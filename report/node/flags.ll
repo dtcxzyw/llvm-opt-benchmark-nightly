@@ -203,7 +203,12 @@ bb.cl:                                            ; preds = %bb.cj, %bb.ci
 .preheader:                                       ; preds = %bb.cl
   %i.gs = load i32, ptr %0, align 4               ; 2 uses
   %i.gt = icmp sgt i32 %i.gs, 1
-  br i1 %i.gt, label %.lr.ph213, label %.loopexit272
+  br i1 %i.gt, label %.lr.ph213, label %._crit_edge214
+
+._crit_edge214:                                   ; preds = %bb.cn, %.preheader
+  %.083.lcssa = phi i32 [ 1, %.preheader ], [ %.1, %bb.cn ]
+  store i32 %.083.lcssa, ptr %0, align 4
+  br label %.loopexit272
 
 .lr.ph213:                                        ; preds = %.preheader, %bb.cn
   %i.gu = phi i32 [ %i.ha, %bb.cn ], [ %i.gs, %.preheader ]
@@ -228,7 +233,7 @@ bb.cn:                                            ; preds = %.lr.ph213, %bb.cm
   %indvars.iv.next221 = add nuw nsw i64 %indvars.iv220, 1 ; 2 uses
   %i.hb = sext i32 %i.ha to i64
   %i.hc = icmp slt i64 %indvars.iv.next221, %i.hb
-  br i1 %i.hc, label %.lr.ph213, label %.loopexit272, !llvm.loop !68
+  br i1 %i.hc, label %.lr.ph213, label %._crit_edge214, !llvm.loop !68
 
 bb.co:                                            ; preds = %bb.cl
   %cond = icmp eq i32 %.9, 0
@@ -254,7 +259,7 @@ bb.cq:                                            ; preds = %bb.cp
 .thread270:                                       ; preds = %.lr.ph210, %bb.cq
   %i.hk = load ptr, ptr @stderr, align 8
   call void (ptr, ptr, ...) @_ZN2v88internal6PrintFEP8_IO_FILEPKcz(ptr noundef %i.hk, ptr noundef nonnull @.str.1820) #30
-  br label %.thread195
+  br label %.loopexit272
 
 .lr.ph210:                                        ; preds = %.lr.ph210.preheader, %.lr.ph210
   %indvars.iv = phi i64 [ %i.hj, %.lr.ph210.preheader ], [ %indvars.iv.next, %.lr.ph210 ] ; 2 uses
@@ -268,13 +273,11 @@ bb.cq:                                            ; preds = %bb.cp
   %i.hq = icmp slt i64 %indvars.iv.next, %i.hp
   br i1 %i.hq, label %.lr.ph210, label %.thread270, !llvm.loop !69
 
-.loopexit272:                                     ; preds = %bb.cn, %.preheader
-  %.083.lcssa = phi i32 [ 1, %.preheader ], [ %.1, %bb.cn ]
-  store i32 %.083.lcssa, ptr %0, align 4
+.loopexit272:                                     ; preds = %.thread270, %._crit_edge214
   %.not110 = icmp eq i32 %.9, 0
   br i1 %.not110, label %bb.cr, label %.thread195
 
-.thread195:                                       ; preds = %.thread270, %bb.cp, %.loopexit272
+.thread195:                                       ; preds = %bb.cp, %.loopexit272
   %i.hr = load ptr, ptr @stderr, align 8
   call void (ptr, ptr, ...) @_ZN2v88internal6PrintFEP8_IO_FILEPKcz(ptr noundef %i.hr, ptr noundef nonnull @.str.1821) #30
   br label %bb.cr

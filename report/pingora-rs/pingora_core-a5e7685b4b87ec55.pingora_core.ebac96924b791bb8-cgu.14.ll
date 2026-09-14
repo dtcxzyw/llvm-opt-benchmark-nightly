@@ -205,16 +205,19 @@ bb.a:
   %i.g = call fastcc noundef i64 @_RINvNtNtCsiRgJJXJ4lb7_6brotli3enc17compress_fragment30BuildAndStoreLiteralPrefixCodeNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocECskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %..i, ptr noalias nofree noundef nonnull %i.c, ptr noalias nofree noundef nonnull align 2 %i.b, ptr noalias nofree noundef align 8 dereferenceable(8) %15, ptr noalias nofree noundef nonnull %16, i64 noundef %17)
   %i.h = load i64, ptr %12, align 8, !noundef !6  ; 4 uses
   %i.i = icmp ugt i64 %i.h, 7
-  br i1 %i.i, label %.lr.ph, label %._crit_edge
+  br i1 %i.i, label %.lr.ph.preheader, label %._crit_edge
+
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %.not2286 = icmp eq i64 %14, 0
+  br i1 %.not2286, label %bb.di, label %bb.dh
 
 ._crit_edge:                                      ; preds = %bb.dh, %bb.a
   %i.j = lshr i64 %i.h, 3                         ; 3 uses
   %i.k = icmp samesign ult i64 %i.j, %14
   br i1 %i.k, label %bb.b, label %bb.c
 
-.lr.ph:                                           ; preds = %bb.a, %bb.dh
-  %.sroa.026.0778 = phi i64 [ %i.kj, %bb.dh ], [ 0, %bb.a ] ; 2 uses
-  %i.l = lshr exact i64 %.sroa.026.0778, 3        ; 3 uses
+.lr.ph:                                           ; preds = %bb.dh
+  %i.l = lshr exact i64 %i.kj, 3                  ; 2 uses
   %i.m = icmp samesign ult i64 %i.l, %14
   br i1 %i.m, label %bb.dh, label %bb.di
 
@@ -617,18 +620,20 @@ bb.dg:                                            ; preds = %bb.de
   call void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 noundef %i.ka, i64 noundef %2, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @26) #16
   unreachable
 
-bb.dh:                                            ; preds = %.lr.ph
-  %i.kg = getelementptr inbounds nuw i8, ptr %13, i64 %i.l
+bb.dh:                                            ; preds = %.lr.ph.preheader, %.lr.ph
+  %18 = phi i64 [ %i.l, %.lr.ph ], [ 0, %.lr.ph.preheader ]
+  %.sroa.026.07782284 = phi i64 [ %i.kj, %.lr.ph ], [ 0, %.lr.ph.preheader ]
+  %i.kg = getelementptr inbounds nuw i8, ptr %13, i64 %18
   %i.kh = load i8, ptr %i.kg, align 1, !noundef !6
   %i.ki = zext i8 %i.kh to i64
   call void @_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc26compress_fragment_two_pass15BrotliWriteBits(i64 noundef 8, i64 noundef %i.ki, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %15, ptr noalias nofree noundef nonnull %16, i64 noundef %17)
-  %i.kj = add i64 %.sroa.026.0778, 8              ; 2 uses
+  %i.kj = add nuw i64 %.sroa.026.07782284, 8      ; 3 uses
   %i.kk = or disjoint i64 %i.kj, 7
   %i.kl = icmp ult i64 %i.kk, %i.h
   br i1 %i.kl, label %.lr.ph, label %._crit_edge
 
-bb.di:                                            ; preds = %.lr.ph
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.l, i64 noundef %14, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @36) #16
+bb.di:                                            ; preds = %.lr.ph, %.lr.ph.preheader
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %14, i64 noundef %14, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @36) #16
   unreachable
 }
 

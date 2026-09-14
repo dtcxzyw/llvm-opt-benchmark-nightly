@@ -205,14 +205,17 @@ bb.o:                                             ; preds = %._crit_edge.i9.i
   %i.gl = load i64, ptr %i.gh, align 8
   %i.gm = add nsw i64 %i.gl, %i.gk
   store i64 %i.gm, ptr %i.gh, align 8
-  br label %_ZN5o3dgc6UpdateEPll.exit.i
+  br label %.preheader.i.i.preheader
 
-_ZN5o3dgc6UpdateEPll.exit.i:                      ; preds = %bb.o, %._crit_edge.i9.i
-  br i1 %i.da, label %.preheader.i.i, label %_ZN5o3dgc5SplitEPll.exit.i
+_ZN5o3dgc6UpdateEPll.exit.i:                      ; preds = %._crit_edge.i9.i
+  br i1 %i.da, label %.preheader.i.i.preheader, label %_ZN5o3dgc5SplitEPll.exit.i
 
-.preheader.i.i:                                   ; preds = %_ZN5o3dgc6UpdateEPll.exit.i, %bb.p
-  %.01217.i.i = phi i64 [ %.012.i.i, %bb.p ], [ %i.cz, %_ZN5o3dgc6UpdateEPll.exit.i ] ; 2 uses
-  %.01316.i.i = phi i64 [ %i.gn, %bb.p ], [ 1, %_ZN5o3dgc6UpdateEPll.exit.i ] ; 2 uses
+.preheader.i.i.preheader:                         ; preds = %_ZN5o3dgc6UpdateEPll.exit.i, %bb.o
+  br label %.preheader.i.i
+
+.preheader.i.i:                                   ; preds = %.preheader.i.i.preheader, %bb.p
+  %.01217.i.i = phi i64 [ %.012.i.i, %bb.p ], [ %i.cz, %.preheader.i.i.preheader ] ; 2 uses
+  %.01316.i.i = phi i64 [ %i.gn, %bb.p ], [ 1, %.preheader.i.i.preheader ] ; 2 uses
   br label %bb.q
 
 bb.p:                                             ; preds = %bb.q

@@ -206,7 +206,7 @@ bb.i:                                             ; preds = %bb.h
   br label %.thread
 
 bb.j:                                             ; preds = %bb.h
-  %i.bq = icmp ugt i32 %i.bn, %i.d
+  %i.bq = icmp samesign ugt i32 %i.bn, %i.d
   br i1 %i.bq, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
@@ -609,7 +609,7 @@ bb.m:                                             ; preds = %bb.k
   %i.ax = zext i8 %i.aw to i32
   %i.ay = or disjoint i32 %i.au, %i.ax
   %i.az = add nuw nsw i32 %i.ay, %i.y             ; 3 uses
-  %3 = icmp sgt i32 %i.az, %i.ae
+  %3 = icmp samesign ugt i32 %i.az, %i.ae
   br i1 %3, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
@@ -1012,7 +1012,7 @@ bb.n:                                             ; preds = %bb.l
   %i.bz = zext i8 %i.by to i32
   %i.ca = or disjoint i32 %i.bw, %i.bz            ; 4 uses
   %i.cb = add nuw nsw i32 %i.ca, %i.an
-  %2 = icmp sgt i32 %i.cb, %i.q
+  %2 = icmp samesign ugt i32 %i.cb, %i.q
   br i1 %2, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
@@ -1032,7 +1032,7 @@ bb.p:                                             ; preds = %bb.n
   br label %bb.s
 
 bb.q:                                             ; preds = %bb.k
-  %3 = icmp sgt i32 %i.bp, %i.q
+  %3 = icmp samesign ugt i32 %i.bp, %i.q
   br i1 %3, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
@@ -1142,7 +1142,7 @@ bb.y:                                             ; preds = %bb.w
   %i.ek = sub nsw i32 %.4223, %i.ej               ; 6 uses
   %i.el = icmp slt i32 %i.ek, %i.dq
   %i.em = add nuw nsw i32 %i.ed, %i.ej
-  %4 = icmp sgt i32 %i.em, %i.q
+  %4 = icmp samesign ugt i32 %i.em, %i.q
   %or.cond = select i1 %i.el, i1 true, i1 %4
   br i1 %or.cond, label %bb.z, label %bb.aa
 
@@ -1545,10 +1545,18 @@ bb.e:                                             ; preds = %jsonAppendControlCh
   %.079 = phi i32 [ %2, %bb.d ], [ %i.ef, %jsonAppendControlChar.exit ] ; 8 uses
   %.0 = phi ptr [ %1, %bb.d ], [ %i.ee, %jsonAppendControlChar.exit ] ; 9 uses
   %.not85100 = icmp ugt i32 %.079, 3
-  br i1 %.not85100, label %.lr.ph, label %.preheader
+  br i1 %.not85100, label %.lr.ph.preheader, label %.preheader
 
-.preheader:                                       ; preds = %bb.j, %bb.e
-  %.077.lcssa = phi i32 [ 0, %bb.e ], [ %10, %bb.j ] ; 3 uses
+.lr.ph.preheader:                                 ; preds = %bb.e
+  %3 = zext i32 %.079 to i64
+  br label %.lr.ph
+
+.preheader.loopexit:                              ; preds = %bb.j
+  %4 = trunc nuw i64 %indvars.iv.next to i32
+  br label %.preheader
+
+.preheader:                                       ; preds = %.preheader.loopexit, %bb.e
+  %.077.lcssa = phi i32 [ 0, %bb.e ], [ %4, %.preheader.loopexit ] ; 3 uses
   %i.p = icmp ult i32 %.077.lcssa, %.079
   br i1 %i.p, label %.lr.ph103.preheader, label %.critedge
 
@@ -1565,69 +1573,84 @@ bb.e:                                             ; preds = %jsonAppendControlCh
   %i.v = getelementptr inbounds nuw i8, ptr @jsonIsOk, i64 %i.u
   %i.w = load i8, ptr %i.v, align 1, !tbaa !733
   %.not90 = icmp eq i8 %i.w, 0
-  br i1 %.not90, label %.critedge.loopexit.a, label %bb.f
+  br i1 %.not90, label %.critedge.loopexit, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph103
   %indvars.iv.next.a = add nuw nsw i64 %indvars.iv.a, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next.a, %i.r
   br i1 %exitcond.not, label %.critedge.thread, label %.lr.ph103, !llvm.loop !4508
 
-.lr.ph:                                           ; preds = %bb.e, %bb.j
-  %.077101 = phi i32 [ %10, %bb.j ], [ 0, %bb.e ] ; 6 uses
-  %3 = or disjoint i32 %.077101, 3                ; 2 uses
-  %4 = zext i32 %.077101 to i64
-  %i.x = getelementptr inbounds nuw i8, ptr %.0, i64 %4
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.j
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.j ] ; 9 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %.0, i64 %indvars.iv
   %i.y = load i8, ptr %i.x, align 1, !tbaa !733
   %i.z = zext i8 %i.y to i64
   %i.aa = getelementptr inbounds nuw i8, ptr @jsonIsOk, i64 %i.z
   %i.ab = load i8, ptr %i.aa, align 1, !tbaa !733
   %.not86 = icmp eq i8 %i.ab, 0
-  br i1 %.not86, label %.critedge, label %bb.g
+  br i1 %.not86, label %.critedge.loopexit122.split.loop.exit, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph
-  %5 = or disjoint i32 %.077101, 1                ; 2 uses
-  %6 = zext i32 %5 to i64
-  %i.ac = getelementptr inbounds nuw i8, ptr %.0, i64 %6
+  %5 = getelementptr inbounds nuw i8, ptr %.0, i64 %indvars.iv
+  %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 1
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !733
   %i.ae = zext i8 %i.ad to i64
   %i.af = getelementptr inbounds nuw i8, ptr @jsonIsOk, i64 %i.ae
   %i.ag = load i8, ptr %i.af, align 1, !tbaa !733
   %.not87 = icmp eq i8 %i.ag, 0
-  br i1 %.not87, label %.critedge, label %bb.h
+  br i1 %.not87, label %.critedge.loopexit122.split.loop.exit131, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %7 = or disjoint i32 %.077101, 2                ; 2 uses
-  %8 = zext i32 %7 to i64
-  %i.ah = getelementptr inbounds nuw i8, ptr %.0, i64 %8
+  %6 = getelementptr inbounds nuw i8, ptr %.0, i64 %indvars.iv
+  %i.ah = getelementptr inbounds nuw i8, ptr %6, i64 2
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !733
   %i.aj = zext i8 %i.ai to i64
   %i.ak = getelementptr inbounds nuw i8, ptr @jsonIsOk, i64 %i.aj
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !733
   %.not88 = icmp eq i8 %i.al, 0
-  br i1 %.not88, label %.critedge, label %bb.i
+  br i1 %.not88, label %.critedge.loopexit122.split.loop.exit133, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %9 = zext i32 %3 to i64
-  %i.am = getelementptr inbounds nuw i8, ptr %.0, i64 %9
+  %7 = getelementptr inbounds nuw i8, ptr %.0, i64 %indvars.iv
+  %i.am = getelementptr inbounds nuw i8, ptr %7, i64 3
   %i.an = load i8, ptr %i.am, align 1, !tbaa !733
   %i.ao = zext i8 %i.an to i64
   %i.ap = getelementptr inbounds nuw i8, ptr @jsonIsOk, i64 %i.ao
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !733
   %.not89 = icmp eq i8 %i.aq, 0
-  br i1 %.not89, label %.critedge, label %bb.j
+  br i1 %.not89, label %.critedge.loopexit.a, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %10 = add i32 %.077101, 4                       ; 3 uses
-  %11 = or disjoint i32 %10, 3
-  %.not85 = icmp ult i32 %11, %.079
-  br i1 %.not85, label %.lr.ph, label %.preheader
+  %indvars.iv.next = add nuw i64 %indvars.iv, 4   ; 3 uses
+  %8 = or disjoint i64 %indvars.iv.next, 3
+  %.not85 = icmp ult i64 %8, %3
+  br i1 %.not85, label %.lr.ph, label %.preheader.loopexit
 
-.critedge.loopexit.a:                             ; preds = %.lr.ph103
-  %i.ar = trunc nuw i64 %indvars.iv.a to i32
+.critedge.loopexit:                               ; preds = %.lr.ph103
+  %9 = trunc nuw i64 %indvars.iv.a to i32
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.i, %bb.h, %bb.g, %.lr.ph, %.critedge.loopexit.a, %.preheader
-  %.2 = phi i32 [ %i.ar, %.critedge.loopexit.a ], [ %.077.lcssa, %.preheader ], [ %5, %bb.g ], [ %7, %bb.h ], [ %3, %bb.i ], [ %.077101, %.lr.ph ] ; 5 uses
+.critedge.loopexit122.split.loop.exit:            ; preds = %.lr.ph
+  %indvars111.le143 = trunc i64 %indvars.iv to i32
+  br label %.critedge
+
+.critedge.loopexit122.split.loop.exit131:         ; preds = %bb.g
+  %indvars111.le139 = trunc i64 %indvars.iv to i32
+  %10 = or disjoint i32 %indvars111.le139, 1
+  br label %.critedge
+
+.critedge.loopexit122.split.loop.exit133:         ; preds = %bb.h
+  %indvars111.le141 = trunc i64 %indvars.iv to i32
+  %11 = or disjoint i32 %indvars111.le141, 2
+  br label %.critedge
+
+.critedge.loopexit.a:                             ; preds = %bb.i
+  %i.ar = trunc i64 %indvars.iv to i32
+  %12 = or disjoint i32 %i.ar, 3
+  br label %.critedge
+
+.critedge:                                        ; preds = %.critedge.loopexit122.split.loop.exit, %.critedge.loopexit122.split.loop.exit131, %.critedge.loopexit122.split.loop.exit133, %.critedge.loopexit.a, %.critedge.loopexit, %.preheader
+  %.2 = phi i32 [ %9, %.critedge.loopexit ], [ %.077.lcssa, %.preheader ], [ %indvars111.le143, %.critedge.loopexit122.split.loop.exit ], [ %10, %.critedge.loopexit122.split.loop.exit131 ], [ %11, %.critedge.loopexit122.split.loop.exit133 ], [ %12, %.critedge.loopexit.a ] ; 5 uses
   %.not91 = icmp ult i32 %.2, %.079
   br i1 %.not91, label %bb.l, label %.critedge.thread
 

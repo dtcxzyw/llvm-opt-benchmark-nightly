@@ -205,14 +205,17 @@ bb.c:                                             ; preds = %._crit_edge.i24
   %i.bo = load i64, ptr %i.bk, align 8
   %i.bp = sub nsw i64 %i.bo, %i.bn
   store i64 %i.bp, ptr %i.bk, align 8
-  br label %_ZN5o3dgc7IUpdateEPll.exit
+  br label %.lr.ph.i28.preheader
 
-_ZN5o3dgc7IUpdateEPll.exit:                       ; preds = %._crit_edge.i24, %bb.c
+_ZN5o3dgc7IUpdateEPll.exit:                       ; preds = %._crit_edge.i24
   %i.bq = icmp sgt i64 %i.q, 2
-  br i1 %i.bq, label %.lr.ph.i28, label %._crit_edge.i26
+  br i1 %i.bq, label %.lr.ph.i28.preheader, label %._crit_edge.i26
 
-.lr.ph.i28:                                       ; preds = %_ZN5o3dgc7IUpdateEPll.exit, %.lr.ph.i28
-  %.016.i29 = phi i64 [ %i.cb, %.lr.ph.i28 ], [ 1, %_ZN5o3dgc7IUpdateEPll.exit ] ; 2 uses
+.lr.ph.i28.preheader:                             ; preds = %bb.c, %_ZN5o3dgc7IUpdateEPll.exit
+  br label %.lr.ph.i28
+
+.lr.ph.i28:                                       ; preds = %.lr.ph.i28.preheader, %.lr.ph.i28
+  %.016.i29 = phi i64 [ %i.cb, %.lr.ph.i28 ], [ 1, %.lr.ph.i28.preheader ] ; 2 uses
   %i.br = getelementptr [8 x i8], ptr %0, i64 %.016.i29 ; 4 uses
   %i.bs = getelementptr i8, ptr %i.br, i64 -8
   %i.bt = load i64, ptr %i.bs, align 8

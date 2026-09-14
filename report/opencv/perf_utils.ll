@@ -204,40 +204,52 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.b
 bb.c:                                             ; preds = %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i, %bb.a
   %.pre-phi60 = phi i64 [ %.pre59, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i ], [ %i.i, %bb.a ]
   %.pre-phi = phi i64 [ %.pre58, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i ], [ %i.h, %bb.a ]
-  %i.m = phi ptr [ %.pre, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i ], [ %i.g, %bb.a ]
-  %i.n = phi ptr [ %i.l, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i ], [ null, %bb.a ] ; 5 uses
-  %i.o = sub i64 %.pre-phi, %.pre-phi60           ; 5 uses
+  %i.m = phi ptr [ %.pre, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i ], [ %i.g, %bb.a ] ; 2 uses
+  %i.n = phi ptr [ %i.l, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i ], [ null, %bb.a ] ; 6 uses
+  %i.o = sub i64 %.pre-phi, %.pre-phi60           ; 6 uses
   %i.p = icmp sgt i64 %i.o, 4
-  br i1 %i.p, label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i, label %_ZNSt6vectorIiSaIiEEC2ERKS1_.exit.a, !prof !65
+  br i1 %i.p, label %11, label %_ZNSt6vectorIiSaIiEEC2ERKS1_.exit.a, !prof !65
+
+11:                                               ; preds = %bb.c
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.n, ptr align 4 %i.m, i64 %i.o, i1 false)
+  br label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i
 
 _ZNSt6vectorIiSaIiEEC2ERKS1_.exit.a:              ; preds = %bb.c
-  %11 = icmp ne i64 %i.o, 4
-  tail call void @llvm.assume(i1 %11)
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #26
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, i8 0, i64 24, i1 false)
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.37) #30
-          to label %.noexc.i.a unwind label %bb.g
+  %12 = icmp eq i64 %i.o, 4
+  br i1 %12, label %.noexc.i.a, label %_ZNSt6vectorIiSaIiEEC2ERKS1_.exit
 
 .noexc.i.a:                                       ; preds = %_ZNSt6vectorIiSaIiEEC2ERKS1_.exit.a
-  unreachable
+  %13 = load i32, ptr %i.m, align 4, !tbaa !66
+  store i32 %13, ptr %i.n, align 4, !tbaa !66
+  br label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i
 
-_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i: ; preds = %bb.c
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.n, ptr align 4 %i.m, i64 %i.o, i1 false)
+_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i: ; preds = %11, %.noexc.i.a
   %i.q = load i32, ptr %i.n, align 4, !tbaa !66   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #26
   %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 4 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, i8 0, i64 24, i1 false)
   %gepdiff79 = add nsw i64 %i.o, -4               ; 4 uses
+  %.not.i.i.i = icmp ne i64 %i.o, 4
+  tail call void @llvm.assume(i1 %.not.i.i.i)
   %i.s = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %gepdiff79) #27
           to label %.noexc5.i unwind label %bb.g  ; 6 uses
+
+_ZNSt6vectorIiSaIiEEC2ERKS1_.exit:                ; preds = %_ZNSt6vectorIiSaIiEEC2ERKS1_.exit.a
+  call void @llvm.lifetime.start.p0(ptr nonnull %1) #26
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, i8 0, i64 24, i1 false)
+  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.37) #30
+          to label %.noexc.i unwind label %bb.g
+
+.noexc.i:                                         ; preds = %_ZNSt6vectorIiSaIiEEC2ERKS1_.exit
+  unreachable
 
 .noexc5.i:                                        ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i
   store ptr %i.s, ptr %1, align 8, !tbaa !61
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 %gepdiff79 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 16
   store ptr %i.t, ptr %i.u, align 8, !tbaa !64
-  %12 = icmp sgt i64 %i.o, 8
-  br i1 %12, label %bb.d, label %bb.e, !prof !89
+  %14 = icmp samesign ugt i64 %i.o, 8
+  br i1 %14, label %bb.d, label %bb.e, !prof !89
 
 bb.d:                                             ; preds = %.noexc5.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.s, ptr nonnull align 4 %i.r, i64 %gepdiff79, i1 false)
@@ -252,7 +264,7 @@ bb.f:                                             ; preds = %bb.e
   store i32 %i.w, ptr %i.s, align 4, !tbaa !66
   br label %bb.i
 
-bb.g:                                             ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i, %_ZNSt6vectorIiSaIiEEC2ERKS1_.exit.a
+bb.g:                                             ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i, %_ZNSt6vectorIiSaIiEEC2ERKS1_.exit
   %i.x = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.y = load ptr, ptr %1, align 8, !tbaa !61     ; 3 uses

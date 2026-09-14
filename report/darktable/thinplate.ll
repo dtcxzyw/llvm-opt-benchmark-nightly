@@ -33,7 +33,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %i.a = add nsw i32 %2, 4                        ; 22 uses
+  %i.a = add nsw i32 %2, 4                        ; 25 uses
   %i.b = sext i32 %i.a to i64                     ; 32 uses
   %i.c = shl nsw i64 %i.b, 3                      ; 7 uses
   %i.d = mul i64 %i.c, %i.b
@@ -436,10 +436,9 @@ bb.m:                                             ; preds = %bb.m, %.epil.prehea
   br i1 %i.gp, label %.lr.ph498, label %._crit_edge499
 
 .lr.ph498:                                        ; preds = %.preheader458.thread
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.a, i32 1)
-  %wide.trip.count624 = zext nneg i32 %smax to i64 ; 7 uses
-  %min.iters.check = icmp slt i32 %2, 0
-  %min.iters.check803 = icmp slt i32 %2, 12
+  %wide.trip.count624 = zext nneg i32 %i.a to i64 ; 7 uses
+  %min.iters.check = icmp ugt i32 %2, -5
+  %min.iters.check803 = icmp ult i32 %i.a, 16
   %i.gq = and i64 %wide.trip.count624, 12
   %n.vec = and i64 %wide.trip.count624, 2147483632 ; 4 uses
   %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %i.b, i64 0
@@ -453,7 +452,7 @@ bb.m:                                             ; preds = %bb.m, %.epil.prehea
   br label %iter.check
 
 ._crit_edge499:                                   ; preds = %.loopexit, %.preheader458.thread
-  %i.gr = zext i32 %i.a to i64                    ; 48 uses
+  %i.gr = zext i32 %i.a to i64                    ; 42 uses
   %i.gs = sext i32 %1 to i64
   %i.gt = shl nsw i64 %i.gs, 3                    ; 2 uses
   %i.gu = mul i64 %i.gt, %i.b
@@ -606,7 +605,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %epil.iter2048.cmp.not, label %._crit_edge505, label %.lr.ph504.epil, !llvm.loop !19
 
 ._crit_edge505:                                   ; preds = %._crit_edge505.loopexit.unr-lcssa, %.lr.ph504.epil, %._crit_edge499
-  %i.ih = sext i32 %5 to i64                      ; 105 uses
+  %i.ih = sext i32 %5 to i64                      ; 104 uses
   %i.ii = shl nsw i64 %i.ih, 3                    ; 3 uses
   %i.ij = tail call noalias ptr @malloc(i64 noundef %i.ii) #15 ; 15 uses
   %i.ik = mul i64 %i.ii, %i.ih
@@ -617,62 +616,61 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 
 .lr.ph552:                                        ; preds = %._crit_edge505
   %i.io = add nsw i32 %5, -4                      ; 3 uses
-  %i.ip = add i32 %5, -1                          ; 8 uses
+  %i.ip = add i32 %5, -1                          ; 7 uses
   %.0661700.i.i = add i32 %5, 1                   ; 3 uses
   %i.iq = xor i32 %5, -1
   %i.ir = getelementptr inbounds nuw [8 x i8], ptr %i.gv, i64 %i.gr ; 3 uses
   %.idx = shl nuw nsw i64 %i.gr, 4
   %i.is = getelementptr inbounds nuw i8, ptr %i.gv, i64 %.idx ; 3 uses
   %i.it = uitofp nneg i32 %i.a to double          ; 3 uses
-  %smax637 = tail call i32 @llvm.smax.i32(i32 %i.a, i32 1)
-  %wide.trip.count680.a = zext nneg i32 %smax637 to i64 ; 19 uses
+  %wide.trip.count680 = zext i32 %i.a to i64      ; 26 uses
+  %wide.trip.count680.a = zext nneg i32 %1 to i64
   %wide.trip.count649 = zext nneg i32 %1 to i64
-  %wide.trip.count675 = zext nneg i32 %1 to i64
-  %i.iu = shl nuw nsw i64 %i.gr, 3                ; 2 uses
+  %10 = sext i32 %i.ip to i64
+  %i.iu = shl nuw nsw i64 %wide.trip.count680, 3  ; 2 uses
   %scevgep1006 = getelementptr i8, ptr %i.in, i64 %i.iu
   %scevgep1009.a = getelementptr i8, ptr %i.in, i64 %i.iu
   %i.iv = shl nsw i64 %i.b, 3                     ; 2 uses
-  %i.iw = add nsw i64 %i.iv, 8
-  %10 = sext i32 %i.ip to i64
+  %i.iw = add nsw i64 %i.iv, 16
+  %11 = add nsw i64 %i.iv, 8
   %i.ix = add i32 %2, 2
-  %11 = sext i32 %i.ip to i64
-  %i.iy = shl nuw nsw i64 %i.gr, 3
+  %i.iy = shl nuw nsw i64 %wide.trip.count680, 3
   %i.iz = getelementptr i8, ptr %i.in, i64 %i.iy
   %scevgep1612 = getelementptr i8, ptr %i.iz, i64 -8
   %i.ja = add nsw i64 %i.gr, -1                   ; 4 uses
   %i.jb = xor i32 %2, 4
   %i.jc = add i32 %2, 3
-  %xtraiter2053 = and i64 %wide.trip.count680.a, 3 ; 3 uses
-  %12 = icmp slt i32 %2, 0
-  %unroll_iter2058 = and i64 %wide.trip.count680.a, 2147483644
+  %xtraiter2053 = and i64 %i.gr, 3                ; 3 uses
+  %12 = icmp ult i64 %i.ja, 3
+  %unroll_iter2058 = and i64 %i.gr, 4294967292
   %lcmp.mod2055.not = icmp eq i64 %xtraiter2053, 0
   %lcmp.mod2057 = icmp ne i64 %xtraiter2053, 0
-  %min.iters.check1850 = icmp slt i32 %2, 0
-  %min.iters.check1852 = icmp slt i32 %2, 12
-  %i.jd = and i64 %wide.trip.count680.a, 12
-  %n.vec1854 = and i64 %wide.trip.count680.a, 2147483632 ; 4 uses
+  %min.iters.check1849 = icmp ugt i32 %2, -5
+  %min.iters.check1851 = icmp ult i32 %i.a, 16
+  %i.jd = and i64 %wide.trip.count680, 12
+  %n.vec1854 = and i64 %wide.trip.count680, 4294967280 ; 4 uses
   %broadcast.splatinsert1855 = insertelement <4 x i64> poison, i64 %i.b, i64 0
   %broadcast.splat1856 = shufflevector <4 x i64> %broadcast.splatinsert1855, <4 x i64> poison, <4 x i32> zeroinitializer ; 4 uses
-  %cmp.n1885 = icmp eq i64 %n.vec1854, %wide.trip.count680.a
+  %cmp.n1885 = icmp eq i64 %n.vec1854, %wide.trip.count680
   %min.epilog.iters.check1891 = icmp eq i64 %i.jd, 0
-  %n.vec1893 = and i64 %wide.trip.count680.a, 2147483644 ; 3 uses
+  %n.vec1893 = and i64 %wide.trip.count680, 4294967292 ; 3 uses
   %broadcast.splatinsert1894 = insertelement <4 x i64> poison, i64 %i.b, i64 0
   %broadcast.splat1895 = shufflevector <4 x i64> %broadcast.splatinsert1894, <4 x i64> poison, <4 x i32> zeroinitializer
-  %cmp.n1909 = icmp eq i64 %n.vec1893, %wide.trip.count680.a
-  %min.iters.check1802 = icmp sgt i32 %2, -1
+  %cmp.n1909 = icmp eq i64 %n.vec1893, %wide.trip.count680
+  %min.iters.check1801 = icmp ult i32 %2, -4
   %ident.check1800.not = icmp eq i32 %5, 1
-  %or.cond1914 = and i1 %min.iters.check1802, %ident.check1800.not
-  %min.iters.check1804 = icmp slt i32 %2, 12
-  %i.je = and i64 %wide.trip.count680.a, 12
-  %n.vec1806 = and i64 %wide.trip.count680.a, 2147483632 ; 4 uses
+  %or.cond1914 = and i1 %min.iters.check1801, %ident.check1800.not
+  %min.iters.check1803 = icmp ult i32 %i.a, 16
+  %i.je = and i64 %wide.trip.count680, 12
+  %n.vec1806 = and i64 %wide.trip.count680, 4294967280 ; 4 uses
   %broadcast.splatinsert1807 = insertelement <4 x i64> poison, i64 %i.b, i64 0
   %broadcast.splat1808 = shufflevector <4 x i64> %broadcast.splatinsert1807, <4 x i64> poison, <4 x i32> zeroinitializer ; 4 uses
-  %cmp.n1826 = icmp eq i64 %n.vec1806, %wide.trip.count680.a
+  %cmp.n1826 = icmp eq i64 %n.vec1806, %wide.trip.count680
   %min.epilog.iters.check1831 = icmp eq i64 %i.je, 0
-  %n.vec1833 = and i64 %wide.trip.count680.a, 2147483644 ; 3 uses
+  %n.vec1833 = and i64 %wide.trip.count680, 4294967292 ; 3 uses
   %broadcast.splatinsert1834 = insertelement <4 x i64> poison, i64 %i.b, i64 0
   %broadcast.splat1835 = shufflevector <4 x i64> %broadcast.splatinsert1834, <4 x i64> poison, <4 x i32> zeroinitializer
-  %cmp.n1847 = icmp eq i64 %n.vec1833, %wide.trip.count680.a
+  %cmp.n1847 = icmp eq i64 %n.vec1833, %wide.trip.count680
   %ident.check1758.not = icmp eq i32 %5, 1
   %ident.check1712.not = icmp eq i32 %5, 1
   %ident.check1665.not = icmp eq i32 %5, 1
@@ -685,8 +683,8 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %min.iters.check1011 = icmp ugt i32 %i.a, 7
   %ident.check1005.not = icmp eq i32 %5, 1
   %or.cond1924.a = and i1 %min.iters.check1011, %ident.check1005.not
-  %n.vec1013 = and i64 %i.gr, 4294967288          ; 3 uses
-  %cmp.n1026 = icmp eq i64 %n.vec1013, %i.gr
+  %n.vec1013 = and i64 %wide.trip.count680, 4294967288 ; 3 uses
+  %cmp.n1026 = icmp eq i64 %n.vec1013, %wide.trip.count680
   %xtraiter2092 = and i64 %i.gr, 1
   %lcmp.mod2093.not = icmp eq i64 %xtraiter2092, 0
   %i.jf = add nsw i64 %i.gr, -1
@@ -705,12 +703,12 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %ident.check.not = icmp eq i32 %5, 1
   %or.cond1925 = and i1 %min.iters.check961, %ident.check.not
   %min.iters.check963 = icmp ult i32 %i.a, 16
-  %i.ji = and i64 %i.gr, 12
-  %n.vec965 = and i64 %i.gr, 4294967280           ; 4 uses
-  %cmp.n985 = icmp eq i64 %n.vec965, %i.gr
+  %i.ji = and i64 %wide.trip.count680, 12
+  %n.vec965 = and i64 %wide.trip.count680, 4294967280 ; 4 uses
+  %cmp.n985 = icmp eq i64 %n.vec965, %wide.trip.count680
   %min.epilog.iters.check991 = icmp eq i64 %i.ji, 0
-  %n.vec993 = and i64 %i.gr, 4294967292           ; 3 uses
-  %cmp.n1001 = icmp eq i64 %n.vec993, %i.gr
+  %n.vec993 = and i64 %wide.trip.count680, 4294967292 ; 3 uses
+  %cmp.n1001 = icmp eq i64 %n.vec993, %wide.trip.count680
   %xtraiter2126 = and i64 %i.gr, 1
   %i.jj = icmp eq i64 %i.ja, 0
   %unroll_iter2132 = and i64 %i.gr, 4294967294
@@ -753,7 +751,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %niter2052.ncmp.3, label %._crit_edge505.loopexit.unr-lcssa, label %.lr.ph504
 
 bb.n:                                             ; preds = %.lr.ph552, %bb.at
-  %indvars.iv677 = phi i64 [ 0, %.lr.ph552 ], [ %indvars.iv.next678, %bb.at ] ; 11 uses
+  %indvars.iv677 = phi i64 [ 0, %.lr.ph552 ], [ %indvars.iv.next678, %bb.at ] ; 13 uses
   %.0383550 = phi double [ f0x47EFFFFFE0000000, %.lr.ph552 ], [ %.lcssa2013.a, %bb.at ]
   %.0385549 = phi i32 [ 0, %.lr.ph552 ], [ %spec.select428, %bb.at ] ; 2 uses
   %i.kd = trunc i64 %indvars.iv677 to i32
@@ -765,30 +763,41 @@ bb.n:                                             ; preds = %.lr.ph552, %bb.at
   %i.kf = trunc i64 %indvars.iv677 to i32
   %smin1613.a = tail call i32 @llvm.smin.i32(i32 %5, i32 %i.kf)
   %smin1614 = tail call i32 @llvm.smin.i32(i32 %smin1613.a, i32 %i.ip)
-  %i.kg = add nsw i32 %smin1614, 1
+  %i.kg = add i32 %smin1614, 1
   %i.kh = zext i32 %i.kg to i64
   %i.ki = shl nuw nsw i64 %i.kh, 3
   %scevgep1615.a = getelementptr i8, ptr %scevgep1612, i64 %i.ki
   %i.kj = trunc i64 %indvars.iv677 to i32
   %smin1334.a = tail call i32 @llvm.smin.i32(i32 %5, i32 %i.kj)
   %smin1335 = tail call i32 @llvm.smin.i32(i32 %smin1334.a, i32 %i.ip)
-  %i.kk = add nsw i32 %smin1335, 1
+  %i.kk = add i32 %smin1335, 1
   %i.kl = zext i32 %i.kk to i64
-  %smin1195 = tail call i64 @llvm.smin.i64(i64 %indvars.iv677, i64 %i.ih)
-  %smin1196 = tail call i64 @llvm.smin.i64(i64 %smin1195, i64 %11) ; 2 uses
-  %i.km = trunc i64 %smin1196 to i32
-  %13 = add nsw i32 %i.km, 1                      ; 2 uses
-  %smin = tail call i64 @llvm.smin.i64(i64 %indvars.iv677, i64 %i.ih)
-  %smin1068 = tail call i64 @llvm.smin.i64(i64 %smin, i64 %10) ; 2 uses
-  %i.kn = shl nsw i64 %smin1068, 3                ; 2 uses
-  %14 = sub i64 %i.iw, %i.kn
-  %15 = trunc i64 %indvars.iv677 to i32
-  %smin1070 = tail call i32 @llvm.smin.i32(i32 %5, i32 %15)
-  %smin1071 = tail call i32 @llvm.smin.i32(i32 %smin1070, i32 %i.ip)
-  %16 = trunc i64 %smin1068 to i32
-  %17 = xor i32 %16, -1
-  %18 = add i32 %smin1071, %17
-  %i.ko = sub i64 %i.iv, %i.kn
+  %13 = trunc i64 %indvars.iv677 to i32
+  %smin1125 = tail call i32 @llvm.smin.i32(i32 %13, i32 0)
+  %14 = sub i32 %i.ix, %smin1125
+  %i.km = trunc i64 %indvars.iv677 to i32
+  %sext = shl i64 %indvars.iv677, 32
+  %15 = ashr exact i64 %sext, 32
+  %smin1068 = tail call i64 @llvm.smin.i64(i64 %15, i64 0)
+  %i.kn = shl nsw i64 %smin1068, 4                ; 4 uses
+  %16 = add i64 %i.iw, %i.kn
+  %smin1071 = tail call i32 @llvm.smin.i32(i32 %5, i32 %i.km)
+  %smin1070 = tail call i32 @llvm.smin.i32(i32 %smin1071, i32 %i.ip)
+  %17 = add i32 %smin1070, 1
+  %18 = sext i32 %17 to i64
+  %19 = shl nsw i64 %18, 3                        ; 2 uses
+  %20 = sub i64 %16, %19
+  %21 = add i64 %11, %i.kn
+  %22 = sub i64 %21, %19
+  %sext1913 = shl i64 %indvars.iv677, 32
+  %23 = ashr exact i64 %sext1913, 32
+  %smin1031 = tail call i64 @llvm.smin.i64(i64 %23, i64 0)
+  %i.ko = sub i64 %i.b, %smin1031
+  %sext1914 = shl i64 %indvars.iv677, 32
+  %24 = ashr exact i64 %sext1914, 32
+  %smin = tail call i64 @llvm.smin.i64(i64 %i.ih, i64 %24)
+  %smin829 = tail call i64 @llvm.smin.i64(i64 %smin, i64 %10)
+  %25 = add nsw i64 %smin829, 1                   ; 7 uses
   %i.kp = trunc i64 %indvars.iv677 to i32
   %i.kq = tail call i32 @llvm.smin.i32(i32 %i.kp, i32 %5) ; 3 uses
   %.not421 = icmp slt i32 %.0385549, %i.io
@@ -818,10 +827,10 @@ iter.check1888:                                   ; preds = %.preheader451.us.us
   %.0376510.us.us.us = phi double [ 0.000000e+00, %.preheader451.us.us.us.preheader ], [ %i.mc, %._crit_edge509.us.us.us ]
   %i.ku = mul nuw nsw i64 %indvars.iv646, %i.gr
   %i.kv = getelementptr inbounds nuw [8 x i8], ptr %i.gv, i64 %i.ku ; 3 uses
-  br i1 %min.iters.check1850, label %vec.epilog.scalar.ph1889.preheader, label %vector.main.loop.iter.check1851
+  br i1 %min.iters.check1849, label %vec.epilog.scalar.ph1889.preheader, label %vector.main.loop.iter.check1851
 
 vector.main.loop.iter.check1851:                  ; preds = %iter.check1888
-  br i1 %min.iters.check1852, label %vec.epilog.ph1892, label %vector.body1857
+  br i1 %min.iters.check1851, label %vec.epilog.ph1892, label %vector.body1857
 
 vector.body1857:                                  ; preds = %vector.main.loop.iter.check1851, %vector.body1857
   %index1858 = phi i64 [ %index.next1879, %vector.body1857 ], [ 0, %vector.main.loop.iter.check1851 ] ; 2 uses
@@ -921,7 +930,7 @@ vec.epilog.scalar.ph1889:                         ; preds = %vec.epilog.scalar.p
   %i.lz = fmul reassoc nsz arcp contract afn double %i.ly, %i.lw
   %i.ma = fadd reassoc nsz arcp contract afn double %i.lz, %.0374506.us.us.us ; 2 uses
   %indvars.iv.next641 = add nuw nsw i64 %indvars.iv640, 1 ; 2 uses
-  %exitcond645.not = icmp eq i64 %indvars.iv.next641, %wide.trip.count680.a
+  %exitcond645.not = icmp eq i64 %indvars.iv.next641, %wide.trip.count680
   br i1 %exitcond645.not, label %._crit_edge509.us.us.us, label %vec.epilog.scalar.ph1889, !llvm.loop !22
 
 ._crit_edge509.us.us.us:                          ; preds = %vec.epilog.scalar.ph1889, %vec.epilog.middle.block1908, %middle.block1881
@@ -929,7 +938,7 @@ vec.epilog.scalar.ph1889:                         ; preds = %vec.epilog.scalar.p
   %i.mb = tail call reassoc nsz arcp contract afn double @llvm.fabs.f64(double %.lcssa)
   %i.mc = fadd reassoc nsz arcp contract afn double %i.mb, %.0376510.us.us.us ; 2 uses
   %indvars.iv.next647 = add nuw nsw i64 %indvars.iv646, 1 ; 2 uses
-  %exitcond650.not = icmp eq i64 %indvars.iv.next647, %wide.trip.count649
+  %exitcond650.not = icmp eq i64 %indvars.iv.next647, %wide.trip.count680.a
   br i1 %exitcond650.not, label %._crit_edge512.split.us.us.us, label %iter.check1888
 
 ._crit_edge512.split.us.us.us:                    ; preds = %._crit_edge509.us.us.us
@@ -943,7 +952,7 @@ bb.o:                                             ; preds = %._crit_edge512.spli
   %i.mf = trunc nuw nsw i64 %indvars.iv651 to i32
   %spec.select427.us.us = select i1 %i.me, i32 %i.mf, i32 %.0379515.us.us ; 2 uses
   %indvars.iv.next652 = add nuw nsw i64 %indvars.iv651, 1 ; 2 uses
-  %exitcond655.not = icmp eq i64 %indvars.iv.next652, %wide.trip.count680.a
+  %exitcond655.not = icmp eq i64 %indvars.iv.next652, %wide.trip.count680
   br i1 %exitcond655.not, label %._crit_edge520, label %.lr.ph519.split.us.split.us
 
 .lr.ph519.split:                                  ; preds = %.lr.ph519.split.preheader, %.lr.ph519.split
@@ -1042,9 +1051,9 @@ bb.o:                                             ; preds = %._crit_edge512.spli
 
 .preheader452.lr.ph:                              ; preds = %._crit_edge520
   %.not422530 = icmp slt i32 %i.np, 0             ; 3 uses
-  %i.nq = add nsw i32 %i.np, 1                    ; 14 uses
+  %i.nq = add i32 %i.np, 1                        ; 12 uses
   %.not59.i = icmp sgt i32 %i.a, %i.np
-  %i.nr = sext i32 %i.nq to i64                   ; 39 uses
+  %i.nr = sext i32 %i.nq to i64                   ; 37 uses
   %i.ns = shl nsw i64 %i.nr, 3
   %i.nt = icmp sgt i32 %i.np, -1
   %i.nu = zext nneg i32 %i.np to i64              ; 4 uses
@@ -1053,9 +1062,9 @@ bb.o:                                             ; preds = %._crit_edge512.spli
   %i.nv = mul i32 %i.np, %5
   %i.nw = add i32 %i.nv, %i.nq
   %i.nx = add nsw i64 %i.nr, -1
-  %i.ny = sext i32 %i.np to i64                   ; 4 uses
+  %i.ny = sext i32 %i.np to i64                   ; 3 uses
   %i.nz = getelementptr inbounds [8 x i8], ptr %i.ij, i64 %i.ny
-  %19 = add nsw i64 %i.ny, 1
+  %invariant.op = sub i32 -2, %i.np
   %broadcast.splatinsert1319 = insertelement <4 x i64> poison, i64 %i.nr, i64 0
   %broadcast.splat1320 = shufflevector <4 x i64> %broadcast.splatinsert1319, <4 x i64> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert1252 = insertelement <4 x i64> poison, i64 %i.nr, i64 0
@@ -1066,42 +1075,45 @@ bb.o:                                             ; preds = %._crit_edge512.spli
   %broadcast.splat1206 = shufflevector <4 x i64> %broadcast.splatinsert1205, <4 x i64> poison, <4 x i32> zeroinitializer ; 4 uses
   %broadcast.splatinsert1232 = insertelement <4 x i64> poison, i64 %i.nr, i64 0
   %broadcast.splat1233 = shufflevector <4 x i64> %broadcast.splatinsert1232, <4 x i64> poison, <4 x i32> zeroinitializer
-  %i.oa = getelementptr i8, ptr %i.in, i64 %14
-  %i.ob = getelementptr i8, ptr %i.in, i64 %i.ko
+  %26 = getelementptr i8, ptr %i.in, i64 %i.kn
+  %27 = getelementptr i8, ptr %26, i64 8
+  %28 = getelementptr i8, ptr %i.in, i64 %20
+  %i.oa = getelementptr i8, ptr %i.in, i64 %i.kn
+  %i.ob = getelementptr i8, ptr %i.in, i64 %22
   %xtraiter2097 = and i64 %wide.trip.count990.i.i, 1
   %i.oc = icmp eq i32 %smin2096, 0
-  %unroll_iter2101 = and i64 %wide.trip.count990.i.i, 2147483646
+  %unroll_iter2101 = and i64 %wide.trip.count990.i.i, 4294967294
   %lcmp.mod2099.not = icmp eq i64 %xtraiter2097, 0
   %lcmp.mod2100 = trunc i32 %i.nq to i1
   %xtraiter2117 = and i64 %wide.trip.count990.i.i, 7 ; 3 uses
   %i.od = icmp ult i32 %smin2116, 7
-  %unroll_iter2121 = and i64 %wide.trip.count990.i.i, 2147483640
+  %unroll_iter2121 = and i64 %wide.trip.count990.i.i, 4294967288
   %lcmp.mod2119.not = icmp eq i64 %xtraiter2117, 0
   %lcmp.mod2120 = icmp ne i64 %xtraiter2117, 0
   %min.iters.check928 = icmp ult i32 %i.nq, 4
   %min.iters.check930 = icmp ult i32 %i.nq, 16
   %i.oe = and i64 %wide.trip.count990.i.i, 12
-  %n.vec932 = and i64 %wide.trip.count990.i.i, 2147483632 ; 4 uses
+  %n.vec932 = and i64 %wide.trip.count990.i.i, 4294967280 ; 4 uses
   %cmp.n945 = icmp eq i64 %n.vec932, %wide.trip.count990.i.i
   %min.epilog.iters.check950 = icmp eq i64 %i.oe, 0
-  %n.vec952 = and i64 %wide.trip.count990.i.i, 2147483644 ; 3 uses
+  %n.vec952 = and i64 %wide.trip.count990.i.i, 4294967292 ; 3 uses
   %cmp.n959 = icmp eq i64 %n.vec952, %wide.trip.count990.i.i
   %min.iters.check885 = icmp ult i32 %i.nq, 4
   %min.iters.check887 = icmp ult i32 %i.nq, 16
   %i.of = and i64 %wide.trip.count990.i.i, 12
-  %n.vec889 = and i64 %wide.trip.count990.i.i, 2147483632 ; 4 uses
+  %n.vec889 = and i64 %wide.trip.count990.i.i, 4294967280 ; 4 uses
   %cmp.n909 = icmp eq i64 %n.vec889, %wide.trip.count990.i.i
   %min.epilog.iters.check915 = icmp eq i64 %i.of, 0
-  %n.vec917 = and i64 %wide.trip.count990.i.i, 2147483644 ; 3 uses
+  %n.vec917 = and i64 %wide.trip.count990.i.i, 4294967292 ; 3 uses
   %cmp.n925 = icmp eq i64 %n.vec917, %wide.trip.count990.i.i
-  %min.iters.check829 = icmp ult i32 %i.nq, 4
-  %min.iters.check831 = icmp ult i32 %i.nq, 16
-  %n.vec833 = and i64 %i.nr, 2147483632           ; 4 uses
-  %cmp.n862 = icmp eq i64 %n.vec833, %i.nr
-  %20 = and i32 %i.nq, 12
-  %min.epilog.iters.check868 = icmp eq i32 %20, 0
-  %n.vec870 = and i64 %i.nr, 2147483644           ; 3 uses
-  %cmp.n882 = icmp eq i64 %n.vec870, %i.nr
+  %min.iters.check829 = icmp ult i64 %25, 4
+  %min.iters.check831 = icmp ult i64 %25, 16
+  %n.vec833 = and i64 %25, 12
+  %n.vec834 = and i64 %25, -16                    ; 4 uses
+  %cmp.n863 = icmp eq i64 %25, %n.vec834
+  %min.epilog.iters.check868 = icmp eq i64 %n.vec833, 0
+  %n.vec870 = and i64 %25, -4                     ; 3 uses
+  %cmp.n882 = icmp eq i64 %25, %n.vec870
   br label %.preheader452
 
 .preheader452:                                    ; preds = %.preheader452.lr.ph, %._crit_edge545
@@ -1118,7 +1130,7 @@ iter.check1828:                                   ; preds = %.preheader452, %._c
   br i1 %or.cond1914, label %vector.main.loop.iter.check1803, label %vec.epilog.scalar.ph1829.preheader
 
 vector.main.loop.iter.check1803:                  ; preds = %iter.check1828
-  br i1 %min.iters.check1804, label %vec.epilog.ph1832, label %vector.body1809
+  br i1 %min.iters.check1803, label %vec.epilog.ph1832, label %vector.body1809
 
 vector.body1809:                                  ; preds = %vector.main.loop.iter.check1803, %vector.body1809
   %index1810 = phi i64 [ %index.next1823, %vector.body1809 ], [ 0, %vector.main.loop.iter.check1803 ] ; 2 uses
@@ -1182,7 +1194,7 @@ vec.epilog.middle.block1846:                      ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph1829.preheader:               ; preds = %iter.check1828, %vec.epilog.iter.check1830, %vec.epilog.middle.block1846
   %indvars.iv656.ph = phi i64 [ 0, %iter.check1828 ], [ %n.vec1806, %vec.epilog.iter.check1830 ], [ %n.vec1833, %vec.epilog.middle.block1846 ] ; 4 uses
-  %i.ov = sub nsw i64 %wide.trip.count680.a, %indvars.iv656.ph
+  %i.ov = sub nsw i64 %i.gr, %indvars.iv656.ph
   %xtraiter2060 = and i64 %i.ov, 7                ; 2 uses
   %lcmp.mod2061.not = icmp eq i64 %xtraiter2060, 0
   br i1 %lcmp.mod2061.not, label %vec.epilog.scalar.ph1829.prol.loopexit, label %vec.epilog.scalar.ph1829.prol
@@ -1203,7 +1215,7 @@ vec.epilog.scalar.ph1829.prol:                    ; preds = %vec.epilog.scalar.p
 
 vec.epilog.scalar.ph1829.prol.loopexit:           ; preds = %vec.epilog.scalar.ph1829.prol, %vec.epilog.scalar.ph1829.preheader
   %indvars.iv656.unr = phi i64 [ %indvars.iv656.ph, %vec.epilog.scalar.ph1829.preheader ], [ %indvars.iv.next657.prol, %vec.epilog.scalar.ph1829.prol ]
-  %i.oz = sub nsw i64 %indvars.iv656.ph, %wide.trip.count680.a
+  %i.oz = sub nsw i64 %indvars.iv656.ph, %i.gr
   %i.pa = icmp ugt i64 %i.oz, -8
   br i1 %i.pa, label %._crit_edge529, label %vec.epilog.scalar.ph1829
 
@@ -1232,10 +1244,10 @@ iter.check1784:                                   ; preds = %bb.q, %.loopexit753
   %i.ph = getelementptr i8, ptr %i.in, i64 %i.pg
   %scevgep1611 = getelementptr i8, ptr %i.ph, i64 8
   %scevgep1616.a = getelementptr i8, ptr %i.in, i64 %i.pg
-  %i.pi = add nuw i64 %indvars.iv.i.i, %i.gr
+  %i.pi = add nuw i64 %indvars.iv.i.i, %wide.trip.count680
   %i.pj = shl i64 %i.pi, 3
   %scevgep1617 = getelementptr i8, ptr %i.in, i64 %i.pj
-  %i.pk = sub nsw i64 %i.gr, %indvars.iv.i.i      ; 35 uses
+  %i.pk = sub nsw i64 %wide.trip.count680, %indvars.iv.i.i ; 35 uses
   %i.pl = xor i64 %indvars.iv.i.i, -1
   %i.pm = add nsw i64 %i.pl, %i.kl                ; 42 uses
   %i.pn = fmul reassoc nsz arcp contract afn double %.0668814.i.i, %.0665815.i.i ; 3 uses
@@ -1323,9 +1335,8 @@ vec.epilog.middle.block1795:                      ; preds = %vec.epilog.vector.b
 .lr.ph.i.i.preheader:                             ; preds = %iter.check1784, %vec.epilog.iter.check1786, %vec.epilog.middle.block1795
   %indvars.iv924.i.i.ph = phi i64 [ %indvars.iv.i.i, %iter.check1784 ], [ %i.pq, %vec.epilog.iter.check1786 ], [ %i.qg, %vec.epilog.middle.block1795 ] ; 4 uses
   %.1666770.i.i.ph = phi double [ 0.000000e+00, %iter.check1784 ], [ %i.qf, %vec.epilog.iter.check1786 ], [ %i.qn, %vec.epilog.middle.block1795 ] ; 2 uses
-  %21 = sub i64 %i.gr, %indvars.iv924.i.i.ph
-  %i.qo = sub i64 %i.ja, %indvars.iv924.i.i.ph
-  %xtraiter2062 = and i64 %21, 7                  ; 2 uses
+  %i.qo = sub i64 %i.gr, %indvars.iv924.i.i.ph
+  %xtraiter2062 = and i64 %i.qo, 7                ; 2 uses
   %lcmp.mod2063.not = icmp eq i64 %xtraiter2062, 0
   br i1 %lcmp.mod2063.not, label %.lr.ph.i.i.prol.loopexit, label %.lr.ph.i.i.prol
 
@@ -1347,8 +1358,9 @@ vec.epilog.middle.block1795:                      ; preds = %vec.epilog.vector.b
   %.lcssa1944.unr = phi double [ poison, %.lr.ph.i.i.preheader ], [ %i.qs, %.lr.ph.i.i.prol ]
   %indvars.iv924.i.i.unr = phi i64 [ %indvars.iv924.i.i.ph, %.lr.ph.i.i.preheader ], [ %indvars.iv.next925.i.i.prol, %.lr.ph.i.i.prol ]
   %.1666770.i.i.unr = phi double [ %.1666770.i.i.ph, %.lr.ph.i.i.preheader ], [ %i.qs, %.lr.ph.i.i.prol ]
-  %22 = icmp ult i64 %i.qo, 7
-  br i1 %22, label %._crit_edge.i.i, label %.lr.ph.i.i
+  %29 = sub i64 %indvars.iv924.i.i.ph, %i.gr
+  %30 = icmp ugt i64 %29, -8
+  br i1 %30, label %._crit_edge.i.i, label %.lr.ph.i.i
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i.prol.loopexit, %.lr.ph.i.i, %vec.epilog.middle.block1795, %middle.block1776
   %.lcssa780 = phi double [ %i.qn, %vec.epilog.middle.block1795 ], [ %i.qf, %middle.block1776 ], [ %.lcssa1944.unr, %.lr.ph.i.i.prol.loopexit ], [ %i.tv, %.lr.ph.i.i ] ; 20 uses
@@ -1751,12 +1763,12 @@ vec.epilog.middle.block1367:                      ; preds = %vec.epilog.vector.b
   %indvar1197 = phi i32 [ %indvar.next1198, %.loopexit745.i.i ], [ 0, %.loopexit753.i.i ] ; 3 uses
   %indvars.iv1017.in.i.i = phi i64 [ %indvars.iv1017.i.i, %.loopexit745.i.i ], [ %i.nr, %.loopexit753.i.i ] ; 6 uses
   %.3671835.i.i = phi double [ %i.aor, %.loopexit745.i.i ], [ %.2670.i.i, %.loopexit753.i.i ] ; 2 uses
-  %23 = sub i32 %13, %indvar1197
-  %i.akn = sext i32 %23 to i64
-  %24 = sub i64 %smin1196, %i.akn
-  %i.ako = sub i32 %13, %indvar1197
+  %.reass = add i32 %indvar1197, %invariant.op
+  %i.akn = sext i32 %.reass to i64
+  %31 = add nsw i64 %i.akn, %i.nr
+  %i.ako = sub i32 %i.nq, %indvar1197
   %i.akp = sext i32 %i.ako to i64
-  %i.akq = sub nsw i64 %19, %i.akp                ; 18 uses
+  %i.akq = sub nsw i64 %i.nr, %i.akp              ; 18 uses
   %indvars116.i = trunc i64 %indvars.iv1017.in.i.i to i32 ; 3 uses
   %indvars.iv1017.i.i = add nsw i64 %indvars.iv1017.in.i.i, -1 ; 6 uses
   %indvars.i = trunc i64 %indvars.iv1017.i.i to i32 ; 2 uses
@@ -1846,7 +1858,7 @@ iter.check1289.preheader:                         ; preds = %scalar.ph1313, %mid
   %cmp.n1310 = icmp eq i64 %i.akq, %n.vec1294
   %xtraiter2077 = and i64 %i.akq, 3               ; 2 uses
   %lcmp.mod2078.not = icmp eq i64 %xtraiter2077, 0
-  %i.alp = icmp ult i64 %24, 3
+  %i.alp = icmp ult i64 %31, 3
   br label %iter.check1289
 
 iter.check1289:                                   ; preds = %iter.check1289.preheader, %._crit_edge830.i.i
@@ -2146,22 +2158,20 @@ vec.epilog.scalar.ph1227:                         ; preds = %vec.epilog.scalar.p
   %indvars.iv1052.i.i = phi i64 [ %indvars.iv.next1053.i.i, %.loopexit735.i.i ], [ 0, %.loopexit745.i.i ] ; 8 uses
   %indvars.iv1026.in.i.i = phi i64 [ %indvars.iv1026.i.i, %.loopexit735.i.i ], [ %i.nr, %.loopexit745.i.i ] ; 8 uses
   %i.aot = trunc i64 %indvars.iv1052.i.i to i32
-  %i.aou = add i32 %i.ix, %i.aot                  ; 3 uses
+  %i.aou = add i32 %14, %i.aot                    ; 3 uses
   %i.aov = zext i32 %i.aou to i64
   %i.aow = add nuw nsw i64 %i.aov, 1              ; 5 uses
   %i.aox = mul nsw i64 %indvars.iv1052.i.i, -16   ; 2 uses
-  %25 = getelementptr i8, ptr %i.in, i64 %i.aox
-  %scevgep1067 = getelementptr i8, ptr %25, i64 8
+  %scevgep1067 = getelementptr i8, ptr %27, i64 %i.aox
   %i.aoy = mul nsw i64 %indvars.iv1052.i.i, -8    ; 2 uses
-  %scevgep1069 = getelementptr i8, ptr %i.oa, i64 %i.aoy
-  %26 = trunc i64 %indvars.iv1052.i.i to i32
-  %27 = add i32 %18, %26
-  %28 = zext i32 %27 to i64
-  %29 = shl nuw nsw i64 %28, 3
-  %scevgep1072 = getelementptr i8, ptr %scevgep1069, i64 %29
-  %scevgep1073 = getelementptr i8, ptr %i.in, i64 %i.aox
+  %scevgep1069 = getelementptr i8, ptr %28, i64 %i.aoy
+  %32 = shl i64 %indvars.iv1052.i.i, 3
+  %33 = add i64 %32, 34359738360
+  %34 = and i64 %33, 34359738360
+  %scevgep1072 = getelementptr i8, ptr %scevgep1069, i64 %34
+  %scevgep1073 = getelementptr i8, ptr %i.oa, i64 %i.aox
   %scevgep1074 = getelementptr i8, ptr %i.ob, i64 %i.aoy
-  %i.aoz = add i64 %indvars.iv1052.i.i, %i.b      ; 21 uses
+  %i.aoz = add i64 %i.ko, %indvars.iv1052.i.i     ; 21 uses
   %indvars.iv1026.i.i = add nsw i64 %indvars.iv1026.in.i.i, -1 ; 23 uses
   %i.apa = getelementptr inbounds nuw [8 x i8], ptr %i.ij, i64 %indvars.iv1026.i.i
   %i.apb = load double, ptr %i.apa, align 8, !tbaa !117 ; 2 uses
@@ -2564,10 +2574,9 @@ vec.epilog.middle.block1061:                      ; preds = %vec.epilog.vector.b
   br i1 %exitcond1058.not.i.i, label %.preheader731.i.i, label %.preheader742.i.i
 
 .preheader731.i.i:                                ; preds = %.loopexit735.i.i, %.thread721.i.i
-  %indvar = phi i32 [ %indvar.next, %.thread721.i.i ], [ 0, %.loopexit735.i.i ] ; 2 uses
   %indvars.iv1095.i.i = phi i64 [ %indvars.iv.next1096.i.i, %.thread721.i.i ], [ %i.nx, %.loopexit735.i.i ] ; 12 uses
   %indvars.iv1071.i.i = phi i32 [ %indvars.iv.next1072.i.i, %.thread721.i.i ], [ %i.nq, %.loopexit735.i.i ] ; 2 uses
-  %indvars118.i = trunc i64 %indvars.iv1095.i.i to i32 ; 4 uses
+  %indvars118.i = trunc i64 %indvars.iv1095.i.i to i32 ; 5 uses
   %i.ayr = tail call i32 @llvm.smax.i32(i32 %indvars118.i, i32 1)
   %i.ays = add nsw i32 %i.ayr, -1                 ; 3 uses
   %i.ayt = getelementptr inbounds nuw [8 x i8], ptr %i.pf, i64 %indvars.iv1095.i.i ; 2 uses
@@ -2639,8 +2648,7 @@ vec.epilog.middle.block1061:                      ; preds = %vec.epilog.vector.b
   %scevgep1007 = getelementptr i8, ptr %scevgep1006, i64 %i.bab
   %i.bac = shl nsw i64 %i.azz, 3
   %scevgep1008 = getelementptr i8, ptr %i.in, i64 %i.bac
-  %30 = add i32 %indvar, %.2664.lcssa.i.i
-  %i.bad = sub i32 %i.np, %30
+  %i.bad = sub i32 %indvars118.i, %.2664.lcssa.i.i
   %i.bae = zext i32 %i.bad to i64
   %i.baf = add nsw i64 %i.azz, %i.bae
   %i.bag = shl nsw i64 %i.baf, 3
@@ -3043,7 +3051,6 @@ bb.ah:                                            ; preds = %bb.ag
 
 .thread721.i.i:                                   ; preds = %.thread721.i.i.loopexit.unr-lcssa, %.lr.ph903.i.i.epil, %bb.x
   %indvars.iv.next1072.i.i = add nsw i32 %indvars.iv1071.i.i, -1
-  %indvar.next = add i32 %indvar, 1
   br i1 %i.ayu, label %.critedge.i.i, label %.preheader731.i.i
 
 bb.ai:                                            ; preds = %bb.y
@@ -3446,12 +3453,12 @@ vec.epilog.scalar.ph1829:                         ; preds = %vec.epilog.scalar.p
   %gep775.7 = getelementptr [8 x i8], ptr %invariant.gep774, i64 %i.brf
   store double %i.bre, ptr %gep775.7, align 8, !tbaa !117
   %indvars.iv.next657.7 = add nuw nsw i64 %indvars.iv656, 8 ; 2 uses
-  %exitcond660.not.7 = icmp eq i64 %indvars.iv.next657.7, %wide.trip.count680.a
+  %exitcond660.not.7 = icmp eq i64 %indvars.iv.next657.7, %wide.trip.count680
   br i1 %exitcond660.not.7, label %._crit_edge529, label %vec.epilog.scalar.ph1829, !llvm.loop !112
 
 ._crit_edge545:                                   ; preds = %bb.al
   %indvars.iv.next673 = add nuw nsw i64 %indvars.iv672, 1 ; 2 uses
-  %exitcond676.not = icmp eq i64 %indvars.iv.next673, %wide.trip.count675
+  %exitcond676.not = icmp eq i64 %indvars.iv.next673, %wide.trip.count649
   br i1 %exitcond676.not, label %.lr.ph.i432.preheader, label %.preheader452
 
 bb.ak:                                            ; preds = %.lr.ph544, %bb.al
@@ -3524,7 +3531,7 @@ vector.body836:                                   ; preds = %vector.body836, %ve
   %i.bsj = fsub reassoc nsz arcp contract afn <4 x double> %vec.phi840, %i.bsf ; 2 uses
   %i.bsk = fsub reassoc nsz arcp contract afn <4 x double> %vec.phi841, %i.bsg ; 2 uses
   %index.next857 = add nuw i64 %index837, 16      ; 2 uses
-  %i.bsl = icmp eq i64 %index.next857, %n.vec833
+  %i.bsl = icmp eq i64 %index.next857, %n.vec834
   br i1 %i.bsl, label %middle.block858, label %vector.body836, !llvm.loop !113
 
 middle.block858:                                  ; preds = %vector.body836
@@ -3532,13 +3539,13 @@ middle.block858:                                  ; preds = %vector.body836
   %bin.rdx860 = fadd reassoc nsz arcp contract afn <4 x double> %i.bsj, %bin.rdx859
   %bin.rdx861 = fadd reassoc nsz arcp contract afn <4 x double> %i.bsk, %bin.rdx860
   %i.bsm = tail call reassoc nsz arcp contract afn double @llvm.vector.reduce.fadd.v4f64(double 0.000000e+00, <4 x double> %bin.rdx861) ; 3 uses
-  br i1 %cmp.n862, label %._crit_edge540, label %vec.epilog.iter.check867
+  br i1 %cmp.n863, label %._crit_edge540, label %vec.epilog.iter.check867
 
 vec.epilog.iter.check867:                         ; preds = %middle.block858
   br i1 %min.epilog.iters.check868, label %vec.epilog.scalar.ph866.preheader, label %vec.epilog.ph869, !prof !121
 
 vec.epilog.ph869:                                 ; preds = %vector.main.loop.iter.check830, %vec.epilog.iter.check867
-  %vec.epilog.resume.val863 = phi i64 [ %n.vec833, %vec.epilog.iter.check867 ], [ 0, %vector.main.loop.iter.check830 ]
+  %vec.epilog.resume.val863 = phi i64 [ %n.vec834, %vec.epilog.iter.check867 ], [ 0, %vector.main.loop.iter.check830 ]
   %bc.merge.rdx864 = phi double [ %i.bsm, %vec.epilog.iter.check867 ], [ %i.brh, %vector.main.loop.iter.check830 ]
   %i.bsn = insertelement <4 x double> <double poison, double 0.000000e+00, double 0.000000e+00, double 0.000000e+00>, double %bc.merge.rdx864, i64 0
   %broadcast.splatinsert871 = insertelement <4 x i32> poison, i32 %i.brl, i64 0
@@ -3567,7 +3574,7 @@ vec.epilog.middle.block881:                       ; preds = %vec.epilog.vector.b
   br i1 %cmp.n882, label %._crit_edge540, label %vec.epilog.scalar.ph866.preheader
 
 vec.epilog.scalar.ph866.preheader:                ; preds = %iter.check865, %vec.epilog.iter.check867, %vec.epilog.middle.block881
-  %indvars.iv664.ph = phi i64 [ 0, %iter.check865 ], [ %n.vec833, %vec.epilog.iter.check867 ], [ %n.vec870, %vec.epilog.middle.block881 ]
+  %indvars.iv664.ph = phi i64 [ 0, %iter.check865 ], [ %n.vec834, %vec.epilog.iter.check867 ], [ %n.vec870, %vec.epilog.middle.block881 ]
   %.ph = phi double [ %i.brh, %iter.check865 ], [ %i.bsm, %vec.epilog.iter.check867 ], [ %i.bsv, %vec.epilog.middle.block881 ]
   br label %vec.epilog.scalar.ph866
 
@@ -3578,7 +3585,7 @@ vec.epilog.scalar.ph866.preheader:                ; preds = %iter.check865, %vec
 
 bb.al:                                            ; preds = %._crit_edge540, %bb.ak
   %indvars.iv.next668 = add nuw nsw i64 %indvars.iv667, 1 ; 2 uses
-  %exitcond671.not = icmp eq i64 %indvars.iv.next668, %wide.trip.count680.a
+  %exitcond671.not = icmp eq i64 %indvars.iv.next668, %wide.trip.count680
   br i1 %exitcond671.not, label %._crit_edge545, label %bb.ak
 
 vec.epilog.scalar.ph866:                          ; preds = %vec.epilog.scalar.ph866.preheader, %vec.epilog.scalar.ph866
@@ -3706,7 +3713,7 @@ bb.as:                                            ; preds = %bb.ar
 
 bb.at:                                            ; preds = %bb.as, %bb.ar
   %indvars.iv.next678 = add nuw nsw i64 %indvars.iv677, 1 ; 2 uses
-  %exitcond681.not = icmp eq i64 %indvars.iv.next678, %wide.trip.count680.a
+  %exitcond681.not = icmp eq i64 %indvars.iv.next678, %wide.trip.count680
   br i1 %exitcond681.not, label %._crit_edge553, label %bb.n
 
 ._crit_edge553:                                   ; preds = %bb.at, %bb.n, %dsvd.exit.i, %._crit_edge505
