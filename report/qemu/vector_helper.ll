@@ -204,11 +204,11 @@ do_vnclip_wx_w.exit43:                            ; preds = %bb.j, %bb.l, %bb.m
   br i1 %exitcond.not.i.i, label %vext_vx_rm_1.exit.i, label %.lr.ph.split.i.i, !llvm.loop !12
 
 .lr.ph.i56.i:                                     ; preds = %bb.c
+  %6 = trunc i64 %2 to i32
   %i.bk = trunc i64 %2 to i8
   %i.bl = and i8 %i.bk, 63                        ; 2 uses
   %i.bm = and i64 %2, 63                          ; 4 uses
   %i.bn = icmp eq i8 %i.bl, 0                     ; 2 uses
-  %6 = trunc i64 %2 to i32
   %.pre.i.i30 = and i32 %6, 63                    ; 2 uses
   %i.bo = add nsw i32 %.pre.i.i30, -1
   %i.bp = zext nneg i32 %i.bo to i64              ; 2 uses
@@ -611,11 +611,11 @@ do_vnclipu_wx_w.exit43:                           ; preds = %bb.h, %bb.i
   br i1 %exitcond.not.i.i, label %vext_vx_rm_1.exit.i, label %.lr.ph.split.i.i, !llvm.loop !12
 
 .lr.ph.i56.i:                                     ; preds = %bb.c
+  %6 = trunc i64 %2 to i32
   %i.bi = trunc i64 %2 to i8
   %i.bj = and i8 %i.bi, 63                        ; 2 uses
   %i.bk = and i64 %2, 63                          ; 2 uses
   %i.bl = icmp eq i8 %i.bj, 0                     ; 2 uses
-  %6 = trunc i64 %2 to i32
   %.pre.i.i30 = and i32 %6, 63                    ; 2 uses
   %i.bm = add nsw i32 %.pre.i.i30, -1
   %i.bn = zext nneg i32 %i.bm to i64              ; 2 uses

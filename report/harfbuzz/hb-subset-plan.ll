@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   %i.y = icmp ne i32 %i.x, -1
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.c, %bb.d
+bb.e:                                             ; preds = %bb.d, %bb.c
   %.sink.i.i.i = phi i32 [ %i.x, %bb.d ], [ %i.h, %bb.c ]
   %.0.i.i.i = phi i1 [ %i.y, %bb.d ], [ true, %bb.c ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14

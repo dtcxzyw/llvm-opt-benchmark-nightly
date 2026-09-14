@@ -205,9 +205,9 @@ bb.d:                                             ; preds = %_ZNK2v88internal4wa
   br i1 %i.p, label %bb.e, label %.critedge
 
 bb.e:                                             ; preds = %.lr.ph
-  %i.q = and i32 %i.n, 268435440
+  %i.q = and i32 %i.n, 268435440                  ; 2 uses
   %i.r = add nsw i32 %i.q, -5648                  ; 2 uses
-  %i.s = tail call i32 @llvm.fshl.i32(i32 %i.r, i32 %i.r, i32 24) ; 2 uses
+  %i.s = tail call i32 @llvm.fshl.i32(i32 %i.r, i32 %i.r, i32 24)
   %i.t = icmp ult i32 %i.s, 8
   br i1 %i.t, label %_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit, label %bb.f
 
@@ -216,51 +216,29 @@ bb.f:                                             ; preds = %bb.e
   unreachable
 
 _ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit: ; preds = %bb.e
-  %switch.idx.cast.i = trunc nuw nsw i32 %i.s to i8
-  %switch.offset.i = add nuw nsw i8 %switch.idx.cast.i, 1
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %.01231
-  %i.v = load i32, ptr %i.u, align 4              ; 4 uses
+  %i.v = load i32, ptr %i.u, align 4              ; 2 uses
   %i.w = and i32 %i.v, 3
   %i.x = icmp eq i32 %i.w, 0
-  br i1 %i.x, label %bb.g, label %2
+  br i1 %i.x, label %bb.g, label %.critedge
 
 bb.g:                                             ; preds = %_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit
-  %i.y = and i32 %i.v, 268435440
+  %i.y = and i32 %i.v, 268435440                  ; 2 uses
   %i.z = add nsw i32 %i.y, -5648                  ; 2 uses
-  %i.aa = tail call i32 @llvm.fshl.i32(i32 %i.z, i32 %i.z, i32 24) ; 2 uses
+  %i.aa = tail call i32 @llvm.fshl.i32(i32 %i.z, i32 %i.z, i32 24)
   %i.ab = icmp ult i32 %i.aa, 8
-  br i1 %i.ab, label %switch.lookup.i22, label %bb.h
+  br i1 %i.ab, label %_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit25, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str) #13
   unreachable
 
-2:                                                ; preds = %_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit
-  %3 = and i32 %i.v, 268435427
-  switch i32 %3, label %4 [
-    i32 258, label %.critedge
-    i32 514, label %.critedge
-    i32 2, label %.critedge
-  ]
-
-4:                                                ; preds = %2
-  %5 = and i32 %i.v, 5
-  %6 = icmp eq i32 %5, 5
-  %7 = select i1 %6, i8 10, i8 9
-  br label %_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit25
-
-switch.lookup.i22:                                ; preds = %bb.g
-  %switch.idx.cast.i23 = trunc nuw nsw i32 %i.aa to i8
-  %switch.offset.i24 = add nuw nsw i8 %switch.idx.cast.i23, 1
-  br label %_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit25
-
-_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit25: ; preds = %4, %switch.lookup.i22
-  %.0.i20 = phi i8 [ %7, %4 ], [ %switch.offset.i24, %switch.lookup.i22 ]
-  %.not15 = icmp eq i8 %switch.offset.i, %.0.i20
+_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit25: ; preds = %bb.g
+  %.not15 = icmp eq i32 %i.q, %i.y
   br i1 %.not15, label %bb.d, label %.critedge
 
-.critedge:                                        ; preds = %bb.d, %.lr.ph, %_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit25, %2, %2, %2, %bb.c, %bb.b, %bb.a
-  %.2 = phi i1 [ false, %bb.b ], [ false, %bb.a ], [ true, %bb.c ], [ false, %_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit25 ], [ false, %2 ], [ false, %2 ], [ true, %bb.d ], [ false, %.lr.ph ], [ false, %2 ]
+.critedge:                                        ; preds = %bb.d, %.lr.ph, %_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit25, %_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit, %bb.c, %bb.b, %bb.a
+  %.2 = phi i1 [ false, %bb.b ], [ false, %bb.a ], [ true, %bb.c ], [ false, %_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit25 ], [ true, %bb.d ], [ false, %.lr.ph ], [ false, %_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit ]
   ret i1 %.2
 }
 

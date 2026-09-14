@@ -205,7 +205,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit: ; preds = %bb.b, %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #24
-  %i.an = call noalias noundef nonnull dereferenceable(12) ptr @_Znwm(i64 noundef 12) #23, !noalias !66 ; 8 uses
+  %i.an = call noalias noundef nonnull dereferenceable(12) ptr @_Znwm(i64 noundef 12) #23, !noalias !66 ; 9 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 12 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 6 uses
   %.val.val.i.i = load i32, ptr %i.ap, align 8, !noalias !66 ; 3 uses
@@ -217,7 +217,7 @@ bb.d:                                             ; preds = %_ZStlsISt11char_tra
   store i32 1, ptr %i.an, align 4, !noalias !66
   br label %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i
 
-bb.e:                                             ; preds = %bb.w, %bb.s, %bb.o, %bb.k, %18
+bb.e:                                             ; preds = %bb.w, %bb.s, %bb.o, %bb.k
   call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.12) #25, !noalias !66
   unreachable
 
@@ -234,86 +234,48 @@ bb.f:                                             ; preds = %_ZNSt20back_insert_
   br label %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.1
 
 _ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.1: ; preds = %bb.f, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i
-  %.idx = phi i64 [ %.idx50, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i ], [ %.add, %bb.f ] ; 2 uses
-  %.ptr = getelementptr inbounds nuw i8, ptr %i.an, i64 %.idx ; 3 uses
+  %.idx = phi i64 [ %.idx50, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i ], [ %.add, %bb.f ] ; 3 uses
   %i.as = and i32 %.val.val.i.i, 4
   %.not6.i.i.2 = icmp eq i32 %i.as, 0
-  br i1 %.not6.i.i.2, label %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.2, label %9
+  br i1 %.not6.i.i.2, label %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.2, label %_ZNSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i.2
 
-9:                                                ; preds = %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.1
-  %.not.i.i.i.i.2 = icmp eq i64 %.idx, 12
-  br i1 %.not.i.i.i.i.2, label %_ZNSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i.2, label %10
-
-10:                                               ; preds = %9
-  store i32 4, ptr %.ptr, align 4, !noalias !66
-  %11 = getelementptr inbounds nuw i8, ptr %.ptr, i64 4
-  br label %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.2
-
-_ZNSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i.2: ; preds = %9
-  %12 = call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #23, !noalias !66 ; 5 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %12, i64 12
+_ZNSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i.2: ; preds = %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.1
+  %i.at = getelementptr inbounds nuw i8, ptr %i.an, i64 %.idx
   store i32 4, ptr %i.at, align 4, !noalias !66
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %12, ptr noundef nonnull align 4 dereferenceable(12) %i.an, i64 12, i1 false), !noalias !66
-  %13 = getelementptr inbounds nuw i8, ptr %12, i64 16
-  call void @_ZdlPvm(ptr noundef nonnull %i.an, i64 noundef 12) #26, !noalias !66
-  %14 = getelementptr inbounds nuw i8, ptr %12, i64 24
+  %.ptr.add = add nuw nsw i64 %.idx, 4
   br label %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.2
 
-_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.2: ; preds = %_ZNSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i.2, %10, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.1
-  %15 = phi ptr [ %12, %_ZNSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i.2 ], [ %i.an, %10 ], [ %i.an, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.1 ] ; 5 uses
-  %16 = phi ptr [ %14, %_ZNSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i.2 ], [ %i.ao, %10 ], [ %i.ao, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.1 ] ; 4 uses
-  %17 = phi ptr [ %13, %_ZNSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i.2 ], [ %11, %10 ], [ %.ptr, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.1 ] ; 4 uses
+_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.2: ; preds = %_ZNSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i.2, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.1
+  %.idx54 = phi i64 [ %.idx, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.1 ], [ %.ptr.add, %_ZNSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i.2 ] ; 2 uses
+  %.ptr55 = getelementptr inbounds nuw i8, ptr %i.an, i64 %.idx54 ; 3 uses
   %.val.val.i.i.3 = load i32, ptr %i.ap, align 8, !noalias !66
   %i.au = and i32 %.val.val.i.i.3, 8
   %.not6.i.i.3 = icmp eq i32 %i.au, 0
   br i1 %.not6.i.i.3, label %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.3, label %bb.g
 
 bb.g:                                             ; preds = %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.2
-  %.not.i.i.i.i.3 = icmp eq ptr %17, %16
-  br i1 %.not.i.i.i.i.3, label %18, label %bb.h
+  %.not.i.i.i.i.3 = icmp eq i64 %.idx54, 12
+  br i1 %.not.i.i.i.i.3, label %_ZNKSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.3, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  store i32 8, ptr %17, align 4, !noalias !66
-  %i.av = getelementptr inbounds nuw i8, ptr %17, i64 4
+  store i32 8, ptr %.ptr55, align 4, !noalias !66
+  %i.av = getelementptr inbounds nuw i8, ptr %.ptr55, i64 4
   br label %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.3
 
-18:                                               ; preds = %bb.g
-  %19 = ptrtoint ptr %16 to i64
-  %20 = ptrtoint ptr %15 to i64
-  %21 = sub i64 %19, %20                          ; 6 uses
-  %22 = icmp eq i64 %21, 9223372036854775804
-  br i1 %22, label %bb.e, label %_ZNKSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.3
-
-_ZNKSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.3: ; preds = %18
-  %23 = ashr exact i64 %21, 2                     ; 3 uses
-  %.sroa.speculated.i.i.i.i.i.i.3 = call i64 @llvm.umax.i64(i64 %23, i64 1)
-  %24 = add nsw i64 %.sroa.speculated.i.i.i.i.i.i.3, %23 ; 2 uses
-  %25 = icmp ult i64 %24, %23
-  %26 = call i64 @llvm.umin.i64(i64 %24, i64 2305843009213693951)
-  %27 = select i1 %25, i64 2305843009213693951, i64 %26 ; 3 uses
-  %.not.i.i.i.i.i.i.3 = icmp ne i64 %27, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i.i.i.3)
-  %28 = shl nuw nsw i64 %27, 2
-  %29 = call noalias noundef nonnull ptr @_Znwm(i64 noundef %28) #23, !noalias !66 ; 4 uses
-  %i.aw = getelementptr inbounds i8, ptr %29, i64 %21 ; 2 uses
-  store i32 8, ptr %i.aw, align 4, !noalias !66
-  %30 = icmp sgt i64 %21, 0
-  br i1 %30, label %31, label %_ZNSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i.3
-
-31:                                               ; preds = %_ZNKSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %29, ptr nonnull align 4 %15, i64 %21, i1 false), !noalias !66
-  br label %_ZNSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i.3
-
-_ZNSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i.3: ; preds = %31, %_ZNKSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.3
-  %32 = getelementptr inbounds nuw i8, ptr %i.aw, i64 4
-  call void @_ZdlPvm(ptr noundef nonnull %15, i64 noundef %21) #26, !noalias !66
-  %33 = getelementptr inbounds nuw [4 x i8], ptr %29, i64 %27
+_ZNKSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.3: ; preds = %bb.g
+  %9 = call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #23, !noalias !66 ; 5 uses
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 12
+  store i32 8, ptr %10, align 4, !noalias !66
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %9, ptr noundef nonnull align 4 dereferenceable(12) %i.an, i64 12, i1 false), !noalias !66
+  %i.aw = getelementptr inbounds nuw i8, ptr %9, i64 16
+  call void @_ZdlPvm(ptr noundef nonnull %i.an, i64 noundef 12) #26, !noalias !66
+  %11 = getelementptr inbounds nuw i8, ptr %9, i64 24
   br label %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.3
 
-_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.3: ; preds = %_ZNSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i.3, %bb.h, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.2
-  %i.ax = phi ptr [ %29, %_ZNSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i.3 ], [ %15, %bb.h ], [ %15, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.2 ] ; 5 uses
-  %i.ay = phi ptr [ %33, %_ZNSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i.3 ], [ %16, %bb.h ], [ %16, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.2 ] ; 4 uses
-  %i.az = phi ptr [ %32, %_ZNSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i.3 ], [ %i.av, %bb.h ], [ %17, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.2 ] ; 4 uses
+_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.3: ; preds = %_ZNKSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.3, %bb.h, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.2
+  %i.ax = phi ptr [ %9, %_ZNKSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.3 ], [ %i.an, %bb.h ], [ %i.an, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.2 ] ; 5 uses
+  %i.ay = phi ptr [ %11, %_ZNKSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.3 ], [ %i.ao, %bb.h ], [ %i.ao, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.2 ] ; 4 uses
+  %i.az = phi ptr [ %i.aw, %_ZNKSt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.3 ], [ %i.av, %bb.h ], [ %.ptr55, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF2PE20ExDllCharacteristics15CHARACTERISTICSESaIS4_EEEaSERKS4_.exit.i.i.2 ] ; 4 uses
   %.val.val.i.i.4 = load i32, ptr %i.ap, align 8, !noalias !66
   %i.ba = and i32 %.val.val.i.i.4, 16
   %.not6.i.i.4 = icmp eq i32 %i.ba, 0

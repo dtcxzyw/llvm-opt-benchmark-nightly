@@ -206,17 +206,21 @@ _ZNSt11char_traitsIcE4moveEPcPKcm.exit.i436:      ; preds = %bb.o
 
 _ZNSt11char_traitsIcE4moveEPcPKcm.exit76.i446:    ; preds = %bb.o
   %i.es = add nsw i64 %.sroa.speculated.i.i64, -5 ; 2 uses
-  %.sroa.speculated.i445 = call i64 @llvm.umin.i64(i64 %i.es, i64 5) ; 4 uses
+  %.sroa.speculated.i445 = call i64 @llvm.umin.i64(i64 %i.es, i64 5) ; 5 uses
   %i.et = add nuw nsw i64 %i.ep, 1
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.ptr640, ptr noundef nonnull align 1 dereferenceable(1) %i.eo, i64 %i.et, i1 false)
   %i.eu = icmp eq i64 %i.es, 0
-  br i1 %i.eu, label %_ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i447.a, label %_ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i447.thread
+  br i1 %i.eu, label %_ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i447, label %_ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i447.thread
 
 _ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i447.thread: ; preds = %_ZNSt11char_traitsIcE4moveEPcPKcm.exit76.i446
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.el, ptr nonnull align 1 %.ptr640, i64 %.sroa.speculated.i445, i1 false)
-  br label %_ZN5boost14static_strings19basic_static_stringILm20EcSt11char_traitsIcEE7replaceIPKcEENSt9enable_ifIXsr6detail19is_forward_iteratorIT_EE5valueERS4_E4typeES7_S7_S9_S9_.exit449
+  br label %_ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i447
 
-_ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i447.a:  ; preds = %_ZNSt11char_traitsIcE4moveEPcPKcm.exit76.i446
+_ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i447:    ; preds = %_ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i447.thread, %_ZNSt11char_traitsIcE4moveEPcPKcm.exit76.i446
+  %45 = icmp eq i64 %.sroa.speculated.i445, 5
+  br i1 %45, label %_ZN5boost14static_strings19basic_static_stringILm20EcSt11char_traitsIcEE7replaceIPKcEENSt9enable_ifIXsr6detail19is_forward_iteratorIT_EE5valueERS4_E4typeES7_S7_S9_S9_.exit449, label %_ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i447.a
+
+_ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i447.a:  ; preds = %_ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i447
   %i.ev = sub nuw nsw i64 5, %.sroa.speculated.i445
   %i.ew = sub nuw nsw i64 5, %.sroa.speculated.i.i64
   %i.ex = getelementptr i8, ptr %i.el, i64 %i.ew
@@ -226,7 +230,7 @@ _ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i447.a:  ; preds = %_ZNSt11char_traitsI
   call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.fa, ptr align 1 %i.ez, i64 %i.ev, i1 false)
   br label %_ZN5boost14static_strings19basic_static_stringILm20EcSt11char_traitsIcEE7replaceIPKcEENSt9enable_ifIXsr6detail19is_forward_iteratorIT_EE5valueERS4_E4typeES7_S7_S9_S9_.exit449
 
-_ZN5boost14static_strings19basic_static_stringILm20EcSt11char_traitsIcEE7replaceIPKcEENSt9enable_ifIXsr6detail19is_forward_iteratorIT_EE5valueERS4_E4typeES7_S7_S9_S9_.exit449: ; preds = %_ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i447.thread, %_ZNSt11char_traitsIcE4moveEPcPKcm.exit.i436, %_ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i447.a
+_ZN5boost14static_strings19basic_static_stringILm20EcSt11char_traitsIcEE7replaceIPKcEENSt9enable_ifIXsr6detail19is_forward_iteratorIT_EE5valueERS4_E4typeES7_S7_S9_S9_.exit449: ; preds = %_ZNSt11char_traitsIcE4moveEPcPKcm.exit.i436, %_ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i447, %_ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i447.a
   %i.fb = trunc nuw nsw i64 %.sroa.speculated.i.i64 to i8
   %reass.sub641 = sub nuw i8 %i.em, %i.fb
   %i.fc = add nuw i8 %reass.sub641, 5             ; 2 uses
@@ -355,7 +359,7 @@ _ZNSt11char_traitsIcE4moveEPcPKcm.exit.i476:      ; preds = %bb.t
 
 _ZNSt11char_traitsIcE4moveEPcPKcm.exit76.i486:    ; preds = %bb.t
   %i.hf = add nsw i64 %.sroa.speculated.i.i75, -2 ; 2 uses
-  %.sroa.speculated.i485 = call i64 @llvm.umin.i64(i64 %i.hf, i64 3) ; 3 uses
+  %.sroa.speculated.i485 = call i64 @llvm.umin.i64(i64 %i.hf, i64 3) ; 5 uses
   %i.hg = sub nuw nsw i64 %i.gy, %.sroa.speculated.i.i75
   %i.hh = add nuw nsw i64 %i.hg, 1
   %i.hi = getelementptr inbounds nuw i8, ptr %7, i64 9
@@ -365,18 +369,20 @@ _ZNSt11char_traitsIcE4moveEPcPKcm.exit76.i486:    ; preds = %bb.t
 
 _ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i487:    ; preds = %_ZNSt11char_traitsIcE4moveEPcPKcm.exit76.i486
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.gx, ptr nonnull align 1 %.ptr643, i64 %.sroa.speculated.i485, i1 false)
-  br label %_ZN5boost14static_strings19basic_static_stringILm20EcSt11char_traitsIcEE7replaceIPKcEENSt9enable_ifIXsr6detail19is_forward_iteratorIT_EE5valueERS4_E4typeES7_S7_S9_S9_.exit489
+  %46 = icmp eq i64 %.sroa.speculated.i485, 3
+  br i1 %46, label %_ZN5boost14static_strings19basic_static_stringILm20EcSt11char_traitsIcEE7replaceIPKcEENSt9enable_ifIXsr6detail19is_forward_iteratorIT_EE5valueERS4_E4typeES7_S7_S9_S9_.exit489, label %bb.u
 
-bb.u:                                             ; preds = %_ZNSt11char_traitsIcE4moveEPcPKcm.exit76.i486
+bb.u:                                             ; preds = %_ZNSt11char_traitsIcE4moveEPcPKcm.exit76.i486, %_ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i487
+  %47 = xor i64 %.sroa.speculated.i485, 3
   %i.hj = xor i64 %.sroa.speculated.i.i75, 7
   %i.hk = getelementptr i8, ptr %i.gt, i64 %i.hj
   %i.hl = getelementptr i8, ptr %i.hk, i64 3
   %i.hm = getelementptr i8, ptr %i.hl, i64 %.sroa.speculated.i485
   %i.hn = getelementptr i8, ptr %i.gx, i64 %.sroa.speculated.i485
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.hn, ptr noundef nonnull align 1 dereferenceable(3) %i.hm, i64 3, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.hn, ptr align 1 %i.hm, i64 %47, i1 false)
   br label %_ZN5boost14static_strings19basic_static_stringILm20EcSt11char_traitsIcEE7replaceIPKcEENSt9enable_ifIXsr6detail19is_forward_iteratorIT_EE5valueERS4_E4typeES7_S7_S9_S9_.exit489
 
-_ZN5boost14static_strings19basic_static_stringILm20EcSt11char_traitsIcEE7replaceIPKcEENSt9enable_ifIXsr6detail19is_forward_iteratorIT_EE5valueERS4_E4typeES7_S7_S9_S9_.exit489: ; preds = %_ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i487, %_ZNSt11char_traitsIcE4moveEPcPKcm.exit.i476, %bb.u
+_ZN5boost14static_strings19basic_static_stringILm20EcSt11char_traitsIcEE7replaceIPKcEENSt9enable_ifIXsr6detail19is_forward_iteratorIT_EE5valueERS4_E4typeES7_S7_S9_S9_.exit489: ; preds = %_ZNSt11char_traitsIcE4moveEPcPKcm.exit.i476, %_ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i487, %bb.u
   %i.ho = trunc nuw nsw i64 %.sroa.speculated.i.i75 to i8
   %i.hp = xor i8 %i.ho, 3
   %i.hq = add i8 %i.hp, %i.gu                     ; 2 uses

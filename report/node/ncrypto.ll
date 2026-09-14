@@ -205,7 +205,7 @@ bb.a:
   %16 = alloca %struct.ossl_param_st, align 8     ; 4 uses
   %17 = alloca %struct.ossl_param_st, align 8     ; 4 uses
   %18 = alloca %struct.ossl_param_st, align 8     ; 4 uses
-  %19 = alloca %struct.ossl_param_st, align 8     ; 5 uses
+  %19 = alloca %struct.ossl_param_st, align 8     ; 4 uses
   store i32 %3, ptr %i.a, align 4
   store i32 %5, ptr %i.b, align 4
   store i32 %6, ptr %i.c, align 4
@@ -254,8 +254,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.m
 
 _ZNSt6vectorI13ossl_param_stSaIS0_EE7reserveEm.exit: ; preds = %bb.g
-  %i.l = tail call noalias noundef nonnull dereferenceable(360) ptr @_Znwm(i64 noundef 360) #24 ; 13 uses
-  %20 = getelementptr inbounds nuw i8, ptr %i.l, i64 360
+  %i.l = tail call noalias noundef nonnull dereferenceable(360) ptr @_Znwm(i64 noundef 360) #24 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #21
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.n = load i64, ptr %i.m, align 8              ; 2 uses
@@ -319,7 +318,7 @@ bb.i:                                             ; preds = %_ZNSt6vectorI13ossl
   %i.z = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.aa = load i64, ptr %i.z, align 8             ; 2 uses
   %.not15 = icmp eq i64 %i.aa, 0
-  br i1 %.not15, label %21, label %_ZNSt6vectorI13ossl_param_stSaIS0_EE9push_backEOS0_.exit71
+  br i1 %.not15, label %_ZNSt6vectorI13ossl_param_stSaIS0_EE9push_backEOS0_.exit79, label %_ZNSt6vectorI13ossl_param_stSaIS0_EE9push_backEOS0_.exit71
 
 _ZNSt6vectorI13ossl_param_stSaIS0_EE9push_backEOS0_.exit71: ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #21
@@ -328,32 +327,14 @@ _ZNSt6vectorI13ossl_param_stSaIS0_EE9push_backEOS0_.exit71: ; preds = %bb.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.26.0.ptr, ptr noundef nonnull align 8 dereferenceable(40) %18, i64 40, i1 false)
   %.sroa.26.0.add = add nuw nsw i64 %.sroa.26.0.idx, 40
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #21
-  br label %21
+  br label %_ZNSt6vectorI13ossl_param_stSaIS0_EE9push_backEOS0_.exit79
 
-21:                                               ; preds = %_ZNSt6vectorI13ossl_param_stSaIS0_EE9push_backEOS0_.exit71, %bb.i
-  %.sroa.26.1.idx = phi i64 [ %.sroa.26.0.idx, %bb.i ], [ %.sroa.26.0.add, %_ZNSt6vectorI13ossl_param_stSaIS0_EE9push_backEOS0_.exit71 ] ; 5 uses
+_ZNSt6vectorI13ossl_param_stSaIS0_EE9push_backEOS0_.exit79: ; preds = %_ZNSt6vectorI13ossl_param_stSaIS0_EE9push_backEOS0_.exit71, %bb.i
+  %.sroa.26.1.idx = phi i64 [ %.sroa.26.0.idx, %bb.i ], [ %.sroa.26.0.add, %_ZNSt6vectorI13ossl_param_stSaIS0_EE9push_backEOS0_.exit71 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #21
   call void @OSSL_PARAM_construct_end(ptr dead_on_unwind nonnull writable sret(%struct.ossl_param_st) align 8 %19) #21
-  %.not.i.i72 = icmp eq i64 %.sroa.26.1.idx, 360
-  br i1 %.not.i.i72, label %_ZNKSt6vectorI13ossl_param_stSaIS0_EE12_M_check_lenEmPKc.exit.i.i.i73, label %22
-
-22:                                               ; preds = %21
   %.sroa.26.1.ptr = getelementptr inbounds nuw i8, ptr %i.l, i64 %.sroa.26.1.idx
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.26.1.ptr, ptr noundef nonnull align 8 dereferenceable(40) %19, i64 40, i1 false)
-  br label %_ZNSt6vectorI13ossl_param_stSaIS0_EE9push_backEOS0_.exit79
-
-_ZNKSt6vectorI13ossl_param_stSaIS0_EE12_M_check_lenEmPKc.exit.i.i.i73: ; preds = %21
-  %23 = call noalias noundef nonnull dereferenceable(720) ptr @_Znwm(i64 noundef 720) #24 ; 4 uses
-  %24 = getelementptr inbounds nuw i8, ptr %23, i64 %.sroa.26.1.idx
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %24, ptr noundef nonnull align 8 dereferenceable(40) %19, i64 40, i1 false)
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %23, ptr noundef nonnull align 8 dereferenceable(1) %i.l, i64 %.sroa.26.1.idx, i1 false)
-  call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef %.sroa.26.1.idx) #22
-  %25 = getelementptr inbounds nuw i8, ptr %23, i64 720
-  br label %_ZNSt6vectorI13ossl_param_stSaIS0_EE9push_backEOS0_.exit79
-
-_ZNSt6vectorI13ossl_param_stSaIS0_EE9push_backEOS0_.exit79: ; preds = %22, %_ZNKSt6vectorI13ossl_param_stSaIS0_EE12_M_check_lenEmPKc.exit.i.i.i73
-  %.sroa.090.11 = phi ptr [ %23, %_ZNKSt6vectorI13ossl_param_stSaIS0_EE12_M_check_lenEmPKc.exit.i.i.i73 ], [ %i.l, %22 ] ; 3 uses
-  %.sroa.65.11 = phi ptr [ %25, %_ZNKSt6vectorI13ossl_param_stSaIS0_EE12_M_check_lenEmPKc.exit.i.i.i73 ], [ %20, %22 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #21
   %i.ac = call noalias ptr @CRYPTO_zalloc(i64 noundef %4, ptr noundef nonnull @.str, i32 noundef 142) #21, !noalias !155 ; 4 uses
   %.not174 = icmp eq ptr %i.ac, null
@@ -364,7 +345,7 @@ _ZNSt6vectorI13ossl_param_stSaIS0_EE9push_backEOS0_.exit79: ; preds = %22, %_ZNK
   br label %bb.l
 
 bb.j:                                             ; preds = %_ZNSt6vectorI13ossl_param_stSaIS0_EE9push_backEOS0_.exit79
-  %i.ad = call i32 @EVP_KDF_derive(ptr noundef nonnull %i.k, ptr noundef nonnull %i.ac, i64 noundef %4, ptr noundef nonnull %.sroa.090.11) #21
+  %i.ad = call i32 @EVP_KDF_derive(ptr noundef nonnull %i.k, ptr noundef nonnull %i.ac, i64 noundef %4, ptr noundef nonnull %i.l) #21
   %i.ae = icmp eq i32 %i.ad, 1
   br i1 %i.ae, label %.thread, label %bb.k
 
@@ -382,10 +363,7 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %.thread162, %.thread, %bb.k
-  %26 = ptrtoint ptr %.sroa.65.11 to i64
-  %27 = ptrtoint ptr %.sroa.090.11 to i64
-  %28 = sub i64 %26, %27
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.090.11, i64 noundef %28) #22
+  call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef 360) #22
   call void @EVP_KDF_CTX_free(ptr noundef nonnull %i.k) #21
   br label %bb.m
 

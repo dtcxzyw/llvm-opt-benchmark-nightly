@@ -202,12 +202,12 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3446)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3447)
   %i.e = add nsw i64 %i.a, -2
-  %.inv.i.i = icmp samesign ult i64 %i.a, 2
+  %.inv.i.i = icmp samesign ult i64 %i.a, 2       ; 2 uses
   %i.f = select i1 %.inv.i.i, i64 2, i64 %i.e     ; 2 uses
   %i.g = add nsw i64 %i.b, -2
-  %.inv5.i.i = icmp samesign ult i64 %i.b, 2
-  %2 = select i1 %.inv5.i.i, i64 2, i64 %i.g
-  %3 = icmp eq i64 %i.f, %2
+  %.inv5.i.i = icmp samesign ult i64 %i.b, 2      ; 2 uses
+  %2 = icmp eq i64 %i.g, %i.f
+  %3 = select i1 %.inv5.i.i, i1 %.inv.i.i, i1 %2
   br i1 %3, label %bb.c, label %_RNvXsf_NtCskKLDkoKarTP_4core6optionINtB5_6OptionNtNtNtCshMzyYDJGtjv_3api4rest6schema16ShardKeySelectorENtNtB7_3cmp9PartialEq2eqCsl8OoimOLbh_6qdrant.exit
 
 bb.c:                                             ; preds = %bb.b
@@ -237,6 +237,7 @@ bb.f:                                             ; preds = %bb.c
   br i1 %i.q, label %bb.l, label %_RNvXsf_NtCskKLDkoKarTP_4core6optionINtB5_6OptionNtNtNtCshMzyYDJGtjv_3api4rest6schema16ShardKeySelectorENtNtB7_3cmp9PartialEq2eqCsl8OoimOLbh_6qdrant.exit
 
 bb.g:                                             ; preds = %bb.c
+  tail call void @llvm.assume(i1 %.inv5.i.i)
   %i.r = tail call fastcc noundef zeroext i1 @_RNvXs1p_NtNtCshMzyYDJGtjv_3api4rest6schemaNtB6_20ShardKeyWithFallbackNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %1) #18
   br label %_RNvXsf_NtCskKLDkoKarTP_4core6optionINtB5_6OptionNtNtNtCshMzyYDJGtjv_3api4rest6schema16ShardKeySelectorENtNtB7_3cmp9PartialEq2eqCsl8OoimOLbh_6qdrant.exit
 

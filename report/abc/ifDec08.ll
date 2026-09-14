@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %.lr.ph.preheader.1.
   br label %.lr.ph.preheader.2.i
 
 .lr.ph.preheader.2.i:                             ; preds = %._crit_edge.1.thread.i, %._crit_edge.1.i
-  %wide.trip.count.2.i.pre-phi = phi i64 [ %.pre, %._crit_edge.1.thread.i ], [ %wide.trip.count.1.i, %._crit_edge.1.i ] ; 8 uses
+  %wide.trip.count.2.i.pre-phi = phi i64 [ %.pre, %._crit_edge.1.thread.i ], [ %wide.trip.count.1.i, %._crit_edge.1.i ] ; 6 uses
   %.1.1.i = phi i32 [ %i.yz, %._crit_edge.1.thread.i ], [ %.1.i, %._crit_edge.1.i ] ; 3 uses
   %i.zb = load i64, ptr %i.as, align 8, !tbaa !12
   %i.zc = lshr i64 %i.zb, %i.au
@@ -248,30 +248,24 @@ bb.aa:                                            ; preds = %.lr.ph.2.i.3
 .lr.ph.2.i.4:                                     ; preds = %bb.aa
   %i.zm = load i64, ptr %i.dd, align 16, !tbaa !12
   %i.zn = icmp eq i64 %i.zd, %i.zm
-  br i1 %i.zn, label %._crit_edge.2.i, label %3
+  br i1 %i.zn, label %._crit_edge.2.i, label %.lr.ph.2.i.5
 
-3:                                                ; preds = %.lr.ph.2.i.4
-  %exitcond.2.not.i.4 = icmp eq i64 %wide.trip.count.2.i.pre-phi, 5
-  br i1 %exitcond.2.not.i.4, label %._crit_edge.2.thread.i, label %.lr.ph.2.i.5
-
-.lr.ph.2.i.5:                                     ; preds = %3
+.lr.ph.2.i.5:                                     ; preds = %.lr.ph.2.i.4
   %i.zo = load i64, ptr %i.de, align 8, !tbaa !12
   %i.zp = icmp eq i64 %i.zd, %i.zo
   br i1 %i.zp, label %._crit_edge.2.i, label %bb.ab
 
 bb.ab:                                            ; preds = %.lr.ph.2.i.5
-  %exitcond.2.not.i.5 = icmp ne i64 %wide.trip.count.2.i.pre-phi, 6
-  %i.zq = load i64, ptr %i.df, align 16
+  %i.zq = load i64, ptr %i.df, align 16, !tbaa !12
   %i.zr = icmp eq i64 %i.zd, %i.zq
-  %or.cond746 = select i1 %exitcond.2.not.i.5, i1 %i.zr, i1 false
-  br i1 %or.cond746, label %._crit_edge.2.i, label %._crit_edge.2.thread.i
+  br i1 %i.zr, label %._crit_edge.2.i, label %._crit_edge.2.thread.i
 
 ._crit_edge.2.i:                                  ; preds = %bb.ab, %.lr.ph.2.i.5, %.lr.ph.2.i.4, %.lr.ph.2.i.3, %.lr.ph.2.i.2, %.lr.ph.2.i.1, %.lr.ph.preheader.2.i
   %indvars.iv.2.i.lcssa = phi i32 [ 0, %.lr.ph.preheader.2.i ], [ 1, %.lr.ph.2.i.1 ], [ 2, %.lr.ph.2.i.2 ], [ 3, %.lr.ph.2.i.3 ], [ 4, %.lr.ph.2.i.4 ], [ 5, %.lr.ph.2.i.5 ], [ 6, %bb.ab ]
   %i.zs = icmp eq i32 %.1.1.i, %indvars.iv.2.i.lcssa
   br i1 %i.zs, label %._crit_edge.2.thread.i, label %.lr.ph.preheader.3.i
 
-._crit_edge.2.thread.i:                           ; preds = %bb.x, %bb.y, %bb.z, %bb.aa, %3, %bb.ab, %._crit_edge.2.i
+._crit_edge.2.thread.i:                           ; preds = %bb.x, %bb.y, %bb.z, %bb.aa, %bb.ab, %._crit_edge.2.i
   %i.zt = add nuw nsw i32 %.1.1.i, 1              ; 2 uses
   %i.zu = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %wide.trip.count.2.i.pre-phi
   store i64 %i.zd, ptr %i.zu, align 8, !tbaa !12

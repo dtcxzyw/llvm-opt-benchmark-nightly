@@ -206,7 +206,7 @@ _ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfL
 
 ._crit_edge.i.i.i.i.i.i.i.i.thread:               ; preds = %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.i.i.i.i.i.i.i.i.i.epil
   %.not41.i.i.i.i.i.i.i.i50 = icmp eq i64 %i.g, 3
-  br i1 %.not41.i.i.i.i.i.i.i.i50, label %_ZN5Eigen6MatrixIfLi1ELi3ELi1ELi1ELi3EEaSINS_16PartialReduxExprIKNS0_IfLin1ELi3ELi1ELin1ELi3EEENS_8internal15member_minCoeffIffEELi0EEEEERS1_RKNS_9DenseBaseIT_EE.exit, label %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.i18.i.i.i.i.i.i.i.i
+  br i1 %.not41.i.i.i.i.i.i.i.i50, label %_ZN5Eigen6MatrixIfLi1ELi3ELi1ELi1ELi3EEaSINS_16PartialReduxExprIKNS0_IfLin1ELi3ELi1ELin1ELi3EEENS_8internal15member_minCoeffIffEELi0EEEEERS1_RKNS_9DenseBaseIT_EE.exit, label %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.i18.i.i.i.i.i.i.i.i.1
 
 .lr.ph.i.i.i.i.i.i.i.preheader.us.i21.i.i.i.i.i.i.i.i: ; preds = %._crit_edge.i.i.i.i.i.i.i.i
   %i.bd = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.g ; 4 uses
@@ -259,18 +259,14 @@ _ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfL
   %.lcssa66 = phi float [ %i.bp, %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.loopexit.us.i28.i.i.i.i.i.i.i.i.unr-lcssa ], [ %i.bu, %.lr.ph.i.i.i.i.i.i.i.us.i23.i.i.i.i.i.i.i.i.epil.preheader ]
   %i.bv = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.g
   store float %.lcssa66, ptr %i.bv, align 4, !tbaa !198
-  %i.bw = add nuw nsw i64 %i.g, 1                 ; 3 uses
-  %exitcond8.not.i29.i.i.i.i.i.i.i.i = icmp eq i64 %i.bw, 3
-  br i1 %exitcond8.not.i29.i.i.i.i.i.i.i.i, label %_ZN5Eigen6MatrixIfLi1ELi3ELi1ELi1ELi3EEaSINS_16PartialReduxExprIKNS0_IfLin1ELi3ELi1ELin1ELi3EEENS_8internal15member_minCoeffIffEELi0EEEEERS1_RKNS_9DenseBaseIT_EE.exit, label %.lr.ph.i.i.i.i.i.i.i.preheader.us.i21.i.i.i.i.i.i.i.i.1
-
-.lr.ph.i.i.i.i.i.i.i.preheader.us.i21.i.i.i.i.i.i.i.i.1: ; preds = %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.loopexit.us.i28.i.i.i.i.i.i.i.i
+  %i.bw = add nuw nsw i64 %i.g, 1                 ; 2 uses
   %14 = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.bw ; 4 uses
   %15 = load float, ptr %14, align 4, !tbaa !198  ; 2 uses
   %xtraiter77.1 = and i64 %i.n, 1
-  %16 = icmp eq i64 %i.o, 0
-  br i1 %16, label %.lr.ph.i.i.i.i.i.i.i.us.i23.i.i.i.i.i.i.i.i.epil.preheader.1, label %.lr.ph.i.i.i.i.i.i.i.preheader.us.i21.i.i.i.i.i.i.i.i.new.1
+  %exitcond8.not.i29.i.i.i.i.i.i.i.i = icmp eq i64 %i.o, 0
+  br i1 %exitcond8.not.i29.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.us.i23.i.i.i.i.i.i.i.i.epil.preheader.1, label %.lr.ph.i.i.i.i.i.i.i.preheader.us.i21.i.i.i.i.i.i.i.i.new.1
 
-.lr.ph.i.i.i.i.i.i.i.preheader.us.i21.i.i.i.i.i.i.i.i.new.1: ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader.us.i21.i.i.i.i.i.i.i.i.1
+.lr.ph.i.i.i.i.i.i.i.preheader.us.i21.i.i.i.i.i.i.i.i.new.1: ; preds = %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.loopexit.us.i28.i.i.i.i.i.i.i.i
   %unroll_iter82.1 = and i64 %i.n, -2
   br label %.lr.ph.i.i.i.i.i.i.i.us.i23.i.i.i.i.i.i.i.i.1
 
@@ -298,9 +294,9 @@ _ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfL
   %lcmp.mod79.1.not = icmp eq i64 %xtraiter77.1, 0
   br i1 %lcmp.mod79.1.not, label %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.loopexit.us.i28.i.i.i.i.i.i.i.i.1, label %.lr.ph.i.i.i.i.i.i.i.us.i23.i.i.i.i.i.i.i.i.epil.preheader.1
 
-.lr.ph.i.i.i.i.i.i.i.us.i23.i.i.i.i.i.i.i.i.epil.preheader.1: ; preds = %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.loopexit.us.i28.i.i.i.i.i.i.i.i.unr-lcssa.1, %.lr.ph.i.i.i.i.i.i.i.preheader.us.i21.i.i.i.i.i.i.i.i.1
-  %.01725.i.i.i.i.i.i.i.us.i24.i.i.i.i.i.i.i.i.epil.init.1 = phi i64 [ 1, %.lr.ph.i.i.i.i.i.i.i.preheader.us.i21.i.i.i.i.i.i.i.i.1 ], [ %i.ch, %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.loopexit.us.i28.i.i.i.i.i.i.i.i.unr-lcssa.1 ]
-  %.02324.i.i.i.i.i.i.i.us.i25.i.i.i.i.i.i.i.i.epil.init.1 = phi float [ %15, %.lr.ph.i.i.i.i.i.i.i.preheader.us.i21.i.i.i.i.i.i.i.i.1 ], [ %i.cg, %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.loopexit.us.i28.i.i.i.i.i.i.i.i.unr-lcssa.1 ] ; 2 uses
+.lr.ph.i.i.i.i.i.i.i.us.i23.i.i.i.i.i.i.i.i.epil.preheader.1: ; preds = %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.loopexit.us.i28.i.i.i.i.i.i.i.i.unr-lcssa.1, %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.loopexit.us.i28.i.i.i.i.i.i.i.i
+  %.01725.i.i.i.i.i.i.i.us.i24.i.i.i.i.i.i.i.i.epil.init.1 = phi i64 [ 1, %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.loopexit.us.i28.i.i.i.i.i.i.i.i ], [ %i.ch, %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.loopexit.us.i28.i.i.i.i.i.i.i.i.unr-lcssa.1 ]
+  %.02324.i.i.i.i.i.i.i.us.i25.i.i.i.i.i.i.i.i.epil.init.1 = phi float [ %15, %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.loopexit.us.i28.i.i.i.i.i.i.i.i ], [ %i.cg, %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.loopexit.us.i28.i.i.i.i.i.i.i.i.unr-lcssa.1 ] ; 2 uses
   %lcmp.mod81.1 = trunc i64 %i.n to i1
   tail call void @llvm.assume(i1 %lcmp.mod81.1)
   %.idx.i.i.i.i.i.i.i.i.i.us.i26.i.i.i.i.i.i.i.i.epil.1 = mul i64 %.01725.i.i.i.i.i.i.i.us.i24.i.i.i.i.i.i.i.i.epil.init.1, 12
@@ -371,19 +367,15 @@ _ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfL
   store float %.lcssa66.2, ptr %i.dg, align 4, !tbaa !198
   br label %_ZN5Eigen6MatrixIfLi1ELi3ELi1ELi1ELi3EEaSINS_16PartialReduxExprIKNS0_IfLin1ELi3ELi1ELin1ELi3EEENS_8internal15member_minCoeffIffEELi0EEEEERS1_RKNS_9DenseBaseIT_EE.exit
 
-_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.i18.i.i.i.i.i.i.i.i: ; preds = %._crit_edge.i.i.i.i.i.i.i.i.thread
-  %17 = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.g
-  %18 = load float, ptr %17, align 4, !tbaa !198
-  %19 = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.g
-  store float %18, ptr %19, align 4, !tbaa !198
-  %20 = add nuw nsw i64 %i.g, 1                   ; 3 uses
-  %exitcond.not.i20.i.i.i.i.i.i.i.i = icmp eq i64 %20, 3
-  br i1 %exitcond.not.i20.i.i.i.i.i.i.i.i, label %_ZN5Eigen6MatrixIfLi1ELi3ELi1ELi1ELi3EEaSINS_16PartialReduxExprIKNS0_IfLin1ELi3ELi1ELin1ELi3EEENS_8internal15member_minCoeffIffEELi0EEEEERS1_RKNS_9DenseBaseIT_EE.exit, label %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.i18.i.i.i.i.i.i.i.i.1
-
-_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.i18.i.i.i.i.i.i.i.i.1: ; preds = %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.i18.i.i.i.i.i.i.i.i
-  %i.dh = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %20
+_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.i18.i.i.i.i.i.i.i.i.1: ; preds = %._crit_edge.i.i.i.i.i.i.i.i.thread
+  %16 = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.g
+  %17 = load float, ptr %16, align 4, !tbaa !198
+  %18 = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.g
+  store float %17, ptr %18, align 4, !tbaa !198
+  %19 = add nuw nsw i64 %i.g, 1                   ; 2 uses
+  %i.dh = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %19
   %i.di = load float, ptr %i.dh, align 4, !tbaa !198
-  %i.dj = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %20
+  %i.dj = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %19
   store float %i.di, ptr %i.dj, align 4, !tbaa !198
   %i.dk = add nuw nsw i64 %i.g, 2                 ; 3 uses
   %exitcond.not.i20.i.i.i.i.i.i.i.i.1 = icmp eq i64 %i.dk, 3
@@ -396,7 +388,7 @@ _ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfL
   store float %i.dm, ptr %i.dn, align 4, !tbaa !198
   br label %_ZN5Eigen6MatrixIfLi1ELi3ELi1ELi1ELi3EEaSINS_16PartialReduxExprIKNS0_IfLin1ELi3ELi1ELin1ELi3EEENS_8internal15member_minCoeffIffEELi0EEEEERS1_RKNS_9DenseBaseIT_EE.exit
 
-_ZN5Eigen6MatrixIfLi1ELi3ELi1ELi1ELi3EEaSINS_16PartialReduxExprIKNS0_IfLin1ELi3ELi1ELin1ELi3EEENS_8internal15member_minCoeffIffEELi0EEEEERS1_RKNS_9DenseBaseIT_EE.exit: ; preds = %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.i18.i.i.i.i.i.i.i.i, %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.i18.i.i.i.i.i.i.i.i.1, %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.i18.i.i.i.i.i.i.i.i.2, %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.loopexit.us.i28.i.i.i.i.i.i.i.i, %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.loopexit.us.i28.i.i.i.i.i.i.i.i.1, %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.loopexit.us.i28.i.i.i.i.i.i.i.i.2, %._crit_edge.i.i.i.i.i.i.i.i.thread, %._crit_edge.i.i.i.i.i.i.i.i
+_ZN5Eigen6MatrixIfLi1ELi3ELi1ELi1ELi3EEaSINS_16PartialReduxExprIKNS0_IfLin1ELi3ELi1ELin1ELi3EEENS_8internal15member_minCoeffIffEELi0EEEEERS1_RKNS_9DenseBaseIT_EE.exit: ; preds = %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.i18.i.i.i.i.i.i.i.i.1, %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.i18.i.i.i.i.i.i.i.i.2, %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.loopexit.us.i28.i.i.i.i.i.i.i.i.1, %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEENS2_INS_16PartialReduxExprIKNS3_IfLin1ELi3ELi1ELin1ELi3EEENS0_15member_minCoeffIffEELi0EEEEENS0_9assign_opIffEELi0EE11assignCoeffEl.exit.loopexit.us.i28.i.i.i.i.i.i.i.i.2, %._crit_edge.i.i.i.i.i.i.i.i.thread, %._crit_edge.i.i.i.i.i.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #23
   %i.do = ptrtoint ptr %11 to i64
   %i.dp = lshr exact i64 %i.do, 2

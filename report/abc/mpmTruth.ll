@@ -205,7 +205,11 @@ bb.bc:                                            ; preds = %bb.bb
   %i.yb = zext nneg i32 %i.ya to i64              ; 2 uses
   %.idx.i.i.i.i = shl nuw nsw i64 %i.yb, 3
   %i.yc = getelementptr inbounds nuw i8, ptr %i.xw, i64 %.idx.i.i.i.i
-  br i1 %i.xy, label %.lr.ph.split.us.i.i.i, label %.lr.ph.split.split.split.preheader.i.i.i
+  br i1 %i.xy, label %.lr.ph.split.us.i.i.i, label %.lr.ph.split.preheader.i.i.i
+
+.lr.ph.split.preheader.i.i.i:                     ; preds = %.lr.ph.i.i.i24
+  %wide.trip.count.i.i.i25 = zext nneg i32 %i.xx to i64
+  br label %.lr.ph.split.split.split.i.i.i
 
 .lr.ph.split.us.i.i.i:                            ; preds = %.lr.ph.i.i.i24
   %i.yd = load i64, ptr %i.xw, align 8, !tbaa !22 ; 12 uses
@@ -281,15 +285,11 @@ Abc_TtHasVar.exit.us.i.i.i.5:                     ; preds = %Abc_TtHasVar.exit.u
   %.1.us.i.i.i.5 = or disjoint i32 %i.zj, %.1.us.i.i.i.4
   br label %Abc_TtSupportAndSize.exit.i.i
 
-.lr.ph.split.split.split.preheader.i.i.i:         ; preds = %.lr.ph.i.i.i24
-  %wide.trip.count.i.i.i25 = zext nneg i32 %i.xx to i64
-  br label %.lr.ph.split.split.split.i.i.i
-
-.lr.ph.split.split.split.i.i.i:                   ; preds = %Abc_TtHasVar.exit.thread.i.i.i, %.lr.ph.split.split.split.preheader.i.i.i
-  %.037.i.i = phi i32 [ 0, %.lr.ph.split.split.split.preheader.i.i.i ], [ %.138.i.i, %Abc_TtHasVar.exit.thread.i.i.i ] ; 2 uses
-  %i.zk = phi i32 [ 0, %.lr.ph.split.split.split.preheader.i.i.i ], [ %i.aai, %Abc_TtHasVar.exit.thread.i.i.i ] ; 3 uses
-  %indvars.iv.i.i.i26 = phi i64 [ 0, %.lr.ph.split.split.split.preheader.i.i.i ], [ %indvars.iv.next.i.i.i28, %Abc_TtHasVar.exit.thread.i.i.i ] ; 4 uses
-  %.022.i.i.i = phi i32 [ 0, %.lr.ph.split.split.split.preheader.i.i.i ], [ %.1.i.i.i27, %Abc_TtHasVar.exit.thread.i.i.i ] ; 3 uses
+.lr.ph.split.split.split.i.i.i:                   ; preds = %Abc_TtHasVar.exit.thread.i.i.i, %.lr.ph.split.preheader.i.i.i
+  %.037.i.i = phi i32 [ 0, %.lr.ph.split.preheader.i.i.i ], [ %.138.i.i, %Abc_TtHasVar.exit.thread.i.i.i ] ; 2 uses
+  %i.zk = phi i32 [ 0, %.lr.ph.split.preheader.i.i.i ], [ %i.aai, %Abc_TtHasVar.exit.thread.i.i.i ] ; 3 uses
+  %indvars.iv.i.i.i26 = phi i64 [ 0, %.lr.ph.split.preheader.i.i.i ], [ %indvars.iv.next.i.i.i28, %Abc_TtHasVar.exit.thread.i.i.i ] ; 4 uses
+  %.022.i.i.i = phi i32 [ 0, %.lr.ph.split.preheader.i.i.i ], [ %.1.i.i.i27, %Abc_TtHasVar.exit.thread.i.i.i ] ; 3 uses
   %i.zl = icmp samesign ult i64 %indvars.iv.i.i.i26, 6
   %i.zm = trunc i64 %indvars.iv.i.i.i26 to i32    ; 3 uses
   br i1 %i.zl, label %.lr.ph.i.i.i.i, label %.preheader.lr.ph.i.i.i.i

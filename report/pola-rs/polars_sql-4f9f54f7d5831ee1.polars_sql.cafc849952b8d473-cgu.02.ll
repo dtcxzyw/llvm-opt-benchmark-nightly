@@ -202,8 +202,8 @@ bb.a:
   %i.d = select i1 %i.c, i64 %i.b, i64 5, !dbg !86885 ; 2 uses
   %i.e = load i64, ptr %1, align 8, !dbg !86886, !range !1704, !noundef !1416 ; 2 uses
   %i.f = add nsw i64 %i.e, -3, !dbg !86886
-  %2 = icmp samesign ugt i64 %i.e, 2, !dbg !86886
-  %i.g = select i1 %2, i64 %i.f, i64 5, !dbg !86886
+  %2 = icmp samesign ult i64 %i.e, 3, !dbg !86886 ; 2 uses
+  %i.g = select i1 %2, i64 5, i64 %i.f, !dbg !86886
   %i.h = icmp eq i64 %i.d, %i.g, !dbg !86887
   br i1 %i.h, label %bb.b, label %_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRNtNtCsaRr8xKSRVhT_9sqlparser3ast18BeginEndStatementsNtB7_9PartialEq2eqCshquuC4dCYVj_10polars_sql.exit, !dbg !86887
 
@@ -267,6 +267,7 @@ bb.h:                                             ; preds = %bb.b
   br label %_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRNtNtCsaRr8xKSRVhT_9sqlparser3ast18BeginEndStatementsNtB7_9PartialEq2eqCshquuC4dCYVj_10polars_sql.exit, !dbg !86896
 
 bb.i:                                             ; preds = %bb.b
+  tail call void @llvm.assume(i1 %2), !dbg !86887
   %i.ac = tail call fastcc noundef zeroext i1 @_RNvXs2X_NtNtCsaRr8xKSRVhT_9sqlparser3ast5queryNtB6_6SelectNtNtCscgRAwXFJnXP_4core3cmp9PartialEq2eq(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(2104) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(2104) %1) #46, !dbg !86905, !noalias !86879, !inline_history !86862
   br label %_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRNtNtCsaRr8xKSRVhT_9sqlparser3ast18BeginEndStatementsNtB7_9PartialEq2eqCshquuC4dCYVj_10polars_sql.exit, !dbg !86896
 

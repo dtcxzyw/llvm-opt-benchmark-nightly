@@ -204,9 +204,9 @@ bb.r:                                             ; preds = %_ZN7meshoptL11updat
   store i32 %i.cb, ptr %i.cd, align 4, !tbaa !38
   br label %_ZN7meshoptL11updateCacheEjjjjPjRj.exit.thread.i
 
-_ZN7meshoptL11updateCacheEjjjjPjRj.exit.thread.i: ; preds = %_ZN7meshoptL11updateCacheEjjjjPjRj.exit.i.thread, %.thread, %bb.r, %_ZN7meshoptL11updateCacheEjjjjPjRj.exit.i, %bb.q
-  %.333.i = phi i32 [ %i.ca, %bb.r ], [ %i.ca, %_ZN7meshoptL11updateCacheEjjjjPjRj.exit.i ], [ %i.bo, %bb.q ], [ %.125.i, %.thread ], [ %i.bz, %_ZN7meshoptL11updateCacheEjjjjPjRj.exit.i.thread ]
-  %.1.i = phi i64 [ %i.cc, %bb.r ], [ %.02127.i, %_ZN7meshoptL11updateCacheEjjjjPjRj.exit.i ], [ %.02127.i, %bb.q ], [ %.02127.i, %.thread ], [ %.02127.i, %_ZN7meshoptL11updateCacheEjjjjPjRj.exit.i.thread ] ; 2 uses
+_ZN7meshoptL11updateCacheEjjjjPjRj.exit.thread.i: ; preds = %bb.r, %_ZN7meshoptL11updateCacheEjjjjPjRj.exit.i, %_ZN7meshoptL11updateCacheEjjjjPjRj.exit.i.thread, %.thread, %bb.q
+  %.333.i = phi i32 [ %i.ca, %bb.r ], [ %i.ca, %_ZN7meshoptL11updateCacheEjjjjPjRj.exit.i ], [ %i.bz, %_ZN7meshoptL11updateCacheEjjjjPjRj.exit.i.thread ], [ %.125.i, %.thread ], [ %i.bo, %bb.q ]
+  %.1.i = phi i64 [ %i.cc, %bb.r ], [ %.02127.i, %_ZN7meshoptL11updateCacheEjjjjPjRj.exit.i ], [ %.02127.i, %_ZN7meshoptL11updateCacheEjjjjPjRj.exit.i.thread ], [ %.02127.i, %.thread ], [ %.02127.i, %bb.q ] ; 2 uses
   %i.ce = add nuw nsw i64 %.028.i, 1              ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ce, %i.t
   br i1 %exitcond.not.i, label %_ZN7meshoptL22generateHardBoundariesEPjPKjmmjS0_.exit, label %.lr.ph.i, !llvm.loop !19

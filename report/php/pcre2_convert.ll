@@ -204,7 +204,7 @@ bb.ff:                                            ; preds = %bb.fe, %bb.fd
   br label %bb.fg
 
 bb.fg:                                            ; preds = %bb.ff, %bb.fc
-  %.1.i241.i = phi i64 [ 3, %bb.fc ], [ %i.nf, %bb.ff ] ; 3 uses
+  %.1.i241.i = phi i64 [ 3, %bb.fc ], [ %i.nf, %bb.ff ] ; 2 uses
   %i.ng = load ptr, ptr %6, align 8, !tbaa !32    ; 4 uses
   %i.nh = load ptr, ptr %i.x, align 8, !tbaa !33  ; 4 uses
   %i.ni = load i64, ptr %i.y, align 8, !tbaa !34
@@ -230,26 +230,22 @@ bb.fj:                                            ; preds = %bb.fi
   store i8 %i.no, ptr %.1.i.i243.i, align 1, !tbaa !35
   br label %bb.fk
 
-bb.fk:                                            ; preds = %bb.fj, %bb.fi
+bb.fk:                                            ; preds = %bb.fi, %bb.fj
   %.115.i.i242.i.1 = phi ptr [ %i.nn, %bb.fj ], [ %.115.i.i242.i, %bb.fi ] ; 3 uses
-  %.1.i.i243.i.1 = phi ptr [ %i.np, %bb.fj ], [ %.1.i.i243.i, %bb.fi ] ; 5 uses
-  %.not.i.i.i.1 = icmp eq i64 %.1.i241.i, 2
-  br i1 %.not.i.i.i.1, label %convert_glob_write_str.exit.i244.i, label %7
+  %.1.i.i243.i.1 = phi ptr [ %i.np, %bb.fj ], [ %.1.i.i243.i, %bb.fi ] ; 4 uses
+  %7 = icmp ult ptr %.1.i.i243.i.1, %i.nh
+  br i1 %7, label %bb.fl, label %bb.fm
 
-7:                                                ; preds = %bb.fk
-  %8 = icmp ult ptr %.1.i.i243.i.1, %i.nh
-  br i1 %8, label %bb.fl, label %bb.fm
-
-bb.fl:                                            ; preds = %7
+bb.fl:                                            ; preds = %bb.fk
   %i.nq = getelementptr inbounds nuw i8, ptr %.115.i.i242.i.1, i64 1
   %i.nr = load i8, ptr %.115.i.i242.i.1, align 1, !tbaa !35
   %i.ns = getelementptr inbounds nuw i8, ptr %.1.i.i243.i.1, i64 1
   store i8 %i.nr, ptr %.1.i.i243.i.1, align 1, !tbaa !35
   br label %bb.fm
 
-bb.fm:                                            ; preds = %bb.fl, %7
-  %.115.i.i242.i.2 = phi ptr [ %i.nq, %bb.fl ], [ %.115.i.i242.i.1, %7 ]
-  %.1.i.i243.i.2 = phi ptr [ %i.ns, %bb.fl ], [ %.1.i.i243.i.1, %7 ] ; 4 uses
+bb.fm:                                            ; preds = %bb.fl, %bb.fk
+  %.115.i.i242.i.2 = phi ptr [ %i.nq, %bb.fl ], [ %.115.i.i242.i.1, %bb.fk ]
+  %.1.i.i243.i.2 = phi ptr [ %i.ns, %bb.fl ], [ %.1.i.i243.i.1, %bb.fk ] ; 4 uses
   %.not.i.i.i.2 = icmp ne i64 %.1.i241.i, 3
   %i.nt = icmp ult ptr %.1.i.i243.i.2, %i.nh
   %or.cond376 = select i1 %.not.i.i.i.2, i1 %i.nt, i1 false
@@ -261,8 +257,8 @@ bb.fn:                                            ; preds = %bb.fm
   store i8 %i.nu, ptr %.1.i.i243.i.2, align 1, !tbaa !35
   br label %convert_glob_write_str.exit.i244.i
 
-convert_glob_write_str.exit.i244.i:               ; preds = %bb.fn, %bb.fm, %bb.fk
-  %.1.i.i243.i.lcssa = phi ptr [ %.1.i.i243.i.2, %bb.fm ], [ %.1.i.i243.i.1, %bb.fk ], [ %i.nv, %bb.fn ]
+convert_glob_write_str.exit.i244.i:               ; preds = %bb.fn, %bb.fm
+  %.1.i.i243.i.lcssa = phi ptr [ %.1.i.i243.i.2, %bb.fm ], [ %i.nv, %bb.fn ]
   %i.nw = add i64 %i.ni, %.1.i241.i
   store ptr %.1.i.i243.i.lcssa, ptr %6, align 8, !tbaa !32
   store i64 %i.nw, ptr %i.y, align 8, !tbaa !34

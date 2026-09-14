@@ -205,35 +205,35 @@ begin_hunk_0_@_ZN3g2o8internal22computeEdgeSE3GradientIN5Eigen3MapINS2_6MatrixId
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0338)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0406)
   %i.ls = fmul double %.sroa.0236.8.vec.extract, 2.000000e+00 ; 2 uses
-  %i.lt = fmul double %i.dg, 2.000000e+00         ; 2 uses
-  %i.lu = fmul double %i.ec, 2.000000e+00         ; 4 uses
-  %i.lv = fmul double %i.ey, 2.000000e+00         ; 4 uses
+  %i.lt = fmul double %.sroa.11.40.vec.extract, 2.000000e+00 ; 5 uses
+  %i.lu = fmul double %.sroa.20247.72.vec.extract, 2.000000e+00 ; 4 uses
+  %i.lv = fmul double %i.dg, 2.000000e+00         ; 2 uses
+  %17 = fmul double %i.ec, 2.000000e+00           ; 4 uses
+  %18 = fmul double %i.ey, 2.000000e+00           ; 4 uses
   store double 0.000000e+00, ptr %.sroa.0274, align 16, !tbaa !10, !noalias !237
-  %.sroa.0274.24..sroa_idx550 = getelementptr inbounds nuw i8, ptr %.sroa.0274, i64 24
-  store double 0.000000e+00, ptr %.sroa.0274.24..sroa_idx550, align 8, !tbaa !10
-  %.sroa.0274.8..sroa_idx546.a = getelementptr inbounds nuw i8, ptr %.sroa.0274, i64 8
-  store double %i.lt, ptr %.sroa.0274.8..sroa_idx546.a, align 8, !tbaa !10
-  %17 = fneg double %i.ls
-  %18 = fmul double %.sroa.20247.72.vec.extract, 2.000000e+00 ; 4 uses
-  %19 = fmul double %.sroa.11.40.vec.extract, 2.000000e+00 ; 5 uses
-  %20 = fmul double %.sroa.0236.0.vec.extract, 2.000000e+00 ; 2 uses
+  %.sroa.0274.8..sroa_idx546.a = getelementptr inbounds nuw i8, ptr %.sroa.0274, i64 24
+  store double 0.000000e+00, ptr %.sroa.0274.8..sroa_idx546.a, align 8, !tbaa !10
+  %.sroa.0274.8..sroa_idx546 = getelementptr inbounds nuw i8, ptr %.sroa.0274, i64 8
+  store double %i.lv, ptr %.sroa.0274.8..sroa_idx546, align 8, !tbaa !10
+  %19 = fneg double %i.ls
   %.sroa.0274.16..sroa_idx549 = getelementptr inbounds nuw i8, ptr %.sroa.0274, i64 16
-  store double %17, ptr %.sroa.0274.16..sroa_idx549, align 16, !tbaa !10
-  %i.lw = fneg double %19
-  %i.lx = fneg double %18
-  %i.ly = fneg double %i.lt
+  store double %19, ptr %.sroa.0274.16..sroa_idx549, align 16, !tbaa !10
+  %i.lw = fneg double %i.lt
+  %i.lx = fneg double %i.lu
+  %20 = fmul double %.sroa.0236.0.vec.extract, 2.000000e+00 ; 2 uses
+  %i.ly = fneg double %i.lv
   store double %i.ly, ptr %.sroa.0338, align 16, !tbaa !10, !noalias !238
-  %i.lz = fneg double %i.lu                       ; 2 uses
+  %i.lz = fneg double %17                         ; 2 uses
   %.sroa.0338.24..sroa_idx544 = getelementptr inbounds nuw i8, ptr %.sroa.0338, i64 24
   store double %i.lz, ptr %.sroa.0338.24..sroa_idx544, align 8, !tbaa !10
-  %i.ma = fneg double %i.lv
+  %i.ma = fneg double %18
   %.sroa.0338.8..sroa_idx540 = getelementptr inbounds nuw i8, ptr %.sroa.0338, i64 8
   store double 0.000000e+00, ptr %.sroa.0338.8..sroa_idx540, align 8, !tbaa !10
   %.sroa.0338.16..sroa_idx543 = getelementptr inbounds nuw i8, ptr %.sroa.0338, i64 16
   store double %20, ptr %.sroa.0338.16..sroa_idx543, align 16, !tbaa !10
   store double %i.ls, ptr %.sroa.0406, align 16, !tbaa !10, !noalias !239
   %.sroa.0406.24..sroa_idx537 = getelementptr inbounds nuw i8, ptr %.sroa.0406, i64 24
-  store double %19, ptr %.sroa.0406.24..sroa_idx537, align 8, !tbaa !10
+  store double %i.lt, ptr %.sroa.0406.24..sroa_idx537, align 8, !tbaa !10
   %i.mb = fneg double %20
   %.sroa.0406.8..sroa_idx534 = getelementptr inbounds nuw i8, ptr %.sroa.0406, i64 8
   store double %i.mb, ptr %.sroa.0406.8..sroa_idx534, align 8, !tbaa !10
@@ -268,7 +268,7 @@ begin_hunk_0_@_ZN3g2o8internal22computeEdgeSE3GradientIN5Eigen3MapINS2_6MatrixId
   store double %i.mv, ptr %i.mn, align 16, !tbaa !10
   %i.mw = getelementptr inbounds nuw i8, ptr %i.j, i64 24 ; 2 uses
   %i.mx = fmul <2 x double> %.sroa.0.8.vec.insert, zeroinitializer ; 2 uses
-  %i.my = insertelement <2 x double> poison, double %i.lu, i64 0
+  %i.my = insertelement <2 x double> poison, double %17, i64 0
   %i.mz = shufflevector <2 x double> %i.my, <2 x double> poison, <2 x i32> zeroinitializer
   %i.na = fmul <2 x double> %.sroa.32.40.vec.insert, %i.mz
   %i.nb = fadd <2 x double> %i.mx, %i.na
@@ -279,13 +279,13 @@ begin_hunk_0_@_ZN3g2o8internal22computeEdgeSE3GradientIN5Eigen3MapINS2_6MatrixId
   store <2 x double> %i.nf, ptr %i.mw, align 8, !tbaa !49
   %i.ng = getelementptr inbounds nuw i8, ptr %i.j, i64 40 ; 2 uses
   %i.nh = fmul double %i.o, 0.000000e+00          ; 2 uses
-  %i.ni = fmul double %i.u, %i.lu
-  %i.nj = fmul double %i.y, %19
+  %i.ni = fmul double %i.u, %17
+  %i.nj = fmul double %i.y, %i.lt
   %i.nk = fsub double %i.ni, %i.nj
   %i.nl = fadd double %i.nh, %i.nk
   store double %i.nl, ptr %i.ng, align 8, !tbaa !10
   %i.nm = getelementptr inbounds nuw i8, ptr %i.j, i64 48 ; 2 uses
-  %i.nn = insertelement <2 x double> poison, double %i.lv, i64 0
+  %i.nn = insertelement <2 x double> poison, double %18, i64 0
   %i.no = shufflevector <2 x double> %i.nn, <2 x double> poison, <2 x i32> zeroinitializer
   %i.np = fmul <2 x double> %.sroa.32.40.vec.insert, %i.no
   %i.nq = fadd <2 x double> %i.mx, %i.np
@@ -295,8 +295,8 @@ begin_hunk_0_@_ZN3g2o8internal22computeEdgeSE3GradientIN5Eigen3MapINS2_6MatrixId
   %i.nu = fadd <2 x double> %i.nq, %i.nt
   store <2 x double> %i.nu, ptr %i.nm, align 16, !tbaa !49
   %i.nv = getelementptr inbounds nuw i8, ptr %i.j, i64 64 ; 2 uses
-  %i.nw = fmul double %i.u, %i.lv
-  %i.nx = fmul double %i.y, %18
+  %i.nw = fmul double %i.u, %18
+  %i.nx = fmul double %i.y, %i.lu
   %i.ny = fsub double %i.nw, %i.nx
   %i.nz = fadd double %i.nh, %i.ny
   store double %i.nz, ptr %i.nv, align 16, !tbaa !10
@@ -338,7 +338,7 @@ begin_hunk_0_@_ZN3g2o8internal22computeEdgeSE3GradientIN5Eigen3MapINS2_6MatrixId
   %i.pb = extractelement <2 x double> %i.md, i64 0 ; 2 uses
   %i.pc = fmul double %i.y, %i.pb
   %i.pd = fadd double %i.kv, %i.pc
-  %i.pe = fmul double %i.o, %i.lu
+  %i.pe = fmul double %i.o, %17
   %i.pf = fsub double %i.pd, %i.pe
   store double %i.pf, ptr %i.pa, align 16, !tbaa !10
   %i.pg = getelementptr inbounds nuw i8, ptr %i.j, i64 120 ; 2 uses
@@ -354,7 +354,7 @@ begin_hunk_0_@_ZN3g2o8internal22computeEdgeSE3GradientIN5Eigen3MapINS2_6MatrixId
   %i.pp = extractelement <2 x double> %i.md, i64 1 ; 2 uses
   %i.pq = fmul double %i.y, %i.pp
   %i.pr = fadd double %i.kv, %i.pq
-  %i.ps = fmul double %i.o, %i.lv
+  %i.ps = fmul double %i.o, %18
   %i.pt = fsub double %i.pr, %i.ps
   store double %i.pt, ptr %i.po, align 8, !tbaa !10
   %i.pu = getelementptr inbounds nuw i8, ptr %i.j, i64 144 ; 2 uses
@@ -383,7 +383,7 @@ begin_hunk_0_@_ZN3g2o8internal22computeEdgeSE3GradientIN5Eigen3MapINS2_6MatrixId
   %i.ql = fadd double %i.qf, %i.qk
   store double %i.ql, ptr %i.qd, align 16, !tbaa !10
   %i.qm = getelementptr inbounds nuw i8, ptr %i.j, i64 168 ; 2 uses
-  %i.qn = insertelement <2 x double> poison, double %19, i64 0
+  %i.qn = insertelement <2 x double> poison, double %i.lt, i64 0
   %i.qo = shufflevector <2 x double> %i.qn, <2 x double> poison, <2 x i32> zeroinitializer
   %i.qp = fmul <2 x double> %.sroa.0.8.vec.insert, %i.qo
   %i.qq = shufflevector <2 x double> %i.me, <2 x double> poison, <2 x i32> zeroinitializer
@@ -392,13 +392,13 @@ begin_hunk_0_@_ZN3g2o8internal22computeEdgeSE3GradientIN5Eigen3MapINS2_6MatrixId
   %i.qt = fadd <2 x double> %i.lf, %i.qs
   store <2 x double> %i.qt, ptr %i.qm, align 8, !tbaa !49
   %i.qu = getelementptr inbounds nuw i8, ptr %i.j, i64 184 ; 2 uses
-  %i.qv = fmul double %i.o, %19
+  %i.qv = fmul double %i.o, %i.lt
   %i.qw = fmul double %i.u, %i.pb
   %i.qx = fsub double %i.lj, %i.qw
   %i.qy = fadd double %i.qv, %i.qx
   store double %i.qy, ptr %i.qu, align 8, !tbaa !10
   %i.qz = getelementptr inbounds nuw i8, ptr %i.j, i64 192 ; 2 uses
-  %i.ra = insertelement <2 x double> poison, double %18, i64 0
+  %i.ra = insertelement <2 x double> poison, double %i.lu, i64 0
   %i.rb = shufflevector <2 x double> %i.ra, <2 x double> poison, <2 x i32> zeroinitializer
   %i.rc = fmul <2 x double> %.sroa.0.8.vec.insert, %i.rb
   %i.rd = shufflevector <2 x double> %i.me, <2 x double> poison, <2 x i32> <i32 1, i32 1>
@@ -407,7 +407,7 @@ begin_hunk_0_@_ZN3g2o8internal22computeEdgeSE3GradientIN5Eigen3MapINS2_6MatrixId
   %i.rg = fadd <2 x double> %i.lf, %i.rf
   store <2 x double> %i.rg, ptr %i.qz, align 16, !tbaa !49
   %i.rh = getelementptr inbounds nuw i8, ptr %i.j, i64 208 ; 2 uses
-  %i.ri = fmul double %i.o, %18
+  %i.ri = fmul double %i.o, %i.lu
   %i.rj = fmul double %i.u, %i.pp
   %i.rk = fsub double %i.lj, %i.rj
   %i.rl = fadd double %i.ri, %i.rk

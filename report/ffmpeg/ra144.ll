@@ -204,24 +204,20 @@ bb.g:                                             ; preds = %bb.a, %ff_irms.exit
   %i.ct = lshr i32 %i.cs, %i.cm
   %i.cu = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0
   store i32 %i.ct, ptr %i.cu, align 4, !tbaa !12
-  %indvars.iv.next.i = add nuw nsw i64 %.0, 1     ; 4 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, 3
-  br i1 %exitcond.not.i, label %bb.i, label %7
+  %indvars.iv.next.i = add nuw nsw i64 %.0, 1     ; 3 uses
+  %7 = getelementptr inbounds nuw [2 x i8], ptr %i.cj, i64 %indvars.iv.next.i
+  %8 = load i16, ptr %7, align 2, !tbaa !11
+  %9 = sext i16 %8 to i32
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.next.i
+  %11 = load i32, ptr %10, align 4, !tbaa !12
+  %12 = mul i32 %11, %9
+  %13 = lshr i32 %12, %i.cm
+  %14 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.next.i
+  store i32 %13, ptr %14, align 4, !tbaa !12
+  %exitcond.not.i = icmp eq i64 %.0, 0
+  br i1 %exitcond.not.i, label %bb.h, label %bb.i
 
-7:                                                ; preds = %bb.g
-  %8 = getelementptr inbounds nuw [2 x i8], ptr %i.cj, i64 %indvars.iv.next.i
-  %9 = load i16, ptr %8, align 2, !tbaa !11
-  %10 = sext i16 %9 to i32
-  %11 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.next.i
-  %12 = load i32, ptr %11, align 4, !tbaa !12
-  %13 = mul i32 %12, %10
-  %14 = lshr i32 %13, %i.cm
-  %15 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.next.i
-  store i32 %14, ptr %15, align 4, !tbaa !12
-  %exitcond.not.i.1.not = icmp eq i64 %.0, 0
-  br i1 %exitcond.not.i.1.not, label %bb.h, label %bb.i
-
-bb.h:                                             ; preds = %7
+bb.h:                                             ; preds = %bb.g
   %indvars.iv.next.i.1 = or disjoint i64 %.0, 2   ; 3 uses
   %i.cv = getelementptr inbounds nuw [2 x i8], ptr %i.cj, i64 %indvars.iv.next.i.1
   %i.cw = load i16, ptr %i.cv, align 2, !tbaa !11
@@ -234,7 +230,7 @@ bb.h:                                             ; preds = %7
   store i32 %i.db, ptr %i.dc, align 4, !tbaa !12
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %7, %bb.g
+bb.i:                                             ; preds = %bb.h, %bb.g
   %i.dd = getelementptr i8, ptr %0, i64 38552     ; 9 uses
   %i.de = getelementptr inbounds nuw i8, ptr %0, i64 38640 ; 3 uses
   %i.df = getelementptr [40 x i8], ptr @ff_cb1_vects, i64 %i.bs ; 16 uses
