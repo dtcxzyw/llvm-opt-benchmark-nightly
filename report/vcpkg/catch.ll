@@ -205,9 +205,9 @@ _ZNSt15__new_allocatorIN5Catch5clara6detail5TokenEE8allocateEmPKv.exit.i.i.i.i.i
 bb.l:                                             ; preds = %.noexc68, %_ZNK5Catch5clara6detail15ResultValueBaseINS1_10ParseStateEE5valueEv.exit
   %i.cx = phi ptr [ %i.cp, %_ZNK5Catch5clara6detail15ResultValueBaseINS1_10ParseStateEE5valueEv.exit ], [ %.pre1.i63, %.noexc68 ]
   %i.cy = phi ptr [ %i.cq, %_ZNK5Catch5clara6detail15ResultValueBaseINS1_10ParseStateEE5valueEv.exit ], [ %.pre.i62, %.noexc68 ]
-  %i.cz = phi ptr [ null, %_ZNK5Catch5clara6detail15ResultValueBaseINS1_10ParseStateEE5valueEv.exit ], [ %i.cw, %.noexc68 ] ; 8 uses
+  %i.cz = phi ptr [ null, %_ZNK5Catch5clara6detail15ResultValueBaseINS1_10ParseStateEE5valueEv.exit ], [ %i.cw, %.noexc68 ] ; 7 uses
   %i.da = invoke noundef ptr @_ZSt16__do_uninit_copyIN9__gnu_cxx17__normal_iteratorIPKN5Catch5clara6detail5TokenESt6vectorIS5_SaIS5_EEEEPS5_ET0_T_SE_SD_(ptr %i.cy, ptr %i.cx, ptr noundef %i.cz)
-          to label %_ZNK5Catch5clara6detail10ParseState15remainingTokensEv.exit unwind label %bb.m, !noalias !2814 ; 3 uses
+          to label %_ZNK5Catch5clara6detail10ParseState15remainingTokensEv.exit unwind label %bb.m, !noalias !2814 ; 2 uses
 
 bb.m:                                             ; preds = %bb.l
   %i.db = landingpad { ptr, i32 }
@@ -220,11 +220,10 @@ bb.n:                                             ; preds = %bb.m
   br label %.body69
 
 _ZNK5Catch5clara6detail10ParseState15remainingTokensEv.exit: ; preds = %bb.l
-  %i.dc = icmp ne ptr %i.cz, %i.da
+  %i.dc = icmp ne ptr %i.cz, %i.da                ; 2 uses
   %i.dd = icmp ne ptr %.sroa.0.0.copyload, %.sroa.5.0.copyload
   %i.de = select i1 %i.dc, i1 true, i1 %i.dd
-  %.not4.i.i.i.i = icmp eq ptr %i.cz, %i.da
-  br i1 %.not4.i.i.i.i, label %_ZSt8_DestroyIPN5Catch5clara6detail5TokenES3_EvT_S5_RSaIT0_E.exit.i.i, label %.lr.ph.i.i.i.i
+  br i1 %i.dc, label %.lr.ph.i.i.i.i, label %_ZSt8_DestroyIPN5Catch5clara6detail5TokenES3_EvT_S5_RSaIT0_E.exit.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %_ZNK5Catch5clara6detail10ParseState15remainingTokensEv.exit, %_ZSt8_DestroyIN5Catch5clara6detail5TokenEEvPT_.exit.i.i.i.i
   %.05.i.i.i.i = phi ptr [ %i.dl, %_ZSt8_DestroyIN5Catch5clara6detail5TokenEEvPT_.exit.i.i.i.i ], [ %i.cz, %_ZNK5Catch5clara6detail10ParseState15remainingTokensEv.exit ] ; 3 uses

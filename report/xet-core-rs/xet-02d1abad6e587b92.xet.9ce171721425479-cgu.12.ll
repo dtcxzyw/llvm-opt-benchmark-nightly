@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.j
 
 bb.h:                                             ; preds = %bb.f
-  %.sroa.044.0.copyload.i = load i32, ptr %i.o, align 4, !noalias !300 ; 4 uses
+  %.sroa.044.0.copyload.i = load i32, ptr %i.o, align 4, !noalias !300 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !noalias !300
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !300
   store i64 0, ptr %i.n, align 8, !noalias !300
@@ -276,8 +276,8 @@ bb.p:                                             ; preds = %bb.m
   store ptr %i.as, ptr %i.au, align 8
   %i.av = getelementptr inbounds nuw i8, ptr %i.y, i64 16 ; 3 uses
   store i64 0, ptr %i.av, align 8
-  %.not183 = icmp eq i32 %.sroa.044.0.copyload.i, 0
-  br i1 %.not183, label %._crit_edge, label %.lr.ph
+  %.not183 = icmp ne i32 %.sroa.044.0.copyload.i, 0 ; 2 uses
+  br i1 %.not183, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.p
   %i.aw = getelementptr inbounds nuw i8, ptr %i.l, i64 8
@@ -429,8 +429,7 @@ bb.ae:                                            ; preds = %bb.ac
   %i.bn = getelementptr inbounds nuw i8, ptr %i.x, i64 16 ; 3 uses
   store i64 0, ptr %i.bn, align 8
   %.not = icmp slt i32 %.sroa.041.0.copyload.i, 0
-  %2 = icmp ne i32 %.sroa.044.0.copyload.i, 0
-  %or.cond182 = select i1 %.not, i1 %2, i1 false
+  %or.cond182 = and i1 %.not, %.not183
   br i1 %or.cond182, label %.lr.ph181, label %.loopexit
 
 .lr.ph181:                                        ; preds = %bb.ae

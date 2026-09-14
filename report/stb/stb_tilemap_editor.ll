@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.d
   %i.aj = icmp ne ptr %i.h, null
-  %i.ak = icmp ne i32 %2, 2                       ; 2 uses
+  %i.ak = icmp ne i32 %2, 2                       ; 3 uses
   %or.cond = and i1 %i.ak, %i.aj
   br i1 %or.cond, label %bb.s, label %.loopexit101
 
@@ -359,8 +359,7 @@ bb.aj:                                            ; preds = %.critedge100, %bb.a
   br i1 %i.cm, label %.lr.ph109.split, label %._crit_edge, !llvm.loop !169
 
 ._crit_edge:                                      ; preds = %bb.aj, %bb.ae, %bb.z
-  %3 = icmp eq i32 %2, 2
-  %. = select i1 %3, i32 2, i32 -1
+  %. = select i1 %i.ak, i32 -1, i32 2
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.ai, %.critedge100.us, %bb.ad, %._crit_edge, %.loopexit101, %bb.x, %bb.o, %bb.q, %bb.h, %bb.i, %bb.j, %bb.p, %bb.c, %.critedge
@@ -610,7 +609,7 @@ stbte__undo_record.exit161:                       ; preds = %bb.q, %bb.r
 
 bb.s:                                             ; preds = %bb.d
   %i.ei = icmp ne ptr %i.h, null
-  %i.ej = icmp ne i32 %3, 2                       ; 2 uses
+  %i.ej = icmp ne i32 %3, 2                       ; 3 uses
   %or.cond = and i1 %i.ej, %i.ei
   br i1 %or.cond, label %bb.t, label %.loopexit174
 
@@ -871,8 +870,7 @@ bb.al:                                            ; preds = %stbte__undo_record.
   br i1 %i.ju, label %bb.ae, label %._crit_edge, !llvm.loop !171
 
 ._crit_edge:                                      ; preds = %bb.al, %bb.ad
-  %4 = icmp eq i32 %3, 2
-  %. = select i1 %4, i32 2, i32 -1
+  %. = select i1 %i.ej, i32 -1, i32 2
   br label %.loopexit
 
 .loopexit:                                        ; preds = %stbte__undo_record.exit167, %bb.aj, %._crit_edge, %.loopexit174, %bb.y, %stbte__undo_record.exit, %stbte__undo_record.exit161, %bb.h, %bb.i, %bb.j, %bb.p, %bb.c, %bb.ab

@@ -92,7 +92,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.ai = tail call i32 @lsame_(ptr noundef %0, ptr noundef nonnull @.str.1) #5
-  %.not536 = icmp eq i32 %i.ai, 0                 ; 4 uses
+  %.not536 = icmp eq i32 %i.ai, 0                 ; 3 uses
   %not..not536 = xor i1 %.not536, true
   %. = zext i1 %not..not536 to i32
   %not..not536707 = xor i1 %.not536, true
@@ -100,8 +100,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %.sink = phi i32 [ %., %bb.b ], [ 0, %bb.a ]
-  %.not544 = phi i1 [ %not..not536707, %bb.b ], [ false, %bb.a ]
-  %.not548 = phi i1 [ %.not536, %bb.b ], [ true, %bb.a ]
+  %.not544 = phi i1 [ %not..not536707, %bb.b ], [ false, %bb.a ] ; 2 uses
   %i.aj = phi i1 [ %.not536, %bb.b ], [ false, %bb.a ] ; 3 uses
   store i32 %.sink, ptr %i.h, align 4, !tbaa !12
   %i.ak = tail call i32 @lsame_(ptr noundef %1, ptr noundef nonnull @.str) #5
@@ -244,7 +243,7 @@ bb.v:                                             ; preds = %bb.u
   %i.cd = add nsw i32 %i.cc, %i.ca                ; 2 uses
   store i32 %i.cd, ptr %i.b, align 4, !tbaa !12
   %i.ce = tail call i32 @llvm.smax.i32(i32 %i.by, i32 %i.cd) ; 3 uses
-  br i1 %.not548, label %bb.x, label %bb.w
+  br i1 %.not544, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %bb.v
   store i32 %i.ce, ptr %i.a, align 4, !tbaa !12

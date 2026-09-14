@@ -202,9 +202,9 @@ define internal fastcc void @_ZN4absl12lts_20260526L14PostSynchEventEPvi(ptr nou
 bb.a:
   %i.a = alloca [40 x ptr], align 16              ; 4 uses
   %i.b = alloca [960 x i8], align 16              ; 5 uses
-  %i.c = tail call fastcc noundef ptr @_ZN4absl12lts_20260526L13GetSynchEventEPKv(ptr noundef %0) ; 7 uses
-  %2 = icmp eq ptr %i.c, null                     ; 2 uses
-  br i1 %2, label %bb.c, label %bb.b
+  %i.c = tail call fastcc noundef ptr @_ZN4absl12lts_20260526L13GetSynchEventEPKv(ptr noundef %0) ; 6 uses
+  %2 = icmp ne ptr %i.c, null                     ; 3 uses
+  br i1 %2, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 40
@@ -251,7 +251,7 @@ bb.d:                                             ; preds = %.lr.ph
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !135
   %i.v = getelementptr inbounds nuw i8, ptr %i.c, i64 41
-  %i.w = select i1 %2, ptr @.str.35, ptr %i.v
+  %i.w = select i1 %2, ptr %i.v, ptr @.str.35
   call void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2026052616raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 0, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 59), i32 noundef 452, ptr noundef nonnull @.str.49, ptr noundef %i.u, ptr noundef nonnull %0, ptr noundef nonnull %i.w, ptr noundef nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
@@ -261,8 +261,7 @@ bb.e:                                             ; preds = %._crit_edge, %bb.b
   %i.x = trunc nuw nsw i32 %1 to i16
   %i.y = lshr i16 933, %i.x
   %i.z = trunc i16 %i.y to i1
-  %3 = icmp ne ptr %i.c, null
-  %or.cond = and i1 %3, %i.z
+  %or.cond = and i1 %2, %i.z
   br i1 %or.cond, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %bb.e

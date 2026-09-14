@@ -202,22 +202,19 @@ bb.km:                                            ; preds = %bb.kj
   %.sroa.61107.0..sroa.5138.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.bo, i64 48 ; 3 uses
   %.sroa.61107.0.copyload = load i64, ptr %.sroa.61107.0..sroa.5138.0..sroa_idx.sroa_idx, align 8 ; 6 uses
   %.sroa.71111.0..sroa.5138.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.bo, i64 56 ; 3 uses
-  %.sroa.71111.0.copyload = load ptr, ptr %.sroa.71111.0..sroa.5138.0..sroa_idx.sroa_idx, align 8 ; 5 uses
+  %.sroa.71111.0.copyload = load ptr, ptr %.sroa.71111.0..sroa.5138.0..sroa_idx.sroa_idx, align 8 ; 4 uses
   %i.mh = icmp ult i64 %.sroa.61107.0.copyload, 72057594037927936
   call void @llvm.assume(i1 %i.mh)
-  %.not.i = icmp ne ptr %.sroa.71111.0.copyload, null
+  %.not.i = icmp ne ptr %.sroa.71111.0.copyload, null ; 2 uses
   %..i = zext i1 %.not.i to i64
   %i.mi = add nuw nsw i64 %.sroa.61107.0.copyload, %..i
-  %4 = icmp samesign ugt i64 %i.mi, 1
-  br i1 %4, label %bb.lu, label %5
+  %4 = icmp samesign ult i64 %i.mi, 2
+  %5 = icmp eq i64 %.sroa.61107.0.copyload, 0
+  %spec.select.i.not = or i1 %5, %.not.i
+  %or.cond1202 = and i1 %4, %spec.select.i.not
+  br i1 %or.cond1202, label %bb.kn, label %bb.lu
 
-5:                                                ; preds = %bb.km
-  %.not.i861 = icmp eq ptr %.sroa.71111.0.copyload, null
-  %6 = icmp ne i64 %.sroa.61107.0.copyload, 0
-  %spec.select.i = and i1 %6, %.not.i861
-  br i1 %spec.select.i, label %bb.lu, label %bb.kn
-
-bb.kn:                                            ; preds = %5
+bb.kn:                                            ; preds = %bb.km
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.61125.sroa.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.61125.sroa.7)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.71128.sroa.4)
@@ -487,7 +484,7 @@ bb.lt:                                            ; preds = %bb.lu
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5184.sroa.0.sroa.7.sroa.0)
   br label %bb.kh
 
-bb.lu:                                            ; preds = %bb.km, %5
+bb.lu:                                            ; preds = %bb.km
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5184.sroa.0.sroa.7.sroa.0)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5184.sroa.0.sroa.7.sroa.0, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5138.0..sroa_idx, i64 16, i1 false)
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCsgbWeKYPjk8w_3syn4attr9AttributeEEB1c_(ptr noalias nofree noundef align 8 dereferenceable(24) %.sroa.4137.0..sroa_idx)

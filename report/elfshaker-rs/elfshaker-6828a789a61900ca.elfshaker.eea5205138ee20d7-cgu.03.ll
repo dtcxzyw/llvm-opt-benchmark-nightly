@@ -202,7 +202,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringEC
           to label %bb.q unwind label %bb.p
 
 bb.n:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECskuiImRAV2ip_9elfshaker.exit17, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECskuiImRAV2ip_9elfshaker.exit
-  %.sroa.0.0 = phi i1 [ %2, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECskuiImRAV2ip_9elfshaker.exit17 ], [ false, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECskuiImRAV2ip_9elfshaker.exit ]
+  %.sroa.0.0 = phi i1 [ %.not.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECskuiImRAV2ip_9elfshaker.exit17 ], [ false, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECskuiImRAV2ip_9elfshaker.exit ]
   ret i1 %.sroa.0.0
 
 bb.o:                                             ; preds = %bb.r, %bb.p
@@ -301,11 +301,11 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECsku
           to label %bb.z unwind label %bb.y
 
 bb.z:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECskuiImRAV2ip_9elfshaker.exit14
-  %i.bj = load i64, ptr %i.b, align 8, !range !18, !noundef !5 ; 2 uses
+  %i.bj = load i64, ptr %i.b, align 8, !range !18, !noundef !5
   %i.bk = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %.val7 = load ptr, ptr %i.bk, align 8           ; 4 uses
-  %.not.i = icmp eq i64 %i.bj, 2
-  br i1 %.not.i, label %bb.aa, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsaL1QbXo9JQH_3std2fs8MetadataNtNtNtB4_2io5error5ErrorEECskuiImRAV2ip_9elfshaker.exit
+  %.not.i = icmp ne i64 %i.bj, 2                  ; 2 uses
+  br i1 %.not.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsaL1QbXo9JQH_3std2fs8MetadataNtNtNtB4_2io5error5ErrorEECskuiImRAV2ip_9elfshaker.exit, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -361,7 +361,6 @@ bb.ae:                                            ; preds = %bb.ad
   unreachable
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECskuiImRAV2ip_9elfshaker.exit17: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsaL1QbXo9JQH_3std2fs8MetadataNtNtNtB4_2io5error5ErrorEECskuiImRAV2ip_9elfshaker.exit
-  %2 = icmp ne i64 %i.bj, 2
   call void @_RNvXs1_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVechENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCskuiImRAV2ip_9elfshaker(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.f)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   br label %bb.n

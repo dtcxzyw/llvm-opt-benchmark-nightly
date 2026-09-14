@@ -202,10 +202,9 @@ bb.a:
   %i.a = alloca [96 x i8], align 16               ; 8 uses
   %.sroa.0.i = alloca [64 x i8], align 16         ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !29)
-  %7 = icmp eq i64 %3, 0
   %i.b = icmp ne i64 %3, 0
   %i.c = icmp ne i32 %4, 0
-  %spec.select13.i = select i1 %7, i1 %i.c, i1 %i.b
+  %spec.select13.i = or i1 %i.b, %i.c
   br i1 %spec.select13.i, label %.lr.ph.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %bb.a

@@ -205,7 +205,6 @@ bb.a:
   %i.c = add nsw i64 %i.b, -4                     ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 392 ; 10 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !90   ; 2 uses
-  %3 = load i8, ptr %i.e, align 1, !tbaa !34      ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 400 ; 2 uses
   %i.g = load i32, ptr %i.f, align 8, !tbaa !100  ; 2 uses
   switch i32 %i.g, label %ssl_flight_append.exit [
@@ -214,8 +213,9 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a, %bb.a
+  %3 = load i8, ptr %i.e, align 1, !tbaa !34
   %i.h = icmp eq i32 %i.g, 22                     ; 2 uses
-  %i.i = icmp eq i8 %3, 0                         ; 3 uses
+  %i.i = icmp eq i8 %3, 0                         ; 4 uses
   %or.cond = select i1 %i.h, i1 %i.i, i1 false
   br i1 %or.cond, label %bb.d, label %bb.c
 
@@ -324,10 +324,9 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.i
-  %4 = icmp ne i8 %3, 0
-  %5 = icmp ne i32 %1, 0
-  %or.cond4 = and i1 %5, %4
-  br i1 %or.cond4, label %bb.p, label %bb.q
+  %4 = icmp eq i32 %1, 0
+  %or.cond4.not = or i1 %4, %i.i
+  br i1 %or.cond4.not, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 112

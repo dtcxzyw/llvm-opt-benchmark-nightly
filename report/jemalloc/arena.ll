@@ -205,8 +205,8 @@ define hidden ptr @je_arena_new(ptr noundef %0, i32 noundef %1, ptr nofree nound
 bb.a:
   %3 = alloca %struct.nstime_t, align 8           ; 2 uses
   %4 = alloca %struct.hpa_shard_opts_s, align 8   ; 5 uses
-  %5 = icmp eq i32 %1, 0                          ; 3 uses
-  br i1 %5, label %bb.b, label %bb.c
+  %5 = icmp ne i32 %1, 0                          ; 4 uses
+  br i1 %5, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.a = tail call ptr @je_b0get() #19
@@ -311,8 +311,7 @@ bb.h:                                             ; preds = %._crit_edge
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
   %i.ay = load atomic ptr, ptr %i.ax acquire, align 8
   %i.az = icmp eq ptr %i.ay, @je_ehooks_default_extent_hooks
-  %6 = icmp ne i32 %1, 0
-  %or.cond = and i1 %6, %i.az
+  %or.cond = and i1 %5, %i.az
   br i1 %or.cond, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
@@ -326,7 +325,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.bc, label %.thread75, label %.thread
 
 bb.j:                                             ; preds = %bb.h, %._crit_edge
-  br i1 %5, label %post_reentrancy.exit, label %.thread
+  br i1 %5, label %.thread, label %post_reentrancy.exit
 
 .thread:                                          ; preds = %bb.i, %bb.j
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 920
@@ -363,7 +362,7 @@ bb.n:                                             ; preds = %bb.m
   br label %post_reentrancy.exit
 
 .loopexit:                                        ; preds = %bb.g, %bb.e, %atomic_store_u.exit70, %atomic_store_u.exit72, %bb.d
-  br i1 %5, label %post_reentrancy.exit, label %.thread75
+  br i1 %5, label %.thread75, label %post_reentrancy.exit
 
 .thread75:                                        ; preds = %bb.i, %.loopexit
   call void @je_base_delete(ptr noundef %0, ptr noundef %.059) #19

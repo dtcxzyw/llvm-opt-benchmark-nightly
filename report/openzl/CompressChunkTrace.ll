@@ -202,11 +202,11 @@ _ZL25ZL_Output_constStringLensPK11ZL_Output_s.exit: ; preds = %bb.e
 
 bb.f:                                             ; preds = %_ZL25ZL_Output_constStringLensPK11ZL_Output_s.exit
   %i.y = extractvalue { i32, i64 } %i.x, 1
-  %i.z = shl i64 %i.y, 2                          ; 6 uses
+  %i.z = shl i64 %i.y, 2                          ; 5 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 10 uses
   store ptr %i.aa, ptr %6, align 8, !tbaa !147
   %i.ab = icmp eq ptr %i.w, null
-  %i.ac = icmp ne i64 %i.z, 0
+  %i.ac = icmp ne i64 %i.z, 0                     ; 2 uses
   %or.cond.i31 = and i1 %i.ab, %i.ac
   br i1 %or.cond.i31, label %bb.g, label %bb.h
 
@@ -234,8 +234,7 @@ bb.h:                                             ; preds = %bb.f
   br label %bb.i
 
 ._crit_edge.i.i32:                                ; preds = %bb.h
-  %cond = icmp eq i64 %i.z, 0
-  br i1 %cond, label %bb.j, label %bb.i
+  br i1 %i.ac, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %._crit_edge.i.i32.thread, %._crit_edge.i.i32
   %i.ag = phi ptr [ %i.ae, %._crit_edge.i.i32.thread ], [ %i.aa, %._crit_edge.i.i32 ]

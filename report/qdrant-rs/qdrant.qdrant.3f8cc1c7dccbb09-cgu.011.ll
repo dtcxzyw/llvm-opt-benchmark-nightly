@@ -205,7 +205,7 @@ bb.a:
   %i.e = load i64, ptr %i.d, align 8, !alias.scope !5305, !noalias !51, !noundef !17 ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.g = load i64, ptr %i.f, align 8, !alias.scope !5305, !noalias !51, !noundef !17 ; 3 uses
-  %i.h = icmp ne ptr %.0.val, null
+  %i.h = icmp ne ptr %.0.val, null                ; 2 uses
   %i.i = zext i1 %i.h to i64
   %i.j = xor i64 %i.b, %i.i
   %i.k = zext i64 %i.j to i128
@@ -213,8 +213,7 @@ bb.a:
   %i.m = lshr i128 %i.l, 64
   %i.n = xor i128 %i.m, %i.l
   %i.o = trunc i128 %i.n to i64                   ; 2 uses
-  %.not.i.i.i.i = icmp eq ptr %.0.val, null
-  br i1 %.not.i.i.i.i, label %_RINvMs1_NtCsyIGusAaLFh_5ahash12random_stateNtB6_11RandomState8hash_oneRINtNtCskKLDkoKarTP_4core6option6OptionRNtNtCsexYYUdYSQU6_5alloc6string6StringEECsl8OoimOLbh_6qdrant.exit, label %bb.b
+  br i1 %i.h, label %bb.b, label %_RINvMs1_NtCsyIGusAaLFh_5ahash12random_stateNtB6_11RandomState8hash_oneRINtNtCskKLDkoKarTP_4core6option6OptionRNtNtCsexYYUdYSQU6_5alloc6string6StringEECsl8OoimOLbh_6qdrant.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.p = getelementptr i8, ptr %.0.val, i64 8
@@ -350,7 +349,7 @@ _RINvXs3_NtNtCskKLDkoKarTP_4core4hash5implsRNtNtCsexYYUdYSQU6_5alloc6string6Stri
   br label %_RINvMs1_NtCsyIGusAaLFh_5ahash12random_stateNtB6_11RandomState8hash_oneRINtNtCskKLDkoKarTP_4core6option6OptionRNtNtCsexYYUdYSQU6_5alloc6string6StringEECsl8OoimOLbh_6qdrant.exit
 
 _RINvMs1_NtCsyIGusAaLFh_5ahash12random_stateNtB6_11RandomState8hash_oneRINtNtCskKLDkoKarTP_4core6option6OptionRNtNtCsexYYUdYSQU6_5alloc6string6StringEECsl8OoimOLbh_6qdrant.exit: ; preds = %bb.a, %_RINvXs3_NtNtCskKLDkoKarTP_4core4hash5implsRNtNtCsexYYUdYSQU6_5alloc6string6StringNtB8_4Hash4hashNtNtCsyIGusAaLFh_5ahash13fallback_hash7AHasherECsl8OoimOLbh_6qdrant.exit.i.i.i.i
-  %.sroa.10.0.i.i = phi i64 [ %i.o, %bb.a ], [ %i.cl, %_RINvXs3_NtNtCskKLDkoKarTP_4core4hash5implsRNtNtCsexYYUdYSQU6_5alloc6string6StringNtB8_4Hash4hashNtNtCsyIGusAaLFh_5ahash13fallback_hash7AHasherECsl8OoimOLbh_6qdrant.exit.i.i.i.i ] ; 2 uses
+  %.sroa.10.0.i.i = phi i64 [ %i.cl, %_RINvXs3_NtNtCskKLDkoKarTP_4core4hash5implsRNtNtCsexYYUdYSQU6_5alloc6string6StringNtB8_4Hash4hashNtNtCsyIGusAaLFh_5ahash13fallback_hash7AHasherECsl8OoimOLbh_6qdrant.exit.i.i.i.i ], [ %i.o, %bb.a ] ; 2 uses
   %i.cm = zext i64 %.sroa.10.0.i.i to i128
   %i.cn = zext i64 %i.c to i128
   %i.co = mul nuw i128 %i.cm, %i.cn               ; 2 uses

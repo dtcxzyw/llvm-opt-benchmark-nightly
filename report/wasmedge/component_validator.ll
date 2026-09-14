@@ -205,10 +205,10 @@ bb.a:
   %i.c = alloca i32, align 4                      ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 592
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 560
-  %i.f = load ptr, ptr %i.d, align 8, !tbaa !61   ; 6 uses
-  %i.g = load ptr, ptr %i.e, align 8, !tbaa !61   ; 2 uses
-  %8 = icmp eq ptr %i.f, %i.g
-  br i1 %8, label %_ZNK8WasmEdge9Validator16ComponentContext21isTypeDefinitionScopeEv.exit.thread, label %bb.b
+  %i.f = load ptr, ptr %i.d, align 8, !tbaa !61   ; 5 uses
+  %i.g = load ptr, ptr %i.e, align 8, !tbaa !61
+  %8 = icmp ne ptr %i.f, %i.g                     ; 2 uses
+  br i1 %8, label %bb.b, label %_ZNK8WasmEdge9Validator16ComponentContext21isTypeDefinitionScopeEv.exit.thread
 
 bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 600
@@ -298,8 +298,7 @@ bb.h:                                             ; preds = %_ZNK8WasmEdge9Valid
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #23
   %.sroa.016.0.extract.trunc = trunc i64 %.sroa.0.0.copyload.i to i32 ; 2 uses
   store i32 %.sroa.016.0.extract.trunc, ptr %i.b, align 4, !tbaa !261
-  %9 = icmp ne ptr %i.f, %i.g
-  tail call void @llvm.assume(i1 %9)
+  tail call void @llvm.assume(i1 %8)
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 600
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !66, !noalias !1114
   %i.aj = icmp eq ptr %i.f, %i.ai

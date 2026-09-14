@@ -205,7 +205,7 @@ bb.a:
   tail call void @_ZNSt18condition_variableC1Ev(ptr noundef nonnull align 8 dereferenceable(48) %i.m) #23
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.n, i8 0, i64 40, i1 false)
-  %.not = icmp ne i64 %2, 0
+  %.not = icmp ne i64 %2, 0                       ; 2 uses
   %i.o = icmp ult i64 %2, %1
   %or.cond = and i1 %.not, %i.o
   br i1 %or.cond, label %bb.b, label %bb.i
@@ -262,8 +262,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.h,
   br label %bb.af
 
 bb.i:                                             ; preds = %bb.a
-  %9 = icmp eq i64 %2, 0
-  %i.y = select i1 %9, i64 %1, i64 %2
+  %i.y = select i1 %.not, i64 %2, i64 %1
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.y, ptr %i.z, align 8, !tbaa !621
   %i.aa = load i64, ptr %i.a, align 8, !tbaa !2088 ; 5 uses
@@ -666,8 +665,8 @@ _ZN7httplib3tls9get_errorEv.exit:                 ; preds = %_ZN7httplib3tls20se
   br i1 %.not.i17, label %_ZN7httplib3tls17set_verify_clientEPvb.exit.sink.split, label %.invoke
 
 bb.i:                                             ; preds = %_ZN7httplib3tls20set_server_cert_fileEPvPKcS3_S3_.exit
-  %i.r = icmp ne ptr %3, null
-  %i.s = icmp ne ptr %4, null
+  %i.r = icmp ne ptr %3, null                     ; 3 uses
+  %i.s = icmp ne ptr %4, null                     ; 2 uses
   %or.cond = or i1 %i.r, %i.s
   br i1 %or.cond, label %bb.j, label %_ZN7httplib3tls17set_verify_clientEPvb.exit
 
@@ -677,8 +676,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not.i19, label %_ZN7httplib3tls18set_client_ca_fileEPvPKcS3_.exit.thread, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %.not22.i = icmp eq ptr %3, null                ; 2 uses
-  br i1 %.not22.i, label %bb.m, label %bb.l
+  br i1 %i.r, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
   %i.u = load i8, ptr %3, align 1, !tbaa !177
@@ -695,8 +693,7 @@ _ZN7httplib3tls12load_ca_fileEPvPKc.exit.i:       ; preds = %bb.l
 
 bb.m:                                             ; preds = %.noexc20, %bb.l, %bb.k
   %.0.i = phi i1 [ %i.w, %.noexc20 ], [ true, %bb.k ], [ true, %bb.l ] ; 3 uses
-  %.not24.i = icmp eq ptr %4, null
-  br i1 %.not24.i, label %bb.o, label %bb.n
+  br i1 %i.s, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
   %i.x = load i8, ptr %4, align 1, !tbaa !177
@@ -714,7 +711,7 @@ _ZN7httplib3tls11load_ca_dirEPvPKc.exit.i:        ; preds = %bb.n
 
 bb.o:                                             ; preds = %.noexc21, %bb.n, %bb.m
   %.1.i = phi i1 [ %spec.select28.i, %.noexc21 ], [ %.0.i, %bb.m ], [ %.0.i, %bb.n ]
-  br i1 %.not22.i, label %_ZN7httplib3tls18set_client_ca_fileEPvPKcS3_.exit, label %bb.p
+  br i1 %i.r, label %bb.p, label %_ZN7httplib3tls18set_client_ca_fileEPvPKcS3_.exit
 
 bb.p:                                             ; preds = %bb.o
   %i.aa = load i8, ptr %3, align 1, !tbaa !177
@@ -1117,7 +1114,7 @@ bb.ao:                                            ; preds = %.thread.i.i.i.i
   br label %_ZN7httplib6detail10from_charsIlEENS0_17from_chars_resultIT_EEPKcS6_RS3_i.exit.thread.i.i.i
 
 _ZN7httplib6detail10from_charsIlEENS0_17from_chars_resultIT_EEPKcS6_RS3_i.exit.thread.i.i.i: ; preds = %bb.am, %bb.ao, %.thread.i.i.i.i, %bb.al, %.thread97.i.i.i
-  %i.fh = phi i64 [ -1, %.thread97.i.i.i ], [ -1, %.thread.i.i.i.i ], [ -1, %bb.al ], [ %i.fg, %bb.ao ], [ -1, %bb.am ] ; 3 uses
+  %i.fh = phi i64 [ -1, %.thread97.i.i.i ], [ -1, %.thread.i.i.i.i ], [ -1, %bb.al ], [ %i.fg, %bb.ao ], [ -1, %bb.am ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #23
   store i64 -1, ptr %i.d, align 8, !tbaa !190
   %i.fi = icmp eq i64 %.val27.i.i.i, 0
@@ -1170,19 +1167,17 @@ bb.as:                                            ; preds = %.thread.i63.i.i.i
   br label %_ZN7httplib6detail10from_charsIlEENS0_17from_chars_resultIT_EEPKcS6_RS3_i.exit78.thread.i.i.i
 
 _ZN7httplib6detail10from_charsIlEENS0_17from_chars_resultIT_EEPKcS6_RS3_i.exit78.thread.i.i.i: ; preds = %bb.aq, %bb.as, %.thread.i63.i.i.i, %bb.ap, %_ZN7httplib6detail10from_charsIlEENS0_17from_chars_resultIT_EEPKcS6_RS3_i.exit.thread.i.i.i
-  %i.ga = phi i64 [ -1, %_ZN7httplib6detail10from_charsIlEENS0_17from_chars_resultIT_EEPKcS6_RS3_i.exit.thread.i.i.i ], [ -1, %.thread.i63.i.i.i ], [ -1, %bb.ap ], [ %i.fz, %bb.as ], [ -1, %bb.aq ] ; 3 uses
-  %i.gb = icmp eq i64 %i.fh, -1
-  %i.gc = icmp eq i64 %i.ga, -1
+  %i.ga = phi i64 [ -1, %_ZN7httplib6detail10from_charsIlEENS0_17from_chars_resultIT_EEPKcS6_RS3_i.exit.thread.i.i.i ], [ -1, %.thread.i63.i.i.i ], [ -1, %bb.ap ], [ %i.fz, %bb.as ], [ -1, %bb.aq ] ; 2 uses
+  %i.gb = icmp eq i64 %i.fh, -1                   ; 2 uses
+  %i.gc = icmp eq i64 %i.ga, -1                   ; 2 uses
   %or.cond.i.i.i = select i1 %i.gb, i1 %i.gc, i1 false
   br i1 %or.cond.i.i.i, label %bb.au, label %bb.at
 
 bb.at:                                            ; preds = %_ZN7httplib6detail10from_charsIlEENS0_17from_chars_resultIT_EEPKcS6_RS3_i.exit78.thread.i.i.i
-  %5 = icmp ne i64 %i.fh, -1
-  %6 = icmp ne i64 %i.ga, -1
-  %7 = icmp sgt i64 %i.fh, %i.ga
-  %8 = and i1 %6, %7
-  %or.cond26.i.i.i = select i1 %5, i1 %8, i1 false
-  br i1 %or.cond26.i.i.i, label %bb.au, label %bb.av
+  %5 = icmp sle i64 %i.fh, %i.ga
+  %.not163.i.i.i = or i1 %i.gc, %5
+  %or.cond26.i.i.i = select i1 %i.gb, i1 true, i1 %.not163.i.i.i
+  br i1 %or.cond26.i.i.i, label %bb.av, label %bb.au
 
 bb.au:                                            ; preds = %bb.at, %_ZN7httplib6detail10from_charsIlEENS0_17from_chars_resultIT_EEPKcS6_RS3_i.exit78.thread.i.i.i
   %i.gd = load ptr, ptr %.val, align 8, !tbaa !3324, !nonnull !192

@@ -202,8 +202,8 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 %4 ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 6 uses
-  %.not160 = icmp eq i32 %6, 0
-  br i1 %.not160, label %bb.b, label %LZ4F_selectCompression.exit
+  %.not160 = icmp ne i32 %6, 0                    ; 2 uses
+  br i1 %.not160, label %LZ4F_selectCompression.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.f = load i32, ptr %i.e, align 8, !tbaa !53
@@ -283,16 +283,13 @@ LZ4F_compressBound_internal.exit:                 ; preds = %bb.f, %LZ4F_getBloc
   %i.ar = add i64 %i.ab, %i.aj
   %i.as = add i64 %i.ar, %i.aq
   %i.at = add i64 %i.as, %i.ao
-  %i.au = icmp ult i64 %2, %i.at
-  br i1 %i.au, label %bb.at, label %7
+  %7 = icmp ult i64 %2, %i.at
+  %i.au = icmp ult i64 %2, %4
+  %or.cond144 = and i1 %i.au, %.not160
+  %or.cond193 = or i1 %7, %or.cond144
+  br i1 %or.cond193, label %bb.at, label %bb.g
 
-7:                                                ; preds = %LZ4F_compressBound_internal.exit
-  %.not137 = icmp ne i32 %6, 0
-  %8 = icmp ult i64 %2, %4
-  %or.cond144 = and i1 %8, %.not137
-  br i1 %or.cond144, label %bb.at, label %bb.g
-
-bb.g:                                             ; preds = %7
+bb.g:                                             ; preds = %LZ4F_compressBound_internal.exit
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 212 ; 2 uses
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !62
   %.not138 = icmp eq i32 %i.aw, %6
@@ -646,8 +643,8 @@ bb.as:                                            ; preds = %bb.ar, %bb.aq
   %i.gl = sub i64 %i.gj, %i.gk
   br label %bb.at
 
-bb.at:                                            ; preds = %7, %LZ4F_compressBound_internal.exit, %LZ4F_selectCompression.exit, %bb.as
-  %.0 = phi i64 [ %i.gl, %bb.as ], [ -20, %LZ4F_selectCompression.exit ], [ -11, %LZ4F_compressBound_internal.exit ], [ -11, %7 ]
+bb.at:                                            ; preds = %LZ4F_compressBound_internal.exit, %LZ4F_selectCompression.exit, %bb.as
+  %.0 = phi i64 [ %i.gl, %bb.as ], [ -20, %LZ4F_selectCompression.exit ], [ -11, %LZ4F_compressBound_internal.exit ]
   ret i64 %.0
 }
 
@@ -1050,13 +1047,13 @@ bb.bp:                                            ; preds = %bb.bo
   %i.ha = sub i64 %i.z, %i.gz
   %i.hb = load i64, ptr %i.aa, align 8, !tbaa !68 ; 5 uses
   %.not653 = icmp ult i64 %i.ha, %i.hb
-  %.pre801.pre = load ptr, ptr %i.p, align 8, !tbaa !79 ; 10 uses
+  %.pre801.pre = load ptr, ptr %i.p, align 8, !tbaa !79 ; 9 uses
   br i1 %.not653, label %bb.ck, label %bb.bq
 
 bb.bq:                                            ; preds = %.thread751
-  %.not654 = icmp eq ptr %.pre801.pre, null
+  %.not654.not.not.not = icmp ne ptr %.pre801.pre, null ; 2 uses
   %.pre = load i64, ptr %i.ab, align 8, !tbaa !78 ; 4 uses
-  br i1 %.not654, label %bb.bs, label %bb.br
+  br i1 %.not654.not.not.not, label %bb.br, label %bb.bs
 
 bb.br:                                            ; preds = %bb.bq
   %i.hc = getelementptr inbounds nuw i8, ptr %.pre801.pre, i64 %.pre
@@ -1065,9 +1062,8 @@ bb.br:                                            ; preds = %bb.bq
   br i1 %i.he, label %bb.ck, label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br, %bb.bq
-  %6 = icmp ne ptr %.pre801.pre, null
   %i.hf = icmp ugt i64 %.pre, 1073741824
-  %or.cond = select i1 %6, i1 %i.hf, i1 false     ; 2 uses
+  %or.cond = select i1 %.not654.not.not.not, i1 %i.hf, i1 false ; 2 uses
   %i.hg = getelementptr i8, ptr %.pre801.pre, i64 %.pre
   %i.hh = getelementptr i8, ptr %i.hg, i64 -65536
   %.0512 = select i1 %or.cond, ptr %i.hh, ptr %.pre801.pre
