@@ -204,21 +204,20 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %.critedge2.backedge
-  %5 = phi i32 [ 4, %.lr.ph ], [ %i.k, %.critedge2.backedge ] ; 2 uses
-  %.02232 = phi i32 [ 5, %.lr.ph ], [ %5, %.critedge2.backedge ]
+  %.02232 = phi i32 [ 4, %.lr.ph ], [ %i.k, %.critedge2.backedge ] ; 2 uses
   %i.e = load i32, ptr %i.d, align 4, !tbaa !9    ; 2 uses
   %i.f = icmp eq i32 %i.e, 11
   br i1 %i.f, label %.critedge2.backedge, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.g = icmp eq i32 %i.e, 16
-  %i.h = icmp sgt i32 %.02232, 1
+  %i.h = icmp sgt i32 %.02232, 0
   %i.i = select i1 %i.g, i1 %i.h, i1 false
   br i1 %i.i, label %.critedge2.backedge, label %.critedge.thread
 
 .critedge2.backedge:                              ; preds = %bb.c, %bb.b
   %i.j = tail call i32 (i32, i64, ...) @ioctl(i32 noundef %0, i64 noundef %i.a, ptr noundef %2) #23 ; 2 uses
-  %i.k = add nsw i32 %5, -1
+  %i.k = add nsw i32 %.02232, -1
   %i.l = icmp eq i32 %i.j, -1
   br i1 %i.l, label %bb.b, label %.critedge, !llvm.loop !109
 

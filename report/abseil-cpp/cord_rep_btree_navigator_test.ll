@@ -204,7 +204,7 @@ _ZN7testing15AssertionResultD2Ev.exit204:         ; preds = %bb.cc, %_ZNKSt14def
   %i.on = ptrtoint ptr %i.ol to i64
   %i.oo = ptrtoint ptr %i.om to i64
   %i.op = sub i64 %i.on, %i.oo
-  %i.oq = ashr exact i64 %i.op, 3                 ; 2 uses
+  %i.oq = ashr exact i64 %i.op, 3
   %.055333 = add nsw i64 %i.oq, -1                ; 2 uses
   %.not75334 = icmp eq i64 %.055333, 0
   br i1 %.not75334, label %.critedge99, label %.lr.ph337
@@ -217,11 +217,10 @@ _ZN7testing15AssertionResultD2Ev.exit204:         ; preds = %bb.cc, %_ZNKSt14def
 bb.ce:                                            ; preds = %.lr.ph337, %_ZN7testing15AssertionResultD2Ev.exit250
   %i.ot = phi i8 [ %i.ni, %.lr.ph337 ], [ %i.si, %_ZN7testing15AssertionResultD2Ev.exit250 ] ; 2 uses
   %i.ou = phi ptr [ %i.nh, %.lr.ph337 ], [ %i.sh, %_ZN7testing15AssertionResultD2Ev.exit250 ] ; 2 uses
-  %.055336 = phi i64 [ %.055333, %.lr.ph337 ], [ %.055, %_ZN7testing15AssertionResultD2Ev.exit250 ] ; 2 uses
-  %.055.in335 = phi i64 [ %i.oq, %.lr.ph337 ], [ %.055336, %_ZN7testing15AssertionResultD2Ev.exit250 ]
+  %.055.in335 = phi i64 [ %.055333, %.lr.ph337 ], [ %.055, %_ZN7testing15AssertionResultD2Ev.exit250 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #32
   call void @llvm.lifetime.start.p0(ptr nonnull %27) #32
-  %i.ov = add i64 %.055.in335, -2                 ; 2 uses
+  %i.ov = add i64 %.055.in335, -1                 ; 2 uses
   %i.ow = load ptr, ptr %i.at, align 8, !tbaa !152
   %i.ox = getelementptr inbounds nuw [8 x i8], ptr %i.ow, i64 %i.ov
   %i.oy = load ptr, ptr %i.ox, align 8, !tbaa !156
@@ -593,7 +592,7 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
 
 _ZN7testing15AssertionResultD2Ev.exit250:         ; preds = %bb.de, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i248
   call void @llvm.lifetime.end.p0(ptr nonnull %30) #32
-  %.055 = add i64 %.055336, -1                    ; 2 uses
+  %.055 = add i64 %.055.in335, -1                 ; 2 uses
   %.not75 = icmp eq i64 %.055, 0
   br i1 %.not75, label %.critedge99, label %bb.ce, !llvm.loop !429
 
@@ -996,7 +995,7 @@ _ZN7testing15AssertionResultD2Ev.exit120:         ; preds = %bb.z, %_ZNKSt14defa
   %i.fq = ptrtoint ptr %i.fo to i64
   %i.fr = ptrtoint ptr %i.fp to i64
   %i.fs = sub i64 %i.fq, %i.fr
-  %i.ft = ashr exact i64 %i.fs, 3                 ; 2 uses
+  %i.ft = ashr exact i64 %i.fs, 3
   %.056326 = add nsw i64 %i.ft, -1                ; 2 uses
   %.not327 = icmp eq i64 %.056326, 0
   br i1 %.not327, label %.critedge95, label %.lr.ph
@@ -1009,11 +1008,10 @@ _ZN7testing15AssertionResultD2Ev.exit120:         ; preds = %bb.z, %_ZNKSt14defa
 bb.ab:                                            ; preds = %.lr.ph, %_ZN7testing15AssertionResultD2Ev.exit163
   %i.fw = phi i8 [ %i.el, %.lr.ph ], [ %i.jl, %_ZN7testing15AssertionResultD2Ev.exit163 ] ; 2 uses
   %i.fx = phi ptr [ %i.ek, %.lr.ph ], [ %i.jk, %_ZN7testing15AssertionResultD2Ev.exit163 ] ; 2 uses
-  %.056329 = phi i64 [ %.056326, %.lr.ph ], [ %.056, %_ZN7testing15AssertionResultD2Ev.exit163 ] ; 2 uses
-  %.056.in328 = phi i64 [ %i.ft, %.lr.ph ], [ %.056329, %_ZN7testing15AssertionResultD2Ev.exit163 ]
+  %.056.in328 = phi i64 [ %.056326, %.lr.ph ], [ %.056, %_ZN7testing15AssertionResultD2Ev.exit163 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #32
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #32
-  %i.fy = add i64 %.056.in328, -2                 ; 2 uses
+  %i.fy = add i64 %.056.in328, -1                 ; 2 uses
   %i.fz = load ptr, ptr %i.bf, align 8, !tbaa !152
   %i.ga = getelementptr inbounds nuw [8 x i8], ptr %i.fz, i64 %i.fy
   %i.gb = load ptr, ptr %i.ga, align 8, !tbaa !156
@@ -1385,7 +1383,7 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
 
 _ZN7testing15AssertionResultD2Ev.exit163:         ; preds = %bb.bb, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i161
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #32
-  %.056 = add i64 %.056329, -1                    ; 2 uses
+  %.056 = add i64 %.056.in328, -1                 ; 2 uses
   %.not = icmp eq i64 %.056, 0
   br i1 %.not, label %.critedge95, label %bb.ab, !llvm.loop !469
 

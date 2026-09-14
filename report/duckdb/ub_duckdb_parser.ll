@@ -204,7 +204,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.lr.ph.backedge, %.lr.ph.lr.ph
   %i.i = phi i64 [ %i.f, %.lr.ph.lr.ph ], [ %.be, %.lr.ph.backedge ] ; 2 uses
-  %.12870 = phi i64 [ 0, %.lr.ph.lr.ph ], [ %.12870.be, %.lr.ph.backedge ] ; 5 uses
+  %.12870 = phi i64 [ 0, %.lr.ph.lr.ph ], [ %.12870.be, %.lr.ph.backedge ] ; 4 uses
   %i.j = load ptr, ptr %1, align 8, !tbaa !53
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %.12870
   %i.l = load i8, ptr %i.k, align 1, !tbaa !57    ; 2 uses
@@ -214,7 +214,7 @@ bb.a:
   ]
 
 .preheader:                                       ; preds = %.lr.ph
-  %.272 = add nuw i64 %.12870, 1                  ; 3 uses
+  %.272 = add nuw i64 %.12870, 1                  ; 4 uses
   %i.m = icmp ult i64 %.272, %i.i
   br i1 %i.m, label %.lr.ph75.preheader, label %.preheader._crit_edge
 
@@ -223,7 +223,7 @@ bb.a:
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 %.272
   %i.p = load i8, ptr %i.o, align 1, !tbaa !57    ; 2 uses
   %i.q = icmp eq i8 %i.p, 34
-  br i1 %i.q, label %.lr.ph75._crit_edge, label %.lr.ph129
+  br i1 %i.q, label %.backedge, label %.lr.ph129
 
 bb.b:                                             ; preds = %.lr.ph
   %i.r = load i64, ptr %i.d, align 8, !tbaa !54   ; 4 uses
@@ -268,7 +268,7 @@ bb.d:                                             ; preds = %.noexc, %_ZNKSt7__c
   br i1 %i.af, label %.lr.ph.backedge, label %._crit_edge
 
 .lr.ph.backedge:                                  ; preds = %bb.d, %.backedge
-  %.be = phi i64 [ %i.ae, %bb.d ], [ %6, %.backedge ]
+  %.be = phi i64 [ %i.ae, %bb.d ], [ %5, %.backedge ]
   %.12870.be = phi i64 [ %i.ad, %bb.d ], [ %.027.be, %.backedge ]
   br label %.lr.ph, !llvm.loop !743
 
@@ -357,14 +357,14 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_b
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit ; 0 uses
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit: ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backERKS5_.exit
-  %5 = add nuw i64 %.12870, 1
   %.pre = load i64, ptr %i.e, align 8, !tbaa !54
   br label %.backedge
 
-.backedge:                                        ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit, %.lr.ph75._crit_edge
-  %6 = phi i64 [ %.lcssa125, %.lr.ph75._crit_edge ], [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit ] ; 2 uses
-  %.027.be = phi i64 [ %7, %.lr.ph75._crit_edge ], [ %5, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit ] ; 2 uses
-  %i.ay = icmp ult i64 %.027.be, %6
+.backedge:                                        ; preds = %.lr.ph75, %.lr.ph75.preheader, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit
+  %5 = phi i64 [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit ], [ %i.i, %.lr.ph75.preheader ], [ %i.bq, %.lr.ph75 ] ; 2 uses
+  %.027.be.in = phi i64 [ %.12870, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit ], [ %.272, %.lr.ph75.preheader ], [ %.2, %.lr.ph75 ]
+  %.027.be = add nuw i64 %.027.be.in, 1           ; 2 uses
+  %i.ay = icmp ult i64 %.027.be, %5
   br i1 %i.ay, label %.lr.ph.backedge, label %._crit_edge
 
 .lr.ph75:                                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit40
@@ -372,17 +372,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit: ; preds = %_ZN
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 %.2
   %i.bb = load i8, ptr %i.ba, align 1, !tbaa !57  ; 2 uses
   %i.bc = icmp eq i8 %i.bb, 34
-  br i1 %i.bc, label %.lr.ph75._crit_edge, label %.lr.ph129
-
-.lr.ph75._crit_edge:                              ; preds = %.lr.ph75, %.lr.ph75.preheader
-  %.lcssa125 = phi i64 [ %i.i, %.lr.ph75.preheader ], [ %i.bq, %.lr.ph75 ]
-  %.2.in73.lcssa = phi i64 [ %.12870, %.lr.ph75.preheader ], [ %.274128, %.lr.ph75 ]
-  %7 = add nuw i64 %.2.in73.lcssa, 2
-  br label %.backedge
+  br i1 %i.bc, label %.backedge, label %.lr.ph129
 
 .lr.ph129:                                        ; preds = %.lr.ph75.preheader, %.lr.ph75
   %i.bd = phi i8 [ %i.bb, %.lr.ph75 ], [ %i.p, %.lr.ph75.preheader ]
-  %.274128 = phi i64 [ %.2, %.lr.ph75 ], [ %.272, %.lr.ph75.preheader ] ; 2 uses
+  %.274128 = phi i64 [ %.2, %.lr.ph75 ], [ %.272, %.lr.ph75.preheader ]
   %i.be = load i64, ptr %i.d, align 8, !tbaa !54  ; 4 uses
   %i.bf = add i64 %i.be, 1                        ; 3 uses
   %i.bg = load ptr, ptr %2, align 8, !tbaa !53    ; 2 uses
@@ -419,7 +413,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit40: ; preds = %_ZN
   %i.bo = load ptr, ptr %2, align 8, !tbaa !53
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 %i.bf
   store i8 0, ptr %i.bp, align 1, !tbaa !57
-  %.2 = add nuw i64 %.274128, 1                   ; 3 uses
+  %.2 = add nuw i64 %.274128, 1                   ; 4 uses
   %i.bq = load i64, ptr %i.e, align 8, !tbaa !54  ; 2 uses
   %i.br = icmp ult i64 %.2, %i.bq
   br i1 %i.br, label %.lr.ph75, label %.preheader._crit_edge

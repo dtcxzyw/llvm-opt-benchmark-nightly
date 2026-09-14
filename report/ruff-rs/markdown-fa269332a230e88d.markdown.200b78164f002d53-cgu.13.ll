@@ -204,7 +204,7 @@ bb.az:                                            ; preds = %bb.bi, %.lr.ph99.i
   %.pre127.i = phi ptr [ %i.de, %.lr.ph99.i ], [ %.pre128.i, %bb.bi ] ; 3 uses
   %i.ih = phi ptr [ %i.de, %.lr.ph99.i ], [ %i.km, %bb.bi ] ; 3 uses
   %i.ii = phi i64 [ %i.dg, %.lr.ph99.i ], [ %i.kp, %bb.bi ] ; 8 uses
-  %.sroa.01.098.i = phi i64 [ 0, %.lr.ph99.i ], [ %i.kn, %bb.bi ] ; 9 uses
+  %.sroa.01.098.i = phi i64 [ 0, %.lr.ph99.i ], [ %i.kn, %bb.bi ] ; 8 uses
   %.sroa.011.097.i = phi i64 [ 0, %.lr.ph99.i ], [ %.sroa.011.1.i, %bb.bi ] ; 5 uses
   %i.ij = getelementptr inbounds nuw i8, ptr %i.ih, i64 480
   %i.ik = load ptr, ptr %i.ij, align 8, !nonnull !4, !noundef !4 ; 4 uses
@@ -249,14 +249,10 @@ bb.bb:                                            ; preds = %bb.ba, %bb.ba
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.ir, i64 noundef %i.ii, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @24) #18
   unreachable
 
-._crit_edge.i.loopexit.split.loop.exit128:        ; preds = %.lr.ph.i
-  %2 = add nuw nsw i64 %.sroa.01.186.i83140, 2
-  br label %._crit_edge.i
-
-._crit_edge.i:                                    ; preds = %.lr.ph84, %.lr.ph84.preheader, %._crit_edge.i.loopexit.split.loop.exit128, %.lr.ph.preheader.i, %.preheader.i
-  %.lcssa84.i = phi i64 [ %i.ir, %.preheader.i ], [ %i.ir, %.lr.ph.preheader.i ], [ %i.jf, %._crit_edge.i.loopexit.split.loop.exit128 ], [ %i.iv, %.lr.ph84.preheader ], [ %i.iv, %.lr.ph84 ]
-  %.sroa.018.0.lcssa.i = phi i64 [ %i.ir, %.preheader.i ], [ %i.ir, %.lr.ph.preheader.i ], [ %2, %._crit_edge.i.loopexit.split.loop.exit128 ], [ %i.ii, %.lr.ph84.preheader ], [ %i.ii, %.lr.ph84 ]
-  %.sroa.01.1.lcssa.i = phi i64 [ %.sroa.01.098.i, %.preheader.i ], [ %.sroa.01.098.i, %.lr.ph.preheader.i ], [ %i.jf, %._crit_edge.i.loopexit.split.loop.exit128 ], [ %i.iv, %.lr.ph84.preheader ], [ %i.iv, %.lr.ph84 ]
+._crit_edge.i:                                    ; preds = %.lr.ph.i, %.lr.ph84, %.lr.ph84.preheader, %.lr.ph.preheader.i, %.preheader.i
+  %.lcssa84.i = phi i64 [ %i.ir, %.preheader.i ], [ %i.ir, %.lr.ph.preheader.i ], [ %i.iv, %.lr.ph84.preheader ], [ %i.iv, %.lr.ph84 ], [ %.sroa.01.186.i83140, %.lr.ph.i ]
+  %.sroa.018.0.lcssa.i = phi i64 [ %i.ir, %.preheader.i ], [ %i.ir, %.lr.ph.preheader.i ], [ %i.ii, %.lr.ph84.preheader ], [ %i.ii, %.lr.ph84 ], [ %i.jf, %.lr.ph.i ]
+  %.sroa.01.1.lcssa.i = phi i64 [ %.sroa.01.098.i, %.preheader.i ], [ %.sroa.01.098.i, %.lr.ph.preheader.i ], [ %i.iv, %.lr.ph84.preheader ], [ %i.iv, %.lr.ph84 ], [ %.sroa.01.186.i83140, %.lr.ph.i ]
   %i.jb = getelementptr inbounds nuw [80 x i8], ptr %i.ik, i64 %.lcssa84.i
   %.sroa.020.0.le.i = getelementptr inbounds nuw i8, ptr %i.jb, i64 40 ; 9 uses
   %i.jc = load i64, ptr %i.r, align 8, !alias.scope !117, !noundef !4 ; 2 uses
@@ -266,17 +262,16 @@ bb.bb:                                            ; preds = %bb.ba, %bb.ba
   br i1 %i.je, label %bb.bd, label %bb.bc
 
 .lr.ph.i:                                         ; preds = %.lr.ph84.preheader, %.lr.ph84
-  %3 = phi i64 [ %i.jk, %.lr.ph84 ], [ %i.ja, %.lr.ph84.preheader ] ; 3 uses
-  %i.jf = phi i64 [ %3, %.lr.ph84 ], [ %i.it, %.lr.ph84.preheader ] ; 3 uses
-  %.sroa.01.186.i83140 = phi i64 [ %i.jf, %.lr.ph84 ], [ %.sroa.01.098.i, %.lr.ph84.preheader ]
-  %i.jg = getelementptr inbounds nuw [80 x i8], ptr %i.ik, i64 %3
+  %i.jf = phi i64 [ %i.jk, %.lr.ph84 ], [ %i.ja, %.lr.ph84.preheader ] ; 4 uses
+  %.sroa.01.186.i83140 = phi i64 [ %i.jf, %.lr.ph84 ], [ %i.it, %.lr.ph84.preheader ] ; 2 uses
+  %i.jg = getelementptr inbounds nuw [80 x i8], ptr %i.ik, i64 %i.jf
   %i.jh = getelementptr inbounds nuw i8, ptr %i.jg, i64 72
   %i.ji = load i8, ptr %i.jh, align 8, !range !7, !noundef !4
   %i.jj = trunc nuw i8 %i.ji to i1
-  br i1 %i.jj, label %.lr.ph84, label %._crit_edge.i.loopexit.split.loop.exit128
+  br i1 %i.jj, label %.lr.ph84, label %._crit_edge.i
 
 .lr.ph84:                                         ; preds = %.lr.ph.i
-  %i.jk = add nsw i64 %3, 1                       ; 2 uses
+  %i.jk = add nsw i64 %i.jf, 1                    ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.jk, %i.ii
   br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i
 
@@ -386,7 +381,7 @@ bb.bi:                                            ; preds = %bb.bc, %bb.ba, %bb.
   %i.km = phi ptr [ %i.ih, %bb.ba ], [ %.pre.i, %bb.bc ], [ %i.ih, %bb.az ] ; 3 uses
   %.sroa.011.1.i = phi i64 [ %.sroa.011.097.i, %bb.ba ], [ %i.jl, %bb.bc ], [ %.sroa.011.097.i, %bb.az ] ; 2 uses
   %.sroa.01.2.i = phi i64 [ %.sroa.01.098.i, %bb.ba ], [ %.sroa.01.1.lcssa.i, %bb.bc ], [ %.sroa.01.098.i, %bb.az ]
-  %i.kn = add i64 %.sroa.01.2.i, 1                ; 2 uses
+  %i.kn = add nsw i64 %.sroa.01.2.i, 1            ; 2 uses
   %i.ko = getelementptr inbounds nuw i8, ptr %i.km, i64 488
   %i.kp = load i64, ptr %i.ko, align 8, !noundef !4 ; 3 uses
   %i.kq = icmp ult i64 %i.kp, 115292150460684698

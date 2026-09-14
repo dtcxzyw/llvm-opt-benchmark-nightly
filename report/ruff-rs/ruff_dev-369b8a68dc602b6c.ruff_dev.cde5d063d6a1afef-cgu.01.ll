@@ -202,7 +202,7 @@ bb.a:
   store ptr %1, ptr %i.f, align 8, !noalias !6341
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.l = load i64, ptr %i.k, align 8, !alias.scope !6342, !noalias !6343, !noundef !10 ; 2 uses
-  %.promoted.i.i.i = load i64, ptr %i.j, align 8, !alias.scope !6342, !noalias !6343 ; 2 uses
+  %.promoted.i.i.i = load i64, ptr %i.j, align 8, !alias.scope !6342, !noalias !6343
   %i.m = add i64 %.promoted.i.i.i, 1              ; 2 uses
   %i.n = add i64 %i.m, %i.l
   %i.o = icmp ugt i64 %i.n, 59
@@ -214,7 +214,7 @@ _RNvXs6_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_10LinterIterNtNtNtNtCs4NRVxsYg
 
 _RNvXs6_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_10LinterIterNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.i.i.i: ; preds = %bb.c, %_RNvXs6_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_10LinterIterNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.lr.ph.i.i.i
   %i.q = phi i64 [ %i.m, %_RNvXs6_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_10LinterIterNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.lr.ph.i.i.i ], [ %i.t, %bb.c ] ; 3 uses
-  %2 = phi i64 [ %.promoted.i.i.i, %_RNvXs6_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_10LinterIterNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.lr.ph.i.i.i ], [ %i.q, %bb.c ]
+  %2 = add i64 %i.q, -1
   store i64 %i.q, ptr %i.j, align 8, !alias.scope !6342, !noalias !6343
   %i.r = call noundef i8 @_RNvMs4_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_10LinterIter3get(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.j, i64 noundef %2), !noalias !6344 ; 2 uses
   %.not.i.i.i = icmp eq i8 %i.r, -1
@@ -310,7 +310,7 @@ bb.h:                                             ; preds = %.noexc
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !6355
   store ptr %i.g, ptr %i.b, align 8, !noalias !6356
   %i.aj = load i64, ptr %i.ai, align 8, !alias.scope !6357, !noalias !6358, !noundef !10 ; 2 uses
-  %.promoted.i.i.i16.i.i = load i64, ptr %i.ah, align 8, !alias.scope !6357, !noalias !6358 ; 2 uses
+  %.promoted.i.i.i16.i.i = load i64, ptr %i.ah, align 8, !alias.scope !6357, !noalias !6358
   %i.ak = add i64 %.promoted.i.i.i16.i.i, 1       ; 2 uses
   %i.al = add i64 %i.ak, %i.aj
   %i.am = icmp ugt i64 %i.al, 59
@@ -324,8 +324,7 @@ _RNvXs6_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_10LinterIterNtNtNtNtCs4NRVxsYg
   br label %_RNvXs6_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_10LinterIterNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.lr.ph.i.i.i.i.i
 
 _RNvXs6_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_10LinterIterNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.lr.ph.i.i.i.i.i: ; preds = %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTNtNtCsEhZmuQNqkz_11ruff_linter8registry6LinterIBu_NtNtBI_5codes4RuleEEE7reserveCshFZivb7RUAJ_8ruff_dev.exit.i.i, %_RNvXs6_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_10LinterIterNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.lr.ph.i.i.i.lr.ph.i.i
-  %3 = phi i64 [ %i.ak, %_RNvXs6_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_10LinterIterNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.lr.ph.i.i.i.lr.ph.i.i ], [ %i.bd, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTNtNtCsEhZmuQNqkz_11ruff_linter8registry6LinterIBu_NtNtBI_5codes4RuleEEE7reserveCshFZivb7RUAJ_8ruff_dev.exit.i.i ]
-  %.promoted.i.i.i17.i.i = phi i64 [ %.promoted.i.i.i16.i.i, %_RNvXs6_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_10LinterIterNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.lr.ph.i.i.i.lr.ph.i.i ], [ %.promoted.i.i.i.i.i, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTNtNtCsEhZmuQNqkz_11ruff_linter8registry6LinterIBu_NtNtBI_5codes4RuleEEE7reserveCshFZivb7RUAJ_8ruff_dev.exit.i.i ]
+  %.promoted.i.i.i17.i.i = phi i64 [ %i.ak, %_RNvXs6_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_10LinterIterNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.lr.ph.i.i.i.lr.ph.i.i ], [ %i.bd, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTNtNtCsEhZmuQNqkz_11ruff_linter8registry6LinterIBu_NtNtBI_5codes4RuleEEE7reserveCshFZivb7RUAJ_8ruff_dev.exit.i.i ]
   %i.ao = phi i64 [ %i.aj, %_RNvXs6_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_10LinterIterNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.lr.ph.i.i.i.lr.ph.i.i ], [ %i.bc, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTNtNtCsEhZmuQNqkz_11ruff_linter8registry6LinterIBu_NtNtBI_5codes4RuleEEE7reserveCshFZivb7RUAJ_8ruff_dev.exit.i.i ]
   call void @llvm.experimental.noalias.scope.decl(metadata !6359)
   call void @llvm.experimental.noalias.scope.decl(metadata !6360)
@@ -333,10 +332,10 @@ _RNvXs6_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_10LinterIterNtNtNtNtCs4NRVxsYg
   br label %_RNvXs6_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_10LinterIterNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i
 
 _RNvXs6_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_10LinterIterNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i: ; preds = %bb.j, %_RNvXs6_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_10LinterIterNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.lr.ph.i.i.i.i.i
-  %i.ap = phi i64 [ %3, %_RNvXs6_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_10LinterIterNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.lr.ph.i.i.i.i.i ], [ %i.as, %bb.j ] ; 3 uses
-  %4 = phi i64 [ %.promoted.i.i.i17.i.i, %_RNvXs6_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_10LinterIterNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.lr.ph.i.i.i.i.i ], [ %i.ap, %bb.j ]
+  %i.ap = phi i64 [ %.promoted.i.i.i17.i.i, %_RNvXs6_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_10LinterIterNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.lr.ph.i.i.i.i.i ], [ %i.as, %bb.j ] ; 3 uses
+  %3 = add i64 %i.ap, -1
   store i64 %i.ap, ptr %i.ah, align 8, !alias.scope !6362, !noalias !6358
-  %i.aq = invoke noundef i8 @_RNvMs4_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_10LinterIter3get(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.ah, i64 noundef %4)
+  %i.aq = invoke noundef i8 @_RNvMs4_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_10LinterIter3get(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.ah, i64 noundef %3)
           to label %.noexc8 unwind label %bb.o    ; 2 uses
 
 .noexc8:                                          ; preds = %_RNvXs6_NtCsEhZmuQNqkz_11ruff_linter8registryNtB5_10LinterIterNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i
@@ -388,7 +387,7 @@ _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTNtNtCsEhZmuQNqkz_11ruff_linter8regist
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !6372
   store ptr %i.g, ptr %i.b, align 8, !noalias !6373
   %i.bc = load i64, ptr %i.ai, align 8, !alias.scope !6374, !noalias !6358, !noundef !10 ; 2 uses
-  %.promoted.i.i.i.i.i = load i64, ptr %i.ah, align 8, !alias.scope !6374, !noalias !6358 ; 2 uses
+  %.promoted.i.i.i.i.i = load i64, ptr %i.ah, align 8, !alias.scope !6374, !noalias !6358
   %i.bd = add i64 %.promoted.i.i.i.i.i, 1         ; 2 uses
   %i.be = add i64 %i.bd, %i.bc
   %i.bf = icmp ugt i64 %i.be, 59

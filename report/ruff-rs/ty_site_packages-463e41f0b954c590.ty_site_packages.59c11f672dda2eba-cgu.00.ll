@@ -204,12 +204,10 @@ _RINvCs7HL9jt3VRMY_16ty_site_packages21discover_package_dirsANtB2_15Installation
   br label %bb.cm
 
 bb.eb:                                            ; preds = %bb.cm, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs56aZGHL6Dc6_7ruff_db6system4path13SystemPathBufECs7HL9jt3VRMY_16ty_site_packages.exit165
-  %exitcond = phi i1 [ false, %bb.cm ], [ true, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs56aZGHL6Dc6_7ruff_db6system4path13SystemPathBufECs7HL9jt3VRMY_16ty_site_packages.exit165 ]
-  %5 = phi i1 [ true, %bb.cm ], [ false, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs56aZGHL6Dc6_7ruff_db6system4path13SystemPathBufECs7HL9jt3VRMY_16ty_site_packages.exit165 ]
-  %.sroa.073.0339 = phi i1 [ false, %bb.cm ], [ %5, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs56aZGHL6Dc6_7ruff_db6system4path13SystemPathBufECs7HL9jt3VRMY_16ty_site_packages.exit165 ] ; 2 uses
+  %exitcond = phi i1 [ false, %bb.cm ], [ true, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs56aZGHL6Dc6_7ruff_db6system4path13SystemPathBufECs7HL9jt3VRMY_16ty_site_packages.exit165 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ay)
-  %..i.i132 = select i1 %.sroa.073.0339, i64 5, i64 3
-  %.1.i.i133 = select i1 %.sroa.073.0339, ptr @176, ptr @62
+  %..i.i132 = select i1 %exitcond, i64 5, i64 3
+  %.1.i.i133 = select i1 %exitcond, ptr @176, ptr @62
   invoke void @_RINvMs16_NtCs2AWtUsOyxgP_3std4pathNtB7_4Path4joinRBw_ECs7HL9jt3VRMY_16ty_site_packages(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.ay, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.cq, i64 noundef %i.cs, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.1.i.i133, i64 noundef %..i.i132)
           to label %_RINvMNtNtCs56aZGHL6Dc6_7ruff_db6system4pathNtB3_10SystemPath4joinNtCs7HL9jt3VRMY_16ty_site_packages10UnixLibDirEB13_.exit135 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit
 

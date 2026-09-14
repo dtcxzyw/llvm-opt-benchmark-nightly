@@ -204,17 +204,16 @@ bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #19
   call void @_ZN4bzla2fp11SymFpuSymBVILb0EED1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %5) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #19
-  %i.h = load i32, ptr %i.a, align 4, !tbaa !95   ; 2 uses
+  %i.h = load i32, ptr %i.a, align 4, !tbaa !95
   %.049 = add i32 %i.h, -1                        ; 2 uses
   %.not50 = icmp eq i32 %.049, 0
   br i1 %.not50, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.e, %bb.p
-  %.052 = phi i32 [ %.0, %bb.p ], [ %.049, %bb.e ] ; 2 uses
-  %.0.in51 = phi i32 [ %.052, %bb.p ], [ %i.h, %bb.e ]
+  %.0.in51 = phi i32 [ %.0, %bb.p ], [ %.049, %bb.e ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #19
   %i.i = load i32, ptr %i.a, align 4, !tbaa !95
-  %i.j = add i32 %.0.in51, -2
+  %i.j = add i32 %.0.in51, -1
   invoke void @_ZN4bzla2fp11SymFpuSymBVILb0EEC1Ejj(ptr noundef nonnull align 8 dereferenceable(8) %7, i32 noundef %i.i, i32 noundef %i.j)
           to label %bb.f unwind label %bb.w
 
@@ -290,7 +289,7 @@ bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #19
   call void @_ZN4bzla2fp11SymFpuSymBVILb0EED1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %7) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #19
-  %.0 = add i32 %.052, -1                         ; 2 uses
+  %.0 = add i32 %.0.in51, -1                      ; 2 uses
   %.not = icmp eq i32 %.0, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !347
 

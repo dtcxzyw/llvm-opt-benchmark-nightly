@@ -205,7 +205,7 @@ bb.a:
 .split:                                           ; preds = %bb.a
   %i.c = add nuw nsw i64 %i.b, 7
   %i.d = and i64 %i.c, 8589934584
-  %i.e = tail call noundef ptr @_ZN6google8protobuf5Arena8AllocateEm(ptr noundef nonnull align 8 dereferenceable(168) %3, i64 noundef %i.d) ; 14 uses
+  %i.e = tail call noundef ptr @_ZN6google8protobuf5Arena8AllocateEm(ptr noundef nonnull align 8 dereferenceable(168) %3, i64 noundef %i.d) ; 15 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.g = load i8, ptr %i.f, align 4, !tbaa !472   ; 2 uses
   %i.h = icmp slt i8 %i.g, 0
@@ -256,13 +256,12 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.l
 
 .lr.ph64.i:                                       ; preds = %.preheader.i, %.lr.ph64.i
-  %4 = phi i64 [ %i.aa, %.lr.ph64.i ], [ 80, %.preheader.i ] ; 2 uses
-  %.05563.i = phi i64 [ %4, %.lr.ph64.i ], [ 16, %.preheader.i ]
-  %i.y = getelementptr inbounds nuw i8, ptr %i.e, i64 %.05563.i ; 2 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 64
-  tail call void asm sideeffect "prefetchw $0", "*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i8) %i.z) #35, !srcloc !473
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.y, i8 0, i64 64, i1 false)
-  %i.aa = add nuw nsw i64 %4, 64                  ; 2 uses
+  %.05563.i = phi i64 [ %i.aa, %.lr.ph64.i ], [ 80, %.preheader.i ] ; 2 uses
+  %i.y = getelementptr i8, ptr %i.e, i64 %.05563.i ; 2 uses
+  %i.z = getelementptr i8, ptr %i.y, i64 -64
+  tail call void asm sideeffect "prefetchw $0", "*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i8) %i.y) #35, !srcloc !473
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.z, i8 0, i64 64, i1 false)
+  %i.aa = add nuw nsw i64 %.05563.i, 64           ; 2 uses
   %i.ab = icmp samesign ult i64 %i.aa, %i.m
   br i1 %i.ab, label %.lr.ph64.i, label %._crit_edge65.i, !llvm.loop !469
 
@@ -305,13 +304,13 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 .lr.ph.i:                                         ; preds = %.preheader61.i, %.lr.ph.i
-  %i.as = phi i64 [ %i.ax, %.lr.ph.i ], [ 80, %.preheader61.i ] ; 2 uses
-  %.062.i = phi i64 [ %i.as, %.lr.ph.i ], [ 16, %.preheader61.i ] ; 2 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %2, i64 %.062.i ; 2 uses
-  %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 64
+  %i.as = phi i64 [ %i.ax, %.lr.ph.i ], [ 80, %.preheader61.i ] ; 4 uses
+  %.06266.i = add nsw i64 %i.as, -64              ; 2 uses
+  %i.at = getelementptr inbounds nuw i8, ptr %2, i64 %.06266.i
+  %i.au = getelementptr inbounds nuw i8, ptr %2, i64 %i.as
   tail call void @llvm.prefetch.p0(ptr nonnull %i.au, i32 0, i32 3, i32 1)
-  %i.av = getelementptr inbounds nuw i8, ptr %i.e, i64 %.062.i ; 2 uses
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 64
+  %i.av = getelementptr inbounds nuw i8, ptr %i.e, i64 %.06266.i
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.as
   tail call void asm sideeffect "prefetchw $0", "*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i8) %i.aw) #35, !srcloc !473
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.av, ptr noundef nonnull align 1 dereferenceable(64) %i.at, i64 64, i1 false)
   %i.ax = add nuw nsw i64 %i.as, 64               ; 2 uses
@@ -326,7 +325,7 @@ bb.l:                                             ; preds = %._crit_edge.i, %bb.
   br label %_ZNK6google8protobuf8internal14MessageCreator12PlacementNewINS0_11MessageLiteEEEPT_PKS5_S8_PvPNS0_5ArenaE.exit
 
 .split8:                                          ; preds = %bb.a
-  %i.bb = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.b) #38 ; 14 uses
+  %i.bb = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.b) #38 ; 15 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.bd = load i8, ptr %i.bc, align 4, !tbaa !472 ; 2 uses
   %i.be = icmp slt i8 %i.bd, 0
@@ -377,13 +376,12 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.w
 
 .lr.ph64.i16:                                     ; preds = %.preheader.i14, %.lr.ph64.i16
-  %5 = phi i64 [ %i.bx, %.lr.ph64.i16 ], [ 80, %.preheader.i14 ] ; 2 uses
-  %.05563.i17 = phi i64 [ %5, %.lr.ph64.i16 ], [ 16, %.preheader.i14 ]
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bb, i64 %.05563.i17 ; 2 uses
-  %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 64
-  tail call void asm sideeffect "prefetchw $0", "*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i8) %i.bw) #35, !srcloc !473
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.bv, i8 0, i64 64, i1 false)
-  %i.bx = add nuw nsw i64 %5, 64                  ; 2 uses
+  %.05563.i17 = phi i64 [ %i.bx, %.lr.ph64.i16 ], [ 80, %.preheader.i14 ] ; 2 uses
+  %i.bv = getelementptr i8, ptr %i.bb, i64 %.05563.i17 ; 2 uses
+  %i.bw = getelementptr i8, ptr %i.bv, i64 -64
+  tail call void asm sideeffect "prefetchw $0", "*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i8) %i.bv) #35, !srcloc !473
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.bw, i8 0, i64 64, i1 false)
+  %i.bx = add nuw nsw i64 %.05563.i17, 64         ; 2 uses
   %i.by = icmp samesign ult i64 %i.bx, %i.bj
   br i1 %i.by, label %.lr.ph64.i16, label %._crit_edge65.i15, !llvm.loop !469
 
@@ -426,13 +424,13 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.w
 
 .lr.ph.i12:                                       ; preds = %.preheader61.i9, %.lr.ph.i12
-  %i.cp = phi i64 [ %i.cu, %.lr.ph.i12 ], [ 80, %.preheader61.i9 ] ; 2 uses
-  %.062.i13 = phi i64 [ %i.cp, %.lr.ph.i12 ], [ 16, %.preheader61.i9 ] ; 2 uses
-  %i.cq = getelementptr inbounds nuw i8, ptr %2, i64 %.062.i13 ; 2 uses
-  %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 64
+  %i.cp = phi i64 [ %i.cu, %.lr.ph.i12 ], [ 80, %.preheader61.i9 ] ; 4 uses
+  %.06266.i13 = add nsw i64 %i.cp, -64            ; 2 uses
+  %i.cq = getelementptr inbounds nuw i8, ptr %2, i64 %.06266.i13
+  %i.cr = getelementptr inbounds nuw i8, ptr %2, i64 %i.cp
   tail call void @llvm.prefetch.p0(ptr nonnull %i.cr, i32 0, i32 3, i32 1)
-  %i.cs = getelementptr inbounds nuw i8, ptr %i.bb, i64 %.062.i13 ; 2 uses
-  %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 64
+  %i.cs = getelementptr inbounds nuw i8, ptr %i.bb, i64 %.06266.i13
+  %i.ct = getelementptr inbounds nuw i8, ptr %i.bb, i64 %i.cp
   tail call void asm sideeffect "prefetchw $0", "*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i8) %i.ct) #35, !srcloc !473
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.cs, ptr noundef nonnull align 1 dereferenceable(64) %i.cq, i64 64, i1 false)
   %i.cu = add nuw nsw i64 %i.cp, 64               ; 2 uses

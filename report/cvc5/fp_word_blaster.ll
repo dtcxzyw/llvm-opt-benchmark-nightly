@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.a
 
 _ZNK4cvc58internal6theory2fp14symfpuSymbolic17symbolicBitVectorILb0EE8getWidthEv.exit: ; preds = %bb.b, %bb.c, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #24
-  %i.m = add i32 %i.a, -1                         ; 5 uses
+  %i.m = add i32 %i.a, -1                         ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
   %i.n = add i32 %i.a, -2                         ; 5 uses
@@ -317,10 +317,9 @@ _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit52: ; preds = %_ZN4cvc58internal12
   br i1 %.not94, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit52, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit75
-  %.096 = phi i32 [ %.0, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit75 ], [ %i.n, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit52 ] ; 2 uses
-  %.0.in95 = phi i32 [ %.096, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit75 ], [ %i.m, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit52 ]
+  %.0.in95 = phi i32 [ %.0, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit75 ], [ %i.n, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit52 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #24
-  %i.as = add i32 %.0.in95, -2
+  %i.as = add i32 %.0.in95, -1
   invoke void @_ZN4cvc58internal6theory2fp14symfpuSymbolic17symbolicBitVectorILb0EEC2Ejj(ptr noundef nonnull align 8 dereferenceable(8) %8, i32 noundef %i.m, i32 noundef %i.as)
           to label %bb.s unwind label %bb.br
 
@@ -704,7 +703,7 @@ bb.bk:                                            ; preds = %bb.bj
 
 _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit75: ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit73, %bb.bi, %bb.bj
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #24
-  %.0 = add i32 %.096, -1                         ; 2 uses
+  %.0 = add i32 %.0.in95, -1                      ; 2 uses
   %.not = icmp eq i32 %.0, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !941
 

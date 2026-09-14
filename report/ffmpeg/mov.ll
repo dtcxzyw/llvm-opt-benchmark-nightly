@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
   %i.aa = load i32, ptr %i.z, align 8, !tbaa !208 ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 256
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 2 uses
-  %i.ad = load i32, ptr %i.ac, align 8, !tbaa !346 ; 2 uses
+  %i.ad = load i32, ptr %i.ac, align 8, !tbaa !346
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 268 ; 2 uses
   %i.af = load i32, ptr %i.ae, align 4, !tbaa !253 ; 3 uses
   %.1376517 = add nsw i32 %i.ad, 1                ; 2 uses
@@ -217,16 +217,15 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph521, %get_frag_stream_info.exit.thread
-  %.1376519 = phi i32 [ %.1376517, %.lr.ph521 ], [ %.1376, %get_frag_stream_info.exit.thread ] ; 5 uses
-  %.1376.in518 = phi i32 [ %i.ad, %.lr.ph521 ], [ %.1376519, %get_frag_stream_info.exit.thread ]
-  %i.ai = icmp sgt i32 %.1376.in518, -2
-  %.not.i = icmp slt i32 %.1376519, %i.af
+  %.1376.in518 = phi i32 [ %.1376517, %.lr.ph521 ], [ %.1376, %get_frag_stream_info.exit.thread ] ; 5 uses
+  %i.ai = icmp sgt i32 %.1376.in518, -1
+  %.not.i = icmp slt i32 %.1376.in518, %i.af
   %or.cond596 = and i1 %i.ai, %.not.i
   br i1 %or.cond596, label %bb.h, label %get_frag_stream_info.exit.thread
 
 bb.h:                                             ; preds = %bb.g
   %i.aj = load ptr, ptr %i.ah, align 8, !tbaa !277
-  %i.ak = zext nneg i32 %.1376519 to i64
+  %i.ak = zext nneg i32 %.1376.in518 to i64
   %i.al = getelementptr inbounds nuw [32 x i8], ptr %i.aj, i64 %i.ak ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 16
   %i.an = load i32, ptr %i.am, align 8, !tbaa !278 ; 2 uses
@@ -258,7 +257,7 @@ get_frag_stream_info.exit:                        ; preds = %bb.j
   br i1 %i.aw, label %bb.k, label %get_frag_stream_info.exit.thread
 
 get_frag_stream_info.exit.thread:                 ; preds = %bb.i, %bb.h, %bb.g, %get_frag_stream_info.exit
-  %.1376 = add i32 %.1376519, 1                   ; 2 uses
+  %.1376 = add i32 %.1376.in518, 1                ; 2 uses
   %exitcond541.not = icmp eq i32 %.1376, %i.af
   br i1 %exitcond541.not, label %.thread465, label %bb.g, !llvm.loop !629
 
@@ -273,7 +272,7 @@ bb.l:                                             ; preds = %bb.k
 
 .thread465:                                       ; preds = %get_frag_stream_info.exit.thread, %bb.f, %bb.k
   %.0370470 = phi i32 [ %i.av, %bb.k ], [ %i.aa, %bb.f ], [ %i.aa, %get_frag_stream_info.exit.thread ] ; 12 uses
-  %.0372469 = phi i32 [ %.1376519, %bb.k ], [ -1, %bb.f ], [ -1, %get_frag_stream_info.exit.thread ]
+  %.0372469 = phi i32 [ %.1376.in518, %bb.k ], [ -1, %bb.f ], [ -1, %get_frag_stream_info.exit.thread ]
   %i.ax = tail call i32 @avio_r8(ptr noundef %1) #16 ; 0 uses
   %i.ay = tail call i32 @avio_rb24(ptr noundef %1) #16 ; 8 uses
   %i.az = tail call i32 @avio_rb32(ptr noundef %1) #16 ; 4 uses

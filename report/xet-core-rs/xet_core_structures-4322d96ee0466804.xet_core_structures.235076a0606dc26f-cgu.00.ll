@@ -204,13 +204,12 @@ bb.ab:                                            ; preds = %_RINvMs2_NtNtCs31YA
   %i.cv = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %i.c, i64 24 ; 2 uses
-  %5 = add nuw nsw i64 %4, 1                      ; 2 uses
   br i1 %or.cond9.i.i, label %.lr.ph.split.us.i, label %.lr.ph.split.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i, %bb.ad
-  %i.cy = phi i64 [ %i.dl, %bb.ad ], [ 2, %.lr.ph.i ] ; 5 uses
+  %i.cy = phi i64 [ %i.dl, %bb.ad ], [ 2, %.lr.ph.i ] ; 4 uses
   %.sroa.084.0125.us.i = phi i32 [ %i.dk, %bb.ad ], [ %.sroa.659.0.copyload.i, %.lr.ph.i ] ; 3 uses
-  %.sroa.081.0124.us.i = phi i64 [ %i.cy, %bb.ad ], [ 1, %.lr.ph.i ] ; 2 uses
+  %.sroa.081.0124.us159.i = add nsw i64 %i.cy, -1 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !313
   call void @_RINvMs_NtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12xorb_structsNtB5_22XorbChunkSequenceEntry11deserializeINtNtNtCskKLDkoKarTP_4core2io6cursor6CursorRINtNtCsexYYUdYSQU6_5alloc3vec3VechEEEB9_(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.d, ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %2), !noalias !312
   %i.cz = load i64, ptr %i.d, align 8, !range !7, !noalias !313, !noundef !4
@@ -224,13 +223,13 @@ bb.ac:                                            ; preds = %.lr.ph.split.us.i
   %.sroa.473.sroa.5.0.copyload.us.i = load i64, ptr %.sroa.473.sroa.5.0..sroa.473.0..sroa_idx.sroa_idx.i, align 8, !noalias !313
   %.sroa.675.0.copyload.us.i = load i32, ptr %.sroa.675.0..sroa_idx.i, align 4, !noalias !313
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !313
-  %exitcond158.i = icmp eq i64 %i.cy, %5
+  %exitcond158.i = icmp eq i64 %.sroa.081.0124.us159.i, %4
   br i1 %exitcond158.i, label %.loopexit, label %_RINvMs2_NtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12shard_formatNtB6_12MDBShardInfo16keyed_chunk_hashNtNtNtBa_10merklehash9data_hash8DataHashEBa_.exit115.us.i
 
 _RINvMs2_NtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12shard_formatNtB6_12MDBShardInfo16keyed_chunk_hashNtNtNtBa_10merklehash9data_hash8DataHashEBa_.exit115.us.i: ; preds = %bb.ac
   %i.db = ptrtoint ptr %.sroa.072.0.copyload.us.i to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !313
-  %i.dc = getelementptr inbounds nuw [32 x i8], ptr %3, i64 %.sroa.081.0124.us.i
+  %i.dc = getelementptr inbounds nuw [32 x i8], ptr %3, i64 %.sroa.081.0124.us159.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !317
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.c, ptr noundef nonnull readonly align 8 dereferenceable(32) %i.dc, i64 32, i1 false), !noalias !315
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !317
@@ -256,9 +255,9 @@ bb.ad:                                            ; preds = %_RINvMs2_NtNtCs31YA
   br i1 %i.dn, label %.loopexit, label %.lr.ph.split.us.i
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i, %bb.af
-  %i.do = phi i64 [ %i.ec, %bb.af ], [ 2, %.lr.ph.i ] ; 5 uses
+  %i.do = phi i64 [ %i.ec, %bb.af ], [ 2, %.lr.ph.i ] ; 4 uses
   %.sroa.084.0125.i = phi i32 [ %i.eb, %bb.af ], [ %.sroa.659.0.copyload.i, %.lr.ph.i ] ; 3 uses
-  %.sroa.081.0124.i = phi i64 [ %i.do, %bb.af ], [ 1, %.lr.ph.i ] ; 2 uses
+  %.sroa.081.0124158.i = add nsw i64 %i.do, -1    ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !313
   call void @_RINvMs_NtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12xorb_structsNtB5_22XorbChunkSequenceEntry11deserializeINtNtNtCskKLDkoKarTP_4core2io6cursor6CursorRINtNtCsexYYUdYSQU6_5alloc3vec3VechEEEB9_(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.d, ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %2), !noalias !312
   %i.dp = load i64, ptr %i.d, align 8, !range !7, !noalias !313, !noundef !4
@@ -277,13 +276,13 @@ bb.ae:                                            ; preds = %.lr.ph.split.i
   %.sroa.473.sroa.5.0.copyload.i = load i64, ptr %.sroa.473.sroa.5.0..sroa.473.0..sroa_idx.sroa_idx.i, align 8, !noalias !313
   %.sroa.675.0.copyload.i = load i32, ptr %.sroa.675.0..sroa_idx.i, align 4, !noalias !313
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !313
-  %exitcond.i = icmp eq i64 %i.do, %5
+  %exitcond.i = icmp eq i64 %.sroa.081.0124158.i, %4
   br i1 %exitcond.i, label %.loopexit, label %_RINvMs2_NtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12shard_formatNtB6_12MDBShardInfo16keyed_chunk_hashNtNtNtBa_10merklehash9data_hash8DataHashEBa_.exit115.i
 
 _RINvMs2_NtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12shard_formatNtB6_12MDBShardInfo16keyed_chunk_hashNtNtNtBa_10merklehash9data_hash8DataHashEBa_.exit115.i: ; preds = %bb.ae
   %i.ds = ptrtoint ptr %.sroa.072.0.copyload.i to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !313
-  %i.dt = getelementptr inbounds nuw [32 x i8], ptr %3, i64 %.sroa.081.0124.i
+  %i.dt = getelementptr inbounds nuw [32 x i8], ptr %3, i64 %.sroa.081.0124158.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !317
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.a, ptr noundef nonnull readonly align 8 dereferenceable(32) %i.dt, i64 32, i1 false), !noalias !315
   call void @_RNvMsf_NtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hashNtB5_8DataHash4hmac(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.c, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %i.w), !noalias !318
@@ -302,7 +301,7 @@ _RINvMs2_NtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12shard_formatNt
   br i1 %or.cond110.i, label %bb.af, label %.split135.us.i
 
 .split135.us.i:                                   ; preds = %_RINvMs2_NtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12shard_formatNtB6_12MDBShardInfo16keyed_chunk_hashNtNtNtBa_10merklehash9data_hash8DataHashEBa_.exit115.i, %_RINvMs2_NtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12shard_formatNtB6_12MDBShardInfo16keyed_chunk_hashNtNtNtBa_10merklehash9data_hash8DataHashEBa_.exit115.us.i
-  %.us-phi136.i = phi i64 [ %.sroa.081.0124.us.i, %_RINvMs2_NtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12shard_formatNtB6_12MDBShardInfo16keyed_chunk_hashNtNtNtBa_10merklehash9data_hash8DataHashEBa_.exit115.us.i ], [ %.sroa.081.0124.i, %_RINvMs2_NtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12shard_formatNtB6_12MDBShardInfo16keyed_chunk_hashNtNtNtBa_10merklehash9data_hash8DataHashEBa_.exit115.i ]
+  %.us-phi136.i = phi i64 [ %.sroa.081.0124.us159.i, %_RINvMs2_NtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12shard_formatNtB6_12MDBShardInfo16keyed_chunk_hashNtNtNtBa_10merklehash9data_hash8DataHashEBa_.exit115.us.i ], [ %.sroa.081.0124158.i, %_RINvMs2_NtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12shard_formatNtB6_12MDBShardInfo16keyed_chunk_hashNtNtNtBa_10merklehash9data_hash8DataHashEBa_.exit115.i ]
   %.us-phi137.i = phi i32 [ %.sroa.084.0125.us.i, %_RINvMs2_NtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12shard_formatNtB6_12MDBShardInfo16keyed_chunk_hashNtNtNtBa_10merklehash9data_hash8DataHashEBa_.exit115.us.i ], [ %.sroa.084.0125.i, %_RINvMs2_NtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12shard_formatNtB6_12MDBShardInfo16keyed_chunk_hashNtNtNtBa_10merklehash9data_hash8DataHashEBa_.exit115.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !313
   br label %.loopexit

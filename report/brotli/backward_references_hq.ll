@@ -205,7 +205,7 @@ GetInsertLengthCode.exit:                         ; preds = %bb.e, %bb.g, %bb.i,
 
 bb.l:                                             ; preds = %.lr.ph351, %.loopexit
   %.0211349 = phi i64 [ 0, %.lr.ph351 ], [ %i.in, %.loopexit ] ; 7 uses
-  %.0213348 = phi i64 [ %i.au, %.lr.ph351 ], [ %.2215.ph, %.loopexit ] ; 14 uses
+  %.0213348 = phi i64 [ %i.au, %.lr.ph351 ], [ %.2215.ph, %.loopexit ] ; 13 uses
   %.1218347 = phi i64 [ %.0217365, %.lr.ph351 ], [ %.4.ph, %.loopexit ] ; 10 uses
   %i.da = getelementptr inbounds nuw [4 x i8], ptr @kDistanceCacheIndex, i64 %.0211349
   %i.db = load i32, ptr %i.da, align 4, !tbaa !21
@@ -433,21 +433,20 @@ FindMatchLengthWithLimit.exit259:                 ; preds = %.critedge.i, %bb.ab
   br label %bb.ae
 
 bb.ae:                                            ; preds = %.lr.ph344, %bb.al
-  %.0205343 = phi i64 [ %.0205339, %.lr.ph344 ], [ %.0205, %bb.al ] ; 10 uses
-  %.1214342 = phi i64 [ %.0213348, %.lr.ph344 ], [ %.0205343, %bb.al ] ; 2 uses
+  %.1214342 = phi i64 [ %.0205339, %.lr.ph344 ], [ %.0205, %bb.al ] ; 11 uses
   %.2219341 = phi i64 [ %.1218347, %.lr.ph344 ], [ %.3, %bb.al ] ; 2 uses
-  %i.gm = icmp ult i64 %.0205343, 10
+  %i.gm = icmp ult i64 %.1214342, 10
   br i1 %i.gm, label %GetCopyLengthCode.exit241, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %i.gn = icmp ult i64 %.0205343, 134
+  %i.gn = icmp ult i64 %.1214342, 134
   br i1 %i.gn, label %bb.ag, label %bb.ah
 
 bb.ag:                                            ; preds = %bb.af
-  %i.go = add nsw i64 %.1214342, -5               ; 2 uses
+  %i.go = add nsw i64 %.1214342, -6               ; 2 uses
   %i.gp = trunc nuw nsw i64 %i.go to i32
   %i.gq = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.gp, i1 true)
-  %i.gr = sub nsw i32 30, %i.gq                   ; 2 uses
+  %i.gr = sub nuw nsw i32 30, %i.gq               ; 2 uses
   %i.gs = shl nuw nsw i32 %i.gr, 1
   %i.gt = zext nneg i32 %i.gs to i64
   %i.gu = zext nneg i32 %i.gr to i64
@@ -456,19 +455,19 @@ bb.ag:                                            ; preds = %bb.af
   br label %GetCopyLengthCode.exit241
 
 bb.ah:                                            ; preds = %bb.af
-  %i.gx = icmp ult i64 %.0205343, 2118
+  %i.gx = icmp ult i64 %.1214342, 2118
   br i1 %i.gx, label %bb.ai, label %GetCopyLengthCode.exit241.thread
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.gy = trunc i64 %.1214342 to i32
-  %i.gz = add i32 %i.gy, -69
+  %i.gy = trunc nuw nsw i64 %.1214342 to i32
+  %i.gz = add nsw i32 %i.gy, -70
   %i.ha = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.gz, i1 true)
   %i.hb = trunc nuw nsw i32 %i.ha to i16
   %i.hc = sub nuw nsw i16 43, %i.hb
   br label %GetCopyLengthCode.exit241.thread
 
 GetCopyLengthCode.exit241:                        ; preds = %bb.ae, %bb.ag
-  %.0205343.sink = phi i64 [ %i.gw, %bb.ag ], [ %.0205343, %bb.ae ]
+  %.0205343.sink = phi i64 [ %i.gw, %bb.ag ], [ %.1214342, %bb.ae ]
   %.sink439 = phi i16 [ 4, %bb.ag ], [ -2, %bb.ae ]
   %i.hd = trunc nuw nsw i64 %.0205343.sink to i16
   %i.he = add nsw i16 %.sink439, %i.hd            ; 4 uses
@@ -512,14 +511,14 @@ CombineLengthCodes.exit:                          ; preds = %bb.aj, %GetCopyLeng
   %i.ib = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %i.ia
   %i.ic = load float, ptr %i.ib, align 4, !tbaa !92
   %i.id = fadd float %i.ic, %i.hz                 ; 2 uses
-  %i.ie = getelementptr [16 x i8], ptr %i.bc, i64 %.0205343 ; 4 uses
+  %i.ie = getelementptr [16 x i8], ptr %i.bc, i64 %.1214342 ; 4 uses
   %i.if = getelementptr inbounds nuw i8, ptr %i.ie, i64 12 ; 2 uses
   %i.ig = load float, ptr %i.if, align 4, !tbaa !22
   %i.ih = fcmp olt float %i.id, %i.ig
   br i1 %i.ih, label %bb.ak, label %bb.al
 
 bb.ak:                                            ; preds = %CombineLengthCodes.exit
-  %i.ii = trunc i64 %.0205343 to i32
+  %i.ii = trunc i64 %.1214342 to i32
   %i.ij = or i32 %i.ii, 301989888
   store i32 %i.ij, ptr %i.ie, align 4, !tbaa !45
   %i.ik = getelementptr inbounds nuw i8, ptr %i.ie, i64 4
@@ -527,18 +526,18 @@ bb.ak:                                            ; preds = %CombineLengthCodes.
   %i.il = getelementptr inbounds nuw i8, ptr %i.ie, i64 8
   store i32 %i.gl, ptr %i.il, align 4, !tbaa !46
   store float %i.id, ptr %i.if, align 4, !tbaa !22
-  %i.im = tail call i64 @llvm.umax.i64(i64 %.2219341, i64 %.0205343)
+  %i.im = tail call i64 @llvm.umax.i64(i64 %.2219341, i64 %.1214342)
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ak, %CombineLengthCodes.exit
   %.3 = phi i64 [ %i.im, %bb.ak ], [ %.2219341, %CombineLengthCodes.exit ] ; 2 uses
-  %.0205 = add i64 %.0205343, 1                   ; 2 uses
+  %.0205 = add i64 %.1214342, 1                   ; 2 uses
   %.not236 = icmp ugt i64 %.0205, %.1210
   br i1 %.not236, label %.loopexit, label %bb.ae, !llvm.loop !179
 
 .loopexit:                                        ; preds = %bb.al, %FindMatchLengthWithLimit.exit259, %bb.p, %bb.m, %bb.o, %bb.v, %bb.q, %bb.y, %bb.z
   %.4.ph = phi i64 [ %.1218347, %bb.z ], [ %.1218347, %bb.y ], [ %.1218347, %bb.q ], [ %.1218347, %bb.p ], [ %.1218347, %bb.v ], [ %.1218347, %bb.o ], [ %.1218347, %bb.m ], [ %.1218347, %FindMatchLengthWithLimit.exit259 ], [ %.3, %bb.al ] ; 2 uses
-  %.2215.ph = phi i64 [ %.0213348, %bb.z ], [ %.0213348, %bb.y ], [ %.0213348, %bb.q ], [ %.0213348, %bb.p ], [ %.0213348, %bb.v ], [ %.0213348, %bb.o ], [ %.0213348, %bb.m ], [ %.0213348, %FindMatchLengthWithLimit.exit259 ], [ %.0205343, %bb.al ] ; 2 uses
+  %.2215.ph = phi i64 [ %.0213348, %bb.z ], [ %.0213348, %bb.y ], [ %.0213348, %bb.q ], [ %.0213348, %bb.p ], [ %.0213348, %bb.v ], [ %.0213348, %bb.o ], [ %.0213348, %bb.m ], [ %.0213348, %FindMatchLengthWithLimit.exit259 ], [ %.1214342, %bb.al ] ; 2 uses
   %i.in = add nuw nsw i64 %.0211349, 1
   %i.io = icmp samesign ult i64 %.0211349, 15
   %i.ip = icmp ult i64 %.2215.ph, %i.h

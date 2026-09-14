@@ -205,7 +205,7 @@ vector.memcheck:                                  ; preds = %.lr.ph
   br i1 %found.conflict, label %scalar.ph115.preheader, label %vector.ph117
 
 vector.ph117:                                     ; preds = %vector.memcheck
-  %n.vec118 = and i64 %i.ge, -8                   ; 4 uses
+  %n.vec118 = and i64 %i.ge, -8                   ; 3 uses
   %i.gg = or disjoint i64 %n.vec118, 1
   %broadcast.splatinsert = insertelement <4 x float> poison, float %i.fz, i64 0
   %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -235,16 +235,16 @@ middle.block125:                                  ; preds = %vector.body119
 
 scalar.ph115.preheader:                           ; preds = %vector.memcheck, %.lr.ph, %middle.block125
   %.ph = phi i64 [ 1, %vector.memcheck ], [ 1, %.lr.ph ], [ %i.gg, %middle.block125 ] ; 4 uses
-  %.03877.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %n.vec118, %middle.block125 ] ; 3 uses
   %.neg = add i64 %.ph, 1
   %i.go = and i64 %i.gb, 1
   %lcmp.mod.not.not = icmp eq i64 %i.go, 0
   br i1 %lcmp.mod.not.not, label %scalar.ph115.prol, label %scalar.ph115.prol.loopexit
 
 scalar.ph115.prol:                                ; preds = %scalar.ph115.preheader
-  %i.gp = getelementptr inbounds nuw [4 x i8], ptr %i.gd, i64 %.03877.ph
+  %.0387787.prol = add nsw i64 %.ph, -1           ; 2 uses
+  %i.gp = getelementptr inbounds nuw [4 x i8], ptr %i.gd, i64 %.0387787.prol
   %i.gq = load float, ptr %i.gp, align 4, !tbaa !97
-  %i.gr = getelementptr inbounds nuw [4 x i8], ptr %i.dv, i64 %.03877.ph ; 2 uses
+  %i.gr = getelementptr inbounds nuw [4 x i8], ptr %i.dv, i64 %.0387787.prol ; 2 uses
   %i.gs = load float, ptr %i.gr, align 4, !tbaa !97
   %i.gt = call float @llvm.fmuladd.f32(float %i.gq, float %i.fz, float %i.gs)
   store float %i.gt, ptr %i.gr, align 4, !tbaa !97
@@ -253,7 +253,6 @@ scalar.ph115.prol:                                ; preds = %scalar.ph115.prehea
 
 scalar.ph115.prol.loopexit:                       ; preds = %scalar.ph115.prol, %scalar.ph115.preheader
   %.unr = phi i64 [ %.ph, %scalar.ph115.preheader ], [ %i.gu, %scalar.ph115.prol ]
-  %.03877.unr = phi i64 [ %.03877.ph, %scalar.ph115.preheader ], [ %.ph, %scalar.ph115.prol ]
   %i.gv = icmp eq i64 %i.gb, %.neg
   br i1 %i.gv, label %._crit_edge, label %scalar.ph115
 
@@ -264,14 +263,13 @@ scalar.ph115.prol.loopexit:                       ; preds = %scalar.ph115.prol, 
 
 scalar.ph115:                                     ; preds = %scalar.ph115.prol.loopexit, %scalar.ph115
   %i.gx = phi i64 [ %i.hi, %scalar.ph115 ], [ %.unr, %scalar.ph115.prol.loopexit ] ; 4 uses
-  %.03877 = phi i64 [ %10, %scalar.ph115 ], [ %.03877.unr, %scalar.ph115.prol.loopexit ] ; 2 uses
-  %i.gy = getelementptr inbounds nuw [4 x i8], ptr %i.gd, i64 %.03877
+  %.0387787 = add i64 %i.gx, -1                   ; 2 uses
+  %i.gy = getelementptr inbounds nuw [4 x i8], ptr %i.gd, i64 %.0387787
   %i.gz = load float, ptr %i.gy, align 4, !tbaa !97
-  %i.ha = getelementptr inbounds nuw [4 x i8], ptr %i.dv, i64 %.03877 ; 2 uses
+  %i.ha = getelementptr inbounds nuw [4 x i8], ptr %i.dv, i64 %.0387787 ; 2 uses
   %i.hb = load float, ptr %i.ha, align 4, !tbaa !97
   %i.hc = call float @llvm.fmuladd.f32(float %i.gz, float %i.fz, float %i.hb)
   store float %i.hc, ptr %i.ha, align 4, !tbaa !97
-  %10 = add nuw i64 %i.gx, 1
   %i.hd = getelementptr inbounds nuw [4 x i8], ptr %i.gd, i64 %i.gx
   %i.he = load float, ptr %i.hd, align 4, !tbaa !97
   %i.hf = getelementptr inbounds nuw [4 x i8], ptr %i.dv, i64 %i.gx ; 2 uses
@@ -674,7 +672,7 @@ vector.memcheck:                                  ; preds = %.lr.ph
   br i1 %found.conflict, label %scalar.ph111.preheader, label %vector.ph113
 
 vector.ph113:                                     ; preds = %vector.memcheck
-  %n.vec114 = and i64 %i.fc, -8                   ; 4 uses
+  %n.vec114 = and i64 %i.fc, -8                   ; 3 uses
   %i.fe = or disjoint i64 %n.vec114, 1
   %broadcast.splatinsert = insertelement <4 x float> poison, float %i.ex, i64 0
   %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -704,16 +702,16 @@ middle.block121:                                  ; preds = %vector.body115
 
 scalar.ph111.preheader:                           ; preds = %vector.memcheck, %.lr.ph, %middle.block121
   %.ph = phi i64 [ 1, %vector.memcheck ], [ 1, %.lr.ph ], [ %i.fe, %middle.block121 ] ; 4 uses
-  %.03876.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %n.vec114, %middle.block121 ] ; 3 uses
   %.neg = add i64 %.ph, 1
   %i.fm = and i64 %i.ez, 1
   %lcmp.mod.not.not = icmp eq i64 %i.fm, 0
   br i1 %lcmp.mod.not.not, label %scalar.ph111.prol, label %scalar.ph111.prol.loopexit
 
 scalar.ph111.prol:                                ; preds = %scalar.ph111.preheader
-  %i.fn = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %.03876.ph
+  %.0387687.prol = add nsw i64 %.ph, -1           ; 2 uses
+  %i.fn = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %.0387687.prol
   %i.fo = load float, ptr %i.fn, align 4, !tbaa !97
-  %i.fp = getelementptr inbounds nuw [4 x i8], ptr %i.ct, i64 %.03876.ph ; 2 uses
+  %i.fp = getelementptr inbounds nuw [4 x i8], ptr %i.ct, i64 %.0387687.prol ; 2 uses
   %i.fq = load float, ptr %i.fp, align 4, !tbaa !97
   %i.fr = call float @llvm.fmuladd.f32(float %i.fo, float %i.ex, float %i.fq)
   store float %i.fr, ptr %i.fp, align 4, !tbaa !97
@@ -722,7 +720,6 @@ scalar.ph111.prol:                                ; preds = %scalar.ph111.prehea
 
 scalar.ph111.prol.loopexit:                       ; preds = %scalar.ph111.prol, %scalar.ph111.preheader
   %.unr = phi i64 [ %.ph, %scalar.ph111.preheader ], [ %i.fs, %scalar.ph111.prol ]
-  %.03876.unr = phi i64 [ %.03876.ph, %scalar.ph111.preheader ], [ %.ph, %scalar.ph111.prol ]
   %i.ft = icmp eq i64 %i.ez, %.neg
   br i1 %i.ft, label %._crit_edge, label %scalar.ph111
 
@@ -733,14 +730,13 @@ scalar.ph111.prol.loopexit:                       ; preds = %scalar.ph111.prol, 
 
 scalar.ph111:                                     ; preds = %scalar.ph111.prol.loopexit, %scalar.ph111
   %i.fv = phi i64 [ %i.gg, %scalar.ph111 ], [ %.unr, %scalar.ph111.prol.loopexit ] ; 4 uses
-  %.03876 = phi i64 [ %10, %scalar.ph111 ], [ %.03876.unr, %scalar.ph111.prol.loopexit ] ; 2 uses
-  %i.fw = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %.03876
+  %.0387687 = add i64 %i.fv, -1                   ; 2 uses
+  %i.fw = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %.0387687
   %i.fx = load float, ptr %i.fw, align 4, !tbaa !97
-  %i.fy = getelementptr inbounds nuw [4 x i8], ptr %i.ct, i64 %.03876 ; 2 uses
+  %i.fy = getelementptr inbounds nuw [4 x i8], ptr %i.ct, i64 %.0387687 ; 2 uses
   %i.fz = load float, ptr %i.fy, align 4, !tbaa !97
   %i.ga = call float @llvm.fmuladd.f32(float %i.fx, float %i.ex, float %i.fz)
   store float %i.ga, ptr %i.fy, align 4, !tbaa !97
-  %10 = add nuw i64 %i.fv, 1
   %i.gb = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %i.fv
   %i.gc = load float, ptr %i.gb, align 4, !tbaa !97
   %i.gd = getelementptr inbounds nuw [4 x i8], ptr %i.ct, i64 %i.fv ; 2 uses
@@ -1143,7 +1139,7 @@ vector.memcheck:                                  ; preds = %.lr.ph
   br i1 %found.conflict, label %scalar.ph118.preheader, label %vector.ph120
 
 vector.ph120:                                     ; preds = %vector.memcheck
-  %n.vec121 = and i64 %i.gu, -8                   ; 4 uses
+  %n.vec121 = and i64 %i.gu, -8                   ; 3 uses
   %i.gw = or disjoint i64 %n.vec121, 1
   %broadcast.splatinsert = insertelement <4 x float> poison, float %i.gp, i64 0
   %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -1173,16 +1169,16 @@ middle.block128:                                  ; preds = %vector.body122
 
 scalar.ph118.preheader:                           ; preds = %vector.memcheck, %.lr.ph, %middle.block128
   %.ph = phi i64 [ 1, %vector.memcheck ], [ 1, %.lr.ph ], [ %i.gw, %middle.block128 ] ; 4 uses
-  %.03876.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %n.vec121, %middle.block128 ] ; 3 uses
   %.neg = add i64 %.ph, 1
   %i.he = and i64 %i.gr, 1
   %lcmp.mod147.not.not = icmp eq i64 %i.he, 0
   br i1 %lcmp.mod147.not.not, label %scalar.ph118.prol, label %scalar.ph118.prol.loopexit
 
 scalar.ph118.prol:                                ; preds = %scalar.ph118.preheader
-  %i.hf = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %.03876.ph
+  %.0387686.prol = add nsw i64 %.ph, -1           ; 2 uses
+  %i.hf = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %.0387686.prol
   %i.hg = load float, ptr %i.hf, align 4, !tbaa !97
-  %i.hh = getelementptr inbounds nuw [4 x i8], ptr %i.el, i64 %.03876.ph ; 2 uses
+  %i.hh = getelementptr inbounds nuw [4 x i8], ptr %i.el, i64 %.0387686.prol ; 2 uses
   %i.hi = load float, ptr %i.hh, align 4, !tbaa !97
   %i.hj = call float @llvm.fmuladd.f32(float %i.hg, float %i.gp, float %i.hi)
   store float %i.hj, ptr %i.hh, align 4, !tbaa !97
@@ -1191,7 +1187,6 @@ scalar.ph118.prol:                                ; preds = %scalar.ph118.prehea
 
 scalar.ph118.prol.loopexit:                       ; preds = %scalar.ph118.prol, %scalar.ph118.preheader
   %.unr = phi i64 [ %.ph, %scalar.ph118.preheader ], [ %i.hk, %scalar.ph118.prol ]
-  %.03876.unr = phi i64 [ %.03876.ph, %scalar.ph118.preheader ], [ %.ph, %scalar.ph118.prol ]
   %i.hl = icmp eq i64 %i.gr, %.neg
   br i1 %i.hl, label %._crit_edge, label %scalar.ph118
 
@@ -1202,14 +1197,13 @@ scalar.ph118.prol.loopexit:                       ; preds = %scalar.ph118.prol, 
 
 scalar.ph118:                                     ; preds = %scalar.ph118.prol.loopexit, %scalar.ph118
   %i.hn = phi i64 [ %i.hy, %scalar.ph118 ], [ %.unr, %scalar.ph118.prol.loopexit ] ; 4 uses
-  %.03876 = phi i64 [ %10, %scalar.ph118 ], [ %.03876.unr, %scalar.ph118.prol.loopexit ] ; 2 uses
-  %i.ho = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %.03876
+  %.0387686 = add i64 %i.hn, -1                   ; 2 uses
+  %i.ho = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %.0387686
   %i.hp = load float, ptr %i.ho, align 4, !tbaa !97
-  %i.hq = getelementptr inbounds nuw [4 x i8], ptr %i.el, i64 %.03876 ; 2 uses
+  %i.hq = getelementptr inbounds nuw [4 x i8], ptr %i.el, i64 %.0387686 ; 2 uses
   %i.hr = load float, ptr %i.hq, align 4, !tbaa !97
   %i.hs = call float @llvm.fmuladd.f32(float %i.hp, float %i.gp, float %i.hr)
   store float %i.hs, ptr %i.hq, align 4, !tbaa !97
-  %10 = add nuw i64 %i.hn, 1
   %i.ht = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %i.hn
   %i.hu = load float, ptr %i.ht, align 4, !tbaa !97
   %i.hv = getelementptr inbounds nuw [4 x i8], ptr %i.el, i64 %i.hn ; 2 uses
@@ -1612,7 +1606,7 @@ vector.memcheck:                                  ; preds = %.lr.ph
   br i1 %found.conflict, label %scalar.ph111.preheader, label %vector.ph113
 
 vector.ph113:                                     ; preds = %vector.memcheck
-  %n.vec114 = and i64 %i.fc, -8                   ; 4 uses
+  %n.vec114 = and i64 %i.fc, -8                   ; 3 uses
   %i.fe = or disjoint i64 %n.vec114, 1
   %broadcast.splatinsert = insertelement <4 x float> poison, float %i.ex, i64 0
   %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -1642,16 +1636,16 @@ middle.block121:                                  ; preds = %vector.body115
 
 scalar.ph111.preheader:                           ; preds = %vector.memcheck, %.lr.ph, %middle.block121
   %.ph = phi i64 [ 1, %vector.memcheck ], [ 1, %.lr.ph ], [ %i.fe, %middle.block121 ] ; 4 uses
-  %.03876.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %n.vec114, %middle.block121 ] ; 3 uses
   %.neg = add i64 %.ph, 1
   %i.fm = and i64 %i.ez, 1
   %lcmp.mod.not.not = icmp eq i64 %i.fm, 0
   br i1 %lcmp.mod.not.not, label %scalar.ph111.prol, label %scalar.ph111.prol.loopexit
 
 scalar.ph111.prol:                                ; preds = %scalar.ph111.preheader
-  %i.fn = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %.03876.ph
+  %.0387687.prol = add nsw i64 %.ph, -1           ; 2 uses
+  %i.fn = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %.0387687.prol
   %i.fo = load float, ptr %i.fn, align 4, !tbaa !97
-  %i.fp = getelementptr inbounds nuw [4 x i8], ptr %i.ct, i64 %.03876.ph ; 2 uses
+  %i.fp = getelementptr inbounds nuw [4 x i8], ptr %i.ct, i64 %.0387687.prol ; 2 uses
   %i.fq = load float, ptr %i.fp, align 4, !tbaa !97
   %i.fr = call float @llvm.fmuladd.f32(float %i.fo, float %i.ex, float %i.fq)
   store float %i.fr, ptr %i.fp, align 4, !tbaa !97
@@ -1660,7 +1654,6 @@ scalar.ph111.prol:                                ; preds = %scalar.ph111.prehea
 
 scalar.ph111.prol.loopexit:                       ; preds = %scalar.ph111.prol, %scalar.ph111.preheader
   %.unr = phi i64 [ %.ph, %scalar.ph111.preheader ], [ %i.fs, %scalar.ph111.prol ]
-  %.03876.unr = phi i64 [ %.03876.ph, %scalar.ph111.preheader ], [ %.ph, %scalar.ph111.prol ]
   %i.ft = icmp eq i64 %i.ez, %.neg
   br i1 %i.ft, label %._crit_edge, label %scalar.ph111
 
@@ -1671,14 +1664,13 @@ scalar.ph111.prol.loopexit:                       ; preds = %scalar.ph111.prol, 
 
 scalar.ph111:                                     ; preds = %scalar.ph111.prol.loopexit, %scalar.ph111
   %i.fv = phi i64 [ %i.gg, %scalar.ph111 ], [ %.unr, %scalar.ph111.prol.loopexit ] ; 4 uses
-  %.03876 = phi i64 [ %10, %scalar.ph111 ], [ %.03876.unr, %scalar.ph111.prol.loopexit ] ; 2 uses
-  %i.fw = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %.03876
+  %.0387687 = add i64 %i.fv, -1                   ; 2 uses
+  %i.fw = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %.0387687
   %i.fx = load float, ptr %i.fw, align 4, !tbaa !97
-  %i.fy = getelementptr inbounds nuw [4 x i8], ptr %i.ct, i64 %.03876 ; 2 uses
+  %i.fy = getelementptr inbounds nuw [4 x i8], ptr %i.ct, i64 %.0387687 ; 2 uses
   %i.fz = load float, ptr %i.fy, align 4, !tbaa !97
   %i.ga = call float @llvm.fmuladd.f32(float %i.fx, float %i.ex, float %i.fz)
   store float %i.ga, ptr %i.fy, align 4, !tbaa !97
-  %10 = add nuw i64 %i.fv, 1
   %i.gb = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %i.fv
   %i.gc = load float, ptr %i.gb, align 4, !tbaa !97
   %i.gd = getelementptr inbounds nuw [4 x i8], ptr %i.ct, i64 %i.fv ; 2 uses

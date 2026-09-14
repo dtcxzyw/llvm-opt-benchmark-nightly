@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.preheader, %bb.c
   %.03455 = phi ptr [ %i.b, %.preheader ], [ %i.i, %bb.c ] ; 4 uses
-  %i.g = phi i32 [ %i.d, %.preheader ], [ %i.j, %bb.c ] ; 6 uses
+  %i.g = phi i32 [ %i.d, %.preheader ], [ %i.j, %bb.c ] ; 5 uses
   %i.h = load i8, ptr %.03455, align 1, !tbaa !33
   switch i8 %i.h, label %.loopexit [
     i8 32, label %bb.c
@@ -244,7 +244,6 @@ bb.d:                                             ; preds = %bb.b
   %storemerge102 = phi i32 [ %storemerge, %.critedge50 ], [ %.promoted, %.lr.ph.preheader ] ; 3 uses
   %storemerge61 = phi i32 [ %storemerge, %.critedge50 ], [ %storemerge58, %.lr.ph.preheader ] ; 6 uses
   %.060 = phi ptr [ %i.t, %.critedge50 ], [ %i.m, %.lr.ph.preheader ] ; 6 uses
-  %storemerge.in5759 = phi i32 [ %storemerge61, %.critedge50 ], [ %i.g, %.lr.ph.preheader ]
   %i.p = load i8, ptr %.060, align 1, !tbaa !33   ; 2 uses
   switch i8 %i.p, label %bb.e [
     i8 0, label %.critedge3.sink.split
@@ -252,7 +251,7 @@ bb.d:                                             ; preds = %bb.b
   ]
 
 bb.e:                                             ; preds = %.lr.ph
-  %.not44 = icmp ne i32 %storemerge.in5759, 2
+  %.not44 = icmp ne i32 %storemerge61, 1
   %i.q = icmp eq i8 %i.p, 62
   %or.cond47 = and i1 %.not44, %i.q
   br i1 %or.cond47, label %bb.f, label %.critedge50
@@ -266,7 +265,7 @@ bb.f:                                             ; preds = %bb.e
 .critedge50:                                      ; preds = %bb.e, %bb.f
   %i.t = getelementptr inbounds nuw i8, ptr %.060, i64 1
   %storemerge = add nsw i32 %storemerge61, -1     ; 4 uses
-  %3 = icmp samesign ugt i32 %storemerge61, 1
+  %3 = icmp sgt i32 %storemerge61, 1
   br i1 %3, label %.lr.ph, label %.critedge3.sink.split
 
 .critedge3.sink.split:                            ; preds = %bb.f, %.critedge50, %.lr.ph, %.lr.ph, %.thread

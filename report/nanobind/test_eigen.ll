@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN5Eigen8internalL21first_default_alignedINS_3MapIKNS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEELi0ENS_6StrideILi0ELi0EEEEEEElRKNS_9DenseBaseIT_EE.exit
 
 _ZN5Eigen8internalL21first_default_alignedINS_3MapIKNS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEELi0ENS_6StrideILi0ELi0EEEEEEElRKNS_9DenseBaseIT_EE.exit: ; preds = %bb.a, %bb.b
-  %.0.i.i.i.i = phi i64 [ %i.h, %bb.b ], [ %i.b, %bb.a ] ; 8 uses
+  %.0.i.i.i.i = phi i64 [ %i.h, %bb.b ], [ %i.b, %bb.a ] ; 7 uses
   %i.i = sub nsw i64 %i.b, %.0.i.i.i.i            ; 5 uses
   %i.j = sdiv i64 %i.i, 8
   %i.k = shl nsw i64 %i.j, 3                      ; 2 uses
@@ -243,18 +243,17 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.z, label %bb.e, label %bb.f
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.05780 = phi i64 [ %.057, %.lr.ph ], [ %.05777, %.lr.ph.preheader ] ; 3 uses
-  %.057.in79 = phi i64 [ %.05780, %.lr.ph ], [ %.0.i.i.i.i, %.lr.ph.preheader ]
+  %.057.in79 = phi i64 [ %.057, %.lr.ph ], [ %.05777, %.lr.ph.preheader ] ; 3 uses
   %.sroa.067.078 = phi <4 x i32> [ %i.ad, %.lr.ph ], [ %i.v, %.lr.ph.preheader ]
   %i.aa = phi <4 x i32> [ %i.ah, %.lr.ph ], [ %i.u, %.lr.ph.preheader ]
-  %i.ab = getelementptr inbounds [4 x i8], ptr %i.p, i64 %.05780
+  %i.ab = getelementptr inbounds [4 x i8], ptr %i.p, i64 %.057.in79
   %i.ac = load <4 x i32>, ptr %i.ab, align 1, !tbaa !25
   %i.ad = add <4 x i32> %i.ac, %.sroa.067.078     ; 2 uses
   %i.ae = getelementptr [4 x i8], ptr %i.p, i64 %.057.in79
-  %i.af = getelementptr i8, ptr %i.ae, i64 48
+  %i.af = getelementptr i8, ptr %i.ae, i64 16
   %i.ag = load <4 x i32>, ptr %i.af, align 1, !tbaa !25
   %i.ah = add <4 x i32> %i.ag, %i.aa              ; 2 uses
-  %.057 = add nsw i64 %.05780, 8                  ; 2 uses
+  %.057 = add nsw i64 %.057.in79, 8               ; 2 uses
   %i.ai = icmp slt i64 %.057, %i.n
   br i1 %i.ai, label %.lr.ph, label %._crit_edge, !llvm.loop !958
 

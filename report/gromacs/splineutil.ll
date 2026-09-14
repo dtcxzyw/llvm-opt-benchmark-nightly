@@ -204,7 +204,7 @@ bb.a:
   %i.d = shufflevector <2 x double> %i.c, <2 x double> poison, <2 x i32> zeroinitializer
   %i.e = fdiv <2 x double> %i.b, %i.d             ; 2 uses
   %i.f = extractelement <2 x double> %i.e, i64 0
-  %i.g = fptoui double %i.f to i64                ; 5 uses
+  %i.g = fptoui double %i.f to i64                ; 4 uses
   %i.h = extractelement <2 x double> %i.e, i64 1
   %i.i = fptoui double %i.h to i64                ; 4 uses
   %i.j = add i64 %i.g, 2                          ; 4 uses
@@ -212,10 +212,7 @@ bb.a:
   br i1 %i.k, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %4 = add i64 %i.g, 1                            ; 3 uses
   %i.l = fmul double %2, %2                       ; 3 uses
-  %.phi.trans.insert = getelementptr [8 x i8], ptr %0, i64 %4
-  %.pre = load double, ptr %.phi.trans.insert, align 8, !tbaa !13 ; 3 uses
   %i.m = sub i64 %i.i, %i.g
   %i.n = add i64 %i.i, -3
   %xtraiter = and i64 %i.m, 1
@@ -223,15 +220,17 @@ bb.a:
   br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
 .prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph
-  %i.o = getelementptr [8 x i8], ptr %0, i64 %4
-  %i.p = getelementptr i8, ptr %i.o, i64 -8
-  %i.q = load double, ptr %i.p, align 8, !tbaa !13
+  %i.o = getelementptr [8 x i8], ptr %0, i64 %i.j ; 2 uses
+  %4 = getelementptr i8, ptr %i.o, i64 -8
+  %i.p = getelementptr i8, ptr %i.o, i64 -16
+  %5 = load double, ptr %i.p, align 8, !tbaa !13
+  %i.q = load double, ptr %4, align 8, !tbaa !13  ; 2 uses
   %i.r = getelementptr inbounds [8 x i8], ptr %0, i64 %i.j
-  %i.s = load double, ptr %i.r, align 8, !tbaa !13 ; 2 uses
-  %i.t = tail call noundef double @llvm.fabs.f64(double %.pre) ; 2 uses
+  %i.s = load double, ptr %i.r, align 8, !tbaa !13
+  %i.t = tail call noundef double @llvm.fabs.f64(double %i.q) ; 2 uses
   %i.u = fcmp olt double %i.t, f0x3C00000000000000
   %.sroa.speculated9.i.prol = select i1 %i.u, double f0x3C00000000000000, double %i.t
-  %i.v = tail call double @llvm.fmuladd.f64(double %.pre, double -2.000000e+00, double %i.q)
+  %i.v = tail call double @llvm.fmuladd.f64(double %i.q, double -2.000000e+00, double %5)
   %i.w = fadd double %i.v, %i.s
   %i.x = fdiv double %i.w, %i.l
   %i.y = tail call noundef double @llvm.fabs.f64(double %i.x) ; 2 uses
@@ -245,9 +244,7 @@ bb.a:
 
 .prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph
   %.sroa.speculated.lcssa.unr = phi double [ poison, %.lr.ph ], [ %.sroa.speculated.prol, %.prol.loopexit.unr-lcssa ]
-  %.unr = phi double [ %.pre, %.lr.ph ], [ %i.s, %.prol.loopexit.unr-lcssa ]
   %.unr19 = phi i64 [ %i.j, %.lr.ph ], [ %i.ac, %.prol.loopexit.unr-lcssa ]
-  %.017.unr = phi i64 [ %4, %.lr.ph ], [ %i.j, %.prol.loopexit.unr-lcssa ]
   %.01516.unr = phi double [ f0x47EFFFFFE0000000, %.lr.ph ], [ %.sroa.speculated.prol, %.prol.loopexit.unr-lcssa ]
   %i.ad = icmp eq i64 %i.n, %i.g
   br i1 %i.ad, label %._crit_edge.loopexit, label %.lr.ph.new
@@ -262,19 +259,19 @@ bb.a:
   ret float %.015.lcssa
 
 .lr.ph.new:                                       ; preds = %.prol.loopexit, %.lr.ph.new
-  %5 = phi double [ %i.at, %.lr.ph.new ], [ %.unr, %.prol.loopexit ] ; 2 uses
   %6 = phi i64 [ %i.bd, %.lr.ph.new ], [ %.unr19, %.prol.loopexit ] ; 4 uses
-  %.017 = phi i64 [ %9, %.lr.ph.new ], [ %.017.unr, %.prol.loopexit ]
   %.01516 = phi double [ %.sroa.speculated.1, %.lr.ph.new ], [ %.01516.unr, %.prol.loopexit ] ; 2 uses
-  %7 = getelementptr [8 x i8], ptr %0, i64 %.017
+  %7 = getelementptr [8 x i8], ptr %0, i64 %6     ; 2 uses
   %8 = getelementptr i8, ptr %7, i64 -8
-  %i.af = load double, ptr %8, align 8, !tbaa !13
+  %9 = getelementptr i8, ptr %7, i64 -16
+  %10 = load double, ptr %9, align 8, !tbaa !13
+  %i.af = load double, ptr %8, align 8, !tbaa !13 ; 3 uses
   %i.ag = getelementptr inbounds [8 x i8], ptr %0, i64 %6
   %i.ah = load double, ptr %i.ag, align 8, !tbaa !13 ; 3 uses
-  %i.ai = tail call noundef double @llvm.fabs.f64(double %5) ; 2 uses
+  %i.ai = tail call noundef double @llvm.fabs.f64(double %i.af) ; 2 uses
   %i.aj = fcmp olt double %i.ai, f0x3C00000000000000
   %.sroa.speculated9.i = select i1 %i.aj, double f0x3C00000000000000, double %i.ai
-  %i.ak = tail call double @llvm.fmuladd.f64(double %5, double -2.000000e+00, double %i.af)
+  %i.ak = tail call double @llvm.fmuladd.f64(double %i.af, double -2.000000e+00, double %10)
   %i.al = fadd double %i.ak, %i.ah
   %i.am = fdiv double %i.al, %i.l
   %i.an = tail call noundef double @llvm.fabs.f64(double %i.am) ; 2 uses
@@ -283,16 +280,13 @@ bb.a:
   %i.ap = fdiv double %.sroa.speculated9.i, %.sroa.speculated.i ; 2 uses
   %i.aq = fcmp olt double %i.ap, %.01516
   %.sroa.speculated = select i1 %i.aq, double %i.ap, double %.01516 ; 2 uses
-  %9 = add nuw i64 %6, 1                          ; 2 uses
   %i.ar = getelementptr [8 x i8], ptr %0, i64 %6
-  %i.as = getelementptr i8, ptr %i.ar, i64 -8
-  %10 = load double, ptr %i.as, align 8, !tbaa !13
-  %11 = getelementptr inbounds [8 x i8], ptr %0, i64 %9
-  %i.at = load double, ptr %11, align 8, !tbaa !13 ; 2 uses
+  %i.as = getelementptr i8, ptr %i.ar, i64 8
+  %i.at = load double, ptr %i.as, align 8, !tbaa !13
   %i.au = tail call noundef double @llvm.fabs.f64(double %i.ah) ; 2 uses
   %i.av = fcmp olt double %i.au, f0x3C00000000000000
   %.sroa.speculated9.i.1 = select i1 %i.av, double f0x3C00000000000000, double %i.au
-  %i.aw = tail call double @llvm.fmuladd.f64(double %i.ah, double -2.000000e+00, double %10)
+  %i.aw = tail call double @llvm.fmuladd.f64(double %i.ah, double -2.000000e+00, double %i.af)
   %i.ax = fadd double %i.aw, %i.at
   %i.ay = fdiv double %i.ax, %i.l
   %i.az = tail call noundef double @llvm.fabs.f64(double %i.ay) ; 2 uses

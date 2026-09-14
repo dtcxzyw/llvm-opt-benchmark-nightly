@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.0154
   %i.q = load i64, ptr %i.p, align 8, !tbaa !15   ; 3 uses
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.q
-  %i.s = load i64, ptr %i.r, align 8, !tbaa !15   ; 22 uses
+  %i.s = load i64, ptr %i.r, align 8, !tbaa !15   ; 21 uses
   %i.t = load i64, ptr @channelTracks, align 8, !tbaa !15
   %i.u = add i64 %i.t, 1                          ; 2 uses
   %i.v = add i64 %i.n, -1                         ; 2 uses
@@ -227,9 +227,8 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %.loopexit354.i, %.lr.ph379.i
-  %.0107377.i = phi i64 [ %.0107375.i, %.lr.ph379.i ], [ %.0107.i, %.loopexit354.i ] ; 20 uses
-  %.0107.in376.i = phi i64 [ %i.s, %.lr.ph379.i ], [ %.0107377.i, %.loopexit354.i ] ; 5 uses
-  %.pre273 = mul i64 %.0107377.i, %i.f            ; 3 uses
+  %.0107.in376.i = phi i64 [ %.0107375.i, %.lr.ph379.i ], [ %0, %.loopexit354.i ] ; 21 uses
+  %.pre273 = mul i64 %.0107.in376.i, %i.f         ; 3 uses
   br i1 %.not17.i.i, label %.lr.ph24.i.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.d
@@ -274,21 +273,19 @@ FindFreeHorzSeg.exit.i:                           ; preds = %bb.h, %bb.g
   %.1.lcssa.i.i = phi i64 [ %.122.i.i, %bb.g ], [ %i.ap, %bb.h ]
   %i.aq = add i64 %.1.lcssa.i.i, -1               ; 2 uses
   %.not.i = icmp ugt i64 %i.aq, %.0.lcssa.i.i
-  br i1 %.not.i, label %0, label %.loopexit354.i
+  %0 = add i64 %.0107.in376.i, 1                  ; 4 uses
+  %1 = icmp ult i64 %0, %i.n
+  %or.cond = and i1 %.not.i, %1
+  br i1 %or.cond, label %.lr.ph.i, label %.loopexit354.i
 
-0:                                                ; preds = %FindFreeHorzSeg.exit.i
-  %1 = add i64 %.0107.in376.i, 2                  ; 2 uses
-  %2 = icmp ult i64 %1, %i.n
-  br i1 %2, label %.lr.ph.i, label %.loopexit354.i
-
-.lr.ph.i:                                         ; preds = %0
-  %i.ar = tail call i64 @llvm.umin.i64(i64 %.0107377.i, i64 %i.x) ; 2 uses
+.lr.ph.i:                                         ; preds = %FindFreeHorzSeg.exit.i
+  %i.ar = tail call i64 @llvm.umin.i64(i64 %.0107.in376.i, i64 %i.x) ; 2 uses
   %i.as = mul i64 %i.ar, %i.f
-  %i.at = tail call i64 @llvm.umax.i64(i64 %.0107377.i, i64 %i.x)
+  %i.at = tail call i64 @llvm.umax.i64(i64 %.0107.in376.i, i64 %i.x)
   br label %bb.i
 
 bb.i:                                             ; preds = %.loopexit353.i, %.lr.ph.i
-  %.0105371.i = phi i64 [ %1, %.lr.ph.i ], [ %i.si, %.loopexit353.i ] ; 18 uses
+  %.0105371.i = phi i64 [ %0, %.lr.ph.i ], [ %i.si, %.loopexit353.i ] ; 18 uses
   %.pre274 = mul i64 %.0105371.i, %i.f            ; 3 uses
   br i1 %.not17.i.i, label %.lr.ph24.i139.i, label %.lr.ph.i131.i
 
@@ -337,7 +334,7 @@ FindFreeHorzSeg.exit145.i:                        ; preds = %bb.m, %bb.l
   br i1 %.not111.i.not, label %.preheader351.lr.ph.i, label %.loopexit353.i
 
 .preheader351.lr.ph.i:                            ; preds = %FindFreeHorzSeg.exit145.i
-  %.not116.i = icmp eq i64 %.0107377.i, %.0105371.i
+  %.not116.i = icmp eq i64 %.0107.in376.i, %.0105371.i
   %i.be = tail call i64 @llvm.umin.i64(i64 %i.u, i64 %.0105371.i) ; 7 uses
   %i.bf = mul i64 %i.be, %i.f
   %i.bg = add i64 %i.bf, %.0154
@@ -380,7 +377,7 @@ FindFreeHorzSeg.exit145.i:                        ; preds = %bb.m, %bb.l
 bb.n:                                             ; preds = %.preheader401.i
   %i.bv = add i64 %.03851.i.i, 1                  ; 2 uses
   %i.bw = add i64 %.052.i.i, %i.f
-  %.not45.i.i = icmp ugt i64 %i.bv, %.0107377.i
+  %.not45.i.i = icmp ugt i64 %i.bv, %.0107.in376.i
   br i1 %.not45.i.i, label %.preheader399.i, label %.preheader401.i, !llvm.loop !2
 
 .preheader399.i:                                  ; preds = %bb.n, %bb.o
@@ -783,20 +780,21 @@ bb.bi:                                            ; preds = %bb.bh
   br i1 %.not.i80.i, label %ExtendOK.exit, label %bb.bh, !llvm.loop !3
 
 ExtendOK.exit:                                    ; preds = %bb.ao, %bb.bi, %bb.bf, %bb.bb, %bb.ba, %bb.ay, %bb.av
+  %.0107.in376414.le.i = add i64 %.0107.in376.i, -1 ; 3 uses
   %i.gy = getelementptr i8, ptr %i.d, i64 %.0154  ; 8 uses
   %i.gz = load i8, ptr %i.gy, align 1, !tbaa !19
   %i.ha = or i8 %i.gz, 8
   store i8 %i.ha, ptr %i.gy, align 1, !tbaa !19
-  %i.hb = icmp ugt i64 %.0107377.i, 1
+  %i.hb = icmp ugt i64 %.0107.in376.i, 1
   br i1 %i.hb, label %.lr.ph62.i.i.preheader, label %.loopexit328.i
 
 .lr.ph62.i.i.preheader:                           ; preds = %ExtendOK.exit
-  %xtraiter = and i64 %.0107.in376.i, 1
-  %i.hc = icmp eq i64 %.0107.in376.i, 1
+  %xtraiter = and i64 %.0107.in376414.le.i, 1
+  %i.hc = icmp eq i64 %.0107.in376.i, 2
   br i1 %i.hc, label %.lr.ph62.i.i.epil.preheader, label %.lr.ph62.i.i.preheader.new
 
 .lr.ph62.i.i.preheader.new:                       ; preds = %.lr.ph62.i.i.preheader
-  %unroll_iter = and i64 %.0107.in376.i, -2
+  %unroll_iter = and i64 %.0107.in376414.le.i, -2
   br label %.lr.ph62.i.i
 
 .lr.ph62.i.i:                                     ; preds = %.lr.ph62.i.i, %.lr.ph62.i.i.preheader.new
@@ -826,7 +824,7 @@ ExtendOK.exit:                                    ; preds = %bb.ao, %bb.bi, %bb.
 
 .lr.ph62.i.i.epil.preheader:                      ; preds = %.loopexit328.i.loopexit.unr-lcssa, %.lr.ph62.i.i.preheader
   %.060.i.i.epil.init = phi i64 [ 1, %.lr.ph62.i.i.preheader ], [ %.0.i202.i.1, %.loopexit328.i.loopexit.unr-lcssa ]
-  %lcmp.mod690 = trunc i64 %.0107.in376.i to i1
+  %lcmp.mod690 = trunc i64 %.0107.in376414.le.i to i1
   tail call void @llvm.assume(i1 %lcmp.mod690)
   %i.hl = load i64, ptr @channelColumns, align 8, !tbaa !15
   %i.hm = mul i64 %i.hl, %.060.i.i.epil.init
@@ -838,19 +836,19 @@ ExtendOK.exit:                                    ; preds = %bb.ao, %bb.bi, %bb.
 
 .loopexit328.i:                                   ; preds = %.lr.ph62.i.i.epil.preheader, %.loopexit328.i.loopexit.unr-lcssa, %ExtendOK.exit
   %i.hp = load i64, ptr @channelColumns, align 8, !tbaa !15
-  %i.hq = mul i64 %i.hp, %.0107377.i
+  %i.hq = mul i64 %i.hp, %.0107.in376.i
   %i.hr = getelementptr i8, ptr %i.d, i64 %i.hq
   %i.hs = getelementptr i8, ptr %i.hr, i64 %.0154 ; 2 uses
   %i.ht = load i8, ptr %i.hs, align 1, !tbaa !19
   %i.hu = or i8 %i.ht, 4
   store i8 %i.hu, ptr %i.hs, align 1, !tbaa !19
   %i.hv = load i64, ptr @channelColumns, align 8, !tbaa !15
-  %i.hw = mul i64 %i.hv, %.0107377.i
+  %i.hw = mul i64 %i.hv, %.0107.in376.i
   %i.hx = getelementptr i8, ptr %i.e, i64 %i.hw
   %i.hy = getelementptr i8, ptr %i.hx, i64 %.0154
   store i8 1, ptr %i.hy, align 1, !tbaa !19
   %i.hz = load i64, ptr @channelColumns, align 8, !tbaa !15
-  %i.ia = mul i64 %i.hz, %.0107377.i
+  %i.ia = mul i64 %i.hz, %.0107.in376.i
   %i.ib = getelementptr i8, ptr %i.c, i64 %i.ia
   %i.ic = getelementptr i8, ptr %i.ib, i64 %i.bl  ; 2 uses
   %i.id = load i8, ptr %i.ic, align 1, !tbaa !19
@@ -873,7 +871,7 @@ ExtendOK.exit:                                    ; preds = %bb.ao, %bb.bi, %bb.
   %.05158.i.i.prol = phi i64 [ %.051.i.i.prol, %.lr.ph.i203.i.prol ], [ %.05157.i.i, %.lr.ph.i203.i.preheader ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i203.i.prol ], [ 0, %.lr.ph.i203.i.preheader ]
   %i.ik = load i64, ptr @channelColumns, align 8, !tbaa !15
-  %i.il = mul i64 %i.ik, %.0107377.i
+  %i.il = mul i64 %i.ik, %.0107.in376.i
   %i.im = getelementptr i8, ptr %i.c, i64 %i.il
   %i.in = getelementptr i8, ptr %i.im, i64 %.05158.i.i.prol
   store i8 3, ptr %i.in, align 1, !tbaa !19
@@ -890,24 +888,24 @@ ExtendOK.exit:                                    ; preds = %bb.ao, %bb.bi, %bb.
 .lr.ph.i203.i:                                    ; preds = %.lr.ph.i203.i.prol.loopexit, %.lr.ph.i203.i
   %.05158.i.i = phi i64 [ %.051.i.i.3, %.lr.ph.i203.i ], [ %.05158.i.i.unr, %.lr.ph.i203.i.prol.loopexit ] ; 5 uses
   %i.ip = load i64, ptr @channelColumns, align 8, !tbaa !15
-  %i.iq = mul i64 %i.ip, %.0107377.i
+  %i.iq = mul i64 %i.ip, %.0107.in376.i
   %i.ir = getelementptr i8, ptr %i.c, i64 %i.iq
   %i.is = getelementptr i8, ptr %i.ir, i64 %.05158.i.i
   store i8 3, ptr %i.is, align 1, !tbaa !19
   %i.it = load i64, ptr @channelColumns, align 8, !tbaa !15
-  %i.iu = mul i64 %i.it, %.0107377.i
+  %i.iu = mul i64 %i.it, %.0107.in376.i
   %i.iv = getelementptr i8, ptr %i.c, i64 %i.iu
   %i.iw = getelementptr i8, ptr %i.iv, i64 %.05158.i.i
   %i.ix = getelementptr i8, ptr %i.iw, i64 1
   store i8 3, ptr %i.ix, align 1, !tbaa !19
   %i.iy = load i64, ptr @channelColumns, align 8, !tbaa !15
-  %i.iz = mul i64 %i.iy, %.0107377.i
+  %i.iz = mul i64 %i.iy, %.0107.in376.i
   %i.ja = getelementptr i8, ptr %i.c, i64 %i.iz
   %i.jb = getelementptr i8, ptr %i.ja, i64 %.05158.i.i
   %i.jc = getelementptr i8, ptr %i.jb, i64 2
   store i8 3, ptr %i.jc, align 1, !tbaa !19
   %i.jd = load i64, ptr @channelColumns, align 8, !tbaa !15
-  %i.je = mul i64 %i.jd, %.0107377.i
+  %i.je = mul i64 %i.jd, %.0107.in376.i
   %i.jf = getelementptr i8, ptr %i.c, i64 %i.je
   %i.jg = getelementptr i8, ptr %i.jf, i64 %.05158.i.i
   %i.jh = getelementptr i8, ptr %i.jg, i64 3
@@ -918,18 +916,18 @@ ExtendOK.exit:                                    ; preds = %bb.ao, %bb.bi, %bb.
 
 DrawSegment.exit210.i:                            ; preds = %.lr.ph.i203.i.prol.loopexit, %.lr.ph.i203.i, %.loopexit328.i
   %i.ji = load i64, ptr @channelColumns, align 8, !tbaa !15
-  %i.jj = mul i64 %i.ji, %.0107377.i
+  %i.jj = mul i64 %i.ji, %.0107.in376.i
   %i.jk = getelementptr i8, ptr %i.c, i64 %i.jj
   %i.jl = getelementptr i8, ptr %i.jk, i64 %i.bn  ; 2 uses
   %i.jm = load i8, ptr %i.jl, align 1, !tbaa !19
   %i.jn = or i8 %i.jm, 1
   store i8 %i.jn, ptr %i.jl, align 1, !tbaa !19
   %i.jo = load i64, ptr @channelColumns, align 8, !tbaa !15
-  %i.jp = mul i64 %i.jo, %.0107377.i
+  %i.jp = mul i64 %i.jo, %.0107.in376.i
   %i.jq = getelementptr i8, ptr %i.e, i64 %i.jp
   %i.jr = getelementptr i8, ptr %i.jq, i64 %.0106369.i
   store i8 1, ptr %i.jr, align 1, !tbaa !19
-  %i.js = tail call i64 @llvm.umin.i64(i64 %.0107377.i, i64 %i.n) ; 5 uses
+  %i.js = tail call i64 @llvm.umin.i64(i64 %.0107.in376.i, i64 %i.n) ; 5 uses
   %i.jt = load i64, ptr @channelColumns, align 8, !tbaa !15
   %i.ju = mul i64 %i.jt, %i.js
   %i.jv = getelementptr i8, ptr %i.d, i64 %i.ju
@@ -937,7 +935,7 @@ DrawSegment.exit210.i:                            ; preds = %.lr.ph.i203.i.prol.
   %i.jx = load i8, ptr %i.jw, align 1, !tbaa !19
   %i.jy = or i8 %i.jx, 8
   store i8 %i.jy, ptr %i.jw, align 1, !tbaa !19
-  %i.jz = tail call i64 @llvm.umax.i64(i64 %.0107377.i, i64 %i.n) ; 5 uses
+  %i.jz = tail call i64 @llvm.umax.i64(i64 %.0107.in376.i, i64 %i.n) ; 5 uses
   %invariant.gep.i218.i = getelementptr i8, ptr %i.d, i64 %.0106369.i ; 3 uses
   %.059.i219.i = add i64 %i.js, 1                 ; 3 uses
   %i.ka = icmp ult i64 %.059.i219.i, %i.jz
@@ -1340,9 +1338,8 @@ SegmentFree.exit.thread.i:                        ; preds = %.preheader401.i, %.
   %exitcond.not.i = icmp eq i64 %i.si, %i.n
   br i1 %exitcond.not.i, label %.loopexit354.i, label %bb.i, !llvm.loop !64
 
-.loopexit354.i:                                   ; preds = %.loopexit353.i, %0, %FindFreeHorzSeg.exit.i
-  %.0107.i = add nuw i64 %.0107377.i, 1           ; 2 uses
-  %exitcond414.not.i = icmp eq i64 %.0107.i, %i.v
+.loopexit354.i:                                   ; preds = %.loopexit353.i, %FindFreeHorzSeg.exit.i
+  %exitcond414.not.i = icmp eq i64 %0, %i.v
   br i1 %exitcond414.not.i, label %.loopexit68, label %bb.d, !llvm.loop !65
 
 .loopexit:                                        ; preds = %.lr.ph.i289.i.prol.loopexit, %.lr.ph.i289.i, %.loopexit.i

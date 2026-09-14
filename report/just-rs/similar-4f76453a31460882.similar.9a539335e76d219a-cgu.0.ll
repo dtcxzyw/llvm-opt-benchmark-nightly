@@ -205,7 +205,6 @@ bb.j:                                             ; preds = %._RNvYNCNKNvNvMNtNt
   %i.cu = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %invariant.op658 = xor i64 %i.co, -1
   %invariant.op672 = xor i64 %i.cg, -1
-  %9 = add i64 %3, -1
   br label %.lr.ph581
 
 bb.k:                                             ; preds = %.lr.ph, %bb.bw
@@ -552,8 +551,6 @@ bb.ab:                                            ; preds = %_RINvMs1_NtCs37Y8JG
   %i.hy = getelementptr inbounds nuw [8 x i8], ptr %i.ck, i64 %i.hw
   %i.hz = trunc nuw i64 %.sroa.041.0.ph664 to i1
   %invariant.op = xor i64 %.val5.i152, 8387220255154660723
-  %10 = add i64 %.sroa.055.0579, 1                ; 2 uses
-  %11 = icmp ult i64 %10, %6
   %invariant.op1326 = xor i64 %.val5.i152, 8387220255154660723
   br label %bb.ac
 
@@ -565,7 +562,7 @@ bb.ac:                                            ; preds = %.lr.ph651, %bb.ap
   %.sroa.7.1645 = phi i64 [ %.sroa.7.0.ph662, %.lr.ph651 ], [ %.sroa.7.2, %bb.ap ] ; 4 uses
   %.sroa.9.1644 = phi i64 [ %.sroa.9.0.ph661, %.lr.ph651 ], [ %.sroa.9.2, %bb.ap ] ; 5 uses
   %i.ia = getelementptr inbounds nuw i8, ptr %.sroa.08.0648, i64 8 ; 2 uses
-  %i.ib = load i64, ptr %.sroa.08.0648, align 8, !noundef !5 ; 14 uses
+  %i.ib = load i64, ptr %.sroa.08.0648, align 8, !noundef !5 ; 12 uses
   %i.ic = icmp ugt i64 %i.ib, %2
   %or.cond591 = and i1 %i.hg, %i.ic
   br i1 %or.cond591, label %.lr.ph596, label %._crit_edge597
@@ -607,29 +604,26 @@ bb.ad:                                            ; preds = %.lr.ph596.split.us
   br label %bb.l
 
 ._crit_edge597:                                   ; preds = %_RINvMs1_NtCs37Y8JGf013z_9hashbrown3mapINtB6_7HashMapjjNtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE3getjECsdftwklc2oBO_7similar.exit168, %bb.ah, %bb.ac
-  %.sroa.032.0.lcssa = phi i64 [ %i.gz, %bb.ac ], [ %spec.store.select1, %_RINvMs1_NtCs37Y8JGf013z_9hashbrown3mapINtB6_7HashMapjjNtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE3getjECsdftwklc2oBO_7similar.exit168 ], [ %.sroa.032.0592, %bb.ah ] ; 4 uses
-  %.sroa.024.0.lcssa = phi i64 [ %.sroa.055.0579, %bb.ac ], [ %i.iz, %_RINvMs1_NtCs37Y8JGf013z_9hashbrown3mapINtB6_7HashMapjjNtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE3getjECsdftwklc2oBO_7similar.exit168 ], [ %.sroa.024.0593, %bb.ah ] ; 6 uses
-  %.sroa.016.0.lcssa = phi i64 [ %i.ib, %bb.ac ], [ %i.iu, %_RINvMs1_NtCs37Y8JGf013z_9hashbrown3mapINtB6_7HashMapjjNtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE3getjECsdftwklc2oBO_7similar.exit168 ], [ %.sroa.016.0594, %bb.ah ] ; 6 uses
+  %.sroa.032.0.lcssa = phi i64 [ %i.gz, %bb.ac ], [ %spec.store.select1, %_RINvMs1_NtCs37Y8JGf013z_9hashbrown3mapINtB6_7HashMapjjNtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE3getjECsdftwklc2oBO_7similar.exit168 ], [ %.sroa.032.0592, %bb.ah ] ; 3 uses
+  %.sroa.024.0.lcssa = phi i64 [ %.sroa.055.0579, %bb.ac ], [ %i.iz, %_RINvMs1_NtCs37Y8JGf013z_9hashbrown3mapINtB6_7HashMapjjNtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE3getjECsdftwklc2oBO_7similar.exit168 ], [ %.sroa.024.0593, %bb.ah ] ; 3 uses
+  %.sroa.016.0.lcssa = phi i64 [ %i.ib, %bb.ac ], [ %i.iu, %_RINvMs1_NtCs37Y8JGf013z_9hashbrown3mapINtB6_7HashMapjjNtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE3getjECsdftwklc2oBO_7similar.exit168 ], [ %.sroa.016.0594, %bb.ah ] ; 3 uses
   %i.ij = add i64 %i.ib, 1                        ; 3 uses
   %i.ik = icmp ult i64 %i.ij, %3
-  br i1 %i.ik, label %.lr.ph619, label %._crit_edge620
+  br i1 %i.ik, label %.lr.ph619.split.preheader, label %._crit_edge620
 
 ._crit_edge597.thread:                            ; preds = %bb.ad
   %i.il = add i64 %i.ib, 1                        ; 2 uses
   %i.im = icmp ult i64 %i.il, %3
   br i1 %i.im, label %.lr.ph619.split.us, label %._crit_edge620
 
-.lr.ph619:                                        ; preds = %._crit_edge597
-  br i1 %i.hi, label %.lr.ph619.split.us, label %.lr.ph619.split.preheader
+.lr.ph619.split.preheader:                        ; preds = %._crit_edge597
+  br i1 %i.hi, label %.lr.ph619.split.us, label %.lr.ph619.split
 
-.lr.ph619.split.preheader:                        ; preds = %.lr.ph619
-  br i1 %11, label %.lr.ph1158, label %._crit_edge620
-
-.lr.ph619.split.us:                               ; preds = %._crit_edge597.thread, %.lr.ph619
-  %.sroa.032.0.lcssa905915 = phi i64 [ %.sroa.032.0.lcssa, %.lr.ph619 ], [ %i.gz, %._crit_edge597.thread ] ; 2 uses
-  %.sroa.024.0.lcssa907914 = phi i64 [ %.sroa.024.0.lcssa, %.lr.ph619 ], [ %.sroa.055.0579, %._crit_edge597.thread ] ; 2 uses
-  %.sroa.016.0.lcssa909913 = phi i64 [ %.sroa.016.0.lcssa, %.lr.ph619 ], [ %i.ib, %._crit_edge597.thread ] ; 2 uses
-  %i.in = phi i64 [ %i.ij, %.lr.ph619 ], [ %i.il, %._crit_edge597.thread ]
+.lr.ph619.split.us:                               ; preds = %._crit_edge597.thread, %.lr.ph619.split.preheader
+  %.sroa.032.0.lcssa905915 = phi i64 [ %.sroa.032.0.lcssa, %.lr.ph619.split.preheader ], [ %i.gz, %._crit_edge597.thread ] ; 2 uses
+  %.sroa.024.0.lcssa907914 = phi i64 [ %.sroa.024.0.lcssa, %.lr.ph619.split.preheader ], [ %.sroa.055.0579, %._crit_edge597.thread ] ; 2 uses
+  %.sroa.016.0.lcssa909913 = phi i64 [ %.sroa.016.0.lcssa, %.lr.ph619.split.preheader ], [ %i.ib, %._crit_edge597.thread ] ; 2 uses
+  %i.in = phi i64 [ %i.ij, %.lr.ph619.split.preheader ], [ %i.il, %._crit_edge597.thread ]
   br i1 %i.hv, label %bb.ae, label %._crit_edge620
 
 bb.ae:                                            ; preds = %.lr.ph619.split.us
@@ -668,35 +662,40 @@ bb.ah:                                            ; preds = %bb.ag
   %i.je = icmp eq i64 %i.iy, %i.jd
   br i1 %i.je, label %._crit_edge.i.i272, label %._crit_edge597
 
-.lr.ph619.split:                                  ; preds = %_RINvMs1_NtCs37Y8JGf013z_9hashbrown3mapINtB6_7HashMapjjNtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE3getjECsdftwklc2oBO_7similar.exit
-  %i.jf = add i64 %12, 1                          ; 2 uses
+.lr.ph619.split:                                  ; preds = %.lr.ph619.split.preheader, %_RINvMs1_NtCs37Y8JGf013z_9hashbrown3mapINtB6_7HashMapjjNtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE3getjECsdftwklc2oBO_7similar.exit
+  %9 = phi i64 [ %i.no, %_RINvMs1_NtCs37Y8JGf013z_9hashbrown3mapINtB6_7HashMapjjNtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE3getjECsdftwklc2oBO_7similar.exit ], [ %i.ij, %.lr.ph619.split.preheader ] ; 4 uses
+  %.sroa.029.0616 = phi i64 [ %i.jf, %_RINvMs1_NtCs37Y8JGf013z_9hashbrown3mapINtB6_7HashMapjjNtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE3getjECsdftwklc2oBO_7similar.exit ], [ %.sroa.055.0579, %.lr.ph619.split.preheader ]
+  %.sroa.032.1615 = phi i64 [ %spec.store.select, %_RINvMs1_NtCs37Y8JGf013z_9hashbrown3mapINtB6_7HashMapjjNtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE3getjECsdftwklc2oBO_7similar.exit ], [ %.sroa.032.0.lcssa, %.lr.ph619.split.preheader ] ; 3 uses
+  %i.jf = add i64 %.sroa.029.0616, 1              ; 3 uses
   %i.jg = icmp ult i64 %i.jf, %6
-  br i1 %i.jg, label %.lr.ph1158, label %._crit_edge620
+  br i1 %i.jg, label %.lr.ph1158, label %._crit_edge620.loopexit
 
-._crit_edge620:                                   ; preds = %bb.aj, %.lr.ph619.split, %_RINvMs1_NtCs37Y8JGf013z_9hashbrown3mapINtB6_7HashMapjjNtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE3getjECsdftwklc2oBO_7similar.exit, %.lr.ph619.split.preheader, %._crit_edge597.thread, %.lr.ph619.split.us, %bb.af, %._crit_edge597
-  %.sroa.016.0.lcssa908 = phi i64 [ %.sroa.016.0.lcssa, %._crit_edge597 ], [ %.sroa.016.0.lcssa909913, %bb.af ], [ %.sroa.016.0.lcssa909913, %.lr.ph619.split.us ], [ %i.ib, %._crit_edge597.thread ], [ %.sroa.016.0.lcssa, %.lr.ph619.split.preheader ], [ %.sroa.016.0.lcssa, %_RINvMs1_NtCs37Y8JGf013z_9hashbrown3mapINtB6_7HashMapjjNtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE3getjECsdftwklc2oBO_7similar.exit ], [ %.sroa.016.0.lcssa, %.lr.ph619.split ], [ %.sroa.016.0.lcssa, %bb.aj ] ; 4 uses
-  %.sroa.024.0.lcssa906 = phi i64 [ %.sroa.024.0.lcssa, %._crit_edge597 ], [ %.sroa.024.0.lcssa907914, %bb.af ], [ %.sroa.024.0.lcssa907914, %.lr.ph619.split.us ], [ %.sroa.055.0579, %._crit_edge597.thread ], [ %.sroa.024.0.lcssa, %.lr.ph619.split.preheader ], [ %.sroa.024.0.lcssa, %_RINvMs1_NtCs37Y8JGf013z_9hashbrown3mapINtB6_7HashMapjjNtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE3getjECsdftwklc2oBO_7similar.exit ], [ %.sroa.024.0.lcssa, %.lr.ph619.split ], [ %.sroa.024.0.lcssa, %bb.aj ] ; 2 uses
-  %.sroa.032.1.lcssa = phi i64 [ %.sroa.032.0.lcssa, %._crit_edge597 ], [ %.sroa.032.0.lcssa905915, %bb.af ], [ %.sroa.032.0.lcssa905915, %.lr.ph619.split.us ], [ %i.gz, %._crit_edge597.thread ], [ %.sroa.032.0.lcssa, %.lr.ph619.split.preheader ], [ %.sroa.032.16151157, %bb.aj ], [ %spec.store.select, %.lr.ph619.split ], [ %spec.store.select, %_RINvMs1_NtCs37Y8JGf013z_9hashbrown3mapINtB6_7HashMapjjNtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE3getjECsdftwklc2oBO_7similar.exit ] ; 3 uses
-  %.sroa.010.0.lcssa = phi i64 [ %i.ib, %._crit_edge597 ], [ %i.ib, %bb.af ], [ %i.ib, %.lr.ph619.split.us ], [ %i.ib, %._crit_edge597.thread ], [ %i.ib, %.lr.ph619.split.preheader ], [ %.sroa.010.06171156, %bb.aj ], [ %13, %.lr.ph619.split ], [ %9, %_RINvMs1_NtCs37Y8JGf013z_9hashbrown3mapINtB6_7HashMapjjNtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE3getjECsdftwklc2oBO_7similar.exit ]
-  %i.jh = sub i64 %.sroa.010.0.lcssa, %.sroa.016.0.lcssa908
+._crit_edge620.loopexit:                          ; preds = %bb.aj, %.lr.ph619.split, %_RINvMs1_NtCs37Y8JGf013z_9hashbrown3mapINtB6_7HashMapjjNtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE3getjECsdftwklc2oBO_7similar.exit
+  %.sroa.032.1.lcssa.ph = phi i64 [ %spec.store.select, %_RINvMs1_NtCs37Y8JGf013z_9hashbrown3mapINtB6_7HashMapjjNtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE3getjECsdftwklc2oBO_7similar.exit ], [ %.sroa.032.1615, %.lr.ph619.split ], [ %.sroa.032.1615, %bb.aj ]
+  %.sroa.010.0.lcssa.ph.in = phi i64 [ %3, %_RINvMs1_NtCs37Y8JGf013z_9hashbrown3mapINtB6_7HashMapjjNtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE3getjECsdftwklc2oBO_7similar.exit ], [ %9, %.lr.ph619.split ], [ %9, %bb.aj ]
+  %.sroa.010.0.lcssa.ph = add i64 %.sroa.010.0.lcssa.ph.in, -1
+  br label %._crit_edge620
+
+._crit_edge620:                                   ; preds = %._crit_edge597.thread, %._crit_edge620.loopexit, %.lr.ph619.split.us, %bb.af, %._crit_edge597
+  %.sroa.016.0.lcssa909 = phi i64 [ %.sroa.016.0.lcssa, %._crit_edge597 ], [ %.sroa.016.0.lcssa909913, %bb.af ], [ %.sroa.016.0.lcssa909913, %.lr.ph619.split.us ], [ %.sroa.016.0.lcssa, %._crit_edge620.loopexit ], [ %i.ib, %._crit_edge597.thread ] ; 4 uses
+  %.sroa.024.0.lcssa907 = phi i64 [ %.sroa.024.0.lcssa, %._crit_edge597 ], [ %.sroa.024.0.lcssa907914, %bb.af ], [ %.sroa.024.0.lcssa907914, %.lr.ph619.split.us ], [ %.sroa.024.0.lcssa, %._crit_edge620.loopexit ], [ %.sroa.055.0579, %._crit_edge597.thread ] ; 2 uses
+  %.sroa.032.1.lcssa = phi i64 [ %.sroa.032.0.lcssa, %._crit_edge597 ], [ %.sroa.032.0.lcssa905915, %bb.af ], [ %.sroa.032.0.lcssa905915, %.lr.ph619.split.us ], [ %.sroa.032.1.lcssa.ph, %._crit_edge620.loopexit ], [ %i.gz, %._crit_edge597.thread ] ; 3 uses
+  %.sroa.010.0.lcssa = phi i64 [ %i.ib, %._crit_edge597 ], [ %i.ib, %bb.af ], [ %i.ib, %.lr.ph619.split.us ], [ %.sroa.010.0.lcssa.ph, %._crit_edge620.loopexit ], [ %i.ib, %._crit_edge597.thread ]
+  %i.jh = sub i64 %.sroa.010.0.lcssa, %.sroa.016.0.lcssa909
   %i.ji = add i64 %i.jh, 1                        ; 3 uses
   %i.jj = icmp ule i64 %i.ji, %.sroa.9.1644
   %or.cond75.not = select i1 %.sroa.041.1647, i1 %i.jj, i1 false
   br i1 %or.cond75.not, label %bb.ak, label %bb.aq
 
-.lr.ph1158:                                       ; preds = %.lr.ph619.split.preheader, %.lr.ph619.split
-  %12 = phi i64 [ %i.jf, %.lr.ph619.split ], [ %10, %.lr.ph619.split.preheader ] ; 2 uses
-  %.sroa.032.16151157 = phi i64 [ %spec.store.select, %.lr.ph619.split ], [ %.sroa.032.0.lcssa, %.lr.ph619.split.preheader ] ; 2 uses
-  %.sroa.010.06171156 = phi i64 [ %13, %.lr.ph619.split ], [ %i.ib, %.lr.ph619.split.preheader ]
-  %13 = phi i64 [ %i.no, %.lr.ph619.split ], [ %i.ij, %.lr.ph619.split.preheader ] ; 4 uses
-  %i.jk = sub i64 %13, %i.co                      ; 3 uses
+.lr.ph1158:                                       ; preds = %.lr.ph619.split
+  %i.jk = sub i64 %9, %i.co                       ; 3 uses
   %i.jl = icmp ult i64 %i.jk, %i.cq
   br i1 %i.jl, label %bb.ai, label %.invoke
 
 bb.ai:                                            ; preds = %.lr.ph1158
   %i.jm = getelementptr inbounds nuw [8 x i8], ptr %i.cs, i64 %i.jk
   %i.jn = load i64, ptr %i.jm, align 8, !noundef !5 ; 4 uses
-  %i.jo = sub i64 %12, %i.cg                      ; 2 uses
+  %i.jo = sub i64 %i.jf, %i.cg                    ; 2 uses
   %i.jp = icmp ult i64 %i.jo, %i.ci
   br i1 %i.jp, label %bb.aj, label %.invoke
 
@@ -704,7 +703,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.jq = getelementptr inbounds nuw [8 x i8], ptr %i.ck, i64 %i.jo
   %i.jr = load i64, ptr %i.jq, align 8, !noundef !5
   %i.js = icmp eq i64 %i.jn, %i.jr
-  br i1 %i.js, label %._crit_edge.i.i253, label %._crit_edge620
+  br i1 %i.js, label %._crit_edge.i.i253, label %._crit_edge620.loopexit
 
 bb.ak:                                            ; preds = %._crit_edge620
   %i.jt = icmp eq i64 %i.ji, %.sroa.9.1644
@@ -719,19 +718,19 @@ bb.am:                                            ; preds = %bb.al
   br i1 %i.jv, label %bb.an, label %bb.ap
 
 bb.an:                                            ; preds = %bb.am
-  %i.jw = icmp ult i64 %.sroa.016.0.lcssa908, %.sroa.443.1646
+  %i.jw = icmp ult i64 %.sroa.016.0.lcssa909, %.sroa.443.1646
   br i1 %i.jw, label %bb.aq, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
-  %i.jx = icmp eq i64 %.sroa.016.0.lcssa908, %.sroa.443.1646
-  %i.jy = icmp ult i64 %.sroa.024.0.lcssa906, %.sroa.7.1645
+  %i.jx = icmp eq i64 %.sroa.016.0.lcssa909, %.sroa.443.1646
+  %i.jy = icmp ult i64 %.sroa.024.0.lcssa907, %.sroa.7.1645
   %or.cond73 = select i1 %i.jx, i1 %i.jy, i1 false
   br i1 %or.cond73, label %bb.aq, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao, %bb.am, %bb.ak, %bb.aq
   %.sroa.9.2 = phi i64 [ %i.ji, %bb.aq ], [ %.sroa.9.1644, %bb.ao ], [ %.sroa.9.1644, %bb.am ], [ %.sroa.9.1644, %bb.ak ] ; 2 uses
-  %.sroa.7.2 = phi i64 [ %.sroa.024.0.lcssa906, %bb.aq ], [ %.sroa.7.1645, %bb.ao ], [ %.sroa.7.1645, %bb.am ], [ %.sroa.7.1645, %bb.ak ] ; 2 uses
-  %.sroa.443.2 = phi i64 [ %.sroa.016.0.lcssa908, %bb.aq ], [ %.sroa.443.1646, %bb.ao ], [ %.sroa.443.1646, %bb.am ], [ %.sroa.443.1646, %bb.ak ] ; 2 uses
+  %.sroa.7.2 = phi i64 [ %.sroa.024.0.lcssa907, %bb.aq ], [ %.sroa.7.1645, %bb.ao ], [ %.sroa.7.1645, %bb.am ], [ %.sroa.7.1645, %bb.ak ] ; 2 uses
+  %.sroa.443.2 = phi i64 [ %.sroa.016.0.lcssa909, %bb.aq ], [ %.sroa.443.1646, %bb.ao ], [ %.sroa.443.1646, %bb.am ], [ %.sroa.443.1646, %bb.ak ] ; 2 uses
   %.sroa.03.2 = phi i64 [ %.sroa.032.1.lcssa, %bb.aq ], [ %.sroa.03.1649, %bb.ao ], [ %.sroa.03.1649, %bb.am ], [ %.sroa.03.1649, %bb.ak ] ; 2 uses
   %i.jz = icmp eq ptr %i.ia, %i.he
   br i1 %i.jz, label %.outer, label %bb.ac
@@ -859,10 +858,10 @@ bb.at:                                            ; preds = %._crit_edge.i.i147
 _RINvMs1_NtCs37Y8JGf013z_9hashbrown3mapINtB6_7HashMapjjNtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE3getjECsdftwklc2oBO_7similar.exit: ; preds = %.lr.ph.i.i143
   %i.nm = getelementptr inbounds i8, ptr %i.nc, i64 -8
   %i.nn = load i64, ptr %i.nm, align 8, !noundef !5
-  %spec.store.select = call i64 @llvm.umin.i64(i64 %i.nn, i64 %.sroa.032.16151157) ; 3 uses
-  %i.no = add nuw i64 %13, 1                      ; 2 uses
+  %spec.store.select = call i64 @llvm.umin.i64(i64 %i.nn, i64 %.sroa.032.1615) ; 2 uses
+  %i.no = add nuw i64 %9, 1                       ; 2 uses
   %exitcond817.not = icmp eq i64 %i.no, %3
-  br i1 %exitcond817.not, label %._crit_edge620, label %.lr.ph619.split
+  br i1 %exitcond817.not, label %._crit_edge620.loopexit, label %.lr.ph619.split
 
 ._crit_edge.i.i272:                               ; preds = %bb.ah
   %.reass.reass.reass = xor i64 %i.iy, %invariant.op ; 3 uses

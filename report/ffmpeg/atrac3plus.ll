@@ -205,53 +205,40 @@ decode_channel_wordlen.exit.i:                    ; preds = %bb.bh, %bb.e, %bb.b
   br i1 %exitcond67.not.i, label %._crit_edge.i, label %bb.d, !llvm.loop !54
 
 ._crit_edge.i:                                    ; preds = %decode_channel_wordlen.exit.i
-  %.pre = load i32, ptr %i.s, align 4, !tbaa !120 ; 14 uses
-  %i.acq = getelementptr inbounds nuw i8, ptr %1, i64 92 ; 10 uses
-  %i.acr = getelementptr inbounds nuw i8, ptr %1, i64 7892 ; 2 uses
-  %.036.i = add nsw i32 %.pre, -1                 ; 3 uses
+  %.pre = load i32, ptr %i.s, align 4, !tbaa !120 ; 10 uses
+  %i.acq = getelementptr inbounds nuw i8, ptr %1, i64 92 ; 7 uses
+  %i.acr = getelementptr inbounds nuw i8, ptr %1, i64 7892
   %i.acs = icmp sgt i32 %.pre, 0
-  br i1 %i.acs, label %.lr.ph40.i, label %.loopexit256
+  br i1 %i.acs, label %.lr.ph.preheader, label %.loopexit256
 
-.lr.ph40.i:                                       ; preds = %._crit_edge.i
-  %5 = icmp eq i32 %2, 2
-  br i1 %5, label %.lr.ph40.split.us.i.preheader, label %.lr.ph40.split.i
+.lr.ph.preheader:                                 ; preds = %._crit_edge.i
+  %.036.i = add nsw i32 %.pre, -1                 ; 2 uses
+  %.not24.us.i601 = icmp eq i32 %2, 2
+  br i1 %.not24.us.i601, label %.lr.ph40.split.us.i, label %.lr.ph40.split.i
 
-.lr.ph40.split.us.i.preheader:                    ; preds = %.lr.ph40.i
-  %6 = zext nneg i32 %.036.i to i64               ; 2 uses
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.acq, i64 %6
-  %8 = load i32, ptr %7, align 4, !tbaa !9
-  %.not.us.i294 = icmp eq i32 %8, 0
-  br i1 %.not.us.i294, label %.lr.ph.preheader, label %.loopexit256.thread
-
-.lr.ph.preheader:                                 ; preds = %.lr.ph40.split.us.i.preheader
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.acr, i64 %6
-  %10 = load i32, ptr %9, align 4, !tbaa !9
-  %.not24.us.i601 = icmp eq i32 %10, 0
-  br i1 %.not24.us.i601, label %.lr.ph603, label %.loopexit256.thread
-
-.lr.ph40.split.us.i:                              ; preds = %.lr.ph603
-  %.0.us.i = add nsw i32 %.038.us.i295602, -1     ; 2 uses
-  %i.act = zext nneg i32 %.0.us.i to i64          ; 2 uses
+.lr.ph40.split.us.i:                              ; preds = %.lr.ph.preheader, %.lr.ph603
+  %.038.us.i = phi i32 [ %.0.us.i, %.lr.ph603 ], [ %.036.i, %.lr.ph.preheader ] ; 5 uses
+  %i.act = zext nneg i32 %.038.us.i to i64        ; 2 uses
   %i.acu = getelementptr inbounds nuw [4 x i8], ptr %i.acq, i64 %i.act
   %i.acv = load i32, ptr %i.acu, align 4, !tbaa !9
   %.not.us.i = icmp eq i32 %i.acv, 0
-  br i1 %.not.us.i, label %.lr.ph.a, label %.lr.ph40.split.us.i..loopexit256.thread.loopexit_crit_edge, !llvm.loop !55
+  br i1 %.not.us.i, label %.lr.ph.a, label %._crit_edge41.loopexit92.split.loop.exit.i
 
 .lr.ph.a:                                         ; preds = %.lr.ph40.split.us.i
   %i.acw = getelementptr inbounds nuw [4 x i8], ptr %i.acr, i64 %i.act
   %i.acx = load i32, ptr %i.acw, align 4, !tbaa !9
   %.not24.us.i = icmp eq i32 %i.acx, 0
-  br i1 %.not24.us.i, label %.lr.ph603, label %.loopexit256.thread, !llvm.loop !55
+  br i1 %.not24.us.i, label %.lr.ph603, label %..loopexit256_crit_edge298
 
-.lr.ph603:                                        ; preds = %.lr.ph.preheader, %.lr.ph.a
-  %.038.us.i295602 = phi i32 [ %.0.us.i, %.lr.ph.a ], [ %.036.i, %.lr.ph.preheader ] ; 4 uses
-  %i.acy = icmp sgt i32 %.038.us.i295602, 0
-  br i1 %i.acy, label %.lr.ph40.split.us.i, label %..loopexit256_crit_edge298, !llvm.loop !55
+.lr.ph603:                                        ; preds = %.lr.ph.a
+  %.0.us.i = add nsw i32 %.038.us.i, -1
+  %i.acy = icmp sgt i32 %.038.us.i, 0
+  br i1 %i.acy, label %.lr.ph40.split.us.i, label %.loopexit256.thread467, !llvm.loop !55
 
-.lr.ph40.split.i:                                 ; preds = %.lr.ph40.i.thread, %.lr.ph40.i
-  %i.acz = phi i32 [ %i.r, %.lr.ph40.i.thread ], [ %.pre, %.lr.ph40.i ] ; 5 uses
-  %i.ada = phi ptr [ %i.ai, %.lr.ph40.i.thread ], [ %i.acq, %.lr.ph40.i ] ; 4 uses
-  %.036.i457459 = phi i32 [ %i.o, %.lr.ph40.i.thread ], [ %.036.i, %.lr.ph40.i ] ; 2 uses
+.lr.ph40.split.i:                                 ; preds = %.lr.ph40.i.thread, %.lr.ph.preheader
+  %i.acz = phi i32 [ %i.r, %.lr.ph40.i.thread ], [ %.pre, %.lr.ph.preheader ] ; 5 uses
+  %i.ada = phi ptr [ %i.ai, %.lr.ph40.i.thread ], [ %i.acq, %.lr.ph.preheader ] ; 4 uses
+  %.036.i457459 = phi i32 [ %i.o, %.lr.ph40.i.thread ], [ %.036.i, %.lr.ph.preheader ] ; 2 uses
   %i.adb = getelementptr inbounds nuw i8, ptr %1, i64 92
   %i.adc = zext nneg i32 %.036.i457459 to i64     ; 2 uses
   %i.add = getelementptr inbounds nuw [4 x i8], ptr %i.adb, i64 %i.adc
@@ -273,29 +260,31 @@ bb.bi:                                            ; preds = %.lr.ph600, %.lr.ph5
   %i.adg = getelementptr inbounds nuw [4 x i8], ptr %i.adf, i64 %indvars.iv.next69.i
   %i.adh = load i32, ptr %i.adg, align 4, !tbaa !9
   %.not.i = icmp eq i32 %i.adh, 0
-  br i1 %.not.i, label %.lr.ph50.i, label %._crit_edge41.loopexit92.split.loop.exit.i, !llvm.loop !55
+  br i1 %.not.i, label %.lr.ph50.i, label %.lr.ph40.split.us.i..loopexit256.thread.loopexit_crit_edge, !llvm.loop !55
 
 .lr.ph50.i:                                       ; preds = %bb.bi
   %i.adi = icmp sgt i64 %indvars.iv68.i599, 1
   br i1 %i.adi, label %bb.bi, label %.lr.ph50.i..loopexit256.thread467.loopexit_crit_edge, !llvm.loop !55
 
-._crit_edge41.loopexit92.split.loop.exit.i:       ; preds = %bb.bi
-  %11 = trunc nuw nsw i64 %indvars.iv68.i599 to i32
+._crit_edge41.loopexit92.split.loop.exit.i:       ; preds = %.lr.ph40.split.us.i
+  %.0.in37.us71.le109.i = add nuw nsw i32 %.038.us.i, 1
   br label %.loopexit256.thread
 
-..loopexit256_crit_edge298:                       ; preds = %.lr.ph603
-  br label %.loopexit256.thread467, !llvm.loop !55
+..loopexit256_crit_edge298:                       ; preds = %.lr.ph.a
+  %.0.in37.us71.le.i = add nuw nsw i32 %.038.us.i, 1
+  br label %.loopexit256.thread
 
-.lr.ph40.split.us.i..loopexit256.thread.loopexit_crit_edge: ; preds = %.lr.ph40.split.us.i
-  br label %.loopexit256.thread, !llvm.loop !55
+.lr.ph40.split.us.i..loopexit256.thread.loopexit_crit_edge: ; preds = %bb.bi
+  %5 = trunc nuw nsw i64 %indvars.iv68.i599 to i32
+  br label %.loopexit256.thread
 
-.loopexit256.thread:                              ; preds = %.lr.ph.a, %.lr.ph.preheader, %.lr.ph40.split.us.i..loopexit256.thread.loopexit_crit_edge, %.lr.ph40.split.i, %._crit_edge41.loopexit92.split.loop.exit.i, %.lr.ph40.split.us.i.preheader
-  %.ph = phi ptr [ %i.ada, %.lr.ph40.split.i ], [ %i.acq, %.lr.ph40.split.us.i.preheader ], [ %i.ada, %._crit_edge41.loopexit92.split.loop.exit.i ], [ %i.acq, %.lr.ph.preheader ], [ %i.acq, %.lr.ph40.split.us.i..loopexit256.thread.loopexit_crit_edge ], [ %i.acq, %.lr.ph.a ]
-  %.ph460 = phi i32 [ %i.acz, %.lr.ph40.split.i ], [ %.pre, %.lr.ph40.split.us.i.preheader ], [ %i.acz, %._crit_edge41.loopexit92.split.loop.exit.i ], [ %.pre, %.lr.ph.preheader ], [ %.pre, %.lr.ph40.split.us.i..loopexit256.thread.loopexit_crit_edge ], [ %.pre, %.lr.ph.a ]
-  %.0.in.lcssa.i.ph = phi i32 [ %i.acz, %.lr.ph40.split.i ], [ %.pre, %.lr.ph40.split.us.i.preheader ], [ %11, %._crit_edge41.loopexit92.split.loop.exit.i ], [ %.pre, %.lr.ph.preheader ], [ %.038.us.i295602, %.lr.ph40.split.us.i..loopexit256.thread.loopexit_crit_edge ], [ %.038.us.i295602, %.lr.ph.a ] ; 2 uses
+.loopexit256.thread:                              ; preds = %.lr.ph40.split.i, %._crit_edge41.loopexit92.split.loop.exit.i, %..loopexit256_crit_edge298, %.lr.ph40.split.us.i..loopexit256.thread.loopexit_crit_edge
+  %.ph = phi ptr [ %i.ada, %.lr.ph40.split.us.i..loopexit256.thread.loopexit_crit_edge ], [ %i.acq, %..loopexit256_crit_edge298 ], [ %i.acq, %._crit_edge41.loopexit92.split.loop.exit.i ], [ %i.ada, %.lr.ph40.split.i ]
+  %.ph458 = phi i32 [ %i.acz, %.lr.ph40.split.us.i..loopexit256.thread.loopexit_crit_edge ], [ %.pre, %..loopexit256_crit_edge298 ], [ %.pre, %._crit_edge41.loopexit92.split.loop.exit.i ], [ %i.acz, %.lr.ph40.split.i ]
+  %.0.in.lcssa.i.ph = phi i32 [ %5, %.lr.ph40.split.us.i..loopexit256.thread.loopexit_crit_edge ], [ %.0.in37.us71.le.i, %..loopexit256_crit_edge298 ], [ %.0.in37.us71.le109.i, %._crit_edge41.loopexit92.split.loop.exit.i ], [ %i.acz, %.lr.ph40.split.i ] ; 2 uses
   %i.adj = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   store i32 %.0.in.lcssa.i.ph, ptr %i.adj, align 4, !tbaa !126
-  %i.adk = sext i32 %.ph460 to i64
+  %i.adk = sext i32 %.ph458 to i64
   %i.adl = getelementptr i8, ptr @atrac3p_qu_to_subband, i64 %i.adk
   %i.adm = getelementptr i8, ptr %i.adl, i64 -1
   %i.adn = load i8, ptr %i.adm, align 1, !tbaa !14
@@ -308,9 +297,9 @@ bb.bi:                                            ; preds = %.lr.ph600, %.lr.ph5
 .lr.ph50.i..loopexit256.thread467.loopexit_crit_edge: ; preds = %.lr.ph50.i
   br label %.loopexit256.thread467, !llvm.loop !55
 
-.loopexit256.thread467:                           ; preds = %.lr.ph50.i.preheader, %.lr.ph50.i..loopexit256.thread467.loopexit_crit_edge, %..loopexit256_crit_edge298
-  %.ph465 = phi ptr [ %i.acq, %..loopexit256_crit_edge298 ], [ %i.ada, %.lr.ph50.i..loopexit256.thread467.loopexit_crit_edge ], [ %i.ada, %.lr.ph50.i.preheader ]
-  %.ph466 = phi i32 [ %.pre, %..loopexit256_crit_edge298 ], [ %i.acz, %.lr.ph50.i..loopexit256.thread467.loopexit_crit_edge ], [ %i.acz, %.lr.ph50.i.preheader ]
+.loopexit256.thread467:                           ; preds = %.lr.ph603, %.lr.ph50.i.preheader, %.lr.ph50.i..loopexit256.thread467.loopexit_crit_edge
+  %.ph465 = phi ptr [ %i.ada, %.lr.ph50.i.preheader ], [ %i.ada, %.lr.ph50.i..loopexit256.thread467.loopexit_crit_edge ], [ %i.acq, %.lr.ph603 ]
+  %.ph466 = phi i32 [ %i.acz, %.lr.ph50.i.preheader ], [ %i.acz, %.lr.ph50.i..loopexit256.thread467.loopexit_crit_edge ], [ %.pre, %.lr.ph603 ]
   %i.adr = getelementptr inbounds nuw i8, ptr %1, i64 12
   store i32 0, ptr %i.adr, align 4, !tbaa !126
   %i.ads = sext i32 %.ph466 to i64

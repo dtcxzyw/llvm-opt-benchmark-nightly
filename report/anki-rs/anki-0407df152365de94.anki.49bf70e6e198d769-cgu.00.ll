@@ -205,10 +205,9 @@ bb.ah:                                            ; preds = %"_ZN4core3ptr46drop
   br label %.body128
 
 bb.ai:                                            ; preds = %.lr.ph209, %bb.bh
-  %5 = phi i16 [ 1, %.lr.ph209 ], [ %i.et, %bb.bh ] ; 3 uses
-  %.sroa.084.0208 = phi i16 [ 0, %.lr.ph209 ], [ %5, %bb.bh ]
+  %.sroa.084.0208 = phi i16 [ 1, %.lr.ph209 ], [ %i.et, %bb.bh ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
-  %i.dp = add i16 %.sroa.084.0208, 2
+  %i.dp = add i16 %.sroa.084.0208, 1
   store i16 %i.dp, ptr %i.l, align 2
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   store ptr %i.l, ptr %i.k, align 8
@@ -458,8 +457,8 @@ bb.bh:                                            ; preds = %bb.be, %bb.bd
   %i.es = add i64 %i.el, 1
   store i64 %i.es, ptr %i.dh, align 8, !alias.scope !8330, !noalias !8331
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
-  %i.et = add i16 %5, 1
-  %exitcond.not = icmp eq i16 %5, %i.bw
+  %i.et = add i16 %.sroa.084.0208, 1
+  %exitcond.not = icmp eq i16 %.sroa.084.0208, %i.bw
   br i1 %exitcond.not, label %._crit_edge210, label %bb.ai
 
 bb.bi:                                            ; preds = %.critedge, %bb.bl, %.thread195, %.body120.thread, %.body, %.body128, %bb.r

@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %.from.624, %.from..
   %i.da = phi ptr [ null, %.from..lr.ph47.i ], [ %i.ez, %.from.624 ] ; 5 uses
   %i.db = phi ptr [ null, %.from..lr.ph47.i ], [ %i.fa, %.from.624 ] ; 9 uses
   %i.dc = phi i64 [ 1, %.from..lr.ph47.i ], [ %i.fb, %.from.624 ] ; 3 uses
-  %.046.i = phi i64 [ 0, %.from..lr.ph47.i ], [ %.1.i, %.from.624 ] ; 5 uses
+  %.046.i = phi i64 [ 0, %.from..lr.ph47.i ], [ %.1.i, %.from.624 ] ; 4 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %2, i64 %.046.i ; 3 uses
   %i.de = load i8, ptr %i.dd, align 1, !tbaa !75, !noalias !582
   %i.df = icmp eq i8 %i.de, -1
@@ -220,23 +220,18 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.q
   %i.dj = add i64 %.046.i, 3                      ; 2 uses
   %i.dk = icmp ult i64 %i.dj, %3
-  br i1 %i.dk, label %.lr.ph.i.from..lr.ph.preheader.i, label %.critedge.i
+  br i1 %i.dk, label %.lr.ph.i, label %.critedge.i
 
-.lr.ph.i.from..lr.ph.preheader.i:                 ; preds = %bb.r
-  %20 = add i64 %.046.i, 2
-  br label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %.critedge22.i, %.lr.ph.i.from..lr.ph.preheader.i
-  %i.dl = phi i64 [ %i.dq, %.critedge22.i ], [ %i.dj, %.lr.ph.i.from..lr.ph.preheader.i ] ; 3 uses
-  %.01845.i = phi i64 [ %i.dl, %.critedge22.i ], [ %20, %.lr.ph.i.from..lr.ph.preheader.i ] ; 2 uses
-  %i.dm = getelementptr inbounds nuw i8, ptr %2, i64 %.01845.i
+.lr.ph.i:                                         ; preds = %bb.r, %.critedge22.i
+  %i.dl = phi i64 [ %i.dq, %.critedge22.i ], [ %i.dj, %bb.r ] ; 3 uses
+  %20 = getelementptr i8, ptr %2, i64 %i.dl       ; 2 uses
+  %i.dm = getelementptr i8, ptr %20, i64 -1
   %i.dn = load i8, ptr %i.dm, align 1, !tbaa !75, !noalias !582
   %i.do = icmp eq i8 %i.dn, -1
   br i1 %i.do, label %bb.s, label %.critedge22.i
 
 bb.s:                                             ; preds = %.lr.ph.i
-  %21 = getelementptr inbounds nuw i8, ptr %2, i64 %i.dl
-  %i.dp = load i8, ptr %21, align 1, !tbaa !75, !noalias !582
+  %i.dp = load i8, ptr %20, align 1, !tbaa !75, !noalias !582
   %.not.i = icmp eq i8 %i.dp, -39
   br i1 %.not.i, label %.critedge.i.from., label %.critedge22.i
 
@@ -249,7 +244,7 @@ bb.s:                                             ; preds = %.lr.ph.i
   br label %.critedge.i, !llvm.loop !551
 
 .critedge.i.from.:                                ; preds = %bb.s
-  %i.dr = add i64 %.01845.i, 2
+  %i.dr = add i64 %i.dl, 1
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %bb.r, %.critedge.i.from..critedge22.i, %.critedge.i.from.

@@ -205,7 +205,7 @@ EC_GROUP_order_bits.exit:                         ; preds = %bb.c, %bn_minimal_w
   %i.at = or disjoint i32 %i.as, %i.ah
   %i.au = or disjoint i32 %i.at, %i.ak
   %i.av = or disjoint i32 %i.au, %i.an
-  %i.aw = add i32 %i.av, %.neg.i.i.i              ; 5 uses
+  %i.aw = add i32 %i.av, %.neg.i.i.i              ; 4 uses
   %.not82 = icmp eq i32 %i.aw, 0
   br i1 %.not82, label %._crit_edge.thread, label %.lr.ph
 
@@ -219,8 +219,7 @@ EC_GROUP_order_bits.exit:                         ; preds = %bb.c, %bn_minimal_w
   br label %.outer
 
 .outer:                                           ; preds = %.thread, %.lr.ph
-  %.05681.ph = phi i32 [ %.05697, %.thread ], [ %.05678, %.lr.ph ]
-  %.056.in80.ph = phi i32 [ %.05681, %.thread ], [ %i.aw, %.lr.ph ]
+  %.056.in80.ph = phi i32 [ %.05697, %.thread ], [ %.05678, %.lr.ph ]
   %.not58 = phi i1 [ true, %.thread ], [ false, %.lr.ph ] ; 3 uses
   br label %bb.i
 
@@ -251,8 +250,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   br i1 %.not58, label %._crit_edge.thread99, label %._crit_edge.thread
 
 bb.i:                                             ; preds = %.outer, %bb.t
-  %.05681 = phi i32 [ %.056, %bb.t ], [ %.05681.ph, %.outer ] ; 6 uses
-  %.056.in80 = phi i32 [ %.05681, %bb.t ], [ %.056.in80.ph, %.outer ] ; 4 uses
+  %.056.in80 = phi i32 [ %.056, %bb.t ], [ %.056.in80.ph, %.outer ] ; 8 uses
   br i1 %.not58, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
@@ -260,14 +258,15 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %i.bi = urem i32 %.05681, 5
+  %i.bi = urem i32 %.056.in80, 5
   %i.bj = icmp eq i32 %i.bi, 0
   br i1 %i.bj, label %bb.l, label %bb.t
 
 bb.l:                                             ; preds = %bb.k
+  %.056.in8085.le = add nuw i32 %.056.in80, 1
   %i.bk = load i32, ptr %i.g, align 8, !tbaa !296
   %i.bl = sext i32 %i.bk to i64                   ; 5 uses
-  %i.bm = add i32 %.056.in80, 3
+  %i.bm = add i32 %.056.in80, 4
   %i.bn = zext i32 %i.bm to i64                   ; 2 uses
   %i.bo = lshr i64 %i.bn, 6                       ; 2 uses
   %.not.i = icmp ult i64 %i.bo, %i.bl
@@ -285,7 +284,7 @@ bb.m:                                             ; preds = %bb.l
 
 bn_is_bit_set_words.exit:                         ; preds = %bb.l, %bb.m
   %.0.i = phi i32 [ %i.bv, %bb.m ], [ 0, %bb.l ]  ; 2 uses
-  %i.bw = add i32 %.056.in80, 2
+  %i.bw = add i32 %.056.in80, 3
   %i.bx = zext i32 %i.bw to i64                   ; 2 uses
   %i.by = lshr i64 %i.bx, 6                       ; 2 uses
   %.not.i60 = icmp ult i64 %i.by, %i.bl
@@ -304,7 +303,7 @@ bb.n:                                             ; preds = %bn_is_bit_set_words
 
 bn_is_bit_set_words.exit62:                       ; preds = %bn_is_bit_set_words.exit, %bb.n
   %.0.i61 = phi i32 [ %i.cg, %bb.n ], [ %.0.i, %bn_is_bit_set_words.exit ] ; 2 uses
-  %i.ch = add i32 %.056.in80, 1
+  %i.ch = add i32 %.056.in80, 2
   %i.ci = zext i32 %i.ch to i64                   ; 2 uses
   %i.cj = lshr i64 %i.ci, 6                       ; 2 uses
   %.not.i63 = icmp ult i64 %i.cj, %i.bl
@@ -323,7 +322,7 @@ bb.o:                                             ; preds = %bn_is_bit_set_words
 
 bn_is_bit_set_words.exit65:                       ; preds = %bn_is_bit_set_words.exit62, %bb.o
   %.0.i64 = phi i32 [ %i.cr, %bb.o ], [ %.0.i61, %bn_is_bit_set_words.exit62 ] ; 2 uses
-  %i.cs = zext i32 %.056.in80 to i64              ; 2 uses
+  %i.cs = zext i32 %.056.in8085.le to i64         ; 2 uses
   %i.ct = lshr i64 %i.cs, 6                       ; 2 uses
   %.not.i66 = icmp ult i64 %i.ct, %i.bl
   br i1 %.not.i66, label %bb.p, label %bn_is_bit_set_words.exit68
@@ -341,7 +340,7 @@ bb.p:                                             ; preds = %bn_is_bit_set_words
 
 bn_is_bit_set_words.exit68:                       ; preds = %bn_is_bit_set_words.exit65, %bb.p
   %.0.i67 = phi i32 [ %i.db, %bb.p ], [ %.0.i64, %bn_is_bit_set_words.exit65 ] ; 2 uses
-  %i.dc = zext i32 %.05681 to i64                 ; 2 uses
+  %i.dc = zext i32 %.056.in80 to i64              ; 2 uses
   %i.dd = lshr i64 %i.dc, 6                       ; 2 uses
   %.not.i69 = icmp ult i64 %i.dd, %i.bl
   br i1 %.not.i69, label %bb.q, label %bn_is_bit_set_words.exit71
@@ -565,13 +564,13 @@ bb.s:                                             ; preds = %.split
   br label %.thread
 
 bb.t:                                             ; preds = %bb.k
-  %.056 = add i32 %.05681, -1                     ; 2 uses
+  %.056 = add i32 %.056.in80, -1                  ; 2 uses
   %i.gb = icmp ult i32 %.056, %i.aw
   br i1 %i.gb, label %bb.i, label %._crit_edge, !llvm.loop !1994
 
 .thread:                                          ; preds = %bb.r, %bb.s
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #46
-  %.05697 = add i32 %.05681, -1                   ; 2 uses
+  %.05697 = add i32 %.056.in80, -1                ; 2 uses
   %i.gc = icmp ult i32 %.05697, %i.aw
   br i1 %i.gc, label %.outer, label %._crit_edge.thread99, !llvm.loop !1994
 

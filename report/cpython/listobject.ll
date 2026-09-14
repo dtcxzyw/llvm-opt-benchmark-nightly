@@ -204,7 +204,7 @@ reverse_slice.exit.i.i:                           ; preds = %.lr.ph.i.i.i, %bb.a
   br i1 %i.ew, label %.lr.ph.i7.i.i, label %sortslice_reverse.exit.i, !llvm.loop !1
 
 sortslice_reverse.exit.i:                         ; preds = %.lr.ph.i7.i.i, %reverse_slice.exit.i.i, %._crit_edge.i, %._crit_edge.thread182.i
-  %.068.lcssa184186.i = phi i64 [ 1, %._crit_edge.thread182.i ], [ %.068141.i, %._crit_edge.i ], [ %.068141.i, %reverse_slice.exit.i.i ], [ %.068141.i, %.lr.ph.i7.i.i ] ; 2 uses
+  %.068.lcssa184186.i = phi i64 [ 1, %._crit_edge.thread182.i ], [ %.068141.i, %._crit_edge.i ], [ %.068141.i, %reverse_slice.exit.i.i ], [ %.068141.i, %.lr.ph.i7.i.i ]
   %.169144.i = add nuw i64 %.068.lcssa184186.i, 1 ; 3 uses
   %i.ex = icmp slt i64 %.169144.i, %.0159
   br i1 %i.ex, label %.lr.ph148.i, label %sortslice_reverse.exit113.i
@@ -216,11 +216,11 @@ sortslice_reverse.exit.i:                         ; preds = %.lr.ph.i7.i.i, %rev
 bb.am:                                            ; preds = %sortslice_reverse.exit97.i, %.lr.ph148.i
   %.169147.i = phi i64 [ %.169144.i, %.lr.ph148.i ], [ %.169.i, %sortslice_reverse.exit97.i ] ; 5 uses
   %.0146.i = phi i64 [ 0, %.lr.ph148.i ], [ %.1.i, %sortslice_reverse.exit97.i ] ; 5 uses
-  %.169.in145.i = phi i64 [ %.068.lcssa184186.i, %.lr.ph148.i ], [ %.169147.i, %sortslice_reverse.exit97.i ] ; 3 uses
+  %.169.in145166.i = add i64 %.169147.i, -1       ; 3 uses
   %i.ey = load ptr, ptr %i.dt, align 8, !tbaa !62
-  %i.ez = getelementptr [8 x i8], ptr %.sroa.0.1, i64 %.169147.i ; 2 uses
+  %i.ez = getelementptr [8 x i8], ptr %.sroa.0.1, i64 %.169147.i ; 3 uses
   %i.fa = load ptr, ptr %i.ez, align 8, !tbaa !54
-  %i.fb = getelementptr [8 x i8], ptr %.sroa.0.1, i64 %.169.in145.i ; 2 uses
+  %i.fb = getelementptr [8 x i8], ptr %.sroa.0.1, i64 %.169.in145166.i ; 2 uses
   %i.fc = load ptr, ptr %i.fb, align 8, !tbaa !54
   %i.fd = call i32 %i.ey(ptr noundef %i.fa, ptr noundef %i.fc, ptr noundef nonnull %3) #13, !inline_history !101 ; 2 uses
   %i.fe = icmp slt i32 %i.fd, 0
@@ -235,13 +235,11 @@ bb.ao:                                            ; preds = %bb.an
   br i1 %.not82.i, label %sortslice_reverse.exit97.i, label %sortslice_advance.exit.i
 
 sortslice_advance.exit.i:                         ; preds = %bb.ao
-  %4 = add i64 %.0146.i, 1                        ; 2 uses
-  %i.ff = sub i64 %.169.in145.i, %.0146.i         ; 2 uses
-  %i.fg = getelementptr [8 x i8], ptr %.sroa.0.1, i64 %i.ff ; 3 uses
+  %i.ff = sub i64 %.169.in145166.i, %.0146.i      ; 2 uses
+  %i.fg = getelementptr [8 x i8], ptr %.sroa.0.1, i64 %i.ff ; 2 uses
   %i.fh = getelementptr [8 x i8], ptr %.8.val.fr.i, i64 %i.ff ; 2 uses
   %spec.select.i205 = select i1 %.not.i83.i, ptr null, ptr %i.fh ; 3 uses
-  %5 = getelementptr [8 x i8], ptr %i.fg, i64 %4
-  %.01011.i.i84.i = getelementptr i8, ptr %5, i64 -8 ; 2 uses
+  %.01011.i.i84.i = getelementptr i8, ptr %i.ez, i64 -8 ; 2 uses
   %i.fi = icmp ult ptr %i.fg, %.01011.i.i84.i
   br i1 %i.fi, label %.lr.ph.i.i93.i, label %reverse_slice.exit.i85.i
 
@@ -259,14 +257,13 @@ sortslice_advance.exit.i:                         ; preds = %bb.ao
 
 reverse_slice.exit.i85.i:                         ; preds = %.lr.ph.i.i93.i, %sortslice_advance.exit.i
   %.not.i86.i = icmp ne ptr %spec.select.i205, null
-  %i.fn = getelementptr [8 x i8], ptr %spec.select.i205, i64 %4
-  %.01011.i6.i87.i = getelementptr i8, ptr %i.fn, i64 -8 ; 2 uses
-  %i.fo = icmp ult ptr %spec.select.i205, %.01011.i6.i87.i
+  %i.fn = getelementptr [8 x i8], ptr %spec.select.i205, i64 %.0146.i ; 2 uses
+  %i.fo = icmp ult ptr %spec.select.i205, %i.fn
   %or.cond.i88.i = and i1 %.not.i86.i, %i.fo
   br i1 %or.cond.i88.i, label %.lr.ph.i7.i89.i, label %sortslice_reverse.exit97.i
 
 .lr.ph.i7.i89.i:                                  ; preds = %reverse_slice.exit.i85.i, %.lr.ph.i7.i89.i
-  %.01013.i8.i90.i = phi ptr [ %.010.i10.i92.i, %.lr.ph.i7.i89.i ], [ %.01011.i6.i87.i, %reverse_slice.exit.i85.i ] ; 3 uses
+  %.01013.i8.i90.i = phi ptr [ %.010.i10.i92.i, %.lr.ph.i7.i89.i ], [ %i.fn, %reverse_slice.exit.i85.i ] ; 3 uses
   %.012.i9.i91.i = phi ptr [ %i.fr, %.lr.ph.i7.i89.i ], [ %i.fh, %reverse_slice.exit.i85.i ] ; 3 uses
   %i.fp = load ptr, ptr %.012.i9.i91.i, align 8, !tbaa !54
   %i.fq = load ptr, ptr %.01013.i8.i90.i, align 8, !tbaa !54
@@ -300,7 +297,7 @@ sortslice_reverse.exit97.i:                       ; preds = %.lr.ph.i7.i89.i, %b
   br i1 %exitcond166.not.i, label %._crit_edge149.i, label %bb.am, !llvm.loop !103
 
 ._crit_edge149.i:                                 ; preds = %sortslice_reverse.exit97.i, %bb.aq
-  %.169.in.lcssa.i = phi i64 [ %.169.in145.i, %bb.aq ], [ %.169147.i, %sortslice_reverse.exit97.i ]
+  %.169.in.lcssa.i = phi i64 [ %.169.in145166.i, %bb.aq ], [ %.169147.i, %sortslice_reverse.exit97.i ]
   %.0.lcssa.i = phi i64 [ %.0146.i, %bb.aq ], [ %.1.i, %sortslice_reverse.exit97.i ] ; 3 uses
   %.169.lcssa.i = phi i64 [ %.169147.i, %bb.aq ], [ %.0159, %sortslice_reverse.exit97.i ] ; 3 uses
   %.not80.i = icmp eq i64 %.0.lcssa.i, 0

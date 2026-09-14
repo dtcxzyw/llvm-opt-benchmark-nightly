@@ -204,18 +204,16 @@ _ZNK9grpc_core10HPackTable17MementoRingBuffer4PeekEj.exit.lr.ph.i: ; preds = %bb
   br label %_ZNK9grpc_core10HPackTable17MementoRingBuffer4PeekEj.exit.i
 
 _ZNK9grpc_core10HPackTable17MementoRingBuffer4PeekEj.exit.i: ; preds = %"_ZZN9grpc_core10HPackTable17MementoRingBufferD1EvENK3$_0clEjRKNS0_7MementoE.exit.i", %_ZNK9grpc_core10HPackTable17MementoRingBuffer4PeekEj.exit.lr.ph.i
-  %1 = phi i32 [ %i.c, %_ZNK9grpc_core10HPackTable17MementoRingBuffer4PeekEj.exit.lr.ph.i ], [ %i.r, %"_ZZN9grpc_core10HPackTable17MementoRingBufferD1EvENK3$_0clEjRKNS0_7MementoE.exit.i" ] ; 2 uses
-  %i.e = phi i32 [ 1, %_ZNK9grpc_core10HPackTable17MementoRingBuffer4PeekEj.exit.lr.ph.i ], [ %i.s, %"_ZZN9grpc_core10HPackTable17MementoRingBufferD1EvENK3$_0clEjRKNS0_7MementoE.exit.i" ] ; 3 uses
-  %.0513.i = phi i32 [ 0, %_ZNK9grpc_core10HPackTable17MementoRingBuffer4PeekEj.exit.lr.ph.i ], [ %i.e, %"_ZZN9grpc_core10HPackTable17MementoRingBufferD1EvENK3$_0clEjRKNS0_7MementoE.exit.i" ]
+  %i.e = phi i32 [ %i.c, %_ZNK9grpc_core10HPackTable17MementoRingBuffer4PeekEj.exit.lr.ph.i ], [ %i.r, %"_ZZN9grpc_core10HPackTable17MementoRingBufferD1EvENK3$_0clEjRKNS0_7MementoE.exit.i" ] ; 2 uses
+  %.0513.i = phi i32 [ 1, %_ZNK9grpc_core10HPackTable17MementoRingBuffer4PeekEj.exit.lr.ph.i ], [ %i.s, %"_ZZN9grpc_core10HPackTable17MementoRingBufferD1EvENK3$_0clEjRKNS0_7MementoE.exit.i" ] ; 3 uses
   %i.f = load ptr, ptr %i.a, align 8, !tbaa !36   ; 2 uses
   %.not.i = icmp eq ptr %i.f, null
   br i1 %.not.i, label %"_ZNK9grpc_core10HPackTable17MementoRingBuffer7ForEachIZNS1_D1EvE3$_0EEvT_.exit", label %bb.b
 
 bb.b:                                             ; preds = %_ZNK9grpc_core10HPackTable17MementoRingBuffer4PeekEj.exit.i
-  %2 = xor i32 %.0513.i, -1
-  %3 = add i32 %1, %2
+  %1 = sub i32 %i.e, %.0513.i
   %i.g = load i32, ptr %0, align 8, !tbaa !47
-  %i.h = add i32 %3, %i.g
+  %i.h = add i32 %1, %i.g
   %i.i = load i32, ptr %i.d, align 8, !tbaa !34
   %i.j = urem i32 %i.h, %i.i
   %i.k = zext i32 %i.j to i64
@@ -237,9 +235,9 @@ bb.c:                                             ; preds = %bb.b
   br label %"_ZZN9grpc_core10HPackTable17MementoRingBufferD1EvENK3$_0clEjRKNS0_7MementoE.exit.i"
 
 "_ZZN9grpc_core10HPackTable17MementoRingBufferD1EvENK3$_0clEjRKNS0_7MementoE.exit.i": ; preds = %.noexc, %bb.b
-  %i.r = phi i32 [ %.pre.i, %.noexc ], [ %1, %bb.b ] ; 2 uses
-  %i.s = add nuw i32 %i.e, 1
-  %.not.i.i = icmp ult i32 %i.e, %i.r
+  %i.r = phi i32 [ %.pre.i, %.noexc ], [ %i.e, %bb.b ] ; 2 uses
+  %i.s = add nuw i32 %.0513.i, 1
+  %.not.i.i = icmp ult i32 %.0513.i, %i.r
   br i1 %.not.i.i, label %_ZNK9grpc_core10HPackTable17MementoRingBuffer4PeekEj.exit.i, label %"_ZNK9grpc_core10HPackTable17MementoRingBuffer7ForEachIZNS1_D1EvE3$_0EEvT_.exit"
 
 "_ZNK9grpc_core10HPackTable17MementoRingBuffer7ForEachIZNS1_D1EvE3$_0EEvT_.exit": ; preds = %"_ZZN9grpc_core10HPackTable17MementoRingBufferD1EvENK3$_0clEjRKNS0_7MementoE.exit.i", %_ZNK9grpc_core10HPackTable17MementoRingBuffer4PeekEj.exit.i, %bb.a
@@ -642,13 +640,11 @@ _ZNK9grpc_core10HPackTable17MementoRingBuffer4PeekEj.exit.lr.ph.i: ; preds = %bb
   br label %_ZNK9grpc_core10HPackTable17MementoRingBuffer4PeekEj.exit.i
 
 _ZNK9grpc_core10HPackTable17MementoRingBuffer4PeekEj.exit.i: ; preds = %"_ZZNK9grpc_core10HPackTable28TestOnlyDynamicTableAsStringB5cxx11EvENK3$_0clEjRKNS0_7MementoE.exit.i", %_ZNK9grpc_core10HPackTable17MementoRingBuffer4PeekEj.exit.lr.ph.i
-  %13 = phi i32 [ %i.e, %_ZNK9grpc_core10HPackTable17MementoRingBuffer4PeekEj.exit.lr.ph.i ], [ %i.ca, %"_ZZNK9grpc_core10HPackTable28TestOnlyDynamicTableAsStringB5cxx11EvENK3$_0clEjRKNS0_7MementoE.exit.i" ]
-  %i.x = phi i32 [ 1, %_ZNK9grpc_core10HPackTable17MementoRingBuffer4PeekEj.exit.lr.ph.i ], [ %i.bz, %"_ZZNK9grpc_core10HPackTable28TestOnlyDynamicTableAsStringB5cxx11EvENK3$_0clEjRKNS0_7MementoE.exit.i" ] ; 5 uses
-  %.0513.i = phi i32 [ 0, %_ZNK9grpc_core10HPackTable17MementoRingBuffer4PeekEj.exit.lr.ph.i ], [ %i.x, %"_ZZNK9grpc_core10HPackTable28TestOnlyDynamicTableAsStringB5cxx11EvENK3$_0clEjRKNS0_7MementoE.exit.i" ]
-  %14 = xor i32 %.0513.i, -1
-  %15 = add i32 %13, %14
+  %i.x = phi i32 [ %i.e, %_ZNK9grpc_core10HPackTable17MementoRingBuffer4PeekEj.exit.lr.ph.i ], [ %i.ca, %"_ZZNK9grpc_core10HPackTable28TestOnlyDynamicTableAsStringB5cxx11EvENK3$_0clEjRKNS0_7MementoE.exit.i" ]
+  %.0513.i = phi i32 [ 1, %_ZNK9grpc_core10HPackTable17MementoRingBuffer4PeekEj.exit.lr.ph.i ], [ %i.bz, %"_ZZNK9grpc_core10HPackTable28TestOnlyDynamicTableAsStringB5cxx11EvENK3$_0clEjRKNS0_7MementoE.exit.i" ] ; 5 uses
+  %13 = sub i32 %i.x, %.0513.i
   %i.y = load i32, ptr %i.c, align 8, !tbaa !47
-  %i.z = add i32 %15, %i.y
+  %i.z = add i32 %13, %i.y
   %i.aa = load i32, ptr %i.f, align 8, !tbaa !34
   %i.ab = urem i32 %i.z, %i.aa
   %i.ac = zext i32 %i.ab to i64
@@ -665,7 +661,7 @@ bb.b:                                             ; preds = %_ZNK9grpc_core10HPa
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #29
-  %i.ai = invoke noundef ptr @_ZN4absl12lts_2025051216numbers_internal15FastIntToBufferEjPc(i32 noundef %i.x, ptr noundef nonnull %i.p)
+  %i.ai = invoke noundef ptr @_ZN4absl12lts_2025051216numbers_internal15FastIntToBufferEjPc(i32 noundef %.0513.i, ptr noundef nonnull %i.p)
           to label %.noexc unwind label %bb.n
 
 .noexc:                                           ; preds = %bb.c
@@ -738,7 +734,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit14.i.i: ; preds = 
 
 bb.f:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #29
-  %i.ba = invoke noundef ptr @_ZN4absl12lts_2025051216numbers_internal15FastIntToBufferEjPc(i32 noundef %i.x, ptr noundef nonnull %i.h)
+  %i.ba = invoke noundef ptr @_ZN4absl12lts_2025051216numbers_internal15FastIntToBufferEjPc(i32 noundef %.0513.i, ptr noundef nonnull %i.h)
           to label %.noexc4 unwind label %bb.n
 
 .noexc4:                                          ; preds = %bb.f
@@ -858,9 +854,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit20.i.i: ; preds = 
   br label %.body
 
 "_ZZNK9grpc_core10HPackTable28TestOnlyDynamicTableAsStringB5cxx11EvENK3$_0clEjRKNS0_7MementoE.exit.i": ; preds = %_ZN4absl12lts_202505126StatusD2Ev.exit.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i
-  %i.bz = add nuw i32 %i.x, 1
+  %i.bz = add nuw i32 %.0513.i, 1
   %i.ca = load i32, ptr %i.d, align 4, !tbaa !33  ; 2 uses
-  %.not.i.i = icmp ult i32 %i.x, %i.ca
+  %.not.i.i = icmp ult i32 %.0513.i, %i.ca
   br i1 %.not.i.i, label %_ZNK9grpc_core10HPackTable17MementoRingBuffer4PeekEj.exit.i, label %"_ZNK9grpc_core10HPackTable17MementoRingBuffer7ForEachIZNKS0_28TestOnlyDynamicTableAsStringB5cxx11EvE3$_0EEvT_.exit"
 
 bb.n:                                             ; preds = %.noexc4, %bb.f, %.noexc, %bb.c

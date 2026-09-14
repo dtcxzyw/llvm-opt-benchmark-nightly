@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %.backedge.i, %.lr.ph364.i
   %i.v = phi i64 [ 0, %.lr.ph364.i ], [ %i.fm, %.backedge.i ] ; 4 uses
   %.sroa.030.0363.i = phi ptr [ %i.p, %.lr.ph364.i ], [ %.sroa.030.0.be.i, %.backedge.i ] ; 10 uses
-  %.sroa.23.0362.i = phi i64 [ %i.s, %.lr.ph364.i ], [ %.sroa.23.0.be.i, %.backedge.i ] ; 9 uses
+  %.sroa.23.0362.i = phi i64 [ %i.s, %.lr.ph364.i ], [ %.sroa.23.0.be.i, %.backedge.i ] ; 8 uses
   %i.w = load i8, ptr %.sroa.030.0363.i, align 1, !alias.scope !163, !noalias !162, !noundef !4 ; 2 uses
   switch i8 %i.w, label %bb.ci [
     i8 34, label %bb.l
@@ -376,7 +376,7 @@ bb.ag:                                            ; preds = %bb.cl
 bb.ah:                                            ; preds = %bb.j
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.030.0363.i, i64 1
   %i.bf = load i8, ptr %i.be, align 1, !alias.scope !163, !noalias !162, !noundef !4 ; 2 uses
-  %i.bg = add i64 %.sroa.23.0362.i, -2            ; 9 uses
+  %i.bg = add i64 %.sroa.23.0362.i, -2            ; 10 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.030.0363.i, i64 2 ; 7 uses
   switch i8 %i.bf, label %_RINvNtNtCsgbWeKYPjk8w_3syn3lit5value11backslash_uShEB6_.exit.thread.i [
     i8 120, label %bb.ai
@@ -475,15 +475,12 @@ bb.ax:                                            ; preds = %bb.ah
 
 bb.ay:                                            ; preds = %bb.ax
   %i.bw = load i8, ptr %i.bh, align 1, !alias.scope !170, !noalias !171, !noundef !4
-  %.not43.i.i.a = icmp eq i8 %i.bw, 123
-  br i1 %.not43.i.i.a, label %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit.i120.i, label %_RINvNtNtCsgbWeKYPjk8w_3syn3lit5value11backslash_uShEB6_.exit.thread.i
+  %.not43.i.i = icmp ne i8 %i.bw, 123
+  %.not43.i.i.a = icmp eq i64 %i.bg, 1
+  %or.cond.i = or i1 %.not43.i.i.a, %.not43.i.i
+  br i1 %or.cond.i, label %_RINvNtNtCsgbWeKYPjk8w_3syn3lit5value11backslash_uShEB6_.exit.thread.i, label %.lr.ph.split.i.i
 
-_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit.i120.i: ; preds = %bb.ay
-  %.pn6593137.i.i = add i64 %.sroa.23.0362.i, -3  ; 2 uses
-  %.not4594138.i.i = icmp eq i64 %.pn6593137.i.i, 0
-  br i1 %.not4594138.i.i, label %_RINvNtNtCsgbWeKYPjk8w_3syn3lit5value11backslash_uShEB6_.exit.thread.i, label %.lr.ph.split.i.i
-
-.lr.ph.split.i.i:                                 ; preds = %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit.i120.i
+.lr.ph.split.i.i:                                 ; preds = %bb.ay
   %.pn67.ph143.i.i = getelementptr inbounds nuw i8, ptr %.sroa.030.0363.i, i64 3
   %i.bx = load i8, ptr %.pn67.ph143.i.i, align 1, !alias.scope !170, !noalias !171, !noundef !4 ; 5 uses
   %i.by = add i8 %i.bx, -48                       ; 2 uses
@@ -509,9 +506,9 @@ bb.ba:                                            ; preds = %bb.az
   br label %.loopexit.i.i
 
 _RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit49.i.i: ; preds = %bb.bd, %bb.bg, %bb.bj, %bb.bm, %bb.bp, %switch.early.test.i.i
-  %.us-phi115.ph.i167.i = phi i64 [ %.pn65.in96.us.3.i.i, %bb.bj ], [ %.pn65.in96.us.2.i.i, %bb.bg ], [ %.pn65.in96.us.4.i.i, %bb.bm ], [ %.pn65.in96.us.6.i.i, %switch.early.test.i.i ], [ %.pn65.in96.us.5.i.i, %bb.bp ], [ %.pn65.in96.us.1.i.i, %bb.bd ]
-  %.us-phi114.ph.i166.i = phi ptr [ %.pn6795.us.3.i.i, %bb.bj ], [ %.pn6795.us.2.i.i, %bb.bg ], [ %.pn6795.us.4.i.i, %bb.bm ], [ %.pn6795.us.6.i.i, %switch.early.test.i.i ], [ %.pn6795.us.5.i.i, %bb.bp ], [ %.pn6795.us.1.i.i, %bb.bd ]
-  %.sroa.020.0.ph141182.ph.i165.i = phi i32 [ %i.cz, %bb.bj ], [ %i.cq, %bb.bg ], [ %i.dj, %bb.bm ], [ %i.ec, %switch.early.test.i.i ], [ %i.ds, %bb.bp ], [ %i.cg, %bb.bd ] ; 11 uses
+  %.pn6795.us.lcssa159.i167.i = phi ptr [ %.pn6795.us.3.i.i, %bb.bj ], [ %.pn6795.us.2.i.i, %bb.bg ], [ %.pn6795.us.6.i.i, %switch.early.test.i.i ], [ %.pn6795.us.5.i.i, %bb.bp ], [ %.pn6795.us.4.i.i, %bb.bm ], [ %.pn6795.us.1.i.i, %bb.bd ]
+  %.pn65.in96.us.lcssa163.in.i166.i = phi i64 [ %.pn65.in96.us.3.i.i, %bb.bj ], [ %.pn65.in96.us.2.i.i, %bb.bg ], [ %.pn65.in96.us.6.i.i, %switch.early.test.i.i ], [ %.pn65.in96.us.5.i.i, %bb.bp ], [ %.pn65.in96.us.4.i.i, %bb.bm ], [ %.pn65.in96.us.1.i.i, %bb.bd ]
+  %.sroa.020.0.ph141182.ph.i165.i = phi i32 [ %i.cz, %bb.bj ], [ %i.cq, %bb.bg ], [ %i.ec, %switch.early.test.i.i ], [ %i.ds, %bb.bp ], [ %i.dj, %bb.bm ], [ %i.cg, %bb.bd ] ; 11 uses
   %i.cd = xor i32 %.sroa.020.0.ph141182.ph.i165.i, 55296
   %i.ce = add nsw i32 %i.cd, -1114112
   %i.cf = icmp ult i32 %i.ce, -1112064
@@ -529,8 +526,7 @@ _RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5
   br label %.lr.ph.split.us.1.i.i
 
 .lr.ph.split.us.1.i.i:                            ; preds = %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.1.i.i, %.lr.ph.split.us.preheader.1.i.i
-  %.pn6597.us.1.i.i = phi i64 [ %.pn65.us.1.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.1.i.i ], [ %.pn6593.i.i, %.lr.ph.split.us.preheader.1.i.i ] ; 4 uses
-  %.pn65.in96.us.1.i.i = phi i64 [ %.pn6597.us.1.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.1.i.i ], [ %.pn6593137.i.i, %.lr.ph.split.us.preheader.1.i.i ]
+  %.pn65.in96.us.1.i.i = phi i64 [ %.pn65.us.1.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.1.i.i ], [ %.pn6593.i.i, %.lr.ph.split.us.preheader.1.i.i ] ; 3 uses
   %.pn6795.us.1.i.i = phi ptr [ %i.cl, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.1.i.i ], [ %.pn67.ph143.1.i.i, %.lr.ph.split.us.preheader.1.i.i ] ; 4 uses
   %i.ch = load i8, ptr %.pn6795.us.1.i.i, align 1, !alias.scope !170, !noalias !171, !noundef !4 ; 6 uses
   %i.ci = add i8 %i.ch, -48                       ; 2 uses
@@ -555,7 +551,7 @@ bb.bd:                                            ; preds = %bb.bc
 
 _RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.1.i.i: ; preds = %bb.bd
   %i.cl = getelementptr inbounds nuw i8, ptr %.pn6795.us.1.i.i, i64 1
-  %.pn65.us.1.i.i = add nsw i64 %.pn6597.us.1.i.i, -1 ; 2 uses
+  %.pn65.us.1.i.i = add nsw i64 %.pn65.in96.us.1.i.i, -1 ; 2 uses
   %.not45.us.1.i.i = icmp eq i64 %.pn65.us.1.i.i, 0
   br i1 %.not45.us.1.i.i, label %_RINvNtNtCsgbWeKYPjk8w_3syn3lit5value11backslash_uShEB6_.exit.thread.i, label %.lr.ph.split.us.1.i.i
 
@@ -572,13 +568,12 @@ _RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5
   %i.co = shl nuw nsw i32 %i.cg, 4
   %i.cp = zext nneg i8 %.sroa.038.0.1.i.i to i32
   %i.cq = add nuw nsw i32 %i.co, %i.cp            ; 2 uses
-  %.pn6593.1.i.i = add nsw i64 %.pn6597.us.1.i.i, -1 ; 2 uses
+  %.pn6593.1.i.i = add nsw i64 %.pn65.in96.us.1.i.i, -1 ; 2 uses
   %.not4594.1.i.i = icmp eq i64 %.pn6593.1.i.i, 0
   br i1 %.not4594.1.i.i, label %_RINvNtNtCsgbWeKYPjk8w_3syn3lit5value11backslash_uShEB6_.exit.thread.i, label %.lr.ph.split.us.2.i.i
 
 .lr.ph.split.us.2.i.i:                            ; preds = %.loopexit.1.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.2.i.i
-  %.pn6597.us.2.i.i = phi i64 [ %.pn65.us.2.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.2.i.i ], [ %.pn6593.1.i.i, %.loopexit.1.i.i ] ; 4 uses
-  %.pn65.in96.us.2.i.i = phi i64 [ %.pn6597.us.2.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.2.i.i ], [ %.pn6597.us.1.i.i, %.loopexit.1.i.i ]
+  %.pn65.in96.us.2.i.i = phi i64 [ %.pn65.us.2.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.2.i.i ], [ %.pn6593.1.i.i, %.loopexit.1.i.i ] ; 3 uses
   %.pn6795.us.2.pn.i.i = phi ptr [ %.pn6795.us.2.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.2.i.i ], [ %.pn6795.us.1.i.i, %.loopexit.1.i.i ] ; 2 uses
   %.pn6795.us.2.i.i = getelementptr inbounds nuw i8, ptr %.pn6795.us.2.pn.i.i, i64 1 ; 3 uses
   %i.cr = load i8, ptr %.pn6795.us.2.i.i, align 1, !alias.scope !170, !noalias !171, !noundef !4 ; 6 uses
@@ -603,7 +598,7 @@ bb.bg:                                            ; preds = %bb.bf
   ]
 
 _RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.2.i.i: ; preds = %bb.bg
-  %.pn65.us.2.i.i = add nsw i64 %.pn6597.us.2.i.i, -1 ; 2 uses
+  %.pn65.us.2.i.i = add nsw i64 %.pn65.in96.us.2.i.i, -1 ; 2 uses
   %.not45.us.2.i.i = icmp eq i64 %.pn65.us.2.i.i, 0
   br i1 %.not45.us.2.i.i, label %_RINvNtNtCsgbWeKYPjk8w_3syn3lit5value11backslash_uShEB6_.exit.thread.i, label %.lr.ph.split.us.2.i.i
 
@@ -620,7 +615,7 @@ _RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5
   %i.cx = shl nuw nsw i32 %i.cq, 4
   %i.cy = zext nneg i8 %.sroa.038.0.2.i.i to i32
   %i.cz = add nuw nsw i32 %i.cx, %i.cy            ; 2 uses
-  %.pn6593.2.i.i = add nsw i64 %.pn6597.us.2.i.i, -1 ; 2 uses
+  %.pn6593.2.i.i = add nsw i64 %.pn65.in96.us.2.i.i, -1 ; 2 uses
   %.not4594.2.i.i = icmp eq i64 %.pn6593.2.i.i, 0
   br i1 %.not4594.2.i.i, label %_RINvNtNtCsgbWeKYPjk8w_3syn3lit5value11backslash_uShEB6_.exit.thread.i, label %.lr.ph.split.us.preheader.3.i.i
 
@@ -629,8 +624,7 @@ _RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5
   br label %.lr.ph.split.us.3.i.i
 
 .lr.ph.split.us.3.i.i:                            ; preds = %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.3.i.i, %.lr.ph.split.us.preheader.3.i.i
-  %.pn6597.us.3.i.i = phi i64 [ %.pn65.us.3.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.3.i.i ], [ %.pn6593.2.i.i, %.lr.ph.split.us.preheader.3.i.i ] ; 4 uses
-  %.pn65.in96.us.3.i.i = phi i64 [ %.pn6597.us.3.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.3.i.i ], [ %.pn6597.us.2.i.i, %.lr.ph.split.us.preheader.3.i.i ]
+  %.pn65.in96.us.3.i.i = phi i64 [ %.pn65.us.3.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.3.i.i ], [ %.pn6593.2.i.i, %.lr.ph.split.us.preheader.3.i.i ] ; 3 uses
   %.pn6795.us.3.i.i = phi ptr [ %i.de, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.3.i.i ], [ %.pn67.ph143.3.i.i, %.lr.ph.split.us.preheader.3.i.i ] ; 4 uses
   %i.da = load i8, ptr %.pn6795.us.3.i.i, align 1, !alias.scope !170, !noalias !171, !noundef !4 ; 6 uses
   %i.db = add i8 %i.da, -48                       ; 2 uses
@@ -655,7 +649,7 @@ bb.bj:                                            ; preds = %bb.bi
 
 _RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.3.i.i: ; preds = %bb.bj
   %i.de = getelementptr inbounds nuw i8, ptr %.pn6795.us.3.i.i, i64 1
-  %.pn65.us.3.i.i = add nsw i64 %.pn6597.us.3.i.i, -1 ; 2 uses
+  %.pn65.us.3.i.i = add nsw i64 %.pn65.in96.us.3.i.i, -1 ; 2 uses
   %.not45.us.3.i.i = icmp eq i64 %.pn65.us.3.i.i, 0
   br i1 %.not45.us.3.i.i, label %_RINvNtNtCsgbWeKYPjk8w_3syn3lit5value11backslash_uShEB6_.exit.thread.i, label %.lr.ph.split.us.3.i.i
 
@@ -672,13 +666,12 @@ _RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5
   %i.dh = shl nuw nsw i32 %i.cz, 4
   %i.di = zext nneg i8 %.sroa.038.0.3.i.i to i32
   %i.dj = add nuw nsw i32 %i.dh, %i.di            ; 2 uses
-  %.pn6593.3.i.i = add nsw i64 %.pn6597.us.3.i.i, -1 ; 2 uses
+  %.pn6593.3.i.i = add nsw i64 %.pn65.in96.us.3.i.i, -1 ; 2 uses
   %.not4594.3.i.i = icmp eq i64 %.pn6593.3.i.i, 0
   br i1 %.not4594.3.i.i, label %_RINvNtNtCsgbWeKYPjk8w_3syn3lit5value11backslash_uShEB6_.exit.thread.i, label %.lr.ph.split.us.4.i.i
 
 .lr.ph.split.us.4.i.i:                            ; preds = %.loopexit.3.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.4.i.i
-  %.pn6597.us.4.i.i = phi i64 [ %.pn65.us.4.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.4.i.i ], [ %.pn6593.3.i.i, %.loopexit.3.i.i ] ; 4 uses
-  %.pn65.in96.us.4.i.i = phi i64 [ %.pn6597.us.4.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.4.i.i ], [ %.pn6597.us.3.i.i, %.loopexit.3.i.i ]
+  %.pn65.in96.us.4.i.i = phi i64 [ %.pn65.us.4.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.4.i.i ], [ %.pn6593.3.i.i, %.loopexit.3.i.i ] ; 3 uses
   %.pn6795.us.4.pn.i.i = phi ptr [ %.pn6795.us.4.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.4.i.i ], [ %.pn6795.us.3.i.i, %.loopexit.3.i.i ] ; 2 uses
   %.pn6795.us.4.i.i = getelementptr inbounds nuw i8, ptr %.pn6795.us.4.pn.i.i, i64 1 ; 3 uses
   %i.dk = load i8, ptr %.pn6795.us.4.i.i, align 1, !alias.scope !170, !noalias !171, !noundef !4 ; 6 uses
@@ -703,7 +696,7 @@ bb.bm:                                            ; preds = %bb.bl
   ]
 
 _RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.4.i.i: ; preds = %bb.bm
-  %.pn65.us.4.i.i = add nsw i64 %.pn6597.us.4.i.i, -1 ; 2 uses
+  %.pn65.us.4.i.i = add nsw i64 %.pn65.in96.us.4.i.i, -1 ; 2 uses
   %.not45.us.4.i.i = icmp eq i64 %.pn65.us.4.i.i, 0
   br i1 %.not45.us.4.i.i, label %_RINvNtNtCsgbWeKYPjk8w_3syn3lit5value11backslash_uShEB6_.exit.thread.i, label %.lr.ph.split.us.4.i.i
 
@@ -720,7 +713,7 @@ _RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5
   %i.dq = shl nuw nsw i32 %i.dj, 4
   %i.dr = zext nneg i8 %.sroa.038.0.4.i.i to i32
   %i.ds = add nuw nsw i32 %i.dq, %i.dr            ; 2 uses
-  %.pn6593.4.i.i = add nsw i64 %.pn6597.us.4.i.i, -1 ; 2 uses
+  %.pn6593.4.i.i = add nsw i64 %.pn65.in96.us.4.i.i, -1 ; 2 uses
   %.not4594.4.i.i = icmp eq i64 %.pn6593.4.i.i, 0
   br i1 %.not4594.4.i.i, label %_RINvNtNtCsgbWeKYPjk8w_3syn3lit5value11backslash_uShEB6_.exit.thread.i, label %.lr.ph.split.us.preheader.5.i.i
 
@@ -729,8 +722,7 @@ _RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5
   br label %.lr.ph.split.us.5.i.i
 
 .lr.ph.split.us.5.i.i:                            ; preds = %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.5.i.i, %.lr.ph.split.us.preheader.5.i.i
-  %.pn6597.us.5.i.i = phi i64 [ %.pn65.us.5.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.5.i.i ], [ %.pn6593.4.i.i, %.lr.ph.split.us.preheader.5.i.i ] ; 4 uses
-  %.pn65.in96.us.5.i.i = phi i64 [ %.pn6597.us.5.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.5.i.i ], [ %.pn6597.us.4.i.i, %.lr.ph.split.us.preheader.5.i.i ]
+  %.pn65.in96.us.5.i.i = phi i64 [ %.pn65.us.5.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.5.i.i ], [ %.pn6593.4.i.i, %.lr.ph.split.us.preheader.5.i.i ] ; 3 uses
   %.pn6795.us.5.i.i = phi ptr [ %i.dx, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.5.i.i ], [ %.pn67.ph143.5.i.i, %.lr.ph.split.us.preheader.5.i.i ] ; 4 uses
   %i.dt = load i8, ptr %.pn6795.us.5.i.i, align 1, !alias.scope !170, !noalias !171, !noundef !4 ; 6 uses
   %i.du = add i8 %i.dt, -48                       ; 2 uses
@@ -755,7 +747,7 @@ bb.bp:                                            ; preds = %bb.bo
 
 _RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.5.i.i: ; preds = %bb.bp
   %i.dx = getelementptr inbounds nuw i8, ptr %.pn6795.us.5.i.i, i64 1
-  %.pn65.us.5.i.i = add nsw i64 %.pn6597.us.5.i.i, -1 ; 2 uses
+  %.pn65.us.5.i.i = add nsw i64 %.pn65.in96.us.5.i.i, -1 ; 2 uses
   %.not45.us.5.i.i = icmp eq i64 %.pn65.us.5.i.i, 0
   br i1 %.not45.us.5.i.i, label %_RINvNtNtCsgbWeKYPjk8w_3syn3lit5value11backslash_uShEB6_.exit.thread.i, label %.lr.ph.split.us.5.i.i
 
@@ -772,13 +764,12 @@ _RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5
   %i.ea = shl nuw nsw i32 %i.ds, 4
   %i.eb = zext nneg i8 %.sroa.038.0.5.i.i to i32
   %i.ec = add nuw nsw i32 %i.ea, %i.eb
-  %.pn6593.5.i.i = add nsw i64 %.pn6597.us.5.i.i, -1 ; 2 uses
+  %.pn6593.5.i.i = add nsw i64 %.pn65.in96.us.5.i.i, -1 ; 2 uses
   %.not4594.5.i.i = icmp eq i64 %.pn6593.5.i.i, 0
   br i1 %.not4594.5.i.i, label %_RINvNtNtCsgbWeKYPjk8w_3syn3lit5value11backslash_uShEB6_.exit.thread.i, label %.lr.ph.split.us.6.i.i
 
 .lr.ph.split.us.6.i.i:                            ; preds = %.loopexit.5.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.6.i.i
-  %.pn6597.us.6.i.i = phi i64 [ %.pn65.us.6.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.6.i.i ], [ %.pn6593.5.i.i, %.loopexit.5.i.i ] ; 2 uses
-  %.pn65.in96.us.6.i.i = phi i64 [ %.pn6597.us.6.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.6.i.i ], [ %.pn6597.us.5.i.i, %.loopexit.5.i.i ]
+  %.pn65.in96.us.6.i.i = phi i64 [ %.pn65.us.6.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.6.i.i ], [ %.pn6593.5.i.i, %.loopexit.5.i.i ] ; 2 uses
   %.pn6795.us.6.pn.i.i = phi ptr [ %.pn6795.us.6.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.6.i.i ], [ %.pn6795.us.5.i.i, %.loopexit.5.i.i ]
   %.pn6795.us.6.i.i = getelementptr inbounds nuw i8, ptr %.pn6795.us.6.pn.i.i, i64 1 ; 3 uses
   %i.ed = load i8, ptr %.pn6795.us.6.i.i, align 1, !alias.scope !170, !noalias !171, !noundef !4 ; 2 uses
@@ -793,7 +784,7 @@ switch.early.test.i.i:                            ; preds = %.lr.ph.split.us.6.i
   ]
 
 _RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.6.i.i: ; preds = %switch.early.test.i.i
-  %.pn65.us.6.i.i = add nsw i64 %.pn6597.us.6.i.i, -1 ; 2 uses
+  %.pn65.us.6.i.i = add nsw i64 %.pn65.in96.us.6.i.i, -1 ; 2 uses
   %.not45.us.6.i.i = icmp eq i64 %.pn65.us.6.i.i, 0
   br i1 %.not45.us.6.i.i, label %_RINvNtNtCsgbWeKYPjk8w_3syn3lit5value11backslash_uShEB6_.exit.thread.i, label %.lr.ph.split.us.6.i.i
 
@@ -814,8 +805,8 @@ bb.bt:                                            ; preds = %bb.av
   br i1 %i.ei, label %_RINvNtNtCsgbWeKYPjk8w_3syn3lit5value11backslash_uShEB6_.exit.thread.i, label %bb.cd
 
 _RINvNtNtCsgbWeKYPjk8w_3syn3lit5value11backslash_uShEB6_.exit.i: ; preds = %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit49.i.i
-  %i.ej = getelementptr inbounds nuw i8, ptr %.us-phi114.ph.i166.i, i64 1
-  %i.ek = add nsw i64 %.us-phi115.ph.i167.i, -2
+  %i.ej = getelementptr inbounds nuw i8, ptr %.pn6795.us.lcssa159.i167.i, i64 1
+  %i.ek = add nsw i64 %.pn65.in96.us.lcssa163.in.i166.i, -1
   %i.el = icmp ult i32 %.sroa.020.0.ph141182.ph.i165.i, 1114112
   call void @llvm.assume(i1 %i.el)
   %i.em = icmp eq i32 %.sroa.020.0.ph141182.ph.i165.i, 0
@@ -987,7 +978,7 @@ bb.cm:                                            ; preds = %bb.ck
   call void @_RNvNtCsj6eKBz9Db1c_4core9panicking16panic_in_cleanup() #16, !noalias !162
   unreachable
 
-_RINvNtNtCsgbWeKYPjk8w_3syn3lit5value11backslash_uShEB6_.exit.thread.i: ; preds = %bb.cg, %.backedge.i, %_RINvNtNtCsgbWeKYPjk8w_3syn3lit5value11backslash_uShEB6_.exit.i, %bb.bt, %.loopexit.5.i.i, %.loopexit.4.i.i, %.loopexit.3.i.i, %.loopexit.2.i.i, %.loopexit.1.i.i, %.loopexit.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit49.i.i, %bb.ba, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit.i120.i, %bb.ay, %bb.ax, %bb.as, %bb.an, %bb.ai, %.preheader.i, %bb.ah, %bb.k, %bb.j, %bb.cf, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.1.i.i, %bb.bd, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.2.i.i, %bb.bg, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.3.i.i, %bb.bj, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.4.i.i, %bb.bm, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.5.i.i, %bb.bp, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.6.i.i, %switch.early.test.i.i, %.lr.ph.split.us.6.i.i, %.split.i.thread.i
+_RINvNtNtCsgbWeKYPjk8w_3syn3lit5value11backslash_uShEB6_.exit.thread.i: ; preds = %bb.cg, %.backedge.i, %_RINvNtNtCsgbWeKYPjk8w_3syn3lit5value11backslash_uShEB6_.exit.i, %bb.bt, %.loopexit.5.i.i, %.loopexit.4.i.i, %.loopexit.3.i.i, %.loopexit.2.i.i, %.loopexit.1.i.i, %.loopexit.i.i, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit49.i.i, %bb.ba, %bb.ay, %bb.ax, %bb.as, %bb.an, %bb.ai, %.preheader.i, %bb.ah, %bb.k, %bb.j, %bb.cf, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.1.i.i, %bb.bd, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.2.i.i, %bb.bg, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.3.i.i, %bb.bj, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.4.i.i, %bb.bm, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.5.i.i, %bb.bp, %_RNvXs5_NtNtCsj6eKBz9Db1c_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgbWeKYPjk8w_3syn.exit48.us.6.i.i, %switch.early.test.i.i, %.lr.ph.split.us.6.i.i, %.split.i.thread.i
   store ptr null, ptr %0, align 8, !alias.scope !162, !noalias !163
   invoke void @_RNvXsp_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VechENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsgbWeKYPjk8w_3syn(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.h)
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsgbWeKYPjk8w_3syn.exit132.i unwind label %bb.cn, !noalias !164

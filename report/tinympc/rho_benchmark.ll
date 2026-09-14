@@ -205,7 +205,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.cn, label %.lr.ph.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i, !llvm.loop !223
 
 _ZN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEaSINS_13CwiseBinaryOpINS_8internal20scalar_difference_opIddEEKS1_S7_EEEERS1_RKNS_9DenseBaseIT_EE.exit: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i.i.i, %middle.block, %._crit_edge.i.i.i.i.i.i.i.i
-  %i.co = load ptr, ptr %i.f, align 8, !tbaa !17  ; 9 uses
+  %i.co = load ptr, ptr %i.f, align 8, !tbaa !17  ; 8 uses
   %i.cp = load i64, ptr %i.o, align 8, !tbaa !13
   %i.cq = load i64, ptr %i.q, align 8, !tbaa !16
   %i.cr = mul nsw i64 %i.cq, %i.cp                ; 9 uses
@@ -238,20 +238,18 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.de, label %bb.g, label %bb.h
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.f, %.lr.ph.i.i.i.i
-  %.05480.i.i.i.i = phi i64 [ %.054.i.i.i.i, %.lr.ph.i.i.i.i ], [ 4, %bb.f ] ; 3 uses
-  %.054.in79.i.i.i.i = phi i64 [ %.05480.i.i.i.i, %.lr.ph.i.i.i.i ], [ 0, %bb.f ]
+  %.054.in79.i.i.i.i = phi i64 [ %.054.i.i.i.i, %.lr.ph.i.i.i.i ], [ 4, %bb.f ] ; 2 uses
   %.07278.i.i.i.i = phi <2 x double> [ %i.di, %.lr.ph.i.i.i.i ], [ %i.cx, %bb.f ]
   %.07577.i.i.i.i = phi <2 x double> [ %i.dm, %.lr.ph.i.i.i.i ], [ %i.db, %bb.f ]
-  %i.df = getelementptr inbounds nuw [8 x i8], ptr %i.co, i64 %.05480.i.i.i.i
+  %i.df = getelementptr inbounds nuw [8 x i8], ptr %i.co, i64 %.054.in79.i.i.i.i ; 2 uses
   %i.dg = load <2 x double>, ptr %i.df, align 16, !tbaa !58
   %i.dh = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %i.dg)
   %i.di = call noundef <2 x double> @llvm.x86.sse2.max.pd(<2 x double> %i.dh, <2 x double> %.07278.i.i.i.i) ; 2 uses
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %i.co, i64 %.054.in79.i.i.i.i
-  %i.dj = getelementptr inbounds nuw i8, ptr %11, i64 48
+  %i.dj = getelementptr i8, ptr %i.df, i64 16
   %i.dk = load <2 x double>, ptr %i.dj, align 16, !tbaa !58
   %i.dl = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %i.dk)
   %i.dm = call noundef <2 x double> @llvm.x86.sse2.max.pd(<2 x double> %i.dl, <2 x double> %.07577.i.i.i.i) ; 2 uses
-  %.054.i.i.i.i = add nuw nsw i64 %.05480.i.i.i.i, 4 ; 2 uses
+  %.054.i.i.i.i = add nuw nsw i64 %.054.in79.i.i.i.i, 4 ; 2 uses
   %i.dn = icmp slt i64 %.054.i.i.i.i, %i.ct
   br i1 %i.dn, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i, !llvm.loop !224
 
@@ -319,7 +317,7 @@ bb.i:                                             ; preds = %_ZN5Eigen6MatrixIdL
 _ZNK5Eigen9DenseBaseINS_12CwiseUnaryOpINS_8internal13scalar_abs_opIdEEKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEEEE8maxCoeffEv.exit: ; preds = %.lr.ph85.i.i.i.i.prol.loopexit, %.lr.ph85.i.i.i.i, %bb.h, %bb.i
   %.3.i.i.i.i = phi double [ %i.dt, %bb.h ], [ %i.ep, %bb.i ], [ %.lcssa342.unr, %.lr.ph85.i.i.i.i.prol.loopexit ], [ %i.em, %.lr.ph85.i.i.i.i ]
   store double %.3.i.i.i.i, ptr %1, align 8, !tbaa !19
-  %i.eq = load ptr, ptr %i.d, align 8, !tbaa !17  ; 9 uses
+  %i.eq = load ptr, ptr %i.d, align 8, !tbaa !17  ; 8 uses
   %i.er = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.es = load i64, ptr %i.er, align 8, !tbaa !13
   %i.et = getelementptr inbounds nuw i8, ptr %0, i64 184
@@ -354,20 +352,18 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.fi, label %bb.l, label %bb.m
 
 .lr.ph.i.i.i.i40:                                 ; preds = %bb.k, %.lr.ph.i.i.i.i40
-  %.05480.i.i.i.i41 = phi i64 [ %.054.i.i.i.i45, %.lr.ph.i.i.i.i40 ], [ 4, %bb.k ] ; 3 uses
-  %.054.in79.i.i.i.i42 = phi i64 [ %.05480.i.i.i.i41, %.lr.ph.i.i.i.i40 ], [ 0, %bb.k ]
+  %.054.in79.i.i.i.i42 = phi i64 [ %.054.i.i.i.i45, %.lr.ph.i.i.i.i40 ], [ 4, %bb.k ] ; 2 uses
   %.07278.i.i.i.i43 = phi <2 x double> [ %i.fm, %.lr.ph.i.i.i.i40 ], [ %i.fb, %bb.k ]
   %.07577.i.i.i.i44 = phi <2 x double> [ %i.fq, %.lr.ph.i.i.i.i40 ], [ %i.ff, %bb.k ]
-  %i.fj = getelementptr inbounds nuw [8 x i8], ptr %i.eq, i64 %.05480.i.i.i.i41
+  %i.fj = getelementptr inbounds nuw [8 x i8], ptr %i.eq, i64 %.054.in79.i.i.i.i42 ; 2 uses
   %i.fk = load <2 x double>, ptr %i.fj, align 16, !tbaa !58
   %i.fl = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %i.fk)
   %i.fm = call noundef <2 x double> @llvm.x86.sse2.max.pd(<2 x double> %i.fl, <2 x double> %.07278.i.i.i.i43) ; 2 uses
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.eq, i64 %.054.in79.i.i.i.i42
-  %i.fn = getelementptr inbounds nuw i8, ptr %12, i64 48
+  %i.fn = getelementptr i8, ptr %i.fj, i64 16
   %i.fo = load <2 x double>, ptr %i.fn, align 16, !tbaa !58
   %i.fp = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %i.fo)
   %i.fq = call noundef <2 x double> @llvm.x86.sse2.max.pd(<2 x double> %i.fp, <2 x double> %.07577.i.i.i.i44) ; 2 uses
-  %.054.i.i.i.i45 = add nuw nsw i64 %.05480.i.i.i.i41, 4 ; 2 uses
+  %.054.i.i.i.i45 = add nuw nsw i64 %.054.in79.i.i.i.i42, 4 ; 2 uses
   %i.fr = icmp slt i64 %.054.i.i.i.i45, %i.ex
   br i1 %i.fr, label %.lr.ph.i.i.i.i40, label %._crit_edge.i.i.i.i37, !llvm.loop !224
 
@@ -434,7 +430,7 @@ bb.n:                                             ; preds = %_ZNK5Eigen9DenseBas
 
 _ZNK5Eigen9DenseBaseINS_12CwiseUnaryOpINS_8internal13scalar_abs_opIdEEKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEEEE8maxCoeffEv.exit46: ; preds = %.lr.ph85.i.i.i.i33.prol.loopexit, %.lr.ph85.i.i.i.i33, %bb.m, %bb.n
   %.3.i.i.i.i32 = phi double [ %i.fx, %bb.m ], [ %i.gt, %bb.n ], [ %.lcssa339.unr, %.lr.ph85.i.i.i.i33.prol.loopexit ], [ %i.gq, %.lr.ph85.i.i.i.i33 ] ; 2 uses
-  %i.gu = load ptr, ptr %i.e, align 8, !tbaa !17  ; 9 uses
+  %i.gu = load ptr, ptr %i.e, align 8, !tbaa !17  ; 8 uses
   %i.gv = load i64, ptr %i.k, align 8, !tbaa !13
   %i.gw = load i64, ptr %i.m, align 8, !tbaa !16
   %i.gx = mul nsw i64 %i.gw, %i.gv                ; 9 uses
@@ -467,20 +463,18 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.hk, label %bb.q, label %bb.r
 
 .lr.ph.i.i.i.i60:                                 ; preds = %bb.p, %.lr.ph.i.i.i.i60
-  %.05480.i.i.i.i61 = phi i64 [ %.054.i.i.i.i65, %.lr.ph.i.i.i.i60 ], [ 4, %bb.p ] ; 3 uses
-  %.054.in79.i.i.i.i62 = phi i64 [ %.05480.i.i.i.i61, %.lr.ph.i.i.i.i60 ], [ 0, %bb.p ]
+  %.054.in79.i.i.i.i62 = phi i64 [ %.054.i.i.i.i65, %.lr.ph.i.i.i.i60 ], [ 4, %bb.p ] ; 2 uses
   %.07278.i.i.i.i63 = phi <2 x double> [ %i.ho, %.lr.ph.i.i.i.i60 ], [ %i.hd, %bb.p ]
   %.07577.i.i.i.i64 = phi <2 x double> [ %i.hs, %.lr.ph.i.i.i.i60 ], [ %i.hh, %bb.p ]
-  %i.hl = getelementptr inbounds nuw [8 x i8], ptr %i.gu, i64 %.05480.i.i.i.i61
+  %i.hl = getelementptr inbounds nuw [8 x i8], ptr %i.gu, i64 %.054.in79.i.i.i.i62 ; 2 uses
   %i.hm = load <2 x double>, ptr %i.hl, align 16, !tbaa !58
   %i.hn = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %i.hm)
   %i.ho = call noundef <2 x double> @llvm.x86.sse2.max.pd(<2 x double> %i.hn, <2 x double> %.07278.i.i.i.i63) ; 2 uses
-  %13 = getelementptr inbounds nuw [8 x i8], ptr %i.gu, i64 %.054.in79.i.i.i.i62
-  %i.hp = getelementptr inbounds nuw i8, ptr %13, i64 48
+  %i.hp = getelementptr i8, ptr %i.hl, i64 16
   %i.hq = load <2 x double>, ptr %i.hp, align 16, !tbaa !58
   %i.hr = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %i.hq)
   %i.hs = call noundef <2 x double> @llvm.x86.sse2.max.pd(<2 x double> %i.hr, <2 x double> %.07577.i.i.i.i64) ; 2 uses
-  %.054.i.i.i.i65 = add nuw nsw i64 %.05480.i.i.i.i61, 4 ; 2 uses
+  %.054.i.i.i.i65 = add nuw nsw i64 %.054.in79.i.i.i.i62, 4 ; 2 uses
   %i.ht = icmp slt i64 %.054.i.i.i.i65, %i.gz
   br i1 %i.ht, label %.lr.ph.i.i.i.i60, label %._crit_edge.i.i.i.i57, !llvm.loop !224
 
@@ -751,7 +745,7 @@ middle.block321:                                  ; preds = %vector.body312
   br i1 %i.mq, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !228
 
 _ZN5Eigen8internal26call_dense_assignment_loopINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS_13CwiseBinaryOpINS0_13scalar_sum_opIddEEKNS4_IS6_KS3_S7_EES7_EENS0_9assign_opIddEEEEvRT_RKT0_RKT1_.exit: ; preds = %.lr.ph.i.i.i.prol.loopexit, %.lr.ph.i.i.i, %middle.block321, %._crit_edge.i.i
-  %i.mr = load ptr, ptr %i.je, align 8, !tbaa !17 ; 9 uses
+  %i.mr = load ptr, ptr %i.je, align 8, !tbaa !17 ; 8 uses
   %i.ms = load i64, ptr %i.jp, align 8, !tbaa !13
   %i.mt = load i64, ptr %i.jr, align 8, !tbaa !16
   %i.mu = mul nsw i64 %i.mt, %i.ms                ; 9 uses
@@ -784,20 +778,18 @@ bb.x:                                             ; preds = %bb.w
   br i1 %i.nh, label %bb.y, label %bb.z
 
 .lr.ph.i.i.i.i84:                                 ; preds = %bb.x, %.lr.ph.i.i.i.i84
-  %.05480.i.i.i.i85 = phi i64 [ %.054.i.i.i.i89, %.lr.ph.i.i.i.i84 ], [ 4, %bb.x ] ; 3 uses
-  %.054.in79.i.i.i.i86 = phi i64 [ %.05480.i.i.i.i85, %.lr.ph.i.i.i.i84 ], [ 0, %bb.x ]
+  %.054.in79.i.i.i.i86 = phi i64 [ %.054.i.i.i.i89, %.lr.ph.i.i.i.i84 ], [ 4, %bb.x ] ; 2 uses
   %.07278.i.i.i.i87 = phi <2 x double> [ %i.nl, %.lr.ph.i.i.i.i84 ], [ %i.na, %bb.x ]
   %.07577.i.i.i.i88 = phi <2 x double> [ %i.np, %.lr.ph.i.i.i.i84 ], [ %i.ne, %bb.x ]
-  %i.ni = getelementptr inbounds nuw [8 x i8], ptr %i.mr, i64 %.05480.i.i.i.i85
+  %i.ni = getelementptr inbounds nuw [8 x i8], ptr %i.mr, i64 %.054.in79.i.i.i.i86 ; 2 uses
   %i.nj = load <2 x double>, ptr %i.ni, align 16, !tbaa !58
   %i.nk = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %i.nj)
   %i.nl = call noundef <2 x double> @llvm.x86.sse2.max.pd(<2 x double> %i.nk, <2 x double> %.07278.i.i.i.i87) ; 2 uses
-  %14 = getelementptr inbounds nuw [8 x i8], ptr %i.mr, i64 %.054.in79.i.i.i.i86
-  %i.nm = getelementptr inbounds nuw i8, ptr %14, i64 48
+  %i.nm = getelementptr i8, ptr %i.ni, i64 16
   %i.nn = load <2 x double>, ptr %i.nm, align 16, !tbaa !58
   %i.no = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %i.nn)
   %i.np = call noundef <2 x double> @llvm.x86.sse2.max.pd(<2 x double> %i.no, <2 x double> %.07577.i.i.i.i88) ; 2 uses
-  %.054.i.i.i.i89 = add nuw nsw i64 %.05480.i.i.i.i85, 4 ; 2 uses
+  %.054.i.i.i.i89 = add nuw nsw i64 %.054.in79.i.i.i.i86, 4 ; 2 uses
   %i.nq = icmp slt i64 %.054.i.i.i.i89, %i.mw
   br i1 %i.nq, label %.lr.ph.i.i.i.i84, label %._crit_edge.i.i.i.i81, !llvm.loop !224
 
@@ -865,7 +857,7 @@ bb.aa:                                            ; preds = %_ZN5Eigen8internal2
 _ZNK5Eigen9DenseBaseINS_12CwiseUnaryOpINS_8internal13scalar_abs_opIdEEKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEEEE8maxCoeffEv.exit90: ; preds = %.lr.ph85.i.i.i.i77.prol.loopexit, %.lr.ph85.i.i.i.i77, %bb.z, %bb.aa
   %.3.i.i.i.i76 = phi double [ %i.nw, %bb.z ], [ %i.os, %bb.aa ], [ %.lcssa332.unr, %.lr.ph85.i.i.i.i77.prol.loopexit ], [ %i.op, %.lr.ph85.i.i.i.i77 ]
   store double %.3.i.i.i.i76, ptr %2, align 8, !tbaa !19
-  %i.ot = load ptr, ptr %i.iz, align 8, !tbaa !17 ; 9 uses
+  %i.ot = load ptr, ptr %i.iz, align 8, !tbaa !17 ; 8 uses
   %i.ou = getelementptr inbounds nuw i8, ptr %0, i64 248
   %i.ov = load i64, ptr %i.ou, align 8, !tbaa !13
   %i.ow = getelementptr inbounds nuw i8, ptr %0, i64 256
@@ -900,20 +892,18 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %i.pl, label %bb.ad, label %bb.ae
 
 .lr.ph.i.i.i.i104:                                ; preds = %bb.ac, %.lr.ph.i.i.i.i104
-  %.05480.i.i.i.i105 = phi i64 [ %.054.i.i.i.i109, %.lr.ph.i.i.i.i104 ], [ 4, %bb.ac ] ; 3 uses
-  %.054.in79.i.i.i.i106 = phi i64 [ %.05480.i.i.i.i105, %.lr.ph.i.i.i.i104 ], [ 0, %bb.ac ]
+  %.054.in79.i.i.i.i106 = phi i64 [ %.054.i.i.i.i109, %.lr.ph.i.i.i.i104 ], [ 4, %bb.ac ] ; 2 uses
   %.07278.i.i.i.i107 = phi <2 x double> [ %i.pp, %.lr.ph.i.i.i.i104 ], [ %i.pe, %bb.ac ]
   %.07577.i.i.i.i108 = phi <2 x double> [ %i.pt, %.lr.ph.i.i.i.i104 ], [ %i.pi, %bb.ac ]
-  %i.pm = getelementptr inbounds nuw [8 x i8], ptr %i.ot, i64 %.05480.i.i.i.i105
+  %i.pm = getelementptr inbounds nuw [8 x i8], ptr %i.ot, i64 %.054.in79.i.i.i.i106 ; 2 uses
   %i.pn = load <2 x double>, ptr %i.pm, align 16, !tbaa !58
   %i.po = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %i.pn)
   %i.pp = call noundef <2 x double> @llvm.x86.sse2.max.pd(<2 x double> %i.po, <2 x double> %.07278.i.i.i.i107) ; 2 uses
-  %15 = getelementptr inbounds nuw [8 x i8], ptr %i.ot, i64 %.054.in79.i.i.i.i106
-  %i.pq = getelementptr inbounds nuw i8, ptr %15, i64 48
+  %i.pq = getelementptr i8, ptr %i.pm, i64 16
   %i.pr = load <2 x double>, ptr %i.pq, align 16, !tbaa !58
   %i.ps = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %i.pr)
   %i.pt = call noundef <2 x double> @llvm.x86.sse2.max.pd(<2 x double> %i.ps, <2 x double> %.07577.i.i.i.i108) ; 2 uses
-  %.054.i.i.i.i109 = add nuw nsw i64 %.05480.i.i.i.i105, 4 ; 2 uses
+  %.054.i.i.i.i109 = add nuw nsw i64 %.054.in79.i.i.i.i106, 4 ; 2 uses
   %i.pu = icmp slt i64 %.054.i.i.i.i109, %i.pa
   br i1 %i.pu, label %.lr.ph.i.i.i.i104, label %._crit_edge.i.i.i.i101, !llvm.loop !224
 
@@ -980,7 +970,7 @@ bb.af:                                            ; preds = %_ZNK5Eigen9DenseBas
 
 _ZNK5Eigen9DenseBaseINS_12CwiseUnaryOpINS_8internal13scalar_abs_opIdEEKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEEEE8maxCoeffEv.exit110: ; preds = %.lr.ph85.i.i.i.i97.prol.loopexit, %.lr.ph85.i.i.i.i97, %bb.ae, %bb.af
   %.3.i.i.i.i96 = phi double [ %i.qa, %bb.ae ], [ %i.qw, %bb.af ], [ %.lcssa329.unr, %.lr.ph85.i.i.i.i97.prol.loopexit ], [ %i.qt, %.lr.ph85.i.i.i.i97 ] ; 2 uses
-  %i.qx = load ptr, ptr %i.jc, align 8, !tbaa !17 ; 9 uses
+  %i.qx = load ptr, ptr %i.jc, align 8, !tbaa !17 ; 8 uses
   %i.qy = load i64, ptr %i.jl, align 8, !tbaa !13
   %i.qz = load i64, ptr %i.jn, align 8, !tbaa !16
   %i.ra = mul nsw i64 %i.qz, %i.qy                ; 9 uses
@@ -1013,20 +1003,18 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %i.rn, label %bb.ai, label %bb.aj
 
 .lr.ph.i.i.i.i124:                                ; preds = %bb.ah, %.lr.ph.i.i.i.i124
-  %.05480.i.i.i.i125 = phi i64 [ %.054.i.i.i.i129, %.lr.ph.i.i.i.i124 ], [ 4, %bb.ah ] ; 3 uses
-  %.054.in79.i.i.i.i126 = phi i64 [ %.05480.i.i.i.i125, %.lr.ph.i.i.i.i124 ], [ 0, %bb.ah ]
+  %.054.in79.i.i.i.i126 = phi i64 [ %.054.i.i.i.i129, %.lr.ph.i.i.i.i124 ], [ 4, %bb.ah ] ; 2 uses
   %.07278.i.i.i.i127 = phi <2 x double> [ %i.rr, %.lr.ph.i.i.i.i124 ], [ %i.rg, %bb.ah ]
   %.07577.i.i.i.i128 = phi <2 x double> [ %i.rv, %.lr.ph.i.i.i.i124 ], [ %i.rk, %bb.ah ]
-  %i.ro = getelementptr inbounds nuw [8 x i8], ptr %i.qx, i64 %.05480.i.i.i.i125
+  %i.ro = getelementptr inbounds nuw [8 x i8], ptr %i.qx, i64 %.054.in79.i.i.i.i126 ; 2 uses
   %i.rp = load <2 x double>, ptr %i.ro, align 16, !tbaa !58
   %i.rq = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %i.rp)
   %i.rr = call noundef <2 x double> @llvm.x86.sse2.max.pd(<2 x double> %i.rq, <2 x double> %.07278.i.i.i.i127) ; 2 uses
-  %16 = getelementptr inbounds nuw [8 x i8], ptr %i.qx, i64 %.054.in79.i.i.i.i126
-  %i.rs = getelementptr inbounds nuw i8, ptr %16, i64 48
+  %i.rs = getelementptr i8, ptr %i.ro, i64 16
   %i.rt = load <2 x double>, ptr %i.rs, align 16, !tbaa !58
   %i.ru = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %i.rt)
   %i.rv = call noundef <2 x double> @llvm.x86.sse2.max.pd(<2 x double> %i.ru, <2 x double> %.07577.i.i.i.i128) ; 2 uses
-  %.054.i.i.i.i129 = add nuw nsw i64 %.05480.i.i.i.i125, 4 ; 2 uses
+  %.054.i.i.i.i129 = add nuw nsw i64 %.054.in79.i.i.i.i126, 4 ; 2 uses
   %i.rw = icmp slt i64 %.054.i.i.i.i129, %i.rc
   br i1 %i.rw, label %.lr.ph.i.i.i.i124, label %._crit_edge.i.i.i.i121, !llvm.loop !224
 
@@ -1093,7 +1081,7 @@ bb.ak:                                            ; preds = %_ZNK5Eigen9DenseBas
 
 _ZNK5Eigen9DenseBaseINS_12CwiseUnaryOpINS_8internal13scalar_abs_opIdEEKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEEEE8maxCoeffEv.exit130: ; preds = %.lr.ph85.i.i.i.i117.prol.loopexit, %.lr.ph85.i.i.i.i117, %bb.aj, %bb.ak
   %.3.i.i.i.i116 = phi double [ %i.sc, %bb.aj ], [ %i.sy, %bb.ak ], [ %.lcssa326.unr, %.lr.ph85.i.i.i.i117.prol.loopexit ], [ %i.sv, %.lr.ph85.i.i.i.i117 ] ; 2 uses
-  %i.sz = load ptr, ptr %i.jd, align 8, !tbaa !17 ; 9 uses
+  %i.sz = load ptr, ptr %i.jd, align 8, !tbaa !17 ; 8 uses
   %i.ta = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.tb = load i64, ptr %i.ta, align 8, !tbaa !13
   %i.tc = getelementptr inbounds nuw i8, ptr %0, i64 160
@@ -1128,20 +1116,18 @@ bb.am:                                            ; preds = %bb.al
   br i1 %i.tr, label %bb.an, label %bb.ao
 
 .lr.ph.i.i.i.i145:                                ; preds = %bb.am, %.lr.ph.i.i.i.i145
-  %.05480.i.i.i.i146 = phi i64 [ %.054.i.i.i.i150, %.lr.ph.i.i.i.i145 ], [ 4, %bb.am ] ; 3 uses
-  %.054.in79.i.i.i.i147 = phi i64 [ %.05480.i.i.i.i146, %.lr.ph.i.i.i.i145 ], [ 0, %bb.am ]
+  %.054.in79.i.i.i.i147 = phi i64 [ %.054.i.i.i.i150, %.lr.ph.i.i.i.i145 ], [ 4, %bb.am ] ; 2 uses
   %.07278.i.i.i.i148 = phi <2 x double> [ %i.tv, %.lr.ph.i.i.i.i145 ], [ %i.tk, %bb.am ]
   %.07577.i.i.i.i149 = phi <2 x double> [ %i.tz, %.lr.ph.i.i.i.i145 ], [ %i.to, %bb.am ]
-  %i.ts = getelementptr inbounds nuw [8 x i8], ptr %i.sz, i64 %.05480.i.i.i.i146
+  %i.ts = getelementptr inbounds nuw [8 x i8], ptr %i.sz, i64 %.054.in79.i.i.i.i147 ; 2 uses
   %i.tt = load <2 x double>, ptr %i.ts, align 16, !tbaa !58
   %i.tu = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %i.tt)
   %i.tv = call noundef <2 x double> @llvm.x86.sse2.max.pd(<2 x double> %i.tu, <2 x double> %.07278.i.i.i.i148) ; 2 uses
-  %17 = getelementptr inbounds nuw [8 x i8], ptr %i.sz, i64 %.054.in79.i.i.i.i147
-  %i.tw = getelementptr inbounds nuw i8, ptr %17, i64 48
+  %i.tw = getelementptr i8, ptr %i.ts, i64 16
   %i.tx = load <2 x double>, ptr %i.tw, align 16, !tbaa !58
   %i.ty = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %i.tx)
   %i.tz = call noundef <2 x double> @llvm.x86.sse2.max.pd(<2 x double> %i.ty, <2 x double> %.07577.i.i.i.i149) ; 2 uses
-  %.054.i.i.i.i150 = add nuw nsw i64 %.05480.i.i.i.i146, 4 ; 2 uses
+  %.054.i.i.i.i150 = add nuw nsw i64 %.054.in79.i.i.i.i147, 4 ; 2 uses
   %i.ua = icmp slt i64 %.054.i.i.i.i150, %i.tg
   br i1 %i.ua, label %.lr.ph.i.i.i.i145, label %._crit_edge.i.i.i.i142, !llvm.loop !224
 
@@ -1544,24 +1530,23 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.aq, label %bb.j, label %bb.k
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %bb.i, %.lr.ph.i.i.i.i.i.i
-  %.05480.i.i.i.i.i.i = phi i64 [ %.054.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ], [ 4, %bb.i ] ; 4 uses
-  %.054.in79.i.i.i.i.i.i = phi i64 [ %.05480.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ], [ 0, %bb.i ]
+  %.054.in79.i.i.i.i.i.i = phi i64 [ %.054.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ], [ 4, %bb.i ] ; 4 uses
   %.07278.i.i.i.i.i.i = phi <2 x double> [ %i.aw, %.lr.ph.i.i.i.i.i.i ], [ %i.ah, %bb.i ]
   %.07577.i.i.i.i.i.i = phi <2 x double> [ %i.bc, %.lr.ph.i.i.i.i.i.i ], [ %i.an, %bb.i ]
-  %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %.05480.i.i.i.i.i.i
+  %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %.054.in79.i.i.i.i.i.i
   %i.as = load <2 x double>, ptr %i.ar, align 1, !tbaa !58
-  %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %.05480.i.i.i.i.i.i
+  %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %.054.in79.i.i.i.i.i.i
   %i.au = load <2 x double>, ptr %i.at, align 1, !tbaa !58
   %i.av = fmul <2 x double> %i.as, %i.au
   %i.aw = fadd <2 x double> %.07278.i.i.i.i.i.i, %i.av ; 2 uses
-  %11 = add nuw nsw i64 %.054.in79.i.i.i.i.i.i, 6 ; 2 uses
+  %11 = or disjoint i64 %.054.in79.i.i.i.i.i.i, 2 ; 2 uses
   %i.ax = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %11
   %i.ay = load <2 x double>, ptr %i.ax, align 1, !tbaa !58
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %11
   %i.ba = load <2 x double>, ptr %i.az, align 1, !tbaa !58
   %i.bb = fmul <2 x double> %i.ay, %i.ba
   %i.bc = fadd <2 x double> %.07577.i.i.i.i.i.i, %i.bb ; 2 uses
-  %.054.i.i.i.i.i.i = add nuw nsw i64 %.05480.i.i.i.i.i.i, 4 ; 2 uses
+  %.054.i.i.i.i.i.i = add nuw nsw i64 %.054.in79.i.i.i.i.i.i, 4 ; 2 uses
   %i.bd = icmp slt i64 %.054.i.i.i.i.i.i, %i.ac
   br i1 %i.bd, label %.lr.ph.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i, !llvm.loop !550
 
@@ -1732,24 +1717,23 @@ bb.s:                                             ; preds = %bb.r
   br i1 %i.ee, label %bb.t, label %bb.u
 
 .lr.ph.i.i.i.i.i.i39:                             ; preds = %bb.s, %.lr.ph.i.i.i.i.i.i39
-  %.05480.i.i.i.i.i.i40 = phi i64 [ %.054.i.i.i.i.i.i44, %.lr.ph.i.i.i.i.i.i39 ], [ 4, %bb.s ] ; 4 uses
-  %.054.in79.i.i.i.i.i.i41 = phi i64 [ %.05480.i.i.i.i.i.i40, %.lr.ph.i.i.i.i.i.i39 ], [ 0, %bb.s ]
+  %.054.in79.i.i.i.i.i.i41 = phi i64 [ %.054.i.i.i.i.i.i44, %.lr.ph.i.i.i.i.i.i39 ], [ 4, %bb.s ] ; 4 uses
   %.07278.i.i.i.i.i.i42 = phi <2 x double> [ %i.ek, %.lr.ph.i.i.i.i.i.i39 ], [ %i.dv, %bb.s ]
   %.07577.i.i.i.i.i.i43 = phi <2 x double> [ %i.eq, %.lr.ph.i.i.i.i.i.i39 ], [ %i.eb, %bb.s ]
-  %i.ef = getelementptr inbounds nuw [8 x i8], ptr %i.di, i64 %.05480.i.i.i.i.i.i40
+  %i.ef = getelementptr inbounds nuw [8 x i8], ptr %i.di, i64 %.054.in79.i.i.i.i.i.i41
   %i.eg = load <2 x double>, ptr %i.ef, align 1, !tbaa !58
-  %i.eh = getelementptr inbounds nuw [8 x i8], ptr %i.dl, i64 %.05480.i.i.i.i.i.i40
+  %i.eh = getelementptr inbounds nuw [8 x i8], ptr %i.dl, i64 %.054.in79.i.i.i.i.i.i41
   %i.ei = load <2 x double>, ptr %i.eh, align 1, !tbaa !58
   %i.ej = fmul <2 x double> %i.eg, %i.ei
   %i.ek = fadd <2 x double> %.07278.i.i.i.i.i.i42, %i.ej ; 2 uses
-  %12 = add nuw nsw i64 %.054.in79.i.i.i.i.i.i41, 6 ; 2 uses
+  %12 = or disjoint i64 %.054.in79.i.i.i.i.i.i41, 2 ; 2 uses
   %i.el = getelementptr inbounds nuw [8 x i8], ptr %i.di, i64 %12
   %i.em = load <2 x double>, ptr %i.el, align 1, !tbaa !58
   %i.en = getelementptr inbounds nuw [8 x i8], ptr %i.dl, i64 %12
   %i.eo = load <2 x double>, ptr %i.en, align 1, !tbaa !58
   %i.ep = fmul <2 x double> %i.em, %i.eo
   %i.eq = fadd <2 x double> %.07577.i.i.i.i.i.i43, %i.ep ; 2 uses
-  %.054.i.i.i.i.i.i44 = add nuw nsw i64 %.05480.i.i.i.i.i.i40, 4 ; 2 uses
+  %.054.i.i.i.i.i.i44 = add nuw nsw i64 %.054.in79.i.i.i.i.i.i41, 4 ; 2 uses
   %i.er = icmp slt i64 %.054.i.i.i.i.i.i44, %i.dq
   br i1 %i.er, label %.lr.ph.i.i.i.i.i.i39, label %._crit_edge.i.i.i.i.i.i36, !llvm.loop !559
 
@@ -2096,24 +2080,23 @@ bb.d:                                             ; preds = %_ZN5Eigen15PlainObj
   br label %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us
 
 .lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us:     ; preds = %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us.us.us.us.us
-  %.05480.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us = phi i64 [ %.054.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us ], [ 4, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us.us.us.us.us ] ; 4 uses
-  %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us = phi i64 [ %.05480.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us ], [ 0, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us.us.us.us.us ]
+  %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us = phi i64 [ %.054.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us ], [ 4, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us.us.us.us.us ] ; 4 uses
   %.07278.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us = phi <2 x double> [ %i.bv, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us ], [ %i.bl, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us.us.us.us.us ]
   %.07577.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us = phi <2 x double> [ %i.cb, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us ], [ %i.bp, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us.us.us.us.us ]
-  %i.bq = getelementptr inbounds nuw [8 x i8], ptr %i.bi, i64 %.05480.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us
+  %i.bq = getelementptr inbounds nuw [8 x i8], ptr %i.bi, i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us
   %i.br = load <2 x double>, ptr %i.bq, align 1, !tbaa !58
-  %i.bs = getelementptr inbounds nuw [8 x i8], ptr %i.bd, i64 %.05480.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us
+  %i.bs = getelementptr inbounds nuw [8 x i8], ptr %i.bd, i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us
   %i.bt = load <2 x double>, ptr %i.bs, align 1, !tbaa !58
   %i.bu = fmul <2 x double> %i.br, %i.bt
   %i.bv = fadd <2 x double> %.07278.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us, %i.bu ; 2 uses
-  %3 = add nuw nsw i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us, 6 ; 2 uses
+  %3 = or disjoint i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us, 2 ; 2 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %i.bi, i64 %3
   %i.bx = load <2 x double>, ptr %i.bw, align 1, !tbaa !58
   %i.by = getelementptr inbounds nuw [8 x i8], ptr %i.bd, i64 %3
   %i.bz = load <2 x double>, ptr %i.by, align 1, !tbaa !58
   %i.ca = fmul <2 x double> %i.bx, %i.bz
   %i.cb = fadd <2 x double> %.07577.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us, %i.ca ; 2 uses
-  %.054.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us = add nuw nsw i64 %.05480.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us, 4 ; 2 uses
+  %.054.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us = add nuw nsw i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us, 4 ; 2 uses
   %i.cc = icmp slt i64 %.054.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us, %i.ac
   br i1 %i.cc, label %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us, label %._crit_edge.i.i.i.i.i.i.i.loopexit.us.us.us.us.us.us.us.us, !llvm.loop !575
 
@@ -2218,24 +2201,23 @@ _ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIdL
   br label %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us
 
 .lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us:           ; preds = %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us.us.us
-  %.05480.i.i.i.i.i.i.i.us.us.us.us.us.us = phi i64 [ %.054.i.i.i.i.i.i.i.us.us.us.us.us.us, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us ], [ 4, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us.us.us ] ; 4 uses
-  %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us = phi i64 [ %.05480.i.i.i.i.i.i.i.us.us.us.us.us.us, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us ], [ 0, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us.us.us ]
+  %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us = phi i64 [ %.054.i.i.i.i.i.i.i.us.us.us.us.us.us, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us ], [ 4, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us.us.us ] ; 4 uses
   %.07278.i.i.i.i.i.i.i.us.us.us.us.us.us = phi <2 x double> [ %i.en, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us ], [ %i.ed, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us.us.us ]
   %.07577.i.i.i.i.i.i.i.us.us.us.us.us.us = phi <2 x double> [ %i.et, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us ], [ %i.eh, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us.us.us ]
-  %i.ei = getelementptr inbounds nuw [8 x i8], ptr %i.ea, i64 %.05480.i.i.i.i.i.i.i.us.us.us.us.us.us
+  %i.ei = getelementptr inbounds nuw [8 x i8], ptr %i.ea, i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us
   %i.ej = load <2 x double>, ptr %i.ei, align 1, !tbaa !58
-  %i.ek = getelementptr inbounds nuw [8 x i8], ptr %i.dw, i64 %.05480.i.i.i.i.i.i.i.us.us.us.us.us.us
+  %i.ek = getelementptr inbounds nuw [8 x i8], ptr %i.dw, i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us
   %i.el = load <2 x double>, ptr %i.ek, align 1, !tbaa !58
   %i.em = fmul <2 x double> %i.ej, %i.el
   %i.en = fadd <2 x double> %.07278.i.i.i.i.i.i.i.us.us.us.us.us.us, %i.em ; 2 uses
-  %4 = add nuw nsw i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us, 6 ; 2 uses
+  %4 = or disjoint i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us, 2 ; 2 uses
   %i.eo = getelementptr inbounds nuw [8 x i8], ptr %i.ea, i64 %4
   %i.ep = load <2 x double>, ptr %i.eo, align 1, !tbaa !58
   %i.eq = getelementptr inbounds nuw [8 x i8], ptr %i.dw, i64 %4
   %i.er = load <2 x double>, ptr %i.eq, align 1, !tbaa !58
   %i.es = fmul <2 x double> %i.ep, %i.er
   %i.et = fadd <2 x double> %.07577.i.i.i.i.i.i.i.us.us.us.us.us.us, %i.es ; 2 uses
-  %.054.i.i.i.i.i.i.i.us.us.us.us.us.us = add nuw nsw i64 %.05480.i.i.i.i.i.i.i.us.us.us.us.us.us, 4 ; 2 uses
+  %.054.i.i.i.i.i.i.i.us.us.us.us.us.us = add nuw nsw i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us, 4 ; 2 uses
   %i.eu = icmp slt i64 %.054.i.i.i.i.i.i.i.us.us.us.us.us.us, %i.ac
   br i1 %i.eu, label %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us, label %._crit_edge.i.i.i.i.i.i.i.loopexit.us.us.us.us.us.us, !llvm.loop !575
 
@@ -2336,24 +2318,23 @@ _ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIdL
   br label %.lr.ph.i.i.i.i.i.i.i.us.us.us.us
 
 .lr.ph.i.i.i.i.i.i.i.us.us.us.us:                 ; preds = %.lr.ph.i.i.i.i.i.i.i.us.us.us.us, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us
-  %.05480.i.i.i.i.i.i.i.us.us.us.us = phi i64 [ %.054.i.i.i.i.i.i.i.us.us.us.us, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us ], [ 4, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us ] ; 4 uses
-  %.054.in79.i.i.i.i.i.i.i.us.us.us.us = phi i64 [ %.05480.i.i.i.i.i.i.i.us.us.us.us, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us ], [ 0, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us ]
+  %.054.in79.i.i.i.i.i.i.i.us.us.us.us = phi i64 [ %.054.i.i.i.i.i.i.i.us.us.us.us, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us ], [ 4, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us ] ; 4 uses
   %.07278.i.i.i.i.i.i.i.us.us.us.us = phi <2 x double> [ %i.hb, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us ], [ %i.gr, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us ]
   %.07577.i.i.i.i.i.i.i.us.us.us.us = phi <2 x double> [ %i.hh, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us ], [ %i.gv, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us ]
-  %i.gw = getelementptr inbounds nuw [8 x i8], ptr %i.go, i64 %.05480.i.i.i.i.i.i.i.us.us.us.us
+  %i.gw = getelementptr inbounds nuw [8 x i8], ptr %i.go, i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us
   %i.gx = load <2 x double>, ptr %i.gw, align 1, !tbaa !58
-  %i.gy = getelementptr inbounds nuw [8 x i8], ptr %i.gj, i64 %.05480.i.i.i.i.i.i.i.us.us.us.us
+  %i.gy = getelementptr inbounds nuw [8 x i8], ptr %i.gj, i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us
   %i.gz = load <2 x double>, ptr %i.gy, align 1, !tbaa !58
   %i.ha = fmul <2 x double> %i.gx, %i.gz
   %i.hb = fadd <2 x double> %.07278.i.i.i.i.i.i.i.us.us.us.us, %i.ha ; 2 uses
-  %5 = add nuw nsw i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us, 6 ; 2 uses
+  %5 = or disjoint i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us, 2 ; 2 uses
   %i.hc = getelementptr inbounds nuw [8 x i8], ptr %i.go, i64 %5
   %i.hd = load <2 x double>, ptr %i.hc, align 1, !tbaa !58
   %i.he = getelementptr inbounds nuw [8 x i8], ptr %i.gj, i64 %5
   %i.hf = load <2 x double>, ptr %i.he, align 1, !tbaa !58
   %i.hg = fmul <2 x double> %i.hd, %i.hf
   %i.hh = fadd <2 x double> %.07577.i.i.i.i.i.i.i.us.us.us.us, %i.hg ; 2 uses
-  %.054.i.i.i.i.i.i.i.us.us.us.us = add nuw nsw i64 %.05480.i.i.i.i.i.i.i.us.us.us.us, 4 ; 2 uses
+  %.054.i.i.i.i.i.i.i.us.us.us.us = add nuw nsw i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us, 4 ; 2 uses
   %i.hi = icmp slt i64 %.054.i.i.i.i.i.i.i.us.us.us.us, %i.ac
   br i1 %i.hi, label %.lr.ph.i.i.i.i.i.i.i.us.us.us.us, label %._crit_edge.i.i.i.i.i.i.i.loopexit.us.us.us.us, !llvm.loop !575
 

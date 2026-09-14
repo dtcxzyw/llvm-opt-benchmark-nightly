@@ -204,18 +204,17 @@ _ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE
   %i.at = ptrtoint ptr %i.as to i64
   %i.au = ptrtoint ptr %i.ar to i64
   %i.av = sub i64 %i.at, %i.au
-  %i.aw = sdiv exact i64 %i.av, 40                ; 2 uses
+  %i.aw = sdiv exact i64 %i.av, 40
   %i.ax = add nsw i64 %i.aw, -1                   ; 2 uses
   %.not32 = icmp eq i64 %i.ax, 0
   br i1 %.not32, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKPKcRmEEERS3_DpOT_.exit, %bb.i
-  %6 = phi i64 [ %i.bj, %bb.i ], [ %i.ax, %_ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKPKcRmEEERS3_DpOT_.exit ] ; 3 uses
-  %.033 = phi i64 [ %6, %bb.i ], [ %i.aw, %_ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKPKcRmEEERS3_DpOT_.exit ]
+  %.033 = phi i64 [ %i.bj, %bb.i ], [ %i.ax, %_ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKPKcRmEEERS3_DpOT_.exit ] ; 3 uses
   %i.ay = getelementptr [40 x i8], ptr %i.ar, i64 %.033 ; 2 uses
-  %i.az = getelementptr i8, ptr %i.ay, i64 -80    ; 3 uses
-  %i.ba = getelementptr inbounds nuw [40 x i8], ptr %i.ar, i64 %6 ; 4 uses
-  %i.bb = getelementptr i8, ptr %i.ay, i64 -48
+  %i.az = getelementptr i8, ptr %i.ay, i64 -40    ; 3 uses
+  %i.ba = getelementptr inbounds nuw [40 x i8], ptr %i.ar, i64 %.033 ; 4 uses
+  %i.bb = getelementptr i8, ptr %i.ay, i64 -8
   %i.bc = load i64, ptr %i.bb, align 8, !tbaa !104 ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %i.ba, i64 32
   %i.be = load i64, ptr %i.bd, align 8, !tbaa !104 ; 2 uses
@@ -233,7 +232,7 @@ bb.i:                                             ; preds = %.lr.ph
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.ba, ptr noundef nonnull align 8 dereferenceable(40) %i.az, i64 40, i1 false), !tbaa.struct !105
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.az, ptr noundef nonnull align 8 dereferenceable(40) %4, i64 40, i1 false), !tbaa.struct !105
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  %i.bj = add i64 %6, -1                          ; 2 uses
+  %i.bj = add i64 %.033, -1                       ; 2 uses
   %.not = icmp eq i64 %i.bj, 0
   br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !515
 
@@ -636,18 +635,17 @@ _ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE
   %i.be = ptrtoint ptr %i.bb to i64
   %i.bf = ptrtoint ptr %i.bc to i64
   %i.bg = sub i64 %i.be, %i.bf
-  %i.bh = sdiv exact i64 %i.bg, 40                ; 2 uses
+  %i.bh = sdiv exact i64 %i.bg, 40
   %i.bi = add nsw i64 %i.bh, -1                   ; 2 uses
   %.not56 = icmp eq i64 %i.bi, 0
   br i1 %.not56, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKSA_RmEEERS3_DpOT_.exit, %bb.j
-  %5 = phi i64 [ %i.bu, %bb.j ], [ %i.bi, %_ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKSA_RmEEERS3_DpOT_.exit ] ; 3 uses
-  %.057 = phi i64 [ %5, %bb.j ], [ %i.bh, %_ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKSA_RmEEERS3_DpOT_.exit ]
+  %.057 = phi i64 [ %i.bu, %bb.j ], [ %i.bi, %_ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKSA_RmEEERS3_DpOT_.exit ] ; 3 uses
   %i.bj = getelementptr [40 x i8], ptr %i.bc, i64 %.057 ; 2 uses
-  %i.bk = getelementptr i8, ptr %i.bj, i64 -80    ; 3 uses
-  %i.bl = getelementptr inbounds nuw [40 x i8], ptr %i.bc, i64 %5 ; 4 uses
-  %i.bm = getelementptr i8, ptr %i.bj, i64 -48
+  %i.bk = getelementptr i8, ptr %i.bj, i64 -40    ; 3 uses
+  %i.bl = getelementptr inbounds nuw [40 x i8], ptr %i.bc, i64 %.057 ; 4 uses
+  %i.bm = getelementptr i8, ptr %i.bj, i64 -8
   %i.bn = load i64, ptr %i.bm, align 8, !tbaa !104 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bl, i64 32
   %i.bp = load i64, ptr %i.bo, align 8, !tbaa !104 ; 2 uses
@@ -665,7 +663,7 @@ bb.j:                                             ; preds = %.lr.ph
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bl, ptr noundef nonnull align 8 dereferenceable(40) %i.bk, i64 40, i1 false), !tbaa.struct !105
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bk, ptr noundef nonnull align 8 dereferenceable(40) %4, i64 40, i1 false), !tbaa.struct !105
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  %i.bu = add i64 %5, -1                          ; 2 uses
+  %i.bu = add i64 %.057, -1                       ; 2 uses
   %.not = icmp eq i64 %i.bu, 0
   br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !543
 
@@ -915,18 +913,17 @@ _ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE
   %i.bq = ptrtoint ptr %i.bn to i64
   %i.br = ptrtoint ptr %i.bo to i64
   %i.bs = sub i64 %i.bq, %i.br
-  %i.bt = sdiv exact i64 %i.bs, 40                ; 2 uses
+  %i.bt = sdiv exact i64 %i.bs, 40
   %i.bu = add nsw i64 %i.bt, -1                   ; 2 uses
   %.not55 = icmp eq i64 %i.bu, 0
   br i1 %.not55, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKNSt7__cxx1112basic_stringIcS9_SaIcEEERmEEERS3_DpOT_.exit, %bb.j
-  %5 = phi i64 [ %i.cg, %bb.j ], [ %i.bu, %_ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKNSt7__cxx1112basic_stringIcS9_SaIcEEERmEEERS3_DpOT_.exit ] ; 3 uses
-  %.056 = phi i64 [ %5, %bb.j ], [ %i.bt, %_ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKNSt7__cxx1112basic_stringIcS9_SaIcEEERmEEERS3_DpOT_.exit ]
+  %.056 = phi i64 [ %i.cg, %bb.j ], [ %i.bu, %_ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKNSt7__cxx1112basic_stringIcS9_SaIcEEERmEEERS3_DpOT_.exit ] ; 3 uses
   %i.bv = getelementptr [40 x i8], ptr %i.bo, i64 %.056 ; 2 uses
-  %i.bw = getelementptr i8, ptr %i.bv, i64 -80    ; 3 uses
-  %i.bx = getelementptr inbounds nuw [40 x i8], ptr %i.bo, i64 %5 ; 4 uses
-  %i.by = getelementptr i8, ptr %i.bv, i64 -48
+  %i.bw = getelementptr i8, ptr %i.bv, i64 -40    ; 3 uses
+  %i.bx = getelementptr inbounds nuw [40 x i8], ptr %i.bo, i64 %.056 ; 4 uses
+  %i.by = getelementptr i8, ptr %i.bv, i64 -8
   %i.bz = load i64, ptr %i.by, align 8, !tbaa !104 ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bx, i64 32
   %i.cb = load i64, ptr %i.ca, align 8, !tbaa !104 ; 2 uses
@@ -944,7 +941,7 @@ bb.j:                                             ; preds = %.lr.ph
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bx, ptr noundef nonnull align 8 dereferenceable(40) %i.bw, i64 40, i1 false), !tbaa.struct !105
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bw, ptr noundef nonnull align 8 dereferenceable(40) %4, i64 40, i1 false), !tbaa.struct !105
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  %i.cg = add i64 %5, -1                          ; 2 uses
+  %i.cg = add i64 %.056, -1                       ; 2 uses
   %.not = icmp eq i64 %i.cg, 0
   br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !548
 
@@ -1347,18 +1344,17 @@ _ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE
   %i.bb = ptrtoint ptr %i.ay to i64
   %i.bc = ptrtoint ptr %i.az to i64
   %i.bd = sub i64 %i.bb, %i.bc
-  %i.be = sdiv exact i64 %i.bd, 40                ; 2 uses
+  %i.be = sdiv exact i64 %i.bd, 40
   %i.bf = add nsw i64 %i.be, -1                   ; 2 uses
   %.not56 = icmp eq i64 %i.bf, 0
   br i1 %.not56, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKSA_RmEEERS3_DpOT_.exit, %bb.j
-  %5 = phi i64 [ %i.br, %bb.j ], [ %i.bf, %_ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKSA_RmEEERS3_DpOT_.exit ] ; 3 uses
-  %.057 = phi i64 [ %5, %bb.j ], [ %i.be, %_ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKSA_RmEEERS3_DpOT_.exit ]
+  %.057 = phi i64 [ %i.br, %bb.j ], [ %i.bf, %_ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKSA_RmEEERS3_DpOT_.exit ] ; 3 uses
   %i.bg = getelementptr [40 x i8], ptr %i.az, i64 %.057 ; 2 uses
-  %i.bh = getelementptr i8, ptr %i.bg, i64 -80    ; 3 uses
-  %i.bi = getelementptr inbounds nuw [40 x i8], ptr %i.az, i64 %5 ; 4 uses
-  %i.bj = getelementptr i8, ptr %i.bg, i64 -48
+  %i.bh = getelementptr i8, ptr %i.bg, i64 -40    ; 3 uses
+  %i.bi = getelementptr inbounds nuw [40 x i8], ptr %i.az, i64 %.057 ; 4 uses
+  %i.bj = getelementptr i8, ptr %i.bg, i64 -8
   %i.bk = load i64, ptr %i.bj, align 8, !tbaa !104 ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bi, i64 32
   %i.bm = load i64, ptr %i.bl, align 8, !tbaa !104 ; 2 uses
@@ -1376,7 +1372,7 @@ bb.j:                                             ; preds = %.lr.ph
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bi, ptr noundef nonnull align 8 dereferenceable(40) %i.bh, i64 40, i1 false), !tbaa.struct !105
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bh, ptr noundef nonnull align 8 dereferenceable(40) %4, i64 40, i1 false), !tbaa.struct !105
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  %i.br = add i64 %5, -1                          ; 2 uses
+  %i.br = add i64 %.057, -1                       ; 2 uses
   %.not = icmp eq i64 %i.br, 0
   br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !591
 
@@ -1624,18 +1620,17 @@ _ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE
   %i.bo = ptrtoint ptr %i.bl to i64
   %i.bp = ptrtoint ptr %i.bm to i64
   %i.bq = sub i64 %i.bo, %i.bp
-  %i.br = sdiv exact i64 %i.bq, 40                ; 2 uses
+  %i.br = sdiv exact i64 %i.bq, 40
   %i.bs = add nsw i64 %i.br, -1                   ; 2 uses
   %.not54 = icmp eq i64 %i.bs, 0
   br i1 %.not54, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKNSt7__cxx1112basic_stringIcS9_SaIcEEERmEEERS3_DpOT_.exit, %bb.j
-  %5 = phi i64 [ %i.ce, %bb.j ], [ %i.bs, %_ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKNSt7__cxx1112basic_stringIcS9_SaIcEEERmEEERS3_DpOT_.exit ] ; 3 uses
-  %.055 = phi i64 [ %5, %bb.j ], [ %i.br, %_ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKNSt7__cxx1112basic_stringIcS9_SaIcEEERmEEERS3_DpOT_.exit ]
+  %.055 = phi i64 [ %i.ce, %bb.j ], [ %i.bs, %_ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKNSt7__cxx1112basic_stringIcS9_SaIcEEERmEEERS3_DpOT_.exit ] ; 3 uses
   %i.bt = getelementptr [40 x i8], ptr %i.bm, i64 %.055 ; 2 uses
-  %i.bu = getelementptr i8, ptr %i.bt, i64 -80    ; 3 uses
-  %i.bv = getelementptr inbounds nuw [40 x i8], ptr %i.bm, i64 %5 ; 4 uses
-  %i.bw = getelementptr i8, ptr %i.bt, i64 -48
+  %i.bu = getelementptr i8, ptr %i.bt, i64 -40    ; 3 uses
+  %i.bv = getelementptr inbounds nuw [40 x i8], ptr %i.bm, i64 %.055 ; 4 uses
+  %i.bw = getelementptr i8, ptr %i.bt, i64 -8
   %i.bx = load i64, ptr %i.bw, align 8, !tbaa !104 ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.bv, i64 32
   %i.bz = load i64, ptr %i.by, align 8, !tbaa !104 ; 2 uses
@@ -1653,7 +1648,7 @@ bb.j:                                             ; preds = %.lr.ph
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bv, ptr noundef nonnull align 8 dereferenceable(40) %i.bu, i64 40, i1 false), !tbaa.struct !105
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bu, ptr noundef nonnull align 8 dereferenceable(40) %4, i64 40, i1 false), !tbaa.struct !105
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  %i.ce = add i64 %5, -1                          ; 2 uses
+  %i.ce = add i64 %.055, -1                       ; 2 uses
   %.not = icmp eq i64 %i.ce, 0
   br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !596
 
@@ -2036,18 +2031,17 @@ _ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE
   %i.ci = ptrtoint ptr %i.cf to i64
   %i.cj = ptrtoint ptr %i.cg to i64
   %i.ck = sub i64 %i.ci, %i.cj
-  %i.cl = sdiv exact i64 %i.ck, 40                ; 2 uses
+  %i.cl = sdiv exact i64 %i.ck, 40
   %i.cm = add nsw i64 %i.cl, -1                   ; 2 uses
   %.not92 = icmp eq i64 %i.cm, 0
   br i1 %.not92, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEESA_RmEEERS3_DpOT_.exit, %bb.r
-  %7 = phi i64 [ %i.cy, %bb.r ], [ %i.cm, %_ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEESA_RmEEERS3_DpOT_.exit ] ; 3 uses
-  %.093 = phi i64 [ %7, %bb.r ], [ %i.cl, %_ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEESA_RmEEERS3_DpOT_.exit ]
+  %.093 = phi i64 [ %i.cy, %bb.r ], [ %i.cm, %_ZNSt6vectorIN4absl12lts_2026052616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEESA_RmEEERS3_DpOT_.exit ] ; 3 uses
   %i.cn = getelementptr [40 x i8], ptr %i.cg, i64 %.093 ; 2 uses
-  %i.co = getelementptr i8, ptr %i.cn, i64 -80    ; 3 uses
-  %i.cp = getelementptr inbounds nuw [40 x i8], ptr %i.cg, i64 %7 ; 4 uses
-  %i.cq = getelementptr i8, ptr %i.cn, i64 -48
+  %i.co = getelementptr i8, ptr %i.cn, i64 -40    ; 3 uses
+  %i.cp = getelementptr inbounds nuw [40 x i8], ptr %i.cg, i64 %.093 ; 4 uses
+  %i.cq = getelementptr i8, ptr %i.cn, i64 -8
   %i.cr = load i64, ptr %i.cq, align 8, !tbaa !104 ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cp, i64 32
   %i.ct = load i64, ptr %i.cs, align 8, !tbaa !104 ; 2 uses
@@ -2065,7 +2059,7 @@ bb.r:                                             ; preds = %.lr.ph
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.cp, ptr noundef nonnull align 8 dereferenceable(40) %i.co, i64 40, i1 false), !tbaa.struct !105
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.co, ptr noundef nonnull align 8 dereferenceable(40) %4, i64 40, i1 false), !tbaa.struct !105
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  %i.cy = add i64 %7, -1                          ; 2 uses
+  %i.cy = add i64 %.093, -1                       ; 2 uses
   %.not = icmp eq i64 %i.cy, 0
   br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !606
 

@@ -73,7 +73,7 @@ bb.a:
   %10 = alloca %"class.Eigen::Matrix.16", align 8 ; 5 uses
   %11 = alloca %"class.Eigen::CwiseBinaryOp", align 8 ; 16 uses
   %12 = alloca %"class.Eigen::Matrix.38", align 16 ; 10 uses
-  %i.a = load ptr, ptr %2, align 8, !tbaa !70     ; 10 uses
+  %i.a = load ptr, ptr %2, align 8, !tbaa !70     ; 9 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 5 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !71
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -106,18 +106,16 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.q, label %bb.d, label %bb.e
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.c, %.lr.ph.i.i.i.i
-  %.05779.i.i.i.i = phi i64 [ %.057.i.i.i.i, %.lr.ph.i.i.i.i ], [ 8, %bb.c ] ; 3 uses
-  %.057.in78.i.i.i.i = phi i64 [ %.05779.i.i.i.i, %.lr.ph.i.i.i.i ], [ 0, %bb.c ]
+  %.057.in78.i.i.i.i = phi i64 [ %.057.i.i.i.i, %.lr.ph.i.i.i.i ], [ 8, %bb.c ] ; 2 uses
   %.sroa.064.077.i.i.i.i = phi <4 x i32> [ %i.u, %.lr.ph.i.i.i.i ], [ %i.k, %bb.c ]
   %i.r = phi <4 x i32> [ %i.x, %.lr.ph.i.i.i.i ], [ %i.n, %bb.c ]
-  %i.s = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.05779.i.i.i.i
+  %i.s = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.057.in78.i.i.i.i ; 2 uses
   %i.t = load <4 x i32>, ptr %i.s, align 16, !tbaa !11
   %i.u = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %.sroa.064.077.i.i.i.i, <4 x i32> %i.t) ; 2 uses
-  %13 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.057.in78.i.i.i.i
-  %i.v = getelementptr inbounds nuw i8, ptr %13, i64 48
+  %i.v = getelementptr i8, ptr %i.s, i64 16
   %i.w = load <4 x i32>, ptr %i.v, align 16, !tbaa !11
   %i.x = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.r, <4 x i32> %i.w) ; 2 uses
-  %.057.i.i.i.i = add nuw nsw i64 %.05779.i.i.i.i, 8 ; 2 uses
+  %.057.i.i.i.i = add nuw nsw i64 %.057.in78.i.i.i.i, 8 ; 2 uses
   %i.y = icmp slt i64 %.057.i.i.i.i, %i.h
   br i1 %i.y, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i, !llvm.loop !32
 

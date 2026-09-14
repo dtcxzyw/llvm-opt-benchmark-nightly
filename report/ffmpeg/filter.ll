@@ -205,8 +205,8 @@ bb.l:                                             ; preds = %bb.k
   %i.fr = load i32, ptr %i.fq, align 8, !tbaa !102
   %i.fs = sext i32 %i.fr to i64
   %i.ft = call i32 %i.fo(ptr noundef %i.ej, i64 noundef %i.fs) #8, !inline_history !193 ; 2 uses
-  %i.fu = load ptr, ptr %i.do, align 8, !tbaa !90 ; 3 uses
-  %i.fv = getelementptr inbounds nuw i8, ptr %i.fu, i64 38752 ; 2 uses
+  %i.fu = load ptr, ptr %i.do, align 8, !tbaa !90 ; 2 uses
+  %i.fv = getelementptr i8, ptr %i.fu, i64 38752  ; 3 uses
   %i.fw = getelementptr inbounds nuw i8, ptr %i.do, i64 44
   %i.fx = getelementptr inbounds nuw i8, ptr %i.do, i64 41
   %i.fy = load i8, ptr %i.fx, align 1, !tbaa !202 ; 2 uses
@@ -215,7 +215,6 @@ bb.l:                                             ; preds = %bb.k
 
 .lr.ph.i.i.us:                                    ; preds = %bb.l
   %i.ga = zext i8 %i.fy to i64                    ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.fu, i64 38753
   %i.gb = getelementptr i8, ptr %i.fu, i64 %i.ga
   %scevgep.i.i.us = getelementptr i8, ptr %i.gb, i64 38751
   %i.gc = getelementptr inbounds nuw i8, ptr %i.do, i64 48
@@ -236,7 +235,6 @@ bb.m:                                             ; preds = %bb.n
   br i1 %exitcond.i.us, label %...critedge.i.loopexit_crit_edge14.i.us_crit_edge, label %bb.n, !llvm.loop !194
 
 bb.n:                                             ; preds = %.lr.ph, %bb.m
-  %indvars.iv.i12.i.us40 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.i13.i.us39, %bb.m ]
   %indvars.iv.next.i13.i.us39 = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next.i.i.us, %bb.m ] ; 2 uses
   %indvars.iv.next.i.i.us = add nuw nsw i64 %indvars.iv.next.i13.i.us39, 1 ; 3 uses
   %i.gg = getelementptr inbounds nuw [4 x i8], ptr %i.fw, i64 %indvars.iv.next.i.i.us
@@ -245,7 +243,7 @@ bb.n:                                             ; preds = %.lr.ph, %bb.m
   br i1 %i.gi, label %bb.m, label %.critedge.i.loopexit.i.us, !llvm.loop !194
 
 .critedge.i.loopexit.i.us:                        ; preds = %bb.n
-  %i.gj = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv.i12.i.us40
+  %i.gj = getelementptr i8, ptr %i.fv, i64 %indvars.iv.next.i13.i.us39
   br label %.critedge.i.i.us
 
 ...critedge.i.loopexit_crit_edge14.i.us_crit_edge: ; preds = %bb.m

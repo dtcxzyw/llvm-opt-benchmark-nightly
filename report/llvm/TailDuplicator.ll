@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %.lr.ph149, %.lr.ph1
   %i.aa = load ptr, ptr %i.g, align 8, !tbaa !276 ; 6 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.0115.0147, i64 40
   %i.ac = load i24, ptr %i.ab, align 8            ; 2 uses
-  %i.ad = zext i24 %i.ac to i32                   ; 3 uses
+  %i.ad = zext i24 %i.ac to i32                   ; 2 uses
   %.not87124 = icmp eq i24 %i.ac, 1
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.sroa.0115.0147, i64 32
   %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !262 ; 2 uses
@@ -238,9 +238,8 @@ bb.d:                                             ; preds = %.lr.ph
   br i1 %.not89129, label %.loopexit121, label %.lr.ph132
 
 .lr.ph132:                                        ; preds = %.preheader, %bb.f
-  %.082131 = phi i32 [ %.082, %bb.f ], [ %.082128, %.preheader ] ; 3 uses
-  %.082.in130 = phi i32 [ %.082131, %bb.f ], [ %i.ad, %.preheader ]
-  %i.ap = add i32 %.082.in130, -1                 ; 2 uses
+  %.082.in130 = phi i32 [ %.082, %bb.f ], [ %.082128, %.preheader ] ; 3 uses
+  %i.ap = add i32 %.082.in130, 1                  ; 2 uses
   %i.aq = load ptr, ptr %i.ak, align 8, !tbaa !262
   %i.ar = zext i32 %i.ap to i64
   %i.as = getelementptr inbounds nuw [32 x i8], ptr %i.aq, i64 %i.ar
@@ -251,11 +250,11 @@ bb.d:                                             ; preds = %.lr.ph
 
 bb.e:                                             ; preds = %.lr.ph132
   call void @_ZN4llvm12MachineInstr13removeOperandEj(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0115.0147, i32 noundef %i.ap) #19
-  call void @_ZN4llvm12MachineInstr13removeOperandEj(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0115.0147, i32 noundef %.082131) #19
+  call void @_ZN4llvm12MachineInstr13removeOperandEj(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0115.0147, i32 noundef %.082.in130) #19
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %.lr.ph132
-  %.082 = add i32 %.082131, -2                    ; 2 uses
+  %.082 = add i32 %.082.in130, -2                 ; 2 uses
   %.not89 = icmp eq i32 %.082, %.286
   br i1 %.not89, label %.loopexit121, label %.lr.ph132, !llvm.loop !362
 

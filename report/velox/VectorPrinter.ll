@@ -202,7 +202,7 @@ bb.v:                                             ; preds = %_ZNK8facebook5velox
 bb.w:                                             ; preds = %bb.v
   %i.dw = add i32 %i.dt, 63                       ; 2 uses
   %i.dx = srem i32 %i.dw, 64
-  %i.dy = sub nsw i32 %i.dw, %i.dx                ; 6 uses
+  %i.dy = sub nsw i32 %i.dw, %i.dx                ; 5 uses
   %i.dz = and i32 %i.dv, -64                      ; 6 uses
   %i.ea = icmp slt i32 %i.dz, %i.dy
   br i1 %i.ea, label %bb.x, label %bb.y
@@ -297,9 +297,9 @@ bb.aa:                                            ; preds = %.noexc37, %.prehead
   br i1 %.not34.i.i.i.i, label %"_ZN8facebook5velox4bits13forEachSetBitIZNS0_11printVectorB5cxx11ERKNS0_10BaseVectorERKNS0_17SelectivityVectorEE3$_0EEvPKmiiT_.exit.i", label %bb.am
 
 bb.ab:                                            ; preds = %"_ZZN8facebook5velox4bits10forEachBitIZNS0_11printVectorB5cxx11ERKNS0_10BaseVectorERKNS0_17SelectivityVectorEE3$_0EEvPKmiibT_ENKUliE_clEi.exit.i.i.i.i", %.lr.ph.i.i.i.i
-  %i.fr = phi i32 [ %i.fm, %.lr.ph.i.i.i.i ], [ %i.is, %"_ZZN8facebook5velox4bits10forEachBitIZNS0_11printVectorB5cxx11ERKNS0_10BaseVectorERKNS0_17SelectivityVectorEE3$_0EEvPKmiibT_ENKUliE_clEi.exit.i.i.i.i" ] ; 2 uses
-  %.066.i.i.i.i = phi i32 [ %i.dy, %.lr.ph.i.i.i.i ], [ %i.fr, %"_ZZN8facebook5velox4bits10forEachBitIZNS0_11printVectorB5cxx11ERKNS0_10BaseVectorERKNS0_17SelectivityVectorEE3$_0EEvPKmiibT_ENKUliE_clEi.exit.i.i.i.i" ] ; 2 uses
-  %i.fs = sdiv i32 %.066.i.i.i.i, 64              ; 3 uses
+  %i.fr = phi i32 [ %i.fm, %.lr.ph.i.i.i.i ], [ %i.is, %"_ZZN8facebook5velox4bits10forEachBitIZNS0_11printVectorB5cxx11ERKNS0_10BaseVectorERKNS0_17SelectivityVectorEE3$_0EEvPKmiibT_ENKUliE_clEi.exit.i.i.i.i" ] ; 3 uses
+  %.06669.i.i.i.i = add nsw i32 %i.fr, -64
+  %i.fs = sdiv i32 %.06669.i.i.i.i, 64            ; 3 uses
   %i.ft = sext i32 %i.fs to i64
   %i.fu = getelementptr inbounds [8 x i8], ptr %i.dr, i64 %i.ft
   %i.fv = load i64, ptr %i.fu, align 8, !tbaa !40 ; 2 uses
@@ -314,9 +314,9 @@ bb.ab:                                            ; preds = %"_ZZN8facebook5velo
 
 bb.ac:                                            ; preds = %bb.ab
   %i.fx = shl nsw i32 %i.fs, 6                    ; 2 uses
-  %i.fy = add i32 %i.fx, 64
+  %i.fy = add nsw i32 %i.fx, 64
   %i.fz = sext i32 %i.fy to i64
-  %.0.off.i.i.i.i = add i32 %.066.i.i.i.i, 127
+  %.0.off.i.i.i.i = add nsw i32 %i.fr, 63
   %.not28.i.i.i.i.i = icmp ult i32 %.0.off.i.i.i.i, 64
   br i1 %.not28.i.i.i.i.i, label %"_ZZN8facebook5velox4bits10forEachBitIZNS0_11printVectorB5cxx11ERKNS0_10BaseVectorERKNS0_17SelectivityVectorEE3$_0EEvPKmiibT_ENKUliE_clEi.exit.i.i.i.i", label %.lr.ph27.i.i.i.i.i
 
@@ -719,7 +719,7 @@ bb.m:                                             ; preds = %_ZN8facebook5velox1
 bb.n:                                             ; preds = %bb.m
   %i.al = add nuw i32 %2, 63                      ; 2 uses
   %i.am = srem i32 %i.al, 64
-  %i.an = sub nsw i32 %i.al, %i.am                ; 6 uses
+  %i.an = sub nsw i32 %i.al, %i.am                ; 5 uses
   %i.ao = and i32 %.sroa.speculated, -64          ; 4 uses
   %i.ap = icmp slt i32 %i.ao, %i.an
   br i1 %i.ap, label %bb.o, label %bb.p
@@ -770,8 +770,8 @@ _ZZN8facebook5velox4bits8fillBitsEPmiibENKUlimE_clEim.exit36.i.i.i: ; preds = %b
 
 .lr.ph.i.i.i:                                     ; preds = %_ZZN8facebook5velox4bits8fillBitsEPmiibENKUlimE_clEim.exit36.i.i.i, %.lr.ph.i.i.i
   %i.bm = phi i32 [ %i.bq, %.lr.ph.i.i.i ], [ %i.bl, %_ZZN8facebook5velox4bits8fillBitsEPmiibENKUlimE_clEim.exit36.i.i.i ] ; 2 uses
-  %.048.i.i.i = phi i32 [ %i.bm, %.lr.ph.i.i.i ], [ %i.an, %_ZZN8facebook5velox4bits8fillBitsEPmiibENKUlimE_clEim.exit36.i.i.i ]
-  %i.bn = sdiv i32 %.048.i.i.i, 64
+  %.04849.i.i.i = add nsw i32 %i.bm, -64
+  %i.bn = sdiv i32 %.04849.i.i.i, 64
   %i.bo = sext i32 %i.bn to i64
   %i.bp = getelementptr inbounds [8 x i8], ptr %.pre, i64 %i.bo
   store i64 -1, ptr %i.bp, align 8, !tbaa !40
@@ -1174,7 +1174,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.w = and i64 %i.v, 12
   %n.vec = and i64 %i.v, 576460752303423472       ; 4 uses
-  %i.x = shl i64 %n.vec, 6                        ; 2 uses
+  %i.x = shl i64 %n.vec, 6
   %i.y = or disjoint i64 %i.x, 64
   br label %vector.body
 
@@ -1225,7 +1225,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i32 [ %i.ar, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec24 = and i64 %i.v, 576460752303423484     ; 3 uses
-  %i.as = shl i64 %n.vec24, 6                     ; 2 uses
+  %i.as = shl i64 %n.vec24, 6
   %i.at = or disjoint i64 %i.as, 64
   %i.au = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %bc.merge.rdx, i64 0
   br label %vec.epilog.vector.body
@@ -1249,7 +1249,6 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %cmp.n29, label %._crit_edge.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %indvars.iv1.i.ph = phi i64 [ 0, %iter.check ], [ %i.x, %vec.epilog.iter.check ], [ %i.as, %vec.epilog.middle.block ]
   %indvars.iv.i.ph = phi i64 [ 64, %iter.check ], [ %i.y, %vec.epilog.iter.check ], [ %i.at, %vec.epilog.middle.block ]
   %.ph = phi i32 [ 0, %iter.check ], [ %i.ar, %vec.epilog.iter.check ], [ %i.bb, %vec.epilog.middle.block ]
   br label %.lr.ph.i.i.i.i.i.i
@@ -1260,18 +1259,17 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %.not34.i.i.i.i.i.i, label %_ZN8facebook5velox4bits10countNullsEPKmjj.exit.i.i, label %.sink.split.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i.i
-  %indvars.iv1.i = phi i64 [ %indvars.iv.next2.i, %.lr.ph.i.i.i.i.i.i ], [ %indvars.iv1.i.ph, %.lr.ph.i.i.i.i.i.i.preheader ] ; 2 uses
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i.i.i.i.i.i ], [ %indvars.iv.i.ph, %.lr.ph.i.i.i.i.i.i.preheader ] ; 2 uses
+  %indvars.iv1.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i.i.i.i.i.i ], [ %indvars.iv.i.ph, %.lr.ph.i.i.i.i.i.i.preheader ] ; 3 uses
   %2 = phi i32 [ %i.bh, %.lr.ph.i.i.i.i.i.i ], [ %.ph, %.lr.ph.i.i.i.i.i.i.preheader ]
-  %i.bc = lshr exact i64 %indvars.iv1.i, 3
+  %3 = add nsw i64 %indvars.iv1.i, -64
+  %i.bc = lshr exact i64 %3, 3
   %i.bd = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.bc
   %i.be = load i64, ptr %i.bd, align 8, !tbaa !40
   %i.bf = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.be)
   %i.bg = trunc nuw nsw i64 %i.bf to i32
   %i.bh = add nuw nsw i32 %2, %i.bg               ; 2 uses
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 64
-  %.not33.i.i.i.i.i.not.i = icmp samesign ult i64 %indvars.iv.i, %i.s
-  %indvars.iv.next2.i = add nuw nsw i64 %indvars.iv1.i, 64
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv1.i, 64
+  %.not33.i.i.i.i.i.not.i = icmp samesign ult i64 %indvars.iv1.i, %i.s
   br i1 %.not33.i.i.i.i.i.not.i, label %.lr.ph.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i, !llvm.loop !511
 
 .sink.split.i.i.i.i.i.i:                          ; preds = %._crit_edge.i.i.i.i.i.i

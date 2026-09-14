@@ -205,8 +205,7 @@ bb.cd:                                            ; preds = %.loopexit1315
   %.val921 = load i32, ptr %i.ce, align 8, !tbaa !30
   %.val922 = load i32, ptr %i.cl, align 4, !tbaa !31
   %i.uw = sub nsw i32 %.val921, %.val922
-  %i.ux = call i32 @llvm.abs.i32(i32 %i.uw, i1 true) ; 2 uses
-  %3 = add nuw nsw i32 %i.ux, 1
+  %i.ux = call i32 @llvm.abs.i32(i32 %i.uw, i1 true)
   br label %bb.ce
 
 .loopexit1191:                                    ; preds = %bb.cf
@@ -216,13 +215,12 @@ bb.cd:                                            ; preds = %.loopexit1315
 
 bb.ce:                                            ; preds = %bb.cd, %.loopexit1191
   %.71220 = phi i32 [ %i.ux, %bb.cd ], [ %.7, %.loopexit1191 ] ; 4 uses
-  %.7.in1219 = phi i32 [ %3, %bb.cd ], [ %.71220, %.loopexit1191 ]
   %.val919 = load i32, ptr %i.ce, align 8, !tbaa !30
   %.val920 = load i32, ptr %i.cl, align 4, !tbaa !31
   %i.uz = sub nsw i32 %.val919, %.val920
   %i.va = call i32 @llvm.abs.i32(i32 %i.uz, i1 true)
-  %.not1183 = icmp samesign ugt i32 %.7.in1219, %i.va
-  %i.vb = select i1 %.not1183, ptr @.str.14, ptr @.str.70
+  %.not1183.not = icmp ult i32 %.71220, %i.va
+  %i.vb = select i1 %.not1183.not, ptr @.str.70, ptr @.str.14
   %i.vc = call ptr @Wlc_ObjName(ptr noundef nonnull %1, i32 noundef %i.tg) #16
   %i.vd = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.69, ptr noundef nonnull %i.vb, ptr noundef %i.vc) #16 ; 0 uses
   br label %bb.cf

@@ -202,7 +202,7 @@ bb.l:                                             ; preds = %bb.j
   call void @proto_item_set_len(ptr noundef %i.dg, i32 noundef %i.da)
   %i.dh = load i32, ptr @hf_unistim_len, align 4
   %i.di = call ptr @proto_tree_add_item(ptr noundef %i.cu, i32 noundef %i.dh, ptr noundef %1, i32 noundef %i.cy, i32 noundef 1, i32 noundef 0) ; 0 uses
-  %i.dj = add i32 %.167, 2                        ; 31 uses
+  %i.dj = add i32 %.167, 2                        ; 30 uses
   switch i8 %i.cv, label %bb.hr [
     i8 0, label %dissect_unistim_message.exit
     i8 9, label %bb.m
@@ -605,16 +605,15 @@ bb.dn:                                            ; preds = %bb.bl
   br i1 %.not601.i, label %dissect_unistim_message.exit, label %.lr.ph.i39
 
 .lr.ph.i39:                                       ; preds = %bb.dn, %.lr.ph.i39
-  %.10572604.i = phi i32 [ %.10572.i, %.lr.ph.i39 ], [ %.10572600.i, %bb.dn ] ; 3 uses
-  %.10603.i.a = phi i32 [ %.10.i, %.lr.ph.i39 ], [ %.10599.i, %bb.dn ]
-  %.10572.in602.i = phi i32 [ %.10572604.i, %.lr.ph.i39 ], [ %i.dj, %bb.dn ]
+  %.10603.i.a = phi i32 [ %.10572.i, %.lr.ph.i39 ], [ %.10572600.i, %bb.dn ] ; 3 uses
+  %.10572.in602.i = phi i32 [ %.10.i, %.lr.ph.i39 ], [ %.10599.i, %bb.dn ]
   %i.ahd = load i32, ptr @hf_display_layer_number, align 4
-  %i.ahe = call ptr @proto_tree_add_item(ptr noundef %i.cu, i32 noundef %i.ahd, ptr noundef %1, i32 noundef %.10572604.i, i32 noundef 1, i32 noundef 0) ; 0 uses
-  %i.ahf = add i32 %.10572.in602.i, 3
+  %i.ahe = call ptr @proto_tree_add_item(ptr noundef %i.cu, i32 noundef %i.ahd, ptr noundef %1, i32 noundef %.10603.i.a, i32 noundef 1, i32 noundef 0) ; 0 uses
+  %i.ahf = add i32 %.10603.i.a, 1
   %i.ahg = load i32, ptr @hf_display_layer_duration, align 4
   %i.ahh = call ptr @proto_tree_add_item(ptr noundef %i.cu, i32 noundef %i.ahg, ptr noundef %1, i32 noundef %i.ahf, i32 noundef 1, i32 noundef 0) ; 0 uses
-  %.10.i = add i32 %.10603.i.a, -2                ; 2 uses
-  %.10572.i = add i32 %.10572604.i, 2             ; 2 uses
+  %.10.i = add i32 %.10572.in602.i, -2            ; 2 uses
+  %.10572.i = add i32 %.10603.i.a, 2              ; 2 uses
   %.not.i40 = icmp eq i32 %.10.i, 0
   br i1 %.not.i40, label %dissect_unistim_message.exit, label %.lr.ph.i39, !llvm.loop !11
 

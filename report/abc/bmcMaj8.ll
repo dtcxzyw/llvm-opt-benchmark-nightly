@@ -205,7 +205,7 @@ bb.fn:                                            ; preds = %._crit_edge54.i187,
   %i.azi = load i32, ptr %i.fo, align 8, !tbaa !51
   %i.azj = shl nuw i32 1, %i.azi
   %i.azk = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.22, i32 noundef %i.azh, i32 noundef %i.azj) ; 0 uses
-  %i.azl = load i32, ptr %i.fq, align 4, !tbaa !166 ; 4 uses
+  %i.azl = load i32, ptr %i.fq, align 4, !tbaa !166 ; 2 uses
   %i.azm = icmp sgt i32 %i.azl, 0
   br i1 %i.azm, label %.lr.ph.i204, label %._crit_edge.i186
 
@@ -214,25 +214,23 @@ bb.fn:                                            ; preds = %._crit_edge54.i187,
   %i.azn = trunc nsw i64 %indvars.iv.next66.i to i32
   %i.azo = sub nsw i32 %i.azn, %i.azd
   %i.azp = mul nsw i32 %i.azo, %i.aze
-  %i.azq = add i32 %i.azp, 1                      ; 2 uses
+  %i.azq = add i32 %i.azp, 2                      ; 2 uses
   br i1 %.not108, label %.lr.ph.split.i205, label %.lr.ph.split.us.i209
 
 .lr.ph.split.us.i209:                             ; preds = %.lr.ph.i204, %.lr.ph.split.us.i209
-  %.049.us.i = phi i32 [ %.0.us.i, %.lr.ph.split.us.i209 ], [ %.047.i, %.lr.ph.i204 ] ; 3 uses
-  %.0.in48.us.i = phi i32 [ %.049.us.i, %.lr.ph.split.us.i209 ], [ %i.azl, %.lr.ph.i204 ]
+  %.0.in48.us.i = phi i32 [ %.0.us.i, %.lr.ph.split.us.i209 ], [ %.047.i, %.lr.ph.i204 ] ; 3 uses
   %.val.us.i = load ptr, ptr %i.vn, align 8, !tbaa !183
   %i.azr = add i32 %.0.in48.us.i, %i.azq
   %i.azs = call i32 @kissat_value(ptr noundef %.val.us.i, i32 noundef %i.azr) #23
   %i.azt = icmp sgt i32 %i.azs, 0
   %i.azu = zext i1 %i.azt to i32
   %i.azv = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.23, i32 noundef %i.azu) ; 0 uses
-  %.0.us.i = add nsw i32 %.049.us.i, -1
-  %.not78.i = icmp eq i32 %.049.us.i, 0
+  %.0.us.i = add nsw i32 %.0.in48.us.i, -1
+  %.not78.i = icmp eq i32 %.0.in48.us.i, 0
   br i1 %.not78.i, label %._crit_edge.thread.i, label %.lr.ph.split.us.i209, !llvm.loop !143
 
 .lr.ph.split.i205:                                ; preds = %.lr.ph.i204, %.lr.ph.split.i205
-  %.049.i = phi i32 [ %.0.i208, %.lr.ph.split.i205 ], [ %.047.i, %.lr.ph.i204 ] ; 3 uses
-  %.0.in48.i = phi i32 [ %.049.i, %.lr.ph.split.i205 ], [ %i.azl, %.lr.ph.i204 ]
+  %.0.in48.i = phi i32 [ %.0.i208, %.lr.ph.split.i205 ], [ %.047.i, %.lr.ph.i204 ] ; 3 uses
   %.val.i206 = load ptr, ptr %i.vn, align 8, !tbaa !183
   %i.azw = add i32 %.0.in48.i, %i.azq
   %i.azx = call i32 @kissat_value(ptr noundef %.val.i206, i32 noundef %i.azw) #23
@@ -242,8 +240,8 @@ bb.fn:                                            ; preds = %._crit_edge54.i187,
   %.sink77.i = xor i1 %i.azy, %i.baa
   %.sink.i207 = zext i1 %.sink77.i to i32
   %i.bab = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.23, i32 noundef %.sink.i207) ; 0 uses
-  %.0.i208 = add nsw i32 %.049.i, -1
-  %.not350 = icmp eq i32 %.049.i, 0
+  %.0.i208 = add nsw i32 %.0.in48.i, -1
+  %.not350 = icmp eq i32 %.0.in48.i, 0
   br i1 %.not350, label %._crit_edge.i186, label %.lr.ph.split.i205, !llvm.loop !143
 
 ._crit_edge.i186:                                 ; preds = %.lr.ph.split.i205, %bb.fn

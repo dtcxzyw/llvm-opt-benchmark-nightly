@@ -205,7 +205,7 @@ _ZNK2cv8MatShapeixEm.exit:                        ; preds = %bb.a
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
   %min.iters.check141 = icmp ult i64 %i.aq, 28
   %n.vec143 = and i64 %i.as, 9223372036854775800  ; 3 uses
-  %i.at = shl i64 %n.vec143, 2                    ; 3 uses
+  %i.at = shl i64 %n.vec143, 2                    ; 2 uses
   %i.au = or disjoint i64 %i.at, 4
   %cmp.n150 = icmp eq i64 %i.as, %n.vec143
   br label %.preheader.lr.ph.us
@@ -340,7 +340,7 @@ _ZNK2cv9SparseMat4hashEPKi.exit.us:               ; preds = %_ZNK2cv9SparseMat4h
 
 vector.body144:                                   ; preds = %.lr.ph.i41.us.preheader, %vector.body144
   %index145 = phi i64 [ %index.next148, %vector.body144 ], [ 0, %.lr.ph.i41.us.preheader ] ; 2 uses
-  %i.cq = shl i64 %index145, 2                    ; 2 uses
+  %i.cq = shl nuw i64 %index145, 2                ; 2 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %.13665.us, i64 %i.cq ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 16
   %wide.load146 = load <4 x i32>, ptr %i.cr, align 4, !tbaa !27
@@ -358,15 +358,14 @@ middle.block149:                                  ; preds = %vector.body144
 
 .lr.ph.i41.us.preheader153:                       ; preds = %.lr.ph.i41.us.preheader, %middle.block149
   %.ph = phi i64 [ 4, %.lr.ph.i41.us.preheader ], [ %i.au, %middle.block149 ]
-  %.015.i.us.ph = phi i64 [ 0, %.lr.ph.i41.us.preheader ], [ %i.at, %middle.block149 ]
   br label %.lr.ph.i41.us
 
 .lr.ph.i41.us:                                    ; preds = %.lr.ph.i41.us.preheader153, %.lr.ph.i41.us
   %i.cw = phi i64 [ %i.da, %.lr.ph.i41.us ], [ %.ph, %.lr.ph.i41.us.preheader153 ] ; 3 uses
-  %.015.i.us = phi i64 [ %i.cw, %.lr.ph.i41.us ], [ %.015.i.us.ph, %.lr.ph.i41.us.preheader153 ] ; 2 uses
-  %i.cx = getelementptr inbounds nuw i8, ptr %.13665.us, i64 %.015.i.us
+  %.01518.i.us = add nsw i64 %i.cw, -4            ; 2 uses
+  %i.cx = getelementptr inbounds nuw i8, ptr %.13665.us, i64 %.01518.i.us
   %i.cy = load i32, ptr %i.cx, align 4, !tbaa !27
-  %i.cz = getelementptr inbounds nuw i8, ptr %i.cn, i64 %.015.i.us
+  %i.cz = getelementptr inbounds nuw i8, ptr %i.cn, i64 %.01518.i.us
   store i32 %i.cy, ptr %i.cz, align 4, !tbaa !27
   %i.da = add nuw nsw i64 %i.cw, 4                ; 2 uses
   %.not.i42.us = icmp samesign ugt i64 %i.da, %i.ag
@@ -769,7 +768,7 @@ _ZNK2cv22SparseMatConstIterator4nodeEv.exit.preheader: ; preds = %_ZNK2cv22Spars
   %i.ay = add nuw nsw i64 %i.ax, 1                ; 2 uses
   %min.iters.check48 = icmp ult i64 %i.au, 28
   %n.vec50 = and i64 %i.ay, 9223372036854775800   ; 3 uses
-  %i.az = shl i64 %n.vec50, 2                     ; 3 uses
+  %i.az = shl i64 %n.vec50, 2                     ; 2 uses
   %i.ba = or disjoint i64 %i.az, 4
   %cmp.n57 = icmp eq i64 %i.ay, %n.vec50
   %min.iters.check = icmp ult i64 %i.aw, 8
@@ -877,7 +876,7 @@ _ZNK2cv22SparseMatConstIterator4nodeEv.exit:      ; preds = %_ZNK2cv22SparseMatC
 
 vector.body51:                                    ; preds = %_ZNK2cv22SparseMatConstIterator4nodeEv.exit, %vector.body51
   %index52 = phi i64 [ %index.next55, %vector.body51 ], [ 0, %_ZNK2cv22SparseMatConstIterator4nodeEv.exit ] ; 2 uses
-  %i.dc = shl i64 %index52, 2                     ; 2 uses
+  %i.dc = shl nuw i64 %index52, 2                 ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.cz, i64 %i.dc ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 16
   %wide.load53 = load <4 x i32>, ptr %i.dd, align 4, !tbaa !27
@@ -895,7 +894,6 @@ middle.block56:                                   ; preds = %vector.body51
 
 .lr.ph.i.preheader:                               ; preds = %_ZNK2cv22SparseMatConstIterator4nodeEv.exit, %middle.block56
   %.ph = phi i64 [ 4, %_ZNK2cv22SparseMatConstIterator4nodeEv.exit ], [ %i.ba, %middle.block56 ]
-  %.015.i.ph = phi i64 [ 0, %_ZNK2cv22SparseMatConstIterator4nodeEv.exit ], [ %i.az, %middle.block56 ]
   br label %.lr.ph.i
 
 .preheader.i.loopexit:                            ; preds = %.lr.ph.i, %middle.block56
@@ -983,10 +981,10 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
   %i.ed = phi i64 [ %i.eh, %.lr.ph.i ], [ %.ph, %.lr.ph.i.preheader ] ; 3 uses
-  %.015.i = phi i64 [ %i.ed, %.lr.ph.i ], [ %.015.i.ph, %.lr.ph.i.preheader ] ; 2 uses
-  %i.ee = getelementptr inbounds nuw i8, ptr %i.cz, i64 %.015.i
+  %.01518.i = add nsw i64 %i.ed, -4               ; 2 uses
+  %i.ee = getelementptr inbounds nuw i8, ptr %i.cz, i64 %.01518.i
   %i.ef = load i32, ptr %i.ee, align 4, !tbaa !27
-  %i.eg = getelementptr inbounds nuw i8, ptr %i.cx, i64 %.015.i
+  %i.eg = getelementptr inbounds nuw i8, ptr %i.cx, i64 %.01518.i
   store i32 %i.ef, ptr %i.eg, align 4, !tbaa !27
   %i.eh = add nuw nsw i64 %i.ed, 4                ; 2 uses
   %.not.i14 = icmp samesign ugt i64 %i.eh, %i.ar
@@ -1124,7 +1122,7 @@ _ZNK2cv9SparseMat7nzcountEv.exit:                 ; preds = %_ZNK2cv9SparseMat4d
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses
   %min.iters.check156 = icmp ult i64 %i.aj, 28
   %n.vec158 = and i64 %i.al, 9223372036854775800  ; 3 uses
-  %i.am = shl i64 %n.vec158, 2                    ; 3 uses
+  %i.am = shl i64 %n.vec158, 2                    ; 2 uses
   %i.an = or disjoint i64 %i.am, 4
   %cmp.n165 = icmp eq i64 %i.al, %n.vec158
   br label %.lr.ph.split.us
@@ -1253,7 +1251,7 @@ _ZN2cv3Mat3ptrEPKi.exit.us:                       ; preds = %_ZN2cv3Mat3ptrEPKi.
 
 vector.body159:                                   ; preds = %.lr.ph.i19.us.preheader, %vector.body159
   %index160 = phi i64 [ %index.next163, %vector.body159 ], [ 0, %.lr.ph.i19.us.preheader ] ; 2 uses
-  %i.cq = shl i64 %index160, 2                    ; 2 uses
+  %i.cq = shl nuw i64 %index160, 2                ; 2 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.cq ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 16
   %wide.load161.a = load <4 x i32>, ptr %i.cr, align 4, !tbaa !27
@@ -1271,15 +1269,14 @@ middle.block164:                                  ; preds = %vector.body159
 
 .lr.ph.i19.us.preheader169:                       ; preds = %.lr.ph.i19.us.preheader, %middle.block164
   %.ph = phi i64 [ 4, %.lr.ph.i19.us.preheader ], [ %i.an, %middle.block164 ]
-  %.015.i.us.ph = phi i64 [ 0, %.lr.ph.i19.us.preheader ], [ %i.am, %middle.block164 ]
   br label %.lr.ph.i19.us
 
 .lr.ph.i19.us:                                    ; preds = %.lr.ph.i19.us.preheader169, %.lr.ph.i19.us
   %i.cw = phi i64 [ %i.da, %.lr.ph.i19.us ], [ %.ph, %.lr.ph.i19.us.preheader169 ] ; 3 uses
-  %.015.i.us = phi i64 [ %i.cw, %.lr.ph.i19.us ], [ %.015.i.us.ph, %.lr.ph.i19.us.preheader169 ] ; 2 uses
-  %i.cx = getelementptr inbounds nuw i8, ptr %i.ao, i64 %.015.i.us
+  %.01518.i.us = add nsw i64 %i.cw, -4            ; 2 uses
+  %i.cx = getelementptr inbounds nuw i8, ptr %i.ao, i64 %.01518.i.us
   %i.cy = load i32, ptr %i.cx, align 4, !tbaa !27
-  %i.cz = getelementptr inbounds nuw i8, ptr %i.cn, i64 %.015.i.us
+  %i.cz = getelementptr inbounds nuw i8, ptr %i.cn, i64 %.01518.i.us
   store i32 %i.cy, ptr %i.cz, align 4, !tbaa !27
   %i.da = add nuw nsw i64 %i.cw, 4                ; 2 uses
   %.not.i20.us = icmp samesign ugt i64 %i.da, %i.ad
@@ -1420,7 +1417,7 @@ _ZN2cvL8copyElemEPKhPhm.exit.us:                  ; preds = %.lr.ph17.i.us.prol.
   %i.ev = add nuw nsw i64 %i.eu, 1                ; 2 uses
   %min.iters.check83 = icmp ult i64 %i.er, 28
   %n.vec85 = and i64 %i.ev, 9223372036854775800   ; 3 uses
-  %i.ew = shl i64 %n.vec85, 2                     ; 3 uses
+  %i.ew = shl i64 %n.vec85, 2                     ; 2 uses
   %i.ex = or disjoint i64 %i.ew, 4
   %cmp.n92 = icmp eq i64 %i.ev, %n.vec85
   %min.iters.check = icmp ult i64 %i.et, 8
@@ -1516,7 +1513,7 @@ vector.memcheck81:                                ; preds = %.lr.ph.split.split
 
 vector.body86:                                    ; preds = %vector.memcheck81, %vector.body86
   %index87 = phi i64 [ %index.next90, %vector.body86 ], [ 0, %vector.memcheck81 ] ; 2 uses
-  %i.gr = shl i64 %index87, 2                     ; 2 uses
+  %i.gr = shl nuw i64 %index87, 2                 ; 2 uses
   %i.gs = getelementptr inbounds nuw i8, ptr %i.fx, i64 %i.gr ; 2 uses
   %i.gt = getelementptr inbounds nuw i8, ptr %i.gs, i64 16
   %wide.load88 = load <4 x i32>, ptr %i.gs, align 4, !tbaa !27
@@ -1534,7 +1531,6 @@ middle.block91:                                   ; preds = %vector.body86
 
 .lr.ph.i19.preheader:                             ; preds = %vector.memcheck81, %.lr.ph.split.split, %middle.block91
   %.ph173 = phi i64 [ 4, %vector.memcheck81 ], [ 4, %.lr.ph.split.split ], [ %i.ex, %middle.block91 ]
-  %.015.i.ph = phi i64 [ 0, %vector.memcheck81 ], [ 0, %.lr.ph.split.split ], [ %i.ew, %middle.block91 ]
   br label %.lr.ph.i19
 
 .preheader.i.loopexit:                            ; preds = %.lr.ph.i19, %middle.block91
@@ -1625,10 +1621,10 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph.i19:                                       ; preds = %.lr.ph.i19.preheader, %.lr.ph.i19
   %i.ht = phi i64 [ %i.hx, %.lr.ph.i19 ], [ %.ph173, %.lr.ph.i19.preheader ] ; 3 uses
-  %.015.i = phi i64 [ %i.ht, %.lr.ph.i19 ], [ %.015.i.ph, %.lr.ph.i19.preheader ] ; 2 uses
-  %i.hu = getelementptr inbounds nuw i8, ptr %i.fx, i64 %.015.i
+  %.01518.i = add nsw i64 %i.ht, -4               ; 2 uses
+  %i.hu = getelementptr inbounds nuw i8, ptr %i.fx, i64 %.01518.i
   %i.hv = load i32, ptr %i.hu, align 4, !tbaa !27
-  %i.hw = getelementptr inbounds nuw i8, ptr %i.go, i64 %.015.i
+  %i.hw = getelementptr inbounds nuw i8, ptr %i.go, i64 %.01518.i
   store i32 %i.hv, ptr %i.hw, align 4, !tbaa !27
   %i.hx = add nuw nsw i64 %i.ht, 4                ; 2 uses
   %.not.i20 = icmp samesign ugt i64 %i.hx, %i.ad

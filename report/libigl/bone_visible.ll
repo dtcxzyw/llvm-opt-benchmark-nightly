@@ -204,18 +204,17 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.ag, label %bb.h, label %bb.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.g, %.lr.ph.i.i.i.i.i
-  %.05480.i.i.i.i.i = phi i64 [ %.054.i.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ 4, %bb.g ] ; 4 uses
-  %.054.in79.i.i.i.i.i = phi i64 [ %.05480.i.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ 0, %bb.g ]
+  %.054.in79.i.i.i.i.i = phi i64 [ %.054.i.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ 4, %bb.g ] ; 4 uses
   %.07278.i.i.i.i.i = phi <2 x double> [ %i.an, %.lr.ph.i.i.i.i.i ], [ %i.w, %bb.g ]
   %.07577.i.i.i.i.i = phi <2 x double> [ %i.au, %.lr.ph.i.i.i.i.i ], [ %i.ad, %bb.g ]
-  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.05480.i.i.i.i.i
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.054.in79.i.i.i.i.i
   %i.ai = load <2 x double>, ptr %i.ah, align 16, !tbaa !63
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.05480.i.i.i.i.i
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.054.in79.i.i.i.i.i
   %i.ak = load <2 x double>, ptr %i.aj, align 16, !tbaa !63
   %i.al = fsub <2 x double> %i.ai, %i.ak          ; 2 uses
   %i.am = fmul <2 x double> %i.al, %i.al
   %i.an = fadd <2 x double> %.07278.i.i.i.i.i, %i.am ; 2 uses
-  %9 = add nuw nsw i64 %.054.in79.i.i.i.i.i, 6    ; 2 uses
+  %9 = or disjoint i64 %.054.in79.i.i.i.i.i, 2    ; 2 uses
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %9
   %i.ap = load <2 x double>, ptr %i.ao, align 16, !tbaa !63
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %9
@@ -223,7 +222,7 @@ bb.g:                                             ; preds = %bb.f
   %i.as = fsub <2 x double> %i.ap, %i.ar          ; 2 uses
   %i.at = fmul <2 x double> %i.as, %i.as
   %i.au = fadd <2 x double> %.07577.i.i.i.i.i, %i.at ; 2 uses
-  %.054.i.i.i.i.i = add nuw nsw i64 %.05480.i.i.i.i.i, 4 ; 2 uses
+  %.054.i.i.i.i.i = add nuw nsw i64 %.054.in79.i.i.i.i.i, 4 ; 2 uses
   %i.av = icmp slt i64 %.054.i.i.i.i.i, %i.q
   br i1 %i.av, label %.lr.ph.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, !llvm.loop !146
 

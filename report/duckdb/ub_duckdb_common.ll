@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %_ZSteqIcSt11char_tr
   br i1 %.not180304, label %._crit_edge309, label %.lr.ph308.split
 
 .thread350:                                       ; preds = %.lr.ph295
-  %i.cs = load i64, ptr %i.d, align 8, !tbaa !231 ; 2 uses
+  %i.cs = load i64, ptr %i.d, align 8, !tbaa !231
   %.0149303353 = add i64 %i.cs, 1                 ; 2 uses
   %.not180304354 = icmp ugt i64 %.0149303353, %.1159294
   br i1 %.not180304354, label %._crit_edge309, label %.lr.ph308.thread
@@ -216,10 +216,9 @@ bb.n:                                             ; preds = %_ZSteqIcSt11char_tr
   br label %.lr.ph308.split.us
 
 .lr.ph308.split.us:                               ; preds = %.lr.ph308.thread, %bb.t
-  %.0149306.us = phi i64 [ %.0149.us, %bb.t ], [ %.0149303353, %.lr.ph308.thread ] ; 3 uses
-  %.0149.in305.us = phi i64 [ %.0149306.us, %bb.t ], [ %i.cs, %.lr.ph308.thread ]
-  %i.cv = call noundef nonnull align 8 dereferenceable(40) ptr @_ZN6duckdb6vectorINS_13JSONComponentELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.al, i64 noundef %.0149306.us) ; 3 uses
-  %i.cw = add i64 %.0149.in305.us, 2              ; 2 uses
+  %.0149.in305.us = phi i64 [ %.0149.us, %bb.t ], [ %.0149303353, %.lr.ph308.thread ] ; 3 uses
+  %i.cv = call noundef nonnull align 8 dereferenceable(40) ptr @_ZN6duckdb6vectorINS_13JSONComponentELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.al, i64 noundef %.0149.in305.us) ; 3 uses
+  %i.cw = add i64 %.0149.in305.us, 1              ; 2 uses
   %.not181.us = icmp ugt i64 %i.cw, %.1159294
   br i1 %.not181.us, label %bb.t, label %bb.o
 
@@ -296,7 +295,7 @@ bb.s:                                             ; preds = %_ZNSt7__cxx1112basi
 
 bb.t:                                             ; preds = %bb.s, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.us, %bb.o, %.lr.ph308.split.us
   call void @_ZN6duckdb13JSONFormatter15FormatComponentERNS0_11FormatStateERNS_13JSONComponentENS0_10InlineModeE(ptr noundef nonnull align 8 dereferenceable(80) %0, ptr noundef nonnull align 8 dereferenceable(100) %1, ptr noundef nonnull align 8 dereferenceable(40) %i.cv, i32 noundef 2)
-  %.0149.us = add i64 %.0149306.us, 1             ; 2 uses
+  %.0149.us = add i64 %.0149.in305.us, 1          ; 2 uses
   %.not180.us = icmp ugt i64 %.0149.us, %.1159294
   br i1 %.not180.us, label %._crit_edge309, label %.lr.ph308.split.us, !llvm.loop !4822
 
@@ -529,7 +528,7 @@ bb.an:                                            ; preds = %bb.al
   br i1 %.not, label %.critedge187, label %.thread233
 
 .thread233:                                       ; preds = %.thread230, %bb.an
-  %i.gu = load i64, ptr %i.d, align 8, !tbaa !231 ; 2 uses
+  %i.gu = load i64, ptr %i.d, align 8, !tbaa !231
   %i.gv = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
   %i.gw = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %.0137274 = add i64 %i.gu, 1                    ; 2 uses
@@ -548,8 +547,7 @@ bb.an:                                            ; preds = %bb.al
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.thread364
-  %.0137278 = phi i64 [ %.0137, %.thread364 ], [ %.0137274, %.lr.ph.preheader ] ; 5 uses
-  %.0137.in277 = phi i64 [ %.0137278, %.thread364 ], [ %i.gu, %.lr.ph.preheader ]
+  %.0137.in277 = phi i64 [ %.0137, %.thread364 ], [ %.0137274, %.lr.ph.preheader ] ; 5 uses
   %.0138276 = phi i64 [ %spec.select192, %.thread364 ], [ %i.hf, %.lr.ph.preheader ] ; 4 uses
   %.0141275 = phi i64 [ %.1142367, %.thread364 ], [ 0, %.lr.ph.preheader ] ; 5 uses
   %i.hg = load i64, ptr %i.c, align 8, !tbaa !231
@@ -557,7 +555,7 @@ bb.an:                                            ; preds = %bb.al
   br i1 %.not176, label %.critedge187, label %bb.ao
 
 bb.ao:                                            ; preds = %.lr.ph
-  %i.hh = tail call noundef nonnull align 8 dereferenceable(40) ptr @_ZN6duckdb6vectorINS_13JSONComponentELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.gv, i64 noundef %.0137278) ; 3 uses
+  %i.hh = tail call noundef nonnull align 8 dereferenceable(40) ptr @_ZN6duckdb6vectorINS_13JSONComponentELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.gv, i64 noundef %.0137.in277) ; 3 uses
   %i.hi = load i32, ptr %i.hh, align 8, !tbaa !1616 ; 2 uses
   switch i32 %i.hi, label %bb.as [
     i32 0, label %bb.ap
@@ -598,7 +596,7 @@ bb.as:                                            ; preds = %bb.ao
   %switch191 = icmp ult i32 %.off190, 2
   %i.hv = zext i1 %switch191 to i64
   %spec.select192 = add i64 %i.ht, %i.hv
-  %.0137 = add nuw i64 %.0137278, 1               ; 2 uses
+  %.0137 = add nuw i64 %.0137.in277, 1            ; 2 uses
   %i.hw = load ptr, ptr %i.gw, align 8, !tbaa !591
   %i.hx = load ptr, ptr %i.gv, align 8, !tbaa !590
   %i.hy = ptrtoint ptr %i.hw to i64
@@ -615,14 +613,15 @@ bb.as:                                            ; preds = %bb.ao
   br i1 %.not380, label %.critedge187, label %bb.at
 
 bb.at:                                            ; preds = %.split, %.critedge4
+  %.0137.in277328376 = add i64 %.0137.in277, -1
   tail call void @_ZN6duckdb13JSONFormatter8AddSpaceERNS0_11FormatStateE(ptr noundef nonnull align 8 dereferenceable(80) %0, ptr noundef nonnull align 8 dereferenceable(100) %1)
   %i.if = load i64, ptr %i.d, align 8, !tbaa !231
   %.0134280 = add i64 %i.if, 1                    ; 2 uses
-  %i.ig = icmp ult i64 %.0134280, %.0137278
+  %i.ig = icmp ult i64 %.0134280, %.0137.in277
   br i1 %i.ig, label %.lr.ph282, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph282, %bb.at
-  store i64 %.0137.in277, ptr %i.d, align 8, !tbaa !231
+  store i64 %.0137.in277328376, ptr %i.d, align 8, !tbaa !231
   br label %.critedge185
 
 .lr.ph282:                                        ; preds = %bb.at, %.lr.ph282
@@ -630,7 +629,7 @@ bb.at:                                            ; preds = %.split, %.critedge4
   %i.ih = tail call noundef nonnull align 8 dereferenceable(40) ptr @_ZN6duckdb6vectorINS_13JSONComponentELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.gv, i64 noundef %.0134281)
   tail call void @_ZN6duckdb13JSONFormatter15FormatComponentERNS0_11FormatStateERNS_13JSONComponentENS0_10InlineModeE(ptr noundef nonnull align 8 dereferenceable(80) %0, ptr noundef nonnull align 8 dereferenceable(100) %1, ptr noundef nonnull align 8 dereferenceable(40) %i.ih, i32 noundef 1)
   %.0134 = add nuw i64 %.0134281, 1               ; 2 uses
-  %exitcond.not = icmp eq i64 %.0134, %.0137278
+  %exitcond.not = icmp eq i64 %.0134, %.0137.in277
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph282, !llvm.loop !4824
 
 .critedge187:                                     ; preds = %.lr.ph, %.thread364, %.split, %.thread233, %.critedge4, %bb.an

@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = sub i64 %i.g, %i.h
-  %i.j = sdiv exact i64 %i.i, 184                 ; 2 uses
+  %i.j = sdiv exact i64 %i.i, 184
   %.01927 = add nsw i64 %i.j, -1                  ; 2 uses
   %.not28 = icmp eq i64 %.01927, 0
   br i1 %.not28, label %._crit_edge, label %.lr.ph
@@ -229,11 +229,10 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.q
 
 bb.c:                                             ; preds = %.lr.ph, %bb.n
-  %.01930 = phi i64 [ %.01927, %.lr.ph ], [ %.019, %bb.n ] ; 3 uses
-  %.019.in29 = phi i64 [ %i.j, %.lr.ph ], [ %.01930, %bb.n ]
+  %.019.in29 = phi i64 [ %.01927, %.lr.ph ], [ %.019, %bb.n ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
   %i.x = load ptr, ptr %0, align 8, !tbaa !62     ; 2 uses
-  %i.y = getelementptr inbounds nuw [184 x i8], ptr %i.x, i64 %.01930
+  %i.y = getelementptr inbounds nuw [184 x i8], ptr %i.x, i64 %.019.in29
   store i32 0, ptr %i.k, align 8, !tbaa !48
   store i32 0, ptr %i.l, align 4, !tbaa !49
   store i32 17432576, ptr %4, align 8, !tbaa !36
@@ -243,7 +242,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.n
   store i32 34209792, ptr %5, align 8, !tbaa !36
   store ptr %3, ptr %i.n, align 8, !tbaa !37
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #18
-  %i.z = add i64 %.019.in29, -2                   ; 2 uses
+  %i.z = add i64 %.019.in29, -1                   ; 2 uses
   %i.aa = getelementptr inbounds nuw [184 x i8], ptr %i.x, i64 %i.z ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 48
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !75 ; 6 uses
@@ -352,7 +351,7 @@ bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #18
-  %.019 = add i64 %.01930, -1                     ; 2 uses
+  %.019 = add i64 %.019.in29, -1                  ; 2 uses
   %.not = icmp eq i64 %.019, 0
   br i1 %.not, label %._crit_edge, label %bb.c, !llvm.loop !209
 

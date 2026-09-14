@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %.lr.ph, %.critedge2
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph73, %.critedge6
-  %.172 = phi i64 [ %.03477, %.lr.ph73 ], [ %.2.lcssa, %.critedge6 ] ; 4 uses
+  %.172 = phi i64 [ %.03477, %.lr.ph73 ], [ %.2.lcssa, %.critedge6 ] ; 3 uses
   %i.bn = getelementptr inbounds nuw [40 x i8], ptr %.pr.i, i64 %.172 ; 3 uses
   %i.bo = load i32, ptr %i.bn, align 8, !tbaa !269
   %i.bp = icmp eq i32 %i.bo, %i.bm
@@ -227,20 +227,19 @@ _ZSteqIiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEbRKSt4pairIT_T0_ESB
   br label %.lr.ph66
 
 .lr.ph66:                                         ; preds = %.lr.ph66.preheader, %_ZSteqIiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEbRKSt4pairIT_T0_ESB_.exit.backedge
-  %.265 = phi i64 [ %.2, %_ZSteqIiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEbRKSt4pairIT_T0_ESB_.exit.backedge ], [ %.263, %.lr.ph66.preheader ] ; 6 uses
-  %.2.in64 = phi i64 [ %.265, %_ZSteqIiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEbRKSt4pairIT_T0_ESB_.exit.backedge ], [ %.172, %.lr.ph66.preheader ]
-  %i.bu = getelementptr inbounds nuw [40 x i8], ptr %.pr.i, i64 %.265 ; 3 uses
+  %.2.in64 = phi i64 [ %.2, %_ZSteqIiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEbRKSt4pairIT_T0_ESB_.exit.backedge ], [ %.263, %.lr.ph66.preheader ] ; 6 uses
+  %i.bu = getelementptr inbounds nuw [40 x i8], ptr %.pr.i, i64 %.2.in64 ; 3 uses
   %i.bv = load i32, ptr %i.bu, align 8, !tbaa !269
   %i.bw = icmp eq i32 %i.bv, %.pre83
   br i1 %i.bw, label %bb.n, label %.critedge6
 
 bb.n:                                             ; preds = %.lr.ph66
-  %i.bx = getelementptr inbounds nuw [40 x i8], ptr %.pr.i, i64 %.2.in64 ; 2 uses
+  %i.bx = getelementptr [40 x i8], ptr %.pr.i, i64 %.2.in64 ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
-  %i.bz = getelementptr inbounds nuw i8, ptr %i.bx, i64 8
+  %i.bz = getelementptr i8, ptr %i.bx, i64 -32
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bu, i64 16
   %i.cb = load i64, ptr %i.ca, align 8, !tbaa !154 ; 3 uses
-  %i.cc = getelementptr inbounds nuw i8, ptr %i.bx, i64 16
+  %i.cc = getelementptr i8, ptr %i.bx, i64 -24
   %i.cd = load i64, ptr %i.cc, align 8, !tbaa !154
   %i.ce = icmp eq i64 %i.cb, %i.cd
   br i1 %i.ce, label %bb.o, label %.critedge6
@@ -257,7 +256,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.ci, label %_ZSteqIiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEbRKSt4pairIT_T0_ESB_.exit.backedge, label %.critedge6
 
 _ZSteqIiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEbRKSt4pairIT_T0_ESB_.exit.backedge: ; preds = %.split, %bb.o
-  %.2 = add nuw i64 %.265, 1                      ; 2 uses
+  %.2 = add nuw i64 %.2.in64, 1                   ; 2 uses
   %exitcond81.not = icmp eq i64 %.2, %i.ao
   br i1 %exitcond81.not, label %.critedge6, label %.lr.ph66, !llvm.loop !371
 
@@ -277,7 +276,7 @@ _ZSteqIiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEbRKSt4pairIT_T0_ESB
   br label %.loopexit.split-lp
 
 .critedge6:                                       ; preds = %_ZSteqIiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEbRKSt4pairIT_T0_ESB_.exit.backedge, %.split, %.lr.ph66, %bb.n, %_ZSteqIiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEbRKSt4pairIT_T0_ESB_.exit.preheader
-  %.2.lcssa = phi i64 [ %.263, %_ZSteqIiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEbRKSt4pairIT_T0_ESB_.exit.preheader ], [ %.265, %bb.n ], [ %.265, %.lr.ph66 ], [ %.265, %.split ], [ %i.ao, %_ZSteqIiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEbRKSt4pairIT_T0_ESB_.exit.backedge ] ; 3 uses
+  %.2.lcssa = phi i64 [ %.263, %_ZSteqIiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEbRKSt4pairIT_T0_ESB_.exit.preheader ], [ %.2.in64, %bb.n ], [ %.2.in64, %.lr.ph66 ], [ %.2.in64, %.split ], [ %i.ao, %_ZSteqIiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEbRKSt4pairIT_T0_ESB_.exit.backedge ] ; 3 uses
   %i.cj = icmp ult i64 %.2.lcssa, %i.as
   br i1 %i.cj, label %bb.l, label %.critedge4.loopexit, !llvm.loop !372
 

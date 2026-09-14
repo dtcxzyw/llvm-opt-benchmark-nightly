@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
-  %.049 = phi i64 [ %i.f, %bb.c ], [ %i.u, %bb.e ], [ %i.f, %bb.d ] ; 4 uses
+  %.049 = phi i64 [ %i.f, %bb.c ], [ %i.u, %bb.e ], [ %i.f, %bb.d ] ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.c, i64 88 ; 4 uses
   %i.w = load i32, ptr %i.v, align 8, !tbaa !21
   %i.x = icmp eq i32 %i.w, 12
@@ -254,7 +254,6 @@ bb.i:                                             ; preds = %bb.g, %bb.f
 .lr.ph59.split.us:                                ; preds = %.lr.ph59.split.us.preheader, %bb.l
   %i.ao = phi i64 [ %i.ea, %bb.l ], [ %i.af, %.lr.ph59.split.us.preheader ] ; 3 uses
   %.04558.us = phi ptr [ %i.dz, %bb.l ], [ %1, %.lr.ph59.split.us.preheader ] ; 9 uses
-  %.157.us = phi i64 [ %i.ao, %bb.l ], [ %.049, %.lr.ph59.split.us.preheader ]
   %i.ap = load i32, ptr %i.v, align 8, !tbaa !21
   %i.aq = icmp eq i32 %i.ap, 12
   br i1 %i.aq, label %.lr.ph.us, label %bb.j
@@ -384,26 +383,22 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %.not53.us, label %bb.k, label %.loopexit55
 
 bb.k:                                             ; preds = %..loopexit_crit_edge.us
-  %.not54.us = icmp eq i64 %.157.us, 1
-  br i1 %.not54.us, label %bb.l, label %4
+  %.not54.us = icmp eq i64 %i.ao, 0
+  br i1 %.not54.us, label %._crit_edge, label %bb.l
 
-4:                                                ; preds = %bb.k
-  %5 = load i32, ptr %i.ah, align 4, !tbaa !120
-  %6 = add i32 %5, 1
-  store i32 %6, ptr %i.ah, align 4, !tbaa !120
-  br label %bb.l
-
-bb.l:                                             ; preds = %4, %bb.k
+bb.l:                                             ; preds = %bb.k
+  %4 = load i32, ptr %i.ah, align 4, !tbaa !120
+  %5 = add i32 %4, 1
+  store i32 %5, ptr %i.ah, align 4, !tbaa !120
   %i.dy = load i64, ptr %i.d, align 8, !tbaa !121
   %i.dz = getelementptr inbounds i8, ptr %.04558.us, i64 %i.dy
   %i.ea = add nsw i64 %i.ao, -1
-  %.not69 = icmp eq i64 %i.ao, 0
-  br i1 %.not69, label %._crit_edge, label %.lr.ph59.split.us
+  %6 = icmp sgt i64 %i.ao, 0
+  br i1 %6, label %.lr.ph59.split.us, label %._crit_edge
 
 .lr.ph59.split:                                   ; preds = %.lr.ph59, %bb.n
   %i.eb = phi i64 [ %i.eh, %bb.n ], [ %i.af, %.lr.ph59 ] ; 3 uses
   %.04558 = phi ptr [ %i.eg, %bb.n ], [ %1, %.lr.ph59 ] ; 2 uses
-  %.157 = phi i64 [ %i.eb, %bb.n ], [ %.049, %.lr.ph59 ]
   %i.ec = load i32, ptr %i.v, align 8, !tbaa !21
   %i.ed = icmp eq i32 %i.ec, 12
   %spec.select = select i1 %i.ed, ptr %.048, ptr %.04558
@@ -413,29 +408,26 @@ bb.l:                                             ; preds = %4, %bb.k
   br i1 %.not53, label %bb.m, label %.loopexit55
 
 bb.m:                                             ; preds = %.lr.ph59.split
-  %.not54 = icmp eq i64 %.157, 1
-  br i1 %.not54, label %bb.n, label %7
+  %.not54 = icmp eq i64 %i.eb, 0
+  br i1 %.not54, label %._crit_edge, label %bb.n
 
-7:                                                ; preds = %bb.m
-  %8 = load i32, ptr %i.ah, align 4, !tbaa !120
-  %9 = add i32 %8, 1
-  store i32 %9, ptr %i.ah, align 4, !tbaa !120
-  br label %bb.n
-
-bb.n:                                             ; preds = %7, %bb.m
+bb.n:                                             ; preds = %bb.m
+  %7 = load i32, ptr %i.ah, align 4, !tbaa !120
+  %8 = add i32 %7, 1
+  store i32 %8, ptr %i.ah, align 4, !tbaa !120
   %i.ef = load i64, ptr %i.d, align 8, !tbaa !121
   %i.eg = getelementptr inbounds i8, ptr %.04558, i64 %i.ef
   %i.eh = add nsw i64 %i.eb, -1
-  %.not68 = icmp eq i64 %i.eb, 0
-  br i1 %.not68, label %._crit_edge, label %.lr.ph59.split
+  %9 = icmp sgt i64 %i.eb, 0
+  br i1 %9, label %.lr.ph59.split, label %._crit_edge
 
-._crit_edge:                                      ; preds = %bb.n, %bb.l, %bb.i
+._crit_edge:                                      ; preds = %bb.m, %bb.n, %bb.k, %bb.l, %bb.i
   %i.ei = load i32, ptr %i.v, align 8, !tbaa !21
   %i.ej = icmp eq i32 %i.ei, 12
   br i1 %i.ej, label %bb.o, label %.loopexit55
 
 bb.o:                                             ; preds = %._crit_edge
-  call void @_TIFFfreeExt(ptr noundef %0, ptr noundef %.048) #16
+  call void @_TIFFfreeExt(ptr noundef nonnull %0, ptr noundef %.048) #16
   br label %.loopexit55
 
 .loopexit55:                                      ; preds = %.lr.ph59.split, %..loopexit_crit_edge.us, %._crit_edge, %bb.o, %bb.h

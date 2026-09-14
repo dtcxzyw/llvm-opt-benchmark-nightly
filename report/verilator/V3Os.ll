@@ -202,8 +202,8 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph205, %bb.ai
   %i.n = phi i64 [ %i.e, %.lr.ph205 ], [ %i.fg, %bb.ai ] ; 16 uses
-  %.055203 = phi i64 [ 0, %.lr.ph205 ], [ %i.ff, %bb.ai ] ; 11 uses
-  %i.o = load ptr, ptr %1, align 8, !tbaa !38     ; 11 uses
+  %.055203 = phi i64 [ 0, %.lr.ph205 ], [ %i.ff, %bb.ai ] ; 9 uses
+  %i.o = load ptr, ptr %1, align 8, !tbaa !38     ; 10 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 %.055203
   %i.q = load i8, ptr %i.p, align 1, !tbaa !36    ; 2 uses
   %i.r = icmp eq i8 %i.q, 36
@@ -234,37 +234,26 @@ bb.e:                                             ; preds = %bb.d, %.thread
   br i1 %i.aa, label %.lr.ph.split, label %.critedge
 
 .thread274:                                       ; preds = %bb.d
-  %i.ab = add nuw i64 %.055203, 1                 ; 8 uses
-  %i.ac = add nuw i64 %.055203, 2                 ; 3 uses
+  %i.ab = add nuw i64 %.055203, 1                 ; 4 uses
+  %i.ac = add nuw i64 %.055203, 2                 ; 2 uses
   %i.ad = icmp ult i64 %i.ac, %i.n
   br i1 %i.ad, label %.lr.ph.split.us.preheader, label %.critedge.thread.thread
 
-.lr.ph.split.us.preheader:                        ; preds = %.thread274
-  %7 = add i64 %i.n, -1                           ; 2 uses
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.ac
+.lr.ph.split.us.preheader:                        ; preds = %.thread274, %.critedge2.us
+  %7 = phi i64 [ %i.aj, %.critedge2.us ], [ %i.ac, %.thread274 ] ; 3 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.o, i64 %7
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !36  ; 2 uses
   %i.ag = sext i8 %i.af to i32
   %i.ah = call i32 @isalnum(i32 noundef %i.ag) #32
   %.not62.us354 = icmp ne i32 %i.ah, 0
   %i.ai = icmp eq i8 %i.af, 95
   %or.cond.us355 = or i1 %i.ai, %.not62.us354
-  br i1 %or.cond.us355, label %.critedge2.us, label %.critedge.thread.thread
+  br i1 %or.cond.us355, label %.critedge2.us, label %.critedge.loopexit
 
-.lr.ph.split.us:                                  ; preds = %.critedge2.us
-  %8 = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.aj
-  %9 = load i8, ptr %8, align 1, !tbaa !36        ; 2 uses
-  %10 = sext i8 %9 to i32
-  %11 = call i32 @isalnum(i32 noundef %10) #32
-  %.not62.us = icmp ne i32 %11, 0
-  %12 = icmp eq i8 %9, 95
-  %or.cond.us = or i1 %12, %.not62.us
-  br i1 %or.cond.us, label %.critedge2.us, label %.critedge.thread.thread, !llvm.loop !150
-
-.critedge2.us:                                    ; preds = %.lr.ph.split.us.preheader, %.lr.ph.split.us
-  %13 = phi i64 [ %i.aj, %.lr.ph.split.us ], [ %i.ac, %.lr.ph.split.us.preheader ] ; 3 uses
-  %i.aj = add nuw i64 %13, 1                      ; 3 uses
+.critedge2.us:                                    ; preds = %.lr.ph.split.us.preheader
+  %i.aj = add nuw i64 %7, 1                       ; 2 uses
   %exitcond233.not = icmp eq i64 %i.aj, %i.n
-  br i1 %exitcond233.not, label %.critedge2.us..critedge.thread.thread.loopexit_crit_edge, label %.lr.ph.split.us, !llvm.loop !150
+  br i1 %exitcond233.not, label %.critedge.loopexit, label %.lr.ph.split.us.preheader, !llvm.loop !150
 
 .lr.ph.split:                                     ; preds = %bb.e
   br i1 %i.x, label %.lr.ph.split.split.us, label %.lr.ph.split.split
@@ -326,6 +315,11 @@ bb.g:                                             ; preds = %.lr.ph, %.critedge2
 .critedge2.us182:                                 ; preds = %bb.g
   %exitcond.not = icmp eq i64 %i.av, %i.at
   br i1 %exitcond.not, label %.critedge2.us182..critedge.loopexit328_crit_edge, label %bb.g, !llvm.loop !150
+
+.critedge.loopexit:                               ; preds = %.lr.ph.split.us.preheader, %.critedge2.us
+  %.lcssa.ph = phi i64 [ %7, %.lr.ph.split.us.preheader ], [ %i.n, %.critedge2.us ]
+  %.054.lcssa.ph = add i64 %.lcssa.ph, -1         ; 2 uses
+  br label %.critedge.thread.thread
 
 .critedge.loopexit.a:                             ; preds = %.lr.ph.split.split.us
   %i.ay = add i64 %i.n, -1
@@ -427,31 +421,28 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.p,
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #28
   br label %bb.aj
 
-.critedge2.us..critedge.thread.thread.loopexit_crit_edge: ; preds = %.critedge2.us
-  br label %.critedge.thread.thread, !llvm.loop !150
-
-.critedge.thread.thread:                          ; preds = %.lr.ph.split.us, %.lr.ph.split.us.preheader, %.critedge2.us..critedge.thread.thread.loopexit_crit_edge, %.lr.ph.split.split, %.thread274, %.critedge.thread, %bb.h
-  %14 = phi i64 [ %i.y, %bb.h ], [ %i.y, %.critedge.thread ], [ %i.ab, %.thread274 ], [ %i.y, %.lr.ph.split.split ], [ %i.ab, %.lr.ph.split.us.preheader ], [ %i.ab, %.critedge2.us..critedge.thread.thread.loopexit_crit_edge ], [ %i.ab, %.lr.ph.split.us ] ; 3 uses
-  %15 = phi i64 [ %i.s, %bb.h ], [ %i.s, %.critedge.thread ], [ %.055203, %.thread274 ], [ %i.s, %.lr.ph.split.split ], [ %.055203, %.lr.ph.split.us.preheader ], [ %.055203, %.critedge2.us..critedge.thread.thread.loopexit_crit_edge ], [ %.055203, %.lr.ph.split.us ] ; 4 uses
-  %.not113276286302 = phi i64 [ %.lcssa288, %bb.h ], [ %.lcssa288298, %.critedge.thread ], [ %i.ab, %.thread274 ], [ %i.z, %.lr.ph.split.split ], [ %i.ab, %.lr.ph.split.us.preheader ], [ %7, %.critedge2.us..critedge.thread.thread.loopexit_crit_edge ], [ %13, %.lr.ph.split.us ]
-  %.054.lcssa287300 = phi i64 [ %.054.lcssa287, %bb.h ], [ %.054.lcssa287301, %.critedge.thread ], [ %i.ab, %.thread274 ], [ %i.y, %.lr.ph.split.split ], [ %i.ab, %.lr.ph.split.us.preheader ], [ %7, %.critedge2.us..critedge.thread.thread.loopexit_crit_edge ], [ %13, %.lr.ph.split.us ]
+.critedge.thread.thread:                          ; preds = %.thread274, %.lr.ph.split.split, %.critedge.loopexit, %.critedge.thread, %bb.h
+  %8 = phi i64 [ %i.y, %bb.h ], [ %i.y, %.critedge.thread ], [ %i.ab, %.thread274 ], [ %i.y, %.lr.ph.split.split ], [ %i.ab, %.critedge.loopexit ] ; 3 uses
+  %9 = phi i64 [ %i.s, %bb.h ], [ %i.s, %.critedge.thread ], [ %.055203, %.thread274 ], [ %i.s, %.lr.ph.split.split ], [ %.055203, %.critedge.loopexit ] ; 4 uses
+  %.not113278290306 = phi i64 [ %.lcssa288, %bb.h ], [ %.lcssa288298, %.critedge.thread ], [ %i.ab, %.thread274 ], [ %i.z, %.lr.ph.split.split ], [ %.054.lcssa.ph, %.critedge.loopexit ]
+  %.054.lcssa291304 = phi i64 [ %.054.lcssa287, %bb.h ], [ %.054.lcssa287301, %.critedge.thread ], [ %i.ab, %.thread274 ], [ %i.y, %.lr.ph.split.split ], [ %.054.lcssa.ph, %.critedge.loopexit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #28
   call void @llvm.experimental.noalias.scope.decl(metadata !154)
-  %.not = icmp ult i64 %15, %i.n
+  %.not = icmp ult i64 %9, %i.n
   br i1 %.not, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i, label %bb.q
 
 bb.q:                                             ; preds = %.critedge.thread.thread
-  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.28, ptr noundef nonnull @.str.32, i64 noundef %14, i64 noundef %i.n) #30
+  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.28, ptr noundef nonnull @.str.32, i64 noundef %8, i64 noundef %i.n) #30
           to label %.noexc unwind label %.loopexit.split-lp
 
 .noexc:                                           ; preds = %bb.q
   unreachable
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ; preds = %.critedge.thread.thread
-  %i.bt = sub i64 %.054.lcssa287300, %15
+  %i.bt = sub i64 %.054.lcssa291304, %9
   store ptr %i.f, ptr %3, align 8, !tbaa !33, !alias.scope !154
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.o, i64 %14 ; 2 uses
-  %i.bv = sub nuw i64 %i.n, %14
+  %i.bu = getelementptr inbounds nuw i8, ptr %i.o, i64 %8 ; 2 uses
+  %i.bv = sub nuw i64 %i.n, %8
   %spec.select.i.i.i = call noundef i64 @llvm.umin.i64(i64 %i.bt, i64 %i.bv) ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #28, !noalias !154
   store i64 %spec.select.i.i.i, ptr %i.a, align 8, !tbaa !15, !noalias !154
@@ -661,7 +652,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i: ; pre
 
 .thread114:                                       ; preds = %bb.t, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i81
   %i.dn = load ptr, ptr %1, align 8, !tbaa !38
-  %i.do = getelementptr inbounds nuw i8, ptr %i.dn, i64 %15
+  %i.do = getelementptr inbounds nuw i8, ptr %i.dn, i64 %9
   %i.dp = load i8, ptr %i.do, align 1, !tbaa !36
   %i.dq = load i64, ptr %i.c, align 8, !tbaa !35  ; 4 uses
   %i.dr = add i64 %i.dq, 1                        ; 3 uses
@@ -702,7 +693,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit: ; preds = %_ZNKS
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit
-  %.257 = phi i64 [ %15, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit ], [ %.not113276286302, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i ]
+  %.257 = phi i64 [ %9, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit ], [ %.not113278290306, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i ]
   %i.ec = load ptr, ptr %4, align 8, !tbaa !38    ; 2 uses
   %i.ed = icmp eq ptr %i.ec, %i.h
   br i1 %i.ed, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit91, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i89

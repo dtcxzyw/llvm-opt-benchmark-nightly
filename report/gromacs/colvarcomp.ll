@@ -204,7 +204,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.h,
   %i.ay = ptrtoint ptr %i.aw to i64
   %i.az = ptrtoint ptr %i.ax to i64
   %i.ba = sub i64 %i.ay, %i.az
-  %i.bb = ashr exact i64 %i.ba, 5                 ; 2 uses
+  %i.bb = ashr exact i64 %i.ba, 5
   %.0116 = add nsw i64 %i.bb, -1                  ; 2 uses
   %.not117 = icmp eq i64 %.0116, 0
   br i1 %.not117, label %._crit_edge, label %.lr.ph
@@ -241,15 +241,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit18: ; preds = %bb.
   br label %common.resume
 
 bb.j:                                             ; preds = %.lr.ph, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit53
-  %.0119 = phi i64 [ %.0116, %.lr.ph ], [ %.0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit53 ] ; 3 uses
-  %.0.in118 = phi i64 [ %i.bb, %.lr.ph ], [ %.0119, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit53 ]
+  %.0.in118 = phi i64 [ %.0116, %.lr.ph ], [ %.0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit53 ] ; 3 uses
   %i.bp = call noundef ptr @_ZN12colvarmodule4mainEv()
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28
   %i.bq = load ptr, ptr %i.b, align 8, !tbaa !172
-  %i.br = getelementptr inbounds nuw [32 x i8], ptr %i.bq, i64 %.0119 ; 2 uses
+  %i.br = getelementptr inbounds nuw [32 x i8], ptr %i.bq, i64 %.0.in118 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !559)
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !21, !noalias !559
   %i.bt = getelementptr inbounds nuw i8, ptr %i.br, i64 8
@@ -362,7 +361,7 @@ bb.o:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.cw = load ptr, ptr %i.b, align 8, !tbaa !172
   %i.cx = getelementptr [32 x i8], ptr %i.cw, i64 %.0.in118 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !562)
-  %i.cy = getelementptr i8, ptr %i.cx, i64 -56
+  %i.cy = getelementptr i8, ptr %i.cx, i64 -24
   %i.cz = load i64, ptr %i.cy, align 8, !tbaa !20, !noalias !562 ; 2 uses
   %i.da = load i64, ptr %i.bf, align 8, !tbaa !20, !noalias !562
   %i.db = sub i64 4611686018427387903, %i.da
@@ -377,7 +376,7 @@ bb.p:                                             ; preds = %bb.o
   unreachable
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i: ; preds = %bb.o
-  %i.dd = getelementptr i8, ptr %i.cx, i64 -64
+  %i.dd = getelementptr i8, ptr %i.cx, i64 -32
   %i.de = load ptr, ptr %i.dd, align 8, !tbaa !21, !noalias !562
   %i.df = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %5, ptr noundef %i.de, i64 noundef %i.cz)
           to label %.noexc34 unwind label %.loopexit71 ; 6 uses
@@ -512,7 +511,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit53: ; preds = %_ZN
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #28
-  %.0 = add i64 %.0119, -1                        ; 2 uses
+  %.0 = add i64 %.0.in118, -1                     ; 2 uses
   %.not = icmp eq i64 %.0, 0
   br i1 %.not, label %._crit_edge, label %bb.j, !llvm.loop !556
 

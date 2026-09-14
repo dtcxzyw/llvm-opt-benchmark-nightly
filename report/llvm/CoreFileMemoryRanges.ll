@@ -112,14 +112,13 @@ _ZN12lldb_private15RangeDataVectorImmNS_19CoreFileMemoryRangeELj0ESt4lessIS1_EE4
   %i.m = zext i32 %i.l to i64
   %i.n = tail call noundef i64 @_ZN12lldb_private15RangeDataVectorImmNS_19CoreFileMemoryRangeELj0ESt4lessIS1_EE18ComputeUpperBoundsEmm(ptr noundef nonnull align 8 dereferenceable(17) %1, i64 noundef 0, i64 noundef %i.m) ; 0 uses
   %.pre = load i32, ptr %i.e, align 8, !tbaa !35  ; 2 uses
-  %i.o = zext i32 %.pre to i64                    ; 2 uses
+  %i.o = zext i32 %.pre to i64
   %.03875 = add nsw i64 %i.o, -1                  ; 2 uses
   %.not76 = icmp eq i64 %.03875, 0
   br i1 %.not76, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.c, %_ZN12lldb_private15RangeDataVectorImmNS_19CoreFileMemoryRangeELj0ESt4lessIS1_EE4SortEv.exit
   %.0387593 = phi i64 [ %.03875, %_ZN12lldb_private15RangeDataVectorImmNS_19CoreFileMemoryRangeELj0ESt4lessIS1_EE4SortEv.exit ], [ -1, %bb.c ]
-  %4 = phi i64 [ %i.o, %_ZN12lldb_private15RangeDataVectorImmNS_19CoreFileMemoryRangeELj0ESt4lessIS1_EE4SortEv.exit ], [ 0, %bb.c ]
   %i.p = phi i32 [ %.pre, %_ZN12lldb_private15RangeDataVectorImmNS_19CoreFileMemoryRangeELj0ESt4lessIS1_EE4SortEv.exit ], [ 0, %bb.c ]
   %.pre84 = load ptr, ptr %1, align 8
   br label %.lr.ph
@@ -127,11 +126,11 @@ _ZN12lldb_private15RangeDataVectorImmNS_19CoreFileMemoryRangeELj0ESt4lessIS1_EE4
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZL8OverlapsPKN12lldb_private9RangeDataImmNS_19CoreFileMemoryRangeEEES4_.exit.thread
   %i.q = phi ptr [ %i.br, %_ZL8OverlapsPKN12lldb_private9RangeDataImmNS_19CoreFileMemoryRangeEEES4_.exit.thread ], [ %.pre84, %.lr.ph.preheader ] ; 7 uses
   %i.r = phi i32 [ %i.bs, %_ZL8OverlapsPKN12lldb_private9RangeDataImmNS_19CoreFileMemoryRangeEEES4_.exit.thread ], [ %i.p, %.lr.ph.preheader ] ; 6 uses
-  %.03878 = phi i64 [ %.038, %_ZL8OverlapsPKN12lldb_private9RangeDataImmNS_19CoreFileMemoryRangeEEES4_.exit.thread ], [ %.0387593, %.lr.ph.preheader ] ; 5 uses
-  %.038.in77 = phi i64 [ %.03878, %_ZL8OverlapsPKN12lldb_private9RangeDataImmNS_19CoreFileMemoryRangeEEES4_.exit.thread ], [ %4, %.lr.ph.preheader ] ; 3 uses
+  %.03878 = phi i64 [ %.038, %_ZL8OverlapsPKN12lldb_private9RangeDataImmNS_19CoreFileMemoryRangeEEES4_.exit.thread ], [ %.0387593, %.lr.ph.preheader ] ; 6 uses
+  %.038.in7784 = add i64 %.03878, 1               ; 2 uses
   %i.s = zext i32 %i.r to i64
   %i.t = getelementptr inbounds nuw [48 x i8], ptr %i.q, i64 %.03878 ; 6 uses
-  %i.u = add i64 %.038.in77, -2                   ; 2 uses
+  %i.u = add i64 %.03878, -1                      ; 2 uses
   %i.v = icmp ult i64 %i.u, %i.s
   %i.w = getelementptr inbounds nuw [48 x i8], ptr %i.q, i64 %i.u ; 10 uses
   %i.x = select i1 %i.v, ptr %i.w, ptr null
@@ -208,14 +207,14 @@ bb.g:                                             ; preds = %bb.d
   %.sroa.0.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.w, i64 24
   store i64 %.sroa.speculated, ptr %.sroa.0.sroa.4.0..sroa_idx, align 8, !tbaa !24
   %i.ba = trunc i64 %.03878 to i32
-  %i.bb = trunc i64 %.038.in77 to i32             ; 3 uses
+  %i.bb = trunc i64 %.038.in7784 to i32           ; 3 uses
   %.not.i = icmp uge i32 %i.ba, %i.bb
   %i.bc = icmp ult i32 %i.r, %i.bb
   %or.cond66 = or i1 %.not.i, %i.bc
   br i1 %or.cond66, label %bb.l, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.bd = and i64 %.038.in77, 4294967295
+  %i.bd = and i64 %.038.in7784, 4294967295
   %i.be = and i64 %.03878, 4294967295
   %i.bf = getelementptr inbounds nuw [48 x i8], ptr %i.q, i64 %i.be ; 3 uses
   %.idx9.i = mul nuw nsw i64 %i.bd, 48

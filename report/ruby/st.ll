@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %st_rehash_linear.ex
 
 .lr.ph48.i.i:                                     ; preds = %bb.b, %.loopexit.i.i
   %i.w = phi i64 [ %i.bi, %.loopexit.i.i ], [ %i.u, %bb.b ] ; 4 uses
-  %.03446.i.i = phi i64 [ %.pre52.i.i.a, %.loopexit.i.i ], [ %i.t, %bb.b ] ; 3 uses
+  %.03446.i.i = phi i64 [ %.pre52.i.i.a, %.loopexit.i.i ], [ %i.t, %bb.b ] ; 2 uses
   %i.x = load ptr, ptr %i.m, align 8, !tbaa !42
   %i.y = getelementptr [24 x i8], ptr %i.x, i64 %.03446.i.i ; 4 uses
   %i.z = load i64, ptr %i.y, align 8, !tbaa !50
@@ -219,12 +219,11 @@ bb.b:                                             ; preds = %st_rehash_linear.ex
   br label %bb.c
 
 bb.c:                                             ; preds = %update_range_for_deleted.exit.i.i, %.lr.ph.i.i
-  %4 = phi i64 [ %i.w, %.lr.ph.i.i ], [ %i.bf, %update_range_for_deleted.exit.i.i ] ; 2 uses
-  %i.ad = phi i64 [ %i.w, %.lr.ph.i.i ], [ %i.bg, %update_range_for_deleted.exit.i.i ] ; 2 uses
-  %.045.i.i.a = phi i64 [ %.pre52.i.i.a, %.lr.ph.i.i ], [ %.0.i.i, %update_range_for_deleted.exit.i.i ] ; 5 uses
-  %.0.in44.i.i = phi i64 [ %.03446.i.i, %.lr.ph.i.i ], [ %.045.i.i.a, %update_range_for_deleted.exit.i.i ]
+  %i.ad = phi i64 [ %i.w, %.lr.ph.i.i ], [ %i.bf, %update_range_for_deleted.exit.i.i ] ; 2 uses
+  %.045.i.i.a = phi i64 [ %i.w, %.lr.ph.i.i ], [ %i.bg, %update_range_for_deleted.exit.i.i ] ; 2 uses
+  %.0.in44.i.i = phi i64 [ %.pre52.i.i.a, %.lr.ph.i.i ], [ %.0.i.i, %update_range_for_deleted.exit.i.i ] ; 5 uses
   %i.ae = load ptr, ptr %i.m, align 8, !tbaa !42
-  %i.af = getelementptr [24 x i8], ptr %i.ae, i64 %.045.i.i.a ; 4 uses
+  %i.af = getelementptr [24 x i8], ptr %i.ae, i64 %.0.in44.i.i ; 4 uses
   %i.ag = load i64, ptr %i.af, align 8, !tbaa !50 ; 2 uses
   %i.ah = icmp eq i64 %i.ag, -1
   br i1 %i.ah, label %update_range_for_deleted.exit.i.i, label %bb.d
@@ -265,15 +264,15 @@ bb.g:                                             ; preds = %bb.f
   %i.av = add i64 %i.au, -1
   store i64 %i.av, ptr %i.p, align 8, !tbaa !43
   %i.aw = load i64, ptr %i.k, align 8, !tbaa !48
-  %i.ax = icmp eq i64 %i.aw, %.045.i.i.a
+  %i.ax = icmp eq i64 %i.aw, %.0.in44.i.i
   %.pre51.i.i = load i64, ptr %i.l, align 8, !tbaa !47 ; 7 uses
   br i1 %i.ax, label %bb.h, label %update_range_for_deleted.exit.i.i
 
 bb.h:                                             ; preds = %.thread63.i.i
   %i.ay = load ptr, ptr %i.m, align 8, !tbaa !42
-  %i.az = add i64 %.0.in44.i.i, 2
+  %i.az = add nuw i64 %.0.in44.i.i, 1
   %umax.i.i.i = tail call i64 @llvm.umax.i64(i64 %.pre51.i.i, i64 %i.az) ; 2 uses
-  %.0.i.i.i67 = add nuw i64 %.045.i.i.a, 1        ; 2 uses
+  %.0.i.i.i67 = add nuw i64 %.0.in44.i.i, 1       ; 2 uses
   %i.ba = icmp ult i64 %.0.i.i.i67, %.pre51.i.i
   br i1 %i.ba, label %.lr.ph70, label %.critedge.i.i.i
 
@@ -298,9 +297,9 @@ bb.i:                                             ; preds = %.lr.ph70
   br label %update_range_for_deleted.exit.i.i
 
 update_range_for_deleted.exit.i.i:                ; preds = %.critedge.i.i.i, %.thread63.i.i, %.update_range_for_deleted.exit_crit_edge.i.i, %bb.d, %bb.c
-  %i.bf = phi i64 [ %.pre50.i.i, %.update_range_for_deleted.exit_crit_edge.i.i ], [ %4, %bb.c ], [ %.pre51.i.i, %.critedge.i.i.i ], [ %.pre51.i.i, %.thread63.i.i ], [ %4, %bb.d ] ; 2 uses
-  %i.bg = phi i64 [ %.pre50.i.i, %.update_range_for_deleted.exit_crit_edge.i.i ], [ %i.ad, %bb.c ], [ %.pre51.i.i, %.critedge.i.i.i ], [ %.pre51.i.i, %.thread63.i.i ], [ %i.ad, %bb.d ] ; 2 uses
-  %.0.i.i = add nuw i64 %.045.i.i.a, 1            ; 2 uses
+  %i.bf = phi i64 [ %.pre50.i.i, %.update_range_for_deleted.exit_crit_edge.i.i ], [ %i.ad, %bb.c ], [ %.pre51.i.i, %.critedge.i.i.i ], [ %.pre51.i.i, %.thread63.i.i ], [ %i.ad, %bb.d ] ; 2 uses
+  %i.bg = phi i64 [ %.pre50.i.i, %.update_range_for_deleted.exit_crit_edge.i.i ], [ %.045.i.i.a, %bb.c ], [ %.pre51.i.i, %.critedge.i.i.i ], [ %.pre51.i.i, %.thread63.i.i ], [ %.045.i.i.a, %bb.d ] ; 2 uses
+  %.0.i.i = add nuw i64 %.0.in44.i.i, 1           ; 2 uses
   %i.bh = icmp ult i64 %.0.i.i, %i.bg
   br i1 %i.bh, label %bb.c, label %.loopexit.i.i, !llvm.loop !110
 

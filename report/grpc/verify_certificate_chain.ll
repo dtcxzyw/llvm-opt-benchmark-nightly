@@ -204,7 +204,7 @@ bb.dg:                                            ; preds = %_ZNKSt3setIN4bssl3d
   %i.qo = ptrtoint ptr %.val39.i.i.i to i64
   %i.qp = ptrtoint ptr %.val.i.i.i to i64
   %i.qq = sub i64 %i.qo, %i.qp
-  %i.qr = sdiv exact i64 %i.qq, 48                ; 2 uses
+  %i.qr = sdiv exact i64 %i.qq, 48
   %.031181.i.i.i = add nsw i64 %i.qr, -1
   br label %.lr.ph188.i.i.i
 
@@ -236,7 +236,6 @@ bb.dg:                                            ; preds = %_ZNKSt3setIN4bssl3d
   %.val52201.i.i.i = phi ptr [ %.val52.i.i.i, %.loopexit.i.i.i ], [ %.val39.i.i.i, %.lr.ph188.preheader.i.i.i ]
   %.val51199.i.i.i = phi ptr [ %.val51.i.i.i, %.loopexit.i.i.i ], [ %.val.i.i.i, %.lr.ph188.preheader.i.i.i ] ; 2 uses
   %.031185.i.i.i = phi i64 [ %.031.i.i.i, %.loopexit.i.i.i ], [ %.031181.i.i.i, %.lr.ph188.preheader.i.i.i ] ; 4 uses
-  %.031.in184.i.i.i = phi i64 [ %.031185.i.i.i, %.loopexit.i.i.i ], [ %i.qr, %.lr.ph188.preheader.i.i.i ]
   %i.qz = getelementptr inbounds nuw [48 x i8], ptr %.val51199.i.i.i, i64 %.031185.i.i.i ; 2 uses
   %i.ra = getelementptr i8, ptr %i.qz, i64 24
   %.val41.i.i.i = load ptr, ptr %i.ra, align 8, !tbaa !27 ; 2 uses
@@ -449,10 +448,10 @@ bb.dv:                                            ; preds = %bb.di
 
 .lr.ph175.i.i.i:                                  ; preds = %bb.dv
   %.val59.i.i.i = load ptr, ptr %25, align 8, !tbaa !170, !noalias !228
-  %i.to = getelementptr [48 x i8], ptr %.val59.i.i.i, i64 %.031.in184.i.i.i ; 2 uses
-  %i.tp = getelementptr i8, ptr %i.to, i64 -80
+  %i.to = getelementptr [48 x i8], ptr %.val59.i.i.i, i64 %.031185.i.i.i ; 2 uses
+  %i.tp = getelementptr i8, ptr %i.to, i64 -32
   %.val.i.i.i.i.i = load ptr, ptr %i.tp, align 8, !tbaa !26 ; 3 uses
-  %i.tq = getelementptr i8, ptr %i.to, i64 -88    ; 2 uses
+  %i.tq = getelementptr i8, ptr %i.to, i64 -40    ; 2 uses
   %.not5.i.i.i.i.i.i = icmp eq ptr %.val.i.i.i.i.i, null
   br i1 %.not5.i.i.i.i.i.i, label %_ZNKSt3setIN4bssl3der5InputESt4lessIS2_ESaIS2_EE5countERKS2_.exit102.thread.i.i.i, label %.lr.ph.i.i.i115.i.i.i
 

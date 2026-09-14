@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.j
 _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit: ; preds = %bb.j, %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
   %i.ac = load ptr, ptr %.0.i.sroa.gep, align 8, !tbaa !18
-  %i.ad = load ptr, ptr %3, align 8, !tbaa !17    ; 6 uses
+  %i.ad = load ptr, ptr %3, align 8, !tbaa !17    ; 5 uses
   %i.ae = ptrtoint ptr %i.ac to i64
   %i.af = ptrtoint ptr %i.ad to i64
   %i.ag = sub i64 %i.ae, %i.af                    ; 4 uses
@@ -236,9 +236,9 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit109: ; p
   br label %_ZN5ErrorD2Ev.exit124
 
 .lr.ph:                                           ; preds = %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit, %bb.at
-  %i.ao = phi i64 [ %i.ei, %bb.at ], [ 1, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit ] ; 3 uses
-  %.074135 = phi i64 [ %i.ao, %bb.at ], [ 0, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit ] ; 4 uses
-  %i.ap = getelementptr i8, ptr %i.ad, i64 %.074135
+  %i.ao = phi i64 [ %i.ei, %bb.at ], [ 1, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit ] ; 5 uses
+  %6 = getelementptr i8, ptr %i.ad, i64 %i.ao     ; 2 uses
+  %i.ap = getelementptr i8, ptr %6, i64 -1
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !22
   %i.ar = icmp eq i8 %i.aq, -1
   br i1 %i.ar, label %bb.o, label %bb.at
@@ -259,7 +259,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.ba, label %bb.q, label %bb.at
 
 bb.q:                                             ; preds = %bb.p
-  %i.bb = add i64 %.074135, 9                     ; 2 uses
+  %i.bb = add i64 %i.ao, 8                        ; 2 uses
   %.not = icmp ult i64 %i.bb, %i.ag
   br i1 %.not, label %bb.v, label %bb.r
 
@@ -290,12 +290,11 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.ay
 
 bb.v:                                             ; preds = %bb.q
-  %6 = getelementptr i8, ptr %i.ad, i64 %.074135
-  %i.bm = getelementptr i8, ptr %6, i64 4
+  %i.bm = getelementptr i8, ptr %6, i64 3
   %i.bn = load i8, ptr %i.bm, align 1, !tbaa !22  ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.ad, i64 %i.bb
   %i.bp = load i8, ptr %i.bo, align 1, !tbaa !22  ; 7 uses
-  %i.bq = add i64 %.074135, 11                    ; 2 uses
+  %i.bq = add i64 %i.ao, 10                       ; 2 uses
   %i.br = zext i8 %i.bp to i64
   %i.bs = mul nuw nsw i64 %i.br, 3
   %i.bt = add i64 %i.bs, %i.bq

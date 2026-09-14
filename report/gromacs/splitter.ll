@@ -204,28 +204,22 @@ bb.cp:                                            ; preds = %bb.co, %.lr.ph231.i
   %indvars.iv306.i = phi i32 [ %indvars.iv.next307.i, %.critedge.i ], [ -1, %._crit_edge232.i ] ; 2 uses
   %indvars.iv292.i = phi i32 [ %indvars.iv.next293.i, %.critedge.i ], [ 1, %._crit_edge232.i ] ; 2 uses
   %indvar.i = phi i64 [ %indvar.next.pre-phi.i, %.critedge.i ], [ 0, %._crit_edge232.i ] ; 6 uses
-  %.067245.i = phi i32 [ %.168.lcssa.i, %.critedge.i ], [ %.046.lcssa.i, %._crit_edge232.i ] ; 5 uses
+  %.067245.i = phi i32 [ %.168.lcssa.i, %.critedge.i ], [ %.046.lcssa.i, %._crit_edge232.i ] ; 4 uses
   %i.pe = mul nuw nsw i64 %indvar.i, 12
   %scevgep.i = getelementptr i8, ptr %.sroa.0118.4.i, i64 %i.pe ; 2 uses
   %scevgep289.i = getelementptr i8, ptr %scevgep.i, i64 12
   %i.pf = getelementptr inbounds nuw [12 x i8], ptr %.sroa.0118.4.i, i64 %indvar.i
   %i.pg = getelementptr inbounds nuw i8, ptr %i.pf, i64 8
   %i.ph = add nsw i32 %.067245.i, -1
-  %i.pi = sext i32 %i.ph to i64
+  %i.pi = sext i32 %i.ph to i64                   ; 2 uses
   %i.pj = icmp slt i64 %indvar.i, %i.pi
-  br i1 %i.pj, label %.lr.ph241.i, label %.preheader182..critedge_crit_edge.i
-
-.preheader182..critedge_crit_edge.i:              ; preds = %.preheader182.i
-  %.pre.i59 = add nuw nsw i64 %indvar.i, 1
-  br label %.critedge.i
+  br i1 %i.pj, label %.lr.ph241.i, label %.critedge.i
 
 .lr.ph241.i:                                      ; preds = %.preheader182.i
   %i.pk = trunc i64 %indvar.i to i32
-  %12 = add nuw nsw i64 %indvar.i, 1              ; 3 uses
   %i.pl = add i32 %.067245.i, %indvars.iv306.i
   %wide.trip.count308.i = zext i32 %i.pl to i64
   %.neg150 = add i32 %.067245.i, -2
-  %13 = sext i32 %.067245.i to i64
   br label %bb.cq
 
 .preheader.i:                                     ; preds = %.critedge.i
@@ -308,14 +302,14 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br label %.lr.ph249.i
 
 .loopexit181.i:                                   ; preds = %.lr.ph239.preheader.i, %.preheader180.i
-  %indvars.iv.next302.i.a = add nuw nsw i64 %indvars.iv301.i, 1 ; 2 uses
-  %exitcond309.not.i = icmp eq i64 %indvars.iv.next302.i.a, %wide.trip.count308.i
-  %indvars.iv.next405 = add nsw i64 %indvars.iv404, -1
-  br i1 %exitcond309.not.i, label %.critedge.i, label %bb.cq, !llvm.loop !54
+  %indvars.iv.next302.i.a = add nsw i64 %indvars.iv404, -1
+  %indvars.iv.next302.i = add nuw nsw i64 %indvars.iv301.i, 1 ; 2 uses
+  %exitcond310.not.i = icmp eq i64 %indvars.iv.next302.i, %wide.trip.count308.i
+  br i1 %exitcond310.not.i, label %.critedge.i, label %bb.cq, !llvm.loop !54
 
 bb.cq:                                            ; preds = %.loopexit181.i, %.lr.ph241.i
-  %indvars.iv404 = phi i64 [ %indvars.iv.next405, %.loopexit181.i ], [ %13, %.lr.ph241.i ] ; 3 uses
-  %indvars.iv301.i = phi i64 [ %indvars.iv.next302.i.a, %.loopexit181.i ], [ 0, %.lr.ph241.i ] ; 2 uses
+  %indvars.iv404 = phi i64 [ %indvars.iv.next302.i.a, %.loopexit181.i ], [ %i.pi, %.lr.ph241.i ] ; 3 uses
+  %indvars.iv301.i = phi i64 [ %indvars.iv.next302.i, %.loopexit181.i ], [ 0, %.lr.ph241.i ] ; 2 uses
   %i.py = trunc i64 %indvars.iv301.i to i32
   %i.pz = add i32 %i.pk, %i.py
   %i.qa = sub i32 %.neg150, %i.pz
@@ -327,7 +321,7 @@ bb.cq:                                            ; preds = %.loopexit181.i, %.l
   br i1 %i.qf, label %.preheader180.i, label %.critedge.i.loopexit.split.loop.exit571
 
 .preheader180.i:                                  ; preds = %bb.cq
-  %i.qg = icmp slt i64 %12, %indvars.iv404
+  %i.qg = icmp slt i64 %indvar.i, %indvars.iv404
   br i1 %i.qg, label %.lr.ph239.preheader.i, label %.loopexit181.i
 
 .lr.ph239.preheader.i:                            ; preds = %.preheader180.i
@@ -335,12 +329,13 @@ bb.cq:                                            ; preds = %.loopexit181.i, %.l
   br label %.loopexit181.i
 
 .critedge.i.loopexit.split.loop.exit571:          ; preds = %bb.cq
-  %i.qh = trunc nsw i64 %indvars.iv404 to i32
+  %i.qh = trunc i64 %indvars.iv404 to i32
+  %12 = add i32 %i.qh, 1
   br label %.critedge.i
 
-.critedge.i:                                      ; preds = %.loopexit181.i, %.critedge.i.loopexit.split.loop.exit571, %.preheader182..critedge_crit_edge.i
-  %indvar.next.pre-phi.i = phi i64 [ %.pre.i59, %.preheader182..critedge_crit_edge.i ], [ %12, %.critedge.i.loopexit.split.loop.exit571 ], [ %12, %.loopexit181.i ] ; 2 uses
-  %.168.lcssa.i = phi i32 [ %.067245.i, %.preheader182..critedge_crit_edge.i ], [ %i.qh, %.critedge.i.loopexit.split.loop.exit571 ], [ %indvars.iv292.i, %.loopexit181.i ] ; 4 uses
+.critedge.i:                                      ; preds = %.loopexit181.i, %.critedge.i.loopexit.split.loop.exit571, %.preheader182.i
+  %.168.lcssa.i = phi i32 [ %.067245.i, %.preheader182.i ], [ %12, %.critedge.i.loopexit.split.loop.exit571 ], [ %indvars.iv292.i, %.loopexit181.i ] ; 4 uses
+  %indvar.next.pre-phi.i = add nuw nsw i64 %indvar.i, 1 ; 2 uses
   %i.qi = sext i32 %.168.lcssa.i to i64
   %i.qj = icmp slt i64 %indvar.next.pre-phi.i, %i.qi
   %indvars.iv.next293.i = add nuw i32 %indvars.iv292.i, 1

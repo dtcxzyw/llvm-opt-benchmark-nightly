@@ -205,7 +205,7 @@ bb.a:
   %i.h = tail call i32 @llvm.fptosi.sat.i32.f64(double %i.g), !dbg !21896 ; 2 uses
     #dbg_value(i32 %i.h, !21702, !DIExpression(), !21810)
   %i.i = tail call double @llvm.floor.f64(double %i.e), !dbg !21898
-  %i.j = tail call i32 @llvm.fptosi.sat.i32.f64(double %i.i), !dbg !21899 ; 4 uses
+  %i.j = tail call i32 @llvm.fptosi.sat.i32.f64(double %i.i), !dbg !21899 ; 3 uses
     #dbg_value(i32 %i.j, !21703, !DIExpression(), !21810)
     #dbg_value(i32 %i.h, !21704, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !21811)
     #dbg_value(i32 %i.j, !21704, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !21811)
@@ -285,14 +285,13 @@ bb.b:                                             ; preds = %.lr.ph, %.backedge
   br label %bb.d, !dbg !21911
 
 bb.c:                                             ; preds = %.lr.ph76, %bb.e
-  %.sroa.010.075 = phi i32 [ %.sroa.010.073, %.lr.ph76 ], [ %.sroa.010.0, %bb.e ] ; 4 uses
-  %.sroa.010.0.in74 = phi i32 [ %i.j, %.lr.ph76 ], [ %.sroa.010.075, %bb.e ]
-    #dbg_value(i32 %.sroa.010.075, !21766, !DIExpression(), !21786)
-    #dbg_value(i32 %.sroa.010.075, !21771, !DIExpression(), !21789)
-    #dbg_value(i32 %.sroa.010.075, !21780, !DIExpression(), !21792)
-    #dbg_value(i32 %.sroa.010.075, !21712, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 32), !21840)
-    #dbg_value(i32 %.sroa.010.075, !21713, !DIExpression(), !21841)
-  %i.ar = sitofp i32 %.sroa.010.075 to double, !dbg !21912 ; 4 uses
+  %.sroa.010.0.in74 = phi i32 [ %.sroa.010.073, %.lr.ph76 ], [ %.sroa.010.0, %bb.e ] ; 4 uses
+    #dbg_value(i32 %.sroa.010.0.in74, !21766, !DIExpression(), !21786)
+    #dbg_value(i32 %.sroa.010.0.in74, !21771, !DIExpression(), !21789)
+    #dbg_value(i32 %.sroa.010.0.in74, !21780, !DIExpression(), !21792)
+    #dbg_value(i32 %.sroa.010.0.in74, !21712, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 32), !21840)
+    #dbg_value(i32 %.sroa.010.0.in74, !21713, !DIExpression(), !21841)
+  %i.ar = sitofp i32 %.sroa.010.0.in74 to double, !dbg !21912 ; 4 uses
     #dbg_value(double %i.ar, !21717, !DIExpression(), !21842)
   %i.as = fmul nnan double %i.ar, %i.ar, !dbg !21912
   %i.at = fsub double %i.y, %i.as, !dbg !21913
@@ -312,7 +311,7 @@ bb.d:                                             ; preds = %_RINvNtCskKLDkoKarT
   ret void, !dbg !21917
 
 bb.e:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultuINtCshnIEpH9fIfn_16plotters_backend16DrawingErrorKindNtNtCs29sfksKwgjx_15plotters_bitmap5error18BitMapBackendErrorEEECsaTqK2fWTXJW_11qlog_dancer.exit70, %bb.c
-  %.sroa.010.0 = add nsw i32 %.sroa.010.075, 1, !dbg !21901 ; 2 uses
+  %.sroa.010.0 = add nsw i32 %.sroa.010.0.in74, 1, !dbg !21901 ; 2 uses
     #dbg_value(i32 %.sroa.010.0, !21712, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !21840)
     #dbg_value(ptr undef, !21735, !DIExpression(), !21742)
     #dbg_value(ptr undef, !21737, !DIExpression(), !21741)
@@ -327,14 +326,14 @@ bb.f:                                             ; preds = %bb.c
     #dbg_value(ptr poison, !21855, !DIExpression(DW_OP_deref, DW_OP_deref), !21660)
     #dbg_value(ptr poison, !21861, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 8, DW_OP_deref), !21660)
     #dbg_value(ptr poison, !21862, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 16, DW_OP_deref), !21660)
-    #dbg_value(i32 %.sroa.010.075, !21859, !DIExpression(), !21660)
+    #dbg_value(i32 %.sroa.010.0.in74, !21859, !DIExpression(), !21660)
     #dbg_value(double %i.av, !21860, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !21660)
     #dbg_value(double %i.ax, !21860, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !21660)
   %i.ay = load ptr, ptr %i.aa, align 8, !dbg !21920, !noalias !21864, !nonnull !3744, !align !4908, !noundef !3744
   %i.az = load ptr, ptr %i.ac, align 8, !dbg !21921, !noalias !21864, !nonnull !3744, !align !4908, !noundef !3744
   %i.ba = load i32, ptr %i.ae, align 4, !dbg !21922, !noalias !21864, !noundef !3744
   %i.bb = load i32, ptr %i.af, align 4, !dbg !21922, !noalias !21864, !noundef !3744
-  call fastcc void @_RINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer6circle15draw_sweep_lineNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtNtCs4bweDUTR8gt_8plotters5style5shape10ShapeStyleECsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(64) %i.b, ptr noalias nofree noundef align 8 dereferenceable(64) %i.ay, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.az, i32 noundef %i.ba, i32 noundef %i.bb, i32 noundef 1, i32 noundef 0, i32 noundef %.sroa.010.075, double noundef %i.av, double noundef %i.ax), !dbg !21923, !noalias !21865
+  call fastcc void @_RINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer6circle15draw_sweep_lineNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtNtCs4bweDUTR8gt_8plotters5style5shape10ShapeStyleECsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(64) %i.b, ptr noalias nofree noundef align 8 dereferenceable(64) %i.ay, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.az, i32 noundef %i.ba, i32 noundef %i.bb, i32 noundef 1, i32 noundef 0, i32 noundef %.sroa.010.0.in74, double noundef %i.av, double noundef %i.ax), !dbg !21923, !noalias !21865
     #dbg_value(ptr %i.b, !21866, !DIExpression(), !21870)
     #dbg_value(ptr %i.b, !21871, !DIExpression(), !21875)
   %i.bc = load i8, ptr %i.b, align 8, !dbg !21924, !range !10475, !noundef !3744
@@ -343,7 +342,7 @@ bb.f:                                             ; preds = %bb.c
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !21753
-  %4 = xor i32 %.sroa.010.0.in74, -1, !dbg !21926
+  %4 = sub i32 0, %.sroa.010.0.in74, !dbg !21926
     #dbg_value(ptr poison, !21855, !DIExpression(DW_OP_deref, DW_OP_deref), !21667)
     #dbg_value(ptr poison, !21861, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 8, DW_OP_deref), !21667)
     #dbg_value(ptr poison, !21862, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 16, DW_OP_deref), !21667)
@@ -512,7 +511,7 @@ bb.a:
   %i.h = tail call i32 @llvm.fptosi.sat.i32.f64(double %i.g), !dbg !22231 ; 2 uses
     #dbg_value(i32 %i.h, !22037, !DIExpression(), !22145)
   %i.i = tail call double @llvm.floor.f64(double %i.e), !dbg !22233
-  %i.j = tail call i32 @llvm.fptosi.sat.i32.f64(double %i.i), !dbg !22234 ; 4 uses
+  %i.j = tail call i32 @llvm.fptosi.sat.i32.f64(double %i.i), !dbg !22234 ; 3 uses
     #dbg_value(i32 %i.j, !22038, !DIExpression(), !22145)
     #dbg_value(i32 %i.h, !22039, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !22146)
     #dbg_value(i32 %i.j, !22039, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !22146)
@@ -592,14 +591,13 @@ bb.b:                                             ; preds = %.lr.ph, %.backedge
   br label %bb.d, !dbg !22246
 
 bb.c:                                             ; preds = %.lr.ph76, %bb.e
-  %.sroa.010.075 = phi i32 [ %.sroa.010.073, %.lr.ph76 ], [ %.sroa.010.0, %bb.e ] ; 4 uses
-  %.sroa.010.0.in74 = phi i32 [ %i.j, %.lr.ph76 ], [ %.sroa.010.075, %bb.e ]
-    #dbg_value(i32 %.sroa.010.075, !22101, !DIExpression(), !22121)
-    #dbg_value(i32 %.sroa.010.075, !22106, !DIExpression(), !22124)
-    #dbg_value(i32 %.sroa.010.075, !22115, !DIExpression(), !22127)
-    #dbg_value(i32 %.sroa.010.075, !22047, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 32), !22175)
-    #dbg_value(i32 %.sroa.010.075, !22048, !DIExpression(), !22176)
-  %i.ar = sitofp i32 %.sroa.010.075 to double, !dbg !22247 ; 4 uses
+  %.sroa.010.0.in74 = phi i32 [ %.sroa.010.073, %.lr.ph76 ], [ %.sroa.010.0, %bb.e ] ; 4 uses
+    #dbg_value(i32 %.sroa.010.0.in74, !22101, !DIExpression(), !22121)
+    #dbg_value(i32 %.sroa.010.0.in74, !22106, !DIExpression(), !22124)
+    #dbg_value(i32 %.sroa.010.0.in74, !22115, !DIExpression(), !22127)
+    #dbg_value(i32 %.sroa.010.0.in74, !22047, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 32), !22175)
+    #dbg_value(i32 %.sroa.010.0.in74, !22048, !DIExpression(), !22176)
+  %i.ar = sitofp i32 %.sroa.010.0.in74 to double, !dbg !22247 ; 4 uses
     #dbg_value(double %i.ar, !22052, !DIExpression(), !22177)
   %i.as = fmul nnan double %i.ar, %i.ar, !dbg !22247
   %i.at = fsub double %i.y, %i.as, !dbg !22248
@@ -619,7 +617,7 @@ bb.d:                                             ; preds = %_RINvNtCskKLDkoKarT
   ret void, !dbg !22252
 
 bb.e:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultuINtCshnIEpH9fIfn_16plotters_backend16DrawingErrorKindNtNtCs29sfksKwgjx_15plotters_bitmap5error18BitMapBackendErrorEEECsaTqK2fWTXJW_11qlog_dancer.exit70, %bb.c
-  %.sroa.010.0 = add nsw i32 %.sroa.010.075, 1, !dbg !22236 ; 2 uses
+  %.sroa.010.0 = add nsw i32 %.sroa.010.0.in74, 1, !dbg !22236 ; 2 uses
     #dbg_value(i32 %.sroa.010.0, !22047, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !22175)
     #dbg_value(ptr undef, !22070, !DIExpression(), !22077)
     #dbg_value(ptr undef, !22072, !DIExpression(), !22076)
@@ -634,14 +632,14 @@ bb.f:                                             ; preds = %bb.c
     #dbg_value(ptr poison, !22190, !DIExpression(DW_OP_deref, DW_OP_deref), !21995)
     #dbg_value(ptr poison, !22196, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 8, DW_OP_deref), !21995)
     #dbg_value(ptr poison, !22197, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 16, DW_OP_deref), !21995)
-    #dbg_value(i32 %.sroa.010.075, !22194, !DIExpression(), !21995)
+    #dbg_value(i32 %.sroa.010.0.in74, !22194, !DIExpression(), !21995)
     #dbg_value(double %i.av, !22195, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !21995)
     #dbg_value(double %i.ax, !22195, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !21995)
   %i.ay = load ptr, ptr %i.aa, align 8, !dbg !22255, !noalias !22199, !nonnull !3744, !align !4908, !noundef !3744
   %i.az = load ptr, ptr %i.ac, align 8, !dbg !22256, !noalias !22199, !nonnull !3744, !align !4908, !noundef !3744
   %i.ba = load i32, ptr %i.ae, align 4, !dbg !22257, !noalias !22199, !noundef !3744
   %i.bb = load i32, ptr %i.af, align 4, !dbg !22257, !noalias !22199, !noundef !3744
-  call fastcc void @_RINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer6circle15draw_sweep_lineNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtNtCs4bweDUTR8gt_8plotters5style5shape10ShapeStyleECsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(64) %i.b, ptr noalias nofree noundef align 8 dereferenceable(64) %i.ay, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.az, i32 noundef %i.ba, i32 noundef %i.bb, i32 noundef -1, i32 noundef 0, i32 noundef %.sroa.010.075, double noundef %i.av, double noundef %i.ax), !dbg !22258, !noalias !22200
+  call fastcc void @_RINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer6circle15draw_sweep_lineNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtNtCs4bweDUTR8gt_8plotters5style5shape10ShapeStyleECsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(64) %i.b, ptr noalias nofree noundef align 8 dereferenceable(64) %i.ay, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.az, i32 noundef %i.ba, i32 noundef %i.bb, i32 noundef -1, i32 noundef 0, i32 noundef %.sroa.010.0.in74, double noundef %i.av, double noundef %i.ax), !dbg !22258, !noalias !22200
     #dbg_value(ptr %i.b, !22201, !DIExpression(), !22205)
     #dbg_value(ptr %i.b, !22206, !DIExpression(), !22210)
   %i.bc = load i8, ptr %i.b, align 8, !dbg !22259, !range !10475, !noundef !3744
@@ -650,7 +648,7 @@ bb.f:                                             ; preds = %bb.c
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !22088
-  %4 = xor i32 %.sroa.010.0.in74, -1, !dbg !22261
+  %4 = sub i32 0, %.sroa.010.0.in74, !dbg !22261
     #dbg_value(ptr poison, !22190, !DIExpression(DW_OP_deref, DW_OP_deref), !22002)
     #dbg_value(ptr poison, !22196, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 8, DW_OP_deref), !22002)
     #dbg_value(ptr poison, !22197, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 16, DW_OP_deref), !22002)
@@ -1053,7 +1051,7 @@ bb.r:                                             ; preds = %_RINvNtNtCshnIEpH9f
   %i.ga = call i32 @llvm.fptosi.sat.i32.f64(double %i.fz), !dbg !38342 ; 3 uses
     #dbg_value(i32 %i.ga, !37486, !DIExpression(), !36419)
   %i.gb = call double @llvm.floor.f64(double %i.fx), !dbg !38344
-  %i.gc = call i32 @llvm.fptosi.sat.i32.f64(double %i.gb), !dbg !38345 ; 7 uses
+  %i.gc = call i32 @llvm.fptosi.sat.i32.f64(double %i.gb), !dbg !38345 ; 5 uses
     #dbg_value(i32 %i.gc, !37487, !DIExpression(), !36419)
     #dbg_value(i32 %i.ga, !37488, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !36420)
     #dbg_value(i32 %i.gc, !37488, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !36420)
@@ -1123,14 +1121,13 @@ _RINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer6circle11draw_part_cNtNtCs2
   br label %bb.bd, !dbg !38358
 
 bb.t:                                             ; preds = %bb.u, %.lr.ph76.i.i.i
-  %.sroa.010.075.i.i.i = phi i32 [ %.sroa.010.073.i.i.i, %.lr.ph76.i.i.i ], [ %.sroa.010.0.i.i.i, %bb.u ] ; 4 uses
-  %.sroa.010.0.in74.i.i.i = phi i32 [ %i.gc, %.lr.ph76.i.i.i ], [ %.sroa.010.075.i.i.i, %bb.u ]
-    #dbg_value(i32 %.sroa.010.075.i.i.i, !37808, !DIExpression(), !36401)
-    #dbg_value(i32 %.sroa.010.075.i.i.i, !37811, !DIExpression(), !36403)
-    #dbg_value(i32 %.sroa.010.075.i.i.i, !37818, !DIExpression(), !36405)
-    #dbg_value(i32 %.sroa.010.075.i.i.i, !37496, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 32), !36450)
-    #dbg_value(i32 %.sroa.010.075.i.i.i, !37497, !DIExpression(), !36451)
-  %i.gy = sitofp i32 %.sroa.010.075.i.i.i to double, !dbg !38359 ; 4 uses
+  %.sroa.010.0.in74.i.i.i = phi i32 [ %.sroa.010.073.i.i.i, %.lr.ph76.i.i.i ], [ %.sroa.010.0.i.i.i, %bb.u ] ; 4 uses
+    #dbg_value(i32 %.sroa.010.0.in74.i.i.i, !37808, !DIExpression(), !36401)
+    #dbg_value(i32 %.sroa.010.0.in74.i.i.i, !37811, !DIExpression(), !36403)
+    #dbg_value(i32 %.sroa.010.0.in74.i.i.i, !37818, !DIExpression(), !36405)
+    #dbg_value(i32 %.sroa.010.0.in74.i.i.i, !37496, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 32), !36450)
+    #dbg_value(i32 %.sroa.010.0.in74.i.i.i, !37497, !DIExpression(), !36451)
+  %i.gy = sitofp i32 %.sroa.010.0.in74.i.i.i to double, !dbg !38359 ; 4 uses
     #dbg_value(double %i.gy, !37501, !DIExpression(), !36452)
   %i.gz = fmul nnan double %i.gy, %i.gy, !dbg !38359
   %i.ha = fsub double %i.gl, %i.gz, !dbg !38360
@@ -1147,7 +1144,7 @@ bb.t:                                             ; preds = %bb.u, %.lr.ph76.i.i
   br i1 %i.hd, label %bb.v, label %bb.u, !dbg !38363
 
 bb.u:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultuINtCshnIEpH9fIfn_16plotters_backend16DrawingErrorKindNtNtCs29sfksKwgjx_15plotters_bitmap5error18BitMapBackendErrorEEECsaTqK2fWTXJW_11qlog_dancer.exit70.i.i.i, %bb.t
-  %.sroa.010.0.i.i.i = add nsw i32 %.sroa.010.075.i.i.i, 1, !dbg !38348 ; 2 uses
+  %.sroa.010.0.i.i.i = add nsw i32 %.sroa.010.0.in74.i.i.i, 1, !dbg !38348 ; 2 uses
     #dbg_value(i32 %.sroa.010.0.i.i.i, !37496, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !36450)
     #dbg_value(ptr undef, !37473, !DIExpression(), !35950)
     #dbg_value(ptr undef, !37468, !DIExpression(), !35949)
@@ -1162,14 +1159,14 @@ bb.v:                                             ; preds = %bb.t
     #dbg_value(ptr poison, !37843, !DIExpression(DW_OP_deref, DW_OP_deref), !36465)
     #dbg_value(ptr poison, !37849, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 8, DW_OP_deref), !36465)
     #dbg_value(ptr poison, !37850, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 16, DW_OP_deref), !36465)
-    #dbg_value(i32 %.sroa.010.075.i.i.i, !37847, !DIExpression(), !36465)
+    #dbg_value(i32 %.sroa.010.0.in74.i.i.i, !37847, !DIExpression(), !36465)
     #dbg_value(double %i.hc, !37848, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !36465)
     #dbg_value(double %i.he, !37848, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !36465)
   %i.hf = load ptr, ptr %i.au, align 8, !dbg !38366, !noalias !37852, !nonnull !3744, !align !4908, !noundef !3744
   %i.hg = load ptr, ptr %i.as, align 8, !dbg !38367, !noalias !37852, !nonnull !3744, !align !4908, !noundef !3744
   %i.hh = load i32, ptr %i.at, align 4, !dbg !38368, !noalias !37852, !noundef !3744
   %i.hi = load i32, ptr %i.cz, align 4, !dbg !38368, !noalias !37852, !noundef !3744
-  invoke fastcc void @_RINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer6circle15draw_sweep_lineNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtNtCs4bweDUTR8gt_8plotters5style5shape10ShapeStyleECsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(64) %i.m, ptr noalias nofree noundef align 8 dereferenceable(64) %i.hf, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.hg, i32 noundef %i.hh, i32 noundef %i.hi, i32 noundef 0, i32 noundef 1, i32 noundef %.sroa.010.075.i.i.i, double noundef %i.hc, double noundef %i.he)
+  invoke fastcc void @_RINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer6circle15draw_sweep_lineNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtNtCs4bweDUTR8gt_8plotters5style5shape10ShapeStyleECsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(64) %i.m, ptr noalias nofree noundef align 8 dereferenceable(64) %i.hf, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.hg, i32 noundef %i.hh, i32 noundef %i.hi, i32 noundef 0, i32 noundef 1, i32 noundef %.sroa.010.0.in74.i.i.i, double noundef %i.hc, double noundef %i.he)
           to label %.noexc97.i.i unwind label %.loopexit275.i.i, !dbg !38369, !noalias !37691
 
 .noexc97.i.i:                                     ; preds = %bb.v
@@ -1181,7 +1178,7 @@ bb.v:                                             ; preds = %bb.t
 
 bb.w:                                             ; preds = %.noexc97.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !dbg !38372, !noalias !37841
-  %7 = xor i32 %.sroa.010.0.in74.i.i.i, -1, !dbg !38373
+  %7 = sub i32 0, %.sroa.010.0.in74.i.i.i, !dbg !38373
     #dbg_value(ptr poison, !37843, !DIExpression(DW_OP_deref, DW_OP_deref), !36476)
     #dbg_value(ptr poison, !37849, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 8, DW_OP_deref), !36476)
     #dbg_value(ptr poison, !37850, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 16, DW_OP_deref), !36476)
@@ -1584,14 +1581,13 @@ _RINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer6circle11draw_part_cNtNtCs2
   br label %bb.bw, !dbg !38513
 
 bb.bf:                                            ; preds = %bb.bg, %.lr.ph76.i118.i.i
-  %.sroa.010.075.i119.i.i = phi i32 [ %.sroa.010.073.i116.i.i, %.lr.ph76.i118.i.i ], [ %.sroa.010.0.i121.i.i, %bb.bg ] ; 4 uses
-  %.sroa.010.0.in74.i120.i.i = phi i32 [ %i.gc, %.lr.ph76.i118.i.i ], [ %.sroa.010.075.i119.i.i, %bb.bg ]
-    #dbg_value(i32 %.sroa.010.075.i119.i.i, !37962, !DIExpression(), !36683)
-    #dbg_value(i32 %.sroa.010.075.i119.i.i, !37965, !DIExpression(), !36685)
-    #dbg_value(i32 %.sroa.010.075.i119.i.i, !37972, !DIExpression(), !36687)
-    #dbg_value(i32 %.sroa.010.075.i119.i.i, !37356, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 32), !36726)
-    #dbg_value(i32 %.sroa.010.075.i119.i.i, !37357, !DIExpression(), !36727)
-  %i.mk = sitofp i32 %.sroa.010.075.i119.i.i to double, !dbg !38514 ; 4 uses
+  %.sroa.010.0.in74.i120.i.i = phi i32 [ %.sroa.010.073.i116.i.i, %.lr.ph76.i118.i.i ], [ %.sroa.010.0.i121.i.i, %bb.bg ] ; 4 uses
+    #dbg_value(i32 %.sroa.010.0.in74.i120.i.i, !37962, !DIExpression(), !36683)
+    #dbg_value(i32 %.sroa.010.0.in74.i120.i.i, !37965, !DIExpression(), !36685)
+    #dbg_value(i32 %.sroa.010.0.in74.i120.i.i, !37972, !DIExpression(), !36687)
+    #dbg_value(i32 %.sroa.010.0.in74.i120.i.i, !37356, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 32), !36726)
+    #dbg_value(i32 %.sroa.010.0.in74.i120.i.i, !37357, !DIExpression(), !36727)
+  %i.mk = sitofp i32 %.sroa.010.0.in74.i120.i.i to double, !dbg !38514 ; 4 uses
     #dbg_value(double %i.mk, !37361, !DIExpression(), !36728)
   %i.ml = fmul nnan double %i.mk, %i.mk, !dbg !38514
   %i.mm = fsub double %i.lx, %i.ml, !dbg !38515
@@ -1608,7 +1604,7 @@ bb.bf:                                            ; preds = %bb.bg, %.lr.ph76.i1
   br i1 %i.mp, label %bb.bh, label %bb.bg, !dbg !38518
 
 bb.bg:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultuINtCshnIEpH9fIfn_16plotters_backend16DrawingErrorKindNtNtCs29sfksKwgjx_15plotters_bitmap5error18BitMapBackendErrorEEECsaTqK2fWTXJW_11qlog_dancer.exit70.i127.i.i, %bb.bf
-  %.sroa.010.0.i121.i.i = add nsw i32 %.sroa.010.075.i119.i.i, 1, !dbg !38503 ; 2 uses
+  %.sroa.010.0.i121.i.i = add nsw i32 %.sroa.010.0.in74.i120.i.i, 1, !dbg !38503 ; 2 uses
     #dbg_value(i32 %.sroa.010.0.i121.i.i, !37356, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !36726)
     #dbg_value(ptr undef, !37333, !DIExpression(), !35919)
     #dbg_value(ptr undef, !37328, !DIExpression(), !35918)
@@ -1623,14 +1619,14 @@ bb.bh:                                            ; preds = %bb.bf
     #dbg_value(ptr poison, !37993, !DIExpression(DW_OP_deref, DW_OP_deref), !36741)
     #dbg_value(ptr poison, !37999, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 8, DW_OP_deref), !36741)
     #dbg_value(ptr poison, !38000, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 16, DW_OP_deref), !36741)
-    #dbg_value(i32 %.sroa.010.075.i119.i.i, !37997, !DIExpression(), !36741)
+    #dbg_value(i32 %.sroa.010.0.in74.i120.i.i, !37997, !DIExpression(), !36741)
     #dbg_value(double %i.mo, !37998, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !36741)
     #dbg_value(double %i.mq, !37998, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !36741)
   %i.mr = load ptr, ptr %i.au, align 8, !dbg !38521, !noalias !38002, !nonnull !3744, !align !4908, !noundef !3744
   %i.ms = load ptr, ptr %i.as, align 8, !dbg !38522, !noalias !38002, !nonnull !3744, !align !4908, !noundef !3744
   %i.mt = load i32, ptr %i.at, align 4, !dbg !38523, !noalias !38002, !noundef !3744
   %i.mu = load i32, ptr %i.cz, align 4, !dbg !38523, !noalias !38002, !noundef !3744
-  invoke fastcc void @_RINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer6circle15draw_sweep_lineNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtNtCs4bweDUTR8gt_8plotters5style5shape10ShapeStyleECsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(64) %i.b, ptr noalias nofree noundef align 8 dereferenceable(64) %i.mr, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ms, i32 noundef %i.mt, i32 noundef %i.mu, i32 noundef 0, i32 noundef -1, i32 noundef %.sroa.010.075.i119.i.i, double noundef %i.mo, double noundef %i.mq)
+  invoke fastcc void @_RINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer6circle15draw_sweep_lineNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtNtCs4bweDUTR8gt_8plotters5style5shape10ShapeStyleECsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(64) %i.b, ptr noalias nofree noundef align 8 dereferenceable(64) %i.mr, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ms, i32 noundef %i.mt, i32 noundef %i.mu, i32 noundef 0, i32 noundef -1, i32 noundef %.sroa.010.0.in74.i120.i.i, double noundef %i.mo, double noundef %i.mq)
           to label %.noexc135.i.i unwind label %.loopexit.i.i, !dbg !38524, !noalias !37691
 
 .noexc135.i.i:                                    ; preds = %bb.bh
@@ -1642,7 +1638,7 @@ bb.bh:                                            ; preds = %bb.bf
 
 bb.bi:                                            ; preds = %.noexc135.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !38527, !noalias !37991
-  %8 = xor i32 %.sroa.010.0.in74.i120.i.i, -1, !dbg !38528
+  %8 = sub i32 0, %.sroa.010.0.in74.i120.i.i, !dbg !38528
     #dbg_value(ptr poison, !37993, !DIExpression(DW_OP_deref, DW_OP_deref), !36752)
     #dbg_value(ptr poison, !37999, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 8, DW_OP_deref), !36752)
     #dbg_value(ptr poison, !38000, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 16, DW_OP_deref), !36752)

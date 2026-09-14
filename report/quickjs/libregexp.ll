@@ -205,7 +205,7 @@ exchange_func.exit.i.i:                           ; preds = %.lr.ph43.i._crit_ed
   %.0.i.i.i = phi ptr [ %switch.load, %switch.lookup ], [ @exchange_bytes, %.lr.ph43.i._crit_edge ] ; 3 uses
   %i.an = shl i64 %.019139.i.lcssa, 2
   %i.ao = and i64 %i.an, -8                       ; 2 uses
-  %i.ap = shl i64 %.019139.i.lcssa, 3             ; 4 uses
+  %i.ap = shl i64 %.019139.i.lcssa, 3             ; 3 uses
   %.not5.i.i = icmp eq i64 %i.ao, 0
   %.pre.i.i = add i64 %i.ap, -8                   ; 3 uses
   br i1 %.not5.i.i, label %.preheader.i.i, label %.lr.ph7.i.i
@@ -268,21 +268,17 @@ bb.p:                                             ; preds = %bb.o
   br i1 %.not.i.i, label %.preheader.i.i, label %.lr.ph7.i.i, !llvm.loop !114
 
 .lr.ph17.i.i:                                     ; preds = %.preheader.i.i, %._crit_edge11.i.i
-  %.18016.i.i = phi i64 [ %.180.i.i, %._crit_edge11.i.i ], [ %.pre.i.i, %.preheader.i.i ] ; 5 uses
-  %.180.in15.i.i = phi i64 [ %.18016.i.i, %._crit_edge11.i.i ], [ %i.ap, %.preheader.i.i ]
-  %i.bs = getelementptr inbounds nuw i8, ptr %.018641.i.lcssa, i64 %.18016.i.i
+  %.180.in15.i.i = phi i64 [ %3, %._crit_edge11.i.i ], [ %.pre.i.i, %.preheader.i.i ] ; 4 uses
+  %i.bs = getelementptr inbounds nuw i8, ptr %.018641.i.lcssa, i64 %.180.in15.i.i
   call void %.0.i.i.i(ptr noundef %.018641.i.lcssa, ptr noundef nonnull %i.bs, i64 noundef 8) #20, !inline_history !112
-  %i.bt = icmp ugt i64 %.18016.i.i, 8
-  br i1 %i.bt, label %.lr.ph10.i.i, label %._crit_edge11.i.i
+  %i.bt = icmp ugt i64 %.180.in15.i.i, 8
+  %3 = add i64 %.180.in15.i.i, -8                 ; 3 uses
+  br i1 %i.bt, label %bb.q, label %._crit_edge11.i.i
 
-.lr.ph10.i.i:                                     ; preds = %.lr.ph17.i.i
-  %3 = add i64 %.180.in15.i.i, -16
-  br label %bb.q
-
-bb.q:                                             ; preds = %bb.t, %.lr.ph10.i.i
-  %i.bu = phi i64 [ 8, %.lr.ph10.i.i ], [ %i.cq, %bb.t ] ; 4 uses
-  %i.bv = phi i64 [ 0, %.lr.ph10.i.i ], [ %i.cp, %bb.t ]
-  %.18.i.i = phi i64 [ 0, %.lr.ph10.i.i ], [ %.178.i.i, %bb.t ]
+bb.q:                                             ; preds = %.lr.ph17.i.i, %bb.t
+  %i.bu = phi i64 [ %i.cq, %bb.t ], [ 8, %.lr.ph17.i.i ] ; 4 uses
+  %i.bv = phi i64 [ %i.cp, %bb.t ], [ 0, %.lr.ph17.i.i ]
+  %.18.i.i = phi i64 [ %.178.i.i, %bb.t ], [ 0, %.lr.ph17.i.i ]
   %i.bw = icmp ult i64 %i.bu, %3
   br i1 %i.bw, label %bb.r, label %bb.s
 
@@ -317,12 +313,11 @@ bb.t:                                             ; preds = %bb.s
   call void %.0.i.i.i(ptr noundef nonnull %i.cg, ptr noundef nonnull %i.ch, i64 noundef 8) #20, !inline_history !112
   %i.cp = shl i64 %.178.i.i, 1                    ; 2 uses
   %i.cq = add i64 %i.cp, 8                        ; 2 uses
-  %i.cr = icmp ult i64 %i.cq, %.18016.i.i
+  %i.cr = icmp ult i64 %i.cq, %.180.in15.i.i
   br i1 %i.cr, label %bb.q, label %._crit_edge11.i.i, !llvm.loop !115
 
 ._crit_edge11.i.i:                                ; preds = %bb.t, %bb.s, %.lr.ph17.i.i
-  %.180.i.i = add i64 %.18016.i.i, -8             ; 2 uses
-  %.not85.i.i = icmp eq i64 %.180.i.i, 0
+  %.not85.i.i = icmp eq i64 %3, 0
   br i1 %.not85.i.i, label %.loopexit.i, label %.lr.ph17.i.i, !llvm.loop !116
 
 .lr.ph288:                                        ; preds = %.lr.ph43.preheader.i, %.lr.ph43.i

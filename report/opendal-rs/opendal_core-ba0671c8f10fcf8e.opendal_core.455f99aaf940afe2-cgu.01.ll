@@ -205,7 +205,7 @@ _RNCINvXsk_NtCs4CtJ3uPHEZZ_4jiff5errorINtNtCsgxBkk5gSRhY_4core6result6ResultaNtB
 
 .lr.ph530.i:                                      ; preds = %.preheader420.i, %_RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRhE6map_orbNCNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtBY_14DateTimeParser15skip_whitespace0ECs5XgW7KoffLW_12opendal_core.exit96.i
   %.sroa.0.0.i68.i529.i = phi ptr [ %i.hc, %_RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRhE6map_orbNCNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtBY_14DateTimeParser15skip_whitespace0ECs5XgW7KoffLW_12opendal_core.exit96.i ], [ %i.gk, %.preheader420.i ] ; 3 uses
-  %.sroa.6.0.i67.i528.i = phi i64 [ %i.hb, %_RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRhE6map_orbNCNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtBY_14DateTimeParser15skip_whitespace0ECs5XgW7KoffLW_12opendal_core.exit96.i ], [ %i.gl, %.preheader420.i ] ; 3 uses
+  %.sroa.6.0.i67.i528.i = phi i64 [ %i.hb, %_RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRhE6map_orbNCNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtBY_14DateTimeParser15skip_whitespace0ECs5XgW7KoffLW_12opendal_core.exit96.i ], [ %i.gl, %.preheader420.i ] ; 2 uses
   %.val.i94.i = load i8, ptr %.sroa.0.0.i68.i529.i, align 1, !alias.scope !672, !noalias !673, !noundef !4 ; 2 uses
   switch i8 %.val.i94.i, label %bb.ci [
     i8 9, label %_RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRhE6map_orbNCNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtBY_14DateTimeParser15skip_whitespace0ECs5XgW7KoffLW_12opendal_core.exit96.i
@@ -239,9 +239,8 @@ bb.ci:                                            ; preds = %.lr.ph530.i
   br label %_RNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtB2_14DateTimeParser20parse_zoned_internal.exit.thread.i
 
 .lr.ph539.i:                                      ; preds = %.preheader419.i, %_RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRhE6map_orbNCNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtBY_14DateTimeParser15skip_whitespace0ECs5XgW7KoffLW_12opendal_core.exit100.i
-  %.sroa.6.0.i61.i538.i = phi i64 [ %.sroa.6.0.i61.i.i, %_RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRhE6map_orbNCNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtBY_14DateTimeParser15skip_whitespace0ECs5XgW7KoffLW_12opendal_core.exit100.i ], [ %.sroa.6.0.i61.i533.i, %.preheader419.i ] ; 3 uses
+  %.sroa.6.0.i61.i538.i = phi i64 [ %.sroa.6.0.i61.i.i, %_RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRhE6map_orbNCNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtBY_14DateTimeParser15skip_whitespace0ECs5XgW7KoffLW_12opendal_core.exit100.i ], [ %.sroa.6.0.i61.i533.i, %.preheader419.i ] ; 4 uses
   %.sroa.0.0.i68.i.pn536.i = phi ptr [ %.sroa.0.0.i62.i.ptr537.i, %_RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRhE6map_orbNCNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtBY_14DateTimeParser15skip_whitespace0ECs5XgW7KoffLW_12opendal_core.exit100.i ], [ %.sroa.0.0.i68.i529.i, %.preheader419.i ] ; 4 uses
-  %.sroa.6.0.i61.i.in535.i = phi i64 [ %.sroa.6.0.i61.i538.i, %_RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRhE6map_orbNCNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtBY_14DateTimeParser15skip_whitespace0ECs5XgW7KoffLW_12opendal_core.exit100.i ], [ %.sroa.6.0.i67.i528.i, %.preheader419.i ] ; 2 uses
   %.sroa.0.0.i62.i.ptr537.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i68.i.pn536.i, i64 1 ; 2 uses
   %.val.i98.i = load i8, ptr %.sroa.0.0.i62.i.ptr537.i, align 1, !alias.scope !675, !noalias !676, !noundef !4 ; 3 uses
   switch i8 %.val.i98.i, label %_RNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtB2_14DateTimeParser15skip_whitespace.exit65.i.i [
@@ -263,7 +262,7 @@ _RNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtB2_14DateTimeParser15skip_whitespace.e
 
 bb.cj:                                            ; preds = %_RNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtB2_14DateTimeParser15skip_whitespace.exit65.i.i
   %i.hg = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i68.i.pn536.i, i64 3 ; 2 uses
-  %i.hh = add nsw i64 %.sroa.6.0.i61.i.in535.i, -3 ; 2 uses
+  %i.hh = add nsw i64 %.sroa.6.0.i61.i538.i, -2   ; 2 uses
   %i.hi = add i8 %.val.i98.i, -48                 ; 2 uses
   %or.cond.i46.i = icmp ult i8 %i.hi, 10
   br i1 %or.cond.i46.i, label %bb.ck, label %bb.cl
@@ -304,7 +303,7 @@ bb.cl:                                            ; preds = %bb.ck, %bb.cj
   ]
 
 _RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRhE6map_orbNCNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtBY_14DateTimeParser15skip_whitespace0ECs5XgW7KoffLW_12opendal_core.exit111.peel.i: ; preds = %.lr.ph546.preheader.i, %.lr.ph546.preheader.i, %.lr.ph546.preheader.i, %.lr.ph546.preheader.i, %.lr.ph546.preheader.i
-  %i.hn = add nsw i64 %.sroa.6.0.i61.i.in535.i, -4 ; 2 uses
+  %i.hn = add nsw i64 %.sroa.6.0.i61.i538.i, -3   ; 2 uses
   %.not.i57.i.peel.i = icmp eq i64 %i.hn, 0
   br i1 %.not.i57.i.peel.i, label %_RNvMNtCsgxBkk5gSRhY_4core5sliceSh11starts_withCs5XgW7KoffLW_12opendal_core.exit.thread.thread.i, label %.lr.ph546.peel.next.i
 
@@ -375,7 +374,7 @@ _RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRhE6map_orbNCNvMNtNtCs4CtJ3uPHEZZ
   br i1 %.not.i57.i.i, label %_RNvMNtCsgxBkk5gSRhY_4core5sliceSh11starts_withCs5XgW7KoffLW_12opendal_core.exit.thread.thread.i, label %.lr.ph546.i, !llvm.loop !507
 
 .preheader417.i:                                  ; preds = %.lr.ph546.i, %.lr.ph546.preheader.i
-  %.sroa.6.0.i55.i544.lcssa.i20 = phi i64 [ %i.hh, %.lr.ph546.preheader.i ], [ %.sroa.6.0.i55.i544.i, %.lr.ph546.i ] ; 3 uses
+  %.sroa.6.0.i55.i544.lcssa.i20 = phi i64 [ %i.hh, %.lr.ph546.preheader.i ], [ %.sroa.6.0.i55.i544.i, %.lr.ph546.i ] ; 2 uses
   %.sroa.0.0.i56.i545.lcssa.i18 = phi ptr [ %i.hg, %.lr.ph546.preheader.i ], [ %.sroa.0.0.i56.i545.i, %.lr.ph546.i ] ; 2 uses
   %.sroa.6.0.i49.i551.i = add nsw i64 %.sroa.6.0.i55.i544.lcssa.i20, -1 ; 2 uses
   %.not.i51.i552.i = icmp eq i64 %.sroa.6.0.i49.i551.i, 0
@@ -396,9 +395,8 @@ _RNvMNtCsgxBkk5gSRhY_4core5sliceSh11starts_withCs5XgW7KoffLW_12opendal_core.exit
   br i1 %i.id, label %bb.cy, label %bb.cz, !prof !8
 
 .lr.ph557.i:                                      ; preds = %.preheader417.i, %_RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRhE6map_orbNCNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtBY_14DateTimeParser15skip_whitespace0ECs5XgW7KoffLW_12opendal_core.exit117.i
-  %.sroa.6.0.i49.i556.i = phi i64 [ %.sroa.6.0.i49.i.i, %_RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRhE6map_orbNCNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtBY_14DateTimeParser15skip_whitespace0ECs5XgW7KoffLW_12opendal_core.exit117.i ], [ %.sroa.6.0.i49.i551.i, %.preheader417.i ] ; 3 uses
+  %.sroa.6.0.i49.i556.i = phi i64 [ %.sroa.6.0.i49.i.i, %_RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRhE6map_orbNCNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtBY_14DateTimeParser15skip_whitespace0ECs5XgW7KoffLW_12opendal_core.exit117.i ], [ %.sroa.6.0.i49.i551.i, %.preheader417.i ] ; 4 uses
   %.sroa.0.0.i56.i.pn554.i = phi ptr [ %.sroa.0.0.i50.i.ptr555.i, %_RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRhE6map_orbNCNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtBY_14DateTimeParser15skip_whitespace0ECs5XgW7KoffLW_12opendal_core.exit117.i ], [ %.sroa.0.0.i56.i545.lcssa.i18, %.preheader417.i ] ; 4 uses
-  %.sroa.6.0.i49.i.in553.i = phi i64 [ %.sroa.6.0.i49.i556.i, %_RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRhE6map_orbNCNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtBY_14DateTimeParser15skip_whitespace0ECs5XgW7KoffLW_12opendal_core.exit117.i ], [ %.sroa.6.0.i55.i544.lcssa.i20, %.preheader417.i ] ; 2 uses
   %.sroa.0.0.i50.i.ptr555.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i56.i.pn554.i, i64 1 ; 2 uses
   %.val.i115.i = load i8, ptr %.sroa.0.0.i50.i.ptr555.i, align 1, !alias.scope !688, !noalias !689, !noundef !4 ; 3 uses
   switch i8 %.val.i115.i, label %_RNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtB2_14DateTimeParser15skip_whitespace.exit53.i.i [
@@ -459,7 +457,7 @@ bb.cw:                                            ; preds = %bb.cv, %bb.cu
 bb.cx:                                            ; preds = %_RNvNtNtCs4CtJ3uPHEZZ_4jiff4util5parse3i64.exit35.i
   %i.io = icmp eq i8 %narrow776.i, 60
   %spec.store.select.i.i.i.i = select i1 %i.io, i8 59, i8 %narrow776.i ; 3 uses
-  %.not.i45.i560.i = icmp eq i64 %.sroa.6.0.i49.i.in553.i, 3
+  %.not.i45.i560.i = icmp eq i64 %.sroa.6.0.i49.i556.i, 2
   br i1 %.not.i45.i560.i, label %_RNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtB2_14DateTimeParser15skip_whitespace.exit47.i.i, label %.lr.ph565.preheader.i
 
 .lr.ph565.preheader.i:                            ; preds = %bb.cx
@@ -474,7 +472,7 @@ bb.cx:                                            ; preds = %_RNvNtNtCs4CtJ3uPHE
   ]
 
 _RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRhE6map_orbNCNvMNtNtCs4CtJ3uPHEZZ_4jiff3fmt7rfc2822NtBY_14DateTimeParser15skip_whitespace0ECs5XgW7KoffLW_12opendal_core.exit126.peel.i: ; preds = %.lr.ph565.preheader.i, %.lr.ph565.preheader.i, %.lr.ph565.preheader.i, %.lr.ph565.preheader.i, %.lr.ph565.preheader.i
-  %i.ip = add nsw i64 %.sroa.6.0.i49.i.in553.i, -4 ; 2 uses
+  %i.ip = add i64 %.sroa.6.0.i49.i556.i, -3       ; 2 uses
   %.not.i45.i.peel.i = icmp eq i64 %i.ip, 0
   br i1 %.not.i45.i.peel.i, label %_RNvMNtCsgxBkk5gSRhY_4core5sliceSh11starts_withCs5XgW7KoffLW_12opendal_core.exit.thread.thread.i, label %.lr.ph565.peel.next.i
 

@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.cs, %bb.c
   %i.s = phi i64 [ -1, %bb.c ], [ %.pre237, %bb.cs ] ; 2 uses
   %i.t = phi i64 [ 0, %bb.c ], [ %.pre235, %bb.cs ] ; 2 uses
-  %i.u = phi ptr [ %1, %bb.c ], [ %.pre233, %bb.cs ] ; 5 uses
+  %i.u = phi ptr [ %1, %bb.c ], [ %.pre233, %bb.cs ] ; 4 uses
   %i.v = phi i64 [ %2, %bb.c ], [ %.pre231, %bb.cs ] ; 3 uses
   %i.w = phi ptr [ %i.f, %bb.c ], [ %.pre, %bb.cs ] ; 21 uses
   %.093 = phi ptr [ %i.b, %bb.c ], [ %.2, %bb.cs ] ; 26 uses
@@ -252,7 +252,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   br label %bb.h
 
 bb.h:                                             ; preds = %.backedge.i, %.lr.ph142.i
-  %i.as = phi i64 [ %i.al, %.lr.ph142.i ], [ %i.bn, %.backedge.i ] ; 6 uses
+  %i.as = phi i64 [ %i.al, %.lr.ph142.i ], [ %i.bn, %.backedge.i ] ; 5 uses
   %i.at = phi i64 [ %i.ak, %.lr.ph142.i ], [ %i.bo, %.backedge.i ] ; 6 uses
   %i.au = load i32, ptr %i.am, align 8, !tbaa !20
   switch i32 %i.au, label %bb.ao [
@@ -593,16 +593,15 @@ bb.ai:                                            ; preds = %bb.h
   br label %yylex.exit
 
 .lr.ph140.i:                                      ; preds = %.preheader.i, %bb.al
-  %i.ew = phi i64 [ %i.fc, %bb.al ], [ %i.aw, %.preheader.i ] ; 5 uses
-  %4 = phi i64 [ %i.ew, %bb.al ], [ %i.as, %.preheader.i ]
-  %i.ex = getelementptr inbounds nuw i8, ptr %i.u, i64 %4
+  %i.ew = phi i64 [ %i.fc, %bb.al ], [ %i.aw, %.preheader.i ] ; 4 uses
+  %4 = getelementptr i8, ptr %i.u, i64 %i.ew      ; 2 uses
+  %i.ex = getelementptr i8, ptr %4, i64 -1
   %i.ey = load i8, ptr %i.ex, align 1, !tbaa !8
   %i.ez = icmp eq i8 %i.ey, 42
   br i1 %i.ez, label %bb.aj, label %bb.al
 
 bb.aj:                                            ; preds = %.lr.ph140.i
-  %5 = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.ew
-  %i.fa = load i8, ptr %5, align 1, !tbaa !8
+  %i.fa = load i8, ptr %4, align 1, !tbaa !8
   %i.fb = icmp eq i8 %i.fa, 47
   br i1 %i.fb, label %bb.ak, label %bb.al
 

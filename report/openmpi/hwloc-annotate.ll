@@ -202,47 +202,41 @@ bb.d:                                             ; preds = %bb.c, %hwloc_utils_
   br i1 %.not177266, label %.critedge.thread, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.d
-  %i.n = add i32 %0, -4                           ; 2 uses
-  %.0161269340 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %4 = load ptr, ptr %.0161269340, align 8, !tbaa !16 ; 3 uses
-  %5 = load i8, ptr %4, align 1, !tbaa !19
-  %6 = icmp eq i8 %5, 45
-  br i1 %6, label %.lr.ph344, label %.critedge
+  %i.n = add i32 %0, -4
+  br label %.lr.ph
 
-.lr.ph:                                           ; preds = %bb.l
-  %indvars.iv.next295 = add i32 %indvars.iv294341, -1 ; 2 uses
-  %.0161269 = getelementptr inbounds nuw i8, ptr %.0161269343, i64 8 ; 2 uses
-  %i.o = load ptr, ptr %.0161269, align 8, !tbaa !16 ; 3 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.l
+  %indvars.iv295 = phi i32 [ %i.n, %.lr.ph.preheader ], [ %indvars.iv.next296, %bb.l ] ; 2 uses
+  %.0163270 = phi i32 [ %.0163265, %.lr.ph.preheader ], [ %.0163, %bb.l ] ; 5 uses
+  %.pn268 = phi ptr [ %1, %.lr.ph.preheader ], [ %.0161269, %bb.l ] ; 5 uses
+  %.0161269 = getelementptr inbounds nuw i8, ptr %.pn268, i64 8 ; 3 uses
+  %i.o = load ptr, ptr %.0161269, align 8, !tbaa !16 ; 11 uses
   %i.p = load i8, ptr %i.o, align 1, !tbaa !19
   %i.q = icmp eq i8 %i.p, 45
-  br i1 %i.q, label %.lr.ph344, label %.critedge, !llvm.loop !60
+  br i1 %i.q, label %.lr.ph344, label %.critedge
 
-.lr.ph344:                                        ; preds = %.lr.ph.preheader, %.lr.ph
-  %7 = phi ptr [ %i.o, %.lr.ph ], [ %4, %.lr.ph.preheader ] ; 9 uses
-  %.0161269343 = phi ptr [ %.0161269, %.lr.ph ], [ %.0161269340, %.lr.ph.preheader ] ; 2 uses
-  %.0163270342 = phi i32 [ %.0163, %.lr.ph ], [ %.0163265, %.lr.ph.preheader ] ; 2 uses
-  %indvars.iv294341 = phi i32 [ %indvars.iv.next295, %.lr.ph ], [ %i.n, %.lr.ph.preheader ]
-  %i.r = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %7, ptr noundef nonnull dereferenceable(5) @.str.28) #26
+.lr.ph344:                                        ; preds = %.lr.ph
+  %i.r = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.o, ptr noundef nonnull dereferenceable(5) @.str.28) #26
   %.not225 = icmp eq i32 %i.r, 0
   br i1 %.not225, label %bb.l, label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph344
-  %i.s = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %7, ptr noundef nonnull dereferenceable(5) @.str.29) #26
+  %i.s = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.o, ptr noundef nonnull dereferenceable(5) @.str.29) #26
   %.not226 = icmp eq i32 %i.s, 0
   br i1 %.not226, label %bb.l, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.t = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %7, ptr noundef nonnull dereferenceable(5) @.str.30) #26
+  %i.t = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.o, ptr noundef nonnull dereferenceable(5) @.str.30) #26
   %.not227 = icmp eq i32 %i.t, 0
   br i1 %.not227, label %bb.l, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.u = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %7, ptr noundef nonnull dereferenceable(5) @.str.31) #26
+  %i.u = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.o, ptr noundef nonnull dereferenceable(5) @.str.31) #26
   %.not228 = icmp eq i32 %i.u, 0
   br i1 %.not228, label %bb.l, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.v = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %7, ptr noundef nonnull dereferenceable(10) @.str.32) #26
+  %i.v = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.o, ptr noundef nonnull dereferenceable(10) @.str.32) #26
   %.not229 = icmp eq i32 %i.v, 0
   br i1 %.not229, label %bb.i, label %sub_1
 
@@ -252,19 +246,19 @@ bb.i:                                             ; preds = %bb.h
   unreachable
 
 sub_1:                                            ; preds = %bb.h
-  %i.x = getelementptr inbounds nuw i8, ptr %7, i64 1
+  %i.x = getelementptr inbounds nuw i8, ptr %i.o, i64 1
   %i.y = load i8, ptr %i.x, align 1
   %.not285 = icmp eq i8 %i.y, 104
   br i1 %.not285, label %.tail, label %.tail.thread
 
 .tail:                                            ; preds = %sub_1
-  %i.z = getelementptr inbounds nuw i8, ptr %7, i64 2
+  %i.z = getelementptr inbounds nuw i8, ptr %i.o, i64 2
   %i.aa = load i8, ptr %i.z, align 1
   %i.ab = icmp eq i8 %i.aa, 0
   br i1 %i.ab, label %bb.j, label %.tail.thread
 
 .tail.thread:                                     ; preds = %sub_1, %.tail
-  %i.ac = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %7, ptr noundef nonnull dereferenceable(7) @.str.36) #26
+  %i.ac = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.o, ptr noundef nonnull dereferenceable(7) @.str.36) #26
   %.not231 = icmp eq i32 %i.ac, 0
   br i1 %.not231, label %bb.j, label %bb.k
 
@@ -276,7 +270,7 @@ bb.j:                                             ; preds = %.tail.thread, %.tai
 
 bb.k:                                             ; preds = %.tail.thread
   %i.ae = load ptr, ptr @stderr, align 8, !tbaa !18
-  %i.af = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ae, ptr noundef nonnull @.str.37, ptr noundef nonnull %7) #27 ; 0 uses
+  %i.af = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ae, ptr noundef nonnull @.str.37, ptr noundef nonnull %i.o) #27 ; 0 uses
   %i.ag = load ptr, ptr @stderr, align 8, !tbaa !18
   tail call void @usage(ptr nonnull poison, ptr noundef %i.ag)
   tail call void @exit(i32 noundef 1) #28
@@ -285,16 +279,13 @@ bb.k:                                             ; preds = %.tail.thread
 bb.l:                                             ; preds = %bb.g, %bb.f, %bb.e, %.lr.ph344
   %replaceinfos.sink = phi ptr [ @clearinfos, %.lr.ph344 ], [ @clearuserdata, %bb.f ], [ @replaceinfos, %bb.e ], [ @cleardistances, %bb.g ]
   store i1 true, ptr %replaceinfos.sink, align 4
-  %.0163 = add nsw i32 %.0163270342, -1           ; 2 uses
+  %.0163 = add nsw i32 %.0163270, -1              ; 2 uses
   %.not177 = icmp eq i32 %.0163, 0
+  %indvars.iv.next296 = add i32 %indvars.iv295, -1
   br i1 %.not177, label %.critedge.thread, label %.lr.ph, !llvm.loop !60
 
-.critedge:                                        ; preds = %.lr.ph, %.lr.ph.preheader
-  %indvars.iv294.lcssa = phi i32 [ %i.n, %.lr.ph.preheader ], [ %indvars.iv.next295, %.lr.ph ]
-  %.pn268.lcssa = phi ptr [ %1, %.lr.ph.preheader ], [ %.0161269343, %.lr.ph ] ; 5 uses
-  %.0163.in267.lcssa = phi i32 [ %0, %.lr.ph.preheader ], [ %.0163270342, %.lr.ph ] ; 4 uses
-  %.lcssa = phi ptr [ %4, %.lr.ph.preheader ], [ %i.o, %.lr.ph ]
-  %i.ah = icmp slt i32 %.0163.in267.lcssa, 4
+.critedge:                                        ; preds = %.lr.ph
+  %i.ah = icmp slt i32 %.0163270, 3
   br i1 %i.ah, label %.critedge.thread, label %sub_0239
 
 .critedge.thread:                                 ; preds = %bb.l, %bb.d, %.critedge
@@ -304,9 +295,9 @@ bb.l:                                             ; preds = %bb.g, %bb.f, %bb.e,
   unreachable
 
 sub_0239:                                         ; preds = %.critedge
-  %i.aj = getelementptr inbounds nuw i8, ptr %.pn268.lcssa, i64 16
+  %i.aj = getelementptr inbounds nuw i8, ptr %.pn268, i64 16
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !16
-  %i.al = getelementptr inbounds nuw i8, ptr %.pn268.lcssa, i64 24
+  %i.al = getelementptr inbounds nuw i8, ptr %.pn268, i64 24
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !16 ; 3 uses
   %i.an = load i8, ptr %i.am, align 1
   %.not275 = icmp eq i8 %i.an, 45
@@ -325,14 +316,14 @@ sub_1240:                                         ; preds = %sub_0239
   br i1 %i.as, label %bb.m, label %.tail238.thread
 
 bb.m:                                             ; preds = %.tail238
-  %i.at = add nsw i32 %.0163.in267.lcssa, -4      ; 3 uses
-  %i.au = getelementptr inbounds nuw i8, ptr %.pn268.lcssa, i64 32 ; 3 uses
-  %.not277 = icmp eq i32 %.0163.in267.lcssa, 4
+  %i.at = add nsw i32 %.0163270, -3               ; 3 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %.pn268, i64 32 ; 3 uses
+  %.not277 = icmp eq i32 %.0163270, 3
   br i1 %.not277, label %.critedge2, label %sub_0244.preheader
 
 sub_0244.preheader:                               ; preds = %bb.m
   %i.av = zext nneg i32 %i.at to i64
-  %smax = tail call i32 @llvm.smax.i32(i32 %indvars.iv294.lcssa, i32 1)
+  %smax = tail call i32 @llvm.smax.i32(i32 %indvars.iv295, i32 1)
   br label %sub_0244
 
 sub_0244:                                         ; preds = %sub_0244.preheader, %.tail243.thread
@@ -403,8 +394,8 @@ bb.n:                                             ; preds = %.tail248
   br label %bb.o
 
 .tail238.thread:                                  ; preds = %sub_1240, %sub_0239, %.tail238
-  %i.bv = add nsw i32 %.0163.in267.lcssa, -4
-  %i.bw = getelementptr inbounds nuw i8, ptr %.pn268.lcssa, i64 32
+  %i.bv = add nsw i32 %.0163270, -3
+  %i.bw = getelementptr inbounds nuw i8, ptr %.pn268, i64 32
   br label %bb.o
 
 bb.o:                                             ; preds = %.tail238.thread, %bb.n
@@ -807,7 +798,7 @@ bb.cl:                                            ; preds = %bb.cj
   %i.ha = load ptr, ptr %i.a, align 8, !tbaa !63
   %i.hb = call i32 @hwloc_topology_set_flags(ptr noundef %i.ha, i64 noundef 9) #25 ; 0 uses
   %i.hc = load ptr, ptr %i.a, align 8, !tbaa !63
-  %i.hd = call i32 @hwloc_topology_set_xml(ptr noundef %i.hc, ptr noundef nonnull %.lcssa) #25
+  %i.hd = call i32 @hwloc_topology_set_xml(ptr noundef %i.hc, ptr noundef nonnull %i.o) #25
   %i.he = icmp slt i32 %i.hd, 0
   br i1 %i.he, label %bb.dv, label %bb.cm
 
@@ -982,8 +973,7 @@ bb.dk:                                            ; preds = %.thread233, %bb.df,
   br i1 %.not283, label %._crit_edge, label %.lr.ph274
 
 .lr.ph274:                                        ; preds = %bb.dk
-  %8 = getelementptr inbounds nuw i8, ptr %.pn268.lcssa, i64 8
-  %i.jk = getelementptr inbounds nuw i8, ptr %8, i64 %i.bx
+  %i.jk = getelementptr inbounds nuw i8, ptr %.0161269, i64 %i.bx
   %i.jl = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.jm = getelementptr inbounds nuw i8, ptr %3, i64 12
   %i.jn = getelementptr inbounds nuw i8, ptr %3, i64 16

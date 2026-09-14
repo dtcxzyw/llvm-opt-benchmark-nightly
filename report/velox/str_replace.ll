@@ -180,19 +180,18 @@ bb.m:                                             ; preds = %_ZNKSt17basic_strin
   %i.al = ptrtoint ptr %.pre58 to i64
   %i.am = ptrtoint ptr %i.ak to i64
   %i.an = sub i64 %i.al, %i.am
-  %i.ao = sdiv exact i64 %i.an, 40                ; 2 uses
+  %i.ao = sdiv exact i64 %i.an, 40
   %i.ap = add nsw i64 %i.ao, -1                   ; 2 uses
   %.not4150 = icmp eq i64 %i.ap, 0
   br i1 %.not4150, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.m, %bb.n
-  %7 = phi i64 [ %i.bc, %bb.n ], [ %i.ap, %bb.m ] ; 3 uses
-  %.051 = phi i64 [ %7, %bb.n ], [ %i.ao, %bb.m ]
+  %.051 = phi i64 [ %i.bc, %bb.n ], [ %i.ap, %bb.m ] ; 3 uses
   %i.aq = load ptr, ptr %2, align 8, !tbaa !23    ; 2 uses
   %i.ar = getelementptr [40 x i8], ptr %i.aq, i64 %.051 ; 2 uses
-  %i.as = getelementptr i8, ptr %i.ar, i64 -80    ; 3 uses
-  %i.at = getelementptr inbounds nuw [40 x i8], ptr %i.aq, i64 %7 ; 4 uses
-  %i.au = getelementptr i8, ptr %i.ar, i64 -48
+  %i.as = getelementptr i8, ptr %i.ar, i64 -40    ; 3 uses
+  %i.at = getelementptr inbounds nuw [40 x i8], ptr %i.aq, i64 %.051 ; 4 uses
+  %i.au = getelementptr i8, ptr %i.ar, i64 -8
   %i.av = load i64, ptr %i.au, align 8, !tbaa !16 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.at, i64 32
   %i.ax = load i64, ptr %i.aw, align 8, !tbaa !16 ; 2 uses
@@ -210,7 +209,7 @@ bb.n:                                             ; preds = %.lr.ph
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.at, ptr noundef nonnull align 8 dereferenceable(40) %i.as, i64 40, i1 false), !tbaa.struct !24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.as, ptr noundef nonnull align 8 dereferenceable(40) %4, i64 40, i1 false), !tbaa.struct !24
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  %i.bc = add i64 %7, -1                          ; 2 uses
+  %i.bc = add i64 %.051, -1                       ; 2 uses
   %.not41 = icmp eq i64 %i.bc, 0
   br i1 %.not41, label %.critedge.loopexit, label %.lr.ph, !llvm.loop !32
 
@@ -613,18 +612,17 @@ _ZNSt6vectorIN4absl12lts_2024011616strings_internal18ViableSubstitutionESaIS3_EE
   %i.bc = ptrtoint ptr %i.az to i64
   %i.bd = ptrtoint ptr %i.ba to i64
   %i.be = sub i64 %i.bc, %i.bd
-  %i.bf = sdiv exact i64 %i.be, 40                ; 2 uses
+  %i.bf = sdiv exact i64 %i.be, 40
   %i.bg = add nsw i64 %i.bf, -1                   ; 2 uses
   %.not2459 = icmp eq i64 %i.bg, 0
   br i1 %.not2459, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIN4absl12lts_2024011616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKSA_RmEEERS3_DpOT_.exit, %bb.j
-  %5 = phi i64 [ %i.bs, %bb.j ], [ %i.bg, %_ZNSt6vectorIN4absl12lts_2024011616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKSA_RmEEERS3_DpOT_.exit ] ; 3 uses
-  %.060 = phi i64 [ %5, %bb.j ], [ %i.bf, %_ZNSt6vectorIN4absl12lts_2024011616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKSA_RmEEERS3_DpOT_.exit ]
+  %.060 = phi i64 [ %i.bs, %bb.j ], [ %i.bg, %_ZNSt6vectorIN4absl12lts_2024011616strings_internal18ViableSubstitutionESaIS3_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKSA_RmEEERS3_DpOT_.exit ] ; 3 uses
   %i.bh = getelementptr [40 x i8], ptr %i.ba, i64 %.060 ; 2 uses
-  %i.bi = getelementptr i8, ptr %i.bh, i64 -80    ; 3 uses
-  %i.bj = getelementptr inbounds nuw [40 x i8], ptr %i.ba, i64 %5 ; 4 uses
-  %i.bk = getelementptr i8, ptr %i.bh, i64 -48
+  %i.bi = getelementptr i8, ptr %i.bh, i64 -40    ; 3 uses
+  %i.bj = getelementptr inbounds nuw [40 x i8], ptr %i.ba, i64 %.060 ; 4 uses
+  %i.bk = getelementptr i8, ptr %i.bh, i64 -8
   %i.bl = load i64, ptr %i.bk, align 8, !tbaa !16 ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bj, i64 32
   %i.bn = load i64, ptr %i.bm, align 8, !tbaa !16 ; 2 uses
@@ -642,7 +640,7 @@ bb.j:                                             ; preds = %.lr.ph
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bj, ptr noundef nonnull align 8 dereferenceable(40) %i.bi, i64 40, i1 false), !tbaa.struct !24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bi, ptr noundef nonnull align 8 dereferenceable(40) %4, i64 40, i1 false), !tbaa.struct !24
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  %i.bs = add i64 %5, -1                          ; 2 uses
+  %i.bs = add i64 %.060, -1                       ; 2 uses
   %.not24 = icmp eq i64 %i.bs, 0
   br i1 %.not24, label %.critedge, label %.lr.ph, !llvm.loop !38
 

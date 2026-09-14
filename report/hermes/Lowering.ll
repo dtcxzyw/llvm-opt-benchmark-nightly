@@ -204,24 +204,20 @@ bb.f:                                             ; preds = %.peel.next
   br i1 %i.au, label %.loopexit, label %bb.g
 
 bb.g:                                             ; preds = %.outer._crit_edge
-  %i.av = call noundef i32 @_ZNK6hermes11Instruction14getNumOperandsEv(ptr noundef nonnull align 8 dereferenceable(132) %.sroa.055.086) #12 ; 2 uses
+  %i.av = call noundef i32 @_ZNK6hermes11Instruction14getNumOperandsEv(ptr noundef nonnull align 8 dereferenceable(132) %.sroa.055.086) #12
   %.04577 = add i32 %i.av, -2                     ; 2 uses
   %i.aw = load i32, ptr %i.f, align 8, !tbaa !262
   %.not5378 = icmp ult i32 %.04577, %i.aw
-  br i1 %.not5378, label %.loopexit, label %.lr.ph82
+  br i1 %.not5378, label %.loopexit, label %bb.h
 
-.lr.ph82:                                         ; preds = %bb.g
-  %3 = add i32 %i.av, -1
-  br label %bb.h
-
-bb.h:                                             ; preds = %.lr.ph82, %bb.h
-  %.04580 = phi i32 [ %.04577, %.lr.ph82 ], [ %.045, %bb.h ] ; 3 uses
-  %.045.in79 = phi i32 [ %3, %.lr.ph82 ], [ %.04580, %bb.h ] ; 2 uses
-  %i.ax = call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %.sroa.055.086, i32 noundef %.045.in79) #12
+bb.h:                                             ; preds = %bb.g, %bb.h
+  %.04580 = phi i32 [ %.045, %bb.h ], [ %.04577, %bb.g ] ; 3 uses
+  %.045.in79108 = add i32 %.04580, 1              ; 2 uses
+  %i.ax = call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %.sroa.055.086, i32 noundef %.045.in79108) #12
   %i.ay = uitofp i32 %.04580 to double
   %i.az = call noundef ptr @_ZN6hermes9IRBuilder16getLiteralNumberEd(ptr noundef nonnull align 8 dereferenceable(40) %2, double noundef %i.ay) #12
   %i.ba = call noundef ptr @_ZN6hermes9IRBuilder26createStoreOwnPropertyInstEPNS_5ValueES2_S2_NS0_14PropEnumerableE(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr noundef %i.ax, ptr noundef nonnull %i.j, ptr noundef %i.az, i32 noundef 1) #12 ; 0 uses
-  call void @_ZN6hermes11Instruction13removeOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %.sroa.055.086, i32 noundef %.045.in79) #12
+  call void @_ZN6hermes11Instruction13removeOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %.sroa.055.086, i32 noundef %.045.in79108) #12
   %.045 = add i32 %.04580, -1                     ; 2 uses
   %i.bb = load i32, ptr %i.f, align 8, !tbaa !262
   %.not53 = icmp ult i32 %.045, %i.bb

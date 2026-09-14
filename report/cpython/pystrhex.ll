@@ -56,10 +56,10 @@ _PyUnicode_DATA.exit.i:                           ; preds = %bb.f, %bb.e
   br i1 %i.i, label %.preheader.i, label %bb.h
 
 .preheader.i:                                     ; preds = %_PyUnicode_DATA.exit.i, %.preheader.i
-  %i.j = phi i64 [ %i.z, %.preheader.i ], [ 16, %_PyUnicode_DATA.exit.i ] ; 5 uses
+  %i.j = phi i64 [ %i.z, %.preheader.i ], [ 16, %_PyUnicode_DATA.exit.i ] ; 4 uses
   %.038.i.i = phi ptr [ %i.y, %.preheader.i ], [ %.0112.i, %_PyUnicode_DATA.exit.i ] ; 3 uses
-  %.03437.i.i = phi i64 [ %i.j, %.preheader.i ], [ 0, %_PyUnicode_DATA.exit.i ]
-  %i.k = getelementptr i8, ptr %0, i64 %.03437.i.i
+  %2 = getelementptr i8, ptr %0, i64 %i.j         ; 2 uses
+  %i.k = getelementptr i8, ptr %2, i64 -16
   %.0.copyload13.i.i = load <16 x i8>, ptr %i.k, align 1 ; 3 uses
   %i.l = lshr <16 x i8> %.0.copyload13.i.i, splat (i8 4)
   %i.m = and <16 x i8> %.0.copyload13.i.i, splat (i8 15) ; 2 uses
@@ -82,7 +82,6 @@ _PyUnicode_DATA.exit.i:                           ; preds = %bb.f, %bb.e
   br i1 %.not.i147.i, label %bb.g, label %.preheader.i, !llvm.loop !0
 
 bb.g:                                             ; preds = %.preheader.i
-  %2 = getelementptr i8, ptr %0, i64 %i.j
   %i.aa = sub nuw nsw i64 %1, %i.j
   %.not239.i = icmp eq i64 %1, %i.j
   br i1 %.not239.i, label %_Py_strhex_impl.exit, label %.lr.ph.i.i.i
@@ -369,10 +368,10 @@ bb.z:                                             ; preds = %_PyUnicode_DATA.exi
   br i1 %i.ao, label %.preheader, label %bb.ab
 
 .preheader:                                       ; preds = %bb.z, %.preheader
-  %i.ap = phi i64 [ %i.bf, %.preheader ], [ 16, %bb.z ] ; 5 uses
+  %i.ap = phi i64 [ %i.bf, %.preheader ], [ 16, %bb.z ] ; 4 uses
   %.038.i = phi ptr [ %i.be, %.preheader ], [ %.0112, %bb.z ] ; 3 uses
-  %.03437.i = phi i64 [ %i.ap, %.preheader ], [ 0, %bb.z ]
-  %i.aq = getelementptr i8, ptr %0, i64 %.03437.i
+  %5 = getelementptr i8, ptr %0, i64 %i.ap        ; 2 uses
+  %i.aq = getelementptr i8, ptr %5, i64 -16
   %.0.copyload13.i = load <16 x i8>, ptr %i.aq, align 1 ; 3 uses
   %i.ar = lshr <16 x i8> %.0.copyload13.i, splat (i8 4)
   %i.as = and <16 x i8> %.0.copyload13.i, splat (i8 15) ; 2 uses
@@ -395,7 +394,6 @@ bb.z:                                             ; preds = %_PyUnicode_DATA.exi
   br i1 %.not.i147, label %bb.aa, label %.preheader, !llvm.loop !0
 
 bb.aa:                                            ; preds = %.preheader
-  %5 = getelementptr i8, ptr %0, i64 %i.ap
   %i.bg = sub nuw nsw i64 %1, %i.ap
   %.not239 = icmp eq i64 %1, %i.ap
   br i1 %.not239, label %.critedge, label %.lr.ph.i.i
@@ -798,10 +796,10 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.f, label %.preheader.i, label %bb.f
 
 .preheader.i:                                     ; preds = %bb.d, %.preheader.i
-  %i.g = phi i64 [ %i.w, %.preheader.i ], [ 16, %bb.d ] ; 5 uses
+  %i.g = phi i64 [ %i.w, %.preheader.i ], [ 16, %bb.d ] ; 4 uses
   %.038.i.i = phi ptr [ %i.v, %.preheader.i ], [ %i.e, %bb.d ] ; 3 uses
-  %.03437.i.i = phi i64 [ %i.g, %.preheader.i ], [ 0, %bb.d ]
-  %i.h = getelementptr i8, ptr %0, i64 %.03437.i.i
+  %2 = getelementptr i8, ptr %0, i64 %i.g         ; 2 uses
+  %i.h = getelementptr i8, ptr %2, i64 -16
   %.0.copyload13.i.i = load <16 x i8>, ptr %i.h, align 1 ; 3 uses
   %i.i = lshr <16 x i8> %.0.copyload13.i.i, splat (i8 4)
   %i.j = and <16 x i8> %.0.copyload13.i.i, splat (i8 15) ; 2 uses
@@ -824,7 +822,6 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i147.i, label %bb.e, label %.preheader.i, !llvm.loop !0
 
 bb.e:                                             ; preds = %.preheader.i
-  %2 = getelementptr i8, ptr %0, i64 %i.g
   %i.x = sub nuw nsw i64 %1, %i.g
   %.not239.i = icmp eq i64 %1, %i.g
   br i1 %.not239.i, label %_Py_strhex_impl.exit, label %.lr.ph.i.i.i
