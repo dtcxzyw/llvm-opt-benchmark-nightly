@@ -205,7 +205,6 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %.not61.not.i = icmp eq i8 %i.ae, 0
   %i.ag = sub nuw nsw i32 32, %i.ab
   %i.ah = getelementptr i8, ptr %2, i64 12
-  %notmask.i = shl nsw i32 -1, %i.ab
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 3972 ; 2 uses
   br i1 %.not61.not.i, label %.preheader.lr.ph.i, label %.preheader53.lr.ph.split.i
 
@@ -213,6 +212,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.aj = load ptr, ptr %2, align 8, !tbaa !90    ; 2 uses
   %i.ak = zext i8 %i.ae to i64
   %i.al = zext nneg i32 %i.ad to i64
+  %notmask = shl nsw i32 -1, %i.ab
+  %invariant.op = sub nuw i32 -1, %notmask
   br label %.preheader53.i
 
 .preheader53.i:                                   ; preds = %..critedge_crit_edge.i, %.preheader53.lr.ph.split.i
@@ -290,8 +291,7 @@ bb.k:                                             ; preds = %bb.j
   br label %decode_band_types.exit.thread
 
 bb.l:                                             ; preds = %bb.j
-  %6 = xor i32 %i.bk, %notmask.i
-  %i.bv = icmp eq i32 %6, -1
+  %i.bv = icmp eq i32 %i.bk, %invariant.op
   br i1 %i.bv, label %bb.h, label %.preheader.i, !llvm.loop !172
 
 .preheader.i:                                     ; preds = %bb.l

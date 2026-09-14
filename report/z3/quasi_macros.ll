@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   %i.v = load i32, ptr %i.u, align 4, !tbaa !39
   %i.w = and i32 %i.r, 31
   %i.x = shl nuw i32 1, %i.w
-  %i.y = or i32 %i.v, %i.x
+  %i.y = or i32 %i.x, %i.v
   store i32 %i.y, ptr %i.u, align 4, !tbaa !39
   br label %bb.f
 
@@ -608,7 +608,7 @@ bb.an:                                            ; preds = %bb.al, %.noexc153
   %i.ic = load i32, ptr %i.ib, align 4, !tbaa !39
   %i.id = and i32 %i.hy, 31
   %i.ie = shl nuw i32 1, %i.id
-  %i.if = or i32 %i.ic, %i.ie
+  %i.if = or i32 %i.ie, %i.ic
   store i32 %i.if, ptr %i.ib, align 4, !tbaa !39
   %i.ig = add i32 %.054245, 1
   br label %bb.ap
