@@ -202,7 +202,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 .lr.ph130:                                        ; preds = %._crit_edge.thread
   %i.w = getelementptr inbounds nuw i8, ptr %5, i64 4
-  %min.iters.check184 = icmp ult i64 %1, 12
+  %min.iters.check184 = icmp ult i64 %1, 10
   br i1 %min.iters.check184, label %scalar.ph183.preheader, label %vector.scevcheck170
 
 vector.scevcheck170:                              ; preds = %.lr.ph130

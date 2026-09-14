@@ -205,7 +205,7 @@ _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters5chainINtB4_5ChainINtNtB6_6cloned6
 .noexc.i.i.i.i.i:                                 ; preds = %.preheader
   %i.t = getelementptr inbounds nuw [24 x i8], ptr %.sroa.10.0.i.i, i64 %.val6.i.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.t, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.a, i64 24, i1 false), !noalias !34515
-  %i.u = add nuw i64 %.val6.i.i.i.i.i, 1          ; 2 uses
+  %i.u = add nuw nsw i64 %.val6.i.i.i.i.i, 1      ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !34513
   %i.v = icmp eq i64 %i.u, %i.f
   br i1 %i.v, label %_RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtB8_6string6StringEINtB4_18SpecFromIterNestedB13_INtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters5chain5ChainINtNtB1Y_6cloned6ClonedINtNtNtB22_5slice4iter4IterB13_EEINtNtNtB20_7sources4once4OnceB13_EEE9from_iterCskXtk6F4WjxZ_4just.exit, label %.preheader
@@ -608,7 +608,7 @@ bb.m:                                             ; preds = %.loopexit35.i
   store ptr %.val15.i.i.i.i.i.i.i.1, ptr %i.bx, align 8, !noalias !66180, !captures !36
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 8
   store i64 %.val16.i.i.i.i.i.i.i.1, ptr %i.by, align 8, !noalias !66181
-  %i.bz = add nuw i64 %i.bn, 2                    ; 2 uses
+  %i.bz = add nuw nsw i64 %i.bn, 2                ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VecReEINtB4_18SpecFromIterNestedB13_INtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map3MapINtNtNtB1J_5slice4iter4IterNtNtB8_6string6StringENvMB2R_B2P_6as_strEE9from_iterCskXtk6F4WjxZ_4just.exit.i.unr-lcssa, label %.preheader.i.i.i38.i
@@ -1011,7 +1011,7 @@ _RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map8map_foldTRTNtNtCskXtk6F4WjxZ_
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !105952
   %i.ce = getelementptr inbounds nuw [24 x i8], ptr %i.k, i64 %.val8.i29.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ce, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false), !noalias !105955
-  %i.cf = add nuw i64 %.val8.i29.i.i.i.i, 1
+  %i.cf = add nuw nsw i64 %.val8.i29.i.i.i.i, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !105950
   %i.cg = icmp eq i64 %i.t, 0
   br i1 %i.cg, label %.loopexit, label %.lr.ph.i.i.i.i
