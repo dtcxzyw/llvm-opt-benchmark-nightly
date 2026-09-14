@@ -202,14 +202,15 @@ calculate_padding_len.exit:                       ; preds = %switch.lookup, %bb.
   %.0.i = phi i32 [ 1, %bb.a ], [ %switch.ext, %switch.lookup ] ; 3 uses
   %i.g = srem i32 %i.d, %.0.i
   %i.h = sub nsw i32 %.0.i, %i.g
-  %.lhs.trunc.i = trunc nsw i32 %i.h to i8
+  %.lhs.trunc.i = trunc nuw nsw i32 %i.h to i8
   %.rhs.trunc.i = trunc nuw nsw i32 %.0.i to i8
-  %2 = srem i8 %.lhs.trunc.i, %.rhs.trunc.i       ; 2 uses
-  %.not = icmp eq i8 %2, 0
+  %2 = add nsw i8 %.rhs.trunc.i, -1
+  %3 = and i8 %2, %.lhs.trunc.i                   ; 2 uses
+  %.not = icmp eq i8 %3, 0
   br i1 %.not, label %proto_item_set_hidden.exit, label %bb.b
 
 bb.b:                                             ; preds = %calculate_padding_len.exit
-  %.sext.i = sext i8 %2 to i32                    ; 2 uses
+  %.sext.i = zext nneg i8 %3 to i32               ; 2 uses
   %i.i = load ptr, ptr %0, align 8
   %i.j = load i32, ptr @hf_dbus_padding, align 4
   %i.k = getelementptr i8, ptr %0, i64 16
