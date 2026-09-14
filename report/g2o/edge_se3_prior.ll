@@ -205,7 +205,9 @@ begin_hunk_0_@_ZN3g2o8internal27computeEdgeSE3PriorGradientIN5Eigen3MapINS2_6Mat
   %i.kw = load double, ptr %i.fe, align 16, !tbaa !10
   %i.kx = load double, ptr %i.ga, align 16, !tbaa !10
   %i.ky = load double, ptr %i.en, align 8, !tbaa !10
+  %11 = fmul double %i.ky, 2.000000e+00           ; 2 uses
   %i.kz = load double, ptr %i.fj, align 8, !tbaa !10
+  %12 = fmul double %i.kz, 2.000000e+00           ; 3 uses
   %i.la = load double, ptr %i.gf, align 8, !tbaa !10
   %i.lb = load double, ptr %i.et, align 16, !tbaa !10
   %i.lc = fmul double %i.lb, 2.000000e+00         ; 2 uses
@@ -221,14 +223,12 @@ begin_hunk_0_@_ZN3g2o8internal27computeEdgeSE3PriorGradientIN5Eigen3MapINS2_6Mat
   store double %i.lh, ptr %.sroa.0171.8..sroa_idx276, align 8, !tbaa !10
   %i.li = fneg double %i.le
   %i.lj = fneg double %i.lg
-  %11 = fmul double %i.la, 2.000000e+00           ; 4 uses
-  %12 = fmul double %i.kz, 2.000000e+00           ; 3 uses
-  %i.lk = fmul double %i.ky, 2.000000e+00         ; 2 uses
+  %.sroa.0171.16..sroa_idx277 = getelementptr inbounds nuw i8, ptr %.sroa.0171, i64 16
+  store double %11, ptr %.sroa.0171.16..sroa_idx277, align 16, !tbaa !10
+  %i.lk = fmul double %i.la, 2.000000e+00         ; 4 uses
   %i.ll = fmul double %i.kx, 2.000000e+00         ; 4 uses
   %i.lm = fmul double %i.kw, 2.000000e+00         ; 4 uses
   %i.ln = fmul double %i.kv, 2.000000e+00         ; 2 uses
-  %.sroa.0171.16..sroa_idx277 = getelementptr inbounds nuw i8, ptr %.sroa.0171, i64 16
-  store double %i.lk, ptr %.sroa.0171.16..sroa_idx277, align 16, !tbaa !10
   store double %i.lc, ptr %.sroa.0219, align 16, !tbaa !10, !noalias !217
   %.sroa.0219.24..sroa_idx275 = getelementptr inbounds nuw i8, ptr %.sroa.0219, i64 24
   store double %i.le, ptr %.sroa.0219.24..sroa_idx275, align 8, !tbaa !10
@@ -239,12 +239,12 @@ begin_hunk_0_@_ZN3g2o8internal27computeEdgeSE3PriorGradientIN5Eigen3MapINS2_6Mat
   store double %i.lo, ptr %.sroa.0219.16..sroa_idx274, align 16, !tbaa !10
   %i.lp = fneg double %i.lm
   %i.lq = fneg double %i.ll
-  %i.lr = fneg double %i.lk
+  %i.lr = fneg double %11
   store double %i.lr, ptr %.sroa.0232, align 16, !tbaa !10, !noalias !218
   %i.ls = fneg double %12
   %.sroa.0232.24..sroa_idx272 = getelementptr inbounds nuw i8, ptr %.sroa.0232, i64 24
   store double %i.ls, ptr %.sroa.0232.24..sroa_idx272, align 8, !tbaa !10
-  %i.lt = fneg double %11
+  %i.lt = fneg double %i.lk
   %.sroa.0232.8..sroa_idx270 = getelementptr inbounds nuw i8, ptr %.sroa.0232, i64 8
   store double %i.ln, ptr %.sroa.0232.8..sroa_idx270, align 8, !tbaa !10
   %.sroa.0232.16..sroa_idx271 = getelementptr inbounds nuw i8, ptr %.sroa.0232, i64 16
@@ -294,11 +294,11 @@ begin_hunk_0_@_ZN3g2o8internal27computeEdgeSE3PriorGradientIN5Eigen3MapINS2_6Mat
   %i.mz = shufflevector <2 x double> %i.my, <2 x double> poison, <2 x i32> zeroinitializer
   %i.na = fmul <2 x double> %i.ci, %i.mz
   %i.nb = fadd <2 x double> %i.mk, %i.na
-  %i.nc = insertelement <2 x double> poison, double %11, i64 0
+  %i.nc = insertelement <2 x double> poison, double %i.lk, i64 0
   %i.nd = shufflevector <2 x double> %i.nc, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ne = fmul <2 x double> %i.de, %i.nd
   %i.nf = fadd <2 x double> %i.ne, %i.nb
-  %i.ng = fmul double %i.dj, %11
+  %i.ng = fmul double %i.dj, %i.lk
   %i.nh = fmul double %i.cn, %i.lg
   %i.ni = fsub double %i.ng, %i.nh
   %i.nj = fadd double %i.mt, %i.ni
@@ -428,7 +428,7 @@ begin_hunk_0_@_ZN3g2o8internal27computeEdgeSE3PriorGradientIN5Eigen3MapINS2_6Mat
   %i.qq = fadd <2 x double> %i.kj, %i.qp
   %i.qr = fmul double %i.cn, %i.ll
   %i.qs = fadd double %i.km, %i.qr
-  %i.qt = fmul double %i.br, %11
+  %i.qt = fmul double %i.br, %i.lk
   %i.qu = fsub double %i.qs, %i.qt
   %.sroa.4.i.i.i.i14.0..sroa.4.i.i.i.i14.0..sroa.4.i.i.i.i14.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.16..i.i.i.i18 = load <2 x double>, ptr %.sroa.4.i.i.i.i14, align 16, !tbaa !49
   %.sroa.4.i.i.i.i14.16.i.i.i.i14.16.i.i.i.i14.16.i.i.i.16.i.i.i.16.i.i.16.i.i.16.i.16.i.16..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.4.i.i.i.i14, i64 16

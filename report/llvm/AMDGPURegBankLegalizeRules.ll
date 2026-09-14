@@ -204,7 +204,7 @@ _ZNK4llvm6AMDGPU19SetOfRulesForOpcode20getFastPredicateSlotENS0_26UniformityLLTO
   %i.ah = getelementptr inbounds nuw [64 x i8], ptr %.v, i64 %i.ag
   br label %.loopexit
 
-.thread:                                          ; preds = %bb.g, %_ZNK4llvm19MachineRegisterInfo7getTypeENS_8RegisterE.exit37, %_ZNK4llvm19MachineRegisterInfo7getTypeENS_8RegisterE.exit, %bb.h, %bb.f, %bb.m, %bb.l, %bb.a
+.thread:                                          ; preds = %bb.l, %bb.m, %bb.f, %bb.h, %_ZNK4llvm19MachineRegisterInfo7getTypeENS_8RegisterE.exit, %_ZNK4llvm19MachineRegisterInfo7getTypeENS_8RegisterE.exit37, %bb.g, %bb.a
   %i.ai = load ptr, ptr %0, align 8, !tbaa !29    ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ak = load i32, ptr %i.aj, align 8, !tbaa !30 ; 2 uses
@@ -285,7 +285,7 @@ _ZNK4llvm6AMDGPU16PredicateMapping5matchERKNS_12MachineInstrERKNS_21GenericUnifo
   %i.bo = getelementptr inbounds nuw i8, ptr %.068, i64 64
   br label %.loopexit
 
-.loopexit:                                        ; preds = %_ZNK4llvm6AMDGPU16PredicateMapping5matchERKNS_12MachineInstrERKNS_21GenericUniformityInfoINS_17GenericSSAContextINS_15MachineFunctionEEEEERKNS_19MachineRegisterInfoE.exit.thread, %.loopexit.split.loop.exit65, %.thread, %_ZNK4llvm6AMDGPU19SetOfRulesForOpcode20getFastPredicateSlotENS0_26UniformityLLTOpPredicateIDE.exit.thread, %_ZNK4llvm6AMDGPU16PredicateMapping5matchERKNS_12MachineInstrERKNS_21GenericUniformityInfoINS_17GenericSSAContextINS_15MachineFunctionEEEEERKNS_19MachineRegisterInfoE.exit.thread56
+.loopexit:                                        ; preds = %_ZNK4llvm6AMDGPU16PredicateMapping5matchERKNS_12MachineInstrERKNS_21GenericUniformityInfoINS_17GenericSSAContextINS_15MachineFunctionEEEEERKNS_19MachineRegisterInfoE.exit.thread, %.loopexit.split.loop.exit65, %.thread, %_ZNK4llvm6AMDGPU16PredicateMapping5matchERKNS_12MachineInstrERKNS_21GenericUniformityInfoINS_17GenericSSAContextINS_15MachineFunctionEEEEERKNS_19MachineRegisterInfoE.exit.thread56, %_ZNK4llvm6AMDGPU19SetOfRulesForOpcode20getFastPredicateSlotENS0_26UniformityLLTOpPredicateIDE.exit.thread
   %.5 = phi ptr [ %i.ah, %_ZNK4llvm6AMDGPU19SetOfRulesForOpcode20getFastPredicateSlotENS0_26UniformityLLTOpPredicateIDE.exit.thread ], [ %i.bi, %_ZNK4llvm6AMDGPU16PredicateMapping5matchERKNS_12MachineInstrERKNS_21GenericUniformityInfoINS_17GenericSSAContextINS_15MachineFunctionEEEEERKNS_19MachineRegisterInfoE.exit.thread56 ], [ %i.bo, %.loopexit.split.loop.exit65 ], [ null, %.thread ], [ null, %_ZNK4llvm6AMDGPU16PredicateMapping5matchERKNS_12MachineInstrERKNS_21GenericUniformityInfoINS_17GenericSSAContextINS_15MachineFunctionEEEEERKNS_19MachineRegisterInfoE.exit.thread ]
   ret ptr %.5
 }
