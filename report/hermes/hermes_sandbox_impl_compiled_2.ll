@@ -204,9 +204,9 @@ bb.n:                                             ; preds = %bb.l, %bb.k, %bb.j,
   %i.cl = add nuw nsw i64 %i.ck, 8                ; 15 uses
   %i.cm = zext i32 %i.cg to i64                   ; 7 uses
   %.not2864 = icmp eq i32 %i.cg, 0                ; 5 uses
-  %5 = select i1 %.not2864, i32 6, i32 8
   %i.cn = icmp eq i32 %4, 0                       ; 2 uses
   %i.co = add nuw nsw i64 %i.u, 56                ; 4 uses
+  %invariant.op = select i1 %.not2864, i32 61, i32 60
   br label %.backedge
 
 .backedge:                                        ; preds = %.backedge.backedge, %bb.n
@@ -609,10 +609,8 @@ bb.ax:                                            ; preds = %bb.at
   %i.in = add i32 %i.im, -512                     ; 7 uses
   store i32 %i.in, ptr %i.a, align 8, !tbaa !17
   %i.io = shl nuw nsw i32 %i.eo, 1                ; 5 uses
-  %6 = add nsw i32 %i.io, -2                      ; 2 uses
-  %7 = shl nsw i32 %6, 1
-  %i.ip = add nsw i32 %7, %5
-  %i.iq = icmp ult i32 %i.ip, 128
+  %i.ip = add nsw i32 %i.io, -2                   ; 2 uses
+  %i.iq = icmp ult i32 %i.ip, %invariant.op
   %i.ir = shl nuw nsw i32 %i.eo, 3
   %i.is = or disjoint i32 %i.ir, 4                ; 2 uses
   br i1 %i.iq, label %bb.ay, label %bb.ba
@@ -777,7 +775,7 @@ bb.bk:                                            ; preds = %bb.bj
   br label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk, %bb.bj, %bb.bi
-  %.12796 = phi i32 [ %6, %bb.bi ], [ %i.io, %bb.bk ], [ %i.lm, %bb.bj ] ; 3 uses
+  %.12796 = phi i32 [ %i.ip, %bb.bi ], [ %i.io, %bb.bk ], [ %i.lm, %bb.bj ] ; 3 uses
   %i.lo = phi i1 [ false, %bb.bi ], [ false, %bb.bk ], [ true, %bb.bj ]
   %.not2879 = phi i1 [ false, %bb.bi ], [ true, %bb.bk ], [ false, %bb.bj ] ; 4 uses
   %.12786 = phi i32 [ 2, %bb.bi ], [ 0, %bb.bk ], [ 1, %bb.bj ] ; 10 uses

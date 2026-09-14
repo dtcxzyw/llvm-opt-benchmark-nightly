@@ -202,20 +202,16 @@ bb.g:                                             ; preds = %_ZSt11swap_rangesIP
   %i.ar = zext i32 %i.u to i64
   %i.as = load ptr, ptr %3, align 8, !tbaa !14
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.as, i64 %i.x ; 2 uses
-  %i.au = sub nuw nsw i64 %i.ar, %i.x             ; 3 uses
+  %i.au = sub nuw nsw i64 %i.ar, %i.x             ; 2 uses
   %i.av = icmp samesign ugt i64 %i.au, 1
-  br i1 %i.av, label %bb.h, label %4, !prof !17
+  br i1 %i.av, label %bb.h, label %bb.i, !prof !17
 
 bb.h:                                             ; preds = %bb.g
   %gepdiff44 = shl nuw nsw i64 %i.au, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.at, ptr align 8 %i.aq, i64 %gepdiff44, i1 false)
   br label %_ZSt4copyIPPKvS2_ET0_T_S4_S3_.exit
 
-4:                                                ; preds = %bb.g
-  %5 = icmp eq i64 %i.au, 1
-  br i1 %5, label %bb.i, label %_ZSt4copyIPPKvS2_ET0_T_S4_S3_.exit
-
-bb.i:                                             ; preds = %4
+bb.i:                                             ; preds = %bb.g
   %i.aw = load ptr, ptr %i.aq, align 8, !tbaa !18
   store ptr %i.aw, ptr %i.at, align 8, !tbaa !18
   br label %_ZSt4copyIPPKvS2_ET0_T_S4_S3_.exit
@@ -244,7 +240,7 @@ bb.m:                                             ; preds = %bb.l
   store ptr %i.be, ptr %i.ba, align 8, !tbaa !18
   br label %_ZSt4copyIPPKvS2_ET0_T_S4_S3_.exit
 
-_ZSt4copyIPPKvS2_ET0_T_S4_S3_.exit:               ; preds = %bb.m, %bb.l, %bb.k, %bb.i, %4, %bb.h
+_ZSt4copyIPPKvS2_ET0_T_S4_S3_.exit:               ; preds = %bb.m, %bb.l, %bb.k, %bb.i, %bb.h
   %i.bf = load i32, ptr %i.r, align 4, !tbaa !23
   %i.bg = load i32, ptr %i.s, align 4, !tbaa !23
   store i32 %i.bg, ptr %i.r, align 4, !tbaa !23

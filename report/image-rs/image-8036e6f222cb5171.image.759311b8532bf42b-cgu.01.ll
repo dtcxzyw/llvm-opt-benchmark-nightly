@@ -205,7 +205,7 @@ bb.cv:                                            ; preds = %._crit_edge.i
   unreachable
 
 bb.cw:                                            ; preds = %bb.ct
-  %i.oc = trunc nsw i64 %indvars.iv.i to i32      ; 3 uses
+  %i.oc = trunc nuw nsw i64 %indvars.iv.i to i32  ; 3 uses
   store i32 %i.oc, ptr %i.w, align 4, !noalias !826
   %i.od = sub nuw nsw i32 16, %i.oc
   %i.oe = lshr i32 %i.no, %i.od
@@ -608,7 +608,7 @@ bb.cv:                                            ; preds = %._crit_edge.i
   unreachable
 
 bb.cw:                                            ; preds = %bb.ct
-  %i.oc = trunc nsw i64 %indvars.iv.i to i32      ; 3 uses
+  %i.oc = trunc nuw nsw i64 %indvars.iv.i to i32  ; 3 uses
   store i32 %i.oc, ptr %i.w, align 4, !noalias !1235
   %i.od = sub nuw nsw i32 16, %i.oc
   %i.oe = lshr i32 %i.no, %i.od

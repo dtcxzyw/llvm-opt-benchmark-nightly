@@ -205,8 +205,8 @@ define linkonce_odr void @_ZN3fmt2v96detail6bigint6squareEv(ptr noundef nonnull 
 bb.a:
   %1 = alloca %"class.fmt::v9::basic_memory_buffer.87", align 8 ; 12 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !321  ; 10 uses
-  %i.c = trunc i64 %i.b to i32                    ; 10 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !321  ; 11 uses
+  %i.c = trunc i64 %i.b to i32                    ; 9 uses
   %i.d = shl nsw i32 %i.c, 1                      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #34
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 8 uses
@@ -393,6 +393,7 @@ _ZN3fmt2v919basic_memory_bufferIjLm32ESaIjEE6resizeEm.exit: ; preds = %bb.o, %.n
   %i.au = load ptr, ptr %i.e, align 8             ; 6 uses
   %sext = shl i64 %i.b, 32
   %i.av = ashr exact i64 %sext, 32                ; 2 uses
+  %2 = and i64 %i.b, 4294967295
   %i.aw = add i32 %i.c, -2
   %invariant.op = sub i32 1, %i.c
   %indvars.iv85.prol = add nsw i64 %i.av, -1      ; 2 uses
@@ -514,15 +515,16 @@ bb.u:                                             ; preds = %.critedge.i
 
 bb.v:                                             ; preds = %.lr.ph61, %._crit_edge
   %indvar = phi i32 [ 0, %.lr.ph61 ], [ %indvar.next, %._crit_edge ] ; 3 uses
-  %indvars.iv81 = phi i32 [ 1, %.lr.ph61 ], [ %indvars.iv.next82, %._crit_edge ] ; 3 uses
-  %.03360 = phi i32 [ %i.c, %.lr.ph61 ], [ %3, %._crit_edge ] ; 3 uses
+  %indvars.iv91 = phi i64 [ %2, %.lr.ph61 ], [ %indvars.iv.next92, %._crit_edge ] ; 3 uses
+  %.03360 = phi i32 [ 1, %.lr.ph61 ], [ %indvars.iv.next82, %._crit_edge ] ; 3 uses
   %.259 = phi i128 [ %.037.lcssa, %.lr.ph61 ], [ %i.ed, %._crit_edge ] ; 3 uses
-  %.reass.reass = add i32 %.03360, %invariant.op
+  %3 = trunc nuw i64 %indvars.iv91 to i32
+  %.reass.reass = add i32 %3, %invariant.op
   %i.cu = icmp slt i32 %.reass.reass, %i.c
   br i1 %i.cu, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.v
-  %i.cv = sext i32 %indvars.iv81 to i64           ; 3 uses
+  %i.cv = sext i32 %.03360 to i64                 ; 3 uses
   %i.cw = sub i32 %indvar, %i.c
   %i.cx = and i32 %i.cw, 1
   %lcmp.mod152.not.not = icmp eq i32 %i.cx, 0
@@ -580,14 +582,13 @@ bb.v:                                             ; preds = %.lr.ph61, %._crit_e
 
 ._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.v
   %.3.lcssa = phi i128 [ %.259, %bb.v ], [ %.lcssa146.unr, %.lr.ph.prol.loopexit ], [ %i.ea, %.lr.ph ] ; 2 uses
-  %2 = zext i32 %.03360 to i64
-  %i.eb = getelementptr inbounds nuw [4 x i8], ptr %.pre93, i64 %2
+  %i.eb = getelementptr inbounds nuw [4 x i8], ptr %.pre93, i64 %indvars.iv91
   %i.ec = trunc i128 %.3.lcssa to i32
   store i32 %i.ec, ptr %i.eb, align 4, !tbaa !76
   %i.ed = lshr i128 %.3.lcssa, 32
-  %3 = add nsw i32 %.03360, 1
-  %indvars.iv.next82 = add i32 %indvars.iv81, 1
-  %exitcond91.not = icmp eq i32 %indvars.iv81, %i.c
+  %indvars.iv.next92 = add nuw nsw i64 %indvars.iv91, 1
+  %indvars.iv.next82 = add i32 %.03360, 1
+  %exitcond91.not = icmp eq i32 %.03360, %i.c
   %indvar.next = add i32 %indvar, 1
   br i1 %exitcond91.not, label %._crit_edge62.loopexit, label %bb.v, !llvm.loop !974
 
@@ -990,7 +991,7 @@ bb.f:                                             ; preds = %_ZNK5folly7dynamic3
   %.024.i53.us = phi i64 [ %i.bu, %bb.h ], [ %i.aq, %bb.f ]
   %.026.i52.us = phi i64 [ %i.bv, %bb.h ], [ %i.ah, %bb.f ] ; 2 uses
   %i.au = and i64 %.026.i52.us, %i.ar
-  %i.av = shl nsw i64 %i.au, 7
+  %i.av = shl nuw nsw i64 %i.au, 7
   %i.aw = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.av ; 4 uses
   %i.ax = getelementptr i8, ptr %i.aw, i64 80
   call void @llvm.prefetch.p0(ptr %i.ax, i32 0, i32 3, i32 1)
@@ -1049,7 +1050,7 @@ bb.h:                                             ; preds = %.loopexit.split.us.
   %.024.i53 = phi i64 [ %i.cz, %bb.j ], [ %i.aq, %bb.f ]
   %.026.i52 = phi i64 [ %i.da, %bb.j ], [ %i.ah, %bb.f ] ; 2 uses
   %i.bw = and i64 %.026.i52, %i.ar
-  %i.bx = shl nsw i64 %i.bw, 7
+  %i.bx = shl nuw nsw i64 %i.bw, 7
   %i.by = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.bx ; 4 uses
   %i.bz = getelementptr i8, ptr %i.by, i64 80
   call void @llvm.prefetch.p0(ptr %i.bz, i32 0, i32 3, i32 1)
@@ -1452,7 +1453,7 @@ bb.c:                                             ; preds = %bb.b, %bb.f
   %i.m = xor i64 %notmask.i, -1
   %i.n = and i64 %.026.i82, %i.m
   %i.o = load ptr, ptr %1, align 8, !tbaa !398
-  %i.p = shl nsw i64 %i.n, 7
+  %i.p = shl nuw nsw i64 %i.n, 7
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.p ; 5 uses
   %i.r = getelementptr i8, ptr %i.q, i64 80
   call void @llvm.prefetch.p0(ptr %i.r, i32 0, i32 3, i32 1)
@@ -1557,7 +1558,7 @@ _ZN5folly3f146detail8F14TableINS1_19NodeContainerPolicyINS_7dynamicES4_NS_6detai
   %notmask.i32 = shl nsw i64 -1, %.pre-phi
   %i.bc = xor i64 %notmask.i32, -1                ; 2 uses
   %i.bd = and i64 %2, %i.bc
-  %i.be = shl nsw i64 %i.bd, 7                    ; 2 uses
+  %i.be = shl nuw nsw i64 %i.bd, 7                ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.bb, i64 %i.be ; 2 uses
   %i.bg = load <16 x i8>, ptr %i.bf, align 16, !tbaa !37
   %i.bh = icmp eq <16 x i8> %i.bg, zeroinitializer
@@ -1588,7 +1589,7 @@ bb.k:                                             ; preds = %bb.j
 _ZN5folly3f146detail8F14ChunkIPSt4pairIKNS_7dynamicES4_EE25incrOutboundOverflowCountEv.exit: ; preds = %bb.j, %bb.k
   %i.br = add i64 %i.bl, %.029                    ; 2 uses
   %i.bs = and i64 %i.br, %i.bc
-  %i.bt = shl nsw i64 %i.bs, 7                    ; 3 uses
+  %i.bt = shl nuw nsw i64 %i.bs, 7                ; 3 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bb, i64 %i.bt
   %i.bv = load <16 x i8>, ptr %i.bu, align 16     ; 2 uses
   %i.bw = icmp eq <16 x i8> %i.bv, zeroinitializer
@@ -1991,7 +1992,7 @@ bb.x:                                             ; preds = %bb.u
   %i.dz = xor i64 %notmask.i.i, -1                ; 2 uses
   %i.ea = load ptr, ptr %0, align 8, !tbaa !398   ; 2 uses
   %i.eb = and i64 %i.do, %i.dz                    ; 4 uses
-  %i.ec = shl nsw i64 %i.eb, 7                    ; 2 uses
+  %i.ec = shl nuw nsw i64 %i.eb, 7                ; 2 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %.0127178, i64 %i.eb
   %i.ee = load i8, ptr %i.ed, align 1, !tbaa !37  ; 2 uses
   %i.ef = icmp ult i8 %i.ee, 14
@@ -2014,7 +2015,7 @@ bb.y:                                             ; preds = %.lr.ph.i82
 _ZN5folly3f146detail8F14ChunkIPSt4pairIKNS_7dynamicES4_EE25incrOutboundOverflowCountEv.exit.i: ; preds = %bb.y, %.lr.ph.i82
   %i.em = add nuw i64 %i.dw, %i.eh
   %i.en = and i64 %i.em, %i.dz                    ; 4 uses
-  %i.eo = shl nsw i64 %i.en, 7                    ; 2 uses
+  %i.eo = shl nuw nsw i64 %i.en, 7                ; 2 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %.0127178, i64 %i.en
   %i.eq = load i8, ptr %i.ep, align 1, !tbaa !37  ; 2 uses
   %i.er = icmp ult i8 %i.eq, 14
@@ -2299,7 +2300,7 @@ bb.c:                                             ; preds = %_ZN5folly3f146detai
   %i.l = xor i64 %notmask.i, -1                   ; 2 uses
   %i.m = load ptr, ptr %0, align 8, !tbaa !398    ; 4 uses
   %i.n = and i64 %3, %i.l
-  %i.o = shl nsw i64 %i.n, 7                      ; 3 uses
+  %i.o = shl nuw nsw i64 %i.n, 7                  ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.o
   %i.q = icmp eq ptr %i.p, %i.b
   br i1 %i.q, label %.thread, label %.lr.ph
@@ -2331,7 +2332,7 @@ bb.d:                                             ; preds = %.lr.ph
 bb.e:                                             ; preds = %bb.d, %.lr.ph
   %i.ab = add i64 %i.h, %.01126                   ; 2 uses
   %i.ac = and i64 %i.ab, %i.l
-  %i.ad = shl nsw i64 %i.ac, 7                    ; 3 uses
+  %i.ad = shl nuw nsw i64 %i.ac, 7                ; 3 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.ad
   %i.af = icmp eq ptr %i.ae, %i.b
   br i1 %i.af, label %.thread, label %.lr.ph
@@ -2734,7 +2735,7 @@ bb.c:                                             ; preds = %bb.b, %bb.e
   %i.l = xor i64 %notmask.i, -1
   %i.m = and i64 %.026.i81, %i.l
   %i.n = load ptr, ptr %1, align 8, !tbaa !398
-  %i.o = shl nsw i64 %i.m, 7
+  %i.o = shl nuw nsw i64 %i.m, 7
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.o ; 5 uses
   %i.q = getelementptr i8, ptr %i.p, i64 80
   tail call void @llvm.prefetch.p0(ptr %i.q, i32 0, i32 3, i32 1)
@@ -2823,7 +2824,7 @@ _ZN5folly3f146detail8F14TableINS1_19NodeContainerPolicyINS_7dynamicES4_NS_6detai
   %notmask.i33 = shl nsw i64 -1, %.pre-phi
   %i.az = xor i64 %notmask.i33, -1                ; 2 uses
   %i.ba = and i64 %2, %i.az
-  %i.bb = shl nsw i64 %i.ba, 7                    ; 2 uses
+  %i.bb = shl nuw nsw i64 %i.ba, 7                ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ay, i64 %i.bb ; 2 uses
   %i.bd = load <16 x i8>, ptr %i.bc, align 16, !tbaa !37
   %i.be = icmp eq <16 x i8> %i.bd, zeroinitializer
@@ -2854,7 +2855,7 @@ bb.j:                                             ; preds = %bb.i
 _ZN5folly3f146detail8F14ChunkIPSt4pairIKNS_7dynamicES4_EE25incrOutboundOverflowCountEv.exit: ; preds = %bb.i, %bb.j
   %i.bo = add i64 %i.bi, %.030                    ; 2 uses
   %i.bp = and i64 %i.bo, %i.az
-  %i.bq = shl nsw i64 %i.bp, 7                    ; 3 uses
+  %i.bq = shl nuw nsw i64 %i.bp, 7                ; 3 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.ay, i64 %i.bq
   %i.bs = load <16 x i8>, ptr %i.br, align 16     ; 2 uses
   %i.bt = icmp eq <16 x i8> %i.bs, zeroinitializer

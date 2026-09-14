@@ -205,13 +205,13 @@ bb.k:                                             ; preds = %_ZNK4llvm3EVT20getV
   br label %bb.l
 
 bb.l:                                             ; preds = %._crit_edge, %bb.j
-  %.pre70.i.pre-phi = phi i1 [ %i.ak, %._crit_edge ], [ true, %bb.j ] ; 3 uses
+  %.pre70.i.pre-phi = phi i1 [ %i.ak, %._crit_edge ], [ true, %bb.j ] ; 2 uses
   %.not4156.not.i = icmp eq i64 %1, 0
   br i1 %.not4156.not.i, label %.critedge43.i, label %.lr.ph58.i
 
 .lr.ph58.i:                                       ; preds = %bb.l
   %.not4054.not.i = icmp eq i32 %i.af, 0
-  br i1 %.not4054.not.i, label %.lr.ph58.split.i, label %.lr.ph58.split.us.i
+  br i1 %.not4054.not.i, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i, label %.lr.ph58.split.us.i
 
 .lr.ph58.split.us.i:                              ; preds = %.lr.ph58.i
   br i1 %.pre70.i.pre-phi, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.us.us.i, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.us.i
@@ -302,10 +302,7 @@ bb.r:                                             ; preds = %bb.q
   %.not41.us.i = icmp ugt i64 %1, %i.bw
   br i1 %.not41.us.i, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.us.i, label %.critedge43.i, !llvm.loop !1383
 
-.lr.ph58.split.i:                                 ; preds = %.lr.ph58.i
-  br i1 %.pre70.i.pre-phi, label %.critedge43.i.thread, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i
-
-_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i:  ; preds = %.lr.ph58.split.i, %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i
+_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i:  ; preds = %.lr.ph58.i, %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i
   %i.bx = load i32, ptr %0, align 4, !tbaa !324
   %i.by = icmp ne i32 %i.bx, 0
   %i.bz = zext i1 %i.by to i32
@@ -315,7 +312,7 @@ _ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i:  ; preds = %.lr.ph58.split.i, %
 .critedge43.i:                                    ; preds = %..critedge_crit_edge.us.i, %..critedge_crit_edge.us.us.i, %bb.l
   br i1 %.pre70.i.pre-phi, label %.critedge43.i.thread, label %_ZL10isVTRNMaskN4llvm8ArrayRefIiEENS_3EVTERj.exit
 
-.critedge43.i.thread:                             ; preds = %.lr.ph58.split.i, %.critedge43.i
+.critedge43.i.thread:                             ; preds = %.critedge43.i
   store i32 0, ptr %4, align 4, !tbaa !324
   br label %_ZL10isVTRNMaskN4llvm8ArrayRefIiEENS_3EVTERj.exit
 
@@ -424,7 +421,7 @@ _ZNK4llvm3EVT20getVectorNumElementsEv.exit.i61:   ; preds = %bb.z, %_ZNK4llvm3MV
   %.not.i62 = icmp eq i64 %1, %i.dg
   %i.dh = shl i32 %i.df, 1
   %i.di = zext i32 %i.dh to i64
-  %.not30.i = icmp eq i64 %1, %i.di               ; 4 uses
+  %.not30.i = icmp eq i64 %1, %i.di               ; 3 uses
   %or.cond44.i = or i1 %.not.i62, %.not30.i
   br i1 %or.cond44.i, label %.preheader.i, label %_ZL10isVUZPMaskN4llvm8ArrayRefIiEENS_3EVTERj.exit.thread
 
@@ -434,7 +431,7 @@ _ZNK4llvm3EVT20getVectorNumElementsEv.exit.i61:   ; preds = %bb.z, %_ZNK4llvm3MV
 
 .lr.ph49.i:                                       ; preds = %.preheader.i
   %.not3245.not.i = icmp eq i32 %i.df, 0
-  br i1 %.not3245.not.i, label %.lr.ph49.split.i, label %.lr.ph49.split.us.i
+  br i1 %.not3245.not.i, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i69, label %.lr.ph49.split.us.i
 
 .lr.ph49.split.us.i:                              ; preds = %.lr.ph49.i
   br i1 %.not30.i, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.us.us.i67, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.us.i64
@@ -509,10 +506,7 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
   %.not33.us.i = icmp ugt i64 %1, %i.ei
   br i1 %.not33.us.i, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.us.i64, label %.critedge35.i, !llvm.loop !1385
 
-.lr.ph49.split.i:                                 ; preds = %.lr.ph49.i
-  br i1 %.not30.i, label %.critedge35.thread.i, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i69
-
-_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i69: ; preds = %.lr.ph49.split.i, %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i69
+_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i69: ; preds = %.lr.ph49.i, %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i69
   %i.ej = load i32, ptr %0, align 4, !tbaa !324
   %i.ek = icmp ne i32 %i.ej, 0
   %i.el = zext i1 %i.ek to i32
@@ -522,7 +516,7 @@ _ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i69: ; preds = %.lr.ph49.split.i, 
 .critedge35.i:                                    ; preds = %..critedge_crit_edge.us.i65, %..critedge_crit_edge.us.us.i68, %.preheader.i
   br i1 %.not30.i, label %.critedge35.thread.i, label %bb.ag
 
-.critedge35.thread.i:                             ; preds = %.critedge35.i, %.lr.ph49.split.i
+.critedge35.thread.i:                             ; preds = %.critedge35.i
   store i32 0, ptr %4, align 4, !tbaa !324
   br label %bb.ag
 
@@ -682,13 +676,13 @@ bb.au:                                            ; preds = %_ZNK4llvm3EVT20getV
   br label %bb.av
 
 bb.av:                                            ; preds = %._crit_edge239, %bb.at
-  %.pre77.i.pre-phi = phi i1 [ %i.ge, %._crit_edge239 ], [ true, %bb.at ] ; 3 uses
+  %.pre77.i.pre-phi = phi i1 [ %i.ge, %._crit_edge239 ], [ true, %bb.at ] ; 2 uses
   %.not4867.not.i = icmp eq i64 %1, 0
   br i1 %.not4867.not.i, label %.critedge51.i, label %.lr.ph69.i
 
 .lr.ph69.i:                                       ; preds = %bb.av
   %.not4764.not.i = icmp eq i32 %i.fz, 0
-  br i1 %.not4764.not.i, label %.lr.ph69.split.i, label %.lr.ph69.split.us.i
+  br i1 %.not4764.not.i, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i96, label %.lr.ph69.split.us.i
 
 .lr.ph69.split.us.i:                              ; preds = %.lr.ph69.i
   br i1 %.pre77.i.pre-phi, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.us.us.i94, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.us.preheader.i
@@ -786,10 +780,7 @@ bb.bb:                                            ; preds = %bb.ba
   %.not48.us.i = icmp ugt i64 %1, %i.hs
   br i1 %.not48.us.i, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.us.i88, label %.critedge51.i, !llvm.loop !1387
 
-.lr.ph69.split.i:                                 ; preds = %.lr.ph69.i
-  br i1 %.pre77.i.pre-phi, label %.critedge51.i.thread, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i96
-
-_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i96: ; preds = %.lr.ph69.split.i, %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i96
+_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i96: ; preds = %.lr.ph69.i, %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i96
   %i.ht = load i32, ptr %0, align 4, !tbaa !324
   %i.hu = icmp ne i32 %i.ht, 0
   %i.hv = zext i1 %i.hu to i32
@@ -799,7 +790,7 @@ _ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i96: ; preds = %.lr.ph69.split.i, 
 .critedge51.i:                                    ; preds = %..critedge_crit_edge.us.i89, %..critedge_crit_edge.us.us.i95, %bb.av
   br i1 %.pre77.i.pre-phi, label %.critedge51.i.thread, label %bb.bc
 
-.critedge51.i.thread:                             ; preds = %.lr.ph69.split.i, %.critedge51.i
+.critedge51.i.thread:                             ; preds = %.critedge51.i
   store i32 0, ptr %4, align 4, !tbaa !324
   br label %bb.bc
 
@@ -960,13 +951,13 @@ bb.bq:                                            ; preds = %_ZNK4llvm3EVT20getV
   br label %bb.br
 
 bb.br:                                            ; preds = %._crit_edge240, %bb.bp
-  %.pre66.i.pre-phi = phi i1 [ %i.jo, %._crit_edge240 ], [ true, %bb.bp ] ; 3 uses
+  %.pre66.i.pre-phi = phi i1 [ %i.jo, %._crit_edge240 ], [ true, %bb.bp ] ; 2 uses
   %.not3956.not.i = icmp eq i64 %1, 0
   br i1 %.not3956.not.i, label %.critedge41.i, label %.lr.ph58.i117
 
 .lr.ph58.i117:                                    ; preds = %bb.br
   %.not3854.not.i = icmp eq i32 %i.jj, 0
-  br i1 %.not3854.not.i, label %.lr.ph58.split.i131, label %.lr.ph58.split.us.i118
+  br i1 %.not3854.not.i, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i132, label %.lr.ph58.split.us.i118
 
 .lr.ph58.split.us.i118:                           ; preds = %.lr.ph58.i117
   br i1 %.pre66.i.pre-phi, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.us.us.i125, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.us.i119
@@ -1053,10 +1044,7 @@ bb.bx:                                            ; preds = %bb.bw
   %.not39.us.i124 = icmp ugt i64 %1, %i.kw
   br i1 %.not39.us.i124, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.us.i119, label %.critedge41.i, !llvm.loop !1389
 
-.lr.ph58.split.i131:                              ; preds = %.lr.ph58.i117
-  br i1 %.pre66.i.pre-phi, label %.critedge41.i.thread, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i132
-
-_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i132: ; preds = %.lr.ph58.split.i131, %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i132
+_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i132: ; preds = %.lr.ph58.i117, %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i132
   %i.kx = load i32, ptr %0, align 4, !tbaa !324
   %i.ky = icmp ne i32 %i.kx, 0
   %i.kz = zext i1 %i.ky to i32
@@ -1066,7 +1054,7 @@ _ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i132: ; preds = %.lr.ph58.split.i1
 .critedge41.i:                                    ; preds = %..critedge_crit_edge.us.i123, %..critedge_crit_edge.us.us.i129, %bb.br
   br i1 %.pre66.i.pre-phi, label %.critedge41.i.thread, label %_ZL19isVTRN_v_undef_MaskN4llvm8ArrayRefIiEENS_3EVTERj.exit
 
-.critedge41.i.thread:                             ; preds = %.lr.ph58.split.i131, %.critedge41.i
+.critedge41.i.thread:                             ; preds = %.critedge41.i
   store i32 0, ptr %4, align 4, !tbaa !324
   br label %_ZL19isVTRN_v_undef_MaskN4llvm8ArrayRefIiEENS_3EVTERj.exit
 
@@ -1175,7 +1163,7 @@ _ZNK4llvm3EVT20getVectorNumElementsEv.exit.i148:  ; preds = %bb.cf, %_ZNK4llvm3M
   %.not.i149 = icmp eq i64 %1, %i.mg
   %i.mh = shl i32 %i.mf, 1
   %i.mi = zext i32 %i.mh to i64
-  %.not49.i = icmp eq i64 %1, %i.mi               ; 5 uses
+  %.not49.i = icmp eq i64 %1, %i.mi               ; 4 uses
   %or.cond67.i = or i1 %.not.i149, %.not49.i
   br i1 %or.cond67.i, label %bb.cg, label %_ZL19isVUZP_v_undef_MaskN4llvm8ArrayRefIiEENS_3EVTERj.exit.thread
 
@@ -1186,7 +1174,7 @@ bb.cg:                                            ; preds = %_ZNK4llvm3EVT20getV
 
 .lr.ph.i:                                         ; preds = %bb.cg
   %.not5371.not.i = icmp eq i32 %i.mf, 0
-  br i1 %.not5371.not.i, label %.lr.ph.split.i, label %.lr.ph.split.us.i
+  br i1 %.not5371.not.i, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i158, label %.lr.ph.split.us.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i
   %.not5168.not.i = icmp eq i32 %i.mj, 0
@@ -1291,10 +1279,7 @@ bb.ck:                                            ; preds = %bb.cj
   %i.no = zext i1 %i.nn to i32
   br label %.sink.split.i
 
-.lr.ph.split.i:                                   ; preds = %.lr.ph.i
-  br i1 %.not49.i, label %.sink.split.i, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i158
-
-_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i158: ; preds = %.lr.ph.split.i, %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i158
+_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i158: ; preds = %.lr.ph.i, %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i158
   %i.np = load i32, ptr %0, align 4, !tbaa !324
   %i.nq = icmp ne i32 %i.np, 0
   %i.nr = zext i1 %i.nq to i32
@@ -1304,8 +1289,8 @@ _ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i158: ; preds = %.lr.ph.split.i, %
 .critedge58.i:                                    ; preds = %..critedge56_crit_edge.split.us.us.us.i, %..critedge56_crit_edge.split.us.us.us.us.i, %bb.cg
   br i1 %.not49.i, label %.sink.split.i, label %bb.cl
 
-.sink.split.i:                                    ; preds = %.critedge58.i, %.lr.ph.split.i, %.critedge58.thread108.i, %.lr.ph.split.us.split.i
-  %.sink.i = phi i32 [ %i.no, %.critedge58.thread108.i ], [ 0, %.lr.ph.split.us.split.i ], [ 0, %.lr.ph.split.i ], [ 0, %.critedge58.i ]
+.sink.split.i:                                    ; preds = %.critedge58.i, %.critedge58.thread108.i, %.lr.ph.split.us.split.i
+  %.sink.i = phi i32 [ %i.no, %.critedge58.thread108.i ], [ 0, %.lr.ph.split.us.split.i ], [ 0, %.critedge58.i ]
   store i32 %.sink.i, ptr %4, align 4, !tbaa !324
   br label %bb.cl
 
@@ -1465,13 +1450,13 @@ bb.cz:                                            ; preds = %_ZNK4llvm3EVT20getV
   br label %bb.da
 
 bb.da:                                            ; preds = %._crit_edge241, %bb.cy
-  %.pre74.i.pre-phi = phi i1 [ %i.pk, %._crit_edge241 ], [ true, %bb.cy ] ; 3 uses
+  %.pre74.i.pre-phi = phi i1 [ %i.pk, %._crit_edge241 ], [ true, %bb.cy ] ; 2 uses
   %.not4664.not.i = icmp eq i64 %1, 0
   br i1 %.not4664.not.i, label %.critedge49.i, label %.lr.ph66.i
 
 .lr.ph66.i:                                       ; preds = %bb.da
   %.not4561.not.i = icmp eq i32 %i.pf, 0
-  br i1 %.not4561.not.i, label %.lr.ph66.split.i, label %.lr.ph66.split.us.i
+  br i1 %.not4561.not.i, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i190, label %.lr.ph66.split.us.i
 
 .lr.ph66.split.us.i:                              ; preds = %.lr.ph66.i
   br i1 %.pre74.i.pre-phi, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.us.us.i186, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.us.preheader.i177
@@ -1567,10 +1552,7 @@ bb.dg:                                            ; preds = %bb.df
   %.not46.us.i181 = icmp ugt i64 %1, %i.qw
   br i1 %.not46.us.i181, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.us.i178, label %.critedge49.i, !llvm.loop !1394
 
-.lr.ph66.split.i:                                 ; preds = %.lr.ph66.i
-  br i1 %.pre74.i.pre-phi, label %.critedge49.i.thread, label %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i190
-
-_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i190: ; preds = %.lr.ph66.split.i, %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i190
+_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i190: ; preds = %.lr.ph66.i, %_ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i190
   %i.qx = load i32, ptr %0, align 4, !tbaa !324
   %i.qy = icmp ne i32 %i.qx, 0
   %i.qz = zext i1 %i.qy to i32
@@ -1580,7 +1562,7 @@ _ZL14SelectPairHalfjN4llvm8ArrayRefIiEEj.exit.i190: ; preds = %.lr.ph66.split.i,
 .critedge49.i:                                    ; preds = %..critedge_crit_edge.us.i180, %..critedge_crit_edge.us.us.i188, %bb.da
   br i1 %.pre74.i.pre-phi, label %.critedge49.i.thread, label %bb.dh
 
-.critedge49.i.thread:                             ; preds = %.lr.ph66.split.i, %.critedge49.i
+.critedge49.i.thread:                             ; preds = %.critedge49.i
   store i32 0, ptr %4, align 4, !tbaa !324
   br label %bb.dh
 

@@ -205,6 +205,21 @@ _RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultAhj2_NtNtB4_5array17TryFromSliceEr
   %i.w = icmp ugt i64 %i.v, %..i.i
   br i1 %i.w, label %3, label %bb.e
 
+3:                                                ; preds = %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultAhj2_NtNtB4_5array17TryFromSliceErrorE6unwrapCs7gfv9tzbXmh_6yara_x.exit100.i, %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultAhj4_NtNtB4_5array17TryFromSliceErrorE6unwrapCs7gfv9tzbXmh_6yara_x.exit102.i
+  br i1 %i.o, label %_RINvCskIN1fSNyKrj_7tinyzip9find_eocdRShECs7gfv9tzbXmh_6yara_x.exit.thread.sink.split, label %bb.c
+
+_RINvCskIN1fSNyKrj_7tinyzip9find_eocdRShECs7gfv9tzbXmh_6yara_x.exit.thread.sink.split: ; preds = %3, %bb.b
+  %.sroa.7.1152.ph = phi i16 [ 0, %bb.b ], [ 1, %3 ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !4854
+  br label %_RINvCskIN1fSNyKrj_7tinyzip9find_eocdRShECs7gfv9tzbXmh_6yara_x.exit.thread
+
+_RINvCskIN1fSNyKrj_7tinyzip9find_eocdRShECs7gfv9tzbXmh_6yara_x.exit.thread: ; preds = %_RINvCskIN1fSNyKrj_7tinyzip9find_eocdRShECs7gfv9tzbXmh_6yara_x.exit.thread.sink.split, %bb.a
+  %.sroa.7.1152 = phi i16 [ 1, %bb.a ], [ %.sroa.7.1152.ph, %_RINvCskIN1fSNyKrj_7tinyzip9find_eocdRShECs7gfv9tzbXmh_6yara_x.exit.thread.sink.split ]
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i16 %.sroa.7.1152, ptr %4, align 8
+  store ptr null, ptr %0, align 8
+  br label %bb.an
+
 bb.e:                                             ; preds = %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultAhj2_NtNtB4_5array17TryFromSliceErrorE6unwrapCs7gfv9tzbXmh_6yara_x.exit100.i
   %i.x = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.p
   %.sroa.050.0.copyload.i = load i16, ptr %i.x, align 1, !noalias !4854
@@ -221,21 +236,6 @@ bb.e:                                             ; preds = %_RNvMNtCskKLDkoKarT
   %i.ad = or i16 %.sroa.051.0.copyload.i, %.sroa.050.0.copyload.i
   %or.cond = icmp eq i16 %i.ad, 0
   br i1 %or.cond, label %bb.g, label %bb.f
-
-3:                                                ; preds = %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultAhj2_NtNtB4_5array17TryFromSliceErrorE6unwrapCs7gfv9tzbXmh_6yara_x.exit100.i, %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultAhj4_NtNtB4_5array17TryFromSliceErrorE6unwrapCs7gfv9tzbXmh_6yara_x.exit102.i
-  br i1 %i.o, label %_RINvCskIN1fSNyKrj_7tinyzip9find_eocdRShECs7gfv9tzbXmh_6yara_x.exit.thread.sink.split, label %bb.c
-
-_RINvCskIN1fSNyKrj_7tinyzip9find_eocdRShECs7gfv9tzbXmh_6yara_x.exit.thread.sink.split: ; preds = %3, %bb.b
-  %.sroa.7.1152.ph = phi i16 [ 0, %bb.b ], [ 1, %3 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !4854
-  br label %_RINvCskIN1fSNyKrj_7tinyzip9find_eocdRShECs7gfv9tzbXmh_6yara_x.exit.thread
-
-_RINvCskIN1fSNyKrj_7tinyzip9find_eocdRShECs7gfv9tzbXmh_6yara_x.exit.thread: ; preds = %_RINvCskIN1fSNyKrj_7tinyzip9find_eocdRShECs7gfv9tzbXmh_6yara_x.exit.thread.sink.split, %bb.a
-  %.sroa.7.1152 = phi i16 [ 1, %bb.a ], [ %.sroa.7.1152.ph, %_RINvCskIN1fSNyKrj_7tinyzip9find_eocdRShECs7gfv9tzbXmh_6yara_x.exit.thread.sink.split ]
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i16 %.sroa.7.1152, ptr %4, align 8
-  store ptr null, ptr %0, align 8
-  br label %bb.an
 
 bb.f:                                             ; preds = %bb.e
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 8

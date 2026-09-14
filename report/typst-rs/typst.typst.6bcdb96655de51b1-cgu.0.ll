@@ -205,23 +205,15 @@ _RNvMs6_NtCs2qDE43xvXom_9hashbrown3rawINtB5_8RawTablejE16with_capacity_inCs9fPPV
   %.sroa.9.0.i.i.i.i.i.i = phi i64 [ %.sroa.12.012.i.i.i.i.i.i.i, %_RINvMsa_NtCs2qDE43xvXom_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtNtB6_5alloc5inner6GlobalECs9fPPV5zPXBl_5typst.exit.thread.i.i.i.i.i.i.i ], [ %.sroa.09.0.i.i.i.i.i.i.i.i, %_RINvMsa_NtCs2qDE43xvXom_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtNtB6_5alloc5inner6GlobalECs9fPPV5zPXBl_5typst.exit.i.i.i.i.i.i.i ] ; 2 uses
   %.sroa.6.0.i.i.i.i.i.i = phi i64 [ %.sroa.7.013.i.i.i.i.i.i.i, %_RINvMsa_NtCs2qDE43xvXom_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtNtB6_5alloc5inner6GlobalECs9fPPV5zPXBl_5typst.exit.thread.i.i.i.i.i.i.i ], [ %i.ck, %_RINvMsa_NtCs2qDE43xvXom_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtNtB6_5alloc5inner6GlobalECs9fPPV5zPXBl_5typst.exit.i.i.i.i.i.i.i ] ; 5 uses
   %.sroa.0.0.i.i.i.i.i.i = phi ptr [ null, %_RINvMsa_NtCs2qDE43xvXom_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtNtB6_5alloc5inner6GlobalECs9fPPV5zPXBl_5typst.exit.thread.i.i.i.i.i.i.i ], [ %i.cn, %_RINvMsa_NtCs2qDE43xvXom_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtNtB6_5alloc5inner6GlobalECs9fPPV5zPXBl_5typst.exit.i.i.i.i.i.i.i ] ; 3 uses
-  %i.co = mul i64 %i.bq, 56                       ; 3 uses
+  %i.co = mul i64 %i.bq, 56                       ; 2 uses
   %or.cond.i.i.i.i.i.i = icmp ugt i64 %i.bq, 164703072086692425
-  br i1 %or.cond.i.i.i.i.i.i, label %bb.o, label %4, !prof !28284
+  br i1 %or.cond.i.i.i.i.i.i, label %bb.o, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i, !prof !28284
 
-4:                                                ; preds = %_RNvMs6_NtCs2qDE43xvXom_9hashbrown3rawINtB5_8RawTablejE16with_capacity_inCs9fPPV5zPXBl_5typst.exit.i.i.i.i.i
-  %5 = icmp eq i64 %i.co, 0
-  br i1 %5, label %_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9fPPV5zPXBl_5typst.exit.i.i.i, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i
-
-_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i: ; preds = %4
+_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i: ; preds = %_RNvMs6_NtCs2qDE43xvXom_9hashbrown3rawINtB5_8RawTablejE16with_capacity_inCs9fPPV5zPXBl_5typst.exit.i.i.i.i.i
   call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #56, !noalias !28285
-  %i.cp = call noundef align 8 ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef %i.co, i64 noundef range(i64 1, -9223372036854775807) 8) #56, !noalias !28285 ; 2 uses
+  %i.cp = call noundef align 8 ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef %i.co, i64 noundef range(i64 1, -9223372036854775807) 8) #56, !noalias !28285 ; 3 uses
   %i.cq = icmp eq ptr %i.cp, null
-  br i1 %i.cq, label %bb.o, label %6
-
-6:                                                ; preds = %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i
-  %7 = ptrtoint ptr %i.cp to i64
-  br label %_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9fPPV5zPXBl_5typst.exit.i.i.i
+  br i1 %i.cq, label %bb.o, label %_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9fPPV5zPXBl_5typst.exit.i.i.i
 
 bb.n:                                             ; preds = %bb.o
   %i.cr = landingpad { ptr, i32 }
@@ -255,15 +247,10 @@ bb.o:                                             ; preds = %_RNvXs1_NtCs1xwejQu
 bb.p:                                             ; preds = %bb.o
   unreachable
 
-_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9fPPV5zPXBl_5typst.exit.i.i.i: ; preds = %6, %4
-  %.sroa.10.0.i.i.i.i.i = phi i64 [ %7, %6 ], [ 8, %4 ]
-  %.sroa.413.0.i.i.i.i.i = phi i64 [ %i.bq, %6 ], [ 0, %4 ] ; 3 uses
-  %8 = inttoptr i64 %.sroa.10.0.i.i.i.i.i to ptr  ; 2 uses
-  %9 = icmp samesign ule i64 %i.bq, %.sroa.413.0.i.i.i.i.i
-  call void @llvm.assume(i1 %9)
-  store i64 %.sroa.413.0.i.i.i.i.i, ptr %i.af, align 8, !alias.scope !28281, !noalias !28280
+_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9fPPV5zPXBl_5typst.exit.i.i.i: ; preds = %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i
+  store i64 %i.bq, ptr %i.af, align 8, !alias.scope !28281, !noalias !28280
   %.sroa.4.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.af, i64 8 ; 10 uses
-  store ptr %8, ptr %.sroa.4.0..sroa_idx.i.i.i.i, align 8, !alias.scope !28281, !noalias !28280
+  store ptr %i.cp, ptr %.sroa.4.0..sroa_idx.i.i.i.i, align 8, !alias.scope !28281, !noalias !28280
   %.sroa.5.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.af, i64 16 ; 7 uses
   store i64 0, ptr %.sroa.5.0..sroa_idx.i.i.i.i, align 8, !alias.scope !28281, !noalias !28280
   %.sroa.6.0..sroa_idx6.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.af, i64 24 ; 2 uses
@@ -280,7 +267,7 @@ _RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_
   br i1 %i.dc, label %bb.q, label %_RINvMs6_NtCs2qDE43xvXom_9hashbrown3rawINtB6_8RawTablejE7reserveNCINvNtNtCsjFU9swAW47b_8indexmap3map4core8get_hashNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtB1R_5value5ValueE0ECs9fPPV5zPXBl_5typst.exit.i.i.i.i.i, !prof !28290
 
 bb.q:                                             ; preds = %_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9fPPV5zPXBl_5typst.exit.i.i.i
-  %i.dd = invoke { i64, i64 } @_RINvMs6_NtCs2qDE43xvXom_9hashbrown3rawINtB6_8RawTablejE14reserve_rehashNCINvNtNtCsjFU9swAW47b_8indexmap3map4core8get_hashNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtB1Z_5value5ValueE0EB21_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %.sroa.6.0..sroa_idx6.i.i.i.i, i64 noundef %i.bq, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %8, i64 noundef 0, i1 noundef zeroext true) #63
+  %i.dd = invoke { i64, i64 } @_RINvMs6_NtCs2qDE43xvXom_9hashbrown3rawINtB6_8RawTablejE14reserve_rehashNCINvNtNtCsjFU9swAW47b_8indexmap3map4core8get_hashNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtB1Z_5value5ValueE0EB21_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %.sroa.6.0..sroa_idx6.i.i.i.i, i64 noundef %i.bq, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.cp, i64 noundef 0, i1 noundef zeroext true) #63
           to label %.noexc.i.i.i unwind label %.loopexit.split-lp.i.i.i, !noalias !28280 ; 0 uses
 
 .noexc.i.i.i:                                     ; preds = %bb.q
@@ -290,7 +277,7 @@ bb.q:                                             ; preds = %_RNvMs1_NtCsjFU9swA
 
 _RINvMs6_NtCs2qDE43xvXom_9hashbrown3rawINtB6_8RawTablejE7reserveNCINvNtNtCsjFU9swAW47b_8indexmap3map4core8get_hashNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtB1R_5value5ValueE0ECs9fPPV5zPXBl_5typst.exit.i.i.i.i.i: ; preds = %.noexc.i.i.i, %_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9fPPV5zPXBl_5typst.exit.i.i.i
   %i.de = phi i64 [ %.pre62.i.i.i, %.noexc.i.i.i ], [ 0, %_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9fPPV5zPXBl_5typst.exit.i.i.i ] ; 5 uses
-  %i.df = phi i64 [ %.pre.i.i.i, %.noexc.i.i.i ], [ %.sroa.413.0.i.i.i.i.i, %_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9fPPV5zPXBl_5typst.exit.i.i.i ] ; 3 uses
+  %i.df = phi i64 [ %.pre.i.i.i, %.noexc.i.i.i ], [ %i.bq, %_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9fPPV5zPXBl_5typst.exit.i.i.i ] ; 3 uses
   %i.dg = icmp ult i64 %i.de, 164703072086692426
   call void @llvm.assume(i1 %i.dg)
   %i.dh = sub nsw i64 %i.df, %i.de
@@ -693,7 +680,7 @@ bb.ex:                                            ; preds = %.noexc100.i, %_RNvX
   store i64 %i.ack, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !46712, !noalias !46706
   %i.acl = load i32, ptr %i.p, align 4, !noalias !46701, !noundef !28
   %i.acm = srem i32 %i.acl, 100                   ; 2 uses
-  %i.acn = trunc nsw i32 %i.acm to i8             ; 2 uses
+  %i.acn = trunc nuw nsw i32 %i.acm to i8         ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !46719)
   %i.aco = icmp slt i32 %i.acm, 0
   br i1 %i.aco, label %_RINvMNtNtCseKXfNLkF2r6_6chrono6format10formattingINtB3_13DelayedFormatNtNtB5_8strftime13StrftimeItemsE14format_numericNtNtCs1xwejQucwHj_5alloc6string6StringECs9fPPV5zPXBl_5typst.exit.thread.thread.i, label %bb.ey

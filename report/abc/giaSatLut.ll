@@ -205,12 +205,14 @@ Gia_SatDumpClause.exit338.1:                      ; preds = %.lr.ph.i333.1, %Gia
 .lr.ph494:                                        ; preds = %.lr.ph.i340
   %i.ev = shl nsw i32 %i.fe, 1
   %i.ew = mul nuw nsw i64 %indvars.iv603, 268     ; 4 uses
-  %invariant.op496 = add nuw i64 %i.ew, 4
   %6 = getelementptr [4 x i8], ptr %0, i64 %i.ew
   %7 = getelementptr i8, ptr %6, i64 8
-  %i.ex = add nuw i64 %i.ew, 28
+  %8 = add nuw i64 %i.ew, 28
+  %9 = and i64 %8, 4294967292
+  %i.ex = add nuw i64 %i.ew, 4
   %i.ey = and i64 %i.ex, 4294967292
-  %i.ez = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.ey
+  %invariant.gep740 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.ey
+  %i.ez = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %9
   br label %bb.h
 
 .lr.ph.i340:                                      ; preds = %.lr.ph489, %.lr.ph.i340
@@ -251,15 +253,12 @@ bb.h:                                             ; preds = %.lr.ph494, %.loopex
   br i1 %i.fk, label %.lr.ph492, label %.loopexit461
 
 .lr.ph492:                                        ; preds = %bb.h
-  %.reass.reass = add i64 %invariant.op496, %indvars.iv588
-  %sext = shl i64 %.reass.reass, 32
-  %8 = ashr exact i64 %sext, 30
-  %9 = getelementptr inbounds i8, ptr %0, i64 %8
+  %gep741 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep740, i64 %indvars.iv588
   br label %.lr.ph.i347
 
 .lr.ph.i347:                                      ; preds = %.lr.ph492, %.lr.ph.i347
   %indvars.iv583 = phi i64 [ %indvars.iv581, %.lr.ph492 ], [ %indvars.iv.next584, %.lr.ph.i347 ] ; 2 uses
-  %i.fl = load i32, ptr %9, align 4, !tbaa !49
+  %i.fl = load i32, ptr %gep741, align 4, !tbaa !49
   %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.ez, i64 %indvars.iv583
   %i.fn = load i32, ptr %i.fm, align 4, !tbaa !49
   %i.fo = load i32, ptr %7, align 4, !tbaa !49    ; 2 uses

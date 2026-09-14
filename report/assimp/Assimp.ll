@@ -205,7 +205,7 @@ bb.fm:                                            ; preds = %bb.fl
   %i.ws = mul nsw i64 %i.wr, %i.uv
   %i.wt = getelementptr inbounds i8, ptr %i.wp, i64 %i.ws
   %i.wu = add nuw nsw i64 %indvars.iv.i351, %i.wn
-  %i.wv = mul nsw i64 %i.wu, %i.uv
+  %i.wv = mul nuw nsw i64 %i.wu, %i.uv
   %i.ww = getelementptr inbounds i8, ptr %.pre115.i, i64 %i.wv
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.wt, ptr align 1 %i.ww, i64 %i.uv, i1 false)
   %indvars.iv.next.i352 = or disjoint i64 %indvars.iv.i351, 1 ; 2 uses
@@ -214,7 +214,7 @@ bb.fm:                                            ; preds = %bb.fl
   %i.wz = mul nsw i64 %i.wy, %i.uv
   %i.xa = getelementptr inbounds i8, ptr %i.wp, i64 %i.wz
   %i.xb = add nuw nsw i64 %indvars.iv.next.i352, %i.wn
-  %i.xc = mul nsw i64 %i.xb, %i.uv
+  %i.xc = mul nuw nsw i64 %i.xb, %i.uv
   %i.xd = getelementptr inbounds i8, ptr %.pre115.i, i64 %i.xc
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.xa, ptr align 1 %i.xd, i64 %i.uv, i1 false)
   %indvars.iv.next.i352.1 = add nuw nsw i64 %indvars.iv.i351, 2 ; 2 uses
@@ -233,7 +233,7 @@ bb.fm:                                            ; preds = %bb.fl
   %i.xg = mul nsw i64 %i.xf, %i.uv
   %i.xh = getelementptr inbounds i8, ptr %i.wp, i64 %i.xg
   %i.xi = add nuw nsw i64 %indvars.iv.i351.epil.init, %i.wn
-  %i.xj = mul nsw i64 %i.xi, %i.uv
+  %i.xj = mul nuw nsw i64 %i.xi, %i.uv
   %i.xk = getelementptr inbounds i8, ptr %.pre115.i, i64 %i.xj
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.xh, ptr align 1 %i.xk, i64 %i.uv, i1 false)
   br label %._crit_edge.i

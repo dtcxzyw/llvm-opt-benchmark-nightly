@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.g, %bb.f
   %i.hf = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.hd
   %i.hg = load ptr, ptr %i.hf, align 8, !tbaa !189
   %i.hh = getelementptr inbounds nuw i8, ptr %i.hg, i64 %.idx195.us
-  %i.hi = mul nsw i64 %i.gz, %i.hd
+  %i.hi = mul nuw nsw i64 %i.gz, %i.hd
   %i.hj = getelementptr inbounds nuw [4 x i8], ptr %i.cm, i64 %i.hi
   call fastcc void @_ZN3jxl6N_SSE412_GLOBAL__N_119TransformFromPixelsENS_14AcStrategyTypeEPKfmPfS5_(i32 noundef %i.he, ptr noundef %i.hh, i64 noundef %i.aq, ptr noundef %i.hj, ptr noundef nonnull %i.bd) #48
   %.0183.add.us = add nuw nsw i64 %.0183.idx274.us, 4 ; 2 uses
@@ -608,58 +608,46 @@ bb.c:                                             ; preds = %bb.b, %.loopexit.2
 
 .lr.ph87.i:                                       ; preds = %bb.c
   %i.ai = lshr exact i64 %i.ah, 1                 ; 2 uses
-  %i.aj = shl i64 %5, 3                           ; 4 uses
+  %i.aj = shl i64 %5, 3                           ; 3 uses
   %.not92.i = icmp eq i64 %i.aj, 0
   %i.ak = lshr exact i64 %i.aj, 1
   br i1 %.not92.i, label %_ZN3jxl6N_AVX215QuantizeBlockACERKNS_9QuantizerEbmfNS_14AcStrategyTypeEmmPfPKfPKiPi.exit, label %.lr.ph87.split.i
 
 .lr.ph87.split.i:                                 ; preds = %.lr.ph87.i
   %i.al = icmp eq i64 %5, 1
-  br i1 %i.al, label %.lr.ph.us.i, label %.lr.ph.i
+  br i1 %i.al, label %bb.d, label %.lr.ph.i
 
-.lr.ph.us.i:                                      ; preds = %.lr.ph87.split.i, %._crit_edge.split.us.us.i
-  %.07585.us.i = phi i64 [ %25, %._crit_edge.split.us.us.i ], [ 0, %.lr.ph87.split.i ] ; 3 uses
-  %.not79.us.i = icmp ult i64 %.07585.us.i, %i.ai ; 2 uses
-  %11 = shl i64 %.07585.us.i, 3                   ; 3 uses
+bb.d:                                             ; preds = %.lr.ph87.split.i, %bb.d
+  %.07684.us.us.i = phi i64 [ %i.aw, %bb.d ], [ 0, %.lr.ph87.split.i ] ; 3 uses
+  %.not79.us.i = icmp ult i64 %.07684.us.us.i, %i.ai ; 2 uses
+  %11 = shl i64 %.07684.us.us.i, 3                ; 3 uses
   %.sroa.sel73.idx.sroa.sel.idx.sroa.sel.idx = select i1 %.not79.us.i, i64 0, i64 8
   %.sroa.sel73.idx.sroa.sel.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sroa.sel73.idx.sroa.sel.idx.sroa.sel.idx
   %.sroa.sel73.sroa.sel.v.sroa.sel.v.sroa.sel.v = select i1 %.not79.us.i, i64 4, i64 12
   %.sroa.sel73.sroa.sel.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sroa.sel73.sroa.sel.v.sroa.sel.v.sroa.sel.v
   %12 = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %11
   %13 = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %11
-  %14 = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %11
-  %15 = load float, ptr %.sroa.sel73.sroa.sel.v.sroa.sel.v.sroa.sel, align 4, !tbaa !56, !noalias !944
-  %16 = insertelement <8 x float> poison, float %15, i64 0
-  %17 = load float, ptr %.sroa.sel73.idx.sroa.sel.idx.sroa.sel, align 8, !tbaa !56, !noalias !944
-  %18 = insertelement <8 x float> poison, float %17, i64 0
-  %19 = shufflevector <8 x float> %18, <8 x float> %16, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 8, i32 8, i32 8, i32 8>
-  br label %bb.d
-
-bb.d:                                             ; preds = %bb.d, %.lr.ph.us.i
-  %.07684.us.us.i = phi i64 [ 0, %.lr.ph.us.i ], [ %i.aw, %bb.d ] ; 4 uses
-  %i.am = getelementptr inbounds nuw [4 x i8], ptr %12, i64 %.07684.us.us.i
-  %20 = load <8 x float>, ptr %i.am, align 32, !tbaa !57, !noalias !944
-  %21 = fmul <8 x float> %i.ag, %20
-  %22 = getelementptr inbounds nuw [4 x i8], ptr %13, i64 %.07684.us.us.i
-  %i.an = load <8 x float>, ptr %22, align 32, !tbaa !57, !alias.scope !945, !noalias !946
-  %i.ao = fmul <8 x float> %21, %i.an             ; 2 uses
+  %i.am = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %11
+  %14 = load float, ptr %.sroa.sel73.sroa.sel.v.sroa.sel.v.sroa.sel, align 4, !tbaa !56, !noalias !944
+  %15 = insertelement <8 x float> poison, float %14, i64 0
+  %16 = load float, ptr %.sroa.sel73.idx.sroa.sel.idx.sroa.sel, align 8, !tbaa !56, !noalias !944
+  %17 = insertelement <8 x float> poison, float %16, i64 0
+  %18 = shufflevector <8 x float> %17, <8 x float> %15, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 8, i32 8, i32 8, i32 8>
+  %19 = load <8 x float>, ptr %12, align 32, !tbaa !57, !noalias !944
+  %20 = fmul <8 x float> %i.ag, %19
+  %i.an = load <8 x float>, ptr %13, align 32, !tbaa !57, !alias.scope !945, !noalias !946
+  %i.ao = fmul <8 x float> %20, %i.an             ; 2 uses
   %i.ap = tail call <8 x float> @llvm.fabs.v8f32(<8 x float> %i.ao)
-  %i.aq = fcmp oge <8 x float> %i.ap, %19
+  %i.aq = fcmp oge <8 x float> %i.ap, %18
   %i.ar = tail call <8 x float> @llvm.roundeven.v8f32(<8 x float> %i.ao)
   %i.as = select <8 x i1> %i.aq, <8 x float> %i.ar, <8 x float> zeroinitializer ; 2 uses
   %i.at = fcmp oge <8 x float> %i.as, splat (float f0x4F000000)
   %i.au = tail call <8 x i32> @llvm.x86.avx.cvtt.ps2dq.256(<8 x float> %i.as)
   %i.av = select <8 x i1> %i.at, <8 x i32> splat (i32 2147483647), <8 x i32> %i.au
-  %23 = getelementptr inbounds nuw [4 x i8], ptr %14, i64 %.07684.us.us.i
-  store <8 x i32> %i.av, ptr %23, align 32, !tbaa !57, !alias.scope !946, !noalias !945
-  %i.aw = add nuw i64 %.07684.us.us.i, 8          ; 2 uses
-  %24 = icmp ult i64 %i.aw, %i.aj
-  br i1 %24, label %bb.d, label %._crit_edge.split.us.us.i, !llvm.loop !4
-
-._crit_edge.split.us.us.i:                        ; preds = %bb.d
-  %25 = add nuw i64 %.07585.us.i, 1               ; 2 uses
-  %exitcond95.not.i = icmp eq i64 %25, %i.ah
-  br i1 %exitcond95.not.i, label %_ZN3jxl6N_AVX215QuantizeBlockACERKNS_9QuantizerEbmfNS_14AcStrategyTypeEmmPfPKfPKiPi.exit, label %.lr.ph.us.i, !llvm.loop !5
+  store <8 x i32> %i.av, ptr %i.am, align 32, !tbaa !57, !alias.scope !946, !noalias !945
+  %i.aw = add nuw i64 %.07684.us.us.i, 1          ; 2 uses
+  %exitcond95.not.i = icmp eq i64 %i.aw, %i.ah
+  br i1 %exitcond95.not.i, label %_ZN3jxl6N_AVX215QuantizeBlockACERKNS_9QuantizerEbmfNS_14AcStrategyTypeEmmPfPKfPKiPi.exit, label %bb.d, !llvm.loop !5
 
 .lr.ph.i:                                         ; preds = %.lr.ph87.split.i, %._crit_edge.split.i
   %.07585.i = phi i64 [ %i.bc, %._crit_edge.split.i ], [ 0, %.lr.ph87.split.i ] ; 3 uses
@@ -705,7 +693,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i
   %i.by = icmp ult i64 %i.bx, %i.aj
   br i1 %i.by, label %bb.e, label %._crit_edge.split.i, !llvm.loop !4
 
-_ZN3jxl6N_AVX215QuantizeBlockACERKNS_9QuantizerEbmfNS_14AcStrategyTypeEmmPfPKfPKiPi.exit: ; preds = %._crit_edge.split.i, %._crit_edge.split.us.us.i, %bb.c, %.lr.ph87.i
+_ZN3jxl6N_AVX215QuantizeBlockACERKNS_9QuantizerEbmfNS_14AcStrategyTypeEmmPfPKfPKiPi.exit: ; preds = %._crit_edge.split.i, %bb.d, %bb.c, %.lr.ph87.i
   %i.bz = getelementptr inbounds nuw i8, ptr %i.t, i64 32
   %i.ca = load ptr, ptr %i.bz, align 8, !tbaa !167
   %i.cb = getelementptr inbounds nuw [4 x i8], ptr %i.ca, i64 %i.z
@@ -1097,7 +1085,7 @@ bb.h:                                             ; preds = %bb.h, %bb.g
   %i.go = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.gm
   %i.gp = load ptr, ptr %i.go, align 8, !tbaa !189
   %i.gq = getelementptr inbounds nuw i8, ptr %i.gp, i64 %.idx195.us
-  %i.gr = mul nsw i64 %i.gi, %i.gm
+  %i.gr = mul nuw nsw i64 %i.gi, %i.gm
   %i.gs = getelementptr inbounds nuw [4 x i8], ptr %i.cm, i64 %i.gr
   call fastcc void @_ZN3jxl6N_AVX212_GLOBAL__N_119TransformFromPixelsENS_14AcStrategyTypeEPKfmPfS5_(i32 noundef %i.gn, ptr noundef %i.gq, i64 noundef %i.aq, ptr noundef %i.gs, ptr noundef nonnull %i.bd) #48
   %.0183.add.us = add nuw nsw i64 %.0183.idx274.us, 4 ; 2 uses
@@ -1500,7 +1488,7 @@ bb.g:                                             ; preds = %bb.g, %bb.f
   %i.gz = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.gx
   %i.ha = load ptr, ptr %i.gz, align 8, !tbaa !189
   %i.hb = getelementptr inbounds nuw i8, ptr %i.ha, i64 %.idx195.us
-  %i.hc = mul nsw i64 %i.gt, %i.gx
+  %i.hc = mul nuw nsw i64 %i.gt, %i.gx
   %i.hd = getelementptr inbounds nuw [4 x i8], ptr %i.cm, i64 %i.hc
   call fastcc void @_ZN3jxl6N_SSE212_GLOBAL__N_119TransformFromPixelsENS_14AcStrategyTypeEPKfmPfS5_(i32 noundef %i.gy, ptr noundef %i.hb, i64 noundef %i.aq, ptr noundef %i.hd, ptr noundef nonnull %i.bd) #48
   %.0183.add.us = add nuw nsw i64 %.0183.idx274.us, 4 ; 2 uses

@@ -204,7 +204,7 @@ bb.a:
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !38   ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !37   ; 5 uses
-  %i.s = sext i32 %i.g to i64                     ; 15 uses
+  %i.s = sext i32 %i.g to i64                     ; 14 uses
   %.not.i.not = icmp eq i32 %i.g, 0               ; 4 uses
   br i1 %.not.i.not, label %._crit_edge, label %bb.b
 
@@ -317,7 +317,7 @@ bb.k:                                             ; preds = %gv_calloc.exit549
   %i.br = getelementptr inbounds nuw i8, ptr %i.e, i64 48
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !41 ; 5 uses
   %invariant.smax730 = tail call i32 @llvm.smax.i32(i32 %1, i32 0)
-  %wide.trip.count679 = zext nneg i32 %i.g to i64
+  %wide.trip.count679 = zext nneg i32 %i.g to i64 ; 2 uses
   br label %.lr.ph629
 
 .lr.ph629:                                        ; preds = %.lr.ph629.preheader, %.loopexit562
@@ -704,10 +704,8 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   br i1 %.not522609, label %.loopexit562, label %.lr.ph613
 
 .lr.ph613:                                        ; preds = %._crit_edge596
-  %i.jl = add nuw nsw i64 %indvars.iv676, %i.s    ; 2 uses
+  %i.jl = add nuw nsw i64 %indvars.iv676, %wide.trip.count679 ; 2 uses
   %i.jm = fadd double %i.gk, %.1450.lcssa         ; 2 uses
-  %2 = trunc nsw i64 %i.jl to i32
-  %3 = trunc nsw i64 %i.jl to i32
   br label %bb.al
 
 bb.ak:                                            ; preds = %.lr.ph595, %bb.ak
@@ -762,7 +760,8 @@ bb.al:                                            ; preds = %.lr.ph613, %.loopex
   %i.kk = sext i32 %i.kj to i64                   ; 3 uses
   %i.kl = getelementptr inbounds [4 x i8], ptr %i.at, i64 %i.kk
   %i.km = load i32, ptr %i.kl, align 4, !tbaa !28
-  %i.kn = icmp eq i32 %i.km, %3
+  %2 = zext i32 %i.km to i64
+  %i.kn = icmp eq i64 %i.jl, %2
   br i1 %i.kn, label %bb.ap, label %bb.am
 
 bb.am:                                            ; preds = %.lr.ph600.split.us
@@ -805,7 +804,8 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an, %.lr
   %i.lf = sext i32 %i.le to i64                   ; 3 uses
   %i.lg = getelementptr inbounds [4 x i8], ptr %i.at, i64 %i.lf
   %i.lh = load i32, ptr %i.lg, align 4, !tbaa !28
-  %i.li = icmp eq i32 %i.lh, %2
+  %3 = zext i32 %i.lh to i64
+  %i.li = icmp eq i64 %i.jl, %3
   br i1 %i.li, label %bb.at, label %bb.aq
 
 bb.aq:                                            ; preds = %.lr.ph600.split.split

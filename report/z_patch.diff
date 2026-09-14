@@ -1,0 +1,1434 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index f73f8c9180a44..6b82362816c86 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -279,10 +279,6 @@ struct ConstraintTy {
+ 
+   bool empty() const { return Coefficients.empty(); }
+ 
+-  /// Returns true if the constraint does not reference any variable, i.e. it is
+-  /// of the form 'c >= 0'.
+-  bool isConstantOnly() const { return Coefficients.size() < 2; }
+-
+   bool isEq() const { return IsEq; }
+ 
+   bool isNe() const { return IsNe; }
+@@ -503,11 +499,95 @@ static bool canUseSExt(ConstantInt *CI) {
+   return Val.sgt(MinSignedConstraintValue) && Val.slt(MaxConstraintValue);
+ }
+ 
+-/// Returns true if the pre-condition \p Op \p Pred \p RHS, required to look
+-/// through an expression while decomposing it, is known to hold given \p Info.
+-static bool preconditionHolds(const ConstraintInfo &Info,
+-                              CmpInst::Predicate Pred, Value *Op, int64_t RHS) {
+-  return Info.doesHold(Pred, Op, ConstantInt::get(Op->getType(), RHS));
++/// Returns true if \p Info implies that \p Op is in \p R, interpreting \p R as
++/// a signed range if \p Signed is set and as an unsigned range otherwise.
++static bool doesHoldInRange(const ConstraintInfo &Info, Value *Op,
++                            const ConstantRange &R, bool Signed) {
++  if (R.isEmptySet() || (Signed ? R.isSignWrappedSet() : R.isWrappedSet()))
++    return false;
++
++  if (R.isFullSet())
++    return true;
++
++  unsigned BitWidth = R.getBitWidth();
++  APInt Min = Signed ? R.getSignedMin() : R.getUnsignedMin();
++  APInt Max = Signed ? R.getSignedMax() : R.getUnsignedMax();
++  APInt MinVal = Signed ? APInt::getSignedMinValue(BitWidth)
++                        : APInt::getMinValue(BitWidth);
++  APInt MaxVal = Signed ? APInt::getSignedMaxValue(BitWidth)
++                        : APInt::getMaxValue(BitWidth);
++  // Replace bound too large to be decomposed by the largest usable one.
++  if (!Signed && Max.uge(MaxConstraintValue))
++    Max = APInt(BitWidth, MaxConstraintValue - 1);
++
++  Type *Ty = Op->getType();
++  if (Min != MinVal &&
++      !Info.doesHold(Signed ? CmpInst::ICMP_SGE : CmpInst::ICMP_UGE, Op,
++                     ConstantInt::get(Ty, Min)))
++    return false;
++  if (Max != MaxVal &&
++      !Info.doesHold(Signed ? CmpInst::ICMP_SLE : CmpInst::ICMP_ULE, Op,
++                     ConstantInt::get(Ty, Max)))
++    return false;
++  return true;
++}
++
++/// Returns true if the no-wrap property selected by \p Signed holds for \p V,
++/// either because the corresponding flag is set in the IR or because \p Info
++/// proves the condition under which \p V cannot wrap.
++///
++/// This is the single place where no-wrap facts are inferred. It is used both
++/// to strengthen the flags of an instruction and to decide whether an
++/// expression can be decomposed; the latter therefore only pays for a query if
++/// flag strengthening has not already materialized the flag in the IR.
++static bool isKnownNoWrap(Value *V, const ConstraintInfo &Info, bool Signed) {
++  // An `or disjoint` never carries, so it behaves like an `add nuw nsw`.
++  if (match(V, m_DisjointOr(m_Value(), m_Value())))
++    return true;
++
++  if (auto *Trunc = dyn_cast<TruncInst>(V)) {
++    if (Signed)
++      return Trunc->hasNoSignedWrap();
++    // A trunc nsw only truncates without unsigned wrap if its operand is
++    // non-negative.
++    return Trunc->hasNoUnsignedWrap() ||
++           (Trunc->hasNoSignedWrap() &&
++            Info.isKnownNonNegative(Trunc->getOperand(0)));
++  }
++
++  auto *BO = dyn_cast<OverflowingBinaryOperator>(V);
++  if (!BO)
++    return false;
++  if (Signed ? BO->hasNoSignedWrap() : BO->hasNoUnsignedWrap())
++    return true;
++
++  Value *Op0 = BO->getOperand(0), *Op1 = BO->getOperand(1);
++  auto Opcode = static_cast<Instruction::BinaryOps>(BO->getOpcode());
++
++  // Op0 - Op1 does not wrap unsigned if Op0 >=u Op1. There is no comparable
++  // rule for nsw.
++  if (Opcode == Instruction::Sub)
++    return !Signed && Info.doesHold(CmpInst::ICMP_UGE, Op0, Op1);
++
++  // The exact result of an nsw add/mul/shl of non-negative operands is
++  // non-negative and representable, so the operation does not wrap unsigned
++  // either. For shl, only the shifted operand matters.
++  if (!Signed && BO->hasNoSignedWrap() &&
++      (Opcode == Instruction::Shl || Info.isKnownNonNegative(Op1)) &&
++      Info.isKnownNonNegative(Op0))
++    return true;
++
++  // For a constant second operand, the range of Op0 for which the operation
++  // does not wrap is known exactly; check if the systems imply it.
++  auto *C = dyn_cast<ConstantInt>(Op1);
++  if (!C)
++    return false;
++  using OBO = OverflowingBinaryOperator;
++  return doesHoldInRange(Info, Op0,
++                         ConstantRange::makeExactNoWrapRegion(
++                             Opcode, C->getValue(),
++                             Signed ? OBO::NoSignedWrap : OBO::NoUnsignedWrap),
++                         Signed);
+ }
+ 
+ static Decomposition decomposeGEP(GEPOperator &GEP, const ConstraintInfo &Info,
+@@ -537,8 +617,7 @@ static Decomposition decomposeGEP(GEPOperator &GEP, const ConstraintInfo &Info,
+       // Try to prove nuw from nusw and nneg. If the index cannot be proven
+       // non-negative, keep the GEP as-is instead of decomposing it.
+       assert(NW.hasNoUnsignedSignedWrap() && "Must have nusw flag");
+-      if (!isKnownNonNegative(Index, DL) &&
+-          !preconditionHolds(Info, CmpInst::ICMP_SGE, Index, 0))
++      if (!Info.isKnownNonNegative(Index))
+         return &GEP;
+     }
+ 
+@@ -598,14 +677,16 @@ static Decomposition decompose(Value *V, const ConstraintInfo &Info,
+       V = Op0;
+     else if (match(V, m_NNegZExt(m_Value(Op0)))) {
+       V = Op0;
+-    } else if (match(V, m_NSWTrunc(m_Value(Op0)))) {
+-      if (Op0->getType()->getScalarSizeInBits() <= 64)
+-        V = Op0;
++    } else if (auto *Trunc = dyn_cast<TruncInst>(V)) {
++      if (Trunc->getSrcTy()->getScalarSizeInBits() <= 64 &&
++          isKnownNoWrap(Trunc, Info, IsSigned))
++        V = Trunc->getOperand(0);
+     }
+ 
+-    if (match(V, m_NSWAddLike(m_Value(Op0), m_Value(Op1)))) {
+-      if (auto Decomp = MergeResults(Op0, Op1, IsSigned))
+-        return *Decomp;
++    if (match(V, m_AddLike(m_Value(Op0), m_Value(Op1)))) {
++      if (isKnownNoWrap(V, Info, IsSigned))
++        if (auto Decomp = MergeResults(Op0, Op1, IsSigned))
++          return *Decomp;
+       return V;
+     }
+ 
+@@ -617,27 +698,32 @@ static Decomposition decompose(Value *V, const ConstraintInfo &Info,
+       return V;
+     }
+ 
+-    if (match(V, m_NSWSub(m_Value(Op0), m_Value(Op1)))) {
+-      auto ResA = decompose(Op0, Info, IsSigned, DL);
+-      auto ResB = decompose(Op1, Info, IsSigned, DL);
+-      if (!ResA.sub(ResB))
+-        return ResA;
++    if (match(V, m_Sub(m_Value(Op0), m_Value(Op1)))) {
++      if (isKnownNoWrap(V, Info, IsSigned)) {
++        auto ResA = decompose(Op0, Info, IsSigned, DL);
++        auto ResB = decompose(Op1, Info, IsSigned, DL);
++        if (!ResA.sub(ResB))
++          return ResA;
++      }
+       return V;
+     }
+ 
+     ConstantInt *CI;
+-    if (match(V, m_NSWMul(m_Value(Op0), m_ConstantInt(CI))) && canUseSExt(CI)) {
+-      auto Result = decompose(Op0, Info, IsSigned, DL);
+-      if (!Result.mul(CI->getSExtValue()))
+-        return Result;
++    if (match(V, m_Mul(m_Value(Op0), m_ConstantInt(CI))) && canUseSExt(CI)) {
++      if (isKnownNoWrap(V, Info, IsSigned)) {
++        auto Result = decompose(Op0, Info, IsSigned, DL);
++        if (!Result.mul(CI->getSExtValue()))
++          return Result;
++      }
+       return V;
+     }
+ 
+     // (shl nsw x, shift) is (mul nsw x, (1<<shift)), with the exception of
+     // shift == bw-1.
+-    if (match(V, m_NSWShl(m_Value(Op0), m_ConstantInt(CI)))) {
++    if (match(V, m_Shl(m_Value(Op0), m_ConstantInt(CI)))) {
+       uint64_t Shift = CI->getValue().getLimitedValue();
+-      if (Shift < Ty->getIntegerBitWidth() - 1) {
++      if (Shift < Ty->getIntegerBitWidth() - 1 &&
++          isKnownNoWrap(V, Info, IsSigned)) {
+         assert(Shift < 64 && "Would overflow");
+         auto Result = decompose(Op0, Info, IsSigned, DL);
+         if (!Result.mul(int64_t(1) << Shift))
+@@ -660,79 +746,61 @@ static Decomposition decompose(Value *V, const ConstraintInfo &Info,
+     V = Op0;
+   } else if (match(V, m_SExt(m_Value(Op0)))) {
+     // Looking through the sext is only valid if the operand is non-negative.
+-    if (!preconditionHolds(Info, CmpInst::ICMP_SGE, Op0, 0))
++    if (!Info.isKnownNonNegative(Op0))
+       return V;
+     V = Op0;
+   } else if (auto *Trunc = dyn_cast<TruncInst>(V)) {
+     if (Trunc->getSrcTy()->getScalarSizeInBits() <= 64 &&
+-        (Trunc->hasNoUnsignedWrap() || Trunc->hasNoSignedWrap())) {
+-      Value *Src = Trunc->getOperand(0);
+-      // A trunc nsw only truncates without unsigned wrap if its operand is
+-      // non-negative.
+-      if (!Trunc->hasNoUnsignedWrap() &&
+-          !preconditionHolds(Info, CmpInst::ICMP_SGE, Src, 0))
+-        return V;
+-      V = Src;
+-    }
++        isKnownNoWrap(Trunc, Info, /*Signed=*/false))
++      V = Trunc->getOperand(0);
+   }
+ 
+   Value *Op1;
+   ConstantInt *CI;
+-  if (match(V, m_NUWAddLike(m_Value(Op0), m_Value(Op1)))) {
+-    if (auto Decomp = MergeResults(Op0, Op1, IsSigned))
+-      return *Decomp;
+-    return V;
+-  }
+-
+-  if (match(V, m_Add(m_Value(Op0), m_ConstantInt(CI))) && CI->isNegative() &&
+-      canUseSExt(CI)) {
+-    // Adding a negative constant only wraps if Op0 is smaller than it.
+-    if (!preconditionHolds(Info, CmpInst::ICMP_UGE, Op0,
+-                           CI->getSExtValue() * -1))
+-      return V;
+-    if (auto Decomp = MergeResults(Op0, CI, true))
+-      return *Decomp;
+-    return V;
+-  }
+-
+-  if (match(V, m_NSWAdd(m_Value(Op0), m_Value(Op1)))) {
+-    // An add nsw only adds without unsigned wrap if both operands are
+-    // non-negative.
+-    if ((!isKnownNonNegative(Op0, DL) &&
+-         !preconditionHolds(Info, CmpInst::ICMP_SGE, Op0, 0)) ||
+-        (!isKnownNonNegative(Op1, DL) &&
+-         !preconditionHolds(Info, CmpInst::ICMP_SGE, Op1, 0)))
++  if (match(V, m_AddLike(m_Value(Op0), m_Value(Op1)))) {
++    // The decomposition is exact if the add does not wrap unsigned.
++    if (isKnownNoWrap(V, Info, /*Signed=*/false)) {
++      if (auto Decomp = MergeResults(Op0, Op1, IsSigned))
++        return *Decomp;
+       return V;
+-
+-    if (auto Decomp = MergeResults(Op0, Op1, IsSigned))
+-      return *Decomp;
++    }
++    // Otherwise `%x + -C` can still be decomposed as `%x - C`, provided the
++    // subtraction does not wrap. Note that this is not implied by nuw, so the
++    // constant has to be decomposed as signed to get the negative offset.
++    if (match(Op1, m_ConstantInt(CI)) && CI->isNegative() && canUseSExt(CI) &&
++        Info.doesHold(CmpInst::ICMP_UGE, Op0,
++                      ConstantInt::get(Op0->getType(), -CI->getSExtValue())))
++      if (auto Decomp = MergeResults(Op0, CI, /*IsSignedB=*/true))
++        return *Decomp;
+     return V;
+   }
+ 
+-  if (match(V, m_NUWShl(m_Value(Op1), m_ConstantInt(CI))) && canUseSExt(CI)) {
++  if (match(V, m_Shl(m_Value(Op1), m_ConstantInt(CI))) && canUseSExt(CI)) {
+     // The scale 1 << shift must fit in the signed coefficient, so reject a
+     // shift of 63, for which int64_t{1} << 63 is INT64_MIN.
+     if (CI->getSExtValue() < 0 || CI->getSExtValue() >= 63)
+       return V;
+-    auto Result = decompose(Op1, Info, IsSigned, DL);
+-    if (!Result.mul(int64_t{1} << CI->getSExtValue()))
+-      return Result;
++    if (isKnownNoWrap(V, Info, /*Signed=*/false)) {
++      auto Result = decompose(Op1, Info, IsSigned, DL);
++      if (!Result.mul(int64_t{1} << CI->getSExtValue()))
++        return Result;
++    }
+     return V;
+   }
+ 
+-  if (match(V, m_NUWMul(m_Value(Op1), m_ConstantInt(CI))) && canUseSExt(CI) &&
+-      (!CI->isNegative())) {
+-    auto Result = decompose(Op1, Info, IsSigned, DL);
+-    if (!Result.mul(CI->getSExtValue()))
+-      return Result;
++  if (match(V, m_Mul(m_Value(Op1), m_ConstantInt(CI))) && canUseSExt(CI) &&
++      !CI->isNegative()) {
++    if (isKnownNoWrap(V, Info, /*Signed=*/false)) {
++      auto Result = decompose(Op1, Info, IsSigned, DL);
++      if (!Result.mul(CI->getSExtValue()))
++        return Result;
++    }
+     return V;
+   }
+ 
+   if (match(V, m_Sub(m_Value(Op0), m_Value(Op1)))) {
+-    // a - b can be decomposed when there is no unsigned wrap (either known via
+-    // flag or proven as precondition).
+-    if (!cast<OverflowingBinaryOperator>(V)->hasNoUnsignedWrap() &&
+-        !Info.doesHold(CmpInst::ICMP_ULE, Op1, Op0))
++    // a - b can be decomposed when there is no unsigned wrap.
++    if (!isKnownNoWrap(V, Info, /*Signed=*/false))
+       return V;
+     auto ResA = decompose(Op0, Info, IsSigned, DL);
+     auto ResB = decompose(Op1, Info, IsSigned, DL);
+@@ -938,8 +1006,10 @@ bool ConstraintInfo::doesHold(CmpInst::Predicate Pred, Value *A,
+ }
+ 
+ bool ConstraintInfo::isKnownNonNegative(Value *V) const {
+-  return doesHold(CmpInst::ICMP_SGE, V, ConstantInt::get(V->getType(), 0)) ||
+-         ::isKnownNonNegative(V, DL, /*Depth=*/MaxAnalysisRecursionDepth - 1);
++  if (auto *CI = dyn_cast<ConstantInt>(V))
++    return !CI->isNegative();
++  return ::isKnownNonNegative(V, DL) ||
++         doesHold(CmpInst::ICMP_SGE, V, ConstantInt::get(V->getType(), 0));
+ }
+ 
+ void ConstraintInfo::transferToOtherSystem(
+@@ -1362,6 +1432,12 @@ static bool getConstraintFromMemoryAccess(GetElementPtrInst &GEP,
+ /// Returns true if \p I is a candidate whose poison-generating flags may be
+ /// strengthened using the constraint systems.
+ static bool canStrengthenFlags(Instruction *I) {
++  // A trunc nsw only truncates without unsigned wrap if its operand is
++  // non-negative.
++  if (auto *Trunc = dyn_cast<TruncInst>(I))
++    return Trunc->getType()->isIntegerTy() && Trunc->hasNoSignedWrap() &&
++           !Trunc->hasNoUnsignedWrap();
++
+   auto *BO = dyn_cast<BinaryOperator>(I);
+   if (!BO || !BO->getType()->isIntegerTy())
+     return false;
+@@ -1372,9 +1448,6 @@ static bool canStrengthenFlags(Instruction *I) {
+     // canonicalized to Add.
+     return !BO->hasNoUnsignedWrap() && !isa<Constant>(BO->getOperand(1));
+   case Instruction::Add:
+-    // NSW/NUW can be refined using constant ranges.
+-    return (!BO->hasNoUnsignedWrap() || !BO->hasNoSignedWrap()) &&
+-           isa<Constant>(BO->getOperand(1));
+   case Instruction::Mul:
+   case Instruction::Shl:
+     if (BO->hasNoUnsignedWrap() && BO->hasNoSignedWrap())
+@@ -1388,106 +1461,24 @@ static bool canStrengthenFlags(Instruction *I) {
+   }
+ }
+ 
+-/// Returns true if \p Info implies that \p Op is in \p R, interpreting \p R as
+-/// a signed range if \p Signed is set and as an unsigned range otherwise.
+-static bool doesHoldInRange(const ConstraintInfo &Info, Value *Op,
+-                            const ConstantRange &R, bool Signed) {
+-  if (R.isEmptySet() || (Signed ? R.isSignWrappedSet() : R.isWrappedSet()))
+-    return false;
+-
+-  if (R.isFullSet())
+-    return true;
+-
+-  unsigned BitWidth = R.getBitWidth();
+-  APInt Min = Signed ? R.getSignedMin() : R.getUnsignedMin();
+-  APInt Max = Signed ? R.getSignedMax() : R.getUnsignedMax();
+-  APInt MinVal = Signed ? APInt::getSignedMinValue(BitWidth)
+-                        : APInt::getMinValue(BitWidth);
+-  APInt MaxVal = Signed ? APInt::getSignedMaxValue(BitWidth)
+-                        : APInt::getMaxValue(BitWidth);
+-  // Replace bound too large to be decomposed by the largest usable one.
+-  if (!Signed && Max.uge(MaxConstraintValue))
+-    Max = APInt(BitWidth, MaxConstraintValue - 1);
+-
+-  Type *Ty = Op->getType();
+-  if (Min != MinVal &&
+-      !Info.doesHold(Signed ? CmpInst::ICMP_SGE : CmpInst::ICMP_UGE, Op,
+-                     ConstantInt::get(Ty, Min)))
+-    return false;
+-  if (Max != MaxVal &&
+-      !Info.doesHold(Signed ? CmpInst::ICMP_SLE : CmpInst::ICMP_ULE, Op,
+-                     ConstantInt::get(Ty, Max)))
+-    return false;
+-  return true;
+-}
+-
+-static bool tryToStrengthenBinOpFlags(Instruction *I, Value *Op0, Value *Op1,
+-                                      ConstraintInfo &Info) {
+-  auto *C = dyn_cast<ConstantInt>(Op1);
+-  if (!C)
+-    return false;
++/// Try to strengthen \p I's poison generating flags using \p Info. Returns
++/// true if \p I was modified.
++static bool tryToStrengthenFlags(Instruction *I, ConstraintInfo &Info) {
++  assert(canStrengthenFlags(I) && "not a candidate for flag strengthening");
+ 
+-  // For a constant Op1, the ranges of Op0 for which the operation does not
+-  // wrap are known exactly; check if the systems imply one of them.
+   bool Changed = false;
+-  auto Opcode = static_cast<Instruction::BinaryOps>(I->getOpcode());
+-  using OBO = OverflowingBinaryOperator;
+-  ConstantRange Other(C->getValue());
+-  if (!I->hasNoUnsignedWrap() &&
+-      doesHoldInRange(Info, Op0,
+-                      ConstantRange::makeGuaranteedNoWrapRegion(
+-                          Opcode, Other, OBO::NoUnsignedWrap),
+-                      /*Signed=*/false)) {
+-    LLVM_DEBUG(dbgs() << "Adding nuw to " << *I << "\n");
+-    I->setHasNoUnsignedWrap();
+-    Changed = true;
+-  }
+-  if (!I->hasNoSignedWrap() &&
+-      doesHoldInRange(Info, Op0,
+-                      ConstantRange::makeGuaranteedNoWrapRegion(
+-                          Opcode, Other, OBO::NoSignedWrap),
+-                      /*Signed=*/true)) {
++  // Check nsw first, as a newly added nsw may in turn imply nuw.
++  if (!I->hasNoSignedWrap() && isKnownNoWrap(I, Info, /*Signed=*/true)) {
+     LLVM_DEBUG(dbgs() << "Adding nsw to " << *I << "\n");
+     I->setHasNoSignedWrap();
+     Changed = true;
+   }
+-  return Changed;
+-}
+-
+-/// Try to strengthen \p I's poison generating flags using \p Info. Returns
+-/// true if \p I was modified.
+-static bool tryToStrengthenFlags(Instruction *I, ConstraintInfo &Info,
+-                                 SmallVectorImpl<Instruction *> &ToRemove) {
+-  assert(canStrengthenFlags(I) && "not a candidate for flag strengthening");
+-
+-  Value *Op0 = I->getOperand(0), *Op1 = I->getOperand(1);
+-  switch (I->getOpcode()) {
+-  case Instruction::Sub: {
+-    // Op0 - Op1 does not wrap unsigned, if Op0 >=u Op1.
+-    if (!Info.doesHold(CmpInst::ICMP_UGE, Op0, Op1))
+-      return false;
++  if (!I->hasNoUnsignedWrap() && isKnownNoWrap(I, Info, /*Signed=*/false)) {
+     LLVM_DEBUG(dbgs() << "Adding nuw to " << *I << "\n");
+     I->setHasNoUnsignedWrap();
+-    return true;
+-  }
+-  case Instruction::Add:
+-    return tryToStrengthenBinOpFlags(I, Op0, Op1, Info);
+-  case Instruction::Mul:
+-  case Instruction::Shl: {
+-    auto Opcode = static_cast<Instruction::BinaryOps>(I->getOpcode());
+-    bool Changed = tryToStrengthenBinOpFlags(I, Op0, Op1, Info);
+-    if (!I->hasNoUnsignedWrap() && I->hasNoSignedWrap() &&
+-        Info.isKnownNonNegative(Op0) &&
+-        (Opcode == Instruction::Shl || Info.isKnownNonNegative(Op1))) {
+-      LLVM_DEBUG(dbgs() << "Adding nuw to " << *I << "\n");
+-      I->setHasNoUnsignedWrap();
+-      Changed = true;
+-    }
+-    return Changed;
+-  }
+-  default:
+-    return false;
++    Changed = true;
+   }
++  return Changed;
+ }
+ 
+ void State::addInfoFor(BasicBlock &BB) {
+@@ -2276,27 +2267,14 @@ static bool replaceOverflowUses(IntrinsicInst *II,
+ static bool
+ tryToSimplifyOverflowMath(IntrinsicInst *II, ConstraintInfo &Info,
+                           SmallVectorImpl<Instruction *> &ToRemove) {
+-  auto DoesConditionHold = [](CmpInst::Predicate Pred, Value *A, Value *B,
+-                              ConstraintInfo &Info) {
+-    auto R = Info.getConstraintForSolving(Pred, A, B);
+-    // Nothing can be proven if the constraint has no variables. This also
+-    // covers rows that could not be decomposed, which are empty.
+-    if (R.isConstantOnly())
+-      return false;
+-
+-    auto &CSToUse = Info.getCS(R.IsSigned);
+-    return CSToUse.isConditionImpliedInSubSystem(R.Coefficients);
+-  };
+-
+   switch (II->getIntrinsicID()) {
+   case Intrinsic::ssub_with_overflow: {
+     // If A s>= B && B s>= 0, ssub.with.overflow(a, b) should not overflow and
+     // can be simplified to a regular sub.
+     Value *A = II->getArgOperand(0);
+     Value *B = II->getArgOperand(1);
+-    if (!DoesConditionHold(CmpInst::ICMP_SGE, A, B, Info) ||
+-        !DoesConditionHold(CmpInst::ICMP_SGE, B,
+-                           ConstantInt::get(A->getType(), 0), Info))
++    if (!Info.doesHold(CmpInst::ICMP_SGE, A, B) ||
++        !Info.doesHold(CmpInst::ICMP_SGE, B, ConstantInt::get(A->getType(), 0)))
+       return false;
+     return replaceOverflowUses(II, Instruction::Sub, A, B, ToRemove);
+   }
+@@ -2406,7 +2384,7 @@ static bool eliminateConstraints(Function &F, DominatorTree &DT, LoopInfo &LI,
+       if (!Inst)
+         continue;
+       if (canStrengthenFlags(Inst)) {
+-        Changed |= tryToStrengthenFlags(Inst, Info, ToRemove);
++        Changed |= tryToStrengthenFlags(Inst, Info);
+         continue;
+       }
+       LLVM_DEBUG(dbgs() << "Processing condition to simplify: " << *Inst
+diff --git a/llvm/test/Transforms/ConstraintElimination/abs.ll b/llvm/test/Transforms/ConstraintElimination/abs.ll
+index b9a0c4963211f..7719bfe14b78a 100644
+--- a/llvm/test/Transforms/ConstraintElimination/abs.ll
++++ b/llvm/test/Transforms/ConstraintElimination/abs.ll
+@@ -40,7 +40,7 @@ define i1 @abs_plus_one_min_is_poison(i32 noundef %arg) {
+ ; CHECK-LABEL: define i1 @abs_plus_one_min_is_poison(
+ ; CHECK-SAME: i32 noundef [[ARG:%.*]]) {
+ ; CHECK-NEXT:    [[ABS:%.*]] = tail call i32 @llvm.abs.i32(i32 [[ARG]], i1 true)
+-; CHECK-NEXT:    [[ABS_PLUS_ONE:%.*]] = add nsw i32 [[ABS]], 1
++; CHECK-NEXT:    [[ABS_PLUS_ONE:%.*]] = add nuw nsw i32 [[ABS]], 1
+ ; CHECK-NEXT:    ret i1 true
+ ;
+   %abs = tail call i32 @llvm.abs.i32(i32 %arg, i1 true)
+diff --git a/llvm/test/Transforms/ConstraintElimination/add-nsw.ll b/llvm/test/Transforms/ConstraintElimination/add-nsw.ll
+index 8d9c61cb0c7c5..9b6ec5f10aa7a 100644
+--- a/llvm/test/Transforms/ConstraintElimination/add-nsw.ll
++++ b/llvm/test/Transforms/ConstraintElimination/add-nsw.ll
+@@ -115,9 +115,9 @@ define void @test.decompose.nonconst(i8 %a, i8 %b, i8 %c, i8 %d) {
+ ; CHECK-NEXT:    [[AND_1:%.*]] = and i1 [[C_2]], [[C_3]]
+ ; CHECK-NEXT:    br i1 [[AND_1]], label [[IF_THEN_2:%.*]], label [[IF_END]]
+ ; CHECK:       if.then.2:
+-; CHECK-NEXT:    [[ADD_0:%.*]] = add nsw i8 [[A]], [[B]]
++; CHECK-NEXT:    [[ADD_0:%.*]] = add nuw nsw i8 [[A]], [[B]]
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[ADD_1:%.*]] = add nsw i8 [[A]], [[A]]
++; CHECK-NEXT:    [[ADD_1:%.*]] = add nuw nsw i8 [[A]], [[A]]
+ ; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    [[ADD_2:%.*]] = add nsw i8 [[A]], [[D:%.*]]
+ ; CHECK-NEXT:    [[C_4:%.*]] = icmp sge i8 [[ADD_2]], [[C]]
+@@ -243,7 +243,7 @@ define i1 @test_ult_add_nsw_pos_1(i8 %start, i8 %high) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[HIGH_EXT:%.*]] = zext i8 [[HIGH:%.*]] to i16
+ ; CHECK-NEXT:    [[START_EXT:%.*]] = zext i8 [[START:%.*]] to i16
+-; CHECK-NEXT:    [[ADD_EXT:%.*]] = add nsw i16 [[START_EXT]], 3
++; CHECK-NEXT:    [[ADD_EXT:%.*]] = add nuw nsw i16 [[START_EXT]], 3
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp ult i16 [[ADD_EXT]], [[HIGH_EXT]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
+ ; CHECK-NEXT:    ret i1 true
+@@ -264,7 +264,7 @@ define i1 @test_ult_add_nsw_pos_1_assume_pos(i8 %start, i8 %high) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[START_POS:%.*]] = icmp sge i8 [[START:%.*]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[START_POS]])
+-; CHECK-NEXT:    [[ADD:%.*]] = add nsw i8 [[START]], 3
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw nsw i8 [[START]], 3
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp ult i8 [[ADD]], [[HIGH:%.*]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
+ ; CHECK-NEXT:    ret i1 true
+@@ -303,7 +303,7 @@ define i1 @test_ult_add_nsw_pos_1_cmp_no_ext(i8 %start, i8 %high) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[HIGH_EXT:%.*]] = zext i8 [[HIGH:%.*]] to i16
+ ; CHECK-NEXT:    [[START_EXT:%.*]] = zext i8 [[START:%.*]] to i16
+-; CHECK-NEXT:    [[ADD_EXT:%.*]] = add nsw i16 [[START_EXT]], 3
++; CHECK-NEXT:    [[ADD_EXT:%.*]] = add nuw nsw i16 [[START_EXT]], 3
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp ult i16 [[ADD_EXT]], [[HIGH_EXT]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
+ ; CHECK-NEXT:    ret i1 true
+@@ -324,7 +324,7 @@ define i1 @test_ult_add_nsw_pos_2(i8 %start, i8 %high) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[HIGH_EXT:%.*]] = zext i8 [[HIGH:%.*]] to i16
+ ; CHECK-NEXT:    [[START_EXT:%.*]] = zext i8 [[START:%.*]] to i16
+-; CHECK-NEXT:    [[ADD_EXT:%.*]] = add nsw i16 [[START_EXT]], 3
++; CHECK-NEXT:    [[ADD_EXT:%.*]] = add nuw nsw i16 [[START_EXT]], 3
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp ult i16 [[ADD_EXT]], [[HIGH_EXT]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
+ ; CHECK-NEXT:    ret i1 false
+@@ -345,7 +345,7 @@ define i1 @test_ult_add_nsw_pos_2_assume_pos(i8 %start, i8 %high) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[START_POS:%.*]] = icmp sge i8 [[START:%.*]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[START_POS]])
+-; CHECK-NEXT:    [[ADD:%.*]] = add nsw i8 [[START]], 3
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw nsw i8 [[START]], 3
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp ult i8 [[ADD]], [[HIGH:%.*]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
+ ; CHECK-NEXT:    ret i1 false
+@@ -366,7 +366,7 @@ define i1 @test_ult_add_nsw_pos_2_cmp_no_ext(i8 %start, i8 %high) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[HIGH_EXT:%.*]] = zext i8 [[HIGH:%.*]] to i16
+ ; CHECK-NEXT:    [[START_EXT:%.*]] = zext i8 [[START:%.*]] to i16
+-; CHECK-NEXT:    [[ADD_EXT:%.*]] = add nsw i16 [[START_EXT]], 3
++; CHECK-NEXT:    [[ADD_EXT:%.*]] = add nuw nsw i16 [[START_EXT]], 3
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp ult i16 [[ADD_EXT]], [[HIGH_EXT]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
+ ; CHECK-NEXT:    ret i1 false
+@@ -387,10 +387,10 @@ define i1 @test_ult_add_nsw_pos_3(i8 %start, i8 %high) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[HIGH_EXT:%.*]] = zext i8 [[HIGH:%.*]] to i16
+ ; CHECK-NEXT:    [[START_EXT:%.*]] = zext i8 [[START:%.*]] to i16
+-; CHECK-NEXT:    [[ADD_EXT:%.*]] = add nsw i16 [[START_EXT]], 3
++; CHECK-NEXT:    [[ADD_EXT:%.*]] = add nuw nsw i16 [[START_EXT]], 3
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp ult i16 [[ADD_EXT]], [[HIGH_EXT]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
+-; CHECK-NEXT:    [[ADD_4:%.*]] = add nsw i16 [[START_EXT]], 4
++; CHECK-NEXT:    [[ADD_4:%.*]] = add nuw nsw i16 [[START_EXT]], 4
+ ; CHECK-NEXT:    [[C:%.*]] = icmp ult i16 [[ADD_4]], [[HIGH_EXT]]
+ ; CHECK-NEXT:    ret i1 [[C]]
+ ;
+@@ -411,10 +411,10 @@ define i1 @test_ult_add_nsw_pos_3_assume_pos(i8 %start, i8 %high) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[START_POS:%.*]] = icmp sge i8 [[START:%.*]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[START_POS]])
+-; CHECK-NEXT:    [[ADD:%.*]] = add nsw i8 [[START]], 3
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw nsw i8 [[START]], 3
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp ult i8 [[ADD]], [[HIGH:%.*]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
+-; CHECK-NEXT:    [[ADD_4:%.*]] = add nsw i8 [[START]], 4
++; CHECK-NEXT:    [[ADD_4:%.*]] = add nuw nsw i8 [[START]], 4
+ ; CHECK-NEXT:    [[C:%.*]] = icmp ult i8 [[ADD_4]], [[HIGH]]
+ ; CHECK-NEXT:    ret i1 [[C]]
+ ;
+@@ -435,10 +435,10 @@ define i1 @test_ult_add_nsw_pos_4(i8 %start, i8 %high) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[HIGH_EXT:%.*]] = zext i8 [[HIGH:%.*]] to i16
+ ; CHECK-NEXT:    [[START_EXT:%.*]] = zext i8 [[START:%.*]] to i16
+-; CHECK-NEXT:    [[ADD_EXT:%.*]] = add nsw i16 [[START_EXT]], 3
++; CHECK-NEXT:    [[ADD_EXT:%.*]] = add nuw nsw i16 [[START_EXT]], 3
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp ult i16 [[ADD_EXT]], [[HIGH_EXT]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
+-; CHECK-NEXT:    [[ADD_2:%.*]] = add nsw i16 [[START_EXT]], 2
++; CHECK-NEXT:    [[ADD_2:%.*]] = add nuw nsw i16 [[START_EXT]], 2
+ ; CHECK-NEXT:    ret i1 true
+ ;
+ entry:
+@@ -458,10 +458,10 @@ define i1 @test_ult_add_nsw_pos_4_assume_pos(i8 %start, i8 %high) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[START_POS:%.*]] = icmp sge i8 [[START:%.*]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[START_POS]])
+-; CHECK-NEXT:    [[ADD:%.*]] = add nsw i8 [[START]], 3
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw nsw i8 [[START]], 3
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp ult i8 [[ADD]], [[HIGH:%.*]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
+-; CHECK-NEXT:    [[ADD_2:%.*]] = add nsw i8 [[START]], 2
++; CHECK-NEXT:    [[ADD_2:%.*]] = add nuw nsw i8 [[START]], 2
+ ; CHECK-NEXT:    ret i1 true
+ ;
+ entry:
+@@ -481,7 +481,7 @@ define i1 @test_ult_add_nsw_neg_5(i8 %start, i8 %high) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[HIGH_EXT:%.*]] = zext i8 [[HIGH:%.*]] to i16
+ ; CHECK-NEXT:    [[START_EXT:%.*]] = zext i8 [[START:%.*]] to i16
+-; CHECK-NEXT:    [[ADD_EXT:%.*]] = add nsw i16 [[START_EXT]], 3
++; CHECK-NEXT:    [[ADD_EXT:%.*]] = add nuw nsw i16 [[START_EXT]], 3
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp ult i16 [[ADD_EXT]], [[HIGH_EXT]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
+ ; CHECK-NEXT:    [[SUB_2:%.*]] = add nsw i16 [[START_EXT]], -2
+@@ -505,7 +505,7 @@ define i1 @test_ult_add_nsw_neg_5_assume_pos(i8 %start, i8 %high) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[START_POS:%.*]] = icmp sge i8 [[START:%.*]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[START_POS]])
+-; CHECK-NEXT:    [[ADD:%.*]] = add nsw i8 [[START]], 3
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw nsw i8 [[START]], 3
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp ult i8 [[ADD]], [[HIGH:%.*]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
+ ; CHECK-NEXT:    [[SUB_2:%.*]] = add nsw i8 [[START]], -2
+@@ -653,7 +653,7 @@ define i1 @test_ult_add_nsw_var_8_all_pos(i8 %start, i8 %off.1, i8 %off.2, i8 %h
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[START_POS:%.*]] = icmp sge i8 [[START:%.*]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[START_POS]])
+-; CHECK-NEXT:    [[ADD:%.*]] = add nsw i8 [[START]], [[OFF_2:%.*]]
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw nsw i8 [[START]], [[OFF_2:%.*]]
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp ult i8 [[ADD]], [[HIGH:%.*]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
+ ; CHECK-NEXT:    [[OFF_1_POS:%.*]] = icmp sge i8 [[OFF_1:%.*]], 0
+@@ -662,7 +662,7 @@ define i1 @test_ult_add_nsw_var_8_all_pos(i8 %start, i8 %off.1, i8 %off.2, i8 %h
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[OFF_2_POS]])
+ ; CHECK-NEXT:    [[OFF_1_ULT:%.*]] = icmp ult i8 [[OFF_1]], [[OFF_2]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[OFF_1_ULT]])
+-; CHECK-NEXT:    [[ADD_OFF_2:%.*]] = add nsw i8 [[START]], [[OFF_1]]
++; CHECK-NEXT:    [[ADD_OFF_2:%.*]] = add nuw nsw i8 [[START]], [[OFF_1]]
+ ; CHECK-NEXT:    ret i1 true
+ ;
+ entry:
+@@ -697,7 +697,7 @@ define i1 @test_ult_add_no_nsw_var_8_all_pos(i8 %start, i8 %off.1, i8 %off.2, i8
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[OFF_2_POS]])
+ ; CHECK-NEXT:    [[OFF_1_ULT:%.*]] = icmp ult i8 [[OFF_1]], [[OFF_2]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[OFF_1_ULT]])
+-; CHECK-NEXT:    [[ADD_OFF_2:%.*]] = add nsw i8 [[START]], [[OFF_1]]
++; CHECK-NEXT:    [[ADD_OFF_2:%.*]] = add nuw nsw i8 [[START]], [[OFF_1]]
+ ; CHECK-NEXT:    [[C:%.*]] = icmp ult i8 [[ADD_OFF_2]], [[HIGH]]
+ ; CHECK-NEXT:    ret i1 [[C]]
+ ;
+@@ -724,14 +724,14 @@ define i1 @test_ult_add_nsw_var_9_all_pos(i8 %start, i8 %off.1, i8 %off.2, i8 %h
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[START_POS:%.*]] = icmp sge i8 [[START:%.*]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[START_POS]])
+-; CHECK-NEXT:    [[ADD:%.*]] = add nsw i8 [[START]], [[OFF_2:%.*]]
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw nsw i8 [[START]], [[OFF_2:%.*]]
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp ult i8 [[ADD]], [[HIGH:%.*]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
+ ; CHECK-NEXT:    [[OFF_1_POS:%.*]] = icmp sge i8 [[OFF_1:%.*]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[OFF_1_POS]])
+ ; CHECK-NEXT:    [[OFF_2_POS:%.*]] = icmp sge i8 [[OFF_2]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[OFF_2_POS]])
+-; CHECK-NEXT:    [[ADD_OFF_2:%.*]] = add nsw i8 [[START]], [[OFF_1]]
++; CHECK-NEXT:    [[ADD_OFF_2:%.*]] = add nuw nsw i8 [[START]], [[OFF_1]]
+ ; CHECK-NEXT:    [[C:%.*]] = icmp ult i8 [[ADD_OFF_2]], [[HIGH]]
+ ; CHECK-NEXT:    ret i1 [[C]]
+ ;
+diff --git a/llvm/test/Transforms/ConstraintElimination/decompose-signed-preconditions.ll b/llvm/test/Transforms/ConstraintElimination/decompose-signed-preconditions.ll
+new file mode 100644
+index 0000000000000..af486e331c56f
+--- /dev/null
++++ b/llvm/test/Transforms/ConstraintElimination/decompose-signed-preconditions.ll
+@@ -0,0 +1,152 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=constraint-elimination -S %s | FileCheck %s
++
++; Tests for decomposing expressions for signed predicates where the no-signed-
++; wrap property is proven using the constraint systems instead of being
++; available as a flag in the IR. The facts are added via llvm.assume after the
++; definitions being decomposed, so the flags cannot be materialized on the
++; definitions either.
++
++declare void @use(i8)
++declare void @llvm.assume(i1)
++
++define i1 @mul_via_range(i8 %a) {
++; CHECK-LABEL: define i1 @mul_via_range(
++; CHECK-SAME: i8 [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[M:%.*]] = mul i8 [[A]], 10
++; CHECK-NEXT:    call void @use(i8 [[M]])
++; CHECK-NEXT:    [[C_1:%.*]] = icmp sle i8 [[A]], 5
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
++; CHECK-NEXT:    [[C_2:%.*]] = icmp sge i8 [[A]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_2]])
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %m = mul i8 %a, 10
++  call void @use(i8 %m)
++  %c.1 = icmp sle i8 %a, 5
++  call void @llvm.assume(i1 %c.1)
++  %c.2 = icmp sge i8 %a, 0
++  call void @llvm.assume(i1 %c.2)
++  %c = icmp sle i8 %m, 50
++  ret i1 %c
++}
++
++; 20 * 10 does not fit in i8, so the multiply may wrap.
++define i1 @mul_range_too_wide(i8 %a) {
++; CHECK-LABEL: define i1 @mul_range_too_wide(
++; CHECK-SAME: i8 [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[M:%.*]] = mul i8 [[A]], 10
++; CHECK-NEXT:    call void @use(i8 [[M]])
++; CHECK-NEXT:    [[C_1:%.*]] = icmp sle i8 [[A]], 20
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
++; CHECK-NEXT:    [[C_2:%.*]] = icmp sge i8 [[A]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_2]])
++; CHECK-NEXT:    [[C:%.*]] = icmp sle i8 [[M]], 50
++; CHECK-NEXT:    ret i1 [[C]]
++;
++entry:
++  %m = mul i8 %a, 10
++  call void @use(i8 %m)
++  %c.1 = icmp sle i8 %a, 20
++  call void @llvm.assume(i1 %c.1)
++  %c.2 = icmp sge i8 %a, 0
++  call void @llvm.assume(i1 %c.2)
++  %c = icmp sle i8 %m, 50
++  ret i1 %c
++}
++
++define i1 @shl_via_range(i8 %a) {
++; CHECK-LABEL: define i1 @shl_via_range(
++; CHECK-SAME: i8 [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[M:%.*]] = shl i8 [[A]], 2
++; CHECK-NEXT:    call void @use(i8 [[M]])
++; CHECK-NEXT:    [[C_1:%.*]] = icmp sle i8 [[A]], 5
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
++; CHECK-NEXT:    [[C_2:%.*]] = icmp sge i8 [[A]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_2]])
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %m = shl i8 %a, 2
++  call void @use(i8 %m)
++  %c.1 = icmp sle i8 %a, 5
++  call void @llvm.assume(i1 %c.1)
++  %c.2 = icmp sge i8 %a, 0
++  call void @llvm.assume(i1 %c.2)
++  %c = icmp sle i8 %m, 20
++  ret i1 %c
++}
++
++; 40 << 2 does not fit in i8, so the shift may wrap.
++define i1 @shl_range_too_wide(i8 %a) {
++; CHECK-LABEL: define i1 @shl_range_too_wide(
++; CHECK-SAME: i8 [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[M:%.*]] = shl i8 [[A]], 2
++; CHECK-NEXT:    call void @use(i8 [[M]])
++; CHECK-NEXT:    [[C_1:%.*]] = icmp sle i8 [[A]], 40
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
++; CHECK-NEXT:    [[C_2:%.*]] = icmp sge i8 [[A]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_2]])
++; CHECK-NEXT:    [[C:%.*]] = icmp sle i8 [[M]], 20
++; CHECK-NEXT:    ret i1 [[C]]
++;
++entry:
++  %m = shl i8 %a, 2
++  call void @use(i8 %m)
++  %c.1 = icmp sle i8 %a, 40
++  call void @llvm.assume(i1 %c.1)
++  %c.2 = icmp sge i8 %a, 0
++  call void @llvm.assume(i1 %c.2)
++  %c = icmp sle i8 %m, 20
++  ret i1 %c
++}
++
++define i1 @sub_via_operand_signs(i8 %a, i8 %b) {
++; CHECK-LABEL: define i1 @sub_via_operand_signs(
++; CHECK-SAME: i8 [[A:%.*]], i8 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[S:%.*]] = sub i8 [[A]], [[B]]
++; CHECK-NEXT:    call void @use(i8 [[S]])
++; CHECK-NEXT:    [[C_1:%.*]] = icmp sge i8 [[B]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
++; CHECK-NEXT:    [[C_2:%.*]] = icmp sge i8 [[A]], [[B]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_2]])
++; CHECK-NEXT:    [[C:%.*]] = icmp sle i8 [[S]], [[A]]
++; CHECK-NEXT:    ret i1 [[C]]
++;
++entry:
++  %s = sub i8 %a, %b
++  call void @use(i8 %s)
++  %c.1 = icmp sge i8 %b, 0
++  call void @llvm.assume(i1 %c.1)
++  %c.2 = icmp sge i8 %a, %b
++  call void @llvm.assume(i1 %c.2)
++  %c = icmp sle i8 %s, %a
++  ret i1 %c
++}
++
++; Without a bound relating %a and %b, the subtract may wrap.
++define i1 @sub_no_order_between_operands(i8 %a, i8 %b) {
++; CHECK-LABEL: define i1 @sub_no_order_between_operands(
++; CHECK-SAME: i8 [[A:%.*]], i8 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[S:%.*]] = sub i8 [[A]], [[B]]
++; CHECK-NEXT:    call void @use(i8 [[S]])
++; CHECK-NEXT:    [[C_1:%.*]] = icmp sge i8 [[B]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
++; CHECK-NEXT:    [[C:%.*]] = icmp sle i8 [[S]], [[A]]
++; CHECK-NEXT:    ret i1 [[C]]
++;
++entry:
++  %s = sub i8 %a, %b
++  call void @use(i8 %s)
++  %c.1 = icmp sge i8 %b, 0
++  call void @llvm.assume(i1 %c.1)
++  %c = icmp sle i8 %s, %a
++  ret i1 %c
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/decompose-unsigned-preconditions.ll b/llvm/test/Transforms/ConstraintElimination/decompose-unsigned-preconditions.ll
+new file mode 100644
+index 0000000000000..a5bf02de7db53
+--- /dev/null
++++ b/llvm/test/Transforms/ConstraintElimination/decompose-unsigned-preconditions.ll
+@@ -0,0 +1,91 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=constraint-elimination -S %s | FileCheck %s
++
++; Tests for decomposing expressions for unsigned predicates where the
++; no-unsigned-wrap property is proven using the constraint systems instead of
++; being available as a flag in the IR. The facts are added via llvm.assume
++; after the definitions being decomposed, so the flags cannot be materialized
++; on the definitions either.
++
++declare void @use(i8)
++declare void @llvm.assume(i1)
++
++define i1 @mul_via_range(i8 %a) {
++; CHECK-LABEL: define i1 @mul_via_range(
++; CHECK-SAME: i8 [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[M:%.*]] = mul i8 [[A]], 10
++; CHECK-NEXT:    call void @use(i8 [[M]])
++; CHECK-NEXT:    [[C_1:%.*]] = icmp ule i8 [[A]], 25
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %m = mul i8 %a, 10
++  call void @use(i8 %m)
++  %c.1 = icmp ule i8 %a, 25
++  call void @llvm.assume(i1 %c.1)
++  %c = icmp ule i8 %m, 250
++  ret i1 %c
++}
++
++; 26 * 10 does not fit in i8, so the multiply may wrap.
++define i1 @mul_range_too_wide(i8 %a) {
++; CHECK-LABEL: define i1 @mul_range_too_wide(
++; CHECK-SAME: i8 [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[M:%.*]] = mul i8 [[A]], 10
++; CHECK-NEXT:    call void @use(i8 [[M]])
++; CHECK-NEXT:    [[C_1:%.*]] = icmp ule i8 [[A]], 26
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
++; CHECK-NEXT:    [[C:%.*]] = icmp ule i8 [[M]], -6
++; CHECK-NEXT:    ret i1 [[C]]
++;
++entry:
++  %m = mul i8 %a, 10
++  call void @use(i8 %m)
++  %c.1 = icmp ule i8 %a, 26
++  call void @llvm.assume(i1 %c.1)
++  %c = icmp ule i8 %m, 250
++  ret i1 %c
++}
++
++define i1 @shl_via_range(i8 %a) {
++; CHECK-LABEL: define i1 @shl_via_range(
++; CHECK-SAME: i8 [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[M:%.*]] = shl i8 [[A]], 2
++; CHECK-NEXT:    call void @use(i8 [[M]])
++; CHECK-NEXT:    [[C_1:%.*]] = icmp ule i8 [[A]], 60
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %m = shl i8 %a, 2
++  call void @use(i8 %m)
++  %c.1 = icmp ule i8 %a, 60
++  call void @llvm.assume(i1 %c.1)
++  %c = icmp ule i8 %m, 240
++  ret i1 %c
++}
++
++; 64 << 2 does not fit in i8, so the shift may wrap.
++define i1 @shl_range_too_wide(i8 %a) {
++; CHECK-LABEL: define i1 @shl_range_too_wide(
++; CHECK-SAME: i8 [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[M:%.*]] = shl i8 [[A]], 2
++; CHECK-NEXT:    call void @use(i8 [[M]])
++; CHECK-NEXT:    [[C_1:%.*]] = icmp ule i8 [[A]], 64
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
++; CHECK-NEXT:    [[C:%.*]] = icmp ule i8 [[M]], -16
++; CHECK-NEXT:    ret i1 [[C]]
++;
++entry:
++  %m = shl i8 %a, 2
++  call void @use(i8 %m)
++  %c.1 = icmp ule i8 %a, 64
++  call void @llvm.assume(i1 %c.1)
++  %c = icmp ule i8 %m, 240
++  ret i1 %c
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/gep-arithmetic-different-types.ll b/llvm/test/Transforms/ConstraintElimination/gep-arithmetic-different-types.ll
+index 47d8ec22dda42..5a3cec9108ea3 100644
+--- a/llvm/test/Transforms/ConstraintElimination/gep-arithmetic-different-types.ll
++++ b/llvm/test/Transforms/ConstraintElimination/gep-arithmetic-different-types.ll
+@@ -84,11 +84,11 @@ define i1 @gep_add_nsw_positive_index(ptr %A, ptr %upper, i8 %idx) {
+ ; CHECK-LABEL: @gep_add_nsw_positive_index(
+ ; CHECK-NEXT:    [[IDX_POS:%.*]] = icmp sge i8 [[IDX:%.*]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[IDX_POS]])
+-; CHECK-NEXT:    [[IDX_3:%.*]] = add nsw i8 [[IDX]], 3
++; CHECK-NEXT:    [[IDX_3:%.*]] = add nuw nsw i8 [[IDX]], 3
+ ; CHECK-NEXT:    [[ADD_I8_IDX_3:%.*]] = getelementptr inbounds i8, ptr [[A:%.*]], i8 [[IDX_3]]
+ ; CHECK-NEXT:    [[C_0:%.*]] = icmp ult ptr [[ADD_I8_IDX_3]], [[UPPER:%.*]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_0]])
+-; CHECK-NEXT:    [[IDX_1:%.*]] = add nsw i8 [[IDX]], 1
++; CHECK-NEXT:    [[IDX_1:%.*]] = add nuw nsw i8 [[IDX]], 1
+ ; CHECK-NEXT:    [[ADD_I32_IDX_1:%.*]] = getelementptr inbounds i32, ptr [[A]], i8 [[IDX_1]]
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp ult ptr [[ADD_I32_IDX_1]], [[UPPER]]
+ ; CHECK-NEXT:    [[ADD_I8_IDX_1:%.*]] = getelementptr inbounds i8, ptr [[A]], i8 [[IDX_1]]
+@@ -131,8 +131,7 @@ define i1 @gep_shl_nsw_positive_index(ptr %A, ptr %upper, i8 %idx) {
+ ; CHECK-NEXT:    [[ADD_I32_IDX_1:%.*]] = getelementptr inbounds i32, ptr [[A]], i8 [[IDX_1]]
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp ult ptr [[ADD_I32_IDX_1]], [[UPPER]]
+ ; CHECK-NEXT:    [[ADD_I8_IDX_1:%.*]] = getelementptr inbounds i8, ptr [[A]], i8 [[IDX_1]]
+-; CHECK-NEXT:    [[T_1:%.*]] = icmp ult ptr [[ADD_I8_IDX_1]], [[UPPER]]
+-; CHECK-NEXT:    [[RES_1:%.*]] = xor i1 [[C_1]], [[T_1]]
++; CHECK-NEXT:    [[RES_1:%.*]] = xor i1 [[C_1]], true
+ ; CHECK-NEXT:    ret i1 [[RES_1]]
+ ;
+   %idx.pos = icmp sge i8 %idx, 0
+@@ -354,11 +353,11 @@ define i1 @gep_add_nsw_positive_index_struct(ptr %A, ptr %upper, i8 %idx) {
+ ; CHECK-LABEL: @gep_add_nsw_positive_index_struct(
+ ; CHECK-NEXT:    [[IDX_POS:%.*]] = icmp sge i8 [[IDX:%.*]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[IDX_POS]])
+-; CHECK-NEXT:    [[IDX_3:%.*]] = add nsw i8 [[IDX]], 2
++; CHECK-NEXT:    [[IDX_3:%.*]] = add nuw nsw i8 [[IDX]], 2
+ ; CHECK-NEXT:    [[ADD_I8_IDX_3:%.*]] = getelementptr inbounds [[STRUCT_T:%.*]], ptr [[A:%.*]], i8 [[IDX_3]]
+ ; CHECK-NEXT:    [[C_0:%.*]] = icmp ult ptr [[ADD_I8_IDX_3]], [[UPPER:%.*]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_0]])
+-; CHECK-NEXT:    [[IDX_1:%.*]] = add nsw i8 [[IDX]], 1
++; CHECK-NEXT:    [[IDX_1:%.*]] = add nuw nsw i8 [[IDX]], 1
+ ; CHECK-NEXT:    [[ADD_I32_IDX_1:%.*]] = getelementptr inbounds i32, ptr [[A]], i8 [[IDX_1]]
+ ; CHECK-NEXT:    [[T_1:%.*]] = icmp ult ptr [[ADD_I32_IDX_1]], [[UPPER]]
+ ; CHECK-NEXT:    [[ADD_I8_IDX_1:%.*]] = getelementptr inbounds i8, ptr [[A]], i8 [[IDX_1]]
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
+index d8f83da780df7..715be96aafe03 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
+@@ -657,9 +657,11 @@ exit:
+   ret i1 false
+ }
+ 
+-; Adjusted lower bound `StartValue + StepOffset` overflows unsigned.
+-define i1 @postinc_start_plus_step_overflow_not_folded(i1 %c) {
+-; CHECK-LABEL: define i1 @postinc_start_plus_step_overflow_not_folded(
++; Adjusted lower bound `StartValue + StepOffset` overflows unsigned, so no
++; unsigned bounds are added. The query is still proven using the signed
++; bounds, as %iv.next is known to be non-negative.
++define i1 @postinc_start_plus_step_overflow_unsigned(i1 %c) {
++; CHECK-LABEL: define i1 @postinc_start_plus_step_overflow_unsigned(
+ ; CHECK-SAME: i1 [[C:%.*]]) {
+ ; CHECK-NEXT:  [[ENTRY:.*]]:
+ ; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
+@@ -671,8 +673,7 @@ define i1 @postinc_start_plus_step_overflow_not_folded(i1 %c) {
+ ; CHECK:       [[LOOP_LATCH]]:
+ ; CHECK-NEXT:    br i1 [[C]], label %[[EXIT_0:.*]], label %[[LOOP_HEADER]]
+ ; CHECK:       [[EXIT_0]]:
+-; CHECK-NEXT:    [[RES:%.*]] = icmp ule i64 [[IV_NEXT]], 100
+-; CHECK-NEXT:    ret i1 [[RES]]
++; CHECK-NEXT:    ret i1 true
+ ; CHECK:       [[EXIT]]:
+ ; CHECK-NEXT:    ret i1 false
+ ;
+@@ -1487,3 +1488,43 @@ declare void @use(i1)
+ declare void @launch(i32)
+ declare void @execute()
+ declare i64 @llvm.umin.i64(i64, i64)
++
++; Adjusted lower bound `StartValue + StepOffset` overflows both signed and
++; unsigned, so neither set of bounds is added.
++define i1 @postinc_start_plus_step_overflow_signed_not_folded(i1 %c) {
++; CHECK-LABEL: define i1 @postinc_start_plus_step_overflow_signed_not_folded(
++; CHECK-SAME: i1 [[C:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 9223372036854775807, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
++; CHECK-NEXT:    [[DONE:%.*]] = icmp eq i64 [[IV_NEXT]], 100
++; CHECK-NEXT:    br i1 [[DONE]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    br i1 [[C]], label %[[EXIT_0:.*]], label %[[LOOP_HEADER]]
++; CHECK:       [[EXIT_0]]:
++; CHECK-NEXT:    [[RES:%.*]] = icmp ule i64 [[IV_NEXT]], 100
++; CHECK-NEXT:    ret i1 [[RES]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  br label %loop.header
++
++loop.header:
++  %iv = phi i64 [ 9223372036854775807, %entry ], [ %iv.next, %loop.latch ]
++  %iv.next = add i64 %iv, 1
++  %done = icmp eq i64 %iv.next, 100
++  br i1 %done, label %exit, label %loop.latch
++
++loop.latch:
++  br i1 %c, label %exit.0, label %loop.header
++
++exit.0:
++  %res = icmp ule i64 %iv.next, 100
++  ret i1 %res
++
++exit:
++  ret i1 false
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-exit-condition-or-and.ll b/llvm/test/Transforms/ConstraintElimination/induction-exit-condition-or-and.ll
+index a333b7c7369a2..3ef6011fb68fe 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-exit-condition-or-and.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-exit-condition-or-and.ll
+@@ -18,7 +18,7 @@ define void @stride2_or_latch(i64 %n, i1 %x, i1 %header.ec) {
+ ; CHECK-NEXT:    call void @use(i1 [[C_TIGHT]])
+ ; CHECK-NEXT:    br i1 [[HEADER_EC]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 2
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp sge i64 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    [[COND:%.*]] = or i1 [[X]], [[EC]]
+ ; CHECK-NEXT:    br i1 [[COND]], label %[[EXIT]], label %[[LOOP_HEADER]]
+@@ -64,7 +64,7 @@ define void @stride2_or_latch_operands_swapped(i64 %n, i1 %x, i1 %header.ec) {
+ ; CHECK-NEXT:    call void @use(i1 [[C_TIGHT]])
+ ; CHECK-NEXT:    br i1 [[HEADER_EC]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 2
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp sge i64 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    [[COND:%.*]] = or i1 [[EC]], [[X]]
+ ; CHECK-NEXT:    br i1 [[COND]], label %[[EXIT]], label %[[LOOP_HEADER]]
+@@ -111,7 +111,7 @@ define void @neg_or_on_continue_edge(i64 %n, i1 %x, i1 %header.ec) {
+ ; CHECK-NEXT:    call void @use(i1 [[C_TIGHT]])
+ ; CHECK-NEXT:    br i1 [[HEADER_EC]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 2
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    [[COND:%.*]] = or i1 [[X]], [[EC]]
+ ; CHECK-NEXT:    br i1 [[COND]], label %[[LOOP_HEADER]], label %[[EXIT]]
+@@ -158,7 +158,7 @@ define void @neg_or_on_continue_edge_operands_swapped(i64 %n, i1 %x, i1 %header.
+ ; CHECK-NEXT:    call void @use(i1 [[C_TIGHT]])
+ ; CHECK-NEXT:    br i1 [[HEADER_EC]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 2
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    [[COND:%.*]] = or i1 [[EC]], [[X]]
+ ; CHECK-NEXT:    br i1 [[COND]], label %[[LOOP_HEADER]], label %[[EXIT]]
+@@ -204,7 +204,7 @@ define void @sel_or_peel(i64 %n, i1 %x, i1 %header.ec) {
+ ; CHECK-NEXT:    call void @use(i1 [[C_TIGHT]])
+ ; CHECK-NEXT:    br i1 [[HEADER_EC]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 2
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp sge i64 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    [[COND:%.*]] = select i1 [[X]], i1 true, i1 [[EC]]
+ ; CHECK-NEXT:    br i1 [[COND]], label %[[EXIT]], label %[[LOOP_HEADER]]
+@@ -250,7 +250,7 @@ define void @stride2_and_latch(i64 %n, i1 %x, i1 %header.ec) {
+ ; CHECK-NEXT:    call void @use(i1 [[C_TIGHT]])
+ ; CHECK-NEXT:    br i1 [[HEADER_EC]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 2
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    [[COND:%.*]] = and i1 [[X]], [[EC]]
+ ; CHECK-NEXT:    br i1 [[COND]], label %[[LOOP_HEADER]], label %[[EXIT]]
+@@ -296,7 +296,7 @@ define void @stride2_and_latch_operands_swapped(i64 %n, i1 %x, i1 %header.ec) {
+ ; CHECK-NEXT:    call void @use(i1 [[C_TIGHT]])
+ ; CHECK-NEXT:    br i1 [[HEADER_EC]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 2
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    [[COND:%.*]] = and i1 [[EC]], [[X]]
+ ; CHECK-NEXT:    br i1 [[COND]], label %[[LOOP_HEADER]], label %[[EXIT]]
+@@ -343,7 +343,7 @@ define void @neg_and_on_exit_edge(i64 %n, i1 %x, i1 %header.ec) {
+ ; CHECK-NEXT:    call void @use(i1 [[C_TIGHT]])
+ ; CHECK-NEXT:    br i1 [[HEADER_EC]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 2
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp sge i64 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    [[COND:%.*]] = and i1 [[X]], [[EC]]
+ ; CHECK-NEXT:    br i1 [[COND]], label %[[EXIT]], label %[[LOOP_HEADER]]
+@@ -390,7 +390,7 @@ define void @neg_and_on_exit_edge_operands_swapped(i64 %n, i1 %x, i1 %header.ec)
+ ; CHECK-NEXT:    call void @use(i1 [[C_TIGHT]])
+ ; CHECK-NEXT:    br i1 [[HEADER_EC]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 2
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp sge i64 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    [[COND:%.*]] = and i1 [[EC]], [[X]]
+ ; CHECK-NEXT:    br i1 [[COND]], label %[[EXIT]], label %[[LOOP_HEADER]]
+@@ -436,7 +436,7 @@ define void @sel_and_peel(i64 %n, i1 %x, i1 %header.ec) {
+ ; CHECK-NEXT:    call void @use(i1 [[C_TIGHT]])
+ ; CHECK-NEXT:    br i1 [[HEADER_EC]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 2
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    [[COND:%.*]] = select i1 [[X]], i1 [[EC]], i1 false
+ ; CHECK-NEXT:    br i1 [[COND]], label %[[LOOP_HEADER]], label %[[EXIT]]
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-nowrap-from-scev-not-ir.ll b/llvm/test/Transforms/ConstraintElimination/induction-nowrap-from-scev-not-ir.ll
+index ffd96bdbfb4a4..8b499c27bc7ab 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-nowrap-from-scev-not-ir.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-nowrap-from-scev-not-ir.ll
+@@ -18,7 +18,7 @@ define void @sum_of_induction_and_guard(i8 %n, i8 %j) mustprogress {
+ ; CHECK-NEXT:    [[C:%.*]] = icmp ne i8 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[C]], label %[[BODY:.*]], label %[[EXIT:.*]]
+ ; CHECK:       [[BODY]]:
+-; CHECK-NEXT:    [[SUM:%.*]] = add nsw i8 [[IV]], [[J]]
++; CHECK-NEXT:    [[SUM:%.*]] = add nuw nsw i8 [[IV]], [[J]]
+ ; CHECK-NEXT:    br i1 true, label %[[THEN:.*]], label %[[ELS:.*]]
+ ; CHECK:       [[THEN]]:
+ ; CHECK-NEXT:    tail call void @use(i32 1)
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-relational-predicate-latch.ll b/llvm/test/Transforms/ConstraintElimination/induction-relational-predicate-latch.ll
+index bdc1f406fce90..47b35a42a5453 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-relational-predicate-latch.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-relational-predicate-latch.ll
+@@ -93,7 +93,7 @@ define void @stride2_slt_latch(i64 %n, i1 %header.ec) {
+ ; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    br i1 [[HEADER_EC]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 2
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP_HEADER]], label %[[EXIT]]
+ ; CHECK:       [[EXIT]]:
+@@ -129,7 +129,7 @@ define void @stride2_slt_header_is_latch(i64 %n) {
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 2
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP]], label %[[EXIT:.*]]
+ ; CHECK:       [[EXIT]]:
+@@ -164,7 +164,7 @@ define void @stride2_sge_latch(i64 %n, i1 %header.ec) {
+ ; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    br i1 [[HEADER_EC]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 2
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp sge i64 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT]], label %[[LOOP_HEADER]]
+ ; CHECK:       [[EXIT]]:
+@@ -204,8 +204,8 @@ define void @neg_compared_value_not_backedge(i64 %n, i1 %header.ec) {
+ ; CHECK-NEXT:    call void @use(i1 [[C]])
+ ; CHECK-NEXT:    br i1 [[HEADER_EC]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[PROBE:%.*]] = add nsw i64 [[IV]], 2
+-; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 4
++; CHECK-NEXT:    [[PROBE:%.*]] = add nuw nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 4
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[PROBE]], [[N]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP_HEADER]], label %[[EXIT]]
+ ; CHECK:       [[EXIT]]:
+@@ -245,7 +245,7 @@ define void @neg_variant_bound(ptr %p, i1 %header.ec) {
+ ; CHECK-NEXT:    call void @use(i1 [[C]])
+ ; CHECK-NEXT:    br i1 [[HEADER_EC]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 2
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP_HEADER]], label %[[EXIT]]
+ ; CHECK:       [[EXIT]]:
+@@ -324,7 +324,7 @@ define void @neg_wrong_polarity(i64 %n, i1 %header.ec) {
+ ; CHECK-NEXT:    call void @use(i1 [[C]])
+ ; CHECK-NEXT:    br i1 [[HEADER_EC]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 2
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT]], label %[[LOOP_HEADER]]
+ ; CHECK:       [[EXIT]]:
+@@ -436,7 +436,7 @@ define void @stride2_sle_latch(i64 %n, i1 %header.ec) {
+ ; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    br i1 [[HEADER_EC]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 2
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp sle i64 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP_HEADER]], label %[[EXIT]]
+ ; CHECK:       [[EXIT]]:
+@@ -513,7 +513,7 @@ define void @neg_unsigned_latch_no_signed_fact(i64 %n, i1 %header.ec) {
+ ; CHECK-NEXT:    call void @use(i1 [[C]])
+ ; CHECK-NEXT:    br i1 [[HEADER_EC]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 2
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp ult i64 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP_HEADER]], label %[[EXIT]]
+ ; CHECK:       [[EXIT]]:
+@@ -593,7 +593,7 @@ define void @commuted_compare(i64 %n, i1 %header.ec) {
+ ; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    br i1 [[HEADER_EC]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 2
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp sgt i64 [[N]], [[IV_NEXT]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP_HEADER]], label %[[EXIT]]
+ ; CHECK:       [[EXIT]]:
+@@ -727,7 +727,7 @@ define void @signed_latch_unsigned_fact(i64 %n, i1 %header.ec) {
+ ; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    br i1 [[HEADER_EC]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 2
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP_HEADER]], label %[[EXIT]]
+ ; CHECK:       [[EXIT]]:
+@@ -807,7 +807,7 @@ define void @signed_latch_unsigned_fact_variable_start(i64 %start, i64 %n, i1 %h
+ ; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    br i1 [[HEADER_EC]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 2
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP_HEADER]], label %[[EXIT]]
+ ; CHECK:       [[EXIT]]:
+@@ -849,7 +849,7 @@ define void @signed_latch_unsigned_fact_variable_start_missing_ult(i64 %start, i
+ ; CHECK-NEXT:    call void @use(i1 [[C]])
+ ; CHECK-NEXT:    br i1 [[HEADER_EC]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 2
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP_HEADER]], label %[[EXIT]]
+ ; CHECK:       [[EXIT]]:
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-symbolic-start-postinc.ll b/llvm/test/Transforms/ConstraintElimination/induction-symbolic-start-postinc.ll
+index 6fbf5942a4d5c..0f6bce64a7339 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-symbolic-start-postinc.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-symbolic-start-postinc.ll
+@@ -205,8 +205,7 @@ define void @postinc_constant_start_step4(i8 %k0, i1 %c) {
+ ; CHECK:       [[LOOP_HEADER]]:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ 4, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[C_1:%.*]] = icmp slt i8 [[IV]], [[N]]
+-; CHECK-NEXT:    call void @use(i1 [[C_1]])
++; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    br i1 [[C]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+ ; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], 4
+diff --git a/llvm/test/Transforms/ConstraintElimination/loops-header-tested-base.ll b/llvm/test/Transforms/ConstraintElimination/loops-header-tested-base.ll
+index 5ff8798730077..5454d74a37d62 100644
+--- a/llvm/test/Transforms/ConstraintElimination/loops-header-tested-base.ll
++++ b/llvm/test/Transforms/ConstraintElimination/loops-header-tested-base.ll
+@@ -19,7 +19,7 @@ define void @loop_phi_pos_start_value(i32 %y, i1 %c, i32 %n) {
+ ; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[X_NEXT]] = add nsw i32 [[X]], 1
++; CHECK-NEXT:    [[X_NEXT]] = add nuw nsw i32 [[X]], 1
+ ; CHECK-NEXT:    br label [[LOOP_HEADER]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    [[C_6:%.*]] = icmp sgt i32 [[Y:%.*]], 10
+@@ -144,7 +144,7 @@ define void @loop_count_down(i32 %y, i1 %c, i32 %n) {
+ ; CHECK-NEXT:    call void @use(i1 [[C_4]])
+ ; CHECK-NEXT:    [[C_5:%.*]] = icmp sge i32 [[X]], 2
+ ; CHECK-NEXT:    call void @use(i1 [[C_5]])
+-; CHECK-NEXT:    [[X_NEXT]] = add nsw i32 [[X]], 1
++; CHECK-NEXT:    [[X_NEXT]] = add nuw nsw i32 [[X]], 1
+ ; CHECK-NEXT:    br label [[LOOP_HEADER]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    [[C_6:%.*]] = icmp sgt i32 [[Y:%.*]], 10
+diff --git a/llvm/test/Transforms/ConstraintElimination/minmax.ll b/llvm/test/Transforms/ConstraintElimination/minmax.ll
+index 029b6508a2106..ffcc7a8bcf7e6 100644
+--- a/llvm/test/Transforms/ConstraintElimination/minmax.ll
++++ b/llvm/test/Transforms/ConstraintElimination/minmax.ll
+@@ -668,7 +668,7 @@ define i64 @pr82271_zext_nneg(i32 %a, i32 %b){
+ ; CHECK:       then:
+ ; CHECK-NEXT:    [[SA:%.*]] = zext nneg i32 [[A]] to i64
+ ; CHECK-NEXT:    [[SB:%.*]] = zext nneg i32 [[B]] to i64
+-; CHECK-NEXT:    [[ADD:%.*]] = add nsw i64 [[SA]], 1
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw nsw i64 [[SA]], 1
+ ; CHECK-NEXT:    ret i64 [[SB]]
+ ; CHECK:       else:
+ ; CHECK-NEXT:    ret i64 0
+@@ -697,7 +697,7 @@ define i64 @pr82271_zext(i32 %a, i32 %b){
+ ; CHECK:       then:
+ ; CHECK-NEXT:    [[SA:%.*]] = zext i32 [[A]] to i64
+ ; CHECK-NEXT:    [[SB:%.*]] = zext i32 [[B]] to i64
+-; CHECK-NEXT:    [[ADD:%.*]] = add nsw i64 [[SA]], 1
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw nsw i64 [[SA]], 1
+ ; CHECK-NEXT:    [[SMAX:%.*]] = call i64 @llvm.smax.i64(i64 [[SB]], i64 [[ADD]])
+ ; CHECK-NEXT:    ret i64 [[SMAX]]
+ ; CHECK:       else:
+diff --git a/llvm/test/Transforms/ConstraintElimination/ne-tightening.ll b/llvm/test/Transforms/ConstraintElimination/ne-tightening.ll
+index 2175b73d37d22..e498f9d9571d3 100644
+--- a/llvm/test/Transforms/ConstraintElimination/ne-tightening.ll
++++ b/llvm/test/Transforms/ConstraintElimination/ne-tightening.ll
+@@ -136,7 +136,7 @@ define i1 @ule_const_and_ne_const_implies_ult_const(i64 %n) {
+ define i1 @sge_and_ne_on_add(i64 %n) {
+ ; CHECK-LABEL: define i1 @sge_and_ne_on_add(
+ ; CHECK-SAME: i64 [[N:%.*]]) {
+-; CHECK-NEXT:    [[ADD:%.*]] = add nsw i64 [[N]], 1
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw nsw i64 [[N]], 1
+ ; CHECK-NEXT:    [[A:%.*]] = icmp sge i64 [[ADD]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[A]])
+ ; CHECK-NEXT:    [[B:%.*]] = icmp ne i64 [[ADD]], 0
+diff --git a/llvm/test/Transforms/ConstraintElimination/or-non-negative.ll b/llvm/test/Transforms/ConstraintElimination/or-non-negative.ll
+index 138ea41198b91..6db17907d1959 100644
+--- a/llvm/test/Transforms/ConstraintElimination/or-non-negative.ll
++++ b/llvm/test/Transforms/ConstraintElimination/or-non-negative.ll
+@@ -16,7 +16,7 @@ define i1 @or_non_negative_bounds(i64 %a, i64 %b, i64 %c, i64 %d) {
+ ; CHECK-NEXT:    [[AND_3:%.*]] = and i1 [[NONNEG]], [[AND_2]]
+ ; CHECK-NEXT:    br i1 [[AND_3]], label %[[THEN:.*]], label %[[ELSE:.*]]
+ ; CHECK:       [[THEN]]:
+-; CHECK-NEXT:    [[IDX:%.*]] = add nsw i64 [[D]], [[B]]
++; CHECK-NEXT:    [[IDX:%.*]] = add nuw nsw i64 [[D]], [[B]]
+ ; CHECK-NEXT:    ret i1 true
+ ; CHECK:       [[ELSE]]:
+ ; CHECK-NEXT:    ret i1 false
+diff --git a/llvm/test/Transforms/ConstraintElimination/partial-decomposition.ll b/llvm/test/Transforms/ConstraintElimination/partial-decomposition.ll
+index ca5a7c3d10a91..093f03e56ed2a 100644
+--- a/llvm/test/Transforms/ConstraintElimination/partial-decomposition.ll
++++ b/llvm/test/Transforms/ConstraintElimination/partial-decomposition.ll
+@@ -30,7 +30,7 @@ define i1 @decompose_used_when_precondition_holds(i16 %x, i16 %y, i16 %z) {
+ ; CHECK-NEXT:  [[ENTRY:.*:]]
+ ; CHECK-NEXT:    [[X_POS:%.*]] = and i16 [[X]], 127
+ ; CHECK-NEXT:    [[Y_POS:%.*]] = and i16 [[Y]], 127
+-; CHECK-NEXT:    [[ADD:%.*]] = add nsw i16 [[X_POS]], [[Y_POS]]
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw nsw i16 [[X_POS]], [[Y_POS]]
+ ; CHECK-NEXT:    [[C:%.*]] = icmp ugt i16 [[ADD]], [[Z]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
+ ; CHECK-NEXT:    ret i1 true
+diff --git a/llvm/test/Transforms/ConstraintElimination/sext-signed-predicates.ll b/llvm/test/Transforms/ConstraintElimination/sext-signed-predicates.ll
+index 34f023e4ba5f1..a80bf7a2b2c24 100644
+--- a/llvm/test/Transforms/ConstraintElimination/sext-signed-predicates.ll
++++ b/llvm/test/Transforms/ConstraintElimination/sext-signed-predicates.ll
+@@ -105,7 +105,7 @@ define i1 @cmp_zext_nneg(i32 %a, i32 %b){
+ ; CHECK:       then:
+ ; CHECK-NEXT:    [[SA:%.*]] = zext nneg i32 [[A]] to i64
+ ; CHECK-NEXT:    [[SB:%.*]] = zext nneg i32 [[B]] to i64
+-; CHECK-NEXT:    [[ADD:%.*]] = add nsw i64 [[SA]], 1
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw nsw i64 [[SA]], 1
+ ; CHECK-NEXT:    ret i1 true
+ ; CHECK:       else:
+ ; CHECK-NEXT:    ret i1 false
+@@ -136,7 +136,7 @@ define i1 @cmp_zext(i32 %a, i32 %b){
+ ; CHECK:       then:
+ ; CHECK-NEXT:    [[SA:%.*]] = zext i32 [[A]] to i64
+ ; CHECK-NEXT:    [[SB:%.*]] = zext i32 [[B]] to i64
+-; CHECK-NEXT:    [[ADD:%.*]] = add nsw i64 [[SA]], 1
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw nsw i64 [[SA]], 1
+ ; CHECK-NEXT:    [[CMP2:%.*]] = icmp sge i64 [[SB]], [[ADD]]
+ ; CHECK-NEXT:    ret i1 [[CMP2]]
+ ; CHECK:       else:
+diff --git a/llvm/test/Transforms/ConstraintElimination/trunc.ll b/llvm/test/Transforms/ConstraintElimination/trunc.ll
+index 8c49daad7b880..dc7db8800b985 100644
+--- a/llvm/test/Transforms/ConstraintElimination/trunc.ll
++++ b/llvm/test/Transforms/ConstraintElimination/trunc.ll
+@@ -98,7 +98,7 @@ define i1 @test2(i32 %n) {
+ ; CHECK-NEXT:    [[COND2:%.*]] = call i1 @cond()
+ ; CHECK-NEXT:    br i1 [[COND2]], label %[[FOR_BODY]], label %[[FOR_END:.*]]
+ ; CHECK:       [[FOR_END]]:
+-; CHECK-NEXT:    [[TRUNC:%.*]] = trunc nsw i64 [[INDVAR_NEXT]] to i32
++; CHECK-NEXT:    [[TRUNC:%.*]] = trunc nuw nsw i64 [[INDVAR_NEXT]] to i32
+ ; CHECK-NEXT:    ret i1 true
+ ; CHECK:       [[IF_ELSE]]:
+ ; CHECK-NEXT:    ret i1 false
+diff --git a/llvm/test/Transforms/ConstraintElimination/wrapping-math.ll b/llvm/test/Transforms/ConstraintElimination/wrapping-math.ll
+index febcdce18ca10..36542bab80709 100644
+--- a/llvm/test/Transforms/ConstraintElimination/wrapping-math.ll
++++ b/llvm/test/Transforms/ConstraintElimination/wrapping-math.ll
+@@ -202,11 +202,8 @@ define i1 @test_slt(i8 %a, i8 %b) {
+ ; CHECK-NEXT:    [[ADD_1:%.*]] = add i8 [[A]], 1
+ ; CHECK-NEXT:    br i1 [[AND]], label [[IF_END:%.*]], label [[EXIT_1:%.*]]
+ ; CHECK:       if.end:
+-; CHECK-NEXT:    [[T_1:%.*]] = icmp slt i8 [[SUB_1]], [[B]]
+-; CHECK-NEXT:    [[T_2:%.*]] = icmp slt i8 [[SUB_2]], [[B]]
+-; CHECK-NEXT:    [[XOR_1:%.*]] = xor i1 [[T_1]], [[T_2]]
+-; CHECK-NEXT:    [[T_3:%.*]] = icmp slt i8 [[SUB_3]], [[B]]
+-; CHECK-NEXT:    [[XOR_2:%.*]] = xor i1 [[XOR_1]], [[T_3]]
++; CHECK-NEXT:    [[XOR_1:%.*]] = xor i1 true, true
++; CHECK-NEXT:    [[XOR_2:%.*]] = xor i1 [[XOR_1]], true
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp slt i8 [[SUB_4]], [[B]]
+ ; CHECK-NEXT:    [[XOR_3:%.*]] = xor i1 [[XOR_2]], [[C_1]]
+ ; CHECK-NEXT:    [[C_2:%.*]] = icmp slt i8 [[ADD_1]], [[B]]

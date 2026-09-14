@@ -205,14 +205,12 @@ _RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsc2V0e
   %i.no = getelementptr inbounds nuw i8, ptr %i.ck, i64 16 ; 3 uses
   store i64 0, ptr %i.no, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cj)
-  %i.np = shl i64 %i.gm, 4                        ; 4 uses
-  %3 = icmp samesign ugt i64 %i.gm, 1152921504606846975
-  %.not.i417 = icmp ugt i64 %i.np, 9223372036854775800
-  %or.cond.i418 = or i1 %3, %.not.i417
-  br i1 %or.cond.i418, label %bb.ex, label %bb.et, !prof !27
+  %i.np = shl nuw i64 %i.gm, 4                    ; 2 uses
+  %.not.i417 = icmp samesign ugt i64 %i.gm, 576460752303423487
+  br i1 %.not.i417, label %bb.ex, label %bb.et, !prof !27
 
 bb.et:                                            ; preds = %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsc2V0exE7CWf_11lance_arrow.exit
-  %i.nq = icmp eq i64 %i.np, 0
+  %i.nq = icmp eq i64 %i.gm, 0
   br i1 %i.nq, label %bb.ey, label %bb.eu
 
 bb.eu:                                            ; preds = %bb.et
@@ -250,12 +248,9 @@ bb.ex:                                            ; preds = %_RNvMs4_NtCs40k4W9m
   br label %bb.gq
 
 bb.ey:                                            ; preds = %bb.ev, %bb.et
-  %.sroa.419.0 = phi i64 [ %i.gm, %bb.ev ], [ 0, %bb.et ] ; 2 uses
   %.sroa.1021.0 = phi i64 [ %i.nt, %bb.ev ], [ 8, %bb.et ]
   %i.nv = inttoptr i64 %.sroa.1021.0 to ptr
-  %4 = icmp samesign ule i64 %i.gm, %.sroa.419.0
-  tail call void @llvm.assume(i1 %4)
-  store i64 %.sroa.419.0, ptr %i.cj, align 8
+  store i64 %i.gm, ptr %i.cj, align 8
   %i.nw = getelementptr inbounds nuw i8, ptr %i.cj, i64 8 ; 2 uses
   store ptr %i.nv, ptr %i.nw, align 8
   %i.nx = getelementptr inbounds nuw i8, ptr %i.cj, i64 16 ; 3 uses
@@ -658,14 +653,12 @@ _RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsc2V0e
   %i.qe = getelementptr inbounds nuw i8, ptr %i.cq, i64 16 ; 3 uses
   store i64 0, ptr %i.qe, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cp)
-  %i.qf = shl i64 %i.ja, 4                        ; 4 uses
-  %3 = icmp samesign ugt i64 %i.ja, 1152921504606846975
-  %.not.i420 = icmp ugt i64 %i.qf, 9223372036854775800
-  %or.cond.i421 = or i1 %3, %.not.i420
-  br i1 %or.cond.i421, label %bb.fl, label %bb.fh, !prof !27
+  %i.qf = shl nuw i64 %i.ja, 4                    ; 2 uses
+  %.not.i420 = icmp samesign ugt i64 %i.ja, 576460752303423487
+  br i1 %.not.i420, label %bb.fl, label %bb.fh, !prof !27
 
 bb.fh:                                            ; preds = %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsc2V0exE7CWf_11lance_arrow.exit
-  %i.qg = icmp eq i64 %i.qf, 0
+  %i.qg = icmp eq i64 %i.ja, 0
   br i1 %i.qg, label %bb.fm, label %bb.fi
 
 bb.fi:                                            ; preds = %bb.fh
@@ -703,12 +696,9 @@ bb.fl:                                            ; preds = %_RNvMs4_NtCs40k4W9m
   br label %bb.he
 
 bb.fm:                                            ; preds = %bb.fj, %bb.fh
-  %.sroa.423.0 = phi i64 [ %i.ja, %bb.fj ], [ 0, %bb.fh ] ; 2 uses
   %.sroa.1025.0 = phi i64 [ %i.qj, %bb.fj ], [ 8, %bb.fh ]
   %i.ql = inttoptr i64 %.sroa.1025.0 to ptr
-  %4 = icmp samesign ule i64 %i.ja, %.sroa.423.0
-  call void @llvm.assume(i1 %4)
-  store i64 %.sroa.423.0, ptr %i.cp, align 8
+  store i64 %i.ja, ptr %i.cp, align 8
   %i.qm = getelementptr inbounds nuw i8, ptr %i.cp, i64 8 ; 2 uses
   store ptr %i.ql, ptr %i.qm, align 8
   %i.qn = getelementptr inbounds nuw i8, ptr %i.cp, i64 16 ; 3 uses
@@ -1111,7 +1101,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 _RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types10UInt32TypeENtB7_5Array7is_nullCsc2V0exE7CWf_11lance_arrow.exit120.thread.us.i: ; preds = %.lr.ph127.i, %bb.l
   %.sroa.068.0125.us.i = phi i64 [ %i.bl, %bb.l ], [ %.sroa.0.0.i117.i, %.lr.ph127.i ] ; 2 uses
-  %i.bl = add nsw i64 %.sroa.068.0125.us.i, 1     ; 2 uses
+  %i.bl = add nuw nsw i64 %.sroa.068.0125.us.i, 1 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !10980)
   %i.bm = load ptr, ptr %1, align 8, !alias.scope !10970, !noalias !10975, !nonnull !10, !noundef !10
   %i.bn = load ptr, ptr %i.f, align 8, !alias.scope !10970, !noalias !10975, !nonnull !10, !align !12, !noundef !10
@@ -1138,7 +1128,7 @@ bb.l:                                             ; preds = %bb.k
 
 .lr.ph127.split.i:                                ; preds = %.lr.ph127.i, %bb.p
   %.sroa.068.0125.i = phi i64 [ %i.bx, %bb.p ], [ %.sroa.0.0.i117.i, %.lr.ph127.i ] ; 4 uses
-  %i.bx = add nsw i64 %.sroa.068.0125.i, 1        ; 2 uses
+  %i.bx = add nuw nsw i64 %.sroa.068.0125.i, 1    ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !10980)
   %i.by = icmp ult i64 %.sroa.068.0125.i, %i.bf
   br i1 %i.by, label %_RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types10UInt32TypeENtB7_5Array7is_nullCsc2V0exE7CWf_11lance_arrow.exit120.i, label %bb.m, !prof !15
@@ -1368,7 +1358,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 _RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types10UInt64TypeENtB7_5Array7is_nullCsc2V0exE7CWf_11lance_arrow.exit120.thread.us.i: ; preds = %.lr.ph127.i, %bb.l
   %.sroa.068.0125.us.i = phi i64 [ %i.bl, %bb.l ], [ %.sroa.0.0.i117.i, %.lr.ph127.i ] ; 2 uses
-  %i.bl = add nsw i64 %.sroa.068.0125.us.i, 1     ; 2 uses
+  %i.bl = add nuw nsw i64 %.sroa.068.0125.us.i, 1 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !11009)
   %i.bm = load ptr, ptr %1, align 8, !alias.scope !10999, !noalias !11004, !nonnull !10, !noundef !10
   %i.bn = load ptr, ptr %i.f, align 8, !alias.scope !10999, !noalias !11004, !nonnull !10, !align !12, !noundef !10
@@ -1395,7 +1385,7 @@ bb.l:                                             ; preds = %bb.k
 
 .lr.ph127.split.i:                                ; preds = %.lr.ph127.i, %bb.p
   %.sroa.068.0125.i = phi i64 [ %i.bx, %bb.p ], [ %.sroa.0.0.i117.i, %.lr.ph127.i ] ; 4 uses
-  %i.bx = add nsw i64 %.sroa.068.0125.i, 1        ; 2 uses
+  %i.bx = add nuw nsw i64 %.sroa.068.0125.i, 1    ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !11009)
   %i.by = icmp ult i64 %.sroa.068.0125.i, %i.bf
   br i1 %i.by, label %_RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types10UInt64TypeENtB7_5Array7is_nullCsc2V0exE7CWf_11lance_arrow.exit120.i, label %bb.m, !prof !15
@@ -1798,7 +1788,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 _RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float32TypeENtB7_5Array7is_nullCsc2V0exE7CWf_11lance_arrow.exit120.thread.us.i: ; preds = %.lr.ph127.i, %bb.l
   %.sroa.068.0125.us.i = phi i64 [ %i.bl, %bb.l ], [ %.sroa.0.0.i117.i, %.lr.ph127.i ] ; 2 uses
-  %i.bl = add nsw i64 %.sroa.068.0125.us.i, 1     ; 2 uses
+  %i.bl = add nuw nsw i64 %.sroa.068.0125.us.i, 1 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !11065)
   %i.bm = load ptr, ptr %1, align 8, !alias.scope !11056, !noalias !11061, !nonnull !10, !noundef !10
   %i.bn = load ptr, ptr %i.f, align 8, !alias.scope !11056, !noalias !11061, !nonnull !10, !align !12, !noundef !10
@@ -1825,7 +1815,7 @@ bb.l:                                             ; preds = %bb.k
 
 .lr.ph127.split.i:                                ; preds = %.lr.ph127.i, %bb.p
   %.sroa.068.0125.i = phi i64 [ %i.bx, %bb.p ], [ %.sroa.0.0.i117.i, %.lr.ph127.i ] ; 4 uses
-  %i.bx = add nsw i64 %.sroa.068.0125.i, 1        ; 2 uses
+  %i.bx = add nuw nsw i64 %.sroa.068.0125.i, 1    ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !11065)
   %i.by = icmp ult i64 %.sroa.068.0125.i, %i.bf
   br i1 %i.by, label %_RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float32TypeENtB7_5Array7is_nullCsc2V0exE7CWf_11lance_arrow.exit120.i, label %bb.m, !prof !15
@@ -2055,7 +2045,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 _RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float64TypeENtB7_5Array7is_nullCsc2V0exE7CWf_11lance_arrow.exit120.thread.us.i: ; preds = %.lr.ph127.i, %bb.l
   %.sroa.068.0125.us.i = phi i64 [ %i.bl, %bb.l ], [ %.sroa.0.0.i117.i, %.lr.ph127.i ] ; 2 uses
-  %i.bl = add nsw i64 %.sroa.068.0125.us.i, 1     ; 2 uses
+  %i.bl = add nuw nsw i64 %.sroa.068.0125.us.i, 1 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !11093)
   %i.bm = load ptr, ptr %1, align 8, !alias.scope !11084, !noalias !11089, !nonnull !10, !noundef !10
   %i.bn = load ptr, ptr %i.f, align 8, !alias.scope !11084, !noalias !11089, !nonnull !10, !align !12, !noundef !10
@@ -2082,7 +2072,7 @@ bb.l:                                             ; preds = %bb.k
 
 .lr.ph127.split.i:                                ; preds = %.lr.ph127.i, %bb.p
   %.sroa.068.0125.i = phi i64 [ %i.bx, %bb.p ], [ %.sroa.0.0.i117.i, %.lr.ph127.i ] ; 4 uses
-  %i.bx = add nsw i64 %.sroa.068.0125.i, 1        ; 2 uses
+  %i.bx = add nuw nsw i64 %.sroa.068.0125.i, 1    ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !11093)
   %i.by = icmp ult i64 %.sroa.068.0125.i, %i.bf
   br i1 %i.by, label %_RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float64TypeENtB7_5Array7is_nullCsc2V0exE7CWf_11lance_arrow.exit120.i, label %bb.m, !prof !15

@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not24.i, label %..loopexit_crit_edge.i, label %.lr.ph.i, !llvm.loop !1
 
 ..loopexit_crit_edge.i:                           ; preds = %.lr.ph.i
-  %i.ab = trunc nsw i64 %indvars.iv.next.i to i32
+  %i.ab = trunc nuw nsw i64 %indvars.iv.next.i to i32
   store i64 %.026.i, ptr %i.s, align 8, !tbaa !84
   store i32 %i.ab, ptr %i.r, align 8, !tbaa !68
   br label %mca_common_ompio_set_explicit_offset.exit
@@ -253,7 +253,7 @@ bb.c:                                             ; preds = %mca_common_ompio_se
   br i1 %.not24.i15, label %..loopexit_crit_edge.i16, label %.lr.ph.i11, !llvm.loop !1
 
 ..loopexit_crit_edge.i16:                         ; preds = %.lr.ph.i11
-  %i.bc = trunc nsw i64 %indvars.iv.next.i14 to i32
+  %i.bc = trunc nuw nsw i64 %indvars.iv.next.i14 to i32
   store i64 %.026.i13, ptr %i.at, align 8, !tbaa !84
   store i32 %i.bc, ptr %i.as, align 8, !tbaa !68
   br label %mca_common_ompio_set_explicit_offset.exit17
@@ -656,7 +656,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not24.i, label %..loopexit_crit_edge.i, label %.lr.ph.i, !llvm.loop !1
 
 ..loopexit_crit_edge.i:                           ; preds = %.lr.ph.i
-  %i.ab = trunc nsw i64 %indvars.iv.next.i to i32
+  %i.ab = trunc nuw nsw i64 %indvars.iv.next.i to i32
   store i64 %.026.i, ptr %i.s, align 8, !tbaa !84
   store i32 %i.ab, ptr %i.r, align 8, !tbaa !68
   br label %mca_common_ompio_set_explicit_offset.exit
@@ -707,7 +707,7 @@ bb.c:                                             ; preds = %mca_common_ompio_se
   br i1 %.not24.i15, label %..loopexit_crit_edge.i16, label %.lr.ph.i11, !llvm.loop !1
 
 ..loopexit_crit_edge.i16:                         ; preds = %.lr.ph.i11
-  %i.bc = trunc nsw i64 %indvars.iv.next.i14 to i32
+  %i.bc = trunc nuw nsw i64 %indvars.iv.next.i14 to i32
   store i64 %.026.i13, ptr %i.at, align 8, !tbaa !84
   store i32 %i.bc, ptr %i.as, align 8, !tbaa !68
   br label %mca_common_ompio_set_explicit_offset.exit17
@@ -933,7 +933,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not24.i, label %..loopexit_crit_edge.i, label %.lr.ph.i, !llvm.loop !1
 
 ..loopexit_crit_edge.i:                           ; preds = %.lr.ph.i
-  %i.ab = trunc nsw i64 %indvars.iv.next.i to i32
+  %i.ab = trunc nuw nsw i64 %indvars.iv.next.i to i32
   store i64 %.026.i, ptr %i.s, align 8, !tbaa !84
   store i32 %i.ab, ptr %i.r, align 8, !tbaa !68
   br label %mca_common_ompio_set_explicit_offset.exit
@@ -984,7 +984,7 @@ bb.c:                                             ; preds = %mca_common_ompio_se
   br i1 %.not24.i15, label %..loopexit_crit_edge.i16, label %.lr.ph.i11, !llvm.loop !1
 
 ..loopexit_crit_edge.i16:                         ; preds = %.lr.ph.i11
-  %i.bc = trunc nsw i64 %indvars.iv.next.i14 to i32
+  %i.bc = trunc nuw nsw i64 %indvars.iv.next.i14 to i32
   store i64 %.026.i13, ptr %i.at, align 8, !tbaa !84
   store i32 %i.bc, ptr %i.as, align 8, !tbaa !68
   br label %mca_common_ompio_set_explicit_offset.exit17
@@ -1067,7 +1067,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not24.i, label %..loopexit_crit_edge.i, label %.lr.ph.i, !llvm.loop !1
 
 ..loopexit_crit_edge.i:                           ; preds = %.lr.ph.i
-  %i.ab = trunc nsw i64 %indvars.iv.next.i to i32
+  %i.ab = trunc nuw nsw i64 %indvars.iv.next.i to i32
   store i64 %.026.i, ptr %i.s, align 8, !tbaa !84
   store i32 %i.ab, ptr %i.r, align 8, !tbaa !68
   br label %mca_common_ompio_set_explicit_offset.exit
@@ -1134,7 +1134,7 @@ bb.e:                                             ; preds = %mca_common_ompio_fi
   br i1 %.not24.i16, label %..loopexit_crit_edge.i17, label %.lr.ph.i12, !llvm.loop !1
 
 ..loopexit_crit_edge.i17:                         ; preds = %.lr.ph.i12
-  %i.bh = trunc nsw i64 %indvars.iv.next.i15 to i32
+  %i.bh = trunc nuw nsw i64 %indvars.iv.next.i15 to i32
   store i64 %.026.i14, ptr %i.ay, align 8, !tbaa !84
   store i32 %i.bh, ptr %i.ax, align 8, !tbaa !68
   br label %mca_common_ompio_set_explicit_offset.exit18

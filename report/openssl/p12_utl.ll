@@ -202,7 +202,7 @@ bb.a:
   %.04590 = phi i32 [ %i.fh, %bb.g ], [ 0, %.preheader87 ]
   %i.c = zext nneg i32 %.091 to i64
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 %i.c ; 4 uses
-  %i.e = sub nsw i32 %1, %.091                    ; 2 uses
+  %i.e = sub nuw nsw i32 %1, %.091                ; 2 uses
   %i.f = icmp slt i32 %i.e, 2
   br i1 %i.f, label %bb.f, label %bb.b
 
@@ -249,7 +249,7 @@ bmp_to_utf8.exit:                                 ; preds = %bb.b, %bb.e
   %i.ac = icmp slt i32 %.fr86, 0
   br i1 %i.ac, label %bb.f, label %bb.g
 
-bb.f:                                             ; preds = %bb.c, %bb.d, %.lr.ph, %bmp_to_utf8.exit
+bb.f:                                             ; preds = %bmp_to_utf8.exit, %.lr.ph, %bb.d, %bb.c
   %i.ad = lshr exact i32 %1, 1                    ; 2 uses
   %i.ae = zext nneg i32 %1 to i64                 ; 3 uses
   %i.af = getelementptr i8, ptr %0, i64 %i.ae
@@ -487,7 +487,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.fu = getelementptr inbounds nuw i8, ptr %i.fr, i64 %i.ft
   %i.fv = zext nneg i32 %.293 to i64
   %i.fw = getelementptr inbounds nuw i8, ptr %0, i64 %i.fv ; 4 uses
-  %i.fx = sub nsw i32 %1, %.293                   ; 2 uses
+  %i.fx = sub nuw nsw i32 %1, %.293               ; 2 uses
   %i.fy = icmp slt i32 %i.fx, 2
   br i1 %i.fy, label %bmp_to_utf8.exit64.thread, label %bb.l
 
@@ -574,7 +574,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q, %._cri
   br label %OPENSSL_uni2asc.exit
 
 OPENSSL_uni2asc.exit:                             ; preds = %.thread83, %._crit_edge.i, %.thread, %bb.r, %bb.s, %bb.k, %bb.a, %bmp_to_utf8.exit64.thread
-  %.048 = phi ptr [ null, %bb.k ], [ %i.fr, %bb.r ], [ null, %bb.a ], [ null, %bmp_to_utf8.exit64.thread ], [ %i.fr, %bb.s ], [ %i.aq, %._crit_edge.i ], [ null, %.thread83 ], [ null, %.thread ]
+  %.048 = phi ptr [ null, %bb.k ], [ %i.fr, %bb.r ], [ null, %bb.a ], [ null, %bmp_to_utf8.exit64.thread ], [ %i.fr, %bb.s ], [ %i.aq, %._crit_edge.i ], [ null, %.thread ], [ null, %.thread83 ]
   ret ptr %.048
 }
 

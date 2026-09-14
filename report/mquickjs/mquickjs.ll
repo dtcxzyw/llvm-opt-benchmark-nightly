@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %get_pc2line.exit.i
   %i.ca = getelementptr inbounds nuw [4 x i8], ptr @opcode_info, i64 %i.bz
   %i.cb = load i8, ptr %i.ca, align 4, !tbaa !62
   %i.cc = zext i8 %i.cb to i32
-  %i.cd = add nsw i32 %.035.i, %i.cc              ; 2 uses
+  %i.cd = add nuw nsw i32 %.035.i, %i.cc          ; 2 uses
   %i.ce = sext i32 %i.cd to i64                   ; 2 uses
   %i.cf = icmp ugt i64 %i.ba, %i.ce
   br i1 %i.cf, label %bb.i, label %find_line_col.exit.thread, !llvm.loop !180
@@ -607,7 +607,7 @@ bb.ch:                                            ; preds = %bb.cg
   %..i15.i = call noundef i32 @llvm.smin.i32(i32 %.017.i, i32 16) ; 2 uses
   %i.hp = zext nneg i32 %..i15.i to i64
   call void %0(ptr noundef %1, ptr noundef nonnull %i.c, i64 noundef %i.hp) #31, !inline_history !366
-  %i.hq = sub nsw i32 %.017.i, %..i15.i           ; 2 uses
+  %i.hq = sub nuw nsw i32 %.017.i, %..i15.i       ; 2 uses
   %.not14.i = icmp eq i32 %i.hq, 0
   br i1 %.not14.i, label %.loopexit239, label %.lr.ph.i, !llvm.loop !367
 
@@ -638,7 +638,7 @@ bb.ck:                                            ; preds = %bb.cj
   %..i15.i176 = call noundef i32 @llvm.smin.i32(i32 %.017.i175, i32 16) ; 2 uses
   %i.hv = zext nneg i32 %..i15.i176 to i64
   call void %0(ptr noundef %1, ptr noundef nonnull %i.b, i64 noundef %i.hv) #31, !inline_history !366
-  %i.hw = sub nsw i32 %.017.i175, %..i15.i176     ; 2 uses
+  %i.hw = sub nuw nsw i32 %.017.i175, %..i15.i176 ; 2 uses
   %.not14.i177 = icmp eq i32 %i.hw, 0
   br i1 %.not14.i177, label %.thread, label %.lr.ph.i174, !llvm.loop !367
 
@@ -672,7 +672,7 @@ bb.cm:                                            ; preds = %bb.cl
   %..i15.i184 = call noundef i32 @llvm.smin.i32(i32 %.017.i183, i32 16) ; 2 uses
   %i.ib = zext nneg i32 %..i15.i184 to i64
   call void %0(ptr noundef %1, ptr noundef nonnull %i.a, i64 noundef %i.ib) #31, !inline_history !366
-  %i.ic = sub nsw i32 %.017.i183, %..i15.i184     ; 2 uses
+  %i.ic = sub nuw nsw i32 %.017.i183, %..i15.i184 ; 2 uses
   %.not14.i185 = icmp eq i32 %i.ic, 0
   br i1 %.not14.i185, label %pad.exit186, label %.lr.ph.i182, !llvm.loop !367
 

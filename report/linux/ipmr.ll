@@ -204,8 +204,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br i1 %.not30.i, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ae = trunc nsw i64 %indvars.iv.i to i32
-  %i.af = add nsw i32 %i.ae, 1                    ; 2 uses
+  %i.ae = trunc nuw nsw i64 %indvars.iv.i to i32
+  %i.af = add nuw nsw i32 %i.ae, 1                ; 2 uses
   store i32 %i.af, ptr %i.m, align 4
   br label %bb.j
 
@@ -339,8 +339,8 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   br i1 %.not30.i101, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.ck = trunc nsw i64 %indvars.iv.i96 to i32
-  %i.cl = add nsw i32 %i.ck, 1                    ; 2 uses
+  %i.ck = trunc nuw nsw i64 %indvars.iv.i96 to i32
+  %i.cl = add nuw nsw i32 %i.ck, 1                ; 2 uses
   store i32 %i.cl, ptr %i.br, align 4
   br label %bb.v
 
