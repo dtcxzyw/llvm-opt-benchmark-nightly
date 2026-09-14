@@ -205,7 +205,7 @@ bb.oa:                                            ; preds = %bb.es
   %i.cog = call noundef double @_ZN6LibRaw7getrealEi(ptr noundef nonnull align 8 dereferenceable(768512) %0, i32 noundef %i.cof) ; 3 uses
   %i.coh = fcmp oge double %i.cog, f0xB690000000000000
   %i.coi = fcmp ole double %i.cog, f0x3FF0000010000000
-  %or.cond72 = and i1 %i.coh, %i.coi
+  %or.cond72 = and i1 %i.coh, %i.coi              ; 2 uses
   br i1 %or.cond72, label %bb.ob, label %bb.oc
 
 bb.ob:                                            ; preds = %.preheader1213
@@ -214,7 +214,6 @@ bb.ob:                                            ; preds = %.preheader1213
   br label %bb.oc
 
 bb.oc:                                            ; preds = %bb.ob, %.preheader1213
-  %.1850 = phi i32 [ 1, %bb.ob ], [ 0, %.preheader1213 ] ; 2 uses
   %i.cok = load i32, ptr %i.b, align 4, !tbaa !74
   %i.col = call noundef double @_ZN6LibRaw7getrealEi(ptr noundef nonnull align 8 dereferenceable(768512) %0, i32 noundef %i.cok) ; 3 uses
   %i.com = fcmp oge double %i.col, f0xB690000000000000
@@ -226,11 +225,10 @@ bb.od:                                            ; preds = %bb.oc
   %i.coo = fptrunc double %i.col to float
   %i.cop = getelementptr i8, ptr %i.cod, i64 466872
   store float %i.coo, ptr %i.cop, align 8, !tbaa !213
-  %3 = add nuw nsw i32 %.1850, 1
   br label %bb.oe
 
 bb.oe:                                            ; preds = %bb.od, %bb.oc
-  %.1850.1 = phi i32 [ %3, %bb.od ], [ %.1850, %bb.oc ] ; 2 uses
+  %.1850.1 = phi i1 [ %or.cond72, %bb.od ], [ false, %bb.oc ]
   %i.coq = load i32, ptr %i.b, align 4, !tbaa !74
   %i.cor = call noundef double @_ZN6LibRaw7getrealEi(ptr noundef nonnull align 8 dereferenceable(768512) %0, i32 noundef %i.coq) ; 3 uses
   %i.cos = fcmp oge double %i.cor, f0xB690000000000000
@@ -242,11 +240,10 @@ bb.of:                                            ; preds = %bb.oe
   %i.cou = fptrunc double %i.cor to float
   %i.cov = getelementptr i8, ptr %i.cod, i64 466876
   store float %i.cou, ptr %i.cov, align 4, !tbaa !213
-  %4 = add nuw nsw i32 %.1850.1, 1
   br label %bb.og
 
 bb.og:                                            ; preds = %bb.of, %bb.oe
-  %.1850.2 = phi i32 [ %4, %bb.of ], [ %.1850.1, %bb.oe ]
+  %.1850.2 = phi i1 [ %.1850.1, %bb.of ], [ false, %bb.oe ]
   %i.cow = load i32, ptr %i.b, align 4, !tbaa !74
   %i.cox = call noundef double @_ZN6LibRaw7getrealEi(ptr noundef nonnull align 8 dereferenceable(768512) %0, i32 noundef %i.cow) ; 3 uses
   %i.coy = fcmp oge double %i.cox, f0xB690000000000000
@@ -258,8 +255,7 @@ bb.oh:                                            ; preds = %bb.og
   %i.cpa = fptrunc double %i.cox to float
   %i.cpb = getelementptr i8, ptr %i.cod, i64 466880
   store float %i.cpa, ptr %i.cpb, align 8, !tbaa !213
-  %5 = icmp eq i32 %.1850.2, 3
-  br i1 %5, label %bb.oi, label %.thread1155
+  br i1 %.1850.2, label %bb.oi, label %.thread1155
 
 bb.oi:                                            ; preds = %bb.oh
   %i.cpc = getelementptr i8, ptr %i.cod, i64 434000 ; 2 uses

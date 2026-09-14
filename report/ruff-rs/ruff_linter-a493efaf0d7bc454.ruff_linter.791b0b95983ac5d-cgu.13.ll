@@ -205,7 +205,7 @@ bb.ae:                                            ; preds = %bb.ad
   br label %_RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11StringFlags6prefix.exit50.jt3
 
 _RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11StringFlags6prefix.exit50.jt3: ; preds = %bb.ac, %bb.ae, %bb.ad
-  %.sroa.14.0.i35.jt3 = phi i8 [ 1, %bb.ad ], [ %.14.i49, %bb.ae ], [ 0, %bb.ac ] ; 4 uses
+  %.sroa.14.0.i35.jt3 = phi i8 [ 1, %bb.ad ], [ %.14.i49, %bb.ae ], [ 0, %bb.ac ] ; 3 uses
   store i8 3, ptr %i.i, align 1, !noalias !6984
   store i8 %.sroa.14.0.i35.jt3, ptr %i.ak, align 1, !noalias !6984
   %i.dx = and i16 %i.de, 16
@@ -241,7 +241,7 @@ _RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11Stri
   %i.ee = icmp ne i8 %.sroa.14.0.i35.jt2, 2       ; 2 uses
   %i.ef = icmp ne i8 %.sroa.14.0.i.jt2, 2         ; 2 uses
   %i.eg = xor i1 %i.ee, %i.ef
-  br i1 %i.eg, label %_RNvXsL_NtCskLngH8kgpZI_15ruff_python_ast10str_prefixNtB5_15AnyStringPrefixNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.thread, label %.split.a
+  br i1 %i.eg, label %_RNvXsL_NtCskLngH8kgpZI_15ruff_python_ast10str_prefixNtB5_15AnyStringPrefixNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.thread, label %.split54
 
 bb.ai:                                            ; preds = %bb.ag
   %i.eh = and i16 %i.de, 64
@@ -287,7 +287,7 @@ bb.an:                                            ; preds = %bb.aj
   br i1 %.not3.i.jt1, label %bb.aq, label %_RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11StringFlags6prefix.exit.jt1
 
 bb.ao:                                            ; preds = %bb.ak
-  br i1 %.not3.i.jt3, label %bb.ar, label %_RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11StringFlags6prefix.exit.jt3
+  br i1 %.not3.i.jt3, label %bb.ar, label %_RNvXsL_NtCskLngH8kgpZI_15ruff_python_ast10str_prefixNtB5_15AnyStringPrefixNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.ap:                                            ; preds = %bb.am
   %i.es = and i16 %i.de, 128
@@ -303,7 +303,7 @@ bb.aq:                                            ; preds = %bb.an
 bb.ar:                                            ; preds = %bb.ao
   %i.eu = and i16 %i.de, 128
   %.not4.i.jt3 = icmp eq i16 %i.eu, 0
-  br i1 %.not4.i.jt3, label %bb.at, label %_RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11StringFlags6prefix.exit.jt3
+  br i1 %.not4.i.jt3, label %bb.at, label %_RNvXsL_NtCskLngH8kgpZI_15ruff_python_ast10str_prefixNtB5_15AnyStringPrefixNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.as:                                            ; preds = %bb.aq
   %i.ev = and i16 %i.de, 4
@@ -315,7 +315,7 @@ bb.at:                                            ; preds = %bb.ar
   %i.ew = and i16 %i.de, 4
   %.not5.i.jt3 = icmp eq i16 %i.ew, 0
   %.14.i.jt3 = select i1 %.not5.i.jt3, i8 2, i8 3
-  br label %_RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11StringFlags6prefix.exit.jt3
+  br label %_RNvXsL_NtCskLngH8kgpZI_15ruff_python_ast10str_prefixNtB5_15AnyStringPrefixNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 _RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11StringFlags6prefix.exit.jt1: ; preds = %bb.af, %bb.ah, %bb.ai, %bb.al, %bb.am, %bb.ap, %bb.an, %bb.aq, %bb.as
   %.sroa.14.0.i.jt1 = phi i8 [ 0, %bb.an ], [ 1, %bb.aq ], [ %.14.i.jt1, %bb.as ], [ 0, %bb.am ], [ %.13.i.jt1, %bb.ap ], [ 0, %bb.ai ], [ %.12.i.jt1, %bb.al ], [ 0, %bb.af ], [ %..i.jt1, %bb.ah ] ; 2 uses
@@ -325,18 +325,7 @@ bb.au:                                            ; preds = %_RNvXs1i_NtCskLngH8
   %i.ex = icmp ne i8 %.sroa.14.0.i35.jt1, 2       ; 2 uses
   %i.ey = icmp ne i8 %.sroa.14.0.i.jt1, 2         ; 2 uses
   %i.ez = xor i1 %i.ex, %i.ey
-  br i1 %i.ez, label %_RNvXsL_NtCskLngH8kgpZI_15ruff_python_ast10str_prefixNtB5_15AnyStringPrefixNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.thread, label %_RNvXsL_NtCskLngH8kgpZI_15ruff_python_ast10str_prefixNtB5_15AnyStringPrefixNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
-
-_RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11StringFlags6prefix.exit.jt3: ; preds = %bb.at, %bb.ar, %bb.ao
-  %.sroa.14.0.i.jt3 = phi i8 [ 0, %bb.ao ], [ 1, %bb.ar ], [ %.14.i.jt3, %bb.at ] ; 3 uses
-  %4 = add nsw i8 %.sroa.14.0.i35.jt3, -2
-  %.inv.i = icmp samesign ult i8 %.sroa.14.0.i35.jt3, 2
-  %narrow.i = select i1 %.inv.i, i8 2, i8 %4      ; 2 uses
-  %5 = add nsw i8 %.sroa.14.0.i.jt3, -2
-  %.inv12.i = icmp samesign ult i8 %.sroa.14.0.i.jt3, 2
-  %narrow11.i = select i1 %.inv12.i, i8 2, i8 %5
-  %6 = icmp eq i8 %narrow.i, %narrow11.i
-  br i1 %6, label %.split54, label %_RNvXsL_NtCskLngH8kgpZI_15ruff_python_ast10str_prefixNtB5_15AnyStringPrefixNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.thread
+  br i1 %i.ez, label %_RNvXsL_NtCskLngH8kgpZI_15ruff_python_ast10str_prefixNtB5_15AnyStringPrefixNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.thread, label %.split.a
 
 .split55:                                         ; preds = %_RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11StringFlags6prefix.exit.jt0
   %i.fa = icmp ne i8 %.sroa.14.0.i35.jt0, %.sroa.14.0.i.jt0
@@ -344,25 +333,31 @@ _RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11Stri
   %spec.select.i.not = and i1 %i.ep, %i.fb
   br i1 %spec.select.i.not, label %_RNvXsL_NtCskLngH8kgpZI_15ruff_python_ast10str_prefixNtB5_15AnyStringPrefixNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.thread, label %bb.av
 
-.split.a:                                         ; preds = %_RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11StringFlags6prefix.exit.jt2
-  %i.fc = icmp ne i8 %.sroa.14.0.i35.jt2, %.sroa.14.0.i.jt2
-  %i.fd = and i1 %i.ef, %i.fc
-  %spec.select14.i.not.a = and i1 %i.ee, %i.fd
+.split.a:                                         ; preds = %bb.au
+  %i.fc = icmp ne i8 %.sroa.14.0.i35.jt1, %.sroa.14.0.i.jt1
+  %i.fd = and i1 %i.ey, %i.fc
+  %spec.select14.i.not.a = and i1 %i.ex, %i.fd
   br i1 %spec.select14.i.not.a, label %_RNvXsL_NtCskLngH8kgpZI_15ruff_python_ast10str_prefixNtB5_15AnyStringPrefixNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.thread, label %bb.av
 
-.split54:                                         ; preds = %_RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11StringFlags6prefix.exit.jt3
-  %i.fe = icmp ne i8 %narrow.i, 2
-  %7 = icmp eq i8 %.sroa.14.0.i35.jt3, %.sroa.14.0.i.jt3
-  %spec.select15.i = select i1 %i.fe, i1 true, i1 %7
-  br i1 %spec.select15.i, label %bb.av, label %_RNvXsL_NtCskLngH8kgpZI_15ruff_python_ast10str_prefixNtB5_15AnyStringPrefixNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.thread
+.split54:                                         ; preds = %_RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11StringFlags6prefix.exit.jt2
+  %i.fe = icmp ne i8 %.sroa.14.0.i35.jt2, %.sroa.14.0.i.jt2
+  %4 = and i1 %i.ef, %i.fe
+  %spec.select14.i.not = and i1 %i.ee, %4
+  br i1 %spec.select14.i.not, label %_RNvXsL_NtCskLngH8kgpZI_15ruff_python_ast10str_prefixNtB5_15AnyStringPrefixNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.thread, label %bb.av
 
-_RNvXsL_NtCskLngH8kgpZI_15ruff_python_ast10str_prefixNtB5_15AnyStringPrefixNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit: ; preds = %bb.au
-  %8 = icmp ne i8 %.sroa.14.0.i35.jt1, %.sroa.14.0.i.jt1
-  %i.ff = and i1 %i.ey, %8
-  %spec.select13.i.not = and i1 %i.ex, %i.ff
-  br i1 %spec.select13.i.not, label %_RNvXsL_NtCskLngH8kgpZI_15ruff_python_ast10str_prefixNtB5_15AnyStringPrefixNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.thread, label %bb.av
+_RNvXsL_NtCskLngH8kgpZI_15ruff_python_ast10str_prefixNtB5_15AnyStringPrefixNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit: ; preds = %bb.at, %bb.ar, %bb.ao
+  %.sroa.14.0.i.jt3 = phi i8 [ 0, %bb.ao ], [ 1, %bb.ar ], [ %.14.i.jt3, %bb.at ] ; 2 uses
+  %.inv.i = icmp samesign ult i8 %.sroa.14.0.i35.jt3, 2 ; 2 uses
+  %.inv12.i = icmp samesign ult i8 %.sroa.14.0.i.jt3, 2
+  %5 = icmp eq i8 %.sroa.14.0.i35.jt3, %.sroa.14.0.i.jt3 ; 2 uses
+  %not..inv.i = xor i1 %.inv.i, true              ; 2 uses
+  %i.ff = and i1 %5, %not..inv.i
+  %6 = select i1 %.inv12.i, i1 %.inv.i, i1 %i.ff
+  %spec.select15.i = or i1 %5, %not..inv.i
+  %spec.select5.i = select i1 %6, i1 %spec.select15.i, i1 false
+  br i1 %spec.select5.i, label %bb.av, label %_RNvXsL_NtCskLngH8kgpZI_15ruff_python_ast10str_prefixNtB5_15AnyStringPrefixNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.thread
 
-bb.av:                                            ; preds = %.split55, %.split54, %.split.a, %_RNvXsL_NtCskLngH8kgpZI_15ruff_python_ast10str_prefixNtB5_15AnyStringPrefixNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
+bb.av:                                            ; preds = %.split55, %.split.a, %.split54, %_RNvXsL_NtCskLngH8kgpZI_15ruff_python_ast10str_prefixNtB5_15AnyStringPrefixNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
   %i.fg = xor i16 %i.de, %i.da
   %i.fh = and i16 %i.fg, 3
   %or.cond89.i = icmp eq i16 %i.fh, 0
@@ -547,7 +542,7 @@ bb.bo:                                            ; preds = %bb.bb
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #39, !noalias !6984
   unreachable
 
-_RNvXsL_NtCskLngH8kgpZI_15ruff_python_ast10str_prefixNtB5_15AnyStringPrefixNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.thread: ; preds = %bb.ak, %_RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11StringFlags6prefix.exit50.jt3, %_RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11StringFlags6prefix.exit50.jt2, %_RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11StringFlags6prefix.exit50.jt0, %_RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11StringFlags6prefix.exit.jt1, %_RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11StringFlags6prefix.exit.jt2, %_RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11StringFlags6prefix.exit.jt3, %bb.au, %_RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11StringFlags6prefix.exit.jt0, %.split55, %.split54, %.split.a, %bb.av, %_RNvXsL_NtCskLngH8kgpZI_15ruff_python_ast10str_prefixNtB5_15AnyStringPrefixNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
+_RNvXsL_NtCskLngH8kgpZI_15ruff_python_ast10str_prefixNtB5_15AnyStringPrefixNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.thread: ; preds = %bb.ak, %_RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11StringFlags6prefix.exit50.jt3, %_RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11StringFlags6prefix.exit50.jt2, %_RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11StringFlags6prefix.exit50.jt0, %_RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11StringFlags6prefix.exit.jt1, %_RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11StringFlags6prefix.exit.jt2, %bb.au, %_RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11StringFlags6prefix.exit.jt0, %.split55, %.split.a, %.split54, %bb.av, %_RNvXsL_NtCskLngH8kgpZI_15ruff_python_ast10str_prefixNtB5_15AnyStringPrefixNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !6984
   br label %_RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules26flake8_implicit_str_concat5rules8implicit19concatenate_strings.exit.thread
 

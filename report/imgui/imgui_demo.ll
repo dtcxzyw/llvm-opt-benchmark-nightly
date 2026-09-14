@@ -205,10 +205,9 @@ bb.md:                                            ; preds = %bb.mc, %bb.lz
   call void @_ZN5ImGui6PushIDEi(i32 noundef 1)
   %i.bcf = call noundef i32 @_ZN5ImGui19TableGetColumnFlagsEi(i32 noundef 1)
   %i.bcg = and i32 %i.bcf, 134217728
-  %.not540.1 = icmp eq i32 %i.bcg, 0
-  %spec.select549.1 = select i1 %.not540.1, i32 %sext, i32 1 ; 2 uses
-  %70 = icmp eq i32 %spec.select549.1, 1
-  br i1 %70, label %bb.me, label %bb.mh
+  %.not540.1 = icmp eq i32 %i.bcg, 0              ; 2 uses
+  %spec.select549.1 = select i1 %.not540.1, i32 %sext, i32 1
+  br i1 %.not540.1, label %bb.mh, label %bb.me
 
 bb.me:                                            ; preds = %bb.md
   %i.bch = call noundef zeroext i1 @_ZN5ImGui16IsAnyItemHoveredEv()
@@ -247,10 +246,9 @@ bb.ml:                                            ; preds = %bb.mk, %bb.mh
   call void @_ZN5ImGui6PushIDEi(i32 noundef 2)
   %i.bcm = call noundef i32 @_ZN5ImGui19TableGetColumnFlagsEi(i32 noundef 2)
   %i.bcn = and i32 %i.bcm, 134217728
-  %.not540.2 = icmp eq i32 %i.bcn, 0
-  %spec.select549.2 = select i1 %.not540.2, i32 %spec.select549.1, i32 2 ; 2 uses
-  %71 = icmp eq i32 %spec.select549.2, 2
-  br i1 %71, label %bb.mm, label %bb.mp
+  %.not540.2 = icmp eq i32 %i.bcn, 0              ; 2 uses
+  %spec.select549.2 = select i1 %.not540.2, i32 %spec.select549.1, i32 2
+  br i1 %.not540.2, label %bb.mp, label %bb.mm
 
 bb.mm:                                            ; preds = %bb.ml
   %i.bco = call noundef zeroext i1 @_ZN5ImGui16IsAnyItemHoveredEv()
@@ -289,10 +287,9 @@ bb.mt:                                            ; preds = %bb.ms, %bb.mp
   call void @_ZN5ImGui6PushIDEi(i32 noundef 3)
   %i.bct = call noundef i32 @_ZN5ImGui19TableGetColumnFlagsEi(i32 noundef 3)
   %i.bcu = and i32 %i.bct, 134217728
-  %.not540.3 = icmp eq i32 %i.bcu, 0
-  %spec.select549.3 = select i1 %.not540.3, i32 %spec.select549.2, i32 3 ; 2 uses
-  %72 = icmp eq i32 %spec.select549.3, 3
-  br i1 %72, label %bb.mu, label %bb.mx
+  %.not540.3 = icmp eq i32 %i.bcu, 0              ; 2 uses
+  %spec.select549.3 = select i1 %.not540.3, i32 %spec.select549.2, i32 3
+  br i1 %.not540.3, label %bb.mx, label %bb.mu
 
 bb.mu:                                            ; preds = %bb.mt
   %i.bcv = call noundef zeroext i1 @_ZN5ImGui16IsAnyItemHoveredEv()

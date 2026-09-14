@@ -202,15 +202,12 @@ _ZN28RegisterContextDarwin_x86_648WriteGPREv.exit.a: ; preds = %bb.c
   %i.x = load ptr, ptr %0, align 8, !tbaa !9
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 296
   %i.z = load ptr, ptr %i.y, align 8
-  %i.aa = tail call noundef i32 %i.z(ptr noundef nonnull align 8 dereferenceable(776) %0, i64 noundef %i.w, i32 noundef 4, ptr noundef nonnull align 8 dereferenceable(168) %i.l) #12, !inline_history !14 ; 2 uses
+  %i.aa = tail call noundef i32 %i.z(ptr noundef nonnull align 8 dereferenceable(776) %0, i64 noundef %i.w, i32 noundef 4, ptr noundef nonnull align 8 dereferenceable(168) %i.l) #12, !inline_history !14
   store i32 -1, ptr %i.q, align 8, !tbaa !10
-  %2 = icmp eq i32 %i.aa, 0
-  %spec.select = zext i1 %2 to i32
   br label %_ZN28RegisterContextDarwin_x86_648WriteGPREv.exit.thread
 
 _ZN28RegisterContextDarwin_x86_648WriteGPREv.exit.thread: ; preds = %bb.c, %_ZN28RegisterContextDarwin_x86_648WriteGPREv.exit.a
-  %.sink = phi i32 [ %i.aa, %_ZN28RegisterContextDarwin_x86_648WriteGPREv.exit.a ], [ -1, %bb.c ]
-  %3 = phi i32 [ %spec.select, %_ZN28RegisterContextDarwin_x86_648WriteGPREv.exit.a ], [ 0, %bb.c ] ; 2 uses
+  %.sink = phi i32 [ %i.aa, %_ZN28RegisterContextDarwin_x86_648WriteGPREv.exit.a ], [ -1, %bb.c ] ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 756
   store i32 %.sink, ptr %i.ab, align 4, !tbaa !10
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 760 ; 2 uses
@@ -226,18 +223,15 @@ _ZN28RegisterContextDarwin_x86_648WriteFPUEv.exit.a: ; preds = %_ZN28RegisterCon
   %i.aj = load ptr, ptr %0, align 8, !tbaa !9
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 304
   %i.al = load ptr, ptr %i.ak, align 8
-  %i.am = tail call noundef i32 %i.al(ptr noundef nonnull align 8 dereferenceable(776) %0, i64 noundef %i.ai, i32 noundef 5, ptr noundef nonnull align 4 dereferenceable(524) %i.n) #12, !inline_history !15 ; 2 uses
+  %i.am = tail call noundef i32 %i.al(ptr noundef nonnull align 8 dereferenceable(776) %0, i64 noundef %i.ai, i32 noundef 5, ptr noundef nonnull align 4 dereferenceable(524) %i.n) #12, !inline_history !15
   store i32 -1, ptr %i.ac, align 8, !tbaa !10
-  %4 = icmp eq i32 %i.am, 0
-  %5 = zext i1 %4 to i32
-  %spec.select19 = add nuw nsw i32 %3, %5
   br label %_ZN28RegisterContextDarwin_x86_648WriteFPUEv.exit.thread
 
 _ZN28RegisterContextDarwin_x86_648WriteFPUEv.exit.thread: ; preds = %_ZN28RegisterContextDarwin_x86_648WriteGPREv.exit.thread, %_ZN28RegisterContextDarwin_x86_648WriteFPUEv.exit.a
-  %.sink21 = phi i32 [ %i.am, %_ZN28RegisterContextDarwin_x86_648WriteFPUEv.exit.a ], [ -1, %_ZN28RegisterContextDarwin_x86_648WriteGPREv.exit.thread ]
-  %6 = phi i32 [ %spec.select19, %_ZN28RegisterContextDarwin_x86_648WriteFPUEv.exit.a ], [ %3, %_ZN28RegisterContextDarwin_x86_648WriteGPREv.exit.thread ] ; 2 uses
+  %.sink21 = phi i32 [ %i.am, %_ZN28RegisterContextDarwin_x86_648WriteFPUEv.exit.a ], [ -1, %_ZN28RegisterContextDarwin_x86_648WriteGPREv.exit.thread ] ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 764
   store i32 %.sink21, ptr %i.an, align 4, !tbaa !10
+  %2 = or i32 %.sink21, %.sink
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 768 ; 2 uses
   %i.ap = load i32, ptr %i.ao, align 8, !tbaa !10
   %i.aq = icmp eq i32 %i.ap, 0
@@ -251,23 +245,20 @@ _ZN28RegisterContextDarwin_x86_648WriteEXCEv.exit.a: ; preds = %_ZN28RegisterCon
   %i.av = load ptr, ptr %0, align 8, !tbaa !9
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 312
   %i.ax = load ptr, ptr %i.aw, align 8
-  %i.ay = tail call noundef i32 %i.ax(ptr noundef nonnull align 8 dereferenceable(776) %0, i64 noundef %i.au, i32 noundef 6, ptr noundef nonnull align 8 dereferenceable(16) %i.p) #12, !inline_history !16 ; 2 uses
+  %i.ay = tail call noundef i32 %i.ax(ptr noundef nonnull align 8 dereferenceable(776) %0, i64 noundef %i.au, i32 noundef 6, ptr noundef nonnull align 8 dereferenceable(16) %i.p) #12, !inline_history !16
   store i32 -1, ptr %i.ao, align 8, !tbaa !10
-  %7 = icmp eq i32 %i.ay, 0
-  %8 = zext i1 %7 to i32
-  %spec.select20 = add nuw nsw i32 %6, %8
   br label %_ZN28RegisterContextDarwin_x86_648WriteEXCEv.exit.thread
 
 _ZN28RegisterContextDarwin_x86_648WriteEXCEv.exit.thread: ; preds = %_ZN28RegisterContextDarwin_x86_648WriteFPUEv.exit.thread, %_ZN28RegisterContextDarwin_x86_648WriteEXCEv.exit.a
-  %.sink22 = phi i32 [ %i.ay, %_ZN28RegisterContextDarwin_x86_648WriteEXCEv.exit.a ], [ -1, %_ZN28RegisterContextDarwin_x86_648WriteFPUEv.exit.thread ]
-  %9 = phi i32 [ %spec.select20, %_ZN28RegisterContextDarwin_x86_648WriteEXCEv.exit.a ], [ %6, %_ZN28RegisterContextDarwin_x86_648WriteFPUEv.exit.thread ]
+  %.sink22 = phi i32 [ %i.ay, %_ZN28RegisterContextDarwin_x86_648WriteEXCEv.exit.a ], [ -1, %_ZN28RegisterContextDarwin_x86_648WriteFPUEv.exit.thread ] ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 772
   store i32 %.sink22, ptr %i.az, align 4, !tbaa !10
-  %i.ba = icmp eq i32 %9, 3
+  %3 = or i32 %2, %.sink22
+  %i.ba = icmp eq i32 %3, 0
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.a, %bb.b, %_ZN28RegisterContextDarwin_x86_648WriteEXCEv.exit.thread
-  %.013 = phi i1 [ %i.ba, %_ZN28RegisterContextDarwin_x86_648WriteEXCEv.exit.thread ], [ false, %bb.b ], [ false, %bb.a ]
+bb.d:                                             ; preds = %_ZN28RegisterContextDarwin_x86_648WriteEXCEv.exit.thread, %bb.a, %bb.b
+  %.013 = phi i1 [ %i.ba, %_ZN28RegisterContextDarwin_x86_648WriteEXCEv.exit.thread ], [ false, %bb.a ], [ false, %bb.b ]
   ret i1 %.013
 }
 

@@ -205,12 +205,12 @@ _RNvXsF_NtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3keyNtB5_4U256INtNtNtCskKLDkoKarTP
   %i.cn = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.ci
   %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 8
   %i.cp = load i64, ptr %i.co, align 8, !alias.scope !225, !noalias !226, !noundef !4
-  %i.cq = lshr i64 %i.cp, %i.cj                   ; 3 uses
+  %i.cq = lshr i64 %i.cp, %i.cj                   ; 2 uses
   %i.cr = add nuw nsw i64 %i.ci, 3                ; 2 uses
   %i.cs = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.ci
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 16
   %i.cu = load i64, ptr %i.ct, align 8, !alias.scope !225, !noalias !226, !noundef !4
-  %i.cv = lshr i64 %i.cu, %i.cj                   ; 4 uses
+  %i.cv = lshr i64 %i.cu, %i.cj                   ; 3 uses
   %exitcond.not.i.i.i.2 = icmp eq i64 %i.cr, 4
   br i1 %exitcond.not.i.i.i.2, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i.3
 
@@ -221,13 +221,23 @@ _RNvXsF_NtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3keyNtB5_4U256INtNtNtCskKLDkoKarTP
 
 .lr.ph15.i.i.i:                                   ; preds = %._crit_edge.i.i.i
   %i.cw = sub nuw nsw i64 64, %i.cj               ; 3 uses
-  %.sroa.05.014.i.i.i = add nuw nsw i64 %i.ci, 1  ; 2 uses
-  %i.cx = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.sroa.05.014.i.i.i
-  %i.cy = load i64, ptr %i.cx, align 8, !alias.scope !225, !noalias !226, !noundef !4
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.ci
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %5 = load i64, ptr %4, align 8, !alias.scope !225, !noalias !226, !noundef !4
+  %6 = shl i64 %5, %i.cw
+  %7 = or disjoint i64 %i.cm, %6
+  %i.cx = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.ci
+  %8 = getelementptr inbounds nuw i8, ptr %i.cx, i64 16
+  %i.cy = load i64, ptr %8, align 8, !alias.scope !225, !noalias !226, !noundef !4
   %i.cz = shl i64 %i.cy, %i.cw
-  %3 = or disjoint i64 %i.cm, %i.cz               ; 3 uses
-  %exitcond16.not.i.i.i = icmp eq i64 %.sroa.05.014.i.i.i, 3
-  br i1 %exitcond16.not.i.i.i, label %_RNvMsi_NtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3keyNtB5_4U2568full_shl.exit.i, label %4
+  %9 = add i64 %i.cq, %i.cz
+  %exitcond16.not.i.i.i = icmp eq i64 %i.ci, 0
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %11 = load i64, ptr %10, align 8
+  %12 = shl i64 %11, %i.cw
+  %13 = add i64 %i.cv, %12
+  %.sroa.10.2 = select i1 %exitcond16.not.i.i.i, i64 %13, i64 %i.cv
+  br label %_RNvMsi_NtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3keyNtB5_4U2568full_shl.exit.i
 
 .lr.ph.i.i.i.3:                                   ; preds = %_RNvXsF_NtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3keyNtB5_4U256INtNtNtCskKLDkoKarTP_4core3ops3bit3ShlmE3shlB9_.exit.i
   %i.da = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.cr
@@ -235,26 +245,10 @@ _RNvXsF_NtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3keyNtB5_4U256INtNtNtCskKLDkoKarTP
   %i.dc = lshr i64 %i.db, %i.cj
   br label %._crit_edge.i.i.i
 
-4:                                                ; preds = %.lr.ph15.i.i.i
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.ci
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %7 = load i64, ptr %6, align 8, !alias.scope !225, !noalias !226, !noundef !4
-  %8 = shl i64 %7, %i.cw
-  %9 = add i64 %i.cq, %8                          ; 2 uses
-  %exitcond16.not.i.i.i.1.not = icmp eq i64 %i.ci, 0
-  br i1 %exitcond16.not.i.i.i.1.not, label %10, label %_RNvMsi_NtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3keyNtB5_4U2568full_shl.exit.i
-
-10:                                               ; preds = %4
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %12 = load i64, ptr %11, align 8, !alias.scope !225, !noalias !226, !noundef !4
-  %13 = shl i64 %12, %i.cw
-  %14 = add i64 %i.cv, %13
-  br label %_RNvMsi_NtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3keyNtB5_4U2568full_shl.exit.i
-
-_RNvMsi_NtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3keyNtB5_4U2568full_shl.exit.i: ; preds = %.lr.ph15.i.i.i, %4, %10, %._crit_edge.i.i.i
-  %.sroa.0.0 = phi i64 [ %i.cm, %._crit_edge.i.i.i ], [ %3, %10 ], [ %3, %4 ], [ %3, %.lr.ph15.i.i.i ]
-  %.sroa.7.1 = phi i64 [ %i.cq, %._crit_edge.i.i.i ], [ %i.cq, %.lr.ph15.i.i.i ], [ %9, %4 ], [ %9, %10 ]
-  %.sroa.10.1 = phi i64 [ %i.cv, %._crit_edge.i.i.i ], [ %i.cv, %.lr.ph15.i.i.i ], [ %i.cv, %4 ], [ %14, %10 ]
+_RNvMsi_NtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3keyNtB5_4U2568full_shl.exit.i: ; preds = %.lr.ph15.i.i.i, %._crit_edge.i.i.i
+  %.sroa.0.0 = phi i64 [ %i.cm, %._crit_edge.i.i.i ], [ %7, %.lr.ph15.i.i.i ]
+  %.sroa.7.1 = phi i64 [ %i.cq, %._crit_edge.i.i.i ], [ %9, %.lr.ph15.i.i.i ]
+  %.sroa.10.1 = phi i64 [ %i.cv, %._crit_edge.i.i.i ], [ %.sroa.10.2, %.lr.ph15.i.i.i ]
   %i.dd = shl i64 %i.cg, %i.at
   store i64 %.sroa.0.0, ptr %i.c, align 8, !noalias !227
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8

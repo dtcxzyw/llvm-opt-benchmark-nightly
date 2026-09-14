@@ -205,10 +205,10 @@ bb.f:                                             ; preds = %bb.a, %bb.c, %bb.d,
 ; Function Attrs: mustprogress uwtable
 define noundef range(i32 0, 5) i32 @_ZN10tetgenmesh13tri_tri_interEPdS0_S0_S0_S0_S0_(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(69984) %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = alloca [2 x i32], align 4                ; 7 uses
-  %i.b = alloca [4 x i32], align 16               ; 4 uses
-  %i.c = alloca [2 x i32], align 4                ; 8 uses
-  %i.d = alloca [4 x i32], align 16               ; 5 uses
+  %i.a = alloca [2 x i32], align 4                ; 8 uses
+  %i.b = alloca [4 x i32], align 16               ; 5 uses
+  %i.c = alloca [2 x i32], align 4                ; 7 uses
+  %i.d = alloca [4 x i32], align 16               ; 4 uses
   %i.e = alloca [2 x i32], align 4                ; 7 uses
   %i.f = alloca [4 x i32], align 16               ; 4 uses
   %i.g = tail call noundef double @_Z8orient3dPdS_S_S_(ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) ; 4 uses
@@ -265,15 +265,14 @@ _ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit: ; preds = %bb.e, %bb
   br label %bb.r
 
 select.unfold:                                    ; preds = %bb.f, %bb.d, %bb.e, %bb.c
-  %i.ab = phi i1 [ false, %bb.d ], [ true, %bb.e ], [ false, %bb.c ], [ false, %bb.f ] ; 3 uses
+  %i.ab = phi i1 [ false, %bb.d ], [ true, %bb.e ], [ false, %bb.c ], [ false, %bb.f ] ; 2 uses
   %i.ac = phi i1 [ true, %bb.d ], [ false, %bb.e ], [ false, %bb.c ], [ true, %bb.f ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #40
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #40
-  %spec.select = zext i1 %i.ab to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #40
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #40
   %i.ad = call noundef i32 @_ZN10tetgenmesh13tri_edge_tailEPdS0_S0_S0_S0_S0_ddiPiS1_(ptr nonnull readnone align 8 poison, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %5, ptr noundef %6, ptr noundef null, double noundef %i.h, double noundef %i.i, i32 noundef 1, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d)
-  switch i32 %i.ad, label %select.unfold117.thread [
+  switch i32 %i.ad, label %bb.k [
     i32 4, label %bb.h
     i32 2, label %bb.g
   ]
@@ -281,46 +280,36 @@ select.unfold:                                    ; preds = %bb.f, %bb.d, %bb.e,
 bb.g:                                             ; preds = %select.unfold
   %i.ae = load i32, ptr %i.c, align 4, !tbaa !59
   %i.af = icmp eq i32 %i.ae, 2
-  br i1 %i.af, label %select.unfold117.thread, label %_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit109
+  br i1 %i.af, label %bb.k, label %bb.j
 
 bb.h:                                             ; preds = %select.unfold
   %i.ag = load i32, ptr %i.c, align 4, !tbaa !59
-  switch i32 %i.ag, label %_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit109 [
+  switch i32 %i.ag, label %bb.j [
     i32 2, label %bb.i
-    i32 3, label %bb.j
+    i32 3, label %bb.k
   ]
 
 bb.i:                                             ; preds = %bb.h
   %i.ah = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !59
   %i.aj = icmp eq i32 %i.ai, 0
-  br i1 %i.aj, label %select.unfold117.thread, label %_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit109
+  br i1 %i.aj, label %bb.k, label %bb.j
 
-_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit109: ; preds = %bb.h, %bb.i, %bb.g
+bb.j:                                             ; preds = %bb.h, %bb.i, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #40
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #40
   br label %bb.r
 
-select.unfold117.thread:                          ; preds = %bb.g, %select.unfold, %bb.i
-  %..ph = phi i32 [ 2, %bb.i ], [ 0, %select.unfold ], [ 2, %bb.g ]
+bb.k:                                             ; preds = %bb.i, %bb.g, %bb.h, %select.unfold
+  %7 = phi i1 [ false, %bb.g ], [ true, %bb.h ], [ false, %select.unfold ], [ false, %bb.i ] ; 2 uses
+  %. = phi i32 [ 2, %bb.g ], [ 0, %bb.h ], [ 0, %select.unfold ], [ 2, %bb.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #40
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #40
-  br label %bb.k
-
-bb.j:                                             ; preds = %bb.h
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #40
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #40
-  %7 = select i1 %i.ab, i32 2, i32 1
-  br label %bb.k
-
-bb.k:                                             ; preds = %select.unfold117.thread, %bb.j
-  %.128 = phi i32 [ 0, %bb.j ], [ %..ph, %select.unfold117.thread ]
-  %8 = phi i1 [ true, %bb.j ], [ false, %select.unfold117.thread ]
-  %9 = phi i32 [ %7, %bb.j ], [ %spec.select, %select.unfold117.thread ]
+  %spec.select = and i1 %i.ab, %7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #40
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #40
   %i.ak = call noundef i32 @_ZN10tetgenmesh13tri_edge_tailEPdS0_S0_S0_S0_S0_ddiPiS1_(ptr nonnull readnone align 8 poison, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %6, ptr noundef %4, ptr noundef null, double noundef %i.i, double noundef %i.g, i32 noundef 1, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b)
-  switch i32 %i.ak, label %select.unfold121 [
+  switch i32 %i.ak, label %_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit113 [
     i32 4, label %bb.m
     i32 2, label %bb.l
   ]
@@ -328,11 +317,11 @@ bb.k:                                             ; preds = %select.unfold117.th
 bb.l:                                             ; preds = %bb.k
   %i.al = load i32, ptr %i.a, align 4, !tbaa !59
   %i.am = icmp eq i32 %i.al, 2
-  br i1 %i.am, label %select.unfold121, label %_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit113
+  br i1 %i.am, label %_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit113, label %_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit112
 
 bb.m:                                             ; preds = %bb.k
   %i.an = load i32, ptr %i.a, align 4, !tbaa !59
-  switch i32 %i.an, label %_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit113 [
+  switch i32 %i.an, label %_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit112 [
     i32 2, label %bb.n
     i32 3, label %select.unfold121
   ]
@@ -341,23 +330,25 @@ bb.n:                                             ; preds = %bb.m
   %i.ao = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !59
   %i.aq = icmp eq i32 %i.ap, 0
-  br i1 %i.aq, label %select.unfold121, label %_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit113
+  br i1 %i.aq, label %_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit113, label %_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit112
 
-_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit113: ; preds = %bb.m, %bb.n, %bb.l
+_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit112: ; preds = %bb.m, %bb.n, %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #40
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #40
   br label %bb.r
 
-select.unfold121:                                 ; preds = %bb.n, %bb.l, %bb.m, %bb.k
-  %10 = phi i1 [ false, %bb.l ], [ true, %bb.m ], [ false, %bb.k ], [ false, %bb.n ] ; 2 uses
+_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit113: ; preds = %bb.k, %bb.l, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #40
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #40
-  %11 = zext i1 %10 to i32
-  %spec.select103 = add nuw nsw i32 %9, %11
-  %12 = icmp eq i32 %spec.select103, 3
-  br i1 %12, label %bb.r, label %bb.o
+  br label %bb.o
 
-bb.o:                                             ; preds = %select.unfold121
+select.unfold121:                                 ; preds = %bb.m
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #40
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #40
+  br i1 %spec.select, label %bb.r, label %bb.o
+
+bb.o:                                             ; preds = %_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit113, %select.unfold121
+  %8 = phi i1 [ %i.ab, %_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit113 ], [ true, %select.unfold121 ]
   %i.ar = call noundef i32 @_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd(ptr nonnull align 8 poison, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef %1, ptr noundef %2, double noundef %i.n, double noundef %i.o)
   %i.as = icmp eq i32 %i.ar, 1
   br i1 %i.as, label %bb.r, label %bb.p
@@ -370,16 +361,15 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.p
   %i.av = call noundef i32 @_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd(ptr nonnull align 8 poison, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef %3, ptr noundef %1, double noundef %i.p, double noundef %i.n)
   %i.aw = icmp eq i32 %i.av, 1                    ; 2 uses
-  %13 = or i1 %i.aw, %8
-  %brmerge104.a = or i1 %13, %i.ab
-  %brmerge105 = or i1 %10, %brmerge104.a
+  %brmerge104.a = or i1 %8, %i.aw
+  %brmerge105 = or i1 %7, %brmerge104.a
   %.mux.mux.mux = select i1 %i.aw, i32 1, i32 3
-  %spec.select125 = select i1 %i.ac, i32 2, i32 %.128
+  %spec.select125 = select i1 %i.ac, i32 2, i32 %.
   %spec.select126 = select i1 %brmerge105, i32 %.mux.mux.mux, i32 %spec.select125
   br label %bb.r
 
-bb.r:                                             ; preds = %bb.q, %_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit113, %_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit109, %_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit, %select.unfold121, %bb.p, %bb.o, %bb.b, %bb.a
-  %.295 = phi i32 [ 0, %bb.b ], [ 0, %bb.a ], [ 4, %select.unfold121 ], [ 1, %_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit ], [ 1, %_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit109 ], [ 1, %_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit113 ], [ %spec.select126, %bb.q ], [ 1, %bb.o ], [ 1, %bb.p ]
+bb.r:                                             ; preds = %bb.q, %_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit112, %bb.j, %_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit, %select.unfold121, %bb.p, %bb.o, %bb.b, %bb.a
+  %.295 = phi i32 [ 0, %bb.b ], [ 0, %bb.a ], [ 4, %select.unfold121 ], [ 1, %_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit ], [ 1, %bb.j ], [ 1, %_ZN10tetgenmesh19tri_edge_inter_tailEPdS0_S0_S0_S0_dd.exit112 ], [ %spec.select126, %bb.q ], [ 1, %bb.o ], [ 1, %bb.p ]
   ret i32 %.295
 }
 

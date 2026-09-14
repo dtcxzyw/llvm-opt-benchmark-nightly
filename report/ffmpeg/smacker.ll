@@ -107,7 +107,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ac = load i8, ptr %i.s, align 1, !tbaa !34
   %i.ad = and i8 %i.ac, 1
   store i32 1, ptr %i.ab, align 8, !tbaa !39
-  %.not.i = icmp eq i8 %i.ad, 0
+  %.not.i = icmp eq i8 %i.ad, 0                   ; 2 uses
   br i1 %.not.i, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %bb.e
@@ -141,7 +141,6 @@ bb.h:                                             ; preds = %bb.e
 bb.i:                                             ; preds = %._crit_edge.i, %bb.g
   %i.am = phi ptr [ %.pre84.i, %._crit_edge.i ], [ %i.s, %bb.g ]
   %i.an = phi i32 [ %.pre.i, %._crit_edge.i ], [ 1, %bb.g ] ; 3 uses
-  %.0.i = phi i32 [ 0, %._crit_edge.i ], [ 1, %bb.g ] ; 2 uses
   %i.ao = lshr i32 %i.an, 3
   %i.ap = zext nneg i32 %i.ao to i64
   %i.aq = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.ap
@@ -165,7 +164,6 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not77.i, label %select.unfold, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %2 = add nuw nsw i32 %.0.i, 1
   store i32 0, ptr %i.ay, align 4, !tbaa !41
   %i.ba = getelementptr inbounds nuw i8, ptr %i.b, i64 60
   %i.bb = getelementptr inbounds nuw i8, ptr %i.b, i64 68
@@ -181,7 +179,7 @@ bb.l:                                             ; preds = %bb.i
   br i1 %i.bf, label %select.unfold, label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  %.1.i = phi i32 [ %.0.i, %bb.l ], [ %2, %bb.k ] ; 2 uses
+  %.1.i = phi i1 [ false, %bb.l ], [ %.not.i, %bb.k ]
   %i.bg = load i32, ptr %i.ab, align 8, !tbaa !39 ; 3 uses
   %i.bh = load ptr, ptr %1, align 8, !tbaa !36
   %i.bi = lshr i32 %i.bg, 3
@@ -207,7 +205,6 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not79.i, label %select.unfold, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %3 = add nuw nsw i32 %.1.i, 1
   store i32 0, ptr %i.bs, align 4, !tbaa !41
   %i.bu = getelementptr inbounds nuw i8, ptr %i.b, i64 72
   %i.bv = getelementptr inbounds nuw i8, ptr %i.b, i64 80
@@ -223,7 +220,7 @@ bb.p:                                             ; preds = %bb.m
   br i1 %i.bz, label %select.unfold, label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o
-  %.2.i = phi i32 [ %.1.i, %bb.p ], [ %3, %bb.o ]
+  %.2.i = phi i1 [ false, %bb.p ], [ %.1.i, %bb.o ]
   %i.ca = load i32, ptr %i.ab, align 8, !tbaa !39 ; 3 uses
   %i.cb = load ptr, ptr %1, align 8, !tbaa !36
   %i.cc = lshr i32 %i.ca, 3
@@ -261,8 +258,7 @@ bb.t:                                             ; preds = %bb.r
   %i.ct = getelementptr inbounds nuw i8, ptr %i.b, i64 92
   store i32 1, ptr %i.ct, align 4, !tbaa !41
   store <2 x i32> splat (i32 1), ptr %i.cs, align 4, !tbaa !41
-  %4 = icmp eq i32 %.2.i, 3
-  br i1 %4, label %select.unfold, label %.thread.i
+  br i1 %.2.i, label %select.unfold, label %.thread.i
 
 .thread.i:                                        ; preds = %bb.t, %bb.s
   %.val.i = load i32, ptr %i.ab, align 8, !tbaa !39

@@ -204,12 +204,11 @@ _ZN27RegisterContextDarwin_arm648WriteGPREv.exit.a: ; preds = %bb.c
   %i.aa = tail call noundef i32 %i.z(ptr noundef nonnull align 16 dereferenceable(1416) %0, i64 noundef %i.w, i32 noundef 6, ptr noundef nonnull align 8 dereferenceable(272) %i.l) #12, !inline_history !15 ; 2 uses
   store i32 -1, ptr %i.q, align 8, !tbaa !10
   %i.ab = icmp eq i32 %i.aa, 0
-  %spec.select = zext i1 %i.ab to i32
   br label %_ZN27RegisterContextDarwin_arm648WriteGPREv.exit.thread
 
 _ZN27RegisterContextDarwin_arm648WriteGPREv.exit.thread: ; preds = %bb.c, %_ZN27RegisterContextDarwin_arm648WriteGPREv.exit.a
   %.sink = phi i32 [ %i.aa, %_ZN27RegisterContextDarwin_arm648WriteGPREv.exit.a ], [ -1, %bb.c ]
-  %2 = phi i32 [ %spec.select, %_ZN27RegisterContextDarwin_arm648WriteGPREv.exit.a ], [ 0, %bb.c ] ; 2 uses
+  %.0.i = phi i1 [ %i.ab, %_ZN27RegisterContextDarwin_arm648WriteGPREv.exit.a ], [ false, %bb.c ]
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 1388
   store i32 %.sink, ptr %i.ac, align 4, !tbaa !10
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 1392 ; 2 uses
@@ -228,13 +227,12 @@ _ZN27RegisterContextDarwin_arm648WriteFPUEv.exit.a: ; preds = %_ZN27RegisterCont
   %i.an = tail call noundef i32 %i.am(ptr noundef nonnull align 16 dereferenceable(1416) %0, i64 noundef %i.aj, i32 noundef 17, ptr noundef nonnull align 16 dereferenceable(528) %i.n) #12, !inline_history !16 ; 2 uses
   store i32 -1, ptr %i.ad, align 16, !tbaa !10
   %i.ao = icmp eq i32 %i.an, 0
-  %3 = zext i1 %i.ao to i32
-  %spec.select24 = add nuw nsw i32 %2, %3
+  %2 = and i1 %.0.i, %i.ao
   br label %_ZN27RegisterContextDarwin_arm648WriteFPUEv.exit.thread
 
 _ZN27RegisterContextDarwin_arm648WriteFPUEv.exit.thread: ; preds = %_ZN27RegisterContextDarwin_arm648WriteGPREv.exit.thread, %_ZN27RegisterContextDarwin_arm648WriteFPUEv.exit.a
   %.sink26 = phi i32 [ %i.an, %_ZN27RegisterContextDarwin_arm648WriteFPUEv.exit.a ], [ -1, %_ZN27RegisterContextDarwin_arm648WriteGPREv.exit.thread ]
-  %4 = phi i32 [ %spec.select24, %_ZN27RegisterContextDarwin_arm648WriteFPUEv.exit.a ], [ %2, %_ZN27RegisterContextDarwin_arm648WriteGPREv.exit.thread ] ; 2 uses
+  %.0.i15 = phi i1 [ %2, %_ZN27RegisterContextDarwin_arm648WriteFPUEv.exit.a ], [ false, %_ZN27RegisterContextDarwin_arm648WriteGPREv.exit.thread ]
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 1396
   store i32 %.sink26, ptr %i.ap, align 4, !tbaa !10
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 1400 ; 2 uses
@@ -253,20 +251,18 @@ _ZN27RegisterContextDarwin_arm648WriteEXCEv.exit.a: ; preds = %_ZN27RegisterCont
   %i.ba = tail call noundef i32 %i.az(ptr noundef nonnull align 16 dereferenceable(1416) %0, i64 noundef %i.aw, i32 noundef 7, ptr noundef nonnull align 8 dereferenceable(16) %i.p) #12, !inline_history !17 ; 2 uses
   store i32 -1, ptr %i.aq, align 8, !tbaa !10
   %i.bb = icmp eq i32 %i.ba, 0
-  %5 = zext i1 %i.bb to i32
-  %spec.select25 = add nuw nsw i32 %4, %5
+  %3 = and i1 %.0.i15, %i.bb
   br label %_ZN27RegisterContextDarwin_arm648WriteEXCEv.exit.thread
 
 _ZN27RegisterContextDarwin_arm648WriteEXCEv.exit.thread: ; preds = %_ZN27RegisterContextDarwin_arm648WriteFPUEv.exit.thread, %_ZN27RegisterContextDarwin_arm648WriteEXCEv.exit.a
   %.sink27 = phi i32 [ %i.ba, %_ZN27RegisterContextDarwin_arm648WriteEXCEv.exit.a ], [ -1, %_ZN27RegisterContextDarwin_arm648WriteFPUEv.exit.thread ]
-  %6 = phi i32 [ %spec.select25, %_ZN27RegisterContextDarwin_arm648WriteEXCEv.exit.a ], [ %4, %_ZN27RegisterContextDarwin_arm648WriteFPUEv.exit.thread ]
+  %.0.i17 = phi i1 [ %3, %_ZN27RegisterContextDarwin_arm648WriteEXCEv.exit.a ], [ false, %_ZN27RegisterContextDarwin_arm648WriteFPUEv.exit.thread ]
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 1404
   store i32 %.sink27, ptr %i.bc, align 4, !tbaa !10
-  %7 = icmp eq i32 %6, 3
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.a, %bb.b, %_ZN27RegisterContextDarwin_arm648WriteEXCEv.exit.thread
-  %.013 = phi i1 [ %7, %_ZN27RegisterContextDarwin_arm648WriteEXCEv.exit.thread ], [ false, %bb.b ], [ false, %bb.a ]
+bb.d:                                             ; preds = %_ZN27RegisterContextDarwin_arm648WriteEXCEv.exit.thread, %bb.a, %bb.b
+  %.013 = phi i1 [ %.0.i17, %_ZN27RegisterContextDarwin_arm648WriteEXCEv.exit.thread ], [ false, %bb.a ], [ false, %bb.b ]
   ret i1 %.013
 }
 

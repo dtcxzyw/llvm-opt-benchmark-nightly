@@ -115,13 +115,13 @@ bb.a:
   %i.d = getelementptr i8, ptr %i.c, i64 12
   %i.e = load i8, ptr %i.d, align 4, !range !6, !noundef !7
   %i.f = icmp eq i8 %i.e, %i.a
-  br i1 %i.f, label %bb.b, label %3
+  br i1 %i.f, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr i8, ptr %i.c, i64 8
   %i.h = load i32, ptr %i.g, align 8              ; 3 uses
   %.not = icmp slt i32 %0, %i.h
-  br i1 %.not, label %3, label %bb.c
+  br i1 %.not, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr i8, ptr %i.c, i64 4
@@ -131,7 +131,7 @@ bb.c:                                             ; preds = %bb.b
   %i.m = udiv i32 %i.l, 5
   %i.n = add i32 %i.m, %i.h
   %.not20 = icmp sgt i32 %0, %i.n
-  br i1 %.not20, label %3, label %bb.d
+  br i1 %.not20, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.r, %bb.o, %bb.k, %bb.g, %bb.c
   %.lcssa28 = phi i32 [ %i.k, %bb.c ], [ %i.z, %bb.g ], [ %i.al, %bb.k ], [ %i.ax, %bb.o ], [ %i.bk, %bb.r ]
@@ -141,28 +141,24 @@ bb.d:                                             ; preds = %bb.r, %bb.o, %bb.k,
   %i.q = add i32 %.lcssa28, %i.p
   br label %.loopexit
 
-3:                                                ; preds = %bb.a, %bb.b, %bb.c
-  %indvars.iv.next = add nuw nsw i64 %i.b, 1      ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, 5
-  br i1 %exitcond.not, label %.loopexit, label %bb.e
-
-bb.e:                                             ; preds = %3
-  %i.r = getelementptr [16 x i8], ptr @freq_cvt, i64 %indvars.iv.next ; 4 uses
-  %i.s = getelementptr i8, ptr %i.r, i64 12
+bb.e:                                             ; preds = %bb.c, %bb.b, %bb.a
+  %i.r = getelementptr [16 x i8], ptr @freq_cvt, i64 %i.b ; 4 uses
+  %3 = getelementptr i8, ptr %i.r, i64 16
+  %i.s = getelementptr i8, ptr %i.r, i64 28
   %i.t = load i8, ptr %i.s, align 4, !range !6, !noundef !7
   %i.u = icmp eq i8 %i.t, %i.a
   br i1 %i.u, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %bb.e
-  %i.v = getelementptr i8, ptr %i.r, i64 8
+  %i.v = getelementptr i8, ptr %i.r, i64 24
   %i.w = load i32, ptr %i.v, align 8              ; 3 uses
   %.not.1 = icmp slt i32 %0, %i.w
   br i1 %.not.1, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.x = getelementptr i8, ptr %i.r, i64 4
+  %i.x = getelementptr i8, ptr %i.r, i64 20
   %i.y = load i32, ptr %i.x, align 4
-  %i.z = load i32, ptr %i.r, align 16             ; 2 uses
+  %i.z = load i32, ptr %3, align 16               ; 2 uses
   %i.aa = sub i32 %i.y, %i.z
   %i.ab = udiv i32 %i.aa, 5
   %i.ac = add i32 %i.ab, %i.w
@@ -249,8 +245,8 @@ bb.r:                                             ; preds = %bb.q
   %.not20.4 = icmp sgt i32 %0, %i.bn
   br i1 %.not20.4, label %.loopexit, label %bb.d
 
-.loopexit:                                        ; preds = %3, %bb.h, %bb.l, %bb.r, %bb.q, %bb.p, %bb.d
-  %.016 = phi i32 [ %i.q, %bb.d ], [ 0, %bb.p ], [ 0, %bb.q ], [ 0, %bb.r ], [ 0, %bb.l ], [ 0, %bb.h ], [ 0, %3 ]
+.loopexit:                                        ; preds = %bb.h, %bb.l, %bb.r, %bb.q, %bb.p, %bb.d
+  %.016 = phi i32 [ %i.q, %bb.d ], [ 0, %bb.p ], [ 0, %bb.q ], [ 0, %bb.r ], [ 0, %bb.l ], [ 0, %bb.h ]
   ret i32 %.016
 }
 
