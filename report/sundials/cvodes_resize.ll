@@ -202,8 +202,7 @@ bb.d:                                             ; preds = %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !11
   tail call void @N_VScale(double noundef 1.000000e+00, ptr noundef %i.o, ptr noundef %i.q) #4
-  %smax = tail call i32 @llvm.smax.i32(i32 %4, i32 2)
-  %i.r = add nuw i32 %smax, 1
+  %i.r = add nuw i32 %4, 1
   %wide.trip.count158 = zext i32 %i.r to i64
   br label %.lr.ph
 
@@ -544,14 +543,14 @@ declare void @N_VScale(double noundef, ptr noundef, ptr noundef) local_unnamed_a
 
 declare void @N_VConst(double noundef, ptr noundef) local_unnamed_addr #2
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #3
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #3
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

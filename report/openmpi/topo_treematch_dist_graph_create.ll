@@ -204,7 +204,7 @@ middle.block:                                     ; preds = %vector.body
 
 .loopexit1097:                                    ; preds = %.lr.ph1113, %middle.block, %.lr.ph1117..loopexit1097_crit_edge, %bb.v
   %indvars.iv.next1327.pre-phi = phi i64 [ %.pre, %.lr.ph1117..loopexit1097_crit_edge ], [ %i.cq, %bb.v ], [ %i.cq, %middle.block ], [ %i.cq, %.lr.ph1113 ] ; 2 uses
-  %.1848 = phi i32 [ %.08471114, %.lr.ph1117..loopexit1097_crit_edge ], [ %i.cp, %bb.v ], [ %i.cp, %middle.block ], [ %i.cp, %.lr.ph1113 ] ; 20 uses
+  %.1848 = phi i32 [ %.08471114, %.lr.ph1117..loopexit1097_crit_edge ], [ %i.cp, %bb.v ], [ %i.cp, %middle.block ], [ %i.cp, %.lr.ph1113 ] ; 19 uses
   %indvars.iv.next1320 = add nuw nsw i64 %indvars.iv1319, 1
   %exitcond1331.not = icmp eq i64 %indvars.iv.next1327.pre-phi, %wide.trip.count1330
   %indvar.next = add i64 %indvar, 1
@@ -607,7 +607,7 @@ bb.bp:                                            ; preds = %._crit_edge1221
   br i1 %i.ma, label %bb.bq, label %bb.ca
 
 bb.bq:                                            ; preds = %bb.bp
-  %i.mb = zext nneg i32 %.1848 to i64             ; 5 uses
+  %i.mb = zext nneg i32 %.1848 to i64             ; 6 uses
   %i.mc = call noalias ptr @calloc(i64 noundef %i.mb, i64 noundef 4) #15 ; 11 uses
   %i.md = add nsw i32 %.1848, -1
   %i.me = zext nneg i32 %i.md to i64              ; 3 uses
@@ -709,8 +709,6 @@ bb.bv:                                            ; preds = %bb.bu
   %i.nf = sext i32 %i.ne to i64
   %i.ng = shl nsw i64 %i.nf, 2
   call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.na, ptr align 4 %i.ll, i64 %i.ng, i1 false)
-  %smax = call i32 @llvm.smax.i32(i32 %.1848, i32 2)
-  %wide.trip.count1476 = zext nneg i32 %smax to i64
   br label %.lr.ph1235
 
 .lr.ph1235:                                       ; preds = %.lr.ph1235.preheader, %bb.bx
@@ -740,7 +738,7 @@ bb.bx:                                            ; preds = %.lr.ph1235
   %i.ns = load i32, ptr %i.nk, align 4, !tbaa !36
   %i.nt = add nsw i32 %i.ns, %.07961233
   %indvars.iv.next1474 = add nuw nsw i64 %indvars.iv1473, 1 ; 2 uses
-  %exitcond1477.not = icmp eq i64 %indvars.iv.next1474, %wide.trip.count1476
+  %exitcond1477.not = icmp eq i64 %indvars.iv.next1474, %i.mb
   br i1 %exitcond1477.not, label %._crit_edge1236, label %.lr.ph1235, !llvm.loop !65
 
 ._crit_edge1236:                                  ; preds = %bb.bx
@@ -1141,9 +1139,6 @@ declare i32 @llvm.smin.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #9

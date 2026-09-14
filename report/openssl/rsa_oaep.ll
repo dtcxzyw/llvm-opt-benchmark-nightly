@@ -35,7 +35,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.070 = phi ptr [ %i.d, %bb.b ], [ %7, %bb.a ]  ; 3 uses
   %i.e = icmp eq ptr %8, null
   %spec.select = select i1 %i.e, ptr %.070, ptr %8 ; 2 uses
-  %i.f = tail call i32 @EVP_MD_get_size(ptr noundef %.070) #6 ; 8 uses
+  %i.f = tail call i32 @EVP_MD_get_size(ptr noundef %.070) #6 ; 7 uses
   %i.g = icmp slt i32 %i.f, 1
   br i1 %i.g, label %bb.d, label %bb.e
 
@@ -72,7 +72,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g
   store i8 0, ptr %1, align 1, !tbaa !8
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 5 uses
-  %i.n = zext nneg i32 %i.f to i64                ; 6 uses
+  %i.n = zext nneg i32 %i.f to i64                ; 12 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 %i.n
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 1 ; 8 uses
   %i.q = sext i32 %6 to i64
@@ -203,7 +203,6 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %i.bi, label %.loopexit, label %iter.check122
 
 iter.check122:                                    ; preds = %._crit_edge
-  %wide.trip.count89 = zext nneg i32 %i.f to i64  ; 6 uses
   %min.iters.check107 = icmp ult i32 %i.f, 4
   br i1 %min.iters.check107, label %.lr.ph84.preheader, label %vector.main.loop.iter.check108
 
@@ -212,8 +211,8 @@ vector.main.loop.iter.check108:                   ; preds = %iter.check122
   br i1 %min.iters.check109, label %vec.epilog.ph126, label %vector.ph110
 
 vector.ph110:                                     ; preds = %vector.main.loop.iter.check108
-  %i.bj = and i64 %wide.trip.count89, 28
-  %n.vec111 = and i64 %wide.trip.count89, 2147483616 ; 4 uses
+  %i.bj = and i64 %i.n, 28
+  %n.vec111 = and i64 %i.n, 2147483616            ; 4 uses
   br label %vector.body112
 
 vector.body112:                                   ; preds = %vector.body112, %vector.ph110
@@ -235,7 +234,7 @@ vector.body112:                                   ; preds = %vector.body112, %ve
   br i1 %i.bq, label %middle.block119, label %vector.body112, !llvm.loop !16
 
 middle.block119:                                  ; preds = %vector.body112
-  %cmp.n120 = icmp eq i64 %n.vec111, %wide.trip.count89
+  %cmp.n120 = icmp eq i64 %n.vec111, %i.n
   br i1 %cmp.n120, label %.loopexit, label %vec.epilog.iter.check124
 
 vec.epilog.iter.check124:                         ; preds = %middle.block119
@@ -244,7 +243,7 @@ vec.epilog.iter.check124:                         ; preds = %middle.block119
 
 vec.epilog.ph126:                                 ; preds = %vector.main.loop.iter.check108, %vec.epilog.iter.check124
   %vec.epilog.resume.val121 = phi i64 [ %n.vec111, %vec.epilog.iter.check124 ], [ 0, %vector.main.loop.iter.check108 ]
-  %n.vec127 = and i64 %wide.trip.count89, 2147483644 ; 3 uses
+  %n.vec127 = and i64 %i.n, 2147483644            ; 3 uses
   br label %vec.epilog.vector.body128
 
 vec.epilog.vector.body128:                        ; preds = %vec.epilog.vector.body128, %vec.epilog.ph126
@@ -260,7 +259,7 @@ vec.epilog.vector.body128:                        ; preds = %vec.epilog.vector.b
   br i1 %i.bu, label %vec.epilog.middle.block133, label %vec.epilog.vector.body128, !llvm.loop !17
 
 vec.epilog.middle.block133:                       ; preds = %vec.epilog.vector.body128
-  %cmp.n134 = icmp eq i64 %n.vec127, %wide.trip.count89
+  %cmp.n134 = icmp eq i64 %n.vec127, %i.n
   br i1 %cmp.n134, label %.loopexit, label %.lr.ph84.preheader
 
 .lr.ph84.preheader:                               ; preds = %iter.check122, %vec.epilog.iter.check124, %vec.epilog.middle.block133
@@ -276,7 +275,7 @@ vec.epilog.middle.block133:                       ; preds = %vec.epilog.vector.b
   %i.bz = xor i8 %i.by, %i.bw
   store i8 %i.bz, ptr %i.bx, align 1, !tbaa !8
   %indvars.iv.next87 = add nuw nsw i64 %indvars.iv86, 1 ; 2 uses
-  %exitcond90.not = icmp eq i64 %indvars.iv.next87, %wide.trip.count89
+  %exitcond90.not = icmp eq i64 %indvars.iv.next87, %i.n
   br i1 %exitcond90.not, label %.loopexit, label %.lr.ph84, !llvm.loop !18
 
 .loopexit:                                        ; preds = %.lr.ph84, %middle.block119, %vec.epilog.middle.block133, %._crit_edge, %bb.l, %bb.k, %bb.j, %bb.i

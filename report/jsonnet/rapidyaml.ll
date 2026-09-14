@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/jsonnet/original/rapidyaml?download=true
 inline.NumInlined: 4426
 inline.NumDeleted: 407
-loop-unroll.NumCompletelyUnrolled: 307
+loop-unroll.NumCompletelyUnrolled: 308
 loop-unroll.NumRuntimeUnrolled: 15
-loop-unroll.NumUnrolled: 323
+loop-unroll.NumUnrolled: 324
 begin_hunk_0
 $_ZN2c46detail18format_dump_resumeIRZNKS_3yml11ParseEngineINS2_16EventHandlerTreeEE4_errIJA21_cEEEvNS_15basic_substringIKcEEDprRKT_EUlSA_E_SA_JmEEENS_11DumpResultsEmOT_SI_NS8_IcEESA_RKT0_DpRKT1_ = comdat any
 
@@ -205,7 +205,6 @@ $_ZN2c46detail10digits0099E = comdat any
 @.str.66 = private unnamed_addr constant [7 x i8] c"VPLAIN\00", align 1
 @.str.67 = private unnamed_addr constant [7 x i8] c"FLOWSL\00", align 1
 @.str.68 = private unnamed_addr constant [7 x i8] c"FLOWML\00", align 1
-@.str.74 = private unnamed_addr constant [6 x i8] c"-.INF\00", align 1
 @.str.82 = private unnamed_addr constant [5 x i8] c"null\00", align 1
 @.str.86 = private unnamed_addr constant [20 x i8] c"<tag:yaml.org,2002:\00", align 1
 @.str.88 = private unnamed_addr constant [4 x i8] c"map\00", align 1
@@ -608,19 +607,13 @@ bb.a:
   %.not.i.1 = icmp eq i8 %i.e, 46
   br i1 %.not.i.1, label %.lr.ph.i2, label %.lr.ph.i16thread-pre-split
 
-.lr.ph.i2:                                        ; preds = %.lr.ph.i.1
-  %..i = tail call i64 @llvm.umin.i64(i64 %1, i64 5)
-  %4 = load i8, ptr %0, align 1, !tbaa !87, !noalias !384
-  %.not.i3 = icmp eq i8 %4, 45
-  br i1 %.not.i3, label %.lr.ph.i2.1, label %_ZNK2c415basic_substringIKcE7compareEPS1_m.exit.thread
-
 .lr.ph.i2.1:                                      ; preds = %.lr.ph.i2
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1
   %i.g = load i8, ptr %i.f, align 1, !tbaa !87, !noalias !384
   %.not.i3.1 = icmp ne i8 %i.g, 46
   %cond = icmp eq i64 %1, 2
   %or.cond = or i1 %.not.i3.1, %cond
-  br i1 %or.cond, label %_ZNK2c415basic_substringIKcE7compareEPS1_m.exit.thread, label %.lr.ph.i2.2
+  br i1 %or.cond, label %.lr.ph.i8, label %.lr.ph.i2.2
 
 .lr.ph.i2.2:                                      ; preds = %.lr.ph.i2.1
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 2
@@ -628,7 +621,7 @@ bb.a:
   %.not.i3.2 = icmp ne i8 %i.i, 105
   %cond76 = icmp eq i64 %1, 3
   %or.cond77 = or i1 %.not.i3.2, %cond76
-  br i1 %or.cond77, label %_ZNK2c415basic_substringIKcE7compareEPS1_m.exit.thread, label %.lr.ph.i2.3
+  br i1 %or.cond77, label %.lr.ph.i8, label %.lr.ph.i2.3
 
 .lr.ph.i2.3:                                      ; preds = %.lr.ph.i2.2
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 3
@@ -636,7 +629,7 @@ bb.a:
   %.not.i3.3 = icmp ne i8 %i.k, 110
   %cond78 = icmp eq i64 %1, 4
   %or.cond79 = or i1 %.not.i3.3, %cond78
-  br i1 %or.cond79, label %_ZNK2c415basic_substringIKcE7compareEPS1_m.exit.thread, label %.lr.ph.i2.4
+  br i1 %or.cond79, label %.lr.ph.i8, label %.lr.ph.i2.4
 
 .lr.ph.i2.4:                                      ; preds = %.lr.ph.i2.3
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 4
@@ -644,31 +637,51 @@ bb.a:
   %.not.i3.4 = icmp eq i8 %i.m, 102
   %.not = icmp eq i64 %1, 5
   %or.cond80 = and i1 %.not.i3.4, %.not
-  br i1 %or.cond80, label %_ZNK2c415basic_substringIKcE15begins_with_anyES2_.exit23, label %_ZNK2c415basic_substringIKcE7compareEPS1_m.exit.thread
+  br i1 %or.cond80, label %_ZNK2c415basic_substringIKcE15begins_with_anyES2_.exit23, label %.lr.ph.i8
 
-_ZNK2c415basic_substringIKcE7compareEPS1_m.exit.thread: ; preds = %.lr.ph.i2, %.lr.ph.i2.1, %.lr.ph.i2.2, %.lr.ph.i2.3, %.lr.ph.i2.4
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !385)
-  br label %.lr.ph.i8.a
+.lr.ph.i2:                                        ; preds = %.lr.ph.i.1
+  %4 = load i8, ptr %0, align 1, !tbaa !87, !noalias !384
+  %.not.i3 = icmp eq i8 %4, 45
+  br i1 %.not.i3, label %.lr.ph.i2.1, label %.lr.ph.i8
 
-bb.b:                                             ; preds = %.lr.ph.i8.a
-  %5 = add nuw nsw i64 %.01934.i9, 1              ; 2 uses
-  %exitcond.not.i11 = icmp eq i64 %5, %..i
-  br i1 %exitcond.not.i11, label %._crit_edge.i12, label %.lr.ph.i8.a, !llvm.loop !3
+_ZNK2c415basic_substringIKcE7compareEPS1_m.exit.thread: ; preds = %.lr.ph.i8
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %6 = load i8, ptr %5, align 1, !tbaa !87, !noalias !385
+  %.not.i10.1 = icmp ne i8 %6, 46
+  %cond81 = icmp eq i64 %1, 2
+  %or.cond82 = or i1 %.not.i10.1, %cond81
+  br i1 %or.cond82, label %_ZNK2c415basic_substringIKcE7compareEPS1_m.exit14.thread, label %bb.b
 
-.lr.ph.i8.a:                                      ; preds = %_ZNK2c415basic_substringIKcE7compareEPS1_m.exit.thread, %bb.b
-  %.01934.i9 = phi i64 [ %5, %bb.b ], [ 0, %_ZNK2c415basic_substringIKcE7compareEPS1_m.exit.thread ] ; 3 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 %.01934.i9
+bb.b:                                             ; preds = %_ZNK2c415basic_substringIKcE7compareEPS1_m.exit.thread
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 2
+  %8 = load i8, ptr %7, align 1, !tbaa !87, !noalias !385
+  %.not.i10.2 = icmp ne i8 %8, 73
+  %exitcond.not.i11 = icmp eq i64 %1, 3
+  %or.cond84 = or i1 %.not.i10.2, %exitcond.not.i11
+  br i1 %or.cond84, label %_ZNK2c415basic_substringIKcE7compareEPS1_m.exit14.thread, label %.lr.ph.i8.a
+
+.lr.ph.i8.a:                                      ; preds = %bb.b
+  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 3
   %i.o = load i8, ptr %i.n, align 1, !tbaa !87, !noalias !385
-  %6 = getelementptr inbounds nuw i8, ptr @.str.74, i64 %.01934.i9
-  %7 = load i8, ptr %6, align 1, !tbaa !87, !alias.scope !385
-  %.not.i10 = icmp eq i8 %i.o, %7
-  br i1 %.not.i10, label %bb.b, label %_ZNK2c415basic_substringIKcE7compareEPS1_m.exit14.thread
+  %.not.i10.3 = icmp ne i8 %i.o, 78
+  %cond85 = icmp eq i64 %1, 4
+  %or.cond86 = or i1 %.not.i10.3, %cond85
+  br i1 %or.cond86, label %_ZNK2c415basic_substringIKcE7compareEPS1_m.exit14.thread, label %._crit_edge.i12
 
-._crit_edge.i12:                                  ; preds = %bb.b
+._crit_edge.i12:                                  ; preds = %.lr.ph.i8.a
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %10 = load i8, ptr %9, align 1, !tbaa !87, !noalias !385
+  %.not.i10.4 = icmp eq i8 %10, 70
   %.not47 = icmp eq i64 %1, 5
-  br i1 %.not47, label %_ZNK2c415basic_substringIKcE15begins_with_anyES2_.exit23, label %_ZNK2c415basic_substringIKcE7compareEPS1_m.exit14.thread
+  %or.cond87 = and i1 %.not.i10.4, %.not47
+  br i1 %or.cond87, label %_ZNK2c415basic_substringIKcE15begins_with_anyES2_.exit23, label %_ZNK2c415basic_substringIKcE7compareEPS1_m.exit14.thread
 
-_ZNK2c415basic_substringIKcE7compareEPS1_m.exit14.thread: ; preds = %.lr.ph.i8.a, %._crit_edge.i12
+.lr.ph.i8:                                        ; preds = %.lr.ph.i2.4, %.lr.ph.i2.3, %.lr.ph.i2.2, %.lr.ph.i2.1, %.lr.ph.i2
+  %11 = load i8, ptr %0, align 1, !tbaa !87, !noalias !385
+  %.not.i10 = icmp eq i8 %11, 45
+  br i1 %.not.i10, label %_ZNK2c415basic_substringIKcE7compareEPS1_m.exit.thread, label %_ZNK2c415basic_substringIKcE7compareEPS1_m.exit14.thread
+
+_ZNK2c415basic_substringIKcE7compareEPS1_m.exit14.thread: ; preds = %.lr.ph.i8, %_ZNK2c415basic_substringIKcE7compareEPS1_m.exit.thread, %bb.b, %.lr.ph.i8.a, %._crit_edge.i12
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #58
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 2
   %i.q = add i64 %1, -2
@@ -792,13 +805,13 @@ bb.e:                                             ; preds = %_ZNK2c415basic_subs
 ._crit_edge.i30:                                  ; preds = %.preheader.i28
   %i.ak = add nuw i64 %.01224.i, 1                ; 2 uses
   %exitcond27.not.i = icmp eq i64 %i.ak, %.pr
-  br i1 %exitcond27.not.i, label %_ZNK2c415basic_substringIKcE15begins_with_anyES2_.exit23, label %.preheader.i28, !llvm.loop !4
+  br i1 %exitcond27.not.i, label %_ZNK2c415basic_substringIKcE15begins_with_anyES2_.exit23, label %.preheader.i28, !llvm.loop !3
 
 _ZNK2c415basic_substringIKcE8first_ofES2_m.exit.loopexit: ; preds = %.preheader.i28, %.preheader.i28, %.preheader.i28, %.preheader.i28, %.preheader.i28, %.preheader.i28, %.preheader.i28, %.preheader.i28
   %i.al = icmp eq i64 %.01224.i, -1
   br label %_ZNK2c415basic_substringIKcE15begins_with_anyES2_.exit23
 
-_ZNK2c415basic_substringIKcE15begins_with_anyES2_.exit23: ; preds = %.lr.ph.i2.4, %._crit_edge.i30, %.lr.ph.i25, %.lr.ph.i25, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.loopexit, %bb.e, %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.loopexit, %._crit_edge.i12, %_ZNK2c415basic_substringIKcE7compareEc.exit, %bb.d, %bb.c
+_ZNK2c415basic_substringIKcE15begins_with_anyES2_.exit23: ; preds = %._crit_edge.i12, %.lr.ph.i2.4, %._crit_edge.i30, %.lr.ph.i25, %.lr.ph.i25, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.lr.ph.i20, %.loopexit, %bb.e, %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.loopexit, %_ZNK2c415basic_substringIKcE7compareEc.exit, %bb.d, %bb.c
   %.0 = phi i1 [ true, %bb.c ], [ true, %.lr.ph.i2.4 ], [ true, %bb.d ], [ true, %._crit_edge.i12 ], [ true, %.loopexit ], [ false, %.lr.ph.i25 ], [ false, %_ZNK2c415basic_substringIKcE7compareEc.exit ], [ false, %.lr.ph.i20 ], [ %i.al, %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.loopexit ], [ false, %.lr.ph.i25 ], [ false, %.lr.ph.i20 ], [ false, %.lr.ph.i20 ], [ false, %.lr.ph.i20 ], [ false, %.lr.ph.i20 ], [ false, %.lr.ph.i20 ], [ false, %.lr.ph.i20 ], [ false, %.lr.ph.i20 ], [ false, %.lr.ph.i20 ], [ false, %.lr.ph.i20 ], [ false, %.lr.ph.i20 ], [ false, %.lr.ph.i20 ], [ false, %.lr.ph.i20 ], [ false, %.lr.ph.i20 ], [ false, %.lr.ph.i20 ], [ false, %.lr.ph.i20 ], [ false, %.lr.ph.i20 ], [ false, %.lr.ph.i20 ], [ false, %.lr.ph.i20 ], [ true, %bb.e ], [ true, %._crit_edge.i30 ]
   ret i1 %.0
 
@@ -842,7 +855,7 @@ _ZNK2c415basic_substringIKcE12first_not_ofES2_.exit.i: ; preds = %.preheader.us.
 bb.b:                                             ; preds = %.preheader.us.i.i, %.preheader.us.i.i, %.preheader.us.i.i, %.preheader.us.i.i
   %i.k = add nuw i64 %.01326.us.i.i, 1            ; 2 uses
   %exitcond29.not.i.i = icmp eq i64 %i.k, %i.b
-  br i1 %exitcond29.not.i.i, label %.critedge, label %.preheader.us.i.i, !llvm.loop !5
+  br i1 %exitcond29.not.i.i, label %.critedge, label %.preheader.us.i.i, !llvm.loop !4
 
 .preheader.i.preheader.i:                         ; preds = %_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit.i
   %i.l = sub nuw i64 %i.b, %.01326.us.i.i         ; 2 uses
@@ -862,7 +875,7 @@ bb.b:                                             ; preds = %.preheader.us.i.i, 
 ._crit_edge.i.i:                                  ; preds = %.preheader.i.i
   %i.o = add i64 %.01224.i.i, 1                   ; 2 uses
   %exitcond27.not.i.i = icmp eq i64 %i.o, %i.l
-  br i1 %exitcond27.not.i.i, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i, label %.preheader.i.i, !llvm.loop !4
+  br i1 %exitcond27.not.i.i, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i, label %.preheader.i.i, !llvm.loop !3
 
 _ZNK2c415basic_substringIKcE8first_ofES2_m.exit.i: ; preds = %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i
   %.not.i.i = icmp eq i64 %.01224.i.i, -1
@@ -899,7 +912,7 @@ _ZNK2c415basic_substringIKcE12first_not_ofES2_.exit.i.i: ; preds = %.preheader.u
 bb.d:                                             ; preds = %.preheader.us.i.i.i, %.preheader.us.i.i.i, %.preheader.us.i.i.i, %.preheader.us.i.i.i
   %i.u = add nuw i64 %.01326.us.i.i.i, 1          ; 2 uses
   %exitcond29.not.i.i.i = icmp eq i64 %i.u, %i.b
-  br i1 %exitcond29.not.i.i.i, label %_ZNK2c415basic_substringIKcE20first_non_empty_spanEv.exit.i.thread, label %.preheader.us.i.i.i, !llvm.loop !5
+  br i1 %exitcond29.not.i.i.i, label %_ZNK2c415basic_substringIKcE20first_non_empty_spanEv.exit.i.thread, label %.preheader.us.i.i.i, !llvm.loop !4
 
 .preheader.i.preheader.i.i:                       ; preds = %_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit.i.i
   %i.v = sub nuw i64 %i.b, %.01326.us.i.i.i       ; 2 uses
@@ -919,7 +932,7 @@ bb.d:                                             ; preds = %.preheader.us.i.i.i
 ._crit_edge.i.i.i:                                ; preds = %.preheader.i.i.i
   %i.y = add i64 %.01224.i.i.i, 1                 ; 2 uses
   %exitcond27.not.i.i.i = icmp eq i64 %i.y, %i.v
-  br i1 %exitcond27.not.i.i.i, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i.i, label %.preheader.i.i.i, !llvm.loop !4
+  br i1 %exitcond27.not.i.i.i, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i.i, label %.preheader.i.i.i, !llvm.loop !3
 
 _ZNK2c415basic_substringIKcE8first_ofES2_m.exit.i.i: ; preds = %.preheader.i.i.i, %.preheader.i.i.i, %.preheader.i.i.i, %.preheader.i.i.i
   %.not.i.i.i = icmp eq i64 %.01224.i.i.i, -1
@@ -982,7 +995,7 @@ bb.h:                                             ; preds = %_ZNK2c415basic_subs
 bb.i:                                             ; preds = %.lr.ph.i
   %i.al = add nuw i64 %.01934.i, 1                ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.al, %..i
-  br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !3
+  br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !5
 
 .lr.ph.i:                                         ; preds = %bb.h, %bb.i
   %.01934.i = phi i64 [ %i.al, %bb.i ], [ 0, %bb.h ] ; 3 uses
@@ -1025,7 +1038,7 @@ _ZNK2c415basic_substringIKcE12first_not_ofES2_.exit.i.i17: ; preds = %.preheader
 bb.k:                                             ; preds = %.preheader.us.i.i.i8, %.preheader.us.i.i.i8, %.preheader.us.i.i.i8, %.preheader.us.i.i.i8
   %i.av = add nuw i64 %.01326.us.i.i.i9, 1        ; 2 uses
   %exitcond29.not.i.i.i10 = icmp eq i64 %i.av, %.sroa.24.0.copyload
-  br i1 %exitcond29.not.i.i.i10, label %_ZNK2c415basic_substringIKcE20first_non_empty_spanEv.exit.i11, label %.preheader.us.i.i.i8, !llvm.loop !5
+  br i1 %exitcond29.not.i.i.i10, label %_ZNK2c415basic_substringIKcE20first_non_empty_spanEv.exit.i11, label %.preheader.us.i.i.i8, !llvm.loop !4
 
 .preheader.i.preheader.i.i18:                     ; preds = %_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit.i.i17
   %i.aw = sub nuw i64 %.sroa.24.0.copyload, %.01326.us.i.i.i9 ; 2 uses
@@ -1045,7 +1058,7 @@ bb.k:                                             ; preds = %.preheader.us.i.i.i
 ._crit_edge.i.i.i24:                              ; preds = %.preheader.i.i.i19
   %i.az = add i64 %.01224.i.i.i20, 1              ; 2 uses
   %exitcond27.not.i.i.i25 = icmp eq i64 %i.az, %i.aw
-  br i1 %exitcond27.not.i.i.i25, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i.i23, label %.preheader.i.i.i19, !llvm.loop !4
+  br i1 %exitcond27.not.i.i.i25, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i.i23, label %.preheader.i.i.i19, !llvm.loop !3
 
 _ZNK2c415basic_substringIKcE8first_ofES2_m.exit.i.i21: ; preds = %.preheader.i.i.i19, %.preheader.i.i.i19, %.preheader.i.i.i19, %.preheader.i.i.i19
   %.not.i.i.i22 = icmp eq i64 %.01224.i.i.i20, -1
@@ -1099,7 +1112,7 @@ bb.m:                                             ; preds = %_ZNK2c415basic_subs
 bb.n:                                             ; preds = %.lr.ph.i29
   %i.bo = add nuw i64 %.01934.i30, 1              ; 2 uses
   %exitcond.not.i32 = icmp eq i64 %i.bo, %..i27
-  br i1 %exitcond.not.i32, label %._crit_edge.i33, label %.lr.ph.i29, !llvm.loop !3
+  br i1 %exitcond.not.i32, label %._crit_edge.i33, label %.lr.ph.i29, !llvm.loop !5
 
 .lr.ph.i29:                                       ; preds = %bb.m, %bb.n
   %.01934.i30 = phi i64 [ %i.bo, %bb.n ], [ 0, %bb.m ] ; 3 uses
@@ -1138,7 +1151,7 @@ bb.p:                                             ; preds = %_ZNK2c415basic_subs
 bb.q:                                             ; preds = %.lr.ph.i39
   %i.ca = add nuw i64 %.01934.i40, 1              ; 2 uses
   %exitcond.not.i42 = icmp eq i64 %i.ca, %..i37
-  br i1 %exitcond.not.i42, label %._crit_edge.i43, label %.lr.ph.i39, !llvm.loop !3
+  br i1 %exitcond.not.i42, label %._crit_edge.i43, label %.lr.ph.i39, !llvm.loop !5
 
 .lr.ph.i39:                                       ; preds = %bb.p, %bb.q
   %.01934.i40 = phi i64 [ %i.ca, %bb.q ], [ 0, %bb.p ] ; 3 uses
@@ -1541,7 +1554,7 @@ bb.am:                                            ; preds = %_ZNK2c415basic_subs
 bb.an:                                            ; preds = %.lr.ph.i52
   %i.cr = add nuw nsw i64 %.01934.i, 1            ; 2 uses
   %exitcond.not.i54 = icmp eq i64 %i.cr, %..i270
-  br i1 %exitcond.not.i54, label %._crit_edge.i, label %.lr.ph.i52, !llvm.loop !3
+  br i1 %exitcond.not.i54, label %._crit_edge.i, label %.lr.ph.i52, !llvm.loop !5
 
 .lr.ph.i52:                                       ; preds = %.lr.ph.i52.preheader, %bb.an
   %.01934.i = phi i64 [ %i.cr, %bb.an ], [ 0, %.lr.ph.i52.preheader ] ; 3 uses
@@ -1592,7 +1605,7 @@ _ZNK2c415basic_substringIKcE7compareEPS1_m.exit.thread: ; preds = %.lr.ph.i52, %
 bb.ao:                                            ; preds = %.lr.ph.i58
   %i.di = add nuw nsw i64 %.01934.i59, 1          ; 2 uses
   %exitcond.not.i61 = icmp eq i64 %i.di, %..i56290
-  br i1 %exitcond.not.i61, label %._crit_edge.i62, label %.lr.ph.i58, !llvm.loop !3
+  br i1 %exitcond.not.i61, label %._crit_edge.i62, label %.lr.ph.i58, !llvm.loop !5
 
 .lr.ph.i58:                                       ; preds = %.lr.ph.i58.preheader, %bb.ao
   %.01934.i59 = phi i64 [ %i.di, %bb.ao ], [ 0, %.lr.ph.i58.preheader ] ; 3 uses
@@ -1649,7 +1662,7 @@ _ZNK2c415basic_substringIKcE7compareEPS1_m.exit64.thread: ; preds = %.lr.ph.i58,
 bb.ap:                                            ; preds = %.lr.ph.i68
   %i.ec = add nuw nsw i64 %.01934.i69, 1          ; 2 uses
   %exitcond.not.i71 = icmp eq i64 %i.ec, %..i66319
-  br i1 %exitcond.not.i71, label %._crit_edge.i72, label %.lr.ph.i68, !llvm.loop !3
+  br i1 %exitcond.not.i71, label %._crit_edge.i72, label %.lr.ph.i68, !llvm.loop !5
 
 .lr.ph.i68:                                       ; preds = %.lr.ph.i68.preheader, %bb.ap
   %.01934.i69 = phi i64 [ %i.ec, %bb.ap ], [ 0, %.lr.ph.i68.preheader ] ; 3 uses
@@ -1704,7 +1717,7 @@ _ZNK2c415basic_substringIKcE7compareEPS1_m.exit74.thread: ; preds = %.lr.ph.i68,
 bb.aq:                                            ; preds = %.lr.ph.i78
   %i.eu = add nuw nsw i64 %.01934.i79, 1          ; 2 uses
   %exitcond.not.i81 = icmp eq i64 %i.eu, %..i271287305341
-  br i1 %exitcond.not.i81, label %._crit_edge.i82, label %.lr.ph.i78, !llvm.loop !3
+  br i1 %exitcond.not.i81, label %._crit_edge.i82, label %.lr.ph.i78, !llvm.loop !5
 
 .lr.ph.i78:                                       ; preds = %.lr.ph.i78.preheader, %bb.aq
   %.01934.i79 = phi i64 [ %i.eu, %bb.aq ], [ 0, %.lr.ph.i78.preheader ] ; 3 uses
@@ -1765,7 +1778,7 @@ _ZNK2c415basic_substringIKcE7compareEPS1_m.exit84.thread: ; preds = %.lr.ph.i78,
 bb.ar:                                            ; preds = %.lr.ph.i88
   %i.fm = add nuw nsw i64 %.01934.i89, 1          ; 2 uses
   %exitcond.not.i91 = icmp eq i64 %i.fm, %..i273364
-  br i1 %exitcond.not.i91, label %._crit_edge.i92, label %.lr.ph.i88, !llvm.loop !3
+  br i1 %exitcond.not.i91, label %._crit_edge.i92, label %.lr.ph.i88, !llvm.loop !5
 
 .lr.ph.i88:                                       ; preds = %.lr.ph.i88.preheader, %bb.ar
   %.01934.i89 = phi i64 [ %i.fm, %bb.ar ], [ 0, %.lr.ph.i88.preheader ] ; 3 uses
@@ -1820,7 +1833,7 @@ _ZNK2c415basic_substringIKcE7compareEPS1_m.exit94.thread: ; preds = %.lr.ph.i88,
 bb.as:                                            ; preds = %.lr.ph.i98
   %i.ge = add nuw nsw i64 %.01934.i99, 1          ; 2 uses
   %exitcond.not.i101 = icmp eq i64 %i.ge, %..i96400
-  br i1 %exitcond.not.i101, label %._crit_edge.i102, label %.lr.ph.i98, !llvm.loop !3
+  br i1 %exitcond.not.i101, label %._crit_edge.i102, label %.lr.ph.i98, !llvm.loop !5
 
 .lr.ph.i98:                                       ; preds = %.lr.ph.i98.preheader, %bb.as
   %.01934.i99 = phi i64 [ %i.ge, %bb.as ], [ 0, %.lr.ph.i98.preheader ] ; 3 uses
@@ -1875,7 +1888,7 @@ _ZNK2c415basic_substringIKcE7compareEPS1_m.exit104.thread: ; preds = %.lr.ph.i98
 bb.at:                                            ; preds = %.lr.ph.i108
   %i.gw = add nuw nsw i64 %.01934.i109, 1         ; 2 uses
   %exitcond.not.i111 = icmp eq i64 %i.gw, %..i56291303333351391414
-  br i1 %exitcond.not.i111, label %._crit_edge.i112, label %.lr.ph.i108, !llvm.loop !3
+  br i1 %exitcond.not.i111, label %._crit_edge.i112, label %.lr.ph.i108, !llvm.loop !5
 
 .lr.ph.i108:                                      ; preds = %.lr.ph.i108.preheader, %bb.at
   %.01934.i109 = phi i64 [ %i.gw, %bb.at ], [ 0, %.lr.ph.i108.preheader ] ; 3 uses
@@ -1922,7 +1935,7 @@ _ZNK2c415basic_substringIKcE7compareEPS1_m.exit114.thread: ; preds = %.lr.ph.i10
 bb.au:                                            ; preds = %.lr.ph.i118
   %i.hk = add nuw nsw i64 %.01934.i119, 1         ; 2 uses
   %exitcond.not.i121 = icmp eq i64 %i.hk, %..i66309328355387409423
-  br i1 %exitcond.not.i121, label %._crit_edge.i122, label %.lr.ph.i118, !llvm.loop !3
+  br i1 %exitcond.not.i121, label %._crit_edge.i122, label %.lr.ph.i118, !llvm.loop !5
 
 .lr.ph.i118:                                      ; preds = %.lr.ph.i118.preheader, %bb.au
   %.01934.i119 = phi i64 [ %i.hk, %bb.au ], [ 0, %.lr.ph.i118.preheader ] ; 3 uses
@@ -2325,7 +2338,7 @@ bb.i:                                             ; preds = %bb.g
   br i1 %i.cb, label %_ZNK2c415basic_substringIKcE4findEcm.exit, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph.i.i
-  %i.cc = add i64 %.0811.i.i, 1                   ; 2 uses
+  %i.cc = add nuw i64 %.0811.i.i, 1               ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.cc, %.sroa.21.0339
   br i1 %exitcond.not.i.i, label %_ZNK2c415basic_substringIKcE4findEcm.exit, label %.lr.ph.i.i, !llvm.loop !6
 
@@ -2728,7 +2741,7 @@ bb.c:                                             ; preds = %.lr.ph.split.i
 bb.d:                                             ; preds = %.lr.ph.i.i
   %i.r = add nuw i64 %.01934.i.i, 1               ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.r, %..i.i
-  br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i, !llvm.loop !3
+  br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i, !llvm.loop !5
 
 .lr.ph.i.i:                                       ; preds = %bb.c, %bb.d
   %.01934.i.i = phi i64 [ %i.r, %bb.d ], [ 0, %bb.c ] ; 3 uses
@@ -2826,7 +2839,7 @@ bb.b:                                             ; preds = %.lr.ph.split.i
 bb.c:                                             ; preds = %.lr.ph.i.i
   %i.o = add nuw i64 %.01934.i.i, 1               ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.o, %..i.i
-  br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i, !llvm.loop !3
+  br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i, !llvm.loop !5
 
 .lr.ph.i.i:                                       ; preds = %bb.b, %bb.c
   %.01934.i.i = phi i64 [ %i.o, %bb.c ], [ 0, %bb.b ] ; 3 uses
@@ -3229,7 +3242,7 @@ bb.j:                                             ; preds = %.lr.ph109.split
 bb.k:                                             ; preds = %.lr.ph.i
   %i.ao = add nuw i64 %.01934.i, 1                ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ao, %..i
-  br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !3
+  br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !5
 
 .lr.ph.i:                                         ; preds = %bb.j, %bb.k
   %.01934.i = phi i64 [ %i.ao, %bb.k ], [ 0, %bb.j ] ; 3 uses
@@ -3632,7 +3645,7 @@ bb.ak:                                            ; preds = %.lr.ph.split.i
 bb.al:                                            ; preds = %.lr.ph.i.i
   %i.gq = add nuw i64 %.01934.i.i, 1              ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.gq, %..i.i
-  br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i, !llvm.loop !3
+  br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i, !llvm.loop !5
 
 .lr.ph.i.i:                                       ; preds = %bb.ak, %bb.al
   %.01934.i.i = phi i64 [ %i.gq, %bb.al ], [ 0, %bb.ak ] ; 3 uses
@@ -3965,7 +3978,7 @@ bb.b:                                             ; preds = %.lr.ph.split
 bb.c:                                             ; preds = %.lr.ph.i
   %i.p = add nuw i64 %.01934.i, 1                 ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.p, %..i
-  br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !3
+  br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !5
 
 .lr.ph.i:                                         ; preds = %bb.b, %bb.c
   %.01934.i = phi i64 [ %i.p, %bb.c ], [ 0, %bb.b ] ; 3 uses
@@ -4368,7 +4381,7 @@ _ZNK2c415basic_substringIKcE12first_not_ofES2_.exit: ; preds = %bb.h
 bb.i:                                             ; preds = %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %bb.h, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i, %.preheader.us.i
   %i.bc = add nuw i64 %.01326.us.i, 1             ; 2 uses
   %exitcond29.not.i = icmp eq i64 %i.bc, %spec.select
-  br i1 %exitcond29.not.i, label %.critedge, label %.preheader.us.i, !llvm.loop !5
+  br i1 %exitcond29.not.i, label %.critedge, label %.preheader.us.i, !llvm.loop !4
 
 bb.j:                                             ; preds = %_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #58
@@ -4771,7 +4784,7 @@ bb.d:                                             ; preds = %.lr.ph.split.i
 bb.e:                                             ; preds = %.lr.ph.i.i
   %i.v = add nuw i64 %.01934.i.i, 1               ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.v, %..i.i
-  br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i, !llvm.loop !3
+  br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i, !llvm.loop !5
 
 .lr.ph.i.i:                                       ; preds = %bb.d, %bb.e
   %.01934.i.i = phi i64 [ %i.v, %bb.e ], [ 0, %bb.d ] ; 3 uses
@@ -4852,7 +4865,7 @@ bb.i:                                             ; preds = %.lr.ph.split.i34
 bb.j:                                             ; preds = %.lr.ph.i.i39
   %i.av = add nuw i64 %.01934.i.i40, 1            ; 2 uses
   %exitcond.not.i.i46 = icmp eq i64 %i.av, %..i.i37
-  br i1 %exitcond.not.i.i46, label %._crit_edge.i.i47, label %.lr.ph.i.i39, !llvm.loop !3
+  br i1 %exitcond.not.i.i46, label %._crit_edge.i.i47, label %.lr.ph.i.i39, !llvm.loop !5
 
 .lr.ph.i.i39:                                     ; preds = %bb.i, %bb.j
   %.01934.i.i40 = phi i64 [ %i.av, %bb.j ], [ 0, %bb.i ] ; 3 uses
@@ -5128,7 +5141,7 @@ bb.h:                                             ; preds = %.lr.ph.split.i
 bb.i:                                             ; preds = %.lr.ph.i.i
   %i.ab = add nuw i64 %.01934.i.i, 1              ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.ab, %..i.i
-  br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i, !llvm.loop !3
+  br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i, !llvm.loop !5
 
 .lr.ph.i.i:                                       ; preds = %bb.h, %bb.i
   %.01934.i.i = phi i64 [ %i.ab, %bb.i ], [ 0, %bb.h ] ; 3 uses
@@ -5450,7 +5463,7 @@ bb.x:                                             ; preds = %.lr.ph.split.i76
 bb.y:                                             ; preds = %.lr.ph.i.i81
   %i.fc = add nuw i64 %.01934.i.i82, 1            ; 2 uses
   %exitcond.not.i.i89 = icmp eq i64 %i.fc, %..i.i79
-  br i1 %exitcond.not.i.i89, label %._crit_edge.i.i90, label %.lr.ph.i.i81, !llvm.loop !3
+  br i1 %exitcond.not.i.i89, label %._crit_edge.i.i90, label %.lr.ph.i.i81, !llvm.loop !5
 
 .lr.ph.i.i81:                                     ; preds = %bb.x, %bb.y
   %.01934.i.i82 = phi i64 [ %i.fc, %bb.y ], [ 0, %bb.x ] ; 3 uses
@@ -5853,7 +5866,7 @@ _ZN2c43yml4Tree8_advanceEPNS1_13lookup_resultEm.exit: ; preds = %bb.d, %_ZNK2c41
 ._crit_edge.i:                                    ; preds = %.preheader.i
   %i.ac = add nuw i64 %.01224.i, 1                ; 2 uses
   %exitcond27.not.i = icmp eq i64 %i.ac, %i.h
-  br i1 %exitcond27.not.i, label %_ZN2c43yml4Tree8_advanceEPNS1_13lookup_resultEm.exit40, label %.preheader.i, !llvm.loop !4
+  br i1 %exitcond27.not.i, label %_ZN2c43yml4Tree8_advanceEPNS1_13lookup_resultEm.exit40, label %.preheader.i, !llvm.loop !3
 
 _ZNK2c415basic_substringIKcE8first_ofES2_m.exit:  ; preds = %.preheader.i
   %i.ad = icmp eq i64 %.01224.i, -1
@@ -6256,7 +6269,7 @@ bb.b:                                             ; preds = %.lr.ph.split
 bb.c:                                             ; preds = %.lr.ph.i
   %i.aj = add nuw i64 %.01934.i, 1                ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.aj, %..i
-  br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !3
+  br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !5
 
 .lr.ph.i:                                         ; preds = %bb.b, %bb.c
   %.01934.i = phi i64 [ %i.aj, %bb.c ], [ 0, %bb.b ] ; 3 uses
@@ -6292,7 +6305,7 @@ bb.e:                                             ; preds = %_ZNK2c415basic_subs
 bb.f:                                             ; preds = %.lr.ph.i12
   %i.at = add nuw i64 %.01934.i13, 1              ; 2 uses
   %exitcond.not.i15 = icmp eq i64 %i.at, %..i10
-  br i1 %exitcond.not.i15, label %._crit_edge.i16, label %.lr.ph.i12, !llvm.loop !3
+  br i1 %exitcond.not.i15, label %._crit_edge.i16, label %.lr.ph.i12, !llvm.loop !5
 
 .lr.ph.i12:                                       ; preds = %bb.e, %bb.f
   %.01934.i13 = phi i64 [ %i.at, %bb.f ], [ 0, %bb.e ] ; 3 uses
@@ -6695,7 +6708,7 @@ bb.aj:                                            ; preds = %bb.ai
 bb.ak:                                            ; preds = %.lr.ph.i85
   %i.et = add nuw i64 %.01934.i86, 1              ; 2 uses
   %exitcond.not.i88 = icmp eq i64 %i.et, %..i83
-  br i1 %exitcond.not.i88, label %._crit_edge.i89, label %.lr.ph.i85, !llvm.loop !3
+  br i1 %exitcond.not.i88, label %._crit_edge.i89, label %.lr.ph.i85, !llvm.loop !5
 
 .lr.ph.i85:                                       ; preds = %bb.aj, %bb.ak
   %.01934.i86 = phi i64 [ %i.et, %bb.ak ], [ 0, %bb.aj ] ; 3 uses
@@ -6802,7 +6815,7 @@ bb.aq:                                            ; preds = %_ZNK2c415basic_subs
 bb.ar:                                            ; preds = %.lr.ph.i96
   %i.ga = add nuw i64 %.01934.i97, 1              ; 2 uses
   %exitcond.not.i99 = icmp eq i64 %i.ga, %..i94
-  br i1 %exitcond.not.i99, label %._crit_edge.i100, label %.lr.ph.i96, !llvm.loop !3
+  br i1 %exitcond.not.i99, label %._crit_edge.i100, label %.lr.ph.i96, !llvm.loop !5
 
 .lr.ph.i96:                                       ; preds = %bb.aq, %bb.ar
   %.01934.i97 = phi i64 [ %i.ga, %bb.ar ], [ 0, %bb.aq ] ; 3 uses
@@ -6888,7 +6901,7 @@ bb.av:                                            ; preds = %bb.au
 bb.aw:                                            ; preds = %.lr.ph.i107
   %i.hg = add nuw i64 %.01934.i108, 1             ; 2 uses
   %exitcond.not.i110 = icmp eq i64 %i.hg, %..i105
-  br i1 %exitcond.not.i110, label %._crit_edge.i111, label %.lr.ph.i107, !llvm.loop !3
+  br i1 %exitcond.not.i110, label %._crit_edge.i111, label %.lr.ph.i107, !llvm.loop !5
 
 .lr.ph.i107:                                      ; preds = %bb.av, %bb.aw
   %.01934.i108 = phi i64 [ %i.hg, %bb.aw ], [ 0, %bb.av ] ; 3 uses
@@ -7291,7 +7304,7 @@ bb.ad:                                            ; preds = %bb.x
 ._crit_edge.i.i:                                  ; preds = %.preheader.i.i
   %i.jc = add nuw i64 %.01224.i.i, 1              ; 2 uses
   %exitcond27.not.i.i = icmp eq i64 %i.jc, %.sroa.5.0.copyload.i
-  br i1 %exitcond27.not.i.i, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i, label %.preheader.i.i, !llvm.loop !4
+  br i1 %exitcond27.not.i.i, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i, label %.preheader.i.i, !llvm.loop !3
 
 _ZNK2c415basic_substringIKcE8first_ofES2_m.exit.i: ; preds = %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i
   %.not.i.i68 = icmp eq i64 %.01224.i.i, -1
@@ -7694,7 +7707,7 @@ bb.an:                                            ; preds = %bb.x
 ._crit_edge.i.i:                                  ; preds = %.preheader.i.i
   %i.ki = add nuw i64 %.01224.i.i, 1              ; 2 uses
   %exitcond27.not.i.i = icmp eq i64 %i.ki, %.sroa.5.0.copyload.i169
-  br i1 %exitcond27.not.i.i, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i, label %.preheader.i.i, !llvm.loop !4
+  br i1 %exitcond27.not.i.i, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i, label %.preheader.i.i, !llvm.loop !3
 
 _ZNK2c415basic_substringIKcE8first_ofES2_m.exit.i: ; preds = %.preheader.i.i, %.preheader.i.i, %.preheader.i.i
   %.not.i.i171 = icmp eq i64 %.01224.i.i, -1
@@ -8097,7 +8110,7 @@ bb.ca:                                            ; preds = %bb.bt
 ._crit_edge.i.i224:                               ; preds = %.preheader.i.i217
   %i.zc = add nuw i64 %.01224.i.i218, 1           ; 2 uses
   %exitcond27.not.i.i225 = icmp eq i64 %i.zc, %.sroa.5.0.copyload.i215
-  br i1 %exitcond27.not.i.i225, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i223, label %.preheader.i.i217, !llvm.loop !4
+  br i1 %exitcond27.not.i.i225, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i223, label %.preheader.i.i217, !llvm.loop !3
 
 _ZNK2c415basic_substringIKcE8first_ofES2_m.exit.i219: ; preds = %.preheader.i.i217, %.preheader.i.i217, %.preheader.i.i217
   %.not.i.i220 = icmp eq i64 %.01224.i.i218, -1
@@ -8500,7 +8513,7 @@ bb.aj:                                            ; preds = %bb.x
 ._crit_edge.i.i:                                  ; preds = %.preheader.i.i
   %i.ly = add nuw i64 %.01224.i.i, 1              ; 2 uses
   %exitcond27.not.i.i = icmp eq i64 %i.ly, %.sroa.5.0.copyload.i119
-  br i1 %exitcond27.not.i.i, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i, label %.preheader.i.i, !llvm.loop !4
+  br i1 %exitcond27.not.i.i, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i, label %.preheader.i.i, !llvm.loop !3
 
 _ZNK2c415basic_substringIKcE8first_ofES2_m.exit.i: ; preds = %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i
   %.not.i.i121 = icmp eq i64 %.01224.i.i, -1
@@ -8903,7 +8916,7 @@ bb.bv:                                            ; preds = %bb.bl
 ._crit_edge.i.i185:                               ; preds = %.preheader.i.i178
   %i.vu = add nuw i64 %.01224.i.i179, 1           ; 2 uses
   %exitcond27.not.i.i186 = icmp eq i64 %i.vu, %.sroa.5.0.copyload.i176
-  br i1 %exitcond27.not.i.i186, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i184, label %.preheader.i.i178, !llvm.loop !4
+  br i1 %exitcond27.not.i.i186, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i184, label %.preheader.i.i178, !llvm.loop !3
 
 _ZNK2c415basic_substringIKcE8first_ofES2_m.exit.i180: ; preds = %.preheader.i.i178, %.preheader.i.i178, %.preheader.i.i178, %.preheader.i.i178
   %.not.i.i181 = icmp eq i64 %.01224.i.i179, -1
@@ -9306,7 +9319,7 @@ bb.dq:                                            ; preds = %bb.cp
 ._crit_edge.i.i:                                  ; preds = %.preheader.i.i
   %i.alm = add nuw i64 %.01224.i.i, 1             ; 2 uses
   %exitcond27.not.i.i = icmp eq i64 %i.alm, %.sroa.5.0.copyload.i348
-  br i1 %exitcond27.not.i.i, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i, label %.preheader.i.i, !llvm.loop !4
+  br i1 %exitcond27.not.i.i, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i, label %.preheader.i.i, !llvm.loop !3
 
 _ZNK2c415basic_substringIKcE8first_ofES2_m.exit.i: ; preds = %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i
   %.not.i.i350 = icmp eq i64 %.01224.i.i, -1
@@ -9709,7 +9722,7 @@ bb.bn:                                            ; preds = %bb.be
 ._crit_edge.i.i:                                  ; preds = %.preheader.i.i
   %i.sw = add nuw i64 %.01224.i.i, 1              ; 2 uses
   %exitcond27.not.i.i = icmp eq i64 %i.sw, %.sroa.5.0.copyload.i425
-  br i1 %exitcond27.not.i.i, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i, label %.preheader.i.i, !llvm.loop !4
+  br i1 %exitcond27.not.i.i, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i, label %.preheader.i.i, !llvm.loop !3
 
 _ZNK2c415basic_substringIKcE8first_ofES2_m.exit.i: ; preds = %.preheader.i.i, %.preheader.i.i, %.preheader.i.i
   %.not.i.i427 = icmp eq i64 %.01224.i.i, -1
@@ -10112,7 +10125,7 @@ bb.jh:                                            ; preds = %bb.iu
 ._crit_edge.i.i809:                               ; preds = %.preheader.i.i802
   %i.byf = add nuw i64 %.01224.i.i803, 1          ; 2 uses
   %exitcond27.not.i.i810 = icmp eq i64 %i.byf, %.sroa.5.0.copyload.i800
-  br i1 %exitcond27.not.i.i810, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i808, label %.preheader.i.i802, !llvm.loop !4
+  br i1 %exitcond27.not.i.i810, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i808, label %.preheader.i.i802, !llvm.loop !3
 
 _ZNK2c415basic_substringIKcE8first_ofES2_m.exit.i804: ; preds = %.preheader.i.i802, %.preheader.i.i802, %.preheader.i.i802
   %.not.i.i805 = icmp eq i64 %.01224.i.i803, -1
@@ -10515,7 +10528,7 @@ _ZNK2c415basic_substringIKcE12first_not_ofES2_.exit: ; preds = %.preheader.us.i
 bb.b:                                             ; preds = %.preheader.us.i, %.preheader.us.i
   %i.u = add nuw i64 %.01326.us.i, 1              ; 2 uses
   %exitcond29.not.i = icmp eq i64 %i.u, %.sroa.17.0.copyload
-  br i1 %exitcond29.not.i, label %.thread, label %.preheader.us.i, !llvm.loop !5
+  br i1 %exitcond29.not.i, label %.thread, label %.preheader.us.i, !llvm.loop !4
 
 .thread:                                          ; preds = %bb.b, %_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit
   br label %bb.c
@@ -10918,7 +10931,7 @@ bb.by:                                            ; preds = %bb.v
 ._crit_edge.i.i:                                  ; preds = %.preheader.i.i
   %i.za = add nuw i64 %.01224.i.i, 1              ; 2 uses
   %exitcond27.not.i.i = icmp eq i64 %i.za, %.sroa.5.0.copyload.i251
-  br i1 %exitcond27.not.i.i, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i, label %.preheader.i.i, !llvm.loop !4
+  br i1 %exitcond27.not.i.i, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i, label %.preheader.i.i, !llvm.loop !3
 
 _ZNK2c415basic_substringIKcE8first_ofES2_m.exit.i: ; preds = %.preheader.i.i, %.preheader.i.i, %.preheader.i.i
   %.not.i.i253 = icmp eq i64 %.01224.i.i, -1
@@ -11321,7 +11334,7 @@ _ZNK2c415basic_substringIKcE12first_not_ofES2_.exit: ; preds = %.preheader.us.i
 bb.b:                                             ; preds = %.preheader.us.i, %.preheader.us.i
   %i.g = add nuw i64 %.01326.us.i, 1              ; 2 uses
   %exitcond29.not.i = icmp eq i64 %i.g, %.sroa.21.0.copyload
-  br i1 %exitcond29.not.i, label %.thread, label %.preheader.us.i, !llvm.loop !5
+  br i1 %exitcond29.not.i, label %.thread, label %.preheader.us.i, !llvm.loop !4
 
 .thread:                                          ; preds = %bb.b, %_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit
   br label %bb.c
@@ -11724,7 +11737,7 @@ _ZNK2c415basic_substringIKcE12first_not_ofES2_.exit: ; preds = %.preheader.us.i
 bb.b:                                             ; preds = %.preheader.us.i, %.preheader.us.i
   %i.k = add nuw i64 %.01326.us.i, 1              ; 2 uses
   %exitcond29.not.i = icmp eq i64 %i.k, %.sroa.9.0.copyload
-  br i1 %exitcond29.not.i, label %.thread, label %.preheader.us.i, !llvm.loop !5
+  br i1 %exitcond29.not.i, label %.thread, label %.preheader.us.i, !llvm.loop !4
 
 .thread:                                          ; preds = %bb.b, %_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit
   br label %bb.c
@@ -12127,7 +12140,7 @@ _ZNK2c415basic_substringIKcE5trimlEc.exit.thread: ; preds = %bb.b, %bb.c, %bb.a,
 ._crit_edge.i:                                    ; preds = %.preheader.i
   %i.aa = add nuw i64 %.01224.i, 1                ; 2 uses
   %exitcond27.not.i = icmp eq i64 %i.aa, %i.x
-  br i1 %exitcond27.not.i, label %.preheader.lr.ph.i83, label %.preheader.i, !llvm.loop !4
+  br i1 %exitcond27.not.i, label %.preheader.lr.ph.i83, label %.preheader.i, !llvm.loop !3
 
 _ZNK2c415basic_substringIKcE8first_ofES2_m.exit:  ; preds = %.preheader.i, %.preheader.i
   %i.ab = icmp eq i8 %i.z, 45
@@ -12175,7 +12188,7 @@ _ZNK2c415basic_substringIKcE12first_not_ofES2_.exit: ; preds = %.preheader.us.i
 bb.f:                                             ; preds = %.preheader.us.i
   %i.ah = add nuw i64 %.01326.us.i, 1             ; 2 uses
   %exitcond29.not.i = icmp eq i64 %i.ah, %.sroa.12.0166
-  br i1 %exitcond29.not.i, label %_ZNK2c415basic_substringIKcE7left_ofEm.exit, label %.preheader.us.i, !llvm.loop !5
+  br i1 %exitcond29.not.i, label %_ZNK2c415basic_substringIKcE7left_ofEm.exit, label %.preheader.us.i, !llvm.loop !4
 
 _ZNK2c415basic_substringIKcE7left_ofEm.exit:      ; preds = %bb.f, %_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit
   %.sroa.5154.0 = phi i64 [ %spec.select394, %_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit ], [ %.sroa.12.0166, %bb.f ] ; 2 uses
@@ -12578,7 +12591,7 @@ bb.a:
 ._crit_edge.i:                                    ; preds = %.preheader.i
   %i.g = add nuw i64 %.01224.i, 1                 ; 2 uses
   %exitcond27.not.i = icmp eq i64 %i.g, %.sroa.5.0.copyload
-  br i1 %exitcond27.not.i, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread, label %.preheader.i, !llvm.loop !4
+  br i1 %exitcond27.not.i, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread, label %.preheader.i, !llvm.loop !3
 
 _ZNK2c415basic_substringIKcE8first_ofES2_m.exit:  ; preds = %.preheader.i, %.preheader.i, %.preheader.i, %.preheader.i
   %.not.i = icmp eq i64 %.01224.i, -1
@@ -12632,7 +12645,7 @@ bb.a:
 ._crit_edge.i:                                    ; preds = %.preheader.i
   %i.g = add nuw i64 %.01224.i, 1                 ; 2 uses
   %exitcond27.not.i = icmp eq i64 %i.g, %.sroa.5.0.copyload
-  br i1 %exitcond27.not.i, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread, label %.preheader.i, !llvm.loop !4
+  br i1 %exitcond27.not.i, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread, label %.preheader.i, !llvm.loop !3
 
 _ZNK2c415basic_substringIKcE8first_ofES2_m.exit:  ; preds = %.preheader.i, %.preheader.i, %.preheader.i
   %.not.i = icmp eq i64 %.01224.i, -1
@@ -12728,7 +12741,7 @@ _ZNK2c415basic_substringIKcE11begins_withES2_.exit: ; preds = %.preheader.i.1
 ._crit_edge.i:                                    ; preds = %.preheader.i39
   %i.x = add nuw i64 %.01224.i, 1                 ; 2 uses
   %exitcond27.not.i = icmp eq i64 %i.x, %i.n
-  br i1 %exitcond27.not.i, label %_ZNK2c415basic_substringIKcE8first_ofEcm.exit.thread, label %.preheader.i39, !llvm.loop !4
+  br i1 %exitcond27.not.i, label %_ZNK2c415basic_substringIKcE8first_ofEcm.exit.thread, label %.preheader.i39, !llvm.loop !3
 
 _ZNK2c415basic_substringIKcE8first_ofES2_m.exit:  ; preds = %.preheader.i39, %.preheader.i39
   %.not.i23 = icmp eq i64 %.01224.i, -1
@@ -12796,7 +12809,7 @@ _ZNK2c415basic_substringIKcE8first_ofEcm.exit54:  ; preds = %.lr.ph.i51
 ._crit_edge.i60:                                  ; preds = %.preheader.i56
   %i.ao = add nuw i64 %.01224.i57, 1              ; 2 uses
   %exitcond27.not.i61 = icmp eq i64 %i.ao, %i.n
-  br i1 %exitcond27.not.i61, label %_ZNK2c415basic_substringIKcE7left_ofEm.exit29, label %.preheader.i56, !llvm.loop !4
+  br i1 %exitcond27.not.i61, label %_ZNK2c415basic_substringIKcE7left_ofEm.exit29, label %.preheader.i56, !llvm.loop !3
 
 _ZNK2c415basic_substringIKcE8first_ofES2_m.exit62: ; preds = %.preheader.i56, %.preheader.i56
   %.not.i9 = icmp eq i64 %.01224.i57, -1
@@ -13199,7 +13212,7 @@ _ZNK2c415basic_substringIKcE9ends_withEc.exit:    ; preds = %.lr.ph.i.1
 ._crit_edge.i:                                    ; preds = %.preheader.i1
   %i.m = add nuw i64 %.01224.i, 1                 ; 2 uses
   %exitcond27.not.i = icmp eq i64 %i.m, %2
-  br i1 %exitcond27.not.i, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread, label %.preheader.i1, !llvm.loop !4
+  br i1 %exitcond27.not.i, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread, label %.preheader.i1, !llvm.loop !3
 
 _ZNK2c415basic_substringIKcE8first_ofES2_m.exit:  ; preds = %.preheader.i1, %.preheader.i1, %.preheader.i1, %.preheader.i1, %.preheader.i1
   %.not = icmp eq i64 %.01224.i, -1
@@ -13602,7 +13615,7 @@ bb.u:                                             ; preds = %.preheader.i.i
 ._crit_edge.i.i:                                  ; preds = %bb.u
   %i.bv = add nuw i64 %.01224.i.i, 1              ; 2 uses
   %exitcond27.not.i.i = icmp eq i64 %i.bv, %i.bi
-  br i1 %exitcond27.not.i.i, label %_ZNK2c415basic_substringIKcE17pair_range_nestedEcc.exit, label %.preheader.i.i, !llvm.loop !4
+  br i1 %exitcond27.not.i.i, label %_ZNK2c415basic_substringIKcE17pair_range_nestedEcc.exit, label %.preheader.i.i, !llvm.loop !3
 
 _ZNK2c415basic_substringIKcE8first_ofES2_m.exit.i: ; preds = %.preheader.i.i
   %.not.i109 = icmp eq i64 %.01224.i.i, -1
@@ -14005,7 +14018,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.lr.ph
   %i.h = add nuw i64 %.01934, 1                   ; 2 uses
   %exitcond.not = icmp eq i64 %i.h, %.
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !3
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !5
 
 .lr.ph:                                           ; preds = %bb.b, %bb.c
   %.01934 = phi i64 [ %i.h, %bb.c ], [ 0, %bb.b ] ; 3 uses
@@ -14073,7 +14086,7 @@ _ZNK2c415basic_substringIKcE12first_not_ofES2_.exit.i: ; preds = %.preheader.us.
 bb.b:                                             ; preds = %.preheader.us.i.i, %.preheader.us.i.i, %.preheader.us.i.i, %.preheader.us.i.i
   %i.g = add nuw i64 %.01326.us.i.i, 1            ; 2 uses
   %exitcond29.not.i.i = icmp eq i64 %i.g, %i.b
-  br i1 %exitcond29.not.i.i, label %_ZNK2c415basic_substringIKcE20first_non_empty_spanEv.exit.thread, label %.preheader.us.i.i, !llvm.loop !5
+  br i1 %exitcond29.not.i.i, label %_ZNK2c415basic_substringIKcE20first_non_empty_spanEv.exit.thread, label %.preheader.us.i.i, !llvm.loop !4
 
 .preheader.i.preheader.i:                         ; preds = %_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit.i
   %i.h = sub nuw i64 %i.b, %.01326.us.i.i         ; 2 uses
@@ -14093,7 +14106,7 @@ bb.b:                                             ; preds = %.preheader.us.i.i, 
 ._crit_edge.i.i:                                  ; preds = %.preheader.i.i
   %i.k = add i64 %.01224.i.i, 1                   ; 2 uses
   %exitcond27.not.i.i = icmp eq i64 %i.k, %i.h
-  br i1 %exitcond27.not.i.i, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i, label %.preheader.i.i, !llvm.loop !4
+  br i1 %exitcond27.not.i.i, label %_ZNK2c415basic_substringIKcE8first_ofES2_m.exit.thread.i, label %.preheader.i.i, !llvm.loop !3
 
 _ZNK2c415basic_substringIKcE8first_ofES2_m.exit.i: ; preds = %.preheader.i.i, %.preheader.i.i, %.preheader.i.i, %.preheader.i.i
   %.not.i.i = icmp eq i64 %.01224.i.i, -1
@@ -14475,7 +14488,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %.lr.ph.i
   %i.j = add nuw i64 %.01934.i, 1                 ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.j, %..i
-  br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !3
+  br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !5
 
 .lr.ph.i:                                         ; preds = %bb.c, %bb.d
   %.01934.i = phi i64 [ %i.j, %bb.d ], [ 0, %bb.c ] ; 3 uses
@@ -14878,7 +14891,7 @@ _ZNK2c415basic_substringIKcE12first_not_ofES2_.exit: ; preds = %.preheader.us.i
 bb.i:                                             ; preds = %.preheader.us.i, %.preheader.us.i
   %i.ap = add nuw i64 %.01326.us.i, 1             ; 2 uses
   %exitcond29.not.i = icmp eq i64 %i.ap, %i.al
-  br i1 %exitcond29.not.i, label %_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit.thread, label %.preheader.us.i, !llvm.loop !5
+  br i1 %exitcond29.not.i, label %_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit.thread, label %.preheader.us.i, !llvm.loop !4
 
 _ZNK2c415basic_substringIKcE12first_not_ofES2_.exit.thread: ; preds = %bb.i, %bb.h, %_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit
   br label %bb.j
@@ -15036,7 +15049,7 @@ _ZNK2c415basic_substringIKcE12first_not_ofES2_.exit: ; preds = %.preheader.us.i
 bb.k:                                             ; preds = %.preheader.us.i, %.preheader.us.i
   %i.aq = add nuw i64 %.01326.us.i, 1             ; 2 uses
   %exitcond29.not.i = icmp eq i64 %i.aq, %i.am
-  br i1 %exitcond29.not.i, label %_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit.thread, label %.preheader.us.i, !llvm.loop !5
+  br i1 %exitcond29.not.i, label %_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit.thread, label %.preheader.us.i, !llvm.loop !4
 
 _ZNK2c415basic_substringIKcE12first_not_ofES2_.exit.thread: ; preds = %bb.k, %bb.j, %_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit
   br label %bb.l
@@ -15427,7 +15440,7 @@ _ZNK2c415basic_substringIKcE12first_not_ofES2_.exit: ; preds = %.preheader.us.i
 bb.i:                                             ; preds = %.preheader.us.i, %.preheader.us.i
   %i.an = add nuw i64 %.01326.us.i, 1             ; 2 uses
   %exitcond29.not.i = icmp eq i64 %i.an, %i.aj
-  br i1 %exitcond29.not.i, label %_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit.thread, label %.preheader.us.i, !llvm.loop !5
+  br i1 %exitcond29.not.i, label %_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit.thread, label %.preheader.us.i, !llvm.loop !4
 
 _ZNK2c415basic_substringIKcE12first_not_ofES2_.exit.thread: ; preds = %bb.i, %bb.h, %_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit
   br label %bb.j
@@ -15586,7 +15599,7 @@ _ZNK2c415basic_substringIKcE12first_not_ofES2_.exit: ; preds = %.preheader.us.i
 bb.l:                                             ; preds = %.preheader.us.i, %.preheader.us.i
   %i.ao = add nuw i64 %.01326.us.i, 1             ; 2 uses
   %exitcond29.not.i = icmp eq i64 %i.ao, %i.ak
-  br i1 %exitcond29.not.i, label %_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit.thread, label %.preheader.us.i, !llvm.loop !5
+  br i1 %exitcond29.not.i, label %_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit.thread, label %.preheader.us.i, !llvm.loop !4
 
 _ZNK2c415basic_substringIKcE12first_not_ofES2_.exit.thread: ; preds = %bb.l, %bb.k, %_ZNK2c415basic_substringIKcE12first_not_ofES2_.exit
   br label %bb.m

@@ -205,7 +205,7 @@ bb.a:
   %i.e = mul i64 %i.d, %i.c
   %i.f = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %i.e ; 9 uses
   %i.g = lshr i64 %i.d, 1                         ; 7 uses
-  %i.h = and i64 %i.g, 65535                      ; 28 uses
+  %i.h = and i64 %i.g, 65535                      ; 30 uses
   %.idx128 = shl nuw nsw i64 %i.h, 1              ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 %.idx128 ; 7 uses
   %.not116 = icmp eq i64 %i.h, 0                  ; 2 uses
@@ -501,9 +501,9 @@ bb.d:                                             ; preds = %_ZN8k_d_tree13Sorte
 
 _ZSt4copyIPKtPtET0_T_S4_S3_.exit:                 ; preds = %bb.c, %bb.d, %bb.b
   %i.by = phi ptr [ %i.x, %bb.d ], [ %i.be, %bb.c ], [ %i.x, %bb.b ] ; 5 uses
-  %i.bz = load i64, ptr %1, align 8, !tbaa !84    ; 2 uses
+  %i.bz = load i64, ptr %1, align 8, !tbaa !84    ; 4 uses
   %i.ca = xor i64 %i.h, -1
-  %i.cb = add i64 %i.bz, %i.ca                    ; 35 uses
+  %i.cb = add i64 %i.bz, %i.ca                    ; 33 uses
   %i.cc = mul i64 %i.cb, 3
   %i.cd = mul i64 %i.cb, 6
   %.inv.i.i = icmp sgt i64 %i.cc, -1
@@ -591,10 +591,11 @@ iter.check263:                                    ; preds = %.split.i64, %vec.ep
   br i1 %min.iters.check249, label %vec.epilog.scalar.ph264.preheader, label %vector.scevcheck248
 
 vector.scevcheck248:                              ; preds = %iter.check263
-  %i.cu = add i64 %i.cb, -1                       ; 2 uses
-  %i.cv = and i64 %i.cu, 65535
+  %i.cu = add i64 %i.bz, -2
+  %4 = sub i64 %i.cu, %i.h                        ; 2 uses
+  %i.cv = and i64 %4, 65535
   %i.cw = icmp eq i64 %i.cv, 65535
-  %i.cx = icmp ugt i64 %i.cu, 65535
+  %i.cx = icmp ugt i64 %4, 65535
   %i.cy = or i1 %i.cw, %i.cx
   br i1 %i.cy, label %vec.epilog.scalar.ph264.preheader, label %vector.main.loop.iter.check250
 
@@ -604,7 +605,7 @@ vector.main.loop.iter.check250:                   ; preds = %vector.scevcheck248
 
 vector.ph252:                                     ; preds = %vector.main.loop.iter.check250
   %i.cz = and i64 %i.cb, 12
-  %n.vec253 = and i64 %i.cb, 131056               ; 4 uses
+  %n.vec253 = and i64 %i.cb, -16                  ; 4 uses
   br label %vector.body254
 
 vector.body254:                                   ; preds = %vector.body254, %vector.ph252
@@ -630,7 +631,7 @@ vec.epilog.iter.check265:                         ; preds = %middle.block260
 
 vec.epilog.ph267:                                 ; preds = %vector.main.loop.iter.check250, %vec.epilog.iter.check265
   %vec.epilog.resume.val262 = phi i64 [ %n.vec253, %vec.epilog.iter.check265 ], [ 0, %vector.main.loop.iter.check250 ] ; 2 uses
-  %n.vec268 = and i64 %i.cb, 131068               ; 3 uses
+  %n.vec268 = and i64 %i.cb, -4                   ; 3 uses
   %i.dd = trunc i64 %vec.epilog.resume.val262 to i16
   %broadcast.splatinsert269 = insertelement <4 x i16> poison, i16 %i.dd, i64 0
   %broadcast.splat270 = shufflevector <4 x i16> %broadcast.splatinsert269, <4 x i16> poison, <4 x i32> zeroinitializer
@@ -672,10 +673,11 @@ iter.check295:                                    ; preds = %vec.epilog.scalar.p
   br i1 %min.iters.check281, label %vec.epilog.scalar.ph296.preheader, label %vector.scevcheck280
 
 vector.scevcheck280:                              ; preds = %iter.check295
-  %i.dl = add i64 %i.cb, -1                       ; 2 uses
-  %i.dm = and i64 %i.dl, 65535
+  %i.dl = add i64 %i.bz, -2
+  %5 = sub i64 %i.dl, %i.h                        ; 2 uses
+  %i.dm = and i64 %5, 65535
   %i.dn = icmp eq i64 %i.dm, 65535
-  %i.do = icmp ugt i64 %i.dl, 65535
+  %i.do = icmp ugt i64 %5, 65535
   %i.dp = or i1 %i.dn, %i.do
   br i1 %i.dp, label %vec.epilog.scalar.ph296.preheader, label %vector.main.loop.iter.check282
 
@@ -685,7 +687,7 @@ vector.main.loop.iter.check282:                   ; preds = %vector.scevcheck280
 
 vector.ph284:                                     ; preds = %vector.main.loop.iter.check282
   %i.dq = and i64 %i.cb, 12
-  %n.vec285 = and i64 %i.cb, 131056               ; 4 uses
+  %n.vec285 = and i64 %i.cb, -16                  ; 4 uses
   br label %vector.body286
 
 vector.body286:                                   ; preds = %vector.body286, %vector.ph284
@@ -711,7 +713,7 @@ vec.epilog.iter.check297:                         ; preds = %middle.block292
 
 vec.epilog.ph299:                                 ; preds = %vector.main.loop.iter.check282, %vec.epilog.iter.check297
   %vec.epilog.resume.val294 = phi i64 [ %n.vec285, %vec.epilog.iter.check297 ], [ 0, %vector.main.loop.iter.check282 ] ; 2 uses
-  %n.vec300 = and i64 %i.cb, 131068               ; 3 uses
+  %n.vec300 = and i64 %i.cb, -4                   ; 3 uses
   %i.du = trunc i64 %vec.epilog.resume.val294 to i16
   %broadcast.splatinsert301 = insertelement <4 x i16> poison, i16 %i.du, i64 0
   %broadcast.splat302 = shufflevector <4 x i16> %broadcast.splatinsert301, <4 x i16> poison, <4 x i32> zeroinitializer

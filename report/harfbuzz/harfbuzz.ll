@@ -205,6 +205,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 bb.m:                                             ; preds = %.loopexit441
   %i.ci = load i32, ptr %.0267, align 4, !tbaa !324
+  %8 = add i32 %1, -1
+  %9 = zext i32 %8 to i64                         ; 3 uses
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.q
@@ -264,8 +266,6 @@ bb.q:                                             ; preds = %bb.n
   br i1 %i.dr, label %.loopexit305.thread, label %bb.r
 
 .loopexit305.thread:                              ; preds = %bb.q, %.loopexit305
-  %8 = add i32 %1, -1
-  %9 = zext i32 %8 to i64
   %i.ds = getelementptr inbounds nuw [4 x i8], ptr %.0267, i64 %9
   %i.dt = load i32, ptr %i.ds, align 4, !tbaa !324 ; 2 uses
   tail call void %5(float noundef 0.000000e+00, i32 noundef %i.dt, float noundef f0x40C90FDB, i32 noundef %i.dt, ptr noundef %6) #63
@@ -329,11 +329,9 @@ bb.t:                                             ; preds = %.lr.ph340
   br i1 %i.ew, label %.loopexit.thread, label %.loopexit306
 
 .loopexit.thread:                                 ; preds = %bb.s, %.loopexit
-  %10 = add i32 %1, -1
-  %11 = zext i32 %10 to i64                       ; 2 uses
-  %i.ex = getelementptr inbounds nuw [4 x i8], ptr %.0267, i64 %11
+  %i.ex = getelementptr inbounds nuw [4 x i8], ptr %.0267, i64 %9
   %i.ey = load i32, ptr %i.ex, align 4, !tbaa !324 ; 2 uses
-  %i.ez = getelementptr inbounds nuw [4 x i8], ptr %.0266, i64 %11
+  %i.ez = getelementptr inbounds nuw [4 x i8], ptr %.0266, i64 %9
   %i.fa = load float, ptr %i.ez, align 4, !tbaa !304
   tail call void %5(float noundef %i.fa, i32 noundef %i.ey, float noundef f0x40C90FDB, i32 noundef %i.ey, ptr noundef %6) #63
   br label %.loopexit306

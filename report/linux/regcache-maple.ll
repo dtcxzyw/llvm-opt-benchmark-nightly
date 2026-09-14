@@ -204,7 +204,7 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, i8 0, i64 24, i1 false)
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 76
   %i.n = sub i32 %2, %1
-  %i.o = add i32 %i.n, 1                          ; 5 uses
+  %i.o = add i32 %i.n, 1                          ; 4 uses
   %i.p = getelementptr i8, ptr %0, i64 56         ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.m, i8 0, i64 12, i1 false)
   %i.q = icmp slt i32 %i.o, 0
@@ -212,7 +212,7 @@ bb.a:
 
 _kmalloc_array_noprof.exit:                       ; preds = %bb.a
   %i.r = load i32, ptr %i.p, align 8
-  %i.s = zext nneg i32 %i.o to i64
+  %i.s = zext nneg i32 %i.o to i64                ; 3 uses
   %i.t = shl nuw nsw i64 %i.s, 3
   %i.u = tail call noalias align 8 ptr @__kmalloc_noprof(i64 noundef %i.t, i32 noundef %i.r) #13 ; 8 uses
   %.not = icmp eq ptr %i.u, null
@@ -226,13 +226,12 @@ _kmalloc_array_noprof.exit:                       ; preds = %bb.a
 .lr.ph:                                           ; preds = %.preheader
   %i.v = getelementptr i8, ptr %0, i64 544
   %i.w = load ptr, ptr %i.v, align 8              ; 5 uses
-  %wide.trip.count = zext nneg i32 %i.o to i64    ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
+  %xtraiter = and i64 %i.s, 3                     ; 3 uses
   %i.x = icmp ult i32 %i.o, 4
   br i1 %i.x, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %wide.trip.count, 2147483644
+  %unroll_iter = and i64 %i.s, 2147483644
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %.lr.ph.new

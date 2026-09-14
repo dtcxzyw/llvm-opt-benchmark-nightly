@@ -206,7 +206,7 @@ bb.t:                                             ; preds = %bb.s
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !8563
   %i.di = getelementptr inbounds nuw [24 x i8], ptr %i.db, i64 %.val20.i.i.i.i.i.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.di, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.e, i64 24, i1 false), !noalias !8567
-  %i.dj = add nuw i64 %.val20.i.i.i.i.i.i.i.i.i, 1
+  %i.dj = add nuw nsw i64 %.val20.i.i.i.i.i.i.i.i.i, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !8562
   %i.dk = icmp eq i64 %.val20.i.i.i.i.i.i.i.i.i, %i.bf
   br i1 %i.dk, label %bb.ai, label %bb.s
@@ -609,7 +609,7 @@ _ZN4core4iter6traits8iterator8Iterator7collect17h73770f6ab8eb1cc4E.exit.thread26
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h646ae71b84e0cae6E.exit.i.i.i.i", %.noexc7.i.i.i.i
   %i.ah = phi ptr [ %i.bc, %.noexc7.i.i.i.i ], [ %.sroa.6.0.copyload529, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h646ae71b84e0cae6E.exit.i.i.i.i" ]
-  %.sroa.9.0.copyload7.pr = phi i64 [ %i.be, %.noexc7.i.i.i.i ], [ 1, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h646ae71b84e0cae6E.exit.i.i.i.i" ] ; 6 uses
+  %.sroa.9.0.copyload7.pr = phi i64 [ %i.be, %.noexc7.i.i.i.i ], [ 1, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h646ae71b84e0cae6E.exit.i.i.i.i" ] ; 5 uses
   %.lcssa22.i.i.i.i.i.i = phi ptr [ %.lcssa21.i.i.i.i.i.i, %.noexc7.i.i.i.i ], [ %.sroa.5.0.i.i, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h646ae71b84e0cae6E.exit.i.i.i.i" ] ; 2 uses
   %i.ai = phi i16 [ %i.ar, %.noexc7.i.i.i.i ], [ %i.s, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h646ae71b84e0cae6E.exit.i.i.i.i" ] ; 2 uses
   %.val1318.i.i.i.i.i.i = phi i64 [ %i.au, %.noexc7.i.i.i.i ], [ %i.v, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h646ae71b84e0cae6E.exit.i.i.i.i" ] ; 2 uses
@@ -651,8 +651,6 @@ _ZN4core4iter6traits8iterator8Iterator7collect17h73770f6ab8eb1cc4E.exit.thread26
   br i1 %.not.i.i.i.i.i.i, label %_ZN4core4iter6traits8iterator8Iterator7collect17h73770f6ab8eb1cc4E.exit, label %bb.f
 
 bb.f:                                             ; preds = %.noexc.i.i.i.i
-  %2 = icmp samesign ult i64 %.sroa.9.0.copyload7.pr, 384307168202282326
-  tail call void @llvm.assume(i1 %2)
   %i.ba = load i64, ptr %i.b, align 8, !range !43, !alias.scope !37044, !noalias !37045, !noundef !41
   %i.bb = icmp eq i64 %.sroa.9.0.copyload7.pr, %i.ba
   br i1 %i.bb, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17he155e442296bbfc4E.exit.i.i.i.i.i.i", label %.noexc7.i.i.i.i
@@ -1055,7 +1053,7 @@ bb.w:                                             ; preds = %_ZN4core5alloc6layo
   %i.fd = add nuw nsw i64 %.sroa.0.011.i.i.i.i.i.i.i.i.i.i.i.i.i69.i.i.i.i, 4 ; 2 uses
   %i.fe = getelementptr inbounds nuw [256 x i8], ptr %i.eu, i64 %i.fb
   store i64 %i.fb, ptr %i.fe, align 8, !noalias !46071
-  %niter763.next.3 = add i64 %niter763, 4         ; 2 uses
+  %niter763.next.3 = add nuw nsw i64 %niter763, 4 ; 2 uses
   %niter763.ncmp.3 = icmp eq i64 %niter763.next.3, %unroll_iter762
   br i1 %niter763.ncmp.3, label %"_ZN17crossbeam_channel7flavors5array16Channel$LT$T$GT$13with_capacity17he3465818ab032d47E.exit.i.i.i.i.i.unr-lcssa", label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h2e9e181ec7043619E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i"
 

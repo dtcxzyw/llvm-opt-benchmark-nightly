@@ -204,8 +204,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   br i1 %.not8, label %.split.us, label %.split.preheader
 
 .split.preheader:                                 ; preds = %bb.d
-  %5 = zext nneg i32 %.fr7 to i64
-  %6 = add nsw i64 %5, -1
+  %5 = add nsw i32 %.fr7, -1
   %i.t = zext nneg i32 %.fr7 to i64
   %i.u = zext i32 %4 to i64
   br label %.split
@@ -270,8 +269,8 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   %scevgep = getelementptr i8, ptr %3, i64 %i.ao
   %i.ap = xor i32 %.040, -1
   %i.aq = add i32 %4, %i.ap
-  %7 = zext i32 %i.aq to i64
-  %umin = call i64 @llvm.umin.i64(i64 %6, i64 %7)
+  %6 = call i32 @llvm.umin.i32(i32 %i.aq, i32 %5)
+  %umin = zext i32 %6 to i64
   %i.ar = add nuw nsw i64 %umin, 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep, ptr noundef nonnull align 16 dereferenceable(1) %i.a, i64 %i.ar, i1 false), !tbaa !24
   br label %.lr.ph
@@ -630,7 +629,7 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 declare i32 @llvm.umax.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #10
+declare i32 @llvm.umin.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #10

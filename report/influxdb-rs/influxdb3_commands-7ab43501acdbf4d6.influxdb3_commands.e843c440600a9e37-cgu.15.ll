@@ -204,7 +204,7 @@ bb.w:                                             ; preds = %_RNvMs_NtCsjWl3uGiV
 
 bb.x:                                             ; preds = %.lr.ph.i.i
   %i.el = getelementptr inbounds nuw i8, ptr %i.ej, i64 1 ; 2 uses
-  %i.em = add nuw i64 %.sroa.02.08.i.i, 1
+  %i.em = add nuw nsw i64 %.sroa.02.08.i.i, 1
   %i.en = icmp eq ptr %i.el, %i.ei
   br i1 %i.en, label %bb.ab, label %.lr.ph.i.i
 
@@ -227,7 +227,7 @@ bb.z:                                             ; preds = %.lr.ph, %bb.y
   br i1 %i.et, label %.thread84, label %bb.y
 
 bb.aa:                                            ; preds = %.lr.ph.i.i
-  %i.eu = icmp ult i64 %.sroa.02.08.i.i, %i.ee
+  %i.eu = icmp samesign ult i64 %.sroa.02.08.i.i, %i.ee
   call void @llvm.assume(i1 %i.eu)
   %i.ev = add nuw nsw i64 %.sroa.02.08.i.i, 1
   br label %.thread84

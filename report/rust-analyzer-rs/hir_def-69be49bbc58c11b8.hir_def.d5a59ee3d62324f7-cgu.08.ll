@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #46, !noalias !5303
   unreachable
 
-common.resume:                                    ; preds = %bb.c, %bb.d, %bb.h
+common.resume:                                    ; preds = %bb.d, %bb.c, %bb.h
   %common.resume.op = phi { ptr, i32 } [ %i.ab, %bb.h ], [ %i.j, %bb.c ], [ %i.j, %bb.d ]
   resume { ptr, i32 } %common.resume.op
 

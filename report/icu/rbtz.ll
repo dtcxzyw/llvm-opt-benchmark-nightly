@@ -204,12 +204,12 @@ bb.g:                                             ; preds = %.thread, %bb.f
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !22   ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.ph, i64 8
-  %i.u = load i32, ptr %i.t, align 8, !tbaa !31   ; 4 uses
+  %i.u = load i32, ptr %i.t, align 8, !tbaa !31   ; 2 uses
   %i.v = icmp sgt i32 %i.u, 0
   br i1 %i.v, label %bb.h, label %bb.bi
 
 bb.h:                                             ; preds = %bb.g
-  %i.w = zext nneg i32 %i.u to i64                ; 2 uses
+  %i.w = zext nneg i32 %i.u to i64                ; 4 uses
   %i.x = tail call noalias ptr @uprv_malloc_78(i64 noundef %i.w) #15 ; 6 uses
   %i.y = icmp eq ptr %i.x, null
   br i1 %i.y, label %bb.i, label %.preheader352
@@ -227,8 +227,6 @@ bb.i:                                             ; preds = %bb.h
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 10
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 3 uses
-  %wide.trip.count = zext nneg i32 %i.u to i64
-  %wide.trip.count443 = zext nneg i32 %i.u to i64
   br label %bb.j
 
 bb.j:                                             ; preds = %.preheader352, %_ZN6icu_7812LocalPointerINS_10TransitionEED2Ev.exit206
@@ -393,7 +391,7 @@ bb.af:                                            ; preds = %bb.r, %bb.ae, %_ZNK
   %.1146 = phi double [ %.0145392, %.lr.ph395 ], [ %.0145392, %bb.u ], [ %.0145392, %bb.ad ], [ %i.cb, %bb.ae ], [ %.0145392, %_ZNK6icu_7813UnicodeStringeqERKS0_.exit.thread ], [ %.0145392, %bb.r ] ; 6 uses
   %.1140 = phi ptr [ %.0139393, %.lr.ph395 ], [ %.0139393, %bb.u ], [ %.0139393, %bb.ad ], [ %i.aq, %bb.ae ], [ %.0139393, %_ZNK6icu_7813UnicodeStringeqERKS0_.exit.thread ], [ %.0139393, %bb.r ] ; 6 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.w
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph395, !llvm.loop !49
 
 ._crit_edge:                                      ; preds = %bb.af
@@ -402,7 +400,7 @@ bb.af:                                            ; preds = %bb.r, %bb.ae, %_ZNK
 
 bb.ag:                                            ; preds = %.lr.ph398
   %indvars.iv.next440 = add nuw nsw i64 %indvars.iv439, 1 ; 2 uses
-  %exitcond444.not = icmp eq i64 %indvars.iv.next440, %wide.trip.count443
+  %exitcond444.not = icmp eq i64 %indvars.iv.next440, %i.w
   br i1 %exitcond444.not, label %_ZN6icu_7812LocalPointerINS_10TransitionEED2Ev.exit206.thread283, label %.lr.ph398, !llvm.loop !50
 
 .lr.ph398:                                        ; preds = %._crit_edge, %bb.ag

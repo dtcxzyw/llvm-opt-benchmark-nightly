@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 13524
 inline.NumDeleted: 6899
 loop-unroll.NumCompletelyUnrolled: 15
-loop-unroll.NumRuntimeUnrolled: 128
-loop-unroll.NumUnrolled: 143
+loop-unroll.NumRuntimeUnrolled: 129
+loop-unroll.NumUnrolled: 144
 begin_hunk_0_@_ZN5Eigen8internal29general_matrix_vector_productIldNS0_22const_blas_data_mapperIdlLi0EEELi0ELb0EdS3_Lb0ELi0EE3runEllRKS3_S6_Pdld:bb.a
   %i.hy = load double, ptr %i.hx, align 8, !tbaa !21
   %i.hz = tail call double @llvm.fmuladd.f64(double %6, double %i.ih, double %i.hy)
@@ -205,7 +205,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i64, ptr %i.a, align 8, !tbaa !34   ; 6 uses
   %i.c = icmp eq i64 %i.b, 1
-  %i.d = load ptr, ptr %0, align 8                ; 16 uses
+  %i.d = load ptr, ptr %0, align 8                ; 20 uses
   br i1 %i.c, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -226,12 +226,12 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZN5Eigen8internalL21first_default_alignedINS_5BlockINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEELin1ELi1ELb0EEEEElRKNS_9DenseBaseIT_EE.exit.i
 
 _ZN5Eigen8internalL21first_default_alignedINS_5BlockINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEELin1ELi1ELb0EEEEElRKNS_9DenseBaseIT_EE.exit.i: ; preds = %bb.d, %bb.c
-  %.0.i.i.i.i.i = phi i64 [ %i.k, %bb.d ], [ %i.b, %bb.c ] ; 14 uses
+  %.0.i.i.i.i.i = phi i64 [ %i.k, %bb.d ], [ %i.b, %bb.c ] ; 16 uses
   %i.l = icmp sgt i64 %.0.i.i.i.i.i, 0
   br i1 %i.l, label %bb.e, label %_ZN5Eigen8internal18stable_norm_kernelINS_11VectorBlockIKNS_5BlockINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEELin1ELi1ELb0EEELin1EEEdEEvRKT_RT0_SD_SD_.exit
 
 bb.e:                                             ; preds = %_ZN5Eigen8internalL21first_default_alignedINS_5BlockINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEELin1ELi1ELb0EEEEElRKNS_9DenseBaseIT_EE.exit.i
-  %i.m = and i64 %.0.i.i.i.i.i, 9223372036854775804 ; 6 uses
+  %i.m = and i64 %.0.i.i.i.i.i, 9223372036854775804 ; 5 uses
   %i.n = and i64 %.0.i.i.i.i.i, 9223372036854775806 ; 6 uses
   %.not.i.i.i.i.i6 = icmp eq i64 %.0.i.i.i.i.i, 1 ; 2 uses
   br i1 %.not.i.i.i.i.i6, label %bb.j, label %bb.f
@@ -342,9 +342,9 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.p
   %.sroa.6.40.vec.insert.i.i.i.i11 = insertelement <2 x double> poison, double %.359, i64 0
   %i.bd = load <2 x double>, ptr %i.d, align 1, !tbaa !30
-  %i.be = shufflevector <2 x double> %.sroa.6.40.vec.insert.i.i.i.i11, <2 x double> poison, <2 x i32> zeroinitializer ; 5 uses
+  %i.be = shufflevector <2 x double> %.sroa.6.40.vec.insert.i.i.i.i11, <2 x double> poison, <2 x i32> zeroinitializer ; 9 uses
   %i.bf = fmul <2 x double> %i.be, %i.bd          ; 2 uses
-  %i.bg = fmul <2 x double> %i.bf, %i.bf          ; 3 uses
+  %i.bg = fmul <2 x double> %i.bf, %i.bf          ; 4 uses
   %i.bh = icmp samesign ugt i64 %.0.i.i.i.i.i, 3
   br i1 %i.bh, label %bb.r, label %bb.t
 
@@ -352,36 +352,86 @@ bb.r:                                             ; preds = %bb.q
   %i.bi = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.bj = load <2 x double>, ptr %i.bi, align 1, !tbaa !30
   %i.bk = fmul <2 x double> %i.be, %i.bj          ; 2 uses
-  %i.bl = fmul <2 x double> %i.bk, %i.bk          ; 2 uses
+  %i.bl = fmul <2 x double> %i.bk, %i.bk          ; 3 uses
   %i.bm = icmp samesign ugt i64 %.0.i.i.i.i.i, 7
-  br i1 %i.bm, label %.lr.ph.i.i.i.i39.i21, label %._crit_edge.i.i.i.i36.i18
+  br i1 %i.bm, label %.lr.ph.i.i.i.i39.i21.preheader, label %._crit_edge.i.i.i.i36.i18
 
-._crit_edge.i.i.i.i36.i18:                        ; preds = %.lr.ph.i.i.i.i39.i21, %bb.r
-  %.075.lcssa.i.i.i.i37.i19 = phi <2 x double> [ %i.bl, %bb.r ], [ %i.bz, %.lr.ph.i.i.i.i39.i21 ]
-  %.072.lcssa.i.i.i.i38.i20 = phi <2 x double> [ %i.bg, %bb.r ], [ %i.bt, %.lr.ph.i.i.i.i39.i21 ]
+.lr.ph.i.i.i.i39.i21.preheader:                   ; preds = %bb.r
+  %2 = add nsw i64 %.0.i.i.i.i.i, -8
+  %3 = lshr i64 %2, 2                             ; 2 uses
+  %4 = add nuw nsw i64 %3, 1                      ; 2 uses
+  %5 = icmp eq i64 %3, 0
+  br i1 %5, label %.lr.ph.i.i.i.i39.i21.epil.preheader, label %.lr.ph.i.i.i.i39.i21.preheader.new
+
+.lr.ph.i.i.i.i39.i21.preheader.new:               ; preds = %.lr.ph.i.i.i.i39.i21.preheader
+  %unroll_iter = and i64 %4, 9223372036854775806
+  br label %.lr.ph.i.i.i.i39.i21
+
+._crit_edge.i.i.i.i36.i18.loopexit.unr-lcssa:     ; preds = %.lr.ph.i.i.i.i39.i21
+  %6 = and i64 %.0.i.i.i.i.i, 4
+  %lcmp.mod.not.not = icmp eq i64 %6, 0
+  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.i.i39.i21.epil.preheader, label %._crit_edge.i.i.i.i36.i18
+
+.lr.ph.i.i.i.i39.i21.epil.preheader:              ; preds = %._crit_edge.i.i.i.i36.i18.loopexit.unr-lcssa, %.lr.ph.i.i.i.i39.i21.preheader
+  %.05480.i.i.i.i40.i22.epil.init = phi i64 [ 4, %.lr.ph.i.i.i.i39.i21.preheader ], [ %.054.i.i.i.i44.i26.1, %._crit_edge.i.i.i.i36.i18.loopexit.unr-lcssa ]
+  %.054.in79.i.i.i.i41.i23.epil.init = phi i64 [ 0, %.lr.ph.i.i.i.i39.i21.preheader ], [ %.054.i.i.i.i44.i26, %._crit_edge.i.i.i.i36.i18.loopexit.unr-lcssa ]
+  %.07278.i.i.i.i42.i24.epil.init = phi <2 x double> [ %i.bg, %.lr.ph.i.i.i.i39.i21.preheader ], [ %i.bt, %._crit_edge.i.i.i.i36.i18.loopexit.unr-lcssa ]
+  %.07577.i.i.i.i43.i25.epil.init = phi <2 x double> [ %i.bl, %.lr.ph.i.i.i.i39.i21.preheader ], [ %i.bz, %._crit_edge.i.i.i.i36.i18.loopexit.unr-lcssa ]
+  %lcmp.mod144 = trunc i64 %4 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod144)
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %.05480.i.i.i.i40.i22.epil.init
+  %8 = load <2 x double>, ptr %7, align 1, !tbaa !30
+  %9 = fmul <2 x double> %i.be, %8                ; 2 uses
+  %10 = fmul <2 x double> %9, %9
+  %11 = fadd <2 x double> %.07278.i.i.i.i42.i24.epil.init, %10
+  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %.054.in79.i.i.i.i41.i23.epil.init
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 48
+  %14 = load <2 x double>, ptr %13, align 1, !tbaa !30
+  %15 = fmul <2 x double> %i.be, %14              ; 2 uses
+  %16 = fmul <2 x double> %15, %15
+  %17 = fadd <2 x double> %.07577.i.i.i.i43.i25.epil.init, %16
+  br label %._crit_edge.i.i.i.i36.i18
+
+._crit_edge.i.i.i.i36.i18:                        ; preds = %.lr.ph.i.i.i.i39.i21.epil.preheader, %._crit_edge.i.i.i.i36.i18.loopexit.unr-lcssa, %bb.r
+  %.075.lcssa.i.i.i.i37.i19 = phi <2 x double> [ %i.bl, %bb.r ], [ %i.bz, %._crit_edge.i.i.i.i36.i18.loopexit.unr-lcssa ], [ %17, %.lr.ph.i.i.i.i39.i21.epil.preheader ]
+  %.072.lcssa.i.i.i.i38.i20 = phi <2 x double> [ %i.bg, %bb.r ], [ %i.bt, %._crit_edge.i.i.i.i36.i18.loopexit.unr-lcssa ], [ %11, %.lr.ph.i.i.i.i39.i21.epil.preheader ]
   %i.bn = fadd <2 x double> %.075.lcssa.i.i.i.i37.i19, %.072.lcssa.i.i.i.i38.i20 ; 2 uses
   %i.bo = icmp samesign ugt i64 %i.n, %i.m
   br i1 %i.bo, label %bb.s, label %bb.t
 
-.lr.ph.i.i.i.i39.i21:                             ; preds = %bb.r, %.lr.ph.i.i.i.i39.i21
-  %.05480.i.i.i.i40.i22 = phi i64 [ %.054.i.i.i.i44.i26.a, %.lr.ph.i.i.i.i39.i21 ], [ 4, %bb.r ] ; 3 uses
-  %.054.in79.i.i.i.i41.i23 = phi i64 [ %.05480.i.i.i.i40.i22, %.lr.ph.i.i.i.i39.i21 ], [ 0, %bb.r ]
-  %.07278.i.i.i.i42.i24 = phi <2 x double> [ %i.bt, %.lr.ph.i.i.i.i39.i21 ], [ %i.bg, %bb.r ]
-  %.07577.i.i.i.i43.i25 = phi <2 x double> [ %i.bz, %.lr.ph.i.i.i.i39.i21 ], [ %i.bl, %bb.r ]
-  %i.bp = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %.05480.i.i.i.i40.i22
+.lr.ph.i.i.i.i39.i21:                             ; preds = %.lr.ph.i.i.i.i39.i21, %.lr.ph.i.i.i.i39.i21.preheader.new
+  %.05480.i.i.i.i40.i22 = phi i64 [ 4, %.lr.ph.i.i.i.i39.i21.preheader.new ], [ %.054.i.i.i.i44.i26.1, %.lr.ph.i.i.i.i39.i21 ] ; 4 uses
+  %.054.in79.i.i.i.i41.i23 = phi i64 [ 0, %.lr.ph.i.i.i.i39.i21.preheader.new ], [ %.054.i.i.i.i44.i26, %.lr.ph.i.i.i.i39.i21 ]
+  %.07278.i.i.i.i42.i24 = phi <2 x double> [ %i.bg, %.lr.ph.i.i.i.i39.i21.preheader.new ], [ %i.bt, %.lr.ph.i.i.i.i39.i21 ]
+  %.07577.i.i.i.i43.i25 = phi <2 x double> [ %i.bl, %.lr.ph.i.i.i.i39.i21.preheader.new ], [ %i.bz, %.lr.ph.i.i.i.i39.i21 ]
+  %niter = phi i64 [ 0, %.lr.ph.i.i.i.i39.i21.preheader.new ], [ %.054.i.i.i.i44.i26.a, %.lr.ph.i.i.i.i39.i21 ]
+  %18 = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %.05480.i.i.i.i40.i22
+  %19 = load <2 x double>, ptr %18, align 1, !tbaa !30
+  %20 = fmul <2 x double> %i.be, %19              ; 2 uses
+  %21 = fmul <2 x double> %20, %20
+  %22 = fadd <2 x double> %.07278.i.i.i.i42.i24, %21
+  %23 = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %.054.in79.i.i.i.i41.i23
+  %24 = getelementptr inbounds nuw i8, ptr %23, i64 48
+  %25 = load <2 x double>, ptr %24, align 1, !tbaa !30
+  %26 = fmul <2 x double> %i.be, %25              ; 2 uses
+  %27 = fmul <2 x double> %26, %26
+  %28 = fadd <2 x double> %.07577.i.i.i.i43.i25, %27
+  %.054.i.i.i.i44.i26 = add nuw nsw i64 %.05480.i.i.i.i40.i22, 4 ; 3 uses
+  %i.bp = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %.054.i.i.i.i44.i26
   %i.bq = load <2 x double>, ptr %i.bp, align 1, !tbaa !30
   %i.br = fmul <2 x double> %i.be, %i.bq          ; 2 uses
   %i.bs = fmul <2 x double> %i.br, %i.br
-  %i.bt = fadd <2 x double> %.07278.i.i.i.i42.i24, %i.bs ; 2 uses
-  %i.bu = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %.054.in79.i.i.i.i41.i23
+  %i.bt = fadd <2 x double> %22, %i.bs            ; 3 uses
+  %i.bu = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %.05480.i.i.i.i40.i22
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 48
   %i.bw = load <2 x double>, ptr %i.bv, align 1, !tbaa !30
   %i.bx = fmul <2 x double> %i.be, %i.bw          ; 2 uses
   %i.by = fmul <2 x double> %i.bx, %i.bx
-  %i.bz = fadd <2 x double> %.07577.i.i.i.i43.i25, %i.by ; 2 uses
-  %.054.i.i.i.i44.i26.a = add nuw nsw i64 %.05480.i.i.i.i40.i22, 4 ; 2 uses
-  %2 = icmp samesign ult i64 %.054.i.i.i.i44.i26.a, %i.m
-  br i1 %2, label %.lr.ph.i.i.i.i39.i21, label %._crit_edge.i.i.i.i36.i18, !llvm.loop !1360
+  %i.bz = fadd <2 x double> %28, %i.by            ; 3 uses
+  %.054.i.i.i.i44.i26.1 = add nuw nsw i64 %.05480.i.i.i.i40.i22, 8 ; 2 uses
+  %.054.i.i.i.i44.i26.a = add i64 %niter, 2       ; 2 uses
+  %niter.ncmp.1.not = icmp eq i64 %.054.i.i.i.i44.i26.a, %unroll_iter
+  br i1 %niter.ncmp.1.not, label %._crit_edge.i.i.i.i36.i18.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i39.i21, !llvm.loop !1360
 
 bb.s:                                             ; preds = %._crit_edge.i.i.i.i36.i18
   %i.ca = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.m
