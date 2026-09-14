@@ -205,7 +205,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v
 
 bb.y:                                             ; preds = %bb.u
   %i.dw = lshr i16 %.099139, 8
-  %i.dx = sub nsw i32 %.0101138, %i.aq
+  %i.dx = sub nuw nsw i32 %.0101138, %i.aq
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.x, %bb.y, %bb.t
@@ -608,7 +608,7 @@ bb.ap:                                            ; preds = %bb.ap, %.lr.ph.new
   %indvars.iv = phi i64 [ 0, %.lr.ph.new ], [ %indvars.iv.next.1, %bb.ap ] ; 4 uses
   %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.1, %bb.ap ]
   %i.cw = load ptr, ptr %i.co, align 8, !tbaa !257
-  %i.cx = add nsw i64 %indvars.iv, %i.ct
+  %i.cx = add nuw nsw i64 %indvars.iv, %i.ct
   %i.cy = mul nsw i64 %i.cx, %i.cu
   %i.cz = getelementptr inbounds i8, ptr %i.cw, i64 %i.cy
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 %i.cs
@@ -617,7 +617,7 @@ bb.ap:                                            ; preds = %bb.ap, %.lr.ph.new
   store ptr %i.da, ptr %i.db, align 8, !tbaa !141
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
   %i.dc = load ptr, ptr %i.co, align 8, !tbaa !257
-  %i.dd = add nsw i64 %indvars.iv.next, %i.ct
+  %i.dd = add nuw nsw i64 %indvars.iv.next, %i.ct
   %i.de = mul nsw i64 %i.dd, %i.cu
   %i.df = getelementptr inbounds i8, ptr %i.dc, i64 %i.de
   %i.dg = getelementptr inbounds nuw i8, ptr %i.df, i64 %i.cs
@@ -638,7 +638,7 @@ bb.ap:                                            ; preds = %bb.ap, %.lr.ph.new
   %lcmp.mod78 = trunc i32 %.fr to i1
   call void @llvm.assume(i1 %lcmp.mod78)
   %i.di = load ptr, ptr %i.co, align 8, !tbaa !257
-  %i.dj = add nsw i64 %indvars.iv.epil.init, %i.ct
+  %i.dj = add nuw nsw i64 %indvars.iv.epil.init, %i.ct
   %i.dk = mul nsw i64 %i.dj, %i.cu
   %i.dl = getelementptr inbounds i8, ptr %i.di, i64 %i.dk
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 %i.cs

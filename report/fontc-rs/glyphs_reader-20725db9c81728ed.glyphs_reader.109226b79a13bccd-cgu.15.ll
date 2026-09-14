@@ -202,7 +202,7 @@ _RNvNtCs1qcNTItuk7F_13glyphs_reader17glyphdata_bundled6offset.exit.i.i.i: ; pred
   %i.r = zext i8 %i.q to i64
   %i.s = or disjoint i64 %i.p, %i.r               ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1151
-  %i.t = add nsw i64 %i.e, 1                      ; 2 uses
+  %i.t = add nuw nsw i64 %i.e, 1                  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1151
   %i.u = icmp eq i64 %i.t, 78576
   br i1 %i.u, label %_RNvNtCs1qcNTItuk7F_13glyphs_reader17glyphdata_bundled6offset.exit6.i.i.i, label %bb.f
@@ -251,7 +251,7 @@ bb.h:                                             ; preds = %_RNCNvNtCs1qcNTItuk
   unreachable
 
 bb.i:                                             ; preds = %_RNCNvNtCs1qcNTItuk7F_13glyphs_reader17glyphdata_bundled16find_pos_by_name0B5_.exit.i
-  %i.an = add nsw i32 %i.d, 1
+  %i.an = add nuw nsw i32 %i.d, 1
   br label %bb.k
 
 bb.j:                                             ; preds = %_RNCNvNtCs1qcNTItuk7F_13glyphs_reader17glyphdata_bundled16find_pos_by_name0B5_.exit.i
@@ -331,7 +331,7 @@ bb.d:                                             ; preds = %_RNCNvNtCs1qcNTItuk
   unreachable
 
 bb.e:                                             ; preds = %_RNCNvNtCs1qcNTItuk7F_13glyphs_reader17glyphdata_bundled21find_pos_by_codepoint0B5_.exit.i
-  %i.z = add nsw i32 %i.c, 1
+  %i.z = add nuw nsw i32 %i.c, 1
   br label %bb.g
 
 bb.f:                                             ; preds = %_RNCNvNtCs1qcNTItuk7F_13glyphs_reader17glyphdata_bundled21find_pos_by_codepoint0B5_.exit.i
@@ -444,7 +444,7 @@ bb.g:                                             ; preds = %_RNCNvNtCs1qcNTItuk
   unreachable
 
 bb.h:                                             ; preds = %_RNCNvNtCs1qcNTItuk7F_13glyphs_reader17glyphdata_bundled21find_pos_by_codepoint0B5_.exit.i.i
-  %i.an = add nsw i32 %i.q, 1
+  %i.an = add nuw nsw i32 %i.q, 1
   br label %bb.j
 
 bb.i:                                             ; preds = %_RNCNvNtCs1qcNTItuk7F_13glyphs_reader17glyphdata_bundled21find_pos_by_codepoint0B5_.exit.i.i

@@ -205,7 +205,7 @@ bb.gs:                                            ; preds = %bb.gr, %bb.gq, %bb.
   br i1 %i.ats, label %bb.gp, label %cgltf_skip_json.exit.i.i.i
 
 cgltf_skip_json.exit.i.i.i:                       ; preds = %bb.gs
-  %i.att = trunc nsw i64 %indvars.iv.next.i.i.i.i341 to i32
+  %i.att = trunc nuw nsw i64 %indvars.iv.next.i.i.i.i341 to i32
   br label %cgltf_skip_json.exit.thread.i.i.i
 
 cgltf_skip_json.exit.thread.i.i.i:                ; preds = %cgltf_skip_json.exit.i.i.i, %cgltf_json_to_component_type.exit.i.i.i, %cgltf_json_to_size.exit159.i.i.i, %cgltf_json_to_int.exit.i244.i.i
@@ -374,7 +374,7 @@ bb.he:                                            ; preds = %bb.hd, %bb.hc, %bb.
   br i1 %i.awp, label %bb.hb, label %cgltf_skip_json.exit187.i.i.i
 
 cgltf_skip_json.exit187.i.i.i:                    ; preds = %bb.he
-  %i.awq = trunc nsw i64 %indvars.iv.next.i184.i.i.i to i32
+  %i.awq = trunc nuw nsw i64 %indvars.iv.next.i184.i.i.i to i32
   br label %cgltf_skip_json.exit187.thread.i.i.i
 
 cgltf_skip_json.exit187.thread.i.i.i:             ; preds = %cgltf_skip_json.exit187.i.i.i, %cgltf_json_to_size.exit180.i.i.i, %cgltf_json_to_int.exit173.i.i.i
@@ -422,7 +422,7 @@ bb.hi:                                            ; preds = %bb.hh, %bb.hg, %bb.
   br i1 %i.axf, label %bb.hf, label %.split.loop.exit.i192.i.i.i
 
 .split.loop.exit.i192.i.i.i:                      ; preds = %bb.hi
-  %i.axg = trunc nsw i64 %indvars.iv.next.i191.i.i.i to i32
+  %i.axg = trunc nuw nsw i64 %indvars.iv.next.i191.i.i.i to i32
   br label %cgltf_skip_json.exit194.i.i.i
 
 cgltf_skip_json.exit194.i.i.i:                    ; preds = %.split.loop.exit.i192.i.i.i, %cgltf_json_to_size.exit.i.i.i
@@ -825,7 +825,7 @@ bb.oz:                                            ; preds = %bb.oy, %bb.ox, %bb.
   br i1 %i.cui, label %bb.ow, label %cgltf_skip_json.exit.i146.i
 
 cgltf_skip_json.exit.i146.i:                      ; preds = %bb.oz
-  %i.cuj = trunc nsw i64 %indvars.iv.next.i.i145.i to i32
+  %i.cuj = trunc nuw nsw i64 %indvars.iv.next.i.i145.i to i32
   br label %bb.pa
 
 bb.pa:                                            ; preds = %cgltf_skip_json.exit.i146.i, %cgltf_skip_json.exit.thread39.i151.i
@@ -1228,7 +1228,7 @@ bb.rn:                                            ; preds = %bb.rm, %bb.rl, %bb.
   br i1 %i.dlh, label %bb.rk, label %cgltf_skip_json.exit.i.i477
 
 cgltf_skip_json.exit.i.i477:                      ; preds = %bb.rn
-  %i.dli = trunc nsw i64 %indvars.iv.next.i.i.i476 to i32
+  %i.dli = trunc nuw nsw i64 %indvars.iv.next.i.i.i476 to i32
   br label %bb.ro
 
 bb.ro:                                            ; preds = %cgltf_skip_json.exit.i.i477, %cgltf_skip_json.exit.thread39.i.i
@@ -1631,7 +1631,7 @@ bb.vb:                                            ; preds = %bb.va, %bb.uz, %bb.
   br i1 %i.eeb, label %bb.uy, label %cgltf_skip_json.exit.i.i584
 
 cgltf_skip_json.exit.i.i584:                      ; preds = %bb.vb
-  %i.eec = trunc nsw i64 %indvars.iv.next.i.i.i583 to i32
+  %i.eec = trunc nuw nsw i64 %indvars.iv.next.i.i.i583 to i32
   br label %bb.vc
 
 bb.vc:                                            ; preds = %cgltf_skip_json.exit.i.i584, %cgltf_skip_json.exit.thread256.i.i
@@ -1765,7 +1765,7 @@ bb.vm:                                            ; preds = %bb.vl, %bb.vk, %bb.
   br i1 %i.egh, label %bb.vj, label %cgltf_skip_json.exit238.i.i
 
 cgltf_skip_json.exit238.i.i:                      ; preds = %bb.vm
-  %i.egi = trunc nsw i64 %indvars.iv.next.i235.i.i to i32
+  %i.egi = trunc nuw nsw i64 %indvars.iv.next.i235.i.i to i32
   br label %bb.vn
 
 bb.vn:                                            ; preds = %cgltf_skip_json.exit238.i.i, %cgltf_skip_json.exit238.thread269.i.i
@@ -2168,7 +2168,7 @@ bb.bh:                                            ; preds = %bb.bg, %bb.bf, %bb.
   br i1 %i.tl, label %bb.be, label %cgltf_skip_json.exit.i
 
 cgltf_skip_json.exit.i:                           ; preds = %bb.bh
-  %i.tm = trunc nsw i64 %indvars.iv.next.i366.i to i32
+  %i.tm = trunc nuw nsw i64 %indvars.iv.next.i366.i to i32
   br label %bb.bi
 
 bb.bi:                                            ; preds = %cgltf_skip_json.exit.i, %cgltf_skip_json.exit.thread384.i
@@ -2571,7 +2571,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae, %bb.
   br i1 %i.ip, label %bb.ad, label %cgltf_skip_json.exit.i
 
 cgltf_skip_json.exit.i:                           ; preds = %bb.ag
-  %i.iq = trunc nsw i64 %indvars.iv.next.i189.i to i32
+  %i.iq = trunc nuw nsw i64 %indvars.iv.next.i189.i to i32
   br label %cgltf_skip_json.exit.thread.i
 
 cgltf_skip_json.exit.thread.i:                    ; preds = %cgltf_skip_json.exit.i, %cgltf_json_to_float.exit186.i, %cgltf_json_to_float.exit179.i
@@ -2974,7 +2974,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u,
   br i1 %i.ga, label %bb.u, label %cgltf_skip_json.exit
 
 cgltf_skip_json.exit:                             ; preds = %bb.x
-  %i.gb = trunc nsw i64 %indvars.iv.next.i to i32
+  %i.gb = trunc nuw nsw i64 %indvars.iv.next.i to i32
   br label %cgltf_skip_json.exit.thread
 
 cgltf_skip_json.exit.thread:                      ; preds = %cgltf_skip_json.exit, %bb.t, %cgltf_json_strcmp.exit152.thread, %cgltf_json_to_size.exit140, %cgltf_json_to_size.exit133, %cgltf_json_to_size.exit126, %cgltf_json_to_size.exit, %cgltf_json_to_int.exit
@@ -3377,7 +3377,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g,
   br i1 %i.ay, label %bb.g, label %cgltf_skip_json.exit
 
 cgltf_skip_json.exit:                             ; preds = %bb.j
-  %i.az = trunc nsw i64 %indvars.iv.next.i to i32
+  %i.az = trunc nuw nsw i64 %indvars.iv.next.i to i32
   br label %bb.k
 
 bb.k:                                             ; preds = %cgltf_skip_json.exit, %cgltf_skip_json.exit.thread38

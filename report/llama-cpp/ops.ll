@@ -205,9 +205,6 @@ bb.ar:                                            ; preds = %bb.ao
   %i.hp = icmp sgt i32 %i.df, %i.hl
   br i1 %i.hp, label %bb.az, label %bb.as
 
-default.unreachable:                              ; preds = %bb.ao
-  unreachable
-
 bb.as:                                            ; preds = %bb.ar, %bb.aq, %bb.ap
   br label %bb.az
 
@@ -609,6 +606,9 @@ _ZL12rotate_pairsItEvllPKfPKT_PS2_i.exit.thread.us.us: ; preds = %.lr.ph.i265.us
   %i.adr = add nuw nsw i64 %.0226324.us, 1        ; 2 uses
   %exitcond337.not = icmp eq i64 %i.adr, %i.ao
   br i1 %exitcond337.not, label %._crit_edge.split, label %.preheader297.us, !llvm.loop !920
+
+default.unreachable:                              ; preds = %bb.ao
+  unreachable
 
 ._crit_edge.split:                                ; preds = %._crit_edge316.split.us.us, %.preheader297.lr.ph, %bb.ag
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
@@ -1012,9 +1012,6 @@ bb.ar:                                            ; preds = %bb.ao
   %i.hx = icmp sgt i32 %i.df, %i.ht
   br i1 %i.hx, label %bb.az, label %bb.as
 
-default.unreachable:                              ; preds = %bb.ao
-  unreachable
-
 bb.as:                                            ; preds = %bb.ar, %bb.aq, %bb.ap
   br label %bb.az
 
@@ -1416,6 +1413,9 @@ _ZL12rotate_pairsIfEvllPKfPKT_PS2_i.exit.thread.us.us: ; preds = %.lr.ph.i263.us
   %i.vw = add nuw nsw i64 %.0226320.us, 1         ; 2 uses
   %exitcond333.not = icmp eq i64 %i.vw, %i.ao
   br i1 %exitcond333.not, label %._crit_edge.split, label %.preheader293.us, !llvm.loop !949
+
+default.unreachable:                              ; preds = %bb.ao
+  unreachable
 
 ._crit_edge.split:                                ; preds = %._crit_edge312.split.us.us, %.preheader293.lr.ph, %bb.ag
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18

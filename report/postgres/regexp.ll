@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %.thread
 
 bb.e:                                             ; preds = %.thread
   %.not = icmp eq ptr %i.b, null
-  %i.v = sub nsw i32 %i.r, %.02126                ; 2 uses
+  %i.v = sub nuw nsw i32 %i.r, %.02126            ; 2 uses
   br i1 %.not, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -220,7 +220,7 @@ bb.g:                                             ; preds = %bb.e
   %i.ae = ptrtoint ptr %i.ad to i64
   %i.af = add nuw i32 %.02126, 1
   %i.ag = sext i32 %i.af to i64
-  %1 = sext i32 %i.v to i64
+  %1 = zext nneg i32 %i.v to i64
   %i.ah = tail call i64 @DirectFunctionCall3Coll(ptr noundef nonnull @text_substr, i32 noundef 0, i64 noundef %i.ae, i64 noundef %i.ag, i64 noundef %1) #7
   br label %bb.h
 

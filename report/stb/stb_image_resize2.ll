@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.c
 
 bb.i:                                             ; preds = %bb.h
   %i.ax = sub nsw i32 %i.b, %i.c
-  %.064 = add nsw i32 %i.ax, 1                    ; 2 uses
+  %.064 = add nuw nsw i32 %i.ax, 1                ; 2 uses
   %i.ay = icmp slt i32 %.064, %i.aw
   br i1 %i.ay, label %.lr.ph67.preheader, label %._crit_edge68
 
@@ -608,7 +608,7 @@ bb.w:                                             ; preds = %bb.s
 
 bb.x:                                             ; preds = %bb.w
   %i.hq = sub nsw i32 %i.fv, %i.fw
-  %.064.i = add nsw i32 %i.hq, 1                  ; 2 uses
+  %.064.i = add nuw nsw i32 %i.hq, 1              ; 2 uses
   %i.hr = icmp slt i32 %.064.i, %i.hp
   br i1 %i.hr, label %.lr.ph67.preheader.i, label %._crit_edge68.i
 
@@ -814,7 +814,7 @@ bb.af:                                            ; preds = %bb.ab
 
 bb.ag:                                            ; preds = %bb.af
   %i.kh = sub nsw i32 %i.im, %i.in
-  %.064.i251 = add nsw i32 %i.kh, 1               ; 2 uses
+  %.064.i251 = add nuw nsw i32 %i.kh, 1           ; 2 uses
   %i.ki = icmp slt i32 %.064.i251, %i.kg
   br i1 %i.ki, label %.lr.ph67.preheader.i253, label %._crit_edge68.i252
 
@@ -1099,7 +1099,7 @@ bb.al:                                            ; preds = %bb.ah
 
 bb.am:                                            ; preds = %bb.al
   %i.oc = sub nsw i32 %i.mh, %i.mi
-  %.064.i270 = add nsw i32 %i.oc, 1               ; 2 uses
+  %.064.i270 = add nuw nsw i32 %i.oc, 1           ; 2 uses
   %i.od = icmp slt i32 %.064.i270, %i.ob
   br i1 %i.od, label %.lr.ph67.preheader.i272, label %._crit_edge68.i271
 
@@ -1502,7 +1502,7 @@ bb.ai:                                            ; preds = %bb.ae
 
 bb.aj:                                            ; preds = %bb.ai
   %i.jr = sub nsw i32 %i.hl, %i.hj
-  %.064.i = add nsw i32 %i.jr, 1                  ; 2 uses
+  %.064.i = add nuw nsw i32 %i.jr, 1              ; 2 uses
   %i.js = icmp slt i32 %.064.i, %i.jq
   br i1 %i.js, label %.lr.ph67.preheader.i, label %._crit_edge68.i
 

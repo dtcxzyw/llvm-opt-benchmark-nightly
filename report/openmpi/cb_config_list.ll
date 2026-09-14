@@ -204,7 +204,7 @@ find_name.exit.i.i:                               ; preds = %bb.ac
   br i1 %i.dw, label %find_name.exit.thread.loopexit82.i.i, label %bb.ae
 
 bb.ae:                                            ; preds = %find_name.exit.i.i
-  %i.dx = trunc nsw i64 %indvars.iv.i.i.i to i32  ; 2 uses
+  %i.dx = trunc nuw nsw i64 %indvars.iv.i.i.i to i32 ; 2 uses
   %i.dy = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv.i.i
   store i32 %i.dx, ptr %i.dy, align 4, !tbaa !11
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
@@ -242,7 +242,7 @@ bb.ag:                                            ; preds = %bb.af, %.lr.ph.i44.
   br i1 %exitcond.not.i49.i.i, label %match_this_proc.exit.i, label %.lr.ph.i44.i.i, !llvm.loop !52
 
 find_name.exit52.thread.i.i:                      ; preds = %bb.af
-  %i.ek = trunc nsw i64 %indvars.iv.i45.i.i to i32
+  %i.ek = trunc nuw nsw i64 %indvars.iv.i45.i.i to i32
   %i.el = and i64 %indvars.iv.i45.i.i, 4294967295
   %i.em = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.el
   store i8 1, ptr %i.em, align 1, !tbaa !58
@@ -324,7 +324,7 @@ find_name.exit.i95.i:                             ; preds = %bb.ai
   br i1 %i.fh, label %find_name.exit.thread.loopexit82.i85.i, label %bb.ak
 
 bb.ak:                                            ; preds = %find_name.exit.i95.i
-  %i.fi = trunc nsw i64 %indvars.iv.i.i88.i to i32 ; 2 uses
+  %i.fi = trunc nuw nsw i64 %indvars.iv.i.i88.i to i32 ; 2 uses
   %i.fj = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv.i82.i
   store i32 %i.fi, ptr %i.fj, align 4, !tbaa !11
   %indvars.iv.next.i96.i = add nuw nsw i64 %indvars.iv.i82.i, 1 ; 2 uses
@@ -362,7 +362,7 @@ bb.am:                                            ; preds = %bb.al, %.lr.ph.i44.
   br i1 %exitcond.not.i49.i77.i, label %match_this_proc.exit98.i, label %.lr.ph.i44.i72.i, !llvm.loop !52
 
 find_name.exit52.thread.i79.i:                    ; preds = %bb.al
-  %i.fv = trunc nsw i64 %indvars.iv.i45.i73.i to i32
+  %i.fv = trunc nuw nsw i64 %indvars.iv.i45.i73.i to i32
   %i.fw = and i64 %indvars.iv.i45.i73.i, 4294967295
   %i.fx = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.fw
   store i8 1, ptr %i.fx, align 1, !tbaa !58
