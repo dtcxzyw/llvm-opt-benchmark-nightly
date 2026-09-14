@@ -176,7 +176,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %or.cond8, label %bb.k, label %._crit_edge152
 
 ._crit_edge152:                                   ; preds = %bb.j
-  %.pre153 = sext i32 %i.i to i64
+  %.pre153 = zext nneg i32 %i.i to i64
   br label %bb.v
 
 bb.k:                                             ; preds = %bb.j
@@ -193,7 +193,7 @@ bb.k:                                             ; preds = %bb.j
 
 ._crit_edge:                                      ; preds = %bb.k
   %.pre = load ptr, ptr %0, align 8, !tbaa !15
-  %.pre151 = sext i32 %i.i to i64
+  %.pre151 = zext nneg i32 %i.i to i64
   br label %bb.p
 
 bb.l:                                             ; preds = %bb.k
@@ -208,7 +208,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %.0 = phi i32 [ 65536, %bb.l ], [ 1114114, %bb.m ] ; 2 uses
   %i.ar = shl i32 %i.i, 2
   %i.as = mul i32 %i.ar, %.0
-  %7 = sext i32 %i.as to i64
+  %7 = zext nneg i32 %i.as to i64
   %i.at = tail call noalias ptr @uprv_malloc_78(i64 noundef %7) #10 ; 6 uses
   %i.au = icmp eq ptr %i.at, null
   br i1 %i.au, label %.critedge.sink.split, label %bb.o
@@ -216,8 +216,8 @@ bb.n:                                             ; preds = %bb.m, %bb.l
 bb.o:                                             ; preds = %bb.n
   %i.av = load ptr, ptr %0, align 8, !tbaa !15    ; 3 uses
   %i.aw = sext i32 %i.ah to i64
-  %8 = sext i32 %i.i to i64                       ; 2 uses
-  %i.ax = shl nsw i64 %8, 2
+  %8 = zext nneg i32 %i.i to i64                  ; 2 uses
+  %i.ax = shl nuw nsw i64 %8, 2
   %i.ay = mul i64 %i.ax, %i.aw
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.at, ptr align 4 %i.av, i64 %i.ay, i1 false)
   %i.az = ptrtoint ptr %i.p to i64
@@ -240,7 +240,7 @@ bb.p:                                             ; preds = %._crit_edge, %bb.o
   %i.bh = mul nsw i32 %i.ah, %i.i
   %i.bi = sext i32 %i.bh to i64
   %i.bj = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %i.bi
-  %i.bk = getelementptr inbounds [4 x i8], ptr %.1132, i64 %.pre-phi ; 3 uses
+  %i.bk = getelementptr inbounds nuw [4 x i8], ptr %.1132, i64 %.pre-phi ; 3 uses
   %i.bl = ptrtoint ptr %i.bj to i64
   %i.bm = ptrtoint ptr %i.bk to i64
   %i.bn = sub i64 %i.bl, %i.bm                    ; 2 uses
@@ -253,8 +253,8 @@ bb.q:                                             ; preds = %bb.p
   %i.br = select i1 %i.x, i32 2, i32 1
   %i.bs = add nuw nsw i32 %i.br, %i.aj
   %i.bt = mul nsw i32 %i.bs, %i.i
-  %9 = sext i32 %i.bt to i64
-  %i.bu = getelementptr inbounds [4 x i8], ptr %.1132, i64 %9
+  %9 = zext nneg i32 %i.bt to i64
+  %i.bu = getelementptr inbounds nuw [4 x i8], ptr %.1132, i64 %9
   %i.bv = and i64 %i.bn, 4294967295
   tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.bu, ptr align 4 %i.bk, i64 %i.bv, i1 false)
   br label %bb.r
@@ -270,7 +270,7 @@ bb.s:                                             ; preds = %bb.r
   %i.bz = lshr exact i64 %i.by, 2
   %i.ca = trunc i64 %i.bz to i32
   %i.cb = add i32 %i.i, %i.ca
-  %i.cc = getelementptr inbounds [4 x i8], ptr %.1134, i64 %.pre-phi ; 3 uses
+  %i.cc = getelementptr inbounds nuw [4 x i8], ptr %.1134, i64 %.pre-phi ; 3 uses
   %i.cd = sext i32 %i.cb to i64
   %i.ce = shl nsw i64 %i.cd, 2
   tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.cc, ptr align 4 %.1134, i64 %i.ce, i1 false)
@@ -285,7 +285,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   br i1 %i.af, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
-  %i.cg = getelementptr inbounds [4 x i8], ptr %.2, i64 %.pre-phi ; 2 uses
+  %i.cg = getelementptr inbounds nuw [4 x i8], ptr %.2, i64 %.pre-phi ; 2 uses
   %i.ch = shl nuw nsw i64 %.pre-phi, 2
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.cg, ptr align 4 %.2, i64 %i.ch, i1 false)
   store i32 %i.m, ptr %i.cg, align 4, !tbaa !19
@@ -319,7 +319,7 @@ bb.v:                                             ; preds = %._crit_edge152, %bb
 
 .lr.ph:                                           ; preds = %bb.v, %.lr.ph
   %.5150 = phi ptr [ %i.cz, %.lr.ph ], [ %i.cs, %bb.v ]
-  %i.cz = getelementptr inbounds [4 x i8], ptr %.5150, i64 %.pre-phi154 ; 4 uses
+  %i.cz = getelementptr inbounds nuw [4 x i8], ptr %.5150, i64 %.pre-phi154 ; 4 uses
   %i.da = load i32, ptr %i.cz, align 4, !tbaa !19
   %i.db = and i32 %i.da, %i.cu
   %i.dc = or disjoint i32 %i.db, %i.o
@@ -508,8 +508,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.t, label %_ZL8_findRowP13UPropsVectorsi.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %3 = sext i32 %i.g to i64                       ; 3 uses
-  %i.u = getelementptr inbounds [4 x i8], ptr %i.p, i64 %3 ; 3 uses
+  %3 = zext nneg i32 %i.g to i64                  ; 3 uses
+  %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %3 ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 4
   %i.w = load i32, ptr %i.v, align 4, !tbaa !19
   %i.x = icmp slt i32 %1, %i.w
@@ -521,7 +521,7 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZL8_findRowP13UPropsVectorsi.exit
 
 bb.g:                                             ; preds = %bb.e
-  %i.z = getelementptr inbounds [4 x i8], ptr %i.u, i64 %3 ; 3 uses
+  %i.z = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %3 ; 3 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 4
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !19 ; 2 uses
   %i.ac = icmp slt i32 %1, %i.ab
@@ -545,7 +545,7 @@ bb.k:                                             ; preds = %bb.k, %bb.j
   %.062.i = phi ptr [ %i.z, %bb.j ], [ %i.ai, %bb.k ]
   %.0.i = phi i32 [ %i.ag, %bb.j ], [ %i.ah, %bb.k ]
   %i.ah = add nsw i32 %.0.i, 1                    ; 2 uses
-  %i.ai = getelementptr inbounds [4 x i8], ptr %.062.i, i64 %3 ; 3 uses
+  %i.ai = getelementptr inbounds nuw [4 x i8], ptr %.062.i, i64 %3 ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 4
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !19
   %.not66.i = icmp slt i32 %1, %i.ak

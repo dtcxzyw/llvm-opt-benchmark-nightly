@@ -204,7 +204,7 @@ bb.r:                                             ; preds = %bb.q
 .thread.i142:                                     ; preds = %bb.u, %bb.t, %bb.r, %bb.p
   %.sroa.03.1.i = phi i64 [ %spec.select.i, %bb.r ], [ %.sroa.03.033.i, %bb.p ], [ %.sroa.03.033.i, %bb.t ], [ %i.dc, %bb.u ]
   %.sroa.0.1.i143 = phi i64 [ %spec.select26.i, %bb.r ], [ %.sroa.0.034.i, %bb.p ], [ %.sroa.0.034.i, %bb.t ], [ %i.dj, %bb.u ]
-  %i.da = add i64 %.sroa.03.1.i, 1                ; 2 uses
+  %i.da = add nuw i64 %.sroa.03.1.i, 1            ; 2 uses
   %i.db = icmp ult i64 %i.da, %i.cq
   br i1 %i.db, label %.lr.ph.i141, label %.noexc56.thread
 
@@ -455,9 +455,9 @@ _RNvMNtCsluekWoTk8SK_11proc_macro25parseNtB2_6Cursor7advance.exit13.i: ; preds =
           cleanup
   br label %.body
 
-.noexc56.thread:                                  ; preds = %bb.o, %.noexc148, %_RNvNtCsluekWoTk8SK_11proc_macro25parse13is_whitespace.exit.i, %bb.ad, %bb.ab, %bb.x, %.noexc55, %.noexc54, %.noexc51, %bb.v, %.thread.i142, %.backedge
-  %.sroa.21.066.i = phi i64 [ %.sroa.21.067.i, %.thread.i142 ], [ 0, %.backedge ], [ %.sroa.21.067.i, %.noexc148 ], [ 1, %bb.o ], [ %.sroa.21.067.i, %.noexc51 ], [ %.sroa.21.067.i, %.noexc54 ], [ %.sroa.21.067.i, %.noexc55 ], [ %.sroa.21.067.i, %_RNvNtCsluekWoTk8SK_11proc_macro25parse13is_whitespace.exit.i ], [ %.sroa.21.067.i, %bb.ab ], [ 0, %bb.x ], [ %.sroa.21.067.i, %bb.ad ], [ 0, %bb.v ] ; 50 uses
-  %.sroa.0.061.i = phi ptr [ %.sroa.0.069.i, %.thread.i142 ], [ %i.bv, %.backedge ], [ %.sroa.0.069.i, %.noexc148 ], [ %.sroa.0.069.i, %bb.o ], [ %.sroa.0.069.i, %.noexc51 ], [ %.sroa.0.069.i, %.noexc54 ], [ %.sroa.0.069.i, %.noexc55 ], [ %.sroa.0.069.i, %_RNvNtCsluekWoTk8SK_11proc_macro25parse13is_whitespace.exit.i ], [ %.sroa.0.069.i, %bb.ab ], [ %.sroa.0.1.i, %bb.x ], [ %.sroa.0.069.i, %bb.ad ], [ %i.dm, %bb.v ] ; 45 uses
+.noexc56.thread:                                  ; preds = %_RNvNtCsluekWoTk8SK_11proc_macro25parse13is_whitespace.exit.i, %bb.ad, %bb.ab, %bb.x, %.noexc55, %.noexc54, %.noexc51, %.noexc148, %bb.o, %bb.v, %.thread.i142, %.backedge
+  %.sroa.21.066.i = phi i64 [ %.sroa.21.067.i, %.thread.i142 ], [ 0, %.backedge ], [ 1, %bb.o ], [ %.sroa.21.067.i, %.noexc148 ], [ %.sroa.21.067.i, %.noexc51 ], [ %.sroa.21.067.i, %.noexc54 ], [ %.sroa.21.067.i, %.noexc55 ], [ %.sroa.21.067.i, %_RNvNtCsluekWoTk8SK_11proc_macro25parse13is_whitespace.exit.i ], [ %.sroa.21.067.i, %bb.ab ], [ 0, %bb.x ], [ %.sroa.21.067.i, %bb.ad ], [ 0, %bb.v ] ; 50 uses
+  %.sroa.0.061.i = phi ptr [ %.sroa.0.069.i, %.thread.i142 ], [ %i.bv, %.backedge ], [ %.sroa.0.069.i, %bb.o ], [ %.sroa.0.069.i, %.noexc148 ], [ %.sroa.0.069.i, %.noexc51 ], [ %.sroa.0.069.i, %.noexc54 ], [ %.sroa.0.069.i, %.noexc55 ], [ %.sroa.0.069.i, %_RNvNtCsluekWoTk8SK_11proc_macro25parse13is_whitespace.exit.i ], [ %.sroa.0.069.i, %bb.ab ], [ %.sroa.0.1.i, %bb.x ], [ %.sroa.0.069.i, %bb.ad ], [ %i.dm, %bb.v ] ; 45 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.061.i) ]
   call void @llvm.experimental.noalias.scope.decl(metadata !419)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
@@ -860,7 +860,7 @@ bb.m:                                             ; preds = %bb.k
   br i1 %i.t, label %bb.n, label %.thread
 
 bb.n:                                             ; preds = %bb.m
-  %i.u = add i64 %.sroa.03.033, 2                 ; 9 uses
+  %i.u = add nuw i64 %.sroa.03.033, 2             ; 9 uses
   %.not.i.i = icmp ult i64 %i.u, %2
   br i1 %.not.i.i, label %bb.o, label %.split3.i.i
 

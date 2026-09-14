@@ -205,7 +205,11 @@ bb.g:                                             ; preds = %.lr.ph.split.us
   br i1 %i.al, label %.invoke, label %.split.us
 
 .lr.ph.split:                                     ; preds = %.lr.ph
-  br i1 %.lcssa, label %.lr.ph.split.split.us, label %.lr.ph.split.split
+  br i1 %.lcssa, label %.lr.ph.split.split.us, label %.lr.ph.split.split.preheader
+
+.lr.ph.split.split.preheader:                     ; preds = %.lr.ph.split
+  %11 = zext i32 %1 to i64
+  br label %.lr.ph.split.split
 
 .lr.ph.split.split.us:                            ; preds = %.lr.ph.split
   %i.am = getelementptr inbounds nuw i8, ptr %2, i64 32
@@ -253,9 +257,9 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 bb.m:                                             ; preds = %bb.s
-  %11 = add i32 %.085, 2                          ; 2 uses
-  %12 = or disjoint i32 %11, 1
-  %i.ba = icmp ult i32 %12, %1
+  %indvars.iv.next93 = add nuw nsw i64 %indvars.iv92, 2 ; 2 uses
+  %12 = or disjoint i64 %indvars.iv.next93, 1
+  %i.ba = icmp samesign ult i64 %12, %11
   br i1 %i.ba, label %.lr.ph.split.split, label %._crit_edge, !llvm.loop !308
 
 ._crit_edge:                                      ; preds = %bb.m, %.preheader
@@ -281,20 +285,18 @@ _ZNK6vectorI9parameterLb1EjE4sizeEv.exit:         ; preds = %._crit_edge, %bb.n
   %i.bk = invoke noundef ptr @_ZN11ast_manager7mk_sortEiijPK9parameter(ptr noundef nonnull align 8 dereferenceable(952) %i.bd, i32 noundef %i.bf, i32 noundef 0, i32 noundef %.0.i57, ptr noundef %i.bg)
           to label %bb.t unwind label %bb.ad
 
-.lr.ph.split.split:                               ; preds = %.lr.ph.split, %bb.m
-  %.085 = phi i32 [ %11, %bb.m ], [ 0, %.lr.ph.split ] ; 3 uses
-  %13 = or disjoint i32 %.085, 1
-  %14 = zext i32 %.085 to i64
-  %i.bl = getelementptr inbounds nuw [40 x i8], ptr %2, i64 %14 ; 2 uses
-  %15 = zext i32 %13 to i64
-  %16 = getelementptr inbounds nuw [40 x i8], ptr %2, i64 %15 ; 2 uses
+.lr.ph.split.split:                               ; preds = %.lr.ph.split.split.preheader, %bb.m
+  %indvars.iv92 = phi i64 [ 0, %.lr.ph.split.split.preheader ], [ %indvars.iv.next93, %bb.m ] ; 3 uses
+  %i.bl = getelementptr inbounds nuw [40 x i8], ptr %2, i64 %indvars.iv92 ; 2 uses
+  %13 = getelementptr inbounds nuw [40 x i8], ptr %2, i64 %indvars.iv92 ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 40
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 32
   %i.bn = load i8, ptr %i.bm, align 8, !tbaa !55
   %i.bo = icmp eq i8 %i.bn, 0
   br i1 %i.bo, label %bb.o, label %.split.us
 
 bb.o:                                             ; preds = %.lr.ph.split.split
-  %i.bp = getelementptr inbounds nuw i8, ptr %16, i64 32
+  %i.bp = getelementptr inbounds nuw i8, ptr %13, i64 72
   %i.bq = load i8, ptr %i.bp, align 8, !tbaa !55
   %i.br = icmp eq i8 %i.bq, 0
   br i1 %i.br, label %_ZNK6vectorIP4sortLb0EjE4sizeEv.exit64, label %.split.us
@@ -315,7 +317,7 @@ bb.q:                                             ; preds = %.split.us
 
 _ZNK6vectorIP4sortLb0EjE4sizeEv.exit64:           ; preds = %bb.o
   %i.bv = load i32, ptr %i.bl, align 8, !tbaa !73 ; 2 uses
-  %i.bw = load i32, ptr %16, align 8, !tbaa !73   ; 2 uses
+  %i.bw = load i32, ptr %14, align 8, !tbaa !73   ; 2 uses
   %i.bx = load i32, ptr %i.ae, align 4, !tbaa !73
   %.not47.not = icmp ult i32 %i.bv, %i.bx
   br i1 %.not47.not, label %_ZNK6vectorIP4sortLb0EjE4sizeEv.exit66, label %.invoke
@@ -706,7 +708,11 @@ bb.e:                                             ; preds = %.lr.ph.split.us
 
 .lr.ph.split:                                     ; preds = %.lr.ph
   %i.r = icmp eq ptr %.fr, null
-  br i1 %i.r, label %.lr.ph.split.split.us, label %.lr.ph.split.split
+  br i1 %i.r, label %.lr.ph.split.split.us, label %.lr.ph.split.split.preheader
+
+.lr.ph.split.split.preheader:                     ; preds = %.lr.ph.split
+  %8 = zext i32 %1 to i64
+  br label %.lr.ph.split.split
 
 .lr.ph.split.split.us:                            ; preds = %.lr.ph.split
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 32
@@ -730,9 +736,9 @@ bb.h:                                             ; preds = %bb.g
   unreachable
 
 bb.i:                                             ; preds = %bb.n
-  %8 = add i32 %.059, 2                           ; 2 uses
-  %9 = or disjoint i32 %8, 1
-  %i.aa = icmp ult i32 %9, %1
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %9 = or disjoint i64 %indvars.iv.next, 1
+  %i.aa = icmp samesign ult i64 %9, %8
   br i1 %i.aa, label %.lr.ph.split.split, label %._crit_edge, !llvm.loop !309
 
 ._crit_edge:                                      ; preds = %bb.i, %.preheader
@@ -746,20 +752,18 @@ bb.i:                                             ; preds = %bb.n
   invoke void @_ZN14func_decl_infoC1EiijPK9parameter(ptr noundef nonnull align 8 dereferenceable(19) %7, i32 noundef %i.ad, i32 noundef 8, i32 noundef %1, ptr noundef %2)
           to label %bb.o unwind label %bb.w
 
-.lr.ph.split.split:                               ; preds = %.lr.ph.split, %bb.i
-  %.059 = phi i32 [ %8, %bb.i ], [ 0, %.lr.ph.split ] ; 3 uses
-  %10 = or disjoint i32 %.059, 1
-  %11 = zext i32 %.059 to i64
-  %i.ae = getelementptr inbounds nuw [40 x i8], ptr %2, i64 %11 ; 2 uses
-  %12 = zext i32 %10 to i64
-  %13 = getelementptr inbounds nuw [40 x i8], ptr %2, i64 %12 ; 2 uses
+.lr.ph.split.split:                               ; preds = %.lr.ph.split.split.preheader, %bb.i
+  %indvars.iv = phi i64 [ 0, %.lr.ph.split.split.preheader ], [ %indvars.iv.next, %bb.i ] ; 3 uses
+  %i.ae = getelementptr inbounds nuw [40 x i8], ptr %2, i64 %indvars.iv ; 2 uses
+  %10 = getelementptr inbounds nuw [40 x i8], ptr %2, i64 %indvars.iv ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %10, i64 40
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 32
   %i.ag = load i8, ptr %i.af, align 8, !tbaa !55
   %i.ah = icmp eq i8 %i.ag, 0
   br i1 %i.ah, label %bb.j, label %.split.us
 
 bb.j:                                             ; preds = %.lr.ph.split.split
-  %i.ai = getelementptr inbounds nuw i8, ptr %13, i64 32
+  %i.ai = getelementptr inbounds nuw i8, ptr %10, i64 72
   %i.aj = load i8, ptr %i.ai, align 8, !tbaa !55
   %i.ak = icmp eq i8 %i.aj, 0
   br i1 %i.ak, label %_ZNK6vectorIP4sortLb0EjE4sizeEv.exit, label %.split.us
@@ -780,7 +784,7 @@ bb.l:                                             ; preds = %.split.us
 
 _ZNK6vectorIP4sortLb0EjE4sizeEv.exit:             ; preds = %bb.j
   %i.ao = load i32, ptr %i.ae, align 8, !tbaa !73 ; 2 uses
-  %i.ap = load i32, ptr %13, align 8, !tbaa !73   ; 2 uses
+  %i.ap = load i32, ptr %11, align 8, !tbaa !73   ; 2 uses
   %i.aq = load i32, ptr %i.i, align 4, !tbaa !73
   %.not37 = icmp ult i32 %i.ao, %i.aq
   br i1 %.not37, label %_ZNK6vectorIP4sortLb0EjE4sizeEv.exit51, label %.invoke

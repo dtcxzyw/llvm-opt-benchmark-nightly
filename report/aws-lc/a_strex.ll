@@ -40,10 +40,10 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define i32 @ASN1_STRING_print_ex(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [2 x i8], align 1                 ; 5 uses
+  %i.a = alloca [2 x i8], align 1                 ; 6 uses
   %i.b = alloca [2 x i8], align 1                 ; 8 uses
-  %3 = alloca %struct.asn1_type_st, align 8       ; 5 uses
-  %i.c = alloca ptr, align 8                      ; 6 uses
+  %3 = alloca %struct.asn1_type_st, align 8       ; 6 uses
+  %i.c = alloca ptr, align 8                      ; 8 uses
   %i.d = alloca i8, align 1                       ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.f = load i32, ptr %i.e, align 4, !tbaa !12   ; 2 uses
@@ -118,7 +118,7 @@ bb.i:                                             ; preds = %bb.c, %string_type_
 maybe_write.exit.i:                               ; preds = %bb.i
   %i.t = tail call i32 @BIO_write(ptr noundef nonnull %0, ptr noundef nonnull @.str.5, i32 noundef 1) #6
   %.not.i = icmp eq i32 %i.t, 1
-  br i1 %.not.i, label %.thread.i, label %do_dump.exit.thread
+  br i1 %.not.i, label %.thread.i, label %.critedge
 
 maybe_write.exit.thread.i:                        ; preds = %bb.i
   %i.u = and i64 %2, 512
@@ -147,8 +147,7 @@ bb.k:                                             ; preds = %.thread.i
 
 do_dump.exit.thread82:                            ; preds = %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
-  %4 = add nsw i32 %.149, 1
-  br label %.critedge
+  br label %do_dump.exit.thread83
 
 maybe_write.exit.lr.ph.i.i:                       ; preds = %bb.k
   %i.ac = getelementptr inbounds nuw i8, ptr %i.b, i64 1
@@ -178,7 +177,7 @@ maybe_write.exit.i.i:                             ; preds = %bb.l, %maybe_write.
 
 do_hex_dump.exit.thread.i:                        ; preds = %maybe_write.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
-  br label %do_dump.exit.thread
+  br label %.critedge
 
 do_hex_dump.exit.i:                               ; preds = %bb.l, %bb.j
   %i.ao = phi i32 [ %i.w, %bb.j ], [ %i.z, %bb.l ]
@@ -187,7 +186,7 @@ do_hex_dump.exit.i:                               ; preds = %bb.l, %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
   %i.aq = icmp slt i32 %i.ap, 0
   %i.ar = or disjoint i32 %i.ap, 1
-  br i1 %i.aq, label %do_dump.exit.thread, label %do_dump.exit
+  br i1 %i.aq, label %.critedge, label %do_dump.exit.thread83
 
 bb.m:                                             ; preds = %.thread.i, %maybe_write.exit.thread.i
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #6
@@ -203,13 +202,13 @@ bb.m:                                             ; preds = %.thread.i, %maybe_w
 bb.n:                                             ; preds = %bb.m
   %i.au = load ptr, ptr %i.c, align 8, !tbaa !17  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
-  br i1 %i.s, label %.loopexit.i25.i, label %bb.o
+  br i1 %i.s, label %do_hex_dump.exit26.i, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   %i.av = zext nneg i32 %.fr.i to i64
   %i.aw = getelementptr inbounds nuw i8, ptr %i.au, i64 %i.av
   %.not1317.i18.i = icmp eq i32 %.fr.i, 0
-  br i1 %.not1317.i18.i, label %.loopexit.i25.i, label %maybe_write.exit.lr.ph.i19.i
+  br i1 %.not1317.i18.i, label %do_hex_dump.exit26.i, label %maybe_write.exit.lr.ph.i19.i
 
 maybe_write.exit.lr.ph.i19.i:                     ; preds = %bb.o
   %i.ax = getelementptr inbounds nuw i8, ptr %i.a, i64 1
@@ -218,7 +217,7 @@ maybe_write.exit.lr.ph.i19.i:                     ; preds = %bb.o
 bb.p:                                             ; preds = %maybe_write.exit.i20.i
   %i.ay = getelementptr inbounds nuw i8, ptr %.018.i21.i, i64 1 ; 2 uses
   %.not13.i24.i = icmp eq ptr %i.ay, %i.aw
-  br i1 %.not13.i24.i, label %.loopexit.i25.i, label %maybe_write.exit.i20.i, !llvm.loop !25
+  br i1 %.not13.i24.i, label %do_hex_dump.exit26.i, label %maybe_write.exit.i20.i, !llvm.loop !25
 
 maybe_write.exit.i20.i:                           ; preds = %bb.p, %maybe_write.exit.lr.ph.i19.i
   %.018.i21.i = phi ptr [ %i.au, %maybe_write.exit.lr.ph.i19.i ], [ %i.ay, %bb.p ] ; 2 uses
@@ -235,36 +234,37 @@ maybe_write.exit.i20.i:                           ; preds = %bb.p, %maybe_write.
   store i8 %i.bh, ptr %i.ax, align 1, !tbaa !16
   %i.bi = call i32 @BIO_write(ptr noundef nonnull %0, ptr noundef nonnull %i.a, i32 noundef 2) #6
   %.not15.i22.i = icmp eq i32 %i.bi, 2
-  br i1 %.not15.i22.i, label %bb.p, label %do_hex_dump.exit26.i
+  br i1 %.not15.i22.i, label %bb.p, label %.loopexit.i25.i
 
-.loopexit.i25.i:                                  ; preds = %bb.p, %bb.o, %bb.n
-  %5 = shl nuw i32 %.fr.i, 1
-  br label %do_hex_dump.exit26.i
+.loopexit.i25.i:                                  ; preds = %maybe_write.exit.i20.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
+  %4 = load ptr, ptr %i.c, align 8, !tbaa !17
+  call void @OPENSSL_free(ptr noundef %4) #6
+  br label %bb.q
 
-do_hex_dump.exit26.i:                             ; preds = %maybe_write.exit.i20.i, %.loopexit.i25.i
-  %.011.i23.i = phi i32 [ %5, %.loopexit.i25.i ], [ -1, %maybe_write.exit.i20.i ] ; 2 uses
+do_hex_dump.exit26.i:                             ; preds = %bb.p, %bb.n, %bb.o
+  %5 = shl nuw i32 %.fr.i, 1                      ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   %i.bj = load ptr, ptr %i.c, align 8, !tbaa !17
   call void @OPENSSL_free(ptr noundef %i.bj) #6
-  %6 = add nuw nsw i32 %.011.i23.i, 1
-  %.inv.i = icmp sgt i32 %.011.i23.i, -1
-  %spec.select = select i1 %.inv.i, i32 %6, i32 -1
-  br label %bb.q
+  %.inv.i = icmp sgt i32 %5, -1
+  br i1 %.inv.i, label %do_dump.exit, label %bb.q
 
-bb.q:                                             ; preds = %do_hex_dump.exit26.i, %bb.m
-  %.2.i = phi i32 [ -1, %bb.m ], [ %spec.select, %do_hex_dump.exit26.i ]
+do_dump.exit.thread83:                            ; preds = %do_hex_dump.exit.i, %do_dump.exit.thread82
+  %.3.i.ph = phi i32 [ 1, %do_dump.exit.thread82 ], [ %i.ar, %do_hex_dump.exit.i ]
+  %6 = add nsw i32 %.3.i.ph, %.149
+  br label %.critedge
+
+bb.q:                                             ; preds = %.loopexit.i25.i, %bb.m, %do_hex_dump.exit26.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #6
-  br label %do_dump.exit
+  br label %.critedge
 
-do_dump.exit:                                     ; preds = %do_hex_dump.exit.i, %bb.q
-  %.3.i = phi i32 [ %.2.i, %bb.q ], [ %i.ar, %do_hex_dump.exit.i ]
-  %.3.i.fr = freeze i32 %.3.i                     ; 2 uses
-  %7 = icmp slt i32 %.3.i.fr, 0
-  %i.bk = add nsw i32 %.3.i.fr, %.149
-  br i1 %7, label %do_dump.exit.thread, label %.critedge
-
-do_dump.exit.thread:                              ; preds = %do_hex_dump.exit.thread.i, %do_hex_dump.exit.i, %maybe_write.exit.i, %do_dump.exit
+do_dump.exit:                                     ; preds = %do_hex_dump.exit26.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #6
+  %7 = add i32 %.149, 1
+  %i.bk = add i32 %7, %5
   br label %.critedge
 
 string_type_to_encoding.exit.thread:              ; preds = %string_type_to_encoding.exit, %bb.e, %bb.g, %bb.f, %bb.h, %bb.d
@@ -326,8 +326,8 @@ bb.w:                                             ; preds = %maybe_write.exit71,
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #6
   br label %.critedge
 
-.critedge:                                        ; preds = %do_dump.exit.thread, %do_dump.exit, %do_dump.exit.thread82, %maybe_write.exit70, %maybe_write.exit, %bb.w
-  %.4 = phi i32 [ %.252, %bb.w ], [ -1, %maybe_write.exit70 ], [ -1, %maybe_write.exit ], [ -1, %do_dump.exit.thread ], [ %i.bk, %do_dump.exit ], [ %4, %do_dump.exit.thread82 ]
+.critedge:                                        ; preds = %bb.q, %maybe_write.exit.i, %do_hex_dump.exit.i, %do_hex_dump.exit.thread.i, %do_dump.exit, %do_dump.exit.thread83, %maybe_write.exit70, %maybe_write.exit, %bb.w
+  %.4 = phi i32 [ %.252, %bb.w ], [ -1, %maybe_write.exit70 ], [ -1, %maybe_write.exit ], [ %6, %do_dump.exit.thread83 ], [ %i.bk, %do_dump.exit ], [ -1, %do_hex_dump.exit.thread.i ], [ -1, %do_hex_dump.exit.i ], [ -1, %maybe_write.exit.i ], [ -1, %bb.q ]
   ret i32 %.4
 }
 

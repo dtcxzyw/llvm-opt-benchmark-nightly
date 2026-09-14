@@ -204,7 +204,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.e = load i32, ptr %i.d, align 8, !tbaa !224  ; 3 uses
   %i.f = add nuw nsw i32 %i.e, 31
-  %1 = sdiv i32 %i.f, 32
+  %1 = lshr i32 %i.f, 5
   %i.g = icmp sgt i32 %i.e, 0
   br i1 %i.g, label %.lr.ph, label %.loopexit
 
@@ -217,7 +217,7 @@ bb.a:
   br i1 %spec.select.i.i, label %_ZNK12V3NumberData3numEv.exit.preheader, label %bb.b, !prof !249
 
 _ZNK12V3NumberData3numEv.exit.preheader:          ; preds = %.lr.ph
-  %smax = tail call i32 @llvm.smax.i32(i32 %1, i32 1)
+  %smax = tail call i32 @llvm.umax.i32(i32 %1, i32 1)
   %wide.trip.count = zext nneg i32 %smax to i64
   br label %_ZNK12V3NumberData3numEv.exit
 
@@ -619,9 +619,6 @@ declare i64 @llvm.smin.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #23
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #22
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

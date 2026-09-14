@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   store i64 %i.bf, ptr %i.ba, align 1, !noalias !257
   %i.bg = add i64 %i.au, 8                        ; 3 uses
   store i64 %i.bg, ptr %5, align 8, !tbaa !17, !alias.scope !257, !noalias !258
-  %i.bh = add i64 %.0343.i181, 8                  ; 2 uses
+  %i.bh = add nuw i64 %.0343.i181, 8              ; 2 uses
   %i.bi = or disjoint i64 %i.bh, 7
   %i.bj = load i64, ptr %i.aq, align 8, !tbaa !21 ; 2 uses
   %i.bk = icmp ult i64 %i.bi, %i.bj
@@ -608,7 +608,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   store i64 %i.bf, ptr %i.ba, align 1, !noalias !574
   %i.bg = add i64 %i.au, 8                        ; 3 uses
   store i64 %i.bg, ptr %5, align 8, !tbaa !17, !alias.scope !574, !noalias !575
-  %i.bh = add i64 %.0343.i181, 8                  ; 2 uses
+  %i.bh = add nuw i64 %.0343.i181, 8              ; 2 uses
   %i.bi = or disjoint i64 %i.bh, 7
   %i.bj = load i64, ptr %i.aq, align 8, !tbaa !21 ; 2 uses
   %i.bk = icmp ult i64 %i.bi, %i.bj
@@ -1011,7 +1011,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   store i64 %i.bf, ptr %i.ba, align 1, !noalias !891
   %i.bg = add i64 %i.au, 8                        ; 3 uses
   store i64 %i.bg, ptr %5, align 8, !tbaa !17, !alias.scope !891, !noalias !892
-  %i.bh = add i64 %.0343.i181, 8                  ; 2 uses
+  %i.bh = add nuw i64 %.0343.i181, 8              ; 2 uses
   %i.bi = or disjoint i64 %i.bh, 7
   %i.bj = load i64, ptr %i.aq, align 8, !tbaa !21 ; 2 uses
   %i.bk = icmp ult i64 %i.bi, %i.bj
@@ -1414,7 +1414,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   store i64 %i.bf, ptr %i.ba, align 1, !noalias !1208
   %i.bg = add i64 %i.au, 8                        ; 3 uses
   store i64 %i.bg, ptr %5, align 8, !tbaa !17, !alias.scope !1208, !noalias !1209
-  %i.bh = add i64 %.0343.i181, 8                  ; 2 uses
+  %i.bh = add nuw i64 %.0343.i181, 8              ; 2 uses
   %i.bi = or disjoint i64 %i.bh, 7
   %i.bj = load i64, ptr %i.aq, align 8, !tbaa !21 ; 2 uses
   %i.bk = icmp ult i64 %i.bi, %i.bj

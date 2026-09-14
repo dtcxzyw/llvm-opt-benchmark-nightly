@@ -205,7 +205,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 %i.e
   %.0.i.i = select i1 %i.c, ptr @_hb_NullPool, ptr %i.f, !prof !267
   %i.g = load i16, ptr %.0.i.i, align 1, !tbaa !283 ; 2 uses
-  %i.h = tail call noundef i16 @llvm.bswap.i16(i16 %i.g) ; 8 uses
+  %i.h = tail call noundef i16 @llvm.bswap.i16(i16 %i.g) ; 7 uses
   %i.i = zext i16 %i.h to i32                     ; 4 uses
   %.not.i = icmp eq i16 %i.g, 0
   br i1 %.not.i, label %_ZN2OT17hb_scalar_cache_t6createEjPS0_.exit, label %bb.b
@@ -343,7 +343,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %exitcond.not.i.i.7, label %_ZN2OT17hb_scalar_cache_t6createEjPS0_.exit, label %.lr.ph18.i.i, !llvm.loop !6
 
 bb.d:                                             ; preds = %bb.b
-  %i.bc = zext i16 %i.h to i64                    ; 4 uses
+  %i.bc = zext i16 %i.h to i64                    ; 5 uses
   %i.bd = shl nuw nsw i64 %i.bc, 2
   %i.be = add nuw nsw i64 %i.bd, 4
   %i.bf = tail call noalias noundef ptr @malloc(i64 noundef %i.be) #65 ; 6 uses
@@ -357,8 +357,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.bh, label %.lr.ph.i25.i.preheader, label %.preheader.i17.i
 
 .lr.ph.i25.i.preheader:                           ; preds = %bb.e
-  %2 = zext i16 %i.h to i64
-  %i.bi = add nsw i64 %2, -4                      ; 2 uses
+  %i.bi = add nsw i64 %i.bc, -4                   ; 2 uses
   %i.bj = lshr i64 %i.bi, 2                       ; 2 uses
   %i.bk = add nuw nsw i64 %i.bj, 1                ; 2 uses
   %i.bl = icmp eq i64 %i.bj, 0

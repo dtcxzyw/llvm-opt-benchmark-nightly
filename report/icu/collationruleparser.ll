@@ -204,7 +204,7 @@ _ZNK6icu_7813UnicodeString6charAtEi.exit52:       ; preds = %_ZNK6icu_7813Unicod
 
 bb.k:                                             ; preds = %_ZNK6icu_7813UnicodeString6charAtEi.exit52
   %i.dv = add nsw i32 %i.do, -49
-  %i.dw = add nuw nsw i32 %.0.lcssa.i36, 2
+  %i.dw = add nsw i32 %.0.lcssa.i36, 2
   %i.dx = tail call noundef i32 @_ZNK6icu_7819CollationRuleParser14skipWhiteSpaceEi(ptr noundef nonnull align 8 dereferenceable(76) %0, i32 noundef %i.dw)
   %.pre66 = load ptr, ptr %i.f, align 8, !tbaa !19
   br label %_ZNK6icu_7813UnicodeString6charAtEi.exit49.thread
@@ -437,7 +437,7 @@ _ZNK6icu_7813UnicodeString6charAtEi.exit37:       ; preds = %bb.f
   br i1 %i.bn, label %bb.g, label %_ZNK6icu_7813UnicodeString6charAtEi.exit37.thread
 
 bb.g:                                             ; preds = %_ZNK6icu_7813UnicodeString6charAtEi.exit37
-  %i.bo = add nuw nsw i32 %.0.lcssa.i, 2          ; 5 uses
+  %i.bo = add nsw i32 %.0.lcssa.i, 2              ; 5 uses
   %i.bp = icmp slt i32 %i.bo, %i.ax
   %i.bq = icmp ult i32 %i.bo, %i.ax
   %or.cond54 = and i1 %i.bp, %i.bq
@@ -451,7 +451,7 @@ _ZNK6icu_7813UnicodeString6charAtEi.exit40:       ; preds = %bb.g
   br i1 %i.bu, label %bb.h, label %_ZNK6icu_7813UnicodeString6charAtEi.exit37.thread
 
 bb.h:                                             ; preds = %_ZNK6icu_7813UnicodeString6charAtEi.exit40
-  %i.bv = add nuw nsw i32 %.0.lcssa.i, 3          ; 5 uses
+  %i.bv = add nsw i32 %.0.lcssa.i, 3              ; 5 uses
   %i.bw = icmp slt i32 %i.bv, %i.ax
   %i.bx = icmp ult i32 %i.bv, %i.ax
   %or.cond83 = and i1 %i.bw, %i.bx
@@ -463,7 +463,7 @@ _ZNK6icu_7813UnicodeString6charAtEi.exit43:       ; preds = %bb.h
   %i.ca = load i16, ptr %i.bz, align 2, !tbaa !29
   %.fr86 = freeze i16 %i.ca
   %i.cb = icmp eq i16 %.fr86, 60                  ; 2 uses
-  %i.cc = add nuw nsw i32 %.0.lcssa.i, 4
+  %i.cc = add nsw i32 %.0.lcssa.i, 4
   %spec.select = select i1 %i.cb, i32 3, i32 2
   %spec.select87 = select i1 %i.cb, i32 %i.cc, i32 %i.bv
   br label %_ZNK6icu_7813UnicodeString6charAtEi.exit37.thread
@@ -503,7 +503,7 @@ _ZNK6icu_7813UnicodeString6charAtEi.exit49:       ; preds = %bb.k
   %i.cp = load i16, ptr %i.co, align 2, !tbaa !29
   %.fr = freeze i16 %i.cp
   %i.cq = icmp eq i16 %.fr, 42                    ; 2 uses
-  %i.cr = add nuw nsw i32 %.0.lcssa.i, 2
+  %i.cr = add nsw i32 %.0.lcssa.i, 2
   %spec.select88 = select i1 %i.cq, i32 31, i32 15
   %spec.select89 = select i1 %i.cq, i32 %i.cr, i32 %i.ay
   br label %_ZNK6icu_7813UnicodeString6charAtEi.exit46.thread
@@ -906,7 +906,7 @@ bb.e:                                             ; preds = %_ZNK6icu_7813Unicod
   store i16 39, ptr %i.c, align 2, !tbaa !29
   %i.ar = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString8doAppendEPKDsii(ptr noundef nonnull align 8 dereferenceable(64) %2, ptr noundef nonnull %i.c, i32 noundef 0, i32 noundef 1) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  %i.as = add nuw nsw i32 %.059125, 2
+  %i.as = add nsw i32 %.059125, 2
   br label %_ZN6icu_7819CollationRuleParser13setParseErrorEPKcR10UErrorCode.exit, !llvm.loop !69
 
 _ZNK6icu_7813UnicodeString6charAtEi.exit75.thread: ; preds = %_ZNK6icu_7813UnicodeString6charAtEi.exit75, %bb.d
@@ -968,7 +968,7 @@ _ZNK6icu_7813UnicodeString6charAtEi.exit81:       ; preds = %bb.g
   br i1 %i.bw, label %bb.h, label %_ZN6icu_7819CollationRuleParser13setParseErrorEPKcR10UErrorCode.exit
 
 bb.h:                                             ; preds = %_ZNK6icu_7813UnicodeString6charAtEi.exit81
-  %i.bx = add nuw nsw i32 %.160123, 2
+  %i.bx = add nsw i32 %.160123, 2
   br label %_ZNK6icu_7813UnicodeString6charAtEi.exit78.thread
 
 _ZNK6icu_7813UnicodeString6charAtEi.exit78.thread: ; preds = %.lr.ph, %bb.h, %_ZNK6icu_7813UnicodeString6charAtEi.exit78

@@ -204,7 +204,7 @@ vector.memcheck1065:                              ; preds = %.lr.ph582
   br i1 %diff.check1066, label %scalar.ph1067.preheader, label %vector.ph1069
 
 vector.ph1069:                                    ; preds = %vector.memcheck1065
-  %n.vec1070 = and i64 %wide.trip.count631, 4294967288 ; 3 uses
+  %n.vec1070 = and i64 %wide.trip.count631, 2147483640 ; 3 uses
   br label %vector.body1071
 
 vector.body1071:                                  ; preds = %vector.body1071, %vector.ph1069
@@ -607,7 +607,7 @@ middle.block876:                                  ; preds = %vector.body871
   call void @llvm.memset.p0.i64(ptr align 4 %i.akj, i8 0, i64 %i.aki, i1 false), !tbaa !177
   store i32 %i.mu, ptr %i.hu, align 4, !tbaa !145
   %i.akk = fdiv float %i.rn, 6.000000e+00         ; 3 uses
-  %wide.trip.count636 = zext i32 %i.mu to i64
+  %wide.trip.count636 = zext nneg i32 %i.mu to i64
   %min.iters.check846 = icmp ult i32 %i.mu, 20
   br i1 %min.iters.check846, label %scalar.ph845.preheader, label %vector.memcheck811
 
@@ -1010,7 +1010,7 @@ vector.memcheck755:                               ; preds = %.lr.ph589
   br i1 %diff.check756, label %scalar.ph757.preheader, label %vector.ph759
 
 vector.ph759:                                     ; preds = %vector.memcheck755
-  %n.vec760 = and i64 %wide.trip.count641, 4294967288 ; 3 uses
+  %n.vec760 = and i64 %wide.trip.count641, 2147483640 ; 3 uses
   br label %vector.body761
 
 vector.body761:                                   ; preds = %vector.body761, %vector.ph759

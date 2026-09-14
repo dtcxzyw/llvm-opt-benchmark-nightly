@@ -205,12 +205,12 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.x = phi ptr [ %i.w, %bb.d ], [ %i.t, %bb.c ] ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 304 ; 4 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 2
-  %i.aa = load i16, ptr %i.z, align 2, !tbaa !95  ; 3 uses
+  %i.aa = load i16, ptr %i.z, align 2, !tbaa !95  ; 2 uses
   %i.ab = icmp ugt i16 %i.aa, 1
   br i1 %i.ab, label %.lr.ph.preheader.i.i.i, label %HashSigAlgoCoverage.exit.i.thread.i
 
 .lr.ph.preheader.i.i.i:                           ; preds = %bb.e
-  %i.ac = zext i16 %i.aa to i64                   ; 2 uses
+  %i.ac = zext i16 %i.aa to i64                   ; 3 uses
   %i.ad = add nsw i64 %i.ac, -2                   ; 2 uses
   %i.ae = lshr i64 %i.ad, 1                       ; 2 uses
   %i.af = add nuw i64 %i.ae, 1                    ; 2 uses
@@ -334,13 +334,13 @@ bb.j:                                             ; preds = %HashSigAlgoCoverage
   br label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.j, %HashSigAlgoCoverage.exit.i.thread.i
-  %storemerge.in.sroa.speculated.i.i = phi i16 [ %i.aa, %bb.j ], [ 26, %HashSigAlgoCoverage.exit.i.thread.i ]
+  %storemerge.in.sroa.speculated.i.i = phi i64 [ %i.ac, %bb.j ], [ 26, %HashSigAlgoCoverage.exit.i.thread.i ]
   br label %.lr.ph.i
 
 bb.k:                                             ; preds = %.lr.ph.i
-  %5 = add i16 %.08.i, 2                          ; 2 uses
-  %6 = or disjoint i16 %5, 1
-  %i.be = icmp ult i16 %6, %storemerge.in.sroa.speculated.i.i
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
+  %5 = or disjoint i64 %indvars.iv.next.i, 1
+  %i.be = icmp samesign ult i64 %5, %storemerge.in.sroa.speculated.i.i
   br i1 %i.be, label %.lr.ph.i, label %InServerCertReqHashSigAlgo.exit.thread, !llvm.loop !401
 
 InServerCertReqHashSigAlgo.exit.thread:           ; preds = %bb.k
@@ -348,9 +348,8 @@ InServerCertReqHashSigAlgo.exit.thread:           ; preds = %bb.k
   br label %.thread147
 
 .lr.ph.i:                                         ; preds = %bb.k, %.lr.ph.preheader.i
-  %.08.i = phi i16 [ %5, %bb.k ], [ 0, %.lr.ph.preheader.i ] ; 2 uses
-  %7 = zext i16 %.08.i to i64
-  %i.bf = getelementptr inbounds nuw i8, ptr %i.b, i64 %7
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.k ] ; 2 uses
+  %i.bf = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv.i
   %i.bg = load i16, ptr %i.bf, align 1
   %i.bh = load i16, ptr %i.r, align 1
   %i.bi = icmp ne i16 %i.bg, %i.bh

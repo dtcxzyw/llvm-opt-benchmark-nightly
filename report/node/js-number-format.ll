@@ -202,8 +202,8 @@ _ZNK6icu_7813UnicodeString7indexOfERKS0_.exit:    ; preds = %_ZNK6icu_7813Unicod
 _ZNK6icu_7813UnicodeStringixEi.exit.lr.ph:        ; preds = %.preheader
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 10
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %narrow = add nuw i32 %i.z, 1
-  %i.ak = zext i32 %narrow to i64
+  %narrow = add nuw nsw i32 %i.z, 1
+  %i.ak = zext nneg i32 %narrow to i64
   br label %_ZNK6icu_7813UnicodeStringixEi.exit
 
 bb.b:                                             ; preds = %_ZNK6icu_7813UnicodeString7indexOfERKS0_.exit.thread, %_ZNK6icu_7813UnicodeString7indexOfERKS0_.exit
@@ -468,8 +468,8 @@ _ZNK6icu_7813UnicodeString7indexOfERKS0_.exit:    ; preds = %_ZNK6icu_7813Unicod
 _ZNK6icu_7813UnicodeStringixEi.exit.lr.ph:        ; preds = %.preheader
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 10
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %narrow = add nuw i32 %i.z, 1
-  %i.ak = zext i32 %narrow to i64
+  %narrow = add nuw nsw i32 %i.z, 1
+  %i.ak = zext nneg i32 %narrow to i64
   br label %_ZNK6icu_7813UnicodeStringixEi.exit
 
 _ZNK6icu_7813UnicodeStringixEi.exit:              ; preds = %_ZNK6icu_7813UnicodeStringixEi.exit.lr.ph, %bb.b

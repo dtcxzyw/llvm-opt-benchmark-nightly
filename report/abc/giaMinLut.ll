@@ -205,7 +205,7 @@ bb.a:
   %.val25.val = load i32, ptr %i.c, align 4, !tbaa !25
   %i.d = sdiv i32 %.val, %.val25.val              ; 8 uses
   %i.e = add nuw nsw i32 %i.d, 199
-  %2 = sdiv i32 %i.e, 200
+  %2 = udiv i32 %i.e, 200
   %i.f = getelementptr i8, ptr %0, i64 72
   %.val26 = load ptr, ptr %i.f, align 8, !tbaa !53
   %i.g = getelementptr i8, ptr %.val26, i64 4
@@ -242,7 +242,7 @@ Vec_WrdStart.exit:                                ; preds = %bb.a, %bb.b
   %i.u = zext nneg i32 %i.d to i64                ; 4 uses
   %i.v = icmp sgt i32 %.val26.val, 0
   %wide.trip.count30.i = zext i32 %.val26.val to i64 ; 3 uses
-  %smax = tail call i32 @llvm.smax.i32(i32 %2, i32 1)
+  %smax = tail call i32 @llvm.umax.i32(i32 %2, i32 1)
   %wide.trip.count = zext nneg i32 %smax to i64
   %i.w = add nuw nsw i64 %wide.trip.count30.i, 2305843009213693951
   %i.x = mul i64 %i.w, %i.u
@@ -644,6 +644,9 @@ declare i32 @llvm.smax.i32(i32, i32) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.ctpop.i64(i64) #24
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #24
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1

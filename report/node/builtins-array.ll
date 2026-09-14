@@ -204,7 +204,7 @@ bb.al:                                            ; preds = %bb.ak
 
 _ZNK2v88internal16BuiltinArguments2atINS0_6ObjectEEENS0_6HandleIT_EEi.exit282.i.i: ; preds = %bb.ak
   %i.lc = shl nuw i64 %indvars.iv744.i.i, 32
-  %sext819.i.i = sub i64 -21474836480, %i.lc
+  %sext819.i.i = sub nuw i64 -21474836480, %i.lc
   %i.ld = ashr exact i64 %sext819.i.i, 32
   %i.le = add i64 %i.la, %i.ld
   %i.lf = shl nsw i64 %i.le, 3
@@ -607,7 +607,7 @@ bb.bk:                                            ; preds = %bb.bj
 
 _ZNK2v88internal16BuiltinArguments2atINS0_6ObjectEEENS0_6HandleIT_EEi.exit301.i.i: ; preds = %bb.bj
   %i.tk = shl nuw i64 %indvars.iv747.i.i, 32
-  %sext820.i.i = sub i64 -21474836480, %i.tk
+  %sext820.i.i = sub nuw i64 -21474836480, %i.tk
   %i.tl = ashr exact i64 %sext820.i.i, 32
   %i.tm = add i64 %i.tl, %i.ti
   %i.tn = shl nsw i64 %i.tm, 3
@@ -1010,8 +1010,8 @@ bb.h:                                             ; preds = %.lr.ph
   unreachable
 
 _ZNK2v88internal16BuiltinArguments2atINS0_6ObjectEEENS0_6HandleIT_EEi.exit: ; preds = %.lr.ph
-  %i.bf = shl i64 %indvars.iv, 32
-  %sext = sub i64 -25769803776, %i.bf
+  %i.bf = shl nuw i64 %indvars.iv, 32
+  %sext = sub nuw i64 -25769803776, %i.bf
   %i.bg = ashr exact i64 %sext, 32
   %i.bh = add i64 %i.bd, %i.bg
   %i.bi = shl nsw i64 %i.bh, 3                    ; 2 uses
@@ -1414,8 +1414,8 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 _ZNK2v88internal16BuiltinArgumentsixEi.exit:      ; preds = %bb.d
-  %i.u = shl i64 %indvars.iv, 32
-  %sext = sub i64 -21474836480, %i.u
+  %i.u = shl nuw i64 %indvars.iv, 32
+  %sext = sub nuw i64 -21474836480, %i.u
   %i.v = ashr exact i64 %sext, 32
   %i.w = add i64 %i.s, %i.v
   %i.x = shl nsw i64 %i.w, 3

@@ -204,48 +204,25 @@ bb.a:
   %i.a = load i64, ptr %2, align 8, !tbaa !96     ; 4 uses
   %i.b = add nsw i64 %i.a, 12
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !104  ; 3 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !104
   %i.e = sext i32 %i.d to i64
   %i.f = icmp sgt i64 %i.b, %i.e
   %i.g = icmp slt i64 %i.a, 0
   %or.cond = or i1 %i.g, %i.f
-  br i1 %or.cond, label %bb.k, label %8
+  br i1 %or.cond, label %bb.k, label %_ZN16checked_buffer_t5sget2Ei.exit
 
-8:                                                ; preds = %bb.a
-  %9 = trunc i64 %i.a to i32                      ; 6 uses
-  %10 = icmp sle i32 %i.d, %9
-  %11 = icmp slt i32 %9, 0
-  %or.cond.i.i = or i1 %11, %10
-  br i1 %or.cond.i.i, label %12, label %_ZN16checked_buffer_t11checkoffsetEi.exit.i
-
-12:                                               ; preds = %8
-  %13 = tail call ptr @__cxa_allocate_exception(i64 4) #30 ; 2 uses
-  store i32 4, ptr %13, align 16, !tbaa !25
-  tail call void @__cxa_throw(ptr nonnull %13, ptr nonnull @_ZTI17LibRaw_exceptions, ptr null) #31
-  unreachable
-
-_ZN16checked_buffer_t11checkoffsetEi.exit.i:      ; preds = %8
-  %14 = add nuw nsw i32 %9, 2                     ; 3 uses
-  %.not.i = icmp slt i32 %14, %i.d
-  br i1 %.not.i, label %_ZN16checked_buffer_t5sget2Ei.exit, label %15
-
-15:                                               ; preds = %_ZN16checked_buffer_t11checkoffsetEi.exit.i
-  %16 = tail call ptr @__cxa_allocate_exception(i64 4) #30 ; 2 uses
-  store i32 4, ptr %16, align 16, !tbaa !25
-  tail call void @__cxa_throw(ptr nonnull %16, ptr nonnull @_ZTI17LibRaw_exceptions, ptr null) #31
-  unreachable
-
-_ZN16checked_buffer_t5sget2Ei.exit:               ; preds = %_ZN16checked_buffer_t11checkoffsetEi.exit.i
+_ZN16checked_buffer_t5sget2Ei.exit:               ; preds = %bb.a
+  %8 = trunc nuw nsw i64 %i.a to i32              ; 4 uses
+  %9 = add nuw nsw i32 %8, 2                      ; 2 uses
   %i.h = load i16, ptr %0, align 8, !tbaa !102
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !103
-  %17 = and i64 %i.a, 2147483647
-  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %17
+  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.a
   %i.l = tail call noundef zeroext i16 @_Z19libraw_sget2_staticsPh(i16 noundef signext %i.h, ptr noundef %i.k)
   %i.m = zext i16 %i.l to i32
   store i32 %i.m, ptr %3, align 4, !tbaa !95
   %i.n = load i32, ptr %i.c, align 8, !tbaa !104  ; 2 uses
-  %.not = icmp slt i32 %14, %i.n
+  %.not = icmp slt i32 %9, %i.n
   br i1 %.not, label %_ZN16checked_buffer_t11checkoffsetEi.exit.i27, label %bb.b
 
 bb.b:                                             ; preds = %_ZN16checked_buffer_t5sget2Ei.exit
@@ -255,7 +232,7 @@ bb.b:                                             ; preds = %_ZN16checked_buffer
   unreachable
 
 _ZN16checked_buffer_t11checkoffsetEi.exit.i27:    ; preds = %_ZN16checked_buffer_t5sget2Ei.exit
-  %i.p = add nuw nsw i32 %9, 4                    ; 3 uses
+  %i.p = add nuw nsw i32 %8, 4                    ; 3 uses
   %.not.i28 = icmp samesign ult i32 %i.p, %i.n
   br i1 %.not.i28, label %_ZN16checked_buffer_t5sget2Ei.exit29, label %bb.c
 
@@ -268,7 +245,7 @@ bb.c:                                             ; preds = %_ZN16checked_buffer
 _ZN16checked_buffer_t5sget2Ei.exit29:             ; preds = %_ZN16checked_buffer_t11checkoffsetEi.exit.i27
   %i.r = load i16, ptr %0, align 8, !tbaa !102
   %i.s = load ptr, ptr %i.i, align 8, !tbaa !103
-  %i.t = zext nneg i32 %14 to i64
+  %i.t = zext nneg i32 %9 to i64
   %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.t
   %i.v = tail call noundef zeroext i16 @_Z19libraw_sget2_staticsPh(i16 noundef signext %i.r, ptr noundef nonnull %i.u)
   %i.w = zext i16 %i.v to i32
@@ -284,7 +261,7 @@ bb.d:                                             ; preds = %_ZN16checked_buffer
   unreachable
 
 _ZN16checked_buffer_t11checkoffsetEi.exit.i31:    ; preds = %_ZN16checked_buffer_t5sget2Ei.exit29
-  %i.z = add nuw nsw i32 %9, 8                    ; 3 uses
+  %i.z = add nuw nsw i32 %8, 8                    ; 3 uses
   %.not.i32 = icmp samesign ult i32 %i.z, %i.x
   br i1 %.not.i32, label %_ZN16checked_buffer_t5sget4Ei.exit, label %bb.e
 
@@ -321,7 +298,7 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 _ZN16checked_buffer_t11checkoffsetEi.exit.i34:    ; preds = %bb.f
-  %i.an = add nuw nsw i32 %9, 12
+  %i.an = add nuw nsw i32 %8, 12
   %.not.i35 = icmp samesign ult i32 %i.an, %i.al
   br i1 %.not.i35, label %_ZN16checked_buffer_t5sget4Ei.exit36, label %bb.h
 

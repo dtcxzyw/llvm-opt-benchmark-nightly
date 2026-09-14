@@ -205,9 +205,9 @@ bb.q:                                             ; preds = %bb.q, %.epil.prehea
 .preheader.i.i.i:                                 ; preds = %.preheader.i.i.i.unr-lcssa, %.preheader.i.i.i.epilog-lcssa
   %indvars.iv.i.i.i.lcssa = phi i1 [ false, %.preheader.i.i.i.unr-lcssa ], [ %i.dt, %.preheader.i.i.i.epilog-lcssa ]
   %.lcssa345 = phi i32 [ 0, %.preheader.i.i.i.unr-lcssa ], [ %i.ds, %.preheader.i.i.i.epilog-lcssa ] ; 3 uses
-  %i.du = add i32 %.pr.i.i.i, -8
+  %i.du = add nsw i32 %.pr.i.i.i, -8
   %i.dv = and i32 %i.dl, -8
-  %i.dw = sub i32 %i.du, %i.dv                    ; 3 uses
+  %i.dw = sub nsw i32 %i.du, %i.dv                ; 3 uses
   store i32 %.lcssa345, ptr %i.ab, align 4
   store i32 %i.dw, ptr %i.aa, align 8
   br i1 %indvars.iv.i.i.i.lcssa, label %.lr.ph42.i.i.i, label %._crit_edge.i.i.i

@@ -202,7 +202,7 @@ bb.fd:                                            ; preds = %bb.fb
 
 bb.fe:                                            ; preds = %.thread109.i
   %i.my = add nuw nsw i32 %i.mv, 9                ; 3 uses
-  %2 = sext i32 %i.my to i64
+  %2 = zext nneg i32 %i.my to i64
   %i.mz = shl nuw nsw i64 %2, 3
   %i.na = load ptr, ptr getelementptr inbounds nuw (i8, ptr @hiredisAllocFns, i64 16), align 8, !tbaa !75
   %i.nb = call ptr %i.na(ptr noundef nonnull %i.ag, i64 noundef range(i64 -17179869112, 17179869177) %i.mz) #11, !inline_history !58 ; 2 uses

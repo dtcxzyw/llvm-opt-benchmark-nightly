@@ -202,7 +202,7 @@ _ZN6hermes2vmL16isValidRadixCharEDsi.exit.us288:  ; preds = %_ZNK6hermes2vm10Str
   %i.ff = or i16 %i.fd, 32                        ; 2 uses
   %i.fg = icmp ugt i16 %i.ff, 96
   %i.fh = zext i16 %i.ff to i32
-  %3 = icmp sgt i32 %i.ez, %i.fh
+  %3 = icmp samesign ugt i32 %i.ez, %i.fh
   %i.fi = select i1 %i.fg, i1 %3, i1 false
   br i1 %i.fi, label %_ZN6hermes2vm10StringView14const_iteratorppEv.exit94.us290, label %.critedge7
 

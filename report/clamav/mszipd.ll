@@ -205,7 +205,7 @@ bb.ai:                                            ; preds = %._crit_edge674
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #7
-  %1 = icmp slt i32 %.2314.lcssa, 7
+  %1 = icmp samesign ult i32 %.2314.lcssa, 7
   br i1 %1, label %.lr.ph.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %bb.ai
@@ -340,7 +340,7 @@ bb.at:                                            ; preds = %bb.as, %.lr.ph424.i
   %i.ha = lshr i32 %.1185.lcssa.i, 5              ; 2 uses
   %i.hb = add nsw i32 %.1178.lcssa.i, -5          ; 2 uses
   %i.hc = add nuw nsw i32 %i.gz, 1                ; 2 uses
-  %2 = icmp slt i32 %.1178.lcssa.i, 9
+  %2 = icmp samesign ult i32 %.1178.lcssa.i, 9
   br i1 %2, label %.lr.ph435.i, label %._crit_edge436.i
 
 .lr.ph435.i:                                      ; preds = %._crit_edge425.i, %bb.az
@@ -415,11 +415,11 @@ bb.az:                                            ; preds = %bb.ay, %.lr.ph435.i
 
 .preheader301.i:                                  ; preds = %._crit_edge446.i, %._crit_edge436.i
   %indvars.iv.i = phi i64 [ 0, %._crit_edge436.i ], [ %indvars.iv.next.i, %._crit_edge446.i ] ; 3 uses
-  %.3180454.i = phi i32 [ %i.ic, %._crit_edge436.i ], [ %i.jq, %._crit_edge446.i ] ; 3 uses
+  %.3180454.i = phi i32 [ %i.ic, %._crit_edge436.i ], [ %i.jq, %._crit_edge446.i ] ; 4 uses
   %.3187453.i = phi i32 [ %i.ib, %._crit_edge436.i ], [ %i.jp, %._crit_edge446.i ] ; 2 uses
-  %.6202452.i = phi ptr [ %.4200.lcssa.i, %._crit_edge436.i ], [ %.7203.lcssa.i, %._crit_edge446.i ] ; 2 uses
-  %.6214451.i = phi ptr [ %.4212.lcssa.i, %._crit_edge436.i ], [ %.7215.lcssa.i, %._crit_edge446.i ] ; 2 uses
-  %3 = icmp slt i32 %.3180454.i, 3
+  %.6202452.i = phi ptr [ %.4200.lcssa.i, %._crit_edge436.i ], [ %.7203.lcssa.i, %._crit_edge446.i ] ; 3 uses
+  %.6214451.i = phi ptr [ %.4212.lcssa.i, %._crit_edge436.i ], [ %.7215.lcssa.i, %._crit_edge446.i ] ; 3 uses
+  %3 = icmp samesign ult i32 %.3180454.i, 3
   br i1 %3, label %.lr.ph445.i, label %._crit_edge446.i
 
 .preheader300.i:                                  ; preds = %._crit_edge446.i
@@ -453,12 +453,8 @@ bb.az:                                            ; preds = %bb.ay, %.lr.ph435.i
   %i.io = icmp ult i32 %i.in, 3
   br i1 %i.io, label %._crit_edge458.i, label %.lr.ph457.i
 
-.lr.ph445.i:                                      ; preds = %.preheader301.i, %bb.bf
-  %.4181444.i = phi i32 [ %5, %bb.bf ], [ %.3180454.i, %.preheader301.i ] ; 3 uses
-  %.4188443.i = phi i32 [ %i.ji, %bb.bf ], [ %.3187453.i, %.preheader301.i ]
-  %.7203442.i = phi ptr [ %.8204.i, %bb.bf ], [ %.6202452.i, %.preheader301.i ] ; 2 uses
-  %.7215441.i = phi ptr [ %4, %bb.bf ], [ %.6214451.i, %.preheader301.i ] ; 2 uses
-  %.not242.i = icmp ult ptr %.7215441.i, %.7203442.i
+.lr.ph445.i:                                      ; preds = %.preheader301.i
+  %.not242.i = icmp ult ptr %.6214451.i, %.6202452.i
   br i1 %.not242.i, label %bb.bf, label %bb.ba
 
 bb.ba:                                            ; preds = %.lr.ph445.i
@@ -499,23 +495,22 @@ bb.be:                                            ; preds = %bb.bd, %bb.bb
   store ptr %i.je, ptr %i.g, align 8, !tbaa !25
   br label %bb.bf
 
-bb.bf:                                            ; preds = %bb.be, %.lr.ph445.i
-  %.8216.i = phi ptr [ %i.jc, %bb.be ], [ %.7215441.i, %.lr.ph445.i ] ; 2 uses
-  %.8204.i = phi ptr [ %i.je, %bb.be ], [ %.7203442.i, %.lr.ph445.i ] ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.8216.i, i64 1 ; 2 uses
+bb.bf:                                            ; preds = %.lr.ph445.i, %bb.be
+  %.8216.i = phi ptr [ %i.jc, %bb.be ], [ %.6214451.i, %.lr.ph445.i ] ; 2 uses
+  %.8204.i = phi ptr [ %i.je, %bb.be ], [ %.6202452.i, %.lr.ph445.i ]
+  %4 = or disjoint i32 %.3180454.i, 8
   %i.jf = load i8, ptr %.8216.i, align 1, !tbaa !32
   %i.jg = zext i8 %i.jf to i32
-  %i.jh = shl nuw nsw i32 %i.jg, %.4181444.i
-  %i.ji = or i32 %i.jh, %.4188443.i               ; 2 uses
-  %5 = add nuw nsw i32 %.4181444.i, 8             ; 2 uses
-  %6 = icmp slt i32 %.4181444.i, -5
-  br i1 %6, label %.lr.ph445.i, label %._crit_edge446.i
+  %i.jh = shl nuw nsw i32 %i.jg, %.3180454.i
+  %i.ji = or i32 %i.jh, %.3187453.i
+  %5 = getelementptr inbounds nuw i8, ptr %.8216.i, i64 1
+  br label %._crit_edge446.i
 
 ._crit_edge446.i:                                 ; preds = %bb.bf, %.preheader301.i
-  %.7215.lcssa.i = phi ptr [ %.6214451.i, %.preheader301.i ], [ %4, %bb.bf ] ; 2 uses
+  %.7215.lcssa.i = phi ptr [ %.6214451.i, %.preheader301.i ], [ %5, %bb.bf ] ; 2 uses
   %.7203.lcssa.i = phi ptr [ %.6202452.i, %.preheader301.i ], [ %.8204.i, %bb.bf ] ; 2 uses
   %.4188.lcssa.i = phi i32 [ %.3187453.i, %.preheader301.i ], [ %i.ji, %bb.bf ] ; 2 uses
-  %.4181.lcssa.i = phi i32 [ %.3180454.i, %.preheader301.i ], [ %5, %bb.bf ]
+  %.4181.lcssa.i = phi i32 [ %.3180454.i, %.preheader301.i ], [ %4, %bb.bf ]
   %i.jj = trunc i32 %.4188.lcssa.i to i8
   %i.jk = and i8 %i.jj, 7
   %i.jl = getelementptr inbounds nuw i8, ptr @bitlen_order, i64 %indvars.iv.i
@@ -918,7 +913,7 @@ bb.n:                                             ; preds = %bb.m, %.lr.ph185
 .preheader139:                                    ; preds = %._crit_edge186
   %i.bw = add nsw i32 %.1.lcssa, -8               ; 2 uses
   %i.bx = lshr i32 %.191.lcssa, 8                 ; 2 uses
-  %1 = icmp slt i32 %.1.lcssa, 16
+  %1 = icmp samesign ult i32 %.1.lcssa, 16
   br i1 %1, label %.lr.ph195, label %._crit_edge196
 
 .lr.ph195:                                        ; preds = %.preheader139, %bb.t
@@ -991,7 +986,7 @@ bb.t:                                             ; preds = %bb.s, %.lr.ph195
 .preheader:                                       ; preds = %._crit_edge196
   %i.cw = add nsw i32 %.2.lcssa, -8               ; 2 uses
   %i.cx = lshr i32 %.292.lcssa, 8                 ; 2 uses
-  %2 = icmp slt i32 %.2.lcssa, 16
+  %2 = icmp samesign ult i32 %.2.lcssa, 16
   br i1 %2, label %.lr.ph205, label %._crit_edge206
 
 .lr.ph205:                                        ; preds = %.preheader, %bb.z

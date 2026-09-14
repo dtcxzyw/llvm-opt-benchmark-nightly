@@ -205,7 +205,7 @@ bb.av:                                            ; preds = %.loopexit.i.i
   %i.sh = zext nneg i32 %i.sg to i64              ; 2 uses
   %i.si = xor i32 %i.ib, -1
   %i.sj = sext i32 %i.si to i64                   ; 2 uses
-  %i.sk = sub i32 1, %i.ib
+  %i.sk = sub nsw i32 1, %i.ib
   %i.sl = sext i32 %i.sk to i64                   ; 2 uses
   br i1 %i.sf, label %.preheader.us.preheader.i.i.i, label %_calcRadiusMono.exit.i.i
 
@@ -386,7 +386,7 @@ bb.bj:                                            ; preds = %.loopexit.i.i
   %i.vm = sext i32 %i.vl to i64                   ; 2 uses
   %i.vn = xor i32 %i.ib, -1
   %i.vo = sext i32 %i.vn to i64                   ; 2 uses
-  %i.vp = sub i32 1, %i.ib
+  %i.vp = sub nsw i32 1, %i.ib
   %i.vq = sext i32 %i.vp to i64                   ; 2 uses
   %i.vr = extractelement <2 x i32> %i.vj, i64 1
   %i.vs = extractelement <2 x i32> %i.vj, i64 0
@@ -789,7 +789,7 @@ bb.ei:                                            ; preds = %bb.eh
   %i.aet = sext i32 %i.aes to i64
   %i.aeu = xor i32 %i.ib, -1
   %i.aev = sext i32 %i.aeu to i64
-  %i.aew = sub i32 1, %i.ib
+  %i.aew = sub nsw i32 1, %i.ib
   %i.aex = sext i32 %i.aew to i64
   %i.aey = mul nsw i32 %i.ib, 3
   %i.aez = sext i32 %i.aey to i64                 ; 2 uses

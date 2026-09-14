@@ -204,14 +204,15 @@ _ZN4llvm16MachineIRBuilder8setInstrERNS_12MachineInstrE.exit: ; preds = %bb.g, %
   %i.dt = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.du = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.dv = getelementptr inbounds nuw i8, ptr %6, i64 24
+  %22 = zext i32 %i.g to i64
   br label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph, %_ZNSt6vectorIN4llvm8RegisterESaIS1_EE9push_backERKS1_.exit
-  %.062142 = phi i32 [ 0, %.lr.ph ], [ %25, %_ZNSt6vectorIN4llvm8RegisterESaIS1_EE9push_backERKS1_.exit ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZNSt6vectorIN4llvm8RegisterESaIS1_EE9push_backERKS1_.exit ] ; 3 uses
   %.sroa.0114.0141 = phi ptr [ null, %.lr.ph ], [ %.sroa.0114.3, %_ZNSt6vectorIN4llvm8RegisterESaIS1_EE9push_backERKS1_.exit ] ; 9 uses
   %.sroa.9.0140 = phi ptr [ null, %.lr.ph ], [ %.sroa.9.2, %_ZNSt6vectorIN4llvm8RegisterESaIS1_EE9push_backERKS1_.exit ] ; 6 uses
   %.sroa.16.0139 = phi ptr [ null, %.lr.ph ], [ %.sroa.16.3, %_ZNSt6vectorIN4llvm8RegisterESaIS1_EE9push_backERKS1_.exit ] ; 3 uses
-  %22 = or disjoint i32 %.062142, 1
+  %23 = or disjoint i64 %indvars.iv, 1
   %i.dw = load ptr, ptr %i.cz, align 8, !tbaa !234
   %i.dx = load ptr, ptr %i.c, align 8, !tbaa !235, !nonnull !78, !align !236
   %i.dy = call noundef ptr @_ZNK4llvm19SPIRVGlobalRegistry11getRegClassENS_13SPIRVTypeInstE(ptr noundef nonnull align 8 dereferenceable(1416) %i.dx, ptr %i.cv) #20
@@ -258,18 +259,16 @@ bb.j:                                             ; preds = %.lr.ph, %_ZNSt6vect
   store i32 0, ptr %15, align 8, !alias.scope !3806
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.eh, ptr noundef nonnull align 8 dereferenceable(1065) %i.eg, ptr noundef nonnull align 8 dereferenceable(32) %15) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #20
-  %23 = zext i32 %.062142 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #20
   store i32 1, ptr %14, align 8, !alias.scope !3807
   store ptr null, ptr %i.do, align 8, !tbaa !50, !alias.scope !3807
-  store i64 %23, ptr %i.dp, align 8, !tbaa !46, !alias.scope !3807
+  store i64 %indvars.iv, ptr %i.dp, align 8, !tbaa !46, !alias.scope !3807
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.eh, ptr noundef nonnull align 8 dereferenceable(1065) %i.eg, ptr noundef nonnull align 8 dereferenceable(32) %14) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #20
-  %24 = zext i32 %22 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #20
   store i32 1, ptr %13, align 8, !alias.scope !3808
   store ptr null, ptr %i.dq, align 8, !tbaa !50, !alias.scope !3808
-  store i64 %24, ptr %i.dr, align 8, !tbaa !46, !alias.scope !3808
+  store i64 %23, ptr %i.dr, align 8, !tbaa !46, !alias.scope !3808
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.eh, ptr noundef nonnull align 8 dereferenceable(1065) %i.eg, ptr noundef nonnull align 8 dereferenceable(32) %13) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #20
@@ -416,16 +415,20 @@ _ZNSt6vectorIN4llvm8RegisterESaIS1_EE9push_backERKS1_.exit: ; preds = %bb.m, %_Z
   %.0.lcssa.i.i.i.i.i.pn = phi ptr [ %.0.lcssa.i.i.i.i.i, %_ZNSt6vectorIN4llvm8RegisterESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %.sroa.9.0140, %bb.m ]
   %.sroa.0114.3 = phi ptr [ %i.fe, %_ZNSt6vectorIN4llvm8RegisterESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %.sroa.0114.0141, %bb.m ] ; 2 uses
   %.sroa.9.2 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.pn, i64 4 ; 2 uses
-  %25 = add i32 %.062142, 2                       ; 3 uses
-  %26 = or disjoint i32 %25, 1
-  %i.fx = icmp ult i32 %26, %i.g
-  br i1 %i.fx, label %bb.j, label %._crit_edge, !llvm.loop !3797
+  %indvars.iv.next = add nuw i64 %indvars.iv, 2   ; 3 uses
+  %24 = or disjoint i64 %indvars.iv.next, 1
+  %i.fx = icmp ult i64 %24, %22
+  br i1 %i.fx, label %bb.j, label %._crit_edge.loopexit, !llvm.loop !3797
 
-._crit_edge:                                      ; preds = %_ZNSt6vectorIN4llvm8RegisterESaIS1_EE9push_backERKS1_.exit, %_ZN4llvm16MachineIRBuilder8setInstrERNS_12MachineInstrE.exit
-  %.sroa.16.0.lcssa = phi ptr [ null, %_ZN4llvm16MachineIRBuilder8setInstrERNS_12MachineInstrE.exit ], [ %.sroa.16.3, %_ZNSt6vectorIN4llvm8RegisterESaIS1_EE9push_backERKS1_.exit ] ; 7 uses
-  %.sroa.9.0.lcssa = phi ptr [ null, %_ZN4llvm16MachineIRBuilder8setInstrERNS_12MachineInstrE.exit ], [ %.sroa.9.2, %_ZNSt6vectorIN4llvm8RegisterESaIS1_EE9push_backERKS1_.exit ] ; 4 uses
-  %.sroa.0114.0.lcssa = phi ptr [ null, %_ZN4llvm16MachineIRBuilder8setInstrERNS_12MachineInstrE.exit ], [ %.sroa.0114.3, %_ZNSt6vectorIN4llvm8RegisterESaIS1_EE9push_backERKS1_.exit ] ; 10 uses
-  %.062.lcssa = phi i32 [ 0, %_ZN4llvm16MachineIRBuilder8setInstrERNS_12MachineInstrE.exit ], [ %25, %_ZNSt6vectorIN4llvm8RegisterESaIS1_EE9push_backERKS1_.exit ]
+._crit_edge.loopexit:                             ; preds = %_ZNSt6vectorIN4llvm8RegisterESaIS1_EE9push_backERKS1_.exit
+  %25 = trunc nuw i64 %indvars.iv.next to i32
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZN4llvm16MachineIRBuilder8setInstrERNS_12MachineInstrE.exit
+  %.sroa.16.0.lcssa = phi ptr [ null, %_ZN4llvm16MachineIRBuilder8setInstrERNS_12MachineInstrE.exit ], [ %.sroa.16.3, %._crit_edge.loopexit ] ; 7 uses
+  %.sroa.9.0.lcssa = phi ptr [ null, %_ZN4llvm16MachineIRBuilder8setInstrERNS_12MachineInstrE.exit ], [ %.sroa.9.2, %._crit_edge.loopexit ] ; 4 uses
+  %.sroa.0114.0.lcssa = phi ptr [ null, %_ZN4llvm16MachineIRBuilder8setInstrERNS_12MachineInstrE.exit ], [ %.sroa.0114.3, %._crit_edge.loopexit ] ; 10 uses
+  %.062.lcssa = phi i32 [ 0, %_ZN4llvm16MachineIRBuilder8setInstrERNS_12MachineInstrE.exit ], [ %25, %._crit_edge.loopexit ]
   %.not = icmp eq i32 %.062.lcssa, %i.g
   br i1 %.not, label %_ZNSt6vectorIN4llvm8RegisterESaIS1_EE9push_backERKS1_.exit85, label %bb.q
 

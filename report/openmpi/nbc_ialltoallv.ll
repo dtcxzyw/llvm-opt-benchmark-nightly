@@ -202,7 +202,7 @@ opal_obj_run_destructors.exit:                    ; preds = %.lr.ph.i, %bb.t
 
 .critedge:                                        ; preds = %.loopexit
   %i.cr = add nuw nsw i32 %.val146.val, 1
-  %12 = sdiv i32 %i.cr, 2
+  %12 = lshr i32 %i.cr, 1
   %.not139155.i = icmp sgt i32 %.val146.val, 2
   br i1 %.not139155.i, label %.lr.ph.i156, label %._crit_edge.i
 
@@ -214,7 +214,7 @@ opal_obj_run_destructors.exit:                    ; preds = %.lr.ph.i, %bb.t
   br i1 %i.ct, label %a2av_sched_inplace.exit, label %.lr.ph.split.preheader.i
 
 .lr.ph.split.preheader.i:                         ; preds = %.lr.ph.i156
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %12, i32 2)
+  %smax.i = tail call i32 @llvm.umax.i32(i32 %12, i32 2)
   br label %.lr.ph.split.i
 
 .lr.ph.split.i:                                   ; preds = %bb.ac, %.lr.ph.split.preheader.i
@@ -615,6 +615,9 @@ declare i32 @NBC_Sched_recv(ptr noundef, i8 noundef signext, i64 noundef, ptr no
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #4

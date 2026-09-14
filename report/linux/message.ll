@@ -205,13 +205,11 @@ bb.l:                                             ; preds = %bb.k, %bb.e, %bb.h
 
 bb.m:                                             ; preds = %bb.l
   %i.ad = getelementptr i8, ptr %i.h, i64 2
-  %4 = trunc nuw nsw i32 %i.ab to i16
-  %.lhs.trunc = add nsw i16 %4, -2
-  %5 = sdiv i16 %.lhs.trunc, 2
-  %.sext = sext i16 %5 to i32
+  %4 = add nsw i32 %i.ab, -2
+  %5 = sdiv i32 %4, 2
   %i.ae = trunc i64 %3 to i32
   %i.af = add i32 %i.ae, -1
-  %i.ag = tail call i32 @utf16s_to_utf8s(ptr noundef %i.ad, i32 noundef %.sext, i32 noundef 1, ptr noundef nonnull %2, i32 noundef %i.af) #12 ; 2 uses
+  %i.ag = tail call i32 @utf16s_to_utf8s(ptr noundef %i.ad, i32 noundef %5, i32 noundef 1, ptr noundef nonnull %2, i32 noundef %i.af) #12 ; 2 uses
   %i.ah = sext i32 %i.ag to i64
   %i.ai = getelementptr i8, ptr %2, i64 %i.ah
   store i8 0, ptr %i.ai, align 1
@@ -228,7 +226,7 @@ bb.n:                                             ; preds = %bb.d, %bb.c, %bb.b,
 }
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
-define internal fastcc range(i32 -2147483648, 255) i32 @usb_string_sub(ptr noundef %0, i32 noundef %1, i32 noundef range(i32 0, 256) %2, ptr noundef nonnull %3) unnamed_addr #0 align 16 prefalign(16) {
+define internal fastcc i32 @usb_string_sub(ptr noundef %0, i32 noundef %1, i32 noundef range(i32 0, 256) %2, ptr noundef nonnull %3) unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 1308
   %i.b = load i32, ptr %i.a, align 4
@@ -260,7 +258,7 @@ bb.d:                                             ; preds = %.thread, %bb.c
   br i1 %i.m, label %.thread27, label %.thread30
 
 .thread27:                                        ; preds = %bb.b, %bb.d
-  %.029 = phi i32 [ %.0, %bb.d ], [ %i.f, %bb.b ] ; 5 uses
+  %.029 = phi i32 [ %.0, %bb.d ], [ %i.f, %bb.b ] ; 6 uses
   %i.n = load i8, ptr %3, align 1                 ; 2 uses
   %.not19 = icmp eq i8 %i.n, 0
   br i1 %.not19, label %bb.e, label %usb_try_string_workarounds.exit
@@ -271,13 +269,19 @@ bb.e:                                             ; preds = %.thread27
   %.not20 = icmp eq i8 %i.p, 0
   %i.q = icmp samesign ugt i32 %.029, 3
   %or.cond = select i1 %.not20, i1 %i.q, i1 false
-  br i1 %or.cond, label %.lr.ph.i, label %usb_try_string_workarounds.exit
+  br i1 %or.cond, label %.lr.ph.i.preheader, label %usb_try_string_workarounds.exit
 
-.lr.ph.i:                                         ; preds = %bb.e, %bb.g
-  %4 = phi i32 [ %8, %bb.g ], [ 3, %bb.e ]
-  %.014.i = phi i32 [ %7, %bb.g ], [ 2, %bb.e ]   ; 4 uses
-  %5 = sext i32 %.014.i to i64
-  %i.r = getelementptr i8, ptr %3, i64 %5
+.lr.ph.i.preheader:                               ; preds = %bb.e
+  %4 = zext nneg i32 %.029 to i64
+  %5 = add nuw i32 %.029, 2147483644
+  %6 = and i32 %5, 2147483646
+  %narrow = add nuw i32 %6, 4
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.g
+  %indvars.iv37 = phi i64 [ 2, %.lr.ph.i.preheader ], [ %indvars.iv.next38, %bb.g ] ; 4 uses
+  %indvars.iv = phi i64 [ 3, %.lr.ph.i.preheader ], [ %indvars.iv.next, %bb.g ] ; 2 uses
+  %i.r = getelementptr i8, ptr %3, i64 %indvars.iv37
   %i.s = load i8, ptr %i.r, align 1
   %i.t = zext i8 %i.s to i64
   %i.u = getelementptr i8, ptr @_ctype, i64 %i.t
@@ -287,31 +291,32 @@ bb.e:                                             ; preds = %.thread27
   br i1 %.not.i, label %._crit_edge.i, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph.i
-  %6 = sext i32 %4 to i64
-  %i.x = getelementptr i8, ptr %3, i64 %6
+  %i.x = getelementptr i8, ptr %3, i64 %indvars.iv
   %i.y = load i8, ptr %i.x, align 1
   %.not13.i = icmp eq i8 %i.y, 0
   br i1 %.not13.i, label %bb.g, label %._crit_edge.i
 
 bb.g:                                             ; preds = %bb.f
-  %7 = add i32 %.014.i, 2                         ; 3 uses
-  %8 = or disjoint i32 %7, 1                      ; 2 uses
-  %9 = icmp slt i32 %8, %.029
-  br i1 %9, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !31
+  %indvars.iv.next38 = add nuw nsw i64 %indvars.iv37, 2 ; 2 uses
+  %7 = or disjoint i64 %indvars.iv.next38, 1
+  %8 = icmp samesign ult i64 %7, %4
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2
+  br i1 %8, label %.lr.ph.i, label %bb.h, !llvm.loop !31
 
-._crit_edge.i:                                    ; preds = %bb.g, %bb.f, %.lr.ph.i
-  %.0.lcssa.i = phi i32 [ %.014.i, %.lr.ph.i ], [ %7, %bb.g ], [ %.014.i, %bb.f ] ; 3 uses
-  %10 = icmp sgt i32 %.0.lcssa.i, 2
+._crit_edge.i:                                    ; preds = %bb.f, %.lr.ph.i
+  %9 = trunc nuw nsw i64 %indvars.iv37 to i32
+  %10 = icmp samesign ugt i64 %indvars.iv37, 2
   br i1 %10, label %bb.h, label %usb_try_string_workarounds.exit
 
-bb.h:                                             ; preds = %._crit_edge.i
-  %i.z = trunc i32 %.0.lcssa.i to i8              ; 2 uses
+bb.h:                                             ; preds = %bb.g, %._crit_edge.i
+  %.0.lcssa.i31 = phi i32 [ %9, %._crit_edge.i ], [ %narrow, %bb.g ] ; 2 uses
+  %i.z = trunc i32 %.0.lcssa.i31 to i8            ; 2 uses
   store i8 %i.z, ptr %3, align 1
   br label %usb_try_string_workarounds.exit
 
 usb_try_string_workarounds.exit:                  ; preds = %bb.h, %._crit_edge.i, %bb.e, %.thread27
   %i.aa = phi i8 [ %i.n, %.thread27 ], [ 0, %bb.e ], [ %i.z, %bb.h ], [ 0, %._crit_edge.i ]
-  %.1 = phi i32 [ %.029, %.thread27 ], [ %.029, %bb.e ], [ %.0.lcssa.i, %bb.h ], [ %.029, %._crit_edge.i ]
+  %.1 = phi i32 [ %.029, %.thread27 ], [ %.029, %bb.e ], [ %.0.lcssa.i31, %bb.h ], [ %.029, %._crit_edge.i ]
   %i.ab = zext i8 %i.aa to i32
   %spec.select = tail call i32 @llvm.smin.i32(i32 %.1, i32 %i.ab) ; 2 uses
   %i.ac = and i32 %spec.select, -2                ; 2 uses

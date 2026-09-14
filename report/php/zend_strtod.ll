@@ -205,7 +205,7 @@ bb.ch:                                            ; preds = %bb.cg
   %.6453 = phi i32 [ %spec.store.select708, %bb.ce ], [ %.1462, %bb.ch ] ; 5 uses
   %.2446 = phi i32 [ %spec.select562, %bb.ce ], [ %spec.select564, %bb.ch ] ; 3 uses
   %i.ol = add nuw nsw i32 %.6453, 8
-  %3 = sdiv i32 %i.ol, 9
+  %3 = udiv i32 %i.ol, 9
   %i.om = icmp sgt i32 %.6453, 9
   br i1 %i.om, label %.lr.ph.i, label %._crit_edge.thread.i
 

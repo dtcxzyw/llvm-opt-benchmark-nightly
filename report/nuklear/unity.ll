@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %nk_textedit_clamp.e
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc range(i32 -2147483648, 2147483647) i32 @nk_textedit_move_to_word_previous(ptr nofree noundef readonly captures(address_is_null) %0) unnamed_addr #8 {
+define internal fastcc range(i32 -2147483647, 2147483647) i32 @nk_textedit_move_to_word_previous(ptr nofree noundef readonly captures(address_is_null) %0) unnamed_addr #8 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = alloca i32, align 4                      ; 6 uses

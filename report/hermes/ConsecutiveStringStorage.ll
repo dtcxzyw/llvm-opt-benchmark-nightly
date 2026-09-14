@@ -205,15 +205,15 @@ bb.an:                                            ; preds = %_ZN12_GLOBAL__N_112
   br label %bb.ao
 
 bb.ao:                                            ; preds = %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i, %.lr.ph112.i.i.i
-  %.sroa.074.1.i = phi ptr [ %.sroa.074.0.i, %.lr.ph112.i.i.i ], [ %.sroa.074.3.i, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 12 uses
-  %.sroa.9.1.i = phi ptr [ %.sroa.9.0.i, %.lr.ph112.i.i.i ], [ %.sroa.9.3.i, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 9 uses
-  %.sroa.14.1.i = phi ptr [ %.sroa.14.0.i, %.lr.ph112.i.i.i ], [ %.sroa.14.3.i, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 12 uses
-  %.val66.i30.i.i = phi ptr [ %.val66.i31.i.i, %.lr.ph112.i.i.i ], [ %.val66.i34.i.i, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 10 uses
-  %.val63.i.i.i = phi ptr [ %.val63.i25.i.i, %.lr.ph112.i.i.i ], [ %.val63.i28.i.i, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 16 uses
-  %.val62.i.i.i = phi ptr [ %.val62.i20.i.i, %.lr.ph112.i.i.i ], [ %.val62.i23.i.i, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 12 uses
+  %.sroa.074.1.i = phi ptr [ %.sroa.074.0.i, %.lr.ph112.i.i.i ], [ %.sroa.074.3.i, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 9 uses
+  %.sroa.9.1.i = phi ptr [ %.sroa.9.0.i, %.lr.ph112.i.i.i ], [ %.sroa.9.3.i, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 7 uses
+  %.sroa.14.1.i = phi ptr [ %.sroa.14.0.i, %.lr.ph112.i.i.i ], [ %.sroa.14.3.i, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 9 uses
+  %.val66.i30.i.i = phi ptr [ %.val66.i31.i.i, %.lr.ph112.i.i.i ], [ %.val66.i34.i.i, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 7 uses
+  %.val63.i.i.i = phi ptr [ %.val63.i25.i.i, %.lr.ph112.i.i.i ], [ %.val63.i28.i.i, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 12 uses
+  %.val62.i.i.i = phi ptr [ %.val62.i20.i.i, %.lr.ph112.i.i.i ], [ %.val62.i23.i.i, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 11 uses
   %.047110.i.i.i = phi ptr [ %.sroa.075.3.i, %.lr.ph112.i.i.i ], [ %i.lh, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 2 uses
   %.048109.i.i.i = phi ptr [ %i.kk, %.lr.ph112.i.i.i ], [ %i.lv, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ]
-  %.049108.i.i.i = phi i64 [ 0, %.lr.ph112.i.i.i ], [ %i.ly, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 7 uses
+  %.049108.i.i.i = phi i64 [ 0, %.lr.ph112.i.i.i ], [ %i.ly, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 8 uses
   %i.ko = getelementptr inbounds nuw i8, ptr %.sroa.096.0.copyload.i.i.i, i64 %.049108.i.i.i
   %i.kp = load i8, ptr %i.ko, align 1, !tbaa !59, !noalias !299 ; 2 uses
   %i.kq = ptrtoint ptr %.048109.i.i.i to i64      ; 2 uses
@@ -323,17 +323,13 @@ bb.at:                                            ; preds = %bb.as
   %i.me = ptrtoint ptr %.val63.i.i.i to i64       ; 2 uses
   %i.mf = ptrtoint ptr %.val62.i.i.i to i64       ; 2 uses
   %i.mg = sub i64 %i.me, %i.mf                    ; 2 uses
-  %i.mh = sdiv exact i64 %i.mg, 24                ; 8 uses
+  %i.mh = sdiv exact i64 %i.mg, 24                ; 6 uses
   %.not58.i.i.i = icmp ugt i64 %i.mh, %i.ly
-  br i1 %.not58.i.i.i, label %_ZNSt6vectorIS_IN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EESaIS5_EE6resizeEm.exit.i.i.i, label %18
+  br i1 %.not58.i.i.i, label %_ZNSt6vectorIS_IN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EESaIS5_EE6resizeEm.exit.i.i.i, label %bb.au
 
-18:                                               ; preds = %bb.at
-  %19 = add i64 %.049108.i.i.i, 2                 ; 5 uses
-  %20 = icmp ugt i64 %19, %i.mh
-  br i1 %20, label %bb.au, label %21
-
-bb.au:                                            ; preds = %18
-  %i.mi = sub nuw i64 %19, %i.mh                  ; 5 uses
+bb.au:                                            ; preds = %bb.at
+  %18 = add nuw i64 %.049108.i.i.i, 2
+  %i.mi = sub nuw i64 %18, %i.mh                  ; 5 uses
   %i.mj = ptrtoint ptr %.sroa.14.1.i to i64       ; 2 uses
   %i.mk = sub i64 %i.mj, %i.me
   %i.ml = sdiv exact i64 %i.mk, 24                ; 2 uses
@@ -352,7 +348,7 @@ _ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIhE7Ov
   br label %_ZNSt6vectorIS_IN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EESaIS5_EE6resizeEm.exit.i.i.i
 
 bb.av:                                            ; preds = %bb.au
-  %i.mq = icmp ugt i64 %19, 384307168202282325
+  %i.mq = icmp ugt i64 %.049108.i.i.i, 384307168202282323
   br i1 %i.mq, label %bb.aw, label %_ZNKSt6vectorIS_IN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i.i.i
 
 bb.aw:                                            ; preds = %bb.av
@@ -402,41 +398,12 @@ _ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EES
   %i.nf = getelementptr inbounds nuw [24 x i8], ptr %i.mu, i64 %i.ms
   br label %_ZNSt6vectorIS_IN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EESaIS5_EE6resizeEm.exit.i.i.i
 
-21:                                               ; preds = %18
-  %22 = icmp ult i64 %19, %i.mh
-  br i1 %22, label %23, label %_ZNSt6vectorIS_IN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EESaIS5_EE6resizeEm.exit.i.i.i
-
-23:                                               ; preds = %21
-  %24 = getelementptr inbounds nuw [24 x i8], ptr %.val62.i.i.i, i64 %19 ; 4 uses
-  %.not.i9.i.i.i.i = icmp eq ptr %.val63.i.i.i, %24
-  br i1 %.not.i9.i.i.i.i, label %_ZNSt6vectorIS_IN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EESaIS5_EE6resizeEm.exit.i.i.i, label %.lr.ph.i.i.i.i.i.i28.i
-
-.lr.ph.i.i.i.i.i.i28.i:                           ; preds = %23, %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i.i.i.i
-  %.06.i.i.i.i.i.i.i = phi ptr [ %30, %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i.i.i.i ], [ %24, %23 ] ; 3 uses
-  %.0.val.i.i.i.i.i.i.i = load ptr, ptr %.06.i.i.i.i.i.i.i, align 8, !tbaa !308, !noalias !299 ; 3 uses
-  %.not.i.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %.0.val.i.i.i.i.i.i.i, null
-  br i1 %.not.i.i.i.i.i.i.i.i.i.i.i, label %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i.i.i.i, label %25
-
-25:                                               ; preds = %.lr.ph.i.i.i.i.i.i28.i
-  %26 = getelementptr i8, ptr %.06.i.i.i.i.i.i.i, i64 16
-  %.0.val4.i.i.i.i.i.i.i = load ptr, ptr %26, align 8, !tbaa !307, !noalias !299
-  %27 = ptrtoint ptr %.0.val4.i.i.i.i.i.i.i to i64
-  %28 = ptrtoint ptr %.0.val.i.i.i.i.i.i.i to i64
-  %29 = sub i64 %27, %28
-  call void @_ZdlPvm(ptr noundef nonnull %.0.val.i.i.i.i.i.i.i, i64 noundef %29) #18, !noalias !299
-  br label %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i.i.i.i
-
-_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i.i.i.i: ; preds = %25, %.lr.ph.i.i.i.i.i.i28.i
-  %30 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i, i64 24 ; 2 uses
-  %.not.i.i.i.i.i.i29.i = icmp eq ptr %30, %.val63.i.i.i
-  br i1 %.not.i.i.i.i.i.i29.i, label %_ZNSt6vectorIS_IN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EESaIS5_EE6resizeEm.exit.i.i.i, label %.lr.ph.i.i.i.i.i.i28.i, !llvm.loop !209
-
-_ZNSt6vectorIS_IN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EESaIS5_EE6resizeEm.exit.i.i.i: ; preds = %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i.i.i.i, %23, %21, %_ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EESaIS6_EE13_M_deallocateEPS6_m.exit.i.i.i.i.i, %_ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEmS6_ET_S8_T0_RSaIT1_E.exit.i.i.i.i.i, %bb.at
-  %.sroa.074.4.i = phi ptr [ %.sroa.074.1.i, %bb.at ], [ %i.mu, %_ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EESaIS6_EE13_M_deallocateEPS6_m.exit.i.i.i.i.i ], [ %.sroa.074.1.i, %_ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEmS6_ET_S8_T0_RSaIT1_E.exit.i.i.i.i.i ], [ %.sroa.074.1.i, %23 ], [ %.sroa.074.1.i, %21 ], [ %.sroa.074.1.i, %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i.i.i.i ] ; 2 uses
-  %.sroa.9.4.i = phi ptr [ %.sroa.9.1.i, %bb.at ], [ %i.ne, %_ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EESaIS6_EE13_M_deallocateEPS6_m.exit.i.i.i.i.i ], [ %scevgep.i.i.i.i.i.i.i.i, %_ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEmS6_ET_S8_T0_RSaIT1_E.exit.i.i.i.i.i ], [ %.sroa.9.1.i, %23 ], [ %.sroa.9.1.i, %21 ], [ %24, %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i.i.i.i ] ; 2 uses
-  %.sroa.14.4.i = phi ptr [ %.sroa.14.1.i, %bb.at ], [ %i.nf, %_ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EESaIS6_EE13_M_deallocateEPS6_m.exit.i.i.i.i.i ], [ %.sroa.14.1.i, %_ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEmS6_ET_S8_T0_RSaIT1_E.exit.i.i.i.i.i ], [ %.sroa.14.1.i, %23 ], [ %.sroa.14.1.i, %21 ], [ %.sroa.14.1.i, %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i.i.i.i ] ; 2 uses
-  %.val66.i.i.i = phi ptr [ %.val66.i30.i.i, %bb.at ], [ %i.mu, %_ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EESaIS6_EE13_M_deallocateEPS6_m.exit.i.i.i.i.i ], [ %.sroa.074.1.i, %_ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEmS6_ET_S8_T0_RSaIT1_E.exit.i.i.i.i.i ], [ %.val66.i30.i.i, %23 ], [ %.val66.i30.i.i, %21 ], [ %.val66.i30.i.i, %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i.i.i.i ] ; 5 uses
-  %.val63.i29.i.i = phi ptr [ %.val63.i.i.i, %bb.at ], [ %i.ne, %_ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EESaIS6_EE13_M_deallocateEPS6_m.exit.i.i.i.i.i ], [ %scevgep.i.i.i.i.i.i.i.i, %_ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEmS6_ET_S8_T0_RSaIT1_E.exit.i.i.i.i.i ], [ %.val63.i.i.i, %23 ], [ %.val63.i.i.i, %21 ], [ %24, %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i.i.i.i ] ; 2 uses
+_ZNSt6vectorIS_IN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EESaIS5_EE6resizeEm.exit.i.i.i: ; preds = %_ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EESaIS6_EE13_M_deallocateEPS6_m.exit.i.i.i.i.i, %_ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEmS6_ET_S8_T0_RSaIT1_E.exit.i.i.i.i.i, %bb.at
+  %.sroa.072.4.i = phi ptr [ %.sroa.074.1.i, %bb.at ], [ %i.mu, %_ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EESaIS6_EE13_M_deallocateEPS6_m.exit.i.i.i.i.i ], [ %.sroa.074.1.i, %_ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEmS6_ET_S8_T0_RSaIT1_E.exit.i.i.i.i.i ] ; 2 uses
+  %.sroa.9.4.i = phi ptr [ %.sroa.9.1.i, %bb.at ], [ %i.ne, %_ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EESaIS6_EE13_M_deallocateEPS6_m.exit.i.i.i.i.i ], [ %scevgep.i.i.i.i.i.i.i.i, %_ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEmS6_ET_S8_T0_RSaIT1_E.exit.i.i.i.i.i ] ; 2 uses
+  %.sroa.13.4.i = phi ptr [ %.sroa.14.1.i, %bb.at ], [ %i.nf, %_ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EESaIS6_EE13_M_deallocateEPS6_m.exit.i.i.i.i.i ], [ %.sroa.14.1.i, %_ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEmS6_ET_S8_T0_RSaIT1_E.exit.i.i.i.i.i ] ; 2 uses
+  %.val66.i.i.i = phi ptr [ %.val66.i30.i.i, %bb.at ], [ %i.mu, %_ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EESaIS6_EE13_M_deallocateEPS6_m.exit.i.i.i.i.i ], [ %.sroa.074.1.i, %_ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEmS6_ET_S8_T0_RSaIT1_E.exit.i.i.i.i.i ] ; 5 uses
+  %.val63.i29.i.i = phi ptr [ %.val63.i.i.i, %bb.at ], [ %i.ne, %_ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EESaIS6_EE13_M_deallocateEPS6_m.exit.i.i.i.i.i ], [ %scevgep.i.i.i.i.i.i.i.i, %_ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEmS6_ET_S8_T0_RSaIT1_E.exit.i.i.i.i.i ] ; 2 uses
   %i.ng = getelementptr inbounds nuw i8, ptr %i.lh, i64 16
   %.val64.i.i.i = load ptr, ptr %i.ng, align 8, !tbaa !293, !noalias !299 ; 3 uses
   %i.nh = getelementptr i8, ptr %i.lh, i64 24
@@ -447,7 +414,7 @@ _ZNSt6vectorIS_IN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EESaIS5_EE6resize
   %i.nl = ashr exact i64 %i.nk, 3                 ; 2 uses
   %i.nm = getelementptr inbounds nuw [24 x i8], ptr %.val66.i.i.i, i64 %i.ly ; 4 uses
   %i.nn = getelementptr inbounds nuw i8, ptr %i.nm, i64 8 ; 3 uses
-  %i.no = load ptr, ptr %i.nn, align 8, !tbaa !309, !noalias !299 ; 8 uses
+  %i.no = load ptr, ptr %i.nn, align 8, !tbaa !308, !noalias !299 ; 8 uses
   %i.np = getelementptr inbounds nuw i8, ptr %i.nm, i64 16 ; 3 uses
   %i.nq = load ptr, ptr %i.np, align 8, !tbaa !307, !noalias !299
   %.not.i.i.i26.i = icmp eq ptr %i.no, %i.nq
@@ -460,11 +427,11 @@ bb.ay:                                            ; preds = %_ZNSt6vectorIS_IN12
   %.sroa.6.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.no, i64 16
   store ptr %.015.i.i, ptr %.sroa.6.0..sroa_idx.i.i.i, align 8, !tbaa !98, !noalias !299
   %i.nr = getelementptr inbounds nuw i8, ptr %i.no, i64 24
-  store ptr %i.nr, ptr %i.nn, align 8, !tbaa !309, !noalias !299
+  store ptr %i.nr, ptr %i.nn, align 8, !tbaa !308, !noalias !299
   br label %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i
 
 bb.az:                                            ; preds = %_ZNSt6vectorIS_IN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EESaIS5_EE6resizeEm.exit.i.i.i
-  %.val.i.i.i.i27.i = load ptr, ptr %i.nm, align 8, !tbaa !308, !noalias !299 ; 5 uses
+  %.val.i.i.i.i27.i = load ptr, ptr %i.nm, align 8, !tbaa !309, !noalias !299 ; 5 uses
   %i.ns = ptrtoint ptr %i.no to i64
   %i.nt = ptrtoint ptr %.val.i.i.i.i27.i to i64   ; 2 uses
   %i.nu = sub i64 %i.ns, %i.nt                    ; 3 uses
@@ -502,7 +469,7 @@ _ZNKSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE12_M_check_lenEmP
   %i.of = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i87.i.i.i, i64 24 ; 2 uses
   %i.og = getelementptr inbounds nuw i8, ptr %.03.i.i.i.i.i86.i.i.i, i64 24 ; 2 uses
   %.not.i.i.i.i.i88.i.i.i = icmp eq ptr %i.of, %i.no
-  br i1 %.not.i.i.i.i.i88.i.i.i, label %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit26.i.i.i.i.i, label %.lr.ph.i.i.i.i.i85.i.i.i, !llvm.loop !213
+  br i1 %.not.i.i.i.i.i88.i.i.i, label %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit26.i.i.i.i.i, label %.lr.ph.i.i.i.i.i85.i.i.i, !llvm.loop !212
 
 _ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit26.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i85.i.i.i, %_ZNKSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i
   %.0.lcssa.i.i.i.i.i.i.i.i = phi ptr [ %i.od, %_ZNKSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i ], [ %i.og, %.lr.ph.i.i.i.i.i85.i.i.i ]
@@ -518,8 +485,8 @@ bb.bb:                                            ; preds = %_ZNSt6vectorIN12_GL
   br label %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i
 
 _ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i: ; preds = %bb.bb, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit26.i.i.i.i.i
-  store ptr %i.od, ptr %i.nm, align 8, !tbaa !308, !noalias !299
-  store ptr %i.oh, ptr %i.nn, align 8, !tbaa !309, !noalias !299
+  store ptr %i.od, ptr %i.nm, align 8, !tbaa !309, !noalias !299
+  store ptr %i.oh, ptr %i.nn, align 8, !tbaa !308, !noalias !299
   %i.ol = getelementptr inbounds nuw [24 x i8], ptr %i.od, i64 %i.ob
   store ptr %i.ol, ptr %i.np, align 8, !tbaa !307, !noalias !299
   br label %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i
@@ -540,7 +507,7 @@ _ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE17_M_realloc_inser
 ._crit_edge.i.i.i:                                ; preds = %bb.bg, %.lr.ph107.i.i.i
   %i.op = getelementptr inbounds nuw i8, ptr %.0106.i.i.i, i64 40 ; 2 uses
   %i.oq = icmp ult ptr %i.op, %i.lv
-  br i1 %i.oq, label %.lr.ph107.i.i.i, label %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i, !llvm.loop !214
+  br i1 %i.oq, label %.lr.ph107.i.i.i, label %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i, !llvm.loop !213
 
 bb.bc:                                            ; preds = %bb.bg, %.lr.ph.i.i.i
   %.sroa.089.0105.i.i.i = phi ptr [ %.val67.i.i.i, %.lr.ph.i.i.i ], [ %i.pb, %bb.bg ] ; 2 uses
@@ -574,14 +541,14 @@ bb.bg:                                            ; preds = %bb.bf, %bb.be, %bb.
   br i1 %.not101.i.i.i, label %._crit_edge.i.i.i, label %bb.bc
 
 _ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i: ; preds = %._crit_edge.i.i.i, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i, %bb.ay, %bb.as, %.preheader.i.i.i
-  %.sroa.074.3.i = phi ptr [ %.sroa.074.4.i, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ], [ %.sroa.074.4.i, %bb.ay ], [ %.sroa.074.1.i, %bb.as ], [ %.sroa.074.1.i, %.preheader.i.i.i ], [ %.sroa.074.1.i, %._crit_edge.i.i.i ] ; 2 uses
+  %.sroa.074.3.i = phi ptr [ %.sroa.072.4.i, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ], [ %.sroa.072.4.i, %bb.ay ], [ %.sroa.074.1.i, %bb.as ], [ %.sroa.074.1.i, %.preheader.i.i.i ], [ %.sroa.074.1.i, %._crit_edge.i.i.i ] ; 2 uses
   %.sroa.9.3.i = phi ptr [ %.sroa.9.4.i, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ], [ %.sroa.9.4.i, %bb.ay ], [ %.sroa.9.1.i, %bb.as ], [ %.sroa.9.1.i, %.preheader.i.i.i ], [ %.sroa.9.1.i, %._crit_edge.i.i.i ] ; 2 uses
-  %.sroa.14.3.i = phi ptr [ %.sroa.14.4.i, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ], [ %.sroa.14.4.i, %bb.ay ], [ %.sroa.14.1.i, %bb.as ], [ %.sroa.14.1.i, %.preheader.i.i.i ], [ %.sroa.14.1.i, %._crit_edge.i.i.i ] ; 2 uses
+  %.sroa.14.3.i = phi ptr [ %.sroa.13.4.i, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ], [ %.sroa.13.4.i, %bb.ay ], [ %.sroa.14.1.i, %bb.as ], [ %.sroa.14.1.i, %.preheader.i.i.i ], [ %.sroa.14.1.i, %._crit_edge.i.i.i ] ; 2 uses
   %.val66.i34.i.i = phi ptr [ %.val66.i.i.i, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ], [ %.val66.i.i.i, %bb.ay ], [ %.val66.i30.i.i, %bb.as ], [ %.val66.i30.i.i, %.preheader.i.i.i ], [ %.val66.i30.i.i, %._crit_edge.i.i.i ] ; 2 uses
   %.val63.i28.i.i = phi ptr [ %.val63.i29.i.i, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ], [ %.val63.i29.i.i, %bb.ay ], [ %.val63.i.i.i, %bb.as ], [ %.val63.i.i.i, %.preheader.i.i.i ], [ %.val63.i.i.i, %._crit_edge.i.i.i ] ; 2 uses
   %.val62.i23.i.i = phi ptr [ %.val66.i.i.i, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ], [ %.val66.i.i.i, %bb.ay ], [ %.val62.i.i.i, %bb.as ], [ %.val62.i.i.i, %.preheader.i.i.i ], [ %.val62.i.i.i, %._crit_edge.i.i.i ] ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %i.ly, %.sroa.4.0.copyload.i.i.i
-  br i1 %exitcond.not.i.i.i, label %_ZN12_GLOBAL__N_112StringPackerIhE32computeOverlapsAndParentForEntryEPNS1_11StringEntryEN4llvh8ArrayRefINS1_16SuffixArrayEntryEEEPSt6vectorIS8_INS1_7OverlapESaIS9_EESaISB_EE.exit.i.i, label %bb.ao, !llvm.loop !215
+  br i1 %exitcond.not.i.i.i, label %_ZN12_GLOBAL__N_112StringPackerIhE32computeOverlapsAndParentForEntryEPNS1_11StringEntryEN4llvh8ArrayRefINS1_16SuffixArrayEntryEEEPSt6vectorIS8_INS1_7OverlapESaIS9_EESaISB_EE.exit.i.i, label %bb.ao, !llvm.loop !214
 
 _ZN12_GLOBAL__N_112StringPackerIhE32computeOverlapsAndParentForEntryEPNS1_11StringEntryEN4llvh8ArrayRefINS1_16SuffixArrayEntryEEEPSt6vectorIS8_INS1_7OverlapESaIS9_EESaISB_EE.exit.i.i: ; preds = %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i, %_ZSt15partition_pointIPKN12_GLOBAL__N_112StringPackerIhE16SuffixArrayEntryEZNS2_32computeOverlapsAndParentForEntryEPNS2_11StringEntryEN4llvh8ArrayRefIS3_EEPSt6vectorISB_INS2_7OverlapESaISC_EESaISE_EEEUlRS4_E0_ET_SK_SK_T0_.exit.i.i.i, %_ZSt15partition_pointIPKN12_GLOBAL__N_112StringPackerIhE16SuffixArrayEntryEZNS2_32computeOverlapsAndParentForEntryEPNS2_11StringEntryEN4llvh8ArrayRefIS3_EEPSt6vectorISB_INS2_7OverlapESaISC_EESaISE_EEEUlRS4_E_ET_SK_SK_T0_.exit.i.i.i, %bb.ao, %bb.an
   %.sroa.074.2.i = phi ptr [ %.sroa.074.0.i, %bb.an ], [ %.sroa.074.1.i, %_ZSt15partition_pointIPKN12_GLOBAL__N_112StringPackerIhE16SuffixArrayEntryEZNS2_32computeOverlapsAndParentForEntryEPNS2_11StringEntryEN4llvh8ArrayRefIS3_EEPSt6vectorISB_INS2_7OverlapESaISC_EESaISE_EEEUlRS4_E0_ET_SK_SK_T0_.exit.i.i.i ], [ %.sroa.074.3.i, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ], [ %.sroa.074.1.i, %_ZSt15partition_pointIPKN12_GLOBAL__N_112StringPackerIhE16SuffixArrayEntryEZNS2_32computeOverlapsAndParentForEntryEPNS2_11StringEntryEN4llvh8ArrayRefIS3_EEPSt6vectorISB_INS2_7OverlapESaISC_EESaISE_EEEUlRS4_E_ET_SK_SK_T0_.exit.i.i.i ], [ %.sroa.074.1.i, %bb.ao ] ; 9 uses
@@ -607,7 +574,7 @@ _ZN12_GLOBAL__N_112StringPackerIhE25computeOverlapsAndParentsEN4llvh15MutableArr
 
 .loopexit70.i.i:                                  ; preds = %_ZN4llvh6detail12DenseSetImplIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_8DenseMapIS7_NS0_13DenseSetEmptyENS_12DenseMapInfoIS7_EENS0_12DenseSetPairIS7_EEEESB_E6insertERKS7_.exit.i.i, %.lr.ph89.i.i
   %.not.i33.i = icmp eq i64 %i.ph, 0
-  br i1 %.not.i33.i, label %_ZN12_GLOBAL__N_112StringPackerIhE10planLayoutERKSt6vectorIS2_INS1_7OverlapESaIS3_EESaIS5_EE.exit.i, label %.lr.ph89.i.i, !llvm.loop !216
+  br i1 %.not.i33.i, label %_ZN12_GLOBAL__N_112StringPackerIhE10planLayoutERKSt6vectorIS2_INS1_7OverlapESaIS3_EESaIS5_EE.exit.i, label %.lr.ph89.i.i, !llvm.loop !215
 
 .lr.ph89.i.i:                                     ; preds = %.loopexit70.i.i, %.lr.ph89.preheader.i.i
   %.in.i.i = phi i64 [ %i.ph, %.loopexit70.i.i ], [ %i.pg, %.lr.ph89.preheader.i.i ]
@@ -701,7 +668,7 @@ bb.bo:                                            ; preds = %.lr.ph.i.i.i.i40.i
   %i.qq = getelementptr inbounds nuw [8 x i8], ptr %.val.i.i.i, i64 %i.qp
   %i.qr = load ptr, ptr %i.qq, align 8, !tbaa !98, !noalias !284 ; 2 uses
   %i.qs = icmp eq ptr %i.pl, %i.qr
-  br i1 %i.qs, label %.critedge.i39.i, label %.lr.ph.i.i.i.i40.i, !prof !87, !llvm.loop !217
+  br i1 %i.qs, label %.critedge.i39.i, label %.lr.ph.i.i.i.i40.i, !prof !87, !llvm.loop !216
 
 .loopexit.i41.i:                                  ; preds = %bb.bm, %.lr.ph.i.i.i.i40.i
   %i.qt = getelementptr inbounds nuw i8, ptr %i.px, i64 48
@@ -716,14 +683,14 @@ bb.bp:                                            ; preds = %bb.bp, %.loopexit.i
   %i.qv = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 48
   %i.qw = load ptr, ptr %i.qv, align 8, !tbaa !109, !noalias !284 ; 2 uses
   %.not39.i.i = icmp eq ptr %i.qw, null
-  br i1 %.not39.i.i, label %.preheader.i.i, label %bb.bp, !llvm.loop !218
+  br i1 %.not39.i.i, label %.preheader.i.i, label %bb.bp, !llvm.loop !217
 
 .preheader.i.i:                                   ; preds = %bb.bp, %.preheader.i.i
   %storemerge.i.i = phi ptr [ %i.qy, %.preheader.i.i ], [ %i.px, %bb.bp ] ; 8 uses
   %i.qx = getelementptr inbounds nuw i8, ptr %storemerge.i.i, i64 56
   %i.qy = load ptr, ptr %i.qx, align 8, !tbaa !108, !noalias !284 ; 2 uses
   %.not40.i.i = icmp eq ptr %i.qy, null
-  br i1 %.not40.i.i, label %bb.bq, label %.preheader.i.i, !llvm.loop !219
+  br i1 %.not40.i.i, label %bb.bq, label %.preheader.i.i, !llvm.loop !218
 
 bb.bq:                                            ; preds = %.preheader.i.i
   %i.qz = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 72 ; 3 uses
@@ -773,7 +740,7 @@ bb.bt:                                            ; preds = %.lr.ph.i.i.i.i.i.i
   %i.rv = getelementptr inbounds nuw [8 x i8], ptr %.val7.i.i.i.i, i64 %i.ru ; 2 uses
   %i.rw = load ptr, ptr %i.rv, align 8, !tbaa !98, !noalias !317 ; 2 uses
   %i.rx = icmp eq ptr %storemerge.i.i, %i.rw
-  br i1 %i.rx, label %_ZN4llvh6detail12DenseSetImplIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_8DenseMapIS7_NS0_13DenseSetEmptyENS_12DenseMapInfoIS7_EENS0_12DenseSetPairIS7_EEEESB_E6insertERKS7_.exit.i.i, label %.lr.ph.i.i.i.i.i.i, !prof !87, !llvm.loop !217
+  br i1 %i.rx, label %_ZN4llvh6detail12DenseSetImplIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_8DenseMapIS7_NS0_13DenseSetEmptyENS_12DenseMapInfoIS7_EENS0_12DenseSetPairIS7_EEEESB_E6insertERKS7_.exit.i.i, label %.lr.ph.i.i.i.i.i.i, !prof !87, !llvm.loop !216
 
 _ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E15LookupBucketForIS7_EEbRKT_RPSD_.exit.i.i.i.i: ; preds = %bb.bs, %bb.bq
   %.sink.i.i.i.i.i.i = phi ptr [ %i.rp, %bb.bs ], [ null, %bb.bq ]
@@ -850,7 +817,7 @@ bb.bw:                                            ; preds = %.sink.split.i.i.i.i
   %i.td = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.prol, i64 8 ; 2 uses
   %prol.iter1128.next = add i64 %prol.iter1128, 1 ; 2 uses
   %prol.iter1128.cmp.not = icmp eq i64 %prol.iter1128.next, %xtraiter1126
-  br i1 %prol.iter1128.cmp.not, label %.lr.ph.i.i.i56.i.i.prol.loopexit, label %.lr.ph.i.i.i56.i.i.prol, !llvm.loop !224
+  br i1 %prol.iter1128.cmp.not, label %.lr.ph.i.i.i56.i.i.prol.loopexit, label %.lr.ph.i.i.i56.i.i.prol, !llvm.loop !223
 
 .lr.ph.i.i.i56.i.i.prol.loopexit:                 ; preds = %.lr.ph.i.i.i56.i.i.prol, %.lr.ph.i.i.i56.i.i.preheader
   %.09.i.i.i.i.i.unr = phi ptr [ %i.sw, %.lr.ph.i.i.i56.i.i.preheader ], [ %i.td, %.lr.ph.i.i.i56.i.i.prol ]
@@ -876,7 +843,7 @@ bb.bw:                                            ; preds = %.sink.split.i.i.i.i
   store ptr inttoptr (i64 -8 to ptr), ptr %i.tl, align 8, !tbaa !98, !noalias !317
   %i.tm = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i, i64 64 ; 2 uses
   %.not.i.i.i.i55.i.7 = icmp eq ptr %i.tm, %i.sz
-  br i1 %.not.i.i.i.i55.i.7, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E4growEj.exit.thread.i.i, label %.lr.ph.i.i.i56.i.i, !llvm.loop !225
+  br i1 %.not.i.i.i.i55.i.7, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E4growEj.exit.thread.i.i, label %.lr.ph.i.i.i56.i.i, !llvm.loop !224
 
 bb.bx:                                            ; preds = %.sink.split.i.i.i.i.i43.i
   %i.tn = zext i32 %.val8.i.i.i.i to i64
@@ -907,7 +874,7 @@ bb.bx:                                            ; preds = %.sink.split.i.i.i.i
   %i.tv = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.prol, i64 8 ; 2 uses
   %prol.iter1125.next = add i64 %prol.iter1125, 1 ; 2 uses
   %prol.iter1125.cmp.not = icmp eq i64 %prol.iter1125.next, %xtraiter1123
-  br i1 %prol.iter1125.cmp.not, label %.lr.ph.i.i.i.i54.i.i.prol.loopexit, label %.lr.ph.i.i.i.i54.i.i.prol, !llvm.loop !226
+  br i1 %prol.iter1125.cmp.not, label %.lr.ph.i.i.i.i54.i.i.prol.loopexit, label %.lr.ph.i.i.i.i54.i.i.prol, !llvm.loop !225
 
 .lr.ph.i.i.i.i54.i.i.prol.loopexit:               ; preds = %.lr.ph.i.i.i.i54.i.i.prol, %.lr.ph.i.i.i.i54.i.i.preheader
   %.09.i.i.i.i.i.i.unr = phi ptr [ %i.sw, %.lr.ph.i.i.i.i54.i.i.preheader ], [ %i.tv, %.lr.ph.i.i.i.i54.i.i.prol ]
@@ -933,7 +900,7 @@ bb.bx:                                            ; preds = %.sink.split.i.i.i.i
   store ptr inttoptr (i64 -8 to ptr), ptr %i.ud, align 8, !tbaa !98, !noalias !317
   %i.ue = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i, i64 64 ; 2 uses
   %.not.i.i.i.i55.i.i.7 = icmp eq ptr %i.ue, %i.tr
-  br i1 %.not.i.i.i.i55.i.i.7, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E9initEmptyEv.exit.i.i.i.i.i, label %.lr.ph.i.i.i.i54.i.i, !llvm.loop !225
+  br i1 %.not.i.i.i.i55.i.i.7, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E9initEmptyEv.exit.i.i.i.i.i, label %.lr.ph.i.i.i.i54.i.i, !llvm.loop !224
 
 _ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E9initEmptyEv.exit.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i54.i.i.prol.loopexit, %.lr.ph.i.i.i.i54.i.i, %bb.bx
   br i1 %i.rb, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E4growEj.exit.i.i, label %.lr.ph.i6.i.i.i46.i
@@ -991,7 +958,7 @@ bb.cb:                                            ; preds = %.lr.ph.i.i.i.i.i.i5
   %i.uy = getelementptr inbounds nuw [8 x i8], ptr %i.sw, i64 %i.ux ; 3 uses
   %i.uz = load ptr, ptr %i.uy, align 8, !tbaa !98, !noalias !317 ; 2 uses
   %i.va = icmp eq ptr %i.ug, %i.uz
-  br i1 %i.va, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E15LookupBucketForIS7_EEbRKT_RPSD_.exit.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i53.i, !prof !87, !llvm.loop !217
+  br i1 %i.va, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E15LookupBucketForIS7_EEbRKT_RPSD_.exit.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i53.i, !prof !87, !llvm.loop !216
 
 _ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E15LookupBucketForIS7_EEbRKT_RPSD_.exit.i.i.i.i.i: ; preds = %bb.cb, %bb.ca, %bb.bz
   %.sink.i.i.i.i.i.i.i = phi ptr [ %i.us, %bb.ca ], [ %i.um, %bb.bz ], [ %i.uy, %bb.cb ]
@@ -1004,7 +971,7 @@ bb.cc:                                            ; preds = %_ZN4llvh12DenseMapB
   %.val.i1728.i.i.i.i.i = phi i32 [ %.val.i17.i.i.i.i.i, %bb.by ], [ %.val.i17.i.i.i.i.i, %bb.by ], [ %i.vb, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E15LookupBucketForIS7_EEbRKT_RPSD_.exit.i.i.i.i.i ]
   %i.vc = getelementptr inbounds nuw i8, ptr %.023.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i7.i.i.i.i = icmp eq ptr %i.vc, %i.to
-  br i1 %.not.i7.i.i.i.i, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E4growEj.exit.i.i, label %bb.by, !llvm.loop !227
+  br i1 %.not.i7.i.i.i.i, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E4growEj.exit.i.i, label %bb.by, !llvm.loop !226
 
 _ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E4growEj.exit.i.i: ; preds = %bb.cc, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E9initEmptyEv.exit.i.i.i.i.i
   call void @_ZdlPv(ptr noundef nonnull %.val7.i.i.i.i) #15, !noalias !317
@@ -1055,7 +1022,7 @@ bb.ce:                                            ; preds = %.lr.ph.i.i.i47.i
   %i.vx = getelementptr inbounds nuw [8 x i8], ptr %.val14.i.i.i.i128.i.i, i64 %i.vw ; 3 uses
   %i.vy = load ptr, ptr %i.vx, align 8, !tbaa !98, !noalias !317 ; 2 uses
   %i.vz = icmp eq ptr %storemerge.i.i, %i.vy
-  br i1 %i.vz, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E15LookupBucketForIS7_EEbRKT_RPSD_.exit.i.i, label %.lr.ph.i.i.i47.i, !prof !87, !llvm.loop !217
+  br i1 %i.vz, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E15LookupBucketForIS7_EEbRKT_RPSD_.exit.i.i, label %.lr.ph.i.i.i47.i, !prof !87, !llvm.loop !216
 
 _ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E15LookupBucketForIS7_EEbRKT_RPSD_.exit.i.i: ; preds = %bb.ce, %bb.cd, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E4growEj.exit.thread.i.i, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E4growEj.exit.i.i, %bb.bw
   %.sink.i.i52.i.i = phi ptr [ %i.vr, %bb.cd ], [ null, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E4growEj.exit.i.i ], [ %i.vl, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E4growEj.exit.thread.i.i ], [ null, %bb.bw ], [ %i.vx, %bb.ce ]
@@ -1109,7 +1076,7 @@ _ZN12_GLOBAL__N_112StringPackerIhE10planLayoutERKSt6vectorIS2_INS1_7OverlapESaIS
 
 .lr.ph.i.i.i58.i:                                 ; preds = %._crit_edge.i, %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i
   %.06.i.i.i59.i = phi ptr [ %i.wn, %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i ], [ %.sroa.074.2.i, %._crit_edge.i ] ; 3 uses
-  %.0.val.i.i.i.i = load ptr, ptr %.06.i.i.i59.i, align 8, !tbaa !308 ; 3 uses
+  %.0.val.i.i.i.i = load ptr, ptr %.06.i.i.i59.i, align 8, !tbaa !309 ; 3 uses
   %.not.i.i.i.i.i.i.i60.i = icmp eq ptr %.0.val.i.i.i.i, null
   br i1 %.not.i.i.i.i.i.i.i60.i, label %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i, label %bb.ch
 
@@ -1125,7 +1092,7 @@ bb.ch:                                            ; preds = %.lr.ph.i.i.i58.i
 _ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i: ; preds = %bb.ch, %.lr.ph.i.i.i58.i
   %i.wn = getelementptr inbounds nuw i8, ptr %.06.i.i.i59.i, i64 24 ; 2 uses
   %.not.i.i.i61.i = icmp eq ptr %i.wn, %.sroa.9.5113.i
-  br i1 %.not.i.i.i61.i, label %_ZSt8_DestroyIPSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEEvT_S8_.exit.i.i, label %.lr.ph.i.i.i58.i, !llvm.loop !209
+  br i1 %.not.i.i.i61.i, label %_ZSt8_DestroyIPSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEEvT_S8_.exit.i.i, label %.lr.ph.i.i.i58.i, !llvm.loop !227
 
 _ZSt8_DestroyIPSt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEEvT_S8_.exit.i.i: ; preds = %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i, %._crit_edge.i
   %.not.i.i2.i.i = icmp eq ptr %.sroa.074.2.i, null
@@ -1528,15 +1495,15 @@ bb.dx:                                            ; preds = %_ZN12_GLOBAL__N_112
   br label %bb.dy
 
 bb.dy:                                            ; preds = %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i, %.lr.ph112.i.i.i133
-  %.sroa.074.1.i134 = phi ptr [ %.sroa.074.0.i122, %.lr.ph112.i.i.i133 ], [ %.sroa.074.3.i297, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 12 uses
-  %.sroa.9.1.i135 = phi ptr [ %.sroa.9.0.i123, %.lr.ph112.i.i.i133 ], [ %.sroa.9.3.i298, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 9 uses
-  %.sroa.14.1.i136 = phi ptr [ %.sroa.14.0.i124, %.lr.ph112.i.i.i133 ], [ %.sroa.14.3.i299, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 12 uses
-  %.val66.i30.i.i137 = phi ptr [ %.val66.i31.i.i125, %.lr.ph112.i.i.i133 ], [ %.val66.i34.i.i300, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 10 uses
-  %.val63.i.i.i138 = phi ptr [ %.val63.i25.i.i126, %.lr.ph112.i.i.i133 ], [ %.val63.i28.i.i301, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 16 uses
-  %.val62.i.i.i139 = phi ptr [ %.val62.i20.i.i127, %.lr.ph112.i.i.i133 ], [ %.val62.i23.i.i302, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 12 uses
+  %.sroa.074.1.i134 = phi ptr [ %.sroa.074.0.i122, %.lr.ph112.i.i.i133 ], [ %.sroa.074.3.i297, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 9 uses
+  %.sroa.9.1.i135 = phi ptr [ %.sroa.9.0.i123, %.lr.ph112.i.i.i133 ], [ %.sroa.9.3.i298, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 7 uses
+  %.sroa.14.1.i136 = phi ptr [ %.sroa.14.0.i124, %.lr.ph112.i.i.i133 ], [ %.sroa.14.3.i299, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 9 uses
+  %.val66.i30.i.i137 = phi ptr [ %.val66.i31.i.i125, %.lr.ph112.i.i.i133 ], [ %.val66.i34.i.i300, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 7 uses
+  %.val63.i.i.i138 = phi ptr [ %.val63.i25.i.i126, %.lr.ph112.i.i.i133 ], [ %.val63.i28.i.i301, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 12 uses
+  %.val62.i.i.i139 = phi ptr [ %.val62.i20.i.i127, %.lr.ph112.i.i.i133 ], [ %.val62.i23.i.i302, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 11 uses
   %.047110.i.i.i140 = phi ptr [ %.sroa.075.3.i114, %.lr.ph112.i.i.i133 ], [ %i.ajp, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 2 uses
   %.048109.i.i.i141 = phi ptr [ %i.ais, %.lr.ph112.i.i.i133 ], [ %i.akd, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ]
-  %.049108.i.i.i142 = phi i64 [ 0, %.lr.ph112.i.i.i133 ], [ %i.akg, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 7 uses
+  %.049108.i.i.i142 = phi i64 [ 0, %.lr.ph112.i.i.i133 ], [ %i.akg, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ] ; 8 uses
   %i.aiw = getelementptr inbounds nuw [2 x i8], ptr %.sroa.096.0.copyload.i.i.i129, i64 %.049108.i.i.i142
   %i.aix = load i16, ptr %i.aiw, align 2, !tbaa !66, !noalias !336 ; 2 uses
   %i.aiy = ptrtoint ptr %.048109.i.i.i141 to i64  ; 2 uses
@@ -1646,17 +1613,13 @@ bb.ed:                                            ; preds = %bb.ec
   %i.akm = ptrtoint ptr %.val63.i.i.i138 to i64   ; 2 uses
   %i.akn = ptrtoint ptr %.val62.i.i.i139 to i64   ; 2 uses
   %i.ako = sub i64 %i.akm, %i.akn                 ; 2 uses
-  %i.akp = sdiv exact i64 %i.ako, 24              ; 8 uses
+  %i.akp = sdiv exact i64 %i.ako, 24              ; 6 uses
   %.not58.i.i.i314 = icmp ugt i64 %i.akp, %i.akg
-  br i1 %.not58.i.i.i314, label %_ZNSt6vectorIS_IN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EESaIS5_EE6resizeEm.exit.i.i.i, label %31
+  br i1 %.not58.i.i.i314, label %_ZNSt6vectorIS_IN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EESaIS5_EE6resizeEm.exit.i.i.i, label %bb.ee
 
-31:                                               ; preds = %bb.ed
-  %32 = add i64 %.049108.i.i.i142, 2              ; 5 uses
-  %33 = icmp ugt i64 %32, %i.akp
-  br i1 %33, label %bb.ee, label %34
-
-bb.ee:                                            ; preds = %31
-  %i.akq = sub nuw i64 %32, %i.akp                ; 5 uses
+bb.ee:                                            ; preds = %bb.ed
+  %19 = add nuw i64 %.049108.i.i.i142, 2
+  %i.akq = sub nuw i64 %19, %i.akp                ; 5 uses
   %i.akr = ptrtoint ptr %.sroa.14.1.i136 to i64   ; 2 uses
   %i.aks = sub i64 %i.akr, %i.akm
   %i.akt = sdiv exact i64 %i.aks, 24              ; 2 uses
@@ -1675,7 +1638,7 @@ _ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7O
   br label %_ZNSt6vectorIS_IN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EESaIS5_EE6resizeEm.exit.i.i.i
 
 bb.ef:                                            ; preds = %bb.ee
-  %i.aky = icmp ugt i64 %32, 384307168202282325
+  %i.aky = icmp ugt i64 %.049108.i.i.i142, 384307168202282323
   br i1 %i.aky, label %bb.eg, label %_ZNKSt6vectorIS_IN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i.i.i
 
 bb.eg:                                            ; preds = %bb.ef
@@ -1725,41 +1688,12 @@ _ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EE
   %i.aln = getelementptr inbounds nuw [24 x i8], ptr %i.alc, i64 %i.ala
   br label %_ZNSt6vectorIS_IN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EESaIS5_EE6resizeEm.exit.i.i.i
 
-34:                                               ; preds = %31
-  %35 = icmp ult i64 %32, %i.akp
-  br i1 %35, label %36, label %_ZNSt6vectorIS_IN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EESaIS5_EE6resizeEm.exit.i.i.i
-
-36:                                               ; preds = %34
-  %37 = getelementptr inbounds nuw [24 x i8], ptr %.val62.i.i.i139, i64 %32 ; 4 uses
-  %.not.i9.i.i.i.i336 = icmp eq ptr %.val63.i.i.i138, %37
-  br i1 %.not.i9.i.i.i.i336, label %_ZNSt6vectorIS_IN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EESaIS5_EE6resizeEm.exit.i.i.i, label %.lr.ph.i.i.i.i.i.i28.i337
-
-.lr.ph.i.i.i.i.i.i28.i337:                        ; preds = %36, %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i.i.i.i
-  %.06.i.i.i.i.i.i.i338 = phi ptr [ %43, %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i.i.i.i ], [ %37, %36 ] ; 3 uses
-  %.0.val.i.i.i.i.i.i.i339 = load ptr, ptr %.06.i.i.i.i.i.i.i338, align 8, !tbaa !345, !noalias !336 ; 3 uses
-  %.not.i.i.i.i.i.i.i.i.i.i.i340 = icmp eq ptr %.0.val.i.i.i.i.i.i.i339, null
-  br i1 %.not.i.i.i.i.i.i.i.i.i.i.i340, label %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i.i.i.i, label %38
-
-38:                                               ; preds = %.lr.ph.i.i.i.i.i.i28.i337
-  %39 = getelementptr i8, ptr %.06.i.i.i.i.i.i.i338, i64 16
-  %.0.val4.i.i.i.i.i.i.i341 = load ptr, ptr %39, align 8, !tbaa !344, !noalias !336
-  %40 = ptrtoint ptr %.0.val4.i.i.i.i.i.i.i341 to i64
-  %41 = ptrtoint ptr %.0.val.i.i.i.i.i.i.i339 to i64
-  %42 = sub i64 %40, %41
-  call void @_ZdlPvm(ptr noundef nonnull %.0.val.i.i.i.i.i.i.i339, i64 noundef %42) #18, !noalias !336
-  br label %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i.i.i.i
-
-_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i.i.i.i: ; preds = %38, %.lr.ph.i.i.i.i.i.i28.i337
-  %43 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i338, i64 24 ; 2 uses
-  %.not.i.i.i.i.i.i29.i342 = icmp eq ptr %43, %.val63.i.i.i138
-  br i1 %.not.i.i.i.i.i.i29.i342, label %_ZNSt6vectorIS_IN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EESaIS5_EE6resizeEm.exit.i.i.i, label %.lr.ph.i.i.i.i.i.i28.i337, !llvm.loop !260
-
-_ZNSt6vectorIS_IN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EESaIS5_EE6resizeEm.exit.i.i.i: ; preds = %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i.i.i.i, %36, %34, %_ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EESaIS6_EE13_M_deallocateEPS6_m.exit.i.i.i.i.i, %_ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEmS6_ET_S8_T0_RSaIT1_E.exit.i.i.i.i.i, %bb.ed
-  %.sroa.074.4.i315 = phi ptr [ %.sroa.074.1.i134, %bb.ed ], [ %i.alc, %_ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EESaIS6_EE13_M_deallocateEPS6_m.exit.i.i.i.i.i ], [ %.sroa.074.1.i134, %_ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEmS6_ET_S8_T0_RSaIT1_E.exit.i.i.i.i.i ], [ %.sroa.074.1.i134, %36 ], [ %.sroa.074.1.i134, %34 ], [ %.sroa.074.1.i134, %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i.i.i.i ] ; 2 uses
-  %.sroa.9.4.i316 = phi ptr [ %.sroa.9.1.i135, %bb.ed ], [ %i.alm, %_ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EESaIS6_EE13_M_deallocateEPS6_m.exit.i.i.i.i.i ], [ %scevgep.i.i.i.i.i.i.i.i344, %_ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEmS6_ET_S8_T0_RSaIT1_E.exit.i.i.i.i.i ], [ %.sroa.9.1.i135, %36 ], [ %.sroa.9.1.i135, %34 ], [ %37, %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i.i.i.i ] ; 2 uses
-  %.sroa.14.4.i317 = phi ptr [ %.sroa.14.1.i136, %bb.ed ], [ %i.aln, %_ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EESaIS6_EE13_M_deallocateEPS6_m.exit.i.i.i.i.i ], [ %.sroa.14.1.i136, %_ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEmS6_ET_S8_T0_RSaIT1_E.exit.i.i.i.i.i ], [ %.sroa.14.1.i136, %36 ], [ %.sroa.14.1.i136, %34 ], [ %.sroa.14.1.i136, %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i.i.i.i ] ; 2 uses
-  %.val66.i.i.i318 = phi ptr [ %.val66.i30.i.i137, %bb.ed ], [ %i.alc, %_ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EESaIS6_EE13_M_deallocateEPS6_m.exit.i.i.i.i.i ], [ %.sroa.074.1.i134, %_ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEmS6_ET_S8_T0_RSaIT1_E.exit.i.i.i.i.i ], [ %.val66.i30.i.i137, %36 ], [ %.val66.i30.i.i137, %34 ], [ %.val66.i30.i.i137, %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i.i.i.i ] ; 5 uses
-  %.val63.i29.i.i319 = phi ptr [ %.val63.i.i.i138, %bb.ed ], [ %i.alm, %_ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EESaIS6_EE13_M_deallocateEPS6_m.exit.i.i.i.i.i ], [ %scevgep.i.i.i.i.i.i.i.i344, %_ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEmS6_ET_S8_T0_RSaIT1_E.exit.i.i.i.i.i ], [ %.val63.i.i.i138, %36 ], [ %.val63.i.i.i138, %34 ], [ %37, %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i.i.i.i ] ; 2 uses
+_ZNSt6vectorIS_IN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EESaIS5_EE6resizeEm.exit.i.i.i: ; preds = %_ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EESaIS6_EE13_M_deallocateEPS6_m.exit.i.i.i.i.i, %_ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEmS6_ET_S8_T0_RSaIT1_E.exit.i.i.i.i.i, %bb.ed
+  %.sroa.072.4.i317 = phi ptr [ %.sroa.074.1.i134, %bb.ed ], [ %i.alc, %_ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EESaIS6_EE13_M_deallocateEPS6_m.exit.i.i.i.i.i ], [ %.sroa.074.1.i134, %_ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEmS6_ET_S8_T0_RSaIT1_E.exit.i.i.i.i.i ] ; 2 uses
+  %.sroa.9.4.i318 = phi ptr [ %.sroa.9.1.i135, %bb.ed ], [ %i.alm, %_ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EESaIS6_EE13_M_deallocateEPS6_m.exit.i.i.i.i.i ], [ %scevgep.i.i.i.i.i.i.i.i344, %_ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEmS6_ET_S8_T0_RSaIT1_E.exit.i.i.i.i.i ] ; 2 uses
+  %.sroa.13.4.i319 = phi ptr [ %.sroa.14.1.i136, %bb.ed ], [ %i.aln, %_ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EESaIS6_EE13_M_deallocateEPS6_m.exit.i.i.i.i.i ], [ %.sroa.14.1.i136, %_ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEmS6_ET_S8_T0_RSaIT1_E.exit.i.i.i.i.i ] ; 2 uses
+  %.val66.i.i.i320 = phi ptr [ %.val66.i30.i.i137, %bb.ed ], [ %i.alc, %_ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EESaIS6_EE13_M_deallocateEPS6_m.exit.i.i.i.i.i ], [ %.sroa.074.1.i134, %_ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEmS6_ET_S8_T0_RSaIT1_E.exit.i.i.i.i.i ] ; 5 uses
+  %.val63.i29.i.i321 = phi ptr [ %.val63.i.i.i138, %bb.ed ], [ %i.alm, %_ZNSt12_Vector_baseISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EESaIS6_EE13_M_deallocateEPS6_m.exit.i.i.i.i.i ], [ %scevgep.i.i.i.i.i.i.i.i344, %_ZSt27__uninitialized_default_n_aIPSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEmS6_ET_S8_T0_RSaIT1_E.exit.i.i.i.i.i ] ; 2 uses
   %i.alo = getelementptr inbounds nuw i8, ptr %i.ajp, i64 16
   %.val64.i.i.i320 = load ptr, ptr %i.alo, align 8, !tbaa !330, !noalias !336 ; 3 uses
   %i.alp = getelementptr i8, ptr %i.ajp, i64 24
@@ -1768,9 +1702,9 @@ _ZNSt6vectorIS_IN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EESaIS5_EE6resiz
   %i.alr = ptrtoint ptr %.val64.i.i.i320 to i64
   %i.als = sub i64 %i.alq, %i.alr
   %i.alt = ashr exact i64 %i.als, 3               ; 2 uses
-  %i.alu = getelementptr inbounds nuw [24 x i8], ptr %.val66.i.i.i318, i64 %i.akg ; 4 uses
+  %i.alu = getelementptr inbounds nuw [24 x i8], ptr %.val66.i.i.i320, i64 %i.akg ; 4 uses
   %i.alv = getelementptr inbounds nuw i8, ptr %i.alu, i64 8 ; 3 uses
-  %i.alw = load ptr, ptr %i.alv, align 8, !tbaa !346, !noalias !336 ; 8 uses
+  %i.alw = load ptr, ptr %i.alv, align 8, !tbaa !345, !noalias !336 ; 8 uses
   %i.alx = getelementptr inbounds nuw i8, ptr %i.alu, i64 16 ; 3 uses
   %i.aly = load ptr, ptr %i.alx, align 8, !tbaa !344, !noalias !336
   %.not.i.i.i26.i322 = icmp eq ptr %i.alw, %i.aly
@@ -1783,11 +1717,11 @@ bb.ei:                                            ; preds = %_ZNSt6vectorIS_IN12
   %.sroa.6.0..sroa_idx.i.i.i324 = getelementptr inbounds nuw i8, ptr %i.alw, i64 16
   store ptr %.015.i.i128, ptr %.sroa.6.0..sroa_idx.i.i.i324, align 8, !tbaa !136, !noalias !336
   %i.alz = getelementptr inbounds nuw i8, ptr %i.alw, i64 24
-  store ptr %i.alz, ptr %i.alv, align 8, !tbaa !346, !noalias !336
+  store ptr %i.alz, ptr %i.alv, align 8, !tbaa !345, !noalias !336
   br label %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i
 
 bb.ej:                                            ; preds = %_ZNSt6vectorIS_IN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EESaIS5_EE6resizeEm.exit.i.i.i
-  %.val.i.i.i.i27.i325 = load ptr, ptr %i.alu, align 8, !tbaa !345, !noalias !336 ; 5 uses
+  %.val.i.i.i.i27.i325 = load ptr, ptr %i.alu, align 8, !tbaa !346, !noalias !336 ; 5 uses
   %i.ama = ptrtoint ptr %i.alw to i64
   %i.amb = ptrtoint ptr %.val.i.i.i.i27.i325 to i64 ; 2 uses
   %i.amc = sub i64 %i.ama, %i.amb                 ; 3 uses
@@ -1825,7 +1759,7 @@ _ZNKSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE12_M_check_lenEm
   %i.amn = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i87.i.i.i332, i64 24 ; 2 uses
   %i.amo = getelementptr inbounds nuw i8, ptr %.03.i.i.i.i.i86.i.i.i331, i64 24 ; 2 uses
   %.not.i.i.i.i.i88.i.i.i333 = icmp eq ptr %i.amn, %i.alw
-  br i1 %.not.i.i.i.i.i88.i.i.i333, label %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit26.i.i.i.i.i, label %.lr.ph.i.i.i.i.i85.i.i.i330, !llvm.loop !264
+  br i1 %.not.i.i.i.i.i88.i.i.i333, label %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit26.i.i.i.i.i, label %.lr.ph.i.i.i.i.i85.i.i.i330, !llvm.loop !263
 
 _ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit26.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i85.i.i.i330, %_ZNKSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i
   %.0.lcssa.i.i.i.i.i.i.i.i334 = phi ptr [ %i.aml, %_ZNKSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i ], [ %i.amo, %.lr.ph.i.i.i.i.i85.i.i.i330 ]
@@ -1841,8 +1775,8 @@ bb.el:                                            ; preds = %_ZNSt6vectorIN12_GL
   br label %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i
 
 _ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i: ; preds = %bb.el, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit26.i.i.i.i.i
-  store ptr %i.aml, ptr %i.alu, align 8, !tbaa !345, !noalias !336
-  store ptr %i.amp, ptr %i.alv, align 8, !tbaa !346, !noalias !336
+  store ptr %i.aml, ptr %i.alu, align 8, !tbaa !346, !noalias !336
+  store ptr %i.amp, ptr %i.alv, align 8, !tbaa !345, !noalias !336
   %i.amt = getelementptr inbounds nuw [24 x i8], ptr %i.aml, i64 %i.amj
   store ptr %i.amt, ptr %i.alx, align 8, !tbaa !344, !noalias !336
   br label %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i
@@ -1863,7 +1797,7 @@ _ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE17_M_realloc_inse
 ._crit_edge.i.i.i313:                             ; preds = %bb.eq, %.lr.ph107.i.i.i304
   %i.amx = getelementptr inbounds nuw i8, ptr %.0106.i.i.i305, i64 40 ; 2 uses
   %i.amy = icmp ult ptr %i.amx, %i.akd
-  br i1 %i.amy, label %.lr.ph107.i.i.i304, label %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i, !llvm.loop !265
+  br i1 %i.amy, label %.lr.ph107.i.i.i304, label %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i, !llvm.loop !264
 
 bb.em:                                            ; preds = %bb.eq, %.lr.ph.i.i.i309
   %.sroa.089.0105.i.i.i310 = phi ptr [ %.val67.i.i.i306, %.lr.ph.i.i.i309 ], [ %i.anj, %bb.eq ] ; 2 uses
@@ -1897,14 +1831,14 @@ bb.eq:                                            ; preds = %bb.ep, %bb.eo, %bb.
   br i1 %.not101.i.i.i312, label %._crit_edge.i.i.i313, label %bb.em
 
 _ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i: ; preds = %._crit_edge.i.i.i313, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i, %bb.ei, %bb.ec, %.preheader.i.i.i296
-  %.sroa.074.3.i297 = phi ptr [ %.sroa.074.4.i315, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ], [ %.sroa.074.4.i315, %bb.ei ], [ %.sroa.074.1.i134, %bb.ec ], [ %.sroa.074.1.i134, %.preheader.i.i.i296 ], [ %.sroa.074.1.i134, %._crit_edge.i.i.i313 ] ; 2 uses
-  %.sroa.9.3.i298 = phi ptr [ %.sroa.9.4.i316, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ], [ %.sroa.9.4.i316, %bb.ei ], [ %.sroa.9.1.i135, %bb.ec ], [ %.sroa.9.1.i135, %.preheader.i.i.i296 ], [ %.sroa.9.1.i135, %._crit_edge.i.i.i313 ] ; 2 uses
-  %.sroa.14.3.i299 = phi ptr [ %.sroa.14.4.i317, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ], [ %.sroa.14.4.i317, %bb.ei ], [ %.sroa.14.1.i136, %bb.ec ], [ %.sroa.14.1.i136, %.preheader.i.i.i296 ], [ %.sroa.14.1.i136, %._crit_edge.i.i.i313 ] ; 2 uses
-  %.val66.i34.i.i300 = phi ptr [ %.val66.i.i.i318, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ], [ %.val66.i.i.i318, %bb.ei ], [ %.val66.i30.i.i137, %bb.ec ], [ %.val66.i30.i.i137, %.preheader.i.i.i296 ], [ %.val66.i30.i.i137, %._crit_edge.i.i.i313 ] ; 2 uses
-  %.val63.i28.i.i301 = phi ptr [ %.val63.i29.i.i319, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ], [ %.val63.i29.i.i319, %bb.ei ], [ %.val63.i.i.i138, %bb.ec ], [ %.val63.i.i.i138, %.preheader.i.i.i296 ], [ %.val63.i.i.i138, %._crit_edge.i.i.i313 ] ; 2 uses
-  %.val62.i23.i.i302 = phi ptr [ %.val66.i.i.i318, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ], [ %.val66.i.i.i318, %bb.ei ], [ %.val62.i.i.i139, %bb.ec ], [ %.val62.i.i.i139, %.preheader.i.i.i296 ], [ %.val62.i.i.i139, %._crit_edge.i.i.i313 ] ; 2 uses
+  %.sroa.074.3.i297 = phi ptr [ %.sroa.072.4.i317, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ], [ %.sroa.072.4.i317, %bb.ei ], [ %.sroa.074.1.i134, %bb.ec ], [ %.sroa.074.1.i134, %.preheader.i.i.i296 ], [ %.sroa.074.1.i134, %._crit_edge.i.i.i313 ] ; 2 uses
+  %.sroa.9.3.i298 = phi ptr [ %.sroa.9.4.i318, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ], [ %.sroa.9.4.i318, %bb.ei ], [ %.sroa.9.1.i135, %bb.ec ], [ %.sroa.9.1.i135, %.preheader.i.i.i296 ], [ %.sroa.9.1.i135, %._crit_edge.i.i.i313 ] ; 2 uses
+  %.sroa.14.3.i299 = phi ptr [ %.sroa.13.4.i319, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ], [ %.sroa.13.4.i319, %bb.ei ], [ %.sroa.14.1.i136, %bb.ec ], [ %.sroa.14.1.i136, %.preheader.i.i.i296 ], [ %.sroa.14.1.i136, %._crit_edge.i.i.i313 ] ; 2 uses
+  %.val66.i34.i.i300 = phi ptr [ %.val66.i.i.i320, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ], [ %.val66.i.i.i320, %bb.ei ], [ %.val66.i30.i.i137, %bb.ec ], [ %.val66.i30.i.i137, %.preheader.i.i.i296 ], [ %.val66.i30.i.i137, %._crit_edge.i.i.i313 ] ; 2 uses
+  %.val63.i28.i.i301 = phi ptr [ %.val63.i29.i.i321, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ], [ %.val63.i29.i.i321, %bb.ei ], [ %.val63.i.i.i138, %bb.ec ], [ %.val63.i.i.i138, %.preheader.i.i.i296 ], [ %.val63.i.i.i138, %._crit_edge.i.i.i313 ] ; 2 uses
+  %.val62.i23.i.i302 = phi ptr [ %.val66.i.i.i320, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ], [ %.val66.i.i.i320, %bb.ei ], [ %.val62.i.i.i139, %bb.ec ], [ %.val62.i.i.i139, %.preheader.i.i.i296 ], [ %.val62.i.i.i139, %._crit_edge.i.i.i313 ] ; 2 uses
   %exitcond.not.i.i.i303 = icmp eq i64 %i.akg, %.sroa.4.0.copyload.i.i.i131
-  br i1 %exitcond.not.i.i.i303, label %_ZN12_GLOBAL__N_112StringPackerIDsE32computeOverlapsAndParentForEntryEPNS1_11StringEntryEN4llvh8ArrayRefINS1_16SuffixArrayEntryEEEPSt6vectorIS8_INS1_7OverlapESaIS9_EESaISB_EE.exit.i.i, label %bb.dy, !llvm.loop !266
+  br i1 %exitcond.not.i.i.i303, label %_ZN12_GLOBAL__N_112StringPackerIDsE32computeOverlapsAndParentForEntryEPNS1_11StringEntryEN4llvh8ArrayRefINS1_16SuffixArrayEntryEEEPSt6vectorIS8_INS1_7OverlapESaIS9_EESaISB_EE.exit.i.i, label %bb.dy, !llvm.loop !265
 
 _ZN12_GLOBAL__N_112StringPackerIDsE32computeOverlapsAndParentForEntryEPNS1_11StringEntryEN4llvh8ArrayRefINS1_16SuffixArrayEntryEEEPSt6vectorIS8_INS1_7OverlapESaIS9_EESaISB_EE.exit.i.i: ; preds = %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i, %_ZSt15partition_pointIPKN12_GLOBAL__N_112StringPackerIDsE16SuffixArrayEntryEZNS2_32computeOverlapsAndParentForEntryEPNS2_11StringEntryEN4llvh8ArrayRefIS3_EEPSt6vectorISB_INS2_7OverlapESaISC_EESaISE_EEEUlRS4_E0_ET_SK_SK_T0_.exit.i.i.i, %_ZSt15partition_pointIPKN12_GLOBAL__N_112StringPackerIDsE16SuffixArrayEntryEZNS2_32computeOverlapsAndParentForEntryEPNS2_11StringEntryEN4llvh8ArrayRefIS3_EEPSt6vectorISB_INS2_7OverlapESaISC_EESaISE_EEEUlRS4_E_ET_SK_SK_T0_.exit.i.i.i, %bb.dy, %bb.dx
   %.sroa.074.2.i143 = phi ptr [ %.sroa.074.0.i122, %bb.dx ], [ %.sroa.074.1.i134, %_ZSt15partition_pointIPKN12_GLOBAL__N_112StringPackerIDsE16SuffixArrayEntryEZNS2_32computeOverlapsAndParentForEntryEPNS2_11StringEntryEN4llvh8ArrayRefIS3_EEPSt6vectorISB_INS2_7OverlapESaISC_EESaISE_EEEUlRS4_E0_ET_SK_SK_T0_.exit.i.i.i ], [ %.sroa.074.3.i297, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE9push_backERKS3_.exit.i.i.i ], [ %.sroa.074.1.i134, %_ZSt15partition_pointIPKN12_GLOBAL__N_112StringPackerIDsE16SuffixArrayEntryEZNS2_32computeOverlapsAndParentForEntryEPNS2_11StringEntryEN4llvh8ArrayRefIS3_EEPSt6vectorISB_INS2_7OverlapESaISC_EESaISE_EEEUlRS4_E_ET_SK_SK_T0_.exit.i.i.i ], [ %.sroa.074.1.i134, %bb.dy ] ; 9 uses
@@ -1930,7 +1864,7 @@ _ZN12_GLOBAL__N_112StringPackerIDsE25computeOverlapsAndParentsEN4llvh15MutableAr
 
 .loopexit70.i.i161:                               ; preds = %_ZN4llvh6detail12DenseSetImplIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_8DenseMapIS7_NS0_13DenseSetEmptyENS_12DenseMapInfoIS7_EENS0_12DenseSetPairIS7_EEEESB_E6insertERKS7_.exit.i.i, %.lr.ph89.i.i152
   %.not.i33.i162 = icmp eq i64 %i.anp, 0
-  br i1 %.not.i33.i162, label %_ZN12_GLOBAL__N_112StringPackerIDsE10planLayoutERKSt6vectorIS2_INS1_7OverlapESaIS3_EESaIS5_EE.exit.i, label %.lr.ph89.i.i152, !llvm.loop !267
+  br i1 %.not.i33.i162, label %_ZN12_GLOBAL__N_112StringPackerIDsE10planLayoutERKSt6vectorIS2_INS1_7OverlapESaIS3_EESaIS5_EE.exit.i, label %.lr.ph89.i.i152, !llvm.loop !266
 
 .lr.ph89.i.i152:                                  ; preds = %.loopexit70.i.i161, %.lr.ph89.preheader.i.i151
   %.in.i.i153 = phi i64 [ %i.anp, %.loopexit70.i.i161 ], [ %i.ano, %.lr.ph89.preheader.i.i151 ]
@@ -2024,7 +1958,7 @@ bb.ey:                                            ; preds = %.lr.ph.i.i.i.i40.i1
   %i.aoy = getelementptr inbounds nuw [8 x i8], ptr %.val.i.i.i194, i64 %i.aox
   %i.aoz = load ptr, ptr %i.aoy, align 8, !tbaa !136, !noalias !321 ; 2 uses
   %i.apa = icmp eq ptr %i.ant, %i.aoz
-  br i1 %i.apa, label %.critedge.i39.i191, label %.lr.ph.i.i.i.i40.i197, !prof !87, !llvm.loop !268
+  br i1 %i.apa, label %.critedge.i39.i191, label %.lr.ph.i.i.i.i40.i197, !prof !87, !llvm.loop !267
 
 .loopexit.i41.i201:                               ; preds = %bb.ew, %.lr.ph.i.i.i.i40.i197
   %i.apb = getelementptr inbounds nuw i8, ptr %i.aof, i64 48
@@ -2039,14 +1973,14 @@ bb.ez:                                            ; preds = %bb.ez, %.loopexit.i
   %i.apd = getelementptr inbounds nuw i8, ptr %.0.i.i202, i64 48
   %i.ape = load ptr, ptr %i.apd, align 8, !tbaa !147, !noalias !321 ; 2 uses
   %.not39.i.i203 = icmp eq ptr %i.ape, null
-  br i1 %.not39.i.i203, label %.preheader.i.i205, label %bb.ez, !llvm.loop !269
+  br i1 %.not39.i.i203, label %.preheader.i.i205, label %bb.ez, !llvm.loop !268
 
 .preheader.i.i205:                                ; preds = %bb.ez, %.preheader.i.i205
   %storemerge.i.i206 = phi ptr [ %i.apg, %.preheader.i.i205 ], [ %i.aof, %bb.ez ] ; 8 uses
   %i.apf = getelementptr inbounds nuw i8, ptr %storemerge.i.i206, i64 56
   %i.apg = load ptr, ptr %i.apf, align 8, !tbaa !146, !noalias !321 ; 2 uses
   %.not40.i.i207 = icmp eq ptr %i.apg, null
-  br i1 %.not40.i.i207, label %bb.fa, label %.preheader.i.i205, !llvm.loop !270
+  br i1 %.not40.i.i207, label %bb.fa, label %.preheader.i.i205, !llvm.loop !269
 
 bb.fa:                                            ; preds = %.preheader.i.i205
   %i.aph = getelementptr inbounds nuw i8, ptr %.0.i.i202, i64 72 ; 3 uses
@@ -2096,7 +2030,7 @@ bb.fd:                                            ; preds = %.lr.ph.i.i.i.i.i.i2
   %i.aqd = getelementptr inbounds nuw [8 x i8], ptr %.val7.i.i.i.i208, i64 %i.aqc ; 2 uses
   %i.aqe = load ptr, ptr %i.aqd, align 8, !tbaa !136, !noalias !354 ; 2 uses
   %i.aqf = icmp eq ptr %storemerge.i.i206, %i.aqe
-  br i1 %i.aqf, label %_ZN4llvh6detail12DenseSetImplIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_8DenseMapIS7_NS0_13DenseSetEmptyENS_12DenseMapInfoIS7_EENS0_12DenseSetPairIS7_EEEESB_E6insertERKS7_.exit.i.i, label %.lr.ph.i.i.i.i.i.i211, !prof !87, !llvm.loop !268
+  br i1 %i.aqf, label %_ZN4llvh6detail12DenseSetImplIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_8DenseMapIS7_NS0_13DenseSetEmptyENS_12DenseMapInfoIS7_EENS0_12DenseSetPairIS7_EEEESB_E6insertERKS7_.exit.i.i, label %.lr.ph.i.i.i.i.i.i211, !prof !87, !llvm.loop !267
 
 _ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E15LookupBucketForIS7_EEbRKT_RPSD_.exit.i.i.i.i: ; preds = %bb.fc, %bb.fa
   %.sink.i.i.i.i.i.i219 = phi ptr [ %i.apx, %bb.fc ], [ null, %bb.fa ]
@@ -2173,7 +2107,7 @@ bb.fg:                                            ; preds = %.sink.split.i.i.i.i
   %i.arl = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i270.prol, i64 8 ; 2 uses
   %prol.iter1138.next = add i64 %prol.iter1138, 1 ; 2 uses
   %prol.iter1138.cmp.not = icmp eq i64 %prol.iter1138.next, %xtraiter1136
-  br i1 %prol.iter1138.cmp.not, label %.lr.ph.i.i.i56.i.i269.prol.loopexit, label %.lr.ph.i.i.i56.i.i269.prol, !llvm.loop !275
+  br i1 %prol.iter1138.cmp.not, label %.lr.ph.i.i.i56.i.i269.prol.loopexit, label %.lr.ph.i.i.i56.i.i269.prol, !llvm.loop !274
 
 .lr.ph.i.i.i56.i.i269.prol.loopexit:              ; preds = %.lr.ph.i.i.i56.i.i269.prol, %.lr.ph.i.i.i56.i.i269.preheader
   %.09.i.i.i.i.i270.unr = phi ptr [ %i.are, %.lr.ph.i.i.i56.i.i269.preheader ], [ %i.arl, %.lr.ph.i.i.i56.i.i269.prol ]
@@ -2199,7 +2133,7 @@ bb.fg:                                            ; preds = %.sink.split.i.i.i.i
   store ptr inttoptr (i64 -8 to ptr), ptr %i.art, align 8, !tbaa !136, !noalias !354
   %i.aru = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i270, i64 64 ; 2 uses
   %.not.i.i.i.i55.i271.7 = icmp eq ptr %i.aru, %i.arh
-  br i1 %.not.i.i.i.i55.i271.7, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E4growEj.exit.thread.i.i, label %.lr.ph.i.i.i56.i.i269, !llvm.loop !276
+  br i1 %.not.i.i.i.i55.i271.7, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E4growEj.exit.thread.i.i, label %.lr.ph.i.i.i56.i.i269, !llvm.loop !275
 
 bb.fh:                                            ; preds = %.sink.split.i.i.i.i.i43.i222
   %i.arv = zext i32 %.val8.i.i.i.i209 to i64
@@ -2230,7 +2164,7 @@ bb.fh:                                            ; preds = %.sink.split.i.i.i.i
   %i.asd = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i264.prol, i64 8 ; 2 uses
   %prol.iter1135.next = add i64 %prol.iter1135, 1 ; 2 uses
   %prol.iter1135.cmp.not = icmp eq i64 %prol.iter1135.next, %xtraiter1133
-  br i1 %prol.iter1135.cmp.not, label %.lr.ph.i.i.i.i54.i.i263.prol.loopexit, label %.lr.ph.i.i.i.i54.i.i263.prol, !llvm.loop !277
+  br i1 %prol.iter1135.cmp.not, label %.lr.ph.i.i.i.i54.i.i263.prol.loopexit, label %.lr.ph.i.i.i.i54.i.i263.prol, !llvm.loop !276
 
 .lr.ph.i.i.i.i54.i.i263.prol.loopexit:            ; preds = %.lr.ph.i.i.i.i54.i.i263.prol, %.lr.ph.i.i.i.i54.i.i263.preheader
   %.09.i.i.i.i.i.i264.unr = phi ptr [ %i.are, %.lr.ph.i.i.i.i54.i.i263.preheader ], [ %i.asd, %.lr.ph.i.i.i.i54.i.i263.prol ]
@@ -2256,7 +2190,7 @@ bb.fh:                                            ; preds = %.sink.split.i.i.i.i
   store ptr inttoptr (i64 -8 to ptr), ptr %i.asl, align 8, !tbaa !136, !noalias !354
   %i.asm = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i264, i64 64 ; 2 uses
   %.not.i.i.i.i55.i.i265.7 = icmp eq ptr %i.asm, %i.arz
-  br i1 %.not.i.i.i.i55.i.i265.7, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E9initEmptyEv.exit.i.i.i.i.i, label %.lr.ph.i.i.i.i54.i.i263, !llvm.loop !276
+  br i1 %.not.i.i.i.i55.i.i265.7, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E9initEmptyEv.exit.i.i.i.i.i, label %.lr.ph.i.i.i.i54.i.i263, !llvm.loop !275
 
 _ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E9initEmptyEv.exit.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i54.i.i263.prol.loopexit, %.lr.ph.i.i.i.i54.i.i263, %bb.fh
   br i1 %i.apj, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E4growEj.exit.i.i, label %.lr.ph.i6.i.i.i46.i230
@@ -2314,7 +2248,7 @@ bb.fl:                                            ; preds = %.lr.ph.i.i.i.i.i.i5
   %i.atg = getelementptr inbounds nuw [8 x i8], ptr %i.are, i64 %i.atf ; 3 uses
   %i.ath = load ptr, ptr %i.atg, align 8, !tbaa !136, !noalias !354 ; 2 uses
   %i.ati = icmp eq ptr %i.aso, %i.ath
-  br i1 %i.ati, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E15LookupBucketForIS7_EEbRKT_RPSD_.exit.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i53.i254, !prof !87, !llvm.loop !268
+  br i1 %i.ati, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E15LookupBucketForIS7_EEbRKT_RPSD_.exit.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i53.i254, !prof !87, !llvm.loop !267
 
 _ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E15LookupBucketForIS7_EEbRKT_RPSD_.exit.i.i.i.i.i: ; preds = %bb.fl, %bb.fk, %bb.fj
   %.sink.i.i.i.i.i.i.i261 = phi ptr [ %i.ata, %bb.fk ], [ %i.asu, %bb.fj ], [ %i.atg, %bb.fl ]
@@ -2327,7 +2261,7 @@ bb.fm:                                            ; preds = %_ZN4llvh12DenseMapB
   %.val.i1728.i.i.i.i.i234 = phi i32 [ %.val.i17.i.i.i.i.i231, %bb.fi ], [ %.val.i17.i.i.i.i.i231, %bb.fi ], [ %i.atj, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E15LookupBucketForIS7_EEbRKT_RPSD_.exit.i.i.i.i.i ]
   %i.atk = getelementptr inbounds nuw i8, ptr %.023.i.i.i.i.i232, i64 8 ; 2 uses
   %.not.i7.i.i.i.i235 = icmp eq ptr %i.atk, %i.arw
-  br i1 %.not.i7.i.i.i.i235, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E4growEj.exit.i.i, label %bb.fi, !llvm.loop !278
+  br i1 %.not.i7.i.i.i.i235, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E4growEj.exit.i.i, label %bb.fi, !llvm.loop !277
 
 _ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E4growEj.exit.i.i: ; preds = %bb.fm, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E9initEmptyEv.exit.i.i.i.i.i
   call void @_ZdlPv(ptr noundef nonnull %.val7.i.i.i.i208) #15, !noalias !354
@@ -2378,7 +2312,7 @@ bb.fo:                                            ; preds = %.lr.ph.i.i.i47.i241
   %i.auf = getelementptr inbounds nuw [8 x i8], ptr %.val14.i.i.i.i128.i.i239, i64 %i.aue ; 3 uses
   %i.aug = load ptr, ptr %i.auf, align 8, !tbaa !136, !noalias !354 ; 2 uses
   %i.auh = icmp eq ptr %storemerge.i.i206, %i.aug
-  br i1 %i.auh, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E15LookupBucketForIS7_EEbRKT_RPSD_.exit.i.i, label %.lr.ph.i.i.i47.i241, !prof !87, !llvm.loop !268
+  br i1 %i.auh, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E15LookupBucketForIS7_EEbRKT_RPSD_.exit.i.i, label %.lr.ph.i.i.i47.i241, !prof !87, !llvm.loop !267
 
 _ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E15LookupBucketForIS7_EEbRKT_RPSD_.exit.i.i: ; preds = %bb.fo, %bb.fn, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E4growEj.exit.thread.i.i, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E4growEj.exit.i.i, %bb.fg
   %.sink.i.i52.i.i248 = phi ptr [ %i.atz, %bb.fn ], [ null, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E4growEj.exit.i.i ], [ %i.att, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E4growEj.exit.thread.i.i ], [ null, %bb.fg ], [ %i.auf, %bb.fo ]
@@ -2432,7 +2366,7 @@ _ZN12_GLOBAL__N_112StringPackerIDsE10planLayoutERKSt6vectorIS2_INS1_7OverlapESaI
 
 .lr.ph.i.i.i58.i168:                              ; preds = %._crit_edge.i167, %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i
   %.06.i.i.i59.i169 = phi ptr [ %i.auv, %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i ], [ %.sroa.074.2.i143, %._crit_edge.i167 ] ; 3 uses
-  %.0.val.i.i.i.i170 = load ptr, ptr %.06.i.i.i59.i169, align 8, !tbaa !345 ; 3 uses
+  %.0.val.i.i.i.i170 = load ptr, ptr %.06.i.i.i59.i169, align 8, !tbaa !346 ; 3 uses
   %.not.i.i.i.i.i.i.i60.i171 = icmp eq ptr %.0.val.i.i.i.i170, null
   br i1 %.not.i.i.i.i.i.i.i60.i171, label %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i, label %bb.fr
 
@@ -2448,7 +2382,7 @@ bb.fr:                                            ; preds = %.lr.ph.i.i.i58.i168
 _ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i: ; preds = %bb.fr, %.lr.ph.i.i.i58.i168
   %i.auv = getelementptr inbounds nuw i8, ptr %.06.i.i.i59.i169, i64 24 ; 2 uses
   %.not.i.i.i61.i173 = icmp eq ptr %i.auv, %.sroa.9.5113.i163
-  br i1 %.not.i.i.i61.i173, label %_ZSt8_DestroyIPSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEEvT_S8_.exit.i.i, label %.lr.ph.i.i.i58.i168, !llvm.loop !260
+  br i1 %.not.i.i.i61.i173, label %_ZSt8_DestroyIPSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEEvT_S8_.exit.i.i, label %.lr.ph.i.i.i58.i168, !llvm.loop !278
 
 _ZSt8_DestroyIPSt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEEvT_S8_.exit.i.i: ; preds = %_ZSt8_DestroyISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EEEvPT_.exit.i.i.i.i, %._crit_edge.i167
   %.not.i.i2.i.i174 = icmp eq ptr %.sroa.074.2.i143, null
@@ -2851,24 +2785,24 @@ begin_hunk_2_@bcmp
 !206 = distinct !{!206, !205, !"_ZSt19__relocate_object_aISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EES6_SaIS6_EEvPT_PT0_RT1_: argument 0"}
 !207 = distinct !{!207, !205, !"_ZSt19__relocate_object_aISt6vectorIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS4_EES6_SaIS6_EEvPT_PT0_RT1_: argument 1"}
 !208 = distinct !{!208, !68}
-!209 = distinct !{!209, !68}
-!210 = distinct !{!210, !"_ZSt19__relocate_object_aIN12_GLOBAL__N_112StringPackerIhE7OverlapES3_SaIS3_EEvPT_PT0_RT1_"}
-!211 = distinct !{!211, !210, !"_ZSt19__relocate_object_aIN12_GLOBAL__N_112StringPackerIhE7OverlapES3_SaIS3_EEvPT_PT0_RT1_: argument 1"}
-!212 = distinct !{!212, !210, !"_ZSt19__relocate_object_aIN12_GLOBAL__N_112StringPackerIhE7OverlapES3_SaIS3_EEvPT_PT0_RT1_: argument 0"}
+!209 = distinct !{!209, !"_ZSt19__relocate_object_aIN12_GLOBAL__N_112StringPackerIhE7OverlapES3_SaIS3_EEvPT_PT0_RT1_"}
+!210 = distinct !{!210, !209, !"_ZSt19__relocate_object_aIN12_GLOBAL__N_112StringPackerIhE7OverlapES3_SaIS3_EEvPT_PT0_RT1_: argument 1"}
+!211 = distinct !{!211, !209, !"_ZSt19__relocate_object_aIN12_GLOBAL__N_112StringPackerIhE7OverlapES3_SaIS3_EEvPT_PT0_RT1_: argument 0"}
+!212 = distinct !{!212, !68}
 !213 = distinct !{!213, !68}
 !214 = distinct !{!214, !68}
 !215 = distinct !{!215, !68}
 !216 = distinct !{!216, !68}
 !217 = distinct !{!217, !68}
 !218 = distinct !{!218, !68}
-!219 = distinct !{!219, !68}
-!220 = distinct !{!220, !"_ZN4llvh6detail12DenseSetImplIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_8DenseMapIS7_NS0_13DenseSetEmptyENS_12DenseMapInfoIS7_EENS0_12DenseSetPairIS7_EEEESB_E6insertERKS7_"}
-!221 = distinct !{!221, !220, !"_ZN4llvh6detail12DenseSetImplIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_8DenseMapIS7_NS0_13DenseSetEmptyENS_12DenseMapInfoIS7_EENS0_12DenseSetPairIS7_EEEESB_E6insertERKS7_: argument 0"}
-!222 = distinct !{!222, !"_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E11try_emplaceIJRS9_EEESt4pairINS_16DenseMapIteratorIS7_S9_SB_SD_Lb0EEEbERKS7_DpOT_"}
-!223 = distinct !{!223, !222, !"_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E11try_emplaceIJRS9_EEESt4pairINS_16DenseMapIteratorIS7_S9_SB_SD_Lb0EEEbERKS7_DpOT_: argument 0"}
-!224 = distinct !{!224, !85}
-!225 = distinct !{!225, !68}
-!226 = distinct !{!226, !85}
+!219 = distinct !{!219, !"_ZN4llvh6detail12DenseSetImplIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_8DenseMapIS7_NS0_13DenseSetEmptyENS_12DenseMapInfoIS7_EENS0_12DenseSetPairIS7_EEEESB_E6insertERKS7_"}
+!220 = distinct !{!220, !219, !"_ZN4llvh6detail12DenseSetImplIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_8DenseMapIS7_NS0_13DenseSetEmptyENS_12DenseMapInfoIS7_EENS0_12DenseSetPairIS7_EEEESB_E6insertERKS7_: argument 0"}
+!221 = distinct !{!221, !"_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E11try_emplaceIJRS9_EEESt4pairINS_16DenseMapIteratorIS7_S9_SB_SD_Lb0EEEbERKS7_DpOT_"}
+!222 = distinct !{!222, !221, !"_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIhE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E11try_emplaceIJRS9_EEESt4pairINS_16DenseMapIteratorIS7_S9_SB_SD_Lb0EEEbERKS7_DpOT_: argument 0"}
+!223 = distinct !{!223, !85}
+!224 = distinct !{!224, !68}
+!225 = distinct !{!225, !85}
+!226 = distinct !{!226, !68}
 !227 = distinct !{!227, !68}
 !228 = distinct !{!228, !68}
 !229 = distinct !{!229, !"_ZN12_GLOBAL__N_112StringPackerIDsE21optimizingPackStringsEN4llvh15MutableArrayRefINS1_11StringEntryEEE"}
@@ -2902,24 +2836,24 @@ begin_hunk_2_@bcmp
 !257 = distinct !{!257, !256, !"_ZSt19__relocate_object_aISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EES6_SaIS6_EEvPT_PT0_RT1_: argument 0"}
 !258 = distinct !{!258, !256, !"_ZSt19__relocate_object_aISt6vectorIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS4_EES6_SaIS6_EEvPT_PT0_RT1_: argument 1"}
 !259 = distinct !{!259, !68}
-!260 = distinct !{!260, !68}
-!261 = distinct !{!261, !"_ZSt19__relocate_object_aIN12_GLOBAL__N_112StringPackerIDsE7OverlapES3_SaIS3_EEvPT_PT0_RT1_"}
-!262 = distinct !{!262, !261, !"_ZSt19__relocate_object_aIN12_GLOBAL__N_112StringPackerIDsE7OverlapES3_SaIS3_EEvPT_PT0_RT1_: argument 1"}
-!263 = distinct !{!263, !261, !"_ZSt19__relocate_object_aIN12_GLOBAL__N_112StringPackerIDsE7OverlapES3_SaIS3_EEvPT_PT0_RT1_: argument 0"}
+!260 = distinct !{!260, !"_ZSt19__relocate_object_aIN12_GLOBAL__N_112StringPackerIDsE7OverlapES3_SaIS3_EEvPT_PT0_RT1_"}
+!261 = distinct !{!261, !260, !"_ZSt19__relocate_object_aIN12_GLOBAL__N_112StringPackerIDsE7OverlapES3_SaIS3_EEvPT_PT0_RT1_: argument 1"}
+!262 = distinct !{!262, !260, !"_ZSt19__relocate_object_aIN12_GLOBAL__N_112StringPackerIDsE7OverlapES3_SaIS3_EEvPT_PT0_RT1_: argument 0"}
+!263 = distinct !{!263, !68}
 !264 = distinct !{!264, !68}
 !265 = distinct !{!265, !68}
 !266 = distinct !{!266, !68}
 !267 = distinct !{!267, !68}
 !268 = distinct !{!268, !68}
 !269 = distinct !{!269, !68}
-!270 = distinct !{!270, !68}
-!271 = distinct !{!271, !"_ZN4llvh6detail12DenseSetImplIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_8DenseMapIS7_NS0_13DenseSetEmptyENS_12DenseMapInfoIS7_EENS0_12DenseSetPairIS7_EEEESB_E6insertERKS7_"}
-!272 = distinct !{!272, !271, !"_ZN4llvh6detail12DenseSetImplIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_8DenseMapIS7_NS0_13DenseSetEmptyENS_12DenseMapInfoIS7_EENS0_12DenseSetPairIS7_EEEESB_E6insertERKS7_: argument 0"}
-!273 = distinct !{!273, !"_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E11try_emplaceIJRS9_EEESt4pairINS_16DenseMapIteratorIS7_S9_SB_SD_Lb0EEEbERKS7_DpOT_"}
-!274 = distinct !{!274, !273, !"_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E11try_emplaceIJRS9_EEESt4pairINS_16DenseMapIteratorIS7_S9_SB_SD_Lb0EEEbERKS7_DpOT_: argument 0"}
-!275 = distinct !{!275, !85}
-!276 = distinct !{!276, !68}
-!277 = distinct !{!277, !85}
+!270 = distinct !{!270, !"_ZN4llvh6detail12DenseSetImplIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_8DenseMapIS7_NS0_13DenseSetEmptyENS_12DenseMapInfoIS7_EENS0_12DenseSetPairIS7_EEEESB_E6insertERKS7_"}
+!271 = distinct !{!271, !270, !"_ZN4llvh6detail12DenseSetImplIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_8DenseMapIS7_NS0_13DenseSetEmptyENS_12DenseMapInfoIS7_EENS0_12DenseSetPairIS7_EEEESB_E6insertERKS7_: argument 0"}
+!272 = distinct !{!272, !"_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E11try_emplaceIJRS9_EEESt4pairINS_16DenseMapIteratorIS7_S9_SB_SD_Lb0EEEbERKS7_DpOT_"}
+!273 = distinct !{!273, !272, !"_ZN4llvh12DenseMapBaseINS_8DenseMapIPKN12_GLOBAL__N_112StringPackerIDsE11StringEntryENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS7_EENS8_12DenseSetPairIS7_EEEES7_S9_SB_SD_E11try_emplaceIJRS9_EEESt4pairINS_16DenseMapIteratorIS7_S9_SB_SD_Lb0EEEbERKS7_DpOT_: argument 0"}
+!274 = distinct !{!274, !85}
+!275 = distinct !{!275, !68}
+!276 = distinct !{!276, !85}
+!277 = distinct !{!277, !68}
 !278 = distinct !{!278, !68}
 !279 = distinct !{!279, !68}
 !280 = distinct !{!280, !"_ZN12_GLOBAL__N_112StringPackerIhE15fastPackStringsEN4llvh15MutableArrayRefINS1_11StringEntryEEE"}
@@ -2950,19 +2884,19 @@ begin_hunk_2_@bcmp
 !305 = !{!207, !202, !179}
 !306 = !{!"_ZTSNSt12_Vector_baseIN12_GLOBAL__N_112StringPackerIhE7OverlapESaIS3_EE17_Vector_impl_dataE", !302, i64 0, !302, i64 8, !302, i64 16}
 !307 = !{!306, !302, i64 16}
-!308 = !{!306, !302, i64 0}
-!309 = !{!306, !302, i64 8}
+!308 = !{!306, !302, i64 8}
+!309 = !{!306, !302, i64 0}
 !310 = !{i64 0, i64 8, !95, i64 8, i64 8, !84, i64 16, i64 8, !98}
-!311 = !{!212, !211}
+!311 = !{!211, !210}
 !312 = !{!"_ZTSN4llvh8ArrayRefIPN12_GLOBAL__N_112StringPackerIhE11StringEntryEEE", !94, i64 0, !37, i64 8}
 !313 = !{!"_ZTSN12_GLOBAL__N_112StringPackerIhE7OverlapE", !312, i64 0, !74, i64 16}
 !314 = !{!313, !74, i64 16}
 !315 = !{!312, !94, i64 0}
 !316 = !{!312, !37, i64 8}
-!317 = !{!223, !221, !179}
+!317 = !{!222, !220, !179}
 !318 = !{!101, !12, i64 8}
 !319 = !{!101, !12, i64 12}
-!320 = !{!223, !221}
+!320 = !{!222, !220}
 !321 = !{!230}
 !322 = !{!232}
 !323 = !{!232, !230}
@@ -2987,19 +2921,19 @@ begin_hunk_2_@bcmp
 !342 = !{!258, !253, !230}
 !343 = !{!"_ZTSNSt12_Vector_baseIN12_GLOBAL__N_112StringPackerIDsE7OverlapESaIS3_EE17_Vector_impl_dataE", !339, i64 0, !339, i64 8, !339, i64 16}
 !344 = !{!343, !339, i64 16}
-!345 = !{!343, !339, i64 0}
-!346 = !{!343, !339, i64 8}
+!345 = !{!343, !339, i64 8}
+!346 = !{!343, !339, i64 0}
 !347 = !{i64 0, i64 8, !133, i64 8, i64 8, !84, i64 16, i64 8, !136}
-!348 = !{!263, !262}
+!348 = !{!262, !261}
 !349 = !{!"_ZTSN4llvh8ArrayRefIPN12_GLOBAL__N_112StringPackerIDsE11StringEntryEEE", !132, i64 0, !37, i64 8}
 !350 = !{!"_ZTSN12_GLOBAL__N_112StringPackerIDsE7OverlapE", !349, i64 0, !114, i64 16}
 !351 = !{!350, !114, i64 16}
 !352 = !{!349, !132, i64 0}
 !353 = !{!349, !37, i64 8}
-!354 = !{!274, !272, !230}
+!354 = !{!273, !271, !230}
 !355 = !{!139, !12, i64 8}
 !356 = !{!139, !12, i64 12}
-!357 = !{!274, !272}
+!357 = !{!273, !271}
 !358 = !{!281}
 !359 = !{!283}
 !360 = distinct !{!360, !154, !155}

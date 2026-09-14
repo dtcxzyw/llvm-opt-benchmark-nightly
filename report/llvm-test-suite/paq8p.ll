@@ -205,7 +205,7 @@ bb.dr:                                            ; preds = %bb.dq
   %i.mx = shl nuw nsw i32 %i.mq, 1                ; 2 uses
   %i.my = getelementptr inbounds nuw i8, ptr %i.mh, i64 12
   store i32 %i.mx, ptr %i.my, align 4, !tbaa !208
-  %i.mz = add i32 %.0554, 2
+  %i.mz = add nsw i32 %.0554, 2
   %i.na = and i32 %i.mk, %i.mz
   %i.nb = sext i32 %i.na to i64
   %i.nc = getelementptr inbounds i8, ptr %i.ml, i64 %i.nb ; 2 uses
@@ -223,7 +223,7 @@ bb.dr:                                            ; preds = %bb.dq
   %i.nm = shl nuw nsw i32 %i.nf, 1                ; 2 uses
   %i.nn = getelementptr inbounds nuw i8, ptr %i.mh, i64 24
   store i32 %i.nm, ptr %i.nn, align 4, !tbaa !208
-  %i.no = add i32 %.0554, 3
+  %i.no = add nsw i32 %.0554, 3
   %i.np = and i32 %i.mk, %i.no
   %i.nq = sext i32 %i.np to i64
   %i.nr = getelementptr inbounds i8, ptr %i.ml, i64 %i.nq ; 2 uses
@@ -241,7 +241,7 @@ bb.dr:                                            ; preds = %bb.dq
   %i.ob = shl nuw nsw i32 %i.nu, 1                ; 2 uses
   %i.oc = getelementptr inbounds nuw i8, ptr %i.mh, i64 36
   store i32 %i.ob, ptr %i.oc, align 4, !tbaa !208
-  %i.od = add i32 %.0554, 4
+  %i.od = add nsw i32 %.0554, 4
   %i.oe = and i32 %i.mk, %i.od
   %i.of = sext i32 %i.oe to i64
   %i.og = getelementptr inbounds i8, ptr %i.ml, i64 %i.of ; 2 uses
@@ -259,7 +259,7 @@ bb.dr:                                            ; preds = %bb.dq
   %i.oq = shl nuw nsw i32 %i.oj, 1                ; 2 uses
   %i.or = getelementptr inbounds nuw i8, ptr %i.mh, i64 48
   store i32 %i.oq, ptr %i.or, align 4, !tbaa !208
-  %i.os = add i32 %.0554, 5
+  %i.os = add nsw i32 %.0554, 5
   %i.ot = and i32 %i.mk, %i.os
   %i.ou = sext i32 %i.ot to i64
   %i.ov = getelementptr inbounds i8, ptr %i.ml, i64 %i.ou ; 2 uses
@@ -277,7 +277,7 @@ bb.dr:                                            ; preds = %bb.dq
   %i.pf = shl nuw nsw i32 %i.oy, 1                ; 2 uses
   %i.pg = getelementptr inbounds nuw i8, ptr %i.mh, i64 60
   store i32 %i.pf, ptr %i.pg, align 4, !tbaa !208
-  %i.ph = add i32 %.0554, 6
+  %i.ph = add nsw i32 %.0554, 6
   %i.pi = and i32 %i.mk, %i.ph
   %i.pj = sext i32 %i.pi to i64
   %i.pk = getelementptr inbounds i8, ptr %i.ml, i64 %i.pj ; 2 uses
@@ -295,7 +295,7 @@ bb.dr:                                            ; preds = %bb.dq
   %i.pu = shl nuw nsw i32 %i.pn, 1                ; 2 uses
   %i.pv = getelementptr inbounds nuw i8, ptr %i.mh, i64 72
   store i32 %i.pu, ptr %i.pv, align 4, !tbaa !208
-  %i.pw = add i32 %.0554, 7
+  %i.pw = add nsw i32 %.0554, 7
   %i.px = and i32 %i.mk, %i.pw
   %i.py = sext i32 %i.px to i64
   %i.pz = getelementptr inbounds i8, ptr %i.ml, i64 %i.py ; 2 uses
@@ -313,7 +313,7 @@ bb.dr:                                            ; preds = %bb.dq
   %i.qj = shl nuw nsw i32 %i.qc, 1                ; 2 uses
   %i.qk = getelementptr inbounds nuw i8, ptr %i.mh, i64 84
   store i32 %i.qj, ptr %i.qk, align 4, !tbaa !208
-  %i.ql = add i32 %.0554, 8
+  %i.ql = add nsw i32 %.0554, 8
   %i.qm = and i32 %i.mk, %i.ql
   %i.qn = sext i32 %i.qm to i64
   %i.qo = getelementptr inbounds i8, ptr %i.ml, i64 %i.qn ; 2 uses
@@ -331,7 +331,7 @@ bb.dr:                                            ; preds = %bb.dq
   %i.qy = shl nuw nsw i32 %i.qr, 1                ; 2 uses
   %i.qz = getelementptr inbounds nuw i8, ptr %i.mh, i64 96
   store i32 %i.qy, ptr %i.qz, align 4, !tbaa !208
-  %i.ra = add i32 %.0554, 9
+  %i.ra = add nsw i32 %.0554, 9
   %i.rb = and i32 %i.mk, %i.ra
   %i.rc = sext i32 %i.rb to i64
   %i.rd = getelementptr inbounds i8, ptr %i.ml, i64 %i.rc ; 2 uses
@@ -349,7 +349,7 @@ bb.dr:                                            ; preds = %bb.dq
   %i.rn = shl nuw nsw i32 %i.rg, 1                ; 2 uses
   %i.ro = getelementptr inbounds nuw i8, ptr %i.mh, i64 108
   store i32 %i.rn, ptr %i.ro, align 4, !tbaa !208
-  %i.rp = add i32 %.0554, 10
+  %i.rp = add nsw i32 %.0554, 10
   %i.rq = and i32 %i.mk, %i.rp
   %i.rr = sext i32 %i.rq to i64
   %i.rs = getelementptr inbounds i8, ptr %i.ml, i64 %i.rr ; 2 uses
@@ -367,7 +367,7 @@ bb.dr:                                            ; preds = %bb.dq
   %i.sc = shl nuw nsw i32 %i.rv, 1                ; 2 uses
   %i.sd = getelementptr inbounds nuw i8, ptr %i.mh, i64 120
   store i32 %i.sc, ptr %i.sd, align 4, !tbaa !208
-  %i.se = add i32 %.0554, 11
+  %i.se = add nsw i32 %.0554, 11
   %i.sf = and i32 %i.mk, %i.se
   %i.sg = sext i32 %i.sf to i64
   %i.sh = getelementptr inbounds i8, ptr %i.ml, i64 %i.sg ; 2 uses
@@ -385,7 +385,7 @@ bb.dr:                                            ; preds = %bb.dq
   %i.sr = shl nuw nsw i32 %i.sk, 1                ; 2 uses
   %i.ss = getelementptr inbounds nuw i8, ptr %i.mh, i64 132
   store i32 %i.sr, ptr %i.ss, align 4, !tbaa !208
-  %i.st = add i32 %.0554, 12
+  %i.st = add nsw i32 %.0554, 12
   %i.su = and i32 %i.mk, %i.st
   %i.sv = sext i32 %i.su to i64
   %i.sw = getelementptr inbounds i8, ptr %i.ml, i64 %i.sv ; 2 uses
@@ -403,7 +403,7 @@ bb.dr:                                            ; preds = %bb.dq
   %i.tg = shl nuw nsw i32 %i.sz, 1                ; 2 uses
   %i.th = getelementptr inbounds nuw i8, ptr %i.mh, i64 144
   store i32 %i.tg, ptr %i.th, align 4, !tbaa !208
-  %i.ti = add i32 %.0554, 13
+  %i.ti = add nsw i32 %.0554, 13
   %i.tj = and i32 %i.mk, %i.ti
   %i.tk = sext i32 %i.tj to i64
   %i.tl = getelementptr inbounds i8, ptr %i.ml, i64 %i.tk ; 2 uses
@@ -421,7 +421,7 @@ bb.dr:                                            ; preds = %bb.dq
   %i.tv = shl nuw nsw i32 %i.to, 1                ; 2 uses
   %i.tw = getelementptr inbounds nuw i8, ptr %i.mh, i64 156
   store i32 %i.tv, ptr %i.tw, align 4, !tbaa !208
-  %i.tx = add i32 %.0554, 14
+  %i.tx = add nsw i32 %.0554, 14
   %i.ty = and i32 %i.mk, %i.tx
   %i.tz = sext i32 %i.ty to i64
   %i.ua = getelementptr inbounds i8, ptr %i.ml, i64 %i.tz ; 2 uses
@@ -439,7 +439,7 @@ bb.dr:                                            ; preds = %bb.dq
   %i.uk = shl nuw nsw i32 %i.ud, 1                ; 2 uses
   %i.ul = getelementptr inbounds nuw i8, ptr %i.mh, i64 168
   store i32 %i.uk, ptr %i.ul, align 4, !tbaa !208
-  %i.um = add i32 %.0554, 15
+  %i.um = add nsw i32 %.0554, 15
   %i.un = and i32 %i.mk, %i.um
   %i.uo = sext i32 %i.un to i64
   %i.up = getelementptr inbounds i8, ptr %i.ml, i64 %i.uo ; 2 uses
@@ -457,7 +457,7 @@ bb.dr:                                            ; preds = %bb.dq
   %i.uz = shl nuw nsw i32 %i.us, 1                ; 2 uses
   %i.va = getelementptr inbounds nuw i8, ptr %i.mh, i64 180
   store i32 %i.uz, ptr %i.va, align 4, !tbaa !208
-  %i.vb = add i32 %.0554, 16
+  %i.vb = add nsw i32 %.0554, 16
   %i.vc = and i32 %i.mk, %i.vb
   %i.vd = sext i32 %i.vc to i64
   %i.ve = getelementptr inbounds i8, ptr %i.ml, i64 %i.vd ; 2 uses

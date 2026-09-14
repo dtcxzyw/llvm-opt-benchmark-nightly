@@ -202,19 +202,22 @@ bb.b:                                             ; preds = %bb.a
   %i.n = trunc i64 %i.m to i32
   %i.o = add nsw i32 %i.e, -1
   %.not3 = icmp sgt i32 %i.o, %i.n
-  br i1 %.not3, label %.thread21, label %bb.c
+  br i1 %.not3, label %1, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.p = sdiv i32 %i.e, 2
   %i.q = sext i32 %i.p to i64
   %i.r = getelementptr inbounds [24 x i8], ptr %i.i, i64 %i.q
   %i.s = tail call ptr @_ZNSt6vectorIS_ISt4pairIN2cv3PtrINS1_6detail8tracking18TrackerTargetStateEEEfESaIS7_EESaIS9_EE8_M_eraseEN9__gnu_cxx17__normal_iteratorIPS9_SB_EESF_(ptr noundef nonnull align 8 dereferenceable(24) %i.f, ptr %i.i, ptr %i.r) ; 0 uses
-  %.pr.pre = load i32, ptr %i.d, align 8, !tbaa !37 ; 2 uses
-  %.not4 = icmp eq i32 %.pr.pre, -1
+  %.pr.pre = load i32, ptr %i.d, align 8, !tbaa !37
+  br label %1
+
+1:                                                ; preds = %bb.c, %bb.b
+  %.pr = phi i32 [ %.pr.pre, %bb.c ], [ %i.e, %bb.b ] ; 3 uses
+  %.not4 = icmp eq i32 %.pr, -1
   br i1 %.not4, label %.thread, label %.thread21
 
-.thread21:                                        ; preds = %bb.b, %bb.c
-  %.pr24 = phi i32 [ %.pr.pre, %bb.c ], [ %i.e, %bb.b ] ; 2 uses
+.thread21:                                        ; preds = %1
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !53
@@ -224,18 +227,18 @@ bb.c:                                             ; preds = %bb.b
   %i.z = sub i64 %i.x, %i.y
   %i.aa = lshr exact i64 %i.z, 4
   %i.ab = trunc i64 %i.aa to i32
-  %i.ac = add nsw i32 %.pr24, -1
+  %i.ac = add nsw i32 %.pr, -1
   %.not5 = icmp sgt i32 %i.ac, %i.ab
   br i1 %.not5, label %.thread, label %bb.d
 
 bb.d:                                             ; preds = %.thread21
-  %i.ad = sdiv i32 %.pr24, 2
+  %i.ad = sdiv i32 %.pr, 2
   %i.ae = sext i32 %i.ad to i64
   %i.af = getelementptr inbounds [16 x i8], ptr %i.w, i64 %i.ae
   %i.ag = tail call ptr @_ZNSt6vectorIN2cv3PtrINS0_6detail8tracking18TrackerTargetStateEEESaIS5_EE8_M_eraseEN9__gnu_cxx17__normal_iteratorIPS5_S7_EESB_(ptr noundef nonnull align 8 dereferenceable(24) %i.t, ptr %i.w, ptr %i.af) ; 0 uses
   br label %.thread
 
-.thread:                                          ; preds = %bb.a, %bb.d, %.thread21, %bb.c
+.thread:                                          ; preds = %bb.a, %bb.d, %.thread21, %1
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   tail call void @_ZNSt6vectorIS_ISt4pairIN2cv3PtrINS1_6detail8tracking18TrackerTargetStateEEEfESaIS7_EESaIS9_EE9push_backERKS9_(ptr noundef nonnull align 8 dereferenceable(24) %i.ah, ptr noundef nonnull align 8 dereferenceable(24) %i.ai)

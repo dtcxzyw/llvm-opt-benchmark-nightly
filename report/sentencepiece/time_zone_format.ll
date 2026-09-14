@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %.backedge
-  %.1193984 = phi ptr [ %.1193.ph1014, %.lr.ph ], [ %.1193.be, %.backedge ] ; 74 uses
+  %.1193984 = phi ptr [ %.1193.ph1014, %.lr.ph ], [ %.1193.be, %.backedge ] ; 73 uses
   %.0222983 = phi ptr [ %.0222.ph1006, %.lr.ph ], [ %.0222.be, %.backedge ] ; 20 uses
   %i.ag = load i8, ptr %.0222983, align 1, !tbaa !18 ; 3 uses
   %i.ah = sext i8 %i.ag to i32
@@ -372,7 +372,7 @@ bb.q:                                             ; preds = %bb.do
 
 bb.r:                                             ; preds = %bb.i
   %i.bw = load i8, ptr %.1193984, align 1, !tbaa !18 ; 2 uses
-  %i.bx = icmp eq i8 %i.bw, 45                    ; 4 uses
+  %i.bx = icmp eq i8 %i.bw, 45                    ; 3 uses
   br i1 %i.bx, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
@@ -387,68 +387,49 @@ bb.t:                                             ; preds = %bb.r
   %i.ca = sext i8 %.pre.i366 to i32
   %memchr95.i.jt1 = call ptr @memchr(ptr noundef nonnull dereferenceable(1) @_ZN4absl12lts_2026052613time_internal4cctz6detail12_GLOBAL__N_17kDigitsE, i32 %i.ca, i64 11) ; 2 uses
   %.not7396.i.jt1 = icmp eq ptr %memchr95.i.jt1, null
-  %21 = ptrtoint ptr %memchr95.i.jt1 to i64
-  %22 = trunc i64 %21 to i32
-  %23 = sub i32 %22, ptrtoint (ptr @_ZN4absl12lts_2026052613time_internal4cctz6detail12_GLOBAL__N_17kDigitsE to i32) ; 2 uses
-  %24 = icmp sgt i32 %23, 9
-  %or.cond1315 = or i1 %.not7396.i.jt1, %24
-  br i1 %or.cond1315, label %select.unfold.i359, label %.thread
+  br i1 %.not7396.i.jt1, label %select.unfold.i359, label %.lr.ph.i356.jt1
 
 .lr.ph.i356.jt2:                                  ; preds = %bb.s
   %i.cb = ptrtoint ptr %memchr95.i.jt2 to i64
   %i.cc = trunc i64 %i.cb to i32
-  %i.cd = sub i32 %i.cc, ptrtoint (ptr @_ZN4absl12lts_2026052613time_internal4cctz6detail12_GLOBAL__N_17kDigitsE to i32) ; 3 uses
+  %i.cd = sub i32 %i.cc, ptrtoint (ptr @_ZN4absl12lts_2026052613time_internal4cctz6detail12_GLOBAL__N_17kDigitsE to i32) ; 2 uses
   %i.ce = icmp sgt i32 %i.cd, 9
   br i1 %i.ce, label %select.unfold.i359, label %.fold.split
 
-.lr.ph.i356.jt1:                                  ; preds = %.fold.split
-  %i.cf = ptrtoint ptr %memchr.i358 to i64
+.lr.ph.i356.jt1:                                  ; preds = %bb.t, %.fold.split
+  %.048.i3551164 = phi ptr [ %.1193984, %.fold.split ], [ %i.bz, %bb.t ] ; 2 uses
+  %memchr100.i.jt1 = phi ptr [ %memchr.i358, %.fold.split ], [ %memchr95.i.jt1, %bb.t ]
+  %.04299.i.jt1 = phi i32 [ %i.cj, %.fold.split ], [ 0, %bb.t ] ; 2 uses
+  %.14998.i.jt1 = phi ptr [ %i.ck, %.fold.split ], [ %i.bz, %bb.t ]
+  %i.cf = ptrtoint ptr %memchr100.i.jt1 to i64
   %i.cg = trunc i64 %i.cf to i32
   %i.ch = sub i32 %i.cg, ptrtoint (ptr @_ZN4absl12lts_2026052613time_internal4cctz6detail12_GLOBAL__N_17kDigitsE to i32) ; 2 uses
   %i.ci = icmp sgt i32 %i.ch, 9
-  br i1 %i.ci, label %select.unfold.i359, label %25
+  br i1 %i.ci, label %select.unfold.i359, label %.thread
 
-25:                                               ; preds = %.lr.ph.i356.jt1
-  %26 = mul i32 %i.cd, -10
-  br label %.thread
-
-.thread:                                          ; preds = %25, %bb.t
-  %.048.i355116411741182 = phi ptr [ %.1193984, %25 ], [ %i.bz, %bb.t ] ; 2 uses
-  %.04299.i.jt111751181 = phi i32 [ %26, %25 ], [ 0, %bb.t ] ; 2 uses
-  %.14998.i.jt111761180 = phi ptr [ %i.ck, %25 ], [ %i.bz, %bb.t ]
-  %27 = phi i32 [ %i.ch, %25 ], [ %23, %bb.t ]    ; 2 uses
-  %28 = or disjoint i32 %27, -2147483648
-  %29 = icmp slt i32 %.04299.i.jt111751181, %28
-  br i1 %29, label %select.unfold.i359, label %30
+.thread:                                          ; preds = %.lr.ph.i356.jt1
+  %21 = mul nsw i32 %.04299.i.jt1, 10
+  %22 = sub nsw i32 %21, %i.ch
+  %23 = getelementptr inbounds nuw i8, ptr %.1193984, i64 2
+  br label %select.unfold.i359
 
 .fold.split:                                      ; preds = %.lr.ph.i356.jt2
   %i.cj = sub nsw i32 0, %i.cd                    ; 2 uses
-  %i.ck = getelementptr inbounds nuw i8, ptr %.1193984, i64 1 ; 4 uses
+  %i.ck = getelementptr inbounds nuw i8, ptr %.1193984, i64 1 ; 3 uses
   %i.cl = load i8, ptr %i.ck, align 1, !tbaa !18
   %i.cm = sext i8 %i.cl to i32
   %memchr.i358 = call ptr @memchr(ptr noundef nonnull dereferenceable(1) @_ZN4absl12lts_2026052613time_internal4cctz6detail12_GLOBAL__N_17kDigitsE, i32 %i.cm, i64 11) ; 2 uses
   %.not73.i = icmp eq ptr %memchr.i358, null
   br i1 %.not73.i, label %select.unfold.i359, label %.lr.ph.i356.jt1
 
-30:                                               ; preds = %.thread
-  %31 = sub nsw i32 %.04299.i.jt111751181, %27
-  %32 = getelementptr inbounds nuw i8, ptr %.1193984, i64 2
-  br label %select.unfold.i359
-
-select.unfold.i359:                               ; preds = %.fold.split, %.lr.ph.i356.jt1, %.thread, %.lr.ph.i356.jt2, %30, %bb.s, %bb.t
-  %.048.i3551163 = phi ptr [ %.1193984, %bb.s ], [ %i.bz, %bb.t ], [ %.048.i355116411741182, %.thread ], [ %.048.i355116411741182, %30 ], [ %.1193984, %.lr.ph.i356.jt1 ], [ %.1193984, %.fold.split ], [ %.1193984, %.lr.ph.i356.jt2 ]
-  %.351.ph.i360 = phi ptr [ %.1193984, %bb.s ], [ %i.bz, %bb.t ], [ %.14998.i.jt111761180, %.thread ], [ %32, %30 ], [ %i.ck, %.lr.ph.i356.jt1 ], [ %i.ck, %.fold.split ], [ %.1193984, %.lr.ph.i356.jt2 ] ; 2 uses
-  %.247.ph.not.i361 = phi i1 [ true, %bb.s ], [ true, %bb.t ], [ false, %.thread ], [ true, %30 ], [ true, %.lr.ph.i356.jt1 ], [ true, %.fold.split ], [ true, %.lr.ph.i356.jt2 ]
-  %.2.ph.i362 = phi i32 [ 0, %bb.s ], [ 0, %bb.t ], [ -2147483640, %.thread ], [ %31, %30 ], [ %i.cj, %.lr.ph.i356.jt1 ], [ %i.cj, %.fold.split ], [ 0, %.lr.ph.i356.jt2 ] ; 4 uses
-  %33 = icmp ne ptr %.351.ph.i360, %.048.i3551163
-  %or.cond.not94.i = and i1 %33, %.247.ph.not.i361
-  %34 = icmp ne i32 %.2.ph.i362, -2147483648
-  %or.cond3.i363 = select i1 %i.bx, i1 true, i1 %34
-  %or.cond76.i = select i1 %or.cond.not94.i, i1 %or.cond3.i363, i1 false
-  %or.cond76.not.i = xor i1 %or.cond76.i, true
+select.unfold.i359:                               ; preds = %.fold.split, %.lr.ph.i356.jt1, %.lr.ph.i356.jt2, %.thread, %bb.s, %bb.t
+  %.048.i3551163 = phi ptr [ %.1193984, %bb.s ], [ %i.bz, %bb.t ], [ %.048.i3551164, %.lr.ph.i356.jt1 ], [ %.048.i3551164, %.thread ], [ %.1193984, %.lr.ph.i356.jt2 ], [ %.1193984, %.fold.split ]
+  %.351.ph.i360 = phi ptr [ %.1193984, %bb.s ], [ %i.bz, %bb.t ], [ %.14998.i.jt1, %.lr.ph.i356.jt1 ], [ %23, %.thread ], [ %.1193984, %.lr.ph.i356.jt2 ], [ %i.ck, %.fold.split ] ; 2 uses
+  %.2.ph.i362 = phi i32 [ 0, %bb.s ], [ 0, %bb.t ], [ %.04299.i.jt1, %.lr.ph.i356.jt1 ], [ %22, %.thread ], [ 0, %.lr.ph.i356.jt2 ], [ %i.cj, %.fold.split ] ; 3 uses
+  %.not1299 = icmp eq ptr %.351.ph.i360, %.048.i3551163
   %i.cn = icmp eq i32 %.2.ph.i362, 0
   %or.cond5.not.i364 = select i1 %i.bx, i1 %i.cn, i1 false
-  %or.cond80.i = select i1 %or.cond76.not.i, i1 true, i1 %or.cond5.not.i364
+  %or.cond80.i = select i1 %.not1299, i1 true, i1 %or.cond5.not.i364
   br i1 %or.cond80.i, label %.outer._crit_edge, label %bb.u, !llvm.loop !63
 
 bb.u:                                             ; preds = %select.unfold.i359
@@ -851,7 +832,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a, %bb.a
   %i.d = load i8, ptr %i.a, align 1, !tbaa !18    ; 2 uses
-  %i.e = icmp eq i8 %i.d, 45                      ; 5 uses
+  %i.e = icmp eq i8 %i.d, 45                      ; 4 uses
   br i1 %i.e, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -877,23 +858,18 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 .lr.ph.i.jt1:                                     ; preds = %.fold.split
   %i.m = ptrtoint ptr %memchr.i to i64
   %i.n = trunc i64 %i.m to i32
-  %i.o = sub i32 %i.n, ptrtoint (ptr @_ZN4absl12lts_2026052613time_internal4cctz6detail12_GLOBAL__N_17kDigitsE to i32) ; 3 uses
+  %i.o = sub i32 %i.n, ptrtoint (ptr @_ZN4absl12lts_2026052613time_internal4cctz6detail12_GLOBAL__N_17kDigitsE to i32) ; 2 uses
   %i.p = icmp sgt i32 %i.o, 9
-  br i1 %i.p, label %select.unfold.i, label %2
+  br i1 %i.p, label %select.unfold.i, label %bb.f
 
 bb.e:                                             ; preds = %.lr.ph.i
   %i.q = sub nsw i32 0, %i.k                      ; 3 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %.048.i, i64 1 ; 5 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %.048.i, i64 1 ; 4 uses
   br i1 %i.e, label %select.unfold.i, label %.fold.split
 
-2:                                                ; preds = %.lr.ph.i.jt1
-  %3 = mul i32 %i.k, -10                          ; 2 uses
-  %4 = or disjoint i32 %i.o, -2147483648
-  %5 = icmp slt i32 %3, %4
-  br i1 %5, label %select.unfold.i, label %bb.f
-
-bb.f:                                             ; preds = %2
-  %i.s = sub nsw i32 %3, %i.o
+bb.f:                                             ; preds = %.lr.ph.i.jt1
+  %2 = mul i32 %i.k, -10
+  %i.s = sub nsw i32 %2, %i.o
   %i.t = getelementptr inbounds nuw i8, ptr %.048.i, i64 2
   br label %select.unfold.i
 
@@ -904,19 +880,13 @@ bb.f:                                             ; preds = %2
   %.not73.i = icmp eq ptr %memchr.i, null
   br i1 %.not73.i, label %select.unfold.i, label %.lr.ph.i.jt1
 
-select.unfold.i:                                  ; preds = %bb.e, %.fold.split, %.lr.ph.i, %.lr.ph.i.jt1, %2, %bb.f, %bb.d
-  %.351.ph.i = phi ptr [ %.048.i, %bb.d ], [ %i.r, %bb.e ], [ %i.t, %bb.f ], [ %.048.i, %.lr.ph.i ], [ %i.r, %.fold.split ], [ %i.r, %2 ], [ %i.r, %.lr.ph.i.jt1 ] ; 8 uses
-  %.247.ph.not.i = phi i1 [ true, %bb.d ], [ true, %bb.e ], [ true, %bb.f ], [ true, %.lr.ph.i ], [ true, %.fold.split ], [ false, %2 ], [ true, %.lr.ph.i.jt1 ]
-  %.2.ph.i = phi i32 [ 0, %bb.d ], [ %i.q, %bb.e ], [ %i.s, %bb.f ], [ 0, %.lr.ph.i ], [ %i.q, %.fold.split ], [ -2147483640, %2 ], [ %i.q, %.lr.ph.i.jt1 ] ; 4 uses
-  %6 = icmp ne ptr %.351.ph.i, %.048.i
-  %or.cond.not94.i = and i1 %6, %.247.ph.not.i
-  %7 = icmp ne i32 %.2.ph.i, -2147483648
-  %or.cond3.i = select i1 %i.e, i1 true, i1 %7
-  %or.cond76.i = select i1 %or.cond.not94.i, i1 %or.cond3.i, i1 false
-  %or.cond76.not.i = xor i1 %or.cond76.i, true
+select.unfold.i:                                  ; preds = %bb.e, %.fold.split, %.lr.ph.i, %.lr.ph.i.jt1, %bb.f, %bb.d
+  %.351.ph.i = phi ptr [ %.048.i, %bb.d ], [ %i.r, %bb.e ], [ %i.t, %bb.f ], [ %.048.i, %.lr.ph.i ], [ %i.r, %.fold.split ], [ %i.r, %.lr.ph.i.jt1 ] ; 8 uses
+  %.2.ph.i = phi i32 [ 0, %bb.d ], [ %i.q, %bb.e ], [ %i.s, %bb.f ], [ 0, %.lr.ph.i ], [ %i.q, %.fold.split ], [ %i.q, %.lr.ph.i.jt1 ] ; 3 uses
+  %.not = icmp eq ptr %.351.ph.i, %.048.i
   %i.w = icmp eq i32 %.2.ph.i, 0
   %or.cond5.not.i = select i1 %i.e, i1 %i.w, i1 false
-  %or.cond80.i = select i1 %or.cond76.not.i, i1 true, i1 %or.cond5.not.i
+  %or.cond80.i = select i1 %.not, i1 true, i1 %or.cond5.not.i
   br i1 %or.cond80.i, label %_ZN4absl12lts_2026052613time_internal4cctz6detail12_GLOBAL__N_18ParseIntIiEEPKcS7_iT_S8_PS8_.exit.thread, label %bb.g
 
 bb.g:                                             ; preds = %select.unfold.i

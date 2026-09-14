@@ -202,7 +202,6 @@ bb.m:                                             ; preds = %bb.k
 bb.n:                                             ; preds = %.lr.ph73.i
   %i.bd = load i32, ptr @ett_docsis_cwt_subtlv, align 4
   %i.be = call ptr @proto_tree_add_subtree(ptr noundef %i.at, ptr noundef nonnull %0, i32 noundef %i.ay, i32 noundef range(i32 0, 256) %i.h, i32 noundef %i.bd, ptr noundef null, ptr noundef nonnull @.str.2240)
-  %invariant.op.i = add nsw i32 %i.am, -1
   %i.bf = icmp ugt i8 %i.al, 1
   br i1 %i.bf, label %.lr.ph.i, label %._crit_edge.i
 
@@ -212,8 +211,9 @@ bb.n:                                             ; preds = %.lr.ph73.i
   %i.bh = add i32 %.070.i, %i.ay
   %i.bi = call ptr @proto_tree_add_item(ptr noundef %i.be, i32 noundef %i.bg, ptr noundef nonnull %0, i32 noundef %i.bh, i32 noundef 2, i32 noundef 0) ; 0 uses
   %i.bj = add nuw nsw i32 %.070.i, 2              ; 3 uses
-  %5 = icmp slt i32 %i.bj, %invariant.op.i
-  br i1 %5, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !72
+  %5 = or disjoint i32 %i.bj, 1
+  %6 = icmp samesign ult i32 %5, %i.am
+  br i1 %6, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !72
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.n
   %.0.lcssa.i = phi i32 [ 0, %bb.n ], [ %i.bj, %.lr.ph.i ]

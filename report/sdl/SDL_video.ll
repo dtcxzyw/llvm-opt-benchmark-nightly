@@ -205,9 +205,9 @@ bb.h:                                             ; preds = %SDL_ResetFullscreen
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.ar, i64 %indvars.iv.i ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   %i.au = xor i32 %i.m, -1
-  %i.av = add i32 %i.an, %i.au
+  %i.av = add nsw i32 %i.an, %i.au
   %i.aw = sext i32 %i.av to i64
-  %i.ax = shl nsw i64 %i.aw, 3
+  %i.ax = shl nuw nsw i64 %i.aw, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.as, ptr nonnull align 8 %i.at, i64 %i.ax, i1 false)
   %.pre = load i32, ptr %i.am, align 8
   %.pre24 = add nsw i32 %.pre, -1

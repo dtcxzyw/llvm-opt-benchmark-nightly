@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.n
   %i.ce = getelementptr inbounds nuw i8, ptr %i.bt, i64 24
-  %i.cf = load i64, ptr %i.ce, align 8, !tbaa !158 ; 3 uses
+  %i.cf = load i64, ptr %i.ce, align 8, !tbaa !158 ; 2 uses
   %i.cg = add nsw i64 %i.cf, 1                    ; 2 uses
   %i.ch = icmp slt i64 %i.cg, %i.bz
   br i1 %i.ch, label %bb.q, label %bb.ao
@@ -276,11 +276,9 @@ _ZNSt10unique_ptrIN8facebook5velox6common11BigintRangeESt14default_deleteIS3_EED
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #44
   br label %bb.an
 
-bb.w:                                             ; preds = %_ZNSt10unique_ptrIN8facebook5velox6common11BigintRangeESt14default_deleteIS3_EED2Ev.exit75, %bb.q
-  %12 = icmp ne i64 %i.cf, 9223372036854775807
-  %13 = icmp ne i64 %i.cj, -9223372036854775808
-  %or.cond = select i1 %12, i1 %13, i1 false
-  br i1 %or.cond, label %bb.x, label %bb.ac
+bb.w:                                             ; preds = %bb.q, %_ZNSt10unique_ptrIN8facebook5velox6common11BigintRangeESt14default_deleteIS3_EED2Ev.exit75
+  %.not166 = icmp eq i64 %i.cj, -9223372036854775808
+  br i1 %.not166, label %bb.ac, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #44

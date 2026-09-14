@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.q
   %i.as = load i16, ptr %i.ar, align 2
   %i.at = and i16 %i.as, -1024
   %.not34.i.i = icmp eq i16 %i.at, -9216
-  %i.au = add i64 %.02236.i.i, 2
+  %i.au = add nuw i64 %.02236.i.i, 2
   br i1 %.not34.i.i, label %bb.s, label %_ZNK7simdutf8fallback14implementation16validate_utf16leEPKDsm.exit
 
 bb.s:                                             ; preds = %bb.r, %.lr.ph.i.i
@@ -426,7 +426,7 @@ bb.c:                                             ; preds = %bb.b
   %i.i = load i16, ptr %i.h, align 2
   %i.j = and i16 %i.i, -1024
   %.not34.i = icmp eq i16 %i.j, -9216
-  %i.k = add i64 %.02236.i, 2
+  %i.k = add nuw i64 %.02236.i, 2
   br i1 %.not34.i, label %bb.d, label %_ZN7simdutf6scalar12_GLOBAL__N_15utf168validateILNS_10endiannessE0EEEbPKDsm.exit
 
 bb.d:                                             ; preds = %bb.c, %.lr.ph.i
@@ -762,7 +762,7 @@ bb.c:                                             ; preds = %bb.b
   %i.j = load i16, ptr %i.i, align 2
   %i.k = and i16 %i.j, 252
   %.not34.i = icmp eq i16 %i.k, 220
-  %i.l = add i64 %.02236.i, 2
+  %i.l = add nuw i64 %.02236.i, 2
   br i1 %.not34.i, label %bb.d, label %_ZN7simdutf6scalar12_GLOBAL__N_15utf168validateILNS_10endiannessE1EEEbPKDsm.exit
 
 bb.d:                                             ; preds = %bb.c, %.lr.ph.i
@@ -805,7 +805,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not32.i, label %.thread.i, label %_ZN7simdutf6scalar12_GLOBAL__N_15utf1620validate_with_errorsILNS_10endiannessE0EEENS_6resultEPKDsm.exit
 
 .thread.i:                                        ; preds = %bb.c
-  %i.j = add i64 %.02537.i, 2
+  %i.j = add nuw i64 %.02537.i, 2
   br label %bb.d
 
 bb.d:                                             ; preds = %.thread.i, %.lr.ph.i
@@ -852,7 +852,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not32.i, label %.thread.i, label %_ZN7simdutf6scalar12_GLOBAL__N_15utf1620validate_with_errorsILNS_10endiannessE1EEENS_6resultEPKDsm.exit
 
 .thread.i:                                        ; preds = %bb.c
-  %i.k = add i64 %.02537.i, 2
+  %i.k = add nuw i64 %.02537.i, 2
   br label %bb.d
 
 bb.d:                                             ; preds = %.thread.i, %.lr.ph.i
@@ -1255,7 +1255,7 @@ bb.g:                                             ; preds = %bb.f, %.thread.i
   %.sink87.i = phi i8 [ %i.bl, %bb.f ], [ %i.ba, %.thread.i ]
   %.sink.i = phi i64 [ 2, %bb.f ], [ 1, %.thread.i ]
   store i8 %.sink87.i, ptr %.05077.i, align 1
-  %i.bm = add i64 %.sink.i, %.04778.i
+  %i.bm = add nuw i64 %.sink.i, %.04778.i
   %.656.i = getelementptr inbounds nuw i8, ptr %.05077.i, i64 1
   br label %.backedge.i
 
@@ -1454,7 +1454,7 @@ bb.k:                                             ; preds = %.thread, %bb.h
   %.sink103 = phi i8 [ %i.cg, %bb.h ], [ %i.bq, %.thread ]
   %.sink = phi i64 [ 2, %bb.h ], [ 1, %.thread ]
   store i8 %.sink103, ptr %.05986, align 1
-  %i.cn = add i64 %.05687, %.sink
+  %i.cn = add nuw i64 %.05687, %.sink
   %.665 = getelementptr inbounds nuw i8, ptr %.05986, i64 1
   br label %.backedge
 
@@ -1606,7 +1606,7 @@ bb.g:                                             ; preds = %bb.f, %.thread.i
   %.sink86.i = phi i8 [ %i.bj, %bb.f ], [ %i.ba, %.thread.i ]
   %.sink.i = phi i64 [ 2, %bb.f ], [ 1, %.thread.i ]
   store i8 %.sink86.i, ptr %.04774.i, align 1
-  %i.bk = add i64 %.sink.i, %.04475.i
+  %i.bk = add nuw i64 %.sink.i, %.04475.i
   %.451.i = getelementptr inbounds nuw i8, ptr %.04774.i, i64 1
   br label %.backedge.i
 
@@ -2009,7 +2009,7 @@ bb.h:                                             ; preds = %bb.g
   %i.av = load i16, ptr %i.au, align 2
   %i.aw = and i16 %i.av, -1024
   %.not34.i = icmp eq i16 %i.aw, -9216
-  %i.ax = add i64 %.02236.i, 2
+  %i.ax = add nuw i64 %.02236.i, 2
   br i1 %.not34.i, label %bb.i, label %_ZN7simdutf6scalar12_GLOBAL__N_15utf168validateILNS_10endiannessE0EEEbPKDsm.exit
 
 bb.i:                                             ; preds = %bb.h, %.lr.ph.i8
@@ -2118,7 +2118,7 @@ bb.h:                                             ; preds = %bb.g
   %i.av = load i16, ptr %i.au, align 2
   %i.aw = and i16 %i.av, 252
   %.not34.i = icmp eq i16 %i.aw, 220
-  %i.ax = add i64 %.02236.i, 2
+  %i.ax = add nuw i64 %.02236.i, 2
   br i1 %.not34.i, label %bb.i, label %_ZN7simdutf6scalar12_GLOBAL__N_15utf168validateILNS_10endiannessE1EEEbPKDsm.exit
 
 bb.i:                                             ; preds = %bb.h, %.lr.ph.i8
@@ -2242,7 +2242,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not32.i, label %.thread.i, label %_ZN7simdutf6scalar12_GLOBAL__N_15utf1620validate_with_errorsILNS_10endiannessE0EEENS_6resultEPKDsm.exit
 
 .thread.i:                                        ; preds = %bb.h
-  %i.ba = add i64 %.02537.i, 2
+  %i.ba = add nuw i64 %.02537.i, 2
   br label %bb.i
 
 bb.i:                                             ; preds = %.thread.i, %.lr.ph.i12
@@ -2375,7 +2375,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not32.i, label %.thread.i, label %_ZN7simdutf6scalar12_GLOBAL__N_15utf1620validate_with_errorsILNS_10endiannessE1EEENS_6resultEPKDsm.exit
 
 .thread.i:                                        ; preds = %bb.h
-  %i.ba = add i64 %.02537.i, 2
+  %i.ba = add nuw i64 %.02537.i, 2
   br label %bb.i
 
 bb.i:                                             ; preds = %.thread.i, %.lr.ph.i12
@@ -2778,7 +2778,7 @@ bb.p:                                             ; preds = %bb.o, %.thread.i
   %.sink87.i = phi i8 [ %i.ft, %bb.o ], [ %i.fi, %.thread.i ]
   %.sink.i = phi i64 [ 2, %bb.o ], [ 1, %.thread.i ]
   store i8 %.sink87.i, ptr %.05077.i, align 1
-  %i.fu = add i64 %.sink.i, %.04778.i
+  %i.fu = add nuw i64 %.sink.i, %.04778.i
   %.656.i = getelementptr inbounds nuw i8, ptr %.05077.i, i64 1
   br label %.backedge.i
 
@@ -3181,7 +3181,7 @@ bb.n:                                             ; preds = %bb.m, %.thread.i
   %.sink86.i = phi i8 [ %i.dx, %bb.m ], [ %i.do, %.thread.i ]
   %.sink.i = phi i64 [ 2, %bb.m ], [ 1, %.thread.i ]
   store i8 %.sink86.i, ptr %.04774.i, align 1
-  %i.dy = add i64 %.sink.i, %.04475.i
+  %i.dy = add nuw i64 %.sink.i, %.04475.i
   %.451.i = getelementptr inbounds nuw i8, ptr %.04774.i, i64 1
   br label %.backedge.i
 
@@ -3584,7 +3584,7 @@ bb.h:                                             ; preds = %bb.g
   %i.aq = load i16, ptr %i.ap, align 2
   %i.ar = and i16 %i.aq, -1024
   %.not34.i = icmp eq i16 %i.ar, -9216
-  %i.as = add i64 %.02236.i, 2
+  %i.as = add nuw i64 %.02236.i, 2
   br i1 %.not34.i, label %bb.i, label %_ZN7simdutf6scalar12_GLOBAL__N_15utf168validateILNS_10endiannessE0EEEbPKDsm.exit
 
 bb.i:                                             ; preds = %bb.h, %.lr.ph.i8
@@ -3688,7 +3688,7 @@ bb.h:                                             ; preds = %bb.g
   %i.ar = load i16, ptr %i.aq, align 2
   %i.as = and i16 %i.ar, 252
   %.not34.i = icmp eq i16 %i.as, 220
-  %i.at = add i64 %.02236.i, 2
+  %i.at = add nuw i64 %.02236.i, 2
   br i1 %.not34.i, label %bb.i, label %_ZN7simdutf6scalar12_GLOBAL__N_15utf168validateILNS_10endiannessE1EEEbPKDsm.exit
 
 bb.i:                                             ; preds = %bb.h, %.lr.ph.i8
@@ -3806,7 +3806,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not32.i, label %.thread.i, label %_ZN7simdutf6scalar12_GLOBAL__N_15utf1620validate_with_errorsILNS_10endiannessE0EEENS_6resultEPKDsm.exit
 
 .thread.i:                                        ; preds = %bb.h
-  %i.av = add i64 %.02537.i, 2
+  %i.av = add nuw i64 %.02537.i, 2
   br label %bb.i
 
 bb.i:                                             ; preds = %.thread.i, %.lr.ph.i12
@@ -3934,7 +3934,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not32.i, label %.thread.i, label %_ZN7simdutf6scalar12_GLOBAL__N_15utf1620validate_with_errorsILNS_10endiannessE1EEENS_6resultEPKDsm.exit
 
 .thread.i:                                        ; preds = %bb.h
-  %i.aw = add i64 %.02537.i, 2
+  %i.aw = add nuw i64 %.02537.i, 2
   br label %bb.i
 
 bb.i:                                             ; preds = %.thread.i, %.lr.ph.i12
@@ -4337,7 +4337,7 @@ bb.p:                                             ; preds = %bb.o, %.thread.i
   %.sink87.i = phi i8 [ %i.hm, %bb.o ], [ %i.hb, %.thread.i ]
   %.sink.i = phi i64 [ 2, %bb.o ], [ 1, %.thread.i ]
   store i8 %.sink87.i, ptr %.05077.i, align 1
-  %i.hn = add i64 %.sink.i, %.04778.i
+  %i.hn = add nuw i64 %.sink.i, %.04778.i
   %.656.i = getelementptr inbounds nuw i8, ptr %.05077.i, i64 1
   br label %.backedge.i
 
@@ -4740,7 +4740,7 @@ bb.n:                                             ; preds = %bb.m, %.thread.i
   %.sink86.i = phi i8 [ %i.et, %bb.m ], [ %i.ek, %.thread.i ]
   %.sink.i = phi i64 [ 2, %bb.m ], [ 1, %.thread.i ]
   store i8 %.sink86.i, ptr %.04774.i, align 1
-  %i.eu = add i64 %.sink.i, %.04475.i
+  %i.eu = add nuw i64 %.sink.i, %.04475.i
   %.451.i = getelementptr inbounds nuw i8, ptr %.04774.i, i64 1
   br label %.backedge.i
 

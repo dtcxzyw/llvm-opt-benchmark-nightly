@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %.thread, %bb.g
   br i1 %i.ah, label %.lr.ph.us.preheader, label %.lr.ph77.split.preheader
 
 .lr.ph77.split.preheader:                         ; preds = %.lr.ph77
-  %i.ai = add i32 %i.ad, -2
+  %i.ai = add nsw i32 %i.ad, -2
   %i.aj = sub i32 %i.ai, %i.af
   %i.ak = zext i32 %i.aj to i64
   %i.al = shl nuw nsw i64 %i.ak, 3
@@ -608,7 +608,7 @@ bb.h:                                             ; preds = %.thread, %bb.g
   br i1 %i.ad, label %.lr.ph.us.preheader, label %.lr.ph145.split.preheader
 
 .lr.ph145.split.preheader:                        ; preds = %.lr.ph145
-  %i.ae = add i32 %i.z, -2
+  %i.ae = add nsw i32 %i.z, -2
   %i.af = sub i32 %i.ae, %i.ab
   %i.ag = zext i32 %i.af to i64
   %i.ah = shl nuw nsw i64 %i.ag, 3
@@ -1011,7 +1011,7 @@ bb.h:                                             ; preds = %.thread, %bb.g
   br i1 %i.ad, label %.lr.ph.us.preheader, label %.lr.ph145.split.preheader
 
 .lr.ph145.split.preheader:                        ; preds = %.lr.ph145
-  %i.ae = add i32 %i.z, -2
+  %i.ae = add nsw i32 %i.z, -2
   %i.af = sub i32 %i.ae, %i.ab
   %i.ag = zext i32 %i.af to i64
   %i.ah = shl nuw nsw i64 %i.ag, 3
@@ -1414,7 +1414,7 @@ bb.h:                                             ; preds = %.thread, %bb.g
   br i1 %i.ad, label %.lr.ph.us.preheader, label %.lr.ph145.split.preheader
 
 .lr.ph145.split.preheader:                        ; preds = %.lr.ph145
-  %i.ae = add i32 %i.z, -2
+  %i.ae = add nsw i32 %i.z, -2
   %i.af = sub i32 %i.ae, %i.ab
   %i.ag = zext i32 %i.af to i64
   %i.ah = shl nuw nsw i64 %i.ag, 3
@@ -1817,7 +1817,7 @@ bb.h:                                             ; preds = %.thread, %bb.g
   br i1 %i.ad, label %.lr.ph.us.preheader, label %.lr.ph141.split.preheader
 
 .lr.ph141.split.preheader:                        ; preds = %.lr.ph141
-  %i.ae = add i32 %i.z, -2
+  %i.ae = add nsw i32 %i.z, -2
   %i.af = sub i32 %i.ae, %i.ab
   %i.ag = zext i32 %i.af to i64
   %i.ah = shl nuw nsw i64 %i.ag, 3
@@ -2220,7 +2220,7 @@ bb.h:                                             ; preds = %.thread, %bb.g
   br i1 %i.ad, label %.lr.ph.us.preheader, label %.lr.ph141.split.preheader
 
 .lr.ph141.split.preheader:                        ; preds = %.lr.ph141
-  %i.ae = add i32 %i.z, -2
+  %i.ae = add nsw i32 %i.z, -2
   %i.af = sub i32 %i.ae, %i.ab
   %i.ag = zext i32 %i.af to i64
   %i.ah = shl nuw nsw i64 %i.ag, 3

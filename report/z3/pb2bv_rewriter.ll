@@ -205,11 +205,12 @@ _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit1
   br i1 %i.hz, label %.lr.ph286, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit108
 
 _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit106: ; preds = %_ZN7obj_refI4expr11ast_managerED2Ev.exit116
-  %13 = add i32 %.0188285, 2                      ; 2 uses
-  %14 = or disjoint i32 %13, 1
+  %indvars.iv.next196 = add nuw nsw i64 %indvars.iv195288, 2 ; 2 uses
+  %13 = or disjoint i64 %indvars.iv.next196, 1
   %i.ia = getelementptr inbounds i8, ptr %i.ja, i64 -4
   %i.ib = load i32, ptr %i.ia, align 4, !tbaa !118 ; 2 uses
-  %i.ic = icmp ult i32 %14, %i.ib
+  %14 = zext i32 %i.ib to i64
+  %i.ic = icmp samesign ult i64 %13, %14
   br i1 %i.ic, label %.lr.ph286, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit108, !llvm.loop !316
 
 _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit108: ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit106, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit106.preheader
@@ -221,25 +222,22 @@ _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit1
   br i1 %.not, label %_ZN6vectorIP4exprLb0EjE3endEv.exit.i, label %bb.ce
 
 .lr.ph286:                                        ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit106.preheader, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit106
-  %.0188285 = phi i32 [ %13, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit106 ], [ 0, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit106.preheader ] ; 4 uses
+  %indvars.iv195288 = phi i64 [ %indvars.iv.next196, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit106 ], [ 0, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit106.preheader ] ; 4 uses
   %i.ie = phi ptr [ %i.ja, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit106 ], [ %i.hw, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit106.preheader ] ; 2 uses
-  %15 = or disjoint i32 %.0188285, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #22
-  %16 = zext i32 %.0188285 to i64
-  %i.if = getelementptr inbounds nuw [8 x i8], ptr %i.ie, i64 %16
+  %i.if = getelementptr inbounds nuw [8 x i8], ptr %i.ie, i64 %indvars.iv195288
   %i.ig = load ptr, ptr %i.if, align 8, !tbaa !126
-  %17 = zext i32 %15 to i64
-  %18 = getelementptr inbounds nuw [8 x i8], ptr %i.ie, i64 %17
-  %i.ih = load ptr, ptr %18, align 8, !tbaa !126
+  %15 = getelementptr inbounds nuw [8 x i8], ptr %i.ie, i64 %indvars.iv195288
+  %16 = getelementptr inbounds nuw i8, ptr %15, i64 8
+  %i.ih = load ptr, ptr %16, align 8, !tbaa !126
   %i.ii = load ptr, ptr %8, align 8, !tbaa !131
   invoke void @_ZN14pb2bv_rewriter3imp16card2bv_rewriter8mk_le_geIL5lbool1EEE7obj_refI4expr11ast_managerER10ref_vectorIS5_S6_EPS5_SB_SB_(ptr dead_on_unwind nonnull writable sret(%class.obj_ref) align 8 %12, ptr noundef nonnull align 8 dereferenceable(296) %1, ptr noundef nonnull align 8 dereferenceable(16) %10, ptr noundef %i.ig, ptr noundef %i.ih, ptr noundef %i.ii)
           to label %bb.bu unwind label %bb.cb
 
 bb.bu:                                            ; preds = %.lr.ph286
-  %19 = lshr exact i32 %.0188285, 1
+  %17 = lshr exact i64 %indvars.iv195288, 1
   %i.ij = load ptr, ptr %i.ea, align 8, !tbaa !33
-  %20 = zext nneg i32 %19 to i64
-  %i.ik = getelementptr inbounds nuw [8 x i8], ptr %i.ij, i64 %20 ; 2 uses
+  %i.ik = getelementptr inbounds nuw [8 x i8], ptr %i.ij, i64 %17 ; 2 uses
   %i.il = load ptr, ptr %9, align 8, !tbaa !127, !nonnull !114, !align !115
   %i.im = load ptr, ptr %i.ik, align 8, !tbaa !126 ; 3 uses
   %.not.i.i113 = icmp eq ptr %i.im, null
@@ -642,11 +640,12 @@ _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit9
   br i1 %i.hp, label %.lr.ph356, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit100
 
 _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit98: ; preds = %_ZN7obj_refI4expr11ast_managerED2Ev.exit108
-  %13 = add i32 %.0204355, 2                      ; 2 uses
-  %14 = or disjoint i32 %13, 1
+  %indvars.iv.next219 = add nuw nsw i64 %indvars.iv218358, 2 ; 2 uses
+  %13 = or disjoint i64 %indvars.iv.next219, 1
   %i.hq = getelementptr inbounds i8, ptr %i.ip, i64 -4
   %i.hr = load i32, ptr %i.hq, align 4, !tbaa !118 ; 2 uses
-  %i.hs = icmp ult i32 %14, %i.hr
+  %14 = zext i32 %i.hr to i64
+  %i.hs = icmp samesign ult i64 %13, %14
   br i1 %i.hs, label %.lr.ph356, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit100, !llvm.loop !324
 
 _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit100: ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit98, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit98.preheader
@@ -658,24 +657,21 @@ _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit1
   br i1 %.not, label %_ZN6vectorIP4exprLb0EjE3endEv.exit.i, label %bb.by
 
 .lr.ph356:                                        ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit98.preheader, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit98
-  %.0204355 = phi i32 [ %13, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit98 ], [ 0, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit98.preheader ] ; 4 uses
+  %indvars.iv218358 = phi i64 [ %indvars.iv.next219, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit98 ], [ 0, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit98.preheader ] ; 4 uses
   %i.hu = phi ptr [ %i.ip, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit98 ], [ %i.hm, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit98.preheader ] ; 2 uses
-  %15 = or disjoint i32 %.0204355, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #22
-  %16 = zext i32 %.0204355 to i64
-  %i.hv = getelementptr inbounds nuw [8 x i8], ptr %i.hu, i64 %16
+  %i.hv = getelementptr inbounds nuw [8 x i8], ptr %i.hu, i64 %indvars.iv218358
   %i.hw = load ptr, ptr %i.hv, align 8, !tbaa !126
-  %17 = zext i32 %15 to i64
-  %18 = getelementptr inbounds nuw [8 x i8], ptr %i.hu, i64 %17
-  %i.hx = load ptr, ptr %18, align 8, !tbaa !126
+  %15 = getelementptr inbounds nuw [8 x i8], ptr %i.hu, i64 %indvars.iv218358
+  %16 = getelementptr inbounds nuw i8, ptr %15, i64 8
+  %i.hx = load ptr, ptr %16, align 8, !tbaa !126
   invoke void @_ZN14pb2bv_rewriter3imp16card2bv_rewriter8mk_le_geIL5lbool0EEE7obj_refI4expr11ast_managerER10ref_vectorIS5_S6_EPS5_SB_SB_(ptr dead_on_unwind nonnull writable sret(%class.obj_ref) align 8 %12, ptr noundef nonnull align 8 dereferenceable(296) %1, ptr noundef nonnull align 8 dereferenceable(16) %10, ptr noundef %i.hw, ptr noundef %i.hx, ptr noundef %i.en)
           to label %bb.bo unwind label %bb.bv
 
 bb.bo:                                            ; preds = %.lr.ph356
-  %19 = lshr exact i32 %.0204355, 1
+  %17 = lshr exact i64 %indvars.iv218358, 1
   %i.hy = load ptr, ptr %i.dq, align 8, !tbaa !33
-  %20 = zext nneg i32 %19 to i64
-  %i.hz = getelementptr inbounds nuw [8 x i8], ptr %i.hy, i64 %20 ; 2 uses
+  %i.hz = getelementptr inbounds nuw [8 x i8], ptr %i.hy, i64 %17 ; 2 uses
   %i.ia = load ptr, ptr %9, align 8, !tbaa !127, !nonnull !114, !align !115
   %i.ib = load ptr, ptr %i.hz, align 8, !tbaa !126 ; 3 uses
   %.not.i.i105 = icmp eq ptr %i.ib, null

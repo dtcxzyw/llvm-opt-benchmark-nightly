@@ -205,7 +205,7 @@ _RNvMs1_NtNtCsfu0rQaTkGUu_12clap_builder6output13help_templateNtB5_12HelpTemplat
 
 bb.ae:                                            ; preds = %_RNvMs1_NtNtCsfu0rQaTkGUu_12clap_builder6output13help_templateNtB5_12HelpTemplate10get_spaces.exit182
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
-  %i.fd = icmp ugt i64 %.sroa.012.0240, 65535
+  %i.fd = icmp samesign ugt i64 %.sroa.012.0240, 65535
   br i1 %i.fd, label %bb.ah, label %bb.ag, !prof !40
 
 bb.af:                                            ; preds = %bb.ag, %_RNvMs1_NtNtCsfu0rQaTkGUu_12clap_builder6output13help_templateNtB5_12HelpTemplate10get_spaces.exit182
@@ -240,7 +240,7 @@ _RNvMNtNtCsfu0rQaTkGUu_12clap_builder7builder10styled_strNtB2_9StyledStr8push_st
   %.sroa.462.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 24
   %i.fq = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %.sroa.483.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 24
-  %i.fr = icmp ugt i64 %.sroa.012.0240, 65535
+  %i.fr = icmp samesign ugt i64 %.sroa.012.0240, 65535
   %i.fs = trunc nuw i64 %.sroa.012.0240 to i16
   %i.ft = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %.sroa.4105.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 24

@@ -202,7 +202,7 @@ _ZN4llvh6detail12DenseSetImplIPN6hermes8CallInstENS_8DenseMapIS4_NS0_13DenseSetE
   br i1 %.not49.i.i.i.i, label %.critedge.i.i.i.i, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %_ZN4llvh6detail12DenseSetImplIPN6hermes8CallInstENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E5beginEv.exit.i.i.i.i
-  %i.ce = trunc i64 %indvars.iv.i.i.i.i to i32
+  %i.ce = trunc nuw i64 %indvars.iv.i.i.i.i to i32
   %i.cf = add i32 %i.ce, 3
   br label %bb.k
 
