@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %.critedge.thread
 
 .critedge:                                        ; preds = %bb.k, %_ZNSt5queueIN6marisa8grimoire4trie5RangeESt5dequeIS3_SaIS3_EEE3popEv.exit
   %.sroa.0249.0.lcssa = phi i32 [ %.sroa.0249.0.copyload, %_ZNSt5queueIN6marisa8grimoire4trie5RangeESt5dequeIS3_SaIS3_EEE3popEv.exit ], [ %.sroa.0249.0489, %bb.k ] ; 3 uses
-  %.lcssa326 = phi i64 [ %i.fr, %_ZNSt5queueIN6marisa8grimoire4trie5RangeESt5dequeIS3_SaIS3_EEE3popEv.exit ], [ %i.fu, %bb.k ] ; 3 uses
+  %.lcssa326 = phi i64 [ %i.fr, %_ZNSt5queueIN6marisa8grimoire4trie5RangeESt5dequeIS3_SaIS3_EEE3popEv.exit ], [ %i.fu, %bb.k ] ; 2 uses
   %i.gg = zext i32 %.sroa.15.0.copyload to i64    ; 3 uses
   %i.gh = icmp eq i32 %.sroa.0249.0.lcssa, %.sroa.15.0.copyload
   br i1 %i.gh, label %.critedge.thread, label %bb.o
@@ -248,19 +248,19 @@ bb.p:                                             ; preds = %bb.y, %._crit_edge5
 
 bb.q:                                             ; preds = %.lr.ph505, %bb.v
   %i.gq = phi ptr [ %i.gi, %.lr.ph505 ], [ %i.hn, %bb.v ] ; 3 uses
-  %.081504 = phi i64 [ %.081496, %.lr.ph505 ], [ %.081, %bb.v ] ; 6 uses
-  %.081.in503 = phi i64 [ %.lcssa326, %.lr.ph505 ], [ %.081504, %bb.v ]
+  %.081.in503 = phi i64 [ %.081496, %.lr.ph505 ], [ %.081, %bb.v ] ; 6 uses
   %.082502 = phi double [ %i.gn, %.lr.ph505 ], [ %i.hs, %bb.v ] ; 2 uses
   %.sroa.0249.1501 = phi i32 [ %.sroa.0249.0.lcssa, %.lr.ph505 ], [ %.sroa.0249.2, %bb.v ] ; 2 uses
   %.sroa.34.0500 = phi i64 [ 0, %.lr.ph505 ], [ %.sroa.34.1, %bb.v ] ; 6 uses
   %.sroa.23.0499 = phi i64 [ 0, %.lr.ph505 ], [ %.sroa.23.1, %bb.v ] ; 4 uses
   %.sroa.12.0498 = phi ptr [ null, %.lr.ph505 ], [ %.sroa.12.1, %bb.v ] ; 3 uses
   %.sroa.0265.1497 = phi ptr [ null, %.lr.ph505 ], [ %.sroa.0265.2, %bb.v ] ; 5 uses
-  %i.gr = getelementptr inbounds nuw [24 x i8], ptr %i.gq, i64 %.081.in503
-  %i.gs = load ptr, ptr %i.gr, align 8, !tbaa !68
+  %i.gr = getelementptr [24 x i8], ptr %i.gq, i64 %.081.in503
+  %7 = getelementptr i8, ptr %i.gr, i64 -24
+  %i.gs = load ptr, ptr %7, align 8, !tbaa !68
   %i.gt = getelementptr inbounds nuw i8, ptr %i.gs, i64 %i.go
   %i.gu = load i8, ptr %i.gt, align 1, !tbaa !55
-  %i.gv = getelementptr inbounds nuw [24 x i8], ptr %i.gq, i64 %.081504
+  %i.gv = getelementptr inbounds nuw [24 x i8], ptr %i.gq, i64 %.081.in503
   %i.gw = load ptr, ptr %i.gv, align 8, !tbaa !68
   %i.gx = getelementptr inbounds nuw i8, ptr %i.gw, i64 %i.go
   %i.gy = load i8, ptr %i.gx, align 1, !tbaa !55
@@ -270,7 +270,7 @@ bb.q:                                             ; preds = %.lr.ph505, %bb.v
 bb.r:                                             ; preds = %bb.q
   %i.gz = zext i32 %.sroa.0249.1501 to i64
   %i.ha = fptrunc double %.082502 to float
-  %.sroa.0.sroa.3.0.insert.ext.i107 = shl i64 %.081504, 32
+  %.sroa.0.sroa.3.0.insert.ext.i107 = shl i64 %.081.in503, 32
   %.sroa.0.sroa.0.0.insert.insert.i109 = or disjoint i64 %.sroa.0.sroa.3.0.insert.ext.i107, %i.gz
   %i.hb = bitcast float %i.ha to i32
   %.sroa.4.sroa.3.0.insert.ext.i111 = zext i32 %i.hb to i64
@@ -309,7 +309,7 @@ bb.t:                                             ; preds = %bb.r, %_ZNKSt14defa
   store i64 %.sroa.0.sroa.0.0.insert.insert.i109, ptr %i.hk, align 4
   %.sroa.5248.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hk, i64 8
   store i64 %.sroa.4.sroa.0.0.insert.insert.i114, ptr %.sroa.5248.0..sroa_idx, align 4
-  %i.hl = trunc i64 %.081504 to i32
+  %i.hl = trunc i64 %.081.in503 to i32
   %.pre631 = load ptr, ptr %i.h, align 8, !tbaa !60
   br label %bb.v
 
@@ -326,12 +326,12 @@ bb.v:                                             ; preds = %bb.t, %bb.q
   %.sroa.34.1 = phi i64 [ %.sroa.34.0500, %bb.q ], [ %.sroa.34.2, %bb.t ] ; 2 uses
   %.sroa.0249.2 = phi i32 [ %.sroa.0249.1501, %bb.q ], [ %i.hl, %bb.t ] ; 2 uses
   %.183 = phi double [ %.082502, %bb.q ], [ 0.000000e+00, %bb.t ]
-  %i.ho = getelementptr inbounds nuw [24 x i8], ptr %i.hn, i64 %.081504
+  %i.ho = getelementptr inbounds nuw [24 x i8], ptr %i.hn, i64 %.081.in503
   %i.hp = getelementptr inbounds nuw i8, ptr %i.ho, i64 12
   %i.hq = load float, ptr %i.hp, align 4, !tbaa !55
   %i.hr = fpext float %i.hq to double
   %i.hs = fadd double %.183, %i.hr                ; 2 uses
-  %.081 = add nuw nsw i64 %.081504, 1             ; 2 uses
+  %.081 = add nuw nsw i64 %.081.in503, 1          ; 2 uses
   %exitcond627.not = icmp eq i64 %.081, %i.gg
   br i1 %exitcond627.not, label %._crit_edge506.loopexit, label %bb.q, !llvm.loop !304
 
@@ -437,7 +437,7 @@ bb.ac:                                            ; preds = %.lr.ph527, %bb.cb
   %i.im = getelementptr inbounds nuw [16 x i8], ptr %.sroa.12.3, i64 %.080525 ; 8 uses
   %i.in = getelementptr inbounds nuw i8, ptr %i.im, i64 8 ; 4 uses
   %i.io = load i32, ptr %i.in, align 4, !tbaa !188
-  %i.ip = zext i32 %i.io to i64                   ; 5 uses
+  %i.ip = zext i32 %i.io to i64                   ; 4 uses
   %i.iq = load i32, ptr %i.im, align 4, !tbaa !189
   %i.ir = zext i32 %i.iq to i64                   ; 3 uses
   %i.is = load ptr, ptr %i.h, align 8, !tbaa !60  ; 3 uses
@@ -465,7 +465,6 @@ bb.ac:                                            ; preds = %.lr.ph527, %bb.cb
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %.loopexit
   %.079515 = phi i64 [ %.079513, %.preheader.lr.ph ], [ %.079, %.loopexit ] ; 5 uses
-  %.079.in514 = phi i64 [ %i.ip, %.preheader.lr.ph ], [ %.079515, %.loopexit ]
   br i1 %i.jc, label %.lr.ph861, label %.loopexit
 
 bb.ad:                                            ; preds = %.lr.ph861
@@ -485,7 +484,7 @@ bb.ad:                                            ; preds = %.lr.ph861
   %i.jk = getelementptr inbounds nuw i8, ptr %i.jj, i64 %.079515
   %i.jl = load i8, ptr %i.jk, align 1, !tbaa !55
   %.not = icmp eq i8 %i.jh, %i.jl
-  br i1 %.not, label %bb.ad, label %.thread, !llvm.loop !305
+  br i1 %.not, label %bb.ad, label %.thread.loopexit, !llvm.loop !305
 
 .loopexit324:                                     ; preds = %bb.al, %bb.au, %bb.bz, %_ZNSt5dequeIN6marisa8grimoire4trie5RangeESaIS3_EE22_M_reserve_map_at_backEm.exit.i, %_ZNSt11_Deque_baseIN6marisa8grimoire4trie5RangeESaIS3_EE15_M_allocate_mapEm.exit.i
   %.sroa.0290.3.ph = phi ptr [ %.sroa.0290.2519, %bb.au ], [ %.sroa.0290.2519, %bb.al ], [ %.sroa.0290.4, %_ZNSt11_Deque_baseIN6marisa8grimoire4trie5RangeESaIS3_EE15_M_allocate_mapEm.exit.i ], [ %.sroa.0290.4, %_ZNSt5dequeIN6marisa8grimoire4trie5RangeESaIS3_EE22_M_reserve_map_at_backEm.exit.i ], [ %.sroa.0290.4, %bb.bz ]
@@ -499,9 +498,13 @@ bb.ad:                                            ; preds = %.lr.ph861
           cleanup
   br label %.body
 
-.thread:                                          ; preds = %.loopexit, %.lr.ph861, %bb.ac
-  %.079.in348 = phi i64 [ %.079.in514, %.lr.ph861 ], [ %i.ip, %bb.ac ], [ %i.jb, %.loopexit ] ; 2 uses
-  %.079346 = phi i64 [ %.079515, %.lr.ph861 ], [ %.079513, %bb.ac ], [ %i.iw, %.loopexit ] ; 2 uses
+.thread.loopexit:                                 ; preds = %.lr.ph861
+  %.079.in514629.le = add nsw i64 %.079515, -1
+  br label %.thread
+
+.thread:                                          ; preds = %.loopexit, %.thread.loopexit, %bb.ac
+  %.079.in348 = phi i64 [ %.079.in514629.le, %.thread.loopexit ], [ %i.ip, %bb.ac ], [ %i.jb, %.loopexit ] ; 2 uses
+  %.079346 = phi i64 [ %.079515, %.thread.loopexit ], [ %.079513, %bb.ac ], [ %i.iw, %.loopexit ] ; 2 uses
   %i.jm = getelementptr inbounds nuw i8, ptr %i.im, i64 12 ; 2 uses
   %i.jn = load float, ptr %i.jm, align 4, !tbaa !193 ; 2 uses
   %i.jo = load ptr, ptr %i.it, align 8, !tbaa !68
@@ -904,7 +907,7 @@ bb.m:                                             ; preds = %.critedge.thread
 
 .critedge:                                        ; preds = %bb.k, %_ZNSt5queueIN6marisa8grimoire4trie5RangeESt5dequeIS3_SaIS3_EEE3popEv.exit
   %.sroa.0249.0.lcssa = phi i32 [ %.sroa.0249.0.copyload, %_ZNSt5queueIN6marisa8grimoire4trie5RangeESt5dequeIS3_SaIS3_EEE3popEv.exit ], [ %.sroa.0249.0487, %bb.k ] ; 3 uses
-  %.lcssa326 = phi i64 [ %i.fr, %_ZNSt5queueIN6marisa8grimoire4trie5RangeESt5dequeIS3_SaIS3_EEE3popEv.exit ], [ %i.fu, %bb.k ] ; 3 uses
+  %.lcssa326 = phi i64 [ %i.fr, %_ZNSt5queueIN6marisa8grimoire4trie5RangeESt5dequeIS3_SaIS3_EEE3popEv.exit ], [ %i.fu, %bb.k ] ; 2 uses
   %i.gf = zext i32 %.sroa.15.0.copyload to i64    ; 3 uses
   %i.gg = icmp eq i32 %.sroa.0249.0.lcssa, %.sroa.15.0.copyload
   br i1 %i.gg, label %.critedge.thread, label %bb.n
@@ -948,20 +951,20 @@ bb.o:                                             ; preds = %bb.x, %._crit_edge5
 
 bb.p:                                             ; preds = %.lr.ph503, %bb.u
   %i.gq = phi ptr [ %i.gh, %.lr.ph503 ], [ %i.hp, %bb.u ] ; 3 uses
-  %.081502 = phi i64 [ %.081494, %.lr.ph503 ], [ %.081, %bb.u ] ; 6 uses
-  %.081.in501 = phi i64 [ %.lcssa326, %.lr.ph503 ], [ %.081502, %bb.u ]
+  %.081.in501 = phi i64 [ %.081494, %.lr.ph503 ], [ %.081, %bb.u ] ; 6 uses
   %.082500 = phi double [ %i.gm, %.lr.ph503 ], [ %i.hu, %bb.u ] ; 2 uses
   %.sroa.0249.1499 = phi i32 [ %.sroa.0249.0.lcssa, %.lr.ph503 ], [ %.sroa.0249.2, %bb.u ] ; 2 uses
   %.sroa.34.0498 = phi i64 [ 0, %.lr.ph503 ], [ %.sroa.34.1, %bb.u ] ; 6 uses
   %.sroa.23.0497 = phi i64 [ 0, %.lr.ph503 ], [ %.sroa.23.1, %bb.u ] ; 4 uses
   %.sroa.12.0496 = phi ptr [ null, %.lr.ph503 ], [ %.sroa.12.1, %bb.u ] ; 3 uses
   %.sroa.0265.1495 = phi ptr [ null, %.lr.ph503 ], [ %.sroa.0265.2, %bb.u ] ; 5 uses
-  %i.gr = getelementptr inbounds nuw [24 x i8], ptr %i.gq, i64 %.081.in501
-  %i.gs = load ptr, ptr %i.gr, align 8, !tbaa !163
+  %i.gr = getelementptr [24 x i8], ptr %i.gq, i64 %.081.in501
+  %7 = getelementptr i8, ptr %i.gr, i64 -24
+  %i.gs = load ptr, ptr %7, align 8, !tbaa !163
   %i.gt = getelementptr inbounds i8, ptr %i.gs, i64 %i.go
   %i.gu = getelementptr inbounds i8, ptr %i.gt, i64 -1
   %i.gv = load i8, ptr %i.gu, align 1, !tbaa !55
-  %i.gw = getelementptr inbounds nuw [24 x i8], ptr %i.gq, i64 %.081502
+  %i.gw = getelementptr inbounds nuw [24 x i8], ptr %i.gq, i64 %.081.in501
   %i.gx = load ptr, ptr %i.gw, align 8, !tbaa !163
   %i.gy = getelementptr inbounds i8, ptr %i.gx, i64 %i.go
   %i.gz = getelementptr inbounds i8, ptr %i.gy, i64 -1
@@ -972,7 +975,7 @@ bb.p:                                             ; preds = %.lr.ph503, %bb.u
 bb.q:                                             ; preds = %bb.p
   %i.hb = zext i32 %.sroa.0249.1499 to i64
   %i.hc = fptrunc double %.082500 to float
-  %.sroa.0.sroa.3.0.insert.ext.i107 = shl i64 %.081502, 32
+  %.sroa.0.sroa.3.0.insert.ext.i107 = shl i64 %.081.in501, 32
   %.sroa.0.sroa.0.0.insert.insert.i109 = or disjoint i64 %.sroa.0.sroa.3.0.insert.ext.i107, %i.hb
   %i.hd = bitcast float %i.hc to i32
   %.sroa.4.sroa.3.0.insert.ext.i111 = zext i32 %i.hd to i64
@@ -1011,7 +1014,7 @@ bb.s:                                             ; preds = %bb.q, %_ZNKSt14defa
   store i64 %.sroa.0.sroa.0.0.insert.insert.i109, ptr %i.hm, align 4
   %.sroa.5248.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hm, i64 8
   store i64 %.sroa.4.sroa.0.0.insert.insert.i114, ptr %.sroa.5248.0..sroa_idx, align 4
-  %i.hn = trunc i64 %.081502 to i32
+  %i.hn = trunc i64 %.081.in501 to i32
   %.pre628 = load ptr, ptr %i.h, align 8, !tbaa !160
   br label %bb.u
 
@@ -1028,12 +1031,12 @@ bb.u:                                             ; preds = %bb.s, %bb.p
   %.sroa.34.1 = phi i64 [ %.sroa.34.0498, %bb.p ], [ %.sroa.34.2, %bb.s ] ; 2 uses
   %.sroa.0249.2 = phi i32 [ %.sroa.0249.1499, %bb.p ], [ %i.hn, %bb.s ] ; 2 uses
   %.183 = phi double [ %.082500, %bb.p ], [ 0.000000e+00, %bb.s ]
-  %i.hq = getelementptr inbounds nuw [24 x i8], ptr %i.hp, i64 %.081502
+  %i.hq = getelementptr inbounds nuw [24 x i8], ptr %i.hp, i64 %.081.in501
   %i.hr = getelementptr inbounds nuw i8, ptr %i.hq, i64 12
   %i.hs = load float, ptr %i.hr, align 4, !tbaa !55
   %i.ht = fpext float %i.hs to double
   %i.hu = fadd double %.183, %i.ht                ; 2 uses
-  %.081 = add nuw nsw i64 %.081502, 1             ; 2 uses
+  %.081 = add nuw nsw i64 %.081.in501, 1          ; 2 uses
   %exitcond624.not = icmp eq i64 %.081, %i.gf
   br i1 %exitcond624.not, label %._crit_edge504.loopexit, label %bb.p, !llvm.loop !348
 
@@ -1137,7 +1140,7 @@ bb.ab:                                            ; preds = %.lr.ph524, %bb.ca
   %i.in = getelementptr inbounds nuw [16 x i8], ptr %.sroa.12.3, i64 %.080522 ; 8 uses
   %i.io = getelementptr inbounds nuw i8, ptr %i.in, i64 8 ; 4 uses
   %i.ip = load i32, ptr %i.io, align 4, !tbaa !188
-  %i.iq = zext i32 %i.ip to i64                   ; 4 uses
+  %i.iq = zext i32 %i.ip to i64                   ; 3 uses
   %i.ir = load i32, ptr %i.in, align 4, !tbaa !189
   %i.is = zext i32 %i.ir to i64                   ; 3 uses
   %i.it = load ptr, ptr %i.h, align 8, !tbaa !160 ; 3 uses
@@ -1164,9 +1167,8 @@ bb.ab:                                            ; preds = %.lr.ph524, %bb.ca
   br i1 %exitcond625.not, label %.thread, label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %.loopexit
-  %.079513 = phi i64 [ %.079511, %.preheader.lr.ph ], [ %.079, %.loopexit ] ; 3 uses
-  %.079.in512 = phi i64 [ %i.iq, %.preheader.lr.ph ], [ %.079513, %.loopexit ] ; 2 uses
-  %7 = xor i64 %.079.in512, -1                    ; 2 uses
+  %.079513 = phi i64 [ %.079511, %.preheader.lr.ph ], [ %.079, %.loopexit ] ; 4 uses
+  %8 = sub nsw i64 0, %.079513                    ; 2 uses
   br i1 %i.jd, label %.lr.ph858, label %.loopexit
 
 bb.ac:                                            ; preds = %.lr.ph858
@@ -1179,20 +1181,24 @@ bb.ac:                                            ; preds = %.lr.ph858
   %.0.in856 = phi i64 [ %.0857, %bb.ac ], [ %i.is, %.preheader ]
   %i.jf = getelementptr inbounds nuw [24 x i8], ptr %i.it, i64 %.0.in856
   %i.jg = load ptr, ptr %i.jf, align 8, !tbaa !163
-  %i.jh = getelementptr inbounds i8, ptr %i.jg, i64 %7
+  %i.jh = getelementptr inbounds i8, ptr %i.jg, i64 %8
   %i.ji = getelementptr inbounds i8, ptr %i.jh, i64 -1
   %i.jj = load i8, ptr %i.ji, align 1, !tbaa !55
   %i.jk = getelementptr inbounds nuw [24 x i8], ptr %i.it, i64 %.0857
   %i.jl = load ptr, ptr %i.jk, align 8, !tbaa !163
-  %i.jm = getelementptr inbounds i8, ptr %i.jl, i64 %7
+  %i.jm = getelementptr inbounds i8, ptr %i.jl, i64 %8
   %i.jn = getelementptr inbounds i8, ptr %i.jm, i64 -1
   %i.jo = load i8, ptr %i.jn, align 1, !tbaa !55
   %.not = icmp eq i8 %i.jj, %i.jo
-  br i1 %.not, label %bb.ac, label %.thread, !llvm.loop !349
+  br i1 %.not, label %bb.ac, label %.thread.loopexit, !llvm.loop !349
 
-.thread:                                          ; preds = %.loopexit, %.lr.ph858, %bb.ab
-  %.079.in346 = phi i64 [ %.079.in512, %.lr.ph858 ], [ %i.iq, %bb.ab ], [ %i.jc, %.loopexit ] ; 2 uses
-  %.079344 = phi i64 [ %.079513, %.lr.ph858 ], [ %.079511, %bb.ab ], [ %i.ix, %.loopexit ] ; 2 uses
+.thread.loopexit:                                 ; preds = %.lr.ph858
+  %.079.in512626.le = add nsw i64 %.079513, -1
+  br label %.thread
+
+.thread:                                          ; preds = %.loopexit, %.thread.loopexit, %bb.ab
+  %.079.in346 = phi i64 [ %.079.in512626.le, %.thread.loopexit ], [ %i.iq, %bb.ab ], [ %i.jc, %.loopexit ] ; 2 uses
+  %.079344 = phi i64 [ %.079513, %.thread.loopexit ], [ %.079511, %bb.ab ], [ %i.ix, %.loopexit ] ; 2 uses
   %i.jp = load i64, ptr %i.bg, align 8, !tbaa !85 ; 2 uses
   %i.jq = getelementptr inbounds nuw i8, ptr %i.in, i64 12 ; 2 uses
   %i.jr = load float, ptr %i.jq, align 4, !tbaa !193 ; 2 uses

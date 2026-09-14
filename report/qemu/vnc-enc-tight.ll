@@ -185,7 +185,7 @@ bb.m:                                             ; preds = %.thread
 bb.n:                                             ; preds = %.lr.ph197, %._crit_edge
   %.0106.i195 = phi i32 [ %.tr141, %.lr.ph197 ], [ %.1107.i, %._crit_edge ] ; 5 uses
   %.0108.i194 = phi i32 [ %.tr143, %.lr.ph197 ], [ %.1109.i, %._crit_edge ] ; 2 uses
-  %.0111.i193 = phi i32 [ %.tr141, %.lr.ph197 ], [ %i.jr, %._crit_edge ] ; 11 uses
+  %.0111.i193 = phi i32 [ %.tr141, %.lr.ph197 ], [ %i.jr, %._crit_edge ] ; 10 uses
   %.0112.i192 = phi i32 [ 0, %.lr.ph197 ], [ %.1113.i, %._crit_edge ] ; 2 uses
   %i.bs = sub i32 %.0111.i193, %.0106.i195
   %.not.i = icmp slt i32 %i.bs, %i.bn
@@ -260,7 +260,7 @@ bb.s:                                             ; preds = %send_rect_simple.ex
   br label %bb.t
 
 bb.t:                                             ; preds = %.lr.ph, %.loopexit
-  %.0110.i191 = phi i32 [ %2, %.lr.ph ], [ %i.jp, %.loopexit ] ; 17 uses
+  %.0110.i191 = phi i32 [ %2, %.lr.ph ], [ %i.jp, %.loopexit ] ; 16 uses
   %i.cz = sub i32 %i.i, %.0110.i191               ; 3 uses
   %i.da = tail call i32 @llvm.umin.i32(i32 %i.cz, i32 16)
   %.val.i = load ptr, ptr %i.k, align 8           ; 3 uses
@@ -496,13 +496,12 @@ bb.ac:                                            ; preds = %find_best_solid_are
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %check_solid_tile.exit.i
-  %.0157.i = phi i32 [ %.0.i, %check_solid_tile.exit.i ], [ %.0153.i, %.lr.ph.i.preheader ] ; 4 uses
-  %.0.in156.i = phi i32 [ %.0157.i, %check_solid_tile.exit.i ], [ %.0111.i193, %.lr.ph.i.preheader ] ; 2 uses
+  %.0.in156.i = phi i32 [ %.0.i, %check_solid_tile.exit.i ], [ %.0153.i, %.lr.ph.i.preheader ] ; 5 uses
   %.val64.i = load ptr, ptr %i.k, align 8         ; 2 uses
-  %i.fs = tail call ptr @vnc_server_fb_ptr(ptr noundef %.val64.i, i32 noundef %.0110.i191, i32 noundef %.0157.i) #12 ; 2 uses
+  %i.fs = tail call ptr @vnc_server_fb_ptr(ptr noundef %.val64.i, i32 noundef %.0110.i191, i32 noundef %.0.in156.i) #12 ; 2 uses
   %i.ft = load i32, ptr %i.fs, align 4
   %.not.i.i.i = icmp eq i32 %i.ft, %i.dc
-  br i1 %.not.i.i.i, label %bb.ad, label %.critedge.i
+  br i1 %.not.i.i.i, label %bb.ad, label %.critedge.loopexit223.split.loop.exit.i
 
 bb.ad:                                            ; preds = %.lr.ph.i
   br i1 %i.fr, label %.preheader.us.preheader.i.i.i, label %check_solid_tile.exit.i
@@ -517,16 +516,24 @@ bb.ae:                                            ; preds = %.preheader.us.prehe
   %i.fu = getelementptr inbounds nuw [4 x i8], ptr %i.fs, i64 %indvars.iv.i.i.i
   %i.fv = load i32, ptr %i.fu, align 4
   %.not24.us.i.i.i = icmp eq i32 %i.dc, %i.fv
-  br i1 %.not24.us.i.i.i, label %bb.ae, label %.critedge.i
+  br i1 %.not24.us.i.i.i, label %bb.ae, label %.critedge.loopexit.i
 
 check_solid_tile.exit.i:                          ; preds = %bb.ae, %bb.ad
   %i.fw = tail call i32 @vnc_server_fb_stride(ptr noundef %.val64.i) #12 ; 0 uses
-  %.0.i = add i32 %.0157.i, -1                    ; 2 uses
+  %.0.i = add i32 %.0.in156.i, -1                 ; 2 uses
   %.not.i69 = icmp slt i32 %.0.i, %.1107.i
   br i1 %.not.i69, label %.critedge.i, label %.lr.ph.i, !llvm.loop !23
 
-.critedge.i:                                      ; preds = %check_solid_tile.exit.i, %.lr.ph.i, %.preheader.us.preheader.i.i.i, %bb.ac
-  %.0.in150.i = phi i32 [ %.0.in156.i, %.preheader.us.preheader.i.i.i ], [ %.0111.i193, %bb.ac ], [ %.0157.i, %check_solid_tile.exit.i ], [ %.0.in156.i, %.lr.ph.i ] ; 9 uses
+.critedge.loopexit.i:                             ; preds = %.preheader.us.preheader.i.i.i
+  %.0.in156200.le230.i = add i32 %.0.in156.i, 1
+  br label %.critedge.i
+
+.critedge.loopexit223.split.loop.exit.i:          ; preds = %.lr.ph.i
+  %.0.in156200.le.i = add i32 %.0.in156.i, 1
+  br label %.critedge.i
+
+.critedge.i:                                      ; preds = %check_solid_tile.exit.i, %.critedge.loopexit223.split.loop.exit.i, %.critedge.loopexit.i, %bb.ac
+  %.0.in150.i = phi i32 [ %.0.in156200.le230.i, %.critedge.loopexit.i ], [ %.0111.i193, %bb.ac ], [ %.0.in156200.le.i, %.critedge.loopexit223.split.loop.exit.i ], [ %.0.in156.i, %check_solid_tile.exit.i ] ; 9 uses
   %i.fx = add i32 %.063108.i, %.0111.i193         ; 3 uses
   %i.fy = icmp slt i32 %i.fx, %i.ct
   br i1 %i.fy, label %.lr.ph164.i.preheader, label %.critedge2.i
@@ -577,13 +584,12 @@ bb.ag:                                            ; preds = %.preheader.us.prehe
   br label %.lr.ph175.i
 
 .lr.ph175.i:                                      ; preds = %.lr.ph175.i.preheader, %check_solid_tile.exit96.i
-  %.059174.i = phi i32 [ %.059.i, %check_solid_tile.exit96.i ], [ %.059170.i, %.lr.ph175.i.preheader ] ; 4 uses
-  %.059.in173.i = phi i32 [ %.059174.i, %check_solid_tile.exit96.i ], [ %.0110.i191, %.lr.ph175.i.preheader ] ; 2 uses
+  %.059.in173.i = phi i32 [ %.059.i, %check_solid_tile.exit96.i ], [ %.059170.i, %.lr.ph175.i.preheader ] ; 5 uses
   %.val62.i = load ptr, ptr %i.k, align 8         ; 2 uses
-  %i.gi = tail call ptr @vnc_server_fb_ptr(ptr noundef %.val62.i, i32 noundef %.059174.i, i32 noundef %.0.in150.i) #12 ; 2 uses
+  %i.gi = tail call ptr @vnc_server_fb_ptr(ptr noundef %.val62.i, i32 noundef %.059.in173.i, i32 noundef %.0.in150.i) #12 ; 2 uses
   %i.gj = load i32, ptr %i.gi, align 4
   %.not.i.i83.i = icmp eq i32 %i.gj, %i.dc
-  br i1 %.not.i.i83.i, label %bb.ah, label %.critedge4.i
+  br i1 %.not.i.i83.i, label %bb.ah, label %.critedge4.loopexit221.split.loop.exit.i
 
 bb.ah:                                            ; preds = %.lr.ph175.i
   br i1 %i.gh, label %.preheader.us.i.i87.i, label %check_solid_tile.exit96.i
@@ -593,7 +599,7 @@ bb.ah:                                            ; preds = %.lr.ph175.i
   %.0222.us.i.i89.i = phi ptr [ %i.gn, %._crit_edge.us.i.i94.i ], [ %i.gi, %bb.ah ] ; 2 uses
   %i.gk = load i32, ptr %.0222.us.i.i89.i, align 4
   %.not24.us.i.i91.i = icmp eq i32 %i.dc, %i.gk
-  br i1 %.not24.us.i.i91.i, label %._crit_edge.us.i.i94.i, label %.critedge4.i
+  br i1 %.not24.us.i.i91.i, label %._crit_edge.us.i.i94.i, label %.critedge4.loopexit.i
 
 ._crit_edge.us.i.i94.i:                           ; preds = %.preheader.us.i.i87.i
   %i.gl = tail call i32 @vnc_server_fb_stride(ptr noundef %.val62.i) #12
@@ -604,12 +610,20 @@ bb.ah:                                            ; preds = %.lr.ph175.i
   br i1 %exitcond8.not.i.i95.i, label %check_solid_tile.exit96.i, label %.preheader.us.i.i87.i, !llvm.loop !20
 
 check_solid_tile.exit96.i:                        ; preds = %._crit_edge.us.i.i94.i, %bb.ah
-  %.059.i = add i32 %.059174.i, -1                ; 2 uses
+  %.059.i = add i32 %.059.in173.i, -1             ; 2 uses
   %.not61.i = icmp slt i32 %.059.i, %2
   br i1 %.not61.i, label %.critedge4.i, label %.lr.ph175.i, !llvm.loop !25
 
-.critedge4.i:                                     ; preds = %check_solid_tile.exit96.i, %.lr.ph175.i, %.preheader.us.i.i87.i, %.critedge2.i
-  %.059.in142.i = phi i32 [ %.059.in173.i, %.preheader.us.i.i87.i ], [ %.0110.i191, %.critedge2.i ], [ %.059174.i, %check_solid_tile.exit96.i ], [ %.059.in173.i, %.lr.ph175.i ] ; 5 uses
+.critedge4.loopexit.i:                            ; preds = %.preheader.us.i.i87.i
+  %.059.in173201.le234.i = add i32 %.059.in173.i, 1
+  br label %.critedge4.i
+
+.critedge4.loopexit221.split.loop.exit.i:         ; preds = %.lr.ph175.i
+  %.059.in173201.le.i = add i32 %.059.in173.i, 1
+  br label %.critedge4.i
+
+.critedge4.i:                                     ; preds = %check_solid_tile.exit96.i, %.critedge4.loopexit221.split.loop.exit.i, %.critedge4.loopexit.i, %.critedge2.i
+  %.059.in142.i = phi i32 [ %.059.in173201.le234.i, %.critedge4.loopexit.i ], [ %.0110.i191, %.critedge2.i ], [ %.059.in173201.le.i, %.critedge4.loopexit221.split.loop.exit.i ], [ %.059.in173.i, %check_solid_tile.exit96.i ] ; 5 uses
   %i.gp = add i32 %.062106.i, %.0110.i191         ; 3 uses
   %i.gq = icmp slt i32 %i.gp, %i.i
   br i1 %i.gq, label %.lr.ph183.i.preheader, label %extend_solid_area.exit
@@ -1012,7 +1026,7 @@ bb.j:                                             ; preds = %bb.i
 
 .lr.ph.i.i:                                       ; preds = %bb.j, %bb.k
   %i.au = phi i64 [ %i.az, %bb.k ], [ 1, %bb.j ]
-  %.0649.i.i = phi i32 [ %i.ay, %bb.k ], [ 1, %bb.j ] ; 5 uses
+  %.0649.i.i = phi i32 [ %i.ay, %bb.k ], [ 1, %bb.j ] ; 4 uses
   %i.av = getelementptr inbounds [4 x i8], ptr %.val37.i, i64 %i.au
   %i.aw = load i32, ptr %i.av, align 4            ; 5 uses
   %i.ax = icmp eq i32 %i.aw, %i.at
@@ -1034,18 +1048,17 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.bb, label %.lr.ph15.i.i, label %._crit_edge.i.i
 
 .lr.ph15.i.i:                                     ; preds = %bb.m, %bb.q
-  %.16514.i.i = phi i32 [ %.165.i.i, %bb.q ], [ %.16510.i.i, %bb.m ] ; 3 uses
-  %.013.i.i.a = phi i32 [ %.1.i.i, %bb.q ], [ 0, %bb.m ] ; 2 uses
-  %.06212.i.i.a = phi i32 [ %.163.i.i, %bb.q ], [ %.0649.i.i, %bb.m ] ; 2 uses
-  %.165.in11.i.i = phi i32 [ %.16514.i.i, %bb.q ], [ %.0649.i.i, %bb.m ]
-  %i.bc = sext i32 %.16514.i.i to i64
+  %.013.i.i.a = phi i32 [ %.165.i.i, %bb.q ], [ %.16510.i.i, %bb.m ] ; 3 uses
+  %.06212.i.i.a = phi i32 [ %.1.i.i, %bb.q ], [ 0, %bb.m ] ; 2 uses
+  %.165.in11.i.i = phi i32 [ %.163.i.i, %bb.q ], [ %.0649.i.i, %bb.m ] ; 2 uses
+  %i.bc = sext i32 %.013.i.i.a to i64
   %i.bd = getelementptr inbounds [4 x i8], ptr %.val37.i, i64 %i.bc
   %i.be = load i32, ptr %i.bd, align 4            ; 4 uses
   %i.bf = icmp eq i32 %i.be, %i.at
   br i1 %i.bf, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %.lr.ph15.i.i
-  %i.bg = add i32 %.06212.i.i.a, 1
+  %i.bg = add i32 %.165.in11.i.i, 1
   br label %bb.q
 
 bb.o:                                             ; preds = %.lr.ph15.i.i
@@ -1053,13 +1066,13 @@ bb.o:                                             ; preds = %.lr.ph15.i.i
   br i1 %i.bh, label %bb.p, label %bb.r
 
 bb.p:                                             ; preds = %bb.o
-  %i.bi = add i32 %.013.i.i.a, 1
+  %i.bi = add i32 %.06212.i.i.a, 1
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.n
-  %.163.i.i = phi i32 [ %i.bg, %bb.n ], [ %.06212.i.i.a, %bb.p ] ; 2 uses
-  %.1.i.i = phi i32 [ %.013.i.i.a, %bb.n ], [ %i.bi, %bb.p ] ; 2 uses
-  %.165.i.i = add nuw i32 %.16514.i.i, 1          ; 2 uses
+  %.163.i.i = phi i32 [ %i.bg, %bb.n ], [ %.165.in11.i.i, %bb.p ] ; 2 uses
+  %.1.i.i = phi i32 [ %.06212.i.i.a, %bb.n ], [ %i.bi, %bb.p ] ; 2 uses
+  %.165.i.i = add nuw i32 %.013.i.i.a, 1          ; 2 uses
   %exitcond138.not = icmp eq i32 %.165.i.i, %i.aa
   br i1 %exitcond138.not, label %._crit_edge.i.i, label %.lr.ph15.i.i, !llvm.loop !31
 
@@ -1081,7 +1094,7 @@ bb.s:                                             ; preds = %bb.r
   %i.bm = tail call i32 @palette_put(ptr noundef %i.ac, i32 noundef %i.at) #12 ; 0 uses
   %i.bn = tail call i32 @palette_put(ptr noundef %i.ac, i32 noundef %i.aw) #12 ; 0 uses
   %i.bo = tail call i32 @palette_put(ptr noundef %i.ac, i32 noundef %i.be) #12 ; 0 uses
-  %i.bp = add i32 %.165.in11.i.i, 2               ; 2 uses
+  %i.bp = add i32 %.013.i.i.a, 1                  ; 2 uses
   %i.bq = icmp ugt i32 %i.aa, %i.bp
   br i1 %i.bq, label %.lr.ph20.i.i, label %._crit_edge21.i.i
 
@@ -1116,7 +1129,7 @@ bb.v:                                             ; preds = %bb.i
 
 .lr.ph.i40.i:                                     ; preds = %bb.v, %bb.w
   %i.ca = phi i64 [ %i.cf, %bb.w ], [ 1, %bb.v ]
-  %.0649.i41.i = phi i32 [ %i.ce, %bb.w ], [ 1, %bb.v ] ; 5 uses
+  %.0649.i41.i = phi i32 [ %i.ce, %bb.w ], [ 1, %bb.v ] ; 4 uses
   %i.cb = getelementptr inbounds [2 x i8], ptr %.val37.i, i64 %i.ca
   %i.cc = load i16, ptr %i.cb, align 2            ; 5 uses
   %i.cd = icmp eq i16 %i.cc, %i.bz
@@ -1142,18 +1155,17 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.ci, label %.lr.ph15.i48.i, label %._crit_edge.i43.i
 
 .lr.ph15.i48.i:                                   ; preds = %bb.y, %bb.ac
-  %.16514.i49.i = phi i32 [ %.165.i61.i, %bb.ac ], [ %.16510.i42.i, %bb.y ] ; 3 uses
-  %.013.i50.i.a = phi i32 [ %.1.i60.i, %bb.ac ], [ 0, %bb.y ] ; 2 uses
-  %.06212.i51.i.a = phi i32 [ %.163.i59.i, %bb.ac ], [ %.0649.i41.i, %bb.y ] ; 2 uses
-  %.165.in11.i52.i = phi i32 [ %.16514.i49.i, %bb.ac ], [ %.0649.i41.i, %bb.y ]
-  %i.cj = sext i32 %.16514.i49.i to i64
+  %.013.i50.i.a = phi i32 [ %.165.i61.i, %bb.ac ], [ %.16510.i42.i, %bb.y ] ; 3 uses
+  %.06212.i51.i.a = phi i32 [ %.1.i60.i, %bb.ac ], [ 0, %bb.y ] ; 2 uses
+  %.165.in11.i52.i = phi i32 [ %.163.i59.i, %bb.ac ], [ %.0649.i41.i, %bb.y ] ; 2 uses
+  %i.cj = sext i32 %.013.i50.i.a to i64
   %i.ck = getelementptr inbounds [2 x i8], ptr %.val37.i, i64 %i.cj
   %i.cl = load i16, ptr %i.ck, align 2            ; 4 uses
   %i.cm = icmp eq i16 %i.cl, %i.bz
   br i1 %i.cm, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %.lr.ph15.i48.i
-  %i.cn = add i32 %.06212.i51.i.a, 1
+  %i.cn = add i32 %.165.in11.i52.i, 1
   br label %bb.ac
 
 bb.aa:                                            ; preds = %.lr.ph15.i48.i
@@ -1161,13 +1173,13 @@ bb.aa:                                            ; preds = %.lr.ph15.i48.i
   br i1 %i.co, label %bb.ab, label %bb.ad
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.cp = add i32 %.013.i50.i.a, 1
+  %i.cp = add i32 %.06212.i51.i.a, 1
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %bb.z
-  %.163.i59.i = phi i32 [ %i.cn, %bb.z ], [ %.06212.i51.i.a, %bb.ab ] ; 2 uses
-  %.1.i60.i = phi i32 [ %.013.i50.i.a, %bb.z ], [ %i.cp, %bb.ab ] ; 2 uses
-  %.165.i61.i = add nuw i32 %.16514.i49.i, 1      ; 2 uses
+  %.163.i59.i = phi i32 [ %i.cn, %bb.z ], [ %.165.in11.i52.i, %bb.ab ] ; 2 uses
+  %.1.i60.i = phi i32 [ %.06212.i51.i.a, %bb.z ], [ %i.cp, %bb.ab ] ; 2 uses
+  %.165.i61.i = add nuw i32 %.013.i50.i.a, 1      ; 2 uses
   %exitcond135.not = icmp eq i32 %.165.i61.i, %i.aa
   br i1 %exitcond135.not, label %._crit_edge.i43.i, label %.lr.ph15.i48.i, !llvm.loop !34
 
@@ -1194,7 +1206,7 @@ bb.ae:                                            ; preds = %bb.ad
   %i.cw = tail call i32 @palette_put(ptr noundef %i.ac, i32 noundef %i.cv) #12 ; 0 uses
   %i.cx = zext i16 %i.cl to i32
   %i.cy = tail call i32 @palette_put(ptr noundef %i.ac, i32 noundef %i.cx) #12 ; 0 uses
-  %i.cz = add i32 %.165.in11.i52.i, 2             ; 2 uses
+  %i.cz = add i32 %.013.i50.i.a, 1                ; 2 uses
   %i.da = icmp ugt i32 %i.aa, %i.cz
   br i1 %i.da, label %.lr.ph20.i54.i, label %._crit_edge21.i53.i
 

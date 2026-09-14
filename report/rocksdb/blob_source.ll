@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %.loopexit.i.i.i.i, %.lr.ph.i.i.i.i
-  %.sroa.5.08.i.i.i.i = phi i64 [ 16, %.lr.ph.i.i.i.i ], [ %i.bk, %.loopexit.i.i.i.i ] ; 5 uses
+  %.sroa.5.08.i.i.i.i = phi i64 [ 16, %.lr.ph.i.i.i.i ], [ %i.bk, %.loopexit.i.i.i.i ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i.i.i.i.i)
   %i.aj = load ptr, ptr %i.ai, align 8            ; 2 uses
   %i.ak = load ptr, ptr %i.v, align 8             ; 4 uses
@@ -229,9 +229,9 @@ bb.d:                                             ; preds = %.loopexit.i.i.i.i, 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i
   %i.ar = phi ptr [ %.val3.val5.i.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ %i.ak, %.lr.ph.i.i.i.i.i.preheader ]
   %i.as = phi ptr [ %.val3.val.i.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ %i.aj, %.lr.ph.i.i.i.i.i.preheader ]
-  %10 = phi i64 [ %.sroa.7.024.i.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ %.sroa.5.08.i.i.i.i, %.lr.ph.i.i.i.i.i.preheader ] ; 3 uses
   %.0.i.i.i25.i.i.i.i.i = phi ptr [ %.0.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ %i.aq, %.lr.ph.i.i.i.i.i.preheader ]
   %.sroa.7.024.i.i.i.i.i = phi i64 [ %.sroa.7.0.i.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ %.sroa.7.019.i.i.i.i.i, %.lr.ph.i.i.i.i.i.preheader ] ; 3 uses
+  %10 = add i64 %.sroa.7.024.i.i.i.i.i, 1         ; 3 uses
   %i.at = icmp ult i64 %10, 8
   %i.au = getelementptr inbounds nuw [48 x i8], ptr %i.as, i64 %10
   %i.av = getelementptr [48 x i8], ptr %i.ar, i64 %10
@@ -634,8 +634,9 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.f
-  %.sroa.9.038.a = phi i64 [ %.sroa.9.035, %.lr.ph ], [ %.sroa.9.0, %bb.f ] ; 10 uses
-  %.sroa.9.0.in37 = phi i64 [ %i.b, %.lr.ph ], [ %.sroa.9.038.a, %bb.f ] ; 7 uses
+  %.sroa.9.038.a = phi i64 [ 0, %.lr.ph ], [ %indvar.next, %bb.f ] ; 2 uses
+  %.sroa.9.0.in37 = phi i64 [ %.sroa.9.035, %.lr.ph ], [ %.sroa.9.0, %bb.f ] ; 14 uses
+  %3 = add i64 %i.b, %.sroa.9.038.a
   %.sroa.021.0.copyload = load ptr, ptr %0, align 8, !tbaa !166 ; 2 uses
   %.sroa.222.0.copyload = load i64, ptr %i.a, align 8, !tbaa !112 ; 6 uses
   %.val.val = load ptr, ptr %i.g, align 8         ; 4 uses
@@ -644,9 +645,9 @@ bb.c:                                             ; preds = %.lr.ph, %bb.f
   %.val9.val = load ptr, ptr %i.i, align 8        ; 2 uses
   %i.j = getelementptr i8, ptr %.sroa.021.0.copyload, i64 400
   %.val9.val12 = load ptr, ptr %i.j, align 8      ; 2 uses
-  %i.k = icmp ult i64 %.sroa.9.038.a, 8
-  %i.l = getelementptr inbounds nuw [48 x i8], ptr %.val.val, i64 %.sroa.9.038.a
-  %i.m = getelementptr [48 x i8], ptr %.val.val11, i64 %.sroa.9.038.a
+  %i.k = icmp ult i64 %.sroa.9.0.in37, 8
+  %i.l = getelementptr inbounds nuw [48 x i8], ptr %.val.val, i64 %.sroa.9.0.in37
+  %i.m = getelementptr [48 x i8], ptr %.val.val11, i64 %.sroa.9.0.in37
   %i.n = getelementptr i8, ptr %i.m, i64 -384
   %.0.i.i.i = select i1 %i.k, ptr %i.l, ptr %i.n  ; 4 uses
   %i.o = icmp ult i64 %.sroa.222.0.copyload, 8
@@ -664,18 +665,18 @@ bb.c:                                             ; preds = %.lr.ph, %bb.f
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %2, ptr noundef nonnull align 8 dereferenceable(48) %.0.i.i.i, i64 48, i1 false), !tbaa.struct !179
-  %i.v = sub i64 %.sroa.9.038.a, %.sroa.222.0.copyload ; 4 uses
+  %i.v = sub i64 %.sroa.9.0.in37, %.sroa.222.0.copyload ; 4 uses
   %i.w = icmp sgt i64 %i.v, 0
   br i1 %i.w, label %.lr.ph.i.i.i.i.i.preheader, label %.loopexit
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %bb.d
-  %i.x = add i64 %.sroa.9.0.in37, 2
+  %i.x = add i64 %.sroa.9.0.in37, 1
   %xtraiter = and i64 %i.v, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.prol
 
 .lr.ph.i.i.i.i.i.prol:                            ; preds = %.lr.ph.i.i.i.i.i.preheader
-  %i.y = add i64 %.sroa.9.038.a, -1               ; 4 uses
+  %i.y = add i64 %.sroa.9.0.in37, -1              ; 4 uses
   %i.z = icmp ult i64 %i.y, 8
   %i.aa = load ptr, ptr %i.g, align 8, !noalias !413 ; 2 uses
   %i.ab = getelementptr inbounds nuw [48 x i8], ptr %i.aa, i64 %i.y
@@ -683,10 +684,9 @@ bb.d:                                             ; preds = %bb.c
   %i.ad = getelementptr [48 x i8], ptr %i.ac, i64 %i.y
   %i.ae = getelementptr i8, ptr %i.ad, i64 -384
   %.0.i.i.i.i.i.i.i.prol = select i1 %i.z, ptr %i.ab, ptr %i.ae
-  %3 = add i64 %.sroa.9.0.in37, 1                 ; 4 uses
-  %i.af = icmp ult i64 %3, 8
-  %i.ag = getelementptr inbounds nuw [48 x i8], ptr %i.aa, i64 %3
-  %i.ah = getelementptr [48 x i8], ptr %i.ac, i64 %3
+  %i.af = icmp ult i64 %.sroa.9.0.in37, 8
+  %i.ag = getelementptr inbounds nuw [48 x i8], ptr %i.aa, i64 %.sroa.9.0.in37
+  %i.ah = getelementptr [48 x i8], ptr %i.ac, i64 %.sroa.9.0.in37
   %i.ai = getelementptr i8, ptr %i.ah, i64 -384
   %.0.i.i2.i.i.i.i.i.prol = select i1 %i.af, ptr %i.ag, ptr %i.ai
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.0.i.i2.i.i.i.i.i.prol, ptr noundef nonnull align 8 dereferenceable(48) %.0.i.i.i.i.i.i.i.prol, i64 48, i1 false), !tbaa.struct !179, !noalias !413
@@ -694,10 +694,10 @@ bb.d:                                             ; preds = %bb.c
   br label %.lr.ph.i.i.i.i.i.prol.loopexit
 
 .lr.ph.i.i.i.i.i.prol.loopexit:                   ; preds = %.lr.ph.i.i.i.i.i.prol, %.lr.ph.i.i.i.i.i.preheader
-  %.sroa.3.0.i.i.i.i.unr = phi i64 [ %i.x, %.lr.ph.i.i.i.i.i.preheader ], [ %3, %.lr.ph.i.i.i.i.i.prol ]
-  %.sroa.2.0.i.i.i.i.unr = phi i64 [ %.sroa.9.038.a, %.lr.ph.i.i.i.i.i.preheader ], [ %i.y, %.lr.ph.i.i.i.i.i.prol ]
+  %.sroa.3.0.i.i.i.i.unr = phi i64 [ %i.x, %.lr.ph.i.i.i.i.i.preheader ], [ %.sroa.9.0.in37, %.lr.ph.i.i.i.i.i.prol ]
+  %.sroa.2.0.i.i.i.i.unr = phi i64 [ %.sroa.9.0.in37, %.lr.ph.i.i.i.i.i.preheader ], [ %i.y, %.lr.ph.i.i.i.i.i.prol ]
   %.03.i.i.i.i.i.unr = phi i64 [ %i.v, %.lr.ph.i.i.i.i.i.preheader ], [ %i.aj, %.lr.ph.i.i.i.i.i.prol ]
-  %i.ak = icmp eq i64 %.sroa.9.0.in37, %.sroa.222.0.copyload
+  %i.ak = icmp eq i64 %3, %.sroa.222.0.copyload
   br i1 %i.ak, label %.loopexit.loopexit, label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i
@@ -761,13 +761,14 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
+  %.sroa.9.0.in3739 = add i64 %.sroa.9.0.in37, -1 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i)
   %.sroa.016.0.copyload.i = load ptr, ptr %.0.i.i.i, align 8, !tbaa !170
   %.sroa.6.0..0.i.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6.0..0.i.i.sroa_idx.i, i64 32, i1 false), !tbaa.struct !176
-  %i.bs = icmp ult i64 %.sroa.9.0.in37, 8
-  %i.bt = getelementptr inbounds nuw [48 x i8], ptr %.val.val, i64 %.sroa.9.0.in37
-  %i.bu = getelementptr [48 x i8], ptr %.val.val11, i64 %.sroa.9.0.in37
+  %i.bs = icmp ult i64 %.sroa.9.0.in3739, 8
+  %i.bt = getelementptr inbounds nuw [48 x i8], ptr %.val.val, i64 %.sroa.9.0.in3739
+  %i.bu = getelementptr [48 x i8], ptr %.val.val11, i64 %.sroa.9.0.in3739
   %i.bv = getelementptr i8, ptr %i.bu, i64 -384
   %.0.i.i.i22.i = select i1 %i.bs, ptr %i.bt, ptr %i.bv ; 2 uses
   %i.bw = getelementptr i8, ptr %.0.i.i.i22.i, i64 8
@@ -778,9 +779,9 @@ bb.e:                                             ; preds = %bb.c
 .lr.ph.i:                                         ; preds = %bb.e, %.lr.ph.i
   %i.by = phi ptr [ %.val3.val5.i, %.lr.ph.i ], [ %.val.val11, %bb.e ]
   %i.bz = phi ptr [ %.val3.val.i, %.lr.ph.i ], [ %.val.val, %bb.e ]
-  %4 = phi i64 [ %.sroa.7.024.i, %.lr.ph.i ], [ %.sroa.9.038.a, %bb.e ] ; 3 uses
   %.0.i.i.i25.i = phi ptr [ %.0.i.i.i.i, %.lr.ph.i ], [ %.0.i.i.i22.i, %bb.e ]
-  %.sroa.7.024.i = phi i64 [ %.sroa.7.0.i, %.lr.ph.i ], [ %.sroa.9.0.in37, %bb.e ] ; 3 uses
+  %.sroa.7.024.i = phi i64 [ %.sroa.7.0.i, %.lr.ph.i ], [ %.sroa.9.0.in3739, %bb.e ] ; 3 uses
+  %4 = add i64 %.sroa.7.024.i, 1                  ; 3 uses
   %i.ca = icmp ult i64 %4, 8
   %i.cb = getelementptr inbounds nuw [48 x i8], ptr %i.bz, i64 %4
   %i.cc = getelementptr [48 x i8], ptr %i.by, i64 %4
@@ -803,7 +804,7 @@ bb.e:                                             ; preds = %bb.c
 .loopexit33:                                      ; preds = %.lr.ph.i, %bb.e
   %i.ck = phi ptr [ %.val.val11, %bb.e ], [ %.val3.val5.i, %.lr.ph.i ]
   %i.cl = phi ptr [ %.val.val, %bb.e ], [ %.val3.val.i, %.lr.ph.i ]
-  %i.cm = phi i64 [ %.sroa.9.038.a, %bb.e ], [ %.sroa.7.024.i, %.lr.ph.i ] ; 3 uses
+  %i.cm = phi i64 [ %.sroa.9.0.in37, %bb.e ], [ %.sroa.7.024.i, %.lr.ph.i ] ; 3 uses
   %i.cn = icmp ult i64 %i.cm, 8
   %i.co = getelementptr inbounds nuw [48 x i8], ptr %i.cl, i64 %i.cm
   %i.cp = getelementptr [48 x i8], ptr %i.ck, i64 %i.cm
@@ -818,9 +819,10 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.f
 
 bb.f:                                             ; preds = %.loopexit, %.loopexit33
-  %.sroa.9.0 = add i64 %.sroa.9.038.a, 1          ; 2 uses
+  %.sroa.9.0 = add i64 %.sroa.9.0.in37, 1         ; 2 uses
   %i.cr = load i64, ptr %i.c, align 8, !tbaa !169
   %.not = icmp eq i64 %.sroa.9.0, %i.cr
+  %indvar.next = add i64 %.sroa.9.038.a, 1
   br i1 %.not, label %.loopexit34, label %bb.c, !llvm.loop !411
 
 .loopexit34:                                      ; preds = %bb.f, %bb.b, %bb.a

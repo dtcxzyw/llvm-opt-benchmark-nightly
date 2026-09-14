@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph63, %.critedge2
   %i.m = phi ptr [ null, %.lr.ph63 ], [ %i.bm, %.critedge2 ] ; 10 uses
-  %.03762 = phi i64 [ 0, %.lr.ph63 ], [ %i.bn, %.critedge2 ] ; 11 uses
+  %.03762 = phi i64 [ 0, %.lr.ph63 ], [ %i.bn, %.critedge2 ] ; 10 uses
   %i.n = load ptr, ptr %0, align 8                ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 %.03762 ; 6 uses
   %i.p = load i8, ptr %i.o, align 1               ; 2 uses
@@ -230,9 +230,8 @@ _ZN10ODDLParser16isCommentOpenTagIcEEbPT_S2_.exit.preheader: ; preds = %bb.d
   br i1 %i.t, label %.lr.ph, label %.critedge
 
 .lr.ph:                                           ; preds = %_ZN10ODDLParser16isCommentOpenTagIcEEbPT_S2_.exit.preheader, %_ZN10ODDLParser17isCommentCloseTagIcEEbPT_S2_.exit
-  %.160 = phi i64 [ %.1, %_ZN10ODDLParser17isCommentCloseTagIcEEbPT_S2_.exit ], [ %.158, %_ZN10ODDLParser16isCommentOpenTagIcEEbPT_S2_.exit.preheader ] ; 3 uses
-  %.1.in59 = phi i64 [ %.160, %_ZN10ODDLParser17isCommentCloseTagIcEEbPT_S2_.exit ], [ %.03762, %_ZN10ODDLParser16isCommentOpenTagIcEEbPT_S2_.exit.preheader ]
-  %i.u = getelementptr inbounds nuw i8, ptr %i.n, i64 %.160 ; 2 uses
+  %.1.in59 = phi i64 [ %.1, %_ZN10ODDLParser17isCommentCloseTagIcEEbPT_S2_.exit ], [ %.158, %_ZN10ODDLParser16isCommentOpenTagIcEEbPT_S2_.exit.preheader ] ; 3 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %i.n, i64 %.1.in59 ; 2 uses
   %i.v = load i8, ptr %i.u, align 1
   %i.w = icmp eq i8 %i.v, 42
   br i1 %i.w, label %bb.e, label %_ZN10ODDLParser17isCommentCloseTagIcEEbPT_S2_.exit
@@ -245,10 +244,10 @@ bb.e:                                             ; preds = %.lr.ph
 bb.f:                                             ; preds = %bb.e
   %i.y = load i8, ptr %i.x, align 1
   %i.z = icmp eq i8 %i.y, 47
-  br i1 %i.z, label %.critedge, label %_ZN10ODDLParser17isCommentCloseTagIcEEbPT_S2_.exit
+  br i1 %i.z, label %.critedge.loopexit.split.loop.exit, label %_ZN10ODDLParser17isCommentCloseTagIcEEbPT_S2_.exit
 
 _ZN10ODDLParser17isCommentCloseTagIcEEbPT_S2_.exit: ; preds = %.lr.ph, %bb.e, %bb.f
-  %.1 = add nuw i64 %.160, 1                      ; 2 uses
+  %.1 = add nuw i64 %.1.in59, 1                   ; 2 uses
   %i.aa = icmp ult i64 %.1, %i.g
   br i1 %i.aa, label %.lr.ph, label %.critedge, !llvm.loop !13
 
@@ -262,8 +261,12 @@ _ZN10ODDLParser17isCommentCloseTagIcEEbPT_S2_.exit: ; preds = %.lr.ph, %bb.e, %b
           cleanup
   br label %bb.u
 
-.critedge:                                        ; preds = %_ZN10ODDLParser17isCommentCloseTagIcEEbPT_S2_.exit, %bb.f, %_ZN10ODDLParser16isCommentOpenTagIcEEbPT_S2_.exit.preheader
-  %.1.in.lcssa = phi i64 [ %.03762, %_ZN10ODDLParser16isCommentOpenTagIcEEbPT_S2_.exit.preheader ], [ %.1.in59, %bb.f ], [ %i.k, %_ZN10ODDLParser17isCommentCloseTagIcEEbPT_S2_.exit ]
+.critedge.loopexit.split.loop.exit:               ; preds = %bb.f
+  %.1.in5964.le = add i64 %.1.in59, -1
+  br label %.critedge
+
+.critedge:                                        ; preds = %_ZN10ODDLParser17isCommentCloseTagIcEEbPT_S2_.exit, %.critedge.loopexit.split.loop.exit, %_ZN10ODDLParser16isCommentOpenTagIcEEbPT_S2_.exit.preheader
+  %.1.in.lcssa = phi i64 [ %.03762, %_ZN10ODDLParser16isCommentOpenTagIcEEbPT_S2_.exit.preheader ], [ %.1.in5964.le, %.critedge.loopexit.split.loop.exit ], [ %i.k, %_ZN10ODDLParser17isCommentCloseTagIcEEbPT_S2_.exit ]
   %i.ab = add i64 %.1.in.lcssa, 2
   br label %.critedge2
 

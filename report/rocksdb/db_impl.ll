@@ -205,8 +205,9 @@ bb.b:                                             ; preds = %bb.a
   br label %.noexc
 
 .noexc:                                           ; preds = %.noexc.lr.ph, %bb.d
-  %.sroa.9.041.a = phi i64 [ %.sroa.9.038, %.noexc.lr.ph ], [ %.sroa.9.0, %bb.d ] ; 11 uses
-  %.sroa.9.0.in40 = phi i64 [ %i.b, %.noexc.lr.ph ], [ %.sroa.9.041.a, %bb.d ] ; 2 uses
+  %.sroa.9.041.a = phi i64 [ 0, %.noexc.lr.ph ], [ %indvar.next, %bb.d ] ; 2 uses
+  %.sroa.9.0.in40 = phi i64 [ %.sroa.9.038, %.noexc.lr.ph ], [ %.sroa.9.0, %bb.d ] ; 11 uses
+  %3 = add i64 %i.b, %.sroa.9.041.a
   %.sroa.023.0.copyload = load ptr, ptr %0, align 8, !tbaa !1609 ; 2 uses
   %.sroa.224.0.copyload = load i64, ptr %i.a, align 8, !tbaa !821 ; 3 uses
   %.val.val = load ptr, ptr %i.g, align 8
@@ -215,9 +216,9 @@ bb.b:                                             ; preds = %bb.a
   %.val10.val = load ptr, ptr %i.i, align 8
   %i.j = getelementptr i8, ptr %.sroa.023.0.copyload, i64 272
   %.val10.val13 = load ptr, ptr %i.j, align 8
-  %i.k = icmp ult i64 %.sroa.9.041.a, 32          ; 2 uses
-  %i.l = getelementptr inbounds nuw [8 x i8], ptr %.val.val, i64 %.sroa.9.041.a
-  %i.m = getelementptr [8 x i8], ptr %.val.val12, i64 %.sroa.9.041.a
+  %i.k = icmp ult i64 %.sroa.9.0.in40, 32         ; 2 uses
+  %i.l = getelementptr inbounds nuw [8 x i8], ptr %.val.val, i64 %.sroa.9.0.in40
+  %i.m = getelementptr [8 x i8], ptr %.val.val12, i64 %.sroa.9.0.in40
   %i.n = getelementptr i8, ptr %i.m, i64 -256
   %.0.i.i.i = select i1 %i.k, ptr %i.l, ptr %i.n
   %i.o = load ptr, ptr %.0.i.i.i, align 8, !tbaa !1539 ; 2 uses
@@ -266,27 +267,27 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7rocksdb12_GLOBAL__N_117CompareKeyContextE
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7rocksdb12_GLOBAL__N_117CompareKeyContextEEclINS2_10autovectorIPNS2_10KeyContextELm32EE13iterator_implISA_S9_EESC_EEbT_T0_.exit.thread: ; preds = %.noexc, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7rocksdb12_GLOBAL__N_117CompareKeyContextEEclINS2_10autovectorIPNS2_10KeyContextELm32EE13iterator_implISA_S9_EESC_EEbT_T0_.exit
   %i.ax = load ptr, ptr %i.g, align 8
-  %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.ax, i64 %.sroa.9.041.a
+  %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.ax, i64 %.sroa.9.0.in40
   %i.az = load ptr, ptr %i.h, align 8
-  %i.ba = getelementptr [8 x i8], ptr %i.az, i64 %.sroa.9.041.a
+  %i.ba = getelementptr [8 x i8], ptr %i.az, i64 %.sroa.9.0.in40
   %i.bb = getelementptr i8, ptr %i.ba, i64 -256
   %.0.i.i = select i1 %i.k, ptr %i.ay, ptr %i.bb
   %i.bc = load ptr, ptr %.0.i.i, align 8, !tbaa !1539
   %.sroa.1.0.copyload = load i64, ptr %i.a, align 8, !tbaa !821 ; 5 uses
-  %i.bd = sub i64 %.sroa.9.041.a, %.sroa.1.0.copyload ; 4 uses
+  %i.bd = sub i64 %.sroa.9.0.in40, %.sroa.1.0.copyload ; 4 uses
   %i.be = icmp sgt i64 %i.bd, 0
   br i1 %i.be, label %.lr.ph.i.i.i.i.i.preheader, label %.loopexit
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7rocksdb12_GLOBAL__N_117CompareKeyContextEEclINS2_10autovectorIPNS2_10KeyContextELm32EE13iterator_implISA_S9_EESC_EEbT_T0_.exit.thread
-  %i.bf = add i64 %.sroa.9.0.in40, 2              ; 2 uses
-  %i.bg = sub i64 %.sroa.9.0.in40, %.sroa.1.0.copyload
+  %i.bf = add i64 %.sroa.9.0.in40, 1              ; 2 uses
+  %i.bg = sub i64 %3, %.sroa.1.0.copyload
   %xtraiter = and i64 %i.bd, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.prol
 
 .lr.ph.i.i.i.i.i.prol:                            ; preds = %.lr.ph.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i.prol
   %.sroa.3.0.i.i.i.i.prol = phi i64 [ %i.bp, %.lr.ph.i.i.i.i.i.prol ], [ %i.bf, %.lr.ph.i.i.i.i.i.preheader ]
-  %.sroa.2.0.i.i.i.i.prol = phi i64 [ %i.bh, %.lr.ph.i.i.i.i.i.prol ], [ %.sroa.9.041.a, %.lr.ph.i.i.i.i.i.preheader ]
+  %.sroa.2.0.i.i.i.i.prol = phi i64 [ %i.bh, %.lr.ph.i.i.i.i.i.prol ], [ %.sroa.9.0.in40, %.lr.ph.i.i.i.i.i.preheader ]
   %.03.i.i.i.i.i.prol = phi i64 [ %i.bu, %.lr.ph.i.i.i.i.i.prol ], [ %i.bd, %.lr.ph.i.i.i.i.i.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.i.i.prol ], [ 0, %.lr.ph.i.i.i.i.i.preheader ]
   %i.bh = add i64 %.sroa.2.0.i.i.i.i.prol, -1     ; 5 uses
@@ -312,7 +313,7 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7rocksdb12_GLOBAL__N_117CompareKeyContextE
 
 .lr.ph.i.i.i.i.i.prol.loopexit:                   ; preds = %.lr.ph.i.i.i.i.i.prol, %.lr.ph.i.i.i.i.i.preheader
   %.sroa.3.0.i.i.i.i.unr = phi i64 [ %i.bf, %.lr.ph.i.i.i.i.i.preheader ], [ %i.bp, %.lr.ph.i.i.i.i.i.prol ]
-  %.sroa.2.0.i.i.i.i.unr = phi i64 [ %.sroa.9.041.a, %.lr.ph.i.i.i.i.i.preheader ], [ %i.bh, %.lr.ph.i.i.i.i.i.prol ]
+  %.sroa.2.0.i.i.i.i.unr = phi i64 [ %.sroa.9.0.in40, %.lr.ph.i.i.i.i.i.preheader ], [ %i.bh, %.lr.ph.i.i.i.i.i.prol ]
   %.03.i.i.i.i.i.unr = phi i64 [ %i.bd, %.lr.ph.i.i.i.i.i.preheader ], [ %i.bu, %.lr.ph.i.i.i.i.i.prol ]
   %i.bv = icmp ult i64 %i.bg, 3
   br i1 %i.bv, label %.loopexit, label %.lr.ph.i.i.i.i.i
@@ -405,14 +406,15 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7rocksdb12_GLOBAL__N_117CompareKeyContextE
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7rocksdb12_GLOBAL__N_117CompareKeyContextEEclINS2_10autovectorIPNS2_10KeyContextELm32EE13iterator_implISA_S9_EESC_EEbT_T0_.exit.thread35: ; preds = %bb.c, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7rocksdb12_GLOBAL__N_117CompareKeyContextEEclINS2_10autovectorIPNS2_10KeyContextELm32EE13iterator_implISA_S9_EESC_EEbT_T0_.exit
   store ptr %i.f, ptr %2, align 8, !tbaa !1609
-  store i64 %.sroa.9.041.a, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !821
+  store i64 %.sroa.9.0.in40, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !821
   call fastcc void @_ZSt25__unguarded_linear_insertIN7rocksdb10autovectorIPNS0_10KeyContextELm32EE13iterator_implIS4_S3_EEN9__gnu_cxx5__ops14_Val_comp_iterINS0_12_GLOBAL__N_117CompareKeyContextEEEEvT_T0_(ptr noundef align 8 %2)
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7rocksdb12_GLOBAL__N_117CompareKeyContextEEclINS2_10autovectorIPNS2_10KeyContextELm32EE13iterator_implISA_S9_EESC_EEbT_T0_.exit.thread35, %.loopexit
-  %.sroa.9.0 = add i64 %.sroa.9.041.a, 1          ; 2 uses
+  %.sroa.9.0 = add i64 %.sroa.9.0.in40, 1         ; 2 uses
   %i.eh = load i64, ptr %i.c, align 8, !tbaa !1612
   %.not = icmp eq i64 %.sroa.9.0, %i.eh
+  %indvar.next = add i64 %.sroa.9.041.a, 1
   br i1 %.not, label %.loopexit37, label %.noexc, !llvm.loop !3880
 
 .loopexit37:                                      ; preds = %bb.d, %bb.b, %bb.a

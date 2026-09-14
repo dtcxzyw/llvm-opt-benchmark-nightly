@@ -205,7 +205,6 @@ _RINvNtNtNtCsiRgJJXJ4lb7_6brotli3enc19backward_references2hq30ZopfliCostModelGet
   %i.dk = lshr i16 %.sroa.0.0.i110131, 3
   %narrow.i107 = mul nuw nsw i16 %i.dk, 3
   %i.dl = trunc i64 %i.bv to i32
-  %17 = or disjoint i16 %i.di, 7
   br label %bb.s
 
 bb.r:                                             ; preds = %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command19GetInsertLengthCode.exit
@@ -229,7 +228,7 @@ bb.r:                                             ; preds = %_RNvNtNtCsiRgJJXJ4l
 bb.s:                                             ; preds = %.lr.ph256, %.loopexit
   %.sroa.0.1255 = phi i64 [ %.sroa.0.0274, %.lr.ph256 ], [ %.sroa.0.3, %.loopexit ] ; 6 uses
   %.sroa.014.0253 = phi i64 [ 0, %.lr.ph256 ], [ %i.gd, %.loopexit ] ; 9 uses
-  %.sroa.042.0252 = phi i64 [ %i.as, %.lr.ph256 ], [ %.sroa.042.2, %.loopexit ] ; 9 uses
+  %.sroa.042.0252 = phi i64 [ %i.as, %.lr.ph256 ], [ %.sroa.042.2, %.loopexit ] ; 8 uses
   %i.dr = getelementptr inbounds nuw i8, ptr @123, i64 %.sroa.014.0253
   %i.ds = load i8, ptr %i.dr, align 1, !noundef !4
   %i.dt = and i8 %i.ds, 3
@@ -326,27 +325,21 @@ bb.ag:                                            ; preds = %bb.ad
   unreachable
 
 bb.ah:                                            ; preds = %.lr.ph249, %bb.at
-  %.sroa.032.0248 = phi i64 [ %.sroa.032.0244, %.lr.ph249 ], [ %.sroa.032.0, %bb.at ] ; 10 uses
-  %.sroa.0.2247.a = phi i64 [ %.sroa.0.1255, %.lr.ph249 ], [ %.sroa.0.4, %bb.at ] ; 2 uses
-  %.sroa.042.1246 = phi i64 [ %.sroa.042.0252, %.lr.ph249 ], [ %.sroa.032.0248, %bb.at ] ; 2 uses
-  %i.fc = icmp ult i64 %.sroa.032.0248, 10
-  br i1 %i.fc, label %18, label %bb.ai
+  %.sroa.0.2247.a = phi i64 [ %.sroa.032.0244, %.lr.ph249 ], [ %.sroa.032.0, %bb.at ] ; 11 uses
+  %.sroa.042.1246 = phi i64 [ %.sroa.0.1255, %.lr.ph249 ], [ %.sroa.0.4, %bb.at ] ; 2 uses
+  %i.fc = icmp ult i64 %.sroa.0.2247.a, 10
+  br i1 %i.fc, label %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command17GetCopyLengthCode.exit105, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.fd = icmp ult i64 %.sroa.032.0248, 134
+  %i.fd = icmp ult i64 %.sroa.0.2247.a, 134
   br i1 %i.fd, label %bb.ak, label %bb.aj
 
-18:                                               ; preds = %bb.ah
-  %19 = trunc nuw nsw i64 %.sroa.032.0248 to i16
-  %20 = add nsw i16 %19, -2
-  br label %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command17GetCopyLengthCode.exit105
-
 bb.aj:                                            ; preds = %bb.ai
-  %i.fe = icmp ult i64 %.sroa.032.0248, 2118
-  br i1 %i.fe, label %bb.al, label %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command18CombineLengthCodes.exit.thread.a
+  %i.fe = icmp ult i64 %.sroa.0.2247.a, 2118
+  br i1 %i.fe, label %bb.al, label %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command18CombineLengthCodes.exit.thread
 
 bb.ak:                                            ; preds = %bb.ai
-  %i.ff = add nsw i64 %.sroa.042.1246, -5         ; 2 uses
+  %i.ff = add nsw i64 %.sroa.0.2247.a, -6         ; 2 uses
   %i.fg = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.ff, i1 false)
   %i.fh = trunc nuw nsw i64 %i.fg to i32
   %i.fi = xor i32 %i.fh, 63
@@ -356,41 +349,49 @@ bb.ak:                                            ; preds = %bb.ai
   %i.fm = zext nneg i32 %i.fj to i64
   %i.fn = lshr i64 %i.ff, %i.fm
   %i.fo = add nuw nsw i64 %i.fn, %i.fl
-  %21 = trunc nuw nsw i64 %i.fo to i16
-  %22 = add nuw nsw i16 %21, 4
   br label %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command17GetCopyLengthCode.exit105
 
 bb.al:                                            ; preds = %bb.aj
-  %i.fp = add nsw i64 %.sroa.042.1246, -69
+  %i.fp = add nsw i64 %.sroa.0.2247.a, -70
   %i.fq = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.fp, i1 false)
   %i.fr = trunc nuw nsw i64 %i.fq to i16
   %i.fs = xor i16 %i.fr, 63
   %i.ft = add nuw nsw i16 %i.fs, 12
-  br label %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command17GetCopyLengthCode.exit105
+  br label %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command18CombineLengthCodes.exit.thread
 
-_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command17GetCopyLengthCode.exit105: ; preds = %18, %bb.ak, %bb.al
-  %.sroa.0.0.i104 = phi i16 [ %20, %18 ], [ %22, %bb.ak ], [ %i.ft, %bb.al ] ; 7 uses
-  %i.fu = and i16 %.sroa.0.0.i104, 7
+_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command18CombineLengthCodes.exit.thread: ; preds = %bb.aj, %bb.al
+  %.sroa.0.0.i104.ph = phi i16 [ 23, %bb.aj ], [ %i.ft, %bb.al ] ; 3 uses
+  %17 = and i16 %.sroa.0.0.i104.ph, 7
+  %18 = or disjoint i16 %17, %i.di
+  %19 = zext nneg i16 %.sroa.0.0.i104.ph to i64
+  br label %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command18CombineLengthCodes.exit.thread.a
+
+_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command17GetCopyLengthCode.exit105: ; preds = %bb.ah, %bb.ak
+  %.sroa.032.0248.sink = phi i64 [ %i.fo, %bb.ak ], [ %.sroa.0.2247.a, %bb.ah ]
+  %.sink435 = phi i16 [ 4, %bb.ak ], [ -2, %bb.ah ]
+  %20 = trunc nuw nsw i64 %.sroa.032.0248.sink to i16
+  %21 = add nsw i16 %.sink435, %20                ; 7 uses
+  %i.fu = and i16 %21, 7
   %i.fv = or disjoint i16 %i.fu, %i.di            ; 2 uses
-  %i.fw = icmp ult i16 %.sroa.0.0.i104, 16
+  %i.fw = icmp ult i16 %21, 16
   %or.cond5.i = and i1 %or.cond.i, %i.fw
   br i1 %or.cond5.i, label %.thread, label %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command18CombineLengthCodes.exit
 
 .thread:                                          ; preds = %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command17GetCopyLengthCode.exit105
-  %i.fx = shl nuw nsw i16 %.sroa.0.0.i104, 3
+  %i.fx = shl nuw nsw i16 %21, 3
   %i.fy = and i16 %i.fx, 64
   %spec.select.i = or disjoint i16 %i.fv, %i.fy
-  %i.fz = zext nneg i16 %.sroa.0.0.i104 to i64
+  %i.fz = zext nneg i16 %21 to i64
   %i.ga = zext nneg i16 %spec.select.i to i64
   br label %bb.an
 
 _RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command18CombineLengthCodes.exit: ; preds = %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command17GetCopyLengthCode.exit105
-  %i.gb = zext i16 %.sroa.0.0.i104 to i64         ; 2 uses
-  %i.gc = icmp ult i16 %.sroa.0.0.i104, 24
+  %i.gb = zext i16 %21 to i64                     ; 2 uses
+  %i.gc = icmp ult i16 %21, 24
   br i1 %i.gc, label %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command18CombineLengthCodes.exit.thread.a, label %bb.am
 
 .loopexit:                                        ; preds = %bb.at, %bb.af, %bb.v, %bb.y, %bb.w
-  %.sroa.042.2 = phi i64 [ %.sroa.042.0252, %bb.v ], [ %.sroa.042.0252, %bb.w ], [ %.sroa.042.0252, %bb.y ], [ %.sroa.042.0252, %bb.af ], [ %.sroa.032.0248, %bb.at ] ; 2 uses
+  %.sroa.042.2 = phi i64 [ %.sroa.042.0252, %bb.v ], [ %.sroa.042.0252, %bb.w ], [ %.sroa.042.0252, %bb.y ], [ %.sroa.042.0252, %bb.af ], [ %.sroa.0.2247.a, %bb.at ] ; 2 uses
   %.sroa.0.3 = phi i64 [ %.sroa.0.1255, %bb.v ], [ %.sroa.0.1255, %bb.w ], [ %.sroa.0.1255, %bb.y ], [ %.sroa.0.1255, %bb.af ], [ %.sroa.0.4, %bb.at ] ; 2 uses
   %i.gd = add nuw nsw i64 %.sroa.014.0253, 1
   %i.ge = icmp samesign ult i64 %.sroa.014.0253, 15
@@ -398,10 +399,10 @@ _RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command18CombineLengthCodes.exit: ; preds = %_
   %or.cond3 = and i1 %i.ge, %i.gf
   br i1 %or.cond3, label %bb.s, label %._crit_edge
 
-_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command18CombineLengthCodes.exit.thread.a: ; preds = %bb.aj, %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command18CombineLengthCodes.exit
-  %i.gg = phi i64 [ %i.gb, %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command18CombineLengthCodes.exit ], [ 23, %bb.aj ]
-  %.sroa.0.0.i104380382 = phi i16 [ %.sroa.0.0.i104, %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command18CombineLengthCodes.exit ], [ 23, %bb.aj ]
-  %i.gh = phi i16 [ %i.fv, %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command18CombineLengthCodes.exit ], [ %17, %bb.aj ]
+_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command18CombineLengthCodes.exit.thread.a: ; preds = %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command18CombineLengthCodes.exit.thread, %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command18CombineLengthCodes.exit
+  %i.gg = phi i64 [ %19, %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command18CombineLengthCodes.exit.thread ], [ %i.gb, %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command18CombineLengthCodes.exit ]
+  %.sroa.0.0.i104380382 = phi i16 [ %.sroa.0.0.i104.ph, %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command18CombineLengthCodes.exit.thread ], [ %21, %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command18CombineLengthCodes.exit ]
+  %i.gh = phi i16 [ %18, %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command18CombineLengthCodes.exit.thread ], [ %i.fv, %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command18CombineLengthCodes.exit ]
   %i.gi = lshr i16 %.sroa.0.0.i104380382, 3
   %narrow4.i108 = add nuw nsw i16 %i.gi, %narrow.i107
   %i.gj = zext nneg i16 %narrow4.i108 to i32      ; 2 uses
@@ -435,7 +436,7 @@ bb.an:                                            ; preds = %.thread, %_RNvNtNtC
   %i.hc = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %i.gw
   %i.hd = load float, ptr %i.hc, align 4, !noundef !4
   %i.he = fadd float %i.hd, %i.hb                 ; 2 uses
-  %i.hf = add i64 %.sroa.032.0248, %2             ; 3 uses
+  %i.hf = add i64 %.sroa.0.2247.a, %2             ; 3 uses
   %i.hg = icmp ult i64 %i.hf, %16
   br i1 %i.hg, label %bb.ap, label %bb.aq
 
@@ -464,14 +465,14 @@ bb.as:                                            ; preds = %bb.ap, %bb.ar
   br i1 %i.hm, label %bb.au, label %bb.at
 
 bb.at:                                            ; preds = %bb.as, %bb.au
-  %.sroa.0.4 = phi i64 [ %..i127, %bb.au ], [ %.sroa.0.2247.a, %bb.as ] ; 2 uses
-  %.sroa.032.0 = add i64 %.sroa.032.0248, 1       ; 2 uses
+  %.sroa.0.4 = phi i64 [ %..i127, %bb.au ], [ %.sroa.042.1246, %bb.as ] ; 2 uses
+  %.sroa.032.0 = add i64 %.sroa.0.2247.a, 1       ; 2 uses
   %.not98 = icmp ugt i64 %.sroa.032.0, %i.et
   br i1 %.not98, label %.loopexit, label %bb.ah
 
 bb.au:                                            ; preds = %bb.as
   %i.hn = getelementptr inbounds nuw i8, ptr %i.hh, i64 8
-  %i.ho = trunc i64 %.sroa.032.0248 to i32
+  %i.ho = trunc i64 %.sroa.0.2247.a to i32
   %i.hp = or i32 %i.ho, 301989888
   store i32 %i.hp, ptr %i.hn, align 4
   %i.hq = getelementptr inbounds nuw i8, ptr %i.hh, i64 12
@@ -481,7 +482,7 @@ bb.au:                                            ; preds = %bb.as
   store i32 0, ptr %i.hh, align 4
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hh, i64 4
   store float %i.he, ptr %.sroa.4.0..sroa_idx, align 4
-  %..i127 = tail call noundef i64 @llvm.umax.i64(i64 %.sroa.032.0248, i64 %.sroa.0.2247.a)
+  %..i127 = tail call noundef i64 @llvm.umax.i64(i64 %.sroa.0.2247.a, i64 %.sroa.042.1246)
   br label %bb.at
 
 bb.av:                                            ; preds = %.lr.ph271, %._crit_edge265

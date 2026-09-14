@@ -205,8 +205,9 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.f
-  %.sroa.9.039.a = phi i64 [ %.sroa.9.036, %.lr.ph ], [ %.sroa.9.0, %bb.f ] ; 10 uses
-  %.sroa.9.0.in38 = phi i64 [ %i.b, %.lr.ph ], [ %.sroa.9.039.a, %bb.f ] ; 3 uses
+  %.sroa.9.039.a = phi i64 [ 0, %.lr.ph ], [ %indvar.next, %bb.f ] ; 2 uses
+  %.sroa.9.0.in38 = phi i64 [ %.sroa.9.036, %.lr.ph ], [ %.sroa.9.0, %bb.f ] ; 14 uses
+  %4 = add i64 %i.b, %.sroa.9.039.a
   %.sroa.023.0.copyload = load ptr, ptr %0, align 8, !tbaa !1105 ; 2 uses
   %.sroa.224.0.copyload = load i64, ptr %i.a, align 8, !tbaa !533
   %.val9.val = load ptr, ptr %i.g, align 8
@@ -215,33 +216,33 @@ bb.c:                                             ; preds = %.lr.ph, %bb.f
   %.val11.val = load ptr, ptr %i.i, align 8
   %i.j = getelementptr i8, ptr %.sroa.023.0.copyload, i64 144
   %.val11.val14 = load ptr, ptr %i.j, align 8
-  %i.k = tail call fastcc noundef zeroext i1 @"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN7rocksdb18VersionStorageInfo44ComputeFilesMarkedForReadTriggeredCompactionEdNS2_15CompactionStyleEE3$_0EclINS2_10autovectorISt4pairIiPNS2_12FileMetaDataEELm8EE13iterator_implISD_SC_EESF_EEbT_T0_"(ptr %2, ptr %.val9.val, ptr %.val9.val13, i64 %.sroa.9.039.a, ptr %.val11.val, ptr %.val11.val14, i64 %.sroa.224.0.copyload)
+  %i.k = tail call fastcc noundef zeroext i1 @"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN7rocksdb18VersionStorageInfo44ComputeFilesMarkedForReadTriggeredCompactionEdNS2_15CompactionStyleEE3$_0EclINS2_10autovectorISt4pairIiPNS2_12FileMetaDataEELm8EE13iterator_implISD_SC_EESF_EEbT_T0_"(ptr %2, ptr %.val9.val, ptr %.val9.val13, i64 %.sroa.9.0.in38, ptr %.val11.val, ptr %.val11.val14, i64 %.sroa.224.0.copyload)
   br i1 %i.k, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.l = icmp ult i64 %.sroa.9.039.a, 8
+  %i.l = icmp ult i64 %.sroa.9.0.in38, 8
   %i.m = load ptr, ptr %i.g, align 8
-  %i.n = getelementptr inbounds nuw [16 x i8], ptr %i.m, i64 %.sroa.9.039.a
+  %i.n = getelementptr inbounds nuw [16 x i8], ptr %i.m, i64 %.sroa.9.0.in38
   %i.o = load ptr, ptr %i.h, align 8
-  %i.p = getelementptr [16 x i8], ptr %i.o, i64 %.sroa.9.039.a
+  %i.p = getelementptr [16 x i8], ptr %i.o, i64 %.sroa.9.0.in38
   %i.q = getelementptr i8, ptr %i.p, i64 -128
   %.0.i.i = select i1 %i.l, ptr %i.n, ptr %i.q    ; 2 uses
   %.sroa.021.0.copyload = load i32, ptr %.0.i.i, align 8
   %.sroa.522.0..0.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 8
   %.sroa.522.0.copyload = load ptr, ptr %.sroa.522.0..0.i.i.sroa_idx, align 8
   %.sroa.1.0.copyload = load i64, ptr %i.a, align 8, !tbaa !533 ; 5 uses
-  %i.r = sub i64 %.sroa.9.039.a, %.sroa.1.0.copyload ; 4 uses
+  %i.r = sub i64 %.sroa.9.0.in38, %.sroa.1.0.copyload ; 4 uses
   %i.s = icmp sgt i64 %i.r, 0
   br i1 %i.s, label %.lr.ph.i.i.i.i.i.preheader, label %.loopexit
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %bb.d
-  %i.t = add i64 %.sroa.9.0.in38, 2
+  %i.t = add i64 %.sroa.9.0.in38, 1
   %xtraiter = and i64 %i.r, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.prol
 
 .lr.ph.i.i.i.i.i.prol:                            ; preds = %.lr.ph.i.i.i.i.i.preheader
-  %i.u = add i64 %.sroa.9.039.a, -1               ; 4 uses
+  %i.u = add i64 %.sroa.9.0.in38, -1              ; 4 uses
   %i.v = icmp ult i64 %i.u, 8
   %i.w = load ptr, ptr %i.g, align 8, !noalias !3291 ; 2 uses
   %i.x = getelementptr inbounds nuw [16 x i8], ptr %i.w, i64 %i.u
@@ -249,10 +250,9 @@ bb.d:                                             ; preds = %bb.c
   %i.z = getelementptr [16 x i8], ptr %i.y, i64 %i.u
   %i.aa = getelementptr i8, ptr %i.z, i64 -128
   %.0.i.i.i.i.i.i.i.prol = select i1 %i.v, ptr %i.x, ptr %i.aa ; 2 uses
-  %4 = add i64 %.sroa.9.0.in38, 1                 ; 4 uses
-  %i.ab = icmp ult i64 %4, 8
-  %i.ac = getelementptr inbounds nuw [16 x i8], ptr %i.w, i64 %4
-  %i.ad = getelementptr [16 x i8], ptr %i.y, i64 %4
+  %i.ab = icmp ult i64 %.sroa.9.0.in38, 8
+  %i.ac = getelementptr inbounds nuw [16 x i8], ptr %i.w, i64 %.sroa.9.0.in38
+  %i.ad = getelementptr [16 x i8], ptr %i.y, i64 %.sroa.9.0.in38
   %i.ae = getelementptr i8, ptr %i.ad, i64 -128
   %.0.i.i2.i.i.i.i.i.prol = select i1 %i.ab, ptr %i.ac, ptr %i.ae ; 2 uses
   %i.af = load i32, ptr %.0.i.i.i.i.i.i.i.prol, align 4, !tbaa !269, !noalias !3291
@@ -265,10 +265,10 @@ bb.d:                                             ; preds = %bb.c
   br label %.lr.ph.i.i.i.i.i.prol.loopexit
 
 .lr.ph.i.i.i.i.i.prol.loopexit:                   ; preds = %.lr.ph.i.i.i.i.i.prol, %.lr.ph.i.i.i.i.i.preheader
-  %.sroa.3.0.i.i.i.i.unr = phi i64 [ %i.t, %.lr.ph.i.i.i.i.i.preheader ], [ %4, %.lr.ph.i.i.i.i.i.prol ]
-  %.sroa.2.0.i.i.i.i.unr = phi i64 [ %.sroa.9.039.a, %.lr.ph.i.i.i.i.i.preheader ], [ %i.u, %.lr.ph.i.i.i.i.i.prol ]
+  %.sroa.3.0.i.i.i.i.unr = phi i64 [ %i.t, %.lr.ph.i.i.i.i.i.preheader ], [ %.sroa.9.0.in38, %.lr.ph.i.i.i.i.i.prol ]
+  %.sroa.2.0.i.i.i.i.unr = phi i64 [ %.sroa.9.0.in38, %.lr.ph.i.i.i.i.i.preheader ], [ %i.u, %.lr.ph.i.i.i.i.i.prol ]
   %.03.i.i.i.i.i.unr = phi i64 [ %i.r, %.lr.ph.i.i.i.i.i.preheader ], [ %i.aj, %.lr.ph.i.i.i.i.i.prol ]
-  %i.ak = icmp eq i64 %.sroa.9.0.in38, %.sroa.1.0.copyload
+  %i.ak = icmp eq i64 %4, %.sroa.1.0.copyload
   br i1 %i.ak, label %.loopexit, label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i
@@ -337,14 +337,15 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   store ptr %i.f, ptr %3, align 8, !tbaa !1105
-  store i64 %.sroa.9.039.a, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !533
+  store i64 %.sroa.9.0.in38, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !533
   call fastcc void @"_ZSt25__unguarded_linear_insertIN7rocksdb10autovectorISt4pairIiPNS0_12FileMetaDataEELm8EE13iterator_implIS6_S5_EEN9__gnu_cxx5__ops14_Val_comp_iterIZNS0_18VersionStorageInfo44ComputeFilesMarkedForReadTriggeredCompactionEdNS0_15CompactionStyleEE3$_0EEEvT_T0_"(ptr noundef align 8 %3, ptr %2)
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %.loopexit
-  %.sroa.9.0 = add i64 %.sroa.9.039.a, 1          ; 2 uses
+  %.sroa.9.0 = add i64 %.sroa.9.0.in38, 1         ; 2 uses
   %i.cd = load i64, ptr %i.c, align 8, !tbaa !1108
   %.not = icmp eq i64 %.sroa.9.0, %i.cd
+  %indvar.next = add i64 %.sroa.9.039.a, 1
   br i1 %.not, label %.loopexit35, label %bb.c, !llvm.loop !3289
 
 .loopexit35:                                      ; preds = %bb.f, %bb.b, %bb.a

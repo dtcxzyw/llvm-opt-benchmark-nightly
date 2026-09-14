@@ -204,13 +204,12 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %.lr.ph.i
-  %indvar = phi i64 [ %indvar.next, %bb.d ], [ 0, %.lr.ph.i ] ; 2 uses
-  %.sroa.8.033.i.a = phi i64 [ %.sroa.8.0.i, %bb.d ], [ %.sroa.8.030.i, %.lr.ph.i ] ; 8 uses
-  %.sroa.8.0.in32.i = phi i64 [ %.sroa.8.033.i.a, %bb.d ], [ %1, %.lr.ph.i ] ; 5 uses
-  %i.i = lshr i64 %.sroa.8.033.i.a, 6
+  %.sroa.8.033.i.a = phi i64 [ %indvar.next, %bb.d ], [ 0, %.lr.ph.i ] ; 2 uses
+  %.sroa.8.0.in32.i = phi i64 [ %.sroa.8.0.i.pre-phi, %bb.d ], [ %.sroa.8.030.i, %.lr.ph.i ] ; 11 uses
+  %i.i = lshr i64 %.sroa.8.0.in32.i, 6
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.i
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !106  ; 2 uses
-  %i.l = and i64 %.sroa.8.033.i.a, 63             ; 2 uses
+  %i.l = and i64 %.sroa.8.0.in32.i, 63            ; 2 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %i.l
   %i.n = load i32, ptr %i.m, align 4, !tbaa !38   ; 5 uses
   %i.o = load i32, ptr %i.h, align 4, !tbaa !38
@@ -218,25 +217,24 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
   br i1 %i.p, label %.lr.ph.i.i.i.i.i.preheader.i, label %bb.c
 
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %bb.b
-  %i.q = add nsw i64 %.sroa.8.0.in32.i, 2
-  %i.r = sub i64 %.sroa.8.033.i.a, %1             ; 3 uses
+  %i.q = add nsw i64 %.sroa.8.0.in32.i, 1         ; 2 uses
+  %i.r = sub i64 %.sroa.8.0.in32.i, %1            ; 3 uses
   %xtraiter = and i64 %i.r, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.i.prol
 
 .lr.ph.i.i.i.i.i.i.prol:                          ; preds = %.lr.ph.i.i.i.i.i.preheader.i
-  %i.s = add nsw i64 %.sroa.8.033.i.a, -1         ; 3 uses
+  %i.s = add nsw i64 %.sroa.8.0.in32.i, -1        ; 3 uses
   %i.t = lshr i64 %i.s, 6
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.t
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !106
   %i.w = and i64 %i.s, 63
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %i.w
   %i.y = load i32, ptr %i.x, align 4, !tbaa !38
-  %4 = add nsw i64 %.sroa.8.0.in32.i, 1           ; 3 uses
-  %i.z = lshr i64 %4, 6
+  %i.z = lshr i64 %.sroa.8.0.in32.i, 6
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.z
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !106
-  %i.ac = and i64 %4, 63
+  %i.ac = and i64 %.sroa.8.0.in32.i, 63
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %i.ac
   store i32 %i.y, ptr %i.ad, align 4, !tbaa !38
   %i.ae = add nsw i64 %i.r, -1
@@ -244,9 +242,9 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
 
 .lr.ph.i.i.i.i.i.i.prol.loopexit:                 ; preds = %.lr.ph.i.i.i.i.i.i.prol, %.lr.ph.i.i.i.i.i.preheader.i
   %.010.i.i.i.i.i.i.unr = phi i64 [ %i.r, %.lr.ph.i.i.i.i.i.preheader.i ], [ %i.ae, %.lr.ph.i.i.i.i.i.i.prol ]
-  %.sroa.2.09.i.i.i.i.i.i.unr = phi i64 [ %.sroa.8.033.i.a, %.lr.ph.i.i.i.i.i.preheader.i ], [ %i.s, %.lr.ph.i.i.i.i.i.i.prol ]
-  %.sroa.3.08.i.i.i.i.i.i.unr = phi i64 [ %i.q, %.lr.ph.i.i.i.i.i.preheader.i ], [ %4, %.lr.ph.i.i.i.i.i.i.prol ]
-  %i.af = icmp eq i64 %indvar, 0
+  %.sroa.2.09.i.i.i.i.i.i.unr = phi i64 [ %.sroa.8.0.in32.i, %.lr.ph.i.i.i.i.i.preheader.i ], [ %i.s, %.lr.ph.i.i.i.i.i.i.prol ]
+  %.sroa.3.08.i.i.i.i.i.i.unr = phi i64 [ %i.q, %.lr.ph.i.i.i.i.i.preheader.i ], [ %.sroa.8.0.in32.i, %.lr.ph.i.i.i.i.i.i.prol ]
+  %i.af = icmp eq i64 %.sroa.8.033.i.a, 0
   br i1 %i.af, label %_ZSt13move_backwardIN5boost9container11nest_detail13sort_iteratorIiLm64EEES4_ET0_T_S6_S5_.exit.loopexit.i, label %.lr.ph.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i
@@ -290,10 +288,11 @@ _ZSt13move_backwardIN5boost9container11nest_detail13sort_iteratorIiLm64EEES4_ET0
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.bi = lshr i64 %.sroa.8.0.in32.i, 6
+  %.sroa.8.0.in3234.i = add nsw i64 %.sroa.8.0.in32.i, -1 ; 3 uses
+  %i.bi = lshr i64 %.sroa.8.0.in3234.i, 6
   %i.bj = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.bi
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !106
-  %i.bl = and i64 %.sroa.8.0.in32.i, 63
+  %i.bl = and i64 %.sroa.8.0.in3234.i, 63
   %i.bm = getelementptr inbounds nuw [4 x i8], ptr %i.bk, i64 %i.bl
   %i.bn = load i32, ptr %i.bm, align 4, !tbaa !38 ; 2 uses
   %i.bo = icmp slt i32 %i.n, %i.bn
@@ -301,12 +300,12 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i.i:                                       ; preds = %bb.c, %.lr.ph.i.i
   %i.bp = phi i32 [ %i.ca, %.lr.ph.i.i ], [ %i.bn, %bb.c ]
-  %.sroa.6.018.i.i = phi i64 [ %.sroa.6.0.i.i, %.lr.ph.i.i ], [ %.sroa.8.0.in32.i, %bb.c ] ; 4 uses
-  %.sroa.612.017.i.i = phi i64 [ %.sroa.6.018.i.i, %.lr.ph.i.i ], [ %.sroa.8.033.i.a, %bb.c ] ; 2 uses
-  %i.bq = lshr i64 %.sroa.612.017.i.i, 6
+  %.sroa.6.018.i.i = phi i64 [ %.sroa.6.0.i.i, %.lr.ph.i.i ], [ %.sroa.8.0.in3234.i, %bb.c ] ; 4 uses
+  %.sroa.612.01719.i.i = add nsw i64 %.sroa.6.018.i.i, 1 ; 2 uses
+  %i.bq = lshr i64 %.sroa.612.01719.i.i, 6
   %i.br = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.bq
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !106
-  %i.bt = and i64 %.sroa.612.017.i.i, 63
+  %i.bt = and i64 %.sroa.612.01719.i.i, 63
   %i.bu = getelementptr inbounds nuw [4 x i8], ptr %i.bs, i64 %i.bt
   store i32 %i.bp, ptr %i.bu, align 4, !tbaa !38
   %.sroa.6.0.i.i = add nsw i64 %.sroa.6.018.i.i, -1 ; 3 uses
@@ -331,16 +330,17 @@ _ZSt25__unguarded_linear_insertIN5boost9container11nest_detail13sort_iteratorIiL
   %i.cc = phi ptr [ %.pre19.i.i, %._crit_edge.loopexit.i.i ], [ %i.k, %bb.c ]
   %i.cd = getelementptr inbounds nuw [4 x i8], ptr %i.cc, i64 %.pre-phi21.i.i
   store i32 %i.n, ptr %i.cd, align 4, !tbaa !38
+  %.pre = add nsw i64 %.sroa.8.0.in32.i, 1
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZSt25__unguarded_linear_insertIN5boost9container11nest_detail13sort_iteratorIiLm64EEEN9__gnu_cxx5__ops14_Val_comp_iterISt4lessIiEEEEvT_T0_.exit.i, %_ZSt13move_backwardIN5boost9container11nest_detail13sort_iteratorIiLm64EEES4_ET0_T_S6_S5_.exit.loopexit.i
-  %.sroa.8.0.i = add nsw i64 %.sroa.8.033.i.a, 1  ; 2 uses
-  %.not.i = icmp eq i64 %.sroa.8.0.i, %i.c
-  %indvar.next = add i64 %indvar, 1
+  %.sroa.8.0.i.pre-phi = phi i64 [ %.pre, %_ZSt25__unguarded_linear_insertIN5boost9container11nest_detail13sort_iteratorIiLm64EEEN9__gnu_cxx5__ops14_Val_comp_iterISt4lessIiEEEEvT_T0_.exit.i ], [ %i.q, %_ZSt13move_backwardIN5boost9container11nest_detail13sort_iteratorIiLm64EEES4_ET0_T_S6_S5_.exit.loopexit.i ] ; 2 uses
+  %.not.i = icmp eq i64 %.sroa.8.0.i.pre-phi, %i.c
+  %indvar.next = add i64 %.sroa.8.033.i.a, 1
   br i1 %.not.i, label %.lr.ph.i19, label %bb.b, !llvm.loop !630
 
 .lr.ph.i19:                                       ; preds = %bb.d, %_ZSt25__unguarded_linear_insertIN5boost9container11nest_detail13sort_iteratorIiLm64EEEN9__gnu_cxx5__ops14_Val_comp_iterISt4lessIiEEEEvT_T0_.exit.i20
-  %.sroa.4.09.i = phi i64 [ %i.dg, %_ZSt25__unguarded_linear_insertIN5boost9container11nest_detail13sort_iteratorIiLm64EEEN9__gnu_cxx5__ops14_Val_comp_iterISt4lessIiEEEEvT_T0_.exit.i20 ], [ %i.c, %bb.d ] ; 5 uses
+  %.sroa.4.09.i = phi i64 [ %i.dg, %_ZSt25__unguarded_linear_insertIN5boost9container11nest_detail13sort_iteratorIiLm64EEEN9__gnu_cxx5__ops14_Val_comp_iterISt4lessIiEEEEvT_T0_.exit.i20 ], [ %i.c, %bb.d ] ; 4 uses
   %i.ce = lshr i64 %.sroa.4.09.i, 6
   %i.cf = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ce
   %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !106 ; 2 uses
@@ -360,11 +360,11 @@ bb.d:                                             ; preds = %_ZSt25__unguarded_l
 .lr.ph.i.i23:                                     ; preds = %.lr.ph.i19, %.lr.ph.i.i23
   %i.cr = phi i32 [ %i.dc, %.lr.ph.i.i23 ], [ %i.cp, %.lr.ph.i19 ]
   %.sroa.6.018.i.i24 = phi i64 [ %.sroa.6.0.i.i26, %.lr.ph.i.i23 ], [ %.sroa.6.016.i.i, %.lr.ph.i19 ] ; 4 uses
-  %.sroa.612.017.i.i25 = phi i64 [ %.sroa.6.018.i.i24, %.lr.ph.i.i23 ], [ %.sroa.4.09.i, %.lr.ph.i19 ] ; 2 uses
-  %i.cs = lshr i64 %.sroa.612.017.i.i25, 6
+  %.sroa.612.01719.i.i25 = add nsw i64 %.sroa.6.018.i.i24, 1 ; 2 uses
+  %i.cs = lshr i64 %.sroa.612.01719.i.i25, 6
   %i.ct = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.cs
   %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !106
-  %i.cv = and i64 %.sroa.612.017.i.i25, 63
+  %i.cv = and i64 %.sroa.612.01719.i.i25, 63
   %i.cw = getelementptr inbounds nuw [4 x i8], ptr %i.cu, i64 %i.cv
   store i32 %i.cr, ptr %i.cw, align 4, !tbaa !38
   %.sroa.6.0.i.i26 = add nsw i64 %.sroa.6.018.i.i24, -1 ; 3 uses
@@ -411,12 +411,11 @@ bb.e:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.h, %.lr.ph.i35
-  %.sroa.8.033.i36 = phi i64 [ %.sroa.8.030.i33, %.lr.ph.i35 ], [ %.sroa.8.0.i40, %bb.h ] ; 7 uses
-  %.sroa.8.0.in32.i37 = phi i64 [ %1, %.lr.ph.i35 ], [ %.sroa.8.033.i36, %bb.h ] ; 4 uses
-  %i.dn = lshr i64 %.sroa.8.033.i36, 6
+  %.sroa.8.0.in32.i37 = phi i64 [ %.sroa.8.030.i33, %.lr.ph.i35 ], [ %.sroa.8.0.i40.pre-phi, %bb.h ] ; 7 uses
+  %i.dn = lshr i64 %.sroa.8.0.in32.i37, 6
   %i.do = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.dn
   %i.dp = load ptr, ptr %i.do, align 8, !tbaa !106 ; 2 uses
-  %i.dq = and i64 %.sroa.8.033.i36, 63            ; 2 uses
+  %i.dq = and i64 %.sroa.8.0.in32.i37, 63         ; 2 uses
   %i.dr = getelementptr inbounds nuw [4 x i8], ptr %i.dp, i64 %i.dq
   %i.ds = load i32, ptr %i.dr, align 4, !tbaa !38 ; 5 uses
   %i.dt = load i32, ptr %i.dm, align 4, !tbaa !38
@@ -424,13 +423,13 @@ bb.f:                                             ; preds = %bb.h, %.lr.ph.i35
   br i1 %i.du, label %.lr.ph.i.i.i.i.i.preheader.i51, label %bb.g
 
 .lr.ph.i.i.i.i.i.preheader.i51:                   ; preds = %bb.f
-  %i.dv = add nsw i64 %.sroa.8.0.in32.i37, 2
-  %i.dw = sub nsw i64 %.sroa.8.033.i36, %1
+  %i.dv = add nsw i64 %.sroa.8.0.in32.i37, 1      ; 2 uses
+  %i.dw = sub nsw i64 %.sroa.8.0.in32.i37, %1
   br label %.lr.ph.i.i.i.i.i.i52
 
 .lr.ph.i.i.i.i.i.i52:                             ; preds = %.lr.ph.i.i.i.i.i.i52, %.lr.ph.i.i.i.i.i.preheader.i51
   %.010.i.i.i.i.i.i53 = phi i64 [ %i.ek, %.lr.ph.i.i.i.i.i.i52 ], [ %i.dw, %.lr.ph.i.i.i.i.i.preheader.i51 ] ; 2 uses
-  %.sroa.2.09.i.i.i.i.i.i54 = phi i64 [ %i.dx, %.lr.ph.i.i.i.i.i.i52 ], [ %.sroa.8.033.i36, %.lr.ph.i.i.i.i.i.preheader.i51 ]
+  %.sroa.2.09.i.i.i.i.i.i54 = phi i64 [ %i.dx, %.lr.ph.i.i.i.i.i.i52 ], [ %.sroa.8.0.in32.i37, %.lr.ph.i.i.i.i.i.preheader.i51 ]
   %.sroa.3.08.i.i.i.i.i.i55 = phi i64 [ %i.ee, %.lr.ph.i.i.i.i.i.i52 ], [ %i.dv, %.lr.ph.i.i.i.i.i.preheader.i51 ]
   %i.dx = add nsw i64 %.sroa.2.09.i.i.i.i.i.i54, -1 ; 3 uses
   %i.dy = lshr i64 %i.dx, 6
@@ -455,10 +454,11 @@ _ZSt13move_backwardIN5boost9container11nest_detail13sort_iteratorIiLm64EEES4_ET0
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.em = lshr i64 %.sroa.8.0.in32.i37, 6
+  %.sroa.8.0.in3234.i37 = add nsw i64 %.sroa.8.0.in32.i37, -1 ; 3 uses
+  %i.em = lshr i64 %.sroa.8.0.in3234.i37, 6
   %i.en = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.em
   %i.eo = load ptr, ptr %i.en, align 8, !tbaa !106
-  %i.ep = and i64 %.sroa.8.0.in32.i37, 63
+  %i.ep = and i64 %.sroa.8.0.in3234.i37, 63
   %i.eq = getelementptr inbounds nuw [4 x i8], ptr %i.eo, i64 %i.ep
   %i.er = load i32, ptr %i.eq, align 4, !tbaa !38 ; 2 uses
   %i.es = icmp slt i32 %i.ds, %i.er
@@ -466,12 +466,12 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.i.i42:                                     ; preds = %bb.g, %.lr.ph.i.i42
   %i.et = phi i32 [ %i.fe, %.lr.ph.i.i42 ], [ %i.er, %bb.g ]
-  %.sroa.6.018.i.i43 = phi i64 [ %.sroa.6.0.i.i45, %.lr.ph.i.i42 ], [ %.sroa.8.0.in32.i37, %bb.g ] ; 4 uses
-  %.sroa.612.017.i.i44 = phi i64 [ %.sroa.6.018.i.i43, %.lr.ph.i.i42 ], [ %.sroa.8.033.i36, %bb.g ] ; 2 uses
-  %i.eu = lshr i64 %.sroa.612.017.i.i44, 6
+  %.sroa.6.018.i.i43 = phi i64 [ %.sroa.6.0.i.i45, %.lr.ph.i.i42 ], [ %.sroa.8.0.in3234.i37, %bb.g ] ; 4 uses
+  %.sroa.612.01719.i.i44 = add nsw i64 %.sroa.6.018.i.i43, 1 ; 2 uses
+  %i.eu = lshr i64 %.sroa.612.01719.i.i44, 6
   %i.ev = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.eu
   %i.ew = load ptr, ptr %i.ev, align 8, !tbaa !106
-  %i.ex = and i64 %.sroa.612.017.i.i44, 63
+  %i.ex = and i64 %.sroa.612.01719.i.i44, 63
   %i.ey = getelementptr inbounds nuw [4 x i8], ptr %i.ew, i64 %i.ex
   store i32 %i.et, ptr %i.ey, align 4, !tbaa !38
   %.sroa.6.0.i.i45 = add nsw i64 %.sroa.6.018.i.i43, -1 ; 3 uses
@@ -496,11 +496,12 @@ _ZSt25__unguarded_linear_insertIN5boost9container11nest_detail13sort_iteratorIiL
   %i.fg = phi ptr [ %.pre19.i.i49, %._crit_edge.loopexit.i.i46 ], [ %i.dp, %bb.g ]
   %i.fh = getelementptr inbounds nuw [4 x i8], ptr %i.fg, i64 %.pre-phi21.i.i39
   store i32 %i.ds, ptr %i.fh, align 4, !tbaa !38
+  %.pre68 = add nsw i64 %.sroa.8.0.in32.i37, 1
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZSt25__unguarded_linear_insertIN5boost9container11nest_detail13sort_iteratorIiLm64EEEN9__gnu_cxx5__ops14_Val_comp_iterISt4lessIiEEEEvT_T0_.exit.i38, %_ZSt13move_backwardIN5boost9container11nest_detail13sort_iteratorIiLm64EEES4_ET0_T_S6_S5_.exit.loopexit.i56
-  %.sroa.8.0.i40 = add nsw i64 %.sroa.8.033.i36, 1 ; 2 uses
-  %.not.i41 = icmp eq i64 %.sroa.8.0.i40, %3
+  %.sroa.8.0.i40.pre-phi = phi i64 [ %.pre68, %_ZSt25__unguarded_linear_insertIN5boost9container11nest_detail13sort_iteratorIiLm64EEEN9__gnu_cxx5__ops14_Val_comp_iterISt4lessIiEEEEvT_T0_.exit.i38 ], [ %i.dv, %_ZSt13move_backwardIN5boost9container11nest_detail13sort_iteratorIiLm64EEES4_ET0_T_S6_S5_.exit.loopexit.i56 ] ; 2 uses
+  %.not.i41 = icmp eq i64 %.sroa.8.0.i40.pre-phi, %3
   br i1 %.not.i41, label %_ZSt26__unguarded_insertion_sortIN5boost9container11nest_detail13sort_iteratorIiLm64EEEN9__gnu_cxx5__ops15_Iter_comp_iterISt4lessIiEEEEvT_SB_T0_.exit, label %bb.f, !llvm.loop !630
 
 _ZSt26__unguarded_insertion_sortIN5boost9container11nest_detail13sort_iteratorIiLm64EEEN9__gnu_cxx5__ops15_Iter_comp_iterISt4lessIiEEEEvT_SB_T0_.exit: ; preds = %bb.h, %_ZSt25__unguarded_linear_insertIN5boost9container11nest_detail13sort_iteratorIiLm64EEEN9__gnu_cxx5__ops14_Val_comp_iterISt4lessIiEEEEvT_T0_.exit.i20, %.preheader.i32, %bb.e
@@ -903,13 +904,12 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %.lr.ph.i
-  %indvar = phi i64 [ %indvar.next, %bb.d ], [ 0, %.lr.ph.i ] ; 2 uses
-  %.sroa.8.033.i.a = phi i64 [ %.sroa.8.0.i, %bb.d ], [ %.sroa.8.030.i, %.lr.ph.i ] ; 8 uses
-  %.sroa.8.0.in32.i = phi i64 [ %.sroa.8.033.i.a, %bb.d ], [ %1, %.lr.ph.i ] ; 5 uses
-  %i.i = lshr i64 %.sroa.8.033.i.a, 6
+  %.sroa.8.033.i.a = phi i64 [ %indvar.next, %bb.d ], [ 0, %.lr.ph.i ] ; 2 uses
+  %.sroa.8.0.in32.i = phi i64 [ %.sroa.8.0.i.pre-phi, %bb.d ], [ %.sroa.8.030.i, %.lr.ph.i ] ; 11 uses
+  %i.i = lshr i64 %.sroa.8.0.in32.i, 6
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.i
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !106  ; 2 uses
-  %i.l = and i64 %.sroa.8.033.i.a, 63             ; 2 uses
+  %i.l = and i64 %.sroa.8.0.in32.i, 63            ; 2 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %i.l
   %i.n = load i32, ptr %i.m, align 4, !tbaa !38   ; 5 uses
   %i.o = load i32, ptr %i.h, align 4, !tbaa !38
@@ -917,25 +917,24 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
   br i1 %i.p, label %.lr.ph.i.i.i.i.i.preheader.i, label %bb.c
 
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %bb.b
-  %i.q = add nsw i64 %.sroa.8.0.in32.i, 2
-  %i.r = sub i64 %.sroa.8.033.i.a, %1             ; 3 uses
+  %i.q = add nsw i64 %.sroa.8.0.in32.i, 1         ; 2 uses
+  %i.r = sub i64 %.sroa.8.0.in32.i, %1            ; 3 uses
   %xtraiter = and i64 %i.r, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.i.prol
 
 .lr.ph.i.i.i.i.i.i.prol:                          ; preds = %.lr.ph.i.i.i.i.i.preheader.i
-  %i.s = add nsw i64 %.sroa.8.033.i.a, -1         ; 3 uses
+  %i.s = add nsw i64 %.sroa.8.0.in32.i, -1        ; 3 uses
   %i.t = lshr i64 %i.s, 6
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.t
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !106
   %i.w = and i64 %i.s, 63
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %i.w
   %i.y = load i32, ptr %i.x, align 4, !tbaa !38
-  %4 = add nsw i64 %.sroa.8.0.in32.i, 1           ; 3 uses
-  %i.z = lshr i64 %4, 6
+  %i.z = lshr i64 %.sroa.8.0.in32.i, 6
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.z
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !106
-  %i.ac = and i64 %4, 63
+  %i.ac = and i64 %.sroa.8.0.in32.i, 63
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %i.ac
   store i32 %i.y, ptr %i.ad, align 4, !tbaa !38
   %i.ae = add nsw i64 %i.r, -1
@@ -943,9 +942,9 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
 
 .lr.ph.i.i.i.i.i.i.prol.loopexit:                 ; preds = %.lr.ph.i.i.i.i.i.i.prol, %.lr.ph.i.i.i.i.i.preheader.i
   %.010.i.i.i.i.i.i.unr = phi i64 [ %i.r, %.lr.ph.i.i.i.i.i.preheader.i ], [ %i.ae, %.lr.ph.i.i.i.i.i.i.prol ]
-  %.sroa.2.09.i.i.i.i.i.i.unr = phi i64 [ %.sroa.8.033.i.a, %.lr.ph.i.i.i.i.i.preheader.i ], [ %i.s, %.lr.ph.i.i.i.i.i.i.prol ]
-  %.sroa.3.08.i.i.i.i.i.i.unr = phi i64 [ %i.q, %.lr.ph.i.i.i.i.i.preheader.i ], [ %4, %.lr.ph.i.i.i.i.i.i.prol ]
-  %i.af = icmp eq i64 %indvar, 0
+  %.sroa.2.09.i.i.i.i.i.i.unr = phi i64 [ %.sroa.8.0.in32.i, %.lr.ph.i.i.i.i.i.preheader.i ], [ %i.s, %.lr.ph.i.i.i.i.i.i.prol ]
+  %.sroa.3.08.i.i.i.i.i.i.unr = phi i64 [ %i.q, %.lr.ph.i.i.i.i.i.preheader.i ], [ %.sroa.8.0.in32.i, %.lr.ph.i.i.i.i.i.i.prol ]
+  %i.af = icmp eq i64 %.sroa.8.033.i.a, 0
   br i1 %i.af, label %_ZSt13move_backwardIN5boost9container11nest_detail13sort_iteratorIiLm64EEES4_ET0_T_S6_S5_.exit.loopexit.i, label %.lr.ph.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i
@@ -989,10 +988,11 @@ _ZSt13move_backwardIN5boost9container11nest_detail13sort_iteratorIiLm64EEES4_ET0
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.bi = lshr i64 %.sroa.8.0.in32.i, 6
+  %.sroa.8.0.in3234.i = add nsw i64 %.sroa.8.0.in32.i, -1 ; 3 uses
+  %i.bi = lshr i64 %.sroa.8.0.in3234.i, 6
   %i.bj = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.bi
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !106
-  %i.bl = and i64 %.sroa.8.0.in32.i, 63
+  %i.bl = and i64 %.sroa.8.0.in3234.i, 63
   %i.bm = getelementptr inbounds nuw [4 x i8], ptr %i.bk, i64 %i.bl
   %i.bn = load i32, ptr %i.bm, align 4, !tbaa !38 ; 2 uses
   %i.bo = icmp sgt i32 %i.n, %i.bn
@@ -1000,12 +1000,12 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i.i:                                       ; preds = %bb.c, %.lr.ph.i.i
   %i.bp = phi i32 [ %i.ca, %.lr.ph.i.i ], [ %i.bn, %bb.c ]
-  %.sroa.6.018.i.i = phi i64 [ %.sroa.6.0.i.i, %.lr.ph.i.i ], [ %.sroa.8.0.in32.i, %bb.c ] ; 4 uses
-  %.sroa.612.017.i.i = phi i64 [ %.sroa.6.018.i.i, %.lr.ph.i.i ], [ %.sroa.8.033.i.a, %bb.c ] ; 2 uses
-  %i.bq = lshr i64 %.sroa.612.017.i.i, 6
+  %.sroa.6.018.i.i = phi i64 [ %.sroa.6.0.i.i, %.lr.ph.i.i ], [ %.sroa.8.0.in3234.i, %bb.c ] ; 4 uses
+  %.sroa.612.01719.i.i = add nsw i64 %.sroa.6.018.i.i, 1 ; 2 uses
+  %i.bq = lshr i64 %.sroa.612.01719.i.i, 6
   %i.br = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.bq
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !106
-  %i.bt = and i64 %.sroa.612.017.i.i, 63
+  %i.bt = and i64 %.sroa.612.01719.i.i, 63
   %i.bu = getelementptr inbounds nuw [4 x i8], ptr %i.bs, i64 %i.bt
   store i32 %i.bp, ptr %i.bu, align 4, !tbaa !38
   %.sroa.6.0.i.i = add nsw i64 %.sroa.6.018.i.i, -1 ; 3 uses
@@ -1030,16 +1030,17 @@ _ZSt25__unguarded_linear_insertIN5boost9container11nest_detail13sort_iteratorIiL
   %i.cc = phi ptr [ %.pre19.i.i, %._crit_edge.loopexit.i.i ], [ %i.k, %bb.c ]
   %i.cd = getelementptr inbounds nuw [4 x i8], ptr %i.cc, i64 %.pre-phi21.i.i
   store i32 %i.n, ptr %i.cd, align 4, !tbaa !38
+  %.pre = add nsw i64 %.sroa.8.0.in32.i, 1
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZSt25__unguarded_linear_insertIN5boost9container11nest_detail13sort_iteratorIiLm64EEEN9__gnu_cxx5__ops14_Val_comp_iterISt7greaterIiEEEEvT_T0_.exit.i, %_ZSt13move_backwardIN5boost9container11nest_detail13sort_iteratorIiLm64EEES4_ET0_T_S6_S5_.exit.loopexit.i
-  %.sroa.8.0.i = add nsw i64 %.sroa.8.033.i.a, 1  ; 2 uses
-  %.not.i = icmp eq i64 %.sroa.8.0.i, %i.c
-  %indvar.next = add i64 %indvar, 1
+  %.sroa.8.0.i.pre-phi = phi i64 [ %.pre, %_ZSt25__unguarded_linear_insertIN5boost9container11nest_detail13sort_iteratorIiLm64EEEN9__gnu_cxx5__ops14_Val_comp_iterISt7greaterIiEEEEvT_T0_.exit.i ], [ %i.q, %_ZSt13move_backwardIN5boost9container11nest_detail13sort_iteratorIiLm64EEES4_ET0_T_S6_S5_.exit.loopexit.i ] ; 2 uses
+  %.not.i = icmp eq i64 %.sroa.8.0.i.pre-phi, %i.c
+  %indvar.next = add i64 %.sroa.8.033.i.a, 1
   br i1 %.not.i, label %.lr.ph.i19, label %bb.b, !llvm.loop !689
 
 .lr.ph.i19:                                       ; preds = %bb.d, %_ZSt25__unguarded_linear_insertIN5boost9container11nest_detail13sort_iteratorIiLm64EEEN9__gnu_cxx5__ops14_Val_comp_iterISt7greaterIiEEEEvT_T0_.exit.i20
-  %.sroa.4.09.i = phi i64 [ %i.dg, %_ZSt25__unguarded_linear_insertIN5boost9container11nest_detail13sort_iteratorIiLm64EEEN9__gnu_cxx5__ops14_Val_comp_iterISt7greaterIiEEEEvT_T0_.exit.i20 ], [ %i.c, %bb.d ] ; 5 uses
+  %.sroa.4.09.i = phi i64 [ %i.dg, %_ZSt25__unguarded_linear_insertIN5boost9container11nest_detail13sort_iteratorIiLm64EEEN9__gnu_cxx5__ops14_Val_comp_iterISt7greaterIiEEEEvT_T0_.exit.i20 ], [ %i.c, %bb.d ] ; 4 uses
   %i.ce = lshr i64 %.sroa.4.09.i, 6
   %i.cf = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ce
   %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !106 ; 2 uses
@@ -1059,11 +1060,11 @@ bb.d:                                             ; preds = %_ZSt25__unguarded_l
 .lr.ph.i.i23:                                     ; preds = %.lr.ph.i19, %.lr.ph.i.i23
   %i.cr = phi i32 [ %i.dc, %.lr.ph.i.i23 ], [ %i.cp, %.lr.ph.i19 ]
   %.sroa.6.018.i.i24 = phi i64 [ %.sroa.6.0.i.i26, %.lr.ph.i.i23 ], [ %.sroa.6.016.i.i, %.lr.ph.i19 ] ; 4 uses
-  %.sroa.612.017.i.i25 = phi i64 [ %.sroa.6.018.i.i24, %.lr.ph.i.i23 ], [ %.sroa.4.09.i, %.lr.ph.i19 ] ; 2 uses
-  %i.cs = lshr i64 %.sroa.612.017.i.i25, 6
+  %.sroa.612.01719.i.i25 = add nsw i64 %.sroa.6.018.i.i24, 1 ; 2 uses
+  %i.cs = lshr i64 %.sroa.612.01719.i.i25, 6
   %i.ct = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.cs
   %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !106
-  %i.cv = and i64 %.sroa.612.017.i.i25, 63
+  %i.cv = and i64 %.sroa.612.01719.i.i25, 63
   %i.cw = getelementptr inbounds nuw [4 x i8], ptr %i.cu, i64 %i.cv
   store i32 %i.cr, ptr %i.cw, align 4, !tbaa !38
   %.sroa.6.0.i.i26 = add nsw i64 %.sroa.6.018.i.i24, -1 ; 3 uses
@@ -1110,12 +1111,11 @@ bb.e:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.h, %.lr.ph.i35
-  %.sroa.8.033.i36 = phi i64 [ %.sroa.8.030.i33, %.lr.ph.i35 ], [ %.sroa.8.0.i40, %bb.h ] ; 7 uses
-  %.sroa.8.0.in32.i37 = phi i64 [ %1, %.lr.ph.i35 ], [ %.sroa.8.033.i36, %bb.h ] ; 4 uses
-  %i.dn = lshr i64 %.sroa.8.033.i36, 6
+  %.sroa.8.0.in32.i37 = phi i64 [ %.sroa.8.030.i33, %.lr.ph.i35 ], [ %.sroa.8.0.i40.pre-phi, %bb.h ] ; 7 uses
+  %i.dn = lshr i64 %.sroa.8.0.in32.i37, 6
   %i.do = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.dn
   %i.dp = load ptr, ptr %i.do, align 8, !tbaa !106 ; 2 uses
-  %i.dq = and i64 %.sroa.8.033.i36, 63            ; 2 uses
+  %i.dq = and i64 %.sroa.8.0.in32.i37, 63         ; 2 uses
   %i.dr = getelementptr inbounds nuw [4 x i8], ptr %i.dp, i64 %i.dq
   %i.ds = load i32, ptr %i.dr, align 4, !tbaa !38 ; 5 uses
   %i.dt = load i32, ptr %i.dm, align 4, !tbaa !38
@@ -1123,13 +1123,13 @@ bb.f:                                             ; preds = %bb.h, %.lr.ph.i35
   br i1 %i.du, label %.lr.ph.i.i.i.i.i.preheader.i51, label %bb.g
 
 .lr.ph.i.i.i.i.i.preheader.i51:                   ; preds = %bb.f
-  %i.dv = add nsw i64 %.sroa.8.0.in32.i37, 2
-  %i.dw = sub nsw i64 %.sroa.8.033.i36, %1
+  %i.dv = add nsw i64 %.sroa.8.0.in32.i37, 1      ; 2 uses
+  %i.dw = sub nsw i64 %.sroa.8.0.in32.i37, %1
   br label %.lr.ph.i.i.i.i.i.i52
 
 .lr.ph.i.i.i.i.i.i52:                             ; preds = %.lr.ph.i.i.i.i.i.i52, %.lr.ph.i.i.i.i.i.preheader.i51
   %.010.i.i.i.i.i.i53 = phi i64 [ %i.ek, %.lr.ph.i.i.i.i.i.i52 ], [ %i.dw, %.lr.ph.i.i.i.i.i.preheader.i51 ] ; 2 uses
-  %.sroa.2.09.i.i.i.i.i.i54 = phi i64 [ %i.dx, %.lr.ph.i.i.i.i.i.i52 ], [ %.sroa.8.033.i36, %.lr.ph.i.i.i.i.i.preheader.i51 ]
+  %.sroa.2.09.i.i.i.i.i.i54 = phi i64 [ %i.dx, %.lr.ph.i.i.i.i.i.i52 ], [ %.sroa.8.0.in32.i37, %.lr.ph.i.i.i.i.i.preheader.i51 ]
   %.sroa.3.08.i.i.i.i.i.i55 = phi i64 [ %i.ee, %.lr.ph.i.i.i.i.i.i52 ], [ %i.dv, %.lr.ph.i.i.i.i.i.preheader.i51 ]
   %i.dx = add nsw i64 %.sroa.2.09.i.i.i.i.i.i54, -1 ; 3 uses
   %i.dy = lshr i64 %i.dx, 6
@@ -1154,10 +1154,11 @@ _ZSt13move_backwardIN5boost9container11nest_detail13sort_iteratorIiLm64EEES4_ET0
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.em = lshr i64 %.sroa.8.0.in32.i37, 6
+  %.sroa.8.0.in3234.i37 = add nsw i64 %.sroa.8.0.in32.i37, -1 ; 3 uses
+  %i.em = lshr i64 %.sroa.8.0.in3234.i37, 6
   %i.en = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.em
   %i.eo = load ptr, ptr %i.en, align 8, !tbaa !106
-  %i.ep = and i64 %.sroa.8.0.in32.i37, 63
+  %i.ep = and i64 %.sroa.8.0.in3234.i37, 63
   %i.eq = getelementptr inbounds nuw [4 x i8], ptr %i.eo, i64 %i.ep
   %i.er = load i32, ptr %i.eq, align 4, !tbaa !38 ; 2 uses
   %i.es = icmp sgt i32 %i.ds, %i.er
@@ -1165,12 +1166,12 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.i.i42:                                     ; preds = %bb.g, %.lr.ph.i.i42
   %i.et = phi i32 [ %i.fe, %.lr.ph.i.i42 ], [ %i.er, %bb.g ]
-  %.sroa.6.018.i.i43 = phi i64 [ %.sroa.6.0.i.i45, %.lr.ph.i.i42 ], [ %.sroa.8.0.in32.i37, %bb.g ] ; 4 uses
-  %.sroa.612.017.i.i44 = phi i64 [ %.sroa.6.018.i.i43, %.lr.ph.i.i42 ], [ %.sroa.8.033.i36, %bb.g ] ; 2 uses
-  %i.eu = lshr i64 %.sroa.612.017.i.i44, 6
+  %.sroa.6.018.i.i43 = phi i64 [ %.sroa.6.0.i.i45, %.lr.ph.i.i42 ], [ %.sroa.8.0.in3234.i37, %bb.g ] ; 4 uses
+  %.sroa.612.01719.i.i44 = add nsw i64 %.sroa.6.018.i.i43, 1 ; 2 uses
+  %i.eu = lshr i64 %.sroa.612.01719.i.i44, 6
   %i.ev = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.eu
   %i.ew = load ptr, ptr %i.ev, align 8, !tbaa !106
-  %i.ex = and i64 %.sroa.612.017.i.i44, 63
+  %i.ex = and i64 %.sroa.612.01719.i.i44, 63
   %i.ey = getelementptr inbounds nuw [4 x i8], ptr %i.ew, i64 %i.ex
   store i32 %i.et, ptr %i.ey, align 4, !tbaa !38
   %.sroa.6.0.i.i45 = add nsw i64 %.sroa.6.018.i.i43, -1 ; 3 uses
@@ -1195,11 +1196,12 @@ _ZSt25__unguarded_linear_insertIN5boost9container11nest_detail13sort_iteratorIiL
   %i.fg = phi ptr [ %.pre19.i.i49, %._crit_edge.loopexit.i.i46 ], [ %i.dp, %bb.g ]
   %i.fh = getelementptr inbounds nuw [4 x i8], ptr %i.fg, i64 %.pre-phi21.i.i39
   store i32 %i.ds, ptr %i.fh, align 4, !tbaa !38
+  %.pre68 = add nsw i64 %.sroa.8.0.in32.i37, 1
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZSt25__unguarded_linear_insertIN5boost9container11nest_detail13sort_iteratorIiLm64EEEN9__gnu_cxx5__ops14_Val_comp_iterISt7greaterIiEEEEvT_T0_.exit.i38, %_ZSt13move_backwardIN5boost9container11nest_detail13sort_iteratorIiLm64EEES4_ET0_T_S6_S5_.exit.loopexit.i56
-  %.sroa.8.0.i40 = add nsw i64 %.sroa.8.033.i36, 1 ; 2 uses
-  %.not.i41 = icmp eq i64 %.sroa.8.0.i40, %3
+  %.sroa.8.0.i40.pre-phi = phi i64 [ %.pre68, %_ZSt25__unguarded_linear_insertIN5boost9container11nest_detail13sort_iteratorIiLm64EEEN9__gnu_cxx5__ops14_Val_comp_iterISt7greaterIiEEEEvT_T0_.exit.i38 ], [ %i.dv, %_ZSt13move_backwardIN5boost9container11nest_detail13sort_iteratorIiLm64EEES4_ET0_T_S6_S5_.exit.loopexit.i56 ] ; 2 uses
+  %.not.i41 = icmp eq i64 %.sroa.8.0.i40.pre-phi, %3
   br i1 %.not.i41, label %_ZSt26__unguarded_insertion_sortIN5boost9container11nest_detail13sort_iteratorIiLm64EEEN9__gnu_cxx5__ops15_Iter_comp_iterISt7greaterIiEEEEvT_SB_T0_.exit, label %bb.f, !llvm.loop !689
 
 _ZSt26__unguarded_insertion_sortIN5boost9container11nest_detail13sort_iteratorIiLm64EEEN9__gnu_cxx5__ops15_Iter_comp_iterISt7greaterIiEEEEvT_SB_T0_.exit: ; preds = %bb.h, %_ZSt25__unguarded_linear_insertIN5boost9container11nest_detail13sort_iteratorIiLm64EEEN9__gnu_cxx5__ops14_Val_comp_iterISt7greaterIiEEEEvT_T0_.exit.i20, %.preheader.i32, %bb.e

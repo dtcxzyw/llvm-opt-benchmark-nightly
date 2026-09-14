@@ -205,7 +205,7 @@ strbuf_setlen.exit:                               ; preds = %bb.j, %bb.k
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 -1, 2) i32 @merge_hunks(ptr noundef nonnull %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef nonnull captures(none) %2, i32 noundef range(i32 0, 2) %3, ptr nofree noundef nonnull captures(none) %4) unnamed_addr #0 {
 bb.a:
-  %i.a = load i64, ptr %2, align 8, !tbaa !87     ; 4 uses
+  %i.a = load i64, ptr %2, align 8, !tbaa !87     ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 128
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !73
   %i.d = getelementptr inbounds nuw [128 x i8], ptr %i.c, i64 %i.a ; 3 uses
@@ -244,9 +244,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %.lr.ph196, %bb.x
   %i.w = phi i64 [ %i.l, %.lr.ph196 ], [ %i.dd, %bb.x ]
-  %i.x = phi i64 [ %i.k, %.lr.ph196 ], [ %i.dr, %bb.x ] ; 3 uses
+  %i.x = phi i64 [ %i.k, %.lr.ph196 ], [ %i.dr, %bb.x ] ; 5 uses
   %.0122193 = phi ptr [ %i.d, %.lr.ph196 ], [ %i.y, %bb.x ] ; 11 uses
-  %.0126192 = phi i64 [ %i.a, %.lr.ph196 ], [ %i.x, %bb.x ] ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.0122193, i64 128 ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %.0122193, i64 184
   br i1 %.not, label %bb.e, label %bb.f
@@ -255,7 +254,7 @@ bb.e:                                             ; preds = %bb.d
   %i.aa = getelementptr inbounds nuw i8, ptr %.0122193, i64 176
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !77
   %.not138 = icmp eq i32 %i.ab, 2
-  br i1 %.not138, label %bb.f, label %._crit_edge197
+  br i1 %.not138, label %bb.f, label %._crit_edge197.loopexit.split.loop.exit
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.ac = load i64, ptr %i.n, align 8, !tbaa !85  ; 3 uses
@@ -264,13 +263,13 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.af = load i64, ptr %i.o, align 8, !tbaa !92
   %i.ag = add i64 %i.af, %i.ae                    ; 4 uses
   %.not139 = icmp ult i64 %i.ac, %i.ag
-  br i1 %.not139, label %bb.g, label %._crit_edge197
+  br i1 %.not139, label %bb.g, label %._crit_edge197.loopexit.split.loop.exit303
 
 bb.g:                                             ; preds = %bb.f
   %i.ah = load i64, ptr %i.p, align 8, !tbaa !86
   %i.ai = add i64 %i.ah, %i.ac                    ; 3 uses
   %i.aj = icmp ult i64 %i.ai, %i.ag
-  br i1 %i.aj, label %._crit_edge197, label %bb.h
+  br i1 %i.aj, label %._crit_edge197.loopexit.split.loop.exit305, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.ak = load i64, ptr %4, align 8, !tbaa !68    ; 4 uses
@@ -476,8 +475,20 @@ bb.x:                                             ; preds = %bb.w, %bb.j
   %i.ds = icmp ult i64 %i.dr, %i.dd
   br i1 %i.ds, label %bb.d, label %._crit_edge197, !llvm.loop !181
 
-._crit_edge197:                                   ; preds = %bb.x, %bb.g, %bb.f, %bb.e, %bb.c
-  %.0126.lcssa = phi i64 [ %i.a, %bb.c ], [ %.0126192, %bb.e ], [ %.0126192, %bb.f ], [ %.0126192, %bb.g ], [ %i.x, %bb.x ] ; 2 uses
+._crit_edge197.loopexit.split.loop.exit:          ; preds = %bb.e
+  %.0126192241.le312 = add i64 %i.x, -1
+  br label %._crit_edge197
+
+._crit_edge197.loopexit.split.loop.exit303:       ; preds = %bb.f
+  %.0126192241.le310 = add i64 %i.x, -1
+  br label %._crit_edge197
+
+._crit_edge197.loopexit.split.loop.exit305:       ; preds = %bb.g
+  %.0126192241.le = add i64 %i.x, -1
+  br label %._crit_edge197
+
+._crit_edge197:                                   ; preds = %bb.x, %._crit_edge197.loopexit.split.loop.exit, %._crit_edge197.loopexit.split.loop.exit303, %._crit_edge197.loopexit.split.loop.exit305, %bb.c
+  %.0126.lcssa = phi i64 [ %i.a, %bb.c ], [ %.0126192241.le, %._crit_edge197.loopexit.split.loop.exit305 ], [ %.0126192241.le312, %._crit_edge197.loopexit.split.loop.exit ], [ %.0126192241.le310, %._crit_edge197.loopexit.split.loop.exit303 ], [ %i.x, %bb.x ] ; 2 uses
   %i.dt = load i64, ptr %2, align 8, !tbaa !87
   %i.du = icmp eq i64 %.0126.lcssa, %i.dt
   br i1 %i.du, label %.critedge, label %bb.y

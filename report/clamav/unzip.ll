@@ -202,17 +202,16 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %bb.m
-  %4 = phi i64 [ 1, %.lr.ph ], [ %i.ad, %bb.m ]   ; 10 uses
-  %.0101202.a = phi i64 [ %i.b, %.lr.ph ], [ %i.k, %bb.m ]
-  %.0106201 = phi i64 [ 0, %.lr.ph ], [ %4, %bb.m ] ; 2 uses
+  %.0101202.a = phi i64 [ 1, %.lr.ph ], [ %i.ad, %bb.m ] ; 11 uses
+  %.0106201 = phi i64 [ %i.b, %.lr.ph ], [ %i.k, %bb.m ]
   %.0109200 = phi ptr [ %i.e, %.lr.ph ], [ %.2111, %bb.m ] ; 11 uses
   %.0113199 = phi i64 [ 1, %.lr.ph ], [ %.1114, %bb.m ] ; 3 uses
   %i.j = load i64, ptr %i.a, align 8, !tbaa !18   ; 2 uses
   %.not213.not.not.not.not = icmp ne i64 %i.j, 0  ; 5 uses
-  br i1 %.not213.not.not.not.not, label %bb.f, label %.loopexit
+  br i1 %.not213.not.not.not.not, label %bb.f, label %.loopexit.loopexit
 
 bb.f:                                             ; preds = %bb.e
-  %i.k = add i64 %i.j, %.0101202.a                ; 2 uses
+  %i.k = add i64 %i.j, %.0106201                  ; 2 uses
   %i.l = tail call i32 @cli_checktimelimit(ptr noundef %0) #13
   %.not = icmp eq i32 %i.l, 0
   %i.m = load ptr, ptr %i.i, align 8, !tbaa !50   ; 2 uses
@@ -229,7 +228,7 @@ bb.h:                                             ; preds = %bb.f
   %i.q = load i32, ptr %i.p, align 4, !tbaa !71   ; 3 uses
   %.not136 = icmp eq i32 %i.q, 0
   %i.r = zext i32 %i.q to i64
-  %.not137 = icmp ult i64 %4, %i.r
+  %.not137 = icmp ult i64 %.0101202.a, %i.r
   %or.cond146 = or i1 %.not136, %.not137
   br i1 %or.cond146, label %bb.j, label %bb.i
 
@@ -240,7 +239,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.h
   %i.s = mul i64 %.0113199, 100
-  %i.t = add i64 %.0106201, 2
+  %i.t = add i64 %.0101202.a, 1
   %i.u = icmp eq i64 %i.s, %i.t
   br i1 %i.u, label %bb.k, label %bb.m
 
@@ -253,9 +252,9 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.y, label %.preheader, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.z = getelementptr inbounds nuw [32 x i8], ptr %i.x, i64 %4
+  %i.z = getelementptr inbounds nuw [32 x i8], ptr %i.x, i64 %.0101202.a
   %i.aa = mul i64 %i.v, 100
-  %i.ab = sub i64 %i.aa, %4
+  %i.ab = sub i64 %i.aa, %.0101202.a
   %i.ac = shl i64 %i.ab, 5
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.z, i8 0, i64 %i.ac, i1 false)
   br label %bb.m
@@ -263,14 +262,18 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.j, %bb.l
   %.1114 = phi i64 [ %i.v, %bb.l ], [ %.0113199, %bb.j ]
   %.2111 = phi ptr [ %i.x, %bb.l ], [ %.0109200, %bb.j ] ; 3 uses
-  %i.ad = add i64 %4, 1                           ; 2 uses
-  %i.ae = getelementptr inbounds nuw [32 x i8], ptr %.2111, i64 %4
+  %i.ad = add i64 %.0101202.a, 1                  ; 2 uses
+  %i.ae = getelementptr inbounds nuw [32 x i8], ptr %.2111, i64 %.0101202.a
   %i.af = call fastcc i32 @parse_central_directory_file_header(ptr noundef nonnull %0, i64 noundef %i.k, i64 noundef %i.ad, ptr noundef null, ptr noundef %i.ae, ptr noundef %i.a)
   %i.ag = icmp eq i32 %i.af, 1
   br i1 %i.ag, label %.preheader, label %bb.e
 
-.loopexit:                                        ; preds = %bb.e, %bb.i
-  %.1107 = phi i64 [ %4, %bb.i ], [ %.0106201, %bb.e ] ; 8 uses
+.loopexit.loopexit:                               ; preds = %bb.e
+  %.0106201231 = add i64 %.0101202.a, -1
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.i
+  %.1107 = phi i64 [ %.0101202.a, %bb.i ], [ %.0106201231, %.loopexit.loopexit ] ; 8 uses
   %i.ah = icmp ugt i64 %.1107, 1
   br i1 %i.ah, label %bb.n, label %.thread166
 
@@ -385,7 +388,7 @@ bb.aa:                                            ; preds = %bb.z
 .preheader:                                       ; preds = %bb.k, %bb.m, %bb.g, %bb.r, %bb.aa, %bb.x, %bb.y
   %.0109197 = phi ptr [ %.0109200, %bb.aa ], [ %.0109200, %bb.r ], [ %.0109200, %bb.g ], [ %.0109200, %bb.x ], [ %.0109200, %bb.y ], [ %.0109200, %bb.k ], [ %.2111, %bb.m ] ; 2 uses
   %.1103165 = phi i1 [ %.not213.not.not.not.not, %bb.aa ], [ %.not213.not.not.not.not, %bb.r ], [ false, %bb.g ], [ %.not213.not.not.not.not, %bb.x ], [ %.not213.not.not.not.not, %bb.y ], [ false, %bb.m ], [ false, %bb.k ]
-  %.2108164 = phi i64 [ %.1107, %bb.aa ], [ %.1107, %bb.r ], [ %4, %bb.g ], [ %.1107, %bb.x ], [ %.1107, %bb.y ], [ %4, %bb.m ], [ %4, %bb.k ] ; 2 uses
+  %.2108164 = phi i64 [ %.1107, %bb.aa ], [ %.1107, %bb.r ], [ %.0101202.a, %bb.g ], [ %.1107, %bb.x ], [ %.1107, %bb.y ], [ %.0101202.a, %bb.m ], [ %.0101202.a, %bb.k ] ; 2 uses
   %.6162 = phi i32 [ 21, %bb.aa ], [ 26, %bb.r ], [ 21, %bb.g ], [ 26, %bb.x ], [ %spec.select, %bb.y ], [ 20, %bb.k ], [ 1, %bb.m ]
   %.not214 = icmp eq i64 %.2108164, 0
   br i1 %.not214, label %.split, label %.lr.ph212

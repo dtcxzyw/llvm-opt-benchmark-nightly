@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %ioc_now.exit, %bb.i
 
 bb.l:                                             ; preds = %bb.k
   %i.ap = getelementptr i8, ptr %0, i64 448
-  %i.aq = load i32, ptr %i.ap, align 8            ; 2 uses
+  %i.aq = load i32, ptr %i.ap, align 8
   %.06473.i = add i32 %i.aq, -1                   ; 2 uses
   %i.ar = icmp sgt i32 %.06473.i, -1
   br i1 %i.ar, label %.lr.ph.i25, label %.thread.i
@@ -212,23 +212,24 @@ bb.l:                                             ; preds = %bb.k
 .lr.ph.i25:                                       ; preds = %bb.l
   %i.as = getelementptr i8, ptr %0, i64 456       ; 2 uses
   %i.at = zext nneg i32 %.06473.i to i64
-  %1 = sext i32 %i.aq to i64
   br label %bb.m
 
 bb.m:                                             ; preds = %.backedge.i, %.lr.ph.i25
   %indvars.iv = phi i64 [ %indvars.iv.next, %.backedge.i ], [ %i.at, %.lr.ph.i25 ] ; 5 uses
   %.076.i = phi i32 [ %.062.i, %.backedge.i ], [ 0, %.lr.ph.i25 ] ; 2 uses
   %.16075.i = phi i32 [ %.061.i, %.backedge.i ], [ %.059.i, %.lr.ph.i25 ] ; 2 uses
-  %.064.in74.i = phi i64 [ %indvars.iv, %.backedge.i ], [ %1, %.lr.ph.i25 ]
-  %2 = getelementptr [8 x i8], ptr %i.as, i64 %indvars.iv
-  %3 = load ptr, ptr %2, align 8                  ; 5 uses
-  %4 = getelementptr [8 x i8], ptr %i.as, i64 %.064.in74.i
+  %1 = getelementptr [8 x i8], ptr %i.as, i64 %indvars.iv
+  %2 = load ptr, ptr %1, align 8                  ; 5 uses
+  %.064.in7480.i = shl i64 %indvars.iv, 32
+  %sext = add i64 %.064.in7480.i, 4294967296
+  %3 = ashr exact i64 %sext, 29
+  %4 = getelementptr i8, ptr %i.as, i64 %3
   %i.au = load ptr, ptr %4, align 8               ; 2 uses
   %i.av = getelementptr i8, ptr %i.au, i64 48     ; 2 uses
   %i.aw = load i32, ptr %i.av, align 8
   %i.ax = sub i32 %.076.i, %i.aw
   %i.ay = sext i32 %i.ax to i64
-  %i.az = getelementptr i8, ptr %3, i64 144       ; 3 uses
+  %i.az = getelementptr i8, ptr %2, i64 144       ; 3 uses
   %i.ba = load i64, ptr %i.az, align 8
   %i.bb = add i64 %i.ba, %i.ay
   store i64 %i.bb, ptr %i.az, align 8
@@ -236,7 +237,7 @@ bb.m:                                             ; preds = %.backedge.i, %.lr.p
   %i.bd = load i32, ptr %i.bc, align 4
   %i.be = sub i32 %.16075.i, %i.bd
   %i.bf = sext i32 %i.be to i64
-  %i.bg = getelementptr i8, ptr %3, i64 152       ; 3 uses
+  %i.bg = getelementptr i8, ptr %2, i64 152       ; 3 uses
   %i.bh = load i64, ptr %i.bg, align 8
   %i.bi = add i64 %i.bh, %i.bf
   store i64 %i.bi, ptr %i.bg, align 8
@@ -247,7 +248,7 @@ bb.m:                                             ; preds = %.backedge.i, %.lr.p
   br i1 %.not69.i, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.bk = getelementptr i8, ptr %3, i64 44
+  %i.bk = getelementptr i8, ptr %2, i64 44
   %i.bl = load i32, ptr %i.bk, align 4            ; 2 uses
   %i.bm = zext i32 %i.bl to i64
   %i.bn = load i64, ptr %i.bg, align 8
@@ -261,13 +262,13 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n, %bb.m
   %.062.i = phi i32 [ %i.bl, %bb.n ], [ 0, %bb.m ] ; 2 uses
   %.061.i = phi i32 [ %i.bs, %bb.n ], [ 0, %bb.m ] ; 2 uses
-  %i.bt = getelementptr i8, ptr %3, i64 48
+  %i.bt = getelementptr i8, ptr %2, i64 48
   %i.bu = load i32, ptr %i.bt, align 8
   %i.bv = icmp eq i32 %.062.i, %i.bu
   br i1 %i.bv, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  %i.bw = getelementptr i8, ptr %3, i64 52
+  %i.bw = getelementptr i8, ptr %2, i64 52
   %i.bx = load i32, ptr %i.bw, align 4
   %i.by = icmp ne i32 %.061.i, %i.bx
   %i.bz = icmp sgt i64 %indvars.iv, 0
@@ -670,7 +671,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 bb.h:                                             ; preds = %bb.g
   %i.ad = getelementptr i8, ptr %0, i64 448
-  %i.ae = load i32, ptr %i.ad, align 8            ; 2 uses
+  %i.ae = load i32, ptr %i.ad, align 8
   %.06473 = add i32 %i.ae, -1                     ; 2 uses
   %i.af = icmp sgt i32 %.06473, -1
   br i1 %i.af, label %.lr.ph, label %.thread
@@ -683,11 +684,11 @@ bb.i:                                             ; preds = %.backedge, %.lr.ph
   %.06477 = phi i32 [ %.06473, %.lr.ph ], [ %.06477.be, %.backedge ] ; 5 uses
   %.076 = phi i32 [ %1, %.lr.ph ], [ %.062, %.backedge ] ; 2 uses
   %.16075 = phi i32 [ %.059, %.lr.ph ], [ %.061, %.backedge ] ; 2 uses
-  %.064.in74 = phi i32 [ %i.ae, %.lr.ph ], [ %.06477, %.backedge ]
+  %.064.in7480 = add nuw i32 %.06477, 1
   %i.ah = zext nneg i32 %.06477 to i64
   %i.ai = getelementptr [8 x i8], ptr %i.ag, i64 %i.ah
   %i.aj = load ptr, ptr %i.ai, align 8            ; 5 uses
-  %i.ak = sext i32 %.064.in74 to i64
+  %i.ak = sext i32 %.064.in7480 to i64
   %i.al = getelementptr [8 x i8], ptr %i.ag, i64 %i.ak
   %i.am = load ptr, ptr %i.al, align 8            ; 2 uses
   %i.an = getelementptr i8, ptr %i.am, i64 48     ; 2 uses
@@ -1090,7 +1091,7 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap, %tra
 
 bb.as:                                            ; preds = %bb.ar
   %i.jq = getelementptr i8, ptr %.pn.in104.i, i64 320
-  %i.jr = load i32, ptr %i.jq, align 8            ; 2 uses
+  %i.jr = load i32, ptr %i.jq, align 8
   %.06473.i.i = add i32 %i.jr, -1                 ; 2 uses
   %i.js = icmp sgt i32 %.06473.i.i, -1
   br i1 %i.js, label %.lr.ph.i89.i, label %.thread.i.i
@@ -1098,23 +1099,24 @@ bb.as:                                            ; preds = %bb.ar
 .lr.ph.i89.i:                                     ; preds = %bb.as
   %i.jt = getelementptr i8, ptr %.pn.in104.i, i64 328 ; 2 uses
   %i.ju = zext nneg i32 %.06473.i.i to i64
-  %6 = sext i32 %i.jr to i64
   br label %bb.at
 
 bb.at:                                            ; preds = %.backedge.i.i, %.lr.ph.i89.i
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.backedge.i.i ], [ %i.ju, %.lr.ph.i89.i ] ; 5 uses
   %.076.i90.i = phi i32 [ %.062.i.i, %.backedge.i.i ], [ 0, %.lr.ph.i89.i ] ; 2 uses
   %.16075.i.i = phi i32 [ %.061.i.i, %.backedge.i.i ], [ %.059.i.i, %.lr.ph.i89.i ] ; 2 uses
-  %.064.in74.i.i = phi i64 [ %indvars.iv.i, %.backedge.i.i ], [ %6, %.lr.ph.i89.i ]
-  %7 = getelementptr [8 x i8], ptr %i.jt, i64 %indvars.iv.i
-  %8 = load ptr, ptr %7, align 8                  ; 5 uses
-  %9 = getelementptr [8 x i8], ptr %i.jt, i64 %.064.in74.i.i
+  %6 = getelementptr [8 x i8], ptr %i.jt, i64 %indvars.iv.i
+  %7 = load ptr, ptr %6, align 8                  ; 5 uses
+  %.064.in7480.i.i = shl i64 %indvars.iv.i, 32
+  %sext.i = add i64 %.064.in7480.i.i, 4294967296
+  %8 = ashr exact i64 %sext.i, 29
+  %9 = getelementptr i8, ptr %i.jt, i64 %8
   %i.jv = load ptr, ptr %9, align 8               ; 2 uses
   %i.jw = getelementptr i8, ptr %i.jv, i64 48     ; 2 uses
   %i.jx = load i32, ptr %i.jw, align 8
   %i.jy = sub i32 %.076.i90.i, %i.jx
   %i.jz = sext i32 %i.jy to i64
-  %i.ka = getelementptr i8, ptr %8, i64 144       ; 3 uses
+  %i.ka = getelementptr i8, ptr %7, i64 144       ; 3 uses
   %i.kb = load i64, ptr %i.ka, align 8
   %i.kc = add i64 %i.kb, %i.jz
   store i64 %i.kc, ptr %i.ka, align 8
@@ -1122,7 +1124,7 @@ bb.at:                                            ; preds = %.backedge.i.i, %.lr
   %i.ke = load i32, ptr %i.kd, align 4
   %i.kf = sub i32 %.16075.i.i, %i.ke
   %i.kg = sext i32 %i.kf to i64
-  %i.kh = getelementptr i8, ptr %8, i64 152       ; 3 uses
+  %i.kh = getelementptr i8, ptr %7, i64 152       ; 3 uses
   %i.ki = load i64, ptr %i.kh, align 8
   %i.kj = add i64 %i.ki, %i.kg
   store i64 %i.kj, ptr %i.kh, align 8
@@ -1133,7 +1135,7 @@ bb.at:                                            ; preds = %.backedge.i.i, %.lr
   br i1 %.not69.i.i, label %bb.av, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  %i.kl = getelementptr i8, ptr %8, i64 44
+  %i.kl = getelementptr i8, ptr %7, i64 44
   %i.km = load i32, ptr %i.kl, align 4            ; 2 uses
   %i.kn = zext i32 %i.km to i64
   %i.ko = load i64, ptr %i.kh, align 8
@@ -1147,13 +1149,13 @@ bb.au:                                            ; preds = %bb.at
 bb.av:                                            ; preds = %bb.au, %bb.at
   %.062.i.i = phi i32 [ %i.km, %bb.au ], [ 0, %bb.at ] ; 2 uses
   %.061.i.i = phi i32 [ %i.kt, %bb.au ], [ 0, %bb.at ] ; 2 uses
-  %i.ku = getelementptr i8, ptr %8, i64 48
+  %i.ku = getelementptr i8, ptr %7, i64 48
   %i.kv = load i32, ptr %i.ku, align 8
   %i.kw = icmp eq i32 %.062.i.i, %i.kv
   br i1 %i.kw, label %bb.aw, label %bb.ax
 
 bb.aw:                                            ; preds = %bb.av
-  %i.kx = getelementptr i8, ptr %8, i64 52
+  %i.kx = getelementptr i8, ptr %7, i64 52
   %i.ky = load i32, ptr %i.kx, align 4
   %i.kz = icmp ne i32 %.061.i.i, %i.ky
   %i.la = icmp sgt i64 %indvars.iv.i, 0

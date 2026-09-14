@@ -204,7 +204,7 @@ bb.a:
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = sub i64 %i.f, %i.g
-  %i.i = ashr exact i64 %i.h, 3                   ; 11 uses
+  %i.i = ashr exact i64 %i.h, 3                   ; 12 uses
   %.not232 = icmp eq ptr %i.d, %i.e
   br i1 %.not232, label %._crit_edge231, label %.lr.ph211
 
@@ -400,7 +400,7 @@ _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   ret i32 0
 
 .lr.ph230:                                        ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit161.thread
-  %.0134229 = phi i64 [ %i.im, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit161.thread ], [ 0, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ] ; 15 uses
+  %.0134229 = phi i64 [ %i.im, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit161.thread ], [ 0, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ] ; 13 uses
   %i.cr = load ptr, ptr %i.a, align 8, !tbaa !40, !nonnull !39, !align !41
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !46 ; 6 uses
   %i.ct = getelementptr inbounds nuw [8 x i8], ptr %i.cs, i64 %.0134229
@@ -434,9 +434,8 @@ _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br i1 %i.dm, label %.lr.ph215, label %._crit_edge216
 
 .lr.ph215:                                        ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit161.thread184, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit163.thread
-  %.0133214 = phi i64 [ %.0133, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit163.thread ], [ %.0133212, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit161.thread184 ] ; 4 uses
-  %.0133.in213 = phi i64 [ %.0133214, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit163.thread ], [ %.0134229, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit161.thread184 ]
-  %i.dn = getelementptr inbounds nuw [8 x i8], ptr %i.cs, i64 %.0133214
+  %.0133.in213 = phi i64 [ %.0133, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit163.thread ], [ %.0133212, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit161.thread184 ] ; 3 uses
+  %i.dn = getelementptr inbounds nuw [8 x i8], ptr %i.cs, i64 %.0133.in213
   %i.do = load ptr, ptr %i.dn, align 8, !tbaa !53 ; 4 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.do, i64 56
   %i.dq = load i64, ptr %i.dp, align 8, !tbaa !58
@@ -472,16 +471,21 @@ _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 bb.n:                                             ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit163.thread185
   %i.ek = load i32, ptr %i.eg, align 4, !tbaa !81
   %i.el = icmp eq i32 %i.ek, %i.dl
-  br i1 %i.el, label %._crit_edge216, label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit163.thread
+  br i1 %i.el, label %._crit_edge216.loopexit, label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit163.thread
 
 _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit163.thread: ; preds = %.lr.ph215, %bb.n, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit163.thread185, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit163
-  %.0133 = add nuw i64 %.0133214, 1               ; 2 uses
+  %.0133 = add nuw i64 %.0133.in213, 1            ; 2 uses
   %exitcond238.not = icmp eq i64 %.0133, %i.i
-  br i1 %exitcond238.not, label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit161.thread, label %.lr.ph215, !llvm.loop !1009
+  br i1 %exitcond238.not, label %._crit_edge216.loopexit, label %.lr.ph215, !llvm.loop !1009
 
-._crit_edge216:                                   ; preds = %bb.n, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit161.thread184
-  %.0133.in.lcssa = phi i64 [ %.0134229, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit161.thread184 ], [ %.0133.in213, %bb.n ]
-  %.0133.lcssa = phi i64 [ %.0133212, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit161.thread184 ], [ %.0133214, %bb.n ] ; 3 uses
+._crit_edge216.loopexit:                          ; preds = %bb.n, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit163.thread
+  %.0133.lcssa.ph = phi i64 [ %i.i, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit163.thread ], [ %.0133.in213, %bb.n ] ; 2 uses
+  %.0133.in.lcssa.ph = add i64 %.0133.lcssa.ph, -1
+  br label %._crit_edge216
+
+._crit_edge216:                                   ; preds = %._crit_edge216.loopexit, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit161.thread184
+  %.0133.in.lcssa = phi i64 [ %.0134229, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit161.thread184 ], [ %.0133.in.lcssa.ph, %._crit_edge216.loopexit ]
+  %.0133.lcssa = phi i64 [ %.0133212, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit161.thread184 ], [ %.0133.lcssa.ph, %._crit_edge216.loopexit ] ; 3 uses
   %i.em = icmp eq i64 %.0133.lcssa, %i.i
   br i1 %i.em, label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit161.thread, label %bb.o
 
@@ -719,8 +723,8 @@ bb.ai:                                            ; preds = %bb.ah, %_ZNSt6vecto
   %i.il = add i64 %.0134229, -1
   br label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit161.thread
 
-_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit161.thread: ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit163.thread, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit165.thread, %.lr.ph230, %bb.x, %._crit_edge216, %bb.v, %bb.u, %bb.t, %bb.ai, %.thread187, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit161
-  %.5 = phi i64 [ %.0134229, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit161 ], [ %.0134229, %._crit_edge216 ], [ %.0134229, %.thread187 ], [ %.0134229, %bb.t ], [ %.0134229, %bb.v ], [ %.0134229, %bb.u ], [ %i.il, %bb.ai ], [ %.0134229, %bb.x ], [ %.0134229, %.lr.ph230 ], [ %.0134229, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit165.thread ], [ %.0134229, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit163.thread ]
+_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit161.thread: ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit165.thread, %.lr.ph230, %bb.x, %._crit_edge216, %bb.v, %bb.u, %bb.t, %bb.ai, %.thread187, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit161
+  %.5 = phi i64 [ %.0134229, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit161 ], [ %.0134229, %._crit_edge216 ], [ %.0134229, %.thread187 ], [ %.0134229, %bb.t ], [ %.0134229, %bb.v ], [ %.0134229, %bb.u ], [ %i.il, %bb.ai ], [ %.0134229, %bb.x ], [ %.0134229, %.lr.ph230 ], [ %.0134229, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit165.thread ]
   %i.im = add i64 %.5, 1                          ; 2 uses
   %i.in = icmp ult i64 %i.im, %i.i
   br i1 %i.in, label %.lr.ph230, label %._crit_edge231, !llvm.loop !1012

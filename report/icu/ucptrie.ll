@@ -202,7 +202,7 @@ bb.y:                                             ; preds = %bb.x, %bb.o
 bb.z:                                             ; preds = %.loopexit, %bb.y
   %indvars.iv467 = phi i64 [ %indvars.iv.next468, %.loopexit ], [ %i.bn, %bb.y ] ; 3 uses
   %.3231 = phi i32 [ %.5233, %.loopexit ], [ %.0228, %bb.y ] ; 2 uses
-  %.3220 = phi i32 [ %.9226, %.loopexit ], [ %.0217, %bb.y ] ; 13 uses
+  %.3220 = phi i32 [ %.9226, %.loopexit ], [ %.0217, %bb.y ] ; 12 uses
   %.4207 = phi i32 [ %.13216, %.loopexit ], [ %.0203, %bb.y ] ; 4 uses
   %.4194 = phi i32 [ %.11201, %.loopexit ], [ %.0190, %bb.y ] ; 6 uses
   %.4181 = phi i8 [ %.11188, %.loopexit ], [ %.0177, %bb.y ] ; 3 uses
@@ -478,9 +478,8 @@ _ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285.us.us401: ;
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %bb.bd
   %indvars.iv = phi i64 [ %i.dw, %.lr.ph.split.preheader ], [ %indvars.iv.next, %bb.bd ]
-  %5 = phi i32 [ %i.dv, %.lr.ph.split.preheader ], [ %i.fq, %bb.bd ] ; 2 uses
-  %.7210362.a = phi i32 [ %.6209477482, %.lr.ph.split.preheader ], [ %.8211, %bb.bd ] ; 2 uses
-  %.4221361 = phi i32 [ %.3220, %.lr.ph.split.preheader ], [ %5, %bb.bd ]
+  %.7210362.a = phi i32 [ %i.dv, %.lr.ph.split.preheader ], [ %i.fq, %bb.bd ] ; 2 uses
+  %.4221361 = phi i32 [ %.6209477482, %.lr.ph.split.preheader ], [ %.8211, %bb.bd ] ; 2 uses
   %.sroa.06.0.copyload = load ptr, ptr %i.ac, align 8, !tbaa !23 ; 3 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 4 uses
   switch i8 %i.c, label %_ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285 [
@@ -508,7 +507,7 @@ bb.ba:                                            ; preds = %.lr.ph.split
 
 _ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285: ; preds = %.lr.ph.split, %bb.ay, %bb.az, %bb.ba
   %.0.i284 = phi i32 [ %i.fm, %bb.ba ], [ %i.fh, %bb.ay ], [ %i.fj, %bb.az ], [ -1, %.lr.ph.split ] ; 4 uses
-  %.not267 = icmp eq i32 %.0.i284, %.7210362.a
+  %.not267 = icmp eq i32 %.0.i284, %.4221361
   br i1 %.not267, label %bb.bd, label %bb.bb
 
 bb.bb:                                            ; preds = %_ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285
@@ -523,11 +522,11 @@ bb.bc:                                            ; preds = %bb.bb
 _ZN12_GLOBAL__N_116maybeFilterValueEjjjPFjPKvjES1_.exit288: ; preds = %bb.bb, %bb.bc
   %.0.i287 = phi i32 [ %.0239, %bb.bb ], [ %i.fp, %bb.bc ]
   %.not268 = icmp eq i32 %.0.i287, %.6196478481
-  br i1 %.not268, label %bb.bd, label %.thread313
+  br i1 %.not268, label %bb.bd, label %.thread313.loopexit489
 
 bb.bd:                                            ; preds = %_ZN12_GLOBAL__N_116maybeFilterValueEjjjPFjPKvjES1_.exit288, %_ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285
-  %.8211 = phi i32 [ %.7210362.a, %_ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285 ], [ %.0.i284, %_ZN12_GLOBAL__N_116maybeFilterValueEjjjPFjPKvjES1_.exit288 ] ; 2 uses
-  %i.fq = add nsw i32 %5, 1                       ; 3 uses
+  %.8211 = phi i32 [ %.4221361, %_ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285 ], [ %.0.i284, %_ZN12_GLOBAL__N_116maybeFilterValueEjjjPFjPKvjES1_.exit288 ] ; 2 uses
+  %i.fq = add nsw i32 %.7210362.a, 1              ; 3 uses
   %i.fr = and i32 %i.fq, %i.bl
   %.not266 = icmp eq i32 %i.fr, 0
   br i1 %.not266, label %.loopexit, label %.lr.ph.split, !llvm.loop !35
@@ -607,8 +606,12 @@ _ZN12_GLOBAL__N_116maybeFilterValueEjjjPFjPKvjES1_.exit293: ; preds = %_ZN12_GLO
   %.10 = select i1 %.not271, i32 1114111, i32 %i.gn
   br label %.thread313
 
-.thread313:                                       ; preds = %.lr.ph.split.us.split.us, %.lr.ph.split.us.split.us384, %.lr.ph.split.us.split, %.lr.ph.split.us.split.us371, %_ZN12_GLOBAL__N_116maybeFilterValueEjjjPFjPKvjES1_.exit288, %_ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285.us.us387, %_ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285.us.us374, %_ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285.us.us, %bb.ah, %bb.at, %bb.be, %bb.i, %bb.c, %_ZN12_GLOBAL__N_116maybeFilterValueEjjjPFjPKvjES1_.exit293, %bb.a
-  %.13 = phi i32 [ -1, %bb.a ], [ 1114111, %bb.c ], [ 1114111, %bb.i ], [ %i.ft, %bb.be ], [ %.10, %_ZN12_GLOBAL__N_116maybeFilterValueEjjjPFjPKvjES1_.exit293 ], [ %i.dn, %bb.at ], [ %i.cs, %bb.ah ], [ %i.ef, %_ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285.us.us ], [ %.4221361, %_ZN12_GLOBAL__N_116maybeFilterValueEjjjPFjPKvjES1_.exit288 ], [ %i.ez, %_ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285.us.us387 ], [ %i.eo, %_ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285.us.us374 ], [ %.3220, %.lr.ph.split.us.split.us371 ], [ %.3220, %.lr.ph.split.us.split ], [ %.3220, %.lr.ph.split.us.split.us384 ], [ %.3220, %.lr.ph.split.us.split.us ]
+.thread313.loopexit489:                           ; preds = %_ZN12_GLOBAL__N_116maybeFilterValueEjjjPFjPKvjES1_.exit288
+  %.4221361458.le = add nsw i32 %.7210362.a, -1
+  br label %.thread313
+
+.thread313:                                       ; preds = %.lr.ph.split.us.split.us, %.lr.ph.split.us.split.us384, %.lr.ph.split.us.split, %.lr.ph.split.us.split.us371, %_ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285.us.us387, %_ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285.us.us374, %_ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285.us.us, %.thread313.loopexit489, %bb.ah, %bb.at, %bb.be, %bb.i, %bb.c, %_ZN12_GLOBAL__N_116maybeFilterValueEjjjPFjPKvjES1_.exit293, %bb.a
+  %.13 = phi i32 [ -1, %bb.a ], [ 1114111, %bb.c ], [ 1114111, %bb.i ], [ %i.ft, %bb.be ], [ %.10, %_ZN12_GLOBAL__N_116maybeFilterValueEjjjPFjPKvjES1_.exit293 ], [ %i.dn, %bb.at ], [ %i.cs, %bb.ah ], [ %i.ez, %_ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285.us.us387 ], [ %i.eo, %_ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285.us.us374 ], [ %.4221361458.le, %.thread313.loopexit489 ], [ %i.ef, %_ZN12_GLOBAL__N_18getValueE11UCPTrieData17UCPTrieValueWidthi.exit285.us.us ], [ %.3220, %.lr.ph.split.us.split.us371 ], [ %.3220, %.lr.ph.split.us.split ], [ %.3220, %.lr.ph.split.us.split.us384 ], [ %.3220, %.lr.ph.split.us.split.us ]
   ret i32 %.13
 }
 

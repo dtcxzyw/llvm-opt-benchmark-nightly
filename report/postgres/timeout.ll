@@ -194,13 +194,13 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.v, label %.lr.ph.i, label %remove_timeout_index.exit
 
 .lr.ph.i:                                         ; preds = %bb.f, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ 1, %bb.f ] ; 3 uses
-  %.0.in11.i = phi i64 [ %indvars.iv.i, %.lr.ph.i ], [ 0, %bb.f ]
-  %i.w = getelementptr inbounds nuw [8 x i8], ptr @active_timeouts, i64 %indvars.iv.i
+  %.0.in11.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ 1, %bb.f ] ; 3 uses
+  %i.w = getelementptr inbounds nuw [8 x i8], ptr @active_timeouts, i64 %.0.in11.i
   %i.x = load volatile ptr, ptr %i.w, align 8
-  %i.y = getelementptr inbounds nuw [8 x i8], ptr @active_timeouts, i64 %.0.in11.i
-  store volatile ptr %i.x, ptr %i.y, align 8
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %i.y = getelementptr [8 x i8], ptr @active_timeouts, i64 %.0.in11.i
+  %2 = getelementptr i8, ptr %i.y, i64 -8
+  store volatile ptr %i.x, ptr %2, align 8
+  %indvars.iv.next.i = add nuw nsw i64 %.0.in11.i, 1 ; 2 uses
   %i.z = load volatile i32, ptr @num_active_timeouts, align 4
   %i.aa = sext i32 %i.z to i64
   %i.ab = icmp slt i64 %indvars.iv.next.i, %i.aa
@@ -483,7 +483,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.g, label %.lr.ph.i, label %find_active_timeout.exit.thread
 
 .lr.ph.i:                                         ; preds = %bb.b, %bb.c
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.c ], [ 0, %bb.b ] ; 5 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.c ], [ 0, %bb.b ] ; 4 uses
   %i.h = getelementptr inbounds nuw [8 x i8], ptr @active_timeouts, i64 %indvars.iv.i
   %i.i = load volatile ptr, ptr %i.h, align 8
   %i.j = load i32, ptr %i.i, align 8
@@ -526,13 +526,13 @@ bb.d:                                             ; preds = %find_active_timeout
   br label %.lr.ph.i23
 
 .lr.ph.i23:                                       ; preds = %.lr.ph.i23, %.lr.ph.preheader.i
-  %indvars.iv.i24 = phi i64 [ %i.y, %.lr.ph.preheader.i ], [ %indvars.iv.next.i25, %.lr.ph.i23 ] ; 3 uses
-  %.0.in11.i = phi i64 [ %indvars.iv.i, %.lr.ph.preheader.i ], [ %indvars.iv.i24, %.lr.ph.i23 ]
-  %i.z = getelementptr inbounds nuw [8 x i8], ptr @active_timeouts, i64 %indvars.iv.i24
+  %.0.in11.i = phi i64 [ %i.y, %.lr.ph.preheader.i ], [ %indvars.iv.next.i25, %.lr.ph.i23 ] ; 3 uses
+  %i.z = getelementptr inbounds nuw [8 x i8], ptr @active_timeouts, i64 %.0.in11.i
   %i.aa = load volatile ptr, ptr %i.z, align 8
-  %i.ab = getelementptr inbounds [8 x i8], ptr @active_timeouts, i64 %.0.in11.i
-  store volatile ptr %i.aa, ptr %i.ab, align 8
-  %indvars.iv.next.i25 = add nuw nsw i64 %indvars.iv.i24, 1 ; 2 uses
+  %i.ab = getelementptr [8 x i8], ptr @active_timeouts, i64 %.0.in11.i
+  %4 = getelementptr i8, ptr %i.ab, i64 -8
+  store volatile ptr %i.aa, ptr %4, align 8
+  %indvars.iv.next.i25 = add nuw nsw i64 %.0.in11.i, 1 ; 2 uses
   %i.ac = load volatile i32, ptr @num_active_timeouts, align 4
   %i.ad = sext i32 %i.ac to i64
   %i.ae = icmp slt i64 %indvars.iv.next.i25, %i.ad
@@ -602,7 +602,7 @@ bb.i:                                             ; preds = %.thread
 
 bb.j:                                             ; preds = %.thread
   store volatile i8 1, ptr %i.c, align 4
-  %i.bd = load volatile i32, ptr @num_active_timeouts, align 4 ; 2 uses
+  %i.bd = load volatile i32, ptr @num_active_timeouts, align 4
   %.012.i = add i32 %i.bd, -1                     ; 2 uses
   %.not13.i = icmp slt i32 %.012.i, %.020.lcssa
   br i1 %.not13.i, label %insert_timeout.exit, label %.lr.ph.i26.preheader
@@ -610,16 +610,17 @@ bb.j:                                             ; preds = %.thread
 .lr.ph.i26.preheader:                             ; preds = %bb.j
   %i.be = sext i32 %.012.i to i64
   %i.bf = sext i32 %.020.lcssa to i64
-  %4 = sext i32 %i.bd to i64
   br label %.lr.ph.i26
 
 .lr.ph.i26:                                       ; preds = %.lr.ph.i26.preheader, %.lr.ph.i26
   %indvars.iv38 = phi i64 [ %i.be, %.lr.ph.i26.preheader ], [ %indvars.iv.next39, %.lr.ph.i26 ] ; 4 uses
-  %.0.in14.i = phi i64 [ %4, %.lr.ph.i26.preheader ], [ %indvars.iv38, %.lr.ph.i26 ]
   %5 = getelementptr inbounds nuw [8 x i8], ptr @active_timeouts, i64 %indvars.iv38
   %6 = load volatile ptr, ptr %5, align 8
-  %7 = getelementptr inbounds [8 x i8], ptr @active_timeouts, i64 %.0.in14.i
-  store volatile ptr %6, ptr %7, align 8
+  %.0.in1416.i = shl i64 %indvars.iv38, 32
+  %sext = add i64 %.0.in1416.i, 4294967296
+  %7 = ashr exact i64 %sext, 29
+  %8 = getelementptr inbounds i8, ptr @active_timeouts, i64 %7
+  store volatile ptr %6, ptr %8, align 8
   %indvars.iv.next39 = add nsw i64 %indvars.iv38, -1
   %.not.not.i = icmp samesign ugt i64 %indvars.iv38, %i.bf
   br i1 %.not.not.i, label %.lr.ph.i26, label %insert_timeout.exit, !llvm.loop !11
@@ -739,7 +740,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.g, label %.lr.ph.i, label %find_active_timeout.exit.thread
 
 .lr.ph.i:                                         ; preds = %bb.b, %bb.c
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.c ], [ 0, %bb.b ] ; 5 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.c ], [ 0, %bb.b ] ; 4 uses
   %i.h = getelementptr inbounds nuw [8 x i8], ptr @active_timeouts, i64 %indvars.iv.i
   %i.i = load volatile ptr, ptr %i.h, align 8
   %i.j = load i32, ptr %i.i, align 8
@@ -782,13 +783,13 @@ bb.d:                                             ; preds = %find_active_timeout
   br label %.lr.ph.i4
 
 .lr.ph.i4:                                        ; preds = %.lr.ph.i4, %.lr.ph.preheader.i
-  %indvars.iv.i5 = phi i64 [ %i.y, %.lr.ph.preheader.i ], [ %indvars.iv.next.i6, %.lr.ph.i4 ] ; 3 uses
-  %.0.in11.i = phi i64 [ %indvars.iv.i, %.lr.ph.preheader.i ], [ %indvars.iv.i5, %.lr.ph.i4 ]
-  %i.z = getelementptr inbounds nuw [8 x i8], ptr @active_timeouts, i64 %indvars.iv.i5
+  %.0.in11.i = phi i64 [ %i.y, %.lr.ph.preheader.i ], [ %indvars.iv.next.i6, %.lr.ph.i4 ] ; 3 uses
+  %i.z = getelementptr inbounds nuw [8 x i8], ptr @active_timeouts, i64 %.0.in11.i
   %i.aa = load volatile ptr, ptr %i.z, align 8
-  %i.ab = getelementptr inbounds [8 x i8], ptr @active_timeouts, i64 %.0.in11.i
-  store volatile ptr %i.aa, ptr %i.ab, align 8
-  %indvars.iv.next.i6 = add nuw nsw i64 %indvars.iv.i5, 1 ; 2 uses
+  %i.ab = getelementptr [8 x i8], ptr @active_timeouts, i64 %.0.in11.i
+  %2 = getelementptr i8, ptr %i.ab, i64 -8
+  store volatile ptr %i.aa, ptr %2, align 8
+  %indvars.iv.next.i6 = add nuw nsw i64 %.0.in11.i, 1 ; 2 uses
   %i.ac = load volatile i32, ptr @num_active_timeouts, align 4
   %i.ad = sext i32 %i.ac to i64
   %i.ae = icmp slt i64 %indvars.iv.next.i6, %i.ad
@@ -850,7 +851,7 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %i.j, label %.lr.ph.i, label %find_active_timeout.exit.thread
 
 .lr.ph.i:                                         ; preds = %bb.b, %bb.c
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.c ], [ 0, %bb.b ] ; 5 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.c ], [ 0, %bb.b ] ; 4 uses
   %i.k = getelementptr inbounds nuw [8 x i8], ptr @active_timeouts, i64 %indvars.iv.i
   %i.l = load volatile ptr, ptr %i.k, align 8
   %i.m = load i32, ptr %i.l, align 8
@@ -893,13 +894,13 @@ bb.d:                                             ; preds = %find_active_timeout
   br label %.lr.ph.i9
 
 .lr.ph.i9:                                        ; preds = %.lr.ph.i9, %.lr.ph.preheader.i
-  %indvars.iv.i10 = phi i64 [ %i.ab, %.lr.ph.preheader.i ], [ %indvars.iv.next.i11, %.lr.ph.i9 ] ; 3 uses
-  %.0.in11.i = phi i64 [ %indvars.iv.i, %.lr.ph.preheader.i ], [ %indvars.iv.i10, %.lr.ph.i9 ]
-  %i.ac = getelementptr inbounds nuw [8 x i8], ptr @active_timeouts, i64 %indvars.iv.i10
+  %.0.in11.i = phi i64 [ %i.ab, %.lr.ph.preheader.i ], [ %indvars.iv.next.i11, %.lr.ph.i9 ] ; 3 uses
+  %i.ac = getelementptr inbounds nuw [8 x i8], ptr @active_timeouts, i64 %.0.in11.i
   %i.ad = load volatile ptr, ptr %i.ac, align 8
-  %i.ae = getelementptr inbounds [8 x i8], ptr @active_timeouts, i64 %.0.in11.i
-  store volatile ptr %i.ad, ptr %i.ae, align 8
-  %indvars.iv.next.i11 = add nuw nsw i64 %indvars.iv.i10, 1 ; 2 uses
+  %i.ae = getelementptr [8 x i8], ptr @active_timeouts, i64 %.0.in11.i
+  %2 = getelementptr i8, ptr %i.ae, i64 -8
+  store volatile ptr %i.ad, ptr %2, align 8
+  %indvars.iv.next.i11 = add nuw nsw i64 %.0.in11.i, 1 ; 2 uses
   %i.af = load volatile i32, ptr @num_active_timeouts, align 4
   %i.ag = sext i32 %i.af to i64
   %i.ah = icmp slt i64 %indvars.iv.next.i11, %i.ag
