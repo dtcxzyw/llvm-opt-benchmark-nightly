@@ -205,7 +205,7 @@ _RNCINvMs_NtCsexYYUdYSQU6_5alloc3vecINtB7_3VecmE6retainNCNvMNtNtNtNtCs607s0NAIaW
   br i1 %i.ak, label %._crit_edge.i, label %.lr.ph.i.us7
 
 .lr.ph.i.us.preheader:                            ; preds = %.lr.ph.i.preheader
-  %i.al = shl nsw i64 %.us-phi60.i, 2             ; 2 uses
+  %i.al = shl nuw nsw i64 %.us-phi60.i, 2         ; 2 uses
   %scevgep = getelementptr i8, ptr %i.f, i64 %i.al
   %i.am = getelementptr i8, ptr %i.f, i64 %i.al
   %scevgep30 = getelementptr i8, ptr %i.am, i64 4

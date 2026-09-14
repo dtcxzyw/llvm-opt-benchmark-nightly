@@ -206,7 +206,7 @@ bb.f:                                             ; preds = %"_ZN10serde_json2de
 
 bb.g:                                             ; preds = %.loopexit.i, %.loopexit.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !23664)
-  %i.ar = add i64 %storemerge.in17.i59, 2         ; 5 uses
+  %i.ar = add nuw i64 %storemerge.in17.i59, 2     ; 5 uses
   store i64 %i.ar, ptr %i.f, align 8, !alias.scope !23665
   %i.as = icmp ult i64 %i.ar, %i.i
   br i1 %i.as, label %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17hd4410d50bf3934c9E.exit.i.i", label %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17hd4410d50bf3934c9E.exit.thread.i.i"
@@ -228,7 +228,7 @@ bb.g:                                             ; preds = %.loopexit.i, %.loop
   br i1 %i.aw, label %"_ZN10serde_json2de21Deserializer$LT$R$GT$17next_char_or_null17hdcd4b45127ba7238E.exit.i.i", label %"_ZN10serde_json2de21Deserializer$LT$R$GT$17next_char_or_null17hdcd4b45127ba7238E.exit.thread.i.i"
 
 bb.h:                                             ; preds = %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17hd4410d50bf3934c9E.exit.i.i", %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17hd4410d50bf3934c9E.exit.i.i"
-  %i.ax = add i64 %storemerge.in17.i59, 3         ; 2 uses
+  %i.ax = add nuw i64 %storemerge.in17.i59, 3     ; 2 uses
   store i64 %i.ax, ptr %i.f, align 8, !alias.scope !23670
   br label %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17hd4410d50bf3934c9E.exit.thread.i.i"
 

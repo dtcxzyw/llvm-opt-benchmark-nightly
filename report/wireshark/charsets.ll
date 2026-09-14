@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c, %bb.a
   %i.p = zext i8 %.val31.us to i32
   %i.q = or disjoint i32 %i.o, %i.p
   tail call void @wmem_strbuf_append_unichar_validated(ptr noundef %i.b, i32 noundef %i.q)
-  %i.r = add i64 %.134.us, 2                      ; 3 uses
+  %i.r = add nuw i64 %.134.us, 2                  ; 3 uses
   %i.s = or disjoint i64 %i.r, 1
   %i.t = icmp ult i64 %i.s, %2
   br i1 %i.t, label %.lr.ph.split.us, label %._crit_edge, !llvm.loop !0
@@ -213,7 +213,7 @@ bb.d:                                             ; preds = %bb.c, %bb.a
   %.val = load i16, ptr %i.u, align 1
   %i.v = zext i16 %.val to i32
   tail call void @wmem_strbuf_append_unichar_validated(ptr noundef %i.b, i32 noundef %i.v)
-  %i.w = add i64 %.134, 2                         ; 3 uses
+  %i.w = add nuw i64 %.134, 2                     ; 3 uses
   %i.x = or disjoint i64 %i.w, 1
   %i.y = icmp ult i64 %i.x, %2
   br i1 %i.y, label %.lr.ph.split, label %._crit_edge, !llvm.loop !0
@@ -440,7 +440,7 @@ bb.d:                                             ; preds = %bb.c, %bb.a
   %i.n = load i32, ptr %i.m, align 1
   %i.o = tail call i32 @llvm.bswap.i32(i32 %i.n)
   tail call void @wmem_strbuf_append_unichar_validated(ptr noundef %i.b, i32 noundef %i.o)
-  %i.p = add i64 %.127.us, 4                      ; 3 uses
+  %i.p = add nuw i64 %.127.us, 4                  ; 3 uses
   %i.q = or disjoint i64 %i.p, 3
   %i.r = icmp ult i64 %i.q, %2
   br i1 %i.r, label %.lr.ph.split.us, label %._crit_edge, !llvm.loop !13
@@ -450,7 +450,7 @@ bb.d:                                             ; preds = %bb.c, %bb.a
   %i.s = getelementptr i8, ptr %1, i64 %.127
   %i.t = load i32, ptr %i.s, align 1
   tail call void @wmem_strbuf_append_unichar_validated(ptr noundef %i.b, i32 noundef %i.t)
-  %i.u = add i64 %.127, 4                         ; 3 uses
+  %i.u = add nuw i64 %.127, 4                     ; 3 uses
   %i.v = or disjoint i64 %i.u, 3
   %i.w = icmp ult i64 %i.v, %2
   br i1 %i.w, label %.lr.ph.split, label %._crit_edge, !llvm.loop !13
@@ -684,7 +684,7 @@ bb.d:                                             ; preds = %bb.c
   %i.m = zext i8 %.val31.us.i to i32
   %i.n = or disjoint i32 %i.l, %i.m
   tail call void @wmem_strbuf_append_unichar_validated(ptr noundef %i.g, i32 noundef %i.n)
-  %i.o = add i64 %.134.us.i, 2                    ; 3 uses
+  %i.o = add nuw i64 %.134.us.i, 2                ; 3 uses
   %i.p = or disjoint i64 %i.o, 1
   %i.q = icmp ult i64 %i.p, %i.e
   br i1 %i.q, label %.lr.ph.split.us.i, label %._crit_edge.i, !llvm.loop !0

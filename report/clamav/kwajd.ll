@@ -204,7 +204,7 @@ bb.ap:                                            ; preds = %._crit_edge453
   %.7208480 = phi i32 [ %i.en, %bb.ap ], [ %.10211, %bb.be ] ; 2 uses
   %.12227479 = phi ptr [ %.10225.lcssa, %bb.ap ], [ %.17, %bb.be ] ; 2 uses
   %.12241478 = phi ptr [ %.10239.lcssa, %bb.ap ], [ %.17246, %bb.be ] ; 2 uses
-  %4 = icmp slt i32 %.7481, 2
+  %4 = icmp samesign ult i32 %.7481, 2
   br i1 %4, label %.lr.ph462, label %._crit_edge463
 
 .lr.ph462:                                        ; preds = %.preheader357, %bb.av
@@ -257,7 +257,7 @@ bb.av:                                            ; preds = %bb.au, %.lr.ph462
   %i.fd = getelementptr inbounds nuw i8, ptr %.14243, i64 1 ; 2 uses
   %i.fe = load i8, ptr %.14243, align 1, !tbaa !28
   %i.ff = zext i8 %i.fe to i32
-  %i.fg = sub i32 24, %.8461
+  %i.fg = sub nsw i32 24, %.8461
   %i.fh = shl nuw i32 %i.ff, %i.fg
   %i.fi = or i32 %i.fh, %.8209460                 ; 2 uses
   %i.fj = add nuw nsw i32 %.8461, 8               ; 2 uses
@@ -283,7 +283,7 @@ bb.aw:                                            ; preds = %._crit_edge463
   br i1 %i.fq, label %.preheader355, label %bb.bd
 
 .preheader355:                                    ; preds = %bb.aw
-  %5 = icmp slt i32 %.8.lcssa, 6
+  %5 = icmp samesign ult i32 %.8.lcssa, 6
   br i1 %5, label %.lr.ph472, label %._crit_edge473
 
 .lr.ph472:                                        ; preds = %.preheader355, %bb.bc

@@ -204,8 +204,8 @@ bb.a:
   br label %.lr.ph87.us
 
 .lr.ph.us.us.preheader:                           ; preds = %.lr.ph96.split.us
-  %narrow = add nuw i32 %4, 1
-  %i.i = zext i32 %narrow to i64
+  %narrow = add nuw nsw i32 %4, 1
+  %i.i = zext nneg i32 %narrow to i64
   %i.j = xor i32 %4, -1
   %i.k = add i32 %5, %i.j                         ; 2 uses
   %wide.trip.count141 = zext nneg i32 %3 to i64
@@ -608,8 +608,8 @@ bb.a:
   br label %.lr.ph87.us
 
 .lr.ph.us.us.preheader:                           ; preds = %.lr.ph96.split.us
-  %narrow = add nuw i32 %4, 1
-  %i.i = zext i32 %narrow to i64
+  %narrow = add nuw nsw i32 %4, 1
+  %i.i = zext nneg i32 %narrow to i64
   %i.j = xor i32 %4, -1
   %i.k = add i32 %5, %i.j                         ; 2 uses
   %wide.trip.count141 = zext nneg i32 %3 to i64
@@ -1012,8 +1012,8 @@ bb.a:
   br label %.lr.ph92.us
 
 .lr.ph.us.us.preheader:                           ; preds = %.lr.ph101.split.us
-  %narrow = add nuw i32 %4, 1
-  %i.h = zext i32 %narrow to i64
+  %narrow = add nuw nsw i32 %4, 1
+  %i.h = zext nneg i32 %narrow to i64
   br label %.lr.ph.us.us
 
 .lr.ph.us.us:                                     ; preds = %.lr.ph.us.us.preheader, %._crit_edge96.us.us
@@ -1416,8 +1416,8 @@ bb.a:
   br label %.lr.ph92.us
 
 .lr.ph.us.us.preheader:                           ; preds = %.lr.ph101.split.us
-  %narrow = add nuw i32 %4, 1
-  %i.h = zext i32 %narrow to i64
+  %narrow = add nuw nsw i32 %4, 1
+  %i.h = zext nneg i32 %narrow to i64
   br label %.lr.ph.us.us
 
 .lr.ph.us.us:                                     ; preds = %.lr.ph.us.us.preheader, %._crit_edge96.us.us

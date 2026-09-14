@@ -202,8 +202,8 @@ bb.d:                                             ; preds = %.lr.ph93
 
 .lr.ph98:                                         ; preds = %._crit_edge94
   %i.ba = zext nneg i32 %i.a to i64
-  %narrow = add nuw i32 %i.h, 1
-  %i.bb = zext i32 %narrow to i64
+  %narrow = add nuw nsw i32 %i.h, 1
+  %i.bb = zext nneg i32 %narrow to i64
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph98, %bb.e

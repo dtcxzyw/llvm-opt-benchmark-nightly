@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %bb.p
   %i.gk = add nuw nsw i64 %indvars.iv606.i, 1     ; 6 uses
   %i.gl = zext i32 %i.fv to i64
   %i.gm = icmp eq i64 %i.gk, %i.gl
-  br i1 %i.gm, label %interpol.exit.thread.i, label %bb.r
+  br i1 %i.gm, label %interpol.exit.thread.thread.i, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %i.gn = load i32, ptr %i.ai, align 4, !tbaa !27 ; 4 uses
@@ -393,15 +393,15 @@ bb.ai:                                            ; preds = %bb.o
   %i.kp = tail call nsz double @llvm.fmuladd.f64(double %i.ko, double %i.gh, double %i.cc)
   br label %interpol.exit.thread.i
 
-interpol.exit.thread.i:                           ; preds = %bb.ai, %bb.q, %bb.p
-  %.0388.i = phi nsz double [ %i.km, %bb.ai ], [ %i.ga, %bb.q ], [ %i.ga, %bb.p ] ; 2 uses
-  %.0382.i = phi nsz double [ %i.kp, %bb.ai ], [ %i.cc, %bb.q ], [ %i.cc, %bb.p ] ; 2 uses
+interpol.exit.thread.i:                           ; preds = %bb.ai, %bb.p
+  %.0388.i = phi nsz double [ %i.km, %bb.ai ], [ %i.ga, %bb.p ] ; 2 uses
+  %.0382.i = phi nsz double [ %i.kp, %bb.ai ], [ %i.cc, %bb.p ] ; 2 uses
   %i.kq = icmp eq i64 %indvars.iv606.i, 0
   br i1 %i.kq, label %.thread.i, label %interpol.exit.thread.thread.i
 
-interpol.exit.thread.thread.i:                    ; preds = %interpol.exit.thread.i, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.z, %bb.s, %bb.r
-  %.0382646.i = phi double [ %.0382.i, %interpol.exit.thread.i ], [ %i.cc, %bb.ab ], [ %i.cc, %bb.ac ], [ %i.cc, %bb.ad ], [ %i.cc, %bb.ae ], [ %i.cc, %bb.af ], [ %i.cc, %bb.ag ], [ %i.cc, %bb.r ], [ %i.cc, %bb.z ], [ %i.cc, %bb.s ] ; 3 uses
-  %.0388643.i = phi double [ %.0388.i, %interpol.exit.thread.i ], [ %i.ga, %bb.ab ], [ %i.ga, %bb.ac ], [ %i.ga, %bb.ad ], [ %i.ga, %bb.ae ], [ %i.ga, %bb.af ], [ %i.ga, %bb.ag ], [ %i.ga, %bb.r ], [ %i.ga, %bb.z ], [ %i.ga, %bb.s ] ; 3 uses
+interpol.exit.thread.thread.i:                    ; preds = %interpol.exit.thread.i, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.z, %bb.s, %bb.r, %bb.q
+  %.0382646.i = phi double [ %.0382.i, %interpol.exit.thread.i ], [ %i.cc, %bb.ab ], [ %i.cc, %bb.ac ], [ %i.cc, %bb.ad ], [ %i.cc, %bb.ae ], [ %i.cc, %bb.af ], [ %i.cc, %bb.ag ], [ %i.cc, %bb.q ], [ %i.cc, %bb.r ], [ %i.cc, %bb.z ], [ %i.cc, %bb.s ] ; 3 uses
+  %.0388643.i = phi double [ %.0388.i, %interpol.exit.thread.i ], [ %i.ga, %bb.ab ], [ %i.ga, %bb.ac ], [ %i.ga, %bb.ad ], [ %i.ga, %bb.ae ], [ %i.ga, %bb.af ], [ %i.ga, %bb.ag ], [ %i.ga, %bb.q ], [ %i.ga, %bb.r ], [ %i.ga, %bb.z ], [ %i.ga, %bb.s ] ; 3 uses
   %i.kr = load i32, ptr %i.bo, align 4, !tbaa !72
   %.not413.i = icmp eq i32 %i.kr, 0
   br i1 %.not413.i, label %bb.aj, label %.thread.i

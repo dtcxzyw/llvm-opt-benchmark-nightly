@@ -205,7 +205,7 @@ bb.ba:                                            ; preds = %bb.ba, %.preheader1
   %i.ti = zext i32 %narrow2428.i to i64
   %i.tj = mul nsw i64 %i.ti, %i.ir
   %scevgep2174.i = getelementptr i8, ptr %.01121.lcssa24422446.i, i64 %i.tj
-  %i.tk = add i32 %.01175.lcssa24402448.i, 8
+  %i.tk = add nsw i32 %.01175.lcssa24402448.i, 8
   %i.tl = and i32 %i.tf, -8
   %i.tm = add i32 %i.tk, %i.tl
   br label %.preheader1590.i
@@ -608,7 +608,7 @@ bb.be:                                            ; preds = %bb.be, %.preheader1
   %i.aft = zext i32 %narrow2430.i to i64
   %i.afu = mul nsw i64 %i.aft, %i.ke
   %scevgep2234.i = getelementptr i8, ptr %.01220.lcssa24842495.i, i64 %i.afu
-  %i.afv = add i32 %.01252.lcssa24752497.i, 8
+  %i.afv = add nsw i32 %.01252.lcssa24752497.i, 8
   %i.afw = and i32 %i.afq, -8
   %i.afx = add i32 %i.afv, %i.afw
   br label %._crit_edge1720.i
@@ -1011,7 +1011,7 @@ bb.bi:                                            ; preds = %bb.bi, %.preheader1
   %scevgep2285.i = getelementptr i8, ptr %.01280.lcssa25212536.i, i64 %i.arz
   %scevgep2286.i = getelementptr i8, ptr %.01277.lcssa25222535.i, i64 %i.arz
   %scevgep2287.i = getelementptr i8, ptr %.01274.lcssa25232534.i, i64 %i.arz
-  %i.asa = add i32 %.01258.lcssa25252532.i, 8
+  %i.asa = add nsw i32 %.01258.lcssa25252532.i, 8
   %i.asb = and i32 %i.arv, -8
   %i.asc = add i32 %i.asa, %i.asb
   br label %.preheader1571.i
@@ -1414,7 +1414,7 @@ bb.bn:                                            ; preds = %bb.bn, %.epil.prehe
   %i.bbx = mul nsw i64 %i.bbw, %i.ano             ; 2 uses
   %scevgep2326.i = getelementptr i8, ptr %.01202.lcssa25582569.i, i64 %i.bbx
   %scevgep2327.i = getelementptr i8, ptr %.01198.lcssa25592568.i, i64 %i.bbx
-  %i.bby = add i32 %.01182.lcssa25612566.i, 8
+  %i.bby = add nsw i32 %.01182.lcssa25612566.i, 8
   %i.bbz = and i32 %i.bbt, -8
   %i.bca = add i32 %i.bby, %i.bbz
   br label %.preheader1562.i
@@ -1817,7 +1817,7 @@ bb.bq:                                            ; preds = %bb.bq, %.epil.prehe
   %i.blq = zext i32 %narrow2436.i to i64
   %i.blr = mul nsw i64 %i.blq, %i.ayb
   %scevgep2365.i = getelementptr i8, ptr %.01143.lcssa25942602.i, i64 %i.blr
-  %i.bls = add i32 %.01133.lcssa25962600.i, 8
+  %i.bls = add nsw i32 %.01133.lcssa25962600.i, 8
   %i.blt = and i32 %i.bln, -8
   %i.blu = add i32 %i.bls, %i.blt
   br label %.preheader1552.i
@@ -2220,7 +2220,7 @@ bb.s:                                             ; preds = %.loopexit2635.i
   br i1 %i.ff, label %.lr.ph2826.us.preheader.i, label %.lr.ph2834.split.preheader.i
 
 .lr.ph2834.split.preheader.i:                     ; preds = %.lr.ph2834.i
-  %i.ajk = add i32 %.21336.lcssa.i, 2
+  %i.ajk = add nsw i32 %.21336.lcssa.i, 2
   %i.ajl = sub i32 %i.fv, %.21336.lcssa.i
   %i.ajm = and i32 %i.ajl, -2
   %i.ajn = add i32 %i.ajk, %i.ajm
@@ -2623,7 +2623,7 @@ bb.aj:                                            ; preds = %.loopexit2616.i
   br i1 %i.axy, label %.lr.ph3068.us.preheader.i, label %.lr.ph3077.split.preheader.i
 
 .lr.ph3077.split.preheader.i:                     ; preds = %.lr.ph3077.i
-  %i.cbv = add i32 %.21477.lcssa.i, 2
+  %i.cbv = add nsw i32 %.21477.lcssa.i, 2
   %i.cbw = sub i32 %i.ayg, %.21477.lcssa.i
   %i.cbx = and i32 %i.cbw, -2
   %i.cby = add i32 %i.cbv, %i.cbx
@@ -3026,7 +3026,7 @@ begin_hunk_7_@_ZN4ncnn24Convolution1D_x86_avx51221create_pipeline_bf16sERKNS_6Op
   %i.xj = zext i32 %narrow2442.i to i64
   %i.xk = mul nsw i64 %i.xj, %i.im
   %scevgep2188.i = getelementptr i8, ptr %.01096.lcssa24562460.i, i64 %i.xk
-  %i.xl = add i32 %.01179.lcssa24542462.i, 8
+  %i.xl = add nsw i32 %.01179.lcssa24542462.i, 8
   %i.xm = and i32 %i.xg, -8
   %i.xn = add i32 %i.xl, %i.xm
   br label %.preheader1604.i
@@ -3429,7 +3429,7 @@ bb.bc:                                            ; preds = %bb.bc, %.preheader1
   %i.ape = zext i32 %narrow2444.i to i64
   %i.apf = mul nsw i64 %i.ape, %i.jy
   %scevgep2248.i = getelementptr i8, ptr %.01234.lcssa24982509.i, i64 %i.apf
-  %i.apg = add i32 %.01265.lcssa24892511.i, 8
+  %i.apg = add nsw i32 %.01265.lcssa24892511.i, 8
   %i.aph = and i32 %i.apb, -8
   %i.api = add i32 %i.apg, %i.aph
   br label %._crit_edge1734.i
@@ -3832,7 +3832,7 @@ bb.bg:                                            ; preds = %bb.bg, %.preheader1
   %scevgep2299.i = getelementptr i8, ptr %.01217.lcssa25352550.i, i64 %i.bem
   %scevgep2300.i = getelementptr i8, ptr %.01214.lcssa25362549.i, i64 %i.bem
   %scevgep2301.i = getelementptr i8, ptr %.01211.lcssa25372548.i, i64 %i.bem
-  %i.ben = add i32 %.01195.lcssa25392546.i, 8
+  %i.ben = add nsw i32 %.01195.lcssa25392546.i, 8
   %i.beo = and i32 %i.bei, -8
   %i.bep = add i32 %i.ben, %i.beo
   br label %.preheader1585.i
@@ -4235,7 +4235,7 @@ _ZN4ncnn3MatD2Ev.exit1300.i:                      ; preds = %._crit_edge1942.spl
   %i.brs = mul nsw i64 %i.brr, %i.azh             ; 2 uses
   %scevgep2340.i = getelementptr i8, ptr %.01155.lcssa25722583.i, i64 %i.brs
   %scevgep2341.i = getelementptr i8, ptr %.01151.lcssa25732582.i, i64 %i.brs
-  %i.brt = add i32 %.01135.lcssa25752580.i, 8
+  %i.brt = add nsw i32 %.01135.lcssa25752580.i, 8
   %i.bru = and i32 %i.bro, -8
   %i.brv = add i32 %i.brt, %i.bru
   br label %.preheader1576.i
@@ -4638,7 +4638,7 @@ _ZN4ncnn3MatD2Ev.exit.i:                          ; preds = %._crit_edge2006.spl
   %i.caz = zext i32 %narrow2450.i to i64
   %i.cba = mul nsw i64 %i.caz, %i.bmx
   %scevgep2379.i = getelementptr i8, ptr %.01115.lcssa26082616.i, i64 %i.cba
-  %i.cbb = add i32 %.01105.lcssa26102614.i, 8
+  %i.cbb = add nsw i32 %.01105.lcssa26102614.i, 8
   %i.cbc = and i32 %i.caw, -8
   %i.cbd = add i32 %i.cbb, %i.cbc
   br label %.preheader1566.i
@@ -5041,7 +5041,7 @@ bb.p:                                             ; preds = %.lr.ph868, %bb.p
   br i1 %i.afl, label %.lr.ph948.split.us, label %.lr.ph948.split.preheader
 
 .lr.ph948.split.preheader:                        ; preds = %.lr.ph948
-  %i.afm = add i32 %.2687.lcssa, 2
+  %i.afm = add nsw i32 %.2687.lcssa, 2
   %i.afn = sub i32 %i.ax, %.2687.lcssa
   %i.afo = and i32 %i.afn, -2
   %i.afp = add i32 %i.afm, %i.afo
@@ -5444,7 +5444,7 @@ begin_hunk_13_@_ZN4ncnnL26convolution1d_packed_bf16sERKNS_3MatERS0_S2_S2_iiiiS2_
   br i1 %i.ch, label %.lr.ph3218.us.preheader, label %.lr.ph3226.split.preheader
 
 .lr.ph3226.split.preheader:                       ; preds = %.lr.ph3226
-  %i.ati = add i32 %.21342.lcssa, 2
+  %i.ati = add nsw i32 %.21342.lcssa, 2
   %i.atj = sub i32 %i.cx, %.21342.lcssa
   %i.atk = and i32 %i.atj, -2
   %i.atl = add i32 %i.ati, %i.atk
@@ -5847,7 +5847,7 @@ begin_hunk_14_@_ZN4ncnnL26convolution1d_packed_bf16sERKNS_3MatERS0_S2_S2_iiiiS2_
   br i1 %i.bkc, label %.lr.ph3460.us.preheader, label %.lr.ph3469.split.preheader
 
 .lr.ph3469.split.preheader:                       ; preds = %.lr.ph3469
-  %i.dav = add i32 %.21483.lcssa, 2
+  %i.dav = add nsw i32 %.21483.lcssa, 2
   %i.daw = sub i32 %i.bkk, %.21483.lcssa
   %i.dax = and i32 %i.daw, -2
   %i.day = add i32 %i.dav, %i.dax
@@ -6250,7 +6250,7 @@ begin_hunk_15_@_ZN4ncnnL26convolution1d_packed_bf16sERKNS_3MatERS0_S2_S2_iiiiS2_
   br i1 %i.dqp, label %.lr.ph3664.us.preheader, label %.lr.ph3674.split.preheader
 
 .lr.ph3674.split.preheader:                       ; preds = %.lr.ph3674
-  %i.emh = add i32 %.21368.lcssa, 2
+  %i.emh = add nsw i32 %.21368.lcssa, 2
   %i.emi = sub i32 %i.bir, %.21368.lcssa
   %i.emj = and i32 %i.emi, -2
   %i.emk = add i32 %i.emh, %i.emj
@@ -6653,7 +6653,7 @@ bb.bg:                                            ; preds = %.lr.ph3837, %.loope
   br i1 %i.etb, label %.lr.ph3851.us.preheader, label %.lr.ph3859.split.preheader
 
 .lr.ph3859.split.preheader:                       ; preds = %.lr.ph3859
-  %i.fkc = add i32 %.21269.lcssa, 2
+  %i.fkc = add nsw i32 %.21269.lcssa, 2
   %i.fkd = sub i32 %i.dpn, %.21269.lcssa
   %i.fke = and i32 %i.fkd, -2
   %i.fkf = add i32 %i.fkc, %i.fke
@@ -7056,7 +7056,7 @@ begin_hunk_17_@_ZN4ncnnL26convolution1d_packed_bf16sERKNS_3MatERS0_S2_S2_iiiiS2_
   br i1 %i.bfu, label %.lr.ph1167.split.us, label %.lr.ph1167.split.preheader
 
 .lr.ph1167.split.preheader:                       ; preds = %.lr.ph1167
-  %i.bfv = add i32 %.2570.lcssa, 2
+  %i.bfv = add nsw i32 %.2570.lcssa, 2
   %i.bfw = sub i32 %i.ax, %.2570.lcssa
   %i.bfx = and i32 %i.bfw, -2
   %i.bfy = add i32 %i.bfv, %i.bfx

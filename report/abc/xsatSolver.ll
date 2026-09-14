@@ -204,13 +204,13 @@ bb.y:                                             ; preds = %bb.ab, %.lr.ph.i.i
   %i.dk = phi i32 [ %i.dh, %.lr.ph.i.i ], [ %i.eg, %bb.ab ] ; 4 uses
   %i.dl = phi i32 [ %i.di, %.lr.ph.i.i ], [ %i.ef, %bb.ab ]
   %.03251.i.i = phi i32 [ %i.dj, %.lr.ph.i.i ], [ %i.eb, %bb.ab ] ; 3 uses
-  %i.dm = add nuw i32 %i.dl, 2                    ; 3 uses
+  %i.dm = add nuw nsw i32 %i.dl, 2                ; 3 uses
   %i.dn = icmp slt i32 %i.dm, %.val3452.i.i
   br i1 %i.dn, label %bb.z, label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %bb.y
-  %.pre.phi.trans.insert.i.i = sext i32 %i.dk to i64
-  %.phi.trans.insert.phi.trans.insert.i.i = getelementptr inbounds [4 x i8], ptr %.val40.i.i, i64 %.pre.phi.trans.insert.i.i
+  %.pre48.phi.trans.insert.i = zext i32 %i.dk to i64
+  %.phi.trans.insert.phi.trans.insert.i.i = getelementptr inbounds nuw [4 x i8], ptr %.val40.i.i, i64 %.pre48.phi.trans.insert.i
   %.pre55.pre.i.i = load i32, ptr %.phi.trans.insert.phi.trans.insert.i.i, align 4, !tbaa !31 ; 2 uses
   %.phi.trans.insert56.phi.trans.insert.i.i = sext i32 %.pre55.pre.i.i to i64 ; 2 uses
   %.phi.trans.insert57.phi.trans.insert.i.i = getelementptr inbounds [4 x i8], ptr %.val45.val.i.i, i64 %.phi.trans.insert56.phi.trans.insert.i.i
@@ -218,8 +218,8 @@ bb.y:                                             ; preds = %bb.ab, %.lr.ph.i.i
   br label %bb.aa
 
 bb.z:                                             ; preds = %bb.y
-  %1 = sext i32 %i.dm to i64
-  %i.do = getelementptr inbounds [4 x i8], ptr %.val40.i.i, i64 %1
+  %1 = zext nneg i32 %i.dm to i64
+  %i.do = getelementptr inbounds nuw [4 x i8], ptr %.val40.i.i, i64 %1
   %i.dp = load i32, ptr %i.do, align 4, !tbaa !31 ; 2 uses
   %i.dq = zext nneg i32 %i.dk to i64
   %i.dr = getelementptr inbounds nuw [4 x i8], ptr %.val40.i.i, i64 %i.dq
@@ -246,8 +246,8 @@ bb.aa:                                            ; preds = %._crit_edge62.i.i, 
   br i1 %.not49.i.i, label %bb.ab, label %xSAT_HeapPercolateDown.exit.i
 
 bb.ab:                                            ; preds = %bb.aa
-  %2 = sext i32 %.03251.i.i to i64
-  %i.ed = getelementptr inbounds [4 x i8], ptr %.val40.i.i, i64 %2
+  %2 = zext nneg i32 %.03251.i.i to i64
+  %i.ed = getelementptr inbounds nuw [4 x i8], ptr %.val40.i.i, i64 %2
   store i32 %i.ea, ptr %i.ed, align 4, !tbaa !31
   %i.ee = getelementptr inbounds [4 x i8], ptr %.val41.i.i, i64 %.pre-phi61.i.i
   store i32 %.03251.i.i, ptr %i.ee, align 4, !tbaa !31
@@ -260,8 +260,8 @@ bb.ab:                                            ; preds = %bb.aa
 xSAT_HeapPercolateDown.exit.i:                    ; preds = %bb.ab, %bb.aa, %..thread_crit_edge.i.i
   %.pre-phi64.i.i = phi i64 [ %.pre63.i.i, %..thread_crit_edge.i.i ], [ %i.df, %bb.aa ], [ %i.df, %bb.ab ]
   %.032.lcssa.i.i = phi i32 [ %i.dd, %..thread_crit_edge.i.i ], [ %i.eb, %bb.ab ], [ %.03251.i.i, %bb.aa ] ; 2 uses
-  %3 = sext i32 %.032.lcssa.i.i to i64
-  %i.ei = getelementptr inbounds [4 x i8], ptr %.val40.i.i, i64 %3
+  %3 = zext nneg i32 %.032.lcssa.i.i to i64
+  %i.ei = getelementptr inbounds nuw [4 x i8], ptr %.val40.i.i, i64 %3
   store i32 %i.cy, ptr %i.ei, align 4, !tbaa !31
   %i.ej = getelementptr inbounds [4 x i8], ptr %.val41.i.i, i64 %.pre-phi64.i.i
   store i32 %.032.lcssa.i.i, ptr %i.ej, align 4, !tbaa !31
@@ -664,13 +664,13 @@ bb.el:                                            ; preds = %bb.eo, %.lr.ph.i.i.
   %i.aiv = phi i32 [ 1, %.lr.ph.i.i.i99 ], [ %i.ajr, %bb.eo ] ; 4 uses
   %i.aiw = phi i32 [ 0, %.lr.ph.i.i.i99 ], [ %i.ajq, %bb.eo ]
   %.03251.i.i.i = phi i32 [ 0, %.lr.ph.i.i.i99 ], [ %i.ajm, %bb.eo ] ; 3 uses
-  %i.aix = add nuw i32 %i.aiw, 2                  ; 3 uses
+  %i.aix = add nuw nsw i32 %i.aiw, 2              ; 3 uses
   %i.aiy = icmp slt i32 %i.aix, %.val3452.i.i.i
   br i1 %i.aiy, label %bb.em, label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %bb.el
-  %.pre.phi.trans.insert.i.i.i = sext i32 %i.aiv to i64
-  %.phi.trans.insert.phi.trans.insert.i.i.i = getelementptr inbounds [4 x i8], ptr %.val11.i.i98, i64 %.pre.phi.trans.insert.i.i.i
+  %.pre.phi.trans.insert.i.i = zext i32 %i.aiv to i64
+  %.phi.trans.insert.phi.trans.insert.i.i.i = getelementptr inbounds nuw [4 x i8], ptr %.val11.i.i98, i64 %.pre.phi.trans.insert.i.i
   %.pre55.pre.i.i.i = load i32, ptr %.phi.trans.insert.phi.trans.insert.i.i.i, align 4, !tbaa !31 ; 2 uses
   %.phi.trans.insert56.phi.trans.insert.i.i.i = sext i32 %.pre55.pre.i.i.i to i64 ; 2 uses
   %.phi.trans.insert57.phi.trans.insert.i.i.i = getelementptr inbounds [4 x i8], ptr %.val45.val.i.i.i, i64 %.phi.trans.insert56.phi.trans.insert.i.i.i
@@ -678,8 +678,8 @@ bb.el:                                            ; preds = %bb.eo, %.lr.ph.i.i.
   br label %bb.en
 
 bb.em:                                            ; preds = %bb.el
-  %1 = sext i32 %i.aix to i64
-  %i.aiz = getelementptr inbounds [4 x i8], ptr %.val11.i.i98, i64 %1
+  %1 = zext nneg i32 %i.aix to i64
+  %i.aiz = getelementptr inbounds nuw [4 x i8], ptr %.val11.i.i98, i64 %1
   %i.aja = load i32, ptr %i.aiz, align 4, !tbaa !31 ; 2 uses
   %i.ajb = zext nneg i32 %i.aiv to i64
   %i.ajc = getelementptr inbounds nuw [4 x i8], ptr %.val11.i.i98, i64 %i.ajb
@@ -706,8 +706,8 @@ bb.en:                                            ; preds = %._crit_edge62.i.i.i
   br i1 %.not49.i.i.i, label %bb.eo, label %xSAT_HeapPercolateDown.exit.i.i
 
 bb.eo:                                            ; preds = %bb.en
-  %2 = sext i32 %.03251.i.i.i to i64
-  %i.ajo = getelementptr inbounds [4 x i8], ptr %.val11.i.i98, i64 %2
+  %2 = zext nneg i32 %.03251.i.i.i to i64
+  %i.ajo = getelementptr inbounds nuw [4 x i8], ptr %.val11.i.i98, i64 %2
   store i32 %i.ajl, ptr %i.ajo, align 4, !tbaa !31
   %i.ajp = getelementptr inbounds [4 x i8], ptr %.val13.i.i, i64 %.pre-phi61.i.i.i
   store i32 %.03251.i.i.i, ptr %i.ajp, align 4, !tbaa !31
@@ -719,8 +719,8 @@ bb.eo:                                            ; preds = %bb.en
 
 xSAT_HeapPercolateDown.exit.i.i:                  ; preds = %bb.eo, %bb.en
   %.032.lcssa.i.i.i = phi i32 [ %i.ajm, %bb.eo ], [ %.03251.i.i.i, %bb.en ] ; 2 uses
-  %3 = sext i32 %.032.lcssa.i.i.i to i64
-  %i.ajt = getelementptr inbounds [4 x i8], ptr %.val11.i.i98, i64 %3
+  %3 = zext nneg i32 %.032.lcssa.i.i.i to i64
+  %i.ajt = getelementptr inbounds nuw [4 x i8], ptr %.val11.i.i98, i64 %3
   store i32 %i.air, ptr %i.ajt, align 4, !tbaa !31
   %i.aju = getelementptr inbounds [4 x i8], ptr %.val13.i.i, i64 %i.ait
   store i32 %.032.lcssa.i.i.i, ptr %i.aju, align 4, !tbaa !31

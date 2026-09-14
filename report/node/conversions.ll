@@ -204,7 +204,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.bl = icmp ugt i8 %i.aw, 96
   %or.cond3.i = and i1 %i.bl, %i.bk
   %i.bm = add nuw nsw i32 %i.au, 87
-  %3 = icmp sgt i32 %i.bm, %i.bb
+  %3 = icmp samesign ugt i32 %i.bm, %i.bb
   %or.cond21.i = select i1 %or.cond3.i, i1 %3, i1 false
   br i1 %or.cond21.i, label %.thread42, label %bb.ah
 
@@ -234,7 +234,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.bv = icmp ugt i8 %i.aw, 96
   %or.cond3.i24 = and i1 %i.bv, %i.bu
   %i.bw = add nuw nsw i32 %i.au, 87
-  %4 = icmp sgt i32 %i.bw, %i.bb
+  %4 = icmp samesign ugt i32 %i.bw, %i.bb
   %or.cond21.i25 = select i1 %or.cond3.i24, i1 %4, i1 false
   br i1 %or.cond21.i25, label %.thread42, label %bb.ak
 
@@ -637,7 +637,7 @@ bb.af:                                            ; preds = %bb.ae
   %i.bq = icmp ugt i16 %i.bb, 96
   %or.cond3.i = and i1 %i.bq, %i.bp
   %i.br = add nuw nsw i32 %i.az, 87
-  %3 = icmp sgt i32 %i.br, %i.bg
+  %3 = icmp samesign ugt i32 %i.br, %i.bg
   %or.cond21.i = select i1 %or.cond3.i, i1 %3, i1 false
   br i1 %or.cond21.i, label %.thread44, label %bb.ag
 
@@ -667,7 +667,7 @@ bb.ai:                                            ; preds = %bb.ah
   %i.ca = icmp ugt i16 %i.bb, 96
   %or.cond3.i24 = and i1 %i.ca, %i.bz
   %i.cb = add nuw nsw i32 %i.az, 87
-  %4 = icmp sgt i32 %i.cb, %i.bg
+  %4 = icmp samesign ugt i32 %i.cb, %i.bg
   %or.cond21.i25 = select i1 %or.cond3.i24, i1 %4, i1 false
   br i1 %or.cond21.i25, label %.thread44, label %bb.aj
 

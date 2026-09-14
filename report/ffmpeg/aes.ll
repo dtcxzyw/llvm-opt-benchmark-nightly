@@ -205,7 +205,7 @@ begin_hunk_0_@av_aes_init:bb.a
   br i1 %i.fk, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %.preheader78
-  %wide.trip.count183 = zext i32 %i.c to i64
+  %wide.trip.count183 = zext nneg i32 %i.c to i64
   br label %.lr.ph
 
 .lr.ph101.preheader:                              ; preds = %._crit_edge91

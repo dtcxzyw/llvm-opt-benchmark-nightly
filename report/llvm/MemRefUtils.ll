@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %.lr.ph34
   br label %.critedge2
 
 .critedge2:                                       ; preds = %bb.m, %.preheader, %.critedge2.loopexit, %bb.l
-  %.015 = phi i1 [ false, %bb.l ], [ true, %.preheader ], [ %i.be, %.critedge2.loopexit ], [ true, %bb.m ]
+  %.015 = phi i1 [ false, %bb.l ], [ %i.be, %.critedge2.loopexit ], [ true, %.preheader ], [ true, %bb.m ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   %i.bf = load ptr, ptr %2, align 8, !tbaa !15    ; 2 uses
   %i.bg = icmp eq ptr %i.bf, %i.af

@@ -205,8 +205,8 @@ bb.e:                                             ; preds = %luaO_log2.exit
   br i1 %i.s, label %bb.f, label %bb.l
 
 bb.f:                                             ; preds = %bb.e
-  %3 = ashr exact i64 %i.r, 32
-  %i.t = mul nsw i64 %3, 40                       ; 2 uses
+  %3 = lshr exact i64 %i.r, 32
+  %i.t = mul nuw nsw i64 %3, 40                   ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !68   ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 16

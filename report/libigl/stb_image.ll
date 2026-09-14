@@ -205,9 +205,9 @@ bb.s:                                             ; preds = %bb.s, %.epil.prehea
 
 .preheader.i.i.epilog-lcssa:                      ; preds = %bb.s
   %i.ds = icmp samesign ult i64 %indvars.iv.i.i.epil, 3
-  %i.dt = add i32 %.pr.i.i, -8
+  %i.dt = add nsw i32 %.pr.i.i, -8
   %i.du = and i32 %i.dk, -8
-  %i.dv = sub i32 %i.dt, %i.du
+  %i.dv = sub nsw i32 %i.dt, %i.du
   store i32 %i.dr, ptr %i.z, align 4, !tbaa !175
   store i32 %i.dv, ptr %i.y, align 8, !tbaa !174
   br i1 %i.ds, label %.lr.ph42.i.i, label %._crit_edge.i.i
@@ -308,9 +308,9 @@ _ZL11stbi__zget8P10stbi__zbuf.exit.i34.i.1:       ; preds = %bb.w, %_ZL11stbi__z
   br i1 %exitcond.not.i.i.1, label %._crit_edge.i.i, label %.lr.ph42.i.i.new, !llvm.loop !161
 
 ._crit_edge.i.i.critedge:                         ; preds = %.preheader.i.i.unr-lcssa
-  %i.fb = add i32 %.pr.i.i, -8
+  %i.fb = add nsw i32 %.pr.i.i, -8
   %i.fc = and i32 %i.dk, -8
-  %i.fd = sub i32 %i.fb, %i.fc
+  %i.fd = sub nsw i32 %i.fb, %i.fc
   store i32 0, ptr %i.z, align 4, !tbaa !175
   store i32 %i.fd, ptr %i.y, align 8, !tbaa !174
   br label %._crit_edge.i.i

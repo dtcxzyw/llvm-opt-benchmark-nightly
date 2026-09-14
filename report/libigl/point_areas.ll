@@ -205,7 +205,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 ._crit_edge:                                      ; preds = %scalar.ph, %middle.block, %bb.v
   %.1.lcssa = phi i64 [ %.0, %bb.v ], [ %i.di, %middle.block ], [ %i.eo, %scalar.ph ] ; 3 uses
   %.lcssa = phi i64 [ %i.ck, %bb.v ], [ %i.ea, %middle.block ], [ %i.ep, %scalar.ph ]
-  %i.eq = add i64 %i.b, 1
+  %i.eq = add nsw i64 %i.b, 1
   %.not97 = icmp ult i64 %.lcssa, %i.eq
   br i1 %.not97, label %bb.x, label %bb.w
 

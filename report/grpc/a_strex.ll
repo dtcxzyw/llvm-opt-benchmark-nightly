@@ -45,10 +45,10 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nounwind uwtable
 define i32 @ASN1_STRING_print_ex(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [2 x i8], align 1                 ; 5 uses
+  %i.a = alloca [2 x i8], align 1                 ; 6 uses
   %i.b = alloca [2 x i8], align 1                 ; 8 uses
-  %3 = alloca %struct.asn1_type_st, align 8       ; 5 uses
-  %i.c = alloca ptr, align 8                      ; 6 uses
+  %3 = alloca %struct.asn1_type_st, align 8       ; 6 uses
+  %i.c = alloca ptr, align 8                      ; 8 uses
   %i.d = alloca i8, align 1                       ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.f = load i32, ptr %i.e, align 4, !tbaa !15   ; 2 uses
@@ -108,7 +108,7 @@ bb.f:                                             ; preds = %bb.c, %_ZL23string_
 _ZL11maybe_writeP6bio_stPKvi.exit.i:              ; preds = %bb.f
   %i.u = tail call i32 @BIO_write(ptr noundef nonnull %0, ptr noundef nonnull @.str.5, i32 noundef 1) #6
   %.not.i = icmp eq i32 %i.u, 1
-  br i1 %.not.i, label %.thread.i, label %_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit.thread
+  br i1 %.not.i, label %.thread.i, label %.critedge
 
 _ZL11maybe_writeP6bio_stPKvi.exit.thread.i:       ; preds = %bb.f
   %i.v = and i64 %2, 512
@@ -137,8 +137,7 @@ bb.h:                                             ; preds = %.thread.i
 
 _ZL7do_dumpmP6bio_stPK14asn1_string_st.exit.thread75: ; preds = %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
-  %4 = add nsw i32 %.1, 1
-  br label %.critedge
+  br label %_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit.thread76
 
 _ZL11maybe_writeP6bio_stPKvi.exit.lr.ph.i.i:      ; preds = %bb.h
   %i.ad = getelementptr inbounds nuw i8, ptr %i.b, i64 1
@@ -168,7 +167,7 @@ _ZL11maybe_writeP6bio_stPKvi.exit.i.i:            ; preds = %bb.i, %_ZL11maybe_w
 
 _ZL11do_hex_dumpP6bio_stPhi.exit.thread.i:        ; preds = %_ZL11maybe_writeP6bio_stPKvi.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
-  br label %_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit.thread
+  br label %.critedge
 
 _ZL11do_hex_dumpP6bio_stPhi.exit.i:               ; preds = %bb.i, %bb.g
   %i.ap = phi i32 [ %i.x, %bb.g ], [ %i.aa, %bb.i ]
@@ -177,7 +176,7 @@ _ZL11do_hex_dumpP6bio_stPhi.exit.i:               ; preds = %bb.i, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
   %i.ar = icmp slt i32 %i.aq, 0
   %i.as = or disjoint i32 %i.aq, 1
-  br i1 %i.ar, label %_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit.thread, label %_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit
+  br i1 %i.ar, label %.critedge, label %_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit.thread76
 
 bb.j:                                             ; preds = %.thread.i, %_ZL11maybe_writeP6bio_stPKvi.exit.thread.i
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #6
@@ -193,13 +192,13 @@ bb.j:                                             ; preds = %.thread.i, %_ZL11ma
 bb.k:                                             ; preds = %bb.j
   %i.av = load ptr, ptr %i.c, align 8, !tbaa !20  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
-  br i1 %i.t, label %.loopexit.i25.i, label %bb.l
+  br i1 %i.t, label %_ZL11do_hex_dumpP6bio_stPhi.exit26.i, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.aw = zext nneg i32 %.fr.i to i64
   %i.ax = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.aw
   %.not1317.i18.i = icmp eq i32 %.fr.i, 0
-  br i1 %.not1317.i18.i, label %.loopexit.i25.i, label %_ZL11maybe_writeP6bio_stPKvi.exit.lr.ph.i19.i
+  br i1 %.not1317.i18.i, label %_ZL11do_hex_dumpP6bio_stPhi.exit26.i, label %_ZL11maybe_writeP6bio_stPKvi.exit.lr.ph.i19.i
 
 _ZL11maybe_writeP6bio_stPKvi.exit.lr.ph.i19.i:    ; preds = %bb.l
   %i.ay = getelementptr inbounds nuw i8, ptr %i.a, i64 1
@@ -208,7 +207,7 @@ _ZL11maybe_writeP6bio_stPKvi.exit.lr.ph.i19.i:    ; preds = %bb.l
 bb.m:                                             ; preds = %_ZL11maybe_writeP6bio_stPKvi.exit.i20.i
   %i.az = getelementptr inbounds nuw i8, ptr %.018.i21.i, i64 1 ; 2 uses
   %.not13.i24.i = icmp eq ptr %i.az, %i.ax
-  br i1 %.not13.i24.i, label %.loopexit.i25.i, label %_ZL11maybe_writeP6bio_stPKvi.exit.i20.i, !llvm.loop !31
+  br i1 %.not13.i24.i, label %_ZL11do_hex_dumpP6bio_stPhi.exit26.i, label %_ZL11maybe_writeP6bio_stPKvi.exit.i20.i, !llvm.loop !31
 
 _ZL11maybe_writeP6bio_stPKvi.exit.i20.i:          ; preds = %bb.m, %_ZL11maybe_writeP6bio_stPKvi.exit.lr.ph.i19.i
   %.018.i21.i = phi ptr [ %i.av, %_ZL11maybe_writeP6bio_stPKvi.exit.lr.ph.i19.i ], [ %i.az, %bb.m ] ; 2 uses
@@ -225,36 +224,37 @@ _ZL11maybe_writeP6bio_stPKvi.exit.i20.i:          ; preds = %bb.m, %_ZL11maybe_w
   store i8 %i.bi, ptr %i.ay, align 1, !tbaa !19
   %i.bj = call i32 @BIO_write(ptr noundef nonnull %0, ptr noundef nonnull %i.a, i32 noundef 2) #6
   %.not15.i22.i = icmp eq i32 %i.bj, 2
-  br i1 %.not15.i22.i, label %bb.m, label %_ZL11do_hex_dumpP6bio_stPhi.exit26.i
+  br i1 %.not15.i22.i, label %bb.m, label %.loopexit.i25.i
 
-.loopexit.i25.i:                                  ; preds = %bb.m, %bb.l, %bb.k
-  %5 = shl nuw i32 %.fr.i, 1
-  br label %_ZL11do_hex_dumpP6bio_stPhi.exit26.i
+.loopexit.i25.i:                                  ; preds = %_ZL11maybe_writeP6bio_stPKvi.exit.i20.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
+  %4 = load ptr, ptr %i.c, align 8, !tbaa !20
+  call void @OPENSSL_free(ptr noundef %4) #6
+  br label %bb.n
 
-_ZL11do_hex_dumpP6bio_stPhi.exit26.i:             ; preds = %_ZL11maybe_writeP6bio_stPKvi.exit.i20.i, %.loopexit.i25.i
-  %.011.i23.i = phi i32 [ %5, %.loopexit.i25.i ], [ -1, %_ZL11maybe_writeP6bio_stPKvi.exit.i20.i ] ; 2 uses
+_ZL11do_hex_dumpP6bio_stPhi.exit26.i:             ; preds = %bb.m, %bb.k, %bb.l
+  %5 = shl nuw i32 %.fr.i, 1                      ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   %i.bk = load ptr, ptr %i.c, align 8, !tbaa !20
   call void @OPENSSL_free(ptr noundef %i.bk) #6
-  %6 = add nuw nsw i32 %.011.i23.i, 1
-  %.inv.i = icmp sgt i32 %.011.i23.i, -1
-  %spec.select = select i1 %.inv.i, i32 %6, i32 -1
-  br label %bb.n
+  %.inv.i = icmp sgt i32 %5, -1
+  br i1 %.inv.i, label %_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit, label %bb.n
 
-bb.n:                                             ; preds = %_ZL11do_hex_dumpP6bio_stPhi.exit26.i, %bb.j
-  %.2.i = phi i32 [ -1, %bb.j ], [ %spec.select, %_ZL11do_hex_dumpP6bio_stPhi.exit26.i ]
+_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit.thread76: ; preds = %_ZL11do_hex_dumpP6bio_stPhi.exit.i, %_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit.thread75
+  %.3.i.ph = phi i32 [ 1, %_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit.thread75 ], [ %i.as, %_ZL11do_hex_dumpP6bio_stPhi.exit.i ]
+  %6 = add nsw i32 %.3.i.ph, %.1
+  br label %.critedge
+
+bb.n:                                             ; preds = %.loopexit.i25.i, %bb.j, %_ZL11do_hex_dumpP6bio_stPhi.exit26.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #6
-  br label %_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit
+  br label %.critedge
 
-_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit:      ; preds = %_ZL11do_hex_dumpP6bio_stPhi.exit.i, %bb.n
-  %.3.i = phi i32 [ %.2.i, %bb.n ], [ %i.as, %_ZL11do_hex_dumpP6bio_stPhi.exit.i ]
-  %.3.i.fr = freeze i32 %.3.i                     ; 2 uses
-  %7 = icmp slt i32 %.3.i.fr, 0
-  %i.bl = add nsw i32 %.3.i.fr, %.1
-  br i1 %7, label %_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit.thread, label %.critedge
-
-_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit.thread: ; preds = %_ZL11do_hex_dumpP6bio_stPhi.exit.thread.i, %_ZL11do_hex_dumpP6bio_stPhi.exit.i, %_ZL11maybe_writeP6bio_stPKvi.exit.i, %_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit
+_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit:      ; preds = %_ZL11do_hex_dumpP6bio_stPhi.exit26.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #6
+  %7 = add i32 %.1, 1
+  %i.bl = add i32 %7, %5
   br label %.critedge
 
 switch.lookup:                                    ; preds = %bb.e
@@ -315,8 +315,8 @@ bb.t:                                             ; preds = %_ZL11maybe_writeP6b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #6
   br label %.critedge
 
-.critedge:                                        ; preds = %_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit.thread, %_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit, %_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit.thread75, %_ZL11maybe_writeP6bio_stPKvi.exit63, %_ZL11maybe_writeP6bio_stPKvi.exit, %bb.t
-  %.4 = phi i32 [ %.246, %bb.t ], [ -1, %_ZL11maybe_writeP6bio_stPKvi.exit63 ], [ -1, %_ZL11maybe_writeP6bio_stPKvi.exit ], [ -1, %_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit.thread ], [ %i.bl, %_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit ], [ %4, %_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit.thread75 ]
+.critedge:                                        ; preds = %bb.n, %_ZL11maybe_writeP6bio_stPKvi.exit.i, %_ZL11do_hex_dumpP6bio_stPhi.exit.i, %_ZL11do_hex_dumpP6bio_stPhi.exit.thread.i, %_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit, %_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit.thread76, %_ZL11maybe_writeP6bio_stPKvi.exit63, %_ZL11maybe_writeP6bio_stPKvi.exit, %bb.t
+  %.4 = phi i32 [ %.246, %bb.t ], [ -1, %_ZL11maybe_writeP6bio_stPKvi.exit63 ], [ -1, %_ZL11maybe_writeP6bio_stPKvi.exit ], [ %6, %_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit.thread76 ], [ %i.bl, %_ZL7do_dumpmP6bio_stPK14asn1_string_st.exit ], [ -1, %_ZL11do_hex_dumpP6bio_stPhi.exit.thread.i ], [ -1, %_ZL11do_hex_dumpP6bio_stPhi.exit.i ], [ -1, %_ZL11maybe_writeP6bio_stPKvi.exit.i ], [ -1, %bb.n ]
   ret i32 %.4
 }
 

@@ -205,7 +205,7 @@ bb.ac:                                            ; preds = %bb.ab
 
 bb.ad:                                            ; preds = %bb.ab, %.critedge.i
   %i.ew = shl nsw i32 %.072.lcssa.i, 6
-  %i.ex = add nsw i32 %.072.lcssa.i, -1           ; 3 uses
+  %i.ex = add nsw i32 %.072.lcssa.i, -1           ; 2 uses
   %i.ey = sext i32 %i.ex to i64
   %i.ez = getelementptr inbounds [8 x i8], ptr %5, i64 %i.ey
   %i.fa = load i64, ptr %i.ez, align 8, !tbaa !240 ; 3 uses
@@ -218,7 +218,7 @@ bb.ad:                                            ; preds = %bb.ab, %.critedge.i
 bb.ae:                                            ; preds = %bb.ad
   %i.fe = shl i64 %i.fa, %i.fb                    ; 2 uses
   %i.ff = icmp sgt i32 %.072.lcssa.i, 1
-  br i1 %i.ff, label %bb.af, label %bb.ag
+  br i1 %i.ff, label %bb.af, label %.loopexit.i50
 
 bb.af:                                            ; preds = %bb.ae
   %i.fg = add nsw i32 %.072.lcssa.i, -2           ; 2 uses
@@ -236,9 +236,9 @@ bb.af:                                            ; preds = %bb.ae
   %i.fr = or i64 %i.fq, %i.fe
   br label %bb.ag
 
-bb.ag:                                            ; preds = %bb.af, %bb.ae, %bb.ad
-  %.076.i = phi i64 [ %i.fr, %bb.af ], [ %i.fe, %bb.ae ], [ %i.fa, %bb.ad ] ; 4 uses
-  %.074.i = phi i32 [ %i.fg, %bb.af ], [ %i.ex, %bb.ae ], [ %i.ex, %bb.ad ] ; 2 uses
+bb.ag:                                            ; preds = %bb.af, %bb.ad
+  %.076.i = phi i64 [ %i.fr, %bb.af ], [ %i.fa, %bb.ad ] ; 4 uses
+  %.074.i = phi i32 [ %i.fg, %bb.af ], [ %i.ex, %bb.ad ] ; 2 uses
   %i.fs = and i64 %.076.i, 1023
   %i.ft = icmp eq i64 %i.fs, 0
   %i.fu = icmp sgt i32 %.074.i, 0
@@ -265,8 +265,8 @@ bb.ai:                                            ; preds = %.preheader.i52
   %i.fy = or disjoint i64 %.076.i, 1
   br label %.loopexit.i50
 
-.loopexit.i50:                                    ; preds = %bb.ah, %bb.ai, %bb.ag
-  %.177.i = phi i64 [ %i.fy, %bb.ai ], [ %.076.i, %bb.ag ], [ %.076.i, %bb.ah ] ; 2 uses
+.loopexit.i50:                                    ; preds = %bb.ah, %bb.ai, %bb.ag, %bb.ae
+  %.177.i = phi i64 [ %i.fy, %bb.ai ], [ %i.fe, %bb.ae ], [ %.076.i, %bb.ag ], [ %.076.i, %bb.ah ] ; 2 uses
   %i.fz = lshr i64 %.177.i, 11
   %i.ga = and i64 %i.fz, 1
   %i.gb = add i64 %.177.i, 1023

@@ -204,7 +204,7 @@ bb.az:                                            ; preds = %bb.ax, %bb.ar
 
 .lr.ph236.i:                                      ; preds = %bb.az
   %i.fw = add nuw nsw i64 %i.fi, 7
-  %7 = sdiv i64 %i.fw, 8
+  %7 = lshr i64 %i.fw, 3
   %i.fx = icmp sgt i64 %i.fi, 0
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fb, i64 96
   br label %bb.ba

@@ -205,7 +205,7 @@ bb.be:                                            ; preds = %bb.ax, %bb.bd
   %i.ib = and i32 %.61073.lcssa, -65536
   %i.ic = shl i32 %.61073.lcssa, 16               ; 2 uses
   %i.id = add nsw i32 %.61051.lcssa, -16          ; 2 uses
-  %2 = icmp slt i32 %.61051.lcssa, 32
+  %2 = icmp samesign ult i32 %.61051.lcssa, 32
   br i1 %2, label %.lr.ph3288, label %._crit_edge3289
 
 .lr.ph3288:                                       ; preds = %._crit_edge3278, %bb.bm
@@ -608,7 +608,7 @@ bb.da:                                            ; preds = %bb.ct, %bb.cz
   %.151060.lcssa = phi i32 [ %i.lt, %._crit_edge3300 ], [ %i.nm, %bb.da ] ; 2 uses
   %i.no = shl i32 %.151082.lcssa, 16              ; 2 uses
   %i.np = add nsw i32 %.151060.lcssa, -16         ; 2 uses
-  %3 = icmp slt i32 %.151060.lcssa, 24
+  %3 = icmp samesign ult i32 %.151060.lcssa, 24
   br i1 %3, label %.lr.ph3321, label %._crit_edge3322
 
 .lr.ph3321:                                       ; preds = %._crit_edge3311, %bb.do
@@ -753,7 +753,7 @@ bb.do:                                            ; preds = %bb.dh, %bb.dn
   %.1910863343 = phi i32 [ %i.qm, %._crit_edge3336 ], [ %i.pk, %._crit_edge3322 ] ; 2 uses
   %.3511633342 = phi ptr [ %.361164.lcssa, %._crit_edge3336 ], [ %.311159.lcssa, %._crit_edge3322 ] ; 2 uses
   %.3512243341 = phi ptr [ %.361225.lcssa, %._crit_edge3336 ], [ %.311220.lcssa, %._crit_edge3322 ] ; 2 uses
-  %4 = icmp slt i32 %.1910643344, 3
+  %4 = icmp samesign ult i32 %.1910643344, 3
   br i1 %4, label %.lr.ph3335, label %._crit_edge3336
 
 .lr.ph3335:                                       ; preds = %.preheader1887, %bb.dw
@@ -809,7 +809,7 @@ bb.dw:                                            ; preds = %bb.ds, %bb.dv
   %i.qd = shl nuw nsw i32 %i.qc, 8
   %i.qe = zext i8 %i.pv to i32
   %i.qf = or disjoint i32 %i.qd, %i.qe
-  %i.qg = sub i32 16, %.2010653334
+  %i.qg = sub nsw i32 16, %.2010653334
   %i.qh = shl nuw i32 %i.qf, %i.qg
   %i.qi = or i32 %i.qh, %.2010873333              ; 2 uses
   %i.qj = add nuw nsw i32 %.2010653334, 16        ; 2 uses

@@ -204,7 +204,7 @@ bb.am:                                            ; preds = %bb.ak
   %.1176254 = phi i32 [ %i.ko, %.lr.ph256 ], [ %i.o, %bb.am ] ; 2 uses
   %i.kn = call noundef nonnull align 8 dereferenceable(24) ptr @_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6appendEPKc(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef %3) ; 0 uses
   %i.ko = add nsw i32 %.1176254, -1
-  %6 = icmp sgt i32 %.1176254, 1
+  %6 = icmp samesign ugt i32 %.1176254, 1
   br i1 %6, label %.lr.ph256, label %._crit_edge257, !llvm.loop !73
 
 ._crit_edge257:                                   ; preds = %.lr.ph256
@@ -219,7 +219,7 @@ bb.am:                                            ; preds = %bb.ak
   %.2177258 = phi i32 [ %i.ku, %.lr.ph260 ], [ %i.o, %._crit_edge257 ] ; 2 uses
   %i.kt = call noundef nonnull align 8 dereferenceable(24) ptr @_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6appendEPKc(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef %3) ; 0 uses
   %i.ku = add nsw i32 %.2177258, -1
-  %7 = icmp sgt i32 %.2177258, 1
+  %7 = icmp samesign ugt i32 %.2177258, 1
   br i1 %7, label %.lr.ph260, label %._crit_edge261, !llvm.loop !74
 
 ._crit_edge261.critedge:                          ; preds = %bb.am
@@ -622,7 +622,7 @@ bb.aq:                                            ; preds = %bb.ap
   %.6292 = phi i32 [ %i.ip, %.lr.ph294 ], [ %i.ho, %bb.aq ] ; 2 uses
   %i.io = call noundef nonnull align 8 dereferenceable(24) ptr @_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6appendEPKc(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef %3) ; 0 uses
   %i.ip = add nsw i32 %.6292, -1
-  %9 = icmp sgt i32 %.6292, 1
+  %9 = icmp samesign ugt i32 %.6292, 1
   br i1 %9, label %.lr.ph294, label %._crit_edge295, !llvm.loop !98
 
 ._crit_edge295:                                   ; preds = %.lr.ph294, %bb.aq

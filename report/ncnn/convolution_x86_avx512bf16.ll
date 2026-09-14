@@ -205,7 +205,7 @@ bb.ax:                                            ; preds = %bb.ax, %.preheader1
   %i.tq = zext i32 %narrow2430.i to i64
   %i.tr = mul nsw i64 %i.tq, %i.ii
   %scevgep2176.i = getelementptr i8, ptr %.01094.lcssa24442448.i, i64 %i.tr
-  %i.ts = add i32 %.01176.lcssa24422450.i, 8
+  %i.ts = add nsw i32 %.01176.lcssa24422450.i, 8
   %i.tt = and i32 %i.tn, -8
   %i.tu = add i32 %i.ts, %i.tt
   br label %.preheader1592.i
@@ -608,7 +608,7 @@ bb.ba:                                            ; preds = %bb.ba, %.preheader1
   %i.agl = zext i32 %narrow2432.i to i64
   %i.agm = mul nsw i64 %i.agl, %i.jv
   %scevgep2236.i = getelementptr i8, ptr %.01231.lcssa24862497.i, i64 %i.agm
-  %i.agn = add i32 %.01262.lcssa24772499.i, 8
+  %i.agn = add nsw i32 %.01262.lcssa24772499.i, 8
   %i.ago = and i32 %i.agi, -8
   %i.agp = add i32 %i.agn, %i.ago
   br label %._crit_edge1722.i
@@ -1011,7 +1011,7 @@ bb.bd:                                            ; preds = %bb.bd, %.preheader1
   %scevgep2287.i = getelementptr i8, ptr %.01213.lcssa25232538.i, i64 %i.aso
   %scevgep2288.i = getelementptr i8, ptr %.01210.lcssa25242537.i, i64 %i.aso
   %scevgep2289.i = getelementptr i8, ptr %.01207.lcssa25252536.i, i64 %i.aso
-  %i.asp = add i32 %.01191.lcssa25272534.i, 8
+  %i.asp = add nsw i32 %.01191.lcssa25272534.i, 8
   %i.asq = and i32 %i.ask, -8
   %i.asr = add i32 %i.asp, %i.asq
   br label %.preheader1573.i
@@ -1414,7 +1414,7 @@ _ZN4ncnn3MatD2Ev.exit1301.i:                      ; preds = %._crit_edge1930.spl
   %i.bcq = mul nsw i64 %i.bcp, %i.aoh             ; 2 uses
   %scevgep2328.i = getelementptr i8, ptr %.01151.lcssa25602571.i, i64 %i.bcq
   %scevgep2329.i = getelementptr i8, ptr %.01147.lcssa25612570.i, i64 %i.bcq
-  %i.bcr = add i32 %.01131.lcssa25632568.i, 8
+  %i.bcr = add nsw i32 %.01131.lcssa25632568.i, 8
   %i.bcs = and i32 %i.bcm, -8
   %i.bct = add i32 %i.bcr, %i.bcs
   br label %.preheader1564.i
@@ -1817,7 +1817,7 @@ bb.bh:                                            ; preds = %bb.bh, %.epil.prehe
   %i.bkf = zext i32 %narrow2438.i to i64
   %i.bkg = mul nsw i64 %i.bkf, %i.azf
   %scevgep2367.i = getelementptr i8, ptr %.01111.lcssa25962604.i, i64 %i.bkg
-  %i.bkh = add i32 %.01101.lcssa25982602.i, 8
+  %i.bkh = add nsw i32 %.01101.lcssa25982602.i, 8
   %i.bki = and i32 %i.bkc, -8
   %i.bkj = add i32 %i.bkh, %i.bki
   br label %.preheader1554.i
@@ -2220,7 +2220,7 @@ _ZN4ncnn3MatD2Ev.exit2354.lr.ph:                  ; preds = %.preheader4399
   br i1 %i.ek, label %_ZN4ncnn3MatD2Ev.exit2354.us.preheader, label %_ZN4ncnn3MatD2Ev.exit2354.preheader
 
 _ZN4ncnn3MatD2Ev.exit2354.preheader:              ; preds = %_ZN4ncnn3MatD2Ev.exit2354.lr.ph
-  %i.akc = add i32 %.21594.lcssa, 2
+  %i.akc = add nsw i32 %.21594.lcssa, 2
   %i.akd = sub i32 %i.ee, %.21594.lcssa
   %i.ake = and i32 %i.akd, -2
   %i.akf = add i32 %i.akc, %i.ake
@@ -2623,7 +2623,7 @@ _ZN4ncnn3MatD2Ev.exit2347.lr.ph:                  ; preds = %.preheader4379
   br i1 %i.bal, label %_ZN4ncnn3MatD2Ev.exit2347.us.preheader, label %_ZN4ncnn3MatD2Ev.exit2347.preheader
 
 _ZN4ncnn3MatD2Ev.exit2347.preheader:              ; preds = %_ZN4ncnn3MatD2Ev.exit2347.lr.ph
-  %i.cqh = add i32 %.21546.lcssa, 2
+  %i.cqh = add nsw i32 %.21546.lcssa, 2
   %i.cqi = sub i32 %i.baf, %.21546.lcssa
   %i.cqj = and i32 %i.cqi, -2
   %i.cqk = add i32 %i.cqh, %i.cqj
@@ -3026,7 +3026,7 @@ _ZN4ncnn3MatD2Ev.exit2339.lr.ph:                  ; preds = %._crit_edge4962
   br i1 %i.dgy, label %_ZN4ncnn3MatD2Ev.exit2339.us.preheader, label %_ZN4ncnn3MatD2Ev.exit2339.preheader
 
 _ZN4ncnn3MatD2Ev.exit2339.preheader:              ; preds = %_ZN4ncnn3MatD2Ev.exit2339.lr.ph
-  %i.edl = add i32 %.21488.lcssa, 2
+  %i.edl = add nsw i32 %.21488.lcssa, 2
   %i.edm = sub i32 %i.ays, %.21488.lcssa
   %i.edn = and i32 %i.edm, -2
   %i.edo = add i32 %i.edl, %i.edn
@@ -3429,7 +3429,7 @@ _ZN4ncnn3MatD2Ev.exit2332.lr.ph:                  ; preds = %._crit_edge5133
   br i1 %i.fnu, label %_ZN4ncnn3MatD2Ev.exit2332.us.preheader, label %_ZN4ncnn3MatD2Ev.exit2332.preheader
 
 _ZN4ncnn3MatD2Ev.exit2332.preheader:              ; preds = %_ZN4ncnn3MatD2Ev.exit2332.lr.ph
-  %i.ghs = add i32 %.2.lcssa, 2
+  %i.ghs = add nsw i32 %.2.lcssa, 2
   %i.ght = sub i32 %i.dft, %.2.lcssa
   %i.ghu = and i32 %i.ght, -2
   %i.ghv = add i32 %i.ghs, %i.ghu
@@ -3832,7 +3832,7 @@ _ZN4ncnn3MatD2Ev.exit724.lr.ph:                   ; preds = %.preheader1082
   br i1 %i.aih, label %_ZN4ncnn3MatD2Ev.exit724.lr.ph.split.us, label %_ZN4ncnn3MatD2Ev.exit724.preheader
 
 _ZN4ncnn3MatD2Ev.exit724.preheader:               ; preds = %_ZN4ncnn3MatD2Ev.exit724.lr.ph
-  %i.aii = add i32 %.2.lcssa, 2
+  %i.aii = add nsw i32 %.2.lcssa, 2
   %i.aij = sub i32 %i.bc, %.2.lcssa
   %i.aik = and i32 %i.aij, -2
   %i.ail = add i32 %i.aii, %i.aik
@@ -4235,7 +4235,7 @@ vec.epilog.middle.block330:                       ; preds = %vec.epilog.vector.b
 .preheader4.preheader.i:                          ; preds = %.lr.ph213.split.i
   %i.qx = sub i32 %i.aq, %.2.lcssa.i
   %i.qy = and i32 %i.qx, -2
-  %i.qz = add i32 %.2.lcssa.i, 2
+  %i.qz = add nsw i32 %.2.lcssa.i, 2
   %i.ra = add i32 %i.qz, %i.qy
   br label %.preheader3.i
 
@@ -4638,7 +4638,7 @@ bb.ay:                                            ; preds = %.lr.ph1120.split.us
   %i.blu = zext nneg i32 %i.blt to i64
   %i.blv = shl nuw nsw i64 %i.blu, 4
   %scevgep1476 = getelementptr i8, ptr %scevgep1475, i64 %i.blv
-  %i.blw = add i32 %.1899.lcssa, 4
+  %i.blw = add nsw i32 %.1899.lcssa, 4
   %i.blx = and i32 %i.bls, -4
   %i.bly = add i32 %i.blw, %i.blx
   br label %.preheader496
@@ -4652,7 +4652,7 @@ bb.ay:                                            ; preds = %.lr.ph1120.split.us
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.31.lcssa, i8 0, i64 %i.bmd, i1 false), !tbaa !18
   %scevgep1477 = getelementptr i8, ptr %.31.lcssa, i64 16
   %scevgep1478 = getelementptr i8, ptr %scevgep1477, i64 %i.bmc
-  %i.bme = add i32 %.1899.lcssa, 4
+  %i.bme = add nsw i32 %.1899.lcssa, 4
   %i.bmf = and i32 %i.blz, -4
   %i.bmg = add i32 %i.bme, %i.bmf
   br label %.preheader496

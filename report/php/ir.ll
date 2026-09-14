@@ -204,7 +204,7 @@ ir_emit3.exit:                                    ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden range(i32 2147483647, 2147483646) i32 @_ir_CALL_2(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #3 {
+define hidden range(i32 -2147483648, 2147483646) i32 @_ir_CALL_2(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !46   ; 5 uses
@@ -223,7 +223,7 @@ bb.a:
 ir_emit_N.exit:                                   ; preds = %.lr.ph.i, %bb.a
   %i.g = shl i32 %1, 8
   %i.h = and i32 %i.g, 16514816
-  %i.i = add i32 %i.b, 2
+  %i.i = add nsw i32 %i.b, 2
   store i32 %i.i, ptr %i.a, align 8, !tbaa !46
   %i.j = load ptr, ptr %0, align 8, !tbaa !48     ; 2 uses
   %i.k = sext i32 %i.b to i64                     ; 3 uses
@@ -251,7 +251,7 @@ ir_emit_N.exit:                                   ; preds = %.lr.ph.i, %bb.a
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden range(i32 2147483647, 2147483646) i32 @_ir_CALL_3(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5) local_unnamed_addr #3 {
+define hidden range(i32 -2147483648, 2147483646) i32 @_ir_CALL_3(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5) local_unnamed_addr #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !46   ; 5 uses
@@ -270,7 +270,7 @@ bb.a:
 ir_emit_N.exit:                                   ; preds = %.lr.ph.i, %bb.a
   %i.g = shl i32 %1, 8
   %i.h = and i32 %i.g, 16449280
-  %i.i = add i32 %i.b, 2
+  %i.i = add nsw i32 %i.b, 2
   store i32 %i.i, ptr %i.a, align 8, !tbaa !46
   %i.j = load ptr, ptr %0, align 8, !tbaa !48     ; 2 uses
   %i.k = sext i32 %i.b to i64                     ; 3 uses
@@ -300,7 +300,7 @@ ir_emit_N.exit:                                   ; preds = %.lr.ph.i, %bb.a
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden range(i32 2147483647, 2147483646) i32 @_ir_CALL_4(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %6) local_unnamed_addr #3 {
+define hidden range(i32 -2147483648, 2147483646) i32 @_ir_CALL_4(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %6) local_unnamed_addr #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !46   ; 5 uses
@@ -319,7 +319,7 @@ bb.a:
 ir_emit_N.exit:                                   ; preds = %.lr.ph.i, %bb.a
   %i.g = shl i32 %1, 8
   %i.h = and i32 %i.g, 16383744
-  %i.i = add i32 %i.b, 2
+  %i.i = add nsw i32 %i.b, 2
   store i32 %i.i, ptr %i.a, align 8, !tbaa !46
   %i.j = load ptr, ptr %0, align 8, !tbaa !48     ; 2 uses
   %i.k = sext i32 %i.b to i64                     ; 3 uses
@@ -351,7 +351,7 @@ ir_emit_N.exit:                                   ; preds = %.lr.ph.i, %bb.a
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden range(i32 2147483647, 2147483646) i32 @_ir_CALL_5(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, i32 noundef %7) local_unnamed_addr #3 {
+define hidden range(i32 -2147483648, 2147483646) i32 @_ir_CALL_5(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, i32 noundef %7) local_unnamed_addr #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !46   ; 5 uses
@@ -370,7 +370,7 @@ bb.a:
 ir_emit_N.exit:                                   ; preds = %.lr.ph.i, %bb.a
   %i.g = shl i32 %1, 8
   %i.h = and i32 %i.g, 16318208
-  %i.i = add i32 %i.b, 2
+  %i.i = add nsw i32 %i.b, 2
   store i32 %i.i, ptr %i.a, align 8, !tbaa !46
   %i.j = load ptr, ptr %0, align 8, !tbaa !48     ; 2 uses
   %i.k = sext i32 %i.b to i64                     ; 3 uses
@@ -404,7 +404,7 @@ ir_emit_N.exit:                                   ; preds = %.lr.ph.i, %bb.a
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden range(i32 2147483646, 2147483645) i32 @_ir_CALL_6(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, i32 noundef %7, i32 noundef %8) local_unnamed_addr #3 {
+define hidden range(i32 -2147483648, 2147483645) i32 @_ir_CALL_6(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, i32 noundef %7, i32 noundef %8) local_unnamed_addr #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !46   ; 5 uses
@@ -423,7 +423,7 @@ bb.a:
 ir_emit_N.exit:                                   ; preds = %.lr.ph.i, %bb.a
   %i.g = shl i32 %1, 8
   %i.h = and i32 %i.g, 16252672
-  %i.i = add i32 %i.b, 3
+  %i.i = add nsw i32 %i.b, 3
   store i32 %i.i, ptr %i.a, align 8, !tbaa !46
   %i.j = load ptr, ptr %0, align 8, !tbaa !48     ; 2 uses
   %i.k = sext i32 %i.b to i64                     ; 3 uses
@@ -826,7 +826,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %.not.i, label %ir_emit_N.exit, label %.lr.ph.i, !prof !79, !llvm.loop !1
 
 ir_emit_N.exit:                                   ; preds = %.lr.ph.i, %bb.c
-  %i.l = add i32 %i.g, 2
+  %i.l = add nsw i32 %i.g, 2
   store i32 %i.l, ptr %i.f, align 8, !tbaa !46
   %i.m = load ptr, ptr %0, align 8, !tbaa !48     ; 2 uses
   %i.n = sext i32 %i.g to i64                     ; 3 uses
@@ -912,7 +912,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %.not.i, label %ir_emit_N.exit, label %.lr.ph.i, !prof !79, !llvm.loop !1
 
 ir_emit_N.exit:                                   ; preds = %.lr.ph.i, %bb.c
-  %i.l = add i32 %i.g, 2
+  %i.l = add nsw i32 %i.g, 2
   store i32 %i.l, ptr %i.f, align 8, !tbaa !46
   %i.m = load ptr, ptr %0, align 8, !tbaa !48     ; 2 uses
   %i.n = sext i32 %i.g to i64                     ; 3 uses
@@ -1000,7 +1000,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %.not.i, label %ir_emit_N.exit, label %.lr.ph.i, !prof !79, !llvm.loop !1
 
 ir_emit_N.exit:                                   ; preds = %.lr.ph.i, %bb.c
-  %i.l = add i32 %i.g, 2
+  %i.l = add nsw i32 %i.g, 2
   store i32 %i.l, ptr %i.f, align 8, !tbaa !46
   %i.m = load ptr, ptr %0, align 8, !tbaa !48     ; 2 uses
   %i.n = sext i32 %i.g to i64                     ; 3 uses
@@ -1090,7 +1090,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %.not.i, label %ir_emit_N.exit, label %.lr.ph.i, !prof !79, !llvm.loop !1
 
 ir_emit_N.exit:                                   ; preds = %.lr.ph.i, %bb.c
-  %i.l = add i32 %i.g, 2
+  %i.l = add nsw i32 %i.g, 2
   store i32 %i.l, ptr %i.f, align 8, !tbaa !46
   %i.m = load ptr, ptr %0, align 8, !tbaa !48     ; 2 uses
   %i.n = sext i32 %i.g to i64                     ; 3 uses
@@ -1182,7 +1182,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %.not.i, label %ir_emit_N.exit, label %.lr.ph.i, !prof !79, !llvm.loop !1
 
 ir_emit_N.exit:                                   ; preds = %.lr.ph.i, %bb.c
-  %i.l = add i32 %i.g, 3
+  %i.l = add nsw i32 %i.g, 3
   store i32 %i.l, ptr %i.f, align 8, !tbaa !46
   %i.m = load ptr, ptr %0, align 8, !tbaa !48     ; 2 uses
   %i.n = sext i32 %i.g to i64                     ; 3 uses

@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %.lr.ph64
 .preheader:                                       ; preds = %_ZNK12V3NumberData3numEv.exit
   %i.cw = load i32, ptr %i.ai, align 8, !tbaa !47 ; 3 uses
   %i.cx = add nuw nsw i32 %i.cw, 31
-  %3 = sdiv i32 %i.cx, 32
+  %3 = lshr i32 %i.cx, 5
   %i.cy = icmp sgt i32 %i.cw, 0
   br i1 %i.cy, label %.lr.ph60, label %.loopexit55
 
@@ -217,7 +217,7 @@ bb.l:                                             ; preds = %.lr.ph64
   br i1 %spec.select.i.i45, label %_ZNK12V3NumberData3numEv.exit47.preheader, label %.split66.us, !prof !49
 
 _ZNK12V3NumberData3numEv.exit47.preheader:        ; preds = %.lr.ph60
-  %smax = tail call i32 @llvm.smax.i32(i32 %3, i32 1)
+  %smax = tail call i32 @llvm.umax.i32(i32 %3, i32 1)
   %wide.trip.count = zext nneg i32 %smax to i64
   br label %_ZNK12V3NumberData3numEv.exit47
 
@@ -620,7 +620,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.e = load i32, ptr %i.d, align 8, !tbaa !47   ; 3 uses
   %i.f = add nuw nsw i32 %i.e, 31
-  %1 = sdiv i32 %i.f, 32
+  %1 = lshr i32 %i.f, 5
   %i.g = icmp sgt i32 %i.e, 0
   br i1 %i.g, label %.lr.ph, label %.loopexit
 
@@ -633,7 +633,7 @@ bb.a:
   br i1 %spec.select.i.i, label %_ZNK12V3NumberData3numEv.exit.preheader, label %bb.b, !prof !49
 
 _ZNK12V3NumberData3numEv.exit.preheader:          ; preds = %.lr.ph
-  %smax = tail call i32 @llvm.smax.i32(i32 %1, i32 1)
+  %smax = tail call i32 @llvm.umax.i32(i32 %1, i32 1)
   %wide.trip.count = zext nneg i32 %smax to i64
   br label %_ZNK12V3NumberData3numEv.exit
 
@@ -686,7 +686,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.e = load i32, ptr %i.d, align 8, !tbaa !47   ; 3 uses
   %i.f = add nuw nsw i32 %i.e, 31
-  %1 = sdiv i32 %i.f, 32
+  %1 = lshr i32 %i.f, 5
   %i.g = icmp slt i32 %i.e, 1
   br i1 %i.g, label %.loopexit, label %.lr.ph
 
@@ -699,7 +699,7 @@ bb.a:
   br i1 %spec.select.i.i, label %_ZNK12V3NumberData3numEv.exit.preheader, label %bb.b, !prof !49
 
 _ZNK12V3NumberData3numEv.exit.preheader:          ; preds = %.lr.ph
-  %smax = tail call i32 @llvm.smax.i32(i32 %1, i32 1)
+  %smax = tail call i32 @llvm.umax.i32(i32 %1, i32 1)
   %wide.trip.count = zext nneg i32 %smax to i64
   br label %_ZNK12V3NumberData3numEv.exit
 
@@ -1102,7 +1102,7 @@ bb.c:                                             ; preds = %bb.a
 
 .preheader:                                       ; preds = %bb.c
   %i.k = add nuw nsw i32 %i.j, 31
-  %2 = sdiv i32 %i.k, 32
+  %2 = lshr i32 %i.k, 5
   %i.l = icmp sgt i32 %i.j, 64
   br i1 %i.l, label %.lr.ph, label %.loopexit
 
@@ -1114,7 +1114,7 @@ bb.c:                                             ; preds = %bb.a
   %i.n = icmp samesign ult i32 %i.j, 129
   %i.o = load ptr, ptr %0, align 8
   %spec.select.i = select i1 %i.n, ptr %0, ptr %i.o
-  %smax = tail call i32 @llvm.smax.i32(i32 %2, i32 3)
+  %smax = tail call i32 @llvm.umax.i32(i32 %2, i32 3)
   %wide.trip.count = zext nneg i32 %smax to i64
   br label %_ZNK12V3NumberData3numEv.exit
 
@@ -1517,7 +1517,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.c = load i32, ptr %i.b, align 8, !tbaa !47   ; 3 uses
   %i.d = add nuw nsw i32 %i.c, 31
-  %1 = sdiv i32 %i.d, 32
+  %1 = lshr i32 %i.d, 5
   %i.e = icmp slt i32 %i.c, 33
   br i1 %i.e, label %.loopexit, label %.lr.ph
 
@@ -1532,7 +1532,7 @@ bb.a:
   %i.i = icmp samesign ult i32 %i.c, 129
   %i.j = load ptr, ptr %0, align 8
   %spec.select.i = select i1 %i.i, ptr %0, ptr %i.j
-  %smax = tail call i32 @llvm.smax.i32(i32 %1, i32 2)
+  %smax = tail call i32 @llvm.umax.i32(i32 %1, i32 2)
   %wide.trip.count = zext nneg i32 %smax to i64
   br label %_ZNK12V3NumberData3numEv.exit
 
@@ -1611,15 +1611,15 @@ define dso_local i32 @_ZNK8V3Number6toHashEv(ptr noundef nonnull align 8 derefer
 bb.a:
   %1 = alloca %class.V3Hash, align 4              ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !47   ; 10 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !47   ; 9 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
   %i.d = load i8, ptr %i.c, align 4, !tbaa !48    ; 2 uses
   %i.e = icmp eq i8 %i.d, 3
   br i1 %i.e, label %_ZNK12V3NumberData3strB5cxx11Ev.exit, label %.preheader
 
 .preheader:                                       ; preds = %bb.a
-  %i.f = add nuw nsw i32 %i.b, 31
-  %2 = sdiv i32 %i.f, 32
+  %i.f = add i32 %i.b, 31                         ; 2 uses
+  %2 = lshr i32 %i.f, 5
   %i.g = icmp sgt i32 %i.b, 0
   br i1 %i.g, label %.lr.ph, label %.loopexit
 
@@ -1632,14 +1632,14 @@ bb.a:
   br i1 %spec.select.i.i, label %_ZNK12V3NumberData3numEv.exit.preheader, label %bb.b, !prof !49
 
 _ZNK12V3NumberData3numEv.exit.preheader:          ; preds = %.lr.ph
-  %smax = tail call i32 @llvm.smax.i32(i32 %2, i32 1) ; 2 uses
+  %smax = tail call i32 @llvm.umax.i32(i32 %2, i32 1) ; 2 uses
   %wide.trip.count = zext nneg i32 %smax to i64   ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 1
-  %3 = icmp slt i32 %i.b, 33
+  %3 = icmp ult i32 %i.f, 64
   br i1 %3, label %_ZNK12V3NumberData3numEv.exit.epil.preheader, label %_ZNK12V3NumberData3numEv.exit.preheader.new
 
 _ZNK12V3NumberData3numEv.exit.preheader.new:      ; preds = %_ZNK12V3NumberData3numEv.exit.preheader
-  %unroll_iter = and i64 %wide.trip.count, 67108862
+  %unroll_iter = and i64 %wide.trip.count, 134217726
   br label %_ZNK12V3NumberData3numEv.exit
 
 _ZNK12V3NumberData3strB5cxx11Ev.exit:             ; preds = %bb.a
@@ -1737,7 +1737,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.e = load i32, ptr %i.d, align 8, !tbaa !47   ; 3 uses
   %i.f = add nuw nsw i32 %i.e, 31
-  %1 = sdiv i32 %i.f, 32
+  %1 = lshr i32 %i.f, 5
   %i.g = icmp sgt i32 %i.e, 0
   br i1 %i.g, label %.lr.ph, label %.loopexit
 
@@ -1750,7 +1750,7 @@ bb.a:
   br i1 %spec.select.i.i, label %_ZNK12V3NumberData3numEv.exit.preheader, label %bb.b, !prof !49
 
 _ZNK12V3NumberData3numEv.exit.preheader:          ; preds = %.lr.ph
-  %smax = tail call i32 @llvm.smax.i32(i32 %1, i32 1)
+  %smax = tail call i32 @llvm.umax.i32(i32 %1, i32 1)
   %wide.trip.count = zext nneg i32 %smax to i64
   br label %_ZNK12V3NumberData3numEv.exit
 
@@ -2153,7 +2153,7 @@ bb.h:                                             ; preds = %bb.a
 
 .preheader:                                       ; preds = %bb.h
   %i.bd = add nuw nsw i32 %i.ba, 31
-  %4 = sdiv i32 %i.bd, 32
+  %4 = lshr i32 %i.bd, 5
   %i.be = icmp slt i32 %i.ba, 1
   br i1 %i.be, label %.loopexit, label %.lr.ph
 
@@ -2175,7 +2175,7 @@ bb.h:                                             ; preds = %bb.a
   br i1 %spec.select.i.i27, label %_ZNK12V3NumberData3numEv.exit.preheader, label %bb.j, !prof !49
 
 _ZNK12V3NumberData3numEv.exit.preheader:          ; preds = %.lr.ph.split
-  %smax = tail call i32 @llvm.smax.i32(i32 %4, i32 1)
+  %smax = tail call i32 @llvm.umax.i32(i32 %4, i32 1)
   %wide.trip.count = zext nneg i32 %smax to i64
   br label %_ZNK12V3NumberData3numEv.exit
 

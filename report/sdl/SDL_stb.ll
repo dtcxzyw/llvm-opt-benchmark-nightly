@@ -205,11 +205,11 @@ bb.q:                                             ; preds = %switch.edge
   %i.cl = icmp sgt i32 %.073, 0                   ; 3 uses
   %i.cm = add nuw nsw i32 %.073, 12
   %narrow265.i = select i1 %i.cl, i32 %i.cm, i32 0
-  %i.cn = zext i32 %narrow265.i to i64
+  %i.cn = zext nneg i32 %narrow265.i to i64
   %i.co = icmp sgt i32 %.072, 0                   ; 2 uses
   %i.cp = add nuw nsw i32 %.072, 12
   %narrow287.i = select i1 %i.co, i32 %i.cp, i32 0
-  %i.cq = zext i32 %narrow287.i to i64
+  %i.cq = zext nneg i32 %narrow287.i to i64
   %storemerge.i = add nuw nsw i64 %i.cq, %i.cn
   %storemerge266.i = add nuw nsw i64 %storemerge.i, %i.cj ; 2 uses
   store i64 %storemerge266.i, ptr %i.ck, align 8
