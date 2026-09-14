@@ -205,14 +205,14 @@ bb.v:                                             ; preds = %bb.e
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4914)
   %i.db = load i32, ptr %i.cz, align 8, !range !28, !alias.scope !4915, !noalias !4916, !noundef !5 ; 4 uses
   %i.dc = add nsw i32 %i.db, -2
-  %.inv.i.i.i.i = icmp samesign ult i32 %i.db, 2
+  %.inv.i.i.i.i = icmp samesign ult i32 %i.db, 2  ; 2 uses
   %narrow.i.i.i.i = select i1 %.inv.i.i.i.i, i32 2, i32 %i.dc ; 2 uses
   %i.dd = load i32, ptr %i.da, align 8, !range !28, !alias.scope !4916, !noalias !4915, !noundef !5 ; 3 uses
   %i.de = add nsw i32 %i.dd, -2
-  %.inv6.i.i.i.i = icmp samesign ult i32 %i.dd, 2
-  %narrow5.i.i.i.i = select i1 %.inv6.i.i.i.i, i32 2, i32 %i.de
-  %3 = icmp eq i32 %narrow.i.i.i.i, %narrow5.i.i.i.i
-  br i1 %3, label %bb.w, label %_RNvYNtNtNtCsileJQcQObtj_7hir_def7nameres11diagnostics13DefDiagnosticNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB8_.exit.thread
+  %.inv6.i.i.i.i = icmp samesign ult i32 %i.dd, 2 ; 2 uses
+  %3 = icmp eq i32 %i.de, %narrow.i.i.i.i
+  %4 = select i1 %.inv6.i.i.i.i, i1 %.inv.i.i.i.i, i1 %3
+  br i1 %4, label %bb.w, label %_RNvYNtNtNtCsileJQcQObtj_7hir_def7nameres11diagnostics13DefDiagnosticNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB8_.exit.thread
 
 bb.w:                                             ; preds = %bb.v
   switch i32 %narrow.i.i.i.i, label %bb.x [
@@ -274,6 +274,7 @@ bb.ac:                                            ; preds = %bb.w
   br i1 %i.ee, label %bb.ak, label %_RNvYNtNtNtCsileJQcQObtj_7hir_def7nameres11diagnostics13DefDiagnosticNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB8_.exit.thread
 
 bb.ad:                                            ; preds = %bb.w
+  tail call void @llvm.assume(i1 %.inv6.i.i.i.i)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4921)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4922)
   %i.ef = icmp eq i32 %i.db, %i.dd

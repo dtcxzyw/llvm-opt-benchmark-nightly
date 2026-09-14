@@ -204,8 +204,8 @@ bb.f:                                             ; preds = %bb.e
   %narrow.i.i.i.i = select i1 %i.ad, i32 %i.ac, i32 6 ; 2 uses
   %i.ae = load i32, ptr %i.b, align 8, !range !14, !alias.scope !2334, !noalias !2333, !noundef !5 ; 3 uses
   %i.af = add nsw i32 %i.ae, -2
-  %2 = icmp samesign ugt i32 %i.ae, 1
-  %narrow2.i.i.i.i = select i1 %2, i32 %i.af, i32 6
+  %2 = icmp samesign ult i32 %i.ae, 2             ; 2 uses
+  %narrow2.i.i.i.i = select i1 %2, i32 6, i32 %i.af
   %i.ag = icmp eq i32 %narrow.i.i.i.i, %narrow2.i.i.i.i
   br i1 %i.ag, label %bb.g, label %_RNvXsd_NtCsd9Lm8bEdjjY_5salsa8internedNtCs33K2ylI4knu_10hir_expand12MacroCallLocINtB5_10HashEqLikeBA_E2eqBC_.exit
 
@@ -470,6 +470,7 @@ _RNvXs1S_Cs33K2ylI4knu_10hir_expandNtB6_9HirFileIdNtNtCshzWfHUSfYae_4core3cmp9Pa
   br i1 %i.fc, label %.split2.i.i, label %_RNvXsd_NtCsd9Lm8bEdjjY_5salsa8internedNtCs33K2ylI4knu_10hir_expand12MacroCallLocINtB5_10HashEqLikeBA_E2eqBC_.exit
 
 bb.ag:                                            ; preds = %bb.g
+  tail call void @llvm.assume(i1 %2)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2359)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2360)
   %i.fd = icmp eq i32 %i.ab, %i.ae
@@ -639,14 +640,14 @@ bb.at:                                            ; preds = %bb.as
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2366)
   %i.iw = load i32, ptr %0, align 8, !range !19, !alias.scope !2367, !noalias !2368, !noundef !5 ; 4 uses
   %i.ix = add nsw i32 %i.iw, -2
-  %.inv.i.i.i = icmp samesign ult i32 %i.iw, 2
+  %.inv.i.i.i = icmp samesign ult i32 %i.iw, 2    ; 2 uses
   %narrow.i.i.i = select i1 %.inv.i.i.i, i32 2, i32 %i.ix ; 2 uses
   %i.iy = load i32, ptr %1, align 8, !range !19, !alias.scope !2368, !noalias !2367, !noundef !5 ; 3 uses
   %i.iz = add nsw i32 %i.iy, -2
-  %.inv6.i.i.i = icmp samesign ult i32 %i.iy, 2
-  %narrow5.i.i.i = select i1 %.inv6.i.i.i, i32 2, i32 %i.iz
-  %3 = icmp eq i32 %narrow.i.i.i, %narrow5.i.i.i
-  br i1 %3, label %bb.au, label %_RNvXsd_NtCsd9Lm8bEdjjY_5salsa8internedNtCs33K2ylI4knu_10hir_expand12MacroCallLocINtB5_10HashEqLikeBA_E2eqBC_.exit
+  %.inv6.i.i.i = icmp samesign ult i32 %i.iy, 2   ; 2 uses
+  %3 = icmp eq i32 %i.iz, %narrow.i.i.i
+  %4 = select i1 %.inv6.i.i.i, i1 %.inv.i.i.i, i1 %3
+  br i1 %4, label %bb.au, label %_RNvXsd_NtCsd9Lm8bEdjjY_5salsa8internedNtCs33K2ylI4knu_10hir_expand12MacroCallLocINtB5_10HashEqLikeBA_E2eqBC_.exit
 
 bb.au:                                            ; preds = %bb.at
   switch i32 %narrow.i.i.i, label %bb.av [
@@ -708,6 +709,7 @@ bb.ba:                                            ; preds = %bb.au
   br i1 %i.jz, label %bb.bi, label %_RNvXsd_NtCsd9Lm8bEdjjY_5salsa8internedNtCs33K2ylI4knu_10hir_expand12MacroCallLocINtB5_10HashEqLikeBA_E2eqBC_.exit
 
 bb.bb:                                            ; preds = %bb.au
+  tail call void @llvm.assume(i1 %.inv6.i.i.i)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2373)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2374)
   %i.ka = icmp eq i32 %i.iw, %i.iy
