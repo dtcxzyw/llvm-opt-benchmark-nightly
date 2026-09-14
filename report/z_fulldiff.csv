@@ -1,0 +1,4 @@
+Delta,Added Lines,Removed Lines,Download URL
+20,49,29,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/norm.dispatch.bc?download=true
+13,36,23,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/dsp.bc?download=true
+2,211,209,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ncnn/original/gemm_x86_avx512vnni.bc?download=true

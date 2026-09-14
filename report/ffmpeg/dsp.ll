@@ -205,38 +205,42 @@ bb.a:
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.preheader.us
-  %6 = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.03041.us, i64 0
+  %6 = insertelement <2 x i32> <i32 poison, i32 0>, i32 %.03041.us, i64 0
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %vec.phi = phi <4 x i32> [ %6, %vector.ph ], [ %17, %vector.body ]
-  %vec.phi49 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %18, %vector.body ]
-  %i.j = getelementptr inbounds nuw [2 x i8], ptr %.03140.us, i64 %index ; 2 uses
+  %vec.phi = phi <2 x i32> [ %6, %vector.ph ], [ %partial.reduce, %vector.body ]
+  %vec.phi49 = phi <2 x i32> [ zeroinitializer, %vector.ph ], [ %partial.reduce53, %vector.body ]
+  %7 = getelementptr inbounds nuw [2 x i8], ptr %.03140.us, i64 %index ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %wide.load = load <4 x i16>, ptr %7, align 2, !tbaa !34
+  %wide.load50 = load <4 x i16>, ptr %8, align 2, !tbaa !34
+  %i.j = getelementptr inbounds nuw [2 x i8], ptr %.03239.us, i64 %index ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %wide.load.a = load <4 x i16>, ptr %i.j, align 2, !tbaa !34
   %wide.load50.a = load <4 x i16>, ptr %i.k, align 2, !tbaa !34
-  %7 = sext <4 x i16> %wide.load.a to <4 x i32>
-  %8 = sext <4 x i16> %wide.load50.a to <4 x i32>
-  %9 = getelementptr inbounds nuw [2 x i8], ptr %.03239.us, i64 %index ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 8
-  %wide.load51 = load <4 x i16>, ptr %9, align 2, !tbaa !34
-  %wide.load52 = load <4 x i16>, ptr %10, align 2, !tbaa !34
-  %11 = sext <4 x i16> %wide.load51 to <4 x i32>
-  %12 = sext <4 x i16> %wide.load52 to <4 x i32>
-  %13 = sub nsw <4 x i32> %7, %11
-  %14 = sub nsw <4 x i32> %8, %12
-  %15 = tail call <4 x i32> @llvm.abs.v4i32(<4 x i32> %13, i1 true)
-  %16 = tail call <4 x i32> @llvm.abs.v4i32(<4 x i32> %14, i1 true)
-  %17 = add <4 x i32> %15, %vec.phi               ; 2 uses
-  %18 = add <4 x i32> %16, %vec.phi49             ; 2 uses
+  %9 = freeze <4 x i16> %wide.load                ; 2 uses
+  %10 = freeze <4 x i16> %wide.load50             ; 2 uses
+  %11 = freeze <4 x i16> %wide.load.a             ; 2 uses
+  %12 = freeze <4 x i16> %wide.load50.a           ; 2 uses
+  %13 = tail call <4 x i16> @llvm.smax.v4i16(<4 x i16> %9, <4 x i16> %11)
+  %14 = tail call <4 x i16> @llvm.smax.v4i16(<4 x i16> %10, <4 x i16> %12)
+  %15 = tail call <4 x i16> @llvm.smin.v4i16(<4 x i16> %9, <4 x i16> %11)
+  %16 = tail call <4 x i16> @llvm.smin.v4i16(<4 x i16> %10, <4 x i16> %12)
+  %17 = sub <4 x i16> %13, %15
+  %18 = sub <4 x i16> %14, %16
+  %19 = zext <4 x i16> %17 to <4 x i32>
+  %partial.reduce = tail call <2 x i32> @llvm.vector.partial.reduce.add.v2i32.v4i32(<2 x i32> %vec.phi, <4 x i32> %19) ; 2 uses
+  %20 = zext <4 x i16> %18 to <4 x i32>
+  %partial.reduce53 = tail call <2 x i32> @llvm.vector.partial.reduce.add.v2i32.v4i32(<2 x i32> %vec.phi49, <4 x i32> %20) ; 2 uses
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.l = icmp eq i64 %index.next, %n.vec
   br i1 %i.l, label %middle.block, label %vector.body, !llvm.loop !615
 
 middle.block:                                     ; preds = %vector.body
-  %bin.rdx = add <4 x i32> %18, %17
-  %i.m = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
+  %bin.rdx = add <2 x i32> %partial.reduce53, %partial.reduce
+  %i.m = tail call i32 @llvm.vector.reduce.add.v2i32(<2 x i32> %bin.rdx) ; 2 uses
   br i1 %cmp.n, label %._crit_edge.us, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.preheader.us, %middle.block
@@ -639,6 +643,18 @@ declare range(i32 -1, 2) <4 x i32> @llvm.scmp.v4i32.v4i32(<4 x i32>, <4 x i32>) 
 declare <4 x i32> @llvm.abs.v4i32(<4 x i32>, i1 immarg) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i16> @llvm.smax.v4i16(<4 x i16>, <4 x i16>) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i16> @llvm.smin.v4i16(<4 x i16>, <4 x i16>) #12
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x i32> @llvm.vector.partial.reduce.add.v2i32.v4i32(<2 x i32>, <4 x i32>) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.add.v2i32(<2 x i32>) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -673,9 +689,6 @@ declare i16 @llvm.vector.reduce.add.v4i16(<4 x i16>) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <16 x i32> @llvm.smin.v16i32(<16 x i32>, <16 x i32>) #12
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i16> @llvm.smin.v4i16(<4 x i16>, <4 x i16>) #12
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
