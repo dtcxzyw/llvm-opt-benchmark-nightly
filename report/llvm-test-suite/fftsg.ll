@@ -203,7 +203,7 @@ bb.a:
   %i.ao = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.ap = load double, ptr %i.ao, align 8, !tbaa !14 ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.ar = load double, ptr %i.aq, align 8, !tbaa !14 ; 3 uses
+  %i.ar = load double, ptr %i.aq, align 8, !tbaa !14 ; 4 uses
   %i.as = add nsw i32 %i.a, -2                    ; 2 uses
   %i.at = icmp sgt i32 %i.a, 4
   br i1 %i.at, label %.lr.ph.preheader, label %.._crit_edge_crit_edge
@@ -216,8 +216,6 @@ bb.a:
   %i.au = zext nneg i32 %i.as to i64              ; 2 uses
   %invariant.gep = getelementptr [8 x i8], ptr %1, i64 %i.q
   %invariant.gep711 = getelementptr [8 x i8], ptr %1, i64 %i.q
-  %3 = insertelement <2 x double> poison, double %i.ar, i64 0
-  %4 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
   %i.av = insertelement <2 x double> poison, double %i.ap, i64 0
   %i.aw = shufflevector <2 x double> %i.av, <2 x double> poison, <2 x i32> zeroinitializer
   br label %.lr.ph
@@ -225,13 +223,15 @@ bb.a:
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv703 = phi i64 [ 2, %.lr.ph.preheader ], [ %indvars.iv.next704, %.lr.ph ] ; 4 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
-  %5 = phi <2 x double> [ <double 1.000000e+00, double 0.000000e+00>, %.lr.ph.preheader ], [ %19, %.lr.ph ] ; 2 uses
+  %.0695 = phi double [ 0.000000e+00, %.lr.ph.preheader ], [ %14, %.lr.ph ]
+  %.0684694 = phi double [ 1.000000e+00, %.lr.ph.preheader ], [ %9, %.lr.ph ]
   %i.ax = phi <2 x double> [ <double 1.000000e+00, double 0.000000e+00>, %.lr.ph.preheader ], [ %i.ba, %.lr.ph ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.next
-  %i.az = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv
+  %i.az = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv ; 2 uses
   %i.ba = load <2 x double>, ptr %i.ay, align 8, !tbaa !14 ; 5 uses
-  %i.bb = getelementptr inbounds nuw i8, ptr %i.az, i64 48
+  %3 = getelementptr inbounds nuw i8, ptr %i.az, i64 48
+  %i.bb = getelementptr inbounds nuw i8, ptr %i.az, i64 56
   %i.bc = add nuw nsw i64 %indvars.iv703, %i.q    ; 2 uses
   %i.bd = add nuw nsw i64 %i.bc, %i.q             ; 2 uses
   %i.be = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv703 ; 3 uses
@@ -269,35 +269,37 @@ bb.a:
   %gep712 = getelementptr [8 x i8], ptr %invariant.gep711, i64 %i.cd ; 3 uses
   %i.cj = getelementptr i8, ptr %i.ci, i64 -16    ; 2 uses
   %i.ck = getelementptr i8, ptr %gep712, i64 -16  ; 2 uses
-  %6 = load <2 x double>, ptr %i.bb, align 8, !tbaa !14 ; 7 uses
-  %i.cl = fsub <2 x double> %5, %6
-  %i.cm = fadd <2 x double> %5, %6
-  %7 = shufflevector <2 x double> %i.cl, <2 x double> %i.cm, <2 x i32> <i32 1, i32 2>
-  %8 = fmul <2 x double> %4, %7                   ; 2 uses
-  %9 = extractelement <2 x double> %6, i64 1
-  %10 = fneg double %9                            ; 4 uses
+  %4 = fsub <2 x double> %i.bl, %i.bm             ; 2 uses
+  %i.cl = fsub <2 x double> %i.bo, %i.bp
+  %5 = shufflevector <2 x double> %i.cl, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
+  %i.cm = fadd <2 x double> %4, %5                ; 2 uses
+  %6 = fsub <2 x double> %4, %5                   ; 4 uses
+  %7 = shufflevector <2 x double> %i.cm, <2 x double> %6, <2 x i32> <i32 0, i32 3> ; 2 uses
+  %8 = load double, ptr %i.bb, align 8, !tbaa !14 ; 3 uses
+  %9 = load double, ptr %3, align 8, !tbaa !14    ; 4 uses
+  %10 = fsub double %.0695, %8
+  %11 = fadd double %.0684694, %9
+  %12 = fmul double %i.ar, %10
+  %13 = fmul double %i.ar, %11
+  %14 = fneg double %8                            ; 3 uses
   store <2 x double> %i.br, ptr %i.be, align 8, !tbaa !14
   store <2 x double> %i.by, ptr %i.bg, align 8, !tbaa !14
   store <2 x double> %i.bz, ptr %i.bi, align 8, !tbaa !14
   store <2 x double> %i.ca, ptr %i.bj, align 8, !tbaa !14
-  %11 = fsub <2 x double> %i.bl, %i.bm            ; 2 uses
-  %12 = fsub <2 x double> %i.bo, %i.bp
-  %13 = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
-  %14 = fadd <2 x double> %11, %13                ; 2 uses
-  %15 = fsub <2 x double> %11, %13                ; 4 uses
-  %16 = shufflevector <2 x double> %14, <2 x double> %15, <2 x i32> <i32 0, i32 3> ; 2 uses
-  %i.cn = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.co = fneg <2 x double> %16
-  %i.cp = shufflevector <2 x double> %15, <2 x double> %i.co, <2 x i32> <i32 1, i32 2>
+  %15 = insertelement <2 x double> poison, double %12, i64 0
+  %i.cn = shufflevector <2 x double> %15, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.co = fneg <2 x double> %7
+  %i.cp = shufflevector <2 x double> %6, <2 x double> %i.co, <2 x i32> <i32 1, i32 2>
   %i.cq = fmul <2 x double> %i.cn, %i.cp
-  %17 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
-  %i.cr = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %17, <2 x double> %16, <2 x double> %i.cq)
+  %16 = insertelement <2 x double> poison, double %13, i64 0
+  %17 = shufflevector <2 x double> %16, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.cr = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %17, <2 x double> %7, <2 x double> %i.cq)
   %i.cs = fadd <2 x double> %i.ax, %i.ba
   %i.ct = fmul <2 x double> %i.aw, %i.cs          ; 2 uses
-  %i.cu = shufflevector <2 x double> %15, <2 x double> %14, <2 x i32> <i32 0, i32 3> ; 2 uses
+  %i.cu = shufflevector <2 x double> %6, <2 x double> %i.cm, <2 x i32> <i32 0, i32 3> ; 2 uses
   %i.cv = shufflevector <2 x double> %i.ct, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
   %i.cw = fneg <2 x double> %i.cu
-  %i.cx = shufflevector <2 x double> %i.cw, <2 x double> %15, <2 x i32> <i32 1, i32 2>
+  %i.cx = shufflevector <2 x double> %i.cw, <2 x double> %6, <2 x i32> <i32 1, i32 2>
   %i.cy = fmul <2 x double> %i.cv, %i.cx
   %i.cz = shufflevector <2 x double> %i.ct, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.da = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.cz, <2 x double> %i.cu, <2 x double> %i.cy)
@@ -318,9 +320,11 @@ bb.a:
   store <2 x double> %i.dn, ptr %i.bh, align 8, !tbaa !14
   store <2 x double> %i.cr, ptr %gep, align 8, !tbaa !14
   %i.do = shufflevector <2 x double> %i.df, <2 x double> %i.de, <2 x i32> <i32 1, i32 2>
-  %i.dp = insertelement <2 x double> %6, double %10, i64 0
+  %18 = insertelement <2 x double> poison, double %14, i64 0 ; 2 uses
+  %i.dp = insertelement <2 x double> %18, double %8, i64 1
   %i.dq = fmul <2 x double> %i.do, %i.dp
-  %i.dr = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %19 = insertelement <2 x double> poison, double %9, i64 0
+  %i.dr = shufflevector <2 x double> %19, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.ds = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dr, <2 x double> %i.dg, <2 x double> %i.dq)
   store <2 x double> %i.ds, ptr %i.bk, align 8, !tbaa !14
   %i.dt = load <2 x double>, ptr %i.cg, align 8, !tbaa !14 ; 2 uses
@@ -376,24 +380,18 @@ bb.a:
   %i.fk = fneg <2 x double> %i.fj
   %i.fl = shufflevector <2 x double> %i.fc, <2 x double> %i.fk, <2 x i32> <i32 1, i32 2>
   %i.fm = fmul <2 x double> %i.dr, %i.fl
-  %18 = insertelement <2 x double> poison, double %10, i64 0
   %i.fn = shufflevector <2 x double> %18, <2 x double> poison, <2 x i32> zeroinitializer
   %i.fo = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fn, <2 x double> %i.fj, <2 x double> %i.fm)
   store <2 x double> %i.fo, ptr %i.ck, align 8, !tbaa !14
   %indvars.iv.next704 = add nuw nsw i64 %indvars.iv703, 4 ; 2 uses
   %i.fp = icmp samesign ult i64 %indvars.iv.next704, %i.au
-  %19 = insertelement <2 x double> %6, double %10, i64 1
-  br i1 %i.fp, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !97
+  br i1 %i.fp, label %.lr.ph, label %._crit_edge, !llvm.loop !97
 
-._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %20 = extractelement <2 x double> %6, i64 0
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.._crit_edge_crit_edge
-  %.pre-phi = phi i64 [ %.pre, %.._crit_edge_crit_edge ], [ %i.au, %._crit_edge.loopexit ]
-  %.0684.lcssa = phi double [ 1.000000e+00, %.._crit_edge_crit_edge ], [ %20, %._crit_edge.loopexit ]
-  %.0.lcssa = phi double [ 0.000000e+00, %.._crit_edge_crit_edge ], [ %10, %._crit_edge.loopexit ]
-  %i.fq = phi <2 x double> [ <double 1.000000e+00, double 0.000000e+00>, %.._crit_edge_crit_edge ], [ %i.ba, %._crit_edge.loopexit ]
+._crit_edge:                                      ; preds = %.lr.ph, %.._crit_edge_crit_edge
+  %.pre-phi = phi i64 [ %.pre, %.._crit_edge_crit_edge ], [ %i.au, %.lr.ph ]
+  %.0684.lcssa = phi double [ 1.000000e+00, %.._crit_edge_crit_edge ], [ %9, %.lr.ph ]
+  %.0.lcssa = phi double [ 0.000000e+00, %.._crit_edge_crit_edge ], [ %14, %.lr.ph ]
+  %i.fq = phi <2 x double> [ <double 1.000000e+00, double 0.000000e+00>, %.._crit_edge_crit_edge ], [ %i.ba, %.lr.ph ]
   %i.fr = insertelement <2 x double> poison, double %i.an, i64 0
   %i.fs = shufflevector <2 x double> %i.fr, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ft = fadd <2 x double> %i.fs, %i.fq
@@ -796,7 +794,7 @@ bb.a:
   %i.ap = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.aq = load double, ptr %i.ap, align 8, !tbaa !14 ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.as = load double, ptr %i.ar, align 8, !tbaa !14 ; 3 uses
+  %i.as = load double, ptr %i.ar, align 8, !tbaa !14 ; 4 uses
   %i.at = add nsw i32 %i.a, -2                    ; 2 uses
   %i.au = icmp sgt i32 %i.a, 4
   br i1 %i.au, label %.lr.ph.preheader, label %.._crit_edge_crit_edge
@@ -809,8 +807,6 @@ bb.a:
   %i.av = zext nneg i32 %i.at to i64              ; 2 uses
   %invariant.gep = getelementptr [8 x i8], ptr %1, i64 %i.r
   %invariant.gep711 = getelementptr [8 x i8], ptr %1, i64 %i.r
-  %3 = insertelement <2 x double> poison, double %i.as, i64 0
-  %4 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
   %i.aw = insertelement <2 x double> poison, double %i.aq, i64 0
   %i.ax = shufflevector <2 x double> %i.aw, <2 x double> poison, <2 x i32> zeroinitializer
   br label %.lr.ph
@@ -818,13 +814,15 @@ bb.a:
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv703 = phi i64 [ 2, %.lr.ph.preheader ], [ %indvars.iv.next704, %.lr.ph ] ; 4 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
-  %5 = phi <2 x double> [ <double 1.000000e+00, double 0.000000e+00>, %.lr.ph.preheader ], [ %15, %.lr.ph ] ; 2 uses
+  %.0695 = phi double [ 0.000000e+00, %.lr.ph.preheader ], [ %10, %.lr.ph ]
+  %.0684694 = phi double [ 1.000000e+00, %.lr.ph.preheader ], [ %5, %.lr.ph ]
   %i.ay = phi <2 x double> [ <double 1.000000e+00, double 0.000000e+00>, %.lr.ph.preheader ], [ %i.bb, %.lr.ph ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.next
-  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv
+  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv ; 2 uses
   %i.bb = load <2 x double>, ptr %i.az, align 8, !tbaa !14 ; 5 uses
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.ba, i64 48
+  %3 = getelementptr inbounds nuw i8, ptr %i.ba, i64 48
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.ba, i64 56
   %i.bd = add nuw nsw i64 %indvars.iv703, %i.r    ; 2 uses
   %i.be = add nuw nsw i64 %i.bd, %i.r             ; 2 uses
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv703 ; 5 uses
@@ -858,13 +856,6 @@ bb.a:
   %i.cf = getelementptr i8, ptr %i.cd, i64 -16    ; 2 uses
   %i.cg = getelementptr i8, ptr %gep712, i64 -16  ; 2 uses
   %i.ch = getelementptr i8, ptr %i.cd, i64 -8
-  %6 = load <2 x double>, ptr %i.bc, align 8, !tbaa !14 ; 7 uses
-  %7 = fsub <2 x double> %5, %6
-  %8 = fadd <2 x double> %5, %6
-  %9 = shufflevector <2 x double> %8, <2 x double> %7, <2 x i32> <i32 0, i32 3>
-  %10 = fmul <2 x double> %4, %9                  ; 2 uses
-  %11 = extractelement <2 x double> %6, i64 1
-  %12 = fneg double %11                           ; 4 uses
   %i.ci = load <2 x double>, ptr %i.bf, align 8, !tbaa !14 ; 3 uses
   %i.cj = load double, ptr %i.bh, align 8, !tbaa !14
   %i.ck = load <2 x double>, ptr %i.bg, align 8, !tbaa !14 ; 3 uses
@@ -888,11 +879,20 @@ bb.a:
   %i.cx = extractelement <2 x double> %foldExtExtBinop723, i64 0
   %i.cy = fadd double %i.cn, %i.ct
   %i.cz = fsub <2 x double> %i.cq, %i.cu          ; 3 uses
-  %13 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
+  %4 = load double, ptr %i.bc, align 8, !tbaa !14 ; 3 uses
+  %5 = load double, ptr %3, align 8, !tbaa !14    ; 4 uses
+  %6 = fsub double %.0695, %4
+  %7 = fadd double %.0684694, %5
+  %8 = fmul double %i.as, %6
+  %9 = fmul double %i.as, %7
+  %10 = fneg double %4                            ; 3 uses
+  %11 = insertelement <2 x double> poison, double %8, i64 0
+  %12 = shufflevector <2 x double> %11, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.da = fneg <2 x double> %i.cz
   %i.db = shufflevector <2 x double> %i.da, <2 x double> %i.cz, <2 x i32> <i32 1, i32 2>
-  %i.dc = fmul <2 x double> %13, %i.db
-  %i.dd = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.dc = fmul <2 x double> %12, %i.db
+  %13 = insertelement <2 x double> poison, double %9, i64 0
+  %i.dd = shufflevector <2 x double> %13, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.de = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dd, <2 x double> %i.cz, <2 x double> %i.dc)
   %i.df = shufflevector <2 x double> %i.de, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.dg = fadd <2 x double> %i.ay, %i.bb
@@ -938,10 +938,12 @@ bb.a:
   %i.eh = shufflevector <2 x double> %i.eg, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   store <2 x double> %i.eh, ptr %i.bk, align 8, !tbaa !14
   store <2 x double> %i.df, ptr %gep, align 8, !tbaa !14
-  %i.ei = insertelement <2 x double> %6, double %12, i64 0
+  %14 = insertelement <2 x double> poison, double %10, i64 0 ; 2 uses
+  %i.ei = insertelement <2 x double> %14, double %4, i64 1
   %i.ej = fmul <2 x double> %i.dz, %i.ei
   %i.ek = shufflevector <2 x double> %i.ej, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %i.el = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %15 = insertelement <2 x double> poison, double %5, i64 0
+  %i.el = shufflevector <2 x double> %15, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.em = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.el, <2 x double> %i.dz, <2 x double> %i.ek)
   %i.en = fadd <2 x double> %i.cq, %i.cu          ; 3 uses
   %i.eo = shufflevector <2 x double> %i.dh, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
@@ -985,7 +987,7 @@ bb.a:
   %i.ft = fneg <2 x double> %i.fs
   %i.fu = shufflevector <2 x double> %i.ft, <2 x double> %i.fs, <2 x i32> <i32 1, i32 2>
   %i.fv = fmul <2 x double> %i.dd, %i.fu
-  %i.fw = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %13, <2 x double> %i.fs, <2 x double> %i.fv)
+  %i.fw = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %12, <2 x double> %i.fs, <2 x double> %i.fv)
   %i.fx = load <2 x double>, ptr %i.bz, align 8, !tbaa !14 ; 3 uses
   %i.fy = load double, ptr %i.cb, align 8, !tbaa !14
   %i.fz = load <2 x double>, ptr %i.ca, align 8, !tbaa !14 ; 3 uses
@@ -1031,25 +1033,19 @@ bb.a:
   %i.gx = fneg <2 x double> %i.gw
   %i.gy = shufflevector <2 x double> %i.gx, <2 x double> %i.gw, <2 x i32> <i32 1, i32 2>
   %i.gz = fmul <2 x double> %i.el, %i.gy
-  %14 = insertelement <2 x double> poison, double %12, i64 0
   %i.ha = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> zeroinitializer
   %i.hb = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ha, <2 x double> %i.gw, <2 x double> %i.gz)
   %i.hc = shufflevector <2 x double> %i.hb, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   store <2 x double> %i.hc, ptr %i.cg, align 8, !tbaa !14
   %indvars.iv.next704 = add nuw nsw i64 %indvars.iv703, 4 ; 2 uses
   %i.hd = icmp samesign ult i64 %indvars.iv.next704, %i.av
-  %15 = insertelement <2 x double> %6, double %12, i64 1
-  br i1 %i.hd, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !110
+  br i1 %i.hd, label %.lr.ph, label %._crit_edge, !llvm.loop !110
 
-._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %16 = extractelement <2 x double> %6, i64 0
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.._crit_edge_crit_edge
-  %.pre-phi = phi i64 [ %.pre, %.._crit_edge_crit_edge ], [ %i.av, %._crit_edge.loopexit ]
-  %.0684.lcssa = phi double [ 1.000000e+00, %.._crit_edge_crit_edge ], [ %16, %._crit_edge.loopexit ]
-  %.0.lcssa = phi double [ 0.000000e+00, %.._crit_edge_crit_edge ], [ %12, %._crit_edge.loopexit ]
-  %i.he = phi <2 x double> [ <double 1.000000e+00, double 0.000000e+00>, %.._crit_edge_crit_edge ], [ %i.bb, %._crit_edge.loopexit ]
+._crit_edge:                                      ; preds = %.lr.ph, %.._crit_edge_crit_edge
+  %.pre-phi = phi i64 [ %.pre, %.._crit_edge_crit_edge ], [ %i.av, %.lr.ph ]
+  %.0684.lcssa = phi double [ 1.000000e+00, %.._crit_edge_crit_edge ], [ %5, %.lr.ph ]
+  %.0.lcssa = phi double [ 0.000000e+00, %.._crit_edge_crit_edge ], [ %10, %.lr.ph ]
+  %i.he = phi <2 x double> [ <double 1.000000e+00, double 0.000000e+00>, %.._crit_edge_crit_edge ], [ %i.bb, %.lr.ph ]
   %i.hf = insertelement <2 x double> poison, double %i.ao, i64 0
   %i.hg = shufflevector <2 x double> %i.hf, <2 x double> poison, <2 x i32> zeroinitializer
   %i.hh = fadd <2 x double> %i.hg, %i.he
