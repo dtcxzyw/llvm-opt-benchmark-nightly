@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/fish-rs/original/fish-3db1312fccef457a.fish.60153328cb65e96a-cgu.13?download=true
 inline.NumInlined: 2010
 inline.NumDeleted: 1053
-loop-unroll.NumCompletelyUnrolled: 20
+loop-unroll.NumCompletelyUnrolled: 21
 loop-unroll.NumRuntimeUnrolled: 8
-loop-unroll.NumUnrolled: 28
+loop-unroll.NumUnrolled: 29
 begin_hunk_0_@_RNvMs_NtNtCs8frGy5WneL6_4fish9highlight9highlightNtB4_22HighlightColorResolver12resolve_spec:bb.a
 bb.t:                                             ; preds = %bb.k
   %i.ay = landingpad { ptr, i32 }
@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
 
 _RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs8frGy5WneL6_4fish.exit: ; preds = %bb.c
   %i.ak = icmp ult i64 %2, 4
-  br i1 %i.ak, label %.preheader350.preheader, label %_RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs8frGy5WneL6_4fish.exit.thread
+  br i1 %i.ak, label %.lr.ph628.preheader, label %_RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs8frGy5WneL6_4fish.exit.thread
 
 bb.e:                                             ; preds = %bb.d
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1956)
@@ -264,14 +264,7 @@ _RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtNtCs8frGy5WneL6_4fish3key3KeyE8pus
   store i64 0, ptr %0, align 8
   br label %bb.db
 
-.preheader350.preheader:                          ; preds = %_RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs8frGy5WneL6_4fish.exit
-  %.idx = shl nuw nsw i64 %2, 2
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 %.idx
-  %.val2.i.i = load i32, ptr %1, align 4, !range !33, !alias.scope !1960, !noalias !1961, !noundef !12
-  %4 = icmp eq i32 %.val2.i.i, 45
-  br i1 %4, label %_RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs8frGy5WneL6_4fish.exit.thread, label %bb.l
-
-bb.l:                                             ; preds = %.preheader350.preheader
+bb.l:                                             ; preds = %.lr.ph628.preheader
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 4
   %.val2.i.i.1 = load i32, ptr %i.aw, align 4, !range !33, !alias.scope !1960, !noalias !1961, !noundef !12
   %i.ax = icmp eq i32 %.val2.i.i.1, 45
@@ -279,18 +272,20 @@ bb.l:                                             ; preds = %.preheader350.prehe
 
 bb.m:                                             ; preds = %bb.l
   %.not.not.not.i.not.not.i.1 = icmp eq i64 %2, 2
-  br i1 %.not.not.not.i.not.not.i.1, label %.lr.ph628.preheader, label %bb.n
+  br i1 %.not.not.not.i.not.not.i.1, label %.lr.ph628, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val2.i.i.2 = load i32, ptr %i.ay, align 4, !range !33, !alias.scope !1960, !noalias !1961, !noundef !12
   %i.az = icmp eq i32 %.val2.i.i.2, 45
-  br i1 %i.az, label %_RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs8frGy5WneL6_4fish.exit.thread, label %.lr.ph628.preheader
+  br i1 %i.az, label %_RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs8frGy5WneL6_4fish.exit.thread, label %.lr.ph628
 
-.lr.ph628.preheader:                              ; preds = %bb.n, %bb.m
-  br label %.lr.ph628.a
+.lr.ph628.preheader:                              ; preds = %_RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs8frGy5WneL6_4fish.exit
+  %.val2.i.i = load i32, ptr %1, align 4, !range !33, !alias.scope !1960, !noalias !1961, !noundef !12
+  %3 = icmp eq i32 %.val2.i.i, 45
+  br i1 %3, label %_RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs8frGy5WneL6_4fish.exit.thread, label %bb.l
 
-_RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs8frGy5WneL6_4fish.exit.thread: ; preds = %.preheader350.preheader, %bb.l, %bb.n, %.lr.ph628.a, %.split.i.6, %.split.i.13, %.split.i.15, %_RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs8frGy5WneL6_4fish.exit
+_RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs8frGy5WneL6_4fish.exit.thread: ; preds = %.lr.ph628.preheader, %bb.l, %bb.n, %.lr.ph628, %_RNvXsK_NtNtCs3oUPovFnLWP_4core5slice3cmpcNtB5_13SliceContains14slice_contains.exit.preheader, %.lr.ph628.a, %.split.i.6, %.split.i.13, %.split.i.15, %_RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs8frGy5WneL6_4fish.exit
   %.old = icmp samesign ult i32 %i.ai, 32
   br i1 %.old, label %_RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs8frGy5WneL6_4fish.exit.thread._crit_edge, label %.thread310
 
@@ -298,18 +293,28 @@ _RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsj
   %.pre = shl nuw nsw i64 %2, 2
   br label %.lr.ph413
 
-_RNvXsK_NtNtCs3oUPovFnLWP_4core5slice3cmpcNtB5_13SliceContains14slice_contains.exit.preheader: ; preds = %.lr.ph628.a
-  %i.ba = getelementptr inbounds nuw i8, ptr %5, i64 4 ; 2 uses
-  %.not.not.not.i.not.not.i207 = icmp eq ptr %i.ba, %3
-  br i1 %.not.not.not.i.not.not.i207, label %_RNCNvNtCs8frGy5WneL6_4fish3key10parse_keys0B5_.exit.backedge.i.5, label %.lr.ph628.a
+_RNvXsK_NtNtCs3oUPovFnLWP_4core5slice3cmpcNtB5_13SliceContains14slice_contains.exit.preheader: ; preds = %.lr.ph628
+  %i.ba = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %.val2.i.i208.1 = load i32, ptr %i.ba, align 4, !range !33, !alias.scope !1962, !noalias !1963, !noundef !12
+  %.not.not.not.i.not.not.i207 = icmp eq i32 %.val2.i.i208.1, 44
+  br i1 %.not.not.not.i.not.not.i207, label %_RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs8frGy5WneL6_4fish.exit.thread, label %_RNvXsK_NtNtCs3oUPovFnLWP_4core5slice3cmpcNtB5_13SliceContains14slice_contains.exit.preheader.1
 
-.lr.ph628.a:                                      ; preds = %.lr.ph628.preheader, %_RNvXsK_NtNtCs3oUPovFnLWP_4core5slice3cmpcNtB5_13SliceContains14slice_contains.exit.preheader
-  %5 = phi ptr [ %i.ba, %_RNvXsK_NtNtCs3oUPovFnLWP_4core5slice3cmpcNtB5_13SliceContains14slice_contains.exit.preheader ], [ %1, %.lr.ph628.preheader ] ; 2 uses
-  %.val2.i.i208.a = load i32, ptr %5, align 4, !range !33, !alias.scope !1962, !noalias !1963, !noundef !12
+_RNvXsK_NtNtCs3oUPovFnLWP_4core5slice3cmpcNtB5_13SliceContains14slice_contains.exit.preheader.1: ; preds = %_RNvXsK_NtNtCs3oUPovFnLWP_4core5slice3cmpcNtB5_13SliceContains14slice_contains.exit.preheader
+  %.not.not.not.i.not.not.i207.1 = icmp eq i64 %2, 2
+  br i1 %.not.not.not.i.not.not.i207.1, label %_RNCNvNtCs8frGy5WneL6_4fish3key10parse_keys0B5_.exit.backedge.i.5, label %.lr.ph628.a
+
+.lr.ph628.a:                                      ; preds = %_RNvXsK_NtNtCs3oUPovFnLWP_4core5slice3cmpcNtB5_13SliceContains14slice_contains.exit.preheader.1
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %.val2.i.i208.a = load i32, ptr %4, align 4, !range !33, !alias.scope !1962, !noalias !1963, !noundef !12
   %i.bb = icmp eq i32 %.val2.i.i208.a, 44
-  br i1 %i.bb, label %_RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs8frGy5WneL6_4fish.exit.thread, label %_RNvXsK_NtNtCs3oUPovFnLWP_4core5slice3cmpcNtB5_13SliceContains14slice_contains.exit.preheader
+  br i1 %i.bb, label %_RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs8frGy5WneL6_4fish.exit.thread, label %_RNCNvNtCs8frGy5WneL6_4fish3key10parse_keys0B5_.exit.backedge.i.5
 
-_RNCNvNtCs8frGy5WneL6_4fish3key10parse_keys0B5_.exit.backedge.i.5: ; preds = %_RNvXsK_NtNtCs3oUPovFnLWP_4core5slice3cmpcNtB5_13SliceContains14slice_contains.exit.preheader
+.lr.ph628:                                        ; preds = %bb.m, %bb.n
+  %.val2.i.i208 = load i32, ptr %1, align 4, !range !33, !alias.scope !1962, !noalias !1963, !noundef !12
+  %5 = icmp eq i32 %.val2.i.i208, 44
+  br i1 %5, label %_RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs8frGy5WneL6_4fish.exit.thread, label %_RNvXsK_NtNtCs3oUPovFnLWP_4core5slice3cmpcNtB5_13SliceContains14slice_contains.exit.preheader
+
+_RNCNvNtCs8frGy5WneL6_4fish3key10parse_keys0B5_.exit.backedge.i.5: ; preds = %.lr.ph628.a, %_RNvXsK_NtNtCs3oUPovFnLWP_4core5slice3cmpcNtB5_13SliceContains14slice_contains.exit.preheader.1
   %i.bc = shl nuw nsw i64 %2, 2                   ; 5 uses
   switch i64 %2, label %_RNCNvNtCs8frGy5WneL6_4fish3key10parse_keys0B5_.exit.backedge.i.18 [
     i64 2, label %.split.i.6
