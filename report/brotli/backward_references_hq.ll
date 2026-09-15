@@ -205,8 +205,8 @@ declare i64 @llvm.cttz.i64(i64, i1 immarg) #7
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite, errnomem: write) uwtable
 define internal fastcc void @SetCost(ptr nofree noundef readonly captures(none) %0, i64 noundef range(i64 0, 4294967296) %1, i32 noundef range(i32 0, 2) %2, ptr nofree noundef writeonly captures(none) %3) unnamed_addr #9 {
 bb.a:
-  %.not51 = icmp eq i64 %1, 0                     ; 2 uses
-  br i1 %.not51, label %._crit_edge.thread, label %.lr.ph.preheader
+  %.not51 = icmp ne i64 %1, 0                     ; 3 uses
+  br i1 %.not51, label %.lr.ph.preheader, label %._crit_edge.thread
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %min.iters.check = icmp samesign ult i64 %1, 4
@@ -275,8 +275,7 @@ FastLog2.exit41:                                  ; preds = %._crit_edge.thread,
   %.0.i40 = phi double [ %i.p, %._crit_edge.thread ], [ %i.r, %bb.b ]
   %i.s = fptrunc double %.0.i40 to float
   %.not = icmp eq i32 %2, 0
-  %4 = icmp ne i64 %1, 0
-  %or.cond = and i1 %.not, %4
+  %or.cond = and i1 %.not, %.not51
   br i1 %or.cond, label %.lr.ph46.preheader, label %.loopexit
 
 .lr.ph46.preheader:                               ; preds = %FastLog2.exit41
@@ -348,7 +347,7 @@ FastLog2.exit39:                                  ; preds = %bb.c, %bb.d
   %.0.i38 = phi double [ %i.al, %bb.c ], [ %i.an, %bb.d ]
   %i.ao = fptrunc double %.0.i38 to float
   %i.ap = fadd float %i.ao, 2.000000e+00
-  br i1 %.not51, label %._crit_edge50, label %.lr.ph49
+  br i1 %.not51, label %.lr.ph49, label %._crit_edge50
 
 .lr.ph49:                                         ; preds = %FastLog2.exit39, %bb.i
   %.248 = phi i64 [ %i.be, %bb.i ], [ 0, %FastLog2.exit39 ] ; 4 uses

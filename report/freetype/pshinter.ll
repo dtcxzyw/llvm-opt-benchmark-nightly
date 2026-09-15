@@ -205,7 +205,7 @@ define internal fastcc i32 @psh_hint_table_init(ptr nofree noundef nonnull captu
 bb.a:
   %i.a = alloca i32, align 4                      ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
-  %i.b = load i32, ptr %1, align 8, !tbaa !118    ; 12 uses
+  %i.b = load i32, ptr %1, align 8, !tbaa !118    ; 11 uses
   %i.c = shl i32 %i.b, 1                          ; 2 uses
   %i.d = zext i32 %i.c to i64
   %i.e = call ptr @ft_mem_qrealloc(ptr noundef %3, i64 noundef 8, i64 noundef 0, i64 noundef %i.d, ptr noundef null, ptr noundef nonnull %i.a) #12
@@ -248,8 +248,8 @@ bb.d:                                             ; preds = %bb.c
   store i32 0, ptr %i.u, align 8, !tbaa !89
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 48
   store ptr null, ptr %i.v, align 8, !tbaa !216
-  %.not595 = icmp eq i32 %i.b, 0
-  br i1 %.not595, label %._crit_edge, label %.lr.ph.preheader
+  %.not595 = icmp ne i32 %i.b, 0                  ; 2 uses
+  br i1 %.not595, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.d
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -455,9 +455,8 @@ psh_hint_table_record_mask.exit:                  ; preds = %psh_hint_table_reco
 
 .loopexit1:                                       ; preds = %psh_hint_table_record_mask.exit, %bb.e, %._crit_edge
   %i.cr = phi i32 [ 0, %._crit_edge ], [ 0, %bb.e ], [ %i.co, %psh_hint_table_record_mask.exit ] ; 2 uses
-  %.not62 = icmp ne i32 %i.cr, %i.b
-  %i.cs = icmp ne i32 %i.b, 0
-  %or.cond = and i1 %.not62, %i.cs
+  %i.cs = icmp ne i32 %i.cr, %i.b
+  %or.cond = and i1 %i.cs, %.not595
   br i1 %or.cond, label %.lr.ph15, label %.loopexit
 
 .lr.ph15:                                         ; preds = %.loopexit1, %psh_hint_table_record.exit

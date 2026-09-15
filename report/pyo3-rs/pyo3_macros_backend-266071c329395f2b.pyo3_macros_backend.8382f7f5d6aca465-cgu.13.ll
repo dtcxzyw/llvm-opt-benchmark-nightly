@@ -204,23 +204,22 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define zeroext i1 @_RINvMs1_NtCsjqcU1oJFKXj_9hashbrown3mapINtB6_7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringuNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE6removeeECsbi23obv45GP_19pyo3_macros_backend(ptr align 8 %0, ptr %1, i64 %2) unnamed_addr #0 {
+define noundef zeroext i1 @_RINvMs1_NtCsjqcU1oJFKXj_9hashbrown3mapINtB6_7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringuNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE6removeeECsbi23obv45GP_19pyo3_macros_backend(ptr align 8 %0, ptr %1, i64 %2) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.c = tail call i64 @_RINvYNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateNtNtCskKLDkoKarTP_4core4hash11BuildHasher8hash_oneReECsbi23obv45GP_19pyo3_macros_backend(ptr nonnull align 8 %i.b, ptr %1, i64 %2)
   call void @_RINvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB6_8RawTableTNtNtCsexYYUdYSQU6_5alloc6string6StringuEE12remove_entryNCINvNtB8_3map14equivalent_keyeBQ_uE0ECsbi23obv45GP_19pyo3_macros_backend(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr align 8 %0, i64 %i.c, ptr %1, i64 %2)
-  %i.d = load i64, ptr %i.a, align 8              ; 2 uses
-  %.not1 = icmp eq i64 %i.d, -1
-  br i1 %.not1, label %bb.c, label %bb.b
+  %i.d = load i64, ptr %i.a, align 8
+  %.not1 = icmp ne i64 %i.d, -1                   ; 2 uses
+  br i1 %.not1, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   call void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECs3FigHW6Y7TR_11proc_macro2(ptr nonnull align 8 %i.a)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.not = icmp ne i64 %i.d, -1
-  ret i1 %.not
+  ret i1 %.not1
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable

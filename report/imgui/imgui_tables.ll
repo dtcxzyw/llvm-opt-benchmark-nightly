@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.t = and i64 %i.s, 4294967295
   %i.u = shl nuw i64 1, %i.t
   %i.v = zext i1 %i.r to i32
-  %.175 = add nuw nsw i32 %.074100, %i.v          ; 8 uses
+  %.175 = add nuw nsw i32 %.074100, %i.v          ; 6 uses
   %i.w = select i1 %i.r, i64 %i.u, i64 0
   %.173 = or i64 %i.w, %.072101                   ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -222,7 +222,7 @@ bb.e:                                             ; preds = %._crit_edge
 bb.f:                                             ; preds = %bb.e, %._crit_edge
   %i.aa = phi i1 [ false, %._crit_edge ], [ %.not, %bb.e ] ; 2 uses
   %or.cond = select i1 %i.i, i1 true, i1 %i.aa
-  %i.ab = icmp ne i32 %.175, 0
+  %i.ab = icmp ne i32 %.175, 0                    ; 2 uses
   %or.cond129 = and i1 %or.cond, %i.ab
   br i1 %or.cond129, label %.preheader95.lr.ph, label %.loopexit
 
@@ -352,7 +352,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q, %bb.o,
   store i16 %i.bp, ptr %i.bs, align 2, !tbaa !339
   %i.bt = add nuw nsw i32 %.067111.us, 1          ; 2 uses
   %exitcond138.not = icmp eq i32 %i.bt, %.175
-  br i1 %exitcond138.not, label %.thread87, label %.preheader95.us, !llvm.loop !655
+  br i1 %exitcond138.not, label %.loopexit, label %.preheader95.us, !llvm.loop !655
 
 .preheader.unr-lcssa:                             ; preds = %bb.m
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -451,9 +451,8 @@ bb.aa:                                            ; preds = %bb.z, %.lr.ph128.3
   %niter187.ncmp.3 = icmp eq i64 %niter187.next.3, %unroll_iter186
   br i1 %niter187.ncmp.3, label %.thread87.loopexit.unr-lcssa, label %.lr.ph128, !llvm.loop !656
 
-.loopexit:                                        ; preds = %bb.f
-  %1 = icmp eq i32 %.175, 0
-  br i1 %1, label %bb.ab, label %.thread87
+.loopexit:                                        ; preds = %._crit_edge108.us, %bb.f
+  br i1 %i.ab, label %.thread87, label %bb.ab
 
 bb.ab:                                            ; preds = %.loopexit
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 4
@@ -530,8 +529,8 @@ bb.ah:                                            ; preds = %bb.ag, %.lr.ph128.e
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter183
   br i1 %epil.iter.cmp.not, label %.thread87, label %.lr.ph128.epil, !llvm.loop !658
 
-.thread87:                                        ; preds = %bb.af, %._crit_edge108.us, %.thread87.loopexit.unr-lcssa, %bb.ah, %bb.ab, %bb.a, %bb.ae, %.loopexit
-  %.9 = phi i32 [ 0, %bb.ab ], [ %.175, %.loopexit ], [ 1, %bb.ae ], [ 1, %.thread87.loopexit.unr-lcssa ], [ 0, %bb.a ], [ %.175, %._crit_edge108.us ], [ 1, %bb.ah ], [ 0, %bb.af ]
+.thread87:                                        ; preds = %bb.af, %.thread87.loopexit.unr-lcssa, %bb.ah, %bb.ab, %bb.a, %bb.ae, %.loopexit
+  %.9 = phi i32 [ 0, %bb.ab ], [ %.175, %.loopexit ], [ 1, %bb.ae ], [ 1, %.thread87.loopexit.unr-lcssa ], [ 0, %bb.a ], [ 1, %bb.ah ], [ 0, %bb.af ]
   %i.dn = trunc i32 %.9 to i16
   %i.do = getelementptr inbounds nuw i8, ptr %0, i64 512
   store i16 %i.dn, ptr %i.do, align 8, !tbaa !353
@@ -934,20 +933,19 @@ bb.h:                                             ; preds = %.lr.ph44, %select.u
   %.042 = phi ptr [ %i.s, %.lr.ph44 ], [ %i.bo, %select.unfold ] ; 5 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %.042, i64 16 ; 2 uses
   %i.aq = load i16, ptr %i.ap, align 2            ; 5 uses
-  %i.ar = and i16 %i.aq, 127                      ; 3 uses
-  %.not.i35 = icmp ne i16 %i.ar, 0
+  %i.ar = and i16 %i.aq, 127                      ; 2 uses
+  %.not.i35 = icmp ne i16 %i.ar, 0                ; 2 uses
   %i.as = and i16 %i.aq, 1920
   %.not1.i = icmp ne i16 %i.as, 0
-  %or.cond.not.i = and i1 %.not.i35, %.not1.i
   %3 = icmp ugt i16 %i.aq, 2047
-  %spec.select.i = and i1 %3, %or.cond.not.i      ; 2 uses
+  %4 = and i1 %.not1.i, %3
+  %spec.select.i = and i1 %4, %.not.i35           ; 2 uses
   %i.at = load i32, ptr %i.t, align 4, !tbaa !694 ; 2 uses
   %.not32 = icmp eq i32 %i.at, 0
   br i1 %.not32, label %bb.n, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %.not.i36 = icmp eq i16 %i.ar, 0
-  br i1 %.not.i36, label %_ZNK15ImGuiPackedDate6UnpackEv.exit, label %bb.j
+  br i1 %.not.i35, label %bb.j, label %_ZNK15ImGuiPackedDate6UnpackEv.exit
 
 bb.j:                                             ; preds = %bb.i
   %i.au = lshr i16 %i.aq, 7

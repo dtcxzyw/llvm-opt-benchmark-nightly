@@ -205,8 +205,8 @@ nk_find_value.exit:                               ; preds = %bb.f
 
 bb.g:                                             ; preds = %nk_find_value.exit, %.loopexit
   %.0 = phi ptr [ %i.t, %nk_find_value.exit ], [ %i.u, %.loopexit ] ; 4 uses
-  %.not5.i28 = icmp eq ptr %3, null               ; 2 uses
-  br i1 %.not5.i28, label %nk_strlen.exit34, label %.lr.ph.i29.preheader
+  %.not5.i28 = icmp ne ptr %3, null               ; 3 uses
+  br i1 %.not5.i28, label %.lr.ph.i29.preheader, label %nk_strlen.exit34
 
 .lr.ph.i29.preheader:                             ; preds = %bb.g
   %i.v = load i8, ptr %3, align 1, !tbaa !56
@@ -529,7 +529,7 @@ bb.u:                                             ; preds = %bb.t
 bb.v:                                             ; preds = %bb.u, %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #50
   store i32 0, ptr %i.b, align 4, !tbaa !55
-  br i1 %.not5.i28, label %nk_strlen.exit.i, label %.lr.ph.i.preheader.i
+  br i1 %.not5.i28, label %.lr.ph.i.preheader.i, label %nk_strlen.exit.i
 
 .lr.ph.i.preheader.i:                             ; preds = %bb.v
   %i.fp = load i8, ptr %3, align 1, !tbaa !56
@@ -582,11 +582,10 @@ bb.w:                                             ; preds = %nk_strlen.exit.i
   br label %nk_do_selectable.exit.i
 
 bb.x:                                             ; preds = %nk_strlen.exit.i
-  %i.gt = icmp ne ptr %3, null
-  %i.gu = icmp ne i32 %.0.lcssa.i33, 0
-  %or.cond5.i.i = and i1 %i.gt, %i.gu
-  %10 = icmp ne ptr %5, null
-  %or.cond7.i.i = and i1 %10, %or.cond5.i.i
+  %i.gt = icmp ne i32 %.0.lcssa.i33, 0
+  %i.gu = icmp ne ptr %5, null
+  %or.cond5.i.i = and i1 %i.gu, %i.gt
+  %or.cond7.i.i = and i1 %.not5.i28, %or.cond5.i.i
   br i1 %or.cond7.i.i, label %bb.y, label %nk_do_selectable.exit.i
 
 bb.y:                                             ; preds = %bb.x
@@ -989,8 +988,8 @@ nk_selectable_image_text.exit:                    ; preds = %nk_strlen.exit, %bb
 define zeroext i1 @nk_select_label(ptr nofree noundef captures(address_is_null) %0, ptr noundef %1, i32 noundef %2, i1 noundef zeroext %3) local_unnamed_addr #20 {
 bb.a:
   %4 = alloca %struct.nk_rect, align 8            ; 5 uses
-  %.not5.i = icmp eq ptr %1, null
-  br i1 %.not5.i, label %nk_strlen.exit, label %.lr.ph.i.preheader
+  %.not5.i = icmp ne ptr %1, null                 ; 2 uses
+  br i1 %.not5.i, label %.lr.ph.i.preheader, label %nk_strlen.exit
 
 .lr.ph.i.preheader:                               ; preds = %bb.a
   %i.a = load i8, ptr %1, align 1, !tbaa !56
@@ -1047,11 +1046,10 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.r = load <2 x float>, ptr %4, align 8        ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.t = load <2 x float>, ptr %i.s, align 8      ; 2 uses
-  %i.u = icmp ne ptr %1, null
-  %i.v = icmp ne i32 %.0.lcssa.i, 0
+  %i.u = icmp ne i32 %.0.lcssa.i, 0
+  %i.v = icmp ne ptr %i.q, null
   %or.cond5.i.i = and i1 %i.u, %i.v
-  %5 = icmp ne ptr %i.q, null
-  %or.cond11.i.i = and i1 %or.cond5.i.i, %5
+  %or.cond11.i.i = and i1 %or.cond5.i.i, %.not5.i
   br i1 %or.cond11.i.i, label %bb.g, label %nk_selectable_text.exit
 
 bb.g:                                             ; preds = %bb.f
@@ -1454,7 +1452,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.e, %bb.d, %bb.c
-  %i.bn = phi i8 [ %i.bm, %bb.i ], [ %i.av, %bb.e ], [ %i.av, %bb.d ], [ %i.av, %bb.c ] ; 5 uses
+  %i.bn = phi i8 [ %i.bm, %bb.i ], [ %i.av, %bb.e ], [ %i.av, %bb.d ], [ %i.av, %bb.c ] ; 4 uses
   %.not725 = icmp eq i8 %i.av, 0
   %.not726 = icmp eq i8 %i.bn, 0                  ; 2 uses
   br i1 %.not725, label %bb.k, label %bb.n
@@ -1524,15 +1522,14 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %.sink.split, %bb.p
   %i.ch = zext i8 %i.bn to i32
-  %.not731 = icmp eq i8 %i.bn, 0                  ; 2 uses
-  %i.ci = select i1 %.not731, i32 2, i32 1
+  %.not731 = icmp ne i8 %i.bn, 0                  ; 3 uses
+  %i.ci = select i1 %.not731, i32 1, i32 2
   %i.cj = sext i8 %i.av to i32
   %.not732 = icmp eq i32 %i.cj, %i.ch
-  %i.ck = select i1 %.not731, i32 10, i32 5
+  %i.ck = select i1 %.not731, i32 5, i32 10
   %spec.select = select i1 %.not732, i32 %i.ci, i32 %i.ck ; 6 uses
-  %14 = icmp ne i8 %i.bn, 0
   %i.cl = icmp ne ptr %.1, null
-  %or.cond5 = and i1 %i.cl, %14
+  %or.cond5 = and i1 %i.cl, %.not731
   br i1 %or.cond5, label %nk_input_is_mouse_hovering_rect.exit, label %bb.bt
 
 nk_input_is_mouse_hovering_rect.exit:             ; preds = %bb.q

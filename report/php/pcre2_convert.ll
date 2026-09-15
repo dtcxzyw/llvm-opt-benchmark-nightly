@@ -23,7 +23,6 @@ bb.a:
   %i.a = alloca [100 x i8], align 16              ; 4 uses
   %i.b = alloca i64, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
-  %7 = and i32 %2, 1
   %i.c = and i32 %2, 28                           ; 2 uses
   %i.d = icmp eq ptr %0, null
   %i.e = icmp eq ptr %4, null
@@ -92,7 +91,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i
   %i.o = and i32 %2, 8
   %.not.i95 = icmp eq i32 %i.o, 0                 ; 5 uses
   %.not250102.i = icmp eq i64 %.077, 0            ; 3 uses
-  %i.p = trunc i32 %2 to i1                       ; 5 uses
+  %i.p = trunc i32 %2 to i1                       ; 6 uses
   %i.q = getelementptr i8, ptr %spec.store.select, i64 24
   %i.r = getelementptr i8, ptr %spec.store.select, i64 28
   %i.s = ptrtoaddr ptr %0 to i64
@@ -100,7 +99,6 @@ bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i
   %i.u = and i32 %2, 32
   %i.v = icmp eq i32 %i.u, 0                      ; 6 uses
   %.not.i = icmp samesign ult i32 %2, 64
-  %.not114.i = icmp eq i32 %7, 0
   %i.w = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 47 uses
   %i.x = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 83 uses
   %i.y = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 33 uses
@@ -142,7 +140,7 @@ bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #6
   %i.al = trunc i32 %spec.store.select.val to i8  ; 13 uses
   %i.am = trunc i32 %spec.store.select.val94 to i8 ; 5 uses
-  br i1 %.not114.i, label %bb.r, label %bb.q
+  br i1 %i.p, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
   %i.an = and i32 %spec.store.select.val, 128
