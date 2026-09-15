@@ -418,6 +418,7 @@ class RenderedDiff:
     artifact_ref_ir: str
     artifact_new_ir: str
     opcode_seq: Optional[Tuple[Tuple[str, ...], Tuple[str, ...]]]
+    timed_out: bool = False
 
 
 @dataclass
@@ -1203,7 +1204,17 @@ def run_opt_file(
                     deadline=deadline,
                 )
             except subprocess.TimeoutExpired:
-                rendered = None
+                minimized_ref_ir, minimized_new_ir = _minimized_ir_paths(
+                    optimized_path.removesuffix(".bc")
+                )
+                rendered = RenderedDiff(
+                    report_ref_ir=minimized_ref_ir,
+                    report_new_ir=minimized_new_ir,
+                    artifact_ref_ir=ref_path,
+                    artifact_new_ir=optimized_path,
+                    opcode_seq=None,
+                    timed_out=True,
+                )
             except (subprocess.SubprocessError, OSError, RuntimeError):
                 return "failed to compute diff"
         return stats_result, rendered, interesting_stats
@@ -1556,7 +1567,7 @@ def commit_grouped_diff_changes(kept_files: List[KeptDiff]):
 
 def generate_diff_report(
     rendered_files: List[RenderedDiff],
-) -> Tuple[str, List[KeptDiff], List[Tuple[int, int, str, str]]]:
+) -> Tuple[str, List[KeptDiff], List[Tuple[Optional[int], Optional[int], str, str]]]:
     MAX_DIFF_TOTAL = 15000
     MAX_FILE_TOTAL = 200
     TRIVIAL_PENALTY = 200
@@ -1567,12 +1578,18 @@ def generate_diff_report(
 
     total_added = 0
     total_removed = 0
-    full_diff_rows: List[Tuple[int, int, str, str]] = []
+    full_diff_rows: List[Tuple[Optional[int], Optional[int], str, str]] = []
     for order_key, rendered_file in enumerate(rendered_files):
         ref_ir = rendered_file.report_ref_ir
         new_ir = rendered_file.report_new_ir
-        proj = os.path.basename(ref_ir).split("-s-")[0]
         if ref_ir is None or new_ir is None:
+            continue
+        name = _report_file_name_from_ir_path(ref_ir)
+        pos = name.index("-s-")
+        proj = name[:pos]
+        file_name = name[pos + 3 :].removesuffix(".ll")
+        if rendered_file.timed_out:
+            full_diff_rows.append((None, None, proj, file_name))
             continue
         with open(ref_ir, "r") as f:
             ref_lines = f.readlines()
@@ -1599,9 +1616,6 @@ def generate_diff_report(
         )
         if number_of_added_lines == 0 and number_of_removed_lines == 0:
             continue
-        name = _report_file_name_from_ir_path(ref_ir)
-        pos = name.index("-s-")
-        file_name = name[pos + 3 :].removesuffix(".ll")
         full_diff_rows.append(
             (number_of_added_lines, number_of_removed_lines, proj, file_name)
         )
@@ -1710,8 +1724,14 @@ def generate_diff_report(
     return report, kept_files, full_diff_rows
 
 
-def write_full_diff_csv(rows: List[Tuple[int, int, str, str]]):
-    rows.sort(key=lambda r: (r[0] - r[1], -(r[0] + r[1])), reverse=True)
+def write_full_diff_csv(rows: List[Tuple[Optional[int], Optional[int], str, str]]):
+    def sort_key(row):
+        add, sub = row[0], row[1]
+        if add is None or sub is None:
+            return (float("inf"), 0)
+        return (add - sub, -(add + sub))
+
+    rows.sort(key=sort_key, reverse=True)
     csv_path = os.path.join(REPORT_DIR, "z_fulldiff.csv")
     with open(csv_path, "w", newline="") as f:
         writer = csv.writer(f)
@@ -1719,9 +1739,9 @@ def write_full_diff_csv(rows: List[Tuple[int, int, str, str]]):
         for add, sub, proj, file_name in rows:
             writer.writerow(
                 [
-                    add - sub,
-                    add,
-                    sub,
+                    "timeout" if add is None or sub is None else add - sub,
+                    "" if add is None else add,
+                    "" if sub is None else sub,
                     make_dataset_download_link(proj, file_name + ".bc"),
                 ]
             )
