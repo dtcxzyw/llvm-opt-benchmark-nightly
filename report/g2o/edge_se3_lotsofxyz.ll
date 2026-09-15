@@ -205,9 +205,9 @@ _ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit.i:
   %i.i = lshr exact i64 %i.h, 3
   %i.j = mul nuw nsw i64 %i.i, 3
   %i.k = add nuw nsw i64 %i.j, 4294967293
-  %i.l = and i64 %i.k, 4294967295                 ; 10 uses
-  %.not.i = icmp eq i64 %i.l, 0
-  br i1 %.not.i, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.thread, label %_ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i
+  %i.l = and i64 %i.k, 4294967295                 ; 9 uses
+  %.not.i = icmp ne i64 %i.l, 0                   ; 2 uses
+  br i1 %.not.i, label %_ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.thread
 
 _ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i: ; preds = %_ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit.i
   %i.m = mul nuw nsw i64 %i.l, 48
@@ -261,8 +261,7 @@ _ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit.i40.l
   %i.al = mul nuw nsw i64 %i.l, 3                 ; 3 uses
   %i.am = shl nuw nsw i64 %i.l, 2                 ; 3 uses
   %i.an = mul nuw nsw i64 %i.l, 5                 ; 3 uses
-  %.not.i62 = icmp ne i64 %i.l, 0
-  tail call void @llvm.assume(i1 %.not.i62)
+  tail call void @llvm.assume(i1 %.not.i)
   %i.ao = mul nuw nsw i64 %i.l, 24
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 256
   %.sroa.0.i.i.16.i.i.16.i.i.16.i.16.i.16..sroa_idx202 = getelementptr inbounds nuw i8, ptr %.sroa.0.i.i, i64 16

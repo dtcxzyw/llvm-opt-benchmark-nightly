@@ -33,12 +33,11 @@ bb.a:
   %i.v = select i1 %i.u, double +inf, double 0.000000e+00 ; 2 uses
   %i.w = select i1 %i.u, double 0.000000e+00, double +inf ; 2 uses
   %i.x = fcmp oeq double %spec.store.select, 0.000000e+00 ; 2 uses
-  %2 = fcmp oeq double %1, 0.000000e+00           ; 2 uses
-  %i.y = select i1 %2, double +qnan, double %i.v
+  %2 = fcmp une double %1, 0.000000e+00           ; 3 uses
+  %i.y = select i1 %2, double %i.v, double +qnan
   %.0 = select i1 %i.x, double %i.y, double %i.t
   %i.z = fcmp oeq double %spec.store.select, +inf
-  %3 = fcmp une double %1, 0.000000e+00
-  %or.cond = and i1 %3, %i.z
+  %or.cond = and i1 %2, %i.z
   %.1 = select i1 %or.cond, double %i.w, double %.0
   %i.aa = tail call double @llvm.fabs.f64(double %1)
   %i.ab = fcmp oeq double %i.aa, +inf
@@ -51,7 +50,7 @@ bb.a:
   %i.ag = fcmp oeq double %i.af, +inf
   %i.ah = or i1 %i.x, %i.ag
   %i.ai = select i1 %i.ah, double +qnan, double 1.000000e+00
-  %.3 = select i1 %2, double %i.ai, double %.2
+  %.3 = select i1 %2, double %.2, double %i.ai
   %i.aj = fcmp uno double %spec.store.select, %1
   %.4 = select i1 %i.aj, double +qnan, double %.3
   ret double %.4

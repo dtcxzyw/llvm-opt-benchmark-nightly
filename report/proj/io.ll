@@ -206,10 +206,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %._cri
 
 .critedge292:                                     ; preds = %bb.g, %.noexc.i
   %i.bj = phi i1 [ false, %bb.g ], [ true, %.noexc.i ] ; 3 uses
-  %37 = icmp eq i32 %5, 1
+  %37 = icmp ne i32 %5, 1                         ; 3 uses
   %i.bk = icmp eq i32 %5, 2                       ; 2 uses
   %_ZN5osgeo4proj2cs13AxisDirection5NORTHE._ZN5osgeo4proj2cs13AxisDirection4EASTE = select i1 %i.bk, ptr @_ZN5osgeo4proj2cs13AxisDirection5NORTHE, ptr @_ZN5osgeo4proj2cs13AxisDirection4EASTE
-  %i.bl = select i1 %37, ptr @_ZN5osgeo4proj2cs13AxisDirection5SOUTHE, ptr %_ZN5osgeo4proj2cs13AxisDirection5NORTHE._ZN5osgeo4proj2cs13AxisDirection4EASTE
+  %i.bl = select i1 %37, ptr %_ZN5osgeo4proj2cs13AxisDirection5NORTHE._ZN5osgeo4proj2cs13AxisDirection4EASTE, ptr @_ZN5osgeo4proj2cs13AxisDirection5SOUTHE
   %i.bm = select i1 %i.n, ptr @_ZN5osgeo4proj2cs13AxisDirection4EASTE, ptr %i.bl
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #41
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #41
@@ -537,8 +537,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj, %._c
   br label %.critedge303
 
 .critedge303:                                     ; preds = %bb.al, %.noexc365
-  %38 = icmp ne i32 %5, 1                         ; 2 uses
-  %i.et = or i1 %38, %i.n
+  %i.et = or i1 %37, %i.n
   %i.eu = select i1 %i.et, ptr @_ZN5osgeo4proj2cs13AxisDirection5NORTHE, ptr @_ZN5osgeo4proj2cs13AxisDirection5SOUTHE
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #41
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #41
@@ -568,7 +567,7 @@ bb.ap:                                            ; preds = %bb.an
   br label %_ZNSt10shared_ptrIN5osgeo4proj2cs8MeridianEEC2ERKS4_.exit381
 
 bb.aq:                                            ; preds = %.critedge303
-  br i1 %38, label %bb.au, label %bb.ar
+  br i1 %37, label %bb.au, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #41

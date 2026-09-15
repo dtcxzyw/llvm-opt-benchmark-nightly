@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZNK4entt14basic_registryINS_6entityESaIS1_EE15group_if_existsIJEJKiKcEJEEENS_11basic_groupINS_7owned_tIJDpNS_11storage_forIKT_S1_SaINSt12remove_constISB_E4typeEEE4typeEEEENS_5get_tIJDpNS9_IKT0_S1_SaINSC_ISM_E4typeEEE4typeEEEENS_9exclude_tIJDpNS9_IKT1_S1_SaINSC_ISW_E4typeEEE4typeEEEEEENSK_IJDpSL_EEENSU_IJDpSV_EEE.exit
 
 _ZNK4entt14basic_registryINS_6entityESaIS1_EE15group_if_existsIJEJKiKcEJEEENS_11basic_groupINS_7owned_tIJDpNS_11storage_forIKT_S1_SaINSt12remove_constISB_E4typeEEE4typeEEEENS_5get_tIJDpNS9_IKT0_S1_SaINSC_ISM_E4typeEEE4typeEEEENS_9exclude_tIJDpNS9_IKT1_S1_SaINSC_ISW_E4typeEEE4typeEEEEEENSK_IJDpSL_EEENSU_IJDpSV_EEE.exit: ; preds = %bb.o, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i, %bb.k, %bb.f, %_ZNK4entt9dense_mapIjSt10shared_ptrINS_8internal16group_descriptorEESt8identitySt8equal_toIvESaISt4pairIKjS4_EEE4findERS9_.exit.i
-  %.sroa.06.1.i = phi ptr [ %i.as, %bb.f ], [ %i.as, %bb.o ], [ %i.as, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i ], [ %i.as, %bb.k ], [ null, %_ZNK4entt9dense_mapIjSt10shared_ptrINS_8internal16group_descriptorEESt8identitySt8equal_toIvESaISt4pairIKjS4_EEE4findERS9_.exit.i ] ; 12 uses
+  %.sroa.06.1.i = phi ptr [ %i.as, %bb.f ], [ %i.as, %bb.o ], [ %i.as, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i ], [ %i.as, %bb.k ], [ null, %_ZNK4entt9dense_mapIjSt10shared_ptrINS_8internal16group_descriptorEESt8identitySt8equal_toIvESaISt4pairIKjS4_EEE4findERS9_.exit.i ] ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #28
   %.not.i = icmp eq ptr %i.r, null                ; 2 uses
   br i1 %.not.i, label %_ZNK4entt11basic_groupINS_7owned_tIJEEENS_5get_tIJNS_16basic_sigh_mixinINS_13basic_storageIiNS_6entityESaIiEEENS_14basic_registryIS6_SaIS6_EEEEENS4_INS5_IcS6_SaIcEEESB_EEEEENS_9exclude_tIJEEEE5emptyEv.exit.thread, label %_ZNK4entt11basic_groupINS_7owned_tIJEEENS_5get_tIJNS_16basic_sigh_mixinINS_13basic_storageIiNS_6entityESaIiEEENS_14basic_registryIS6_SaIS6_EEEEENS4_INS5_IcS6_SaIcEEESB_EEEEENS_9exclude_tIJEEEE5emptyEv.exit
@@ -608,8 +608,8 @@ bb.fk:                                            ; preds = %_ZN7testing8interna
   call void @llvm.lifetime.end.p0(ptr nonnull %35) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %40) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %41) #28
-  %.not.i642 = icmp eq ptr %.sroa.06.1.i, null    ; 4 uses
-  br i1 %.not.i642, label %_ZNK4entt11basic_groupINS_7owned_tIJEEENS_5get_tIJKNS_16basic_sigh_mixinINS_13basic_storageIiNS_6entityESaIiEEENS_14basic_registryIS6_SaIS6_EEEEEKNS4_INS5_IcS6_SaIcEEESB_EEEEENS_9exclude_tIJEEEE5beginEv.exit647.thread, label %_ZNK4entt11basic_groupINS_7owned_tIJEEENS_5get_tIJKNS_16basic_sigh_mixinINS_13basic_storageIiNS_6entityESaIiEEENS_14basic_registryIS6_SaIS6_EEEEEKNS4_INS5_IcS6_SaIcEEESB_EEEEENS_9exclude_tIJEEEE5beginEv.exit647
+  %.not.i642 = icmp ne ptr %.sroa.06.1.i, null    ; 6 uses
+  br i1 %.not.i642, label %_ZNK4entt11basic_groupINS_7owned_tIJEEENS_5get_tIJKNS_16basic_sigh_mixinINS_13basic_storageIiNS_6entityESaIiEEENS_14basic_registryIS6_SaIS6_EEEEEKNS4_INS5_IcS6_SaIcEEESB_EEEEENS_9exclude_tIJEEEE5beginEv.exit647, label %_ZNK4entt11basic_groupINS_7owned_tIJEEENS_5get_tIJKNS_16basic_sigh_mixinINS_13basic_storageIiNS_6entityESaIiEEENS_14basic_registryIS6_SaIS6_EEEEEKNS4_INS5_IcS6_SaIcEEESB_EEEEENS_9exclude_tIJEEEE5beginEv.exit647.thread
 
 _ZNK4entt11basic_groupINS_7owned_tIJEEENS_5get_tIJKNS_16basic_sigh_mixinINS_13basic_storageIiNS_6entityESaIiEEENS_14basic_registryIS6_SaIS6_EEEEEKNS4_INS5_IcS6_SaIcEEESB_EEEEENS_9exclude_tIJEEEE5beginEv.exit647.thread: ; preds = %bb.fk
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %41, i8 0, i64 16, i1 false)
@@ -878,7 +878,7 @@ bb.gk:                                            ; preds = %bb.fy
   call void @llvm.lifetime.end.p0(ptr nonnull %45) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %50) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %51) #28
-  br i1 %.not.i642, label %bb.gm, label %bb.gl
+  br i1 %.not.i642, label %bb.gl, label %bb.gm
 
 bb.gl:                                            ; preds = %bb.gk
   store ptr %i.tw, ptr %51, align 8, !tbaa !367, !alias.scope !895
@@ -1281,7 +1281,7 @@ bb.li:                                            ; preds = %bb.kw
   call void @llvm.lifetime.end.p0(ptr nonnull %76) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %81) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %82) #28
-  br i1 %.not.i642, label %_ZNK4entt11basic_groupINS_7owned_tIJEEENS_5get_tIJKNS_16basic_sigh_mixinINS_13basic_storageIiNS_6entityESaIiEEENS_14basic_registryIS6_SaIS6_EEEEEKNS4_INS5_IcS6_SaIcEEESB_EEEEENS_9exclude_tIJEEEE5beginEv.exit815, label %bb.lj
+  br i1 %.not.i642, label %bb.lj, label %_ZNK4entt11basic_groupINS_7owned_tIJEEENS_5get_tIJKNS_16basic_sigh_mixinINS_13basic_storageIiNS_6entityESaIiEEENS_14basic_registryIS6_SaIS6_EEEEEKNS4_INS5_IcS6_SaIcEEESB_EEEEENS_9exclude_tIJEEEE5beginEv.exit815
 
 bb.lj:                                            ; preds = %bb.li
   %i.ahe = getelementptr inbounds nuw i8, ptr %.sroa.06.1.i, i64 72
@@ -1534,7 +1534,7 @@ bb.mi:                                            ; preds = %bb.lw
   call void @llvm.lifetime.end.p0(ptr nonnull %86) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %91) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %92) #28
-  br i1 %.not.i642, label %bb.mk, label %bb.mj
+  br i1 %.not.i642, label %bb.mj, label %bb.mk
 
 bb.mj:                                            ; preds = %bb.mi
   store ptr %i.tw, ptr %92, align 8, !tbaa !367, !alias.scope !914
@@ -1937,12 +1937,11 @@ bb.oh:                                            ; preds = %bb.nu
   call void @_ZN7testing15AssertionResultD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %106) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %106) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %107) #28
-  %112 = icmp ne ptr %.sroa.06.1.i, null          ; 2 uses
-  %i.ana = zext i1 %112 to i8
+  %i.ana = zext i1 %.not.i642 to i8
   store i8 %i.ana, ptr %107, align 8, !tbaa !308
   %i.anb = getelementptr inbounds nuw i8, ptr %107, i64 8
   store ptr null, ptr %i.anb, align 8, !tbaa !309
-  br i1 %112, label %.critedge442, label %bb.oi
+  br i1 %.not.i642, label %.critedge442, label %bb.oi
 
 bb.oi:                                            ; preds = %bb.oh
   call void @llvm.lifetime.start.p0(ptr nonnull %108) #28

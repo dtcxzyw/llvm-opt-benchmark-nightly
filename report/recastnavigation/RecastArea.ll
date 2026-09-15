@@ -204,7 +204,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.a = add nsw i32 %1, -1
-  %i.b = zext nneg i32 %1 to i64                  ; 2 uses
+  %i.b = zext nneg i32 %1 to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.i
@@ -213,8 +213,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.i
   %i.c = trunc nuw nsw i64 %indvars.iv to i32
   %i.d = add i32 %i.a, %i.c
   %i.e = srem i32 %i.d, %1
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 4 uses
-  %i.f = icmp eq i64 %indvars.iv.next, %i.b
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %i.f = icmp eq i64 %indvars.iv.next, %i.b       ; 2 uses
   %i.g = mul nsw i32 %i.e, 3
   %i.h = sext i32 %i.g to i64
   %i.i = getelementptr inbounds [4 x i8], ptr %0, i64 %i.h ; 2 uses
@@ -367,8 +367,7 @@ bb.i:                                             ; preds = %bb.f, %bb.h
   %i.de = getelementptr inbounds [4 x i8], ptr %3, i64 %i.dd
   %i.df = getelementptr i8, ptr %i.de, i64 8
   store float %.sink, ptr %i.df, align 4, !tbaa !75
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.b
-  br i1 %exitcond.not, label %.thread, label %bb.b
+  br i1 %i.f, label %.thread, label %bb.b
 
 .thread:                                          ; preds = %bb.i, %bb.e, %bb.g, %bb.a
   %spec.select = phi i32 [ 0, %bb.a ], [ 0, %bb.g ], [ 0, %bb.e ], [ %.296, %bb.i ]

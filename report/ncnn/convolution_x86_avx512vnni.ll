@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.a
   %i.ags = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.agt = load i32, ptr %i.ags, align 4, !tbaa !16 ; 11 uses
   %i.agu = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.agv = load i32, ptr %i.agu, align 8, !tbaa !17 ; 11 uses
+  %i.agv = load i32, ptr %i.agu, align 8, !tbaa !17 ; 10 uses
   %i.agw = add nsw i32 %6, -1                     ; 2 uses
   %i.agx = mul nsw i32 %8, %i.agw
   %.neg.i.i = xor i32 %i.agx, -1
@@ -608,11 +608,8 @@ begin_hunk_1_@_ZN4ncnn45convolution_im2col_input_tile_int8_avx512vnniERKNS_3MatE
   %i.bug = icmp eq i32 %i.agv, 8
   %i.buh = sdiv i32 %5, 8                         ; 2 uses
   %i.bui = sdiv i32 %4, 8                         ; 2 uses
-  %12 = icmp ne i32 %i.agv, 8
-  %13 = icmp slt i32 %5, 8
   %i.buj = icmp sgt i32 %5, 7
-  %or.cond504.i.i = and i1 %i.buj, %i.bug
-  %brmerge503.i.i = or i1 %13, %12
+  %or.cond504.i.i = and i1 %i.buj, %i.bug         ; 2 uses
   %i.buk = insertelement <2 x i32> poison, i32 %10, i64 0
   %i.bul = shufflevector <2 x i32> %i.buk, <2 x i32> poison, <2 x i32> zeroinitializer
   %i.bum = insertelement <2 x i32> poison, i32 %i.aha, i64 0
@@ -1015,7 +1012,7 @@ bb.ah:                                            ; preds = %bb.ah, %.lr.ph453.i
   br i1 %exitcond583.not.i.i, label %.loopexit251.i.i, label %bb.ah, !llvm.loop !527
 
 .loopexit253.i.i:                                 ; preds = %bb.ae
-  br i1 %brmerge503.i.i, label %.loopexit251.i.i, label %.lr.ph457.i.i
+  br i1 %or.cond504.i.i, label %.lr.ph457.i.i, label %.loopexit251.i.i
 
 .lr.ph457.i.i:                                    ; preds = %.loopexit253.i.i
   %i.cqh = extractelement <2 x i32> %i.cld, i64 0

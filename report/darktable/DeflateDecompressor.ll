@@ -183,7 +183,7 @@ bb.a:
   %.sroa.0156.0.extract.trunc = trunc i64 %2 to i32 ; 2 uses
   %.sroa.7162.0.extract.shift = lshr i64 %2, 32   ; 3 uses
   %.sroa.7162.0.extract.trunc = trunc nuw i64 %.sroa.7162.0.extract.shift to i32
-  %.sroa.044.0.extract.trunc = trunc i64 %3 to i32 ; 2 uses
+  %.sroa.044.0.extract.trunc = trunc i64 %3 to i32
   %.sroa.245.0.extract.shift = lshr i64 %3, 32    ; 8 uses
   %.sroa.245.0.extract.trunc = trunc nuw i64 %.sroa.245.0.extract.shift to i32
   %.sroa.243.0.extract.shift = lshr i64 %4, 32    ; 7 uses
@@ -272,7 +272,6 @@ bb.d:                                             ; preds = %_ZNSt10unique_ptrIA
   %i.av = zext nneg i32 %i.r to i64               ; 18 uses
   %i.aw = and i64 %4, 2147483648
   %i.ax = icmp eq i64 %i.aw, 0
-  %5 = icmp ne i32 %.sroa.044.0.extract.trunc, 0
   %i.ay = icmp sgt i32 %.sroa.044.0.extract.trunc, 0 ; 3 uses
   %sext = shl i64 %2, 32                          ; 2 uses
   %i.az = ashr exact i64 %sext, 32                ; 15 uses
@@ -356,7 +355,6 @@ bb.d:                                             ; preds = %_ZNSt10unique_ptrIA
   %i.de = getelementptr i8, ptr %i.q, i64 %i.cx
   %scevgep279 = getelementptr i8, ptr %i.de, i64 %wide.trip.count.i81
   call void @llvm.assume(i1 %i.ax)
-  call void @llvm.assume(i1 %5)
   %min.iters.check296 = icmp samesign ult i64 %wide.trip.count.i81, 8
   %bound0280 = icmp ult ptr %scevgep271, %scevgep274
   %bound1281 = icmp ult ptr %scevgep273, %scevgep272

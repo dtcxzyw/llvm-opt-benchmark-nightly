@@ -202,10 +202,9 @@ bb.e:                                             ; preds = %bb.c
 define noundef nonnull align 8 ptr @_RNvMNtCskKYJnXoAH79_10tokio_test2ioNtB2_7Builder4wait(ptr noalias nofree noundef returned align 8 dereferenceable(56) %0, i64 noundef %1, i32 noundef range(i32 0, 1000000000) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 6 uses
-  %3 = icmp eq i64 %1, 0
+  %3 = icmp ne i64 %1, 0
   %i.b = icmp samesign ugt i32 %2, 1000000
-  %4 = icmp ne i64 %1, 0
-  %i.c = select i1 %3, i1 %i.b, i1 %4             ; 2 uses
+  %i.c = select i1 %3, i1 true, i1 %i.b           ; 2 uses
   %..i = select i1 %i.c, i32 %2, i32 1000000
   %.2.i = select i1 %i.c, i64 %1, i64 0
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)

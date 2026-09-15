@@ -202,8 +202,8 @@ bb.m:                                             ; preds = %bb.j
 
 bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
-  %i.am = call ptr @stats_prefix_dump(ptr noundef nonnull %i.a) #11 ; 5 uses
-  %i.an = icmp ne ptr %i.am, null
+  %i.am = call ptr @stats_prefix_dump(ptr noundef nonnull %i.a) #11 ; 4 uses
+  %i.an = icmp ne ptr %i.am, null                 ; 2 uses
   %i.ao = load i32, ptr %i.a, align 4             ; 2 uses
   %i.ap = icmp sgt i32 %i.ao, 0
   %or.cond.not = select i1 %i.an, i1 %i.ap, i1 false
@@ -211,8 +211,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   call void @out_of_memory(ptr noundef nonnull %0, ptr noundef nonnull @.str.61) #11
-  %.not = icmp eq ptr %i.am, null
-  br i1 %.not, label %.thread, label %bb.p
+  br i1 %i.an, label %bb.p, label %.thread
 
 bb.p:                                             ; preds = %bb.o
   call void @free(ptr noundef nonnull %i.am) #11

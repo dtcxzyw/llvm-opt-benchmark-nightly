@@ -205,8 +205,8 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i: ; preds = %bb.c
   br label %bb.d
 
 bb.d:                                             ; preds = %.noexc60, %bb.b
-  %.pre-phi4.i = phi i64 [ %.pre3.i, %.noexc60 ], [ %i.z, %bb.b ] ; 3 uses
-  %.pre-phi.i = phi i64 [ %.pre2.i, %.noexc60 ], [ %i.y, %bb.b ] ; 3 uses
+  %.pre-phi4.i = phi i64 [ %.pre3.i, %.noexc60 ], [ %i.z, %bb.b ] ; 2 uses
+  %.pre-phi.i = phi i64 [ %.pre2.i, %.noexc60 ], [ %i.y, %bb.b ] ; 2 uses
   %i.ad = phi ptr [ %.pre.i, %.noexc60 ], [ %i.x, %bb.b ] ; 2 uses
   %i.ae = phi ptr [ %i.ac, %.noexc60 ], [ null, %bb.b ] ; 10 uses
   %i.af = sub i64 %.pre-phi.i, %.pre-phi4.i       ; 5 uses
@@ -230,8 +230,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %i.aj = getelementptr inbounds i8, ptr %i.ae, i64 %i.af ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
   store ptr %6, ptr %5, align 8, !tbaa !378
-  %.not6.i.i.i = icmp eq i64 %.pre-phi.i, %.pre-phi4.i ; 2 uses
-  br i1 %.not6.i.i.i, label %.loopexit279, label %.lr.ph.i.i.i
+  %.not6.i.i.i = icmp ne i64 %.pre-phi.i, %.pre-phi4.i ; 3 uses
+  br i1 %.not6.i.i.i, label %.lr.ph.i.i.i, label %.loopexit279
 
 .lr.ph.i.i.i:                                     ; preds = %bb.h, %.noexc61
   %.sroa.03.07.i.i.i = phi ptr [ %i.al, %.noexc61 ], [ %i.ae, %bb.h ] ; 3 uses
@@ -257,7 +257,6 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %i.ar = getelementptr inbounds nuw i8, ptr %7, i64 32
   %i.as = getelementptr inbounds nuw i8, ptr %7, i64 48 ; 2 uses
   %i.at = lshr exact i64 %i.af, 2
-  %13 = icmp ne i64 %.pre-phi.i, %.pre-phi4.i
   %i.au = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 2 uses
   %i.av = trunc i64 %i.at to i32                  ; 2 uses
   br label %bb.l
@@ -303,7 +302,7 @@ bb.m:                                             ; preds = %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
   %i.bd = load ptr, ptr %i.ap, align 8            ; 2 uses
   %.not6.i.i.i64 = icmp eq ptr %i.bd, null
-  %or.cond = select i1 %13, i1 true, i1 %.not6.i.i.i64
+  %or.cond = select i1 %.not6.i.i.i, i1 true, i1 %.not6.i.i.i64
   br i1 %or.cond, label %_ZNSt13unordered_setIiSt4hashIiESt8equal_toIiESaIiEE6insertINSt8__detail14_Node_iteratorIiLb1ELb0EEEEEvT_SA_.exit, label %.lr.ph.i.i.i65
 
 .lr.ph.i.i.i65:                                   ; preds = %bb.m, %.noexc68
@@ -406,7 +405,7 @@ bb.t:                                             ; preds = %.critedge.i
   br label %.body
 
 _ZNSt13unordered_setIiSt4hashIiESt8equal_toIiESaIiEE6insertINSt8__detail14_Node_iteratorIiLb1ELb0EEEEEvT_SA_.exit: ; preds = %.noexc68, %bb.m
-  br i1 %.not6.i.i.i, label %_ZNSt13unordered_setIiSt4hashIiESt8equal_toIiESaIiEE6insertINSt8__detail14_Node_iteratorIiLb1ELb0EEEEEvT_SA_.exit76.thread, label %.lr.ph
+  br i1 %.not6.i.i.i, label %.lr.ph, label %_ZNSt13unordered_setIiSt4hashIiESt8equal_toIiESaIiEE6insertINSt8__detail14_Node_iteratorIiLb1ELb0EEEEEvT_SA_.exit76.thread
 
 .lr.ph:                                           ; preds = %_ZNSt13unordered_setIiSt4hashIiESt8equal_toIiESaIiEE6insertINSt8__detail14_Node_iteratorIiLb1ELb0EEEEEvT_SA_.exit
   %i.cn = load i64, ptr %i.aq, align 8, !tbaa !373

@@ -204,9 +204,9 @@ bb.x:                                             ; preds = %bb.w
   %i.ce = ptrtoaddr ptr %i.cd to i64              ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 11 uses
   store i32 0, ptr %i.cf, align 8, !tbaa !26
-  %i.cg = load i32, ptr %i.bg, align 8, !tbaa !19 ; 3 uses
-  %5 = icmp eq i32 %i.cg, 1                       ; 3 uses
-  br i1 %5, label %.preheader280, label %.loopexit281
+  %i.cg = load i32, ptr %i.bg, align 8, !tbaa !19 ; 2 uses
+  %5 = icmp ne i32 %i.cg, 1                       ; 4 uses
+  br i1 %5, label %.loopexit281, label %.preheader280
 
 .preheader280:                                    ; preds = %bb.x
   %i.ch = load i32, ptr %i.p, align 8, !tbaa !52  ; 2 uses
@@ -268,7 +268,7 @@ bb.aa:                                            ; preds = %bb.w
   %i.db = getelementptr inbounds nuw i8, ptr %i.y, i64 8
   %i.dc = load i32, ptr %i.db, align 4, !tbaa !54
   store i32 %i.dc, ptr %i.ca, align 4, !tbaa !28
-  br i1 %5, label %bb.ab, label %bb.ad
+  br i1 %5, label %bb.ad, label %bb.ab
 
 bb.ab:                                            ; preds = %._crit_edge291
   %i.dd = getelementptr inbounds [4 x i8], ptr %.0206, i64 %i.cx ; 2 uses
@@ -294,7 +294,6 @@ bb.ad:                                            ; preds = %bb.ab, %bb.ac, %._c
 
 .lr.ph301:                                        ; preds = %bb.ad
   %.sroa.0252.1292 = getelementptr inbounds nuw i8, ptr %i.y, i64 12
-  %6 = icmp ne i32 %i.cg, 1
   br label %bb.ae
 
 bb.ae:                                            ; preds = %.lr.ph301, %bb.am
@@ -328,13 +327,13 @@ bb.ag:                                            ; preds = %bb.af
   store i32 %i.dp, ptr %i.dy, align 4, !tbaa !28
   %i.dz = add nsw i32 %.0195297, 1
   %.not246 = icmp eq i32 %.1200296, %i.dn
-  %or.cond = or i1 %6, %.not246
+  %or.cond = or i1 %5, %.not246
   %spec.select.v = select i1 %or.cond, i32 1, i32 2
   %spec.select = add nsw i32 %spec.select.v, %.0193298
   br label %bb.am
 
 bb.ah:                                            ; preds = %bb.af, %bb.ae
-  br i1 %5, label %bb.ai, label %bb.ak
+  br i1 %5, label %bb.ak, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
   %i.ea = add nsw i32 %.1203295, 1

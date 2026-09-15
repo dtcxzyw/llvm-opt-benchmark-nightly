@@ -202,9 +202,9 @@ bb.a:
   %1 = alloca %"class.std::unique_ptr.8", align 8 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #23
   call void @_ZN6casadi15ifstream_compatERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt13_Ios_Openmode(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.8") align 8 %1, ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef 8)
-  %i.a = load ptr, ptr %1, align 8, !tbaa !45     ; 4 uses
-  %.not.i = icmp eq ptr %i.a, null
-  br i1 %.not.i, label %_ZNSt10unique_ptrISiSt14default_deleteISiEED2Ev.exit, label %_ZNKSt14default_deleteISiEclEPSi.exit.i
+  %i.a = load ptr, ptr %1, align 8, !tbaa !45     ; 3 uses
+  %.not.i = icmp ne ptr %i.a, null                ; 2 uses
+  br i1 %.not.i, label %_ZNKSt14default_deleteISiEclEPSi.exit.i, label %_ZNSt10unique_ptrISiSt14default_deleteISiEED2Ev.exit
 
 _ZNKSt14default_deleteISiEclEPSi.exit.i:          ; preds = %bb.a
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !36
@@ -214,9 +214,8 @@ _ZNKSt14default_deleteISiEclEPSi.exit.i:          ; preds = %bb.a
   br label %_ZNSt10unique_ptrISiSt14default_deleteISiEED2Ev.exit
 
 _ZNSt10unique_ptrISiSt14default_deleteISiEED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteISiEclEPSi.exit.i
-  %2 = icmp ne ptr %i.a, null
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #23
-  ret i1 %2
+  ret i1 %.not.i
 }
 
 ; Function Attrs: noinline noreturn nounwind uwtable

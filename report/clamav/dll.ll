@@ -202,15 +202,14 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 83476
-  %6 = icmp eq i32 %1, 2
-  %.str.1..str.2 = select i1 %6, ptr @.str.1, ptr @.str.2
+  %6 = icmp ne i32 %1, 2                          ; 2 uses
+  %.str.1..str.2 = select i1 %6, ptr @.str.2, ptr @.str.1
   invoke void @_Z8wcsncpyzPwPKwm(ptr noundef nonnull %i.ae, ptr noundef nonnull %.str.1..str.2, i64 noundef 2064)
           to label %bb.ab unwind label %bb.i
 
 bb.ab:                                            ; preds = %bb.aa
-  %7 = icmp ne i32 %1, 2
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 58617
-  %i.ag = zext i1 %7 to i8
+  %i.ag = zext i1 %6 to i8
   store i8 %i.ag, ptr %i.af, align 1, !tbaa !186
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #16
   store i8 0, ptr %i.c, align 1, !tbaa !187

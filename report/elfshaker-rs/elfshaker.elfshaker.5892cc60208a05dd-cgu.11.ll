@@ -202,12 +202,12 @@ bb.ad:                                            ; preds = %_RINvNtNtCskuiImRAV
   store i64 %.sroa.11.0.copyload, ptr %.sroa.3.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
   %i.bm = invoke noundef ptr @_RINvNtCsaL1QbXo9JQH_3std2fs6renameRNtNtB4_4path7PathBufRNtBz_4PathECs7BtpbLEd5q3_9elfshaker(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.o, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %3, i64 noundef %4)
-          to label %bb.ae unwind label %bb.az     ; 8 uses
+          to label %bb.ae unwind label %bb.az     ; 6 uses
 
 bb.ae:                                            ; preds = %bb.ad
   store ptr %i.bm, ptr %i.n, align 8
-  %.not = icmp eq ptr %i.bm, null
-  br i1 %.not, label %bb.ai, label %bb.af
+  %.not = icmp ne ptr %i.bm, null                 ; 3 uses
+  br i1 %.not, label %bb.af, label %bb.ai
 
 bb.af:                                            ; preds = %bb.ae
   %i.bn = invoke noundef zeroext i1 @_RNvMs16_NtCsaL1QbXo9JQH_3std4pathNtB6_4Path7is_file(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %3, i64 noundef %4)
@@ -246,9 +246,8 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsSt
 .body:                                            ; preds = %bb.al, %bb.aj, %bb.ah, %bb.aw
   %.pn.pn = phi { ptr, i32 } [ %lpad.thr_comm.split-lp, %bb.aw ], [ %lpad.thr_comm, %bb.ah ], [ %i.bs, %bb.al ], [ %i.bp, %bb.aj ] ; 2 uses
   %.sroa.013.2 = phi i8 [ 1, %bb.aw ], [ 1, %bb.ah ], [ %.sroa.013.0, %bb.al ], [ %.sroa.013.0, %bb.aj ]
-  %5 = icmp ne ptr %i.bm, null
   %i.br = trunc nuw i8 %.sroa.013.2 to i1
-  %or.cond3 = select i1 %5, i1 %i.br, i1 false
+  %or.cond3 = select i1 %.not, i1 %i.br, i1 false
   br i1 %or.cond3, label %bb.ay, label %common.resume
 
 bb.al:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsStringECs7BtpbLEd5q3_9elfshaker.exit.i
@@ -260,9 +259,8 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECs7B
   %.sroa.013.3 = phi i8 [ %.sroa.013.0, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsStringECs7BtpbLEd5q3_9elfshaker.exit.i ], [ 1, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs7BtpbLEd5q3_9elfshaker.exit.i ], [ 1, %bb.an ]
   %.sroa.0.1 = phi ptr [ %i.bm, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsStringECs7BtpbLEd5q3_9elfshaker.exit.i ], [ null, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs7BtpbLEd5q3_9elfshaker.exit.i ], [ null, %bb.an ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
-  %6 = icmp ne ptr %i.bm, null
   %i.bt = trunc nuw i8 %.sroa.013.3 to i1
-  %or.cond = select i1 %6, i1 %i.bt, i1 false
+  %or.cond = select i1 %.not, i1 %i.bt, i1 false
   br i1 %or.cond, label %bb.as, label %bb.ar
 
 bb.am:                                            ; preds = %bb.ag

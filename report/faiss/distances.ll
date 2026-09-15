@@ -204,15 +204,15 @@ bb.a:
   %i.i = mul i64 %i.h, %i.g
   %i.j = load i32, ptr %3, align 4, !tbaa !33
   %i.k = sext i32 %i.j to i64                     ; 2 uses
-  %i.l = udiv i64 %i.i, %i.k                      ; 6 uses
+  %i.l = udiv i64 %i.i, %i.k                      ; 5 uses
   %i.m = add nsw i32 %i.f, 1
   %i.n = sext i32 %i.m to i64
   %i.o = mul i64 %i.h, %i.n
-  %i.p = udiv i64 %i.o, %i.k                      ; 3 uses
+  %i.p = udiv i64 %i.o, %i.k                      ; 2 uses
   %i.q = sub i64 %i.p, %i.l                       ; 4 uses
   %i.r = load ptr, ptr %4, align 8, !tbaa !30     ; 2 uses
   %i.s = icmp ne ptr %i.r, null
-  %i.t = icmp ne i64 %i.p, %i.l
+  %i.t = icmp ne i64 %i.p, %i.l                   ; 2 uses
   %or.cond = select i1 %i.s, i1 %i.t, i1 false
   br i1 %or.cond, label %bb.b, label %bb.c
 
@@ -243,8 +243,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 ._crit_edge:                                      ; preds = %_ZN5faiss12heap_heapifyINS_4CMaxIflEEEEvmPNT_1TEPNS3_2TIEPKS4_PKS6_m.exit, %.lr.ph, %bb.c
   %.lcssa = phi i64 [ 0, %bb.c ], [ %i.aa, %.lr.ph ], [ %i.av, %_ZN5faiss12heap_heapifyINS_4CMaxIflEEEEvmPNT_1TEPNS3_2TIEPKS4_PKS6_m.exit ]
-  %.not = icmp eq i64 %i.p, %i.l
-  br i1 %.not, label %bb.l, label %bb.d
+  br i1 %i.t, label %bb.d, label %bb.l
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %_ZN5faiss12heap_heapifyINS_4CMaxIflEEEEvmPNT_1TEPNS3_2TIEPKS4_PKS6_m.exit
   %i.ai = phi i64 [ %i.av, %_ZN5faiss12heap_heapifyINS_4CMaxIflEEEEvmPNT_1TEPNS3_2TIEPKS4_PKS6_m.exit ], [ %i.aa, %.lr.ph ]

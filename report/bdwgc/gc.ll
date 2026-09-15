@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.n, label %bb.q, label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.a
-  %i.o = tail call ptr @GC_unix_get_mem(i64 noundef %i.i) ; 7 uses
+  %i.o = tail call ptr @GC_unix_get_mem(i64 noundef %i.i) ; 6 uses
   %i.p = icmp eq ptr %i.o, null
   br i1 %i.p, label %bb.e, label %bb.f, !prof !48
 
@@ -271,23 +271,20 @@ min_bytes_allocd.exit:                            ; preds = %bb.i, %bb.j
   %i.aq = load i64, ptr @min_bytes_allocd_minimum, align 8
   %i.ar = tail call i64 @llvm.umax.i64(i64 %spec.select.i, i64 %i.aq) ; 2 uses
   %i.as = add i64 %i.ar, 33554432                 ; 2 uses
-  %i.at = load ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 16), align 8 ; 3 uses
-  %i.au = icmp eq ptr %i.at, null
+  %i.at = load ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 16), align 8 ; 2 uses
+  %i.au = icmp eq ptr %i.at, null                 ; 2 uses
   %.not38 = icmp sgt ptr %i.o, inttoptr (i64 -1 to ptr)
   %or.cond = and i1 %.not38, %i.au
-  br i1 %or.cond, label %bb.k, label %1
+  %1 = icmp ult ptr %i.at, %i.o
+  %or.cond41 = xor i1 %i.au, %1
+  %or.cond49 = or i1 %or.cond, %or.cond41
+  %2 = ptrtoint ptr %i.o to i64                   ; 4 uses
+  br i1 %or.cond49, label %bb.k, label %bb.m
 
-1:                                                ; preds = %min_bytes_allocd.exit
-  %.not39 = icmp ne ptr %i.at, null
-  %2 = icmp ult ptr %i.at, %i.o
-  %or.cond41 = and i1 %.not39, %2
-  br i1 %or.cond41, label %bb.k, label %bb.m
-
-bb.k:                                             ; preds = %1, %min_bytes_allocd.exit
-  %3 = ptrtoint ptr %i.o to i64                   ; 2 uses
-  %i.av = add i64 %i.i, %3
+bb.k:                                             ; preds = %min_bytes_allocd.exit
+  %i.av = add i64 %i.i, %2
   %i.aw = add i64 %i.av, %i.as                    ; 2 uses
-  %i.ax = icmp ugt i64 %i.aw, %3
+  %i.ax = icmp ugt i64 %i.aw, %2
   br i1 %i.ax, label %bb.l, label %bb.o
 
 bb.l:                                             ; preds = %bb.k
@@ -296,10 +293,9 @@ bb.l:                                             ; preds = %bb.k
   %i.ba = tail call noundef i64 @llvm.umax.i64(i64 %i.az, i64 %i.aw)
   br label %.sink.split
 
-bb.m:                                             ; preds = %1
-  %4 = ptrtoint ptr %i.o to i64                   ; 2 uses
-  %i.bb = sub i64 %4, %i.as                       ; 2 uses
-  %i.bc = icmp ult i64 %i.bb, %4
+bb.m:                                             ; preds = %min_bytes_allocd.exit
+  %i.bb = sub i64 %2, %i.as                       ; 2 uses
+  %i.bc = icmp ult i64 %i.bb, %2
   br i1 %i.bc, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
@@ -702,8 +698,8 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.p
   %i.bf = getelementptr inbounds nuw i8, ptr %i.af, i64 25 ; 7 uses
   %i.bg = load i8, ptr %i.bf, align 1             ; 2 uses
-  %i.bh = and i8 %i.bg, 2                         ; 2 uses
-  %i.bi = icmp ne i8 %i.bh, 0
+  %i.bh = and i8 %i.bg, 2
+  %i.bi = icmp ne i8 %i.bh, 0                     ; 3 uses
   %i.bj = and i32 %i.az, 2
   %i.bk = icmp eq i32 %i.bj, 0
   %or.cond.i = or i1 %i.bk, %i.bi
@@ -783,12 +779,11 @@ GC_unmap.exit.i:                                  ; preds = %bb.x, %bb.u
 
 bb.y:                                             ; preds = %bb.q
   %i.cx = and i8 %i.ay, 2
-  %3 = icmp eq i8 %i.cx, 0
-  %i.cy = icmp eq i8 %i.bh, 0                     ; 2 uses
-  br i1 %3, label %bb.z, label %bb.ah
+  %i.cy = icmp eq i8 %i.cx, 0
+  br i1 %i.cy, label %bb.z, label %bb.ah
 
 bb.z:                                             ; preds = %bb.y
-  br i1 %i.cy, label %GC_remap.exit.i, label %bb.aa
+  br i1 %i.bi, label %bb.aa, label %GC_remap.exit.i
 
 bb.aa:                                            ; preds = %bb.z
   %i.cz = icmp ugt i64 %i.ah, %i.bc
@@ -871,7 +866,7 @@ GC_remap.exit98.i:                                ; preds = %bb.ag, %bb.af
   br label %GC_remap.exit.i
 
 bb.ah:                                            ; preds = %bb.y
-  br i1 %i.cy, label %GC_remap.exit.i, label %bb.ai
+  br i1 %i.bi, label %bb.ai, label %GC_remap.exit.i
 
 bb.ai:                                            ; preds = %bb.ah
   tail call fastcc void @GC_unmap_gap(ptr noundef %.083113.i, i64 noundef %i.ah, ptr noundef %i.as, i64 noundef %i.bc)
@@ -1274,7 +1269,7 @@ bb.k:                                             ; preds = %GC_remove_counts.ex
   %i.bp = lshr i64 %i.bo, 22                      ; 3 uses
   %i.bq = and i64 %i.bp, 2047
   %i.br = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 166400), i64 %i.bq ; 2 uses
-  %i.bs = load ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 192), align 8 ; 8 uses
+  %i.bs = load ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 192), align 8 ; 7 uses
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.l, %bb.k
@@ -1361,18 +1356,17 @@ GC_find_header.exit.i.i:                          ; preds = %bb.p
 
 .preheader.i.i:                                   ; preds = %._crit_edge.i.i, %.preheader.i.i
   %.027.in.i.i.i = phi ptr [ %i.ds, %.preheader.i.i ], [ %i.ch, %._crit_edge.i.i ]
-  %.027.i.i.i = load ptr, ptr %.027.in.i.i.i, align 8 ; 5 uses
+  %.027.i.i.i = load ptr, ptr %.027.in.i.i.i, align 8 ; 4 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %.027.i.i.i, i64 8208
   %i.do = load i64, ptr %i.dn, align 8
   %i.dp = icmp ne i64 %i.do, %i.cf
-  %i.dq = icmp ne ptr %.027.i.i.i, %i.bs
+  %i.dq = icmp ne ptr %.027.i.i.i, %i.bs          ; 2 uses
   %i.dr = select i1 %i.dp, i1 %i.dq, i1 false
   %i.ds = getelementptr inbounds nuw i8, ptr %.027.i.i.i, i64 8216
   br i1 %i.dr, label %.preheader.i.i, label %bb.q, !llvm.loop !127
 
 bb.q:                                             ; preds = %.preheader.i.i
-  %1 = icmp eq ptr %.027.i.i.i, %i.bs
-  br i1 %1, label %.preheader42.i.i.i, label %.preheader.i.i.i.preheader
+  br i1 %i.dq, label %.preheader.i.i.i.preheader, label %.preheader42.i.i.i
 
 .preheader.i.i.i.preheader:                       ; preds = %.lr.ph.i.i.i, %bb.q
   %.153.i.i.i.ph = phi i64 [ %i.cp, %bb.q ], [ 1023, %.lr.ph.i.i.i ]
@@ -1775,7 +1769,7 @@ bb.d:                                             ; preds = %bb.b
   %i.l = lshr i64 %i.k, 22                        ; 2 uses
   %i.m = and i64 %i.l, 2047
   %i.n = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 166400), i64 %i.m
-  %i.o = load ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 192), align 8 ; 7 uses
+  %i.o = load ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 192), align 8 ; 6 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %bb.d
@@ -1831,11 +1825,11 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.i, %.critedge.i
   %.028.in.i.i = phi ptr [ %i.ah, %.critedge.i ], [ %i.an, %bb.i ]
-  %.028.i.i = load ptr, ptr %.028.in.i.i, align 8 ; 5 uses
+  %.028.i.i = load ptr, ptr %.028.in.i.i, align 8 ; 4 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %.028.i.i, i64 8208
   %i.aj = load i64, ptr %i.ai, align 8
   %i.ak = icmp ne i64 %i.aj, %i.af
-  %i.al = icmp ne ptr %.028.i.i, %i.o
+  %i.al = icmp ne ptr %.028.i.i, %i.o             ; 2 uses
   %i.am = select i1 %i.ak, i1 %i.al, i1 false
   %i.an = getelementptr inbounds nuw i8, ptr %.028.i.i, i64 8216
   br i1 %i.am, label %bb.i, label %bb.j, !llvm.loop !36
@@ -1843,8 +1837,7 @@ bb.i:                                             ; preds = %bb.i, %.critedge.i
 bb.j:                                             ; preds = %bb.i
   %i.ao = lshr i64 %i.ae, 12
   %i.ap = and i64 %i.ao, 1023
-  %1 = icmp eq ptr %.028.i.i, %i.o
-  br i1 %1, label %.preheader42.i.i, label %.preheader.i.i.preheader
+  br i1 %i.al, label %.preheader.i.i.preheader, label %.preheader42.i.i
 
 .preheader.i.i.preheader:                         ; preds = %.lr.ph.i.i, %bb.j
   %.153.i.i.ph = phi i64 [ %i.ap, %bb.j ], [ 0, %.lr.ph.i.i ]
@@ -2247,16 +2240,16 @@ bb.a:
   %i.b = lshr i64 %i.a, 22                        ; 3 uses
   %i.c = and i64 %i.b, 2047
   %i.d = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 166400), i64 %i.c
-  %i.e = load ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 192), align 8 ; 2 uses
+  %i.e = load ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 192), align 8
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
   %.028.in = phi ptr [ %i.d, %bb.a ], [ %i.k, %bb.b ]
-  %.028 = load ptr, ptr %.028.in, align 8         ; 5 uses
+  %.028 = load ptr, ptr %.028.in, align 8         ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.028, i64 8208
   %i.g = load i64, ptr %i.f, align 8
   %i.h = icmp ne i64 %i.g, %i.b
-  %i.i = icmp ne ptr %.028, %i.e
+  %i.i = icmp ne ptr %.028, %i.e                  ; 2 uses
   %i.j = select i1 %i.h, i1 %i.i, i1 false
   %i.k = getelementptr inbounds nuw i8, ptr %.028, i64 8216
   br i1 %i.j, label %bb.b, label %bb.c, !llvm.loop !36
@@ -2264,8 +2257,7 @@ bb.b:                                             ; preds = %bb.b, %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.l = lshr i64 %i.a, 12
   %i.m = and i64 %i.l, 1023
-  %1 = icmp eq ptr %.028, %i.e
-  br i1 %1, label %.preheader42, label %.preheader.preheader
+  br i1 %i.i, label %.preheader.preheader, label %.preheader42
 
 .preheader.preheader:                             ; preds = %.lr.ph, %bb.c
   %.153.ph = phi i64 [ %i.m, %bb.c ], [ 0, %.lr.ph ]

@@ -110,7 +110,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 56 ; 5 uses
   %.sroa.0234.0.copyload = load i32, ptr %i.a, align 8, !tbaa !13 ; 8 uses
   %.sroa.12242.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 60 ; 5 uses
-  %.sroa.12242.0.copyload = load i32, ptr %.sroa.12242.0..sroa_idx, align 4, !tbaa !13 ; 7 uses
+  %.sroa.12242.0.copyload = load i32, ptr %.sroa.12242.0..sroa_idx, align 4, !tbaa !13 ; 6 uses
   %.sroa.20.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 64 ; 3 uses
   %.sroa.20252.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 72
   %i.b = load <2 x i64>, ptr %.sroa.20.0..sroa_idx, align 8
@@ -151,7 +151,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.m
   %.1280 = phi double [ %.0143291, %.lr.ph ], [ %i.ee, %bb.m ] ; 2 uses
   %.1145279 = phi i32 [ %.0144290, %.lr.ph ], [ %.2146, %bb.m ]
   %.1149278 = phi i32 [ %.0148289, %.lr.ph ], [ %i.eg, %bb.m ] ; 5 uses
-  %i.s = shl nuw nsw i32 %.1149278, %i.k          ; 9 uses
+  %i.s = shl nuw nsw i32 %.1149278, %i.k          ; 8 uses
   %i.t = load i32, ptr %i.d, align 4, !tbaa !139
   %i.u = add nuw nsw i32 %i.s, 16                 ; 3 uses
   %i.v = add nuw nsw i32 %i.u, %i.l               ; 2 uses
@@ -204,7 +204,8 @@ BrotliInitDistanceParams.exit:                    ; preds = %bb.b, %BrotliCalcul
   %.0.i183 = phi i32 [ %i.ax, %BrotliCalculateDistanceCodeLimit.exit.i ], [ %i.v, %bb.b ]
   %i.ay = zext i32 %.021.i to i64
   %i.az = icmp eq i32 %i.s, %.sroa.12242.0.copyload
-  %or.cond = select i1 %i.o, i1 %i.az, i1 false
+  %.fr = freeze i1 %i.az                          ; 2 uses
+  %or.cond = and i1 %i.o, %.fr
   %.2146 = select i1 %or.cond, i32 0, i32 %.1145279 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2184) %i.c, i8 0, i64 2184, i1 false)
   store double +inf, ptr %i.f, align 8, !tbaa !18
@@ -217,9 +218,7 @@ bb.e:                                             ; preds = %BrotliInitDistanceP
   br i1 %.not4555.i, label %.loopexit271, label %.lr.ph.split.us.preheader.i
 
 .lr.ph.i:                                         ; preds = %bb.e
-  %11 = icmp ne i32 %.sroa.12242.0.copyload, %i.s
-  %12 = freeze i1 %11
-  br i1 %12, label %.lr.ph.split.us.preheader.i, label %.lr.ph.split.i
+  br i1 %.fr, label %.lr.ph.split.i, label %.lr.ph.split.us.preheader.i
 
 .lr.ph.split.us.preheader.i:                      ; preds = %.thread.i, %.lr.ph.i
   %i.ba = zext nneg i32 %i.s to i64               ; 2 uses
@@ -365,8 +364,8 @@ PrefixEncodeCopyDistance.exit.i:                  ; preds = %bb.l
   %exitcond.not.i = icmp eq i64 %i.ec, %8
   br i1 %exitcond.not.i, label %.loopexit271, label %.lr.ph.split.i, !llvm.loop !114
 
-.loopexit271:                                     ; preds = %.critedge.i, %.critedge.us.i, %.thread.i, %bb.e
-  %.029.lcssa.i = phi double [ 0.000000e+00, %bb.e ], [ 0.000000e+00, %.thread.i ], [ %.2.us.i, %.critedge.us.i ], [ %.2.i, %.critedge.i ]
+.loopexit271:                                     ; preds = %.critedge.us.i, %.critedge.i, %.thread.i, %bb.e
+  %.029.lcssa.i = phi double [ 0.000000e+00, %bb.e ], [ 0.000000e+00, %.thread.i ], [ %.2.i, %.critedge.i ], [ %.2.us.i, %.critedge.us.i ]
   %i.ed = tail call double @BrotliPopulationCostDistance(ptr noundef nonnull %i.c) #8
   %i.ee = fadd double %.029.lcssa.i, %i.ed        ; 3 uses
   %i.ef = fcmp ogt double %i.ee, %.1280

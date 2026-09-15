@@ -205,6 +205,7 @@ bb.n:                                             ; preds = %bb.m
 
 .critedge96.thread128:                            ; preds = %bb.n
   %i.at = and i32 %2, 24
+  %3 = icmp ne i32 %i.at, 24
   br label %bb.x
 
 .lr.ph:                                           ; preds = %bb.n
@@ -250,8 +251,8 @@ bb.o:                                             ; preds = %bb.o, %.epil.prehea
   %.lcssa140.a = phi i64 [ %i.by, %._crit_edge.unr-lcssa ], [ %i.bb, %bb.o ]
   %.lcssa139 = phi i64 [ %i.bz, %._crit_edge.unr-lcssa ], [ %i.bc, %bb.o ]
   %i.be = icmp sgt i64 %.lcssa139, 1
-  %i.bf = and i32 %2, 24                          ; 2 uses
-  %i.bg = icmp ne i32 %i.bf, 24
+  %i.bf = and i32 %2, 24
+  %i.bg = icmp ne i32 %i.bf, 24                   ; 2 uses
   %or.cond = select i1 %i.bg, i1 %i.be, i1 false
   br i1 %or.cond, label %bb.q, label %.critedge96
 
@@ -389,7 +390,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u
 bb.x:                                             ; preds = %.critedge96.thread128, %.critedge96
   %i.dq = phi i64 [ 0, %.critedge96.thread128 ], [ %i.do, %.critedge96 ] ; 2 uses
   %.086.lcssa126130 = phi i64 [ %i.ap, %.critedge96.thread128 ], [ %.lcssa140.a, %.critedge96 ]
-  %3 = phi i32 [ %i.at, %.critedge96.thread128 ], [ %i.bf, %.critedge96 ]
+  %4 = phi i1 [ %3, %.critedge96.thread128 ], [ %i.bg, %.critedge96 ]
   %i.dr = tail call ptr @PyMem_Malloc(i64 noundef %i.dq) ; 5 uses
   %.not.i = icmp eq ptr %i.dr, null
   br i1 %.not.i, label %bb.y, label %_ZN8nanobind6detail15scoped_pymallocIlEC2Emm.exit, !prof !3
@@ -450,8 +451,7 @@ _ZL10_Py_NewRefP7_object.exit:                    ; preds = %._crit_edge116, %bb
   %i.eu = insertelement <2 x ptr> %i.et, ptr %i.dr, i64 1
   %i.ev = select <2 x i1> %i.es, <2 x ptr> splat (ptr null), <2 x ptr> %i.eu
   store <2 x ptr> %i.ev, ptr %i.er, align 8
-  %4 = icmp eq i32 %3, 24
-  %i.ew = select i1 %4, ptr %i.du, ptr null
+  %i.ew = select i1 %4, ptr null, ptr %i.du
   %i.ex = getelementptr inbounds nuw i8, ptr %1, i64 56
   store ptr %i.ew, ptr %i.ex, align 8
   %i.ey = getelementptr inbounds nuw i8, ptr %1, i64 64
@@ -817,23 +817,22 @@ bb.c:                                             ; preds = %bb.b
   br label %_ZL10_Py_NewRefP7_object.exit
 
 bb.d:                                             ; preds = %bb.a
-  %i.u = tail call ptr @PyTuple_New(i64 noundef 2) ; 8 uses
+  %i.u = tail call ptr @PyTuple_New(i64 noundef 2) ; 7 uses
   %i.v = load i32, ptr %i.h, align 8
   %i.w = sext i32 %i.v to i64
-  %i.x = tail call ptr @PyLong_FromLong(i64 noundef %i.w) ; 6 uses
+  %i.x = tail call ptr @PyLong_FromLong(i64 noundef %i.w) ; 5 uses
   %i.y = load i32, ptr %i.k, align 4
   %i.z = sext i32 %i.y to i64
-  %i.aa = tail call ptr @PyLong_FromLong(i64 noundef %i.z) ; 6 uses
-  %i.ab = icmp ne ptr %i.u, null
-  %i.ac = icmp ne ptr %i.x, null
+  %i.aa = tail call ptr @PyLong_FromLong(i64 noundef %i.z) ; 5 uses
+  %i.ab = icmp ne ptr %i.u, null                  ; 2 uses
+  %i.ac = icmp ne ptr %i.x, null                  ; 2 uses
   %or.cond = select i1 %i.ab, i1 %i.ac, i1 false
-  %i.ad = icmp ne ptr %i.aa, null
+  %i.ad = icmp ne ptr %i.aa, null                 ; 2 uses
   %or.cond3 = select i1 %or.cond, i1 %i.ad, i1 false
   br i1 %or.cond3, label %bb.o, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %.not.i = icmp eq ptr %i.u, null
-  br i1 %.not.i, label %_ZL10Py_XDECREFP7_object.exit, label %bb.f
+  br i1 %i.ab, label %bb.f, label %_ZL10Py_XDECREFP7_object.exit
 
 bb.f:                                             ; preds = %bb.e
   %i.ae = load i64, ptr %i.u, align 8             ; 2 uses
@@ -852,8 +851,7 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZL10Py_XDECREFP7_object.exit
 
 _ZL10Py_XDECREFP7_object.exit:                    ; preds = %bb.e, %bb.f, %bb.g, %bb.h
-  %.not.i30 = icmp eq ptr %i.x, null
-  br i1 %.not.i30, label %_ZL10Py_XDECREFP7_object.exit32, label %bb.i
+  br i1 %i.ac, label %bb.i, label %_ZL10Py_XDECREFP7_object.exit32
 
 bb.i:                                             ; preds = %_ZL10Py_XDECREFP7_object.exit
   %i.ai = load i64, ptr %i.x, align 8             ; 2 uses
@@ -872,8 +870,7 @@ bb.k:                                             ; preds = %bb.j
   br label %_ZL10Py_XDECREFP7_object.exit32
 
 _ZL10Py_XDECREFP7_object.exit32:                  ; preds = %_ZL10Py_XDECREFP7_object.exit, %bb.i, %bb.j, %bb.k
-  %.not.i33 = icmp eq ptr %i.aa, null
-  br i1 %.not.i33, label %_ZL10_Py_NewRefP7_object.exit, label %bb.l
+  br i1 %i.ad, label %bb.l, label %_ZL10_Py_NewRefP7_object.exit
 
 bb.l:                                             ; preds = %_ZL10Py_XDECREFP7_object.exit32
   %i.am = load i64, ptr %i.aa, align 8            ; 2 uses
