@@ -202,22 +202,29 @@ bb.a:
   %i.n = mul nuw nsw i64 %i.m, 2081
   %i.o = lshr i64 %i.n, 32
   %i.p = getelementptr inbounds nuw [8 x i8], ptr @17, i64 %i.o
-  %.sroa.03.0.copyload.i = load i64, ptr %i.p, align 4, !alias.scope !16, !noalias !15 ; 3 uses
+  %.sroa.03.0.copyload.i = load i64, ptr %i.p, align 4, !alias.scope !16, !noalias !15 ; 2 uses
   %.sroa.01.0.extract.trunc.i.i.i = trunc i64 %.sroa.03.0.copyload.i to i32
   %i.q = icmp eq i32 %0, %.sroa.01.0.extract.trunc.i.i.i
-  br i1 %i.q, label %_RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit, label %_RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit.thread
+  %sh.diff.i.i.i = lshr i64 %.sroa.03.0.copyload.i, 16
+  %tr.sh.diff.i.i.i = trunc nuw i64 %sh.diff.i.i.i to i48
+  %.sroa.02.0.insert.insert.i.i.i = or i48 %tr.sh.diff.i.i.i, 1
+  %.sroa.02.0.i = select i1 %i.q, i48 %.sroa.02.0.insert.insert.i.i.i, i48 0 ; 3 uses
+  %1 = trunc i48 %.sroa.02.0.i to i1
+  br i1 %1, label %_RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit, label %_RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit.thread
 
 _RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit: ; preds = %bb.a
-  %1 = lshr i64 %.sroa.03.0.copyload.i, 32        ; 2 uses
-  %.sroa.06.2.extract.trunc = trunc i64 %1 to i16
-  %2 = and i64 %1, 65535                          ; 3 uses
+  %.sroa.06.2.extract.shift = lshr i48 %.sroa.02.0.i, 16 ; 2 uses
+  %.sroa.06.2.extract.trunc = trunc i48 %.sroa.06.2.extract.shift to i16
+  %.sroa.06.2.extract.trunc.mask = and i48 %.sroa.06.2.extract.shift, 65535
+  %2 = zext nneg i48 %.sroa.06.2.extract.trunc.mask to i64 ; 3 uses
   %i.r = icmp ugt i16 %.sroa.06.2.extract.trunc, 3450
   br i1 %i.r, label %bb.c, label %bb.b, !prof !4
 
 bb.b:                                             ; preds = %_RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit
-  %.sroa.06.4.extract.shift8 = lshr i64 %.sroa.03.0.copyload.i, 48 ; 3 uses
+  %.sroa.06.4.extract.shift = lshr i48 %.sroa.02.0.i, 32
+  %.sroa.06.4.extract.trunc = zext nneg i48 %.sroa.06.4.extract.shift to i64 ; 3 uses
   %i.s = sub nuw nsw i64 3450, %2                 ; 2 uses
-  %.not.i = icmp samesign ult i64 %i.s, %.sroa.06.4.extract.shift8
+  %.not.i = icmp samesign ult i64 %i.s, %.sroa.06.4.extract.trunc
   br i1 %.not.i, label %bb.d, label %_RNCNvNtCs7CqHJXwM7TD_21unicode_normalization7lookups26canonical_fully_decomposed0B5_.exit, !prof !5
 
 bb.c:                                             ; preds = %_RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit
@@ -225,7 +232,7 @@ bb.c:                                             ; preds = %_RINvNtCs7CqHJXwM7T
   unreachable
 
 bb.d:                                             ; preds = %bb.b
-  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %.sroa.06.4.extract.shift8, i64 noundef %i.s, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #6
+  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %.sroa.06.4.extract.trunc, i64 noundef %i.s, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #6
   unreachable
 
 _RNCNvNtCs7CqHJXwM7TD_21unicode_normalization7lookups26canonical_fully_decomposed0B5_.exit: ; preds = %bb.b
@@ -233,7 +240,7 @@ _RNCNvNtCs7CqHJXwM7TD_21unicode_normalization7lookups26canonical_fully_decompose
   br label %_RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit.thread
 
 _RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit.thread: ; preds = %bb.a, %_RNCNvNtCs7CqHJXwM7TD_21unicode_normalization7lookups26canonical_fully_decomposed0B5_.exit
-  %.sroa.3.0 = phi i64 [ %.sroa.06.4.extract.shift8, %_RNCNvNtCs7CqHJXwM7TD_21unicode_normalization7lookups26canonical_fully_decomposed0B5_.exit ], [ undef, %bb.a ]
+  %.sroa.3.0 = phi i64 [ %.sroa.06.4.extract.trunc, %_RNCNvNtCs7CqHJXwM7TD_21unicode_normalization7lookups26canonical_fully_decomposed0B5_.exit ], [ undef, %bb.a ]
   %.sroa.0.0 = phi ptr [ %i.t, %_RNCNvNtCs7CqHJXwM7TD_21unicode_normalization7lookups26canonical_fully_decomposed0B5_.exit ], [ null, %bb.a ]
   %i.u = insertvalue { ptr, i64 } poison, ptr %.sroa.0.0, 0
   %i.v = insertvalue { ptr, i64 } %i.u, i64 %.sroa.3.0, 1
@@ -261,22 +268,29 @@ bb.a:
   %i.n = mul nuw nsw i64 %i.m, 3848
   %i.o = lshr i64 %i.n, 32
   %i.p = getelementptr inbounds nuw [8 x i8], ptr @19, i64 %i.o
-  %.sroa.03.0.copyload.i = load i64, ptr %i.p, align 4, !alias.scope !21, !noalias !20 ; 3 uses
+  %.sroa.03.0.copyload.i = load i64, ptr %i.p, align 4, !alias.scope !21, !noalias !20 ; 2 uses
   %.sroa.01.0.extract.trunc.i.i.i = trunc i64 %.sroa.03.0.copyload.i to i32
   %i.q = icmp eq i32 %0, %.sroa.01.0.extract.trunc.i.i.i
-  br i1 %i.q, label %_RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit, label %_RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit.thread
+  %sh.diff.i.i.i = lshr i64 %.sroa.03.0.copyload.i, 16
+  %tr.sh.diff.i.i.i = trunc nuw i64 %sh.diff.i.i.i to i48
+  %.sroa.02.0.insert.insert.i.i.i = or i48 %tr.sh.diff.i.i.i, 1
+  %.sroa.02.0.i = select i1 %i.q, i48 %.sroa.02.0.insert.insert.i.i.i, i48 0 ; 3 uses
+  %1 = trunc i48 %.sroa.02.0.i to i1
+  br i1 %1, label %_RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit, label %_RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit.thread
 
 _RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit: ; preds = %bb.a
-  %1 = lshr i64 %.sroa.03.0.copyload.i, 32        ; 2 uses
-  %.sroa.06.2.extract.trunc = trunc i64 %1 to i16
-  %2 = and i64 %1, 65535                          ; 3 uses
+  %.sroa.06.2.extract.shift = lshr i48 %.sroa.02.0.i, 16 ; 2 uses
+  %.sroa.06.2.extract.trunc = trunc i48 %.sroa.06.2.extract.shift to i16
+  %.sroa.06.2.extract.trunc.mask = and i48 %.sroa.06.2.extract.shift, 65535
+  %2 = zext nneg i48 %.sroa.06.2.extract.trunc.mask to i64 ; 3 uses
   %i.r = icmp ugt i16 %.sroa.06.2.extract.trunc, 5771
   br i1 %i.r, label %bb.c, label %bb.b, !prof !4
 
 bb.b:                                             ; preds = %_RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit
-  %.sroa.06.4.extract.shift8 = lshr i64 %.sroa.03.0.copyload.i, 48 ; 3 uses
+  %.sroa.06.4.extract.shift = lshr i48 %.sroa.02.0.i, 32
+  %.sroa.06.4.extract.trunc = zext nneg i48 %.sroa.06.4.extract.shift to i64 ; 3 uses
   %i.s = sub nuw nsw i64 5771, %2                 ; 2 uses
-  %.not.i = icmp samesign ult i64 %i.s, %.sroa.06.4.extract.shift8
+  %.not.i = icmp samesign ult i64 %i.s, %.sroa.06.4.extract.trunc
   br i1 %.not.i, label %bb.d, label %_RNCNvNtCs7CqHJXwM7TD_21unicode_normalization7lookups30compatibility_fully_decomposed0B5_.exit, !prof !5
 
 bb.c:                                             ; preds = %_RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit
@@ -284,7 +298,7 @@ bb.c:                                             ; preds = %_RINvNtCs7CqHJXwM7T
   unreachable
 
 bb.d:                                             ; preds = %bb.b
-  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %.sroa.06.4.extract.shift8, i64 noundef %i.s, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #6
+  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %.sroa.06.4.extract.trunc, i64 noundef %i.s, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #6
   unreachable
 
 _RNCNvNtCs7CqHJXwM7TD_21unicode_normalization7lookups30compatibility_fully_decomposed0B5_.exit: ; preds = %bb.b
@@ -292,7 +306,7 @@ _RNCNvNtCs7CqHJXwM7TD_21unicode_normalization7lookups30compatibility_fully_decom
   br label %_RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit.thread
 
 _RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit.thread: ; preds = %bb.a, %_RNCNvNtCs7CqHJXwM7TD_21unicode_normalization7lookups30compatibility_fully_decomposed0B5_.exit
-  %.sroa.3.0 = phi i64 [ %.sroa.06.4.extract.shift8, %_RNCNvNtCs7CqHJXwM7TD_21unicode_normalization7lookups30compatibility_fully_decomposed0B5_.exit ], [ undef, %bb.a ]
+  %.sroa.3.0 = phi i64 [ %.sroa.06.4.extract.trunc, %_RNCNvNtCs7CqHJXwM7TD_21unicode_normalization7lookups30compatibility_fully_decomposed0B5_.exit ], [ undef, %bb.a ]
   %.sroa.0.0 = phi ptr [ %i.t, %_RNCNvNtCs7CqHJXwM7TD_21unicode_normalization7lookups30compatibility_fully_decomposed0B5_.exit ], [ null, %bb.a ]
   %i.u = insertvalue { ptr, i64 } poison, ptr %.sroa.0.0, 0
   %i.v = insertvalue { ptr, i64 } %i.u, i64 %.sroa.3.0, 1
@@ -350,22 +364,29 @@ bb.a:
   %i.n = mul nuw nsw i64 %i.m, 1002
   %i.o = lshr i64 %i.n, 32
   %i.p = getelementptr inbounds nuw [8 x i8], ptr @23, i64 %i.o
-  %.sroa.03.0.copyload.i = load i64, ptr %i.p, align 4, !alias.scope !31, !noalias !30 ; 3 uses
+  %.sroa.03.0.copyload.i = load i64, ptr %i.p, align 4, !alias.scope !31, !noalias !30 ; 2 uses
   %.sroa.01.0.extract.trunc.i.i.i = trunc i64 %.sroa.03.0.copyload.i to i32
   %i.q = icmp eq i32 %0, %.sroa.01.0.extract.trunc.i.i.i
-  br i1 %i.q, label %_RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit, label %_RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit.thread
+  %sh.diff.i.i.i = lshr i64 %.sroa.03.0.copyload.i, 16
+  %tr.sh.diff.i.i.i = trunc nuw i64 %sh.diff.i.i.i to i48
+  %.sroa.02.0.insert.insert.i.i.i = or i48 %tr.sh.diff.i.i.i, 1
+  %.sroa.02.0.i = select i1 %i.q, i48 %.sroa.02.0.insert.insert.i.i.i, i48 0 ; 3 uses
+  %1 = trunc i48 %.sroa.02.0.i to i1
+  br i1 %1, label %_RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit, label %_RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit.thread
 
 _RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit: ; preds = %bb.a
-  %1 = lshr i64 %.sroa.03.0.copyload.i, 32        ; 2 uses
-  %.sroa.06.2.extract.trunc = trunc i64 %1 to i16
-  %2 = and i64 %1, 65535                          ; 3 uses
+  %.sroa.06.2.extract.shift = lshr i48 %.sroa.02.0.i, 16 ; 2 uses
+  %.sroa.06.2.extract.trunc = trunc i48 %.sroa.06.2.extract.shift to i16
+  %.sroa.06.2.extract.trunc.mask = and i48 %.sroa.06.2.extract.shift, 65535
+  %2 = zext nneg i48 %.sroa.06.2.extract.trunc.mask to i64 ; 3 uses
   %i.r = icmp ugt i16 %.sroa.06.2.extract.trunc, 2004
   br i1 %i.r, label %bb.c, label %bb.b, !prof !4
 
 bb.b:                                             ; preds = %_RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit
-  %.sroa.06.4.extract.shift8 = lshr i64 %.sroa.03.0.copyload.i, 48 ; 3 uses
+  %.sroa.06.4.extract.shift = lshr i48 %.sroa.02.0.i, 32
+  %.sroa.06.4.extract.trunc = zext nneg i48 %.sroa.06.4.extract.shift to i64 ; 3 uses
   %i.s = sub nuw nsw i64 2004, %2                 ; 2 uses
-  %.not.i = icmp samesign ult i64 %i.s, %.sroa.06.4.extract.shift8
+  %.not.i = icmp samesign ult i64 %i.s, %.sroa.06.4.extract.trunc
   br i1 %.not.i, label %bb.d, label %_RNCNvNtCs7CqHJXwM7TD_21unicode_normalization7lookups36cjk_compat_variants_fully_decomposed0B5_.exit, !prof !5
 
 bb.c:                                             ; preds = %_RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit
@@ -373,7 +394,7 @@ bb.c:                                             ; preds = %_RINvNtCs7CqHJXwM7T
   unreachable
 
 bb.d:                                             ; preds = %bb.b
-  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %.sroa.06.4.extract.shift8, i64 noundef %i.s, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8) #6
+  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %.sroa.06.4.extract.trunc, i64 noundef %i.s, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8) #6
   unreachable
 
 _RNCNvNtCs7CqHJXwM7TD_21unicode_normalization7lookups36cjk_compat_variants_fully_decomposed0B5_.exit: ; preds = %bb.b
@@ -381,7 +402,7 @@ _RNCNvNtCs7CqHJXwM7TD_21unicode_normalization7lookups36cjk_compat_variants_fully
   br label %_RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit.thread
 
 _RINvNtCs7CqHJXwM7TD_21unicode_normalization12perfect_hash10mph_lookupTmTttEEINtNtCs4NRVxsYgnAr_4core6option6OptionB17_EINvNtB4_7lookups14pair_lookup_fkB17_EINvB1W_18pair_lookup_fv_optB17_EEB4_.exit.thread: ; preds = %bb.a, %_RNCNvNtCs7CqHJXwM7TD_21unicode_normalization7lookups36cjk_compat_variants_fully_decomposed0B5_.exit
-  %.sroa.3.0 = phi i64 [ %.sroa.06.4.extract.shift8, %_RNCNvNtCs7CqHJXwM7TD_21unicode_normalization7lookups36cjk_compat_variants_fully_decomposed0B5_.exit ], [ undef, %bb.a ]
+  %.sroa.3.0 = phi i64 [ %.sroa.06.4.extract.trunc, %_RNCNvNtCs7CqHJXwM7TD_21unicode_normalization7lookups36cjk_compat_variants_fully_decomposed0B5_.exit ], [ undef, %bb.a ]
   %.sroa.0.0 = phi ptr [ %i.t, %_RNCNvNtCs7CqHJXwM7TD_21unicode_normalization7lookups36cjk_compat_variants_fully_decomposed0B5_.exit ], [ null, %bb.a ]
   %i.u = insertvalue { ptr, i64 } poison, ptr %.sroa.0.0, 0
   %i.v = insertvalue { ptr, i64 } %i.u, i64 %.sroa.3.0, 1
