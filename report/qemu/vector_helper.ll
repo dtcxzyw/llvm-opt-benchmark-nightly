@@ -204,8 +204,7 @@ bb.a:
 .preheader35:                                     ; preds = %bb.a
   %i.i = and i32 %5, 1024
   %.not32 = icmp eq i32 %i.i, 0
-  %6 = trunc i64 %2 to i32
-  %7 = and i32 %6, 255                            ; 3 uses
+  %6 = trunc i64 %2 to i8                         ; 3 uses
   %i.j = zext i32 %i.h to i64                     ; 2 uses
   %wide.trip.count48 = zext i32 %i.b to i64       ; 2 uses
   br i1 %.not32, label %.preheader35.split.us, label %.critedge
@@ -227,11 +226,10 @@ vext_set_elem_mask.exit.us:                       ; preds = %.preheader35.split.
   %i.t = and i64 %i.q, %i.s
   %i.u = icmp eq i64 %i.t, 0
   %i.v = getelementptr inbounds nuw i8, ptr %3, i64 %indvars.iv45
-  %i.w = load i8, ptr %i.v, align 1
-  %8 = zext i8 %i.w to i32                        ; 2 uses
-  %9 = icmp samesign ugt i32 %7, %8
-  %10 = icmp samesign uge i32 %7, %8
-  %.in.us = select i1 %i.u, i1 %9, i1 %10
+  %i.w = load i8, ptr %i.v, align 1               ; 2 uses
+  %7 = icmp ult i8 %i.w, %6
+  %8 = icmp ule i8 %i.w, %6
+  %.in.us = select i1 %i.u, i1 %7, i1 %8
   %i.x = zext i1 %.in.us to i64
   %i.y = getelementptr inbounds [8 x i8], ptr %0, i64 %i.o ; 2 uses
   %i.z = load i64, ptr %i.y, align 8
@@ -263,9 +261,8 @@ bb.b:                                             ; preds = %bb.a
 vext_set_elem_mask.exit:                          ; preds = %.critedge
   %i.ai = getelementptr inbounds nuw i8, ptr %3, i64 %indvars.iv
   %i.aj = load i8, ptr %i.ai, align 1
-  %11 = zext i8 %i.aj to i32
-  %12 = icmp samesign ugt i32 %7, %11
-  %i.ak = zext i1 %12 to i64
+  %9 = icmp ult i8 %i.aj, %6
+  %i.ak = zext i1 %9 to i64
   %i.al = sext i32 %i.ag to i64
   %i.am = getelementptr inbounds [8 x i8], ptr %0, i64 %i.al ; 2 uses
   %i.an = load i64, ptr %i.am, align 8
@@ -324,8 +321,7 @@ bb.a:
 .preheader35:                                     ; preds = %bb.a
   %i.i = and i32 %5, 1024
   %.not32 = icmp eq i32 %i.i, 0
-  %6 = trunc i64 %2 to i32
-  %7 = and i32 %6, 65535                          ; 3 uses
+  %6 = trunc i64 %2 to i16                        ; 3 uses
   %i.j = zext i32 %i.h to i64                     ; 2 uses
   %wide.trip.count48 = zext i32 %i.b to i64       ; 2 uses
   br i1 %.not32, label %.preheader35.split.us, label %.critedge
@@ -347,11 +343,10 @@ vext_set_elem_mask.exit.us:                       ; preds = %.preheader35.split.
   %i.t = and i64 %i.q, %i.s
   %i.u = icmp eq i64 %i.t, 0
   %i.v = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %indvars.iv45
-  %i.w = load i16, ptr %i.v, align 2
-  %8 = zext i16 %i.w to i32                       ; 2 uses
-  %9 = icmp samesign ugt i32 %7, %8
-  %10 = icmp samesign uge i32 %7, %8
-  %.in.us = select i1 %i.u, i1 %9, i1 %10
+  %i.w = load i16, ptr %i.v, align 2              ; 2 uses
+  %7 = icmp ult i16 %i.w, %6
+  %8 = icmp ule i16 %i.w, %6
+  %.in.us = select i1 %i.u, i1 %7, i1 %8
   %i.x = zext i1 %.in.us to i64
   %i.y = getelementptr inbounds [8 x i8], ptr %0, i64 %i.o ; 2 uses
   %i.z = load i64, ptr %i.y, align 8
@@ -383,9 +378,8 @@ bb.b:                                             ; preds = %bb.a
 vext_set_elem_mask.exit:                          ; preds = %.critedge
   %i.ai = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %indvars.iv
   %i.aj = load i16, ptr %i.ai, align 2
-  %11 = zext i16 %i.aj to i32
-  %12 = icmp samesign ugt i32 %7, %11
-  %i.ak = zext i1 %12 to i64
+  %9 = icmp ult i16 %i.aj, %6
+  %i.ak = zext i1 %9 to i64
   %i.al = sext i32 %i.ag to i64
   %i.am = getelementptr inbounds [8 x i8], ptr %0, i64 %i.al ; 2 uses
   %i.an = load i64, ptr %i.am, align 8
@@ -788,8 +782,7 @@ bb.a:
 .preheader38:                                     ; preds = %bb.a
   %i.i = and i32 %5, 1024
   %.not33 = icmp eq i32 %i.i, 0
-  %6 = trunc i64 %2 to i32
-  %7 = and i32 %6, 255                            ; 3 uses
+  %6 = trunc i64 %2 to i8                         ; 3 uses
   br i1 %.not33, label %.preheader38.split.us, label %.preheader38.split.preheader
 
 .preheader38.split.preheader:                     ; preds = %.preheader38
@@ -825,9 +818,8 @@ bb.b:                                             ; preds = %.preheader38.split.
   br i1 %i.x, label %.split.us, label %vext_set_elem_mask.exit36.us.us
 
 vext_set_elem_mask.exit36.us.us:                  ; preds = %bb.b
-  %8 = zext i8 %i.n to i32
-  %9 = icmp samesign ugt i32 %7, %8
-  %i.y = zext i1 %9 to i64
+  %7 = icmp ult i8 %i.n, %6
+  %i.y = zext i1 %7 to i64
   %i.z = getelementptr inbounds [8 x i8], ptr %0, i64 %i.r ; 2 uses
   %i.aa = load i64, ptr %i.z, align 8
   %i.ab = xor i64 %i.v, -1
@@ -863,9 +855,8 @@ bb.d:                                             ; preds = %.preheader38.split.
   br i1 %i.aq, label %.split.us, label %vext_set_elem_mask.exit36.us
 
 vext_set_elem_mask.exit36.us:                     ; preds = %bb.d
-  %10 = zext i8 %i.ag to i32
-  %11 = icmp samesign ugt i32 %7, %10
-  %i.ar = zext i1 %11 to i64
+  %8 = icmp ult i8 %i.ag, %6
+  %i.ar = zext i1 %8 to i64
   %i.as = getelementptr inbounds [8 x i8], ptr %0, i64 %i.ak ; 2 uses
   %i.at = load i64, ptr %i.as, align 8
   %i.au = xor i64 %i.ao, -1
@@ -913,9 +904,8 @@ bb.g:                                             ; preds = %bb.a
 vext_set_elem_mask.exit36:                        ; preds = %.preheader38.split
   %i.bf = getelementptr inbounds nuw i8, ptr %3, i64 %indvars.iv
   %i.bg = load i8, ptr %i.bf, align 1
-  %12 = zext i8 %i.bg to i32
-  %13 = icmp samesign ugt i32 %7, %12
-  %i.bh = zext i1 %13 to i64
+  %9 = icmp ult i8 %i.bg, %6
+  %i.bh = zext i1 %9 to i64
   %i.bi = sext i32 %i.bd to i64
   %i.bj = getelementptr inbounds [8 x i8], ptr %0, i64 %i.bi ; 2 uses
   %i.bk = load i64, ptr %i.bj, align 8
@@ -974,8 +964,7 @@ bb.a:
 .preheader38:                                     ; preds = %bb.a
   %i.i = and i32 %5, 1024
   %.not33 = icmp eq i32 %i.i, 0
-  %6 = trunc i64 %2 to i32
-  %7 = and i32 %6, 65535                          ; 3 uses
+  %6 = trunc i64 %2 to i16                        ; 3 uses
   br i1 %.not33, label %.preheader38.split.us, label %.preheader38.split.preheader
 
 .preheader38.split.preheader:                     ; preds = %.preheader38
@@ -1011,9 +1000,8 @@ bb.b:                                             ; preds = %.preheader38.split.
   br i1 %i.x, label %.split.us, label %vext_set_elem_mask.exit36.us.us
 
 vext_set_elem_mask.exit36.us.us:                  ; preds = %bb.b
-  %8 = zext i16 %i.n to i32
-  %9 = icmp samesign ugt i32 %7, %8
-  %i.y = zext i1 %9 to i64
+  %7 = icmp ult i16 %i.n, %6
+  %i.y = zext i1 %7 to i64
   %i.z = getelementptr inbounds [8 x i8], ptr %0, i64 %i.r ; 2 uses
   %i.aa = load i64, ptr %i.z, align 8
   %i.ab = xor i64 %i.v, -1
@@ -1049,9 +1037,8 @@ bb.d:                                             ; preds = %.preheader38.split.
   br i1 %i.aq, label %.split.us, label %vext_set_elem_mask.exit36.us
 
 vext_set_elem_mask.exit36.us:                     ; preds = %bb.d
-  %10 = zext i16 %i.ag to i32
-  %11 = icmp samesign ugt i32 %7, %10
-  %i.ar = zext i1 %11 to i64
+  %8 = icmp ult i16 %i.ag, %6
+  %i.ar = zext i1 %8 to i64
   %i.as = getelementptr inbounds [8 x i8], ptr %0, i64 %i.ak ; 2 uses
   %i.at = load i64, ptr %i.as, align 8
   %i.au = xor i64 %i.ao, -1
@@ -1099,9 +1086,8 @@ bb.g:                                             ; preds = %bb.a
 vext_set_elem_mask.exit36:                        ; preds = %.preheader38.split
   %i.bf = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %indvars.iv
   %i.bg = load i16, ptr %i.bf, align 2
-  %12 = zext i16 %i.bg to i32
-  %13 = icmp samesign ugt i32 %7, %12
-  %i.bh = zext i1 %13 to i64
+  %9 = icmp ult i16 %i.bg, %6
+  %i.bh = zext i1 %9 to i64
   %i.bi = sext i32 %i.bd to i64
   %i.bj = getelementptr inbounds [8 x i8], ptr %0, i64 %i.bi ; 2 uses
   %i.bk = load i64, ptr %i.bj, align 8
@@ -1504,8 +1490,7 @@ bb.a:
 .preheader38:                                     ; preds = %bb.a
   %i.i = and i32 %5, 1024
   %.not33 = icmp eq i32 %i.i, 0
-  %6 = trunc i64 %2 to i32
-  %7 = and i32 %6, 255                            ; 3 uses
+  %6 = trunc i64 %2 to i8                         ; 3 uses
   br i1 %.not33, label %.preheader38.split.us, label %.preheader38.split.preheader
 
 .preheader38.split.preheader:                     ; preds = %.preheader38
@@ -1541,9 +1526,8 @@ bb.b:                                             ; preds = %.preheader38.split.
   br i1 %i.x, label %.split.us, label %vext_set_elem_mask.exit36.us.us
 
 vext_set_elem_mask.exit36.us.us:                  ; preds = %bb.b
-  %8 = zext i8 %i.n to i32
-  %9 = icmp samesign uge i32 %7, %8
-  %i.y = zext i1 %9 to i64
+  %7 = icmp ule i8 %i.n, %6
+  %i.y = zext i1 %7 to i64
   %i.z = getelementptr inbounds [8 x i8], ptr %0, i64 %i.r ; 2 uses
   %i.aa = load i64, ptr %i.z, align 8
   %i.ab = xor i64 %i.v, -1
@@ -1579,9 +1563,8 @@ bb.d:                                             ; preds = %.preheader38.split.
   br i1 %i.aq, label %.split.us, label %vext_set_elem_mask.exit36.us
 
 vext_set_elem_mask.exit36.us:                     ; preds = %bb.d
-  %10 = zext i8 %i.ag to i32
-  %11 = icmp samesign uge i32 %7, %10
-  %i.ar = zext i1 %11 to i64
+  %8 = icmp ule i8 %i.ag, %6
+  %i.ar = zext i1 %8 to i64
   %i.as = getelementptr inbounds [8 x i8], ptr %0, i64 %i.ak ; 2 uses
   %i.at = load i64, ptr %i.as, align 8
   %i.au = xor i64 %i.ao, -1
@@ -1629,9 +1612,8 @@ bb.g:                                             ; preds = %bb.a
 vext_set_elem_mask.exit36:                        ; preds = %.preheader38.split
   %i.bf = getelementptr inbounds nuw i8, ptr %3, i64 %indvars.iv
   %i.bg = load i8, ptr %i.bf, align 1
-  %12 = zext i8 %i.bg to i32
-  %13 = icmp samesign uge i32 %7, %12
-  %i.bh = zext i1 %13 to i64
+  %9 = icmp ule i8 %i.bg, %6
+  %i.bh = zext i1 %9 to i64
   %i.bi = sext i32 %i.bd to i64
   %i.bj = getelementptr inbounds [8 x i8], ptr %0, i64 %i.bi ; 2 uses
   %i.bk = load i64, ptr %i.bj, align 8
@@ -1690,8 +1672,7 @@ bb.a:
 .preheader38:                                     ; preds = %bb.a
   %i.i = and i32 %5, 1024
   %.not33 = icmp eq i32 %i.i, 0
-  %6 = trunc i64 %2 to i32
-  %7 = and i32 %6, 65535                          ; 3 uses
+  %6 = trunc i64 %2 to i16                        ; 3 uses
   br i1 %.not33, label %.preheader38.split.us, label %.preheader38.split.preheader
 
 .preheader38.split.preheader:                     ; preds = %.preheader38
@@ -1727,9 +1708,8 @@ bb.b:                                             ; preds = %.preheader38.split.
   br i1 %i.x, label %.split.us, label %vext_set_elem_mask.exit36.us.us
 
 vext_set_elem_mask.exit36.us.us:                  ; preds = %bb.b
-  %8 = zext i16 %i.n to i32
-  %9 = icmp samesign uge i32 %7, %8
-  %i.y = zext i1 %9 to i64
+  %7 = icmp ule i16 %i.n, %6
+  %i.y = zext i1 %7 to i64
   %i.z = getelementptr inbounds [8 x i8], ptr %0, i64 %i.r ; 2 uses
   %i.aa = load i64, ptr %i.z, align 8
   %i.ab = xor i64 %i.v, -1
@@ -1765,9 +1745,8 @@ bb.d:                                             ; preds = %.preheader38.split.
   br i1 %i.aq, label %.split.us, label %vext_set_elem_mask.exit36.us
 
 vext_set_elem_mask.exit36.us:                     ; preds = %bb.d
-  %10 = zext i16 %i.ag to i32
-  %11 = icmp samesign uge i32 %7, %10
-  %i.ar = zext i1 %11 to i64
+  %8 = icmp ule i16 %i.ag, %6
+  %i.ar = zext i1 %8 to i64
   %i.as = getelementptr inbounds [8 x i8], ptr %0, i64 %i.ak ; 2 uses
   %i.at = load i64, ptr %i.as, align 8
   %i.au = xor i64 %i.ao, -1
@@ -1815,9 +1794,8 @@ bb.g:                                             ; preds = %bb.a
 vext_set_elem_mask.exit36:                        ; preds = %.preheader38.split
   %i.bf = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %indvars.iv
   %i.bg = load i16, ptr %i.bf, align 2
-  %12 = zext i16 %i.bg to i32
-  %13 = icmp samesign uge i32 %7, %12
-  %i.bh = zext i1 %13 to i64
+  %9 = icmp ule i16 %i.bg, %6
+  %i.bh = zext i1 %9 to i64
   %i.bi = sext i32 %i.bd to i64
   %i.bj = getelementptr inbounds [8 x i8], ptr %0, i64 %i.bi ; 2 uses
   %i.bk = load i64, ptr %i.bj, align 8
@@ -2220,8 +2198,7 @@ bb.a:
 .preheader38:                                     ; preds = %bb.a
   %i.i = and i32 %5, 1024
   %.not33 = icmp eq i32 %i.i, 0
-  %6 = trunc i64 %2 to i32
-  %7 = and i32 %6, 255                            ; 3 uses
+  %6 = trunc i64 %2 to i8                         ; 3 uses
   br i1 %.not33, label %.preheader38.split.us, label %.preheader38.split.preheader
 
 .preheader38.split.preheader:                     ; preds = %.preheader38
@@ -2257,9 +2234,8 @@ bb.b:                                             ; preds = %.preheader38.split.
   br i1 %i.x, label %.split.us, label %vext_set_elem_mask.exit36.us.us
 
 vext_set_elem_mask.exit36.us.us:                  ; preds = %bb.b
-  %8 = zext i8 %i.n to i32
-  %9 = icmp samesign ult i32 %7, %8
-  %i.y = zext i1 %9 to i64
+  %7 = icmp ugt i8 %i.n, %6
+  %i.y = zext i1 %7 to i64
   %i.z = getelementptr inbounds [8 x i8], ptr %0, i64 %i.r ; 2 uses
   %i.aa = load i64, ptr %i.z, align 8
   %i.ab = xor i64 %i.v, -1
@@ -2295,9 +2271,8 @@ bb.d:                                             ; preds = %.preheader38.split.
   br i1 %i.aq, label %.split.us, label %vext_set_elem_mask.exit36.us
 
 vext_set_elem_mask.exit36.us:                     ; preds = %bb.d
-  %10 = zext i8 %i.ag to i32
-  %11 = icmp samesign ult i32 %7, %10
-  %i.ar = zext i1 %11 to i64
+  %8 = icmp ugt i8 %i.ag, %6
+  %i.ar = zext i1 %8 to i64
   %i.as = getelementptr inbounds [8 x i8], ptr %0, i64 %i.ak ; 2 uses
   %i.at = load i64, ptr %i.as, align 8
   %i.au = xor i64 %i.ao, -1
@@ -2345,9 +2320,8 @@ bb.g:                                             ; preds = %bb.a
 vext_set_elem_mask.exit36:                        ; preds = %.preheader38.split
   %i.bf = getelementptr inbounds nuw i8, ptr %3, i64 %indvars.iv
   %i.bg = load i8, ptr %i.bf, align 1
-  %12 = zext i8 %i.bg to i32
-  %13 = icmp samesign ult i32 %7, %12
-  %i.bh = zext i1 %13 to i64
+  %9 = icmp ugt i8 %i.bg, %6
+  %i.bh = zext i1 %9 to i64
   %i.bi = sext i32 %i.bd to i64
   %i.bj = getelementptr inbounds [8 x i8], ptr %0, i64 %i.bi ; 2 uses
   %i.bk = load i64, ptr %i.bj, align 8
@@ -2406,8 +2380,7 @@ bb.a:
 .preheader38:                                     ; preds = %bb.a
   %i.i = and i32 %5, 1024
   %.not33 = icmp eq i32 %i.i, 0
-  %6 = trunc i64 %2 to i32
-  %7 = and i32 %6, 65535                          ; 3 uses
+  %6 = trunc i64 %2 to i16                        ; 3 uses
   br i1 %.not33, label %.preheader38.split.us, label %.preheader38.split.preheader
 
 .preheader38.split.preheader:                     ; preds = %.preheader38
@@ -2443,9 +2416,8 @@ bb.b:                                             ; preds = %.preheader38.split.
   br i1 %i.x, label %.split.us, label %vext_set_elem_mask.exit36.us.us
 
 vext_set_elem_mask.exit36.us.us:                  ; preds = %bb.b
-  %8 = zext i16 %i.n to i32
-  %9 = icmp samesign ult i32 %7, %8
-  %i.y = zext i1 %9 to i64
+  %7 = icmp ugt i16 %i.n, %6
+  %i.y = zext i1 %7 to i64
   %i.z = getelementptr inbounds [8 x i8], ptr %0, i64 %i.r ; 2 uses
   %i.aa = load i64, ptr %i.z, align 8
   %i.ab = xor i64 %i.v, -1
@@ -2481,9 +2453,8 @@ bb.d:                                             ; preds = %.preheader38.split.
   br i1 %i.aq, label %.split.us, label %vext_set_elem_mask.exit36.us
 
 vext_set_elem_mask.exit36.us:                     ; preds = %bb.d
-  %10 = zext i16 %i.ag to i32
-  %11 = icmp samesign ult i32 %7, %10
-  %i.ar = zext i1 %11 to i64
+  %8 = icmp ugt i16 %i.ag, %6
+  %i.ar = zext i1 %8 to i64
   %i.as = getelementptr inbounds [8 x i8], ptr %0, i64 %i.ak ; 2 uses
   %i.at = load i64, ptr %i.as, align 8
   %i.au = xor i64 %i.ao, -1
@@ -2531,9 +2502,8 @@ bb.g:                                             ; preds = %bb.a
 vext_set_elem_mask.exit36:                        ; preds = %.preheader38.split
   %i.bf = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %indvars.iv
   %i.bg = load i16, ptr %i.bf, align 2
-  %12 = zext i16 %i.bg to i32
-  %13 = icmp samesign ult i32 %7, %12
-  %i.bh = zext i1 %13 to i64
+  %9 = icmp ugt i16 %i.bg, %6
+  %i.bh = zext i1 %9 to i64
   %i.bi = sext i32 %i.bd to i64
   %i.bj = getelementptr inbounds [8 x i8], ptr %0, i64 %i.bi ; 2 uses
   %i.bk = load i64, ptr %i.bj, align 8

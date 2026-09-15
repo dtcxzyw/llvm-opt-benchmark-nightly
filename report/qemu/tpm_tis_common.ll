@@ -204,17 +204,15 @@ bb.p:                                             ; preds = %bb.o
   %i.cn = zext i32 %i.cm to i64
   %i.co = load i64, ptr %i.cb, align 8
   %i.cp = tail call i64 @llvm.umin.i64(i64 %i.co, i64 %i.cn)
-  %3 = trunc nuw i64 %i.cp to i32
   %i.cq = load i16, ptr %i.cc, align 16           ; 2 uses
-  %i.cr = add i16 %i.cq, 1                        ; 2 uses
+  %i.cr = add i16 %i.cq, 1                        ; 4 uses
   store i16 %i.cr, ptr %i.cc, align 16
   %i.cs = zext i16 %i.cq to i64
   %i.ct = getelementptr inbounds nuw i8, ptr %i.bz, i64 %i.cs
   %i.cu = load i8, ptr %i.ct, align 1
-  %4 = zext i8 %i.cu to i32                       ; 5 uses
-  %i.cv = zext i16 %i.cr to i32                   ; 3 uses
-  %5 = and i32 %3, 65535
-  %.not19.i = icmp samesign ugt i32 %5, %i.cv
+  %i.cv = zext i8 %i.cu to i32                    ; 5 uses
+  %3 = trunc i64 %i.cp to i16
+  %.not19.i = icmp ult i16 %i.cr, %3
   br i1 %.not19.i, label %tpm_tis_raise_irq.exit.i, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
@@ -253,12 +251,12 @@ trace_tpm_tis_raise_irq.exit.i.i:                 ; preds = %bb.u, %bb.t, %bb.s,
   %i.dg = or i32 %i.df, 2
   store i32 %i.dg, ptr %i.cf, align 4
   %.pre.i = load i16, ptr %i.cc, align 16
-  %.pre21.i = zext i16 %.pre.i to i32
   br label %tpm_tis_raise_irq.exit.i
 
 tpm_tis_raise_irq.exit.i:                         ; preds = %trace_tpm_tis_raise_irq.exit.i.i, %bb.q, %bb.p
-  %.pre-phi.i = phi i32 [ %.pre21.i, %trace_tpm_tis_raise_irq.exit.i.i ], [ %i.cv, %bb.q ], [ %i.cv, %bb.p ]
-  %i.dh = add nsw i32 %.pre-phi.i, -1
+  %4 = phi i16 [ %.pre.i, %trace_tpm_tis_raise_irq.exit.i.i ], [ %i.cr, %bb.q ], [ %i.cr, %bb.p ]
+  %5 = zext i16 %4 to i32
+  %i.dh = add nsw i32 %5, -1
   %i.di = load i32, ptr @trace_events_enabled_count, align 4
   %.not.i20.i = icmp eq i32 %i.di, 0
   br i1 %.not.i20.i, label %tpm_tis_data_read.exit, label %bb.v, !prof !7
@@ -275,11 +273,11 @@ bb.w:                                             ; preds = %bb.v
   br i1 %.not3.i.i, label %tpm_tis_data_read.exit, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  tail call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.13, i32 noundef range(i32 0, 256) %4, i32 noundef range(i32 -1, 65535) %i.dh) #9
+  tail call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.13, i32 noundef range(i32 0, 256) %i.cv, i32 noundef range(i32 -1, 65535) %i.dh) #9
   br label %tpm_tis_data_read.exit
 
 tpm_tis_data_read.exit:                           ; preds = %bb.x, %bb.w, %bb.v, %tpm_tis_raise_irq.exit.i, %bb.o, %.lr.ph.split
-  %.068 = phi i32 [ 255, %.lr.ph.split ], [ 255, %bb.o ], [ %4, %tpm_tis_raise_irq.exit.i ], [ %4, %bb.v ], [ %4, %bb.w ], [ %4, %bb.x ]
+  %.068 = phi i32 [ 255, %.lr.ph.split ], [ 255, %bb.o ], [ %i.cv, %tpm_tis_raise_irq.exit.i ], [ %i.cv, %bb.v ], [ %i.cv, %bb.w ], [ %i.cv, %bb.x ]
   %i.dm = and i32 %.07293, 255                    ; 2 uses
   %i.dn = shl i32 %.068, %i.dm
   %i.do = or i32 %i.dn, %.17094                   ; 2 uses

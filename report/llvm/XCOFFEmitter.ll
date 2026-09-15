@@ -204,12 +204,12 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.z, %.lr.ph.i.i
-  %indvars.iv.i.a = phi i64 [ %indvars.iv.next.i.a, %bb.z ], [ 0, %.lr.ph.i.i ] ; 6 uses
-  %.027.i = phi i64 [ %.1.i, %bb.z ], [ %i.ez, %.lr.ph.i.i ] ; 5 uses
-  %48 = phi ptr [ %i.fs, %bb.z ], [ %i.et, %.lr.ph.i.i ]
-  %.0211.i.i = phi i64 [ %.1.i.i, %bb.z ], [ 0, %.lr.ph.i.i ] ; 8 uses
-  %.0184210.i.i = phi i64 [ %.1185.i.i, %bb.z ], [ 0, %.lr.ph.i.i ] ; 8 uses
-  %i.fc = getelementptr inbounds nuw [120 x i8], ptr %48, i64 %indvars.iv.i.a ; 2 uses
+  %indvars.iv.i.a = phi i64 [ %i.ez, %.lr.ph.i.i ], [ %.1.i, %bb.z ] ; 5 uses
+  %48 = phi ptr [ %i.et, %.lr.ph.i.i ], [ %i.fs, %bb.z ]
+  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.a, %bb.z ] ; 6 uses
+  %.0211.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %.1.i.i, %bb.z ] ; 8 uses
+  %.0184210.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %.1185.i.i, %bb.z ] ; 8 uses
+  %i.fc = getelementptr inbounds nuw [120 x i8], ptr %48, i64 %indvars.iv.i.i ; 2 uses
   %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 8
   %i.fe = load i64, ptr %i.fd, align 8, !tbaa !292
   %.not.i.i = icmp eq i64 %i.fe, 0
@@ -224,10 +224,10 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not61.i.i, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.fi = trunc i64 %indvars.iv.i.a to i16
+  %i.fi = trunc i64 %indvars.iv.i.i to i16
   %i.fj = add i16 %i.fi, 1
   store i16 %i.fj, ptr %i.fg, align 2, !tbaa !71
-  %i.fk = icmp samesign ugt i64 %indvars.iv.i.a, 32766
+  %i.fk = icmp samesign ugt i64 %indvars.iv.i.i, 32766
   br i1 %i.fk, label %_ZN4llvmplERKNS_5TwineES2_.exit.i.i, label %bb.h
 
 _ZN4llvmplERKNS_5TwineES2_.exit.i.i:              ; preds = %bb.g
@@ -249,7 +249,7 @@ _ZN4llvmplERKNS_5TwineES2_.exit.i.i:              ; preds = %bb.g
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %i.fs = load ptr, ptr %i.eq, align 8, !tbaa !78 ; 3 uses
-  %i.ft = getelementptr inbounds nuw [120 x i8], ptr %i.fs, i64 %indvars.iv.i.a ; 17 uses
+  %i.ft = getelementptr inbounds nuw [120 x i8], ptr %i.fs, i64 %indvars.iv.i.i ; 17 uses
   %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 24 ; 2 uses
   %i.fv = load i64, ptr %i.fu, align 8, !tbaa !57 ; 2 uses
   %.not62.i.i = icmp eq i64 %i.fv, 0
@@ -333,7 +333,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %.not66.i.i, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.gy = icmp ugt i64 %.027.i, %i.gx
+  %i.gy = icmp ugt i64 %indvars.iv.i.a, %i.gx
   br i1 %i.gy, label %_ZN4llvmplERKNS_5TwineES2_.exit90.i.i, label %bb.u
 
 _ZN4llvmplERKNS_5TwineES2_.exit90.i.i:            ; preds = %bb.s
@@ -362,15 +362,15 @@ _ZN4llvmplERKNS_5TwineES2_.exit90.i.i:            ; preds = %bb.s
   %.val.i.i = load ptr, ptr %i.hg, align 8
   %i.hh = getelementptr inbounds nuw i8, ptr %0, i64 40
   %.val74.i.i = load i64, ptr %i.hh, align 8
-  call fastcc void @_ZN12_GLOBAL__N_111XCOFFWriter15reportOverwriteEmmRKN4llvm5TwineE(ptr %.val.i.i, i64 %.val74.i.i, i64 noundef %.027.i, i64 noundef %i.gx, ptr noundef nonnull align 8 dereferenceable(34) %38)
+  call fastcc void @_ZN12_GLOBAL__N_111XCOFFWriter15reportOverwriteEmmRKN4llvm5TwineE(ptr %.val.i.i, i64 %.val74.i.i, i64 noundef %indvars.iv.i.a, i64 noundef %i.gx, ptr noundef nonnull align 8 dereferenceable(34) %38)
   call void @llvm.lifetime.end.p0(ptr nonnull %39) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %38) #13
   br label %_ZN12_GLOBAL__N_111XCOFFWriter16writeRelocationsEv.exit
 
 bb.t:                                             ; preds = %bb.r
-  %i.hi = icmp ne i64 %.027.i, 0                  ; 2 uses
+  %i.hi = icmp ne i64 %indvars.iv.i.a, 0          ; 2 uses
   %.neg.i.i = sext i1 %i.hi to i64
-  %i.hj = add nsw i64 %.027.i, %.neg.i.i
+  %i.hj = add nsw i64 %indvars.iv.i.a, %.neg.i.i
   %i.hk = select i1 %i.hi, i64 4, i64 0
   %i.hl = add nsw i64 %i.hj, %i.hk
   %i.hm = and i64 %i.hl, -4                       ; 2 uses
@@ -384,6 +384,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   br i1 %i.hp, label %_ZN4llvmplERKNS_5TwineES2_.exit181.i.i, label %bb.v
 
 _ZN4llvmplERKNS_5TwineES2_.exit181.i.i:           ; preds = %bb.u
+  %49 = and i64 %indvars.iv.i.i, 65535
   %i.hq = getelementptr inbounds nuw i8, ptr %0, i64 32
   call void @llvm.lifetime.start.p0(ptr nonnull %40) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %41) #13
@@ -405,7 +406,7 @@ _ZN4llvmplERKNS_5TwineES2_.exit181.i.i:           ; preds = %bb.u
   store i8 2, ptr %i.hv, align 8, !tbaa !88, !alias.scope !312
   %i.hw = getelementptr inbounds nuw i8, ptr %44, i64 33
   store i8 3, ptr %i.hw, align 1, !tbaa !89, !alias.scope !312
-  %.sroa.0251.0.insert.ext.i.i = add nuw nsw i64 %indvars.iv.i.a, 1
+  %.sroa.0251.0.insert.ext.i.i = add nuw nsw i64 %49, 1
   %i.hx = inttoptr i64 %.sroa.0251.0.insert.ext.i.i to ptr
   store ptr %44, ptr %43, align 8, !alias.scope !313
   %i.hy = getelementptr inbounds nuw i8, ptr %43, i64 16
@@ -453,7 +454,7 @@ _ZN4llvmplERKNS_5TwineES2_.exit181.i.i:           ; preds = %bb.u
   br label %_ZN12_GLOBAL__N_111XCOFFWriter16writeRelocationsEv.exit
 
 bb.v:                                             ; preds = %bb.u, %bb.q
-  %.1.i = phi i64 [ %.027.i, %bb.q ], [ %i.ho, %bb.u ] ; 2 uses
+  %.1.i = phi i64 [ %indvars.iv.i.a, %bb.q ], [ %i.ho, %bb.u ] ; 2 uses
   %i.in = getelementptr inbounds nuw i8, ptr %i.ft, i64 68
   %i.io = load i8, ptr %i.in, align 4, !tbaa !317, !range !265, !noundef !69
   %i.ip = trunc nuw i8 %i.io to i1
@@ -506,7 +507,7 @@ bb.y:                                             ; preds = %bb.x
   br label %_ZN12_GLOBAL__N_111XCOFFWriter16writeRelocationsEv.exit
 
 bb.z:                                             ; preds = %.thread.i.i, %bb.v
-  %indvars.iv.next.i.a = add nuw nsw i64 %indvars.iv.i.a, 1 ; 2 uses
+  %indvars.iv.next.i.a = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %exitcond.not.i.a = icmp eq i64 %indvars.iv.next.i.a, %i.fa
   br i1 %exitcond.not.i.a, label %.critedge73.loopexit.i.i, label %bb.e, !llvm.loop !146
 
@@ -909,17 +910,13 @@ bb.cq:                                            ; preds = %_ZN12_GLOBAL__N_111
   %i.aoy = ptrtoint ptr %i.aow to i64
   %i.aoz = ptrtoint ptr %i.aou to i64
   %i.apa = sub i64 %i.aoy, %i.aoz
-  %i.apb = sdiv exact i64 %i.apa, 120             ; 2 uses
-  %i.apc = and i64 %i.apb, 65535
+  %i.apb = sdiv exact i64 %i.apa, 120
+  %i.apc = and i64 %i.apb, 65535                  ; 2 uses
   %.not.i11 = icmp eq i64 %i.apc, 0
-  br i1 %.not.i11, label %_ZN12_GLOBAL__N_111XCOFFWriter16writeRelocationsEv.exit.thread, label %.lr.ph.i
+  br i1 %.not.i11, label %_ZN12_GLOBAL__N_111XCOFFWriter16writeRelocationsEv.exit.thread, label %bb.cr
 
-.lr.ph.i:                                         ; preds = %bb.cq
-  %wide.trip.count = and i64 %i.apb, 65535
-  br label %bb.cr
-
-bb.cr:                                            ; preds = %_ZN4llvm9XCOFFYAML7SectionD2Ev.exit.i, %.lr.ph.i
-  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN4llvm9XCOFFYAML7SectionD2Ev.exit.i ], [ 0, %.lr.ph.i ] ; 2 uses
+bb.cr:                                            ; preds = %bb.cq, %_ZN4llvm9XCOFFYAML7SectionD2Ev.exit.i
+  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN4llvm9XCOFFYAML7SectionD2Ev.exit.i ], [ 0, %bb.cq ] ; 2 uses
   %i.apd = load ptr, ptr %i.eq, align 8, !tbaa !78
   %i.ape = getelementptr inbounds nuw [120 x i8], ptr %i.apd, i64 %indvars.iv ; 12 uses
   %.sroa.0.0.copyload40.i = load ptr, ptr %i.ape, align 8
@@ -1181,7 +1178,7 @@ bb.da:                                            ; preds = %bb.cz
 
 _ZN4llvm9XCOFFYAML7SectionD2Ev.exit.i:            ; preds = %bb.da, %bb.cz
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.apc
   br i1 %exitcond.not, label %_ZN12_GLOBAL__N_111XCOFFWriter19writeSectionHeadersEv.exit, label %bb.cr, !llvm.loop !222
 
 _ZN12_GLOBAL__N_111XCOFFWriter19writeSectionHeadersEv.exit: ; preds = %_ZN4llvm9XCOFFYAML7SectionD2Ev.exit.i
@@ -1193,8 +1190,8 @@ _ZN12_GLOBAL__N_111XCOFFWriter19writeSectionHeadersEv.exit: ; preds = %_ZN4llvm9
   %.pre224.a = ptrtoint ptr %.pre214.a to i64
   %.pre225 = ptrtoint ptr %.pre216.a to i64
   %.pre227 = sub i64 %.pre224.a, %.pre225
-  %.pre229 = sdiv exact i64 %.pre227, 120         ; 2 uses
-  %.pre231 = and i64 %.pre229, 65535
+  %.pre229 = sdiv exact i64 %.pre227, 120
+  %.pre231 = and i64 %.pre229, 65535              ; 2 uses
   %i.asx = icmp eq i64 %.pre231, 0
   br i1 %i.asx, label %_ZN12_GLOBAL__N_111XCOFFWriter16writeRelocationsEv.exit.thread, label %.lr.ph.i36
 
@@ -1205,11 +1202,10 @@ _ZN12_GLOBAL__N_111XCOFFWriter19writeSectionHeadersEv.exit: ; preds = %_ZN4llvm9
   %i.atb = getelementptr inbounds nuw i8, ptr %14, i64 72
   %i.atc = getelementptr inbounds nuw i8, ptr %14, i64 88
   %i.atd = getelementptr inbounds nuw i8, ptr %14, i64 80
-  %wide.trip.count207 = and i64 %.pre229, 65535
   br label %bb.db
 
 bb.db:                                            ; preds = %_ZN4llvm9XCOFFYAML7SectionD2Ev.exit.i45, %.lr.ph.i36
-  %indvars.iv204 = phi i64 [ %indvars.iv.next205, %_ZN4llvm9XCOFFYAML7SectionD2Ev.exit.i45 ], [ 0, %.lr.ph.i36 ] ; 3 uses
+  %indvars.iv204 = phi i64 [ 0, %.lr.ph.i36 ], [ %indvars.iv.next205, %_ZN4llvm9XCOFFYAML7SectionD2Ev.exit.i45 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #13
   %i.ate = load ptr, ptr %0, align 8, !tbaa !68, !nonnull !69, !align !70
   %i.atf = getelementptr inbounds nuw i8, ptr %i.ate, i64 248
@@ -1325,7 +1321,7 @@ bb.di:                                            ; preds = %.critedge.i
 _ZN4llvm9XCOFFYAML7SectionD2Ev.exit.i45:          ; preds = %bb.di, %.critedge.i
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #13
   %indvars.iv.next205 = add nuw nsw i64 %indvars.iv204, 1 ; 2 uses
-  %exitcond208.not = icmp eq i64 %indvars.iv.next205, %wide.trip.count207
+  %exitcond208.not = icmp eq i64 %indvars.iv.next205, %.pre231
   br i1 %exitcond208.not, label %.loopexit, label %bb.db, !llvm.loop !224
 
 bb.dj:                                            ; preds = %bb.dh
@@ -1366,17 +1362,13 @@ _ZN12_GLOBAL__N_111XCOFFWriter16writeSectionDataEv.exit: ; preds = %bb.dj, %bb.d
   %.pre233 = ptrtoint ptr %.pre219.a to i64
   %.pre235 = ptrtoint ptr %.pre221 to i64
   %.pre237 = sub i64 %.pre233, %.pre235
-  %.pre239 = sdiv exact i64 %.pre237, 120         ; 2 uses
-  %.pre241 = and i64 %.pre239, 65535
+  %.pre239 = sdiv exact i64 %.pre237, 120
+  %.pre241 = and i64 %.pre239, 65535              ; 2 uses
   %i.avs = icmp eq i64 %.pre241, 0
-  br i1 %i.avs, label %_ZN12_GLOBAL__N_111XCOFFWriter16writeRelocationsEv.exit.thread, label %.lr.ph51.i
+  br i1 %i.avs, label %_ZN12_GLOBAL__N_111XCOFFWriter16writeRelocationsEv.exit.thread, label %bb.dl
 
-.lr.ph51.i:                                       ; preds = %.loopexit
-  %wide.trip.count212 = and i64 %.pre239, 65535
-  br label %bb.dl
-
-bb.dl:                                            ; preds = %_ZN4llvm9XCOFFYAML7SectionD2Ev.exit.i62, %.lr.ph51.i
-  %indvars.iv209 = phi i64 [ %indvars.iv.next210, %_ZN4llvm9XCOFFYAML7SectionD2Ev.exit.i62 ], [ 0, %.lr.ph51.i ] ; 3 uses
+bb.dl:                                            ; preds = %.loopexit, %_ZN4llvm9XCOFFYAML7SectionD2Ev.exit.i62
+  %indvars.iv209 = phi i64 [ %indvars.iv.next210, %_ZN4llvm9XCOFFYAML7SectionD2Ev.exit.i62 ], [ 0, %.loopexit ] ; 3 uses
   %i.avt = load ptr, ptr %0, align 8, !tbaa !68, !nonnull !69, !align !70
   %i.avu = getelementptr inbounds nuw i8, ptr %i.avt, i64 248
   %i.avv = load ptr, ptr %i.avu, align 8, !tbaa !78
@@ -1554,7 +1546,7 @@ bb.dv:                                            ; preds = %.critedge.i60
 
 _ZN4llvm9XCOFFYAML7SectionD2Ev.exit.i62:          ; preds = %bb.dv, %.critedge.i60
   %indvars.iv.next210 = add nuw nsw i64 %indvars.iv209, 1 ; 2 uses
-  %exitcond213.not = icmp eq i64 %indvars.iv.next210, %wide.trip.count212
+  %exitcond213.not = icmp eq i64 %indvars.iv.next210, %.pre241
   br i1 %exitcond213.not, label %_ZN12_GLOBAL__N_111XCOFFWriter16writeRelocationsEv.exit.thread.loopexit, label %bb.dl, !llvm.loop !228
 
 bb.dw:                                            ; preds = %.thread.i53

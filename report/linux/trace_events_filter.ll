@@ -205,11 +205,9 @@ bb.aq:                                            ; preds = %bb.ap
   %i.lm = getelementptr i8, ptr %1, i64 %i.ll
   %i.ln = getelementptr i8, ptr %i.d, i64 32
   %i.lo = load i64, ptr %i.ln, align 8
-  %2 = trunc i64 %i.lo to i32
   %i.lp = load i16, ptr %i.lm, align 2
-  %3 = zext i16 %i.lp to i32
-  %4 = and i32 %2, 65535
-  %5 = icmp samesign ugt i32 %4, %3
+  %2 = trunc i64 %i.lo to i16
+  %3 = icmp ult i16 %i.lp, %2
   br label %filter_pred_u16.exit.i
 
 bb.ar:                                            ; preds = %bb.ap
@@ -219,11 +217,9 @@ bb.ar:                                            ; preds = %bb.ap
   %i.lt = getelementptr i8, ptr %1, i64 %i.ls
   %i.lu = getelementptr i8, ptr %i.d, i64 32
   %i.lv = load i64, ptr %i.lu, align 8
-  %6 = trunc i64 %i.lv to i32
   %i.lw = load i16, ptr %i.lt, align 2
-  %7 = zext i16 %i.lw to i32
-  %8 = and i32 %6, 65535
-  %9 = icmp samesign uge i32 %8, %7
+  %4 = trunc i64 %i.lv to i16
+  %5 = icmp ule i16 %i.lw, %4
   br label %filter_pred_u16.exit.i
 
 bb.as:                                            ; preds = %bb.ap
@@ -233,11 +229,9 @@ bb.as:                                            ; preds = %bb.ap
   %i.ma = getelementptr i8, ptr %1, i64 %i.lz
   %i.mb = getelementptr i8, ptr %i.d, i64 32
   %i.mc = load i64, ptr %i.mb, align 8
-  %10 = trunc i64 %i.mc to i32
   %i.md = load i16, ptr %i.ma, align 2
-  %11 = zext i16 %i.md to i32
-  %12 = and i32 %10, 65535
-  %13 = icmp samesign ult i32 %12, %11
+  %6 = trunc i64 %i.mc to i16
+  %7 = icmp ugt i16 %i.md, %6
   br label %filter_pred_u16.exit.i
 
 bb.at:                                            ; preds = %bb.ap
@@ -247,11 +241,9 @@ bb.at:                                            ; preds = %bb.ap
   %i.mh = getelementptr i8, ptr %1, i64 %i.mg
   %i.mi = getelementptr i8, ptr %i.d, i64 32
   %i.mj = load i64, ptr %i.mi, align 8
-  %14 = trunc i64 %i.mj to i32
   %i.mk = load i16, ptr %i.mh, align 2
-  %15 = zext i16 %i.mk to i32
-  %16 = and i32 %14, 65535
-  %17 = icmp samesign ule i32 %16, %15
+  %8 = trunc i64 %i.mj to i16
+  %9 = icmp uge i16 %i.mk, %8
   br label %filter_pred_u16.exit.i
 
 bb.au:                                            ; preds = %bb.ap
@@ -269,7 +261,7 @@ bb.au:                                            ; preds = %bb.ap
   br label %filter_pred_u16.exit.i
 
 filter_pred_u16.exit.i:                           ; preds = %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap
-  %.0.shrunk.i74.i = phi i1 [ %i.mv, %bb.au ], [ %5, %bb.aq ], [ %9, %bb.ar ], [ %13, %bb.as ], [ %17, %bb.at ], [ false, %bb.ap ]
+  %.0.shrunk.i74.i = phi i1 [ %i.mv, %bb.au ], [ %3, %bb.aq ], [ %5, %bb.ar ], [ %7, %bb.as ], [ %9, %bb.at ], [ false, %bb.ap ]
   %.0.i75.i = zext i1 %.0.shrunk.i74.i to i32
   br label %filter_pred_fn_call.exit
 
@@ -413,11 +405,9 @@ bb.bf:                                            ; preds = %bb.be
   %i.pz = getelementptr i8, ptr %1, i64 %i.py
   %i.qa = getelementptr i8, ptr %i.d, i64 32
   %i.qb = load i64, ptr %i.qa, align 8
-  %18 = trunc i64 %i.qb to i32
   %i.qc = load i8, ptr %i.pz, align 1
-  %19 = zext i8 %i.qc to i32
-  %20 = and i32 %18, 255
-  %21 = icmp samesign ugt i32 %20, %19
+  %10 = trunc i64 %i.qb to i8
+  %11 = icmp ult i8 %i.qc, %10
   br label %filter_pred_u8.exit.i
 
 bb.bg:                                            ; preds = %bb.be
@@ -427,11 +417,9 @@ bb.bg:                                            ; preds = %bb.be
   %i.qg = getelementptr i8, ptr %1, i64 %i.qf
   %i.qh = getelementptr i8, ptr %i.d, i64 32
   %i.qi = load i64, ptr %i.qh, align 8
-  %22 = trunc i64 %i.qi to i32
   %i.qj = load i8, ptr %i.qg, align 1
-  %23 = zext i8 %i.qj to i32
-  %24 = and i32 %22, 255
-  %25 = icmp samesign uge i32 %24, %23
+  %12 = trunc i64 %i.qi to i8
+  %13 = icmp ule i8 %i.qj, %12
   br label %filter_pred_u8.exit.i
 
 bb.bh:                                            ; preds = %bb.be
@@ -441,11 +429,9 @@ bb.bh:                                            ; preds = %bb.be
   %i.qn = getelementptr i8, ptr %1, i64 %i.qm
   %i.qo = getelementptr i8, ptr %i.d, i64 32
   %i.qp = load i64, ptr %i.qo, align 8
-  %26 = trunc i64 %i.qp to i32
   %i.qq = load i8, ptr %i.qn, align 1
-  %27 = zext i8 %i.qq to i32
-  %28 = and i32 %26, 255
-  %29 = icmp samesign ult i32 %28, %27
+  %14 = trunc i64 %i.qp to i8
+  %15 = icmp ugt i8 %i.qq, %14
   br label %filter_pred_u8.exit.i
 
 bb.bi:                                            ; preds = %bb.be
@@ -455,11 +441,9 @@ bb.bi:                                            ; preds = %bb.be
   %i.qu = getelementptr i8, ptr %1, i64 %i.qt
   %i.qv = getelementptr i8, ptr %i.d, i64 32
   %i.qw = load i64, ptr %i.qv, align 8
-  %30 = trunc i64 %i.qw to i32
   %i.qx = load i8, ptr %i.qu, align 1
-  %31 = zext i8 %i.qx to i32
-  %32 = and i32 %30, 255
-  %33 = icmp samesign ule i32 %32, %31
+  %16 = trunc i64 %i.qw to i8
+  %17 = icmp uge i8 %i.qx, %16
   br label %filter_pred_u8.exit.i
 
 bb.bj:                                            ; preds = %bb.be
@@ -477,7 +461,7 @@ bb.bj:                                            ; preds = %bb.be
   br label %filter_pred_u8.exit.i
 
 filter_pred_u8.exit.i:                            ; preds = %bb.bj, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be
-  %.0.shrunk.i82.i = phi i1 [ %i.ri, %bb.bj ], [ %21, %bb.bf ], [ %25, %bb.bg ], [ %29, %bb.bh ], [ %33, %bb.bi ], [ false, %bb.be ]
+  %.0.shrunk.i82.i = phi i1 [ %i.ri, %bb.bj ], [ %11, %bb.bf ], [ %13, %bb.bg ], [ %15, %bb.bh ], [ %17, %bb.bi ], [ false, %bb.be ]
   %.0.i83.i = zext i1 %.0.shrunk.i82.i to i32
   br label %filter_pred_fn_call.exit
 

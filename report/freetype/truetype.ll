@@ -205,35 +205,27 @@ bb.bs:                                            ; preds = %bb.f
   %i.qa = load i64, ptr %i.pz, align 8, !tbaa !185 ; 2 uses
   %i.qb = getelementptr inbounds nuw i8, ptr %i.ew, i64 32
   %i.qc = load i64, ptr %i.qb, align 8, !tbaa !185 ; 2 uses
-  %8 = trunc i64 %i.qa to i32
-  %9 = and i32 %8, 65535
-  %i.qd = load i16, ptr %i.bu, align 8, !tbaa !258
-  %10 = zext i16 %i.qd to i32                     ; 2 uses
-  %.not.i = icmp samesign ult i32 %9, %10
-  %11 = trunc i64 %i.qc to i32
-  %12 = and i32 %11, 65535
-  %.not95.i = icmp samesign ult i32 %12, %10
+  %i.qd = load i16, ptr %i.bu, align 8, !tbaa !258 ; 2 uses
+  %8 = trunc i64 %i.qa to i16
+  %.not.i = icmp ugt i16 %i.qd, %8
+  %9 = trunc i64 %i.qc to i16
+  %.not95.i = icmp ugt i16 %i.qd, %9
   %or.cond.i = select i1 %.not.i, i1 %.not95.i, i1 false
   br i1 %or.cond.i, label %bb.bt, label %bb.bv
 
 bb.bt:                                            ; preds = %bb.bs
-  %13 = trunc i64 %i.pw to i32
-  %14 = and i32 %13, 65535
-  %i.qe = load i16, ptr %i.ad, align 8, !tbaa !255
-  %15 = zext i16 %i.qe to i32                     ; 2 uses
-  %.not96.i = icmp samesign ult i32 %14, %15
-  %16 = trunc i64 %i.py to i32
-  %17 = and i32 %16, 65535
-  %.not97.i = icmp samesign ult i32 %17, %15
+  %i.qe = load i16, ptr %i.ad, align 8, !tbaa !255 ; 2 uses
+  %10 = trunc i64 %i.pw to i16
+  %.not96.i = icmp ugt i16 %i.qe, %10
+  %11 = trunc i64 %i.py to i16
+  %.not97.i = icmp ugt i16 %i.qe, %11
   %or.cond102.i = select i1 %.not96.i, i1 %.not97.i, i1 false
   br i1 %or.cond102.i, label %bb.bu, label %bb.bv
 
 bb.bu:                                            ; preds = %bb.bt
-  %18 = trunc i64 %i.pu to i32
-  %19 = and i32 %18, 65535
   %i.qf = load i16, ptr %i.ae, align 8, !tbaa !617
-  %20 = zext i16 %i.qf to i32
-  %.not98.i = icmp samesign ult i32 %19, %20
+  %12 = trunc i64 %i.pu to i16
+  %.not98.i = icmp ugt i16 %i.qf, %12
   br i1 %.not98.i, label %bb.bw, label %bb.bv
 
 bb.bv:                                            ; preds = %bb.bu, %bb.bt, %bb.bs
@@ -636,24 +628,18 @@ bb.ea:                                            ; preds = %bb.dy
   br label %Ins_SPVTL.exitthread-pre-split
 
 bb.eb:                                            ; preds = %bb.f
-  %.val315 = load i64, ptr %i.ew, align 8, !tbaa !185 ; 3 uses
+  %.val315 = load i64, ptr %i.ew, align 8, !tbaa !185 ; 2 uses
   %i.xd = getelementptr i8, ptr %i.ew, i64 8
-  %.val316 = load i64, ptr %i.xd, align 8, !tbaa !185 ; 3 uses
-  %i.xe = trunc i64 %.val315 to i16
-  %i.xf = trunc i64 %.val316 to i16
-  %21 = trunc i64 %.val315 to i32
-  %22 = and i32 %21, 65535
+  %.val316 = load i64, ptr %i.xd, align 8, !tbaa !185 ; 2 uses
+  %i.xe = trunc i64 %.val315 to i16               ; 2 uses
+  %i.xf = trunc i64 %.val316 to i16               ; 2 uses
   %i.xg = load i16, ptr %i.ad, align 8, !tbaa !255
-  %23 = zext i16 %i.xg to i32
-  %.not.i385 = icmp samesign ult i32 %22, %23
+  %.not.i385 = icmp ugt i16 %i.xg, %i.xe
   br i1 %.not.i385, label %bb.ec, label %bb.ed
 
 bb.ec:                                            ; preds = %bb.eb
-  %24 = trunc i64 %.val316 to i32
-  %25 = and i32 %24, 65535
   %i.xh = load i16, ptr %i.bu, align 8, !tbaa !258
-  %26 = zext i16 %i.xh to i32
-  %.not28.i = icmp samesign ult i32 %25, %26
+  %.not28.i = icmp ugt i16 %i.xh, %i.xf
   br i1 %.not28.i, label %bb.ee, label %bb.ed
 
 bb.ed:                                            ; preds = %bb.ec, %bb.eb
@@ -775,11 +761,9 @@ bb.en:                                            ; preds = %bb.eh, %.lr.ph.i
 
 bb.eo:                                            ; preds = %bb.f
   %.val317 = load i64, ptr %i.ew, align 8, !tbaa !185 ; 2 uses
-  %27 = trunc i64 %.val317 to i32
-  %28 = and i32 %27, 65535
   %i.zm = load i16, ptr %i.bu, align 8, !tbaa !258
-  %29 = zext i16 %i.zm to i32
-  %.not.i392 = icmp samesign ult i32 %28, %29
+  %13 = trunc i64 %.val317 to i16
+  %.not.i392 = icmp ugt i16 %i.zm, %13
   br i1 %.not.i392, label %bb.eq, label %bb.ep
 
 bb.ep:                                            ; preds = %bb.eo
@@ -1182,13 +1166,10 @@ bb.go:                                            ; preds = %bb.gn
   br label %Ins_SPVTL.exitthread-pre-split
 
 bb.gp:                                            ; preds = %bb.f, %bb.f
-  %.val319 = load i64, ptr %i.ew, align 8, !tbaa !185 ; 3 uses
-  %i.agp = trunc i64 %.val319 to i16              ; 3 uses
-  %30 = trunc i64 %.val319 to i32
-  %31 = and i32 %30, 65535
+  %.val319 = load i64, ptr %i.ew, align 8, !tbaa !185 ; 2 uses
+  %i.agp = trunc i64 %.val319 to i16              ; 4 uses
   %i.agq = load i16, ptr %i.bu, align 8, !tbaa !258
-  %32 = zext i16 %i.agq to i32
-  %.not.i422 = icmp samesign ult i32 %31, %32
+  %.not.i422 = icmp ugt i16 %i.agq, %i.agp
   br i1 %.not.i422, label %bb.gr, label %bb.gq
 
 bb.gq:                                            ; preds = %bb.gp
@@ -1591,11 +1572,9 @@ Compute_Point_Displacement.exit.i:                ; preds = %bb.hw
   %i.aoh = add nsw i64 %.in.i, -1                 ; 2 uses
   %i.aoi = getelementptr inbounds i8, ptr %.01632.i, i64 -8 ; 2 uses
   %i.aoj = load i64, ptr %i.aoi, align 8, !tbaa !185 ; 5 uses
-  %33 = trunc i64 %i.aoj to i32
-  %34 = and i32 %33, 65535
   %i.aok = load i16, ptr %i.ae, align 8, !tbaa !617
-  %35 = zext i16 %i.aok to i32
-  %.not20.i = icmp samesign ult i32 %34, %35
+  %14 = trunc i64 %i.aoj to i16
+  %.not20.i = icmp ugt i16 %i.aok, %14
   br i1 %.not20.i, label %bb.hz, label %bb.hy
 
 bb.hy:                                            ; preds = %.lr.ph.i433
@@ -1998,11 +1977,9 @@ bb.jx:                                            ; preds = %bb.ju
   %i.axv = add nsw i64 %.in.i491, -1              ; 2 uses
   %i.axw = getelementptr inbounds i8, ptr %.03453.i, i64 -8 ; 2 uses
   %i.axx = load i64, ptr %i.axw, align 8, !tbaa !185 ; 8 uses
-  %36 = trunc i64 %i.axx to i32
-  %37 = and i32 %36, 65535
+  %15 = trunc i64 %i.axx to i16
   %i.axy = load i16, ptr %i.ae, align 8, !tbaa !617
-  %38 = zext i16 %i.axy to i32
-  %.not38.i492 = icmp samesign ult i32 %37, %38
+  %.not38.i492 = icmp ugt i16 %i.axy, %15
   br i1 %.not38.i492, label %bb.jz, label %bb.jy
 
 bb.jy:                                            ; preds = %.lr.ph.i490
@@ -2405,13 +2382,10 @@ bb.lr:                                            ; preds = %bb.lq, %bb.lk
   br label %Ins_SPVTL.exitthread-pre-split
 
 bb.ls:                                            ; preds = %bb.f, %bb.f
-  %i.biv = load i64, ptr %i.ew, align 8, !tbaa !185 ; 4 uses
-  %i.biw = trunc i64 %i.biv to i16                ; 4 uses
-  %39 = trunc i64 %i.biv to i32
-  %40 = and i32 %39, 65535
+  %i.biv = load i64, ptr %i.ew, align 8, !tbaa !185 ; 3 uses
+  %i.biw = trunc i64 %i.biv to i16                ; 5 uses
   %i.bix = load i16, ptr %i.ad, align 8, !tbaa !255
-  %41 = zext i16 %i.bix to i32
-  %.not.i516 = icmp samesign ult i32 %40, %41
+  %.not.i516 = icmp ugt i16 %i.bix, %i.biw
   br i1 %.not.i516, label %bb.lt, label %bb.lu
 
 bb.lt:                                            ; preds = %bb.ls
@@ -2521,12 +2495,10 @@ bb.mc:                                            ; preds = %bb.mb
   %.03242.i = phi ptr [ %i.bkv, %bb.mf ], [ %i.ew, %.preheader.i ]
   %i.bku = add nsw i64 %.in.i529, -1              ; 2 uses
   %i.bkv = getelementptr inbounds i8, ptr %.03242.i, i64 -8 ; 2 uses
-  %i.bkw = load i64, ptr %i.bkv, align 8, !tbaa !185 ; 3 uses
-  %42 = trunc i64 %i.bkw to i32
-  %43 = and i32 %42, 65535
+  %i.bkw = load i64, ptr %i.bkv, align 8, !tbaa !185 ; 2 uses
   %i.bkx = load i16, ptr %i.ad, align 8, !tbaa !255
-  %44 = zext i16 %i.bkx to i32
-  %.not37.i = icmp samesign ult i32 %43, %44
+  %16 = trunc i64 %i.bkw to i16                   ; 2 uses
+  %.not37.i = icmp ugt i16 %i.bkx, %16
   br i1 %.not37.i, label %bb.me, label %bb.md
 
 bb.md:                                            ; preds = %.lr.ph.i528
@@ -2535,7 +2507,6 @@ bb.md:                                            ; preds = %.lr.ph.i528
   br i1 %.not38.i530, label %bb.mf, label %.loopexit.sink.split
 
 bb.me:                                            ; preds = %.lr.ph.i528
-  %45 = trunc i64 %i.bkw to i16
   %i.bkz = load ptr, ptr %i.av, align 8, !tbaa !252
   %i.bla = load ptr, ptr %i.ak, align 8, !tbaa !256
   %i.blb = and i64 %i.bkw, 65535
@@ -2555,7 +2526,7 @@ bb.me:                                            ; preds = %.lr.ph.i528
   %i.blp = call i64 %i.bkz(ptr noundef nonnull %0, i64 noundef %i.blj, i64 noundef %i.blo) #21, !inline_history !585
   %i.blq = load ptr, ptr %i.at, align 8, !tbaa !250
   %i.blr = sub i64 0, %i.blp
-  call void %i.blq(ptr noundef nonnull %0, ptr noundef nonnull %i.ad, i16 noundef zeroext %45, i64 noundef %i.blr) #21, !inline_history !585
+  call void %i.blq(ptr noundef nonnull %0, ptr noundef nonnull %i.ad, i16 noundef zeroext %16, i64 noundef %i.blr) #21, !inline_history !585
   br label %bb.mf
 
 bb.mf:                                            ; preds = %bb.me, %bb.md
@@ -2577,15 +2548,12 @@ bb.mg:                                            ; preds = %bb.f
   br label %Ins_SPVTL.exitthread-pre-split
 
 bb.mh:                                            ; preds = %bb.f, %bb.f
-  %.val322 = load i64, ptr %i.ew, align 8, !tbaa !185 ; 4 uses
+  %.val322 = load i64, ptr %i.ew, align 8, !tbaa !185 ; 3 uses
   %i.bls = getelementptr i8, ptr %i.ew, i64 8
   %.val323 = load i64, ptr %i.bls, align 8, !tbaa !185 ; 2 uses
-  %i.blt = trunc i64 %.val322 to i16              ; 3 uses
-  %46 = trunc i64 %.val322 to i32
-  %47 = and i32 %46, 65535
+  %i.blt = trunc i64 %.val322 to i16              ; 4 uses
   %i.blu = load i16, ptr %i.bu, align 8, !tbaa !258
-  %48 = zext i16 %i.blu to i32
-  %.not.i532 = icmp samesign ult i32 %47, %48
+  %.not.i532 = icmp ugt i16 %i.blu, %i.blt
   br i1 %.not.i532, label %bb.mi, label %bb.mj
 
 bb.mi:                                            ; preds = %bb.mh
@@ -2988,12 +2956,10 @@ Ins_GC.exit:                                      ; preds = %bb.no, %bb.np, %bb.
   br label %Ins_SPVTL.exitthread-pre-split
 
 bb.nt:                                            ; preds = %bb.f
-  %i.btk = load i64, ptr %i.ew, align 8, !tbaa !185 ; 3 uses
-  %49 = trunc i64 %i.btk to i32
-  %50 = and i32 %49, 65535
+  %i.btk = load i64, ptr %i.ew, align 8, !tbaa !185 ; 2 uses
   %i.btl = load i16, ptr %i.ae, align 8, !tbaa !617
-  %51 = zext i16 %i.btl to i32
-  %.not.i576 = icmp samesign ult i32 %50, %51
+  %17 = trunc i64 %i.btk to i16                   ; 2 uses
+  %.not.i576 = icmp ugt i16 %i.btl, %17
   br i1 %.not.i576, label %bb.nv, label %bb.nu
 
 bb.nu:                                            ; preds = %bb.nt
@@ -3002,7 +2968,6 @@ bb.nu:                                            ; preds = %bb.nt
   br i1 %.not21.i577, label %Ins_SPVTL.exitthread-pre-split, label %.loopexit.sink.split
 
 bb.nv:                                            ; preds = %bb.nt
-  %52 = trunc i64 %i.btk to i16
   %i.btn = load ptr, ptr %i.av, align 8, !tbaa !252
   %i.bto = load ptr, ptr %i.al, align 8, !tbaa !618
   %i.btp = and i64 %i.btk, 65535                  ; 3 uses
@@ -3015,7 +2980,7 @@ bb.nv:                                            ; preds = %bb.nt
   %i.btw = getelementptr inbounds nuw i8, ptr %i.ew, i64 8
   %i.btx = load i64, ptr %i.btw, align 8, !tbaa !185
   %i.bty = sub i64 %i.btx, %i.btu
-  call void %i.btv(ptr noundef nonnull %0, ptr noundef nonnull %i.ae, i16 noundef zeroext %52, i64 noundef %i.bty) #21, !inline_history !594
+  call void %i.btv(ptr noundef nonnull %0, ptr noundef nonnull %i.ae, i16 noundef zeroext %17, i64 noundef %i.bty) #21, !inline_history !594
   %i.btz = load i16, ptr %i.cd, align 2, !tbaa !622
   %i.bua = icmp eq i16 %i.btz, 0
   br i1 %i.bua, label %bb.nw, label %Ins_SPVTL.exitthread-pre-split
@@ -3030,21 +2995,17 @@ bb.nw:                                            ; preds = %bb.nv
 
 bb.nx:                                            ; preds = %bb.f, %bb.f
   %i.buf = load i64, ptr %i.ew, align 8, !tbaa !185 ; 4 uses
-  %53 = trunc i64 %i.buf to i32
-  %54 = and i32 %53, 65535
   %i.bug = load i16, ptr %i.bu, align 8, !tbaa !258
-  %55 = zext i16 %i.bug to i32
-  %.not.i578 = icmp samesign ult i32 %54, %55
+  %18 = trunc i64 %i.buf to i16
+  %.not.i578 = icmp ugt i16 %i.bug, %18
   br i1 %.not.i578, label %bb.ny, label %bb.nz
 
 bb.ny:                                            ; preds = %bb.nx
   %i.buh = getelementptr inbounds nuw i8, ptr %i.ew, i64 8
   %i.bui = load i64, ptr %i.buh, align 8, !tbaa !185 ; 4 uses
-  %56 = trunc i64 %i.bui to i32
-  %57 = and i32 %56, 65535
   %i.buj = load i16, ptr %i.ad, align 8, !tbaa !255
-  %58 = zext i16 %i.buj to i32
-  %.not57.i580 = icmp samesign ult i32 %57, %58
+  %19 = trunc i64 %i.bui to i16
+  %.not57.i580 = icmp ugt i16 %i.buj, %19
   br i1 %.not57.i580, label %bb.ob, label %bb.nz
 
 bb.nz:                                            ; preds = %bb.ny, %bb.nx
@@ -3447,11 +3408,9 @@ bb.sg:                                            ; preds = %bb.sd
   %i.ckl = add nsw i64 %.in.i628, -1              ; 2 uses
   %i.ckm = getelementptr inbounds i8, ptr %.01623.i, i64 -8 ; 2 uses
   %i.ckn = load i64, ptr %i.ckm, align 8, !tbaa !185 ; 2 uses
-  %59 = trunc i64 %i.ckn to i32
-  %60 = and i32 %59, 65535
   %i.cko = load i16, ptr %i.ba, align 8, !tbaa !209
-  %61 = zext i16 %i.cko to i32
-  %.not19.i629 = icmp samesign ult i32 %60, %61
+  %20 = trunc i64 %i.ckn to i16
+  %.not19.i629 = icmp ugt i16 %i.cko, %20
   br i1 %.not19.i629, label %bb.si, label %bb.sh
 
 bb.sh:                                            ; preds = %.lr.ph.i627
@@ -3486,19 +3445,19 @@ bb.sl:                                            ; preds = %bb.sk
   %i.cky = load i64, ptr %i.ckx, align 8, !tbaa !185 ; 2 uses
   %i.ckz = trunc i64 %i.cky to i32
   %i.cla = load i64, ptr %i.ew, align 8, !tbaa !185 ; 2 uses
-  %i.clb = trunc i64 %i.cla to i16
+  %i.clb = trunc i64 %i.cla to i16                ; 2 uses
   %i.clc = and i32 %i.ckz, 65535                  ; 2 uses
-  %i.cld = load i16, ptr %i.ba, align 8, !tbaa !209
-  %i.cle = zext i16 %i.cld to i32                 ; 2 uses
+  %i.cld = load i16, ptr %i.ba, align 8, !tbaa !209 ; 2 uses
+  %i.cle = zext i16 %i.cld to i32
   %.not.i634 = icmp samesign ult i32 %i.clc, %i.cle
-  %62 = trunc i64 %i.cla to i32
-  %63 = and i32 %62, 65535                        ; 2 uses
-  %.not16.i = icmp samesign ult i32 %63, %i.cle
+  %.not16.i = icmp ugt i16 %i.cld, %i.clb
   %or.cond.i635 = select i1 %.not.i634, i1 %.not16.i, i1 false
   br i1 %or.cond.i635, label %.preheader.i638, label %bb.sm
 
 .preheader.i638:                                  ; preds = %bb.sl
-  %.not1720.i = icmp samesign ult i32 %i.clc, %63
+  %21 = trunc i64 %i.cla to i32
+  %22 = and i32 %21, 65535
+  %.not1720.i = icmp samesign ult i32 %i.clc, %22
   br i1 %.not1720.i, label %Ins_SPVTL.exitthread-pre-split, label %.lr.ph.i639
 
 .lr.ph.i639:                                      ; preds = %.preheader.i638
@@ -3532,19 +3491,19 @@ bb.sp:                                            ; preds = %bb.so
   %i.clq = load i64, ptr %i.clp, align 8, !tbaa !185 ; 2 uses
   %i.clr = trunc i64 %i.clq to i32
   %i.cls = load i64, ptr %i.ew, align 8, !tbaa !185 ; 2 uses
-  %i.clt = trunc i64 %i.cls to i16
+  %i.clt = trunc i64 %i.cls to i16                ; 2 uses
   %i.clu = and i32 %i.clr, 65535                  ; 2 uses
-  %i.clv = load i16, ptr %i.ba, align 8, !tbaa !209
-  %i.clw = zext i16 %i.clv to i32                 ; 2 uses
+  %i.clv = load i16, ptr %i.ba, align 8, !tbaa !209 ; 2 uses
+  %i.clw = zext i16 %i.clv to i32
   %.not.i640 = icmp samesign ult i32 %i.clu, %i.clw
-  %64 = trunc i64 %i.cls to i32
-  %65 = and i32 %64, 65535                        ; 2 uses
-  %.not16.i641 = icmp samesign ult i32 %65, %i.clw
+  %.not16.i641 = icmp ugt i16 %i.clv, %i.clt
   %or.cond.i642 = select i1 %.not.i640, i1 %.not16.i641, i1 false
   br i1 %or.cond.i642, label %.preheader.i645, label %bb.sq
 
 .preheader.i645:                                  ; preds = %bb.sp
-  %.not1720.i646 = icmp samesign ult i32 %i.clu, %65
+  %23 = trunc i64 %i.cls to i32
+  %24 = and i32 %23, 65535
+  %.not1720.i646 = icmp samesign ult i32 %i.clu, %24
   br i1 %.not1720.i646, label %Ins_SPVTL.exitthread-pre-split, label %.lr.ph.i647
 
 .lr.ph.i647:                                      ; preds = %.preheader.i645
@@ -3757,21 +3716,17 @@ bb.tt:                                            ; preds = %bb.ts
 
 bb.tu:                                            ; preds = %bb.f, %bb.f
   %i.cof = load i64, ptr %i.ew, align 8, !tbaa !185 ; 2 uses
-  %66 = trunc i64 %i.cof to i32
-  %67 = and i32 %66, 65535
   %i.cog = load i16, ptr %i.ad, align 8, !tbaa !255
-  %68 = zext i16 %i.cog to i32
-  %.not.i674 = icmp samesign ult i32 %67, %68
+  %25 = trunc i64 %i.cof to i16
+  %.not.i674 = icmp ugt i16 %i.cog, %25
   br i1 %.not.i674, label %bb.tv, label %bb.tw
 
 bb.tv:                                            ; preds = %bb.tu
   %i.coh = getelementptr inbounds nuw i8, ptr %i.ew, i64 8
   %i.coi = load i64, ptr %i.coh, align 8, !tbaa !185 ; 2 uses
-  %69 = trunc i64 %i.coi to i32
-  %70 = and i32 %69, 65535
   %i.coj = load i16, ptr %i.ae, align 8, !tbaa !617
-  %71 = zext i16 %i.coj to i32
-  %.not52.i676 = icmp samesign ult i32 %70, %71
+  %26 = trunc i64 %i.coi to i16
+  %.not52.i676 = icmp ugt i16 %i.coj, %26
   br i1 %.not52.i676, label %bb.tx, label %bb.tw
 
 bb.tw:                                            ; preds = %bb.tv, %bb.tu
@@ -4174,15 +4129,12 @@ bb.k:                                             ; preds = %.lr.ph, %bb.s
   %.04964 = phi ptr [ %1, %.lr.ph ], [ %i.as, %bb.s ] ; 2 uses
   %i.ao = add nsw i64 %.in, -1                    ; 2 uses
   %i.ap = getelementptr inbounds i8, ptr %.04964, i64 -8
-  %i.aq = load i64, ptr %i.ap, align 8, !tbaa !185 ; 3 uses
-  %i.ar = trunc i64 %i.aq to i16
+  %i.aq = load i64, ptr %i.ap, align 8, !tbaa !185 ; 2 uses
+  %i.ar = trunc i64 %i.aq to i16                  ; 2 uses
   %i.as = getelementptr inbounds i8, ptr %.04964, i64 -16 ; 2 uses
   %i.at = load i64, ptr %i.as, align 8, !tbaa !185 ; 2 uses
-  %2 = trunc i64 %i.aq to i32
-  %3 = and i32 %2, 65535
   %i.au = load i16, ptr %i.ah, align 8, !tbaa !258
-  %4 = zext i16 %i.au to i32
-  %.not56 = icmp samesign ult i32 %3, %4
+  %.not56 = icmp ugt i16 %i.au, %i.ar
   br i1 %.not56, label %bb.n, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
@@ -4247,14 +4199,11 @@ bb.s:                                             ; preds = %.sink.split, %bb.o,
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @Ins_MIRP(ptr noundef %0, i64 %.0.val, i64 %.8.val) unnamed_addr #2 {
 bb.a:
-  %i.a = trunc i64 %.0.val to i16                 ; 3 uses
+  %i.a = trunc i64 %.0.val to i16                 ; 4 uses
   %i.b = add i64 %.8.val, 1                       ; 2 uses
-  %1 = trunc i64 %.0.val to i32
-  %2 = and i32 %1, 65535
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %i.d = load i16, ptr %i.c, align 8, !tbaa !255
-  %3 = zext i16 %i.d to i32
-  %.not = icmp samesign ult i32 %2, %3
+  %.not = icmp ugt i16 %i.d, %i.a
   br i1 %.not, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
@@ -4510,13 +4459,10 @@ bb.w:                                             ; preds = %bb.v, %bb.u
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @Ins_MDRP(ptr noundef %0, i64 %.0.val) unnamed_addr #2 {
 bb.a:
-  %i.a = trunc i64 %.0.val to i16                 ; 3 uses
-  %1 = trunc i64 %.0.val to i32
-  %2 = and i32 %1, 65535
+  %i.a = trunc i64 %.0.val to i16                 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %i.c = load i16, ptr %i.b, align 8, !tbaa !255
-  %3 = zext i16 %i.c to i32
-  %.not = icmp samesign ult i32 %2, %3
+  %.not = icmp ugt i16 %i.c, %i.a
   br i1 %.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a

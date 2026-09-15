@@ -205,12 +205,11 @@ bb.ba:                                            ; preds = %bb.ay
 
 _ZN5o3dgc12BinaryStream11WriteUInt32EmNS_15O3DGCStreamTypeE.exit129: ; preds = %bb.az, %bb.ba
   %i.ek = getelementptr inbounds nuw [8 x i8], ptr %i.du, i64 %.0107140
-  %i.el = load i64, ptr %i.ek, align 8            ; 3 uses
-  %i.em = trunc i64 %i.el to i8
+  %i.el = load i64, ptr %i.ek, align 8            ; 2 uses
+  %i.em = trunc i64 %i.el to i8                   ; 2 uses
   %i.en = load i32, ptr %i.c, align 8
   tail call void @_ZN5o3dgc12BinaryStream10WriteUCharEhNS_15O3DGCStreamTypeE(ptr noundef nonnull align 8 dereferenceable(28) %3, i8 noundef zeroext %i.em, i32 noundef %i.en)
-  %4 = and i64 %i.el, 255
-  %.not147 = icmp eq i64 %4, 0
+  %.not147 = icmp eq i8 %i.em, 0
   br i1 %.not147, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN5o3dgc12BinaryStream11WriteUInt32EmNS_15O3DGCStreamTypeE.exit129
