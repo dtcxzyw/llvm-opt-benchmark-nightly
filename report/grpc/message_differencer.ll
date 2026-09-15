@@ -205,7 +205,7 @@ _ZNSt6vectorIbSaIbEEC2EmRKS0_.exit.us.i:          ; preds = %_ZNSt6vectorIbSaIbE
   %.02139.us.i = phi i32 [ %.2.us.i, %_ZNSt13_Bvector_baseISaIbEED2Ev.exit.us.i ], [ 0, %_ZNSt6vectorIbSaIbEEC2EmRKS0_.exit.lr.ph.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #40
   %i.cg = sext i32 %i.cf to i64                   ; 2 uses
-  %i.ch = add nsw i64 %i.cg, 63                   ; 2 uses
+  %i.ch = add nuw nsw i64 %i.cg, 63               ; 2 uses
   %i.ci = lshr i64 %i.ch, 3
   %i.cj = and i64 %i.ci, 2305843009213693944
   %i.ck = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cj) #41
@@ -271,7 +271,7 @@ _ZNSt6vectorIbSaIbEEC2EmRKS0_.exit.i:             ; preds = %_ZNSt6vectorIbSaIbE
   %.02040.i = phi i32 [ %i.cy, %bb.u ], [ 0, %_ZNSt6vectorIbSaIbEEC2EmRKS0_.exit.lr.ph.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #40
   %i.dg = sext i32 %i.df to i64                   ; 2 uses
-  %i.dh = add nsw i64 %i.dg, 63                   ; 2 uses
+  %i.dh = add nuw nsw i64 %i.dg, 63               ; 2 uses
   %i.di = lshr i64 %i.dh, 3
   %i.dj = and i64 %i.di, 2305843009213693944
   %i.dk = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.dj) #41

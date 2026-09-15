@@ -205,15 +205,15 @@ bb.af:                                            ; preds = %bb.ae
   br label %bb.ah
 
 bb.ag:                                            ; preds = %bb.ae
-  %i.fm = mul nsw i32 %i.fd, 9
-  %.not106 = icmp ult i32 %i.fc, %i.fm
+  %i.fm = mul nuw nsw i32 %i.fd, 9
+  %.not106 = icmp samesign ult i32 %i.fc, %i.fm
   %i.fn = select i1 %.not106, i32 4, i32 5
-  %i.fo = mul nsw i32 %i.fd, 12
-  %i.fp = icmp uge i32 %i.fc, %i.fo
+  %i.fo = mul nuw nsw i32 %i.fd, 12
+  %i.fp = icmp samesign uge i32 %i.fc, %i.fo
   %i.fq = zext i1 %i.fp to i32
   %i.fr = add nuw nsw i32 %i.fn, %i.fq
-  %i.fs = mul nsw i32 %i.fd, 15
-  %i.ft = icmp uge i32 %i.fc, %i.fs
+  %i.fs = mul nuw nsw i32 %i.fd, 15
+  %i.ft = icmp samesign uge i32 %i.fc, %i.fs
   %i.fu = zext i1 %i.ft to i32
   %i.fv = add nuw nsw i32 %i.fr, %i.fu            ; 2 uses
   %i.fw = trunc nuw nsw i32 %i.fv to i16

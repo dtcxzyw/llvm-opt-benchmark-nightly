@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.d
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val.i.i = load ptr, ptr %i.m, align 8, !alias.scope !10338, !noalias !10336, !nonnull !69, !noundef !69 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.val1.i.i = load i64, ptr %i.n, align 8, !alias.scope !10338, !noalias !10336, !noundef !69 ; 10 uses
+  %.val1.i.i = load i64, ptr %i.n, align 8, !alias.scope !10338, !noalias !10336, !noundef !69 ; 9 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10339)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !10340
   %i.o = mul i64 %.val1.i.i, 20                   ; 3 uses
@@ -221,7 +221,7 @@ _ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i: ; pred
 
 "_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$8allocate17h2c5e185936086779E.exit.i.i.i.i.i.i": ; preds = %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i
   tail call void @_RNvCskdKJRKLKjqM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #28, !noalias !10341
-  %i.s = tail call noundef align 4 ptr @_RNvCskdKJRKLKjqM_7___rustc12___rust_alloc(i64 noundef %i.o, i64 noundef range(i64 1, 9) 4) #28, !noalias !10341 ; 6 uses
+  %i.s = tail call noundef align 4 ptr @_RNvCskdKJRKLKjqM_7___rustc12___rust_alloc(i64 noundef %i.o, i64 noundef range(i64 1, 9) 4) #28, !noalias !10341 ; 5 uses
   %i.t = icmp eq ptr %i.s, null
   br i1 %i.t, label %bb.f, label %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h0591bbf21008cd7fE.exit.i.i.i.i"
 
@@ -237,12 +237,11 @@ bb.f:                                             ; preds = %"_ZN63_$LT$alloc..a
   store i64 %.val1.i.i, ptr %i.a, align 8, !noalias !10340
   %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %i.s, ptr %i.u, align 8, !noalias !10340
-  %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 4 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 3 uses
   %i.w = getelementptr inbounds nuw [20 x i8], ptr %.val.i.i, i64 %.val1.i.i
-  %2 = icmp eq i64 %.val1.i.i, 0
-  br i1 %2, label %"_ZN76_$LT$proc_macro2..imp..DeferredTokenStream$u20$as$u20$core..clone..Clone$GT$5clone17h0b1e626992be8645E.exit.i", label %.lr.ph.i.i.i.i
+  br label %.lr.ph.i.i.i.i
 
-.lr.ph.i.i.i.i:                                   ; preds = %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h0591bbf21008cd7fE.exit.i.i.i.i", %"_ZN60_$LT$proc_macro..TokenTree$u20$as$u20$core..clone..Clone$GT$5clone17h5e4866675070d1f9E.exit.i.i.i.i"
+.lr.ph.i.i.i.i:                                   ; preds = %"_ZN60_$LT$proc_macro..TokenTree$u20$as$u20$core..clone..Clone$GT$5clone17h5e4866675070d1f9E.exit.i.i.i.i", %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h0591bbf21008cd7fE.exit.i.i.i.i"
   %.sroa.012.060.i.i.i.i = phi ptr [ %i.z, %"_ZN60_$LT$proc_macro..TokenTree$u20$as$u20$core..clone..Clone$GT$5clone17h5e4866675070d1f9E.exit.i.i.i.i" ], [ %.val.i.i, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h0591bbf21008cd7fE.exit.i.i.i.i" ] ; 16 uses
   %.sroa.7.058.i.i.i.i = phi i64 [ %i.aa, %"_ZN60_$LT$proc_macro..TokenTree$u20$as$u20$core..clone..Clone$GT$5clone17h5e4866675070d1f9E.exit.i.i.i.i" ], [ 0, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h0591bbf21008cd7fE.exit.i.i.i.i" ] ; 3 uses
   %.sroa.10.057.i.i.i.i = phi i64 [ %i.x, %"_ZN60_$LT$proc_macro..TokenTree$u20$as$u20$core..clone..Clone$GT$5clone17h5e4866675070d1f9E.exit.i.i.i.i" ], [ %.val1.i.i, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h0591bbf21008cd7fE.exit.i.i.i.i" ]
@@ -393,10 +392,10 @@ bb.r:                                             ; preds = %bb.q
 "_ZN4core3ptr44drop_in_place$LT$proc_macro..TokenStream$GT$17hebda6fb383036884E.exit.i.i": ; preds = %bb.q, %.body.i.i
   resume { ptr, i32 } %eh.lpad-body.i.i
 
-"_ZN76_$LT$proc_macro2..imp..DeferredTokenStream$u20$as$u20$core..clone..Clone$GT$5clone17h0b1e626992be8645E.exit.i": ; preds = %"_ZN60_$LT$proc_macro..TokenTree$u20$as$u20$core..clone..Clone$GT$5clone17h5e4866675070d1f9E.exit.i.i.i.i", %.lr.ph.i.i.i.i, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h0591bbf21008cd7fE.exit.i.i.i.i", %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h0591bbf21008cd7fE.exit.thread.i.i.i.i"
-  %3 = phi ptr [ inttoptr (i64 4 to ptr), %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h0591bbf21008cd7fE.exit.thread.i.i.i.i" ], [ %i.s, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h0591bbf21008cd7fE.exit.i.i.i.i" ], [ %i.s, %.lr.ph.i.i.i.i ], [ %i.s, %"_ZN60_$LT$proc_macro..TokenTree$u20$as$u20$core..clone..Clone$GT$5clone17h5e4866675070d1f9E.exit.i.i.i.i" ]
-  %4 = phi ptr [ %i.r, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h0591bbf21008cd7fE.exit.thread.i.i.i.i" ], [ %i.v, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h0591bbf21008cd7fE.exit.i.i.i.i" ], [ %i.v, %.lr.ph.i.i.i.i ], [ %i.v, %"_ZN60_$LT$proc_macro..TokenTree$u20$as$u20$core..clone..Clone$GT$5clone17h5e4866675070d1f9E.exit.i.i.i.i" ]
-  store i64 %.val1.i.i, ptr %4, align 8, !noalias !10340
+"_ZN76_$LT$proc_macro2..imp..DeferredTokenStream$u20$as$u20$core..clone..Clone$GT$5clone17h0b1e626992be8645E.exit.i": ; preds = %"_ZN60_$LT$proc_macro..TokenTree$u20$as$u20$core..clone..Clone$GT$5clone17h5e4866675070d1f9E.exit.i.i.i.i", %.lr.ph.i.i.i.i, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h0591bbf21008cd7fE.exit.thread.i.i.i.i"
+  %2 = phi ptr [ inttoptr (i64 4 to ptr), %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h0591bbf21008cd7fE.exit.thread.i.i.i.i" ], [ %i.s, %.lr.ph.i.i.i.i ], [ %i.s, %"_ZN60_$LT$proc_macro..TokenTree$u20$as$u20$core..clone..Clone$GT$5clone17h5e4866675070d1f9E.exit.i.i.i.i" ]
+  %3 = phi ptr [ %i.r, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h0591bbf21008cd7fE.exit.thread.i.i.i.i" ], [ %i.v, %.lr.ph.i.i.i.i ], [ %i.v, %"_ZN60_$LT$proc_macro..TokenTree$u20$as$u20$core..clone..Clone$GT$5clone17h5e4866675070d1f9E.exit.i.i.i.i" ]
+  store i64 %.val1.i.i, ptr %3, align 8, !noalias !10340
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !10340
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !10333
   br label %"_ZN68_$LT$proc_macro2..imp..TokenStream$u20$as$u20$core..clone..Clone$GT$5clone17h290d641b1cb2685fE.exit"
@@ -404,7 +403,7 @@ bb.r:                                             ; preds = %bb.q
 "_ZN68_$LT$proc_macro2..imp..TokenStream$u20$as$u20$core..clone..Clone$GT$5clone17h290d641b1cb2685fE.exit": ; preds = %bb.b, %"_ZN76_$LT$proc_macro2..imp..DeferredTokenStream$u20$as$u20$core..clone..Clone$GT$5clone17h0b1e626992be8645E.exit.i"
   %.sroa.410.0 = phi i32 [ %i.l, %"_ZN76_$LT$proc_macro2..imp..DeferredTokenStream$u20$as$u20$core..clone..Clone$GT$5clone17h0b1e626992be8645E.exit.i" ], [ undef, %bb.b ]
   %.sroa.4.0 = phi i64 [ %.val1.i.i, %"_ZN76_$LT$proc_macro2..imp..DeferredTokenStream$u20$as$u20$core..clone..Clone$GT$5clone17h0b1e626992be8645E.exit.i" ], [ undef, %bb.b ]
-  %.sroa.3.0 = phi ptr [ %3, %"_ZN76_$LT$proc_macro2..imp..DeferredTokenStream$u20$as$u20$core..clone..Clone$GT$5clone17h0b1e626992be8645E.exit.i" ], [ %.val.i, %bb.b ]
+  %.sroa.3.0 = phi ptr [ %2, %"_ZN76_$LT$proc_macro2..imp..DeferredTokenStream$u20$as$u20$core..clone..Clone$GT$5clone17h0b1e626992be8645E.exit.i" ], [ %.val.i, %bb.b ]
   %.sroa.0.0 = phi i64 [ %.val1.i.i, %"_ZN76_$LT$proc_macro2..imp..DeferredTokenStream$u20$as$u20$core..clone..Clone$GT$5clone17h0b1e626992be8645E.exit.i" ], [ -9223372036854775808, %bb.b ]
   store i64 %.sroa.0.0, ptr %0, align 8
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8

@@ -116,8 +116,8 @@ bb.h:                                             ; preds = %bb.g
   %i.am = extractelement <2 x double> %i.al, i64 0
   %i.an = extractelement <2 x double> %i.al, i64 1
   %i.ao = tail call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef null, i64 noundef 0, ptr noundef nonnull @.str.8, ptr noundef %i.ae, double noundef %i.am, double noundef %i.an) #13 ; 3 uses
-  %i.ap = add nsw i32 %i.ao, 1                    ; 2 uses
-  %i.aq = sext i32 %i.ap to i64                   ; 5 uses
+  %i.ap = add nsw i32 %i.ao, 1                    ; 3 uses
+  %i.aq = sext i32 %i.ap to i64                   ; 4 uses
   %i.ar = icmp ne i32 %i.ap, 0
   tail call void @llvm.assume(i1 %i.ar)
   %i.as = icmp slt i32 %i.ao, -1
@@ -520,8 +520,7 @@ begin_hunk_1_@_ZN6LibRaw14convert_to_rgbEv:bb.a
   store <8 x i32> %i.lv, ptr %i.lr, align 4, !tbaa !80
   %i.lw = getelementptr inbounds nuw i8, ptr %i.jk, i64 260
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %i.lw, ptr noundef nonnull align 1 dereferenceable(24) @.str.9, i64 24, i1 false) #13
-  %1 = add nsw i64 %i.aq, 300
-  %i.lx = icmp ult i64 %1, 1024
+  %i.lx = icmp ult i32 %i.ap, 724
   br i1 %i.lx, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %.preheader89

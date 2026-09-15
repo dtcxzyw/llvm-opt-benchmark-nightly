@@ -204,45 +204,24 @@ _RNvNtCscdodAO9FK5_5alloc5boxed14box_new_uninit.exit: ; preds = %bb.b
   store ptr %i.e, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 1, ptr %.sroa.5.0..sroa_idx, align 8
-  br label %8
+  br label %4
 
 bb.d:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  %i.g = mul i64 %3, 24                           ; 3 uses
+  %i.g = mul i64 %3, 24                           ; 2 uses
   %or.cond.i = icmp ugt i64 %3, 384307168202282325
-  br i1 %or.cond.i, label %9, label %4, !prof !10
+  br i1 %or.cond.i, label %5, label %bb.e, !prof !10
 
-4:                                                ; preds = %bb.d
-  %5 = icmp eq i64 %i.g, 0
-  br i1 %5, label %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgHzbbc7_10tokenizers.exit, label %bb.e
-
-bb.e:                                             ; preds = %4
+bb.e:                                             ; preds = %bb.d
   tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #35, !noalias !2001
-  %i.h = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %i.g, i64 noundef range(i64 1, -9223372036854775807) 8) #35, !noalias !2001 ; 2 uses
+  %i.h = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %i.g, i64 noundef range(i64 1, -9223372036854775807) 8) #35, !noalias !2001 ; 3 uses
   %i.i = icmp eq ptr %i.h, null
-  br i1 %i.i, label %9, label %6
+  br i1 %i.i, label %5, label %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgHzbbc7_10tokenizers.exit
 
-6:                                                ; preds = %bb.e
-  %7 = ptrtoint ptr %i.h to i64
-  br label %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgHzbbc7_10tokenizers.exit
-
-8:                                                ; preds = %bb.n, %_RNvNtCscdodAO9FK5_5alloc5boxed14box_new_uninit.exit
-  ret void
-
-9:                                                ; preds = %bb.d, %bb.e
-  %.sroa.443.0.ph = phi i64 [ 8, %bb.e ], [ 0, %bb.d ]
-  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %.sroa.443.0.ph, i64 %i.g) #36
-  unreachable
-
-_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgHzbbc7_10tokenizers.exit: ; preds = %6, %4
-  %.sroa.10.0 = phi i64 [ %7, %6 ], [ 8, %4 ]
-  %.sroa.443.0 = phi i64 [ %3, %6 ], [ 0, %4 ]    ; 2 uses
-  %10 = inttoptr i64 %.sroa.10.0 to ptr           ; 2 uses
-  %11 = icmp samesign ule i64 %3, %.sroa.443.0
-  tail call void @llvm.assume(i1 %11)
-  store i64 %.sroa.443.0, ptr %i.c, align 8
+_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgHzbbc7_10tokenizers.exit: ; preds = %bb.e
+  store i64 %3, ptr %i.c, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 4 uses
-  store ptr %10, ptr %i.j, align 8
+  store ptr %i.h, ptr %i.j, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 4 uses
   store i64 0, ptr %i.k, align 8
   %i.l = load ptr, ptr %1, align 8, !nonnull !4, !align !6, !noundef !4
@@ -260,8 +239,16 @@ _RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgH
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.611.0..sroa_idx, i8 0, i64 40, i1 false)
   br label %bb.f
 
+4:                                                ; preds = %bb.n, %_RNvNtCscdodAO9FK5_5alloc5boxed14box_new_uninit.exit
+  ret void
+
+5:                                                ; preds = %bb.d, %bb.e
+  %.sroa.443.0.ph = phi i64 [ 8, %bb.e ], [ 0, %bb.d ]
+  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %.sroa.443.0.ph, i64 %i.g) #36
+  unreachable
+
 bb.f:                                             ; preds = %bb.u, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgHzbbc7_10tokenizers.exit
-  %i.o = phi ptr [ %10, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgHzbbc7_10tokenizers.exit ], [ %i.ai, %bb.u ] ; 2 uses
+  %i.o = phi ptr [ %i.h, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgHzbbc7_10tokenizers.exit ], [ %i.ai, %bb.u ] ; 2 uses
   %i.p = phi i64 [ 0, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgHzbbc7_10tokenizers.exit ], [ %i.ak, %bb.u ] ; 7 uses
   %.sroa.04.0 = phi i64 [ 0, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgHzbbc7_10tokenizers.exit ], [ %i.u, %bb.u ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -323,7 +310,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsaiktC1pStS5_4onig4find11FindMatchesECs2JiOgHzbbc7_10tokenizers.exit27, %bb.o
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  br label %8
+  br label %4
 
 bb.o:                                             ; preds = %._crit_edge, %bb.l
   %i.y = phi ptr [ %.pre, %._crit_edge ], [ %i.o, %bb.l ]
@@ -726,45 +713,24 @@ _RNvNtCscdodAO9FK5_5alloc5boxed14box_new_uninit.exit: ; preds = %bb.b
   store ptr %i.e, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 1, ptr %.sroa.5.0..sroa_idx, align 8
-  br label %8
+  br label %4
 
 bb.d:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  %i.g = mul i64 %3, 24                           ; 3 uses
+  %i.g = mul i64 %3, 24                           ; 2 uses
   %or.cond.i = icmp ugt i64 %3, 384307168202282325
-  br i1 %or.cond.i, label %9, label %4, !prof !10
+  br i1 %or.cond.i, label %5, label %bb.e, !prof !10
 
-4:                                                ; preds = %bb.d
-  %5 = icmp eq i64 %i.g, 0
-  br i1 %5, label %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgHzbbc7_10tokenizers.exit, label %bb.e
-
-bb.e:                                             ; preds = %4
+bb.e:                                             ; preds = %bb.d
   tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #35, !noalias !2167
-  %i.h = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %i.g, i64 noundef range(i64 1, -9223372036854775807) 8) #35, !noalias !2167 ; 2 uses
+  %i.h = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %i.g, i64 noundef range(i64 1, -9223372036854775807) 8) #35, !noalias !2167 ; 3 uses
   %i.i = icmp eq ptr %i.h, null
-  br i1 %i.i, label %9, label %6
+  br i1 %i.i, label %5, label %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgHzbbc7_10tokenizers.exit
 
-6:                                                ; preds = %bb.e
-  %7 = ptrtoint ptr %i.h to i64
-  br label %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgHzbbc7_10tokenizers.exit
-
-8:                                                ; preds = %bb.n, %_RNvNtCscdodAO9FK5_5alloc5boxed14box_new_uninit.exit
-  ret void
-
-9:                                                ; preds = %bb.d, %bb.e
-  %.sroa.443.0.ph = phi i64 [ 8, %bb.e ], [ 0, %bb.d ]
-  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %.sroa.443.0.ph, i64 %i.g) #36
-  unreachable
-
-_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgHzbbc7_10tokenizers.exit: ; preds = %6, %4
-  %.sroa.10.0 = phi i64 [ %7, %6 ], [ 8, %4 ]
-  %.sroa.443.0 = phi i64 [ %3, %6 ], [ 0, %4 ]    ; 2 uses
-  %10 = inttoptr i64 %.sroa.10.0 to ptr           ; 2 uses
-  %11 = icmp samesign ule i64 %3, %.sroa.443.0
-  tail call void @llvm.assume(i1 %11)
-  store i64 %.sroa.443.0, ptr %i.c, align 8
+_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgHzbbc7_10tokenizers.exit: ; preds = %bb.e
+  store i64 %3, ptr %i.c, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 4 uses
-  store ptr %10, ptr %i.j, align 8
+  store ptr %i.h, ptr %i.j, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 4 uses
   store i64 0, ptr %i.k, align 8
   %i.l = load ptr, ptr %1, align 8, !nonnull !4, !align !6, !noundef !4
@@ -782,8 +748,16 @@ _RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgH
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.611.0..sroa_idx, i8 0, i64 40, i1 false)
   br label %bb.f
 
+4:                                                ; preds = %bb.n, %_RNvNtCscdodAO9FK5_5alloc5boxed14box_new_uninit.exit
+  ret void
+
+5:                                                ; preds = %bb.d, %bb.e
+  %.sroa.443.0.ph = phi i64 [ 8, %bb.e ], [ 0, %bb.d ]
+  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %.sroa.443.0.ph, i64 %i.g) #36
+  unreachable
+
 bb.f:                                             ; preds = %bb.u, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgHzbbc7_10tokenizers.exit
-  %i.o = phi ptr [ %10, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgHzbbc7_10tokenizers.exit ], [ %i.ai, %bb.u ] ; 2 uses
+  %i.o = phi ptr [ %i.h, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgHzbbc7_10tokenizers.exit ], [ %i.ai, %bb.u ] ; 2 uses
   %i.p = phi i64 [ 0, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgHzbbc7_10tokenizers.exit ], [ %i.ak, %bb.u ] ; 7 uses
   %.sroa.04.0 = phi i64 [ 0, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgHzbbc7_10tokenizers.exit ], [ %i.u, %bb.u ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -845,7 +819,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsaiktC1pStS5_4onig4find11FindMatchesECs2JiOgHzbbc7_10tokenizers.exit27, %bb.o
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  br label %8
+  br label %4
 
 bb.o:                                             ; preds = %._crit_edge, %bb.l
   %i.y = phi ptr [ %.pre, %._crit_edge ], [ %i.o, %bb.l ]

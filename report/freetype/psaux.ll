@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %exitcond.not.1, label %afm_parse_kern_data.exit, label %bb.n, !llvm.loop !532
 
 afm_tokenize.exit:                                ; preds = %bb.o
-  %i.by = trunc nsw i64 %indvars.iv.i to i32
+  %i.by = trunc nuw nsw i64 %indvars.iv.i to i32
   switch i32 %i.by, label %afm_parse_kern_data.exit [
     i32 40, label %bb.q
     i32 30, label %bb.s
@@ -608,7 +608,7 @@ bb.am:                                            ; preds = %bb.al
   br i1 %exitcond.not.i79.1, label %afm_tokenize.exit.i, label %bb.ak, !llvm.loop !532
 
 .loopexit.loopexit.split.loop.exit25.i.i:         ; preds = %bb.al
-  %i.fl = trunc nsw i64 %indvars.iv.i.i to i32
+  %i.fl = trunc nuw nsw i64 %indvars.iv.i.i to i32
   br label %afm_tokenize.exit.i
 
 afm_tokenize.exit.i:                              ; preds = %.loopexit17.i.i.1, %bb.am, %.preheader.i.i, %.loopexit.loopexit.split.loop.exit25.i.i
@@ -836,7 +836,7 @@ bb.aw:                                            ; preds = %bb.av
   br i1 %exitcond.not.i88.1, label %afm_tokenize.exit.thread.i, label %bb.au, !llvm.loop !532
 
 afm_tokenize.exit.i93:                            ; preds = %bb.av
-  %i.ic = trunc nsw i64 %indvars.iv.i.i90 to i32
+  %i.ic = trunc nuw nsw i64 %indvars.iv.i.i90 to i32
   switch i32 %i.ic, label %afm_parse_kern_data.exit.thread128 [
     i32 53, label %bb.ax
     i32 50, label %bb.br
@@ -1005,7 +1005,7 @@ bb.bl:                                            ; preds = %bb.bk
   br i1 %exitcond.not.i24.i.1, label %afm_tokenize.exit.thread.i.i, label %bb.bj, !llvm.loop !532
 
 afm_tokenize.exit.i.i:                            ; preds = %bb.bk
-  %i.kf = trunc nsw i64 %indvars.iv.i.i.i to i32
+  %i.kf = trunc nuw nsw i64 %indvars.iv.i.i.i to i32
   switch i32 %i.kf, label %.thread.i25.i [
     i32 56, label %bb.bm
     i32 23, label %bb.bp
@@ -1234,7 +1234,7 @@ bb.ce:                                            ; preds = %bb.cd
   br i1 %exitcond.not.i37.i.1, label %afm_tokenize.exit.thread.i38.i.backedge, label %bb.cc, !llvm.loop !532
 
 afm_tokenize.exit.i43.i:                          ; preds = %bb.cd
-  %i.mz = trunc nsw i64 %indvars.iv.i.i40.i to i32
+  %i.mz = trunc nuw nsw i64 %indvars.iv.i.i40.i to i32
   switch i32 %i.mz, label %afm_parse_kern_data.exit.thread128 [
     i32 34, label %bb.cf
     i32 36, label %bb.cf

@@ -205,7 +205,7 @@ _ZN6duckdb4Date22ExtractISODayOfTheWeekENS_6date_tE.exit: ; preds = %bb.e, %bb.f
   br i1 %i.bh, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %_ZN6duckdb4Date22ExtractISODayOfTheWeekENS_6date_tE.exit
-  %i.bi = sub nsw i32 %i.ay, %.0
+  %i.bi = sub nuw nsw i32 %i.ay, %.0
   %i.bj = udiv i32 %i.bi, 7
   %i.bk = add nuw nsw i32 %i.bj, 1
   br label %bb.h

@@ -204,7 +204,7 @@ bb.bh:                                            ; preds = %.noexc92, %._crit_e
   %i.hn = sext i32 %i.hm to i64
   %i.ho = getelementptr [4 x i8], ptr %i.hk, i64 %i.hn
   %i.hp = getelementptr i8, ptr %i.ho, i64 -4
-  %i.hq = trunc nsw i64 %indvars.iv68.i to i32
+  %i.hq = trunc nuw nsw i64 %indvars.iv68.i to i32
   store i32 %i.hq, ptr %i.hp, align 4, !tbaa !16
   br label %.loopexit.i
 
@@ -218,7 +218,7 @@ bb.bj:                                            ; preds = %bb.bi
   %i.ht = getelementptr inbounds nuw [16 x i8], ptr %i.ai, i64 %i.hs
   %i.hu = lshr exact i32 16384, %i.fm
   %i.hv = zext nneg i32 %i.hu to i64
-  %i.hw = trunc nsw i64 %indvars.iv68.i to i32
+  %i.hw = trunc nuw nsw i64 %indvars.iv68.i to i32
   %i.hx = shl nuw nsw i32 %i.hw, 8
   %i.hy = or disjoint i32 %i.hx, %i.fm
   br label %bb.bk
@@ -552,7 +552,7 @@ bb.ci:                                            ; preds = %bb.ch
 
 bb.cj:                                            ; preds = %._crit_edge.i102
   %i.lv = lshr i64 %i.lg, 6
-  %i.lw = sub nsw i32 %.4.lcssa.i, %i.li          ; 5 uses
+  %i.lw = sub nuw nsw i32 %.4.lcssa.i, %i.li      ; 5 uses
   %i.lx = zext nneg i32 %i.lw to i64
   %i.ly = lshr i64 %.4137.lcssa.i, %i.lx
   %notmask.i = shl nsw i64 -1, %i.lh

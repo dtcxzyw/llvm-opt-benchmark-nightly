@@ -205,7 +205,7 @@ ir_merge_to_unhandled.exit.i:                     ; preds = %.critedge.i285.i, %
   br i1 %lcmp.mod697.not.not, label %.prol.preheader, label %.prol.loopexit
 
 .prol.preheader:                                  ; preds = %ir_merge_to_unhandled.exit.i
-  %indvars.iv.next726.i.prol = add nsw i64 %i.gw, 1 ; 3 uses
+  %indvars.iv.next726.i.prol = add nuw nsw i64 %i.gw, 1 ; 3 uses
   %i.hb = getelementptr inbounds [8 x i8], ptr %.pre739.i, i64 %indvars.iv.next726.i.prol
   %i.hc = load ptr, ptr %i.hb, align 8, !tbaa !66 ; 6 uses
   %.not272.i.prol = icmp eq ptr %i.hc, null
@@ -229,7 +229,7 @@ bb.al:                                            ; preds = %.prol.preheader
 ir_merge_to_unhandled.exit.i.new:                 ; preds = %.prol.loopexit, %bb.ap
   %indvars.iv725.i = phi i64 [ %indvars.iv.next726.i.1, %bb.ap ], [ %indvars.iv725.i.unr, %.prol.loopexit ] ; 2 uses
   %.0415548.i = phi ptr [ %.1416.i.1, %bb.ap ], [ %.0415548.i.unr, %.prol.loopexit ] ; 2 uses
-  %indvars.iv.next726.i = add nsw i64 %indvars.iv725.i, 1 ; 2 uses
+  %indvars.iv.next726.i = add nuw nsw i64 %indvars.iv725.i, 1 ; 2 uses
   %i.hg = getelementptr inbounds [8 x i8], ptr %.pre739.i, i64 %indvars.iv.next726.i
   %i.hh = load ptr, ptr %i.hg, align 8, !tbaa !66 ; 5 uses
   %.not272.i = icmp eq ptr %i.hh, null
@@ -245,7 +245,7 @@ bb.am:                                            ; preds = %ir_merge_to_unhandl
 
 bb.an:                                            ; preds = %bb.am, %ir_merge_to_unhandled.exit.i.new
   %.1416.i = phi ptr [ %.0415548.i, %ir_merge_to_unhandled.exit.i.new ], [ %i.hh, %bb.am ] ; 2 uses
-  %indvars.iv.next726.i.1 = add nsw i64 %indvars.iv725.i, 2 ; 2 uses
+  %indvars.iv.next726.i.1 = add nuw nsw i64 %indvars.iv725.i, 2 ; 2 uses
   %i.hl = getelementptr inbounds [8 x i8], ptr %.pre739.i, i64 %indvars.iv.next726.i.1
   %i.hm = load ptr, ptr %i.hl, align 8, !tbaa !66 ; 5 uses
   %.not272.i.1 = icmp eq ptr %i.hm, null

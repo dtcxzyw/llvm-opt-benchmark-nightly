@@ -205,27 +205,23 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i: ; preds = %.lr.
   br i1 %.not17.i, label %_ZN4moldL9find_nullESt17basic_string_viewIcSt11char_traitsIcEEll.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i, %bb.s
-  %.06.i.i = phi i64 [ %i.dh, %bb.s ], [ 0, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i ] ; 3 uses
+  %.06.i.i = phi i64 [ %i.dh, %bb.s ], [ 0, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i ] ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 %.06.i.i
   %i.df = load i8, ptr %i.de, align 1, !tbaa !57
   %i.dg = icmp eq i8 %i.df, 0
-  br i1 %i.dg, label %bb.s, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit.i
+  br i1 %i.dg, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %.lr.ph.i.i
   %i.dh = add nuw i64 %.06.i.i, 1                 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.dh, %.sroa.speculated.i.i
   br i1 %exitcond.not.i.i, label %_ZN4moldL9find_nullESt17basic_string_viewIcSt11char_traitsIcEEll.exit, label %.lr.ph.i.i, !llvm.loop !574
 
-_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit.i: ; preds = %.lr.ph.i.i
-  %5 = icmp eq i64 %.06.i.i, -1
-  br i1 %5, label %_ZN4moldL9find_nullESt17basic_string_viewIcSt11char_traitsIcEEll.exit, label %bb.t
-
-bb.t:                                             ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit.i
+bb.t:                                             ; preds = %.lr.ph.i.i
   %i.di = add nsw i64 %.01023.i, %.0.copyload.i.fr ; 2 uses
   %.not.i30 = icmp ugt i64 %i.di, %i.ar
   br i1 %.not.i30, label %_ZN4moldL9find_nullESt17basic_string_viewIcSt11char_traitsIcEEll.exit.thread, label %.lr.ph.i, !llvm.loop !575
 
-_ZN4moldL9find_nullESt17basic_string_viewIcSt11char_traitsIcEEll.exit: ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit.i, %bb.s
+_ZN4moldL9find_nullESt17basic_string_viewIcSt11char_traitsIcEEll.exit: ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i, %bb.s
   %i.dj = icmp eq i64 %.01023.i, -1
   br i1 %i.dj, label %_ZN4moldL9find_nullESt17basic_string_viewIcSt11char_traitsIcEEll.exit.thread, label %bb.m
 

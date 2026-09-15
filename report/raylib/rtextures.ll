@@ -205,7 +205,7 @@ bb.fm:                                            ; preds = %bb.fl
   %i.vo = mul nsw i64 %i.vn, %i.ts
   %i.vp = getelementptr inbounds i8, ptr %i.vl, i64 %i.vo
   %i.vq = add nuw nsw i64 %indvars.iv.i352, %i.vj
-  %i.vr = mul nsw i64 %i.vq, %i.ts
+  %i.vr = mul nuw nsw i64 %i.vq, %i.ts
   %i.vs = getelementptr inbounds i8, ptr %.pre115.i, i64 %i.vr
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.vp, ptr align 1 %i.vs, i64 %i.ts, i1 false)
   %indvars.iv.next.i353 = or disjoint i64 %indvars.iv.i352, 1 ; 2 uses
@@ -214,7 +214,7 @@ bb.fm:                                            ; preds = %bb.fl
   %i.vv = mul nsw i64 %i.vu, %i.ts
   %i.vw = getelementptr inbounds i8, ptr %i.vl, i64 %i.vv
   %i.vx = add nuw nsw i64 %indvars.iv.next.i353, %i.vj
-  %i.vy = mul nsw i64 %i.vx, %i.ts
+  %i.vy = mul nuw nsw i64 %i.vx, %i.ts
   %i.vz = getelementptr inbounds i8, ptr %.pre115.i, i64 %i.vy
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.vw, ptr align 1 %i.vz, i64 %i.ts, i1 false)
   %indvars.iv.next.i353.1 = add nuw nsw i64 %indvars.iv.i352, 2 ; 2 uses
@@ -233,7 +233,7 @@ bb.fm:                                            ; preds = %bb.fl
   %i.wc = mul nsw i64 %i.wb, %i.ts
   %i.wd = getelementptr inbounds i8, ptr %i.vl, i64 %i.wc
   %i.we = add nuw nsw i64 %indvars.iv.i352.epil.init, %i.vj
-  %i.wf = mul nsw i64 %i.we, %i.ts
+  %i.wf = mul nuw nsw i64 %i.we, %i.ts
   %i.wg = getelementptr inbounds i8, ptr %.pre115.i, i64 %i.wf
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.wd, ptr align 1 %i.wg, i64 %i.ts, i1 false)
   br label %._crit_edge.i
@@ -636,7 +636,7 @@ bb.ai:                                            ; preds = %bb.ae
 
 bb.aj:                                            ; preds = %bb.ai
   %i.jk = sub nsw i32 %i.hn, %i.hl
-  %.064.i = add nsw i32 %i.jk, 1                  ; 2 uses
+  %.064.i = add nuw nsw i32 %i.jk, 1              ; 2 uses
   %i.jl = icmp slt i32 %.064.i, %i.jj
   br i1 %i.jl, label %.lr.ph67.preheader.i, label %._crit_edge68.i
 
@@ -1039,7 +1039,7 @@ bb.x:                                             ; preds = %bb.t
 
 bb.y:                                             ; preds = %bb.x
   %i.hi = sub nsw i32 %i.fn, %i.fo
-  %.064.i = add nsw i32 %i.hi, 1                  ; 2 uses
+  %.064.i = add nuw nsw i32 %i.hi, 1              ; 2 uses
   %i.hj = icmp slt i32 %.064.i, %i.hh
   br i1 %i.hj, label %.lr.ph67.preheader.i, label %._crit_edge68.i
 
@@ -1248,7 +1248,7 @@ bb.af:                                            ; preds = %bb.ab
 
 bb.ag:                                            ; preds = %bb.af
   %i.jx = sub nsw i32 %i.id, %i.hx
-  %.064.i251 = add nsw i32 %i.jx, 1               ; 2 uses
+  %.064.i251 = add nuw nsw i32 %i.jx, 1           ; 2 uses
   %i.jy = icmp slt i32 %.064.i251, %i.jw
   br i1 %i.jy, label %.lr.ph67.preheader.i253, label %._crit_edge68.i252
 
@@ -1486,7 +1486,7 @@ bb.ap:                                            ; preds = %bb.al
 
 bb.aq:                                            ; preds = %bb.ap
   %i.mu = sub nsw i32 %i.kt, %i.la
-  %.064.i270 = add nsw i32 %i.mu, 1               ; 2 uses
+  %.064.i270 = add nuw nsw i32 %i.mu, 1           ; 2 uses
   %i.mv = icmp slt i32 %.064.i270, %i.mt
   br i1 %i.mv, label %.lr.ph67.preheader.i272, label %._crit_edge68.i271
 
