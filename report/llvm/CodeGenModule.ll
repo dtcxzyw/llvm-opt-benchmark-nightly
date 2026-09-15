@@ -205,7 +205,7 @@ bb.hx:                                            ; preds = %bb.hw
   %i.aob = call noundef zeroext i1 @_ZNK4llvm6Module27getDirectAccessExternalDataEv(ptr noundef nonnull align 8 dereferenceable(1288) %i.aoa) #28
   %i.aoc = and i64 %i.anz, 8589934592
   %i.aod = icmp eq i64 %i.aoc, 0
-  %.not243 = xor i1 %i.aob, %i.aod
+  %.not243 = xor i1 %i.aod, %i.aob
   %.pre882 = load ptr, ptr %i.hi, align 8, !tbaa !516 ; 2 uses
   br i1 %.not243, label %bb.hz, label %bb.hy
 

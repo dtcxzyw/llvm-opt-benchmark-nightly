@@ -205,12 +205,10 @@ bb.cu:                                            ; preds = %bb.cs
   br i1 %i.yy, label %bb.cv, label %bb.dd
 
 bb.cv:                                            ; preds = %bb.cu
-  %i.yz = sub nuw nsw i64 %i.yu, %i.yx            ; 2 uses
-  %8 = trunc nuw i64 %i.yz to i32
-  %9 = and i32 %8, 65535                          ; 2 uses
+  %i.yz = sub nuw nsw i64 %i.yu, %i.yx            ; 3 uses
   %i.za = load i16, ptr %i.as, align 2, !tbaa !382 ; 2 uses
-  %10 = zext i16 %i.za to i32
-  %.not128 = icmp samesign ugt i32 %9, %10
+  %8 = trunc i64 %i.yz to i16
+  %.not128 = icmp ult i16 %i.za, %8
   br i1 %.not128, label %bb.cw, label %bb.cx
 
 bb.cw:                                            ; preds = %bb.cv
@@ -240,8 +238,10 @@ _ZN5boost6system10error_codeC2INS_5beast4zlib5errorEEET_PNSt9enable_ifIXoosr18is
   br label %.critedge
 
 bb.cx:                                            ; preds = %bb.cv
+  %9 = trunc nuw i64 %i.yz to i32
   %i.zj = load i32, ptr %i.x, align 8, !tbaa !1200
-  %spec.select.i328 = call noundef i32 @llvm.umin.i32(i32 %i.zj, i32 %9)
+  %10 = and i32 %9, 65535
+  %spec.select.i328 = call noundef i32 @llvm.umin.i32(i32 %i.zj, i32 %10)
   %i.zk = zext nneg i32 %spec.select.i328 to i64
   %spec.select5.i329 = call i64 @llvm.umin.i64(i64 %i.ys, i64 %i.zk) ; 6 uses
   %spec.select.i330 = trunc nuw nsw i64 %spec.select5.i329 to i32

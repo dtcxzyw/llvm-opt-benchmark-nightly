@@ -205,7 +205,7 @@ bb.dl:                                            ; preds = %bb.dj, %bb.dk
   br i1 %.not.i107, label %.thread138, label %bb.dm
 
 bb.dm:                                            ; preds = %bb.dl
-  %i.qi = call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.bl) #15 ; 16 uses
+  %i.qi = call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.bl) #15 ; 15 uses
   %i.qj = getelementptr inbounds nuw i8, ptr %i.qh, i64 74
   store i16 0, ptr %i.qj, align 2, !tbaa !82
   %i.qk = getelementptr inbounds nuw i8, ptr %i.qh, i64 24
@@ -215,16 +215,13 @@ bb.dm:                                            ; preds = %bb.dl
   %i.qm = getelementptr inbounds nuw i8, ptr %i.qh, i64 40
   %i.qn = getelementptr inbounds nuw i8, ptr %i.qh, i64 72
   store i8 0, ptr %i.qn, align 8, !tbaa !85
-  %i.qo = trunc i64 %i.qi to i16                  ; 2 uses
+  %i.qo = trunc i64 %i.qi to i16                  ; 3 uses
   %i.qp = getelementptr inbounds nuw i8, ptr %i.qh, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.qm, i8 0, i64 16, i1 false)
   store i16 %i.qo, ptr %i.qp, align 8, !tbaa !86
-  %6 = trunc i64 %i.qi to i32
-  %7 = and i32 %6, 65535
   %i.qq = load i16, ptr %.1, align 8, !tbaa !93
-  %8 = zext i16 %i.qq to i32
-  %9 = icmp samesign ugt i32 %7, %8
-  br i1 %9, label %bb.dn, label %bb.do
+  %6 = icmp ult i16 %i.qq, %i.qo
+  br i1 %6, label %bb.dn, label %bb.do
 
 bb.dn:                                            ; preds = %bb.dm
   store i16 %i.qo, ptr %.1, align 8, !tbaa !93

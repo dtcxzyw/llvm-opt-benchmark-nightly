@@ -205,13 +205,13 @@ _ZNK5arrow9ArrayData9GetValuesIhEEPKT_i.exit.i.i: ; preds = %bb.he, %bb.hd
   br i1 %.not80280.i.i, label %.lr.ph.i.i121, label %._crit_edge.i.i93
 
 .lr.ph.i.i121:                                    ; preds = %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_i.exit.i.i
+  %162 = trunc i64 %i.ue to i8                    ; 2 uses
   %i.zp = load ptr, ptr %1, align 8, !tbaa !1631, !noalias !1657, !nonnull !173, !align !472
   %i.zq = load ptr, ptr %i.zp, align 8, !tbaa !98 ; 2 uses
   %i.zr = getelementptr inbounds nuw i8, ptr %i.zq, i64 40
   %i.zs = load ptr, ptr %i.zr, align 8, !tbaa !101
   %i.zt = load ptr, ptr %i.zs, align 8, !tbaa !104 ; 2 uses
   %i.zu = icmp eq ptr %i.zt, null
-  %162 = trunc i64 %i.ue to i8                    ; 2 uses
   br i1 %i.zu, label %.lr.ph.split.i.i136, label %.lr.ph.split.us.i.i122
 
 .lr.ph.split.us.i.i122:                           ; preds = %.lr.ph.i.i121
@@ -614,13 +614,13 @@ _ZNK5arrow9ArrayData9GetValuesItEEPKT_i.exit.i.i: ; preds = %bb.tq, %bb.tp
   br i1 %.not80280.i.i360, label %.lr.ph.i.i460, label %._crit_edge.i.i361
 
 .lr.ph.i.i460:                                    ; preds = %_ZNK5arrow9ArrayData9GetValuesItEEPKT_i.exit.i.i
+  %163 = trunc i64 %i.bhz to i16                  ; 2 uses
   %i.bnk = load ptr, ptr %1, align 8, !tbaa !1631, !noalias !1703, !nonnull !173, !align !472
   %i.bnl = load ptr, ptr %i.bnk, align 8, !tbaa !98 ; 2 uses
   %i.bnm = getelementptr inbounds nuw i8, ptr %i.bnl, i64 40
   %i.bnn = load ptr, ptr %i.bnm, align 8, !tbaa !101
   %i.bno = load ptr, ptr %i.bnn, align 8, !tbaa !104 ; 2 uses
   %i.bnp = icmp eq ptr %i.bno, null
-  %163 = trunc i64 %i.bhz to i16                  ; 2 uses
   br i1 %i.bnp, label %.lr.ph.split.i.i489, label %.lr.ph.split.us.i.i461
 
 .lr.ph.split.us.i.i461:                           ; preds = %.lr.ph.i.i460

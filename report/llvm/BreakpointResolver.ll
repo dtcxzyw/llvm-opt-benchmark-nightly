@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b,
 .lr.ph.lr.ph.i.i.lr.ph:                           ; preds = %bb.e
   %i.t = and i32 %7, 65536
   %.not265 = icmp eq i32 %i.t, 0
-  %10 = and i32 %7, 65535                         ; 8 uses
+  %10 = trunc i32 %7 to i16                       ; 8 uses
   %i.u = getelementptr inbounds nuw i8, ptr %9, i64 72 ; 9 uses
   %i.v = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 9 uses
   %i.w = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 4 uses
@@ -356,9 +356,8 @@ bb.r:                                             ; preds = %"_ZN9__gnu_cxx5__op
 bb.s:                                             ; preds = %bb.r
   %i.ck = getelementptr i8, ptr %.029138.i.i.i.i, i64 132
   %.029.val46.i.i.i.i = load i16, ptr %i.ck, align 4, !tbaa !120
-  %.sroa.3.0.extract.trunc.i.i.i.i.i.i.i = zext i16 %.029.val46.i.i.i.i to i32
   %i.cl = icmp uge i32 %.029.val45.i.i.i.i, %6
-  %11 = icmp samesign ult i32 %10, %.sroa.3.0.extract.trunc.i.i.i.i.i.i.i
+  %11 = icmp ugt i16 %.029.val46.i.i.i.i, %10
   %or.cond.i.i.i.i = select i1 %i.cl, i1 %11, i1 false
   br i1 %or.cond.i.i.i.i, label %"_ZSt9__find_ifIPN12lldb_private13SymbolContextEN9__gnu_cxx5__ops10_Iter_predIZNS0_18BreakpointResolver18SetSCMatchesByLineERNS0_12SearchFilterERNS0_17SymbolContextListEbN4llvm9StringRefEjSt8optionalItEE3$_1EEET_SH_SH_T0_.exit.i.i", label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12lldb_private18BreakpointResolver18SetSCMatchesByLineERNS2_12SearchFilterERNS2_17SymbolContextListEbN4llvm9StringRefEjSt8optionalItEE3$_1EclIPNS2_13SymbolContextEEEbT_.exit.thread84.i.i.i.i"
 
@@ -371,9 +370,8 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12lldb_private18BreakpointResolver18SetSCMatchesByLineERNS2_12SearchFilterERNS2_17SymbolContextListEbN4llvm9StringRefEjSt8optionalItEE3$_1EclIPNS2_13SymbolContextEEEbT_.exit.thread84.i.i.i.i"
   %i.co = getelementptr i8, ptr %.029138.i.i.i.i, i64 284
   %.val43.i.i.i.i = load i16, ptr %i.co, align 4, !tbaa !120
-  %.sroa.3.0.extract.trunc.i.i.i50.i.i.i.i = zext i16 %.val43.i.i.i.i to i32
   %i.cp = icmp uge i32 %.val42.i.i.i.i, %6
-  %12 = icmp samesign ult i32 %10, %.sroa.3.0.extract.trunc.i.i.i50.i.i.i.i
+  %12 = icmp ugt i16 %.val43.i.i.i.i, %10
   %or.cond106.i.i.i.i = select i1 %i.cp, i1 %12, i1 false
   br i1 %or.cond106.i.i.i.i, label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12lldb_private18BreakpointResolver18SetSCMatchesByLineERNS2_12SearchFilterERNS2_17SymbolContextListEbN4llvm9StringRefEjSt8optionalItEE3$_1EclIPNS2_13SymbolContextEEEbT_.exit.thread.loopexit.split.loop.exit126.i.i.i.i", label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12lldb_private18BreakpointResolver18SetSCMatchesByLineERNS2_12SearchFilterERNS2_17SymbolContextListEbN4llvm9StringRefEjSt8optionalItEE3$_1EclIPNS2_13SymbolContextEEEbT_.exit52.thread87.i.i.i.i"
 
@@ -386,9 +384,8 @@ bb.t:                                             ; preds = %"_ZN9__gnu_cxx5__op
 bb.u:                                             ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12lldb_private18BreakpointResolver18SetSCMatchesByLineERNS2_12SearchFilterERNS2_17SymbolContextListEbN4llvm9StringRefEjSt8optionalItEE3$_1EclIPNS2_13SymbolContextEEEbT_.exit52.thread87.i.i.i.i"
   %i.cs = getelementptr i8, ptr %.029138.i.i.i.i, i64 436
   %.val40.i.i.i.i = load i16, ptr %i.cs, align 4, !tbaa !120
-  %.sroa.3.0.extract.trunc.i.i.i56.i.i.i.i = zext i16 %.val40.i.i.i.i to i32
   %i.ct = icmp uge i32 %.val39.i.i.i.i, %6
-  %13 = icmp samesign ult i32 %10, %.sroa.3.0.extract.trunc.i.i.i56.i.i.i.i
+  %13 = icmp ugt i16 %.val40.i.i.i.i, %10
   %or.cond108.i.i.i.i = select i1 %i.ct, i1 %13, i1 false
   br i1 %or.cond108.i.i.i.i, label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12lldb_private18BreakpointResolver18SetSCMatchesByLineERNS2_12SearchFilterERNS2_17SymbolContextListEbN4llvm9StringRefEjSt8optionalItEE3$_1EclIPNS2_13SymbolContextEEEbT_.exit.thread.loopexit.split.loop.exit128.i.i.i.i", label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12lldb_private18BreakpointResolver18SetSCMatchesByLineERNS2_12SearchFilterERNS2_17SymbolContextListEbN4llvm9StringRefEjSt8optionalItEE3$_1EclIPNS2_13SymbolContextEEEbT_.exit58.thread90.i.i.i.i"
 
@@ -401,9 +398,8 @@ bb.u:                                             ; preds = %"_ZN9__gnu_cxx5__op
 bb.v:                                             ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12lldb_private18BreakpointResolver18SetSCMatchesByLineERNS2_12SearchFilterERNS2_17SymbolContextListEbN4llvm9StringRefEjSt8optionalItEE3$_1EclIPNS2_13SymbolContextEEEbT_.exit58.thread90.i.i.i.i"
   %i.cw = getelementptr i8, ptr %.029138.i.i.i.i, i64 588
   %.val37.i.i.i.i = load i16, ptr %i.cw, align 4, !tbaa !120
-  %.sroa.3.0.extract.trunc.i.i.i62.i.i.i.i = zext i16 %.val37.i.i.i.i to i32
   %i.cx = icmp uge i32 %.val36.i.i.i.i, %6
-  %14 = icmp samesign ult i32 %10, %.sroa.3.0.extract.trunc.i.i.i62.i.i.i.i
+  %14 = icmp ugt i16 %.val37.i.i.i.i, %10
   %or.cond110.i.i.i.i = select i1 %i.cx, i1 %14, i1 false
   br i1 %or.cond110.i.i.i.i, label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12lldb_private18BreakpointResolver18SetSCMatchesByLineERNS2_12SearchFilterERNS2_17SymbolContextListEbN4llvm9StringRefEjSt8optionalItEE3$_1EclIPNS2_13SymbolContextEEEbT_.exit.thread.loopexit.split.loop.exit130.i.i.i.i", label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12lldb_private18BreakpointResolver18SetSCMatchesByLineERNS2_12SearchFilterERNS2_17SymbolContextListEbN4llvm9StringRefEjSt8optionalItEE3$_1EclIPNS2_13SymbolContextEEEbT_.exit64.thread93.i.i.i.i"
 
@@ -437,9 +433,8 @@ bb.w:                                             ; preds = %._crit_edge.i.i.i.i
 bb.x:                                             ; preds = %bb.w
   %i.de = getelementptr i8, ptr %.029.lcssa.i.i.i.i, i64 132
   %.029.val34.i.i.i.i = load i16, ptr %i.de, align 4, !tbaa !120
-  %.sroa.3.0.extract.trunc.i.i.i68.i.i.i.i = zext i16 %.029.val34.i.i.i.i to i32
   %i.df = icmp uge i32 %.029.val.i.i.i.i, %6
-  %15 = icmp samesign ult i32 %10, %.sroa.3.0.extract.trunc.i.i.i68.i.i.i.i
+  %15 = icmp ugt i16 %.029.val34.i.i.i.i, %10
   %or.cond112.i.i.i.i = select i1 %i.df, i1 %15, i1 false
   br i1 %or.cond112.i.i.i.i, label %"_ZSt9__find_ifIPN12lldb_private13SymbolContextEN9__gnu_cxx5__ops10_Iter_predIZNS0_18BreakpointResolver18SetSCMatchesByLineERNS0_12SearchFilterERNS0_17SymbolContextListEbN4llvm9StringRefEjSt8optionalItEE3$_1EEET_SH_SH_T0_.exit.i.i", label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12lldb_private18BreakpointResolver18SetSCMatchesByLineERNS2_12SearchFilterERNS2_17SymbolContextListEbN4llvm9StringRefEjSt8optionalItEE3$_1EclIPNS2_13SymbolContextEEEbT_.exit70.thread96.i.i.i.i"
 
@@ -457,9 +452,8 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %._crit_edge._crit_edge.i.i.i.i
   %i.dj = getelementptr i8, ptr %.1.i.i.i.i, i64 132
   %.1.val32.i.i.i.i = load i16, ptr %i.dj, align 4, !tbaa !120
-  %.sroa.3.0.extract.trunc.i.i.i74.i.i.i.i = zext i16 %.1.val32.i.i.i.i to i32
   %i.dk = icmp uge i32 %.1.val.i.i.i.i, %6
-  %16 = icmp samesign ult i32 %10, %.sroa.3.0.extract.trunc.i.i.i74.i.i.i.i
+  %16 = icmp ugt i16 %.1.val32.i.i.i.i, %10
   %or.cond114.i.i.i.i = select i1 %i.dk, i1 %16, i1 false
   br i1 %or.cond114.i.i.i.i, label %"_ZSt9__find_ifIPN12lldb_private13SymbolContextEN9__gnu_cxx5__ops10_Iter_predIZNS0_18BreakpointResolver18SetSCMatchesByLineERNS0_12SearchFilterERNS0_17SymbolContextListEbN4llvm9StringRefEjSt8optionalItEE3$_1EEET_SH_SH_T0_.exit.i.i", label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12lldb_private18BreakpointResolver18SetSCMatchesByLineERNS2_12SearchFilterERNS2_17SymbolContextListEbN4llvm9StringRefEjSt8optionalItEE3$_1EclIPNS2_13SymbolContextEEEbT_.exit76.thread99.i.i.i.i"
 
@@ -477,9 +471,8 @@ bb.y:                                             ; preds = %._crit_edge._crit_e
 bb.z:                                             ; preds = %._crit_edge._crit_edge148.i.i.i.i
   %i.do = getelementptr i8, ptr %.2.i.i.i.i, i64 132
   %.2.val30.i.i.i.i = load i16, ptr %i.do, align 4, !tbaa !120
-  %.sroa.3.0.extract.trunc.i.i.i80.i.i.i.i = zext i16 %.2.val30.i.i.i.i to i32
   %i.dp = icmp uge i32 %.2.val.i.i.i.i, %6
-  %17 = icmp samesign ult i32 %10, %.sroa.3.0.extract.trunc.i.i.i80.i.i.i.i
+  %17 = icmp ugt i16 %.2.val30.i.i.i.i, %10
   %or.cond116.i.i.i.i = select i1 %i.dp, i1 %17, i1 false
   br i1 %or.cond116.i.i.i.i, label %"_ZSt9__find_ifIPN12lldb_private13SymbolContextEN9__gnu_cxx5__ops10_Iter_predIZNS0_18BreakpointResolver18SetSCMatchesByLineERNS0_12SearchFilterERNS0_17SymbolContextListEbN4llvm9StringRefEjSt8optionalItEE3$_1EEET_SH_SH_T0_.exit.i.i", label %"_ZSt9remove_ifIPN12lldb_private13SymbolContextEZNS0_18BreakpointResolver18SetSCMatchesByLineERNS0_12SearchFilterERNS0_17SymbolContextListEbN4llvm9StringRefEjSt8optionalItEE3$_1ET_SD_SD_T0_.exit"
 
@@ -527,9 +520,8 @@ bb.z:                                             ; preds = %._crit_edge._crit_e
 bb.aa:                                            ; preds = %.lr.ph.i.i50
   %i.dz = getelementptr i8, ptr %.pn36.i.i, i64 284
   %.017.val21.i.i = load i16, ptr %i.dz, align 4, !tbaa !120
-  %.sroa.3.0.extract.trunc.i.i.i.i.i = zext i16 %.017.val21.i.i to i32
   %i.ea = icmp uge i32 %.017.val.i.i, %6
-  %18 = icmp samesign ult i32 %10, %.sroa.3.0.extract.trunc.i.i.i.i.i
+  %18 = icmp ugt i16 %.017.val21.i.i, %10
   %or.cond.i.i = select i1 %i.ea, i1 %18, i1 false
   br i1 %or.cond.i.i, label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12lldb_private18BreakpointResolver18SetSCMatchesByLineERNS2_12SearchFilterERNS2_17SymbolContextListEbN4llvm9StringRefEjSt8optionalItEE3$_1EclIPNS2_13SymbolContextEEEbT_.exit.thread.i.i", label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12lldb_private18BreakpointResolver18SetSCMatchesByLineERNS2_12SearchFilterERNS2_17SymbolContextListEbN4llvm9StringRefEjSt8optionalItEE3$_1EclIPNS2_13SymbolContextEEEbT_.exit.thread24.i.i"
 

@@ -204,13 +204,11 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.m
   %i.au = add i64 %1, 7936
-  %i.av = lshr i64 %i.au, 5                       ; 2 uses
-  %3 = trunc i64 %i.av to i32
-  %4 = and i32 %3, 255                            ; 2 uses
+  %i.av = lshr i64 %i.au, 5                       ; 3 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 1424
   %i.ax = load i8, ptr %i.aw, align 16
-  %5 = zext i8 %i.ax to i32
-  %.not = icmp samesign ult i32 %4, %5
+  %3 = trunc i64 %i.av to i8
+  %.not = icmp ugt i8 %i.ax, %3
   br i1 %.not, label %bb.aa, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
@@ -230,7 +228,9 @@ bb.y:                                             ; preds = %bb.x
   br i1 %.not2.i52, label %glib_autoptr_cleanup_QemuLockable.exit, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  tail call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.10, i32 noundef %4) #7
+  %4 = trunc i64 %i.av to i32
+  %5 = and i32 %4, 255
+  tail call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.10, i32 noundef %5) #7
   br label %glib_autoptr_cleanup_QemuLockable.exit
 
 bb.aa:                                            ; preds = %bb.v

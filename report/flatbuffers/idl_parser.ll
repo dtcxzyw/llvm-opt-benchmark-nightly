@@ -205,16 +205,14 @@ bb.cz:                                            ; preds = %bb.cj
   store i16 %i.po, ptr %i.pp, align 8, !tbaa !315
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #32
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %32 = trunc nuw nsw i64 %indvars.iv.next to i32
   %i.pq = load ptr, ptr %i.hs, align 8, !tbaa !313
   %i.pr = load ptr, ptr %i.hr, align 8, !tbaa !314 ; 2 uses
   %i.ps = ptrtoint ptr %i.pq to i64
   %i.pt = ptrtoint ptr %i.pr to i64
   %i.pu = sub i64 %i.ps, %i.pt
-  %33 = trunc i64 %i.pu to i32
-  %34 = lshr i32 %33, 3
-  %35 = and i32 %34, 65535
-  %.not197 = icmp samesign ugt i32 %35, %32
+  %32 = lshr exact i64 %i.pu, 3
+  %33 = and i64 %32, 65535
+  %.not197 = icmp samesign ult i64 %indvars.iv.next, %33
   br i1 %.not197, label %bb.bt, label %.critedge234, !llvm.loop !1830
 
 bb.da:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit410, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit374, %bb.ce

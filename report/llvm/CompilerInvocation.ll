@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %_ZL11GenerateArgN4l
   %i.fa = load i64, ptr %0, align 8
   %i.fb = and i64 %i.fa, 131072                   ; 2 uses
   %i.fc = and i64 %i.ez, 17179869184              ; 2 uses
-  %i.fd = or disjoint i64 %i.fc, %i.fb
+  %i.fd = or disjoint i64 %i.fb, %i.fc
   %or.cond6276 = icmp eq i64 %i.fd, 0
   br i1 %or.cond6276, label %bb.x, label %"_ZZL29makeBooleanOptionDenormalizerbENK3$_0clEN4llvm12function_refIFvRKNS0_5TwineEEEEjNS0_3opt6Option11OptionClassEjb.exit"
 
@@ -243,10 +243,10 @@ _ZL16lookupStrInTablej.exit.i:                    ; preds = %bb.y, %bb.x
 "_ZZL29makeBooleanOptionDenormalizerbENK3$_0clEN4llvm12function_refIFvRKNS0_5TwineEEEEjNS0_3opt6Option11OptionClassEjb.exit": ; preds = %_ZL16lookupStrInTablej.exit.i, %bb.w
   %.pre-phi6572 = phi i64 [ %.pre6571.a, %_ZL16lookupStrInTablej.exit.i ], [ %i.fc, %bb.w ]
   %.pre-phi = phi i64 [ %.pre6570.a, %_ZL16lookupStrInTablej.exit.i ], [ %i.fb, %bb.w ]
-  %.not2278 = icmp ne i64 %.pre-phi, 0
-  %409 = icmp ne i64 %.pre-phi6572, 0
-  %or.cond6221 = and i1 %409, %.not2278
-  br i1 %or.cond6221, label %bb.z, label %"_ZZL29makeBooleanOptionDenormalizerbENK3$_0clEN4llvm12function_refIFvRKNS0_5TwineEEEEjNS0_3opt6Option11OptionClassEjb.exit2828"
+  %409 = icmp eq i64 %.pre-phi6572, 0
+  %410 = icmp eq i64 %.pre-phi, 0
+  %.not6273 = or i1 %409, %410
+  br i1 %.not6273, label %"_ZZL29makeBooleanOptionDenormalizerbENK3$_0clEN4llvm12function_refIFvRKNS0_5TwineEEEEjNS0_3opt6Option11OptionClassEjb.exit2828", label %bb.z
 
 bb.z:                                             ; preds = %"_ZZL29makeBooleanOptionDenormalizerbENK3$_0clEN4llvm12function_refIFvRKNS0_5TwineEEEEjNS0_3opt6Option11OptionClassEjb.exit"
   call void @llvm.lifetime.start.p0(ptr nonnull %328) #26
@@ -275,7 +275,7 @@ _ZL16lookupStrInTablej.exit.i2826:                ; preds = %bb.aa, %bb.z
   call void @llvm.lifetime.end.p0(ptr nonnull %328) #26
   br label %"_ZZL29makeBooleanOptionDenormalizerbENK3$_0clEN4llvm12function_refIFvRKNS0_5TwineEEEEjNS0_3opt6Option11OptionClassEjb.exit2828"
 
-"_ZZL29makeBooleanOptionDenormalizerbENK3$_0clEN4llvm12function_refIFvRKNS0_5TwineEEEEjNS0_3opt6Option11OptionClassEjb.exit2828": ; preds = %_ZL16lookupStrInTablej.exit.i2826, %"_ZZL29makeBooleanOptionDenormalizerbENK3$_0clEN4llvm12function_refIFvRKNS0_5TwineEEEEjNS0_3opt6Option11OptionClassEjb.exit"
+"_ZZL29makeBooleanOptionDenormalizerbENK3$_0clEN4llvm12function_refIFvRKNS0_5TwineEEEEjNS0_3opt6Option11OptionClassEjb.exit2828": ; preds = %"_ZZL29makeBooleanOptionDenormalizerbENK3$_0clEN4llvm12function_refIFvRKNS0_5TwineEEEEjNS0_3opt6Option11OptionClassEjb.exit", %_ZL16lookupStrInTablej.exit.i2826
   %i.fw = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 19 uses
   %i.fx = load i64, ptr %i.fw, align 8            ; 3 uses
   %i.fy = lshr i64 %i.fx, 39
@@ -678,8 +678,8 @@ _ZL16lookupStrInTablej.exit.i3257:                ; preds = %bb.hj, %bb.hi
   %.pre6454 = load i64, ptr %0, align 8
   br label %"_ZZL29makeBooleanOptionDenormalizerbENK3$_0clEN4llvm12function_refIFvRKNS0_5TwineEEEEjNS0_3opt6Option11OptionClassEjb.exit3259"
 
-"_ZZL29makeBooleanOptionDenormalizerbENK3$_0clEN4llvm12function_refIFvRKNS0_5TwineEEEEjNS0_3opt6Option11OptionClassEjb.exit3259": ; preds = %_ZL16lookupStrInTablej.exit.i3257, %"_ZZL29makeBooleanOptionDenormalizerbENK3$_0clEN4llvm12function_refIFvRKNS0_5TwineEEEEjNS0_3opt6Option11OptionClassEjb.exit3255"
-  %i.aov = phi i64 [ %.pre6454, %_ZL16lookupStrInTablej.exit.i3257 ], [ %i.aok, %"_ZZL29makeBooleanOptionDenormalizerbENK3$_0clEN4llvm12function_refIFvRKNS0_5TwineEEEEjNS0_3opt6Option11OptionClassEjb.exit3255" ]
+"_ZZL29makeBooleanOptionDenormalizerbENK3$_0clEN4llvm12function_refIFvRKNS0_5TwineEEEEjNS0_3opt6Option11OptionClassEjb.exit3259": ; preds = %"_ZZL29makeBooleanOptionDenormalizerbENK3$_0clEN4llvm12function_refIFvRKNS0_5TwineEEEEjNS0_3opt6Option11OptionClassEjb.exit3255", %_ZL16lookupStrInTablej.exit.i3257
+  %i.aov = phi i64 [ %i.aok, %"_ZZL29makeBooleanOptionDenormalizerbENK3$_0clEN4llvm12function_refIFvRKNS0_5TwineEEEEjNS0_3opt6Option11OptionClassEjb.exit3255" ], [ %.pre6454, %_ZL16lookupStrInTablej.exit.i3257 ]
   %i.aow = and i64 %i.aov, 51539607552
   %or.cond6281 = icmp eq i64 %i.aow, 0
   br i1 %or.cond6281, label %bb.hk, label %"_ZZL29makeBooleanOptionDenormalizerbENK3$_0clEN4llvm12function_refIFvRKNS0_5TwineEEEEjNS0_3opt6Option11OptionClassEjb.exit3263"
