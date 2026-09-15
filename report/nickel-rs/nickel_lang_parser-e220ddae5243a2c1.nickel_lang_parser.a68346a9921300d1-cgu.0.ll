@@ -205,7 +205,7 @@ bb.ao:                                            ; preds = %bb.am
   %i.da = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 3 uses
   store i64 0, ptr %i.da, align 8, !noalias !2427
   %i.db = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.dc = load ptr, ptr %i.db, align 8, !noalias !2427, !nonnull !19, !noundef !19 ; 10 uses
+  %i.dc = load ptr, ptr %i.db, align 8, !noalias !2427, !nonnull !19, !noundef !19 ; 9 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.de = load i64, ptr %i.dd, align 8, !noalias !2427, !noundef !19
   %i.df = getelementptr inbounds nuw i8, ptr %i.dc, i64 %i.de ; 2 uses
@@ -217,25 +217,24 @@ bb.ao:                                            ; preds = %bb.am
 
 .lr.ph.i.i.us.i.i:                                ; preds = %bb.ao, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17hacf513a9f19c5e82E.exit.us.i.i"
   %i.dj = phi i64 [ %i.eb, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17hacf513a9f19c5e82E.exit.us.i.i" ], [ 0, %bb.ao ] ; 3 uses
-  %.sroa.1040.0.us191.i.i = phi ptr [ %.sroa.1040.7103.us.i.i, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17hacf513a9f19c5e82E.exit.us.i.i" ], [ %i.df, %bb.ao ] ; 4 uses
+  %.sroa.1040.0.us191.i.i = phi ptr [ %.sroa.1040.7103.us.i.i, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17hacf513a9f19c5e82E.exit.us.i.i" ], [ %i.df, %bb.ao ] ; 3 uses
   %.promoted29.i.i.us.i.i = ptrtoaddr ptr %.sroa.1040.0.us191.i.i to i64 ; 2 uses
   %i.dk = sub i64 %.promoted29.i.i.us.i.i, %i.di
   %i.dl = mul i64 %i.dk, %i.cw
   %scevgep225.i.i = getelementptr i8, ptr %.sroa.1040.0.us191.i.i, i64 %i.di
   %i.dm = sub i64 0, %.promoted29.i.i.us.i.i
   %scevgep226.i.i = getelementptr i8, ptr %scevgep225.i.i, i64 %i.dm
-  %.not.i5.i.us.i.i232 = icmp eq ptr %i.dc, %.sroa.1040.0.us191.i.i
-  br i1 %.not.i5.i.us.i.i232, label %.loopexit.i.i.us.i.i, label %.lr.ph237
+  br label %bb.ap
 
-bb.ap:                                            ; preds = %bb.aq
-  %.not.i5.i.us.i.i = icmp eq ptr %i.dc, %i.dn
+bb.ap:                                            ; preds = %bb.aq, %.lr.ph.i.i.us.i.i
+  %.sroa.1040.4.us.i.i = phi ptr [ %.sroa.1040.0.us191.i.i, %.lr.ph.i.i.us.i.i ], [ %i.dn, %bb.aq ] ; 2 uses
+  %.sroa.01.021.i.i.us.i.i = phi i64 [ 0, %.lr.ph.i.i.us.i.i ], [ %i.du, %bb.aq ] ; 2 uses
+  %.sroa.0.01020.i.i.us.i.i = phi i64 [ 0, %.lr.ph.i.i.us.i.i ], [ %i.dt, %bb.aq ] ; 2 uses
+  %.not.i5.i.us.i.i = icmp eq ptr %i.dc, %.sroa.1040.4.us.i.i ; 2 uses
   br i1 %.not.i5.i.us.i.i, label %.loopexit.i.i.us.i.i, label %.lr.ph237
 
-.lr.ph237:                                        ; preds = %.lr.ph.i.i.us.i.i, %bb.ap
-  %.sroa.0.01020.i.i.us.i.i235 = phi i64 [ %i.dt, %bb.ap ], [ 0, %.lr.ph.i.i.us.i.i ]
-  %.sroa.01.021.i.i.us.i.i234 = phi i64 [ %i.du, %bb.ap ], [ 0, %.lr.ph.i.i.us.i.i ] ; 2 uses
-  %.sroa.1040.4.us.i.i233 = phi ptr [ %i.dn, %bb.ap ], [ %.sroa.1040.0.us191.i.i, %.lr.ph.i.i.us.i.i ]
-  %i.dn = getelementptr inbounds i8, ptr %.sroa.1040.4.us.i.i233, i64 -1 ; 4 uses
+.lr.ph237:                                        ; preds = %bb.ap
+  %i.dn = getelementptr inbounds i8, ptr %.sroa.1040.4.us.i.i, i64 -1 ; 3 uses
   %i.do = load i8, ptr %i.dn, align 1, !noalias !2428, !noundef !19 ; 2 uses
   %i.dp = call range(i8 0, 9) i8 @llvm.ctlz.i8(i8 %i.do, i1 false)
   %i.dq = icmp samesign ult i8 %i.dp, %invariant.op34.i
@@ -243,20 +242,18 @@ bb.ap:                                            ; preds = %bb.aq
 
 bb.aq:                                            ; preds = %.lr.ph237
   %i.dr = zext i8 %i.do to i64
-  %i.ds = shl i64 %i.dr, %.sroa.01.021.i.i.us.i.i234
-  %i.dt = or i64 %i.ds, %.sroa.0.01020.i.i.us.i.i235 ; 3 uses
-  %i.du = add nuw nsw i64 %.sroa.01.021.i.i.us.i.i234, %i.cw ; 2 uses
+  %i.ds = shl i64 %i.dr, %.sroa.01.021.i.i.us.i.i
+  %i.dt = or i64 %i.ds, %.sroa.0.01020.i.i.us.i.i ; 2 uses
+  %i.du = add nuw nsw i64 %.sroa.01.021.i.i.us.i.i, %i.cw ; 2 uses
   %i.dv = icmp samesign ult i64 %i.du, 64
   br i1 %i.dv, label %bb.ap, label %.thread92.us.i.i
 
-.loopexit.i.i.us.i.i:                             ; preds = %bb.ap, %.lr.ph.i.i.us.i.i
-  %.sroa.0.01020.i.i.us.i.i.lcssa = phi i64 [ 0, %.lr.ph.i.i.us.i.i ], [ %i.dt, %bb.ap ]
+.loopexit.i.i.us.i.i:                             ; preds = %bb.ap
   %i.dw = icmp eq i64 %i.dl, 0
   br i1 %i.dw, label %.thread116.i.i, label %.thread92.us.i.i
 
 .thread92.us.i.i:                                 ; preds = %bb.aq, %.loopexit.i.i.us.i.i
-  %.not.i5.i.us.i.i200 = phi i1 [ true, %.loopexit.i.i.us.i.i ], [ false, %bb.aq ]
-  %.sroa.3.0.i.pn.i109.us.i.i = phi i64 [ %.sroa.0.01020.i.i.us.i.i.lcssa, %.loopexit.i.i.us.i.i ], [ %i.dt, %bb.aq ]
+  %.sroa.3.0.i.pn.i109.us.i.i = phi i64 [ %.sroa.0.01020.i.i.us.i.i, %.loopexit.i.i.us.i.i ], [ %i.dt, %bb.aq ]
   %.sroa.1040.7103.us.i.i = phi ptr [ %scevgep226.i.i, %.loopexit.i.i.us.i.i ], [ %i.dn, %bb.aq ]
   %i.dx = load i64, ptr %i.c, align 8, !range !38, !alias.scope !2429, !noalias !2430, !noundef !19
   %i.dy = icmp eq i64 %i.dj, %i.dx
@@ -272,7 +269,7 @@ bb.ar:                                            ; preds = %.thread92.us.i.i
   store i64 %.sroa.3.0.i.pn.i109.us.i.i, ptr %i.ea, align 8, !noalias !2427
   %i.eb = add i64 %i.dj, 1                        ; 2 uses
   store i64 %i.eb, ptr %i.da, align 8, !alias.scope !2429, !noalias !2430
-  br i1 %.not.i5.i.us.i.i200, label %.thread116.i.i, label %.lr.ph.i.i.us.i.i
+  br i1 %.not.i5.i.us.i.i, label %.thread116.i.i, label %.lr.ph.i.i.us.i.i
 
 .loopexit.split.us.i.i:                           ; preds = %bb.ar
   %lpad.loopexit.us.i.i = landingpad { ptr, i32 }
