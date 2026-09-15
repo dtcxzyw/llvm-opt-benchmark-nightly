@@ -1,0 +1,8 @@
+Delta,Added Lines,Removed Lines,Download URL
+131,406,275,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/regex_syntax-f1f61ff0feae2508.regex_syntax.535bfd884d6d4f8f-cgu.11.bc?download=true
+45,458,413,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libjpeg-turbo/original/spng.bc?download=true
+41,138,97,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/regex_lite-e70a0891ea48dde5.regex_lite.c95cdb2f3cf4675d-cgu.13.bc?download=true
+27,227,200,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/raylib/original/rmodels.bc?download=true
+26,91,65,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/stb_image.bc?download=true
+26,91,65,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ncnn/original/imreadwrite.bc?download=true
+-1,2,3,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/cpython/original/pystrtod.bc?download=true
