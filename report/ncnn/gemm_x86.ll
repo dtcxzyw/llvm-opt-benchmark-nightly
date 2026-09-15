@@ -205,7 +205,7 @@ bb.dv:                                            ; preds = %bb.du
 
 .thread778:                                       ; preds = %bb.dv
   %i.afj = load float, ptr %.201025, align 4, !tbaa !67
-  %i.afk = fmul fast float %i.afj, %8             ; 3 uses
+  %i.afk = fmul fast float %i.afj, %8             ; 2 uses
   %i.afl = insertelement <4 x float> poison, float %i.afk, i64 0
   %i.afm = shufflevector <4 x float> %i.afl, <4 x float> poison, <4 x i32> zeroinitializer
   %i.afn = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.afk, i64 0
@@ -219,8 +219,7 @@ bb.dx:                                            ; preds = %bb.dw
   %i.afp = getelementptr inbounds [4 x i8], ptr %i.afo, i64 %i.bh
   %i.afq = getelementptr inbounds nuw [4 x i8], ptr %i.afp, i64 %indvars.iv1109 ; 2 uses
   %i.afr = load <2 x float>, ptr %i.afq, align 4, !tbaa !67
-  %i.afs = fmul fast <2 x float> %i.afr, %i.bw    ; 4 uses
-  %11 = extractelement <2 x float> %i.afs, i64 0
+  %i.afs = fmul fast <2 x float> %i.afr, %i.bw    ; 3 uses
   %i.aft = shufflevector <2 x float> %i.afs, <2 x float> poison, <4 x i32> zeroinitializer
   %i.afu = shufflevector <2 x float> %i.afs, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
   br label %.thread794
@@ -247,9 +246,8 @@ bb.ea:                                            ; preds = %bb.dy
 .thread794:                                       ; preds = %bb.dy, %bb.dx, %.thread778, %bb.dz, %bb.ea, %bb.du
   %.2668 = phi nsz <4 x float> [ zeroinitializer, %bb.du ], [ zeroinitializer, %bb.ea ], [ zeroinitializer, %bb.dy ], [ zeroinitializer, %bb.dz ], [ %i.afm, %.thread778 ], [ %i.aft, %bb.dx ] ; 2 uses
   %.1659 = phi nsz <4 x float> [ zeroinitializer, %bb.du ], [ zeroinitializer, %bb.ea ], [ zeroinitializer, %bb.dy ], [ zeroinitializer, %bb.dz ], [ zeroinitializer, %.thread778 ], [ %i.afu, %bb.dx ] ; 2 uses
-  %.21742 = phi nsz float [ 0.000000e+00, %bb.du ], [ 0.000000e+00, %bb.ea ], [ 0.000000e+00, %bb.dy ], [ 0.000000e+00, %bb.dz ], [ %i.afk, %.thread778 ], [ %11, %bb.dx ] ; 2 uses
   %.23 = phi ptr [ null, %bb.du ], [ %i.agb, %bb.ea ], [ %.201025, %bb.dy ], [ %i.afz, %bb.dz ], [ %.201025, %.thread778 ], [ %i.afq, %bb.dx ] ; 2 uses
-  %i.agc = phi <2 x float> [ zeroinitializer, %bb.du ], [ zeroinitializer, %bb.ea ], [ zeroinitializer, %bb.dy ], [ zeroinitializer, %bb.dz ], [ %i.afn, %.thread778 ], [ %i.afs, %bb.dx ] ; 4 uses
+  %i.agc = phi <2 x float> [ zeroinitializer, %bb.du ], [ zeroinitializer, %bb.ea ], [ zeroinitializer, %bb.dy ], [ zeroinitializer, %bb.dz ], [ %i.afn, %.thread778 ], [ %i.afs, %bb.dx ] ; 5 uses
   br i1 %i.bi, label %.lr.ph982, label %.preheader912
 
 .preheader912:                                    ; preds = %bb.ez, %.thread794
@@ -576,12 +574,9 @@ bb.ez:                                            ; preds = %bb.ex, %bb.ey, %bb.
   br i1 %i.akv, label %.lr.ph1008.preheader, label %.preheader910
 
 .lr.ph1008.preheader:                             ; preds = %.preheader911
-  %12 = insertelement <2 x float> poison, float %.21742, i64 0
-  %i.akw = shufflevector <2 x float> %12, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.akw = shufflevector <2 x float> %i.agc, <2 x float> poison, <2 x i32> zeroinitializer
   %i.akx = shufflevector <2 x float> %i.agc, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %13 = insertelement <2 x float> poison, float %.21742, i64 0
-  %14 = shufflevector <2 x float> %13, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.aky = shufflevector <2 x float> %i.agc, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.aky = shufflevector <2 x float> %i.agc, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %.lr.ph1008
 
 .lr.ph997:                                        ; preds = %.preheader912, %bb.fs
@@ -796,7 +791,7 @@ bb.ft:                                            ; preds = %.lr.ph1008
   br i1 %i.bg, label %.thread836, label %bb.fu
 
 .thread836:                                       ; preds = %bb.ft
-  %i.anp = fadd fast <2 x float> %i.anl, %14
+  %i.anp = fadd fast <2 x float> %i.anl, %i.aky
   %i.anq = fadd fast <2 x float> %i.ann, %i.aky
   br label %.thread849
 

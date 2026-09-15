@@ -204,16 +204,16 @@ _ZN12_GLOBAL__N_16pass_0ERKN2cv18ContourDataStorageIaLm1024ELm0EEENS0_6Point_IiE
 
 .lr.ph.split:                                     ; preds = %.preheader169, %bb.aj
   %.043194 = phi i64 [ %i.gm, %bb.aj ], [ 0, %.preheader169 ] ; 6 uses
-  %i.ct = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.6, i64 %.043194 ; 6 uses
+  %i.ct = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.6, i64 %.043194 ; 7 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 20
   %i.cv = load i8, ptr %i.cu, align 4, !tbaa !77, !range !80, !noundef !81
   %i.cw = trunc nuw i8 %i.cv to i1
   br i1 %i.cw, label %bb.aj, label %.lr.ph.i77
 
 .lr.ph.i77:                                       ; preds = %.lr.ph.split
-  %10 = load <2 x i32>, ptr %i.ct, align 8, !tbaa !22 ; 4 uses
-  %11 = extractelement <2 x i32> %10, i64 0
-  %12 = extractelement <2 x i32> %10, i64 1
+  %10 = getelementptr inbounds nuw i8, ptr %i.ct, i64 4
+  %11 = load i32, ptr %10, align 4, !tbaa !82     ; 2 uses
+  %12 = load i32, ptr %i.ct, align 8, !tbaa !83   ; 2 uses
   br label %bb.w
 
 ._crit_edge.i:                                    ; preds = %bb.aa
@@ -260,21 +260,21 @@ bb.w:                                             ; preds = %bb.aa, %.lr.ph.i77
   %i.df = select i1 %i.de, i64 0, i64 %i.cs
   %i.dg = sub nuw i64 %i.dd, %i.df
   %i.dh = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.6, i64 %i.dg ; 2 uses
-  %i.di = load i32, ptr %i.dh, align 8, !tbaa !82
+  %i.di = load i32, ptr %i.dh, align 8, !tbaa !83
   %i.dj = getelementptr [24 x i8], ptr %i.ct, i64 %.p.i ; 2 uses
-  %i.dk = load i32, ptr %i.dj, align 8, !tbaa !82 ; 2 uses
+  %i.dk = load i32, ptr %i.dj, align 8, !tbaa !83 ; 2 uses
   %i.dl = sub nsw i32 %i.di, %i.dk                ; 3 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dh, i64 4
-  %i.dn = load i32, ptr %i.dm, align 4, !tbaa !83
+  %i.dn = load i32, ptr %i.dm, align 4, !tbaa !82
   %i.do = getelementptr inbounds nuw i8, ptr %i.dj, i64 4
-  %i.dp = load i32, ptr %i.do, align 4, !tbaa !83 ; 2 uses
+  %i.dp = load i32, ptr %i.do, align 4, !tbaa !82 ; 2 uses
   %i.dq = sub nsw i32 %i.dn, %i.dp                ; 3 uses
   %i.dr = mul nsw i32 %i.dl, %i.dl
   %i.ds = mul nsw i32 %i.dq, %i.dq
   %i.dt = add nuw nsw i32 %i.ds, %i.dr            ; 3 uses
-  %i.du = sub nsw i32 %11, %i.dk
+  %i.du = sub nsw i32 %12, %i.dk
   %i.dv = mul nsw i32 %i.dq, %i.du
-  %.neg.i = sub i32 %i.dp, %12
+  %.neg.i = sub i32 %i.dp, %11
   %.neg72.i = mul i32 %.neg.i, %i.dl
   %i.dw = add i32 %.neg72.i, %i.dv                ; 2 uses
   %i.dx = sitofp i32 %.0636.i to double
@@ -317,8 +317,10 @@ bb.ab:                                            ; preds = %bb.z, %bb.y, %bb.x
   br i1 %i.o, label %.lr.ph.i79.preheader, label %bb.aj
 
 .lr.ph.i79.preheader:                             ; preds = %bb.ab
-  %i.eo = shufflevector <2 x i32> %10, <2 x i32> poison, <2 x i32> zeroinitializer
-  %13 = shufflevector <2 x i32> %10, <2 x i32> poison, <2 x i32> <i32 1, i32 1>
+  %13 = insertelement <2 x i32> poison, i32 %12, i64 0
+  %i.eo = shufflevector <2 x i32> %13, <2 x i32> poison, <2 x i32> zeroinitializer
+  %14 = insertelement <2 x i32> poison, i32 %11, i64 0
+  %15 = shufflevector <2 x i32> %14, <2 x i32> poison, <2 x i32> zeroinitializer
   br label %.lr.ph.i79
 
 bb.ac:                                            ; preds = %bb.ah
@@ -343,7 +345,7 @@ bb.ac:                                            ; preds = %bb.ah
   %i.ey = shufflevector <2 x i32> %i.ew, <2 x i32> %i.ex, <2 x i32> <i32 0, i32 2>
   %i.ez = sub nsw <2 x i32> %i.ey, %i.eo          ; 4 uses
   %i.fa = shufflevector <2 x i32> %i.ew, <2 x i32> %i.ex, <2 x i32> <i32 1, i32 3>
-  %i.fb = sub nsw <2 x i32> %i.fa, %13            ; 4 uses
+  %i.fb = sub nsw <2 x i32> %i.fa, %15            ; 4 uses
   %i.fc = or <2 x i32> %i.fb, %i.ez
   %i.fd = icmp eq <2 x i32> %i.fc, zeroinitializer ; 2 uses
   %i.fe = extractelement <2 x i1> %i.fd, i64 0
@@ -746,8 +748,8 @@ attributes #16 = { nounwind }
 !79 = !{!75, !5, i64 4}
 !80 = !{i8 0, i8 2}
 !81 = !{}
-!82 = !{!76, !5, i64 0}
-!83 = !{!76, !5, i64 4}
+!82 = !{!76, !5, i64 4}
+!83 = !{!76, !5, i64 0}
 !84 = !{!76, !9, i64 8}
 !85 = !{!76, !5, i64 16}
 !86 = !{!"llvm.loop.peeled.count", i32 1}

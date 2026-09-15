@@ -204,10 +204,10 @@ bb.f:                                             ; preds = %bb.e
   %i.bn = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.bg
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !11 ; 2 uses
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bo, i64 8
-  %i.bp = load <2 x double>, ptr %i.bm, align 8, !tbaa !26 ; 9 uses
-  %5 = load <2 x double>, ptr %i.bo, align 8, !tbaa !26 ; 11 uses
+  %i.bp = load <2 x double>, ptr %i.bo, align 8, !tbaa !26 ; 11 uses
   %.sroa.2.0.copyload.i = load double, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !26 ; 9 uses
-  %i.bq = fsub <2 x double> %i.bp, %i.af          ; 2 uses
+  %5 = load <2 x double>, ptr %i.bm, align 8, !tbaa !26 ; 9 uses
+  %i.bq = fsub <2 x double> %5, %i.af             ; 2 uses
   %i.br = extractelement <2 x double> %i.bq, i64 1
   %i.bs = fmul double %i.br, %i.aj
   %i.bt = extractelement <2 x double> %i.bq, i64 0
@@ -218,7 +218,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.bx, label %bb.j, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %foldExtExtBinop162 = fsub <2 x double> %5, %i.af
+  %foldExtExtBinop162 = fsub <2 x double> %i.bp, %i.af
   %i.by = extractelement <2 x double> %foldExtExtBinop162, i64 0
   %i.bz = fsub double %.sroa.2.0.copyload.i, %i.ag
   %i.ca = fmul double %i.bz, %i.aj
@@ -229,12 +229,12 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.ce, label %bb.j, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.cf = extractelement <2 x double> %i.bp, i64 1
+  %i.cf = extractelement <2 x double> %5, i64 1
   %i.cg = fsub double %i.cf, %.sroa.2.0.copyload.i ; 2 uses
-  %foldExtExtBinop164 = fsub <2 x double> %i.o, %5
+  %foldExtExtBinop164 = fsub <2 x double> %i.o, %i.bp
   %i.ch = extractelement <2 x double> %foldExtExtBinop164, i64 0
   %i.ci = fsub double %.sroa.2.0.copyload.i107, %.sroa.2.0.copyload.i
-  %foldExtExtBinop166 = fsub <2 x double> %i.bp, %5
+  %foldExtExtBinop166 = fsub <2 x double> %5, %i.bp
   %i.cj = extractelement <2 x double> %foldExtExtBinop166, i64 0
   %i.ck = fneg double %i.cj                       ; 2 uses
   %i.cl = fmul double %i.ci, %i.ck
@@ -245,7 +245,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.cp, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %foldExtExtBinop168 = fsub <2 x double> %i.af, %5
+  %foldExtExtBinop168 = fsub <2 x double> %i.af, %i.bp
   %i.cq = extractelement <2 x double> %foldExtExtBinop168, i64 0
   %i.cr = fsub double %i.ag, %.sroa.2.0.copyload.i
   %i.cs = fmul double %i.cr, %i.ck
@@ -256,9 +256,9 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.cw, label %bb.j, label %.split116.i
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g, %bb.f
-  %foldExtExtBinop170 = fsub <2 x double> %i.bp, %i.o
+  %foldExtExtBinop170 = fsub <2 x double> %5, %i.o
   %i.cx = extractelement <2 x double> %foldExtExtBinop170, i64 0 ; 3 uses
-  %i.cy = extractelement <2 x double> %i.bp, i64 1 ; 3 uses
+  %i.cy = extractelement <2 x double> %5, i64 1   ; 3 uses
   %i.cz = fsub double %i.cy, %.sroa.2.0.copyload.i107 ; 3 uses
   %.not.i.i.i = fcmp ueq double %i.bu, 0.000000e+00
   br i1 %.not.i.i.i, label %bb.k, label %between.exit.thread.i.i
@@ -276,10 +276,10 @@ between.exit.i.i:                                 ; preds = %bb.k
   br i1 %i.df, label %between.exit.thread.i.i, label %.loopexit
 
 between.exit.thread.i.i:                          ; preds = %between.exit.i.i, %bb.k, %bb.j
-  %foldExtExtBinop172 = fsub <2 x double> %5, %i.o
+  %foldExtExtBinop172 = fsub <2 x double> %i.bp, %i.o
   %i.dg = extractelement <2 x double> %foldExtExtBinop172, i64 0 ; 3 uses
   %i.dh = fsub double %.sroa.2.0.copyload.i, %.sroa.2.0.copyload.i107 ; 3 uses
-  %foldExtExtBinop174 = fsub <2 x double> %5, %i.af
+  %foldExtExtBinop174 = fsub <2 x double> %i.bp, %i.af
   %i.di = extractelement <2 x double> %foldExtExtBinop174, i64 0
   %i.dj = fsub double %.sroa.2.0.copyload.i, %i.ag
   %i.dk = fmul double %i.dj, %i.aj
@@ -300,17 +300,17 @@ between.exit76.i.i:                               ; preds = %bb.l
   br i1 %i.dr, label %between.exit76.thread.i.i, label %.loopexit
 
 between.exit76.thread.i.i:                        ; preds = %between.exit76.i.i, %bb.l, %between.exit.thread.i.i
-  %i.ds = shufflevector <2 x double> %i.o, <2 x double> %5, <2 x i32> <i32 0, i32 2>
-  %i.dt = shufflevector <2 x double> %i.bp, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.ds = shufflevector <2 x double> %i.o, <2 x double> %i.bp, <2 x i32> <i32 0, i32 2>
+  %i.dt = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
   %i.du = fsub <2 x double> %i.ds, %i.dt          ; 6 uses
-  %i.dv = shufflevector <2 x double> %i.o, <2 x double> %5, <2 x i32> <i32 1, i32 3>
-  %i.dw = shufflevector <2 x double> %i.bp, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.dv = shufflevector <2 x double> %i.o, <2 x double> %i.bp, <2 x i32> <i32 1, i32 3>
+  %i.dw = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.dx = fsub <2 x double> %i.dv, %i.dw          ; 6 uses
   %i.dy = fsub double %i.cy, %.sroa.2.0.copyload.i ; 2 uses
-  %foldExtExtBinop176 = fsub <2 x double> %i.o, %5
+  %foldExtExtBinop176 = fsub <2 x double> %i.o, %i.bp
   %i.dz = extractelement <2 x double> %foldExtExtBinop176, i64 0
   %i.ea = fsub double %.sroa.2.0.copyload.i107, %.sroa.2.0.copyload.i
-  %foldExtExtBinop178 = fsub <2 x double> %i.bp, %5
+  %foldExtExtBinop178 = fsub <2 x double> %5, %i.bp
   %i.eb = extractelement <2 x double> %foldExtExtBinop178, i64 0
   %i.ec = fneg double %i.eb                       ; 2 uses
   %i.ed = fmul double %i.ea, %i.ec
@@ -337,9 +337,9 @@ between.exit79.i.i:                               ; preds = %bb.m
   br i1 %i.eo, label %between.exit79.thread.i.i, label %.loopexit
 
 between.exit79.thread.i.i:                        ; preds = %between.exit79.i.i, %bb.m, %between.exit76.thread.i.i
-  %foldExtExtBinop182 = fsub <2 x double> %i.af, %i.bp ; 2 uses
+  %foldExtExtBinop182 = fsub <2 x double> %i.af, %5 ; 2 uses
   %i.ep = fsub double %i.ag, %i.cy                ; 2 uses
-  %foldExtExtBinop184 = fsub <2 x double> %i.af, %5
+  %foldExtExtBinop184 = fsub <2 x double> %i.af, %i.bp
   %i.eq = extractelement <2 x double> %foldExtExtBinop184, i64 0
   %i.er = fsub double %i.ag, %.sroa.2.0.copyload.i
   %i.es = fmul double %i.er, %i.ec

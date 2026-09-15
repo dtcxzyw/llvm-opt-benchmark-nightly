@@ -205,24 +205,26 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br label %.lr.ph665
 
 .lr.ph665:                                        ; preds = %.lr.ph665.preheader847, %.lr.ph665
-  %.0205663 = phi ptr [ %i.zf, %.lr.ph665 ], [ %.0205663.ph, %.lr.ph665.preheader847 ] ; 4 uses
-  %i.yy = getelementptr inbounds nuw i8, ptr %.0205663, i64 8
-  %3 = load <2 x float>, ptr %.0205663, align 4   ; 4 uses
-  %4 = shufflevector <2 x float> %3, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %5 = fmul <2 x float> %i.wt, %4
-  %i.yz = shufflevector <2 x float> %3, <2 x float> poison, <2 x i32> zeroinitializer
-  %6 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ws, <2 x float> %i.yz, <2 x float> %5)
-  %7 = fadd <2 x float> %i.wu, %6
-  %8 = extractelement <2 x float> %3, i64 1
-  %9 = fmul float %i.wz, %8
-  %10 = extractelement <2 x float> %3, i64 0
-  %i.za = call float @llvm.fmuladd.f32(float %i.wx, float %10, float %9)
+  %.0205663 = phi ptr [ %i.zf, %.lr.ph665 ], [ %.0205663.ph, %.lr.ph665.preheader847 ] ; 5 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.0205663, i64 8
+  %i.yy = getelementptr inbounds nuw i8, ptr %.0205663, i64 4
+  %4 = load float, ptr %i.yy, align 4             ; 2 uses
+  %5 = load float, ptr %.0205663, align 4         ; 2 uses
+  %6 = insertelement <2 x float> poison, float %4, i64 0
+  %i.yz = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
+  %7 = fmul <2 x float> %i.wt, %i.yz
+  %8 = insertelement <2 x float> poison, float %5, i64 0
+  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
+  %10 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ws, <2 x float> %9, <2 x float> %7)
+  %11 = fadd <2 x float> %i.wu, %10
+  %12 = fmul float %i.wz, %4
+  %i.za = call float @llvm.fmuladd.f32(float %i.wx, float %5, float %12)
   %i.zb = fadd float %i.xe, %i.za
   %i.zc = insertelement <2 x float> poison, float %i.zb, i64 0
   %i.zd = shufflevector <2 x float> %i.zc, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.ze = fdiv <2 x float> %7, %i.zd
+  %i.ze = fdiv <2 x float> %11, %i.zd
   store <2 x float> %i.ze, ptr %.0205663, align 4
-  store float 0.000000e+00, ptr %i.yy, align 4
+  store float 0.000000e+00, ptr %3, align 4
   %i.zf = getelementptr inbounds nuw i8, ptr %.0205663, i64 12 ; 2 uses
   %.not243 = icmp eq ptr %i.zf, %i.tq
   br i1 %.not243, label %.loopexit, label %.lr.ph665, !llvm.loop !36

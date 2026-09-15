@@ -204,7 +204,7 @@ bb.a:
   %i.cl = fmul double %i.ax, %i.ck                ; 3 uses
   %i.cm = fmul double %i.ba, %i.ck                ; 3 uses
   %i.cn = fneg double %i.cm                       ; 2 uses
-  %i.co = load double, ptr %i.aa, align 8, !tbaa !18 ; 9 uses
+  %i.co = load double, ptr %i.aa, align 8, !tbaa !18 ; 10 uses
   %i.cp = fneg double %i.bb
   %i.cq = load double, ptr %i.w, align 8, !tbaa !18 ; 6 uses
   %i.cr = fmul double %i.aw, %i.cq                ; 3 uses
@@ -212,7 +212,7 @@ bb.a:
   %i.ct = fmul double %i.bh, %i.cs                ; 3 uses
   %i.cu = fneg double %i.ct                       ; 2 uses
   %i.cv = load double, ptr %i.ab, align 8, !tbaa !18 ; 9 uses
-  %i.cw = load double, ptr %i.x, align 8, !tbaa !18 ; 5 uses
+  %i.cw = load double, ptr %i.x, align 8, !tbaa !18 ; 6 uses
   %i.cx = fmul double %i.aw, %i.cw                ; 3 uses
   %i.cy = fneg double %i.cx                       ; 2 uses
   %i.cz = fmul double %i.bg, %i.cw                ; 3 uses
@@ -285,7 +285,7 @@ bb.a:
   %i.fo = insertelement <2 x double> %i.ex, double %i.dc, i64 1
   %i.fp = extractelement <2 x double> %i.fn, i64 1
   %i.fq = fmul double %i.ba, %i.dw                ; 2 uses
-  %i.fr = insertelement <2 x double> poison, double %i.co, i64 0 ; 3 uses
+  %i.fr = insertelement <2 x double> poison, double %i.co, i64 0 ; 2 uses
   %i.fs = insertelement <2 x double> %i.fr, double %i.ce, i64 1 ; 2 uses
   %i.ft = fneg <2 x double> %i.fs                 ; 4 uses
   %i.fu = extractelement <2 x double> %i.dv, i64 0 ; 2 uses
@@ -318,7 +318,7 @@ bb.a:
   %i.gv = fmul <2 x double> %i.gl, %i.gu          ; 2 uses
   %i.gw = extractelement <2 x double> %i.gv, i64 1
   %i.gx = insertelement <2 x double> poison, double %i.cw, i64 0 ; 2 uses
-  %i.gy = shufflevector <2 x double> %i.gx, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.gy = shufflevector <2 x double> %i.gx, <2 x double> poison, <2 x i32> zeroinitializer
   %i.gz = fmul <2 x double> %i.gy, %i.dv          ; 2 uses
   %i.ha = insertelement <2 x double> %i.dt, double %i.bc, i64 1
   %i.hb = insertelement <2 x double> poison, double %i.da, i64 0 ; 2 uses
@@ -350,9 +350,8 @@ bb.a:
   %i.ib = extractelement <2 x double> %i.hd, i64 0
   %i.ic = fmul <2 x double> %i.gg, %i.gu          ; 2 uses
   %i.id = fmul <2 x double> %i.hc, %i.ft          ; 2 uses
-  %5 = insertelement <2 x double> %i.fr, double %i.cq, i64 1
-  %6 = insertelement <2 x double> %i.gy, double %i.dn, i64 1
-  %7 = fmul <2 x double> %5, %6                   ; 2 uses
+  %5 = fmul double %i.cq, %i.dn
+  %6 = fmul double %i.co, %i.cw
   %i.ie = insertelement <2 x double> %i.gf, double %i.az, i64 1
   %i.if = shufflevector <2 x double> %i.gk, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ig = fmul <2 x double> %i.ie, %i.if          ; 3 uses
@@ -577,11 +576,13 @@ bb.a:
   %i.qq = shufflevector <2 x double> %i.pp, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.qr = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.gv, <2 x double> %i.qq, <2 x double> %i.qp)
   %i.qs = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.gr, <2 x double> %i.qj, <2 x double> %i.qr)
-  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %7 = insertelement <2 x double> poison, double %5, i64 0
+  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
   %i.qt = insertelement <2 x double> %i.pv, double %i.bu, i64 1 ; 2 uses
   %i.qu = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %8, <2 x double> %i.qt, <2 x double> %i.qs)
   %i.qv = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.gz, <2 x double> %i.qq, <2 x double> %i.qu)
-  %i.qw = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
+  %9 = insertelement <2 x double> poison, double %6, i64 0
+  %i.qw = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
   %i.qx = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.qw, <2 x double> %i.qt, <2 x double> %i.qv) ; 7 uses
   %i.qy = extractelement <2 x double> %i.li, i64 0 ; 2 uses
   %i.qz = tail call noundef double @llvm.fabs.f64(double %i.qy)

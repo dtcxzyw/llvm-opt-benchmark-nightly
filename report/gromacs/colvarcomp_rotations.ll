@@ -204,6 +204,7 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 208
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 328
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 360
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 368
@@ -214,6 +215,7 @@ bb.a:
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 376
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 432
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 336
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 456
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 488
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 496
@@ -224,6 +226,7 @@ bb.a:
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 504
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 560
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 464
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 584
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 616
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 624
@@ -236,21 +239,12 @@ bb.a:
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 592
   %i.aq = load double, ptr %i.g, align 8, !tbaa !108, !noalias !393 ; 2 uses
   %i.ar = load double, ptr %i.f, align 8, !tbaa !108, !noalias !393 ; 2 uses
-  %3 = load <4 x double>, ptr %2, align 8, !tbaa !108 ; 8 uses
-  %4 = shufflevector <4 x double> %3, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
-  %5 = extractelement <4 x double> %3, i64 0
   %i.as = load double, ptr %i.s, align 8, !tbaa !108, !noalias !394 ; 2 uses
   %i.at = load double, ptr %i.r, align 8, !tbaa !108, !noalias !394 ; 2 uses
-  %6 = shufflevector <4 x double> %3, <4 x double> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1> ; 2 uses
-  %7 = extractelement <4 x double> %3, i64 1
   %i.au = load double, ptr %i.ac, align 8, !tbaa !108, !noalias !395 ; 2 uses
   %i.av = load double, ptr %i.ab, align 8, !tbaa !108, !noalias !395 ; 2 uses
-  %8 = shufflevector <4 x double> %3, <4 x double> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2> ; 2 uses
-  %9 = extractelement <4 x double> %3, i64 2
   %i.aw = load double, ptr %i.am, align 8, !tbaa !108, !noalias !396 ; 2 uses
   %i.ax = load double, ptr %i.al, align 8, !tbaa !108, !noalias !396 ; 2 uses
-  %10 = shufflevector <4 x double> %3, <4 x double> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3> ; 2 uses
-  %11 = extractelement <4 x double> %3, i64 3
   %i.ay = load double, ptr %i.a, align 8, !tbaa !108, !noalias !393 ; 2 uses
   %i.az = load double, ptr %i.m, align 8, !tbaa !108, !noalias !394 ; 2 uses
   %i.ba = load double, ptr %i.w, align 8, !tbaa !108, !noalias !395 ; 2 uses
@@ -265,6 +259,12 @@ bb.a:
   %i.bj = shufflevector <3 x double> %i.bi, <3 x double> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 1> ; 2 uses
   %i.bk = extractelement <3 x double> %i.bi, i64 2 ; 2 uses
   %i.bl = fsub double %i.bh, %i.bk
+  %6 = load double, ptr %5, align 8, !tbaa !130   ; 2 uses
+  %7 = load double, ptr %4, align 8, !tbaa !129   ; 2 uses
+  %8 = load double, ptr %3, align 8, !tbaa !128   ; 2 uses
+  %9 = load double, ptr %2, align 8, !tbaa !116   ; 2 uses
+  %10 = insertelement <4 x double> poison, double %9, i64 0
+  %11 = shufflevector <4 x double> %10, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.bm = insertelement <4 x double> poison, double %i.bl, i64 0
   %i.bn = load <2 x double>, ptr %i.j, align 8, !tbaa !108, !noalias !393 ; 3 uses
   %i.bo = extractelement <2 x double> %i.bn, i64 0
@@ -289,7 +289,7 @@ bb.a:
   %i.ch = fsub <2 x double> %i.cd, %i.cf
   %i.ci = shufflevector <2 x double> %i.cg, <2 x double> %i.ch, <4 x i32> <i32 0, i32 3, i32 poison, i32 poison>
   %i.cj = shufflevector <4 x double> %i.bx, <4 x double> %i.ci, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %i.ck = fmul <4 x double> %4, %i.cj
+  %i.ck = fmul <4 x double> %11, %i.cj
   %i.cl = fsub double %i.bp, %i.bd
   %i.cm = insertelement <2 x double> %i.bq, double %i.bd, i64 0
   %i.cn = fadd <2 x double> %i.bn, %i.cm
@@ -303,10 +303,10 @@ bb.a:
   %i.cv = fsub <4 x double> %i.cu, %i.bj
   %i.cw = fadd <4 x double> %i.cu, %i.bj
   %i.cx = shufflevector <4 x double> %i.cv, <4 x double> %i.cw, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
-  %i.cy = fmul <4 x double> %4, %i.cx
+  %i.cy = fmul <4 x double> %11, %i.cx
   %i.cz = fsub double %i.co, %i.bg
   %i.da = fadd double %i.cz, %i.bk
-  %i.db = fmul double %5, %i.da
+  %i.db = fmul double %9, %i.da
   %i.dc = fadd <4 x double> %i.ck, zeroinitializer
   %i.dd = fadd <4 x double> %i.cy, zeroinitializer
   %i.de = fadd double %i.db, 0.000000e+00
@@ -320,6 +320,8 @@ bb.a:
   %i.dm = shufflevector <3 x double> %i.dl, <3 x double> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 1> ; 2 uses
   %i.dn = extractelement <3 x double> %i.dl, i64 2 ; 2 uses
   %i.do = fsub double %i.dk, %i.dn
+  %12 = insertelement <4 x double> poison, double %8, i64 0
+  %13 = shufflevector <4 x double> %12, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.dp = insertelement <4 x double> poison, double %i.do, i64 0
   %i.dq = load <2 x double>, ptr %i.v, align 8, !tbaa !108, !noalias !394 ; 3 uses
   %i.dr = extractelement <2 x double> %i.dq, i64 0
@@ -344,7 +346,7 @@ bb.a:
   %i.ek = fsub <2 x double> %i.eg, %i.ei
   %i.el = shufflevector <2 x double> %i.ej, <2 x double> %i.ek, <4 x i32> <i32 0, i32 3, i32 poison, i32 poison>
   %i.em = shufflevector <4 x double> %i.ea, <4 x double> %i.el, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %i.en = fmul <4 x double> %6, %i.em
+  %i.en = fmul <4 x double> %13, %i.em
   %i.eo = fsub double %i.ds, %i.dg
   %i.ep = insertelement <2 x double> %i.dt, double %i.dg, i64 0
   %i.eq = fadd <2 x double> %i.dq, %i.ep
@@ -358,10 +360,10 @@ bb.a:
   %i.ey = fsub <4 x double> %i.ex, %i.dm
   %i.ez = fadd <4 x double> %i.ex, %i.dm
   %i.fa = shufflevector <4 x double> %i.ey, <4 x double> %i.ez, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
-  %i.fb = fmul <4 x double> %6, %i.fa
+  %i.fb = fmul <4 x double> %13, %i.fa
   %i.fc = fsub double %i.er, %i.dj
   %i.fd = fadd double %i.fc, %i.dn
-  %i.fe = fmul double %7, %i.fd
+  %i.fe = fmul double %8, %i.fd
   %i.ff = fadd <4 x double> %i.dc, %i.en
   %i.fg = fadd <4 x double> %i.dd, %i.fb
   %i.fh = fadd double %i.de, %i.fe
@@ -375,6 +377,8 @@ bb.a:
   %i.fp = shufflevector <3 x double> %i.fo, <3 x double> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 1> ; 2 uses
   %i.fq = extractelement <3 x double> %i.fo, i64 2 ; 2 uses
   %i.fr = fsub double %i.fn, %i.fq
+  %14 = insertelement <4 x double> poison, double %7, i64 0
+  %15 = shufflevector <4 x double> %14, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.fs = insertelement <4 x double> poison, double %i.fr, i64 0
   %i.ft = load <2 x double>, ptr %i.af, align 8, !tbaa !108, !noalias !395 ; 3 uses
   %i.fu = extractelement <2 x double> %i.ft, i64 0
@@ -399,7 +403,7 @@ bb.a:
   %i.gn = fsub <2 x double> %i.gj, %i.gl
   %i.go = shufflevector <2 x double> %i.gm, <2 x double> %i.gn, <4 x i32> <i32 0, i32 3, i32 poison, i32 poison>
   %i.gp = shufflevector <4 x double> %i.gd, <4 x double> %i.go, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %i.gq = fmul <4 x double> %8, %i.gp
+  %i.gq = fmul <4 x double> %15, %i.gp
   %i.gr = fsub double %i.fv, %i.fj
   %i.gs = insertelement <2 x double> %i.fw, double %i.fj, i64 0
   %i.gt = fadd <2 x double> %i.ft, %i.gs
@@ -413,10 +417,10 @@ bb.a:
   %i.hb = fsub <4 x double> %i.ha, %i.fp
   %i.hc = fadd <4 x double> %i.ha, %i.fp
   %i.hd = shufflevector <4 x double> %i.hb, <4 x double> %i.hc, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
-  %i.he = fmul <4 x double> %8, %i.hd
+  %i.he = fmul <4 x double> %15, %i.hd
   %i.hf = fsub double %i.gu, %i.fm
   %i.hg = fadd double %i.hf, %i.fq
-  %i.hh = fmul double %9, %i.hg
+  %i.hh = fmul double %7, %i.hg
   %i.hi = fadd <4 x double> %i.ff, %i.gq
   %i.hj = fadd <4 x double> %i.fg, %i.he
   %i.hk = fadd double %i.fh, %i.hh
@@ -430,6 +434,8 @@ bb.a:
   %i.hs = fsub double %i.hq, %i.hr
   %i.ht = extractelement <3 x double> %i.ho, i64 2 ; 2 uses
   %i.hu = fsub double %i.hs, %i.ht
+  %16 = insertelement <4 x double> poison, double %6, i64 0
+  %17 = shufflevector <4 x double> %16, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.hv = insertelement <4 x double> poison, double %i.hu, i64 0
   %i.hw = load <2 x double>, ptr %i.ap, align 8, !tbaa !108, !noalias !396 ; 3 uses
   %i.hx = extractelement <2 x double> %i.hw, i64 0
@@ -454,7 +460,7 @@ bb.a:
   %i.iq = fsub <2 x double> %i.im, %i.io
   %i.ir = shufflevector <2 x double> %i.ip, <2 x double> %i.iq, <4 x i32> <i32 0, i32 3, i32 poison, i32 poison>
   %i.is = shufflevector <4 x double> %i.ig, <4 x double> %i.ir, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %i.it = fmul <4 x double> %10, %i.is
+  %i.it = fmul <4 x double> %17, %i.is
   %i.iu = fsub double %i.hy, %i.hm
   %i.iv = insertelement <2 x double> %i.hz, double %i.hm, i64 0
   %i.iw = fadd <2 x double> %i.hw, %i.iv
@@ -468,10 +474,10 @@ bb.a:
   %i.je = fsub <4 x double> %i.jd, %i.hp
   %i.jf = fadd <4 x double> %i.jd, %i.hp
   %i.jg = shufflevector <4 x double> %i.je, <4 x double> %i.jf, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
-  %i.jh = fmul <4 x double> %10, %i.jg
+  %i.jh = fmul <4 x double> %17, %i.jg
   %i.ji = fsub double %i.ix, %i.hr
   %i.jj = fadd double %i.ji, %i.ht
-  %i.jk = fmul double %11, %i.jj
+  %i.jk = fmul double %6, %i.jj
   %i.jl = fadd <4 x double> %i.hi, %i.it
   store <4 x double> %i.jl, ptr %0, align 8, !tbaa !108
   %i.jm = fadd <4 x double> %i.hj, %i.jh
@@ -874,6 +880,7 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 208
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 328
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 360
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 368
@@ -884,6 +891,7 @@ bb.a:
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 376
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 432
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 336
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 456
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 488
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 496
@@ -894,6 +902,7 @@ bb.a:
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 504
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 560
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 464
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 584
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 616
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 624
@@ -906,21 +915,12 @@ bb.a:
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 592
   %i.aq = load double, ptr %i.g, align 8, !tbaa !108, !noalias !421 ; 2 uses
   %i.ar = load double, ptr %i.f, align 8, !tbaa !108, !noalias !421 ; 2 uses
-  %3 = load <4 x double>, ptr %2, align 8, !tbaa !108 ; 8 uses
-  %4 = shufflevector <4 x double> %3, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
-  %5 = extractelement <4 x double> %3, i64 0
   %i.as = load double, ptr %i.s, align 8, !tbaa !108, !noalias !422 ; 2 uses
   %i.at = load double, ptr %i.r, align 8, !tbaa !108, !noalias !422 ; 2 uses
-  %6 = shufflevector <4 x double> %3, <4 x double> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1> ; 2 uses
-  %7 = extractelement <4 x double> %3, i64 1
   %i.au = load double, ptr %i.ac, align 8, !tbaa !108, !noalias !423 ; 2 uses
   %i.av = load double, ptr %i.ab, align 8, !tbaa !108, !noalias !423 ; 2 uses
-  %8 = shufflevector <4 x double> %3, <4 x double> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2> ; 2 uses
-  %9 = extractelement <4 x double> %3, i64 2
   %i.aw = load double, ptr %i.am, align 8, !tbaa !108, !noalias !424 ; 2 uses
   %i.ax = load double, ptr %i.al, align 8, !tbaa !108, !noalias !424 ; 2 uses
-  %10 = shufflevector <4 x double> %3, <4 x double> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3> ; 2 uses
-  %11 = extractelement <4 x double> %3, i64 3
   %i.ay = load double, ptr %i.a, align 8, !tbaa !108, !noalias !421 ; 2 uses
   %i.az = load double, ptr %i.m, align 8, !tbaa !108, !noalias !422 ; 2 uses
   %i.ba = load double, ptr %i.w, align 8, !tbaa !108, !noalias !423 ; 2 uses
@@ -935,6 +935,12 @@ bb.a:
   %i.bj = shufflevector <3 x double> %i.bi, <3 x double> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 1> ; 2 uses
   %i.bk = extractelement <3 x double> %i.bi, i64 2 ; 2 uses
   %i.bl = fsub double %i.bh, %i.bk
+  %6 = load double, ptr %5, align 8, !tbaa !108   ; 2 uses
+  %7 = load double, ptr %4, align 8, !tbaa !108   ; 2 uses
+  %8 = load double, ptr %3, align 8, !tbaa !108   ; 2 uses
+  %9 = load double, ptr %2, align 8, !tbaa !108   ; 2 uses
+  %10 = insertelement <4 x double> poison, double %9, i64 0
+  %11 = shufflevector <4 x double> %10, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.bm = insertelement <4 x double> poison, double %i.bl, i64 0
   %i.bn = load <2 x double>, ptr %i.j, align 8, !tbaa !108, !noalias !421 ; 3 uses
   %i.bo = extractelement <2 x double> %i.bn, i64 0
@@ -959,7 +965,7 @@ bb.a:
   %i.ch = fsub <2 x double> %i.cd, %i.cf
   %i.ci = shufflevector <2 x double> %i.cg, <2 x double> %i.ch, <4 x i32> <i32 0, i32 3, i32 poison, i32 poison>
   %i.cj = shufflevector <4 x double> %i.bx, <4 x double> %i.ci, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %i.ck = fmul <4 x double> %4, %i.cj
+  %i.ck = fmul <4 x double> %11, %i.cj
   %i.cl = fsub double %i.bp, %i.bd
   %i.cm = insertelement <2 x double> %i.bq, double %i.bd, i64 0
   %i.cn = fadd <2 x double> %i.bn, %i.cm
@@ -973,10 +979,10 @@ bb.a:
   %i.cv = fsub <4 x double> %i.cu, %i.bj
   %i.cw = fadd <4 x double> %i.cu, %i.bj
   %i.cx = shufflevector <4 x double> %i.cv, <4 x double> %i.cw, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
-  %i.cy = fmul <4 x double> %4, %i.cx
+  %i.cy = fmul <4 x double> %11, %i.cx
   %i.cz = fsub double %i.co, %i.bg
   %i.da = fadd double %i.cz, %i.bk
-  %i.db = fmul double %5, %i.da
+  %i.db = fmul double %9, %i.da
   %i.dc = fadd <4 x double> %i.ck, zeroinitializer
   %i.dd = fadd <4 x double> %i.cy, zeroinitializer
   %i.de = fadd double %i.db, 0.000000e+00
@@ -990,6 +996,8 @@ bb.a:
   %i.dm = shufflevector <3 x double> %i.dl, <3 x double> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 1> ; 2 uses
   %i.dn = extractelement <3 x double> %i.dl, i64 2 ; 2 uses
   %i.do = fsub double %i.dk, %i.dn
+  %12 = insertelement <4 x double> poison, double %8, i64 0
+  %13 = shufflevector <4 x double> %12, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.dp = insertelement <4 x double> poison, double %i.do, i64 0
   %i.dq = load <2 x double>, ptr %i.v, align 8, !tbaa !108, !noalias !422 ; 3 uses
   %i.dr = extractelement <2 x double> %i.dq, i64 0
@@ -1014,7 +1022,7 @@ bb.a:
   %i.ek = fsub <2 x double> %i.eg, %i.ei
   %i.el = shufflevector <2 x double> %i.ej, <2 x double> %i.ek, <4 x i32> <i32 0, i32 3, i32 poison, i32 poison>
   %i.em = shufflevector <4 x double> %i.ea, <4 x double> %i.el, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %i.en = fmul <4 x double> %6, %i.em
+  %i.en = fmul <4 x double> %13, %i.em
   %i.eo = fsub double %i.ds, %i.dg
   %i.ep = insertelement <2 x double> %i.dt, double %i.dg, i64 0
   %i.eq = fadd <2 x double> %i.dq, %i.ep
@@ -1028,10 +1036,10 @@ bb.a:
   %i.ey = fsub <4 x double> %i.ex, %i.dm
   %i.ez = fadd <4 x double> %i.ex, %i.dm
   %i.fa = shufflevector <4 x double> %i.ey, <4 x double> %i.ez, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
-  %i.fb = fmul <4 x double> %6, %i.fa
+  %i.fb = fmul <4 x double> %13, %i.fa
   %i.fc = fsub double %i.er, %i.dj
   %i.fd = fadd double %i.fc, %i.dn
-  %i.fe = fmul double %7, %i.fd
+  %i.fe = fmul double %8, %i.fd
   %i.ff = fadd <4 x double> %i.dc, %i.en
   %i.fg = fadd <4 x double> %i.dd, %i.fb
   %i.fh = fadd double %i.de, %i.fe
@@ -1045,6 +1053,8 @@ bb.a:
   %i.fp = shufflevector <3 x double> %i.fo, <3 x double> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 1> ; 2 uses
   %i.fq = extractelement <3 x double> %i.fo, i64 2 ; 2 uses
   %i.fr = fsub double %i.fn, %i.fq
+  %14 = insertelement <4 x double> poison, double %7, i64 0
+  %15 = shufflevector <4 x double> %14, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.fs = insertelement <4 x double> poison, double %i.fr, i64 0
   %i.ft = load <2 x double>, ptr %i.af, align 8, !tbaa !108, !noalias !423 ; 3 uses
   %i.fu = extractelement <2 x double> %i.ft, i64 0
@@ -1069,7 +1079,7 @@ bb.a:
   %i.gn = fsub <2 x double> %i.gj, %i.gl
   %i.go = shufflevector <2 x double> %i.gm, <2 x double> %i.gn, <4 x i32> <i32 0, i32 3, i32 poison, i32 poison>
   %i.gp = shufflevector <4 x double> %i.gd, <4 x double> %i.go, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %i.gq = fmul <4 x double> %8, %i.gp
+  %i.gq = fmul <4 x double> %15, %i.gp
   %i.gr = fsub double %i.fv, %i.fj
   %i.gs = insertelement <2 x double> %i.fw, double %i.fj, i64 0
   %i.gt = fadd <2 x double> %i.ft, %i.gs
@@ -1083,10 +1093,10 @@ bb.a:
   %i.hb = fsub <4 x double> %i.ha, %i.fp
   %i.hc = fadd <4 x double> %i.ha, %i.fp
   %i.hd = shufflevector <4 x double> %i.hb, <4 x double> %i.hc, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
-  %i.he = fmul <4 x double> %8, %i.hd
+  %i.he = fmul <4 x double> %15, %i.hd
   %i.hf = fsub double %i.gu, %i.fm
   %i.hg = fadd double %i.hf, %i.fq
-  %i.hh = fmul double %9, %i.hg
+  %i.hh = fmul double %7, %i.hg
   %i.hi = fadd <4 x double> %i.ff, %i.gq
   %i.hj = fadd <4 x double> %i.fg, %i.he
   %i.hk = fadd double %i.fh, %i.hh
@@ -1100,6 +1110,8 @@ bb.a:
   %i.hs = fsub double %i.hq, %i.hr
   %i.ht = extractelement <3 x double> %i.ho, i64 2 ; 2 uses
   %i.hu = fsub double %i.hs, %i.ht
+  %16 = insertelement <4 x double> poison, double %6, i64 0
+  %17 = shufflevector <4 x double> %16, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.hv = insertelement <4 x double> poison, double %i.hu, i64 0
   %i.hw = load <2 x double>, ptr %i.ap, align 8, !tbaa !108, !noalias !424 ; 3 uses
   %i.hx = extractelement <2 x double> %i.hw, i64 0
@@ -1124,7 +1136,7 @@ bb.a:
   %i.iq = fsub <2 x double> %i.im, %i.io
   %i.ir = shufflevector <2 x double> %i.ip, <2 x double> %i.iq, <4 x i32> <i32 0, i32 3, i32 poison, i32 poison>
   %i.is = shufflevector <4 x double> %i.ig, <4 x double> %i.ir, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %i.it = fmul <4 x double> %10, %i.is
+  %i.it = fmul <4 x double> %17, %i.is
   %i.iu = fsub double %i.hy, %i.hm
   %i.iv = insertelement <2 x double> %i.hz, double %i.hm, i64 0
   %i.iw = fadd <2 x double> %i.hw, %i.iv
@@ -1138,10 +1150,10 @@ bb.a:
   %i.je = fsub <4 x double> %i.jd, %i.hp
   %i.jf = fadd <4 x double> %i.jd, %i.hp
   %i.jg = shufflevector <4 x double> %i.je, <4 x double> %i.jf, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
-  %i.jh = fmul <4 x double> %10, %i.jg
+  %i.jh = fmul <4 x double> %17, %i.jg
   %i.ji = fsub double %i.ix, %i.hr
   %i.jj = fadd double %i.ji, %i.ht
-  %i.jk = fmul double %11, %i.jj
+  %i.jk = fmul double %6, %i.jj
   %i.jl = fadd <4 x double> %i.hi, %i.it
   store <4 x double> %i.jl, ptr %0, align 8, !tbaa !108
   %i.jm = fadd <4 x double> %i.hj, %i.jh

@@ -202,9 +202,6 @@ bb.a:
   %i.dl = fadd <2 x float> %i.co, %i.dk
   %i.dm = fmul float %i.dj, 2.000000e+00
   %i.dn = fadd float %i.cu, %i.dm
-  %3 = load <2 x float>, ptr %i.bt, align 4, !tbaa !90 ; 3 uses
-  %4 = shufflevector <2 x float> %3, <2 x float> poison, <2 x i32> zeroinitializer
-  %5 = shufflevector <2 x float> %3, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.do = shufflevector <2 x float> %i.at, <2 x float> %i.ar, <2 x i32> <i32 1, i32 3>
   %i.dp = shufflevector <2 x float> %i.aq, <2 x float> %i.as, <2 x i32> <i32 0, i32 2>
   %i.dq = fsub <2 x float> %i.do, %i.dp
@@ -264,7 +261,10 @@ bb.a:
   %i.fk = extractelement <2 x float> %i.fc, i64 1
   store float %i.fk, ptr %.sroa.493.0..sroa_idx, align 4, !tbaa !90
   %i.fl = load float, ptr %i.bw, align 8, !tbaa !83 ; 2 uses
+  %3 = load <2 x float>, ptr %i.bt, align 4, !tbaa !90 ; 3 uses
+  %4 = shufflevector <2 x float> %3, <2 x float> poison, <2 x i32> zeroinitializer
   %i.fm = fmul <2 x float> %4, %i.ei
+  %5 = shufflevector <2 x float> %3, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.fn = fmul <2 x float> %5, %i.fj
   %i.fo = fmul <2 x float> %3, %i.fc              ; 2 uses
   %i.fp = fadd <2 x float> %i.fm, %i.fn

@@ -205,18 +205,22 @@ declare float @llvm.fmuladd.f32(float, float, float) #16
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef zeroext i1 @_Z23ImTriangleContainsPointRK6ImVec2S1_S1_S1_(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(8) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(8) %1, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(8) %2, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(8) %3) local_unnamed_addr #17 {
 bb.a:
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.a = load <2 x float>, ptr %1, align 4, !tbaa !75 ; 4 uses
-  %4 = load <2 x float>, ptr %3, align 4, !tbaa !75 ; 4 uses
+  %5 = load float, ptr %4, align 4, !tbaa !250    ; 2 uses
+  %6 = load float, ptr %3, align 4, !tbaa !249    ; 2 uses
   %i.b = load <2 x float>, ptr %0, align 4, !tbaa !75 ; 4 uses
   %i.c = load <2 x float>, ptr %2, align 4, !tbaa !75 ; 3 uses
-  %i.d = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> zeroinitializer
+  %7 = insertelement <2 x float> poison, float %6, i64 0
+  %i.d = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer
   %i.e = shufflevector <2 x float> %i.a, <2 x float> %i.c, <2 x i32> <i32 0, i32 2> ; 2 uses
   %i.f = fsub <2 x float> %i.d, %i.e
   %i.g = shufflevector <2 x float> %i.b, <2 x float> %i.a, <2 x i32> <i32 1, i32 3>
   %i.h = shufflevector <2 x float> %i.a, <2 x float> %i.c, <2 x i32> <i32 1, i32 3> ; 2 uses
   %i.i = fsub <2 x float> %i.g, %i.h
-  %5 = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.j = fsub <2 x float> %5, %i.h
+  %8 = insertelement <2 x float> poison, float %5, i64 0
+  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.j = fsub <2 x float> %9, %i.h
   %i.k = shufflevector <2 x float> %i.b, <2 x float> %i.a, <2 x i32> <i32 0, i32 2>
   %i.l = fsub <2 x float> %i.k, %i.e
   %i.m = fneg <2 x float> %i.l
@@ -234,16 +238,15 @@ bb.b:                                             ; preds = %bb.a
   %i.v = load float, ptr %i.u, align 4, !tbaa !250
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.x = load float, ptr %i.w, align 4, !tbaa !250 ; 2 uses
-  %foldExtExtBinop = fsub <2 x float> %4, %i.b
-  %i.y = extractelement <2 x float> %foldExtExtBinop, i64 0
-  %i.z = fsub float %i.v, %i.x
-  %6 = extractelement <2 x float> %4, i64 1
-  %i.aa = fsub float %6, %i.x
+  %i.y = extractelement <2 x float> %i.b, i64 0
+  %i.z = fsub float %6, %i.y
+  %10 = fsub float %i.v, %i.x
+  %i.aa = fsub float %5, %i.x
   %foldExtExtBinop28 = fsub <2 x float> %i.c, %i.b
   %i.ab = extractelement <2 x float> %foldExtExtBinop28, i64 0
   %i.ac = fneg float %i.ab
   %i.ad = fmul float %i.aa, %i.ac
-  %i.ae = tail call float @llvm.fmuladd.f32(float %i.y, float %i.z, float %i.ad)
+  %i.ae = tail call float @llvm.fmuladd.f32(float %i.z, float %10, float %i.ad)
   %i.af = fcmp uge float %i.ae, 0.000000e+00
   %i.ag = xor i1 %i.af, %i.q
   br label %bb.c
@@ -646,7 +649,7 @@ bb.hu:                                            ; preds = %.thread396.i.i
   %i.azb = fcmp oge float %i.ayu, %i.aza
   %i.azc = select i1 %i.azb, float %i.ayu, float %i.aza
   store float %i.azc, ptr %i.ayt, align 4, !tbaa !800
-  %i.azd = load ptr, ptr @GImGui, align 8, !tbaa !227 ; 19 uses
+  %i.azd = load ptr, ptr @GImGui, align 8, !tbaa !227 ; 21 uses
   %i.aze = getelementptr i8, ptr %i.azd, i64 2388
   %i.azf = load i8, ptr %i.aze, align 4, !tbaa !239, !range !99, !noundef !236
   %i.azg = trunc nuw i8 %i.azf to i1
@@ -664,9 +667,10 @@ bb.hw:                                            ; preds = %bb.hv
 
 bb.hx:                                            ; preds = %bb.hw
   %i.azl = getelementptr inbounds nuw i8, ptr %i.azd, i64 164
-  %2 = load <2 x float>, ptr %i.azl, align 4, !tbaa !75 ; 4 uses
-  %3 = extractelement <2 x float> %2, i64 0       ; 4 uses
-  %i.azm = fcmp ogt float %i.azi, %3
+  %2 = getelementptr inbounds nuw i8, ptr %i.azd, i64 168
+  %3 = load float, ptr %2, align 8, !tbaa !728    ; 2 uses
+  %4 = load float, ptr %i.azl, align 4, !tbaa !726 ; 5 uses
+  %i.azm = fcmp ogt float %i.azi, %4
   br i1 %i.azm, label %bb.hy, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit355.i.i
 
 bb.hy:                                            ; preds = %bb.hx
@@ -677,19 +681,20 @@ bb.hy:                                            ; preds = %bb.hx
   br i1 %i.azq, label %bb.hz, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit355.i.i
 
 bb.hz:                                            ; preds = %bb.hy
-  %4 = extractelement <2 x float> %2, i64 1
-  %i.azr = fcmp ugt float %4, 0.000000e+00
-  %i.azs = fcmp olt float %i.azp, %3              ; 2 uses
+  %i.azr = fcmp ugt float %3, 0.000000e+00
+  %i.azs = fcmp olt float %i.azp, %4              ; 2 uses
   br i1 %i.azr, label %.split400.i.i, label %bb.ia
 
 .split400.i.i:                                    ; preds = %bb.hz
   %i.azt = insertelement <2 x float> poison, float %i.azi, i64 0
-  %i.azu = insertelement <2 x float> %i.azt, float %i.azp, i64 1
-  %i.azv = shufflevector <2 x float> %2, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.azw = fsub <2 x float> %i.azu, %i.azv
-  %i.azx = fcmp olt float %i.azi, %3
-  %5 = shufflevector <2 x float> %2, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.azy = fdiv <2 x float> %i.azw, %5
+  %5 = insertelement <2 x float> %i.azt, float %i.azp, i64 1
+  %i.azu = insertelement <2 x float> poison, float %4, i64 0
+  %i.azv = shufflevector <2 x float> %i.azu, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.azw = fsub <2 x float> %5, %i.azv
+  %i.azx = fcmp olt float %i.azi, %4
+  %6 = insertelement <2 x float> poison, float %3, i64 0
+  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.azy = fdiv <2 x float> %i.azw, %7
   %i.azz = fptosi <2 x float> %i.azy to <2 x i32>
   %i.baa = insertelement <2 x i1> poison, i1 %i.azx, i64 0
   %i.bab = insertelement <2 x i1> %i.baa, i1 %i.azs, i64 1
@@ -700,7 +705,7 @@ bb.hz:                                            ; preds = %bb.hy
   br i1 %i.bae, label %.thread398.i.i, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit355.i.i
 
 bb.ia:                                            ; preds = %bb.hz
-  %i.baf = fcmp oge float %i.azi, %3
+  %i.baf = fcmp oge float %i.azi, %4
   %i.bag = and i1 %i.baf, %i.azs
   br i1 %i.bag, label %.thread398.i.i, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit355.i.i
 
@@ -730,9 +735,10 @@ bb.ic:                                            ; preds = %bb.ib
 
 bb.id:                                            ; preds = %bb.ic
   %i.bas = getelementptr inbounds nuw i8, ptr %i.azd, i64 164
-  %6 = load <2 x float>, ptr %i.bas, align 4, !tbaa !75 ; 4 uses
-  %7 = extractelement <2 x float> %6, i64 0       ; 4 uses
-  %i.bat = fcmp ogt float %i.bap, %7
+  %8 = getelementptr inbounds nuw i8, ptr %i.azd, i64 168
+  %9 = load float, ptr %8, align 8, !tbaa !728    ; 2 uses
+  %10 = load float, ptr %i.bas, align 4, !tbaa !726 ; 5 uses
+  %i.bat = fcmp ogt float %i.bap, %10
   br i1 %i.bat, label %bb.ie, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit370.i.i
 
 bb.ie:                                            ; preds = %bb.id
@@ -743,19 +749,20 @@ bb.ie:                                            ; preds = %bb.id
   br i1 %i.bax, label %bb.if, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit370.i.i
 
 bb.if:                                            ; preds = %bb.ie
-  %8 = extractelement <2 x float> %6, i64 1
-  %i.bay = fcmp ugt float %8, 0.000000e+00
-  %i.baz = fcmp olt float %i.baw, %7              ; 2 uses
+  %i.bay = fcmp ugt float %9, 0.000000e+00
+  %i.baz = fcmp olt float %i.baw, %10             ; 2 uses
   br i1 %i.bay, label %.split403.i.i, label %bb.ig
 
 .split403.i.i:                                    ; preds = %bb.if
   %i.bba = insertelement <2 x float> poison, float %i.bap, i64 0
-  %i.bbb = insertelement <2 x float> %i.bba, float %i.baw, i64 1
-  %i.bbc = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.bbd = fsub <2 x float> %i.bbb, %i.bbc
-  %i.bbe = fcmp olt float %i.bap, %7
-  %9 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.bbf = fdiv <2 x float> %i.bbd, %9
+  %11 = insertelement <2 x float> %i.bba, float %i.baw, i64 1
+  %i.bbb = insertelement <2 x float> poison, float %10, i64 0
+  %i.bbc = shufflevector <2 x float> %i.bbb, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.bbd = fsub <2 x float> %11, %i.bbc
+  %i.bbe = fcmp olt float %i.bap, %10
+  %12 = insertelement <2 x float> poison, float %9, i64 0
+  %13 = shufflevector <2 x float> %12, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.bbf = fdiv <2 x float> %i.bbd, %13
   %i.bbg = fptosi <2 x float> %i.bbf to <2 x i32>
   %i.bbh = insertelement <2 x i1> poison, i1 %i.bbe, i64 0
   %i.bbi = insertelement <2 x i1> %i.bbh, i1 %i.baz, i64 1
@@ -766,7 +773,7 @@ bb.if:                                            ; preds = %bb.ie
   br i1 %i.bbl, label %.thread401.i.i, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit370.i.i
 
 bb.ig:                                            ; preds = %bb.if
-  %i.bbm = fcmp oge float %i.bap, %7
+  %i.bbm = fcmp oge float %i.bap, %10
   %i.bbn = and i1 %i.bbm, %i.baz
   br i1 %i.bbn, label %.thread401.i.i, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit370.i.i
 
@@ -1169,7 +1176,7 @@ bb.re:                                            ; preds = %bb.qd
   br i1 %or.cond3.i316.i, label %bb.rf, label %_ZN5ImGuiL23NavUpdatePageUpPageDownEv.exit.i.i
 
 bb.rf:                                            ; preds = %.thread.i315.i
-  %i.cky = load ptr, ptr @GImGui, align 8, !tbaa !227 ; 35 uses
+  %i.cky = load ptr, ptr @GImGui, align 8, !tbaa !227 ; 37 uses
   %i.ckz = getelementptr inbounds nuw i8, ptr %i.cky, i64 8224
   %i.cla = load ptr, ptr %i.ckz, align 8, !tbaa !370 ; 27 uses
   %i.clb = getelementptr inbounds nuw i8, ptr %i.cla, i64 20
@@ -1253,9 +1260,10 @@ bb.rp:                                            ; preds = %bb.ro
 
 bb.rq:                                            ; preds = %bb.rp
   %i.cmi = getelementptr inbounds nuw i8, ptr %i.cky, i64 164
-  %10 = load <2 x float>, ptr %i.cmi, align 4, !tbaa !75 ; 4 uses
-  %11 = extractelement <2 x float> %10, i64 0     ; 4 uses
-  %i.cmj = fcmp ogt float %i.cmf, %11
+  %14 = getelementptr inbounds nuw i8, ptr %i.cky, i64 168
+  %15 = load float, ptr %14, align 8, !tbaa !728  ; 2 uses
+  %16 = load float, ptr %i.cmi, align 4, !tbaa !726 ; 5 uses
+  %i.cmj = fcmp ogt float %i.cmf, %16
   br i1 %i.cmj, label %bb.rr, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit.i.i.i
 
 bb.rr:                                            ; preds = %bb.rq
@@ -1266,19 +1274,20 @@ bb.rr:                                            ; preds = %bb.rq
   br i1 %i.cmn, label %bb.rs, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit.i.i.i
 
 bb.rs:                                            ; preds = %bb.rr
-  %12 = extractelement <2 x float> %10, i64 1
-  %i.cmo = fcmp ugt float %12, 0.000000e+00
-  %i.cmp = fcmp olt float %i.cmm, %11             ; 2 uses
+  %i.cmo = fcmp ugt float %15, 0.000000e+00
+  %i.cmp = fcmp olt float %i.cmm, %16             ; 2 uses
   br i1 %i.cmo, label %.split.i.i.i, label %bb.rt
 
 .split.i.i.i:                                     ; preds = %bb.rs
   %i.cmq = insertelement <2 x float> poison, float %i.cmf, i64 0
-  %i.cmr = insertelement <2 x float> %i.cmq, float %i.cmm, i64 1
-  %i.cms = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.cmt = fsub <2 x float> %i.cmr, %i.cms
-  %i.cmu = fcmp olt float %i.cmf, %11
-  %13 = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.cmv = fdiv <2 x float> %i.cmt, %13
+  %17 = insertelement <2 x float> %i.cmq, float %i.cmm, i64 1
+  %i.cmr = insertelement <2 x float> poison, float %16, i64 0
+  %i.cms = shufflevector <2 x float> %i.cmr, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.cmt = fsub <2 x float> %17, %i.cms
+  %i.cmu = fcmp olt float %i.cmf, %16
+  %18 = insertelement <2 x float> poison, float %15, i64 0
+  %19 = shufflevector <2 x float> %18, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.cmv = fdiv <2 x float> %i.cmt, %19
   %i.cmw = fptosi <2 x float> %i.cmv to <2 x i32>
   %i.cmx = insertelement <2 x i1> poison, i1 %i.cmu, i64 0
   %i.cmy = insertelement <2 x i1> %i.cmx, i1 %i.cmp, i64 1
@@ -1289,7 +1298,7 @@ bb.rs:                                            ; preds = %bb.rr
   br i1 %i.cnb, label %.thread.i.i321.i, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit.i.i.i
 
 bb.rt:                                            ; preds = %bb.rs
-  %i.cnc = fcmp oge float %i.cmf, %11
+  %i.cnc = fcmp oge float %i.cmf, %16
   %i.cnd = and i1 %i.cnc, %i.cmp
   br i1 %i.cnd, label %.thread.i.i321.i, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit.i.i.i
 
@@ -1330,9 +1339,10 @@ bb.rx:                                            ; preds = %bb.rw
 
 bb.ry:                                            ; preds = %bb.rx
   %i.cns = getelementptr inbounds nuw i8, ptr %i.cky, i64 164
-  %14 = load <2 x float>, ptr %i.cns, align 4, !tbaa !75 ; 4 uses
-  %15 = extractelement <2 x float> %14, i64 0     ; 4 uses
-  %i.cnt = fcmp ogt float %i.cnp, %15
+  %20 = getelementptr inbounds nuw i8, ptr %i.cky, i64 168
+  %21 = load float, ptr %20, align 8, !tbaa !728  ; 2 uses
+  %22 = load float, ptr %i.cns, align 4, !tbaa !726 ; 5 uses
+  %i.cnt = fcmp ogt float %i.cnp, %22
   br i1 %i.cnt, label %bb.rz, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit65.i.i.i
 
 bb.rz:                                            ; preds = %bb.ry
@@ -1343,19 +1353,20 @@ bb.rz:                                            ; preds = %bb.ry
   br i1 %i.cnx, label %bb.sa, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit65.i.i.i
 
 bb.sa:                                            ; preds = %bb.rz
-  %16 = extractelement <2 x float> %14, i64 1
-  %i.cny = fcmp ugt float %16, 0.000000e+00
-  %i.cnz = fcmp olt float %i.cnw, %15             ; 2 uses
+  %i.cny = fcmp ugt float %21, 0.000000e+00
+  %i.cnz = fcmp olt float %i.cnw, %22             ; 2 uses
   br i1 %i.cny, label %.split85.i.i.i, label %bb.sb
 
 .split85.i.i.i:                                   ; preds = %bb.sa
   %i.coa = insertelement <2 x float> poison, float %i.cnp, i64 0
-  %i.cob = insertelement <2 x float> %i.coa, float %i.cnw, i64 1
-  %i.coc = shufflevector <2 x float> %14, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.cod = fsub <2 x float> %i.cob, %i.coc
-  %i.coe = fcmp olt float %i.cnp, %15
-  %17 = shufflevector <2 x float> %14, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.cof = fdiv <2 x float> %i.cod, %17
+  %23 = insertelement <2 x float> %i.coa, float %i.cnw, i64 1
+  %i.cob = insertelement <2 x float> poison, float %22, i64 0
+  %i.coc = shufflevector <2 x float> %i.cob, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.cod = fsub <2 x float> %23, %i.coc
+  %i.coe = fcmp olt float %i.cnp, %22
+  %24 = insertelement <2 x float> poison, float %21, i64 0
+  %25 = shufflevector <2 x float> %24, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.cof = fdiv <2 x float> %i.cod, %25
   %i.cog = fptosi <2 x float> %i.cof to <2 x i32>
   %i.coh = insertelement <2 x i1> poison, i1 %i.coe, i64 0
   %i.coi = insertelement <2 x i1> %i.coh, i1 %i.cnz, i64 1
@@ -1366,7 +1377,7 @@ bb.sa:                                            ; preds = %bb.rz
   br i1 %i.col, label %.thread83.i.i.i, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit65.i.i.i
 
 bb.sb:                                            ; preds = %bb.sa
-  %i.com = fcmp oge float %i.cnp, %15
+  %i.com = fcmp oge float %i.cnp, %22
   %i.con = and i1 %i.com, %i.cnz
   br i1 %i.con, label %.thread83.i.i.i, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit65.i.i.i
 
@@ -1419,7 +1430,7 @@ bb.sh:                                            ; preds = %bb.sg
   %i.cpc = getelementptr inbounds nuw i8, ptr %i.cla, i64 378
   %i.cpd = load i8, ptr %i.cpc, align 2, !tbaa !822, !range !99, !noundef !236
   %i.cpe = trunc nuw i8 %i.cpd to i1
-  %.pre106.i.i.i = load ptr, ptr @GImGui, align 8, !tbaa !227 ; 8 uses
+  %.pre106.i.i.i = load ptr, ptr @GImGui, align 8, !tbaa !227 ; 9 uses
   br i1 %i.cpe, label %bb.si, label %bb.sx
 
 bb.si:                                            ; preds = %bb.sh
@@ -1440,9 +1451,10 @@ bb.sk:                                            ; preds = %bb.sj
 
 bb.sl:                                            ; preds = %bb.sk
   %i.cpm = getelementptr inbounds nuw i8, ptr %.pre106.i.i.i, i64 164
-  %18 = load <2 x float>, ptr %i.cpm, align 4, !tbaa !75 ; 4 uses
-  %19 = extractelement <2 x float> %18, i64 0     ; 4 uses
-  %i.cpn = fcmp ogt float %i.cpj, %19
+  %26 = getelementptr inbounds nuw i8, ptr %.pre106.i.i.i, i64 168
+  %27 = load float, ptr %26, align 8, !tbaa !728  ; 2 uses
+  %28 = load float, ptr %i.cpm, align 4, !tbaa !726 ; 5 uses
+  %i.cpn = fcmp ogt float %i.cpj, %28
   br i1 %i.cpn, label %bb.sm, label %bb.sr
 
 bb.sm:                                            ; preds = %bb.sl
@@ -1453,19 +1465,20 @@ bb.sm:                                            ; preds = %bb.sl
   br i1 %i.cpr, label %bb.sn, label %bb.sr
 
 bb.sn:                                            ; preds = %bb.sm
-  %20 = extractelement <2 x float> %18, i64 1
-  %i.cps = fcmp ugt float %20, 0.000000e+00
-  %i.cpt = fcmp olt float %i.cpq, %19             ; 2 uses
+  %i.cps = fcmp ugt float %27, 0.000000e+00
+  %i.cpt = fcmp olt float %i.cpq, %28             ; 2 uses
   br i1 %i.cps, label %.split88.i.i.i, label %bb.so
 
 .split88.i.i.i:                                   ; preds = %bb.sn
   %i.cpu = insertelement <2 x float> poison, float %i.cpj, i64 0
-  %i.cpv = insertelement <2 x float> %i.cpu, float %i.cpq, i64 1
-  %i.cpw = shufflevector <2 x float> %18, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.cpx = fsub <2 x float> %i.cpv, %i.cpw
-  %i.cpy = fcmp olt float %i.cpj, %19
-  %21 = shufflevector <2 x float> %18, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.cpz = fdiv <2 x float> %i.cpx, %21
+  %29 = insertelement <2 x float> %i.cpu, float %i.cpq, i64 1
+  %i.cpv = insertelement <2 x float> poison, float %28, i64 0
+  %i.cpw = shufflevector <2 x float> %i.cpv, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.cpx = fsub <2 x float> %29, %i.cpw
+  %i.cpy = fcmp olt float %i.cpj, %28
+  %30 = insertelement <2 x float> poison, float %27, i64 0
+  %31 = shufflevector <2 x float> %30, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.cpz = fdiv <2 x float> %i.cpx, %31
   %i.cqa = fptosi <2 x float> %i.cpz to <2 x i32>
   %i.cqb = insertelement <2 x i1> poison, i1 %i.cpy, i64 0
   %i.cqc = insertelement <2 x i1> %i.cqb, i1 %i.cpt, i64 1
@@ -1476,7 +1489,7 @@ bb.sn:                                            ; preds = %bb.sm
   br i1 %i.cqf, label %.thread86.i.i.i, label %bb.sr
 
 bb.so:                                            ; preds = %bb.sn
-  %i.cqg = fcmp oge float %i.cpj, %19
+  %i.cqg = fcmp oge float %i.cpj, %28
   %i.cqh = and i1 %i.cqg, %i.cpt
   br i1 %i.cqh, label %.thread86.i.i.i, label %bb.sr
 
@@ -1563,7 +1576,7 @@ bb.sw:                                            ; preds = %bb.sv
   br label %_ZN5ImGuiL23NavUpdatePageUpPageDownEv.exit.i.i
 
 bb.sx:                                            ; preds = %bb.sh, %._crit_edge.i.i319.i
-  %i.cru = phi ptr [ %.pre.i.i320.i, %._crit_edge.i.i319.i ], [ %.pre106.i.i.i, %bb.sh ] ; 10 uses
+  %i.cru = phi ptr [ %.pre.i.i320.i, %._crit_edge.i.i319.i ], [ %.pre106.i.i.i, %bb.sh ] ; 12 uses
   %i.crv = getelementptr inbounds nuw i8, ptr %i.cla, i64 1016
   %i.crw = load i32, ptr %i.cow, align 4, !tbaa !713
   %i.crx = zext i32 %i.crw to i64
@@ -1601,9 +1614,10 @@ bb.sz:                                            ; preds = %bb.sy
 
 bb.ta:                                            ; preds = %bb.sz
   %i.csw = getelementptr inbounds nuw i8, ptr %i.cru, i64 164
-  %22 = load <2 x float>, ptr %i.csw, align 4, !tbaa !75 ; 4 uses
-  %23 = extractelement <2 x float> %22, i64 0     ; 4 uses
-  %i.csx = fcmp ogt float %i.cst, %23
+  %32 = getelementptr inbounds nuw i8, ptr %i.cru, i64 168
+  %33 = load float, ptr %32, align 8, !tbaa !728  ; 2 uses
+  %34 = load float, ptr %i.csw, align 4, !tbaa !726 ; 5 uses
+  %i.csx = fcmp ogt float %i.cst, %34
   br i1 %i.csx, label %bb.tb, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit76.thread.i.i.i
 
 bb.tb:                                            ; preds = %bb.ta
@@ -1614,19 +1628,20 @@ bb.tb:                                            ; preds = %bb.ta
   br i1 %i.ctb, label %bb.tc, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit76.thread.i.i.i
 
 bb.tc:                                            ; preds = %bb.tb
-  %24 = extractelement <2 x float> %22, i64 1
-  %i.ctc = fcmp ugt float %24, 0.000000e+00
-  %i.ctd = fcmp olt float %i.cta, %23             ; 2 uses
+  %i.ctc = fcmp ugt float %33, 0.000000e+00
+  %i.ctd = fcmp olt float %i.cta, %34             ; 2 uses
   br i1 %i.ctc, label %.split92.i.i.i, label %bb.td
 
 .split92.i.i.i:                                   ; preds = %bb.tc
   %i.cte = insertelement <2 x float> poison, float %i.cst, i64 0
-  %i.ctf = insertelement <2 x float> %i.cte, float %i.cta, i64 1
-  %i.ctg = shufflevector <2 x float> %22, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.cth = fsub <2 x float> %i.ctf, %i.ctg
-  %i.cti = fcmp olt float %i.cst, %23
-  %25 = shufflevector <2 x float> %22, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.ctj = fdiv <2 x float> %i.cth, %25
+  %35 = insertelement <2 x float> %i.cte, float %i.cta, i64 1
+  %i.ctf = insertelement <2 x float> poison, float %34, i64 0
+  %i.ctg = shufflevector <2 x float> %i.ctf, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.cth = fsub <2 x float> %35, %i.ctg
+  %i.cti = fcmp olt float %i.cst, %34
+  %36 = insertelement <2 x float> poison, float %33, i64 0
+  %37 = shufflevector <2 x float> %36, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.ctj = fdiv <2 x float> %i.cth, %37
   %i.ctk = fptosi <2 x float> %i.ctj to <2 x i32>
   %i.ctl = insertelement <2 x i1> poison, i1 %i.cti, i64 0
   %i.ctm = insertelement <2 x i1> %i.ctl, i1 %i.ctd, i64 1
@@ -1637,7 +1652,7 @@ bb.tc:                                            ; preds = %bb.tb
   br i1 %i.ctp, label %.thread90.i.i.i, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit76.thread.i.i.i
 
 bb.td:                                            ; preds = %bb.tc
-  %i.ctq = fcmp oge float %i.cst, %23
+  %i.ctq = fcmp oge float %i.cst, %34
   %i.ctr = and i1 %i.ctq, %i.ctd
   br i1 %i.ctr, label %.thread90.i.i.i, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit76.thread.i.i.i
 
@@ -1675,9 +1690,10 @@ bb.tg:                                            ; preds = %bb.tf
 
 bb.th:                                            ; preds = %bb.tg
   %i.cug = getelementptr inbounds nuw i8, ptr %i.cru, i64 164
-  %26 = load <2 x float>, ptr %i.cug, align 4, !tbaa !75 ; 4 uses
-  %27 = extractelement <2 x float> %26, i64 0     ; 4 uses
-  %i.cuh = fcmp ogt float %i.cud, %27
+  %38 = getelementptr inbounds nuw i8, ptr %i.cru, i64 168
+  %39 = load float, ptr %38, align 8, !tbaa !728  ; 2 uses
+  %40 = load float, ptr %i.cug, align 4, !tbaa !726 ; 5 uses
+  %i.cuh = fcmp ogt float %i.cud, %40
   br i1 %i.cuh, label %bb.ti, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit81.thread.i.i.i
 
 bb.ti:                                            ; preds = %bb.th
@@ -1688,19 +1704,20 @@ bb.ti:                                            ; preds = %bb.th
   br i1 %i.cul, label %bb.tj, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit81.thread.i.i.i
 
 bb.tj:                                            ; preds = %bb.ti
-  %28 = extractelement <2 x float> %26, i64 1
-  %i.cum = fcmp ugt float %28, 0.000000e+00
-  %i.cun = fcmp olt float %i.cuk, %27             ; 2 uses
+  %i.cum = fcmp ugt float %39, 0.000000e+00
+  %i.cun = fcmp olt float %i.cuk, %40             ; 2 uses
   br i1 %i.cum, label %.split96.i.i.i, label %bb.tk
 
 .split96.i.i.i:                                   ; preds = %bb.tj
   %i.cuo = insertelement <2 x float> poison, float %i.cud, i64 0
-  %i.cup = insertelement <2 x float> %i.cuo, float %i.cuk, i64 1
-  %i.cuq = shufflevector <2 x float> %26, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.cur = fsub <2 x float> %i.cup, %i.cuq
-  %i.cus = fcmp olt float %i.cud, %27
-  %29 = shufflevector <2 x float> %26, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.cut = fdiv <2 x float> %i.cur, %29
+  %41 = insertelement <2 x float> %i.cuo, float %i.cuk, i64 1
+  %i.cup = insertelement <2 x float> poison, float %40, i64 0
+  %i.cuq = shufflevector <2 x float> %i.cup, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.cur = fsub <2 x float> %41, %i.cuq
+  %i.cus = fcmp olt float %i.cud, %40
+  %42 = insertelement <2 x float> poison, float %39, i64 0
+  %43 = shufflevector <2 x float> %42, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.cut = fdiv <2 x float> %i.cur, %43
   %i.cuu = fptosi <2 x float> %i.cut to <2 x i32>
   %i.cuv = insertelement <2 x i1> poison, i1 %i.cus, i64 0
   %i.cuw = insertelement <2 x i1> %i.cuv, i1 %i.cun, i64 1
@@ -1711,7 +1728,7 @@ bb.tj:                                            ; preds = %bb.ti
   br i1 %i.cuz, label %.thread94.i.i.i, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit81.thread.i.i.i
 
 bb.tk:                                            ; preds = %bb.tj
-  %i.cva = fcmp oge float %i.cud, %27
+  %i.cva = fcmp oge float %i.cud, %40
   %i.cvb = and i1 %i.cva, %i.cun
   br i1 %i.cvb, label %.thread94.i.i.i, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit81.thread.i.i.i
 
@@ -2114,7 +2131,7 @@ _ZN5ImGuiL26NavUpdateCreateMoveRequestEv.exit.i:  ; preds = %bb.ve, %bb.vd, %bb.
   br i1 %i.dew, label %bb.vf, label %_ZN5ImGuiL29NavUpdateCreateTabbingRequestEv.exit.i
 
 bb.vf:                                            ; preds = %_ZN5ImGuiL26NavUpdateCreateMoveRequestEv.exit.i
-  %i.dex = load ptr, ptr @GImGui, align 8, !tbaa !227 ; 18 uses
+  %i.dex = load ptr, ptr @GImGui, align 8, !tbaa !227 ; 19 uses
   %i.dey = getelementptr inbounds nuw i8, ptr %i.dex, i64 8224
   %i.dez = load ptr, ptr %i.dey, align 8, !tbaa !370 ; 3 uses
   %i.dfa = icmp eq ptr %i.dez, null
@@ -2157,9 +2174,10 @@ bb.vl:                                            ; preds = %bb.vk
 
 bb.vm:                                            ; preds = %bb.vl
   %i.dfq = getelementptr inbounds nuw i8, ptr %i.dex, i64 164
-  %30 = load <2 x float>, ptr %i.dfq, align 4, !tbaa !75 ; 4 uses
-  %31 = extractelement <2 x float> %30, i64 0     ; 4 uses
-  %i.dfr = fcmp ogt float %i.dfn, %31
+  %44 = getelementptr inbounds nuw i8, ptr %i.dex, i64 168
+  %45 = load float, ptr %44, align 8, !tbaa !728  ; 2 uses
+  %46 = load float, ptr %i.dfq, align 4, !tbaa !726 ; 5 uses
+  %i.dfr = fcmp ogt float %i.dfn, %46
   br i1 %i.dfr, label %bb.vn, label %_ZN5ImGuiL29NavUpdateCreateTabbingRequestEv.exit.i
 
 bb.vn:                                            ; preds = %bb.vm
@@ -2170,19 +2188,20 @@ bb.vn:                                            ; preds = %bb.vm
   br i1 %i.dfv, label %bb.vo, label %_ZN5ImGuiL29NavUpdateCreateTabbingRequestEv.exit.i
 
 bb.vo:                                            ; preds = %bb.vn
-  %32 = extractelement <2 x float> %30, i64 1
-  %i.dfw = fcmp ugt float %32, 0.000000e+00
-  %i.dfx = fcmp olt float %i.dfu, %31             ; 2 uses
+  %i.dfw = fcmp ugt float %45, 0.000000e+00
+  %i.dfx = fcmp olt float %i.dfu, %46             ; 2 uses
   br i1 %i.dfw, label %.split.i331.i, label %bb.vp
 
 .split.i331.i:                                    ; preds = %bb.vo
   %i.dfy = insertelement <2 x float> poison, float %i.dfn, i64 0
-  %i.dfz = insertelement <2 x float> %i.dfy, float %i.dfu, i64 1
-  %i.dga = shufflevector <2 x float> %30, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.dgb = fsub <2 x float> %i.dfz, %i.dga
-  %i.dgc = fcmp olt float %i.dfn, %31
-  %33 = shufflevector <2 x float> %30, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.dgd = fdiv <2 x float> %i.dgb, %33
+  %47 = insertelement <2 x float> %i.dfy, float %i.dfu, i64 1
+  %i.dfz = insertelement <2 x float> poison, float %46, i64 0
+  %i.dga = shufflevector <2 x float> %i.dfz, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.dgb = fsub <2 x float> %47, %i.dga
+  %i.dgc = fcmp olt float %i.dfn, %46
+  %48 = insertelement <2 x float> poison, float %45, i64 0
+  %49 = shufflevector <2 x float> %48, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.dgd = fdiv <2 x float> %i.dgb, %49
   %i.dge = fptosi <2 x float> %i.dgd to <2 x i32>
   %i.dgf = insertelement <2 x i1> poison, i1 %i.dgc, i64 0
   %i.dgg = insertelement <2 x i1> %i.dgf, i1 %i.dfx, i64 1
@@ -2193,7 +2212,7 @@ bb.vo:                                            ; preds = %bb.vn
   br i1 %i.dgj, label %.thread.i328.i, label %_ZN5ImGuiL29NavUpdateCreateTabbingRequestEv.exit.i
 
 bb.vp:                                            ; preds = %bb.vo
-  %i.dgk = fcmp oge float %i.dfn, %31
+  %i.dgk = fcmp oge float %i.dfn, %46
   %i.dgl = and i1 %i.dgk, %i.dfx
   br i1 %i.dgl, label %.thread.i328.i, label %_ZN5ImGuiL29NavUpdateCreateTabbingRequestEv.exit.i
 
@@ -2596,7 +2615,7 @@ bb.aai:                                           ; preds = %_ZN5ImGui26FocusTop
   store i32 %i.ejw, ptr %i.ejx, align 8, !tbaa !792
   %i.ejy = getelementptr inbounds nuw i8, ptr %i.c, i64 8136
   call void @_ZN8ImVectorI14ImGuiGroupDataE6resizeEi(ptr noundef nonnull align 8 dereferenceable(16) %i.ejy, i32 noundef 0)
-  %i.ejz = load ptr, ptr @GImGui, align 8, !tbaa !227 ; 28 uses
+  %i.ejz = load ptr, ptr @GImGui, align 8, !tbaa !227 ; 29 uses
   %i.eka = getelementptr inbounds nuw i8, ptr %i.ejz, i64 10468 ; 2 uses
   store i32 0, ptr %i.eka, align 4, !tbaa !582
   %i.ekb = getelementptr inbounds nuw i8, ptr %i.ejz, i64 10465 ; 3 uses
@@ -2626,9 +2645,10 @@ bb.aal:                                           ; preds = %bb.aak
 
 bb.aam:                                           ; preds = %bb.aal
   %i.eko = getelementptr inbounds nuw i8, ptr %i.ejz, i64 164
-  %34 = load <2 x float>, ptr %i.eko, align 4, !tbaa !75 ; 4 uses
-  %35 = extractelement <2 x float> %34, i64 0     ; 4 uses
-  %i.ekp = fcmp ogt float %i.ekl, %35
+  %50 = getelementptr inbounds nuw i8, ptr %i.ejz, i64 168
+  %51 = load float, ptr %50, align 8, !tbaa !728  ; 2 uses
+  %52 = load float, ptr %i.eko, align 4, !tbaa !726 ; 5 uses
+  %i.ekp = fcmp ogt float %i.ekl, %52
   br i1 %i.ekp, label %bb.aan, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit.thread.i
 
 bb.aan:                                           ; preds = %bb.aam
@@ -2639,19 +2659,20 @@ bb.aan:                                           ; preds = %bb.aam
   br i1 %i.ekt, label %bb.aao, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit.thread.i
 
 bb.aao:                                           ; preds = %bb.aan
-  %36 = extractelement <2 x float> %34, i64 1
-  %i.eku = fcmp ugt float %36, 0.000000e+00
-  %i.ekv = fcmp olt float %i.eks, %35             ; 2 uses
+  %i.eku = fcmp ugt float %51, 0.000000e+00
+  %i.ekv = fcmp olt float %i.eks, %52             ; 2 uses
   br i1 %i.eku, label %.split.i, label %bb.aap
 
 .split.i:                                         ; preds = %bb.aao
   %i.ekw = insertelement <2 x float> poison, float %i.ekl, i64 0
-  %i.ekx = insertelement <2 x float> %i.ekw, float %i.eks, i64 1
-  %i.eky = shufflevector <2 x float> %34, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.ekz = fsub <2 x float> %i.ekx, %i.eky
-  %i.ela = fcmp olt float %i.ekl, %35
-  %37 = shufflevector <2 x float> %34, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.elb = fdiv <2 x float> %i.ekz, %37
+  %53 = insertelement <2 x float> %i.ekw, float %i.eks, i64 1
+  %i.ekx = insertelement <2 x float> poison, float %52, i64 0
+  %i.eky = shufflevector <2 x float> %i.ekx, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.ekz = fsub <2 x float> %53, %i.eky
+  %i.ela = fcmp olt float %i.ekl, %52
+  %54 = insertelement <2 x float> poison, float %51, i64 0
+  %55 = shufflevector <2 x float> %54, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.elb = fdiv <2 x float> %i.ekz, %55
   %i.elc = fptosi <2 x float> %i.elb to <2 x i32>
   %i.eld = insertelement <2 x i1> poison, i1 %i.ela, i64 0
   %i.ele = insertelement <2 x i1> %i.eld, i1 %i.ekv, i64 1
@@ -2662,7 +2683,7 @@ bb.aao:                                           ; preds = %bb.aan
   br i1 %i.elh, label %.thread.i398, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit.thread.i
 
 bb.aap:                                           ; preds = %bb.aao
-  %i.eli = fcmp oge float %i.ekl, %35
+  %i.eli = fcmp oge float %i.ekl, %52
   %i.elj = and i1 %i.eli, %i.ekv
   br i1 %i.elj, label %.thread.i398, label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit.thread.i
 
@@ -3065,32 +3086,28 @@ bb.d:                                             ; preds = %bb.c
   ]
 
 bb.e:                                             ; preds = %bb.d
+  %3 = fmul float %i.t, 7.200000e-01
   %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 168
   %i.v = load float, ptr %i.u, align 8, !tbaa !728
-  %3 = insertelement <2 x float> poison, float %i.v, i64 0
-  %4 = insertelement <2 x float> %3, float %i.t, i64 1
-  %5 = fmul <2 x float> %4, <float 8.000000e-01, float 7.200000e-01>
+  %4 = fmul float %i.v, 8.000000e-01
   br label %_ZN5ImGui22GetTypematicRepeatRateEiPfS0_.exit
 
 bb.f:                                             ; preds = %bb.d
+  %5 = fmul float %i.t, 7.200000e-01
   %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 168
   %i.x = load float, ptr %i.w, align 8, !tbaa !728
-  %6 = insertelement <2 x float> poison, float %i.x, i64 0
-  %7 = insertelement <2 x float> %6, float %i.t, i64 1
-  %8 = fmul <2 x float> %7, <float 3.000000e-01, float 7.200000e-01>
+  %6 = fmul float %i.x, 3.000000e-01
   br label %_ZN5ImGui22GetTypematicRepeatRateEiPfS0_.exit
 
 bb.g:                                             ; preds = %bb.d
   %i.y = getelementptr inbounds nuw i8, ptr %i.a, i64 168
   %i.z = load float, ptr %i.y, align 8, !tbaa !728
-  %9 = insertelement <2 x float> poison, float %i.z, i64 0
-  %10 = insertelement <2 x float> %9, float %i.t, i64 1
   br label %_ZN5ImGui22GetTypematicRepeatRateEiPfS0_.exit
 
 _ZN5ImGui22GetTypematicRepeatRateEiPfS0_.exit:    ; preds = %bb.e, %bb.f, %bb.g
-  %11 = phi <2 x float> [ %10, %bb.g ], [ %5, %bb.e ], [ %8, %bb.f ] ; 4 uses
-  %12 = extractelement <2 x float> %11, i64 1     ; 4 uses
-  %i.aa = fcmp ogt float %i.n, %12
+  %.051 = phi float [ %i.t, %bb.g ], [ %3, %bb.e ], [ %5, %bb.f ] ; 5 uses
+  %.sink.i = phi float [ %i.z, %bb.g ], [ %4, %bb.e ], [ %6, %bb.f ] ; 2 uses
+  %i.aa = fcmp ogt float %i.n, %.051
   br i1 %i.aa, label %bb.h, label %_ZN5ImGui12TestKeyOwnerE8ImGuiKeyj.exit
 
 bb.h:                                             ; preds = %_ZN5ImGui22GetTypematicRepeatRateEiPfS0_.exit
@@ -3127,23 +3144,24 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.ap, label %bb.k, label %_ZN5ImGui12TestKeyOwnerE8ImGuiKeyj.exit
 
 bb.k:                                             ; preds = %bb.j
-  %13 = extractelement <2 x float> %11, i64 0
-  %i.aq = fcmp ugt float %13, 0.000000e+00
-  %i.ar = fcmp olt float %i.an, %12               ; 2 uses
+  %i.aq = fcmp ugt float %.sink.i, 0.000000e+00
+  %i.ar = fcmp olt float %i.an, %.051             ; 2 uses
   br i1 %i.aq, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.as = fcmp oge float %i.ak, %12
+  %i.as = fcmp oge float %i.ak, %.051
   %i.at = and i1 %i.as, %i.ar
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.k
   %i.au = insertelement <2 x float> poison, float %i.an, i64 0
-  %i.av = insertelement <2 x float> %i.au, float %i.ak, i64 1
-  %14 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.aw = fsub <2 x float> %i.av, %14
-  %i.ax = fcmp olt float %i.ak, %12
-  %i.ay = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
+  %7 = insertelement <2 x float> %i.au, float %i.ak, i64 1
+  %i.av = insertelement <2 x float> poison, float %.051, i64 0
+  %8 = shufflevector <2 x float> %i.av, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.aw = fsub <2 x float> %7, %8
+  %i.ax = fcmp olt float %i.ak, %.051
+  %9 = insertelement <2 x float> poison, float %.sink.i, i64 0
+  %i.ay = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> zeroinitializer
   %i.az = fdiv <2 x float> %i.aw, %i.ay
   %i.ba = fptosi <2 x float> %i.az to <2 x i32>
   %i.bb = insertelement <2 x i1> poison, i1 %i.ar, i64 0

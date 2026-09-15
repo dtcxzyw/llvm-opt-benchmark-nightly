@@ -205,18 +205,22 @@ bb.g:                                             ; preds = %.loopexit
 bb.h:                                             ; preds = %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit46.i, %bb.g
   %.036.i = phi ptr [ %2, %bb.g ], [ %i.eh, %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit46.i ] ; 6 uses
   %.035.i = phi i64 [ %i.ca, %bb.g ], [ %i.ei, %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit46.i ]
-  %.034.i = phi ptr [ %i.cd, %bb.g ], [ %i.dn, %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit46.i ] ; 2 uses
-  %.0.i = phi ptr [ %i.cd, %bb.g ], [ %i.do, %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit46.i ] ; 2 uses
+  %.034.i = phi ptr [ %i.cd, %bb.g ], [ %i.dn, %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit46.i ] ; 3 uses
+  %.0.i = phi ptr [ %i.cd, %bb.g ], [ %i.do, %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit46.i ] ; 3 uses
   %i.ci = getelementptr inbounds nuw [8 x i8], ptr %.036.i, i64 %i.ca ; 6 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %.036.i, i64 %.idx38.i ; 2 uses
   %i.ck = load <2 x float>, ptr %i.ci, align 4, !tbaa !103 ; 4 uses
+  %6 = getelementptr inbounds nuw i8, ptr %.034.i, i64 4
   %.sroa.0.0.vec.extract.i.i.i47 = extractelement <2 x float> %i.ck, i64 0
   %.sroa.0.4.vec.extract.i.i.i48 = extractelement <2 x float> %i.ck, i64 1
-  %6 = load <2 x float>, ptr %.034.i, align 4     ; 4 uses
+  %7 = load float, ptr %6, align 4                ; 2 uses
+  %8 = load float, ptr %.034.i, align 4           ; 2 uses
+  %9 = insertelement <2 x float> poison, float %7, i64 0
   %i.cl = shufflevector <2 x float> %i.ck, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.cm = fmul <2 x float> %i.cl, %7              ; 2 uses
-  %i.cn = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
+  %10 = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.cm = fmul <2 x float> %i.cl, %10             ; 2 uses
+  %11 = insertelement <2 x float> poison, float %8, i64 0
+  %i.cn = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
   %i.co = fmul <2 x float> %i.cn, %i.ck           ; 2 uses
   %i.cp = fsub <2 x float> %i.co, %i.cm           ; 2 uses
   %i.cq = fadd <2 x float> %i.co, %i.cm           ; 2 uses
@@ -231,21 +235,23 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.cv, label %bb.j, label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit.i, !prof !401
 
 bb.j:                                             ; preds = %bb.i
-  %8 = extractelement <2 x float> %6, i64 0
-  %9 = extractelement <2 x float> %6, i64 1
-  %i.cw = tail call noundef <2 x float> @__mulsc3(float noundef %.sroa.0.0.vec.extract.i.i.i47, float noundef %.sroa.0.4.vec.extract.i.i.i48, float noundef %8, float noundef %9) #32
+  %i.cw = tail call noundef <2 x float> @__mulsc3(float noundef %.sroa.0.0.vec.extract.i.i.i47, float noundef %.sroa.0.4.vec.extract.i.i.i48, float noundef %8, float noundef %7) #32
   br label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit.i
 
 _ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit.i: ; preds = %bb.j, %bb.i, %bb.h
   %i.cx = phi <2 x float> [ %i.cr, %bb.h ], [ %i.cr, %bb.i ], [ %i.cw, %bb.j ] ; 2 uses
   %i.cy = load <2 x float>, ptr %i.cj, align 4, !tbaa !103 ; 4 uses
+  %12 = getelementptr inbounds nuw i8, ptr %.0.i, i64 4
   %.sroa.0.0.vec.extract.i.i40.i = extractelement <2 x float> %i.cy, i64 0
   %.sroa.0.4.vec.extract.i.i41.i = extractelement <2 x float> %i.cy, i64 1
-  %10 = load <2 x float>, ptr %.0.i, align 4      ; 4 uses
+  %13 = load float, ptr %12, align 4              ; 2 uses
+  %14 = load float, ptr %.0.i, align 4            ; 2 uses
+  %15 = insertelement <2 x float> poison, float %13, i64 0
   %i.cz = shufflevector <2 x float> %i.cy, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  %11 = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.da = fmul <2 x float> %i.cz, %11             ; 2 uses
-  %i.db = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> zeroinitializer
+  %16 = shufflevector <2 x float> %15, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.da = fmul <2 x float> %i.cz, %16             ; 2 uses
+  %17 = insertelement <2 x float> poison, float %14, i64 0
+  %i.db = shufflevector <2 x float> %17, <2 x float> poison, <2 x i32> zeroinitializer
   %i.dc = fmul <2 x float> %i.db, %i.cy           ; 2 uses
   %i.dd = fsub <2 x float> %i.dc, %i.da           ; 2 uses
   %i.de = fadd <2 x float> %i.dc, %i.da           ; 2 uses
@@ -260,9 +266,7 @@ bb.k:                                             ; preds = %_ZN7kissfftIfN13kis
   br i1 %i.dj, label %bb.l, label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit46.i, !prof !401
 
 bb.l:                                             ; preds = %bb.k
-  %12 = extractelement <2 x float> %10, i64 0
-  %13 = extractelement <2 x float> %10, i64 1
-  %i.dk = tail call noundef <2 x float> @__mulsc3(float noundef %.sroa.0.0.vec.extract.i.i40.i, float noundef %.sroa.0.4.vec.extract.i.i41.i, float noundef %12, float noundef %13) #32
+  %i.dk = tail call noundef <2 x float> @__mulsc3(float noundef %.sroa.0.0.vec.extract.i.i40.i, float noundef %.sroa.0.4.vec.extract.i.i41.i, float noundef %14, float noundef %13) #32
   br label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit46.i
 
 _ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit46.i: ; preds = %bb.l, %bb.k, %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit.i
@@ -665,15 +669,19 @@ bb.e:                                             ; preds = %_ZN7kissfftIfN13kis
   %i.bg = load ptr, ptr %i.d, align 8, !tbaa !385
   %i.bh = getelementptr inbounds nuw [8 x i8], ptr %i.bg, i64 %indvars.iv111
   %i.bi = sext i32 %spec.select.us.us.us to i64
-  %i.bj = getelementptr inbounds [8 x i8], ptr %i.b, i64 %i.bi
+  %i.bj = getelementptr inbounds [8 x i8], ptr %i.b, i64 %i.bi ; 2 uses
   %i.bk = load <2 x float>, ptr %i.bh, align 4, !tbaa !103 ; 4 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.bj, i64 4
   %.sroa.0.0.vec.extract.i.i.us.us.us = extractelement <2 x float> %i.bk, i64 0
   %.sroa.0.4.vec.extract.i.i.us.us.us = extractelement <2 x float> %i.bk, i64 1
-  %5 = load <2 x float>, ptr %i.bj, align 4       ; 4 uses
+  %6 = load float, ptr %5, align 4                ; 2 uses
+  %7 = load float, ptr %i.bj, align 4             ; 2 uses
+  %8 = insertelement <2 x float> poison, float %6, i64 0
   %i.bl = shufflevector <2 x float> %i.bk, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  %6 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.bm = fmul <2 x float> %i.bl, %6              ; 2 uses
-  %i.bn = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer
+  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.bm = fmul <2 x float> %i.bl, %9              ; 2 uses
+  %10 = insertelement <2 x float> poison, float %7, i64 0
+  %i.bn = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bo = fmul <2 x float> %i.bn, %i.bk           ; 2 uses
   %i.bp = fsub <2 x float> %i.bo, %i.bm           ; 2 uses
   %i.bq = fadd <2 x float> %i.bo, %i.bm           ; 2 uses
@@ -688,9 +696,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.bv, label %bb.g, label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit.us.us.us, !prof !401
 
 bb.g:                                             ; preds = %bb.f
-  %7 = extractelement <2 x float> %5, i64 0
-  %8 = extractelement <2 x float> %5, i64 1
-  %i.bw = tail call noundef <2 x float> @__mulsc3(float noundef %.sroa.0.0.vec.extract.i.i.us.us.us, float noundef %.sroa.0.4.vec.extract.i.i.us.us.us, float noundef %7, float noundef %8) #32
+  %i.bw = tail call noundef <2 x float> @__mulsc3(float noundef %.sroa.0.0.vec.extract.i.i.us.us.us, float noundef %.sroa.0.4.vec.extract.i.i.us.us.us, float noundef %7, float noundef %6) #32
   %i.bx = load <2 x float>, ptr %i.au, align 4
   br label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit.us.us.us
 
@@ -1093,10 +1099,7 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.i.i.i: ; preds 
   %i.br = fmul nnan float %i.bq, f0x3B808081      ; 2 uses
   %i.bs = extractelement <2 x float> %i.bp, i64 1
   %i.bt = fmul nnan float %i.bs, f0x3B808081      ; 2 uses
-  %i.bu = call noundef float @llvm.atan2.f32(float %i.bt, float %i.br) ; 3 uses
-  %5 = fcmp olt float %i.bu, 0.000000e+00
-  %6 = fadd float %i.bu, f0x40C90FDB
-  %.018.i.i.i = select i1 %5, float %6, float %i.bu
+  %i.bu = call noundef float @llvm.atan2.f32(float %i.bt, float %i.br)
   %i.bv = call float @hypotf(float noundef %i.br, float noundef %i.bt) #39
   %i.bw = load ptr, ptr %3, align 8, !tbaa !184
   %i.bx = invoke noundef i32 @_ZNK11OpenImageIO4v3_18ImageBuf7storageEv(ptr noundef nonnull align 8 dereferenceable(16) %i.bw)
@@ -1128,7 +1131,7 @@ bb.l:                                             ; preds = %.noexc32.i.i.i
 bb.m:                                             ; preds = %bb.l, %.noexc32.i.i.i
   %i.cd = load ptr, ptr %i.l, align 8, !tbaa !186 ; 3 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cd, i64 4
-  store float %.018.i.i.i, ptr %i.ce, align 4, !tbaa !161
+  store float %i.bu, ptr %i.ce, align 4, !tbaa !161
   %i.cf = load i32, ptr %i.e, align 4, !tbaa !176
   %i.cg = add nsw i32 %i.cf, 1                    ; 7 uses
   store i32 %i.cg, ptr %i.e, align 4, !tbaa !176
@@ -1531,10 +1534,7 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.i.i.i: ; preds 
   %i.br = fmul nnan float %i.bq, f0x37800080      ; 2 uses
   %i.bs = extractelement <2 x float> %i.bp, i64 1
   %i.bt = fmul nnan float %i.bs, f0x37800080      ; 2 uses
-  %i.bu = call noundef float @llvm.atan2.f32(float %i.bt, float %i.br) ; 3 uses
-  %5 = fcmp olt float %i.bu, 0.000000e+00
-  %6 = fadd float %i.bu, f0x40C90FDB
-  %.018.i.i.i = select i1 %5, float %6, float %i.bu
+  %i.bu = call noundef float @llvm.atan2.f32(float %i.bt, float %i.br)
   %i.bv = call float @hypotf(float noundef %i.br, float noundef %i.bt) #39
   %i.bw = load ptr, ptr %3, align 8, !tbaa !184
   %i.bx = invoke noundef i32 @_ZNK11OpenImageIO4v3_18ImageBuf7storageEv(ptr noundef nonnull align 8 dereferenceable(16) %i.bw)
@@ -1566,7 +1566,7 @@ bb.l:                                             ; preds = %.noexc32.i.i.i
 bb.m:                                             ; preds = %bb.l, %.noexc32.i.i.i
   %i.cd = load ptr, ptr %i.l, align 8, !tbaa !186 ; 3 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cd, i64 4
-  store float %.018.i.i.i, ptr %i.ce, align 4, !tbaa !161
+  store float %i.bu, ptr %i.ce, align 4, !tbaa !161
   %i.cf = load i32, ptr %i.e, align 4, !tbaa !176
   %i.cg = add nsw i32 %i.cf, 1                    ; 7 uses
   store i32 %i.cg, ptr %i.e, align 4, !tbaa !176
@@ -1962,10 +1962,7 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.i.i.i: ; preds 
   %i.br = fmul nnan float %i.bq, f0x3B808081      ; 2 uses
   %i.bs = extractelement <2 x float> %i.bp, i64 1
   %i.bt = fmul nnan float %i.bs, f0x3B808081      ; 2 uses
-  %i.bu = call noundef float @llvm.atan2.f32(float %i.bt, float %i.br) ; 3 uses
-  %5 = fcmp olt float %i.bu, 0.000000e+00
-  %6 = fadd nnan float %i.bu, f0x40C90FDB
-  %.018.i.i.i = select i1 %5, float %6, float %i.bu
+  %i.bu = call noundef float @llvm.atan2.f32(float %i.bt, float %i.br)
   %i.bv = call float @hypotf(float noundef %i.br, float noundef %i.bt) #39
   %i.bw = load ptr, ptr %3, align 8, !tbaa !184
   %i.bx = invoke noundef i32 @_ZNK11OpenImageIO4v3_18ImageBuf7storageEv(ptr noundef nonnull align 8 dereferenceable(16) %i.bw)
@@ -2006,14 +2003,10 @@ bb.l:                                             ; preds = %.noexc35.i.i.i
 bb.m:                                             ; preds = %bb.l, %.noexc35.i.i.i
   %i.cj = load ptr, ptr %i.l, align 8, !tbaa !186
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 1
-  %i.cl = fmul nnan float %.018.i.i.i, 2.550000e+02 ; 2 uses
-  %7 = fcmp olt float %i.cl, 0.000000e+00
-  %8 = select i1 %7, float -5.000000e-01, float 5.000000e-01
-  %i.cm = fadd float %i.cl, %8                    ; 2 uses
-  %.inv.i.i.i.i.i32.i.i.i = fcmp oge float %i.cm, 0.000000e+00
-  %.0.i.i.i.i.i.i33.i.i.i = select i1 %.inv.i.i.i.i.i32.i.i.i, float %i.cm, float 0.000000e+00 ; 2 uses
-  %i.cn = fcmp ogt float %.0.i.i.i.i.i.i33.i.i.i, 2.550000e+02
-  %.1.i.i.i.i.i.i34.i.i.i = select i1 %i.cn, float 2.550000e+02, float %.0.i.i.i.i.i.i33.i.i.i
+  %i.cl = fmul nnan float %i.bu, 2.550000e+02
+  %i.cm = fadd float %i.cl, 5.000000e-01          ; 2 uses
+  %i.cn = fcmp ogt float %i.cm, 2.550000e+02
+  %.1.i.i.i.i.i.i34.i.i.i = select i1 %i.cn, float 2.550000e+02, float %i.cm
   %i.co = fptoui float %.1.i.i.i.i.i.i34.i.i.i to i8
   store i8 %i.co, ptr %i.ck, align 1, !tbaa !103
   %i.cp = load i32, ptr %i.e, align 4, !tbaa !176
@@ -2416,10 +2409,7 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.i.i.i: ; preds 
   %i.br = fmul nnan float %i.bq, f0x37800080      ; 2 uses
   %i.bs = extractelement <2 x float> %i.bp, i64 1
   %i.bt = fmul nnan float %i.bs, f0x37800080      ; 2 uses
-  %i.bu = call noundef float @llvm.atan2.f32(float %i.bt, float %i.br) ; 3 uses
-  %5 = fcmp olt float %i.bu, 0.000000e+00
-  %6 = fadd nnan float %i.bu, f0x40C90FDB
-  %.018.i.i.i = select i1 %5, float %6, float %i.bu
+  %i.bu = call noundef float @llvm.atan2.f32(float %i.bt, float %i.br)
   %i.bv = call float @hypotf(float noundef %i.br, float noundef %i.bt) #39
   %i.bw = load ptr, ptr %3, align 8, !tbaa !184
   %i.bx = invoke noundef i32 @_ZNK11OpenImageIO4v3_18ImageBuf7storageEv(ptr noundef nonnull align 8 dereferenceable(16) %i.bw)
@@ -2460,14 +2450,10 @@ bb.l:                                             ; preds = %.noexc35.i.i.i
 bb.m:                                             ; preds = %bb.l, %.noexc35.i.i.i
   %i.cj = load ptr, ptr %i.l, align 8, !tbaa !186 ; 3 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 2
-  %i.cl = fmul nnan float %.018.i.i.i, 6.553500e+04 ; 2 uses
-  %7 = fcmp olt float %i.cl, 0.000000e+00
-  %8 = select i1 %7, float -5.000000e-01, float 5.000000e-01
-  %i.cm = fadd float %i.cl, %8                    ; 2 uses
-  %.inv.i.i.i.i.i32.i.i.i = fcmp oge float %i.cm, 0.000000e+00
-  %.0.i.i.i.i.i.i33.i.i.i = select i1 %.inv.i.i.i.i.i32.i.i.i, float %i.cm, float 0.000000e+00 ; 2 uses
-  %i.cn = fcmp ogt float %.0.i.i.i.i.i.i33.i.i.i, 6.553500e+04
-  %.1.i.i.i.i.i.i34.i.i.i = select i1 %i.cn, float 6.553500e+04, float %.0.i.i.i.i.i.i33.i.i.i
+  %i.cl = fmul nnan float %i.bu, 6.553500e+04
+  %i.cm = fadd float %i.cl, 5.000000e-01          ; 2 uses
+  %i.cn = fcmp ogt float %i.cm, 6.553500e+04
+  %.1.i.i.i.i.i.i34.i.i.i = select i1 %i.cn, float 6.553500e+04, float %i.cm
   %i.co = fptoui float %.1.i.i.i.i.i.i34.i.i.i to i16
   store i16 %i.co, ptr %i.ck, align 2, !tbaa !415
   %i.cp = load i32, ptr %i.e, align 4, !tbaa !176
