@@ -205,7 +205,7 @@ _RNvXsq_NtCseO5Jl7W60Eg_16rustls_pki_types11server_nameNtB5_8Ipv4AddrINtNtCsj6eK
   store ptr %1, ptr %i.a, align 8, !noalias !466
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   store i64 %2, ptr %i.d, align 8, !noalias !466
-  %i.e = call fastcc range(i40 0, -254) i40 @_RNvMNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name6parserNtB2_6Parser14read_ipv4_addr(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.a) ; 3 uses
+  %i.e = call fastcc range(i40 0, -254) i40 @_RNvMNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name6parserNtB2_6Parser14read_ipv4_addr(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.a) ; 2 uses
   %i.f = load i64, ptr %i.d, align 8, !alias.scope !467, !noalias !466, !noundef !7
   %i.g = icmp eq i64 %i.f, 0
   %i.h = trunc i40 %i.e to i1
@@ -223,15 +223,10 @@ _RNvXsq_NtCseO5Jl7W60Eg_16rustls_pki_types11server_nameNtB5_8Ipv4AddrINtNtCsj6eK
 
 bb.b:                                             ; preds = %_RNvXsq_NtCseO5Jl7W60Eg_16rustls_pki_types11server_nameNtB5_8Ipv4AddrINtNtCsj6eKBz9Db1c_4core7convert7TryFromReE8try_from.exit
   %sh.diff = lshr i40 %i.e, 8
-  %tr.sh.diff = trunc nuw i40 %sh.diff to i32
-  %3 = and i32 %tr.sh.diff, -256
-  %i.m = trunc i40 %i.e to i32
-  %4 = lshr i32 %i.m, 8
-  %5 = and i32 %4, 255
-  %6 = or disjoint i32 %3, %5
+  %i.m = trunc nuw i40 %sh.diff to i32
   store i8 0, ptr %0, align 1
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i32 %6, ptr %.sroa.43.0..sroa_idx, align 1
+  store i32 %i.m, ptr %.sroa.43.0..sroa_idx, align 1
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.f, %bb.b

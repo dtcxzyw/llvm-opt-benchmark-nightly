@@ -205,18 +205,14 @@ _ZN5clang13ASTDeclReader17VisitRedeclarableINS_7VarDeclEEEN12_GLOBAL__N_118Redec
   %i.cl = getelementptr inbounds nuw [8 x i8], ptr %i.ck, i64 %i.cj
   %i.cm = load i64, ptr %i.cl, align 8, !tbaa !165 ; 10 uses
   %i.cn = trunc i64 %i.cm to i32                  ; 2 uses
-  %i.co = trunc i64 %i.cm to i8                   ; 2 uses
+  %i.co = trunc i64 %i.cm to i8
   %i.cp = and i8 %i.co, 7                         ; 2 uses
   %i.cq = and i32 %i.cn, 8
   %.not96 = icmp eq i32 %i.cq, 0
   %i.cr = getelementptr inbounds nuw i8, ptr %2, i64 96 ; 4 uses
-  %3 = lshr i8 %i.co, 4
   %sh.diff = lshr i64 %i.cm, 4
   %tr.sh.diff = trunc i64 %sh.diff to i8
-  %.masked = and i8 %3, 7
-  %4 = and i8 %tr.sh.diff, -8
-  %5 = or disjoint i8 %.masked, %4
-  store i8 %5, ptr %i.cr, align 8
+  store i8 %tr.sh.diff, ptr %i.cr, align 8
   %i.cs = getelementptr inbounds nuw i8, ptr %2, i64 28 ; 6 uses
   %i.ct = load i32, ptr %i.cs, align 4
   %i.cu = and i32 %i.ct, 127

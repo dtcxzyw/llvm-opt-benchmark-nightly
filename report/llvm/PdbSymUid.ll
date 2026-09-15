@@ -155,15 +155,10 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define dso_local i48 @_ZNK12lldb_private4npdb9PdbSymUid17asFieldListMemberEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0) local_unnamed_addr #1 align 2 {
 bb.a:
-  %.val = load i64, ptr %0, align 8               ; 2 uses
+  %.val = load i64, ptr %0, align 8
   %sh.diff = lshr i64 %.val, 4
-  %tr.sh.diff = trunc i64 %sh.diff to i48
-  %.sroa.3.0.insert.ext = and i48 %tr.sh.diff, -4294967296
-  %i.a = trunc i64 %.val to i48
-  %1 = lshr i48 %i.a, 4
-  %.sroa.0.0.insert.ext = and i48 %1, 4294967295
-  %.sroa.0.0.insert.insert = or disjoint i48 %.sroa.3.0.insert.ext, %.sroa.0.0.insert.ext
-  ret i48 %.sroa.0.0.insert.insert
+  %i.a = trunc i64 %sh.diff to i48
+  ret i48 %i.a
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
