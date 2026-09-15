@@ -205,18 +205,17 @@ bb.a:
   br i1 %.not12, label %hwloc_type_cmp.exit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.b = load i32, ptr %1, align 8, !tbaa !60     ; 6 uses
+  %i.b = load i32, ptr %1, align 8, !tbaa !60     ; 5 uses
   %i.c = zext i32 %i.b to i64
   %i.d = getelementptr inbounds nuw [4 x i8], ptr @obj_type_order, i64 %i.c
   %i.e = load i32, ptr %i.d, align 4, !tbaa !48   ; 2 uses
   %i.f = icmp ult i32 %i.b, 13
-  %i.g = icmp eq i32 %i.b, 19
+  %i.g = icmp eq i32 %i.b, 19                     ; 2 uses
   %i.h = or i1 %i.f, %i.g
   %i.i = icmp ne i32 %i.b, 0
   %or.cond.i.i = and i1 %i.i, %i.h
   %i.j = icmp ugt i32 %i.b, 12
-  %2 = icmp ne i32 %i.b, 19
-  %.not17.i.i = and i1 %i.j, %2                   ; 2 uses
+  %.not17.i.i = xor i1 %i.g, %i.j                 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %or.cond.i.i.fr = freeze i1 %or.cond.i.i
   br i1 %or.cond.i.i.fr, label %.lr.ph.split.us, label %.lr.ph.split

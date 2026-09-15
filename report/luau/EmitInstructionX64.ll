@@ -202,7 +202,7 @@ bb.a:
   %11 = alloca %"struct.Luau::CodeGen::Label", align 4 ; 6 uses
   %i.a = add i32 %5, -1                           ; 2 uses
   %i.b = add i32 %i.a, %4                         ; 2 uses
-  %i.c = icmp eq i32 %4, -1                       ; 4 uses
+  %i.c = icmp eq i32 %4, -1                       ; 5 uses
   br i1 %i.c, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -289,9 +289,8 @@ bb.g:                                             ; preds = %bb.c, %bb.f
   %.sroa.060.0 = phi i8 [ %i.e, %bb.c ], [ %i.l, %bb.f ]
   %.sroa.0273.0.insert.insert = or disjoint i64 %.sroa.3.0.insert.shift.i173.pre-phi, 103414792193
   call void @_ZN4Luau7CodeGen3X6418AssemblyBuilderX643movENS1_10OperandX64ES3_(ptr noundef nonnull align 8 dereferenceable(268) %1, i64 269778944, i64 %.sroa.0273.0.insert.insert)
-  %12 = icmp ne i32 %4, -1
   %i.m = icmp slt i32 %4, 5
-  %or.cond3 = and i1 %12, %i.m
+  %or.cond3 = xor i1 %i.c, %i.m
   br i1 %or.cond3, label %.preheader, label %bb.h
 
 .preheader:                                       ; preds = %bb.g

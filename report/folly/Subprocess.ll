@@ -205,9 +205,9 @@ bb.u:                                             ; preds = %bb.t
 
 .lr.ph254:                                        ; preds = %.thread224, %.thread236
   %.0126253 = phi ptr [ %i.cq, %.thread236 ], [ %i.bt, %.thread224 ] ; 3 uses
-  %.sroa.0.0.copyload = load i32, ptr %.0126253, align 4 ; 6 uses
+  %.sroa.0.0.copyload = load i32, ptr %.0126253, align 4 ; 5 uses
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.0126253, i64 4
-  %.sroa.9.0.copyload = load i32, ptr %.sroa.9.0..sroa_idx, align 4 ; 6 uses
+  %.sroa.9.0.copyload = load i32, ptr %.sroa.9.0..sroa_idx, align 4 ; 4 uses
   %i.bv = icmp eq i32 %.sroa.9.0.copyload, -5
   br i1 %i.bv, label %bb.v, label %bb.x
 
@@ -226,8 +226,8 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.cb, label %.thread245.sink.split, label %.thread236
 
 bb.x:                                             ; preds = %.lr.ph254
-  %i.ce = icmp ne i32 %.sroa.9.0.copyload, %.sroa.0.0.copyload
-  %i.cf = icmp ne i32 %.sroa.9.0.copyload, -6
+  %i.ce = icmp ne i32 %.sroa.9.0.copyload, %.sroa.0.0.copyload ; 2 uses
+  %i.cf = icmp ne i32 %.sroa.9.0.copyload, -6     ; 2 uses
   %or.cond = and i1 %i.ce, %i.cf
   br i1 %or.cond, label %bb.y, label %bb.z
 
@@ -238,10 +238,8 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.ci, label %.thread245.sink.split, label %.thread236
 
 bb.z:                                             ; preds = %bb.x
-  %1 = icmp eq i32 %.sroa.9.0.copyload, %.sroa.0.0.copyload
-  %2 = icmp eq i32 %.sroa.9.0.copyload, -6
-  %or.cond19 = or i1 %1, %2
-  br i1 %or.cond19, label %bb.aa, label %.thread236
+  %or.cond19.demorgan = and i1 %i.ce, %i.cf
+  br i1 %or.cond19.demorgan, label %.thread236, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   %i.cj = load ptr, ptr @_ZN5folly6detail15subprocess_libc5fcntlE, align 8, !tbaa !113

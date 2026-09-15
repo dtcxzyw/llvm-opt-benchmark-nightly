@@ -205,7 +205,7 @@ bb.a:                                             ; preds = %.peel.begin
           to label %bb.b unwind label %.loopexit.loopexit.split-lp
 
 bb.b:                                             ; preds = %bb.a, %.peel.begin
-  %.012.peel = phi i32 [ %2, %.peel.begin ], [ %i.d, %bb.a ] ; 4 uses
+  %.012.peel = phi i32 [ %2, %.peel.begin ], [ %i.d, %bb.a ] ; 3 uses
   switch i32 %.012.peel, label %_ZN4bzla6parser4smt26Parser11check_tokenENS1_5TokenE.exit.peel [
     i32 1, label %.loopexit28
     i32 0, label %.loopexit29
@@ -214,13 +214,12 @@ bb.b:                                             ; preds = %bb.a, %.peel.begin
 _ZN4bzla6parser4smt26Parser11check_tokenENS1_5TokenE.exit.peel: ; preds = %bb.b
   %i.e = load i8, ptr %i.a, align 8, !tbaa !194, !range !209, !noundef !207
   %i.f = trunc nuw i8 %i.e to i1
-  %i.g = icmp ne i32 %.012.peel, 4
+  %i.g = icmp ne i32 %.012.peel, 4                ; 2 uses
   %or.cond.peel = and i1 %i.g, %i.f
   br i1 %or.cond.peel, label %._crit_edge.i.i, label %bb.c
 
 bb.c:                                             ; preds = %_ZN4bzla6parser4smt26Parser11check_tokenENS1_5TokenE.exit.peel
-  %7 = icmp eq i32 %.012.peel, 4
-  br i1 %7, label %bb.f, label %bb.d
+  br i1 %i.g, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %bb.c
   %i.h = invoke noundef zeroext i1 @_ZN4bzla6parser4smt26Parser15parse_open_termENS1_5TokenE(ptr noundef nonnull align 8 dereferenceable(2056) %0, i32 noundef %.012.peel)
@@ -248,7 +247,7 @@ bb.h:                                             ; preds = %bb.g, %bb.e
 
 .peel.next:                                       ; preds = %bb.h, %bb.q
   %i.o = invoke noundef i32 @_ZN4bzla6parser4smt26Parser10next_tokenEb(ptr noundef nonnull align 8 dereferenceable(2056) %0, i1 noundef zeroext false)
-          to label %bb.i unwind label %.loopexit.loopexit ; 4 uses
+          to label %bb.i unwind label %.loopexit.loopexit ; 3 uses
 
 .loopexit.loopexit:                               ; preds = %bb.o, %bb.m, %.peel.next
   %lpad.loopexit26 = landingpad { ptr, i32 }
@@ -295,7 +294,7 @@ bb.i:                                             ; preds = %.peel.next
 _ZN4bzla6parser4smt26Parser11check_tokenENS1_5TokenE.exit: ; preds = %bb.i
   %i.v = load i8, ptr %i.a, align 8, !tbaa !194, !range !209, !noundef !207
   %i.w = trunc nuw i8 %i.v to i1
-  %i.x = icmp ne i32 %i.o, 4
+  %i.x = icmp ne i32 %i.o, 4                      ; 2 uses
   %or.cond = and i1 %i.x, %i.w
   br i1 %or.cond, label %._crit_edge.i.i, label %bb.l
 
@@ -349,8 +348,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit23: ; preds = %bb.
   br label %.loopexit
 
 bb.l:                                             ; preds = %_ZN4bzla6parser4smt26Parser11check_tokenENS1_5TokenE.exit
-  %8 = icmp eq i32 %i.o, 4
-  br i1 %8, label %bb.m, label %bb.o
+  br i1 %i.x, label %bb.o, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   store i8 0, ptr %i.a, align 8, !tbaa !194

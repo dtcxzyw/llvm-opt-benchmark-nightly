@@ -204,11 +204,10 @@ bb.a:
     #dbg_value(ptr poison, !3834, !DIExpression(), !11711)
     #dbg_value(ptr poison, !3836, !DIExpression(), !11713)
     #dbg_value(ptr poison, !3840, !DIExpression(), !11713)
-  %5 = icmp eq i64 %1, 0, !dbg !11760
+  %5 = icmp ne i64 %1, 0, !dbg !11760
     #dbg_value(i8 poison, !3826, !DIExpression(), !11714)
   %i.n = icmp samesign ugt i32 %2, 25000000, !dbg !11761
-  %6 = icmp ne i64 %1, 0, !dbg !11761
-  %i.o = select i1 %5, i1 %i.n, i1 %6, !dbg !11760 ; 2 uses
+  %i.o = select i1 %5, i1 true, i1 %i.n, !dbg !11760 ; 2 uses
   %..i = select i1 %i.o, i32 %2, i32 25000000, !dbg !11762 ; 3 uses
   %.2.i = select i1 %i.o, i64 %1, i64 0, !dbg !11762 ; 5 uses
     #dbg_value(i64 %.sroa.03.0, !4133, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11716)
@@ -363,11 +362,10 @@ bb.b:                                             ; preds = %bb.a
     #dbg_value(ptr poison, !3834, !DIExpression(), !11808)
     #dbg_value(ptr poison, !3836, !DIExpression(), !11810)
     #dbg_value(ptr poison, !3840, !DIExpression(), !11810)
-  %5 = icmp eq i64 %1, 0, !dbg !11906
+  %5 = icmp ne i64 %1, 0, !dbg !11906
     #dbg_value(i8 poison, !3826, !DIExpression(), !11811)
   %i.s = icmp samesign ugt i32 %2, 25000000, !dbg !11907
-  %6 = icmp ne i64 %1, 0, !dbg !11907
-  %i.t = select i1 %5, i1 %i.s, i1 %6, !dbg !11906 ; 2 uses
+  %i.t = select i1 %5, i1 true, i1 %i.s, !dbg !11906 ; 2 uses
   %..i.i = select i1 %i.t, i32 %2, i32 25000000, !dbg !11908 ; 3 uses
   %.2.i.i = select i1 %i.t, i64 %1, i64 0, !dbg !11908 ; 5 uses
     #dbg_value(i64 %.sroa.03.0.i, !4133, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11813)
@@ -770,7 +768,7 @@ bb.b:                                             ; preds = %bb.a
   %.zext43 = zext nneg i32 %i.k to i64, !dbg !18020
     #dbg_value(i64 %.zext43, !6208, !DIExpression(), !17929)
     #dbg_value(i64 %.zext43, !6227, !DIExpression(), !17931)
-  %i.l = add nuw i64 %i.h, %.zext43, !dbg !18021  ; 3 uses
+  %i.l = add nuw i64 %i.h, %.zext43, !dbg !18021  ; 2 uses
   %i.m = shl nuw i32 %i.j, 2, !dbg !18022
     #dbg_value(i32 %i.m, !6207, !DIExpression(DW_OP_LLVM_convert, 32, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !17928)
   %i.n = urem i32 %i.m, 1000000000, !dbg !18023   ; 2 uses
@@ -791,11 +789,10 @@ bb.b:                                             ; preds = %bb.a
     #dbg_value(ptr poison, !3834, !DIExpression(), !17946)
     #dbg_value(ptr poison, !3836, !DIExpression(), !17948)
     #dbg_value(ptr poison, !3840, !DIExpression(), !17948)
-  %1 = icmp eq i64 %i.l, 0, !dbg !18024
+  %1 = icmp ne i64 %i.l, 0, !dbg !18024
     #dbg_value(i8 poison, !3826, !DIExpression(), !17949)
   %i.o = icmp samesign ugt i32 %i.n, 1000000, !dbg !18025
-  %2 = icmp ne i64 %i.l, 0, !dbg !18025
-  %i.p = select i1 %1, i1 %i.o, i1 %2, !dbg !18024 ; 2 uses
+  %i.p = select i1 %1, i1 true, i1 %i.o, !dbg !18024 ; 2 uses
   %.2.i = select i1 %i.p, i64 %i.l, i64 0, !dbg !18026
     #dbg_value(i64 %.2.i, !17974, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !18009)
     #dbg_value(i32 poison, !17974, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !18009)

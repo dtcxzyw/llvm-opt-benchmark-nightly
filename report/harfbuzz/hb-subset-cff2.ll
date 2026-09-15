@@ -205,13 +205,13 @@ _ZN11hb_vector_tIjLb0EE4pushIJRjEEEPjDpOT_.exit:  ; preds = %_ZN11hb_vector_tIjL
 
 _ZL27_serialize_cff1_charstringsP22hb_serialize_context_tRN2OT16cff2_subset_planEjj.exit.thread1417: ; preds = %.thread1409, %_ZN11hb_vector_tIS_IhLb0EELb0EE13shrink_vectorEj.exit.i.i.i
   %i.bgt = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.bgu = load i32, ptr %i.bgt, align 8, !tbaa !180 ; 7 uses
+  %i.bgu = load i32, ptr %i.bgt, align 8, !tbaa !180 ; 6 uses
   %i.bgv = icmp slt i32 %i.bgu, 0
   br i1 %i.bgv, label %_ZN11hb_vector_tIN3CFF12table_info_tELb0EED2Ev.exit, label %bb.js, !prof !99
 
 bb.js:                                            ; preds = %_ZL27_serialize_cff1_charstringsP22hb_serialize_context_tRN2OT16cff2_subset_planEjj.exit.thread1417
-  %.not.i484.not.not = icmp eq i32 %i.bgu, 0      ; 2 uses
-  br i1 %.not.i484.not.not, label %bb.ju, label %.preheader.i486, !prof !97
+  %.not.i484.not.not = icmp ne i32 %i.bgu, 0      ; 3 uses
+  br i1 %.not.i484.not.not, label %.preheader.i486, label %bb.ju, !prof !99
 
 .preheader.i486:                                  ; preds = %bb.js, %.preheader.i486
   %.043.i487 = phi i32 [ %i.bgy, %.preheader.i486 ], [ 0, %bb.js ] ; 2 uses
@@ -614,9 +614,8 @@ _ZNR9hb_iter_tI10hb_array_tIKN3CFF23cff2_font_dict_values_tEERS3_EppEv.exit.i.i.
   %i.brq = call noundef nonnull ptr @_ZN22hb_serialize_context_t4pushIvEEPT_v(ptr noundef nonnull align 8 dereferenceable(144) %0) ; 0 uses
   %i.brr = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 50 uses
   %i.brs = load ptr, ptr %i.brr, align 8, !tbaa !171 ; 2 uses
-  %20 = icmp ne i32 %.sroa.7.sroa.0.2, 0
-  %i.brt = icmp ne i32 %i.bgu, 0
-  %spec.select.i.i.i.i48.i.i.i = and i1 %i.brt, %20
+  %i.brt = icmp ne i32 %.sroa.7.sroa.0.2, 0
+  %spec.select.i.i.i.i48.i.i.i = and i1 %.not.i484.not.not, %i.brt
   br i1 %spec.select.i.i.i.i48.i.i.i, label %.lr.ph.i.i.i344, label %"_ZorI13hb_map_iter_tI13hb_zip_iter_tI16hb_filter_iter_tI10hb_array_tIKN3CFF23cff2_font_dict_values_tEEZNS4_22serialize_cff2_to_cff1EP22hb_serialize_context_tRN2OT16cff2_subset_planERKNS4_22cff2_top_dict_values_tERKNSA_4cff220accelerator_subset_tEE3$_0RK3$_8LPv0EES3_IKNS4_12table_info_tEEEZNS4_7FDArrayINSA_7NumTypeILb1EtLj2EEEE9serializeIS5_SQ_ST_NS4_29cff_font_dict_op_serializer_tEEEbS9_T1_RT2_EUlRK9hb_pair_tIRS6_RSR_EE_L24hb_function_sortedness_t0ELSO_0EE9hb_sink_tIR11hb_vector_tIjLb0EEETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NS1I_6item_tEEE5valueEvE4typeELSO_0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardIS1I_Efp_EEEOS1I_OS1N_.exit.i.thread"
 
 "_ZorI13hb_map_iter_tI13hb_zip_iter_tI16hb_filter_iter_tI10hb_array_tIKN3CFF23cff2_font_dict_values_tEEZNS4_22serialize_cff2_to_cff1EP22hb_serialize_context_tRN2OT16cff2_subset_planERKNS4_22cff2_top_dict_values_tERKNSA_4cff220accelerator_subset_tEE3$_0RK3$_8LPv0EES3_IKNS4_12table_info_tEEEZNS4_7FDArrayINSA_7NumTypeILb1EtLj2EEEE9serializeIS5_SQ_ST_NS4_29cff_font_dict_op_serializer_tEEEbS9_T1_RT2_EUlRK9hb_pair_tIRS6_RSR_EE_L24hb_function_sortedness_t0ELSO_0EE9hb_sink_tIR11hb_vector_tIjLb0EEETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NS1I_6item_tEEE5valueEvE4typeELSO_0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardIS1I_Efp_EEEOS1I_OS1N_.exit.i.thread": ; preds = %"_ZorI10hb_array_tIKN3CFF23cff2_font_dict_values_tEE24hb_filter_iter_factory_tIZNS1_22serialize_cff2_to_cff1EP22hb_serialize_context_tRN2OT16cff2_subset_planERKNS1_22cff2_top_dict_values_tERKNS8_4cff220accelerator_subset_tEE3$_0RK3$_8ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSO_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISO_Efp_EEEOSO_OSU_.exit"
@@ -1019,7 +1018,7 @@ _ZNK22hb_serialize_context_t6lengthEv.exit459:    ; preds = %._crit_edge952, %bb
 
 _ZN11hb_vector_tIN3CFF12table_info_tELb0EE6resizeEi.exit: ; preds = %bb.li, %.thread720, %_ZNK22hb_serialize_context_t6lengthEv.exit459, %bb.ot, %.critedge.i.i424, %bb.ns, %bb.np, %bb.nm, %bb.nj, %_ZN11hb_vector_tI10hb_array_tIKhELb0EED2Ev.exit, %_ZL23_serialize_cff1_charsetP22hb_serialize_context_tjRj.exit, %bb.oo, %_ZN22hb_serialize_context_t12allocate_minIN2OT4cff1EEEPT_v.exit, %_ZN22hb_serialize_context_t5embedEPKcj.exit434.thread767, %.thread787, %bb.nd, %bb.ng
   %.25 = phi i1 [ false, %.critedge.i.i424 ], [ false, %bb.ns ], [ false, %bb.ng ], [ %i.cmc, %_ZNK22hb_serialize_context_t6lengthEv.exit459 ], [ false, %bb.nd ], [ false, %_ZN22hb_serialize_context_t12allocate_minIN2OT4cff1EEEPT_v.exit ], [ false, %.thread787 ], [ false, %_ZN22hb_serialize_context_t5embedEPKcj.exit434.thread767 ], [ false, %_ZN11hb_vector_tI10hb_array_tIKhELb0EED2Ev.exit ], [ false, %bb.oo ], [ false, %_ZL23_serialize_cff1_charsetP22hb_serialize_context_tjRj.exit ], [ false, %bb.ot ], [ false, %bb.nj ], [ false, %bb.nm ], [ false, %bb.np ], [ false, %.thread720 ], [ false, %bb.li ] ; 2 uses
-  br i1 %.not.i484.not.not, label %_ZN11hb_vector_tIN3CFF12table_info_tELb0EED2Ev.exit, label %bb.pw
+  br i1 %.not.i484.not.not, label %bb.pw, label %_ZN11hb_vector_tIN3CFF12table_info_tELb0EED2Ev.exit
 
 bb.pw:                                            ; preds = %_ZN11hb_vector_tIN3CFF12table_info_tELb0EE6resizeEi.exit
   call void @hb_free(ptr noundef %.sroa.14587.0.ph) #16
@@ -1422,13 +1421,13 @@ bb.m:                                             ; preds = %_ZN22hb_serialize_c
   %i.ci = getelementptr inbounds nuw i8, ptr %2, i64 16
   store i32 %i.ch, ptr %i.ci, align 8, !tbaa !179
   %i.cj = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %i.ck = load i32, ptr %i.cj, align 8, !tbaa !180 ; 7 uses
+  %i.ck = load i32, ptr %i.cj, align 8, !tbaa !180 ; 6 uses
   %i.cl = icmp slt i32 %i.ck, 0
   br i1 %i.cl, label %_ZN11hb_vector_tIN3CFF12table_info_tELb0EED2Ev.exit, label %bb.n, !prof !99
 
 bb.n:                                             ; preds = %.loopexit337
-  %.not.i215.not.not = icmp eq i32 %i.ck, 0       ; 2 uses
-  br i1 %.not.i215.not.not, label %bb.p, label %.preheader.i, !prof !97
+  %.not.i215.not.not = icmp ne i32 %i.ck, 0       ; 3 uses
+  br i1 %.not.i215.not.not, label %.preheader.i, label %bb.p, !prof !99
 
 .preheader.i:                                     ; preds = %bb.n, %.preheader.i
   %.043.i = phi i32 [ %i.co, %.preheader.i ], [ 0, %bb.n ] ; 2 uses
@@ -1831,9 +1830,8 @@ _ZNR9hb_iter_tI10hb_array_tIKN3CFF23cff2_font_dict_values_tEERS3_EppEv.exit.i.i.
   %.sroa.0232.2 = phi ptr [ %.val102, %bb.au ], [ %scevgep.i.i.i, %.lr.ph.split.us.i.i.i ], [ %.sroa.0232.0, %"_ZNK4$_25clIRZNK2OT4cff220accelerator_subset_t9serializeEP22hb_serialize_context_tRNS1_16cff2_subset_planE10hb_array_tIiEE3$_0RKN3CFF23cff2_font_dict_values_tEEEN10_hb_head_tIbJDTcl4implclsr3stdE7forwardIT_Efp_Eclsr3stdE7forwardIT0_Efp0_Ecv11hb_priorityILj16EE_EEEEE4typeEOSH_OSI_.exit.i.i.i" ], [ %i.mh, %_ZNR9hb_iter_tI10hb_array_tIKN3CFF23cff2_font_dict_values_tEERS3_EppEv.exit.i.i.i ]
   %i.mi = call noundef nonnull ptr @_ZN22hb_serialize_context_t4pushIvEEPT_v(ptr noundef nonnull align 8 dereferenceable(144) %1) ; 0 uses
   %i.mj = load ptr, ptr %i.au, align 8, !tbaa !171 ; 2 uses
-  %7 = icmp ne i32 %.sroa.7.sroa.0.2, 0
-  %i.mk = icmp ne i32 %i.ck, 0
-  %spec.select.i.i.i.i48.i.i.i.i = and i1 %i.mk, %7
+  %i.mk = icmp ne i32 %.sroa.7.sroa.0.2, 0
+  %spec.select.i.i.i.i48.i.i.i.i = and i1 %.not.i215.not.not, %i.mk
   br i1 %spec.select.i.i.i.i48.i.i.i.i, label %.lr.ph.i.i.i.i157, label %"_ZorI13hb_map_iter_tI13hb_zip_iter_tI16hb_filter_iter_tI10hb_array_tIKN3CFF23cff2_font_dict_values_tEEZNK2OT4cff220accelerator_subset_t9serializeEP22hb_serialize_context_tRNS8_16cff2_subset_planES3_IiEE3$_0RK3$_8LPv0EES3_IKNS4_12table_info_tEEEZNS4_7FDArrayINS8_7NumTypeILb1EjLj4EEEE9serializeIS5_SM_SP_NS4_29cff_font_dict_op_serializer_tEEEbSC_T1_RT2_EUlRK9hb_pair_tIRS6_RSN_EE_L24hb_function_sortedness_t0ELSK_0EE9hb_sink_tIR11hb_vector_tIjLb0EEETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NS1E_6item_tEEE5valueEvE4typeELSK_0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardIS1E_Efp_EEEOS1E_OS1J_.exit.i.thread.i"
 
 "_ZorI13hb_map_iter_tI13hb_zip_iter_tI16hb_filter_iter_tI10hb_array_tIKN3CFF23cff2_font_dict_values_tEEZNK2OT4cff220accelerator_subset_t9serializeEP22hb_serialize_context_tRNS8_16cff2_subset_planES3_IiEE3$_0RK3$_8LPv0EES3_IKNS4_12table_info_tEEEZNS4_7FDArrayINS8_7NumTypeILb1EjLj4EEEE9serializeIS5_SM_SP_NS4_29cff_font_dict_op_serializer_tEEEbSC_T1_RT2_EUlRK9hb_pair_tIRS6_RSN_EE_L24hb_function_sortedness_t0ELSK_0EE9hb_sink_tIR11hb_vector_tIjLb0EEETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NS1E_6item_tEEE5valueEvE4typeELSK_0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardIS1E_Efp_EEEOS1E_OS1J_.exit.i.thread.i": ; preds = %"_ZorI10hb_array_tIKN3CFF23cff2_font_dict_values_tEE24hb_filter_iter_factory_tIZNK2OT4cff220accelerator_subset_t9serializeEP22hb_serialize_context_tRNS6_16cff2_subset_planES0_IiEE3$_0RK3$_8ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSK_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISK_Efp_EEEOSK_OSQ_.exit"
@@ -2236,7 +2234,7 @@ _ZN22hb_serialize_context_t13allocate_sizeIhEEPT_mb.exit.thread.sink.split.i212:
 
 _ZN11hb_vector_tIN3CFF12table_info_tELb0EE6resizeEi.exit: ; preds = %_ZN33cff2_private_dict_op_serializer_tD2Ev.exit, %bb.dm, %bb.cz, %.critedge.i.i172, %_ZN22hb_serialize_context_t12allocate_minIN2OT4cff2EEEPT_v.exit, %.critedge101, %_ZN2OT8CFFIndexINS_7NumTypeILb1EjLj4EEEE10total_sizeI11hb_vector_tIS5_IhLb0EELb0EETnPN12hb_enable_ifIXsr14hb_is_iterableIT_EE5valueEvE4typeELPv0EEEjRKS9_Pjj.exit.i191, %bb.de, %_ZN22hb_serialize_context_t13allocate_sizeIhEEPT_mb.exit.i198, %bb.dh, %bb.dj, %_ZN22hb_serialize_context_t13allocate_sizeIhEEPT_mb.exit.thread.sink.split.i212, %bb.cy, %bb.cp, %.critedge, %bb.cv, %bb.at
   %.12 = phi i1 [ false, %bb.cz ], [ true, %bb.dm ], [ false, %bb.cv ], [ false, %bb.cy ], [ false, %bb.cp ], [ false, %bb.at ], [ false, %bb.dj ], [ false, %_ZN22hb_serialize_context_t13allocate_sizeIhEEPT_mb.exit.thread.sink.split.i212 ], [ false, %.critedge ], [ false, %.critedge101 ], [ true, %bb.dh ], [ false, %_ZN22hb_serialize_context_t12allocate_minIN2OT4cff2EEEPT_v.exit ], [ false, %bb.de ], [ false, %_ZN2OT8CFFIndexINS_7NumTypeILb1EjLj4EEEE10total_sizeI11hb_vector_tIS5_IhLb0EELb0EETnPN12hb_enable_ifIXsr14hb_is_iterableIT_EE5valueEvE4typeELPv0EEEjRKS9_Pjj.exit.i191 ], [ false, %_ZN22hb_serialize_context_t13allocate_sizeIhEEPT_mb.exit.i198 ], [ false, %.critedge.i.i172 ], [ false, %_ZN33cff2_private_dict_op_serializer_tD2Ev.exit ] ; 2 uses
-  br i1 %.not.i215.not.not, label %_ZN11hb_vector_tIN3CFF12table_info_tELb0EED2Ev.exit, label %bb.dn
+  br i1 %.not.i215.not.not, label %bb.dn, label %_ZN11hb_vector_tIN3CFF12table_info_tELb0EED2Ev.exit
 
 bb.dn:                                            ; preds = %_ZN11hb_vector_tIN3CFF12table_info_tELb0EE6resizeEi.exit
   call void @hb_free(ptr noundef %.sroa.14262.0.ph) #16
@@ -2639,7 +2637,7 @@ _ZNK2OT18ItemVariationStore13get_sub_tableEj.exit: ; preds = %bb.i, %bb.j
   %i.co = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.cn
   %.0.i.i.i101 = select i1 %i.cl, ptr @_hb_NullPool, ptr %i.co, !prof !99 ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %.0.i.i.i101, i64 4 ; 2 uses
-  %i.cq = load i16, ptr %i.cp, align 1, !tbaa !276 ; 3 uses
+  %i.cq = load i16, ptr %i.cp, align 1, !tbaa !276 ; 2 uses
   %i.cr = call noundef i16 @llvm.bswap.i16(i16 %i.cq) ; 4 uses
   %i.cs = zext i16 %i.cr to i32                   ; 21 uses
   %i.ct = load ptr, ptr %i.ak, align 8, !tbaa !991
@@ -2711,8 +2709,8 @@ _ZNK2OT18ItemVariationStore18get_region_scalarsEjPKijPfj.exit: ; preds = %bb.m, 
   store i8 1, ptr %i.aw, align 8, !tbaa !993
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(18) %i.ax, i8 0, i64 18, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(22) %i.ay, i8 0, i64 22, i1 false)
-  %.not87258.not = icmp eq i16 %i.cq, 0           ; 2 uses
-  br i1 %.not87258.not, label %.critedge92.thread, label %.lr.ph
+  %.not87258.not = icmp ne i16 %i.cq, 0           ; 3 uses
+  br i1 %.not87258.not, label %.lr.ph, label %.critedge92.thread
 
 .lr.ph:                                           ; preds = %_ZNK2OT18ItemVariationStore18get_region_scalarsEjPKijPfj.exit
   %i.dz = getelementptr inbounds nuw i8, ptr %.0.i.i.i101, i64 6
@@ -3115,7 +3113,6 @@ _ZN2OT18TupleVariationDataINS_7NumTypeILb1EtLj2EEEE18tuple_variations_t11instant
   %i.ki = shl nuw nsw i32 %i.cs, 2
   %i.kj = zext nneg i32 %i.ki to i64              ; 2 uses
   %i.kk = getelementptr inbounds nuw i8, ptr %i.cu, i64 4 ; 3 uses
-  %6 = icmp ne i16 %i.cq, 0
   %i.kl = getelementptr inbounds nuw i8, ptr %i.cu, i64 8
   %i.km = getelementptr inbounds nuw i8, ptr %i.cu, i64 32 ; 2 uses
   %i.kn = getelementptr inbounds nuw i8, ptr %i.cu, i64 36 ; 3 uses
@@ -3137,7 +3134,7 @@ bb.aj:                                            ; preds = %.lr.ph264, %_ZN11hb
   br i1 %.not89, label %bb.ak, label %.critedge97.sink.split, !prof !97
 
 bb.ak:                                            ; preds = %bb.aj
-  br i1 %.not87258.not, label %._crit_edge, label %_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i154
+  br i1 %.not87258.not, label %_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i154, label %._crit_edge
 
 _ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i154: ; preds = %bb.ak
   %i.kr = call ptr @hb_realloc(ptr noundef null, i64 noundef %i.kj) #16 ; 12 uses
@@ -3230,7 +3227,7 @@ bb.am:                                            ; preds = %bb.al
   br label %_ZN11hb_vector_tIS_IfLb0EELb0EE4pushIJS0_EEEPS0_DpOT_.exit
 
 _ZN11hb_vector_tIS_IfLb0EELb0EE4pushIJS0_EEEPS0_DpOT_.exit: ; preds = %bb.am, %.critedge.i121
-  %.sroa.0.0 = phi i1 [ false, %.critedge.i121 ], [ %6, %bb.am ]
+  %.sroa.0.0 = phi i1 [ false, %.critedge.i121 ], [ %.not87258.not, %bb.am ]
   %.sroa.18.0 = phi ptr [ null, %.critedge.i121 ], [ %.sroa.18.2216341, %bb.am ]
   %i.ls = load i32, ptr %i.kn, align 4, !tbaa !291 ; 3 uses
   %i.lt = load i32, ptr %i.km, align 8, !tbaa !477

@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.bf, %_RINvNtCs3o
 
 bb.q:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcDNtNtCs8frGy5WneL6_4fish2io6IoDataEL_EEB1e_.exit37.i, %bb.h
   %i.bd = phi ptr [ %.pre78.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcDNtNtCs8frGy5WneL6_4fish2io6IoDataEL_EEB1e_.exit37.i ], [ %i.s, %bb.h ] ; 2 uses
-  %i.be = phi ptr [ %.pre.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcDNtNtCs8frGy5WneL6_4fish2io6IoDataEL_EEB1e_.exit37.i ], [ %i.k, %bb.h ] ; 6 uses
+  %i.be = phi ptr [ %.pre.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcDNtNtCs8frGy5WneL6_4fish2io6IoDataEL_EEB1e_.exit37.i ], [ %i.k, %bb.h ] ; 5 uses
   %.sroa.010.1.i = phi i32 [ %.sroa.010.0.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcDNtNtCs8frGy5WneL6_4fish2io6IoDataEL_EEB1e_.exit37.i ], [ 0, %bb.h ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !851
   %i.bf = getelementptr inbounds nuw i8, ptr %i.d, i64 8
@@ -224,7 +224,7 @@ bb.q:                                             ; preds = %_RINvNtCs3oUPovFnLW
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.bn = load i8, ptr %i.bm, align 8, !range !31, !alias.scope !850, !noalias !861, !noundef !9
   store i8 %i.bn, ptr %i.bi, align 4, !noalias !851
-  %i.bo = icmp ne ptr %i.be, null
+  %i.bo = icmp ne ptr %i.be, null                 ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.d, i64 39
   %i.bq = zext i1 %i.bo to i8
   store i8 %i.bq, ptr %i.bp, align 1, !noalias !851
@@ -232,8 +232,7 @@ bb.q:                                             ; preds = %_RINvNtCs3oUPovFnLW
   %i.bs = getelementptr inbounds nuw i8, ptr %i.d, i64 40
   %i.bt = zext i1 %i.br to i8
   store i8 %i.bt, ptr %i.bs, align 8, !noalias !851
-  %.not26.i = icmp eq ptr %i.be, null
-  br i1 %.not26.i, label %bb.x, label %bb.r
+  br i1 %i.bo, label %bb.r, label %bb.x
 
 bb.r:                                             ; preds = %bb.q
   %i.bu = load ptr, ptr %i.m, align 8, !noalias !851, !nonnull !9, !noundef !9 ; 3 uses
@@ -636,8 +635,8 @@ bb.u:                                             ; preds = %bb.t, %_RINvNtCs3oU
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs8frGy5WneL6_4fish.exit109: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecmEECs8frGy5WneL6_4fish.exit.i102
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cn)
-  %.not75 = icmp eq i32 %4, -1
-  br i1 %.not75, label %bb.v, label %bb.w
+  %.not75 = icmp ne i32 %4, -1                    ; 2 uses
+  br i1 %.not75, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.y, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs8frGy5WneL6_4fish.exit109
   %.sroa.021.4 = phi i8 [ 0, %bb.y ], [ 1, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs8frGy5WneL6_4fish.exit109 ] ; 14 uses
@@ -1040,9 +1039,8 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecINtNtBG
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish2io7IoChainEBF_.exit171: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecINtNtBG_4sync3ArcDNtNtCs8frGy5WneL6_4fish2io6IoDataEL_EEEB1u_.exit.i164
   call void @llvm.lifetime.end.p0(ptr nonnull %i.co)
-  %8 = icmp ne i32 %4, -1
   %i.agn = trunc nuw i8 %.sroa.021.4 to i1
-  %or.cond = and i1 %8, %i.agn
+  %or.cond = and i1 %.not75, %i.agn
   br i1 %or.cond, label %bb.t, label %bb.u
 
 bb.pb:                                            ; preds = %bb.ph

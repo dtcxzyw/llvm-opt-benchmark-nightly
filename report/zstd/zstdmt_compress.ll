@@ -27,7 +27,7 @@ target triple = "x86_64-pc-linux-gnu"
 define ptr @ZSTDMT_createCCtx_advanced(i32 noundef %0, ptr nofree noundef readonly byval(%struct.ZSTD_customMem) align 8 captures(none) %1, ptr noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
-  %.sroa.0.0.copyload = load ptr, ptr %1, align 8 ; 3 uses
+  %.sroa.0.0.copyload = load ptr, ptr %1, align 8 ; 2 uses
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -40,14 +40,13 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = tail call i32 @llvm.umin.i32(i32 %0, i32 256) ; 5 uses
-  %i.e = icmp ne ptr %.sroa.0.0.copyload, null
+  %i.e = icmp ne ptr %.sroa.0.0.copyload, null    ; 2 uses
   %i.f = icmp ne ptr %.sroa.4.0.copyload, null
   %i.g = xor i1 %i.e, %i.f
   br i1 %i.g, label %ZSTDMT_createCCtx_advanced_internal.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.not.i.i = icmp eq ptr %.sroa.0.0.copyload, null
-  br i1 %.not.i.i, label %ZSTD_customCalloc.exit.i, label %bb.d
+  br i1 %i.e, label %bb.d, label %ZSTD_customCalloc.exit.i
 
 bb.d:                                             ; preds = %bb.c
   %i.h = tail call ptr %.sroa.0.0.copyload(ptr noundef %.sroa.5.0.copyload, i64 noundef 3120) #14, !inline_history !114 ; 3 uses
@@ -450,10 +449,10 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %i.zu = getelementptr inbounds nuw i8, ptr %0, i64 352
   %i.zv = getelementptr inbounds nuw i8, ptr %i.zl, i64 128
   store ptr %i.zu, ptr %i.zv, align 8, !tbaa !108
-  %i.zw = load i32, ptr %i.xz, align 8, !tbaa !72 ; 3 uses
+  %i.zw = load i32, ptr %i.xz, align 8, !tbaa !72 ; 2 uses
   %i.zx = getelementptr inbounds nuw i8, ptr %i.zl, i64 184
   store i32 %i.zw, ptr %i.zx, align 8, !tbaa !109
-  %i.zy = icmp eq i32 %i.zw, 0                    ; 3 uses
+  %i.zy = icmp eq i32 %i.zw, 0                    ; 4 uses
   %i.zz = zext i1 %i.zy to i32
   %i.aaa = getelementptr inbounds nuw i8, ptr %i.zl, i64 188
   store i32 %i.zz, ptr %i.aaa, align 4, !tbaa !110
@@ -463,8 +462,8 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %i.aad = load i32, ptr %i.aac, align 4, !tbaa !172
   %i.aae = icmp ne i32 %i.aad, 0
   %or.cond.i70 = and i1 %i.ye, %i.aae
-  %4 = icmp ne i32 %i.zw, 0
-  %narrow.i = select i1 %or.cond.i70, i1 %4, i1 false
+  %.not103.i = xor i1 %i.zy, true
+  %narrow.i = select i1 %or.cond.i70, i1 %.not103.i, i1 false
   %i.aaf = zext i1 %narrow.i to i32
   %i.aag = getelementptr inbounds nuw i8, ptr %i.zl, i64 448
   store i32 %i.aaf, ptr %i.aag, align 8, !tbaa !173

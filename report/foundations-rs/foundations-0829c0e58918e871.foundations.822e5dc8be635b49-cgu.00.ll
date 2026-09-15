@@ -205,16 +205,15 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.915.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 48, !dbg !7885 ; 2 uses
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 56, !dbg !7885
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %.sroa.915.0..sroa_idx, i8 0, i64 24, i1 false), !dbg !7885
-  %i.l = load ptr, ptr %1, align 8, !dbg !7888, !noalias !7858, !noundef !714 ; 2 uses
-  %i.m = icmp ne ptr %i.l, null, !dbg !7888
+  %i.l = load ptr, ptr %1, align 8, !dbg !7888, !noalias !7858, !noundef !714
+  %i.m = icmp ne ptr %i.l, null, !dbg !7888       ; 2 uses
   %i.n = zext i1 %i.m to i64, !dbg !7888
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !7889, !noalias !7861
   store i64 %i.n, ptr %i.b, align 8, !dbg !7890, !noalias !7861
   call fastcc void @_RNvXs2_NtNtCsaL1QbXo9JQH_3std4hash6randomNtB5_13DefaultHasherNtNtCs3oUPovFnLWP_4core4hash6Hasher5write(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.b, i64 noundef 8) #38, !dbg !7891
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !7892, !noalias !7861
-  %.not.i.i = icmp eq ptr %i.l, null, !dbg !7893
-  %i.o = getelementptr i8, ptr %1, i64 8, !dbg !7894 ; 2 uses
-  br i1 %.not.i.i, label %bb.d, label %bb.c, !dbg !7893
+  %i.o = getelementptr i8, ptr %1, i64 8, !dbg !7893 ; 2 uses
+  br i1 %i.m, label %bb.c, label %bb.d, !dbg !7894
 
 bb.c:                                             ; preds = %bb.b
   %.val.i.i = load ptr, ptr %i.o, align 8, !dbg !7895, !noalias !7858, !noundef !714
@@ -303,14 +302,13 @@ _RINvXsz_NtNtCs74LoFwSioHw_4http6header4nameNtB6_10HeaderNameNtNtCs3oUPovFnLWP_4
   br label %_RINvXsz_NtNtCs74LoFwSioHw_4http6header4nameNtB6_10HeaderNameNtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtNtB8_3map9FnvHasherECsbaWXNhtWAp9_11foundations.exit, !dbg !7954
 
 bb.e:                                             ; preds = %bb.a
-  %i.cc = load ptr, ptr %1, align 8, !dbg !7955, !noalias !7874, !noundef !714 ; 2 uses
-  %i.cd = icmp ne ptr %i.cc, null, !dbg !7955
+  %i.cc = load ptr, ptr %1, align 8, !dbg !7955, !noalias !7874, !noundef !714
+  %i.cd = icmp ne ptr %i.cc, null, !dbg !7955     ; 2 uses
   %i.ce = zext i1 %i.cd to i64, !dbg !7955
   %i.cf = xor i64 %i.ce, -3750763034362895579, !dbg !7956
   %i.cg = mul i64 %i.cf, 2232315406967589409, !dbg !7957 ; 4 uses
-  %.not.i.i20 = icmp eq ptr %i.cc, null, !dbg !7958
-  %i.ch = getelementptr i8, ptr %1, i64 8, !dbg !7959 ; 2 uses
-  br i1 %.not.i.i20, label %bb.g, label %bb.f, !dbg !7958
+  %i.ch = getelementptr i8, ptr %1, i64 8, !dbg !7958 ; 2 uses
+  br i1 %i.cd, label %bb.f, label %bb.g, !dbg !7959
 
 bb.f:                                             ; preds = %bb.e
   %.val.i.i21 = load ptr, ptr %i.ch, align 8, !dbg !7960, !noalias !7874, !noundef !714 ; 3 uses
@@ -713,8 +711,8 @@ begin_hunk_1_@llvm.memset.p0.i64
 !7890 = !DILocation(line: 4088, column: 22, scope: !7698, inlinedAt: !7699)
 !7891 = !DILocation(line: 393, column: 14, scope: !7691, inlinedAt: !7697)
 !7892 = !DILocation(line: 393, column: 36, scope: !7691, inlinedAt: !7697)
-!7893 = !DILocation(line: 43, column: 39, scope: !7694, inlinedAt: !7686)
-!7894 = !DILocation(line: 0, scope: !7694, inlinedAt: !7686)
+!7893 = !DILocation(line: 0, scope: !7694, inlinedAt: !7686)
+!7894 = !DILocation(line: 43, column: 39, scope: !7694, inlinedAt: !7686)
 !7895 = !DILocation(line: 46, column: 12, scope: !7700, inlinedAt: !7686)
 !7896 = !DILocation(line: 1595, column: 16, scope: !7701, inlinedAt: !7702)
 !7897 = !DILocation(line: 43, column: 42, scope: !7694, inlinedAt: !7686)
@@ -778,8 +776,8 @@ begin_hunk_1_@llvm.memset.p0.i64
 !7955 = !DILocation(line: 43, column: 39, scope: !7793, inlinedAt: !7797)
 !7956 = !DILocation(line: 3768, column: 13, scope: !7801, inlinedAt: !7809)
 !7957 = !DILocation(line: 2758, column: 13, scope: !7810, inlinedAt: !7811)
-!7958 = !DILocation(line: 43, column: 39, scope: !7805, inlinedAt: !7797)
-!7959 = !DILocation(line: 0, scope: !7805, inlinedAt: !7797)
+!7958 = !DILocation(line: 0, scope: !7805, inlinedAt: !7797)
+!7959 = !DILocation(line: 43, column: 39, scope: !7805, inlinedAt: !7797)
 !7960 = !DILocation(line: 46, column: 12, scope: !7812, inlinedAt: !7797)
 !7961 = !DILocation(line: 970, column: 18, scope: !7813, inlinedAt: !7825)
 !7962 = !DILocation(line: 1663, column: 9, scope: !7826, inlinedAt: !7831)

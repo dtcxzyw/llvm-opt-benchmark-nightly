@@ -205,11 +205,10 @@ bb.bm:                                            ; preds = %bb.bl
 _ZN4entt10basic_viewINS_5get_tIJNS_13basic_storageIiNS_6entityESaIiEEEEEENS_9exclude_tIJKNS2_IdS3_SaIdEEEEEEEC2Ev.exit.i298: ; preds = %bb.bm, %bb.bl, %_ZN4entt10basic_viewINS_5get_tIJNS_13basic_storageIiNS_6entityESaIiEEEKNS2_IcS3_SaIcEEEEEENS_9exclude_tIJNS2_IdS3_SaIdEEEKNS2_IfS3_SaIfEEEEEEE7storageIS7_EEvRT_.exit
   %i.hp = load ptr, ptr %1, align 8, !tbaa !126   ; 8 uses
   %.not.i.i299 = icmp ne ptr %i.hp, null
-  %i.hq = load ptr, ptr %i.u, align 8, !tbaa !126 ; 4 uses
-  %i.hr = load ptr, ptr %i.v, align 8, !tbaa !167 ; 3 uses
-  %i.hs = icmp ne ptr %i.hq, %i.hr
+  %i.hq = load ptr, ptr %i.u, align 8, !tbaa !126 ; 3 uses
+  %i.hr = load ptr, ptr %i.v, align 8, !tbaa !167 ; 2 uses
+  %i.hs = icmp ne ptr %i.hq, %i.hr                ; 2 uses
   %.not.i34.i301 = icmp ne ptr %i.hq, null
-  %.not.i3.i302.not = and i1 %.not.i34.i301, %i.hs
   %i.ht = load ptr, ptr %i.ai, align 8, !tbaa !126 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %24) #26
   %i.hu = load i64, ptr %i.w, align 8, !tbaa !168 ; 2 uses
@@ -223,10 +222,9 @@ _ZN7testing15AssertionResultC2IN4entt10basic_viewINS2_5get_tIJNS2_13basic_storag
   br label %bb.bn
 
 _ZN7testing15AssertionResultC2IN4entt10basic_viewINS2_5get_tIJNS2_13basic_storageIiNS2_6entityESaIiEEEKNS5_IcS6_SaIcEEEEEENS2_9exclude_tIJNS5_IdS6_SaIdEEEKNS5_IfS6_SaIfEEEEEEEEEERKT_PNSt9enable_ifIXntsr3std14is_convertibleISL_S0_EE5valueEvE4typeE.exit: ; preds = %_ZN4entt10basic_viewINS_5get_tIJNS_13basic_storageIiNS_6entityESaIiEEEEEENS_9exclude_tIJKNS2_IdS3_SaIdEEEEEEEC2Ev.exit.i298
-  %.not7.not.i.i.i = icmp ne ptr %i.hq, %i.hr
   %i.hw = load ptr, ptr %i.x, align 8
   %.not7.not.i.1.i.i = icmp ne ptr %i.hw, %i.hr
-  %or.cond.not.i.i = select i1 %.not7.not.i.i.i, i1 %.not7.not.i.1.i.i, i1 false ; 2 uses
+  %or.cond.not.i.i = select i1 %i.hs, i1 %.not7.not.i.1.i.i, i1 false ; 2 uses
   %i.hx = zext i1 %or.cond.not.i.i to i8
   store i8 %i.hx, ptr %24, align 8, !tbaa !91
   %i.hy = getelementptr inbounds nuw i8, ptr %24, i64 8 ; 2 uses
@@ -526,7 +524,8 @@ bb.ck:                                            ; preds = %_ZN7testing15Assert
   call void @llvm.lifetime.end.p0(ptr nonnull %28) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %32) #26
   %.not7.not.i.i.i361691 = icmp ne ptr %i.hq, @_ZZN4entt8internal16view_placeholderITkNS_17cvref_unqualifiedENS_16basic_sparse_setINS_6entityESaIS3_EEEEEPKT_vE11placeholder
-  %.not7.not.i.i.i361 = and i1 %.not.i3.i302.not, %.not7.not.i.i.i361691
+  %64 = and i1 %.not.i34.i301, %.not7.not.i.i.i361691
+  %.not7.not.i.i.i361 = and i1 %64, %i.hs
   %i.kp = select i1 %.not.i.i299, i1 %.not7.not.i.i.i361, i1 false ; 2 uses
   %i.kq = zext i1 %i.kp to i8
   store i8 %i.kq, ptr %32, align 8, !tbaa !91

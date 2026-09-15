@@ -204,44 +204,43 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.g = load i8, ptr %i.f, align 8, !range !6, !noalias !114, !noundef !5
   %i.h = icmp eq i8 %i.g, 1
-  br i1 %i.h, label %_RINvMs2_NtNtCsaL1QbXo9JQH_3std6thread5localINtB6_8LocalKeyNtNtCsdS7Q0PB8o3V_15crossbeam_epoch9collector11LocalHandleE8try_withNCINvNtBY_7default11with_handleNCNvB25_9is_pinned0bE0bECskVyUMSjkkSy_10rayon_core.exit.i, label %_RNvYNCNKNvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default6HANDLE00INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtNtBa_9collector11LocalHandleEEEE9call_onceCskVyUMSjkkSy_10rayon_core.exit.i.i, !prof !9
+  br i1 %i.h, label %_RINvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECskVyUMSjkkSy_10rayon_core.exit, label %_RNvYNCNKNvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default6HANDLE00INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtNtBa_9collector11LocalHandleEEEE9call_onceCskVyUMSjkkSy_10rayon_core.exit.i.i, !prof !9
 
 _RNvYNCNKNvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default6HANDLE00INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtNtBa_9collector11LocalHandleEEEE9call_onceCskVyUMSjkkSy_10rayon_core.exit.i.i: ; preds = %bb.a
   %i.i = tail call fastcc noundef ptr @_RINvMs0_NtNtNtNtCsaL1QbXo9JQH_3std3sys12thread_local6native4lazyINtB6_7StorageNtNtCsdS7Q0PB8o3V_15crossbeam_epoch9collector11LocalHandleuE16get_or_init_slowNvNvNtB1i_7default6HANDLE27___rust_std_internal_init_fnECskVyUMSjkkSy_10rayon_core(ptr noundef nonnull align 8 %i.e, ptr noalias nofree noundef align 8 dereferenceable_or_null(16) null) ; 2 uses
   %i.j = icmp eq ptr %i.i, null
-  br i1 %i.j, label %_RINvMs2_NtNtCsaL1QbXo9JQH_3std6thread5localINtB6_8LocalKeyNtNtCsdS7Q0PB8o3V_15crossbeam_epoch9collector11LocalHandleE8try_withNCINvNtBY_7default11with_handleNCNvB25_9is_pinned0bE0bECskVyUMSjkkSy_10rayon_core.exit.thread.i, label %_RINvMs2_NtNtCsaL1QbXo9JQH_3std6thread5localINtB6_8LocalKeyNtNtCsdS7Q0PB8o3V_15crossbeam_epoch9collector11LocalHandleE8try_withNCINvNtBY_7default11with_handleNCNvB25_9is_pinned0bE0bECskVyUMSjkkSy_10rayon_core.exit.i
-
-_RINvMs2_NtNtCsaL1QbXo9JQH_3std6thread5localINtB6_8LocalKeyNtNtCsdS7Q0PB8o3V_15crossbeam_epoch9collector11LocalHandleE8try_withNCINvNtBY_7default11with_handleNCNvB25_9is_pinned0bE0bECskVyUMSjkkSy_10rayon_core.exit.i: ; preds = %_RNvYNCNKNvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default6HANDLE00INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtNtBa_9collector11LocalHandleEEEE9call_onceCskVyUMSjkkSy_10rayon_core.exit.i.i, %bb.a
-  %.sroa.0.0.i.i.i2.i.i = phi ptr [ %i.i, %_RNvYNCNKNvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default6HANDLE00INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtNtBa_9collector11LocalHandleEEEE9call_onceCskVyUMSjkkSy_10rayon_core.exit.i.i ], [ %i.e, %bb.a ]
-  %.val.i.i = load ptr, ptr %.sroa.0.0.i.i.i2.i.i, align 8, !noundef !5
-  %2 = getelementptr i8, ptr %.val.i.i, i64 2072
-  %.val.val.i.i = load i64, ptr %2, align 8, !noundef !5
-  br label %_RINvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECskVyUMSjkkSy_10rayon_core.exit
+  br i1 %i.j, label %_RINvMs2_NtNtCsaL1QbXo9JQH_3std6thread5localINtB6_8LocalKeyNtNtCsdS7Q0PB8o3V_15crossbeam_epoch9collector11LocalHandleE8try_withNCINvNtBY_7default11with_handleNCNvB25_9is_pinned0bE0bECskVyUMSjkkSy_10rayon_core.exit.thread.i, label %_RINvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECskVyUMSjkkSy_10rayon_core.exit
 
 _RINvMs2_NtNtCsaL1QbXo9JQH_3std6thread5localINtB6_8LocalKeyNtNtCsdS7Q0PB8o3V_15crossbeam_epoch9collector11LocalHandleE8try_withNCINvNtBY_7default11with_handleNCNvB25_9is_pinned0bE0bECskVyUMSjkkSy_10rayon_core.exit.thread.i: ; preds = %_RNvYNCNKNvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default6HANDLE00INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtNtBa_9collector11LocalHandleEEEE9call_onceCskVyUMSjkkSy_10rayon_core.exit.i.i
   %i.k = tail call noundef nonnull align 8 ptr @_RNvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default9collector()
   %i.l = tail call noundef ptr @_RNvMs1_NtCsdS7Q0PB8o3V_15crossbeam_epoch9collectorNtB5_9Collector8register(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.k) ; 3 uses
   %i.m = getelementptr i8, ptr %i.l, i64 2072
-  %.val2.val.i.i = load i64, ptr %i.m, align 8, !noundef !5 ; 2 uses
+  %.val2.val.i.i = load i64, ptr %i.m, align 8, !noundef !5
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 2080 ; 2 uses
   %i.o = load i64, ptr %i.n, align 8, !noundef !5 ; 2 uses
   %i.p = add i64 %i.o, -1
   store i64 %i.p, ptr %i.n, align 8
-  %i.q = icmp eq i64 %.val2.val.i.i, 0
+  %i.q = icmp eq i64 %.val2.val.i.i, 0            ; 2 uses
   %i.r = icmp eq i64 %i.o, 1
   %or.cond.i.i.i3.i.i = and i1 %i.q, %i.r
-  br i1 %or.cond.i.i.i3.i.i, label %_RINvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECskVyUMSjkkSy_10rayon_core.exit.thread, label %_RINvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECskVyUMSjkkSy_10rayon_core.exit, !prof !8
+  br i1 %or.cond.i.i.i3.i.i, label %_RINvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECskVyUMSjkkSy_10rayon_core.exit.thread, label %_RNCINvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default11with_handleNCNvB4_9is_pinned0bEs_0CskVyUMSjkkSy_10rayon_core.exit.i, !prof !8
 
 _RINvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECskVyUMSjkkSy_10rayon_core.exit.thread: ; preds = %_RINvMs2_NtNtCsaL1QbXo9JQH_3std6thread5localINtB6_8LocalKeyNtNtCsdS7Q0PB8o3V_15crossbeam_epoch9collector11LocalHandleE8try_withNCINvNtBY_7default11with_handleNCNvB25_9is_pinned0bE0bECskVyUMSjkkSy_10rayon_core.exit.thread.i
   tail call void @_RNvMs6_NtCsdS7Q0PB8o3V_15crossbeam_epoch8internalNtB5_5Local8finalize(ptr noundef nonnull align 128 %i.l)
   br label %bb.d
 
-_RINvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECskVyUMSjkkSy_10rayon_core.exit: ; preds = %_RINvMs2_NtNtCsaL1QbXo9JQH_3std6thread5localINtB6_8LocalKeyNtNtCsdS7Q0PB8o3V_15crossbeam_epoch9collector11LocalHandleE8try_withNCINvNtBY_7default11with_handleNCNvB25_9is_pinned0bE0bECskVyUMSjkkSy_10rayon_core.exit.i, %_RINvMs2_NtNtCsaL1QbXo9JQH_3std6thread5localINtB6_8LocalKeyNtNtCsdS7Q0PB8o3V_15crossbeam_epoch9collector11LocalHandleE8try_withNCINvNtBY_7default11with_handleNCNvB25_9is_pinned0bE0bECskVyUMSjkkSy_10rayon_core.exit.thread.i
-  %.sroa.0.0.in.i = phi i64 [ %.val.val.i.i, %_RINvMs2_NtNtCsaL1QbXo9JQH_3std6thread5localINtB6_8LocalKeyNtNtCsdS7Q0PB8o3V_15crossbeam_epoch9collector11LocalHandleE8try_withNCINvNtBY_7default11with_handleNCNvB25_9is_pinned0bE0bECskVyUMSjkkSy_10rayon_core.exit.i ], [ %.val2.val.i.i, %_RINvMs2_NtNtCsaL1QbXo9JQH_3std6thread5localINtB6_8LocalKeyNtNtCsdS7Q0PB8o3V_15crossbeam_epoch9collector11LocalHandleE8try_withNCINvNtBY_7default11with_handleNCNvB25_9is_pinned0bE0bECskVyUMSjkkSy_10rayon_core.exit.thread.i ]
-  %.sroa.0.0.i.not = icmp eq i64 %.sroa.0.0.in.i, 0
+_RNCINvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default11with_handleNCNvB4_9is_pinned0bEs_0CskVyUMSjkkSy_10rayon_core.exit.i: ; preds = %_RINvMs2_NtNtCsaL1QbXo9JQH_3std6thread5localINtB6_8LocalKeyNtNtCsdS7Q0PB8o3V_15crossbeam_epoch9collector11LocalHandleE8try_withNCINvNtBY_7default11with_handleNCNvB25_9is_pinned0bE0bECskVyUMSjkkSy_10rayon_core.exit.thread.i
+  br i1 %i.q, label %bb.d, label %bb.b
+
+_RINvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECskVyUMSjkkSy_10rayon_core.exit: ; preds = %bb.a, %_RNvYNCNKNvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default6HANDLE00INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtNtBa_9collector11LocalHandleEEEE9call_onceCskVyUMSjkkSy_10rayon_core.exit.i.i
+  %.sroa.0.0.i.i.i2.i.i = phi ptr [ %i.i, %_RNvYNCNKNvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default6HANDLE00INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtNtBa_9collector11LocalHandleEEEE9call_onceCskVyUMSjkkSy_10rayon_core.exit.i.i ], [ %i.e, %bb.a ]
+  %.val.i.i = load ptr, ptr %.sroa.0.0.i.i.i2.i.i, align 8, !noundef !5
+  %2 = getelementptr i8, ptr %.val.i.i, i64 2072
+  %.val.val.i.i = load i64, ptr %2, align 8, !noundef !5
+  %.sroa.0.0.i.not = icmp eq i64 %.val.val.i.i, 0
   br i1 %.sroa.0.0.i.not, label %bb.d, label %bb.b
 
-bb.b:                                             ; preds = %_RINvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECskVyUMSjkkSy_10rayon_core.exit
+bb.b:                                             ; preds = %_RNCINvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default11with_handleNCNvB4_9is_pinned0bEs_0CskVyUMSjkkSy_10rayon_core.exit.i, %_RINvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECskVyUMSjkkSy_10rayon_core.exit
   fence seq_cst
   br label %bb.d
 
@@ -251,7 +250,7 @@ bb.c:                                             ; preds = %bb.f
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsdS7Q0PB8o3V_15crossbeam_epoch5guard5GuardECskVyUMSjkkSy_10rayon_core(ptr %i.t) #27
           to label %bb.q unwind label %bb.p
 
-bb.d:                                             ; preds = %_RINvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECskVyUMSjkkSy_10rayon_core.exit, %bb.b, %_RINvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECskVyUMSjkkSy_10rayon_core.exit.thread
+bb.d:                                             ; preds = %_RINvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECskVyUMSjkkSy_10rayon_core.exit.thread, %_RINvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default11with_handleNCNvB2_9is_pinned0bECskVyUMSjkkSy_10rayon_core.exit, %bb.b, %_RNCINvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default11with_handleNCNvB4_9is_pinned0bEs_0CskVyUMSjkkSy_10rayon_core.exit.i
   %i.t = tail call fastcc noundef ptr @_RINvNtCsdS7Q0PB8o3V_15crossbeam_epoch7default11with_handleNCNvB2_3pin0NtNtB4_5guard5GuardECskVyUMSjkkSy_10rayon_core() #29 ; 10 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 264
   %i.v = load atomic i64, ptr %i.u acquire, align 8

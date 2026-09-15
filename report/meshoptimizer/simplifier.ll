@@ -205,11 +205,11 @@ bb.u:                                             ; preds = %.lr.ph298.i
 
 bb.v:                                             ; preds = %bb.u
   %i.mb = getelementptr inbounds nuw [4 x i8], ptr %i.ka, i64 %.0229297.i
-  %i.mc = load i32, ptr %i.mb, align 4, !tbaa !28 ; 3 uses
+  %i.mc = load i32, ptr %i.mb, align 4, !tbaa !28 ; 2 uses
   %i.md = getelementptr inbounds nuw [4 x i8], ptr %i.jv, i64 %.0229297.i
-  %i.me = load i32, ptr %i.md, align 4, !tbaa !28 ; 4 uses
-  %i.mf = icmp eq i32 %i.mc, -1
-  %i.mg = icmp eq i32 %i.me, -1
+  %i.me = load i32, ptr %i.md, align 4, !tbaa !28 ; 3 uses
+  %i.mf = icmp eq i32 %i.mc, -1                   ; 2 uses
+  %i.mg = icmp eq i32 %i.me, -1                   ; 2 uses
   %or.cond.i = select i1 %i.mf, i1 %i.mg, i1 false
   br i1 %or.cond.i, label %bb.w, label %bb.x
 
@@ -219,11 +219,9 @@ bb.w:                                             ; preds = %bb.v
   br label %bb.ap
 
 bb.x:                                             ; preds = %bb.v
-  %18 = icmp ne i32 %i.mc, -1
-  %19 = icmp ne i32 %i.me, -1
-  %or.cond3.i = select i1 %18, i1 %19, i1 false
+  %or.cond3.i = select i1 %i.mf, i1 true, i1 %i.mg
   %i.mi = zext i32 %i.mc to i64                   ; 3 uses
-  br i1 %or.cond3.i, label %bb.y, label %._crit_edge351.i
+  br i1 %or.cond3.i, label %._crit_edge351.i, label %bb.y
 
 ._crit_edge351.i:                                 ; preds = %bb.x
   %.pre352.i = zext i32 %i.me to i64
@@ -626,7 +624,7 @@ bb.bn:                                            ; preds = %bb.bm, %.lr.ph323.i
   %exitcond350.not.i = icmp eq i64 %i.zm, %.0702
   br i1 %exitcond350.not.i, label %_ZN7meshoptL16classifyVerticesEPhPjS1_mRKNS_13EdgeAdjacencyEPKjS6_PKhS6_j.exit, label %.lr.ph323.i, !llvm.loop !80
 
-_ZN7meshoptL16classifyVerticesEPhPjS1_mRKNS_13EdgeAdjacencyEPKjS6_PKhS6_j.exit: ; preds = %bb.bn, %middle.block, %vec.epilog.middle.block, %bb.p, %.loopexit284.i
+_ZN7meshoptL16classifyVerticesEPhPjS1_mRKNS_13EdgeAdjacencyEPKjS6_PKhS6_j.exit: ; preds = %bb.bn, %middle.block, %vec.epilog.middle.block, %.loopexit284.i, %bb.p
   %i.zn = load ptr, ptr @_ZZN17meshopt_Allocator7storageEvE1s, align 8, !tbaa !23
   %i.zo = icmp ugt i64 %.0702, 1537228672809129301
   %i.zp = mul nuw i64 %.0702, 12
@@ -1029,7 +1027,7 @@ bb.hg:                                            ; preds = %_ZN7meshoptL15prune
 
 .critedge:                                        ; preds = %bb.hg, %_ZN7meshoptL15pruneComponentsEPjmPKjPKfmfRf.exit581, %_ZN7meshoptL15pruneComponentsEPjmPKjPKfmfRf.exit.thread
   %.3691.lcssa = phi float [ %.2690, %_ZN7meshoptL15pruneComponentsEPjmPKjPKfmfRf.exit.thread ], [ %.3691813, %_ZN7meshoptL15pruneComponentsEPjmPKjPKfmfRf.exit581 ], [ %i.cyr, %bb.hg ]
-  %.5.lcssa = phi i64 [ %.0339.lcssa, %_ZN7meshoptL15pruneComponentsEPjmPKjPKfmfRf.exit.thread ], [ %.5815, %_ZN7meshoptL15pruneComponentsEPjmPKjPKfmfRf.exit581 ], [ %.134.i575, %bb.hg ] ; 13 uses
+  %.5.lcssa = phi i64 [ %.0339.lcssa, %_ZN7meshoptL15pruneComponentsEPjmPKjPKfmfRf.exit.thread ], [ %.5815, %_ZN7meshoptL15pruneComponentsEPjmPKjPKfmfRf.exit581 ], [ %.134.i575, %bb.hg ] ; 12 uses
   %i.cyu = and i32 %13, 536870912
   %.not408 = icmp eq i32 %i.cyu, 0
   br i1 %.not408, label %_ZN7meshoptL16finalizeVerticesEPfmS0_mPKfmmPKNS_7Vector3ES2_PKjS7_fS2_PKhS9_S9_.exit, label %bb.hh
@@ -1432,7 +1430,7 @@ _ZN7meshoptL16finalizeVerticesEPfmS0_mPKfmmPKNS_7Vector3ES2_PKjS7_fS2_PKhS9_S9_.
   %i.dxg = and i32 %13, 1073741824
   %i.dxh = icmp eq i32 %i.dxg, 0
   %i.dxi = icmp ne ptr %.0379, null               ; 2 uses
-  %i.dxj = icmp eq i64 %.5.lcssa, 0
+  %i.dxj = icmp eq i64 %.5.lcssa, 0               ; 2 uses
   %i.dxk = or i1 %i.dxh, %i.dxj
   %or.cond830.not = or i1 %i.dxk, %i.dxi
   br i1 %or.cond830.not, label %.loopexit722, label %.lr.ph827
@@ -1516,13 +1514,14 @@ bb.je:                                            ; preds = %bb.jd, %._crit_edge
   br i1 %i.dzj, label %.lr.ph827, label %.loopexit722, !llvm.loop !126
 
 .loopexit722:                                     ; preds = %bb.je, %_ZN7meshoptL16finalizeVerticesEPfmS0_mPKfmmPKNS_7Vector3ES2_PKjS7_fS2_PKhS9_S9_.exit
-  %20 = icmp ne i64 %.5.lcssa, 0
-  %or.cond831 = and i1 %i.dxi, %20
+  %.not890 = xor i1 %i.dxj, true
+  %or.cond831 = and i1 %i.dxi, %.not890
   br i1 %or.cond831, label %.lr.ph829.preheader, label %.loopexit
 
 .lr.ph829.preheader:                              ; preds = %.loopexit722
+  %18 = add i64 %.5.lcssa, -1
   %xtraiter1413 = and i64 %.5.lcssa, 3            ; 3 uses
-  %i.dzk = icmp ult i64 %.5.lcssa, 4
+  %i.dzk = icmp ult i64 %18, 3
   br i1 %i.dzk, label %.lr.ph829.epil.preheader, label %.lr.ph829.preheader.new
 
 .lr.ph829.preheader.new:                          ; preds = %.lr.ph829.preheader
@@ -1560,7 +1559,7 @@ bb.je:                                            ; preds = %bb.jd, %._crit_edge
   %i.eah = load i32, ptr %i.eag, align 4, !tbaa !28
   store i32 %i.eah, ptr %i.ead, align 4, !tbaa !28
   %i.eai = add nuw i64 %.0828, 4                  ; 2 uses
-  %niter1418.next.3 = add nuw i64 %niter1418, 4   ; 2 uses
+  %niter1418.next.3 = add i64 %niter1418, 4       ; 2 uses
   %niter1418.ncmp.3 = icmp eq i64 %niter1418.next.3, %unroll_iter1417
   br i1 %niter1418.ncmp.3, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph829, !llvm.loop !127
 
@@ -1963,7 +1962,7 @@ bb.c:                                             ; preds = %bb.b
   %i.t = fptosi float %i.s to i32                 ; 3 uses
   %i.u = udiv i64 %2, 3
   %i.v = icmp sgt i32 %i.t, 1
-  %i.w = icmp ne ptr %6, null
+  %i.w = icmp ne ptr %6, null                     ; 4 uses
   %or.cond = or i1 %i.w, %i.v
   br i1 %or.cond, label %bb.d, label %_ZN7meshoptL14countTrianglesEPKjS1_m.exit
 
@@ -1974,8 +1973,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not26.i, label %_ZN7meshoptL16computeVertexIdsEPjPKNS_7Vector3EPKhmi.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.d
-  %.not.i = icmp eq ptr %6, null
-  br i1 %.not.i, label %.lr.ph.split.us.i.preheader, label %.lr.ph.split.i.preheader
+  br i1 %i.w, label %.lr.ph.split.i.preheader, label %.lr.ph.split.us.i.preheader
 
 .lr.ph.split.i.preheader:                         ; preds = %.lr.ph.i
   %i.z = insertelement <2 x float> poison, float %i.y, i64 0
@@ -2117,7 +2115,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %exitcond.not.i = icmp eq i64 %i.di, %4
   br i1 %exitcond.not.i, label %_ZN7meshoptL16computeVertexIdsEPjPKNS_7Vector3EPKhmi.exit, label %.lr.ph.split.i, !llvm.loop !166
 
-_ZN7meshoptL16computeVertexIdsEPjPKNS_7Vector3EPKhmi.exit: ; preds = %bb.g, %.lr.ph.split.us.i, %middle.block, %bb.d
+_ZN7meshoptL16computeVertexIdsEPjPKNS_7Vector3EPKhmi.exit: ; preds = %.lr.ph.split.us.i, %bb.g, %middle.block, %bb.d
   %.not.i165 = icmp eq i64 %2, 0
   br i1 %.not.i165, label %_ZN7meshoptL14countTrianglesEPKjS1_m.exit, label %.lr.ph.i166
 
@@ -2168,7 +2166,6 @@ _ZN7meshoptL14countTrianglesEPKjS1_m.exit:        ; preds = %.lr.ph.i166, %_ZN7m
   %i.el = fptosi float %i.ek to i32
   %i.em = udiv i64 %7, 3                          ; 3 uses
   %.not26.i167 = icmp eq i64 %4, 0                ; 3 uses
-  %.not.i169 = icmp eq ptr %6, null               ; 2 uses
   %.not.i179 = icmp eq i64 %2, 0                  ; 3 uses
   %i.en = uitofp nneg i64 %i.em to float          ; 3 uses
   %min.iters.check298 = icmp ult i64 %4, 4
@@ -2209,7 +2206,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   br i1 %.not26.i167, label %_ZN7meshoptL16computeVertexIdsEPjPKNS_7Vector3EPKhmi.exit178, label %.lr.ph.i168
 
 .lr.ph.i168:                                      ; preds = %bb.n
-  br i1 %.not.i169, label %.lr.ph.split.us.i175.preheader, label %.lr.ph.split.i170.preheader
+  br i1 %i.w, label %.lr.ph.split.i170.preheader, label %.lr.ph.split.us.i175.preheader
 
 .lr.ph.split.i170.preheader:                      ; preds = %.lr.ph.i168
   %i.ew = insertelement <2 x float> poison, float %i.ev, i64 0
@@ -2348,7 +2345,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %exitcond.not.i174 = icmp eq i64 %i.if, %4
   br i1 %exitcond.not.i174, label %_ZN7meshoptL16computeVertexIdsEPjPKNS_7Vector3EPKhmi.exit178, label %.lr.ph.split.i170, !llvm.loop !166
 
-_ZN7meshoptL16computeVertexIdsEPjPKNS_7Vector3EPKhmi.exit178: ; preds = %bb.q, %.lr.ph.split.us.i175, %middle.block306, %bb.n
+_ZN7meshoptL16computeVertexIdsEPjPKNS_7Vector3EPKhmi.exit178: ; preds = %.lr.ph.split.us.i175, %bb.q, %middle.block306, %bb.n
   br i1 %.not.i179, label %_ZN7meshoptL14countTrianglesEPKjS1_m.exit184, label %.lr.ph.i180
 
 .lr.ph.i180:                                      ; preds = %_ZN7meshoptL16computeVertexIdsEPjPKNS_7Vector3EPKhmi.exit178, %.lr.ph.i180
@@ -2477,7 +2474,7 @@ bb.z:                                             ; preds = %bb.y
   br i1 %.not26.i167, label %_ZN7meshoptL15fillVertexCellsEPjmS0_PKjm.exit.thread, label %.lr.ph.i188
 
 .lr.ph.i188:                                      ; preds = %bb.z
-  br i1 %.not.i169, label %.lr.ph.split.us.i195.preheader, label %.lr.ph.split.i190.preheader
+  br i1 %i.w, label %.lr.ph.split.i190.preheader, label %.lr.ph.split.us.i195.preheader
 
 .lr.ph.split.i190.preheader:                      ; preds = %.lr.ph.i188
   %i.la = insertelement <2 x float> poison, float %i.kz, i64 0
@@ -2623,7 +2620,7 @@ _ZN7meshoptL15fillVertexCellsEPjmS0_PKjm.exit.thread: ; preds = %bb.z
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.kt, i8 -1, i64 %i.kr, i1 false)
   br label %bb.ag
 
-.lr.ph33.i:                                       ; preds = %bb.ac, %.lr.ph.split.us.i195, %middle.block318
+.lr.ph33.i:                                       ; preds = %.lr.ph.split.us.i195, %bb.ac, %middle.block318
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.kt, i8 -1, i64 %i.kr, i1 false)
   %i.ok = add i64 %.0.i, -1                       ; 3 uses
   br label %bb.ad

@@ -205,11 +205,10 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.p
 
 bb.c:                                             ; preds = %bb.a
-  %i.g = fcmp uge double %.0.val, 0.000000e+00
+  %i.g = fcmp uge double %.0.val, 0.000000e+00    ; 2 uses
   %spec.select.i = sext i1 %i.g to i64
   store i64 %spec.select.i, ptr %i.a, align 8, !tbaa !223
-  %5 = fcmp olt double %.0.val, 0.000000e+00
-  br i1 %5, label %bb.d, label %bb.j
+  br i1 %i.g, label %bb.j, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #30

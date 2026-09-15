@@ -204,11 +204,11 @@ bb.a:
   %i.c = bitcast double %0 to i64                 ; 5 uses
   %i.d = lshr i64 %i.c, 32
   %i.e = trunc nuw i64 %i.d to i32                ; 2 uses
-  %i.f = trunc i64 %i.c to i32                    ; 3 uses
+  %i.f = trunc i64 %i.c to i32                    ; 2 uses
   %i.g = bitcast double %1 to i64                 ; 9 uses
   %i.h = lshr i64 %i.g, 32                        ; 3 uses
   %i.i = trunc nuw i64 %i.h to i32                ; 3 uses
-  %i.j = trunc i64 %i.g to i32                    ; 6 uses
+  %i.j = trunc i64 %i.g to i32                    ; 4 uses
   %i.k = and i32 %i.e, 2147483647                 ; 8 uses
   %i.l = and i32 %i.i, 2147483647                 ; 12 uses
   %i.m = or i32 %i.l, %i.j
@@ -221,7 +221,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.p = icmp eq i32 %i.k, 2146435072
-  %i.q = icmp ne i32 %i.f, 0
+  %i.q = icmp ne i32 %i.f, 0                      ; 2 uses
   %or.cond = and i1 %i.q, %i.p
   %i.r = icmp samesign ugt i32 %i.l, 2146435072
   %or.cond3 = select i1 %or.cond, i1 true, i1 %i.r
@@ -229,7 +229,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.s = icmp eq i32 %i.l, 2146435072             ; 2 uses
-  %i.t = icmp ne i32 %i.j, 0
+  %i.t = icmp ne i32 %i.j, 0                      ; 3 uses
   %or.cond5 = and i1 %i.t, %i.s
   br i1 %or.cond5, label %bb.e, label %bb.f
 
@@ -267,8 +267,7 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.o
 
 bb.l:                                             ; preds = %bb.i
-  %2 = icmp eq i32 %i.j, 0
-  br i1 %2, label %bb.m, label %.thread196
+  br i1 %i.t, label %.thread196, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.ag = sub nsw i32 1043, %i.y                  ; 2 uses
@@ -284,8 +283,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.g, %bb.k, %bb.j, %bb.h, %bb.f
   %.0183 = phi i32 [ 0, %bb.f ], [ %i.af, %bb.k ], [ 0, %bb.j ], [ 0, %bb.h ], [ 2, %bb.g ] ; 2 uses
-  %3 = icmp eq i32 %i.j, 0
-  br i1 %3, label %bb.p, label %.thread196
+  br i1 %i.t, label %.thread196, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   br i1 %i.s, label %bb.q, label %.thread198
@@ -349,8 +347,7 @@ bb.aa:                                            ; preds = %bb.z
 .thread196:                                       ; preds = %bb.l, %bb.z, %bb.o
   %.0183194 = phi i32 [ %.0183195200, %bb.z ], [ %.0183, %bb.o ], [ 0, %bb.l ] ; 4 uses
   %i.be = tail call double @llvm.fabs.f64(double %0) ; 4 uses
-  %4 = icmp eq i32 %i.f, 0
-  br i1 %4, label %bb.ab, label %bb.ah
+  br i1 %i.q, label %bb.ah, label %bb.ab
 
 bb.ab:                                            ; preds = %.thread196
   switch i32 %i.e, label %bb.ah [
