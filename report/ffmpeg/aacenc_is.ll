@@ -205,7 +205,7 @@ ff_init_nextband_map.exit:                        ; preds = %._crit_edge.i, %vec
   %.0142228 = phi i32 [ %.1143.lcssa, %._crit_edge ], [ 0, %.preheader190.lr.ph ] ; 2 uses
   %.0144227 = phi i32 [ %.1145.lcssa, %._crit_edge ], [ -1, %.preheader190.lr.ph ] ; 2 uses
   %.0146226 = phi i32 [ %.1147.lcssa, %._crit_edge ], [ -1, %.preheader190.lr.ph ] ; 2 uses
-  %.0152225 = phi i32 [ %i.fu, %._crit_edge ], [ 0, %.preheader190.lr.ph ] ; 7 uses
+  %.0152225 = phi i32 [ %i.fu, %._crit_edge ], [ 0, %.preheader190.lr.ph ] ; 6 uses
   %.0153224 = phi i32 [ %.1154.lcssa, %._crit_edge ], [ 0, %.preheader190.lr.ph ] ; 2 uses
   %i.ci = icmp sgt i32 %i.ch, 0
   br i1 %i.ci, label %.lr.ph, label %.preheader190.._crit_edge_crit_edge
@@ -215,8 +215,8 @@ ff_init_nextband_map.exit:                        ; preds = %._crit_edge.i, %vec
   br label %._crit_edge
 
 .lr.ph:                                           ; preds = %.preheader190
-  %i.cj = shl nsw i32 %.0152225, 4
-  %i.ck = zext nneg i32 %.0152225 to i64          ; 2 uses
+  %i.cj = shl nuw nsw i32 %.0152225, 4
+  %i.ck = zext nneg i32 %.0152225 to i64          ; 3 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %i.bw, i64 %i.ck
   %i.cm = zext nneg i32 %i.cj to i64
   br label %bb.j
@@ -289,6 +289,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %.not233, label %._crit_edge205, label %.preheader.us.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
+  %5 = zext nneg i32 %.0157213 to i64
   %wide.trip.count245 = zext i8 %i.dk to i64
   %wide.trip.count = zext i8 %i.dn to i64
   br label %.preheader.us
@@ -296,17 +297,15 @@ bb.p:                                             ; preds = %bb.o
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge.us
   %indvars.iv242 = phi i64 [ 0, %.preheader.us.preheader ], [ %indvars.iv.next243, %._crit_edge.us ] ; 2 uses
   %i.do = phi <4 x float> [ zeroinitializer, %.preheader.us.preheader ], [ %i.eb, %._crit_edge.us ]
-  %5 = trunc i64 %indvars.iv242 to i32
-  %.tr = add i32 %.0152225, %5
-  %6 = shl i32 %.tr, 7
-  %7 = add i32 %6, %.0157213
-  %8 = zext i32 %7 to i64
+  %6 = add nuw nsw i64 %indvars.iv242, %i.ck
+  %7 = shl nuw nsw i64 %6, 7
+  %8 = add nuw nsw i64 %7, %5
   br label %bb.q
 
 bb.q:                                             ; preds = %.preheader.us, %bb.q
   %indvars.iv = phi i64 [ 0, %.preheader.us ], [ %indvars.iv.next, %bb.q ] ; 2 uses
   %i.dp = phi <4 x float> [ %i.do, %.preheader.us ], [ %i.eb, %bb.q ]
-  %i.dq = add nuw nsw i64 %indvars.iv, %8         ; 2 uses
+  %i.dq = add nuw nsw i64 %8, %indvars.iv         ; 2 uses
   %i.dr = getelementptr inbounds nuw [4 x i8], ptr %i.by, i64 %i.dq
   %i.ds = load float, ptr %i.dr, align 4, !tbaa !49 ; 3 uses
   %i.dt = getelementptr inbounds nuw [4 x i8], ptr %i.bz, i64 %i.dq

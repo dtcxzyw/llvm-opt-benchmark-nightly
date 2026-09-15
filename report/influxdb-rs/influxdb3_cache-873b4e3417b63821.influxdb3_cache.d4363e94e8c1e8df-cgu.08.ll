@@ -204,7 +204,7 @@ define hidden void @_RNvMNtNtCs6ePPILGZvJ2_11arrow_array7builder21generic_bytes_
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %i.b = add i64 %1, 1                            ; 5 uses
+  %i.b = add i64 %1, 1                            ; 4 uses
   %i.c = shl i64 %i.b, 2                          ; 4 uses
   %i.d = icmp ugt i64 %i.b, 4611686018427387903
   %.not.i = icmp ugt i64 %i.c, 9223372036854775804
@@ -223,11 +223,16 @@ bb.b:                                             ; preds = %bb.a
   store ptr inttoptr (i64 4 to ptr), ptr %i.g, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   store i64 0, ptr %i.h, align 8
-  br label %4
+  invoke void @_RNvMs3_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVeclE8grow_oneCs52Be9pdaNRP_12pbjson_types(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.a)
+          to label %.thread._crit_edge unwind label %bb.e
+
+.thread._crit_edge:                               ; preds = %.thread
+  %.pre = load ptr, ptr %i.g, align 8, !alias.scope !1271
+  br label %bb.h
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #32, !noalias !1271
-  %i.i = tail call noundef align 4 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.c, i64 noundef range(i64 1, -9223372036854775807) 4) #32, !noalias !1271 ; 3 uses
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #32, !noalias !1272
+  %i.i = tail call noundef align 4 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.c, i64 noundef range(i64 1, -9223372036854775807) 4) #32, !noalias !1272 ; 3 uses
   %i.j = icmp eq ptr %i.i, null
   br i1 %i.j, label %bb.d, label %bb.f
 
@@ -236,7 +241,7 @@ bb.d:                                             ; preds = %bb.a, %bb.c
   tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph, i64 %i.c) #30
   unreachable
 
-bb.e:                                             ; preds = %4, %bb.l
+bb.e:                                             ; preds = %.thread, %bb.l
   %i.k = landingpad { ptr, i32 }
           cleanup
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VeclEECsidB8gjke19X_15influxdb3_cache(ptr noalias noundef align 8 dereferenceable(24) %i.a) #33
@@ -244,31 +249,19 @@ bb.e:                                             ; preds = %4, %bb.l
 
 bb.f:                                             ; preds = %bb.c
   store i64 %i.b, ptr %i.a, align 8
-  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %i.i, ptr %i.l, align 8
-  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 3 uses
-  store i64 0, ptr %i.m, align 8
-  %3 = icmp eq i64 %i.b, 0
-  br i1 %3, label %4, label %bb.h
-
-4:                                                ; preds = %.thread, %bb.f
-  %5 = phi ptr [ %i.h, %.thread ], [ %i.m, %bb.f ]
-  %6 = phi ptr [ %i.g, %.thread ], [ %i.l, %bb.f ]
-  invoke void @_RNvMs3_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVeclE8grow_oneCs52Be9pdaNRP_12pbjson_types(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.a)
-          to label %._crit_edge unwind label %bb.e
-
-._crit_edge:                                      ; preds = %4
-  %.pre = load ptr, ptr %6, align 8, !alias.scope !1272
+  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.l
   unreachable
 
-bb.h:                                             ; preds = %._crit_edge, %bb.f
-  %i.n = phi ptr [ %i.i, %bb.f ], [ %.pre, %._crit_edge ]
-  %i.o = phi ptr [ %i.m, %bb.f ], [ %5, %._crit_edge ]
+bb.h:                                             ; preds = %.thread._crit_edge, %bb.f
+  %i.n = phi ptr [ %i.i, %bb.f ], [ %.pre, %.thread._crit_edge ]
+  %i.o = phi ptr [ %i.m, %bb.f ], [ %i.h, %.thread._crit_edge ]
   store i32 0, ptr %i.n, align 4
-  store i64 1, ptr %i.o, align 8, !alias.scope !1272
+  store i64 1, ptr %i.o, align 8, !alias.scope !1271
   %.not.i12 = icmp slt i64 %2, 0
   br i1 %.not.i12, label %bb.l, label %bb.i, !prof !17
 
@@ -671,46 +664,33 @@ _RNvMs_NtNtCsidB8gjke19X_15influxdb3_cache14distinct_cache5cacheNtB4_4Node11card
   br i1 %i.as, label %bb.c, label %bb.p
 
 bb.c:                                             ; preds = %_RNvMs_NtNtCsidB8gjke19X_15influxdb3_cache14distinct_cache5cacheNtB4_4Node11cardinality.exit
-  %i.at = sub nuw i64 %i.an, %i.ar                ; 5 uses
+  %i.at = sub nuw i64 %i.an, %i.ar                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !1562
-  %i.au = shl i64 %i.at, 3                        ; 4 uses
+  %i.au = shl i64 %i.at, 3                        ; 3 uses
   %i.av = icmp ugt i64 %i.at, 2305843009213693951
   %.not.i.i3 = icmp ugt i64 %i.au, 9223372036854775800
   %or.cond.i.i = or i1 %i.av, %.not.i.i3
-  br i1 %or.cond.i.i, label %5, label %1, !prof !17
+  br i1 %or.cond.i.i, label %1, label %bb.d, !prof !17
 
-1:                                                ; preds = %bb.c
-  %2 = icmp eq i64 %i.au, 0
-  br i1 %2, label %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsidB8gjke19X_15influxdb3_cache.exit.i, label %bb.d
-
-bb.d:                                             ; preds = %1
+bb.d:                                             ; preds = %bb.c
   call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #32, !noalias !1563
   %i.aw = call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.au, i64 noundef range(i64 1, -9223372036854775807) 8) #32, !noalias !1563 ; 2 uses
   %i.ax = icmp eq ptr %i.aw, null
-  br i1 %i.ax, label %5, label %3
+  br i1 %i.ax, label %1, label %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsidB8gjke19X_15influxdb3_cache.exit.i
 
-3:                                                ; preds = %bb.d
-  %4 = ptrtoint ptr %i.aw to i64
-  br label %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsidB8gjke19X_15influxdb3_cache.exit.i
-
-5:                                                ; preds = %bb.d, %bb.c
-  %.sroa.4.0.ph.i = phi i64 [ 8, %bb.d ], [ 0, %bb.c ]
-  call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph.i, i64 %i.au) #30, !noalias !1562
-  unreachable
-
-_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsidB8gjke19X_15influxdb3_cache.exit.i: ; preds = %3, %1
-  %.sroa.10.0.i = phi i64 [ %4, %3 ], [ 8, %1 ]
-  %.sroa.4.0.i = phi i64 [ %i.at, %3 ], [ 0, %1 ] ; 2 uses
-  %6 = inttoptr i64 %.sroa.10.0.i to ptr
-  %7 = icmp samesign ule i64 %i.at, %.sroa.4.0.i
-  call void @llvm.assume(i1 %7)
-  store i64 %.sroa.4.0.i, ptr %i.b, align 8, !noalias !1562
+_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsidB8gjke19X_15influxdb3_cache.exit.i: ; preds = %bb.d
+  store i64 %i.at, ptr %i.b, align 8, !noalias !1562
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 4 uses
-  store ptr %6, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !1562
+  store ptr %i.aw, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !1562
   %.sroa.5.0..sroa_idx.i4 = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   store i64 0, ptr %.sroa.5.0..sroa_idx.i4, align 8, !noalias !1562
   invoke fastcc void @_RNvMs_NtNtCsidB8gjke19X_15influxdb3_cache14distinct_cache5cacheNtB4_4Node13find_n_oldest(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.y, i64 noundef %i.at, ptr noalias noundef align 8 dereferenceable(24) %i.b)
           to label %bb.f unwind label %bb.e
+
+1:                                                ; preds = %bb.d, %bb.c
+  %.sroa.4.0.ph.i = phi i64 [ 8, %bb.d ], [ 0, %bb.c ]
+  call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph.i, i64 %i.au) #30, !noalias !1562
+  unreachable
 
 bb.e:                                             ; preds = %bb.h, %bb.g, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsidB8gjke19X_15influxdb3_cache.exit.i
   %i.ay = landingpad { ptr, i32 }
@@ -1114,10 +1094,10 @@ begin_hunk_2_@llvm.umax.i64
 !1262 = !{!1252, !1245, !1244, !1243, !1242, !1241}
 !1263 = !{!1245, !1244, !1243, !1242, !1241}
 !1264 = !{!1254, !1245, !1244, !1243, !1242, !1241}
-!1265 = distinct !{!1265, !"_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsidB8gjke19X_15influxdb3_cache"}
-!1266 = distinct !{!1266, !1265, !"_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsidB8gjke19X_15influxdb3_cache: argument 0"}
-!1267 = distinct !{!1267, !"_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VeclE8push_mutCsidB8gjke19X_15influxdb3_cache"}
-!1268 = distinct !{!1268, !1267, !"_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VeclE8push_mutCsidB8gjke19X_15influxdb3_cache: argument 0"}
+!1265 = distinct !{!1265, !"_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VeclE8push_mutCsidB8gjke19X_15influxdb3_cache"}
+!1266 = distinct !{!1266, !1265, !"_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VeclE8push_mutCsidB8gjke19X_15influxdb3_cache: argument 0"}
+!1267 = distinct !{!1267, !"_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsidB8gjke19X_15influxdb3_cache"}
+!1268 = distinct !{!1268, !1267, !"_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsidB8gjke19X_15influxdb3_cache: argument 0"}
 !1269 = distinct !{!1269, !"_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsidB8gjke19X_15influxdb3_cache"}
 !1270 = distinct !{!1270, !1269, !"_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsidB8gjke19X_15influxdb3_cache: argument 0"}
 !1271 = !{!1266}

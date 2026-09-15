@@ -204,28 +204,26 @@ bb.m:                                             ; preds = %bb.l
           to label %bb.n unwind label %bb.q       ; 0 uses
 
 bb.n:                                             ; preds = %bb.m
-  %i.ci = zext nneg i32 %i.bb to i64              ; 3 uses
+  %i.ci = zext nneg i32 %i.bb to i64
   %i.cj = load ptr, ptr %8, align 8, !tbaa !192   ; 4 uses
   %i.ck = getelementptr inbounds nuw [8 x i8], ptr %i.cj, i64 %i.ci
   %i.cl = load double, ptr %i.ck, align 8, !tbaa !191 ; 2 uses
   %i.cm = zext nneg i32 %i.bc to i64              ; 2 uses
   %i.cn = getelementptr inbounds nuw [8 x i8], ptr %i.cj, i64 %i.cm ; 4 uses
-  %i.co = sub nsw i32 %5, %i.bc
+  %i.co = sub nuw nsw i32 %5, %i.bc               ; 3 uses
   %i.cp = icmp ugt i32 %i.co, 1
   br i1 %i.cp, label %.lr.ph.preheader.i190, label %_ZN8LightGBM9ArrayArgsIdE6ArgMaxEPKdm.exit
 
 .lr.ph.preheader.i190:                            ; preds = %bb.n
+  %i.cq = zext nneg i32 %i.co to i64
   %.pre.i191 = load double, ptr %i.cn, align 8, !tbaa !191 ; 2 uses
-  %i.cq = zext nneg i32 %5 to i64                 ; 2 uses
-  %10 = add nsw i64 %i.cq, -2
-  %11 = sub nsw i64 %10, %i.ci                    ; 3 uses
-  %i.cr = add nsw i64 %i.cq, -3
-  %xtraiter573 = and i64 %11, 1
-  %i.cs = icmp eq i64 %i.cr, %i.ci
+  %i.cr = add nsw i64 %i.cq, -1                   ; 3 uses
+  %xtraiter573 = and i64 %i.cr, 1
+  %i.cs = icmp eq i32 %i.co, 2
   br i1 %i.cs, label %.lr.ph.i192.epil.preheader, label %.lr.ph.preheader.i190.new
 
 .lr.ph.preheader.i190.new:                        ; preds = %.lr.ph.preheader.i190
-  %unroll_iter579 = and i64 %11, -2
+  %unroll_iter579 = and i64 %i.cr, -2
   br label %.lr.ph.i192
 
 .lr.ph.i192:                                      ; preds = %.lr.ph.i192, %.lr.ph.preheader.i190.new
@@ -237,13 +235,13 @@ bb.n:                                             ; preds = %bb.m
   %i.cv = load double, ptr %i.cu, align 8, !tbaa !191 ; 2 uses
   %i.cw = fcmp ogt double %i.cv, %i.ct            ; 2 uses
   %spec.select.i193 = select i1 %i.cw, i64 %.014.i, i64 %.01013.i
-  %i.cx = add nuw i64 %.014.i, 1                  ; 2 uses
+  %i.cx = add nuw nsw i64 %.014.i, 1              ; 2 uses
   %i.cy = select i1 %i.cw, double %i.cv, double %i.ct ; 2 uses
   %i.cz = getelementptr inbounds nuw [8 x i8], ptr %i.cn, i64 %i.cx
   %i.da = load double, ptr %i.cz, align 8, !tbaa !191 ; 2 uses
   %i.db = fcmp ogt double %i.da, %i.cy            ; 2 uses
   %spec.select.i193.1 = select i1 %i.db, i64 %i.cx, i64 %spec.select.i193 ; 3 uses
-  %i.dc = add nuw i64 %.014.i, 2                  ; 2 uses
+  %i.dc = add nuw nsw i64 %.014.i, 2              ; 2 uses
   %i.dd = select i1 %i.db, double %i.da, double %i.cy ; 2 uses
   %niter580.next.1 = add nuw i64 %niter580, 2     ; 2 uses
   %niter580.ncmp.1 = icmp eq i64 %niter580.next.1, %unroll_iter579
@@ -257,7 +255,7 @@ _ZN8LightGBM9ArrayArgsIdE6ArgMaxEPKdm.exit.loopexit.unr-lcssa: ; preds = %.lr.ph
   %.epil.init575 = phi double [ %.pre.i191, %.lr.ph.preheader.i190 ], [ %i.dd, %_ZN8LightGBM9ArrayArgsIdE6ArgMaxEPKdm.exit.loopexit.unr-lcssa ]
   %.014.i.epil.init = phi i64 [ 1, %.lr.ph.preheader.i190 ], [ %i.dc, %_ZN8LightGBM9ArrayArgsIdE6ArgMaxEPKdm.exit.loopexit.unr-lcssa ] ; 2 uses
   %.01013.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i190 ], [ %spec.select.i193.1, %_ZN8LightGBM9ArrayArgsIdE6ArgMaxEPKdm.exit.loopexit.unr-lcssa ]
-  %lcmp.mod578 = trunc i64 %11 to i1
+  %lcmp.mod578 = trunc i64 %i.cr to i1
   call void @llvm.assume(i1 %lcmp.mod578)
   %i.de = getelementptr inbounds nuw [8 x i8], ptr %i.cn, i64 %.014.i.epil.init
   %i.df = load double, ptr %i.de, align 8, !tbaa !191
@@ -561,28 +559,26 @@ bb.ab:                                            ; preds = %bb.aa
           to label %bb.ac unwind label %bb.af     ; 0 uses
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.hi = zext nneg i32 %i.fx to i64              ; 3 uses
+  %i.hi = zext nneg i32 %i.fx to i64
   %i.hj = load ptr, ptr %9, align 8, !tbaa !192   ; 4 uses
   %i.hk = getelementptr inbounds nuw [8 x i8], ptr %i.hj, i64 %i.hi
   %i.hl = load double, ptr %i.hk, align 8, !tbaa !191 ; 2 uses
   %i.hm = zext nneg i32 %i.fy to i64              ; 2 uses
   %i.hn = getelementptr inbounds nuw [8 x i8], ptr %i.hj, i64 %i.hm ; 4 uses
-  %i.ho = sub nsw i32 %5, %i.fy
+  %i.ho = sub nuw nsw i32 %5, %i.fy               ; 3 uses
   %i.hp = icmp ugt i32 %i.ho, 1
   br i1 %i.hp, label %.lr.ph.preheader.i229, label %_ZN8LightGBM9ArrayArgsIdE6ArgMaxEPKdm.exit236
 
 .lr.ph.preheader.i229:                            ; preds = %bb.ac
+  %i.hq = zext nneg i32 %i.ho to i64
   %.pre.i230 = load double, ptr %i.hn, align 8, !tbaa !191 ; 2 uses
-  %i.hq = zext nneg i32 %5 to i64                 ; 2 uses
-  %12 = add nsw i64 %i.hq, -2
-  %13 = sub nsw i64 %12, %i.hi                    ; 3 uses
-  %i.hr = add nsw i64 %i.hq, -3
-  %xtraiter549 = and i64 %13, 1
-  %i.hs = icmp eq i64 %i.hr, %i.hi
+  %i.hr = add nsw i64 %i.hq, -1                   ; 3 uses
+  %xtraiter549 = and i64 %i.hr, 1
+  %i.hs = icmp eq i32 %i.ho, 2
   br i1 %i.hs, label %.lr.ph.i231.epil.preheader, label %.lr.ph.preheader.i229.new
 
 .lr.ph.preheader.i229.new:                        ; preds = %.lr.ph.preheader.i229
-  %unroll_iter555 = and i64 %13, -2
+  %unroll_iter555 = and i64 %i.hr, -2
   br label %.lr.ph.i231
 
 .lr.ph.i231:                                      ; preds = %.lr.ph.i231, %.lr.ph.preheader.i229.new
@@ -594,13 +590,13 @@ bb.ac:                                            ; preds = %bb.ab
   %i.hv = load double, ptr %i.hu, align 8, !tbaa !191 ; 2 uses
   %i.hw = fcmp ogt double %i.hv, %i.ht            ; 2 uses
   %spec.select.i234 = select i1 %i.hw, i64 %.014.i232, i64 %.01013.i233
-  %i.hx = add nuw i64 %.014.i232, 1               ; 2 uses
+  %i.hx = add nuw nsw i64 %.014.i232, 1           ; 2 uses
   %i.hy = select i1 %i.hw, double %i.hv, double %i.ht ; 2 uses
   %i.hz = getelementptr inbounds nuw [8 x i8], ptr %i.hn, i64 %i.hx
   %i.ia = load double, ptr %i.hz, align 8, !tbaa !191 ; 2 uses
   %i.ib = fcmp ogt double %i.ia, %i.hy            ; 2 uses
   %spec.select.i234.1 = select i1 %i.ib, i64 %i.hx, i64 %spec.select.i234 ; 3 uses
-  %i.ic = add nuw i64 %.014.i232, 2               ; 2 uses
+  %i.ic = add nuw nsw i64 %.014.i232, 2           ; 2 uses
   %i.id = select i1 %i.ib, double %i.ia, double %i.hy ; 2 uses
   %niter556.next.1 = add nuw i64 %niter556, 2     ; 2 uses
   %niter556.ncmp.1 = icmp eq i64 %niter556.next.1, %unroll_iter555
@@ -614,7 +610,7 @@ _ZN8LightGBM9ArrayArgsIdE6ArgMaxEPKdm.exit236.loopexit.unr-lcssa: ; preds = %.lr
   %.epil.init551 = phi double [ %.pre.i230, %.lr.ph.preheader.i229 ], [ %i.id, %_ZN8LightGBM9ArrayArgsIdE6ArgMaxEPKdm.exit236.loopexit.unr-lcssa ]
   %.014.i232.epil.init = phi i64 [ 1, %.lr.ph.preheader.i229 ], [ %i.ic, %_ZN8LightGBM9ArrayArgsIdE6ArgMaxEPKdm.exit236.loopexit.unr-lcssa ] ; 2 uses
   %.01013.i233.epil.init = phi i64 [ 0, %.lr.ph.preheader.i229 ], [ %spec.select.i234.1, %_ZN8LightGBM9ArrayArgsIdE6ArgMaxEPKdm.exit236.loopexit.unr-lcssa ]
-  %lcmp.mod554 = trunc i64 %13 to i1
+  %lcmp.mod554 = trunc i64 %i.hr to i1
   call void @llvm.assume(i1 %lcmp.mod554)
   %i.ie = getelementptr inbounds nuw [8 x i8], ptr %i.hn, i64 %.014.i232.epil.init
   %i.if = load double, ptr %i.ie, align 8, !tbaa !191
@@ -1017,8 +1013,8 @@ scalar.ph215.prol.loopexit:                       ; preds = %scalar.ph215.prol, 
   %i.ex = add nsw i32 %i.eg, -1
   %i.ey = sitofp i32 %i.ex to double
   %i.ez = fmul nnan double %i.ey, 5.000000e-01    ; 2 uses
-  %i.fa = fptosi double %i.ez to i32              ; 7 uses
-  %i.fb = add nsw i32 %i.fa, 1                    ; 6 uses
+  %i.fa = fptosi double %i.ez to i32              ; 9 uses
+  %i.fb = add nuw nsw i32 %i.fa, 1                ; 6 uses
   %i.fc = icmp slt i32 %i.fa, 0
   br i1 %i.fc, label %bb.t, label %bb.w
 
@@ -1241,7 +1237,7 @@ bb.ab:                                            ; preds = %bb.x
           to label %bb.ac unwind label %bb.aa     ; 0 uses
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.ie = zext nneg i32 %i.fb to i64              ; 2 uses
+  %i.ie = zext nneg i32 %i.fb to i64
   %i.if = load ptr, ptr %2, align 8, !tbaa !174   ; 7 uses
   %i.ig = getelementptr inbounds nuw [4 x i8], ptr %i.if, i64 %i.ie
   %i.ih = load float, ptr %i.ig, align 4, !tbaa !169
@@ -1250,13 +1246,13 @@ bb.ac:                                            ; preds = %bb.ab
 
 .lr.ph.preheader.i106:                            ; preds = %bb.ac
   %.pre.i107 = load float, ptr %i.if, align 4, !tbaa !169 ; 2 uses
-  %3 = add nsw i64 %i.ie, -1                      ; 3 uses
+  %3 = zext nneg i32 %i.fa to i64                 ; 2 uses
   %xtraiter238 = and i64 %3, 1
   %i.ii = icmp eq i32 %i.fb, 2
   br i1 %i.ii, label %.lr.ph.i108.epil.preheader, label %.lr.ph.preheader.i106.new
 
 .lr.ph.preheader.i106.new:                        ; preds = %.lr.ph.preheader.i106
-  %unroll_iter244 = and i64 %3, -2
+  %unroll_iter244 = and i64 %3, 2147483646
   br label %.lr.ph.i108
 
 .lr.ph.i108:                                      ; preds = %.lr.ph.i108, %.lr.ph.preheader.i106.new
@@ -1288,7 +1284,7 @@ _ZN8LightGBM9ArrayArgsIfE6ArgMinEPKfm.exit.loopexit.unr-lcssa: ; preds = %.lr.ph
   %.epil.init240 = phi float [ %.pre.i107, %.lr.ph.preheader.i106 ], [ %i.it, %_ZN8LightGBM9ArrayArgsIfE6ArgMinEPKfm.exit.loopexit.unr-lcssa ]
   %.014.i109.epil.init = phi i64 [ 1, %.lr.ph.preheader.i106 ], [ %i.is, %_ZN8LightGBM9ArrayArgsIfE6ArgMinEPKfm.exit.loopexit.unr-lcssa ] ; 2 uses
   %.01013.i110.epil.init = phi i64 [ 0, %.lr.ph.preheader.i106 ], [ %spec.select.i111.1, %_ZN8LightGBM9ArrayArgsIfE6ArgMinEPKfm.exit.loopexit.unr-lcssa ]
-  %lcmp.mod243 = trunc i64 %3 to i1
+  %lcmp.mod243 = trunc i32 %i.fa to i1
   call void @llvm.assume(i1 %lcmp.mod243)
   %i.iu = getelementptr inbounds nuw [4 x i8], ptr %i.if, i64 %.014.i109.epil.init
   %i.iv = load float, ptr %i.iu, align 4, !tbaa !169
@@ -1691,8 +1687,8 @@ bb.f:                                             ; preds = %bb.c
   %i.bc = fpext float %i.bb to double
   %i.bd = fsub double 1.000000e+00, %i.bc
   %i.be = fmul double %i.bd, %i.az                ; 2 uses
-  %i.bf = fptosi double %i.be to i32              ; 7 uses
-  %i.bg = add nsw i32 %i.bf, 1                    ; 6 uses
+  %i.bf = fptosi double %i.be to i32              ; 9 uses
+  %i.bg = add nuw nsw i32 %i.bf, 1                ; 6 uses
   %i.bh = icmp slt i32 %i.bf, 0
   br i1 %i.bh, label %bb.l, label %bb.p
 
@@ -1924,7 +1920,7 @@ bb.t:                                             ; preds = %bb.s
   %i.ee = zext nneg i32 %i.bg to i64              ; 2 uses
   %i.ef = getelementptr inbounds nuw [8 x i8], ptr %i.eb, i64 %i.ee ; 4 uses
   %i.eg = sub nuw nsw i32 %5, %i.bg               ; 3 uses
-  %i.eh = icmp samesign ugt i32 %i.eg, 1
+  %i.eh = icmp ugt i32 %i.eg, 1
   br i1 %i.eh, label %.lr.ph.preheader.i205, label %_ZN8LightGBM9ArrayArgsIdE6ArgMaxEPKdm.exit
 
 .lr.ph.preheader.i205:                            ; preds = %bb.t
@@ -1996,7 +1992,7 @@ bb.v:                                             ; preds = %bb.r
           to label %bb.w unwind label %bb.u       ; 0 uses
 
 bb.w:                                             ; preds = %bb.v
-  %i.fh = zext nneg i32 %i.bg to i64              ; 2 uses
+  %i.fh = zext nneg i32 %i.bg to i64
   %i.fi = load ptr, ptr %8, align 8, !tbaa !192   ; 7 uses
   %i.fj = getelementptr inbounds nuw [8 x i8], ptr %i.fi, i64 %i.fh
   %i.fk = load double, ptr %i.fj, align 8, !tbaa !191
@@ -2005,13 +2001,13 @@ bb.w:                                             ; preds = %bb.v
 
 .lr.ph.preheader.i211:                            ; preds = %bb.w
   %.pre.i212 = load double, ptr %i.fi, align 8, !tbaa !191 ; 2 uses
-  %10 = add nsw i64 %i.fh, -1                     ; 3 uses
+  %10 = zext nneg i32 %i.bf to i64                ; 2 uses
   %xtraiter623 = and i64 %10, 1
   %i.fl = icmp eq i32 %i.bg, 2
   br i1 %i.fl, label %.lr.ph.i213.epil.preheader, label %.lr.ph.preheader.i211.new
 
 .lr.ph.preheader.i211.new:                        ; preds = %.lr.ph.preheader.i211
-  %unroll_iter629 = and i64 %10, -2
+  %unroll_iter629 = and i64 %10, 2147483646
   br label %.lr.ph.i213
 
 .lr.ph.i213:                                      ; preds = %.lr.ph.i213, %.lr.ph.preheader.i211.new
@@ -2043,7 +2039,7 @@ _ZN8LightGBM9ArrayArgsIdE6ArgMinEPKdm.exit.loopexit.unr-lcssa: ; preds = %.lr.ph
   %.epil.init625 = phi double [ %.pre.i212, %.lr.ph.preheader.i211 ], [ %i.fw, %_ZN8LightGBM9ArrayArgsIdE6ArgMinEPKdm.exit.loopexit.unr-lcssa ]
   %.014.i214.epil.init = phi i64 [ 1, %.lr.ph.preheader.i211 ], [ %i.fv, %_ZN8LightGBM9ArrayArgsIdE6ArgMinEPKdm.exit.loopexit.unr-lcssa ] ; 2 uses
   %.01013.i215.epil.init = phi i64 [ 0, %.lr.ph.preheader.i211 ], [ %spec.select.i216.1, %_ZN8LightGBM9ArrayArgsIdE6ArgMinEPKdm.exit.loopexit.unr-lcssa ]
-  %lcmp.mod628 = trunc i64 %10 to i1
+  %lcmp.mod628 = trunc i32 %i.bf to i1
   call void @llvm.assume(i1 %lcmp.mod628)
   %i.fx = getelementptr inbounds nuw [8 x i8], ptr %i.fi, i64 %.014.i214.epil.init
   %i.fy = load double, ptr %i.fx, align 8, !tbaa !191
@@ -2153,8 +2149,8 @@ bb.ac:                                            ; preds = %bb.z
   %i.hp = fpext float %i.ho to double
   %i.hq = fsub double 1.000000e+00, %i.hp
   %i.hr = fmul double %i.hq, %i.hm                ; 2 uses
-  %i.hs = fptosi double %i.hr to i32              ; 7 uses
-  %i.ht = add nsw i32 %i.hs, 1                    ; 6 uses
+  %i.hs = fptosi double %i.hr to i32              ; 9 uses
+  %i.ht = add nuw nsw i32 %i.hs, 1                ; 6 uses
   %i.hu = icmp slt i32 %i.hs, 0
   br i1 %i.hu, label %bb.ai, label %bb.am
 
@@ -2390,7 +2386,7 @@ bb.aq:                                            ; preds = %bb.ap
   %i.kv = zext nneg i32 %i.ht to i64              ; 2 uses
   %i.kw = getelementptr inbounds nuw [8 x i8], ptr %i.ks, i64 %i.kv ; 4 uses
   %i.kx = sub nuw nsw i32 %5, %i.ht               ; 3 uses
-  %i.ky = icmp samesign ugt i32 %i.kx, 1
+  %i.ky = icmp ugt i32 %i.kx, 1
   br i1 %i.ky, label %.lr.ph.preheader.i255, label %_ZN8LightGBM9ArrayArgsIdE6ArgMaxEPKdm.exit262
 
 .lr.ph.preheader.i255:                            ; preds = %bb.aq
@@ -2462,7 +2458,7 @@ bb.as:                                            ; preds = %bb.ao
           to label %bb.at unwind label %bb.ar     ; 0 uses
 
 bb.at:                                            ; preds = %bb.as
-  %i.ly = zext nneg i32 %i.ht to i64              ; 2 uses
+  %i.ly = zext nneg i32 %i.ht to i64
   %i.lz = load ptr, ptr %9, align 8, !tbaa !192   ; 7 uses
   %i.ma = getelementptr inbounds nuw [8 x i8], ptr %i.lz, i64 %i.ly
   %i.mb = load double, ptr %i.ma, align 8, !tbaa !191
@@ -2471,13 +2467,13 @@ bb.at:                                            ; preds = %bb.as
 
 .lr.ph.preheader.i264:                            ; preds = %bb.at
   %.pre.i265 = load double, ptr %i.lz, align 8, !tbaa !191 ; 2 uses
-  %11 = add nsw i64 %i.ly, -1                     ; 3 uses
+  %11 = zext nneg i32 %i.hs to i64                ; 2 uses
   %xtraiter591 = and i64 %11, 1
   %i.mc = icmp eq i32 %i.ht, 2
   br i1 %i.mc, label %.lr.ph.i266.epil.preheader, label %.lr.ph.preheader.i264.new
 
 .lr.ph.preheader.i264.new:                        ; preds = %.lr.ph.preheader.i264
-  %unroll_iter597 = and i64 %11, -2
+  %unroll_iter597 = and i64 %11, 2147483646
   br label %.lr.ph.i266
 
 .lr.ph.i266:                                      ; preds = %.lr.ph.i266, %.lr.ph.preheader.i264.new
@@ -2509,7 +2505,7 @@ _ZN8LightGBM9ArrayArgsIdE6ArgMinEPKdm.exit271.loopexit.unr-lcssa: ; preds = %.lr
   %.epil.init593 = phi double [ %.pre.i265, %.lr.ph.preheader.i264 ], [ %i.mn, %_ZN8LightGBM9ArrayArgsIdE6ArgMinEPKdm.exit271.loopexit.unr-lcssa ]
   %.014.i267.epil.init = phi i64 [ 1, %.lr.ph.preheader.i264 ], [ %i.mm, %_ZN8LightGBM9ArrayArgsIdE6ArgMinEPKdm.exit271.loopexit.unr-lcssa ] ; 2 uses
   %.01013.i268.epil.init = phi i64 [ 0, %.lr.ph.preheader.i264 ], [ %spec.select.i269.1, %_ZN8LightGBM9ArrayArgsIdE6ArgMinEPKdm.exit271.loopexit.unr-lcssa ]
-  %lcmp.mod596 = trunc i64 %11 to i1
+  %lcmp.mod596 = trunc i32 %i.hs to i1
   call void @llvm.assume(i1 %lcmp.mod596)
   %i.mo = getelementptr inbounds nuw [8 x i8], ptr %i.lz, i64 %.014.i267.epil.init
   %i.mp = load double, ptr %i.mo, align 8, !tbaa !191
@@ -2912,8 +2908,8 @@ scalar.ph215.prol.loopexit:                       ; preds = %scalar.ph215.prol, 
   %i.fe = fpext float %i.fd to double
   %i.ff = fsub double 1.000000e+00, %i.fe
   %i.fg = fmul double %i.ff, %i.fb                ; 2 uses
-  %i.fh = fptosi double %i.fg to i32              ; 7 uses
-  %i.fi = add nsw i32 %i.fh, 1                    ; 6 uses
+  %i.fh = fptosi double %i.fg to i32              ; 9 uses
+  %i.fi = add nuw nsw i32 %i.fh, 1                ; 6 uses
   %i.fj = icmp slt i32 %i.fh, 0
   br i1 %i.fj, label %bb.t, label %bb.w
 
@@ -3136,7 +3132,7 @@ bb.ab:                                            ; preds = %bb.x
           to label %bb.ac unwind label %bb.aa     ; 0 uses
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.il = zext nneg i32 %i.fi to i64              ; 2 uses
+  %i.il = zext nneg i32 %i.fi to i64
   %i.im = load ptr, ptr %2, align 8, !tbaa !174   ; 7 uses
   %i.in = getelementptr inbounds nuw [4 x i8], ptr %i.im, i64 %i.il
   %i.io = load float, ptr %i.in, align 4, !tbaa !169
@@ -3145,13 +3141,13 @@ bb.ac:                                            ; preds = %bb.ab
 
 .lr.ph.preheader.i106:                            ; preds = %bb.ac
   %.pre.i107 = load float, ptr %i.im, align 4, !tbaa !169 ; 2 uses
-  %3 = add nsw i64 %i.il, -1                      ; 3 uses
+  %3 = zext nneg i32 %i.fh to i64                 ; 2 uses
   %xtraiter238 = and i64 %3, 1
   %i.ip = icmp eq i32 %i.fi, 2
   br i1 %i.ip, label %.lr.ph.i108.epil.preheader, label %.lr.ph.preheader.i106.new
 
 .lr.ph.preheader.i106.new:                        ; preds = %.lr.ph.preheader.i106
-  %unroll_iter244 = and i64 %3, -2
+  %unroll_iter244 = and i64 %3, 2147483646
   br label %.lr.ph.i108
 
 .lr.ph.i108:                                      ; preds = %.lr.ph.i108, %.lr.ph.preheader.i106.new
@@ -3183,7 +3179,7 @@ _ZN8LightGBM9ArrayArgsIfE6ArgMinEPKfm.exit.loopexit.unr-lcssa: ; preds = %.lr.ph
   %.epil.init240 = phi float [ %.pre.i107, %.lr.ph.preheader.i106 ], [ %i.ja, %_ZN8LightGBM9ArrayArgsIfE6ArgMinEPKfm.exit.loopexit.unr-lcssa ]
   %.014.i109.epil.init = phi i64 [ 1, %.lr.ph.preheader.i106 ], [ %i.iz, %_ZN8LightGBM9ArrayArgsIfE6ArgMinEPKfm.exit.loopexit.unr-lcssa ] ; 2 uses
   %.01013.i110.epil.init = phi i64 [ 0, %.lr.ph.preheader.i106 ], [ %spec.select.i111.1, %_ZN8LightGBM9ArrayArgsIfE6ArgMinEPKfm.exit.loopexit.unr-lcssa ]
-  %lcmp.mod243 = trunc i64 %3 to i1
+  %lcmp.mod243 = trunc i32 %i.fh to i1
   call void @llvm.assume(i1 %lcmp.mod243)
   %i.jb = getelementptr inbounds nuw [4 x i8], ptr %i.im, i64 %.014.i109.epil.init
   %i.jc = load float, ptr %i.jb, align 4, !tbaa !169

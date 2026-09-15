@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.a
   %i.k = icmp ult i64 %i.j, 2305843009213693952
   tail call void @llvm.assume(i1 %i.k)
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.m = load i64, ptr %i.l, align 8, !noundef !24 ; 16 uses
+  %i.m = load i64, ptr %i.l, align 8, !noundef !24 ; 15 uses
   %i.n = icmp ult i64 %i.m, 2305843009213693952
   tail call void @llvm.assume(i1 %i.n)
   %i.o = icmp eq i64 %i.j, 0
@@ -230,15 +230,13 @@ bb.g:                                             ; preds = %bb.f
 
 _RNvXsd_NtNtCscI6d9CVNmLh_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusivejENtNtNtB7_6traits8iterator8Iterator9size_hintCs63DIHKhvmTb_10lance_core.exit.thread.i: ; preds = %bb.e
   %i.t = add nuw nsw i64 %i.m, 1                  ; 6 uses
-  %i.u = shl i64 %i.t, 3                          ; 6 uses
+  %i.u = shl i64 %i.t, 3                          ; 5 uses
   %i.v = icmp eq i64 %i.m, 2305843009213693951
   %.not.i.i.i = icmp ugt i64 %i.u, 9223372036854775800
   %or.cond.i.i.i = or i1 %i.v, %.not.i.i.i
   br i1 %or.cond.i.i.i, label %bb.i, label %bb.h, !prof !25
 
 bb.h:                                             ; preds = %_RNvXsd_NtNtCscI6d9CVNmLh_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusivejENtNtNtB7_6traits8iterator8Iterator9size_hintCs63DIHKhvmTb_10lance_core.exit.thread.i
-  %4 = icmp ne i64 %i.u, 0
-  tail call void @llvm.assume(i1 %4)
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #65, !noalias !21137
   %i.w = tail call noundef align 8 ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef %i.u, i64 noundef range(i64 1, 9) 8) #65, !noalias !21137 ; 6 uses
   %i.x = icmp eq ptr %i.w, null
@@ -337,19 +335,13 @@ bb.l:                                             ; preds = %bb.i
   %.lcssa260 = phi i64 [ %ind.escape, %middle.block ], [ %i.ac, %.lr.ph.i.i.i.i.i.i ]
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %i.m
   store i64 %i.m, ptr %i.am, align 8, !noalias !21139
-  %5 = add nuw nsw i64 %.lcssa260, 2
-  %.not.i.i60 = icmp samesign ugt i64 %i.m, 1152921504606846974
-  br i1 %.not.i.i60, label %bb.m, label %6, !prof !25
-
-6:                                                ; preds = %.loopexit
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #65, !noalias !21140
-  %7 = tail call noundef align 8 ptr @_RNvCs9hJ03s5DiqP_7___rustc19___rust_alloc_zeroed(i64 noundef range(i64 1, -9223372036854775808) %i.u, i64 noundef range(i64 1, 9) 8) #65, !noalias !21140 ; 2 uses
-  %8 = icmp eq ptr %7, null
-  br i1 %8, label %bb.m, label %.lr.ph.preheader
+  %4 = tail call noundef align 8 ptr @_RNvCs9hJ03s5DiqP_7___rustc19___rust_alloc_zeroed(i64 noundef range(i64 1, -9223372036854775808) %i.u, i64 noundef range(i64 1, 9) 8) #65, !noalias !21140 ; 2 uses
+  %5 = icmp eq ptr %4, null
+  br i1 %5, label %bb.m, label %.lr.ph.preheader
 
-bb.m:                                             ; preds = %6, %.loopexit
-  %.sroa.4.0.ph.i = phi i64 [ 8, %6 ], [ 0, %.loopexit ]
-  invoke void @_RNvNtCs40k4W9msRzi_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph.i, i64 %i.u) #68
+bb.m:                                             ; preds = %.loopexit
+  invoke void @_RNvNtCs40k4W9msRzi_5alloc7raw_vec12handle_error(i64 noundef 8, i64 %i.u) #68
           to label %.noexc61 unwind label %bb.n
 
 .noexc61:                                         ; preds = %bb.m
@@ -368,8 +360,9 @@ bb.n:                                             ; preds = %bb.m
           cleanup
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecjEECs63DIHKhvmTb_10lance_core.exit62
 
-.lr.ph.preheader:                                 ; preds = %6
-  %i.ap = ptrtoint ptr %7 to i64
+.lr.ph.preheader:                                 ; preds = %.loopexit
+  %6 = add nuw nsw i64 %.lcssa260, 2
+  %i.ap = ptrtoint ptr %4 to i64
   %i.aq = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.ar = load ptr, ptr %i.aq, align 8, !nonnull !24, !noundef !24 ; 3 uses
   %.idx = shl nuw nsw i64 %i.j, 2
@@ -398,7 +391,7 @@ bb.o:                                             ; preds = %.invoke, %bb.p
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %..loopexit_crit_edge
   %.sroa.7.1163 = phi i64 [ %.sroa.783.0160, %..loopexit_crit_edge ], [ %i.y, %.lr.ph.preheader ] ; 5 uses
-  %.sroa.14.0162 = phi i64 [ %.sroa.15.0159, %..loopexit_crit_edge ], [ %5, %.lr.ph.preheader ] ; 3 uses
+  %.sroa.14.0162 = phi i64 [ %.sroa.15.0159, %..loopexit_crit_edge ], [ %6, %.lr.ph.preheader ] ; 3 uses
   %.sroa.783.0160 = phi i64 [ %.sroa.7.1163, %..loopexit_crit_edge ], [ %i.ap, %.lr.ph.preheader ] ; 5 uses
   %.sroa.15.0159 = phi i64 [ %.sroa.14.0162, %..loopexit_crit_edge ], [ %i.t, %.lr.ph.preheader ] ; 8 uses
   %.sroa.089.0158 = phi ptr [ %i.bb, %..loopexit_crit_edge ], [ %i.ar, %.lr.ph.preheader ] ; 2 uses

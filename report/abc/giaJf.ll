@@ -205,16 +205,15 @@ bb.m:                                             ; preds = %bb.l, %.lr.ph.i.i
 .preheader.lr.ph.i.i:                             ; preds = %.lr.ph.split.split.split.i
   %i.ha = add nsw i64 %indvars.iv.i70, -6         ; 2 uses
   %i.hb = icmp eq i64 %i.ha, 31
-  %i.hc = trunc nsw i64 %i.ha to i32              ; 2 uses
+  %i.hc = trunc nuw nsw i64 %i.ha to i32          ; 2 uses
   %i.hd = shl i32 2, %i.hc
   %i.he = sext i32 %i.hd to i64
   br i1 %i.hb, label %Abc_TtHasVar.exit.thread.i, label %.preheader.us.preheader.i.i
 
 .preheader.us.preheader.i.i:                      ; preds = %.preheader.lr.ph.i.i
-  %i.hf = shl nuw i32 1, %i.hc                    ; 2 uses
-  %6 = sext i32 %i.hf to i64
-  %smax.i.i = call i32 @llvm.smax.i32(i32 %i.hf, i32 1)
-  %wide.trip.count.i.i = zext nneg i32 %smax.i.i to i64
+  %i.hf = shl nuw nsw i32 1, %i.hc                ; 2 uses
+  %6 = zext nneg i32 %i.hf to i64
+  %wide.trip.count.i.i = zext nneg i32 %i.hf to i64
   br label %.preheader.us.i.i
 
 .preheader.us.i.i:                                ; preds = %._crit_edge.us.i.i, %.preheader.us.preheader.i.i
@@ -617,7 +616,7 @@ middle.block912:                                  ; preds = %vector.body907
 
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph116.i.prol.loopexit, %.lr.ph116.i, %middle.block912
   %indvars.iv.next130.i.lcssa = phi i64 [ %i.it, %middle.block912 ], [ %indvars.iv.next130.i.lcssa1007.unr, %.lr.ph116.i.prol.loopexit ], [ %indvars.iv.next130.i.3, %.lr.ph116.i ]
-  %i.jv = trunc nsw i64 %indvars.iv.next130.i.lcssa to i32
+  %i.jv = trunc nuw nsw i64 %indvars.iv.next130.i.lcssa to i32
   br label %.loopexit458
 
 .loopexit109.loopexit.split.loop.exit.i:          ; preds = %bb.h
@@ -747,7 +746,7 @@ middle.block:                                     ; preds = %vector.body
 
 ._crit_edge120.loopexit.i:                        ; preds = %.lr.ph119.i.prol.loopexit, %.lr.ph119.i, %middle.block
   %indvars.iv.next141.i.lcssa = phi i64 [ %i.km, %middle.block ], [ %indvars.iv.next141.i.lcssa1008.unr, %.lr.ph119.i.prol.loopexit ], [ %indvars.iv.next141.i.3, %.lr.ph119.i ]
-  %i.lo = trunc nsw i64 %indvars.iv.next141.i.lcssa to i32
+  %i.lo = trunc nuw nsw i64 %indvars.iv.next141.i.lcssa to i32
   br label %.loopexit458
 
 .loopexit458:                                     ; preds = %bb.e, %._crit_edge120.loopexit.i, %.preheader105.i, %._crit_edge.loopexit.i, %.preheader106.i, %.preheader.i
@@ -1150,7 +1149,7 @@ middle.block942:                                  ; preds = %vector.body937
 
 ._crit_edge.loopexit.i318:                        ; preds = %.lr.ph116.i312.prol.loopexit, %.lr.ph116.i312, %middle.block942
   %indvars.iv.next130.i316.lcssa = phi i64 [ %i.rn, %middle.block942 ], [ %indvars.iv.next130.i316.lcssa986.unr, %.lr.ph116.i312.prol.loopexit ], [ %indvars.iv.next130.i316.3, %.lr.ph116.i312 ]
-  %i.sp = trunc nsw i64 %indvars.iv.next130.i316.lcssa to i32
+  %i.sp = trunc nuw nsw i64 %indvars.iv.next130.i316.lcssa to i32
   br label %.loopexit461
 
 .loopexit109.loopexit.split.loop.exit.i328:       ; preds = %bb.ae
@@ -1280,7 +1279,7 @@ middle.block927:                                  ; preds = %vector.body922
 
 ._crit_edge120.loopexit.i302:                     ; preds = %.lr.ph119.i296.prol.loopexit, %.lr.ph119.i296, %middle.block927
   %indvars.iv.next141.i300.lcssa = phi i64 [ %i.tg, %middle.block927 ], [ %indvars.iv.next141.i300.lcssa987.unr, %.lr.ph119.i296.prol.loopexit ], [ %indvars.iv.next141.i300.3, %.lr.ph119.i296 ]
-  %i.ui = trunc nsw i64 %indvars.iv.next141.i300.lcssa to i32
+  %i.ui = trunc nuw nsw i64 %indvars.iv.next141.i300.lcssa to i32
   br label %.loopexit461
 
 .loopexit461:                                     ; preds = %bb.ab, %._crit_edge120.loopexit.i302, %.preheader105.i290, %._crit_edge.loopexit.i318, %.preheader106.i309, %.preheader.i329

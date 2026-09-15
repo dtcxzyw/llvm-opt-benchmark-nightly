@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   %.sroa.413.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %.sroa.413.0.copyload.i = load ptr, ptr %.sroa.413.0..sroa_idx.i, align 8, !noalias !1388
   %.sroa.514.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 16
-  %.sroa.514.0.copyload.i = load i64, ptr %.sroa.514.0..sroa_idx.i, align 8, !noalias !1388 ; 35 uses
+  %.sroa.514.0.copyload.i = load i64, ptr %.sroa.514.0..sroa_idx.i, align 8, !noalias !1388 ; 32 uses
   %.sroa.615.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 24
   %.sroa.615.0.copyload.i = load i64, ptr %.sroa.615.0..sroa_idx.i, align 8, !noalias !1388 ; 10 uses
   %i.bk = lshr i64 %.sroa.4.0.copyload, 1         ; 2 uses
@@ -248,7 +248,7 @@ bb.i:                                             ; preds = %bb.g
 
 bb.j:                                             ; preds = %bb.i
   %.sroa.514.0..sroa_idx.i255 = getelementptr inbounds nuw i8, ptr %i.p, i64 16
-  %.sroa.514.0.copyload.i256 = load i64, ptr %.sroa.514.0..sroa_idx.i255, align 8, !noalias !1390 ; 31 uses
+  %.sroa.514.0.copyload.i256 = load i64, ptr %.sroa.514.0..sroa_idx.i255, align 8, !noalias !1390 ; 30 uses
   %.sroa.615.0..sroa_idx.i257 = getelementptr inbounds nuw i8, ptr %i.p, i64 24
   %.sroa.615.0.copyload.i258 = load i64, ptr %.sroa.615.0..sroa_idx.i257, align 8, !noalias !1390
   %.not.i259 = icmp eq i64 %.sroa.615.0.copyload.i258, %.sroa.615.0.copyload.i
@@ -651,7 +651,7 @@ bb.bj:                                            ; preds = %bb.bh
 
 bb.bk:                                            ; preds = %bb.bj
   %i.fg = shl nuw i64 %.sroa.514.0.copyload.i, 1
-  %i.fh = add i64 %i.fg, 2                        ; 9 uses
+  %i.fh = add i64 %i.fg, 2                        ; 8 uses
   %i.fi = icmp eq i64 %i.fh, 0
   br i1 %i.fi, label %bb.cd, label %bb.bl, !prof !16
 
@@ -696,7 +696,7 @@ _RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uni
   br i1 %i.fs, label %_RNCINvMs1_NtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint7modulus4montNtNtBa_5value14ValidatedInput18write_into_mont_RRNtNtNtBg_3rsa7keypair1PEs_0Bg_.exit.i.i.thread.i.i, label %bb.bn
 
 bb.bn:                                            ; preds = %.noexc5.i.i
-  %i.ft = load i64, ptr %i.fo, align 8, !alias.scope !1424, !noalias !1417, !noundef !15 ; 8 uses
+  %i.ft = load i64, ptr %i.fo, align 8, !alias.scope !1424, !noalias !1417, !noundef !15 ; 7 uses
   %.val3.i.i.i.i.i.i = load i64, ptr %i.fn, align 8, !alias.scope !1424, !noalias !1417, !noundef !15 ; 3 uses
   %.not.i.i.i.i.i.i.i.i.i = icmp ugt i64 %i.ft, %.val3.i.i.i.i.i.i
   br i1 %.not.i.i.i.i.i.i.i.i.i, label %.invoke45.i.i, label %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE10filled_mutB9_.exit.i.i.i.i.i, !prof !16
@@ -965,20 +965,14 @@ _RNCINvMs1_NtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint7modulus4montNtNtBa_5va
   %i.io = icmp ne i64 %.val3.i.i.i.i.i.i, %i.fh
   %.not27.i.i = or i1 %i.io, %i.in
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !1417
-  br i1 %.not27.i.i, label %.invoke.i.i, label %3, !prof !35
+  br i1 %.not27.i.i, label %.invoke.i.i, label %bb.cg, !prof !35
 
-.invoke.i.i:                                      ; preds = %3, %_RNCINvMs1_NtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint7modulus4montNtNtBa_5value14ValidatedInput18write_into_mont_RRNtNtNtBg_3rsa7keypair1PEs_0Bg_.exit.i.i.i.i, %_RNCINvMs1_NtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint7modulus4montNtNtBa_5value14ValidatedInput18write_into_mont_RRNtNtNtBg_3rsa7keypair1PEs_0Bg_.exit.i.i.thread.i.i
-  %2 = phi ptr [ @11, %_RNCINvMs1_NtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint7modulus4montNtNtBa_5value14ValidatedInput18write_into_mont_RRNtNtNtBg_3rsa7keypair1PEs_0Bg_.exit.i.i.i.i ], [ @11, %_RNCINvMs1_NtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint7modulus4montNtNtBa_5value14ValidatedInput18write_into_mont_RRNtNtNtBg_3rsa7keypair1PEs_0Bg_.exit.i.i.thread.i.i ], [ @10, %3 ]
-  invoke void @_RNvNtCs3oUPovFnLWP_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @0, i64 noundef 40, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %2) #42
+.invoke.i.i:                                      ; preds = %_RNCINvMs1_NtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint7modulus4montNtNtBa_5value14ValidatedInput18write_into_mont_RRNtNtNtBg_3rsa7keypair1PEs_0Bg_.exit.i.i.i.i, %_RNCINvMs1_NtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint7modulus4montNtNtBa_5value14ValidatedInput18write_into_mont_RRNtNtNtBg_3rsa7keypair1PEs_0Bg_.exit.i.i.thread.i.i
+  invoke void @_RNvNtCs3oUPovFnLWP_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @0, i64 noundef 40, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #42
           to label %.cont.i.i unwind label %bb.cc, !noalias !1423
 
 .cont.i.i:                                        ; preds = %.invoke.i.i
   unreachable
-
-3:                                                ; preds = %_RNCINvMs1_NtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint7modulus4montNtNtBa_5value14ValidatedInput18write_into_mont_RRNtNtNtBg_3rsa7keypair1PEs_0Bg_.exit.i.i.i.i
-  %4 = add nuw i64 %i.ft, %.sroa.514.0.copyload.i
-  %.not.i.i269 = icmp eq i64 %4, %i.fh
-  br i1 %.not.i.i269, label %bb.cg, label %.invoke.i.i, !prof !19
 
 bb.cc:                                            ; preds = %_RNvNtCs5yxAJGbRKSL_4ring4limb16limbs_double_mod.exit.thread.i.i.i.i.i.i.i.invoke.i.i, %bb.cb, %bb.bt, %.invoke.i.i, %bb.ca, %bb.by, %.invoke45.i.i, %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i
   %i.ip = landingpad { ptr, i32 }
@@ -1001,35 +995,26 @@ bb.cf:                                            ; preds = %bb.ch, %bb.dc, %bb.
           cleanup
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs5yxAJGbRKSL_4ring3rsa7keypair12PrivatePrimeNtBE_1PEEBI_.exit358
 
-bb.cg:                                            ; preds = %3
+bb.cg:                                            ; preds = %_RNCINvMs1_NtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint7modulus4montNtNtBa_5value14ValidatedInput18write_into_mont_RRNtNtNtBg_3rsa7keypair1PEs_0Bg_.exit.i.i.i.i
   %i.ir = add nuw i64 %.sroa.514.0.copyload.i, 2  ; 3 uses
   %i.is = load i64, ptr %i.fp, align 8, !alias.scope !1444, !noalias !1445, !noundef !15
   %.not.i.i273 = icmp eq i64 %i.is, %.sroa.514.0.copyload.i
-  br i1 %.not.i.i273, label %5, label %bb.ch, !prof !19
+  br i1 %.not.i.i273, label %bb.ci, label %bb.ch, !prof !19
 
-5:                                                ; preds = %bb.cg
-  %6 = icmp ult i64 %.sroa.514.0.copyload.i, 4
-  br i1 %6, label %bb.ch, label %7, !prof !16
-
-7:                                                ; preds = %5
-  %8 = icmp ugt i64 %.sroa.514.0.copyload.i, 128
-  br i1 %8, label %bb.ch, label %bb.ci, !prof !16
-
-bb.ch:                                            ; preds = %7, %5, %bb.cg
-  %.sroa.42.0.ph.i274 = phi i64 [ 0, %bb.cg ], [ 1, %5 ], [ 2, %7 ]
-  invoke fastcc void @_RINvNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint34unwrap_impossible_limb_slice_errorINtNtNtNtB2_7modulus4mont4base4MontNtNtNtB6_3rsa7keypair1PEEB6_(i64 noundef %.sroa.42.0.ph.i274) #39
+bb.ch:                                            ; preds = %bb.cg
+  invoke fastcc void @_RINvNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint34unwrap_impossible_limb_slice_errorINtNtNtNtB2_7modulus4mont4base4MontNtNtNtB6_3rsa7keypair1PEEB6_(i64 noundef 0) #39
           to label %.noexc278 unwind label %bb.cf
 
 .noexc278:                                        ; preds = %bb.ch
   unreachable
 
-bb.ci:                                            ; preds = %7
+bb.ci:                                            ; preds = %bb.cg
   %i.it = icmp slt i64 %.sroa.514.0.copyload.i256, 0
   br i1 %i.it, label %bb.dc, label %bb.cj, !prof !16
 
 bb.cj:                                            ; preds = %bb.ci
   %i.iu = shl nuw i64 %.sroa.514.0.copyload.i256, 1
-  %i.iv = add i64 %i.iu, 2                        ; 7 uses
+  %i.iv = add i64 %i.iu, 2                        ; 6 uses
   %i.iw = icmp eq i64 %i.iv, 0
   br i1 %i.iw, label %bb.dc, label %bb.ck, !prof !16
 
@@ -1074,7 +1059,7 @@ _RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uni
   br i1 %i.jg, label %_RNCINvMs1_NtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint7modulus4montNtNtBa_5value14ValidatedInput18write_into_mont_RRNtNtNtBg_3rsa7keypair1QEs_0Bg_.exit.i.i.thread.i.i, label %bb.cm
 
 bb.cm:                                            ; preds = %.noexc5.i.i283
-  %i.jh = load i64, ptr %i.jc, align 8, !alias.scope !1454, !noalias !1447, !noundef !15 ; 8 uses
+  %i.jh = load i64, ptr %i.jc, align 8, !alias.scope !1454, !noalias !1447, !noundef !15 ; 7 uses
   %.val3.i.i.i.i.i.i284 = load i64, ptr %i.jb, align 8, !alias.scope !1454, !noalias !1447, !noundef !15 ; 3 uses
   %.not.i.i.i.i.i.i.i.i.i285 = icmp ugt i64 %i.jh, %.val3.i.i.i.i.i.i284
   br i1 %.not.i.i.i.i.i.i.i.i.i285, label %.invoke45.i.i288, label %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE10filled_mutB9_.exit.i.i.i.i.i286, !prof !16
@@ -1343,20 +1328,14 @@ _RNCINvMs1_NtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint7modulus4montNtNtBa_5va
   %i.mc = icmp ne i64 %.val3.i.i.i.i.i.i284, %i.iv
   %.not27.i.i323 = or i1 %i.mc, %i.mb
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !1447
-  br i1 %.not27.i.i323, label %.invoke.i.i303, label %10, !prof !35
+  br i1 %.not27.i.i323, label %.invoke.i.i303, label %_RNvMs2_NtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint7modulus4montINtB5_8IntoMontNtNtNtBd_3rsa7keypair1QNtNtBb_10montgomery2RRE5valueBd_.exit.i, !prof !35
 
-.invoke.i.i303:                                   ; preds = %10, %_RNCINvMs1_NtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint7modulus4montNtNtBa_5value14ValidatedInput18write_into_mont_RRNtNtNtBg_3rsa7keypair1QEs_0Bg_.exit.i.i.i.i, %_RNCINvMs1_NtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint7modulus4montNtNtBa_5value14ValidatedInput18write_into_mont_RRNtNtNtBg_3rsa7keypair1QEs_0Bg_.exit.i.i.thread.i.i
-  %9 = phi ptr [ @11, %_RNCINvMs1_NtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint7modulus4montNtNtBa_5value14ValidatedInput18write_into_mont_RRNtNtNtBg_3rsa7keypair1QEs_0Bg_.exit.i.i.i.i ], [ @11, %_RNCINvMs1_NtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint7modulus4montNtNtBa_5value14ValidatedInput18write_into_mont_RRNtNtNtBg_3rsa7keypair1QEs_0Bg_.exit.i.i.thread.i.i ], [ @10, %10 ]
-  invoke void @_RNvNtCs3oUPovFnLWP_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @0, i64 noundef 40, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %9) #42
+.invoke.i.i303:                                   ; preds = %_RNCINvMs1_NtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint7modulus4montNtNtBa_5value14ValidatedInput18write_into_mont_RRNtNtNtBg_3rsa7keypair1QEs_0Bg_.exit.i.i.i.i, %_RNCINvMs1_NtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint7modulus4montNtNtBa_5value14ValidatedInput18write_into_mont_RRNtNtNtBg_3rsa7keypair1QEs_0Bg_.exit.i.i.thread.i.i
+  invoke void @_RNvNtCs3oUPovFnLWP_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @0, i64 noundef 40, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #42
           to label %.cont.i.i304 unwind label %bb.db, !noalias !1453
 
 .cont.i.i304:                                     ; preds = %.invoke.i.i303
   unreachable
-
-10:                                               ; preds = %_RNCINvMs1_NtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint7modulus4montNtNtBa_5value14ValidatedInput18write_into_mont_RRNtNtNtBg_3rsa7keypair1QEs_0Bg_.exit.i.i.i.i
-  %11 = add nuw i64 %i.jh, %.sroa.514.0.copyload.i256
-  %.not.i.i324 = icmp eq i64 %11, %i.iv
-  br i1 %.not.i.i324, label %_RNvMs2_NtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint7modulus4montINtB5_8IntoMontNtNtNtBd_3rsa7keypair1QNtNtBb_10montgomery2RRE5valueBd_.exit.i, label %.invoke.i.i303, !prof !19
 
 bb.db:                                            ; preds = %_RNvNtCs5yxAJGbRKSL_4ring4limb16limbs_double_mod.exit.thread.i.i.i.i.i.i.i.invoke.i.i314, %bb.da, %bb.cs, %.invoke.i.i303, %bb.cz, %bb.cx, %.invoke45.i.i288, %_RNvMsb_NtNtCs5yxAJGbRKSL_4ring8polyfill12uninit_sliceINtB5_3BufyE15unfilled_uninitB9_.exit.i.i.i.i.i.i282
   %i.md = landingpad { ptr, i32 }
@@ -1380,7 +1359,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs5yxAJGbRKSL_4ring3rsa7keypair12
   call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %i.iz, i64 noundef %i.ix, i64 noundef 8) #36
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs5yxAJGbRKSL_4ring3rsa7keypair12PrivatePrimeNtBE_1PEEBI_.exit358
 
-_RNvMs2_NtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint7modulus4montINtB5_8IntoMontNtNtNtBd_3rsa7keypair1QNtNtBb_10montgomery2RRE5valueBd_.exit.i: ; preds = %10
+_RNvMs2_NtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint7modulus4montINtB5_8IntoMontNtNtNtBd_3rsa7keypair1QNtNtBb_10montgomery2RRE5valueBd_.exit.i: ; preds = %_RNCINvMs1_NtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint7modulus4montNtNtBa_5value14ValidatedInput18write_into_mont_RRNtNtNtBg_3rsa7keypair1QEs_0Bg_.exit.i.i.i.i
   call void @llvm.experimental.noalias.scope.decl(metadata !1474)
   call void @llvm.experimental.noalias.scope.decl(metadata !1475)
   %i.mf = icmp samesign ult i64 %i.be, %.sroa.514.0.copyload.i256

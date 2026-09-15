@@ -205,16 +205,15 @@ bb.az:                                            ; preds = %bb.ay, %.lr.ph.i.i1
 .preheader.lr.ph.i.i:                             ; preds = %.lr.ph.split.split.i
   %i.hn = add nsw i64 %indvars.iv.i, -6           ; 2 uses
   %i.ho = icmp eq i64 %i.hn, 31
-  %i.hp = trunc nsw i64 %i.hn to i32              ; 2 uses
+  %i.hp = trunc nuw nsw i64 %i.hn to i32          ; 2 uses
   %i.hq = shl i32 2, %i.hp
   %i.hr = sext i32 %i.hq to i64
   br i1 %i.ho, label %.loopexit.i, label %.preheader.us.preheader.i.i
 
 .preheader.us.preheader.i.i:                      ; preds = %.preheader.lr.ph.i.i
-  %i.hs = shl nuw i32 1, %i.hp                    ; 2 uses
-  %3 = sext i32 %i.hs to i64
-  %smax.i.i = call i32 @llvm.smax.i32(i32 %i.hs, i32 1)
-  %wide.trip.count.i.i = zext nneg i32 %smax.i.i to i64
+  %i.hs = shl nuw nsw i32 1, %i.hp                ; 2 uses
+  %3 = zext nneg i32 %i.hs to i64
+  %wide.trip.count.i.i = zext nneg i32 %i.hs to i64
   br label %.preheader.us.i.i
 
 .preheader.us.i.i:                                ; preds = %._crit_edge.us.i.i, %.preheader.us.preheader.i.i
@@ -617,7 +616,7 @@ Vec_IntDup.exit.i:                                ; preds = %bb.dp, %.lr.ph.i196
   %i.te = getelementptr inbounds nuw i8, ptr %i.su, i64 8
   %i.tf = load ptr, ptr %i.te, align 8, !tbaa !38
   call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.tc, ptr align 4 %i.tf, i64 %.pre-phi12.i.i, i1 false)
-  %i.tg = trunc nsw i64 %indvars.iv19.i to i32
+  %i.tg = trunc nuw nsw i64 %indvars.iv19.i to i32
   %i.th = icmp eq i32 %spec.select.sink.i15.i, %i.tg
   br i1 %i.th, label %bb.dq, label %Vec_PtrPush.exit.i
 
@@ -670,7 +669,7 @@ Vec_PtrPush.exit.i:                               ; preds = %bb.dx, %bb.dw, %bb.
   br i1 %i.tt, label %.lr.ph.i196, label %..critedge_crit_edge.i, !llvm.loop !167
 
 ..critedge_crit_edge.i:                           ; preds = %Vec_PtrPush.exit.i
-  %i.tu = trunc nsw i64 %indvars.iv.next20.i to i32
+  %i.tu = trunc nuw nsw i64 %indvars.iv.next20.i to i32
   store i32 %i.tu, ptr %i.so, align 4, !tbaa !66
   store i32 %spec.select.sink.i14.i, ptr %i.sm, align 8
   store ptr %storemerge18.i, ptr %i.ss, align 8

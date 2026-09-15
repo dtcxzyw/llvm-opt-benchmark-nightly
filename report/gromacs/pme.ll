@@ -205,23 +205,15 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.i,
 
 bb.j:                                             ; preds = %bb.a
   %i.l = shl i32 %0, 1
-  %i.m = add i32 %i.l, -2                         ; 5 uses
+  %i.m = add nsw i32 %i.l, -2                     ; 4 uses
   %i.n = icmp sgt i32 %0, 2
-  br i1 %i.n, label %20, label %bb.k
+  br i1 %i.n, label %_Z18minimalPmeGridSizei.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   tail call void @_ZN3gmx8internal13assertHandlerEPKcS2_S2_S2_i(ptr noundef nonnull @.str.13, ptr noundef nonnull @.str.14, ptr noundef nonnull @"__PRETTY_FUNCTION__._ZZ18minimalPmeGridSizeiENK3$_0clEv", ptr noundef nonnull @.str.15, i32 noundef 477) #32
   unreachable
 
-20:                                               ; preds = %bb.j
-  %.not.not.i = icmp sgt i32 %i.m, %0
-  br i1 %.not.not.i, label %_Z18minimalPmeGridSizei.exit, label %21
-
-21:                                               ; preds = %20
-  tail call void @_ZN3gmx8internal13assertHandlerEPKcS2_S2_S2_i(ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.17, ptr noundef nonnull @"__PRETTY_FUNCTION__._ZZ18minimalPmeGridSizeiENK3$_0clEv", ptr noundef nonnull @.str.15, i32 noundef 478) #32
-  unreachable
-
-_Z18minimalPmeGridSizei.exit:                     ; preds = %20
+_Z18minimalPmeGridSizei.exit:                     ; preds = %bb.j
   %i.o = icmp slt i32 %1, %i.m
   %i.p = icmp slt i32 %2, %i.m
   %or.cond66 = or i1 %i.o, %i.p
