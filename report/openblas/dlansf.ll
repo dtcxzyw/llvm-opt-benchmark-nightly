@@ -202,33 +202,34 @@ bb.x:                                             ; preds = %bb.w
 
 .lr.ph1464:                                       ; preds = %._crit_edge1440.thread, %._crit_edge1440
   %i.dl = shl nuw nsw i32 %i.df, 1
+  %6 = zext i32 %i.df to i64                      ; 2 uses
   %i.dm = sext i32 %i.dg to i64
   %i.dn = sext i32 %.0784 to i64
   %i.do = sext i32 %i.df to i64
   %i.dp = add nsw i32 %i.df, 1                    ; 2 uses
   %wide.trip.count1858 = zext i32 %i.dp to i64
   %wide.trip.count1855 = zext i32 %i.dg to i64    ; 3 uses
+  %7 = add nsw i64 %6, -1
   br label %bb.y
 
 bb.y:                                             ; preds = %.lr.ph1464, %._crit_edge1455
-  %indvars.iv1846.a = phi i64 [ 0, %.lr.ph1464 ], [ %indvars.iv.next1847, %._crit_edge1455 ] ; 10 uses
-  %indvars.iv1842 = phi i32 [ %i.df, %.lr.ph1464 ], [ %indvars.iv.next1843, %._crit_edge1455 ] ; 5 uses
-  %i.dq = sub nsw i64 %wide.trip.count1855, %indvars.iv1846.a
-  %i.dr = add nsw i64 %indvars.iv1846.a, %i.do    ; 3 uses
+  %indvars.iv1846.a = phi i64 [ %6, %.lr.ph1464 ], [ %indvars.iv.next1858, %._crit_edge1455 ] ; 4 uses
+  %indvars.iv1846 = phi i64 [ 0, %.lr.ph1464 ], [ %indvars.iv.next1847, %._crit_edge1455 ] ; 11 uses
+  %i.dq = sub nsw i64 %wide.trip.count1855, %indvars.iv1846
+  %i.dr = add nuw nsw i64 %indvars.iv1846, %i.do  ; 3 uses
   %.not969.not1442 = icmp sgt i64 %i.dr, 0
-  %i.ds = mul nsw i64 %indvars.iv1846.a, %i.dn    ; 4 uses
+  %i.ds = mul nsw i64 %indvars.iv1846, %i.dn      ; 4 uses
   br i1 %.not969.not1442, label %.lr.ph1445, label %._crit_edge1446
 
 .lr.ph1445:                                       ; preds = %bb.y
-  %wide.trip.count1844 = zext i32 %indvars.iv1842 to i64 ; 2 uses
+  %8 = add i64 %7, %indvars.iv1846
   %invariant.gep2202.a = getelementptr [8 x i8], ptr %4, i64 %i.ds ; 5 uses
-  %xtraiter2457 = and i64 %wide.trip.count1844, 3 ; 3 uses
-  %6 = add i32 %indvars.iv1842, -1
-  %i.dt = icmp ult i32 %6, 3
+  %xtraiter2457 = and i64 %indvars.iv1846.a, 3    ; 3 uses
+  %i.dt = icmp ult i64 %8, 3
   br i1 %i.dt, label %.epil.preheader2456, label %.lr.ph1445.new
 
 .lr.ph1445.new:                                   ; preds = %.lr.ph1445
-  %unroll_iter2464 = and i64 %wide.trip.count1844, 4294967292
+  %unroll_iter2464 = and i64 %indvars.iv1846.a, -4
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.z, %.lr.ph1445.new
@@ -285,7 +286,7 @@ bb.z:                                             ; preds = %bb.z, %.lr.ph1445.n
 
 ._crit_edge1446.loopexit.unr-lcssa:               ; preds = %bb.z
   %lcmp.mod2461.not = icmp eq i64 %xtraiter2457, 0
-  br i1 %lcmp.mod2461.not, label %._crit_edge1446, label %.epil.preheader2456
+  br i1 %lcmp.mod2461.not, label %._crit_edge1446.loopexit, label %.epil.preheader2456
 
 .epil.preheader2456:                              ; preds = %._crit_edge1446.loopexit.unr-lcssa, %.lr.ph1445
   %indvars.iv1839.epil.init = phi i64 [ 0, %.lr.ph1445 ], [ %indvars.iv.next1840.3, %._crit_edge1446.loopexit.unr-lcssa ]
@@ -311,11 +312,16 @@ bb.aa:                                            ; preds = %bb.aa, %.epil.prehe
   %indvars.iv.next1840.epil = add nuw nsw i64 %indvars.iv1839.epil, 1
   %epil.iter2458.next = add i64 %epil.iter2458, 1 ; 2 uses
   %epil.iter2458.cmp.not = icmp eq i64 %epil.iter2458.next, %xtraiter2457
-  br i1 %epil.iter2458.cmp.not, label %._crit_edge1446, label %bb.aa, !llvm.loop !17
+  br i1 %epil.iter2458.cmp.not, label %._crit_edge1446.loopexit, label %bb.aa, !llvm.loop !17
 
-._crit_edge1446:                                  ; preds = %._crit_edge1446.loopexit.unr-lcssa, %bb.aa, %bb.y
-  %.lcssa14561459 = phi double [ 0.000000e+00, %bb.y ], [ %i.ex, %._crit_edge1446.loopexit.unr-lcssa ], [ %i.fg, %bb.aa ] ; 2 uses
-  %.5799.lcssa = phi i32 [ 0, %bb.y ], [ %indvars.iv1842, %bb.aa ], [ %indvars.iv1842, %._crit_edge1446.loopexit.unr-lcssa ] ; 4 uses
+._crit_edge1446.loopexit:                         ; preds = %bb.aa, %._crit_edge1446.loopexit.unr-lcssa
+  %.lcssa2292 = phi double [ %i.ex, %._crit_edge1446.loopexit.unr-lcssa ], [ %i.fg, %bb.aa ]
+  %9 = trunc nuw nsw i64 %indvars.iv1846.a to i32
+  br label %._crit_edge1446
+
+._crit_edge1446:                                  ; preds = %bb.y, %._crit_edge1446.loopexit
+  %.lcssa14561459 = phi double [ %.lcssa2292, %._crit_edge1446.loopexit ], [ 0.000000e+00, %bb.y ] ; 2 uses
+  %.5799.lcssa = phi i32 [ %9, %._crit_edge1446.loopexit ], [ 0, %bb.y ] ; 4 uses
   %i.fk = sext i32 %.5799.lcssa to i64
   %i.fl = getelementptr [8 x i8], ptr %4, i64 %i.ds
   %i.fm = getelementptr [8 x i8], ptr %i.fl, i64 %i.fk
@@ -338,11 +344,11 @@ bb.ab:                                            ; preds = %._crit_edge1446
   %i.fz = fcmp oge double %i.fy, 0.000000e+00
   %i.ga = fneg double %i.fy
   %i.gb = select i1 %i.fz, double %i.fy, double %i.ga
-  %i.gc = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv1846.a ; 4 uses
+  %i.gc = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv1846 ; 4 uses
   %i.gd = load double, ptr %i.gc, align 8, !tbaa !106
   %i.ge = fadd double %i.gd, %i.gb                ; 2 uses
   store double %i.ge, ptr %i.gc, align 8, !tbaa !106
-  %.not970.not1450 = icmp slt i64 %indvars.iv1846.a, %i.dm
+  %.not970.not1450 = icmp slt i64 %indvars.iv1846, %i.dm
   br i1 %.not970.not1450, label %.lr.ph1454.preheader, label %._crit_edge1455
 
 .lr.ph1454.preheader:                             ; preds = %bb.ab
@@ -355,7 +361,7 @@ bb.ab:                                            ; preds = %._crit_edge1446
 
 .lr.ph1454.prol:                                  ; preds = %.lr.ph1454.preheader, %.lr.ph1454.prol
   %indvars.iv1850.prol = phi i64 [ %indvars.iv.next1851.prol, %.lr.ph1454.prol ], [ %i.gg, %.lr.ph1454.preheader ]
-  %indvars.iv1848.prol = phi i64 [ %indvars.iv.next1849.prol, %.lr.ph1454.prol ], [ %indvars.iv1846.a, %.lr.ph1454.preheader ]
+  %indvars.iv1848.prol = phi i64 [ %indvars.iv.next1849.prol, %.lr.ph1454.prol ], [ %indvars.iv1846, %.lr.ph1454.preheader ]
   %i.gh = phi double [ %i.gm, %.lr.ph1454.prol ], [ 0.000000e+00, %.lr.ph1454.preheader ]
   %prol.iter2468 = phi i64 [ %prol.iter2468.next, %.lr.ph1454.prol ], [ 0, %.lr.ph1454.preheader ]
   %indvars.iv.next1849.prol = add nuw nsw i64 %indvars.iv1848.prol, 1 ; 3 uses
@@ -377,9 +383,9 @@ bb.ab:                                            ; preds = %._crit_edge1446
 .lr.ph1454.prol.loopexit:                         ; preds = %.lr.ph1454.prol, %.lr.ph1454.preheader
   %.lcssa2289.unr = phi double [ poison, %.lr.ph1454.preheader ], [ %i.gm, %.lr.ph1454.prol ]
   %indvars.iv1850.unr = phi i64 [ %i.gg, %.lr.ph1454.preheader ], [ %indvars.iv.next1851.prol, %.lr.ph1454.prol ]
-  %indvars.iv1848.unr = phi i64 [ %indvars.iv1846.a, %.lr.ph1454.preheader ], [ %indvars.iv.next1849.prol, %.lr.ph1454.prol ]
+  %indvars.iv1848.unr = phi i64 [ %indvars.iv1846, %.lr.ph1454.preheader ], [ %indvars.iv.next1849.prol, %.lr.ph1454.prol ]
   %.unr2469 = phi double [ 0.000000e+00, %.lr.ph1454.preheader ], [ %i.gm, %.lr.ph1454.prol ]
-  %i.gq = sub nsw i64 %indvars.iv1846.a, %wide.trip.count1855
+  %i.gq = sub nsw i64 %indvars.iv1846, %wide.trip.count1855
   %i.gr = icmp ugt i64 %i.gq, -4
   br i1 %i.gr, label %._crit_edge1455.loopexit, label %.lr.ph1454
 
@@ -448,8 +454,8 @@ bb.ab:                                            ; preds = %._crit_edge1446
   %.lcssa14561458 = phi double [ 0.000000e+00, %bb.ab ], [ %.lcssa2289, %._crit_edge1455.loopexit ] ; 2 uses
   %i.ig = fadd double %.lcssa14561458, %i.if
   store double %i.ig, ptr %i.gc, align 8, !tbaa !106
-  %indvars.iv.next1847 = add nuw nsw i64 %indvars.iv1846.a, 1 ; 2 uses
-  %indvars.iv.next1843 = add i32 %indvars.iv1842, 1
+  %indvars.iv.next1847 = add nuw nsw i64 %indvars.iv1846, 1 ; 2 uses
+  %indvars.iv.next1858 = add nuw i64 %indvars.iv1846.a, 1
   %exitcond1859.not = icmp eq i64 %indvars.iv.next1847, %wide.trip.count1858
   br i1 %exitcond1859.not, label %._crit_edge1465, label %bb.y, !llvm.loop !20
 
@@ -458,7 +464,7 @@ bb.ab:                                            ; preds = %._crit_edge1446
   br label %bb.ac
 
 ._crit_edge1468:                                  ; preds = %._crit_edge1446
-  %i.ih = trunc nuw nsw i64 %indvars.iv1846.a to i32
+  %i.ih = trunc nuw nsw i64 %indvars.iv1846 to i32
   %i.ii = trunc nsw i64 %i.dr to i32
   store double %.lcssa14561459, ptr %i.f, align 8, !tbaa !106
   %i.ij = add nsw i32 %i.ii, -1
@@ -700,7 +706,7 @@ bb.ai:                                            ; preds = %._crit_edge1487._cr
   %indvars.iv1872.prol = phi i64 [ %indvars.iv.next1873.prol, %.lr.ph1495.prol ], [ %i.lw, %.lr.ph1495.preheader ]
   %i.ma = phi double [ %i.mf, %.lr.ph1495.prol ], [ 0.000000e+00, %.lr.ph1495.preheader ]
   %prol.iter2486 = phi i64 [ %prol.iter2486.next, %.lr.ph1495.prol ], [ 0, %.lr.ph1495.preheader ]
-  %indvars.iv.next1873.prol = add nsw i64 %indvars.iv1872.prol, 1 ; 3 uses
+  %indvars.iv.next1873.prol = add nuw nsw i64 %indvars.iv1872.prol, 1 ; 3 uses
   %indvars.iv.next1875.prol = add nuw nsw i64 %indvars.iv1874.prol, 1 ; 3 uses
   %gep2211.prol = getelementptr [8 x i8], ptr %invariant.gep2210, i64 %indvars.iv.next1875.prol
   %i.mb = load double, ptr %gep2211.prol, align 8, !tbaa !106 ; 3 uses
@@ -766,7 +772,7 @@ bb.ai:                                            ; preds = %._crit_edge1487._cr
   %i.np = load double, ptr %i.no, align 8, !tbaa !106
   %i.nq = fadd double %i.nl, %i.np
   store double %i.nq, ptr %i.no, align 8, !tbaa !106
-  %indvars.iv.next1873.3 = add nsw i64 %indvars.iv1872, 4 ; 3 uses
+  %indvars.iv.next1873.3 = add nuw nsw i64 %indvars.iv1872, 4 ; 3 uses
   %indvars.iv.next1875.3 = add nuw nsw i64 %indvars.iv1874, 4 ; 2 uses
   %gep2211.3 = getelementptr [8 x i8], ptr %invariant.gep2210, i64 %indvars.iv.next1875.3
   %i.nr = load double, ptr %gep2211.3, align 8, !tbaa !106 ; 3 uses
@@ -1169,7 +1175,7 @@ bb.au:                                            ; preds = %bb.au, %.epil.prehe
   %indvars.iv1927 = phi i64 [ %i.wq, %.lr.ph1571.preheader ], [ %indvars.iv.next1928, %.lr.ph1571 ]
   %indvars.iv1925 = phi i64 [ %i.wn, %.lr.ph1571.preheader ], [ %indvars.iv.next1926, %.lr.ph1571 ]
   %i.ws = phi double [ 0.000000e+00, %.lr.ph1571.preheader ], [ %i.wx, %.lr.ph1571 ]
-  %indvars.iv.next1926 = add nsw i64 %indvars.iv1925, 1 ; 3 uses
+  %indvars.iv.next1926 = add nuw nsw i64 %indvars.iv1925, 1 ; 3 uses
   %indvars.iv.next1928 = add nuw nsw i64 %indvars.iv1927, 1 ; 2 uses
   %gep2221 = getelementptr [8 x i8], ptr %invariant.gep2220, i64 %indvars.iv.next1928
   %i.wt = load double, ptr %gep2221, align 8, !tbaa !106 ; 3 uses

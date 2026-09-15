@@ -203,8 +203,8 @@ bb.a:
   %i.ca = fsub <2 x double> %i.bo, %i.br
   %i.cb = fsub <2 x double> %i.bv, %i.by
   %i.cc = sub nsw i64 %i.q, %indvars.iv703        ; 2 uses
-  %i.cd = add nsw i64 %i.cc, %i.q                 ; 2 uses
-  %i.ce = add nsw i64 %i.cd, %i.q                 ; 2 uses
+  %i.cd = add nuw nsw i64 %i.cc, %i.q             ; 2 uses
+  %i.ce = add nuw nsw i64 %i.cd, %i.q             ; 2 uses
   %i.cf = getelementptr inbounds [8 x i8], ptr %1, i64 %i.cc ; 3 uses
   %i.cg = getelementptr inbounds [8 x i8], ptr %1, i64 %i.ce ; 3 uses
   %i.ch = getelementptr i8, ptr %i.cf, i64 -16    ; 2 uses
@@ -607,8 +607,8 @@ bb.a:
   %i.br = getelementptr i8, ptr %gep, i64 16      ; 2 uses
   %i.bs = getelementptr i8, ptr %i.bo, i64 24
   %i.bt = sub nsw i64 %i.r, %indvars.iv703        ; 2 uses
-  %i.bu = add nsw i64 %i.bt, %i.r                 ; 2 uses
-  %i.bv = add nsw i64 %i.bu, %i.r                 ; 2 uses
+  %i.bu = add nuw nsw i64 %i.bt, %i.r             ; 2 uses
+  %i.bv = add nuw nsw i64 %i.bu, %i.r             ; 2 uses
   %i.bw = getelementptr inbounds [8 x i8], ptr %1, i64 %i.bt ; 5 uses
   %i.bx = getelementptr inbounds [8 x i8], ptr %1, i64 %i.bv ; 5 uses
   %i.by = getelementptr i8, ptr %i.bw, i64 8      ; 2 uses
@@ -1011,7 +1011,7 @@ bb.a:
 define dso_local void @cftmdl1(i32 noundef %0, ptr nofree noundef captures(none) %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #4 {
 bb.a:
   %i.a = ashr i32 %0, 3                           ; 9 uses
-  %i.b = shl nsw i32 %i.a, 1
+  %i.b = shl nsw i32 %i.a, 1                      ; 2 uses
   %i.c = shl nsw i32 %i.a, 2
   %i.d = mul nsw i32 %i.a, 6
   %i.e = load double, ptr %1, align 8, !tbaa !14  ; 2 uses
@@ -1026,7 +1026,7 @@ bb.a:
   %i.n = fadd double %i.k, %i.m                   ; 2 uses
   %i.o = fsub double %i.e, %i.h                   ; 2 uses
   %i.p = fsub double %i.k, %i.m                   ; 2 uses
-  %i.q = sext i32 %i.b to i64                     ; 8 uses
+  %i.q = sext i32 %i.b to i64
   %i.r = getelementptr inbounds [8 x i8], ptr %1, i64 %i.q ; 3 uses
   %i.s = load double, ptr %i.r, align 8, !tbaa !14 ; 2 uses
   %i.t = sext i32 %i.d to i64
@@ -1066,9 +1066,10 @@ bb.a:
   br label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
+  %3 = zext nneg i32 %i.b to i64                  ; 7 uses
   %i.ap = zext nneg i32 %i.a to i64               ; 2 uses
-  %invariant.gep = getelementptr [8 x i8], ptr %1, i64 %i.q
-  %invariant.gep344 = getelementptr [8 x i8], ptr %1, i64 %i.q
+  %invariant.gep = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %3
+  %invariant.gep344 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %3
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -1082,12 +1083,12 @@ bb.a:
   %i.au = getelementptr inbounds nuw i8, ptr %i.ar, i64 56
   %i.av = load double, ptr %i.au, align 8, !tbaa !14 ; 2 uses
   %i.aw = fneg double %i.av
-  %i.ax = add nuw nsw i64 %indvars.iv338, %i.q    ; 2 uses
-  %i.ay = add nuw nsw i64 %i.ax, %i.q             ; 2 uses
+  %i.ax = add nuw nsw i64 %indvars.iv338, %3      ; 2 uses
+  %i.ay = add nuw nsw i64 %i.ax, %3               ; 2 uses
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv338 ; 2 uses
   %i.ba = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.ay ; 2 uses
   %i.bb = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.ax ; 2 uses
-  %gep = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.ay ; 2 uses
+  %gep = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %i.ay ; 2 uses
   %i.bc = load <2 x double>, ptr %i.az, align 8, !tbaa !14 ; 2 uses
   %i.bd = load <2 x double>, ptr %i.ba, align 8, !tbaa !14 ; 2 uses
   %i.be = fadd <2 x double> %i.bc, %i.bd          ; 2 uses
@@ -1096,13 +1097,13 @@ bb.a:
   %i.bh = fadd <2 x double> %i.bf, %i.bg          ; 2 uses
   %i.bi = fadd <2 x double> %i.be, %i.bh
   %i.bj = fsub <2 x double> %i.be, %i.bh
-  %i.bk = sub nsw i64 %i.q, %indvars.iv338        ; 2 uses
-  %i.bl = add nsw i64 %i.bk, %i.q                 ; 2 uses
-  %i.bm = add nsw i64 %i.bl, %i.q                 ; 2 uses
-  %i.bn = getelementptr inbounds [8 x i8], ptr %1, i64 %i.bk ; 2 uses
-  %i.bo = getelementptr inbounds [8 x i8], ptr %1, i64 %i.bm ; 2 uses
-  %i.bp = getelementptr inbounds [8 x i8], ptr %1, i64 %i.bl ; 2 uses
-  %gep345 = getelementptr [8 x i8], ptr %invariant.gep344, i64 %i.bm ; 2 uses
+  %i.bk = sub nuw nsw i64 %3, %indvars.iv338      ; 2 uses
+  %i.bl = add nuw nsw i64 %i.bk, %3               ; 2 uses
+  %i.bm = add nuw nsw i64 %i.bl, %3               ; 2 uses
+  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.bk ; 2 uses
+  %i.bo = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.bm ; 2 uses
+  %i.bp = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.bl ; 2 uses
+  %gep345 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep344, i64 %i.bm ; 2 uses
   %i.bq = fsub <2 x double> %i.bc, %i.bd          ; 2 uses
   %i.br = fsub <2 x double> %i.bf, %i.bg
   %i.bs = shufflevector <2 x double> %i.br, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
@@ -1225,7 +1226,7 @@ bb.a:
 define dso_local void @cftmdl2(i32 noundef %0, ptr nofree noundef captures(none) %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #4 {
 bb.a:
   %i.a = ashr i32 %0, 3                           ; 9 uses
-  %i.b = shl nsw i32 %i.a, 1                      ; 2 uses
+  %i.b = shl nsw i32 %i.a, 1                      ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.d = load double, ptr %i.c, align 8, !tbaa !14 ; 4 uses
   %i.e = shl nsw i32 %i.a, 2
@@ -1242,7 +1243,7 @@ bb.a:
   %i.p = fadd double %i.n, %i.o                   ; 2 uses
   %i.q = fadd double %i.g, %i.k                   ; 2 uses
   %i.r = fsub double %i.n, %i.o                   ; 2 uses
-  %i.s = sext i32 %i.b to i64                     ; 9 uses
+  %i.s = sext i32 %i.b to i64                     ; 2 uses
   %i.t = getelementptr inbounds [8 x i8], ptr %1, i64 %i.s ; 2 uses
   %i.u = load double, ptr %i.t, align 8, !tbaa !14 ; 2 uses
   %i.v = sext i32 %i.f to i64
@@ -1290,9 +1291,10 @@ bb.a:
   br label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
+  %3 = zext nneg i32 %i.b to i64                  ; 7 uses
   %i.az = zext nneg i32 %i.a to i64               ; 2 uses
-  %invariant.gep = getelementptr [8 x i8], ptr %1, i64 %i.s
-  %invariant.gep428 = getelementptr [8 x i8], ptr %1, i64 %i.s
+  %invariant.gep = getelementptr [8 x i8], ptr %1, i64 %3
+  %invariant.gep428 = getelementptr [8 x i8], ptr %1, i64 %3
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -1321,8 +1323,8 @@ bb.a:
   %i.br = getelementptr i8, ptr %i.bm, i64 -8
   %i.bs = load double, ptr %i.br, align 8, !tbaa !14 ; 2 uses
   %i.bt = fneg double %i.bs
-  %i.bu = add nuw nsw i64 %indvars.iv420, %i.s    ; 2 uses
-  %i.bv = add nuw nsw i64 %i.bu, %i.s             ; 2 uses
+  %i.bu = add nuw nsw i64 %indvars.iv420, %3      ; 2 uses
+  %i.bv = add nuw nsw i64 %i.bu, %3               ; 2 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv420 ; 2 uses
   %i.bx = getelementptr [8 x i8], ptr %1, i64 %i.bv ; 2 uses
   %i.by = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.bu ; 2 uses
@@ -1380,12 +1382,12 @@ bb.a:
   store <2 x double> %i.du, ptr %i.bx, align 8, !tbaa !14
   %i.dv = fsub <2 x double> %i.dl, %i.dt
   store <2 x double> %i.dv, ptr %gep, align 8, !tbaa !14
-  %i.dw = sub nsw i64 %i.s, %indvars.iv420        ; 2 uses
-  %i.dx = add nsw i64 %i.dw, %i.s                 ; 2 uses
-  %i.dy = add nsw i64 %i.dx, %i.s                 ; 2 uses
-  %i.dz = getelementptr inbounds [8 x i8], ptr %1, i64 %i.dw ; 2 uses
+  %i.dw = sub nuw nsw i64 %3, %indvars.iv420      ; 2 uses
+  %i.dx = add nuw nsw i64 %i.dw, %3               ; 2 uses
+  %i.dy = add nuw nsw i64 %i.dx, %3               ; 2 uses
+  %i.dz = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.dw ; 2 uses
   %i.ea = getelementptr [8 x i8], ptr %1, i64 %i.dy ; 2 uses
-  %i.eb = getelementptr inbounds [8 x i8], ptr %1, i64 %i.dx ; 2 uses
+  %i.eb = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.dx ; 2 uses
   %gep429 = getelementptr [8 x i8], ptr %invariant.gep428, i64 %i.dy ; 2 uses
   %i.ec = load <2 x double>, ptr %i.dz, align 8, !tbaa !14 ; 2 uses
   %i.ed = load <2 x double>, ptr %i.ea, align 8, !tbaa !14
