@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %_ZNK23llama_sampler
   br label %bb.o
 
 bb.g:                                             ; preds = %.lr.ph, %bb.i
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.i ] ; 11 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.i ] ; 9 uses
   %.sroa.095.0134 = phi ptr [ %.sroa.095.0131, %.lr.ph ], [ %.sroa.095.0, %bb.i ] ; 3 uses
   %i.ai = load i32, ptr %i.g, align 8, !tbaa !623
   %i.aj = sext i32 %i.ai to i64
@@ -227,7 +227,7 @@ bb.i:                                             ; preds = %bb.g
   %i.ar = load ptr, ptr %i.ab, align 8, !tbaa !199
   %i.as = getelementptr inbounds nuw [4 x i8], ptr %i.ar, i64 %indvars.iv
   store i32 %i.aq, ptr %i.as, align 4, !tbaa !84
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 6 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 8 uses
   %.sroa.095.0 = load ptr, ptr %.sroa.095.0134, align 8, !tbaa !214 ; 2 uses
   %.not105 = icmp eq ptr %.sroa.095.0, null
   br i1 %.not105, label %._crit_edge, label %bb.g
@@ -516,17 +516,15 @@ _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIiiESt6vectorIS3_SaIS
   %i.ev = load ptr, ptr %i.eu, align 8, !tbaa !199 ; 7 uses
   %i.ew = getelementptr inbounds nuw i8, ptr %i.b, i64 248
   %i.ex = load ptr, ptr %i.ew, align 8, !tbaa !199 ; 7 uses
-  %min.iters.check = icmp samesign ult i64 %indvars.iv, 27
+  %min.iters.check = icmp samesign ult i64 %indvars.iv, 23
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph145
-  %i.ey = shl nuw nsw i64 %indvars.iv, 2
-  %1 = add nuw i64 %i.ey, 4                       ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.ev, i64 %1  ; 2 uses
-  %scevgep251 = getelementptr i8, ptr %i.ex, i64 %1 ; 2 uses
-  %i.ez = shl nuw nsw i64 %indvars.iv, 3
-  %2 = getelementptr i8, ptr %.sroa.082.3, i64 %i.ez
-  %scevgep252 = getelementptr i8, ptr %2, i64 8   ; 2 uses
+  %i.ey = shl nuw nsw i64 %indvars.iv.next, 2     ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.ev, i64 %i.ey ; 2 uses
+  %scevgep251 = getelementptr i8, ptr %i.ex, i64 %i.ey ; 2 uses
+  %i.ez = shl nuw nsw i64 %indvars.iv.next, 3
+  %scevgep252 = getelementptr i8, ptr %.sroa.082.3, i64 %i.ez ; 2 uses
   %bound0 = icmp ult ptr %i.ev, %scevgep251
   %bound1 = icmp ult ptr %i.ex, %scevgep
   %found.conflict = and i1 %bound0, %bound1

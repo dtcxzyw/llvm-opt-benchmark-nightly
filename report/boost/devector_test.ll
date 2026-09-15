@@ -205,9 +205,9 @@ bb.a:
   br i1 %.not4.i.i, label %bb.b, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a, %.lr.ph.i.i
-  %.06.i.i = phi i64 [ %i.a, %.lr.ph.i.i ], [ 0, %bb.a ] ; 20 uses
+  %.06.i.i = phi i64 [ %i.a, %.lr.ph.i.i ], [ 0, %bb.a ] ; 19 uses
   %.sroa.02.05.i.i = phi ptr [ %i.b, %.lr.ph.i.i ], [ %2, %bb.a ]
-  %i.a = add nuw i64 %.06.i.i, 1                  ; 20 uses
+  %i.a = add i64 %.06.i.i, 1                      ; 20 uses
   %i.b = load ptr, ptr %.sroa.02.05.i.i, align 8, !tbaa !677 ; 2 uses
   %.not.i.i = icmp eq ptr %i.b, %3
   br i1 %.not.i.i, label %_ZN5boost9intrusive18iterator_udistanceISt14_List_iteratorIiEEENS_7movelib9iter_sizeIT_E4typeES6_S6_.exit, label %.lr.ph.i.i, !llvm.loop !98
@@ -320,7 +320,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not.i57.not, label %bb.j, label %.lr.ph.i48.preheader.i
 
 bb.j:                                             ; preds = %bb.i
-  %i.az = xor i64 %.06.i.i, -1
+  %i.az = xor i64 %.06.i.i, -1                    ; 2 uses
   %i.ba = getelementptr inbounds [4 x i8], ptr %i.n, i64 %i.az ; 7 uses
   %xtraiter168 = and i64 %i.a, 3                  ; 2 uses
   %lcmp.mod169.not = icmp eq i64 %xtraiter168, 0
@@ -399,12 +399,12 @@ _ZN5boost9container26uninitialized_move_alloc_nISaINS0_4test12copyable_intEEPS3_
   %i.cf = add i64 %i.ce, %i.m
   %i.cg = and i64 %i.cf, 4611686018427387903      ; 2 uses
   %i.ch = add nuw nsw i64 %i.cg, 1                ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.cg, 19
+  %min.iters.check = icmp samesign ult i64 %i.cg, 11
   br i1 %min.iters.check, label %.lr.ph.i40.i.preheader161, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i40.i.preheader
-  %i.ci = shl i64 %.06.i.i, 2
-  %i.cj = add i64 %i.ci, 35
+  %i.ci = shl i64 %i.az, 2
+  %i.cj = add i64 %i.ci, -1
   %diff.check = icmp ult i64 %i.cj, 31
   br i1 %diff.check, label %.lr.ph.i40.i.preheader161, label %vector.ph
 
@@ -807,9 +807,9 @@ bb.a:
   br i1 %.not4.i.i, label %bb.b, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a, %.lr.ph.i.i
-  %.06.i.i = phi i64 [ %i.a, %.lr.ph.i.i ], [ 0, %bb.a ] ; 20 uses
+  %.06.i.i = phi i64 [ %i.a, %.lr.ph.i.i ], [ 0, %bb.a ] ; 19 uses
   %.sroa.02.05.i.i = phi ptr [ %i.b, %.lr.ph.i.i ], [ %2, %bb.a ]
-  %i.a = add nuw i64 %.06.i.i, 1                  ; 20 uses
+  %i.a = add i64 %.06.i.i, 1                      ; 20 uses
   %i.b = load ptr, ptr %.sroa.02.05.i.i, align 8, !tbaa !677 ; 2 uses
   %.not.i.i = icmp eq ptr %i.b, %3
   br i1 %.not.i.i, label %_ZN5boost9intrusive18iterator_udistanceISt14_List_iteratorIiEEENS_7movelib9iter_sizeIT_E4typeES6_S6_.exit, label %.lr.ph.i.i, !llvm.loop !98
@@ -922,7 +922,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not.i57.not, label %bb.j, label %.lr.ph.i48.preheader.i
 
 bb.j:                                             ; preds = %bb.i
-  %i.az = xor i64 %.06.i.i, -1
+  %i.az = xor i64 %.06.i.i, -1                    ; 2 uses
   %i.ba = getelementptr inbounds [4 x i8], ptr %i.n, i64 %i.az ; 7 uses
   %xtraiter168 = and i64 %i.a, 3                  ; 2 uses
   %lcmp.mod169.not = icmp eq i64 %xtraiter168, 0
@@ -1001,12 +1001,12 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test12copyab
   %i.cf = add i64 %i.ce, %i.m
   %i.cg = and i64 %i.cf, 4611686018427387903      ; 2 uses
   %i.ch = add nuw nsw i64 %i.cg, 1                ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.cg, 19
+  %min.iters.check = icmp samesign ult i64 %i.cg, 11
   br i1 %min.iters.check, label %.lr.ph.i40.i.preheader161, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i40.i.preheader
-  %i.ci = shl i64 %.06.i.i, 2
-  %i.cj = add i64 %i.ci, 35
+  %i.ci = shl i64 %i.az, 2
+  %i.cj = add i64 %i.ci, -1
   %diff.check = icmp ult i64 %i.cj, 31
   br i1 %diff.check, label %.lr.ph.i40.i.preheader161, label %vector.ph
 

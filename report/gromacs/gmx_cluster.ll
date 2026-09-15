@@ -205,8 +205,8 @@ bb.es:                                            ; preds = %.lr.ph795, %._crit_
   br i1 %exitcond25.not.i, label %_ZL9calc_distiPA3_fPPf.exit, label %.lr.ph.i434, !llvm.loop !79
 
 .lr.ph.i434:                                      ; preds = %.lr.ph.i434.preheader, %.loopexit.i437
-  %indvars.iv21.i = phi i64 [ %indvars.iv.next22.i, %.loopexit.i437 ], [ 0, %.lr.ph.i434.preheader ] ; 6 uses
-  %indvars.iv.i435 = phi i64 [ %indvars.iv.next.i438, %.loopexit.i437 ], [ 1, %.lr.ph.i434.preheader ] ; 5 uses
+  %indvars.iv21.i = phi i64 [ %indvars.iv.next22.i, %.loopexit.i437 ], [ 0, %.lr.ph.i434.preheader ] ; 4 uses
+  %indvars.iv.i435 = phi i64 [ %indvars.iv.next.i438, %.loopexit.i437 ], [ 1, %.lr.ph.i434.preheader ] ; 7 uses
   %i.afq = getelementptr inbounds nuw [12 x i8], ptr %i.afp, i64 %indvars.iv21.i ; 6 uses
   %i.afr = getelementptr inbounds nuw i8, ptr %i.afq, i64 4 ; 4 uses
   %i.afs = getelementptr inbounds nuw i8, ptr %i.afq, i64 8 ; 4 uses
@@ -218,12 +218,10 @@ bb.es:                                            ; preds = %.lr.ph795, %._crit_
   br i1 %min.iters.check1099, label %scalar.ph1098.preheader, label %vector.memcheck1085
 
 vector.memcheck1085:                              ; preds = %.lr.ph.i434
-  %i.afx = mul nuw nsw i64 %indvars.iv21.i, 12
-  %36 = getelementptr nuw i8, ptr %i.afp, i64 %i.afx
-  %scevgep1088 = getelementptr nuw i8, ptr %36, i64 12
-  %i.afy = shl nuw nsw i64 %indvars.iv21.i, 2
-  %37 = getelementptr nuw i8, ptr %i.afu, i64 %i.afy
-  %scevgep1086 = getelementptr nuw i8, ptr %37, i64 4 ; 2 uses
+  %i.afx = mul nuw nsw i64 %indvars.iv.i435, 12
+  %scevgep1088 = getelementptr nuw i8, ptr %i.afp, i64 %i.afx
+  %i.afy = shl nuw nsw i64 %indvars.iv.i435, 2
+  %scevgep1086 = getelementptr nuw i8, ptr %i.afu, i64 %i.afy ; 2 uses
   %scevgep1087 = getelementptr i8, ptr %i.afu, i64 %i.afe ; 2 uses
   %bound01091 = icmp ult ptr %scevgep1086, %scevgep1089
   %bound11092 = icmp ult ptr %scevgep1088, %scevgep1087
@@ -378,8 +376,8 @@ _ZL9calc_distiPA3_fPPf.exit454.thread.preheader:  ; preds = %_ZL9calc_distiPA3_f
   br label %.lr.ph.i443.us
 
 .lr.ph.i443.us:                                   ; preds = %.loopexit.i451.us, %.lr.ph17.preheader.i440.us
-  %indvars.iv21.i444.us = phi i64 [ 0, %.lr.ph17.preheader.i440.us ], [ %indvars.iv.next22.i446.us, %.loopexit.i451.us ] ; 6 uses
-  %indvars.iv.i445.us = phi i64 [ 1, %.lr.ph17.preheader.i440.us ], [ %indvars.iv.next.i452.us, %.loopexit.i451.us ] ; 5 uses
+  %indvars.iv21.i444.us = phi i64 [ 0, %.lr.ph17.preheader.i440.us ], [ %indvars.iv.next22.i446.us, %.loopexit.i451.us ] ; 4 uses
+  %indvars.iv.i445.us = phi i64 [ 1, %.lr.ph17.preheader.i440.us ], [ %indvars.iv.next.i452.us, %.loopexit.i451.us ] ; 7 uses
   %i.ait = getelementptr inbounds nuw [12 x i8], ptr %i.ais, i64 %indvars.iv21.i444.us ; 6 uses
   %i.aiu = getelementptr inbounds nuw i8, ptr %i.ait, i64 4 ; 4 uses
   %i.aiv = getelementptr inbounds nuw i8, ptr %i.ait, i64 8 ; 4 uses
@@ -391,12 +389,10 @@ _ZL9calc_distiPA3_fPPf.exit454.thread.preheader:  ; preds = %_ZL9calc_distiPA3_f
   br i1 %min.iters.check1068, label %scalar.ph1067.preheader, label %vector.memcheck1055
 
 vector.memcheck1055:                              ; preds = %.lr.ph.i443.us
-  %i.aja = mul nuw nsw i64 %indvars.iv21.i444.us, 12
-  %38 = getelementptr nuw i8, ptr %i.ais, i64 %i.aja
-  %scevgep1058 = getelementptr nuw i8, ptr %38, i64 12
-  %i.ajb = shl nuw nsw i64 %indvars.iv21.i444.us, 2
-  %39 = getelementptr nuw i8, ptr %i.aix, i64 %i.ajb
-  %scevgep1056 = getelementptr nuw i8, ptr %39, i64 4 ; 2 uses
+  %i.aja = mul nuw nsw i64 %indvars.iv.i445.us, 12
+  %scevgep1058 = getelementptr nuw i8, ptr %i.ais, i64 %i.aja
+  %i.ajb = shl nuw nsw i64 %indvars.iv.i445.us, 2
+  %scevgep1056 = getelementptr nuw i8, ptr %i.aix, i64 %i.ajb ; 2 uses
   %scevgep1057 = getelementptr i8, ptr %i.aix, i64 %i.afe ; 2 uses
   %bound01061 = icmp ult ptr %scevgep1056, %scevgep1059
   %bound11062 = icmp ult ptr %scevgep1058, %scevgep1057

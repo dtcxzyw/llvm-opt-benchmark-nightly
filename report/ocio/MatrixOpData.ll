@@ -205,16 +205,15 @@ bb.i:                                             ; preds = %bb.f
   br label %bb.r
 
 .lr.ph.preheader:                                 ; preds = %.loopexit, %bb.g
-  %indvars.iv217 = phi i64 [ 0, %bb.g ], [ %indvars.iv.next218, %.loopexit ] ; 8 uses
-  %indvars.iv = phi i64 [ 1, %bb.g ], [ %indvars.iv.next, %.loopexit ] ; 11 uses
+  %indvars.iv217 = phi i64 [ 0, %bb.g ], [ %indvars.iv.next218, %.loopexit ] ; 7 uses
+  %indvars.iv = phi i64 [ 1, %bb.g ], [ %indvars.iv.next, %.loopexit ] ; 12 uses
   %i.cz = shl nuw nsw i64 %indvars.iv217, 3
   %i.da = add nuw i64 %i.cz, 24                   ; 2 uses
   %scevgep267 = getelementptr i8, ptr %i.n, i64 %i.da
   %scevgep270 = getelementptr i8, ptr %i.an, i64 %i.da
-  %i.db = shl nuw nsw i64 %indvars.iv217, 3
-  %2 = add nuw i64 %i.db, 8                       ; 2 uses
-  %scevgep257 = getelementptr i8, ptr %i.n, i64 %2
-  %scevgep259 = getelementptr i8, ptr %i.an, i64 %2
+  %i.db = shl nuw nsw i64 %indvars.iv, 3          ; 2 uses
+  %scevgep257 = getelementptr i8, ptr %i.n, i64 %i.db
+  %scevgep259 = getelementptr i8, ptr %i.an, i64 %i.db
   %i.dc = mul i64 %i.am, %indvars.iv217           ; 9 uses
   %i.dd = getelementptr [8 x i8], ptr %i.n, i64 %i.dc ; 9 uses
   %i.de = getelementptr [8 x i8], ptr %i.dd, i64 %indvars.iv217 ; 7 uses

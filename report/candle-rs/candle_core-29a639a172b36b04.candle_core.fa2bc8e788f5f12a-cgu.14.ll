@@ -205,7 +205,7 @@ vector.ph147:                                     ; preds = %vector.memcheck135
   %broadcast.splat150 = shufflevector <4 x float> %broadcast.splatinsert149, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert151 = insertelement <4 x float> poison, float %i.em, i64 0
   %broadcast.splat152 = shufflevector <4 x float> %broadcast.splatinsert151, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
-  %i.fb = getelementptr inbounds nuw [4 x i8], ptr %.sroa.6.0.copyload, i64 %.sroa.08.078
+  %i.fb = getelementptr [4 x i8], ptr %.sroa.6.0.copyload, i64 %.sroa.08.078
   br label %vector.body153
 
 vector.body153:                                   ; preds = %vector.body153, %vector.ph147
@@ -220,7 +220,7 @@ vector.body153:                                   ; preds = %vector.body153, %ve
   %i.fh = uitofp nneg <4 x i8> %i.ff to <4 x float>
   %i.fi = fmul <4 x float> %broadcast.splat150, %i.fg
   %i.fj = fmul <4 x float> %broadcast.splat150, %i.fh
-  %i.fk = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %index154 ; 2 uses
+  %i.fk = getelementptr [4 x i8], ptr %i.fb, i64 %index154 ; 2 uses
   %i.fl = fsub <4 x float> %i.fi, %broadcast.splat152
   %i.fm = fsub <4 x float> %i.fj, %broadcast.splat152
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fk, i64 16
@@ -251,7 +251,7 @@ bb.ah:                                            ; preds = %scalar.ph145
   %i.ft = getelementptr inbounds nuw [4 x i8], ptr %.sroa.6.0.copyload, i64 %.sroa.08.173
   %i.fu = fsub float %i.fs, %i.em
   store float %i.fu, ptr %i.ft, align 4
-  %i.fv = add nuw i64 %.sroa.08.173, 1            ; 5 uses
+  %i.fv = add i64 %.sroa.08.173, 1                ; 6 uses
   %i.fw = icmp eq i64 %.sroa.014.0.add, 32
   br i1 %i.fw, label %.preheader.preheader, label %scalar.ph145, !llvm.loop !1170
 
@@ -274,11 +274,8 @@ bb.ah:                                            ; preds = %scalar.ph145
   br label %.preheader
 
 vector.memcheck:                                  ; preds = %.preheader.preheader
-  %4 = shl i64 %.sroa.08.078, 2                   ; 2 uses
-  %i.gg = shl nuw nsw i64 %.sroa.014.0.idx72, 2   ; 2 uses
-  %5 = getelementptr i8, ptr %.sroa.6.0.copyload, i64 %i.gg
-  %6 = getelementptr i8, ptr %5, i64 %4
-  %scevgep = getelementptr i8, ptr %6, i64 4
+  %i.gg = shl i64 %i.fv, 2
+  %scevgep = getelementptr i8, ptr %.sroa.6.0.copyload, i64 %i.gg
   %i.gh = add i64 %.sroa.08.078, 1
   %umin = call i64 @llvm.umin.i64(i64 %i.er, i64 31) ; 2 uses
   %i.gi = add i64 %i.gh, %umin
@@ -287,11 +284,11 @@ vector.memcheck:                                  ; preds = %.preheader.preheade
   %i.gk = add i64 %umax, %i.gj
   %i.gl = sub i64 %i.gk, %umin
   %umin126 = call i64 @llvm.umin.i64(i64 %i.gl, i64 31) ; 2 uses
-  %7 = shl nuw nsw i64 %umin126, 2
-  %8 = getelementptr i8, ptr %.sroa.6.0.copyload, i64 %i.gg
-  %9 = getelementptr i8, ptr %8, i64 %4
-  %i.gm = getelementptr i8, ptr %9, i64 8
-  %scevgep127 = getelementptr i8, ptr %i.gm, i64 %7
+  %4 = add i64 %.sroa.08.078, %umin126
+  %5 = add i64 %4, %.sroa.014.0.idx72
+  %6 = shl i64 %5, 2
+  %i.gm = getelementptr i8, ptr %.sroa.6.0.copyload, i64 %6
+  %scevgep127 = getelementptr i8, ptr %i.gm, i64 8
   %scevgep129 = getelementptr i8, ptr %scevgep128, i64 %umin126
   %bound0 = icmp ult ptr %scevgep, %scevgep129
   %bound1 = icmp ult ptr %i.db, %scevgep127

@@ -1,0 +1,245 @@
+diff --git a/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h b/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h
+index c98c0cb52fa9c4..6886342721399b 100644
+--- a/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h
++++ b/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h
+@@ -561,6 +561,7 @@ class SCEVExpander : public SCEVUseVisitor<SCEVExpander, Value *> {
+   bool isExpandedAddRecExprPHI(PHINode *PN, Instruction *IncV, const Loop *L);
+ 
+   Value *tryToReuseLCSSAPhi(SCEVUseT<const SCEVAddRecExpr *> S);
++  Value *tryToReuseScaledAddRec(const SCEVAddRecExpr *S);
+   Value *expandAddRecExprLiterally(SCEVUseT<const SCEVAddRecExpr *> S);
+   PHINode *getAddRecExprPHILiterally(const SCEVAddRecExpr *Normalized,
+                                      const Loop *L, Type *&TruncTy,
+diff --git a/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp b/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
+index f01a6746093250..a1977e3d53f614 100644
+--- a/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
++++ b/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
+@@ -17,6 +17,7 @@
+ #include "llvm/ADT/ScopeExit.h"
+ #include "llvm/Analysis/InstructionSimplify.h"
+ #include "llvm/Analysis/LoopInfo.h"
++#include "llvm/Analysis/ScalarEvolutionDivision.h"
+ #include "llvm/Analysis/ScalarEvolutionPatternMatch.h"
+ #include "llvm/Analysis/TargetTransformInfo.h"
+ #include "llvm/Analysis/ValueTracking.h"
+@@ -551,8 +552,8 @@ Value *SCEVExpander::visitAddExpr(SCEVUseT<const SCEVAddExpr *> S) {
+   // Iterate in reverse so that constants are emitted last, all else equal, and
+   // so that pointer operands are inserted first, which the code below relies on
+   // to form more involved GEPs.
+-  SmallVector<std::pair<const Loop *, const SCEV *>, 8> OpsAndLoops;
+-  for (const SCEV *Op : reverse(S->operands()))
++  SmallVector<std::pair<const Loop *, SCEVUse>, 8> OpsAndLoops;
++  for (SCEVUse Op : reverse(S->operands()))
+     OpsAndLoops.push_back(std::make_pair(getRelevantLoop(Op), Op));
+ 
+   // Sort by loop. Use a stable sort so that constants follow non-constants and
+@@ -564,7 +565,7 @@ Value *SCEVExpander::visitAddExpr(SCEVUseT<const SCEVAddExpr *> S) {
+   Value *Sum = nullptr;
+   for (auto I = OpsAndLoops.begin(), E = OpsAndLoops.end(); I != E;) {
+     const Loop *CurLoop = I->first;
+-    const SCEV *Op = I->second;
++    SCEVUse Op = I->second;
+     if (!Sum) {
+       // This is the first operand. Just expand it.
+       Sum = expand(Op);
+@@ -580,7 +581,7 @@ Value *SCEVExpander::visitAddExpr(SCEVUseT<const SCEVAddExpr *> S) {
+       for (; I != E && I->first == CurLoop; ++I) {
+         // If the operand is SCEVUnknown and not instructions, peek through
+         // it, to enable more of it to be folded into the GEP.
+-        const SCEV *X = I->second;
++        SCEVUse X = I->second;
+         if (const SCEVUnknown *U = dyn_cast<SCEVUnknown>(X))
+           if (!isa<Instruction>(U->getValue()))
+             X = SE.getSCEV(U->getValue());
+@@ -629,8 +630,8 @@ Value *SCEVExpander::visitMulExpr(SCEVUseT<const SCEVMulExpr *> S) {
+ 
+   // Collect all the mul operands in a loop, along with their associated loops.
+   // Iterate in reverse so that constants are emitted last, all else equal.
+-  SmallVector<std::pair<const Loop *, const SCEV *>, 8> OpsAndLoops;
+-  for (const SCEV *Op : reverse(S->operands()))
++  SmallVector<std::pair<const Loop *, SCEVUse>, 8> OpsAndLoops;
++  for (SCEVUse Op : reverse(S->operands()))
+     OpsAndLoops.push_back(std::make_pair(getRelevantLoop(Op), Op));
+ 
+   // Sort by loop. Use a stable sort so that constants follow non-constants.
+@@ -1334,6 +1335,67 @@ Value *SCEVExpander::tryToReuseLCSSAPhi(SCEVUseT<const SCEVAddRecExpr *> S) {
+   return nullptr;
+ }
+ 
++/// ScalarEvolution distributes a constant factor into an AddRec's operands, so
++/// `{8 * X,+,-8}` and `{X,+,-1}` have no expression in common even though the
++/// former is just eight times the latter. If the scaled-down recurrence is
++/// already available, reuse it: expanding \p S structurally instead builds a
++/// second induction variable for the same recurrence.
++Value *SCEVExpander::tryToReuseScaledAddRec(const SCEVAddRecExpr *S) {
++  // Only a recurrence with a constant step can be scaled down. S is always
++  // affine here: visitAddRecExpr only calls this for two-operand AddRecs.
++  const APInt *Step;
++  if (!S->getType()->isIntegerTy() ||
++      !match(S->getStepRecurrence(SE), m_scev_APInt(Step)))
++    return nullptr;
++  // Scaling down to a unit step is what recovers a plain induction variable.
++  APInt Factor = Step->abs();
++  if (Factor.ule(1))
++    return nullptr;
++  const SCEV *FactorS = SE.getConstant(Factor);
++
++  // Anything that does not divide is left in Offset, and only a constant one
++  // can be added back cheaply: `{5 + 8 * X,+,-8}` leaves 5 behind. divide()
++  // does not guarantee that the quotient multiplies back to S, so check it.
++  const SCEV *Divided, *Offset;
++  SCEVDivision::divide(SE, S, FactorS, &Divided, &Offset);
++  if (!isa<SCEVConstant>(Offset))
++    return nullptr;
++  SCEVUse Scaled = SE.getMulExpr(Divided, FactorS);
++  if (SE.getAddExpr(Scaled, Offset) != S)
++    return nullptr;
++
++  // Wrap the found value as an opaque SCEVUnknown before combining with
++  // Offset: Scaled/Divided already reconstruct S (checked above), so passing
++  // either through getAddExpr unwrapped would just rebuild S and recurse.
++  //
++  // Try the scaling itself first: cheaper, and what a structural expansion
++  // would also find. Skip when Scaled == S (i.e. Offset == 0): expand()
++  // already failed to find S at this insertion point.
++  const Instruction *InsertPt = &*Builder.GetInsertPoint();
++  SCEVUse Reused;
++  if (Value *V = Scaled != S
++                     ? findExistingExpansionAndDropPoisonFlags(Scaled, InsertPt)
++                     : nullptr) {
++    Reused = SE.getUnknown(V);
++  } else if (Value *V =
++                 findExistingExpansionAndDropPoisonFlags(Divided, InsertPt)) {
++    // Carry over the no-wrap facts that hold for the scaling, so the reused
++    // form is no weaker than a structural expansion. These are proven on
++    // Divided; the wrapped V is opaque and would prove nothing on its own.
++    SCEV::NoWrapFlags Flags = SCEV::FlagAnyWrap;
++    if (SE.willNotOverflow(Instruction::Mul, /*Signed=*/false, Divided,
++                           FactorS))
++      Flags = ScalarEvolution::setFlags(Flags, SCEV::FlagNUW);
++    if (SE.willNotOverflow(Instruction::Mul, /*Signed=*/true, Divided, FactorS))
++      Flags = ScalarEvolution::setFlags(Flags, SCEV::FlagNSW);
++    Reused = {SE.getMulExpr(SE.getUnknown(V), FactorS), Flags};
++  } else {
++    return nullptr;
++  }
++  // A zero Offset folds away.
++  return expand(SE.getAddExpr(Reused, Offset));
++}
++
+ Value *SCEVExpander::visitAddRecExpr(SCEVUseT<const SCEVAddRecExpr *> S) {
+   // In canonical mode we compute the addrec as an expression of a canonical IV
+   // using evaluateAtIteration and expand the resulting SCEV expression. This
+@@ -1348,6 +1410,10 @@ Value *SCEVExpander::visitAddRecExpr(SCEVUseT<const SCEVAddRecExpr *> S) {
+   if (!CanonicalMode || (S->getNumOperands() > 2))
+     return expandAddRecExprLiterally(S);
+ 
++  // Check if a recurrence a constant factor away from S is already available.
++  if (Value *V = tryToReuseScaledAddRec(S))
++    return V;
++
+   Type *Ty = SE.getEffectiveSCEVType(S->getType());
+   const Loop *L = S->getLoop();
+ 
+diff --git a/llvm/test/Transforms/LoopIdiom/reuse-lcssa-phi-scev-expansion.ll b/llvm/test/Transforms/LoopIdiom/reuse-lcssa-phi-scev-expansion.ll
+index 5011d21d7a0444..de6cc5aaa48e41 100644
+--- a/llvm/test/Transforms/LoopIdiom/reuse-lcssa-phi-scev-expansion.ll
++++ b/llvm/test/Transforms/LoopIdiom/reuse-lcssa-phi-scev-expansion.ll
+@@ -178,14 +178,13 @@ define void @phi_ptr_addressspace_ptrtoint_fail(ptr addrspace(1) %arg) {
+ ; CHECK-NEXT:    br i1 false, label %[[LOOP_1]], label %[[LOOP_2_PH:.*]]
+ ; CHECK:       [[LOOP_2_PH]]:
+ ; CHECK-NEXT:    [[IV_1_LCSSA1:%.*]] = phi i64 [ [[IV_1]], %[[LOOP_1]] ]
+-; CHECK-NEXT:    [[IV_1_LCSSA:%.*]] = phi i64 [ [[IV_1]], %[[LOOP_1]] ]
+ ; CHECK-NEXT:    [[PHI:%.*]] = phi ptr addrspace(1) [ [[GETELEMENTPTR]], %[[LOOP_1]] ]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = shl nuw nsw i64 [[IV_1_LCSSA1]], 2
+ ; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr addrspace(1) [[ARG]], i64 [[TMP0]]
+ ; CHECK-NEXT:    call void @llvm.memset.p1.i64(ptr addrspace(1) align 4 [[SCEVGEP]], i8 0, i64 8, i1 false)
+ ; CHECK-NEXT:    br label %[[LOOP_2_HEADER:.*]]
+ ; CHECK:       [[LOOP_2_HEADER]]:
+-; CHECK-NEXT:    [[IV_2:%.*]] = phi i64 [ [[IV_1_LCSSA]], %[[LOOP_2_PH]] ], [ [[IV_2_NEXT:%.*]], %[[LOOP_2_LATCH:.*]] ]
++; CHECK-NEXT:    [[IV_2:%.*]] = phi i64 [ [[IV_1_LCSSA1]], %[[LOOP_2_PH]] ], [ [[IV_2_NEXT:%.*]], %[[LOOP_2_LATCH:.*]] ]
+ ; CHECK-NEXT:    [[GREP_ARG:%.*]] = getelementptr i32, ptr addrspace(1) [[ARG]], i64 [[IV_2]]
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp ult i64 [[IV_2]], 1
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP_2_LATCH]], label %[[EXIT:.*]]
+diff --git a/llvm/test/Transforms/LoopVectorize/VPlan/memory-checks.ll b/llvm/test/Transforms/LoopVectorize/VPlan/memory-checks.ll
+index 344ccf7d03685b..49fb58f84a6f0c 100644
+--- a/llvm/test/Transforms/LoopVectorize/VPlan/memory-checks.ll
++++ b/llvm/test/Transforms/LoopVectorize/VPlan/memory-checks.ll
+@@ -196,7 +196,7 @@ define void @bound_is_addrec_of_sibling_loop(ptr %a, ptr %b, i64 %n, i64 %d, i1
+ ; CHECK-NEXT:  ir-bb<vector.memcheck>:
+ ; CHECK-NEXT:    IR   %4 = udiv i64 %n, %d
+ ; CHECK-NEXT:    IR   %5 = shl i64 %4, 2
+-; CHECK-NEXT:    IR   %6 = shl i64 %iv.1, 2
++; CHECK-NEXT:    IR   %6 = shl i64 %iv.1.lcssa, 2
+ ; CHECK-NEXT:    IR   %7 = add i64 %6, %5
+ ; CHECK-NEXT:    IR   %scevgep = getelementptr i8, ptr %b, i64 %7
+ ; CHECK-NEXT:    IR   %8 = shl i64 %n, 2
+diff --git a/llvm/test/Transforms/LoopVectorize/runtime-checks-difference.ll b/llvm/test/Transforms/LoopVectorize/runtime-checks-difference.ll
+index e816b559bffe6d..2e7a95c2b3a3dd 100644
+--- a/llvm/test/Transforms/LoopVectorize/runtime-checks-difference.ll
++++ b/llvm/test/Transforms/LoopVectorize/runtime-checks-difference.ll
+@@ -356,19 +356,16 @@ define void @nested_loop_bounds_are_scaled_outer_iv(ptr %a, ptr %b, i32 %n, i32
+ ; CHECK-NEXT:    [[N_EXT:%.*]] = zext nneg i32 [[N]] to i64
+ ; CHECK-NEXT:    br label %[[OUTER_HEADER:.*]]
+ ; CHECK:       [[OUTER_HEADER]]:
+-; CHECK-NEXT:    [[OUTER_IV:%.*]] = phi i64 [ [[INDVAR_NEXT:%.*]], [[OUTER_LATCH:%.*]] ], [ 0, %[[OUTER_PH]] ]
+-; CHECK-NEXT:    [[OUTER_IV1:%.*]] = phi i64 [ 1, %[[OUTER_PH]] ], [ [[OUTER_IV_NEXT:%.*]], [[OUTER_LATCH]] ]
++; CHECK-NEXT:    [[OUTER_IV:%.*]] = phi i64 [ 1, %[[OUTER_PH]] ], [ [[OUTER_IV_NEXT:%.*]], [[OUTER_LATCH:%.*]] ]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = shl nuw nsw i64 [[OUTER_IV]], 2
+-; CHECK-NEXT:    [[TMP4:%.*]] = add i64 [[TMP0]], 4
+-; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP4]]
++; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP0]]
+ ; CHECK-NEXT:    [[TMP1:%.*]] = shl nuw nsw i64 [[OUTER_IV]], 3
+-; CHECK-NEXT:    [[TMP3:%.*]] = add i64 [[TMP1]], 8
+-; CHECK-NEXT:    [[SCEVGEP2:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP3]]
+-; CHECK-NEXT:    [[SCEVGEP3:%.*]] = getelementptr i8, ptr [[B]], i64 [[TMP4]]
+-; CHECK-NEXT:    [[SCEVGEP4:%.*]] = getelementptr i8, ptr [[B]], i64 [[TMP3]]
+-; CHECK-NEXT:    [[OUTER_OFF_IS:%.*]] = mul nsw i64 [[OUTER_IV1]], [[IS_EXT]]
+-; CHECK-NEXT:    [[OUTER_OFF_JS:%.*]] = mul nsw i64 [[OUTER_IV1]], [[JS_EXT]]
+-; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i64 [[OUTER_IV1]], 4
++; CHECK-NEXT:    [[SCEVGEP2:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP1]]
++; CHECK-NEXT:    [[SCEVGEP3:%.*]] = getelementptr i8, ptr [[B]], i64 [[TMP0]]
++; CHECK-NEXT:    [[SCEVGEP4:%.*]] = getelementptr i8, ptr [[B]], i64 [[TMP1]]
++; CHECK-NEXT:    [[OUTER_OFF_IS:%.*]] = mul nsw i64 [[OUTER_IV]], [[IS_EXT]]
++; CHECK-NEXT:    [[OUTER_OFF_JS:%.*]] = mul nsw i64 [[OUTER_IV]], [[JS_EXT]]
++; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i64 [[OUTER_IV]], 4
+ ; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], [[SCALAR_PH:label %.*]], label %[[VECTOR_SCEVCHECK:.*]]
+ ; CHECK:       [[VECTOR_SCEVCHECK]]:
+ ; CHECK-NEXT:    [[IDENT_CHECK:%.*]] = icmp ne i32 [[JS]], 1
+@@ -441,19 +438,18 @@ define void @nested_loop_only_one_bound_is_scaled_outer_iv(ptr %a, ptr %b, i32 %
+ ; CHECK-NEXT:    [[N_EXT:%.*]] = zext nneg i32 [[N]] to i64
+ ; CHECK-NEXT:    br label %[[OUTER_HEADER:.*]]
+ ; CHECK:       [[OUTER_HEADER]]:
+-; CHECK-NEXT:    [[OUTER_IV:%.*]] = phi i64 [ [[INDVAR_NEXT:%.*]], [[OUTER_LATCH:%.*]] ], [ 0, %[[OUTER_PH]] ]
+-; CHECK-NEXT:    [[OUTER_IV1:%.*]] = phi i64 [ 1, %[[OUTER_PH]] ], [ [[OUTER_IV_NEXT:%.*]], [[OUTER_LATCH]] ]
++; CHECK-NEXT:    [[INDVAR:%.*]] = phi i64 [ [[INDVAR_NEXT:%.*]], [[OUTER_LATCH:%.*]] ], [ 0, %[[OUTER_PH]] ]
++; CHECK-NEXT:    [[OUTER_IV:%.*]] = phi i64 [ 1, %[[OUTER_PH]] ], [ [[OUTER_IV_NEXT:%.*]], [[OUTER_LATCH]] ]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = mul nuw nsw i64 [[OUTER_IV]], 12
+-; CHECK-NEXT:    [[TMP4:%.*]] = add i64 [[TMP0]], 12
+-; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP4]]
+-; CHECK-NEXT:    [[TMP1:%.*]] = mul nuw nsw i64 [[OUTER_IV]], 24
++; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP0]]
++; CHECK-NEXT:    [[TMP1:%.*]] = mul nuw nsw i64 [[INDVAR]], 24
+ ; CHECK-NEXT:    [[TMP2:%.*]] = add i64 [[TMP1]], 16
+ ; CHECK-NEXT:    [[SCEVGEP2:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP2]]
+-; CHECK-NEXT:    [[SCEVGEP3:%.*]] = getelementptr i8, ptr [[B]], i64 [[TMP4]]
++; CHECK-NEXT:    [[SCEVGEP3:%.*]] = getelementptr i8, ptr [[B]], i64 [[TMP0]]
+ ; CHECK-NEXT:    [[SCEVGEP4:%.*]] = getelementptr i8, ptr [[B]], i64 [[TMP2]]
+-; CHECK-NEXT:    [[OUTER_OFF_IS:%.*]] = mul nsw i64 [[OUTER_IV1]], [[IS_EXT]]
+-; CHECK-NEXT:    [[OUTER_OFF_JS:%.*]] = mul nsw i64 [[OUTER_IV1]], [[JS_EXT]]
+-; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i64 [[OUTER_IV1]], 4
++; CHECK-NEXT:    [[OUTER_OFF_IS:%.*]] = mul nsw i64 [[OUTER_IV]], [[IS_EXT]]
++; CHECK-NEXT:    [[OUTER_OFF_JS:%.*]] = mul nsw i64 [[OUTER_IV]], [[JS_EXT]]
++; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i64 [[OUTER_IV]], 4
+ ; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], [[SCALAR_PH:label %.*]], label %[[VECTOR_SCEVCHECK:.*]]
+ ; CHECK:       [[VECTOR_SCEVCHECK]]:
+ ; CHECK-NEXT:    [[IDENT_CHECK:%.*]] = icmp ne i32 [[JS]], 1
+@@ -529,7 +525,7 @@ define void @nested_loop_bound_needs_constant_correction(ptr %a, ptr %b, i64 %n)
+ ; CHECK-NEXT:    [[TMP4:%.*]] = shl i64 [[OUTER_IV]], 2
+ ; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[B]], i64 [[TMP4]]
+ ; CHECK-NEXT:    [[TMP5:%.*]] = shl i64 [[OUTER_IV]], 3
+-; CHECK-NEXT:    [[TMP6:%.*]] = add i64 [[TMP5]], 4
++; CHECK-NEXT:    [[TMP6:%.*]] = add nuw nsw i64 [[TMP5]], 4
+ ; CHECK-NEXT:    [[SCEVGEP2:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP6]]
+ ; CHECK-NEXT:    [[TMP3:%.*]] = sub i64 [[N]], [[OUTER_IV]]
+ ; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i64 [[TMP3]], 4

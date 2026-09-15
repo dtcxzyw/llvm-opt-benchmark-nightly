@@ -205,15 +205,15 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %.backedge
-  %indvar = phi i64 [ 0, %bb.a ], [ %indvar.next, %.backedge ] ; 6 uses
-  %.0116455 = phi i64 [ 0, %bb.a ], [ %.pre-phi, %.backedge ] ; 21 uses
+  %indvar = phi i64 [ 0, %bb.a ], [ %indvar.next, %.backedge ] ; 4 uses
+  %.0116455 = phi i64 [ 0, %bb.a ], [ %.pre-phi, %.backedge ] ; 23 uses
   %.0118454 = phi i8 [ 1, %bb.a ], [ %.3, %.backedge ] ; 6 uses
   %.0120453 = phi i1 [ false, %bb.a ], [ %.1121, %.backedge ] ; 2 uses
   %i.p = sub i64 2, %indvar                       ; 3 uses
-  %i.q = mul nuw nsw i64 %indvar, 24
+  %i.q = mul nuw nsw i64 %.0116455, 24
   %i.r = getelementptr nuw i8, ptr %0, i64 %i.q
   %scevgep470 = getelementptr nuw i8, ptr %i.r, i64 24 ; 2 uses
-  %i.s = shl nuw nsw i64 %indvar, 5
+  %i.s = shl nuw nsw i64 %.0116455, 5
   %i.t = getelementptr nuw i8, ptr %0, i64 %i.s
   %scevgep471 = getelementptr nuw i8, ptr %i.t, i64 8
   %.idx.i.i.i.i.i = shl nuw nsw i64 %.0116455, 5

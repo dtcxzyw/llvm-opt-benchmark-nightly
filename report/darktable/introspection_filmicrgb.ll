@@ -205,14 +205,13 @@ bb.a:
   br label %.lr.ph.preheader.i9
 
 bb.b:                                             ; preds = %.loopexit.i, %bb.a
-  %indvars.iv147.i = phi i64 [ 0, %bb.a ], [ %indvars.iv.next148.i, %.loopexit.i ] ; 16 uses
-  %indvars.iv.i = phi i64 [ 1, %bb.a ], [ %indvars.iv.next.i, %.loopexit.i ] ; 15 uses
+  %indvars.iv147.i = phi i64 [ 0, %bb.a ], [ %indvars.iv.next148.i, %.loopexit.i ] ; 15 uses
+  %indvars.iv.i = phi i64 [ 1, %bb.a ], [ %indvars.iv.next.i, %.loopexit.i ] ; 16 uses
   %i.af = xor i64 %indvars.iv147.i, -1
   %i.ag = add nsw i64 %i.af, %i.g                 ; 2 uses
   %i.ah = sub nsw i64 %i.r, %indvars.iv147.i      ; 2 uses
-  %i.ai = shl nuw nsw i64 %indvars.iv147.i, 3
-  %3 = getelementptr i8, ptr %0, i64 %i.ai
-  %scevgep27 = getelementptr i8, ptr %3, i64 8
+  %i.ai = shl nuw nsw i64 %indvars.iv.i, 3
+  %scevgep27 = getelementptr i8, ptr %0, i64 %i.ai
   %i.aj = mul i64 %i.p, %indvars.iv147.i
   %i.ak = getelementptr i8, ptr %0, i64 %i.aj
   %scevgep31 = getelementptr i8, ptr %i.ak, i64 8
@@ -615,7 +614,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 
 .lr.ph.preheader.i9:                              ; preds = %.lr.ph.preheader.i9.preheader, %.loopexit.i15
   %indvars.iv63.i = phi i64 [ %indvars.iv.next64.i, %.loopexit.i15 ], [ 0, %.lr.ph.preheader.i9.preheader ] ; 7 uses
-  %indvars.iv.i10 = phi i64 [ %indvars.iv.next.i16, %.loopexit.i15 ], [ 1, %.lr.ph.preheader.i9.preheader ] ; 6 uses
+  %indvars.iv.i10 = phi i64 [ %indvars.iv.next.i16, %.loopexit.i15 ], [ 1, %.lr.ph.preheader.i9.preheader ] ; 7 uses
   %i.ho = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv63.i
   %i.hp = load i32, ptr %i.ho, align 4, !tbaa !14
   %i.hq = sext i32 %i.hp to i64
@@ -632,12 +631,12 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %min.iters.check57, label %.lr.ph.i12.preheader, label %vector.memcheck48
 
 vector.memcheck48:                                ; preds = %.lr.ph.preheader.i9
-  %i.hx = shl nuw nsw i64 %indvars.iv63.i, 3      ; 2 uses
+  %i.hx = shl nuw nsw i64 %indvars.iv63.i, 3
   %scevgep52 = getelementptr i8, ptr %i.ad, i64 %i.hx
   %i.hy = mul i64 %i.z, %indvars.iv63.i
   %scevgep51 = getelementptr i8, ptr %i.ae, i64 %i.hy
-  %4 = getelementptr nuw i8, ptr %1, i64 %i.hx
-  %scevgep49 = getelementptr nuw i8, ptr %4, i64 8
+  %3 = shl nuw nsw i64 %indvars.iv.i10, 3
+  %scevgep49 = getelementptr nuw i8, ptr %1, i64 %3
   %bound053 = icmp ult ptr %scevgep49, %scevgep52
   %bound154 = icmp ult ptr %scevgep51, %scevgep50
   %found.conflict55 = and i1 %bound053, %bound154
