@@ -204,7 +204,7 @@ bb.an:                                            ; preds = %bb.am
   br label %bb.ao
 
 bb.ao:                                            ; preds = %.sink.split257.i, %bb.an
-  %.1164.i = phi ptr [ %i.bu, %bb.an ], [ %i.bz, %.sink.split257.i ] ; 4 uses
+  %.1164.i = phi ptr [ %i.bu, %bb.an ], [ %i.bz, %.sink.split257.i ] ; 3 uses
   br i1 %i.bn, label %.thread202.i, label %bb.ap
 
 .thread202.i:                                     ; preds = %bb.ao
@@ -222,8 +222,7 @@ bb.ao:                                            ; preds = %.sink.split257.i, %
   br i1 %.not192204.i, label %bb.ar, label %bb.as
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.ch = sub nuw nsw i64 1, %i.bo                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 1 %.1164.i, i8 48, i64 %i.ch, i1 false)
+  %i.ch = sub nuw nsw i64 1, %i.bo
   %i.ci = getelementptr i8, ptr %.1164.i, i64 %i.ch ; 4 uses
   %.not192.i = icmp sgt i64 %i.bm, %i.u
   br i1 %.not192.i, label %bb.aq, label %.split.i
