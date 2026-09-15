@@ -205,16 +205,15 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.915.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 48 ; 2 uses
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 56
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %.sroa.915.0..sroa_idx, i8 0, i64 24, i1 false)
-  %i.l = load ptr, ptr %1, align 8, !noalias !13633, !noundef !80 ; 2 uses
-  %i.m = icmp ne ptr %i.l, null
+  %i.l = load ptr, ptr %1, align 8, !noalias !13633, !noundef !80
+  %i.m = icmp ne ptr %i.l, null                   ; 2 uses
   %i.n = zext i1 %i.m to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !13634
   store i64 %i.n, ptr %i.b, align 8, !noalias !13634
   call fastcc void @_RNvXs3_NtNtCsf3Ta7LF998c_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsa7TLgTh0CeG_9ssmanager(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.b, i64 noundef 8) #54
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !13634
-  %.not.i.i = icmp eq ptr %i.l, null
   %i.o = getelementptr i8, ptr %1, i64 8          ; 2 uses
-  br i1 %.not.i.i, label %bb.d, label %bb.c
+  br i1 %i.m, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %.val.i.i = load ptr, ptr %i.o, align 8, !noalias !13633, !noundef !80
@@ -303,14 +302,13 @@ _RINvXsz_NtNtCs7ewmRfXve8r_4http6header4nameNtB6_10HeaderNameNtNtCsf3Ta7LF998c_4
   br label %_RINvXsz_NtNtCs7ewmRfXve8r_4http6header4nameNtB6_10HeaderNameNtNtCsf3Ta7LF998c_4core4hash4Hash4hashNtNtB8_3map9FnvHasherECsa7TLgTh0CeG_9ssmanager.exit
 
 bb.e:                                             ; preds = %bb.a
-  %i.cc = load ptr, ptr %1, align 8, !noalias !13637, !noundef !80 ; 2 uses
-  %i.cd = icmp ne ptr %i.cc, null
+  %i.cc = load ptr, ptr %1, align 8, !noalias !13637, !noundef !80
+  %i.cd = icmp ne ptr %i.cc, null                 ; 2 uses
   %i.ce = zext i1 %i.cd to i64
   %i.cf = xor i64 %i.ce, -3750763034362895579
   %i.cg = mul i64 %i.cf, 2232315406967589409      ; 4 uses
-  %.not.i.i20 = icmp eq ptr %i.cc, null
   %i.ch = getelementptr i8, ptr %1, i64 8         ; 2 uses
-  br i1 %.not.i.i20, label %bb.g, label %bb.f
+  br i1 %i.cd, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %.val.i.i21 = load ptr, ptr %i.ch, align 8, !noalias !13637, !noundef !80 ; 3 uses
@@ -713,15 +711,14 @@ _RINvYNtNtNtCs2Z77Vc7pSLS_13hickory_proto2op5query5QueryNtNtCsf3Ta7LF998c_4core4
   call fastcc void @_RNvXs3_NtNtCsf3Ta7LF998c_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsa7TLgTh0CeG_9ssmanager(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.t, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.g, i64 noundef 1) #54, !noalias !17063
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !17094
   %i.dy = getelementptr inbounds nuw i8, ptr %.val.i, i64 45
-  %i.dz = load i8, ptr %i.dy, align 1, !range !95, !alias.scope !17063, !noalias !17065, !noundef !80 ; 4 uses
-  %i.ea = icmp ne i8 %i.dz, 2
+  %i.dz = load i8, ptr %i.dy, align 1, !range !95, !alias.scope !17063, !noalias !17065, !noundef !80 ; 3 uses
+  %i.ea = icmp ne i8 %i.dz, 2                     ; 2 uses
   %i.eb = zext i1 %i.ea to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !17095
   store i64 %i.eb, ptr %i.f, align 8, !noalias !17095
   call fastcc void @_RNvXs3_NtNtCsf3Ta7LF998c_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsa7TLgTh0CeG_9ssmanager(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.t, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.f, i64 noundef 8) #54, !noalias !17063
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !17095
-  %.not.i.i.i = icmp eq i8 %i.dz, 2
-  br i1 %.not.i.i.i, label %_RINvXs3_NtNtCsf3Ta7LF998c_4core4hash5implsRINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCs8AjStw0eGtC_16hickory_resolver16name_server_pool8CacheKeyENtB8_4Hash4hashNtNtNtCs5Xr050g3D4S_3std4hash6random13DefaultHasherECsa7TLgTh0CeG_9ssmanager.exit, label %bb.n
+  br i1 %i.ea, label %bb.n, label %_RINvXs3_NtNtCsf3Ta7LF998c_4core4hash5implsRINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCs8AjStw0eGtC_16hickory_resolver16name_server_pool8CacheKeyENtB8_4Hash4hashNtNtNtCs5Xr050g3D4S_3std4hash6random13DefaultHasherECsa7TLgTh0CeG_9ssmanager.exit
 
 bb.n:                                             ; preds = %_RINvYNtNtNtCs2Z77Vc7pSLS_13hickory_proto2op5query5QueryNtNtCsf3Ta7LF998c_4core4hash4Hash10hash_sliceNtNtNtCs5Xr050g3D4S_3std4hash6random13DefaultHasherECsa7TLgTh0CeG_9ssmanager.exit.i.i.i
   call void @llvm.experimental.noalias.scope.decl(metadata !17096)
@@ -1124,7 +1121,7 @@ bb.ca:                                            ; preds = %_RNCINvMNtNtNtNtCsl
 bb.cb:                                            ; preds = %_RNCINvMNtNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay12proxy_stream8protocolNtB5_16TcpRequestHeader9read_fromINtNtB7_6server17ProxyServerStreamINtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net10mon_stream14MonProxyStreamNtNtNtNtCsczhfDQ1qNkX_5tokio3net3tcp6stream9TcpStreamEEE0Csa7TLgTh0CeG_9ssmanager.exit.thread99, %_RNCINvMNtNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay12proxy_stream8protocolNtB5_16TcpRequestHeader9read_fromINtNtB7_6server17ProxyServerStreamINtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net10mon_stream14MonProxyStreamNtNtNtNtCsczhfDQ1qNkX_5tokio3net3tcp6stream9TcpStreamEEE0Csa7TLgTh0CeG_9ssmanager.exit
   %i.gv = phi ptr [ %i.gt, %_RNCINvMNtNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay12proxy_stream8protocolNtB5_16TcpRequestHeader9read_fromINtNtB7_6server17ProxyServerStreamINtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net10mon_stream14MonProxyStreamNtNtNtNtCsczhfDQ1qNkX_5tokio3net3tcp6stream9TcpStreamEEE0Csa7TLgTh0CeG_9ssmanager.exit.thread99 ], [ %i.gb, %_RNCINvMNtNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay12proxy_stream8protocolNtB5_16TcpRequestHeader9read_fromINtNtB7_6server17ProxyServerStreamINtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net10mon_stream14MonProxyStreamNtNtNtNtCsczhfDQ1qNkX_5tokio3net3tcp6stream9TcpStreamEEE0Csa7TLgTh0CeG_9ssmanager.exit ]
   %.sroa.13220.0.i111 = phi ptr [ %.sroa.13220.0.i.ph, %_RNCINvMNtNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay12proxy_stream8protocolNtB5_16TcpRequestHeader9read_fromINtNtB7_6server17ProxyServerStreamINtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net10mon_stream14MonProxyStreamNtNtNtNtCsczhfDQ1qNkX_5tokio3net3tcp6stream9TcpStreamEEE0Csa7TLgTh0CeG_9ssmanager.exit.thread99 ], [ %.sroa.557.0.copyload.i.i, %_RNCINvMNtNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay12proxy_stream8protocolNtB5_16TcpRequestHeader9read_fromINtNtB7_6server17ProxyServerStreamINtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net10mon_stream14MonProxyStreamNtNtNtNtCsczhfDQ1qNkX_5tokio3net3tcp6stream9TcpStreamEEE0Csa7TLgTh0CeG_9ssmanager.exit ] ; 4 uses
-  %.sroa.0218.0.i110 = phi i16 [ %.sroa.0218.0.i.ph, %_RNCINvMNtNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay12proxy_stream8protocolNtB5_16TcpRequestHeader9read_fromINtNtB7_6server17ProxyServerStreamINtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net10mon_stream14MonProxyStreamNtNtNtNtCsczhfDQ1qNkX_5tokio3net3tcp6stream9TcpStreamEEE0Csa7TLgTh0CeG_9ssmanager.exit.thread99 ], [ %.sroa.055.0.copyload.i.i, %_RNCINvMNtNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay12proxy_stream8protocolNtB5_16TcpRequestHeader9read_fromINtNtB7_6server17ProxyServerStreamINtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net10mon_stream14MonProxyStreamNtNtNtNtCsczhfDQ1qNkX_5tokio3net3tcp6stream9TcpStreamEEE0Csa7TLgTh0CeG_9ssmanager.exit ] ; 5 uses
+  %.sroa.0218.0.i110 = phi i16 [ %.sroa.0218.0.i.ph, %_RNCINvMNtNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay12proxy_stream8protocolNtB5_16TcpRequestHeader9read_fromINtNtB7_6server17ProxyServerStreamINtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net10mon_stream14MonProxyStreamNtNtNtNtCsczhfDQ1qNkX_5tokio3net3tcp6stream9TcpStreamEEE0Csa7TLgTh0CeG_9ssmanager.exit.thread99 ], [ %.sroa.055.0.copyload.i.i, %_RNCINvMNtNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay12proxy_stream8protocolNtB5_16TcpRequestHeader9read_fromINtNtB7_6server17ProxyServerStreamINtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net10mon_stream14MonProxyStreamNtNtNtNtCsczhfDQ1qNkX_5tokio3net3tcp6stream9TcpStreamEEE0Csa7TLgTh0CeG_9ssmanager.exit ] ; 4 uses
   %.sroa.24.0.i109 = phi ptr [ %.sroa.24.0.i.ph, %_RNCINvMNtNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay12proxy_stream8protocolNtB5_16TcpRequestHeader9read_fromINtNtB7_6server17ProxyServerStreamINtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net10mon_stream14MonProxyStreamNtNtNtNtCsczhfDQ1qNkX_5tokio3net3tcp6stream9TcpStreamEEE0Csa7TLgTh0CeG_9ssmanager.exit.thread99 ], [ %.sroa.852.i.sroa.0.0.copyload.i, %_RNCINvMNtNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay12proxy_stream8protocolNtB5_16TcpRequestHeader9read_fromINtNtB7_6server17ProxyServerStreamINtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net10mon_stream14MonProxyStreamNtNtNtNtCsczhfDQ1qNkX_5tokio3net3tcp6stream9TcpStreamEEE0Csa7TLgTh0CeG_9ssmanager.exit ] ; 3 uses
   %.sroa.28.0.i108 = phi i64 [ %.sroa.28.0.i.ph, %_RNCINvMNtNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay12proxy_stream8protocolNtB5_16TcpRequestHeader9read_fromINtNtB7_6server17ProxyServerStreamINtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net10mon_stream14MonProxyStreamNtNtNtNtCsczhfDQ1qNkX_5tokio3net3tcp6stream9TcpStreamEEE0Csa7TLgTh0CeG_9ssmanager.exit.thread99 ], [ %.sroa.852.i.sroa.4.0.copyload.i, %_RNCINvMNtNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay12proxy_stream8protocolNtB5_16TcpRequestHeader9read_fromINtNtB7_6server17ProxyServerStreamINtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net10mon_stream14MonProxyStreamNtNtNtNtCsczhfDQ1qNkX_5tokio3net3tcp6stream9TcpStreamEEE0Csa7TLgTh0CeG_9ssmanager.exit ]
   %.sroa.31.0.i107 = phi i64 [ %.sroa.31.0.i.ph, %_RNCINvMNtNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay12proxy_stream8protocolNtB5_16TcpRequestHeader9read_fromINtNtB7_6server17ProxyServerStreamINtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net10mon_stream14MonProxyStreamNtNtNtNtCsczhfDQ1qNkX_5tokio3net3tcp6stream9TcpStreamEEE0Csa7TLgTh0CeG_9ssmanager.exit.thread99 ], [ %.sroa.852.i.sroa.5.0.copyload.i, %_RNCINvMNtNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay12proxy_stream8protocolNtB5_16TcpRequestHeader9read_fromINtNtB7_6server17ProxyServerStreamINtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net10mon_stream14MonProxyStreamNtNtNtNtCsczhfDQ1qNkX_5tokio3net3tcp6stream9TcpStreamEEE0Csa7TLgTh0CeG_9ssmanager.exit ]
@@ -1145,7 +1142,7 @@ bb.cd:                                            ; preds = %bb.cb
   %i.gx = ptrtoint ptr %.sroa.13220.0.i111 to i64 ; 3 uses
   %i.gy = ptrtoint ptr %.sroa.24.0.i109 to i64    ; 2 uses
   %i.gz = inttoptr i64 %.sroa.28.0.i108 to ptr    ; 2 uses
-  %i.ha = icmp ne i16 %.sroa.0218.0.i110, 2
+  %i.ha = icmp ne i16 %.sroa.0218.0.i110, 2       ; 5 uses
   %i.hb = icmp eq i16 %.sroa.34.0.i106, 0
   %or.cond3 = select i1 %i.ha, i1 %i.hb, i1 false
   br i1 %or.cond3, label %bb.cf, label %bb.ce
@@ -1167,19 +1164,18 @@ bb.ce:                                            ; preds = %bb.cn, %bb.cd
   store i16 %.sroa.34.0.i106, ptr %.sroa.1424.0..sroa_idx25, align 8
   %.sroa.15.0..sroa_idx27 = getelementptr inbounds nuw i8, ptr %i.l, i64 42
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.15.0..sroa_idx27, ptr noundef nonnull align 2 dereferenceable(6) %.sroa.1364, i64 6, i1 false)
-  %.not.i = icmp eq i16 %.sroa.0218.0.i110, 2     ; 4 uses
-  %.sroa.915.0..sroa_idx16.val.a = load i16, ptr %.sroa.915.0..sroa_idx16, align 8
-  %.val = load i16, ptr %i.l, align 8
-  %.sroa.087.0.copyload = select i1 %.not.i, i16 %.sroa.915.0..sroa_idx16.val.a, i16 %.val
+  %.sroa.915.0..sroa_idx16.val.a = load i16, ptr %i.l, align 8
+  %.val = load i16, ptr %.sroa.915.0..sroa_idx16, align 8
+  %.sroa.087.0.copyload = select i1 %i.ha, i16 %.sroa.915.0..sroa_idx16.val.a, i16 %.val
   %.sroa.915.0..sroa_idx16.sroa.gep = getelementptr inbounds nuw i8, ptr %i.l, i64 10
-  %.sink.idx.i.sroa.sel.sroa.sel = select i1 %.not.i, ptr %.sroa.915.0..sroa_idx16.sroa.gep, ptr %.sroa.9.0..sroa_idx14
+  %.sink.idx.i.sroa.sel.sroa.sel = select i1 %i.ha, ptr %.sroa.9.0..sroa_idx14, ptr %.sroa.915.0..sroa_idx16.sroa.gep
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.580, ptr noundef nonnull align 2 dereferenceable(6) %.sink.idx.i.sroa.sel.sroa.sel, i64 6, i1 false)
   %.sroa.915.0..sroa_idx16.sroa.gep120 = getelementptr inbounds nuw i8, ptr %i.l, i64 16
-  %.sroa.915.0..sroa_idx16.sroa.gep120.val.a = load ptr, ptr %.sroa.915.0..sroa_idx16.sroa.gep120, align 8
-  %.sroa.915.0..sroa_idx16.val146 = load ptr, ptr %.sroa.915.0..sroa_idx16, align 8
-  %.sroa.589.0.copyload = select i1 %.not.i, ptr %.sroa.915.0..sroa_idx16.sroa.gep120.val.a, ptr %.sroa.915.0..sroa_idx16.val146
+  %.sroa.915.0..sroa_idx16.sroa.gep120.val.a = load ptr, ptr %.sroa.915.0..sroa_idx16, align 8
+  %.sroa.915.0..sroa_idx16.val146 = load ptr, ptr %.sroa.915.0..sroa_idx16.sroa.gep120, align 8
+  %.sroa.589.0.copyload = select i1 %i.ha, ptr %.sroa.915.0..sroa_idx16.sroa.gep120.val.a, ptr %.sroa.915.0..sroa_idx16.val146
   %.sroa.915.0..sroa_idx16.sroa.gep123 = getelementptr inbounds nuw i8, ptr %i.l, i64 24
-  %.sink.idx.i.sroa.sel.sroa.sel125 = select i1 %.not.i, ptr %.sroa.915.0..sroa_idx16.sroa.gep123, ptr %.sroa.11.0..sroa_idx18
+  %.sink.idx.i.sroa.sel.sroa.sel125 = select i1 %i.ha, ptr %.sroa.11.0..sroa_idx18, ptr %.sroa.915.0..sroa_idx16.sroa.gep123
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.885, ptr noundef nonnull align 8 dereferenceable(24) %.sink.idx.i.sroa.sel.sroa.sel125, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtNtNtCslxdWNweD0x2_11shadowsocks5relay8tcprelay12proxy_stream8protocol16TcpRequestHeaderECsa7TLgTh0CeG_9ssmanager.exit
@@ -1582,9 +1578,9 @@ bb.d:                                             ; preds = %bb.g, %bb.b
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ab, i8 0, i64 16, i1 false), !noalias !39507
   %i.ac = call { i64, ptr } @_RNvXs0_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net8outbound6streamNtB5_19OutboundProxyStreamNtNtNtCsczhfDQ1qNkX_5tokio2io10async_read9AsyncRead9poll_read(ptr noalias nofree noundef nonnull align 8 dereferenceable(1160) %i.z, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.a) #46, !noalias !39508 ; 2 uses
   %i.ad = extractvalue { i64, ptr } %i.ac, 0
-  %i.ae = extractvalue { i64, ptr } %i.ac, 1      ; 3 uses
+  %i.ae = extractvalue { i64, ptr } %i.ac, 1      ; 2 uses
   %i.af = trunc nuw i64 %i.ad to i1               ; 2 uses
-  %.not.i = icmp ne ptr %i.ae, null
+  %.not.i = icmp ne ptr %i.ae, null               ; 2 uses
   %or.cond.not.i = select i1 %i.af, i1 true, i1 %.not.i
   br i1 %or.cond.not.i, label %_RNvXs_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rtINtB4_7TokioIoNtNtNtNtBa_3net8outbound6stream19OutboundProxyStreamENtNtNtCsaI3lGUjttVO_5hyper2rt2io4Read9poll_readCsa7TLgTh0CeG_9ssmanager.exit, label %bb.e
 
@@ -1613,8 +1609,7 @@ bb.h:                                             ; preds = %_RNvXs_NtNtNtCs8UFH
   br label %bb.w
 
 bb.i:                                             ; preds = %_RNvXs_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rtINtB4_7TokioIoNtNtNtNtBa_3net8outbound6stream19OutboundProxyStreamENtNtNtCsaI3lGUjttVO_5hyper2rt2io4Read9poll_readCsa7TLgTh0CeG_9ssmanager.exit
-  %.not = icmp eq ptr %i.ae, null
-  br i1 %.not, label %.thread38, label %bb.w
+  br i1 %.not.i, label %bb.w, label %.thread38
 
 .thread38:                                        ; preds = %bb.i
   %i.aj = load i64, ptr %i.i, align 8, !noundef !80

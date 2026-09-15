@@ -202,8 +202,8 @@ bb.g:                                             ; preds = %bb.d
   store i8 %i.r, ptr %i.t, align 1, !tbaa !3761
   %i.u = getelementptr inbounds nuw i8, ptr %storemerge.i, i64 4
   store i32 %.0.i, ptr %i.u, align 4, !tbaa !3762
-  %.not17.i = icmp eq ptr @_Z15io_buf_alloc_cbPvm, null
-  br i1 %.not17.i, label %bb.i, label %bb.h
+  %.not17.i = icmp ne ptr @_Z15io_buf_alloc_cbPvm, null ; 2 uses
+  br i1 %.not17.i, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %.noexc26
   call void @_Z15io_buf_alloc_cbPvm(ptr noundef nonnull %storemerge.i, i64 noundef %.0) #35
@@ -225,10 +225,9 @@ bb.j:                                             ; preds = %bb.i
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 %3
   call void @_ZN5folly5IOBufC1ENS0_19InternalConstructorEPNS0_10SharedInfoEPhmS4_m(ptr noundef nonnull align 8 dereferenceable(56) %i.z, ptr noundef nonnull %i.aa, ptr noundef %i.ab, i64 noundef %2, ptr noundef %i.ac, i64 noundef %4) #35
   store ptr %i.z, ptr %0, align 8, !tbaa !3778
-  %11 = icmp ne ptr @_Z15io_buf_alloc_cbPvm, null
   %i.ad = load ptr, ptr %i.c, align 8
   %i.ae = icmp ne ptr %i.ad, null
-  %or.cond.not19.not23 = select i1 %11, i1 %i.ae, i1 false
+  %or.cond.not19.not23 = select i1 %.not17.i, i1 %i.ae, i1 false
   %i.af = load ptr, ptr %i.b, align 8
   %i.ag = icmp eq ptr %i.af, null
   %or.cond3.not20 = select i1 %or.cond.not19.not23, i1 %i.ag, i1 false

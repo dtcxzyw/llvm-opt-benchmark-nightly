@@ -205,11 +205,11 @@ bb.a:
   call void @_Z41autodep_chooseFullStateDiagMatrDeploymentiRiS_S_8QuESTEnv(i32 noundef %1, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 4 dereferenceable(4) %i.b, ptr noundef nonnull align 4 dereferenceable(4) %i.c, ptr noundef nonnull byval(%struct.QuESTEnv) align 8 %6)
   %i.d = zext nneg i32 %1 to i64
   %i.e = shl nuw i64 1, %i.d                      ; 2 uses
-  %i.f = load i32, ptr %i.a, align 4, !tbaa !47   ; 2 uses
-  %.not = icmp eq i32 %i.f, 0
+  %i.f = load i32, ptr %i.a, align 4, !tbaa !47
+  %.not = icmp ne i32 %i.f, 0                     ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.h = load i32, ptr %i.g, align 8              ; 2 uses
-  %i.i = select i1 %.not, i32 1, i32 %i.h
+  %i.i = select i1 %.not, i32 %i.h, i32 1
   %i.j = sext i32 %i.i to i64
   %i.k = sdiv i64 %i.e, %i.j                      ; 3 uses
   store i32 %1, ptr %0, align 8, !tbaa !54
@@ -221,9 +221,8 @@ bb.a:
   %i.o = load i32, ptr %i.c, align 4, !tbaa !47
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 20
   store i32 %i.o, ptr %i.p, align 4, !tbaa !95
-  %7 = icmp ne i32 %i.f, 0
   %i.q = icmp sgt i32 %i.h, 1
-  %i.r = select i1 %7, i1 %i.q, i1 false
+  %i.r = select i1 %.not, i1 %i.q, i1 false
   %i.s = zext i1 %i.r to i32
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 %i.s, ptr %i.t, align 8, !tbaa !96

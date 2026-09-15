@@ -202,7 +202,7 @@ bb.g:                                             ; preds = %bb.a
   %i.al = trunc nuw i8 %i.ak to i1
   %i.am = load i32, ptr %i.b, align 4             ; 2 uses
   %.sroa.0.0.insert.insert.i = call i32 @llvm.bswap.i32(i32 %i.am)
-  %i.an = select i1 %i.al, i32 %.sroa.0.0.insert.insert.i, i32 %i.am ; 3 uses
+  %i.an = select i1 %i.al, i32 %.sroa.0.0.insert.insert.i, i32 %i.am ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   %i.ao = load ptr, ptr %1, align 8, !tbaa !83    ; 2 uses
@@ -232,8 +232,8 @@ bb.g:                                             ; preds = %bb.a
   %i.bj = load ptr, ptr %i.bi, align 8
   %i.bk = call noundef ptr %i.bj(ptr noundef nonnull align 8 dereferenceable(8) %i.bg, i64 noundef %i.bf, i64 noundef 4), !inline_history !130 ; 4 uses
   store ptr %i.bk, ptr %0, align 8, !tbaa !41
-  %.not.i.i = icmp eq i32 %i.an, 0
-  br i1 %.not.i.i, label %_ZN3ozz9animation8internal5TrackIfE8AllocateEmm.exit, label %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit19.i
+  %.not.i.i = icmp ne i32 %i.an, 0                ; 2 uses
+  br i1 %.not.i.i, label %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit19.i, label %_ZN3ozz9animation8internal5TrackIfE8AllocateEmm.exit
 
 _ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit19.i: ; preds = %bb.g
   %.idx.i.i = shl nuw nsw i64 %i.ax, 2            ; 3 uses
@@ -273,8 +273,7 @@ _ZN3ozz9animation8internal5TrackIfE8AllocateEmm.exit: ; preds = %bb.g, %_ZN3ozz9
   %i.cb = call noundef i64 %i.ca(ptr noundef nonnull align 8 dereferenceable(8) %i.bx, ptr noundef %.sink.i, i64 noundef %.pre-phi), !inline_history !14 ; 0 uses
   %i.cc = load i8, ptr %i.aj, align 8, !tbaa !84, !range !50, !noundef !51
   %i.cd = trunc nuw i8 %i.cc to i1
-  %.not.i.i.i = icmp ne i32 %i.an, 0
-  %or.cond.not = and i1 %.not.i.i.i, %i.cd
+  %or.cond.not = and i1 %.not.i.i, %i.cd
   br i1 %or.cond.not, label %iter.check, label %_ZN3ozz2io8IArchiversIKNS0_8internal5ArrayIfEEEEvRT_.exit
 
 iter.check:                                       ; preds = %_ZN3ozz9animation8internal5TrackIfE8AllocateEmm.exit
@@ -677,7 +676,7 @@ bb.g:                                             ; preds = %bb.a
   %i.al = trunc nuw i8 %i.ak to i1
   %i.am = load i32, ptr %i.b, align 4             ; 2 uses
   %.sroa.0.0.insert.insert.i = call i32 @llvm.bswap.i32(i32 %i.am)
-  %i.an = select i1 %i.al, i32 %.sroa.0.0.insert.insert.i, i32 %i.am ; 3 uses
+  %i.an = select i1 %i.al, i32 %.sroa.0.0.insert.insert.i, i32 %i.am ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   %i.ao = load ptr, ptr %1, align 8, !tbaa !83    ; 2 uses
@@ -707,8 +706,8 @@ bb.g:                                             ; preds = %bb.a
   %i.bj = load ptr, ptr %i.bi, align 8
   %i.bk = call noundef ptr %i.bj(ptr noundef nonnull align 8 dereferenceable(8) %i.bg, i64 noundef %i.bf, i64 noundef 4), !inline_history !134 ; 4 uses
   store ptr %i.bk, ptr %0, align 8, !tbaa !94
-  %.not.i.i = icmp eq i32 %i.an, 0
-  br i1 %.not.i.i, label %_ZN3ozz9animation8internal5TrackINS_4math6Float2EE8AllocateEmm.exit, label %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i
+  %.not.i.i = icmp ne i32 %i.an, 0                ; 2 uses
+  br i1 %.not.i.i, label %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i, label %_ZN3ozz9animation8internal5TrackINS_4math6Float2EE8AllocateEmm.exit
 
 _ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i: ; preds = %bb.g
   %.idx.i.i = shl nuw nsw i64 %i.ax, 3
@@ -749,8 +748,7 @@ _ZN3ozz9animation8internal5TrackINS_4math6Float2EE8AllocateEmm.exit: ; preds = %
   %i.cb = call noundef i64 %i.ca(ptr noundef nonnull align 8 dereferenceable(8) %i.bx, ptr noundef %.sink.i, i64 noundef %.pre-phi), !inline_history !14 ; 0 uses
   %i.cc = load i8, ptr %i.aj, align 8, !tbaa !84, !range !50, !noundef !51
   %i.cd = trunc nuw i8 %i.cc to i1
-  %.not.i.i.i = icmp ne i32 %i.an, 0
-  %or.cond.not = and i1 %.not.i.i.i, %i.cd
+  %or.cond.not = and i1 %.not.i.i, %i.cd
   br i1 %or.cond.not, label %iter.check, label %_ZN3ozz2io8IArchiversIKNS0_8internal5ArrayIfEEEEvRT_.exit
 
 iter.check:                                       ; preds = %_ZN3ozz9animation8internal5TrackINS_4math6Float2EE8AllocateEmm.exit
@@ -1153,7 +1151,7 @@ bb.g:                                             ; preds = %bb.a
   %i.al = trunc nuw i8 %i.ak to i1
   %i.am = load i32, ptr %i.b, align 4             ; 2 uses
   %.sroa.0.0.insert.insert.i = call i32 @llvm.bswap.i32(i32 %i.am)
-  %i.an = select i1 %i.al, i32 %.sroa.0.0.insert.insert.i, i32 %i.am ; 3 uses
+  %i.an = select i1 %i.al, i32 %.sroa.0.0.insert.insert.i, i32 %i.am ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   %i.ao = load ptr, ptr %1, align 8, !tbaa !83    ; 2 uses
@@ -1183,8 +1181,8 @@ bb.g:                                             ; preds = %bb.a
   %i.bj = load ptr, ptr %i.bi, align 8
   %i.bk = call noundef ptr %i.bj(ptr noundef nonnull align 8 dereferenceable(8) %i.bg, i64 noundef %i.bf, i64 noundef 4), !inline_history !138 ; 4 uses
   store ptr %i.bk, ptr %0, align 8, !tbaa !103
-  %.not.i.i = icmp eq i32 %i.an, 0
-  br i1 %.not.i.i, label %_ZN3ozz9animation8internal5TrackINS_4math6Float3EE8AllocateEmm.exit, label %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i
+  %.not.i.i = icmp ne i32 %i.an, 0                ; 2 uses
+  br i1 %.not.i.i, label %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i, label %_ZN3ozz9animation8internal5TrackINS_4math6Float3EE8AllocateEmm.exit
 
 _ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i: ; preds = %bb.g
   %.idx.i.i = mul nuw nsw i64 %i.ax, 12
@@ -1225,8 +1223,7 @@ _ZN3ozz9animation8internal5TrackINS_4math6Float3EE8AllocateEmm.exit: ; preds = %
   %i.cb = call noundef i64 %i.ca(ptr noundef nonnull align 8 dereferenceable(8) %i.bx, ptr noundef %.sink.i, i64 noundef %.pre-phi), !inline_history !14 ; 0 uses
   %i.cc = load i8, ptr %i.aj, align 8, !tbaa !84, !range !50, !noundef !51
   %i.cd = trunc nuw i8 %i.cc to i1
-  %.not.i.i.i = icmp ne i32 %i.an, 0
-  %or.cond.not = and i1 %.not.i.i.i, %i.cd
+  %or.cond.not = and i1 %.not.i.i, %i.cd
   br i1 %or.cond.not, label %iter.check, label %_ZN3ozz2io8IArchiversIKNS0_8internal5ArrayIfEEEEvRT_.exit
 
 iter.check:                                       ; preds = %_ZN3ozz9animation8internal5TrackINS_4math6Float3EE8AllocateEmm.exit
@@ -1629,7 +1626,7 @@ bb.g:                                             ; preds = %bb.a
   %i.al = trunc nuw i8 %i.ak to i1
   %i.am = load i32, ptr %i.b, align 4             ; 2 uses
   %.sroa.0.0.insert.insert.i = call i32 @llvm.bswap.i32(i32 %i.am)
-  %i.an = select i1 %i.al, i32 %.sroa.0.0.insert.insert.i, i32 %i.am ; 3 uses
+  %i.an = select i1 %i.al, i32 %.sroa.0.0.insert.insert.i, i32 %i.am ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   %i.ao = load ptr, ptr %1, align 8, !tbaa !83    ; 2 uses
@@ -1659,8 +1656,8 @@ bb.g:                                             ; preds = %bb.a
   %i.bj = load ptr, ptr %i.bi, align 8
   %i.bk = call noundef ptr %i.bj(ptr noundef nonnull align 8 dereferenceable(8) %i.bg, i64 noundef %i.bf, i64 noundef 4), !inline_history !142 ; 4 uses
   store ptr %i.bk, ptr %0, align 8, !tbaa !112
-  %.not.i.i = icmp eq i32 %i.an, 0
-  br i1 %.not.i.i, label %_ZN3ozz9animation8internal5TrackINS_4math6Float4EE8AllocateEmm.exit, label %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i
+  %.not.i.i = icmp ne i32 %i.an, 0                ; 2 uses
+  br i1 %.not.i.i, label %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i, label %_ZN3ozz9animation8internal5TrackINS_4math6Float4EE8AllocateEmm.exit
 
 _ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i: ; preds = %bb.g
   %.idx.i.i = shl nuw nsw i64 %i.ax, 4
@@ -1701,8 +1698,7 @@ _ZN3ozz9animation8internal5TrackINS_4math6Float4EE8AllocateEmm.exit: ; preds = %
   %i.cb = call noundef i64 %i.ca(ptr noundef nonnull align 8 dereferenceable(8) %i.bx, ptr noundef %.sink.i, i64 noundef %.pre-phi), !inline_history !14 ; 0 uses
   %i.cc = load i8, ptr %i.aj, align 8, !tbaa !84, !range !50, !noundef !51
   %i.cd = trunc nuw i8 %i.cc to i1
-  %.not.i.i.i = icmp ne i32 %i.an, 0
-  %or.cond.not = and i1 %.not.i.i.i, %i.cd
+  %or.cond.not = and i1 %.not.i.i, %i.cd
   br i1 %or.cond.not, label %iter.check, label %_ZN3ozz2io8IArchiversIKNS0_8internal5ArrayIfEEEEvRT_.exit
 
 iter.check:                                       ; preds = %_ZN3ozz9animation8internal5TrackINS_4math6Float4EE8AllocateEmm.exit
@@ -2105,7 +2101,7 @@ bb.g:                                             ; preds = %bb.a
   %i.al = trunc nuw i8 %i.ak to i1
   %i.am = load i32, ptr %i.b, align 4             ; 2 uses
   %.sroa.0.0.insert.insert.i = call i32 @llvm.bswap.i32(i32 %i.am)
-  %i.an = select i1 %i.al, i32 %.sroa.0.0.insert.insert.i, i32 %i.am ; 3 uses
+  %i.an = select i1 %i.al, i32 %.sroa.0.0.insert.insert.i, i32 %i.am ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   %i.ao = load ptr, ptr %1, align 8, !tbaa !83    ; 2 uses
@@ -2135,8 +2131,8 @@ bb.g:                                             ; preds = %bb.a
   %i.bj = load ptr, ptr %i.bi, align 8
   %i.bk = call noundef ptr %i.bj(ptr noundef nonnull align 8 dereferenceable(8) %i.bg, i64 noundef %i.bf, i64 noundef 4), !inline_history !146 ; 4 uses
   store ptr %i.bk, ptr %0, align 8, !tbaa !121
-  %.not.i.i = icmp eq i32 %i.an, 0
-  br i1 %.not.i.i, label %_ZN3ozz9animation8internal5TrackINS_4math10QuaternionEE8AllocateEmm.exit, label %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i
+  %.not.i.i = icmp ne i32 %i.an, 0                ; 2 uses
+  br i1 %.not.i.i, label %_ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i, label %_ZN3ozz9animation8internal5TrackINS_4math10QuaternionEE8AllocateEmm.exit
 
 _ZN3ozz9fill_spanIfEENS_4spanIT_EERNS1_IhEEm.exit.i: ; preds = %bb.g
   %.idx.i.i = shl nuw nsw i64 %i.ax, 4
@@ -2177,8 +2173,7 @@ _ZN3ozz9animation8internal5TrackINS_4math10QuaternionEE8AllocateEmm.exit: ; pred
   %i.cb = call noundef i64 %i.ca(ptr noundef nonnull align 8 dereferenceable(8) %i.bx, ptr noundef %.sink.i, i64 noundef %.pre-phi), !inline_history !14 ; 0 uses
   %i.cc = load i8, ptr %i.aj, align 8, !tbaa !84, !range !50, !noundef !51
   %i.cd = trunc nuw i8 %i.cc to i1
-  %.not.i.i.i = icmp ne i32 %i.an, 0
-  %or.cond.not = and i1 %.not.i.i.i, %i.cd
+  %or.cond.not = and i1 %.not.i.i, %i.cd
   br i1 %or.cond.not, label %iter.check, label %_ZN3ozz2io8IArchiversIKNS0_8internal5ArrayIfEEEEvRT_.exit
 
 iter.check:                                       ; preds = %_ZN3ozz9animation8internal5TrackINS_4math10QuaternionEE8AllocateEmm.exit

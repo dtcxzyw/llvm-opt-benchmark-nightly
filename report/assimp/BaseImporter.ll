@@ -205,9 +205,9 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   %i.c = load ptr, ptr %i.b, align 8
-  %i.d = tail call noundef i64 %i.c(ptr noundef nonnull align 8 dereferenceable(8) %0) ; 9 uses
+  %i.d = tail call noundef i64 %i.c(ptr noundef nonnull align 8 dereferenceable(8) %0) ; 8 uses
   %i.e = icmp ne i32 %2, 1
-  %i.f = icmp ne i64 %i.d, 0
+  %i.f = icmp ne i64 %i.d, 0                      ; 2 uses
   %or.cond = or i1 %i.e, %i.f
   br i1 %or.cond, label %bb.e, label %bb.b
 
@@ -311,8 +311,7 @@ _ZSt8_DestroyIPccEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.l
   br label %_ZNSt6vectorIcSaIcEE6resizeEm.exit
 
 _ZNSt6vectorIcSaIcEE6resizeEm.exit:               ; preds = %bb.j, %bb.k, %bb.l, %_ZSt8_DestroyIPccEvT_S1_RSaIT0_E.exit.i.i
-  %.not = icmp eq i64 %i.d, 0
-  br i1 %.not, label %bb.r, label %bb.m
+  br i1 %i.f, label %bb.m, label %bb.r
 
 bb.m:                                             ; preds = %_ZNSt6vectorIcSaIcEE6resizeEm.exit
   %i.aq = load ptr, ptr %1, align 8

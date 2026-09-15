@@ -205,11 +205,11 @@ bb.cn:                                            ; preds = %bb.cj, %bb.cm
   store i8 %i.tj, ptr %i.tk, align 1
   %i.tl = sitofp i32 %.1 to double
   %i.tm = fsub double %.61849, %i.tl
-  %i.tn = fmul double %i.tm, 1.600000e+01         ; 3 uses
+  %i.tn = fmul double %i.tm, 1.600000e+01         ; 2 uses
   %i.to = add i32 %.101828, 1                     ; 2 uses
   %i.tp = sub i32 %i.to, %i.y
   %.not1902 = icmp ne i32 %i.tp, 1
-  %i.tq = fcmp oeq double %i.tn, 0.000000e+00
+  %i.tq = fcmp oeq double %i.tn, 0.000000e+00     ; 2 uses
   %or.cond1951 = and i1 %or.cond1950.not2061, %i.tq
   %or.cond2106 = select i1 %.not1902, i1 true, i1 %or.cond1951
   br i1 %or.cond2106, label %bb.cp, label %bb.co
@@ -224,8 +224,7 @@ bb.co:                                            ; preds = %bb.cn
 
 bb.cp:                                            ; preds = %bb.cn, %bb.co
   %.111829 = phi i32 [ %i.to, %bb.cn ], [ %i.tt, %bb.co ] ; 2 uses
-  %7 = fcmp une double %i.tn, 0.000000e+00
-  br i1 %7, label %bb.cj, label %bb.cq
+  br i1 %i.tq, label %bb.cq, label %bb.cj
 
 bb.cq:                                            ; preds = %bb.cp
   %i.tu = sub i32 %i.y, %i.sn                     ; 2 uses

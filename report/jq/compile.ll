@@ -202,7 +202,7 @@ block_append.exit:                                ; preds = %inst_join.exit.i, %
 ; Function Attrs: nounwind uwtable
 define dso_local { ptr, ptr } @gen_subexp(ptr %0, ptr %1) local_unnamed_addr #1 {
 bb.a:
-  %i.a = icmp ne ptr %0, null                     ; 2 uses
+  %i.a = icmp ne ptr %0, null                     ; 3 uses
   %i.b = icmp ne ptr %1, null
   %.not41 = select i1 %i.a, i1 true, i1 %i.b
   br i1 %.not41, label %bb.d, label %bb.b
@@ -240,10 +240,9 @@ gen_op_simple.exit:                               ; preds = %bb.b
   br label %block_join.exit38
 
 bb.d:                                             ; preds = %bb.a
-  %i.p = icmp eq ptr %0, null
-  %2 = icmp ne ptr %0, %1
-  %.not43 = select i1 %i.p, i1 true, i1 %2
-  br i1 %.not43, label %bb.g, label %bb.e
+  %i.p = icmp eq ptr %0, %1
+  %.not43 = select i1 %i.a, i1 %i.p, i1 false
+  br i1 %.not43, label %bb.e, label %bb.g
 
 bb.e:                                             ; preds = %bb.d
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16

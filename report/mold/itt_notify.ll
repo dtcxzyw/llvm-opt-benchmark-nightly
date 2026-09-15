@@ -205,7 +205,7 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r
-  %.065 = phi ptr [ %i.ae, %bb.s ], [ %0, %bb.r ] ; 5 uses
+  %.065 = phi ptr [ %i.ae, %bb.s ], [ %0, %bb.r ] ; 4 uses
   %i.af = call ptr @getenv(ptr noundef nonnull @.str.159) #17, !inline_history !1 ; 3 uses
   %.not29.i.i = icmp eq ptr %i.af, null
   br i1 %.not29.i.i, label %_ZL17__itt_get_env_varPKc.exit.i, label %bb.u
@@ -585,13 +585,12 @@ _ZL16__itt_get_groupsv.exit:                      ; preds = %_ZL12__itt_fsplitPK
 
 bb.av:                                            ; preds = %_ZL16__itt_get_groupsv.exit
   %i.gl = icmp ne i32 %.030.i, 0
-  %i.gm = icmp ne ptr %.065, null
+  %i.gm = icmp ne ptr %.065, null                 ; 2 uses
   %or.cond17 = or i1 %i.gm, %i.gl
   br i1 %or.cond17, label %bb.aw, label %bb.bi
 
 bb.aw:                                            ; preds = %bb.av
-  %3 = icmp eq ptr %.065, null
-  %i.gn = select i1 %3, ptr @.str.179, ptr %.065
+  %i.gn = select i1 %i.gm, ptr %.065, ptr @.str.179
   %i.go = call ptr @dlopen(ptr noundef nonnull %i.gn, i32 noundef 1) #17 ; 3 uses
   store ptr %i.go, ptr getelementptr inbounds nuw (i8, ptr @__itt__ittapi_global, i64 96), align 8, !tbaa !69
   %.not80 = icmp eq ptr %i.go, null

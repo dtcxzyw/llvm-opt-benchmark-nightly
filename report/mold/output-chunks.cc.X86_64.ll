@@ -205,9 +205,9 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.c
   br label %_ZNKSt6ranges16__stable_sort_fnclITkNS_19random_access_rangeERSt6vectorIPN4mold5ChunkINS3_6X86_64EEESaIS7_EENS_4lessEZNS3_L11create_phdrIS5_EES2_INS3_7ElfPhdrIT_EESaISF_EERNS3_7ContextISE_EEEUlS7_E3_Q8sortableIDTclsr6ranges13__cust_accessE7__beginclsr3stdE7declvalIRSE_EEEET0_T1_EEENSt13__conditionalIX14borrowed_rangeISE_EEE4typeISN_NS_8danglingEEEOSE_SO_SP_.exit.i
 
 _ZNKSt6ranges16__stable_sort_fnclITkNS_19random_access_rangeERSt6vectorIPN4mold5ChunkINS3_6X86_64EEESaIS7_EENS_4lessEZNS3_L11create_phdrIS5_EES2_INS3_7ElfPhdrIT_EESaISF_EERNS3_7ContextISE_EEEUlS7_E3_Q8sortableIDTclsr6ranges13__cust_accessE7__beginclsr3stdE7declvalIRSE_EEEET0_T1_EEENSt13__conditionalIX14borrowed_rangeISE_EEE4typeISN_NS_8danglingEEEOSE_SO_SP_.exit.i: ; preds = %bb.g, %._crit_edge.i, %._crit_edge.thread.i
-  %i.aa = phi i1 [ true, %._crit_edge.thread.i ], [ true, %._crit_edge.i ], [ false, %bb.g ]
-  %.sroa.0322.0.lcssa518.i = phi ptr [ null, %._crit_edge.thread.i ], [ %.sroa.0322.1.i, %._crit_edge.i ], [ %.sroa.0322.1.i, %bb.g ] ; 10 uses
-  %.sroa.27.0.lcssa517.i = phi ptr [ null, %._crit_edge.thread.i ], [ %.sroa.27.1.i, %._crit_edge.i ], [ %.sroa.27.1.i, %bb.g ] ; 2 uses
+  %i.aa = phi i1 [ false, %._crit_edge.thread.i ], [ false, %._crit_edge.i ], [ true, %bb.g ] ; 2 uses
+  %.sroa.0322.0.lcssa518.i = phi ptr [ null, %._crit_edge.thread.i ], [ %.sroa.0322.1.i, %._crit_edge.i ], [ %.sroa.0322.1.i, %bb.g ] ; 9 uses
+  %.sroa.27.0.lcssa517.i = phi ptr [ null, %._crit_edge.thread.i ], [ %.sroa.27.1.i, %._crit_edge.i ], [ %.sroa.27.1.i, %bb.g ]
   %.sroa.38.0.lcssa516.i = phi i64 [ 0, %._crit_edge.thread.i ], [ %i.f, %._crit_edge.i ], [ %i.f, %bb.g ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5), !noalias !1227
   call void @llvm.lifetime.end.p0(ptr nonnull %6), !noalias !1227
@@ -578,7 +578,7 @@ _ZZN4moldL11create_phdrINS_6X86_64EEESt6vectorINS_7ElfPhdrIT_EESaIS5_EERNS_7Cont
   %i.em = ptrtoint ptr %.sroa.0322.0.lcssa518.i to i64 ; 2 uses
   %i.en = sub i64 %i.el, %i.em
   %i.eo = ashr exact i64 %i.en, 3                 ; 12 uses
-  br i1 %i.aa, label %.preheader362.i, label %.lr.ph388.i
+  br i1 %i.aa, label %.lr.ph388.i, label %.preheader362.i
 
 .lr.ph388.i:                                      ; preds = %_ZZN4moldL11create_phdrINS_6X86_64EEESt6vectorINS_7ElfPhdrIT_EESaIS5_EERNS_7ContextIS4_EEENKUlmmPNS_5ChunkIS1_EEE_clEmmSD_.exit313
   %i.ep = getelementptr inbounds nuw i8, ptr %1, i64 2681 ; 4 uses
@@ -981,8 +981,7 @@ _ZNSt6vectorIN4mold7ElfPhdrINS0_6X86_64EEESaIS3_EE9push_backERKS3_.exit.i: ; pre
   %i.abc = getelementptr inbounds nuw i8, ptr %1, i64 2722
   %i.abd = load i8, ptr %i.abc, align 2, !tbaa !1233, !range !350, !noalias !1227, !noundef !351
   %i.abe = trunc nuw i8 %i.abd to i1
-  %8 = icmp ne ptr %.sroa.27.0.lcssa517.i, %.sroa.0322.0.lcssa518.i
-  %or.cond438.i = and i1 %8, %i.abe
+  %or.cond438.i = and i1 %i.aa, %i.abe
   br i1 %or.cond438.i, label %.lr.ph423.i.preheader, label %.loopexit.i
 
 .lr.ph423.i.preheader:                            ; preds = %_ZNSt6vectorIN4mold7ElfPhdrINS0_6X86_64EEESaIS3_EE9push_backERKS3_.exit.i

@@ -201,7 +201,7 @@ bb.h:                                             ; preds = %bb.g, %.lr.ph.us.i
 
 ._crit_edge.us.i:                                 ; preds = %._crit_edge.us.i.outer, %bb.ad
   %.156.us.i = phi ptr [ %.257.us.i, %bb.ad ], [ %.156.us.i.ph, %._crit_edge.us.i.outer ] ; 7 uses
-  %.253.us.i = phi ptr [ %.354.us.i, %bb.ad ], [ %.253.us.i.ph, %._crit_edge.us.i.outer ] ; 11 uses
+  %.253.us.i = phi ptr [ %.354.us.i, %bb.ad ], [ %.253.us.i.ph, %._crit_edge.us.i.outer ] ; 10 uses
   %.149.us.i = phi ptr [ %.050.us.i, %bb.ad ], [ %.149.us.i.ph, %._crit_edge.us.i.outer ] ; 4 uses
   %.2.us.i = phi i32 [ %.3.us.i, %bb.ad ], [ %.2.us.i.ph213, %._crit_edge.us.i.outer ] ; 5 uses
   %.043.us.i = phi i32 [ %.1.us.i, %bb.ad ], [ %.043.us.i.ph, %._crit_edge.us.i.outer ] ; 6 uses
@@ -210,7 +210,7 @@ bb.h:                                             ; preds = %bb.g, %.lr.ph.us.i
 
 bb.i:                                             ; preds = %._crit_edge.us.i
   %i.bf = icmp sgt i32 %.043.us.i, 0
-  %i.bg = icmp ne ptr %.253.us.i, null
+  %i.bg = icmp ne ptr %.253.us.i, null            ; 2 uses
   %i.bh = select i1 %i.bf, i1 %i.bg, i1 false
   br i1 %i.bh, label %.critedge.us.i, label %.loopexit.us.i
 
@@ -386,8 +386,7 @@ bb.ad:                                            ; preds = %bb.ac
   br label %._crit_edge.us.i, !llvm.loop !4
 
 .loopexit.us.i:                                   ; preds = %bb.i
-  %.not.us.i = icmp eq ptr %.253.us.i, null
-  br i1 %.not.us.i, label %._crit_edge80.i, label %.lr.ph.us.i, !llvm.loop !5
+  br i1 %i.bg, label %.lr.ph.us.i, label %._crit_edge80.i, !llvm.loop !5
 
 ._crit_edge80.i:                                  ; preds = %.loopexit.us.i
   store ptr null, ptr %.149.us.i, align 8, !tbaa !37
@@ -513,7 +512,7 @@ bb.ai:                                            ; preds = %bb.ah, %.lr.ph.us.i
 
 ._crit_edge.us.i92:                               ; preds = %._crit_edge.us.i92.outer, %bb.aq
   %.156.us.i95 = phi ptr [ %.257.us.i106, %bb.aq ], [ %.156.us.i95.ph, %._crit_edge.us.i92.outer ] ; 7 uses
-  %.253.us.i96 = phi ptr [ %.354.us.i107, %bb.aq ], [ %.253.us.i96.ph, %._crit_edge.us.i92.outer ] ; 11 uses
+  %.253.us.i96 = phi ptr [ %.354.us.i107, %bb.aq ], [ %.253.us.i96.ph, %._crit_edge.us.i92.outer ] ; 10 uses
   %.149.us.i97 = phi ptr [ %.050.us.i108, %bb.aq ], [ %.149.us.i97.ph, %._crit_edge.us.i92.outer ] ; 4 uses
   %.2.us.i98 = phi i32 [ %.3.us.i109, %bb.aq ], [ %.2.us.i98.ph204, %._crit_edge.us.i92.outer ] ; 5 uses
   %.043.us.i99 = phi i32 [ %.1.us.i110, %bb.aq ], [ %.043.us.i99.ph, %._crit_edge.us.i92.outer ] ; 6 uses
@@ -522,7 +521,7 @@ bb.ai:                                            ; preds = %bb.ah, %.lr.ph.us.i
 
 bb.aj:                                            ; preds = %._crit_edge.us.i92
   %i.fc = icmp sgt i32 %.043.us.i99, 0
-  %i.fd = icmp ne ptr %.253.us.i96, null
+  %i.fd = icmp ne ptr %.253.us.i96, null          ; 2 uses
   %i.fe = select i1 %i.fc, i1 %i.fd, i1 false
   br i1 %i.fe, label %.critedge.us.i103, label %.loopexit.us.i100
 
@@ -592,8 +591,7 @@ bb.aq:                                            ; preds = %bb.ap
   br label %._crit_edge.us.i92, !llvm.loop !4
 
 .loopexit.us.i100:                                ; preds = %bb.aj
-  %.not.us.i101 = icmp eq ptr %.253.us.i96, null
-  br i1 %.not.us.i101, label %._crit_edge80.i102, label %.lr.ph.us.i83, !llvm.loop !5
+  br i1 %i.fd, label %.lr.ph.us.i83, label %._crit_edge80.i102, !llvm.loop !5
 
 ._crit_edge80.i102:                               ; preds = %.loopexit.us.i100
   store ptr null, ptr %.149.us.i97, align 8, !tbaa !37
@@ -742,7 +740,7 @@ bb.c:                                             ; preds = %.lr.ph.us, %bb.b
 
 ._crit_edge.us:                                   ; preds = %._crit_edge.us.outer, %bb.k
   %.156.us = phi ptr [ %.257.us, %bb.k ], [ %.156.us.ph, %._crit_edge.us.outer ] ; 7 uses
-  %.253.us = phi ptr [ %.354.us, %bb.k ], [ %.253.us.ph, %._crit_edge.us.outer ] ; 11 uses
+  %.253.us = phi ptr [ %.354.us, %bb.k ], [ %.253.us.ph, %._crit_edge.us.outer ] ; 10 uses
   %.149.us = phi ptr [ %.050.us, %bb.k ], [ %.149.us.ph, %._crit_edge.us.outer ] ; 4 uses
   %.2.us = phi i32 [ %.3.us, %bb.k ], [ %.2.us.ph89, %._crit_edge.us.outer ] ; 5 uses
   %.043.us = phi i32 [ %.1.us, %bb.k ], [ %.043.us.ph, %._crit_edge.us.outer ] ; 6 uses
@@ -751,7 +749,7 @@ bb.c:                                             ; preds = %.lr.ph.us, %bb.b
 
 bb.d:                                             ; preds = %._crit_edge.us
   %i.e = icmp sgt i32 %.043.us, 0
-  %i.f = icmp ne ptr %.253.us, null
+  %i.f = icmp ne ptr %.253.us, null               ; 2 uses
   %i.g = select i1 %i.e, i1 %i.f, i1 false
   br i1 %i.g, label %.critedge.us, label %.loopexit.us
 
@@ -808,8 +806,7 @@ bb.k:                                             ; preds = %bb.j
   br label %._crit_edge.us, !llvm.loop !4
 
 .loopexit.us:                                     ; preds = %bb.d
-  %.not.us = icmp eq ptr %.253.us, null
-  br i1 %.not.us, label %._crit_edge80, label %.lr.ph.us, !llvm.loop !5
+  br i1 %i.f, label %.lr.ph.us, label %._crit_edge80, !llvm.loop !5
 
 ._crit_edge80:                                    ; preds = %.loopexit.us
   store ptr null, ptr %.149.us, align 8, !tbaa !37
@@ -1011,7 +1008,7 @@ bb.i:                                             ; preds = %bb.h, %.lr.ph.us.i
 
 ._crit_edge.us.i:                                 ; preds = %._crit_edge.us.i.outer, %bb.q
   %.156.us.i = phi ptr [ %.257.us.i, %bb.q ], [ %.156.us.i.ph, %._crit_edge.us.i.outer ] ; 7 uses
-  %.253.us.i = phi ptr [ %.354.us.i, %bb.q ], [ %.253.us.i.ph, %._crit_edge.us.i.outer ] ; 11 uses
+  %.253.us.i = phi ptr [ %.354.us.i, %bb.q ], [ %.253.us.i.ph, %._crit_edge.us.i.outer ] ; 10 uses
   %.149.us.i = phi ptr [ %.050.us.i, %bb.q ], [ %.149.us.i.ph, %._crit_edge.us.i.outer ] ; 4 uses
   %.2.us.i = phi i32 [ %.3.us.i, %bb.q ], [ %.2.us.i.ph85, %._crit_edge.us.i.outer ] ; 5 uses
   %.043.us.i = phi i32 [ %.1.us.i, %bb.q ], [ %.043.us.i.ph, %._crit_edge.us.i.outer ] ; 6 uses
@@ -1020,7 +1017,7 @@ bb.i:                                             ; preds = %bb.h, %.lr.ph.us.i
 
 bb.j:                                             ; preds = %._crit_edge.us.i
   %i.au = icmp sgt i32 %.043.us.i, 0
-  %i.av = icmp ne ptr %.253.us.i, null
+  %i.av = icmp ne ptr %.253.us.i, null            ; 2 uses
   %i.aw = select i1 %i.au, i1 %i.av, i1 false
   br i1 %i.aw, label %.critedge.us.i, label %.loopexit.us.i
 
@@ -1090,8 +1087,7 @@ bb.q:                                             ; preds = %bb.p
   br label %._crit_edge.us.i, !llvm.loop !4
 
 .loopexit.us.i:                                   ; preds = %bb.j
-  %.not.us.i = icmp eq ptr %.253.us.i, null
-  br i1 %.not.us.i, label %._crit_edge80.i, label %.lr.ph.us.i, !llvm.loop !5
+  br i1 %i.av, label %.lr.ph.us.i, label %._crit_edge80.i, !llvm.loop !5
 
 ._crit_edge80.i:                                  ; preds = %.loopexit.us.i
   store ptr null, ptr %.149.us.i, align 8, !tbaa !37

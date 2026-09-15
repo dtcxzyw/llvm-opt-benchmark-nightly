@@ -204,9 +204,9 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %bb.b
-  %i.c = and i64 %.sroa.06.0.i, 2                 ; 2 uses
-  %.not7.not.i.i = icmp eq i64 %i.c, 0
-  %.sroa.0.0.v.i.i = select i1 %.not7.not.i.i, i64 -27, i64 -9
+  %i.c = and i64 %.sroa.06.0.i, 2
+  %.not7.not.i.i = icmp ne i64 %i.c, 0            ; 2 uses
+  %.sroa.0.0.v.i.i = select i1 %.not7.not.i.i, i64 -9, i64 -27
   %.sroa.0.0.i.i = and i64 %.sroa.0.0.v.i.i, %.sroa.06.0.i ; 2 uses
   %i.d = cmpxchg ptr %0, i64 %.sroa.06.0.i, i64 %.sroa.0.0.i.i acq_rel acquire, align 8 ; 2 uses
   %.sroa.18.0.in.i.i = extractvalue { i64, i1 } %i.d, 1
@@ -216,9 +216,8 @@ bb.d:                                             ; preds = %bb.b
 _RINvMNtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB3_5State19fetch_update_actionNCNvB2_33transition_to_join_handle_dropped0NtB3_26TransitionToJoinHandleDropEB9_.exit: ; preds = %bb.d
   %i.e = and i64 %.sroa.0.0.i.i, 16
   %.not8.i.i = icmp eq i64 %i.e, 0
-  %1 = icmp ne i64 %i.c, 0
   %i.f = insertvalue { i1, i1 } poison, i1 %.not8.i.i, 0
-  %i.g = insertvalue { i1, i1 } %i.f, i1 %1, 1
+  %i.g = insertvalue { i1, i1 } %i.f, i1 %.not7.not.i.i, 1
   ret { i1, i1 } %i.g
 }
 

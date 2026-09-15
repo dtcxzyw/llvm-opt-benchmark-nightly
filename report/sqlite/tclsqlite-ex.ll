@@ -206,8 +206,8 @@ bb.dt:                                            ; preds = %bb.ds, %bb.dr, %bb.
   %i.rl = getelementptr inbounds nuw i8, ptr %4, i64 103
   %i.rm = load i8, ptr %i.rl, align 1, !tbaa !274
   %i.rn = icmp eq i8 %i.rm, 2
-  %i.ro = load i8, ptr %i.gu, align 4             ; 2 uses
-  %i.rp = icmp ne i8 %i.ro, 0                     ; 3 uses
+  %i.ro = load i8, ptr %i.gu, align 4
+  %i.rp = icmp ne i8 %i.ro, 0                     ; 5 uses
   %i.rq = select i1 %i.rn, i1 %i.rp, i1 false
   %i.rr = zext i1 %i.rq to i32
   %i.rs = load i8, ptr %i.dg, align 1, !tbaa !53  ; 3 uses
@@ -250,7 +250,6 @@ bb.dw:                                            ; preds = %bb.dv, %bb.du, %bb.
   %.val.i = load i32, ptr %i.ek, align 8          ; 2 uses
   %i.sn = sext i32 %.val.i to i64
   %i.so = icmp sgt i32 %.val.i, 0
-  %.not300.i = icmp eq i8 %i.ro, 0                ; 2 uses
   %i.sp = icmp eq i32 %.0263.i, 1
   %unroll_iter209 = and i64 %i.sa, 2147483646
   %i.sq = and i32 %.0263.i, 1
@@ -653,7 +652,7 @@ bb.fb:                                            ; preds = %bb.fa
   br label %.loopexit.i9
 
 bb.fc:                                            ; preds = %bb.fa
-  br i1 %.not300.i, label %.loopexit.i9, label %bb.fd
+  br i1 %i.rp, label %bb.fd, label %.loopexit.i9
 
 bb.fd:                                            ; preds = %bb.fc
   %i.ya = load ptr, ptr %i.rz, align 8, !tbaa !47
@@ -722,7 +721,7 @@ bb.fk:                                            ; preds = %qrfRTrim.exit342.i,
   br i1 %exitcond404.not.i, label %.loopexit.i9, label %.lr.ph392.i, !llvm.loop !248
 
 bb.fl:                                            ; preds = %bb.fg
-  br i1 %.not300.i, label %.loopexit.i9, label %bb.fm
+  br i1 %i.rp, label %bb.fm, label %.loopexit.i9
 
 bb.fm:                                            ; preds = %bb.fl
   %i.yu = load ptr, ptr %i.rz, align 8, !tbaa !47
@@ -996,15 +995,14 @@ bb.gp:                                            ; preds = %bb.ga
   %i.acd = load i32, ptr %i.dy, align 8, !tbaa !279 ; 2 uses
   %i.ace = load ptr, ptr %i.dq, align 8, !tbaa !47
   %i.acf = call i32 @sqlite3_str_length(ptr noundef %i.ace) #20
-  %i.acg = load i32, ptr %i.dl, align 8, !tbaa !29 ; 3 uses
-  %i.ach = icmp ne i32 %i.acg, 0
+  %i.acg = load i32, ptr %i.dl, align 8, !tbaa !29 ; 2 uses
+  %i.ach = icmp ne i32 %i.acg, 0                  ; 2 uses
   %.not201.i = icmp ult i32 %i.acg, %i.acd
   %or.cond.i24 = select i1 %i.ach, i1 %.not201.i, i1 false
   br i1 %or.cond.i24, label %bb.ha, label %bb.gq
 
 bb.gq:                                            ; preds = %bb.gp
-  %.not202.i = icmp eq i32 %i.acg, 0
-  br i1 %.not202.i, label %bb.gs, label %bb.gr
+  br i1 %i.ach, label %bb.gr, label %bb.gs
 
 bb.gr:                                            ; preds = %bb.gq
   %i.aci = load ptr, ptr %i.dq, align 8, !tbaa !47
