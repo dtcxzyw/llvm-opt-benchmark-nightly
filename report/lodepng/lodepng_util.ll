@@ -205,7 +205,7 @@ define internal fastcc noundef range(i32 0, 2) i32 @_ZN7lodepngL7getChrmEPfS0_jP
 bb.a:
   %i.a = alloca [9 x float], align 16             ; 9 uses
   %i.b = alloca [9 x float], align 16             ; 11 uses
-  %i.c = alloca [9 x float], align 16             ; 11 uses
+  %i.c = alloca [9 x float], align 16             ; 10 uses
   %.not = icmp eq i32 %2, 0
   br i1 %.not, label %bb.g, label %bb.b
 
@@ -303,7 +303,6 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.cf = getelementptr inbounds nuw i8, ptr %3, i64 76
-  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   %i.cg = getelementptr inbounds nuw i8, ptr %3, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(36) %i.c, ptr noundef nonnull readonly align 8 dereferenceable(36) %i.cg, i64 36, i1 false), !tbaa !58
   %i.ch = call fastcc noundef i32 @_ZN7lodepngL9invMatrixEPf(ptr noundef %i.c) ; 0 uses
@@ -325,9 +324,7 @@ bb.d:                                             ; preds = %bb.c
   %i.cx = fpext <2 x float> %i.cu to <2 x double> ; 2 uses
   %i.cy = fpext float %i.cr to double             ; 2 uses
   %i.cz = load <2 x float>, ptr %i.cn, align 4, !tbaa !58
-  %6 = load float, ptr %5, align 16, !tbaa !58
-  %7 = insertelement <2 x float> %i.cz, float %6, i64 1
-  %i.da = fpext <2 x float> %7 to <2 x double>    ; 3 uses
+  %i.da = fpext <2 x float> %i.cz to <2 x double> ; 3 uses
   %i.db = load float, ptr %i.cf, align 4, !tbaa !58
   %i.dc = load float, ptr %i.ci, align 8, !tbaa !58
   %i.dd = load float, ptr %i.cj, align 8, !tbaa !58

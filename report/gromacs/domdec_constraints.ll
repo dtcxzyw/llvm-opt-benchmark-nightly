@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   br label %.loopexit.split-lp
 
 bb.f:                                             ; preds = %bb.d, %bb.c
-  %i.ad = load i32, ptr %10, align 4, !tbaa !44   ; 3 uses
+  %i.ad = load i32, ptr %10, align 4, !tbaa !44   ; 4 uses
   %i.ae = sext i32 %i.ad to i64
   %.not = icmp slt i64 %indvars.iv, %i.ae
   br i1 %.not, label %_ZL16atoms_to_settlesP12gmx_domdec_tRK10gmx_mtop_tN3gmx8ArrayRefIKiEENS5_IKSt6vectorIiSaIiEEEEiiP15InteractionListPSA_.exit, label %bb.g
@@ -218,18 +218,17 @@ bb.g:                                             ; preds = %bb.f
   %i.aj = load ptr, ptr %2, align 8, !tbaa !17    ; 3 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 152
   %i.al = load i32, ptr %i.ak, align 8, !tbaa !102
-  %14 = insertelement <2 x i32> poison, i32 %i.ai, i64 0
-  %15 = insertelement <2 x i32> %14, i32 %i.al, i64 1
-  %i.am = insertelement <2 x i32> poison, i32 %i.ad, i64 0
-  %16 = shufflevector <2 x i32> %i.am, <2 x i32> poison, <2 x i32> zeroinitializer
-  %17 = sub nsw <2 x i32> %15, %16                ; 2 uses
-  %i.an = shufflevector <2 x i32> %17, <2 x i32> poison, <2 x i32> zeroinitializer
+  %14 = sub nsw i32 %i.al, %i.ad
+  %15 = sub nsw i32 %i.ai, %i.ad
+  %i.am = insertelement <2 x i32> poison, i32 %15, i64 0
+  %i.an = shufflevector <2 x i32> %i.am, <2 x i32> poison, <2 x i32> zeroinitializer
   %i.ao = add nuw nsw <2 x i32> %i.an, <i32 0, i32 1>
   %i.ap = insertelement <2 x i32> poison, i32 %i.ah, i64 0
   %i.aq = shufflevector <2 x i32> %i.ap, <2 x i32> poison, <2 x i32> zeroinitializer
   %i.ar = mul nsw <2 x i32> %i.aq, %i.ao
-  %18 = shufflevector <2 x i32> %17, <2 x i32> poison, <2 x i32> <i32 1, i32 1>
-  %i.as = sdiv <2 x i32> %i.ar, %18               ; 2 uses
+  %16 = insertelement <2 x i32> poison, i32 %14, i64 0
+  %17 = shufflevector <2 x i32> %16, <2 x i32> poison, <2 x i32> zeroinitializer
+  %i.as = sdiv <2 x i32> %i.ar, %17               ; 2 uses
   %i.at = icmp eq i32 %i.ad, %i.ai
   br i1 %i.at, label %bb.h, label %bb.i
 

@@ -204,11 +204,11 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph472, %stbtt__handle_clipped_edge.exit351
-  %.0293469 = phi ptr [ %3, %.lr.ph472 ], [ %i.afx, %stbtt__handle_clipped_edge.exit351 ] ; 19 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %.0293469, i64 8
-  %5 = load <2 x float>, ptr %i.i, align 8, !tbaa !80 ; 10 uses
-  %6 = extractelement <2 x float> %5, i64 0       ; 40 uses
-  %7 = extractelement <2 x float> %5, i64 1       ; 2 uses
+  %.0293469 = phi ptr [ %3, %.lr.ph472 ], [ %i.afx, %stbtt__handle_clipped_edge.exit351 ] ; 20 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %.0293469, i64 12
+  %5 = getelementptr inbounds nuw i8, ptr %.0293469, i64 8
+  %6 = load float, ptr %5, align 8, !tbaa !98     ; 47 uses
+  %7 = load float, ptr %i.i, align 4, !tbaa !96   ; 3 uses
   %i.j = fcmp oeq float %7, 0.000000e+00
   br i1 %i.j, label %bb.c, label %bb.ak
 
@@ -241,8 +241,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.t, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  %foldExtExtBinop = fsub <2 x float> %5, %5
-  %8 = extractelement <2 x float> %foldExtExtBinop, i64 0
+  %8 = fsub float %6, %6
   %i.u = fsub float %i.r, %4
   %i.v = fmul float %8, %i.u
   %i.w = fdiv float %i.v, %i.e
@@ -326,8 +325,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bm, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
-  %foldExtExtBinop560 = fsub <2 x float> %5, %5
-  %9 = extractelement <2 x float> %foldExtExtBinop560, i64 0
+  %9 = fsub float %6, %6
   %i.bn = fsub float %i.bk, %4
   %i.bo = fmul float %9, %i.bn
   %i.bp = fdiv float %i.bo, %i.e
@@ -414,8 +412,7 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %i.df, label %bb.ad, label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ac
-  %foldExtExtBinop562 = fsub <2 x float> %5, %5
-  %10 = extractelement <2 x float> %foldExtExtBinop562, i64 0
+  %10 = fsub float %6, %6
   %i.dg = fsub float %i.dd, %4
   %i.dh = fmul float %10, %i.dg
   %i.di = fdiv float %i.dh, %i.e
@@ -483,9 +480,11 @@ bb.ak:                                            ; preds = %bb.b
   %i.ep = extractelement <2 x float> %i.eo, i64 0 ; 2 uses
   %i.eq = fcmp ogt float %i.ep, %4                ; 2 uses
   %i.er = fsub <2 x float> %i.eo, %i.h
-  %11 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
-  %i.es = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.et = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %11, <2 x float> %i.er, <2 x float> %i.es) ; 2 uses
+  %11 = insertelement <2 x float> poison, float %7, i64 0
+  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %13 = insertelement <2 x float> poison, float %6, i64 0
+  %i.es = shufflevector <2 x float> %13, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.et = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %12, <2 x float> %i.er, <2 x float> %i.es) ; 2 uses
   %i.eu = extractelement <2 x float> %i.et, i64 0
   %.0305 = select i1 %i.eq, float %i.eu, float %6 ; 7 uses
   %.0301 = select i1 %i.eq, float %i.ep, float %4 ; 3 uses
@@ -674,7 +673,7 @@ bb.as:                                            ; preds = %.lr.ph, %stbtt__han
   %i.ix = insertelement <2 x float> poison, float %i.iw, i64 0
   %i.iy = insertelement <2 x float> %i.ix, float %i.iv, i64 1
   %i.iz = fsub <2 x float> %i.iy, %i.es           ; 7 uses
-  %i.ja = fdiv <2 x float> %i.iz, %11             ; 2 uses
+  %i.ja = fdiv <2 x float> %i.iz, %12             ; 2 uses
   %i.jb = extractelement <2 x float> %i.ja, i64 0
   %i.jc = fadd float %4, %i.jb                    ; 52 uses
   %i.jd = extractelement <2 x float> %i.ja, i64 1

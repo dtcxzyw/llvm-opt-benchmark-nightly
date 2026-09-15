@@ -205,10 +205,10 @@ bb.j:                                             ; preds = %.preheader187.us, %
   br i1 %i.cr, label %bb.k, label %bb.o
 
 bb.k:                                             ; preds = %bb.j
-  %i.cs = load double, ptr %i.gw, align 8, !tbaa !49 ; 2 uses
+  %i.cs = load double, ptr %i.gw, align 8, !tbaa !49 ; 3 uses
   %i.ct = getelementptr [8 x i8], ptr %i.cb, i64 %.056194.us ; 5 uses
   %i.cu = getelementptr [8 x i8], ptr %i.ct, i64 %.056194.us ; 2 uses
-  %i.cv = load double, ptr %i.cu, align 8, !tbaa !49 ; 3 uses
+  %i.cv = load double, ptr %i.cu, align 8, !tbaa !49 ; 4 uses
   %i.cw = fsub double %i.cp, %i.cp                ; 2 uses
   %i.cx = call noundef double @llvm.fabs.f64(double %i.cw)
   %i.cy = fcmp olt double %i.cx, f0x0010000000000000
@@ -227,41 +227,37 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  %i.dh = phi <2 x double> [ %i.dg, %bb.l ], [ <double 0.000000e+00, double 1.000000e+00>, %bb.k ] ; 7 uses
-  %i.di = extractelement <2 x double> %i.dh, i64 1 ; 2 uses
+  %i.dh = phi <2 x double> [ %i.dg, %bb.l ], [ <double 0.000000e+00, double 1.000000e+00>, %bb.k ] ; 4 uses
+  %i.di = extractelement <2 x double> %i.dh, i64 1 ; 4 uses
   %i.dj = fcmp oeq double %i.di, 1.000000e+00
-  %i.dk = extractelement <2 x double> %i.dh, i64 0 ; 2 uses
+  %i.dk = extractelement <2 x double> %i.dh, i64 0 ; 4 uses
   %i.dl = fcmp oeq double %i.dk, 0.000000e+00
   %or.cond.i.i.i.us = and i1 %i.dl, %i.dj
-  %5 = insertelement <2 x double> poison, double %i.cs, i64 0 ; 2 uses
-  %6 = insertelement <2 x double> %5, double %i.cv, i64 1 ; 2 uses
   br i1 %or.cond.i.i.i.us, label %_ZN5Eigen10MatrixBaseINS_6MatrixIdLi2ELi2ELi0ELi2ELi2EEEE14applyOnTheLeftIdEEvllRKNS_14JacobiRotationIT_EE.exit.i.us, label %_ZN5Eigen8internal36apply_rotation_in_the_plane_selectorIddLi2ELi0ELb0EE3runEPdlS3_lldd.exit.loopexit.i.i.i.us
 
 _ZN5Eigen8internal36apply_rotation_in_the_plane_selectorIddLi2ELi0ELb0EE3runEPdlS3_lldd.exit.loopexit.i.i.i.us: ; preds = %bb.m
-  %7 = insertelement <2 x double> %6, double %i.cp, i64 0
-  %8 = fmul <2 x double> %7, %i.dh
-  %i.dm = fmul double %i.cv, %i.dk
-  %i.dn = call double @llvm.fmuladd.f64(double %i.di, double %i.cp, double %i.dm) ; 2 uses
-  %9 = fneg <2 x double> %i.dh
-  %10 = shufflevector <2 x double> %i.dh, <2 x double> %9, <2 x i32> <i32 1, i32 2>
-  %11 = insertelement <2 x double> %5, double %i.cp, i64 1
-  %12 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %10, <2 x double> %11, <2 x double> %8)
-  %.pre209 = call noundef double @llvm.fabs.f64(double %i.dn)
+  %5 = fneg double %i.dk
+  %i.dm = fmul double %i.cp, %i.dk
+  %i.dn = call double @llvm.fmuladd.f64(double %i.di, double %i.cs, double %i.dm)
+  %6 = fmul double %i.cv, %i.dk
+  %7 = call double @llvm.fmuladd.f64(double %i.di, double %i.cp, double %6) ; 2 uses
+  %8 = fmul double %i.cv, %i.di
+  %9 = call double @llvm.fmuladd.f64(double %5, double %i.cp, double %8)
+  %.pre209 = call noundef double @llvm.fabs.f64(double %7)
   br label %_ZN5Eigen10MatrixBaseINS_6MatrixIdLi2ELi2ELi0ELi2ELi2EEEE14applyOnTheLeftIdEEvllRKNS_14JacobiRotationIT_EE.exit.i.us
 
 _ZN5Eigen10MatrixBaseINS_6MatrixIdLi2ELi2ELi0ELi2ELi2EEEE14applyOnTheLeftIdEEvllRKNS_14JacobiRotationIT_EE.exit.i.us: ; preds = %_ZN5Eigen8internal36apply_rotation_in_the_plane_selectorIddLi2ELi0ELb0EE3runEPdlS3_lldd.exit.loopexit.i.i.i.us, %bb.m
   %.pre-phi = phi double [ %.pre209, %_ZN5Eigen8internal36apply_rotation_in_the_plane_selectorIddLi2ELi0ELb0EE3runEPdlS3_lldd.exit.loopexit.i.i.i.us ], [ %i.cq, %bb.m ] ; 2 uses
-  %.sroa.9.0.i.us = phi double [ %i.dn, %_ZN5Eigen8internal36apply_rotation_in_the_plane_selectorIddLi2ELi0ELb0EE3runEPdlS3_lldd.exit.loopexit.i.i.i.us ], [ %i.cp, %bb.m ]
-  %13 = phi <2 x double> [ %12, %_ZN5Eigen8internal36apply_rotation_in_the_plane_selectorIddLi2ELi0ELb0EE3runEPdlS3_lldd.exit.loopexit.i.i.i.us ], [ %6, %bb.m ] ; 2 uses
+  %.sroa.13.0.i.us = phi double [ %9, %_ZN5Eigen8internal36apply_rotation_in_the_plane_selectorIddLi2ELi0ELb0EE3runEPdlS3_lldd.exit.loopexit.i.i.i.us ], [ %i.cv, %bb.m ]
+  %.sroa.9.0.i.us = phi double [ %7, %_ZN5Eigen8internal36apply_rotation_in_the_plane_selectorIddLi2ELi0ELb0EE3runEPdlS3_lldd.exit.loopexit.i.i.i.us ], [ %i.cp, %bb.m ]
+  %.sroa.0.0.i.us = phi double [ %i.dn, %_ZN5Eigen8internal36apply_rotation_in_the_plane_selectorIddLi2ELi0ELb0EE3runEPdlS3_lldd.exit.loopexit.i.i.i.us ], [ %i.cs, %bb.m ]
   %i.do = fmul double %.pre-phi, 2.000000e+00     ; 2 uses
   %i.dp = fcmp uge double %i.do, f0x0010000000000000
   br i1 %i.dp, label %bb.n, label %_ZN5Eigen8internal19real_2x2_jacobi_svdINS_6MatrixIdLi1ELi1ELi0ELi1ELi1EEEdlEEvRKT_T1_S7_PNS_14JacobiRotationIT0_EESB_.exit.us
 
 bb.n:                                             ; preds = %_ZN5Eigen10MatrixBaseINS_6MatrixIdLi2ELi2ELi0ELi2ELi2EEEE14applyOnTheLeftIdEEvllRKNS_14JacobiRotationIT_EE.exit.i.us
-  %shift = shufflevector <2 x double> %13, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fsub <2 x double> %13, %shift
-  %14 = extractelement <2 x double> %foldExtExtBinop, i64 0
-  %i.dq = fdiv double %14, %i.do                  ; 4 uses
+  %10 = fsub double %.sroa.0.0.i.us, %.sroa.13.0.i.us
+  %i.dq = fdiv double %10, %i.do                  ; 4 uses
   %i.dr = fmul double %i.dq, %i.dq
   %i.ds = fadd double %i.dr, 1.000000e+00
   %sqrt19.i.i.i.us = call double @llvm.sqrt.f64(double %i.ds) ; 2 uses

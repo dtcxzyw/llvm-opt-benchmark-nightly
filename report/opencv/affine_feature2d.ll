@@ -204,7 +204,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %69, i64 4 ; 3 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %69, i64 8 ; 7 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %69, i64 8 ; 6 uses
   %i.f = getelementptr inbounds nuw i8, ptr %69, i64 12
   %i.g = getelementptr inbounds nuw i8, ptr %90, i64 44 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %90, i64 8 ; 3 uses
@@ -607,16 +607,15 @@ bb.dq:                                            ; preds = %_ZNK2cv7MatExprcvNS
 bb.dr:                                            ; preds = %bb.dq
   %i.abt = extractvalue { <2 x float>, <2 x float> } %i.abc, 1 ; 2 uses
   %i.abu = extractvalue { <2 x float>, <2 x float> } %i.abc, 0 ; 2 uses
-  %94 = load <2 x float>, ptr %69, align 16, !tbaa !36 ; 2 uses
-  %i.abv = shufflevector <2 x float> %94, <2 x float> poison, <2 x i32> zeroinitializer
+  %94 = load <4 x float>, ptr %69, align 16       ; 4 uses
+  %i.abv = shufflevector <4 x float> %94, <4 x float> poison, <2 x i32> zeroinitializer
   %i.abw = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.abv, <2 x float> %i.abu, <2 x float> zeroinitializer)
-  %i.abx = shufflevector <2 x float> %94, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %i.abx = shufflevector <4 x float> %94, <4 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.aby = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.abx, <2 x float> %i.abt, <2 x float> %i.abw)
-  %95 = load <2 x float>, ptr %i.e, align 8, !tbaa !36 ; 2 uses
-  %96 = shufflevector <2 x float> %95, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.abz = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %96, <2 x float> %i.abu, <2 x float> zeroinitializer)
-  %97 = shufflevector <2 x float> %95, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.aca = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %97, <2 x float> %i.abt, <2 x float> %i.abz)
+  %95 = shufflevector <4 x float> %94, <4 x float> poison, <2 x i32> <i32 2, i32 2>
+  %i.abz = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %95, <2 x float> %i.abu, <2 x float> zeroinitializer)
+  %96 = shufflevector <4 x float> %94, <4 x float> poison, <2 x i32> <i32 3, i32 3>
+  %i.aca = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %96, <2 x float> %i.abt, <2 x float> %i.abz)
   store <2 x float> %i.aby, ptr %69, align 16
   store <2 x float> %i.aca, ptr %i.e, align 8, !tbaa !44
   call void @llvm.lifetime.start.p0(ptr nonnull %85) #21
