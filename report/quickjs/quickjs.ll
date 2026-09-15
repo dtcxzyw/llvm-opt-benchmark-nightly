@@ -205,9 +205,9 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not41, label %bb.j, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.ak = sub nsw i64 %i.b, %i.ah
+  %i.ak = sub nuw nsw i64 %i.b, %i.ah
   %i.al = zext nneg i8 %i.z to i64
-  %1 = ashr i64 %i.ak, %i.al
+  %1 = lshr i64 %i.ak, %i.al
   %i.am = trunc i64 %1 to i32
   store i32 %i.am, ptr %i.u, align 8, !tbaa !218
   %i.an = load i32, ptr %i.af, align 8, !tbaa !512

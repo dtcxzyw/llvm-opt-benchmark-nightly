@@ -204,8 +204,8 @@ bb.a:
   %i.ab = fneg double %i.aa
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %.04344.us
   store double %i.ab, ptr %i.ac, align 8, !tbaa !44
-  %i.ad = sub nsw i64 %i.k, %.04344.us
-  %i.ae = getelementptr inbounds [8 x i8], ptr %i.m, i64 %i.ad
+  %i.ad = sub nuw nsw i64 %i.k, %.04344.us
+  %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.ad
   store double %i.aa, ptr %i.ae, align 8, !tbaa !44
   %i.af = add nuw nsw i64 %.04344.us, 1           ; 2 uses
   %i.ag = mul nsw i64 %.04344.us, %i.b
@@ -214,8 +214,8 @@ bb.a:
   %i.aj = fneg double %i.ai
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.af
   store double %i.aj, ptr %i.ak, align 8, !tbaa !44
-  %i.al = sub nsw i64 %i.k, %i.af
-  %i.am = getelementptr inbounds [8 x i8], ptr %i.m, i64 %i.al
+  %i.al = sub nuw nsw i64 %i.k, %i.af
+  %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.al
   store double %i.ai, ptr %i.am, align 8, !tbaa !44
   %i.an = add nuw nsw i64 %.04344.us, 2           ; 2 uses
   %i.ao = add nuw nsw i64 %.04344.us, 1
@@ -225,8 +225,8 @@ bb.a:
   %i.as = fneg double %i.ar
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.an
   store double %i.as, ptr %i.at, align 8, !tbaa !44
-  %i.au = sub nsw i64 %i.k, %i.an
-  %i.av = getelementptr inbounds [8 x i8], ptr %i.m, i64 %i.au
+  %i.au = sub nuw nsw i64 %i.k, %i.an
+  %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.au
   store double %i.ar, ptr %i.av, align 8, !tbaa !44
   %i.aw = add nuw nsw i64 %.04344.us, 3           ; 2 uses
   %i.ax = add nuw nsw i64 %.04344.us, 2
@@ -236,8 +236,8 @@ bb.a:
   %i.bb = fneg double %i.ba
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.aw
   store double %i.bb, ptr %i.bc, align 8, !tbaa !44
-  %i.bd = sub nsw i64 %i.k, %i.aw
-  %i.be = getelementptr inbounds [8 x i8], ptr %i.m, i64 %i.bd
+  %i.bd = sub nuw nsw i64 %i.k, %i.aw
+  %i.be = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.bd
   store double %i.ba, ptr %i.be, align 8, !tbaa !44
   %i.bf = add nuw nsw i64 %.04344.us, 4           ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
@@ -262,8 +262,8 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
   %i.bk = fneg double %i.bj
   %i.bl = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %.04344.us.epil
   store double %i.bk, ptr %i.bl, align 8, !tbaa !44
-  %i.bm = sub nsw i64 %i.k, %.04344.us.epil
-  %i.bn = getelementptr inbounds [8 x i8], ptr %i.m, i64 %i.bm
+  %i.bm = sub nuw nsw i64 %i.k, %.04344.us.epil
+  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.bm
   store double %i.bj, ptr %i.bn, align 8, !tbaa !44
   %i.bo = add nuw nsw i64 %.04344.us.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses

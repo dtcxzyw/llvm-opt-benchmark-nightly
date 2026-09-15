@@ -205,7 +205,7 @@ bb.ai:                                            ; preds = %bb.af
   br label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai, %bb.ah, %_PyFreeList_Push.exit.i.i.i.i210, %bb.ae, %bb.aa, %v_iadd.exit
-  %i.hf = sub nsw i64 %.040.i246, %i.et           ; 2 uses
+  %i.hf = sub nuw nsw i64 %.040.i246, %i.et       ; 2 uses
   %i.hg = add i64 %.039.i247, %i.et
   %.not229 = icmp eq i64 %i.hf, 0
   br i1 %.not229, label %._crit_edge, label %bb.y
@@ -608,7 +608,7 @@ bb.z:                                             ; preds = %.loopexit151.thread
   %i.jx = getelementptr i8, ptr %.1114, i64 24
   %i.jy = getelementptr [4 x i8], ptr %i.jx, i64 %.3193
   %i.jz = sub nuw nsw i64 %.0106, %.3193
-  %i.ka = shl nsw i64 %i.jz, 2
+  %i.ka = shl nuw nsw i64 %i.jz, 2
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.jw, ptr align 4 %i.jy, i64 %i.ka, i1 false)
   br label %.loopexit
 

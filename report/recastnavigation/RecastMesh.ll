@@ -204,7 +204,7 @@ vector.ph358:                                     ; preds = %vector.main.loop.it
 
 vector.body366:                                   ; preds = %pred.store.continue401, %vector.ph358
   %index367 = phi i64 [ 0, %vector.ph358 ], [ %index.next402, %pred.store.continue401 ] ; 2 uses
-  %i.jg = add i64 %index367, %i.ix                ; 17 uses
+  %i.jg = add nuw i64 %index367, %i.ix            ; 17 uses
   %i.jh = getelementptr inbounds [2 x i8], ptr %i.hs, i64 %i.jg ; 2 uses
   %i.ji = getelementptr inbounds nuw i8, ptr %i.jh, i64 16
   %wide.load368 = load <8 x i16>, ptr %i.jh, align 2, !tbaa !77 ; 10 uses
@@ -430,7 +430,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %pred.store.continue430, %vec.epilog.ph
   %index413 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next431, %pred.store.continue430 ] ; 2 uses
-  %i.mw = add i64 %index413, %i.ix                ; 9 uses
+  %i.mw = add nuw i64 %index413, %i.ix            ; 9 uses
   %i.mx = getelementptr inbounds [2 x i8], ptr %i.hs, i64 %i.mw
   %wide.load414 = load <8 x i16>, ptr %i.mx, align 2, !tbaa !77 ; 10 uses
   %i.my = icmp slt <8 x i16> %wide.load414, splat (i16 -1) ; 3 uses
@@ -576,7 +576,7 @@ bb.ae:                                            ; preds = %bb.ab
   br label %.lr.ph264.split.prol.loopexit.unr-lcssa
 
 .lr.ph264.split.prol.loopexit.unr-lcssa:          ; preds = %.sink.split330.prol, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %.lr.ph264.split.prol
-  %indvars.iv.next290.prol = add nsw i64 %indvars.iv289.ph, 1
+  %indvars.iv.next290.prol = add nuw nsw i64 %indvars.iv289.ph, 1
   br label %.lr.ph264.split.prol.loopexit
 
 .lr.ph264.split.prol.loopexit:                    ; preds = %.lr.ph264.split.prol.loopexit.unr-lcssa, %.lr.ph264.split.preheader
@@ -604,7 +604,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %pred.store.continue352, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue352 ] ; 2 uses
-  %i.pd = add i64 %index, %i.ix                   ; 9 uses
+  %i.pd = add nuw i64 %index, %i.ix               ; 9 uses
   %i.pe = getelementptr inbounds [2 x i8], ptr %i.hs, i64 %i.pd
   %wide.load = load <8 x i16>, ptr %i.pe, align 2, !tbaa !77 ; 10 uses
   %i.pf = icmp slt <8 x i16> %wide.load, splat (i16 -1) ; 4 uses
@@ -754,7 +754,7 @@ bb.ai:                                            ; preds = %bb.af
   br label %.lr.ph264.split.us.prol.loopexit.unr-lcssa
 
 .lr.ph264.split.us.prol.loopexit.unr-lcssa:       ; preds = %.sink.split.prol, %bb.ai, %bb.ah, %bb.ag, %bb.af, %.lr.ph264.split.us.prol
-  %indvars.iv.next295.prol = add nsw i64 %indvars.iv294.ph, 1
+  %indvars.iv.next295.prol = add nuw nsw i64 %indvars.iv294.ph, 1
   br label %.lr.ph264.split.us.prol.loopexit
 
 .lr.ph264.split.us.prol.loopexit:                 ; preds = %.lr.ph264.split.us.prol.loopexit.unr-lcssa, %.lr.ph264.split.us.preheader434
@@ -794,7 +794,7 @@ bb.am:                                            ; preds = %bb.aj
   br label %.lr.ph264.split.us.1
 
 .lr.ph264.split.us.1:                             ; preds = %.sink.split, %bb.am, %bb.al, %bb.ak, %bb.aj, %.lr.ph264.split.us
-  %indvars.iv.next295 = add nsw i64 %indvars.iv294, 1 ; 2 uses
+  %indvars.iv.next295 = add nuw nsw i64 %indvars.iv294, 1 ; 2 uses
   %i.rl = getelementptr inbounds [2 x i8], ptr %i.hs, i64 %indvars.iv.next295
   %i.rm = load i16, ptr %i.rl, align 2, !tbaa !77 ; 3 uses
   %or.cond224.us.1 = icmp sgt i16 %i.rm, -2
@@ -824,7 +824,7 @@ bb.aq:                                            ; preds = %bb.an
   br label %bb.ar
 
 bb.ar:                                            ; preds = %.sink.split.1, %bb.aq, %bb.ap, %bb.ao, %bb.an, %.lr.ph264.split.us.1
-  %indvars.iv.next295.1 = add nsw i64 %indvars.iv294, 2 ; 2 uses
+  %indvars.iv.next295.1 = add nuw nsw i64 %indvars.iv294, 2 ; 2 uses
   %exitcond298.not.1 = icmp eq i64 %indvars.iv.next295.1, %wide.trip.count297
   br i1 %exitcond298.not.1, label %.loopexit, label %.lr.ph264.split.us, !llvm.loop !123
 
@@ -858,7 +858,7 @@ bb.av:                                            ; preds = %bb.as
   br label %.lr.ph264.split.1
 
 .lr.ph264.split.1:                                ; preds = %.sink.split330, %bb.as, %bb.at, %bb.au, %bb.av, %.lr.ph264.split
-  %indvars.iv.next290 = add nsw i64 %indvars.iv289, 1 ; 2 uses
+  %indvars.iv.next290 = add nuw nsw i64 %indvars.iv289, 1 ; 2 uses
   %i.rt = getelementptr inbounds [2 x i8], ptr %i.hs, i64 %indvars.iv.next290
   %i.ru = load i16, ptr %i.rt, align 2, !tbaa !77 ; 3 uses
   %or.cond224.1 = icmp sgt i16 %i.ru, -2
@@ -887,7 +887,7 @@ bb.az:                                            ; preds = %bb.aw
   br label %bb.ba
 
 bb.ba:                                            ; preds = %.sink.split330.1, %bb.az, %bb.ay, %bb.ax, %bb.aw, %.lr.ph264.split.1
-  %indvars.iv.next290.1 = add nsw i64 %indvars.iv289, 2 ; 2 uses
+  %indvars.iv.next290.1 = add nuw nsw i64 %indvars.iv289, 2 ; 2 uses
   %exitcond293.not.1 = icmp eq i64 %indvars.iv.next290.1, %wide.trip.count297
   br i1 %exitcond293.not.1, label %.loopexit, label %.lr.ph264.split, !llvm.loop !124
 
