@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 679
 inline.NumDeleted: 153
 loop-unroll.NumCompletelyUnrolled: 28
-loop-unroll.NumRuntimeUnrolled: 61
-loop-unroll.NumUnrolled: 90
+loop-unroll.NumRuntimeUnrolled: 60
+loop-unroll.NumUnrolled: 89
 begin_hunk_0_@_ZL26stbi__create_png_image_rawP9stbi__pngPhjijjii:bb.a
 
 bb.aq:                                            ; preds = %bb.ap
@@ -205,76 +205,97 @@ bb.ax:                                            ; preds = %._crit_edge826.thre
   br i1 %.not866, label %.critedge, label %.lr.ph831.preheader
 
 .lr.ph831.preheader:                              ; preds = %bb.ax
-  %i.apx = load ptr, ptr %i.u, align 8, !tbaa !48 ; 2 uses
-  %xtraiter1670 = and i32 %i.apw, 3               ; 3 uses
-  %i.apy = icmp ult i32 %i.apw, 4
+  %i.apx = load ptr, ptr %i.u, align 8, !tbaa !48 ; 10 uses
+  %8 = zext i32 %i.apw to i64                     ; 2 uses
+  %i.apy = icmp ult i32 %i.apw, 8
   br i1 %i.apy, label %.lr.ph831.epil.preheader, label %.lr.ph831.preheader.new
 
 .lr.ph831.preheader.new:                          ; preds = %.lr.ph831.preheader
-  %unroll_iter1674 = and i32 %i.apw, -4
+  %n.vec1605 = and i64 %8, 4294967288             ; 4 uses
+  %9 = shl nuw nsw i64 %n.vec1605, 1
+  %10 = getelementptr i8, ptr %i.apx, i64 %9
+  %11 = trunc nuw i64 %n.vec1605 to i32
   br label %.lr.ph831.a
 
 .lr.ph831.a:                                      ; preds = %.lr.ph831.a, %.lr.ph831.preheader.new
-  %.0829 = phi ptr [ %i.apx, %.lr.ph831.preheader.new ], [ %30, %.lr.ph831.a ] ; 10 uses
-  %niter1675 = phi i32 [ 0, %.lr.ph831.preheader.new ], [ %niter1675.next.3, %.lr.ph831.a ]
-  %8 = load i8, ptr %.0829, align 1, !tbaa !35
-  %9 = zext i8 %8 to i16
-  %10 = shl nuw i16 %9, 8
-  %i.apz = getelementptr inbounds nuw i8, ptr %.0829, i64 1
-  %11 = load i8, ptr %i.apz, align 1, !tbaa !35
-  %12 = zext i8 %11 to i16
-  %13 = or disjoint i16 %10, %12
-  store i16 %13, ptr %.0829, align 2, !tbaa !41
-  %i.aqa = getelementptr i8, ptr %.0829, i64 2    ; 2 uses
-  %14 = load i8, ptr %i.aqa, align 2, !tbaa !35
-  %15 = zext i8 %14 to i16
-  %16 = shl nuw i16 %15, 8
-  %i.aqb = getelementptr i8, ptr %.0829, i64 3
-  %i.aqc = load i8, ptr %i.aqb, align 1, !tbaa !35
-  %17 = zext i8 %i.aqc to i16
-  %18 = or disjoint i16 %16, %17
-  store i16 %18, ptr %i.aqa, align 2, !tbaa !41
-  %19 = getelementptr i8, ptr %.0829, i64 4       ; 2 uses
-  %i.aqd = load i8, ptr %19, align 2, !tbaa !35
-  %20 = zext i8 %i.aqd to i16
-  %21 = shl nuw i16 %20, 8
-  %i.aqe = getelementptr i8, ptr %.0829, i64 5
-  %22 = load i8, ptr %i.aqe, align 1, !tbaa !35
-  %23 = zext i8 %22 to i16
-  %24 = or disjoint i16 %21, %23
-  store i16 %24, ptr %19, align 2, !tbaa !41
-  %i.aqf = getelementptr i8, ptr %.0829, i64 6    ; 2 uses
-  %i.aqg = load i8, ptr %i.aqf, align 2, !tbaa !35
-  %25 = zext i8 %i.aqg to i16
-  %26 = shl nuw i16 %25, 8
-  %27 = getelementptr i8, ptr %.0829, i64 7
-  %i.aqh = load i8, ptr %27, align 1, !tbaa !35
-  %28 = zext i8 %i.aqh to i16
-  %29 = or disjoint i16 %26, %28
-  store i16 %29, ptr %i.aqf, align 2, !tbaa !41
-  %30 = getelementptr i8, ptr %.0829, i64 8       ; 2 uses
-  %niter1675.next.3 = add i32 %niter1675, 4       ; 2 uses
-  %niter1675.ncmp.3 = icmp eq i32 %niter1675.next.3, %unroll_iter1674
+  %index1607 = phi i64 [ 0, %.lr.ph831.preheader.new ], [ %index.next1615, %.lr.ph831.a ] ; 2 uses
+  %12 = shl i64 %index1607, 1                     ; 8 uses
+  %next.gep = getelementptr i8, ptr %i.apx, i64 %12 ; 3 uses
+  %13 = getelementptr i8, ptr %i.apx, i64 %12     ; 2 uses
+  %next.gep1608 = getelementptr i8, ptr %13, i64 2
+  %14 = getelementptr i8, ptr %i.apx, i64 %12     ; 2 uses
+  %next.gep1609 = getelementptr i8, ptr %14, i64 4
+  %i.apz = getelementptr i8, ptr %i.apx, i64 %12  ; 2 uses
+  %next.gep1610 = getelementptr i8, ptr %i.apz, i64 6
+  %15 = getelementptr i8, ptr %i.apx, i64 %12     ; 2 uses
+  %next.gep1611 = getelementptr i8, ptr %15, i64 8
+  %16 = getelementptr i8, ptr %i.apx, i64 %12     ; 2 uses
+  %i.aqa = getelementptr i8, ptr %16, i64 10
+  %17 = getelementptr i8, ptr %i.apx, i64 %12     ; 2 uses
+  %next.gep1613 = getelementptr i8, ptr %17, i64 12
+  %18 = getelementptr i8, ptr %i.apx, i64 %12     ; 2 uses
+  %i.aqb = getelementptr i8, ptr %18, i64 14
+  %19 = load i8, ptr %next.gep, align 1, !tbaa !35
+  %20 = load i8, ptr %next.gep1608, align 1, !tbaa !35
+  %i.aqc = load i8, ptr %next.gep1609, align 1, !tbaa !35
+  %21 = load i8, ptr %next.gep1610, align 1, !tbaa !35
+  %22 = load i8, ptr %next.gep1611, align 1, !tbaa !35
+  %23 = load i8, ptr %i.aqa, align 1, !tbaa !35
+  %24 = load i8, ptr %next.gep1613, align 1, !tbaa !35
+  %i.aqd = load i8, ptr %i.aqb, align 1, !tbaa !35
+  %25 = insertelement <8 x i8> poison, i8 %19, i64 0
+  %26 = insertelement <8 x i8> %25, i8 %20, i64 1
+  %27 = insertelement <8 x i8> %26, i8 %i.aqc, i64 2
+  %28 = insertelement <8 x i8> %27, i8 %21, i64 3
+  %29 = insertelement <8 x i8> %28, i8 %22, i64 4
+  %30 = insertelement <8 x i8> %29, i8 %23, i64 5
+  %31 = insertelement <8 x i8> %30, i8 %24, i64 6
+  %32 = insertelement <8 x i8> %31, i8 %i.aqd, i64 7
+  %33 = zext <8 x i8> %32 to <8 x i16>
+  %34 = shl nuw <8 x i16> %33, splat (i16 8)
+  %35 = getelementptr inbounds nuw i8, ptr %next.gep, i64 1
+  %36 = getelementptr i8, ptr %13, i64 3
+  %i.aqe = getelementptr i8, ptr %14, i64 5
+  %37 = getelementptr i8, ptr %i.apz, i64 7
+  %38 = getelementptr i8, ptr %15, i64 9
+  %39 = getelementptr i8, ptr %16, i64 11
+  %40 = getelementptr i8, ptr %17, i64 13
+  %i.aqf = getelementptr i8, ptr %18, i64 15
+  %41 = load i8, ptr %35, align 1, !tbaa !35
+  %42 = load i8, ptr %36, align 1, !tbaa !35
+  %43 = load i8, ptr %i.aqe, align 1, !tbaa !35
+  %i.aqg = load i8, ptr %37, align 1, !tbaa !35
+  %44 = load i8, ptr %38, align 1, !tbaa !35
+  %45 = load i8, ptr %39, align 1, !tbaa !35
+  %46 = load i8, ptr %40, align 1, !tbaa !35
+  %i.aqh = load i8, ptr %i.aqf, align 1, !tbaa !35
+  %47 = insertelement <8 x i8> poison, i8 %41, i64 0
+  %48 = insertelement <8 x i8> %47, i8 %42, i64 1
+  %49 = insertelement <8 x i8> %48, i8 %43, i64 2
+  %50 = insertelement <8 x i8> %49, i8 %i.aqg, i64 3
+  %51 = insertelement <8 x i8> %50, i8 %44, i64 4
+  %52 = insertelement <8 x i8> %51, i8 %45, i64 5
+  %53 = insertelement <8 x i8> %52, i8 %46, i64 6
+  %54 = insertelement <8 x i8> %53, i8 %i.aqh, i64 7
+  %55 = zext <8 x i8> %54 to <8 x i16>
+  %56 = or disjoint <8 x i16> %34, %55
+  store <8 x i16> %56, ptr %next.gep, align 2, !tbaa !41
+  %index.next1615 = add nuw i64 %index1607, 8     ; 2 uses
+  %niter1675.ncmp.3 = icmp eq i64 %index.next1615, %n.vec1605
   br i1 %niter1675.ncmp.3, label %.critedge.loopexit.unr-lcssa, label %.lr.ph831.a, !llvm.loop !396
 
-.critedge.sink.split:                             ; preds = %bb.i, %bb.g, %_ZL21stbi__mad3sizes_validiiii.exit._crit_edge, %_ZL21stbi__mul2sizes_validii.exit12.i, %_ZL21stbi__mul2sizes_validii.exit.i, %bb.d, %_ZL21stbi__mul2sizes_validii.exit.thread15.i, %_ZL17stbi__malloc_mad3iiii.exit, %_ZL17stbi__malloc_mad3iiii.exit.thread
-  %.str.27.sink = phi ptr [ @.str.26, %_ZL21stbi__mad3sizes_validiiii.exit._crit_edge ], [ @.str.8, %_ZL21stbi__mul2sizes_validii.exit.i ], [ @.str.8, %_ZL21stbi__mul2sizes_validii.exit12.i ], [ @.str.23, %_ZL17stbi__malloc_mad3iiii.exit ], [ @.str.23, %_ZL17stbi__malloc_mad3iiii.exit.thread ], [ @.str.8, %_ZL21stbi__mul2sizes_validii.exit.thread15.i ], [ @.str.8, %bb.d ], [ @.str.27, %bb.g ], [ @.str.28, %bb.i ]
-  store ptr %.str.27.sink, ptr @_ZL22stbi__g_failure_reason, align 8, !tbaa !22
-  br label %.critedge
-
 .critedge.loopexit.unr-lcssa:                     ; preds = %.lr.ph831.a
-  %lcmp.mod1672.not = icmp eq i32 %xtraiter1670, 0
+  %lcmp.mod1672.not = icmp eq i64 %n.vec1605, %8
   br i1 %lcmp.mod1672.not, label %.critedge, label %.lr.ph831.epil.preheader
 
-.lr.ph831.epil.preheader:                         ; preds = %.critedge.loopexit.unr-lcssa, %.lr.ph831.preheader
-  %.0829.epil.init = phi ptr [ %i.apx, %.lr.ph831.preheader ], [ %30, %.critedge.loopexit.unr-lcssa ]
-  %lcmp.mod1673 = icmp ne i32 %xtraiter1670, 0
-  tail call void @llvm.assume(i1 %lcmp.mod1673)
+.lr.ph831.epil.preheader:                         ; preds = %.lr.ph831.preheader, %.critedge.loopexit.unr-lcssa
+  %.0829.epil.init = phi ptr [ %i.apx, %.lr.ph831.preheader ], [ %10, %.critedge.loopexit.unr-lcssa ]
+  %.8569827.ph = phi i32 [ 0, %.lr.ph831.preheader ], [ %11, %.critedge.loopexit.unr-lcssa ]
   br label %.lr.ph831.epil
 
-.lr.ph831.epil:                                   ; preds = %.lr.ph831.epil, %.lr.ph831.epil.preheader
-  %.0829.epil = phi ptr [ %31, %.lr.ph831.epil ], [ %.0829.epil.init, %.lr.ph831.epil.preheader ] ; 4 uses
-  %epil.iter1671 = phi i32 [ %epil.iter1671.next, %.lr.ph831.epil ], [ 0, %.lr.ph831.epil.preheader ]
+.lr.ph831.epil:                                   ; preds = %.lr.ph831.epil.preheader, %.lr.ph831.epil
+  %.0829.epil = phi ptr [ %58, %.lr.ph831.epil ], [ %.0829.epil.init, %.lr.ph831.epil.preheader ] ; 4 uses
+  %epil.iter1671 = phi i32 [ %57, %.lr.ph831.epil ], [ %.8569827.ph, %.lr.ph831.epil.preheader ]
   %i.aqi = load i8, ptr %.0829.epil, align 1, !tbaa !35
   %i.aqj = zext i8 %i.aqi to i16
   %i.aqk = shl nuw i16 %i.aqj, 8
@@ -283,12 +304,17 @@ bb.ax:                                            ; preds = %._crit_edge826.thre
   %i.aqn = zext i8 %i.aqm to i16
   %i.aqo = or disjoint i16 %i.aqk, %i.aqn
   store i16 %i.aqo, ptr %.0829.epil, align 2, !tbaa !41
-  %31 = getelementptr i8, ptr %.0829.epil, i64 2
-  %epil.iter1671.next = add i32 %epil.iter1671, 1 ; 2 uses
-  %epil.iter1671.cmp.not = icmp eq i32 %epil.iter1671.next, %xtraiter1670
+  %57 = add nuw i32 %epil.iter1671, 1             ; 2 uses
+  %58 = getelementptr i8, ptr %.0829.epil, i64 2
+  %epil.iter1671.cmp.not = icmp eq i32 %57, %i.apw
   br i1 %epil.iter1671.cmp.not, label %.critedge, label %.lr.ph831.epil, !llvm.loop !397
 
-.critedge:                                        ; preds = %.loopexit, %.critedge.loopexit.unr-lcssa, %.lr.ph831.epil, %.critedge.sink.split, %._crit_edge826.thread, %bb.ax, %bb.aw
+.critedge.sink.split:                             ; preds = %bb.i, %bb.g, %_ZL21stbi__mad3sizes_validiiii.exit._crit_edge, %_ZL21stbi__mul2sizes_validii.exit12.i, %_ZL21stbi__mul2sizes_validii.exit.i, %bb.d, %_ZL21stbi__mul2sizes_validii.exit.thread15.i, %_ZL17stbi__malloc_mad3iiii.exit, %_ZL17stbi__malloc_mad3iiii.exit.thread
+  %.str.27.sink = phi ptr [ @.str.26, %_ZL21stbi__mad3sizes_validiiii.exit._crit_edge ], [ @.str.8, %_ZL21stbi__mul2sizes_validii.exit.i ], [ @.str.8, %_ZL21stbi__mul2sizes_validii.exit12.i ], [ @.str.23, %_ZL17stbi__malloc_mad3iiii.exit ], [ @.str.23, %_ZL17stbi__malloc_mad3iiii.exit.thread ], [ @.str.8, %_ZL21stbi__mul2sizes_validii.exit.thread15.i ], [ @.str.8, %bb.d ], [ @.str.27, %bb.g ], [ @.str.28, %bb.i ]
+  store ptr %.str.27.sink, ptr @_ZL22stbi__g_failure_reason, align 8, !tbaa !22
+  br label %.critedge
+
+.critedge:                                        ; preds = %.loopexit, %.lr.ph831.epil, %.critedge.loopexit.unr-lcssa, %.critedge.sink.split, %._crit_edge826.thread, %bb.ax, %bb.aw
   %.2572 = phi i32 [ 1, %.critedge.loopexit.unr-lcssa ], [ 1, %bb.ax ], [ 1, %._crit_edge826.thread ], [ 1, %bb.aw ], [ 0, %.critedge.sink.split ], [ 1, %.lr.ph831.epil ], [ 1, %.loopexit ]
   ret i32 %.2572
 }
@@ -691,8 +717,8 @@ begin_hunk_1_@llvm.fmuladd.v2f32
 !393 = distinct !{!393, !42}
 !394 = distinct !{!394, !42}
 !395 = distinct !{!395, !42}
-!396 = distinct !{!396, !42}
-!397 = distinct !{!397, !67}
+!396 = distinct !{!396, !42, !43, !44}
+!397 = distinct !{!397, !42, !44, !43}
 !398 = !{!327}
 !399 = !{!328}
 !400 = !{!335}

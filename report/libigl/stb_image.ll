@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 822
 inline.NumDeleted: 120
 loop-unroll.NumCompletelyUnrolled: 28
-loop-unroll.NumRuntimeUnrolled: 80
-loop-unroll.NumUnrolled: 110
+loop-unroll.NumRuntimeUnrolled: 79
+loop-unroll.NumUnrolled: 109
 begin_hunk_0_@_ZL26stbi__create_png_image_rawP9stbi__pngPhjijjii:bb.a
 
 bb.an:                                            ; preds = %bb.am
@@ -205,76 +205,97 @@ bb.au:                                            ; preds = %._crit_edge828.thre
   br i1 %.not868, label %.loopexit704, label %.lr.ph833.preheader
 
 .lr.ph833.preheader:                              ; preds = %bb.au
-  %i.ari = load ptr, ptr %i.u, align 8, !tbaa !111 ; 2 uses
-  %xtraiter1665 = and i32 %i.arh, 3               ; 3 uses
-  %i.arj = icmp ult i32 %i.arh, 4
+  %i.ari = load ptr, ptr %i.u, align 8, !tbaa !111 ; 10 uses
+  %8 = zext i32 %i.arh to i64                     ; 2 uses
+  %i.arj = icmp ult i32 %i.arh, 8
   br i1 %i.arj, label %.lr.ph833.epil.preheader, label %.lr.ph833.preheader.new
 
 .lr.ph833.preheader.new:                          ; preds = %.lr.ph833.preheader
-  %unroll_iter1669 = and i32 %i.arh, -4
+  %n.vec1600 = and i64 %8, 4294967288             ; 4 uses
+  %9 = shl nuw nsw i64 %n.vec1600, 1
+  %10 = getelementptr i8, ptr %i.ari, i64 %9
+  %11 = trunc nuw i64 %n.vec1600 to i32
   br label %.lr.ph833.a
 
 .lr.ph833.a:                                      ; preds = %.lr.ph833.a, %.lr.ph833.preheader.new
-  %.0831 = phi ptr [ %i.ari, %.lr.ph833.preheader.new ], [ %30, %.lr.ph833.a ] ; 10 uses
-  %niter1670 = phi i32 [ 0, %.lr.ph833.preheader.new ], [ %niter1670.next.3, %.lr.ph833.a ]
-  %8 = load i8, ptr %.0831, align 1, !tbaa !34
-  %9 = zext i8 %8 to i16
-  %10 = shl nuw i16 %9, 8
-  %i.ark = getelementptr inbounds nuw i8, ptr %.0831, i64 1
-  %11 = load i8, ptr %i.ark, align 1, !tbaa !34
-  %12 = zext i8 %11 to i16
-  %13 = or disjoint i16 %10, %12
-  store i16 %13, ptr %.0831, align 2, !tbaa !41
-  %i.arl = getelementptr i8, ptr %.0831, i64 2    ; 2 uses
-  %14 = load i8, ptr %i.arl, align 2, !tbaa !34
-  %15 = zext i8 %14 to i16
-  %16 = shl nuw i16 %15, 8
-  %i.arm = getelementptr i8, ptr %.0831, i64 3
-  %i.arn = load i8, ptr %i.arm, align 1, !tbaa !34
-  %17 = zext i8 %i.arn to i16
-  %18 = or disjoint i16 %16, %17
-  store i16 %18, ptr %i.arl, align 2, !tbaa !41
-  %19 = getelementptr i8, ptr %.0831, i64 4       ; 2 uses
-  %i.aro = load i8, ptr %19, align 2, !tbaa !34
-  %20 = zext i8 %i.aro to i16
-  %21 = shl nuw i16 %20, 8
-  %i.arp = getelementptr i8, ptr %.0831, i64 5
-  %22 = load i8, ptr %i.arp, align 1, !tbaa !34
-  %23 = zext i8 %22 to i16
-  %24 = or disjoint i16 %21, %23
-  store i16 %24, ptr %19, align 2, !tbaa !41
-  %i.arq = getelementptr i8, ptr %.0831, i64 6    ; 2 uses
-  %i.arr = load i8, ptr %i.arq, align 2, !tbaa !34
-  %25 = zext i8 %i.arr to i16
-  %26 = shl nuw i16 %25, 8
-  %27 = getelementptr i8, ptr %.0831, i64 7
-  %i.ars = load i8, ptr %27, align 1, !tbaa !34
-  %28 = zext i8 %i.ars to i16
-  %29 = or disjoint i16 %26, %28
-  store i16 %29, ptr %i.arq, align 2, !tbaa !41
-  %30 = getelementptr i8, ptr %.0831, i64 8       ; 2 uses
-  %niter1670.next.3 = add i32 %niter1670, 4       ; 2 uses
-  %niter1670.ncmp.3 = icmp eq i32 %niter1670.next.3, %unroll_iter1669
+  %index1602 = phi i64 [ 0, %.lr.ph833.preheader.new ], [ %index.next1610, %.lr.ph833.a ] ; 2 uses
+  %12 = shl i64 %index1602, 1                     ; 8 uses
+  %next.gep = getelementptr i8, ptr %i.ari, i64 %12 ; 3 uses
+  %13 = getelementptr i8, ptr %i.ari, i64 %12     ; 2 uses
+  %next.gep1603 = getelementptr i8, ptr %13, i64 2
+  %14 = getelementptr i8, ptr %i.ari, i64 %12     ; 2 uses
+  %next.gep1604 = getelementptr i8, ptr %14, i64 4
+  %i.ark = getelementptr i8, ptr %i.ari, i64 %12  ; 2 uses
+  %next.gep1605 = getelementptr i8, ptr %i.ark, i64 6
+  %15 = getelementptr i8, ptr %i.ari, i64 %12     ; 2 uses
+  %next.gep1606 = getelementptr i8, ptr %15, i64 8
+  %16 = getelementptr i8, ptr %i.ari, i64 %12     ; 2 uses
+  %i.arl = getelementptr i8, ptr %16, i64 10
+  %17 = getelementptr i8, ptr %i.ari, i64 %12     ; 2 uses
+  %next.gep1608 = getelementptr i8, ptr %17, i64 12
+  %18 = getelementptr i8, ptr %i.ari, i64 %12     ; 2 uses
+  %i.arm = getelementptr i8, ptr %18, i64 14
+  %19 = load i8, ptr %next.gep, align 1, !tbaa !34
+  %20 = load i8, ptr %next.gep1603, align 1, !tbaa !34
+  %i.arn = load i8, ptr %next.gep1604, align 1, !tbaa !34
+  %21 = load i8, ptr %next.gep1605, align 1, !tbaa !34
+  %22 = load i8, ptr %next.gep1606, align 1, !tbaa !34
+  %23 = load i8, ptr %i.arl, align 1, !tbaa !34
+  %24 = load i8, ptr %next.gep1608, align 1, !tbaa !34
+  %i.aro = load i8, ptr %i.arm, align 1, !tbaa !34
+  %25 = insertelement <8 x i8> poison, i8 %19, i64 0
+  %26 = insertelement <8 x i8> %25, i8 %20, i64 1
+  %27 = insertelement <8 x i8> %26, i8 %i.arn, i64 2
+  %28 = insertelement <8 x i8> %27, i8 %21, i64 3
+  %29 = insertelement <8 x i8> %28, i8 %22, i64 4
+  %30 = insertelement <8 x i8> %29, i8 %23, i64 5
+  %31 = insertelement <8 x i8> %30, i8 %24, i64 6
+  %32 = insertelement <8 x i8> %31, i8 %i.aro, i64 7
+  %33 = zext <8 x i8> %32 to <8 x i16>
+  %34 = shl nuw <8 x i16> %33, splat (i16 8)
+  %35 = getelementptr inbounds nuw i8, ptr %next.gep, i64 1
+  %36 = getelementptr i8, ptr %13, i64 3
+  %i.arp = getelementptr i8, ptr %14, i64 5
+  %37 = getelementptr i8, ptr %i.ark, i64 7
+  %38 = getelementptr i8, ptr %15, i64 9
+  %39 = getelementptr i8, ptr %16, i64 11
+  %40 = getelementptr i8, ptr %17, i64 13
+  %i.arq = getelementptr i8, ptr %18, i64 15
+  %41 = load i8, ptr %35, align 1, !tbaa !34
+  %42 = load i8, ptr %36, align 1, !tbaa !34
+  %43 = load i8, ptr %i.arp, align 1, !tbaa !34
+  %i.arr = load i8, ptr %37, align 1, !tbaa !34
+  %44 = load i8, ptr %38, align 1, !tbaa !34
+  %45 = load i8, ptr %39, align 1, !tbaa !34
+  %46 = load i8, ptr %40, align 1, !tbaa !34
+  %i.ars = load i8, ptr %i.arq, align 1, !tbaa !34
+  %47 = insertelement <8 x i8> poison, i8 %41, i64 0
+  %48 = insertelement <8 x i8> %47, i8 %42, i64 1
+  %49 = insertelement <8 x i8> %48, i8 %43, i64 2
+  %50 = insertelement <8 x i8> %49, i8 %i.arr, i64 3
+  %51 = insertelement <8 x i8> %50, i8 %44, i64 4
+  %52 = insertelement <8 x i8> %51, i8 %45, i64 5
+  %53 = insertelement <8 x i8> %52, i8 %46, i64 6
+  %54 = insertelement <8 x i8> %53, i8 %i.ars, i64 7
+  %55 = zext <8 x i8> %54 to <8 x i16>
+  %56 = or disjoint <8 x i16> %34, %55
+  store <8 x i16> %56, ptr %next.gep, align 2, !tbaa !41
+  %index.next1610 = add nuw i64 %index1602, 8     ; 2 uses
+  %niter1670.ncmp.3 = icmp eq i64 %index.next1610, %n.vec1600
   br i1 %niter1670.ncmp.3, label %.loopexit704.loopexit.unr-lcssa, label %.lr.ph833.a, !llvm.loop !642
 
-.loopexit704.sink.split:                          ; preds = %bb.g, %_ZL21stbi__mad3sizes_validiiii.exit._crit_edge, %_ZL21stbi__mul2sizes_validii.exit12.i, %_ZL21stbi__mul2sizes_validii.exit.i, %bb.d, %_ZL21stbi__mul2sizes_validii.exit.thread15.i, %_ZL17stbi__malloc_mad3iiii.exit, %_ZL17stbi__malloc_mad3iiii.exit.thread
-  %.str.57.sink = phi ptr [ @.str.56, %_ZL21stbi__mad3sizes_validiiii.exit._crit_edge ], [ @.str.26, %_ZL21stbi__mul2sizes_validii.exit12.i ], [ @.str.27, %_ZL17stbi__malloc_mad3iiii.exit ], [ @.str.27, %_ZL17stbi__malloc_mad3iiii.exit.thread ], [ @.str.26, %_ZL21stbi__mul2sizes_validii.exit.thread15.i ], [ @.str.26, %bb.d ], [ @.str.26, %_ZL21stbi__mul2sizes_validii.exit.i ], [ @.str.57, %bb.g ]
-  store ptr %.str.57.sink, ptr @_ZL22stbi__g_failure_reason, align 8, !tbaa !23
-  br label %.loopexit704
-
 .loopexit704.loopexit.unr-lcssa:                  ; preds = %.lr.ph833.a
-  %lcmp.mod1667.not = icmp eq i32 %xtraiter1665, 0
+  %lcmp.mod1667.not = icmp eq i64 %n.vec1600, %8
   br i1 %lcmp.mod1667.not, label %.loopexit704, label %.lr.ph833.epil.preheader
 
-.lr.ph833.epil.preheader:                         ; preds = %.loopexit704.loopexit.unr-lcssa, %.lr.ph833.preheader
-  %.0831.epil.init = phi ptr [ %i.ari, %.lr.ph833.preheader ], [ %30, %.loopexit704.loopexit.unr-lcssa ]
-  %lcmp.mod1668 = icmp ne i32 %xtraiter1665, 0
-  tail call void @llvm.assume(i1 %lcmp.mod1668)
+.lr.ph833.epil.preheader:                         ; preds = %.lr.ph833.preheader, %.loopexit704.loopexit.unr-lcssa
+  %.0831.epil.init = phi ptr [ %i.ari, %.lr.ph833.preheader ], [ %10, %.loopexit704.loopexit.unr-lcssa ]
+  %.8567829.ph = phi i32 [ 0, %.lr.ph833.preheader ], [ %11, %.loopexit704.loopexit.unr-lcssa ]
   br label %.lr.ph833.epil
 
-.lr.ph833.epil:                                   ; preds = %.lr.ph833.epil, %.lr.ph833.epil.preheader
-  %.0831.epil = phi ptr [ %31, %.lr.ph833.epil ], [ %.0831.epil.init, %.lr.ph833.epil.preheader ] ; 4 uses
-  %epil.iter1666 = phi i32 [ %epil.iter1666.next, %.lr.ph833.epil ], [ 0, %.lr.ph833.epil.preheader ]
+.lr.ph833.epil:                                   ; preds = %.lr.ph833.epil.preheader, %.lr.ph833.epil
+  %.0831.epil = phi ptr [ %58, %.lr.ph833.epil ], [ %.0831.epil.init, %.lr.ph833.epil.preheader ] ; 4 uses
+  %epil.iter1666 = phi i32 [ %57, %.lr.ph833.epil ], [ %.8567829.ph, %.lr.ph833.epil.preheader ]
   %i.art = load i8, ptr %.0831.epil, align 1, !tbaa !34
   %i.aru = zext i8 %i.art to i16
   %i.arv = shl nuw i16 %i.aru, 8
@@ -283,12 +304,17 @@ bb.au:                                            ; preds = %._crit_edge828.thre
   %i.ary = zext i8 %i.arx to i16
   %i.arz = or disjoint i16 %i.arv, %i.ary
   store i16 %i.arz, ptr %.0831.epil, align 2, !tbaa !41
-  %31 = getelementptr i8, ptr %.0831.epil, i64 2
-  %epil.iter1666.next = add i32 %epil.iter1666, 1 ; 2 uses
-  %epil.iter1666.cmp.not = icmp eq i32 %epil.iter1666.next, %xtraiter1665
+  %57 = add nuw i32 %epil.iter1666, 1             ; 2 uses
+  %58 = getelementptr i8, ptr %.0831.epil, i64 2
+  %epil.iter1666.cmp.not = icmp eq i32 %57, %i.arh
   br i1 %epil.iter1666.cmp.not, label %.loopexit704, label %.lr.ph833.epil, !llvm.loop !643
 
-.loopexit704:                                     ; preds = %.loopexit, %.loopexit704.loopexit.unr-lcssa, %.lr.ph833.epil, %.loopexit704.sink.split, %._crit_edge828.thread, %bb.au, %bb.at
+.loopexit704.sink.split:                          ; preds = %bb.g, %_ZL21stbi__mad3sizes_validiiii.exit._crit_edge, %_ZL21stbi__mul2sizes_validii.exit12.i, %_ZL21stbi__mul2sizes_validii.exit.i, %bb.d, %_ZL21stbi__mul2sizes_validii.exit.thread15.i, %_ZL17stbi__malloc_mad3iiii.exit, %_ZL17stbi__malloc_mad3iiii.exit.thread
+  %.str.57.sink = phi ptr [ @.str.56, %_ZL21stbi__mad3sizes_validiiii.exit._crit_edge ], [ @.str.26, %_ZL21stbi__mul2sizes_validii.exit12.i ], [ @.str.27, %_ZL17stbi__malloc_mad3iiii.exit ], [ @.str.27, %_ZL17stbi__malloc_mad3iiii.exit.thread ], [ @.str.26, %_ZL21stbi__mul2sizes_validii.exit.thread15.i ], [ @.str.26, %bb.d ], [ @.str.26, %_ZL21stbi__mul2sizes_validii.exit.i ], [ @.str.57, %bb.g ]
+  store ptr %.str.57.sink, ptr @_ZL22stbi__g_failure_reason, align 8, !tbaa !23
+  br label %.loopexit704
+
+.loopexit704:                                     ; preds = %.loopexit, %.lr.ph833.epil, %.loopexit704.loopexit.unr-lcssa, %.loopexit704.sink.split, %._crit_edge828.thread, %bb.au, %bb.at
   %.2570 = phi i32 [ 1, %bb.au ], [ 1, %._crit_edge828.thread ], [ 1, %bb.at ], [ 1, %.loopexit704.loopexit.unr-lcssa ], [ 0, %.loopexit704.sink.split ], [ 1, %.lr.ph833.epil ], [ 1, %.loopexit ]
   ret i32 %.2570
 }
@@ -691,8 +717,8 @@ begin_hunk_1_@llvm.fmuladd.v4f32
 !639 = distinct !{!639, !42}
 !640 = distinct !{!640, !42}
 !641 = distinct !{!641, !42}
-!642 = distinct !{!642, !42}
-!643 = distinct !{!643, !62}
+!642 = distinct !{!642, !42, !43, !44}
+!643 = distinct !{!643, !42, !44, !43}
 !644 = !{!573}
 !645 = !{!574}
 !646 = !{!581}

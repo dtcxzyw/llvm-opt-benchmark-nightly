@@ -41,11 +41,12 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %.sroa.01.0 = phi i64 [ %.sroa.0.0.i32, %bb.d ], [ %i.h, %bb.c ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
+  %scevgep = getelementptr i8, ptr %0, i64 -8
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.y, %bb.e
   %.sroa.023.0 = phi i64 [ 1, %bb.e ], [ %.sroa.018.0, %bb.y ] ; 3 uses
-  %.sroa.09.0 = phi i64 [ 0, %bb.e ], [ %i.cq, %bb.y ] ; 6 uses
+  %.sroa.09.0 = phi i64 [ 0, %bb.e ], [ %i.cq, %bb.y ] ; 7 uses
   %.sroa.02.0 = phi i64 [ 0, %bb.e ], [ %i.co, %bb.y ] ; 3 uses
   %i.k = icmp ult i64 %.sroa.09.0, %1             ; 2 uses
   br i1 %i.k, label %bb.h, label %bb.g
@@ -58,7 +59,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
 
 bb.h:                                             ; preds = %bb.f
   %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
-  %i.n = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.09.0 ; 11 uses
+  %i.n = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.09.0 ; 12 uses
   %.not.i33 = icmp ult i64 %i.m, %.sroa.01.0
   br i1 %.not.i33, label %bb.i, label %bb.j
 
@@ -67,16 +68,16 @@ bb.i:                                             ; preds = %_RINvNtNtNtCs4NRVxs
 
 bb.j:                                             ; preds = %bb.h
   %i.o = icmp samesign ult i64 %i.m, 2
-  br i1 %i.o, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.a, label %bb.k
+  br i1 %i.o, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 8
-  %.val14.i = load i32, ptr %i.p, align 4, !range !13, !alias.scope !14, !noalias !15, !noundef !3 ; 4 uses
+  %.val14.i = load i32, ptr %i.p, align 4, !range !15, !alias.scope !16, !noalias !17, !noundef !3 ; 4 uses
   %i.q = getelementptr i8, ptr %i.n, i64 12
-  %.val15.i = load i32, ptr %i.q, align 4, !alias.scope !14, !noalias !15 ; 3 uses
-  %.val16.i = load i32, ptr %i.n, align 4, !range !13, !alias.scope !14, !noalias !15, !noundef !3 ; 2 uses
+  %.val15.i = load i32, ptr %i.q, align 4, !alias.scope !16, !noalias !17 ; 3 uses
+  %.val16.i = load i32, ptr %i.n, align 4, !range !15, !alias.scope !16, !noalias !17, !noundef !3 ; 2 uses
   %i.r = getelementptr i8, ptr %i.n, i64 4
-  %.val17.i = load i32, ptr %i.r, align 4, !alias.scope !14, !noalias !15
+  %.val17.i = load i32, ptr %i.r, align 4, !alias.scope !16, !noalias !17
   %i.s = icmp eq i32 %.val14.i, %.val16.i
   %i.t = icmp ult i32 %.val15.i, %.val17.i
   %i.u = icmp samesign ult i32 %.val14.i, %.val16.i
@@ -85,19 +86,19 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.v, label %.preheader.i, label %.preheader28.i
 
 .preheader28.i:                                   ; preds = %bb.k
-  br i1 %.not39.i, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.a, label %.lr.ph.i
+  br i1 %.not39.i, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i, label %.lr.ph.i
 
 .preheader.i:                                     ; preds = %bb.k
-  br i1 %.not39.i, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i.a, label %.lr.ph34.i
+  br i1 %.not39.i, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i, label %.lr.ph34.i
 
 .lr.ph.i:                                         ; preds = %.preheader28.i, %bb.l
   %.val13.i = phi i32 [ %.val11.i, %bb.l ], [ %.val15.i, %.preheader28.i ]
   %.val12.i = phi i32 [ %.val10.i, %bb.l ], [ %.val14.i, %.preheader28.i ] ; 2 uses
   %.sroa.01.0.i30.i = phi i64 [ %i.ac, %bb.l ], [ 2, %.preheader28.i ] ; 3 uses
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.sroa.01.0.i30.i ; 2 uses
-  %.val10.i = load i32, ptr %i.w, align 4, !range !13, !alias.scope !14, !noalias !15, !noundef !3 ; 3 uses
+  %.val10.i = load i32, ptr %i.w, align 4, !range !15, !alias.scope !16, !noalias !17, !noundef !3 ; 3 uses
   %i.x = getelementptr i8, ptr %i.w, i64 4
-  %.val11.i = load i32, ptr %i.x, align 4, !alias.scope !14, !noalias !15 ; 2 uses
+  %.val11.i = load i32, ptr %i.x, align 4, !alias.scope !16, !noalias !17 ; 2 uses
   %i.y = icmp eq i32 %.val10.i, %.val12.i
   %i.z = icmp ult i32 %.val11.i, %.val13.i
   %i.aa = icmp samesign ult i32 %.val10.i, %.val12.i
@@ -114,9 +115,9 @@ bb.l:                                             ; preds = %.lr.ph.i
   %.val8.i = phi i32 [ %.val.i, %bb.m ], [ %.val14.i, %.preheader.i ] ; 2 uses
   %.sroa.01.1.i33.i = phi i64 [ %i.aj, %bb.m ], [ 2, %.preheader.i ] ; 3 uses
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.sroa.01.1.i33.i ; 2 uses
-  %.val.i = load i32, ptr %i.ad, align 4, !range !13, !alias.scope !14, !noalias !15, !noundef !3 ; 3 uses
+  %.val.i = load i32, ptr %i.ad, align 4, !range !15, !alias.scope !16, !noalias !17, !noundef !3 ; 3 uses
   %i.ae = getelementptr i8, ptr %i.ad, i64 4
-  %.val7.i = load i32, ptr %i.ae, align 4, !alias.scope !14, !noalias !15 ; 2 uses
+  %.val7.i = load i32, ptr %i.ae, align 4, !alias.scope !16, !noalias !17 ; 2 uses
   %i.af = icmp eq i32 %.val.i, %.val8.i
   %i.ag = icmp ult i32 %.val7.i, %.val9.i
   %i.ah = icmp samesign ult i32 %.val.i, %.val8.i
@@ -136,7 +137,7 @@ _RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtCshhQDFPp
   br i1 %.not5.i, label %bb.i, label %bb.n
 
 bb.n:                                             ; preds = %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRangeNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i
-  br i1 %i.v, label %bb.q, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.a
+  br i1 %i.v, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.loopexit.unr-lcssa, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i
 
 bb.o:                                             ; preds = %bb.i
   %.sroa.0.0.i18.i = tail call noundef range(i64 0, 1152921504606846976) i64 @llvm.umin.i64(i64 range(i64 0, 1152921504606846976) %i.m, i64 %.sroa.01.0)
@@ -150,73 +151,109 @@ bb.p:                                             ; preds = %bb.i
   %i.an = or disjoint i64 %i.am, 1
   br label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift10create_runNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRangeNvYB13_NtNtBa_3cmp10PartialOrd2ltEB17_.exit
 
-_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.loopexit.unr-lcssa: ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.i.i.i
-  %lcmp.mod.not.a = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not.a, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.a, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.i.i.i.epil.preheader
-
-_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.i.i.i.epil.preheader: ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.loopexit.unr-lcssa, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i.a
-  %.sroa.0.016.i.i.i.epil.init = phi i64 [ 0, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i.a ], [ %17, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod58 = trunc i64 %14 to i1
-  tail call void @llvm.assume(i1 %lcmp.mod58)
-  %6 = xor i64 %.sroa.0.016.i.i.i.epil.init, -1
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.sroa.0.016.i.i.i.epil.init ; 2 uses
-  %8 = getelementptr [8 x i8], ptr %i.ao, i64 %6  ; 2 uses
-  %9 = load i64, ptr %8, align 4, !alias.scope !16, !noalias !17
-  %10 = load <2 x i32>, ptr %7, align 4, !alias.scope !18, !noalias !19
-  store i64 %9, ptr %7, align 4, !alias.scope !18, !noalias !19
-  store <2 x i32> %10, ptr %8, align 4, !alias.scope !16, !noalias !17
-  br label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.a
-
-_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.a: ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.i.i.i.epil.preheader, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.loopexit.unr-lcssa, %.preheader28.i, %bb.q, %bb.n, %bb.j
-  %.sroa.0.0.i25.i = phi i64 [ %i.m, %bb.j ], [ %.sroa.0.0.i.i, %bb.n ], [ %.sroa.0.0.i.i, %bb.q ], [ 2, %.preheader28.i ], [ %.sroa.0.0.i576468.i, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.loopexit.unr-lcssa ], [ %.sroa.0.0.i576468.i, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.i.i.i.epil.preheader ]
-  %11 = shl nuw nsw i64 %.sroa.0.0.i25.i, 1
-  %12 = or disjoint i64 %11, 1
+_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i: ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i.new, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.i.i.i, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.a, %.preheader28.i, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.loopexit.unr-lcssa, %bb.n, %bb.j
+  %.sroa.0.0.i25.i = phi i64 [ %i.m, %bb.j ], [ %.sroa.0.0.i.i, %bb.n ], [ %.sroa.0.0.i.i, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.loopexit.unr-lcssa ], [ 2, %.preheader28.i ], [ %.sroa.0.0.i576468.i, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.a ], [ %.sroa.0.0.i576468.i, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.i.i.i ], [ %.sroa.0.0.i576468.i, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i.new ]
+  %6 = shl nuw nsw i64 %.sroa.0.0.i25.i, 1
+  %7 = or disjoint i64 %6, 1
   br label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift10create_runNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRangeNvYB13_NtNtBa_3cmp10PartialOrd2ltEB17_.exit
 
-bb.q:                                             ; preds = %bb.n
-  %13 = lshr i64 %.sroa.0.0.i.i, 1                ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !20)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !21)
-  %.not.i.i.i = icmp eq i64 %13, 0
-  br i1 %.not.i.i.i, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.a, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i.a
+_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.loopexit.unr-lcssa: ; preds = %bb.n
+  %8 = lshr i64 %.sroa.0.0.i.i, 1                 ; 2 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !18)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !19)
+  %lcmp.mod.not.a = icmp eq i64 %8, 0
+  br i1 %lcmp.mod.not.a, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i
 
-_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i.a: ; preds = %.preheader.i, %bb.q
-  %14 = phi i64 [ %13, %bb.q ], [ 1, %.preheader.i ] ; 4 uses
-  %.sroa.0.0.i576468.i = phi i64 [ %.sroa.0.0.i.i, %bb.q ], [ 2, %.preheader.i ] ; 3 uses
-  %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.sroa.0.0.i576468.i ; 3 uses
-  %xtraiter = and i64 %14, 1
-  %15 = icmp eq i64 %14, 1
-  br i1 %15, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.i.i.i.epil.preheader, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i.new
+_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i: ; preds = %.preheader.i, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.loopexit.unr-lcssa
+  %9 = phi i64 [ %8, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.loopexit.unr-lcssa ], [ 1, %.preheader.i ] ; 7 uses
+  %.sroa.0.0.i576468.i = phi i64 [ %.sroa.0.0.i.i, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.loopexit.unr-lcssa ], [ 2, %.preheader.i ] ; 5 uses
+  %10 = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.sroa.0.0.i576468.i ; 4 uses
+  %min.iters.check = icmp samesign ult i64 %9, 18
+  br i1 %min.iters.check, label %bb.q, label %vector.scevcheck
 
-_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i.new: ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i.a
-  %unroll_iter = and i64 %14, 9223372036854775806
-  br label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.i.i.i
+vector.scevcheck:                                 ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i
+  %11 = add nsw i64 %9, -1                        ; 2 uses
+  %12 = add i64 %.sroa.0.0.i576468.i, %.sroa.09.0
+  %13 = shl i64 %12, 3
+  %scevgep56 = getelementptr i8, ptr %scevgep, i64 %13 ; 2 uses
+  %mul.result.neg = mul i64 %11, -8
+  %mul.overflow = icmp ugt i64 %11, 2305843009213693951
+  %14 = getelementptr i8, ptr %scevgep56, i64 %mul.result.neg
+  %15 = icmp ugt ptr %14, %scevgep56
+  %16 = or i1 %15, %mul.overflow
+  br i1 %16, label %bb.q, label %vector.ph
 
-_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.i.i.i: ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.i.i.i, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i.new
-  %.sroa.0.016.i.i.i = phi i64 [ 0, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i.new ], [ %17, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.i.i.i ] ; 5 uses
-  %niter = phi i64 [ 0, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i.new ], [ %niter.next.1, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.i.i.i ]
-  %i.ap = xor i64 %.sroa.0.016.i.i.i, -1
-  %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.sroa.0.016.i.i.i ; 2 uses
-  %i.ar = getelementptr [8 x i8], ptr %i.ao, i64 %i.ap ; 2 uses
-  %i.as = load i64, ptr %i.ar, align 4, !alias.scope !16, !noalias !17
-  %i.at = load <2 x i32>, ptr %i.aq, align 4, !alias.scope !18, !noalias !19
-  store i64 %i.as, ptr %i.aq, align 4, !alias.scope !18, !noalias !19
-  store <2 x i32> %i.at, ptr %i.ar, align 4, !alias.scope !16, !noalias !17
-  %16 = xor i64 %.sroa.0.016.i.i.i, -2
-  %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.sroa.0.016.i.i.i
+vector.ph:                                        ; preds = %vector.scevcheck
+  %n.vec = and i64 %9, 4611686018427387902        ; 3 uses
+  br label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.i.i.i.epil.preheader
+
+_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.i.i.i.epil.preheader: ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.i.i.i.epil.preheader, %vector.ph
+  %.sroa.0.016.i.i.i.epil.init = phi i64 [ 0, %vector.ph ], [ %index.next, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.i.i.i.epil.preheader ] ; 3 uses
+  %17 = xor i64 %.sroa.0.016.i.i.i.epil.init, -1
+  %18 = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.sroa.0.016.i.i.i.epil.init ; 2 uses
+  %19 = getelementptr [8 x i8], ptr %10, i64 %17  ; 2 uses
+  %wide.vec = load <4 x i32>, ptr %18, align 4, !alias.scope !20, !noalias !21
+  %20 = getelementptr i8, ptr %19, i64 -8
+  %wide.load = load <2 x i64>, ptr %20, align 4, !alias.scope !22, !noalias !23
+  %reverse = shufflevector <2 x i64> %wide.load, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
+  store <2 x i64> %reverse, ptr %18, align 4, !alias.scope !20, !noalias !21
+  %21 = getelementptr inbounds i8, ptr %19, i64 -8
+  %interleaved.vec = shufflevector <4 x i32> %wide.vec, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
+  store <4 x i32> %interleaved.vec, ptr %21, align 4, !alias.scope !22, !noalias !23
+  %index.next = add nuw i64 %.sroa.0.016.i.i.i.epil.init, 2 ; 2 uses
+  %22 = icmp eq i64 %index.next, %n.vec
+  br i1 %22, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.a, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.i.i.i.epil.preheader, !llvm.loop !13
+
+_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.a: ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.i.i.i.epil.preheader
+  %cmp.n = icmp eq i64 %9, %n.vec
+  br i1 %cmp.n, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i, label %bb.q
+
+bb.q:                                             ; preds = %vector.scevcheck, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.a
+  %.sroa.0.016.i.i.i.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i ], [ %n.vec, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.a ] ; 5 uses
+  %.neg = or disjoint i64 %.sroa.0.016.i.i.i.ph, 1
+  %xtraiter = and i64 %9, 1
+  %.not.i.i.i = icmp eq i64 %xtraiter, 0
+  br i1 %.not.i.i.i, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i.new, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i.a
+
+_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i.a: ; preds = %bb.q
+  %23 = xor i64 %.sroa.0.016.i.i.i.ph, -1
+  %24 = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.sroa.0.016.i.i.i.ph ; 2 uses
+  %i.ao = getelementptr [8 x i8], ptr %10, i64 %23 ; 2 uses
+  %25 = load i64, ptr %i.ao, align 4, !alias.scope !22, !noalias !23
+  %26 = load <2 x i32>, ptr %24, align 4, !alias.scope !20, !noalias !21
+  store i64 %25, ptr %24, align 4, !alias.scope !20, !noalias !21
+  store <2 x i32> %26, ptr %i.ao, align 4, !alias.scope !22, !noalias !23
+  %27 = or disjoint i64 %.sroa.0.016.i.i.i.ph, 1
+  br label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i.new
+
+_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i.new: ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i.a, %bb.q
+  %.sroa.0.016.i.i.i.unr = phi i64 [ %.sroa.0.016.i.i.i.ph, %bb.q ], [ %27, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i.a ]
+  %28 = icmp eq i64 %9, %.neg
+  br i1 %28, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.i.i.i
+
+_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.i.i.i: ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i.new, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.i.i.i
+  %niter = phi i64 [ %niter.next.1, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.i.i.i ], [ %.sroa.0.016.i.i.i.unr, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.preheader.i.i.i.new ] ; 5 uses
+  %i.ap = xor i64 %niter, -1
+  %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %niter ; 2 uses
+  %i.ar = getelementptr [8 x i8], ptr %10, i64 %i.ap ; 2 uses
+  %i.as = load i64, ptr %i.ar, align 4, !alias.scope !22, !noalias !23
+  %i.at = load <2 x i32>, ptr %i.aq, align 4, !alias.scope !20, !noalias !21
+  store i64 %i.as, ptr %i.aq, align 4, !alias.scope !20, !noalias !21
+  store <2 x i32> %i.at, ptr %i.ar, align 4, !alias.scope !22, !noalias !23
+  %29 = sub i64 -2, %niter
+  %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %niter
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 8 ; 2 uses
-  %i.aw = getelementptr [8 x i8], ptr %i.ao, i64 %16 ; 2 uses
-  %i.ax = load i64, ptr %i.aw, align 4, !alias.scope !16, !noalias !17
-  %i.ay = load <2 x i32>, ptr %i.av, align 4, !alias.scope !18, !noalias !19
-  store i64 %i.ax, ptr %i.av, align 4, !alias.scope !18, !noalias !19
-  store <2 x i32> %i.ay, ptr %i.aw, align 4, !alias.scope !16, !noalias !17
-  %17 = add nuw nsw i64 %.sroa.0.016.i.i.i, 2     ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.loopexit.unr-lcssa, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.i.i.i
+  %i.aw = getelementptr [8 x i8], ptr %10, i64 %29 ; 2 uses
+  %i.ax = load i64, ptr %i.aw, align 4, !alias.scope !22, !noalias !23
+  %i.ay = load <2 x i32>, ptr %i.av, align 4, !alias.scope !20, !noalias !21
+  store i64 %i.ax, ptr %i.av, align 4, !alias.scope !20, !noalias !21
+  store <2 x i32> %i.ay, ptr %i.aw, align 4, !alias.scope !22, !noalias !23
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %9
+  br i1 %niter.ncmp.1, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange12split_at_mutBy_.exit11.i.i.i, !llvm.loop !14
 
-_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift10create_runNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRangeNvYB13_NtNtBa_3cmp10PartialOrd2ltEB17_.exit: ; preds = %bb.o, %bb.p, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.a
-  %.sroa.0.0.i34 = phi i64 [ %12, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i.a ], [ %i.an, %bb.p ], [ %i.al, %bb.o ] ; 2 uses
+_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift10create_runNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRangeNvYB13_NtNtBa_3cmp10PartialOrd2ltEB17_.exit: ; preds = %bb.o, %bb.p, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i
+  %.sroa.0.0.i34 = phi i64 [ %7, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_.exit.i ], [ %i.an, %bb.p ], [ %i.al, %bb.o ] ; 2 uses
   %i.az = lshr i64 %.sroa.023.0, 1
   %i.ba = lshr i64 %.sroa.0.0.i34, 1
   %factor = shl nuw nsw i64 %.sroa.09.0, 1        ; 2 uses
@@ -337,7 +374,7 @@ define hidden void @_RNvMs5_NtNtNtCs2AWtUsOyxgP_3std4sync6poison5mutexINtB5_5Mut
 bb.a:
   %i.a = cmpxchg ptr %1, i32 0, i32 1 acquire monotonic, align 4
   %i.b = extractvalue { i32, i1 } %i.a, 1
-  br i1 %i.b, label %bb.c, label %bb.b, !prof !22
+  br i1 %i.b, label %bb.c, label %bb.b, !prof !26
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_RNvMNtNtNtNtCs2AWtUsOyxgP_3std3sys4sync5mutex5futexNtB2_5Mutex14lock_contended(ptr noundef nonnull align 4 %1)
@@ -347,7 +384,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.c = load atomic i64, ptr @_RNvNtNtCs2AWtUsOyxgP_3std9panicking11panic_count18GLOBAL_PANIC_COUNT monotonic, align 8
   %i.d = and i64 %i.c, 9223372036854775807
   %i.e = icmp eq i64 %i.d, 0
-  br i1 %i.e, label %_RNvMNtNtCs2AWtUsOyxgP_3std4sync6poisonNtB2_4Flag5guard.exit, label %bb.d, !prof !22
+  br i1 %i.e, label %_RNvMNtNtCs2AWtUsOyxgP_3std4sync6poisonNtB2_4Flag5guard.exit, label %bb.d, !prof !26
 
 bb.d:                                             ; preds = %bb.c
   %i.f = tail call noundef zeroext i1 @_RNvNtNtCs2AWtUsOyxgP_3std9panicking11panic_count17is_zero_slow_path()
@@ -374,7 +411,7 @@ bb.a:
   store ptr @_RNvXs1i_NtCs4NRVxsYgnAr_4core3fmtReNtB6_7Display3fmtCshhQDFPpdXZx_10regex_lite, ptr %.sroa.43.0..sroa_idx, align 8
   %i.b = load ptr, ptr %1, align 8, !nonnull !3, !noundef !3
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !nonnull !3, !align !23, !noundef !3
+  %i.d = load ptr, ptr %i.c, align 8, !nonnull !3, !align !27, !noundef !3
   %i.e = call noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull %i.b, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.d, ptr noundef nonnull @0, ptr noundef nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %i.e
@@ -447,20 +484,24 @@ attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 !5 = distinct !{!5, !4, !"_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift10create_runNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRangeNvYB13_NtNtBa_3cmp10PartialOrd2ltEB17_: argument 0"}
 !6 = distinct !{!6, !4, !"_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift10create_runNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRangeNvYB13_NtNtBa_3cmp10PartialOrd2ltEB17_: argument 2"}
 !7 = distinct !{!7, !4, !"_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift10create_runNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRangeNvYB13_NtNtBa_3cmp10PartialOrd2ltEB17_: argument 1"}
-!8 = distinct !{!8, !"_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_"}
-!9 = distinct !{!9, !8, !"_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_: argument 0"}
-!10 = distinct !{!10, !"_RINvNvMNtCs4NRVxsYgnAr_4core5sliceSp7reverse7revswapNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRangeEBS_"}
-!11 = distinct !{!11, !10, !"_RINvNvMNtCs4NRVxsYgnAr_4core5sliceSp7reverse7revswapNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRangeEBS_: argument 1"}
-!12 = distinct !{!12, !10, !"_RINvNvMNtCs4NRVxsYgnAr_4core5sliceSp7reverse7revswapNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRangeEBS_: argument 0"}
-!13 = !{i32 0, i32 1114112}
-!14 = !{!5}
-!15 = !{!7, !6}
-!16 = !{!11, !9, !5}
-!17 = !{!12, !7, !6}
-!18 = !{!12, !9, !5}
-!19 = !{!11, !7, !6}
-!20 = !{!12}
-!21 = !{!11}
-!22 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!23 = !{i64 8}
+!8 = distinct !{!8, !"_RINvNvMNtCs4NRVxsYgnAr_4core5sliceSp7reverse7revswapNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRangeEBS_"}
+!9 = distinct !{!9, !8, !"_RINvNvMNtCs4NRVxsYgnAr_4core5sliceSp7reverse7revswapNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRangeEBS_: argument 0"}
+!10 = distinct !{!10, !8, !"_RINvNvMNtCs4NRVxsYgnAr_4core5sliceSp7reverse7revswapNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRangeEBS_: argument 1"}
+!11 = distinct !{!11, !"_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_"}
+!12 = distinct !{!12, !11, !"_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCshhQDFPpdXZx_10regex_lite3hir10ClassRange7reverseBy_: argument 0"}
+!13 = distinct !{!13, !24, !25}
+!14 = distinct !{!14, !24}
+!15 = !{i32 0, i32 1114112}
+!16 = !{!5}
+!17 = !{!7, !6}
+!18 = !{!9}
+!19 = !{!10}
+!20 = !{!9, !12, !5}
+!21 = !{!10, !7, !6}
+!22 = !{!10, !12, !5}
+!23 = !{!9, !7, !6}
+!24 = !{!"llvm.loop.isvectorized", i32 1}
+!25 = !{!"llvm.loop.unroll.runtime.disable"}
+!26 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!27 = !{i64 8}
 end_hunk_0
