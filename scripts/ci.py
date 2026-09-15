@@ -419,6 +419,7 @@ class RenderedDiff:
     artifact_new_ir: str
     opcode_seq: Optional[Tuple[Tuple[str, ...], Tuple[str, ...]]]
     timed_out: bool = False
+    oversized_counts: Optional[Tuple[int, int]] = None
 
 
 @dataclass
@@ -1026,7 +1027,6 @@ def compute_diff(
         raise RuntimeError("diff failed")
 
     unified = diff_ret.stdout.splitlines()
-    opcode_seq = _extract_opcode_sequences_from_unified(unified)
     number_of_added_lines = sum(
         1 for line in unified if line.startswith("+") and not line.startswith("+++")
     )
@@ -1034,7 +1034,15 @@ def compute_diff(
         1 for line in unified if line.startswith("-") and not line.startswith("---")
     )
     if number_of_added_lines + number_of_removed_lines > MAX_DIFF_PER_FILE:
-        return None
+        return RenderedDiff(
+            report_ref_ir=minimized_ref_ir,
+            report_new_ir=minimized_new_ir,
+            artifact_ref_ir=ref_ir,
+            artifact_new_ir=new_ir,
+            opcode_seq=None,
+            oversized_counts=(number_of_added_lines, number_of_removed_lines),
+        )
+    opcode_seq = _extract_opcode_sequences_from_unified(unified)
 
     with open(ref_ir, "r") as f:
         ref_lines = f.read().splitlines()
@@ -1590,6 +1598,12 @@ def generate_diff_report(
         file_name = name[pos + 3 :].removesuffix(".ll")
         if rendered_file.timed_out:
             full_diff_rows.append((None, None, proj, file_name))
+            continue
+        if rendered_file.oversized_counts is not None:
+            added_lines, removed_lines = rendered_file.oversized_counts
+            total_added += added_lines
+            total_removed += removed_lines
+            full_diff_rows.append((added_lines, removed_lines, proj, file_name))
             continue
         with open(ref_ir, "r") as f:
             ref_lines = f.readlines()
