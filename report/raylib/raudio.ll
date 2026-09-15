@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %.lr.ph105.us, %bb.e
   store <4 x i32> %i.cn, ptr %i.ei, align 4
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.eh, ptr noundef nonnull align 4 dereferenceable(12) %i.ej, i64 12, i1 false)
   store i32 %.0.i.us, ptr %i.el, align 4
-  %i.co = add i32 %.076104.us, %i.a               ; 2 uses
+  %i.co = add nuw i32 %.076104.us, %i.a           ; 2 uses
   %i.cp = sext i32 %i.co to i64
   %i.cq = icmp sgt i64 %i.bc, %i.cp
   br i1 %i.cq, label %bb.e, label %._crit_edge.us
