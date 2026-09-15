@@ -205,7 +205,7 @@ _RINvXsf_NtCsiBsA9HK2Eg7_3nom8internalNvMs2_NtCslbrwWrVtb7E_5uu_tr9operationNtBF
   br label %_RINvXs5_NtCsiBsA9HK2Eg7_3nom6branchINtB6_6ChoiceTNvMs2_NtCslbrwWrVtb7E_5uu_tr9operationNtBR_8Sequence16parse_char_rangeNvBN_15parse_char_starNvBN_17parse_char_repeatNvBN_11parse_classNvBN_16parse_char_equalINtNtB8_8internal3MapNvBN_36parse_backslash_or_char_with_warningNCNvBN_8from_str0EEEINtB3l_6ParserRShE7processINtB3l_7OutputMNtB3l_4EmitNtB3l_5CheckNtB3l_9StreamingEEBT_.exit.i
 
 bb.z:                                             ; preds = %bb.y
-  %.sroa.648.0.copyload.i.i.i.i.fr.i = freeze i64 %.sroa.648.0.copyload.i.i.i.i.i ; 5 uses
+  %.sroa.648.0.copyload.i.i.i.i.fr.i = freeze i64 %.sroa.648.0.copyload.i.i.i.i.i ; 3 uses
   %.sroa.18.sroa.0.0.extract.trunc.i.i = trunc i64 %.sroa.648.0.copyload.i.i.i.i.fr.i to i8 ; 4 uses
   %i.ja = icmp ugt i8 %.sroa.18.sroa.0.0.extract.trunc.i.i, 56
   br i1 %i.ja, label %.thread182.i, label %.thread124.loopexit.split.loop.exit706.i
@@ -608,12 +608,7 @@ bb.hx:                                            ; preds = %_RNvYNvMs2_NtCslbrw
 .thread124.loopexit.split.loop.exit666.i:         ; preds = %.thread182.i
   %i.aeu = ptrtoint ptr %.sroa.036.0.copyload.i8.i.i.i.i to i64
   %sh.diff.i.le.i = lshr i64 %.sroa.648.0.copyload.i.i.i.i.fr.i, 8
-  %tr.sh.diff.i.le766.i = trunc nuw i64 %sh.diff.i.le.i to i56
-  %.sroa.734.sroa.4.0.insert.shift.i.le.i = and i56 %tr.sh.diff.i.le766.i, -256
-  %i.aev = trunc i64 %.sroa.648.0.copyload.i.i.i.i.fr.i to i56
-  %3 = lshr i56 %i.aev, 8
-  %.sroa.734.sroa.0.0.insert.ext.i.le.i = and i56 %3, 255
-  %.sroa.734.sroa.0.0.insert.insert.i.le755.i = or disjoint i56 %.sroa.734.sroa.4.0.insert.shift.i.le.i, %.sroa.734.sroa.0.0.insert.ext.i.le.i
+  %i.aev = trunc nuw i64 %sh.diff.i.le.i to i56
   br label %.thread124.i
 
 .thread124.loopexit.split.loop.exit676.i:         ; preds = %.thread235.i
@@ -637,12 +632,7 @@ bb.hx:                                            ; preds = %_RNvYNvMs2_NtCslbrw
 .thread124.loopexit.split.loop.exit706.i:         ; preds = %bb.z
   %i.aey = ptrtoint ptr %.sroa.036.0.copyload.i8.i.i.i.i to i64
   %sh.diff.i.le769.i = lshr i64 %.sroa.648.0.copyload.i.i.i.i.fr.i, 8
-  %tr.sh.diff.i.le.i = trunc nuw i64 %sh.diff.i.le769.i to i56
-  %.sroa.734.sroa.4.0.insert.shift.i.le764.i = and i56 %tr.sh.diff.i.le.i, -256
-  %i.aez = trunc i64 %.sroa.648.0.copyload.i.i.i.i.fr.i to i56
-  %4 = lshr i56 %i.aez, 8
-  %.sroa.734.sroa.0.0.insert.ext.i.le759.i = and i56 %4, 255
-  %.sroa.734.sroa.0.0.insert.insert.i.le.i = or disjoint i56 %.sroa.734.sroa.4.0.insert.shift.i.le764.i, %.sroa.734.sroa.0.0.insert.ext.i.le759.i
+  %i.aez = trunc nuw i64 %sh.diff.i.le769.i to i56
   br label %.thread124.i
 
 .thread124.loopexit.split.loop.exit716.i:         ; preds = %bb.cu
@@ -654,7 +644,7 @@ bb.hx:                                            ; preds = %_RNvYNvMs2_NtCslbrw
   br label %.thread124.i
 
 .thread124.i:                                     ; preds = %.thread124.loopexit.split.loop.exit716.i, %.thread124.loopexit.split.loop.exit706.i, %.thread124.loopexit.split.loop.exit696.i, %.thread124.loopexit.split.loop.exit686.i, %.thread124.loopexit.split.loop.exit676.i, %.thread124.loopexit.split.loop.exit666.i, %.thread124.loopexit.split.loop.exit656.i, %.thread124.loopexit.split.loop.exit.i, %bb.hx
-  %.sroa.79.6.ph.i = phi i56 [ %.sroa.731.i.sroa.0.0.copyload, %bb.hx ], [ %.sroa.734.sroa.0.0.insert.insert.i.le.i, %.thread124.loopexit.split.loop.exit706.i ], [ %.sroa.18.33.extract.trunc.i.le773.i, %.thread124.loopexit.split.loop.exit656.i ], [ %.sroa.19.33.extract.trunc.i.i, %.thread124.loopexit.split.loop.exit.i ], [ %.sroa.18.33.extract.trunc.i.le.i, %.thread124.loopexit.split.loop.exit696.i ], [ %.sroa.734.sroa.0.0.insert.insert.i.le755.i, %.thread124.loopexit.split.loop.exit666.i ], [ %.sroa.734.sroa.0.0.insert.insert.i92.le726.i, %.thread124.loopexit.split.loop.exit676.i ], [ %.sroa.19.33.extract.trunc.i.i, %.thread124.loopexit.split.loop.exit686.i ], [ %.sroa.734.sroa.0.0.insert.insert.i92.le.i, %.thread124.loopexit.split.loop.exit716.i ]
+  %.sroa.79.6.ph.i = phi i56 [ %.sroa.731.i.sroa.0.0.copyload, %bb.hx ], [ %i.aez, %.thread124.loopexit.split.loop.exit706.i ], [ %.sroa.18.33.extract.trunc.i.le773.i, %.thread124.loopexit.split.loop.exit656.i ], [ %.sroa.19.33.extract.trunc.i.i, %.thread124.loopexit.split.loop.exit.i ], [ %.sroa.18.33.extract.trunc.i.le.i, %.thread124.loopexit.split.loop.exit696.i ], [ %i.aev, %.thread124.loopexit.split.loop.exit666.i ], [ %.sroa.734.sroa.0.0.insert.insert.i92.le726.i, %.thread124.loopexit.split.loop.exit676.i ], [ %.sroa.19.33.extract.trunc.i.i, %.thread124.loopexit.split.loop.exit686.i ], [ %.sroa.734.sroa.0.0.insert.insert.i92.le.i, %.thread124.loopexit.split.loop.exit716.i ]
   %.sroa.63.6.ph.i = phi i8 [ %.sroa.7.sroa.5.0.copyload.i, %bb.hx ], [ %.sroa.18.sroa.0.0.extract.trunc.i.i, %.thread124.loopexit.split.loop.exit706.i ], [ %.sroa.18.32.extract.trunc.i.i, %.thread124.loopexit.split.loop.exit656.i ], [ %.sroa.14.094.i.i.i.fr.i, %.thread124.loopexit.split.loop.exit.i ], [ %.sroa.18.32.extract.trunc.i.i, %.thread124.loopexit.split.loop.exit696.i ], [ %.sroa.18.sroa.0.0.extract.trunc.i.i, %.thread124.loopexit.split.loop.exit666.i ], [ %.fr.i, %.thread124.loopexit.split.loop.exit676.i ], [ %.sroa.14.094.i.i.i.fr.i, %.thread124.loopexit.split.loop.exit686.i ], [ %.fr.i, %.thread124.loopexit.split.loop.exit716.i ]
   %.sroa.56.6.ph.i = phi i64 [ %.sroa.7.sroa.0.0.copyload.i, %bb.hx ], [ %.sroa.437.0.copyload.i.i.i.i.i, %.thread124.loopexit.split.loop.exit706.i ], [ %.sroa.431.0.copyload.i.i.i.i.i, %.thread124.loopexit.split.loop.exit656.i ], [ %.sroa.11.095.i.i.i.i, %.thread124.loopexit.split.loop.exit.i ], [ %.sroa.431.0.copyload.i.i.i.i.i, %.thread124.loopexit.split.loop.exit696.i ], [ %.sroa.437.0.copyload.i.i.i.i.i, %.thread124.loopexit.split.loop.exit666.i ], [ %i.ps, %.thread124.loopexit.split.loop.exit676.i ], [ %.sroa.11.095.i.i.i.i, %.thread124.loopexit.split.loop.exit686.i ], [ %i.ps, %.thread124.loopexit.split.loop.exit716.i ]
   %.sroa.44.6.ph.i = phi i64 [ %.sroa.044.0.copyload.i.pre, %bb.hx ], [ %i.aey, %.thread124.loopexit.split.loop.exit706.i ], [ %i.aet, %.thread124.loopexit.split.loop.exit656.i ], [ %i.aes, %.thread124.loopexit.split.loop.exit.i ], [ %i.aex, %.thread124.loopexit.split.loop.exit696.i ], [ %i.aeu, %.thread124.loopexit.split.loop.exit666.i ], [ %.sroa.11.0.ph.i.i.i.le753.i, %.thread124.loopexit.split.loop.exit676.i ], [ %i.aew, %.thread124.loopexit.split.loop.exit686.i ], [ %.sroa.11.0.ph.i.i.i.le751.i, %.thread124.loopexit.split.loop.exit716.i ] ; 2 uses

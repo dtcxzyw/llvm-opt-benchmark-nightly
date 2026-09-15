@@ -205,7 +205,7 @@ bb.cu:                                            ; preds = %.peel.next28.i
 .peel.next36.i:                                   ; preds = %bb.cu, %bb.ct, %bb.cs
   %i.sn = load i8, ptr %i.ry, align 1, !range !7, !noundef !8
   %i.so = trunc nuw i8 %i.sn to i1
-  %.val.peel47.i = load i16, ptr %i.ec, align 2   ; 3 uses
+  %.val.peel47.i = load i16, ptr %i.ec, align 2   ; 2 uses
   br i1 %i.so, label %bb.cy, label %bb.cv
 
 bb.cv:                                            ; preds = %.peel.next36.i
@@ -223,12 +223,8 @@ bb.cx:                                            ; preds = %bb.cv
 
 bb.cy:                                            ; preds = %.peel.next36.i
   %i.sq = lshr i16 %.val.peel47.i, 6
-  %15 = trunc i16 %i.sq to i8
-  %spec.select.i.peel48.i = and i8 %15, 4
-  %16 = trunc i16 %.val.peel47.i to i8
-  %17 = lshr i8 %16, 6
-  %.2.i.peel49.i = or disjoint i8 %spec.select.i.peel48.i, %17
-  %i.sr = zext nneg i8 %.2.i.peel49.i to i64
+  %15 = and i16 %i.sq, 7
+  %i.sr = zext nneg i16 %15 to i64
   %i.ss = getelementptr i8, ptr @tcp_flags_to_str_first_letter.digits, i64 %i.sr
   %i.st = load i8, ptr %i.ss, align 1
   call void @wmem_strbuf_append_c(ptr noundef %i.sc, i8 noundef signext %i.st)
@@ -631,17 +627,14 @@ bb.gc:                                            ; preds = %.critedge1391
   br i1 %i.ace, label %bb.gd, label %bb.ge
 
 bb.gd:                                            ; preds = %bb.gc
-  %.val = load i16, ptr %i.ec, align 2            ; 2 uses
+  %.val = load i16, ptr %i.ec, align 2
   %i.acf = lshr i16 %.val, 6
   %i.acg = trunc i16 %i.acf to i8
-  %spec.select.i.a = and i8 %i.acg, 4             ; 2 uses
-  %18 = trunc i16 %.val to i8
-  %19 = lshr i8 %18, 6
-  %.2.i = or disjoint i8 %spec.select.i.a, %19
+  %spec.select.i.a = and i8 %i.acg, 7             ; 2 uses
   %i.ach = load i32, ptr @hf_tcp_flags_ace, align 4
-  %i.aci = zext nneg i8 %.2.i to i32              ; 4 uses
-  %.not1181.not.not = icmp eq i8 %spec.select.i.a, 0
-  %i.acj = select i1 %.not1181.not.not, i32 48, i32 49
+  %i.aci = zext nneg i8 %spec.select.i.a to i32   ; 4 uses
+  %.not1181 = icmp samesign ult i8 %spec.select.i.a, 4
+  %i.acj = select i1 %.not1181, i32 48, i32 49
   %i.ack = and i32 %i.aci, 2
   %.not1182 = icmp eq i32 %i.ack, 0
   %i.acl = select i1 %.not1182, i32 48, i32 49
@@ -1044,19 +1037,15 @@ bb.f:                                             ; preds = %bb.b, %bb.e
   br i1 %i.p, label %bb.b, label %bb.g, !llvm.loop !52
 
 bb.g:                                             ; preds = %bb.f
-  %.pre29 = load i16, ptr %i.c, align 2           ; 3 uses
+  %.pre29 = load i16, ptr %i.c, align 2           ; 2 uses
   br i1 %i.n, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   %i.q = lshr i16 %.pre29, 6
-  %2 = trunc i16 %i.q to i8
-  %spec.select.i = and i8 %2, 4
-  %3 = trunc i16 %.pre29 to i8
-  %4 = lshr i8 %3, 6
-  %.2.i = or disjoint i8 %spec.select.i, %4
+  %2 = and i16 %i.q, 7
+  %.2.i = zext nneg i16 %2 to i64
   %i.r = tail call ptr @g_stpcpy(ptr noundef %.2, ptr noundef nonnull @.str.1003)
-  %5 = zext nneg i8 %.2.i to i64
-  %i.s = getelementptr [2 x i8], ptr @tcp_flags_to_str.digit, i64 %5
+  %i.s = getelementptr [2 x i8], ptr @tcp_flags_to_str.digit, i64 %.2.i
   %i.t = tail call ptr @g_stpcpy(ptr noundef %i.r, ptr noundef %i.s)
   %.pre = load i16, ptr %i.c, align 2
   br label %bb.i
