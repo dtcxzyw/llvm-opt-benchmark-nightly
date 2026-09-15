@@ -204,7 +204,7 @@ bb.a:
   %i.a = ptrtoint ptr %2 to i64
   %i.b = ptrtoint ptr %1 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 5 uses
-  %i.d = ashr exact i64 %i.c, 2                   ; 6 uses
+  %i.d = ashr exact i64 %i.c, 2                   ; 5 uses
   %i.e = icmp ugt i64 %i.d, 65535
   br i1 %i.e, label %bb.b, label %_ZN5boost9container20vec_on_type_overflowImtE12throw_lengthEmPKc.exit
 
@@ -213,12 +213,11 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZN5boost9container20vec_on_type_overflowImtE12throw_lengthEmPKc.exit: ; preds = %bb.a
-  %i.f = trunc nuw i64 %i.d to i16                ; 2 uses
+  %i.f = trunc nuw i64 %i.d to i16                ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 2 uses
-  %i.h = load i16, ptr %i.g, align 2, !tbaa !101
-  %4 = zext i16 %i.h to i64                       ; 2 uses
-  %5 = icmp samesign ugt i64 %i.d, %4
-  br i1 %5, label %bb.c, label %bb.j
+  %i.h = load i16, ptr %i.g, align 2, !tbaa !101  ; 2 uses
+  %4 = icmp ult i16 %i.h, %i.f
+  br i1 %4, label %bb.c, label %bb.j
 
 bb.c:                                             ; preds = %_ZN5boost9container20vec_on_type_overflowImtE12throw_lengthEmPKc.exit
   %i.i = icmp samesign ugt i64 %i.d, 16383
@@ -237,7 +236,8 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i16 0, ptr %i.l, align 8, !tbaa !104
-  %i.m = shl nuw nsw i64 %4, 2
+  %5 = zext i16 %i.h to i64
+  %i.m = shl nuw nsw i64 %5, 2
   tail call void @_ZdlPvm(ptr noundef nonnull %i.k, i64 noundef %i.m) #25
   br label %bb.g
 
@@ -386,7 +386,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN5boost9container6vectorIiNS0_4test25small_size_type_allocatorIiEEvE6assignINS0_17constant_iteratorIiEEEEvT_S9_PNS_11move_detail13disable_if_orIvNSA_7is_sameINSA_17integral_constantIjLj1EEENSD_IjLj0EEEEENSA_14is_convertibleIS9_tEENS0_3dtl17is_input_iteratorIS9_Xsr21has_iterator_categoryIS9_EE5valueEEENSA_5bool_ILb0EEEE4typeE(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr %1, i64 %2, ptr %3, i64 %4, ptr noundef %5) local_unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = sub i64 %2, %4                           ; 16 uses
+  %i.a = sub i64 %2, %4                           ; 15 uses
   %i.b = icmp ugt i64 %i.a, 65535
   br i1 %i.b, label %bb.b, label %_ZN5boost9container20vec_on_type_overflowImtE12throw_lengthEmPKc.exit
 
@@ -395,12 +395,11 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZN5boost9container20vec_on_type_overflowImtE12throw_lengthEmPKc.exit: ; preds = %bb.a
-  %i.c = trunc nuw i64 %i.a to i16                ; 2 uses
+  %i.c = trunc nuw i64 %i.a to i16                ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 2 uses
-  %i.e = load i16, ptr %i.d, align 2, !tbaa !101
-  %6 = zext i16 %i.e to i64                       ; 2 uses
-  %7 = icmp samesign ugt i64 %i.a, %6
-  br i1 %7, label %bb.c, label %bb.h
+  %i.e = load i16, ptr %i.d, align 2, !tbaa !101  ; 2 uses
+  %6 = icmp ult i16 %i.e, %i.c
+  br i1 %6, label %bb.c, label %bb.h
 
 bb.c:                                             ; preds = %_ZN5boost9container20vec_on_type_overflowImtE12throw_lengthEmPKc.exit
   %i.f = icmp samesign ugt i64 %i.a, 16383
@@ -420,7 +419,8 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.e
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i16 0, ptr %i.j, align 8, !tbaa !104
-  %i.k = shl nuw nsw i64 %6, 2
+  %7 = zext i16 %i.e to i64
+  %i.k = shl nuw nsw i64 %7, 2
   tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef %i.k) #25
   br label %bb.g
 
@@ -823,7 +823,7 @@ bb.a:
   %i.a = ptrtoint ptr %2 to i64
   %i.b = ptrtoint ptr %1 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 5 uses
-  %i.d = ashr exact i64 %i.c, 2                   ; 6 uses
+  %i.d = ashr exact i64 %i.c, 2                   ; 5 uses
   %i.e = icmp ugt i64 %i.d, 65535
   br i1 %i.e, label %bb.b, label %_ZN5boost9container20vec_on_type_overflowImtE12throw_lengthEmPKc.exit
 
@@ -832,12 +832,11 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZN5boost9container20vec_on_type_overflowImtE12throw_lengthEmPKc.exit: ; preds = %bb.a
-  %i.f = trunc nuw i64 %i.d to i16                ; 2 uses
+  %i.f = trunc nuw i64 %i.d to i16                ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 2 uses
-  %i.h = load i16, ptr %i.g, align 2, !tbaa !101
-  %4 = zext i16 %i.h to i64                       ; 2 uses
-  %5 = icmp samesign ugt i64 %i.d, %4
-  br i1 %5, label %bb.c, label %bb.j
+  %i.h = load i16, ptr %i.g, align 2, !tbaa !101  ; 2 uses
+  %4 = icmp ult i16 %i.h, %i.f
+  br i1 %4, label %bb.c, label %bb.j
 
 bb.c:                                             ; preds = %_ZN5boost9container20vec_on_type_overflowImtE12throw_lengthEmPKc.exit
   %i.i = icmp samesign ugt i64 %i.d, 16383
@@ -856,7 +855,8 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i16 0, ptr %i.l, align 8, !tbaa !104
-  %i.m = shl nuw nsw i64 %4, 2
+  %5 = zext i16 %i.h to i64
+  %i.m = shl nuw nsw i64 %5, 2
   tail call void @_ZdlPvm(ptr noundef nonnull %i.k, i64 noundef %i.m) #25
   br label %bb.g
 

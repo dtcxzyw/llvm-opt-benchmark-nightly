@@ -205,10 +205,10 @@ bb.ar:                                            ; preds = %._crit_edge61, %_ZN
   %i.dz = getelementptr inbounds nuw [8 x i8], ptr %.sroa.023.037.i.i.i, i64 %i.dy ; 2 uses
   %i.ea = and i64 %i.dx, 63
   %i.eb = load i64, ptr %i.dz, align 8, !tbaa !132
-  %9 = shl nuw i64 1, %i.ea
-  %10 = and i64 %i.eb, %9
-  %11 = icmp eq i64 %10, 0
-  %i.ec = and i1 %11, %i.di
+  %9 = lshr i64 %i.eb, %i.ea
+  %10 = trunc i64 %9 to i1
+  %11 = xor i1 %10, true
+  %i.ec = and i1 %i.di, %11
   br i1 %i.ec, label %_ZNSt19_Bit_const_iteratorppEv.exit.i.i.i, label %bb.as
 
 _ZNSt19_Bit_const_iteratorppEv.exit.i.i.i:        ; preds = %.lr.ph.i.i.i
