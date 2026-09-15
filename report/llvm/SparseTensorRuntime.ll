@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNK4mlir13sparse_tensor19SparseTensorStorageImtdE13assembledSizeEmm.exit
   %i.e = phi ptr [ %.pre, %.lr.ph ], [ %i.av, %_ZNK4mlir13sparse_tensor19SparseTensorStorageImtdE13assembledSizeEmm.exit ]
-  %.090117 = phi i64 [ 0, %.lr.ph ], [ %i.bq, %_ZNK4mlir13sparse_tensor19SparseTensorStorageImtdE13assembledSizeEmm.exit ] ; 28 uses
+  %.090117 = phi i64 [ 0, %.lr.ph ], [ %i.bq, %_ZNK4mlir13sparse_tensor19SparseTensorStorageImtdE13assembledSizeEmm.exit ] ; 27 uses
   %.091116 = phi i64 [ 0, %.lr.ph ], [ %.1, %_ZNK4mlir13sparse_tensor19SparseTensorStorageImtdE13assembledSizeEmm.exit ] ; 8 uses
   %.092115 = phi i64 [ 1, %.lr.ph ], [ %.0.i, %_ZNK4mlir13sparse_tensor19SparseTensorStorageImtdE13assembledSizeEmm.exit ] ; 16 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %.090117
@@ -327,7 +327,7 @@ _ZNK4mlir13sparse_tensor19SparseTensorStorageImtdE13assembledSizeEmm.exit: ; pre
   br i1 %exitcond.not, label %_ZNK4mlir13sparse_tensor19SparseTensorStorageImtdE13assembledSizeEmm.exit107, label %bb.b, !llvm.loop !1179
 
 bb.j:                                             ; preds = %bb.c, %bb.c
-  %i.br = sub i64 %3, %.090117                    ; 14 uses
+  %i.br = sub i64 %3, %.090117                    ; 15 uses
   %i.bs = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %.091116 ; 2 uses
   %i.bt = load i64, ptr %i.bs, align 8, !tbaa !165
   %i.bu = inttoptr i64 %i.bt to ptr               ; 4 uses
@@ -404,8 +404,7 @@ _ZNSt6vectorItSaItEE6resizeEm.exit.prol:          ; preds = %bb.n, %.lr.ph123.sp
 .lr.ph123.split.us.preheader:                     ; preds = %.lr.ph123
   %i.cx = shl i64 %.089.fr, 1
   %i.cy = add i64 %.089.fr, -1
-  %9 = sub i64 %3, %.090117
-  %i.cz = shl i64 %9, 1
+  %i.cz = shl i64 %i.br, 1
   %i.da = mul i64 %i.cy, %i.cz
   %i.db = getelementptr i8, ptr %i.by, i64 %i.da
   %min.iters.check = icmp ult i64 %.089.fr, 8
@@ -808,7 +807,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIjtdE13assembledSizeEmm.exit
   %i.e = phi ptr [ %.pre, %.lr.ph ], [ %i.ax, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIjtdE13assembledSizeEmm.exit ]
-  %.090117 = phi i64 [ 0, %.lr.ph ], [ %i.bu, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIjtdE13assembledSizeEmm.exit ] ; 25 uses
+  %.090117 = phi i64 [ 0, %.lr.ph ], [ %i.bu, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIjtdE13assembledSizeEmm.exit ] ; 24 uses
   %.091116 = phi i64 [ 0, %.lr.ph ], [ %.1, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIjtdE13assembledSizeEmm.exit ] ; 8 uses
   %.092115 = phi i64 [ 1, %.lr.ph ], [ %.0.i, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIjtdE13assembledSizeEmm.exit ] ; 16 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %.090117
@@ -934,7 +933,7 @@ _ZNK4mlir13sparse_tensor19SparseTensorStorageIjtdE13assembledSizeEmm.exit: ; pre
   br i1 %exitcond.not, label %_ZNK4mlir13sparse_tensor19SparseTensorStorageIjtdE13assembledSizeEmm.exit107, label %bb.b, !llvm.loop !1318
 
 bb.j:                                             ; preds = %bb.c, %bb.c
-  %i.bv = sub nuw i64 %3, %.090117                ; 13 uses
+  %i.bv = sub i64 %3, %.090117                    ; 14 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %.091116 ; 2 uses
   %i.bx = load i64, ptr %i.bw, align 8, !tbaa !165
   %i.by = inttoptr i64 %i.bx to ptr               ; 4 uses
@@ -985,8 +984,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %.pre133 = load ptr, ptr %i.c, align 8, !tbaa !618
   %i.cw = shl nuw nsw i64 %i.cv, 1
   %i.cx = add nsw i64 %i.cv, -1
-  %9 = sub i64 %3, %.090117
-  %i.cy = shl i64 %9, 1
+  %i.cy = shl i64 %i.bv, 1
   %i.cz = mul i64 %i.cx, %i.cy
   %i.da = getelementptr i8, ptr %i.cc, i64 %i.cz
   %min.iters.check = icmp ult i32 %.089.fr, 8
@@ -1389,7 +1387,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttdE13assembledSizeEmm.exit
   %i.e = phi ptr [ %.pre, %.lr.ph ], [ %i.ax, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttdE13assembledSizeEmm.exit ]
-  %.090117 = phi i64 [ 0, %.lr.ph ], [ %i.bu, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttdE13assembledSizeEmm.exit ] ; 25 uses
+  %.090117 = phi i64 [ 0, %.lr.ph ], [ %i.bu, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttdE13assembledSizeEmm.exit ] ; 24 uses
   %.091116 = phi i64 [ 0, %.lr.ph ], [ %.1, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttdE13assembledSizeEmm.exit ] ; 8 uses
   %.092115 = phi i64 [ 1, %.lr.ph ], [ %.0.i, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttdE13assembledSizeEmm.exit ] ; 16 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %.090117
@@ -1515,7 +1513,7 @@ _ZNK4mlir13sparse_tensor19SparseTensorStorageIttdE13assembledSizeEmm.exit: ; pre
   br i1 %exitcond.not, label %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttdE13assembledSizeEmm.exit107, label %bb.b, !llvm.loop !1461
 
 bb.j:                                             ; preds = %bb.c, %bb.c
-  %i.bv = sub nuw i64 %3, %.090117                ; 13 uses
+  %i.bv = sub i64 %3, %.090117                    ; 14 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %.091116 ; 2 uses
   %i.bx = load i64, ptr %i.bw, align 8, !tbaa !165
   %i.by = inttoptr i64 %i.bx to ptr               ; 4 uses
@@ -1566,8 +1564,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %.pre133 = load ptr, ptr %i.c, align 8, !tbaa !618
   %i.cw = shl nuw nsw i64 %i.cv, 1
   %i.cx = add nsw i64 %i.cv, -1
-  %9 = sub i64 %3, %.090117
-  %i.cy = shl i64 %9, 1
+  %i.cy = shl i64 %i.bv, 1
   %i.cz = mul i64 %i.cx, %i.cy
   %i.da = getelementptr i8, ptr %i.cc, i64 %i.cz
   %min.iters.check = icmp ult i16 %.089.fr, 8
@@ -1970,7 +1967,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIhtdE13assembledSizeEmm.exit
   %i.e = phi ptr [ %.pre, %.lr.ph ], [ %i.ax, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIhtdE13assembledSizeEmm.exit ]
-  %.090116 = phi i64 [ 0, %.lr.ph ], [ %i.bv, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIhtdE13assembledSizeEmm.exit ] ; 25 uses
+  %.090116 = phi i64 [ 0, %.lr.ph ], [ %i.bv, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIhtdE13assembledSizeEmm.exit ] ; 24 uses
   %.091115 = phi i64 [ 0, %.lr.ph ], [ %.1, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIhtdE13assembledSizeEmm.exit ] ; 8 uses
   %.092114 = phi i64 [ 1, %.lr.ph ], [ %.0.i, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIhtdE13assembledSizeEmm.exit ] ; 16 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %.090116
@@ -2096,7 +2093,7 @@ _ZNK4mlir13sparse_tensor19SparseTensorStorageIhtdE13assembledSizeEmm.exit: ; pre
   br i1 %exitcond.not, label %_ZNK4mlir13sparse_tensor19SparseTensorStorageIhtdE13assembledSizeEmm.exit106, label %bb.b, !llvm.loop !1592
 
 bb.j:                                             ; preds = %bb.c, %bb.c
-  %i.bw = sub nuw i64 %3, %.090116                ; 13 uses
+  %i.bw = sub i64 %3, %.090116                    ; 14 uses
   %i.bx = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %.091115 ; 2 uses
   %i.by = load i64, ptr %i.bx, align 8, !tbaa !165
   %i.bz = inttoptr i64 %i.by to ptr               ; 4 uses
@@ -2147,8 +2144,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %.pre132 = load ptr, ptr %i.c, align 8, !tbaa !618
   %i.cx = shl nuw nsw i64 %i.cw, 1
   %i.cy = add nsw i64 %i.cw, -1
-  %9 = sub i64 %3, %.090116
-  %i.cz = shl i64 %9, 1
+  %i.cz = shl i64 %i.bw, 1
   %i.da = mul i64 %i.cy, %i.cz
   %i.db = getelementptr i8, ptr %i.cd, i64 %i.da
   %min.iters.check = icmp ult i8 %.089.fr, 8
@@ -2551,7 +2547,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNK4mlir13sparse_tensor19SparseTensorStorageImtfE13assembledSizeEmm.exit
   %i.e = phi ptr [ %.pre, %.lr.ph ], [ %i.av, %_ZNK4mlir13sparse_tensor19SparseTensorStorageImtfE13assembledSizeEmm.exit ]
-  %.090117 = phi i64 [ 0, %.lr.ph ], [ %i.bq, %_ZNK4mlir13sparse_tensor19SparseTensorStorageImtfE13assembledSizeEmm.exit ] ; 28 uses
+  %.090117 = phi i64 [ 0, %.lr.ph ], [ %i.bq, %_ZNK4mlir13sparse_tensor19SparseTensorStorageImtfE13assembledSizeEmm.exit ] ; 27 uses
   %.091116 = phi i64 [ 0, %.lr.ph ], [ %.1, %_ZNK4mlir13sparse_tensor19SparseTensorStorageImtfE13assembledSizeEmm.exit ] ; 8 uses
   %.092115 = phi i64 [ 1, %.lr.ph ], [ %.0.i, %_ZNK4mlir13sparse_tensor19SparseTensorStorageImtfE13assembledSizeEmm.exit ] ; 16 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %.090117
@@ -2673,7 +2669,7 @@ _ZNK4mlir13sparse_tensor19SparseTensorStorageImtfE13assembledSizeEmm.exit: ; pre
   br i1 %exitcond.not, label %_ZNK4mlir13sparse_tensor19SparseTensorStorageImtfE13assembledSizeEmm.exit107, label %bb.b, !llvm.loop !1753
 
 bb.j:                                             ; preds = %bb.c, %bb.c
-  %i.br = sub i64 %3, %.090117                    ; 14 uses
+  %i.br = sub i64 %3, %.090117                    ; 15 uses
   %i.bs = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %.091116 ; 2 uses
   %i.bt = load i64, ptr %i.bs, align 8, !tbaa !165
   %i.bu = inttoptr i64 %i.bt to ptr               ; 4 uses
@@ -2750,8 +2746,7 @@ _ZNSt6vectorItSaItEE6resizeEm.exit.prol:          ; preds = %bb.n, %.lr.ph123.sp
 .lr.ph123.split.us.preheader:                     ; preds = %.lr.ph123
   %i.cx = shl i64 %.089.fr, 1
   %i.cy = add i64 %.089.fr, -1
-  %9 = sub i64 %3, %.090117
-  %i.cz = shl i64 %9, 1
+  %i.cz = shl i64 %i.br, 1
   %i.da = mul i64 %i.cy, %i.cz
   %i.db = getelementptr i8, ptr %i.by, i64 %i.da
   %min.iters.check = icmp ult i64 %.089.fr, 8
@@ -3154,7 +3149,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIjtfE13assembledSizeEmm.exit
   %i.e = phi ptr [ %.pre, %.lr.ph ], [ %i.ax, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIjtfE13assembledSizeEmm.exit ]
-  %.090117 = phi i64 [ 0, %.lr.ph ], [ %i.bu, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIjtfE13assembledSizeEmm.exit ] ; 25 uses
+  %.090117 = phi i64 [ 0, %.lr.ph ], [ %i.bu, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIjtfE13assembledSizeEmm.exit ] ; 24 uses
   %.091116 = phi i64 [ 0, %.lr.ph ], [ %.1, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIjtfE13assembledSizeEmm.exit ] ; 8 uses
   %.092115 = phi i64 [ 1, %.lr.ph ], [ %.0.i, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIjtfE13assembledSizeEmm.exit ] ; 16 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %.090117
@@ -3280,7 +3275,7 @@ _ZNK4mlir13sparse_tensor19SparseTensorStorageIjtfE13assembledSizeEmm.exit: ; pre
   br i1 %exitcond.not, label %_ZNK4mlir13sparse_tensor19SparseTensorStorageIjtfE13assembledSizeEmm.exit107, label %bb.b, !llvm.loop !1884
 
 bb.j:                                             ; preds = %bb.c, %bb.c
-  %i.bv = sub nuw i64 %3, %.090117                ; 13 uses
+  %i.bv = sub i64 %3, %.090117                    ; 14 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %.091116 ; 2 uses
   %i.bx = load i64, ptr %i.bw, align 8, !tbaa !165
   %i.by = inttoptr i64 %i.bx to ptr               ; 4 uses
@@ -3331,8 +3326,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %.pre133 = load ptr, ptr %i.c, align 8, !tbaa !618
   %i.cw = shl nuw nsw i64 %i.cv, 1
   %i.cx = add nsw i64 %i.cv, -1
-  %9 = sub i64 %3, %.090117
-  %i.cy = shl i64 %9, 1
+  %i.cy = shl i64 %i.bv, 1
   %i.cz = mul i64 %i.cx, %i.cy
   %i.da = getelementptr i8, ptr %i.cc, i64 %i.cz
   %min.iters.check = icmp ult i32 %.089.fr, 8
@@ -3735,7 +3729,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttfE13assembledSizeEmm.exit
   %i.e = phi ptr [ %.pre, %.lr.ph ], [ %i.ax, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttfE13assembledSizeEmm.exit ]
-  %.090117 = phi i64 [ 0, %.lr.ph ], [ %i.bu, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttfE13assembledSizeEmm.exit ] ; 25 uses
+  %.090117 = phi i64 [ 0, %.lr.ph ], [ %i.bu, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttfE13assembledSizeEmm.exit ] ; 24 uses
   %.091116 = phi i64 [ 0, %.lr.ph ], [ %.1, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttfE13assembledSizeEmm.exit ] ; 8 uses
   %.092115 = phi i64 [ 1, %.lr.ph ], [ %.0.i, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttfE13assembledSizeEmm.exit ] ; 16 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %.090117
@@ -3861,7 +3855,7 @@ _ZNK4mlir13sparse_tensor19SparseTensorStorageIttfE13assembledSizeEmm.exit: ; pre
   br i1 %exitcond.not, label %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttfE13assembledSizeEmm.exit107, label %bb.b, !llvm.loop !2015
 
 bb.j:                                             ; preds = %bb.c, %bb.c
-  %i.bv = sub nuw i64 %3, %.090117                ; 13 uses
+  %i.bv = sub i64 %3, %.090117                    ; 14 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %.091116 ; 2 uses
   %i.bx = load i64, ptr %i.bw, align 8, !tbaa !165
   %i.by = inttoptr i64 %i.bx to ptr               ; 4 uses
@@ -3912,8 +3906,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %.pre133 = load ptr, ptr %i.c, align 8, !tbaa !618
   %i.cw = shl nuw nsw i64 %i.cv, 1
   %i.cx = add nsw i64 %i.cv, -1
-  %9 = sub i64 %3, %.090117
-  %i.cy = shl i64 %9, 1
+  %i.cy = shl i64 %i.bv, 1
   %i.cz = mul i64 %i.cx, %i.cy
   %i.da = getelementptr i8, ptr %i.cc, i64 %i.cz
   %min.iters.check = icmp ult i16 %.089.fr, 8
@@ -4316,7 +4309,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIhtfE13assembledSizeEmm.exit
   %i.e = phi ptr [ %.pre, %.lr.ph ], [ %i.ax, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIhtfE13assembledSizeEmm.exit ]
-  %.090116 = phi i64 [ 0, %.lr.ph ], [ %i.bv, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIhtfE13assembledSizeEmm.exit ] ; 25 uses
+  %.090116 = phi i64 [ 0, %.lr.ph ], [ %i.bv, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIhtfE13assembledSizeEmm.exit ] ; 24 uses
   %.091115 = phi i64 [ 0, %.lr.ph ], [ %.1, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIhtfE13assembledSizeEmm.exit ] ; 8 uses
   %.092114 = phi i64 [ 1, %.lr.ph ], [ %.0.i, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIhtfE13assembledSizeEmm.exit ] ; 16 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %.090116
@@ -4442,7 +4435,7 @@ _ZNK4mlir13sparse_tensor19SparseTensorStorageIhtfE13assembledSizeEmm.exit: ; pre
   br i1 %exitcond.not, label %_ZNK4mlir13sparse_tensor19SparseTensorStorageIhtfE13assembledSizeEmm.exit106, label %bb.b, !llvm.loop !2146
 
 bb.j:                                             ; preds = %bb.c, %bb.c
-  %i.bw = sub nuw i64 %3, %.090116                ; 13 uses
+  %i.bw = sub i64 %3, %.090116                    ; 14 uses
   %i.bx = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %.091115 ; 2 uses
   %i.by = load i64, ptr %i.bx, align 8, !tbaa !165
   %i.bz = inttoptr i64 %i.by to ptr               ; 4 uses
@@ -4493,8 +4486,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %.pre132 = load ptr, ptr %i.c, align 8, !tbaa !618
   %i.cx = shl nuw nsw i64 %i.cw, 1
   %i.cy = add nsw i64 %i.cw, -1
-  %9 = sub i64 %3, %.090116
-  %i.cz = shl i64 %9, 1
+  %i.cz = shl i64 %i.bw, 1
   %i.da = mul i64 %i.cy, %i.cz
   %i.db = getelementptr i8, ptr %i.cd, i64 %i.da
   %min.iters.check = icmp ult i8 %.089.fr, 8
@@ -4897,7 +4889,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNK4mlir13sparse_tensor19SparseTensorStorageItt3f16E13assembledSizeEmm.exit
   %i.e = phi ptr [ %.pre, %.lr.ph ], [ %i.ax, %_ZNK4mlir13sparse_tensor19SparseTensorStorageItt3f16E13assembledSizeEmm.exit ]
-  %.090117 = phi i64 [ 0, %.lr.ph ], [ %i.bu, %_ZNK4mlir13sparse_tensor19SparseTensorStorageItt3f16E13assembledSizeEmm.exit ] ; 25 uses
+  %.090117 = phi i64 [ 0, %.lr.ph ], [ %i.bu, %_ZNK4mlir13sparse_tensor19SparseTensorStorageItt3f16E13assembledSizeEmm.exit ] ; 24 uses
   %.091116 = phi i64 [ 0, %.lr.ph ], [ %.1, %_ZNK4mlir13sparse_tensor19SparseTensorStorageItt3f16E13assembledSizeEmm.exit ] ; 8 uses
   %.092115 = phi i64 [ 1, %.lr.ph ], [ %.0.i, %_ZNK4mlir13sparse_tensor19SparseTensorStorageItt3f16E13assembledSizeEmm.exit ] ; 16 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %.090117
@@ -5023,7 +5015,7 @@ _ZNK4mlir13sparse_tensor19SparseTensorStorageItt3f16E13assembledSizeEmm.exit: ; 
   br i1 %exitcond.not, label %_ZNK4mlir13sparse_tensor19SparseTensorStorageItt3f16E13assembledSizeEmm.exit107, label %bb.b, !llvm.loop !2599
 
 bb.j:                                             ; preds = %bb.c, %bb.c
-  %i.bv = sub nuw i64 %3, %.090117                ; 13 uses
+  %i.bv = sub i64 %3, %.090117                    ; 14 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %.091116 ; 2 uses
   %i.bx = load i64, ptr %i.bw, align 8, !tbaa !165
   %i.by = inttoptr i64 %i.bx to ptr               ; 4 uses
@@ -5074,8 +5066,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %.pre133 = load ptr, ptr %i.c, align 8, !tbaa !618
   %i.cw = shl nuw nsw i64 %i.cv, 1
   %i.cx = add nsw i64 %i.cv, -1
-  %9 = sub i64 %3, %.090117
-  %i.cy = shl i64 %9, 1
+  %i.cy = shl i64 %i.bv, 1
   %i.cz = mul i64 %i.cx, %i.cy
   %i.da = getelementptr i8, ptr %i.cc, i64 %i.cz
   %min.iters.check = icmp ult i16 %.089.fr, 8
@@ -5478,7 +5469,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNK4mlir13sparse_tensor19SparseTensorStorageItt4bf16E13assembledSizeEmm.exit
   %i.e = phi ptr [ %.pre, %.lr.ph ], [ %i.ax, %_ZNK4mlir13sparse_tensor19SparseTensorStorageItt4bf16E13assembledSizeEmm.exit ]
-  %.090117 = phi i64 [ 0, %.lr.ph ], [ %i.bu, %_ZNK4mlir13sparse_tensor19SparseTensorStorageItt4bf16E13assembledSizeEmm.exit ] ; 25 uses
+  %.090117 = phi i64 [ 0, %.lr.ph ], [ %i.bu, %_ZNK4mlir13sparse_tensor19SparseTensorStorageItt4bf16E13assembledSizeEmm.exit ] ; 24 uses
   %.091116 = phi i64 [ 0, %.lr.ph ], [ %.1, %_ZNK4mlir13sparse_tensor19SparseTensorStorageItt4bf16E13assembledSizeEmm.exit ] ; 8 uses
   %.092115 = phi i64 [ 1, %.lr.ph ], [ %.0.i, %_ZNK4mlir13sparse_tensor19SparseTensorStorageItt4bf16E13assembledSizeEmm.exit ] ; 16 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %.090117
@@ -5604,7 +5595,7 @@ _ZNK4mlir13sparse_tensor19SparseTensorStorageItt4bf16E13assembledSizeEmm.exit: ;
   br i1 %exitcond.not, label %_ZNK4mlir13sparse_tensor19SparseTensorStorageItt4bf16E13assembledSizeEmm.exit107, label %bb.b, !llvm.loop !2669
 
 bb.j:                                             ; preds = %bb.c, %bb.c
-  %i.bv = sub nuw i64 %3, %.090117                ; 13 uses
+  %i.bv = sub i64 %3, %.090117                    ; 14 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %.091116 ; 2 uses
   %i.bx = load i64, ptr %i.bw, align 8, !tbaa !165
   %i.by = inttoptr i64 %i.bx to ptr               ; 4 uses
@@ -5655,8 +5646,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %.pre133 = load ptr, ptr %i.c, align 8, !tbaa !618
   %i.cw = shl nuw nsw i64 %i.cv, 1
   %i.cx = add nsw i64 %i.cv, -1
-  %9 = sub i64 %3, %.090117
-  %i.cy = shl i64 %9, 1
+  %i.cy = shl i64 %i.bv, 1
   %i.cz = mul i64 %i.cx, %i.cy
   %i.da = getelementptr i8, ptr %i.cc, i64 %i.cz
   %min.iters.check = icmp ult i16 %.089.fr, 8
@@ -6059,7 +6049,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttlE13assembledSizeEmm.exit
   %i.e = phi ptr [ %.pre, %.lr.ph ], [ %i.ax, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttlE13assembledSizeEmm.exit ]
-  %.090117 = phi i64 [ 0, %.lr.ph ], [ %i.bu, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttlE13assembledSizeEmm.exit ] ; 25 uses
+  %.090117 = phi i64 [ 0, %.lr.ph ], [ %i.bu, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttlE13assembledSizeEmm.exit ] ; 24 uses
   %.091116 = phi i64 [ 0, %.lr.ph ], [ %.1, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttlE13assembledSizeEmm.exit ] ; 8 uses
   %.092115 = phi i64 [ 1, %.lr.ph ], [ %.0.i, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttlE13assembledSizeEmm.exit ] ; 16 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %.090117
@@ -6185,7 +6175,7 @@ _ZNK4mlir13sparse_tensor19SparseTensorStorageIttlE13assembledSizeEmm.exit: ; pre
   br i1 %exitcond.not, label %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttlE13assembledSizeEmm.exit107, label %bb.b, !llvm.loop !3196
 
 bb.j:                                             ; preds = %bb.c, %bb.c
-  %i.bv = sub nuw i64 %3, %.090117                ; 13 uses
+  %i.bv = sub i64 %3, %.090117                    ; 14 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %.091116 ; 2 uses
   %i.bx = load i64, ptr %i.bw, align 8, !tbaa !165
   %i.by = inttoptr i64 %i.bx to ptr               ; 4 uses
@@ -6236,8 +6226,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %.pre133 = load ptr, ptr %i.c, align 8, !tbaa !618
   %i.cw = shl nuw nsw i64 %i.cv, 1
   %i.cx = add nsw i64 %i.cv, -1
-  %9 = sub i64 %3, %.090117
-  %i.cy = shl i64 %9, 1
+  %i.cy = shl i64 %i.bv, 1
   %i.cz = mul i64 %i.cx, %i.cy
   %i.da = getelementptr i8, ptr %i.cc, i64 %i.cz
   %min.iters.check = icmp ult i16 %.089.fr, 8
@@ -6640,7 +6629,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttiE13assembledSizeEmm.exit
   %i.e = phi ptr [ %.pre, %.lr.ph ], [ %i.ax, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttiE13assembledSizeEmm.exit ]
-  %.090117 = phi i64 [ 0, %.lr.ph ], [ %i.bu, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttiE13assembledSizeEmm.exit ] ; 25 uses
+  %.090117 = phi i64 [ 0, %.lr.ph ], [ %i.bu, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttiE13assembledSizeEmm.exit ] ; 24 uses
   %.091116 = phi i64 [ 0, %.lr.ph ], [ %.1, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttiE13assembledSizeEmm.exit ] ; 8 uses
   %.092115 = phi i64 [ 1, %.lr.ph ], [ %.0.i, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttiE13assembledSizeEmm.exit ] ; 16 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %.090117
@@ -6766,7 +6755,7 @@ _ZNK4mlir13sparse_tensor19SparseTensorStorageIttiE13assembledSizeEmm.exit: ; pre
   br i1 %exitcond.not, label %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttiE13assembledSizeEmm.exit107, label %bb.b, !llvm.loop !3234
 
 bb.j:                                             ; preds = %bb.c, %bb.c
-  %i.bv = sub nuw i64 %3, %.090117                ; 13 uses
+  %i.bv = sub i64 %3, %.090117                    ; 14 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %.091116 ; 2 uses
   %i.bx = load i64, ptr %i.bw, align 8, !tbaa !165
   %i.by = inttoptr i64 %i.bx to ptr               ; 4 uses
@@ -6817,8 +6806,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %.pre133 = load ptr, ptr %i.c, align 8, !tbaa !618
   %i.cw = shl nuw nsw i64 %i.cv, 1
   %i.cx = add nsw i64 %i.cv, -1
-  %9 = sub i64 %3, %.090117
-  %i.cy = shl i64 %9, 1
+  %i.cy = shl i64 %i.bv, 1
   %i.cz = mul i64 %i.cx, %i.cy
   %i.da = getelementptr i8, ptr %i.cc, i64 %i.cz
   %min.iters.check = icmp ult i16 %.089.fr, 8
@@ -7221,7 +7209,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttsE13assembledSizeEmm.exit
   %i.e = phi ptr [ %.pre, %.lr.ph ], [ %i.ax, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttsE13assembledSizeEmm.exit ]
-  %.090117 = phi i64 [ 0, %.lr.ph ], [ %i.bu, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttsE13assembledSizeEmm.exit ] ; 25 uses
+  %.090117 = phi i64 [ 0, %.lr.ph ], [ %i.bu, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttsE13assembledSizeEmm.exit ] ; 24 uses
   %.091116 = phi i64 [ 0, %.lr.ph ], [ %.1, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttsE13assembledSizeEmm.exit ] ; 8 uses
   %.092115 = phi i64 [ 1, %.lr.ph ], [ %.0.i, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttsE13assembledSizeEmm.exit ] ; 16 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %.090117
@@ -7347,7 +7335,7 @@ _ZNK4mlir13sparse_tensor19SparseTensorStorageIttsE13assembledSizeEmm.exit: ; pre
   br i1 %exitcond.not, label %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttsE13assembledSizeEmm.exit107, label %bb.b, !llvm.loop !3272
 
 bb.j:                                             ; preds = %bb.c, %bb.c
-  %i.bv = sub nuw i64 %3, %.090117                ; 13 uses
+  %i.bv = sub i64 %3, %.090117                    ; 14 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %.091116 ; 2 uses
   %i.bx = load i64, ptr %i.bw, align 8, !tbaa !165
   %i.by = inttoptr i64 %i.bx to ptr               ; 4 uses
@@ -7398,8 +7386,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %.pre133 = load ptr, ptr %i.c, align 8, !tbaa !618
   %i.cw = shl nuw nsw i64 %i.cv, 1
   %i.cx = add nsw i64 %i.cv, -1
-  %9 = sub i64 %3, %.090117
-  %i.cy = shl i64 %9, 1
+  %i.cy = shl i64 %i.bv, 1
   %i.cz = mul i64 %i.cx, %i.cy
   %i.da = getelementptr i8, ptr %i.cc, i64 %i.cz
   %min.iters.check = icmp ult i16 %.089.fr, 8
@@ -7802,7 +7789,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttaE13assembledSizeEmm.exit
   %i.e = phi ptr [ %.pre, %.lr.ph ], [ %i.ax, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttaE13assembledSizeEmm.exit ]
-  %.090117 = phi i64 [ 0, %.lr.ph ], [ %i.bu, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttaE13assembledSizeEmm.exit ] ; 25 uses
+  %.090117 = phi i64 [ 0, %.lr.ph ], [ %i.bu, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttaE13assembledSizeEmm.exit ] ; 24 uses
   %.091116 = phi i64 [ 0, %.lr.ph ], [ %.1, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttaE13assembledSizeEmm.exit ] ; 8 uses
   %.092115 = phi i64 [ 1, %.lr.ph ], [ %.0.i, %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttaE13assembledSizeEmm.exit ] ; 16 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %.090117
@@ -7928,7 +7915,7 @@ _ZNK4mlir13sparse_tensor19SparseTensorStorageIttaE13assembledSizeEmm.exit: ; pre
   br i1 %exitcond.not, label %_ZNK4mlir13sparse_tensor19SparseTensorStorageIttaE13assembledSizeEmm.exit107, label %bb.b, !llvm.loop !3310
 
 bb.j:                                             ; preds = %bb.c, %bb.c
-  %i.bv = sub nuw i64 %3, %.090117                ; 13 uses
+  %i.bv = sub i64 %3, %.090117                    ; 14 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %.091116 ; 2 uses
   %i.bx = load i64, ptr %i.bw, align 8, !tbaa !165
   %i.by = inttoptr i64 %i.bx to ptr               ; 4 uses
@@ -7979,8 +7966,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %.pre133 = load ptr, ptr %i.c, align 8, !tbaa !618
   %i.cw = shl nuw nsw i64 %i.cv, 1
   %i.cx = add nsw i64 %i.cv, -1
-  %9 = sub i64 %3, %.090117
-  %i.cy = shl i64 %9, 1
+  %i.cy = shl i64 %i.bv, 1
   %i.cz = mul i64 %i.cx, %i.cy
   %i.da = getelementptr i8, ptr %i.cc, i64 %i.cz
   %min.iters.check = icmp ult i16 %.089.fr, 8

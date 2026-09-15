@@ -158,7 +158,7 @@ bb.a:
 
 .preheader.preheader:                             ; preds = %bb.a
   %i.e = zext nneg i32 %1 to i64                  ; 2 uses
-  %i.f = shl nuw nsw i64 %i.e, 3                  ; 2 uses
+  %i.f = shl nuw nsw i64 %i.e, 3
   %i.g = add nsw i64 %i.f, -8
   %i.h = mul i32 %1, 3
   %i.i = zext i32 %i.h to i64
@@ -174,14 +174,14 @@ bb.a:
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge75
   %indvar = phi i64 [ 0, %.preheader.preheader ], [ %indvar.next, %._crit_edge75 ] ; 8 uses
-  %indvars.iv = phi i64 [ %i.e, %.preheader.preheader ], [ %indvars.iv.next, %._crit_edge75 ] ; 10 uses
+  %indvars.iv = phi i64 [ %i.e, %.preheader.preheader ], [ %indvars.iv.next, %._crit_edge75 ] ; 11 uses
   %i.r = shl i64 %indvar, 1
   %i.s = sub i64 %i.q, %i.r
   %i.t = add i64 %indvar, %i.n
   %i.u = add i64 %indvar, %i.o
-  %2 = mul nsw i64 %indvar, -8                    ; 2 uses
-  %3 = add i64 %i.g, %2
-  %4 = add i64 %i.f, %2                           ; 2 uses
+  %2 = shl i64 %indvar, 3
+  %3 = sub i64 %i.g, %2
+  %4 = shl nsw i64 %indvars.iv, 3
   %i.v = mul i64 %indvar, 4294967293
   %i.w = add i64 %i.v, %i.i
   %i.x = add i64 %indvar, %i.k
@@ -198,12 +198,11 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.lr.ph, %._crit_edge
   %indvars.iv83 = phi i64 [ 0, %.lr.ph.i.lr.ph ], [ %indvars.iv.next84, %._crit_edge ] ; 18 uses
-  %indvars.iv78 = phi i64 [ %indvars.iv, %.lr.ph.i.lr.ph ], [ %indvars.iv.next79, %._crit_edge ] ; 2 uses
+  %indvars.iv78 = phi i64 [ %indvars.iv, %.lr.ph.i.lr.ph ], [ %indvars.iv.next79, %._crit_edge ] ; 3 uses
   %i.ad = trunc i64 %indvars.iv83 to i32          ; 2 uses
   %i.ae = sub i64 %i.t, %indvars.iv83
-  %i.af = shl nuw nsw i64 %indvars.iv83, 3        ; 3 uses
-  %5 = add i64 %3, %i.af
-  %i.ag = add i64 %4, %i.af
+  %i.af = shl nuw nsw i64 %indvars.iv83, 3        ; 2 uses
+  %i.ag = add i64 %3, %i.af
   %i.ah = add i64 %i.w, %indvars.iv83
   %i.ai = sub i64 %i.x, %indvars.iv83
   %indvars86 = trunc i64 %indvars.iv83 to i32
@@ -354,8 +353,7 @@ ApplyGivens.exit.loopexit:                        ; preds = %.lr.ph53.i
   %indvar94 = phi i64 [ %indvar.next95, %ApplyGivens.exit72 ], [ 0, %ApplyGivens.exit.loopexit ] ; 5 uses
   %indvars.iv80 = phi i64 [ %indvars.iv.next81, %ApplyGivens.exit72 ], [ %indvars.iv78, %ApplyGivens.exit.loopexit ] ; 3 uses
   %i.dj = mul i64 %4, %indvar94                   ; 2 uses
-  %6 = add i64 %5, %i.dj                          ; 2 uses
-  %i.dk = add i64 %i.ag, %i.dj
+  %i.dk = add i64 %i.ag, %i.dj                    ; 2 uses
   %i.dl = mul i64 %indvars.iv, %indvar94
   %i.dm = add i64 %i.ah, %i.dl
   %i.dn = trunc i64 %i.dm to i32
@@ -365,8 +363,9 @@ ApplyGivens.exit.loopexit:                        ; preds = %.lr.ph53.i
   %i.dq = trunc i64 %i.dp to i32
   %i.dr = add i32 %smin, %i.dq
   %i.ds = zext i32 %i.dr to i64
-  %i.dt = shl nuw nsw i64 %i.ds, 3
-  %i.du = add i64 %i.dk, %i.dt                    ; 2 uses
+  %5 = add nuw i64 %indvars.iv78, %i.ds
+  %i.dt = shl i64 %5, 3
+  %i.du = add i64 %i.dt, %i.dj                    ; 2 uses
   %i.dv = add nsw i64 %indvars.iv80, -1           ; 7 uses
   %i.dw = getelementptr inbounds [8 x i8], ptr %0, i64 %i.dv
   %i.dx = load ptr, ptr %i.dw, align 8, !tbaa !11 ; 2 uses
@@ -404,9 +403,9 @@ ApplyGivens.exit.loopexit:                        ; preds = %.lr.ph53.i
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i62
-  %scevgep = getelementptr i8, ptr %i.eo, i64 %6
+  %scevgep = getelementptr i8, ptr %i.eo, i64 %i.dk
   %scevgep96 = getelementptr i8, ptr %i.eo, i64 %i.du
-  %scevgep97 = getelementptr i8, ptr %i.eq, i64 %6
+  %scevgep97 = getelementptr i8, ptr %i.eq, i64 %i.dk
   %scevgep98 = getelementptr i8, ptr %i.eq, i64 %i.du
   %bound0 = icmp ult ptr %scevgep, %scevgep98
   %bound1 = icmp ult ptr %scevgep97, %scevgep96

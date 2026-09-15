@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 ._crit_edge92.i:                                  ; preds = %.lr.ph91.i.epil.preheader, %._crit_edge92.i.loopexit.unr-lcssa, %._crit_edge.i
   store i32 0, ptr %i.j, align 4, !tbaa !33
   %i.ca = add nuw nsw i32 %i.n, 1                 ; 3 uses
-  %i.cb = sub i32 %i.ca, %.069.lcssa.i            ; 4 uses
+  %i.cb = sub nsw i32 %i.ca, %.069.lcssa.i        ; 4 uses
   br i1 %.not7584.i, label %._crit_edge106.split.i, label %.lr.ph97.preheader.i
 
 .lr.ph97.preheader.i:                             ; preds = %._crit_edge92.i
@@ -241,7 +241,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not77103.i, label %._crit_edge106.split.i, label %.lr.ph101.i.preheader
 
 .lr.ph101.i.preheader:                            ; preds = %.preheader.i
-  %i.ch = zext nneg i32 %i.cb to i64              ; 2 uses
+  %i.ch = zext nneg i32 %i.cb to i64
   %i.ci = add nuw nsw i32 %.069.lcssa.i, 12
   %i.cj = sub nuw nsw i32 %i.ci, %i.n
   %i.ck = zext i32 %.069.lcssa.i to i64
@@ -279,16 +279,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %niter181.ncmp.1, label %.preheader.i.unr-lcssa, label %.lr.ph97.i, !llvm.loop !91
 
 .lr.ph101.i:                                      ; preds = %.lr.ph101.i.preheader, %._crit_edge102.i
-  %indvar = phi i64 [ 0, %.lr.ph101.i.preheader ], [ %indvar.next, %._crit_edge102.i ] ; 2 uses
-  %indvars.iv = phi i64 [ %i.ch, %.lr.ph101.i.preheader ], [ %indvars.iv.next, %._crit_edge102.i ] ; 3 uses
+  %indvars.iv = phi i64 [ %i.ch, %.lr.ph101.i.preheader ], [ %indvars.iv.next, %._crit_edge102.i ] ; 4 uses
   %i.cz = getelementptr inbounds nuw [68 x i8], ptr %i.f, i64 %indvars.iv ; 6 uses
   %i.da = trunc nuw i64 %indvars.iv to i32        ; 6 uses
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph101.i
-  %9 = add i64 %indvar, %i.ch
-  %i.db = mul i64 %9, 68
-  %i.dc = add i64 %i.db, -1
+  %i.db = mul nuw nsw i64 %indvars.iv, 68
+  %i.dc = add nsw i64 %i.db, -1
   %diff.check = icmp ult i64 %i.dc, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -376,7 +374,6 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next to i32
   %exitcond.not = icmp eq i32 %i.cj, %lftr.wideiv
-  %indvar.next = add i64 %indvar, 1
   br i1 %exitcond.not, label %._crit_edge106.split.i, label %.lr.ph101.i, !llvm.loop !95
 
 ._crit_edge106.split.i:                           ; preds = %._crit_edge102.i, %.preheader.i, %._crit_edge92.i

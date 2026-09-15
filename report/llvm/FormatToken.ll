@@ -204,9 +204,8 @@ _ZN4llvm15SmallVectorImplIjE7reserveEm.exit125:   ; preds = %bb.al
   br label %bb.am
 
 bb.am:                                            ; preds = %.lr.ph195, %_ZN5clang6format18CommaSeparatedList12ColumnFormatD2Ev.exit.jt13
-  %indvar = phi i64 [ 0, %.lr.ph195 ], [ %indvar.next, %_ZN5clang6format18CommaSeparatedList12ColumnFormatD2Ev.exit.jt13 ] ; 2 uses
-  %indvars.iv205 = phi i64 [ 1, %.lr.ph195 ], [ %indvars.iv.next206, %_ZN5clang6format18CommaSeparatedList12ColumnFormatD2Ev.exit.jt13 ] ; 19 uses
-  %i.ho = shl i64 %indvar, 2
+  %indvars.iv205 = phi i64 [ 1, %.lr.ph195 ], [ %indvars.iv.next206, %_ZN5clang6format18CommaSeparatedList12ColumnFormatD2Ev.exit.jt13 ] ; 20 uses
+  %i.ho = shl i64 %indvars.iv205, 2
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #16
   store ptr %i.hg, ptr %i.hf, align 8, !tbaa !170
   store i32 0, ptr %i.hh, align 8, !tbaa !169
@@ -344,8 +343,7 @@ bb.aq:                                            ; preds = %bb.ao, %bb.ap
 
 vector.memcheck:                                  ; preds = %.lr.ph191
   %i.jb = getelementptr i8, ptr %.pre219, i64 %i.ho
-  %scevgep = getelementptr i8, ptr %i.jb, i64 4
-  %bound0 = icmp ult ptr %i.hl, %scevgep
+  %bound0 = icmp ult ptr %i.hl, %i.jb
   %bound1 = icmp ult ptr %.pre219, %i.hj
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
@@ -483,7 +481,6 @@ _ZN5clang6format18CommaSeparatedList12ColumnFormatD2Ev.exit.jt13: ; preds = %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #16
   %indvars.iv.next206 = add nuw nsw i64 %indvars.iv205, 1 ; 2 uses
   %exitcond209 = icmp eq i64 %indvars.iv.next206, %wide.trip.count208
-  %indvar.next = add i64 %indvar, 1
   br i1 %exitcond209, label %._crit_edge196, label %bb.am, !llvm.loop !225
 
 _ZN5clang6format18CommaSeparatedList12ColumnFormatD2Ev.exit.jt11: ; preds = %bb.au, %"_ZZN5clang6format18CommaSeparatedList25precomputeFormattingInfosEPKNS0_11FormatTokenEENK3$_0clEv.exit.jt11"

@@ -205,7 +205,7 @@ _ZNK5Eigen19ColPivHouseholderQRINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEEE4rankEv.exit:
 _ZNK5Eigen19ColPivHouseholderQRINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEEE4rankEv.exit.thread: ; preds = %_ZNK5Eigen19ColPivHouseholderQRINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEEE4rankEv.exit
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 352
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 384
-  %i.bf = add nsw i64 %.lcssa180, -1              ; 5 uses
+  %i.bf = add nsw i64 %.lcssa180, -1              ; 4 uses
   %.not166 = icmp eq i64 %.lcssa180, 0
   br i1 %.not166, label %.loopexit, label %.lr.ph
 
@@ -244,10 +244,9 @@ _ZNK5Eigen19ColPivHouseholderQRINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEEE4rankEv.exit.
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN5Eigen9DenseBaseINS_5BlockINS1_INS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELi4ELi1ELb1EEELin1ELi1ELb0EEEE4swapIS5_EEvRKNS0_IT_EE.exit49
-  %indvar = phi i64 [ 0, %.lr.ph ], [ %indvar.next, %_ZN5Eigen9DenseBaseINS_5BlockINS1_INS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELi4ELi1ELb1EEELin1ELi1ELb0EEEE4swapIS5_EEvRKNS0_IT_EE.exit49 ] ; 8 uses
-  %.0165 = phi i64 [ %i.bf, %.lr.ph ], [ %i.gg, %_ZN5Eigen9DenseBaseINS_5BlockINS1_INS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELi4ELi1ELb1EEELin1ELi1ELb0EEEE4swapIS5_EEvRKNS0_IT_EE.exit49 ] ; 20 uses
-  %3 = sub i64 %i.bf, %indvar
-  %i.bu = shl i64 %3, 5
+  %indvar = phi i64 [ 0, %.lr.ph ], [ %indvar.next, %_ZN5Eigen9DenseBaseINS_5BlockINS1_INS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELi4ELi1ELb1EEELin1ELi1ELb0EEEE4swapIS5_EEvRKNS0_IT_EE.exit49 ] ; 7 uses
+  %.0165 = phi i64 [ %i.bf, %.lr.ph ], [ %i.gg, %_ZN5Eigen9DenseBaseINS_5BlockINS1_INS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELi4ELi1ELb1EEELin1ELi1ELb0EEEE4swapIS5_EEvRKNS0_IT_EE.exit49 ] ; 21 uses
+  %i.bu = shl i64 %.0165, 5
   %scevgep200 = getelementptr i8, ptr %0, i64 %i.bu
   %i.bv = sub i64 %.lcssa180, %indvar
   %i.bw = shl i64 %i.bv, 3
