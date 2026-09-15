@@ -205,14 +205,15 @@ define dso_local noundef zeroext i1 @_ZN4llvm10BitTracker12RegisterCell4meetERKS
 bb.a:
   %3 = alloca %"struct.llvm::BitTracker::BitRef", align 4 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !49
-  %i.c = and i32 %i.b, 65535                      ; 2 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !49   ; 2 uses
+  %i.c = and i32 %i.b, 65535
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %wide.trip.count = zext nneg i32 %i.c to i64
+  %.mask = and i32 %i.b, 65535
+  %wide.trip.count = zext nneg i32 %.mask to i64
   %i.e = icmp eq i32 %2, 0
   br label %bb.b
 
@@ -615,28 +616,29 @@ _ZNK4llvm10BitTracker8BitValueeqERKS1_.exit:      ; preds = %bb.b
 define dso_local noundef zeroext i1 @_ZNK4llvm10BitTracker12RegisterCelleqERKS1_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(400) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(400) %1) local_unnamed_addr #6 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !49
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !49   ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !49   ; 3 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !49
   %i.e = and i32 %i.b, 65535
-  %.not = icmp eq i32 %i.d, %i.e
+  %.not = icmp eq i32 %i.e, %i.d
   br i1 %.not, label %.preheader, label %_ZNK4llvm10BitTracker8BitValueneERKS1_.exit.thread
 
 .preheader:                                       ; preds = %bb.a
-  %.not1213 = icmp eq i32 %i.d, 0
+  %2 = and i32 %i.b, 65535
+  %.not1213 = icmp eq i32 %2, 0
   br i1 %.not1213, label %_ZNK4llvm10BitTracker8BitValueneERKS1_.exit.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
   %i.f = load ptr, ptr %0, align 8, !tbaa !50
   %i.g = load ptr, ptr %1, align 8, !tbaa !50
-  %2 = trunc nuw i32 %i.d to i16
+  %.mask = and i32 %i.b, 65535
+  %wide.trip.count = zext nneg i32 %.mask to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNK4llvm10BitTracker8BitValueneERKS1_.exit
-  %.014 = phi i16 [ 0, %.lr.ph ], [ %4, %_ZNK4llvm10BitTracker8BitValueneERKS1_.exit ] ; 2 uses
-  %3 = zext i16 %.014 to i64                      ; 2 uses
-  %i.h = getelementptr inbounds nuw [12 x i8], ptr %i.f, i64 %3 ; 3 uses
-  %i.i = getelementptr inbounds nuw [12 x i8], ptr %i.g, i64 %3 ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZNK4llvm10BitTracker8BitValueneERKS1_.exit ] ; 3 uses
+  %i.h = getelementptr inbounds nuw [12 x i8], ptr %i.f, i64 %indvars.iv ; 3 uses
+  %i.i = getelementptr inbounds nuw [12 x i8], ptr %i.g, i64 %indvars.iv ; 3 uses
   %i.j = load i32, ptr %i.h, align 4, !tbaa !36   ; 2 uses
   %i.k = load i32, ptr %i.i, align 4, !tbaa !36
   %.not.i.i = icmp eq i32 %i.j, %i.k
@@ -667,9 +669,9 @@ _ZNK4llvm10BitTracker6BitRefeqERKS1_.exit.i.i:    ; preds = %bb.e
   br i1 %i.w, label %_ZNK4llvm10BitTracker8BitValueneERKS1_.exit, label %_ZNK4llvm10BitTracker8BitValueneERKS1_.exit.thread
 
 _ZNK4llvm10BitTracker8BitValueneERKS1_.exit:      ; preds = %_ZNK4llvm10BitTracker6BitRefeqERKS1_.exit.i.i, %bb.e, %bb.c
-  %4 = add nuw i16 %.014, 1                       ; 2 uses
-  %.not12.not = icmp ult i16 %4, %2
-  br i1 %.not12.not, label %bb.b, label %_ZNK4llvm10BitTracker8BitValueneERKS1_.exit.thread, !llvm.loop !10
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %_ZNK4llvm10BitTracker8BitValueneERKS1_.exit.thread, label %bb.b, !llvm.loop !10
 
 _ZNK4llvm10BitTracker8BitValueneERKS1_.exit.thread: ; preds = %bb.d, %_ZNK4llvm10BitTracker6BitRefeqERKS1_.exit.i.i, %bb.b, %_ZNK4llvm10BitTracker8BitValueneERKS1_.exit, %.preheader, %bb.a
   %.1 = phi i1 [ false, %bb.a ], [ true, %.preheader ], [ false, %bb.b ], [ false, %_ZNK4llvm10BitTracker6BitRefeqERKS1_.exit.i.i ], [ false, %bb.d ], [ true, %_ZNK4llvm10BitTracker8BitValueneERKS1_.exit ]
@@ -1072,7 +1074,7 @@ bb.a:
   %3 = alloca %"class.llvm::Printable", align 8   ; 8 uses
   %4 = alloca %"struct.llvm::BitTracker::RegisterRef", align 4 ; 6 uses
   %5 = alloca %"struct.llvm::BitTracker::RegisterCell", align 8 ; 12 uses
-  %6 = alloca %"struct.llvm::BitTracker::RegisterCell", align 8 ; 17 uses
+  %6 = alloca %"struct.llvm::BitTracker::RegisterCell", align 8 ; 16 uses
   %7 = alloca %"class.llvm::Printable", align 8   ; 8 uses
   %8 = alloca %"class.llvm::Printable", align 8   ; 8 uses
   %9 = alloca %"struct.llvm::BitTracker::RegisterRef", align 4 ; 5 uses
@@ -1360,23 +1362,27 @@ bb.o:                                             ; preds = %bb.o, %.epil.prehea
 
 _ZN4llvm10BitTracker12RegisterCell4selfEjt.exit:  ; preds = %bb.o, %_ZN4llvm10BitTracker12RegisterCell4selfEjt.exit.unr-lcssa
   %.pr = load i32, ptr %i.cm, align 8, !tbaa !49  ; 3 uses
-  %i.dn = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
+  %i.dn = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 7 uses
   %i.do = load i32, ptr %i.dn, align 8, !tbaa !49
   %i.dp = and i32 %i.do, 65535
-  %.not.i = icmp eq i32 %.pr, %i.dp
+  %.not.i = icmp eq i32 %i.dp, %.pr
   br i1 %.not.i, label %.preheader.i, label %_ZN4llvm10BitTracker12RegisterCell4selfEjt.exit._ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit_crit_edge
 
-_ZN4llvm10BitTracker12RegisterCell4selfEjt.exit._ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit_crit_edge: ; preds = %_ZN4llvm10BitTracker12RegisterCell4selfEjt.exit
-  %.pre = load ptr, ptr %6, align 8, !tbaa !50
-  br label %_ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit
-
 _ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit.thread: ; preds = %_ZNK4llvm10BitTracker16MachineEvaluator14getRegBitWidthERKNS0_11RegisterRefE.exit
-  %i.dq = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
+  %i.dq = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
   %i.dr = load i32, ptr %i.dq, align 8, !tbaa !49
   %i.ds = and i32 %i.dr, 65535
   %.not.i85 = icmp eq i32 %i.ds, 0
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
-  br i1 %.not.i85, label %.critedge, label %bb.t
+  br i1 %.not.i85, label %.preheader.i.thread, label %_ZN4llvm10BitTracker12RegisterCell4selfEjt.exit._ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit_crit_edge
+
+.preheader.i.thread:                              ; preds = %_ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit.thread
+  %.pre99133 = load ptr, ptr %6, align 8, !tbaa !50
+  br label %_ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit
+
+_ZN4llvm10BitTracker12RegisterCell4selfEjt.exit._ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit_crit_edge: ; preds = %_ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit.thread, %_ZN4llvm10BitTracker12RegisterCell4selfEjt.exit
+  %14 = phi ptr [ %i.dq, %_ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit.thread ], [ %i.dn, %_ZN4llvm10BitTracker12RegisterCell4selfEjt.exit ]
+  %.pre98 = load ptr, ptr %6, align 8, !tbaa !50
+  br label %_ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit
 
 .preheader.i:                                     ; preds = %_ZN4llvm10BitTracker12RegisterCell4selfEjt.exit
   %.not1213.i = icmp eq i32 %.pr, 0
@@ -1389,7 +1395,7 @@ _ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit.thread: ; preds = %_ZNK4llvm10B
   br label %bb.p
 
 bb.p:                                             ; preds = %_ZNK4llvm10BitTracker8BitValueneERKS1_.exit.i, %.lr.ph.i26
-  %indvars.iv.a = phi i64 [ %indvars.iv.next.a, %_ZNK4llvm10BitTracker8BitValueneERKS1_.exit.i ], [ 0, %.lr.ph.i26 ] ; 3 uses
+  %indvars.iv.a = phi i64 [ 0, %.lr.ph.i26 ], [ %indvars.iv.next.a, %_ZNK4llvm10BitTracker8BitValueneERKS1_.exit.i ] ; 3 uses
   %i.du = getelementptr inbounds nuw [12 x i8], ptr %i.dt, i64 %indvars.iv.a ; 3 uses
   %i.dv = getelementptr inbounds nuw [12 x i8], ptr %.pre98.a, i64 %indvars.iv.a ; 3 uses
   %i.dw = load i32, ptr %i.du, align 4, !tbaa !36 ; 2 uses
@@ -1426,23 +1432,22 @@ _ZNK4llvm10BitTracker8BitValueneERKS1_.exit.i:    ; preds = %_ZNK4llvm10BitTrack
   %exitcond.not = icmp eq i64 %indvars.iv.next.a, %wide.trip.count
   br i1 %exitcond.not, label %_ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit, label %bb.p, !llvm.loop !10
 
-_ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit: ; preds = %bb.p, %bb.r, %_ZNK4llvm10BitTracker6BitRefeqERKS1_.exit.i.i.i, %_ZNK4llvm10BitTracker8BitValueneERKS1_.exit.i, %_ZN4llvm10BitTracker12RegisterCell4selfEjt.exit._ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit_crit_edge, %.preheader.i
-  %14 = phi ptr [ %.pre, %_ZN4llvm10BitTracker12RegisterCell4selfEjt.exit._ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit_crit_edge ], [ %.pre98.a, %.preheader.i ], [ %.pre98.a, %_ZNK4llvm10BitTracker8BitValueneERKS1_.exit.i ], [ %.pre98.a, %_ZNK4llvm10BitTracker6BitRefeqERKS1_.exit.i.i.i ], [ %.pre98.a, %bb.r ], [ %.pre98.a, %bb.p ] ; 2 uses
-  %.1.i = phi i1 [ false, %_ZN4llvm10BitTracker12RegisterCell4selfEjt.exit._ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit_crit_edge ], [ true, %.preheader.i ], [ false, %bb.p ], [ false, %bb.r ], [ false, %_ZNK4llvm10BitTracker6BitRefeqERKS1_.exit.i.i.i ], [ true, %_ZNK4llvm10BitTracker8BitValueneERKS1_.exit.i ] ; 2 uses
-  %i.ek = icmp eq ptr %14, %i.cl
+_ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit: ; preds = %bb.p, %bb.r, %_ZNK4llvm10BitTracker6BitRefeqERKS1_.exit.i.i.i, %_ZNK4llvm10BitTracker8BitValueneERKS1_.exit.i, %.preheader.i.thread, %_ZN4llvm10BitTracker12RegisterCell4selfEjt.exit._ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit_crit_edge, %.preheader.i
+  %15 = phi ptr [ %14, %_ZN4llvm10BitTracker12RegisterCell4selfEjt.exit._ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit_crit_edge ], [ %i.dn, %.preheader.i ], [ %i.dq, %.preheader.i.thread ], [ %i.dn, %_ZNK4llvm10BitTracker8BitValueneERKS1_.exit.i ], [ %i.dn, %_ZNK4llvm10BitTracker6BitRefeqERKS1_.exit.i.i.i ], [ %i.dn, %bb.r ], [ %i.dn, %bb.p ] ; 3 uses
+  %16 = phi ptr [ %.pre98, %_ZN4llvm10BitTracker12RegisterCell4selfEjt.exit._ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit_crit_edge ], [ %.pre98.a, %.preheader.i ], [ %.pre99133, %.preheader.i.thread ], [ %.pre98.a, %_ZNK4llvm10BitTracker8BitValueneERKS1_.exit.i ], [ %.pre98.a, %_ZNK4llvm10BitTracker6BitRefeqERKS1_.exit.i.i.i ], [ %.pre98.a, %bb.r ], [ %.pre98.a, %bb.p ] ; 2 uses
+  %.1.i = phi i1 [ false, %_ZN4llvm10BitTracker12RegisterCell4selfEjt.exit._ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit_crit_edge ], [ true, %.preheader.i ], [ true, %.preheader.i.thread ], [ false, %bb.p ], [ false, %bb.r ], [ false, %_ZNK4llvm10BitTracker6BitRefeqERKS1_.exit.i.i.i ], [ true, %_ZNK4llvm10BitTracker8BitValueneERKS1_.exit.i ]
+  %i.ek = icmp eq ptr %16, %i.cl
   br i1 %i.ek, label %_ZN4llvm10BitTracker12RegisterCellD2Ev.exit, label %.split
 
 .split:                                           ; preds = %_ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit
-  call void @free(ptr noundef %14) #18
+  call void @free(ptr noundef %16) #18
+  br label %_ZN4llvm10BitTracker12RegisterCellD2Ev.exit
+
+_ZN4llvm10BitTracker12RegisterCellD2Ev.exit:      ; preds = %_ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit, %.split
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
   br i1 %.1.i, label %.critedge, label %bb.t
 
-_ZN4llvm10BitTracker12RegisterCellD2Ev.exit:      ; preds = %_ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
-  br i1 %.1.i, label %.critedge, label %bb.t
-
-bb.t:                                             ; preds = %.split, %_ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit.thread, %_ZN4llvm10BitTracker12RegisterCellD2Ev.exit
-  %15 = phi ptr [ %i.dq, %_ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit.thread ], [ %i.dn, %_ZN4llvm10BitTracker12RegisterCellD2Ev.exit ], [ %i.dn, %.split ] ; 3 uses
+bb.t:                                             ; preds = %_ZN4llvm10BitTracker12RegisterCellD2Ev.exit
   %i.el = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.em = load i24, ptr %i.el, align 8            ; 2 uses
   %i.en = icmp ugt i24 %i.em, 1
@@ -1845,7 +1850,7 @@ _ZN4llvm10BitTracker12RegisterCellD2Ev.exit82:    ; preds = %_ZN4llvm10BitTracke
   call void @_ZN4llvm10BitTracker11visitUsesOfENS_8RegisterE(ptr noundef nonnull align 8 dereferenceable(313) %0, i32 %i.ao)
   br label %.critedge
 
-.critedge:                                        ; preds = %.split, %_ZNK4llvm10BitTracker12RegisterCelleqERKS1_.exit.thread, %bb.t, %._crit_edge, %_ZN4llvm10BitTracker12RegisterCellD2Ev.exit82, %_ZN4llvm10BitTracker12RegisterCellD2Ev.exit
+.critedge:                                        ; preds = %bb.t, %._crit_edge, %_ZN4llvm10BitTracker12RegisterCellD2Ev.exit82, %_ZN4llvm10BitTracker12RegisterCellD2Ev.exit
   %i.ni = load ptr, ptr %5, align 8, !tbaa !50    ; 2 uses
   %i.nj = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.nk = icmp eq ptr %i.ni, %i.nj
@@ -2248,7 +2253,7 @@ _ZN4llvm10BitTracker12RegisterCell4selfEjt.exit:  ; preds = %_ZN4llvm10BitTracke
   %i.jh = load i32, ptr %i.gf, align 8, !tbaa !49
   %i.ji = load i32, ptr %i.gh, align 8, !tbaa !49 ; 3 uses
   %i.jj = and i32 %i.jh, 65535
-  %.not.i.i87 = icmp eq i32 %i.ji, %i.jj
+  %.not.i.i87 = icmp eq i32 %i.jj, %i.ji
   br i1 %.not.i.i87, label %.preheader.i.i, label %_ZN4llvm10BitTracker12RegisterCell4selfEjt.exit._ZNK4llvm10BitTracker12RegisterCellneERKS1_.exit_crit_edge
 
 _ZN4llvm10BitTracker12RegisterCell4selfEjt.exit._ZNK4llvm10BitTracker12RegisterCellneERKS1_.exit_crit_edge: ; preds = %_ZN4llvm10BitTracker12RegisterCell4selfEjt.exit
@@ -2266,7 +2271,7 @@ _ZN4llvm10BitTracker12RegisterCell4selfEjt.exit._ZNK4llvm10BitTracker12RegisterC
   br label %bb.ap
 
 bb.ap:                                            ; preds = %_ZNK4llvm10BitTracker8BitValueneERKS1_.exit.i.i, %.lr.ph.i.i
-  %indvars.iv.i88 = phi i64 [ %indvars.iv.next.i89, %_ZNK4llvm10BitTracker8BitValueneERKS1_.exit.i.i ], [ 0, %.lr.ph.i.i ] ; 3 uses
+  %indvars.iv.i88 = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i89, %_ZNK4llvm10BitTracker8BitValueneERKS1_.exit.i.i ] ; 3 uses
   %i.jl = getelementptr inbounds nuw [12 x i8], ptr %i.jk, i64 %indvars.iv.i88 ; 3 uses
   %i.jm = getelementptr inbounds nuw [12 x i8], ptr %.pre152, i64 %indvars.iv.i88 ; 3 uses
   %i.jn = load i32, ptr %i.jl, align 4, !tbaa !36 ; 2 uses
