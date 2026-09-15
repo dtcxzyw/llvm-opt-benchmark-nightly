@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bg, i64 40
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bg, i64 48 ; 2 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bb, i64 16 ; 2 uses
-  %i.cd = getelementptr inbounds nuw i8, ptr %i.bb, i64 24
+  %i.cd = getelementptr inbounds nuw i8, ptr %i.bb, i64 24 ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %i.bb, i64 8 ; 2 uses
   %or.cond5.i = and i1 %i.bl, %i.bu               ; 2 uses
   %or.cond3.i = and i1 %i.bi, %i.by               ; 2 uses
@@ -325,9 +325,8 @@ bb.n:                                             ; preds = %_ZN3igl8geodesic4Ed
 
 bb.o:                                             ; preds = %bb.i, %_ZN3igl8geodesic4Edge7belongsEPNS0_6VertexE.exit.i, %bb.k, %_ZN3igl8geodesic4Edge7belongsEPNS0_6VertexE.exit.1.i, %bb.m, %_ZN3igl8geodesic4Edge7belongsEPNS0_6VertexE.exit.2.i, %bb.n
   %i.ep = phi ptr [ null, %bb.n ], [ %i.cx, %_ZN3igl8geodesic4Edge7belongsEPNS0_6VertexE.exit.i ], [ %i.cx, %bb.i ], [ %i.dm, %bb.k ], [ %i.dm, %_ZN3igl8geodesic4Edge7belongsEPNS0_6VertexE.exit.1.i ], [ %i.eb, %_ZN3igl8geodesic4Edge7belongsEPNS0_6VertexE.exit.2.i ], [ %i.eb, %bb.m ] ; 8 uses
-  %5 = load <2 x double>, ptr %i.cc, align 8, !tbaa !87 ; 6 uses
-  %6 = extractelement <2 x double> %5, i64 1      ; 6 uses
-  %7 = extractelement <2 x double> %5, i64 0      ; 12 uses
+  %5 = load double, ptr %i.cd, align 8, !tbaa !87 ; 8 uses
+  %6 = load double, ptr %i.cc, align 8, !tbaa !87 ; 14 uses
   %i.eq = load double, ptr %i.ce, align 8, !tbaa !87 ; 7 uses
   %i.er = load double, ptr %i.bb, align 8, !tbaa !87 ; 3 uses
   %i.es = load ptr, ptr %i.bj, align 8, !tbaa !105 ; 2 uses
@@ -371,32 +370,32 @@ _ZN3igl8geodesic4Face12vertex_angleEPNS0_6VertexE.exit: ; preds = %bb.r, %bb.q
   %i.fp = phi double [ %i.fo, %bb.r ], [ 0.000000e+00, %bb.q ] ; 6 uses
   %i.fq = getelementptr inbounds nuw i8, ptr %i.ep, i64 56 ; 2 uses
   %i.fr = load double, ptr %i.fq, align 8, !tbaa !87 ; 13 uses
-  %i.fs = call noundef double @llvm.fabs.f64(double %6)
+  %i.fs = call noundef double @llvm.fabs.f64(double %5)
   %i.ft = fcmp ugt double %i.fs, 1.000000e-30
   br i1 %i.ft, label %bb.y, label %bb.s
 
 bb.s:                                             ; preds = %_ZN3igl8geodesic4Face12vertex_angleEPNS0_6VertexE.exit
-  %i.fu = fcmp ole double %7, 0.000000e+00
+  %i.fu = fcmp ole double %6, 0.000000e+00
   %or.cond.i = and i1 %i.bi, %i.fu
   br i1 %or.cond.i, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
   store double 0.000000e+00, ptr %4, align 16, !tbaa !87
   store double %i.fr, ptr %i.k, align 16, !tbaa !87
-  %i.fv = fsub double %i.eq, %7
+  %i.fv = fsub double %i.eq, %6
   store double %i.fv, ptr %i.l, align 8, !tbaa !87
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.m, i8 0, i64 16, i1 false)
   br label %bb.aj
 
 bb.u:                                             ; preds = %bb.s
-  %i.fw = fcmp oge double %7, %i.ev
+  %i.fw = fcmp oge double %6, %i.ev
   %or.cond140.not.i = and i1 %i.bl, %i.fw
   br i1 %or.cond140.not.i, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
   store double 0.000000e+00, ptr %4, align 16, !tbaa !87
   store double %i.fr, ptr %i.k, align 16, !tbaa !87
-  %i.fx = fadd double %7, %i.eq
+  %i.fx = fadd double %6, %i.eq
   %i.fy = fsub double %i.fx, %i.ev
   store double %i.fy, ptr %i.l, align 8, !tbaa !87
   %i.fz = call double @cos(double noundef %i.fp) #22
@@ -409,8 +408,8 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.aj
 
 bb.w:                                             ; preds = %bb.u
-  %i.ge = fcmp ult double %7, %i.er
-  %i.gf = fcmp ugt double %7, %i.ev
+  %i.ge = fcmp ult double %6, %i.er
+  %i.gf = fcmp ugt double %6, %i.ev
   %or.cond141.i = or i1 %i.ge, %i.gf
   br i1 %or.cond141.i, label %.critedge, label %bb.x
 
@@ -419,9 +418,9 @@ bb.x:                                             ; preds = %bb.w
   %i.gg = insertelement <2 x double> <double 0.000000e+00, double poison>, double %i.eq, i64 1
   store <2 x double> %i.gg, ptr %4, align 16, !tbaa !87
   %i.gh = call double @cos(double noundef %i.fp) #22
-  %i.gi = fmul double %7, %i.gh
+  %i.gi = fmul double %6, %i.gh
   store double %i.gi, ptr %i.m, align 16, !tbaa !87
-  %i.gj = fneg double %7
+  %i.gj = fneg double %6
   %i.gk = call double @sin(double noundef %i.fp) #22
   %i.gl = fmul double %i.gk, %i.gj
   store double %i.gl, ptr %i.n, align 8, !tbaa !87
@@ -430,8 +429,8 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %_ZN3igl8geodesic4Face12vertex_angleEPNS0_6VertexE.exit
   %i.gm = call double @sin(double noundef %i.fp) #22 ; 7 uses
   %i.gn = call double @cos(double noundef %i.fp) #22 ; 6 uses
-  %i.go = fsub double %7, %i.er
-  %i.gp = fneg double %6                          ; 3 uses
+  %i.go = fsub double %6, %i.er
+  %i.gp = fneg double %5                          ; 3 uses
   %i.gq = fmul double %i.gn, %i.gp                ; 2 uses
   %i.gr = call double @llvm.fmuladd.f64(double %i.gm, double %i.go, double %i.gq) ; 3 uses
   %i.gs = fcmp olt double %i.gr, 0.000000e+00
@@ -461,8 +460,8 @@ _ZN3igl8geodesic22GeodesicAlgorithmExact29compute_positive_intersectionEddddd.ex
 bb.ac:                                            ; preds = %_ZN3igl8geodesic22GeodesicAlgorithmExact29compute_positive_intersectionEddddd.exit.thread.i
   store double 0.000000e+00, ptr %4, align 16, !tbaa !87
   store double %i.fr, ptr %i.k, align 16, !tbaa !87
-  %i.gy = fmul double %6, %6
-  %i.gz = call double @llvm.fmuladd.f64(double %7, double %7, double %i.gy)
+  %i.gy = fmul double %5, %5
+  %i.gz = call double @llvm.fmuladd.f64(double %6, double %6, double %i.gy)
   %sqrt.i = call double @llvm.sqrt.f64(double %i.gz)
   %i.ha = fadd double %i.eq, %sqrt.i
   store double %i.ha, ptr %i.l, align 8, !tbaa !87
@@ -470,7 +469,7 @@ bb.ac:                                            ; preds = %_ZN3igl8geodesic22G
   br label %bb.aj
 
 bb.ad:                                            ; preds = %_ZN3igl8geodesic22GeodesicAlgorithmExact29compute_positive_intersectionEddddd.exit.i
-  %i.hb = fsub double %7, %i.ev                   ; 3 uses
+  %i.hb = fsub double %6, %i.ev                   ; 3 uses
   %i.hc = call double @llvm.fmuladd.f64(double %i.gm, double %i.hb, double %i.gq) ; 3 uses
   %i.hd = fcmp olt double %i.hc, 0.000000e+00
   br i1 %i.hd, label %_ZN3igl8geodesic22GeodesicAlgorithmExact29compute_positive_intersectionEddddd.exit145.thread.i, label %bb.ae
@@ -497,15 +496,17 @@ _ZN3igl8geodesic22GeodesicAlgorithmExact29compute_positive_intersectionEddddd.ex
   store double %.1.i.i, ptr %4, align 16, !tbaa !87
   store double %i.fr, ptr %i.k, align 16, !tbaa !87
   store double %i.eq, ptr %i.l, align 8, !tbaa !87
-  %8 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %7 = insertelement <2 x double> poison, double %5, i64 0
+  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
   %i.hj = insertelement <2 x double> poison, double %i.gm, i64 0
   %i.hk = insertelement <2 x double> %i.hj, double %i.gn, i64 1
   %i.hl = fmul <2 x double> %8, %i.hk
   %i.hm = fneg double %i.gm
   %i.hn = insertelement <2 x double> poison, double %i.gn, i64 0
-  %i.ho = insertelement <2 x double> %i.hn, double %i.hm, i64 1
-  %i.hp = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.hq = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ho, <2 x double> %i.hp, <2 x double> %i.hl)
+  %9 = insertelement <2 x double> %i.hn, double %i.hm, i64 1
+  %i.ho = insertelement <2 x double> poison, double %6, i64 0
+  %i.hp = shufflevector <2 x double> %i.ho, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.hq = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %9, <2 x double> %i.hp, <2 x double> %i.hl)
   store <2 x double> %i.hq, ptr %i.m, align 16, !tbaa !87
   br label %bb.aj
 
@@ -513,22 +514,24 @@ bb.ah:                                            ; preds = %_ZN3igl8geodesic22G
   store double %.1.i.i, ptr %4, align 16, !tbaa !87
   store double %.1.i144.i, ptr %i.k, align 16, !tbaa !87
   store double %i.eq, ptr %i.l, align 8, !tbaa !87
-  %9 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %10 = insertelement <2 x double> poison, double %5, i64 0
+  %11 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
   %i.hr = insertelement <2 x double> poison, double %i.gm, i64 0
   %i.hs = insertelement <2 x double> %i.hr, double %i.gn, i64 1
-  %i.ht = fmul <2 x double> %9, %i.hs
+  %i.ht = fmul <2 x double> %11, %i.hs
   %i.hu = fneg double %i.gm
   %i.hv = insertelement <2 x double> poison, double %i.gn, i64 0
-  %i.hw = insertelement <2 x double> %i.hv, double %i.hu, i64 1
-  %i.hx = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.hy = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.hw, <2 x double> %i.hx, <2 x double> %i.ht)
+  %12 = insertelement <2 x double> %i.hv, double %i.hu, i64 1
+  %i.hw = insertelement <2 x double> poison, double %6, i64 0
+  %i.hx = shufflevector <2 x double> %i.hw, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.hy = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %12, <2 x double> %i.hx, <2 x double> %i.ht)
   store <2 x double> %i.hy, ptr %i.m, align 16, !tbaa !87
   br i1 %or.cond5.i, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah
   store double %.1.i144.i, ptr %.2.i.ph.sroa.gep, align 8, !tbaa !87
   store double %i.fr, ptr %i.o, align 8, !tbaa !87
-  %i.hz = fmul double %6, %6
+  %i.hz = fmul double %5, %5
   %i.ia = call double @llvm.fmuladd.f64(double %i.hb, double %i.hb, double %i.hz)
   %sqrt151.i = call double @llvm.sqrt.f64(double %i.ia)
   %i.ib = fadd double %i.eq, %sqrt151.i

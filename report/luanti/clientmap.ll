@@ -205,6 +205,7 @@ bb.a:
   store float 1.000000e+00, ptr %i.b, align 4, !tbaa !82
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 124
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 128
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 132
   %i.f = load float, ptr %i.e, align 4, !tbaa !483
   %i.g = fmul nsz float %i.f, f0x3C8EFA35
@@ -220,47 +221,54 @@ bb.a:
   %i.n = fneg nsz double %cos41.i.i
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 112
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %2 = load <2 x float>, ptr %i.d, align 4, !tbaa !82
-  %3 = fmul nsz <2 x float> %2, splat (float f0x3C8EFA35)
-  %4 = shufflevector <2 x float> %3, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  %5 = fpext <2 x float> %4 to <2 x double>
-  %6 = tail call nsz { <2 x double>, <2 x double> } @llvm.sincos.v2f64(<2 x double> %5) ; 2 uses
-  %7 = extractvalue { <2 x double>, <2 x double> } %6, 0 ; 5 uses
-  %8 = extractvalue { <2 x double>, <2 x double> } %6, 1 ; 5 uses
-  %i.q = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
+  %3 = load float, ptr %i.d, align 4, !tbaa !481
+  %4 = load float, ptr %2, align 8, !tbaa !482
+  %5 = fmul nsz float %3, f0x3C8EFA35
+  %6 = fmul nsz float %4, f0x3C8EFA35
+  %7 = fpext nsz float %5 to double
+  %8 = fpext nsz float %6 to double
+  %sincos.i.i = tail call nsz { double, double } @llvm.sincos.f64(double %7) ; 2 uses
+  %sincos36.i.i = tail call nsz { double, double } @llvm.sincos.f64(double %8) ; 2 uses
+  %sin.i.i = extractvalue { double, double } %sincos.i.i, 0 ; 3 uses
+  %cos.i.i = extractvalue { double, double } %sincos.i.i, 1 ; 3 uses
+  %sin37.i.i = extractvalue { double, double } %sincos36.i.i, 0 ; 3 uses
+  %cos38.i.i = extractvalue { double, double } %sincos36.i.i, 1 ; 3 uses
+  %9 = insertelement <2 x double> poison, double %cos38.i.i, i64 0
+  %i.q = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
   %i.r = insertelement <2 x double> poison, double %cos41.i.i, i64 0
   %i.s = insertelement <2 x double> %i.r, double %sin40.i.i, i64 1 ; 4 uses
   %i.t = fmul nsz <2 x double> %i.q, %i.s
   %i.u = fptrunc <2 x double> %i.t to <2 x float> ; 4 uses
   store <2 x float> %i.u, ptr %0, align 4, !tbaa !82
-  %9 = extractelement <2 x double> %7, i64 0
-  %i.v = fptrunc nsz double %9 to float
+  %i.v = fptrunc nsz double %sin37.i.i to float
   %i.w = fneg nsz float %i.v                      ; 4 uses
   store float %i.w, ptr %i.i, align 4, !tbaa !82
-  %10 = shufflevector <2 x double> %8, <2 x double> %7, <2 x i32> <i32 1, i32 2>
-  %11 = fmul nsz <2 x double> %7, %10             ; 2 uses
-  %12 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %10 = fmul nsz double %sin.i.i, %sin37.i.i
+  %11 = fmul nsz double %cos.i.i, %sin37.i.i
+  %12 = insertelement <2 x double> poison, double %cos.i.i, i64 0
+  %13 = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> zeroinitializer
   %i.x = shufflevector <2 x double> %i.s, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.y = insertelement <2 x double> %i.x, double %i.j, i64 0
-  %i.z = fmul nsz <2 x double> %12, %i.y
-  %13 = shufflevector <2 x double> %11, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.aa = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %13, <2 x double> %i.s, <2 x double> %i.z)
+  %i.z = fmul nsz <2 x double> %13, %i.y
+  %14 = insertelement <2 x double> poison, double %10, i64 0
+  %15 = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.aa = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %15, <2 x double> %i.s, <2 x double> %i.z)
   %i.ab = fptrunc <2 x double> %i.aa to <2 x float> ; 3 uses
   store <2 x float> %i.ab, ptr %i.k, align 4, !tbaa !82
-  %14 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %15 = insertelement <2 x double> %i.x, double %i.n, i64 1
-  %16 = fmul nsz <2 x double> %14, %15
-  %17 = shufflevector <2 x double> %11, <2 x double> poison, <2 x i32> zeroinitializer
-  %18 = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %17, <2 x double> %i.s, <2 x double> %16)
-  %19 = fptrunc <2 x double> %18 to <2 x float>   ; 5 uses
-  store <2 x float> %19, ptr %i.m, align 4, !tbaa !82
-  %20 = shufflevector <2 x double> %7, <2 x double> %8, <2 x i32> <i32 1, i32 2>
-  %21 = fmul nsz <2 x double> %8, %20             ; 2 uses
-  %22 = extractelement <2 x double> %21, i64 0
-  %23 = fptrunc nsz double %22 to float           ; 3 uses
-  store float %23, ptr %i.l, align 4, !tbaa !82
-  %24 = extractelement <2 x double> %21, i64 1
-  %i.ac = fptrunc nsz double %24 to float         ; 5 uses
+  %16 = fmul nsz double %sin.i.i, %cos38.i.i
+  %17 = fptrunc nsz double %16 to float           ; 3 uses
+  store float %17, ptr %i.l, align 4, !tbaa !82
+  %18 = insertelement <2 x double> poison, double %sin.i.i, i64 0
+  %19 = shufflevector <2 x double> %18, <2 x double> poison, <2 x i32> zeroinitializer
+  %20 = insertelement <2 x double> %i.x, double %i.n, i64 1
+  %21 = fmul nsz <2 x double> %19, %20
+  %22 = insertelement <2 x double> poison, double %11, i64 0
+  %23 = shufflevector <2 x double> %22, <2 x double> poison, <2 x i32> zeroinitializer
+  %24 = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %23, <2 x double> %i.s, <2 x double> %21)
+  %25 = fptrunc <2 x double> %24 to <2 x float>   ; 5 uses
+  store <2 x float> %25, ptr %i.m, align 4, !tbaa !82
+  %26 = fmul nsz double %cos.i.i, %cos38.i.i
+  %i.ac = fptrunc nsz double %26 to float         ; 5 uses
   store float %i.ac, ptr %i.c, align 4, !tbaa !82
   %i.ad = load <2 x float>, ptr %i.o, align 8, !tbaa !82 ; 5 uses
   store <2 x float> %i.ad, ptr %i.p, align 4, !tbaa !82
@@ -294,10 +302,10 @@ _ZNK4core8vector3dIfEneERKS1_.exit.thread:        ; preds = %bb.a, %_ZNK4core8ve
   %i.au = insertelement <2 x float> poison, float %i.ai, i64 0
   %i.av = shufflevector <2 x float> %i.au, <2 x float> poison, <2 x i32> zeroinitializer
   %i.aw = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.u, <2 x float> %i.av, <2 x float> %i.at)
-  %i.ax = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %19, <2 x float> zeroinitializer, <2 x float> %i.aw)
+  %i.ax = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %25, <2 x float> zeroinitializer, <2 x float> %i.aw)
   %i.ay = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ad, <2 x float> zeroinitializer, <2 x float> %i.ax)
   store <2 x float> %i.ay, ptr %0, align 4, !tbaa !82
-  %i.az = fmul nsz float %23, 0.000000e+00        ; 2 uses
+  %i.az = fmul nsz float %17, 0.000000e+00        ; 2 uses
   %i.ba = tail call nsz float @llvm.fmuladd.f32(float %i.w, float %i.ai, float %i.az)
   %i.bb = tail call nsz float @llvm.fmuladd.f32(float %i.ac, float 0.000000e+00, float %i.ba)
   %i.bc = tail call nsz float @llvm.fmuladd.f32(float %i.af, float 0.000000e+00, float %i.bb)
@@ -308,10 +316,10 @@ _ZNK4core8vector3dIfEneERKS1_.exit.thread:        ; preds = %bb.a, %_ZNK4core8ve
   %i.bf = shufflevector <2 x float> %i.be, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bg = fmul nsz <2 x float> %i.bf, %i.ab
   %i.bh = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.u, <2 x float> zeroinitializer, <2 x float> %i.bg)
-  %i.bi = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %19, <2 x float> zeroinitializer, <2 x float> %i.bh)
+  %i.bi = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %25, <2 x float> zeroinitializer, <2 x float> %i.bh)
   %i.bj = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ad, <2 x float> zeroinitializer, <2 x float> %i.bi)
   store <2 x float> %i.bj, ptr %i.k, align 4, !tbaa !82
-  %i.bk = fmul nsz float %i.aq, %23
+  %i.bk = fmul nsz float %i.aq, %17
   %i.bl = tail call nsz float @llvm.fmuladd.f32(float %i.w, float 0.000000e+00, float %i.bk)
   %i.bm = tail call nsz float @llvm.fmuladd.f32(float %i.ac, float 0.000000e+00, float %i.bl)
   %i.bn = tail call nsz float @llvm.fmuladd.f32(float %i.af, float 0.000000e+00, float %i.bm)
@@ -327,10 +335,10 @@ _ZNK4core8vector3dIfEneERKS1_.exit.thread:        ; preds = %bb.a, %_ZNK4core8ve
   %i.bt = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.u, <2 x float> zeroinitializer, <2 x float> %i.at) ; 2 uses
   %i.bu = insertelement <2 x float> poison, float %i.as, i64 0
   %i.bv = shufflevector <2 x float> %i.bu, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.bw = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %19, <2 x float> %i.bv, <2 x float> %i.bt)
+  %i.bw = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %25, <2 x float> %i.bv, <2 x float> %i.bt)
   %i.bx = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ad, <2 x float> zeroinitializer, <2 x float> %i.bw)
   store <2 x float> %i.bx, ptr %i.m, align 4, !tbaa !82
-  %i.by = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %19, <2 x float> zeroinitializer, <2 x float> %i.bt)
+  %i.by = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %25, <2 x float> zeroinitializer, <2 x float> %i.bt)
   %i.bz = fadd nsz <2 x float> %i.ad, %i.by
   store <2 x float> %i.bz, ptr %i.p, align 4, !tbaa !82
   %i.ca = tail call nsz float @llvm.fmuladd.f32(float %i.ac, float 0.000000e+00, float %i.bp)
@@ -732,9 +740,6 @@ declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i48 @llvm.vector.reduce.or.v2i48(<2 x i48>) #19
-
-; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare { <2 x double>, <2 x double> } @llvm.sincos.v2f64(<2 x double>) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #19

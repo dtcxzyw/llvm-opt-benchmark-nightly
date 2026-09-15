@@ -204,7 +204,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !105  ; 2 uses
   %i.g = sext i32 %i.c to i64                     ; 2 uses
-  %i.h = getelementptr [4 x i8], ptr %i.f, i64 %i.g ; 19 uses
+  %i.h = getelementptr [4 x i8], ptr %i.f, i64 %i.g ; 20 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 228
   %i.j = load i32, ptr %i.i, align 4, !tbaa !256
   %i.k = and i32 %i.j, 1
@@ -607,7 +607,9 @@ scalar.ph848:                                     ; preds = %scalar.ph848.prehea
 
 bb.j:                                             ; preds = %bb.h
   %i.ru = getelementptr inbounds nuw i8, ptr %i.h, i64 4
-  %6 = load <2 x float>, ptr %i.ru, align 4, !tbaa !240 ; 4 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
+  %7 = load float, ptr %6, align 4, !tbaa !240    ; 2 uses
+  %8 = load float, ptr %i.ru, align 4, !tbaa !240 ; 2 uses
   %.not301368 = icmp slt i32 %i.n, 2
   br i1 %.not301368, label %.loopexit312, label %.lr.ph372
 
@@ -698,8 +700,10 @@ vector.ph808:                                     ; preds = %vector.memcheck775
   %i.to = shl nsw i64 %n.vec809, 1
   %i.tp = shl nsw i64 %n.vec809, 3
   %i.tq = getelementptr i8, ptr %i.m, i64 %i.tp
-  %broadcast.splat811 = shufflevector <2 x float> %6, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1> ; 2 uses
-  %broadcast.splat813 = shufflevector <2 x float> %6, <2 x float> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert810 = insertelement <4 x float> poison, float %7, i64 0
+  %broadcast.splat811 = shufflevector <4 x float> %broadcast.splatinsert810, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert812 = insertelement <4 x float> poison, float %8, i64 0
+  %broadcast.splat813 = shufflevector <4 x float> %broadcast.splatinsert812, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body814
 
 vector.body814:                                   ; preds = %vector.body814, %vector.ph808
@@ -743,8 +747,10 @@ vector.body814:                                   ; preds = %vector.body814, %ve
 scalar.ph806.preheader:                           ; preds = %vector.body814, %vector.memcheck775, %.lr.ph372
   %indvars.iv455.ph = phi i64 [ 0, %vector.memcheck775 ], [ 0, %.lr.ph372 ], [ %i.to, %vector.body814 ]
   %.10296369.ph = phi ptr [ %i.m, %vector.memcheck775 ], [ %i.m, %.lr.ph372 ], [ %i.tq, %vector.body814 ]
-  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.uh = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
+  %9 = insertelement <2 x float> poison, float %7, i64 0
+  %10 = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> zeroinitializer
+  %11 = insertelement <2 x float> poison, float %8, i64 0
+  %i.uh = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
   br label %scalar.ph806
 
 scalar.ph806:                                     ; preds = %scalar.ph806.preheader, %scalar.ph806
@@ -769,7 +775,7 @@ scalar.ph806:                                     ; preds = %scalar.ph806.prehea
   %i.uy = insertelement <2 x float> poison, float %i.un, i64 0
   %i.uz = insertelement <2 x float> %i.uy, float %i.ur, i64 1
   %i.va = fsub <2 x float> %i.ux, %i.uz
-  %i.vb = fmul <2 x float> %7, %i.va
+  %i.vb = fmul <2 x float> %10, %i.va
   %i.vc = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.uw, <2 x float> %i.uh, <2 x float> %i.vb)
   store <2 x float> %i.vc, ptr %i.us, align 4, !tbaa !240
   %indvars.iv.next456 = add nuw nsw i64 %indvars.iv455, 2 ; 3 uses

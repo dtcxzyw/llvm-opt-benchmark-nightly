@@ -202,7 +202,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 128
   %i.f = load double, ptr %i.e, align 8, !tbaa !43
   %i.g = fdiv double %i.d, %i.f
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.j = load double, ptr %i.i, align 8, !tbaa !47
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 144
@@ -223,26 +223,29 @@ bb.a:
   %i.v = load double, ptr %i.i, align 8, !tbaa !47 ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 56
   %i.x = load <2 x double>, ptr %i.s, align 8, !tbaa !44 ; 2 uses
-  %i.y = load <2 x double>, ptr %1, align 8, !tbaa !44 ; 3 uses
-  %4 = load <2 x double>, ptr %i.w, align 8, !tbaa !44 ; 2 uses
-  %5 = shufflevector <2 x double> %i.y, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.z = shufflevector <2 x double> %i.x, <2 x double> %4, <2 x i32> <i32 1, i32 3>
-  %i.aa = fmul <2 x double> %5, %i.z
-  %i.ab = shufflevector <2 x double> %i.x, <2 x double> %4, <2 x i32> <i32 0, i32 2>
-  %i.ac = shufflevector <2 x double> %i.y, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %4 = load double, ptr %i.h, align 8, !tbaa !65  ; 2 uses
+  %5 = load double, ptr %1, align 8, !tbaa !66    ; 2 uses
+  %i.y = load <2 x double>, ptr %i.w, align 8, !tbaa !44 ; 2 uses
+  %6 = insertelement <2 x double> poison, double %4, i64 0
+  %7 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.z = shufflevector <2 x double> %i.x, <2 x double> %i.y, <2 x i32> <i32 1, i32 3>
+  %i.aa = fmul <2 x double> %7, %i.z
+  %i.ab = shufflevector <2 x double> %i.x, <2 x double> %i.y, <2 x i32> <i32 0, i32 2>
+  %8 = insertelement <2 x double> poison, double %5, i64 0
+  %i.ac = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ad = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ab, <2 x double> %i.ac, <2 x double> %i.aa) ; 2 uses
   %i.ae = extractelement <2 x double> %i.ad, i64 0
   %i.af = call double @llvm.fmuladd.f64(double %i.u, double %i.v, double %i.ae)
   %i.ag = getelementptr inbounds nuw i8, ptr %i.b, i64 72
   %i.ah = getelementptr inbounds nuw i8, ptr %i.b, i64 88
   %i.ai = load double, ptr %i.ah, align 8, !tbaa !44
-  %6 = extractelement <2 x double> %i.y, i64 1
-  %7 = fmul double %6, %i.ai
-  %8 = load <2 x double>, ptr %i.ag, align 8, !tbaa !44
-  %i.aj = insertelement <2 x double> %i.ac, double %i.v, i64 0
+  %9 = fmul double %4, %i.ai
+  %10 = load <2 x double>, ptr %i.ag, align 8, !tbaa !44
+  %11 = insertelement <2 x double> poison, double %i.v, i64 0
+  %i.aj = insertelement <2 x double> %11, double %5, i64 1
   %i.ak = shufflevector <2 x double> %i.ad, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %i.al = insertelement <2 x double> %i.ak, double %7, i64 1
-  %i.am = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %8, <2 x double> %i.aj, <2 x double> %i.al) ; 2 uses
+  %i.al = insertelement <2 x double> %i.ak, double %9, i64 1
+  %i.am = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %10, <2 x double> %i.aj, <2 x double> %i.al) ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.b, i64 96
   %i.ao = load double, ptr %i.an, align 8, !tbaa !44
   %i.ap = extractelement <2 x double> %i.am, i64 1
@@ -250,12 +253,12 @@ bb.a:
   %i.ar = getelementptr inbounds nuw i8, ptr %i.b, i64 104
   %i.as = load double, ptr %i.ar, align 8, !tbaa !44
   %i.at = fadd double %i.af, %i.as
-  store double %i.at, ptr %1, align 8, !tbaa !65
+  store double %i.at, ptr %1, align 8, !tbaa !66
   %i.au = getelementptr inbounds nuw i8, ptr %i.b, i64 112
   %i.av = load double, ptr %i.au, align 8, !tbaa !44
   %i.aw = extractelement <2 x double> %i.am, i64 0
   %i.ax = fadd double %i.aw, %i.av
-  store double %i.ax, ptr %i.h, align 8, !tbaa !66
+  store double %i.ax, ptr %i.h, align 8, !tbaa !65
   %i.ay = getelementptr inbounds nuw i8, ptr %i.b, i64 120
   %i.az = load double, ptr %i.ay, align 8, !tbaa !44
   %i.ba = fadd double %i.aq, %i.az
@@ -352,6 +355,6 @@ attributes #7 = { nounwind }
 !62 = !{!36, !14, i64 216}
 !63 = !{!"_ZTS6PJ_LPZ", !14, i64 0, !14, i64 8, !14, i64 16}
 !64 = !{!63, !14, i64 16}
-!65 = !{!46, !14, i64 0}
-!66 = !{!46, !14, i64 8}
+!65 = !{!46, !14, i64 8}
+!66 = !{!46, !14, i64 0}
 end_hunk_0

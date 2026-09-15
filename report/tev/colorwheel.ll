@@ -36,7 +36,7 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
   tail call void @_ZN7nanogui10ColorWheel9set_colorERKNS_5ColorE(ptr noundef nonnull align 16 dereferenceable(224) %0, ptr noundef nonnull align 4 dereferenceable(16) %2)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store i8 0, ptr %i.c, align 8, !tbaa !50
+  store i8 0, ptr %i.c, align 8, !tbaa !52
   ret void
 }
 
@@ -68,9 +68,9 @@ bb.a:                                             ; preds = %.lr.ph.i.i.i
   store float 0.000000e+00, ptr %i.o, align 4, !tbaa !45
   %i.p = fsub float 1.000000e+00, %i.n
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 156
-  store float %i.p, ptr %i.q, align 4, !tbaa !51
+  store float %i.p, ptr %i.q, align 4, !tbaa !46
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 152
-  store float %i.n, ptr %i.r, align 8, !tbaa !52
+  store float %i.n, ptr %i.r, align 8, !tbaa !47
   br label %bb.n
 
 bb.b:                                             ; preds = %.lr.ph.i.i.i
@@ -201,17 +201,17 @@ bb.a:
   %5 = alloca %struct.NVGpaint, align 8           ; 4 uses
   tail call void @_ZN7nanogui6Widget4drawEP10NVGcontext(ptr noundef nonnull align 8 dereferenceable(148) %0, ptr noundef %1)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %i.b = load i8, ptr %i.a, align 8, !tbaa !54, !range !46, !noundef !47
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !54, !range !48, !noundef !49
   %i.c = trunc nuw i8 %i.b to i1
   br i1 %i.c, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.f = load <2 x i32>, ptr %i.d, align 8, !tbaa !48
+  %i.f = load <2 x i32>, ptr %i.d, align 8, !tbaa !50
   %i.g = shufflevector <2 x i32> %i.f, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.h = sitofp <4 x i32> %i.g to <4 x float>
-  %i.i = load <2 x i32>, ptr %i.e, align 16, !tbaa !48
+  %i.i = load <2 x i32>, ptr %i.e, align 16, !tbaa !50
   %i.j = shufflevector <2 x i32> %i.i, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.k = sitofp <4 x i32> %i.j to <4 x float>     ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 148
@@ -482,7 +482,7 @@ define hidden noundef zeroext i1 @_ZN7nanogui10ColorWheel18mouse_button_eventERK
 bb.a:
   %i.a = tail call noundef zeroext i1 @_ZN7nanogui6Widget18mouse_button_eventERKNS_5ArrayIiLm2EEEibi(ptr noundef nonnull align 8 dereferenceable(148) %0, ptr noundef nonnull align 4 dereferenceable(8) %1, i32 noundef %2, i1 noundef zeroext %3, i32 noundef %4) ; 0 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 105
-  %i.c = load i8, ptr %i.b, align 1, !tbaa !58, !range !46, !noundef !47
+  %i.c = load i8, ptr %i.b, align 1, !tbaa !58, !range !48, !noundef !49
   %i.d = trunc nuw i8 %i.c to i1
   %i.e = icmp eq i32 %2, 0
   %or.cond.not = and i1 %i.e, %i.d
@@ -494,13 +494,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.f = tail call noundef i32 @_ZN7nanogui10ColorWheel15adjust_positionERKNS_5ArrayIiLm2EEENS0_6RegionE(ptr noundef nonnull align 16 dereferenceable(224) %0, ptr noundef nonnull align 4 dereferenceable(8) %1, i32 noundef 3) ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 160
-  store i32 %i.f, ptr %i.g, align 16, !tbaa !49
+  store i32 %i.f, ptr %i.g, align 16, !tbaa !51
   %i.h = icmp ne i32 %i.f, 0
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 160
-  store i32 0, ptr %i.i, align 16, !tbaa !49
+  store i32 0, ptr %i.i, align 16, !tbaa !51
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.a, %bb.d, %bb.c
@@ -516,12 +516,12 @@ bb.a:
   %3 = alloca %"class.nanogui::Color", align 8    ; 5 uses
   %4 = alloca %"class.nanogui::Color", align 8    ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.b = load <2 x i32>, ptr %1, align 4, !tbaa !48
-  %i.c = load <2 x i32>, ptr %i.a, align 8, !tbaa !48
+  %i.b = load <2 x i32>, ptr %1, align 4, !tbaa !50
+  %i.c = load <2 x i32>, ptr %i.a, align 8, !tbaa !50
   %i.d = sub nsw <2 x i32> %i.b, %i.c
   %i.e = sitofp <2 x i32> %i.d to <2 x float>     ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.g = load <2 x i32>, ptr %i.f, align 16, !tbaa !48
+  %i.g = load <2 x i32>, ptr %i.f, align 16, !tbaa !50
   %i.h = sitofp <2 x i32> %i.g to <2 x float>     ; 2 uses
   %i.i = extractelement <2 x float> %i.h, i64 0   ; 3 uses
   %i.j = fmul nnan float %i.i, 5.000000e-01
@@ -615,11 +615,11 @@ _ZNKSt3__18functionIFvRKN7nanogui5ColorEEEclES4_.exit: ; preds = %bb.l, %bb.k, %
   %.034.i.i = phi float [ 0.000000e+00, %bb.f ], [ %i.aq, %bb.g ], [ 1.000000e+00, %bb.h ], [ 1.000000e+00, %bb.i ], [ %i.ao, %bb.j ], [ 0.000000e+00, %bb.k ], [ 0.000000e+00, %bb.l ]
   %.0.i.i = phi float [ 0.000000e+00, %bb.f ], [ 0.000000e+00, %bb.g ], [ 0.000000e+00, %bb.h ], [ %i.aq, %bb.i ], [ 1.000000e+00, %bb.j ], [ 1.000000e+00, %bb.k ], [ %i.ao, %bb.l ]
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 152
-  %5 = load <2 x float>, ptr %i.as, align 8, !tbaa !41 ; 4 uses
-  %6 = extractelement <2 x float> %5, i64 0
-  %7 = fsub float 1.000000e+00, %6
-  %8 = extractelement <2 x float> %5, i64 1
-  %i.at = fsub float %7, %8
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 156
+  %6 = load float, ptr %5, align 4, !tbaa !46     ; 2 uses
+  %7 = load float, ptr %i.as, align 8, !tbaa !47  ; 2 uses
+  %8 = fsub float 1.000000e+00, %7
+  %i.at = fsub float %8, %6
   %i.au = insertelement <4 x float> poison, float %i.at, i64 0
   %i.av = shufflevector <4 x float> %i.au, <4 x float> poison, <4 x i32> zeroinitializer
   %i.aw = insertelement <4 x float> poison, float %.035.i.i, i64 0
@@ -627,10 +627,12 @@ _ZNKSt3__18functionIFvRKN7nanogui5ColorEEEclES4_.exit: ; preds = %bb.l, %bb.k, %
   %i.ay = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %.0.i.i, i64 2
   %i.az = shufflevector <4 x float> %i.ax, <4 x float> %i.ay, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.ba = fmul <4 x float> %i.av, %i.az
-  %9 = shufflevector <2 x float> %5, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %i.bb = fmul <4 x float> %9, <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>
+  %9 = insertelement <4 x float> poison, float %6, i64 0
+  %10 = shufflevector <4 x float> %9, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.bb = fmul <4 x float> %10, <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>
   %i.bc = fadd <4 x float> %i.bb, %i.ba
-  %i.bd = shufflevector <2 x float> %5, <2 x float> poison, <4 x i32> zeroinitializer
+  %11 = insertelement <4 x float> poison, float %7, i64 0
+  %i.bd = shufflevector <4 x float> %11, <4 x float> poison, <4 x i32> zeroinitializer
   %i.be = fadd <4 x float> %i.bd, %i.bc           ; 2 uses
   %i.bf = shufflevector <4 x float> %i.be, <4 x float> poison, <2 x i32> <i32 0, i32 1>
   %i.bg = shufflevector <4 x float> %i.be, <4 x float> poison, <2 x i32> <i32 2, i32 3>
@@ -811,7 +813,7 @@ bb.w:                                             ; preds = %_ZNKSt3__18function
 define hidden noundef zeroext i1 @_ZN7nanogui10ColorWheel16mouse_drag_eventERKNS_5ArrayIiLm2EEES4_ii(ptr nofree noundef nonnull align 16 captures(none) dereferenceable(224) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(8) %1, ptr nofree nonnull readnone align 4 captures(none) %2, i32 %3, i32 %4) unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 160
-  %i.b = load i32, ptr %i.a, align 16, !tbaa !49
+  %i.b = load i32, ptr %i.a, align 16, !tbaa !51
   %i.c = tail call noundef i32 @_ZN7nanogui10ColorWheel15adjust_positionERKNS_5ArrayIiLm2EEENS0_6RegionE(ptr noundef nonnull align 16 dereferenceable(224) %0, ptr noundef nonnull align 4 dereferenceable(8) %1, i32 noundef %i.b)
   %i.d = icmp ne i32 %i.c, 0
   ret i1 %i.d
@@ -866,11 +868,11 @@ _ZNK7nanogui10ColorWheel7hue2rgbEf.exit:          ; preds = %bb.a, %bb.b, %bb.c,
   %.034.i = phi float [ 0.000000e+00, %bb.a ], [ %i.l, %bb.b ], [ 1.000000e+00, %bb.c ], [ 1.000000e+00, %bb.d ], [ %i.j, %bb.e ], [ 0.000000e+00, %bb.f ], [ 0.000000e+00, %bb.g ]
   %.0.i = phi float [ 0.000000e+00, %bb.a ], [ 0.000000e+00, %bb.b ], [ 0.000000e+00, %bb.c ], [ %i.l, %bb.d ], [ 1.000000e+00, %bb.e ], [ 1.000000e+00, %bb.f ], [ %i.j, %bb.g ]
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 152
-  %1 = load <2 x float>, ptr %i.n, align 8, !tbaa !41 ; 4 uses
-  %2 = extractelement <2 x float> %1, i64 0
-  %3 = fsub float 1.000000e+00, %2
-  %4 = extractelement <2 x float> %1, i64 1
-  %i.o = fsub float %3, %4
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 156
+  %2 = load float, ptr %1, align 4, !tbaa !46     ; 2 uses
+  %3 = load float, ptr %i.n, align 8, !tbaa !47   ; 2 uses
+  %4 = fsub float 1.000000e+00, %3
+  %i.o = fsub float %4, %2
   %i.p = insertelement <4 x float> poison, float %i.o, i64 0
   %i.q = shufflevector <4 x float> %i.p, <4 x float> poison, <4 x i32> zeroinitializer
   %i.r = insertelement <4 x float> poison, float %.035.i, i64 0
@@ -878,10 +880,12 @@ _ZNK7nanogui10ColorWheel7hue2rgbEf.exit:          ; preds = %bb.a, %bb.b, %bb.c,
   %i.t = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %.0.i, i64 2
   %i.u = shufflevector <4 x float> %i.s, <4 x float> %i.t, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.v = fmul <4 x float> %i.q, %i.u
-  %5 = shufflevector <2 x float> %1, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %i.w = fmul <4 x float> %5, <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>
+  %5 = insertelement <4 x float> poison, float %2, i64 0
+  %6 = shufflevector <4 x float> %5, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.w = fmul <4 x float> %6, <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>
   %i.x = fadd <4 x float> %i.w, %i.v
-  %i.y = shufflevector <2 x float> %1, <2 x float> poison, <4 x i32> zeroinitializer
+  %7 = insertelement <4 x float> poison, float %3, i64 0
+  %i.y = shufflevector <4 x float> %7, <4 x float> poison, <4 x i32> zeroinitializer
   %i.z = fadd <4 x float> %i.y, %i.x              ; 2 uses
   %i.aa = shufflevector <4 x float> %i.z, <4 x float> poison, <2 x i32> <i32 0, i32 1>
   %i.ab = shufflevector <4 x float> %i.z, <4 x float> poison, <2 x i32> <i32 2, i32 3>
@@ -1104,17 +1108,17 @@ attributes #14 = { builtin nounwind }
 !43 = !{!"_ZTSNSt3__18functionIFvRKN7nanogui5ColorEEEE", !14, i64 0}
 !44 = !{!"_ZTSN7nanogui10ColorWheelE", !40, i64 0, !38, i64 148, !38, i64 152, !38, i64 156, !42, i64 160, !43, i64 176}
 !45 = !{!44, !38, i64 148}
-!46 = !{i8 0, i8 2}
-!47 = !{}
-!48 = !{!6, !6, i64 0}
-!49 = !{!44, !42, i64 160}
-!50 = !{!40, !28, i64 72}
-!51 = !{!44, !38, i64 156}
-!52 = !{!44, !38, i64 152}
+!46 = !{!44, !38, i64 156}
+!47 = !{!44, !38, i64 152}
+!48 = !{i8 0, i8 2}
+!49 = !{}
+!50 = !{!6, !6, i64 0}
+!51 = !{!44, !42, i64 160}
+!52 = !{!40, !28, i64 72}
 !53 = distinct !{!53, !57}
 !54 = !{!40, !28, i64 104}
 !55 = !{!5, !5, i64 0}
-!56 = !{i64 0, i64 24, !55, i64 24, i64 8, !55, i64 32, i64 4, !41, i64 36, i64 4, !41, i64 40, i64 16, !55, i64 56, i64 16, !55, i64 72, i64 4, !48}
+!56 = !{i64 0, i64 24, !55, i64 24, i64 8, !55, i64 32, i64 4, !41, i64 36, i64 4, !41, i64 40, i64 16, !55, i64 56, i64 16, !55, i64 72, i64 4, !50}
 !57 = !{!"llvm.loop.mustprogress"}
 !58 = !{!40, !28, i64 105}
 !59 = distinct !{null, null}

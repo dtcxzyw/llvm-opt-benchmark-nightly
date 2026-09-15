@@ -81,14 +81,16 @@ bb.a:
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !37
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !39
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 72
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !28   ; 6 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !28   ; 7 uses
   %i.i = load ptr, ptr %1, align 8, !tbaa !40
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
   %i.k = load i32, ptr %i.j, align 8, !tbaa !46   ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 16
-  %2 = load <2 x double>, ptr %i.l, align 8, !tbaa !30 ; 2 uses
+  %3 = load double, ptr %i.l, align 8, !tbaa !47
+  %4 = load double, ptr %2, align 8, !tbaa !48
   %i.m = getelementptr inbounds nuw i8, ptr %i.h, i64 32
-  %i.n = load double, ptr %i.m, align 8, !tbaa !47 ; 2 uses
+  %i.n = load double, ptr %i.m, align 8, !tbaa !49 ; 2 uses
   %i.o = tail call i32 @av_frame_is_writable(ptr noundef nonnull %1) #4
   %.not = icmp eq i32 %i.o, 0
   br i1 %.not, label %bb.b, label %bb.e
@@ -120,8 +122,10 @@ bb.e:                                             ; preds = %bb.a, %bb.d
   %i.x = fsub nsz double 1.000000e+00, %i.n
   %i.y = getelementptr inbounds nuw i8, ptr %i.h, i64 132
   %i.z = getelementptr inbounds nuw i8, ptr %i.h, i64 180
-  %3 = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.aa = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer
+  %5 = insertelement <2 x double> poison, double %4, i64 0
+  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
+  %7 = insertelement <2 x double> poison, double %3, i64 0
+  %i.aa = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ab = insertelement <2 x double> poison, double %i.x, i64 0
   %i.ac = shufflevector <2 x double> %i.ab, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ad = insertelement <2 x double> poison, double %i.v, i64 0
@@ -132,7 +136,7 @@ bb.f:                                             ; preds = %.lr.ph, %bb.f
   %.04656 = phi ptr [ %i.i, %.lr.ph ], [ %i.bm, %bb.f ] ; 2 uses
   %.04755 = phi i32 [ 0, %.lr.ph ], [ %i.bn, %bb.f ]
   %.04854 = phi ptr [ %i.t, %.lr.ph ], [ %i.bl, %bb.f ] ; 2 uses
-  %i.af = load <2 x double>, ptr %.04656, align 8, !tbaa !30
+  %i.af = load <2 x double>, ptr %.04656, align 8, !tbaa !32
   %i.ag = fmul nsz <2 x double> %i.aa, %i.af      ; 2 uses
   %i.ah = tail call nsz fastcc double @lfo_get_value(ptr noundef nonnull %i.u)
   %i.ai = tail call nsz fastcc double @lfo_get_value(ptr noundef nonnull %i.w)
@@ -141,12 +145,12 @@ bb.f:                                             ; preds = %.lr.ph, %bb.f
   %i.al = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ak, <2 x double> splat (double 5.000000e-01), <2 x double> %i.ae)
   %i.am = fmul nsz <2 x double> %i.ag, %i.al
   %i.an = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ag, <2 x double> %i.ac, <2 x double> %i.am)
-  %i.ao = fmul nsz <2 x double> %3, %i.an
-  store <2 x double> %i.ao, ptr %.04854, align 8, !tbaa !30
-  %i.ap = load i32, ptr %i.y, align 4, !tbaa !48
-  %i.aq = load i32, ptr %i.z, align 4, !tbaa !48
-  %i.ar = load <2 x double>, ptr %i.u, align 8, !tbaa !30 ; 2 uses
-  %i.as = load <2 x double>, ptr %i.w, align 8, !tbaa !30 ; 2 uses
+  %i.ao = fmul nsz <2 x double> %6, %i.an
+  store <2 x double> %i.ao, ptr %.04854, align 8, !tbaa !32
+  %i.ap = load i32, ptr %i.y, align 4, !tbaa !50
+  %i.aq = load i32, ptr %i.z, align 4, !tbaa !50
+  %i.ar = load <2 x double>, ptr %i.u, align 8, !tbaa !32 ; 2 uses
+  %i.as = load <2 x double>, ptr %i.w, align 8, !tbaa !32 ; 2 uses
   %i.at = insertelement <2 x i32> poison, i32 %i.aq, i64 0
   %i.au = insertelement <2 x i32> %i.at, i32 %i.ap, i64 1
   %i.av = sitofp <2 x i32> %i.au to <2 x double>
@@ -198,7 +202,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 72
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !28   ; 19 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 84
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !50
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !52
   switch i32 %i.f, label %bb.e [
     i32 0, label %bb.b
     i32 1, label %bb.c
@@ -207,13 +211,13 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 64
-  %i.h = load double, ptr %i.g, align 8, !tbaa !51
+  %i.h = load double, ptr %i.g, align 8, !tbaa !53
   %i.i = fdiv nsz double %i.h, 6.000000e+01
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 80
-  %i.k = load i32, ptr %i.j, align 8, !tbaa !52
+  %i.k = load i32, ptr %i.j, align 8, !tbaa !54
   %i.l = sitofp nsz i32 %i.k to double
   %i.m = fdiv nsz double %i.l, 1.000000e+03
   %i.n = fdiv nsz double 1.000000e+00, %i.m
@@ -221,7 +225,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %i.d, i64 72
-  %i.p = load double, ptr %i.o, align 8, !tbaa !53
+  %i.p = load double, ptr %i.o, align 8, !tbaa !55
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.a
@@ -232,39 +236,39 @@ bb.e:                                             ; preds = %bb.a
 bb.f:                                             ; preds = %bb.d, %bb.c, %bb.b
   %.0 = phi nsz double [ %i.i, %bb.b ], [ %i.n, %bb.c ], [ %i.p, %bb.d ] ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.d, i64 96
-  store double %.0, ptr %i.q, align 8, !tbaa !54
+  store double %.0, ptr %i.q, align 8, !tbaa !56
   %i.r = getelementptr inbounds nuw i8, ptr %i.d, i64 144
-  store double %.0, ptr %i.r, align 8, !tbaa !55
+  store double %.0, ptr %i.r, align 8, !tbaa !57
   %i.s = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.t = load i32, ptr %i.s, align 8, !tbaa !56   ; 2 uses
+  %i.t = load i32, ptr %i.s, align 8, !tbaa !58   ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.d, i64 128
-  store i32 %i.t, ptr %i.u, align 8, !tbaa !57
+  store i32 %i.t, ptr %i.u, align 8, !tbaa !59
   %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 176
-  store i32 %i.t, ptr %i.v, align 8, !tbaa !58
+  store i32 %i.t, ptr %i.v, align 8, !tbaa !60
   %i.w = getelementptr inbounds nuw i8, ptr %i.d, i64 104
   %i.x = getelementptr inbounds nuw i8, ptr %i.d, i64 48
-  %i.y = load double, ptr %i.x, align 8, !tbaa !59
+  %i.y = load double, ptr %i.x, align 8, !tbaa !61
   %i.z = getelementptr inbounds nuw i8, ptr %i.d, i64 152
-  store double %i.y, ptr %i.z, align 8, !tbaa !60
+  store double %i.y, ptr %i.z, align 8, !tbaa !62
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.ab = load i32, ptr %i.aa, align 8, !tbaa !61 ; 2 uses
+  %i.ab = load i32, ptr %i.aa, align 8, !tbaa !63 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.d, i64 132
-  store i32 %i.ab, ptr %i.ac, align 4, !tbaa !62
+  store i32 %i.ab, ptr %i.ac, align 4, !tbaa !64
   %i.ad = getelementptr inbounds nuw i8, ptr %i.d, i64 180
-  store i32 %i.ab, ptr %i.ad, align 4, !tbaa !63
+  store i32 %i.ab, ptr %i.ad, align 4, !tbaa !65
   %i.ae = getelementptr inbounds nuw i8, ptr %i.d, i64 32
-  %i.af = load <2 x double>, ptr %i.ae, align 8, !tbaa !30 ; 2 uses
+  %i.af = load <2 x double>, ptr %i.ae, align 8, !tbaa !32 ; 2 uses
   %i.ag = shufflevector <2 x double> %i.af, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x double> %i.ag, ptr %i.w, align 8, !tbaa !30
+  store <2 x double> %i.ag, ptr %i.w, align 8, !tbaa !32
   %i.ah = getelementptr inbounds nuw i8, ptr %i.d, i64 160
   %i.ai = extractelement <2 x double> %i.af, i64 0
-  store double %i.ai, ptr %i.ah, align 8, !tbaa !64
+  store double %i.ai, ptr %i.ah, align 8, !tbaa !66
   %i.aj = getelementptr inbounds nuw i8, ptr %i.d, i64 56
-  %i.ak = load double, ptr %i.aj, align 8, !tbaa !65 ; 2 uses
+  %i.ak = load double, ptr %i.aj, align 8, !tbaa !67 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.d, i64 120
-  store double %i.ak, ptr %i.al, align 8, !tbaa !66
+  store double %i.ak, ptr %i.al, align 8, !tbaa !68
   %i.am = getelementptr inbounds nuw i8, ptr %i.d, i64 168
-  store double %i.ak, ptr %i.am, align 8, !tbaa !67
+  store double %i.ak, ptr %i.am, align 8, !tbaa !69
   ret i32 0
 }
 
@@ -281,7 +285,7 @@ define internal fastcc double @lfo_get_value(ptr nofree noundef readonly capture
 bb.a:
   %i.a = load double, ptr %0, align 8, !tbaa !33  ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.c = load double, ptr %i.b, align 8, !tbaa !68 ; 4 uses
+  %i.c = load double, ptr %i.b, align 8, !tbaa !70 ; 4 uses
   %i.d = fcmp nsz olt double %i.c, 1.000000e-02   ; 2 uses
   %i.e = fcmp nsz olt double %i.c, 1.990000e+00
   br i1 %i.e, label %bb.b, label %.thread
@@ -290,7 +294,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = select nsz i1 %i.d, double 1.000000e-02, double %i.c
   %i.g = fdiv nsz double %i.a, %i.f
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.i = load double, ptr %i.h, align 8, !tbaa !69 ; 3 uses
+  %i.i = load double, ptr %i.h, align 8, !tbaa !71 ; 3 uses
   %i.j = fadd nsz double %i.g, %i.i
   %i.k = fcmp nsz olt double %i.j, 1.000000e+02
   br i1 %i.k, label %bb.c, label %bb.e
@@ -298,7 +302,7 @@ bb.b:                                             ; preds = %bb.a
 .thread:                                          ; preds = %bb.a
   %i.l = fdiv nsz double %i.a, 1.990000e+00
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.n = load double, ptr %i.m, align 8, !tbaa !69 ; 2 uses
+  %i.n = load double, ptr %i.m, align 8, !tbaa !71 ; 2 uses
   %i.o = fadd nsz double %i.l, %i.n
   %i.p = fcmp nsz olt double %i.o, 1.000000e+02
   br i1 %i.p, label %.thread33, label %bb.e
@@ -322,7 +326,7 @@ bb.e:                                             ; preds = %.thread, %bb.b, %.t
   %i.w = frem nsz double %i.u, 1.000000e+00
   %.026 = select nsz i1 %i.v, double %i.w, double %i.u ; 9 uses
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.y = load i32, ptr %i.x, align 8, !tbaa !70
+  %i.y = load i32, ptr %i.x, align 8, !tbaa !72
   switch i32 %i.y, label %bb.o [
     i32 0, label %bb.f
     i32 1, label %bb.g
@@ -380,7 +384,7 @@ bb.o:                                             ; preds = %bb.e
 bb.p:                                             ; preds = %bb.h, %bb.k, %bb.j, %bb.n, %bb.m, %bb.l, %bb.f
   %.0 = phi nsz double [ %i.ab, %bb.f ], [ %i.ae, %bb.h ], [ %i.ag, %bb.j ], [ %i.ah, %bb.k ], [ %i.aj, %bb.l ], [ %i.ak, %bb.m ], [ %i.am, %bb.n ]
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.ao = load double, ptr %i.an, align 8, !tbaa !71
+  %i.ao = load double, ptr %i.an, align 8, !tbaa !73
   %i.ap = fmul nsz double %.0, %i.ao
   ret double %i.ap
 }
@@ -454,11 +458,11 @@ attributes #5 = { noreturn nounwind }
 !27 = !{!"AVFilterContext", !21, i64 0, !22, i64 8, !23, i64 16, !11, i64 24, !24, i64 32, !6, i64 40, !11, i64 48, !24, i64 56, !6, i64 64, !9, i64 72, !25, i64 80, !6, i64 88, !6, i64 92, !23, i64 96, !6, i64 104, !26, i64 112, !6, i64 120}
 !28 = !{!27, !9, i64 72}
 !29 = !{!"double", !5, i64 0}
-!30 = !{!29, !29, i64 0}
-!31 = !{!"SimpleLFO", !29, i64 0, !29, i64 8, !29, i64 16, !29, i64 24, !29, i64 32, !6, i64 40, !6, i64 44}
-!32 = !{!"AudioPulsatorContext", !21, i64 0, !6, i64 8, !29, i64 16, !29, i64 24, !29, i64 32, !29, i64 40, !29, i64 48, !29, i64 56, !29, i64 64, !29, i64 72, !6, i64 80, !6, i64 84, !31, i64 88, !31, i64 136}
-!33 = !{!31, !29, i64 0}
-!34 = distinct !{!34, !49}
+!30 = !{!"SimpleLFO", !29, i64 0, !29, i64 8, !29, i64 16, !29, i64 24, !29, i64 32, !6, i64 40, !6, i64 44}
+!31 = !{!"AudioPulsatorContext", !21, i64 0, !6, i64 8, !29, i64 16, !29, i64 24, !29, i64 32, !29, i64 40, !29, i64 48, !29, i64 56, !29, i64 64, !29, i64 72, !6, i64 80, !6, i64 84, !30, i64 88, !30, i64 136}
+!32 = !{!29, !29, i64 0}
+!33 = !{!30, !29, i64 0}
+!34 = distinct !{!34, !51}
 !35 = !{!"p1 _ZTS7AVFrame", !9, i64 0}
 !36 = !{!35, !35, i64 0}
 !37 = !{!27, !24, i64 56}
@@ -471,29 +475,31 @@ attributes #5 = { noreturn nounwind }
 !44 = !{!"p1 _ZTS12AVDictionary", !9, i64 0}
 !45 = !{!"AVFrame", !5, i64 0, !5, i64 64, !41, i64 96, !6, i64 104, !6, i64 108, !6, i64 112, !6, i64 116, !6, i64 120, !12, i64 124, !42, i64 136, !42, i64 144, !12, i64 152, !6, i64 160, !9, i64 168, !6, i64 176, !6, i64 180, !5, i64 184, !43, i64 248, !6, i64 256, !15, i64 264, !6, i64 272, !6, i64 276, !6, i64 280, !6, i64 284, !6, i64 288, !6, i64 292, !6, i64 296, !42, i64 304, !44, i64 312, !6, i64 320, !26, i64 328, !26, i64 336, !42, i64 344, !42, i64 352, !42, i64 360, !42, i64 368, !9, i64 376, !13, i64 384, !42, i64 408, !6, i64 416}
 !46 = !{!45, !6, i64 112}
-!47 = !{!32, !29, i64 32}
-!48 = !{!31, !6, i64 44}
-!49 = !{!"llvm.loop.mustprogress"}
-!50 = !{!32, !6, i64 84}
-!51 = !{!32, !29, i64 64}
-!52 = !{!32, !6, i64 80}
-!53 = !{!32, !29, i64 72}
-!54 = !{!32, !29, i64 96}
-!55 = !{!32, !29, i64 144}
-!56 = !{!32, !6, i64 8}
-!57 = !{!32, !6, i64 128}
-!58 = !{!32, !6, i64 176}
-!59 = !{!32, !29, i64 48}
-!60 = !{!32, !29, i64 152}
-!61 = !{!19, !6, i64 64}
-!62 = !{!32, !6, i64 132}
-!63 = !{!32, !6, i64 180}
-!64 = !{!32, !29, i64 160}
-!65 = !{!32, !29, i64 56}
-!66 = !{!32, !29, i64 120}
-!67 = !{!32, !29, i64 168}
-!68 = !{!31, !29, i64 32}
-!69 = !{!31, !29, i64 16}
-!70 = !{!31, !6, i64 40}
-!71 = !{!31, !29, i64 24}
+!47 = !{!31, !29, i64 16}
+!48 = !{!31, !29, i64 24}
+!49 = !{!31, !29, i64 32}
+!50 = !{!30, !6, i64 44}
+!51 = !{!"llvm.loop.mustprogress"}
+!52 = !{!31, !6, i64 84}
+!53 = !{!31, !29, i64 64}
+!54 = !{!31, !6, i64 80}
+!55 = !{!31, !29, i64 72}
+!56 = !{!31, !29, i64 96}
+!57 = !{!31, !29, i64 144}
+!58 = !{!31, !6, i64 8}
+!59 = !{!31, !6, i64 128}
+!60 = !{!31, !6, i64 176}
+!61 = !{!31, !29, i64 48}
+!62 = !{!31, !29, i64 152}
+!63 = !{!19, !6, i64 64}
+!64 = !{!31, !6, i64 132}
+!65 = !{!31, !6, i64 180}
+!66 = !{!31, !29, i64 160}
+!67 = !{!31, !29, i64 56}
+!68 = !{!31, !29, i64 120}
+!69 = !{!31, !29, i64 168}
+!70 = !{!30, !29, i64 32}
+!71 = !{!30, !29, i64 16}
+!72 = !{!30, !6, i64 40}
+!73 = !{!30, !29, i64 24}
 end_hunk_0

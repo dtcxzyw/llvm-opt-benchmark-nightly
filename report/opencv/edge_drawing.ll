@@ -205,18 +205,22 @@ define hidden noundef double @_ZN2cv8ximgproc15EdgeDrawingImpl33ComputeMinDistan
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %3 = load <2 x double>, ptr %i.a, align 8, !tbaa !46 ; 2 uses
+  %4 = load double, ptr %3, align 8, !tbaa !229
+  %5 = load double, ptr %i.a, align 8, !tbaa !230
   %i.e = load <4 x double>, ptr %i.b, align 8, !tbaa !46 ; 3 uses
   %i.f = load double, ptr %i.d, align 8, !tbaa !233
   %i.g = load double, ptr %i.c, align 8, !tbaa !229
-  %i.h = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
+  %6 = insertelement <2 x double> poison, double %5, i64 0
+  %i.h = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
   %i.i = shufflevector <4 x double> %i.e, <4 x double> poison, <2 x i32> <i32 2, i32 0>
   %i.j = fsub <2 x double> %i.h, %i.i             ; 2 uses
-  %4 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %7 = insertelement <2 x double> poison, double %4, i64 0
+  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
   %i.k = shufflevector <4 x double> %i.e, <4 x double> poison, <2 x i32> <i32 3, i32 1>
-  %i.l = fsub <2 x double> %4, %i.k               ; 2 uses
+  %i.l = fsub <2 x double> %8, %i.k               ; 2 uses
   %i.m = fmul <2 x double> %i.l, %i.l
   %i.n = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.j, <2 x double> %i.j, <2 x double> %i.m)
   %i.o = tail call <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.n) ; 2 uses

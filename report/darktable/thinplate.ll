@@ -205,14 +205,22 @@ bb.ae:                                            ; preds = %bb.ad
   br label %.lr.ph886.preheader.i.i
 
 .lr.ph886.preheader.i.i:                          ; preds = %bb.ae, %bb.ad, %bb.ac
-  %.0.i709.i.i = phi nsz double [ %i.bhq, %bb.ac ], [ %i.bhw, %bb.ae ], [ 0.000000e+00, %bb.ad ] ; 3 uses
+  %.0.i709.i.i = phi nsz double [ %i.bhq, %bb.ac ], [ %i.bhw, %bb.ae ], [ 0.000000e+00, %bb.ad ] ; 2 uses
   %i.bhx = getelementptr inbounds nuw [8 x i8], ptr %i.pq, i64 %indvars.iv1085.i.i
   store double %.0.i709.i.i, ptr %i.bhx, align 8, !tbaa !117
-  %10 = fdiv reassoc nsz arcp contract afn double %.0679892.i.i, %.0.i709.i.i ; 10 uses
-  %11 = fdiv reassoc nsz arcp contract afn double %i.bhh, %.0.i709.i.i ; 10 uses
+  %10 = insertelement <2 x double> poison, double %i.bhh, i64 0
+  %11 = insertelement <2 x double> %10, double %.0679892.i.i, i64 1
+  %12 = insertelement <2 x double> poison, double %.0.i709.i.i, i64 0
+  %13 = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> zeroinitializer
+  %14 = fdiv reassoc nsz arcp contract afn <2 x double> %11, %13 ; 8 uses
   %invariant.gep1221.i.i = getelementptr [8 x i8], ptr %i.il, i64 %indvars.iv1085.i.i ; 3 uses
   %invariant.gep1223.i.i = getelementptr [8 x i8], ptr %i.il, i64 %indvars.iv.next1086.i.i ; 3 uses
-  br i1 %i.om, label %.lr.ph886.i.i.epil.preheader, label %.lr.ph886.i.i
+  br i1 %i.om, label %.lr.ph886.i.i.epil.preheader, label %.lr.ph886.preheader.i.i.new
+
+.lr.ph886.preheader.i.i.new:                      ; preds = %.lr.ph886.preheader.i.i
+  %15 = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %16 = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  br label %.lr.ph886.i.i
 
 ._crit_edge887.i.i.unr-lcssa:                     ; preds = %.lr.ph886.i.i
   br i1 %lcmp.mod2099.not, label %._crit_edge887.i.i, label %.lr.ph886.i.i.epil.preheader
@@ -221,29 +229,34 @@ bb.ae:                                            ; preds = %bb.ad
   %indvars.iv1075.i.i.epil.init = phi i64 [ 0, %.lr.ph886.preheader.i.i ], [ %indvars.iv.next1076.i.i.1, %._crit_edge887.i.i.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod2100)
   %i.bhy = mul nuw nsw i64 %indvars.iv1075.i.i.epil.init, %i.oa ; 2 uses
-  %gep1222.i.i.epil.a = getelementptr [8 x i8], ptr %invariant.gep1221.i.i, i64 %i.bhy ; 2 uses
-  %i.bhz = load double, ptr %gep1222.i.i.epil.a, align 8, !tbaa !117 ; 2 uses
-  %gep1224.i.i.epil = getelementptr [8 x i8], ptr %invariant.gep1223.i.i, i64 %i.bhy ; 2 uses
-  %12 = load double, ptr %gep1224.i.i.epil, align 8, !tbaa !117 ; 2 uses
-  %13 = fmul reassoc nsz arcp contract afn double %i.bhz, %10
-  %14 = fmul reassoc nsz arcp contract afn double %12, %11
-  %15 = fadd reassoc nsz arcp contract afn double %14, %13
-  store double %15, ptr %gep1222.i.i.epil.a, align 8, !tbaa !117
-  %16 = fmul reassoc nsz arcp contract afn double %12, %10
-  %17 = fmul reassoc nsz arcp contract afn double %i.bhz, %11
-  %18 = fsub reassoc nsz arcp contract afn double %16, %17
-  store double %18, ptr %gep1224.i.i.epil, align 8, !tbaa !117
+  %gep1222.i.i.epil = getelementptr [8 x i8], ptr %invariant.gep1221.i.i, i64 %i.bhy ; 2 uses
+  %gep1222.i.i.epil.a = getelementptr [8 x i8], ptr %invariant.gep1223.i.i, i64 %i.bhy
+  %17 = load double, ptr %gep1222.i.i.epil, align 8, !tbaa !117
+  %i.bhz = load double, ptr %gep1222.i.i.epil.a, align 8, !tbaa !117
+  %18 = insertelement <2 x double> poison, double %i.bhz, i64 0
+  %19 = shufflevector <2 x double> %18, <2 x double> poison, <2 x i32> zeroinitializer
+  %20 = fmul reassoc nsz arcp contract afn <2 x double> %19, %14 ; 2 uses
+  %21 = insertelement <2 x double> poison, double %17, i64 0
+  %22 = shufflevector <2 x double> %21, <2 x double> poison, <2 x i32> zeroinitializer
+  %23 = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %24 = fmul reassoc nsz arcp contract afn <2 x double> %22, %23 ; 2 uses
+  %25 = fadd reassoc nsz arcp contract afn <2 x double> %20, %24
+  %26 = fsub reassoc nsz arcp contract afn <2 x double> %20, %24
+  %27 = shufflevector <2 x double> %25, <2 x double> %26, <2 x i32> <i32 0, i32 3>
+  store <2 x double> %27, ptr %gep1222.i.i.epil, align 8, !tbaa !117
   br label %._crit_edge887.i.i
 
 ._crit_edge887.i.i:                               ; preds = %._crit_edge887.i.i.unr-lcssa, %.lr.ph886.i.i.epil.preheader
-  %i.bia = fmul reassoc nsz arcp contract afn double %10, %.0673894.i.i
-  %i.bib = fmul reassoc nsz arcp contract afn double %11, %i.bhi
+  %28 = extractelement <2 x double> %14, i64 1    ; 4 uses
+  %i.bia = fmul reassoc nsz arcp contract afn double %28, %.0673894.i.i
+  %29 = extractelement <2 x double> %14, i64 0    ; 4 uses
+  %i.bib = fmul reassoc nsz arcp contract afn double %29, %i.bhi
   %i.bic = fadd reassoc nsz arcp contract afn double %i.bia, %i.bib ; 2 uses
-  %i.bid = fmul reassoc nsz arcp contract afn double %10, %i.bhi
-  %i.bie = fmul reassoc nsz arcp contract afn double %11, %.0673894.i.i
+  %i.bid = fmul reassoc nsz arcp contract afn double %28, %i.bhi
+  %i.bie = fmul reassoc nsz arcp contract afn double %29, %.0673894.i.i
   %i.bif = fsub reassoc nsz arcp contract afn double %i.bid, %i.bie ; 2 uses
-  %i.big = fmul reassoc nsz arcp contract afn double %11, %i.bhg ; 3 uses
-  %i.bih = fmul reassoc nsz arcp contract afn double %10, %i.bhg ; 2 uses
+  %i.big = fmul reassoc nsz arcp contract afn double %29, %i.bhg ; 3 uses
+  %i.bih = fmul reassoc nsz arcp contract afn double %28, %i.bhg ; 2 uses
   %i.bii = tail call reassoc nsz arcp contract afn double @llvm.fabs.f64(double %i.bic) ; 4 uses
   %i.bij = tail call reassoc nsz arcp contract afn double @llvm.fabs.f64(double %i.big) ; 4 uses
   %i.bik = fcmp reassoc nsz arcp contract afn ogt double %i.bii, %i.bij
@@ -277,8 +290,8 @@ bb.ah:                                            ; preds = %bb.ag
   %i.biy = fdiv reassoc nsz arcp contract afn double 1.000000e+00, %.0.i711.i.i ; 2 uses
   %i.biz = fmul reassoc nsz arcp contract afn double %i.biy, %i.bic
   %i.bja = fmul reassoc nsz arcp contract afn double %i.biy, %i.big
-  %.1681.i.i = select nsz i1 %i.bix, double %i.biz, double %10 ; 15 uses
-  %.9.i.i = select nsz i1 %i.bix, double %i.bja, double %11 ; 15 uses
+  %.1681.i.i = select nsz i1 %i.bix, double %i.biz, double %28 ; 15 uses
+  %.9.i.i = select nsz i1 %i.bix, double %i.bja, double %29 ; 15 uses
   %invariant.gep1225.i.i = getelementptr [8 x i8], ptr %i.in, i64 %indvars.iv1085.i.i ; 7 uses
   %invariant.gep1227.i.i = getelementptr [8 x i8], ptr %i.in, i64 %indvars.iv.next1086.i.i ; 6 uses
   br i1 %ident.check1912.not, label %.lr.ph889.i.i.ph, label %.lr.ph889.i.i.lver.orig.preheader
@@ -325,36 +338,40 @@ bb.ah:                                            ; preds = %bb.ag
   %load_initial = load double, ptr %invariant.gep1225.i.i, align 8 ; 2 uses
   br i1 %i.jk, label %.lr.ph889.i.i.epil.preheader, label %.lr.ph889.i.i
 
-.lr.ph886.i.i:                                    ; preds = %.lr.ph886.preheader.i.i, %.lr.ph886.i.i
-  %indvars.iv1075.i.i = phi i64 [ %indvars.iv.next1076.i.i.1, %.lr.ph886.i.i ], [ 0, %.lr.ph886.preheader.i.i ] ; 3 uses
-  %niter2102 = phi i64 [ %niter2102.next.1, %.lr.ph886.i.i ], [ 0, %.lr.ph886.preheader.i.i ]
+.lr.ph886.i.i:                                    ; preds = %.lr.ph886.i.i, %.lr.ph886.preheader.i.i.new
+  %indvars.iv1075.i.i = phi i64 [ 0, %.lr.ph886.preheader.i.i.new ], [ %indvars.iv.next1076.i.i.1, %.lr.ph886.i.i ] ; 3 uses
+  %niter2102 = phi i64 [ 0, %.lr.ph886.preheader.i.i.new ], [ %niter2102.next.1, %.lr.ph886.i.i ]
   %i.bjt = mul nuw nsw i64 %indvars.iv1075.i.i, %i.oa ; 2 uses
-  %gep1222.i.i.a = getelementptr [8 x i8], ptr %invariant.gep1221.i.i, i64 %i.bjt ; 2 uses
-  %i.bju = load double, ptr %gep1222.i.i.a, align 8, !tbaa !117 ; 2 uses
-  %gep1224.i.i = getelementptr [8 x i8], ptr %invariant.gep1223.i.i, i64 %i.bjt ; 2 uses
-  %19 = load double, ptr %gep1224.i.i, align 8, !tbaa !117 ; 2 uses
-  %20 = fmul reassoc nsz arcp contract afn double %i.bju, %10
-  %21 = fmul reassoc nsz arcp contract afn double %19, %11
-  %22 = fadd reassoc nsz arcp contract afn double %21, %20
-  store double %22, ptr %gep1222.i.i.a, align 8, !tbaa !117
-  %23 = fmul reassoc nsz arcp contract afn double %19, %10
-  %24 = fmul reassoc nsz arcp contract afn double %i.bju, %11
-  %25 = fsub reassoc nsz arcp contract afn double %23, %24
-  store double %25, ptr %gep1224.i.i, align 8, !tbaa !117
+  %gep1222.i.i = getelementptr [8 x i8], ptr %invariant.gep1221.i.i, i64 %i.bjt ; 2 uses
+  %gep1222.i.i.a = getelementptr [8 x i8], ptr %invariant.gep1223.i.i, i64 %i.bjt
+  %30 = load double, ptr %gep1222.i.i, align 8, !tbaa !117
+  %i.bju = load double, ptr %gep1222.i.i.a, align 8, !tbaa !117
+  %31 = insertelement <2 x double> poison, double %i.bju, i64 0
+  %32 = shufflevector <2 x double> %31, <2 x double> poison, <2 x i32> zeroinitializer
+  %33 = fmul reassoc nsz arcp contract afn <2 x double> %32, %14 ; 2 uses
+  %34 = insertelement <2 x double> poison, double %30, i64 0
+  %35 = shufflevector <2 x double> %34, <2 x double> poison, <2 x i32> zeroinitializer
+  %36 = fmul reassoc nsz arcp contract afn <2 x double> %35, %15 ; 2 uses
+  %37 = fadd reassoc nsz arcp contract afn <2 x double> %33, %36
+  %38 = fsub reassoc nsz arcp contract afn <2 x double> %33, %36
+  %39 = shufflevector <2 x double> %37, <2 x double> %38, <2 x i32> <i32 0, i32 3>
+  store <2 x double> %39, ptr %gep1222.i.i, align 8, !tbaa !117
   %indvars.iv.next1076.i.i = or disjoint i64 %indvars.iv1075.i.i, 1
   %i.bjv = mul nuw nsw i64 %indvars.iv.next1076.i.i, %i.oa ; 2 uses
-  %gep1222.i.i.1.a = getelementptr [8 x i8], ptr %invariant.gep1221.i.i, i64 %i.bjv ; 2 uses
-  %i.bjw = load double, ptr %gep1222.i.i.1.a, align 8, !tbaa !117 ; 2 uses
-  %gep1224.i.i.1 = getelementptr [8 x i8], ptr %invariant.gep1223.i.i, i64 %i.bjv ; 2 uses
-  %26 = load double, ptr %gep1224.i.i.1, align 8, !tbaa !117 ; 2 uses
-  %27 = fmul reassoc nsz arcp contract afn double %i.bjw, %10
-  %28 = fmul reassoc nsz arcp contract afn double %26, %11
-  %29 = fadd reassoc nsz arcp contract afn double %28, %27
-  store double %29, ptr %gep1222.i.i.1.a, align 8, !tbaa !117
-  %30 = fmul reassoc nsz arcp contract afn double %26, %10
-  %31 = fmul reassoc nsz arcp contract afn double %i.bjw, %11
-  %32 = fsub reassoc nsz arcp contract afn double %30, %31
-  store double %32, ptr %gep1224.i.i.1, align 8, !tbaa !117
+  %gep1222.i.i.1 = getelementptr [8 x i8], ptr %invariant.gep1221.i.i, i64 %i.bjv ; 2 uses
+  %gep1222.i.i.1.a = getelementptr [8 x i8], ptr %invariant.gep1223.i.i, i64 %i.bjv
+  %40 = load double, ptr %gep1222.i.i.1, align 8, !tbaa !117
+  %i.bjw = load double, ptr %gep1222.i.i.1.a, align 8, !tbaa !117
+  %41 = insertelement <2 x double> poison, double %i.bjw, i64 0
+  %42 = shufflevector <2 x double> %41, <2 x double> poison, <2 x i32> zeroinitializer
+  %43 = fmul reassoc nsz arcp contract afn <2 x double> %42, %14 ; 2 uses
+  %44 = insertelement <2 x double> poison, double %40, i64 0
+  %45 = shufflevector <2 x double> %44, <2 x double> poison, <2 x i32> zeroinitializer
+  %46 = fmul reassoc nsz arcp contract afn <2 x double> %45, %16 ; 2 uses
+  %47 = fadd reassoc nsz arcp contract afn <2 x double> %43, %46
+  %48 = fsub reassoc nsz arcp contract afn <2 x double> %43, %46
+  %49 = shufflevector <2 x double> %47, <2 x double> %48, <2 x i32> <i32 0, i32 3>
+  store <2 x double> %49, ptr %gep1222.i.i.1, align 8, !tbaa !117
   %indvars.iv.next1076.i.i.1 = add nuw nsw i64 %indvars.iv1075.i.i, 2 ; 2 uses
   %niter2102.next.1 = add i64 %niter2102, 2       ; 2 uses
   %niter2102.ncmp.1 = icmp eq i64 %niter2102.next.1, %unroll_iter2101

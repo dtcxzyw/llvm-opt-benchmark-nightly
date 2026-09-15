@@ -205,29 +205,31 @@ _ZNK2cv7Affine3IfE3invEi.exit:                    ; preds = %bb.a, %bb.b
   %i.o = phi <2 x float> [ %i.k, %bb.b ], [ zeroinitializer, %bb.a ]
   %i.p = phi <2 x float> [ %i.l, %bb.b ], [ zeroinitializer, %bb.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #21, !noalias !482
-  %8 = load <2 x float>, ptr %1, align 4, !tbaa !41, !noalias !484 ; 4 uses
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.q = load float, ptr %9, align 4, !tbaa !41, !noalias !484
-  %.fr.i = freeze float %i.q                      ; 3 uses
-  %10 = extractelement <2 x float> %8, i64 0      ; 2 uses
-  %11 = fcmp uno float %10, 0.000000e+00
-  %12 = extractelement <2 x float> %8, i64 1      ; 2 uses
-  %spec.select.i = fcmp uno float %12, %.fr.i
-  %i.r = select i1 %11, i1 true, i1 %spec.select.i
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %9 = load float, ptr %8, align 4, !tbaa !41, !noalias !484 ; 3 uses
+  %i.q = load float, ptr %1, align 4, !tbaa !41, !noalias !484 ; 3 uses
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %11 = load float, ptr %10, align 4, !tbaa !41, !noalias !484
+  %.fr.i = freeze float %11                       ; 3 uses
+  %12 = fcmp uno float %i.q, 0.000000e+00
+  %spec.select.i = fcmp uno float %9, %.fr.i
+  %i.r = select i1 %12, i1 true, i1 %spec.select.i
   br i1 %i.r, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %_ZNK2cv7Affine3IfE3invEi.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #21
-  %13 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.s = fmul <2 x float> %i.p, %13
-  %i.t = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
+  %13 = insertelement <2 x float> poison, float %9, i64 0
+  %14 = shufflevector <2 x float> %13, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.s = fmul <2 x float> %i.p, %14
+  %15 = insertelement <2 x float> poison, float %i.q, i64 0
+  %i.t = shufflevector <2 x float> %15, <2 x float> poison, <2 x i32> zeroinitializer
   %i.u = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.o, <2 x float> %i.t, <2 x float> %i.s)
   %i.v = insertelement <2 x float> poison, float %.fr.i, i64 0
   %i.w = shufflevector <2 x float> %i.v, <2 x float> poison, <2 x i32> zeroinitializer
   %i.x = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.n, <2 x float> %i.w, <2 x float> %i.u)
   %i.y = fadd <2 x float> %i.m, %i.x
-  %i.z = fmul float %.sroa.0.i.sroa.13.0, %12
-  %i.aa = call float @llvm.fmuladd.f32(float %.sroa.0.i.sroa.12.0, float %10, float %i.z)
+  %i.z = fmul float %.sroa.0.i.sroa.13.0, %9
+  %i.aa = call float @llvm.fmuladd.f32(float %.sroa.0.i.sroa.12.0, float %i.q, float %i.z)
   %i.ab = call float @llvm.fmuladd.f32(float %.sroa.0.i.sroa.14.0, float %.fr.i, float %i.aa)
   %i.ac = fadd float %.sroa.0.i.sroa.15.0, %i.ab
   store <2 x float> %i.y, ptr %6, align 8

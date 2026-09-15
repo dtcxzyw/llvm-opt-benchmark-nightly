@@ -204,17 +204,23 @@ declare void @_cmsFree(ptr noundef, ptr noundef) local_unnamed_addr #1
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) uwtable
 define void @cmsCIECAM02Forward(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) initializes((0, 24)) %2) local_unnamed_addr #3 {
 bb.a:
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.b = load double, ptr %i.a, align 8, !tbaa !25 ; 2 uses
-  %3 = load <2 x double>, ptr %1, align 8, !tbaa !16 ; 3 uses
-  %4 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.c = fmul <2 x double> %4, <double 4.296000e-01, double 1.697500e+00>
-  %i.d = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %4 = load double, ptr %i.a, align 8, !tbaa !25
+  %5 = load double, ptr %3, align 8, !tbaa !26    ; 2 uses
+  %i.b = load double, ptr %1, align 8, !tbaa !27  ; 2 uses
+  %6 = insertelement <2 x double> poison, double %5, i64 0
+  %7 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.c = fmul <2 x double> %7, <double 4.296000e-01, double 1.697500e+00>
+  %8 = insertelement <2 x double> poison, double %i.b, i64 0
+  %i.d = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
   %i.e = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.d, <2 x double> <double 7.328000e-01, double -7.036000e-01>, <2 x double> %i.c) ; 2 uses
-  %5 = shufflevector <2 x double> %i.e, <2 x double> %3, <2 x i32> <i32 1, i32 3>
-  %6 = fmul <2 x double> %5, <double 1.000000e+00, double 1.360000e-02>
-  %i.f = insertelement <2 x double> %i.d, double %i.b, i64 0
-  %i.g = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.f, <2 x double> <double 6.100000e-03, double 3.000000e-03>, <2 x double> %6) ; 2 uses
+  %9 = fmul double %5, 1.360000e-02
+  %10 = insertelement <2 x double> poison, double %4, i64 0 ; 2 uses
+  %11 = insertelement <2 x double> %10, double %i.b, i64 1
+  %12 = shufflevector <2 x double> %i.e, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %i.f = insertelement <2 x double> %12, double %9, i64 1
+  %i.g = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %11, <2 x double> <double 6.100000e-03, double 3.000000e-03>, <2 x double> %i.f) ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.i = load double, ptr %i.h, align 8, !tbaa !16, !noalias !51 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 352
@@ -233,8 +239,7 @@ bb.a:
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.x = load double, ptr %i.w, align 8, !tbaa !16, !noalias !51
   %i.y = fdiv double %i.k, %i.x
-  %7 = insertelement <2 x double> poison, double %i.b, i64 0
-  %i.z = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.z = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
   %i.aa = shufflevector <2 x double> %i.g, <2 x double> %i.e, <2 x i32> <i32 1, i32 2>
   %i.ab = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.z, <2 x double> <double 9.834000e-01, double -1.624000e-01>, <2 x double> %i.aa) ; 2 uses
   %i.ac = shufflevector <2 x double> %i.ab, <2 x double> %i.g, <2 x i32> <i32 1, i32 2>
@@ -414,7 +419,7 @@ ComputeCorrelates.exit:                           ; preds = %bb.p, %bb.k, %bb.j,
   %i.el = fadd double %i.ed, 3.800000e+00
   %i.em = fmul double %i.ek, %i.el
   %i.en = getelementptr inbounds nuw i8, ptr %0, i64 160
-  %i.eo = load double, ptr %i.en, align 8, !tbaa !26, !noalias !53 ; 2 uses
+  %i.eo = load double, ptr %i.en, align 8, !tbaa !28, !noalias !53 ; 2 uses
   %i.ep = fdiv double %i.ei, %i.eo
   %i.eq = getelementptr inbounds nuw i8, ptr %0, i64 288
   %i.er = load double, ptr %i.eq, align 8, !tbaa !18, !noalias !53 ; 2 uses
@@ -452,7 +457,7 @@ ComputeCorrelates.exit:                           ; preds = %bb.p, %bb.k, %bb.j,
   %i.fx = tail call double @pow(double noundef %i.fw, double noundef 5.000000e-01) #6, !noalias !53 ; 0 uses
   store double %i.ew, ptr %2, align 8, !tbaa !27
   %i.fy = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store double %i.ft, ptr %i.fy, align 8, !tbaa !28
+  store double %i.ft, ptr %i.fy, align 8, !tbaa !26
   %i.fz = getelementptr inbounds nuw i8, ptr %2, i64 16
   store double %.sroa.37.0, ptr %i.fz, align 8, !tbaa !25
   ret void
@@ -463,7 +468,7 @@ define void @cmsCIECAM02Reverse(ptr nofree noundef readonly captures(none) %0, p
 bb.a:
   %i.a = load double, ptr %1, align 8, !tbaa !27
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.c = load double, ptr %i.b, align 8, !tbaa !28
+  %i.c = load double, ptr %i.b, align 8, !tbaa !26
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.e = load double, ptr %i.d, align 8, !tbaa !25 ; 2 uses
   %i.f = fdiv double %i.a, 1.000000e+02           ; 2 uses
@@ -481,7 +486,7 @@ bb.a:
   %i.r = tail call double @cos(double noundef %i.q) #6, !noalias !60
   %i.s = fadd double %i.r, 3.800000e+00
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 160
-  %i.u = load double, ptr %i.t, align 8, !tbaa !26, !noalias !60
+  %i.u = load double, ptr %i.t, align 8, !tbaa !28, !noalias !60
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 288
   %i.w = load <2 x double>, ptr %i.v, align 8, !tbaa !16, !noalias !60
   %i.x = fmul <2 x double> %i.w, <double 1.000000e+00, double f0x408E0C4EC4EC4EC5>
@@ -711,9 +716,9 @@ attributes #6 = { nounwind }
 !23 = !{!13, !9, i64 344}
 !24 = !{!13, !9, i64 328}
 !25 = !{!15, !9, i64 16}
-!26 = !{!13, !9, i64 160}
+!26 = !{!15, !9, i64 8}
 !27 = !{!15, !9, i64 0}
-!28 = !{!15, !9, i64 8}
+!28 = !{!13, !9, i64 160}
 !29 = distinct !{!29, !"NonlinearCompression"}
 !30 = distinct !{!30, !29, !"NonlinearCompression: argument 0"}
 !31 = !{!"", !15, i64 0, !9, i64 24, !9, i64 32, !6, i64 40, !9, i64 48}

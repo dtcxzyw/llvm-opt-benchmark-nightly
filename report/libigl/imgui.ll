@@ -205,18 +205,22 @@ declare float @llvm.fmuladd.f32(float, float, float) #14
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define dso_local noundef zeroext i1 @_Z23ImTriangleContainsPointRK6ImVec2S1_S1_S1_(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(8) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(8) %1, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(8) %2, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(8) %3) local_unnamed_addr #15 {
 bb.a:
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.a = load <2 x float>, ptr %1, align 4, !tbaa !75 ; 4 uses
-  %4 = load <2 x float>, ptr %3, align 4, !tbaa !75 ; 4 uses
+  %5 = load float, ptr %4, align 4, !tbaa !188    ; 2 uses
+  %6 = load float, ptr %3, align 4, !tbaa !187    ; 2 uses
   %i.b = load <2 x float>, ptr %0, align 4, !tbaa !75 ; 4 uses
   %i.c = load <2 x float>, ptr %2, align 4, !tbaa !75 ; 3 uses
-  %i.d = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> zeroinitializer
+  %7 = insertelement <2 x float> poison, float %6, i64 0
+  %i.d = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer
   %i.e = shufflevector <2 x float> %i.a, <2 x float> %i.c, <2 x i32> <i32 0, i32 2> ; 2 uses
   %i.f = fsub <2 x float> %i.d, %i.e
   %i.g = shufflevector <2 x float> %i.b, <2 x float> %i.a, <2 x i32> <i32 1, i32 3>
   %i.h = shufflevector <2 x float> %i.a, <2 x float> %i.c, <2 x i32> <i32 1, i32 3> ; 2 uses
   %i.i = fsub <2 x float> %i.g, %i.h
-  %5 = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.j = fsub <2 x float> %5, %i.h
+  %8 = insertelement <2 x float> poison, float %5, i64 0
+  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.j = fsub <2 x float> %9, %i.h
   %i.k = shufflevector <2 x float> %i.b, <2 x float> %i.a, <2 x i32> <i32 0, i32 2>
   %i.l = fsub <2 x float> %i.k, %i.e
   %i.m = fneg <2 x float> %i.l
@@ -234,16 +238,15 @@ bb.b:                                             ; preds = %bb.a
   %i.v = load float, ptr %i.u, align 4, !tbaa !188
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.x = load float, ptr %i.w, align 4, !tbaa !188 ; 2 uses
-  %foldExtExtBinop = fsub <2 x float> %4, %i.b
-  %i.y = extractelement <2 x float> %foldExtExtBinop, i64 0
-  %i.z = fsub float %i.v, %i.x
-  %6 = extractelement <2 x float> %4, i64 1
-  %i.aa = fsub float %6, %i.x
+  %i.y = extractelement <2 x float> %i.b, i64 0
+  %i.z = fsub float %6, %i.y
+  %10 = fsub float %i.v, %i.x
+  %i.aa = fsub float %5, %i.x
   %foldExtExtBinop28 = fsub <2 x float> %i.c, %i.b
   %i.ab = extractelement <2 x float> %foldExtExtBinop28, i64 0
   %i.ac = fneg float %i.ab
   %i.ad = fmul float %i.aa, %i.ac
-  %i.ae = tail call float @llvm.fmuladd.f32(float %i.y, float %i.z, float %i.ad)
+  %i.ae = tail call float @llvm.fmuladd.f32(float %i.z, float %10, float %i.ad)
   %i.af = fcmp uge float %i.ae, 0.000000e+00
   %i.ag = xor i1 %i.af, %i.q
   br label %bb.c

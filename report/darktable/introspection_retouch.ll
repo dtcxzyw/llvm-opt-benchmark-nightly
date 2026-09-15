@@ -205,17 +205,20 @@ bb.ai:                                            ; preds = %bb.ah
   br label %bb.av
 
 bb.aj:                                            ; preds = %bb.ah
-  %i.fl = getelementptr inbounds nuw i8, ptr %i.fi, i64 4
+  %i.fl = getelementptr inbounds nuw i8, ptr %i.fi, i64 4 ; 2 uses
   %i.fm = getelementptr inbounds nuw i8, ptr %i.fi, i64 8 ; 2 uses
   %i.fn = load float, ptr %i.fm, align 8, !tbaa !12 ; 4 uses
   %i.fo = fmul reassoc nsz arcp contract afn float %i.fn, f0x3E1283AB
   %i.fp = fmul reassoc nsz arcp contract afn float %i.fn, 6.061690e-02
   %i.fq = fmul reassoc nsz arcp contract afn float %i.fn, f0x3F36D410
-  %7 = load <2 x float>, ptr %i.fi, align 16, !tbaa !12 ; 2 uses
-  %i.fr = shufflevector <2 x float> %7, <2 x float> poison, <4 x i32> zeroinitializer
+  %7 = load float, ptr %i.fi, align 16, !tbaa !12
+  %8 = load float, ptr %i.fl, align 4, !tbaa !12
+  %9 = insertelement <4 x float> poison, float %7, i64 0
+  %i.fr = shufflevector <4 x float> %9, <4 x float> poison, <4 x i32> zeroinitializer
   %i.fs = fmul reassoc nsz arcp contract afn <4 x float> %i.fr, <float f0x3EDF452F, float f0x3E63D838, float 1.393220e-02, float 1.000000e+00>
-  %8 = shufflevector <2 x float> %7, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %i.ft = fmul reassoc nsz arcp contract afn <4 x float> %8, <float f0x3EC5273A, float f0x3F37855B, float f0x3DC6DEB9, float 1.000000e+00>
+  %10 = insertelement <4 x float> poison, float %8, i64 0
+  %11 = shufflevector <4 x float> %10, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.ft = fmul reassoc nsz arcp contract afn <4 x float> %11, <float f0x3EC5273A, float f0x3F37855B, float f0x3DC6DEB9, float 1.000000e+00>
   %i.fu = fadd reassoc nsz arcp contract afn <4 x float> %i.ft, %i.fs ; 4 uses
   %i.fv = extractelement <4 x float> %i.fu, i64 0
   %i.fw = fadd reassoc nsz arcp contract afn float %i.fv, %i.fo ; 2 uses
@@ -618,17 +621,21 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a, %dt_XYZ_to_Lab.exit
   %.08 = phi i64 [ %i.ba, %dt_XYZ_to_Lab.exit ], [ 0, %bb.a ] ; 2 uses
   %.idx = shl i64 %.08, 4
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 %.idx ; 3 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 %.idx ; 4 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %i.e = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.f = load float, ptr %i.e, align 4, !tbaa !12 ; 4 uses
   %i.g = fmul reassoc nsz arcp contract afn float %i.f, f0x3E1283AB
   %i.h = fmul reassoc nsz arcp contract afn float %i.f, 6.061690e-02
   %i.i = fmul reassoc nsz arcp contract afn float %i.f, f0x3F36D410
-  %3 = load <2 x float>, ptr %i.d, align 4, !tbaa !12 ; 2 uses
-  %i.j = shufflevector <2 x float> %3, <2 x float> poison, <4 x i32> zeroinitializer
+  %4 = load float, ptr %3, align 4, !tbaa !12
+  %5 = load float, ptr %i.d, align 4, !tbaa !12
+  %6 = insertelement <4 x float> poison, float %4, i64 0
+  %i.j = shufflevector <4 x float> %6, <4 x float> poison, <4 x i32> zeroinitializer
   %i.k = fmul reassoc nsz arcp contract afn <4 x float> %i.j, <float f0x3EDF452F, float f0x3E63D838, float 1.393220e-02, float 1.000000e+00>
-  %4 = shufflevector <2 x float> %3, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %i.l = fmul reassoc nsz arcp contract afn <4 x float> %4, <float f0x3EC5273A, float f0x3F37855B, float f0x3DC6DEB9, float 1.000000e+00>
+  %7 = insertelement <4 x float> poison, float %5, i64 0
+  %8 = shufflevector <4 x float> %7, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.l = fmul reassoc nsz arcp contract afn <4 x float> %8, <float f0x3EC5273A, float f0x3F37855B, float f0x3DC6DEB9, float 1.000000e+00>
   %i.m = fadd reassoc nsz arcp contract afn <4 x float> %i.l, %i.k ; 4 uses
   %i.n = extractelement <4 x float> %i.m, i64 0
   %i.o = fadd reassoc nsz arcp contract afn float %i.n, %i.g ; 2 uses
@@ -705,7 +712,7 @@ dt_XYZ_to_Lab.exit:                               ; preds = %bb.k, %bb.l
   %i.ax = shufflevector <4 x float> %i.aw, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 3>
   %i.ay = fsub reassoc nsz arcp contract afn <4 x float> %i.av, %i.ax
   %i.az = fmul reassoc nsz arcp contract afn <4 x float> %i.ay, <float 1.000000e+00, float 5.000000e+02, float -2.000000e+02, float 0.000000e+00>
-  store <4 x float> %i.az, ptr %i.d, align 4, !tbaa !12
+  store <4 x float> %i.az, ptr %3, align 4, !tbaa !12
   %i.ba = add nuw i64 %.08, 1                     ; 2 uses
   %exitcond.not = icmp eq i64 %i.ba, %i.c
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph

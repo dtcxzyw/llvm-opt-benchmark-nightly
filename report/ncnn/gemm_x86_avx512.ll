@@ -205,7 +205,8 @@ bb.ru:                                            ; preds = %bb.rt
   %i.iwa = getelementptr inbounds [4 x i8], ptr %i.ivz, i64 %i.gut
   %i.iwb = getelementptr inbounds nuw [4 x i8], ptr %i.iwa, i64 %indvars.iv5624 ; 2 uses
   %i.iwc = load <2 x float>, ptr %i.iwb, align 4, !tbaa !69
-  %i.iwd = fmul fast <2 x float> %i.iwc, %i.gvs   ; 6 uses
+  %i.iwd = fmul fast <2 x float> %i.iwc, %i.gvs   ; 7 uses
+  %11 = extractelement <2 x float> %i.iwd, i64 1
   %i.iwe = extractelement <2 x float> %i.iwd, i64 0
   %i.iwf = shufflevector <2 x float> %i.iwd, <2 x float> poison, <4 x i32> zeroinitializer
   %i.iwg = shufflevector <2 x float> %i.iwd, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
@@ -236,10 +237,11 @@ bb.rx:                                            ; preds = %bb.rv
   %.23881 = phi nsz <4 x float> [ zeroinitializer, %bb.rr ], [ zeroinitializer, %bb.rx ], [ zeroinitializer, %bb.rv ], [ zeroinitializer, %bb.rw ], [ %i.ivv, %.thread4990 ], [ %i.iwf, %bb.ru ] ; 2 uses
   %.13872 = phi nsz <4 x float> [ zeroinitializer, %bb.rr ], [ zeroinitializer, %bb.rx ], [ zeroinitializer, %bb.rv ], [ zeroinitializer, %bb.rw ], [ zeroinitializer, %.thread4990 ], [ %i.iwg, %bb.ru ] ; 2 uses
   %.26527 = phi nsz float [ 0.000000e+00, %bb.rr ], [ 0.000000e+00, %bb.rx ], [ 0.000000e+00, %bb.rv ], [ 0.000000e+00, %bb.rw ], [ %i.ivt, %.thread4990 ], [ %i.iwe, %bb.ru ] ; 2 uses
+  %.16524 = phi nsz float [ 0.000000e+00, %bb.rr ], [ 0.000000e+00, %bb.rx ], [ 0.000000e+00, %bb.rv ], [ 0.000000e+00, %bb.rw ], [ 0.000000e+00, %.thread4990 ], [ %11, %bb.ru ]
   %.26519 = phi nsz <16 x float> [ zeroinitializer, %bb.rr ], [ zeroinitializer, %bb.rx ], [ zeroinitializer, %bb.rv ], [ zeroinitializer, %bb.rw ], [ %i.ivx, %.thread4990 ], [ %i.iwh, %bb.ru ]
   %.16513 = phi nsz <16 x float> [ zeroinitializer, %bb.rr ], [ zeroinitializer, %bb.rx ], [ zeroinitializer, %bb.rv ], [ zeroinitializer, %bb.rw ], [ zeroinitializer, %.thread4990 ], [ %i.iwi, %bb.ru ]
   %.75 = phi ptr [ null, %bb.rr ], [ %i.iwp, %bb.rx ], [ %.725481, %bb.rv ], [ %i.iwn, %bb.rw ], [ %.725481, %.thread4990 ], [ %i.iwb, %bb.ru ] ; 2 uses
-  %i.iwq = phi <2 x float> [ zeroinitializer, %bb.rr ], [ zeroinitializer, %bb.rx ], [ zeroinitializer, %bb.rv ], [ zeroinitializer, %bb.rw ], [ %i.ivy, %.thread4990 ], [ %i.iwd, %bb.ru ] ; 4 uses
+  %i.iwq = phi <2 x float> [ zeroinitializer, %bb.rr ], [ zeroinitializer, %bb.rx ], [ zeroinitializer, %bb.rv ], [ zeroinitializer, %bb.rw ], [ %i.ivy, %.thread4990 ], [ %i.iwd, %bb.ru ] ; 2 uses
   br i1 %i.guu, label %.lr.ph5425, label %.preheader5191
 
 .preheader5191:                                   ; preds = %bb.su, %.thread5011
@@ -642,10 +644,10 @@ bb.tu:                                            ; preds = %bb.ts, %bb.tt, %bb.
 .lr.ph5464.preheader:                             ; preds = %.preheader5189
   %i.jgz = insertelement <2 x float> poison, float %.26527, i64 0
   %i.jha = shufflevector <2 x float> %i.jgz, <2 x float> poison, <2 x i32> zeroinitializer
-  %11 = shufflevector <2 x float> %i.iwq, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %12 = insertelement <2 x float> poison, float %.26527, i64 0
+  %12 = insertelement <2 x float> poison, float %.16524, i64 0
   %13 = shufflevector <2 x float> %12, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.jhb = shufflevector <2 x float> %i.iwq, <2 x float> poison, <2 x i32> zeroinitializer
+  %14 = insertelement <2 x float> poison, float %.26527, i64 0
+  %i.jhb = shufflevector <2 x float> %14, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %.lr.ph5464
 
 .lr.ph5453:                                       ; preds = %.preheader5190, %bb.un
@@ -849,7 +851,7 @@ bb.uo:                                            ; preds = %.lr.ph5464
   br i1 %i.gur, label %.thread5074, label %bb.up
 
 .thread5074:                                      ; preds = %bb.uo
-  %i.jjp = fadd fast <2 x float> %i.jjl, %13
+  %i.jjp = fadd fast <2 x float> %i.jjl, %i.jhb
   %i.jjq = fadd fast <2 x float> %i.jjn, %i.jhb
   br label %.thread5087
 
@@ -858,7 +860,7 @@ bb.up:                                            ; preds = %bb.uo
 
 bb.uq:                                            ; preds = %bb.up
   %i.jjr = fadd fast <2 x float> %i.jjl, %i.jha
-  %i.jjs = fadd fast <2 x float> %i.jjn, %11
+  %i.jjs = fadd fast <2 x float> %i.jjn, %13
   br label %.thread5087
 
 bb.ur:                                            ; preds = %bb.up

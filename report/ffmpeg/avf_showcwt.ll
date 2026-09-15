@@ -204,7 +204,7 @@ bb.a:
   %i.bo = getelementptr inbounds nuw i8, ptr %i.b, i64 268
   %or.cond = icmp ult i32 %i.an, 2
   %i.bp = getelementptr i8, ptr %i.b, i64 336     ; 4 uses
-  %i.bq = getelementptr i8, ptr %i.b, i64 340     ; 3 uses
+  %i.bq = getelementptr i8, ptr %i.b, i64 340     ; 4 uses
   %i.br = icmp sgt i32 %i.bb, 0                   ; 5 uses
   %i.bs = icmp sgt i32 %i.az, 0                   ; 5 uses
   %i.bt = icmp sgt i32 %i.be, 1
@@ -382,10 +382,9 @@ bb.o:                                             ; preds = %bb.n
   %i.eu = extractelement <2 x float> %i.em, i64 0
   %i.ev = extractelement <2 x float> %i.em, i64 1
   %i.ew = tail call nsz float @hypotf(float noundef %i.eu, float noundef %i.ev) #14 ; 5 uses
-  %4 = load <2 x float>, ptr %i.bp, align 8, !tbaa !66 ; 8 uses
-  %5 = extractelement <2 x float> %4, i64 1       ; 5 uses
-  %6 = extractelement <2 x float> %4, i64 0       ; 9 uses
-  %i.ex = fadd nsz float %i.eq, %6                ; 5 uses
+  %.val333 = load float, ptr %i.bp, align 8, !tbaa !196 ; 10 uses
+  %.val334 = load float, ptr %i.bq, align 4, !tbaa !197 ; 10 uses
+  %i.ex = fadd nsz float %i.eq, %.val333          ; 5 uses
   switch i32 %i.aj, label %unreachable.i [
     i32 1, label %bb.p
     i32 0, label %bb.q
@@ -398,25 +397,26 @@ unreachable.i:                                    ; preds = %bb.o
   unreachable
 
 bb.p:                                             ; preds = %bb.o
-  %i.ey = fadd nsz float %i.et, %6
+  %i.ey = fadd nsz float %i.et, %.val333
   %i.ez = insertelement <2 x float> poison, float %i.ey, i64 0
   %i.fa = insertelement <2 x float> %i.ez, float %i.ex, i64 1
   %i.fb = fdiv nsz <2 x float> %i.fa, %i.cb
   %i.fc = tail call nsz <2 x float> @llvm.exp.v2f32(<2 x float> %i.fb)
-  %7 = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.fd = fsub nsz <2 x float> %7, %i.fc          ; 2 uses
+  %4 = insertelement <2 x float> poison, float %.val334, i64 0
+  %5 = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.fd = fsub nsz <2 x float> %5, %i.fc          ; 2 uses
   %i.fe = fcmp nsz ogt <2 x float> %i.fd, zeroinitializer
   %i.ff = select <2 x i1> %i.fe, <2 x float> %i.fd, <2 x float> zeroinitializer ; 2 uses
   %i.fg = fcmp nsz ogt <2 x float> %i.ff, splat (float 1.000000e+00)
   %i.fh = select <2 x i1> %i.fg, <2 x float> splat (float 1.000000e+00), <2 x float> %i.ff
-  %i.fi = fadd nsz float %i.ew, %6
+  %i.fi = fadd nsz float %i.ew, %.val333
   %i.fj = fdiv nsz float %i.fi, %i.t
   %i.fk = tail call nsz float @llvm.exp.f32(float %i.fj)
-  %i.fl = fsub nsz float %5, %i.fk
+  %i.fl = fsub nsz float %.val334, %i.fk
   br label %remap_log.exit345
 
 bb.q:                                             ; preds = %bb.o
-  %i.fm = fadd nsz float %i.et, %6
+  %i.fm = fadd nsz float %i.et, %.val333
   %i.fn = tail call nsz float @llvm.log.f32(float %i.ex)
   %i.fo = tail call nsz float @llvm.log.f32(float %i.fm)
   %i.fp = insertelement <2 x float> poison, float %i.fo, i64 0
@@ -426,55 +426,59 @@ bb.q:                                             ; preds = %bb.o
   %i.ft = select <2 x i1> %i.fs, <2 x float> %i.fr, <2 x float> zeroinitializer ; 2 uses
   %i.fu = fcmp nsz ogt <2 x float> %i.ft, splat (float 1.000000e+00)
   %i.fv = select <2 x i1> %i.fu, <2 x float> splat (float 1.000000e+00), <2 x float> %i.ft
-  %8 = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.fw = fsub nsz <2 x float> %8, %i.fv          ; 2 uses
+  %6 = insertelement <2 x float> poison, float %.val334, i64 0
+  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.fw = fsub nsz <2 x float> %7, %i.fv          ; 2 uses
   %i.fx = fcmp nsz ogt <2 x float> %i.fw, zeroinitializer
   %i.fy = select <2 x i1> %i.fx, <2 x float> %i.fw, <2 x float> zeroinitializer ; 2 uses
   %i.fz = fcmp nsz ogt <2 x float> %i.fy, splat (float 1.000000e+00)
   %i.ga = select <2 x i1> %i.fz, <2 x float> splat (float 1.000000e+00), <2 x float> %i.fy
-  %i.gb = fadd nsz float %i.ew, %6
+  %i.gb = fadd nsz float %i.ew, %.val333
   %i.gc = tail call nsz float @llvm.log.f32(float %i.gb)
   %i.gd = fmul nsz float %i.t, %i.gc              ; 2 uses
   %i.ge = fcmp nsz ogt float %i.gd, 0.000000e+00
   %i.gf = select nsz i1 %i.ge, float %i.gd, float 0.000000e+00 ; 2 uses
   %i.gg = fcmp nsz ogt float %i.gf, 1.000000e+00
   %..i24.i343 = select nsz i1 %i.gg, float 1.000000e+00, float %i.gf
-  %i.gh = fsub nsz float %5, %..i24.i343
+  %i.gh = fsub nsz float %.val334, %..i24.i343
   br label %remap_log.exit345
 
 bb.r:                                             ; preds = %bb.o
-  %i.gi = fadd nsz float %i.et, %6
+  %i.gi = fadd nsz float %i.et, %.val333
   %i.gj = insertelement <2 x float> poison, float %i.gi, i64 0
   %i.gk = insertelement <2 x float> %i.gj, float %i.ex, i64 1
   %i.gl = fdiv nsz <2 x float> %i.gk, %i.cb
   %i.gm = tail call nsz <2 x float> @llvm.exp.v2f32(<2 x float> %i.gl)
-  %9 = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %8 = insertelement <2 x float> poison, float %.val334, i64 0
+  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
   %i.gn = fsub nsz <2 x float> %9, %i.gm          ; 2 uses
   %i.go = tail call nsz <2 x float> @llvm.sqrt.v2f32(<2 x float> %i.gn)
   %i.gp = fcmp nsz ogt <2 x float> %i.gn, zeroinitializer
   %i.gq = select <2 x i1> %i.gp, <2 x float> %i.go, <2 x float> zeroinitializer ; 2 uses
   %i.gr = fcmp nsz ogt <2 x float> %i.gq, splat (float 1.000000e+00)
   %i.gs = select <2 x i1> %i.gr, <2 x float> splat (float 1.000000e+00), <2 x float> %i.gq
-  %i.gt = fadd nsz float %i.ew, %6
+  %i.gt = fadd nsz float %i.ew, %.val333
   %i.gu = fdiv nsz float %i.gt, %i.t
   %i.gv = tail call nsz float @llvm.exp.f32(float %i.gu)
-  %i.gw = fsub nsz float %5, %i.gv
+  %i.gw = fsub nsz float %.val334, %i.gv
   %i.gx = tail call nsz float @llvm.sqrt.f32(float %i.gw)
   br label %remap_log.exit345
 
 bb.s:                                             ; preds = %bb.o
   %i.gy = fdiv nsz float %i.ex, %i.t
   %i.gz = tail call nsz float @llvm.exp.f32(float %i.gy)
-  %i.ha = fsub nsz float %5, %i.gz
+  %i.ha = fsub nsz float %.val334, %i.gz
   %i.hb = tail call nsz float @cbrtf(float noundef %i.ha) #14
   %i.hc = insertelement <2 x float> poison, float %i.ew, i64 0
-  %i.hd = insertelement <2 x float> %i.hc, float %i.et, i64 1
-  %i.he = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.hf = fadd nsz <2 x float> %i.hd, %i.he
+  %10 = insertelement <2 x float> %i.hc, float %i.et, i64 1
+  %i.hd = insertelement <2 x float> poison, float %.val333, i64 0
+  %i.he = shufflevector <2 x float> %i.hd, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.hf = fadd nsz <2 x float> %10, %i.he
   %i.hg = fdiv nsz <2 x float> %i.hf, %i.cb
   %i.hh = tail call nsz <2 x float> @llvm.exp.v2f32(<2 x float> %i.hg)
-  %10 = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.hi = fsub nsz <2 x float> %10, %i.hh         ; 2 uses
+  %11 = insertelement <2 x float> poison, float %.val334, i64 0
+  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.hi = fsub nsz <2 x float> %12, %i.hh         ; 2 uses
   %i.hj = extractelement <2 x float> %i.hi, i64 1
   %i.hk = tail call nsz float @cbrtf(float noundef %i.hj) #14
   %i.hl = insertelement <2 x float> poison, float %i.hk, i64 0
@@ -488,22 +492,23 @@ bb.s:                                             ; preds = %bb.o
   br label %remap_log.exit345
 
 bb.t:                                             ; preds = %bb.o
-  %i.ht = fadd nsz float %i.et, %6
+  %i.ht = fadd nsz float %i.et, %.val333
   %i.hu = insertelement <2 x float> poison, float %i.ht, i64 0
   %i.hv = insertelement <2 x float> %i.hu, float %i.ex, i64 1
   %i.hw = fdiv nsz <2 x float> %i.hv, %i.cb
   %i.hx = tail call nsz <2 x float> @llvm.exp.v2f32(<2 x float> %i.hw)
-  %11 = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.hy = fsub nsz <2 x float> %11, %i.hx
+  %13 = insertelement <2 x float> poison, float %.val334, i64 0
+  %14 = shufflevector <2 x float> %13, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.hy = fsub nsz <2 x float> %14, %i.hx
   %i.hz = tail call nsz <2 x float> @llvm.pow.v2f32(<2 x float> %i.hy, <2 x float> splat (float 2.500000e-01)) ; 2 uses
   %i.ia = fcmp nsz ogt <2 x float> %i.hz, zeroinitializer
   %i.ib = select <2 x i1> %i.ia, <2 x float> %i.hz, <2 x float> zeroinitializer ; 2 uses
   %i.ic = fcmp nsz ogt <2 x float> %i.ib, splat (float 1.000000e+00)
   %i.id = select <2 x i1> %i.ic, <2 x float> splat (float 1.000000e+00), <2 x float> %i.ib
-  %i.ie = fadd nsz float %i.ew, %6
+  %i.ie = fadd nsz float %i.ew, %.val333
   %i.if = fdiv nsz float %i.ie, %i.t
   %i.ig = tail call nsz float @llvm.exp.f32(float %i.if)
-  %i.ih = fsub nsz float %5, %i.ig
+  %i.ih = fsub nsz float %.val334, %i.ig
   %i.ii = tail call nsz float @llvm.pow.f32(float %i.ih, float 2.500000e-01)
   br label %remap_log.exit345
 
