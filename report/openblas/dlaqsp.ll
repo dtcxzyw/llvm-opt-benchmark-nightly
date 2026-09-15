@@ -51,7 +51,7 @@ bb.e:                                             ; preds = %bb.d
 
 iter.check:                                       ; preds = %.lr.ph.preheader, %.loopexit173
   %indvar = phi i64 [ 0, %.lr.ph.preheader ], [ %indvar.next, %.loopexit173 ] ; 2 uses
-  %indvars.iv85 = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next86, %.loopexit173 ] ; 11 uses
+  %indvars.iv85 = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next86, %.loopexit173 ] ; 12 uses
   %indvars.iv83 = phi i64 [ 2, %.lr.ph.preheader ], [ %indvars.iv.next84, %.loopexit173 ] ; 3 uses
   %.072 = phi i32 [ 1, %.lr.ph.preheader ], [ %i.dc, %.loopexit173 ] ; 3 uses
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv85
@@ -62,14 +62,14 @@ iter.check:                                       ; preds = %.lr.ph.preheader, %
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.t = shl nuw nsw i64 %indvar, 3               ; 2 uses
+  %i.t = shl nuw nsw i64 %indvars.iv85, 3
   %i.u = getelementptr i8, ptr %3, i64 %i.t
-  %scevgep106 = getelementptr i8, ptr %i.u, i64 8
-  %scevgep = getelementptr i8, ptr %2, i64 %i.t
+  %7 = shl nuw nsw i64 %indvar, 3
+  %scevgep = getelementptr i8, ptr %2, i64 %7
   %i.v = zext i32 %.072 to i64
   %i.w = shl nuw nsw i64 %i.v, 3
   %scevgep105 = getelementptr i8, ptr %scevgep, i64 %i.w
-  %bound0 = icmp ult ptr %invariant.gep, %scevgep106
+  %bound0 = icmp ult ptr %invariant.gep, %i.u
   %bound1 = icmp ult ptr %3, %scevgep105
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
