@@ -204,6 +204,7 @@ bb.w:                                             ; preds = %bb.v
   %i.cf = add nsw i32 %i.i, -1                    ; 2 uses
   %i.cg = uitofp nneg i32 %i.cf to double
   %i.ch = icmp ult i32 %reass.sub115, 2147483647
+  %9 = zext nneg i32 %i.cf to i64
   %wide.trip.count131 = zext nneg i32 %i.i to i64
   %wide.trip.count126 = zext i32 %i.by to i64     ; 3 uses
   %min.iters.check = icmp ult i32 %i.by, 8
@@ -226,9 +227,7 @@ bb.y:                                             ; preds = %.lr.ph114, %._crit_
 bb.z:                                             ; preds = %bb.y
   %i.cl = load ptr, ptr %i.f, align 8
   %i.cm = getelementptr i8, ptr %i.cl, i64 200
-  %9 = trunc i64 %indvars.iv128 to i32
-  %10 = sub i32 %i.cf, %9
-  %11 = zext nneg i32 %10 to i64
+  %10 = sub nuw nsw i64 %9, %indvars.iv128
   %i.cn = load ptr, ptr %3, align 8               ; 3 uses
   %.not.i.i.i.i80 = icmp eq ptr %i.cn, null
   br i1 %.not.i.i.i.i80, label %_ZN5QListIdE6detachEv.exit.i84, label %_ZNK17QArrayDataPointerIdE11needsDetachEv.exit.i.i.i81
@@ -259,7 +258,7 @@ _ZNK17QArrayDataPointerIdE11needsDetachEv.exit.thread.i.i.i.i83: ; preds = %_ZNK
 
 bb.aa:                                            ; preds = %_ZNK17QArrayDataPointerIdE11needsDetachEv.exit.i.i.i.i82, %_ZNK17QArrayDataPointerIdE11needsDetachEv.exit.thread.i.i.i.i83
   %i.ct = load ptr, ptr %i.m, align 8
-  %i.cu = getelementptr [8 x i8], ptr %i.ct, i64 %11
+  %i.cu = getelementptr [8 x i8], ptr %i.ct, i64 %10
   %i.cv = load double, ptr %i.cu, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #51
   invoke void @_ZN8QCPRangeC1Edd(ptr noundef nonnull align 8 dereferenceable_or_null(16) %8, double noundef 0.000000e+00, double noundef %i.cg)
