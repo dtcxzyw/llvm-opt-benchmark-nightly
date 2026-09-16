@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/sqlite3?download=true
 inline.NumInlined: 3254
 inline.NumDeleted: 427
-loop-unroll.NumCompletelyUnrolled: 75
+loop-unroll.NumCompletelyUnrolled: 74
 loop-unroll.NumRuntimeUnrolled: 30
-loop-unroll.NumUnrolled: 106
+loop-unroll.NumUnrolled: 105
 begin_hunk_0_@sqlite3_blob_write:bb.a
   br i1 %i.aa, label %.critedge.i.i, label %bb.h
 
@@ -205,74 +205,71 @@ bb.a:
   br i1 %i.c, label %bb.ak, label %.preheader200
 
 .preheader200:                                    ; preds = %bb.a
-  %i.d = icmp eq ptr %0, null
+  %i.d = icmp eq ptr %0, null                     ; 3 uses
   %i.e = getelementptr i8, ptr %0, i64 72         ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 42 ; 4 uses
   %.not116 = icmp eq ptr %2, null
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
-  br i1 %i.d, label %.preheader200.split.us, label %.preheader200.split.outer
+  br label %.preheader200.split.us
 
-.preheader200.split.us:                           ; preds = %.preheader200
-  %5 = load i8, ptr %1, align 1, !tbaa !139
-  %.not.us = icmp eq i8 %5, 0
-  %spec.select = select i1 %.not.us, i32 0, i32 21
-  br label %sqlite3_errcode.exit.thread.a
+.preheader200.split.us:                           ; preds = %.preheader200.split.outer, %.preheader200
+  %.093.ph = phi ptr [ %1, %.preheader200 ], [ %.093.ph.a, %.preheader200.split.outer ] ; 3 uses
+  %.088.ph = phi i32 [ 0, %.preheader200 ], [ %.088.ph.a, %.preheader200.split.outer ]
+  %.081.ph = phi i32 [ 0, %.preheader200 ], [ %.081.ph.a, %.preheader200.split.outer ]
+  br label %.preheader200.split
 
-.preheader200.split:                              ; preds = %.preheader200.split.backedge, %.preheader200.split.outer
-  %.088 = phi i32 [ %.088.ph.a, %.preheader200.split.outer ], [ %.088.be, %.preheader200.split.backedge ] ; 3 uses
-  %.081 = phi i32 [ %.081.ph.a, %.preheader200.split.outer ], [ %.182, %.preheader200.split.backedge ] ; 2 uses
-  switch i32 %.088, label %.critedge [
+.preheader200.split:                              ; preds = %.preheader200.split.backedge, %.preheader200.split.us
+  %.088 = phi i32 [ %.088.ph, %.preheader200.split.us ], [ %.088.be, %.preheader200.split.backedge ] ; 3 uses
+  %.081 = phi i32 [ %.081.ph, %.preheader200.split.us ], [ %.182, %.preheader200.split.backedge ] ; 2 uses
+  switch i32 %.088, label %.critedgethread-pre-split [
     i32 0, label %bb.c
     i32 17, label %bb.b
   ]
 
 bb.b:                                             ; preds = %.preheader200.split
   %i.h = icmp slt i32 %.081, 1
-  br i1 %i.h, label %bb.c, label %.critedge
+  br i1 %i.h, label %bb.c, label %.critedgethread-pre-split
 
 bb.c:                                             ; preds = %.preheader200.split, %bb.b
   %.182 = phi i32 [ %.081, %.preheader200.split ], [ 1, %bb.b ] ; 3 uses
-  %i.i = load i8, ptr %.093.ph.a, align 1, !tbaa !139
+  %i.i = load i8, ptr %.093.ph, align 1, !tbaa !139
   %.not = icmp eq i8 %i.i, 0
-  br i1 %.not, label %.critedge, label %sqlite3SafetyCheckOk.exit.i
+  br i1 %.not, label %.critedgethread-pre-split, label %5
 
-sqlite3SafetyCheckOk.exit.i:                      ; preds = %bb.c
+5:                                                ; preds = %bb.c
   store ptr null, ptr %i.b, align 8, !tbaa !262
+  br i1 %i.d, label %.preheader200.split.backedge, label %sqlite3SafetyCheckOk.exit.i
+
+sqlite3SafetyCheckOk.exit.i:                      ; preds = %5
   %i.j = load i32, ptr %i.e, align 8, !tbaa !260
   switch i32 %i.j, label %.preheader200.split.backedge [
     i32 -264537850, label %sqlite3LockAndPrepare.exit
     i32 -1607883113, label %sqlite3LockAndPrepare.exit
   ]
 
-.preheader200.split.backedge:                     ; preds = %sqlite3SafetyCheckOk.exit.i, %sqlite3LockAndPrepare.exit
-  %.088.be = phi i32 [ 21, %sqlite3SafetyCheckOk.exit.i ], [ %i.k, %sqlite3LockAndPrepare.exit ]
+.preheader200.split.backedge:                     ; preds = %sqlite3SafetyCheckOk.exit.i, %5, %sqlite3LockAndPrepare.exit
+  %.088.be = phi i32 [ 21, %5 ], [ 21, %sqlite3SafetyCheckOk.exit.i ], [ %i.k, %sqlite3LockAndPrepare.exit ]
   br label %.preheader200.split, !llvm.loop !1124
 
 sqlite3LockAndPrepare.exit:                       ; preds = %sqlite3SafetyCheckOk.exit.i, %sqlite3SafetyCheckOk.exit.i
-  %i.k = call fastcc i32 @sqlite3Prepare(ptr noundef nonnull %0, ptr noundef nonnull %.093.ph.a, i32 noundef -1, i32 noundef 0, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a), !inline_history !14 ; 2 uses
+  %i.k = call fastcc i32 @sqlite3Prepare(ptr noundef nonnull %0, ptr noundef nonnull %.093.ph, i32 noundef -1, i32 noundef 0, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a), !inline_history !14 ; 2 uses
   %.not114 = icmp eq i32 %i.k, 0
   br i1 %.not114, label %bb.d, label %.preheader200.split.backedge
 
 bb.d:                                             ; preds = %sqlite3LockAndPrepare.exit
-  %i.l = load ptr, ptr %i.b, align 8, !tbaa !262  ; 4 uses
+  %i.l = load ptr, ptr %i.b, align 8, !tbaa !262  ; 3 uses
   %.not115 = icmp eq ptr %i.l, null
   br i1 %.not115, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.m = load ptr, ptr %i.a, align 8, !tbaa !150
-  br label %.preheader200.split.outer.backedge
+  br label %.preheader200.split.outer
 
-.preheader200.split.outer.backedge:               ; preds = %bb.e, %sqlite3_free.exit
-  %.093.ph.be = phi ptr [ %.497.ph, %sqlite3_free.exit ], [ %i.m, %bb.e ]
-  %.088.ph.be = phi i32 [ %.189.ph177, %sqlite3_free.exit ], [ 0, %bb.e ]
-  %.081.ph.be = phi i32 [ %.4.ph, %sqlite3_free.exit ], [ %.182, %bb.e ]
-  br label %.preheader200.split.outer, !llvm.loop !1124
-
-.preheader200.split.outer:                        ; preds = %.preheader200, %.preheader200.split.outer.backedge
-  %.093.ph.a = phi ptr [ %.093.ph.be, %.preheader200.split.outer.backedge ], [ %1, %.preheader200 ] ; 3 uses
-  %.088.ph.a = phi i32 [ %.088.ph.be, %.preheader200.split.outer.backedge ], [ 0, %.preheader200 ]
-  %.081.ph.a = phi i32 [ %.081.ph.be, %.preheader200.split.outer.backedge ], [ 0, %.preheader200 ]
-  br label %.preheader200.split
+.preheader200.split.outer:                        ; preds = %bb.e, %sqlite3_free.exit
+  %.093.ph.a = phi ptr [ %.497.ph, %sqlite3_free.exit ], [ %i.m, %bb.e ]
+  %.088.ph.a = phi i32 [ %.189.ph177, %sqlite3_free.exit ], [ 0, %bb.e ]
+  %.081.ph.a = phi i32 [ %.4.ph, %sqlite3_free.exit ], [ %.182, %bb.e ]
+  br label %.preheader200.split.us, !llvm.loop !1124
 
 bb.f:                                             ; preds = %bb.d
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 308
@@ -281,7 +278,7 @@ bb.f:                                             ; preds = %bb.d
   %i.q = or disjoint i32 %i.p, 1                  ; 2 uses
   %i.r = load i8, ptr %i.f, align 2, !tbaa !202
   %i.s = icmp eq i8 %i.r, 0
-  br i1 %i.s, label %bb.g, label %.critedge
+  br i1 %i.s, label %bb.g, label %.critedgethread-pre-split
 
 bb.g:                                             ; preds = %bb.f
   %i.t = call ptr @sqlite3_malloc(i32 noundef %i.q) ; 11 uses
@@ -294,29 +291,25 @@ sqlite3DbMallocZero.exit:                         ; preds = %bb.g
   %i.w = icmp slt i32 %i.o, 1                     ; 2 uses
   %i.x = sext i32 %i.o to i64
   %i.y = getelementptr inbounds [8 x i8], ptr %i.t, i64 %i.x ; 3 uses
-  br i1 %.not116, label %sqlite3DbMallocZero.exit.split.us, label %sqlite3DbMallocZero.exit.split.preheader
-
-sqlite3DbMallocZero.exit.split.preheader:         ; preds = %sqlite3DbMallocZero.exit
   %wide.trip.count = zext nneg i32 %i.o to i64
-  %wide.trip.count275 = zext nneg i32 %i.o to i64
-  br label %sqlite3DbMallocZero.exit.split
+  %wide.trip.count258 = zext nneg i32 %i.o to i64
+  br label %sqlite3DbMallocZero.exit.split.us
 
-sqlite3DbMallocZero.exit.split.us:                ; preds = %sqlite3DbMallocZero.exit, %sqlite3DbMallocZero.exit.split.us
-  %6 = call i32 @sqlite3_step(ptr noundef nonnull %i.l)
-  %.not119.us = icmp eq i32 %6, 100
-  br i1 %.not119.us, label %sqlite3DbMallocZero.exit.split.us, label %.thread.thread
+sqlite3DbMallocZero.exit.split.us:                ; preds = %bb.q, %sqlite3DbMallocZero.exit
+  %6 = phi ptr [ %i.l, %sqlite3DbMallocZero.exit ], [ %10, %bb.q ] ; 8 uses
+  %.077 = phi i32 [ 0, %sqlite3DbMallocZero.exit ], [ %.279, %bb.q ] ; 3 uses
+  %.073 = phi ptr [ null, %sqlite3DbMallocZero.exit ], [ %.2, %bb.q ] ; 2 uses
+  %7 = call i32 @sqlite3_step(ptr noundef %6)     ; 5 uses
+  br i1 %.not116, label %bb.q, label %sqlite3DbMallocZero.exit.split
 
-sqlite3DbMallocZero.exit.split:                   ; preds = %sqlite3DbMallocZero.exit.split.preheader, %bb.q
-  %7 = phi i1 [ true, %bb.q ], [ false, %sqlite3DbMallocZero.exit.split.preheader ] ; 2 uses
-  %.073 = phi ptr [ %.174, %bb.q ], [ null, %sqlite3DbMallocZero.exit.split.preheader ]
-  %8 = load ptr, ptr %i.b, align 8, !tbaa !262    ; 9 uses
-  %9 = call i32 @sqlite3_step(ptr noundef %8)     ; 5 uses
-  %i.z = icmp ne i32 %9, 100                      ; 3 uses
+sqlite3DbMallocZero.exit.split:                   ; preds = %sqlite3DbMallocZero.exit.split.us
+  %i.z = icmp ne i32 %7, 100                      ; 3 uses
   br i1 %i.z, label %bb.h, label %bb.j
 
 bb.h:                                             ; preds = %sqlite3DbMallocZero.exit.split
-  %i.aa = icmp ne i32 %9, 101
-  %or.cond = or i1 %i.aa, %7
+  %8 = icmp ne i32 %7, 101
+  %i.aa = icmp ne i32 %.077, 0
+  %or.cond = select i1 %8, i1 true, i1 %i.aa
   br i1 %or.cond, label %.thread, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -326,13 +319,14 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not117, label %.thread, label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %sqlite3DbMallocZero.exit.split
-  %brmerge = select i1 %7, i1 true, i1 %i.w
+  %9 = icmp ne i32 %.077, 0
+  %brmerge = select i1 %9, i1 true, i1 %i.w
   br i1 %brmerge, label %.loopexit198, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.j
-  %.not.i.i131 = icmp eq ptr %8, null
-  %i.ad = getelementptr inbounds nuw i8, ptr %8, i64 308
-  %i.ae = getelementptr inbounds nuw i8, ptr %8, i64 64
+  %.not.i.i131 = icmp eq ptr %6, null
+  %i.ad = getelementptr inbounds nuw i8, ptr %6, i64 308
+  %i.ae = getelementptr inbounds nuw i8, ptr %6, i64 64
   br i1 %.not.i.i131, label %sqlite3_column_name.exit.thread, label %sqlite3_column_count.exit.i.i
 
 sqlite3_column_count.exit.i.i:                    ; preds = %.lr.ph, %bb.n
@@ -346,7 +340,7 @@ bb.k:                                             ; preds = %sqlite3_column_coun
   %i.ai = load ptr, ptr %i.ae, align 8, !tbaa !278
   %i.aj = getelementptr inbounds nuw [48 x i8], ptr %i.ai, i64 %indvars.iv
   %i.ak = call fastcc ptr @sqlite3ValueText(ptr noundef %i.aj, i8 noundef zeroext 1) ; 2 uses
-  %i.al = load ptr, ptr %8, align 8, !tbaa !179   ; 3 uses
+  %i.al = load ptr, ptr %6, align 8, !tbaa !179   ; 3 uses
   %.not20.i.i = icmp eq ptr %i.al, null
   br i1 %.not20.i.i, label %sqlite3_column_name.exit, label %bb.l
 
@@ -386,43 +380,42 @@ bb.n:                                             ; preds = %sqlite3_column_name
 .lr.ph241:                                        ; preds = %.loopexit198, %bb.p
   %indvars.iv272 = phi i64 [ %indvars.iv.next273, %bb.p ], [ 0, %.loopexit198 ] ; 3 uses
   %i.ar = trunc nuw nsw i64 %indvars.iv272 to i32 ; 2 uses
-  %i.as = call ptr @sqlite3_column_text(ptr noundef %8, i32 noundef %i.ar) ; 2 uses
+  %i.as = call ptr @sqlite3_column_text(ptr noundef %6, i32 noundef %i.ar) ; 2 uses
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %indvars.iv272
   store ptr %i.as, ptr %i.at, align 8, !tbaa !150
   %.not122 = icmp eq ptr %i.as, null
   br i1 %.not122, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %.lr.ph241
-  %i.au = call i32 @sqlite3_column_type(ptr noundef %8, i32 noundef %i.ar)
+  %i.au = call i32 @sqlite3_column_type(ptr noundef %6, i32 noundef %i.ar)
   %.not123 = icmp eq i32 %i.au, 5
   br i1 %.not123, label %bb.p, label %.critedge.sink.split
 
 bb.p:                                             ; preds = %.lr.ph241, %bb.o
   %indvars.iv.next273 = add nuw nsw i64 %indvars.iv272, 1 ; 2 uses
-  %exitcond276.not = icmp eq i64 %indvars.iv.next273, %wide.trip.count275
+  %exitcond276.not = icmp eq i64 %indvars.iv.next273, %wide.trip.count258
   br i1 %exitcond276.not, label %.loopexit, label %.lr.ph241, !llvm.loop !1126
 
 .loopexit:                                        ; preds = %bb.p, %.loopexit198
   %.174 = phi ptr [ %.073.mux, %.loopexit198 ], [ %i.y, %bb.p ] ; 2 uses
   %i.av = call i32 %2(ptr noundef %3, i32 noundef %i.o, ptr noundef %.174, ptr noundef nonnull %i.t) #43
   %.not118 = icmp eq i32 %i.av, 0
+  %.pre = load ptr, ptr %i.b, align 8, !tbaa !262 ; 2 uses
   br i1 %.not118, label %bb.q, label %.critedge
 
-bb.q:                                             ; preds = %.loopexit
-  %.not119 = icmp eq i32 %9, 100
-  br i1 %.not119, label %sqlite3DbMallocZero.exit.split, label %..thread.loopexit248_crit_edge
+bb.q:                                             ; preds = %.loopexit, %sqlite3DbMallocZero.exit.split.us
+  %10 = phi ptr [ %.pre, %.loopexit ], [ %6, %sqlite3DbMallocZero.exit.split.us ]
+  %.279 = phi i32 [ 1, %.loopexit ], [ %.077, %sqlite3DbMallocZero.exit.split.us ]
+  %.2 = phi ptr [ %.174, %.loopexit ], [ %.073, %sqlite3DbMallocZero.exit.split.us ]
+  %.not119 = icmp eq i32 %7, 100
+  br i1 %.not119, label %sqlite3DbMallocZero.exit.split.us, label %.thread
 
-..thread.loopexit248_crit_edge:                   ; preds = %bb.q
-  %.pre.pre = load ptr, ptr %i.b, align 8, !tbaa !262
-  br label %.thread
-
-.thread:                                          ; preds = %bb.i, %bb.h, %..thread.loopexit248_crit_edge
-  %10 = phi ptr [ %.pre.pre, %..thread.loopexit248_crit_edge ], [ %8, %bb.h ], [ %8, %bb.i ] ; 2 uses
-  %i.aw = icmp eq ptr %10, null
+.thread:                                          ; preds = %bb.h, %bb.i, %bb.q
+  %11 = load ptr, ptr %i.b, align 8, !tbaa !262   ; 5 uses
+  %i.aw = icmp eq ptr %11, null
   br i1 %i.aw, label %.sink.split, label %.thread.thread
 
-.thread.thread:                                   ; preds = %sqlite3DbMallocZero.exit.split.us, %.thread
-  %11 = phi ptr [ %10, %.thread ], [ %i.l, %sqlite3DbMallocZero.exit.split.us ] ; 4 uses
+.thread.thread:                                   ; preds = %.thread
   %i.ax = getelementptr inbounds nuw i8, ptr %11, i64 116
   %i.ay = load i32, ptr %i.ax, align 4, !tbaa !178
   switch i32 %i.ay, label %.sink.split [
@@ -466,7 +459,7 @@ bb.s:                                             ; preds = %bb.s, %bb.r
   br i1 %.not121, label %sqlite3_free.exit, label %bb.s, !llvm.loop !1127
 
 sqlite3_free.exit:                                ; preds = %bb.s, %sqlite3_finalize.exit
-  %.497.ph = phi ptr [ %.093.ph.a, %sqlite3_finalize.exit ], [ %.295, %bb.s ]
+  %.497.ph = phi ptr [ %.093.ph, %sqlite3_finalize.exit ], [ %.295, %bb.s ]
   %.189.ph177 = phi i32 [ 17, %sqlite3_finalize.exit ], [ %.0.i164, %bb.s ]
   %.4.ph = phi i32 [ %.182, %sqlite3_finalize.exit ], [ 0, %bb.s ]
   %i.bj = getelementptr inbounds i8, ptr %i.t, i64 -8 ; 2 uses
@@ -477,23 +470,29 @@ sqlite3_free.exit:                                ; preds = %bb.s, %sqlite3_fina
   %i.bn = sub nsw i64 %i.bm, %i.bl
   store i64 %i.bn, ptr @mem.5, align 8, !tbaa !125
   call void @free(ptr noundef nonnull %i.bj) #43
-  br label %.preheader200.split.outer.backedge
+  br label %.preheader200.split.outer
 
 .critedge.sink.split:                             ; preds = %bb.g, %sqlite3_column_name.exit, %bb.o, %sqlite3_column_name.exit.thread
-  %.391.ph.ph = phi i32 [ 100, %bb.o ], [ %9, %sqlite3_column_name.exit ], [ %9, %sqlite3_column_name.exit.thread ], [ 0, %bb.g ]
-  %.287.ph.ph = phi ptr [ %i.t, %bb.o ], [ %i.t, %sqlite3_column_name.exit ], [ %i.t, %sqlite3_column_name.exit.thread ], [ null, %bb.g ]
+  %.391.ph.ph = phi i32 [ %7, %sqlite3_column_name.exit ], [ 100, %bb.o ], [ %7, %sqlite3_column_name.exit.thread ], [ 0, %bb.g ]
+  %.287.ph.ph = phi ptr [ %i.t, %sqlite3_column_name.exit ], [ %i.t, %bb.o ], [ %i.t, %sqlite3_column_name.exit.thread ], [ null, %bb.g ]
   store i8 1, ptr %i.f, align 2, !tbaa !202
+  br label %.critedgethread-pre-split
+
+.critedgethread-pre-split:                        ; preds = %bb.b, %bb.c, %.preheader200.split, %bb.f, %.critedge.sink.split
+  %.391.ph = phi i32 [ %.391.ph.ph, %.critedge.sink.split ], [ 17, %bb.b ], [ %.088, %bb.c ], [ %.088, %.preheader200.split ], [ 0, %bb.f ]
+  %.287.ph = phi ptr [ %.287.ph.ph, %.critedge.sink.split ], [ null, %bb.f ], [ null, %.preheader200.split ], [ null, %bb.c ], [ null, %bb.b ]
+  %.pr = load ptr, ptr %i.b, align 8, !tbaa !262
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.b, %bb.c, %.preheader200.split, %bb.f, %.loopexit, %.critedge.sink.split
-  %.391.ph = phi i32 [ 4, %.loopexit ], [ %.391.ph.ph, %.critedge.sink.split ], [ %.088, %.preheader200.split ], [ 17, %bb.b ], [ %.088, %bb.c ], [ 0, %bb.f ]
-  %.287.ph = phi ptr [ %i.t, %.loopexit ], [ %.287.ph.ph, %.critedge.sink.split ], [ null, %bb.f ], [ null, %.preheader200.split ], [ null, %bb.c ], [ null, %bb.b ] ; 2 uses
-  %.pr = load ptr, ptr %i.b, align 8, !tbaa !262  ; 4 uses
-  %.not125 = icmp eq ptr %.pr, null
+.critedge:                                        ; preds = %.loopexit, %.critedgethread-pre-split
+  %12 = phi ptr [ %.pr, %.critedgethread-pre-split ], [ %.pre, %.loopexit ] ; 4 uses
+  %.391 = phi i32 [ %.391.ph, %.critedgethread-pre-split ], [ 4, %.loopexit ] ; 2 uses
+  %.287 = phi ptr [ %.287.ph, %.critedgethread-pre-split ], [ %i.t, %.loopexit ] ; 2 uses
+  %.not125 = icmp eq ptr %12, null
   br i1 %.not125, label %sqlite3_finalize.exit135, label %bb.t
 
 bb.t:                                             ; preds = %.critedge
-  %i.bo = getelementptr inbounds nuw i8, ptr %.pr, i64 116
+  %i.bo = getelementptr inbounds nuw i8, ptr %12, i64 116
   %i.bp = load i32, ptr %i.bo, align 4, !tbaa !178
   switch i32 %i.bp, label %sqlite3_finalize.exit135 [
     i32 -1108210269, label %bb.u
@@ -502,19 +501,19 @@ bb.t:                                             ; preds = %.critedge
   ]
 
 bb.u:                                             ; preds = %bb.t, %bb.t
-  %i.bq = call fastcc i32 @sqlite3VdbeReset(ptr noundef nonnull %.pr) ; 0 uses
+  %i.bq = call fastcc i32 @sqlite3VdbeReset(ptr noundef nonnull %12) ; 0 uses
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t
-  call fastcc void @sqlite3VdbeDelete(ptr noundef nonnull %.pr)
+  call fastcc void @sqlite3VdbeDelete(ptr noundef nonnull %12)
   br label %sqlite3_finalize.exit135
 
 sqlite3_finalize.exit135:                         ; preds = %bb.v, %bb.t, %.critedge
-  %.not126 = icmp eq ptr %.287.ph, null
-  br i1 %.not126, label %bb.w, label %sqlite3_free.exit137
+  %.not126 = icmp eq ptr %.287, null
+  br i1 %.not126, label %13, label %sqlite3_free.exit137
 
 sqlite3_free.exit137:                             ; preds = %sqlite3_finalize.exit135
-  %i.br = getelementptr inbounds i8, ptr %.287.ph, i64 -8 ; 2 uses
+  %i.br = getelementptr inbounds i8, ptr %.287, i64 -8 ; 2 uses
   %i.bs = load i64, ptr %i.br, align 8, !tbaa !130
   %sext.i136 = shl i64 %i.bs, 32
   %i.bt = ashr exact i64 %sext.i136, 32
@@ -522,9 +521,12 @@ sqlite3_free.exit137:                             ; preds = %sqlite3_finalize.ex
   %i.bv = sub nsw i64 %i.bu, %i.bt
   store i64 %i.bv, ptr @mem.5, align 8, !tbaa !125
   call void @free(ptr noundef nonnull %i.br) #43
-  br label %bb.w
+  br label %13
 
-bb.w:                                             ; preds = %sqlite3_finalize.exit135, %sqlite3_free.exit137
+13:                                               ; preds = %sqlite3_free.exit137, %sqlite3_finalize.exit135
+  br i1 %i.d, label %sqlite3ApiExit.exit, label %bb.w
+
+bb.w:                                             ; preds = %13
   %i.bw = load i8, ptr %i.f, align 2, !tbaa !202
   %.not7.i = icmp eq i8 %i.bw, 0
   br i1 %.not7.i, label %sqlite3ApiExit.exit.thread, label %bb.x
@@ -551,11 +553,16 @@ sqlite3Error.exit.i:                              ; preds = %bb.y, %bb.x
   store i8 0, ptr %i.f, align 2, !tbaa !202
   br label %sqlite3ApiExit.exit.thread
 
+sqlite3ApiExit.exit:                              ; preds = %13
+  %14 = and i32 %.391, 255                        ; 3 uses
+  %.not127 = icmp eq i32 %14, 0
+  br i1 %.not127, label %sqlite3_errcode.exit.thread.a, label %sqlite3_errcode.exit.thread
+
 sqlite3ApiExit.exit.thread:                       ; preds = %bb.w, %sqlite3Error.exit.i
-  %.0.ph.i = phi i32 [ %.391.ph, %bb.w ], [ 7, %sqlite3Error.exit.i ]
+  %.0.ph.i = phi i32 [ %.391, %bb.w ], [ 7, %sqlite3Error.exit.i ]
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.cg = load i32, ptr %i.cf, align 4, !tbaa !205 ; 2 uses
-  %i.ch = and i32 %i.cg, %.0.ph.i                 ; 5 uses
+  %i.ch = and i32 %i.cg, %.0.ph.i                 ; 7 uses
   %.not127196 = icmp eq i32 %i.ch, 0
   br i1 %.not127196, label %sqlite3_errcode.exit.thread.a, label %bb.z
 
@@ -579,6 +586,12 @@ sqlite3_errcode.exit:                             ; preds = %bb.z, %bb.aa
   %i.cm = icmp ne ptr %4, null
   %or.cond3 = and i1 %i.cm, %i.cl
   br i1 %or.cond3, label %bb.ab, label %sqlite3_errcode.exit.thread.a
+
+sqlite3_errcode.exit.thread:                      ; preds = %sqlite3ApiExit.exit
+  %15 = icmp eq i32 %14, 7
+  %16 = icmp ne ptr %4, null
+  %or.cond3285 = and i1 %16, %15
+  br i1 %or.cond3285, label %sqlite3_errmsg.exit, label %sqlite3_errcode.exit.thread.a
 
 bb.ab:                                            ; preds = %sqlite3_errcode.exit
   %.val.i142 = load i32, ptr %i.e, align 8, !tbaa !260
@@ -606,17 +619,21 @@ bb.ae:                                            ; preds = %bb.ad
   %i.cv = call fastcc ptr @sqlite3ErrStr(i32 noundef %i.cu)
   br label %sqlite3_errmsg.exit
 
-sqlite3_errmsg.exit:                              ; preds = %bb.ab, %bb.ac, %bb.ad, %bb.ae
-  %.08.i = phi ptr [ @.str.566, %bb.ab ], [ %i.cs, %bb.ad ], [ %i.cv, %bb.ae ], [ @.str.566, %bb.ac ]
+sqlite3_errmsg.exit:                              ; preds = %sqlite3_errcode.exit.thread, %bb.ab, %bb.ac, %bb.ad, %bb.ae
+  %17 = phi i32 [ 7, %sqlite3_errcode.exit.thread ], [ %i.ch, %bb.ad ], [ %i.ch, %bb.ae ], [ %i.ch, %bb.ac ], [ %i.ch, %bb.ab ] ; 2 uses
+  %.08.i = phi ptr [ @.str.206, %sqlite3_errcode.exit.thread ], [ %i.cs, %bb.ad ], [ %i.cv, %bb.ae ], [ @.str.566, %bb.ac ], [ @.str.566, %bb.ab ]
   %i.cw = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.08.i) #42
   %i.cx = trunc i64 %i.cw to i32
   %i.cy = add i32 %i.cx, 1                        ; 2 uses
   %i.cz = call ptr @sqlite3_malloc(i32 noundef %i.cy) ; 3 uses
   store ptr %i.cz, ptr %4, align 8, !tbaa !150
   %.not129 = icmp eq ptr %i.cz, null
-  br i1 %.not129, label %bb.ak, label %bb.af
+  br i1 %.not129, label %bb.ak, label %18
 
-bb.af:                                            ; preds = %sqlite3_errmsg.exit
+18:                                               ; preds = %sqlite3_errmsg.exit
+  br i1 %i.d, label %sqlite3_errmsg.exit146, label %bb.af
+
+bb.af:                                            ; preds = %18
   %.val.i144 = load i32, ptr %i.e, align 8, !tbaa !260
   switch i32 %.val.i144, label %sqlite3_errmsg.exit146 [
     i32 -264537850, label %bb.ag
@@ -642,14 +659,14 @@ bb.ai:                                            ; preds = %bb.ah
   %i.di = call fastcc ptr @sqlite3ErrStr(i32 noundef %i.dh)
   br label %sqlite3_errmsg.exit146
 
-sqlite3_errmsg.exit146:                           ; preds = %bb.af, %bb.ag, %bb.ah, %bb.ai
-  %.08.i145 = phi ptr [ @.str.566, %bb.af ], [ %i.df, %bb.ah ], [ %i.di, %bb.ai ], [ @.str.566, %bb.ag ]
+sqlite3_errmsg.exit146:                           ; preds = %18, %bb.af, %bb.ag, %bb.ah, %bb.ai
+  %.08.i145 = phi ptr [ @.str.206, %18 ], [ %i.df, %bb.ah ], [ %i.di, %bb.ai ], [ @.str.566, %bb.ag ], [ @.str.566, %bb.af ]
   %i.dj = sext i32 %i.cy to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.cz, ptr nonnull align 1 %.08.i145, i64 %i.dj, i1 false)
   br label %bb.ak
 
-sqlite3_errcode.exit.thread.a:                    ; preds = %.preheader200.split.us, %sqlite3ApiExit.exit.thread, %sqlite3_errcode.exit
-  %12 = phi i32 [ 0, %sqlite3ApiExit.exit.thread ], [ %i.ch, %sqlite3_errcode.exit ], [ %spec.select, %.preheader200.split.us ] ; 2 uses
+sqlite3_errcode.exit.thread.a:                    ; preds = %sqlite3_errcode.exit.thread, %sqlite3ApiExit.exit.thread, %sqlite3_errcode.exit, %sqlite3ApiExit.exit
+  %19 = phi i32 [ 0, %sqlite3ApiExit.exit.thread ], [ %i.ch, %sqlite3_errcode.exit ], [ 0, %sqlite3ApiExit.exit ], [ %14, %sqlite3_errcode.exit.thread ] ; 2 uses
   %.not128 = icmp eq ptr %4, null
   br i1 %.not128, label %bb.ak, label %bb.aj
 
@@ -658,7 +675,7 @@ bb.aj:                                            ; preds = %sqlite3_errcode.exi
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj, %sqlite3_errcode.exit.thread.a, %sqlite3_errmsg.exit146, %sqlite3_errmsg.exit, %bb.a
-  %.092 = phi i32 [ 0, %bb.a ], [ %12, %bb.aj ], [ %i.ch, %sqlite3_errmsg.exit ], [ %i.ch, %sqlite3_errmsg.exit146 ], [ %12, %sqlite3_errcode.exit.thread.a ]
+  %.092 = phi i32 [ 0, %bb.a ], [ %19, %bb.aj ], [ %17, %sqlite3_errmsg.exit ], [ %17, %sqlite3_errmsg.exit146 ], [ %19, %sqlite3_errcode.exit.thread.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #43
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #43
   ret i32 %.092
@@ -1061,8 +1078,16 @@ bb.p:                                             ; preds = %sqlite3DbMallocRaw.
   %wide.trip.count160 = zext nneg i32 %i.bs to i64
   br label %.preheader137.us
 
-.preheader137.us:                                 ; preds = %bb.t, %.preheader137.lr.ph.split.us
-  %indvars.iv162 = phi i64 [ %indvars.iv.next163, %bb.t ], [ 0, %.preheader137.lr.ph.split.us ] ; 3 uses
+5:                                                ; preds = %bb.p
+  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %7 = load i32, ptr %6, align 8, !tbaa !301
+  %8 = add nsw i32 %7, -1
+  %9 = load ptr, ptr %i.ay, align 8, !tbaa !902
+  store i32 %8, ptr %9, align 8, !tbaa !905
+  br label %.loopexit139
+
+.preheader137.us:                                 ; preds = %.preheader137.lr.ph.split.us, %bb.t
+  %indvars.iv162 = phi i64 [ 0, %.preheader137.lr.ph.split.us ], [ %indvars.iv.next163, %bb.t ] ; 3 uses
   %i.by = getelementptr inbounds nuw [24 x i8], ptr %i.bx, i64 %indvars.iv162
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 8
   %i.ca = load ptr, ptr %i.bz, align 8, !tbaa !810 ; 3 uses
@@ -1129,14 +1154,6 @@ bb.t:                                             ; preds = %sqlite3StrICmp.exit
   %indvars.iv.next163 = add nuw nsw i64 %indvars.iv162, 1 ; 2 uses
   %exitcond166.not = icmp eq i64 %indvars.iv.next163, %wide.trip.count165
   br i1 %exitcond166.not, label %.loopexit139, label %.preheader137.us, !llvm.loop !1613
-
-5:                                                ; preds = %bb.p
-  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %7 = load i32, ptr %6, align 8, !tbaa !301
-  %8 = add nsw i32 %7, -1
-  %9 = load ptr, ptr %i.ay, align 8, !tbaa !902
-  store i32 %8, ptr %9, align 8, !tbaa !905
-  br label %.loopexit139
 
 .loopexit139:                                     ; preds = %bb.t, %5
   %i.db = icmp sgt i32 %.1106, 0
