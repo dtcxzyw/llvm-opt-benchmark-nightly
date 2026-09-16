@@ -1,0 +1,374 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 30b5adfa266a2..1bdf93ce58609 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -599,6 +599,17 @@ static int CompareValueComplexity(const LoopInfo *const LI, Value *LV,
+     return (int)LArgNo - (int)RArgNo;
+   }
+ 
++  // Sort integer constants by their value.
++  if (const auto *LCI = dyn_cast<ConstantInt>(LV)) {
++    const APInt &LA = LCI->getValue(), &RA = cast<ConstantInt>(RV)->getValue();
++    unsigned LBitWidth = LA.getBitWidth(), RBitWidth = RA.getBitWidth();
++    if (LBitWidth != RBitWidth)
++      return (int)LBitWidth - (int)RBitWidth;
++    if (LA == RA)
++      return 0;
++    return LA.ult(RA) ? -1 : 1;
++  }
++
+   if (const auto *LGV = dyn_cast<GlobalValue>(LV)) {
+     const auto *RGV = cast<GlobalValue>(RV);
+ 
+diff --git a/llvm/test/Analysis/ScalarEvolution/increasing-or-decreasing-iv.ll b/llvm/test/Analysis/ScalarEvolution/increasing-or-decreasing-iv.ll
+index 7170645ccc659..7bb156d18766a 100644
+--- a/llvm/test/Analysis/ScalarEvolution/increasing-or-decreasing-iv.ll
++++ b/llvm/test/Analysis/ScalarEvolution/increasing-or-decreasing-iv.ll
+@@ -13,7 +13,7 @@ define void @f0(i1 %c) {
+ ; CHECK-NEXT:    %iv = phi i32 [ %start, %entry ], [ %iv.next, %loop ]
+ ; CHECK-NEXT:    --> {%start,+,%step}<nsw><%loop> U: [0,128) S: [0,128) Exits: ((127 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.next = add i32 %iv, %step
+-; CHECK-NEXT:    --> {(%step + %start),+,%step}<nw><%loop> U: [-256,256) S: [-256,256) Exits: ((128 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {(%start + %step),+,%step}<nw><%loop> U: [-256,256) S: [-256,256) Exits: ((128 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %loop.iv.inc = add i32 %loop.iv, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,129) S: [1,129) Exits: 128 LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @f0
+@@ -79,7 +79,7 @@ define void @f1(i1 %c) {
+ ; CHECK-NEXT:    %iv.m7 = sub i32 %iv, 7
+ ; CHECK-NEXT:    --> {(-7 + %start)<nsw>,+,%step}<nsw><%loop> U: [-7,114) S: [-7,114) Exits: (-7 + (15 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.next = add i32 %iv, %step
+-; CHECK-NEXT:    --> {(%step + %start),+,%step}<nw><%loop> U: [0,-7) S: [-256,361) Exits: ((16 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {(%start + %step),+,%step}<nw><%loop> U: [0,-7) S: [-256,361) Exits: ((16 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %loop.iv.inc = add i32 %loop.iv, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,17) S: [1,17) Exits: 16 LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @f1
+@@ -138,7 +138,7 @@ define void @f2(i1 %c) {
+ ; CHECK-NEXT:    %iv.sext = sext i32 %iv to i64
+ ; CHECK-NEXT:    --> {(zext i32 %start to i64),+,(sext i32 %step to i64)}<nsw><%loop> U: [0,128) S: [0,128) Exits: ((zext i32 %start to i64) + (127 * (sext i32 %step to i64))<nsw>) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.next = add i32 %iv, %step
+-; CHECK-NEXT:    --> {(%step + %start),+,%step}<nw><%loop> U: [-256,256) S: [-256,256) Exits: ((128 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {(%start + %step),+,%step}<nw><%loop> U: [-256,256) S: [-256,256) Exits: ((128 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %loop.iv.inc = add i32 %loop.iv, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,129) S: [1,129) Exits: 128 LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @f2
+@@ -227,7 +227,7 @@ define void @f4(i1 %c) {
+ ; CHECK-NEXT:    %iv.trunc = trunc i32 %iv to i16
+ ; CHECK-NEXT:    --> {(trunc i32 %start to i16),+,(trunc i32 %step to i16)}<%loop> U: [0,128) S: [0,128) Exits: ((trunc i32 %start to i16) + (127 * (trunc i32 %step to i16))<nsw>) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.next = add i32 %iv, %step
+-; CHECK-NEXT:    --> {(%step + %start),+,%step}<nw><%loop> U: [-256,256) S: [-256,256) Exits: ((128 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {(%start + %step),+,%step}<nw><%loop> U: [-256,256) S: [-256,256) Exits: ((128 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %loop.iv.inc = add i32 %loop.iv, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,129) S: [1,129) Exits: 128 LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @f4
+@@ -269,7 +269,7 @@ define void @f5(i1 %c) {
+ ; CHECK-NEXT:    %iv.trunc = trunc i32 %iv to i16
+ ; CHECK-NEXT:    --> {(trunc i32 %start to i16),+,(trunc i32 %step to i16)}<%loop> U: [0,128) S: [0,128) Exits: ((trunc i32 %start to i16) + (127 * (trunc i32 %step to i16))<nsw>) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.next = add i32 %iv, %step
+-; CHECK-NEXT:    --> {(%step + %start),+,%step}<nw><%loop> U: [-256,256) S: [-256,256) Exits: ((128 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {(%start + %step),+,%step}<nw><%loop> U: [-256,256) S: [-256,256) Exits: ((128 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %loop.iv.inc = add i16 %loop.iv, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,129) S: [1,129) Exits: 128 LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @f5
+@@ -311,7 +311,7 @@ define void @f6(i1 %c) {
+ ; CHECK-NEXT:    %step.plus.one = add i32 %step, 1
+ ; CHECK-NEXT:    --> (1 + %step)<nuw><nsw> U: [1,0) S: [-1,3) Exits: (1 + %step)<nuw><nsw> LoopDispositions: { %loop: Invariant }
+ ; CHECK-NEXT:    %iv.next = add i32 %iv, %step.plus.one
+-; CHECK-NEXT:    --> {(1 + %step + %start),+,(1 + %step)<nuw><nsw>}<nw><%loop> U: [-128,384) S: [-128,384) Exits: (128 + (128 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {(1 + %start + %step),+,(1 + %step)<nuw><nsw>}<nw><%loop> U: [-128,384) S: [-128,384) Exits: (128 + (128 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.sext = sext i32 %iv to i64
+ ; CHECK-NEXT:    --> {(zext i32 %start to i64),+,(1 + (sext i32 %step to i64))<nuw><nsw>}<nsw><%loop> U: [0,128) S: [0,128) Exits: (127 + (zext i32 %start to i64) + (127 * (sext i32 %step to i64))<nsw>) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %loop.iv.inc = add i16 %loop.iv, 1
+@@ -356,7 +356,7 @@ define void @f7(i1 %c) {
+ ; CHECK-NEXT:    %iv.trunc = trunc i32 %iv to i16
+ ; CHECK-NEXT:    --> {(trunc i32 %start to i16),+,(trunc i32 %step to i16)}<%loop> U: [0,128) S: [0,128) Exits: ((trunc i32 %start to i16) + (127 * (trunc i32 %step to i16))<nsw>) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.next = add i32 %iv, %step
+-; CHECK-NEXT:    --> {(%step + %start),+,%step}<nw><%loop> U: [-256,256) S: [-256,256) Exits: ((128 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {(%start + %step),+,%step}<nw><%loop> U: [-256,256) S: [-256,256) Exits: ((128 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.trunc.plus.one = add i16 %iv.trunc, 1
+ ; CHECK-NEXT:    --> {(1 + (trunc i32 %start to i16))<nuw><nsw>,+,(trunc i32 %step to i16)}<nsw><%loop> U: [1,129) S: [1,129) Exits: (1 + (trunc i32 %start to i16) + (127 * (trunc i32 %step to i16))<nsw>) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.trunc.plus.two = add i16 %iv.trunc, 2
+diff --git a/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info-operand-order.ll b/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info-operand-order.ll
+index 87ba0036b4eba..7c4bc151b0a62 100644
+--- a/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info-operand-order.ll
++++ b/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info-operand-order.ll
+@@ -253,7 +253,7 @@ define void @const_max_btc_32_or_order_2(i64 %n) {
+ ; CHECK-LABEL: 'const_max_btc_32_or_order_2'
+ ; CHECK-NEXT:  Classifying expressions for: @const_max_btc_32_or_order_2
+ ; CHECK-NEXT:    %and.pre = and i1 %pre.0, %pre.1
+-; CHECK-NEXT:    --> (%pre.0 umin %pre.1) U: full-set S: full-set
++; CHECK-NEXT:    --> (%pre.1 umin %pre.0) U: full-set S: full-set
+ ; CHECK-NEXT:    %iv = phi i64 [ %iv.next, %loop ], [ 0, %ph ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,33) S: [0,33) Exits: %n LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.next = add i64 %iv, 1
+diff --git a/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll b/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll
+index 8f7d2007cdcc0..e7b6b6fa3056c 100644
+--- a/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll
++++ b/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll
+@@ -330,7 +330,7 @@ define void @test_guard_if_and_enter(ptr nocapture readonly %data, i64 %count) {
+ ; CHECK-LABEL: 'test_guard_if_and_enter'
+ ; CHECK-NEXT:  Classifying expressions for: @test_guard_if_and_enter
+ ; CHECK-NEXT:    %cmp.and = and i1 %cmp.ult, %cmp.ne
+-; CHECK-NEXT:    --> (%cmp.ult umin %cmp.ne) U: full-set S: full-set
++; CHECK-NEXT:    --> (%cmp.ne umin %cmp.ult) U: full-set S: full-set
+ ; CHECK-NEXT:    %iv = phi i64 [ %iv.next, %loop ], [ 0, %entry ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,4) S: [0,4) Exits: (-1 + %count) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %idx = getelementptr inbounds i32, ptr %data, i64 %iv
+@@ -365,7 +365,7 @@ define void @test_guard_if_and_skip(ptr nocapture readonly %data, i64 %count) {
+ ; CHECK-LABEL: 'test_guard_if_and_skip'
+ ; CHECK-NEXT:  Classifying expressions for: @test_guard_if_and_skip
+ ; CHECK-NEXT:    %cmp.and = and i1 %cmp.ult, %cmp.ne
+-; CHECK-NEXT:    --> (%cmp.ult umin %cmp.ne) U: full-set S: full-set
++; CHECK-NEXT:    --> (%cmp.ne umin %cmp.ult) U: full-set S: full-set
+ ; CHECK-NEXT:    %iv = phi i64 [ %iv.next, %loop ], [ 0, %entry ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: (-1 + %count) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %idx = getelementptr inbounds i32, ptr %data, i64 %iv
+@@ -402,7 +402,7 @@ define void @test_guard_if_and_and(ptr nocapture readonly %data, i64 %count, i1
+ ; CHECK-NEXT:    %cmp.and1 = and i1 %c, %cmp.ne
+ ; CHECK-NEXT:    --> (%c umin %cmp.ne) U: full-set S: full-set
+ ; CHECK-NEXT:    %cmp.and = and i1 %cmp.ult, %cmp.and1
+-; CHECK-NEXT:    --> (%c umin %cmp.ult umin %cmp.ne) U: full-set S: full-set
++; CHECK-NEXT:    --> (%c umin %cmp.ne umin %cmp.ult) U: full-set S: full-set
+ ; CHECK-NEXT:    %iv = phi i64 [ %iv.next, %loop ], [ 0, %entry ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,4) S: [0,4) Exits: (-1 + %count) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %idx = getelementptr inbounds i32, ptr %data, i64 %iv
+@@ -476,7 +476,7 @@ define void @test_guard_if_or_skip(ptr nocapture readonly %data, i64 %count) {
+ ; CHECK-LABEL: 'test_guard_if_or_skip'
+ ; CHECK-NEXT:  Classifying expressions for: @test_guard_if_or_skip
+ ; CHECK-NEXT:    %cmp.or = or i1 %cmp.uge, %cmp.eq
+-; CHECK-NEXT:    --> (%cmp.uge umax %cmp.eq) U: full-set S: full-set
++; CHECK-NEXT:    --> (%cmp.eq umax %cmp.uge) U: full-set S: full-set
+ ; CHECK-NEXT:    %iv = phi i64 [ %iv.next, %loop ], [ 0, %entry ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,4) S: [0,4) Exits: (-1 + %count) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %idx = getelementptr inbounds i32, ptr %data, i64 %iv
+@@ -511,7 +511,7 @@ define void @test_guard_if_or_enter(ptr nocapture readonly %data, i64 %count) {
+ ; CHECK-LABEL: 'test_guard_if_or_enter'
+ ; CHECK-NEXT:  Classifying expressions for: @test_guard_if_or_enter
+ ; CHECK-NEXT:    %cmp.or = or i1 %cmp.uge, %cmp.eq
+-; CHECK-NEXT:    --> (%cmp.uge umax %cmp.eq) U: full-set S: full-set
++; CHECK-NEXT:    --> (%cmp.eq umax %cmp.uge) U: full-set S: full-set
+ ; CHECK-NEXT:    %iv = phi i64 [ %iv.next, %loop ], [ 0, %entry ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: (-1 + %count) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %idx = getelementptr inbounds i32, ptr %data, i64 %iv
+@@ -548,7 +548,7 @@ define void @test_guard_if_or_or(ptr nocapture readonly %data, i64 %count, i1 %c
+ ; CHECK-NEXT:    %cmp.or1 = or i1 %c, %cmp.eq
+ ; CHECK-NEXT:    --> (%c umax %cmp.eq) U: full-set S: full-set
+ ; CHECK-NEXT:    %cmp.or = or i1 %cmp.uge, %cmp.or1
+-; CHECK-NEXT:    --> (%c umax %cmp.uge umax %cmp.eq) U: full-set S: full-set
++; CHECK-NEXT:    --> (%c umax %cmp.eq umax %cmp.uge) U: full-set S: full-set
+ ; CHECK-NEXT:    %iv = phi i64 [ %iv.next, %loop ], [ 0, %entry ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,4) S: [0,4) Exits: (-1 + %count) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %idx = getelementptr inbounds i32, ptr %data, i64 %iv
+@@ -658,7 +658,7 @@ define void @test_guard_assume_and(ptr nocapture readonly %data, i64 %count) {
+ ; CHECK-LABEL: 'test_guard_assume_and'
+ ; CHECK-NEXT:  Classifying expressions for: @test_guard_assume_and
+ ; CHECK-NEXT:    %cmp.and = and i1 %cmp.ult, %cmp.ne
+-; CHECK-NEXT:    --> (%cmp.ult umin %cmp.ne) U: full-set S: full-set
++; CHECK-NEXT:    --> (%cmp.ne umin %cmp.ult) U: full-set S: full-set
+ ; CHECK-NEXT:    %iv = phi i64 [ %iv.next, %loop ], [ 0, %entry ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,4) S: [0,4) Exits: (-1 + %count) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %idx = getelementptr inbounds i32, ptr %data, i64 %iv
+@@ -974,7 +974,7 @@ define void @test_guard_slt_sgt_1(ptr nocapture %a, i64 %N) {
+ ; CHECK-LABEL: 'test_guard_slt_sgt_1'
+ ; CHECK-NEXT:  Classifying expressions for: @test_guard_slt_sgt_1
+ ; CHECK-NEXT:    %and = and i1 %c.0, %c.1
+-; CHECK-NEXT:    --> (%c.0 umin %c.1) U: full-set S: full-set
++; CHECK-NEXT:    --> (%c.1 umin %c.0) U: full-set S: full-set
+ ; CHECK-NEXT:    %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,11) S: [0,11) Exits: (-1 + %N) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %idx = getelementptr inbounds i32, ptr %a, i64 %iv
+@@ -1009,7 +1009,7 @@ define void @test_guard_slt_sgt_2(ptr nocapture %a, i64 %i) {
+ ; CHECK-LABEL: 'test_guard_slt_sgt_2'
+ ; CHECK-NEXT:  Classifying expressions for: @test_guard_slt_sgt_2
+ ; CHECK-NEXT:    %and = and i1 %c.0, %c.1
+-; CHECK-NEXT:    --> (%c.0 umin %c.1) U: full-set S: full-set
++; CHECK-NEXT:    --> (%c.1 umin %c.0) U: full-set S: full-set
+ ; CHECK-NEXT:    %iv = phi i64 [ %iv.next, %loop ], [ %i, %entry ]
+ ; CHECK-NEXT:    --> {%i,+,1}<nuw><nsw><%loop> U: full-set S: full-set Exits: 17 LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %idx = getelementptr inbounds i32, ptr %a, i64 %iv
+@@ -1044,7 +1044,7 @@ define void @test_guard_sle_sge_1(ptr nocapture %a, i64 %N) {
+ ; CHECK-LABEL: 'test_guard_sle_sge_1'
+ ; CHECK-NEXT:  Classifying expressions for: @test_guard_sle_sge_1
+ ; CHECK-NEXT:    %and = and i1 %c.0, %c.1
+-; CHECK-NEXT:    --> (%c.0 umin %c.1) U: full-set S: full-set
++; CHECK-NEXT:    --> (%c.1 umin %c.0) U: full-set S: full-set
+ ; CHECK-NEXT:    %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,12) S: [0,12) Exits: (-1 + %N) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %idx = getelementptr inbounds i32, ptr %a, i64 %iv
+@@ -1079,7 +1079,7 @@ define void @test_guard_sle_sge_2(ptr nocapture %a, i64 %i) {
+ ; CHECK-LABEL: 'test_guard_sle_sge_2'
+ ; CHECK-NEXT:  Classifying expressions for: @test_guard_sle_sge_2
+ ; CHECK-NEXT:    %and = and i1 %c.0, %c.1
+-; CHECK-NEXT:    --> (%c.0 umin %c.1) U: full-set S: full-set
++; CHECK-NEXT:    --> (%c.1 umin %c.0) U: full-set S: full-set
+ ; CHECK-NEXT:    %iv = phi i64 [ %iv.next, %loop ], [ %i, %entry ]
+ ; CHECK-NEXT:    --> {%i,+,1}<nuw><nsw><%loop> U: full-set S: full-set Exits: 17 LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %idx = getelementptr inbounds i32, ptr %a, i64 %iv
+diff --git a/llvm/test/Analysis/ScalarEvolution/minmax-operand-order.ll b/llvm/test/Analysis/ScalarEvolution/minmax-operand-order.ll
+new file mode 100644
+index 0000000000000..d1c295de02ac2
+--- /dev/null
++++ b/llvm/test/Analysis/ScalarEvolution/minmax-operand-order.ll
+@@ -0,0 +1,150 @@
++; NOTE: Assertions have been autogenerated by utils/update_analyze_test_checks.py
++; RUN: opt -passes='print<scalar-evolution>' -disable-output %s 2>&1 | FileCheck %s
++
++; Commutative SCEV expressions must not depend on the order their operands are
++; passed in, otherwise (a smax b) and (b smax a) become distinct SCEVs that
++; never cancel. Unlike add and mul, min/max expressions are neither flattened
++; nor distributed over, so the duplicates survive.
++
++declare i32 @get(ptr, i32)
++
++define i32 @smax_operand_order_calls_with_different_constants(ptr %p) {
++; CHECK-LABEL: 'smax_operand_order_calls_with_different_constants'
++; CHECK-NEXT:  Classifying expressions for: @smax_operand_order_calls_with_different_constants
++; CHECK-NEXT:    %x = call i32 @get(ptr %p, i32 5)
++; CHECK-NEXT:    --> %x U: full-set S: full-set
++; CHECK-NEXT:    %y = call i32 @get(ptr %p, i32 6)
++; CHECK-NEXT:    --> %y U: full-set S: full-set
++; CHECK-NEXT:    %max.1 = call i32 @llvm.smax.i32(i32 %x, i32 %y)
++; CHECK-NEXT:    --> (%x smax %y) U: full-set S: full-set
++; CHECK-NEXT:    %max.2 = call i32 @llvm.smax.i32(i32 %y, i32 %x)
++; CHECK-NEXT:    --> (%x smax %y) U: full-set S: full-set
++; CHECK-NEXT:    %sub = sub i32 %max.1, %max.2
++; CHECK-NEXT:    --> 0 U: [0,1) S: [0,1)
++; CHECK-NEXT:  Determining loop execution counts for: @smax_operand_order_calls_with_different_constants
++;
++entry:
++  %x = call i32 @get(ptr %p, i32 5)
++  %y = call i32 @get(ptr %p, i32 6)
++  %max.1 = call i32 @llvm.smax.i32(i32 %x, i32 %y)
++  %max.2 = call i32 @llvm.smax.i32(i32 %y, i32 %x)
++  %sub = sub i32 %max.1, %max.2
++  ret i32 %sub
++}
++
++define i32 @umin_operand_order_calls_with_different_constants(ptr %p) {
++; CHECK-LABEL: 'umin_operand_order_calls_with_different_constants'
++; CHECK-NEXT:  Classifying expressions for: @umin_operand_order_calls_with_different_constants
++; CHECK-NEXT:    %x = call i32 @get(ptr %p, i32 5)
++; CHECK-NEXT:    --> %x U: full-set S: full-set
++; CHECK-NEXT:    %y = call i32 @get(ptr %p, i32 6)
++; CHECK-NEXT:    --> %y U: full-set S: full-set
++; CHECK-NEXT:    %min.1 = call i32 @llvm.umin.i32(i32 %x, i32 %y)
++; CHECK-NEXT:    --> (%x umin %y) U: full-set S: full-set
++; CHECK-NEXT:    %min.2 = call i32 @llvm.umin.i32(i32 %y, i32 %x)
++; CHECK-NEXT:    --> (%x umin %y) U: full-set S: full-set
++; CHECK-NEXT:    %sub = sub i32 %min.1, %min.2
++; CHECK-NEXT:    --> 0 U: [0,1) S: [0,1)
++; CHECK-NEXT:  Determining loop execution counts for: @umin_operand_order_calls_with_different_constants
++;
++entry:
++  %x = call i32 @get(ptr %p, i32 5)
++  %y = call i32 @get(ptr %p, i32 6)
++  %min.1 = call i32 @llvm.umin.i32(i32 %x, i32 %y)
++  %min.2 = call i32 @llvm.umin.i32(i32 %y, i32 %x)
++  %sub = sub i32 %min.1, %min.2
++  ret i32 %sub
++}
++
++; Constant operands are ordered by their unsigned value.
++define i32 @smax_operand_order_negative_constant(ptr %p) {
++; CHECK-LABEL: 'smax_operand_order_negative_constant'
++; CHECK-NEXT:  Classifying expressions for: @smax_operand_order_negative_constant
++; CHECK-NEXT:    %x = call i32 @get(ptr %p, i32 5)
++; CHECK-NEXT:    --> %x U: full-set S: full-set
++; CHECK-NEXT:    %y = call i32 @get(ptr %p, i32 -1)
++; CHECK-NEXT:    --> %y U: full-set S: full-set
++; CHECK-NEXT:    %max.1 = call i32 @llvm.smax.i32(i32 %x, i32 %y)
++; CHECK-NEXT:    --> (%x smax %y) U: full-set S: full-set
++; CHECK-NEXT:    %max.2 = call i32 @llvm.smax.i32(i32 %y, i32 %x)
++; CHECK-NEXT:    --> (%x smax %y) U: full-set S: full-set
++; CHECK-NEXT:    %sub = sub i32 %max.1, %max.2
++; CHECK-NEXT:    --> 0 U: [0,1) S: [0,1)
++; CHECK-NEXT:  Determining loop execution counts for: @smax_operand_order_negative_constant
++;
++entry:
++  %x = call i32 @get(ptr %p, i32 5)
++  %y = call i32 @get(ptr %p, i32 -1)
++  %max.1 = call i32 @llvm.smax.i32(i32 %x, i32 %y)
++  %max.2 = call i32 @llvm.smax.i32(i32 %y, i32 %x)
++  %sub = sub i32 %max.1, %max.2
++  ret i32 %sub
++}
++
++; getSignExtendExpr sinks the extend into the min/max, so the widened
++; expression must order its operands the same way as the narrow one.
++define i64 @sext_of_smax_operand_order(ptr %p) {
++; CHECK-LABEL: 'sext_of_smax_operand_order'
++; CHECK-NEXT:  Classifying expressions for: @sext_of_smax_operand_order
++; CHECK-NEXT:    %x = call i32 @get(ptr %p, i32 5)
++; CHECK-NEXT:    --> %x U: full-set S: full-set
++; CHECK-NEXT:    %y = call i32 @get(ptr %p, i32 6)
++; CHECK-NEXT:    --> %y U: full-set S: full-set
++; CHECK-NEXT:    %max.1 = call i32 @llvm.smax.i32(i32 %x, i32 %y)
++; CHECK-NEXT:    --> (%x smax %y) U: full-set S: full-set
++; CHECK-NEXT:    %ext.1 = sext i32 %max.1 to i64
++; CHECK-NEXT:    --> ((sext i32 %x to i64) smax (sext i32 %y to i64)) U: [-2147483648,2147483648) S: [-2147483648,2147483648)
++; CHECK-NEXT:    %x.ext = sext i32 %x to i64
++; CHECK-NEXT:    --> (sext i32 %x to i64) U: [-2147483648,2147483648) S: [-2147483648,2147483648)
++; CHECK-NEXT:    %y.ext = sext i32 %y to i64
++; CHECK-NEXT:    --> (sext i32 %y to i64) U: [-2147483648,2147483648) S: [-2147483648,2147483648)
++; CHECK-NEXT:    %ext.2 = call i64 @llvm.smax.i64(i64 %y.ext, i64 %x.ext)
++; CHECK-NEXT:    --> ((sext i32 %y to i64) smax (sext i32 %x to i64)) U: [-2147483648,2147483648) S: [-2147483648,2147483648)
++; CHECK-NEXT:    %sub = sub i64 %ext.1, %ext.2
++; CHECK-NEXT:    --> ((-1 * ((sext i32 %y to i64) smax (sext i32 %x to i64)))<nsw> + ((sext i32 %x to i64) smax (sext i32 %y to i64))) U: [-4294967295,4294967296) S: [-4294967295,4294967296)
++; CHECK-NEXT:  Determining loop execution counts for: @sext_of_smax_operand_order
++;
++entry:
++  %x = call i32 @get(ptr %p, i32 5)
++  %y = call i32 @get(ptr %p, i32 6)
++  %max.1 = call i32 @llvm.smax.i32(i32 %x, i32 %y)
++  %ext.1 = sext i32 %max.1 to i64
++  %x.ext = sext i32 %x to i64
++  %y.ext = sext i32 %y to i64
++  %ext.2 = call i64 @llvm.smax.i64(i64 %y.ext, i64 %x.ext)
++  %sub = sub i64 %ext.1, %ext.2
++  ret i64 %sub
++}
++
++; Negative test: the constants telling %x and %y apart sit one level deeper
++; than scalar-evolution-max-value-compare-depth allows, so the operands still
++; compare equal and the order is not canonicalized.
++define i32 @smax_operand_order_beyond_compare_depth(ptr %p, i32 %c) {
++; CHECK-LABEL: 'smax_operand_order_beyond_compare_depth'
++; CHECK-NEXT:  Classifying expressions for: @smax_operand_order_beyond_compare_depth
++; CHECK-NEXT:    %a = add i32 %c, 5
++; CHECK-NEXT:    --> (5 + %c) U: full-set S: full-set
++; CHECK-NEXT:    %b = add i32 %c, 6
++; CHECK-NEXT:    --> (6 + %c) U: full-set S: full-set
++; CHECK-NEXT:    %x = call i32 @get(ptr %p, i32 %a)
++; CHECK-NEXT:    --> %x U: full-set S: full-set
++; CHECK-NEXT:    %y = call i32 @get(ptr %p, i32 %b)
++; CHECK-NEXT:    --> %y U: full-set S: full-set
++; CHECK-NEXT:    %max.1 = call i32 @llvm.smax.i32(i32 %x, i32 %y)
++; CHECK-NEXT:    --> (%x smax %y) U: full-set S: full-set
++; CHECK-NEXT:    %max.2 = call i32 @llvm.smax.i32(i32 %y, i32 %x)
++; CHECK-NEXT:    --> (%y smax %x) U: full-set S: full-set
++; CHECK-NEXT:    %sub = sub i32 %max.1, %max.2
++; CHECK-NEXT:    --> ((-1 * (%y smax %x)) + (%x smax %y)) U: full-set S: full-set
++; CHECK-NEXT:  Determining loop execution counts for: @smax_operand_order_beyond_compare_depth
++;
++entry:
++  %a = add i32 %c, 5
++  %b = add i32 %c, 6
++  %x = call i32 @get(ptr %p, i32 %a)
++  %y = call i32 @get(ptr %p, i32 %b)
++  %max.1 = call i32 @llvm.smax.i32(i32 %x, i32 %y)
++  %max.2 = call i32 @llvm.smax.i32(i32 %y, i32 %x)
++  %sub = sub i32 %max.1, %max.2
++  ret i32 %sub
++}
+diff --git a/llvm/test/Analysis/ScalarEvolution/sext-to-zext.ll b/llvm/test/Analysis/ScalarEvolution/sext-to-zext.ll
+index 3725bd9faa8e7..49520e093ea8b 100644
+--- a/llvm/test/Analysis/ScalarEvolution/sext-to-zext.ll
++++ b/llvm/test/Analysis/ScalarEvolution/sext-to-zext.ll
+@@ -15,7 +15,7 @@ define void @f(i1 %c) {
+ ; CHECK-NEXT:    %iv.tc.inc = add i32 %iv.tc, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,101) S: [1,101) Exits: 100 LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.dec = add nsw i32 %iv, %step
+-; CHECK-NEXT:    --> {(%step + %start),+,%step}<nw><%loop> U: [-200,201) S: [-200,201) Exits: ((100 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {(%start + %step),+,%step}<nw><%loop> U: [-200,201) S: [-200,201) Exits: ((100 * %step)<nsw> + %start) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.sext = sext i32 %iv to i64
+ ; CHECK-NEXT:    --> {(zext i32 %start to i64),+,(sext i32 %step to i64)}<nsw><%loop> U: [0,101) S: [0,101) Exits: ((zext i32 %start to i64) + (99 * (sext i32 %step to i64))<nsw>) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @f
