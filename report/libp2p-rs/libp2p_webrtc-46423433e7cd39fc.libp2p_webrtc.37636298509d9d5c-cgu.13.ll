@@ -204,9 +204,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check2, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %3 = and i64 %i.d, 28
   %n.vec = and i64 %i.d, -32                      ; 6 uses
-  %4 = getelementptr i8, ptr %1, i64 %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -224,6 +222,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.r, label %middle.block, label %vector.body, !llvm.loop !1582
 
 middle.block:                                     ; preds = %vector.body
+  %3 = and i64 %i.d, 28
+  %4 = getelementptr i8, ptr %1, i64 %n.vec
   %cmp.n = icmp eq i64 %i.d, %n.vec
   br i1 %cmp.n, label %_RNvXs_NtNtCsexYYUdYSQU6_5alloc3vec21spec_from_iter_nestedINtB6_3VechEINtB4_18SpecFromIterNestedhNtNtNtCskKLDkoKarTP_4core3str4iter5BytesE9from_iterCs4KPtkQIfQGm_13libp2p_webrtc.exit, label %vec.epilog.iter.check
 
@@ -234,7 +234,6 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec4 = and i64 %i.d, -4                      ; 5 uses
-  %5 = getelementptr i8, ptr %1, i64 %n.vec4
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -248,6 +247,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.t, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !1583
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
+  %5 = getelementptr i8, ptr %1, i64 %n.vec4
   %cmp.n9 = icmp eq i64 %i.d, %n.vec4
   br i1 %cmp.n9, label %_RNvXs_NtNtCsexYYUdYSQU6_5alloc3vec21spec_from_iter_nestedINtB6_3VechEINtB4_18SpecFromIterNestedhNtNtNtCskKLDkoKarTP_4core3str4iter5BytesE9from_iterCs4KPtkQIfQGm_13libp2p_webrtc.exit, label %.lr.ph.i.i.i.i.i.preheader
 
@@ -650,9 +650,6 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs4KPt
 
 vector.ph:                                        ; preds = %.lr.ph.i.preheader
   %n.vec = and i64 %i.r, 1152921504606846974      ; 4 uses
-  %2 = shl nuw i64 %n.vec, 4
-  %3 = getelementptr i8, ptr %i.d, i64 %2
-  %4 = sub i64 %i.i, %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -670,12 +667,18 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x i64> %wide.load3, ptr %i.w, align 8, !noalias !2392
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.x = icmp eq i64 %index.next, %n.vec
-  br i1 %i.x, label %.lr.ph.i.preheader6, label %vector.body, !llvm.loop !2389
+  br i1 %i.x, label %.lr.ph.i.preheader6.loopexit, label %vector.body, !llvm.loop !2389
 
-.lr.ph.i.preheader6:                              ; preds = %vector.body, %.lr.ph.i.preheader
-  %.sroa.014.023.i.ph = phi ptr [ %i.d, %.lr.ph.i.preheader ], [ %3, %vector.body ]
-  %.sroa.7.022.i.ph = phi i64 [ 0, %.lr.ph.i.preheader ], [ %n.vec, %vector.body ]
-  %.sroa.10.021.i.ph = phi i64 [ %i.i, %.lr.ph.i.preheader ], [ %4, %vector.body ]
+.lr.ph.i.preheader6.loopexit:                     ; preds = %vector.body
+  %2 = shl nuw i64 %n.vec, 4
+  %3 = getelementptr i8, ptr %i.d, i64 %2
+  %4 = sub i64 %i.i, %n.vec
+  br label %.lr.ph.i.preheader6
+
+.lr.ph.i.preheader6:                              ; preds = %.lr.ph.i.preheader6.loopexit, %.lr.ph.i.preheader
+  %.sroa.014.023.i.ph = phi ptr [ %i.d, %.lr.ph.i.preheader ], [ %3, %.lr.ph.i.preheader6.loopexit ]
+  %.sroa.7.022.i.ph = phi i64 [ 0, %.lr.ph.i.preheader ], [ %n.vec, %.lr.ph.i.preheader6.loopexit ]
+  %.sroa.10.021.i.ph = phi i64 [ %i.i, %.lr.ph.i.preheader ], [ %4, %.lr.ph.i.preheader6.loopexit ]
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader6, %bb.c

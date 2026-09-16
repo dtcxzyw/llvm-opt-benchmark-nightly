@@ -205,15 +205,15 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br label %.loopexit.split-lp
 
 _ZL13gmx_snew_implIiEvPKcS1_iRPT_m.exit.loopexit: ; preds = %bb.l
-  %21 = add nsw i32 %.0313668, 1
-  %22 = trunc nsw i64 %indvars.iv.next to i32
+  %21 = trunc nsw i64 %indvars.iv.next to i32
+  %22 = add nsw i32 %.0313668, 1
   %.pre872 = load i32, ptr %i.g, align 4, !tbaa !47
   br label %_ZL13gmx_snew_implIiEvPKcS1_iRPT_m.exit
 
 _ZL13gmx_snew_implIiEvPKcS1_iRPT_m.exit:          ; preds = %_ZL13gmx_snew_implIiEvPKcS1_iRPT_m.exit.loopexit, %bb.j
   %i.dx = phi i32 [ %i.df, %bb.j ], [ %.pre872, %_ZL13gmx_snew_implIiEvPKcS1_iRPT_m.exit.loopexit ] ; 2 uses
-  %.1314 = phi i32 [ %.0313668, %bb.j ], [ %21, %_ZL13gmx_snew_implIiEvPKcS1_iRPT_m.exit.loopexit ] ; 8 uses
-  %.2310 = phi i32 [ %.0308669, %bb.j ], [ %22, %_ZL13gmx_snew_implIiEvPKcS1_iRPT_m.exit.loopexit ]
+  %.1314 = phi i32 [ %.0313668, %bb.j ], [ %22, %_ZL13gmx_snew_implIiEvPKcS1_iRPT_m.exit.loopexit ] ; 8 uses
+  %.2310 = phi i32 [ %.0308669, %bb.j ], [ %21, %_ZL13gmx_snew_implIiEvPKcS1_iRPT_m.exit.loopexit ]
   %indvars.iv.next745 = add nuw nsw i64 %indvars.iv744, 1 ; 3 uses
   %i.dy = sext i32 %i.dx to i64
   %i.dz = icmp slt i64 %indvars.iv.next745, %i.dy
@@ -616,7 +616,6 @@ vector.ph1133:                                    ; preds = %.preheader639
   %i.adb = icmp eq i64 %i.ada, 0
   %i.adc = select i1 %i.adb, i64 4, i64 %i.ada
   %n.vec1134 = sub i64 %i.acz, %i.adc             ; 2 uses
-  %23 = shl i64 %n.vec1134, 1
   %broadcast.splatinsert1135 = insertelement <4 x float> poison, float %i.acq, i64 0
   %broadcast.splat1136 = shufflevector <4 x float> %broadcast.splatinsert1135, <4 x float> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert1137 = insertelement <4 x float> poison, float %i.acs, i64 0
@@ -653,10 +652,14 @@ vector.body1141:                                  ; preds = %vector.body1141, %v
   %index.next1150 = add nuw i64 %index1142, 4     ; 2 uses
   %vec.ind.next = add nuw nsw <4 x i64> %vec.ind, splat (i64 8)
   %i.adm = icmp eq i64 %index.next1150, %n.vec1134
-  br i1 %i.adm, label %scalar.ph1131.preheader, label %vector.body1141, !llvm.loop !37
+  br i1 %i.adm, label %scalar.ph1131.preheader.loopexit, label %vector.body1141, !llvm.loop !37
 
-scalar.ph1131.preheader:                          ; preds = %vector.body1141, %.preheader639
-  %indvars.iv797.ph = phi i64 [ 0, %.preheader639 ], [ %23, %vector.body1141 ]
+scalar.ph1131.preheader.loopexit:                 ; preds = %vector.body1141
+  %23 = shl i64 %n.vec1134, 1
+  br label %scalar.ph1131.preheader
+
+scalar.ph1131.preheader:                          ; preds = %scalar.ph1131.preheader.loopexit, %.preheader639
+  %indvars.iv797.ph = phi i64 [ 0, %.preheader639 ], [ %23, %scalar.ph1131.preheader.loopexit ]
   br label %scalar.ph1131
 
 scalar.ph1131:                                    ; preds = %scalar.ph1131.preheader, %scalar.ph1131

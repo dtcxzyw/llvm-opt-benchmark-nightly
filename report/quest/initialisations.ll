@@ -204,11 +204,8 @@ _ZNSt6vectorISt7complexIdESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i: ; preds = %
 
 .lr.ph.preheader:                                 ; preds = %_ZNSt6vectorISt7complexIdESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i
   %i.c = shl nuw nsw i64 %i.a, 4                  ; 3 uses
-  %i.d = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #15 ; 8 uses
-  %7 = getelementptr inbounds nuw [16 x i8], ptr %i.d, i64 %i.a
+  %i.d = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #15 ; 7 uses
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.d, i8 0, i64 %i.c, i1 false)
-  %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.d, i64 %i.c ; 2 uses
-  %8 = ptrtoint ptr %7 to i64                     ; 2 uses
   %wide.trip.count = zext nneg i32 %3 to i64      ; 3 uses
   %min.iters.check = icmp ult i32 %3, 4
   br i1 %min.iters.check, label %.lr.ph.preheader87, label %vector.ph
@@ -236,16 +233,22 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
-  br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader87
+  br i1 %cmp.n, label %._crit_edge.loopexit, label %.lr.ph.preheader87
 
 .lr.ph.preheader87:                               ; preds = %.lr.ph.preheader, %middle.block
   %indvars.iv.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
   br label %.lr.ph
 
-._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %_ZNSt6vectorISt7complexIdESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i
-  %.0.lcssa.i.i.i.i.i84 = phi ptr [ null, %_ZNSt6vectorISt7complexIdESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i ], [ %scevgep.i.i.i.i.i, %middle.block ], [ %scevgep.i.i.i.i.i, %.lr.ph ] ; 2 uses
-  %.sink.i80 = phi i64 [ 0, %_ZNSt6vectorISt7complexIdESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i ], [ %8, %middle.block ], [ %8, %.lr.ph ] ; 2 uses
-  %.sroa.050.076 = phi ptr [ null, %_ZNSt6vectorISt7complexIdESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i ], [ %i.d, %middle.block ], [ %i.d, %.lr.ph ] ; 8 uses
+._crit_edge.loopexit:                             ; preds = %.lr.ph, %middle.block
+  %7 = getelementptr inbounds nuw [16 x i8], ptr %i.d, i64 %i.a
+  %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.d, i64 %i.c
+  %8 = ptrtoint ptr %7 to i64
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZNSt6vectorISt7complexIdESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i
+  %.0.lcssa.i.i.i.i.i84 = phi ptr [ null, %_ZNSt6vectorISt7complexIdESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i ], [ %scevgep.i.i.i.i.i, %._crit_edge.loopexit ] ; 2 uses
+  %.sink.i80 = phi i64 [ 0, %_ZNSt6vectorISt7complexIdESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i ], [ %8, %._crit_edge.loopexit ] ; 2 uses
+  %.sroa.050.076 = phi ptr [ null, %_ZNSt6vectorISt7complexIdESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i ], [ %i.d, %._crit_edge.loopexit ] ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
   invoke void @_Z14util_getVectorP5Quregi(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %4, ptr noundef %2, i32 noundef %3)
           to label %bb.b unwind label %bb.n
@@ -259,7 +262,7 @@ middle.block:                                     ; preds = %vector.body
   store <2 x double> %i.n, ptr %i.m, align 8
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !54
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !54
 
 bb.b:                                             ; preds = %._crit_edge
   %i.o = ptrtoint ptr %.0.lcssa.i.i.i.i.i84 to i64 ; 2 uses

@@ -203,7 +203,6 @@ bb.i:                                             ; preds = %bb.g
 
 .lr.ph192.preheader:                              ; preds = %bb.h, %bb.i
   %.1134 = phi i32 [ %.0133193, %bb.h ], [ %i.be, %bb.i ]
-  %8 = add nsw i32 %.0126197, 1
   %i.bh = sext i32 %.0126197 to i64
   %i.bi = getelementptr inbounds [4 x i8], ptr %4, i64 %i.bh
   store i32 %spec.store.select1, ptr %i.bi, align 4, !tbaa !8
@@ -257,6 +256,7 @@ add_circular.exit:                                ; preds = %.lr.ph192.add_circu
   br i1 %exitcond227.not, label %._crit_edge, label %.lr.ph192, !llvm.loop !16
 
 ._crit_edge:                                      ; preds = %add_circular.exit
+  %8 = add nsw i32 %.0126197, 1
   %i.cf = add i32 %.1123198, -1
   %i.cg = add i32 %i.cf, %spec.store.select1
   br label %bb.l
@@ -432,8 +432,6 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.y = icmp eq i64 %i.x, 0
   %i.z = select i1 %i.y, i64 32, i64 %i.x
   %n.vec = sub nsw i64 %i.u, %i.z                 ; 3 uses
-  %8 = add nsw i64 %n.vec, %i.p
-  %9 = trunc i64 %n.vec to i32
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -458,11 +456,16 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <8 x i32> %wide.load54, ptr %i.aj, align 4, !tbaa !8
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.ak = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ak, label %.lr.ph.preheader57, label %vector.body, !llvm.loop !18
+  br i1 %i.ak, label %.lr.ph.preheader57.loopexit, label %vector.body, !llvm.loop !18
 
-.lr.ph.preheader57:                               ; preds = %vector.body, %vector.memcheck, %.lr.ph.preheader
-  %indvars.iv.ph = phi i64 [ %i.p, %vector.memcheck ], [ %i.p, %.lr.ph.preheader ], [ %8, %vector.body ]
-  %.036.ph = phi i32 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %9, %vector.body ]
+.lr.ph.preheader57.loopexit:                      ; preds = %vector.body
+  %8 = add nsw i64 %n.vec, %i.p
+  %9 = trunc i64 %n.vec to i32
+  br label %.lr.ph.preheader57
+
+.lr.ph.preheader57:                               ; preds = %.lr.ph.preheader57.loopexit, %vector.memcheck, %.lr.ph.preheader
+  %indvars.iv.ph = phi i64 [ %i.p, %vector.memcheck ], [ %i.p, %.lr.ph.preheader ], [ %8, %.lr.ph.preheader57.loopexit ]
+  %.036.ph = phi i32 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %9, %.lr.ph.preheader57.loopexit ]
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader57, %bb.f

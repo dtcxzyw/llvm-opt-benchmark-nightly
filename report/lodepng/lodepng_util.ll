@@ -205,12 +205,10 @@ bb.ac:                                            ; preds = %._crit_edge
 bb.ad:                                            ; preds = %._crit_edge
   %i.bv = fptosi float %i.bp to i32               ; 6 uses
   %i.bw = sitofp i32 %i.bv to float
-  %i.bx = fsub float %i.bp, %i.bw                 ; 5 uses
-  %2 = tail call float @llvm.fmuladd.f32(float %i.bx, float f0x3BB8A601, float f0x3D953178)
-  %3 = tail call float @llvm.fmuladd.f32(float %i.bx, float %2, float f0x3ED5E70B)
-  %i.by = tail call float @llvm.fmuladd.f32(float %i.bx, float %3, float 1.000000e+00) ; 3 uses
-  %i.bz = tail call float @llvm.fmuladd.f32(float %i.bx, float f0x3CC0861B, float f0xBE8CFD51)
-  %i.ca = tail call float @llvm.fmuladd.f32(float %i.bx, float %i.bz, float 1.000000e+00) ; 2 uses
+  %i.bx = fsub float %i.bp, %i.bw                 ; 7 uses
+  %i.by = tail call float @llvm.fmuladd.f32(float %i.bx, float f0x3BB8A601, float f0x3D953178)
+  %i.bz = tail call float @llvm.fmuladd.f32(float %i.bx, float %i.by, float f0x3ED5E70B)
+  %i.ca = tail call float @llvm.fmuladd.f32(float %i.bx, float %i.bz, float 1.000000e+00) ; 3 uses
   %i.cb = icmp slt i32 %i.bv, -30
   br i1 %i.cb, label %.lr.ph154, label %.preheader
 
@@ -220,7 +218,7 @@ bb.ad:                                            ; preds = %._crit_edge
 
 .lr.ph154:                                        ; preds = %bb.ad, %.lr.ph154
   %.1152 = phi i32 [ %i.ce, %.lr.ph154 ], [ %i.bv, %bb.ad ] ; 2 uses
-  %.0114151 = phi float [ %i.cd, %.lr.ph154 ], [ %i.by, %bb.ad ]
+  %.0114151 = phi float [ %i.cd, %.lr.ph154 ], [ %i.ca, %bb.ad ]
   %i.cd = fmul float %.0114151, f0x30000000       ; 2 uses
   %i.ce = add nsw i32 %.1152, 31                  ; 2 uses
   %i.cf = icmp samesign ult i32 %.1152, -61
@@ -228,15 +226,22 @@ bb.ad:                                            ; preds = %._crit_edge
 
 .lr.ph159:                                        ; preds = %.preheader, %.lr.ph159
   %.2158 = phi i32 [ %i.ch, %.lr.ph159 ], [ %i.bv, %.preheader ] ; 2 uses
-  %.1115157 = phi float [ %i.cg, %.lr.ph159 ], [ %i.by, %.preheader ]
+  %.1115157 = phi float [ %i.cg, %.lr.ph159 ], [ %i.ca, %.preheader ]
   %i.cg = fmul float %.1115157, f0x4F000000       ; 2 uses
   %i.ch = add nsw i32 %.2158, -31                 ; 2 uses
   %i.ci = icmp samesign ugt i32 %.2158, 61
-  br i1 %i.ci, label %.lr.ph159, label %._crit_edge160.thread.a, !llvm.loop !153
+  br i1 %i.ci, label %.lr.ph159, label %._crit_edge160.thread, !llvm.loop !153
+
+._crit_edge160.thread:                            ; preds = %.lr.ph159
+  %2 = tail call float @llvm.fmuladd.f32(float %i.bx, float f0x3CC0861B, float f0xBE8CFD51)
+  %3 = tail call float @llvm.fmuladd.f32(float %i.bx, float %2, float 1.000000e+00)
+  br label %._crit_edge160.thread.a
 
 ._crit_edge160:                                   ; preds = %.lr.ph154, %.preheader
-  %.1115.lcssa = phi float [ %i.by, %.preheader ], [ %i.cd, %.lr.ph154 ] ; 2 uses
+  %.1115.lcssa = phi float [ %i.ca, %.preheader ], [ %i.cd, %.lr.ph154 ] ; 2 uses
   %.2.lcssa = phi i32 [ %i.bv, %.preheader ], [ %i.ce, %.lr.ph154 ] ; 3 uses
+  %4 = tail call float @llvm.fmuladd.f32(float %i.bx, float f0x3CC0861B, float f0xBE8CFD51)
+  %5 = tail call float @llvm.fmuladd.f32(float %i.bx, float %4, float 1.000000e+00) ; 2 uses
   %i.cj = icmp slt i32 %.2.lcssa, 0
   br i1 %i.cj, label %bb.ae, label %._crit_edge160.thread.a
 
@@ -244,17 +249,18 @@ bb.ae:                                            ; preds = %._crit_edge160
   %i.ck = sub nsw i32 0, %.2.lcssa
   %i.cl = shl nuw nsw i32 1, %i.ck
   %i.cm = uitofp nneg i32 %i.cl to float
-  %i.cn = fmul float %i.ca, %i.cm
+  %i.cn = fmul float %5, %i.cm
   %i.co = fdiv float %.1115.lcssa, %i.cn
   br label %common.ret231
 
-._crit_edge160.thread.a:                          ; preds = %.lr.ph159, %._crit_edge160
-  %.2.lcssa186 = phi i32 [ %.2.lcssa, %._crit_edge160 ], [ %i.ch, %.lr.ph159 ]
-  %.1115.lcssa185 = phi float [ %.1115.lcssa, %._crit_edge160 ], [ %i.cg, %.lr.ph159 ]
+._crit_edge160.thread.a:                          ; preds = %._crit_edge160.thread, %._crit_edge160
+  %6 = phi float [ %3, %._crit_edge160.thread ], [ %5, %._crit_edge160 ]
+  %.2.lcssa186 = phi i32 [ %i.ch, %._crit_edge160.thread ], [ %.2.lcssa, %._crit_edge160 ]
+  %.1115.lcssa185 = phi float [ %i.cg, %._crit_edge160.thread ], [ %.1115.lcssa, %._crit_edge160 ]
   %i.cp = shl nuw nsw i32 1, %.2.lcssa186
   %i.cq = uitofp nneg i32 %i.cp to float
   %i.cr = fmul float %.1115.lcssa185, %i.cq
-  %i.cs = fdiv float %i.cr, %i.ca
+  %i.cs = fdiv float %i.cr, %6
   br label %common.ret231
 }
 

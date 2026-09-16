@@ -205,7 +205,6 @@ bb.d:                                             ; preds = %bb.b
   br label %._crit_edge.i
 
 .lr.ph.i33.preheader:                             ; preds = %count_encoded_length.exit
-  %3 = add nuw nsw i64 %.016.i, 2
   %i.n = select i1 %.not, i8 -1, i8 127
   store i8 %i.n, ptr %i.a, align 16, !tbaa !26
   %.02528.i48 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
@@ -220,12 +219,16 @@ bb.d:                                             ; preds = %bb.b
   %i.q = lshr i64 %.02429.i, 7                    ; 2 uses
   %.025.i = getelementptr inbounds nuw i8, ptr %.02530.i, i64 1 ; 2 uses
   %i.r = icmp ugt i64 %.02429.i, 16383
-  br i1 %i.r, label %.lr.ph.i33, label %._crit_edge.i, !llvm.loop !4
+  br i1 %i.r, label %.lr.ph.i33, label %._crit_edge.i.loopexit, !llvm.loop !4
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i33, %bb.d
-  %.011.i353849 = phi i64 [ 2, %bb.d ], [ %3, %.lr.ph.i33 ]
-  %.024.lcssa.i = phi i64 [ %i.d, %bb.d ], [ %i.q, %.lr.ph.i33 ]
-  %.025.lcssa.i = phi ptr [ %.02528.i, %bb.d ], [ %.025.i, %.lr.ph.i33 ]
+._crit_edge.i.loopexit:                           ; preds = %.lr.ph.i33
+  %3 = add nuw nsw i64 %.016.i, 2
+  br label %._crit_edge.i
+
+._crit_edge.i:                                    ; preds = %._crit_edge.i.loopexit, %bb.d
+  %.011.i353849 = phi i64 [ 2, %bb.d ], [ %3, %._crit_edge.i.loopexit ]
+  %.024.lcssa.i = phi i64 [ %i.d, %bb.d ], [ %i.q, %._crit_edge.i.loopexit ]
+  %.025.lcssa.i = phi ptr [ %.02528.i, %bb.d ], [ %.025.i, %._crit_edge.i.loopexit ]
   %i.s = trunc nuw nsw i64 %.024.lcssa.i to i8
   store i8 %i.s, ptr %.025.lcssa.i, align 1, !tbaa !26
   br label %encode_length.exit

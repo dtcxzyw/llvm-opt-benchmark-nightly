@@ -205,9 +205,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
   %i.x = and i64 %i.v, 31                         ; 2 uses
   %i.y = icmp eq i64 %i.x, 0
   %i.z = select i1 %i.y, i64 32, i64 %i.x
-  %n.vec = sub i64 %i.v, %i.z                     ; 4 uses
-  %2 = getelementptr i8, ptr %i.l, i64 %n.vec
-  %i.aa = sub i64 %1, %n.vec
+  %i.aa = sub i64 %i.v, %i.z                      ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j) ]
   br label %vector.body
 
@@ -224,13 +222,18 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <16 x i8> %i.ac, ptr %i.ae, align 1
   store <16 x i8> %i.ad, ptr %i.af, align 1
   %index.next = add nuw i64 %index, 32            ; 2 uses
-  %i.ag = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ag, label %.lr.ph.preheader31, label %vector.body, !llvm.loop !5431
+  %i.ag = icmp eq i64 %index.next, %i.aa
+  br i1 %i.ag, label %.lr.ph.preheader31.loopexit, label %vector.body, !llvm.loop !5431
 
-.lr.ph.preheader31:                               ; preds = %vector.body, %.lr.ph.preheader
-  %.sroa.012.022.ph = phi ptr [ %i.l, %.lr.ph.preheader ], [ %2, %vector.body ]
-  %.sroa.7.021.ph = phi i64 [ %1, %.lr.ph.preheader ], [ %i.aa, %vector.body ]
-  %.sroa.10.020.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %vector.body ]
+.lr.ph.preheader31.loopexit:                      ; preds = %vector.body
+  %2 = getelementptr i8, ptr %i.l, i64 %i.aa
+  %3 = sub i64 %1, %i.aa
+  br label %.lr.ph.preheader31
+
+.lr.ph.preheader31:                               ; preds = %.lr.ph.preheader31.loopexit, %.lr.ph.preheader
+  %.sroa.012.022.ph = phi ptr [ %i.l, %.lr.ph.preheader ], [ %2, %.lr.ph.preheader31.loopexit ]
+  %.sroa.7.021.ph = phi i64 [ %1, %.lr.ph.preheader ], [ %3, %.lr.ph.preheader31.loopexit ]
+  %.sroa.10.020.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %i.aa, %.lr.ph.preheader31.loopexit ]
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader31, %bb.h

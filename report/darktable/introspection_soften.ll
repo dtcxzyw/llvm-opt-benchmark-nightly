@@ -125,8 +125,12 @@ bb.b:                                             ; preds = %bb.a
   %min.iters.check = icmp ult i64 %i.v, 32
   br i1 %min.iters.check, label %.lr.ph.preheader96, label %vector.memcheck
 
-.lr.ph.preheader96:                               ; preds = %vector.body, %vector.memcheck, %.lr.ph.preheader
-  %.054.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %6, %vector.body ]
+.lr.ph.preheader96.loopexit:                      ; preds = %vector.body
+  %6 = shl i64 %n.vec, 2
+  br label %.lr.ph.preheader96
+
+.lr.ph.preheader96:                               ; preds = %.lr.ph.preheader96.loopexit, %vector.memcheck, %.lr.ph.preheader
+  %.054.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %6, %.lr.ph.preheader96.loopexit ]
   br label %.lr.ph
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
@@ -144,7 +148,6 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.ab = icmp eq i64 %i.aa, 0
   %i.ac = select i1 %i.ab, i64 8, i64 %i.aa
   %n.vec = sub nsw i64 %i.x, %i.ac                ; 2 uses
-  %6 = shl i64 %n.vec, 2
   %broadcast.splatinsert = insertelement <8 x float> poison, float %i.m, i64 0
   %broadcast.splat = shufflevector <8 x float> %broadcast.splatinsert, <8 x float> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert70 = insertelement <8 x float> poison, float %invariant.op, i64 0
@@ -298,7 +301,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %vec.ind.next = add nuw <8 x i64> %vec.ind, splat (i64 32)
   %i.ei = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ei, label %.lr.ph.preheader96, label %vector.body, !llvm.loop !45
+  br i1 %i.ei, label %.lr.ph.preheader96.loopexit, label %vector.body, !llvm.loop !45
 
 ._crit_edge:                                      ; preds = %hsl2rgb.exit, %bb.b
   %i.ej = getelementptr inbounds nuw i8, ptr %1, i64 108

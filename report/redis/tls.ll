@@ -204,11 +204,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %i.d = load i64, ptr %i.c, align 8, !tbaa !82
-  %2 = trunc i64 %i.d to i32                      ; 2 uses
   call void @listRewind(ptr noundef nonnull %i.b, ptr noundef nonnull %1) #16
   %i.e = call ptr @listNext(ptr noundef nonnull %1) #16 ; 2 uses
   %.not910 = icmp eq ptr %i.e, null
-  br i1 %.not910, label %.loopexit.a, label %.lr.ph
+  br i1 %.not910, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b, %.lr.ph
   %i.f = phi ptr [ %i.i, %.lr.ph ], [ %i.e, %bb.b ]
@@ -217,10 +216,14 @@ bb.b:                                             ; preds = %bb.a
   call fastcc void @tlsHandleEvent(ptr noundef %i.h, i32 noundef 1)
   %i.i = call ptr @listNext(ptr noundef nonnull %1) #16 ; 2 uses
   %.not9 = icmp eq ptr %i.i, null
-  br i1 %.not9, label %.loopexit.a, label %.lr.ph, !llvm.loop !114
+  br i1 %.not9, label %.loopexit, label %.lr.ph, !llvm.loop !114
 
-.loopexit.a:                                      ; preds = %.lr.ph, %bb.b, %bb.a
-  %.0 = phi i32 [ 0, %bb.a ], [ %2, %bb.b ], [ %2, %.lr.ph ]
+.loopexit:                                        ; preds = %.lr.ph, %bb.b
+  %2 = trunc i64 %i.d to i32
+  br label %.loopexit.a
+
+.loopexit.a:                                      ; preds = %.loopexit, %bb.a
+  %.0 = phi i32 [ 0, %bb.a ], [ %2, %.loopexit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #16
   ret i32 %.0
 }

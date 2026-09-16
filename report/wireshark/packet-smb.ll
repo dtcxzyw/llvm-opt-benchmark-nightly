@@ -202,7 +202,6 @@ bb.l:                                             ; preds = %bb.j
   %i.aa = getelementptr i8, ptr %i.y, i64 8
   store i64 %.050, ptr %i.aa, align 8
   store i64 %.050, ptr %i.y, align 8
-  %1 = add i64 %.050, 15768000
   %i.ab = icmp sgt i64 %.050, -9223372036839011409
   br i1 %i.ab, label %.lr.ph64.preheader, label %.preheader
 
@@ -220,7 +219,11 @@ bb.l:                                             ; preds = %bb.j
   %i.ae = phi i64 [ %.pre72, %.preheader.loopexit ], [ %.050, %bb.l ] ; 2 uses
   %i.af = add i64 %.050, 15764400
   %i.ag = icmp sgt i64 %i.af, %i.ae
-  br i1 %i.ag, label %.lr.ph66, label %.loopexit
+  br i1 %i.ag, label %.lr.ph66.preheader, label %.loopexit
+
+.lr.ph66.preheader:                               ; preds = %.preheader
+  %1 = add i64 %.050, 15768000
+  br label %.lr.ph66
 
 .lr.ph64:                                         ; preds = %.lr.ph64.preheader, %bb.q
   %i.ah = phi i64 [ %i.aq, %bb.q ], [ %.050, %.lr.ph64.preheader ] ; 2 uses
@@ -261,9 +264,9 @@ bb.q:                                             ; preds = %._crit_edge69, %bb.
   %i.as = icmp slt i64 %i.ar, %i.aq
   br i1 %i.as, label %.lr.ph64, label %.preheader.loopexit, !llvm.loop !30
 
-.lr.ph66:                                         ; preds = %.preheader, %bb.v
-  %i.at = phi i64 [ %i.bc, %bb.v ], [ %i.ae, %.preheader ] ; 2 uses
-  %.065 = phi i64 [ %.1, %bb.v ], [ %1, %.preheader ] ; 3 uses
+.lr.ph66:                                         ; preds = %.lr.ph66.preheader, %bb.v
+  %i.at = phi i64 [ %i.bc, %bb.v ], [ %i.ae, %.lr.ph66.preheader ] ; 2 uses
+  %.065 = phi i64 [ %.1, %bb.v ], [ %1, %.lr.ph66.preheader ] ; 3 uses
   %i.au = sub i64 %.065, %i.at                    ; 2 uses
   %i.av = icmp sgt i64 %i.au, 1209600
   br i1 %i.av, label %bb.r, label %bb.s

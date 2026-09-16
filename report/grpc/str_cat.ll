@@ -204,8 +204,6 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: mustprogress uwtable
 define void @_ZN4absl12lts_2025051216strings_internal12AppendPiecesEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt16initializer_listISt17basic_string_viewIcS5_EE(ptr noundef %0, ptr nofree readonly captures(address) %1, i64 %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %4 = load i64, ptr %3, align 8, !tbaa !14       ; 3 uses
   %.idx = shl i64 %2, 4                           ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 %.idx
   %.not36 = icmp eq i64 %2, 0
@@ -224,6 +222,8 @@ bb.a:
   br label %.lr.ph
 
 ._crit_edge.thread:                               ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %4 = load i64, ptr %3, align 8, !tbaa !14
   %i.f = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %4, i64 noundef 0, i64 noundef 0, i8 noundef signext 0) ; 0 uses
   br label %._crit_edge44
 
@@ -251,9 +251,11 @@ bb.a:
 
 .lr.ph43.preheader:                               ; preds = %.lr.ph.epil, %.lr.ph43.preheader.unr-lcssa
   %.lcssa = phi i64 [ %i.ad, %.lr.ph43.preheader.unr-lcssa ], [ %i.g, %.lr.ph.epil ]
-  %i.i = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %4, i64 noundef 0, i64 noundef %.lcssa, i8 noundef signext 0) ; 0 uses
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %6 = load i64, ptr %5, align 8, !tbaa !14       ; 2 uses
+  %i.i = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %6, i64 noundef 0, i64 noundef %.lcssa, i8 noundef signext 0) ; 0 uses
   %i.j = load ptr, ptr %0, align 8, !tbaa !18
-  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %4 ; 4 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %6 ; 4 uses
   %i.l = and i64 %i.b, 16
   %lcmp.mod49.not.not = icmp eq i64 %i.l, 0
   br i1 %lcmp.mod49.not.not, label %.lr.ph43.prol, label %.lr.ph43.prol.loopexit

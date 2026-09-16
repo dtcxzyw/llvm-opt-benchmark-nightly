@@ -204,8 +204,6 @@ vector.ph:                                        ; preds = %.lr.ph.split.split.
   %i.cq = icmp eq i64 %i.cp, 0
   %i.cr = select i1 %i.cq, i64 8, i64 %i.cp
   %n.vec = sub nsw i64 %i.co, %i.cr               ; 2 uses
-  %6 = mul i64 %n.vec, 28
-  %7 = getelementptr i8, ptr %i.l, i64 %6
   %broadcast.splatinsert = insertelement <8 x i32> poison, i32 %i.cj, i64 0
   %broadcast.splat = shufflevector <8 x i32> %broadcast.splatinsert, <8 x i32> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert95 = insertelement <8 x i1> poison, i1 %i.ck, i64 0
@@ -256,10 +254,15 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %ptr.ind = getelementptr i8, ptr %pointer.phi, i64 224
   %i.dt = icmp eq i64 %index.next, %n.vec
-  br i1 %i.dt, label %._crit_edge.i.i.i.us50.preheader, label %vector.body, !llvm.loop !418
+  br i1 %i.dt, label %._crit_edge.i.i.i.us50.preheader.loopexit, label %vector.body, !llvm.loop !418
 
-._crit_edge.i.i.i.us50.preheader:                 ; preds = %vector.body, %.lr.ph.split.split.us49
-  %.sroa.012.029.us51.ph = phi ptr [ %i.l, %.lr.ph.split.split.us49 ], [ %7, %vector.body ]
+._crit_edge.i.i.i.us50.preheader.loopexit:        ; preds = %vector.body
+  %6 = mul i64 %n.vec, 28
+  %7 = getelementptr i8, ptr %i.l, i64 %6
+  br label %._crit_edge.i.i.i.us50.preheader
+
+._crit_edge.i.i.i.us50.preheader:                 ; preds = %._crit_edge.i.i.i.us50.preheader.loopexit, %.lr.ph.split.split.us49
+  %.sroa.012.029.us51.ph = phi ptr [ %i.l, %.lr.ph.split.split.us49 ], [ %7, %._crit_edge.i.i.i.us50.preheader.loopexit ]
   br label %._crit_edge.i.i.i.us50
 
 ._crit_edge.i.i.i.us50:                           ; preds = %._crit_edge.i.i.i.us50.preheader, %._crit_edge.i.i.i.us50

@@ -204,10 +204,8 @@ _ZNSt3setIiSt4lessIiESaIiEE6insertERKi.exit270:   ; preds = %bb.as, %_ZNSt8_Rb_t
 
 .lr.ph349:                                        ; preds = %._crit_edge347
   %i.la = shl nuw nsw i64 %i.im, 2                ; 2 uses
-  %i.lb = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.la) #30 ; 8 uses
+  %i.lb = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.la) #30 ; 6 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.lb, i8 0, i64 %i.la, i1 false), !tbaa !52
-  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.lb, i64 %i.im
-  %3 = ptrtoint ptr %2 to i64                     ; 3 uses
   %i.lc = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.ld = load ptr, ptr %i.lc, align 8, !tbaa !53 ; 3 uses
   %xtraiter = and i64 %i.im, 1
@@ -220,7 +218,7 @@ _ZNSt3setIiSt4lessIiESaIiEE6insertERKi.exit270:   ; preds = %bb.as, %_ZNSt8_Rb_t
 
 ._crit_edge350.loopexit.unr-lcssa:                ; preds = %bb.az
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge350, label %.epil.preheader
+  br i1 %lcmp.mod.not, label %._crit_edge350.loopexit, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge350.loopexit.unr-lcssa, %.lr.ph349
   %.0179348.epil.init = phi i64 [ 0, %.lr.ph349 ], [ %i.mg, %._crit_edge350.loopexit.unr-lcssa ]
@@ -230,7 +228,7 @@ _ZNSt3setIiSt4lessIiESaIiEE6insertERKi.exit270:   ; preds = %bb.as, %_ZNSt8_Rb_t
   %i.lg = getelementptr inbounds nuw i8, ptr %i.lf, i64 4
   %i.lh = load i32, ptr %i.lg, align 4, !tbaa !99 ; 2 uses
   %i.li = icmp sgt i32 %i.lh, -1
-  br i1 %i.li, label %bb.au, label %._crit_edge350
+  br i1 %i.li, label %bb.au, label %._crit_edge350.loopexit
 
 bb.au:                                            ; preds = %.epil.preheader
   %i.lj = zext nneg i32 %i.lh to i64
@@ -238,11 +236,16 @@ bb.au:                                            ; preds = %.epil.preheader
   %i.ll = load i32, ptr %i.lk, align 4, !tbaa !52
   %i.lm = add nsw i32 %i.ll, 1
   store i32 %i.lm, ptr %i.lk, align 4, !tbaa !52
+  br label %._crit_edge350.loopexit
+
+._crit_edge350.loopexit:                          ; preds = %.epil.preheader, %bb.au, %._crit_edge350.loopexit.unr-lcssa
+  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.lb, i64 %i.im
+  %3 = ptrtoint ptr %2 to i64
   br label %._crit_edge350
 
-._crit_edge350:                                   ; preds = %._crit_edge350.loopexit.unr-lcssa, %bb.au, %.epil.preheader, %._crit_edge347
-  %.sroa.11.0458 = phi i64 [ 0, %._crit_edge347 ], [ %3, %.epil.preheader ], [ %3, %bb.au ], [ %3, %._crit_edge350.loopexit.unr-lcssa ] ; 2 uses
-  %.sroa.0279.0457 = phi ptr [ null, %._crit_edge347 ], [ %i.lb, %.epil.preheader ], [ %i.lb, %bb.au ], [ %i.lb, %._crit_edge350.loopexit.unr-lcssa ] ; 7 uses
+._crit_edge350:                                   ; preds = %._crit_edge350.loopexit, %._crit_edge347
+  %.sroa.11.0458 = phi i64 [ 0, %._crit_edge347 ], [ %3, %._crit_edge350.loopexit ] ; 2 uses
+  %.sroa.0279.0457 = phi ptr [ null, %._crit_edge347 ], [ %i.lb, %._crit_edge350.loopexit ] ; 7 uses
   %i.ln = getelementptr inbounds nuw i8, ptr %0, i64 52 ; 2 uses
   store i32 -1, ptr %i.ln, align 4, !tbaa !46
   %.not231351 = icmp sgt i32 %.0182.lcssa450453, %.0189.lcssa449454
@@ -645,8 +648,6 @@ bb.ap:                                            ; preds = %_ZNSt6vectorISt4pai
 
 vector.ph:                                        ; preds = %.lr.ph202.preheader
   %n.vec = and i64 %i.gi, 4611686018427387896     ; 3 uses
-  %6 = shl i64 %n.vec, 3
-  %7 = getelementptr i8, ptr %i.gd, i64 %6
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -672,6 +673,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.gp, label %middle.block, label %vector.body, !llvm.loop !230
 
 middle.block:                                     ; preds = %vector.body
+  %6 = shl i64 %n.vec, 3
+  %7 = getelementptr i8, ptr %i.gd, i64 %6
   %bin.rdx = add <4 x i32> %i.go, %i.gn
   %i.gq = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
   %cmp.n = icmp eq i64 %i.gi, %n.vec
@@ -721,8 +724,6 @@ bb.ar:                                            ; preds = %._crit_edge203
 
 vector.ph401:                                     ; preds = %.lr.ph209.preheader
   %n.vec402 = and i64 %i.hf, 4611686018427387896  ; 3 uses
-  %8 = shl i64 %n.vec402, 3
-  %9 = getelementptr i8, ptr %i.fs, i64 %8
   br label %vector.body403
 
 vector.body403:                                   ; preds = %vector.body403, %vector.ph401
@@ -748,6 +749,8 @@ vector.body403:                                   ; preds = %vector.body403, %ve
   br i1 %i.hm, label %middle.block416, label %vector.body403, !llvm.loop !232
 
 middle.block416:                                  ; preds = %vector.body403
+  %8 = shl i64 %n.vec402, 3
+  %9 = getelementptr i8, ptr %i.fs, i64 %8
   %bin.rdx417 = add <4 x i32> %i.hl, %i.hk
   %i.hn = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx417) ; 2 uses
   %cmp.n418 = icmp eq i64 %i.hf, %n.vec402
@@ -1150,8 +1153,6 @@ _ZNSt6vectorIjSaIjEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.b
 
 vector.ph51:                                      ; preds = %_ZNSt6vectorIjSaIjEE17_S_check_init_lenEmRKS0_.exit.i
   %n.vec52 = and i64 %i.p, 9223372036854775800    ; 3 uses
-  %3 = shl i64 %n.vec52, 2
-  %4 = getelementptr i8, ptr %i.k, i64 %3
   %broadcast.splatinsert53 = insertelement <4 x i32> poison, i32 %i.m, i64 0
   %broadcast.splat54 = shufflevector <4 x i32> %broadcast.splatinsert53, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body55
@@ -1168,6 +1169,8 @@ vector.body55:                                    ; preds = %vector.body55, %vec
   br i1 %i.s, label %middle.block59, label %vector.body55, !llvm.loop !305
 
 middle.block59:                                   ; preds = %vector.body55
+  %3 = shl i64 %n.vec52, 2
+  %4 = getelementptr i8, ptr %i.k, i64 %3
   %cmp.n60 = icmp eq i64 %i.p, %n.vec52
   br i1 %cmp.n60, label %_ZNSt6vectorIjSaIjEEC2EmRKjRKS0_.exit, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader
 
@@ -1219,8 +1222,6 @@ bb.f:                                             ; preds = %bb.e
 
 vector.ph25:                                      ; preds = %.lr.ph.i.i.i.i.preheader
   %n.vec26 = and i64 %i.ag, 9223372036854775800   ; 3 uses
-  %5 = shl i64 %n.vec26, 2
-  %6 = getelementptr i8, ptr %i.c, i64 %5
   %broadcast.splatinsert27 = insertelement <4 x i32> poison, i32 %i.ac, i64 0
   %broadcast.splat28 = shufflevector <4 x i32> %broadcast.splatinsert27, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body29
@@ -1237,6 +1238,8 @@ vector.body29:                                    ; preds = %vector.body29, %vec
   br i1 %i.aj, label %middle.block33, label %vector.body29, !llvm.loop !307
 
 middle.block33:                                   ; preds = %vector.body29
+  %5 = shl i64 %n.vec26, 2
+  %6 = getelementptr i8, ptr %i.c, i64 %5
   %cmp.n34 = icmp eq i64 %i.ag, %n.vec26
   br i1 %cmp.n34, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEjEvT_S7_RKT0_.exit.loopexit, label %.lr.ph.i.i.i.i.preheader62
 
@@ -1270,8 +1273,6 @@ _ZSt4fillIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEjEvT_S7_RKT0_.exit
 
 vector.ph38:                                      ; preds = %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEjEvT_S7_RKT0_.exit
   %n.vec39 = and i64 %i.as, 9223372036854775800   ; 3 uses
-  %7 = shl i64 %n.vec39, 2
-  %8 = getelementptr i8, ptr %i.x, i64 %7
   %broadcast.splatinsert40 = insertelement <4 x i32> poison, i32 %i.al, i64 0
   %broadcast.splat41 = shufflevector <4 x i32> %broadcast.splatinsert40, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body42
@@ -1288,6 +1289,8 @@ vector.body42:                                    ; preds = %vector.body42, %vec
   br i1 %i.av, label %middle.block46, label %vector.body42, !llvm.loop !309
 
 middle.block46:                                   ; preds = %vector.body42
+  %7 = shl i64 %n.vec39, 2
+  %8 = getelementptr i8, ptr %i.x, i64 %7
   %cmp.n47 = icmp eq i64 %i.as, %n.vec39
   br i1 %cmp.n47, label %_ZSt24__uninitialized_fill_n_aIPjmjjET_S1_T0_RKT1_RSaIT2_E.exit, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
@@ -1322,8 +1325,6 @@ bb.h:                                             ; preds = %bb.g
 
 vector.ph:                                        ; preds = %bb.h
   %n.vec = and i64 %i.bc, 9223372036854775800     ; 3 uses
-  %9 = shl i64 %n.vec, 2
-  %10 = getelementptr i8, ptr %i.c, i64 %9
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.az, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body
@@ -1340,6 +1341,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bf, label %middle.block, label %vector.body, !llvm.loop !311
 
 middle.block:                                     ; preds = %vector.body
+  %9 = shl i64 %n.vec, 2
+  %10 = getelementptr i8, ptr %i.c, i64 %9
   %cmp.n = icmp eq i64 %i.bc, %n.vec
   br i1 %cmp.n, label %_ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit, label %.lr.ph.i.i.i.i12.preheader
 
@@ -1648,8 +1651,8 @@ bb.c:                                             ; preds = %bb.b
 
 _ZSt6fill_nIPP11ggml_tensormS1_ET_S3_T0_RKT1_.exit.loopexit.i.i.i: ; preds = %bb.c
   %.idx.i.i.i.i.i = shl nuw nsw i64 %i.q, 3       ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.p, i8 0, i64 %.idx.i.i.i.i.i, i1 false), !tbaa !81
   %2 = getelementptr inbounds nuw i8, ptr %i.p, i64 %.idx.i.i.i.i.i
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.p, i8 0, i64 %.idx.i.i.i.i.i, i1 false), !tbaa !81
   br label %_ZSt27__uninitialized_default_n_aIPP11ggml_tensormS1_ET_S3_T0_RSaIT1_E.exit
 
 _ZSt27__uninitialized_default_n_aIPP11ggml_tensormS1_ET_S3_T0_RSaIT1_E.exit: ; preds = %bb.c, %_ZSt6fill_nIPP11ggml_tensormS1_ET_S3_T0_RKT1_.exit.loopexit.i.i.i

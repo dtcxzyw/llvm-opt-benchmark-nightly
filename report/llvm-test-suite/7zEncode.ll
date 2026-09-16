@@ -204,7 +204,6 @@ _ZNK11NCoderMixer9CBindInfo22FindBinderForOutStreamEj.exit126: ; preds = %bb.ae
   br i1 %i.na, label %bb.aj, label %.loopexit
 
 bb.aj:                                            ; preds = %.loopexit140
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 3 uses
   %i.nb = load i32, ptr %i.ml, align 4, !tbaa !39 ; 3 uses
   %i.nc = icmp sgt i32 %i.nb, 0
   br i1 %i.nc, label %.lr.ph184, label %._crit_edge185
@@ -240,11 +239,13 @@ bb.ak:                                            ; preds = %.lr.ph184, %bb.ak
   br i1 %exitcond221.not, label %.lr.ph188, label %bb.ak, !llvm.loop !190
 
 ._crit_edge185:                                   ; preds = %bb.aj
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 232
   tail call void @_ZN17CBaseRecordVector5ClearEv(ptr noundef nonnull align 8 dereferenceable(32) %3)
   br label %.loopexit
 
 .lr.ph188:                                        ; preds = %bb.ak
-  tail call void @_ZN17CBaseRecordVector5ClearEv(ptr noundef nonnull align 8 dereferenceable(32) %3)
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 2 uses
+  tail call void @_ZN17CBaseRecordVector5ClearEv(ptr noundef nonnull align 8 dereferenceable(32) %4)
   %i.nq = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 5 uses
   %i.nr = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.ns = getelementptr inbounds nuw i8, ptr %2, i64 32
@@ -312,7 +313,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.op = load i32, ptr %i.ju, align 4, !tbaa !39
   %i.oq = add nsw i32 %i.op, 1
   store i32 %i.oq, ptr %i.ju, align 4, !tbaa !39
-  invoke void @_ZN17CBaseRecordVector18ReserveOnePositionEv(ptr noundef nonnull align 8 dereferenceable(32) %3)
+  invoke void @_ZN17CBaseRecordVector18ReserveOnePositionEv(ptr noundef nonnull align 8 dereferenceable(32) %4)
           to label %bb.ap unwind label %bb.ar
 
 bb.ap:                                            ; preds = %bb.ao
@@ -715,7 +716,6 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check21, label %vec.epilog.ph, label %vector.ph22
 
 vector.ph22:                                      ; preds = %vector.main.loop.iter.check
-  %2 = and i64 %wide.trip.count.i.i.i.i, 28
   %n.vec23 = and i64 %wide.trip.count.i.i.i.i, 2147483616 ; 4 uses
   br label %vector.body24
 
@@ -734,6 +734,7 @@ vector.body24:                                    ; preds = %vector.body24, %vec
   br i1 %i.bw, label %middle.block29, label %vector.body24, !llvm.loop !238
 
 middle.block29:                                   ; preds = %vector.body24
+  %2 = and i64 %wide.trip.count.i.i.i.i, 28
   %cmp.n30 = icmp eq i64 %n.vec23, %wide.trip.count.i.i.i.i
   br i1 %cmp.n30, label %._crit_edge.thread.i.i.i.i, label %vec.epilog.iter.check
 

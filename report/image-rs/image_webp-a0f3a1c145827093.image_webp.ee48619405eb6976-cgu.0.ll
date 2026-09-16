@@ -205,8 +205,7 @@ common.resume:                                    ; preds = %common.resume.sink.
 .lr.ph.preheader:                                 ; preds = %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x
   %i.ar = phi i1 [ true, %bb.x ], [ true, %bb.w ], [ true, %bb.v ], [ false, %bb.u ], [ false, %bb.t ], [ false, %bb.s ], [ false, %bb.r ], [ false, %bb.q ], [ false, %bb.p ], [ false, %bb.o ], [ false, %bb.n ], [ false, %bb.m ], [ false, %bb.l ], [ false, %bb.k ], [ false, %bb.j ]
   %.lcssa307.ph = phi i64 [ 1, %bb.x ], [ 2, %bb.w ], [ 3, %bb.v ], [ 4, %bb.u ], [ 5, %bb.t ], [ 6, %bb.s ], [ 7, %bb.r ], [ 8, %bb.q ], [ 9, %bb.p ], [ 10, %bb.o ], [ 11, %bb.n ], [ 12, %bb.m ], [ 13, %bb.l ], [ 14, %bb.k ], [ 15, %bb.j ] ; 3 uses
-  %.sroa.03.0.i.lcssa306.ph = phi i64 [ 2, %bb.x ], [ 3, %bb.w ], [ 4, %bb.v ], [ 5, %bb.u ], [ 6, %bb.t ], [ 7, %bb.s ], [ 8, %bb.r ], [ 9, %bb.q ], [ 10, %bb.p ], [ 11, %bb.o ], [ 12, %bb.n ], [ 13, %bb.m ], [ 14, %bb.l ], [ 15, %bb.k ], [ 16, %bb.j ] ; 2 uses
-  %2 = trunc nuw nsw i64 %.lcssa307.ph to i16     ; 2 uses
+  %.sroa.03.0.i.lcssa306.ph = phi i64 [ 2, %bb.x ], [ 3, %bb.w ], [ 4, %bb.v ], [ 5, %bb.u ], [ 6, %bb.t ], [ 7, %bb.s ], [ 8, %bb.r ], [ 9, %bb.q ], [ 10, %bb.p ], [ 11, %bb.o ], [ 12, %bb.n ], [ 13, %bb.m ], [ 14, %bb.l ], [ 15, %bb.k ], [ 16, %bb.j ]
   %xtraiter = and i64 %.lcssa307.ph, 3            ; 3 uses
   br i1 %i.ar, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -224,7 +223,7 @@ common.resume:                                    ; preds = %common.resume.sink.
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
+  br i1 %lcmp.mod.not, label %._crit_edge.loopexit, label %.lr.ph.epil.preheader
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
   %.sroa.09.0236.epil.init = phi i16 [ 0, %.lr.ph.preheader ], [ %i.bx, %._crit_edge.loopexit.unr-lcssa ]
@@ -246,12 +245,17 @@ common.resume:                                    ; preds = %common.resume.sink.
   %i.ay = shl i16 %i.ax, 1                        ; 2 uses
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !61
+  br i1 %epil.iter.cmp.not, label %._crit_edge.loopexit, label %.lr.ph.epil, !llvm.loop !61
 
-._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.epil, %bb.y
-  %3 = phi i16 [ 0, %bb.y ], [ %2, %.lr.ph.epil ], [ %2, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
-  %.sroa.03.0.i.lcssa306345 = phi i64 [ 1, %bb.y ], [ %.sroa.03.0.i.lcssa306.ph, %.lr.ph.epil ], [ %.sroa.03.0.i.lcssa306.ph, %._crit_edge.loopexit.unr-lcssa ] ; 4 uses
-  %.sroa.09.0.lcssa = phi i16 [ 0, %bb.y ], [ %i.bx, %._crit_edge.loopexit.unr-lcssa ], [ %i.ay, %.lr.ph.epil ]
+._crit_edge.loopexit:                             ; preds = %.lr.ph.epil, %._crit_edge.loopexit.unr-lcssa
+  %.lcssa466 = phi i16 [ %i.bx, %._crit_edge.loopexit.unr-lcssa ], [ %i.ay, %.lr.ph.epil ]
+  %2 = trunc nuw nsw i64 %.lcssa307.ph to i16
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %bb.y, %._crit_edge.loopexit
+  %3 = phi i16 [ %2, %._crit_edge.loopexit ], [ 0, %bb.y ] ; 2 uses
+  %.sroa.03.0.i.lcssa306345 = phi i64 [ %.sroa.03.0.i.lcssa306.ph, %._crit_edge.loopexit ], [ 1, %bb.y ] ; 4 uses
+  %.sroa.09.0.lcssa = phi i16 [ %.lcssa466, %._crit_edge.loopexit ], [ 0, %bb.y ]
   %i.az = shl i16 2, %3
   %.not87 = icmp eq i16 %.sroa.09.0.lcssa, %i.az
   br i1 %.not87, label %bb.af, label %bb.ae
@@ -337,7 +341,6 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check434, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %4 = and i64 %i.ci, 12
   %n.vec = and i64 %i.ci, -16                     ; 4 uses
   br label %vector.body
 
@@ -356,6 +359,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.cn, label %middle.block, label %vector.body, !llvm.loop !62
 
 middle.block:                                     ; preds = %vector.body
+  %4 = and i64 %i.ci, 12
   %bin.rdx = add <8 x i16> %i.cm, %i.cl
   %i.co = tail call i16 @llvm.vector.reduce.add.v8i16(<8 x i16> %bin.rdx) ; 3 uses
   %cmp.n = icmp eq i64 %i.ci, %n.vec

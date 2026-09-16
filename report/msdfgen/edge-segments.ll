@@ -204,7 +204,7 @@ bb.a:
   %i.a = alloca [2 x double], align 16            ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %.sroa.050.0.copyload = load double, ptr %i.b, align 8, !tbaa !14 ; 4 uses
-  %.sroa.251.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %.sroa.251.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %.sroa.251.0.copyload = load double, ptr %.sroa.251.0..sroa_idx, align 8, !tbaa !14 ; 4 uses
   %i.c = load double, ptr %1, align 8, !tbaa !14
   %i.d = fcmp olt double %.sroa.050.0.copyload, %i.c
@@ -244,7 +244,7 @@ bb.h:                                             ; preds = %bb.g
 _ZN7msdfgenL11pointBoundsENS_7Vector2ERdS1_S1_S1_.exit: ; preds = %bb.g, %bb.h
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %.sroa.048.0.copyload = load double, ptr %i.k, align 8, !tbaa !14 ; 4 uses
-  %.sroa.249.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72
+  %.sroa.249.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %.sroa.249.0.copyload = load double, ptr %.sroa.249.0..sroa_idx, align 8, !tbaa !14 ; 4 uses
   %i.l = load double, ptr %1, align 8, !tbaa !14
   %i.m = fcmp olt double %.sroa.048.0.copyload, %i.l
@@ -283,25 +283,30 @@ bb.o:                                             ; preds = %bb.n
 
 _ZN7msdfgenL11pointBoundsENS_7Vector2ERdS1_S1_S1_.exit72: ; preds = %bb.n, %bb.o
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %5 = load <2 x double>, ptr %i.u, align 8, !tbaa !14 ; 2 uses
-  %6 = load <2 x double>, ptr %i.k, align 8, !tbaa !14
-  %7 = fmul <2 x double> %5, splat (double 3.000000e+00)
-  %8 = fsub <2 x double> %6, %7
-  %9 = load <2 x double>, ptr %i.t, align 8, !tbaa !14 ; 3 uses
-  %10 = load <2 x double>, ptr %i.b, align 8, !tbaa !14 ; 2 uses
-  %11 = fsub <2 x double> %9, %10                 ; 3 uses
-  %12 = fsub <2 x double> %5, %9
-  %13 = fsub <2 x double> %12, %11
-  %14 = fmul <2 x double> %13, splat (double 2.000000e+00) ; 2 uses
-  %15 = fmul <2 x double> %9, splat (double 3.000000e+00)
-  %16 = fadd <2 x double> %15, %8
-  %17 = fsub <2 x double> %16, %10                ; 2 uses
+  %.sroa.045.0.copyload = load double, ptr %i.t, align 8, !tbaa !14 ; 3 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %.sroa.246.0.copyload = load double, ptr %i.u, align 8, !tbaa !14 ; 3 uses
+  %.sroa.043.0.copyload = load double, ptr %i.b, align 8, !tbaa !14 ; 2 uses
+  %.sroa.244.0.copyload = load double, ptr %.sroa.251.0..sroa_idx, align 8, !tbaa !14 ; 2 uses
+  %5 = fsub double %.sroa.045.0.copyload, %.sroa.043.0.copyload ; 2 uses
+  %6 = fsub double %.sroa.246.0.copyload, %.sroa.244.0.copyload ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %.sroa.035.0.copyload = load double, ptr %7, align 8, !tbaa !14 ; 2 uses
+  %.sroa.236.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %.sroa.236.0.copyload = load double, ptr %.sroa.236.0..sroa_idx, align 8, !tbaa !14 ; 2 uses
+  %8 = fsub double %.sroa.035.0.copyload, %.sroa.045.0.copyload
+  %9 = fsub double %.sroa.236.0.copyload, %.sroa.246.0.copyload
+  %10 = fsub double %8, %5
+  %11 = fmul double %10, 2.000000e+00
+  %.sroa.024.0.copyload = load double, ptr %i.k, align 8, !tbaa !14
+  %.sroa.225.0.copyload = load double, ptr %.sroa.249.0..sroa_idx, align 8, !tbaa !14
+  %12 = fmul double %.sroa.035.0.copyload, 3.000000e+00
+  %13 = fsub double %.sroa.024.0.copyload, %12
+  %14 = fmul double %.sroa.045.0.copyload, 3.000000e+00
+  %15 = fadd double %14, %13
+  %16 = fsub double %15, %.sroa.043.0.copyload
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
-  %18 = extractelement <2 x double> %17, i64 0
-  %19 = extractelement <2 x double> %14, i64 0
-  %20 = extractelement <2 x double> %11, i64 0
-  %i.v = call noundef i32 @_ZN7msdfgen14solveQuadraticEPdddd(ptr noundef nonnull %i.a, double noundef %18, double noundef %19, double noundef %20) ; 2 uses
+  %i.v = call noundef i32 @_ZN7msdfgen14solveQuadraticEPdddd(ptr noundef nonnull %i.a, double noundef %16, double noundef %11, double noundef %5) ; 2 uses
   %i.w = icmp sgt i32 %i.v, 0
   br i1 %i.w, label %.lr.ph.preheader, label %._crit_edge
 
@@ -310,10 +315,14 @@ _ZN7msdfgenL11pointBoundsENS_7Vector2ERdS1_S1_S1_.exit72: ; preds = %bb.n, %bb.o
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZN7msdfgenL11pointBoundsENS_7Vector2ERdS1_S1_S1_.exit89, %_ZN7msdfgenL11pointBoundsENS_7Vector2ERdS1_S1_S1_.exit72
-  %21 = extractelement <2 x double> %17, i64 1
-  %22 = extractelement <2 x double> %14, i64 1
-  %23 = extractelement <2 x double> %11, i64 1
-  %i.x = call noundef i32 @_ZN7msdfgen14solveQuadraticEPdddd(ptr noundef nonnull %i.a, double noundef %21, double noundef %22, double noundef %23) ; 2 uses
+  %17 = fsub double %9, %6
+  %18 = fmul double %17, 2.000000e+00
+  %19 = fmul double %.sroa.236.0.copyload, 3.000000e+00
+  %20 = fsub double %.sroa.225.0.copyload, %19
+  %21 = fmul double %.sroa.246.0.copyload, 3.000000e+00
+  %22 = fadd double %21, %20
+  %23 = fsub double %22, %.sroa.244.0.copyload
+  %i.x = call noundef i32 @_ZN7msdfgen14solveQuadraticEPdddd(ptr noundef nonnull %i.a, double noundef %23, double noundef %18, double noundef %6) ; 2 uses
   %i.y = icmp sgt i32 %i.x, 0
   br i1 %i.y, label %.lr.ph94.preheader, label %._crit_edge95
 

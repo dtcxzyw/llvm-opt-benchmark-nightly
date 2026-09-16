@@ -204,7 +204,6 @@ vector.ph:                                        ; preds = %.preheader.preheade
   %i.q = icmp eq i64 %i.p, 0
   %i.r = select i1 %i.q, i64 8, i64 %i.p
   %n.vec = sub nsw i64 %i.o, %i.r                 ; 3 uses
-  %5 = add i64 %.0, %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -226,11 +225,15 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <8 x i64> %interleaved.vec47, ptr %i.y, align 8, !tbaa !935
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.ab = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ab, label %.preheader.preheader49, label %vector.body, !llvm.loop !1183
+  br i1 %i.ab, label %.preheader.preheader49.loopexit, label %vector.body, !llvm.loop !1183
 
-.preheader.preheader49:                           ; preds = %vector.body, %.preheader.preheader
-  %indvars.iv.ph = phi i64 [ 0, %.preheader.preheader ], [ %n.vec, %vector.body ]
-  %.129.ph = phi i64 [ %.0, %.preheader.preheader ], [ %5, %vector.body ]
+.preheader.preheader49.loopexit:                  ; preds = %vector.body
+  %5 = add i64 %.0, %n.vec
+  br label %.preheader.preheader49
+
+.preheader.preheader49:                           ; preds = %.preheader.preheader49.loopexit, %.preheader.preheader
+  %indvars.iv.ph = phi i64 [ 0, %.preheader.preheader ], [ %n.vec, %.preheader.preheader49.loopexit ]
+  %.129.ph = phi i64 [ %.0, %.preheader.preheader ], [ %5, %.preheader.preheader49.loopexit ]
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader49, %.preheader

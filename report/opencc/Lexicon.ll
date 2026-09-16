@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %_ZNSt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS1_EED2Ev.exit.i22, %bb.c
   %.sroa.014.029.i8.idx = phi i64 [ 8, %bb.c ], [ %.sroa.014.029.i8.add, %_ZNSt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS1_EED2Ev.exit.i22 ] ; 3 uses
   %.pn28.i9 = phi ptr [ %i.a, %bb.c ], [ %.sroa.014.029.i8.ptr, %_ZNSt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS1_EED2Ev.exit.i22 ]
-  %.sroa.014.029.i8.ptr = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sroa.014.029.i8.idx ; 6 uses
+  %.sroa.014.029.i8.ptr = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sroa.014.029.i8.idx ; 7 uses
   %i.m = load ptr, ptr %.sroa.014.029.i8.ptr, align 8, !tbaa !23 ; 2 uses
   %i.n = load ptr, ptr %i.a, align 8, !tbaa !23   ; 2 uses
   %i.o = load ptr, ptr %i.m, align 8, !tbaa !25
@@ -236,12 +236,11 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i71: ; preds = %_ZNSt11c
 _ZN6opencc9DictEntry12UPtrLessThanERKSt10unique_ptrIS0_St14default_deleteIS0_EES6_.exit75: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i69, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i71
   %.0.i.i.i.i70 = phi i32 [ %.0.i4.i.i.i.i74, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i71 ], [ %i.ab, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i69 ]
   %i.ae = icmp slt i32 %.0.i.i.i.i70, 0
-  %i.af = load i64, ptr %.sroa.014.029.i8.ptr, align 8, !tbaa !23
-  %1 = inttoptr i64 %i.af to ptr                  ; 5 uses
-  store ptr null, ptr %.sroa.014.029.i8.ptr, align 8, !tbaa !23
-  br i1 %i.ae, label %.lr.ph.i.i.i.i.i.preheader.i31, label %.preheader.a
+  %i.af = load i64, ptr %.sroa.014.029.i8.ptr, align 8, !tbaa !23 ; 2 uses
+  br i1 %i.ae, label %.lr.ph.i.i.i.i.i.preheader.i31, label %2
 
 .lr.ph.i.i.i.i.i.preheader.i31:                   ; preds = %_ZN6opencc9DictEntry12UPtrLessThanERKSt10unique_ptrIS0_St14default_deleteIS0_EES6_.exit75
+  store ptr null, ptr %.sroa.014.029.i8.ptr, align 8, !tbaa !23
   %i.ag = lshr exact i64 %.sroa.014.029.i8.idx, 3
   %i.ah = getelementptr inbounds nuw i8, ptr %.pn28.i9, i64 16
   br label %.lr.ph.i.i.i.i.i.i32
@@ -272,19 +271,25 @@ _ZNSt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS1_EEaSEOS4_.exit.i.i.i.
   br i1 %i.aq, label %.lr.ph.i.i.i.i.i.i32, label %.loopexit.i28, !llvm.loop !55
 
 .loopexit.i28:                                    ; preds = %_ZNSt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS1_EEaSEOS4_.exit.i.i.i.i.i.i38
+  %1 = inttoptr i64 %i.af to ptr
   %i.ar = load ptr, ptr %i.a, align 8, !tbaa !23  ; 2 uses
   store ptr %1, ptr %i.a, align 8, !tbaa !23
   %.not.i.i.i.i.i29 = icmp eq ptr %i.ar, null
   br i1 %.not.i.i.i.i.i29, label %_ZNSt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS1_EED2Ev.exit.i22, label %_ZNSt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS1_EED2Ev.exit.i22.sink.split
 
-.preheader.a:                                     ; preds = %_ZN6opencc9DictEntry12UPtrLessThanERKSt10unique_ptrIS0_St14default_deleteIS0_EES6_.exit75, %.preheader.backedge.a
-  %.sroa.010.0.i.i10 = phi ptr [ %.sroa.0.0.i.i11, %.preheader.backedge.a ], [ %.sroa.014.029.i8.ptr, %_ZN6opencc9DictEntry12UPtrLessThanERKSt10unique_ptrIS0_St14default_deleteIS0_EES6_.exit75 ] ; 5 uses
+2:                                                ; preds = %_ZN6opencc9DictEntry12UPtrLessThanERKSt10unique_ptrIS0_St14default_deleteIS0_EES6_.exit75
+  %3 = inttoptr i64 %i.af to ptr                  ; 4 uses
+  store ptr null, ptr %.sroa.014.029.i8.ptr, align 8, !tbaa !23
+  br label %.preheader.a
+
+.preheader.a:                                     ; preds = %.preheader.backedge.a, %2
+  %.sroa.010.0.i.i10 = phi ptr [ %.sroa.014.029.i8.ptr, %2 ], [ %.sroa.0.0.i.i11, %.preheader.backedge.a ] ; 5 uses
   %.sroa.0.0.i.i11 = getelementptr inbounds i8, ptr %.sroa.010.0.i.i10, i64 -8 ; 4 uses
   %i.as = load ptr, ptr %.sroa.0.0.i.i11, align 8, !tbaa !23 ; 2 uses
-  %i.at = load ptr, ptr %1, align 8, !tbaa !25
+  %i.at = load ptr, ptr %3, align 8, !tbaa !25
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 16
   %i.av = load ptr, ptr %i.au, align 8
-  %i.aw = invoke { i64, ptr } %i.av(ptr noundef nonnull align 8 dereferenceable(8) %1)
+  %i.aw = invoke { i64, ptr } %i.av(ptr noundef nonnull align 8 dereferenceable(8) %3)
           to label %.noexc65 unwind label %_ZNSt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS1_EED2Ev.exit.i.i14, !inline_history !56 ; 2 uses
 
 .noexc65:                                         ; preds = %.preheader.a
@@ -339,7 +344,7 @@ _ZNKSt14default_deleteIN6opencc9DictEntryEEclEPS1_.exit.i.i.i.i.i.i26: ; preds =
   br label %.preheader.a, !llvm.loop !58
 
 common.resume:                                    ; preds = %_ZNSt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS1_EED2Ev.exit.i.i, %_ZNSt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS1_EED2Ev.exit.i.i.i, %_ZNSt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS1_EED2Ev.exit.i.i14
-  %.lcssa123.sink125 = phi ptr [ %i.dw, %_ZNSt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS1_EED2Ev.exit.i.i ], [ %i.by, %_ZNSt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS1_EED2Ev.exit.i.i.i ], [ %1, %_ZNSt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS1_EED2Ev.exit.i.i14 ] ; 2 uses
+  %.lcssa123.sink125 = phi ptr [ %i.dw, %_ZNSt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS1_EED2Ev.exit.i.i ], [ %i.by, %_ZNSt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS1_EED2Ev.exit.i.i.i ], [ %3, %_ZNSt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS1_EED2Ev.exit.i.i14 ] ; 2 uses
   %common.resume.op = phi { ptr, i32 } [ %i.fj, %_ZNSt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS1_EED2Ev.exit.i.i ], [ %i.cw, %_ZNSt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS1_EED2Ev.exit.i.i.i ], [ %i.bs, %_ZNSt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS1_EED2Ev.exit.i.i14 ]
   %i.bp = load ptr, ptr %.lcssa123.sink125, align 8, !tbaa !25
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
@@ -354,7 +359,7 @@ _ZNSt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS1_EED2Ev.exit.i.i14: ; 
 
 bb.f:                                             ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKSt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS4_EES9_EEclIS7_NS_17__normal_iteratorIPS7_St6vectorIS7_SaIS7_EEEEEEbRT_T0_.exit.i.i15
   %i.bt = load ptr, ptr %.sroa.010.0.i.i10, align 8, !tbaa !23 ; 2 uses
-  store ptr %1, ptr %.sroa.010.0.i.i10, align 8, !tbaa !23
+  store ptr %3, ptr %.sroa.010.0.i.i10, align 8, !tbaa !23
   %.not.i.i.i.i1.i.i16 = icmp eq ptr %i.bt, null
   br i1 %.not.i.i.i.i1.i.i16, label %_ZNSt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS1_EED2Ev.exit.i22, label %_ZNSt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS1_EED2Ev.exit.i22.sink.split
 
@@ -757,9 +762,6 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.af, 4611686018427387900     ; 3 uses
-  %3 = shl i64 %n.vec, 3                          ; 2 uses
-  %4 = getelementptr i8, ptr %i.aa, i64 %3        ; 2 uses
-  %5 = getelementptr i8, ptr %i.p, i64 %3
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -783,6 +785,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.an, label %middle.block, label %vector.body, !llvm.loop !73
 
 middle.block:                                     ; preds = %vector.body
+  %3 = shl i64 %n.vec, 3                          ; 2 uses
+  %4 = getelementptr i8, ptr %i.aa, i64 %3        ; 2 uses
+  %5 = getelementptr i8, ptr %i.p, i64 %3
   %cmp.n = icmp eq i64 %i.af, %n.vec
   br i1 %cmp.n, label %_ZNSt6vectorISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.preheader27
 
@@ -1185,9 +1190,6 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.by, 4611686018427387900     ; 3 uses
-  %4 = shl i64 %n.vec, 3                          ; 2 uses
-  %5 = getelementptr i8, ptr %i.bt, i64 %4        ; 2 uses
-  %6 = getelementptr i8, ptr %i.bi, i64 %4
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1211,6 +1213,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.cg, label %middle.block, label %vector.body, !llvm.loop !95
 
 middle.block:                                     ; preds = %vector.body
+  %4 = shl i64 %n.vec, 3                          ; 2 uses
+  %5 = getelementptr i8, ptr %i.bt, i64 %4        ; 2 uses
+  %6 = getelementptr i8, ptr %i.bi, i64 %4
   %cmp.n = icmp eq i64 %i.by, %n.vec
   br i1 %cmp.n, label %_ZNSt6vectorISt10unique_ptrIN6opencc9DictEntryESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.preheader87
 

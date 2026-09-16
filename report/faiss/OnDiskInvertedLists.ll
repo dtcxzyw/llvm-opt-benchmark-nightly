@@ -204,8 +204,8 @@ bb.l:                                             ; preds = %_ZNSt6vectorImSaImE
 
 _ZSt6fill_nIPmmmET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i66: ; preds = %.noexc71
   %.idx.i.i.i.i.i.i.i67 = shl nuw nsw i64 %i.as, 3 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ar, i8 0, i64 %.idx.i.i.i.i.i.i.i67, i1 false), !tbaa !63
   %8 = getelementptr inbounds nuw i8, ptr %i.ar, i64 %.idx.i.i.i.i.i.i.i67
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ar, i8 0, i64 %.idx.i.i.i.i.i.i.i67, i1 false), !tbaa !63
   br label %.lr.ph93
 
 bb.m:                                             ; preds = %_ZNSt6vectorImSaImEE17_S_check_init_lenEmRKS0_.exit.i64
@@ -608,7 +608,7 @@ bb.g:                                             ; preds = %bb.f
 _ZNKSt6vectorIlSaIlEE12_M_check_lenEmPKc.exit.i:  ; preds = %bb.f
   %i.ak = shl nuw nsw i64 %i.aa, 3
   %i.al = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ak) #31
-          to label %.noexc51 unwind label %.loopexit66 ; 13 uses
+          to label %.noexc51 unwind label %.loopexit66 ; 14 uses
 
 .noexc51:                                         ; preds = %_ZNKSt6vectorIlSaIlEE12_M_check_lenEmPKc.exit.i
   store i64 0, ptr %i.al, align 8, !tbaa !63
@@ -623,22 +623,22 @@ _ZSt6fill_nIPlmlET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i: ; preds = %.noexc51
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZSt6fill_nIPlmlET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i, %.noexc51
-  %11 = getelementptr [8 x i8], ptr %i.al, i64 %i.aa ; 3 uses
   %i.ap = load ptr, ptr %6, align 8, !tbaa !80    ; 2 uses
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.ap, i64 %indvars.iv ; 7 uses
   %min.iters.check = icmp ult i64 %i.aa, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
-  %i.ar = shl nuw nsw i64 %i.aa, 3
+  %i.ar = shl nuw nsw i64 %i.aa, 3                ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.al, i64 %i.ar ; 2 uses
   %scevgep.a = getelementptr i8, ptr %i.ag, i64 %i.ar
   %i.as = getelementptr i8, ptr %i.ap, i64 %i.t
   %scevgep85 = getelementptr i8, ptr %i.as, i64 8
   %bound0 = icmp ult ptr %i.al, %scevgep.a
-  %bound1 = icmp ult ptr %i.ag, %11
+  %bound1 = icmp ult ptr %i.ag, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   %bound086 = icmp ult ptr %i.al, %scevgep85
-  %bound187 = icmp ult ptr %i.aq, %11
+  %bound187 = icmp ult ptr %i.aq, %scevgep
   %found.conflict88 = and i1 %bound086, %bound187
   %conflict.rdx = or i1 %found.conflict, %found.conflict88
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph
@@ -730,6 +730,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   br i1 %exitcond.not.3, label %.loopexit.loopexit, label %scalar.ph, !llvm.loop !201
 
 .loopexit.loopexit:                               ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
+  %11 = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %i.aa
   %i.ch = ptrtoint ptr %11 to i64
   br label %.loopexit
 

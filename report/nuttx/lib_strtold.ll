@@ -31,14 +31,6 @@ define internal fastcc x86_fp80 @strtox(ptr noundef %0, ptr nofree noundef write
 switch.lookup:
   %i.a = alloca ptr, align 8                      ; 8 uses
   %i.b = alloca ptr, align 8                      ; 8 uses
-  %switch.tableidx = add nsw i32 %2, -1           ; 2 uses
-  %3 = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.strtox, i64 %3
-  %switch.load = load i8, ptr %switch.gep, align 1 ; 2 uses
-  %switch.ext = zext i8 %switch.load to i32
-  %4 = zext nneg i32 %switch.tableidx to i64
-  %switch.gep214 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.strtox.1, i64 %4
-  %switch.load215 = load i32, ptr %switch.gep214, align 4 ; 3 uses
   br label %bb.a
 
 bb.a:                                             ; preds = %bb.a, %switch.lookup
@@ -51,6 +43,14 @@ bb.a:                                             ; preds = %bb.a, %switch.looku
   br i1 %.not, label %bb.b, label %bb.a, !llvm.loop !9
 
 bb.b:                                             ; preds = %bb.a
+  %switch.tableidx = add nsw i32 %2, -1           ; 2 uses
+  %3 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.strtox, i64 %3
+  %switch.load = load i8, ptr %switch.gep, align 1 ; 2 uses
+  %switch.ext = zext i8 %switch.load to i32
+  %4 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep214 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.strtox.1, i64 %4
+  %switch.load215 = load i32, ptr %switch.gep214, align 4 ; 3 uses
   switch i8 %i.c, label %bb.e [
     i8 45, label %bb.c
     i8 43, label %bb.d
@@ -181,7 +181,7 @@ bb.q:                                             ; preds = %bb.p
 
 .loopexit.i:                                      ; preds = %bb.p, %.lr.ph.i, %bb.q
   %.promoted159.i = phi ptr [ %i.aj, %.lr.ph.i ], [ %i.ag, %bb.q ], [ %storemerge130.i, %bb.p ] ; 4 uses
-  %.0112.i = phi i32 [ 1, %.lr.ph.i ], [ 1, %bb.q ], [ 0, %bb.p ] ; 2 uses
+  %.0112.i = phi i32 [ 1, %.lr.ph.i ], [ 1, %bb.q ], [ 0, %bb.p ] ; 3 uses
   %.2109.i = phi i32 [ 1, %.lr.ph.i ], [ %.0107.i, %bb.q ], [ %.0107.i, %bb.p ] ; 2 uses
   %.299.in.i = phi i8 [ %.198.in.i, %.lr.ph.i ], [ %.198.in155.i, %bb.q ], [ %.097.in.i, %bb.p ] ; 4 uses
   %.184.i = phi i64 [ %i.ak, %.lr.ph.i ], [ 0, %bb.q ], [ 0, %bb.p ] ; 2 uses
@@ -272,12 +272,12 @@ bb.y:                                             ; preds = %bb.x, %bb.r
 
 ._crit_edge.i:                                    ; preds = %bb.y, %bb.r
   %i.bn = phi ptr [ %i.ar, %bb.r ], [ %i.bh, %bb.y ] ; 4 uses
-  %.1113.lcssa.i = phi i32 [ 1, %bb.r ], [ %.2114.i, %bb.y ] ; 2 uses
+  %.1113.lcssa.i = phi i32 [ 1, %bb.r ], [ %.2114.i, %bb.y ] ; 3 uses
   %.3110.lcssa.i = phi i32 [ %.3110164.i, %bb.r ], [ %.4111.i, %bb.y ]
   %.0101.lcssa.i = phi i32 [ %.0101165.i, %bb.r ], [ %.2103.i, %bb.y ] ; 2 uses
   %.3100.in.lcssa.i = phi i8 [ %.3100.in166.i, %bb.r ], [ %i.bi, %bb.y ] ; 2 uses
   %.092.lcssa.i = phi x86_fp80 [ %.092167.i, %bb.r ], [ %.294.i, %bb.y ] ; 2 uses
-  %.285.lcssa.i = phi i64 [ %.285169.i, %bb.r ], [ %.3.i, %bb.y ]
+  %.285.lcssa.i = phi i64 [ %.285169.i, %bb.r ], [ %.3.i, %bb.y ] ; 2 uses
   %.081.lcssa.i = phi i64 [ %.081170.i, %bb.r ], [ %.182.i, %bb.y ] ; 3 uses
   store ptr %i.bn, ptr %i.b, align 8
   %.not123.i = icmp eq i32 %.3110.lcssa.i, 0
@@ -302,18 +302,17 @@ bb.aa:                                            ; preds = %bb.z
   br label %hexfloat.exit
 
 bb.ab:                                            ; preds = %._crit_edge.i
-  %.not126.i = icmp eq i32 %.1113.lcssa.i, 0
-  %spec.select134.i = select i1 %.not126.i, i64 %.081.lcssa.i, i64 %.285.lcssa.i ; 2 uses
   %i.bp = icmp slt i64 %.081.lcssa.i, 8
   br i1 %i.bp, label %.lr.ph193.preheader.i, label %._crit_edge194.i
 
-.lr.ph193.preheader.i:                            ; preds = %._crit_edge.thread.i, %bb.ab
-  %spec.select134248.i = phi i64 [ %spec.select134.i, %bb.ab ], [ %.184.i, %._crit_edge.thread.i ]
+.lr.ph193.preheader.i:                            ; preds = %bb.ab, %._crit_edge.thread.i
   %5 = phi ptr [ %i.bn, %bb.ab ], [ %.promoted159.i, %._crit_edge.thread.i ]
+  %.1113.lcssa227249.i = phi i32 [ %.1113.lcssa.i, %bb.ab ], [ %.0112.i, %._crit_edge.thread.i ]
   %.0101.lcssa228246.i = phi i32 [ %.0101.lcssa.i, %bb.ab ], [ 0, %._crit_edge.thread.i ]
   %.3100.in.lcssa229245.i.a = phi i8 [ %.3100.in.lcssa.i, %bb.ab ], [ %.299.in.i, %._crit_edge.thread.i ]
   %.092.lcssa230243.i.a = phi x86_fp80 [ %.092.lcssa.i, %bb.ab ], [ 0.000000e+00, %._crit_edge.thread.i ]
-  %.081.lcssa232241.i = phi i64 [ %.081.lcssa.i, %bb.ab ], [ 0, %._crit_edge.thread.i ]
+  %.285.lcssa231242.i = phi i64 [ %.285.lcssa.i, %bb.ab ], [ %.184.i, %._crit_edge.thread.i ]
+  %.081.lcssa232241.i = phi i64 [ %.081.lcssa.i, %bb.ab ], [ 0, %._crit_edge.thread.i ] ; 2 uses
   br label %.lr.ph193.i
 
 .lr.ph193.i:                                      ; preds = %.lr.ph193.i, %.lr.ph193.preheader.i
@@ -325,11 +324,15 @@ bb.ab:                                            ; preds = %._crit_edge.i
   br i1 %exitcond.not.i, label %._crit_edge194.i, label %.lr.ph193.i, !llvm.loop !16
 
 ._crit_edge194.i:                                 ; preds = %.lr.ph193.i, %bb.ab
-  %spec.select134247.i = phi i64 [ %spec.select134.i, %bb.ab ], [ %spec.select134248.i, %.lr.ph193.i ]
   %6 = phi ptr [ %i.bn, %bb.ab ], [ %5, %.lr.ph193.i ]
+  %.1113.lcssa227248.i = phi i32 [ %.1113.lcssa.i, %bb.ab ], [ %.1113.lcssa227249.i, %.lr.ph193.i ]
   %.3100.in.lcssa229244.i = phi i8 [ %.3100.in.lcssa.i, %bb.ab ], [ %.3100.in.lcssa229245.i.a, %.lr.ph193.i ]
   %.092.lcssa230242.i = phi x86_fp80 [ %.092.lcssa.i, %bb.ab ], [ %.092.lcssa230243.i.a, %.lr.ph193.i ] ; 2 uses
+  %.285.lcssa231241.i = phi i64 [ %.285.lcssa.i, %bb.ab ], [ %.285.lcssa231242.i, %.lr.ph193.i ]
+  %.081.lcssa232239.i = phi i64 [ %.081.lcssa.i, %bb.ab ], [ %.081.lcssa232241.i, %.lr.ph193.i ]
   %.3104.lcssa.i = phi i32 [ %.0101.lcssa.i, %bb.ab ], [ %i.bq, %.lr.ph193.i ] ; 4 uses
+  %.not126.i = icmp eq i32 %.1113.lcssa227248.i, 0
+  %spec.select134.i = select i1 %.not126.i, i64 %.081.lcssa232239.i, i64 %.285.lcssa231241.i
   %i.bs = and i8 %.3100.in.lcssa229244.i, -33
   %i.bt = icmp eq i8 %i.bs, 80
   br i1 %i.bt, label %bb.ac, label %.sink.split.i
@@ -360,7 +363,7 @@ bb.af:                                            ; preds = %bb.ae
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af, %bb.ae
-  %i.bz = shl nsw i64 %spec.select134247.i, 2
+  %i.bz = shl nsw i64 %spec.select134.i, 2
   %i.ca = add nsw i64 %i.bz, -32
   %i.cb = add nsw i64 %i.ca, %.080.i              ; 4 uses
   %.not128.i = icmp eq i32 %.3104.lcssa.i, 0

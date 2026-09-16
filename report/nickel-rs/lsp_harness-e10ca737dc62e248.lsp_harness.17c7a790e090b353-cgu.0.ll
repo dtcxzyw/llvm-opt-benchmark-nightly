@@ -205,7 +205,6 @@ bb.g:                                             ; preds = %bb.e
   %i.ae = load i32, ptr %i.aa, align 8, !alias.scope !1021, !noalias !1018, !noundef !28 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1022
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1023)
-  %3 = icmp sgt i32 %i.ae, -1
   %.sroa.0.0.i.i.i.i.i.i.i.i = tail call i32 @llvm.abs.i32(i32 %i.ae, i1 false) ; 3 uses
   %i.af = icmp ugt i32 %.sroa.0.0.i.i.i.i.i.i.i.i, 9999
   br i1 %i.af, label %.lr.ph.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i
@@ -213,6 +212,7 @@ bb.g:                                             ; preds = %bb.e
 ._crit_edge.i.i.i.i.i.i.i.i:                      ; preds = %.lr.ph.i.i.i.i.i.i.i.i, %bb.g
   %.sroa.09.0.lcssa.i.i.i.i.i.i.i.i = phi i64 [ 11, %bb.g ], [ %i.ap, %.lr.ph.i.i.i.i.i.i.i.i ] ; 2 uses
   %.sroa.0.1.lcssa.i.i.i.i.i.i.i.i = phi i32 [ %.sroa.0.0.i.i.i.i.i.i.i.i, %bb.g ], [ %i.ai, %.lr.ph.i.i.i.i.i.i.i.i ] ; 3 uses
+  %3 = icmp sgt i32 %i.ae, -1
   %i.ag = icmp samesign ugt i32 %.sroa.0.1.lcssa.i.i.i.i.i.i.i.i, 99
   br i1 %i.ag, label %bb.h, label %bb.i
 
@@ -615,7 +615,6 @@ bb.n:                                             ; preds = %bb.g
   %i.cq = load i64, ptr %i.ap, align 8, !alias.scope !9372, !noundef !28 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !9372
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9383)
-  %2 = icmp sgt i64 %i.cq, -1
   %.sroa.0.0.i.i.i.i = tail call i64 @llvm.abs.i64(i64 %i.cq, i1 false) ; 3 uses
   %i.cr = icmp ugt i64 %.sroa.0.0.i.i.i.i, 9999
   br i1 %i.cr, label %.lr.ph.i.i.i12.i, label %._crit_edge.i.i.i3.i
@@ -623,6 +622,7 @@ bb.n:                                             ; preds = %bb.g
 ._crit_edge.i.i.i3.i:                             ; preds = %.lr.ph.i.i.i12.i, %bb.n
   %.sroa.09.0.lcssa.i.i.i4.i = phi i64 [ 20, %bb.n ], [ %i.db, %.lr.ph.i.i.i12.i ] ; 2 uses
   %.sroa.0.1.lcssa.i.i.i5.i = phi i64 [ %.sroa.0.0.i.i.i.i, %bb.n ], [ %i.cu, %.lr.ph.i.i.i12.i ] ; 3 uses
+  %2 = icmp sgt i64 %i.cq, -1
   %i.cs = icmp samesign ugt i64 %.sroa.0.1.lcssa.i.i.i5.i, 99
   br i1 %i.cs, label %bb.o, label %bb.p
 
@@ -1025,7 +1025,6 @@ _ZN10serde_json3ser9Formatter18begin_object_value17h6d3bc186cdc16551E.exit.i.i.i
   %.val10.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %.pre.i.i.i.i.i.i.i.i.i.i.i, align 8, !alias.scope !13527, !noalias !13528 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.gi), !noalias !13537
   call void @llvm.experimental.noalias.scope.decl(metadata !13538)
-  %2 = icmp sgt i32 %.val16.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, -1
   %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = call i32 @llvm.abs.i32(i32 %.val16.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false) ; 3 uses
   %i.agj = icmp ugt i32 %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 9999
   br i1 %i.agj, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
@@ -1033,6 +1032,7 @@ _ZN10serde_json3ser9Formatter18begin_object_value17h6d3bc186cdc16551E.exit.i.i.i
 ._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %_ZN10serde_json3ser9Formatter18begin_object_value17h6d3bc186cdc16551E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %.sroa.09.0.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ 11, %_ZN10serde_json3ser9Formatter18begin_object_value17h6d3bc186cdc16551E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.agt, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %.sroa.0.1.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i32 [ %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %_ZN10serde_json3ser9Formatter18begin_object_value17h6d3bc186cdc16551E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.agm, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
+  %2 = icmp sgt i32 %.val16.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, -1
   %i.agk = icmp samesign ugt i32 %.sroa.0.1.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 99
   br i1 %i.agk, label %bb.ia, label %bb.ib
 
@@ -1435,7 +1435,6 @@ bb.rd:                                            ; preds = %_ZN10serde_json3ser
   %i.bhq = load i32, ptr %i.bgs, align 8, !alias.scope !13869, !noalias !13870, !noundef !28 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ew), !noalias !13888
   call void @llvm.experimental.noalias.scope.decl(metadata !13889)
-  %3 = icmp sgt i32 %i.bhq, -1
   %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = call i32 @llvm.abs.i32(i32 %i.bhq, i1 false) ; 3 uses
   %i.bhr = icmp ugt i32 %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 9999
   br i1 %i.bhr, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
@@ -1443,6 +1442,7 @@ bb.rd:                                            ; preds = %_ZN10serde_json3ser
 ._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.rd
   %.sroa.09.0.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ 11, %bb.rd ], [ %i.bib, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %.sroa.0.1.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i32 [ %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.rd ], [ %i.bhu, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
+  %3 = icmp sgt i32 %i.bhq, -1
   %i.bhs = icmp samesign ugt i32 %.sroa.0.1.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 99
   br i1 %i.bhs, label %bb.re, label %bb.rf
 
@@ -1845,8 +1845,6 @@ bb.n:                                             ; preds = %bb.k
   %i.ao = getelementptr [8 x i8], ptr %i.an, i64 %.val3
   %i.ap = shl nuw nsw i64 %i.ag, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, ptr noundef nonnull readonly align 8 dereferenceable(1) %i.ao, i64 %i.ap, i1 false), !alias.scope !35903
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %3 = load i64, ptr %2, align 8, !noundef !28    ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !35904)
   br label %bb.o
 
@@ -1870,6 +1868,8 @@ bb.o:                                             ; preds = %bb.o, %bb.n
   br i1 %or.cond.i.i, label %bb.p, label %bb.o
 
 bb.p:                                             ; preds = %bb.o
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %3 = load i64, ptr %2, align 8, !noundef !28    ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr noundef nonnull align 8 dereferenceable(56) %i.b, i64 56, i1 false)
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 56
   store ptr %i.c, ptr %i.ay, align 8
@@ -2272,10 +2272,7 @@ vector.ph:                                        ; preds = %"_ZN5alloc7raw_vec2
   %i.gd = and i64 %i.gc, 7                        ; 2 uses
   %i.ge = icmp eq i64 %i.gd, 0
   %i.gf = select i1 %i.ge, i64 8, i64 %i.gd
-  %n.vec = sub nsw i64 %i.gc, %i.gf               ; 4 uses
-  %1 = shl i64 %n.vec, 2
-  %2 = getelementptr i8, ptr %.val39.i.i, i64 %1
-  %i.gg = sub i64 %.val40.i.i, %n.vec
+  %i.gg = sub nsw i64 %i.gc, %i.gf                ; 4 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -2290,13 +2287,19 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x i32> %wide.load, ptr %i.gj, align 4, !noalias !36698
   store <4 x i32> %wide.load2035, ptr %i.gk, align 4, !noalias !36698
   %index.next = add nuw i64 %index, 8             ; 2 uses
-  %i.gl = icmp eq i64 %index.next, %n.vec
-  br i1 %i.gl, label %.lr.ph.i.i73.i.i.preheader, label %vector.body, !llvm.loop !36617
+  %i.gl = icmp eq i64 %index.next, %i.gg
+  br i1 %i.gl, label %.lr.ph.i.i73.i.i.preheader.loopexit, label %vector.body, !llvm.loop !36617
 
-.lr.ph.i.i73.i.i.preheader:                       ; preds = %vector.body, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf5149a4291ac7aa1E.exit.i.i72.i.i"
-  %.sroa.015.024.i.i.i.i.ph = phi ptr [ %.val39.i.i, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf5149a4291ac7aa1E.exit.i.i72.i.i" ], [ %2, %vector.body ]
-  %.sroa.7.023.i.i.i.i.ph = phi i64 [ 0, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf5149a4291ac7aa1E.exit.i.i72.i.i" ], [ %n.vec, %vector.body ]
-  %.sroa.10.022.i.i.i.i.ph = phi i64 [ %.val40.i.i, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf5149a4291ac7aa1E.exit.i.i72.i.i" ], [ %i.gg, %vector.body ]
+.lr.ph.i.i73.i.i.preheader.loopexit:              ; preds = %vector.body
+  %1 = shl i64 %i.gg, 2
+  %2 = getelementptr i8, ptr %.val39.i.i, i64 %1
+  %3 = sub i64 %.val40.i.i, %i.gg
+  br label %.lr.ph.i.i73.i.i.preheader
+
+.lr.ph.i.i73.i.i.preheader:                       ; preds = %.lr.ph.i.i73.i.i.preheader.loopexit, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf5149a4291ac7aa1E.exit.i.i72.i.i"
+  %.sroa.015.024.i.i.i.i.ph = phi ptr [ %.val39.i.i, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf5149a4291ac7aa1E.exit.i.i72.i.i" ], [ %2, %.lr.ph.i.i73.i.i.preheader.loopexit ]
+  %.sroa.7.023.i.i.i.i.ph = phi i64 [ 0, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf5149a4291ac7aa1E.exit.i.i72.i.i" ], [ %i.gg, %.lr.ph.i.i73.i.i.preheader.loopexit ]
+  %.sroa.10.022.i.i.i.i.ph = phi i64 [ %.val40.i.i, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hf5149a4291ac7aa1E.exit.i.i72.i.i" ], [ %3, %.lr.ph.i.i73.i.i.preheader.loopexit ]
   br label %.lr.ph.i.i73.i.i
 
 .lr.ph.i.i73.i.i:                                 ; preds = %.lr.ph.i.i73.i.i.preheader, %bb.dc
@@ -2699,7 +2702,6 @@ _ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit: ; preds = %bb.f, %bb.g
 bb.h:                                             ; preds = %bb.a, %bb.i
   %.sroa.0.0 = phi i64 [ 0, %bb.a ], [ %i.g, %bb.i ] ; 4 uses
   %i.af = sub i64 %2, %.sroa.0.0                  ; 2 uses
-  %3 = and i64 %i.af, 7                           ; 4 uses
   %i.ag = and i64 %i.af, -8                       ; 2 uses
   %i.ah = icmp ult i64 %.sroa.0.0, %i.ag
   br i1 %i.ah, label %.lr.ph, label %bb.k
@@ -2757,6 +2759,7 @@ bb.j:                                             ; preds = %_ZN4core4hash3sip9u
 
 bb.k:                                             ; preds = %._crit_edge, %bb.h
   %.sroa.04.0.lcssa = phi i64 [ %i.da, %._crit_edge ], [ %.sroa.0.0, %bb.h ] ; 3 uses
+  %3 = and i64 %i.af, 7                           ; 4 uses
   %i.bj = icmp samesign ugt i64 %3, 3
   br i1 %i.bj, label %bb.l, label %bb.m
 
@@ -3159,7 +3162,6 @@ _ZN10serde_json3ser9Formatter17begin_array_value17h99dd1a34b9f19112E.exit.i.i.i.
   %i.bp = phi i64 [ %i.bo, %"_ZN3std2io5impls58_$LT$impl$u20$std..io..Write$u20$for$u20$$RF$mut$u20$W$GT$9write_all17h4ab301283a333dfdE.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i" ], [ %i.be, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !58555
   tail call void @llvm.experimental.noalias.scope.decl(metadata !58556)
-  %2 = icmp sgt i32 %.val8.i.i.i.i.i.i.i.i.i.i.i.i.i.i, -1
   %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = tail call i32 @llvm.abs.i32(i32 %.val8.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false) ; 3 uses
   %i.bq = icmp ugt i32 %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 9999
   br i1 %i.bq, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
@@ -3167,6 +3169,7 @@ _ZN10serde_json3ser9Formatter17begin_array_value17h99dd1a34b9f19112E.exit.i.i.i.
 ._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %_ZN10serde_json3ser9Formatter17begin_array_value17h99dd1a34b9f19112E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %.sroa.09.0.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ 11, %_ZN10serde_json3ser9Formatter17begin_array_value17h99dd1a34b9f19112E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.ca, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %.sroa.0.1.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i32 [ %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %_ZN10serde_json3ser9Formatter17begin_array_value17h99dd1a34b9f19112E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.bt, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
+  %2 = icmp sgt i32 %.val8.i.i.i.i.i.i.i.i.i.i.i.i.i.i, -1
   %i.br = icmp samesign ugt i32 %.sroa.0.1.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 99
   br i1 %i.br, label %bb.m, label %bb.n
 
@@ -3569,7 +3572,6 @@ bb.q:                                             ; preds = %bb.p, %"_ZN88_$LT$s
   %.val11.i.i.i.i.i.i.i.i = load ptr, ptr %i.be, align 8, !noalias !58821 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !58830
   tail call void @llvm.experimental.noalias.scope.decl(metadata !58831)
-  %2 = icmp sgt i32 %.val47.i.i.i.i.i, -1
   %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i = tail call i32 @llvm.abs.i32(i32 %.val47.i.i.i.i.i, i1 false) ; 3 uses
   %i.cb = icmp ugt i32 %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 9999
   br i1 %i.cb, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i
@@ -3577,6 +3579,7 @@ bb.q:                                             ; preds = %bb.p, %"_ZN88_$LT$s
 ._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i:          ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.q
   %.sroa.09.0.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ 11, %bb.q ], [ %i.cl, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %.sroa.0.1.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i32 [ %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.q ], [ %i.ce, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
+  %2 = icmp sgt i32 %.val47.i.i.i.i.i, -1
   %i.cc = icmp samesign ugt i32 %.sroa.0.1.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 99
   br i1 %i.cc, label %bb.r, label %bb.s
 
@@ -3979,7 +3982,6 @@ _ZN10serde_json3ser9Formatter17begin_array_value17h99dd1a34b9f19112E.exit.i.i.i.
   %i.ds = phi i64 [ %i.dr, %"_ZN3std2io5impls58_$LT$impl$u20$std..io..Write$u20$for$u20$$RF$mut$u20$W$GT$9write_all17h4ab301283a333dfdE.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i" ], [ %i.dh, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !59430
   tail call void @llvm.experimental.noalias.scope.decl(metadata !59431)
-  %2 = icmp sgt i32 %.val8.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, -1
   %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = tail call i32 @llvm.abs.i32(i32 %.val8.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false) ; 3 uses
   %i.dt = icmp ugt i32 %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 9999
   br i1 %i.dt, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
@@ -3987,6 +3989,7 @@ _ZN10serde_json3ser9Formatter17begin_array_value17h99dd1a34b9f19112E.exit.i.i.i.
 ._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %_ZN10serde_json3ser9Formatter17begin_array_value17h99dd1a34b9f19112E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %.sroa.09.0.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ 11, %_ZN10serde_json3ser9Formatter17begin_array_value17h99dd1a34b9f19112E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.ed, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %.sroa.0.1.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i32 [ %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %_ZN10serde_json3ser9Formatter17begin_array_value17h99dd1a34b9f19112E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.dw, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
+  %2 = icmp sgt i32 %.val8.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, -1
   %i.du = icmp samesign ugt i32 %.sroa.0.1.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 99
   br i1 %i.du, label %bb.v, label %bb.w
 
@@ -4389,7 +4392,6 @@ _ZN10serde_json3ser9Formatter17begin_array_value17h99dd1a34b9f19112E.exit.i.i.i.
   %i.bp = phi i64 [ %i.bo, %"_ZN3std2io5impls58_$LT$impl$u20$std..io..Write$u20$for$u20$$RF$mut$u20$W$GT$9write_all17h4ab301283a333dfdE.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i" ], [ %i.be, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !60285
   tail call void @llvm.experimental.noalias.scope.decl(metadata !60286)
-  %2 = icmp sgt i32 %.val8.i.i.i.i.i.i.i.i.i.i.i.i, -1
   %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = tail call i32 @llvm.abs.i32(i32 %.val8.i.i.i.i.i.i.i.i.i.i.i.i, i1 false) ; 3 uses
   %i.bq = icmp ugt i32 %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 9999
   br i1 %i.bq, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
@@ -4397,6 +4399,7 @@ _ZN10serde_json3ser9Formatter17begin_array_value17h99dd1a34b9f19112E.exit.i.i.i.
 ._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %_ZN10serde_json3ser9Formatter17begin_array_value17h99dd1a34b9f19112E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %.sroa.09.0.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ 11, %_ZN10serde_json3ser9Formatter17begin_array_value17h99dd1a34b9f19112E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.ca, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %.sroa.0.1.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i32 [ %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %_ZN10serde_json3ser9Formatter17begin_array_value17h99dd1a34b9f19112E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.bt, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
+  %2 = icmp sgt i32 %.val8.i.i.i.i.i.i.i.i.i.i.i.i, -1
   %i.br = icmp samesign ugt i32 %.sroa.0.1.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 99
   br i1 %i.br, label %bb.l, label %bb.m
 
@@ -4799,7 +4802,6 @@ _ZN10serde_json3ser9Formatter18begin_object_value17h6d3bc186cdc16551E.exit.i.i: 
   %.val10.i.i = load ptr, ptr %i.b, align 8, !noalias !60558 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !60558
   tail call void @llvm.experimental.noalias.scope.decl(metadata !60579)
-  %1 = icmp sgt i32 %.0.val, -1
   %.sroa.0.0.i.i.i.i.i.i = tail call i32 @llvm.abs.i32(i32 %.0.val, i1 false) ; 3 uses
   %i.z = icmp ugt i32 %.sroa.0.0.i.i.i.i.i.i, 9999
   br i1 %i.z, label %.lr.ph.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i
@@ -4807,6 +4809,7 @@ _ZN10serde_json3ser9Formatter18begin_object_value17h6d3bc186cdc16551E.exit.i.i: 
 ._crit_edge.i.i.i.i.i.i:                          ; preds = %.lr.ph.i.i.i.i.i.i, %_ZN10serde_json3ser9Formatter18begin_object_value17h6d3bc186cdc16551E.exit.i.i
   %.sroa.09.0.lcssa.i.i.i.i.i.i = phi i64 [ 11, %_ZN10serde_json3ser9Formatter18begin_object_value17h6d3bc186cdc16551E.exit.i.i ], [ %i.aj, %.lr.ph.i.i.i.i.i.i ] ; 2 uses
   %.sroa.0.1.lcssa.i.i.i.i.i.i = phi i32 [ %.sroa.0.0.i.i.i.i.i.i, %_ZN10serde_json3ser9Formatter18begin_object_value17h6d3bc186cdc16551E.exit.i.i ], [ %i.ac, %.lr.ph.i.i.i.i.i.i ] ; 3 uses
+  %1 = icmp sgt i32 %.0.val, -1
   %i.aa = icmp samesign ugt i32 %.sroa.0.1.lcssa.i.i.i.i.i.i, 99
   br i1 %i.aa, label %bb.e, label %bb.f
 
@@ -5209,7 +5212,6 @@ bb.a:
   %i.a = alloca [40 x i8], align 1                ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !65853)
-  %0 = icmp sgt i32 %.0.val, -1
   %.sroa.0.0.i.i.i = tail call i32 @llvm.abs.i32(i32 %.0.val, i1 false) ; 3 uses
   %i.b = icmp ugt i32 %.sroa.0.0.i.i.i, 9999
   br i1 %i.b, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
@@ -5217,6 +5219,7 @@ bb.a:
 ._crit_edge.i.i.i:                                ; preds = %.lr.ph.i.i.i, %bb.a
   %.sroa.09.0.lcssa.i.i.i = phi i64 [ 11, %bb.a ], [ %i.l, %.lr.ph.i.i.i ] ; 2 uses
   %.sroa.0.1.lcssa.i.i.i = phi i32 [ %.sroa.0.0.i.i.i, %bb.a ], [ %i.e, %.lr.ph.i.i.i ] ; 3 uses
+  %0 = icmp sgt i32 %.0.val, -1
   %i.c = icmp samesign ugt i32 %.sroa.0.1.lcssa.i.i.i, 99
   br i1 %i.c, label %bb.b, label %bb.c
 
@@ -5619,7 +5622,6 @@ _ZN10serde_json3ser9Formatter17begin_array_value17h99dd1a34b9f19112E.exit.i.i.i.
   %i.nj = phi i64 [ %i.ni, %"_ZN3std2io5impls58_$LT$impl$u20$std..io..Write$u20$for$u20$$RF$mut$u20$W$GT$9write_all17h4ab301283a333dfdE.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i" ], [ %i.my, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !73765
   tail call void @llvm.experimental.noalias.scope.decl(metadata !73766)
-  %2 = icmp sgt i32 %.val8.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, -1
   %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = tail call i32 @llvm.abs.i32(i32 %.val8.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false) ; 3 uses
   %i.nk = icmp ugt i32 %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 9999
   br i1 %i.nk, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
@@ -5627,6 +5629,7 @@ _ZN10serde_json3ser9Formatter17begin_array_value17h99dd1a34b9f19112E.exit.i.i.i.
 ._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %_ZN10serde_json3ser9Formatter17begin_array_value17h99dd1a34b9f19112E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %.sroa.09.0.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ 11, %_ZN10serde_json3ser9Formatter17begin_array_value17h99dd1a34b9f19112E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.nu, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %.sroa.0.1.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i32 [ %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %_ZN10serde_json3ser9Formatter17begin_array_value17h99dd1a34b9f19112E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.nn, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
+  %2 = icmp sgt i32 %.val8.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, -1
   %i.nl = icmp samesign ugt i32 %.sroa.0.1.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 99
   br i1 %i.nl, label %bb.bk, label %bb.bl
 
@@ -6029,7 +6032,6 @@ _ZN10serde_json3ser9Formatter17begin_array_value17h99dd1a34b9f19112E.exit.i.i.i.
   %i.yj = phi i64 [ %i.yi, %"_ZN3std2io5impls58_$LT$impl$u20$std..io..Write$u20$for$u20$$RF$mut$u20$W$GT$9write_all17h4ab301283a333dfdE.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i" ], [ %i.xy, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !74010
   tail call void @llvm.experimental.noalias.scope.decl(metadata !74011)
-  %3 = icmp sgt i32 %.val8.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, -1
   %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = tail call i32 @llvm.abs.i32(i32 %.val8.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i1 false) ; 3 uses
   %i.yk = icmp ugt i32 %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 9999
   br i1 %i.yk, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
@@ -6037,6 +6039,7 @@ _ZN10serde_json3ser9Formatter17begin_array_value17h99dd1a34b9f19112E.exit.i.i.i.
 ._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %_ZN10serde_json3ser9Formatter17begin_array_value17h99dd1a34b9f19112E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %.sroa.09.0.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ 11, %_ZN10serde_json3ser9Formatter17begin_array_value17h99dd1a34b9f19112E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.yu, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %.sroa.0.1.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i32 [ %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %_ZN10serde_json3ser9Formatter17begin_array_value17h99dd1a34b9f19112E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.yn, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
+  %3 = icmp sgt i32 %.val8.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, -1
   %i.yl = icmp samesign ugt i32 %.sroa.0.1.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 99
   br i1 %i.yl, label %bb.dm, label %bb.dn
 

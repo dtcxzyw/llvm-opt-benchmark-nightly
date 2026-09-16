@@ -205,7 +205,6 @@ vector.ph154:                                     ; preds = %.lr.ph.i44.preheade
   %i.lr = icmp eq i64 %i.lq, 0
   %i.ls = select i1 %i.lr, i64 8, i64 %i.lq
   %n.vec155 = sub nsw i64 %i.lp, %i.ls            ; 2 uses
-  %4 = add i64 %indvars.iv.i38, %n.vec155
   %broadcast.splatinsert = insertelement <8 x i16> poison, i16 %i.km, i64 0
   %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert156 = insertelement <8 x i16> poison, i16 %i.kz, i64 0
@@ -324,10 +323,14 @@ pred.store.if172:                                 ; preds = %pred.store.continue
 pred.store.continue173:                           ; preds = %pred.store.if172, %pred.store.continue171
   %index.next174 = add nuw i64 %index159, 8       ; 2 uses
   %i.ns = icmp eq i64 %index.next174, %n.vec155
-  br i1 %i.ns, label %.lr.ph.i44.preheader177, label %vector.body158, !llvm.loop !113
+  br i1 %i.ns, label %.lr.ph.i44.preheader177.loopexit, label %vector.body158, !llvm.loop !113
 
-.lr.ph.i44.preheader177:                          ; preds = %pred.store.continue173, %.lr.ph.i44.preheader
-  %indvars.iv85.i.ph = phi i64 [ %indvars.iv.i38, %.lr.ph.i44.preheader ], [ %4, %pred.store.continue173 ]
+.lr.ph.i44.preheader177.loopexit:                 ; preds = %pred.store.continue173
+  %4 = add i64 %indvars.iv.i38, %n.vec155
+  br label %.lr.ph.i44.preheader177
+
+.lr.ph.i44.preheader177:                          ; preds = %.lr.ph.i44.preheader177.loopexit, %.lr.ph.i44.preheader
+  %indvars.iv85.i.ph = phi i64 [ %indvars.iv.i38, %.lr.ph.i44.preheader ], [ %4, %.lr.ph.i44.preheader177.loopexit ]
   br label %.lr.ph.i44
 
 .lr.ph.i44:                                       ; preds = %.lr.ph.i44.preheader177, %bb.bk

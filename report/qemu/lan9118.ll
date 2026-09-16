@@ -204,9 +204,7 @@ lan9118_filter.exit.thread:                       ; preds = %.thread.i, %bb.c, %
 
 .lr.ph:                                           ; preds = %lan9118_filter.exit.thread
   %i.cf = trunc nuw nsw i64 %2 to i32             ; 2 uses
-  %i.cg = tail call i64 @crc32(i64 noundef -1, ptr noundef %1, i32 noundef %i.cf) #5
-  %3 = trunc i64 %i.cg to i32
-  %4 = tail call i32 @llvm.bswap.i32(i32 %3)      ; 3 uses
+  %i.cg = tail call i64 @crc32(i64 noundef -1, ptr noundef %1, i32 noundef %i.cf) #5 ; 2 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %i.a, i64 18212
   %i.ci = getelementptr inbounds nuw i8, ptr %i.a, i64 18216
   br label %.backedge
@@ -257,6 +255,8 @@ bb.t:                                             ; preds = %.backedge
   br i1 %i.de, label %.backedge.backedge, label %bb.u
 
 ._crit_edge:                                      ; preds = %bb.t
+  %3 = trunc i64 %i.cg to i32
+  %4 = tail call i32 @llvm.bswap.i32(i32 %3)      ; 2 uses
   %i.df = shl nuw nsw i32 %i.co, 3                ; 2 uses
   %i.dg = sub nuw nsw i32 32, %i.df               ; 2 uses
   %i.dh = lshr i32 %i.cn, %i.dg
@@ -283,6 +283,8 @@ bb.t:                                             ; preds = %.backedge
   br label %bb.v
 
 bb.u:                                             ; preds = %.thread
+  %5 = trunc i64 %i.cg to i32
+  %6 = tail call i32 @llvm.bswap.i32(i32 %5)
   %i.dy = getelementptr inbounds nuw i8, ptr %i.a, i64 18212
   %i.dz = load i32, ptr %i.dy, align 4
   %i.ea = load i32, ptr %i.cc, align 16
@@ -291,7 +293,7 @@ bb.u:                                             ; preds = %.thread
 
 bb.v:                                             ; preds = %bb.u, %._crit_edge
   %.sink138 = phi i32 [ %i.eb, %bb.u ], [ %i.dx, %._crit_edge ] ; 2 uses
-  %.sink = phi i32 [ %4, %bb.u ], [ %i.dv, %._crit_edge ]
+  %.sink = phi i32 [ %6, %bb.u ], [ %i.dv, %._crit_edge ]
   %i.ec = load i32, ptr %i.ca, align 4            ; 2 uses
   %.not.i103 = icmp slt i32 %.sink138, %i.ec
   %i.ed = select i1 %.not.i103, i32 0, i32 %i.ec

@@ -205,41 +205,44 @@ bb.d:                                             ; preds = %bb.c
   %i.ae = load i8, ptr %i.ad, align 16, !alias.scope !10247, !noalias !10248, !noundef !10 ; 4 uses
   %i.af = icmp sgt i8 %i.ae, -1
   call void @llvm.assume(i1 %i.af)
-  %3 = zext nneg i8 %i.ae to i128
   %i.ag = getelementptr inbounds nuw i8, ptr %i.f, i64 64 ; 2 uses
   %i.ah = load i128, ptr %i.ag, align 16, !alias.scope !10249, !noalias !10250, !noundef !10
-  %4 = shl i128 %i.ah, 10
-  %5 = shl nuw nsw i128 %3, 3
-  %6 = or disjoint i128 %4, %5
-  %7 = call i128 @llvm.bswap.i128(i128 %6)        ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !10251)
   %i.ai = zext nneg i8 %i.ae to i64               ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.ai ; 2 uses
   store i8 -128, ptr %i.aj, align 1, !alias.scope !10252, !noalias !10253
   %i.ak = icmp eq i8 %i.ae, 127
-  br i1 %i.ak, label %._crit_edge.thread.i.i.i.i.i, label %._crit_edge.i.i.i.i.i
+  br i1 %i.ak, label %._crit_edge.i.i.i.i.i, label %.lr.ph.preheader.i.i.i.i.i
 
-._crit_edge.i.i.i.i.i:                            ; preds = %"_ZN82_$LT$digest..core_api..wrapper..CoreWrapper$LT$T$GT$$u20$as$u20$digest..Update$GT$6update17h7b6d9e5921c8e308E.exit.i"
-  %8 = getelementptr i8, ptr %i.aj, i64 1
-  %9 = xor i64 %i.ai, 127
-  call void @llvm.memset.p0.i64(ptr align 1 %8, i8 0, i64 %9, i1 false), !alias.scope !10252, !noalias !10253
+.lr.ph.preheader.i.i.i.i.i:                       ; preds = %"_ZN82_$LT$digest..core_api..wrapper..CoreWrapper$LT$T$GT$$u20$as$u20$digest..Update$GT$6update17h7b6d9e5921c8e308E.exit.i"
+  %3 = getelementptr i8, ptr %i.aj, i64 1
+  %4 = xor i64 %i.ai, 127
+  call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 %4, i1 false), !alias.scope !10252, !noalias !10253
+  br label %._crit_edge.i.i.i.i.i
+
+._crit_edge.i.i.i.i.i:                            ; preds = %.lr.ph.preheader.i.i.i.i.i, %"_ZN82_$LT$digest..core_api..wrapper..CoreWrapper$LT$T$GT$$u20$as$u20$digest..Update$GT$6update17h7b6d9e5921c8e308E.exit.i"
+  %5 = zext nneg i8 %i.ae to i128
+  %6 = shl i128 %i.ah, 10
+  %7 = shl nuw nsw i128 %5, 3
+  %8 = or disjoint i128 %6, %7
+  %9 = call i128 @llvm.bswap.i128(i128 %8)        ; 2 uses
   %i.al = xor i64 %i.ai, 112
   %i.am = icmp samesign ult i64 %i.al, 16
   br i1 %i.am, label %._crit_edge.thread.i.i.i.i.i, label %bb.e
 
-._crit_edge.thread.i.i.i.i.i:                     ; preds = %._crit_edge.i.i.i.i.i, %"_ZN82_$LT$digest..core_api..wrapper..CoreWrapper$LT$T$GT$$u20$as$u20$digest..Update$GT$6update17h7b6d9e5921c8e308E.exit.i"
+._crit_edge.thread.i.i.i.i.i:                     ; preds = %._crit_edge.i.i.i.i.i
   call void @_ZN4sha26sha51211compress51217h97998c3175954028E(ptr noalias noundef nonnull align 16 dereferenceable(224) %i.f, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) dereferenceable(129) %i.ac, i64 noundef 1), !noalias !10254
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !10255
   call void @"_ZN110_$LT$generic_array..GenericArray$LT$T$C$N$GT$$u20$as$u20$generic_array..sequence..GenericSequence$LT$T$GT$$GT$8generate17h7b9c6e71b0230d8aE"(ptr noalias noundef nonnull sret([128 x i8]) align 1 captures(address) dereferenceable(128) %i.b), !noalias !10256
   %i.an = getelementptr inbounds nuw i8, ptr %i.b, i64 112
-  store i128 %7, ptr %i.an, align 1, !alias.scope !10257, !noalias !10258
+  store i128 %9, ptr %i.an, align 1, !alias.scope !10257, !noalias !10258
   call void @_ZN4sha26sha51211compress51217h97998c3175954028E(ptr noalias noundef nonnull align 16 dereferenceable(224) %i.f, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) dereferenceable(128) %i.b, i64 noundef 1), !noalias !10254
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !10255
   br label %"_ZN12block_buffer50BlockBuffer$LT$BlockSize$C$block_buffer..Eager$GT$10digest_pad17h2167a50a2f52460aE.exit.i.i.i.i.i"
 
 bb.e:                                             ; preds = %._crit_edge.i.i.i.i.i
   %i.ao = getelementptr inbounds nuw i8, ptr %i.f, i64 192
-  store i128 %7, ptr %i.ao, align 16, !alias.scope !10259, !noalias !10260
+  store i128 %9, ptr %i.ao, align 16, !alias.scope !10259, !noalias !10260
   call void @_ZN4sha26sha51211compress51217h97998c3175954028E(ptr noalias noundef nonnull align 16 dereferenceable(224) %i.f, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) dereferenceable(129) %i.ac, i64 noundef 1), !noalias !10254
   br label %"_ZN12block_buffer50BlockBuffer$LT$BlockSize$C$block_buffer..Eager$GT$10digest_pad17h2167a50a2f52460aE.exit.i.i.i.i.i"
 
@@ -409,37 +412,40 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.assume(i1 %i.af)
   %i.ag = getelementptr inbounds nuw i8, ptr %i.f, i64 32 ; 2 uses
   %i.ah = load i64, ptr %i.ag, align 8, !alias.scope !10385, !noalias !10386, !noundef !10
-  %3 = shl i64 %i.ah, 9
-  %4 = shl nuw nsw i64 %i.ae, 3
-  %5 = or disjoint i64 %3, %4
-  %6 = call i64 @llvm.bswap.i64(i64 %5)           ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !10387)
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.ae ; 2 uses
   store i8 -128, ptr %i.ai, align 1, !alias.scope !10388, !noalias !10389
   %i.aj = icmp eq i8 %i.ad, 63
-  br i1 %i.aj, label %._crit_edge.thread.i.i.i.i.i, label %._crit_edge.i.i.i.i.i
+  br i1 %i.aj, label %._crit_edge.i.i.i.i.i, label %.lr.ph.preheader.i.i.i.i.i
 
-._crit_edge.i.i.i.i.i:                            ; preds = %"_ZN82_$LT$digest..core_api..wrapper..CoreWrapper$LT$T$GT$$u20$as$u20$digest..Update$GT$6update17h9ecdcc65f94f0ae4E.exit.i"
-  %7 = getelementptr i8, ptr %i.ai, i64 1
-  %8 = xor i64 %i.ae, 63
-  call void @llvm.memset.p0.i64(ptr align 1 %7, i8 0, i64 %8, i1 false), !alias.scope !10388, !noalias !10389
+.lr.ph.preheader.i.i.i.i.i:                       ; preds = %"_ZN82_$LT$digest..core_api..wrapper..CoreWrapper$LT$T$GT$$u20$as$u20$digest..Update$GT$6update17h9ecdcc65f94f0ae4E.exit.i"
+  %3 = getelementptr i8, ptr %i.ai, i64 1
+  %4 = xor i64 %i.ae, 63
+  call void @llvm.memset.p0.i64(ptr align 1 %3, i8 0, i64 %4, i1 false), !alias.scope !10388, !noalias !10389
+  br label %._crit_edge.i.i.i.i.i
+
+._crit_edge.i.i.i.i.i:                            ; preds = %.lr.ph.preheader.i.i.i.i.i, %"_ZN82_$LT$digest..core_api..wrapper..CoreWrapper$LT$T$GT$$u20$as$u20$digest..Update$GT$6update17h9ecdcc65f94f0ae4E.exit.i"
+  %5 = shl i64 %i.ah, 9
+  %6 = shl nuw nsw i64 %i.ae, 3
+  %7 = or disjoint i64 %5, %6
+  %8 = call i64 @llvm.bswap.i64(i64 %7)           ; 2 uses
   %i.ak = xor i64 %i.ae, 56
   %i.al = icmp samesign ult i64 %i.ak, 8
   br i1 %i.al, label %._crit_edge.thread.i.i.i.i.i, label %bb.e
 
-._crit_edge.thread.i.i.i.i.i:                     ; preds = %._crit_edge.i.i.i.i.i, %"_ZN82_$LT$digest..core_api..wrapper..CoreWrapper$LT$T$GT$$u20$as$u20$digest..Update$GT$6update17h9ecdcc65f94f0ae4E.exit.i"
+._crit_edge.thread.i.i.i.i.i:                     ; preds = %._crit_edge.i.i.i.i.i
   call void @_ZN4sha26sha25611compress25617h0f9b7f3b30da6ce0E(ptr noalias noundef nonnull align 8 dereferenceable(112) %i.f, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) dereferenceable(65) %i.ab, i64 noundef 1), !noalias !10390
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !10391
   call void @"_ZN110_$LT$generic_array..GenericArray$LT$T$C$N$GT$$u20$as$u20$generic_array..sequence..GenericSequence$LT$T$GT$$GT$8generate17hdf506f7d63e2b6a3E"(ptr noalias noundef nonnull sret([64 x i8]) align 1 captures(address) dereferenceable(64) %i.b), !noalias !10392
   %i.am = getelementptr inbounds nuw i8, ptr %i.b, i64 56
-  store i64 %6, ptr %i.am, align 1, !alias.scope !10393, !noalias !10394
+  store i64 %8, ptr %i.am, align 1, !alias.scope !10393, !noalias !10394
   call void @_ZN4sha26sha25611compress25617h0f9b7f3b30da6ce0E(ptr noalias noundef nonnull align 8 dereferenceable(112) %i.f, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) dereferenceable(64) %i.b, i64 noundef 1), !noalias !10390
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !10391
   br label %"_ZN12block_buffer50BlockBuffer$LT$BlockSize$C$block_buffer..Eager$GT$10digest_pad17h32f878d07b5c89dbE.exit.i.i.i.i.i"
 
 bb.e:                                             ; preds = %._crit_edge.i.i.i.i.i
   %i.an = getelementptr inbounds nuw i8, ptr %i.f, i64 96
-  store i64 %6, ptr %i.an, align 8, !alias.scope !10395, !noalias !10396
+  store i64 %8, ptr %i.an, align 8, !alias.scope !10395, !noalias !10396
   call void @_ZN4sha26sha25611compress25617h0f9b7f3b30da6ce0E(ptr noalias noundef nonnull align 8 dereferenceable(112) %i.f, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) dereferenceable(65) %i.ab, i64 noundef 1), !noalias !10390
   br label %"_ZN12block_buffer50BlockBuffer$LT$BlockSize$C$block_buffer..Eager$GT$10digest_pad17h32f878d07b5c89dbE.exit.i.i.i.i.i"
 

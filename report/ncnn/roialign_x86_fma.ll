@@ -204,12 +204,12 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   %i.an = zext nneg i32 %i.af to i64              ; 2 uses
   %min.iters.check = icmp ult i32 %i.af, 4
   %n.vec = and i64 %i.an, 2147483644              ; 4 uses
-  %10 = trunc nuw nsw i64 %n.vec to i32
   %broadcast.splatinsert172 = insertelement <4 x float> poison, float %i.ai, i64 0
   %broadcast.splat173 = shufflevector <4 x float> %broadcast.splatinsert172, <4 x float> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert174 = insertelement <4 x float> poison, float %.sroa.speculated115, i64 0
   %broadcast.splat175 = shufflevector <4 x float> %broadcast.splatinsert174, <4 x float> poison, <4 x i32> zeroinitializer
   %i.ao = fdiv fast <4 x float> splat (float 1.000000e+00), %broadcast.splat173
+  %10 = trunc nuw nsw i64 %n.vec to i32
   %cmp.n = icmp eq i64 %n.vec, %i.an
   %i.ap = fdiv fast float 1.000000e+00, %i.ai
   br label %.lr.ph.us
@@ -243,7 +243,6 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.us
-  %11 = add i64 %.2142.us, %n.vec                 ; 2 uses
   %broadcast.splat = shufflevector <2 x float> %i.bg, <2 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %broadcast.splat165 = shufflevector <2 x float> %i.bg, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1> ; 2 uses
   %broadcast.splat167 = shufflevector <2 x i32> %i.bk, <2 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -293,6 +292,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.co, label %middle.block, label %vector.body, !llvm.loop !70
 
 middle.block:                                     ; preds = %vector.body
+  %11 = add i64 %.2142.us, %n.vec                 ; 2 uses
   br i1 %cmp.n, label %._crit_edge.us, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph.us, %middle.block
@@ -478,15 +478,7 @@ bb.c:                                             ; preds = %.preheader147, %._c
   %i.bv = fsub fast <2 x float> %i.bu, %i.bq
   %i.bw = call fast <2 x float> @llvm.ceil.v2f32(<2 x float> %i.bv)
   %i.bx = select <2 x i1> %i.ao, <2 x float> %i.aq, <2 x float> %i.bw
-  %i.by = fptosi <2 x float> %i.bx to <2 x i32>   ; 3 uses
-  %13 = fcmp ole <2 x float> %i.bu, %i.bq
-  %14 = extractelement <2 x i1> %13, i64 1
-  %15 = fcmp ole <2 x float> %i.bu, %i.bq
-  %16 = extractelement <2 x i1> %15, i64 0
-  %17 = select i1 %14, i1 true, i1 %16
-  %18 = extractelement <2 x i32> %i.by, i64 0     ; 3 uses
-  %19 = extractelement <2 x i32> %i.by, i64 1     ; 2 uses
-  %20 = mul i32 %18, %19                          ; 2 uses
+  %i.by = fptosi <2 x float> %i.bx to <2 x i32>   ; 5 uses
   %i.bz = icmp sgt <2 x i32> %i.by, zeroinitializer ; 2 uses
   %i.ca = extractelement <2 x i1> %i.bz, i64 0
   %i.cb = extractelement <2 x i1> %i.bz, i64 1
@@ -495,8 +487,10 @@ bb.c:                                             ; preds = %.preheader147, %._c
 
 .preheader.lr.ph.split.us:                        ; preds = %bb.c
   %i.cc = load ptr, ptr %12, align 8, !tbaa !40
-  %i.cd = zext nneg i32 %18 to i64
+  %13 = extractelement <2 x i32> %i.by, i64 0     ; 3 uses
+  %i.cd = zext nneg i32 %13 to i64
   %i.ce = sext i32 %.166159 to i64
+  %14 = extractelement <2 x i32> %i.by, i64 1     ; 2 uses
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %._crit_edge.us, %.preheader.lr.ph.split.us
@@ -539,25 +533,34 @@ bb.d:                                             ; preds = %.preheader.us, %bb.
   %i.df = fmul fast <4 x float> %i.de, %i.da
   %op.rdx = call fast float @llvm.vector.reduce.fadd.v4f32(float %.1149.us, <4 x float> %i.df) ; 3 uses
   %i.dg = add nuw nsw i32 %.060150.us, 1          ; 2 uses
-  %exitcond.not = icmp eq i32 %i.dg, %18
+  %exitcond.not = icmp eq i32 %i.dg, %13
   br i1 %exitcond.not, label %._crit_edge.us, label %bb.d, !llvm.loop !80
 
 ._crit_edge.us:                                   ; preds = %bb.d
   %i.dh = add nsw i64 %.2152.us, %i.cd
   %i.di = add nuw nsw i32 %.061154.us, 1          ; 2 uses
-  %exitcond175.not = icmp eq i32 %i.di, %19
+  %exitcond175.not = icmp eq i32 %i.di, %14
   br i1 %exitcond175.not, label %._crit_edge155.loopexit, label %.preheader.us, !llvm.loop !81
 
 ._crit_edge155.loopexit:                          ; preds = %._crit_edge.us
-  %i.dj = add i32 %.166159, %20
+  %15 = mul i32 %14, %13
+  %i.dj = add i32 %.166159, %15
   br label %._crit_edge155
 
 ._crit_edge155:                                   ; preds = %._crit_edge155.loopexit, %bb.c
   %.2.lcssa = phi i32 [ %.166159, %bb.c ], [ %i.dj, %._crit_edge155.loopexit ] ; 2 uses
   %.062.lcssa = phi float [ 0.000000e+00, %bb.c ], [ %op.rdx, %._crit_edge155.loopexit ]
-  %i.dk = sitofp fast i32 %20 to float
+  %16 = fcmp ole <2 x float> %i.bu, %i.bq
+  %17 = extractelement <2 x i1> %16, i64 1
+  %18 = fcmp ole <2 x float> %i.bu, %i.bq
+  %19 = extractelement <2 x i1> %18, i64 0
+  %20 = select i1 %17, i1 true, i1 %19
+  %21 = extractelement <2 x i32> %i.by, i64 0
+  %22 = extractelement <2 x i32> %i.by, i64 1
+  %23 = mul nsw i32 %21, %22
+  %i.dk = sitofp fast i32 %23 to float
   %i.dl = fdiv fast float %.062.lcssa, %i.dk
-  %i.dm = select fast i1 %17, float 0.000000e+00, float %i.dl
+  %i.dm = select fast i1 %20, float 0.000000e+00, float %i.dl
   %i.dn = getelementptr inbounds nuw [4 x i8], ptr %.067162, i64 %indvars.iv176
   store float %i.dm, ptr %i.dn, align 4, !tbaa !36
   %exitcond179.not = icmp eq i64 %indvars.iv.next177, %wide.trip.count

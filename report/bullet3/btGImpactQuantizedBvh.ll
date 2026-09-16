@@ -110,7 +110,6 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local noundef range(i32 0, 3) i32 @_ZN18btQuantizedBvhTree20_calc_splitting_axisER18GIM_BVH_DATA_ARRAYii(ptr nofree nonnull readnone align 8 captures(none) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(25) %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #2 align 2 {
 bb.a:
-  %4 = sub nsw i32 %3, %2                         ; 2 uses
   %i.a = icmp slt i32 %2, %3
   br i1 %i.a, label %.lr.ph, label %._crit_edge
 
@@ -150,12 +149,14 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   br i1 %exitcond.not, label %.lr.ph100, label %bb.b, !llvm.loop !55
 
 ._crit_edge:                                      ; preds = %bb.a
+  %4 = sub nsw i32 %3, %2
   %i.z = sitofp i32 %4 to float
   %i.aa = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %i.z, i64 0
   br label %._crit_edge101
 
 .lr.ph100:                                        ; preds = %bb.b
-  %i.ab = sitofp i32 %4 to float                  ; 2 uses
+  %5 = sub nsw i32 %3, %2
+  %i.ab = sitofp i32 %5 to float                  ; 2 uses
   %i.ac = fdiv nnan float 1.000000e+00, %i.ab
   %i.ad = insertelement <4 x float> <float 0.000000e+00, float poison, float poison, float poison>, float %i.ac, i64 1
   %i.ae = shufflevector <4 x float> %i.ad, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
@@ -228,7 +229,6 @@ bb.a:
   %.sroa.0.i = alloca %class.btAABB, align 8      ; 5 uses
   %5 = alloca %class.btVector3, align 8           ; 6 uses
   %6 = alloca %class.btVector3, align 8           ; 5 uses
-  %7 = sub nsw i32 %3, %2                         ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #15
   %i.a = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.b = icmp slt i32 %2, %3                      ; 2 uses
@@ -314,6 +314,7 @@ bb.a:
 ._crit_edge:                                      ; preds = %.prol.loopexit, %.lr.ph.new, %bb.a
   %.0.5863.lcssa = phi float [ 0.000000e+00, %bb.a ], [ %.lcssa.unr, %.prol.loopexit ], [ %i.ba, %.lr.ph.new ]
   %i.bb = phi <2 x float> [ zeroinitializer, %bb.a ], [ %.lcssa102.unr, %.prol.loopexit ], [ %i.az, %.lr.ph.new ]
+  %7 = sub nsw i32 %3, %2                         ; 3 uses
   %i.bc = sitofp i32 %7 to float
   %i.bd = fdiv float 1.000000e+00, %i.bc          ; 2 uses
   %i.be = insertelement <2 x float> poison, float %i.bd, i64 0

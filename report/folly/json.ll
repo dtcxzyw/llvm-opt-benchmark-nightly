@@ -205,8 +205,6 @@ _ZN3fmt2v96detail14write_exponentIcNS1_19truncating_iteratorIPcSt17integral_cons
 ; Function Attrs: mustprogress noinline uwtable
 define linkonce_odr void @_ZN3fmt2v96detail17copy_str_noinlineIcPcNS1_19truncating_iteratorIS3_St17integral_constantIbLb0EEEEEET1_T0_S9_S8_(ptr dead_on_unwind noalias writable sret(%"class.fmt::v9::detail::truncating_iterator") align 8 %0, ptr noundef %1, ptr noundef %2, ptr noundef byval(%"class.fmt::v9::detail::truncating_iterator") align 8 %3) local_unnamed_addr #21 comdat {
 bb.a:
-  %4 = ptrtoaddr ptr %1 to i64                    ; 3 uses
-  %5 = ptrtoaddr ptr %2 to i64                    ; 3 uses
   %.sroa.08.0.copyload = load ptr, ptr %3, align 8 ; 3 uses
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
   %.sroa.2.0.copyload = load i64, ptr %.sroa.2.0..sroa_idx, align 8 ; 6 uses
@@ -218,7 +216,9 @@ bb.a:
   br i1 %.not5.i, label %_ZN3fmt2v96detail8copy_strIcPcNS1_19truncating_iteratorIS3_St17integral_constantIbLb0EEEEEET1_T0_S9_S8_.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.a
-  %i.b = sub i64 %5, %4
+  %4 = ptrtoaddr ptr %2 to i64                    ; 2 uses
+  %5 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %i.b = sub i64 %4, %5
   %xtraiter = and i64 %i.b, 3                     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
@@ -250,7 +250,7 @@ _ZN3fmt2v96detail19truncating_iteratorIPcSt17integral_constantIbLb0EEEppEi.exit.
   %.sroa.7.0.unr = phi i64 [ %.sroa.3.0.copyload, %.lr.ph.i.preheader ], [ %i.d, %_ZN3fmt2v96detail19truncating_iteratorIPcSt17integral_constantIbLb0EEEppEi.exit.cont.i.prol ]
   %.07.i.unr = phi ptr [ %1, %.lr.ph.i.preheader ], [ %i.c, %_ZN3fmt2v96detail19truncating_iteratorIPcSt17integral_constantIbLb0EEEppEi.exit.cont.i.prol ]
   %.sroa.0.0.copyload46.i.unr = phi ptr [ %.sroa.08.0.copyload, %.lr.ph.i.preheader ], [ %.sroa.0.0.copyload3.i.prol, %_ZN3fmt2v96detail19truncating_iteratorIPcSt17integral_constantIbLb0EEEppEi.exit.cont.i.prol ]
-  %i.h = sub i64 %4, %5
+  %i.h = sub i64 %5, %4
   %i.i = icmp ugt i64 %i.h, -4
   br i1 %i.i, label %_ZN3fmt2v96detail8copy_strIcPcNS1_19truncating_iteratorIS3_St17integral_constantIbLb0EEEEEET1_T0_S9_S8_.exit.loopexit, label %.lr.ph.i
 
@@ -315,8 +315,10 @@ _ZN3fmt2v96detail19truncating_iteratorIPcSt17integral_constantIbLb0EEEppEi.exit.
 
 _ZN3fmt2v96detail8copy_strIcPcNS1_19truncating_iteratorIS3_St17integral_constantIbLb0EEEEEET1_T0_S9_S8_.exit.loopexit: ; preds = %_ZN3fmt2v96detail19truncating_iteratorIPcSt17integral_constantIbLb0EEEppEi.exit.cont.i.3, %.lr.ph.i.prol.loopexit
   %.sroa.0.0.copyload3.i.lcssa = phi ptr [ %.sroa.0.0.copyload3.i.lcssa.unr, %.lr.ph.i.prol.loopexit ], [ %.sroa.0.0.copyload3.i.3, %_ZN3fmt2v96detail19truncating_iteratorIPcSt17integral_constantIbLb0EEEppEi.exit.cont.i.3 ]
-  %i.ad = add i64 %.sroa.3.0.copyload, %5
-  %i.ae = sub i64 %i.ad, %4
+  %6 = ptrtoaddr ptr %2 to i64
+  %7 = ptrtoaddr ptr %1 to i64
+  %i.ad = add i64 %.sroa.3.0.copyload, %6
+  %i.ae = sub i64 %i.ad, %7
   br label %_ZN3fmt2v96detail8copy_strIcPcNS1_19truncating_iteratorIS3_St17integral_constantIbLb0EEEEEET1_T0_S9_S8_.exit
 
 _ZN3fmt2v96detail8copy_strIcPcNS1_19truncating_iteratorIS3_St17integral_constantIbLb0EEEEEET1_T0_S9_S8_.exit: ; preds = %_ZN3fmt2v96detail8copy_strIcPcNS1_19truncating_iteratorIS3_St17integral_constantIbLb0EEEEEET1_T0_S9_S8_.exit.loopexit, %bb.a
@@ -719,8 +721,6 @@ vector.memcheck:                                  ; preds = %.lr.ph.i
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.b, 2147483640               ; 4 uses
-  %2 = sub nsw i64 %i.at, %n.vec
-  %3 = sub nsw i64 %i.as, %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -742,6 +742,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bg, label %middle.block, label %vector.body, !llvm.loop !962
 
 middle.block:                                     ; preds = %vector.body
+  %2 = sub nsw i64 %i.at, %n.vec
+  %3 = sub nsw i64 %i.as, %n.vec
   %cmp.n = icmp eq i64 %i.au, %n.vec
   br i1 %cmp.n, label %._crit_edge.i, label %scalar.ph.preheader
 

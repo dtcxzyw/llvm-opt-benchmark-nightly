@@ -205,9 +205,9 @@ bb.m:                                             ; preds = %._crit_edge
   br i1 %niter301.ncmp.1, label %._crit_edge210.loopexit.unr-lcssa, label %.lr.ph209, !llvm.loop !30
 
 bb.n:                                             ; preds = %._crit_edge210, %_ZN7meshoptL22getNextTriangleDeadEndERjPKhm.exit
-  %.0173239 = phi i32 [ 0, %._crit_edge210 ], [ %7, %_ZN7meshoptL22getNextTriangleDeadEndERjPKhm.exit ] ; 2 uses
+  %.0173239 = phi i32 [ 0, %._crit_edge210 ], [ %13, %_ZN7meshoptL22getNextTriangleDeadEndERjPKhm.exit ] ; 3 uses
   %.0174238 = phi i32 [ 0, %._crit_edge210 ], [ %.1175, %_ZN7meshoptL22getNextTriangleDeadEndERjPKhm.exit ] ; 5 uses
-  %.0176237 = phi i64 [ 0, %._crit_edge210 ], [ %8, %_ZN7meshoptL22getNextTriangleDeadEndERjPKhm.exit ] ; 5 uses
+  %.0176237 = phi i64 [ 0, %._crit_edge210 ], [ %12, %_ZN7meshoptL22getNextTriangleDeadEndERjPKhm.exit ] ; 5 uses
   %.0177236 = phi ptr [ %i.ci, %._crit_edge210 ], [ %.0178235, %_ZN7meshoptL22getNextTriangleDeadEndERjPKhm.exit ] ; 8 uses
   %.0178235 = phi ptr [ %i.a, %._crit_edge210 ], [ %.0177236, %_ZN7meshoptL22getNextTriangleDeadEndERjPKhm.exit ] ; 4 uses
   %.0203234 = phi i32 [ 1, %._crit_edge210 ], [ %.1204, %_ZN7meshoptL22getNextTriangleDeadEndERjPKhm.exit ] ; 3 uses
@@ -235,7 +235,6 @@ bb.n:                                             ; preds = %._crit_edge210, %_Z
   %i.eu = zext i32 %i.et to i64
   %i.ev = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.eu
   store i32 %i.em, ptr %i.ev, align 4, !tbaa !22
-  %7 = add i32 %.0173239, 1
   %i.ew = zext i32 %.0174238 to i64               ; 2 uses
   %i.ex = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.ew
   store i8 1, ptr %i.ex, align 1, !tbaa !26
@@ -255,7 +254,7 @@ bb.n:                                             ; preds = %._crit_edge210, %_Z
   br i1 %i.fb, label %.lr.ph214.epil.preheader, label %.lr.ph214.preheader.new
 
 .lr.ph214.preheader.new:                          ; preds = %.lr.ph214.preheader
-  %unroll_iter306 = and i64 %.0176237, 30
+  %unroll_iter306 = and i64 %.0176237, -2
   br label %.lr.ph214
 
 ._crit_edge215.loopexit.unr-lcssa:                ; preds = %.lr.ph214
@@ -322,7 +321,7 @@ bb.n:                                             ; preds = %._crit_edge210, %_Z
   %i.go = zext i1 %i.gn to i64
   %i.gp = add i64 %i.ge, %i.go                    ; 3 uses
   %i.gq = add nuw nsw i64 %.0171212, 2            ; 2 uses
-  %niter307.next.1 = add nuw nsw i64 %niter307, 2 ; 2 uses
+  %niter307.next.1 = add nuw i64 %niter307, 2     ; 2 uses
   %niter307.ncmp.1 = icmp eq i64 %niter307.next.1, %unroll_iter306
   br i1 %niter307.ncmp.1, label %._crit_edge215.loopexit.unr-lcssa, label %.lr.ph214, !llvm.loop !31
 
@@ -429,11 +428,16 @@ bb.q:                                             ; preds = %.lr.ph218.2
   br label %.loopexit206.2
 
 .loopexit206.2:                                   ; preds = %.critedge.2, %bb.q, %.loopexit206.1
-  %8 = tail call i64 @llvm.umin.i64(i64 %.0172.lcssa, i64 16)
   %.not244 = icmp eq i64 %.0172.lcssa, 0
-  br i1 %.not244, label %._crit_edge232.thread.a, label %.lr.ph231
+  br i1 %.not244, label %._crit_edge232.thread, label %.lr.ph231
+
+._crit_edge232.thread:                            ; preds = %.loopexit206.2
+  %7 = add i32 %.0173239, 1
+  br label %._crit_edge232.thread.a
 
 ._crit_edge232:                                   ; preds = %.loopexit
+  %8 = add i32 %.0173239, 1                       ; 2 uses
+  %9 = tail call i64 @llvm.umin.i64(i64 %.0172.lcssa, i64 16) ; 2 uses
   %i.im = icmp eq i32 %.2168, -1
   br i1 %i.im, label %._crit_edge232.thread.a, label %_ZN7meshoptL22getNextTriangleDeadEndERjPKhm.exit
 
@@ -534,7 +538,9 @@ bb.r:                                             ; preds = %.lr.ph231, %.loopex
   %exitcond253.not = icmp eq i64 %i.kr, %.0172.lcssa
   br i1 %exitcond253.not, label %._crit_edge232, label %bb.r, !llvm.loop !34
 
-._crit_edge232.thread.a:                          ; preds = %.loopexit206.2, %._crit_edge232
+._crit_edge232.thread.a:                          ; preds = %._crit_edge232.thread, %._crit_edge232
+  %10 = phi i64 [ 0, %._crit_edge232.thread ], [ %9, %._crit_edge232 ]
+  %11 = phi i32 [ %7, %._crit_edge232.thread ], [ %8, %._crit_edge232 ]
   %i.ks = zext i32 %.0203234 to i64               ; 2 uses
   %i.kt = icmp samesign ugt i64 %i.l, %i.ks
   br i1 %i.kt, label %.lr.ph.i, label %_ZN7meshoptL22getNextTriangleDeadEndERjPKhm.exit.thread
@@ -554,6 +560,8 @@ bb.s:                                             ; preds = %.lr.ph.i
   br i1 %i.kz, label %.lr.ph.i, label %_ZN7meshoptL22getNextTriangleDeadEndERjPKhm.exit.thread, !llvm.loop !35
 
 _ZN7meshoptL22getNextTriangleDeadEndERjPKhm.exit: ; preds = %.lr.ph.i, %._crit_edge232
+  %12 = phi i64 [ %9, %._crit_edge232 ], [ %10, %.lr.ph.i ]
+  %13 = phi i32 [ %8, %._crit_edge232 ], [ %11, %.lr.ph.i ]
   %.1204 = phi i32 [ %.0203234, %._crit_edge232 ], [ %.2205, %.lr.ph.i ]
   %.1175 = phi i32 [ %.2168, %._crit_edge232 ], [ %.2205, %.lr.ph.i ] ; 2 uses
   %.not = icmp eq i32 %.1175, -1
@@ -956,13 +964,11 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %_ZN7meshoptL20getNextVertexDeadEndEPKjRjS2_S1_m.exit
-  %.0100172 = phi i32 [ 0, %bb.k ], [ %.1.lcssa, %_ZN7meshoptL20getNextVertexDeadEndEPKjRjS2_S1_m.exit ] ; 2 uses
-  %.0101171 = phi i32 [ %i.ak, %bb.k ], [ %.1102.lcssa, %_ZN7meshoptL20getNextVertexDeadEndEPKjRjS2_S1_m.exit ] ; 2 uses
+  %.0100172 = phi i32 [ 0, %bb.k ], [ %.1102.lcssa, %_ZN7meshoptL20getNextVertexDeadEndEPKjRjS2_S1_m.exit ] ; 2 uses
+  %.0101171 = phi i32 [ %i.ak, %bb.k ], [ %.1149.lcssa.a, %_ZN7meshoptL20getNextVertexDeadEndEPKjRjS2_S1_m.exit ] ; 2 uses
   %.0104170 = phi i32 [ 0, %bb.k ], [ %.1105, %_ZN7meshoptL20getNextVertexDeadEndEPKjRjS2_S1_m.exit ]
   %.0144169 = phi i32 [ 1, %bb.k ], [ %.1145, %_ZN7meshoptL20getNextVertexDeadEndEPKjRjS2_S1_m.exit ] ; 4 uses
   %.0148168 = phi i32 [ 0, %bb.k ], [ %.3151, %_ZN7meshoptL20getNextVertexDeadEndEPKjRjS2_S1_m.exit ] ; 4 uses
-  %7 = zext i32 %.0148168 to i64                  ; 2 uses
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.ad, i64 %7
   %i.ap = zext i32 %.0104170 to i64               ; 2 uses
   %i.aq = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %i.ap
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !22
@@ -976,23 +982,24 @@ bb.l:                                             ; preds = %bb.k, %_ZN7meshoptL
   %.not127157 = icmp eq i32 %i.av, 0
   br i1 %.not127157, label %._crit_edge, label %.lr.ph
 
-._crit_edge.loopexit:                             ; preds = %bb.aa
-  %.pre = zext i32 %.2150 to i64
-  br label %._crit_edge
+._crit_edge:                                      ; preds = %bb.aa, %bb.l
+  %.1149.lcssa = phi i32 [ %.0148168, %bb.l ], [ %.2150, %bb.aa ] ; 4 uses
+  %.1149.lcssa.a = phi i32 [ %.0101171, %bb.l ], [ %.5, %bb.aa ] ; 3 uses
+  %.1102.lcssa = phi i32 [ %.0100172, %bb.l ], [ %.2, %bb.aa ]
+  %7 = zext i32 %.1149.lcssa to i64               ; 2 uses
+  %i.ay = getelementptr inbounds nuw [4 x i8], ptr %i.ad, i64 %7
+  %.not28.i = icmp eq i32 %.0148168, %.1149.lcssa
+  br i1 %.not28.i, label %_ZN7meshoptL21getNextVertexNeighborEPKjS1_S1_S1_jj.exit.thread, label %.lr.ph.i.preheader
 
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.l
-  %.pre-phi = phi i64 [ %.pre, %._crit_edge.loopexit ], [ %7, %bb.l ] ; 2 uses
-  %.1149.lcssa.a = phi i32 [ %.2150, %._crit_edge.loopexit ], [ %.0148168, %bb.l ] ; 3 uses
-  %.1102.lcssa = phi i32 [ %.5, %._crit_edge.loopexit ], [ %.0101171, %bb.l ] ; 3 uses
-  %.1.lcssa = phi i32 [ %.2, %._crit_edge.loopexit ], [ %.0100172, %bb.l ]
-  %i.ay = getelementptr inbounds nuw [4 x i8], ptr %i.ad, i64 %.pre-phi
-  %.not28.i = icmp eq i32 %.0148168, %.1149.lcssa.a
-  br i1 %.not28.i, label %_ZN7meshoptL21getNextVertexNeighborEPKjS1_S1_S1_jj.exit.thread, label %.lr.ph.i
+.lr.ph.i.preheader:                               ; preds = %._crit_edge
+  %8 = zext i32 %.0148168 to i64
+  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.ad, i64 %8
+  br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %._crit_edge, %bb.n
-  %.02031.i = phi ptr [ %i.bk, %bb.n ], [ %8, %._crit_edge ] ; 2 uses
-  %.02130.i = phi i32 [ %.2.i, %bb.n ], [ -1, %._crit_edge ] ; 3 uses
-  %.02229.i = phi i32 [ %.224.i, %bb.n ], [ -1, %._crit_edge ] ; 2 uses
+.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.n
+  %.02031.i = phi ptr [ %i.bk, %bb.n ], [ %9, %.lr.ph.i.preheader ] ; 2 uses
+  %.02130.i = phi i32 [ %.2.i, %bb.n ], [ -1, %.lr.ph.i.preheader ] ; 3 uses
+  %.02229.i = phi i32 [ %.224.i, %bb.n ], [ -1, %.lr.ph.i.preheader ] ; 2 uses
   %i.az = load i32, ptr %.02031.i, align 4, !tbaa !22 ; 2 uses
   %i.ba = zext i32 %i.az to i64                   ; 2 uses
   %i.bb = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %i.ba
@@ -1002,12 +1009,12 @@ bb.l:                                             ; preds = %bb.k, %_ZN7meshoptL
 
 bb.m:                                             ; preds = %.lr.ph.i
   %i.bd = shl i32 %i.bc, 1
-  %i.be = add i32 %i.bd, %.1102.lcssa
+  %i.be = add i32 %i.bd, %.1149.lcssa.a
   %i.bf = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %i.ba
   %i.bg = load i32, ptr %i.bf, align 4, !tbaa !22 ; 2 uses
   %i.bh = sub i32 %i.be, %i.bg
   %.not27.i = icmp ugt i32 %i.bh, %4
-  %i.bi = sub i32 %.1102.lcssa, %i.bg
+  %i.bi = sub i32 %.1149.lcssa.a, %i.bg
   %spec.select.i = select i1 %.not27.i, i32 0, i32 %i.bi ; 2 uses
   %i.bj = icmp sgt i32 %spec.select.i, %.02130.i
   %.123.i = select i1 %i.bj, i32 %i.az, i32 %.02229.i
@@ -1158,15 +1165,15 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %.lr.ph
-  %.2150 = phi i32 [ %i.cz, %bb.z ], [ %.1149158, %.lr.ph ] ; 3 uses
+  %.2150 = phi i32 [ %i.cz, %bb.z ], [ %.1149158, %.lr.ph ] ; 2 uses
   %.5 = phi i32 [ %.4, %bb.z ], [ %.1102159, %.lr.ph ] ; 2 uses
   %.2 = phi i32 [ %i.cq, %bb.z ], [ %.1160, %.lr.ph ] ; 2 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %.0161, i64 4 ; 2 uses
   %.not127 = icmp eq ptr %i.eb, %i.ax
-  br i1 %.not127, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !56
+  br i1 %.not127, label %._crit_edge, label %.lr.ph, !llvm.loop !56
 
 _ZN7meshoptL21getNextVertexNeighborEPKjS1_S1_S1_jj.exit.thread: ; preds = %._crit_edge, %_ZN7meshoptL21getNextVertexNeighborEPKjS1_S1_S1_jj.exit
-  %.not.i132164 = icmp eq i32 %.1149.lcssa.a, 0
+  %.not.i132164 = icmp eq i32 %.1149.lcssa, 0
   br i1 %.not.i132164, label %.preheader.i, label %.lr.ph166
 
 bb.ab:                                            ; preds = %.lr.ph166
@@ -1179,7 +1186,7 @@ bb.ab:                                            ; preds = %.lr.ph166
   br i1 %i.ed, label %.lr.ph.i134, label %_ZN7meshoptL20getNextVertexDeadEndEPKjRjS2_S1_m.exit.thread
 
 .lr.ph166:                                        ; preds = %_ZN7meshoptL21getNextVertexNeighborEPKjS1_S1_S1_jj.exit.thread, %bb.ab
-  %indvars.iv.i165 = phi i64 [ %indvars.iv.next.i, %bb.ab ], [ %.pre-phi, %_ZN7meshoptL21getNextVertexNeighborEPKjS1_S1_S1_jj.exit.thread ]
+  %indvars.iv.i165 = phi i64 [ %indvars.iv.next.i, %bb.ab ], [ %7, %_ZN7meshoptL21getNextVertexNeighborEPKjS1_S1_S1_jj.exit.thread ]
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i165, -1 ; 4 uses
   %i.ee = getelementptr inbounds nuw [4 x i8], ptr %i.ad, i64 %indvars.iv.next.i
   %i.ef = load i32, ptr %i.ee, align 4, !tbaa !22 ; 2 uses
@@ -1208,7 +1215,7 @@ _ZN7meshoptL20getNextVertexDeadEndEPKjRjS2_S1_m.exit.loopexit173: ; preds = %.lr
   br label %_ZN7meshoptL20getNextVertexDeadEndEPKjRjS2_S1_m.exit
 
 _ZN7meshoptL20getNextVertexDeadEndEPKjRjS2_S1_m.exit: ; preds = %.lr.ph.i134, %_ZN7meshoptL20getNextVertexDeadEndEPKjRjS2_S1_m.exit.loopexit173, %_ZN7meshoptL21getNextVertexNeighborEPKjS1_S1_S1_jj.exit
-  %.3151 = phi i32 [ %.1149.lcssa.a, %_ZN7meshoptL21getNextVertexNeighborEPKjS1_S1_S1_jj.exit ], [ %indvars.i, %_ZN7meshoptL20getNextVertexDeadEndEPKjRjS2_S1_m.exit.loopexit173 ], [ 0, %.lr.ph.i134 ]
+  %.3151 = phi i32 [ %.1149.lcssa, %_ZN7meshoptL21getNextVertexNeighborEPKjS1_S1_S1_jj.exit ], [ %indvars.i, %_ZN7meshoptL20getNextVertexDeadEndEPKjRjS2_S1_m.exit.loopexit173 ], [ 0, %.lr.ph.i134 ]
   %.1145 = phi i32 [ %.0144169, %_ZN7meshoptL21getNextVertexNeighborEPKjS1_S1_S1_jj.exit ], [ %.0144169, %_ZN7meshoptL20getNextVertexDeadEndEPKjRjS2_S1_m.exit.loopexit173 ], [ %.2146, %.lr.ph.i134 ]
   %.1105 = phi i32 [ %.224.i, %_ZN7meshoptL21getNextVertexNeighborEPKjS1_S1_S1_jj.exit ], [ %i.ef, %_ZN7meshoptL20getNextVertexDeadEndEPKjRjS2_S1_m.exit.loopexit173 ], [ %.2146, %.lr.ph.i134 ] ; 2 uses
   %.not = icmp eq i32 %.1105, -1

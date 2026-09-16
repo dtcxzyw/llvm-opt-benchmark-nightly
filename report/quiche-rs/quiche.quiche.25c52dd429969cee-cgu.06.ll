@@ -202,9 +202,15 @@ _RNvMsd_Cs5kGgRUzsVpH_8smallvecINtB5_8SmallVecATyyEj4_E11try_reserveCs3f36owOmep
   %min.iters.check = icmp samesign ult i64 %i.z, 20, !dbg !10429
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader30, label %vector.memcheck, !dbg !10429
 
-.lr.ph.i.i.preheader30:                           ; preds = %vector.body, %vector.memcheck, %.lr.ph.i.i.preheader
-  %.sroa.0.073.i.i.ph = phi ptr [ %.sink22.i, %vector.memcheck ], [ %.sink22.i, %.lr.ph.i.i.preheader ], [ %3, %vector.body ]
-  %.sroa.7.072.i.i.ph = phi i64 [ %i.v, %vector.memcheck ], [ %i.v, %.lr.ph.i.i.preheader ], [ %4, %vector.body ]
+.lr.ph.i.i.preheader30.loopexit:                  ; preds = %vector.body
+  %2 = shl nuw i64 %n.vec, 4
+  %3 = getelementptr i8, ptr %.sink22.i, i64 %2
+  %4 = add i64 %i.v, %n.vec
+  br label %.lr.ph.i.i.preheader30, !dbg !10429
+
+.lr.ph.i.i.preheader30:                           ; preds = %.lr.ph.i.i.preheader30.loopexit, %vector.memcheck, %.lr.ph.i.i.preheader
+  %.sroa.0.073.i.i.ph = phi ptr [ %.sink22.i, %vector.memcheck ], [ %.sink22.i, %.lr.ph.i.i.preheader ], [ %3, %.lr.ph.i.i.preheader30.loopexit ]
+  %.sroa.7.072.i.i.ph = phi i64 [ %i.v, %vector.memcheck ], [ %i.v, %.lr.ph.i.i.preheader ], [ %4, %.lr.ph.i.i.preheader30.loopexit ]
   br label %.lr.ph.i.i, !dbg !10429
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
@@ -227,9 +233,6 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheade
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.z, 1152921504606846974      ; 3 uses
-  %2 = shl nuw i64 %n.vec, 4
-  %3 = getelementptr i8, ptr %.sink22.i, i64 %2
-  %4 = add i64 %i.v, %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -248,7 +251,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x i64> %wide.load28, ptr %i.an, align 8, !dbg !10432, !alias.scope !10400, !noalias !10401
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.ao = icmp eq i64 %index.next, %n.vec, !dbg !10428
-  br i1 %i.ao, label %.lr.ph.i.i.preheader30, label %vector.body, !dbg !10428, !llvm.loop !10214
+  br i1 %i.ao, label %.lr.ph.i.i.preheader30.loopexit, label %vector.body, !dbg !10428, !llvm.loop !10214
 
 ._crit_edge.i.i:                                  ; preds = %bb.d, %.thread.i
   %i.ap = phi ptr [ %spec.select14, %.thread.i ], [ %i.t, %bb.d ]

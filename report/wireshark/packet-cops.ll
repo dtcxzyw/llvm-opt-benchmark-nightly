@@ -204,23 +204,24 @@ middle.block:                                     ; preds = %vector.body
   %i.cj = shl nuw nsw i64 %i.ci, 2
   %i.ck = call noalias ptr @wmem_alloc(ptr noundef %i.br, i64 noundef %i.cj) #9 ; 5 uses
   store ptr %i.ck, ptr %i.b, align 8
-  %9 = zext i32 %.038.lcssa.i.i to i64
-  %10 = getelementptr [4 x i8], ptr %i.ck, i64 %9
-  %11 = zext i32 %i.bs to i64                     ; 3 uses
-  %12 = getelementptr [4 x i8], ptr %10, i64 %11
   %.not58.i.i = icmp eq i32 %i.bs, 0
   br i1 %.not58.i.i, label %._crit_edge50.i.i, label %.lr.ph49.preheader.i.i
 
 .lr.ph49.preheader.i.i:                           ; preds = %._crit_edge.i.i
-  %i.cl = shl nuw nsw i64 %11, 2
+  %9 = zext i32 %i.bs to i64                      ; 2 uses
+  %i.cl = shl nuw nsw i64 %9, 2
   call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.ck, ptr nonnull readonly align 4 %i.bq, i64 %i.cl, i1 false)
   br label %._crit_edge50.i.i
 
 ._crit_edge50.i.i:                                ; preds = %.lr.ph49.preheader.i.i, %._crit_edge.i.i
+  %.pre-phi.i.i = phi i64 [ %9, %.lr.ph49.preheader.i.i ], [ 0, %._crit_edge.i.i ] ; 2 uses
+  %10 = zext i32 %.038.lcssa.i.i to i64
+  %11 = getelementptr [4 x i8], ptr %i.ck, i64 %10
+  %12 = getelementptr [4 x i8], ptr %11, i64 %.pre-phi.i.i
   br i1 %.not57.i.i, label %redecode_oid.exit.i, label %.lr.ph55.preheader.i.i
 
 .lr.ph55.preheader.i.i:                           ; preds = %._crit_edge50.i.i
-  %i.cm = getelementptr [4 x i8], ptr %i.ck, i64 %11
+  %i.cm = getelementptr [4 x i8], ptr %i.ck, i64 %.pre-phi.i.i
   %wide.trip.count67.i.i = zext i32 %i.bt to i64
   br label %.lr.ph55.i.i
 
