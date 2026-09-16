@@ -204,8 +204,8 @@ _ZN12_GLOBAL__N_121BitCastBitsEnumerator21getMaxNumberOfEntriesEv.exit.unr-lcssa
 
 _ZN12_GLOBAL__N_121BitCastBitsEnumerator21getMaxNumberOfEntriesEv.exit: ; preds = %.lr.ph.i.epil, %_ZN12_GLOBAL__N_121BitCastBitsEnumerator21getMaxNumberOfEntriesEv.exit.unr-lcssa
   %.sroa.speculated.i.lcssa = phi i64 [ %.sroa.speculated.i.7, %_ZN12_GLOBAL__N_121BitCastBitsEnumerator21getMaxNumberOfEntriesEv.exit.unr-lcssa ], [ %.sroa.speculated.i.epil, %.lr.ph.i.epil ] ; 2 uses
-  %10 = icmp sgt i64 %.sroa.speculated.i.lcssa, 0
-  br i1 %10, label %.lr.ph81, label %._crit_edge82
+  %.not109 = icmp eq i64 %.sroa.speculated.i.lcssa, 0
+  br i1 %.not109, label %._crit_edge82, label %.lr.ph81
 
 .lr.ph81:                                         ; preds = %_ZN12_GLOBAL__N_121BitCastBitsEnumerator21getMaxNumberOfEntriesEv.exit
   %i.an = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses

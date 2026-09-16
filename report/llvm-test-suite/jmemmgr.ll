@@ -205,7 +205,7 @@ alloc_large.exit:                                 ; preds = %bb.h, %bb.i
   %i.ax = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %i.aw
   store ptr %.03842.prol, ptr %i.ax, align 8, !tbaa !38
   %i.ay = getelementptr inbounds nuw i8, ptr %.03842.prol, i64 %i.c ; 2 uses
-  %i.az = add i32 %.044.prol, -1                  ; 2 uses
+  %i.az = add nsw i32 %.044.prol, -1              ; 2 uses
   %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol, !llvm.loop !87
@@ -215,7 +215,7 @@ alloc_large.exit:                                 ; preds = %bb.h, %bb.i
   %.044.unr = phi i32 [ %i.p, %.lr.ph.preheader ], [ %i.az, %.lr.ph.prol ]
   %.143.unr = phi i32 [ %.03546, %.lr.ph.preheader ], [ %i.av, %.lr.ph.prol ]
   %.03842.unr = phi ptr [ %i.au, %.lr.ph.preheader ], [ %i.ay, %.lr.ph.prol ]
-  %i.ba = icmp ult i32 %i.p, 4
+  %i.ba = icmp samesign ult i32 %i.p, 4
   br i1 %i.ba, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
@@ -242,7 +242,7 @@ alloc_large.exit:                                 ; preds = %bb.h, %bb.i
   %i.bp = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %i.bo
   store ptr %i.bm, ptr %i.bp, align 8, !tbaa !38
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bm, i64 %i.c
-  %i.br = add i32 %.044, -4                       ; 2 uses
+  %i.br = add nsw i32 %.044, -4                   ; 2 uses
   %.not.3 = icmp eq i32 %i.br, 0
   br i1 %.not.3, label %.loopexit, label %.lr.ph, !llvm.loop !88
 
@@ -376,7 +376,7 @@ alloc_large.exit:                                 ; preds = %bb.h, %bb.i
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.ax
   store ptr %.03843.prol, ptr %i.ay, align 8, !tbaa !41
   %i.az = getelementptr inbounds nuw [128 x i8], ptr %.03843.prol, i64 %i.c ; 2 uses
-  %i.ba = add i32 %.045.prol, -1                  ; 2 uses
+  %i.ba = add nsw i32 %.045.prol, -1              ; 2 uses
   %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol, !llvm.loop !90
@@ -386,7 +386,7 @@ alloc_large.exit:                                 ; preds = %bb.h, %bb.i
   %.045.unr = phi i32 [ %i.q, %.lr.ph.preheader ], [ %i.ba, %.lr.ph.prol ]
   %.144.unr = phi i32 [ %.03547, %.lr.ph.preheader ], [ %i.aw, %.lr.ph.prol ]
   %.03843.unr = phi ptr [ %i.av, %.lr.ph.preheader ], [ %i.az, %.lr.ph.prol ]
-  %i.bb = icmp ult i32 %i.q, 4
+  %i.bb = icmp samesign ult i32 %i.q, 4
   br i1 %i.bb, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
@@ -413,7 +413,7 @@ alloc_large.exit:                                 ; preds = %bb.h, %bb.i
   %i.bq = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.bp
   store ptr %i.bn, ptr %i.bq, align 8, !tbaa !41
   %i.br = getelementptr inbounds nuw [128 x i8], ptr %i.bn, i64 %i.c
-  %i.bs = add i32 %.045, -4                       ; 2 uses
+  %i.bs = add nsw i32 %.045, -4                   ; 2 uses
   %.not.3 = icmp eq i32 %i.bs, 0
   br i1 %.not.3, label %.loopexit, label %.lr.ph, !llvm.loop !91
 

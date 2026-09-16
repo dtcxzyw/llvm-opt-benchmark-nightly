@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.h
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %0, ptr noundef nonnull align 8 dereferenceable(104) %i.c, i64 104, i1 false)
-  %i.n = icmp ugt i64 %.sroa.018.0.i.i.ph, 1
+  %i.n = icmp samesign ugt i64 %.sroa.018.0.i.i.ph, 1
   br i1 %i.n, label %.lr.ph.i.i, label %_RINvNtNtCscI6d9CVNmLh_4core5slice6rotate14ptr_rotate_gcdTNtNtCshMFl0SviwmK_3syn4item5FnArgNtNtBX_5token5CommaEECsluMP4ekZjHw_14diesel_derives.exit.i
 
 bb.j:                                             ; preds = %bb.h
@@ -476,7 +476,7 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.h
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef nonnull align 8 dereferenceable(72) %i.c, i64 72, i1 false)
-  %i.n = icmp ugt i64 %.sroa.018.0.i.i.ph, 1
+  %i.n = icmp samesign ugt i64 %.sroa.018.0.i.i.ph, 1
   br i1 %i.n, label %.lr.ph.i.i, label %_RINvNtNtCscI6d9CVNmLh_4core5slice6rotate14ptr_rotate_gcdTNtNtCshMFl0SviwmK_3syn4item7UseTreeNtNtBX_5token5CommaEECsluMP4ekZjHw_14diesel_derives.exit.i
 
 bb.j:                                             ; preds = %bb.h
@@ -750,7 +750,7 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.h
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull align 8 dereferenceable(96) %i.c, i64 96, i1 false)
-  %i.n = icmp ugt i64 %.sroa.018.0.i.i.ph, 1
+  %i.n = icmp samesign ugt i64 %.sroa.018.0.i.i.ph, 1
   br i1 %i.n, label %.lr.ph.i.i, label %_RINvNtNtCscI6d9CVNmLh_4core5slice6rotate14ptr_rotate_gcdTNtNtCshMFl0SviwmK_3syn4path11PathSegmentNtNtBX_5token7PathSepEECsluMP4ekZjHw_14diesel_derives.exit.i
 
 bb.j:                                             ; preds = %bb.h
@@ -1017,7 +1017,7 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(320) %0, ptr noundef nonnull align 8 dereferenceable(320) %i.b, i64 320, i1 false)
-  %i.k = icmp ugt i64 %.sroa.018.0.i.i.ph, 1
+  %i.k = icmp samesign ugt i64 %.sroa.018.0.i.i.ph, 1
   br i1 %i.k, label %.lr.ph.i.i, label %_RINvNtNtCscI6d9CVNmLh_4core5slice6rotate14ptr_rotate_gcdTNtNtCshMFl0SviwmK_3syn4path15GenericArgumentNtNtBX_5token5CommaEECsluMP4ekZjHw_14diesel_derives.exit.i
 
 bb.i:                                             ; preds = %bb.g

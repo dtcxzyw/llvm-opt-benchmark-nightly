@@ -127,11 +127,11 @@ bb.e:                                             ; preds = %.unr-lcssa, %.prehe
 .preheader.preheader.i:                           ; preds = %bb.e
   %i.v = add nuw nsw i32 %spec.select.i.lcssa, 1
   %wide.trip.count.i = zext nneg i32 %i.v to i64  ; 3 uses
-  %min.iters.check = icmp ult i32 %spec.select.i.lcssa, 7
+  %min.iters.check = icmp samesign ult i32 %spec.select.i.lcssa, 7
   br i1 %min.iters.check, label %.preheader.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.preheader.preheader.i
-  %n.vec = and i64 %wide.trip.count.i, 2147483640 ; 3 uses
+  %n.vec = and i64 %wide.trip.count.i, 131064     ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -306,11 +306,11 @@ bb.e:                                             ; preds = %.unr-lcssa, %.prehe
 .preheader.preheader.i.i:                         ; preds = %bb.e
   %i.ab = add nuw nsw i32 %spec.select.i.i.lcssa, 1
   %wide.trip.count.i.i = zext nneg i32 %i.ab to i64 ; 3 uses
-  %min.iters.check = icmp ult i32 %spec.select.i.i.lcssa, 7
+  %min.iters.check = icmp samesign ult i32 %spec.select.i.i.lcssa, 7
   br i1 %min.iters.check, label %.preheader.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.preheader.preheader.i.i
-  %n.vec = and i64 %wide.trip.count.i.i, 2147483640 ; 3 uses
+  %n.vec = and i64 %wide.trip.count.i.i, 131064   ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph

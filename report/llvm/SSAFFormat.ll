@@ -205,13 +205,13 @@ _ZNSt7__cxx119to_stringEm.exit43.i.i:             ; preds = %bb.as, %bb.ar
   %i.ih = load i64, ptr %i.ig, align 8, !tbaa !60, !noalias !225
   call void @llvm.lifetime.start.p0(ptr nonnull %59) #23, !noalias !225
   call void @llvm.experimental.noalias.scope.decl(metadata !230)
-  %i.ii = icmp ult i64 %.sroa.speculated67.i.i, 10
+  %i.ii = icmp samesign ult i64 %.sroa.speculated67.i.i, 10
   br i1 %i.ii, label %_ZNSt8__detail14__to_chars_lenImEEjT_i.exit.i47.i.i, label %.lr.ph.i.i44.i.i
 
 .lr.ph.i.i44.i.i:                                 ; preds = %_ZNSt7__cxx119to_stringEm.exit43.i.i, %bb.ay
   %.029.i.i45.i.i = phi i32 [ %i.iq, %bb.ay ], [ 1, %_ZNSt7__cxx119to_stringEm.exit43.i.i ] ; 4 uses
   %.02328.i.i46.i.i = phi i64 [ %i.ip, %bb.ay ], [ %.sroa.speculated67.i.i, %_ZNSt7__cxx119to_stringEm.exit43.i.i ] ; 5 uses
-  %i.ij = icmp ult i64 %.02328.i.i46.i.i, 100
+  %i.ij = icmp samesign ult i64 %.02328.i.i46.i.i, 100
   br i1 %i.ij, label %bb.at, label %bb.au
 
 bb.at:                                            ; preds = %.lr.ph.i.i44.i.i
@@ -219,7 +219,7 @@ bb.at:                                            ; preds = %.lr.ph.i.i44.i.i
   br label %_ZNSt8__detail14__to_chars_lenImEEjT_i.exit.i47.i.i
 
 bb.au:                                            ; preds = %.lr.ph.i.i44.i.i
-  %i.il = icmp ult i64 %.02328.i.i46.i.i, 1000
+  %i.il = icmp samesign ult i64 %.02328.i.i46.i.i, 1000
   br i1 %i.il, label %bb.av, label %bb.aw
 
 bb.av:                                            ; preds = %bb.au
@@ -227,7 +227,7 @@ bb.av:                                            ; preds = %bb.au
   br label %_ZNSt8__detail14__to_chars_lenImEEjT_i.exit.i47.i.i
 
 bb.aw:                                            ; preds = %bb.au
-  %i.in = icmp ult i64 %.02328.i.i46.i.i, 10000
+  %i.in = icmp samesign ult i64 %.02328.i.i46.i.i, 10000
   br i1 %i.in, label %bb.ax, label %bb.ay
 
 bb.ax:                                            ; preds = %bb.aw
@@ -237,7 +237,7 @@ bb.ax:                                            ; preds = %bb.aw
 bb.ay:                                            ; preds = %bb.aw
   %i.ip = udiv i64 %.02328.i.i46.i.i, 10000
   %i.iq = add i32 %.029.i.i45.i.i, 4              ; 2 uses
-  %i.ir = icmp ult i64 %.02328.i.i46.i.i, 100000
+  %i.ir = icmp samesign ult i64 %.02328.i.i46.i.i, 100000
   br i1 %i.ir, label %_ZNSt8__detail14__to_chars_lenImEEjT_i.exit.i47.i.i, label %.lr.ph.i.i44.i.i, !llvm.loop !130
 
 _ZNSt8__detail14__to_chars_lenImEEjT_i.exit.i47.i.i: ; preds = %bb.ay, %bb.ax, %bb.av, %bb.at, %_ZNSt7__cxx119to_stringEm.exit43.i.i
@@ -247,7 +247,7 @@ _ZNSt8__detail14__to_chars_lenImEEjT_i.exit.i47.i.i: ; preds = %bb.ay, %bb.ax, %
   store ptr %i.it, ptr %59, align 8, !tbaa !59, !alias.scope !230, !noalias !225
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructEmc(ptr noundef nonnull align 8 dereferenceable(32) %59, i64 noundef %i.is, i8 noundef signext 0) #23, !noalias !225
   %i.iu = load ptr, ptr %59, align 8, !tbaa !29, !alias.scope !230, !noalias !225 ; 4 uses
-  %i.iv = icmp ugt i64 %.sroa.speculated67.i.i, 99
+  %i.iv = icmp samesign ugt i64 %.sroa.speculated67.i.i, 99
   br i1 %i.iv, label %.lr.ph.preheader.i.i52.i.i, label %._crit_edge.i.i49.i.i
 
 .lr.ph.preheader.i.i52.i.i:                       ; preds = %_ZNSt8__detail14__to_chars_lenImEEjT_i.exit.i47.i.i
@@ -275,7 +275,7 @@ _ZNSt8__detail14__to_chars_lenImEEjT_i.exit.i47.i.i: ; preds = %bb.ay, %bb.ax, %
   %i.jl = getelementptr inbounds nuw i8, ptr %i.iu, i64 %i.jk
   store i8 %i.ji, ptr %i.jl, align 1, !tbaa !30, !noalias !225
   %i.jm = add i32 %.01819.i.i55.i.i, -2
-  %i.jn = icmp ugt i64 %.020.i.i54.i.i, 9999
+  %i.jn = icmp samesign ugt i64 %.020.i.i54.i.i, 9999
   br i1 %i.jn, label %.lr.ph.i2.i53.i.i, label %._crit_edge.i.i49.i.i, !llvm.loop !131
 
 ._crit_edge.i.i49.i.i:                            ; preds = %.lr.ph.i2.i53.i.i, %_ZNSt8__detail14__to_chars_lenImEEjT_i.exit.i47.i.i

@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.j
   %i.as = inttoptr i64 %i.ar to ptr
   br label %sg_set_folio.exit
 
-sg_set_folio.exit:                                ; preds = %folio_nr_pages.exit, %bb.i, %bb.j, %bb.k
+sg_set_folio.exit:                                ; preds = %bb.k, %bb.j, %bb.i, %folio_nr_pages.exit
   %.186 = phi ptr [ %.085131, %folio_nr_pages.exit ], [ null, %bb.i ], [ %i.as, %bb.k ], [ %i.ap, %bb.j ] ; 5 uses
   %i.at = load i32, ptr %i.n, align 8
   %i.au = add i32 %i.at, 1

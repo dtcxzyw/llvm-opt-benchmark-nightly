@@ -205,7 +205,7 @@ _ZN22hb_serialize_context_t10extend_minIN2OT6Layout6Common8CoverageEEEPT_S6_.exi
   %i.r = shl i64 %3, 1                            ; 2 uses
   %.idx = and i64 %i.r, 8589934590                ; 2 uses
   %.not3057 = icmp samesign eq i64 %.idx, 0
-  br i1 %.not3057, label %4, label %.lr.ph.preheader
+  br i1 %.not3057, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %_ZN22hb_serialize_context_t10extend_minIN2OT6Layout6Common8CoverageEEEPT_S6_.exit
   %i.s = add nsw i64 %.idx, -2                    ; 3 uses
@@ -247,7 +247,17 @@ _ZN22hb_serialize_context_t10extend_minIN2OT6Layout6Common8CoverageEEEPT_S6_.exi
   %.126.lcssa = phi i1 [ %.126.1, %._crit_edge.loopexit.unr-lcssa ], [ %.126.epil, %.lr.ph.epil.preheader ]
   %spec.select35.lcssa = phi i32 [ %spec.select35.1, %._crit_edge.loopexit.unr-lcssa ], [ %spec.select35.epil, %.lr.ph.epil.preheader ]
   %i.ab = mul i32 %spec.select35.lcssa, 3
-  br label %4
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZN22hb_serialize_context_t10extend_minIN2OT6Layout6Common8CoverageEEEPT_S6_.exit
+  %.025.lcssa = phi i1 [ false, %_ZN22hb_serialize_context_t10extend_minIN2OT6Layout6Common8CoverageEEEPT_S6_.exit ], [ %.126.lcssa, %._crit_edge.loopexit ]
+  %.022.lcssa = phi i32 [ 0, %_ZN22hb_serialize_context_t10extend_minIN2OT6Layout6Common8CoverageEEEPT_S6_.exit ], [ %i.ab, %._crit_edge.loopexit ]
+  %4 = icmp ult i32 %.022.lcssa, %.sroa.5.8.extract.trunc
+  %.not32 = select i1 %.025.lcssa, i1 true, i1 %4 ; 2 uses
+  %5 = select i1 %.not32, i16 512, i16 256
+  store i16 %5, ptr %0, align 1, !tbaa !280
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #63
+  br i1 %.not32, label %bb.n, label %bb.f
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
   %.02262 = phi i32 [ 0, %.lr.ph.preheader.new ], [ %spec.select35.1, %.lr.ph ]
@@ -281,17 +291,7 @@ _ZN22hb_serialize_context_t10extend_minIN2OT6Layout6Common8CoverageEEEPT_S6_.exi
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph
 
-4:                                                ; preds = %_ZN22hb_serialize_context_t10extend_minIN2OT6Layout6Common8CoverageEEEPT_S6_.exit, %._crit_edge.loopexit
-  %.025.lcssa = phi i1 [ false, %_ZN22hb_serialize_context_t10extend_minIN2OT6Layout6Common8CoverageEEEPT_S6_.exit ], [ %.126.lcssa, %._crit_edge.loopexit ]
-  %.022.lcssa = phi i32 [ 0, %_ZN22hb_serialize_context_t10extend_minIN2OT6Layout6Common8CoverageEEEPT_S6_.exit ], [ %i.ab, %._crit_edge.loopexit ]
-  %5 = icmp ult i32 %.022.lcssa, %.sroa.5.8.extract.trunc
-  %.not32 = select i1 %.025.lcssa, i1 true, i1 %5 ; 2 uses
-  %6 = select i1 %.not32, i16 512, i16 256
-  store i16 %6, ptr %0, align 1, !tbaa !280
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #63
-  br i1 %.not32, label %bb.n, label %bb.f
-
-bb.f:                                             ; preds = %4
+bb.f:                                             ; preds = %._crit_edge
   %i.an = load i32, ptr %i.a, align 4, !tbaa !902
   %.not11.i.i.i.i.i.i = icmp eq i32 %i.an, 0
   br i1 %.not11.i.i.i.i.i.i, label %bb.g, label %_ZN22hb_serialize_context_t13check_successEb20hb_serialize_error_t.exit, !prof !268
@@ -413,7 +413,7 @@ select.unfold14.i.sink.split.i.i.i:               ; preds = %bb.l, %bb.k, %_ZN22
   store i32 %.sink.i.i.i, ptr %i.a, align 4, !tbaa !902
   br label %_ZN22hb_serialize_context_t13check_successEb20hb_serialize_error_t.exit
 
-bb.n:                                             ; preds = %4
+bb.n:                                             ; preds = %._crit_edge
   %i.by = tail call noundef zeroext i1 @_ZN2OT6Layout6Common17CoverageFormat2_4INS0_10SmallTypesEE9serializeI17hb_sorted_array_tIKNS_11HBGlyphID16EETnPN12hb_enable_ifIXaasr15hb_is_source_ofIT_jEE5valuesrSB_18is_sorted_iteratorEvE4typeELPv0EEEbP22hb_serialize_context_tSB_(ptr noundef nonnull align 1 dereferenceable(10) %0, ptr noundef nonnull %1, ptr %2, i64 %3)
   br label %_ZN22hb_serialize_context_t13check_successEb20hb_serialize_error_t.exit
 
@@ -435,7 +435,7 @@ _ZNR9hb_iter_tI17hb_sorted_array_tIKN2OT11HBGlyphID16EERS3_EppEv.exit.i.i.i.epil
   br label %_ZN22hb_serialize_context_t13check_successEb20hb_serialize_error_t.exit
 
 _ZN22hb_serialize_context_t13check_successEb20hb_serialize_error_t.exit: ; preds = %_ZNR9hb_iter_tI17hb_sorted_array_tIKN2OT11HBGlyphID16EERS3_EppEv.exit.i.i.i.epil.preheader, %_ZN22hb_serialize_context_t13check_successEb20hb_serialize_error_t.exit.loopexit.unr-lcssa, %select.unfold14.i.sink.split.i.i.i, %_ZN2OT7ArrayOfINS_11HBGlyphID16ENS_7NumTypeILb1EtLj2EEEE9serializeEP22hb_serialize_context_tjb.exit.preheader.i.i.i, %bb.m, %_ZN22hb_serialize_context_t12check_assignIN2OT7NumTypeILb1EtLj2EEERjEEbRT_OT0_20hb_serialize_error_t.exit.i.i.i.i, %_ZL9hb_memsetPvij.exit.i.i.i.i.i.i.i, %bb.f, %_ZL9hb_memsetPvij.exit.i.i.i, %.critedge.i.i.i, %bb.a, %bb.n
-  %.1 = phi i1 [ %i.by, %bb.n ], [ false, %_ZL9hb_memsetPvij.exit.i.i.i ], [ true, %_ZN2OT7ArrayOfINS_11HBGlyphID16ENS_7NumTypeILb1EtLj2EEEE9serializeEP22hb_serialize_context_tjb.exit.preheader.i.i.i ], [ false, %_ZN22hb_serialize_context_t12check_assignIN2OT7NumTypeILb1EtLj2EEERjEEbRT_OT0_20hb_serialize_error_t.exit.i.i.i.i ], [ false, %bb.a ], [ false, %.critedge.i.i.i ], [ false, %_ZL9hb_memsetPvij.exit.i.i.i.i.i.i.i ], [ false, %bb.m ], [ false, %bb.f ], [ false, %select.unfold14.i.sink.split.i.i.i ], [ true, %_ZN22hb_serialize_context_t13check_successEb20hb_serialize_error_t.exit.loopexit.unr-lcssa ], [ true, %_ZNR9hb_iter_tI17hb_sorted_array_tIKN2OT11HBGlyphID16EERS3_EppEv.exit.i.i.i.epil.preheader ]
+  %.1 = phi i1 [ %i.by, %bb.n ], [ false, %_ZL9hb_memsetPvij.exit.i.i.i ], [ false, %.critedge.i.i.i ], [ false, %bb.a ], [ false, %_ZL9hb_memsetPvij.exit.i.i.i.i.i.i.i ], [ false, %bb.m ], [ false, %bb.f ], [ false, %select.unfold14.i.sink.split.i.i.i ], [ false, %_ZN22hb_serialize_context_t12check_assignIN2OT7NumTypeILb1EtLj2EEERjEEbRT_OT0_20hb_serialize_error_t.exit.i.i.i.i ], [ true, %_ZN2OT7ArrayOfINS_11HBGlyphID16ENS_7NumTypeILb1EtLj2EEEE9serializeEP22hb_serialize_context_tjb.exit.preheader.i.i.i ], [ true, %_ZN22hb_serialize_context_t13check_successEb20hb_serialize_error_t.exit.loopexit.unr-lcssa ], [ true, %_ZNR9hb_iter_tI17hb_sorted_array_tIKN2OT11HBGlyphID16EERS3_EppEv.exit.i.i.i.epil.preheader ]
   ret i1 %.1
 }
 
