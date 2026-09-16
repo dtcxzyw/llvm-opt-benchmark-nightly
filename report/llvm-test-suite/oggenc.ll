@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.ag, label %.lr.ph61.preheader, label %._crit_edge
 
 .lr.ph61.preheader:                               ; preds = %.preheader57
-  %i.ah = add nsw i64 %i.v, %.neg
+  %i.ah = add nsw i64 %.neg, %i.v
   %i.ai = add i64 %i.ah, %i.x
   %i.aj = sub i64 %i.ai, %.050.lcssa              ; 3 uses
   %min.iters.check = icmp ult i64 %i.aj, 8
@@ -278,16 +278,16 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph65.preheader:                               ; preds = %._crit_edge
   %i.be = trunc i64 %i.ac to i32                  ; 5 uses
-  %i.bf = add nsw i64 %i.z, %i.v
-  %i.bg = add i64 %i.bf, %.neg56
+  %i.bf = add nsw i64 %.neg56, %i.v
+  %i.bg = add i64 %i.bf, %i.z
   %i.bh = add i64 %i.bg, %i.ac
   %i.bi = sub i64 %i.bh, %i.bc                    ; 3 uses
   %min.iters.check105 = icmp ult i64 %i.bi, 28
   br i1 %min.iters.check105, label %.lr.ph65.preheader133, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph65.preheader
-  %i.bj = add nsw i64 %i.z, %i.v
-  %i.bk = add i64 %i.bj, %.neg56
+  %i.bj = add nsw i64 %.neg56, %i.v
+  %i.bk = add i64 %i.bj, %i.z
   %i.bl = add i64 %i.bk, %i.ac
   %i.bm = xor i64 %i.bc, -1
   %i.bn = add i64 %i.bl, %i.bm                    ; 2 uses
@@ -690,7 +690,7 @@ _vorbis_block_alloc.exit377:                      ; preds = %bb.k, %bb.n
   br i1 %i.fw, label %.lr.ph61.i.preheader, label %._crit_edge.i
 
 .lr.ph61.i.preheader:                             ; preds = %.preheader57.i
-  %i.fx = add nsw i64 %i.fl, %.neg.i
+  %i.fx = add nsw i64 %.neg.i, %i.fl
   %i.fy = add i64 %i.fx, %i.fn
   %i.fz = sub i64 %i.fy, %.050.lcssa.i            ; 3 uses
   %min.iters.check619 = icmp ult i64 %i.fz, 8
@@ -763,17 +763,17 @@ middle.block629:                                  ; preds = %vector.body622
 
 .lr.ph65.preheader.i:                             ; preds = %._crit_edge.i
   %i.gu = trunc i64 %i.fs to i32                  ; 5 uses
-  %i.gv = add nsw i64 %i.fp, %i.fl
-  %i.gw = add i64 %i.gv, %.neg56.i
+  %i.gv = add nsw i64 %.neg56.i, %i.fl
+  %i.gw = add i64 %i.gv, %i.fp
   %i.gx = add i64 %i.gw, %i.fs
   %i.gy = sub i64 %i.gx, %i.gs                    ; 3 uses
   %min.iters.check = icmp ult i64 %i.gy, 20
   br i1 %min.iters.check, label %.lr.ph65.i.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph65.preheader.i
-  %i.gz = add nsw i64 %i.fp, -1
+  %i.gz = add nsw i64 %.neg56.i, -1
   %i.ha = add i64 %i.gz, %i.fl
-  %i.hb = add i64 %i.ha, %.neg56.i
+  %i.hb = add i64 %i.ha, %i.fp
   %i.hc = add i64 %i.hb, %i.fs
   %i.hd = sub i64 %i.hc, %i.gs                    ; 2 uses
   %i.he = add i32 %i.gu, -1                       ; 2 uses

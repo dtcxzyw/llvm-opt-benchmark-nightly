@@ -205,8 +205,8 @@ bb.iv:                                            ; preds = %ZSTD_wildcopy.exit.
   br i1 %i.brs, label %iter.check579, label %ZSTD_wildcopy.exit104.i.i
 
 iter.check579:                                    ; preds = %bb.iv
-  %i.brt = add nsw i64 %.156.i.i, 4
-  %i.bru = add nsw i64 %i.brt, %.153.i.i
+  %i.brt = add nsw i64 %.153.i.i, 4
+  %i.bru = add nsw i64 %i.brt, %.156.i.i
   %i.brv = add i64 %i.bru, %i.bpl
   %i.brw = add nsw i64 %.156.i.i, 8
   %i.brx = add i64 %i.brw, %i.bpl
