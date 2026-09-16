@@ -205,32 +205,22 @@ bb.b:                                             ; preds = %bb.a, %bb.a
   %unroll_iter = and i64 %wide.trip.count.i, 2147483646
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod1039 = trunc i32 %i.aa to i1
-  br label %.lr.ph.split.us181.i
+  br label %.lr.ph.split.us.i
 
 .preheader138.us.i:                               ; preds = %._crit_edge.us.i
-  %indvars.iv.next243.i = add nsw i64 %indvars.iv242.i, 1 ; 2 uses
+  %indvars.iv.next243.i = add nsw i64 %indvars.iv223.i, 1 ; 2 uses
   %i.ap = getelementptr [8 x i8], ptr %i.w, i64 %indvars.iv.next243.i
   %i.aq = load ptr, ptr %i.ap, align 8            ; 2 uses
   %i.ar = icmp eq ptr %i.aq, null
-  br i1 %i.ar, label %keycode2keysymString.exit, label %.lr.ph.split.us181.i, !llvm.loop !37
+  br i1 %i.ar, label %keycode2keysymString.exit, label %.lr.ph.split.us.i, !llvm.loop !37
 
-.lr.ph.split.us181.i:                             ; preds = %.preheader138.us.i, %.lr.ph.split.us181.preheader.i
-  %indvars.iv242.i = phi i64 [ %i.ak, %.lr.ph.split.us181.preheader.i ], [ %indvars.iv.next243.i, %.preheader138.us.i ] ; 3 uses
-  %7 = phi ptr [ %i.am, %.lr.ph.split.us181.preheader.i ], [ %i.aq, %.preheader138.us.i ] ; 3 uses
-  %.0112170.us200.i = phi i32 [ -1, %.lr.ph.split.us181.preheader.i ], [ %.2114.us.i.lcssa, %.preheader138.us.i ] ; 2 uses
-  %.0109171.us199.i = phi i32 [ -1, %.lr.ph.split.us181.preheader.i ], [ %.2111.us.i.lcssa, %.preheader138.us.i ] ; 2 uses
-  %.099172.us198.i = phi i32 [ 0, %.lr.ph.split.us181.preheader.i ], [ %.2101.us.i.lcssa, %.preheader138.us.i ] ; 2 uses
-  %.096173.us197.i = phi i32 [ 0, %.lr.ph.split.us181.preheader.i ], [ %.298.us.i.lcssa, %.preheader138.us.i ] ; 2 uses
-  %8 = trunc nsw i64 %indvars.iv242.i to i32      ; 12 uses
-  br i1 %i.ao, label %.epil.preheader, label %.lr.ph.split.us181.i.new
-
-.lr.ph.split.us181.i.new:                         ; preds = %.lr.ph.split.us181.i, %bb.l
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.1, %bb.l ], [ 0, %.lr.ph.split.us181.i ] ; 3 uses
-  %.197154.us182.i = phi i32 [ %.298.us.i.1, %bb.l ], [ %.096173.us197.i, %.lr.ph.split.us181.i ] ; 4 uses
-  %.1100153.us183.i = phi i32 [ %.2101.us.i.1, %bb.l ], [ %.099172.us198.i, %.lr.ph.split.us181.i ] ; 4 uses
-  %.1110152.us184.i = phi i32 [ %.2111.us.i.1, %bb.l ], [ %.0109171.us199.i, %.lr.ph.split.us181.i ] ; 4 uses
-  %.1113151.us185.i = phi i32 [ %.2114.us.i.1, %bb.l ], [ %.0112170.us200.i, %.lr.ph.split.us181.i ] ; 4 uses
-  %niter = phi i64 [ %niter.next.1, %bb.l ], [ 0, %.lr.ph.split.us181.i ]
+.lr.ph.split.us181.i.new:                         ; preds = %.lr.ph.split.us.i, %bb.l
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.1, %bb.l ], [ 0, %.lr.ph.split.us.i ] ; 3 uses
+  %.197154.us182.i = phi i32 [ %.298.us.i.1, %bb.l ], [ %.096165.us180.i, %.lr.ph.split.us.i ] ; 4 uses
+  %.1100153.us183.i = phi i32 [ %.2101.us.i.1, %bb.l ], [ %.099164.us181.i, %.lr.ph.split.us.i ] ; 4 uses
+  %.1110152.us184.i = phi i32 [ %.2111.us.i.1, %bb.l ], [ %.0109163.us182.i, %.lr.ph.split.us.i ] ; 4 uses
+  %.1113151.us185.i = phi i32 [ %.2114.us.i.1, %bb.l ], [ %.0112162.us183.i, %.lr.ph.split.us.i ] ; 4 uses
+  %niter = phi i64 [ %niter.next.1, %bb.l ], [ 0, %.lr.ph.split.us.i ]
   %i.as = getelementptr [4 x i8], ptr %7, i64 %indvars.iv.i
   %i.at = load i32, ptr %i.as, align 4
   switch i32 %i.at, label %bb.g [
@@ -292,12 +282,12 @@ bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i,
 ._crit_edge.us.i.unr-lcssa:                       ; preds = %bb.l
   br i1 %lcmp.mod.not, label %._crit_edge.us.i, label %.epil.preheader
 
-.epil.preheader:                                  ; preds = %._crit_edge.us.i.unr-lcssa, %.lr.ph.split.us181.i
-  %indvars.iv.i.epil.init = phi i64 [ 0, %.lr.ph.split.us181.i ], [ %indvars.iv.next.i.1, %._crit_edge.us.i.unr-lcssa ]
-  %.197154.us182.i.epil.init = phi i32 [ %.096173.us197.i, %.lr.ph.split.us181.i ], [ %.298.us.i.1, %._crit_edge.us.i.unr-lcssa ] ; 4 uses
-  %.1100153.us183.i.epil.init = phi i32 [ %.099172.us198.i, %.lr.ph.split.us181.i ], [ %.2101.us.i.1, %._crit_edge.us.i.unr-lcssa ] ; 4 uses
-  %.1110152.us184.i.epil.init = phi i32 [ %.0109171.us199.i, %.lr.ph.split.us181.i ], [ %.2111.us.i.1, %._crit_edge.us.i.unr-lcssa ] ; 4 uses
-  %.1113151.us185.i.epil.init = phi i32 [ %.0112170.us200.i, %.lr.ph.split.us181.i ], [ %.2114.us.i.1, %._crit_edge.us.i.unr-lcssa ] ; 4 uses
+.epil.preheader:                                  ; preds = %._crit_edge.us.i.unr-lcssa, %.lr.ph.split.us.i
+  %indvars.iv.i.epil.init = phi i64 [ 0, %.lr.ph.split.us.i ], [ %indvars.iv.next.i.1, %._crit_edge.us.i.unr-lcssa ]
+  %.197154.us182.i.epil.init = phi i32 [ %.096165.us180.i, %.lr.ph.split.us.i ], [ %.298.us.i.1, %._crit_edge.us.i.unr-lcssa ] ; 4 uses
+  %.1100153.us183.i.epil.init = phi i32 [ %.099164.us181.i, %.lr.ph.split.us.i ], [ %.2101.us.i.1, %._crit_edge.us.i.unr-lcssa ] ; 4 uses
+  %.1110152.us184.i.epil.init = phi i32 [ %.0109163.us182.i, %.lr.ph.split.us.i ], [ %.2111.us.i.1, %._crit_edge.us.i.unr-lcssa ] ; 4 uses
+  %.1113151.us185.i.epil.init = phi i32 [ %.0112162.us183.i, %.lr.ph.split.us.i ], [ %.2114.us.i.1, %._crit_edge.us.i.unr-lcssa ] ; 4 uses
   tail call void @llvm.assume(i1 %lcmp.mod1039)
   %i.ax = getelementptr [4 x i8], ptr %7, i64 %indvars.iv.i.epil.init
   %i.ay = load i32, ptr %i.ax, align 4
@@ -325,8 +315,18 @@ bb.p:                                             ; preds = %.epil.preheader
   %.2111.us.i.lcssa = phi i32 [ %.2111.us.i.1, %._crit_edge.us.i.unr-lcssa ], [ %.1110152.us184.i.epil.init, %.epil.preheader ], [ %.1110152.us184.i.epil.init, %bb.p ], [ %8, %bb.o ], [ %.1110152.us184.i.epil.init, %bb.n ], [ %.1110152.us184.i.epil.init, %bb.m ] ; 2 uses
   %.2101.us.i.lcssa = phi i32 [ %.2101.us.i.1, %._crit_edge.us.i.unr-lcssa ], [ %.1100153.us183.i.epil.init, %.epil.preheader ], [ %.1100153.us183.i.epil.init, %bb.p ], [ %.1100153.us183.i.epil.init, %bb.o ], [ %8, %bb.n ], [ %.1100153.us183.i.epil.init, %bb.m ] ; 2 uses
   %.298.us.i.lcssa = phi i32 [ %.298.us.i.1, %._crit_edge.us.i.unr-lcssa ], [ %.197154.us182.i.epil.init, %.epil.preheader ], [ %.197154.us182.i.epil.init, %bb.p ], [ %.197154.us182.i.epil.init, %bb.o ], [ %.197154.us182.i.epil.init, %bb.n ], [ %8, %bb.m ] ; 2 uses
-  %exitcond245.not.i = icmp eq i64 %indvars.iv242.i, 255
+  %exitcond245.not.i = icmp eq i64 %indvars.iv223.i, 255
   br i1 %exitcond245.not.i, label %._crit_edge175.i, label %.preheader138.us.i, !llvm.loop !37
+
+.lr.ph.split.us.i:                                ; preds = %.preheader138.us.i, %.lr.ph.split.us181.preheader.i
+  %indvars.iv223.i = phi i64 [ %i.ak, %.lr.ph.split.us181.preheader.i ], [ %indvars.iv.next243.i, %.preheader138.us.i ] ; 3 uses
+  %7 = phi ptr [ %i.am, %.lr.ph.split.us181.preheader.i ], [ %i.aq, %.preheader138.us.i ] ; 3 uses
+  %.0112162.us183.i = phi i32 [ -1, %.lr.ph.split.us181.preheader.i ], [ %.2114.us.i.lcssa, %.preheader138.us.i ] ; 2 uses
+  %.0109163.us182.i = phi i32 [ -1, %.lr.ph.split.us181.preheader.i ], [ %.2111.us.i.lcssa, %.preheader138.us.i ] ; 2 uses
+  %.099164.us181.i = phi i32 [ 0, %.lr.ph.split.us181.preheader.i ], [ %.2101.us.i.lcssa, %.preheader138.us.i ] ; 2 uses
+  %.096165.us180.i = phi i32 [ 0, %.lr.ph.split.us181.preheader.i ], [ %.298.us.i.lcssa, %.preheader138.us.i ] ; 2 uses
+  %8 = trunc nsw i64 %indvars.iv223.i to i32      ; 12 uses
+  br i1 %i.ao, label %.epil.preheader, label %.lr.ph.split.us181.i.new
 
 ._crit_edge175.i:                                 ; preds = %._crit_edge.us.i, %.preheader138.lr.ph.i, %.preheader139.i
   %storemerge.lcssa167.lcssa.i = phi i32 [ undef, %.preheader139.i ], [ 0, %.preheader138.lr.ph.i ], [ %i.aa, %._crit_edge.us.i ] ; 2 uses

@@ -205,6 +205,11 @@ bb.by:                                            ; preds = %bb.bx
   %i.ix = getelementptr i8, ptr %.pre352, i64 %i.ir ; 4 uses
   br i1 %i.iw, label %.lr.ph.split.us, label %.critedge16
 
+.thread305:                                       ; preds = %bb.bz, %bb.by
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5290)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.5290, i8 0, i64 12, i1 false)
+  br label %_ZN6duckdb8string_tC2EPKcj.exit
+
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.bz
   %.050342.us = phi i64 [ %i.jb, %bb.bz ], [ %i.it, %.lr.ph ] ; 3 uses
   %i.iy = getelementptr i8, ptr %i.ix, i64 %.050342.us
@@ -216,11 +221,6 @@ bb.bz:                                            ; preds = %.lr.ph.split.us
   %i.jb = add i64 %.050342.us, -1                 ; 2 uses
   %.not92.us = icmp eq i64 %i.jb, 0
   br i1 %.not92.us, label %.thread305, label %.lr.ph.split.us, !llvm.loop !1148
-
-.thread305:                                       ; preds = %bb.bz, %bb.by
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5290)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.5290, i8 0, i64 12, i1 false)
-  br label %_ZN6duckdb8string_tC2EPKcj.exit
 
 .critedge16:                                      ; preds = %.lr.ph.split.us, %.lr.ph
   %.us-phi = phi i64 [ %i.it, %.lr.ph ], [ %.050342.us, %.lr.ph.split.us ] ; 2 uses

@@ -202,7 +202,7 @@ bb.dx:                                            ; preds = %bb.dw, %bb.dv
   %.0329.ph = phi ptr [ %.2331, %bb.fr ], [ null, %bb.dx ] ; 7 uses
   %.2281.ph = phi ptr [ %.5, %bb.fr ], [ %.0279.lcssa134714371529, %bb.dx ] ; 7 uses
   %.2.ph = phi i32 [ %.3, %bb.fr ], [ %.0262.lcssa135714301536, %bb.dx ] ; 3 uses
-  br i1 %i.ia, label %.outer.split.us, label %.outer.split
+  br i1 %i.ia, label %.outer.split.us, label %2
 
 .outer.split.us:                                  ; preds = %.outer, %bb.ec
   %.1351.us = phi ptr [ %.3353.us, %bb.ec ], [ %.1351.ph, %.outer ] ; 4 uses
@@ -230,24 +230,19 @@ bb.eb:                                            ; preds = %bb.dz, %bb.dy
   call void (i32, ptr, i32, ptr, ...) @trace_log_message(i32 noundef -1, ptr noundef %i.im, i32 noundef 3, ptr noundef nonnull @.str.215, ptr noundef %.0298.lcssa133914451521) #10
   br label %bb.ec
 
-bb.ec:                                            ; preds = %bb.eb, %bb.ea, %.outer.split.us
+bb.ec:                                            ; preds = %bb.ea, %bb.eb, %.outer.split.us
   %.3353.us = phi ptr [ %.1351.us, %.outer.split.us ], [ %i.ij, %bb.ea ], [ %.1351.us, %bb.eb ] ; 5 uses
   store ptr null, ptr %i.d, align 8, !tbaa !32
   %i.in = call fastcc i32 @do_responder(ptr noundef %i.d, ptr noundef %i.a, ptr noundef %.0365, i32 noundef %.0239.lcssa136714201546) ; 2 uses
   %i.io = icmp eq i32 %i.in, 0
-  br i1 %i.io, label %.outer.split.us, label %.split.us
+  br i1 %i.io, label %.outer.split.us, label %.outer.split
 
-.split.us:                                        ; preds = %bb.ec
-  %2 = load ptr, ptr %i.d, align 8, !tbaa !32     ; 2 uses
-  %3 = icmp eq ptr %2, null
-  br i1 %3, label %bb.ed, label %.thread482
-
-.outer.split:                                     ; preds = %.outer
+.outer.split:                                     ; preds = %bb.ec
   %.pr.a = load ptr, ptr %i.d, align 8, !tbaa !32 ; 2 uses
   %i.ip = icmp eq ptr %.pr.a, null
-  br i1 %i.ip, label %bb.eg, label %.thread482
+  br i1 %i.ip, label %bb.ed, label %.thread482
 
-bb.ed:                                            ; preds = %.split.us
+bb.ed:                                            ; preds = %.outer.split
   %i.iq = icmp eq i32 %i.in, 1
   br i1 %i.iq, label %bb.ee, label %bb.fg
 
@@ -262,7 +257,12 @@ bb.ef:                                            ; preds = %bb.ee
   call fastcc void @send_ocsp_response(ptr noundef %i.is, ptr noundef %i.ir)
   br label %bb.fg
 
-bb.eg:                                            ; preds = %.outer.split
+2:                                                ; preds = %.outer
+  %.pr = load ptr, ptr %i.d, align 8, !tbaa !32   ; 2 uses
+  %3 = icmp eq ptr %.pr, null
+  br i1 %3, label %bb.eg, label %.thread482
+
+bb.eg:                                            ; preds = %2
   %i.it = load ptr, ptr %i.l, align 8
   %i.iu = icmp ne ptr %i.it, null
   %or.cond23 = select i1 %or.cond21, i1 true, i1 %i.iu
@@ -275,9 +275,9 @@ bb.eh:                                            ; preds = %bb.eg
   %i.iw = call i32 @BIO_puts(ptr noundef %i.iv, ptr noundef nonnull @.str.216) #10 ; 0 uses
   br label %add_ocsp_serial.exit.thread
 
-.thread482:                                       ; preds = %.split.us, %.outer.split
-  %.4354484 = phi ptr [ %.1351.ph, %.outer.split ], [ %.3353.us, %.split.us ] ; 7 uses
-  %i.ix = phi ptr [ %.pr.a, %.outer.split ], [ %2, %.split.us ]
+.thread482:                                       ; preds = %.outer.split, %2
+  %.4354484 = phi ptr [ %.1351.ph, %2 ], [ %.3353.us, %.outer.split ] ; 7 uses
+  %i.ix = phi ptr [ %.pr, %2 ], [ %.pr.a, %.outer.split ]
   br i1 %.not500, label %bb.ej, label %bb.ei
 
 bb.ei:                                            ; preds = %.thread482

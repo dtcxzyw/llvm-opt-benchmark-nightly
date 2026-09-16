@@ -205,14 +205,14 @@ _ZNSt6vectorIN5vcpkg17PackageDependInfoESaIS1_EE7reserveEm.exit: ; preds = %_ZNS
 ._crit_edge:                                      ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit
   %.val.pre = load ptr, ptr %0, align 8, !tbaa !46, !noalias !354 ; 6 uses
   %.val36.pre = load ptr, ptr %i.bc, align 8, !tbaa !46, !noalias !355 ; 6 uses
+  %.pre176 = load ptr, ptr %i.ad, align 8
+  %19 = freeze ptr %.pre176                       ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8)
   %.not1420.i = icmp eq ptr %.val36.pre, %.val.pre
   br i1 %.not1420.i, label %.loopexit, label %.lr.ph22.i
 
 .lr.ph22.i:                                       ; preds = %._crit_edge
-  %19 = load ptr, ptr %i.ad, align 8
-  %.fr.i = freeze ptr %19                         ; 2 uses
-  %.not10.i.i.i.i = icmp eq ptr %.fr.i, null
+  %.not10.i.i.i.i = icmp eq ptr %19, null
   br i1 %.not10.i.i.i.i, label %.lr.ph22.split.us.i, label %.lr.ph22.split.i
 
 .lr.ph22.split.us.i:                              ; preds = %.lr.ph22.i, %.loopexit.us.i
@@ -254,7 +254,7 @@ _ZNSt6vectorIN5vcpkg17PackageDependInfoESaIS1_EE7reserveEm.exit: ; preds = %_ZNS
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.i.i.i.i, %.lr.ph.i.i.i.i
-  %.012.i.i.i.i = phi ptr [ %.fr.i, %.lr.ph.i.i.i.i ], [ %.1.i.i.i.i, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.i.i.i.i ] ; 7 uses
+  %.012.i.i.i.i = phi ptr [ %19, %.lr.ph.i.i.i.i ], [ %.1.i.i.i.i, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.i.i.i.i ] ; 7 uses
   %.0811.i.i.i.i = phi ptr [ %i.ac, %.lr.ph.i.i.i.i ], [ %.19.i.i.i.i, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.i.i.i.i ] ; 4 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 40
   %i.bu = load i64, ptr %i.bt, align 8, !tbaa !44 ; 2 uses

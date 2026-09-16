@@ -205,11 +205,7 @@ bb.ac:                                            ; preds = %bb.z
   %i.ed = icmp eq i64 %i.ec, 0
   %.sroa.0.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.bd, i64 8 ; 4 uses
   %.sroa.0.sroa.5.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.bd, i64 16
-  br i1 %i.ed, label %.split.us.i.i, label %.split.i.i
-
-.split.us.i.i:                                    ; preds = %bb.ac
-  invoke void @_RNvNtNtCscI6d9CVNmLh_4core9panicking11panic_const23panic_const_div_by_zero(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @469) #66
-          to label %.noexc.i.i.i unwind label %bb.ag, !noalias !32222
+  br i1 %i.ed, label %3, label %.split.i.i
 
 .split.i.i:                                       ; preds = %bb.ac, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB1I_16InlineBitpacking15bitpack_chunkedhE0NCB1E_s_0E0B1O_.exit.i.i
   %.sroa.012.sroa.7.0.i.i = phi i64 [ %i.ep, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB1I_16InlineBitpacking15bitpack_chunkedhE0NCB1E_s_0E0B1O_.exit.i.i ], [ 0, %bb.ac ] ; 5 uses
@@ -217,15 +213,19 @@ bb.ac:                                            ; preds = %bb.z
   %.sroa.012.sroa.0.0.i.i = phi i64 [ %.sroa.011.sroa.0.0.copyload.i.i, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB1I_16InlineBitpacking15bitpack_chunkedhE0NCB1E_s_0E0B1O_.exit.i.i ], [ %i.dv, %bb.ac ] ; 2 uses
   %.sroa.6.0.i.i = phi i64 [ %i.er, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB1I_16InlineBitpacking15bitpack_chunkedhE0NCB1E_s_0E0B1O_.exit.i.i ], [ 0, %bb.ac ]
   %i.ee = getelementptr inbounds nuw [8 x i8], ptr %i.ds, i64 %.sroa.012.sroa.7.0.i.i
-  %.val10.i.i = load i64, ptr %i.ee, align 8, !noalias !32223
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.bd), !noalias !32224
-  store i64 %.sroa.012.sroa.0.0.i.i, ptr %i.bd, align 8, !noalias !32225
-  store ptr %.sroa.012.sroa.6.0.i.i, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i, align 8, !noalias !32225
-  store i64 %.sroa.012.sroa.7.0.i.i, ptr %.sroa.0.sroa.5.0..sroa_idx.i.i.i, align 8, !noalias !32225
+  %.val10.i.i = load i64, ptr %i.ee, align 8, !noalias !32222
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.bd), !noalias !32223
+  store i64 %.sroa.012.sroa.0.0.i.i, ptr %i.bd, align 8, !noalias !32224
+  store ptr %.sroa.012.sroa.6.0.i.i, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i, align 8, !noalias !32224
+  store i64 %.sroa.012.sroa.7.0.i.i, ptr %.sroa.0.sroa.5.0..sroa_idx.i.i.i, align 8, !noalias !32224
   %i.ef = icmp eq i64 %.sroa.012.sroa.7.0.i.i, %.sroa.012.sroa.0.0.i.i
   br i1 %i.ef, label %bb.ad, label %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB1I_16InlineBitpacking15bitpack_chunkedhE0NCB1E_s_0E0B1O_.exit.i.i
 
-.noexc.i.i.i:                                     ; preds = %.split.us.i.i
+3:                                                ; preds = %bb.ac
+  invoke void @_RNvNtNtCscI6d9CVNmLh_4core9panicking11panic_const23panic_const_div_by_zero(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @469) #66
+          to label %.noexc.i.i.i unwind label %bb.ag, !noalias !32225
+
+.noexc.i.i.i:                                     ; preds = %3
   unreachable
 
 bb.ad:                                            ; preds = %.split.i.i
@@ -233,18 +233,18 @@ bb.ad:                                            ; preds = %.split.i.i
           to label %._crit_edge.i.i.i unwind label %bb.ae, !noalias !32226
 
 ._crit_edge.i.i.i:                                ; preds = %bb.ad
-  %.pre.i.i.i = load ptr, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i, align 8, !alias.scope !32227, !noalias !32224
+  %.pre.i.i.i = load ptr, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i, align 8, !alias.scope !32227, !noalias !32223
   br label %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB1I_16InlineBitpacking15bitpack_chunkedhE0NCB1E_s_0E0B1O_.exit.i.i
 
 bb.ae:                                            ; preds = %bb.ad
   %i.eg = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %.val.i.i.i.i.i = load i64, ptr %i.bd, align 8, !alias.scope !32228, !noalias !32224 ; 2 uses
+  %.val.i.i.i.i.i = load i64, ptr %i.bd, align 8, !alias.scope !32228, !noalias !32223 ; 2 uses
   %i.eh = icmp eq i64 %.val.i.i.i.i.i, 0
   br i1 %i.eh, label %.body78.i, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %.val1.i.i.i.i.i = load ptr, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i, align 8, !alias.scope !32228, !noalias !32224, !nonnull !75, !noundef !75
+  %.val1.i.i.i.i.i = load ptr, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i, align 8, !alias.scope !32228, !noalias !32223, !nonnull !75, !noundef !75
   br label %.body.i.sink.split.i.i
 
 .body.i.sink.split.i.i:                           ; preds = %bb.ag, %bb.af
@@ -252,10 +252,10 @@ bb.af:                                            ; preds = %bb.ae
   %.sroa.012.sroa.6.0.copyload.sink.i.i = phi ptr [ %.val1.i.i.i.i.i, %bb.af ], [ %i.dz, %bb.ag ]
   %eh.lpad-body12.i.ph.i.i = phi { ptr, i32 } [ %i.eg, %bb.af ], [ %i.ej, %bb.ag ]
   %i.ei = shl nuw i64 %.sroa.012.sroa.0.0.copyload.sink.i.i, 3
-  call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.012.sroa.6.0.copyload.sink.i.i, i64 noundef %i.ei, i64 noundef range(i64 1, -9223372036854775807) 8) #63, !noalias !32222
+  call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.012.sroa.6.0.copyload.sink.i.i, i64 noundef %i.ei, i64 noundef range(i64 1, -9223372036854775807) 8) #63, !noalias !32225
   br label %.body78.i
 
-bb.ag:                                            ; preds = %.split.us.i.i
+bb.ag:                                            ; preds = %3
   %i.ej = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.ek = icmp eq i64 %i.dv, 0
@@ -272,7 +272,7 @@ _RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9m
   %.sroa.011.sroa.4.0.copyload.i.i = load ptr, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i, align 8, !noalias !32229 ; 4 uses
   %i.eq = add i64 %.sroa.6.0.i.i, 1
   %i.er = add i64 %i.eq, %i.en                    ; 6 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.bd), !noalias !32224
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.bd), !noalias !32223
   %i.es = icmp eq i64 %i.ep, %i.dv
   br i1 %i.es, label %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldTINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvNtNtBY_8adapters3map8map_foldRyTjjEB1C_NCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB32_16InlineBitpacking15bitpack_chunkedhE0NCB2Y_s_0E0EB38_.exit.i, label %.split.i.i
 
@@ -675,11 +675,7 @@ bb.dh:                                            ; preds = %bb.de
   %i.mw = icmp eq i64 %i.mv, 0
   %.sroa.0.sroa.4.0..sroa_idx.i.i.i23 = getelementptr inbounds nuw i8, ptr %i.an, i64 8 ; 4 uses
   %.sroa.0.sroa.5.0..sroa_idx.i.i.i24 = getelementptr inbounds nuw i8, ptr %i.an, i64 16
-  br i1 %i.mw, label %.split.us.i.i80, label %.split.i.i25
-
-.split.us.i.i80:                                  ; preds = %bb.dh
-  invoke void @_RNvNtNtCscI6d9CVNmLh_4core9panicking11panic_const23panic_const_div_by_zero(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @469) #66
-          to label %.noexc.i.i.i81 unwind label %bb.dl, !noalias !32323
+  br i1 %i.mw, label %4, label %.split.i.i25
 
 .split.i.i25:                                     ; preds = %bb.dh, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB1I_16InlineBitpacking15bitpack_chunkedtE0NCB1E_s_0E0B1O_.exit.i.i
   %.sroa.012.sroa.7.0.i.i26 = phi i64 [ %i.ni, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB1I_16InlineBitpacking15bitpack_chunkedtE0NCB1E_s_0E0B1O_.exit.i.i ], [ 0, %bb.dh ] ; 5 uses
@@ -687,15 +683,19 @@ bb.dh:                                            ; preds = %bb.de
   %.sroa.012.sroa.0.0.i.i28 = phi i64 [ %.sroa.011.sroa.0.0.copyload.i.i31, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB1I_16InlineBitpacking15bitpack_chunkedtE0NCB1E_s_0E0B1O_.exit.i.i ], [ %i.mo, %bb.dh ] ; 2 uses
   %.sroa.6.0.i.i29 = phi i64 [ %i.nk, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB1I_16InlineBitpacking15bitpack_chunkedtE0NCB1E_s_0E0B1O_.exit.i.i ], [ 0, %bb.dh ]
   %i.mx = getelementptr inbounds nuw [8 x i8], ptr %i.ml, i64 %.sroa.012.sroa.7.0.i.i26
-  %.val10.i.i30 = load i64, ptr %i.mx, align 8, !noalias !32324
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.an), !noalias !32325
-  store i64 %.sroa.012.sroa.0.0.i.i28, ptr %i.an, align 8, !noalias !32326
-  store ptr %.sroa.012.sroa.6.0.i.i27, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i23, align 8, !noalias !32326
-  store i64 %.sroa.012.sroa.7.0.i.i26, ptr %.sroa.0.sroa.5.0..sroa_idx.i.i.i24, align 8, !noalias !32326
+  %.val10.i.i30 = load i64, ptr %i.mx, align 8, !noalias !32323
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.an), !noalias !32324
+  store i64 %.sroa.012.sroa.0.0.i.i28, ptr %i.an, align 8, !noalias !32325
+  store ptr %.sroa.012.sroa.6.0.i.i27, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i23, align 8, !noalias !32325
+  store i64 %.sroa.012.sroa.7.0.i.i26, ptr %.sroa.0.sroa.5.0..sroa_idx.i.i.i24, align 8, !noalias !32325
   %i.my = icmp eq i64 %.sroa.012.sroa.7.0.i.i26, %.sroa.012.sroa.0.0.i.i28
   br i1 %i.my, label %bb.di, label %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB1I_16InlineBitpacking15bitpack_chunkedtE0NCB1E_s_0E0B1O_.exit.i.i
 
-.noexc.i.i.i81:                                   ; preds = %.split.us.i.i80
+4:                                                ; preds = %bb.dh
+  invoke void @_RNvNtNtCscI6d9CVNmLh_4core9panicking11panic_const23panic_const_div_by_zero(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @469) #66
+          to label %.noexc.i.i.i81 unwind label %bb.dl, !noalias !32326
+
+.noexc.i.i.i81:                                   ; preds = %4
   unreachable
 
 bb.di:                                            ; preds = %.split.i.i25
@@ -703,18 +703,18 @@ bb.di:                                            ; preds = %.split.i.i25
           to label %._crit_edge.i.i.i78 unwind label %bb.dj, !noalias !32327
 
 ._crit_edge.i.i.i78:                              ; preds = %bb.di
-  %.pre.i.i.i79 = load ptr, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i23, align 8, !alias.scope !32328, !noalias !32325
+  %.pre.i.i.i79 = load ptr, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i23, align 8, !alias.scope !32328, !noalias !32324
   br label %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB1I_16InlineBitpacking15bitpack_chunkedtE0NCB1E_s_0E0B1O_.exit.i.i
 
 bb.dj:                                            ; preds = %bb.di
   %i.mz = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %.val.i.i.i.i.i72 = load i64, ptr %i.an, align 8, !alias.scope !32329, !noalias !32325 ; 2 uses
+  %.val.i.i.i.i.i72 = load i64, ptr %i.an, align 8, !alias.scope !32329, !noalias !32324 ; 2 uses
   %i.na = icmp eq i64 %.val.i.i.i.i.i72, 0
   br i1 %i.na, label %.body85.i, label %bb.dk
 
 bb.dk:                                            ; preds = %bb.dj
-  %.val1.i.i.i.i.i73 = load ptr, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i23, align 8, !alias.scope !32329, !noalias !32325, !nonnull !75, !noundef !75
+  %.val1.i.i.i.i.i73 = load ptr, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i23, align 8, !alias.scope !32329, !noalias !32324, !nonnull !75, !noundef !75
   br label %.body.i.sink.split.i.i74
 
 .body.i.sink.split.i.i74:                         ; preds = %bb.dl, %bb.dk
@@ -722,10 +722,10 @@ bb.dk:                                            ; preds = %bb.dj
   %.sroa.012.sroa.6.0.copyload.sink.i.i76 = phi ptr [ %.val1.i.i.i.i.i73, %bb.dk ], [ %i.mt, %bb.dl ]
   %eh.lpad-body12.i.ph.i.i77 = phi { ptr, i32 } [ %i.mz, %bb.dk ], [ %i.nc, %bb.dl ]
   %i.nb = shl nuw i64 %.sroa.012.sroa.0.0.copyload.sink.i.i75, 3
-  call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.012.sroa.6.0.copyload.sink.i.i76, i64 noundef %i.nb, i64 noundef range(i64 1, -9223372036854775807) 8) #63, !noalias !32323
+  call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.012.sroa.6.0.copyload.sink.i.i76, i64 noundef %i.nb, i64 noundef range(i64 1, -9223372036854775807) 8) #63, !noalias !32326
   br label %.body85.i
 
-bb.dl:                                            ; preds = %.split.us.i.i80
+bb.dl:                                            ; preds = %4
   %i.nc = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.nd = icmp eq i64 %i.mo, 0
@@ -742,7 +742,7 @@ _RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9m
   %.sroa.011.sroa.4.0.copyload.i.i32 = load ptr, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i23, align 8, !noalias !32330 ; 2 uses
   %i.nj = add i64 %.sroa.6.0.i.i29, 1
   %i.nk = add i64 %i.nj, %i.ng                    ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.an), !noalias !32325
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.an), !noalias !32324
   %i.nl = icmp eq i64 %i.ni, %i.mo
   br i1 %i.nl, label %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldTINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvNtNtBY_8adapters3map8map_foldRyTjjEB1C_NCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB32_16InlineBitpacking15bitpack_chunkedtE0NCB2Y_s_0E0EB38_.exit.i, label %.split.i.i25
 
@@ -1145,11 +1145,7 @@ bb.gm:                                            ; preds = %bb.gj
   %i.wb = icmp eq i64 %i.wa, 0
   %.sroa.0.sroa.4.0..sroa_idx.i.i.i100 = getelementptr inbounds nuw i8, ptr %i.x, i64 8 ; 4 uses
   %.sroa.0.sroa.5.0..sroa_idx.i.i.i101 = getelementptr inbounds nuw i8, ptr %i.x, i64 16
-  br i1 %i.wb, label %.split.us.i.i220, label %.split.i.i102
-
-.split.us.i.i220:                                 ; preds = %bb.gm
-  invoke void @_RNvNtNtCscI6d9CVNmLh_4core9panicking11panic_const23panic_const_div_by_zero(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @469) #66
-          to label %.noexc.i.i.i221 unwind label %bb.gq, !noalias !32419
+  br i1 %i.wb, label %5, label %.split.i.i102
 
 .split.i.i102:                                    ; preds = %bb.gm, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB1I_16InlineBitpacking15bitpack_chunkedmE0NCB1E_s_0E0B1O_.exit.i.i
   %.sroa.012.sroa.7.0.i.i103 = phi i64 [ %i.wn, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB1I_16InlineBitpacking15bitpack_chunkedmE0NCB1E_s_0E0B1O_.exit.i.i ], [ 0, %bb.gm ] ; 5 uses
@@ -1157,15 +1153,19 @@ bb.gm:                                            ; preds = %bb.gj
   %.sroa.012.sroa.0.0.i.i105 = phi i64 [ %.sroa.011.sroa.0.0.copyload.i.i108, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB1I_16InlineBitpacking15bitpack_chunkedmE0NCB1E_s_0E0B1O_.exit.i.i ], [ %i.vt, %bb.gm ] ; 2 uses
   %.sroa.6.0.i.i106 = phi i64 [ %i.wp, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB1I_16InlineBitpacking15bitpack_chunkedmE0NCB1E_s_0E0B1O_.exit.i.i ], [ 0, %bb.gm ]
   %i.wc = getelementptr inbounds nuw [8 x i8], ptr %i.vq, i64 %.sroa.012.sroa.7.0.i.i103
-  %.val10.i.i107 = load i64, ptr %i.wc, align 8, !noalias !32420
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.x), !noalias !32421
-  store i64 %.sroa.012.sroa.0.0.i.i105, ptr %i.x, align 8, !noalias !32422
-  store ptr %.sroa.012.sroa.6.0.i.i104, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i100, align 8, !noalias !32422
-  store i64 %.sroa.012.sroa.7.0.i.i103, ptr %.sroa.0.sroa.5.0..sroa_idx.i.i.i101, align 8, !noalias !32422
+  %.val10.i.i107 = load i64, ptr %i.wc, align 8, !noalias !32419
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.x), !noalias !32420
+  store i64 %.sroa.012.sroa.0.0.i.i105, ptr %i.x, align 8, !noalias !32421
+  store ptr %.sroa.012.sroa.6.0.i.i104, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i100, align 8, !noalias !32421
+  store i64 %.sroa.012.sroa.7.0.i.i103, ptr %.sroa.0.sroa.5.0..sroa_idx.i.i.i101, align 8, !noalias !32421
   %i.wd = icmp eq i64 %.sroa.012.sroa.7.0.i.i103, %.sroa.012.sroa.0.0.i.i105
   br i1 %i.wd, label %bb.gn, label %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB1I_16InlineBitpacking15bitpack_chunkedmE0NCB1E_s_0E0B1O_.exit.i.i
 
-.noexc.i.i.i221:                                  ; preds = %.split.us.i.i220
+5:                                                ; preds = %bb.gm
+  invoke void @_RNvNtNtCscI6d9CVNmLh_4core9panicking11panic_const23panic_const_div_by_zero(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @469) #66
+          to label %.noexc.i.i.i221 unwind label %bb.gq, !noalias !32422
+
+.noexc.i.i.i221:                                  ; preds = %5
   unreachable
 
 bb.gn:                                            ; preds = %.split.i.i102
@@ -1173,18 +1173,18 @@ bb.gn:                                            ; preds = %.split.i.i102
           to label %._crit_edge.i.i.i218 unwind label %bb.go, !noalias !32423
 
 ._crit_edge.i.i.i218:                             ; preds = %bb.gn
-  %.pre.i.i.i219 = load ptr, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i100, align 8, !alias.scope !32424, !noalias !32421
+  %.pre.i.i.i219 = load ptr, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i100, align 8, !alias.scope !32424, !noalias !32420
   br label %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB1I_16InlineBitpacking15bitpack_chunkedmE0NCB1E_s_0E0B1O_.exit.i.i
 
 bb.go:                                            ; preds = %bb.gn
   %i.we = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %.val.i.i.i.i.i212 = load i64, ptr %i.x, align 8, !alias.scope !32425, !noalias !32421 ; 2 uses
+  %.val.i.i.i.i.i212 = load i64, ptr %i.x, align 8, !alias.scope !32425, !noalias !32420 ; 2 uses
   %i.wf = icmp eq i64 %.val.i.i.i.i.i212, 0
   br i1 %i.wf, label %.body85.i97, label %bb.gp
 
 bb.gp:                                            ; preds = %bb.go
-  %.val1.i.i.i.i.i213 = load ptr, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i100, align 8, !alias.scope !32425, !noalias !32421, !nonnull !75, !noundef !75
+  %.val1.i.i.i.i.i213 = load ptr, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i100, align 8, !alias.scope !32425, !noalias !32420, !nonnull !75, !noundef !75
   br label %.body.i.sink.split.i.i214
 
 .body.i.sink.split.i.i214:                        ; preds = %bb.gq, %bb.gp
@@ -1192,10 +1192,10 @@ bb.gp:                                            ; preds = %bb.go
   %.sroa.012.sroa.6.0.copyload.sink.i.i216 = phi ptr [ %.val1.i.i.i.i.i213, %bb.gp ], [ %i.vy, %bb.gq ]
   %eh.lpad-body12.i.ph.i.i217 = phi { ptr, i32 } [ %i.we, %bb.gp ], [ %i.wh, %bb.gq ]
   %i.wg = shl nuw i64 %.sroa.012.sroa.0.0.copyload.sink.i.i215, 3
-  call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.012.sroa.6.0.copyload.sink.i.i216, i64 noundef %i.wg, i64 noundef range(i64 1, -9223372036854775807) 8) #63, !noalias !32419
+  call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.012.sroa.6.0.copyload.sink.i.i216, i64 noundef %i.wg, i64 noundef range(i64 1, -9223372036854775807) 8) #63, !noalias !32422
   br label %.body85.i97
 
-bb.gq:                                            ; preds = %.split.us.i.i220
+bb.gq:                                            ; preds = %5
   %i.wh = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.wi = icmp eq i64 %i.vt, 0
@@ -1212,7 +1212,7 @@ _RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9m
   %.sroa.011.sroa.4.0.copyload.i.i109 = load ptr, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i100, align 8, !noalias !32426 ; 2 uses
   %i.wo = add i64 %.sroa.6.0.i.i106, 1
   %i.wp = add i64 %i.wo, %i.wl                    ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !32421
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !32420
   %i.wq = icmp eq i64 %i.wn, %i.vt
   br i1 %i.wq, label %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldTINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvNtNtBY_8adapters3map8map_foldRyTjjEB1C_NCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB32_16InlineBitpacking15bitpack_chunkedmE0NCB2Y_s_0E0EB38_.exit.i, label %.split.i.i102
 
@@ -1615,11 +1615,7 @@ bb.jr:                                            ; preds = %bb.jo
   %i.afg = icmp eq i64 %i.aff, 0
   %.sroa.0.sroa.4.0..sroa_idx.i.i.i241 = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 4 uses
   %.sroa.0.sroa.5.0..sroa_idx.i.i.i242 = getelementptr inbounds nuw i8, ptr %i.h, i64 16
-  br i1 %i.afg, label %.split.us.i.i305, label %.split.i.i243
-
-.split.us.i.i305:                                 ; preds = %bb.jr
-  invoke void @_RNvNtNtCscI6d9CVNmLh_4core9panicking11panic_const23panic_const_div_by_zero(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @469) #66
-          to label %.noexc.i.i.i306 unwind label %bb.jv, !noalias !32515
+  br i1 %i.afg, label %6, label %.split.i.i243
 
 .split.i.i243:                                    ; preds = %bb.jr, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB1I_16InlineBitpacking15bitpack_chunkedyE0NCB1E_s_0E0B1O_.exit.i.i
   %.sroa.012.sroa.7.0.i.i244 = phi i64 [ %i.afs, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB1I_16InlineBitpacking15bitpack_chunkedyE0NCB1E_s_0E0B1O_.exit.i.i ], [ 0, %bb.jr ] ; 5 uses
@@ -1627,15 +1623,19 @@ bb.jr:                                            ; preds = %bb.jo
   %.sroa.012.sroa.0.0.i.i246 = phi i64 [ %.sroa.011.sroa.0.0.copyload.i.i249, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB1I_16InlineBitpacking15bitpack_chunkedyE0NCB1E_s_0E0B1O_.exit.i.i ], [ %i.aey, %bb.jr ] ; 2 uses
   %.sroa.6.0.i.i247 = phi i64 [ %i.afu, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB1I_16InlineBitpacking15bitpack_chunkedyE0NCB1E_s_0E0B1O_.exit.i.i ], [ 0, %bb.jr ]
   %i.afh = getelementptr inbounds nuw [8 x i8], ptr %i.aev, i64 %.sroa.012.sroa.7.0.i.i244
-  %.val10.i.i248 = load i64, ptr %i.afh, align 8, !noalias !32516
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !32517
-  store i64 %.sroa.012.sroa.0.0.i.i246, ptr %i.h, align 8, !noalias !32518
-  store ptr %.sroa.012.sroa.6.0.i.i245, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i241, align 8, !noalias !32518
-  store i64 %.sroa.012.sroa.7.0.i.i244, ptr %.sroa.0.sroa.5.0..sroa_idx.i.i.i242, align 8, !noalias !32518
+  %.val10.i.i248 = load i64, ptr %i.afh, align 8, !noalias !32515
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !32516
+  store i64 %.sroa.012.sroa.0.0.i.i246, ptr %i.h, align 8, !noalias !32517
+  store ptr %.sroa.012.sroa.6.0.i.i245, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i241, align 8, !noalias !32517
+  store i64 %.sroa.012.sroa.7.0.i.i244, ptr %.sroa.0.sroa.5.0..sroa_idx.i.i.i242, align 8, !noalias !32517
   %i.afi = icmp eq i64 %.sroa.012.sroa.7.0.i.i244, %.sroa.012.sroa.0.0.i.i246
   br i1 %i.afi, label %bb.js, label %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB1I_16InlineBitpacking15bitpack_chunkedyE0NCB1E_s_0E0B1O_.exit.i.i
 
-.noexc.i.i.i306:                                  ; preds = %.split.us.i.i305
+6:                                                ; preds = %bb.jr
+  invoke void @_RNvNtNtCscI6d9CVNmLh_4core9panicking11panic_const23panic_const_div_by_zero(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @469) #66
+          to label %.noexc.i.i.i306 unwind label %bb.jv, !noalias !32518
+
+.noexc.i.i.i306:                                  ; preds = %6
   unreachable
 
 bb.js:                                            ; preds = %.split.i.i243
@@ -1643,18 +1643,18 @@ bb.js:                                            ; preds = %.split.i.i243
           to label %._crit_edge.i.i.i303 unwind label %bb.jt, !noalias !32519
 
 ._crit_edge.i.i.i303:                             ; preds = %bb.js
-  %.pre.i.i.i304 = load ptr, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i241, align 8, !alias.scope !32520, !noalias !32517
+  %.pre.i.i.i304 = load ptr, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i241, align 8, !alias.scope !32520, !noalias !32516
   br label %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB1I_16InlineBitpacking15bitpack_chunkedyE0NCB1E_s_0E0B1O_.exit.i.i
 
 bb.jt:                                            ; preds = %bb.js
   %i.afj = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %.val.i.i.i.i.i297 = load i64, ptr %i.h, align 8, !alias.scope !32521, !noalias !32517 ; 2 uses
+  %.val.i.i.i.i.i297 = load i64, ptr %i.h, align 8, !alias.scope !32521, !noalias !32516 ; 2 uses
   %i.afk = icmp eq i64 %.val.i.i.i.i.i297, 0
   br i1 %i.afk, label %.body79.i, label %bb.ju
 
 bb.ju:                                            ; preds = %bb.jt
-  %.val1.i.i.i.i.i298 = load ptr, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i241, align 8, !alias.scope !32521, !noalias !32517, !nonnull !75, !noundef !75
+  %.val1.i.i.i.i.i298 = load ptr, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i241, align 8, !alias.scope !32521, !noalias !32516, !nonnull !75, !noundef !75
   br label %.body.i.sink.split.i.i299
 
 .body.i.sink.split.i.i299:                        ; preds = %bb.jv, %bb.ju
@@ -1662,10 +1662,10 @@ bb.ju:                                            ; preds = %bb.jt
   %.sroa.012.sroa.6.0.copyload.sink.i.i301 = phi ptr [ %.val1.i.i.i.i.i298, %bb.ju ], [ %i.afd, %bb.jv ]
   %eh.lpad-body12.i.ph.i.i302 = phi { ptr, i32 } [ %i.afj, %bb.ju ], [ %i.afm, %bb.jv ]
   %i.afl = shl nuw i64 %.sroa.012.sroa.0.0.copyload.sink.i.i300, 3
-  call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.012.sroa.6.0.copyload.sink.i.i301, i64 noundef %i.afl, i64 noundef range(i64 1, -9223372036854775807) 8) #63, !noalias !32515
+  call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.012.sroa.6.0.copyload.sink.i.i301, i64 noundef %i.afl, i64 noundef range(i64 1, -9223372036854775807) 8) #63, !noalias !32518
   br label %.body79.i
 
-bb.jv:                                            ; preds = %.split.us.i.i305
+bb.jv:                                            ; preds = %6
   %i.afm = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.afn = icmp eq i64 %i.aey, 0
@@ -1682,7 +1682,7 @@ _RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRyTjjETINtNtCs40k4W9m
   %.sroa.011.sroa.4.0.copyload.i.i250 = load ptr, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i.i241, align 8, !noalias !32522 ; 2 uses
   %i.aft = add i64 %.sroa.6.0.i.i247, 1
   %i.afu = add i64 %i.aft, %i.afq                 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !32517
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !32516
   %i.afv = icmp eq i64 %i.afs, %i.aey
   br i1 %i.afv, label %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4foldTINtNtCs40k4W9msRzi_5alloc3vec3VecjEjENCINvNtNtBY_8adapters3map8map_foldRyTjjEB1C_NCINvMNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings8physical10bitpackingNtB32_16InlineBitpacking15bitpack_chunkedyE0NCB2Y_s_0E0EB38_.exit.i, label %.split.i.i243
 
@@ -2085,10 +2085,10 @@ begin_hunk_4_@llvm.umax.i128
 !32219 = !{!31706}
 !32220 = !{!31706, !31659}
 !32221 = !{!31711, !31710, !31708, !31707, !31660}
-!32222 = !{!31711, !31710, !31708, !31707, !31706, !31660}
-!32223 = !{!31708, !31707, !31706, !31660}
-!32224 = !{!31714, !31713, !31711, !31710, !31708, !31707, !31706, !31660, !31659}
-!32225 = !{!31714, !31711, !31710, !31708, !31707, !31706, !31660, !31659}
+!32222 = !{!31708, !31707, !31706, !31660}
+!32223 = !{!31714, !31713, !31711, !31710, !31708, !31707, !31706, !31660, !31659}
+!32224 = !{!31714, !31711, !31710, !31708, !31707, !31706, !31660, !31659}
+!32225 = !{!31711, !31710, !31708, !31707, !31706, !31660}
 !32226 = !{!31714, !31713, !31711, !31710, !31708, !31707, !31706, !31660}
 !32227 = !{!31716}
 !32228 = !{!31718}
@@ -2186,10 +2186,10 @@ begin_hunk_4_@llvm.umax.i128
 !32320 = !{!31839}
 !32321 = !{!31839, !31798}
 !32322 = !{!31844, !31843, !31841, !31840, !31799}
-!32323 = !{!31844, !31843, !31841, !31840, !31839, !31799}
-!32324 = !{!31841, !31840, !31839, !31799}
-!32325 = !{!31847, !31846, !31844, !31843, !31841, !31840, !31839, !31799, !31798}
-!32326 = !{!31847, !31844, !31843, !31841, !31840, !31839, !31799, !31798}
+!32323 = !{!31841, !31840, !31839, !31799}
+!32324 = !{!31847, !31846, !31844, !31843, !31841, !31840, !31839, !31799, !31798}
+!32325 = !{!31847, !31844, !31843, !31841, !31840, !31839, !31799, !31798}
+!32326 = !{!31844, !31843, !31841, !31840, !31839, !31799}
 !32327 = !{!31847, !31846, !31844, !31843, !31841, !31840, !31839, !31799}
 !32328 = !{!31849}
 !32329 = !{!31851}
@@ -2282,10 +2282,10 @@ begin_hunk_4_@llvm.umax.i128
 !32416 = !{!31966}
 !32417 = !{!31966, !31925}
 !32418 = !{!31971, !31970, !31968, !31967, !31926}
-!32419 = !{!31971, !31970, !31968, !31967, !31966, !31926}
-!32420 = !{!31968, !31967, !31966, !31926}
-!32421 = !{!31974, !31973, !31971, !31970, !31968, !31967, !31966, !31926, !31925}
-!32422 = !{!31974, !31971, !31970, !31968, !31967, !31966, !31926, !31925}
+!32419 = !{!31968, !31967, !31966, !31926}
+!32420 = !{!31974, !31973, !31971, !31970, !31968, !31967, !31966, !31926, !31925}
+!32421 = !{!31974, !31971, !31970, !31968, !31967, !31966, !31926, !31925}
+!32422 = !{!31971, !31970, !31968, !31967, !31966, !31926}
 !32423 = !{!31974, !31973, !31971, !31970, !31968, !31967, !31966, !31926}
 !32424 = !{!31976}
 !32425 = !{!31978}
@@ -2378,10 +2378,10 @@ begin_hunk_4_@llvm.umax.i128
 !32512 = !{!32093}
 !32513 = !{!32093, !32052}
 !32514 = !{!32098, !32097, !32095, !32094, !32053}
-!32515 = !{!32098, !32097, !32095, !32094, !32093, !32053}
-!32516 = !{!32095, !32094, !32093, !32053}
-!32517 = !{!32101, !32100, !32098, !32097, !32095, !32094, !32093, !32053, !32052}
-!32518 = !{!32101, !32098, !32097, !32095, !32094, !32093, !32053, !32052}
+!32515 = !{!32095, !32094, !32093, !32053}
+!32516 = !{!32101, !32100, !32098, !32097, !32095, !32094, !32093, !32053, !32052}
+!32517 = !{!32101, !32098, !32097, !32095, !32094, !32093, !32053, !32052}
+!32518 = !{!32098, !32097, !32095, !32094, !32093, !32053}
 !32519 = !{!32101, !32100, !32098, !32097, !32095, !32094, !32093, !32053}
 !32520 = !{!32103}
 !32521 = !{!32105}

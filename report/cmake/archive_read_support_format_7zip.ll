@@ -205,8 +205,13 @@ bb.a:
   %i.ae = zext nneg i32 %i.x to i64
   br label %.preheader.us.i
 
-.preheader.us.i:                                  ; preds = %.loopexit.us.i, %.preheader.lr.ph.split.us.i
-  %indvars.iv26.i = phi i64 [ %indvars.iv.next27.i, %.loopexit.us.i ], [ %i.ae, %.preheader.lr.ph.split.us.i ] ; 4 uses
+.loopexit.i:                                      ; preds = %bb.c
+  %indvars.iv.next27.i = add nsw i64 %indvars.iv26.i, -1
+  %3 = icmp sgt i64 %indvars.iv26.i, 0
+  br i1 %3, label %.preheader.us.i, label %folder_uncompressed_size.exit
+
+.preheader.us.i:                                  ; preds = %.loopexit.i, %.preheader.lr.ph.split.us.i
+  %indvars.iv26.i = phi i64 [ %i.ae, %.preheader.lr.ph.split.us.i ], [ %indvars.iv.next27.i, %.loopexit.i ] ; 4 uses
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.c
@@ -220,12 +225,7 @@ bb.c:                                             ; preds = %bb.b, %.preheader.u
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   %i.ah = load i64, ptr %i.ag, align 8, !tbaa !129
   %i.ai = icmp eq i64 %i.ah, %indvars.iv26.i
-  br i1 %i.ai, label %.loopexit.us.i, label %bb.b
-
-.loopexit.us.i:                                   ; preds = %bb.c
-  %indvars.iv.next27.i = add nsw i64 %indvars.iv26.i, -1
-  %3 = icmp sgt i64 %indvars.iv26.i, 0
-  br i1 %3, label %.preheader.us.i, label %folder_uncompressed_size.exit
+  br i1 %i.ai, label %.loopexit.i, label %bb.b
 
 .thread18.loopexit.i:                             ; preds = %bb.b
   %i.aj = trunc nuw nsw i64 %indvars.iv26.i to i32
@@ -240,8 +240,8 @@ bb.c:                                             ; preds = %bb.b, %.preheader.u
   %i.ao = load i64, ptr %i.an, align 8, !tbaa !42
   br label %folder_uncompressed_size.exit
 
-folder_uncompressed_size.exit:                    ; preds = %.loopexit.us.i, %bb.a, %.thread18.i
-  %.2.i = phi i64 [ %i.ao, %.thread18.i ], [ 0, %bb.a ], [ 0, %.loopexit.us.i ]
+folder_uncompressed_size.exit:                    ; preds = %.loopexit.i, %bb.a, %.thread18.i
+  %.2.i = phi i64 [ %i.ao, %.thread18.i ], [ 0, %bb.a ], [ 0, %.loopexit.i ]
   %i.ap = getelementptr inbounds nuw i8, ptr %i.f, i64 264 ; 8 uses
   store i64 %.2.i, ptr %i.ap, align 8, !tbaa !75
   %i.aq = getelementptr inbounds nuw i8, ptr %i.f, i64 240 ; 5 uses
@@ -644,8 +644,13 @@ bb.cg:                                            ; preds = %bb.cf
   %i.oy = zext nneg i32 %i.or to i64
   br label %.preheader.us.i.i95
 
-.preheader.us.i.i95:                              ; preds = %.loopexit.us.i.i, %.preheader.lr.ph.split.us.i.i
-  %indvars.iv26.i.i = phi i64 [ %indvars.iv.next27.i.i, %.loopexit.us.i.i ], [ %i.oy, %.preheader.lr.ph.split.us.i.i ] ; 4 uses
+.loopexit.i.i:                                    ; preds = %bb.ci
+  %indvars.iv.next27.i.i = add nsw i64 %indvars.iv26.i.i, -1
+  %4 = icmp sgt i64 %indvars.iv26.i.i, 0
+  br i1 %4, label %.preheader.us.i.i95, label %folder_uncompressed_size.exit.i
+
+.preheader.us.i.i95:                              ; preds = %.loopexit.i.i, %.preheader.lr.ph.split.us.i.i
+  %indvars.iv26.i.i = phi i64 [ %i.oy, %.preheader.lr.ph.split.us.i.i ], [ %indvars.iv.next27.i.i, %.loopexit.i.i ] ; 4 uses
   br label %bb.ci
 
 bb.ch:                                            ; preds = %bb.ci
@@ -659,12 +664,7 @@ bb.ci:                                            ; preds = %bb.ch, %.preheader.
   %i.pa = getelementptr inbounds nuw i8, ptr %i.oz, i64 8
   %i.pb = load i64, ptr %i.pa, align 8, !tbaa !129
   %i.pc = icmp eq i64 %i.pb, %indvars.iv26.i.i
-  br i1 %i.pc, label %.loopexit.us.i.i, label %bb.ch
-
-.loopexit.us.i.i:                                 ; preds = %bb.ci
-  %indvars.iv.next27.i.i = add nsw i64 %indvars.iv26.i.i, -1
-  %4 = icmp sgt i64 %indvars.iv26.i.i, 0
-  br i1 %4, label %.preheader.us.i.i95, label %folder_uncompressed_size.exit.i
+  br i1 %i.pc, label %.loopexit.i.i, label %bb.ch
 
 .thread18.loopexit.i.i:                           ; preds = %bb.ch
   %i.pd = trunc nuw nsw i64 %indvars.iv26.i.i to i32
@@ -679,8 +679,8 @@ bb.ci:                                            ; preds = %bb.ch, %.preheader.
   %i.pi = load i64, ptr %i.ph, align 8, !tbaa !42
   br label %folder_uncompressed_size.exit.i
 
-folder_uncompressed_size.exit.i:                  ; preds = %.loopexit.us.i.i, %.thread18.i.i, %.loopexit169.i
-  %.2.i.i = phi i64 [ %i.pi, %.thread18.i.i ], [ 0, %.loopexit169.i ], [ 0, %.loopexit.us.i.i ] ; 2 uses
+folder_uncompressed_size.exit.i:                  ; preds = %.loopexit.i.i, %.thread18.i.i, %.loopexit169.i
+  %.2.i.i = phi i64 [ %i.pi, %.thread18.i.i ], [ 0, %.loopexit169.i ], [ 0, %.loopexit.i.i ] ; 2 uses
   %i.pj = icmp ult i64 %.2.i.i, %.1118.i
   br i1 %i.pj, label %.critedge, label %bb.cj
 
@@ -1083,8 +1083,13 @@ bb.a:
   %wide.trip.count = and i64 %i.e, 4294967295
   br label %.preheader.us
 
-.preheader.us:                                    ; preds = %.loopexit.us, %.preheader.lr.ph.split.us
-  %indvars.iv26 = phi i64 [ %indvars.iv.next27, %.loopexit.us ], [ %i.k, %.preheader.lr.ph.split.us ] ; 4 uses
+.loopexit:                                        ; preds = %bb.c
+  %indvars.iv.next27 = add nsw i64 %indvars.iv26, -1
+  %1 = icmp sgt i64 %indvars.iv26, 0
+  br i1 %1, label %.preheader.us, label %.loopexit20
+
+.preheader.us:                                    ; preds = %.preheader.lr.ph.split.us, %.loopexit
+  %indvars.iv26 = phi i64 [ %i.k, %.preheader.lr.ph.split.us ], [ %indvars.iv.next27, %.loopexit ] ; 4 uses
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.c
@@ -1098,12 +1103,7 @@ bb.c:                                             ; preds = %.preheader.us, %bb.
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %i.n = load i64, ptr %i.m, align 8, !tbaa !129
   %i.o = icmp eq i64 %i.n, %indvars.iv26
-  br i1 %i.o, label %.loopexit.us, label %bb.b
-
-.loopexit.us:                                     ; preds = %bb.c
-  %indvars.iv.next27 = add nsw i64 %indvars.iv26, -1
-  %1 = icmp sgt i64 %indvars.iv26, 0
-  br i1 %1, label %.preheader.us, label %.loopexit20
+  br i1 %i.o, label %.loopexit, label %bb.b
 
 .thread18.loopexit:                               ; preds = %bb.b
   %i.p = trunc nuw nsw i64 %indvars.iv26 to i32
@@ -1118,8 +1118,8 @@ bb.c:                                             ; preds = %.preheader.us, %bb.
   %i.u = load i64, ptr %i.t, align 8, !tbaa !42
   br label %.loopexit20
 
-.loopexit20:                                      ; preds = %.loopexit.us, %bb.a, %.thread18
-  %.2 = phi i64 [ %i.u, %.thread18 ], [ 0, %bb.a ], [ 0, %.loopexit.us ]
+.loopexit20:                                      ; preds = %.loopexit, %bb.a, %.thread18
+  %.2 = phi i64 [ %i.u, %.thread18 ], [ 0, %bb.a ], [ 0, %.loopexit ]
   ret i64 %.2
 }
 

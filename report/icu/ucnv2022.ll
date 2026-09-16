@@ -204,8 +204,8 @@ bb.w:                                             ; preds = %bb.v
   %scevgep = getelementptr i8, ptr %.promoted, i64 %i.fi
   br label %.lr.ph.split.us
 
-.lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %.backedge.us
-  %i.fj = phi ptr [ %i.fk, %.backedge.us ], [ %.promoted, %.lr.ph.split.us.preheader ] ; 4 uses
+.lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %.backedge
+  %i.fj = phi ptr [ %i.fk, %.backedge ], [ %.promoted, %.lr.ph.split.us.preheader ] ; 4 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fj, i64 1 ; 9 uses
   %i.fl = load i8, ptr %i.fj, align 1, !tbaa !21  ; 4 uses
   switch i8 %i.fl, label %.split.us [
@@ -214,20 +214,11 @@ bb.w:                                             ; preds = %bb.v
     i8 27, label %.split125.us
   ]
 
-3:                                                ; preds = %.lr.ph.split.us
-  store i8 1, ptr %i.fg, align 8, !tbaa !74
-  store i8 1, ptr %i.fh, align 8, !tbaa !42
-  br label %.backedge.us
-
 bb.x:                                             ; preds = %.lr.ph.split.us
   store i8 0, ptr %i.fg, align 8, !tbaa !74
   %i.fm = load i8, ptr %i.fh, align 8, !tbaa !42
   %.not96.us = icmp eq i8 %i.fm, 0
-  br i1 %.not96.us, label %.backedge.us, label %.split129.us
-
-.backedge.us:                                     ; preds = %bb.x, %3
-  %exitcond.not = icmp eq ptr %i.fk, %i.h
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph.split.us, !llvm.loop !110
+  br i1 %.not96.us, label %.backedge, label %.split129.us
 
 .split129.us:                                     ; preds = %bb.x
   store i8 0, ptr %i.fh, align 8, !tbaa !42
@@ -243,6 +234,15 @@ bb.x:                                             ; preds = %.lr.ph.split.us
   store ptr %.0.ph, ptr %i.e, align 8, !tbaa !51
   store ptr %i.fk, ptr %i.c, align 8, !tbaa !49
   br label %bb.aq
+
+3:                                                ; preds = %.lr.ph.split.us
+  store i8 1, ptr %i.fg, align 8, !tbaa !74
+  store i8 1, ptr %i.fh, align 8, !tbaa !42
+  br label %.backedge
+
+.backedge:                                        ; preds = %3, %bb.x
+  %exitcond.not = icmp eq ptr %i.fk, %i.h
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph.split.us, !llvm.loop !110
 
 .split125.us:                                     ; preds = %.lr.ph.split.us
   store ptr %i.fj, ptr %i.b, align 8, !tbaa !50
@@ -413,9 +413,9 @@ _ZL17toUnicodeCallbackP10UConverterjjP10UErrorCode.exit: ; preds = %bb.ao, %bb.a
   store i32 15, ptr %1, align 4, !tbaa !23
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.backedge.us, %.preheader, %.lr.ph.split, %_ZL17toUnicodeCallbackP10UConverterjjP10UErrorCode.exit, %bb.ah
-  %i.if = phi ptr [ %.pre147, %_ZL17toUnicodeCallbackP10UConverterjjP10UErrorCode.exit ], [ %i.fk, %bb.ah ], [ %.promoted, %.lr.ph.split ], [ %.promoted, %.preheader ], [ %scevgep, %.backedge.us ]
-  %.4 = phi ptr [ %.3, %_ZL17toUnicodeCallbackP10UConverterjjP10UErrorCode.exit ], [ %.0.ph, %bb.ah ], [ %.0.ph, %.lr.ph.split ], [ %.0.ph, %.preheader ], [ %.0.ph, %.backedge.us ]
+.loopexit:                                        ; preds = %.backedge, %.preheader, %.lr.ph.split, %_ZL17toUnicodeCallbackP10UConverterjjP10UErrorCode.exit, %bb.ah
+  %i.if = phi ptr [ %.pre147, %_ZL17toUnicodeCallbackP10UConverterjjP10UErrorCode.exit ], [ %i.fk, %bb.ah ], [ %.promoted, %.lr.ph.split ], [ %.promoted, %.preheader ], [ %scevgep, %.backedge ]
+  %.4 = phi ptr [ %.3, %_ZL17toUnicodeCallbackP10UConverterjjP10UErrorCode.exit ], [ %.0.ph, %bb.ah ], [ %.0.ph, %.lr.ph.split ], [ %.0.ph, %.preheader ], [ %.0.ph, %.backedge ]
   store ptr %.4, ptr %i.e, align 8, !tbaa !51
   store ptr %i.if, ptr %i.c, align 8, !tbaa !49
   br label %bb.aq
@@ -818,8 +818,8 @@ bb.d:                                             ; preds = %bb.c
   %scevgep = getelementptr i8, ptr %.promoted, i64 %i.ah
   br label %.lr.ph.split.us
 
-.lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %.backedge.us
-  %i.ai = phi ptr [ %i.aj, %.backedge.us ], [ %.promoted, %.lr.ph.split.us.preheader ] ; 4 uses
+.lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %.backedge
+  %i.ai = phi ptr [ %i.aj, %.backedge ], [ %.promoted, %.lr.ph.split.us.preheader ] ; 4 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 1 ; 12 uses
   %i.ak = load i8, ptr %i.ai, align 1, !tbaa !21  ; 5 uses
   switch i8 %i.ak, label %bb.l [
@@ -830,25 +830,11 @@ bb.d:                                             ; preds = %bb.c
     i8 10, label %.thread260
   ]
 
-2:                                                ; preds = %.lr.ph.split.us
-  %3 = load i8, ptr %i.ae, align 1, !tbaa !21
-  %.not151.us = icmp eq i8 %3, 0
-  br i1 %.not151.us, label %.split211.us, label %4
-
-4:                                                ; preds = %2
-  store i8 1, ptr %i.af, align 8, !tbaa !46
-  store i8 1, ptr %i.ag, align 8, !tbaa !42
-  br label %.backedge.us
-
 bb.e:                                             ; preds = %.lr.ph.split.us
   store i8 0, ptr %i.af, align 8, !tbaa !46
   %i.al = load i8, ptr %i.ag, align 8, !tbaa !42
   %.not152.us = icmp eq i8 %i.al, 0
-  br i1 %.not152.us, label %.backedge.us, label %.split214.us
-
-.backedge.us:                                     ; preds = %bb.e, %4
-  %exitcond.not = icmp eq ptr %i.aj, %i.h
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph.split.us, !llvm.loop !115
+  br i1 %.not152.us, label %.backedge, label %.split214.us
 
 .split214.us:                                     ; preds = %bb.e
   store i8 0, ptr %i.ag, align 8, !tbaa !42
@@ -864,6 +850,20 @@ bb.e:                                             ; preds = %.lr.ph.split.us
   store ptr %.0.ph, ptr %i.e, align 8, !tbaa !51
   store ptr %i.aj, ptr %i.c, align 8, !tbaa !49
   br label %bb.am
+
+2:                                                ; preds = %.lr.ph.split.us
+  %3 = load i8, ptr %i.ae, align 1, !tbaa !21
+  %.not151 = icmp eq i8 %3, 0
+  br i1 %.not151, label %.split211.us, label %4
+
+4:                                                ; preds = %2
+  store i8 1, ptr %i.af, align 8, !tbaa !46
+  store i8 1, ptr %i.ag, align 8, !tbaa !42
+  br label %.backedge
+
+.backedge:                                        ; preds = %4, %bb.e
+  %exitcond.not = icmp eq ptr %i.aj, %i.h
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph.split.us, !llvm.loop !115
 
 .split211.us:                                     ; preds = %2
   store ptr %i.aj, ptr %i.b, align 8
@@ -1201,9 +1201,9 @@ _ZL17toUnicodeCallbackP10UConverterjjP10UErrorCode.exit: ; preds = %bb.ak, %bb.a
   store i32 15, ptr %1, align 4, !tbaa !23
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.backedge.us, %.preheader, %_ZL17toUnicodeCallbackP10UConverterjjP10UErrorCode.exit, %.lr.ph.split, %bb.y
-  %i.gg = phi ptr [ %i.dh, %_ZL17toUnicodeCallbackP10UConverterjjP10UErrorCode.exit ], [ %i.aj, %bb.y ], [ %.promoted, %.lr.ph.split ], [ %.promoted, %.preheader ], [ %scevgep, %.backedge.us ]
-  %.5 = phi ptr [ %.3, %_ZL17toUnicodeCallbackP10UConverterjjP10UErrorCode.exit ], [ %.0.ph, %bb.y ], [ %.0.ph, %.lr.ph.split ], [ %.0.ph, %.preheader ], [ %.0.ph, %.backedge.us ]
+.loopexit:                                        ; preds = %.backedge, %.preheader, %_ZL17toUnicodeCallbackP10UConverterjjP10UErrorCode.exit, %.lr.ph.split, %bb.y
+  %i.gg = phi ptr [ %i.dh, %_ZL17toUnicodeCallbackP10UConverterjjP10UErrorCode.exit ], [ %i.aj, %bb.y ], [ %.promoted, %.lr.ph.split ], [ %.promoted, %.preheader ], [ %scevgep, %.backedge ]
+  %.5 = phi ptr [ %.3, %_ZL17toUnicodeCallbackP10UConverterjjP10UErrorCode.exit ], [ %.0.ph, %bb.y ], [ %.0.ph, %.lr.ph.split ], [ %.0.ph, %.preheader ], [ %.0.ph, %.backedge ]
   store ptr %.5, ptr %i.e, align 8, !tbaa !51
   store ptr %i.gg, ptr %i.c, align 8, !tbaa !49
   br label %bb.am

@@ -205,15 +205,6 @@ bb.by:                                            ; preds = %.lr.ph.split.us.spl
   %i.bm = icmp samesign ult i64 %.sroa.6.0.ph.fr, %i.bl
   br i1 %i.bm, label %.thread268.loopexit685.loopexit, label %.split.us
 
-.split.us:                                        ; preds = %bb.bw, %bb.bs, %bb.by, %bb.bu
-  %.us-phi444 = phi i64 [ %i.az, %bb.bu ], [ %i.bl, %bb.by ], [ %i.bf, %bb.bw ], [ %i.at, %bb.bs ]
-  %4 = call i32 @avio_rb16(ptr noundef %1) #16    ; 2 uses
-  %5 = trunc i32 %4 to i16
-  %6 = and i32 %4, 65535
-  %7 = call i32 @ff_mov_lang_to_iso639(i32 noundef %6, ptr noundef nonnull %i.c) #16 ; 0 uses
-  %8 = add nsw i64 %.sroa.6.0.ph.fr, -4
-  br label %.thread268
-
 ._crit_edge.split.us:                             ; preds = %bb.bx, %bb.bt, %.outer
   %.1190.lcssa = phi i32 [ %.1190.ph, %.outer ], [ 1, %bb.bt ], [ 1, %bb.bx ] ; 4 uses
   %i.bn = call i32 @avio_rb32(ptr noundef %1) #16 ; 3 uses
@@ -367,6 +358,15 @@ mov_read_covr.exit:                               ; preds = %bb.cr, %bb.cl
   %i.dn = icmp sgt i64 %i.dm, 8
   br i1 %i.dn, label %.outer, label %.thread260
 
+.split.us:                                        ; preds = %bb.bw, %bb.bs, %bb.by, %bb.bu
+  %.us-phi404 = phi i64 [ %i.az, %bb.bu ], [ %i.bl, %bb.by ], [ %i.bf, %bb.bw ], [ %i.at, %bb.bs ]
+  %4 = call i32 @avio_rb16(ptr noundef %1) #16    ; 2 uses
+  %5 = trunc i32 %4 to i16
+  %6 = and i32 %4, 65535
+  %7 = call i32 @ff_mov_lang_to_iso639(i32 noundef %6, ptr noundef nonnull %i.c) #16 ; 0 uses
+  %8 = add nsw i64 %.sroa.6.0.ph.fr, -4
+  br label %.thread268
+
 .thread268.loopexit685.loopexit:                  ; preds = %bb.by
   %i.do = call i64 @avio_seek(ptr noundef %1, i64 noundef -2, i32 noundef 1) #16 ; 0 uses
   %i.dp = load ptr, ptr %i.ae, align 8, !tbaa !36
@@ -379,7 +379,7 @@ mov_read_covr.exit:                               ; preds = %bb.cr, %bb.cl
   %.5205 = phi ptr [ null, %.thread255 ], [ %.1201.ph, %.split.us ], [ null, %.lr.ph.split.us.split.us.split.us ], [ null, %bb.bv ], [ null, %bb.bt ], [ null, %bb.ch ], [ null, %.lr.ph.split.us.split.us.split.preheader ], [ %.1201.ph, %.lr.ph ] ; 2 uses
   %.1199 = phi i16 [ %.0198.ph.ph, %.thread255 ], [ %5, %.split.us ], [ %.0198.ph.ph, %.lr.ph.split.us.split.us.split.us ], [ %.0198.ph.ph, %bb.bv ], [ %.0198.ph.ph, %bb.bt ], [ %.0198.ph.ph, %.lr.ph.split.us.split.us.split.preheader ], [ %.0198.ph.ph, %.lr.ph ], [ %.0198.ph.ph, %bb.ch ]
   %.2197 = phi i32 [ %i.bt, %.thread255 ], [ %.0195.ph, %.split.us ], [ %.0195.ph, %.lr.ph.split.us.split.us.split.us ], [ %.0195.ph, %bb.bv ], [ %.0195.ph, %bb.bt ], [ %i.bt, %bb.ch ], [ %.0195.ph, %.lr.ph.split.us.split.us.split.preheader ], [ %.0195.ph, %.lr.ph ]
-  %.2194 = phi i64 [ %i.bw, %.thread255 ], [ %.us-phi444, %.split.us ], [ %.sroa.6.0.ph.fr, %.lr.ph.split.us.split.us.split.us ], [ %.sroa.6.0.ph.fr, %bb.bv ], [ %.sroa.6.0.ph.fr, %bb.bt ], [ %i.bw, %bb.ch ], [ %.sroa.6.0.ph.fr, %.lr.ph.split.us.split.us.split.preheader ], [ %.sroa.6.0.ph.fr, %.lr.ph ]
+  %.2194 = phi i64 [ %i.bw, %.thread255 ], [ %.us-phi404, %.split.us ], [ %.sroa.6.0.ph.fr, %.lr.ph.split.us.split.us.split.us ], [ %.sroa.6.0.ph.fr, %bb.bv ], [ %.sroa.6.0.ph.fr, %bb.bt ], [ %i.bw, %bb.ch ], [ %.sroa.6.0.ph.fr, %.lr.ph.split.us.split.us.split.preheader ], [ %.sroa.6.0.ph.fr, %.lr.ph ]
   %i.dq = load i32, ptr %i.ad, align 8, !tbaa !565
   %i.dr = icmp eq i32 %i.dq, 0
   %i.ds = icmp ne ptr %.5205, null

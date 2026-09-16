@@ -202,8 +202,8 @@ bb.h:                                             ; preds = %.split43.us
   %i.an = icmp eq ptr %.124, null
   br i1 %i.an, label %.split.us, label %.outer.split, !llvm.loop !38
 
-.split.us:                                        ; preds = %.outer, %.outer.split, %.outer.us, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
-  %.027 = phi i1 [ false, %bb.c ], [ false, %bb.a ], [ false, %bb.b ], [ false, %bb.e ], [ true, %bb.d ], [ %i.w, %.outer.us ], [ false, %.outer.split ], [ %i.ah, %.outer ]
+.split.us:                                        ; preds = %.outer.split, %.outer, %.outer.us, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
+  %.027 = phi i1 [ false, %bb.c ], [ false, %bb.a ], [ false, %bb.b ], [ %i.w, %.outer.us ], [ false, %bb.e ], [ true, %bb.d ], [ false, %.outer.split ], [ %i.ah, %.outer ]
   ret i1 %.027
 }
 

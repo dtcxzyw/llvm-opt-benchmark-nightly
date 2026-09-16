@@ -205,8 +205,8 @@ Py_DECREF.exit65.i.i:                             ; preds = %bb.dg, %bb.df, %bb.
   br i1 %or.cond.i.i, label %fastsearch.exit.thread.thread.i.i, label %.lr.ph.i21.split.i, !llvm.loop !202
 
 fastsearch.exit.thread.i.i:                       ; preds = %fastsearch.exit.i.i, %.preheader56.i.i.i.i, %bb.cp, %bb.ck, %.lr.ph.i21.i, %.preheader.i20.i
-  %.05130.i.i = phi i64 [ %.val16.i, %.preheader.i20.i ], [ %.05157.i.i, %bb.cp ], [ %.val16.i, %.lr.ph.i21.i ], [ %.05157.i.i, %bb.ck ], [ %.05157.i.i, %.preheader56.i.i.i.i ], [ %.05157.i.i, %fastsearch.exit.i.i ] ; 2 uses
-  %.021.i.i = phi i64 [ 0, %.preheader.i20.i ], [ %.058.i.i, %bb.cp ], [ 0, %.lr.ph.i21.i ], [ %.058.i.i, %bb.ck ], [ %.058.i.i, %.preheader56.i.i.i.i ], [ %.058.i.i, %fastsearch.exit.i.i ]
+  %.05130.i.i = phi i64 [ %.val16.i, %.preheader.i20.i ], [ %.val16.i, %.lr.ph.i21.i ], [ %.05157.i.i, %bb.cp ], [ %.05157.i.i, %bb.ck ], [ %.05157.i.i, %.preheader56.i.i.i.i ], [ %.05157.i.i, %fastsearch.exit.i.i ] ; 2 uses
+  %.021.i.i = phi i64 [ 0, %.preheader.i20.i ], [ 0, %.lr.ph.i21.i ], [ %.058.i.i, %bb.cp ], [ %.058.i.i, %bb.ck ], [ %.058.i.i, %.preheader56.i.i.i.i ], [ %.058.i.i, %fastsearch.exit.i.i ]
   %i.kq = icmp slt i64 %.05130.i.i, 0
   br i1 %i.kq, label %bb.dh, label %fastsearch.exit.thread.thread.i.i
 

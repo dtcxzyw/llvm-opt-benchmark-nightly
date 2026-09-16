@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   %i.u = fmul float %2, %i.t
   %i.v = fmul float %i.u, -5.000000e-01
   %.not634 = icmp slt i32 %0, 0
-  br i1 %.not634, label %._crit_edge640.a, label %.lr.ph639
+  br i1 %.not634, label %._crit_edge640, label %.lr.ph639
 
 .lr.ph639:                                        ; preds = %bb.i
   %i.w = sitofp i32 %1 to float
@@ -217,31 +217,42 @@ bb.i:                                             ; preds = %bb.g, %bb.h
 .lr.ph639.split.us:                               ; preds = %.lr.ph639.split.us.preheader
   %i.aa = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.ad, i32 1), !nosanitize !9 ; 2 uses
   %i.ab = extractvalue { i32, i1 } %i.aa, 1, !nosanitize !9
-  br i1 %i.ab, label %.split642.us, label %.lr.ph639.split.us.preheader, !prof !20, !llvm.loop !118, !nosanitize !9
+  br i1 %i.ab, label %.split.us.a, label %.lr.ph639.split.us.preheader, !prof !20, !llvm.loop !118, !nosanitize !9
 
 .lr.ph639.split.us.preheader:                     ; preds = %.lr.ph639, %.lr.ph639.split.us
   %i.ac = phi { i32, i1 } [ %i.aa, %.lr.ph639.split.us ], [ { i32 1, i1 false }, %.lr.ph639 ]
   %i.ad = extractvalue { i32, i1 } %i.ac, 0, !nosanitize !9 ; 2 uses
   %.not.us = icmp sgt i32 %i.ad, %0
-  br i1 %.not.us, label %._crit_edge640.a, label %.lr.ph639.split.us, !llvm.loop !118
+  br i1 %.not.us, label %._crit_edge640, label %.lr.ph639.split.us, !llvm.loop !118
 
 .lr.ph639.split:                                  ; preds = %.lr.ph639
   %.not.a = icmp eq ptr %.sroa.0122.0, null
-  br i1 %.not.a, label %.split615.a, label %.lr.ph.us, !prof !17
+  br i1 %.not.a, label %.split615, label %.lr.ph.us, !prof !17
 
-.lr.ph.us:                                        ; preds = %.lr.ph639.split, %bb.n
-  %.082637.us644 = phi i32 [ %10, %bb.n ], [ 0, %.lr.ph639.split ]
-  %.083636.us645 = phi float [ %11, %bb.n ], [ %i.v, %.lr.ph639.split ] ; 2 uses
-  %.084635.us646 = phi i32 [ %indvars.le, %bb.n ], [ 0, %.lr.ph639.split ] ; 2 uses
+._crit_edge640:                                   ; preds = %.split615.a, %.lr.ph639.split.us.preheader, %bb.i
+  %6 = shl nsw i32 %0, 1                          ; 2 uses
+  %7 = add i32 %0, 1073741824
+  %8 = icmp sgt i32 %7, -1
+  br i1 %8, label %bb.p, label %bb.o, !prof !10, !nosanitize !9
+
+.lr.ph.us:                                        ; preds = %.lr.ph639.split, %.split615.a
+  %.082637.us644 = phi i32 [ %11, %.split615.a ], [ 0, %.lr.ph639.split ]
+  %.083636.us645 = phi float [ %12, %.split615.a ], [ %i.v, %.lr.ph639.split ] ; 2 uses
+  %.084635.us646 = phi i32 [ %indvars.le, %.split615.a ], [ 0, %.lr.ph639.split ] ; 2 uses
   %i.ae = sext i32 %.084635.us646 to i64
   %i.af = add i32 %.084635.us646, 2147483647
   %wide.trip.count = sext i32 %i.af to i64
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.m, %.lr.ph.us
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.m ], [ %i.ae, %.lr.ph.us ] ; 6 uses
-  %.080612.us648 = phi i32 [ %7, %bb.m ], [ 0, %.lr.ph.us ]
-  %.081611.us649 = phi float [ %i.ar, %bb.m ], [ %i.y, %.lr.ph.us ] ; 2 uses
+._crit_edge:                                      ; preds = %._crit_edge640.a
+  %9 = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %.082637.us644, i32 1), !nosanitize !9 ; 2 uses
+  %10 = extractvalue { i32, i1 } %9, 1, !nosanitize !9
+  br i1 %10, label %.split.us.a, label %.split615.a, !prof !17, !nosanitize !9
+
+bb.j:                                             ; preds = %.lr.ph.us, %._crit_edge640.a
+  %indvars.iv = phi i64 [ %i.ae, %.lr.ph.us ], [ %indvars.iv.next, %._crit_edge640.a ] ; 6 uses
+  %.080612.us648 = phi i32 [ 0, %.lr.ph.us ], [ %i.as, %._crit_edge640.a ]
+  %.081611.us649 = phi float [ %i.y, %.lr.ph.us ], [ %i.ar, %._crit_edge640.a ] ; 2 uses
   %i.ag = getelementptr inbounds [12 x i8], ptr %.sroa.0122.0, i64 %indvars.iv ; 4 uses
   %i.ah = mul nsw i64 %indvars.iv, 12
   %i.ai = add i64 %i.ah, %i.z, !nosanitize !9     ; 3 uses
@@ -250,13 +261,22 @@ bb.j:                                             ; preds = %bb.m, %.lr.ph.us
   %i.al = icmp slt i64 %indvars.iv, 0
   %i.am = xor i1 %i.al, %i.ak
   %i.an = and i1 %i.aj, %i.am, !nosanitize !9
-  br i1 %i.an, label %bb.k, label %.split.us.a, !prof !10, !nosanitize !9
+  br i1 %i.an, label %bb.k, label %.split.us, !prof !10, !nosanitize !9
+
+.split.us:                                        ; preds = %bb.j
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @8, i64 %i.z, i64 %i.ai) #12, !nosanitize !9
+  unreachable, !nosanitize !9
 
 bb.k:                                             ; preds = %bb.j
   %i.ao = ptrtoint ptr %i.ag to i64, !nosanitize !9 ; 2 uses
   %i.ap = and i64 %i.ao, 3, !nosanitize !9
   %i.aq = icmp eq i64 %i.ap, 0, !nosanitize !9
-  br i1 %i.aq, label %bb.l, label %.split615.a, !prof !10, !nosanitize !9
+  br i1 %i.aq, label %bb.l, label %.split615, !prof !10, !nosanitize !9
+
+.split615:                                        ; preds = %bb.k, %.lr.ph639.split
+  %.us-phi616 = phi i64 [ 0, %.lr.ph639.split ], [ %i.ao, %bb.k ]
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @10, i64 %.us-phi616) #12, !nosanitize !9
+  unreachable, !nosanitize !9
 
 bb.l:                                             ; preds = %bb.k
   store float %.083636.us645, ptr %i.ag, align 4, !tbaa !22
@@ -267,69 +287,49 @@ bb.l:                                             ; preds = %bb.k
   %i.ar = fadd float %2, %.081611.us649
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %exitcond = icmp eq i64 %indvars.iv, 2147483647
-  br i1 %exitcond, label %.split659.us, label %6, !prof !17, !nosanitize !9
+  br i1 %exitcond, label %bb.m, label %._crit_edge.us, !prof !17, !nosanitize !9
 
-6:                                                ; preds = %bb.l
-  %exitcond1443 = icmp eq i64 %indvars.iv, %wide.trip.count
-  br i1 %exitcond1443, label %.split662.us, label %bb.m, !prof !17, !nosanitize !9
-
-bb.m:                                             ; preds = %6
-  %7 = add i32 %.080612.us648, 1                  ; 2 uses
-  %.not107.us = icmp sgt i32 %7, %1
-  br i1 %.not107.us, label %._crit_edge.us, label %bb.j, !llvm.loop !119
-
-._crit_edge.us:                                   ; preds = %bb.m
-  %8 = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %.082637.us644, i32 1), !nosanitize !9 ; 2 uses
-  %9 = extractvalue { i32, i1 } %8, 1, !nosanitize !9
-  br i1 %9, label %.split642.us, label %bb.n, !prof !17, !nosanitize !9
-
-bb.n:                                             ; preds = %._crit_edge.us
-  %indvars.le = trunc i64 %indvars.iv.next to i32
-  %10 = extractvalue { i32, i1 } %8, 0, !nosanitize !9 ; 2 uses
-  %11 = fadd float %2, %.083636.us645
-  %.not.us651 = icmp sgt i32 %10, %0
-  br i1 %.not.us651, label %._crit_edge640.a, label %.lr.ph.us, !llvm.loop !118
-
-._crit_edge640.a:                                 ; preds = %bb.n, %.lr.ph639.split.us.preheader, %bb.i
-  %12 = shl nsw i32 %0, 1                         ; 2 uses
-  %i.as = add i32 %0, 1073741824
-  %i.at = icmp sgt i32 %i.as, -1
-  br i1 %i.at, label %bb.p, label %bb.o, !prof !10, !nosanitize !9
-
-.split.us.a:                                      ; preds = %bb.j
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @8, i64 %i.z, i64 %i.ai) #12, !nosanitize !9
-  unreachable, !nosanitize !9
-
-.split615.a:                                      ; preds = %bb.k, %.lr.ph639.split
-  %.us-phi616 = phi i64 [ 0, %.lr.ph639.split ], [ %i.ao, %bb.k ]
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @10, i64 %.us-phi616) #12, !nosanitize !9
-  unreachable, !nosanitize !9
-
-.split659.us:                                     ; preds = %bb.l
+bb.m:                                             ; preds = %bb.l
   tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @12, i64 2147483647, i64 1) #12, !nosanitize !9
   unreachable, !nosanitize !9
 
-.split662.us:                                     ; preds = %6
+._crit_edge.us:                                   ; preds = %bb.l
+  %exitcond1422 = icmp eq i64 %indvars.iv, %wide.trip.count
+  br i1 %exitcond1422, label %bb.n, label %._crit_edge640.a, !prof !17, !nosanitize !9
+
+bb.n:                                             ; preds = %._crit_edge.us
   tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @13, i64 2147483647, i64 1) #12, !nosanitize !9
   unreachable, !nosanitize !9
 
-.split642.us:                                     ; preds = %._crit_edge.us, %.lr.ph639.split.us
+._crit_edge640.a:                                 ; preds = %._crit_edge.us
+  %i.as = add i32 %.080612.us648, 1               ; 2 uses
+  %i.at = icmp sgt i32 %i.as, %1
+  br i1 %i.at, label %._crit_edge, label %bb.j, !llvm.loop !119
+
+.split.us.a:                                      ; preds = %._crit_edge, %.lr.ph639.split.us
   tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @14, i64 2147483647, i64 1) #12, !nosanitize !9
   unreachable, !nosanitize !9
 
-bb.o:                                             ; preds = %._crit_edge640.a
+.split615.a:                                      ; preds = %._crit_edge
+  %indvars.le = trunc i64 %indvars.iv.next to i32
+  %11 = extractvalue { i32, i1 } %9, 0, !nosanitize !9 ; 2 uses
+  %12 = fadd float %2, %.083636.us645
+  %.not = icmp sgt i32 %11, %0
+  br i1 %.not, label %._crit_edge640, label %.lr.ph.us, !llvm.loop !118
+
+bb.o:                                             ; preds = %._crit_edge640
   %i.au = zext i32 %0 to i64, !nosanitize !9
   tail call void @__ubsan_handle_mul_overflow_abort(ptr nonnull @15, i64 2, i64 %i.au) #12, !nosanitize !9
   unreachable, !nosanitize !9
 
-bb.p:                                             ; preds = %._crit_edge640.a
-  %i.av = tail call { i32, i1 } @llvm.smul.with.overflow.i32(i32 %12, i32 %1), !nosanitize !9 ; 2 uses
+bb.p:                                             ; preds = %._crit_edge640
+  %i.av = tail call { i32, i1 } @llvm.smul.with.overflow.i32(i32 %6, i32 %1), !nosanitize !9 ; 2 uses
   %i.aw = extractvalue { i32, i1 } %i.av, 0, !nosanitize !9 ; 5 uses
   %i.ax = extractvalue { i32, i1 } %i.av, 1, !nosanitize !9
   br i1 %i.ax, label %bb.q, label %bb.r, !prof !17, !nosanitize !9
 
 bb.q:                                             ; preds = %bb.p
-  %i.ay = zext i32 %12 to i64, !nosanitize !9
+  %i.ay = zext i32 %6 to i64, !nosanitize !9
   %i.az = zext i32 %1 to i64, !nosanitize !9
   tail call void @__ubsan_handle_mul_overflow_abort(ptr nonnull @16, i64 %i.ay, i64 %i.az) #12, !nosanitize !9
   unreachable, !nosanitize !9

@@ -202,14 +202,7 @@ bb.ce:                                            ; preds = %bb.cd
   %i.he = phi ptr [ %i.hs, %.outer.i ], [ %i.hd, %bb.ce ] ; 3 uses
   %.0.ph34.i = phi ptr [ %i.he, %.outer.i ], [ null, %bb.ce ] ; 5 uses
   %.not23.i = icmp eq ptr %.0.ph34.i, null
-  br i1 %.not23.i, label %.lr.ph.split.us.i, label %.lr.ph.split.i
-
-.lr.ph.split.us.i:                                ; preds = %.lr.ph.i170
-  %5 = getelementptr inbounds nuw i8, ptr %i.he, i64 8 ; 3 uses
-  call void @slurm_xfree(ptr noundef nonnull %5) #12
-  %6 = load ptr, ptr @fed_name, align 8           ; 2 uses
-  %.not24.i = icmp eq ptr %6, null
-  br i1 %.not24.i, label %bb.ch, label %bb.cg
+  br i1 %.not23.i, label %5, label %.lr.ph.split.i
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i170
   %i.hf = getelementptr inbounds nuw i8, ptr %.0.ph34.i, i64 16 ; 2 uses
@@ -232,13 +225,20 @@ bb.cf:                                            ; preds = %_combine_acct_group
   %i.hq = load ptr, ptr %i.hh, align 8            ; 5 uses
   br i1 %.not25.i, label %bb.ci, label %bb.cj
 
-bb.cg:                                            ; preds = %.lr.ph.split.us.i
-  call void (ptr, ptr, ...) @_xstrfmtcat(ptr noundef nonnull %5, ptr noundef nonnull @.str.41, ptr noundef nonnull %6) #12
+5:                                                ; preds = %.lr.ph.i170
+  %6 = getelementptr inbounds nuw i8, ptr %i.he, i64 8 ; 3 uses
+  call void @slurm_xfree(ptr noundef nonnull %6) #12
+  %7 = load ptr, ptr @fed_name, align 8           ; 2 uses
+  %.not24.i = icmp eq ptr %7, null
+  br i1 %.not24.i, label %bb.ch, label %bb.cg
+
+bb.cg:                                            ; preds = %5
+  call void (ptr, ptr, ...) @_xstrfmtcat(ptr noundef nonnull %6, ptr noundef nonnull @.str.41, ptr noundef nonnull %7) #12
   br label %.outer.i
 
-bb.ch:                                            ; preds = %.lr.ph.split.us.i
+bb.ch:                                            ; preds = %5
   %i.hr = call ptr @xstrdup(ptr noundef nonnull @.str.42) #12
-  store ptr %i.hr, ptr %5, align 8
+  store ptr %i.hr, ptr %6, align 8
   br label %.outer.i
 
 .outer.i:                                         ; preds = %bb.ch, %bb.cg

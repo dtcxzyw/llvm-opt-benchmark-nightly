@@ -205,24 +205,12 @@ bb.a:
   %i.o = icmp slt i64 %i.n, 1
   %i.p = icmp sgt i64 %i.k, 0
   %i.q = shl nuw i64 %i.k, 3                      ; 3 uses
-  br i1 %i.o, label %.preheader.us, label %.preheader.lr.ph.split
-
-.preheader.us:                                    ; preds = %.preheader.lr.ph
-  store double 1.000000e+26, ptr %i.a, align 16
-  store double 1.000000e+26, ptr %i.b, align 16
-  store double -1.000000e+26, ptr %i.c, align 8
-  store double -1.000000e+26, ptr %i.d, align 8
-  store double -1.000000e+26, ptr %i.e, align 8
-  store double 1.000000e+26, ptr %0, align 16
-  %4 = tail call ptr @__cxa_allocate_exception(i64 8) #22 ; 2 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %4, align 8, !tbaa !38
-  tail call void @__cxa_throw(ptr nonnull %4, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #36
-  unreachable
+  br i1 %i.o, label %.noexc, label %.preheader.lr.ph.split
 
 .preheader.lr.ph.split:                           ; preds = %.preheader.lr.ph
   %i.r = icmp samesign ugt i64 %i.k, 2305843009213693951
   tail call void @llvm.assume(i1 %i.p)
-  br i1 %i.r, label %.preheader.us295, label %.preheader.preheader
+  br i1 %i.r, label %.noexc55, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph.split
   %.idx = shl i64 %i.g, 3
@@ -248,18 +236,6 @@ bb.a:
   %xtraiter409 = and i64 %i.k, 3                  ; 2 uses
   %lcmp.mod410.not = icmp eq i64 %xtraiter409, 0
   br label %.preheader
-
-.preheader.us295:                                 ; preds = %.preheader.lr.ph.split
-  store double 1.000000e+26, ptr %i.a, align 16
-  store double 1.000000e+26, ptr %i.b, align 16
-  store double -1.000000e+26, ptr %i.c, align 8
-  store double -1.000000e+26, ptr %i.d, align 8
-  store double -1.000000e+26, ptr %i.e, align 8
-  store double 1.000000e+26, ptr %0, align 16
-  %5 = tail call ptr @__cxa_allocate_exception(i64 8) #22 ; 2 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %5, align 8, !tbaa !38
-  tail call void @__cxa_throw(ptr nonnull %5, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #36
-  unreachable
 
 .preheader:                                       ; preds = %.preheader.preheader, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2
   %.lcssa133265 = phi double [ %i.fw, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2 ], [ -1.000000e+26, %.preheader.preheader ] ; 3 uses
@@ -334,6 +310,30 @@ bb.b:                                             ; preds = %._crit_edge, %bb.a
   %.lcssa251.lcssa = phi double [ %i.ft, %._crit_edge ], [ 1.000000e+26, %bb.a ]
   store double %.lcssa251.lcssa, ptr %0, align 16
   ret void
+
+.noexc:                                           ; preds = %.preheader.lr.ph
+  store double 1.000000e+26, ptr %i.a, align 16
+  store double 1.000000e+26, ptr %i.b, align 16
+  store double -1.000000e+26, ptr %i.c, align 8
+  store double -1.000000e+26, ptr %i.d, align 8
+  store double -1.000000e+26, ptr %i.e, align 8
+  store double 1.000000e+26, ptr %0, align 16
+  %4 = tail call ptr @__cxa_allocate_exception(i64 8) #22 ; 2 uses
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %4, align 8, !tbaa !38
+  tail call void @__cxa_throw(ptr nonnull %4, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #36
+  unreachable
+
+.noexc55:                                         ; preds = %.preheader.lr.ph.split
+  store double 1.000000e+26, ptr %i.a, align 16
+  store double 1.000000e+26, ptr %i.b, align 16
+  store double -1.000000e+26, ptr %i.c, align 8
+  store double -1.000000e+26, ptr %i.d, align 8
+  store double -1.000000e+26, ptr %i.e, align 8
+  store double 1.000000e+26, ptr %0, align 16
+  %5 = tail call ptr @__cxa_allocate_exception(i64 8) #22 ; 2 uses
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %5, align 8, !tbaa !38
+  tail call void @__cxa_throw(ptr nonnull %5, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #36
+  unreachable
 
 .noexc56.split.loop.exit:                         ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.1
   %i.aq = extractelement <2 x double> %i.ee, i64 0
@@ -634,24 +634,12 @@ bb.a:
   %i.o = icmp slt i64 %i.n, 1
   %i.p = icmp sgt i64 %i.k, 0
   %i.q = shl nuw i64 %i.k, 3                      ; 3 uses
-  br i1 %i.o, label %.preheader.us, label %.preheader.lr.ph.split
-
-.preheader.us:                                    ; preds = %.preheader.lr.ph
-  store double 1.000000e+26, ptr %i.a, align 16
-  store double 1.000000e+26, ptr %i.b, align 16
-  store double -1.000000e+26, ptr %i.c, align 8
-  store double -1.000000e+26, ptr %i.d, align 8
-  store double -1.000000e+26, ptr %i.e, align 8
-  store double 1.000000e+26, ptr %0, align 16
-  %4 = tail call ptr @__cxa_allocate_exception(i64 8) #22 ; 2 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %4, align 8, !tbaa !38
-  tail call void @__cxa_throw(ptr nonnull %4, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #36
-  unreachable
+  br i1 %i.o, label %.noexc, label %.preheader.lr.ph.split
 
 .preheader.lr.ph.split:                           ; preds = %.preheader.lr.ph
   %i.r = icmp samesign ugt i64 %i.k, 2305843009213693951
   tail call void @llvm.assume(i1 %i.p)
-  br i1 %i.r, label %.preheader.us295, label %.preheader.preheader
+  br i1 %i.r, label %.noexc55, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph.split
   %.idx = shl i64 %i.g, 3
@@ -677,18 +665,6 @@ bb.a:
   %xtraiter409 = and i64 %i.k, 3                  ; 2 uses
   %lcmp.mod410.not = icmp eq i64 %xtraiter409, 0
   br label %.preheader
-
-.preheader.us295:                                 ; preds = %.preheader.lr.ph.split
-  store double 1.000000e+26, ptr %i.a, align 16
-  store double 1.000000e+26, ptr %i.b, align 16
-  store double -1.000000e+26, ptr %i.c, align 8
-  store double -1.000000e+26, ptr %i.d, align 8
-  store double -1.000000e+26, ptr %i.e, align 8
-  store double 1.000000e+26, ptr %0, align 16
-  %5 = tail call ptr @__cxa_allocate_exception(i64 8) #22 ; 2 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %5, align 8, !tbaa !38
-  tail call void @__cxa_throw(ptr nonnull %5, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #36
-  unreachable
 
 .preheader:                                       ; preds = %.preheader.preheader, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2
   %.lcssa133265 = phi double [ %i.fw, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2 ], [ -1.000000e+26, %.preheader.preheader ] ; 3 uses
@@ -763,6 +739,30 @@ bb.b:                                             ; preds = %._crit_edge, %bb.a
   %.lcssa251.lcssa = phi double [ %i.ft, %._crit_edge ], [ 1.000000e+26, %bb.a ]
   store double %.lcssa251.lcssa, ptr %0, align 16
   ret void
+
+.noexc:                                           ; preds = %.preheader.lr.ph
+  store double 1.000000e+26, ptr %i.a, align 16
+  store double 1.000000e+26, ptr %i.b, align 16
+  store double -1.000000e+26, ptr %i.c, align 8
+  store double -1.000000e+26, ptr %i.d, align 8
+  store double -1.000000e+26, ptr %i.e, align 8
+  store double 1.000000e+26, ptr %0, align 16
+  %4 = tail call ptr @__cxa_allocate_exception(i64 8) #22 ; 2 uses
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %4, align 8, !tbaa !38
+  tail call void @__cxa_throw(ptr nonnull %4, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #36
+  unreachable
+
+.noexc55:                                         ; preds = %.preheader.lr.ph.split
+  store double 1.000000e+26, ptr %i.a, align 16
+  store double 1.000000e+26, ptr %i.b, align 16
+  store double -1.000000e+26, ptr %i.c, align 8
+  store double -1.000000e+26, ptr %i.d, align 8
+  store double -1.000000e+26, ptr %i.e, align 8
+  store double 1.000000e+26, ptr %0, align 16
+  %5 = tail call ptr @__cxa_allocate_exception(i64 8) #22 ; 2 uses
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %5, align 8, !tbaa !38
+  tail call void @__cxa_throw(ptr nonnull %5, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #36
+  unreachable
 
 .noexc56.split.loop.exit:                         ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.1
   %i.aq = extractelement <2 x double> %i.ee, i64 0

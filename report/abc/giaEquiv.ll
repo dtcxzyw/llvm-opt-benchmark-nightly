@@ -204,7 +204,7 @@ Gia_ObjIsHead.exit.epil:                          ; preds = %bb.e, %.lr.ph.split
   %i.ao = add nuw nsw i32 %i.an, %.014.epil.init
   br label %.critedge
 
-.critedge:                                        ; preds = %Gia_ObjIsHead.exit.epil, %.critedge.loopexit.unr-lcssa, %.lr.ph, %.preheader, %bb.a, %bb.b
+.critedge:                                        ; preds = %Gia_ObjIsHead.exit.epil, %.critedge.loopexit.unr-lcssa, %.preheader, %.lr.ph, %bb.a, %bb.b
   %.012 = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ 0, %.preheader ], [ 0, %.lr.ph ], [ %i.ae, %.critedge.loopexit.unr-lcssa ], [ %i.ao, %Gia_ObjIsHead.exit.epil ]
   ret i32 %.012
 }
