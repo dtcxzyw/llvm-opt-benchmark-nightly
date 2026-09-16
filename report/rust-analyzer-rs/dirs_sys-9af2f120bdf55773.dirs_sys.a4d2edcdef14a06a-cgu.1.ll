@@ -202,7 +202,7 @@ bb.k:                                             ; preds = %bb.j
   unreachable
 
 bb.l:                                             ; preds = %bb.j
-  %i.cn = add i64 %i.bz, -8
+  %i.cn = add nsw i64 %i.bz, -8
   %i.co = getelementptr inbounds nuw i8, ptr %i.bv, i64 4
   invoke void @_RNvNtNtCshzWfHUSfYae_4core3str8converts9from_utf8(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.r, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.co, i64 noundef %i.cn)
           to label %bb.m unwind label %.loopexit132
