@@ -147,42 +147,41 @@ target triple = "x86_64-pc-linux-gnu"
 @138 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 212, i32 26 }, ptr @0, i8 6, i8 3 }
 @139 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 212, i32 23 } }
 @140 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 212, i32 23 }, ptr @96, i8 1, i8 0 }
-@141 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 214, i32 46 }, ptr @14 }
-@142 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 222, i32 37 } }
-@143 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 223, i32 41 } }
-@144 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 227, i32 37 } }
-@145 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 237, i32 9 }, ptr @14 }
-@146 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 237, i32 9 } }
-@147 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 237, i32 9 }, ptr @35, i8 1, i8 0 }
-@148 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 244, i32 23 }, ptr @0, i8 6, i8 3 }
-@149 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 247, i32 15 }, ptr @0, i8 6, i8 3 }
+@141 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 222, i32 37 } }
+@142 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 223, i32 41 } }
+@143 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 227, i32 37 } }
+@144 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 237, i32 9 }, ptr @14 }
+@145 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 237, i32 9 } }
+@146 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 237, i32 9 }, ptr @35, i8 1, i8 0 }
+@147 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 244, i32 23 }, ptr @0, i8 6, i8 3 }
+@148 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 247, i32 15 }, ptr @0, i8 6, i8 3 }
 @.src.1 = private unnamed_addr constant [67 x i8] c"/opt-bench/work/zlib-ng_ubsan/zlib-ng/arch/x86/compare256_avx512.c\00", align 1
-@150 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.1, i32 44, i32 53 } }
-@151 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.1, i32 45, i32 53 } }
-@152 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.1, i32 53, i32 53 } }
-@153 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.1, i32 54, i32 53 } }
-@154 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.1, i32 62, i32 53 } }
-@155 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.1, i32 63, i32 53 } }
-@156 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.1, i32 71, i32 53 } }
-@157 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.1, i32 72, i32 53 } }
+@149 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.1, i32 44, i32 53 } }
+@150 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.1, i32 45, i32 53 } }
+@151 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.1, i32 53, i32 53 } }
+@152 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.1, i32 54, i32 53 } }
+@153 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.1, i32 62, i32 53 } }
+@154 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.1, i32 63, i32 53 } }
+@155 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.1, i32 71, i32 53 } }
+@156 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.1, i32 72, i32 53 } }
 @.src.2 = private unnamed_addr constant [50 x i8] c"/usr/lib/llvm-24/lib/clang/24/include/emmintrin.h\00", align 1
-@158 = private unnamed_addr constant { i16, i16, [29 x i8] } { i16 -1, i16 0, [29 x i8] c"'const struct __loadu_si128'\00" }
-@159 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.2, i32 3469, i32 47 }, ptr @158, i8 0, i8 3 }
-@160 = private unnamed_addr constant { i16, i16, [51 x i8] } { i16 -1, i16 0, [51 x i8] c"'const __m128i_u' (vector of 2 'long long' values)\00" }
-@161 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.2, i32 3469, i32 47 }, ptr @160, i8 0, i8 0 }
+@157 = private unnamed_addr constant { i16, i16, [29 x i8] } { i16 -1, i16 0, [29 x i8] c"'const struct __loadu_si128'\00" }
+@158 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.2, i32 3469, i32 47 }, ptr @157, i8 0, i8 3 }
+@159 = private unnamed_addr constant { i16, i16, [51 x i8] } { i16 -1, i16 0, [51 x i8] c"'const __m128i_u' (vector of 2 'long long' values)\00" }
+@160 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.2, i32 3469, i32 47 }, ptr @159, i8 0, i8 0 }
 @.src.4 = private unnamed_addr constant [48 x i8] c"/opt-bench/work/zlib-ng_ubsan/zlib-ng/zmemory.h\00", align 1
-@162 = private unnamed_addr constant { i16, i16, [27 x i8] } { i16 -1, i16 0, [27 x i8] c"'const unaligned_uint64_t'\00" }
-@163 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.4, i32 37, i32 47 }, ptr @162, i8 0, i8 3 }
-@164 = private unnamed_addr constant { i16, i16, [45 x i8] } { i16 0, i16 12, [45 x i8] c"'const uint64_t' (aka 'const unsigned long')\00" }
-@165 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.4, i32 37, i32 47 }, ptr @164, i8 0, i8 0 }
-@166 = private unnamed_addr constant { i16, i16, [27 x i8] } { i16 -1, i16 0, [27 x i8] c"'const unaligned_uint16_t'\00" }
-@167 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.4, i32 15, i32 47 }, ptr @166, i8 0, i8 3 }
-@168 = private unnamed_addr constant { i16, i16, [46 x i8] } { i16 0, i16 8, [46 x i8] c"'const uint16_t' (aka 'const unsigned short')\00" }
-@169 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.4, i32 15, i32 47 }, ptr @168, i8 0, i8 0 }
-@170 = private unnamed_addr constant { i16, i16, [27 x i8] } { i16 -1, i16 0, [27 x i8] c"'const unaligned_uint32_t'\00" }
-@171 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.4, i32 26, i32 47 }, ptr @170, i8 0, i8 3 }
-@172 = private unnamed_addr constant { i16, i16, [44 x i8] } { i16 0, i16 10, [44 x i8] c"'const uint32_t' (aka 'const unsigned int')\00" }
-@173 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.4, i32 26, i32 47 }, ptr @172, i8 0, i8 0 }
+@161 = private unnamed_addr constant { i16, i16, [27 x i8] } { i16 -1, i16 0, [27 x i8] c"'const unaligned_uint64_t'\00" }
+@162 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.4, i32 37, i32 47 }, ptr @161, i8 0, i8 3 }
+@163 = private unnamed_addr constant { i16, i16, [45 x i8] } { i16 0, i16 12, [45 x i8] c"'const uint64_t' (aka 'const unsigned long')\00" }
+@164 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.4, i32 37, i32 47 }, ptr @163, i8 0, i8 0 }
+@165 = private unnamed_addr constant { i16, i16, [27 x i8] } { i16 -1, i16 0, [27 x i8] c"'const unaligned_uint16_t'\00" }
+@166 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.4, i32 15, i32 47 }, ptr @165, i8 0, i8 3 }
+@167 = private unnamed_addr constant { i16, i16, [46 x i8] } { i16 0, i16 8, [46 x i8] c"'const uint16_t' (aka 'const unsigned short')\00" }
+@168 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.4, i32 15, i32 47 }, ptr @167, i8 0, i8 0 }
+@169 = private unnamed_addr constant { i16, i16, [27 x i8] } { i16 -1, i16 0, [27 x i8] c"'const unaligned_uint32_t'\00" }
+@170 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.4, i32 26, i32 47 }, ptr @169, i8 0, i8 3 }
+@171 = private unnamed_addr constant { i16, i16, [44 x i8] } { i16 0, i16 10, [44 x i8] c"'const uint32_t' (aka 'const unsigned int')\00" }
+@172 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.4, i32 26, i32 47 }, ptr @171, i8 0, i8 0 }
 
 ; Function Attrs: nounwind uwtable
 define hidden range(i32 0, 257) i32 @compare256_avx512(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 !func_sanitize !12 {
@@ -199,8 +198,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = ptrtoint ptr %0 to i64, !nosanitize !13  ; 2 uses
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @159, i64 %i.a) #5, !nosanitize !13
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @161, i64 %i.a) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @158, i64 %i.a) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @160, i64 %i.a) #5, !nosanitize !13
   br label %_mm_loadu_si128.exit44, !nosanitize !13
 
 _mm_loadu_si128.exit44:                           ; preds = %bb.a, %bb.b
@@ -210,8 +209,8 @@ _mm_loadu_si128.exit44:                           ; preds = %bb.a, %bb.b
 
 bb.c:                                             ; preds = %_mm_loadu_si128.exit44
   %i.c = ptrtoint ptr %1 to i64, !nosanitize !13  ; 2 uses
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @159, i64 %i.c) #5, !nosanitize !13
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @161, i64 %i.c) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @158, i64 %i.c) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @160, i64 %i.c) #5, !nosanitize !13
   br label %_mm_loadu_si128.exit, !nosanitize !13
 
 _mm_loadu_si128.exit:                             ; preds = %_mm_loadu_si128.exit44, %bb.c
@@ -237,7 +236,7 @@ bb.e:                                             ; preds = %_mm_loadu_si128.exi
   br i1 %i.o, label %_mm512_loadu_si512.exit51, label %bb.f, !prof !16, !nosanitize !13
 
 bb.f:                                             ; preds = %bb.e
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @150, i64 %i.k, i64 %i.l) #5, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @149, i64 %i.k, i64 %i.l) #5, !nosanitize !13
   br label %_mm512_loadu_si512.exit51, !nosanitize !13
 
 _mm512_loadu_si512.exit51:                        ; preds = %bb.e, %bb.f
@@ -251,7 +250,7 @@ _mm512_loadu_si512.exit51:                        ; preds = %bb.e, %bb.f
   br i1 %i.v, label %_mm512_loadu_si512.exit50, label %bb.g, !prof !16, !nosanitize !13
 
 bb.g:                                             ; preds = %_mm512_loadu_si512.exit51
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @151, i64 %i.r, i64 %i.s) #5, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @150, i64 %i.r, i64 %i.s) #5, !nosanitize !13
   br label %_mm512_loadu_si512.exit50, !nosanitize !13
 
 _mm512_loadu_si512.exit50:                        ; preds = %_mm512_loadu_si512.exit51, %bb.g
@@ -277,7 +276,7 @@ bb.i:                                             ; preds = %_mm512_loadu_si512.
   br i1 %i.ah, label %_mm512_loadu_si512.exit49, label %bb.j, !prof !16, !nosanitize !13
 
 bb.j:                                             ; preds = %bb.i
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @152, i64 %i.k, i64 %i.ae) #5, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @151, i64 %i.k, i64 %i.ae) #5, !nosanitize !13
   br label %_mm512_loadu_si512.exit49, !nosanitize !13
 
 _mm512_loadu_si512.exit49:                        ; preds = %bb.i, %bb.j
@@ -290,7 +289,7 @@ _mm512_loadu_si512.exit49:                        ; preds = %bb.i, %bb.j
   br i1 %i.an, label %_mm512_loadu_si512.exit48, label %bb.k, !prof !16, !nosanitize !13
 
 bb.k:                                             ; preds = %_mm512_loadu_si512.exit49
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @153, i64 %i.r, i64 %i.ak) #5, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @152, i64 %i.r, i64 %i.ak) #5, !nosanitize !13
   br label %_mm512_loadu_si512.exit48, !nosanitize !13
 
 _mm512_loadu_si512.exit48:                        ; preds = %_mm512_loadu_si512.exit49, %bb.k
@@ -316,7 +315,7 @@ bb.m:                                             ; preds = %_mm512_loadu_si512.
   br i1 %i.az, label %_mm512_loadu_si512.exit47, label %bb.n, !prof !16, !nosanitize !13
 
 bb.n:                                             ; preds = %bb.m
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @154, i64 %i.k, i64 %i.aw) #5, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @153, i64 %i.k, i64 %i.aw) #5, !nosanitize !13
   br label %_mm512_loadu_si512.exit47, !nosanitize !13
 
 _mm512_loadu_si512.exit47:                        ; preds = %bb.m, %bb.n
@@ -329,7 +328,7 @@ _mm512_loadu_si512.exit47:                        ; preds = %bb.m, %bb.n
   br i1 %i.bf, label %_mm512_loadu_si512.exit46, label %bb.o, !prof !16, !nosanitize !13
 
 bb.o:                                             ; preds = %_mm512_loadu_si512.exit47
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @155, i64 %i.r, i64 %i.bc) #5, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @154, i64 %i.r, i64 %i.bc) #5, !nosanitize !13
   br label %_mm512_loadu_si512.exit46, !nosanitize !13
 
 _mm512_loadu_si512.exit46:                        ; preds = %_mm512_loadu_si512.exit47, %bb.o
@@ -355,7 +354,7 @@ bb.q:                                             ; preds = %_mm512_loadu_si512.
   br i1 %i.br, label %_mm512_loadu_si512.exit45, label %bb.r, !prof !16, !nosanitize !13
 
 bb.r:                                             ; preds = %bb.q
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @156, i64 %i.k, i64 %i.bo) #5, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @155, i64 %i.k, i64 %i.bo) #5, !nosanitize !13
   br label %_mm512_loadu_si512.exit45, !nosanitize !13
 
 _mm512_loadu_si512.exit45:                        ; preds = %bb.q, %bb.r
@@ -368,7 +367,7 @@ _mm512_loadu_si512.exit45:                        ; preds = %bb.q, %bb.r
   br i1 %i.bx, label %_mm512_loadu_si512.exit, label %bb.s, !prof !16, !nosanitize !13
 
 bb.s:                                             ; preds = %_mm512_loadu_si512.exit45
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @157, i64 %i.r, i64 %i.bu) #5, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @156, i64 %i.r, i64 %i.bu) #5, !nosanitize !13
   br label %_mm512_loadu_si512.exit, !nosanitize !13
 
 _mm512_loadu_si512.exit:                          ; preds = %_mm512_loadu_si512.exit45, %bb.s
@@ -557,8 +556,8 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %i.v, label %zng_memread_8.exit, label %bb.ae, !prof !16, !nosanitize !13
 
 bb.ae:                                            ; preds = %.thread157
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @163, i64 %.pre) #5, !nosanitize !13
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @165, i64 %.pre) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @162, i64 %.pre) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @164, i64 %.pre) #5, !nosanitize !13
   br label %zng_memread_8.exit, !nosanitize !13
 
 zng_memread_8.exit:                               ; preds = %.thread157, %bb.ae
@@ -786,8 +785,8 @@ bb.bm:                                            ; preds = %bb.bl, %bb.bk
 
 bb.bn:                                            ; preds = %bb.bm
   %i.dp = ptrtoint ptr %i.dj to i64, !nosanitize !13 ; 2 uses
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @167, i64 %i.dp) #5, !nosanitize !13
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @169, i64 %i.dp) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @166, i64 %i.dp) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @168, i64 %i.dp) #5, !nosanitize !13
   br label %zng_memread_2.exit.i149, !nosanitize !13
 
 zng_memread_2.exit.i149:                          ; preds = %bb.bn, %bb.bm
@@ -887,8 +886,8 @@ bb.bz:                                            ; preds = %bb.by, %bb.bx
 
 bb.ca:                                            ; preds = %bb.bz
   %i.ev = ptrtoint ptr %i.ep to i64, !nosanitize !13 ; 2 uses
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @163, i64 %i.ev) #5, !nosanitize !13
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @165, i64 %i.ev) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @162, i64 %i.ev) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @164, i64 %i.ev) #5, !nosanitize !13
   br label %zng_memread_8.exit.i, !nosanitize !13
 
 zng_memread_8.exit.i:                             ; preds = %bb.ca, %bb.bz
@@ -914,8 +913,8 @@ bb.cd:                                            ; preds = %bb.cc, %bb.cb
 
 bb.ce:                                            ; preds = %bb.cd
   %i.fd = ptrtoint ptr %i.ex to i64, !nosanitize !13 ; 2 uses
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @163, i64 %i.fd) #5, !nosanitize !13
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @165, i64 %i.fd) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @162, i64 %i.fd) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @164, i64 %i.fd) #5, !nosanitize !13
   br label %zng_memread_8.exit.i151, !nosanitize !13
 
 zng_memread_8.exit.i151:                          ; preds = %bb.ce, %bb.cd
@@ -992,8 +991,8 @@ bb.cp:                                            ; preds = %bb.co, %bb.cn
 
 bb.cq:                                            ; preds = %bb.cp
   %i.gg = ptrtoint ptr %i.ga to i64, !nosanitize !13 ; 2 uses
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @171, i64 %i.gg) #5, !nosanitize !13
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @173, i64 %i.gg) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @170, i64 %i.gg) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @172, i64 %i.gg) #5, !nosanitize !13
   br label %zng_memread_4.exit.i, !nosanitize !13
 
 zng_memread_4.exit.i:                             ; preds = %bb.cq, %bb.cp
@@ -1019,8 +1018,8 @@ bb.ct:                                            ; preds = %bb.cs, %bb.cr
 
 bb.cu:                                            ; preds = %bb.ct
   %i.go = ptrtoint ptr %i.gi to i64, !nosanitize !13 ; 2 uses
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @171, i64 %i.go) #5, !nosanitize !13
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @173, i64 %i.go) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @170, i64 %i.go) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @172, i64 %i.go) #5, !nosanitize !13
   br label %zng_memread_4.exit.i153, !nosanitize !13
 
 zng_memread_4.exit.i153:                          ; preds = %bb.cu, %bb.ct
@@ -1141,7 +1140,7 @@ bb.dn:                                            ; preds = %bb.dm
   %spec.select288.v = select i1 %i.ic, i32 -5, i32 -1
   %.1100.v = select i1 %i.ib, i32 %spec.select288.v, i32 1
   %.1100 = add nsw i32 %i.hy, %.1100.v
-  %i.id = zext nneg i32 %.1100 to i64             ; 4 uses
+  %i.id = zext i32 %.1100 to i64                  ; 4 uses
   %i.ie = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.id
   %i.if = add i64 %.pre, %i.id, !nosanitize !13   ; 2 uses
   %.not144 = icmp ult i64 %i.if, %.pre, !nosanitize !13
@@ -1415,8 +1414,8 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %i.v, label %zng_memread_8.exit, label %bb.ae, !prof !16, !nosanitize !13
 
 bb.ae:                                            ; preds = %.thread290
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @163, i64 %.pre) #5, !nosanitize !13
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @165, i64 %.pre) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @162, i64 %.pre) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @164, i64 %.pre) #5, !nosanitize !13
   br label %zng_memread_8.exit, !nosanitize !13
 
 zng_memread_8.exit:                               ; preds = %.thread290, %bb.ae
@@ -1819,8 +1818,8 @@ bb.cv:                                            ; preds = %bb.cu, %bb.ct
 
 bb.cw:                                            ; preds = %bb.cv
   %i.hg = ptrtoint ptr %i.ha to i64, !nosanitize !13 ; 2 uses
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @167, i64 %i.hg) #5, !nosanitize !13
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @169, i64 %i.hg) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @166, i64 %i.hg) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @168, i64 %i.hg) #5, !nosanitize !13
   br label %zng_memread_2.exit.i, !nosanitize !13
 
 zng_memread_2.exit.i:                             ; preds = %bb.cw, %bb.cv
@@ -1846,8 +1845,8 @@ bb.cz:                                            ; preds = %bb.cy, %bb.cx
 
 bb.da:                                            ; preds = %bb.cz
   %i.ho = ptrtoint ptr %i.hi to i64, !nosanitize !13 ; 2 uses
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @167, i64 %i.ho) #5, !nosanitize !13
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @169, i64 %i.ho) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @166, i64 %i.ho) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @168, i64 %i.ho) #5, !nosanitize !13
   br label %zng_memread_2.exit.i282, !nosanitize !13
 
 zng_memread_2.exit.i282:                          ; preds = %bb.da, %bb.cz
@@ -1951,8 +1950,8 @@ bb.dm:                                            ; preds = %bb.dl, %bb.dk
 
 bb.dn:                                            ; preds = %bb.dm
   %i.iy = ptrtoint ptr %i.is to i64, !nosanitize !13 ; 2 uses
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @163, i64 %i.iy) #5, !nosanitize !13
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @165, i64 %i.iy) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @162, i64 %i.iy) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @164, i64 %i.iy) #5, !nosanitize !13
   br label %zng_memread_8.exit.i, !nosanitize !13
 
 zng_memread_8.exit.i:                             ; preds = %bb.dn, %bb.dm
@@ -1978,8 +1977,8 @@ bb.dq:                                            ; preds = %bb.dp, %bb.do
 
 bb.dr:                                            ; preds = %bb.dq
   %i.jg = ptrtoint ptr %i.ja to i64, !nosanitize !13 ; 2 uses
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @163, i64 %i.jg) #5, !nosanitize !13
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @165, i64 %i.jg) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @162, i64 %i.jg) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @164, i64 %i.jg) #5, !nosanitize !13
   br label %zng_memread_8.exit.i284, !nosanitize !13
 
 zng_memread_8.exit.i284:                          ; preds = %bb.dr, %bb.dq
@@ -2056,8 +2055,8 @@ bb.ec:                                            ; preds = %bb.eb, %bb.ea
 
 bb.ed:                                            ; preds = %bb.ec
   %i.kj = ptrtoint ptr %i.kd to i64, !nosanitize !13 ; 2 uses
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @171, i64 %i.kj) #5, !nosanitize !13
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @173, i64 %i.kj) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @170, i64 %i.kj) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @172, i64 %i.kj) #5, !nosanitize !13
   br label %zng_memread_4.exit.i, !nosanitize !13
 
 zng_memread_4.exit.i:                             ; preds = %bb.ed, %bb.ec
@@ -2083,8 +2082,8 @@ bb.eg:                                            ; preds = %bb.ef, %bb.ee
 
 bb.eh:                                            ; preds = %bb.eg
   %i.kr = ptrtoint ptr %i.kl to i64, !nosanitize !13 ; 2 uses
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @171, i64 %i.kr) #5, !nosanitize !13
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @173, i64 %i.kr) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @170, i64 %i.kr) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @172, i64 %i.kr) #5, !nosanitize !13
   br label %zng_memread_4.exit.i286, !nosanitize !13
 
 zng_memread_4.exit.i286:                          ; preds = %bb.eh, %bb.eg
@@ -2177,8 +2176,8 @@ bb.eu:                                            ; preds = %bb.et
   br label %bb.ev, !nosanitize !13
 
 bb.ev:                                            ; preds = %bb.eu, %bb.et
-  %i.ma = call fastcc i32 @compare256_avx512_static(ptr noundef nonnull %i.gk, ptr noundef nonnull %i.lu) ; 5 uses
-  %i.mb = add nuw nsw i32 %i.ma, 2                ; 13 uses
+  %i.ma = call fastcc i32 @compare256_avx512_static(ptr noundef nonnull %i.gk, ptr noundef nonnull %i.lu) ; 6 uses
+  %i.mb = add nuw nsw i32 %i.ma, 2                ; 12 uses
   %i.mc = icmp ugt i32 %i.mb, %.0188377
   br i1 %i.mc, label %bb.ew, label %bb.hd
 
@@ -2201,13 +2200,13 @@ bb.ez:                                            ; preds = %bb.ey
   br i1 %.not267, label %bb.fa, label %.thread307
 
 bb.fa:                                            ; preds = %bb.ez
-  %i.mf = zext nneg i32 %i.mb to i64              ; 4 uses
+  %i.mf = zext nneg i32 %i.mb to i64              ; 3 uses
   %i.mg = icmp samesign ugt i32 %i.ma, 1          ; 2 uses
   %i.mh = icmp samesign ugt i32 %i.ma, 5
   %spec.select507.v = select i1 %i.mh, i32 -5, i32 -1
   %.1187.v = select i1 %i.mg, i32 %spec.select507.v, i32 1
   %.1187 = add nsw i32 %i.ma, %.1187.v
-  %i.mi = zext nneg i32 %.1187 to i64             ; 6 uses
+  %i.mi = zext i32 %.1187 to i64                  ; 6 uses
   %i.mj = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.mi
   %i.mk = add i64 %.pre, %i.mi, !nosanitize !13   ; 2 uses
   %.not268 = icmp ult i64 %i.mk, %.pre, !nosanitize !13
@@ -2248,26 +2247,22 @@ bb.ff:                                            ; preds = %bb.fe
   %i.mu = zext i16 %i.mr to i64
   br label %bb.fg
 
-bb.fg:                                            ; preds = %.backedge, %bb.ff
-  %.4 = phi i16 [ 0, %bb.ff ], [ %.5, %.backedge ] ; 2 uses
-  %.0177 = phi i16 [ %i.mr, %bb.ff ], [ %.1, %.backedge ] ; 4 uses
-  %.0 = phi i32 [ 0, %bb.ff ], [ %i.ns, %.backedge ] ; 8 uses
-  %.not269 = icmp ugt i32 %.0, %i.ms
-  br i1 %.not269, label %bb.ft, label %2
+bb.fg:                                            ; preds = %bb.ff, %.backedge
+  %.0373 = phi i32 [ 0, %bb.ff ], [ %i.ns, %.backedge ] ; 7 uses
+  %.4 = phi i16 [ %i.mr, %bb.ff ], [ %.1, %.backedge ] ; 2 uses
+  %.0177 = phi i16 [ 0, %bb.ff ], [ %.5, %.backedge ]
+  %2 = call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 %i.mt, i32 %.0373), !nosanitize !13 ; 2 uses
+  %3 = extractvalue { i32, i1 } %2, 0, !nosanitize !13
+  %4 = extractvalue { i32, i1 } %2, 1, !nosanitize !13
+  br i1 %4, label %bb.fh, label %bb.fi, !prof !14, !nosanitize !13
 
-2:                                                ; preds = %bb.fg
-  %3 = call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 %i.mt, i32 %.0), !nosanitize !13 ; 2 uses
-  %4 = extractvalue { i32, i1 } %3, 0, !nosanitize !13
-  %5 = extractvalue { i32, i1 } %3, 1, !nosanitize !13
-  br i1 %5, label %bb.fh, label %bb.fi, !prof !14, !nosanitize !13
-
-bb.fh:                                            ; preds = %2
-  %i.mv = zext i32 %.0 to i64, !nosanitize !13
+bb.fh:                                            ; preds = %bb.fg
+  %i.mv = zext i32 %.0373 to i64, !nosanitize !13
   call void @__ubsan_handle_add_overflow(ptr nonnull @123, i64 %i.mu, i64 %i.mv) #6, !nosanitize !13
   br label %bb.fi, !nosanitize !13
 
-bb.fi:                                            ; preds = %bb.fh, %2
-  %i.mw = and i32 %4, %i.o
+bb.fi:                                            ; preds = %bb.fh, %bb.fg
+  %i.mw = and i32 %3, %i.o
   %i.mx = zext i32 %i.mw to i64                   ; 2 uses
   %i.my = getelementptr inbounds nuw [2 x i8], ptr %i.ae, i64 %i.mx ; 2 uses
   %i.mz = shl nuw nsw i64 %i.mx, 1
@@ -2296,17 +2291,17 @@ bb.fl:                                            ; preds = %bb.fk
 bb.fm:                                            ; preds = %bb.fl, %bb.fk
   %i.nj = load i16, ptr %i.my, align 2, !tbaa !41 ; 3 uses
   %i.nk = zext i16 %i.nj to i32
-  %i.nl = icmp ult i16 %i.nj, %.0177
+  %i.nl = icmp ult i16 %i.nj, %.4
   br i1 %i.nl, label %bb.fn, label %bb.fr
 
 bb.fn:                                            ; preds = %bb.fm
-  %i.nm = call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 %i.gn, i32 %.0), !nosanitize !13 ; 2 uses
+  %i.nm = call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 %i.gn, i32 %.0373), !nosanitize !13 ; 2 uses
   %i.nn = extractvalue { i32, i1 } %i.nm, 0, !nosanitize !13
   %i.no = extractvalue { i32, i1 } %i.nm, 1, !nosanitize !13
   br i1 %i.no, label %bb.fo, label %bb.fp, !prof !14, !nosanitize !13
 
 bb.fo:                                            ; preds = %bb.fn
-  %i.np = zext i32 %.0 to i64, !nosanitize !13
+  %i.np = zext i32 %.0373 to i64, !nosanitize !13
   call void @__ubsan_handle_add_overflow(ptr nonnull @126, i64 %i.go, i64 %i.np) #6, !nosanitize !13
   br label %bb.fp, !nosanitize !13
 
@@ -2315,26 +2310,27 @@ bb.fp:                                            ; preds = %bb.fo, %bb.fn
   br i1 %.not277, label %bb.fq, label %.thread296.thread327
 
 bb.fq:                                            ; preds = %bb.fp
-  %i.nq = trunc i32 %.0 to i16
+  %i.nq = trunc i32 %.0373 to i16
   br label %bb.fr
 
 bb.fr:                                            ; preds = %bb.fm, %bb.fq
-  %.5 = phi i16 [ %i.nq, %bb.fq ], [ %.4, %bb.fm ]
-  %.1 = phi i16 [ %i.nj, %bb.fq ], [ %.0177, %bb.fm ]
-  %i.nr = call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 %.0, i32 1), !nosanitize !13 ; 2 uses
-  %i.ns = extractvalue { i32, i1 } %i.nr, 0, !nosanitize !13
+  %.5 = phi i16 [ %i.nq, %bb.fq ], [ %.0177, %bb.fm ] ; 2 uses
+  %.1 = phi i16 [ %i.nj, %bb.fq ], [ %.4, %bb.fm ] ; 3 uses
+  %i.nr = call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 %.0373, i32 1), !nosanitize !13 ; 2 uses
+  %i.ns = extractvalue { i32, i1 } %i.nr, 0, !nosanitize !13 ; 2 uses
   %i.nt = extractvalue { i32, i1 } %i.nr, 1, !nosanitize !13
   br i1 %i.nt, label %bb.fs, label %.backedge, !prof !14, !nosanitize !13
 
 bb.fs:                                            ; preds = %bb.fr
-  %i.nu = zext i32 %.0 to i64, !nosanitize !13
+  %i.nu = zext i32 %.0373 to i64, !nosanitize !13
   call void @__ubsan_handle_add_overflow(ptr nonnull @127, i64 %i.nu, i64 1) #6, !nosanitize !13
   br label %.backedge, !nosanitize !13
 
 .backedge:                                        ; preds = %bb.fs, %bb.fr
-  br label %bb.fg, !llvm.loop !46
+  %.not269 = icmp ugt i32 %i.ns, %i.ms
+  br i1 %.not269, label %bb.ft, label %bb.fg, !llvm.loop !46
 
-bb.ft:                                            ; preds = %bb.fg
+bb.ft:                                            ; preds = %.backedge
   %i.nv = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.mf ; 5 uses
   %i.nw = add i64 %.pre, %i.mf, !nosanitize !13   ; 2 uses
   %.not270 = icmp ult i64 %i.nw, %.pre, !nosanitize !13
@@ -2500,30 +2496,20 @@ bb.gv:                                            ; preds = %bb.gu
 
 bb.gw:                                            ; preds = %bb.gv, %bb.gu
   %i.qe = load i16, ptr %i.pr, align 2, !tbaa !41 ; 3 uses
-  %6 = zext i16 %i.qe to i32
-  %i.qf = icmp ult i16 %i.qe, %.0177
-  br i1 %i.qf, label %7, label %bb.gy
+  %i.qf = icmp ult i16 %i.qe, %.1
+  br i1 %i.qf, label %bb.gx, label %bb.gy
 
-7:                                                ; preds = %bb.gw
-  %8 = call { i32, i1 } @llvm.usub.with.overflow.i32(i32 %i.mb, i32 4), !nosanitize !13 ; 2 uses
-  %9 = extractvalue { i32, i1 } %8, 0, !nosanitize !13 ; 2 uses
-  %10 = extractvalue { i32, i1 } %8, 1, !nosanitize !13
-  br i1 %10, label %11, label %bb.gx, !prof !14, !nosanitize !13
-
-11:                                               ; preds = %7
-  call void @__ubsan_handle_sub_overflow(ptr nonnull @141, i64 %i.mf, i64 4) #6, !nosanitize !13
-  br label %bb.gx, !nosanitize !13
-
-bb.gx:                                            ; preds = %11, %7
-  %12 = trunc nsw i32 %9 to i16
-  %13 = and i32 %9, 65535
-  %i.qg = add nuw nsw i32 %13, %i.gn
-  %.not276 = icmp samesign ult i32 %i.qg, %6
+bb.gx:                                            ; preds = %bb.gw
+  %5 = zext i16 %i.qe to i32
+  %6 = add nsw i32 %i.ma, -2                      ; 2 uses
+  %7 = trunc nuw nsw i32 %6 to i16
+  %i.qg = add nuw nsw i32 %6, %i.gn
+  %.not276 = icmp samesign ult i32 %i.qg, %5
   br i1 %.not276, label %bb.gy, label %.thread296.thread327
 
 bb.gy:                                            ; preds = %bb.gx, %bb.gw
-  %.8228 = phi i16 [ %.0177, %bb.gw ], [ %i.qe, %bb.gx ] ; 2 uses
-  %.6 = phi i16 [ %.4, %bb.gw ], [ %12, %bb.gx ]  ; 5 uses
+  %.8228 = phi i16 [ %.1, %bb.gw ], [ %i.qe, %bb.gx ] ; 2 uses
+  %.6 = phi i16 [ %.5, %bb.gw ], [ %7, %bb.gx ]   ; 5 uses
   %i.qh = add i16 %.6, %i.cn                      ; 2 uses
   %i.qi = zext i16 %.6 to i64                     ; 3 uses
   %i.qj = sub nsw i64 0, %i.qi
@@ -2538,7 +2524,7 @@ bb.gy:                                            ; preds = %bb.gx, %bb.gw
   br i1 %i.qr, label %bb.ha, label %bb.gz, !prof !16, !nosanitize !13
 
 bb.gz:                                            ; preds = %bb.gy
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @142, i64 %i.t, i64 %i.ql) #5, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @141, i64 %i.t, i64 %i.ql) #5, !nosanitize !13
   br label %bb.ha, !nosanitize !13
 
 bb.ha:                                            ; preds = %bb.gz, %bb.gy
@@ -2552,7 +2538,7 @@ bb.ha:                                            ; preds = %bb.gz, %bb.gy
   br i1 %i.qy, label %.thread296, label %bb.hb, !prof !16, !nosanitize !13
 
 bb.hb:                                            ; preds = %bb.ha
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @143, i64 %i.qt, i64 %i.qu) #5, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @142, i64 %i.qt, i64 %i.qu) #5, !nosanitize !13
   br label %.thread296, !nosanitize !13
 
 .critedge:                                        ; preds = %zng_memread_8.exit288, %bb.fe
@@ -2564,7 +2550,7 @@ bb.hb:                                            ; preds = %bb.ha
   br i1 %i.rd, label %bb.hd, label %bb.hc, !prof !16, !nosanitize !13
 
 bb.hc:                                            ; preds = %.critedge
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @144, i64 %i.lp, i64 %i.ra) #5, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @143, i64 %i.lp, i64 %i.ra) #5, !nosanitize !13
   br label %bb.hd, !nosanitize !13
 
 bb.hd:                                            ; preds = %bb.hc, %.critedge, %bb.ev
@@ -2580,7 +2566,7 @@ bb.hd:                                            ; preds = %bb.hc, %.critedge, 
 
 bb.he:                                            ; preds = %bb.hd
   %i.rh = zext nneg i32 %.5198 to i64, !nosanitize !13
-  call void @__ubsan_handle_sub_overflow(ptr nonnull @145, i64 %i.rh, i64 1) #6, !nosanitize !13
+  call void @__ubsan_handle_sub_overflow(ptr nonnull @144, i64 %i.rh, i64 1) #6, !nosanitize !13
   br label %bb.hf, !nosanitize !13
 
 bb.hf:                                            ; preds = %bb.he, %bb.hd
@@ -2600,7 +2586,7 @@ bb.hg:                                            ; preds = %bb.hf
   br i1 %i.rq, label %bb.hi, label %bb.hh, !prof !16, !nosanitize !13
 
 bb.hh:                                            ; preds = %bb.hg
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @146, i64 %i.gi, i64 %i.rm) #5, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @145, i64 %i.gi, i64 %i.rm) #5, !nosanitize !13
   br label %bb.hi, !nosanitize !13
 
 bb.hi:                                            ; preds = %bb.hh, %bb.hg
@@ -2611,7 +2597,7 @@ bb.hi:                                            ; preds = %bb.hh, %bb.hg
   br i1 %i.ru, label %bb.hk, label %bb.hj, !prof !16, !nosanitize !13
 
 bb.hj:                                            ; preds = %bb.hi
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @147, i64 %i.rr) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @146, i64 %i.rr) #5, !nosanitize !13
   br label %bb.hk, !nosanitize !13
 
 bb.hk:                                            ; preds = %bb.hj, %bb.hi
@@ -2639,7 +2625,7 @@ bb.hk:                                            ; preds = %bb.hj, %bb.hi
   br i1 %i.e, label %bb.hm, label %bb.hl, !prof !16, !nosanitize !13
 
 bb.hl:                                            ; preds = %.thread296.thread327
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @148, i64 %i.b) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @147, i64 %i.b) #5, !nosanitize !13
   br label %bb.hm, !nosanitize !13
 
 bb.hm:                                            ; preds = %.thread296.thread327, %bb.hl
@@ -2651,7 +2637,7 @@ bb.hn:                                            ; preds = %bb.hm
   br i1 %i.e, label %bb.hp, label %bb.ho, !prof !16, !nosanitize !13
 
 bb.ho:                                            ; preds = %bb.hn
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @149, i64 %i.b) #5, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @148, i64 %i.b) #5, !nosanitize !13
   br label %bb.hp, !nosanitize !13
 
 bb.hp:                                            ; preds = %bb.hn, %bb.ho

@@ -157,84 +157,78 @@ target triple = "x86_64-pc-linux-gnu"
 @143 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src, i32 144, i32 16 }, { ptr, i32, i32 } { ptr @.src.4, i32 61, i32 62 }, i32 1 }
 @144 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 145, i32 20 } }
 @145 = private unnamed_addr constant { i16, i16, [33 x i8] } { i16 0, i16 12, [33 x i8] c"'__size_t' (aka 'unsigned long')\00" }
-@146 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 199, i32 34 }, ptr @145 }
-@147 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 203, i32 24 } }
-@148 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 204, i32 18 }, ptr @14 }
-@149 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 204, i32 13 } }
-@150 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 205, i32 18 }, ptr @14 }
-@151 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 205, i32 13 }, ptr @5 }
-@152 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 214, i32 13 }, ptr @5 }
-@153 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 215, i32 13 } }
-@154 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src, i32 222, i32 16 }, { ptr, i32, i32 } { ptr @.src.4, i32 44, i32 28 }, i32 1 }
-@155 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 223, i32 13 } }
+@146 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 203, i32 24 } }
+@147 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 204, i32 13 } }
+@148 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 215, i32 13 } }
+@149 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src, i32 222, i32 16 }, { ptr, i32, i32 } { ptr @.src.4, i32 44, i32 28 }, i32 1 }
+@150 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 223, i32 13 } }
 @.src.6 = private unnamed_addr constant [50 x i8] c"/usr/lib/llvm-24/lib/clang/24/include/emmintrin.h\00", align 1
 @.src.7 = private unnamed_addr constant [48 x i8] c"/opt-bench/work/zlib-ng_ubsan/zlib-ng/zmemory.h\00", align 1
-@156 = private unnamed_addr constant { i16, i16, [27 x i8] } { i16 -1, i16 0, [27 x i8] c"'const unaligned_uint16_t'\00" }
-@157 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.7, i32 15, i32 47 }, ptr @156, i8 0, i8 3 }
-@158 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.7, i32 15, i32 47 }, ptr @53, i8 0, i8 0 }
-@159 = private unnamed_addr constant { i16, i16, [27 x i8] } { i16 -1, i16 0, [27 x i8] c"'const unaligned_uint32_t'\00" }
-@160 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.7, i32 26, i32 47 }, ptr @159, i8 0, i8 3 }
-@161 = private unnamed_addr constant { i16, i16, [44 x i8] } { i16 0, i16 10, [44 x i8] c"'const uint32_t' (aka 'const unsigned int')\00" }
-@162 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.7, i32 26, i32 47 }, ptr @161, i8 0, i8 0 }
-@163 = private unnamed_addr constant { i16, i16, [27 x i8] } { i16 -1, i16 0, [27 x i8] c"'const unaligned_uint64_t'\00" }
-@164 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.7, i32 37, i32 47 }, ptr @163, i8 0, i8 3 }
-@165 = private unnamed_addr constant { i16, i16, [45 x i8] } { i16 0, i16 12, [45 x i8] c"'const uint64_t' (aka 'const unsigned long')\00" }
-@166 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.7, i32 37, i32 47 }, ptr @165, i8 0, i8 0 }
-@167 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src, i32 78, i32 31 }, { ptr, i32, i32 } { ptr @.src.4, i32 44, i32 28 }, i32 2 }
-@168 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 79, i32 29 }, ptr @33 }
-@169 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 80, i32 23 } }
-@170 = private unnamed_addr constant { i16, i16, [24 x i8] } { i16 -1, i16 0, [24 x i8] c"'struct __storeu_si128'\00" }
-@171 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.6, i32 3923, i32 35 }, ptr @170, i8 0, i8 3 }
-@172 = private unnamed_addr constant { i16, i16, [45 x i8] } { i16 -1, i16 0, [45 x i8] c"'__m128i_u' (vector of 2 'long long' values)\00" }
-@173 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.6, i32 3923, i32 35 }, ptr @172, i8 0, i8 1 }
+@151 = private unnamed_addr constant { i16, i16, [27 x i8] } { i16 -1, i16 0, [27 x i8] c"'const unaligned_uint16_t'\00" }
+@152 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.7, i32 15, i32 47 }, ptr @151, i8 0, i8 3 }
+@153 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.7, i32 15, i32 47 }, ptr @53, i8 0, i8 0 }
+@154 = private unnamed_addr constant { i16, i16, [27 x i8] } { i16 -1, i16 0, [27 x i8] c"'const unaligned_uint32_t'\00" }
+@155 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.7, i32 26, i32 47 }, ptr @154, i8 0, i8 3 }
+@156 = private unnamed_addr constant { i16, i16, [44 x i8] } { i16 0, i16 10, [44 x i8] c"'const uint32_t' (aka 'const unsigned int')\00" }
+@157 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.7, i32 26, i32 47 }, ptr @156, i8 0, i8 0 }
+@158 = private unnamed_addr constant { i16, i16, [27 x i8] } { i16 -1, i16 0, [27 x i8] c"'const unaligned_uint64_t'\00" }
+@159 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.7, i32 37, i32 47 }, ptr @158, i8 0, i8 3 }
+@160 = private unnamed_addr constant { i16, i16, [45 x i8] } { i16 0, i16 12, [45 x i8] c"'const uint64_t' (aka 'const unsigned long')\00" }
+@161 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.7, i32 37, i32 47 }, ptr @160, i8 0, i8 0 }
+@162 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src, i32 78, i32 31 }, { ptr, i32, i32 } { ptr @.src.4, i32 44, i32 28 }, i32 2 }
+@163 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 80, i32 23 } }
+@164 = private unnamed_addr constant { i16, i16, [24 x i8] } { i16 -1, i16 0, [24 x i8] c"'struct __storeu_si128'\00" }
+@165 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.6, i32 3923, i32 35 }, ptr @164, i8 0, i8 3 }
+@166 = private unnamed_addr constant { i16, i16, [45 x i8] } { i16 -1, i16 0, [45 x i8] c"'__m128i_u' (vector of 2 'long long' values)\00" }
+@167 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.6, i32 3923, i32 35 }, ptr @166, i8 0, i8 1 }
 @.src.8 = private unnamed_addr constant [50 x i8] c"/opt-bench/work/zlib-ng_ubsan/zlib-ng/inflate_p.h\00", align 1
-@174 = private unnamed_addr global { { ptr, i32, i32 }, ptr, ptr } { { ptr, i32, i32 } { ptr @.src.8, i32 145, i32 18 }, ptr @33, ptr @5 }
-@175 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 266, i32 20 } }
-@176 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 272, i32 42 }, ptr @137 }
-@177 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 274, i32 19 }, ptr @33 }
-@178 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 275, i32 27 } }
-@179 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 275, i32 22 }, ptr @1, i8 0, i8 0 }
-@180 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 275, i32 17 } }
-@181 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 275, i32 13 }, ptr @1, i8 0, i8 1 }
-@182 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 54, i32 37 } }
-@183 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 59, i32 13 } }
-@184 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 60, i32 14 }, ptr @5 }
-@185 = private unnamed_addr constant { i16, i16, [29 x i8] } { i16 -1, i16 0, [29 x i8] c"'const struct __loadu_si128'\00" }
-@186 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.6, i32 3469, i32 47 }, ptr @185, i8 0, i8 3 }
-@187 = private unnamed_addr constant { i16, i16, [51 x i8] } { i16 -1, i16 0, [51 x i8] c"'const __m128i_u' (vector of 2 'long long' values)\00" }
-@188 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.6, i32 3469, i32 47 }, ptr @187, i8 0, i8 0 }
-@189 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.8, i32 155, i32 50 } }
-@190 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.8, i32 156, i32 50 } }
-@191 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src.8, i32 161, i32 16 }, { ptr, i32, i32 } { ptr @.src.4, i32 44, i32 28 }, i32 1 }
-@192 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src.8, i32 161, i32 21 }, { ptr, i32, i32 } { ptr @.src.4, i32 44, i32 28 }, i32 2 }
-@193 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.8, i32 162, i32 20 } }
-@194 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.8, i32 167, i32 20 } }
-@195 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src.8, i32 175, i32 36 }, ptr @137 }
-@196 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src.8, i32 184, i32 13 }, ptr @33 }
-@197 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src.8, i32 187, i32 20 }, { ptr, i32, i32 } { ptr @.src.4, i32 44, i32 28 }, i32 1 }
-@198 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src.8, i32 187, i32 25 }, { ptr, i32, i32 } { ptr @.src.4, i32 44, i32 28 }, i32 2 }
-@199 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.8, i32 188, i32 17 } }
-@200 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.8, i32 189, i32 18 } }
-@201 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src.8, i32 194, i32 20 }, { ptr, i32, i32 } { ptr @.src.4, i32 44, i32 28 }, i32 1 }
-@202 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src.8, i32 194, i32 25 }, { ptr, i32, i32 } { ptr @.src.4, i32 44, i32 28 }, i32 2 }
-@203 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.8, i32 195, i32 17 } }
-@204 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.8, i32 196, i32 18 } }
-@205 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src.8, i32 201, i32 20 }, { ptr, i32, i32 } { ptr @.src.4, i32 44, i32 28 }, i32 1 }
-@206 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src.8, i32 201, i32 25 }, { ptr, i32, i32 } { ptr @.src.4, i32 44, i32 28 }, i32 2 }
-@207 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.8, i32 202, i32 17 } }
-@208 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.8, i32 203, i32 18 } }
-@209 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src.8, i32 207, i32 22 }, ptr @33 }
-@210 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.8, i32 208, i32 27 } }
-@211 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.8, i32 208, i32 22 }, ptr @1, i8 0, i8 0 }
-@212 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.8, i32 208, i32 17 } }
-@213 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.8, i32 208, i32 13 }, ptr @1, i8 0, i8 1 }
-@214 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 27, i32 27 }, ptr @5 }
-@215 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 30, i32 9 } }
-@216 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 31, i32 10 } }
-@217 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 32, i32 9 }, ptr @5 }
-@218 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 36, i32 13 } }
-@219 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 37, i32 14 } }
-@220 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 38, i32 13 }, ptr @145 }
+@168 = private unnamed_addr global { { ptr, i32, i32 }, ptr, ptr } { { ptr, i32, i32 } { ptr @.src.8, i32 145, i32 18 }, ptr @33, ptr @5 }
+@169 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 266, i32 20 } }
+@170 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 272, i32 42 }, ptr @137 }
+@171 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 274, i32 19 }, ptr @33 }
+@172 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 275, i32 27 } }
+@173 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 275, i32 22 }, ptr @1, i8 0, i8 0 }
+@174 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 275, i32 17 } }
+@175 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 275, i32 13 }, ptr @1, i8 0, i8 1 }
+@176 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 54, i32 37 } }
+@177 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 59, i32 13 } }
+@178 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 60, i32 14 }, ptr @5 }
+@179 = private unnamed_addr constant { i16, i16, [29 x i8] } { i16 -1, i16 0, [29 x i8] c"'const struct __loadu_si128'\00" }
+@180 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.6, i32 3469, i32 47 }, ptr @179, i8 0, i8 3 }
+@181 = private unnamed_addr constant { i16, i16, [51 x i8] } { i16 -1, i16 0, [51 x i8] c"'const __m128i_u' (vector of 2 'long long' values)\00" }
+@182 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.6, i32 3469, i32 47 }, ptr @181, i8 0, i8 0 }
+@183 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.8, i32 155, i32 50 } }
+@184 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.8, i32 156, i32 50 } }
+@185 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src.8, i32 161, i32 16 }, { ptr, i32, i32 } { ptr @.src.4, i32 44, i32 28 }, i32 1 }
+@186 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src.8, i32 161, i32 21 }, { ptr, i32, i32 } { ptr @.src.4, i32 44, i32 28 }, i32 2 }
+@187 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.8, i32 162, i32 20 } }
+@188 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.8, i32 167, i32 20 } }
+@189 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src.8, i32 175, i32 36 }, ptr @137 }
+@190 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src.8, i32 184, i32 13 }, ptr @33 }
+@191 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src.8, i32 187, i32 20 }, { ptr, i32, i32 } { ptr @.src.4, i32 44, i32 28 }, i32 1 }
+@192 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src.8, i32 187, i32 25 }, { ptr, i32, i32 } { ptr @.src.4, i32 44, i32 28 }, i32 2 }
+@193 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.8, i32 188, i32 17 } }
+@194 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.8, i32 189, i32 18 } }
+@195 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src.8, i32 194, i32 20 }, { ptr, i32, i32 } { ptr @.src.4, i32 44, i32 28 }, i32 1 }
+@196 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src.8, i32 194, i32 25 }, { ptr, i32, i32 } { ptr @.src.4, i32 44, i32 28 }, i32 2 }
+@197 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.8, i32 195, i32 17 } }
+@198 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.8, i32 196, i32 18 } }
+@199 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src.8, i32 201, i32 20 }, { ptr, i32, i32 } { ptr @.src.4, i32 44, i32 28 }, i32 1 }
+@200 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src.8, i32 201, i32 25 }, { ptr, i32, i32 } { ptr @.src.4, i32 44, i32 28 }, i32 2 }
+@201 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.8, i32 202, i32 17 } }
+@202 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.8, i32 203, i32 18 } }
+@203 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src.8, i32 207, i32 22 }, ptr @33 }
+@204 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.8, i32 208, i32 27 } }
+@205 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.8, i32 208, i32 22 }, ptr @1, i8 0, i8 0 }
+@206 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src.8, i32 208, i32 17 } }
+@207 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.8, i32 208, i32 13 }, ptr @1, i8 0, i8 1 }
+@208 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 27, i32 27 }, ptr @5 }
+@209 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 30, i32 9 } }
+@210 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 31, i32 10 } }
+@211 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 32, i32 9 }, ptr @5 }
+@212 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 36, i32 13 } }
+@213 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 37, i32 14 } }
+@214 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 38, i32 13 }, ptr @145 }
 
 ; Function Attrs: nounwind uwtable
 define hidden ptr @chunkmemset_safe_sse2(ptr noundef %0, ptr noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 !func_sanitize !23 {
@@ -439,8 +433,8 @@ bb.u:                                             ; preds = %bb.t
   br i1 %.not112, label %bb.v, label %zng_memread_2.exit.i, !prof !17, !nosanitize !13
 
 bb.v:                                             ; preds = %bb.u
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @157, i64 %i.d) #9, !nosanitize !13
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @158, i64 %i.d) #9, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @152, i64 %i.d) #9, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @153, i64 %i.d) #9, !nosanitize !13
   br label %zng_memread_2.exit.i, !nosanitize !13
 
 zng_memread_2.exit.i:                             ; preds = %bb.v, %bb.u
@@ -456,8 +450,8 @@ bb.w:                                             ; preds = %bb.t
   br i1 %.not111, label %bb.x, label %zng_memread_4.exit.i, !prof !17, !nosanitize !13
 
 bb.x:                                             ; preds = %bb.w
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @160, i64 %i.d) #9, !nosanitize !13
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @162, i64 %i.d) #9, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @155, i64 %i.d) #9, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @157, i64 %i.d) #9, !nosanitize !13
   br label %zng_memread_4.exit.i, !nosanitize !13
 
 zng_memread_4.exit.i:                             ; preds = %bb.x, %bb.w
@@ -473,8 +467,8 @@ bb.y:                                             ; preds = %bb.t
   br i1 %.not110.a, label %bb.z, label %zng_memread_8.exit.i, !prof !17, !nosanitize !13
 
 bb.z:                                             ; preds = %bb.y
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @164, i64 %i.d) #9, !nosanitize !13
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @166, i64 %i.d) #9, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @159, i64 %i.d) #9, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @161, i64 %i.d) #9, !nosanitize !13
   br label %zng_memread_8.exit.i, !nosanitize !13
 
 zng_memread_8.exit.i:                             ; preds = %bb.z, %bb.y
@@ -495,192 +489,135 @@ zng_memread_8.exit.i:                             ; preds = %bb.z, %bb.y
 
 bb.aa:                                            ; preds = %.split.us.split.us.preheader.i, %bb.aa
   %.01315.us.us.i = phi i64 [ %i.ar, %bb.aa ], [ 16, %.split.us.split.us.preheader.i ] ; 2 uses
-  call void @__ubsan_handle_nonnull_arg(ptr nonnull @167) #9, !nosanitize !13
+  call void @__ubsan_handle_nonnull_arg(ptr nonnull @162) #9, !nosanitize !13
   call void @llvm.assume(i1 %i.aq)
   %i.ar = sub nuw nsw i64 %.01315.us.us.i, %i.j
   %.not.us.us.i = icmp eq i64 %.01315.us.us.i, 0
   br i1 %.not.us.us.i, label %GET_CHUNK_MAG.exit, label %bb.aa, !llvm.loop !24
 
-.split.us.split.i:                                ; preds = %.split.us.i, %12
-  %.016.us.i = phi ptr [ %6, %12 ], [ %i.a, %.split.us.i ] ; 3 uses
-  %.01315.us.i = phi i64 [ %4, %12 ], [ 16, %.split.us.i ] ; 3 uses
-  %i.as = call i64 @llvm.umin.i64(i64 %.01315.us.i, i64 %i.j) ; 6 uses
+.split.us.split.i:                                ; preds = %.split.us.i, %bb.ac
+  %.016.us.i = phi ptr [ %4, %bb.ac ], [ %i.a, %.split.us.i ] ; 3 uses
+  %.01315.us.i = phi i64 [ %3, %bb.ac ], [ 16, %.split.us.i ] ; 2 uses
+  %i.as = call i64 @llvm.umin.i64(i64 %.01315.us.i, i64 %i.j) ; 5 uses
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.016.us.i, ptr nonnull readonly align 1 %1, i64 %i.as, i1 false)
-  %3 = call { i64, i1 } @llvm.usub.with.overflow.i64(i64 %.01315.us.i, i64 %i.as), !nosanitize !13 ; 2 uses
-  %4 = extractvalue { i64, i1 } %3, 0, !nosanitize !13 ; 2 uses
-  %5 = extractvalue { i64, i1 } %3, 1, !nosanitize !13
-  br i1 %5, label %bb.ab, label %bb.ac, !prof !17, !nosanitize !13
+  %3 = sub nuw nsw i64 %.01315.us.i, %i.as        ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.016.us.i, i64 %i.as
+  %5 = ptrtoint ptr %.016.us.i to i64, !nosanitize !13 ; 3 uses
+  %6 = add i64 %i.as, %5, !nosanitize !13         ; 3 uses
+  %7 = icmp ne i64 %6, 0, !nosanitize !13
+  %8 = icmp uge i64 %6, %5, !nosanitize !13
+  %9 = and i1 %7, %8, !nosanitize !13
+  br i1 %9, label %bb.ac, label %bb.ab, !prof !14, !nosanitize !13
 
 bb.ab:                                            ; preds = %.split.us.split.i
-  call void @__ubsan_handle_sub_overflow(ptr nonnull @168, i64 %.01315.us.i, i64 %i.as) #10, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @163, i64 %5, i64 %6) #9, !nosanitize !13
   br label %bb.ac, !nosanitize !13
 
 bb.ac:                                            ; preds = %bb.ab, %.split.us.split.i
-  %6 = getelementptr inbounds nuw i8, ptr %.016.us.i, i64 %i.as
-  %7 = ptrtoint ptr %.016.us.i to i64, !nosanitize !13 ; 3 uses
-  %8 = add i64 %i.as, %7, !nosanitize !13         ; 3 uses
-  %9 = icmp ne i64 %8, 0, !nosanitize !13
-  %10 = icmp uge i64 %8, %7, !nosanitize !13
-  %11 = and i1 %9, %10, !nosanitize !13
-  br i1 %11, label %12, label %bb.ad, !prof !14, !nosanitize !13
+  %.not.us.i = icmp eq i64 %3, 0
+  br i1 %.not.us.i, label %bb.ad, label %.split.us.split.i, !llvm.loop !24
 
 bb.ad:                                            ; preds = %bb.ac
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @169, i64 %7, i64 %8) #9, !nosanitize !13
-  br label %12, !nosanitize !13
+  %10 = sub nuw nsw i64 16, %i.as
+  br label %GET_CHUNK_MAG.exit
 
-12:                                               ; preds = %bb.ad, %bb.ac
-  %.not.us.i = icmp eq i64 %4, 0
-  br i1 %.not.us.i, label %GET_CHUNK_MAG.exit, label %.split.us.split.i, !llvm.loop !24
-
-GET_CHUNK_MAG.exit:                               ; preds = %12, %bb.aa
-  %storemerge = phi i64 [ 0, %bb.aa ], [ %i.as, %12 ]
+GET_CHUNK_MAG.exit:                               ; preds = %bb.aa, %bb.ad
+  %storemerge = phi i64 [ %10, %bb.ad ], [ 16, %bb.aa ]
   %i.at = load <2 x i64>, ptr %i.a, align 16, !tbaa !15 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   store <2 x i64> %i.at, ptr %i.b, align 16, !tbaa !15
   br label %bb.ae
 
-bb.ae:                                            ; preds = %zng_memread_4.exit.i, %GET_CHUNK_MAG.exit, %zng_memread_8.exit.i, %zng_memread_2.exit.i
+bb.ae:                                            ; preds = %zng_memread_2.exit.i, %zng_memread_8.exit.i, %GET_CHUNK_MAG.exit, %zng_memread_4.exit.i
   %.0.81 = phi <2 x i64> [ %i.at, %GET_CHUNK_MAG.exit ], [ %i.ai, %zng_memread_2.exit.i ], [ %i.am, %zng_memread_4.exit.i ], [ %i.ap, %zng_memread_8.exit.i ] ; 3 uses
-  %.0 = phi i64 [ %storemerge, %GET_CHUNK_MAG.exit ], [ 0, %zng_memread_2.exit.i ], [ 0, %zng_memread_4.exit.i ], [ 0, %zng_memread_8.exit.i ] ; 2 uses
-  %13 = call { i64, i1 } @llvm.usub.with.overflow.i64(i64 16, i64 %.0), !nosanitize !13 ; 2 uses
-  %14 = extractvalue { i64, i1 } %13, 0, !nosanitize !13 ; 3 uses
-  %15 = extractvalue { i64, i1 } %13, 1, !nosanitize !13
-  br i1 %15, label %16, label %17, !prof !17, !nosanitize !13
+  %.0 = phi i64 [ %storemerge, %GET_CHUNK_MAG.exit ], [ 16, %zng_memread_2.exit.i ], [ 16, %zng_memread_4.exit.i ], [ 16, %zng_memread_8.exit.i ] ; 5 uses
+  %11 = trunc nuw nsw i64 %.0 to i32              ; 2 uses
+  %12 = icmp ugt i32 %2, 31
+  br i1 %12, label %.lr.ph, label %.preheader
 
-16:                                               ; preds = %bb.ae
-  call void @__ubsan_handle_sub_overflow(ptr nonnull @146, i64 16, i64 %.0) #10, !nosanitize !13
-  br label %17, !nosanitize !13
-
-17:                                               ; preds = %16, %bb.ae
-  %18 = trunc i64 %14 to i32                      ; 3 uses
-  %19 = icmp ugt i32 %2, 31
-  br i1 %19, label %.lr.ph, label %.preheader
-
-.lr.ph:                                           ; preds = %17
-  %20 = and i64 %14, 4294967295                   ; 4 uses
-  %i.au = shl i32 %18, 1                          ; 2 uses
-  %21 = icmp sgt i32 %18, -1                      ; 2 uses
-  %i.av = zext i32 %i.au to i64                   ; 3 uses
+.lr.ph:                                           ; preds = %bb.ae
+  %i.au = shl nuw nsw i32 %11, 1                  ; 2 uses
+  %i.av = zext nneg i32 %i.au to i64              ; 2 uses
   br label %bb.af
 
-.preheader:                                       ; preds = %32, %17
-  %.050.lcssa = phi ptr [ %0, %17 ], [ %i.az, %32 ] ; 2 uses
-  %.0.lcssa = phi i32 [ %2, %17 ], [ %29, %32 ]   ; 4 uses
-  %22 = zext nneg i32 %.0.lcssa to i64            ; 2 uses
+.preheader:                                       ; preds = %bb.ak, %bb.ae
+  %.050.lcssa = phi ptr [ %0, %bb.ae ], [ %i.az, %bb.ak ] ; 2 uses
+  %.0.lcssa = phi i32 [ %2, %bb.ae ], [ %13, %bb.ak ] ; 3 uses
   %i.aw = icmp samesign ugt i32 %.0.lcssa, 15
-  br i1 %i.aw, label %.lr.ph71, label %._crit_edge
+  br i1 %i.aw, label %bb.al, label %._crit_edge
 
-.lr.ph71:                                         ; preds = %.preheader
-  %23 = and i64 %14, 4294967295                   ; 3 uses
-  br label %bb.al
-
-bb.af:                                            ; preds = %.lr.ph, %32
-  %.067 = phi i32 [ %2, %.lr.ph ], [ %29, %32 ]   ; 2 uses
-  %.05066 = phi ptr [ %0, %.lr.ph ], [ %i.az, %32 ] ; 5 uses
-  %24 = zext i32 %.067 to i64
+bb.af:                                            ; preds = %.lr.ph, %bb.ak
+  %.067 = phi i32 [ %2, %.lr.ph ], [ %13, %bb.ak ]
+  %.05066 = phi ptr [ %0, %.lr.ph ], [ %i.az, %bb.ak ] ; 5 uses
   %.not113 = icmp eq ptr %.05066, null, !nosanitize !13
   %.pre = ptrtoint ptr %.05066 to i64, !nosanitize !13 ; 8 uses
   br i1 %.not113, label %bb.ag, label %storechunk.exit, !prof !17, !nosanitize !13
 
 bb.ag:                                            ; preds = %bb.af
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @171, i64 %.pre) #9, !nosanitize !13
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @173, i64 %.pre) #9, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @165, i64 %.pre) #9, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @167, i64 %.pre) #9, !nosanitize !13
   br label %storechunk.exit, !nosanitize !13
 
 storechunk.exit:                                  ; preds = %bb.af, %bb.ag
   store <2 x i64> %.0.81, ptr %.05066, align 1, !tbaa !15
-  %i.ax = getelementptr inbounds nuw i8, ptr %.05066, i64 %20
-  %i.ay = add i64 %20, %.pre, !nosanitize !13     ; 2 uses
+  %i.ax = getelementptr inbounds nuw i8, ptr %.05066, i64 %.0
+  %i.ay = add i64 %.0, %.pre, !nosanitize !13     ; 2 uses
   %.not61 = icmp ult i64 %i.ay, %.pre, !nosanitize !13
-  br i1 %.not61, label %25, label %storechunk.exit58, !prof !17, !nosanitize !13
+  br i1 %.not61, label %bb.ah, label %bb.ai, !prof !17, !nosanitize !13
 
-25:                                               ; preds = %storechunk.exit
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @147, i64 %.pre, i64 %i.ay) #9, !nosanitize !13
-  br label %storechunk.exit58, !nosanitize !13
-
-storechunk.exit58:                                ; preds = %25, %storechunk.exit
-  store <2 x i64> %.0.81, ptr %i.ax, align 1, !tbaa !15
-  br i1 %21, label %bb.ai, label %bb.ah, !prof !14, !nosanitize !13
-
-bb.ah:                                            ; preds = %storechunk.exit58
-  call void @__ubsan_handle_mul_overflow(ptr nonnull @148, i64 2, i64 %20) #10, !nosanitize !13
+bb.ah:                                            ; preds = %storechunk.exit
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @146, i64 %.pre, i64 %i.ay) #9, !nosanitize !13
   br label %bb.ai, !nosanitize !13
 
-bb.ai:                                            ; preds = %bb.ah, %storechunk.exit58
+bb.ai:                                            ; preds = %bb.ah, %storechunk.exit
+  store <2 x i64> %.0.81, ptr %i.ax, align 1, !tbaa !15
   %i.az = getelementptr inbounds nuw i8, ptr %.05066, i64 %i.av ; 2 uses
   %i.ba = add i64 %.pre, %i.av, !nosanitize !13   ; 2 uses
   %.not62 = icmp ult i64 %i.ba, %.pre, !nosanitize !13
-  br i1 %.not62, label %26, label %27, !prof !17, !nosanitize !13
+  br i1 %.not62, label %bb.aj, label %bb.ak, !prof !17, !nosanitize !13
 
-26:                                               ; preds = %bb.ai
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @149, i64 %.pre, i64 %i.ba) #9, !nosanitize !13
-  br label %27, !nosanitize !13
-
-27:                                               ; preds = %26, %bb.ai
-  br i1 %21, label %bb.ak, label %bb.aj, !prof !14, !nosanitize !13
-
-bb.aj:                                            ; preds = %27
-  call void @__ubsan_handle_mul_overflow(ptr nonnull @150, i64 2, i64 %20) #10, !nosanitize !13
+bb.aj:                                            ; preds = %bb.ai
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @147, i64 %.pre, i64 %i.ba) #9, !nosanitize !13
   br label %bb.ak, !nosanitize !13
 
-bb.ak:                                            ; preds = %bb.aj, %27
-  %28 = call { i32, i1 } @llvm.usub.with.overflow.i32(i32 %.067, i32 %i.au), !nosanitize !13 ; 2 uses
-  %29 = extractvalue { i32, i1 } %28, 0, !nosanitize !13 ; 3 uses
-  %30 = extractvalue { i32, i1 } %28, 1, !nosanitize !13
-  br i1 %30, label %31, label %32, !prof !17, !nosanitize !13
+bb.ak:                                            ; preds = %bb.aj, %bb.ai
+  %13 = sub i32 %.067, %i.au                      ; 3 uses
+  %14 = icmp ugt i32 %13, 31
+  br i1 %14, label %bb.af, label %.preheader, !llvm.loop !25
 
-31:                                               ; preds = %bb.ak
-  call void @__ubsan_handle_sub_overflow(ptr nonnull @151, i64 %24, i64 %i.av) #10, !nosanitize !13
-  br label %32, !nosanitize !13
-
-32:                                               ; preds = %31, %bb.ak
-  %33 = icmp ugt i32 %29, 31
-  br i1 %33, label %bb.af, label %.preheader, !llvm.loop !25
-
-bb.al:                                            ; preds = %.lr.ph71, %bb.ap
-  %34 = phi i64 [ %22, %.lr.ph71 ], [ %39, %bb.ap ]
-  %.170 = phi i32 [ %.0.lcssa, %.lr.ph71 ], [ %36, %bb.ap ]
-  %.15169 = phi ptr [ %.050.lcssa, %.lr.ph71 ], [ %i.bc, %bb.ap ] ; 5 uses
+bb.al:                                            ; preds = %.preheader, %bb.ap
+  %.170 = phi i32 [ %15, %bb.ap ], [ %.0.lcssa, %.preheader ]
+  %.15169 = phi ptr [ %i.bc, %bb.ap ], [ %.050.lcssa, %.preheader ] ; 5 uses
   %.not114 = icmp eq ptr %.15169, null, !nosanitize !13
-  br i1 %.not114, label %bb.am, label %storechunk.exit59, !prof !17, !nosanitize !13
+  br i1 %.not114, label %bb.am, label %bb.an, !prof !17, !nosanitize !13
 
 bb.am:                                            ; preds = %bb.al
   %i.bb = ptrtoint ptr %.15169 to i64, !nosanitize !13 ; 2 uses
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @171, i64 %i.bb) #9, !nosanitize !13
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @173, i64 %i.bb) #9, !nosanitize !13
-  br label %storechunk.exit59, !nosanitize !13
-
-storechunk.exit59:                                ; preds = %bb.al, %bb.am
-  store <2 x i64> %.0.81, ptr %.15169, align 1, !tbaa !15
-  %35 = call { i32, i1 } @llvm.usub.with.overflow.i32(i32 %.170, i32 %18), !nosanitize !13 ; 2 uses
-  %36 = extractvalue { i32, i1 } %35, 0, !nosanitize !13 ; 4 uses
-  %37 = extractvalue { i32, i1 } %35, 1, !nosanitize !13
-  br i1 %37, label %38, label %bb.an, !prof !17, !nosanitize !13
-
-38:                                               ; preds = %storechunk.exit59
-  call void @__ubsan_handle_sub_overflow(ptr nonnull @152, i64 %34, i64 %23) #10, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @165, i64 %i.bb) #9, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @167, i64 %i.bb) #9, !nosanitize !13
   br label %bb.an, !nosanitize !13
 
-bb.an:                                            ; preds = %38, %storechunk.exit59
-  %i.bc = getelementptr inbounds nuw i8, ptr %.15169, i64 %23 ; 2 uses
+bb.an:                                            ; preds = %bb.am, %bb.al
+  store <2 x i64> %.0.81, ptr %.15169, align 1, !tbaa !15
+  %15 = sub i32 %.170, %11                        ; 3 uses
+  %i.bc = getelementptr inbounds nuw i8, ptr %.15169, i64 %.0 ; 2 uses
   %i.bd = ptrtoint ptr %.15169 to i64, !nosanitize !13 ; 3 uses
-  %i.be = add i64 %23, %i.bd, !nosanitize !13     ; 2 uses
+  %i.be = add i64 %.0, %i.bd, !nosanitize !13     ; 2 uses
   %.not60 = icmp ult i64 %i.be, %i.bd, !nosanitize !13
   br i1 %.not60, label %bb.ao, label %bb.ap, !prof !17, !nosanitize !13
 
 bb.ao:                                            ; preds = %bb.an
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @153, i64 %i.bd, i64 %i.be) #9, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @148, i64 %i.bd, i64 %i.be) #9, !nosanitize !13
   br label %bb.ap, !nosanitize !13
 
 bb.ap:                                            ; preds = %bb.ao, %bb.an
-  %39 = zext i32 %36 to i64                       ; 2 uses
-  %i.bf = icmp ugt i32 %36, 15
+  %i.bf = icmp ugt i32 %15, 15
   br i1 %i.bf, label %bb.al, label %._crit_edge, !llvm.loop !26
 
 ._crit_edge:                                      ; preds = %bb.ap, %.preheader
   %.151.lcssa = phi ptr [ %.050.lcssa, %.preheader ], [ %i.bc, %bb.ap ] ; 5 uses
-  %.1.lcssa = phi i32 [ %.0.lcssa, %.preheader ], [ %36, %bb.ap ]
-  %.lcssa = phi i64 [ %22, %.preheader ], [ %39, %bb.ap ] ; 3 uses
+  %.1.lcssa = phi i32 [ %.0.lcssa, %.preheader ], [ %15, %bb.ap ] ; 2 uses
+  %.lcssa = zext nneg i32 %.1.lcssa to i64        ; 3 uses
   %.not = icmp eq i32 %.1.lcssa, 0
   br i1 %.not, label %bb.au, label %bb.aq
 
@@ -689,7 +626,7 @@ bb.aq:                                            ; preds = %._crit_edge
   br i1 %i.bg, label %bb.as, label %bb.ar, !prof !14, !nosanitize !13
 
 bb.ar:                                            ; preds = %bb.aq
-  call void @__ubsan_handle_nonnull_arg(ptr nonnull @154) #9, !nosanitize !13
+  call void @__ubsan_handle_nonnull_arg(ptr nonnull @149) #9, !nosanitize !13
   br label %bb.as, !nosanitize !13
 
 bb.as:                                            ; preds = %bb.aq, %bb.ar
@@ -704,7 +641,7 @@ bb.as:                                            ; preds = %bb.aq, %bb.ar
   br i1 %i.bn, label %bb.au, label %bb.at, !prof !14, !nosanitize !13
 
 bb.at:                                            ; preds = %bb.as
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @155, i64 %i.bi, i64 %i.bj) #9, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @150, i64 %i.bi, i64 %i.bj) #9, !nosanitize !13
   br label %bb.au, !nosanitize !13
 
 bb.au:                                            ; preds = %._crit_edge, %bb.at, %bb.as, %bb.p, %bb.q, %bb.i, %bb.j, %bb.s
@@ -1097,8 +1034,8 @@ bb.bp:                                            ; preds = %bb.iw, %bb.bo
 
 bb.bq:                                            ; preds = %bb.bp
   %i.dz = ptrtoint ptr %.0227 to i64, !nosanitize !13 ; 2 uses
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @164, i64 %i.dz) #9, !nosanitize !13
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @166, i64 %i.dz) #9, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @159, i64 %i.dz) #9, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @161, i64 %i.dz) #9, !nosanitize !13
   br label %zng_memread_8.exit.i, !nosanitize !13
 
 zng_memread_8.exit.i:                             ; preds = %bb.bq, %bb.bp
@@ -1112,7 +1049,7 @@ zng_memread_8.exit.i:                             ; preds = %bb.bq, %bb.bp
   br i1 %i.eg, label %load_64_bits.exit, label %bb.br, !prof !14, !nosanitize !13
 
 bb.br:                                            ; preds = %zng_memread_8.exit.i
-  call void @__ubsan_handle_shift_out_of_bounds(ptr nonnull @174, i64 %i.ea, i64 %i.eb) #10, !nosanitize !13
+  call void @__ubsan_handle_shift_out_of_bounds(ptr nonnull @168, i64 %i.ea, i64 %i.eb) #10, !nosanitize !13
   br label %load_64_bits.exit, !nosanitize !13
 
 load_64_bits.exit:                                ; preds = %zng_memread_8.exit.i, %bb.br
@@ -1515,7 +1452,7 @@ zng_memread_8.exit.i277:                          ; preds = %bb.er
   br i1 %i.kh, label %load_64_bits.exit278, label %bb.es, !prof !14, !nosanitize !13
 
 bb.es:                                            ; preds = %zng_memread_8.exit.i277
-  call void @__ubsan_handle_shift_out_of_bounds(ptr nonnull @174, i64 %i.kd, i64 %i.ke) #10, !nosanitize !13
+  call void @__ubsan_handle_shift_out_of_bounds(ptr nonnull @168, i64 %i.kd, i64 %i.ke) #10, !nosanitize !13
   br label %load_64_bits.exit278, !nosanitize !13
 
 load_64_bits.exit278:                             ; preds = %zng_memread_8.exit.i277, %bb.es
@@ -1805,7 +1742,7 @@ bb.go:                                            ; preds = %bb.gn
 
 bb.gp:                                            ; preds = %bb.go
   %i.oh = sub nsw i64 %i.of, %i.ob
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @182, i64 %i.of, i64 %i.oh) #9, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @176, i64 %i.of, i64 %i.oh) #9, !nosanitize !13
   br label %bb.gq, !nosanitize !13
 
 bb.gq:                                            ; preds = %bb.gp, %bb.go
@@ -1822,8 +1759,8 @@ bb.gq:                                            ; preds = %bb.gp, %bb.go
   br i1 %.not520, label %bb.gr, label %loadchunk.exit.thread.i, !prof !17, !nosanitize !13
 
 bb.gr:                                            ; preds = %.lr.ph
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @186, i64 %i.oi) #9, !nosanitize !13
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @188, i64 %i.oi) #9, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @180, i64 %i.oi) #9, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @182, i64 %i.oi) #9, !nosanitize !13
   br label %loadchunk.exit.thread.i, !nosanitize !13
 
 loadchunk.exit.thread.i:                          ; preds = %bb.gr, %.lr.ph
@@ -1833,8 +1770,8 @@ loadchunk.exit.thread.i:                          ; preds = %bb.gr, %.lr.ph
   br i1 %.not521, label %bb.gs, label %storechunk.exit.i, !prof !17, !nosanitize !13
 
 bb.gs:                                            ; preds = %loadchunk.exit.thread.i
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @171, i64 %.pre397) #9, !nosanitize !13
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @173, i64 %.pre397) #9, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @165, i64 %.pre397) #9, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @167, i64 %.pre397) #9, !nosanitize !13
   br label %storechunk.exit.i, !nosanitize !13
 
 storechunk.exit.i:                                ; preds = %loadchunk.exit.thread.i, %bb.gs
@@ -1846,7 +1783,7 @@ storechunk.exit.i:                                ; preds = %loadchunk.exit.thre
   br i1 %.not.i, label %bb.gt, label %bb.gu, !prof !17, !nosanitize !13
 
 bb.gt:                                            ; preds = %storechunk.exit.i
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @183, i64 %.pre397, i64 %i.oq) #9, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @177, i64 %.pre397, i64 %i.oq) #9, !nosanitize !13
   br label %bb.gu, !nosanitize !13
 
 bb.gu:                                            ; preds = %storechunk.exit.i, %bb.gt
@@ -1857,7 +1794,7 @@ bb.gu:                                            ; preds = %storechunk.exit.i, 
 
 bb.gv:                                            ; preds = %bb.gu
   %i.ou = zext i32 %i.om to i64, !nosanitize !13
-  call void @__ubsan_handle_sub_overflow(ptr nonnull @184, i64 %i.ou, i64 %i.oo) #10, !nosanitize !13
+  call void @__ubsan_handle_sub_overflow(ptr nonnull @178, i64 %i.ou, i64 %i.oo) #10, !nosanitize !13
   br label %bb.gw, !nosanitize !13
 
 bb.gw:                                            ; preds = %bb.gu, %bb.gv
@@ -2260,7 +2197,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.i, label %bb.p, label %bb.c, !prof !14, !nosanitize !13
 
 bb.c:                                             ; preds = %bb.b
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @175, i64 %i.b, i64 %i.d) #9, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @169, i64 %i.b, i64 %i.d) #9, !nosanitize !13
   br label %bb.p, !nosanitize !13
 
 bb.d:                                             ; preds = %bb.a
@@ -2275,7 +2212,7 @@ bb.d:                                             ; preds = %bb.a
   br i1 %i.q, label %bb.e, label %bb.f, !prof !17, !nosanitize !13
 
 bb.e:                                             ; preds = %bb.d
-  call void @__ubsan_handle_negate_overflow(ptr nonnull @176, i64 %i.n) #9, !nosanitize !13
+  call void @__ubsan_handle_negate_overflow(ptr nonnull @170, i64 %i.n) #9, !nosanitize !13
   br label %bb.f, !nosanitize !13
 
 bb.f:                                             ; preds = %bb.e, %bb.d
@@ -2293,7 +2230,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 .thread:                                          ; preds = %bb.n, %.preheader
   %.023.lcssa = phi ptr [ %0, %.preheader ], [ %i.ag, %bb.n ]
-  call void @__ubsan_handle_sub_overflow(ptr nonnull @177, i64 0, i64 1) #10, !nosanitize !13
+  call void @__ubsan_handle_sub_overflow(ptr nonnull @171, i64 0, i64 1) #10, !nosanitize !13
   br label %bb.p
 
 .lr.ph:                                           ; preds = %.preheader, %bb.n
@@ -2310,14 +2247,14 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %i.ae, label %bb.h, label %bb.g, !prof !14, !nosanitize !13
 
 bb.g:                                             ; preds = %.lr.ph
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @178, i64 %i.aa, i64 %i.ab) #9, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @172, i64 %i.aa, i64 %i.ab) #9, !nosanitize !13
   br label %bb.h, !nosanitize !13
 
 bb.h:                                             ; preds = %bb.g, %.lr.ph
   br i1 %i.ac, label %bb.j, label %bb.i, !prof !14, !nosanitize !13
 
 bb.i:                                             ; preds = %bb.h
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @179, i64 %i.aa) #9, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @173, i64 %i.aa) #9, !nosanitize !13
   br label %bb.j, !nosanitize !13
 
 bb.j:                                             ; preds = %bb.i, %bb.h
@@ -2331,14 +2268,14 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %i.al, label %bb.l, label %bb.k, !prof !14, !nosanitize !13
 
 bb.k:                                             ; preds = %bb.j
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @180, i64 %i.ah, i64 %i.ai) #9, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @174, i64 %i.ah, i64 %i.ai) #9, !nosanitize !13
   br label %bb.l, !nosanitize !13
 
 bb.l:                                             ; preds = %bb.k, %bb.j
   br i1 %i.aj, label %bb.n, label %bb.m, !prof !14, !nosanitize !13
 
 bb.m:                                             ; preds = %bb.l
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @181, i64 %i.ah) #9, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @175, i64 %i.ah) #9, !nosanitize !13
   br label %bb.n, !nosanitize !13
 
 bb.n:                                             ; preds = %bb.m, %bb.l
@@ -2378,7 +2315,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.k, label %bb.d, label %bb.c, !prof !14, !nosanitize !13
 
 bb.c:                                             ; preds = %bb.b
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @189, i64 %i.b, i64 %i.f) #9, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @183, i64 %i.b, i64 %i.f) #9, !nosanitize !13
   br label %bb.d, !nosanitize !13
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -2402,7 +2339,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.u, label %bb.h, label %bb.g, !prof !14, !nosanitize !13
 
 bb.g:                                             ; preds = %bb.f
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @190, i64 %i.o, i64 %i.p) #9, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @184, i64 %i.o, i64 %i.p) #9, !nosanitize !13
   br label %bb.h, !nosanitize !13
 
 bb.h:                                             ; preds = %bb.g, %bb.f
@@ -2419,7 +2356,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.x, label %bb.l, label %bb.k, !prof !14, !nosanitize !13
 
 bb.k:                                             ; preds = %bb.j
-  call void @__ubsan_handle_nonnull_arg(ptr nonnull @191) #9, !nosanitize !13
+  call void @__ubsan_handle_nonnull_arg(ptr nonnull @185) #9, !nosanitize !13
   br label %bb.l, !nosanitize !13
 
 bb.l:                                             ; preds = %bb.k, %bb.j
@@ -2427,7 +2364,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br i1 %.not78, label %bb.m, label %bb.n, !prof !17, !nosanitize !13
 
 bb.m:                                             ; preds = %bb.l
-  call void @__ubsan_handle_nonnull_arg(ptr nonnull @192) #9, !nosanitize !13
+  call void @__ubsan_handle_nonnull_arg(ptr nonnull @186) #9, !nosanitize !13
   br label %bb.n, !nosanitize !13
 
 bb.n:                                             ; preds = %bb.m, %bb.l
@@ -2441,7 +2378,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   br i1 %i.ad, label %.loopexit, label %bb.o, !prof !14, !nosanitize !13
 
 bb.o:                                             ; preds = %bb.n
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @193, i64 %i.b, i64 %i.z) #9, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @187, i64 %i.b, i64 %i.z) #9, !nosanitize !13
   br label %.loopexit, !nosanitize !13
 
 bb.p:                                             ; preds = %bb.i
@@ -2459,7 +2396,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.al, label %.loopexit, label %bb.r, !prof !14, !nosanitize !13
 
 bb.r:                                             ; preds = %bb.q
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @194, i64 %i.b, i64 %i.ag) #9, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @188, i64 %i.b, i64 %i.ag) #9, !nosanitize !13
   br label %.loopexit, !nosanitize !13
 
 bb.s:                                             ; preds = %bb.p
@@ -2471,7 +2408,7 @@ bb.s:                                             ; preds = %bb.p
   br i1 %i.aq, label %bb.t, label %bb.u, !prof !17, !nosanitize !13
 
 bb.t:                                             ; preds = %bb.s
-  call void @__ubsan_handle_negate_overflow(ptr nonnull @195, i64 %i.an) #9, !nosanitize !13
+  call void @__ubsan_handle_negate_overflow(ptr nonnull @189, i64 %i.an) #9, !nosanitize !13
   br label %bb.u, !nosanitize !13
 
 bb.u:                                             ; preds = %bb.t, %bb.s
@@ -2491,7 +2428,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   br i1 %i.aw, label %bb.v, label %bb.w, !prof !17, !nosanitize !13
 
 bb.v:                                             ; preds = %.lr.ph121
-  call void @__ubsan_handle_sub_overflow(ptr nonnull @196, i64 %.060119, i64 %i.at) #10, !nosanitize !13
+  call void @__ubsan_handle_sub_overflow(ptr nonnull @190, i64 %.060119, i64 %i.at) #10, !nosanitize !13
   br label %bb.w, !nosanitize !13
 
 bb.w:                                             ; preds = %bb.v, %.lr.ph121
@@ -2506,7 +2443,7 @@ bb.w:                                             ; preds = %bb.v, %.lr.ph121
   br i1 %i.ay, label %bb.y, label %bb.x, !prof !14, !nosanitize !13
 
 bb.x:                                             ; preds = %.lr.ph
-  call void @__ubsan_handle_nonnull_arg(ptr nonnull @197) #9, !nosanitize !13
+  call void @__ubsan_handle_nonnull_arg(ptr nonnull @191) #9, !nosanitize !13
   br label %bb.y, !nosanitize !13
 
 bb.y:                                             ; preds = %bb.x, %.lr.ph
@@ -2514,7 +2451,7 @@ bb.y:                                             ; preds = %bb.x, %.lr.ph
   br i1 %i.az, label %bb.aa, label %bb.z, !prof !14, !nosanitize !13
 
 bb.z:                                             ; preds = %bb.y
-  call void @__ubsan_handle_nonnull_arg(ptr nonnull @198) #9, !nosanitize !13
+  call void @__ubsan_handle_nonnull_arg(ptr nonnull @192) #9, !nosanitize !13
   br label %bb.aa, !nosanitize !13
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
@@ -2529,7 +2466,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   br i1 %i.bg, label %bb.ac, label %bb.ab, !prof !14, !nosanitize !13
 
 bb.ab:                                            ; preds = %bb.aa
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @199, i64 %i.bb, i64 %i.bc) #9, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @193, i64 %i.bb, i64 %i.bc) #9, !nosanitize !13
   br label %bb.ac, !nosanitize !13
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
@@ -2543,7 +2480,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
   br i1 %i.bn, label %bb.ae, label %bb.ad, !prof !14, !nosanitize !13
 
 bb.ad:                                            ; preds = %bb.ac
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @200, i64 %i.bi, i64 %i.bj) #9, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @194, i64 %i.bi, i64 %i.bj) #9, !nosanitize !13
   br label %bb.ae, !nosanitize !13
 
 bb.ae:                                            ; preds = %bb.ac, %bb.ad
@@ -2563,7 +2500,7 @@ bb.af:                                            ; preds = %._crit_edge
   br i1 %.not95, label %bb.ag, label %bb.ah, !prof !17, !nosanitize !13
 
 bb.ag:                                            ; preds = %bb.af
-  call void @__ubsan_handle_nonnull_arg(ptr nonnull @201) #9, !nosanitize !13
+  call void @__ubsan_handle_nonnull_arg(ptr nonnull @195) #9, !nosanitize !13
   br label %bb.ah, !nosanitize !13
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af
@@ -2571,7 +2508,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
   br i1 %.not96, label %bb.ai, label %bb.aj, !prof !17, !nosanitize !13
 
 bb.ai:                                            ; preds = %bb.ah
-  call void @__ubsan_handle_nonnull_arg(ptr nonnull @202) #9, !nosanitize !13
+  call void @__ubsan_handle_nonnull_arg(ptr nonnull @196) #9, !nosanitize !13
   br label %bb.aj, !nosanitize !13
 
 bb.aj:                                            ; preds = %bb.ai, %bb.ah
@@ -2586,7 +2523,7 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   br i1 %or.cond87, label %bb.al, label %bb.ak, !prof !18
 
 bb.ak:                                            ; preds = %bb.aj
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @203, i64 %i.bt, i64 %i.bu) #9, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @197, i64 %i.bt, i64 %i.bu) #9, !nosanitize !13
   br label %bb.al, !nosanitize !13
 
 bb.al:                                            ; preds = %bb.aj, %bb.ak
@@ -2599,7 +2536,7 @@ bb.al:                                            ; preds = %bb.aj, %bb.ak
   br i1 %or.cond89, label %bb.an, label %bb.am, !prof !18
 
 bb.am:                                            ; preds = %bb.al
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @204, i64 %i.bx, i64 %i.by) #9, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @198, i64 %i.bx, i64 %i.by) #9, !nosanitize !13
   br label %bb.an, !nosanitize !13
 
 bb.an:                                            ; preds = %bb.al, %bb.am
@@ -2620,7 +2557,7 @@ bb.ap:                                            ; preds = %bb.ao
   br i1 %.not99, label %bb.aq, label %bb.ar, !prof !17, !nosanitize !13
 
 bb.aq:                                            ; preds = %bb.ap
-  call void @__ubsan_handle_nonnull_arg(ptr nonnull @205) #9, !nosanitize !13
+  call void @__ubsan_handle_nonnull_arg(ptr nonnull @199) #9, !nosanitize !13
   br label %bb.ar, !nosanitize !13
 
 bb.ar:                                            ; preds = %bb.aq, %bb.ap
@@ -2628,7 +2565,7 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap
   br i1 %.not100, label %bb.as, label %bb.at, !prof !17, !nosanitize !13
 
 bb.as:                                            ; preds = %bb.ar
-  call void @__ubsan_handle_nonnull_arg(ptr nonnull @206) #9, !nosanitize !13
+  call void @__ubsan_handle_nonnull_arg(ptr nonnull @200) #9, !nosanitize !13
   br label %bb.at, !nosanitize !13
 
 bb.at:                                            ; preds = %bb.as, %bb.ar
@@ -2643,7 +2580,7 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
   br i1 %or.cond91, label %bb.av, label %bb.au, !prof !18
 
 bb.au:                                            ; preds = %bb.at
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @207, i64 %i.ce, i64 %i.cf) #9, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @201, i64 %i.ce, i64 %i.cf) #9, !nosanitize !13
   br label %bb.av, !nosanitize !13
 
 bb.av:                                            ; preds = %bb.at, %bb.au
@@ -2656,7 +2593,7 @@ bb.av:                                            ; preds = %bb.at, %bb.au
   br i1 %or.cond93, label %bb.ax, label %bb.aw, !prof !18
 
 bb.aw:                                            ; preds = %bb.av
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @208, i64 %i.ci, i64 %i.cj) #9, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @202, i64 %i.ci, i64 %i.cj) #9, !nosanitize !13
   br label %bb.ax, !nosanitize !13
 
 bb.ax:                                            ; preds = %bb.av, %bb.aw
@@ -2674,7 +2611,7 @@ bb.ay:                                            ; preds = %bb.ax, %bb.ao
 ._crit_edge112:                                   ; preds = %bb.bg, %bb.ay
   %.469.lcssa = phi ptr [ %.368, %bb.ay ], [ %i.cw, %bb.bg ] ; 2 uses
   %.4.lcssa = phi ptr [ %.364, %bb.ay ], [ %i.cp, %bb.bg ]
-  call void @__ubsan_handle_sub_overflow(ptr nonnull @209, i64 0, i64 1) #10, !nosanitize !13
+  call void @__ubsan_handle_sub_overflow(ptr nonnull @203, i64 0, i64 1) #10, !nosanitize !13
   %.not79 = icmp eq i64 %i.av, 0
   br i1 %.not79, label %.loopexit, label %.lr.ph121, !llvm.loop !66
 
@@ -2692,14 +2629,14 @@ bb.ay:                                            ; preds = %bb.ax, %bb.ao
   br i1 %i.cu, label %bb.ba, label %bb.az, !prof !14, !nosanitize !13
 
 bb.az:                                            ; preds = %.lr.ph111
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @210, i64 %i.cq, i64 %i.cr) #9, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @204, i64 %i.cq, i64 %i.cr) #9, !nosanitize !13
   br label %bb.ba, !nosanitize !13
 
 bb.ba:                                            ; preds = %bb.az, %.lr.ph111
   br i1 %i.cs, label %bb.bc, label %bb.bb, !prof !14, !nosanitize !13
 
 bb.bb:                                            ; preds = %bb.ba
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @211, i64 %i.cq) #9, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @205, i64 %i.cq) #9, !nosanitize !13
   br label %bb.bc, !nosanitize !13
 
 bb.bc:                                            ; preds = %bb.bb, %bb.ba
@@ -2713,14 +2650,14 @@ bb.bc:                                            ; preds = %bb.bb, %bb.ba
   br i1 %i.db, label %bb.be, label %bb.bd, !prof !14, !nosanitize !13
 
 bb.bd:                                            ; preds = %bb.bc
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @212, i64 %i.cx, i64 %i.cy) #9, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @206, i64 %i.cx, i64 %i.cy) #9, !nosanitize !13
   br label %bb.be, !nosanitize !13
 
 bb.be:                                            ; preds = %bb.bd, %bb.bc
   br i1 %i.cz, label %bb.bg, label %bb.bf, !prof !14, !nosanitize !13
 
 bb.bf:                                            ; preds = %bb.be
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @213, i64 %i.cx) #9, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @207, i64 %i.cx) #9, !nosanitize !13
   br label %bb.bg, !nosanitize !13
 
 bb.bg:                                            ; preds = %bb.bf, %bb.be
@@ -2744,7 +2681,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = zext nneg i32 %2 to i64, !nosanitize !13
-  call void @__ubsan_handle_sub_overflow(ptr nonnull @214, i64 %i.d, i64 1) #10, !nosanitize !13
+  call void @__ubsan_handle_sub_overflow(ptr nonnull @208, i64 %i.d, i64 1) #10, !nosanitize !13
   br label %bb.c, !nosanitize !13
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -2755,8 +2692,8 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.f = ptrtoint ptr %1 to i64, !nosanitize !13  ; 2 uses
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @186, i64 %i.f) #9, !nosanitize !13
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @188, i64 %i.f) #9, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @180, i64 %i.f) #9, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @182, i64 %i.f) #9, !nosanitize !13
   br label %loadchunk.exit.thread, !nosanitize !13
 
 loadchunk.exit.thread:                            ; preds = %bb.c, %bb.d
@@ -2766,8 +2703,8 @@ loadchunk.exit.thread:                            ; preds = %bb.c, %bb.d
   br i1 %.not37, label %bb.e, label %storechunk.exit, !prof !17, !nosanitize !13
 
 bb.e:                                             ; preds = %loadchunk.exit.thread
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @171, i64 %.pre) #9, !nosanitize !13
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @173, i64 %.pre) #9, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @165, i64 %.pre) #9, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @167, i64 %.pre) #9, !nosanitize !13
   br label %storechunk.exit, !nosanitize !13
 
 storechunk.exit:                                  ; preds = %loadchunk.exit.thread, %bb.e
@@ -2779,7 +2716,7 @@ storechunk.exit:                                  ; preds = %loadchunk.exit.thre
   br i1 %.not20, label %bb.f, label %bb.g, !prof !17, !nosanitize !13
 
 bb.f:                                             ; preds = %storechunk.exit
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @215, i64 %.pre, i64 %i.j) #9, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @209, i64 %.pre, i64 %i.j) #9, !nosanitize !13
   br label %bb.g, !nosanitize !13
 
 bb.g:                                             ; preds = %bb.f, %storechunk.exit
@@ -2790,7 +2727,7 @@ bb.g:                                             ; preds = %bb.f, %storechunk.e
   br i1 %.not21, label %bb.h, label %bb.i, !prof !17, !nosanitize !13
 
 bb.h:                                             ; preds = %bb.g
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @216, i64 %i.l, i64 %i.m) #9, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @210, i64 %i.l, i64 %i.m) #9, !nosanitize !13
   br label %bb.i, !nosanitize !13
 
 bb.i:                                             ; preds = %bb.h, %bb.g
@@ -2801,7 +2738,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 bb.j:                                             ; preds = %bb.i
   %i.q = zext i32 %2 to i64, !nosanitize !13
-  call void @__ubsan_handle_sub_overflow(ptr nonnull @217, i64 %i.q, i64 %i.h) #10, !nosanitize !13
+  call void @__ubsan_handle_sub_overflow(ptr nonnull @211, i64 %i.q, i64 %i.h) #10, !nosanitize !13
   br label %bb.k, !nosanitize !13
 
 bb.k:                                             ; preds = %bb.j, %bb.i
@@ -2823,7 +2760,7 @@ loadchunk.exit18.thread:                          ; preds = %bb.k, %bb.q
   br i1 %i.w, label %bb.m, label %bb.l, !prof !14, !nosanitize !13
 
 bb.l:                                             ; preds = %loadchunk.exit18.thread
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @218, i64 %.pre29, i64 %i.t) #9, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @212, i64 %.pre29, i64 %i.t) #9, !nosanitize !13
   br label %bb.m, !nosanitize !13
 
 bb.m:                                             ; preds = %bb.l, %loadchunk.exit18.thread
@@ -2836,7 +2773,7 @@ bb.m:                                             ; preds = %bb.l, %loadchunk.ex
   br i1 %i.ac, label %bb.o, label %bb.n, !prof !14, !nosanitize !13
 
 bb.n:                                             ; preds = %bb.m
-  call void @__ubsan_handle_pointer_overflow(ptr nonnull @219, i64 %i.y, i64 %i.z) #9, !nosanitize !13
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @213, i64 %i.y, i64 %i.z) #9, !nosanitize !13
   br label %bb.o, !nosanitize !13
 
 bb.o:                                             ; preds = %bb.n, %bb.m
@@ -2847,7 +2784,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br i1 %i.ag, label %bb.p, label %bb.q, !prof !17, !nosanitize !13
 
 bb.p:                                             ; preds = %bb.o
-  call void @__ubsan_handle_sub_overflow(ptr nonnull @220, i64 %i.ad, i64 16) #10, !nosanitize !13
+  call void @__ubsan_handle_sub_overflow(ptr nonnull @214, i64 %i.ad, i64 16) #10, !nosanitize !13
   br label %bb.q, !nosanitize !13
 
 bb.q:                                             ; preds = %bb.p, %bb.o
@@ -2880,9 +2817,6 @@ declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly 
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #7
-
-; Function Attrs: uwtable
-declare void @__ubsan_handle_mul_overflow(ptr, i64, i64) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #5
