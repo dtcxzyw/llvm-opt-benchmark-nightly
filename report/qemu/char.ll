@@ -202,51 +202,55 @@ bb.a:
   %i.c = load atomic ptr, ptr @qemu_mutex_lock_func monotonic, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   tail call void %i.c(ptr noundef nonnull %i.d, ptr noundef nonnull @.str.2, i32 noundef 152) #13
-  %i.e = load i32, ptr %3, align 4                ; 6 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 120 ; 2 uses
+  %i.e = load i32, ptr %3, align 4                ; 3 uses
   %i.f = icmp slt i32 %i.e, %2
-  br i1 %i.f, label %.preheader.lr.ph, label %.loopexit.thread
+  br i1 %i.f, label %.preheader.us, label %.loopexit
 
-.preheader.lr.ph:                                 ; preds = %bb.a
-  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 120 ; 3 uses
-  br i1 %4, label %.preheader.us, label %.preheader
+.preheader.lr.ph:                                 ; preds = %bb.f
+  %7 = icmp slt i32 %i.z, %2
+  br i1 %7, label %.preheader.us, label %.loopexit, !llvm.loop !12
 
-.preheader.us:                                    ; preds = %.preheader.lr.ph, %bb.f
-  %i.g = phi i32 [ %i.z, %bb.f ], [ %i.e, %.preheader.lr.ph ] ; 2 uses
+.preheader.us:                                    ; preds = %bb.a, %.preheader.lr.ph
+  %i.g = phi i32 [ %i.z, %.preheader.lr.ph ], [ %i.e, %bb.a ] ; 2 uses
   %i.h = load ptr, ptr %6, align 8
   %i.i = sext i32 %i.g to i64
   %i.j = getelementptr inbounds i8, ptr %1, i64 %i.i
   %i.k = sub i32 %2, %i.g
-  %i.l = call i32 %i.h(ptr noundef %0, ptr noundef %i.j, i32 noundef %i.k) #13 ; 3 uses
+  %i.l = call i32 %i.h(ptr noundef %0, ptr noundef %i.j, i32 noundef %i.k) #13 ; 4 uses
   %i.m = icmp slt i32 %i.l, 0
   br i1 %i.m, label %.lr.ph.us, label %._crit_edge.us
 
 .lr.ph.us:                                        ; preds = %.preheader.us
   %i.n = tail call ptr @__errno_location() #15    ; 2 uses
-  %7 = load i32, ptr %i.n, align 4
-  %8 = icmp eq i32 %7, 11
-  br i1 %8, label %.lr.ph38.us, label %thread-pre-split
+  br i1 %4, label %bb.b, label %..loopexit_crit_edge43.split
 
-bb.b:                                             ; preds = %bb.e
+bb.b:                                             ; preds = %.lr.ph.us
   %i.o = load i32, ptr %i.n, align 4
   %i.p = icmp eq i32 %i.o, 11
-  br i1 %i.p, label %.lr.ph38.us, label %thread-pre-split
+  br i1 %i.p, label %bb.c, label %..loopexit_crit_edge43.split
 
-.lr.ph38.us:                                      ; preds = %.lr.ph.us, %bb.b
-  %9 = call zeroext i1 @qemu_in_coroutine() #13
-  br i1 %9, label %bb.d, label %bb.c
+.lr.ph38.us:                                      ; preds = %bb.e
+  %8 = load i32, ptr %i.n, align 4
+  %9 = icmp eq i32 %8, 11
+  br i1 %9, label %bb.c, label %..loopexit_crit_edge43.split
 
-bb.c:                                             ; preds = %.lr.ph38.us
-  call void @g_usleep(i64 noundef 100) #13
-  br label %bb.e
+bb.c:                                             ; preds = %bb.b, %.lr.ph38.us
+  %10 = call zeroext i1 @qemu_in_coroutine() #13
+  br i1 %10, label %bb.d, label %11
 
-bb.d:                                             ; preds = %.lr.ph38.us
+bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #13
   store i64 0, ptr %5, align 8
   call void @qemu_co_sleep_ns_wakeable(ptr noundef nonnull %5, i32 noundef 0, i64 noundef 100000) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #13
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %bb.c
+11:                                               ; preds = %bb.c
+  call void @g_usleep(i64 noundef 100) #13
+  br label %bb.e
+
+bb.e:                                             ; preds = %11, %bb.d
   %i.q = load ptr, ptr %6, align 8
   %i.r = load i32, ptr %3, align 4                ; 2 uses
   %i.s = sext i32 %i.r to i64
@@ -254,58 +258,35 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.u = sub i32 %2, %i.r
   %i.v = call i32 %i.q(ptr noundef %0, ptr noundef %i.t, i32 noundef %i.u) #13 ; 3 uses
   %i.w = icmp slt i32 %i.v, 0
-  br i1 %i.w, label %bb.b, label %._crit_edge.us
+  br i1 %i.w, label %.lr.ph38.us, label %._crit_edge.us
 
 ._crit_edge.us:                                   ; preds = %bb.e, %.preheader.us
-  %.lcssa.us = phi i32 [ %i.l, %.preheader.us ], [ %i.v, %bb.e ] ; 3 uses
+  %.lcssa.us = phi i32 [ %i.l, %.preheader.us ], [ %i.v, %bb.e ] ; 4 uses
   %i.x = icmp eq i32 %.lcssa.us, 0
-  br i1 %i.x, label %thread-pre-split, label %bb.f
+  br i1 %i.x, label %..loopexit_crit_edge43.split, label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge.us
   %i.y = load i32, ptr %3, align 4
-  %i.z = add i32 %i.y, %.lcssa.us                 ; 4 uses
+  %i.z = add i32 %i.y, %.lcssa.us                 ; 5 uses
   store i32 %i.z, ptr %3, align 4
-  %10 = icmp slt i32 %i.z, %2
-  br i1 %10, label %.preheader.us, label %.loopexit, !llvm.loop !12
+  br i1 %4, label %.preheader.lr.ph, label %thread-pre-split, !llvm.loop !12
 
-.preheader:                                       ; preds = %.preheader.lr.ph
-  %11 = load ptr, ptr %6, align 8
-  %12 = sext i32 %i.e to i64
-  %13 = getelementptr inbounds i8, ptr %1, i64 %12
-  %14 = sub i32 %2, %i.e
-  %15 = tail call i32 %11(ptr noundef nonnull %0, ptr noundef %13, i32 noundef %14) #13 ; 5 uses
-  %16 = icmp slt i32 %15, 0
-  br i1 %16, label %thread-pre-split, label %17
-
-17:                                               ; preds = %.preheader
-  %18 = icmp eq i32 %15, 0
-  br i1 %18, label %thread-pre-split, label %..loopexit_crit_edge43.split
-
-..loopexit_crit_edge43.split:                     ; preds = %17
-  %19 = load i32, ptr %3, align 4
-  %20 = add i32 %19, %15                          ; 2 uses
-  store i32 %20, ptr %3, align 4
-  br label %.loopexit, !llvm.loop !12
-
-thread-pre-split:                                 ; preds = %._crit_edge.us, %.lr.ph.us, %bb.b, %.preheader, %17
-  %21 = phi i32 [ 0, %17 ], [ %i.v, %bb.b ], [ %15, %.preheader ], [ 0, %._crit_edge.us ], [ %i.l, %.lr.ph.us ]
+..loopexit_crit_edge43.split:                     ; preds = %._crit_edge.us, %.lr.ph.us, %bb.b, %.lr.ph38.us
+  %12 = phi i32 [ %i.v, %.lr.ph38.us ], [ %i.l, %.lr.ph.us ], [ %i.l, %bb.b ], [ 0, %._crit_edge.us ]
   %.pr = load i32, ptr %3, align 4
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.f, %..loopexit_crit_edge43.split, %thread-pre-split
-  %22 = phi i32 [ %.pr, %thread-pre-split ], [ %20, %..loopexit_crit_edge43.split ], [ %i.z, %bb.f ] ; 2 uses
-  %.1 = phi i32 [ %21, %thread-pre-split ], [ %15, %..loopexit_crit_edge43.split ], [ %.lcssa.us, %bb.f ] ; 4 uses
-  %i.aa = icmp sgt i32 %22, 0
+thread-pre-split:                                 ; preds = %bb.f
+  br label %.loopexit, !llvm.loop !12
+
+.loopexit:                                        ; preds = %.preheader.lr.ph, %bb.a, %thread-pre-split, %..loopexit_crit_edge43.split
+  %13 = phi i32 [ %.pr, %..loopexit_crit_edge43.split ], [ %i.z, %thread-pre-split ], [ %i.e, %bb.a ], [ %i.z, %.preheader.lr.ph ] ; 2 uses
+  %.1 = phi i32 [ %12, %..loopexit_crit_edge43.split ], [ %.lcssa.us, %thread-pre-split ], [ 0, %bb.a ], [ %.lcssa.us, %.preheader.lr.ph ] ; 2 uses
+  %i.aa = icmp sgt i32 %13, 0
   br i1 %i.aa, label %bb.g, label %bb.h
 
-.loopexit.thread:                                 ; preds = %bb.a
-  %23 = icmp sgt i32 %i.e, 0
-  br i1 %23, label %bb.g, label %.thread
-
-bb.g:                                             ; preds = %.loopexit.thread, %.loopexit
-  %.174 = phi i32 [ 0, %.loopexit.thread ], [ %.1, %.loopexit ]
-  %24 = phi i32 [ %i.e, %.loopexit.thread ], [ %22, %.loopexit ]
-  %i.ab = zext nneg i32 %24 to i64
+bb.g:                                             ; preds = %.loopexit
+  %i.ab = zext nneg i32 %13 to i64
   br label %.thread.sink.split
 
 bb.h:                                             ; preds = %.loopexit
@@ -318,14 +299,12 @@ bb.i:                                             ; preds = %bb.h
 
 .thread.sink.split:                               ; preds = %bb.g, %bb.i
   %.sink = phi i64 [ %i.ad, %bb.i ], [ %i.ab, %bb.g ]
-  %.172.ph = phi i32 [ %.1, %bb.i ], [ %.174, %bb.g ]
   call fastcc void @qemu_chr_write_log(ptr noundef %0, ptr noundef %1, i64 noundef %.sink)
   br label %.thread
 
-.thread:                                          ; preds = %.thread.sink.split, %.loopexit.thread, %bb.h
-  %.172 = phi i32 [ %.1, %bb.h ], [ 0, %.loopexit.thread ], [ %.172.ph, %.thread.sink.split ]
+.thread:                                          ; preds = %.thread.sink.split, %bb.h
   call void @qemu_mutex_unlock_impl(ptr noundef nonnull %i.d, ptr noundef nonnull @.str.2, i32 noundef 190) #13
-  ret i32 %.172
+  ret i32 %.1
 }
 
 declare void @replay_char_write_event_save(i32 noundef, i32 noundef) local_unnamed_addr #1

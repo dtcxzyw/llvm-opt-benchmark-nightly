@@ -202,10 +202,10 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %.not3850.i, label %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24find_closing_parenthesisEPKcS6_Rc.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.b, %bb.n
-  %.0 = phi i8 [ %.248, %bb.n ], [ 0, %bb.b ]     ; 6 uses
+  %.0 = phi i8 [ %.248, %bb.n ], [ 0, %bb.b ]     ; 7 uses
   %.02453.i = phi ptr [ %.4.i, %bb.n ], [ %i.i, %bb.b ] ; 5 uses
-  %.02652.i = phi i32 [ %.228.i, %bb.n ], [ 1, %bb.b ] ; 5 uses
-  %.02951.i = phi i1 [ %.231.i, %bb.n ], [ false, %bb.b ] ; 6 uses
+  %.02652.i = phi i32 [ %.228.i, %bb.n ], [ 1, %bb.b ] ; 6 uses
+  %.02951.i = phi i1 [ %.231.i, %bb.n ], [ false, %bb.b ] ; 7 uses
   %i.j = load i8, ptr %.02453.i, align 1, !tbaa !14 ; 3 uses
   switch i8 %i.j, label %bb.l [
     i8 41, label %bb.c
@@ -235,7 +235,7 @@ bb.e:                                             ; preds = %.lr.ph.i
 bb.f:                                             ; preds = %bb.j, %.outer.split.i.i.a
   %.012.i.i = phi ptr [ %i.s, %bb.j ], [ %.012.ph22.i.i, %.outer.split.i.i.a ] ; 5 uses
   %.not.i.i.a = icmp eq ptr %.012.i.i, %.02867
-  br i1 %.not.i.i.a, label %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i, label %bb.g
+  br i1 %.not.i.i.a, label %bb.n, label %bb.g, !llvm.loop !137
 
 bb.g:                                             ; preds = %bb.f
   %i.o = load i8, ptr %.012.i.i, align 1, !tbaa !14
@@ -264,11 +264,7 @@ bb.j:                                             ; preds = %bb.g
   %.114.i.i = phi i32 [ %i.q, %bb.i ], [ %i.p, %bb.h ], [ %.013.ph21.i.i, %bb.g ], [ %.013.ph21.i.i, %bb.j ] ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.012.i.i, i64 1 ; 2 uses
   %.not23.i.i = icmp eq i32 %.114.i.i, 0
-  br i1 %.not23.i.i, label %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i, label %.outer.split.i.i.a, !llvm.loop !1
-
-_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i: ; preds = %.outer.i.i, %bb.f
-  %.us-phi.i.i = phi ptr [ %.012.i.i, %bb.f ], [ %i.t, %.outer.i.i ]
-  br label %bb.n, !llvm.loop !137
+  br i1 %.not23.i.i, label %bb.n, label %.outer.split.i.i.a, !llvm.loop !1
 
 bb.k:                                             ; preds = %.lr.ph.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #18
@@ -292,11 +288,11 @@ bb.m:                                             ; preds = %bb.l, %bb.d, %bb.c
   %i.y = getelementptr inbounds nuw i8, ptr %.02453.i, i64 1
   br label %bb.n
 
-bb.n:                                             ; preds = %bb.m, %bb.k, %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i
-  %.248 = phi i8 [ %.147, %bb.m ], [ %.0, %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i ], [ %.0, %bb.k ] ; 2 uses
-  %.231.i = phi i1 [ %.130.i, %bb.m ], [ %.02951.i, %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i ], [ %.02951.i, %bb.k ]
-  %.228.i = phi i32 [ %.127.i, %bb.m ], [ %.02652.i, %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i ], [ %.02652.i, %bb.k ]
-  %.4.i = phi ptr [ %i.y, %bb.m ], [ %.us-phi.i.i, %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit.i ], [ %i.v, %bb.k ] ; 3 uses
+bb.n:                                             ; preds = %.outer.i.i, %bb.f, %bb.m, %bb.k
+  %.248 = phi i8 [ %.147, %bb.m ], [ %.0, %bb.k ], [ %.0, %bb.f ], [ %.0, %.outer.i.i ] ; 2 uses
+  %.231.i = phi i1 [ %.130.i, %bb.m ], [ %.02951.i, %bb.k ], [ %.02951.i, %bb.f ], [ %.02951.i, %.outer.i.i ]
+  %.228.i = phi i32 [ %.127.i, %bb.m ], [ %.02652.i, %bb.k ], [ %.02652.i, %bb.f ], [ %.02652.i, %.outer.i.i ]
+  %.4.i = phi ptr [ %i.y, %bb.m ], [ %i.v, %bb.k ], [ %.012.i.i, %bb.f ], [ %i.t, %.outer.i.i ] ; 3 uses
   %.not38.i = icmp eq ptr %.4.i, %.02867
   br i1 %.not38.i, label %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24find_closing_parenthesisEPKcS6_Rc.exit.loopexit, label %.lr.ph.i
 
@@ -428,12 +424,12 @@ bb.d:                                             ; preds = %bb.c
   %i.h = getelementptr inbounds nuw i8, ptr %.05693110, i64 1 ; 2 uses
   br label %.outer.split.i.a
 
-.outer.split.i.a:                                 ; preds = %.outer.i, %bb.d
+.outer.split.i.a:                                 ; preds = %bb.d, %.outer.i
   %.012.ph22.i = phi ptr [ %i.h, %bb.d ], [ %i.n, %.outer.i ]
   %.013.ph21.i = phi i32 [ 1, %bb.d ], [ %.114.i, %.outer.i ] ; 4 uses
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.i, %.outer.split.i.a
+bb.e:                                             ; preds = %.outer.split.i.a, %bb.i
   %.012.i = phi ptr [ %i.m, %bb.i ], [ %.012.ph22.i, %.outer.split.i.a ] ; 5 uses
   %.not.i.a = icmp eq ptr %.012.i, %1
   br i1 %.not.i.a, label %_ZN5boost3log11v2_mt_posix11expressions3aux9anonymous24skip_template_parametersEPKcS6_.exit, label %bb.f
