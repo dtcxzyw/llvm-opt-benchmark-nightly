@@ -205,7 +205,7 @@ bb.a:
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.loopexit.1
-  %indvars.iv = phi i64 [ %3, %.lr.ph.preheader ], [ %indvars.iv.next, %.loopexit.1 ] ; 7 uses
+  %indvars.iv = phi i64 [ %3, %.lr.ph.preheader ], [ %indvars.iv.next, %.loopexit.1 ] ; 6 uses
   %.sroa.0.0174 = phi ptr [ %0, %.lr.ph.preheader ], [ %i.e, %.loopexit.1 ] ; 11 uses
   %.sroa.7.0173 = phi i64 [ 0, %.lr.ph.preheader ], [ %i.f, %.loopexit.1 ] ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.sroa.0.0174, i64 210 ; 2 uses
@@ -305,17 +305,25 @@ bb.l:                                             ; preds = %bb.k, %_RNvNtNtCsds
   %i.av = getelementptr inbounds nuw i8, ptr %.sroa.0.0174, i64 128 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.sroa.0.0174, i64 192 ; 5 uses
   %i.ax = shl nuw nsw i64 %.sroa.7.0173, 8        ; 7 uses
-  %i.ay = tail call i64 @llvm.usub.sat.i64(i64 %indvars.iv, i64 32) ; 2 uses
-  %i.az = tail call i64 @llvm.usub.sat.i64(i64 %indvars.iv, i64 64) ; 2 uses
-  %i.ba = tail call i64 @llvm.usub.sat.i64(i64 %indvars.iv, i64 96) ; 2 uses
+  %smax = tail call i64 @llvm.smax.i64(i64 %indvars.iv, i64 0) ; 3 uses
+  %i.ay = tail call i64 @llvm.smax.i64(i64 %indvars.iv, i64 32)
+  %4 = add nsw i64 %i.ay, -32                     ; 2 uses
+  %i.az = tail call i64 @llvm.smax.i64(i64 %indvars.iv, i64 64)
+  %5 = add nsw i64 %i.az, -64                     ; 2 uses
+  %i.ba = tail call i64 @llvm.smax.i64(i64 %indvars.iv, i64 96)
+  %6 = add nsw i64 %i.ba, -96                     ; 2 uses
   %exitcond354 = icmp eq i64 %.sroa.7.0173, %i.d
   br i1 %exitcond354, label %bb.s, label %bb.r, !prof !14
 
 .loopexit:                                        ; preds = %bb.w
-  %indvars.iv.next305 = add nsw i64 %indvars.iv, -128 ; 5 uses
-  %i.bb = tail call i64 @llvm.usub.sat.i64(i64 %indvars.iv.next305, i64 32) ; 2 uses
-  %i.bc = tail call i64 @llvm.usub.sat.i64(i64 %indvars.iv.next305, i64 64) ; 2 uses
-  %i.bd = tail call i64 @llvm.usub.sat.i64(i64 %indvars.iv.next305, i64 96) ; 2 uses
+  %indvars.iv.next305 = add nsw i64 %indvars.iv, -128 ; 4 uses
+  %smax.1 = tail call i64 @llvm.smax.i64(i64 %indvars.iv.next305, i64 0) ; 3 uses
+  %i.bb = tail call i64 @llvm.smax.i64(i64 %indvars.iv.next305, i64 32)
+  %7 = add nsw i64 %i.bb, -32                     ; 2 uses
+  %i.bc = tail call i64 @llvm.smax.i64(i64 %indvars.iv.next305, i64 64)
+  %8 = add nsw i64 %i.bc, -64                     ; 2 uses
+  %i.bd = tail call i64 @llvm.smax.i64(i64 %indvars.iv.next305, i64 96)
+  %9 = add nsw i64 %i.bd, -96                     ; 2 uses
   %i.be = or disjoint i64 %i.ax, 128              ; 7 uses
   %i.bf = icmp samesign ugt i64 %i.be, %3
   br i1 %i.bf, label %bb.s, label %bb.m, !prof !14
@@ -325,9 +333,10 @@ bb.m:                                             ; preds = %.loopexit
   %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.0.0174, i64 200 ; 5 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.0.0174, i64 64 ; 4 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.0.0174, i64 160 ; 2 uses
-  %i.bk = tail call i64 @llvm.umin.i64(i64 %i.bd, i64 %i.bc)
-  %i.bl = tail call i64 @llvm.umin.i64(i64 %i.bk, i64 %i.bb) ; 2 uses
-  %min.iters.check = icmp ult i64 %i.bl, 4
+  %10 = tail call i64 @llvm.umin.i64(i64 %smax.1, i64 %7)
+  %i.bk = tail call i64 @llvm.umin.i64(i64 %10, i64 %8)
+  %i.bl = tail call i64 @llvm.umin.i64(i64 %i.bk, i64 %9) ; 2 uses
+  %min.iters.check = icmp samesign ult i64 %i.bl, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %bb.m
@@ -445,7 +454,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.eo = and i8 %i.en, 48
   %i.ep = add nsw i8 %i.eo, -32
   %i.eq = or disjoint i8 %i.ep, %i.em
-  %exitcond.1.not = icmp eq i64 %.sroa.014.0170.1, %indvars.iv.next305
+  %exitcond.1.not = icmp eq i64 %.sroa.014.0170.1, %smax.1
   br i1 %exitcond.1.not, label %.loopexit314, label %bb.n
 
 bb.n:                                             ; preds = %scalar.ph
@@ -462,7 +471,7 @@ bb.n:                                             ; preds = %scalar.ph
   %i.fb = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %.sroa.014.0170.1
   %i.fc = fmul float %i.fa, %i.ew
   store float %i.fc, ptr %i.fb, align 4
-  %exitcond306.1.not = icmp eq i64 %.sroa.014.0170.1, %i.bb
+  %exitcond306.1.not = icmp eq i64 %.sroa.014.0170.1, %7
   br i1 %exitcond306.1.not, label %.loopexit316, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
@@ -476,7 +485,7 @@ bb.o:                                             ; preds = %bb.n
   %i.fk = fmul float %i.fi, %i.fd
   store float %i.fk, ptr %i.fj, align 4
   %i.fl = or disjoint i64 %.sroa.014.0170.1, 64   ; 2 uses
-  %exitcond307.1.not = icmp eq i64 %.sroa.014.0170.1, %i.bc
+  %exitcond307.1.not = icmp eq i64 %.sroa.014.0170.1, %8
   br i1 %exitcond307.1.not, label %.loopexit318, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
@@ -490,7 +499,7 @@ bb.p:                                             ; preds = %bb.o
   %i.ft = fmul float %i.fr, %i.fm
   store float %i.ft, ptr %i.fs, align 4
   %i.fu = or disjoint i64 %.sroa.014.0170.1, 96   ; 2 uses
-  %exitcond308.1.not = icmp eq i64 %.sroa.014.0170.1, %i.bd
+  %exitcond308.1.not = icmp eq i64 %.sroa.014.0170.1, %9
   br i1 %exitcond308.1.not, label %.loopexit320, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
@@ -513,9 +522,10 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.l
   %i.ge = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.ax ; 8 uses
-  %i.gf = tail call i64 @llvm.umin.i64(i64 %i.ba, i64 %i.az)
-  %i.gg = tail call i64 @llvm.umin.i64(i64 %i.gf, i64 %i.ay) ; 2 uses
-  %min.iters.check483 = icmp ult i64 %i.gg, 4
+  %11 = tail call i64 @llvm.umin.i64(i64 %smax, i64 %4)
+  %i.gf = tail call i64 @llvm.umin.i64(i64 %11, i64 %5)
+  %i.gg = tail call i64 @llvm.umin.i64(i64 %i.gf, i64 %6) ; 2 uses
+  %min.iters.check483 = icmp samesign ult i64 %i.gg, 4
   br i1 %min.iters.check483, label %scalar.ph482.preheader, label %vector.ph484
 
 scalar.ph482.preheader:                           ; preds = %vector.body488, %bb.r
@@ -638,12 +648,12 @@ scalar.ph482:                                     ; preds = %scalar.ph482.prehea
   %i.jj = and i8 %i.ji, 48
   %i.jk = add nsw i8 %i.jj, -32
   %i.jl = or disjoint i8 %i.jk, %i.jh
-  %exitcond.not = icmp eq i64 %.sroa.014.0170, %indvars.iv
+  %exitcond.not = icmp eq i64 %.sroa.014.0170, %smax
   br i1 %exitcond.not, label %.loopexit314, label %bb.t
 
 .loopexit314:                                     ; preds = %scalar.ph482, %scalar.ph
   %.lcssa419.sink.a = phi i64 [ %i.be, %scalar.ph ], [ %i.ax, %scalar.ph482 ]
-  %.sroa.014.0170.lcssa190 = phi i64 [ %indvars.iv.next305, %scalar.ph ], [ %indvars.iv, %scalar.ph482 ]
+  %.sroa.014.0170.lcssa190 = phi i64 [ %smax.1, %scalar.ph ], [ %smax, %scalar.ph482 ]
   %i.jm = sub nuw nsw i64 %3, %.lcssa419.sink.a
   tail call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %.sroa.014.0170.lcssa190, i64 noundef %i.jm, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @164) #32
   unreachable
@@ -662,7 +672,7 @@ bb.t:                                             ; preds = %scalar.ph482
   %i.jx = getelementptr inbounds nuw [4 x i8], ptr %i.ge, i64 %.sroa.014.0170
   %i.jy = fmul float %i.jw, %i.js
   store float %i.jy, ptr %i.jx, align 4
-  %exitcond306.not = icmp eq i64 %.sroa.014.0170, %i.ay
+  %exitcond306.not = icmp eq i64 %.sroa.014.0170, %4
   br i1 %exitcond306.not, label %.loopexit316, label %bb.u
 
 .loopexit316:                                     ; preds = %bb.t, %bb.n
@@ -683,7 +693,7 @@ bb.u:                                             ; preds = %bb.t
   %i.kh = fmul float %i.kf, %i.ka
   store float %i.kh, ptr %i.kg, align 4
   %i.ki = or disjoint i64 %.sroa.014.0170, 64     ; 2 uses
-  %exitcond307.not = icmp eq i64 %.sroa.014.0170, %i.az
+  %exitcond307.not = icmp eq i64 %.sroa.014.0170, %5
   br i1 %exitcond307.not, label %.loopexit318, label %bb.v
 
 .loopexit318:                                     ; preds = %bb.u, %bb.o
@@ -704,7 +714,7 @@ bb.v:                                             ; preds = %bb.u
   %i.kr = fmul float %i.kp, %i.kk
   store float %i.kr, ptr %i.kq, align 4
   %i.ks = or disjoint i64 %.sroa.014.0170, 96     ; 2 uses
-  %exitcond308.not = icmp eq i64 %.sroa.014.0170, %i.ba
+  %exitcond308.not = icmp eq i64 %.sroa.014.0170, %6
   br i1 %exitcond308.not, label %.loopexit320, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
@@ -1105,6 +1115,9 @@ declare i32 @llvm.smax.i32(i32, i32) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #15

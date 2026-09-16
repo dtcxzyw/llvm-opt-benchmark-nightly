@@ -204,7 +204,7 @@ bb.hj:                                            ; preds = %_ZN7Imf_3_47Array2D
 
 .preheader346.i:                                  ; preds = %bb.hj, %bb.hq
   %.sroa.0248.0.i = phi ptr [ %i.zv, %bb.hq ], [ %i.zd, %bb.hj ] ; 2 uses
-  %.0162.i = phi i32 [ %i.zw, %bb.hq ], [ 0, %bb.hj ] ; 14 uses
+  %.0162.i = phi i32 [ %i.zw, %bb.hq ], [ 0, %bb.hj ] ; 13 uses
   %i.ze = invoke noundef nonnull align 8 dereferenceable(48) ptr @_ZNK7Imf_3_46Header8channelsEv(ptr noundef nonnull align 8 dereferenceable(49) %i.ye)
           to label %bb.hk unwind label %bb.hp
 
@@ -217,7 +217,7 @@ bb.hl:                                            ; preds = %bb.hk
   br i1 %.not319.i, label %bb.hm, label %bb.hq
 
 bb.hm:                                            ; preds = %bb.hl
-  %i.zg = zext i32 %.0162.i to i64                ; 10 uses
+  %i.zg = zext i32 %.0162.i to i64                ; 2 uses
   %i.zh = mul nuw nsw i64 %i.zg, 24               ; 3 uses
   %i.zi = add nuw nsw i64 %i.zh, 8
   %i.zj = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.zi) #29
@@ -237,6 +237,8 @@ bb.hm:                                            ; preds = %bb.hl
   %i.zp = icmp ugt i64 %i.yr, 2305843009213693951
   %i.zq = shl nuw i64 %i.yr, 3
   %i.zr = select i1 %i.zp, i64 -1, i64 %i.zq
+  %smax.i = call i32 @llvm.smax.i32(i32 %.0162.i, i32 1)
+  %wide.trip.count.i = zext nneg i32 %smax.i to i64
   br label %bb.ht
 
 bb.hn:                                            ; preds = %bb.hi
@@ -302,7 +304,7 @@ bb.hv:                                            ; preds = %bb.hu, %.noexc215.i
   store i64 %i.yp, ptr %i.aae, align 8, !tbaa !101
   store ptr %i.aaa, ptr %i.aab, align 8, !tbaa !99
   %indvars.iv.next.i144 = add nuw nsw i64 %indvars.iv.i143, 1 ; 2 uses
-  %exitcond.not.i145 = icmp eq i64 %indvars.iv.next.i144, %i.zg
+  %exitcond.not.i145 = icmp eq i64 %indvars.iv.next.i144, %wide.trip.count.i
   br i1 %exitcond.not.i145, label %._crit_edge.i146, label %bb.ht, !llvm.loop !191
 
 bb.hw:                                            ; preds = %bb.ht
@@ -407,25 +409,27 @@ bb.il:                                            ; preds = %bb.id
   br i1 %.not210507.i, label %.preheader343.us.i.preheader, label %_ZNSt6vectorIfSaIfEED2Ev.exit218.i
 
 .preheader343.us.i.preheader:                     ; preds = %.preheader343.lr.ph.i
-  %i.aba = add nsw i64 %i.zg, -1                  ; 3 uses
-  %xtraiter591 = and i64 %i.zg, 1
+  %smax662.i = call i32 @llvm.smax.i32(i32 %.0162.i, i32 1) ; 4 uses
+  %wide.trip.count663.i = zext nneg i32 %smax662.i to i64 ; 7 uses
+  %i.aba = add nsw i64 %wide.trip.count663.i, -1  ; 3 uses
+  %xtraiter591 = and i64 %wide.trip.count663.i, 1
   %i.abb = icmp eq i64 %i.aba, 0
-  %unroll_iter596 = and i64 %i.zg, 4294967294
+  %unroll_iter596 = and i64 %wide.trip.count663.i, 2147483646
   %lcmp.mod593.not = icmp eq i64 %xtraiter591, 0
-  %lcmp.mod595 = trunc i32 %.0162.i to i1
-  %xtraiter598 = and i64 %i.zg, 1
+  %lcmp.mod595 = trunc i32 %smax662.i to i1
+  %xtraiter598 = and i64 %wide.trip.count663.i, 1
   %i.abc = icmp eq i64 %i.aba, 0
-  %unroll_iter602 = and i64 %i.zg, 4294967294
+  %unroll_iter602 = and i64 %wide.trip.count663.i, 2147483646
   %lcmp.mod600.not = icmp eq i64 %xtraiter598, 0
-  %lcmp.mod601 = trunc i32 %.0162.i to i1
-  %xtraiter605 = and i64 %i.zg, 1
+  %lcmp.mod601 = trunc i32 %smax662.i to i1
+  %xtraiter605 = and i64 %wide.trip.count663.i, 1
   %i.abd = icmp eq i64 %i.aba, 0
-  %unroll_iter610 = and i64 %i.zg, 4294967294
+  %unroll_iter610 = and i64 %wide.trip.count663.i, 2147483646
   %lcmp.mod607.not = icmp eq i64 %xtraiter605, 0
-  %lcmp.mod609 = trunc i32 %.0162.i to i1
+  %lcmp.mod609 = trunc i32 %smax662.i to i1
   br label %.preheader343.us.i
 
-.preheader343.us.i:                               ; preds = %.preheader343.us.i.preheader, %..thread288_crit_edge.us.i
+.preheader343.us.i:                               ; preds = %..thread288_crit_edge.us.i, %.preheader343.us.i.preheader
   %.0155524.us.i = phi i32 [ %i.ajc, %..thread288_crit_edge.us.i ], [ 0, %.preheader343.us.i.preheader ] ; 6 uses
   %.0175522.us.i = phi i1 [ %.2177.us.i, %..thread288_crit_edge.us.i ], [ false, %.preheader343.us.i.preheader ]
   %.sroa.15.0521.us.i = phi ptr [ %.sroa.15.2.us.i, %..thread288_crit_edge.us.i ], [ null, %.preheader343.us.i.preheader ]
@@ -828,7 +832,7 @@ bb.o:                                             ; preds = %_ZN7Imf_3_47Array2D
 
 .preheader346:                                    ; preds = %bb.o, %bb.v
   %.sroa.0248.0 = phi ptr [ %i.ar, %bb.v ], [ %i.z, %bb.o ] ; 2 uses
-  %.0162 = phi i32 [ %i.as, %bb.v ], [ 0, %bb.o ] ; 14 uses
+  %.0162 = phi i32 [ %i.as, %bb.v ], [ 0, %bb.o ] ; 13 uses
   %i.aa = invoke noundef nonnull align 8 dereferenceable(48) ptr @_ZNK7Imf_3_46Header8channelsEv(ptr noundef nonnull align 8 dereferenceable(49) %i.a)
           to label %bb.p unwind label %bb.u
 
@@ -841,7 +845,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not319, label %bb.r, label %bb.v
 
 bb.r:                                             ; preds = %bb.q
-  %i.ac = zext i32 %.0162 to i64                  ; 10 uses
+  %i.ac = zext i32 %.0162 to i64                  ; 2 uses
   %i.ad = mul nuw nsw i64 %i.ac, 24               ; 3 uses
   %i.ae = add nuw nsw i64 %i.ad, 8
   %i.af = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.ae) #29
@@ -861,6 +865,8 @@ bb.r:                                             ; preds = %bb.q
   %i.al = icmp ugt i64 %i.n, 2305843009213693951
   %i.am = shl nuw i64 %i.n, 3
   %i.an = select i1 %i.al, i64 -1, i64 %i.am
+  %smax = tail call i32 @llvm.smax.i32(i32 %.0162, i32 1)
+  %wide.trip.count = zext nneg i32 %smax to i64
   br label %bb.y
 
 bb.s:                                             ; preds = %bb.n
@@ -932,7 +938,7 @@ bb.aa:                                            ; preds = %bb.z, %.noexc215
   store i64 %i.l, ptr %i.bg, align 8, !tbaa !101
   store ptr %i.bc, ptr %i.bd, align 8, !tbaa !99
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.ac
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.y, !llvm.loop !234
 
 bb.ab:                                            ; preds = %bb.y
@@ -1040,22 +1046,24 @@ bb.aq:                                            ; preds = %bb.ai
   br i1 %.not210507, label %.preheader343.us.preheader, label %_ZNSt6vectorIfSaIfEED2Ev.exit218
 
 .preheader343.us.preheader:                       ; preds = %.preheader343.lr.ph
-  %i.cf = add nsw i64 %i.ac, -1                   ; 3 uses
-  %xtraiter868 = and i64 %i.ac, 1
+  %smax662 = call i32 @llvm.smax.i32(i32 %.0162, i32 1) ; 4 uses
+  %wide.trip.count663 = zext nneg i32 %smax662 to i64 ; 7 uses
+  %i.cf = add nsw i64 %wide.trip.count663, -1     ; 3 uses
+  %xtraiter868 = and i64 %wide.trip.count663, 1
   %i.cg = icmp eq i64 %i.cf, 0
-  %unroll_iter873 = and i64 %i.ac, 4294967294
+  %unroll_iter873 = and i64 %wide.trip.count663, 2147483646
   %lcmp.mod870.not = icmp eq i64 %xtraiter868, 0
-  %lcmp.mod872 = trunc i32 %.0162 to i1
-  %xtraiter875 = and i64 %i.ac, 1
+  %lcmp.mod872 = trunc i32 %smax662 to i1
+  %xtraiter875 = and i64 %wide.trip.count663, 1
   %i.ch = icmp eq i64 %i.cf, 0
-  %unroll_iter879 = and i64 %i.ac, 4294967294
+  %unroll_iter879 = and i64 %wide.trip.count663, 2147483646
   %lcmp.mod877.not = icmp eq i64 %xtraiter875, 0
-  %lcmp.mod878 = trunc i32 %.0162 to i1
-  %xtraiter882 = and i64 %i.ac, 1
+  %lcmp.mod878 = trunc i32 %smax662 to i1
+  %xtraiter882 = and i64 %wide.trip.count663, 1
   %i.ci = icmp eq i64 %i.cf, 0
-  %unroll_iter887 = and i64 %i.ac, 4294967294
+  %unroll_iter887 = and i64 %wide.trip.count663, 2147483646
   %lcmp.mod884.not = icmp eq i64 %xtraiter882, 0
-  %lcmp.mod886 = trunc i32 %.0162 to i1
+  %lcmp.mod886 = trunc i32 %smax662 to i1
   br label %.preheader343.us
 
 .preheader343.us:                                 ; preds = %.preheader343.us.preheader, %..thread288_crit_edge.us

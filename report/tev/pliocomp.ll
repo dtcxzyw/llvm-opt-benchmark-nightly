@@ -29,9 +29,11 @@ bb.b:                                             ; preds = %bb.a
   %i.m = tail call i32 @llvm.smax.i32(i32 %i.l, i32 0)
   %i.n = sext i32 %i.i to i64
   %i.o = sext i32 %i.h to i64
+  %4 = add i32 %1, 4095
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.p
+  %indvar = phi i32 [ 0, %bb.b ], [ %indvar.next, %bb.p ] ; 2 uses
   %indvars.iv147 = phi i64 [ %i.j, %bb.b ], [ %indvars.iv.next148.pre-phi, %bb.p ] ; 5 uses
   %.0105141 = phi i32 [ %i.m, %bb.b ], [ %.2, %bb.p ] ; 13 uses
   %.0106140 = phi i32 [ 0, %bb.b ], [ %.2, %bb.p ]
@@ -39,7 +41,8 @@ bb.c:                                             ; preds = %bb.b, %bb.p
   %.0110138 = phi i32 [ 8, %bb.b ], [ %.6, %bb.p ] ; 9 uses
   %.0115134 = phi i32 [ 1, %bb.b ], [ %.3118, %bb.p ] ; 5 uses
   %.0119133 = phi i32 [ %1, %bb.b ], [ %.2121, %bb.p ] ; 3 uses
-  %indvars149 = trunc i64 %indvars.iv147 to i32   ; 4 uses
+  %5 = add i32 %4, %indvar
+  %indvars149 = trunc i64 %indvars.iv147 to i32   ; 3 uses
   %i.p = icmp slt i64 %indvars.iv147, %i.n
   br i1 %i.p, label %bb.d, label %bb.f
 
@@ -65,8 +68,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %.1120 = phi i32 [ %.0119133, %bb.e ], [ %spec.select, %bb.f ] ; 6 uses
   %.1107 = phi i32 [ %i.t, %bb.e ], [ %.0106140, %bb.f ]
   %i.y = add i32 %indvars149, 1                   ; 2 uses
-  %i.z = sub i32 %i.y, %.1120                     ; 6 uses
-  %i.aa = sub nsw i32 %.1120, %.0108139           ; 7 uses
+  %i.z = sub i32 %i.y, %.1120                     ; 7 uses
+  %i.aa = sub i32 %.1120, %.0108139               ; 8 uses
   %i.ab = icmp sgt i32 %.0105141, 0               ; 2 uses
   br i1 %i.ab, label %bb.h, label %bb.m
 
@@ -124,16 +127,18 @@ bb.m:                                             ; preds = %bb.h, %bb.k, %bb.j,
 
 iter.check185:                                    ; preds = %bb.m
   %i.bb = sext i32 %.1111 to i64                  ; 5 uses
-  %4 = xor i32 %.0108139, -1
-  %i.bc = add i32 %.1120, %4                      ; 3 uses
-  %i.bd = udiv i32 %i.bc, 4095
+  %6 = add i32 %.1120, 4094
+  %smin167 = tail call i32 @llvm.smin.i32(i32 %i.aa, i32 4095)
+  %i.bc = add i32 %.0108139, %smin167
+  %7 = sub i32 %6, %i.bc                          ; 3 uses
+  %i.bd = udiv i32 %7, 4095
   %narrow = add nuw nsw i32 %i.bd, 1
   %i.be = zext nneg i32 %narrow to i64            ; 5 uses
-  %min.iters.check167 = icmp ult i32 %i.bc, 12285
+  %min.iters.check167 = icmp ult i32 %7, 12285
   br i1 %min.iters.check167, label %.preheader.preheader, label %vector.main.loop.iter.check168
 
 vector.main.loop.iter.check168:                   ; preds = %iter.check185
-  %min.iters.check169 = icmp ult i32 %i.bc, 61425
+  %min.iters.check169 = icmp ult i32 %7, 61425
   br i1 %min.iters.check169, label %vec.epilog.ph189, label %vector.ph170
 
 vector.ph170:                                     ; preds = %vector.main.loop.iter.check168
@@ -248,7 +253,9 @@ bb.o:                                             ; preds = %.loopexit204, %bb.m
 
 iter.check:                                       ; preds = %bb.o
   %i.ck = sext i32 %.3 to i64                     ; 5 uses
-  %i.cl = sub i32 %indvars149, %.1120             ; 3 uses
+  %smin = tail call i32 @llvm.smin.i32(i32 %i.z, i32 4095)
+  %8 = add i32 %.1120, %smin
+  %i.cl = sub i32 %5, %8                          ; 3 uses
   %i.cm = udiv i32 %i.cl, 4095
   %narrow205 = add nuw nsw i32 %i.cm, 1
   %i.cn = zext nneg i32 %narrow205 to i64         ; 5 uses
@@ -368,6 +375,7 @@ bb.p:                                             ; preds = %bb.e, %.loopexit, %
   %.1109 = phi i32 [ %.0108139, %bb.e ], [ %i.dr, %.loopexit ], [ %.0108139, %bb.d ]
   %.2 = phi i32 [ %i.t, %bb.e ], [ %.1107, %.loopexit ], [ %.0105141, %bb.d ] ; 2 uses
   %.not.not = icmp slt i64 %indvars.iv.next148.pre-phi, %i.o
+  %indvar.next = add i32 %indvar, 1
   br i1 %.not.not, label %bb.c, label %bb.q, !llvm.loop !21
 
 bb.q:                                             ; preds = %bb.p

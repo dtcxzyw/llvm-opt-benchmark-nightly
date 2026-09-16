@@ -26,9 +26,9 @@ bb.a:
   %8 = alloca [64 x %struct.blas_queue], align 16 ; 16 uses
   %i.c = alloca [65 x i64], align 16              ; 9 uses
   %i.d = alloca [65 x i64], align 16              ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %8) #5
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #5
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %8) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #6
   %i.e = getelementptr inbounds [8 x i8], ptr @divide_rule, i64 %7 ; 2 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !13   ; 2 uses
   %i.g = zext i32 %i.f to i64
@@ -75,7 +75,7 @@ bb.e:                                             ; preds = %.lr.ph
   %i.z = zext i32 %i.x to i64
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr @blas_quick_divide_table, i64 %i.z
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !13
-  %i.ac = tail call { i32, i32 } asm sideeffect "mull $0", "={dx},={ax},0,1,~{cc},~{dirflag},~{fpsr},~{flags}"(i32 %i.ab, i32 %i.v) #5, !srcloc !19
+  %i.ac = tail call { i32, i32 } asm sideeffect "mull $0", "={dx},={ax},0,1,~{cc},~{dirflag},~{fpsr},~{flags}"(i32 %i.ab, i32 %i.v) #6, !srcloc !19
   %i.ad = extractvalue { i32, i32 } %i.ac, 0
   store volatile i32 %i.ad, ptr %i.b, align 4, !tbaa !13
   %.0..0..0..0..0..0..i = load volatile i32, ptr %i.b, align 4, !tbaa !13
@@ -96,7 +96,7 @@ blas_quickdivide.exit:                            ; preds = %.lr.ph, %bb.e
   br i1 %i.ak, label %.lr.ph, label %._crit_edge, !llvm.loop !8
 
 ._crit_edge:                                      ; preds = %blas_quickdivide.exit, %bb.d
-  %.071.lcssa = phi i64 [ 0, %bb.d ], [ %i.ai, %blas_quickdivide.exit ] ; 4 uses
+  %.071.lcssa = phi i64 [ 0, %bb.d ], [ %i.ai, %blas_quickdivide.exit ] ; 3 uses
   %.not76 = icmp eq ptr %3, null
   br i1 %.not76, label %bb.f, label %bb.g
 
@@ -124,9 +124,10 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br i1 %.not100, label %._crit_edge97.thread, label %.preheader.us.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
-  %xtraiter = and i64 %.071.lcssa, 3              ; 3 uses
-  %9 = icmp ult i64 %.071.lcssa, 4
-  %unroll_iter = and i64 %.071.lcssa, -4
+  %smax = tail call i64 @llvm.smax.i64(i64 %.071.lcssa, i64 1) ; 2 uses
+  %xtraiter = and i64 %smax, 3                    ; 3 uses
+  %9 = icmp slt i64 %.071.lcssa, 4
+  %unroll_iter = and i64 %smax, 9223372036854775804
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod121 = icmp ne i64 %xtraiter, 0
   br label %.preheader.us
@@ -213,7 +214,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cg, i8 0, i64 16, i1 false)
   store ptr %i.ci, ptr %i.cj, align 8, !tbaa !29
   %i.ck = add nuw nsw i64 %.491.us, 4             ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge93.us.unr-lcssa, label %.preheader.us.new, !llvm.loop !9
 
@@ -276,7 +277,7 @@ bb.j:                                             ; preds = %.lr.ph88
   %i.df = zext i32 %i.dd to i64
   %i.dg = getelementptr inbounds nuw [4 x i8], ptr @blas_quick_divide_table, i64 %i.df
   %i.dh = load i32, ptr %i.dg, align 4, !tbaa !13
-  %i.di = tail call { i32, i32 } asm sideeffect "mull $0", "={dx},={ax},0,1,~{cc},~{dirflag},~{fpsr},~{flags}"(i32 %i.dh, i32 %i.db) #5, !srcloc !19
+  %i.di = tail call { i32, i32 } asm sideeffect "mull $0", "={dx},={ax},0,1,~{cc},~{dirflag},~{fpsr},~{flags}"(i32 %i.dh, i32 %i.db) #6, !srcloc !19
   %i.dj = extractvalue { i32, i32 } %i.di, 0
   store volatile i32 %i.dj, ptr %i.a, align 4, !tbaa !13
   %.0..0..0..0..0..0..i79 = load volatile i32, ptr %i.a, align 4, !tbaa !13
@@ -308,13 +309,13 @@ bb.k:                                             ; preds = %._crit_edge97
   %i.dt = getelementptr [168 x i8], ptr %8, i64 %.lcssa
   %i.du = getelementptr i8, ptr %i.dt, i64 -104
   store ptr null, ptr %i.du, align 8, !tbaa !29
-  %i.dv = call i32 @exec_blas(i64 noundef %.lcssa, ptr noundef nonnull %8) #5 ; 0 uses
+  %i.dv = call i32 @exec_blas(i64 noundef %.lcssa, ptr noundef nonnull %8) #6 ; 0 uses
   br label %._crit_edge97.thread
 
 ._crit_edge97.thread:                             ; preds = %bb.h, %.preheader.lr.ph, %bb.k, %._crit_edge97
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #6
   ret i32 0
 }
 
@@ -326,18 +327,22 @@ declare i32 @exec_blas(i64 noundef, ptr noundef) local_unnamed_addr #2
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #3
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #3
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #4
+declare void @llvm.assume(i1 noundef) #5
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
-attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #4 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #5 = { nounwind }
+attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #5 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

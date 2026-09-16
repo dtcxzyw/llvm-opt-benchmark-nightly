@@ -205,6 +205,7 @@ _ZN4llvm23LockstepReverseIteratorILb1EE5resetEv.exit.i.i: ; preds = %.sink.split
   store i32 4, ptr %i.bo, align 8, !tbaa !136
   store i32 0, ptr %i.bp, align 4, !tbaa !137
   store i8 1, ptr %i.bq, align 8, !tbaa !72
+  %smax.i.i = call i32 @llvm.smax.i32(i32 %.075316545.i.i, i32 1)
   br label %bb.fi
 
 bb.fi:                                            ; preds = %_ZN4llvm15SmallPtrSetImplIPNS_5ValueEE12insert_rangeINS_8ArrayRefIPNS_11InstructionEEEEEvOT_.exit149.i.i, %_ZN4llvm23LockstepReverseIteratorILb1EE5resetEv.exit.i.i
@@ -278,8 +279,8 @@ _ZN4llvm15SmallPtrSetImplIPNS_5ValueEE6insertES2_.exit.i.i139.i.i: ; preds = %.l
 
 _ZN4llvm15SmallPtrSetImplIPNS_5ValueEE12insert_rangeINS_8ArrayRefIPNS_11InstructionEEEEEvOT_.exit149.i.i: ; preds = %_ZN4llvm15SmallPtrSetImplIPNS_5ValueEE6insertES2_.exit.i.i139.i.i, %bb.fj
   %i.aoc = call noundef nonnull align 8 dereferenceable(65) ptr @_ZN4llvm23LockstepReverseIteratorILb1EEmmEv(ptr noundef nonnull align 8 dereferenceable(65) %59) ; 0 uses
-  %i.aod = add nuw i32 %.071391.i.i, 1            ; 2 uses
-  %exitcond.not.i.i = icmp eq i32 %i.aod, %.075316545.i.i
+  %i.aod = add nuw nsw i32 %.071391.i.i, 1        ; 2 uses
+  %exitcond.not.i.i = icmp eq i32 %i.aod, %smax.i.i
   br i1 %exitcond.not.i.i, label %.thread288.i.i, label %bb.fi, !llvm.loop !598
 
 bb.fn:                                            ; preds = %bb.fi
@@ -680,6 +681,9 @@ declare i32 @llvm.umax.i32(i32, i32) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.sadd.sat.i64(i64, i64) #21
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #21

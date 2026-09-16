@@ -205,7 +205,8 @@ bb.p:                                             ; preds = %bb.k, %_RNvXs_NtNtC
   br label %.lr.ph173
 
 .lr.ph.preheader:                                 ; preds = %bb.p
-  %i.bn = call i64 @llvm.usub.sat.i64(i64 %i.ad, i64 1)
+  %i.bn = call i64 @llvm.smax.i64(i64 %i.ad, i64 1)
+  %4 = add nsw i64 %i.bn, -1
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.bc
@@ -241,7 +242,7 @@ bb.p:                                             ; preds = %bb.k, %_RNvXs_NtNtC
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.bc
   %.sroa.030.0167 = phi i64 [ %i.ca, %bb.bc ], [ 0, %.lr.ph.preheader ] ; 5 uses
-  %i.ca = add nuw i64 %.sroa.030.0167, 1          ; 4 uses
+  %i.ca = add nuw nsw i64 %.sroa.030.0167, 1      ; 4 uses
   %exitcond.not = icmp eq i64 %.sroa.030.0167, %i.ad
   br i1 %exitcond.not, label %.invoke, label %bb.bb
 
@@ -369,7 +370,7 @@ bb.z:                                             ; preds = %bb.av, %bb.al, %.th
 
 bb.aa:                                            ; preds = %bb.ap, %.lr.ph173
   %.sroa.032.0171 = phi i64 [ 0, %.lr.ph173 ], [ %i.dd, %bb.ap ] ; 4 uses
-  %i.dd = add nuw i64 %.sroa.032.0171, 1          ; 2 uses
+  %i.dd = add nuw nsw i64 %.sroa.032.0171, 1      ; 2 uses
   %i.de = getelementptr inbounds nuw [8 x i8], ptr %.sroa.10.0.i10.i231236, i64 %.sroa.032.0171 ; 2 uses
   %i.df = load i64, ptr %i.de, align 8, !noundef !75
   %i.dg = mul i64 %i.df, %3                       ; 5 uses
@@ -667,7 +668,7 @@ bb.ba:                                            ; preds = %.invoke
   br label %.thread112
 
 bb.bb:                                            ; preds = %.lr.ph
-  %exitcond200.not = icmp eq i64 %.sroa.030.0167, %i.bn
+  %exitcond200.not = icmp eq i64 %.sroa.030.0167, %4
   br i1 %exitcond200.not, label %.invoke, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb

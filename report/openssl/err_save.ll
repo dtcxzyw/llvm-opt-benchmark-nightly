@@ -10,7 +10,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define noalias ptr @OSSL_ERR_STATE_new() local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 904, ptr noundef null, i32 noundef 0) #6
+  %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 904, ptr noundef null, i32 noundef 0) #7
   ret ptr %i.a
 }
 
@@ -44,7 +44,7 @@ bb.b:                                             ; preds = %.preheader, %err_cl
 
 bb.c:                                             ; preds = %bb.b
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !11
-  tail call void @CRYPTO_free(ptr noundef %i.n, ptr noundef nonnull @.str, i32 noundef 42) #6
+  tail call void @CRYPTO_free(ptr noundef %i.n, ptr noundef nonnull @.str, i32 noundef 42) #7
   br label %err_clear.exit
 
 err_clear.exit:                                   ; preds = %bb.b, %bb.c
@@ -62,18 +62,18 @@ err_clear.exit:                                   ; preds = %bb.b, %bb.c
   store i32 -1, ptr %i.s, align 4, !tbaa !8
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %indvars.iv ; 2 uses
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !11
-  tail call void @CRYPTO_free(ptr noundef %i.u, ptr noundef nonnull @.str, i32 noundef 109) #6
+  tail call void @CRYPTO_free(ptr noundef %i.u, ptr noundef nonnull @.str, i32 noundef 109) #7
   store ptr null, ptr %i.t, align 8, !tbaa !11
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv ; 2 uses
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !11
-  tail call void @CRYPTO_free(ptr noundef %i.w, ptr noundef nonnull @.str, i32 noundef 111) #6
+  tail call void @CRYPTO_free(ptr noundef %i.w, ptr noundef nonnull @.str, i32 noundef 111) #7
   store ptr null, ptr %i.v, align 8, !tbaa !11
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
   br i1 %exitcond.not, label %bb.d, label %bb.b, !llvm.loop !18
 
 bb.d:                                             ; preds = %err_clear.exit
-  %i.x = tail call ptr @ossl_err_get_state_int() #6 ; 3 uses
+  %i.x = tail call ptr @ossl_err_get_state_int() #7 ; 3 uses
   %i.y = icmp eq ptr %i.x, null
   br i1 %i.y, label %bb.f, label %bb.e
 
@@ -101,7 +101,7 @@ bb.a:
   br i1 %i.a, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call ptr @ossl_err_get_state_int() #6 ; 12 uses
+  %i.b = tail call ptr @ossl_err_get_state_int() #7 ; 12 uses
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %.preheader, label %bb.f
 
@@ -127,7 +127,7 @@ bb.c:                                             ; preds = %.preheader, %err_cl
 
 bb.d:                                             ; preds = %bb.c
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !11
-  tail call void @CRYPTO_free(ptr noundef %i.p, ptr noundef nonnull @.str, i32 noundef 42) #6
+  tail call void @CRYPTO_free(ptr noundef %i.p, ptr noundef nonnull @.str, i32 noundef 42) #7
   br label %err_clear.exit
 
 err_clear.exit:                                   ; preds = %bb.c, %bb.d
@@ -145,11 +145,11 @@ err_clear.exit:                                   ; preds = %bb.c, %bb.d
   store i32 -1, ptr %i.u, align 4, !tbaa !8
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %indvars.iv115 ; 2 uses
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !11
-  tail call void @CRYPTO_free(ptr noundef %i.w, ptr noundef nonnull @.str, i32 noundef 109) #6
+  tail call void @CRYPTO_free(ptr noundef %i.w, ptr noundef nonnull @.str, i32 noundef 109) #7
   store ptr null, ptr %i.v, align 8, !tbaa !11
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %indvars.iv115 ; 2 uses
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !11
-  tail call void @CRYPTO_free(ptr noundef %i.y, ptr noundef nonnull @.str, i32 noundef 111) #6
+  tail call void @CRYPTO_free(ptr noundef %i.y, ptr noundef nonnull @.str, i32 noundef 111) #7
   store ptr null, ptr %i.x, align 8, !tbaa !11
   %indvars.iv.next116 = add nuw nsw i64 %indvars.iv115, 1 ; 2 uses
   %exitcond118.not = icmp eq i64 %indvars.iv.next116, 16
@@ -194,7 +194,7 @@ bb.g:                                             ; preds = %.lr.ph
 
 .lr.ph103:                                        ; preds = %bb.g, %.critedge
   %.0.lcssa133 = phi i32 [ %.096, %.critedge ], [ %i.af, %bb.g ] ; 2 uses
-  %.084.lcssa132 = phi i32 [ %.08495, %.critedge ], [ %i.an, %bb.g ] ; 4 uses
+  %.084.lcssa132 = phi i32 [ %.08495, %.critedge ], [ %i.an, %bb.g ] ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 512
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 384 ; 2 uses
@@ -210,7 +210,8 @@ bb.g:                                             ; preds = %.lr.ph
   %i.ba = getelementptr inbounds nuw i8, ptr %i.b, i64 576
   %i.bb = getelementptr inbounds nuw i8, ptr %i.b, i64 704
   %i.bc = getelementptr inbounds nuw i8, ptr %i.b, i64 768
-  %wide.trip.count = zext i32 %.084.lcssa132 to i64
+  %smax = tail call i32 @llvm.smax.i32(i32 %.084.lcssa132, i32 1) ; 3 uses
+  %wide.trip.count = zext nneg i32 %smax to i64
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph103, %err_clear.exit91
@@ -227,7 +228,7 @@ bb.h:                                             ; preds = %.lr.ph103, %err_cle
 
 bb.i:                                             ; preds = %bb.h
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !11
-  tail call void @CRYPTO_free(ptr noundef %i.bj, ptr noundef nonnull @.str, i32 noundef 42) #6
+  tail call void @CRYPTO_free(ptr noundef %i.bj, ptr noundef nonnull @.str, i32 noundef 42) #7
   br label %err_clear.exit91
 
 err_clear.exit91:                                 ; preds = %bb.h, %bb.i
@@ -245,11 +246,11 @@ err_clear.exit91:                                 ; preds = %bb.h, %bb.i
   store i32 -1, ptr %i.bo, align 4, !tbaa !8
   %i.bp = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %indvars.iv ; 3 uses
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !11
-  tail call void @CRYPTO_free(ptr noundef %i.bq, ptr noundef nonnull @.str, i32 noundef 109) #6
+  tail call void @CRYPTO_free(ptr noundef %i.bq, ptr noundef nonnull @.str, i32 noundef 109) #7
   store ptr null, ptr %i.bp, align 8, !tbaa !11
   %i.br = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %indvars.iv ; 3 uses
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !11
-  tail call void @CRYPTO_free(ptr noundef %i.bs, ptr noundef nonnull @.str, i32 noundef 111) #6
+  tail call void @CRYPTO_free(ptr noundef %i.bs, ptr noundef nonnull @.str, i32 noundef 111) #7
   store ptr null, ptr %i.br, align 8, !tbaa !11
   %i.bt = sext i32 %i.be to i64                   ; 8 uses
   %i.bu = getelementptr inbounds [4 x i8], ptr %i.b, i64 %i.bt ; 2 uses
@@ -300,16 +301,16 @@ err_clear.exit91:                                 ; preds = %bb.h, %bb.i
 
 bb.j:                                             ; preds = %err_clear.exit91
   store i32 %.0.lcssa133, ptr %i.ab, align 8, !tbaa !17
-  %i.co = add nsw i32 %.084.lcssa132, -1
+  %i.co = add nsw i32 %smax, -1
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 900
   store i32 15, ptr %i.cp, align 4, !tbaa !16
   %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 896
   store i32 %i.co, ptr %i.cq, align 8, !tbaa !17
-  %1 = icmp samesign ult i32 %.084.lcssa132, 16
+  %1 = icmp slt i32 %.084.lcssa132, 16
   br i1 %1, label %.lr.ph107, label %.loopexit
 
 .lr.ph107:                                        ; preds = %.thread, %bb.j
-  %.1.lcssa137142 = phi i32 [ 0, %.thread ], [ %.084.lcssa132, %bb.j ]
+  %.1.lcssa137142 = phi i32 [ 0, %.thread ], [ %smax, %bb.j ]
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 512
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 256
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 384
@@ -332,7 +333,7 @@ bb.k:                                             ; preds = %.lr.ph107, %err_cle
 
 bb.l:                                             ; preds = %bb.k
   %i.de = load ptr, ptr %i.dd, align 8, !tbaa !11
-  tail call void @CRYPTO_free(ptr noundef %i.de, ptr noundef nonnull @.str, i32 noundef 42) #6
+  tail call void @CRYPTO_free(ptr noundef %i.de, ptr noundef nonnull @.str, i32 noundef 42) #7
   br label %err_clear.exit93
 
 err_clear.exit93:                                 ; preds = %bb.k, %bb.l
@@ -350,15 +351,14 @@ err_clear.exit93:                                 ; preds = %bb.k, %bb.l
   store i32 -1, ptr %i.dj, align 4, !tbaa !8
   %i.dk = getelementptr inbounds nuw [8 x i8], ptr %i.cx, i64 %indvars.iv111 ; 2 uses
   %i.dl = load ptr, ptr %i.dk, align 8, !tbaa !11
-  tail call void @CRYPTO_free(ptr noundef %i.dl, ptr noundef nonnull @.str, i32 noundef 109) #6
+  tail call void @CRYPTO_free(ptr noundef %i.dl, ptr noundef nonnull @.str, i32 noundef 109) #7
   store ptr null, ptr %i.dk, align 8, !tbaa !11
   %i.dm = getelementptr inbounds nuw [8 x i8], ptr %i.cy, i64 %indvars.iv111 ; 2 uses
   %i.dn = load ptr, ptr %i.dm, align 8, !tbaa !11
-  tail call void @CRYPTO_free(ptr noundef %i.dn, ptr noundef nonnull @.str, i32 noundef 111) #6
+  tail call void @CRYPTO_free(ptr noundef %i.dn, ptr noundef nonnull @.str, i32 noundef 111) #7
   store ptr null, ptr %i.dm, align 8, !tbaa !11
   %indvars.iv.next112 = add nuw nsw i64 %indvars.iv111, 1 ; 2 uses
-  %2 = and i64 %indvars.iv.next112, 4294967295
-  %exitcond114.not = icmp eq i64 %2, 16
+  %exitcond114.not = icmp eq i64 %indvars.iv.next112, 16
   br i1 %exitcond114.not, label %.loopexit, label %bb.k, !llvm.loop !22
 
 .loopexit:                                        ; preds = %err_clear.exit93, %bb.j, %bb.a, %bb.e
@@ -380,7 +380,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.g = tail call ptr @ossl_err_get_state_int() #6 ; 12 uses
+  %i.g = tail call ptr @ossl_err_get_state_int() #7 ; 12 uses
   %i.h = icmp eq ptr %i.g, null
   br i1 %i.h, label %.loopexit, label %bb.d
 
@@ -478,11 +478,11 @@ err_clear.exit:                                   ; preds = %bb.h, %.sink.split.
   store i32 -1, ptr %i.ay, align 4, !tbaa !8
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.ao ; 5 uses
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !11
-  tail call void @CRYPTO_free(ptr noundef %i.ba, ptr noundef nonnull @.str, i32 noundef 109) #6
+  tail call void @CRYPTO_free(ptr noundef %i.ba, ptr noundef nonnull @.str, i32 noundef 109) #7
   store ptr null, ptr %i.az, align 8, !tbaa !11
   %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %i.ao ; 5 uses
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !11
-  tail call void @CRYPTO_free(ptr noundef %i.bc, ptr noundef nonnull @.str, i32 noundef 111) #6
+  tail call void @CRYPTO_free(ptr noundef %i.bc, ptr noundef nonnull @.str, i32 noundef 111) #7
   store ptr null, ptr %i.bb, align 8, !tbaa !11
   %i.bd = load i32, ptr %i.ae, align 4, !tbaa !8
   store i32 %i.bd, ptr %i.aw, align 4, !tbaa !8
@@ -496,7 +496,7 @@ err_clear.exit:                                   ; preds = %bb.h, %.sink.split.
   %i.bk = getelementptr inbounds [8 x i8], ptr %i.x, i64 %i.ad
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !11 ; 4 uses
   %i.bm = load ptr, ptr %i.az, align 8, !tbaa !11
-  tail call void @CRYPTO_free(ptr noundef %i.bm, ptr noundef nonnull @.str, i32 noundef 73) #6
+  tail call void @CRYPTO_free(ptr noundef %i.bm, ptr noundef nonnull @.str, i32 noundef 73) #7
   %i.bn = icmp eq ptr %i.bh, null
   br i1 %i.bn, label %bb.l, label %bb.k
 
@@ -510,21 +510,21 @@ bb.l:                                             ; preds = %bb.k, %err_clear.ex
   br label %bb.o
 
 bb.m:                                             ; preds = %bb.k
-  %i.bq = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.bh) #7
+  %i.bq = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.bh) #8
   %i.br = add i64 %i.bq, 1
-  %i.bs = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.br, ptr noundef null, i32 noundef 0) #6 ; 3 uses
+  %i.bs = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.br, ptr noundef null, i32 noundef 0) #7 ; 3 uses
   store ptr %i.bs, ptr %i.az, align 8, !tbaa !11
   %.not.i = icmp eq ptr %i.bs, null
   br i1 %.not.i, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.bt = tail call ptr @strcpy(ptr noundef nonnull dereferenceable(1) %i.bs, ptr noundef nonnull readonly dereferenceable(1) %i.bh) #6 ; 0 uses
+  %i.bt = tail call ptr @strcpy(ptr noundef nonnull dereferenceable(1) %i.bs, ptr noundef nonnull readonly dereferenceable(1) %i.bh) #7 ; 0 uses
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l
   store i32 %i.bj, ptr %i.ay, align 4, !tbaa !8
   %i.bu = load ptr, ptr %i.bb, align 8, !tbaa !11
-  tail call void @CRYPTO_free(ptr noundef %i.bu, ptr noundef nonnull @.str, i32 noundef 83) #6
+  tail call void @CRYPTO_free(ptr noundef %i.bu, ptr noundef nonnull @.str, i32 noundef 83) #7
   %i.bv = icmp eq ptr %i.bl, null
   br i1 %i.bv, label %bb.q, label %bb.p
 
@@ -538,15 +538,15 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   br label %err_set_debug.exit
 
 bb.r:                                             ; preds = %bb.p
-  %i.by = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.bl) #7
+  %i.by = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.bl) #8
   %i.bz = add i64 %i.by, 1
-  %i.ca = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.bz, ptr noundef null, i32 noundef 0) #6 ; 3 uses
+  %i.ca = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.bz, ptr noundef null, i32 noundef 0) #7 ; 3 uses
   store ptr %i.ca, ptr %i.bb, align 8, !tbaa !11
   %.not29.i = icmp eq ptr %i.ca, null
   br i1 %.not29.i, label %err_set_debug.exit, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.cb = tail call ptr @strcpy(ptr noundef nonnull dereferenceable(1) %i.ca, ptr noundef nonnull readonly dereferenceable(1) %i.bl) #6 ; 0 uses
+  %i.cb = tail call ptr @strcpy(ptr noundef nonnull dereferenceable(1) %i.ca, ptr noundef nonnull readonly dereferenceable(1) %i.bl) #7 ; 0 uses
   br label %err_set_debug.exit
 
 err_set_debug.exit:                               ; preds = %bb.q, %bb.r, %bb.s
@@ -562,7 +562,7 @@ bb.t:                                             ; preds = %err_set_debug.exit
   br i1 %.not55, label %bb.x, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.cg = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.cf, ptr noundef null, i32 noundef 0) #6 ; 3 uses
+  %i.cg = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.cf, ptr noundef null, i32 noundef 0) #7 ; 3 uses
   %.not56 = icmp eq ptr %i.cg, null
   br i1 %.not56, label %err_clear_data.exit, label %bb.v
 
@@ -580,7 +580,7 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.v
   %i.cn = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %i.ao
   %i.co = load ptr, ptr %i.cn, align 8, !tbaa !11
-  tail call void @CRYPTO_free(ptr noundef %i.co, ptr noundef nonnull @.str, i32 noundef 96) #6
+  tail call void @CRYPTO_free(ptr noundef %i.co, ptr noundef nonnull @.str, i32 noundef 96) #7
   br label %err_set_data.exit
 
 err_set_data.exit:                                ; preds = %bb.v, %bb.w
@@ -636,14 +636,18 @@ declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #4
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare ptr @strcpy(ptr noalias noundef returned writeonly, ptr noalias noundef readonly captures(none)) local_unnamed_addr #5
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #6
+
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { nounwind }
-attributes #7 = { nounwind willreturn memory(read) }
+attributes #6 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #7 = { nounwind }
+attributes #8 = { nounwind willreturn memory(read) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

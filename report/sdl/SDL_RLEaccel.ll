@@ -204,7 +204,7 @@ bb.ae:                                            ; preds = %bb.ad
   %.4.lcssa363 = phi i32 [ %.4.lcssa, %.critedge4 ], [ %.4.lcssa, %.critedge6.loopexit.split.loop.exit378 ], [ %.4.lcssa, %bb.ae ], [ %i.ax, %bb.ac ] ; 5 uses
   %.5.lcssa = phi i32 [ %.4.lcssa, %.critedge4 ], [ %i.er, %.critedge6.loopexit.split.loop.exit378 ], [ %i.ax, %bb.ae ], [ %i.ax, %bb.ac ] ; 2 uses
   %.lcssa271 = phi i1 [ false, %.critedge4 ], [ true, %.critedge6.loopexit.split.loop.exit378 ], [ false, %bb.ae ], [ false, %bb.ac ]
-  %i.es = sub nsw i32 %.4.lcssa363, %.3           ; 5 uses
+  %i.es = sub nsw i32 %.4.lcssa363, %.3           ; 6 uses
   %i.et = icmp eq i32 %i.es, %i.ax
   %i.eu = select i1 %i.et, i32 %.2, i32 0         ; 2 uses
   %i.ev = sub nsw i32 %.5.lcssa, %.4.lcssa363     ; 2 uses
@@ -212,8 +212,10 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %i.ew, label %.lr.ph310.preheader, label %._crit_edge311
 
 .lr.ph310.preheader:                              ; preds = %.critedge6
-  %i.ex = add i32 %.4.lcssa363, -65536
-  %i.ey = sub i32 %i.ex, %.3                      ; 2 uses
+  %1 = tail call i32 @llvm.smin.i32(i32 %i.es, i32 131070)
+  %2 = add i32 %.4.lcssa363, 65534
+  %i.ex = add i32 %.3, %1
+  %i.ey = sub i32 %2, %i.ex                       ; 2 uses
   %i.ez = udiv i32 %i.ey, 65535
   %narrow = add nuw nsw i32 %i.ez, 1
   %i.fa = zext nneg i32 %narrow to i64            ; 2 uses

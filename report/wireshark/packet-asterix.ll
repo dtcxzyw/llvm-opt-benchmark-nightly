@@ -204,7 +204,7 @@ asterix_get_unsigned_value.exit:                  ; preds = %bb.d, %bb.e, %bb.f,
   br i1 %.not37, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %asterix_get_unsigned_value.exit
-  %umax = tail call i32 @llvm.umax.i32(i32 %indvars.iv, i32 1)
+  %umax = tail call i32 @llvm.smax.i32(i32 %indvars.iv, i32 1)
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.j, %asterix_get_unsigned_value.exit
@@ -605,6 +605,9 @@ bb.a:
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.abs.i32(i32, i1 immarg) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #10

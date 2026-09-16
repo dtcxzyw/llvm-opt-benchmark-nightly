@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 583
 inline.NumDeleted: 258
 loop-unroll.NumCompletelyUnrolled: 12
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 13
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 14
 begin_hunk_0_@_ZL34hb_raster_paint_finalize_path_clipP17hb_raster_paint_tP16hb_raster_draw_tP17hb_raster_image_tjj:bb.a
   %i.aa = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !84, !noalias !316
@@ -205,7 +205,7 @@ _ZNK16hb_raster_clip_t20has_valid_alpha_maskEv.exit.thread249: ; preds = %_ZN17h
   %i.cv = load i32, ptr %i.cu, align 8, !tbaa !124
   %i.cw = zext i32 %i.cv to i64
   %.sroa.speculated37.i = call i64 @llvm.smax.i64(i64 %i.co, i64 0)
-  %.sroa.speculated20.i = call i64 @llvm.umax.i64(i64 %.sroa.speculated37.i, i64 %i.cw) ; 4 uses
+  %.sroa.speculated20.i = call i64 @llvm.umax.i64(i64 %.sroa.speculated37.i, i64 %i.cw) ; 9 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 52
   %i.cy = load i32, ptr %i.cx, align 4, !tbaa !122
   %i.cz = zext i32 %i.cy to i64
@@ -219,7 +219,7 @@ _ZNK16hb_raster_clip_t20has_valid_alpha_maskEv.exit.thread249: ; preds = %_ZN17h
   %i.df = zext i32 %i.de to i64
   %i.dg = add nsw i64 %i.co, %i.df
   %i.dh = call i64 @llvm.smin.i64(i64 %i.dg, i64 %i.f)
-  %.sroa.speculated8.i = call i64 @llvm.smin.i64(i64 %i.dh, i64 %i.dc) ; 4 uses
+  %.sroa.speculated8.i = call i64 @llvm.smin.i64(i64 %i.dh, i64 %i.dc) ; 6 uses
   %i.di = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 60
   %i.dj = load i32, ptr %i.di, align 4, !tbaa !121
   %i.dk = zext i32 %i.dj to i64
@@ -239,8 +239,8 @@ _ZL30hb_raster_paint_intersect_maskPK17hb_raster_image_tRK19hb_raster_extents_tR
   br label %.sink.split
 
 bb.r:                                             ; preds = %_ZNK16hb_raster_clip_t20has_valid_alpha_maskEv.exit.thread249
-  %i.dq = trunc nuw i64 %.sroa.speculated20.i to i32 ; 3 uses
-  %i.dr = trunc nuw i64 %.sroa.speculated8.i to i32 ; 3 uses
+  %i.dq = trunc nuw i64 %.sroa.speculated20.i to i32 ; 4 uses
+  %i.dr = trunc nuw i64 %.sroa.speculated8.i to i32 ; 5 uses
   br i1 %i.bt, label %.lr.ph301, label %.lr.ph284
 
 .lr.ph284:                                        ; preds = %bb.r
@@ -254,7 +254,17 @@ bb.r:                                             ; preds = %_ZNK16hb_raster_cli
   %i.dw = trunc i64 %i.ct to i32
   %i.dx = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.dy = trunc i64 %i.co to i32
-  %i.dz = sub i32 %i.dq, %i.dy
+  %i.dz = sub i32 %i.dq, %i.dy                    ; 3 uses
+  %7 = sub i64 %.sroa.speculated8.i, %.sroa.speculated20.i
+  %.neg376 = add nuw i64 %.sroa.speculated20.i, 1
+  %xtraiter = and i64 %7, 1
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %8 = add i32 %i.dz, 1
+  %9 = zext i32 %i.dz to i64
+  %indvars.iv.next339.prol = add nuw nsw i64 %.sroa.speculated20.i, 1 ; 2 uses
+  %10 = trunc nuw i64 %.sroa.speculated20.i to i32
+  %11 = trunc nuw i64 %indvars.iv.next339.prol to i32
+  %12 = icmp eq i64 %.sroa.speculated8.i, %.neg376
   br label %.critedge87.lr.ph.us
 
 .critedge87.lr.ph.us:                             ; preds = %.lr.ph301, %bb.t
@@ -268,38 +278,71 @@ bb.r:                                             ; preds = %_ZNK16hb_raster_cli
   %i.ec = load i32, ptr %i.dx, align 4, !tbaa !135
   %i.ed = mul i32 %i.ec, %i.eb
   %i.ee = zext i32 %i.ed to i64
-  %i.ef = getelementptr inbounds nuw i8, ptr %i.bj, i64 %i.ee
+  %i.ef = getelementptr inbounds nuw i8, ptr %i.bj, i64 %i.ee ; 3 uses
   %i.eg = mul i32 %i.an, %i.ea
   %i.eh = zext i32 %i.eg to i64
-  %i.ei = getelementptr inbounds nuw i8, ptr %.sroa.17.5, i64 %i.eh
-  br label %.critedge87.us
+  %i.ei = getelementptr inbounds nuw i8, ptr %.sroa.17.5, i64 %i.eh ; 3 uses
+  br i1 %lcmp.mod.not, label %.critedge87.us.prol.loopexit, label %.critedge87.us.prol
 
-.critedge87.us:                                   ; preds = %.critedge87.lr.ph.us, %.critedge87.us
-  %indvars.iv338 = phi i64 [ %.sroa.speculated20.i, %.critedge87.lr.ph.us ], [ %indvars.iv.next339.a, %.critedge87.us ] ; 3 uses
-  %.077291.us = phi i32 [ %i.dz, %.critedge87.lr.ph.us ], [ %i.ej, %.critedge87.us ] ; 2 uses
-  %.0222290.us = phi i32 [ %i.dq, %.critedge87.lr.ph.us ], [ %.1223.us.a, %.critedge87.us ]
-  %.0224289.us = phi i32 [ %i.dr, %.critedge87.lr.ph.us ], [ %.1225.us.a, %.critedge87.us ] ; 2 uses
-  %i.ej = add i32 %.077291.us, 1
-  %i.ek = zext i32 %.077291.us to i64
+.critedge87.us.prol:                              ; preds = %.critedge87.lr.ph.us
+  %13 = getelementptr inbounds nuw i8, ptr %i.ef, i64 %9
+  %14 = load i8, ptr %13, align 1, !tbaa !115     ; 2 uses
+  %15 = getelementptr inbounds nuw i8, ptr %i.ei, i64 %.sroa.speculated20.i
+  store i8 %14, ptr %15, align 1, !tbaa !115
+  %.not85.us.prol = icmp eq i8 %14, 0             ; 2 uses
+  %.1225.us.prol = select i1 %.not85.us.prol, i32 %i.dr, i32 %10 ; 2 uses
+  %.1223.us.prol = select i1 %.not85.us.prol, i32 %i.dq, i32 %11 ; 2 uses
+  br label %.critedge87.us.prol.loopexit
+
+.critedge87.us.prol.loopexit:                     ; preds = %.critedge87.us.prol, %.critedge87.lr.ph.us
+  %indvars.iv338.unr = phi i64 [ %.sroa.speculated20.i, %.critedge87.lr.ph.us ], [ %indvars.iv.next339.prol, %.critedge87.us.prol ]
+  %.077291.us.unr = phi i32 [ %i.dz, %.critedge87.lr.ph.us ], [ %8, %.critedge87.us.prol ]
+  %.0222290.us.unr = phi i32 [ %i.dq, %.critedge87.lr.ph.us ], [ %.1223.us.prol, %.critedge87.us.prol ]
+  %.0224289.us.unr = phi i32 [ %i.dr, %.critedge87.lr.ph.us ], [ %.1225.us.prol, %.critedge87.us.prol ]
+  %.1225.us.lcssa.unr = phi i32 [ poison, %.critedge87.lr.ph.us ], [ %.1225.us.prol, %.critedge87.us.prol ]
+  %.1223.us.lcssa.unr = phi i32 [ poison, %.critedge87.lr.ph.us ], [ %.1223.us.prol, %.critedge87.us.prol ]
+  br i1 %12, label %._crit_edge293.us, label %.critedge87.us
+
+.critedge87.us:                                   ; preds = %.critedge87.us.prol.loopexit, %.critedge87.us
+  %indvars.iv338 = phi i64 [ %indvars.iv.next339.a, %.critedge87.us ], [ %indvars.iv338.unr, %.critedge87.us.prol.loopexit ] ; 4 uses
+  %.077291.us = phi i32 [ %i.ej, %.critedge87.us ], [ %.077291.us.unr, %.critedge87.us.prol.loopexit ] ; 3 uses
+  %.0222290.us = phi i32 [ %.1223.us.a, %.critedge87.us ], [ %.0222290.us.unr, %.critedge87.us.prol.loopexit ]
+  %.0224289.us = phi i32 [ %.1225.us.a, %.critedge87.us ], [ %.0224289.us.unr, %.critedge87.us.prol.loopexit ] ; 2 uses
+  %16 = add i32 %.077291.us, 1
+  %17 = zext i32 %.077291.us to i64
+  %18 = getelementptr inbounds nuw i8, ptr %i.ef, i64 %17
+  %19 = load i8, ptr %18, align 1, !tbaa !115     ; 2 uses
+  %20 = getelementptr inbounds nuw i8, ptr %i.ei, i64 %indvars.iv338
+  store i8 %19, ptr %20, align 1, !tbaa !115
+  %.not85.us = icmp eq i8 %19, 0                  ; 2 uses
+  %21 = icmp ne i32 %.0224289.us, %i.dr
+  %indvars.iv.next339 = add nuw nsw i64 %indvars.iv338, 1 ; 3 uses
+  %22 = select i1 %.not85.us, i1 true, i1 %21
+  %23 = trunc nuw i64 %indvars.iv338 to i32
+  %.1225.us = select i1 %22, i32 %.0224289.us, i32 %23 ; 2 uses
+  %24 = trunc nuw i64 %indvars.iv.next339 to i32
+  %.1223.us = select i1 %.not85.us, i32 %.0222290.us, i32 %24
+  %i.ej = add i32 %.077291.us, 2
+  %i.ek = zext i32 %16 to i64
   %i.el = getelementptr inbounds nuw i8, ptr %i.ef, i64 %i.ek
   %i.em = load i8, ptr %i.el, align 1, !tbaa !115 ; 2 uses
-  %i.en = getelementptr inbounds nuw i8, ptr %i.ei, i64 %indvars.iv338
+  %i.en = getelementptr inbounds nuw i8, ptr %i.ei, i64 %indvars.iv.next339
   store i8 %i.em, ptr %i.en, align 1, !tbaa !115
   %.not85.us.a = icmp eq i8 %i.em, 0              ; 2 uses
-  %i.eo = icmp ne i32 %.0224289.us, %i.dr
-  %indvars.iv.next339.a = add nuw nsw i64 %indvars.iv338, 1 ; 3 uses
+  %i.eo = icmp ne i32 %.1225.us, %i.dr
+  %indvars.iv.next339.a = add nuw nsw i64 %indvars.iv338, 2 ; 3 uses
   %i.ep = select i1 %.not85.us.a, i1 true, i1 %i.eo
-  %i.eq = trunc nuw i64 %indvars.iv338 to i32
-  %.1225.us.a = select i1 %i.ep, i32 %.0224289.us, i32 %i.eq ; 3 uses
+  %i.eq = trunc nuw i64 %indvars.iv.next339 to i32
+  %.1225.us.a = select i1 %i.ep, i32 %.1225.us, i32 %i.eq ; 2 uses
   %i.er = trunc nuw i64 %indvars.iv.next339.a to i32
-  %.1223.us.a = select i1 %.not85.us.a, i32 %.0222290.us, i32 %i.er ; 3 uses
+  %.1223.us.a = select i1 %.not85.us.a, i32 %.1223.us, i32 %i.er ; 2 uses
   %i.es = icmp samesign ult i64 %indvars.iv.next339.a, %.sroa.speculated8.i
   br i1 %i.es, label %.critedge87.us, label %._crit_edge293.us, !llvm.loop !311
 
 bb.s:                                             ; preds = %._crit_edge293.us
-  %.sroa.speculated149.us = call i32 @llvm.umin.i32(i32 %.sroa.37.0296.us, i32 %.1225.us.a)
+  %.sroa.speculated149.us = call i32 @llvm.umin.i32(i32 %.sroa.37.0296.us, i32 %.1225.us.lcssa)
   %.sroa.speculated157.us = call i32 @llvm.umin.i32(i32 %.sroa.44.0297.us, i32 %i.ea)
-  %.sroa.speculated142.us = call i32 @llvm.umax.i32(i32 %.sroa.51.0298.us, i32 %.1223.us.a)
+  %.sroa.speculated142.us = call i32 @llvm.umax.i32(i32 %.sroa.51.0298.us, i32 %.1223.us.lcssa)
   %i.et = add nuw nsw i64 %indvars.iv341, 1       ; 2 uses
   %i.eu = trunc nuw i64 %i.et to i32
   %.sroa.speculated137.us = call i32 @llvm.umax.i32(i32 %.sroa.58.0299.us, i32 %i.eu)
@@ -314,8 +357,10 @@ bb.t:                                             ; preds = %._crit_edge293.us._
   %i.ev = icmp samesign ult i64 %indvars.iv.next342.pre-phi, %.sroa.speculated.i
   br i1 %i.ev, label %.critedge87.lr.ph.us, label %.loopexit, !llvm.loop !312
 
-._crit_edge293.us:                                ; preds = %.critedge87.us
-  %i.ew = icmp ult i32 %.1225.us.a, %.1223.us.a
+._crit_edge293.us:                                ; preds = %.critedge87.us, %.critedge87.us.prol.loopexit
+  %.1225.us.lcssa = phi i32 [ %.1225.us.lcssa.unr, %.critedge87.us.prol.loopexit ], [ %.1225.us.a, %.critedge87.us ] ; 2 uses
+  %.1223.us.lcssa = phi i32 [ %.1223.us.lcssa.unr, %.critedge87.us.prol.loopexit ], [ %.1223.us.a, %.critedge87.us ] ; 2 uses
+  %i.ew = icmp ult i32 %.1225.us.lcssa, %.1223.us.lcssa
   br i1 %i.ew, label %bb.s, label %._crit_edge293.us._crit_edge
 
 ._crit_edge293.us._crit_edge:                     ; preds = %._crit_edge293.us

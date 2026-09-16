@@ -2,7 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 8
 inline.NumDeleted: 3
 loop-unroll.NumCompletelyUnrolled: 4
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@schedule_alarm:bb.a
   br label %bb.h
 
@@ -204,23 +205,63 @@ bb.j:                                             ; preds = %.thread
   br i1 %.not13.i, label %insert_timeout.exit, label %.lr.ph.i26.preheader
 
 .lr.ph.i26.preheader:                             ; preds = %bb.j
-  %i.be = sext i32 %.012.i to i64
-  %i.bf = sext i32 %.020.lcssa to i64
-  %i.bg = sext i32 %i.bd to i64
-  br label %.lr.ph.i26
+  %i.be = sext i32 %.012.i to i64                 ; 3 uses
+  %i.bf = sext i32 %.020.lcssa to i64             ; 2 uses
+  %i.bg = sext i32 %i.bd to i64                   ; 2 uses
+  %4 = add nsw i64 %i.be, 1
+  %5 = sub nsw i64 %4, %i.bf
+  %6 = freeze i64 %5                              ; 2 uses
+  %7 = add i64 %6, -1
+  %xtraiter = and i64 %6, 3                       ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.lr.ph.i26.prol.loopexit, label %.lr.ph.i26.prol
 
-.lr.ph.i26:                                       ; preds = %.lr.ph.i26.preheader, %.lr.ph.i26
-  %indvars.iv38 = phi i64 [ %i.be, %.lr.ph.i26.preheader ], [ %indvars.iv.next39.a, %.lr.ph.i26 ] ; 4 uses
-  %.0.in14.i = phi i64 [ %i.bg, %.lr.ph.i26.preheader ], [ %indvars.iv38, %.lr.ph.i26 ]
-  %i.bh = getelementptr inbounds nuw [8 x i8], ptr @active_timeouts, i64 %indvars.iv38
+.lr.ph.i26.prol:                                  ; preds = %.lr.ph.i26.preheader, %.lr.ph.i26.prol
+  %indvars.iv38.prol = phi i64 [ %indvars.iv.next39.prol, %.lr.ph.i26.prol ], [ %i.be, %.lr.ph.i26.preheader ] ; 4 uses
+  %.0.in14.i.prol = phi i64 [ %indvars.iv38.prol, %.lr.ph.i26.prol ], [ %i.bg, %.lr.ph.i26.preheader ]
+  %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i26.prol ], [ 0, %.lr.ph.i26.preheader ]
+  %8 = getelementptr inbounds nuw [8 x i8], ptr @active_timeouts, i64 %indvars.iv38.prol
+  %9 = load volatile ptr, ptr %8, align 8
+  %10 = getelementptr inbounds [8 x i8], ptr @active_timeouts, i64 %.0.in14.i.prol
+  store volatile ptr %9, ptr %10, align 8
+  %indvars.iv.next39.prol = add nsw i64 %indvars.iv38.prol, -1 ; 2 uses
+  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
+  br i1 %prol.iter.cmp.not, label %.lr.ph.i26.prol.loopexit, label %.lr.ph.i26.prol, !llvm.loop !11
+
+.lr.ph.i26.prol.loopexit:                         ; preds = %.lr.ph.i26.prol, %.lr.ph.i26.preheader
+  %indvars.iv38.unr = phi i64 [ %i.be, %.lr.ph.i26.preheader ], [ %indvars.iv.next39.prol, %.lr.ph.i26.prol ]
+  %.0.in14.i.unr = phi i64 [ %i.bg, %.lr.ph.i26.preheader ], [ %indvars.iv38.prol, %.lr.ph.i26.prol ]
+  %11 = icmp ult i64 %7, 3
+  br i1 %11, label %insert_timeout.exit, label %.lr.ph.i26
+
+.lr.ph.i26:                                       ; preds = %.lr.ph.i26.prol.loopexit, %.lr.ph.i26
+  %indvars.iv38 = phi i64 [ %indvars.iv.next39.a, %.lr.ph.i26 ], [ %indvars.iv38.unr, %.lr.ph.i26.prol.loopexit ] ; 6 uses
+  %.0.in14.i = phi i64 [ %indvars.iv.next39.2, %.lr.ph.i26 ], [ %.0.in14.i.unr, %.lr.ph.i26.prol.loopexit ]
+  %12 = getelementptr inbounds nuw [8 x i8], ptr @active_timeouts, i64 %indvars.iv38
+  %13 = load volatile ptr, ptr %12, align 8
+  %14 = getelementptr inbounds [8 x i8], ptr @active_timeouts, i64 %.0.in14.i
+  store volatile ptr %13, ptr %14, align 8
+  %indvars.iv.next39 = add nsw i64 %indvars.iv38, -1 ; 2 uses
+  %15 = getelementptr inbounds nuw [8 x i8], ptr @active_timeouts, i64 %indvars.iv.next39
+  %16 = load volatile ptr, ptr %15, align 8
+  %17 = getelementptr inbounds [8 x i8], ptr @active_timeouts, i64 %indvars.iv38
+  store volatile ptr %16, ptr %17, align 8
+  %indvars.iv.next39.1 = add nsw i64 %indvars.iv38, -2 ; 2 uses
+  %18 = getelementptr inbounds nuw [8 x i8], ptr @active_timeouts, i64 %indvars.iv.next39.1
+  %19 = load volatile ptr, ptr %18, align 8
+  %20 = getelementptr inbounds [8 x i8], ptr @active_timeouts, i64 %indvars.iv.next39
+  store volatile ptr %19, ptr %20, align 8
+  %indvars.iv.next39.2 = add nsw i64 %indvars.iv38, -3 ; 3 uses
+  %i.bh = getelementptr inbounds nuw [8 x i8], ptr @active_timeouts, i64 %indvars.iv.next39.2
   %i.bi = load volatile ptr, ptr %i.bh, align 8
-  %i.bj = getelementptr inbounds [8 x i8], ptr @active_timeouts, i64 %.0.in14.i
+  %i.bj = getelementptr inbounds [8 x i8], ptr @active_timeouts, i64 %indvars.iv.next39.1
   store volatile ptr %i.bi, ptr %i.bj, align 8
-  %indvars.iv.next39.a = add nsw i64 %indvars.iv38, -1
-  %.not.not.i = icmp samesign ugt i64 %indvars.iv38, %i.bf
-  br i1 %.not.not.i, label %.lr.ph.i26, label %insert_timeout.exit, !llvm.loop !11
+  %indvars.iv.next39.a = add nsw i64 %indvars.iv38, -4
+  %.not.not.i = icmp samesign ugt i64 %indvars.iv.next39.2, %i.bf
+  br i1 %.not.not.i, label %.lr.ph.i26, label %insert_timeout.exit, !llvm.loop !12
 
-insert_timeout.exit:                              ; preds = %.lr.ph.i26, %bb.j
+insert_timeout.exit:                              ; preds = %.lr.ph.i26.prol.loopexit, %.lr.ph.i26, %bb.j
   %i.bk = zext nneg i32 %.020.lcssa to i64
   %i.bl = getelementptr inbounds nuw [8 x i8], ptr @active_timeouts, i64 %i.bk
   store volatile ptr %i.b, ptr %i.bl, align 8
@@ -309,7 +350,7 @@ bb.e:                                             ; preds = %.lr.ph
 bb.f:                                             ; preds = %bb.d, %bb.c, %bb.b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !12
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !14
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.a
   tail call fastcc void @schedule_alarm(i64 noundef %i.a)
@@ -521,7 +562,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f, %bb.e
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !13
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !15
 
 ._crit_edge:                                      ; preds = %bb.g, %bb.a
   %i.ao = load volatile i32, ptr @num_active_timeouts, align 4
@@ -707,7 +748,9 @@ attributes #9 = { cold nounwind }
 !8 = !{}
 !9 = distinct !{!9, !6}
 !10 = distinct !{!10, !6}
-!11 = distinct !{!11, !6}
+!11 = distinct !{!11, !13}
 !12 = distinct !{!12, !6}
-!13 = distinct !{!13, !6}
+!13 = !{!"llvm.loop.unroll.disable"}
+!14 = distinct !{!14, !6}
+!15 = distinct !{!15, !6}
 end_hunk_0

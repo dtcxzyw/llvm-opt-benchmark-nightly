@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.q
 
 bb.h:                                             ; preds = %bb.f
-  %i.ad = sub nuw nsw i64 %1, %.sroa.09.0         ; 11 uses
+  %i.ad = sub nuw nsw i64 %1, %.sroa.09.0         ; 9 uses
   %i.ae = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   %.not.i31 = icmp ult i64 %i.ad, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
@@ -224,13 +224,21 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ah, label %.preheader, label %.preheader72
 
 .preheader72:                                     ; preds = %bb.k
-  br i1 %.not98, label %_RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMNtCs7tKScEop1B6_5alloc5sliceSB12_11sort_by_keybNCNvB14_12sort_entriess4_0E0EB14_.exit.i.thread, label %.lr.ph
+  br i1 %.not98, label %_RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMNtCs7tKScEop1B6_5alloc5sliceSB12_11sort_by_keybNCNvB14_12sort_entriess4_0E0EB14_.exit.i.thread, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader72
+  %smax = call i64 @llvm.smax.i64(i64 %i.ad, i64 3) ; 2 uses
+  br label %.lr.ph
 
 .preheader:                                       ; preds = %bb.k
-  br i1 %.not98, label %_RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMNtCs7tKScEop1B6_5alloc5sliceSB12_11sort_by_keybNCNvB14_12sort_entriess4_0E0EB14_.exit.i.thread127, label %.lr.ph85
+  br i1 %.not98, label %_RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMNtCs7tKScEop1B6_5alloc5sliceSB12_11sort_by_keybNCNvB14_12sort_entriess4_0E0EB14_.exit.i.thread127, label %.lr.ph85.preheader
 
-.lr.ph:                                           ; preds = %.preheader72, %bb.l
-  %.sroa.01.0.i.i81 = phi i64 [ %i.am, %bb.l ], [ 2, %.preheader72 ] ; 4 uses
+.lr.ph85.preheader:                               ; preds = %.preheader
+  %smax105 = call i64 @llvm.smax.i64(i64 %i.ad, i64 3) ; 2 uses
+  br label %.lr.ph85
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.l
+  %.sroa.01.0.i.i81 = phi i64 [ %i.am, %bb.l ], [ 2, %.lr.ph.preheader ] ; 4 uses
   %i.ai = getelementptr inbounds nuw [304 x i8], ptr %i.ae, i64 %.sroa.01.0.i.i81
   %i.aj = getelementptr [304 x i8], ptr %i.ae, i64 %.sroa.01.0.i.i81
   %i.ak = getelementptr i8, ptr %i.aj, i64 -304
@@ -238,12 +246,12 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.al, label %_RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMNtCs7tKScEop1B6_5alloc5sliceSB12_11sort_by_keybNCNvB14_12sort_entriess4_0E0EB14_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.am = add nuw i64 %.sroa.01.0.i.i81, 1        ; 2 uses
-  %exitcond.not = icmp eq i64 %i.am, %i.ad
+  %i.am = add nuw nsw i64 %.sroa.01.0.i.i81, 1    ; 2 uses
+  %exitcond.not = icmp eq i64 %i.am, %smax
   br i1 %exitcond.not, label %_RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMNtCs7tKScEop1B6_5alloc5sliceSB12_11sort_by_keybNCNvB14_12sort_entriess4_0E0EB14_.exit.i, label %.lr.ph
 
-.lr.ph85:                                         ; preds = %.preheader, %bb.m
-  %.sroa.01.1.i.i84 = phi i64 [ %i.ar, %bb.m ], [ 2, %.preheader ] ; 4 uses
+.lr.ph85:                                         ; preds = %.lr.ph85.preheader, %bb.m
+  %.sroa.01.1.i.i84 = phi i64 [ %i.ar, %bb.m ], [ 2, %.lr.ph85.preheader ] ; 4 uses
   %i.an = getelementptr inbounds nuw [304 x i8], ptr %i.ae, i64 %.sroa.01.1.i.i84
   %i.ao = getelementptr [304 x i8], ptr %i.ae, i64 %.sroa.01.1.i.i84
   %i.ap = getelementptr i8, ptr %i.ao, i64 -304
@@ -251,12 +259,12 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.aq, label %bb.m, label %_RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMNtCs7tKScEop1B6_5alloc5sliceSB12_11sort_by_keybNCNvB14_12sort_entriess4_0E0EB14_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph85
-  %i.ar = add nuw i64 %.sroa.01.1.i.i84, 1        ; 2 uses
-  %exitcond105.not = icmp eq i64 %i.ar, %i.ad
+  %i.ar = add nuw nsw i64 %.sroa.01.1.i.i84, 1    ; 2 uses
+  %exitcond105.not = icmp eq i64 %i.ar, %smax105
   br i1 %exitcond105.not, label %_RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMNtCs7tKScEop1B6_5alloc5sliceSB12_11sort_by_keybNCNvB14_12sort_entriess4_0E0EB14_.exit.i, label %.lr.ph85
 
 _RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMNtCs7tKScEop1B6_5alloc5sliceSB12_11sort_by_keybNCNvB14_12sort_entriess4_0E0EB14_.exit.i: ; preds = %bb.l, %.lr.ph, %bb.m, %.lr.ph85
-  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i84, %.lr.ph85 ], [ %i.ad, %bb.m ], [ %.sroa.01.0.i.i81, %.lr.ph ], [ %i.ad, %bb.l ] ; 4 uses
+  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i84, %.lr.ph85 ], [ %smax105, %bb.m ], [ %.sroa.01.0.i.i81, %.lr.ph ], [ %smax, %bb.l ] ; 4 uses
   %i.as = icmp samesign ule i64 %.sroa.0.0.i.i, %i.ad
   call void @llvm.assume(i1 %i.as)
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
@@ -657,6 +665,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #35
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #28
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #28
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i64> @llvm.umax.v2i64(<2 x i64>, <2 x i64>) #28

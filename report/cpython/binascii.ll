@@ -205,20 +205,22 @@ bb.l:                                             ; preds = %.lr.ph11.split.us.i
 
 bb.m:                                             ; preds = %bb.l, %.lr.ph11.split.us.i
   %.141.us.i = phi i32 [ %i.ak, %bb.l ], [ %i.ah, %.lr.ph11.split.us.i ] ; 4 uses
-  %i.al = add nsw i32 %.0426.us.i, 8              ; 6 uses
+  %i.al = add i32 %.0426.us.i, 8                  ; 7 uses
   %i.am = icmp sgt i32 %.0426.us.i, -3
   br i1 %i.am, label %iter.check87, label %._crit_edge.split.us.us.i
 
 iter.check87:                                     ; preds = %bb.m
-  %i.an = add i32 %.0426.us.i, 2                  ; 3 uses
-  %i.ao = udiv i32 %i.an, 6
+  %i.an = add i32 %.0426.us.i, 13
+  %smin67 = call i32 @llvm.smin.i32(i32 %i.al, i32 11)
+  %5 = sub i32 %i.an, %smin67                     ; 3 uses
+  %i.ao = udiv i32 %5, 6
   %narrow108 = add nuw nsw i32 %i.ao, 1
   %i.ap = zext nneg i32 %narrow108 to i64         ; 5 uses
-  %min.iters.check67 = icmp ult i32 %i.an, 42
+  %min.iters.check67 = icmp ult i32 %5, 42
   br i1 %min.iters.check67, label %.lr.ph.us.i.preheader, label %vector.main.loop.iter.check68
 
 vector.main.loop.iter.check68:                    ; preds = %iter.check87
-  %min.iters.check69 = icmp ult i32 %i.an, 90
+  %min.iters.check69 = icmp ult i32 %5, 90
   br i1 %min.iters.check69, label %vec.epilog.ph91, label %vector.ph70
 
 vector.ph70:                                      ; preds = %vector.main.loop.iter.check68
@@ -338,20 +340,22 @@ bb.n:                                             ; preds = %.lr.ph11.split.i
 
 bb.o:                                             ; preds = %bb.n, %.lr.ph11.split.i
   %.141.i = phi i32 [ %i.ca, %bb.n ], [ %i.bx, %.lr.ph11.split.i ] ; 4 uses
-  %i.cb = add nsw i32 %.0426.i, 8                 ; 6 uses
+  %i.cb = add i32 %.0426.i, 8                     ; 7 uses
   %i.cc = icmp sgt i32 %.0426.i, -3
   br i1 %i.cc, label %iter.check, label %._crit_edge.split.i
 
 iter.check:                                       ; preds = %bb.o
-  %i.cd = add i32 %.0426.i, 2                     ; 3 uses
-  %i.ce = udiv i32 %i.cd, 6
+  %i.cd = add i32 %.0426.i, 13
+  %smin = call i32 @llvm.smin.i32(i32 %i.cb, i32 11)
+  %6 = sub i32 %i.cd, %smin                       ; 3 uses
+  %i.ce = udiv i32 %6, 6
   %narrow = add nuw nsw i32 %i.ce, 1
   %i.cf = zext nneg i32 %narrow to i64            ; 5 uses
-  %min.iters.check = icmp ult i32 %i.cd, 18
+  %min.iters.check = icmp ult i32 %6, 18
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check49 = icmp ult i32 %i.cd, 90
+  %min.iters.check49 = icmp ult i32 %6, 90
   br i1 %min.iters.check49, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -752,6 +756,9 @@ declare i64 @llvm.smin.i64(i64, i64) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #5

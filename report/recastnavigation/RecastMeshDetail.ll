@@ -205,7 +205,7 @@ bb.ck:                                            ; preds = %bb.cj
 bb.cl:                                            ; preds = %bb.ck, %bb.cj, %bb.ci
   %.387.i.i = phi i16 [ %.084100.i.i, %bb.ci ], [ %.185.i.i, %bb.ck ], [ %.084100.i.i, %bb.cj ] ; 4 uses
   %.3.i.i345 = phi float [ %.067109.i.i, %bb.ci ], [ %.1.i.i, %bb.ck ], [ %.067109.i.i, %bb.cj ]
-  %i.ahw = add nuw i32 %.066110.i.i, 1            ; 3 uses
+  %i.ahw = add nuw nsw i32 %.066110.i.i, 1        ; 3 uses
   %i.ahx = icmp eq i32 %i.ahw, %.071107.i.i
   br i1 %i.ahx, label %bb.cm, label %bb.co
 
@@ -608,7 +608,7 @@ bb.ey:                                            ; preds = %bb.ex
 bb.ez:                                            ; preds = %bb.ey, %bb.ex, %.lr.ph.i282.i
   %.387.i295.i = phi i16 [ %.084100.i291.i, %.lr.ph.i282.i ], [ %.185.i306.i, %bb.ey ], [ %.084100.i291.i, %bb.ex ] ; 4 uses
   %.3.i296.i = phi float [ %.067109.i284.i, %.lr.ph.i282.i ], [ %.1.i307.i, %bb.ey ], [ %.067109.i284.i, %bb.ex ]
-  %i.blg = add nuw i32 %.066110.i283.i, 1         ; 3 uses
+  %i.blg = add nuw nsw i32 %.066110.i283.i, 1     ; 3 uses
   %i.blh = icmp eq i32 %i.blg, %.071107.i286.i
   br i1 %i.blh, label %bb.fa, label %bb.fc
 
@@ -1011,8 +1011,9 @@ scalar.ph964.preheader:                           ; preds = %.lr.ph567, %middle.
   br i1 %.not497, label %._crit_edge570, label %.lr.ph569.preheader
 
 .lr.ph569.preheader:                              ; preds = %.preheader505
-  %wide.trip.count663 = zext i32 %.0254.lcssa to i64 ; 4 uses
-  %min.iters.check = icmp ult i32 %.0254.lcssa, 4
+  %smax663 = call i32 @llvm.smax.i32(i32 %.0254.lcssa, i32 1)
+  %wide.trip.count663 = zext nneg i32 %smax663 to i64 ; 4 uses
+  %min.iters.check = icmp slt i32 %.0254.lcssa, 4
   br i1 %min.iters.check, label %.lr.ph569.preheader1128, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph569.preheader
@@ -1023,7 +1024,7 @@ vector.memcheck:                                  ; preds = %.lr.ph569.preheader
   br i1 %found.conflict, label %.lr.ph569.preheader1128, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %wide.trip.count663, 4294967292 ; 3 uses
+  %n.vec = and i64 %wide.trip.count663, 2147483644 ; 3 uses
   %i.cid = load float, ptr %i.x, align 8, !tbaa !62, !alias.scope !146
   %broadcast.splatinsert = insertelement <4 x float> poison, float %i.cid, i64 0
   %i.cie = load float, ptr %i.fd, align 4, !tbaa !62, !alias.scope !146

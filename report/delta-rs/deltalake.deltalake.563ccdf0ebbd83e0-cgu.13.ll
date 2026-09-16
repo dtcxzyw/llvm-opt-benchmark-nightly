@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph61, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 9 uses
   %i.n = getelementptr inbounds nuw [56 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5841)
   %.not.i33 = icmp ult i64 %i.m, %.sroa.01.0
@@ -238,15 +238,23 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.x, label %.preheader49, label %.preheader
 
 .preheader49:                                     ; preds = %bb.k
-  br i1 %.not68, label %_RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB31_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB44_8adapters3map3MapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map8IntoIterB13_B13_ENCNCNvMsl_Cs7p2uQeJxui2_9deltalakeNtB6D_13RawDeltaTable24create_write_transaction0s2_0EE0E0EB6D_.exit.i.thread, label %.lr.ph
+  br i1 %.not68, label %_RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB31_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB44_8adapters3map3MapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map8IntoIterB13_B13_ENCNCNvMsl_Cs7p2uQeJxui2_9deltalakeNtB6D_13RawDeltaTable24create_write_transaction0s2_0EE0E0EB6D_.exit.i.thread, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader49
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.m, i64 3) ; 2 uses
+  br label %.lr.ph
 
 .preheader:                                       ; preds = %bb.k
-  br i1 %.not68, label %_RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB31_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB44_8adapters3map3MapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map8IntoIterB13_B13_ENCNCNvMsl_Cs7p2uQeJxui2_9deltalakeNtB6D_13RawDeltaTable24create_write_transaction0s2_0EE0E0EB6D_.exit.i.thread93, label %.lr.ph55
+  br i1 %.not68, label %_RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB31_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB44_8adapters3map3MapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map8IntoIterB13_B13_ENCNCNvMsl_Cs7p2uQeJxui2_9deltalakeNtB6D_13RawDeltaTable24create_write_transaction0s2_0EE0E0EB6D_.exit.i.thread93, label %.lr.ph55.preheader
 
-.lr.ph:                                           ; preds = %.preheader49, %bb.l
-  %.val13.i = phi i64 [ %.val11.i, %bb.l ], [ %.val15.i, %.preheader49 ] ; 2 uses
-  %.val12.i = phi ptr [ %.val10.i, %bb.l ], [ %.val14.i, %.preheader49 ]
-  %.sroa.01.0.i.i51 = phi i64 [ %i.ag, %bb.l ], [ 2, %.preheader49 ] ; 3 uses
+.lr.ph55.preheader:                               ; preds = %.preheader
+  %smax71 = tail call i64 @llvm.smax.i64(i64 %i.m, i64 3) ; 2 uses
+  br label %.lr.ph55
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.l
+  %.val13.i = phi i64 [ %.val11.i, %bb.l ], [ %.val15.i, %.lr.ph.preheader ] ; 2 uses
+  %.val12.i = phi ptr [ %.val10.i, %bb.l ], [ %.val14.i, %.lr.ph.preheader ]
+  %.sroa.01.0.i.i51 = phi i64 [ %i.ag, %bb.l ], [ 2, %.lr.ph.preheader ] ; 3 uses
   %i.y = getelementptr inbounds nuw [56 x i8], ptr %i.n, i64 %.sroa.01.0.i.i51 ; 2 uses
   %i.z = getelementptr i8, ptr %i.y, i64 8
   %.val10.i = load ptr, ptr %i.z, align 8, !alias.scope !5841, !noalias !5842, !nonnull !12, !noundef !12 ; 2 uses
@@ -262,14 +270,14 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.af, label %_RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB31_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB44_8adapters3map3MapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map8IntoIterB13_B13_ENCNCNvMsl_Cs7p2uQeJxui2_9deltalakeNtB6D_13RawDeltaTable24create_write_transaction0s2_0EE0E0EB6D_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.ag = add nuw i64 %.sroa.01.0.i.i51, 1        ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ag, %i.m
+  %i.ag = add nuw nsw i64 %.sroa.01.0.i.i51, 1    ; 2 uses
+  %exitcond.not = icmp eq i64 %i.ag, %smax
   br i1 %exitcond.not, label %_RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB31_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB44_8adapters3map3MapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map8IntoIterB13_B13_ENCNCNvMsl_Cs7p2uQeJxui2_9deltalakeNtB6D_13RawDeltaTable24create_write_transaction0s2_0EE0E0EB6D_.exit.i, label %.lr.ph
 
-.lr.ph55:                                         ; preds = %.preheader, %bb.m
-  %.val9.i = phi i64 [ %.val7.i, %bb.m ], [ %.val15.i, %.preheader ] ; 2 uses
-  %.val8.i = phi ptr [ %.val.i, %bb.m ], [ %.val14.i, %.preheader ]
-  %.sroa.01.1.i.i54 = phi i64 [ %i.ap, %bb.m ], [ 2, %.preheader ] ; 3 uses
+.lr.ph55:                                         ; preds = %.lr.ph55.preheader, %bb.m
+  %.val9.i = phi i64 [ %.val7.i, %bb.m ], [ %.val15.i, %.lr.ph55.preheader ] ; 2 uses
+  %.val8.i = phi ptr [ %.val.i, %bb.m ], [ %.val14.i, %.lr.ph55.preheader ]
+  %.sroa.01.1.i.i54 = phi i64 [ %i.ap, %bb.m ], [ 2, %.lr.ph55.preheader ] ; 3 uses
   %i.ah = getelementptr inbounds nuw [56 x i8], ptr %i.n, i64 %.sroa.01.1.i.i54 ; 2 uses
   %i.ai = getelementptr i8, ptr %i.ah, i64 8
   %.val.i = load ptr, ptr %i.ai, align 8, !alias.scope !5841, !noalias !5842, !nonnull !12, !noundef !12 ; 2 uses
@@ -285,12 +293,12 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.ao, label %bb.m, label %_RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB31_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB44_8adapters3map3MapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map8IntoIterB13_B13_ENCNCNvMsl_Cs7p2uQeJxui2_9deltalakeNtB6D_13RawDeltaTable24create_write_transaction0s2_0EE0E0EB6D_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph55
-  %i.ap = add nuw i64 %.sroa.01.1.i.i54, 1        ; 2 uses
-  %exitcond71.not = icmp eq i64 %i.ap, %i.m
+  %i.ap = add nuw nsw i64 %.sroa.01.1.i.i54, 1    ; 2 uses
+  %exitcond71.not = icmp eq i64 %i.ap, %smax71
   br i1 %exitcond71.not, label %_RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB31_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB44_8adapters3map3MapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map8IntoIterB13_B13_ENCNCNvMsl_Cs7p2uQeJxui2_9deltalakeNtB6D_13RawDeltaTable24create_write_transaction0s2_0EE0E0EB6D_.exit.i, label %.lr.ph55
 
 _RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB31_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB44_8adapters3map3MapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map8IntoIterB13_B13_ENCNCNvMsl_Cs7p2uQeJxui2_9deltalakeNtB6D_13RawDeltaTable24create_write_transaction0s2_0EE0E0EB6D_.exit.i: ; preds = %bb.m, %.lr.ph55, %bb.l, %.lr.ph
-  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.0.i.i51, %.lr.ph ], [ %i.m, %bb.l ], [ %.sroa.01.1.i.i54, %.lr.ph55 ], [ %i.m, %bb.m ] ; 5 uses
+  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.0.i.i51, %.lr.ph ], [ %smax, %bb.l ], [ %.sroa.01.1.i.i54, %.lr.ph55 ], [ %smax71, %bb.m ] ; 5 uses
   %i.aq = icmp samesign ule i64 %.sroa.0.0.i.i, %i.m
   tail call void @llvm.assume(i1 %i.aq)
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
@@ -517,7 +525,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph61, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 9 uses
   %i.n = getelementptr inbounds nuw [56 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5862)
   %.not.i33 = icmp ult i64 %i.m, %.sroa.01.0
@@ -550,15 +558,23 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.x, label %.preheader49, label %.preheader
 
 .preheader49:                                     ; preds = %bb.k
-  br i1 %.not68, label %_RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB31_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB44_8adapters3map3MapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map8IntoIterB13_B13_ENCNvCs7p2uQeJxui2_9deltalake30maybe_create_commit_properties0EE0E0EB6x_.exit.i.thread, label %.lr.ph
+  br i1 %.not68, label %_RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB31_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB44_8adapters3map3MapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map8IntoIterB13_B13_ENCNvCs7p2uQeJxui2_9deltalake30maybe_create_commit_properties0EE0E0EB6x_.exit.i.thread, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader49
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.m, i64 3) ; 2 uses
+  br label %.lr.ph
 
 .preheader:                                       ; preds = %bb.k
-  br i1 %.not68, label %_RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB31_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB44_8adapters3map3MapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map8IntoIterB13_B13_ENCNvCs7p2uQeJxui2_9deltalake30maybe_create_commit_properties0EE0E0EB6x_.exit.i.thread93, label %.lr.ph55
+  br i1 %.not68, label %_RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB31_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB44_8adapters3map3MapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map8IntoIterB13_B13_ENCNvCs7p2uQeJxui2_9deltalake30maybe_create_commit_properties0EE0E0EB6x_.exit.i.thread93, label %.lr.ph55.preheader
 
-.lr.ph:                                           ; preds = %.preheader49, %bb.l
-  %.val13.i = phi i64 [ %.val11.i, %bb.l ], [ %.val15.i, %.preheader49 ] ; 2 uses
-  %.val12.i = phi ptr [ %.val10.i, %bb.l ], [ %.val14.i, %.preheader49 ]
-  %.sroa.01.0.i.i51 = phi i64 [ %i.ag, %bb.l ], [ 2, %.preheader49 ] ; 3 uses
+.lr.ph55.preheader:                               ; preds = %.preheader
+  %smax71 = tail call i64 @llvm.smax.i64(i64 %i.m, i64 3) ; 2 uses
+  br label %.lr.ph55
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.l
+  %.val13.i = phi i64 [ %.val11.i, %bb.l ], [ %.val15.i, %.lr.ph.preheader ] ; 2 uses
+  %.val12.i = phi ptr [ %.val10.i, %bb.l ], [ %.val14.i, %.lr.ph.preheader ]
+  %.sroa.01.0.i.i51 = phi i64 [ %i.ag, %bb.l ], [ 2, %.lr.ph.preheader ] ; 3 uses
   %i.y = getelementptr inbounds nuw [56 x i8], ptr %i.n, i64 %.sroa.01.0.i.i51 ; 2 uses
   %i.z = getelementptr i8, ptr %i.y, i64 8
   %.val10.i = load ptr, ptr %i.z, align 8, !alias.scope !5862, !noalias !5863, !nonnull !12, !noundef !12 ; 2 uses
@@ -574,14 +590,14 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.af, label %_RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB31_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB44_8adapters3map3MapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map8IntoIterB13_B13_ENCNvCs7p2uQeJxui2_9deltalake30maybe_create_commit_properties0EE0E0EB6x_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.ag = add nuw i64 %.sroa.01.0.i.i51, 1        ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ag, %i.m
+  %i.ag = add nuw nsw i64 %.sroa.01.0.i.i51, 1    ; 2 uses
+  %exitcond.not = icmp eq i64 %i.ag, %smax
   br i1 %exitcond.not, label %_RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB31_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB44_8adapters3map3MapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map8IntoIterB13_B13_ENCNvCs7p2uQeJxui2_9deltalake30maybe_create_commit_properties0EE0E0EB6x_.exit.i, label %.lr.ph
 
-.lr.ph55:                                         ; preds = %.preheader, %bb.m
-  %.val9.i = phi i64 [ %.val7.i, %bb.m ], [ %.val15.i, %.preheader ] ; 2 uses
-  %.val8.i = phi ptr [ %.val.i, %bb.m ], [ %.val14.i, %.preheader ]
-  %.sroa.01.1.i.i54 = phi i64 [ %i.ap, %bb.m ], [ 2, %.preheader ] ; 3 uses
+.lr.ph55:                                         ; preds = %.lr.ph55.preheader, %bb.m
+  %.val9.i = phi i64 [ %.val7.i, %bb.m ], [ %.val15.i, %.lr.ph55.preheader ] ; 2 uses
+  %.val8.i = phi ptr [ %.val.i, %bb.m ], [ %.val14.i, %.lr.ph55.preheader ]
+  %.sroa.01.1.i.i54 = phi i64 [ %i.ap, %bb.m ], [ 2, %.lr.ph55.preheader ] ; 3 uses
   %i.ah = getelementptr inbounds nuw [56 x i8], ptr %i.n, i64 %.sroa.01.1.i.i54 ; 2 uses
   %i.ai = getelementptr i8, ptr %i.ah, i64 8
   %.val.i = load ptr, ptr %i.ai, align 8, !alias.scope !5862, !noalias !5863, !nonnull !12, !noundef !12 ; 2 uses
@@ -597,12 +613,12 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.ao, label %bb.m, label %_RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB31_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB44_8adapters3map3MapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map8IntoIterB13_B13_ENCNvCs7p2uQeJxui2_9deltalake30maybe_create_commit_properties0EE0E0EB6x_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph55
-  %i.ap = add nuw i64 %.sroa.01.1.i.i54, 1        ; 2 uses
-  %exitcond71.not = icmp eq i64 %i.ap, %i.m
+  %i.ap = add nuw nsw i64 %.sroa.01.1.i.i54, 1    ; 2 uses
+  %exitcond71.not = icmp eq i64 %i.ap, %smax71
   br i1 %exitcond71.not, label %_RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB31_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB44_8adapters3map3MapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map8IntoIterB13_B13_ENCNvCs7p2uQeJxui2_9deltalake30maybe_create_commit_properties0EE0E0EB6x_.exit.i, label %.lr.ph55
 
 _RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB31_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB44_8adapters3map3MapINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map8IntoIterB13_B13_ENCNvCs7p2uQeJxui2_9deltalake30maybe_create_commit_properties0EE0E0EB6x_.exit.i: ; preds = %bb.m, %.lr.ph55, %bb.l, %.lr.ph
-  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.0.i.i51, %.lr.ph ], [ %i.m, %bb.l ], [ %.sroa.01.1.i.i54, %.lr.ph55 ], [ %i.m, %bb.m ] ; 5 uses
+  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.0.i.i51, %.lr.ph ], [ %smax, %bb.l ], [ %.sroa.01.1.i.i54, %.lr.ph55 ], [ %smax71, %bb.m ] ; 5 uses
   %i.aq = icmp samesign ule i64 %.sroa.0.0.i.i, %i.m
   tail call void @llvm.assume(i1 %i.aq)
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
@@ -1004,6 +1020,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #33
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #33
 
 attributes #0 = { cold minsize nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

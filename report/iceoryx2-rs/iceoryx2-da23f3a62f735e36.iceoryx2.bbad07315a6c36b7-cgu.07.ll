@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.t
 
 bb.h:                                             ; preds = %bb.f
-  %i.o = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
+  %i.o = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
   %i.p = getelementptr inbounds nuw [352 x i8], ptr %0, i64 %.sroa.09.0 ; 11 uses
   %.not.i31 = icmp ult i64 %i.o, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
@@ -236,13 +236,21 @@ _RNvYNvYNtNtNtCsg6ZEkMtNi4J_8iceoryx27service9attribute9AttributeNtNtCs8Chj7Szqq
   br i1 %i.x, label %.preheader48, label %.preheader
 
 .preheader48:                                     ; preds = %_RNvYNvYNtNtNtCsg6ZEkMtNi4J_8iceoryx27service9attribute9AttributeNtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit38
-  br i1 %.not68, label %_RINvNtNtNtCs8Chj7Szqq0n_4core5slice4sort6shared17find_existing_runNtNtNtCsg6ZEkMtNi4J_8iceoryx27service9attribute9AttributeNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i.thread, label %.lr.ph
+  br i1 %.not68, label %_RINvNtNtNtCs8Chj7Szqq0n_4core5slice4sort6shared17find_existing_runNtNtNtCsg6ZEkMtNi4J_8iceoryx27service9attribute9AttributeNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i.thread, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader48
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.o, i64 3) ; 2 uses
+  br label %.lr.ph
 
 .preheader:                                       ; preds = %_RNvYNvYNtNtNtCsg6ZEkMtNi4J_8iceoryx27service9attribute9AttributeNtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit38
-  br i1 %.not68, label %_RINvNtNtNtCs8Chj7Szqq0n_4core5slice4sort6shared17find_existing_runNtNtNtCsg6ZEkMtNi4J_8iceoryx27service9attribute9AttributeNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i.thread100, label %.lr.ph56
+  br i1 %.not68, label %_RINvNtNtNtCs8Chj7Szqq0n_4core5slice4sort6shared17find_existing_runNtNtNtCsg6ZEkMtNi4J_8iceoryx27service9attribute9AttributeNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i.thread100, label %.lr.ph56.preheader
 
-.lr.ph:                                           ; preds = %.preheader48, %bb.n
-  %.sroa.01.0.i.i53 = phi i64 [ %i.ai, %bb.n ], [ 2, %.preheader48 ] ; 4 uses
+.lr.ph56.preheader:                               ; preds = %.preheader
+  %smax75 = tail call i64 @llvm.smax.i64(i64 %i.o, i64 3) ; 2 uses
+  br label %.lr.ph56
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.n
+  %.sroa.01.0.i.i53 = phi i64 [ %i.ai, %bb.n ], [ 2, %.lr.ph.preheader ] ; 4 uses
   %i.y = getelementptr inbounds nuw [352 x i8], ptr %i.p, i64 %.sroa.01.0.i.i53 ; 2 uses
   %i.z = add nsw i64 %.sroa.01.0.i.i53, -1        ; 2 uses
   %i.aa = icmp ult i64 %i.z, %i.o
@@ -264,12 +272,12 @@ _RNvYNvYNtNtNtCsg6ZEkMtNi4J_8iceoryx27service9attribute9AttributeNtNtCs8Chj7Szqq
   br i1 %i.ah, label %_RINvNtNtNtCs8Chj7Szqq0n_4core5slice4sort6shared17find_existing_runNtNtNtCsg6ZEkMtNi4J_8iceoryx27service9attribute9AttributeNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i, label %bb.n
 
 bb.n:                                             ; preds = %_RNvYNvYNtNtNtCsg6ZEkMtNi4J_8iceoryx27service9attribute9AttributeNtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit36
-  %i.ai = add nuw i64 %.sroa.01.0.i.i53, 1        ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ai, %i.o
+  %i.ai = add nuw nsw i64 %.sroa.01.0.i.i53, 1    ; 2 uses
+  %exitcond.not = icmp eq i64 %i.ai, %smax
   br i1 %exitcond.not, label %_RINvNtNtNtCs8Chj7Szqq0n_4core5slice4sort6shared17find_existing_runNtNtNtCsg6ZEkMtNi4J_8iceoryx27service9attribute9AttributeNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i, label %.lr.ph
 
-.lr.ph56:                                         ; preds = %.preheader, %bb.p
-  %.sroa.01.1.i.i55 = phi i64 [ %i.at, %bb.p ], [ 2, %.preheader ] ; 4 uses
+.lr.ph56:                                         ; preds = %.lr.ph56.preheader, %bb.p
+  %.sroa.01.1.i.i55 = phi i64 [ %i.at, %bb.p ], [ 2, %.lr.ph56.preheader ] ; 4 uses
   %i.aj = getelementptr inbounds nuw [352 x i8], ptr %i.p, i64 %.sroa.01.1.i.i55 ; 2 uses
   %i.ak = add nsw i64 %.sroa.01.1.i.i55, -1       ; 2 uses
   %i.al = icmp ult i64 %i.ak, %i.o
@@ -291,12 +299,12 @@ _RNvYNvYNtNtNtCsg6ZEkMtNi4J_8iceoryx27service9attribute9AttributeNtNtCs8Chj7Szqq
   br i1 %i.as, label %bb.p, label %_RINvNtNtNtCs8Chj7Szqq0n_4core5slice4sort6shared17find_existing_runNtNtNtCsg6ZEkMtNi4J_8iceoryx27service9attribute9AttributeNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i
 
 bb.p:                                             ; preds = %_RNvYNvYNtNtNtCsg6ZEkMtNi4J_8iceoryx27service9attribute9AttributeNtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit
-  %i.at = add nuw i64 %.sroa.01.1.i.i55, 1        ; 2 uses
-  %exitcond76.not = icmp eq i64 %i.at, %i.o
+  %i.at = add nuw nsw i64 %.sroa.01.1.i.i55, 1    ; 2 uses
+  %exitcond76.not = icmp eq i64 %i.at, %smax75
   br i1 %exitcond76.not, label %_RINvNtNtNtCs8Chj7Szqq0n_4core5slice4sort6shared17find_existing_runNtNtNtCsg6ZEkMtNi4J_8iceoryx27service9attribute9AttributeNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i, label %.lr.ph56
 
 _RINvNtNtNtCs8Chj7Szqq0n_4core5slice4sort6shared17find_existing_runNtNtNtCsg6ZEkMtNi4J_8iceoryx27service9attribute9AttributeNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i: ; preds = %bb.p, %_RNvYNvYNtNtNtCsg6ZEkMtNi4J_8iceoryx27service9attribute9AttributeNtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit, %bb.n, %_RNvYNvYNtNtNtCsg6ZEkMtNi4J_8iceoryx27service9attribute9AttributeNtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit36
-  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.0.i.i53, %_RNvYNvYNtNtNtCsg6ZEkMtNi4J_8iceoryx27service9attribute9AttributeNtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit36 ], [ %i.o, %bb.n ], [ %.sroa.01.1.i.i55, %_RNvYNvYNtNtNtCsg6ZEkMtNi4J_8iceoryx27service9attribute9AttributeNtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit ], [ %i.o, %bb.p ] ; 5 uses
+  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.0.i.i53, %_RNvYNvYNtNtNtCsg6ZEkMtNi4J_8iceoryx27service9attribute9AttributeNtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit36 ], [ %smax, %bb.n ], [ %.sroa.01.1.i.i55, %_RNvYNvYNtNtNtCsg6ZEkMtNi4J_8iceoryx27service9attribute9AttributeNtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtB14_3ops8function5FnMutTRB5_B2b_EE8call_mutBb_.exit ], [ %smax75, %bb.p ] ; 5 uses
   %i.au = icmp samesign ule i64 %.sroa.0.0.i.i, %i.o
   tail call void @llvm.assume(i1 %i.au)
   %.not3.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
@@ -698,6 +706,9 @@ declare noundef zeroext i1 @_RNvMs2_NtNtCs8Chj7Szqq0n_4core3fmt8buildersNtB5_11D
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #6
 
 attributes #0 = { nounwind nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { noinline nounwind nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

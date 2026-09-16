@@ -204,6 +204,8 @@ bb.m:                                             ; preds = %vectors_inner_produ
 
 bb.n:                                             ; preds = %.lr.ph318, %vectors_scalar_mult.exit260.loopexit
   %indvars.iv373 = phi i64 [ %i.ky, %.lr.ph318 ], [ %indvars.iv.next374, %vectors_scalar_mult.exit260.loopexit ] ; 5 uses
+  %4 = trunc nuw i64 %indvars.iv373 to i32
+  %smax = tail call i32 @llvm.smax.i32(i32 %4, i32 1)
   %i.ls = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv373
   %i.lt = load ptr, ptr %i.ls, align 8, !tbaa !16 ; 19 uses
   br i1 %i.kx, label %.lr.ph313, label %.preheader286
@@ -216,6 +218,7 @@ bb.n:                                             ; preds = %.lr.ph318, %vectors
   br i1 %i.ll, label %.lr.ph.i.i248.epil.preheader, label %.lr.ph.i.i248
 
 .lr.ph.preheader.i262.preheader:                  ; preds = %.preheader286
+  %wide.trip.count371 = zext nneg i32 %smax to i64
   %scevgep500 = getelementptr i8, ptr %i.lt, i64 %i.lc
   %i.lu = getelementptr i8, ptr %i.lt, i64 %i.lk
   br label %.lr.ph.preheader.i262
@@ -327,7 +330,7 @@ vectors_scalar_mult.exit260.loopexit:             ; preds = %.lr.ph.i256, %middl
   br i1 %i.nd, label %bb.n, label %.preheader, !llvm.loop !75
 
 .lr.ph.preheader.i262:                            ; preds = %.lr.ph.preheader.i262.preheader, %scadd.exit276.loopexit
-  %indvars.iv368 = phi i64 [ %indvars.iv.next369, %scadd.exit276.loopexit ], [ 0, %.lr.ph.preheader.i262.preheader ] ; 2 uses
+  %indvars.iv368 = phi i64 [ 0, %.lr.ph.preheader.i262.preheader ], [ %indvars.iv.next369, %scadd.exit276.loopexit ] ; 2 uses
   %i.ne = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv368
   %i.nf = load ptr, ptr %i.ne, align 8, !tbaa !16 ; 11 uses
   br i1 %i.le, label %.lr.ph.i264.epil.preheader, label %.lr.ph.i264
@@ -493,7 +496,7 @@ middle.block520:                                  ; preds = %vector.body511
 
 scadd.exit276.loopexit:                           ; preds = %.lr.ph.i271.prol.loopexit, %.lr.ph.i271, %middle.block520
   %indvars.iv.next369 = add nuw nsw i64 %indvars.iv368, 1 ; 2 uses
-  %exitcond372.not = icmp eq i64 %indvars.iv.next369, %indvars.iv373
+  %exitcond372.not = icmp eq i64 %indvars.iv.next369, %wide.trip.count371
   br i1 %exitcond372.not, label %.lr.ph.i.i248.preheader, label %.lr.ph.preheader.i262, !llvm.loop !83
 
 .lr.ph323.preheader:                              ; preds = %bb.o, %.lr.ph328
@@ -894,6 +897,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #7

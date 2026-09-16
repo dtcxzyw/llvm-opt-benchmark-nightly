@@ -204,8 +204,8 @@ bb.a:
   %i.g = add nsw i32 %2, -1
   %or.cond = icmp ult i32 %i.g, 2
   %i.h = zext i1 %or.cond to i32
-  %spec.select = add nuw nsw i32 %.0120.lcssa, %i.h ; 7 uses
-  %i.i = zext i32 %spec.select to i64             ; 3 uses
+  %spec.select = add nuw nsw i32 %.0120.lcssa, %i.h ; 9 uses
+  %i.i = zext nneg i32 %spec.select to i64
   %i.j = shl nuw nsw i64 %i.i, 2                  ; 2 uses
   %i.k = tail call noalias ptr @malloc(i64 noundef %i.j) #29 ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
@@ -408,6 +408,8 @@ bb.w:                                             ; preds = %bb.v, %bb.u
 .lr.ph153:                                        ; preds = %.preheader
   %.str.86..str.85 = select i1 %i.bu, ptr @.str.86, ptr @.str.85
   %i.cr = add nuw nsw i32 %.0113, 2
+  %smax = tail call i32 @llvm.smax.i32(i32 %spec.select, i32 1)
+  %wide.trip.count = zext nneg i32 %smax to i64
   br label %bb.x
 
 bb.x:                                             ; preds = %.lr.ph153, %bb.z
@@ -441,7 +443,7 @@ bb.z:                                             ; preds = %bb.x, %bb.y
   store i32 %i.dh, ptr %i.dc, align 4, !tbaa !14
   %indvars.iv.next176 = add nuw nsw i64 %indvars.iv175, 1 ; 2 uses
   %i.di = getelementptr inbounds nuw i8, ptr %.2152, i64 48
-  %exitcond.not = icmp eq i64 %indvars.iv.next176, %i.i
+  %exitcond.not = icmp eq i64 %indvars.iv.next176, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge154, label %bb.x, !llvm.loop !95
 
 ._crit_edge154:                                   ; preds = %bb.z, %.preheader
@@ -481,6 +483,8 @@ bb.aa:                                            ; preds = %._crit_edge158, %bb
 
 .lr.ph165:                                        ; preds = %bb.aa
   %.str.86..str.85136 = select i1 %i.bu, ptr @.str.86, ptr @.str.85
+  %smax190 = tail call i32 @llvm.smax.i32(i32 %spec.select, i32 1)
+  %wide.trip.count191 = zext nneg i32 %smax190 to i64
   br label %bb.ab
 
 bb.ab:                                            ; preds = %.lr.ph165, %bb.aw
@@ -621,7 +625,7 @@ bb.av:                                            ; preds = %.thread, %bb.au
 bb.aw:                                            ; preds = %bb.av, %bb.au
   %indvars.iv.next186 = add nuw nsw i64 %indvars.iv185, 1 ; 2 uses
   %i.fp = getelementptr inbounds nuw i8, ptr %.3163, i64 48
-  %exitcond191.not = icmp eq i64 %indvars.iv.next186, %i.i
+  %exitcond191.not = icmp eq i64 %indvars.iv.next186, %wide.trip.count191
   br i1 %exitcond191.not, label %._crit_edge166, label %bb.ab, !llvm.loop !97
 
 ._crit_edge166:                                   ; preds = %bb.aw, %bb.aa

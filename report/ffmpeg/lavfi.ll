@@ -179,11 +179,11 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not224, label %._crit_edge, label %.lr.ph, !llvm.loop !61
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.preheader278
-  %.0172.lcssa = phi i32 [ 0, %.preheader278 ], [ %i.an, %.lr.ph ] ; 5 uses
+  %.0172.lcssa = phi i32 [ 0, %.preheader278 ], [ %i.an, %.lr.ph ] ; 6 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.i, i64 80 ; 4 uses
   store i32 %.0172.lcssa, ptr %i.ap, align 8, !tbaa !35
-  %i.aq = zext i32 %.0172.lcssa to i64
-  %i.ar = shl nuw nsw i64 %i.aq, 2                ; 5 uses
+  %i.aq = zext nneg i32 %.0172.lcssa to i64
+  %i.ar = shl nuw nsw i64 %i.aq, 2                ; 4 uses
   %i.as = call noalias ptr @av_malloc(i64 noundef %i.ar) #9 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.i, i64 48 ; 2 uses
   store ptr %i.as, ptr %i.at, align 8, !tbaa !36
@@ -217,7 +217,10 @@ bb.r:                                             ; preds = %bb.q
 
 .lr.ph302:                                        ; preds = %.preheader277
   %i.ba = load ptr, ptr %i.ax, align 8, !tbaa !38
-  call void @llvm.memset.p0.i64(ptr align 4 %i.ba, i8 -1, i64 %i.ar, i1 false), !tbaa !40
+  %smax = call i32 @llvm.smax.i32(i32 %.0172.lcssa, i32 1)
+  %2 = zext nneg i32 %smax to i64
+  %3 = shl nuw nsw i64 %2, 2
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ba, i8 -1, i64 %3, i1 false), !tbaa !40
   br label %.preheader276
 
 .preheader276:                                    ; preds = %.lr.ph302, %.preheader277
@@ -619,6 +622,9 @@ declare void @avfilter_graph_free(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #8

@@ -204,24 +204,25 @@ scalar.ph490:                                     ; preds = %scalar.ph490.prol.l
   %i.bg = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv280
   %i.bh = load float, ptr %i.bg, align 4, !tbaa !10
   %i.bi = fpext reassoc nsz arcp float %i.bh to double ; 2 uses
-  %i.bj = sub nuw nsw i64 %i.bf, %indvars.iv280   ; 4 uses
+  %i.bj = sub nuw nsw i64 %i.bf, %indvars.iv280   ; 3 uses
+  %4 = tail call i64 @llvm.smax.i64(i64 %i.bj, i64 1) ; 2 uses
   %min.iters.check506 = icmp samesign ult i64 %i.bj, 4
   br i1 %min.iters.check506, label %.lr.ph188.preheader522, label %vector.scevcheck504
 
 vector.scevcheck504:                              ; preds = %.lr.ph188.preheader
   %i.bk = trunc i64 %indvars.iv280 to i32
   %i.bl = add i64 %indvar, %i.be
-  %i.bm = sub i64 %i.bf, %i.bl
-  %i.bn = tail call i64 @llvm.usub.sat.i64(i64 %i.bm, i64 1) ; 2 uses
+  %i.bm = sub i64 %i.bf, %i.bl                    ; 2 uses
+  %i.bn = tail call i64 @llvm.smax.i64(i64 %i.bm, i64 1)
   %i.bo = trunc i64 %i.bn to i32
-  %4 = xor i32 %i.bk, -1
-  %i.bp = icmp ult i32 %4, %i.bo
-  %5 = icmp ugt i64 %i.bn, 4294967295
-  %i.bq = or i1 %i.bp, %5
+  %5 = sub i32 0, %i.bo
+  %i.bp = icmp ult i32 %5, %i.bk
+  %6 = icmp sgt i64 %i.bm, 4294967296
+  %i.bq = or i1 %i.bp, %6
   br i1 %i.bq, label %.lr.ph188.preheader522, label %vector.ph507
 
 vector.ph507:                                     ; preds = %vector.scevcheck504
-  %n.vec508 = and i64 %i.bj, 4294967292           ; 3 uses
+  %n.vec508 = and i64 %4, 4294967292              ; 3 uses
   %broadcast.splatinsert509 = insertelement <2 x double> poison, double %i.bi, i64 0
   %broadcast.splat510 = shufflevector <2 x double> %broadcast.splatinsert509, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body511
@@ -249,7 +250,7 @@ vector.body511:                                   ; preds = %vector.body511, %ve
   br i1 %i.cb, label %middle.block518, label %vector.body511, !llvm.loop !33
 
 middle.block518:                                  ; preds = %vector.body511
-  %cmp.n519 = icmp eq i64 %i.bj, %n.vec508
+  %cmp.n519 = icmp eq i64 %4, %n.vec508
   br i1 %cmp.n519, label %._crit_edge, label %.lr.ph188.preheader522
 
 .lr.ph188.preheader522:                           ; preds = %vector.scevcheck504, %.lr.ph188.preheader, %middle.block518
@@ -652,7 +653,7 @@ declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double
 declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #2
+declare i64 @llvm.smax.i64(i64, i64) #2
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #13

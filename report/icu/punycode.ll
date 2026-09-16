@@ -204,9 +204,9 @@ bb.au:                                            ; preds = %bb.an, %bb.at
   br i1 %i.dq, label %.lr.ph.split, label %.loopexit, !llvm.loop !15
 
 .loopexit:                                        ; preds = %bb.ai, %bb.au, %bb.q
-  %indvars.iv.next.lcssa.sink = phi i64 [ %indvars.iv.next, %bb.au ], [ %indvars.iv.next300, %bb.q ], [ %indvars.iv.next303, %bb.ai ] ; 6 uses
+  %indvars.iv.next.lcssa.sink = phi i64 [ %indvars.iv.next, %bb.au ], [ %indvars.iv.next300, %bb.q ], [ %indvars.iv.next303, %bb.ai ]
   %.4179 = phi i32 [ %.3178, %bb.au ], [ %.3178.us, %bb.q ], [ %.1176, %bb.ai ] ; 8 uses
-  %i.dr = trunc nuw i64 %indvars.iv.next.lcssa.sink to i32 ; 2 uses
+  %i.dr = trunc nuw i64 %indvars.iv.next.lcssa.sink to i32 ; 4 uses
   %i.ds = icmp sgt i32 %.4179, 0
   br i1 %i.ds, label %bb.av, label %bb.ay
 
@@ -230,12 +230,15 @@ bb.ay:                                            ; preds = %bb.ax, %.loopexit
   br i1 %i.dx, label %.preheader233.lr.ph, label %._crit_edge288
 
 .preheader233.lr.ph:                              ; preds = %bb.ay
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.dr, i32 1) ; 3 uses
   %i.dy = zext nneg i32 %3 to i64
-  %xtraiter = and i64 %indvars.iv.next.lcssa.sink, 1
-  %6 = icmp eq i64 %indvars.iv.next.lcssa.sink, 1
-  %unroll_iter = and i64 %indvars.iv.next.lcssa.sink, -2
+  %wide.trip.count = zext nneg i32 %smax to i64   ; 2 uses
+  %wide.trip.count314 = zext nneg i32 %smax to i64
+  %xtraiter = and i64 %wide.trip.count, 1
+  %6 = icmp slt i32 %i.dr, 2
+  %unroll_iter = and i64 %wide.trip.count, 2147483646
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  %lcmp.mod359 = trunc i64 %indvars.iv.next.lcssa.sink to i1
+  %lcmp.mod359 = trunc i32 %smax to i1
   br label %.preheader233
 
 .preheader233:                                    ; preds = %.preheader233.lr.ph, %._crit_edge278
@@ -456,7 +459,7 @@ bb.bl:                                            ; preds = %bb.ba, %_ZL9adaptBi
   %.9 = phi i32 [ %.7182273, %bb.ba ], [ %i.ge, %_ZL9adaptBiasiia.exit ], [ %.7182273, %bb.bb ] ; 3 uses
   %.2174 = phi i32 [ %.1173274, %bb.ba ], [ %i.gr, %_ZL9adaptBiasiia.exit ], [ %.1173274, %bb.bb ] ; 2 uses
   %indvars.iv.next311 = add nuw nsw i64 %indvars.iv310, 1 ; 2 uses
-  %exitcond314.not = icmp eq i64 %indvars.iv.next311, %indvars.iv.next.lcssa.sink
+  %exitcond314.not = icmp eq i64 %indvars.iv.next311, %wide.trip.count314
   br i1 %exitcond314.not, label %._crit_edge278, label %.lr.ph277, !llvm.loop !19
 
 ._crit_edge278:                                   ; preds = %bb.bl
@@ -858,6 +861,9 @@ declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly 
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #4

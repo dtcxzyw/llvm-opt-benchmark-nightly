@@ -204,7 +204,7 @@ bb.a:
   br i1 %.not81, label %_ZSt4copyIN4llvm6detail15SafeIntIteratorIlLb0EEEN9__gnu_cxx17__normal_iteratorIPlSt6vectorIlSaIlEEEEET0_T_SC_SB_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = sub i64 %3, %2                           ; 18 uses
+  %i.a = sub i64 %3, %2                           ; 19 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !112
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
@@ -519,7 +519,10 @@ bb.s:                                             ; preds = %bb.r
 
 _ZSt34__uninitialized_move_if_noexcept_aIPlS0_SaIlEET0_T_S3_S2_RT1_.exit: ; preds = %bb.q, %bb.r, %bb.s
   %i.cu = getelementptr inbounds i8, ptr %i.co, i64 %i.cq ; 3 uses
-  %i.cv = sub i64 %3, %2                          ; 3 uses
+  %4 = tail call i64 @llvm.smin.i64(i64 %i.a, i64 1)
+  %5 = add i64 %3, 1
+  %6 = add i64 %2, %4
+  %i.cv = sub i64 %5, %6                          ; 3 uses
   %min.iters.check140 = icmp ult i64 %i.cv, 4
   br i1 %min.iters.check140, label %.lr.ph.i.i.i.i.i.i.i.i51.preheader, label %vector.ph141
 
@@ -921,6 +924,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smin.i64(i64, i64) #14
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

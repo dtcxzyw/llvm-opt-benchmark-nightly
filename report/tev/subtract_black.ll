@@ -134,7 +134,8 @@ bb.k:                                             ; preds = %._crit_edge127
 
 .preheader86.lr.ph:                               ; preds = %.preheader87
   %i.an = load ptr, ptr %i.a, align 8, !tbaa !82
-  %wide.trip.count = zext i32 %i.ab to i64
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.ab, i32 1)
+  %wide.trip.count = zext nneg i32 %smax to i64
   br label %.preheader86
 
 .preheader86:                                     ; preds = %.preheader86.lr.ph, %.preheader86
@@ -239,7 +240,8 @@ bb.l:                                             ; preds = %bb.k, %._crit_edge1
 
 .preheader.lr.ph:                                 ; preds = %bb.l
   %i.dr = load ptr, ptr %i.a, align 8, !tbaa !82
-  %wide.trip.count116 = zext i32 %i.ab to i64
+  %smax116 = tail call i32 @llvm.smax.i32(i32 %i.ab, i32 1)
+  %wide.trip.count116 = zext nneg i32 %smax116 to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %.preheader
@@ -313,12 +315,13 @@ bb.m:                                             ; preds = %bb.h, %bb.g, %bb.c
   br i1 %.not104, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.m
-  %wide.trip.count121 = zext i32 %i.fj to i64     ; 3 uses
-  %min.iters.check = icmp ult i32 %i.fj, 8
+  %smax122 = tail call i32 @llvm.smax.i32(i32 %i.fj, i32 1)
+  %wide.trip.count121 = zext nneg i32 %smax122 to i64 ; 3 uses
+  %min.iters.check = icmp slt i32 %i.fj, 8
   br i1 %min.iters.check, label %.lr.ph.preheader137, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %wide.trip.count121, 4294967288 ; 3 uses
+  %n.vec = and i64 %wide.trip.count121, 2147483640 ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph

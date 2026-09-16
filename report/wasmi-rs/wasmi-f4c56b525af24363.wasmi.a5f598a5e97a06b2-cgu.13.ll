@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.r
 
 bb.h:                                             ; preds = %bb.f
-  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 9 uses
   %i.o = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !450)
   %.not.i31 = icmp ult i64 %i.n, %.sroa.01.0
@@ -237,15 +237,23 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.x, label %.preheader51, label %.preheader
 
 .preheader51:                                     ; preds = %bb.k
-  br i1 %.not73, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxENCINvMNtB18_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB18_11collections5btree3mapINtB38_8BTreeMapB13_B1E_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtB4b_8adapters12GenericShuntINtNtB56_3map3MapINtNtCs9FmeSmcCnTG_10wasmparser7readers22SectionLimitedIntoIterNtNtNtB5T_4core7exports6ExportENCNvMNtB1I_6parserNtB7r_12ModuleParser15process_exports0EINtNtB8_6result6ResultzNtNtB1K_5error5ErrorEEE0E0EB1K_.exit.i.thread, label %.lr.ph
+  br i1 %.not73, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxENCINvMNtB18_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB18_11collections5btree3mapINtB38_8BTreeMapB13_B1E_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtB4b_8adapters12GenericShuntINtNtB56_3map3MapINtNtCs9FmeSmcCnTG_10wasmparser7readers22SectionLimitedIntoIterNtNtNtB5T_4core7exports6ExportENCNvMNtB1I_6parserNtB7r_12ModuleParser15process_exports0EINtNtB8_6result6ResultzNtNtB1K_5error5ErrorEEE0E0EB1K_.exit.i.thread, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader51
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.n, i64 3) ; 2 uses
+  br label %.lr.ph
 
 .preheader:                                       ; preds = %bb.k
-  br i1 %.not73, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxENCINvMNtB18_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB18_11collections5btree3mapINtB38_8BTreeMapB13_B1E_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtB4b_8adapters12GenericShuntINtNtB56_3map3MapINtNtCs9FmeSmcCnTG_10wasmparser7readers22SectionLimitedIntoIterNtNtNtB5T_4core7exports6ExportENCNvMNtB1I_6parserNtB7r_12ModuleParser15process_exports0EINtNtB8_6result6ResultzNtNtB1K_5error5ErrorEEE0E0EB1K_.exit.i.thread102, label %.lr.ph60
+  br i1 %.not73, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxENCINvMNtB18_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB18_11collections5btree3mapINtB38_8BTreeMapB13_B1E_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtB4b_8adapters12GenericShuntINtNtB56_3map3MapINtNtCs9FmeSmcCnTG_10wasmparser7readers22SectionLimitedIntoIterNtNtNtB5T_4core7exports6ExportENCNvMNtB1I_6parserNtB7r_12ModuleParser15process_exports0EINtNtB8_6result6ResultzNtNtB1K_5error5ErrorEEE0E0EB1K_.exit.i.thread102, label %.lr.ph60.preheader
 
-.lr.ph:                                           ; preds = %.preheader51, %bb.l
-  %.val13.i = phi i64 [ %.val11.i, %bb.l ], [ %.val15.i, %.preheader51 ] ; 2 uses
-  %.val12.i = phi ptr [ %.val10.i, %bb.l ], [ %.val14.i, %.preheader51 ]
-  %.sroa.01.0.i.i56 = phi i64 [ %i.af, %bb.l ], [ 2, %.preheader51 ] ; 3 uses
+.lr.ph60.preheader:                               ; preds = %.preheader
+  %smax80 = tail call i64 @llvm.smax.i64(i64 %i.n, i64 3) ; 2 uses
+  br label %.lr.ph60
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.l
+  %.val13.i = phi i64 [ %.val11.i, %bb.l ], [ %.val15.i, %.lr.ph.preheader ] ; 2 uses
+  %.val12.i = phi ptr [ %.val10.i, %bb.l ], [ %.val14.i, %.lr.ph.preheader ]
+  %.sroa.01.0.i.i56 = phi i64 [ %i.af, %bb.l ], [ 2, %.lr.ph.preheader ] ; 3 uses
   %i.y = getelementptr inbounds nuw [24 x i8], ptr %i.o, i64 %.sroa.01.0.i.i56 ; 2 uses
   %.val10.i = load ptr, ptr %i.y, align 8, !alias.scope !450, !noalias !451, !nonnull !4, !noundef !4 ; 2 uses
   %i.z = getelementptr i8, ptr %i.y, i64 8
@@ -260,14 +268,14 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ae, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxENCINvMNtB18_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB18_11collections5btree3mapINtB38_8BTreeMapB13_B1E_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtB4b_8adapters12GenericShuntINtNtB56_3map3MapINtNtCs9FmeSmcCnTG_10wasmparser7readers22SectionLimitedIntoIterNtNtNtB5T_4core7exports6ExportENCNvMNtB1I_6parserNtB7r_12ModuleParser15process_exports0EINtNtB8_6result6ResultzNtNtB1K_5error5ErrorEEE0E0EB1K_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.af = add nuw i64 %.sroa.01.0.i.i56, 1        ; 2 uses
-  %exitcond.not = icmp eq i64 %i.af, %i.n
+  %i.af = add nuw nsw i64 %.sroa.01.0.i.i56, 1    ; 2 uses
+  %exitcond.not = icmp eq i64 %i.af, %smax
   br i1 %exitcond.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxENCINvMNtB18_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB18_11collections5btree3mapINtB38_8BTreeMapB13_B1E_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtB4b_8adapters12GenericShuntINtNtB56_3map3MapINtNtCs9FmeSmcCnTG_10wasmparser7readers22SectionLimitedIntoIterNtNtNtB5T_4core7exports6ExportENCNvMNtB1I_6parserNtB7r_12ModuleParser15process_exports0EINtNtB8_6result6ResultzNtNtB1K_5error5ErrorEEE0E0EB1K_.exit.i, label %.lr.ph
 
-.lr.ph60:                                         ; preds = %.preheader, %bb.m
-  %.val9.i = phi i64 [ %.val7.i, %bb.m ], [ %.val15.i, %.preheader ] ; 2 uses
-  %.val8.i = phi ptr [ %.val.i, %bb.m ], [ %.val14.i, %.preheader ]
-  %.sroa.01.1.i.i59 = phi i64 [ %i.an, %bb.m ], [ 2, %.preheader ] ; 3 uses
+.lr.ph60:                                         ; preds = %.lr.ph60.preheader, %bb.m
+  %.val9.i = phi i64 [ %.val7.i, %bb.m ], [ %.val15.i, %.lr.ph60.preheader ] ; 2 uses
+  %.val8.i = phi ptr [ %.val.i, %bb.m ], [ %.val14.i, %.lr.ph60.preheader ]
+  %.sroa.01.1.i.i59 = phi i64 [ %i.an, %bb.m ], [ 2, %.lr.ph60.preheader ] ; 3 uses
   %i.ag = getelementptr inbounds nuw [24 x i8], ptr %i.o, i64 %.sroa.01.1.i.i59 ; 2 uses
   %.val.i = load ptr, ptr %i.ag, align 8, !alias.scope !450, !noalias !451, !nonnull !4, !noundef !4 ; 2 uses
   %i.ah = getelementptr i8, ptr %i.ag, i64 8
@@ -282,12 +290,12 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.am, label %bb.m, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxENCINvMNtB18_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB18_11collections5btree3mapINtB38_8BTreeMapB13_B1E_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtB4b_8adapters12GenericShuntINtNtB56_3map3MapINtNtCs9FmeSmcCnTG_10wasmparser7readers22SectionLimitedIntoIterNtNtNtB5T_4core7exports6ExportENCNvMNtB1I_6parserNtB7r_12ModuleParser15process_exports0EINtNtB8_6result6ResultzNtNtB1K_5error5ErrorEEE0E0EB1K_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph60
-  %i.an = add nuw i64 %.sroa.01.1.i.i59, 1        ; 2 uses
-  %exitcond80.not = icmp eq i64 %i.an, %i.n
+  %i.an = add nuw nsw i64 %.sroa.01.1.i.i59, 1    ; 2 uses
+  %exitcond80.not = icmp eq i64 %i.an, %smax80
   br i1 %exitcond80.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxENCINvMNtB18_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB18_11collections5btree3mapINtB38_8BTreeMapB13_B1E_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtB4b_8adapters12GenericShuntINtNtB56_3map3MapINtNtCs9FmeSmcCnTG_10wasmparser7readers22SectionLimitedIntoIterNtNtNtB5T_4core7exports6ExportENCNvMNtB1I_6parserNtB7r_12ModuleParser15process_exports0EINtNtB8_6result6ResultzNtNtB1K_5error5ErrorEEE0E0EB1K_.exit.i, label %.lr.ph60
 
 _RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxENCINvMNtB18_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB18_11collections5btree3mapINtB38_8BTreeMapB13_B1E_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtB4b_8adapters12GenericShuntINtNtB56_3map3MapINtNtCs9FmeSmcCnTG_10wasmparser7readers22SectionLimitedIntoIterNtNtNtB5T_4core7exports6ExportENCNvMNtB1I_6parserNtB7r_12ModuleParser15process_exports0EINtNtB8_6result6ResultzNtNtB1K_5error5ErrorEEE0E0EB1K_.exit.i: ; preds = %bb.m, %.lr.ph60, %bb.l, %.lr.ph
-  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.0.i.i56, %.lr.ph ], [ %i.n, %bb.l ], [ %.sroa.01.1.i.i59, %.lr.ph60 ], [ %i.n, %bb.m ] ; 5 uses
+  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.0.i.i56, %.lr.ph ], [ %smax, %bb.l ], [ %.sroa.01.1.i.i59, %.lr.ph60 ], [ %smax80, %bb.m ] ; 5 uses
   %i.ao = icmp samesign ule i64 %.sroa.0.0.i.i, %i.n
   tail call void @llvm.assume(i1 %i.ao)
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
@@ -689,6 +697,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #26
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #27
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #23
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { nofree norecurse nosync nounwind nonlazybind memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

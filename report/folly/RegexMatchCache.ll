@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %_ZSteqIcSt11char_tr
           to label %.preheader unwind label %bb.g
 
 .preheader:                                       ; preds = %bb.c
-  %i.n = load i64, ptr %i.e, align 8, !tbaa !19673 ; 14 uses
+  %i.n = load i64, ptr %i.e, align 8, !tbaa !19673 ; 13 uses
   %i.o = trunc i64 %i.n to i32
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.q = load i64, ptr %i.p, align 8
@@ -411,11 +411,12 @@ bb.i:                                             ; preds = %_ZN5boost13re_detai
   br i1 %.not.i, label %_ZN5boost13re_detail_50011count_charsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEEjRKT_T0_.exit47, label %.lr.ph.i41.preheader
 
 .lr.ph.i41.preheader:                             ; preds = %bb.i
-  %min.iters.check126 = icmp ult i64 %i.n, 8
+  %5 = call i64 @llvm.smax.i64(i64 %i.n, i64 1)   ; 2 uses
+  %min.iters.check126 = icmp slt i64 %i.n, 12
   br i1 %min.iters.check126, label %.lr.ph.i41.preheader163, label %vector.scevcheck124
 
 vector.scevcheck124:                              ; preds = %.lr.ph.i41.preheader
-  %i.cg = add i64 %i.n, -1                        ; 2 uses
+  %i.cg = add nsw i64 %i.n, -1                    ; 2 uses
   %i.ch = and i64 %i.cg, 4294967295
   %i.ci = icmp eq i64 %i.ch, 4294967295
   %i.cj = icmp ugt i64 %i.cg, 4294967295
@@ -423,7 +424,7 @@ vector.scevcheck124:                              ; preds = %.lr.ph.i41.preheade
   br i1 %i.ck, label %.lr.ph.i41.preheader163, label %vector.ph127
 
 vector.ph127:                                     ; preds = %vector.scevcheck124
-  %n.vec128 = and i64 %i.n, 8589934584            ; 3 uses
+  %n.vec128 = and i64 %5, 8589934584              ; 3 uses
   %broadcast.splatinsert129 = insertelement <4 x i8> poison, i8 %i.an, i64 0
   %broadcast.splat130 = shufflevector <4 x i8> %broadcast.splatinsert129, <4 x i8> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body131
@@ -449,7 +450,7 @@ vector.body131:                                   ; preds = %vector.body131, %ve
 middle.block138:                                  ; preds = %vector.body131
   %bin.rdx139 = add <4 x i32> %i.cs, %i.cr
   %i.cu = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx139) ; 2 uses
-  %cmp.n140 = icmp eq i64 %i.n, %n.vec128
+  %cmp.n140 = icmp eq i64 %5, %n.vec128
   br i1 %cmp.n140, label %_ZN5boost13re_detail_50011count_charsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEEjRKT_T0_.exit47, label %.lr.ph.i41.preheader163
 
 .lr.ph.i41.preheader163:                          ; preds = %vector.scevcheck124, %.lr.ph.i41.preheader, %middle.block138

@@ -205,11 +205,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.g, label %iter.check261, label %._crit_edge172
 
 iter.check261:                                    ; preds = %.preheader
-  %i.h = add nsw i32 %3, -1
-  %i.i = udiv i32 %i.h, 3
+  %i.h = add nuw i32 %3, 2
+  %smin242 = tail call i32 @llvm.smin.i32(i32 %3, i32 3)
+  %6 = sub i32 %i.h, %smin242                     ; 3 uses
+  %i.i = udiv i32 %6, 3
   %narrow280.a = add nuw nsw i32 %i.i, 1
   %i.j = zext nneg i32 %narrow280.a to i64        ; 5 uses
-  %min.iters.check243 = icmp ult i32 %3, 10
+  %min.iters.check243 = icmp ult i32 %6, 9
   br i1 %min.iters.check243, label %.lr.ph171.preheader, label %vector.memcheck240
 
 vector.memcheck240:                               ; preds = %iter.check261
@@ -219,7 +221,7 @@ vector.memcheck240:                               ; preds = %iter.check261
   br i1 %diff.check241, label %.lr.ph171.preheader, label %vector.main.loop.iter.check244
 
 vector.main.loop.iter.check244:                   ; preds = %vector.memcheck240
-  %min.iters.check245 = icmp ult i32 %3, 46
+  %min.iters.check245 = icmp ult i32 %6, 45
   br i1 %min.iters.check245, label %vec.epilog.ph265, label %vector.ph246
 
 vector.ph246:                                     ; preds = %vector.main.loop.iter.check244
@@ -509,18 +511,20 @@ bb.q:                                             ; preds = %bb.o
   br label %bb.r
 
 bb.r:                                             ; preds = %.sink.split, %bb.q
-  %i.cs = load i32, ptr %1, align 4, !tbaa !27    ; 9 uses
+  %i.cs = load i32, ptr %1, align 4, !tbaa !27    ; 8 uses
   %i.ct = icmp slt i32 %i.cs, 1
   br i1 %i.ct, label %.loopexit.sink.split, label %iter.check
 
 iter.check:                                       ; preds = %bb.r
   store i32 %i.cs, ptr %0, align 4, !tbaa !19
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 6 uses
-  %i.cv = add nsw i32 %i.cs, -1
-  %i.cw = udiv i32 %i.cv, 3
+  %i.cv = add nuw i32 %i.cs, 2
+  %smin = tail call i32 @llvm.smin.i32(i32 %i.cs, i32 3)
+  %7 = sub i32 %i.cv, %smin                       ; 3 uses
+  %i.cw = udiv i32 %7, 3
   %narrow279 = add nuw nsw i32 %i.cw, 1
   %i.cx = zext nneg i32 %narrow279 to i64         ; 5 uses
-  %min.iters.check214 = icmp ult i32 %i.cs, 10
+  %min.iters.check214 = icmp ult i32 %7, 9
   br i1 %min.iters.check214, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck211
 
 vector.memcheck211:                               ; preds = %iter.check
@@ -530,7 +534,7 @@ vector.memcheck211:                               ; preds = %iter.check
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck211
-  %min.iters.check215 = icmp ult i32 %i.cs, 46
+  %min.iters.check215 = icmp ult i32 %7, 45
   br i1 %min.iters.check215, label %vec.epilog.ph, label %vector.ph216
 
 vector.ph216:                                     ; preds = %vector.main.loop.iter.check
@@ -933,22 +937,24 @@ bb.a:
   br i1 %i.e, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = load i32, ptr %2, align 4, !tbaa !27     ; 8 uses
+  %i.f = load i32, ptr %2, align 4, !tbaa !27     ; 9 uses
   store i32 %i.f, ptr %0, align 4, !tbaa !19
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 6 uses
   %i.h = icmp sgt i32 %i.f, 3
   br i1 %i.h, label %iter.check, label %decSetMaxValue.exit
 
 iter.check:                                       ; preds = %bb.b
-  %i.i = add nsw i32 %i.f, -4                     ; 3 uses
-  %i.j = udiv i32 %i.i, 3
+  %i.i = add nuw i32 %i.f, 2
+  %smin = tail call i32 @llvm.smin.i32(i32 %i.f, i32 6)
+  %5 = sub i32 %i.i, %smin                        ; 3 uses
+  %i.j = udiv i32 %5, 3
   %narrow = add nuw nsw i32 %i.j, 1
   %i.k = zext nneg i32 %narrow to i64             ; 5 uses
-  %min.iters.check = icmp ult i32 %i.i, 9
+  %min.iters.check = icmp ult i32 %5, 9
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check16 = icmp ult i32 %i.i, 45
+  %min.iters.check16 = icmp ult i32 %5, 45
   br i1 %min.iters.check16, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -1087,22 +1093,24 @@ bb.g:                                             ; preds = %bb.c, %decStatus.ex
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc void @decSetMaxValue(ptr nofree noundef writeonly captures(none) initializes((0, 4)) %0, ptr nofree noundef readonly captures(none) %1) unnamed_addr #0 {
 bb.a:
-  %i.a = load i32, ptr %1, align 4, !tbaa !27     ; 8 uses
+  %i.a = load i32, ptr %1, align 4, !tbaa !27     ; 9 uses
   store i32 %i.a, ptr %0, align 4, !tbaa !19
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 6 uses
   %i.c = icmp sgt i32 %i.a, 3
   br i1 %i.c, label %iter.check, label %._crit_edge
 
 iter.check:                                       ; preds = %bb.a
-  %i.d = add nsw i32 %i.a, -4                     ; 3 uses
-  %i.e = udiv i32 %i.d, 3
+  %i.d = add nuw i32 %i.a, 2
+  %smin = tail call i32 @llvm.smin.i32(i32 %i.a, i32 6)
+  %2 = sub i32 %i.d, %smin                        ; 3 uses
+  %i.e = udiv i32 %2, 3
   %narrow = add nuw nsw i32 %i.e, 1
   %i.f = zext nneg i32 %narrow to i64             ; 5 uses
-  %min.iters.check = icmp ult i32 %i.d, 9
+  %min.iters.check = icmp ult i32 %2, 9
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check20 = icmp ult i32 %i.d, 45
+  %min.iters.check20 = icmp ult i32 %2, 45
   br i1 %min.iters.check20, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -1208,22 +1216,24 @@ bb.a:
   br i1 %i.d, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = load i32, ptr %2, align 4, !tbaa !27     ; 8 uses
+  %i.e = load i32, ptr %2, align 4, !tbaa !27     ; 9 uses
   store i32 %i.e, ptr %0, align 4, !tbaa !19
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 6 uses
   %i.g = icmp sgt i32 %i.e, 3
   br i1 %i.g, label %iter.check, label %decSetMaxValue.exit
 
 iter.check:                                       ; preds = %bb.b
-  %i.h = add nsw i32 %i.e, -4                     ; 3 uses
-  %i.i = udiv i32 %i.h, 3
+  %i.h = add nuw i32 %i.e, 2
+  %smin = tail call i32 @llvm.smin.i32(i32 %i.e, i32 6)
+  %5 = sub i32 %i.h, %smin                        ; 3 uses
+  %i.i = udiv i32 %5, 3
   %narrow = add nuw nsw i32 %i.i, 1
   %i.j = zext nneg i32 %narrow to i64             ; 5 uses
-  %min.iters.check = icmp ult i32 %i.h, 9
+  %min.iters.check = icmp ult i32 %5, 9
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check17 = icmp ult i32 %i.h, 45
+  %min.iters.check17 = icmp ult i32 %5, 45
   br i1 %min.iters.check17, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -1626,21 +1636,23 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not.not, label %.critedge31, label %.critedge
 
 .critedge31:                                      ; preds = %.split, %bb.g, %bb.g, %bb.h
-  %i.w = load i32, ptr %1, align 4, !tbaa !27     ; 8 uses
+  %i.w = load i32, ptr %1, align 4, !tbaa !27     ; 9 uses
   store i32 %i.w, ptr %0, align 4, !tbaa !19
   %i.x = icmp sgt i32 %i.w, 3
   br i1 %i.x, label %iter.check, label %decSetMaxValue.exit
 
 iter.check:                                       ; preds = %.critedge31
-  %i.y = add nsw i32 %i.w, -4                     ; 3 uses
-  %i.z = udiv i32 %i.y, 3
+  %i.y = add nuw i32 %i.w, 2
+  %smin = tail call i32 @llvm.smin.i32(i32 %i.w, i32 6)
+  %3 = sub i32 %i.y, %smin                        ; 3 uses
+  %i.z = udiv i32 %3, 3
   %narrow = add nuw nsw i32 %i.z, 1
   %i.aa = zext nneg i32 %narrow to i64            ; 5 uses
-  %min.iters.check = icmp ult i32 %i.y, 9
+  %min.iters.check = icmp ult i32 %3, 9
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check41 = icmp ult i32 %i.y, 45
+  %min.iters.check41 = icmp ult i32 %3, 45
   br i1 %min.iters.check41, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check

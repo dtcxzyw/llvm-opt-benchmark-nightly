@@ -204,7 +204,8 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPimiET_
   br label %bb.e
 
 ._crit_edge115.loopexit:                          ; preds = %._crit_edge112
-  %i.ak = zext i32 %i.at to i64
+  %3 = tail call i32 @llvm.smax.i32(i32 %i.at, i32 1)
+  %i.ak = zext nneg i32 %3 to i64
   br label %._crit_edge115
 
 ._crit_edge115:                                   ; preds = %._crit_edge115.loopexit, %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit
@@ -338,7 +339,7 @@ bb.h:                                             ; preds = %._crit_edge115
   br i1 %i.cu, label %.epil.preheader, label %.new
 
 .new:                                             ; preds = %bb.h
-  %unroll_iter = and i64 %.068.lcssa, 4294967294
+  %unroll_iter = and i64 %.068.lcssa, 2147483646
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.i, %.new
@@ -376,7 +377,7 @@ bb.i:                                             ; preds = %bb.i, %.new
   %i.dw = getelementptr inbounds nuw [4 x i8], ptr %i.dv, i64 %i.du
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.dr, ptr noundef nonnull align 4 dereferenceable(1) %i.dw, i64 %i.ct, i1 false)
   %indvars.iv.next124.1 = add nuw nsw i64 %indvars.iv123, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZNSt6vectorImSaImEED2Ev.exit84.loopexit151.unr-lcssa, label %bb.i, !llvm.loop !110
 
@@ -777,6 +778,9 @@ declare i32 @llvm.ctpop.i32(i32) #20
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #26
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #20

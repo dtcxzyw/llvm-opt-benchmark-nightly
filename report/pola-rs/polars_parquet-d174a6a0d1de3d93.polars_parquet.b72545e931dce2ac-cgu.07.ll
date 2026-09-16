@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %.val = load ptr, ptr %i.j, align 8, !dbg !5554, !nonnull !107, !noundef !107
-  %i.ae = sub nuw i64 %.val12, %i.ac, !dbg !5557  ; 6 uses
+  %i.ae = sub nuw i64 %.val12, %i.ac, !dbg !5557  ; 4 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.val, i64 %i.ac, !dbg !5558 ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5521), !dbg !5559
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5522), !dbg !5559
@@ -217,6 +217,7 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph.i:                                         ; preds = %bb.e
   %i.ai = load i64, ptr %i.c, align 8, !alias.scope !5522, !noalias !5524 ; 2 uses
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.ae, i64 0), !dbg !5560 ; 3 uses
   %i.aj = sub i32 56, %i.s, !dbg !5560
   %i.ak = lshr i32 %i.aj, 3, !dbg !5560
   %i.al = zext nneg i32 %i.ak to i64, !dbg !5560
@@ -224,7 +225,7 @@ bb.e:                                             ; preds = %bb.d
   %i.an = xor i32 %i.x, -1, !dbg !5560
   %i.ao = add i32 %i.am, %i.an, !dbg !5560
   %i.ap = zext i32 %i.ao to i64, !dbg !5560
-  %i.aq = tail call i64 @llvm.umin.i64(i64 %i.al, i64 %i.ae), !dbg !5560
+  %i.aq = tail call i64 @llvm.umin.i64(i64 %smax, i64 %i.al), !dbg !5560
   %i.ar = tail call i64 @llvm.umin.i64(i64 %i.aq, i64 %i.ap), !dbg !5560 ; 2 uses
   %min.iters.check131 = icmp samesign ult i64 %i.ar, 4, !dbg !5560
   br i1 %min.iters.check131, label %scalar.ph130.preheader, label %vector.ph132, !dbg !5560
@@ -319,7 +320,7 @@ scalar.ph130:                                     ; preds = %scalar.ph130.prehea
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.j ], [ %indvars.iv.i.ph, %scalar.ph130.preheader ] ; 3 uses
   %.sroa.0.027.i = phi i32 [ %i.cg, %bb.j ], [ %.sroa.0.027.i.ph, %scalar.ph130.preheader ]
   %i.bu = phi i32 [ %i.cf, %bb.j ], [ %.ph, %scalar.ph130.preheader ] ; 3 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.i, %i.ae, !dbg !5565
+  %exitcond.not = icmp eq i64 %indvars.iv.i, %smax, !dbg !5565
   br i1 %exitcond.not, label %bb.k, label %bb.j, !dbg !5565
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %bb.h
@@ -368,7 +369,7 @@ bb.j:                                             ; preds = %scalar.ph130
   br i1 %or.cond.i, label %scalar.ph130, label %.preheader.i, !dbg !5560, !llvm.loop !5514
 
 bb.k:                                             ; preds = %scalar.ph130
-  tail call void @_RNvNtCscgRAwXFJnXP_4core9panicking18panic_bounds_check(i64 noundef %i.ae, i64 noundef range(i64 0, -9223372036854775808) %i.ae, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @114) #20, !dbg !5565, !noalias !5537
+  tail call void @_RNvNtCscgRAwXFJnXP_4core9panicking18panic_bounds_check(i64 noundef %smax, i64 noundef range(i64 0, -9223372036854775808) %i.ae, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @114) #20, !dbg !5565, !noalias !5537
   unreachable, !dbg !5565
 
 _RNvNtCsjPfRcqrlXv6_19brotli_decompressor10bit_reader15BrotliCopyBytes.exit: ; preds = %bb.h, %.preheader.i
@@ -770,6 +771,9 @@ declare i64 @llvm.umax.i64(i64, i64) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.ctlz.i32(i32, i1 immarg) #16

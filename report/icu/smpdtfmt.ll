@@ -204,7 +204,7 @@ bb.fh:                                            ; preds = %bb.fg
 bb.fi:                                            ; preds = %bb.bj
   %i.os = load i32, ptr %2, align 4, !tbaa !69
   %i.ot = invoke noundef i32 @_ZNK6icu_7816SimpleDateFormat11countDigitsERKNS_13UnicodeStringEii(ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(64) %1, i32 noundef %i.os, i32 noundef %i.ff)
-          to label %bb.fj unwind label %bb.bo     ; 8 uses
+          to label %bb.fj unwind label %bb.bo     ; 9 uses
 
 bb.fj:                                            ; preds = %bb.fi
   %i.ou = icmp slt i32 %i.ot, 3
@@ -247,12 +247,14 @@ middle.block1186:                                 ; preds = %vector.body1181
   br i1 %.not1071, label %._crit_edge1067, label %.lr.ph1066.preheader
 
 .lr.ph1066.preheader:                             ; preds = %.preheader1051
-  %i.pc = add nsw i32 %i.ot, -3                   ; 3 uses
-  %min.iters.check = icmp ult i32 %i.pc, 8
+  %21 = call i32 @llvm.smin.i32(i32 %i.ot, i32 4)
+  %i.pc = add nuw i32 %i.ot, 1
+  %22 = sub i32 %i.pc, %21                        ; 3 uses
+  %min.iters.check = icmp ult i32 %22, 8
   br i1 %min.iters.check, label %.lr.ph1066.preheader1204, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph1066.preheader
-  %n.vec = and i32 %i.pc, -8                      ; 3 uses
+  %n.vec = and i32 %22, -8                        ; 3 uses
   %i.pd = sub i32 %i.ot, %n.vec
   br label %vector.body
 
@@ -266,7 +268,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 middle.block:                                     ; preds = %vector.body
   %i.pf = call i32 @llvm.vector.reduce.mul.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i32 %i.pc, %n.vec
+  %cmp.n = icmp eq i32 %22, %n.vec
   br i1 %cmp.n, label %._crit_edge1067, label %.lr.ph1066.preheader1204
 
 .lr.ph1066.preheader1204:                         ; preds = %.lr.ph1066.preheader, %middle.block

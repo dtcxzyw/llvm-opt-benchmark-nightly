@@ -206,6 +206,7 @@ bb.e:                                             ; preds = %.noexc7
   %i.bb = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %.sroa.429.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sroa.427.88..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.427, i64 80
+  %smax = call i64 @llvm.smax.i64(i64 %i.ae, i64 1)
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %.noexc9
@@ -284,7 +285,7 @@ bb.g:                                             ; preds = %bb.f
   %.sroa.425.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bf, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %.sroa.425.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(96) %.sroa.425, i64 96, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.425)
-  %exitcond.not = icmp eq i64 %i.bg, %i.ae
+  %exitcond.not = icmp eq i64 %i.bg, %smax
   br i1 %exitcond.not, label %._crit_edge, label %bb.f
 
 .loopexit:                                        ; preds = %.noexc16, %bb.g

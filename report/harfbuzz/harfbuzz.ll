@@ -205,7 +205,8 @@ bb.f:                                             ; preds = %bb.b
   %i.av = getelementptr inbounds nuw i8, ptr %i.d, i64 100
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 24
   %or.cond.i.fr = freeze i1 %or.cond.i
-  %wide.trip.count76 = zext nneg i32 %1 to i64    ; 2 uses
+  %5 = tail call i32 @llvm.umax.i32(i32 %1, i32 2)
+  %wide.trip.count76 = zext nneg i32 %5 to i64    ; 2 uses
   br i1 %or.cond.i.fr, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %.critedge112.i.thread24.us
@@ -608,7 +609,8 @@ bb.f:                                             ; preds = %bb.b
   %or.cond.i = and i1 %i.ay, %i.az
   %i.ba = getelementptr inbounds nuw i8, ptr %i.f, i64 120
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %wide.trip.count = zext nneg i32 %3 to i64
+  %10 = tail call i32 @llvm.umax.i32(i32 %3, i32 2)
+  %wide.trip.count = zext nneg i32 %10 to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph, %.critedge112.i.thread120

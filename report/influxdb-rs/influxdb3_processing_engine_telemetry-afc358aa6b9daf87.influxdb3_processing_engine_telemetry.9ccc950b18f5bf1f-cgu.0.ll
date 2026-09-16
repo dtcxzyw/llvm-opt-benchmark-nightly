@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.r
 
 bb.h:                                             ; preds = %bb.f
-  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 9 uses
   %i.o = getelementptr inbounds nuw [96 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   %.not.i33 = icmp ult i64 %i.n, %.sroa.01.0
   br i1 %.not.i33, label %bb.i, label %bb.j
@@ -223,13 +223,21 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.r, label %.preheader, label %.preheader76
 
 .preheader76:                                     ; preds = %bb.k
-  br i1 %.not98, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtCsdsDzd1zQknb_37influxdb3_processing_engine_telemetry31PluginTriggerInvocationSnapshotNCINvMNtCscdodAO9FK5_5alloc5sliceSB12_7sort_byNCNvMs0_B14_NtB14_31PluginTriggerInvocationRegistry8snapshots_0E0EB14_.exit.i.thread, label %.lr.ph
+  br i1 %.not98, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtCsdsDzd1zQknb_37influxdb3_processing_engine_telemetry31PluginTriggerInvocationSnapshotNCINvMNtCscdodAO9FK5_5alloc5sliceSB12_7sort_byNCNvMs0_B14_NtB14_31PluginTriggerInvocationRegistry8snapshots_0E0EB14_.exit.i.thread, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader76
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.n, i64 3) ; 2 uses
+  br label %.lr.ph
 
 .preheader:                                       ; preds = %bb.k
-  br i1 %.not98, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtCsdsDzd1zQknb_37influxdb3_processing_engine_telemetry31PluginTriggerInvocationSnapshotNCINvMNtCscdodAO9FK5_5alloc5sliceSB12_7sort_byNCNvMs0_B14_NtB14_31PluginTriggerInvocationRegistry8snapshots_0E0EB14_.exit.i.thread124, label %.lr.ph85
+  br i1 %.not98, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtCsdsDzd1zQknb_37influxdb3_processing_engine_telemetry31PluginTriggerInvocationSnapshotNCINvMNtCscdodAO9FK5_5alloc5sliceSB12_7sort_byNCNvMs0_B14_NtB14_31PluginTriggerInvocationRegistry8snapshots_0E0EB14_.exit.i.thread124, label %.lr.ph85.preheader
 
-.lr.ph:                                           ; preds = %.preheader76, %bb.l
-  %.sroa.01.0.i.i81 = phi i64 [ %i.w, %bb.l ], [ 2, %.preheader76 ] ; 4 uses
+.lr.ph85.preheader:                               ; preds = %.preheader
+  %smax105 = tail call i64 @llvm.smax.i64(i64 %i.n, i64 3) ; 2 uses
+  br label %.lr.ph85
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.l
+  %.sroa.01.0.i.i81 = phi i64 [ %i.w, %bb.l ], [ 2, %.lr.ph.preheader ] ; 4 uses
   %i.s = getelementptr inbounds nuw [96 x i8], ptr %i.o, i64 %.sroa.01.0.i.i81
   %i.t = getelementptr [96 x i8], ptr %i.o, i64 %.sroa.01.0.i.i81
   %i.u = getelementptr i8, ptr %i.t, i64 -96
@@ -237,12 +245,12 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.v, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtCsdsDzd1zQknb_37influxdb3_processing_engine_telemetry31PluginTriggerInvocationSnapshotNCINvMNtCscdodAO9FK5_5alloc5sliceSB12_7sort_byNCNvMs0_B14_NtB14_31PluginTriggerInvocationRegistry8snapshots_0E0EB14_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.w = add nuw i64 %.sroa.01.0.i.i81, 1         ; 2 uses
-  %exitcond.not = icmp eq i64 %i.w, %i.n
+  %i.w = add nuw nsw i64 %.sroa.01.0.i.i81, 1     ; 2 uses
+  %exitcond.not = icmp eq i64 %i.w, %smax
   br i1 %exitcond.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtCsdsDzd1zQknb_37influxdb3_processing_engine_telemetry31PluginTriggerInvocationSnapshotNCINvMNtCscdodAO9FK5_5alloc5sliceSB12_7sort_byNCNvMs0_B14_NtB14_31PluginTriggerInvocationRegistry8snapshots_0E0EB14_.exit.i, label %.lr.ph
 
-.lr.ph85:                                         ; preds = %.preheader, %bb.m
-  %.sroa.01.1.i.i84 = phi i64 [ %i.ab, %bb.m ], [ 2, %.preheader ] ; 4 uses
+.lr.ph85:                                         ; preds = %.lr.ph85.preheader, %bb.m
+  %.sroa.01.1.i.i84 = phi i64 [ %i.ab, %bb.m ], [ 2, %.lr.ph85.preheader ] ; 4 uses
   %i.x = getelementptr inbounds nuw [96 x i8], ptr %i.o, i64 %.sroa.01.1.i.i84
   %i.y = getelementptr [96 x i8], ptr %i.o, i64 %.sroa.01.1.i.i84
   %i.z = getelementptr i8, ptr %i.y, i64 -96
@@ -250,12 +258,12 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.aa, label %bb.m, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtCsdsDzd1zQknb_37influxdb3_processing_engine_telemetry31PluginTriggerInvocationSnapshotNCINvMNtCscdodAO9FK5_5alloc5sliceSB12_7sort_byNCNvMs0_B14_NtB14_31PluginTriggerInvocationRegistry8snapshots_0E0EB14_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph85
-  %i.ab = add nuw i64 %.sroa.01.1.i.i84, 1        ; 2 uses
-  %exitcond105.not = icmp eq i64 %i.ab, %i.n
+  %i.ab = add nuw nsw i64 %.sroa.01.1.i.i84, 1    ; 2 uses
+  %exitcond105.not = icmp eq i64 %i.ab, %smax105
   br i1 %exitcond105.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtCsdsDzd1zQknb_37influxdb3_processing_engine_telemetry31PluginTriggerInvocationSnapshotNCINvMNtCscdodAO9FK5_5alloc5sliceSB12_7sort_byNCNvMs0_B14_NtB14_31PluginTriggerInvocationRegistry8snapshots_0E0EB14_.exit.i, label %.lr.ph85
 
 _RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtCsdsDzd1zQknb_37influxdb3_processing_engine_telemetry31PluginTriggerInvocationSnapshotNCINvMNtCscdodAO9FK5_5alloc5sliceSB12_7sort_byNCNvMs0_B14_NtB14_31PluginTriggerInvocationRegistry8snapshots_0E0EB14_.exit.i: ; preds = %bb.l, %.lr.ph, %bb.m, %.lr.ph85
-  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i84, %.lr.ph85 ], [ %i.n, %bb.m ], [ %.sroa.01.0.i.i81, %.lr.ph ], [ %i.n, %bb.l ] ; 5 uses
+  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i84, %.lr.ph85 ], [ %smax105, %bb.m ], [ %.sroa.01.0.i.i81, %.lr.ph ], [ %smax, %bb.l ] ; 5 uses
   %i.ac = icmp samesign ule i64 %.sroa.0.0.i.i, %i.n
   tail call void @llvm.assume(i1 %i.ac)
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
@@ -657,6 +665,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #16
 
 attributes #0 = { cold noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

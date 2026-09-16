@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.f
     #dbg_value(i64 %.sroa.09.0, !7685, !DIExpression(), !7688)
     #dbg_value(i64 %.sroa.09.0, !7690, !DIExpression(), !7694)
     #dbg_value(i64 %.sroa.09.0, !7758, !DIExpression(), !7763)
-  %i.n = sub nuw nsw i64 %1, %.sroa.09.0, !dbg !8203 ; 11 uses
+  %i.n = sub nuw nsw i64 %1, %.sroa.09.0, !dbg !8203 ; 9 uses
     #dbg_value(i64 %i.n, !7691, !DIExpression(), !7764)
     #dbg_value(i64 %i.n, !7760, !DIExpression(), !7763)
     #dbg_value(ptr %0, !7759, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7763)
@@ -337,34 +337,42 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.aj, label %.preheader, label %.preheader102, !dbg !8223
 
 .preheader102:                                    ; preds = %bb.k
-  br i1 %.not124, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runNtNtNtCs3roNzt6HBWW_12regex_syntax3hir7literal7LiteralNvYB12_NtNtB8_3cmp10PartialOrd2ltECs9GYDdpCSJ4S_14regex_automata.exit.i.thread, label %.lr.ph, !dbg !8224
+  br i1 %.not124, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runNtNtNtCs3roNzt6HBWW_12regex_syntax3hir7literal7LiteralNvYB12_NtNtB8_3cmp10PartialOrd2ltECs9GYDdpCSJ4S_14regex_automata.exit.i.thread, label %.lr.ph.preheader, !dbg !8224
+
+.lr.ph.preheader:                                 ; preds = %.preheader102
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.n, i64 3), !dbg !8225 ; 2 uses
+  br label %.lr.ph, !dbg !8225
 
 .preheader:                                       ; preds = %bb.k
-  br i1 %.not124, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runNtNtNtCs3roNzt6HBWW_12regex_syntax3hir7literal7LiteralNvYB12_NtNtB8_3cmp10PartialOrd2ltECs9GYDdpCSJ4S_14regex_automata.exit.i.thread158, label %.lr.ph111, !dbg !8225
+  br i1 %.not124, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runNtNtNtCs3roNzt6HBWW_12regex_syntax3hir7literal7LiteralNvYB12_NtNtB8_3cmp10PartialOrd2ltECs9GYDdpCSJ4S_14regex_automata.exit.i.thread158, label %.lr.ph111.preheader, !dbg !8226
 
-.lr.ph:                                           ; preds = %.preheader102, %bb.l
-  %i.ak = phi i8 [ %i.ay, %bb.l ], [ %i.ae, %.preheader102 ], !dbg !8226
-  %i.al = phi i64 [ %i.ar, %bb.l ], [ %i.t, %.preheader102 ], !dbg !8227 ; 2 uses
-  %i.am = phi ptr [ %i.ap, %bb.l ], [ %i.r, %.preheader102 ], !dbg !8228
-  %.sroa.01.0.i.i107 = phi i64 [ %i.bc, %bb.l ], [ 2, %.preheader102 ] ; 3 uses
+.lr.ph111.preheader:                              ; preds = %.preheader
+  %smax131 = tail call i64 @llvm.smax.i64(i64 %i.n, i64 3), !dbg !8227 ; 2 uses
+  br label %.lr.ph111, !dbg !8227
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.l
+  %i.ak = phi i8 [ %i.ay, %bb.l ], [ %i.ae, %.lr.ph.preheader ], !dbg !8228
+  %i.al = phi i64 [ %i.ar, %bb.l ], [ %i.t, %.lr.ph.preheader ], !dbg !8229 ; 2 uses
+  %i.am = phi ptr [ %i.ap, %bb.l ], [ %i.r, %.lr.ph.preheader ], !dbg !8230
+  %.sroa.01.0.i.i107 = phi i64 [ %i.bc, %bb.l ], [ 2, %.lr.ph.preheader ] ; 3 uses
     #dbg_value(i64 %.sroa.01.0.i.i107, !7786, !DIExpression(), !7087)
     #dbg_value(i64 %.sroa.01.0.i.i107, !7793, !DIExpression(), !7079)
     #dbg_value(i64 %.sroa.01.0.i.i107, !7803, !DIExpression(), !7081)
-  %i.an = getelementptr inbounds nuw [32 x i8], ptr %i.o, i64 %.sroa.01.0.i.i107, !dbg !8229 ; 3 uses
+  %i.an = getelementptr inbounds nuw [32 x i8], ptr %i.o, i64 %.sroa.01.0.i.i107, !dbg !8231 ; 3 uses
     #dbg_value(i64 %.sroa.01.0.i.i107, !7793, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value), !7083)
     #dbg_value(i64 %.sroa.01.0.i.i107, !7803, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value), !7085)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !7828), !dbg !8230
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !7828), !dbg !8225
     #dbg_value(ptr %i.an, !2552, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7158)
     #dbg_value(!DIArgList(ptr %i.o, i64 %.sroa.01.0.i.i107), !2552, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_constu, 1, DW_OP_minus, DW_OP_constu, 32, DW_OP_mul, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !7158)
     #dbg_value(ptr poison, !2561, !DIExpression(), !7158)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !7830), !dbg !8231, !noalias !7813
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !7830), !dbg !8232, !noalias !7813
     #dbg_value(ptr %i.an, !2567, !DIExpression(), !7161)
     #dbg_value(!DIArgList(ptr %i.o, i64 %.sroa.01.0.i.i107), !2569, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_constu, 1, DW_OP_minus, DW_OP_constu, 32, DW_OP_mul, DW_OP_plus, DW_OP_stack_value), !7161)
     #dbg_declare(ptr poison, !2578, !DIExpression(), !7163)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !7831), !dbg !8232, !noalias !7813
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !7831), !dbg !8233, !noalias !7813
     #dbg_value(ptr %i.an, !2597, !DIExpression(), !7166)
     #dbg_value(!DIArgList(ptr %i.o, i64 %.sroa.01.0.i.i107), !2601, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_constu, 1, DW_OP_minus, DW_OP_constu, 32, DW_OP_mul, DW_OP_plus, DW_OP_stack_value), !7166)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !7832), !dbg !8233, !noalias !7813
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !7832), !dbg !8234, !noalias !7813
     #dbg_value(ptr %i.an, !2603, !DIExpression(), !7169)
     #dbg_value(!DIArgList(ptr %i.o, i64 %.sroa.01.0.i.i107), !2607, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_constu, 1, DW_OP_minus, DW_OP_constu, 32, DW_OP_mul, DW_OP_plus, DW_OP_stack_value), !7169)
     #dbg_value(ptr %i.an, !2612, !DIExpression(), !7170)
@@ -375,10 +383,10 @@ bb.k:                                             ; preds = %bb.j
     #dbg_value(!DIArgList(ptr %i.o, i64 %.sroa.01.0.i.i107), !2618, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_constu, 1, DW_OP_minus, DW_OP_constu, 32, DW_OP_mul, DW_OP_plus, DW_OP_stack_value), !7178)
     #dbg_value(!DIArgList(ptr %i.o, i64 %.sroa.01.0.i.i107), !2626, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_constu, 1, DW_OP_minus, DW_OP_constu, 32, DW_OP_mul, DW_OP_plus, DW_OP_stack_value), !7179)
     #dbg_value(!DIArgList(ptr %i.o, i64 %.sroa.01.0.i.i107), !2629, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_constu, 1, DW_OP_minus, DW_OP_constu, 32, DW_OP_mul, DW_OP_plus, DW_OP_stack_value), !7180)
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 8, !dbg !8234
-  %i.ap = load ptr, ptr %i.ao, align 8, !dbg !8234, !alias.scope !7833, !noalias !7834, !nonnull !1173, !noundef !1173 ; 2 uses
-  %i.aq = getelementptr inbounds nuw i8, ptr %i.an, i64 16, !dbg !8235
-  %i.ar = load i64, ptr %i.aq, align 8, !dbg !8235, !alias.scope !7833, !noalias !7834, !noundef !1173 ; 3 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 8, !dbg !8235
+  %i.ap = load ptr, ptr %i.ao, align 8, !dbg !8235, !alias.scope !7833, !noalias !7834, !nonnull !1173, !noundef !1173 ; 2 uses
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.an, i64 16, !dbg !8236
+  %i.ar = load i64, ptr %i.aq, align 8, !dbg !8236, !alias.scope !7833, !noalias !7834, !noundef !1173 ; 3 uses
     #dbg_value(i64 %i.ar, !2651, !DIExpression(), !7190)
     #dbg_value(ptr %i.ap, !2669, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7191)
     #dbg_value(ptr %i.ap, !2656, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7192)
@@ -388,45 +396,45 @@ bb.k:                                             ; preds = %bb.j
     #dbg_value(ptr %i.am, !2657, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7192)
     #dbg_value(i64 %i.al, !2670, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !7191)
     #dbg_value(i64 %i.al, !2657, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !7192)
-  %i.as = sub i64 %i.ar, %i.al, !dbg !8236
+  %i.as = sub i64 %i.ar, %i.al, !dbg !8237
     #dbg_value(i64 %i.as, !2658, !DIExpression(), !7193)
-  %spec.store.select.i.i.i.i89 = tail call i64 @llvm.umin.i64(i64 %i.ar, i64 %i.al), !dbg !8237
+  %spec.store.select.i.i.i.i89 = tail call i64 @llvm.umin.i64(i64 %i.ar, i64 %i.al), !dbg !8238
     #dbg_value(i64 %spec.store.select.i.i.i.i89, !2651, !DIExpression(), !7190)
     #dbg_value(ptr %i.ap, !2659, !DIExpression(), !7194)
     #dbg_value(ptr %i.am, !2660, !DIExpression(), !7195)
-  %i.at = tail call i32 @memcmp(ptr nonnull %i.ap, ptr nonnull %i.am, i64 %spec.store.select.i.i.i.i89), !dbg !8238, !noalias !7835 ; 2 uses
-  %i.au = sext i32 %i.at to i64, !dbg !8238
+  %i.at = tail call i32 @memcmp(ptr nonnull %i.ap, ptr nonnull %i.am, i64 %spec.store.select.i.i.i.i89), !dbg !8239, !noalias !7835 ; 2 uses
+  %i.au = sext i32 %i.at to i64, !dbg !8239
     #dbg_value(i64 %i.au, !2661, !DIExpression(), !7196)
-  %i.av = icmp eq i32 %i.at, 0, !dbg !8239
-  %spec.store.select1.i.i.i.i90 = select i1 %i.av, i64 %i.as, i64 %i.au, !dbg !8239 ; 2 uses
+  %i.av = icmp eq i32 %i.at, 0, !dbg !8240
+  %spec.store.select1.i.i.i.i90 = select i1 %i.av, i64 %i.as, i64 %i.au, !dbg !8240 ; 2 uses
     #dbg_value(i64 %spec.store.select1.i.i.i.i90, !2661, !DIExpression(), !7196)
-  %i.aw = icmp eq i64 %spec.store.select1.i.i.i.i90, 0, !dbg !8226
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.an, i64 24, !dbg !8226
-  %i.ay = load i8, ptr %i.ax, align 8, !dbg !8226, !range !2675, !alias.scope !7836, !noalias !7837 ; 2 uses
+  %i.aw = icmp eq i64 %spec.store.select1.i.i.i.i90, 0, !dbg !8228
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.an, i64 24, !dbg !8228
+  %i.ay = load i8, ptr %i.ax, align 8, !dbg !8228, !range !2675, !alias.scope !7836, !noalias !7837 ; 2 uses
     #dbg_value(i8 poison, !2593, !DIExpression(), !7197)
-  %i.az = icmp samesign ult i8 %i.ay, %i.ak, !dbg !8240
-  %i.ba = icmp slt i64 %spec.store.select1.i.i.i.i90, 0, !dbg !8240
-  %i.bb = select i1 %i.aw, i1 %i.az, i1 %i.ba, !dbg !8226
-  br i1 %i.bb, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runNtNtNtCs3roNzt6HBWW_12regex_syntax3hir7literal7LiteralNvYB12_NtNtB8_3cmp10PartialOrd2ltECs9GYDdpCSJ4S_14regex_automata.exit.i, label %bb.l, !dbg !8230
+  %i.az = icmp samesign ult i8 %i.ay, %i.ak, !dbg !8241
+  %i.ba = icmp slt i64 %spec.store.select1.i.i.i.i90, 0, !dbg !8241
+  %i.bb = select i1 %i.aw, i1 %i.az, i1 %i.ba, !dbg !8228
+  br i1 %i.bb, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runNtNtNtCs3roNzt6HBWW_12regex_syntax3hir7literal7LiteralNvYB12_NtNtB8_3cmp10PartialOrd2ltECs9GYDdpCSJ4S_14regex_automata.exit.i, label %bb.l, !dbg !8225
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.bc = add nuw i64 %.sroa.01.0.i.i107, 1, !dbg !8241 ; 2 uses
+  %i.bc = add nuw nsw i64 %.sroa.01.0.i.i107, 1, !dbg !8242 ; 2 uses
     #dbg_value(i64 %i.bc, !7786, !DIExpression(), !7087)
-  %exitcond.not = icmp eq i64 %i.bc, %i.n, !dbg !8224
+  %exitcond.not = icmp eq i64 %i.bc, %smax, !dbg !8224
   br i1 %exitcond.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runNtNtNtCs3roNzt6HBWW_12regex_syntax3hir7literal7LiteralNvYB12_NtNtB8_3cmp10PartialOrd2ltECs9GYDdpCSJ4S_14regex_automata.exit.i, label %.lr.ph, !dbg !8224
 
-.lr.ph111:                                        ; preds = %.preheader, %bb.m
-  %i.bd = phi i8 [ %i.br, %bb.m ], [ %i.ae, %.preheader ], !dbg !8242
-  %i.be = phi i64 [ %i.bk, %bb.m ], [ %i.t, %.preheader ], !dbg !8243 ; 2 uses
-  %i.bf = phi ptr [ %i.bi, %bb.m ], [ %i.r, %.preheader ], !dbg !8244
-  %.sroa.01.1.i.i110 = phi i64 [ %i.bv, %bb.m ], [ 2, %.preheader ] ; 3 uses
+.lr.ph111:                                        ; preds = %.lr.ph111.preheader, %bb.m
+  %i.bd = phi i8 [ %i.br, %bb.m ], [ %i.ae, %.lr.ph111.preheader ], !dbg !8243
+  %i.be = phi i64 [ %i.bk, %bb.m ], [ %i.t, %.lr.ph111.preheader ], !dbg !8244 ; 2 uses
+  %i.bf = phi ptr [ %i.bi, %bb.m ], [ %i.r, %.lr.ph111.preheader ], !dbg !8245
+  %.sroa.01.1.i.i110 = phi i64 [ %i.bv, %bb.m ], [ 2, %.lr.ph111.preheader ] ; 3 uses
     #dbg_value(i64 %.sroa.01.1.i.i110, !7786, !DIExpression(), !7087)
     #dbg_value(i64 %.sroa.01.1.i.i110, !7793, !DIExpression(), !7071)
     #dbg_value(i64 %.sroa.01.1.i.i110, !7803, !DIExpression(), !7073)
-  %i.bg = getelementptr inbounds nuw [32 x i8], ptr %i.o, i64 %.sroa.01.1.i.i110, !dbg !8245 ; 3 uses
+  %i.bg = getelementptr inbounds nuw [32 x i8], ptr %i.o, i64 %.sroa.01.1.i.i110, !dbg !8246 ; 3 uses
     #dbg_value(i64 %.sroa.01.1.i.i110, !7793, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value), !7075)
     #dbg_value(i64 %.sroa.01.1.i.i110, !7803, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value), !7077)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !7838), !dbg !8246
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !7838), !dbg !8227
     #dbg_value(ptr %i.bg, !2552, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7211)
     #dbg_value(!DIArgList(ptr %i.o, i64 %.sroa.01.1.i.i110), !2552, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_constu, 1, DW_OP_minus, DW_OP_constu, 32, DW_OP_mul, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !7211)
     #dbg_value(ptr poison, !2561, !DIExpression(), !7211)
@@ -473,23 +481,23 @@ bb.l:                                             ; preds = %.lr.ph
   %i.bo = icmp eq i32 %i.bm, 0, !dbg !8255
   %spec.store.select1.i.i.i.i = select i1 %i.bo, i64 %i.bl, i64 %i.bn, !dbg !8255 ; 2 uses
     #dbg_value(i64 %spec.store.select1.i.i.i.i, !2661, !DIExpression(), !7249)
-  %i.bp = icmp eq i64 %spec.store.select1.i.i.i.i, 0, !dbg !8242
-  %i.bq = getelementptr inbounds nuw i8, ptr %i.bg, i64 24, !dbg !8242
-  %i.br = load i8, ptr %i.bq, align 8, !dbg !8242, !range !2675, !alias.scope !7845, !noalias !7846 ; 2 uses
+  %i.bp = icmp eq i64 %spec.store.select1.i.i.i.i, 0, !dbg !8243
+  %i.bq = getelementptr inbounds nuw i8, ptr %i.bg, i64 24, !dbg !8243
+  %i.br = load i8, ptr %i.bq, align 8, !dbg !8243, !range !2675, !alias.scope !7845, !noalias !7846 ; 2 uses
     #dbg_value(i8 poison, !2593, !DIExpression(), !7250)
   %i.bs = icmp samesign ult i8 %i.br, %i.bd, !dbg !8256
   %i.bt = icmp slt i64 %spec.store.select1.i.i.i.i, 0, !dbg !8256
-  %i.bu = select i1 %i.bp, i1 %i.bs, i1 %i.bt, !dbg !8242
-  br i1 %i.bu, label %bb.m, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runNtNtNtCs3roNzt6HBWW_12regex_syntax3hir7literal7LiteralNvYB12_NtNtB8_3cmp10PartialOrd2ltECs9GYDdpCSJ4S_14regex_automata.exit.i, !dbg !8246
+  %i.bu = select i1 %i.bp, i1 %i.bs, i1 %i.bt, !dbg !8243
+  br i1 %i.bu, label %bb.m, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runNtNtNtCs3roNzt6HBWW_12regex_syntax3hir7literal7LiteralNvYB12_NtNtB8_3cmp10PartialOrd2ltECs9GYDdpCSJ4S_14regex_automata.exit.i, !dbg !8227
 
 bb.m:                                             ; preds = %.lr.ph111
-  %i.bv = add nuw i64 %.sroa.01.1.i.i110, 1, !dbg !8257 ; 2 uses
+  %i.bv = add nuw nsw i64 %.sroa.01.1.i.i110, 1, !dbg !8257 ; 2 uses
     #dbg_value(i64 %i.bv, !7786, !DIExpression(), !7087)
-  %exitcond131.not = icmp eq i64 %i.bv, %i.n, !dbg !8225
-  br i1 %exitcond131.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runNtNtNtCs3roNzt6HBWW_12regex_syntax3hir7literal7LiteralNvYB12_NtNtB8_3cmp10PartialOrd2ltECs9GYDdpCSJ4S_14regex_automata.exit.i, label %.lr.ph111, !dbg !8225
+  %exitcond131.not = icmp eq i64 %i.bv, %smax131, !dbg !8226
+  br i1 %exitcond131.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runNtNtNtCs3roNzt6HBWW_12regex_syntax3hir7literal7LiteralNvYB12_NtNtB8_3cmp10PartialOrd2ltECs9GYDdpCSJ4S_14regex_automata.exit.i, label %.lr.ph111, !dbg !8226
 
 _RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runNtNtNtCs3roNzt6HBWW_12regex_syntax3hir7literal7LiteralNvYB12_NtNtB8_3cmp10PartialOrd2ltECs9GYDdpCSJ4S_14regex_automata.exit.i: ; preds = %bb.l, %.lr.ph, %bb.m, %.lr.ph111
-  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i110, %.lr.ph111 ], [ %i.n, %bb.m ], [ %.sroa.01.0.i.i107, %.lr.ph ], [ %i.n, %bb.l ], !dbg !8258 ; 5 uses
+  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i110, %.lr.ph111 ], [ %smax131, %bb.m ], [ %.sroa.01.0.i.i107, %.lr.ph ], [ %smax, %bb.l ], !dbg !8258 ; 5 uses
     #dbg_value(i64 %.sroa.0.0.i.i, !7773, !DIExpression(), !7251)
     #dbg_value(i64 %.sroa.0.0.i.i, !7847, !DIExpression(), !7254)
     #dbg_value(i1 poison, !7774, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !7251)
@@ -890,6 +898,9 @@ declare i64 @llvm.umin.i64(i64, i64) #18
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #21
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #18
@@ -1294,28 +1305,28 @@ begin_hunk_2_@llvm.memset.p0.i64
 !8222 = !DILocation(line: 0, scope: !7053, inlinedAt: !7057)
 !8223 = !DILocation(line: 35, column: 12, scope: !7053, inlinedAt: !7057)
 !8224 = !DILocation(line: 40, column: 19, scope: !7053, inlinedAt: !7057)
-!8225 = !DILocation(line: 36, column: 19, scope: !7053, inlinedAt: !7057)
-!8226 = !DILocation(line: 2050, column: 5, scope: !389, inlinedAt: !7148)
-!8227 = !DILocation(line: 1865, column: 86, scope: !393, inlinedAt: !7151)
-!8228 = !DILocation(line: 611, column: 9, scope: !395, inlinedAt: !7155)
-!8229 = !DILocation(line: 219, column: 13, scope: !7063, inlinedAt: !7080)
-!8230 = !DILocation(line: 40, column: 37, scope: !7053, inlinedAt: !7057)
-!8231 = !DILocation(line: 166, column: 5, scope: !379, inlinedAt: !7145)
-!8232 = !DILocation(line: 1471, column: 14, scope: !380, inlinedAt: !7146)
-!8233 = !DILocation(line: 2048, column: 32, scope: !387, inlinedAt: !7147)
-!8234 = !DILocation(line: 611, column: 9, scope: !395, inlinedAt: !7183)
-!8235 = !DILocation(line: 1865, column: 86, scope: !393, inlinedAt: !7173)
-!8236 = !DILocation(line: 328, column: 20, scope: !402, inlinedAt: !7189)
-!8237 = !DILocation(line: 331, column: 22, scope: !403, inlinedAt: !7189)
-!8238 = !DILocation(line: 339, column: 34, scope: !399, inlinedAt: !7189)
-!8239 = !DILocation(line: 340, column: 12, scope: !398, inlinedAt: !7189)
-!8240 = !DILocation(line: 660, column: 9, scope: !386, inlinedAt: !7162)
-!8241 = !DILocation(line: 42, column: 17, scope: !7053, inlinedAt: !7057)
-!8242 = !DILocation(line: 2050, column: 5, scope: !389, inlinedAt: !7201)
-!8243 = !DILocation(line: 1865, column: 86, scope: !393, inlinedAt: !7204)
-!8244 = !DILocation(line: 611, column: 9, scope: !395, inlinedAt: !7208)
-!8245 = !DILocation(line: 219, column: 13, scope: !7063, inlinedAt: !7072)
-!8246 = !DILocation(line: 36, column: 36, scope: !7053, inlinedAt: !7057)
+!8225 = !DILocation(line: 40, column: 37, scope: !7053, inlinedAt: !7057)
+!8226 = !DILocation(line: 36, column: 19, scope: !7053, inlinedAt: !7057)
+!8227 = !DILocation(line: 36, column: 36, scope: !7053, inlinedAt: !7057)
+!8228 = !DILocation(line: 2050, column: 5, scope: !389, inlinedAt: !7148)
+!8229 = !DILocation(line: 1865, column: 86, scope: !393, inlinedAt: !7151)
+!8230 = !DILocation(line: 611, column: 9, scope: !395, inlinedAt: !7155)
+!8231 = !DILocation(line: 219, column: 13, scope: !7063, inlinedAt: !7080)
+!8232 = !DILocation(line: 166, column: 5, scope: !379, inlinedAt: !7145)
+!8233 = !DILocation(line: 1471, column: 14, scope: !380, inlinedAt: !7146)
+!8234 = !DILocation(line: 2048, column: 32, scope: !387, inlinedAt: !7147)
+!8235 = !DILocation(line: 611, column: 9, scope: !395, inlinedAt: !7183)
+!8236 = !DILocation(line: 1865, column: 86, scope: !393, inlinedAt: !7173)
+!8237 = !DILocation(line: 328, column: 20, scope: !402, inlinedAt: !7189)
+!8238 = !DILocation(line: 331, column: 22, scope: !403, inlinedAt: !7189)
+!8239 = !DILocation(line: 339, column: 34, scope: !399, inlinedAt: !7189)
+!8240 = !DILocation(line: 340, column: 12, scope: !398, inlinedAt: !7189)
+!8241 = !DILocation(line: 660, column: 9, scope: !386, inlinedAt: !7162)
+!8242 = !DILocation(line: 42, column: 17, scope: !7053, inlinedAt: !7057)
+!8243 = !DILocation(line: 2050, column: 5, scope: !389, inlinedAt: !7201)
+!8244 = !DILocation(line: 1865, column: 86, scope: !393, inlinedAt: !7204)
+!8245 = !DILocation(line: 611, column: 9, scope: !395, inlinedAt: !7208)
+!8246 = !DILocation(line: 219, column: 13, scope: !7063, inlinedAt: !7072)
 !8247 = !DILocation(line: 166, column: 5, scope: !379, inlinedAt: !7198)
 !8248 = !DILocation(line: 1471, column: 14, scope: !380, inlinedAt: !7199)
 !8249 = !DILocation(line: 2048, column: 32, scope: !387, inlinedAt: !7200)

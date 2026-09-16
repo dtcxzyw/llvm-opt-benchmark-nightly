@@ -205,10 +205,14 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.d = load i64, ptr %i.c, align 8, !tbaa !183  ; 7 uses
   %.not = icmp eq i64 %i.d, 0
-  br i1 %.not, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i, label %.lr.ph.i
+  br i1 %.not, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i, label %.lr.ph.i.preheader
 
-.lr.ph.i:                                         ; preds = %bb.a, %bb.b
-  %.01213.i = phi i64 [ %i.g, %bb.b ], [ 0, %bb.a ] ; 3 uses
+.lr.ph.i.preheader:                               ; preds = %bb.a
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.d, i64 1)
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.b
+  %.01213.i = phi i64 [ %i.g, %bb.b ], [ 0, %.lr.ph.i.preheader ] ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 %.01213.i
   %i.f = load i8, ptr %i.e, align 1, !tbaa !184
   switch i8 %i.f, label %.lr.ph18.i.preheader [
@@ -217,12 +221,12 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %.lr.ph.i, %.lr.ph.i
-  %i.g = add nuw i64 %.01213.i, 1                 ; 2 uses
-  %exitcond.not = icmp eq i64 %i.g, %i.d
+  %i.g = add nuw nsw i64 %.01213.i, 1             ; 2 uses
+  %exitcond.not = icmp eq i64 %i.g, %smax
   br i1 %exitcond.not, label %.lr.ph18.i.preheader, label %.lr.ph.i, !llvm.loop !15
 
 .lr.ph18.i.preheader:                             ; preds = %bb.b, %.lr.ph.i
-  %.012.lcssa.i12 = phi i64 [ %.01213.i, %.lr.ph.i ], [ %i.d, %bb.b ] ; 3 uses
+  %.012.lcssa.i12 = phi i64 [ %i.d, %bb.b ], [ %.01213.i, %.lr.ph.i ] ; 3 uses
   br label %.lr.ph18.i
 
 .lr.ph18.i:                                       ; preds = %.lr.ph18.i.preheader, %bb.c
@@ -241,7 +245,7 @@ bb.c:                                             ; preds = %.lr.ph18.i, %.lr.ph
   br i1 %.not.i, label %_ZN7httplib6detail4trimEPKcS2_mm.exit, label %.lr.ph18.i, !llvm.loop !16
 
 _ZN7httplib6detail4trimEPKcS2_mm.exit:            ; preds = %.lr.ph18.i, %bb.c
-  %.0.lcssa.i = phi i64 [ %.017.i, %.lr.ph18.i ], [ 0, %bb.c ]
+  %.0.lcssa.i = phi i64 [ 0, %bb.c ], [ %.017.i, %.lr.ph18.i ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1381)
   %i.l = icmp ugt i64 %.012.lcssa.i12, %i.d
   br i1 %i.l, label %bb.d, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
@@ -644,10 +648,14 @@ bb.a:
   %.val6 = load ptr, ptr %3, align 8, !tbaa !312  ; 3 uses
   %.val7 = load i64, ptr %4, align 8, !tbaa !197  ; 4 uses
   %.not.i.i.i = icmp eq i64 %.val5, 0
-  br i1 %.not.i.i.i, label %_ZN7httplib6detail4trimEPKcS2_mm.exit.i.i.i, label %.lr.ph.i.i.i.i
+  br i1 %.not.i.i.i, label %_ZN7httplib6detail4trimEPKcS2_mm.exit.i.i.i, label %.lr.ph.i.preheader.i.i.i
 
-.lr.ph.i.i.i.i:                                   ; preds = %bb.a, %bb.b
-  %.01213.i.i.i.i = phi i64 [ %i.c, %bb.b ], [ 0, %bb.a ] ; 3 uses
+.lr.ph.i.preheader.i.i.i:                         ; preds = %bb.a
+  %smax.i.i.i = tail call i64 @llvm.smax.i64(i64 %.val5, i64 1)
+  br label %.lr.ph.i.i.i.i
+
+.lr.ph.i.i.i.i:                                   ; preds = %bb.b, %.lr.ph.i.preheader.i.i.i
+  %.01213.i.i.i.i = phi i64 [ %i.c, %bb.b ], [ 0, %.lr.ph.i.preheader.i.i.i ] ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %.val, i64 %.01213.i.i.i.i
   %i.b = load i8, ptr %i.a, align 1, !tbaa !184
   switch i8 %i.b, label %.lr.ph18.i.preheader.i.i.i [
@@ -656,8 +664,8 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %.lr.ph.i.i.i.i, %.lr.ph.i.i.i.i
-  %i.c = add nuw i64 %.01213.i.i.i.i, 1           ; 2 uses
-  %exitcond.not.i.i.i = icmp eq i64 %i.c, %.val5
+  %i.c = add nuw nsw i64 %.01213.i.i.i.i, 1       ; 2 uses
+  %exitcond.not.i.i.i = icmp eq i64 %i.c, %smax.i.i.i
   br i1 %exitcond.not.i.i.i, label %.lr.ph18.i.preheader.i.i.i, label %.lr.ph.i.i.i.i, !llvm.loop !15
 
 .lr.ph18.i.preheader.i.i.i:                       ; preds = %bb.b, %.lr.ph.i.i.i.i
@@ -689,10 +697,14 @@ _ZN7httplib6detail4trimEPKcS2_mm.exit.i.i.i:      ; preds = %bb.c, %.lr.ph18.i.i
   %gepdiff.i.i.i = sub nsw i64 %.0.lcssa.i.i.i.i, %.012.lcssa.i37.i.i.i
   %i.l = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.h, i64 noundef 0, i64 noundef %i.k, ptr noundef %i.i, i64 noundef %gepdiff.i.i.i) ; 0 uses
   %.not27.i.i.i = icmp eq i64 %.val7, 0
-  br i1 %.not27.i.i.i, label %"_ZSt10__invoke_rIvRZN7httplib6detail17divide_param_pairEPKcS3_RNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_E3$_0JS3_mS3_mEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESE_E4typeEOSF_DpOSG_.exit", label %.lr.ph.i24.i.i.i
+  br i1 %.not27.i.i.i, label %"_ZSt10__invoke_rIvRZN7httplib6detail17divide_param_pairEPKcS3_RNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_E3$_0JS3_mS3_mEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESE_E4typeEOSF_DpOSG_.exit", label %.lr.ph.i24.preheader.i.i.i
 
-.lr.ph.i24.i.i.i:                                 ; preds = %_ZN7httplib6detail4trimEPKcS2_mm.exit.i.i.i, %bb.d
-  %.01213.i25.i.i.i = phi i64 [ %i.o, %bb.d ], [ 0, %_ZN7httplib6detail4trimEPKcS2_mm.exit.i.i.i ] ; 3 uses
+.lr.ph.i24.preheader.i.i.i:                       ; preds = %_ZN7httplib6detail4trimEPKcS2_mm.exit.i.i.i
+  %smax29.i.i.i = tail call i64 @llvm.smax.i64(i64 %.val7, i64 1)
+  br label %.lr.ph.i24.i.i.i
+
+.lr.ph.i24.i.i.i:                                 ; preds = %bb.d, %.lr.ph.i24.preheader.i.i.i
+  %.01213.i25.i.i.i = phi i64 [ %i.o, %bb.d ], [ 0, %.lr.ph.i24.preheader.i.i.i ] ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.val6, i64 %.01213.i25.i.i.i
   %i.n = load i8, ptr %i.m, align 1, !tbaa !184
   switch i8 %i.n, label %.lr.ph18.i17.preheader.i.i.i [
@@ -701,8 +713,8 @@ _ZN7httplib6detail4trimEPKcS2_mm.exit.i.i.i:      ; preds = %bb.c, %.lr.ph18.i.i
   ]
 
 bb.d:                                             ; preds = %.lr.ph.i24.i.i.i, %.lr.ph.i24.i.i.i
-  %i.o = add nuw i64 %.01213.i25.i.i.i, 1         ; 2 uses
-  %exitcond29.not.i.i.i = icmp eq i64 %i.o, %.val7
+  %i.o = add nuw nsw i64 %.01213.i25.i.i.i, 1     ; 2 uses
+  %exitcond29.not.i.i.i = icmp eq i64 %i.o, %smax29.i.i.i
   br i1 %exitcond29.not.i.i.i, label %.lr.ph18.i17.preheader.i.i.i, label %.lr.ph.i24.i.i.i, !llvm.loop !15
 
 .lr.ph18.i17.preheader.i.i.i:                     ; preds = %bb.d, %.lr.ph.i24.i.i.i
@@ -1105,10 +1117,14 @@ bb.a:
   %.val7 = load ptr, ptr %3, align 8, !tbaa !312
   %.val8 = load i64, ptr %4, align 8, !tbaa !197
   %.not.i.i.i = icmp eq i64 %.val6, 0
-  br i1 %.not.i.i.i, label %"_ZSt10__invoke_rIvRZN7httplib6detail13parse_qualityEPKcS3_RNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERdE3$_0JS3_mS3_mEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESF_E4typeEOSG_DpOSH_.exit", label %.lr.ph.i.i.i.i
+  br i1 %.not.i.i.i, label %"_ZSt10__invoke_rIvRZN7httplib6detail13parse_qualityEPKcS3_RNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERdE3$_0JS3_mS3_mEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESF_E4typeEOSG_DpOSH_.exit", label %.lr.ph.i.preheader.i.i.i
 
-.lr.ph.i.i.i.i:                                   ; preds = %bb.a, %bb.b
-  %.01213.i.i.i.i = phi i64 [ %i.c, %bb.b ], [ 0, %bb.a ] ; 3 uses
+.lr.ph.i.preheader.i.i.i:                         ; preds = %bb.a
+  %smax.i.i.i = tail call i64 @llvm.smax.i64(i64 %.val6, i64 1)
+  br label %.lr.ph.i.i.i.i
+
+.lr.ph.i.i.i.i:                                   ; preds = %bb.b, %.lr.ph.i.preheader.i.i.i
+  %.01213.i.i.i.i = phi i64 [ %i.c, %bb.b ], [ 0, %.lr.ph.i.preheader.i.i.i ] ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %.val5, i64 %.01213.i.i.i.i
   %i.b = load i8, ptr %i.a, align 1, !tbaa !184
   switch i8 %i.b, label %.lr.ph18.i.preheader.i.i.i [
@@ -1117,8 +1133,8 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %.lr.ph.i.i.i.i, %.lr.ph.i.i.i.i
-  %i.c = add nuw i64 %.01213.i.i.i.i, 1           ; 2 uses
-  %exitcond.not.i.i.i = icmp eq i64 %i.c, %.val6
+  %i.c = add nuw nsw i64 %.01213.i.i.i.i, 1       ; 2 uses
+  %exitcond.not.i.i.i = icmp eq i64 %i.c, %smax.i.i.i
   br i1 %exitcond.not.i.i.i, label %.lr.ph18.i.preheader.i.i.i, label %.lr.ph.i.i.i.i, !llvm.loop !15
 
 .lr.ph18.i.preheader.i.i.i:                       ; preds = %bb.b, %.lr.ph.i.i.i.i

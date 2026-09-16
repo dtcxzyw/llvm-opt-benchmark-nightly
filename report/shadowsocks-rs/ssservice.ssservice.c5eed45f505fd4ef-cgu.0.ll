@@ -205,7 +205,7 @@ bb.fi:                                            ; preds = %bb.ey
   br i1 %i.afv, label %bb.fq, label %bb.fj, !prof !187
 
 bb.fj:                                            ; preds = %bb.fi
-  %i.afw = sub nuw i64 %.val12.i.i.i.i, %i.afu    ; 6 uses
+  %i.afw = sub nuw i64 %.val12.i.i.i.i, %i.afu    ; 4 uses
   %i.afx = getelementptr inbounds nuw i8, ptr %.val.i86.i.i.i, i64 %i.afu ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !45227), !noalias !45228
   call void @llvm.experimental.noalias.scope.decl(metadata !45229), !noalias !45228
@@ -217,6 +217,7 @@ bb.fj:                                            ; preds = %bb.fi
   br i1 %or.cond25.i.i.i.i.i, label %.lr.ph.i.i94.i.i.i.preheader, label %.preheader.i.i.i.i.i
 
 .lr.ph.i.i94.i.i.i.preheader:                     ; preds = %bb.fj
+  %smax.i.i.i.i = call i64 @llvm.smax.i64(i64 %i.afw, i64 0) ; 3 uses
   %i.aga = call i32 @llvm.smin.i32(i32 %.fr, i32 %i.afr)
   %i.agb = xor i32 %i.afq, -1
   %i.agc = add i32 %i.aga, %i.agb
@@ -224,7 +225,7 @@ bb.fj:                                            ; preds = %bb.fi
   %i.age = sub i32 56, %i.afl
   %i.agf = lshr i32 %i.age, 3
   %i.agg = zext nneg i32 %i.agf to i64
-  %i.agh = call i64 @llvm.umin.i64(i64 %i.agg, i64 %i.afw)
+  %i.agh = call i64 @llvm.umin.i64(i64 %smax.i.i.i.i, i64 %i.agg)
   %i.agi = call i64 @llvm.umin.i64(i64 %i.agd, i64 %i.agh) ; 2 uses
   %min.iters.check4312 = icmp samesign ult i64 %i.agi, 4
   br i1 %min.iters.check4312, label %.lr.ph.i.i94.i.i.i.preheader4408, label %vector.ph4313
@@ -317,7 +318,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %indvars.iv.i.i.i.i.i = phi i64 [ %indvars.iv.next.i.i96.i.i.i, %bb.fo ], [ %indvars.iv.i.i.i.i.i.ph, %.lr.ph.i.i94.i.i.i.preheader4408 ] ; 3 uses
   %.sroa.0.027.i.i.i.i.i = phi i32 [ %i.ahx, %bb.fo ], [ %.sroa.0.027.i.i.i.i.i.ph, %.lr.ph.i.i94.i.i.i.preheader4408 ]
   %i.ahl = phi i32 [ %i.ahw, %bb.fo ], [ %.ph, %.lr.ph.i.i94.i.i.i.preheader4408 ] ; 3 uses
-  %exitcond.not.i95.i.i.i = icmp eq i64 %indvars.iv.i.i.i.i.i, %i.afw
+  %exitcond.not.i95.i.i.i = icmp eq i64 %indvars.iv.i.i.i.i.i, %smax.i.i.i.i
   br i1 %exitcond.not.i95.i.i.i, label %bb.fp, label %bb.fo
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %bb.fm
@@ -366,7 +367,7 @@ bb.fo:                                            ; preds = %.lr.ph.i.i94.i.i.i
   br i1 %or.cond.i.i97.i.i.i, label %.lr.ph.i.i94.i.i.i, label %.preheader.i.i.i.i.i, !llvm.loop !44711
 
 bb.fp:                                            ; preds = %.lr.ph.i.i94.i.i.i
-  call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.afw, i64 noundef range(i64 0, -9223372036854775808) %i.afw, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2368) #63, !noalias !45236
+  call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %smax.i.i.i.i, i64 noundef range(i64 0, -9223372036854775808) %i.afw, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2368) #63, !noalias !45236
   unreachable
 
 _RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader15BrotliCopyBytes.exit.i.i.i.i: ; preds = %bb.fm, %.preheader.i.i.i.i.i
@@ -767,6 +768,9 @@ declare i32 @llvm.smax.i32(i32, i32) #42
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umin.i8(i8, i8) #42
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #42
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #42

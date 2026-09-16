@@ -205,7 +205,7 @@ bb.bk:                                            ; preds = %.preheader200.prehe
   %i.sw = getelementptr inbounds nuw i8, ptr %0, i64 30 ; 5 uses
   %i.sx = load i16, ptr %i.sw, align 2, !tbaa !143
   %i.sy = zext i16 %i.sx to i32
-  %i.sz = mul nuw i32 %i.sy, %i.sv                ; 8 uses
+  %i.sz = mul nuw i32 %i.sy, %i.sv                ; 7 uses
   %i.ta = load ptr, ptr %0, align 8, !tbaa !86
   %i.tb = getelementptr inbounds nuw i8, ptr %i.ta, i64 136
   %i.tc = load ptr, ptr %i.tb, align 8
@@ -231,6 +231,7 @@ bb.bm:                                            ; preds = %bb.bl, %bb.bk
   %i.tm = shl nuw i32 %i.sz, 1
   %i.tn = zext i32 %i.tm to i64                   ; 2 uses
   %.not272 = icmp eq i32 %i.sz, 0                 ; 2 uses
+  %smax = call i32 @llvm.smax.i32(i32 %i.sz, i32 1) ; 2 uses
   %i.to = fcmp reassoc nsz arcp contract afn oeq double %i.te, 1.000000e+00
   br i1 %i.to, label %bb.bs, label %bb.bn
 
@@ -240,8 +241,8 @@ bb.bn:                                            ; preds = %.preheader198
 
 iter.check:                                       ; preds = %bb.bn
   %i.tq = load ptr, ptr %i.i, align 8, !tbaa !93  ; 16 uses
-  %wide.trip.count = zext i32 %i.sz to i64        ; 9 uses
-  %min.iters.check = icmp ult i32 %i.sz, 9
+  %wide.trip.count = zext nneg i32 %smax to i64   ; 9 uses
+  %min.iters.check = icmp slt i32 %i.sz, 9
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
@@ -256,8 +257,8 @@ vector.memcheck:                                  ; preds = %iter.check
   br i1 %found.conflict, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check485 = icmp ult i32 %i.sz, 65
-  br i1 %min.iters.check485, label %vec.epilog.ph, label %vector.ph
+  %min.iters.check483 = icmp slt i32 %i.sz, 65
+  br i1 %min.iters.check483, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.tu = and i64 %wide.trip.count, 63            ; 2 uses
@@ -515,9 +516,9 @@ bb.bt:                                            ; preds = %bb.bs
 iter.check521:                                    ; preds = %bb.bt
   %i.yj = load ptr, ptr %i.i, align 8, !tbaa !93  ; 2 uses
   %invariant.gep.1 = getelementptr inbounds nuw i8, ptr %i.yj, i64 4 ; 15 uses
-  %wide.trip.count.1 = zext i32 %i.sz to i64      ; 9 uses
-  %min.iters.check503 = icmp ult i32 %i.sz, 9
-  br i1 %min.iters.check503, label %vec.epilog.scalar.ph522.preheader, label %vector.memcheck497
+  %wide.trip.count.1 = zext nneg i32 %smax to i64 ; 9 uses
+  %min.iters.check501 = icmp slt i32 %i.sz, 9
+  br i1 %min.iters.check501, label %vec.epilog.scalar.ph522.preheader, label %vector.memcheck497
 
 vector.memcheck497:                               ; preds = %iter.check521
   %i.yk = shl nuw nsw i64 %wide.trip.count.1, 1
@@ -531,8 +532,8 @@ vector.memcheck497:                               ; preds = %iter.check521
   br i1 %found.conflict502, label %vec.epilog.scalar.ph522.preheader, label %vector.main.loop.iter.check504
 
 vector.main.loop.iter.check504:                   ; preds = %vector.memcheck497
-  %min.iters.check505 = icmp ult i32 %i.sz, 65
-  br i1 %min.iters.check505, label %vec.epilog.ph525, label %vector.ph506
+  %min.iters.check503 = icmp slt i32 %i.sz, 65
+  br i1 %min.iters.check503, label %vec.epilog.ph525, label %vector.ph506
 
 vector.ph506:                                     ; preds = %vector.main.loop.iter.check504
   %i.yn = and i64 %wide.trip.count.1, 63          ; 2 uses

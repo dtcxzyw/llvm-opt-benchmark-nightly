@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %.loopexit
   %i.am = icmp ult i64 %i.al, 576460752303423488
   tail call void @llvm.assume(i1 %i.am)
   %.not24 = icmp samesign ugt i64 %i.al, %i.l
-  br i1 %.not24, label %bb.n, label %bb.r
+  br i1 %.not24, label %bb.n, label %6
 
 .invoke:                                          ; preds = %.lr.ph, %._crit_edge, %.loopexit
   %i.an = phi i64 [ %i.y, %.loopexit ], [ %i.ax, %._crit_edge ], [ %i.az, %.lr.ph ]
@@ -247,17 +247,21 @@ bb.q:                                             ; preds = %bb.p
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCscdodAO9FK5_5alloc4sync3ArceEEECs98D8VPWzHuM_14regex_automata.exit: ; preds = %bb.q, %bb.p, %bb.o, %bb.g, %bb.f, %bb.e, %bb.y
   ret void
 
-bb.r:                                             ; preds = %bb.m
-  %i.aw = sub nuw nsw i64 %i.l, %i.al
+6:                                                ; preds = %bb.m
   %.not58 = icmp eq i64 %i.al, %i.l
-  br i1 %.not58, label %._crit_edge, label %.lr.ph
+  br i1 %.not58, label %._crit_edge, label %bb.r
+
+bb.r:                                             ; preds = %6
+  %i.aw = sub nsw i64 %i.l, %i.al
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.aw, i64 1)
+  br label %.lr.ph
 
 ._crit_edge.loopexit:                             ; preds = %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecINtNtCs4NRVxsYgnAr_4core6option6OptionINtNtB7_4sync3ArceEEE8push_mutCs98D8VPWzHuM_14regex_automata.exit33
   %.pre = load i64, ptr %i.o, align 8
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.r
-  %i.ax = phi i64 [ %.pre, %._crit_edge.loopexit ], [ %i.y, %bb.r ] ; 2 uses
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %6
+  %i.ax = phi i64 [ %.pre, %._crit_edge.loopexit ], [ %i.y, %6 ] ; 2 uses
   %i.ay = icmp ugt i64 %i.ax, %i.m
   br i1 %i.ay, label %bb.s, label %.invoke
 
@@ -333,7 +337,7 @@ bb.y:                                             ; preds = %bb.t, %bb.s
 
 bb.z:                                             ; preds = %.lr.ph
   %i.bx = load ptr, ptr %i.z, align 8, !nonnull !3, !noundef !3
-  %i.by = add nuw i64 %.sroa.010.057, 1           ; 2 uses
+  %i.by = add nuw nsw i64 %.sroa.010.057, 1       ; 2 uses
   %i.bz = getelementptr inbounds nuw [24 x i8], ptr %i.bx, i64 %i.m ; 4 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 16 ; 2 uses
   %i.cb = load i64, ptr %i.ca, align 8, !alias.scope !653, !noundef !3 ; 3 uses
@@ -357,7 +361,7 @@ _RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecINtNtCs4NRVxsYgnAr_4core6option6Optio
   store ptr null, ptr %i.ch, align 8
   %i.ci = add i64 %i.cb, 1
   store i64 %i.ci, ptr %i.ca, align 8, !alias.scope !653
-  %exitcond.not = icmp eq i64 %i.by, %i.aw
+  %exitcond.not = icmp eq i64 %i.by, %smax
   br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph
 
 bb.ac:                                            ; preds = %bb.j, %bb.i
@@ -759,6 +763,9 @@ declare i64 @llvm.umin.i64(i64, i64) #16
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #21
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #16
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

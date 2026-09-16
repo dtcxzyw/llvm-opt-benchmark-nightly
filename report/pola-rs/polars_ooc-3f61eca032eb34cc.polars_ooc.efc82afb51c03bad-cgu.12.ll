@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.r, !dbg !3665
 
 bb.h:                                             ; preds = %bb.f
-  %i.n = sub nuw nsw i64 %1, %.sroa.09.0, !dbg !3666 ; 11 uses
+  %i.n = sub nuw nsw i64 %1, %.sroa.09.0, !dbg !3666 ; 9 uses
   %i.o = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %.sroa.09.0, !dbg !3667 ; 7 uses
   %.not.i33 = icmp ult i64 %i.n, %.sroa.01.0, !dbg !3668
   br i1 %.not.i33, label %bb.i, label %bb.j, !dbg !3668
@@ -233,37 +233,45 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not119, label %.preheader53, label %.preheader, !dbg !3676
 
 .preheader53:                                     ; preds = %bb.k
-  br i1 %.not75, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTNtNtCskAlUH1kY1DR_10polars_ooc13spill_context16WeakSpillContextdENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_7sort_byNCNCNvMNtB17_14memory_managerNtB2Y_13MemoryManager15find_spillables00E0EB17_.exit.i.thread, label %.lr.ph, !dbg !3677
+  br i1 %.not75, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTNtNtCskAlUH1kY1DR_10polars_ooc13spill_context16WeakSpillContextdENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_7sort_byNCNCNvMNtB17_14memory_managerNtB2Y_13MemoryManager15find_spillables00E0EB17_.exit.i.thread, label %.lr.ph.preheader, !dbg !3677
+
+.lr.ph.preheader:                                 ; preds = %.preheader53
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.n, i64 3), !dbg !3678 ; 2 uses
+  br label %.lr.ph, !dbg !3678
 
 .preheader:                                       ; preds = %bb.k
-  br i1 %.not75, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTNtNtCskAlUH1kY1DR_10polars_ooc13spill_context16WeakSpillContextdENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_7sort_byNCNCNvMNtB17_14memory_managerNtB2Y_13MemoryManager15find_spillables00E0EB17_.exit.i.thread102, label %.lr.ph62, !dbg !3678
+  br i1 %.not75, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTNtNtCskAlUH1kY1DR_10polars_ooc13spill_context16WeakSpillContextdENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_7sort_byNCNCNvMNtB17_14memory_managerNtB2Y_13MemoryManager15find_spillables00E0EB17_.exit.i.thread102, label %.lr.ph62.preheader, !dbg !3679
 
-.lr.ph:                                           ; preds = %.preheader53, %bb.l
-  %.val9.i = phi double [ %.val8.i, %bb.l ], [ %.val10.i, %.preheader53 ], !dbg !3679 ; 3 uses
-  %.sroa.01.0.i.i58 = phi i64 [ %i.ad, %bb.l ], [ 2, %.preheader53 ] ; 3 uses
-  %i.w = getelementptr inbounds nuw [24 x i8], ptr %i.o, i64 %.sroa.01.0.i.i58, !dbg !3680
-  %i.x = getelementptr i8, ptr %i.w, i64 16, !dbg !3679
-  %.val8.i = load double, ptr %i.x, align 8, !dbg !3679, !alias.scope !3609, !noalias !3610, !noundef !336 ; 4 uses
-  %i.y = fcmp uno double %.val8.i, 0.000000e+00, !dbg !3681
-  %i.z = fcmp oge double %.val8.i, %.val9.i, !dbg !3682
-  %.not2.i.not.i40 = or i1 %i.y, %i.z, !dbg !3683
-  %i.aa = fcmp ord double %.val9.i, 0.000000e+00, !dbg !3683
-  %i.ab = fcmp ult double %.val9.i, %.val8.i, !dbg !3683
-  %.not4.i.i41 = and i1 %i.aa, %i.ab, !dbg !3683
-  %i.ac = and i1 %.not2.i.not.i40, %.not4.i.i41, !dbg !3683
-  br i1 %i.ac, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTNtNtCskAlUH1kY1DR_10polars_ooc13spill_context16WeakSpillContextdENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_7sort_byNCNCNvMNtB17_14memory_managerNtB2Y_13MemoryManager15find_spillables00E0EB17_.exit.i, label %bb.l, !dbg !3679
+.lr.ph62.preheader:                               ; preds = %.preheader
+  %smax82 = tail call i64 @llvm.smax.i64(i64 %i.n, i64 3), !dbg !3680 ; 2 uses
+  br label %.lr.ph62, !dbg !3680
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.l
+  %.val9.i = phi double [ %.val8.i, %bb.l ], [ %.val10.i, %.lr.ph.preheader ], !dbg !3678 ; 3 uses
+  %.sroa.01.0.i.i58 = phi i64 [ %i.ad, %bb.l ], [ 2, %.lr.ph.preheader ] ; 3 uses
+  %i.w = getelementptr inbounds nuw [24 x i8], ptr %i.o, i64 %.sroa.01.0.i.i58, !dbg !3681
+  %i.x = getelementptr i8, ptr %i.w, i64 16, !dbg !3678
+  %.val8.i = load double, ptr %i.x, align 8, !dbg !3678, !alias.scope !3609, !noalias !3610, !noundef !336 ; 4 uses
+  %i.y = fcmp uno double %.val8.i, 0.000000e+00, !dbg !3682
+  %i.z = fcmp oge double %.val8.i, %.val9.i, !dbg !3683
+  %.not2.i.not.i40 = or i1 %i.y, %i.z, !dbg !3684
+  %i.aa = fcmp ord double %.val9.i, 0.000000e+00, !dbg !3684
+  %i.ab = fcmp ult double %.val9.i, %.val8.i, !dbg !3684
+  %.not4.i.i41 = and i1 %i.aa, %i.ab, !dbg !3684
+  %i.ac = and i1 %.not2.i.not.i40, %.not4.i.i41, !dbg !3684
+  br i1 %i.ac, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTNtNtCskAlUH1kY1DR_10polars_ooc13spill_context16WeakSpillContextdENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_7sort_byNCNCNvMNtB17_14memory_managerNtB2Y_13MemoryManager15find_spillables00E0EB17_.exit.i, label %bb.l, !dbg !3678
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.ad = add nuw i64 %.sroa.01.0.i.i58, 1, !dbg !3684 ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ad, %i.n, !dbg !3677
+  %i.ad = add nuw nsw i64 %.sroa.01.0.i.i58, 1, !dbg !3685 ; 2 uses
+  %exitcond.not = icmp eq i64 %i.ad, %smax, !dbg !3677
   br i1 %exitcond.not, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTNtNtCskAlUH1kY1DR_10polars_ooc13spill_context16WeakSpillContextdENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_7sort_byNCNCNvMNtB17_14memory_managerNtB2Y_13MemoryManager15find_spillables00E0EB17_.exit.i, label %.lr.ph, !dbg !3677
 
-.lr.ph62:                                         ; preds = %.preheader, %bb.m
-  %.val7.i = phi double [ %.val.i, %bb.m ], [ %.val10.i, %.preheader ], !dbg !3685 ; 3 uses
-  %.sroa.01.1.i.i61 = phi i64 [ %i.al, %bb.m ], [ 2, %.preheader ] ; 3 uses
+.lr.ph62:                                         ; preds = %.lr.ph62.preheader, %bb.m
+  %.val7.i = phi double [ %.val.i, %bb.m ], [ %.val10.i, %.lr.ph62.preheader ], !dbg !3680 ; 3 uses
+  %.sroa.01.1.i.i61 = phi i64 [ %i.al, %bb.m ], [ 2, %.lr.ph62.preheader ] ; 3 uses
   %i.ae = getelementptr inbounds nuw [24 x i8], ptr %i.o, i64 %.sroa.01.1.i.i61, !dbg !3686
-  %i.af = getelementptr i8, ptr %i.ae, i64 16, !dbg !3685
-  %.val.i = load double, ptr %i.af, align 8, !dbg !3685, !alias.scope !3609, !noalias !3610, !noundef !336 ; 4 uses
+  %i.af = getelementptr i8, ptr %i.ae, i64 16, !dbg !3680
+  %.val.i = load double, ptr %i.af, align 8, !dbg !3680, !alias.scope !3609, !noalias !3610, !noundef !336 ; 4 uses
   %i.ag = fcmp uno double %.val.i, 0.000000e+00, !dbg !3687
   %i.ah = fcmp oge double %.val.i, %.val7.i, !dbg !3688
   %.not2.i.not.i = or i1 %i.ag, %i.ah, !dbg !3689
@@ -271,15 +279,15 @@ bb.l:                                             ; preds = %.lr.ph
   %i.aj = fcmp ult double %.val7.i, %.val.i, !dbg !3689
   %.not4.i.i = and i1 %i.ai, %i.aj, !dbg !3689
   %i.ak = and i1 %.not2.i.not.i, %.not4.i.i, !dbg !3689
-  br i1 %i.ak, label %bb.m, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTNtNtCskAlUH1kY1DR_10polars_ooc13spill_context16WeakSpillContextdENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_7sort_byNCNCNvMNtB17_14memory_managerNtB2Y_13MemoryManager15find_spillables00E0EB17_.exit.i, !dbg !3685
+  br i1 %i.ak, label %bb.m, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTNtNtCskAlUH1kY1DR_10polars_ooc13spill_context16WeakSpillContextdENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_7sort_byNCNCNvMNtB17_14memory_managerNtB2Y_13MemoryManager15find_spillables00E0EB17_.exit.i, !dbg !3680
 
 bb.m:                                             ; preds = %.lr.ph62
-  %i.al = add nuw i64 %.sroa.01.1.i.i61, 1, !dbg !3690 ; 2 uses
-  %exitcond82.not = icmp eq i64 %i.al, %i.n, !dbg !3678
-  br i1 %exitcond82.not, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTNtNtCskAlUH1kY1DR_10polars_ooc13spill_context16WeakSpillContextdENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_7sort_byNCNCNvMNtB17_14memory_managerNtB2Y_13MemoryManager15find_spillables00E0EB17_.exit.i, label %.lr.ph62, !dbg !3678
+  %i.al = add nuw nsw i64 %.sroa.01.1.i.i61, 1, !dbg !3690 ; 2 uses
+  %exitcond82.not = icmp eq i64 %i.al, %smax82, !dbg !3679
+  br i1 %exitcond82.not, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTNtNtCskAlUH1kY1DR_10polars_ooc13spill_context16WeakSpillContextdENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_7sort_byNCNCNvMNtB17_14memory_managerNtB2Y_13MemoryManager15find_spillables00E0EB17_.exit.i, label %.lr.ph62, !dbg !3679
 
 _RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTNtNtCskAlUH1kY1DR_10polars_ooc13spill_context16WeakSpillContextdENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_7sort_byNCNCNvMNtB17_14memory_managerNtB2Y_13MemoryManager15find_spillables00E0EB17_.exit.i: ; preds = %bb.m, %.lr.ph62, %bb.l, %.lr.ph
-  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.0.i.i58, %.lr.ph ], [ %i.n, %bb.l ], [ %.sroa.01.1.i.i61, %.lr.ph62 ], [ %i.n, %bb.m ], !dbg !3691 ; 5 uses
+  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.0.i.i58, %.lr.ph ], [ %smax, %bb.l ], [ %.sroa.01.1.i.i61, %.lr.ph62 ], [ %smax82, %bb.m ], !dbg !3691 ; 5 uses
   %i.am = icmp samesign ule i64 %.sroa.0.0.i.i, %i.n, !dbg !3692
   tail call void @llvm.assume(i1 %i.am), !dbg !3693
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0, !dbg !3694
@@ -681,6 +689,9 @@ declare i64 @llvm.umin.i64(i64, i64) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umin.i8(i8, i8) #25
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #25
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { cold noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
@@ -1084,14 +1095,14 @@ begin_hunk_2_@llvm.umin.i8/@llvm.smax.i64
 !3675 = !DILocation(line: 0, scope: !3392, inlinedAt: !3378)
 !3676 = !DILocation(line: 35, column: 12, scope: !3392, inlinedAt: !3378)
 !3677 = !DILocation(line: 40, column: 19, scope: !3392, inlinedAt: !3378)
-!3678 = !DILocation(line: 36, column: 19, scope: !3392, inlinedAt: !3378)
-!3679 = !DILocation(line: 40, column: 37, scope: !3392, inlinedAt: !3378)
-!3680 = !DILocation(line: 253, column: 13, scope: !3393, inlinedAt: !3396)
-!3681 = !DILocation(line: 604, column: 9, scope: !112, inlinedAt: !3402)
-!3682 = !DILocation(line: 1923, column: 50, scope: !118, inlinedAt: !3404)
-!3683 = !DILocation(line: 333, column: 20, scope: !115, inlinedAt: !3399)
-!3684 = !DILocation(line: 42, column: 17, scope: !3392, inlinedAt: !3378)
-!3685 = !DILocation(line: 36, column: 36, scope: !3392, inlinedAt: !3378)
+!3678 = !DILocation(line: 40, column: 37, scope: !3392, inlinedAt: !3378)
+!3679 = !DILocation(line: 36, column: 19, scope: !3392, inlinedAt: !3378)
+!3680 = !DILocation(line: 36, column: 36, scope: !3392, inlinedAt: !3378)
+!3681 = !DILocation(line: 253, column: 13, scope: !3393, inlinedAt: !3396)
+!3682 = !DILocation(line: 604, column: 9, scope: !112, inlinedAt: !3402)
+!3683 = !DILocation(line: 1923, column: 50, scope: !118, inlinedAt: !3404)
+!3684 = !DILocation(line: 333, column: 20, scope: !115, inlinedAt: !3399)
+!3685 = !DILocation(line: 42, column: 17, scope: !3392, inlinedAt: !3378)
 !3686 = !DILocation(line: 253, column: 13, scope: !3393, inlinedAt: !3406)
 !3687 = !DILocation(line: 604, column: 9, scope: !112, inlinedAt: !3412)
 !3688 = !DILocation(line: 1923, column: 50, scope: !118, inlinedAt: !3414)

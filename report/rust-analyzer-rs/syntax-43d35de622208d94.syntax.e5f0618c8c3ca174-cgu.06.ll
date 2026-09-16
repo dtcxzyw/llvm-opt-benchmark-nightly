@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.r
 
 bb.h:                                             ; preds = %bb.f
-  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 9 uses
   %i.o = getelementptr inbounds nuw [64 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !302)
   %.not.i31 = icmp ult i64 %i.n, %.sroa.01.0
@@ -225,13 +225,21 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.r, label %.preheader48, label %.preheader49
 
 .preheader49:                                     ; preds = %bb.k
-  br i1 %.not81, label %_RINvNtNtNtCshzWfHUSfYae_4core5slice4sort6shared17find_existing_runNtNtCsjJXvCMGntp8_6syntax13syntax_editor6ChangeNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB12_7sort_byNCNvNtB14_9edit_algo11apply_editss_0E0EB16_.exit.i.thread, label %.lr.ph
+  br i1 %.not81, label %_RINvNtNtNtCshzWfHUSfYae_4core5slice4sort6shared17find_existing_runNtNtCsjJXvCMGntp8_6syntax13syntax_editor6ChangeNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB12_7sort_byNCNvNtB14_9edit_algo11apply_editss_0E0EB16_.exit.i.thread, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader49
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.n, i64 3) ; 2 uses
+  br label %.lr.ph
 
 .preheader48:                                     ; preds = %bb.k
-  br i1 %.not81, label %_RINvNtNtNtCshzWfHUSfYae_4core5slice4sort6shared17find_existing_runNtNtCsjJXvCMGntp8_6syntax13syntax_editor6ChangeNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB12_7sort_byNCNvNtB14_9edit_algo11apply_editss_0E0EB16_.exit.i.thread113, label %.lr.ph68
+  br i1 %.not81, label %_RINvNtNtNtCshzWfHUSfYae_4core5slice4sort6shared17find_existing_runNtNtCsjJXvCMGntp8_6syntax13syntax_editor6ChangeNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB12_7sort_byNCNvNtB14_9edit_algo11apply_editss_0E0EB16_.exit.i.thread113, label %.lr.ph68.preheader
 
-.lr.ph:                                           ; preds = %.preheader49, %bb.l
-  %.sroa.01.0.i.i64 = phi i64 [ %i.w, %bb.l ], [ 2, %.preheader49 ] ; 4 uses
+.lr.ph68.preheader:                               ; preds = %.preheader48
+  %smax94 = tail call i64 @llvm.smax.i64(i64 %i.n, i64 3) ; 2 uses
+  br label %.lr.ph68
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.l
+  %.sroa.01.0.i.i64 = phi i64 [ %i.w, %bb.l ], [ 2, %.lr.ph.preheader ] ; 4 uses
   %i.s = getelementptr inbounds nuw [64 x i8], ptr %i.o, i64 %.sroa.01.0.i.i64
   %i.t = getelementptr [64 x i8], ptr %i.o, i64 %.sroa.01.0.i.i64
   %i.u = getelementptr i8, ptr %i.t, i64 -64
@@ -239,12 +247,12 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.v, label %_RINvNtNtNtCshzWfHUSfYae_4core5slice4sort6shared17find_existing_runNtNtCsjJXvCMGntp8_6syntax13syntax_editor6ChangeNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB12_7sort_byNCNvNtB14_9edit_algo11apply_editss_0E0EB16_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.w = add nuw i64 %.sroa.01.0.i.i64, 1         ; 2 uses
-  %exitcond.not = icmp eq i64 %i.w, %i.n
+  %i.w = add nuw nsw i64 %.sroa.01.0.i.i64, 1     ; 2 uses
+  %exitcond.not = icmp eq i64 %i.w, %smax
   br i1 %exitcond.not, label %_RINvNtNtNtCshzWfHUSfYae_4core5slice4sort6shared17find_existing_runNtNtCsjJXvCMGntp8_6syntax13syntax_editor6ChangeNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB12_7sort_byNCNvNtB14_9edit_algo11apply_editss_0E0EB16_.exit.i, label %.lr.ph
 
-.lr.ph68:                                         ; preds = %.preheader48, %bb.m
-  %.sroa.01.1.i.i67 = phi i64 [ %i.ab, %bb.m ], [ 2, %.preheader48 ] ; 4 uses
+.lr.ph68:                                         ; preds = %.lr.ph68.preheader, %bb.m
+  %.sroa.01.1.i.i67 = phi i64 [ %i.ab, %bb.m ], [ 2, %.lr.ph68.preheader ] ; 4 uses
   %i.x = getelementptr inbounds nuw [64 x i8], ptr %i.o, i64 %.sroa.01.1.i.i67
   %i.y = getelementptr [64 x i8], ptr %i.o, i64 %.sroa.01.1.i.i67
   %i.z = getelementptr i8, ptr %i.y, i64 -64
@@ -252,12 +260,12 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.aa, label %bb.m, label %_RINvNtNtNtCshzWfHUSfYae_4core5slice4sort6shared17find_existing_runNtNtCsjJXvCMGntp8_6syntax13syntax_editor6ChangeNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB12_7sort_byNCNvNtB14_9edit_algo11apply_editss_0E0EB16_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph68
-  %i.ab = add nuw i64 %.sroa.01.1.i.i67, 1        ; 2 uses
-  %exitcond94.not = icmp eq i64 %i.ab, %i.n
+  %i.ab = add nuw nsw i64 %.sroa.01.1.i.i67, 1    ; 2 uses
+  %exitcond94.not = icmp eq i64 %i.ab, %smax94
   br i1 %exitcond94.not, label %_RINvNtNtNtCshzWfHUSfYae_4core5slice4sort6shared17find_existing_runNtNtCsjJXvCMGntp8_6syntax13syntax_editor6ChangeNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB12_7sort_byNCNvNtB14_9edit_algo11apply_editss_0E0EB16_.exit.i, label %.lr.ph68
 
 _RINvNtNtNtCshzWfHUSfYae_4core5slice4sort6shared17find_existing_runNtNtCsjJXvCMGntp8_6syntax13syntax_editor6ChangeNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB12_7sort_byNCNvNtB14_9edit_algo11apply_editss_0E0EB16_.exit.i: ; preds = %bb.l, %.lr.ph, %bb.m, %.lr.ph68
-  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i67, %.lr.ph68 ], [ %i.n, %bb.m ], [ %.sroa.01.0.i.i64, %.lr.ph ], [ %i.n, %bb.l ] ; 5 uses
+  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i67, %.lr.ph68 ], [ %smax94, %bb.m ], [ %.sroa.01.0.i.i64, %.lr.ph ], [ %smax, %bb.l ] ; 5 uses
   %i.ac = icmp samesign ule i64 %.sroa.0.0.i.i, %i.n
   tail call void @llvm.assume(i1 %i.ac)
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
@@ -659,6 +667,9 @@ declare i64 @llvm.umax.i64(i64, i64) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #14
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { cold noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %bb.u, %.lr.ph123
   %i.cs = load ptr, ptr %i.cb, align 8, !tbaa !29
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 8
   store ptr null, ptr %i.ct, align 8, !tbaa !31
-  %i.cu = add nuw i64 %.1122, 1                   ; 2 uses
+  %i.cu = add nuw nsw i64 %.1122, 1               ; 2 uses
   %exitcond.not = icmp eq i64 %i.cu, %.087121
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph123
 
@@ -608,6 +608,7 @@ bb.z:                                             ; preds = %bb.y, %.thread
 
 .lr.ph135:                                        ; preds = %bb.z
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 2 uses
+  %smax = tail call i64 @llvm.smax.i64(i64 %.397120, i64 1)
   br label %bb.aa
 
 bb.aa:                                            ; preds = %.lr.ph135, %bb.af
@@ -655,8 +656,8 @@ bb.af:                                            ; preds = %bb.ad, %bb.ae, %bb.
   %i.dj = load ptr, ptr %i.cs, align 8, !tbaa !29
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 8
   store ptr null, ptr %i.dk, align 8, !tbaa !31
-  %i.dl = add nuw i64 %.199133, 1                 ; 2 uses
-  %exitcond.not = icmp eq i64 %i.dl, %.397120
+  %i.dl = add nuw nsw i64 %.199133, 1             ; 2 uses
+  %exitcond.not = icmp eq i64 %i.dl, %smax
   br i1 %exitcond.not, label %.loopexit, label %bb.aa
 
 .loopexit:                                        ; preds = %bb.af, %bb.h, %bb.z, %._crit_edge, %bb.b, %bb.a, %bb.g, %bb.e

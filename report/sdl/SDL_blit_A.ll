@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.0123 = phi i32 [ %i.r, %bb.d ], [ %i.b, %bb.c ] ; 7 uses
+  %.0123 = phi i32 [ %i.r, %bb.d ], [ %i.b, %bb.c ] ; 9 uses
   %.1113 = phi ptr [ %i.ao, %bb.d ], [ %.0112147, %bb.c ] ; 7 uses
   %.1 = phi ptr [ %i.ap, %bb.d ], [ %.0111148, %bb.c ] ; 3 uses
   %i.aq = getelementptr i8, ptr %.1, i64 2        ; 6 uses
@@ -212,17 +212,21 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.at, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.e
-  %i.au = add nsw i32 %.0123, -2                  ; 2 uses
-  %i.av = lshr i32 %i.au, 1
+  %2 = tail call i32 @llvm.smin.i32(i32 %.0123, i32 3)
+  %i.au = add nuw i32 %.0123, 1
+  %3 = sub i32 %i.au, %2                          ; 2 uses
+  %i.av = lshr i32 %3, 1
   %narrow = add nuw i32 %i.av, 1
   %i.aw = zext i32 %narrow to i64                 ; 2 uses
-  %min.iters.check191 = icmp ult i32 %i.au, 6
+  %min.iters.check191 = icmp ult i32 %3, 6
   br i1 %min.iters.check191, label %.lr.ph.preheader212, label %vector.memcheck182
 
 vector.memcheck182:                               ; preds = %.lr.ph.preheader
   %scevgep183 = getelementptr i8, ptr %.1113, i64 4
-  %i.ax = add nsw i32 %.0123, -2
-  %i.ay = lshr i32 %i.ax, 1
+  %i.ax = add nuw i32 %.0123, 1
+  %smin184 = tail call i32 @llvm.smin.i32(i32 %.0123, i32 3)
+  %4 = sub i32 %i.ax, %smin184
+  %i.ay = lshr i32 %4, 1
   %i.az = zext nneg i32 %i.ay to i64
   %i.ba = shl nuw nsw i64 %i.az, 2                ; 2 uses
   %scevgep184 = getelementptr i8, ptr %scevgep183, i64 %i.ba
@@ -358,24 +362,28 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %.0120 = phi i32 [ %i.r, %bb.i ], [ %i.b, %bb.h ] ; 7 uses
+  %.0120 = phi i32 [ %i.r, %bb.i ], [ %i.b, %bb.h ] ; 9 uses
   %.4116 = phi ptr [ %i.dl, %bb.i ], [ %.0112147, %bb.h ] ; 7 uses
   %.4 = phi ptr [ %i.dk, %bb.i ], [ %.0111148, %bb.h ] ; 7 uses
   %i.dm = icmp sgt i32 %.0120, 1
   br i1 %i.dm, label %.lr.ph141.preheader, label %._crit_edge142
 
 .lr.ph141.preheader:                              ; preds = %bb.j
-  %i.dn = add nsw i32 %.0120, -2                  ; 2 uses
-  %i.do = lshr i32 %i.dn, 1
+  %5 = tail call i32 @llvm.smin.i32(i32 %.0120, i32 3)
+  %i.dn = add nuw i32 %.0120, 1
+  %6 = sub i32 %i.dn, %5                          ; 2 uses
+  %i.do = lshr i32 %6, 1
   %narrow210 = add nuw i32 %i.do, 1
   %i.dp = zext i32 %narrow210 to i64              ; 2 uses
-  %min.iters.check = icmp ult i32 %i.dn, 14
+  %min.iters.check = icmp ult i32 %6, 14
   br i1 %min.iters.check, label %.lr.ph141.preheader211, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph141.preheader
   %scevgep = getelementptr i8, ptr %.4116, i64 4
-  %i.dq = add nsw i32 %.0120, -2
-  %i.dr = lshr i32 %i.dq, 1
+  %i.dq = add nuw i32 %.0120, 1
+  %smin = tail call i32 @llvm.smin.i32(i32 %.0120, i32 3)
+  %7 = sub i32 %i.dq, %smin
+  %i.dr = lshr i32 %7, 1
   %i.ds = zext nneg i32 %i.dr to i64
   %i.dt = shl nuw nsw i64 %i.ds, 2                ; 2 uses
   %scevgep171 = getelementptr i8, ptr %scevgep, i64 %i.dt
@@ -504,6 +512,9 @@ bb.m:                                             ; preds = %bb.l, %bb.g
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.fshl.i32(i32, i32, i32) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.fshl.v4i32(<4 x i32>, <4 x i32>, <4 x i32>) #5

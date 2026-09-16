@@ -205,9 +205,9 @@ bb.g:                                             ; preds = %json_find_attr.exit
   br label %.lr.ph.preheader.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.g, %bb.m
-  %indvars.iv.i129 = phi i64 [ %indvars.iv.next.i134, %bb.m ], [ 0, %bb.g ] ; 8 uses
+  %indvars.iv.i129 = phi i64 [ %indvars.iv.next.i134, %bb.m ], [ 0, %bb.g ] ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #16
-  %i.br = trunc nuw nsw i64 %indvars.iv.i129 to i32 ; 2 uses
+  %i.br = trunc nuw nsw i64 %indvars.iv.i129 to i32 ; 3 uses
   %i.bs = call i32 (ptr, i64, i32, i64, ptr, ...) @__snprintf_chk(ptr noundef nonnull %i.e, i64 noundef 64, i32 noundef 2, i64 noundef 64, ptr noundef nonnull @.str.205, i32 noundef %i.br) ; 0 uses
   br label %.lr.ph.i.i
 
@@ -282,8 +282,10 @@ bb.m:                                             ; preds = %bb.l, %bb.j
   br i1 %.not61.i, label %sharkd_session_create_columns.exit, label %.lr.ph.i130
 
 .lr.ph.i130:                                      ; preds = %.loopexit.i, %.loopexit.thread.i
-  %.0405777.i = phi i64 [ 32, %.loopexit.thread.i ], [ %indvars.iv.i129, %.loopexit.i ]
+  %.0405777.i = phi i32 [ 32, %.loopexit.thread.i ], [ %i.br, %.loopexit.i ]
   %i.cq = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %smax.i = call i32 @llvm.smax.i32(i32 %.0405777.i, i32 1)
+  %wide.trip.count.i = zext nneg i32 %smax.i to i64
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.o, %.lr.ph.i130
@@ -316,7 +318,7 @@ bb.o:                                             ; preds = %g_strdup_inline.exi
   %i.dg = getelementptr i8, ptr %i.cs, i64 72
   store i32 0, ptr %i.dg, align 8
   %indvars.iv.next70.i = add nuw nsw i64 %indvars.iv69.i, 1 ; 2 uses
-  %exitcond72.not.i = icmp eq i64 %indvars.iv.next70.i, %.0405777.i
+  %exitcond72.not.i = icmp eq i64 %indvars.iv.next70.i, %wide.trip.count.i
   br i1 %exitcond72.not.i, label %sharkd_session_create_columns.exit, label %bb.n, !llvm.loop !32
 
 sharkd_session_create_columns.exit:               ; preds = %bb.o, %.loopexit.i
@@ -717,6 +719,9 @@ declare i32 @speex_resampler_set_rate(ptr noundef, i32 noundef, i32 noundef) loc
 
 ; Function Attrs: null_pointer_is_valid
 declare i32 @speex_resampler_process_int(ptr noundef, i32 noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fabs.f64(double) #15

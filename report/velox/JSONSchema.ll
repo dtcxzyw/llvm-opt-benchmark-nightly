@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %_ZSteqIcSt11char_tr
           to label %.preheader unwind label %bb.g
 
 .preheader:                                       ; preds = %bb.c
-  %i.n = load i64, ptr %i.e, align 8, !tbaa !441  ; 22 uses
+  %i.n = load i64, ptr %i.e, align 8, !tbaa !441  ; 18 uses
   %i.o = trunc i64 %i.n to i32
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.q = load i64, ptr %i.p, align 8
@@ -509,11 +509,12 @@ bb.i:                                             ; preds = %_ZN5boost13re_detai
   br i1 %.not.i, label %_ZN5boost13re_detail_50011count_charsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEEjRKT_T0_.exit47, label %iter.check190
 
 iter.check190:                                    ; preds = %bb.i
-  %min.iters.check165 = icmp ult i64 %i.n, 4
-  br i1 %min.iters.check165, label %.lr.ph.i41.preheader, label %vector.scevcheck164
+  %smax165 = call i64 @llvm.smax.i64(i64 %i.n, i64 1) ; 5 uses
+  %min.iters.check166 = icmp slt i64 %i.n, 4
+  br i1 %min.iters.check166, label %.lr.ph.i41.preheader, label %vector.scevcheck164
 
 vector.scevcheck164:                              ; preds = %iter.check190
-  %i.dm = add i64 %i.n, -1                        ; 2 uses
+  %i.dm = add nsw i64 %i.n, -1                    ; 2 uses
   %i.dn = and i64 %i.dm, 4294967295
   %i.do = icmp eq i64 %i.dn, 4294967295
   %i.dp = icmp ugt i64 %i.dm, 4294967295
@@ -521,12 +522,12 @@ vector.scevcheck164:                              ; preds = %iter.check190
   br i1 %i.dq, label %.lr.ph.i41.preheader, label %vector.main.loop.iter.check166
 
 vector.main.loop.iter.check166:                   ; preds = %vector.scevcheck164
-  %min.iters.check167 = icmp ult i64 %i.n, 32
-  br i1 %min.iters.check167, label %vec.epilog.ph194, label %vector.ph168
+  %min.iters.check168 = icmp slt i64 %i.n, 32
+  br i1 %min.iters.check168, label %vec.epilog.ph194, label %vector.ph168
 
 vector.ph168:                                     ; preds = %vector.main.loop.iter.check166
-  %i.dr = and i64 %i.n, 28
-  %n.vec169 = and i64 %i.n, 8589934560            ; 4 uses
+  %i.dr = and i64 %smax165, 28
+  %n.vec169 = and i64 %smax165, 8589934560        ; 4 uses
   %broadcast.splatinsert170 = insertelement <8 x i8> poison, i8 %i.an, i64 0
   %broadcast.splat171 = shufflevector <8 x i8> %broadcast.splatinsert170, <8 x i8> poison, <8 x i32> zeroinitializer ; 4 uses
   br label %vector.body172
@@ -566,7 +567,7 @@ middle.block183:                                  ; preds = %vector.body172
   %bin.rdx185 = add <8 x i32> %i.eg, %bin.rdx184
   %bin.rdx186 = add <8 x i32> %i.eh, %bin.rdx185
   %i.ej = call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %bin.rdx186) ; 3 uses
-  %cmp.n187 = icmp eq i64 %i.n, %n.vec169
+  %cmp.n187 = icmp eq i64 %smax165, %n.vec169
   br i1 %cmp.n187, label %_ZN5boost13re_detail_50011count_charsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEEjRKT_T0_.exit47, label %vec.epilog.iter.check192
 
 vec.epilog.iter.check192:                         ; preds = %middle.block183
@@ -576,7 +577,7 @@ vec.epilog.iter.check192:                         ; preds = %middle.block183
 vec.epilog.ph194:                                 ; preds = %vector.main.loop.iter.check166, %vec.epilog.iter.check192
   %vec.epilog.resume.val188 = phi i64 [ %n.vec169, %vec.epilog.iter.check192 ], [ 0, %vector.main.loop.iter.check166 ]
   %bc.merge.rdx189 = phi i32 [ %i.ej, %vec.epilog.iter.check192 ], [ 0, %vector.main.loop.iter.check166 ]
-  %n.vec195 = and i64 %i.n, 8589934588            ; 3 uses
+  %n.vec195 = and i64 %smax165, 8589934588        ; 3 uses
   %i.ek = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %bc.merge.rdx189, i64 0
   %broadcast.splatinsert196 = insertelement <4 x i8> poison, i8 %i.an, i64 0
   %broadcast.splat197 = shufflevector <4 x i8> %broadcast.splatinsert196, <4 x i8> poison, <4 x i32> zeroinitializer
@@ -596,7 +597,7 @@ vec.epilog.vector.body198:                        ; preds = %vec.epilog.vector.b
 
 vec.epilog.middle.block203:                       ; preds = %vec.epilog.vector.body198
   %i.eq = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.eo) ; 2 uses
-  %cmp.n204 = icmp eq i64 %i.n, %n.vec195
+  %cmp.n204 = icmp eq i64 %smax165, %n.vec195
   br i1 %cmp.n204, label %_ZN5boost13re_detail_50011count_charsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEEjRKT_T0_.exit47, label %.lr.ph.i41.preheader
 
 .lr.ph.i41.preheader:                             ; preds = %vector.scevcheck164, %iter.check190, %vec.epilog.iter.check192, %vec.epilog.middle.block203

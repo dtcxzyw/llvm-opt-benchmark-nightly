@@ -204,7 +204,8 @@ bb.g:                                             ; preds = %bb.b, %bb.f, %bb.c,
   %i.aa = mul i32 %i.z, %i.z
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %i.ad = add i32 %i.aa, 1
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.aa, i32 0)
+  %i.ad = add nuw i32 %smax, 1
   %wide.trip.count = zext i32 %i.ad to i64
   br label %bb.h
 

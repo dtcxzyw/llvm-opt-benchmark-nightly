@@ -205,7 +205,7 @@ bb.ce:                                            ; preds = %_ZN10tetgenmesh14en
   %i.bqm = add nsw i32 %.2305, 1                  ; 2 uses
   %.urem = add nsw i32 %.2305, -2
   %.cmp = icmp ult i32 %i.bqm, 3
-  %i.bqn = select i1 %.cmp, i32 %i.bqm, i32 %.urem ; 6 uses
+  %i.bqn = select i1 %.cmp, i32 %i.bqm, i32 %.urem ; 4 uses
   %i.bqo = zext nneg i32 %i.bqn to i64
   %i.bqp = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %i.bqo ; 2 uses
   %i.bqq = load ptr, ptr %i.bqp, align 16, !tbaa !224
@@ -236,12 +236,13 @@ bb.ce:                                            ; preds = %_ZN10tetgenmesh14en
   br i1 %.not770, label %._crit_edge570, label %.lr.ph569.preheader
 
 .lr.ph569.preheader:                              ; preds = %bb.ce
-  %xtraiter804 = and i32 %i.bqn, 1
-  %6 = icmp eq i32 %i.bqn, 1
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.bqn, i32 1) ; 3 uses
+  %xtraiter804 = and i32 %smax, 1
+  %6 = icmp slt i32 %i.bqn, 2
   br i1 %6, label %.lr.ph569.epil.preheader, label %.lr.ph569.preheader.new
 
 .lr.ph569.preheader.new:                          ; preds = %.lr.ph569.preheader
-  %unroll_iter = and i32 %i.bqn, -2
+  %unroll_iter = and i32 %smax, 2147483646
   br label %.lr.ph569
 
 .lr.ph569:                                        ; preds = %.lr.ph569, %.lr.ph569.preheader.new
@@ -260,7 +261,7 @@ bb.ce:                                            ; preds = %_ZN10tetgenmesh14en
   %i.brs = sext i32 %i.bro to i64
   %i.brt = getelementptr inbounds [4 x i8], ptr @_ZN10tetgenmesh8eprevtblE, i64 %i.brs
   %i.bru = load i32, ptr %i.brt, align 4, !tbaa !59 ; 3 uses
-  %niter.next.1 = add nuw i32 %niter, 2           ; 2 uses
+  %niter.next.1 = add i32 %niter, 2               ; 2 uses
   %niter.ncmp.1.not = icmp eq i32 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1.not, label %._crit_edge570.loopexit.unr-lcssa, label %.lr.ph569, !llvm.loop !597
 
@@ -271,7 +272,7 @@ bb.ce:                                            ; preds = %_ZN10tetgenmesh14en
 .lr.ph569.epil.preheader:                         ; preds = %._crit_edge570.loopexit.unr-lcssa, %.lr.ph569.preheader
   %.epil.init = phi i32 [ %i.bre, %.lr.ph569.preheader ], [ %i.brr, %._crit_edge570.loopexit.unr-lcssa ]
   %.epil.init806 = phi i32 [ %i.brg, %.lr.ph569.preheader ], [ %i.bru, %._crit_edge570.loopexit.unr-lcssa ]
-  %lcmp.mod810 = trunc i32 %i.bqn to i1
+  %lcmp.mod810 = trunc i32 %smax to i1
   tail call void @llvm.assume(i1 %lcmp.mod810)
   %i.brv = sext i32 %.epil.init to i64
   %i.brw = getelementptr inbounds [4 x i8], ptr @_ZN10tetgenmesh8enexttblE, i64 %i.brv

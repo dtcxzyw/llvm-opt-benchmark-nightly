@@ -205,7 +205,8 @@ bb.ad:                                            ; preds = %bb.e, %bb.m, %bb.x,
   %.0144.lcssa270 = phi i32 [ %i.fi, %.thread193 ], [ %i.ff, %bb.ad ] ; 4 uses
   %i.fj = getelementptr inbounds nuw i8, ptr %i.c, i64 5192
   %i.fk = getelementptr inbounds nuw i8, ptr %i.c, i64 5184
-  %wide.trip.count = zext i32 %.0144.lcssa270 to i64
+  %smax = call i32 @llvm.smax.i32(i32 %.0144.lcssa270, i32 1)
+  %wide.trip.count = zext nneg i32 %smax to i64
   br label %bb.ae
 
 ._crit_edge..loopexit_crit_edge:                  ; preds = %bb.c, %.thread193

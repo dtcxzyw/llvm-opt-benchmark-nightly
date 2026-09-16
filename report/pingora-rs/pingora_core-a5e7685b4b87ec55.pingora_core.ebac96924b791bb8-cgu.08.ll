@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.r
 
 bb.h:                                             ; preds = %bb.f
-  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 9 uses
   %i.o = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.09.0 ; 11 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1026)
   %.not.i31 = icmp ult i64 %i.n, %.sroa.01.0
@@ -241,15 +241,23 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ab, label %.preheader, label %.preheader47
 
 .preheader47:                                     ; preds = %bb.k
-  br i1 %.not79, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtCskeugdADtBsi_12pingora_core7modules4http17HttpModuleBuilderNtNtB8_6marker4SendNtB2I_4SyncEL_ENCINvMNtB17_5sliceSB12_11sort_by_keysNCNvMB1E_NtB1E_11HttpModules10add_module0E0EB1I_.exit.i.thread, label %.lr.ph
+  br i1 %.not79, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtCskeugdADtBsi_12pingora_core7modules4http17HttpModuleBuilderNtNtB8_6marker4SendNtB2I_4SyncEL_ENCINvMNtB17_5sliceSB12_11sort_by_keysNCNvMB1E_NtB1E_11HttpModules10add_module0E0EB1I_.exit.i.thread, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader47
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.n, i64 3) ; 2 uses
+  br label %.lr.ph
 
 .preheader:                                       ; preds = %bb.k
-  br i1 %.not79, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtCskeugdADtBsi_12pingora_core7modules4http17HttpModuleBuilderNtNtB8_6marker4SendNtB2I_4SyncEL_ENCINvMNtB17_5sliceSB12_11sort_by_keysNCNvMB1E_NtB1E_11HttpModules10add_module0E0EB1I_.exit.i.thread117, label %.lr.ph66
+  br i1 %.not79, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtCskeugdADtBsi_12pingora_core7modules4http17HttpModuleBuilderNtNtB8_6marker4SendNtB2I_4SyncEL_ENCINvMNtB17_5sliceSB12_11sort_by_keysNCNvMB1E_NtB1E_11HttpModules10add_module0E0EB1I_.exit.i.thread117, label %.lr.ph66.preheader
 
-.lr.ph:                                           ; preds = %.preheader47, %bb.l
-  %i.ac = phi ptr [ %i.ag, %bb.l ], [ %i.u, %.preheader47 ]
-  %.val12.i = phi ptr [ %.val10.i, %bb.l ], [ %.val14.i, %.preheader47 ]
-  %.sroa.01.0.i.i62 = phi i64 [ %i.am, %bb.l ], [ 2, %.preheader47 ] ; 3 uses
+.lr.ph66.preheader:                               ; preds = %.preheader
+  %smax92 = tail call i64 @llvm.smax.i64(i64 %i.n, i64 3) ; 2 uses
+  br label %.lr.ph66
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.l
+  %i.ac = phi ptr [ %i.ag, %bb.l ], [ %i.u, %.lr.ph.preheader ]
+  %.val12.i = phi ptr [ %.val10.i, %bb.l ], [ %.val14.i, %.lr.ph.preheader ]
+  %.sroa.01.0.i.i62 = phi i64 [ %i.am, %bb.l ], [ 2, %.lr.ph.preheader ] ; 3 uses
   %i.ad = getelementptr inbounds nuw [16 x i8], ptr %i.o, i64 %.sroa.01.0.i.i62 ; 2 uses
   %.val10.i = load ptr, ptr %i.ad, align 8, !alias.scope !1026, !noalias !1027, !nonnull !10, !noundef !10 ; 2 uses
   %i.ae = getelementptr i8, ptr %i.ad, i64 8
@@ -264,14 +272,14 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.al, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtCskeugdADtBsi_12pingora_core7modules4http17HttpModuleBuilderNtNtB8_6marker4SendNtB2I_4SyncEL_ENCINvMNtB17_5sliceSB12_11sort_by_keysNCNvMB1E_NtB1E_11HttpModules10add_module0E0EB1I_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.am = add nuw i64 %.sroa.01.0.i.i62, 1        ; 2 uses
-  %exitcond.not = icmp eq i64 %i.am, %i.n
+  %i.am = add nuw nsw i64 %.sroa.01.0.i.i62, 1    ; 2 uses
+  %exitcond.not = icmp eq i64 %i.am, %smax
   br i1 %exitcond.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtCskeugdADtBsi_12pingora_core7modules4http17HttpModuleBuilderNtNtB8_6marker4SendNtB2I_4SyncEL_ENCINvMNtB17_5sliceSB12_11sort_by_keysNCNvMB1E_NtB1E_11HttpModules10add_module0E0EB1I_.exit.i, label %.lr.ph
 
-.lr.ph66:                                         ; preds = %.preheader, %bb.m
-  %i.an = phi ptr [ %i.ar, %bb.m ], [ %i.u, %.preheader ]
-  %.val8.i = phi ptr [ %.val.i, %bb.m ], [ %.val14.i, %.preheader ]
-  %.sroa.01.1.i.i65 = phi i64 [ %i.ax, %bb.m ], [ 2, %.preheader ] ; 3 uses
+.lr.ph66:                                         ; preds = %.lr.ph66.preheader, %bb.m
+  %i.an = phi ptr [ %i.ar, %bb.m ], [ %i.u, %.lr.ph66.preheader ]
+  %.val8.i = phi ptr [ %.val.i, %bb.m ], [ %.val14.i, %.lr.ph66.preheader ]
+  %.sroa.01.1.i.i65 = phi i64 [ %i.ax, %bb.m ], [ 2, %.lr.ph66.preheader ] ; 3 uses
   %i.ao = getelementptr inbounds nuw [16 x i8], ptr %i.o, i64 %.sroa.01.1.i.i65 ; 2 uses
   %.val.i = load ptr, ptr %i.ao, align 8, !alias.scope !1026, !noalias !1027, !nonnull !10, !noundef !10 ; 2 uses
   %i.ap = getelementptr i8, ptr %i.ao, i64 8
@@ -286,12 +294,12 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.aw, label %bb.m, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtCskeugdADtBsi_12pingora_core7modules4http17HttpModuleBuilderNtNtB8_6marker4SendNtB2I_4SyncEL_ENCINvMNtB17_5sliceSB12_11sort_by_keysNCNvMB1E_NtB1E_11HttpModules10add_module0E0EB1I_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph66
-  %i.ax = add nuw i64 %.sroa.01.1.i.i65, 1        ; 2 uses
-  %exitcond92.not = icmp eq i64 %i.ax, %i.n
+  %i.ax = add nuw nsw i64 %.sroa.01.1.i.i65, 1    ; 2 uses
+  %exitcond92.not = icmp eq i64 %i.ax, %smax92
   br i1 %exitcond92.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtCskeugdADtBsi_12pingora_core7modules4http17HttpModuleBuilderNtNtB8_6marker4SendNtB2I_4SyncEL_ENCINvMNtB17_5sliceSB12_11sort_by_keysNCNvMB1E_NtB1E_11HttpModules10add_module0E0EB1I_.exit.i, label %.lr.ph66
 
 _RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtCskeugdADtBsi_12pingora_core7modules4http17HttpModuleBuilderNtNtB8_6marker4SendNtB2I_4SyncEL_ENCINvMNtB17_5sliceSB12_11sort_by_keysNCNvMB1E_NtB1E_11HttpModules10add_module0E0EB1I_.exit.i: ; preds = %bb.l, %.lr.ph, %bb.m, %.lr.ph66
-  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i65, %.lr.ph66 ], [ %i.n, %bb.m ], [ %.sroa.01.0.i.i62, %.lr.ph ], [ %i.n, %bb.l ] ; 6 uses
+  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i65, %.lr.ph66 ], [ %smax92, %bb.m ], [ %.sroa.01.0.i.i62, %.lr.ph ], [ %smax, %bb.l ] ; 6 uses
   %i.ay = icmp samesign ule i64 %.sroa.0.0.i.i, %i.n
   tail call void @llvm.assume(i1 %i.ay)
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
@@ -693,6 +701,9 @@ declare i32 @llvm.umin.i32(i32, i32) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #14
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { cold noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
