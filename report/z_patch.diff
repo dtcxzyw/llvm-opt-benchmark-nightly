@@ -1,0 +1,587 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index 658b027820a84..d8c64d9c47d58 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -532,12 +532,58 @@ static bool doesHoldInRange(const ConstraintInfo &Info, Value *Op,
+   return true;
+ }
+ 
++/// Returns true if \p Opcode applied to \p Op0 and \p Op1 with \p NoWrapFlags
++/// is known to not wrap in signed or unsigned, depending on \p Signed.
++static bool isKnownNoWrap(Instruction::BinaryOps Opcode, Value *Op0, Value *Op1,
++                          unsigned NoWrapFlags, const ConstraintInfo &Info,
++                          bool Signed) {
++  using OBO = OverflowingBinaryOperator;
++
++  if (NoWrapFlags & (Signed ? OBO::NoSignedWrap : OBO::NoUnsignedWrap))
++    return true;
++
++  if (Opcode == Instruction::Sub) {
++    // Op0 - Op1 does not wrap unsigned if Op0 >=u Op1.
++    if (!Signed)
++      return Info.doesHold(CmpInst::ICMP_UGE, Op0, Op1);
++
++    // Subtracting a non-negative Op1 can only decrease the result, so a
++    // matching bound on Op0 keeps the exact result in the signed range.
++    if (Info.isKnownNonNegative(Op1) &&
++        Info.doesHold(CmpInst::ICMP_SGE, Op0, Op1))
++      return true;
++  } else if (!Signed && (NoWrapFlags & OBO::NoSignedWrap) &&
++             (Opcode == Instruction::Shl || Info.isKnownNonNegative(Op1)) &&
++             Info.isKnownNonNegative(Op0)) {
++    return true;
++  }
++
++  // For a constant Op1, the ranges of Op0 for which the operation does not
++  // wrap are known exactly; check if the systems imply one of them.
++  auto *C = dyn_cast<ConstantInt>(Op1);
++  if (!C)
++    return false;
++
++  return doesHoldInRange(Info, Op0,
++                         ConstantRange::makeExactNoWrapRegion(
++                             Opcode, C->getValue(),
++                             Signed ? OBO::NoSignedWrap : OBO::NoUnsignedWrap),
++                         Signed);
++}
++
+ /// Returns true if \p V is known to not wrap in signed or unsigned, depending
+-/// on \p Signed.
++/// on \p Signed. \p V is either an operation with a no-wrap rule or a
++/// with.overflow intrinsic performing one.
+ static bool isKnownNoWrap(Value *V, const ConstraintInfo &Info, bool Signed) {
+   if (match(V, m_DisjointOr(m_Value(), m_Value())))
+     return true;
+ 
++  // The with.overflow intrinsics perform a binary operation without being one,
++  // so they need to be handled separately.
++  if (auto *WO = dyn_cast<WithOverflowInst>(V))
++    return isKnownNoWrap(WO->getBinaryOp(), WO->getLHS(), WO->getRHS(),
++                         /*NoWrapFlags=*/0, Info, Signed);
++
+   if (auto *Trunc = dyn_cast<TruncInst>(V)) {
+     if (Signed)
+       return Trunc->hasNoSignedWrap();
+@@ -551,35 +597,9 @@ static bool isKnownNoWrap(Value *V, const ConstraintInfo &Info, bool Signed) {
+   auto *BO = dyn_cast<OverflowingBinaryOperator>(V);
+   if (!BO)
+     return false;
+-
+-  if (Signed ? BO->hasNoSignedWrap() : BO->hasNoUnsignedWrap())
+-    return true;
+-
+-  Value *Op0 = BO->getOperand(0);
+-  Value *Op1 = BO->getOperand(1);
+-  auto Opcode = static_cast<Instruction::BinaryOps>(BO->getOpcode());
+-
+-  // Op0 - Op1 does not wrap unsigned if Op0 >=u Op1.
+-  if (Opcode == Instruction::Sub)
+-    return !Signed && Info.doesHold(CmpInst::ICMP_UGE, Op0, Op1);
+-
+-  if (!Signed && BO->hasNoSignedWrap() &&
+-      (Opcode == Instruction::Shl || Info.isKnownNonNegative(Op1)) &&
+-      Info.isKnownNonNegative(Op0))
+-    return true;
+-
+-  // For a constant Op1, the ranges of Op0 for which the operation does not
+-  // wrap are known exactly; check if the systems imply one of them.
+-  auto *C = dyn_cast<ConstantInt>(Op1);
+-  if (!C)
+-    return false;
+-
+-  using OBO = OverflowingBinaryOperator;
+-  return doesHoldInRange(Info, Op0,
+-                         ConstantRange::makeExactNoWrapRegion(
+-                             Opcode, C->getValue(),
+-                             Signed ? OBO::NoSignedWrap : OBO::NoUnsignedWrap),
+-                         Signed);
++  return isKnownNoWrap(static_cast<Instruction::BinaryOps>(BO->getOpcode()),
++                       BO->getOperand(0), BO->getOperand(1),
++                       BO->getNoWrapKind(), Info, Signed);
+ }
+ 
+ static Decomposition decomposeGEP(GEPOperator &GEP, const ConstraintInfo &Info,
+@@ -1485,9 +1505,13 @@ void State::addInfoFor(BasicBlock &BB) {
+       }
+       break;
+     }
+-    // Enqueue intrinsics for simplification.
++    // Enqueue the overflow intrinsics for simplification.
++    case Intrinsic::uadd_with_overflow:
+     case Intrinsic::sadd_with_overflow:
++    case Intrinsic::usub_with_overflow:
+     case Intrinsic::ssub_with_overflow:
++    case Intrinsic::umul_with_overflow:
++    case Intrinsic::smul_with_overflow:
+     case Intrinsic::ucmp:
+     case Intrinsic::scmp:
+       WorkList.push_back(
+@@ -2159,11 +2183,9 @@ void ConstraintInfo::addFactImpl(CmpInst::Predicate Pred, Value *A, Value *B,
+   }
+ }
+ 
+-/// Replace the uses of the overflow intrinsic \p II, which has been proven not
+-/// to signed-overflow, by (Opcode A, B).
+-static bool replaceOverflowUses(IntrinsicInst *II,
+-                                Instruction::BinaryOps Opcode, Value *A,
+-                                Value *B,
++/// Replace the uses of \p II, which is known not to overflow, by the
++/// corresponding plain binary operation and a false overflow flag.
++static bool replaceOverflowUses(WithOverflowInst *II,
+                                 SmallVectorImpl<Instruction *> &ToRemove) {
+   bool Changed = false;
+   IRBuilder<> Builder(II->getParent(), II->getIterator());
+@@ -2171,8 +2193,10 @@ static bool replaceOverflowUses(IntrinsicInst *II,
+   for (User *U : make_early_inc_range(II->users())) {
+     if (match(U, m_ExtractValue<0>(m_Value()))) {
+       if (!Res)
+-        Res = Builder.CreateNoWrapBinOp(Opcode, A, B, /*IsNUW=*/false,
+-                                        /*IsNSW=*/true);
++        Res = Builder.CreateNoWrapBinOp(II->getBinaryOp(), II->getLHS(),
++                                        II->getRHS(),
++                                        /*IsNUW=*/!II->isSigned(),
++                                        /*IsNSW=*/II->isSigned());
+       U->replaceAllUsesWith(Res);
+       Changed = true;
+     } else if (match(U, m_ExtractValue<1>(m_Value()))) {
+@@ -2199,36 +2223,14 @@ static bool replaceOverflowUses(IntrinsicInst *II,
+   return Changed;
+ }
+ 
++/// Try to replace \p II by the plain binary operation it performs, if \p Info
++/// proves that it cannot overflow. Returns true if \p II was replaced.
+ static bool
+-tryToSimplifyOverflowMath(IntrinsicInst *II, ConstraintInfo &Info,
++tryToSimplifyOverflowMath(WithOverflowInst *II, ConstraintInfo &Info,
+                           SmallVectorImpl<Instruction *> &ToRemove) {
+-  switch (II->getIntrinsicID()) {
+-  case Intrinsic::ssub_with_overflow: {
+-    // If A s>= B && B s>= 0, ssub.with.overflow(a, b) should not overflow and
+-    // can be simplified to a regular sub.
+-    Value *A = II->getArgOperand(0);
+-    Value *B = II->getArgOperand(1);
+-    if (!Info.doesHold(CmpInst::ICMP_SGE, A, B) ||
+-        !Info.doesHold(CmpInst::ICMP_SGE, B, ConstantInt::get(A->getType(), 0)))
+-      return false;
+-    return replaceOverflowUses(II, Instruction::Sub, A, B, ToRemove);
+-  }
+-  case Intrinsic::sadd_with_overflow: {
+-    Value *A = II->getArgOperand(0);
+-    Value *B = II->getArgOperand(1);
+-    auto *C = dyn_cast<ConstantInt>(B);
+-    if (!C ||
+-        !doesHoldInRange(Info, A,
+-                         ConstantRange::makeGuaranteedNoWrapRegion(
+-                             Instruction::Add, ConstantRange(C->getValue()),
+-                             OverflowingBinaryOperator::NoSignedWrap),
+-                         /*Signed=*/true))
+-      return false;
+-    return replaceOverflowUses(II, Instruction::Add, A, B, ToRemove);
+-  }
+-  default:
++  if (!isKnownNoWrap(II, Info, II->isSigned()))
+     return false;
+-  }
++  return replaceOverflowUses(II, ToRemove);
+ }
+ 
+ static bool eliminateConstraints(Function &F, DominatorTree &DT, LoopInfo &LI,
+@@ -2465,16 +2467,14 @@ static bool eliminateConstraints(Function &F, DominatorTree &DT, LoopInfo &LI,
+           Value *X = BO->getOperand(0);
+           Value *N = BO->getOperand(1);
+           Constant *Zero = Constant::getNullValue(BO->getType());
+-          if (Info.doesHold(CmpInst::ICMP_SGE, X, Zero) ||
+-              isKnownNonNegative(X, F.getDataLayout())) {
++          if (Info.isKnownNonNegative(X)) {
+             // srem x, n: result >= 0, if x >= 0 (result has the sign of x)
+             AddFact(CmpInst::ICMP_SGE, BO, Zero);
+             // srem x, n: result <= x, if x >= 0 (|result| <= |x| and both are
+             // non-negative)
+             AddFact(CmpInst::ICMP_SLE, BO, X);
+           }
+-          if (Info.doesHold(CmpInst::ICMP_SGE, N, Zero) ||
+-              isKnownPositive(N, F.getDataLayout())) {
++          if (Info.isKnownNonNegative(N)) {
+             // srem x, n: result <= n, if n >= 0 (|result| < n, so result <= n -
+             // 1
+             AddFact(CmpInst::ICMP_SLT, BO, N);
+diff --git a/llvm/test/Transforms/ConstraintElimination/decompose-signed-preconditions.ll b/llvm/test/Transforms/ConstraintElimination/decompose-signed-preconditions.ll
+index a93f8615db127..b6e517204da55 100644
+--- a/llvm/test/Transforms/ConstraintElimination/decompose-signed-preconditions.ll
++++ b/llvm/test/Transforms/ConstraintElimination/decompose-signed-preconditions.ll
+@@ -109,8 +109,7 @@ define i1 @sub_via_operand_signs(i8 %a, i8 %b) {
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
+ ; CHECK-NEXT:    [[C_2:%.*]] = icmp sge i8 [[A]], [[B]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_2]])
+-; CHECK-NEXT:    [[C:%.*]] = icmp sle i8 [[S]], [[A]]
+-; CHECK-NEXT:    ret i1 [[C]]
++; CHECK-NEXT:    ret i1 true
+ ;
+ entry:
+   %s = sub i8 %a, %b
+diff --git a/llvm/test/Transforms/ConstraintElimination/mul-with-overflow.ll b/llvm/test/Transforms/ConstraintElimination/mul-with-overflow.ll
+new file mode 100644
+index 0000000000000..85808a10a9dd4
+--- /dev/null
++++ b/llvm/test/Transforms/ConstraintElimination/mul-with-overflow.ll
+@@ -0,0 +1,139 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=constraint-elimination -S %s | FileCheck %s
++
++declare { i8, i1 } @llvm.umul.with.overflow.i8(i8, i8)
++declare { i8, i1 } @llvm.smul.with.overflow.i8(i8, i8)
++
++define i8 @umul_no_overflow_due_to_upper_bound(i8 %a) {
++; CHECK-LABEL: define i8 @umul_no_overflow_due_to_upper_bound(
++; CHECK-SAME: i8 [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_1:%.*]] = icmp ule i8 [[A]], 10
++; CHECK-NEXT:    br i1 [[C_1]], label %[[MATH:.*]], label %[[EXIT_FAIL:.*]]
++; CHECK:       [[MATH]]:
++; CHECK-NEXT:    [[TMP0:%.*]] = mul nuw i8 [[A]], 10
++; CHECK-NEXT:    br i1 false, label %[[EXIT_FAIL]], label %[[EXIT_OK:.*]]
++; CHECK:       [[EXIT_OK]]:
++; CHECK-NEXT:    ret i8 [[TMP0]]
++; CHECK:       [[EXIT_FAIL]]:
++; CHECK-NEXT:    ret i8 0
++;
++entry:
++  %c.1 = icmp ule i8 %a, 10
++  br i1 %c.1, label %math, label %exit.fail
++
++math:
++  %op = tail call { i8, i1 } @llvm.umul.with.overflow.i8(i8 %a, i8 10)
++  %status = extractvalue { i8, i1 } %op, 1
++  br i1 %status, label %exit.fail, label %exit.ok
++
++exit.ok:
++  %res = extractvalue { i8, i1 } %op, 0
++  ret i8 %res
++
++exit.fail:
++  ret i8 0
++}
++
++; 26 * 10 does not fit in i8.
++define i8 @umul_may_overflow_upper_bound_too_large(i8 %a) {
++; CHECK-LABEL: define i8 @umul_may_overflow_upper_bound_too_large(
++; CHECK-SAME: i8 [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_1:%.*]] = icmp ule i8 [[A]], 26
++; CHECK-NEXT:    br i1 [[C_1]], label %[[MATH:.*]], label %[[EXIT_FAIL:.*]]
++; CHECK:       [[MATH]]:
++; CHECK-NEXT:    [[OP:%.*]] = tail call { i8, i1 } @llvm.umul.with.overflow.i8(i8 [[A]], i8 10)
++; CHECK-NEXT:    [[STATUS:%.*]] = extractvalue { i8, i1 } [[OP]], 1
++; CHECK-NEXT:    br i1 [[STATUS]], label %[[EXIT_FAIL]], label %[[EXIT_OK:.*]]
++; CHECK:       [[EXIT_OK]]:
++; CHECK-NEXT:    [[RES:%.*]] = extractvalue { i8, i1 } [[OP]], 0
++; CHECK-NEXT:    ret i8 [[RES]]
++; CHECK:       [[EXIT_FAIL]]:
++; CHECK-NEXT:    ret i8 0
++;
++entry:
++  %c.1 = icmp ule i8 %a, 26
++  br i1 %c.1, label %math, label %exit.fail
++
++math:
++  %op = tail call { i8, i1 } @llvm.umul.with.overflow.i8(i8 %a, i8 10)
++  %status = extractvalue { i8, i1 } %op, 1
++  br i1 %status, label %exit.fail, label %exit.ok
++
++exit.ok:
++  %res = extractvalue { i8, i1 } %op, 0
++  ret i8 %res
++
++exit.fail:
++  ret i8 0
++}
++
++; Both bounds are needed to rule out a signed overflow.
++define i8 @smul_no_overflow_due_to_bounds(i8 %a) {
++; CHECK-LABEL: define i8 @smul_no_overflow_due_to_bounds(
++; CHECK-SAME: i8 [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_1:%.*]] = icmp sle i8 [[A]], 5
++; CHECK-NEXT:    [[C_2:%.*]] = icmp sge i8 [[A]], -5
++; CHECK-NEXT:    [[AND:%.*]] = and i1 [[C_1]], [[C_2]]
++; CHECK-NEXT:    br i1 [[AND]], label %[[MATH:.*]], label %[[EXIT_FAIL:.*]]
++; CHECK:       [[MATH]]:
++; CHECK-NEXT:    [[TMP0:%.*]] = mul nsw i8 [[A]], 10
++; CHECK-NEXT:    br i1 false, label %[[EXIT_FAIL]], label %[[EXIT_OK:.*]]
++; CHECK:       [[EXIT_OK]]:
++; CHECK-NEXT:    ret i8 [[TMP0]]
++; CHECK:       [[EXIT_FAIL]]:
++; CHECK-NEXT:    ret i8 0
++;
++entry:
++  %c.1 = icmp sle i8 %a, 5
++  %c.2 = icmp sge i8 %a, -5
++  %and = and i1 %c.1, %c.2
++  br i1 %and, label %math, label %exit.fail
++
++math:
++  %op = tail call { i8, i1 } @llvm.smul.with.overflow.i8(i8 %a, i8 10)
++  %status = extractvalue { i8, i1 } %op, 1
++  br i1 %status, label %exit.fail, label %exit.ok
++
++exit.ok:
++  %res = extractvalue { i8, i1 } %op, 0
++  ret i8 %res
++
++exit.fail:
++  ret i8 0
++}
++
++define i8 @smul_may_overflow_missing_lower_bound(i8 %a) {
++; CHECK-LABEL: define i8 @smul_may_overflow_missing_lower_bound(
++; CHECK-SAME: i8 [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_1:%.*]] = icmp sle i8 [[A]], 5
++; CHECK-NEXT:    br i1 [[C_1]], label %[[MATH:.*]], label %[[EXIT_FAIL:.*]]
++; CHECK:       [[MATH]]:
++; CHECK-NEXT:    [[OP:%.*]] = tail call { i8, i1 } @llvm.smul.with.overflow.i8(i8 [[A]], i8 10)
++; CHECK-NEXT:    [[STATUS:%.*]] = extractvalue { i8, i1 } [[OP]], 1
++; CHECK-NEXT:    br i1 [[STATUS]], label %[[EXIT_FAIL]], label %[[EXIT_OK:.*]]
++; CHECK:       [[EXIT_OK]]:
++; CHECK-NEXT:    [[RES:%.*]] = extractvalue { i8, i1 } [[OP]], 0
++; CHECK-NEXT:    ret i8 [[RES]]
++; CHECK:       [[EXIT_FAIL]]:
++; CHECK-NEXT:    ret i8 0
++;
++entry:
++  %c.1 = icmp sle i8 %a, 5
++  br i1 %c.1, label %math, label %exit.fail
++
++math:
++  %op = tail call { i8, i1 } @llvm.smul.with.overflow.i8(i8 %a, i8 10)
++  %status = extractvalue { i8, i1 } %op, 1
++  br i1 %status, label %exit.fail, label %exit.ok
++
++exit.ok:
++  %res = extractvalue { i8, i1 } %op, 0
++  ret i8 %res
++
++exit.fail:
++  ret i8 0
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/srem.ll b/llvm/test/Transforms/ConstraintElimination/srem.ll
+index 3540b0f5978dc..dc7a001d305ef 100644
+--- a/llvm/test/Transforms/ConstraintElimination/srem.ll
++++ b/llvm/test/Transforms/ConstraintElimination/srem.ll
+@@ -37,6 +37,21 @@ define i1 @srem_slt_divisor_bound(i32 noundef %x, i32 noundef %n, i32 noundef %m
+   ret i1 %c
+ }
+ 
++; The divisor is only known to be non-negative via ValueTracking, with no facts
++; about it in the constraint system. It cannot be zero, as srem by zero is UB.
++define i1 @srem_slt_divisor_bound_masked_divisor(i32 noundef %x, i32 noundef %a) {
++; CHECK-LABEL: define i1 @srem_slt_divisor_bound_masked_divisor(
++; CHECK-SAME: i32 noundef [[X:%.*]], i32 noundef [[A:%.*]]) {
++; CHECK-NEXT:    [[N:%.*]] = and i32 [[A]], 2147483647
++; CHECK-NEXT:    [[R:%.*]] = srem i32 [[X]], [[N]]
++; CHECK-NEXT:    ret i1 true
++;
++  %n = and i32 %a, 2147483647
++  %r = srem i32 %x, %n
++  %c = icmp slt i32 %r, %n
++  ret i1 %c
++}
++
+ define i1 @srem_sle_dividend_bound(i32 noundef %x, i32 noundef %n, i32 noundef %limit) {
+ ; CHECK-LABEL: define i1 @srem_sle_dividend_bound(
+ ; CHECK-SAME: i32 noundef [[X:%.*]], i32 noundef [[N:%.*]], i32 noundef [[LIMIT:%.*]]) {
+diff --git a/llvm/test/Transforms/ConstraintElimination/uadd-with-overflow.ll b/llvm/test/Transforms/ConstraintElimination/uadd-with-overflow.ll
+new file mode 100644
+index 0000000000000..f5669a1833118
+--- /dev/null
++++ b/llvm/test/Transforms/ConstraintElimination/uadd-with-overflow.ll
+@@ -0,0 +1,103 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=constraint-elimination -S %s | FileCheck %s
++
++declare { i8, i1 } @llvm.uadd.with.overflow.i8(i8, i8)
++
++define i8 @uadd_no_overflow_due_to_upper_bound(i8 %a) {
++; CHECK-LABEL: define i8 @uadd_no_overflow_due_to_upper_bound(
++; CHECK-SAME: i8 [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_1:%.*]] = icmp ule i8 [[A]], 10
++; CHECK-NEXT:    br i1 [[C_1]], label %[[MATH:.*]], label %[[EXIT_FAIL:.*]]
++; CHECK:       [[MATH]]:
++; CHECK-NEXT:    [[TMP0:%.*]] = add nuw i8 [[A]], 100
++; CHECK-NEXT:    br i1 false, label %[[EXIT_FAIL]], label %[[EXIT_OK:.*]]
++; CHECK:       [[EXIT_OK]]:
++; CHECK-NEXT:    ret i8 [[TMP0]]
++; CHECK:       [[EXIT_FAIL]]:
++; CHECK-NEXT:    ret i8 0
++;
++entry:
++  %c.1 = icmp ule i8 %a, 10
++  br i1 %c.1, label %math, label %exit.fail
++
++math:
++  %op = tail call { i8, i1 } @llvm.uadd.with.overflow.i8(i8 %a, i8 100)
++  %status = extractvalue { i8, i1 } %op, 1
++  br i1 %status, label %exit.fail, label %exit.ok
++
++exit.ok:
++  %res = extractvalue { i8, i1 } %op, 0
++  ret i8 %res
++
++exit.fail:
++  ret i8 0
++}
++
++; The upper bound on %a is not tight enough to rule out an overflow.
++define i8 @uadd_may_overflow_upper_bound_too_large(i8 %a) {
++; CHECK-LABEL: define i8 @uadd_may_overflow_upper_bound_too_large(
++; CHECK-SAME: i8 [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_1:%.*]] = icmp ule i8 [[A]], -56
++; CHECK-NEXT:    br i1 [[C_1]], label %[[MATH:.*]], label %[[EXIT_FAIL:.*]]
++; CHECK:       [[MATH]]:
++; CHECK-NEXT:    [[OP:%.*]] = tail call { i8, i1 } @llvm.uadd.with.overflow.i8(i8 [[A]], i8 100)
++; CHECK-NEXT:    [[STATUS:%.*]] = extractvalue { i8, i1 } [[OP]], 1
++; CHECK-NEXT:    br i1 [[STATUS]], label %[[EXIT_FAIL]], label %[[EXIT_OK:.*]]
++; CHECK:       [[EXIT_OK]]:
++; CHECK-NEXT:    [[RES:%.*]] = extractvalue { i8, i1 } [[OP]], 0
++; CHECK-NEXT:    ret i8 [[RES]]
++; CHECK:       [[EXIT_FAIL]]:
++; CHECK-NEXT:    ret i8 0
++;
++entry:
++  %c.1 = icmp ule i8 %a, 200
++  br i1 %c.1, label %math, label %exit.fail
++
++math:
++  %op = tail call { i8, i1 } @llvm.uadd.with.overflow.i8(i8 %a, i8 100)
++  %status = extractvalue { i8, i1 } %op, 1
++  br i1 %status, label %exit.fail, label %exit.ok
++
++exit.ok:
++  %res = extractvalue { i8, i1 } %op, 0
++  ret i8 %res
++
++exit.fail:
++  ret i8 0
++}
++
++; There is no bound on the second operand, so nothing can be proven.
++define i8 @uadd_may_overflow_variable_operand(i8 %a, i8 %b) {
++; CHECK-LABEL: define i8 @uadd_may_overflow_variable_operand(
++; CHECK-SAME: i8 [[A:%.*]], i8 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_1:%.*]] = icmp ule i8 [[A]], 10
++; CHECK-NEXT:    br i1 [[C_1]], label %[[MATH:.*]], label %[[EXIT_FAIL:.*]]
++; CHECK:       [[MATH]]:
++; CHECK-NEXT:    [[OP:%.*]] = tail call { i8, i1 } @llvm.uadd.with.overflow.i8(i8 [[A]], i8 [[B]])
++; CHECK-NEXT:    [[STATUS:%.*]] = extractvalue { i8, i1 } [[OP]], 1
++; CHECK-NEXT:    br i1 [[STATUS]], label %[[EXIT_FAIL]], label %[[EXIT_OK:.*]]
++; CHECK:       [[EXIT_OK]]:
++; CHECK-NEXT:    [[RES:%.*]] = extractvalue { i8, i1 } [[OP]], 0
++; CHECK-NEXT:    ret i8 [[RES]]
++; CHECK:       [[EXIT_FAIL]]:
++; CHECK-NEXT:    ret i8 0
++;
++entry:
++  %c.1 = icmp ule i8 %a, 10
++  br i1 %c.1, label %math, label %exit.fail
++
++math:
++  %op = tail call { i8, i1 } @llvm.uadd.with.overflow.i8(i8 %a, i8 %b)
++  %status = extractvalue { i8, i1 } %op, 1
++  br i1 %status, label %exit.fail, label %exit.ok
++
++exit.ok:
++  %res = extractvalue { i8, i1 } %op, 0
++  ret i8 %res
++
++exit.fail:
++  ret i8 0
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/usub-with-overflow.ll b/llvm/test/Transforms/ConstraintElimination/usub-with-overflow.ll
+index 06bfd8269d97d..b4b3fcce2d31a 100644
+--- a/llvm/test/Transforms/ConstraintElimination/usub-with-overflow.ll
++++ b/llvm/test/Transforms/ConstraintElimination/usub-with-overflow.ll
+@@ -9,11 +9,9 @@ define i8 @usub_no_overflow_due_to_cmp_condition(i8 %a, i8 %b) {
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp uge i8 [[B:%.*]], [[A:%.*]]
+ ; CHECK-NEXT:    br i1 [[C_1]], label [[MATH:%.*]], label [[EXIT_FAIL:%.*]]
+ ; CHECK:       math:
+-; CHECK-NEXT:    [[OP:%.*]] = tail call { i8, i1 } @llvm.usub.with.overflow.i8(i8 [[B]], i8 [[A]])
+-; CHECK-NEXT:    [[STATUS:%.*]] = extractvalue { i8, i1 } [[OP]], 1
+-; CHECK-NEXT:    br i1 [[STATUS]], label [[EXIT_FAIL]], label [[EXIT_OK:%.*]]
++; CHECK-NEXT:    [[RES:%.*]] = sub nuw i8 [[B]], [[A]]
++; CHECK-NEXT:    br i1 false, label [[EXIT_FAIL]], label [[EXIT_OK:%.*]]
+ ; CHECK:       exit.ok:
+-; CHECK-NEXT:    [[RES:%.*]] = extractvalue { i8, i1 } [[OP]], 0
+ ; CHECK-NEXT:    ret i8 [[RES]]
+ ; CHECK:       exit.fail:
+ ; CHECK-NEXT:    ret i8 0
+@@ -41,11 +39,9 @@ define i8 @usub_no_overflow_due_to_cmp_condition2(i8 %a, i8 %b) {
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp ule i8 [[B:%.*]], [[A:%.*]]
+ ; CHECK-NEXT:    br i1 [[C_1]], label [[EXIT_FAIL:%.*]], label [[MATH:%.*]]
+ ; CHECK:       math:
+-; CHECK-NEXT:    [[OP:%.*]] = tail call { i8, i1 } @llvm.usub.with.overflow.i8(i8 [[B]], i8 [[A]])
+-; CHECK-NEXT:    [[STATUS:%.*]] = extractvalue { i8, i1 } [[OP]], 1
+-; CHECK-NEXT:    br i1 [[STATUS]], label [[EXIT_FAIL]], label [[EXIT_OK:%.*]]
++; CHECK-NEXT:    [[RES:%.*]] = sub nuw i8 [[B]], [[A]]
++; CHECK-NEXT:    br i1 false, label [[EXIT_FAIL]], label [[EXIT_OK:%.*]]
+ ; CHECK:       exit.ok:
+-; CHECK-NEXT:    [[RES:%.*]] = extractvalue { i8, i1 } [[OP]], 0
+ ; CHECK-NEXT:    ret i8 [[RES]]
+ ; CHECK:       exit.fail:
+ ; CHECK-NEXT:    ret i8 0
+@@ -75,12 +71,11 @@ define i8 @sub_no_overflow_due_to_cmp_condition_result_used(i8 %a, i8 %b) {
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp ule i8 [[B:%.*]], [[A:%.*]]
+ ; CHECK-NEXT:    br i1 [[C_1]], label [[EXIT_FAIL:%.*]], label [[MATH:%.*]]
+ ; CHECK:       math:
++; CHECK-NEXT:    [[RES:%.*]] = sub nuw i8 [[B]], [[A]]
+ ; CHECK-NEXT:    [[OP:%.*]] = tail call { i8, i1 } @llvm.usub.with.overflow.i8(i8 [[B]], i8 [[A]])
+ ; CHECK-NEXT:    call void @use_res({ i8, i1 } [[OP]])
+-; CHECK-NEXT:    [[STATUS:%.*]] = extractvalue { i8, i1 } [[OP]], 1
+-; CHECK-NEXT:    br i1 [[STATUS]], label [[EXIT_FAIL]], label [[EXIT_OK:%.*]]
++; CHECK-NEXT:    br i1 false, label [[EXIT_FAIL]], label [[EXIT_OK:%.*]]
+ ; CHECK:       exit.ok:
+-; CHECK-NEXT:    [[RES:%.*]] = extractvalue { i8, i1 } [[OP]], 0
+ ; CHECK-NEXT:    ret i8 [[RES]]
+ ; CHECK:       exit.fail:
+ ; CHECK-NEXT:    ret i8 0
+@@ -111,11 +106,9 @@ define i8 @usub_no_overflow_due_to_or_conds(i8 %a, i8 %b) {
+ ; CHECK-NEXT:    [[OR:%.*]] = or i1 [[C_2]], [[C_1]]
+ ; CHECK-NEXT:    br i1 [[OR]], label [[EXIT_FAIL:%.*]], label [[MATH:%.*]]
+ ; CHECK:       math:
+-; CHECK-NEXT:    [[OP:%.*]] = tail call { i8, i1 } @llvm.usub.with.overflow.i8(i8 [[B]], i8 [[A]])
+-; CHECK-NEXT:    [[STATUS:%.*]] = extractvalue { i8, i1 } [[OP]], 1
+-; CHECK-NEXT:    br i1 [[STATUS]], label [[EXIT_FAIL]], label [[EXIT_OK:%.*]]
++; CHECK-NEXT:    [[RES:%.*]] = sub nuw i8 [[B]], [[A]]
++; CHECK-NEXT:    br i1 false, label [[EXIT_FAIL]], label [[EXIT_OK:%.*]]
+ ; CHECK:       exit.ok:
+-; CHECK-NEXT:    [[RES:%.*]] = extractvalue { i8, i1 } [[OP]], 0
+ ; CHECK-NEXT:    ret i8 [[RES]]
+ ; CHECK:       exit.fail:
+ ; CHECK-NEXT:    ret i8 0
+@@ -147,9 +140,7 @@ define i8 @usub_no_overflow_due_to_or_conds_sub_result_not_used(i8 %a, i8 %b) {
+ ; CHECK-NEXT:    [[OR:%.*]] = or i1 [[C_2]], [[C_1]]
+ ; CHECK-NEXT:    br i1 [[OR]], label [[EXIT_FAIL:%.*]], label [[MATH:%.*]]
+ ; CHECK:       math:
+-; CHECK-NEXT:    [[OP:%.*]] = tail call { i8, i1 } @llvm.usub.with.overflow.i8(i8 [[B]], i8 [[A]])
+-; CHECK-NEXT:    [[STATUS:%.*]] = extractvalue { i8, i1 } [[OP]], 1
+-; CHECK-NEXT:    br i1 [[STATUS]], label [[EXIT_FAIL]], label [[EXIT_OK:%.*]]
++; CHECK-NEXT:    br i1 false, label [[EXIT_FAIL]], label [[EXIT_OK:%.*]]
+ ; CHECK:       exit.ok:
+ ; CHECK-NEXT:    ret i8 20
+ ; CHECK:       exit.fail:
+@@ -181,11 +172,9 @@ define i8 @usub_no_overflow_due_to_and_conds(i8 %a, i8 %b) {
+ ; CHECK-NEXT:    [[AND:%.*]] = and i1 [[C_2]], [[C_1]]
+ ; CHECK-NEXT:    br i1 [[AND]], label [[MATH:%.*]], label [[EXIT_FAIL:%.*]]
+ ; CHECK:       math:
+-; CHECK-NEXT:    [[OP:%.*]] = tail call { i8, i1 } @llvm.usub.with.overflow.i8(i8 [[B]], i8 [[A]])
+-; CHECK-NEXT:    [[STATUS:%.*]] = extractvalue { i8, i1 } [[OP]], 1
+-; CHECK-NEXT:    br i1 [[STATUS]], label [[EXIT_FAIL]], label [[EXIT_OK:%.*]]
++; CHECK-NEXT:    [[RES:%.*]] = sub nuw i8 [[B]], [[A]]
++; CHECK-NEXT:    br i1 false, label [[EXIT_FAIL]], label [[EXIT_OK:%.*]]
+ ; CHECK:       exit.ok:
+-; CHECK-NEXT:    [[RES:%.*]] = extractvalue { i8, i1 } [[OP]], 0
+ ; CHECK-NEXT:    ret i8 [[RES]]
+ ; CHECK:       exit.fail:
+ ; CHECK-NEXT:    ret i8 0
