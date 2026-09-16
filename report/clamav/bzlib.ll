@@ -205,27 +205,35 @@ begin_hunk_0_@nsis_BZ2_bzDecompress:bb.a
   %i.axj = zext i32 %.0948.lcssa20942097.i to i64 ; 4 uses
   %wide.trip.count112.i.i = zext nneg i32 %.0950.lcssa20932099.i to i64 ; 2 uses
   %i.axk = sub nsw i64 %wide.trip.count112.i.i, %i.axj ; 3 uses
-  %min.iters.check532 = icmp ult i64 %i.axk, 4
+  %min.iters.check532 = icmp ult i64 %i.axk, 8
   br i1 %min.iters.check532, label %.lr.ph85.i.i.preheader, label %vector.ph533
 
 vector.ph533:                                     ; preds = %.lr.ph85.preheader.i.i
-  %n.vec534 = and i64 %i.axk, -4                  ; 3 uses
+  %n.vec534 = and i64 %i.axk, -8                  ; 3 uses
   %i.axl = add nsw i64 %n.vec534, %i.axj
   br label %vector.body535
 
 vector.body535:                                   ; preds = %vector.body535, %vector.ph533
   %index536 = phi i64 [ 0, %vector.ph533 ], [ %index.next538, %vector.body535 ] ; 2 uses
   %i.axm = add nuw i64 %index536, %i.axj          ; 2 uses
-  %i.axn = getelementptr inbounds nuw [4 x i8], ptr %i.aub, i64 %i.axm
-  %wide.load.a = load <4 x i32>, ptr %i.axn, align 4, !tbaa !58
+  %i.axn = getelementptr inbounds nuw [4 x i8], ptr %i.aub, i64 %i.axm ; 2 uses
+  %1 = getelementptr inbounds nuw i8, ptr %i.axn, i64 16
+  %wide.load = load <4 x i32>, ptr %i.axn, align 4, !tbaa !58
+  %wide.load.a = load <4 x i32>, ptr %1, align 4, !tbaa !58
+  %2 = shl <4 x i32> %wide.load, splat (i32 1)
   %i.axo = shl <4 x i32> %wide.load.a, splat (i32 1)
+  %3 = add <4 x i32> %2, splat (i32 2)
   %i.axp = add <4 x i32> %i.axo, splat (i32 2)
-  %i.axq = getelementptr inbounds nuw [4 x i8], ptr %i.aua, i64 %i.axm
-  %i.axr = getelementptr inbounds nuw i8, ptr %i.axq, i64 4 ; 2 uses
+  %i.axq = getelementptr inbounds nuw [4 x i8], ptr %i.aua, i64 %i.axm ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.axq, i64 4 ; 2 uses
+  %i.axr = getelementptr inbounds nuw i8, ptr %i.axq, i64 20 ; 2 uses
+  %wide.load538 = load <4 x i32>, ptr %4, align 4, !tbaa !58
   %wide.load537 = load <4 x i32>, ptr %i.axr, align 4, !tbaa !58
+  %5 = sub <4 x i32> %3, %wide.load538
   %i.axs = sub <4 x i32> %i.axp, %wide.load537
+  store <4 x i32> %5, ptr %4, align 4, !tbaa !58
   store <4 x i32> %i.axs, ptr %i.axr, align 4, !tbaa !58
-  %index.next538 = add nuw i64 %index536, 4       ; 2 uses
+  %index.next538 = add nuw i64 %index536, 8       ; 2 uses
   %i.axt = icmp eq i64 %index.next538, %n.vec534
   br i1 %i.axt, label %middle.block539, label %vector.body535, !llvm.loop !42
 
