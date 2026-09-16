@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   %i.d = icmp ult i64 %1, 6
   br i1 %i.d, label %bb.c, label %bb.d
 
-_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit.thread: ; preds = %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0CslkzCjlEuW1f_5xtask.exit.backedge.us.i.i, %.split.us.i.i, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %.lr.ph.split.us.i.i, %bb.d, %bb.a, %bb.o, %_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit
-  %.sroa.0.0 = phi i1 [ false, %bb.d ], [ true, %bb.g ], [ true, %bb.a ], [ %i.am, %_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit ], [ %i.ba, %bb.o ], [ true, %bb.i ], [ true, %.lr.ph.split.us.i.i ], [ true, %bb.e ], [ true, %bb.h ], [ true, %bb.f ], [ %i.x, %bb.j ], [ %.not27.i.i.not.not, %.split.us.i.i ], [ %.not27.i.i.not.not, %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0CslkzCjlEuW1f_5xtask.exit.backedge.us.i.i ]
+_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit.thread: ; preds = %.split.us.i.i, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %.lr.ph.split.us.i.i, %bb.d, %bb.a, %bb.o, %_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit
+  %.sroa.0.0 = phi i1 [ false, %bb.d ], [ true, %bb.g ], [ true, %bb.a ], [ %i.am, %_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit ], [ %i.ba, %bb.o ], [ true, %bb.i ], [ true, %.lr.ph.split.us.i.i ], [ true, %bb.e ], [ true, %bb.h ], [ true, %bb.f ], [ %i.x, %bb.j ], [ %4, %.split.us.i.i ]
   ret i1 %.sroa.0.0
 
 bb.c:                                             ; preds = %bb.b
@@ -287,20 +287,18 @@ _RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedItera
 .lr.ph.split.us.i.i:                              ; preds = %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CslkzCjlEuW1f_5xtask.exit.i.i, %bb.k
   %bcmp.i.i.us22.i.i = tail call i32 @bcmp(ptr noundef nonnull readonly dereferenceable(1) %2, ptr noundef nonnull readonly dereferenceable(1) %0, i64 range(i64 2, 33) %1), !alias.scope !641, !noalias !642
   %i.ai = icmp eq i32 %bcmp.i.i.us22.i.i, 0
-  br i1 %i.ai, label %_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit.thread, label %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0CslkzCjlEuW1f_5xtask.exit.backedge.us.i.i
+  br i1 %i.ai, label %_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit.thread, label %.split.us.i.i
 
-.split.us.i.i:                                    ; preds = %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0CslkzCjlEuW1f_5xtask.exit.backedge.us.i.i
-  %i.aj = getelementptr inbounds nuw i8, ptr %.pn.i, i64 1 ; 2 uses
-  %i.ak = add nsw i64 %4, -1
+.split.us.i.i:                                    ; preds = %.split.us.i.i, %.lr.ph.split.us.i.i
+  %3 = phi i64 [ %i.ak, %.split.us.i.i ], [ 5, %.lr.ph.split.us.i.i ]
+  %.pn.i3 = phi ptr [ %i.aj, %.split.us.i.i ], [ %2, %.lr.ph.split.us.i.i ]
+  %i.aj = getelementptr inbounds nuw i8, ptr %.pn.i3, i64 1 ; 2 uses
   %bcmp.i.i.us.i.i = tail call i32 @bcmp(ptr noundef nonnull readonly dereferenceable(1) %i.aj, ptr noundef nonnull readonly dereferenceable(1) %0, i64 range(i64 2, 33) %1), !alias.scope !641, !noalias !642
-  %3 = icmp eq i32 %bcmp.i.i.us.i.i, 0
-  br i1 %3, label %_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit.thread, label %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0CslkzCjlEuW1f_5xtask.exit.backedge.us.i.i
-
-_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0CslkzCjlEuW1f_5xtask.exit.backedge.us.i.i: ; preds = %.lr.ph.split.us.i.i, %.split.us.i.i
-  %.pn.i = phi ptr [ %i.aj, %.split.us.i.i ], [ %2, %.lr.ph.split.us.i.i ]
-  %4 = phi i64 [ %i.ak, %.split.us.i.i ], [ 5, %.lr.ph.split.us.i.i ] ; 2 uses
-  %.not27.i.i.not.not = icmp samesign ule i64 %1, %4 ; 3 uses
-  br i1 %.not27.i.i.not.not, label %.split.us.i.i, label %_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit.thread
+  %4 = icmp eq i32 %bcmp.i.i.us.i.i, 0            ; 2 uses
+  %i.ak = add nsw i64 %3, -1                      ; 2 uses
+  %.not27.i.i.not = icmp samesign ugt i64 %1, %i.ak
+  %or.cond = select i1 %4, i1 true, i1 %.not27.i.i.not
+  br i1 %or.cond, label %_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit.thread, label %.split.us.i.i
 
 _RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit: ; preds = %bb.m, %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)

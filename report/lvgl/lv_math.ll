@@ -33,9 +33,9 @@ define range(i32 -65535, 65536) i32 @lv_trigo_sin(i16 noundef signext %0) local_
   %i.d = sub nuw i16 %i.b, %i.c
   %.fr = freeze i16 %i.d
   %i.e = add i16 %0, %.fr                         ; 2 uses
-  %i.f = tail call i16 @llvm.umax.i16(i16 %i.e, i16 359) ; 2 uses
+  %i.f = tail call i16 @llvm.smax.i16(i16 %i.e, i16 359) ; 2 uses
   %i.g = urem i16 %i.f, 360
-  %.neg = sub i16 %i.g, %i.f
+  %.neg = sub nsw i16 %i.g, %i.f
   %i.h = add i16 %.neg, %i.e                      ; 7 uses
   %i.i = icmp samesign ult i16 %i.h, 90
   br i1 %i.i, label %bb.a, label %bb.b
@@ -438,9 +438,9 @@ bb.a:
   %i.c = urem i16 %i.b, 360
   %i.d = sub nuw i16 %i.b, %i.c
   %i.e = add i16 %i.d, %i.a                       ; 2 uses
-  %i.f = tail call i16 @llvm.umax.i16(i16 %i.e, i16 359) ; 2 uses
+  %i.f = tail call i16 @llvm.smax.i16(i16 %i.e, i16 359) ; 2 uses
   %i.g = urem i16 %i.f, 360
-  %.neg.i = sub i16 %i.g, %i.f
+  %.neg.i = sub nsw i16 %i.g, %i.f
   %i.h = add i16 %.neg.i, %i.e                    ; 7 uses
   %i.i = icmp samesign ult i16 %i.h, 90
   br i1 %i.i, label %bb.b, label %bb.c
@@ -516,9 +516,6 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.smax.i16(i16, i16) #6
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.umax.i16(i16, i16) #6
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree norecurse nosync nounwind memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

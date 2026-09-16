@@ -204,12 +204,10 @@ bb.s:                                             ; preds = %bb.r
 
 _ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEPllET0_T_S9_S8_RSaIT1_E.exit63: ; preds = %bb.s, %bb.r, %bb.q
   %i.ek = getelementptr i8, ptr %i.ee, i64 %i.eg
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.ek, ptr align 8 %2, i64 %i.d, i1 false), !tbaa !50
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ek, ptr noundef nonnull align 8 dereferenceable(1) %2, i64 %i.d, i1 false), !tbaa !50
   %i.el = add i64 %i.d, %i.ef
-  %4 = add i64 %i.el, 8
-  %i.em = sub i64 %4, %i.dt
-  %5 = getelementptr i8, ptr %i.ee, i64 %i.em
-  %scevgep = getelementptr i8, ptr %5, i64 -8     ; 3 uses
+  %i.em = sub i64 %i.el, %i.dt
+  %scevgep = getelementptr i8, ptr %i.ee, i64 %i.em ; 3 uses
   %i.en = sub i64 %i.k, %i.ef                     ; 4 uses
   %i.eo = icmp sgt i64 %i.en, 8
   br i1 %i.eo, label %bb.t, label %bb.u, !prof !120
@@ -612,10 +610,10 @@ declare i64 @llvm.umax.i64(i64, i64) #20
 declare i64 @llvm.umin.i64(i64, i64) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #20
+declare i64 @llvm.smin.i64(i64, i64) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smin.i64(i64, i64) #20
+declare i64 @llvm.smax.i64(i64, i64) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.sqrt.f64(double) #20

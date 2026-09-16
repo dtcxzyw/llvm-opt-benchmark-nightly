@@ -1,7 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/sundials/original/sundials_math?download=true
 inline.NumInlined: 1
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -65,54 +63,21 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(none) uwtable
 define double @SUNRpowerI(double noundef %0, i32 noundef %1) local_unnamed_addr #0 {
-  %.not9 = icmp eq i32 %1, 0
-  br i1 %.not9, label %._crit_edge, label %.lr.ph.preheader
+.lr.ph.a:
+  %2 = tail call i32 @llvm.abs.i32(i32 %1, i1 true)
+  %niter.ncmp.7 = icmp eq i32 %1, 0
+  br i1 %niter.ncmp.7, label %._crit_edge, label %.lr.ph.epil
 
-.lr.ph.preheader:                                 ; preds = %2
-  %3 = tail call i32 @llvm.abs.i32(i32 %1, i1 false) ; 3 uses
-  %xtraiter = and i32 %3, 7                       ; 3 uses
-  %4 = icmp ult i32 %3, 8
-  br i1 %4, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
-
-.lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i32 %3, -8
-  br label %.lr.ph.a
-
-.lr.ph.a:                                         ; preds = %.lr.ph.a, %.lr.ph.preheader.new
-  %.011 = phi double [ 1.000000e+00, %.lr.ph.preheader.new ], [ %12, %.lr.ph.a ]
-  %niter = phi i32 [ 0, %.lr.ph.preheader.new ], [ %niter.next.7, %.lr.ph.a ]
-  %5 = fmul double %0, %.011
-  %6 = fmul double %0, %5
-  %7 = fmul double %0, %6
-  %8 = fmul double %0, %7
-  %9 = fmul double %0, %8
-  %10 = fmul double %0, %9
-  %11 = fmul double %0, %10
-  %12 = fmul double %0, %11                       ; 3 uses
-  %niter.next.7 = add i32 %niter, 8               ; 2 uses
-  %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter
-  br i1 %niter.ncmp.7, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph.a
-
-._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph.a
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
-
-.lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
-  %.011.epil.init = phi double [ 1.000000e+00, %.lr.ph.preheader ], [ %12, %._crit_edge.loopexit.unr-lcssa ]
-  %lcmp.mod13 = icmp ne i32 %xtraiter, 0
-  tail call void @llvm.assume(i1 %lcmp.mod13)
-  br label %.lr.ph.epil
-
-.lr.ph.epil:                                      ; preds = %.lr.ph.epil, %.lr.ph.epil.preheader
-  %.011.epil = phi double [ %i.a, %.lr.ph.epil ], [ %.011.epil.init, %.lr.ph.epil.preheader ]
-  %epil.iter = phi i32 [ %epil.iter.next, %.lr.ph.epil ], [ 0, %.lr.ph.epil.preheader ]
+.lr.ph.epil:                                      ; preds = %.lr.ph.a, %.lr.ph.epil
+  %.011.epil = phi double [ %i.a, %.lr.ph.epil ], [ 1.000000e+00, %.lr.ph.a ]
+  %epil.iter = phi i32 [ %epil.iter.next, %.lr.ph.epil ], [ 1, %.lr.ph.a ] ; 2 uses
   %i.a = fmul double %0, %.011.epil               ; 2 uses
-  %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
-  %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !12
+  %epil.iter.next = add nuw nsw i32 %epil.iter, 1
+  %.not.not = icmp samesign ult i32 %epil.iter, %2
+  br i1 %.not.not, label %.lr.ph.epil, label %._crit_edge
 
-._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.epil, %2
-  %.0.lcssa = phi double [ 1.000000e+00, %2 ], [ %12, %._crit_edge.loopexit.unr-lcssa ], [ %i.a, %.lr.ph.epil ] ; 2 uses
+._crit_edge:                                      ; preds = %.lr.ph.epil, %.lr.ph.a
+  %.0.lcssa = phi double [ 1.000000e+00, %.lr.ph.a ], [ %i.a, %.lr.ph.epil ] ; 2 uses
   %i.b = icmp slt i32 %1, 0
   %i.c = fdiv double 1.000000e+00, %.0.lcssa
   %.1 = select i1 %i.b, double %i.c, double %.0.lcssa
@@ -179,9 +144,9 @@ declare double @llvm.fabs.f64(double) #4
 define double @SUNStrToReal(ptr noundef %0) local_unnamed_addr #5 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
-  %i.b = call double @strtod(ptr noundef %0, ptr noundef nonnull %i.a) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
+  %i.b = call double @strtod(ptr noundef %0, ptr noundef nonnull %i.a) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret double %i.b
 }
 
@@ -191,9 +156,6 @@ declare double @strtod(ptr noundef readonly, ptr noundef captures(none)) local_u
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.mul.v4i32(<4 x i32>) #4
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #7
-
 attributes #0 = { nofree norecurse nosync nounwind memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
@@ -201,8 +163,7 @@ attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #5 = { mustprogress nofree norecurse nounwind willreturn uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { mustprogress nocallback nofree nounwind willreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #8 = { nounwind }
+attributes #7 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}
@@ -220,6 +181,4 @@ attributes #8 = { nounwind }
 !9 = distinct !{!9, !11, !10}
 !10 = !{!"llvm.loop.isvectorized", i32 1}
 !11 = !{!"llvm.loop.unroll.runtime.disable"}
-!12 = distinct !{!12, !13}
-!13 = !{!"llvm.loop.unroll.disable"}
 end_hunk_0

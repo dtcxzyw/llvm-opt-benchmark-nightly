@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.l
   %i.by = tail call ptr @proto_tree_add_item(ptr noundef %i.bw, i32 noundef %i.bx, ptr noundef %0, i32 noundef 0, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.bz = load i32, ptr @hf_tcp_option_len, align 4
   %i.ca = tail call ptr @proto_tree_add_item(ptr noundef %i.bw, i32 noundef %i.bz, ptr noundef %0, i32 noundef 1, i32 noundef 1, i32 noundef 0) ; 0 uses
-  %i.cb = add i32 %i.c, -2                        ; 3 uses
+  %i.cb = add i32 %i.c, -2                        ; 2 uses
   %i.cc = icmp sgt i32 %i.cb, 0
   br i1 %i.cc, label %.lr.ph259, label %.loopexit246
 
@@ -216,11 +216,10 @@ bb.m:                                             ; preds = %bb.l
   %i.cf = getelementptr i8, ptr %3, i64 17        ; 2 uses
   %i.cg = getelementptr i8, ptr %3, i64 88
   %i.ch = getelementptr i8, ptr %3, i64 104
-  %4 = and i32 %i.cb, 7
   br label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph259, %bb.w
-  %.0189258 = phi i32 [ %i.cb, %.lr.ph259 ], [ %i.cy, %bb.w ] ; 5 uses
+  %.0189258 = phi i32 [ %i.cb, %.lr.ph259 ], [ %i.cy, %bb.w ] ; 6 uses
   %.0190257 = phi i32 [ 2, %.lr.ph259 ], [ %i.ei, %bb.w ] ; 5 uses
   %.0191256 = phi i32 [ 0, %.lr.ph259 ], [ %.1192, %bb.w ] ; 6 uses
   %i.ci = icmp samesign ult i32 %.0189258, 4
@@ -241,7 +240,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.ct, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  %i.cu = add nsw i32 %4, -4
+  %i.cu = add nsw i32 %.0189258, -4
   br label %.loopexit246.sink.split
 
 bb.q:                                             ; preds = %bb.o

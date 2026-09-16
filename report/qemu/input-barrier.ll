@@ -204,7 +204,7 @@ bb.ah:                                            ; preds = %bb.y
   br i1 %i.et, label %bb.ai, label %.loopexit
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.eu = add i32 %i.q, -8                        ; 3 uses
+  %i.eu = add i32 %i.q, -8                        ; 2 uses
   %.not234299.i = icmp eq i32 %i.eu, 0
   br i1 %.not234299.i, label %thread-pre-split.thread, label %.lr.ph.i
 
@@ -217,9 +217,7 @@ bb.ai:                                            ; preds = %bb.ah
   %i.fa = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.fb = call i32 @llvm.smax.i32(i32 %i.ez, i32 0)
   %smax.i = select i1 %i.ey, i32 32, i32 %i.fb    ; 2 uses
-  %wide.trip.count.i = zext nneg i32 %smax.i to i64
-  %4 = lshr i32 %i.eu, 3
-  %wide.trip.count = zext nneg i32 %4 to i64
+  %wide.trip.count = zext nneg i32 %smax.i to i64
   %exitcond.not.i43 = icmp eq i32 %smax.i, 0
   br i1 %exitcond.not.i43, label %thread-pre-split.thread, label %.lr.ph
 
@@ -230,13 +228,13 @@ bb.ai:                                            ; preds = %bb.ah
 bb.aj:                                            ; preds = %bb.am
   %i.fd = getelementptr inbounds nuw i8, ptr %.3190301.i45, i64 8
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i44, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count
   br i1 %exitcond.not.i, label %thread-pre-split.thread, label %bb.ak, !llvm.loop !8
 
 bb.ak:                                            ; preds = %.lr.ph, %bb.aj
-  %i.fe = phi i32 [ %i.eu, %.lr.ph ], [ %i.fn, %bb.aj ] ; 2 uses
+  %i.fe = phi i32 [ %i.eu, %.lr.ph ], [ %i.fn, %bb.aj ] ; 3 uses
   %.3190301.i45 = phi ptr [ %i.fc, %.lr.ph ], [ %i.fd, %bb.aj ] ; 3 uses
-  %indvars.iv.i44 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.i, %bb.aj ] ; 3 uses
+  %indvars.iv.i44 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.i, %bb.aj ] ; 2 uses
   %i.ff = icmp sgt i32 %i.fe, 3
   br i1 %i.ff, label %bb.al, label %.loopexit
 
@@ -246,8 +244,8 @@ bb.al:                                            ; preds = %bb.ak
   store i32 %i.fg, ptr %i.fh, align 4
   %i.fi = getelementptr inbounds nuw i8, ptr %i.fh, i64 4
   store i8 0, ptr %i.fi, align 4
-  %exitcond.not = icmp eq i64 %indvars.iv.i44, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit, label %bb.am
+  %4 = icmp samesign ugt i32 %i.fe, 7
+  br i1 %4, label %bb.am, label %.loopexit
 
 bb.am:                                            ; preds = %bb.al
   %i.fj = getelementptr inbounds nuw i8, ptr %.3190301.i45, i64 4

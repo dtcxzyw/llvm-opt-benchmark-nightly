@@ -205,7 +205,7 @@ bb.am:                                            ; preds = %bb.af
 
 .split.preheader:                                 ; preds = %bb.am
   %i.hw = lshr i32 3840, %.fr240
-  %umax = call i32 @llvm.umax.i32(i32 %.fr240, i32 1)
+  %umax = call i32 @llvm.smax.i32(i32 %.fr240, i32 1)
   %i.hx = and i32 %i.hw, 255
   %i.hy = mul i32 %.fr240, 6
   %i.hz = add i32 %i.hy, -6
@@ -418,7 +418,7 @@ _ZNSt6vectorIiSaIiEE9push_backERKi.exit126:       ; preds = %_ZNSt6vectorIiSaIiE
   %i.kw = phi ptr [ %i.ku, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i123 ], [ %i.ju, %bb.av ] ; 2 uses
   %.pn241 = phi ptr [ %i.kr, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i123 ], [ %i.jt, %bb.av ]
   %i.kx = getelementptr inbounds nuw i8, ptr %.pn241, i64 4 ; 2 uses
-  %i.ky = add nuw i32 %.068220, 1                 ; 2 uses
+  %i.ky = add nuw nsw i32 %.068220, 1             ; 2 uses
   %exitcond.not = icmp eq i32 %.fr240, %i.ky
   br i1 %exitcond.not, label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit.loopexit, label %.split, !llvm.loop !609
 
@@ -819,9 +819,6 @@ declare i64 @llvm.smin.i64(i64, i64) #28
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #28
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #28
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #28

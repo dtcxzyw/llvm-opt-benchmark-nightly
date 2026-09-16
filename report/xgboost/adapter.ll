@@ -204,12 +204,10 @@ bb.s:                                             ; preds = %bb.r
 
 _ZSt22__uninitialized_copy_aIPlPmmET0_T_S3_S2_RSaIT1_E.exit67: ; preds = %bb.s, %bb.r, %bb.q
   %i.dc = getelementptr i8, ptr %i.cw, i64 %i.cy
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.dc, ptr align 8 %2, i64 %i.c, i1 false), !tbaa !52
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.dc, ptr noundef nonnull align 8 dereferenceable(1) %2, i64 %i.c, i1 false), !tbaa !52
   %i.dd = add i64 %i.c, %i.cx
-  %4 = add i64 %i.dd, 8
-  %i.de = sub i64 %4, %i.cl
-  %5 = getelementptr i8, ptr %i.cw, i64 %i.de
-  %scevgep = getelementptr i8, ptr %5, i64 -8     ; 3 uses
+  %i.de = sub i64 %i.dd, %i.cl
+  %scevgep = getelementptr i8, ptr %i.cw, i64 %i.de ; 3 uses
   %i.df = sub i64 %i.j, %i.cx                     ; 4 uses
   %i.dg = icmp sgt i64 %i.df, 8
   br i1 %i.dg, label %bb.t, label %bb.u, !prof !51
@@ -612,12 +610,10 @@ bb.s:                                             ; preds = %bb.r
 
 _ZSt22__uninitialized_copy_aIPiPjjET0_T_S3_S2_RSaIT1_E.exit67: ; preds = %bb.s, %bb.r, %bb.q
   %i.dc = getelementptr i8, ptr %i.cw, i64 %i.cy
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.dc, ptr align 4 %2, i64 %i.c, i1 false), !tbaa !90
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.dc, ptr noundef nonnull align 4 dereferenceable(1) %2, i64 %i.c, i1 false), !tbaa !90
   %i.dd = add i64 %i.c, %i.cx
-  %4 = add i64 %i.dd, 4
-  %i.de = sub i64 %4, %i.cl
-  %5 = getelementptr i8, ptr %i.cw, i64 %i.de
-  %scevgep = getelementptr i8, ptr %5, i64 -4     ; 3 uses
+  %i.de = sub i64 %i.dd, %i.cl
+  %scevgep = getelementptr i8, ptr %i.cw, i64 %i.de ; 3 uses
   %i.df = sub i64 %i.j, %i.cx                     ; 4 uses
   %i.dg = icmp sgt i64 %i.df, 4
   br i1 %i.dg, label %bb.t, label %bb.u, !prof !51
@@ -674,10 +670,10 @@ declare i64 @llvm.umax.i64(i64, i64) #24
 declare i64 @llvm.umin.i64(i64, i64) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #24
+declare i64 @llvm.smin.i64(i64, i64) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smin.i64(i64, i64) #24
+declare i64 @llvm.smax.i64(i64, i64) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #24

@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/slowfloat?download=true
 inline.NumInlined: 295
 inline.NumDeleted: 28
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@slow_f128M_mulAdd:bb.a
 bb.f:                                             ; preds = %f128MToFloatX256.exit
   %i.ai = icmp ne i64 %i.ah, 0
@@ -204,7 +204,7 @@ floatX256Mul.exit:                                ; preds = %f128MToFloatX256.ex
   %.promoted74.i = phi i64 [ 0, %f128MToFloatX256.exit22 ], [ 0, %bb.k ], [ 0, %bb.o ], [ 0, %bb.p ], [ 0, %bb.s ], [ 0, %bb.t ], [ 0, %bb.w ], [ 0, %bb.x ], [ %.sroa.10.2.i, %bb.ae ] ; 4 uses
   %.promoted76.i = phi i64 [ %i.v, %f128MToFloatX256.exit22 ], [ %i.v, %bb.k ], [ %i.v, %bb.o ], [ 0, %bb.p ], [ 0, %bb.s ], [ %i.v, %bb.t ], [ 0, %bb.w ], [ 0, %bb.x ], [ %.sroa.17.2.i, %bb.ae ] ; 4 uses
   %.promoted78.i = phi i64 [ %i.w, %f128MToFloatX256.exit22 ], [ %i.w, %bb.k ], [ %i.w, %bb.o ], [ 0, %bb.p ], [ 0, %bb.s ], [ %i.w, %bb.t ], [ 0, %bb.w ], [ 0, %bb.x ], [ %.sroa.24.2.i, %bb.ae ] ; 4 uses
-  %i.cx = phi i64 [ %i.p, %f128MToFloatX256.exit22 ], [ %i.p, %bb.k ], [ %i.p, %bb.o ], [ 0, %bb.p ], [ 0, %bb.s ], [ %i.p, %bb.t ], [ 0, %bb.w ], [ 0, %bb.x ], [ %i.cw, %bb.ae ] ; 5 uses
+  %i.cx = phi i64 [ %i.p, %f128MToFloatX256.exit22 ], [ %i.p, %bb.k ], [ %i.p, %bb.o ], [ 0, %bb.p ], [ 0, %bb.s ], [ %i.p, %bb.t ], [ 0, %bb.w ], [ 0, %bb.x ], [ %i.cw, %bb.ae ] ; 4 uses
   %i.cy = phi i8 [ %i.t, %f128MToFloatX256.exit22 ], [ %i.at, %bb.k ], [ %i.bh, %bb.o ], [ 0, %bb.p ], [ 0, %bb.s ], [ %i.bh, %bb.t ], [ 1, %bb.w ], [ 0, %bb.x ], [ %i.bh, %bb.ae ] ; 9 uses
   %i.cz = phi i8 [ %i.q, %f128MToFloatX256.exit22 ], [ 0, %bb.k ], [ %i.q, %bb.o ], [ 0, %bb.p ], [ 0, %bb.s ], [ 0, %bb.t ], [ 1, %bb.w ], [ 1, %bb.x ], [ %i.q, %bb.ae ] ; 2 uses
   %i.da = phi i8 [ %i.r, %f128MToFloatX256.exit22 ], [ 0, %bb.k ], [ 1, %bb.o ], [ 0, %bb.p ], [ 0, %bb.s ], [ 1, %bb.t ], [ 0, %bb.w ], [ 0, %bb.x ], [ 0, %bb.ae ]
@@ -252,7 +252,7 @@ bb.ai:                                            ; preds = %floatX256Mul.exit
   br label %f128MToFloatX256.exit36
 
 f128MToFloatX256.exit36:                          ; preds = %.preheader.i.i31, %bb.af, %bb.ag, %bb.ah, %bb.ai
-  %.sroa.131.0.i24 = phi i64 [ %i.dp, %bb.ai ], [ undef, %bb.af ], [ undef, %bb.ag ], [ undef, %bb.ah ], [ %i.dk, %.preheader.i.i31 ] ; 7 uses
+  %.sroa.131.0.i24 = phi i64 [ %i.dp, %bb.ai ], [ undef, %bb.af ], [ undef, %bb.ag ], [ undef, %bb.ah ], [ %i.dk, %.preheader.i.i31 ] ; 6 uses
   %.sroa.8.0.i25 = phi i8 [ 0, %bb.ai ], [ 0, %bb.af ], [ 0, %bb.ag ], [ 1, %bb.ah ], [ 0, %.preheader.i.i31 ] ; 3 uses
   %.sroa.5.0.i26 = phi i8 [ 0, %bb.ai ], [ 0, %bb.af ], [ 1, %bb.ag ], [ 0, %bb.ah ], [ 0, %.preheader.i.i31 ] ; 2 uses
   %.sroa.0.0.i27 = phi i8 [ 0, %bb.ai ], [ 1, %bb.af ], [ 0, %bb.ag ], [ 0, %bb.ah ], [ 0, %.preheader.i.i31 ] ; 2 uses
@@ -345,7 +345,7 @@ bb.av:                                            ; preds = %eq256M.exit.thread.
   br i1 %i.ek, label %floatX256Add.exit, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  %i.el = sub nsw i64 %i.cx, %.sroa.131.0.i24     ; 9 uses
+  %i.el = sub nsw i64 %i.cx, %.sroa.131.0.i24     ; 7 uses
   %i.em = icmp slt i64 %i.el, 0
   br i1 %i.em, label %bb.ax, label %bb.bh
 
@@ -482,7 +482,7 @@ bb.bh:                                            ; preds = %bb.aw
   br i1 %i.gc, label %bb.bi, label %.preheader62.i
 
 .preheader62.i:                                   ; preds = %bb.bh
-  %.promoted.i38 = load i64, ptr %5, align 8      ; 4 uses
+  %.promoted.i38 = load i64, ptr %5, align 8      ; 2 uses
   %.not80.i = icmp eq i64 %i.el, 0
   br i1 %.not80.i, label %.loopexit63.i, label %.lr.ph.i
 
@@ -490,75 +490,40 @@ bb.bh:                                            ; preds = %bb.aw
   %i.gd = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %i.ge = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.gf = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
-  %.promoted65.i = load i64, ptr %i.gd, align 8, !tbaa !37 ; 3 uses
-  %.promoted67.i = load i64, ptr %i.ge, align 8, !tbaa !38 ; 3 uses
-  %.promoted69.i = load i64, ptr %i.gf, align 8, !tbaa !39 ; 3 uses
-  %.neg = add i64 %.sroa.131.0.i24, 1
-  %xtraiter = and i64 %i.el, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
-
-.prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph.i
-  %8 = add nsw i64 %i.el, -1
-  %9 = and i64 %.promoted.i38, 1
-  %10 = tail call i64 @llvm.fshl.i64(i64 %.promoted65.i, i64 %.promoted.i38, i64 63)
-  %11 = tail call i64 @llvm.fshl.i64(i64 %.promoted67.i, i64 %.promoted65.i, i64 63) ; 2 uses
-  %12 = tail call i64 @llvm.fshl.i64(i64 %.promoted69.i, i64 %.promoted67.i, i64 63) ; 2 uses
-  %13 = lshr i64 %.promoted69.i, 1                ; 2 uses
-  %14 = or i64 %10, %9                            ; 2 uses
-  br label %.prol.loopexit
-
-.prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph.i
-  %.unr = phi i64 [ %.promoted69.i, %.lr.ph.i ], [ %13, %.prol.loopexit.unr-lcssa ]
-  %.unr196 = phi i64 [ %.promoted67.i, %.lr.ph.i ], [ %12, %.prol.loopexit.unr-lcssa ]
-  %.unr197 = phi i64 [ %.promoted65.i, %.lr.ph.i ], [ %11, %.prol.loopexit.unr-lcssa ]
-  %.164.i.unr = phi i64 [ %i.el, %.lr.ph.i ], [ %8, %.prol.loopexit.unr-lcssa ]
-  %.unr198 = phi i64 [ %.promoted.i38, %.lr.ph.i ], [ %14, %.prol.loopexit.unr-lcssa ]
-  %.lcssa183.unr = phi i64 [ poison, %.lr.ph.i ], [ %11, %.prol.loopexit.unr-lcssa ]
-  %.lcssa182.unr = phi i64 [ poison, %.lr.ph.i ], [ %12, %.prol.loopexit.unr-lcssa ]
-  %.lcssa181.unr = phi i64 [ poison, %.lr.ph.i ], [ %13, %.prol.loopexit.unr-lcssa ]
-  %.lcssa180.unr = phi i64 [ poison, %.lr.ph.i ], [ %14, %.prol.loopexit.unr-lcssa ]
-  %15 = icmp eq i64 %i.cx, %.neg
-  br i1 %15, label %..loopexit63_crit_edge.i, label %.lr.ph.i.new
+  %.promoted65.i = load i64, ptr %i.gd, align 8, !tbaa !37
+  %.promoted67.i = load i64, ptr %i.ge, align 8, !tbaa !38
+  %.promoted69.i = load i64, ptr %i.gf, align 8, !tbaa !39
+  br label %.lr.ph.i.new
 
 bb.bi:                                            ; preds = %bb.bh
   %i.gg = getelementptr inbounds nuw i8, ptr %5, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.gg, i8 0, i64 24, i1 false)
   br label %.loopexit63.i
 
-.lr.ph.i.new:                                     ; preds = %.prol.loopexit, %.lr.ph.i.new
-  %i.gh = phi i64 [ %i.gq, %.lr.ph.i.new ], [ %.unr, %.prol.loopexit ] ; 3 uses
-  %i.gi = phi i64 [ %i.gp, %.lr.ph.i.new ], [ %.unr196, %.prol.loopexit ] ; 2 uses
-  %i.gj = phi i64 [ %i.go, %.lr.ph.i.new ], [ %.unr197, %.prol.loopexit ] ; 2 uses
-  %.164.i = phi i64 [ %i.gl, %.lr.ph.i.new ], [ %.164.i.unr, %.prol.loopexit ] ; 2 uses
-  %i.gk = phi i64 [ %i.gr, %.lr.ph.i.new ], [ %.unr198, %.prol.loopexit ] ; 2 uses
-  %16 = tail call i64 @llvm.fshl.i64(i64 %i.gj, i64 %i.gk, i64 63) ; 2 uses
-  %17 = tail call i64 @llvm.fshl.i64(i64 %i.gi, i64 %i.gj, i64 63) ; 2 uses
-  %18 = tail call i64 @llvm.fshl.i64(i64 %i.gh, i64 %i.gi, i64 63) ; 2 uses
-  %19 = lshr i64 %i.gh, 1
-  %20 = or i64 %16, %i.gk
-  %i.gl = add nsw i64 %.164.i, -2
-  %i.gm = and i64 %20, 1
-  %i.gn = tail call i64 @llvm.fshl.i64(i64 %17, i64 %16, i64 63)
-  %i.go = tail call i64 @llvm.fshl.i64(i64 %18, i64 %17, i64 63) ; 2 uses
-  %i.gp = tail call i64 @llvm.fshl.i64(i64 %19, i64 %18, i64 63) ; 2 uses
-  %i.gq = lshr i64 %i.gh, 2                       ; 2 uses
+.lr.ph.i.new:                                     ; preds = %.lr.ph.i.new, %.lr.ph.i
+  %i.gh = phi i64 [ %.promoted69.i, %.lr.ph.i ], [ %i.gq, %.lr.ph.i.new ] ; 2 uses
+  %i.gi = phi i64 [ %.promoted67.i, %.lr.ph.i ], [ %i.gp, %.lr.ph.i.new ] ; 2 uses
+  %i.gj = phi i64 [ %.promoted65.i, %.lr.ph.i ], [ %i.go, %.lr.ph.i.new ] ; 2 uses
+  %.164.i = phi i64 [ %i.el, %.lr.ph.i ], [ %i.gl, %.lr.ph.i.new ] ; 2 uses
+  %i.gk = phi i64 [ %.promoted.i38, %.lr.ph.i ], [ %i.gr, %.lr.ph.i.new ] ; 2 uses
+  %i.gl = add nsw i64 %.164.i, -1
+  %i.gm = and i64 %i.gk, 1
+  %i.gn = tail call i64 @llvm.fshl.i64(i64 %i.gj, i64 %i.gk, i64 63)
+  %i.go = tail call i64 @llvm.fshl.i64(i64 %i.gi, i64 %i.gj, i64 63) ; 2 uses
+  %i.gp = tail call i64 @llvm.fshl.i64(i64 %i.gh, i64 %i.gi, i64 63) ; 2 uses
+  %i.gq = lshr i64 %i.gh, 1                       ; 2 uses
   %i.gr = or i64 %i.gn, %i.gm                     ; 2 uses
-  %21 = icmp sgt i64 %.164.i, 2
-  br i1 %21, label %.lr.ph.i.new, label %..loopexit63_crit_edge.i
+  %8 = icmp samesign ugt i64 %.164.i, 1
+  br i1 %8, label %.lr.ph.i.new, label %..loopexit63_crit_edge.i
 
-..loopexit63_crit_edge.i:                         ; preds = %.lr.ph.i.new, %.prol.loopexit
-  %.lcssa183 = phi i64 [ %.lcssa183.unr, %.prol.loopexit ], [ %i.go, %.lr.ph.i.new ]
-  %.lcssa182 = phi i64 [ %.lcssa182.unr, %.prol.loopexit ], [ %i.gp, %.lr.ph.i.new ]
-  %.lcssa181 = phi i64 [ %.lcssa181.unr, %.prol.loopexit ], [ %i.gq, %.lr.ph.i.new ]
-  %.lcssa180 = phi i64 [ %.lcssa180.unr, %.prol.loopexit ], [ %i.gr, %.lr.ph.i.new ]
-  store i64 %.lcssa183, ptr %i.gd, align 8, !tbaa !37
-  store i64 %.lcssa182, ptr %i.ge, align 8, !tbaa !38
-  store i64 %.lcssa181, ptr %i.gf, align 8, !tbaa !39
+..loopexit63_crit_edge.i:                         ; preds = %.lr.ph.i.new
+  store i64 %i.go, ptr %i.gd, align 8, !tbaa !37
+  store i64 %i.gp, ptr %i.ge, align 8, !tbaa !38
+  store i64 %i.gq, ptr %i.gf, align 8, !tbaa !39
   br label %.loopexit63.i
 
 .loopexit63.i:                                    ; preds = %.preheader62.i, %..loopexit63_crit_edge.i, %bb.bi
-  %i.gs = phi i64 [ 1, %bb.bi ], [ %.lcssa180, %..loopexit63_crit_edge.i ], [ %.promoted.i38, %.preheader62.i ] ; 4 uses
+  %i.gs = phi i64 [ 1, %bb.bi ], [ %i.gr, %..loopexit63_crit_edge.i ], [ %.promoted.i38, %.preheader62.i ] ; 4 uses
   store i64 %i.gs, ptr %5, align 8
   %.not58.i = icmp eq i8 %i.cy, %i.dr
   br i1 %.not58.i, label %neg256M.exit.i, label %bb.bj

@@ -178,9 +178,10 @@ bb.k:                                             ; preds = %bb.j
   %i.bh = icmp slt i32 %i.aq, %i.as
   %i.bi = add nsw i32 %i.aq, 360
   %spec.select298 = select i1 %i.bh, i32 %i.bi, i32 %i.aq ; 3 uses
-  %i.bj = call i32 @llvm.usub.sat.i32(i32 359, i32 %i.bg)
-  %i.bk = add i32 %i.bf, %i.bj
-  %i.bl = sub i32 %i.bk, %i.ay
+  %10 = add i32 %i.bf, 359
+  %i.bj = call i32 @llvm.smin.i32(i32 %i.bg, i32 359)
+  %i.bk = add i32 %i.bj, %i.ay
+  %i.bl = sub i32 %10, %i.bk
   %.fr356 = freeze i32 %i.bl                      ; 2 uses
   %i.bm = urem i32 %.fr356, 360
   %.neg357 = sub i32 %i.bm, %.fr356
@@ -496,9 +497,10 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   %i.gu = sub nuw i32 %.fr, %i.gt
   %i.gv = add i32 %i.gu, %i.gj                    ; 2 uses
   %i.gw = sub i32 %i.gv, %i.go                    ; 2 uses
-  %i.gx = call i32 @llvm.usub.sat.i32(i32 359, i32 %i.gw)
-  %i.gy = add i32 %i.gv, %i.gx
-  %i.gz = sub i32 %i.gy, %i.go
+  %11 = add i32 %i.gv, 359
+  %i.gx = call i32 @llvm.smin.i32(i32 %i.gw, i32 359)
+  %i.gy = add i32 %i.gx, %i.go
+  %i.gz = sub i32 %11, %i.gy
   %.fr354 = freeze i32 %i.gz                      ; 2 uses
   %i.ha = urem i32 %.fr354, 360
   %.neg = sub i32 %i.ha, %.fr354
@@ -901,9 +903,9 @@ bb.a:
   %i.d = sub nuw i32 %i.b, %i.c
   %.fr = freeze i32 %i.d
   %i.e = add i32 %1, %.fr                         ; 2 uses
-  %i.f = tail call i32 @llvm.umax.i32(i32 %i.e, i32 359) ; 2 uses
+  %i.f = tail call i32 @llvm.smax.i32(i32 %i.e, i32 359) ; 2 uses
   %i.g = urem i32 %i.f, 360
-  %.neg = sub i32 %i.g, %i.f
+  %.neg = sub nsw i32 %i.g, %i.f
   %i.h = add i32 %.neg, %i.e
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 72
   store i32 %i.h, ptr %i.i, align 8, !tbaa !27
@@ -1306,7 +1308,7 @@ bb.b:                                             ; preds = %bb.a
   %i.l = add i32 %i.b, %i.k                       ; 2 uses
   %i.m = sub i32 %i.l, %i.d                       ; 2 uses
   %i.n = add i32 %i.l, 359
-  %umin = tail call i32 @llvm.umin.i32(i32 %i.m, i32 359)
+  %umin = tail call i32 @llvm.smin.i32(i32 %i.m, i32 359)
   %i.o = add i32 %i.d, %umin
   %i.p = sub i32 %i.n, %i.o
   %.fr46 = freeze i32 %i.p                        ; 2 uses
@@ -1596,16 +1598,7 @@ declare i32 @llvm.smax.i32(i32, i32) #6
 declare i32 @llvm.abs.i32(i32, i1 immarg) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #6
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #6
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.usub.sat.i32(i32, i32) #6
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #6
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -205,7 +205,7 @@ jvp_string_free.exit.i:                           ; preds = %bb.g, %jvp_string_p
 jvp_object_size.exit.i.i:                         ; preds = %jvp_object_find_bucket.exit.i
   %i.w = getelementptr inbounds nuw i8, ptr %i.g, i64 4 ; 2 uses
   %i.x = load i32, ptr %i.w, align 4, !tbaa !14   ; 11 uses
-  %.sroa.21.0.extract.shift.i.i.i = lshr i64 %i.f, 32 ; 2 uses
+  %.sroa.21.0.extract.shift.i.i.i = lshr i64 %i.f, 32 ; 3 uses
   %.sroa.21.0.extract.trunc.i.i.i = trunc nuw i64 %.sroa.21.0.extract.shift.i.i.i to i32 ; 2 uses
   %i.y = icmp eq i32 %i.x, %.sroa.21.0.extract.trunc.i.i.i
   br i1 %i.y, label %bb.k, label %bb.h
@@ -268,11 +268,10 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.n
   %i.am = zext nneg i32 %i.ai to i64              ; 5 uses
   %i.an = mul nuw nsw i64 %i.am, 40
-  %6 = or disjoint i64 %i.an, 8
-  %7 = shl nuw nsw i32 %i.x, 2                    ; 3 uses
-  %8 = zext nneg i32 %7 to i64
-  %9 = shl nuw nsw i64 %8, 2
-  %i.ao = add nuw nsw i64 %6, %9
+  %6 = shl nuw nsw i64 %.sroa.21.0.extract.shift.i.i.i, 4
+  %7 = and i64 %6, 17179869168                    ; 2 uses
+  %8 = or disjoint i64 %7, 8
+  %i.ao = add nuw nsw i64 %8, %i.an
   %i.ap = tail call ptr @jv_mem_alloc(i64 noundef %i.ao) #20 ; 6 uses
   store i32 1, ptr %i.ap, align 8, !tbaa !17
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 8 ; 4 uses
@@ -298,14 +297,11 @@ jvp_object_get_slot.exit.lr.ph.i.i:               ; preds = %bb.q
   %i.ax = getelementptr inbounds nuw i8, ptr %i.ap, i64 4 ; 5 uses
   store i32 0, ptr %i.ax, align 4, !tbaa !14
   %i.ay = getelementptr inbounds nuw [40 x i8], ptr %i.aq, i64 %i.am ; 3 uses
-  %10 = add nsw i32 %7, -2
-  %11 = zext nneg i32 %10 to i64
-  %12 = shl nuw nsw i64 %11, 2
-  %13 = add nuw nsw i64 %12, 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ay, i8 -1, i64 %13, i1 false), !tbaa !14
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ay, i8 -1, i64 %7, i1 false), !tbaa !14
   %.sroa.4.0.insert.shift.i.i.i = shl nuw nsw i64 %i.am, 32
   %.sroa.0.0.insert.insert.i.i.i = or disjoint i64 %.sroa.4.0.insert.shift.i.i.i, 135 ; 2 uses
-  %i.az = add nsw i32 %7, -1                      ; 2 uses
+  %sh.diff.i.i.i.i = shl nuw nsw i32 %i.x, 2
+  %i.az = add nsw i32 %sh.diff.i.i.i.i, -1        ; 2 uses
   br label %jvp_object_get_slot.exit.i.i
 
 jvp_object_get_slot.exit.i.i:                     ; preds = %bb.w, %jvp_object_get_slot.exit.lr.ph.i.i
@@ -708,7 +704,7 @@ jvp_refcnt_unshared.exit:                         ; preds = %bb.c
 
 jvp_object_size.exit:                             ; preds = %jvp_refcnt_unshared.exit
   %.sroa.21.0.extract.shift.i = lshr i64 %0, 32   ; 6 uses
-  %.sroa.21.0.extract.trunc.i = trunc nuw i64 %.sroa.21.0.extract.shift.i to i32 ; 3 uses
+  %.sroa.21.0.extract.trunc.i = trunc nuw i64 %.sroa.21.0.extract.shift.i to i32 ; 2 uses
   %i.d = icmp sgt i32 %.sroa.21.0.extract.trunc.i, 0
   %i.e = tail call range(i32 1, 32) i32 @llvm.ctpop.i32(i32 %.sroa.21.0.extract.trunc.i)
   %i.f = icmp samesign ult i32 %i.e, 2
@@ -722,9 +718,7 @@ bb.e:                                             ; preds = %jvp_object_size.exi
 bb.f:                                             ; preds = %jvp_object_size.exit
   %i.g = mul nuw nsw i64 %.sroa.21.0.extract.shift.i, 40
   %i.h = add nuw nsw i64 %i.g, 8
-  %2 = shl nuw nsw i32 %.sroa.21.0.extract.trunc.i, 1 ; 2 uses
-  %3 = zext nneg i32 %2 to i64
-  %i.i = shl nuw nsw i64 %3, 2
+  %i.i = shl nuw nsw i64 %.sroa.21.0.extract.shift.i, 3 ; 3 uses
   %i.j = add nuw nsw i64 %i.h, %i.i
   %i.k = tail call ptr @jv_mem_alloc(i64 noundef %i.j) #20 ; 5 uses
   store i32 1, ptr %i.k, align 8, !tbaa !17
@@ -751,11 +745,7 @@ jvp_object_get_slot.exit92.lr.ph:                 ; preds = %bb.g
   %i.s = getelementptr inbounds nuw i8, ptr %i.k, i64 4 ; 2 uses
   store i32 0, ptr %i.s, align 4, !tbaa !14
   %i.t = getelementptr inbounds nuw [40 x i8], ptr %i.l, i64 %.sroa.21.0.extract.shift.i
-  %4 = add nsw i32 %2, -2
-  %5 = zext nneg i32 %4 to i64
-  %6 = shl nuw nsw i64 %5, 2
-  %7 = add nuw nsw i64 %6, 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.t, i8 -1, i64 %7, i1 false), !tbaa !14
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.t, i8 -1, i64 %i.i, i1 false), !tbaa !14
   %.sroa.4.0.insert.shift.i = and i64 %0, -4294967296
   %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.4.0.insert.shift.i, 135
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 4
@@ -769,8 +759,7 @@ jvp_object_size.exit87:                           ; preds = %jvp_object_size.exi
   %i.y = ashr i64 %0, 32                          ; 2 uses
   %i.z = getelementptr inbounds [40 x i8], ptr %i.x, i64 %i.y
   %i.aa = getelementptr inbounds [40 x i8], ptr %i.l, i64 %i.y
-  %8 = shl nuw nsw i64 %.sroa.21.0.extract.shift.i, 3
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.aa, ptr nonnull align 4 %i.z, i64 %8, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.aa, ptr nonnull align 4 %i.z, i64 %i.i, i1 false)
   tail call void @jv_free(i64 %0, ptr nonnull %1)
   %.val = load i32, ptr %i.k, align 8, !tbaa !17  ; 2 uses
   %i.ab = icmp sgt i32 %.val, 0

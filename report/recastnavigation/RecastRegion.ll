@@ -205,21 +205,20 @@ _ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit252.i: ; preds = %bb.av
   br i1 %i.adf, label %bb.aw, label %._crit_edge375.i
 
 bb.aw:                                            ; preds = %.loopexit335.i, %.lr.ph374.i
-  %i.adg = phi i64 [ %i.acx, %.lr.ph374.i ], [ %i.ade, %.loopexit335.i ] ; 2 uses
+  %i.adg = phi i64 [ %i.acx, %.lr.ph374.i ], [ %i.ade, %.loopexit335.i ]
   %i.adh = load ptr, ptr %i.aaj, align 8, !tbaa !86 ; 3 uses
   %i.adi = load i32, ptr %i.adh, align 4, !tbaa !87
   %i.adj = sext i32 %i.adi to i64
   %i.adk = load ptr, ptr %i.ph, align 8, !tbaa !98
   %i.adl = getelementptr inbounds [64 x i8], ptr %i.adk, i64 %i.adj ; 3 uses
-  %i.adm = add nsw i64 %i.adg, -1                 ; 3 uses
+  %i.adm = add nsw i64 %i.adg, -1                 ; 4 uses
   %.not395.i = icmp eq i64 %i.adm, 0
   br i1 %.not395.i, label %_ZN12rcVectorBaseIiL11rcAllocHint1EE6resizeEl.exit.i, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.aw
   %scevgep.i = getelementptr i8, ptr %i.adh, i64 4
-  %i.adn = shl i64 %i.adg, 2
-  %7 = add i64 %i.adn, -4
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.adh, ptr align 4 %scevgep.i, i64 %7, i1 false), !tbaa !87
+  %i.adn = shl nuw i64 %i.adm, 2
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.adh, ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i, i64 %i.adn, i1 false), !tbaa !87
   br label %_ZN12rcVectorBaseIiL11rcAllocHint1EE6resizeEl.exit.i
 
 _ZN12rcVectorBaseIiL11rcAllocHint1EE6resizeEl.exit.i: ; preds = %.lr.ph.preheader.i, %bb.aw

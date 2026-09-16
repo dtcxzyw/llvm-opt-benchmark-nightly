@@ -202,9 +202,9 @@ bb.a:
   %i.e = urem i32 %i.d, 360
   %i.f = sub nuw i32 %i.d, %i.e
   %i.g = add i32 %i.f, %1                         ; 2 uses
-  %i.h = tail call i32 @llvm.umax.i32(i32 %i.g, i32 359) ; 2 uses
+  %i.h = tail call i32 @llvm.smax.i32(i32 %i.g, i32 359) ; 2 uses
   %i.i = urem i32 %i.h, 360
-  %.neg.i = sub i32 %i.i, %i.h
+  %.neg.i = sub nsw i32 %i.i, %i.h
   %i.j = add i32 %.neg.i, %i.g                    ; 8 uses
   %i.k = icmp samesign ult i32 %i.j, 23
   br i1 %i.k, label %heading_to_cardinal.exit, label %bb.b
@@ -288,9 +288,6 @@ declare void @lv_label_set_text_fmt(ptr noundef, ptr noundef, ...) local_unnamed
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #3
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

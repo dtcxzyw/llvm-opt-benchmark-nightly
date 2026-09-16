@@ -119,15 +119,15 @@ bb.a:
   %i.o = select i1 %i.l, i32 %i.n, i32 0
   %.0.i28 = add nsw i32 %i.o, %i.j
   %i.p = call noundef range(i32 0, -2147483648) i32 @llvm.smax.i32(i32 %.0.i28, i32 0)
-  %i.q = call i32 @llvm.smax.i32(i32 %.0.i, i32 1) ; 4 uses
+  %i.q = call i32 @llvm.smax.i32(i32 %.0.i, i32 1) ; 3 uses
   %i.r = zext nneg i32 %i.p to i64
   %spec.select29 = call i64 @llvm.umin.i64(i64 %i.k, i64 %i.r) ; 2 uses
-  %spec.select = trunc nuw nsw i64 %spec.select29 to i32 ; 3 uses
+  %spec.select = trunc nuw nsw i64 %spec.select29 to i32 ; 2 uses
   %i.s = icmp samesign ugt i32 %i.q, %spec.select
   br i1 %i.s, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.t = sub nuw nsw i32 %spec.select, %i.q
+  %i.t = sub nuw nsw i32 %spec.select, %i.q       ; 2 uses
   %i.u = add nuw nsw i32 %i.t, 1                  ; 2 uses
   %.not.not = icmp eq i64 %spec.select29, 2147483647
   br i1 %.not.not, label %bb.c, label %bb.d
@@ -139,9 +139,8 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   call void @_Z15luaL_checkstackP9lua_StateiPKc(ptr noundef %0, i32 noundef %i.u, ptr noundef nonnull @.str.18)
   %i.v = zext nneg i32 %i.q to i64
-  %i.w = add nuw nsw i32 %spec.select, 1
-  %1 = sub nsw i32 %i.w, %i.q
-  %wide.trip.count = zext i32 %1 to i64
+  %i.w = add nuw nsw i32 %i.t, 1
+  %wide.trip.count = zext nneg i32 %i.w to i64
   %invariant.gep = getelementptr i8, ptr %i.b, i64 %i.v
   br label %bb.e
 

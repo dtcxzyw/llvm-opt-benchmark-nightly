@@ -204,18 +204,18 @@ bb.p:                                             ; preds = %.lr.ph.i.epil.prehe
 
 iter.check547:                                    ; preds = %.preheader.i
   %i.eb = mul i32 %i.bp, %i.bp                    ; 3 uses
-  %umax138.i = call i32 @llvm.umax.i32(i32 %i.eb, i32 1)
-  %wide.trip.count139.i = zext i32 %umax138.i to i64 ; 6 uses
-  %min.iters.check534 = icmp ult i32 %i.eb, 4
+  %umax138.i = call i32 @llvm.smax.i32(i32 %i.eb, i32 1)
+  %wide.trip.count139.i = zext nneg i32 %umax138.i to i64 ; 6 uses
+  %min.iters.check534 = icmp slt i32 %i.eb, 4
   br i1 %min.iters.check534, label %.lr.ph118.i.preheader, label %vector.main.loop.iter.check535
 
 vector.main.loop.iter.check535:                   ; preds = %iter.check547
-  %min.iters.check536 = icmp ult i32 %i.eb, 16
+  %min.iters.check536 = icmp slt i32 %i.eb, 16
   br i1 %min.iters.check536, label %vec.epilog.ph551, label %vector.ph537
 
 vector.ph537:                                     ; preds = %vector.main.loop.iter.check535
   %i.ec = and i64 %wide.trip.count139.i, 12
-  %n.vec538 = and i64 %wide.trip.count139.i, 4294967280 ; 4 uses
+  %n.vec538 = and i64 %wide.trip.count139.i, 2147483632 ; 4 uses
   br label %vector.body539
 
 vector.body539:                                   ; preds = %vector.body539, %vector.ph537
@@ -246,7 +246,7 @@ vec.epilog.iter.check549:                         ; preds = %middle.block544
 
 vec.epilog.ph551:                                 ; preds = %vector.main.loop.iter.check535, %vec.epilog.iter.check549
   %vec.epilog.resume.val546 = phi i64 [ %n.vec538, %vec.epilog.iter.check549 ], [ 0, %vector.main.loop.iter.check535 ]
-  %n.vec552 = and i64 %wide.trip.count139.i, 4294967292 ; 3 uses
+  %n.vec552 = and i64 %wide.trip.count139.i, 2147483644 ; 3 uses
   br label %vec.epilog.vector.body553
 
 vec.epilog.vector.body553:                        ; preds = %vec.epilog.vector.body553, %vec.epilog.ph551
@@ -387,18 +387,18 @@ bb.x:                                             ; preds = %.epil.preheader
   br i1 %.not120.i, label %shadow_draw_corner_buf.exit, label %iter.check
 
 iter.check:                                       ; preds = %._crit_edge141.i
-  %umax.i = call i32 @llvm.umax.i32(i32 %i.ey, i32 1)
-  %wide.trip.count133.i = zext i32 %umax.i to i64 ; 6 uses
-  %min.iters.check = icmp ult i32 %i.ey, 4
+  %umax.i = call i32 @llvm.smax.i32(i32 %i.ey, i32 1)
+  %wide.trip.count133.i = zext nneg i32 %umax.i to i64 ; 6 uses
+  %min.iters.check = icmp slt i32 %i.ey, 4
   br i1 %min.iters.check, label %.lr.ph116.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check527 = icmp ult i32 %i.ey, 16
+  %min.iters.check527 = icmp slt i32 %i.ey, 16
   br i1 %min.iters.check527, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.fn = and i64 %wide.trip.count133.i, 12
-  %n.vec = and i64 %wide.trip.count133.i, 4294967280 ; 4 uses
+  %n.vec = and i64 %wide.trip.count133.i, 2147483632 ; 4 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -427,7 +427,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec529 = and i64 %wide.trip.count133.i, 4294967292 ; 3 uses
+  %n.vec529 = and i64 %wide.trip.count133.i, 2147483644 ; 3 uses
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -829,9 +829,6 @@ declare i32 @llvm.smax.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #4
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #5

@@ -205,15 +205,14 @@ bb.d:                                             ; preds = %bb.b
   br label %.lr.ph182.us
 
 .preheader172.preheader:                          ; preds = %..loopexit_crit_edge.us, %._crit_edge
-  %i.ca = zext nneg i32 %0 to i64                 ; 6 uses
+  %i.ca = zext nneg i32 %0 to i64                 ; 7 uses
   %i.cb = zext nneg i32 %0 to i64
   br label %.preheader172
 
 .preheader172:                                    ; preds = %.preheader172.preheader, %.split.us
   %indvars.iv262 = phi i64 [ 0, %.preheader172.preheader ], [ %indvars.iv.next263, %.split.us ] ; 20 uses
   %indvars.iv260 = phi i64 [ 1, %.preheader172.preheader ], [ %indvars.iv.next261, %.split.us ] ; 5 uses
-  %7 = trunc nuw i64 %indvars.iv262 to i32
-  %.not150.not = icmp sgt i32 %0, %7
+  %.not150.not = icmp samesign ult i64 %indvars.iv262, %i.ca
   %i.cc = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %indvars.iv262 ; 3 uses
   %i.cd = sub nuw nsw i64 %indvars.iv262, %i.cb
   %i.ce = getelementptr inbounds nuw [12 x i8], ptr %i.e, i64 %i.cd ; 5 uses

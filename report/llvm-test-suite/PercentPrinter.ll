@@ -202,16 +202,16 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.q = getelementptr inbounds i8, ptr %i.a, i64 %i.p
   store i8 0, ptr %i.q, align 1, !tbaa !13
   %i.r = call noundef i32 @llvm.smax.i32(i32 %i.m, i32 4)
-  %i.s = add nuw i32 %i.r, 2
+  %i.s = add nuw i32 %i.r, 2                      ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.u = load i32, ptr %i.t, align 8, !tbaa !12   ; 3 uses
-  %spec.select = call i32 @llvm.smax.i32(i32 %i.s, i32 %i.u) ; 4 uses
+  %spec.select = call i32 @llvm.smax.i32(i32 %i.s, i32 %i.u) ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   %i.v = icmp eq i32 %i.u, 0
   br i1 %i.v, label %.preheader24.preheader, label %bb.d
 
 .preheader24.preheader:                           ; preds = %bb.c
-  %i.w = call i32 @llvm.umax.i32(i32 %spec.select, i32 1)
+  %i.w = call i32 @llvm.smax.i32(i32 %i.s, i32 1)
   %umax = zext nneg i32 %i.w to i64               ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.b, i8 32, i64 %umax, i1 false), !tbaa !13
   %scevgep = getelementptr i8, ptr %i.b, i64 %umax
@@ -374,9 +374,6 @@ declare i32 @llvm.smax.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #4
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

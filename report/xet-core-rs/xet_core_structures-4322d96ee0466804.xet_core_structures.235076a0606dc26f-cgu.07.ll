@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %.noexc
   store i64 %i.y, ptr %i.aj, align 8, !alias.scope !354
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   %i.ak = tail call i64 @llvm.usub.sat.i64(i64 %i.j, i64 2)
-  %i.al = add nuw nsw i64 %i.ak, %i.i             ; 5 uses
+  %i.al = add nuw nsw i64 %i.ak, %i.i             ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !355)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !355
   invoke void @_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs31YAwBA1AlL_19xet_core_structures(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.b, i64 noundef %i.al, i1 noundef zeroext true, i64 noundef 1, i64 noundef 1)
@@ -278,10 +278,9 @@ _RINvXs1_NtNtCsexYYUdYSQU6_5alloc3vec14spec_from_elemhNtB6_12SpecFromElem9from_e
   %i.bk = add nuw i64 %2, 1
   %i.bl = lshr i64 %i.bk, 2                       ; 2 uses
   %i.bm = add nsw i64 %i.i, -1
-  %3 = tail call i64 @llvm.umin.i64(i64 %i.i, i64 %i.bh)
-  %i.bn = tail call i64 @llvm.umin.i64(i64 %3, i64 %i.bj)
-  %i.bo = tail call i64 @llvm.umin.i64(i64 %i.bn, i64 %i.bl)
-  %i.bp = tail call i64 @llvm.umin.i64(i64 %i.bo, i64 %i.al)
+  %i.bn = tail call i64 @llvm.umin.i64(i64 %i.i, i64 %i.bh)
+  %i.bo = tail call i64 @llvm.umin.i64(i64 %i.bn, i64 %i.bj)
+  %i.bp = tail call i64 @llvm.umin.i64(i64 %i.bo, i64 %i.bl)
   %i.bq = tail call i64 @llvm.umin.i64(i64 %i.bp, i64 %i.l)
   %i.br = tail call i64 @llvm.umin.i64(i64 %i.bq, i64 %i.y)
   %i.bs = tail call i64 @llvm.umin.i64(i64 %i.br, i64 %i.bm) ; 2 uses
