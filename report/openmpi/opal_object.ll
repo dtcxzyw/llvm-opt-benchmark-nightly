@@ -50,16 +50,12 @@ opal_atomic_lock.exit:                            ; preds = %bb.c, %bb.b
   %i.k = load i32, ptr @opal_class_init_epoch, align 4, !tbaa !8 ; 2 uses
   %i.l = load i32, ptr %i.b, align 8, !tbaa !21
   %i.m = icmp eq i32 %i.k, %i.l
-  br i1 %i.m, label %.sink.split, label %.lr.ph
+  br i1 %i.m, label %.sink.split, label %bb.d
 
-.lr.ph:                                           ; preds = %opal_atomic_lock.exit
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 36
-  br label %bb.d
-
-bb.d:                                             ; preds = %.lr.ph, %bb.d
-  %i.n = phi i32 [ 0, %.lr.ph ], [ %i.u, %bb.d ]  ; 4 uses
-  %.04454 = phi ptr [ %0, %.lr.ph ], [ %i.w, %bb.d ] ; 2 uses
-  %i.o = phi <2 x i32> [ zeroinitializer, %.lr.ph ], [ %i.t, %bb.d ]
+bb.d:                                             ; preds = %opal_atomic_lock.exit, %bb.d
+  %i.n = phi i32 [ %i.u, %bb.d ], [ 0, %opal_atomic_lock.exit ] ; 4 uses
+  %.04454 = phi ptr [ %i.w, %bb.d ], [ %0, %opal_atomic_lock.exit ] ; 2 uses
+  %i.o = phi <2 x i32> [ %i.t, %bb.d ], [ zeroinitializer, %opal_atomic_lock.exit ]
   %i.p = getelementptr inbounds nuw i8, ptr %.04454, i64 16
   %i.q = load <2 x ptr>, ptr %i.p, align 8, !tbaa !12
   %i.r = icmp ne <2 x ptr> %i.q, splat (ptr null)
@@ -72,6 +68,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
   br i1 %.not, label %bb.e, label %bb.d, !llvm.loop !15
 
 bb.e:                                             ; preds = %bb.d
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 36
   store i32 %i.u, ptr %1, align 4, !tbaa !23
   %i.x = extractelement <2 x i32> %i.t, i64 0     ; 2 uses
   %i.y = add nuw nsw i32 %i.x, 2

@@ -204,14 +204,10 @@ vector.memcheck:                                  ; preds = %.preheader
   %i.t = add i64 %i.s, %.0142028
   %i.u = add i64 %i.t, -1
   %diff.check = icmp ult i64 %i.u, 31
-  br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
+  br i1 %diff.check, label %scalar.ph.preheader, label %vector.body
 
-vector.ph:                                        ; preds = %vector.memcheck
-  %5 = getelementptr i8, ptr %.01420, i64 %i.p    ; 2 uses
-  br label %vector.body
-
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
+vector.body:                                      ; preds = %vector.memcheck, %vector.body
+  %index = phi i64 [ %index.next, %vector.body ], [ 0, %vector.memcheck ] ; 3 uses
   %i.v = shl i64 %index, 3
   %next.gep = getelementptr i8, ptr %.01420, i64 %i.v ; 2 uses
   %i.w = getelementptr [8 x i8], ptr %i.q, i64 %index ; 2 uses
@@ -226,6 +222,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.z, label %middle.block, label %vector.body, !llvm.loop !103
 
 middle.block:                                     ; preds = %vector.body
+  %5 = getelementptr i8, ptr %.01420, i64 %i.p    ; 2 uses
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.preheader, %middle.block
@@ -358,14 +355,10 @@ vector.memcheck:                                  ; preds = %.preheader
   %bound0 = icmp ult ptr %i.a, %scevgep29
   %bound1 = icmp ult ptr %.01521, %scevgep
   %found.conflict = and i1 %bound0, %bound1
-  br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
+  br i1 %found.conflict, label %scalar.ph.preheader, label %vector.body
 
-vector.ph:                                        ; preds = %vector.memcheck
-  %5 = getelementptr i8, ptr %.01521, i64 %i.s    ; 2 uses
-  br label %vector.body
-
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
+vector.body:                                      ; preds = %vector.memcheck, %vector.body
+  %index = phi i64 [ %index.next, %vector.body ], [ 0, %vector.memcheck ] ; 3 uses
   %i.u = shl i64 %index, 3
   %next.gep = getelementptr i8, ptr %.01521, i64 %i.u ; 3 uses
   %i.v = getelementptr i8, ptr %next.gep, i64 16  ; 2 uses
@@ -386,6 +379,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.aa, label %middle.block, label %vector.body, !llvm.loop !110
 
 middle.block:                                     ; preds = %vector.body
+  %5 = getelementptr i8, ptr %.01521, i64 %i.s    ; 2 uses
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.preheader, %middle.block

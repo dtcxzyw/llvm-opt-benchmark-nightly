@@ -205,14 +205,10 @@ middle.block861:                                  ; preds = %vector.body858
   %.1451617 = phi i32 [ %i.mj, %._crit_edge615 ], [ 0, %.preheader561.preheader ] ; 2 uses
   %i.mi = sext i32 %.1451617 to i64               ; 3 uses
   %i.mj = add i32 %i.ly, %.1451617                ; 2 uses
-  br i1 %min.iters.check865, label %scalar.ph864.preheader, label %vector.ph866
+  br i1 %min.iters.check865, label %scalar.ph864.preheader, label %vector.body868
 
-vector.ph866:                                     ; preds = %.preheader561
-  %5 = add nsw i64 %n.vec867, %i.mi
-  br label %vector.body868
-
-vector.body868:                                   ; preds = %vector.body868, %vector.ph866
-  %index869 = phi i64 [ 0, %vector.ph866 ], [ %index.next870, %vector.body868 ] ; 2 uses
+vector.body868:                                   ; preds = %.preheader561, %vector.body868
+  %index869 = phi i64 [ %index.next870, %vector.body868 ], [ 0, %.preheader561 ] ; 2 uses
   %i.mk = add i64 %index869, %i.mi                ; 2 uses
   %i.ml = getelementptr inbounds [8 x i8], ptr %i.mc, i64 %i.mk ; 2 uses
   %i.mm = getelementptr inbounds nuw i8, ptr %i.ml, i64 16
@@ -227,6 +223,7 @@ vector.body868:                                   ; preds = %vector.body868, %ve
   br i1 %i.mp, label %middle.block871, label %vector.body868, !llvm.loop !102
 
 middle.block871:                                  ; preds = %vector.body868
+  %5 = add nsw i64 %n.vec867, %i.mi
   br i1 %cmp.n872, label %._crit_edge615, label %scalar.ph864.preheader
 
 scalar.ph864.preheader:                           ; preds = %.preheader561, %middle.block871
@@ -629,7 +626,6 @@ bb.ar:                                            ; preds = %._crit_edge624
 
 vector.ph22:                                      ; preds = %.lr.ph.i.preheader
   %n.vec23 = and i64 %i.qo, -8                    ; 3 uses
-  %5 = or disjoint i64 %n.vec23, 1
   br label %vector.body24
 
 vector.body24:                                    ; preds = %vector.body24, %vector.ph22
@@ -647,6 +643,7 @@ vector.body24:                                    ; preds = %vector.body24, %vec
   br i1 %i.qs, label %middle.block27, label %vector.body24, !llvm.loop !193
 
 middle.block27:                                   ; preds = %vector.body24
+  %5 = or disjoint i64 %n.vec23, 1
   %cmp.n28 = icmp eq i64 %i.qo, %n.vec23
   br i1 %cmp.n28, label %._crit_edge.i, label %.lr.ph.i.preheader39
 

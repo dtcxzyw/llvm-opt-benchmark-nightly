@@ -33,20 +33,17 @@ bb.b:                                             ; preds = %bb.a
 .thread:                                          ; preds = %bb.a, %bb.b
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 %0, ptr noundef nonnull align 1 %2, i64 noundef %3, i1 noundef false) #6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, i8 noundef 0, i64 noundef 32, i1 noundef false) #6
-  %7 = icmp ugt i64 %3, 32
   %spec.store.select60 = call i64 @llvm.umin.i64(i64 %3, i64 32)
   br label %.lr.ph.preheader
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, i8 noundef 0, i64 noundef 32, i1 noundef false) #6
-  %8 = icmp ugt i64 %3, 32                        ; 2 uses
   %spec.store.select = call i64 @llvm.umin.i64(i64 %3, i64 32) ; 2 uses
   %.not = icmp eq i64 %3, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.thread, %bb.c
   %spec.store.select64 = phi i64 [ %spec.store.select60, %.thread ], [ %spec.store.select, %bb.c ] ; 2 uses
-  %9 = phi i1 [ %7, %.thread ], [ %8, %bb.c ]
   %.04362 = phi ptr [ %0, %.thread ], [ %2, %bb.c ] ; 2 uses
   %scevgep = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %scevgep, ptr align 1 %.04362, i64 %spec.store.select64, i1 false)
@@ -55,7 +52,6 @@ bb.c:                                             ; preds = %bb.b
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %bb.c
   %.not67 = phi i1 [ false, %.lr.ph.preheader ], [ true, %bb.c ]
   %spec.store.select65 = phi i64 [ %spec.store.select64, %.lr.ph.preheader ], [ %spec.store.select, %bb.c ] ; 5 uses
-  %10 = phi i1 [ %9, %.lr.ph.preheader ], [ %8, %bb.c ]
   %.04363 = phi ptr [ %.04362, %.lr.ph.preheader ], [ %2, %bb.c ]
   %i.l = add nuw nsw i64 %spec.store.select65, 32
   %i.m = getelementptr i8, ptr %4, i64 16         ; 2 uses
@@ -69,8 +65,9 @@ bb.c:                                             ; preds = %bb.b
   br label %._crit_edge56
 
 ._crit_edge56:                                    ; preds = %.lr.ph55.preheader, %._crit_edge
+  %7 = icmp ugt i64 %3, 32
   call void @sodium_memzero(ptr noundef nonnull %i.a, i64 noundef 64) #6
-  br i1 %10, label %bb.d, label %bb.e
+  br i1 %7, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %._crit_edge56
   %i.p = getelementptr i8, ptr %0, i64 %spec.store.select65
@@ -191,13 +188,13 @@ bb.g:                                             ; preds = %bb.f
 ._crit_edge:                                      ; preds = %bb.g, %.thread
   %spec.store.select71 = phi i64 [ %spec.store.select67, %.thread ], [ %spec.store.select, %bb.g ] ; 6 uses
   %.04769 = phi ptr [ %0, %.thread ], [ %1, %bb.g ] ; 2 uses
-  %6 = icmp ugt i64 %3, 32
   %scevgep = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %scevgep, ptr nonnull align 1 %.04769, i64 %spec.store.select71, i1 false)
   %i.q = add nuw nsw i64 %spec.store.select71, 32
   %i.r = call i32 @crypto_stream_salsa20_xor(ptr noundef nonnull %i.a, ptr noundef nonnull %i.a, i64 noundef %i.q, ptr noundef %i.d, ptr noundef nonnull %i.b) #6 ; 0 uses
   %scevgep64 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %0, ptr nonnull align 16 %scevgep64, i64 %spec.store.select71, i1 false)
+  %6 = icmp ugt i64 %3, 32
   call void @sodium_memzero(ptr noundef nonnull %i.a, i64 noundef 64) #6
   br i1 %6, label %bb.h, label %bb.i
 
@@ -208,7 +205,7 @@ bb.h:                                             ; preds = %._crit_edge
   %i.v = call i32 @crypto_stream_salsa20_xor_ic(ptr noundef %i.s, ptr noundef %i.t, i64 noundef %i.u, ptr noundef %i.d, i64 noundef 1, ptr noundef nonnull %i.b) #6 ; 0 uses
   br label %bb.i
 
-bb.i:                                             ; preds = %._crit_edge.thread, %._crit_edge, %bb.h
+bb.i:                                             ; preds = %._crit_edge.thread, %bb.h, %._crit_edge
   call void @sodium_memzero(ptr noundef nonnull %i.b, i64 noundef 32) #6
   br label %bb.j
 

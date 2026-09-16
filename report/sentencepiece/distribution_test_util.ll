@@ -204,13 +204,8 @@ bb.c:                                             ; preds = %bb.a
   %i.n = tail call double @llvm.fmuladd.f64(double %i.d, double %i.a, double %2)
   %i.o = fptosi double %i.n to i32                ; 2 uses
   %i.p = icmp eq i32 %i.o, 0
-  %4 = insertelement <2 x double> poison, double %i.m, i64 0
-  %5 = insertelement <2 x double> %4, double %0, i64 1
-  %6 = insertelement <2 x double> poison, double %1, i64 0
-  %7 = insertelement <2 x double> %6, double %i.d, i64 1
-  %8 = fdiv <2 x double> %5, %7                   ; 2 uses
-  %9 = extractelement <2 x double> %8, i64 1
-  %i.q = select i1 %i.p, double %0, double %9     ; 2 uses
+  %4 = fdiv double %0, %i.d
+  %i.q = select i1 %i.p, double %0, double %4     ; 2 uses
   %i.r = fmul double %i.q, %i.h
   %i.s = fadd double %1, 1.000000e+00
   %i.t = fdiv double %i.r, %i.s                   ; 3 uses
@@ -224,8 +219,8 @@ bb.c:                                             ; preds = %bb.a
 
 ._crit_edge:                                      ; preds = %bb.g, %bb.c
   %.lcssa = phi double [ %i.u, %bb.c ], [ %i.am, %bb.g ]
-  %10 = extractelement <2 x double> %8, i64 0
-  %i.z = fmul double %10, %.lcssa
+  %5 = fdiv double %i.m, %1
+  %i.z = fmul double %5, %.lcssa
   br label %common.ret73
 
 .lr.ph:                                           ; preds = %bb.c, %bb.g

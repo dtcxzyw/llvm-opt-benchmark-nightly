@@ -204,19 +204,15 @@ bb.b:                                             ; preds = %.lr.ph, %bb.c
   %i.h = sext i8 %i.g to i32
   %i.i = tail call i32 @isspace(i32 noundef %i.h) #31
   %.not14 = icmp eq i32 %i.i, 0
-  br i1 %.not14, label %.preheader, label %bb.c
-
-.preheader:                                       ; preds = %bb.b
-  %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 %.01220 ; 2 uses
-  br label %bb.d
+  br i1 %.not14, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.j = add nuw i64 %.01220, 1                   ; 2 uses
   %exitcond.not = icmp eq i64 %i.j, %i.b
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !52
 
-bb.d:                                             ; preds = %.preheader, %bb.d
-  %.0 = phi i64 [ %i.k, %bb.d ], [ %i.b, %.preheader ] ; 2 uses
+bb.d:                                             ; preds = %bb.b, %bb.d
+  %.0 = phi i64 [ %i.k, %bb.d ], [ %i.b, %bb.b ]  ; 2 uses
   %i.k = add i64 %.0, -1                          ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.k
   %i.m = load i8, ptr %i.l, align 1, !tbaa !17
@@ -226,6 +222,7 @@ bb.d:                                             ; preds = %.preheader, %bb.d
   br i1 %.not15, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i, label %bb.d, !llvm.loop !53
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ; preds = %bb.d
+  %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 %.01220 ; 2 uses
   %i.p = sub i64 %.0, %.01220
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.q, ptr %0, align 8, !tbaa !13, !alias.scope !56

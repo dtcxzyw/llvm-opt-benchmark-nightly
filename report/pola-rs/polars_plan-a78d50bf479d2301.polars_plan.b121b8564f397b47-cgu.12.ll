@@ -205,7 +205,7 @@ bb.a:
   %.idx = shl nuw nsw i64 %2, 3, !dbg !93491
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 %.idx, !dbg !93491
   %i.f = icmp eq i64 %2, 0, !dbg !93492
-  br i1 %i.f, label %.thread, label %.lr.ph, !dbg !93473
+  br i1 %i.f, label %.thread, label %bb.b, !dbg !93473
 
 .thread:                                          ; preds = %bb.a
   store i8 0, ptr %i.c, align 8, !dbg !93493
@@ -214,19 +214,15 @@ bb.a:
   store i8 0, ptr %i.b, align 1, !dbg !93496
   br label %bb.h, !dbg !93497
 
-.lr.ph:                                           ; preds = %bb.a
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  br label %bb.b, !dbg !93473
-
-bb.b:                                             ; preds = %.lr.ph, %_RNvMNtNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering4expr10__order_accNtB2_12ExprOrderAcc3add.exit
-  %i.g = phi i64 [ undef, %.lr.ph ], [ %i.aa, %_RNvMNtNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering4expr10__order_accNtB2_12ExprOrderAcc3add.exit ]
-  %.sroa.02.016 = phi ptr [ %1, %.lr.ph ], [ %i.n, %_RNvMNtNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering4expr10__order_accNtB2_12ExprOrderAcc3add.exit ] ; 2 uses
-  %i.h = phi i64 [ 0, %.lr.ph ], [ %i.af, %_RNvMNtNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering4expr10__order_accNtB2_12ExprOrderAcc3add.exit ] ; 2 uses
-  %i.i = phi i8 [ 0, %.lr.ph ], [ %i.ae, %_RNvMNtNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering4expr10__order_accNtB2_12ExprOrderAcc3add.exit ] ; 3 uses
-  %i.j = phi i8 [ 0, %.lr.ph ], [ %i.ag, %_RNvMNtNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering4expr10__order_accNtB2_12ExprOrderAcc3add.exit ] ; 3 uses
-  %i.k = phi i8 [ 0, %.lr.ph ], [ %i.ad, %_RNvMNtNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering4expr10__order_accNtB2_12ExprOrderAcc3add.exit ] ; 2 uses
-  %i.l = phi i64 [ 0, %.lr.ph ], [ %i.ac, %_RNvMNtNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering4expr10__order_accNtB2_12ExprOrderAcc3add.exit ]
-  %i.m = phi i64 [ 0, %.lr.ph ], [ %i.ab, %_RNvMNtNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering4expr10__order_accNtB2_12ExprOrderAcc3add.exit ]
+bb.b:                                             ; preds = %bb.a, %_RNvMNtNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering4expr10__order_accNtB2_12ExprOrderAcc3add.exit
+  %i.g = phi i64 [ %i.aa, %_RNvMNtNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering4expr10__order_accNtB2_12ExprOrderAcc3add.exit ], [ undef, %bb.a ]
+  %.sroa.02.016 = phi ptr [ %i.n, %_RNvMNtNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering4expr10__order_accNtB2_12ExprOrderAcc3add.exit ], [ %1, %bb.a ] ; 2 uses
+  %i.h = phi i64 [ %i.af, %_RNvMNtNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering4expr10__order_accNtB2_12ExprOrderAcc3add.exit ], [ 0, %bb.a ] ; 2 uses
+  %i.i = phi i8 [ %i.ae, %_RNvMNtNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering4expr10__order_accNtB2_12ExprOrderAcc3add.exit ], [ 0, %bb.a ] ; 3 uses
+  %i.j = phi i8 [ %i.ag, %_RNvMNtNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering4expr10__order_accNtB2_12ExprOrderAcc3add.exit ], [ 0, %bb.a ] ; 3 uses
+  %i.k = phi i8 [ %i.ad, %_RNvMNtNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering4expr10__order_accNtB2_12ExprOrderAcc3add.exit ], [ 0, %bb.a ] ; 2 uses
+  %i.l = phi i64 [ %i.ac, %_RNvMNtNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering4expr10__order_accNtB2_12ExprOrderAcc3add.exit ], [ 0, %bb.a ]
+  %i.m = phi i64 [ %i.ab, %_RNvMNtNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering4expr10__order_accNtB2_12ExprOrderAcc3add.exit ], [ 0, %bb.a ]
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.02.016, i64 8, !dbg !93498 ; 2 uses
   %i.o = load i64, ptr %.sroa.02.016, align 8, !dbg !93499, !noundef !2568 ; 2 uses
   %i.p = tail call noundef i8 @_RNvMs0_NtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering4exprNtB5_19ExprOrderSimplifier3rec(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.o, i1 noundef zeroext false), !dbg !93500 ; 3 uses
@@ -272,6 +268,7 @@ _RNvMNtNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering4ex
   br i1 %i.ah, label %bb.g, label %bb.b, !dbg !93473
 
 bb.g:                                             ; preds = %_RNvMNtNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering4expr10__order_accNtB2_12ExprOrderAcc3add.exit
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %i.aa, ptr %4, align 8, !dbg !93495
   %i.ai = trunc nuw i8 %i.ae to i1, !dbg !93510
   store i8 %i.ad, ptr %i.c, align 8, !dbg !93493

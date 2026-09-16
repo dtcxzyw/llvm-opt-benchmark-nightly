@@ -204,14 +204,10 @@ bb.dv:                                            ; preds = %.noexc1221, %bb.du
   %i.ark = getelementptr inbounds [32 x i8], ptr %i.aqy, i64 %i.arj
   %i.arl = getelementptr inbounds nuw i8, ptr %.sroa.033.050.i, i64 32 ; 2 uses
   %.not41.i = icmp eq ptr %i.arl, %i.aqa
-  br i1 %.not41.i, label %.noexc1166, label %bb.dv, !llvm.loop !4
+  br i1 %.not41.i, label %.lr.ph.i.i.i.i.i, label %bb.dv, !llvm.loop !4
 
-.noexc1166:                                       ; preds = %.noexc1221
-  %.sroa.020.0.i1220 = getelementptr inbounds nuw i8, ptr %i.are, i64 64
-  br label %.lr.ph.i.i.i.i.i
-
-.lr.ph.i.i.i.i.i:                                 ; preds = %.noexc1166, %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i.i
-  %.05.i.i.i.i.i = phi ptr [ %i.arr, %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i.i ], [ %i.apv, %.noexc1166 ] ; 3 uses
+.lr.ph.i.i.i.i.i:                                 ; preds = %.noexc1221, %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i.i
+  %.05.i.i.i.i.i = phi ptr [ %i.arr, %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i.i ], [ %i.apv, %.noexc1221 ] ; 3 uses
   %i.arm = load ptr, ptr %.05.i.i.i.i.i, align 8, !tbaa !25 ; 2 uses
   %i.arn = getelementptr inbounds nuw i8, ptr %.05.i.i.i.i.i, i64 16 ; 2 uses
   %i.aro = icmp eq ptr %i.arm, %i.arn
@@ -229,6 +225,7 @@ _ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i
   br i1 %.not.i.i.i.i.i, label %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i.i, label %.lr.ph.i.i.i.i.i, !llvm.loop !0
 
 _ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i.i: ; preds = %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i.i
+  %.sroa.020.0.i1220 = getelementptr inbounds nuw i8, ptr %i.are, i64 64
   store ptr %i.apv, ptr %i.aqc, align 8, !tbaa !28
   %.pre1458 = load ptr, ptr %41, align 8, !tbaa !29
   br label %_ZN6cmList6insertEN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEEOSC_NS_14ExpandElementsENS_13EmptyElementsE.exit

@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %.lr.ph146, %bb.q
   %.val107.pre162 = phi i32 [ 0, %.lr.ph146 ], [ %.val107.pre163, %bb.q ] ; 4 uses
   %indvars.iv159 = phi i64 [ 0, %.lr.ph146 ], [ %indvars.iv.next160, %bb.q ] ; 2 uses
   %i.aq = phi ptr [ %i.al, %.lr.ph146 ], [ %i.bq, %bb.q ]
-  %.0145 = phi i32 [ 0, %.lr.ph146 ], [ %.1, %bb.q ] ; 6 uses
+  %.0145 = phi i32 [ 0, %.lr.ph146 ], [ %.1, %bb.q ] ; 5 uses
   %i.ar = getelementptr i8, ptr %i.aq, i64 8
   %.val115.val = load ptr, ptr %i.ar, align 8, !tbaa !35
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %.val115.val, i64 %indvars.iv159
@@ -248,7 +248,6 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.bc, label %bb.q, label %.critedge4.preheader
 
 bb.n:                                             ; preds = %bb.l
-  %6 = add i32 %.val110, %.0145                   ; 2 uses
   %i.bd = icmp sgt i32 %.val110, 0
   br i1 %i.bd, label %.lr.ph140, label %.critedge4.preheader
 
@@ -259,8 +258,6 @@ bb.n:                                             ; preds = %bb.l
   br label %bb.o
 
 .critedge4.preheader:                             ; preds = %bb.o, %bb.m, %bb.n
-  %.0145.pn = phi i32 [ %.0145, %bb.m ], [ %6, %bb.n ], [ %6, %bb.o ]
-  %7 = add i32 %.0145.pn, %.val107.pre            ; 2 uses
   %i.bf = icmp sgt i32 %.val107.pre, 0
   br i1 %i.bf, label %.lr.ph142, label %.critedge6
 
@@ -295,6 +292,8 @@ bb.o:                                             ; preds = %.lr.ph140, %bb.o
   br i1 %exitcond158.not, label %.critedge6, label %.critedge4, !llvm.loop !68
 
 .critedge6:                                       ; preds = %.critedge4, %.critedge4.preheader
+  %6 = add i32 %.val110, %.0145
+  %7 = add i32 %6, %.val107.pre                   ; 2 uses
   %i.bn = load i32, ptr %i.ap, align 4, !tbaa !76
   %.not91 = icmp eq i32 %i.bn, 0
   br i1 %.not91, label %bb.q, label %bb.p

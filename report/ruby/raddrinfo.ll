@@ -206,8 +206,7 @@ bb.aa:                                            ; preds = %.lr.ph211.epil.preh
 
 ._crit_edge:                                      ; preds = %bb.aa, %._crit_edge.unr-lcssa
   %.lcssa = phi i1 [ %i.bt, %._crit_edge.unr-lcssa ], [ %spec.select240.epil, %bb.aa ]
-  %smax = tail call i64 @llvm.smax.i64(i64 %.0.idx.i238, i64 2)
-  %scevgep = getelementptr i8, ptr %0, i64 %smax
+  %scevgep = getelementptr i8, ptr %0, i64 %.0.idx.i238
   br i1 %.lcssa, label %.lr.ph215.preheader, label %._crit_edge.thread
 
 ._crit_edge.thread:                               ; preds = %unixsocket_len.exit, %._crit_edge
@@ -227,8 +226,7 @@ bb.ac:                                            ; preds = %bb.ab, %._crit_edge
   br label %.loopexit
 
 .lr.ph215.preheader.critedge:                     ; preds = %.lr.ph211.epil.preheader
-  %smax.c = tail call i64 @llvm.smax.i64(i64 %.0.idx.i238, i64 2)
-  %scevgep.c = getelementptr i8, ptr %0, i64 %smax.c ; 0 uses
+  %scevgep.c = getelementptr i8, ptr %0, i64 %.0.idx.i238 ; 0 uses
   br label %.lr.ph215.preheader
 
 .lr.ph215.preheader:                              ; preds = %.lr.ph215.preheader.critedge, %._crit_edge

@@ -205,7 +205,6 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   br i1 %min.iters.check26, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %7 = and i64 %.025.i.i.i, 28
   %n.vec = and i64 %.025.i.i.i, -32               ; 4 uses
   br label %vector.body
 
@@ -224,6 +223,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.aw, label %middle.block, label %vector.body, !llvm.loop !502
 
 middle.block:                                     ; preds = %vector.body
+  %7 = and i64 %.025.i.i.i, 28
   %cmp.n = icmp eq i64 %.025.i.i.i, %n.vec
   br i1 %cmp.n, label %._crit_edge.loopexit.i.i.i, label %vec.epilog.iter.check
 
@@ -457,7 +457,6 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   br i1 %min.iters.check40, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %4 = and i64 %.025.i.i, 28
   %n.vec = and i64 %.025.i.i, -32                 ; 4 uses
   br label %vector.body
 
@@ -476,6 +475,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ar, label %middle.block, label %vector.body, !llvm.loop !509
 
 middle.block:                                     ; preds = %vector.body
+  %4 = and i64 %.025.i.i, 28
   %cmp.n = icmp eq i64 %.025.i.i, %n.vec
   br i1 %cmp.n, label %._crit_edge.loopexit.i.i, label %vec.epilog.iter.check
 
@@ -720,10 +720,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check48, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %4 = and i64 %i.bu, 24
   %n.vec = and i64 %i.bu, -32                     ; 5 uses
-  %5 = getelementptr i8, ptr %i.b, i64 %n.vec
-  %6 = getelementptr i8, ptr %.2, i64 %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -741,6 +738,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bz, label %middle.block, label %vector.body, !llvm.loop !516
 
 middle.block:                                     ; preds = %vector.body
+  %4 = and i64 %i.bu, 24
+  %5 = getelementptr i8, ptr %i.b, i64 %n.vec
+  %6 = getelementptr i8, ptr %.2, i64 %n.vec
   %cmp.n = icmp eq i64 %i.bu, %n.vec
   br i1 %cmp.n, label %_ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT1_EE5valueoosr41has_back_insert_iterator_container_appendIS7_T0_EE5valuesr48has_back_insert_iterator_container_insert_at_endIS7_S8_EE5valueEiE4typeELi0EEES7_S8_S8_S7_.exit.preheader, label %vec.epilog.iter.check
 
@@ -751,8 +751,6 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec52 = and i64 %i.bu, -8                    ; 4 uses
-  %7 = getelementptr i8, ptr %i.b, i64 %n.vec52
-  %8 = getelementptr i8, ptr %.2, i64 %n.vec52
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -766,6 +764,8 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.ca, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !517
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
+  %7 = getelementptr i8, ptr %i.b, i64 %n.vec52
+  %8 = getelementptr i8, ptr %.2, i64 %n.vec52
   %cmp.n58 = icmp eq i64 %i.bu, %n.vec52
   br i1 %cmp.n58, label %_ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT1_EE5valueoosr41has_back_insert_iterator_container_appendIS7_T0_EE5valuesr48has_back_insert_iterator_container_insert_at_endIS7_S8_EE5valueEiE4typeELi0EEES7_S8_S8_S7_.exit.preheader, label %.lr.ph.i.preheader
 
@@ -1050,7 +1050,6 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   br i1 %min.iters.check35, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %5 = and i64 %.025.i.i.i, 28
   %n.vec = and i64 %.025.i.i.i, -32               ; 4 uses
   br label %vector.body
 
@@ -1069,6 +1068,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bn, label %middle.block, label %vector.body, !llvm.loop !523
 
 middle.block:                                     ; preds = %vector.body
+  %5 = and i64 %.025.i.i.i, 28
   %cmp.n = icmp eq i64 %.025.i.i.i, %n.vec
   br i1 %cmp.n, label %._crit_edge.loopexit.i.i.i, label %vec.epilog.iter.check
 
@@ -1471,10 +1471,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check107, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %3 = and i64 %i.bw, 24
   %n.vec = and i64 %i.bw, -32                     ; 5 uses
-  %4 = getelementptr i8, ptr %i.b, i64 %n.vec
-  %5 = getelementptr i8, ptr %.2, i64 %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1492,6 +1489,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.cb, label %middle.block, label %vector.body, !llvm.loop !528
 
 middle.block:                                     ; preds = %vector.body
+  %3 = and i64 %i.bw, 24
+  %4 = getelementptr i8, ptr %i.b, i64 %n.vec
+  %5 = getelementptr i8, ptr %.2, i64 %n.vec
   %cmp.n = icmp eq i64 %i.bw, %n.vec
   br i1 %cmp.n, label %_ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT1_EE5valueoosr41has_back_insert_iterator_container_appendIS7_T0_EE5valuesr48has_back_insert_iterator_container_insert_at_endIS7_S8_EE5valueEiE4typeELi0EEES7_S8_S8_S7_.exit.preheader, label %vec.epilog.iter.check
 
@@ -1502,8 +1502,6 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec111 = and i64 %i.bw, -8                   ; 4 uses
-  %6 = getelementptr i8, ptr %i.b, i64 %n.vec111
-  %7 = getelementptr i8, ptr %.2, i64 %n.vec111
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -1517,6 +1515,8 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.cc, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !529
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
+  %6 = getelementptr i8, ptr %i.b, i64 %n.vec111
+  %7 = getelementptr i8, ptr %.2, i64 %n.vec111
   %cmp.n117 = icmp eq i64 %i.bw, %n.vec111
   br i1 %cmp.n117, label %_ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXntaasr23is_back_insert_iteratorIT1_EE5valueoosr41has_back_insert_iterator_container_appendIS7_T0_EE5valuesr48has_back_insert_iterator_container_insert_at_endIS7_S8_EE5valueEiE4typeELi0EEES7_S8_S8_S7_.exit.preheader, label %.lr.ph.i.preheader
 
@@ -1919,7 +1919,6 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   br i1 %min.iters.check31, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %3 = and i64 %.025.i.i, 28
   %n.vec = and i64 %.025.i.i, -32                 ; 4 uses
   br label %vector.body
 
@@ -1938,6 +1937,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.at, label %middle.block, label %vector.body, !llvm.loop !541
 
 middle.block:                                     ; preds = %vector.body
+  %3 = and i64 %.025.i.i, 28
   %cmp.n = icmp eq i64 %.025.i.i, %n.vec
   br i1 %cmp.n, label %._crit_edge.loopexit.i.i, label %vec.epilog.iter.check
 
@@ -2340,14 +2340,10 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i22.i: ; preds = %_ZNS
   %.0.i.i.i.i.i21.i = phi i32 [ %i.hg, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i16.i ], [ %.0.i6.i.i.i.i.i25.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i22.i ]
   %i.hi = icmp slt i32 %.0.i.i.i.i.i21.i, 0
   %i.hj = getelementptr inbounds nuw i8, ptr %.sroa.023.1.i.i, i64 120 ; 2 uses
-  br i1 %i.hi, label %bb.y, label %.preheader.i.i.preheader, !llvm.loop !580
+  br i1 %i.hi, label %bb.y, label %.preheader.i.i, !llvm.loop !580
 
-.preheader.i.i.preheader:                         ; preds = %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN5vcpkg28command_depend_info_and_exitERKNS2_17VcpkgCmdArgumentsERKNS2_10VcpkgPathsENS2_7TripletES9_E3$_1EclINS_17__normal_iteratorIPNS2_17PackageDependInfoESt6vectorISE_SaISE_EEEESJ_EEbT_T0_.exit.i20.i"
-  %8 = getelementptr i8, ptr %.sroa.023.1.i.i, i64 8 ; 3 uses
-  br label %.preheader.i.i
-
-.preheader.i.i:                                   ; preds = %.preheader.i.i.preheader, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN5vcpkg28command_depend_info_and_exitERKNS2_17VcpkgCmdArgumentsERKNS2_10VcpkgPathsENS2_7TripletES9_E3$_1EclINS_17__normal_iteratorIPNS2_17PackageDependInfoESt6vectorISE_SaISE_EEEESJ_EEbT_T0_.exit20.i.i"
-  %.sroa.0.0.pn.i.i = phi ptr [ %.sroa.0.1.i.i, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN5vcpkg28command_depend_info_and_exitERKNS2_17VcpkgCmdArgumentsERKNS2_10VcpkgPathsENS2_7TripletES9_E3$_1EclINS_17__normal_iteratorIPNS2_17PackageDependInfoESt6vectorISE_SaISE_EEEESJ_EEbT_T0_.exit20.i.i" ], [ %.sroa.0.0.i.i, %.preheader.i.i.preheader ] ; 16 uses
+.preheader.i.i:                                   ; preds = %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN5vcpkg28command_depend_info_and_exitERKNS2_17VcpkgCmdArgumentsERKNS2_10VcpkgPathsENS2_7TripletES9_E3$_1EclINS_17__normal_iteratorIPNS2_17PackageDependInfoESt6vectorISE_SaISE_EEEESJ_EEbT_T0_.exit.i20.i", %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN5vcpkg28command_depend_info_and_exitERKNS2_17VcpkgCmdArgumentsERKNS2_10VcpkgPathsENS2_7TripletES9_E3$_1EclINS_17__normal_iteratorIPNS2_17PackageDependInfoESt6vectorISE_SaISE_EEEESJ_EEbT_T0_.exit20.i.i"
+  %.sroa.0.0.pn.i.i = phi ptr [ %.sroa.0.1.i.i, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN5vcpkg28command_depend_info_and_exitERKNS2_17VcpkgCmdArgumentsERKNS2_10VcpkgPathsENS2_7TripletES9_E3$_1EclINS_17__normal_iteratorIPNS2_17PackageDependInfoESt6vectorISE_SaISE_EEEESJ_EEbT_T0_.exit20.i.i" ], [ %.sroa.0.0.i.i, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN5vcpkg28command_depend_info_and_exitERKNS2_17VcpkgCmdArgumentsERKNS2_10VcpkgPathsENS2_7TripletES9_E3$_1EclINS_17__normal_iteratorIPNS2_17PackageDependInfoESt6vectorISE_SaISE_EEEESJ_EEbT_T0_.exit.i20.i" ] ; 16 uses
   %.sroa.0.1.i.i = getelementptr inbounds i8, ptr %.sroa.0.0.pn.i.i, i64 -120 ; 12 uses
   %i.hk = getelementptr i8, ptr %.sroa.0.0.pn.i.i, i64 -112
   %.val3.i9.i.i = load i64, ptr %i.hk, align 8, !tbaa !44 ; 2 uses
@@ -2375,6 +2371,7 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i16.i.i: ; preds = %_ZNS
   br i1 %i.ho, label %.preheader.i.i, label %bb.z, !llvm.loop !581
 
 bb.z:                                             ; preds = %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN5vcpkg28command_depend_info_and_exitERKNS2_17VcpkgCmdArgumentsERKNS2_10VcpkgPathsENS2_7TripletES9_E3$_1EclINS_17__normal_iteratorIPNS2_17PackageDependInfoESt6vectorISE_SaISE_EEEESJ_EEbT_T0_.exit20.i.i"
+  %8 = getelementptr i8, ptr %.sroa.023.1.i.i, i64 8 ; 3 uses
   %i.hp = getelementptr i8, ptr %.sroa.0.0.pn.i.i, i64 -112 ; 7 uses
   %i.hq = icmp ult ptr %.sroa.023.1.i.i, %.sroa.0.1.i.i
   br i1 %i.hq, label %bb.aa, label %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN5vcpkg17PackageDependInfoESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_28command_depend_info_and_exitERKNS2_17VcpkgCmdArgumentsERKNS2_10VcpkgPathsENS2_7TripletESH_E3$_1EEET_SK_SK_T0_.exit"
@@ -2777,14 +2774,10 @@ bb.y:                                             ; preds = %bb.y, %bb.x
   %.val.i.i14.i = load i32, ptr %i.gp, align 8, !tbaa !122 ; 2 uses
   %i.gq = icmp slt i32 %.val.i.i14.i, %.val1.i.i13.i
   %i.gr = getelementptr inbounds nuw i8, ptr %.sroa.012.1.i.i, i64 120 ; 2 uses
-  br i1 %i.gq, label %bb.y, label %.preheader.i.i.preheader, !llvm.loop !590
+  br i1 %i.gq, label %bb.y, label %.preheader.i.i, !llvm.loop !590
 
-.preheader.i.i.preheader:                         ; preds = %bb.y
-  %8 = getelementptr i8, ptr %.sroa.012.1.i.i, i64 32
-  br label %.preheader.i.i
-
-.preheader.i.i:                                   ; preds = %.preheader.i.i.preheader, %.preheader.i.i
-  %.sroa.0.0.pn.i.i = phi ptr [ %.sroa.0.1.i.i, %.preheader.i.i ], [ %.sroa.0.0.i.i, %.preheader.i.i.preheader ] ; 18 uses
+.preheader.i.i:                                   ; preds = %bb.y, %.preheader.i.i
+  %.sroa.0.0.pn.i.i = phi ptr [ %.sroa.0.1.i.i, %.preheader.i.i ], [ %.sroa.0.0.i.i, %bb.y ] ; 18 uses
   %.sroa.0.1.i.i = getelementptr inbounds i8, ptr %.sroa.0.0.pn.i.i, i64 -120 ; 11 uses
   %i.gs = getelementptr i8, ptr %.sroa.0.0.pn.i.i, i64 -88
   %.val1.i9.i.i = load i32, ptr %i.gs, align 8, !tbaa !122
@@ -2792,6 +2785,7 @@ bb.y:                                             ; preds = %bb.y, %bb.x
   br i1 %i.gt, label %.preheader.i.i, label %bb.z, !llvm.loop !591
 
 bb.z:                                             ; preds = %.preheader.i.i
+  %8 = getelementptr i8, ptr %.sroa.012.1.i.i, i64 32
   %i.gu = getelementptr i8, ptr %.sroa.0.0.pn.i.i, i64 -88 ; 2 uses
   %i.gv = icmp ult ptr %.sroa.012.1.i.i, %.sroa.0.1.i.i
   br i1 %i.gv, label %bb.aa, label %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN5vcpkg17PackageDependInfoESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_28command_depend_info_and_exitERKNS2_17VcpkgCmdArgumentsERKNS2_10VcpkgPathsENS2_7TripletESH_E3$_3EEET_SK_SK_T0_.exit"
@@ -3194,14 +3188,10 @@ bb.y:                                             ; preds = %bb.y, %bb.x
   %.val.i.i14.i = load i32, ptr %i.gp, align 8, !tbaa !122 ; 2 uses
   %i.gq = icmp sgt i32 %.val.i.i14.i, %.val1.i.i13.i
   %i.gr = getelementptr inbounds nuw i8, ptr %.sroa.012.1.i.i, i64 120 ; 2 uses
-  br i1 %i.gq, label %bb.y, label %.preheader.i.i.preheader, !llvm.loop !600
+  br i1 %i.gq, label %bb.y, label %.preheader.i.i, !llvm.loop !600
 
-.preheader.i.i.preheader:                         ; preds = %bb.y
-  %8 = getelementptr i8, ptr %.sroa.012.1.i.i, i64 32
-  br label %.preheader.i.i
-
-.preheader.i.i:                                   ; preds = %.preheader.i.i.preheader, %.preheader.i.i
-  %.sroa.0.0.pn.i.i = phi ptr [ %.sroa.0.1.i.i, %.preheader.i.i ], [ %.sroa.0.0.i.i, %.preheader.i.i.preheader ] ; 18 uses
+.preheader.i.i:                                   ; preds = %bb.y, %.preheader.i.i
+  %.sroa.0.0.pn.i.i = phi ptr [ %.sroa.0.1.i.i, %.preheader.i.i ], [ %.sroa.0.0.i.i, %bb.y ] ; 18 uses
   %.sroa.0.1.i.i = getelementptr inbounds i8, ptr %.sroa.0.0.pn.i.i, i64 -120 ; 11 uses
   %i.gs = getelementptr i8, ptr %.sroa.0.0.pn.i.i, i64 -88
   %.val1.i9.i.i = load i32, ptr %i.gs, align 8, !tbaa !122
@@ -3209,6 +3199,7 @@ bb.y:                                             ; preds = %bb.y, %bb.x
   br i1 %i.gt, label %.preheader.i.i, label %bb.z, !llvm.loop !601
 
 bb.z:                                             ; preds = %.preheader.i.i
+  %8 = getelementptr i8, ptr %.sroa.012.1.i.i, i64 32
   %i.gu = getelementptr i8, ptr %.sroa.0.0.pn.i.i, i64 -88 ; 2 uses
   %i.gv = icmp ult ptr %.sroa.012.1.i.i, %.sroa.0.1.i.i
   br i1 %i.gv, label %bb.aa, label %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN5vcpkg17PackageDependInfoESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_28command_depend_info_and_exitERKNS2_17VcpkgCmdArgumentsERKNS2_10VcpkgPathsENS2_7TripletESH_E3$_2EEET_SK_SK_T0_.exit"

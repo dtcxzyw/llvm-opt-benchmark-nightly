@@ -202,14 +202,10 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   %i.cu = mul nsw i64 %i.ae, %indvars.iv89
   %invariant.gep78 = getelementptr [8 x i8], ptr %i.ad, i64 %i.cu ; 2 uses
   %brmerge175 = select i1 %min.iters.check, i1 true, i1 %op.rdx170
-  br i1 %brmerge175, label %scalar.ph.preheader, label %vector.ph
+  br i1 %brmerge175, label %scalar.ph.preheader, label %vector.body
 
-vector.ph:                                        ; preds = %.preheader
-  %7 = add i64 %.06180, %n.vec                    ; 2 uses
-  br label %vector.body
-
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 7 uses
+vector.body:                                      ; preds = %.preheader, %vector.body
+  %index = phi i64 [ %index.next, %vector.body ], [ 0, %.preheader ] ; 7 uses
   %i.cv = add i64 %.06180, %index                 ; 3 uses
   %i.cw = shl nsw i64 %i.cv, 4
   %i.cx = shl i64 %i.cv, 4
@@ -260,6 +256,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ei, label %middle.block, label %vector.body, !llvm.loop !41
 
 middle.block:                                     ; preds = %vector.body
+  %7 = add i64 %.06180, %n.vec                    ; 2 uses
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.preheader, %middle.block
@@ -535,14 +532,10 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   %op.rdx270 = or i1 %op.rdx264, %op.rdx265
   %op.rdx273 = or i1 %op.rdx269, %op.rdx270
   %op.rdx275 = or i1 %op.rdx273, %op.rdx274
-  br i1 %op.rdx275, label %scalar.ph.preheader, label %vector.ph
+  br i1 %op.rdx275, label %scalar.ph.preheader, label %vector.body
 
-vector.ph:                                        ; preds = %vector.memcheck
-  %7 = add i64 %.06180, %n.vec                    ; 2 uses
-  br label %vector.body
-
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 7 uses
+vector.body:                                      ; preds = %vector.memcheck, %vector.body
+  %index = phi i64 [ %index.next, %vector.body ], [ 0, %vector.memcheck ] ; 7 uses
   %i.dg = add i64 %.06180, %index                 ; 5 uses
   %i.dh = shl nsw i64 %i.dg, 4
   %i.di = shl i64 %i.dg, 4
@@ -616,6 +609,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.fq, label %middle.block, label %vector.body, !llvm.loop !62
 
 middle.block:                                     ; preds = %vector.body
+  %7 = add i64 %.06180, %n.vec                    ; 2 uses
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %vector.scevcheck, %.preheader, %middle.block

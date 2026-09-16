@@ -205,13 +205,8 @@ _ZNSt7__cxx1110_List_baseISt6vectorINS_12basic_stringIcSt11char_traitsIcESaIcEEE
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #33
   br label %bb.bh
 
-._crit_edge:                                      ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
-  %26 = xor i1 %.1, true
-  %27 = select i1 %26, i1 true, i1 %.148
-  br label %.lr.ph.i.i
-
-.lr.ph.i.i:                                       ; preds = %._crit_edge, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit.i.i
-  %.09.i.i = phi ptr [ %i.ci, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit.i.i ], [ %i.ch, %._crit_edge ] ; 5 uses
+.lr.ph.i.i:                                       ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit.i.i
+  %.09.i.i = phi ptr [ %i.ci, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit.i.i ], [ %i.ch, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ] ; 5 uses
   %i.ci = load ptr, ptr %.09.i.i, align 8, !tbaa !182 ; 2 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %.09.i.i, i64 16 ; 2 uses
   %i.ck = load ptr, ptr %i.cj, align 8, !tbaa !187 ; 3 uses
@@ -262,6 +257,8 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.ex
   br i1 %.not.i.i, label %_ZNSt7__cxx1110_List_baseISt6vectorINS_12basic_stringIcSt11char_traitsIcESaIcEEESaIS6_EESaIS8_EED2Ev.exit, label %.lr.ph.i.i, !llvm.loop !1
 
 _ZNSt7__cxx1110_List_baseISt6vectorINS_12basic_stringIcSt11char_traitsIcESaIcEEESaIS6_EESaIS8_EED2Ev.exit: ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit.i.i
+  %26 = xor i1 %.1, true
+  %27 = select i1 %26, i1 true, i1 %.148
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #33
   br i1 %27, label %bb.bh, label %bb.m
 
@@ -308,7 +305,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %.1 = phi i1 [ %.0249, %.lr.ph ], [ %.0249, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit ], [ %spec.select, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread241 ] ; 2 uses
   %i.do = load ptr, ptr %.sroa.0237.0247, align 8, !tbaa !182 ; 2 uses
   %.not245 = icmp eq ptr %i.do, %10
-  br i1 %.not245, label %._crit_edge, label %.lr.ph
+  br i1 %.not245, label %.lr.ph.i.i, label %.lr.ph
 
 bb.m:                                             ; preds = %_ZNSt7__cxx1110_List_baseISt6vectorINS_12basic_stringIcSt11char_traitsIcESaIcEEESaIS6_EESaIS8_EED2Ev.exit
   %i.dp = load ptr, ptr %9, align 8, !tbaa !182   ; 2 uses
@@ -711,14 +708,10 @@ bb.w:                                             ; preds = %bb.w, %"_ZSt22__mov
   %.val.i.i14.i = load i32, ptr %i.dr, align 8, !tbaa !601
   %i.ds = icmp sgt i32 %.val1.i.i13.i, %.val.i.i14.i
   %i.dt = getelementptr inbounds nuw i8, ptr %.sroa.012.1.i.i, i64 40 ; 2 uses
-  br i1 %i.ds, label %bb.w, label %.preheader.i.i.preheader, !llvm.loop !2683
+  br i1 %i.ds, label %bb.w, label %.preheader.i.i, !llvm.loop !2683
 
-.preheader.i.i.preheader:                         ; preds = %bb.w
-  %7 = getelementptr i8, ptr %.sroa.012.1.i.i, i64 32 ; 2 uses
-  br label %.preheader.i.i
-
-.preheader.i.i:                                   ; preds = %.preheader.i.i.preheader, %.preheader.i.i
-  %.sroa.0.0.pn.i.i = phi ptr [ %.sroa.0.1.i.i, %.preheader.i.i ], [ %.sroa.0.0.i.i, %.preheader.i.i.preheader ] ; 3 uses
+.preheader.i.i:                                   ; preds = %bb.w, %.preheader.i.i
+  %.sroa.0.0.pn.i.i = phi ptr [ %.sroa.0.1.i.i, %.preheader.i.i ], [ %.sroa.0.0.i.i, %bb.w ] ; 3 uses
   %.sroa.0.1.i.i = getelementptr inbounds i8, ptr %.sroa.0.0.pn.i.i, i64 -40 ; 4 uses
   %i.du = getelementptr i8, ptr %.sroa.0.0.pn.i.i, i64 -8
   %.val1.i9.i.i = load i32, ptr %i.du, align 8, !tbaa !601
@@ -731,6 +724,7 @@ bb.x:                                             ; preds = %.preheader.i.i
 
 bb.y:                                             ; preds = %bb.x
   %i.dx = getelementptr i8, ptr %.sroa.0.0.pn.i.i, i64 -8 ; 2 uses
+  %7 = getelementptr i8, ptr %.sroa.012.1.i.i, i64 32 ; 2 uses
   tail call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_(ptr noundef nonnull align 8 dereferenceable(36) %.sroa.012.1.i.i, ptr noundef nonnull align 8 dereferenceable(36) %.sroa.0.1.i.i) #33
   %i.dy = load i32, ptr %7, align 4, !tbaa !225
   %i.dz = load i32, ptr %i.dx, align 4, !tbaa !225

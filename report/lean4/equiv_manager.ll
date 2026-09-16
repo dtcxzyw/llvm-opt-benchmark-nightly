@@ -159,14 +159,10 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   %i.c = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.b
   %i.d = load i32, ptr %i.c, align 4, !tbaa !16   ; 2 uses
   %.not.i = icmp eq i32 %i.d, %.07.i
-  br i1 %.not.i, label %_ZN4lean13equiv_manager4findEj.exit.preheader, label %bb.b
+  br i1 %.not.i, label %_ZN4lean13equiv_manager4findEj.exit, label %bb.b
 
-_ZN4lean13equiv_manager4findEj.exit.preheader:    ; preds = %bb.b
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.b ; 2 uses
-  br label %_ZN4lean13equiv_manager4findEj.exit
-
-_ZN4lean13equiv_manager4findEj.exit:              ; preds = %_ZN4lean13equiv_manager4findEj.exit.preheader, %_ZN4lean13equiv_manager4findEj.exit
-  %.07.i20 = phi i32 [ %i.g, %_ZN4lean13equiv_manager4findEj.exit ], [ %2, %_ZN4lean13equiv_manager4findEj.exit.preheader ] ; 4 uses
+_ZN4lean13equiv_manager4findEj.exit:              ; preds = %bb.b, %_ZN4lean13equiv_manager4findEj.exit
+  %.07.i20 = phi i32 [ %i.g, %_ZN4lean13equiv_manager4findEj.exit ], [ %2, %bb.b ] ; 4 uses
   %i.e = zext i32 %.07.i20 to i64                 ; 2 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.e
   %i.g = load i32, ptr %i.f, align 4, !tbaa !16   ; 2 uses
@@ -174,6 +170,7 @@ _ZN4lean13equiv_manager4findEj.exit:              ; preds = %_ZN4lean13equiv_man
   br i1 %.not.i21, label %_ZN4lean13equiv_manager4findEj.exit22, label %_ZN4lean13equiv_manager4findEj.exit
 
 _ZN4lean13equiv_manager4findEj.exit22:            ; preds = %_ZN4lean13equiv_manager4findEj.exit
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.b ; 2 uses
   %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.e ; 2 uses
   %.not = icmp eq i32 %.07.i, %.07.i20
   br i1 %.not, label %bb.g, label %bb.c
@@ -576,14 +573,10 @@ bb.u:                                             ; preds = %bb.u, %bb.t
   %i.em = getelementptr inbounds nuw [8 x i8], ptr %i.ek, i64 %i.el
   %i.en = load i32, ptr %i.em, align 4, !tbaa !16 ; 2 uses
   %.not.i.i = icmp eq i32 %i.en, %.07.i.i
-  br i1 %.not.i.i, label %_ZN4lean13equiv_manager4findEj.exit.i.preheader, label %bb.u
+  br i1 %.not.i.i, label %_ZN4lean13equiv_manager4findEj.exit.i, label %bb.u
 
-_ZN4lean13equiv_manager4findEj.exit.i.preheader:  ; preds = %bb.u
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.ek, i64 %i.el ; 2 uses
-  br label %_ZN4lean13equiv_manager4findEj.exit.i
-
-_ZN4lean13equiv_manager4findEj.exit.i:            ; preds = %_ZN4lean13equiv_manager4findEj.exit.i.preheader, %_ZN4lean13equiv_manager4findEj.exit.i
-  %.07.i20.i = phi i32 [ %i.eq, %_ZN4lean13equiv_manager4findEj.exit.i ], [ %.07.i61, %_ZN4lean13equiv_manager4findEj.exit.i.preheader ] ; 4 uses
+_ZN4lean13equiv_manager4findEj.exit.i:            ; preds = %bb.u, %_ZN4lean13equiv_manager4findEj.exit.i
+  %.07.i20.i = phi i32 [ %i.eq, %_ZN4lean13equiv_manager4findEj.exit.i ], [ %.07.i61, %bb.u ] ; 4 uses
   %i.eo = zext i32 %.07.i20.i to i64              ; 2 uses
   %i.ep = getelementptr inbounds nuw [8 x i8], ptr %i.ek, i64 %i.eo
   %i.eq = load i32, ptr %i.ep, align 4, !tbaa !16 ; 2 uses
@@ -591,6 +584,7 @@ _ZN4lean13equiv_manager4findEj.exit.i:            ; preds = %_ZN4lean13equiv_man
   br i1 %.not.i21.i, label %_ZN4lean13equiv_manager4findEj.exit22.i, label %_ZN4lean13equiv_manager4findEj.exit.i
 
 _ZN4lean13equiv_manager4findEj.exit22.i:          ; preds = %_ZN4lean13equiv_manager4findEj.exit.i
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.ek, i64 %i.el ; 2 uses
   %i.er = getelementptr inbounds nuw [8 x i8], ptr %i.ek, i64 %i.eo ; 2 uses
   %.not.i70 = icmp eq i32 %.07.i.i, %.07.i20.i
   br i1 %.not.i70, label %_ZN4leaneqERKNS_3natES2_.exit, label %bb.v
@@ -707,14 +701,10 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %i.d
   %i.f = load i32, ptr %i.e, align 4, !tbaa !16   ; 2 uses
   %.not.i.i = icmp eq i32 %i.f, %.07.i.i
-  br i1 %.not.i.i, label %_ZN4lean13equiv_manager4findEj.exit.i.preheader, label %bb.b
+  br i1 %.not.i.i, label %_ZN4lean13equiv_manager4findEj.exit.i, label %bb.b
 
-_ZN4lean13equiv_manager4findEj.exit.i.preheader:  ; preds = %bb.b
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %i.d ; 2 uses
-  br label %_ZN4lean13equiv_manager4findEj.exit.i
-
-_ZN4lean13equiv_manager4findEj.exit.i:            ; preds = %_ZN4lean13equiv_manager4findEj.exit.i.preheader, %_ZN4lean13equiv_manager4findEj.exit.i
-  %.07.i20.i = phi i32 [ %i.i, %_ZN4lean13equiv_manager4findEj.exit.i ], [ %i.b, %_ZN4lean13equiv_manager4findEj.exit.i.preheader ] ; 4 uses
+_ZN4lean13equiv_manager4findEj.exit.i:            ; preds = %bb.b, %_ZN4lean13equiv_manager4findEj.exit.i
+  %.07.i20.i = phi i32 [ %i.i, %_ZN4lean13equiv_manager4findEj.exit.i ], [ %i.b, %bb.b ] ; 4 uses
   %i.g = zext i32 %.07.i20.i to i64               ; 2 uses
   %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %i.g
   %i.i = load i32, ptr %i.h, align 4, !tbaa !16   ; 2 uses
@@ -722,6 +712,7 @@ _ZN4lean13equiv_manager4findEj.exit.i:            ; preds = %_ZN4lean13equiv_man
   br i1 %.not.i21.i, label %_ZN4lean13equiv_manager4findEj.exit22.i, label %_ZN4lean13equiv_manager4findEj.exit.i
 
 _ZN4lean13equiv_manager4findEj.exit22.i:          ; preds = %_ZN4lean13equiv_manager4findEj.exit.i
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %i.d ; 2 uses
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %i.g ; 2 uses
   %.not.i = icmp eq i32 %.07.i.i, %.07.i20.i
   br i1 %.not.i, label %_ZN4lean13equiv_manager5mergeEjj.exit, label %bb.c

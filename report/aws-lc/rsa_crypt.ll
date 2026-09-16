@@ -129,7 +129,6 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   br i1 %min.iters.check98, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %8 = and i64 %i.af, 28
   %n.vec = and i64 %i.af, -32                     ; 4 uses
   br label %vector.body
 
@@ -152,6 +151,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ap, label %middle.block, label %vector.body, !llvm.loop !32
 
 middle.block:                                     ; preds = %vector.body
+  %8 = and i64 %i.af, 28
   %cmp.n = icmp eq i64 %i.af, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %vec.epilog.iter.check
 
@@ -202,7 +202,6 @@ vector.main.loop.iter.check109:                   ; preds = %iter.check123
   br i1 %min.iters.check110, label %vec.epilog.ph127, label %vector.ph111
 
 vector.ph111:                                     ; preds = %vector.main.loop.iter.check109
-  %9 = and i64 %i.e, 28
   %n.vec112 = and i64 %i.e, -32                   ; 4 uses
   br label %vector.body113
 
@@ -225,6 +224,7 @@ vector.body113:                                   ; preds = %vector.body113, %ve
   br i1 %i.bb, label %middle.block120, label %vector.body113, !llvm.loop !34
 
 middle.block120:                                  ; preds = %vector.body113
+  %9 = and i64 %i.e, 28
   %cmp.n121 = icmp eq i64 %i.e, %n.vec112
   br i1 %cmp.n121, label %.loopexit, label %vec.epilog.iter.check125
 
@@ -366,7 +366,6 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check130, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %9 = and i64 %i.f, 28
   %n.vec = and i64 %i.f, -32                      ; 4 uses
   br label %vector.body
 
@@ -389,6 +388,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.w, label %middle.block, label %vector.body, !llvm.loop !40
 
 middle.block:                                     ; preds = %vector.body
+  %9 = and i64 %i.f, 28
   %cmp.n = icmp eq i64 %i.f, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %vec.epilog.iter.check
 
@@ -447,7 +447,6 @@ vector.main.loop.iter.check142:                   ; preds = %vector.memcheck
   br i1 %min.iters.check143, label %vec.epilog.ph160, label %vector.ph144
 
 vector.ph144:                                     ; preds = %vector.main.loop.iter.check142
-  %10 = and i64 %i.k, 28
   %n.vec145 = and i64 %i.k, -32                   ; 4 uses
   br label %vector.body146
 
@@ -470,6 +469,7 @@ vector.body146:                                   ; preds = %vector.body146, %ve
   br i1 %i.ai, label %middle.block153, label %vector.body146, !llvm.loop !45
 
 middle.block153:                                  ; preds = %vector.body146
+  %10 = and i64 %i.k, 28
   %cmp.n154 = icmp eq i64 %i.k, %n.vec145
   br i1 %cmp.n154, label %._crit_edge103, label %vec.epilog.iter.check158
 
@@ -872,21 +872,18 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.n
   %i.p = icmp ult i32 %i.h, 11
-  br i1 %i.p, label %bb.q, label %7
+  br i1 %i.p, label %bb.q, label %bb.s
 
 bb.q:                                             ; preds = %bb.p
   tail call void @ERR_put_error(i32 noundef 4, i32 noundef 0, i32 noundef 126, ptr noundef nonnull @.str, i32 noundef 247) #6
   br label %rsa_padding_check_PKCS1_type_2.exit.thread.i
 
-7:                                                ; preds = %bb.p
-  %8 = load i8, ptr %.030.i, align 1, !tbaa !8
-  %9 = getelementptr inbounds nuw i8, ptr %.030.i, i64 1
-  %10 = load i8, ptr %9, align 1, !tbaa !8
-  br label %bb.s
-
 bb.r:                                             ; preds = %bb.s
-  %i.q = icmp ne i8 %8, 0
-  %i.r = icmp ne i8 %10, 2
+  %7 = load i8, ptr %.030.i, align 1, !tbaa !8
+  %i.q = icmp ne i8 %7, 0
+  %8 = getelementptr inbounds nuw i8, ptr %.030.i, i64 1
+  %9 = load i8, ptr %8, align 1, !tbaa !8
+  %i.r = icmp ne i8 %9, 2
   %.not45.i.i = or i1 %i.q, %i.r
   %i.s = sub i64 9, %i.ae
   %i.t = or i64 %i.s, %i.ad
@@ -897,10 +894,10 @@ bb.r:                                             ; preds = %bb.s
   %.not.i.i = select i1 %.not42.i.i, i1 true, i1 %.not40.i.i
   br i1 %.not.i.i, label %bb.t, label %bb.u
 
-bb.s:                                             ; preds = %bb.s, %7
-  %.03448.i.i = phi i64 [ 2, %7 ], [ %i.aj, %bb.s ] ; 3 uses
-  %.03547.i.i = phi i64 [ -1, %7 ], [ %i.ai, %bb.s ] ; 2 uses
-  %.03646.i.i = phi i64 [ 0, %7 ], [ %i.ae, %bb.s ]
+bb.s:                                             ; preds = %bb.p, %bb.s
+  %.03448.i.i = phi i64 [ %i.aj, %bb.s ], [ 2, %bb.p ] ; 3 uses
+  %.03547.i.i = phi i64 [ %i.ai, %bb.s ], [ -1, %bb.p ] ; 2 uses
+  %.03646.i.i = phi i64 [ %i.ae, %bb.s ], [ 0, %bb.p ]
   %i.v = getelementptr inbounds nuw i8, ptr %.030.i, i64 %.03448.i.i
   %i.w = load i8, ptr %i.v, align 1, !tbaa !8
   %i.x = icmp eq i8 %i.w, 0                       ; 2 uses

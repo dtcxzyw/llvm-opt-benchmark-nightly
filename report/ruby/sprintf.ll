@@ -202,6 +202,7 @@ bb.l:                                             ; preds = %bb.k
   br label %.outer
 
 .outer.loopexit:                                  ; preds = %bb.ab
+  %.1519.fr.le2972 = freeze i32 %.1519
   br label %.outer, !llvm.loop !94
 
 .outer:                                           ; preds = %.outer.loopexit, %.backedge
@@ -261,7 +262,6 @@ bb.l:                                             ; preds = %bb.k
   ]
 
 .preheader2283:                                   ; preds = %._crit_edge, %._crit_edge, %._crit_edge, %._crit_edge, %._crit_edge, %._crit_edge, %._crit_edge, %._crit_edge, %._crit_edge
-  %.1519.fr.le2972 = freeze i32 %.1519
   br label %bb.ab
 
 bb.m:                                             ; preds = %._crit_edge
@@ -664,11 +664,7 @@ bb.fs:                                            ; preds = %bb.ea, %bb.ee, %bb.
   %i.sf = icmp ne i64 %i.sc, 0
   %i.sg = icmp ne i32 %.1519.fr2658, 0
   %or.cond9.jt8 = or i1 %i.sg, %i.sf
-  br i1 %or.cond9.jt8, label %.preheader.i785.preheader, label %BSD__ultoa.exit
-
-.preheader.i785.preheader:                        ; preds = %bb.fs
-  %5 = and i32 %spec.select747.jt8, 1
-  br label %.preheader.i785
+  br i1 %or.cond9.jt8, label %.preheader.i785, label %BSD__ultoa.exit
 
 .preheader39.i.preheader:                         ; preds = %bb.fr, %.thread1743
   %i.sh = phi i32 [ %i.og, %.thread1743 ], [ %spec.select2021, %bb.fr ]
@@ -721,9 +717,9 @@ bb.fw:                                            ; preds = %.preheader2295, %bb
   %.not38.i = icmp samesign ult i64 %.1.i, 10
   br i1 %.not38.i, label %BSD__ultoa.exit, label %bb.fw, !llvm.loop !0
 
-.preheader.i785:                                  ; preds = %.preheader.i785.preheader, %.preheader.i785
-  %.031.i = phi i64 [ %i.tb, %.preheader.i785 ], [ %i.sc, %.preheader.i785.preheader ] ; 2 uses
-  %.2.i786 = phi ptr [ %i.ta, %.preheader.i785 ], [ %i.l, %.preheader.i785.preheader ] ; 2 uses
+.preheader.i785:                                  ; preds = %bb.fs, %.preheader.i785
+  %.031.i = phi i64 [ %i.tb, %.preheader.i785 ], [ %i.sc, %bb.fs ] ; 2 uses
+  %.2.i786 = phi ptr [ %i.ta, %.preheader.i785 ], [ %i.l, %bb.fs ] ; 2 uses
   %i.sx = trunc i64 %.031.i to i8
   %i.sy = and i8 %i.sx, 7                         ; 2 uses
   %i.sz = or disjoint i8 %i.sy, 48
@@ -734,6 +730,7 @@ bb.fw:                                            ; preds = %.preheader2295, %bb
   br i1 %.not35.i, label %bb.fx, label %.preheader.i785, !llvm.loop !101
 
 bb.fx:                                            ; preds = %.preheader.i785
+  %5 = and i32 %spec.select747.jt8, 1
   %.not36.i = icmp eq i32 %5, 0
   %.not37.i = icmp eq i8 %i.sy, 0
   %or.cond.i = or i1 %.not36.i, %.not37.i

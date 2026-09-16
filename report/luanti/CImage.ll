@@ -205,14 +205,10 @@ bb.d:                                             ; preds = %bb.a
   %.157 = phi ptr [ %i.fa, %._crit_edge ], [ %i.g, %.preheader.preheader ] ; 3 uses
   %.04956 = phi ptr [ %i.ez, %._crit_edge ], [ %i.bg, %.preheader.preheader ] ; 11 uses
   %brmerge = select i1 %min.iters.check, i1 true, i1 %i.bq
-  br i1 %brmerge, label %scalar.ph.preheader, label %vector.ph
+  br i1 %brmerge, label %scalar.ph.preheader, label %vector.body
 
-vector.ph:                                        ; preds = %.preheader
-  %1 = getelementptr i8, ptr %.04956, i64 %i.br
-  br label %vector.body
-
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
+vector.body:                                      ; preds = %.preheader, %vector.body
+  %index = phi i64 [ %index.next, %vector.body ], [ 0, %.preheader ] ; 3 uses
   %i.bs = mul i64 %index, 3                       ; 8 uses
   %next.gep = getelementptr i8, ptr %.04956, i64 %i.bs ; 3 uses
   %i.bt = getelementptr i8, ptr %.04956, i64 %i.bs ; 3 uses
@@ -311,6 +307,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ey, label %middle.block, label %vector.body, !llvm.loop !97
 
 middle.block:                                     ; preds = %vector.body
+  %1 = getelementptr i8, ptr %.04956, i64 %i.br
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.preheader, %middle.block

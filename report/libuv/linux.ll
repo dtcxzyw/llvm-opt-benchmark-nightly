@@ -204,9 +204,9 @@ bb.k:                                             ; preds = %bb.f
 .loopexit:                                        ; preds = %.loopexit86
   %i.ao = call i32 (ptr, ptr, ...) @__isoc23_fscanf(ptr noundef nonnull %i.ak, ptr noundef nonnull @.str.13, ptr noundef nonnull %i.a) #15
   %.not78 = icmp eq i32 %i.ao, 1
-  br i1 %.not78, label %.preheader.backedge, label %._crit_edge
+  br i1 %.not78, label %bb.m, label %._crit_edge
 
-.preheader:                                       ; preds = %.preheader.backedge, %.preheader.lr.ph
+.preheader:                                       ; preds = %bb.m, %.preheader.lr.ph
   %i.ap = call ptr @fgets(ptr noundef nonnull %i.e, i32 noundef 1024, ptr noundef nonnull %i.ak)
   %.not79 = icmp eq ptr %i.ap, null
   br i1 %.not79, label %.loopexit86.preheader, label %bb.l
@@ -221,17 +221,13 @@ bb.l:                                             ; preds = %.preheader
   %i.aw = icmp ne i64 %i.av, 0
   %i.ax = zext i1 %i.aw to i32
   %.not80 = icmp eq i32 %i.ax, 0
-  br i1 %.not80, label %bb.m, label %.preheader.backedge
+  br i1 %.not80, label %bb.n, label %bb.m
 
-.preheader.backedge:                              ; preds = %bb.l, %.loopexit
+bb.m:                                             ; preds = %bb.l, %.loopexit
   br label %.preheader, !llvm.loop !26
 
-bb.m:                                             ; preds = %bb.l
-  %3 = call i64 @strcspn(ptr noundef nonnull %i.an, ptr noundef nonnull @.str.14) #16
-  br label %bb.n
-
-bb.n:                                             ; preds = %bb.m, %bb.n
-  %.068.idx91 = phi i64 [ 0, %bb.m ], [ %.068.add, %bb.n ] ; 3 uses
+bb.n:                                             ; preds = %bb.l, %bb.n
+  %.068.idx91 = phi i64 [ %.068.add, %bb.n ], [ 0, %bb.l ] ; 3 uses
   %.068.ptr92 = getelementptr inbounds nuw i8, ptr %i.d, i64 %.068.idx91 ; 2 uses
   %i.ay = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.068.ptr92) #16
   %i.az = call i32 @strncmp(ptr noundef nonnull %i.an, ptr noundef nonnull %.068.ptr92, i64 noundef %i.ay) #16
@@ -243,6 +239,7 @@ bb.n:                                             ; preds = %bb.m, %bb.n
 
 bb.o:                                             ; preds = %bb.n
   %.068.ptr.le = getelementptr inbounds nuw i8, ptr %i.d, i64 %.068.add ; 2 uses
+  %3 = call i64 @strcspn(ptr noundef nonnull %i.an, ptr noundef nonnull @.str.14) #16
   %i.bd = trunc i64 %3 to i32
   br i1 %i.ba, label %.loopexit86.preheader, label %bb.p
 

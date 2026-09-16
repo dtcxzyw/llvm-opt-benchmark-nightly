@@ -204,17 +204,11 @@ bb.e:                                             ; preds = %bb.d, %bb.d
   %.val.val = load ptr, ptr %i.p, align 8
   %.val.val.val = load ptr, ptr %.val.val, align 8 ; 2 uses
   %i.q = icmp eq ptr %.val.val.val, null
-  br i1 %i.q, label %evhttp_append_to_last_header.exit.thread, label %3
+  br i1 %i.q, label %evhttp_append_to_last_header.exit.thread, label %bb.f
 
-3:                                                ; preds = %bb.e
-  %4 = getelementptr inbounds nuw i8, ptr %.val.val.val, i64 24 ; 3 uses
-  %5 = load ptr, ptr %4, align 8
-  %6 = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %5) #14 ; 2 uses
-  br label %bb.f
-
-bb.f:                                             ; preds = %.critedge.i, %3
-  %i.r = phi i8 [ %i.o, %3 ], [ %.pre, %.critedge.i ]
-  %.0.i = phi ptr [ %i.g, %3 ], [ %i.s, %.critedge.i ] ; 4 uses
+bb.f:                                             ; preds = %bb.e, %.critedge.i
+  %i.r = phi i8 [ %.pre, %.critedge.i ], [ %i.o, %bb.e ]
+  %.0.i = phi ptr [ %i.s, %.critedge.i ], [ %i.g, %bb.e ] ; 4 uses
   switch i8 %i.r, label %bb.g [
     i8 32, label %.critedge.i
     i8 9, label %.critedge.i
@@ -226,22 +220,25 @@ bb.f:                                             ; preds = %.critedge.i, %3
   br label %bb.f, !llvm.loop !28
 
 bb.g:                                             ; preds = %bb.f
+  %3 = getelementptr inbounds nuw i8, ptr %.val.val.val, i64 24 ; 3 uses
+  %4 = load ptr, ptr %3, align 8
+  %5 = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %4) #14 ; 2 uses
   call void @evutil_rtrim_lws_(ptr noundef nonnull %.0.i) #15
   %i.t = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0.i) #14 ; 2 uses
-  %i.u = load ptr, ptr %4, align 8
-  %i.v = add i64 %6, 2
+  %i.u = load ptr, ptr %3, align 8
+  %i.v = add i64 %5, 2
   %i.w = add i64 %i.v, %i.t
   %i.x = call ptr @event_mm_realloc_(ptr noundef %i.u, i64 noundef %i.w) #15 ; 3 uses
   %i.y = icmp eq ptr %i.x, null
   br i1 %i.y, label %evhttp_append_to_last_header.exit.thread, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 %6 ; 2 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 %5 ; 2 uses
   store i8 32, ptr %i.z, align 1
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 1
   %i.ab = add i64 %i.t, 1
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aa, ptr nonnull align 1 %.0.i, i64 %i.ab, i1 false)
-  store ptr %i.x, ptr %4, align 8
+  store ptr %i.x, ptr %3, align 8
   br label %bb.k, !llvm.loop !29
 
 bb.i:                                             ; preds = %bb.d

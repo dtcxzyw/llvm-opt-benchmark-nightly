@@ -204,6 +204,7 @@ bb.bux:                                           ; preds = %bb.buw
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i54025) #7, !srcloc !19
   %i.udj = zext i32 %.0.copyload.i54023 to i64
   tail call void @w2c_hermes_hermes0x3A0x3AappendSignedLEB1280x28std0x3A0x3A_0x5F20x3A0x3Avector0x3Cunsigned0x20char0x2C0x20std0x3A0x3A_0x5F20x3A0x3Aallocator0x3Cunsigned0x20char0x3E0x3E0x260x2C0x20long0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.sza, i64 noundef %i.udj)
+  %6 = sub i32 %.0.copyload.i54024, %.0.copyload.i54025
   %.val46927 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.udk = getelementptr inbounds nuw i8, ptr %.val46927, i64 %i.tai
   %.0.copyload.i54026 = load i32, ptr %i.udk, align 1 ; 3 uses
@@ -229,14 +230,10 @@ bb.buy:                                           ; preds = %bb.buy, %bb.bux
   tail call void @w2c_hermes_hermes0x3A0x3Ahbc0x3A0x3ADebugInfoGenerator0x3A0x3AappendString0x28std0x3A0x3A_0x5F20x3A0x3Avector0x3Cunsigned0x20char0x2C0x20std0x3A0x3A_0x5F20x3A0x3Aallocator0x3Cunsigned0x20char0x3E0x3E0x260x2C0x20hermes0x3A0x3AIdentifier0x29(ptr noundef nonnull %0, i32 noundef %i.sii, i32 noundef %i.sza, i32 noundef %.0.copyload.i54028)
   %i.uds = add i32 %.158, 8                       ; 2 uses
   %.not46656 = icmp eq i32 %i.uds, %i.udm
-  br i1 %.not46656, label %.loopexit54224.loopexit, label %bb.buy
+  br i1 %.not46656, label %.loopexit54224, label %bb.buy
 
-.loopexit54224.loopexit:                          ; preds = %bb.buy
-  %6 = sub i32 %.0.copyload.i54024, %.0.copyload.i54025
-  br label %.loopexit54224
-
-.loopexit54224:                                   ; preds = %.loopexit54224.loopexit, %bb.buw
-  %.4643175 = phi i32 [ 0, %bb.buw ], [ %6, %.loopexit54224.loopexit ]
+.loopexit54224:                                   ; preds = %bb.buy, %bb.buw
+  %.4643175 = phi i32 [ 0, %bb.buw ], [ %6, %bb.buy ]
   %.val46925 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.udt = getelementptr inbounds nuw i8, ptr %.val46925, i64 %i.rla
   %.0.copyload.i54029 = load i32, ptr %i.udt, align 1 ; 3 uses
