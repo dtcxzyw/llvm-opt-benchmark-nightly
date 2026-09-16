@@ -1,0 +1,23 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index 658b027820a84..db909dbd4f17c 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -2465,16 +2465,14 @@ static bool eliminateConstraints(Function &F, DominatorTree &DT, LoopInfo &LI,
+           Value *X = BO->getOperand(0);
+           Value *N = BO->getOperand(1);
+           Constant *Zero = Constant::getNullValue(BO->getType());
+-          if (Info.doesHold(CmpInst::ICMP_SGE, X, Zero) ||
+-              isKnownNonNegative(X, F.getDataLayout())) {
++          if (Info.isKnownNonNegative(X)) {
+             // srem x, n: result >= 0, if x >= 0 (result has the sign of x)
+             AddFact(CmpInst::ICMP_SGE, BO, Zero);
+             // srem x, n: result <= x, if x >= 0 (|result| <= |x| and both are
+             // non-negative)
+             AddFact(CmpInst::ICMP_SLE, BO, X);
+           }
+-          if (Info.doesHold(CmpInst::ICMP_SGE, N, Zero) ||
+-              isKnownPositive(N, F.getDataLayout())) {
++          if (Info.isKnownNonNegative(N)) {
+             // srem x, n: result <= n, if n >= 0 (|result| < n, so result <= n -
+             // 1
+             AddFact(CmpInst::ICMP_SLT, BO, N);
