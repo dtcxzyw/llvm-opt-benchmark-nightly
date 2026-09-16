@@ -204,16 +204,13 @@ bb.an:                                            ; preds = %.lr.ph.i121
   store i32 %i.du, ptr %i.au, align 8, !tbaa !30
   %i.dv = load ptr, ptr %i.dl, align 8, !tbaa !33 ; 4 uses
   %i.dw = load i32, ptr %i.dj, align 8, !tbaa !32 ; 3 uses
-  %4 = add i32 %i.dw, -1
-  %5 = zext i32 %4 to i64
-  %6 = getelementptr inbounds nuw [48 x i8], ptr %i.dv, i64 %5 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #17
   %.not.i128 = icmp ne i32 %i.dw, 0
   call void @llvm.assume(i1 %.not.i128)
   %wide.trip.count.i130 = zext i32 %i.dw to i64
   %i.dx = load i32, ptr %i.dv, align 8, !tbaa !35
   %i.dy = icmp eq i32 %i.dx, 27
-  br i1 %i.dy, label %find_shorthand_operation.exit127, label %.lr.ph182
+  br i1 %i.dy, label %find_shorthand_operation.exit127.loopexit, label %.lr.ph182
 
 .lr.ph182:                                        ; preds = %.lr.ph.i129, %.lr.ph182
   %indvars.iv.i131181 = phi i64 [ %indvars.iv.next.i132, %.lr.ph182 ], [ 0, %.lr.ph.i129 ]
@@ -223,11 +220,18 @@ bb.an:                                            ; preds = %.lr.ph.i121
   %i.dz = getelementptr inbounds nuw [48 x i8], ptr %i.dv, i64 %indvars.iv.next.i132 ; 2 uses
   %i.ea = load i32, ptr %i.dz, align 8, !tbaa !35
   %i.eb = icmp eq i32 %i.ea, 27
-  br i1 %i.eb, label %find_shorthand_operation.exit127, label %.lr.ph182
+  br i1 %i.eb, label %find_shorthand_operation.exit127.loopexit, label %.lr.ph182
 
-find_shorthand_operation.exit127:                 ; preds = %.lr.ph.i121, %.lr.ph182, %.lr.ph.i129
-  %.049 = phi ptr [ %i.dz, %.lr.ph182 ], [ %i.dv, %.lr.ph.i129 ], [ %i.dn, %.lr.ph.i121 ]
-  %.0 = phi ptr [ %6, %.lr.ph182 ], [ %6, %.lr.ph.i129 ], [ %i.dq, %.lr.ph.i121 ]
+find_shorthand_operation.exit127.loopexit:        ; preds = %.lr.ph182, %.lr.ph.i129
+  %.lcssa = phi ptr [ %i.dv, %.lr.ph.i129 ], [ %i.dz, %.lr.ph182 ]
+  %4 = add i32 %i.dw, -1
+  %5 = zext i32 %4 to i64
+  %6 = getelementptr inbounds nuw [48 x i8], ptr %i.dv, i64 %5
+  br label %find_shorthand_operation.exit127
+
+find_shorthand_operation.exit127:                 ; preds = %.lr.ph.i121, %find_shorthand_operation.exit127.loopexit
+  %.049 = phi ptr [ %.lcssa, %find_shorthand_operation.exit127.loopexit ], [ %i.dn, %.lr.ph.i121 ]
+  %.0 = phi ptr [ %6, %find_shorthand_operation.exit127.loopexit ], [ %i.dq, %.lr.ph.i121 ]
   %i.ec = getelementptr inbounds nuw i8, ptr %.0, i64 8
   %i.ed = getelementptr inbounds nuw i8, ptr %.049, i64 16
   store ptr %i.ec, ptr %i.ed, align 8, !tbaa !36

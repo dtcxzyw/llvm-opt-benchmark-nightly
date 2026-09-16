@@ -203,7 +203,7 @@ get_byte.exit.4:                                  ; preds = %get_byte.exit.3
 bb.j:                                             ; preds = %.lr.ph, %select.unfold
   %i.bs = phi i32 [ 0, %.lr.ph ], [ %i.adc, %select.unfold ] ; 5 uses
   %.0274638 = phi i32 [ 0, %.lr.ph ], [ %.3, %select.unfold ]
-  %.0276635 = phi i32 [ 0, %.lr.ph ], [ %.3279, %select.unfold ] ; 13 uses
+  %.0276635 = phi i32 [ 0, %.lr.ph ], [ %.3279, %select.unfold ] ; 14 uses
   %.0280628 = phi i32 [ 1, %.lr.ph ], [ %.4, %select.unfold ] ; 10 uses
   %.0284621 = phi i32 [ 1, %.lr.ph ], [ %.3287, %select.unfold ] ; 11 uses
   %.0288614 = phi i32 [ 1, %.lr.ph ], [ %.2290, %select.unfold ] ; 11 uses
@@ -606,8 +606,6 @@ getbit_from_table.exit438:                        ; preds = %bb.cm, %get_byte.ex
   br label %bb.fu
 
 getbit_from_table.exit399:                        ; preds = %get_byte.exit.i397, %bb.at
-  %10 = icmp slt i32 %.0276635, 7
-  %11 = select i1 %10, i32 7, i32 10
   %i.pd = call i32 @get_n_bits_from_tablesize(ptr noundef nonnull %i.bm, ptr noundef nonnull %9, i32 noundef %i.bs) ; 2 uses
   %i.pe = tail call i32 @llvm.umin.i32(i32 %i.pd, i32 3)
   %i.pf = shl nuw nsw i32 %i.pe, 6
@@ -628,6 +626,8 @@ getbit_from_table.exit399:                        ; preds = %get_byte.exit.i397,
 
 .thread848:                                       ; preds = %getbit_from_table.exit399
   store i32 1, ptr %i.t, align 8, !tbaa !14
+  %10 = icmp slt i32 %.0276635, 7
+  %11 = select i1 %10, i32 7, i32 10
   br label %.preheader.i454
 
 .lr.ph.i:                                         ; preds = %getbit_from_table.exit399, %getbit_from_table.exit491
@@ -746,6 +746,8 @@ getbit_from_table.exit491:                        ; preds = %bb.cx, %bb.cz, %get
   br i1 %.not.i452, label %get_n_bits_from_table.exit, label %.lr.ph.i
 
 get_n_bits_from_table.exit:                       ; preds = %getbit_from_table.exit491
+  %12 = icmp slt i32 %.0276635, 7
+  %13 = select i1 %12, i32 7, i32 10              ; 3 uses
   %i.rh = add i32 %i.rg, -64                      ; 4 uses
   %i.ri = icmp ugt i32 %i.rh, 3
   br i1 %i.ri, label %bb.dh, label %bb.ft
@@ -895,6 +897,7 @@ get_bb.exit:                                      ; preds = %getbit_from_table.e
   %.promoted596843856 = phi ptr [ %.promoted586, %.thread848 ], [ %i.rd, %bb.dh ]
   %.promoted595844855 = phi i32 [ %.promoted585, %.thread848 ], [ %i.re, %bb.dh ]
   %.promoted594845854 = phi i32 [ %.promoted584, %.thread848 ], [ %i.rf, %bb.dh ]
+  %14 = phi i32 [ %11, %.thread848 ], [ %13, %bb.dh ]
   %i.tq = add nsw i32 %i.tp, -5
   br label %bb.du
 
@@ -1297,6 +1300,7 @@ getbit_from_table.exit517.3:                      ; preds = %bb.fs, %get_byte.ex
   br label %bb.ft
 
 bb.ft:                                            ; preds = %get_n_bits_from_table.exit, %get_bb.exit, %getbit_from_table.exit517.3
+  %15 = phi i32 [ %14, %getbit_from_table.exit517.3 ], [ %13, %get_bb.exit ], [ %13, %get_n_bits_from_table.exit ]
   %.1 = phi i32 [ %i.aah, %getbit_from_table.exit517.3 ], [ %i.tn, %get_bb.exit ], [ %i.rh, %get_n_bits_from_table.exit ]
   %i.aai = add i32 %.1, 1
   br label %bb.fu
@@ -1306,7 +1310,7 @@ bb.fu:                                            ; preds = %bb.ca, %getbit_from
   %.1289 = phi i32 [ %.0291607, %getbit_from_table.exit438 ], [ %.0288614, %bb.ca ], [ %.0291607, %bb.ft ]
   %.2286 = phi i32 [ %.1285, %getbit_from_table.exit438 ], [ %.0284621, %bb.ca ], [ %.0288614, %bb.ft ]
   %.3283 = phi i32 [ %.2282, %getbit_from_table.exit438 ], [ %.0280628, %bb.ca ], [ %.0284621, %bb.ft ]
-  %.2278 = phi i32 [ %i.pc, %getbit_from_table.exit438 ], [ %i.lx, %bb.ca ], [ %11, %bb.ft ]
+  %.2278 = phi i32 [ %i.pc, %getbit_from_table.exit438 ], [ %i.lx, %bb.ca ], [ %15, %bb.ft ]
   %.0270 = phi i32 [ %i.pa, %getbit_from_table.exit438 ], [ %i.lv, %bb.ca ], [ %i.pd, %bb.ft ] ; 3 uses
   %.not365 = icmp eq i32 %.1292, 0
   br i1 %.not365, label %.thread551, label %bb.fv
@@ -1380,10 +1384,7 @@ vector.main.loop.iter.check890:                   ; preds = %vector.scevcheck
   br i1 %min.iters.check891, label %vec.epilog.ph908, label %vector.ph892
 
 vector.ph892:                                     ; preds = %vector.main.loop.iter.check890
-  %12 = and i32 %i.abc, 28
   %n.vec893 = and i32 %i.abc, 262112              ; 5 uses
-  %13 = add i32 %.0294606, %n.vec893              ; 3 uses
-  %14 = sub nsw i32 %i.aak, %n.vec893
   %i.abn = add i32 %.0294606, 15
   br label %vector.body896
 
@@ -1408,6 +1409,9 @@ vector.body896:                                   ; preds = %vector.body896, %ve
   br i1 %i.aby, label %middle.block900, label %vector.body896, !llvm.loop !27
 
 middle.block900:                                  ; preds = %vector.body896
+  %16 = and i32 %i.abc, 28
+  %17 = add i32 %.0294606, %n.vec893              ; 3 uses
+  %18 = sub nsw i32 %i.aak, %n.vec893
   %i.abz = extractelement <16 x i8> %wide.load898, i64 15
   %i.aca = add i32 %i.abo, 17
   %i.acb = icmp ult i32 %i.aca, %8
@@ -1415,15 +1419,13 @@ middle.block900:                                  ; preds = %vector.body896
   br i1 %cmp.n901, label %.loopexit, label %vec.epilog.iter.check906
 
 vec.epilog.iter.check906:                         ; preds = %middle.block900
-  %min.epilog.iters.check907 = icmp eq i32 %12, 0
+  %min.epilog.iters.check907 = icmp eq i32 %16, 0
   br i1 %min.epilog.iters.check907, label %.preheader.preheader, label %vec.epilog.ph908, !prof !32
 
 vec.epilog.ph908:                                 ; preds = %vector.main.loop.iter.check890, %vec.epilog.iter.check906
   %vec.epilog.resume.val902 = phi i32 [ %n.vec893, %vec.epilog.iter.check906 ], [ 0, %vector.main.loop.iter.check890 ]
-  %bc.resume.val = phi i32 [ %13, %vec.epilog.iter.check906 ], [ %.0294606, %vector.main.loop.iter.check890 ]
+  %bc.resume.val = phi i32 [ %17, %vec.epilog.iter.check906 ], [ %.0294606, %vector.main.loop.iter.check890 ]
   %n.vec909 = and i32 %i.abc, 262140              ; 4 uses
-  %15 = add i32 %.0294606, %n.vec909              ; 2 uses
-  %16 = sub nsw i32 %i.aak, %n.vec909
   %i.acc = add i32 %bc.resume.val, 3
   br label %vec.epilog.vector.body915
 
@@ -1444,6 +1446,8 @@ vec.epilog.vector.body915:                        ; preds = %vec.epilog.vector.b
   br i1 %i.acl, label %vec.epilog.middle.block921, label %vec.epilog.vector.body915, !llvm.loop !28
 
 vec.epilog.middle.block921:                       ; preds = %vec.epilog.vector.body915
+  %19 = add i32 %.0294606, %n.vec909              ; 2 uses
+  %20 = sub nsw i32 %i.aak, %n.vec909
   %i.acm = extractelement <4 x i8> %wide.load918, i64 3
   %i.acn = add i32 %i.acd, 1
   %i.aco = icmp ult i32 %i.acn, %8
@@ -1451,8 +1455,8 @@ vec.epilog.middle.block921:                       ; preds = %vec.epilog.vector.b
   br i1 %cmp.n922, label %.loopexit, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %vector.scevcheck, %iter.check904, %vec.epilog.iter.check906, %vec.epilog.middle.block921
-  %.2296.ph = phi i32 [ %.0294606, %vector.scevcheck ], [ %.0294606, %iter.check904 ], [ %13, %vec.epilog.iter.check906 ], [ %15, %vec.epilog.middle.block921 ]
-  %.1271.ph = phi i32 [ %i.aak, %vector.scevcheck ], [ %i.aak, %iter.check904 ], [ %14, %vec.epilog.iter.check906 ], [ %16, %vec.epilog.middle.block921 ]
+  %.2296.ph = phi i32 [ %.0294606, %vector.scevcheck ], [ %.0294606, %iter.check904 ], [ %17, %vec.epilog.iter.check906 ], [ %19, %vec.epilog.middle.block921 ]
+  %.1271.ph = phi i32 [ %i.aak, %vector.scevcheck ], [ %i.aak, %iter.check904 ], [ %18, %vec.epilog.iter.check906 ], [ %20, %vec.epilog.middle.block921 ]
   br label %.preheader
 
 split:                                            ; preds = %bb.fy, %bb.fx, %bb.fw
@@ -1479,7 +1483,7 @@ split:                                            ; preds = %bb.fy, %bb.fx, %bb.
 
 .loopexit:                                        ; preds = %.preheader, %vec.epilog.middle.block921, %middle.block900
   %.lcssa877 = phi i8 [ %i.acm, %vec.epilog.middle.block921 ], [ %i.abz, %middle.block900 ], [ %i.act, %.preheader ]
-  %.lcssa876 = phi i32 [ %15, %vec.epilog.middle.block921 ], [ %13, %middle.block900 ], [ %i.acw, %.preheader ]
+  %.lcssa876 = phi i32 [ %19, %vec.epilog.middle.block921 ], [ %17, %middle.block900 ], [ %i.acw, %.preheader ]
   %.lcssa875 = phi i1 [ %i.aco, %vec.epilog.middle.block921 ], [ %i.acb, %middle.block900 ], [ %i.acz, %.preheader ]
   %i.adb = zext i8 %.lcssa877 to i32
   br i1 %.lcssa875, label %select.unfold, label %.thread551

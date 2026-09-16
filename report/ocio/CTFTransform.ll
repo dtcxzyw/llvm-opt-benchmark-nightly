@@ -202,14 +202,17 @@ _ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i: ; preds = %.noexc88
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i, %.noexc88
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.cz, i64 %i.cw
   %i.dd = getelementptr inbounds nuw i8, ptr %i.b, i64 200
   %i.de = load ptr, ptr %i.dd, align 8, !tbaa !755
   br label %bb.y
 
-._crit_edge:                                      ; preds = %_ZN9Imath_3_14halfC2Ef.exit, %bb.p
-  %.sroa.090.1167 = phi ptr [ null, %bb.p ], [ %i.cz, %_ZN9Imath_3_14halfC2Ef.exit ] ; 10 uses
-  %.sroa.11.0164 = phi ptr [ null, %bb.p ], [ %10, %_ZN9Imath_3_14halfC2Ef.exit ] ; 8 uses
+._crit_edge.loopexit:                             ; preds = %_ZN9Imath_3_14halfC2Ef.exit
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.cz, i64 %i.cw
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.p
+  %.sroa.090.1167 = phi ptr [ null, %bb.p ], [ %i.cz, %._crit_edge.loopexit ] ; 10 uses
+  %.sroa.11.0164 = phi ptr [ null, %bb.p ], [ %10, %._crit_edge.loopexit ] ; 8 uses
   %i.df = load ptr, ptr %i.bz, align 8, !tbaa !166, !nonnull !98, !align !167
   %i.dg = load ptr, ptr %i.c, align 8, !tbaa !79
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 40
@@ -375,7 +378,7 @@ _ZN9Imath_3_14halfC2Ef.exit:                      ; preds = %bb.aa, %bb.ab, %bb.
   store i32 %i.ft, ptr %i.fu, align 4, !tbaa !59
   %i.fv = add nuw i64 %.033103, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %i.fv, %i.cw
-  br i1 %exitcond.not, label %._crit_edge, label %bb.y, !llvm.loop !746
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.y, !llvm.loop !746
 
 bb.aj:                                            ; preds = %._crit_edge
   %i.fw = load ptr, ptr %i.c, align 8, !tbaa !79

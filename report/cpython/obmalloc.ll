@@ -206,7 +206,6 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check112, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %1 = and i64 %.0.i, 24
   %n.vec = and i64 %.0.i, 9223372036854775776     ; 4 uses
   br label %vector.body
 
@@ -233,6 +232,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bo, label %middle.block, label %vector.body, !llvm.loop !538
 
 middle.block:                                     ; preds = %vector.body
+  %1 = and i64 %.0.i, 24
   %cmp.n = icmp eq i64 %.0.i, %n.vec
   br i1 %cmp.n, label %_mi_strnlen.exit._crit_edge, label %vec.epilog.iter.check
 
@@ -635,7 +635,6 @@ bb.t:                                             ; preds = %mi_bin.exit35.i
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i
   %n.vec = and i64 %i.cq, -4                      ; 3 uses
-  %3 = add i64 %.145.i, %n.vec
   %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %spec.store.select.i, i64 0
   %broadcast.splat = shufflevector <2 x ptr> %broadcast.splatinsert, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.cr = getelementptr [8 x i8], ptr %i.az, i64 %.145.i
@@ -652,6 +651,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.cu, label %middle.block, label %vector.body, !llvm.loop !550
 
 middle.block:                                     ; preds = %vector.body
+  %3 = add i64 %.145.i, %n.vec
   %cmp.n = icmp eq i64 %i.cq, %n.vec
   br i1 %cmp.n, label %mi_heap_queue_first_update.exit, label %.lr.ph.i27.preheader
 
@@ -892,7 +892,6 @@ bb.o:                                             ; preds = %mi_bin.exit35.i
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i
   %n.vec = and i64 %i.bh, -4                      ; 3 uses
-  %3 = add i64 %.145.i, %n.vec
   %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %2, i64 0
   %broadcast.splat = shufflevector <2 x ptr> %broadcast.splatinsert, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.bi = getelementptr [8 x i8], ptr %i.q, i64 %.145.i
@@ -909,6 +908,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bl, label %middle.block, label %vector.body, !llvm.loop !552
 
 middle.block:                                     ; preds = %vector.body
+  %3 = add i64 %.145.i, %n.vec
   %cmp.n = icmp eq i64 %i.bh, %n.vec
   br i1 %cmp.n, label %mi_heap_queue_first_update.exit, label %.lr.ph.i.preheader
 
@@ -1311,7 +1311,6 @@ bb.r:                                             ; preds = %mi_bin.exit35.i
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i
   %n.vec = and i64 %i.bk, -4                      ; 3 uses
-  %3 = add i64 %.145.i, %n.vec
   %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %spec.store.select.i, i64 0
   %broadcast.splat = shufflevector <2 x ptr> %broadcast.splatinsert, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.bl = getelementptr [8 x i8], ptr %i.t, i64 %.145.i
@@ -1328,6 +1327,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bo, label %middle.block, label %vector.body, !llvm.loop !555
 
 middle.block:                                     ; preds = %vector.body
+  %3 = add i64 %.145.i, %n.vec
   %cmp.n = icmp eq i64 %i.bk, %n.vec
   br i1 %cmp.n, label %mi_heap_queue_first_update.exit, label %.lr.ph.i.preheader
 
@@ -1468,7 +1468,6 @@ bb.ae:                                            ; preds = %mi_bin.exit35.i44
 
 vector.ph77:                                      ; preds = %.lr.ph.preheader.i49
   %n.vec78 = and i64 %i.dq, -4                    ; 3 uses
-  %4 = add i64 %.145.i50, %n.vec78
   %broadcast.splatinsert79 = insertelement <2 x ptr> poison, ptr %2, i64 0
   %broadcast.splat80 = shufflevector <2 x ptr> %broadcast.splatinsert79, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.dr = getelementptr [8 x i8], ptr %i.bz, i64 %.145.i50
@@ -1485,6 +1484,7 @@ vector.body81:                                    ; preds = %vector.body81, %vec
   br i1 %i.du, label %middle.block84, label %vector.body81, !llvm.loop !557
 
 middle.block84:                                   ; preds = %vector.body81
+  %4 = add i64 %.145.i50, %n.vec78
   %cmp.n85 = icmp eq i64 %i.dq, %n.vec78
   br i1 %cmp.n85, label %mi_heap_queue_first_update.exit54, label %.lr.ph.i51.preheader
 
@@ -1748,7 +1748,6 @@ bb.r:                                             ; preds = %mi_bin.exit35.i
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i
   %n.vec = and i64 %i.bj, -4                      ; 3 uses
-  %2 = add i64 %.145.i, %n.vec
   %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %spec.store.select.i, i64 0
   %broadcast.splat = shufflevector <2 x ptr> %broadcast.splatinsert, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.bk = getelementptr [8 x i8], ptr %i.s, i64 %.145.i
@@ -1765,6 +1764,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bn, label %middle.block, label %vector.body, !llvm.loop !559
 
 middle.block:                                     ; preds = %vector.body
+  %2 = add i64 %.145.i, %n.vec
   %cmp.n = icmp eq i64 %i.bj, %n.vec
   br i1 %cmp.n, label %mi_heap_queue_first_update.exit, label %.lr.ph.i.preheader
 
@@ -2167,21 +2167,15 @@ bb.q:                                             ; preds = %.loopexit.i.a, %.lr
   br i1 %i.eg, label %.loopexit.i.a, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %1 = add i64 %.0109134.i, 1                     ; 2 uses
   %i.eh = getelementptr i8, ptr %i.ee, i64 16
   %i.ei = load i32, ptr %i.eh, align 8, !tbaa !453
-  %2 = add i32 %i.ei, %.0117132.i                 ; 2 uses
-  %3 = and i64 %i.ef, 16383
-  %.not.i9 = icmp eq i64 %3, 0
-  %4 = add i64 %.0115133.i, 16384
-  %.1116.i = select i1 %.not.i9, i64 %.0115133.i, i64 %4 ; 2 uses
   %.biased.i = add i64 %i.ef, 16383
   %.0.i10 = and i64 %.biased.i, -16384            ; 2 uses
   %i.ej = getelementptr i8, ptr %i.ee, i64 8
   %i.ek = load ptr, ptr %i.ej, align 8, !tbaa !429
   %i.el = ptrtoint ptr %i.ek to i64               ; 2 uses
   %i.em = icmp ult i64 %.0.i10, %i.el
-  br i1 %i.em, label %.lr.ph.i, label %.loopexit.i.a
+  br i1 %i.em, label %.lr.ph.i, label %.loopexit.i
 
 .lr.ph.i:                                         ; preds = %bb.r, %bb.t
   %.1130.i = phi i64 [ %i.fi, %bb.t ], [ %.0.i10, %bb.r ] ; 2 uses
@@ -2217,12 +2211,21 @@ bb.s:                                             ; preds = %.lr.ph.i
 bb.t:                                             ; preds = %bb.s, %.lr.ph.i
   %i.fi = add i64 %.1130.i, 16384                 ; 2 uses
   %i.fj = icmp ult i64 %i.fi, %i.el
-  br i1 %i.fj, label %.lr.ph.i, label %.loopexit.i.a, !llvm.loop !627
+  br i1 %i.fj, label %.lr.ph.i, label %.loopexit.i, !llvm.loop !627
 
-.loopexit.i.a:                                    ; preds = %bb.t, %bb.r, %bb.q
-  %.1118.i = phi i32 [ %.0117132.i, %bb.q ], [ %2, %bb.r ], [ %2, %bb.t ] ; 2 uses
-  %.2.i = phi i64 [ %.0115133.i, %bb.q ], [ %.1116.i, %bb.r ], [ %.1116.i, %bb.t ] ; 2 uses
-  %.1110.i = phi i64 [ %.0109134.i, %bb.q ], [ %1, %bb.r ], [ %1, %bb.t ] ; 2 uses
+.loopexit.i:                                      ; preds = %bb.t, %bb.r
+  %1 = add i64 %.0109134.i, 1
+  %2 = add i32 %i.ei, %.0117132.i
+  %3 = and i64 %i.ef, 16383
+  %.not.i10 = icmp eq i64 %3, 0
+  %4 = add i64 %.0115133.i, 16384
+  %.1116.i = select i1 %.not.i10, i64 %.0115133.i, i64 %4
+  br label %.loopexit.i.a
+
+.loopexit.i.a:                                    ; preds = %.loopexit.i, %bb.q
+  %.1118.i = phi i32 [ %.0117132.i, %bb.q ], [ %2, %.loopexit.i ] ; 2 uses
+  %.2.i = phi i64 [ %.0115133.i, %bb.q ], [ %.1116.i, %.loopexit.i ] ; 2 uses
+  %.1110.i = phi i64 [ %.0109134.i, %bb.q ], [ %1, %.loopexit.i ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %._crit_edge.i, label %bb.q, !llvm.loop !628

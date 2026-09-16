@@ -202,9 +202,14 @@ _RNvMsd_Csi1wr4QBDb3z_8smallvecINtB5_8SmallVecANtNtCsC8CapfvpQ1_5salsa8revision1
   %min.iters.check = icmp ult i64 %i.ab, 5
   br i1 %min.iters.check, label %.lr.ph.preheader74, label %vector.ph
 
-.lr.ph.preheader74:                               ; preds = %vector.body, %.lr.ph.preheader
-  %.sroa.0.052.ph = phi i64 [ %1, %.lr.ph.preheader ], [ %3, %vector.body ]
-  %.sroa.7.051.ph = phi i64 [ %i.v, %.lr.ph.preheader ], [ %4, %vector.body ]
+.lr.ph.preheader74.loopexit:                      ; preds = %vector.body
+  %3 = add i64 %1, %n.vec
+  %4 = add i64 %i.v, %n.vec
+  br label %.lr.ph.preheader74
+
+.lr.ph.preheader74:                               ; preds = %.lr.ph.preheader74.loopexit, %.lr.ph.preheader
+  %.sroa.0.052.ph = phi i64 [ %1, %.lr.ph.preheader ], [ %3, %.lr.ph.preheader74.loopexit ]
+  %.sroa.7.051.ph = phi i64 [ %i.v, %.lr.ph.preheader ], [ %4, %.lr.ph.preheader74.loopexit ]
   br label %.lr.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -212,8 +217,6 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
   %i.ad = icmp eq i64 %i.ac, 0
   %i.ae = select i1 %i.ad, i64 4, i64 %i.ac
   %n.vec = sub i64 %i.ab, %i.ae                   ; 3 uses
-  %3 = add i64 %1, %n.vec
-  %4 = add i64 %i.v, %n.vec
   %i.af = getelementptr [8 x i8], ptr %.sink11.i, i64 %i.v
   br label %vector.body
 
@@ -225,7 +228,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x i64> splat (i64 1), ptr %i.ah, align 8
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ai = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ai, label %.lr.ph.preheader74, label %vector.body, !llvm.loop !67
+  br i1 %i.ai, label %.lr.ph.preheader74.loopexit, label %vector.body, !llvm.loop !67
 
 ._crit_edge:                                      ; preds = %bb.i, %_RNvMsd_Csi1wr4QBDb3z_8smallvecINtB5_8SmallVecANtNtCsC8CapfvpQ1_5salsa8revision14AtomicRevisionj3_E10triple_mutBM_.exit
   %.sroa.7.0.lcssa = phi i64 [ %i.v, %_RNvMsd_Csi1wr4QBDb3z_8smallvecINtB5_8SmallVecANtNtCsC8CapfvpQ1_5salsa8revision14AtomicRevisionj3_E10triple_mutBM_.exit ], [ %.sink.i15, %bb.i ]

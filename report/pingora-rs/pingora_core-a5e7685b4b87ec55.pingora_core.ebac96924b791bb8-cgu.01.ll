@@ -205,9 +205,7 @@ vector.ph:                                        ; preds = %vector.scevcheck
   %i.fj = and i32 %i.fa, 31                       ; 2 uses
   %i.fk = icmp eq i32 %i.fj, 0
   %i.fl = select i1 %i.fk, i32 32, i32 %i.fj
-  %n.vec = sub i32 %i.fa, %i.fl                   ; 3 uses
-  %i.fm = sub i32 %i.eq, %n.vec
-  %5 = add i32 %.sroa.04.0168.i, %n.vec
+  %i.fm = sub i32 %i.fa, %i.fl                    ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -219,12 +217,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <16 x i8> zeroinitializer, ptr %i.fp, align 1, !noalias !496
   store <16 x i8> zeroinitializer, ptr %i.fq, align 1, !noalias !496
   %index.next = add nuw i32 %index, 32            ; 2 uses
-  %i.fr = icmp eq i32 %index.next, %n.vec
-  br i1 %i.fr, label %.preheader.i.preheader374, label %vector.body, !llvm.loop !476
+  %i.fr = icmp eq i32 %index.next, %i.fm
+  br i1 %i.fr, label %.preheader.i.preheader374.loopexit, label %vector.body, !llvm.loop !476
 
-.preheader.i.preheader374:                        ; preds = %vector.body, %vector.scevcheck, %.preheader.i.preheader
-  %.sroa.073.0.i.ph = phi i32 [ %i.eq, %vector.scevcheck ], [ %i.eq, %.preheader.i.preheader ], [ %i.fm, %vector.body ]
-  %.sroa.04.2.i.ph = phi i32 [ %.sroa.04.0168.i, %vector.scevcheck ], [ %.sroa.04.0168.i, %.preheader.i.preheader ], [ %5, %vector.body ]
+.preheader.i.preheader374.loopexit:               ; preds = %vector.body
+  %5 = sub i32 %i.eq, %i.fm
+  %6 = add i32 %.sroa.04.0168.i, %i.fm
+  br label %.preheader.i.preheader374
+
+.preheader.i.preheader374:                        ; preds = %.preheader.i.preheader374.loopexit, %vector.scevcheck, %.preheader.i.preheader
+  %.sroa.073.0.i.ph = phi i32 [ %i.eq, %vector.scevcheck ], [ %i.eq, %.preheader.i.preheader ], [ %5, %.preheader.i.preheader374.loopexit ]
+  %.sroa.04.2.i.ph = phi i32 [ %.sroa.04.0168.i, %vector.scevcheck ], [ %.sroa.04.0168.i, %.preheader.i.preheader ], [ %6, %.preheader.i.preheader374.loopexit ]
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.preheader.i.preheader374, %bb.ap
@@ -627,10 +630,6 @@ vector.ph132:                                     ; preds = %.lr.ph.i
   %i.au = icmp eq i64 %i.at, 0
   %i.av = select i1 %i.au, i64 4, i64 %i.at
   %n.vec133 = sub nsw i64 %i.as, %i.av            ; 3 uses
-  %8 = trunc nsw i64 %n.vec133 to i32             ; 2 uses
-  %9 = sub i32 %.sroa.02.1, %8
-  %10 = shl i32 %8, 3
-  %11 = add i32 %i.s, %10
   %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %i.ai, i64 0
   %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert134 = insertelement <4 x i32> poison, i32 %i.s, i64 0
@@ -653,6 +652,10 @@ vector.body136:                                   ; preds = %vector.body136, %ve
   br i1 %i.bb, label %middle.block139, label %vector.body136, !llvm.loop !827
 
 middle.block139:                                  ; preds = %vector.body136
+  %8 = trunc nsw i64 %n.vec133 to i32             ; 2 uses
+  %9 = sub i32 %.sroa.02.1, %8
+  %10 = shl i32 %8, 3
+  %11 = add i32 %i.s, %10
   %i.bc = extractelement <4 x i32> %vec.ind, i64 3
   %i.bd = add i32 %i.bc, 8
   store i32 %i.bd, ptr %i.e, align 8, !alias.scope !832, !noalias !834
@@ -1055,8 +1058,6 @@ bb.q:                                             ; preds = %bb.c
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
   %n.vec = and i64 %i.be, 9223372036854775800     ; 3 uses
-  %1 = shl i64 %n.vec, 2
-  %2 = getelementptr i8, ptr %i.ay, i64 %1
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1072,6 +1073,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bh, label %middle.block, label %vector.body, !llvm.loop !1103
 
 middle.block:                                     ; preds = %vector.body
+  %1 = shl i64 %n.vec, 2
+  %2 = getelementptr i8, ptr %i.ay, i64 %1
   %cmp.n = icmp eq i64 %i.be, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader37
 
@@ -1474,8 +1477,6 @@ bb.q:                                             ; preds = %bb.c
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
   %n.vec = and i64 %i.be, 9223372036854775800     ; 3 uses
-  %1 = shl i64 %n.vec, 2
-  %2 = getelementptr i8, ptr %i.ay, i64 %1
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1491,6 +1492,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bh, label %middle.block, label %vector.body, !llvm.loop !1163
 
 middle.block:                                     ; preds = %vector.body
+  %1 = shl i64 %n.vec, 2
+  %2 = getelementptr i8, ptr %i.ay, i64 %1
   %cmp.n = icmp eq i64 %i.be, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader37
 
@@ -1893,9 +1896,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check33, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %2 = and i64 %.val26, 24
   %n.vec = and i64 %.val26, -32                   ; 4 uses
-  %3 = getelementptr i8, ptr %.val, i64 %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1921,6 +1922,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ab, label %middle.block, label %vector.body, !llvm.loop !1481
 
 middle.block:                                     ; preds = %vector.body
+  %2 = and i64 %.val26, 24
+  %3 = getelementptr i8, ptr %.val, i64 %n.vec
   %bin.rdx = or <16 x i1> %predphi36, %predphi
   %i.ac = bitcast <16 x i1> %bin.rdx to i16
   %i.ad = icmp ne i16 %i.ac, 0                    ; 3 uses
@@ -1935,7 +1938,6 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i1 [ %i.ad, %vec.epilog.iter.check ], [ false, %vector.main.loop.iter.check ]
   %n.vec37 = and i64 %.val26, -8                  ; 3 uses
-  %4 = getelementptr i8, ptr %.val, i64 %n.vec37
   %i.ae = insertelement <8 x i1> <i1 poison, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false>, i1 %bc.merge.rdx, i64 0
   br label %vec.epilog.vector.body
 
@@ -1954,6 +1956,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.aj, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !1482
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
+  %4 = getelementptr i8, ptr %.val, i64 %n.vec37
   %i.ak = bitcast <8 x i1> %predphi42 to i8
   %i.al = icmp ne i8 %i.ak, 0                     ; 2 uses
   %cmp.n44 = icmp eq i64 %.val26, %n.vec37
@@ -2356,7 +2359,6 @@ _RNvNtNtCskKLDkoKarTP_4core4hash3sip9u8to64_le.exit.i: ; preds = %bb.g, %bb.f
 bb.h:                                             ; preds = %bb.i, %bb.a
   %.sroa.0.0.i = phi i64 [ 0, %bb.a ], [ %i.g, %bb.i ] ; 4 uses
   %i.af = sub nsw i64 %2, %.sroa.0.0.i            ; 2 uses
-  %3 = and i64 %i.af, 7                           ; 4 uses
   %i.ag = and i64 %i.af, -8                       ; 2 uses
   %i.ah = icmp ult i64 %.sroa.0.0.i, %i.ag
   br i1 %i.ah, label %.lr.ph.i, label %bb.k
@@ -2414,6 +2416,7 @@ bb.j:                                             ; preds = %_RNvNtNtCskKLDkoKar
 
 bb.k:                                             ; preds = %._crit_edge.i, %bb.h
   %.sroa.0.1.lcssa.i = phi i64 [ %i.da, %._crit_edge.i ], [ %.sroa.0.0.i, %bb.h ] ; 3 uses
+  %3 = and i64 %i.af, 7                           ; 4 uses
   %i.bj = icmp samesign ugt i64 %3, 3
   br i1 %i.bj, label %bb.l, label %bb.m
 

@@ -205,7 +205,7 @@ bb.bw:                                            ; preds = %bb.b
   br i1 %.not109120, label %.noexc.i70, label %_ZN5draco13DecoderBuffer4PeekIcEEbPT_.exit68
 
 _ZN5draco13DecoderBuffer4PeekIcEEbPT_.exit68:     ; preds = %bb.bw, %.loopexit.a
-  %i.of = phi i64 [ %i.ow, %.loopexit.a ], [ %i.od, %bb.bw ]
+  %i.of = phi i64 [ %8, %.loopexit.a ], [ %i.od, %bb.bw ]
   %.0121 = phi i32 [ %.1, %.loopexit.a ], [ 0, %bb.bw ] ; 3 uses
   %i.og = load ptr, ptr %i.f, align 8, !tbaa !126
   %i.oh = getelementptr inbounds i8, ptr %i.og, i64 %i.of
@@ -219,17 +219,16 @@ bb.bx:                                            ; preds = %_ZN5draco13DecoderB
 
 bb.by:                                            ; preds = %bb.bx
   %i.ok = load i64, ptr %i.i, align 8, !tbaa !123
-  %i.ol = add nsw i64 %i.ok, 1
+  %i.ol = add nsw i64 %i.ok, 1                    ; 2 uses
   store i64 %i.ol, ptr %i.i, align 8, !tbaa !123
   br label %.loopexit.a
 
 bb.bz:                                            ; preds = %bb.bx
-  %7 = add nsw i32 %.0121, 1                      ; 2 uses
   %i.om = call noundef zeroext i1 @_ZN5draco6parser14PeekWhitespaceEPNS_13DecoderBufferEPb(ptr noundef nonnull %i.f, ptr noundef nonnull %i.e)
   %i.on = load i8, ptr %i.e, align 1, !range !76
   %i.oo = trunc nuw i8 %i.on to i1
   %i.op = select i1 %i.om, i1 true, i1 %i.oo
-  br i1 %i.op, label %.loopexit.a, label %.lr.ph
+  br i1 %i.op, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.bz, %.lr.ph
   %i.oq = load i64, ptr %i.i, align 8, !tbaa !123
@@ -239,14 +238,19 @@ bb.bz:                                            ; preds = %bb.bx
   %i.ot = load i8, ptr %i.e, align 1, !range !76
   %i.ou = trunc nuw i8 %i.ot to i1
   %i.ov = select i1 %i.os, i1 true, i1 %i.ou
-  br i1 %i.ov, label %.loopexit.a, label %.lr.ph, !llvm.loop !171
+  br i1 %i.ov, label %.loopexit, label %.lr.ph, !llvm.loop !171
 
-.loopexit.a:                                      ; preds = %.lr.ph, %bb.bz, %bb.by
-  %.1 = phi i32 [ %.0121, %bb.by ], [ %7, %bb.bz ], [ %7, %.lr.ph ] ; 2 uses
-  %8 = load i64, ptr %i.g, align 8, !tbaa !127
-  %i.ow = load i64, ptr %i.i, align 8, !tbaa !123 ; 2 uses
-  %i.ox = add i64 %i.ow, 1
-  %.not109 = icmp slt i64 %8, %i.ox
+.loopexit:                                        ; preds = %.lr.ph, %bb.bz
+  %7 = add nsw i32 %.0121, 1
+  %.pre = load i64, ptr %i.i, align 8, !tbaa !123
+  br label %.loopexit.a
+
+.loopexit.a:                                      ; preds = %.loopexit, %bb.by
+  %8 = phi i64 [ %i.ol, %bb.by ], [ %.pre, %.loopexit ] ; 2 uses
+  %.1 = phi i32 [ %.0121, %bb.by ], [ %7, %.loopexit ] ; 2 uses
+  %i.ow = load i64, ptr %i.g, align 8, !tbaa !127
+  %i.ox = add i64 %8, 1
+  %.not109 = icmp slt i64 %i.ow, %i.ox
   br i1 %.not109, label %_ZN5draco13DecoderBuffer4PeekIcEEbPT_.exit68.thread, label %_ZN5draco13DecoderBuffer4PeekIcEEbPT_.exit68, !llvm.loop !172
 
 _ZN5draco13DecoderBuffer4PeekIcEEbPT_.exit68.thread: ; preds = %_ZN5draco13DecoderBuffer4PeekIcEEbPT_.exit68, %.loopexit.a

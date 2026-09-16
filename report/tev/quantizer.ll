@@ -205,8 +205,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable
 
 .lr.ph:                                           ; preds = %bb.e
-  %i.bs = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bl) #21 ; 6 uses
-  %8 = getelementptr i8, ptr %i.bs, i64 %i.bl     ; 2 uses
+  %i.bs = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bl) #21 ; 5 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bs, i8 0, i64 %i.bl, i1 false), !tbaa !17
   %min.iters.check80 = icmp ult i64 %i.bm, 8
   br i1 %min.iters.check80, label %scalar.ph79.preheader, label %vector.ph81
@@ -237,15 +236,19 @@ vector.body83:                                    ; preds = %vector.body83, %vec
 
 middle.block88:                                   ; preds = %vector.body83
   %cmp.n89 = icmp eq i64 %i.bm, %n.vec82
-  br i1 %cmp.n89, label %._crit_edge, label %scalar.ph79.preheader
+  br i1 %cmp.n89, label %._crit_edge.loopexit, label %scalar.ph79.preheader
 
 scalar.ph79.preheader:                            ; preds = %.lr.ph, %middle.block88
   %.03758.ph = phi i64 [ 0, %.lr.ph ], [ %n.vec82, %middle.block88 ]
   br label %scalar.ph79
 
-._crit_edge:                                      ; preds = %scalar.ph79, %middle.block88, %_ZNSt3__111nth_elementB8nn180100INS_11__wrap_iterIPfEEEEvT_S4_S4_.exit
-  %9 = phi ptr [ null, %_ZNSt3__111nth_elementB8nn180100INS_11__wrap_iterIPfEEEEvT_S4_S4_.exit ], [ %i.bs, %middle.block88 ], [ %i.bs, %scalar.ph79 ] ; 5 uses
-  %10 = phi ptr [ null, %_ZNSt3__111nth_elementB8nn180100INS_11__wrap_iterIPfEEEEvT_S4_S4_.exit ], [ %8, %middle.block88 ], [ %8, %scalar.ph79 ] ; 3 uses
+._crit_edge.loopexit:                             ; preds = %scalar.ph79, %middle.block88
+  %8 = getelementptr i8, ptr %i.bs, i64 %i.bl
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZNSt3__111nth_elementB8nn180100INS_11__wrap_iterIPfEEEEvT_S4_S4_.exit
+  %9 = phi ptr [ null, %_ZNSt3__111nth_elementB8nn180100INS_11__wrap_iterIPfEEEEvT_S4_S4_.exit ], [ %i.bs, %._crit_edge.loopexit ] ; 5 uses
+  %10 = phi ptr [ null, %_ZNSt3__111nth_elementB8nn180100INS_11__wrap_iterIPfEEEEvT_S4_S4_.exit ], [ %8, %._crit_edge.loopexit ] ; 3 uses
   %i.cc = ptrtoint ptr %10 to i64
   %i.cd = ptrtoint ptr %9 to i64
   %i.ce = sub i64 %i.cc, %i.cd                    ; 2 uses
@@ -375,7 +378,7 @@ scalar.ph79:                                      ; preds = %scalar.ph79.prehead
   store float %i.fj, ptr %i.fk, align 4, !tbaa !17
   %i.fl = add nuw i64 %.03758, 1                  ; 2 uses
   %exitcond65.not = icmp eq i64 %i.fl, %i.bm
-  br i1 %exitcond65.not, label %._crit_edge, label %scalar.ph79, !llvm.loop !50
+  br i1 %exitcond65.not, label %._crit_edge.loopexit, label %scalar.ph79, !llvm.loop !50
 
 bb.h:                                             ; preds = %_ZNSt3__111nth_elementB8nn180100INS_11__wrap_iterIPfEEEEvT_S4_S4_.exit42
   %i.fm = load i32, ptr %3, align 8, !tbaa !31    ; 4 uses

@@ -202,12 +202,10 @@ bb.a:
   %i.c = add i32 %i.b, 2                          ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 260
   %i.e = load i8, ptr %i.d, align 4, !range !5, !noundef !6
-  %2 = zext nneg i8 %i.e to i64
-  %3 = sub nsw i64 0, %2
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #6
   %i.f = load ptr, ptr @CurrentResourceOwner, align 8
   %i.g = tail call ptr @CreateWaitEventSet(ptr noundef %i.f, i32 noundef %i.c) #6 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 7 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 8 uses
   store ptr %i.g, ptr %i.h, align 8
   %i.i = tail call i32 @AddWaitEventToSet(ptr noundef %i.g, i32 noundef 32, i32 noundef -1, ptr noundef null, ptr noundef null) #6 ; 0 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 224 ; 2 uses
@@ -245,20 +243,23 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.z = load ptr, ptr %i.h, align 8
   %i.aa = tail call i32 @GetNumRegisteredWaitEvents(ptr noundef %i.z) #6
   %i.ab = icmp eq i32 %i.aa, 1
-  %4 = load ptr, ptr %i.h, align 8                ; 2 uses
   br i1 %i.ab, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %._crit_edge
-  tail call void @FreeWaitEventSet(ptr noundef %4) #6
+  %2 = load ptr, ptr %i.h, align 8
+  tail call void @FreeWaitEventSet(ptr noundef %2) #6
   store ptr null, ptr %i.h, align 8
   br label %.loopexit
 
 bb.f:                                             ; preds = %._crit_edge
+  %3 = zext nneg i8 %i.e to i64
+  %4 = sub nsw i64 0, %3
+  %5 = load ptr, ptr %i.h, align 8
   %i.ac = load ptr, ptr @MyLatch, align 8
-  %i.ad = tail call i32 @AddWaitEventToSet(ptr noundef %4, i32 noundef 1, i32 noundef -1, ptr noundef %i.ac, ptr noundef null) #6 ; 0 uses
+  %i.ad = tail call i32 @AddWaitEventToSet(ptr noundef %5, i32 noundef 1, i32 noundef -1, ptr noundef %i.ac, ptr noundef null) #6 ; 0 uses
   %spec.store.select = tail call i32 @llvm.smin.i32(i32 %i.c, i32 16)
   %i.ae = load ptr, ptr %i.h, align 8
-  %i.af = call i32 @WaitEventSetWait(ptr noundef %i.ae, i64 noundef %3, ptr noundef nonnull %1, i32 noundef %spec.store.select, i32 noundef 134217728) #6 ; 2 uses
+  %i.af = call i32 @WaitEventSetWait(ptr noundef %i.ae, i64 noundef %4, ptr noundef nonnull %1, i32 noundef %spec.store.select, i32 noundef 134217728) #6 ; 2 uses
   %i.ag = load ptr, ptr %i.h, align 8
   call void @FreeWaitEventSet(ptr noundef %i.ag) #6
   store ptr null, ptr %i.h, align 8

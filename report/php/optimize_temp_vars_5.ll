@@ -204,8 +204,6 @@ bb.n:                                             ; preds = %.lr.ph218
 
 .critedge:                                        ; preds = %bb.n, %.critedge.loopexit.split.loop.exit300, %bb.m
   %.0162.lcssa = phi i32 [ %.0164245, %bb.m ], [ %i.da, %.critedge.loopexit.split.loop.exit300 ], [ -1, %bb.n ] ; 5 uses
-  %2 = add nsw i32 %.0162.lcssa, %i.cq
-  %3 = tail call i32 @llvm.smax.i32(i32 %.0164245, i32 %2) ; 3 uses
   %i.db = add nsw i32 %.0162.lcssa, 1             ; 4 uses
   %i.dc = sext i32 %.reass307.reass to i64
   %i.dd = getelementptr inbounds [4 x i8], ptr %.0.i, i64 %i.dc
@@ -224,7 +222,7 @@ bb.n:                                             ; preds = %.lr.ph218
   %i.do = add i32 %i.dn, 80
   store i32 %i.do, ptr %i.cd, align 8, !tbaa !56
   %i.dp = icmp sgt i32 %i.cq, 1
-  br i1 %i.dp, label %.lr.ph223.preheader, label %.loopexit.a
+  br i1 %i.dp, label %.lr.ph223.preheader, label %.loopexit
 
 .lr.ph223.preheader:                              ; preds = %.critedge
   %i.dq = and i32 %i.cq, 1
@@ -248,7 +246,7 @@ bb.n:                                             ; preds = %.lr.ph218
 .lr.ph223.prol.loopexit:                          ; preds = %.lr.ph223.prol, %.lr.ph223.preheader
   %.0163222.unr = phi i32 [ %i.cq, %.lr.ph223.preheader ], [ %i.dr, %.lr.ph223.prol ]
   %i.eb = icmp eq i64 %i.cp, 2
-  br i1 %i.eb, label %.loopexit.a, label %.lr.ph223.preheader.new
+  br i1 %i.eb, label %.loopexit, label %.lr.ph223.preheader.new
 
 .lr.ph223.preheader.new:                          ; preds = %.lr.ph223.prol.loopexit
   %invariant.op327 = add i32 -1, %.0162.lcssa
@@ -278,7 +276,7 @@ bb.n:                                             ; preds = %.lr.ph218
   %i.et = or i64 %i.es, %i.eo
   store i64 %i.et, ptr %i.er, align 8, !tbaa !62
   %i.eu = icmp sgt i32 %.0163222, 3
-  br i1 %i.eu, label %.lr.ph223, label %.loopexit.a, !llvm.loop !14
+  br i1 %i.eu, label %.lr.ph223, label %.loopexit, !llvm.loop !14
 
 bb.o:                                             ; preds = %bb.l
   %i.ev = sext i32 %.reass307.reass to i64
@@ -389,8 +387,13 @@ bb.w:                                             ; preds = %bb.v, %bb.o
   store i32 %i.gh, ptr %i.cd, align 8, !tbaa !56
   br label %.loopexit.a
 
-.loopexit.a:                                      ; preds = %.lr.ph223.prol.loopexit, %.lr.ph223, %.critedge, %bb.w, %bb.k
-  %.3 = phi i32 [ %.0164245, %bb.k ], [ %.2, %bb.w ], [ %3, %.critedge ], [ %3, %.lr.ph223 ], [ %3, %.lr.ph223.prol.loopexit ] ; 3 uses
+.loopexit:                                        ; preds = %.lr.ph223.prol.loopexit, %.lr.ph223, %.critedge
+  %2 = add nsw i32 %.0162.lcssa, %i.cq
+  %3 = tail call i32 @llvm.smax.i32(i32 %.0164245, i32 %2)
+  br label %.loopexit.a
+
+.loopexit.a:                                      ; preds = %.loopexit, %bb.w, %bb.k
+  %.3 = phi i32 [ %.0164245, %bb.k ], [ %.2, %bb.w ], [ %3, %.loopexit ] ; 3 uses
   %i.gi = getelementptr inbounds nuw i8, ptr %.1171240, i64 30
   %i.gj = load i8, ptr %i.gi, align 2, !tbaa !65
   %i.gk = and i8 %i.gj, 6

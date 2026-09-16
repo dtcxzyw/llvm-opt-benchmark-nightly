@@ -205,7 +205,6 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.hq = icmp eq i64 %i.hp, 0
   %i.hr = select i1 %i.hq, i64 8, i64 %i.hp
   %n.vec = sub nsw i64 %i.hk, %i.hr               ; 2 uses
-  %2 = add nsw i64 %n.vec, 1
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -224,10 +223,14 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x i32> %strided.vec131, ptr %i.hx, align 4, !tbaa !88, !alias.scope !183, !noalias !182
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.hy = icmp eq i64 %index.next, %n.vec
-  br i1 %i.hy, label %.lr.ph.i87.preheader, label %vector.body, !llvm.loop !147
+  br i1 %i.hy, label %.lr.ph.i87.preheader.loopexit, label %vector.body, !llvm.loop !147
 
-.lr.ph.i87.preheader:                             ; preds = %vector.body, %vector.memcheck, %.lr.ph.preheader.i
-  %indvars.iv.i88.ph = phi i64 [ 1, %vector.memcheck ], [ 1, %.lr.ph.preheader.i ], [ %2, %vector.body ] ; 4 uses
+.lr.ph.i87.preheader.loopexit:                    ; preds = %vector.body
+  %2 = add nsw i64 %n.vec, 1
+  br label %.lr.ph.i87.preheader
+
+.lr.ph.i87.preheader:                             ; preds = %.lr.ph.i87.preheader.loopexit, %vector.memcheck, %.lr.ph.preheader.i
+  %indvars.iv.i88.ph = phi i64 [ 1, %vector.memcheck ], [ 1, %.lr.ph.preheader.i ], [ %2, %.lr.ph.i87.preheader.loopexit ] ; 4 uses
   %i.hz = sub nsw i64 %wide.trip.count.i86, %indvars.iv.i88.ph
   %xtraiter = and i64 %i.hz, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0

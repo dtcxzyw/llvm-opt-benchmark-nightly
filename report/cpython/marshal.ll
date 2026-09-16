@@ -202,7 +202,7 @@ declare i64 @PyLong_AsLongAndOverflow(ptr noundef, ptr noundef) local_unnamed_ad
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @w_PyLong(ptr noundef %0, i8 noundef signext %1, ptr noundef nonnull %2) unnamed_addr #0 {
 bb.a:
-  %3 = alloca %struct.PyLongExport, align 8       ; 8 uses
+  %3 = alloca %struct.PyLongExport, align 8       ; 9 uses
   %i.a = getelementptr i8, ptr %2, i64 24         ; 20 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !19   ; 4 uses
   %i.c = getelementptr i8, ptr %2, i64 32         ; 15 uses
@@ -352,8 +352,6 @@ bb.q:                                             ; preds = %bb.l
   %i.bm = load ptr, ptr %i.au, align 8, !tbaa !121 ; 4 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.bo = load i64, ptr %i.bn, align 8, !tbaa !123
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %5 = load i8, ptr %4, align 8, !tbaa !124       ; 2 uses
   %i.bp = add i64 %i.bo, -1                       ; 7 uses
   %i.bq = mul i64 %i.bp, %i.bi                    ; 2 uses
   br i1 %i.bl, label %bb.r, label %bb.aj
@@ -376,6 +374,8 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.bv, label %_r_digits32.exit.sink.split, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %5 = load i8, ptr %4, align 8, !tbaa !124
   %.not34.i = icmp eq i8 %5, 0
   %i.bw = xor i64 %.032.i, -1
   %i.bx = select i1 %.not34.i, i64 %i.bu, i64 %i.bw
@@ -599,7 +599,9 @@ bb.al:                                            ; preds = %bb.ak
   br i1 %i.es, label %_r_digits32.exit.sink.split, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  %.not34.i38 = icmp eq i8 %5, 0
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %7 = load i8, ptr %6, align 8, !tbaa !124
+  %.not34.i38 = icmp eq i8 %7, 0
   %i.et = xor i64 %.032.i35, -1
   %i.eu = select i1 %.not34.i38, i64 %i.er, i64 %i.et
   call fastcc void @w_long(i64 noundef %i.eu, ptr noundef nonnull %2)

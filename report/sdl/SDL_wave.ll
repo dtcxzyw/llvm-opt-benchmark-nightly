@@ -205,7 +205,6 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.ag, -8                      ; 2 uses
-  %3 = and i64 %i.ag, 7
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -242,6 +241,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.br, label %middle.block, label %vector.body, !llvm.loop !11
 
 middle.block:                                     ; preds = %vector.body
+  %3 = and i64 %i.ag, 7
   %cmp.n = icmp eq i64 %i.ag, %n.vec
   br i1 %cmp.n, label %.loopexit, label %.lr.ph.preheader137
 
@@ -268,7 +268,6 @@ vector.memcheck117:                               ; preds = %.lr.ph104.preheader
 
 vector.ph125:                                     ; preds = %vector.memcheck117
   %n.vec126 = and i64 %i.ag, -8                   ; 2 uses
-  %4 = and i64 %i.ag, 7
   br label %vector.body127
 
 vector.body127:                                   ; preds = %vector.body127, %vector.ph125
@@ -308,6 +307,7 @@ vector.body127:                                   ; preds = %vector.body127, %ve
   br i1 %i.cu, label %middle.block133, label %vector.body127, !llvm.loop !15
 
 middle.block133:                                  ; preds = %vector.body127
+  %4 = and i64 %i.ag, 7
   %cmp.n134 = icmp eq i64 %i.ag, %n.vec126
   br i1 %cmp.n134, label %.loopexit, label %.lr.ph104.preheader136
 
@@ -710,7 +710,6 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
   br i1 %conflict.rdx151, label %.lr.ph.i.preheader154, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %3 = add i64 %.sroa.68.0110, %n.vec
   %i.aw = getelementptr [2 x i8], ptr %i.ad, i64 %.sroa.68.0110
   br label %vector.body
 
@@ -744,11 +743,15 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x i8> %i.br, ptr %i.bs, align 1, !alias.scope !39, !noalias !36
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bt = icmp eq i64 %index.next, %n.vec
-  br i1 %i.bt, label %.lr.ph.i.preheader154, label %vector.body, !llvm.loop !30
+  br i1 %i.bt, label %.lr.ph.i.preheader154.loopexit, label %vector.body, !llvm.loop !30
 
-.lr.ph.i.preheader154:                            ; preds = %vector.body, %vector.memcheck, %.lr.ph.i.preheader
-  %.sroa.68.2.ph = phi i64 [ %.sroa.68.0110, %vector.memcheck ], [ %.sroa.68.0110, %.lr.ph.i.preheader ], [ %3, %vector.body ] ; 3 uses
-  %indvars.iv.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.preheader ], [ %n.vec, %vector.body ] ; 6 uses
+.lr.ph.i.preheader154.loopexit:                   ; preds = %vector.body
+  %3 = add i64 %.sroa.68.0110, %n.vec
+  br label %.lr.ph.i.preheader154
+
+.lr.ph.i.preheader154:                            ; preds = %.lr.ph.i.preheader154.loopexit, %vector.memcheck, %.lr.ph.i.preheader
+  %.sroa.68.2.ph = phi i64 [ %.sroa.68.0110, %vector.memcheck ], [ %.sroa.68.0110, %.lr.ph.i.preheader ], [ %3, %.lr.ph.i.preheader154.loopexit ] ; 3 uses
+  %indvars.iv.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.preheader ], [ %n.vec, %.lr.ph.i.preheader154.loopexit ] ; 6 uses
   %i.bu = sub nsw i64 %i.o, %indvars.iv.i.ph
   %xtraiter = and i64 %i.bu, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0

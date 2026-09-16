@@ -202,9 +202,14 @@ bb.l:                                             ; preds = %bb.k
   %min.iters.check = icmp samesign ult i64 %i.bd, 20
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck, !prof !130
 
-scalar.ph.preheader:                              ; preds = %vector.body, %vector.memcheck, %vector.scevcheck, %.lr.ph
-  %.ph297 = phi ptr [ %i.u, %vector.memcheck ], [ %i.u, %vector.scevcheck ], [ %i.u, %.lr.ph ], [ %5, %vector.body ]
-  %.sroa.16.0135.i210.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph ], [ %n.vec, %vector.body ]
+scalar.ph.preheader.loopexit:                     ; preds = %vector.body
+  %4 = shl i64 %n.vec, 3
+  %5 = getelementptr i8, ptr %i.u, i64 %4
+  br label %scalar.ph.preheader
+
+scalar.ph.preheader:                              ; preds = %scalar.ph.preheader.loopexit, %vector.memcheck, %vector.scevcheck, %.lr.ph
+  %.ph297 = phi ptr [ %i.u, %vector.memcheck ], [ %i.u, %vector.scevcheck ], [ %i.u, %.lr.ph ], [ %5, %scalar.ph.preheader.loopexit ]
+  %.sroa.16.0135.i210.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph ], [ %n.vec, %scalar.ph.preheader.loopexit ]
   br label %scalar.ph
 
 vector.scevcheck:                                 ; preds = %.lr.ph
@@ -234,8 +239,6 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.bp = icmp eq i64 %i.bo, 0
   %i.bq = select i1 %i.bp, i64 4, i64 %i.bo
   %n.vec = sub nsw i64 %i.be, %i.bq               ; 3 uses
-  %4 = shl i64 %n.vec, 3
-  %5 = getelementptr i8, ptr %i.u, i64 %4
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -253,7 +256,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x i32> %wide.vec228, ptr %i.bv, align 8, !alias.scope !133, !noalias !127
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bw = icmp eq i64 %index.next, %n.vec
-  br i1 %i.bw, label %scalar.ph.preheader, label %vector.body, !prof !134, !llvm.loop !30
+  br i1 %i.bw, label %scalar.ph.preheader.loopexit, label %vector.body, !prof !134, !llvm.loop !30
 
 .body.thread110.loopexit.i:                       ; preds = %.lr.ph212
   %lpad.loopexit.i = landingpad { ptr, i32 }
@@ -656,9 +659,14 @@ _RNvMse_NtCsC8CapfvpQ1_5salsa11zalsa_localINtB5_15SliceWithHeaderuNtB5_15PackedQ
   %min.iters.check243 = icmp samesign ult i64 %i.fj, 20
   br i1 %min.iters.check243, label %scalar.ph242.preheader, label %vector.scevcheck233, !prof !130
 
-scalar.ph242.preheader:                           ; preds = %vector.body246, %vector.memcheck235, %vector.scevcheck233, %.lr.ph218
-  %.ph = phi ptr [ %i.ef, %vector.memcheck235 ], [ %i.ef, %vector.scevcheck233 ], [ %i.ef, %.lr.ph218 ], [ %7, %vector.body246 ]
-  %.sroa.16.0113.i217.ph = phi i64 [ 0, %vector.memcheck235 ], [ 0, %vector.scevcheck233 ], [ 0, %.lr.ph218 ], [ %n.vec245, %vector.body246 ]
+scalar.ph242.preheader.loopexit:                  ; preds = %vector.body246
+  %6 = shl i64 %n.vec245, 3
+  %7 = getelementptr i8, ptr %i.ef, i64 %6
+  br label %scalar.ph242.preheader
+
+scalar.ph242.preheader:                           ; preds = %scalar.ph242.preheader.loopexit, %vector.memcheck235, %vector.scevcheck233, %.lr.ph218
+  %.ph = phi ptr [ %i.ef, %vector.memcheck235 ], [ %i.ef, %vector.scevcheck233 ], [ %i.ef, %.lr.ph218 ], [ %7, %scalar.ph242.preheader.loopexit ]
+  %.sroa.16.0113.i217.ph = phi i64 [ 0, %vector.memcheck235 ], [ 0, %vector.scevcheck233 ], [ 0, %.lr.ph218 ], [ %n.vec245, %scalar.ph242.preheader.loopexit ]
   br label %scalar.ph242
 
 vector.scevcheck233:                              ; preds = %.lr.ph218
@@ -687,8 +695,6 @@ vector.ph244:                                     ; preds = %vector.memcheck235
   %i.fu = icmp eq i64 %i.ft, 0
   %i.fv = select i1 %i.fu, i64 4, i64 %i.ft
   %n.vec245 = sub nsw i64 %i.fk, %i.fv            ; 3 uses
-  %6 = shl i64 %n.vec245, 3
-  %7 = getelementptr i8, ptr %i.ef, i64 %6
   br label %vector.body246
 
 vector.body246:                                   ; preds = %vector.body246, %vector.ph244
@@ -706,7 +712,7 @@ vector.body246:                                   ; preds = %vector.body246, %ve
   store <4 x i32> %wide.vec253, ptr %i.ga, align 4, !alias.scope !166, !noalias !161
   %index.next258 = add nuw i64 %index247, 4       ; 2 uses
   %i.gb = icmp eq i64 %index.next258, %n.vec245
-  br i1 %i.gb, label %scalar.ph242.preheader, label %vector.body246, !prof !134, !llvm.loop !86
+  br i1 %i.gb, label %scalar.ph242.preheader.loopexit, label %vector.body246, !prof !134, !llvm.loop !86
 
 .body36.i:                                        ; preds = %bb.au
   %i.gc = landingpad { ptr, i32 }

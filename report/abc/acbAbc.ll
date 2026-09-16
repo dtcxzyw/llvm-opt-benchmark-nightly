@@ -121,8 +121,7 @@ bb.c:                                             ; preds = %bb.b
 .critedge4.preheader:                             ; preds = %.critedge4.preheader.loopexit, %.critedge2.preheader
   %.val96.val147177 = phi i32 [ %.val97.val136, %.critedge2.preheader ], [ %.val97.val, %.critedge4.preheader.loopexit ]
   %i.at = phi ptr [ %i.ac, %.critedge2.preheader ], [ %.pre173, %.critedge4.preheader.loopexit ] ; 2 uses
-  %.val97.lcssa134 = phi ptr [ %.val97135, %.critedge2.preheader ], [ %.val97, %.critedge4.preheader.loopexit ] ; 2 uses
-  %1 = getelementptr i8, ptr %.val97.lcssa134, i64 4 ; 2 uses
+  %.val97.lcssa134 = phi ptr [ %.val97135, %.critedge2.preheader ], [ %.val97, %.critedge4.preheader.loopexit ] ; 3 uses
   %i.au = getelementptr i8, ptr %i.at, i64 4      ; 2 uses
   %.val92144 = load i32, ptr %i.au, align 4, !tbaa !35 ; 2 uses
   %i.av = icmp sgt i32 %.val92144, 0
@@ -154,11 +153,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.bg, label %.critedge2, label %.critedge4.preheader.loopexit, !llvm.loop !90
 
 .critedge6.preheader.loopexit:                    ; preds = %.critedge8
-  %.val96.val147.pre = load i32, ptr %1, align 4, !tbaa !35
+  %.phi.trans.insert = getelementptr i8, ptr %.val97.lcssa134, i64 4
+  %.val96.val147.pre = load i32, ptr %.phi.trans.insert, align 4, !tbaa !35
   br label %.critedge6.preheader
 
 .critedge6.preheader:                             ; preds = %.critedge6.preheader.loopexit, %.critedge4.preheader
   %.val96.val147 = phi i32 [ %.val96.val147.pre, %.critedge6.preheader.loopexit ], [ %.val96.val147177, %.critedge4.preheader ]
+  %1 = getelementptr i8, ptr %.val97.lcssa134, i64 4
   %i.bh = icmp sgt i32 %.val96.val147, 0
   br i1 %i.bh, label %.lr.ph149, label %.critedge10
 

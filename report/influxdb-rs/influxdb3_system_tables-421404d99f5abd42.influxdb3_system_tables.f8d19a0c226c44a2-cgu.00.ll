@@ -202,9 +202,7 @@ vector.ph:                                        ; preds = %.lr.ph.i.preheader
   %i.o = and i64 %i.n, 31                         ; 2 uses
   %i.p = icmp eq i64 %i.o, 0
   %i.q = select i1 %i.p, i64 32, i64 %i.o
-  %n.vec = sub i64 %i.n, %i.q                     ; 4 uses
-  %1 = getelementptr i8, ptr %.8.val, i64 %n.vec
-  %i.r = sub i64 %i.e, %n.vec
+  %i.r = sub i64 %i.n, %i.q                       ; 4 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -218,13 +216,18 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <16 x i8> %wide.load, ptr %i.t, align 1, !noalias !14332
   store <16 x i8> %wide.load2, ptr %i.u, align 1, !noalias !14332
   %index.next = add nuw i64 %index, 32            ; 2 uses
-  %i.v = icmp eq i64 %index.next, %n.vec
-  br i1 %i.v, label %.lr.ph.i.preheader5, label %vector.body, !llvm.loop !14329
+  %i.v = icmp eq i64 %index.next, %i.r
+  br i1 %i.v, label %.lr.ph.i.preheader5.loopexit, label %vector.body, !llvm.loop !14329
 
-.lr.ph.i.preheader5:                              ; preds = %vector.body, %.lr.ph.i.preheader
-  %.sroa.013.022.i.ph = phi ptr [ %.8.val, %.lr.ph.i.preheader ], [ %1, %vector.body ]
-  %.sroa.7.021.i.ph = phi i64 [ 0, %.lr.ph.i.preheader ], [ %n.vec, %vector.body ]
-  %.sroa.10.020.i.ph = phi i64 [ %i.e, %.lr.ph.i.preheader ], [ %i.r, %vector.body ]
+.lr.ph.i.preheader5.loopexit:                     ; preds = %vector.body
+  %1 = getelementptr i8, ptr %.8.val, i64 %i.r
+  %2 = sub i64 %i.e, %i.r
+  br label %.lr.ph.i.preheader5
+
+.lr.ph.i.preheader5:                              ; preds = %.lr.ph.i.preheader5.loopexit, %.lr.ph.i.preheader
+  %.sroa.013.022.i.ph = phi ptr [ %.8.val, %.lr.ph.i.preheader ], [ %1, %.lr.ph.i.preheader5.loopexit ]
+  %.sroa.7.021.i.ph = phi i64 [ 0, %.lr.ph.i.preheader ], [ %i.r, %.lr.ph.i.preheader5.loopexit ]
+  %.sroa.10.020.i.ph = phi i64 [ %i.e, %.lr.ph.i.preheader ], [ %2, %.lr.ph.i.preheader5.loopexit ]
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader5, %bb.c

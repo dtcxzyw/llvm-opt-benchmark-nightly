@@ -204,10 +204,6 @@ _ZSt13move_backwardIPSt17reference_wrapperIKN4bzla4NodeEES5_ET0_T_S7_S6_.exit: ;
 
 vector.ph130:                                     ; preds = %.lr.ph.i.i.i.i.i55.preheader
   %n.vec131 = and i64 %i.d, 9223372036854775804   ; 3 uses
-  %4 = and i64 %i.d, 3
-  %5 = shl i64 %n.vec131, 3                       ; 2 uses
-  %6 = getelementptr i8, ptr %1, i64 %5
-  %7 = getelementptr i8, ptr %2, i64 %5
   br label %vector.body132
 
 vector.body132:                                   ; preds = %vector.body132, %vector.ph130
@@ -228,6 +224,10 @@ vector.body132:                                   ; preds = %vector.body132, %ve
   br i1 %i.aj, label %middle.block140, label %vector.body132, !llvm.loop !816
 
 middle.block140:                                  ; preds = %vector.body132
+  %4 = and i64 %i.d, 3
+  %5 = shl i64 %n.vec131, 3                       ; 2 uses
+  %6 = getelementptr i8, ptr %1, i64 %5
+  %7 = getelementptr i8, ptr %2, i64 %5
   %cmp.n141 = icmp eq i64 %i.d, %n.vec131
   br i1 %cmp.n141, label %_ZSt4copyIPKN4bzla4NodeEN9__gnu_cxx17__normal_iteratorIPSt17reference_wrapperIS2_ESt6vectorIS7_SaIS7_EEEEET0_T_SE_SD_.exit, label %.lr.ph.i.i.i.i.i55
 
@@ -304,10 +304,6 @@ _ZSt22__uninitialized_move_aIPSt17reference_wrapperIKN4bzla4NodeEES5_SaIS4_EET0_
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i64.preheader
   %n.vec = and i64 %i.bd, 9223372036854775804     ; 3 uses
-  %8 = and i64 %i.bd, 3
-  %9 = shl i64 %n.vec, 3                          ; 2 uses
-  %10 = getelementptr i8, ptr %1, i64 %9
-  %11 = getelementptr i8, ptr %2, i64 %9
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -328,6 +324,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bj, label %middle.block, label %vector.body, !llvm.loop !818
 
 middle.block:                                     ; preds = %vector.body
+  %8 = and i64 %i.bd, 3
+  %9 = shl i64 %n.vec, 3                          ; 2 uses
+  %10 = getelementptr i8, ptr %1, i64 %9
+  %11 = getelementptr i8, ptr %2, i64 %9
   %cmp.n = icmp eq i64 %i.bd, %n.vec
   br i1 %cmp.n, label %_ZSt4copyIPKN4bzla4NodeEN9__gnu_cxx17__normal_iteratorIPSt17reference_wrapperIS2_ESt6vectorIS7_SaIS7_EEEEET0_T_SE_SD_.exit, label %.lr.ph.i.i.i.i.i64
 
@@ -730,9 +730,9 @@ bb.a:
   %scevgep = getelementptr i8, ptr %0, i64 8
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.g, %.lr.ph.i.a
-  %.sroa.0.020.i.idx = phi i64 [ 8, %.lr.ph.i.a ], [ %.sroa.0.020.i.add, %bb.g ] ; 4 uses
-  %.pn19.i = phi ptr [ %0, %.lr.ph.i.a ], [ %.sroa.0.020.i.ptr, %bb.g ] ; 3 uses
+bb.b:                                             ; preds = %.lr.ph.i.a, %bb.g
+  %.sroa.0.020.i.idx = phi i64 [ %.sroa.0.020.i.add, %bb.g ], [ 8, %.lr.ph.i.a ] ; 4 uses
+  %.pn19.i = phi ptr [ %.sroa.0.020.i.ptr, %bb.g ], [ %0, %.lr.ph.i.a ] ; 3 uses
   %.sroa.0.020.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.0.020.i.idx ; 6 uses
   %i.e = load ptr, ptr %.sroa.0.020.i.ptr, align 8, !tbaa !59
   %i.f = load ptr, ptr %0, align 8, !tbaa !59
@@ -1135,14 +1135,10 @@ bb.aj:                                            ; preds = %bb.aj, %"_ZSt22__mo
   %.val.i.i14.i = load i64, ptr %i.ca, align 8, !tbaa !179
   %i.cb = icmp ugt i64 %.val.i.i14.i, %.val1.i.i13.i
   %i.cc = getelementptr inbounds nuw i8, ptr %.sroa.012.1.i.i, i64 16 ; 2 uses
-  br i1 %i.cb, label %bb.aj, label %.preheader.i.i.preheader, !llvm.loop !945
+  br i1 %i.cb, label %bb.aj, label %.preheader.i.i, !llvm.loop !945
 
-.preheader.i.i.preheader:                         ; preds = %bb.aj
-  %14 = getelementptr i8, ptr %.sroa.012.1.i.i, i64 8 ; 2 uses
-  br label %.preheader.i.i
-
-.preheader.i.i:                                   ; preds = %.preheader.i.i.preheader, %.preheader.i.i
-  %.sroa.0.0.pn.i.i = phi ptr [ %.sroa.0.1.i.i, %.preheader.i.i ], [ %.sroa.0.0.i.i, %.preheader.i.i.preheader ] ; 3 uses
+.preheader.i.i:                                   ; preds = %bb.aj, %.preheader.i.i
+  %.sroa.0.0.pn.i.i = phi ptr [ %.sroa.0.1.i.i, %.preheader.i.i ], [ %.sroa.0.0.i.i, %bb.aj ] ; 3 uses
   %.sroa.0.1.i.i = getelementptr inbounds i8, ptr %.sroa.0.0.pn.i.i, i64 -16 ; 5 uses
   %i.cd = getelementptr i8, ptr %.sroa.0.0.pn.i.i, i64 -8
   %.val1.i9.i.i = load i64, ptr %i.cd, align 8, !tbaa !179
@@ -1150,6 +1146,7 @@ bb.aj:                                            ; preds = %bb.aj, %"_ZSt22__mo
   br i1 %i.ce, label %.preheader.i.i, label %bb.ak, !llvm.loop !946
 
 bb.ak:                                            ; preds = %.preheader.i.i
+  %14 = getelementptr i8, ptr %.sroa.012.1.i.i, i64 8 ; 2 uses
   %i.cf = getelementptr i8, ptr %.sroa.0.0.pn.i.i, i64 -8 ; 2 uses
   %i.cg = icmp ult ptr %.sroa.012.1.i.i, %.sroa.0.1.i.i
   br i1 %i.cg, label %bb.al, label %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeEmESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS7_IS4_SaIS4_EERSH_E3$_0EEET_SN_SN_T0_.exit"
@@ -1552,9 +1549,9 @@ bb.a:
   %scevgep = getelementptr i8, ptr %0, i64 8
   br label %bb.b
 
-bb.b:                                             ; preds = %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES6_ET0_T_S8_S7_.exit.i, %.lr.ph.i.a
-  %.sroa.0.018.i.idx = phi i64 [ 8, %.lr.ph.i.a ], [ %.sroa.0.018.i.add, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES6_ET0_T_S8_S7_.exit.i ] ; 4 uses
-  %.pn17.i = phi ptr [ %0, %.lr.ph.i.a ], [ %.sroa.0.018.i.ptr, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES6_ET0_T_S8_S7_.exit.i ] ; 3 uses
+bb.b:                                             ; preds = %.lr.ph.i.a, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES6_ET0_T_S8_S7_.exit.i
+  %.sroa.0.018.i.idx = phi i64 [ %.sroa.0.018.i.add, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES6_ET0_T_S8_S7_.exit.i ], [ 8, %.lr.ph.i.a ] ; 4 uses
+  %.pn17.i = phi ptr [ %.sroa.0.018.i.ptr, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES6_ET0_T_S8_S7_.exit.i ], [ %0, %.lr.ph.i.a ] ; 3 uses
   %.sroa.0.018.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.0.018.i.idx ; 4 uses
   %i.e = load i64, ptr %.sroa.0.018.i.ptr, align 8, !tbaa !166 ; 4 uses
   %i.f = load i64, ptr %0, align 8, !tbaa !166    ; 2 uses

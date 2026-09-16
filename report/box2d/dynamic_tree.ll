@@ -204,16 +204,6 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = load ptr, ptr %0, align 8, !tbaa !18     ; 2 uses
-  %1 = sext i32 %i.b to i64
-  %2 = getelementptr inbounds [40 x i8], ptr %i.d, i64 %1 ; 2 uses
-  %3 = load <2 x float>, ptr %2, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %5 = load <2 x float>, ptr %4, align 8
-  %6 = fsub <2 x float> %5, %3                    ; 2 uses
-  %shift = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x float> %6, %shift
-  %7 = extractelement <2 x float> %foldExtExtBinop, i64 0
-  %8 = fmul float %7, 2.000000e+00
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.f = load i32, ptr %i.e, align 8, !tbaa !16   ; 2 uses
   %i.g = icmp sgt i32 %i.f, 0
@@ -226,6 +216,14 @@ bb.b:                                             ; preds = %bb.a
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.b
   %.017.lcssa = phi float [ 0.000000e+00, %bb.b ], [ %.1, %bb.d ]
+  %1 = sext i32 %i.b to i64
+  %2 = getelementptr inbounds [40 x i8], ptr %i.d, i64 %1 ; 2 uses
+  %3 = load <2 x float>, ptr %2, align 8
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %5 = load <2 x float>, ptr %4, align 8
+  %6 = fsub <2 x float> %5, %3
+  %7 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %6)
+  %8 = fmul float %7, 2.000000e+00
   %i.i = fdiv float %.017.lcssa, %8
   br label %bb.e
 

@@ -204,7 +204,6 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.l = icmp eq i64 %i.k, 0
   %i.m = select i1 %i.l, i64 4, i64 %i.k
   %n.vec = sub nsw i64 %i.e, %i.m                 ; 3 uses
-  %3 = add i64 %.sroa.5.0.copyload, %n.vec
   %i.n = getelementptr [8 x i8], ptr %.sroa.7.0.copyload, i64 %.sroa.5.0.copyload
   br label %vector.body
 
@@ -225,11 +224,15 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x i64> %i.s, ptr %i.u, align 8, !alias.scope !841, !noalias !842
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.v = icmp eq i64 %index.next, %n.vec
-  br i1 %i.v, label %scalar.ph.preheader, label %vector.body, !llvm.loop !837
+  br i1 %i.v, label %scalar.ph.preheader.loopexit, label %vector.body, !llvm.loop !837
 
-scalar.ph.preheader:                              ; preds = %vector.body, %vector.memcheck, %bb.b
-  %.ph = phi i64 [ %.sroa.5.0.copyload, %vector.memcheck ], [ %.sroa.5.0.copyload, %bb.b ], [ %3, %vector.body ] ; 3 uses
-  %.sroa.01.0.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.b ], [ %n.vec, %vector.body ] ; 5 uses
+scalar.ph.preheader.loopexit:                     ; preds = %vector.body
+  %3 = add i64 %.sroa.5.0.copyload, %n.vec
+  br label %scalar.ph.preheader
+
+scalar.ph.preheader:                              ; preds = %scalar.ph.preheader.loopexit, %vector.memcheck, %bb.b
+  %.ph = phi i64 [ %.sroa.5.0.copyload, %vector.memcheck ], [ %.sroa.5.0.copyload, %bb.b ], [ %3, %scalar.ph.preheader.loopexit ] ; 3 uses
+  %.sroa.01.0.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.b ], [ %n.vec, %scalar.ph.preheader.loopexit ] ; 5 uses
   %i.w = sub nsw i64 %i.e, %.sroa.01.0.i.ph
   %.neg = add nsw i64 %.sroa.01.0.i.ph, 1
   %xtraiter = and i64 %i.w, 1
@@ -319,7 +322,6 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.l = icmp eq i64 %i.k, 0
   %i.m = select i1 %i.l, i64 4, i64 %i.k
   %n.vec = sub nsw i64 %i.e, %i.m                 ; 3 uses
-  %3 = add i64 %.sroa.5.0.copyload, %n.vec
   %i.n = getelementptr [8 x i8], ptr %.sroa.7.0.copyload, i64 %.sroa.5.0.copyload
   br label %vector.body
 
@@ -340,11 +342,15 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x i64> %i.s, ptr %i.u, align 8, !alias.scope !859, !noalias !860
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.v = icmp eq i64 %index.next, %n.vec
-  br i1 %i.v, label %scalar.ph.preheader, label %vector.body, !llvm.loop !855
+  br i1 %i.v, label %scalar.ph.preheader.loopexit, label %vector.body, !llvm.loop !855
 
-scalar.ph.preheader:                              ; preds = %vector.body, %vector.memcheck, %bb.b
-  %.ph = phi i64 [ %.sroa.5.0.copyload, %vector.memcheck ], [ %.sroa.5.0.copyload, %bb.b ], [ %3, %vector.body ] ; 3 uses
-  %.sroa.01.0.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.b ], [ %n.vec, %vector.body ] ; 5 uses
+scalar.ph.preheader.loopexit:                     ; preds = %vector.body
+  %3 = add i64 %.sroa.5.0.copyload, %n.vec
+  br label %scalar.ph.preheader
+
+scalar.ph.preheader:                              ; preds = %scalar.ph.preheader.loopexit, %vector.memcheck, %bb.b
+  %.ph = phi i64 [ %.sroa.5.0.copyload, %vector.memcheck ], [ %.sroa.5.0.copyload, %bb.b ], [ %3, %scalar.ph.preheader.loopexit ] ; 3 uses
+  %.sroa.01.0.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.b ], [ %n.vec, %scalar.ph.preheader.loopexit ] ; 5 uses
   %i.w = sub nsw i64 %i.e, %.sroa.01.0.i.ph
   %.neg = add nsw i64 %.sroa.01.0.i.ph, 1
   %xtraiter = and i64 %i.w, 1
@@ -434,7 +440,6 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.l = icmp eq i64 %i.k, 0
   %i.m = select i1 %i.l, i64 4, i64 %i.k
   %n.vec = sub nsw i64 %i.e, %i.m                 ; 3 uses
-  %3 = add i64 %.sroa.5.0.copyload, %n.vec
   %i.n = getelementptr [8 x i8], ptr %.sroa.7.0.copyload, i64 %.sroa.5.0.copyload
   br label %vector.body
 
@@ -455,11 +460,15 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x i64> %i.s, ptr %i.u, align 8, !alias.scope !877, !noalias !878
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.v = icmp eq i64 %index.next, %n.vec
-  br i1 %i.v, label %scalar.ph.preheader, label %vector.body, !llvm.loop !873
+  br i1 %i.v, label %scalar.ph.preheader.loopexit, label %vector.body, !llvm.loop !873
 
-scalar.ph.preheader:                              ; preds = %vector.body, %vector.memcheck, %bb.b
-  %.ph = phi i64 [ %.sroa.5.0.copyload, %vector.memcheck ], [ %.sroa.5.0.copyload, %bb.b ], [ %3, %vector.body ] ; 3 uses
-  %.sroa.01.0.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.b ], [ %n.vec, %vector.body ] ; 5 uses
+scalar.ph.preheader.loopexit:                     ; preds = %vector.body
+  %3 = add i64 %.sroa.5.0.copyload, %n.vec
+  br label %scalar.ph.preheader
+
+scalar.ph.preheader:                              ; preds = %scalar.ph.preheader.loopexit, %vector.memcheck, %bb.b
+  %.ph = phi i64 [ %.sroa.5.0.copyload, %vector.memcheck ], [ %.sroa.5.0.copyload, %bb.b ], [ %3, %scalar.ph.preheader.loopexit ] ; 3 uses
+  %.sroa.01.0.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.b ], [ %n.vec, %scalar.ph.preheader.loopexit ] ; 5 uses
   %i.w = sub nsw i64 %i.e, %.sroa.01.0.i.ph
   %.neg = add nsw i64 %.sroa.01.0.i.ph, 1
   %xtraiter = and i64 %i.w, 1
@@ -549,7 +558,6 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.l = icmp eq i64 %i.k, 0
   %i.m = select i1 %i.l, i64 4, i64 %i.k
   %n.vec = sub nsw i64 %i.e, %i.m                 ; 3 uses
-  %3 = add i64 %.sroa.5.0.copyload, %n.vec
   %i.n = getelementptr [8 x i8], ptr %.sroa.7.0.copyload, i64 %.sroa.5.0.copyload
   br label %vector.body
 
@@ -570,11 +578,15 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x i64> %i.s, ptr %i.u, align 8, !alias.scope !895, !noalias !896
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.v = icmp eq i64 %index.next, %n.vec
-  br i1 %i.v, label %scalar.ph.preheader, label %vector.body, !llvm.loop !891
+  br i1 %i.v, label %scalar.ph.preheader.loopexit, label %vector.body, !llvm.loop !891
 
-scalar.ph.preheader:                              ; preds = %vector.body, %vector.memcheck, %bb.b
-  %.ph = phi i64 [ %.sroa.5.0.copyload, %vector.memcheck ], [ %.sroa.5.0.copyload, %bb.b ], [ %3, %vector.body ] ; 3 uses
-  %.sroa.01.0.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.b ], [ %n.vec, %vector.body ] ; 5 uses
+scalar.ph.preheader.loopexit:                     ; preds = %vector.body
+  %3 = add i64 %.sroa.5.0.copyload, %n.vec
+  br label %scalar.ph.preheader
+
+scalar.ph.preheader:                              ; preds = %scalar.ph.preheader.loopexit, %vector.memcheck, %bb.b
+  %.ph = phi i64 [ %.sroa.5.0.copyload, %vector.memcheck ], [ %.sroa.5.0.copyload, %bb.b ], [ %3, %scalar.ph.preheader.loopexit ] ; 3 uses
+  %.sroa.01.0.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.b ], [ %n.vec, %scalar.ph.preheader.loopexit ] ; 5 uses
   %i.w = sub nsw i64 %i.e, %.sroa.01.0.i.ph
   %.neg = add nsw i64 %.sroa.01.0.i.ph, 1
   %xtraiter = and i64 %i.w, 1
@@ -659,7 +671,6 @@ vector.memcheck:                                  ; preds = %bb.b
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.e, 1152921504606846974      ; 4 uses
-  %3 = add i64 %.sroa.5.0.copyload, %n.vec        ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -680,6 +691,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.p, label %middle.block, label %vector.body, !llvm.loop !909
 
 middle.block:                                     ; preds = %vector.body
+  %3 = add i64 %.sroa.5.0.copyload, %n.vec        ; 2 uses
   %cmp.n = icmp eq i64 %i.e, %n.vec
   br i1 %cmp.n, label %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterTjjEENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB11_8adapters3map8map_foldRBQ_Ajj2_uNCNCNvNtCsbNLsQi0JuJ4_5tgrep5serve18collect_match_rows00NCINvNvBV_8for_each4callB2j_NCINvMsk_NtCsgCecv3eZDcN_5alloc3vecINtB3U_3VecB2j_E14extend_trustedINtB1L_3MapBF_B2p_EE0E0E0EB2x_.exit, label %scalar.ph.preheader
 
@@ -1082,9 +1094,7 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   br i1 %min.iters.check3, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %3 = and i64 %i.d, 24
   %n.vec = and i64 %i.d, -32                      ; 5 uses
-  %4 = add i64 %.sroa.5.0.copyload, %n.vec        ; 2 uses
   %i.g = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %.sroa.5.0.copyload
   br label %vector.body
 
@@ -1111,6 +1121,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.t, label %middle.block, label %vector.body, !llvm.loop !992
 
 middle.block:                                     ; preds = %vector.body
+  %3 = and i64 %i.d, 24
+  %4 = add i64 %.sroa.5.0.copyload, %n.vec        ; 2 uses
   %cmp.n = icmp eq i64 %i.d, %n.vec
   br i1 %cmp.n, label %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters3map8map_foldRhhuNCNvMs_NtCsgCecv3eZDcN_5alloc5sliceSh18to_ascii_lowercase0NCINvNvBS_8for_each4callhNCINvMsk_NtB2o_3vecINtB3J_3VechE14extend_trustedINtB1I_3MapBF_B2f_EE0E0E0ECsbNLsQi0JuJ4_5tgrep.exit, label %vec.epilog.iter.check
 
@@ -1121,7 +1133,6 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec5 = and i64 %i.d, -8                      ; 4 uses
-  %5 = add i64 %.sroa.5.0.copyload, %n.vec5       ; 2 uses
   %i.u = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %.sroa.5.0.copyload
   br label %vec.epilog.vector.body
 
@@ -1140,6 +1151,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.ab, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !993
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
+  %5 = add i64 %.sroa.5.0.copyload, %n.vec5       ; 2 uses
   %cmp.n9 = icmp eq i64 %i.d, %n.vec5
   br i1 %cmp.n9, label %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters3map8map_foldRhhuNCNvMs_NtCsgCecv3eZDcN_5alloc5sliceSh18to_ascii_lowercase0NCINvNvBS_8for_each4callhNCINvMsk_NtB2o_3vecINtB3J_3VechE14extend_trustedINtB1I_3MapBF_B2f_EE0E0E0ECsbNLsQi0JuJ4_5tgrep.exit, label %vec.epilog.scalar.ph.preheader
 

@@ -169,13 +169,13 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit54, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   store i32 -824761590, ptr %i.a, align 4, !tbaa !8
-  %i.l = trunc i64 %2 to i32                      ; 6 uses
-  %4 = add i32 %i.l, 3
-  %5 = and i32 %4, -4                             ; 2 uses
+  %i.l = trunc i64 %2 to i32                      ; 7 uses
   %.not57 = icmp ult i32 %i.l, 4
   br i1 %.not57, label %._crit_edge.thread, label %.lr.ph
 
 ._crit_edge.thread:                               ; preds = %bb.e
+  %4 = add nuw nsw i32 %i.l, 3
+  %5 = and i32 %4, 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #7
   br label %bb.f
 
@@ -188,12 +188,15 @@ bb.e:                                             ; preds = %_ZStlsISt11char_tra
   br label %bb.g
 
 ._crit_edge:                                      ; preds = %bb.n
+  %6 = add i32 %i.l, 3
+  %7 = and i32 %6, -4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #7
   %.not = icmp eq i32 %.1, 0
   %spec.select = select i1 %.not, i32 0, i32 1610612736
   br label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge, %._crit_edge.thread
+  %8 = phi i32 [ %7, %._crit_edge ], [ %5, %._crit_edge.thread ] ; 2 uses
   %.047.lcssa65 = phi i32 [ %.1, %._crit_edge ], [ 0, %._crit_edge.thread ] ; 3 uses
   %i.r = phi i32 [ %spec.select, %._crit_edge ], [ 0, %._crit_edge.thread ]
   %i.s = sub i32 %i.l, %.047.lcssa65              ; 2 uses
@@ -306,12 +309,12 @@ bb.o:                                             ; preds = %bb.f
 bb.p:                                             ; preds = %bb.o, %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #7
   store i32 0, ptr %i.d, align 4, !tbaa !8
-  %.not51 = icmp eq i32 %5, %i.l
+  %.not51 = icmp eq i32 %8, %i.l
   br i1 %.not51, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.ch = load ptr, ptr %0, align 8, !tbaa !36    ; 2 uses
-  %i.ci = sub i32 %5, %i.l
+  %i.ci = sub i32 %8, %i.l
   %i.cj = zext i32 %i.ci to i64
   %i.ck = load ptr, ptr %i.ch, align 8, !tbaa !14
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 8

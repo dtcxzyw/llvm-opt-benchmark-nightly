@@ -205,8 +205,11 @@ bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.j = load i64, ptr %i.i, align 8, !tbaa !32   ; 4 uses
   %i.k = icmp ugt i64 %i.h, %i.j
-  %.pre65 = load ptr, ptr %0, align 8, !tbaa !31  ; 5 uses
-  br i1 %i.k, label %.preheader, label %bb.i
+  br i1 %i.k, label %.preheader, label %._crit_edge
+
+._crit_edge:                                      ; preds = %bb.c
+  %.pre = load ptr, ptr %0, align 8, !tbaa !31
+  br label %bb.i
 
 .preheader:                                       ; preds = %bb.c, %.preheader
   %.04264 = phi i64 [ %i.o, %.preheader ], [ %i.j, %bb.c ] ; 2 uses
@@ -218,8 +221,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.p, label %.preheader, label %bb.d, !llvm.loop !420
 
 bb.d:                                             ; preds = %.preheader
+  %4 = load ptr, ptr %0, align 8, !tbaa !31       ; 4 uses
   %i.q = ptrtoint ptr %2 to i64
-  %i.r = ptrtoint ptr %.pre65 to i64              ; 2 uses
+  %i.r = ptrtoint ptr %4 to i64                   ; 2 uses
   %i.s = sub i64 %i.q, %i.r                       ; 2 uses
   %.not50 = icmp ult i64 %i.s, %i.j
   %i.t = tail call i64 @llvm.smax.i64(i64 %i.s, i64 -1)
@@ -227,7 +231,7 @@ bb.d:                                             ; preds = %.preheader
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !22
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
-  %i.w = call ptr @ft_mem_realloc(ptr noundef %i.v, i64 noundef 1, i64 noundef %i.j, i64 noundef %i.o, ptr noundef %.pre65, ptr noundef nonnull %i.a) #19 ; 4 uses
+  %i.w = call ptr @ft_mem_realloc(ptr noundef %i.v, i64 noundef 1, i64 noundef %i.j, i64 noundef %i.o, ptr noundef %4, ptr noundef nonnull %i.a) #19 ; 4 uses
   store ptr %i.w, ptr %0, align 8, !tbaa !31
   %i.x = load i32, ptr %i.a, align 4, !tbaa !24   ; 2 uses
   %.not.i = icmp eq i32 %i.x, 0
@@ -238,8 +242,8 @@ bb.d:                                             ; preds = %.preheader
   br label %bb.l
 
 bb.e:                                             ; preds = %bb.d
-  %.not27.i = icmp eq ptr %.pre65, null
-  %.not28.i = icmp eq ptr %i.w, %.pre65
+  %.not27.i = icmp eq ptr %4, null
+  %.not28.i = icmp eq ptr %i.w, %4
   %or.cond.i = select i1 %.not27.i, i1 true, i1 %.not28.i
   br i1 %or.cond.i, label %ps_table_realloc.exit, label %bb.f
 
@@ -285,9 +289,9 @@ ps_table_realloc.exit:                            ; preds = %ps_table_realloc.ex
   %spec.select = select i1 %i.am, ptr %2, ptr %i.al
   br label %bb.i
 
-bb.i:                                             ; preds = %ps_table_realloc.exit, %bb.c
-  %i.an = phi ptr [ %.pre65, %bb.c ], [ %.pre.a, %ps_table_realloc.exit ] ; 2 uses
-  %.2 = phi ptr [ %2, %bb.c ], [ %spec.select, %ps_table_realloc.exit ]
+bb.i:                                             ; preds = %ps_table_realloc.exit, %._crit_edge
+  %i.an = phi ptr [ %.pre, %._crit_edge ], [ %.pre.a, %ps_table_realloc.exit ] ; 2 uses
+  %.2 = phi ptr [ %2, %._crit_edge ], [ %spec.select, %ps_table_realloc.exit ]
   %.not52 = icmp eq ptr %i.an, null
   %.pre67.pre = load i64, ptr %i.e, align 8, !tbaa !30 ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 %.pre67.pre

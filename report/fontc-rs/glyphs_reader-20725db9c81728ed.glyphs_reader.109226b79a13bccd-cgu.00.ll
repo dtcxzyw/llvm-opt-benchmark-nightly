@@ -204,8 +204,6 @@ bb.c:                                             ; preds = %bb.a
 vector.ph:                                        ; preds = %.lr.ph.i
   %i.aj = udiv i64 %i.ai, 24
   %n.vec = and i64 %i.aj, 1152921504606846974     ; 2 uses
-  %2 = mul i64 %n.vec, 24
-  %3 = getelementptr i8, ptr %i.ab, i64 %2
   %broadcast.splatinsert = insertelement <2 x double> poison, double %.sroa.0.0.copyload.i.i, i64 0
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer
   %broadcast.splat8 = shufflevector <2 x double> %i.ag, <2 x double> poison, <2 x i32> zeroinitializer
@@ -249,10 +247,15 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x double> %i.bg, ptr %next.gep17, align 8, !alias.scope !1028
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.bh = icmp eq i64 %index.next, %n.vec
-  br i1 %i.bh, label %scalar.ph.preheader, label %vector.body, !llvm.loop !1024
+  br i1 %i.bh, label %scalar.ph.preheader.loopexit, label %vector.body, !llvm.loop !1024
 
-scalar.ph.preheader:                              ; preds = %vector.body, %.lr.ph.i
-  %.sroa.0.02.i.ph = phi ptr [ %i.ab, %.lr.ph.i ], [ %3, %vector.body ]
+scalar.ph.preheader.loopexit:                     ; preds = %vector.body
+  %2 = mul i64 %n.vec, 24
+  %3 = getelementptr i8, ptr %i.ab, i64 %2
+  br label %scalar.ph.preheader
+
+scalar.ph.preheader:                              ; preds = %scalar.ph.preheader.loopexit, %.lr.ph.i
+  %.sroa.0.02.i.ph = phi ptr [ %i.ab, %.lr.ph.i ], [ %3, %scalar.ph.preheader.loopexit ]
   %i.bi = insertelement <2 x double> poison, double %.sroa.0.0.copyload.i.i, i64 0
   %i.bj = insertelement <2 x double> %i.bi, double %.sroa.6.0.copyload.i.i, i64 1
   br label %scalar.ph
@@ -655,12 +658,12 @@ bb.py:                                            ; preds = %.loopexit154.i, %_R
   br label %bb.pz
 
 _RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtCs1qcNTItuk7F_13glyphs_reader4font4AxisEIBX_INtCsidwnrrI1Awe_13ordered_float12OrderedFloatdEEEINtB5_7ZipImplBW_B24_E4nextB1q_.exit.thread.loopexit.i.i: ; preds = %_RNvMsI_NtCs1qcNTItuk7F_13glyphs_reader4fontNtB5_19AxisUserToDesignMap16add_identity_map.exit.i.i, %.noexc122.i
+  %2 = getelementptr inbounds nuw i8, ptr %.sroa.0.015.i.i, i64 544 ; 2 uses
   %i.bvx = icmp eq ptr %2, %i.bmr
   br i1 %i.bvx, label %_RNvMsJ_NtCs1qcNTItuk7F_13glyphs_reader4fontNtB5_19UserToDesignMapping26add_master_mappings_if_new.exit.i, label %bb.pz
 
 bb.pz:                                            ; preds = %_RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtCs1qcNTItuk7F_13glyphs_reader4font4AxisEIBX_INtCsidwnrrI1Awe_13ordered_float12OrderedFloatdEEEINtB5_7ZipImplBW_B24_E4nextB1q_.exit.thread.loopexit.i.i, %.lr.ph.i112.i
   %.sroa.0.015.i.i = phi ptr [ %i.bmp, %.lr.ph.i112.i ], [ %2, %_RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtCs1qcNTItuk7F_13glyphs_reader4font4AxisEIBX_INtCsidwnrrI1Awe_13ordered_float12OrderedFloatdEEEINtB5_7ZipImplBW_B24_E4nextB1q_.exit.thread.loopexit.i.i ] ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %.sroa.0.015.i.i, i64 544 ; 2 uses
   %i.bvy = getelementptr i8, ptr %.sroa.0.015.i.i, i64 288
   %.val.i114.i = load ptr, ptr %i.bvy, align 8, !noalias !4151, !nonnull !6, !noundef !6 ; 2 uses
   %i.bvz = getelementptr i8, ptr %.sroa.0.015.i.i, i64 296

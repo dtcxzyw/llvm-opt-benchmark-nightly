@@ -205,14 +205,10 @@ bb.cp:                                            ; preds = %bb.cp, %bb.co
   %i.afi = getelementptr inbounds i8, ptr %.1.i958, i64 %i.afh
   %i.afj = load float, ptr %i.afi, align 4, !tbaa !165
   %i.afk = fcmp olt float %i.afj, %i.aff
-  br i1 %i.afk, label %bb.cp, label %.preheader1545, !llvm.loop !22
+  br i1 %i.afk, label %bb.cp, label %bb.cq, !llvm.loop !22
 
-.preheader1545:                                   ; preds = %bb.cp
-  %24 = getelementptr inbounds i8, ptr %.1.i958, i64 %i.afh ; 2 uses
-  br label %bb.cq
-
-bb.cq:                                            ; preds = %.preheader1545, %bb.cq
-  %.1884 = phi i64 [ %i.afl, %bb.cq ], [ %.0883, %.preheader1545 ] ; 7 uses
+bb.cq:                                            ; preds = %bb.cp, %bb.cq
+  %.1884 = phi i64 [ %i.afl, %bb.cq ], [ %.0883, %bb.cp ] ; 7 uses
   %i.afl = add i64 %.1884, -1                     ; 4 uses
   %sext945 = shl i64 %i.afl, 32
   %i.afm = ashr exact i64 %sext945, 29            ; 2 uses
@@ -222,20 +218,22 @@ bb.cq:                                            ; preds = %.preheader1545, %bb
   br i1 %i.afp, label %bb.cq, label %bb.cr, !llvm.loop !23
 
 bb.cr:                                            ; preds = %bb.cq
-  %i.afq = getelementptr inbounds i8, ptr %.1.i958, i64 %i.afm ; 3 uses
+  %i.afq = getelementptr inbounds i8, ptr %.1.i958, i64 %i.afm ; 4 uses
   %.not946 = icmp ult i64 %i.afg, %i.afl
-  %25 = load i64, ptr %i.afq, align 4             ; 2 uses
   br i1 %.not946, label %bb.cs, label %bb.ct
 
 bb.cs:                                            ; preds = %bb.cr
-  %i.afr = load i64, ptr %24, align 4
-  store i64 %25, ptr %24, align 4
-  store i64 %i.afr, ptr %i.afq, align 4
+  %24 = getelementptr inbounds i8, ptr %.1.i958, i64 %i.afh ; 2 uses
+  %25 = load i64, ptr %24, align 4
+  %i.afr = load i64, ptr %i.afq, align 4
+  store i64 %i.afr, ptr %24, align 4
+  store i64 %25, ptr %i.afq, align 4
   br label %bb.co
 
 bb.ct:                                            ; preds = %bb.cr
   %i.afs = load i64, ptr %i.afb, align 4
-  store i64 %25, ptr %i.afb, align 4
+  %26 = load i64, ptr %i.afq, align 4
+  store i64 %26, ptr %i.afb, align 4
   store i64 %i.afs, ptr %i.afq, align 4
   %i.aft = add i64 %.1884, -2                     ; 5 uses
   %i.afu = sub i64 %i.aft, %.0861
@@ -638,12 +636,12 @@ bb.fg:                                            ; preds = %bb.ff
   br label %b3CullPoints.exit.i
 
 .lr.ph322.i.preheader.i:                          ; preds = %bb.ff
-  %.sroa.01.0.vec.extract.i.i.i = extractelement <2 x float> %.sroa.9112.16.copyload.i.i, i64 0
   %i.awy = fsub <2 x float> %.sroa.9112.16.copyload.i.i, %.sroa.0101.0.copyload.i.i ; 2 uses
   %i.awz = shufflevector <2 x float> %i.awy, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   br label %.lr.ph322.i.i
 
 ._crit_edge.i.i:                                  ; preds = %b3IsBetterCullCandidate.exit229.thread294.i.i
+  %.sroa.01.0.vec.extract.i.i.i = extractelement <2 x float> %.sroa.9112.16.copyload.i.i, i64 0
   %i.axa = fcmp olt float %.1185.i.i, 0.000000e+00
   %i.axb = icmp eq i32 %.1187.i.i, -1
   br i1 %i.axb, label %._crit_edge.thread.i.i, label %bb.fi

@@ -205,7 +205,6 @@ bb.a:
   br i1 %i.c, label %bb.b, label %bb.k
 
 bb.b:                                             ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 568 ; 3 uses
   %i.d = sub nsw i32 %i.b, %1                     ; 2 uses
   %i.e = icmp sgt i32 %i.d, 0
   br i1 %i.e, label %.lr.ph, label %._crit_edge
@@ -215,6 +214,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 ._crit_edge:                                      ; preds = %bb.c, %bb.b
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 568 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 552 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 560 ; 3 uses
   %i.i = load i32, ptr %i.h, align 8, !tbaa !102  ; 3 uses
@@ -617,7 +617,6 @@ _ZN4cvc58internal7Minisat3vecIiE8capacityEi.exit: ; preds = %bb.b, %bb.d, %bb.e
 
 vector.ph:                                        ; preds = %.lr.ph
   %n.vec = and i64 %i.ab, -8                      ; 3 uses
-  %3 = add nsw i64 %n.vec, %i.aa
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %.pre, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %invariant.gep = getelementptr [4 x i8], ptr %i.z, i64 %i.aa
@@ -634,6 +633,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ad, label %middle.block, label %vector.body, !llvm.loop !551
 
 middle.block:                                     ; preds = %vector.body
+  %3 = add nsw i64 %n.vec, %i.aa
   %cmp.n = icmp eq i64 %i.ab, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
@@ -1036,14 +1036,10 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   %i.ak = getelementptr inbounds [4 x i8], ptr %.tr46, i64 %indvars.iv.next
   %.sroa.03.0.copyload = load i32, ptr %i.ak, align 4, !tbaa !80 ; 2 uses
   %i.al = icmp slt i32 %.sroa.03.0.copyload, %.sroa.018.0.copyload
-  br i1 %i.al, label %bb.c, label %.preheader, !llvm.loop !568
+  br i1 %i.al, label %bb.c, label %bb.d, !llvm.loop !568
 
-.preheader:                                       ; preds = %bb.c
-  %2 = getelementptr inbounds [4 x i8], ptr %.tr46, i64 %indvars.iv.next ; 3 uses
-  br label %bb.d
-
-bb.d:                                             ; preds = %.preheader, %bb.d
-  %indvars.iv55 = phi i64 [ %.034, %.preheader ], [ %indvars.iv.next56, %bb.d ]
+bb.d:                                             ; preds = %bb.c, %bb.d
+  %indvars.iv55 = phi i64 [ %indvars.iv.next56, %bb.d ], [ %.034, %bb.c ]
   %indvars.iv.next56 = add nsw i64 %indvars.iv55, -1 ; 5 uses
   %i.am = getelementptr inbounds [4 x i8], ptr %.tr46, i64 %indvars.iv.next56
   %.sroa.0.0.copyload = load i32, ptr %i.am, align 4, !tbaa !80 ; 2 uses
@@ -1051,6 +1047,7 @@ bb.d:                                             ; preds = %.preheader, %bb.d
   br i1 %i.an, label %bb.d, label %bb.e, !llvm.loop !569
 
 bb.e:                                             ; preds = %bb.d
+  %2 = getelementptr inbounds [4 x i8], ptr %.tr46, i64 %indvars.iv.next ; 3 uses
   %.not = icmp slt i64 %indvars.iv.next, %indvars.iv.next56
   br i1 %.not, label %bb.f, label %tailrecurse
 

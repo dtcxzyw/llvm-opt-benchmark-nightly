@@ -204,11 +204,7 @@ bb.a:
 
 .noexc4:                                          ; preds = %.noexc3
   %i.g = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull @.str.55, i64 noundef 2)
-          to label %.noexc5 unwind label %bb.j    ; 0 uses
-
-.noexc5:                                          ; preds = %.noexc4
-  %.val.i.i.i.i.i.i = load i32, ptr %1, align 4, !tbaa !122 ; 6 uses
-  br label %.critedge.i.i.i.i.i.i.i.i.i
+          to label %.critedge.i.i.i.i.i.i.i.i.i unwind label %bb.j ; 0 uses
 
 .critedge.1.i.i.i.i.i.i.i.i.i:                    ; preds = %.critedge38.i.i.i.i.i.i.i.i.i, %.critedge.1.i.i.i.i.i.i.i.i.i
   %indvars.iv.1.i.i.i.i.i.i.i.i.i = phi i64 [ %indvars.iv.next.1.i.i.i.i.i.i.i.i.i, %.critedge.1.i.i.i.i.i.i.i.i.i ], [ %indvars.iv63.i.i.i.i.i.i.i.i.i, %.critedge38.i.i.i.i.i.i.i.i.i ] ; 4 uses
@@ -364,8 +360,8 @@ bb.a:
   %i.bk = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull @.str.57, i64 noundef 7)
           to label %_ZN7testing8internal14UniversalPrintISt5tupleIJN2cv5Size_IiEES5_N11opencv_test12_GLOBAL__N_110MethodTypeEEEEEvRKT_PSo.exit.i unwind label %bb.j ; 0 uses
 
-.critedge.i.i.i.i.i.i.i.i.i:                      ; preds = %.critedge.i.i.i.i.i.i.i.i.i, %.noexc5
-  %indvars.iv.i.i.i.i.i.i.i.i.i = phi i64 [ %indvars.iv.next.i.i.i.i.i.i.i.i.i, %.critedge.i.i.i.i.i.i.i.i.i ], [ 0, %.noexc5 ] ; 4 uses
+.critedge.i.i.i.i.i.i.i.i.i:                      ; preds = %.noexc4, %.critedge.i.i.i.i.i.i.i.i.i
+  %indvars.iv.i.i.i.i.i.i.i.i.i = phi i64 [ %indvars.iv.next.i.i.i.i.i.i.i.i.i, %.critedge.i.i.i.i.i.i.i.i.i ], [ 0, %.noexc4 ] ; 4 uses
   %i.bl = getelementptr inbounds nuw i8, ptr @.str.56, i64 %indvars.iv.i.i.i.i.i.i.i.i.i
   %i.bm = load i8, ptr %i.bl, align 1, !tbaa !43  ; 3 uses
   %i.bn = sext i8 %i.bm to i32
@@ -391,6 +387,7 @@ bb.a:
   br i1 %or.cond43.i.i.i.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.i.i.i.i, label %.critedge38.i.i.i.i.i.i.i.i.i, !llvm.loop !421
 
 .critedge38.i.i.i.i.i.i.i.i.i:                    ; preds = %.preheader.i.i.i.i.i.i.i.i.i
+  %.val.i.i.i.i.i.i = load i32, ptr %1, align 4   ; 6 uses
   %.not35.i.i.i.i.i.i.i.i.i = icmp eq i32 %.val.i.i.i.i.i.i, 0
   br i1 %.not35.i.i.i.i.i.i.i.i.i, label %bb.b, label %.critedge.1.i.i.i.i.i.i.i.i.i
 

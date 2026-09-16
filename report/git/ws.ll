@@ -204,8 +204,7 @@ bb.s:                                             ; preds = %._crit_edge
   %i.bd = and i32 %3, 256
   %.not147 = icmp eq i32 %i.bd, 0
   %.3106..3110 = tail call i32 @llvm.smax.i32(i32 %.0107.lcssa, i32 %.0103.lcssa)
-  %.0.in = select i1 %.not147, i32 %.0107.lcssa, i32 %.3106..3110 ; 2 uses
-  %.0 = add i32 %.0.in, 1                         ; 3 uses
+  %.0.in = select i1 %.not147, i32 %.0107.lcssa, i32 %.3106..3110 ; 3 uses
   %.not148286 = icmp slt i32 %.0.in, 0
   br i1 %.not148286, label %._crit_edge294, label %.lr.ph290
 
@@ -213,7 +212,8 @@ bb.s:                                             ; preds = %._crit_edge
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.bg = and i32 %3, 63
-  %wide.trip.count329 = zext i32 %.0 to i64
+  %5 = add nuw i32 %.0.in, 1
+  %wide.trip.count329 = zext i32 %5 to i64
   br label %bb.t
 
 .preheader237:                                    ; preds = %bb.x
@@ -321,6 +321,7 @@ strbuf_addch.exit173:                             ; preds = %strbuf_avail.exit.i
   br i1 %i.cg, label %bb.y, label %._crit_edge294, !llvm.loop !41
 
 ._crit_edge294:                                   ; preds = %strbuf_addch.exit173, %bb.s, %.preheader237
+  %.0 = add nsw i32 %.0.in, 1                     ; 2 uses
   %i.ch = sub nsw i32 %.2125366, %.0
   %i.ci = sext i32 %.0 to i64
   %i.cj = getelementptr inbounds i8, ptr %1, i64 %i.ci

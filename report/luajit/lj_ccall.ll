@@ -128,17 +128,12 @@ bb.b:                                             ; preds = %bb.b, %bb.a
 ctype_raw.exit:                                   ; preds = %bb.b
   %.mask = and i32 %i.q, -268435456
   switch i32 %.mask, label %bb.cb [
-    i32 536870912, label %4
+    i32 536870912, label %bb.c
     i32 1610612736, label %.thread
   ]
 
-4:                                                ; preds = %ctype_raw.exit
-  %5 = getelementptr inbounds nuw i8, ptr %.0.i, i64 4
-  %6 = load i32, ptr %5, align 4, !tbaa !26
-  br label %bb.c
-
-bb.c:                                             ; preds = %bb.c, %4
-  %i.u = phi i32 [ %i.q, %4 ], [ %i.y, %bb.c ]
+bb.c:                                             ; preds = %ctype_raw.exit, %bb.c
+  %i.u = phi i32 [ %i.y, %bb.c ], [ %i.q, %ctype_raw.exit ]
   %i.v = and i32 %i.u, 65535                      ; 3 uses
   %i.w = zext nneg i32 %i.v to i64
   %i.x = getelementptr inbounds nuw [24 x i8], ptr %i.o, i64 %i.w ; 3 uses
@@ -158,9 +153,11 @@ ctype_rawchild.exit:                              ; preds = %bb.c
   br label %bb.f
 
 bb.d:                                             ; preds = %ctype_rawchild.exit
+  %4 = getelementptr inbounds nuw i8, ptr %.0.i, i64 4
+  %5 = load i32, ptr %4, align 4, !tbaa !26
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #6
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %i.ae = icmp eq i32 %6, 4
+  %i.ae = icmp eq i32 %5, 4
   br i1 %i.ae, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d

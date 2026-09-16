@@ -204,15 +204,15 @@ bb.w:                                             ; preds = %bb.v
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.v
-  %i.jb = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZL7options, i64 874), align 2, !tbaa !38
-  %.not92 = icmp eq i8 %i.jb, 0
-  %i.jc = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL7options, i64 848), align 16
-  %spec.select209 = select i1 %.not92, ptr null, ptr %i.jc
+  %i.jb = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZL7options, i64 874), align 2, !tbaa !38 ; 2 uses
+  %i.jc = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL7options, i64 848), align 16 ; 2 uses
   store ptr null, ptr %i.ab, align 8, !tbaa !43
   %i.jd = icmp sgt i32 %i.ad, 1
   br i1 %i.jd, label %.lr.ph247.preheader, label %._crit_edge.thread
 
 ._crit_edge.thread:                               ; preds = %bb.x
+  %.not92406 = icmp eq i8 %i.jb, 0
+  %spec.select209407 = select i1 %.not92406, ptr null, ptr %i.jc
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aa) #16
@@ -234,6 +234,8 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph247, !llvm.loop !25
 
 ._crit_edge:                                      ; preds = %.lr.ph247
+  %.not92 = icmp eq i8 %i.jb, 0
+  %spec.select209 = select i1 %.not92, ptr null, ptr %i.jc ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y) #16
   store ptr null, ptr %i.y, align 8, !tbaa !43
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z) #16
@@ -472,6 +474,7 @@ bb.ar:                                            ; preds = %bb.z
 
 .loopexit214:                                     ; preds = %._crit_edge.i110, %._crit_edge.thread, %._crit_edge
   %.not126.i415 = phi i1 [ true, %._crit_edge ], [ true, %._crit_edge.thread ], [ false, %._crit_edge.i110 ]
+  %spec.select209417 = phi ptr [ %spec.select209, %._crit_edge ], [ %spec.select209407, %._crit_edge.thread ], [ %spec.select209, %._crit_edge.i110 ]
   %.sroa.0.0.lcssa407 = phi ptr [ null, %._crit_edge ], [ null, %._crit_edge.thread ], [ %i.jh, %._crit_edge.i110 ] ; 4 uses
   %.sroa.10.5.ph = phi ptr [ null, %._crit_edge ], [ null, %._crit_edge.thread ], [ %.sroa.10.3, %._crit_edge.i110 ] ; 5 uses
   %.sroa.14.5.ph = phi ptr [ null, %._crit_edge ], [ null, %._crit_edge.thread ], [ %.sroa.14.3, %._crit_edge.i110 ] ; 4 uses
@@ -874,7 +877,7 @@ _ZL22pkg_createOptMatchArchPc.exit.i:             ; preds = %bb.gx, %bb.gw
   %i.aiv = load i8, ptr %i.x, align 8, !tbaa !14
   %i.aiw = icmp eq i8 %i.aiv, 0
   %i.aix = select i1 %i.aiw, ptr null, ptr %i.x
-  call void @writeObjectCode(ptr noundef nonnull %i.s, ptr noundef nonnull %.sroa.38138.0, ptr noundef %.sroa.29.0, ptr noundef %i.aix, ptr noundef %spec.select209, ptr noundef null, ptr noundef nonnull %i.v, i64 noundef 4096, i8 noundef signext 1)
+  call void @writeObjectCode(ptr noundef nonnull %i.s, ptr noundef nonnull %.sroa.38138.0, ptr noundef %.sroa.29.0, ptr noundef %i.aix, ptr noundef %spec.select209417, ptr noundef null, ptr noundef nonnull %i.v, i64 noundef 4096, i8 noundef signext 1)
   %i.aiy = call signext i8 @T_FileStream_file_exists(ptr noundef nonnull %i.x)
   %.not.i237.i = icmp eq i8 %i.aiy, 0
   br i1 %.not.i237.i, label %_ZL23pkg_destroyOptMatchArchPc.exit.i, label %bb.gy

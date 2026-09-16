@@ -204,7 +204,6 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %.sroa.0.0.i.i.i.i, -4         ; 4 uses
-  %2 = add i64 %.sroa.5.0.copyload, %n.vec        ; 2 uses
   %i.p = getelementptr [8 x i8], ptr %.sroa.8.0.copyload, i64 %.sroa.5.0.copyload
   br label %vector.body
 
@@ -231,6 +230,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.z, label %middle.block, label %vector.body, !llvm.loop !280
 
 middle.block:                                     ; preds = %vector.body
+  %2 = add i64 %.sroa.5.0.copyload, %n.vec        ; 2 uses
   %cmp.n = icmp eq i64 %.sroa.0.0.i.i.i.i, %n.vec
   br i1 %cmp.n, label %_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterdEINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterdEENtNtNtB9_6traits8iterator8Iterator4folduNCINvNtB7_3map8map_foldTRddEduNCNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB3v_14UnigramTrainer10run_e_steps1_00NCINvNvB2e_8for_each4calldNCINvMsj_B1t_INtB1t_3VecdE14extend_trustedINtB2X_3MapBM_B3m_EE0E0E0EB3B_.exit, label %scalar.ph.preheader
 
@@ -371,7 +371,6 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %.sroa.0.0.i.i.i.i, -4         ; 4 uses
-  %2 = add i64 %.sroa.5.0.copyload, %n.vec        ; 2 uses
   %i.p = getelementptr [8 x i8], ptr %.sroa.8.0.copyload, i64 %.sroa.5.0.copyload
   br label %vector.body
 
@@ -398,6 +397,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.z, label %middle.block, label %vector.body, !llvm.loop !303
 
 middle.block:                                     ; preds = %vector.body
+  %2 = add i64 %.sroa.5.0.copyload, %n.vec        ; 2 uses
   %cmp.n = icmp eq i64 %.sroa.0.0.i.i.i.i, %n.vec
   br i1 %cmp.n, label %_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterdEINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterdEENtNtNtB9_6traits8iterator8Iterator4folduNCINvNtB7_3map8map_foldTRddEduNCNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB3v_14UnigramTrainer21prune_sentence_piecess0_00NCINvNvB2e_8for_each4calldNCINvMsj_B1t_INtB1t_3VecdE14extend_trustedINtB2X_3MapBM_B3m_EE0E0E0EB3B_.exit, label %scalar.ph.preheader
 
@@ -800,8 +800,6 @@ bb.a:
 
 vector.ph:                                        ; preds = %.lr.ph.i
   %n.vec = and i64 %i.g, -8                       ; 4 uses
-  %2 = add i64 %.sroa.4.0.copyload, %n.vec        ; 2 uses
-  %3 = add i64 %i.b, %n.vec
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %.pre.i, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.h = getelementptr [4 x i8], ptr %.sroa.6.0.copyload, i64 %.sroa.4.0.copyload
@@ -818,6 +816,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.k, label %middle.block, label %vector.body, !llvm.loop !1046
 
 middle.block:                                     ; preds = %vector.body
+  %2 = add i64 %.sroa.4.0.copyload, %n.vec        ; 2 uses
+  %3 = add i64 %i.b, %n.vec
   %cmp.n = icmp eq i64 %i.g, %n.vec
   br i1 %cmp.n, label %_RINvYINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNtNtBR_8adapters3map8map_foldjmuNCNvMNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer8encodingNtB2c_8Encoding3pads7_0NCINvNvBL_8for_each4callmNCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB3U_3VecmE14extend_trustedINtB1B_3MapB3_B27_EE0E0E0EB2g_.exit, label %scalar.ph.preheader
 
@@ -867,8 +867,6 @@ bb.a:
 
 vector.ph:                                        ; preds = %.lr.ph.i
   %n.vec = and i64 %i.g, -8                       ; 4 uses
-  %2 = add i64 %.sroa.4.0.copyload, %n.vec        ; 2 uses
-  %3 = add i64 %i.b, %n.vec
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %.pre.i, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.h = getelementptr [4 x i8], ptr %.sroa.6.0.copyload, i64 %.sroa.4.0.copyload
@@ -885,6 +883,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.k, label %middle.block, label %vector.body, !llvm.loop !1059
 
 middle.block:                                     ; preds = %vector.body
+  %2 = add i64 %.sroa.4.0.copyload, %n.vec        ; 2 uses
+  %3 = add i64 %i.b, %n.vec
   %cmp.n = icmp eq i64 %i.g, %n.vec
   br i1 %cmp.n, label %_RINvYINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNtNtBR_8adapters3map8map_foldjmuNCNvMNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer8encodingNtB2c_8Encoding3pads8_0NCINvNvBL_8for_each4callmNCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB3U_3VecmE14extend_trustedINtB1B_3MapB3_B27_EE0E0E0EB2g_.exit, label %scalar.ph.preheader
 
@@ -1142,8 +1142,6 @@ bb.a:
 
 vector.ph:                                        ; preds = %.lr.ph.i.preheader
   %n.vec = and i64 %i.b, -8                       ; 4 uses
-  %3 = add i64 %.sroa.4.0.copyload, %n.vec        ; 2 uses
-  %4 = add i64 %0, %n.vec
   %i.c = getelementptr [4 x i8], ptr %.sroa.6.0.copyload, i64 %.sroa.4.0.copyload
   br label %vector.body
 
@@ -1158,6 +1156,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.f, label %middle.block, label %vector.body, !llvm.loop !1113
 
 middle.block:                                     ; preds = %vector.body
+  %3 = add i64 %.sroa.4.0.copyload, %n.vec        ; 2 uses
+  %4 = add i64 %0, %n.vec
   %cmp.n = icmp eq i64 %i.b, %n.vec
   br i1 %cmp.n, label %_RINvYINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNtNtBR_8adapters3map8map_foldjmuNCNvMNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer8encodingNtB2c_8Encoding3padsc_0NCINvNvBL_8for_each4callmNCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB3U_3VecmE14extend_trustedINtB1B_3MapB3_B27_EE0E0E0EB2g_.exit, label %.lr.ph.i.preheader3
 
@@ -1560,7 +1560,6 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.l = icmp eq i64 %i.k, 0
   %i.m = select i1 %i.l, i64 8, i64 %i.k
   %n.vec = sub nsw i64 %i.e, %i.m                 ; 3 uses
-  %3 = add i64 %.sroa.5.0.copyload, %n.vec
   %i.n = getelementptr [4 x i8], ptr %.sroa.7.0.copyload, i64 %.sroa.5.0.copyload
   br label %vector.body
 
@@ -1604,11 +1603,15 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x i32> %i.at, ptr %i.av, align 4, !alias.scope !1306, !noalias !1307
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.aw = icmp eq i64 %index.next, %n.vec
-  br i1 %i.aw, label %scalar.ph.preheader, label %vector.body, !llvm.loop !1301
+  br i1 %i.aw, label %scalar.ph.preheader.loopexit, label %vector.body, !llvm.loop !1301
 
-scalar.ph.preheader:                              ; preds = %vector.body, %vector.memcheck, %bb.b
-  %.ph = phi i64 [ %.sroa.5.0.copyload, %vector.memcheck ], [ %.sroa.5.0.copyload, %bb.b ], [ %3, %vector.body ] ; 2 uses
-  %.sroa.01.0.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.b ], [ %n.vec, %vector.body ] ; 4 uses
+scalar.ph.preheader.loopexit:                     ; preds = %vector.body
+  %3 = add i64 %.sroa.5.0.copyload, %n.vec
+  br label %scalar.ph.preheader
+
+scalar.ph.preheader:                              ; preds = %scalar.ph.preheader.loopexit, %vector.memcheck, %bb.b
+  %.ph = phi i64 [ %.sroa.5.0.copyload, %vector.memcheck ], [ %.sroa.5.0.copyload, %bb.b ], [ %3, %scalar.ph.preheader.loopexit ] ; 2 uses
+  %.sroa.01.0.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.b ], [ %n.vec, %scalar.ph.preheader.loopexit ] ; 4 uses
   %i.ax = sub nsw i64 %i.e, %.sroa.01.0.i.ph
   %xtraiter = and i64 %i.ax, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -2011,7 +2014,6 @@ vector.memcheck:                                  ; preds = %bb.b
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.j, 1152921504606846974      ; 4 uses
-  %2 = add i64 %.sroa.5.0.copyload, %n.vec        ; 2 uses
   %i.n = load i64, ptr %i.e, align 8, !alias.scope !1367, !noalias !1368, !noundef !3
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.n, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -2037,6 +2039,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.x, label %middle.block, label %vector.body, !llvm.loop !1365
 
 middle.block:                                     ; preds = %vector.body
+  %2 = add i64 %.sroa.5.0.copyload, %n.vec        ; 2 uses
   %cmp.n = icmp eq i64 %i.j, %n.vec
   br i1 %cmp.n, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterTjjEENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB11_8adapters3map8map_foldRBQ_BQ_uNCINvMs0_NtNtCs2JiOgHzbbc7_10tokenizers9tokenizer10normalizerNtB2w_16NormalizedString5sliceINtNtNtBb_3ops5range5RangejEE0NCINvNvBV_8for_each4callBQ_NCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB4U_3VecBQ_E14extend_trustedINtB1L_3MapBF_B2n_EE0E0E0EB2A_.exit, label %scalar.ph.preheader
 
@@ -2238,7 +2241,6 @@ vector.memcheck:                                  ; preds = %bb.b
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.d, -8                       ; 4 uses
-  %3 = add i64 %.sroa.5.0.copyload, %n.vec        ; 2 uses
   %i.i = getelementptr [4 x i8], ptr %.sroa.7.0.copyload, i64 %.sroa.5.0.copyload
   br label %vector.body
 
@@ -2259,6 +2261,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.p, label %middle.block, label %vector.body, !llvm.loop !1396
 
 middle.block:                                     ; preds = %vector.body
+  %3 = add i64 %.sroa.5.0.copyload, %n.vec        ; 2 uses
   %cmp.n = icmp eq i64 %i.d, %n.vec
   br i1 %cmp.n, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters3map8map_foldRhmuNCNvNtNtCs2JiOgHzbbc7_10tokenizers14pre_tokenizers10byte_level10bytes_char0NCINvNvBS_8for_each4callmNCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB40_3VecmE14extend_trustedINtB1I_3MapBF_B2f_EE0E0E0EB2n_.exit, label %scalar.ph.preheader
 

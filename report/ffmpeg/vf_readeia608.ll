@@ -205,8 +205,12 @@ bb.j:                                             ; preds = %find_black_and_whit
   %min.iters.check = icmp ult i64 %i.eg, 5
   br i1 %min.iters.check, label %.lr.ph.i118.i.preheader, label %vector.ph
 
-.lr.ph.i118.i.preheader:                          ; preds = %vector.body, %.lr.ph.preheader.i.i
-  %indvars.iv.i119.i.ph = phi i64 [ 25, %.lr.ph.preheader.i.i ], [ %4, %vector.body ]
+.lr.ph.i118.i.preheader.loopexit:                 ; preds = %vector.body
+  %4 = add nsw i64 %n.vec, 25
+  br label %.lr.ph.i118.i.preheader
+
+.lr.ph.i118.i.preheader:                          ; preds = %.lr.ph.i118.i.preheader.loopexit, %.lr.ph.preheader.i.i
+  %indvars.iv.i119.i.ph = phi i64 [ 25, %.lr.ph.preheader.i.i ], [ %4, %.lr.ph.i118.i.preheader.loopexit ]
   br label %.lr.ph.i118.i
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i.i
@@ -214,7 +218,6 @@ vector.ph:                                        ; preds = %.lr.ph.preheader.i.
   %i.ei = icmp eq i64 %i.eh, 0
   %i.ej = select i1 %i.ei, i64 4, i64 %i.eh
   %n.vec = sub nsw i64 %i.eg, %i.ej               ; 2 uses
-  %4 = add nsw i64 %n.vec, 25
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -253,7 +256,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x float> %i.fk, ptr %i.ff, align 4, !tbaa !91
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.fl = icmp eq i64 %index.next, %n.vec
-  br i1 %i.fl, label %.lr.ph.i118.i.preheader, label %vector.body, !llvm.loop !72
+  br i1 %i.fl, label %.lr.ph.i118.i.preheader.loopexit, label %vector.body, !llvm.loop !72
 
 .preheader.i113.i:                                ; preds = %.lr.ph.i118.i, %bb.j
   %i.fm = sitofp nsz i32 %i.y to float            ; 2 uses

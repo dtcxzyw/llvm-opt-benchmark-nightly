@@ -13,20 +13,19 @@ bb.a:
   %i.a = fcmp olt double %0, 0.000000e+00         ; 2 uses
   %i.b = fneg double %0
   %.073 = select i1 %i.a, double %i.b, double %0  ; 4 uses
-  %.067 = zext i1 %i.a to i8                      ; 5 uses
+  %.067 = zext i1 %i.a to i8                      ; 4 uses
   %i.c = fcmp oeq double %0, 0.000000e+00
   br i1 %i.c, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %4 = or disjoint i8 %.067, 2                    ; 2 uses
   %i.d = icmp sgt i32 %2, 0
-  br i1 %i.d, label %.lr.ph106, label %.loopexit.a
+  br i1 %i.d, label %.lr.ph106, label %.loopexit
 
 .lr.ph106:                                        ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 5
   %i.f = zext nneg i32 %2 to i64
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.e, i8 48, i64 %i.f, i1 false)
-  br label %.loopexit.a
+  br label %.loopexit
 
 bb.c:                                             ; preds = %bb.a
   %i.g = fcmp uno double %.073, 0.000000e+00
@@ -97,16 +96,14 @@ bb.h:                                             ; preds = %.loopexit93
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %.loopexit93
-  %.080 = phi i32 [ %., %bb.h ], [ %2, %.loopexit93 ] ; 5 uses
+  %.080 = phi i32 [ %., %bb.h ], [ %2, %.loopexit93 ] ; 4 uses
   %i.ab = sext i32 %.080 to i64
   %i.ac = getelementptr inbounds [8 x i8], ptr @g_dtoa_round, i64 %i.ab
   %i.ad = load double, ptr %i.ac, align 8
   %i.ae = fadd double %.578, %i.ad                ; 3 uses
   %i.af = fcmp oge double %i.ae, 1.000000e+16     ; 2 uses
-  %5 = zext i1 %i.af to i32
-  %.5 = add nsw i32 %.4, %5                       ; 2 uses
   %i.ag = icmp sgt i32 %.080, 0
-  br i1 %i.ag, label %.lr.ph, label %.loopexit.a
+  br i1 %i.ag, label %.lr.ph, label %.loopexit92
 
 .lr.ph:                                           ; preds = %bb.i
   %i.ah = fdiv double %i.ae, 1.000000e+01
@@ -129,12 +126,21 @@ bb.j:                                             ; preds = %.lr.ph, %bb.j
   %i.ap = udiv i64 %.0104, 10
   %indvars.iv.next114 = add nuw nsw i64 %indvars.iv113, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next114, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit.a, label %bb.j, !llvm.loop !9
+  br i1 %exitcond.not, label %.loopexit92, label %bb.j, !llvm.loop !9
 
-.loopexit.a:                                      ; preds = %bb.j, %.lr.ph106, %bb.i, %bb.b, %bb.d, %bb.f
-  %.181 = phi i32 [ %2, %bb.b ], [ %2, %bb.d ], [ %2, %bb.f ], [ %.080, %bb.i ], [ %2, %.lr.ph106 ], [ %.080, %bb.j ] ; 2 uses
-  %.6 = phi i32 [ 0, %bb.b ], [ 0, %bb.d ], [ 0, %bb.f ], [ %.5, %bb.i ], [ 0, %.lr.ph106 ], [ %.5, %bb.j ]
-  %.168 = phi i8 [ %4, %bb.b ], [ %i.h, %bb.d ], [ %i.j, %bb.f ], [ %.067, %bb.i ], [ %4, %.lr.ph106 ], [ %.067, %bb.j ]
+.loopexit:                                        ; preds = %.lr.ph106, %bb.b
+  %4 = or disjoint i8 %.067, 2
+  br label %.loopexit.a
+
+.loopexit92:                                      ; preds = %bb.j, %bb.i
+  %5 = zext i1 %i.af to i32
+  %.5 = add nsw i32 %.4, %5
+  br label %.loopexit.a
+
+.loopexit.a:                                      ; preds = %.loopexit92, %.loopexit, %bb.d, %bb.f
+  %.181 = phi i32 [ %2, %.loopexit ], [ %2, %bb.d ], [ %2, %bb.f ], [ %.080, %.loopexit92 ] ; 2 uses
+  %.6 = phi i32 [ 0, %.loopexit ], [ 0, %bb.d ], [ 0, %bb.f ], [ %.5, %.loopexit92 ]
+  %.168 = phi i8 [ %4, %.loopexit ], [ %i.h, %bb.d ], [ %i.j, %bb.f ], [ %.067, %.loopexit92 ]
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 5
   %i.ar = sext i32 %.181 to i64
   %i.as = getelementptr inbounds i8, ptr %i.aq, i64 %i.ar

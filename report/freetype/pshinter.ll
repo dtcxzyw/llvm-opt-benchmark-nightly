@@ -205,8 +205,6 @@ bb.a:
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
   %n.vec = and i64 %i.aa, 1152921504606846968     ; 3 uses
-  %2 = mul i64 %n.vec, 72
-  %3 = getelementptr i8, ptr %i.l, i64 %2
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -257,6 +255,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bn, label %middle.block, label %vector.body, !llvm.loop !181
 
 middle.block:                                     ; preds = %vector.body
+  %2 = mul i64 %n.vec, 72
+  %3 = getelementptr i8, ptr %i.l, i64 %2
   %bin.rdx = add <4 x i32> %i.bm, %i.bl
   %i.bo = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
   %cmp.n = icmp eq i64 %i.aa, %n.vec
@@ -659,18 +659,14 @@ bb.f:                                             ; preds = %.preheader123
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !53
   %i.bb = and i32 %i.ba, 32
   %.not112 = icmp eq i32 %i.bb, 0
-  br i1 %.not112, label %.preheader, label %.preheader123.backedge
+  br i1 %.not112, label %bb.g, label %.preheader123.backedge
 
 .preheader123.backedge:                           ; preds = %bb.f, %bb.t
   %.4.be = phi ptr [ %i.ax, %bb.f ], [ %i.bd, %bb.t ]
   br label %.preheader123, !llvm.loop !191
 
-.preheader:                                       ; preds = %bb.f
-  %2 = getelementptr inbounds nuw i8, ptr %.4, i64 8
-  br label %bb.g
-
-bb.g:                                             ; preds = %.preheader, %bb.g
-  %.093 = phi ptr [ %i.bd, %bb.g ], [ %i.ax, %.preheader ]
+bb.g:                                             ; preds = %bb.f, %bb.g
+  %.093 = phi ptr [ %i.bd, %bb.g ], [ %i.ax, %bb.f ]
   %i.bc = getelementptr inbounds nuw i8, ptr %.093, i64 8
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !34 ; 8 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 28
@@ -680,6 +676,7 @@ bb.g:                                             ; preds = %.preheader, %bb.g
   br i1 %.not113, label %bb.g, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
+  %2 = getelementptr inbounds nuw i8, ptr %.4, i64 8
   %i.bh = getelementptr inbounds nuw i8, ptr %.4, i64 48
   %i.bi = load i64, ptr %i.bh, align 8, !tbaa !56 ; 4 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bd, i64 48
@@ -1082,8 +1079,6 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   store ptr %0, ptr %i.b, align 8, !tbaa !16
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 416
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 424
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 128
   %i.f = load i16, ptr %i.e, align 8, !tbaa !28
@@ -1173,8 +1168,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not76.7, label %._crit_edge, label %.lr.ph, !llvm.loop !226
 
 ._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.b
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 416
   %i.az = add nuw nsw i32 %i.j, 1
-  store i32 %i.az, ptr %4, align 8, !tbaa !123
+  store i32 %i.az, ptr %3, align 8, !tbaa !123
   %i.ba = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 130
   %i.bc = load i16, ptr %i.bb, align 2, !tbaa !28
@@ -1264,8 +1260,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not77.7, label %._crit_edge115, label %.lr.ph114, !llvm.loop !228
 
 ._crit_edge115:                                   ; preds = %.lr.ph114.prol.loopexit, %.lr.ph114, %._crit_edge
+  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.cw = add nuw nsw i32 %i.bg, 1
-  store i32 %i.cw, ptr %3, align 8, !tbaa !123
+  store i32 %i.cw, ptr %4, align 8, !tbaa !123
   %i.cx = getelementptr inbounds nuw i8, ptr %i.b, i64 824 ; 2 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.cz = load i8, ptr %i.cy, align 8, !tbaa !240
@@ -1302,7 +1299,6 @@ bb.b:                                             ; preds = %bb.a
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i
   %n.vec = and i64 %i.dv, -8                      ; 3 uses
-  %5 = shl i64 %n.vec, 1
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1328,6 +1324,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ee, label %middle.block, label %vector.body, !llvm.loop !229
 
 middle.block:                                     ; preds = %vector.body
+  %5 = shl i64 %n.vec, 1
   %rdx.minmax = call <4 x i16> @llvm.smax.v4i16(<4 x i16> %i.ec, <4 x i16> %i.ed)
   %i.ef = call i16 @llvm.vector.reduce.smax.v4i16(<4 x i16> %rdx.minmax) ; 2 uses
   %cmp.n = icmp eq i64 %i.dv, %n.vec
@@ -1367,7 +1364,6 @@ psh_calc_max_height.exit:                         ; preds = %.lr.ph.i, %middle.b
 
 vector.ph127:                                     ; preds = %.lr.ph.preheader.i79
   %n.vec128 = and i64 %i.eq, -8                   ; 3 uses
-  %6 = shl i64 %n.vec128, 1
   %broadcast.splatinsert = insertelement <4 x i16> poison, i16 %.010.lcssa.i, i64 0
   %broadcast.splat = shufflevector <4 x i16> %broadcast.splatinsert, <4 x i16> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body129
@@ -1395,6 +1391,7 @@ vector.body129:                                   ; preds = %vector.body129, %ve
   br i1 %i.ez, label %middle.block140, label %vector.body129, !llvm.loop !231
 
 middle.block140:                                  ; preds = %vector.body129
+  %6 = shl i64 %n.vec128, 1
   %rdx.minmax141 = call <4 x i16> @llvm.smax.v4i16(<4 x i16> %i.ex, <4 x i16> %i.ey)
   %i.fa = call i16 @llvm.vector.reduce.smax.v4i16(<4 x i16> %rdx.minmax141) ; 2 uses
   %cmp.n142 = icmp eq i64 %i.eq, %n.vec128
@@ -1434,7 +1431,6 @@ psh_calc_max_height.exit86:                       ; preds = %.lr.ph.i80, %middle
 
 vector.ph147:                                     ; preds = %.lr.ph.preheader.i88
   %n.vec148 = and i64 %i.fl, -8                   ; 3 uses
-  %7 = shl i64 %n.vec148, 1
   %broadcast.splatinsert149 = insertelement <4 x i16> poison, i16 %.010.lcssa.i85, i64 0
   %broadcast.splat150 = shufflevector <4 x i16> %broadcast.splatinsert149, <4 x i16> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body151
@@ -1462,6 +1458,7 @@ vector.body151:                                   ; preds = %vector.body151, %ve
   br i1 %i.fu, label %middle.block162, label %vector.body151, !llvm.loop !233
 
 middle.block162:                                  ; preds = %vector.body151
+  %7 = shl i64 %n.vec148, 1
   %rdx.minmax163 = call <4 x i16> @llvm.smax.v4i16(<4 x i16> %i.fs, <4 x i16> %i.ft)
   %i.fv = call i16 @llvm.vector.reduce.smax.v4i16(<4 x i16> %rdx.minmax163) ; 2 uses
   %cmp.n164 = icmp eq i64 %i.fl, %n.vec148
@@ -1501,7 +1498,6 @@ psh_calc_max_height.exit95:                       ; preds = %.lr.ph.i89, %middle
 
 vector.ph169:                                     ; preds = %.lr.ph.preheader.i97
   %n.vec170 = and i64 %i.gg, -8                   ; 3 uses
-  %8 = shl i64 %n.vec170, 1
   %broadcast.splatinsert171 = insertelement <4 x i16> poison, i16 %.010.lcssa.i94, i64 0
   %broadcast.splat172 = shufflevector <4 x i16> %broadcast.splatinsert171, <4 x i16> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body173
@@ -1529,6 +1525,7 @@ vector.body173:                                   ; preds = %vector.body173, %ve
   br i1 %i.gp, label %middle.block184, label %vector.body173, !llvm.loop !235
 
 middle.block184:                                  ; preds = %vector.body173
+  %8 = shl i64 %n.vec170, 1
   %rdx.minmax185 = call <4 x i16> @llvm.smax.v4i16(<4 x i16> %i.gn, <4 x i16> %i.go)
   %i.gq = call i16 @llvm.vector.reduce.smax.v4i16(<4 x i16> %rdx.minmax185) ; 2 uses
   %cmp.n186 = icmp eq i64 %i.gg, %n.vec170
@@ -1931,12 +1928,7 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   br i1 %min.iters.check72, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %4 = and i64 %i.bi, 28
   %n.vec = and i64 %i.bi, 536870880               ; 6 uses
-  %5 = getelementptr i8, ptr %i.bg, i64 %n.vec
-  %6 = getelementptr i8, ptr %i.bh, i64 %n.vec
-  %7 = trunc nuw nsw i64 %n.vec to i32
-  %8 = sub nsw i32 %.pre-phi78.i.i, %7
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1958,6 +1950,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bp, label %middle.block, label %vector.body, !llvm.loop !265
 
 middle.block:                                     ; preds = %vector.body
+  %4 = and i64 %i.bi, 28
+  %5 = getelementptr i8, ptr %i.bg, i64 %n.vec
+  %6 = getelementptr i8, ptr %i.bh, i64 %n.vec
+  %7 = trunc nuw nsw i64 %n.vec to i32
+  %8 = sub nsw i32 %.pre-phi78.i.i, %7
   %cmp.n = icmp eq i64 %n.vec, %i.bi
   br i1 %cmp.n, label %.thread.i.i, label %vec.epilog.iter.check
 
@@ -1968,10 +1965,6 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec79 = and i64 %i.bi, 536870908             ; 5 uses
-  %9 = getelementptr i8, ptr %i.bg, i64 %n.vec79
-  %10 = getelementptr i8, ptr %i.bh, i64 %n.vec79
-  %11 = trunc nuw nsw i64 %n.vec79 to i32
-  %12 = sub nsw i32 %.pre-phi78.i.i, %11
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -1987,6 +1980,10 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.br, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !266
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
+  %9 = getelementptr i8, ptr %i.bg, i64 %n.vec79
+  %10 = getelementptr i8, ptr %i.bh, i64 %n.vec79
+  %11 = trunc nuw nsw i64 %n.vec79 to i32
+  %12 = sub nsw i32 %.pre-phi78.i.i, %11
   %cmp.n86 = icmp eq i64 %n.vec79, %i.bi
   br i1 %cmp.n86, label %.thread.i.i, label %.lr.ph.i24.i.preheader
 

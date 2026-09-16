@@ -204,7 +204,6 @@ _RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit: ; preds = %bb.f, %bb.g
 bb.h:                                             ; preds = %bb.a, %bb.i
   %.sroa.0.0 = phi i64 [ 0, %bb.a ], [ %i.g, %bb.i ] ; 4 uses
   %i.af = sub nsw i64 %2, %.sroa.0.0              ; 2 uses
-  %3 = and i64 %i.af, 7                           ; 4 uses
   %i.ag = and i64 %i.af, -8                       ; 2 uses
   %i.ah = icmp ult i64 %.sroa.0.0, %i.ag
   br i1 %i.ah, label %.lr.ph, label %bb.k
@@ -262,6 +261,7 @@ bb.j:                                             ; preds = %_RNvNtNtCs6JMX4GRUq
 
 bb.k:                                             ; preds = %._crit_edge, %bb.h
   %.sroa.0.1.lcssa = phi i64 [ %i.da, %._crit_edge ], [ %.sroa.0.0, %bb.h ] ; 3 uses
+  %3 = and i64 %i.af, 7                           ; 4 uses
   %i.bj = icmp samesign ugt i64 %3, 3
   br i1 %i.bj, label %bb.l, label %bb.m
 
@@ -664,8 +664,12 @@ bb.a:
   %min.iters.check = icmp ult i64 %i.j, 17
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
-scalar.ph.preheader:                              ; preds = %vector.body, %.lr.ph.i
-  %.sroa.02.010.i.ph = phi i64 [ %i.b, %.lr.ph.i ], [ %3, %vector.body ]
+scalar.ph.preheader.loopexit:                     ; preds = %vector.body
+  %3 = add i64 %n.vec, %i.b
+  br label %scalar.ph.preheader
+
+scalar.ph.preheader:                              ; preds = %scalar.ph.preheader.loopexit, %.lr.ph.i
+  %.sroa.02.010.i.ph = phi i64 [ %i.b, %.lr.ph.i ], [ %3, %scalar.ph.preheader.loopexit ]
   br label %scalar.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i
@@ -673,7 +677,6 @@ vector.ph:                                        ; preds = %.lr.ph.i
   %i.l = icmp eq i64 %i.k, 0
   %i.m = select i1 %i.l, i64 16, i64 %i.k
   %n.vec = sub i64 %i.j, %i.m                     ; 2 uses
-  %3 = add i64 %n.vec, %i.b
   %invariant.gep = getelementptr i8, ptr %i.g, i64 %i.b
   br label %vector.body
 
@@ -685,7 +688,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <16 x i8> %wide.load, ptr %gep, align 1, !alias.scope !4789, !noalias !4790
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.o = icmp eq i64 %index.next, %n.vec
-  br i1 %i.o, label %scalar.ph.preheader, label %vector.body, !llvm.loop !4787
+  br i1 %i.o, label %scalar.ph.preheader.loopexit, label %vector.body, !llvm.loop !4787
 
 ._crit_edge.i:                                    ; preds = %bb.c, %.preheader.i
   %i.p = trunc nuw nsw i64 %i.c to i8

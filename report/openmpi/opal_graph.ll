@@ -204,12 +204,11 @@ bb.b:                                             ; preds = %bb.a
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !57   ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 56
   %i.h = load volatile i64, ptr %i.g, align 8, !tbaa !45
-  %4 = trunc i64 %i.h to i32                      ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 32
   %i.j = load volatile ptr, ptr %i.i, align 8, !tbaa !46 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %.not1314 = icmp eq ptr %i.j, %i.k
-  br i1 %.not1314, label %.loopexit.a, label %.lr.ph
+  br i1 %.not1314, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 32
@@ -246,10 +245,14 @@ opal_value_array_append_item.exit:                ; preds = %bb.c, %bb.d
   %i.ab = load ptr, ptr %i.e, align 8, !tbaa !57
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
   %.not13 = icmp eq ptr %i.aa, %i.ac
-  br i1 %.not13, label %.loopexit.a, label %bb.c, !llvm.loop !79
+  br i1 %.not13, label %.loopexit, label %bb.c, !llvm.loop !79
 
-.loopexit.a:                                      ; preds = %opal_value_array_append_item.exit, %bb.b, %bb.a
-  %.012 = phi i32 [ 0, %bb.a ], [ %4, %bb.b ], [ %4, %opal_value_array_append_item.exit ]
+.loopexit:                                        ; preds = %opal_value_array_append_item.exit, %bb.b
+  %4 = trunc i64 %i.h to i32
+  br label %.loopexit.a
+
+.loopexit.a:                                      ; preds = %.loopexit, %bb.a
+  %.012 = phi i32 [ 0, %bb.a ], [ %4, %.loopexit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   ret i32 %.012
 }

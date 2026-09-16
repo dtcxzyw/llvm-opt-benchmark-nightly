@@ -205,7 +205,6 @@ bb.i:                                             ; preds = %bb.j, %_RINvXs1_NtC
   %i.ce = phi i64 [ %i.as, %_RINvXs1_NtCs6xpQEr8gLsQ_11typst_utils4hashINtB6_8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleENtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13ECs9gmjTwvRRSu_10typst_html.exit.i.i ], [ %i.cs, %bb.j ] ; 2 uses
   %.sroa.0.0.i = phi i64 [ 0, %_RINvXs1_NtCs6xpQEr8gLsQ_11typst_utils4hashINtB6_8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleENtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13ECs9gmjTwvRRSu_10typst_html.exit.i.i ], [ %i.bg, %bb.j ] ; 8 uses
   %i.cf = sub nuw nsw i64 16, %.sroa.0.0.i        ; 2 uses
-  %2 = and i64 %i.cf, 7                           ; 4 uses
   %i.cg = and i64 %i.cf, 24                       ; 4 uses
   %i.ch = icmp samesign ult i64 %.sroa.0.0.i, %i.cg
   br i1 %i.ch, label %.lr.ph.i, label %bb.l
@@ -259,6 +258,7 @@ bb.l:                                             ; preds = %._crit_edge.i, %bb.
   %.lcssa213 = phi i64 [ %.lcssa88, %._crit_edge.i ], [ %.lcssa214, %bb.i ]
   %i.db = phi i64 [ %.lcssa91, %._crit_edge.i ], [ %i.ce, %bb.i ]
   %.sroa.0.1.lcssa.i = phi i64 [ %.lcssa, %._crit_edge.i ], [ %.sroa.0.0.i, %bb.i ] ; 3 uses
+  %2 = and i64 %i.cf, 7                           ; 4 uses
   %i.dc = icmp samesign ugt i64 %2, 3
   br i1 %i.dc, label %bb.m, label %bb.n
 
@@ -661,9 +661,15 @@ _RINvCsiSzwKAiqS6b_8smallvec10infallibleuECs9gmjTwvRRSu_10typst_html.exit.i.i.i.
   %min.iters.check = icmp samesign ult i64 %i.jr, 4
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.i83.i.i.i.i.i.i.preheader212, label %vector.memcheck
 
-.lr.ph.i.i.i.i.i.i.i.i83.i.i.i.i.i.i.preheader212: ; preds = %vector.body, %vector.memcheck, %.lr.ph.i.i.i.i.i.i.i.i83.i.i.i.i.i.i.preheader
-  %storemerge50.i.i.i.i.i.i.i.i.i.i.i.i.i.i.ph = phi i64 [ %i.jk, %vector.memcheck ], [ %i.jk, %.lr.ph.i.i.i.i.i.i.i.i83.i.i.i.i.i.i.preheader ], [ %1, %vector.body ]
-  %.sroa.0.049.i.i.i.i.i.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %.sink11.i.i.i.i.i.i.i60.i.i.i.i.i.i, %vector.memcheck ], [ %.sink11.i.i.i.i.i.i.i60.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i83.i.i.i.i.i.i.preheader ], [ %3, %vector.body ]
+.lr.ph.i.i.i.i.i.i.i.i83.i.i.i.i.i.i.preheader212.loopexit: ; preds = %vector.body
+  %1 = add i64 %i.jk, %n.vec
+  %2 = shl i64 %n.vec, 3
+  %3 = getelementptr i8, ptr %.sink11.i.i.i.i.i.i.i60.i.i.i.i.i.i, i64 %2
+  br label %.lr.ph.i.i.i.i.i.i.i.i83.i.i.i.i.i.i.preheader212
+
+.lr.ph.i.i.i.i.i.i.i.i83.i.i.i.i.i.i.preheader212: ; preds = %.lr.ph.i.i.i.i.i.i.i.i83.i.i.i.i.i.i.preheader212.loopexit, %vector.memcheck, %.lr.ph.i.i.i.i.i.i.i.i83.i.i.i.i.i.i.preheader
+  %storemerge50.i.i.i.i.i.i.i.i.i.i.i.i.i.i.ph = phi i64 [ %i.jk, %vector.memcheck ], [ %i.jk, %.lr.ph.i.i.i.i.i.i.i.i83.i.i.i.i.i.i.preheader ], [ %1, %.lr.ph.i.i.i.i.i.i.i.i83.i.i.i.i.i.i.preheader212.loopexit ]
+  %.sroa.0.049.i.i.i.i.i.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %.sink11.i.i.i.i.i.i.i60.i.i.i.i.i.i, %vector.memcheck ], [ %.sink11.i.i.i.i.i.i.i60.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i83.i.i.i.i.i.i.preheader ], [ %3, %.lr.ph.i.i.i.i.i.i.i.i83.i.i.i.i.i.i.preheader212.loopexit ]
   br label %.lr.ph.i.i.i.i.i.i.i.i83.i.i.i.i.i.i
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i83.i.i.i.i.i.i.preheader
@@ -678,9 +684,6 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.jx = icmp eq i64 %i.jw, 0
   %i.jy = select i1 %i.jx, i64 4, i64 %i.jw
   %n.vec = sub nsw i64 %i.js, %i.jy               ; 3 uses
-  %1 = add i64 %i.jk, %n.vec
-  %2 = shl i64 %n.vec, 3
-  %3 = getelementptr i8, ptr %.sink11.i.i.i.i.i.i.i60.i.i.i.i.i.i, i64 %2
   %i.jz = getelementptr inbounds nuw [8 x i8], ptr %.sink10.i.i.i.i.i.i.i.i.i65.i.i.i.i.i.i, i64 %i.jk
   br label %vector.body
 
@@ -697,7 +700,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x i64> %wide.load207, ptr %i.kd, align 8, !noalias !12968
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ke = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ke, label %.lr.ph.i.i.i.i.i.i.i.i83.i.i.i.i.i.i.preheader212, label %vector.body, !llvm.loop !12812
+  br i1 %i.ke, label %.lr.ph.i.i.i.i.i.i.i.i83.i.i.i.i.i.i.preheader212.loopexit, label %vector.body, !llvm.loop !12812
 
 ._crit_edge.i.i.i.i.i.i.i.i67.i.i.i.i.i.i:        ; preds = %bb.at, %_RINvCsiSzwKAiqS6b_8smallvec10infallibleuECs9gmjTwvRRSu_10typst_html.exit.i.i.i.i.i.i.i.i63.i.i.i.i.i.i
   %.sroa.0.0.lcssa.i.i.i.i.i.i.i.i68.i.i.i.i.i.i = phi ptr [ %.sink11.i.i.i.i.i.i.i60.i.i.i.i.i.i, %_RINvCsiSzwKAiqS6b_8smallvec10infallibleuECs9gmjTwvRRSu_10typst_html.exit.i.i.i.i.i.i.i.i63.i.i.i.i.i.i ], [ %i.ku, %bb.at ] ; 2 uses
@@ -1100,7 +1103,6 @@ _RNvNtCs83m0le5ggt2_9siphasher6sip1289u8to64_le.exit: ; preds = %bb.f, %bb.g
 bb.h:                                             ; preds = %bb.a, %bb.i
   %.sroa.0.0 = phi i64 [ 0, %bb.a ], [ %i.g, %bb.i ] ; 4 uses
   %i.af = sub nsw i64 %2, %.sroa.0.0              ; 2 uses
-  %3 = and i64 %i.af, 7                           ; 4 uses
   %i.ag = and i64 %i.af, -8                       ; 2 uses
   %i.ah = icmp ult i64 %.sroa.0.0, %i.ag
   br i1 %i.ah, label %.lr.ph, label %bb.k
@@ -1158,6 +1160,7 @@ bb.j:                                             ; preds = %_RNvNtCs83m0le5ggt2
 
 bb.k:                                             ; preds = %._crit_edge, %bb.h
   %.sroa.0.1.lcssa = phi i64 [ %i.da, %._crit_edge ], [ %.sroa.0.0, %bb.h ] ; 3 uses
+  %3 = and i64 %i.af, 7                           ; 4 uses
   %i.bj = icmp samesign ugt i64 %3, 3
   br i1 %i.bj, label %bb.l, label %bb.m
 

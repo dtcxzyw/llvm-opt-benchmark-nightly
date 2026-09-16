@@ -203,14 +203,10 @@ bb.b:                                             ; preds = %.preheader46.us, %b
   br i1 %i.ak, label %.lr.ph49.us.preheader, label %._crit_edge.us
 
 .lr.ph49.us.preheader:                            ; preds = %..preheader_crit_edge.us
-  br i1 %min.iters.check, label %.lr.ph49.us.preheader72, label %vector.ph
+  br i1 %min.iters.check, label %.lr.ph49.us.preheader72, label %vector.body
 
-vector.ph:                                        ; preds = %.lr.ph49.us.preheader
-  %6 = add i64 %indvars.iv60, %n.vec
-  br label %vector.body
-
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+vector.body:                                      ; preds = %.lr.ph49.us.preheader, %vector.body
+  %index = phi i64 [ %index.next, %vector.body ], [ 0, %.lr.ph49.us.preheader ] ; 2 uses
   %i.al = add nuw i64 %indvars.iv60, %index       ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %.052.us, i64 %i.al ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 4
@@ -229,6 +225,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.au, label %middle.block, label %vector.body, !llvm.loop !29
 
 middle.block:                                     ; preds = %vector.body
+  %6 = add i64 %indvars.iv60, %n.vec
   br i1 %cmp.n, label %._crit_edge.us, label %.lr.ph49.us.preheader72
 
 .lr.ph49.us.preheader72:                          ; preds = %.lr.ph49.us.preheader, %middle.block
@@ -463,7 +460,6 @@ bb.a:
   br i1 %min.iters.check, label %.lr.ph57.us.preheader109, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph57.us.preheader
-  %6 = add i64 %indvars.iv93.lcssa, %n.vec
   %i.bp = insertelement <4 x i32> <i32 poison, i32 -1, i32 -1, i32 -1>, i32 %.04361.us, i64 0
   br label %vector.body
 
@@ -524,6 +520,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.dk, label %middle.block, label %vector.body, !llvm.loop !35
 
 middle.block:                                     ; preds = %vector.body
+  %6 = add i64 %indvars.iv93.lcssa, %n.vec
   %bin.rdx = and <4 x i32> %i.dj, %i.di
   %i.dl = tail call i32 @llvm.vector.reduce.and.v4i32(<4 x i32> %bin.rdx)
   br label %.lr.ph57.us.preheader109
@@ -729,7 +726,6 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge
 
 vector.ph:                                        ; preds = %.lr.ph65.preheader
   %n.vec = and i64 %i.an, -8                      ; 3 uses
-  %3 = add nsw i64 %n.vec, %i.am
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -752,6 +748,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ax, label %middle.block, label %vector.body, !llvm.loop !37
 
 middle.block:                                     ; preds = %vector.body
+  %3 = add nsw i64 %n.vec, %i.am
   %cmp.n = icmp eq i64 %i.an, %n.vec
   br i1 %cmp.n, label %._crit_edge66, label %.lr.ph65.preheader79
 
@@ -945,7 +942,6 @@ bb.a:
 
 vector.ph:                                        ; preds = %.lr.ph41.preheader
   %n.vec = and i64 %i.k, 8589934584               ; 3 uses
-  %3 = add nuw nsw i64 %n.vec, %i.g
   br label %vector.body
 
 vector.body:                                      ; preds = %pred.store.continue64, %vector.ph
@@ -1040,6 +1036,7 @@ pred.store.continue64:                            ; preds = %pred.store.if63, %p
   br i1 %i.am, label %middle.block, label %vector.body, !llvm.loop !44
 
 middle.block:                                     ; preds = %pred.store.continue64
+  %3 = add nuw nsw i64 %n.vec, %i.g
   %cmp.n = icmp eq i64 %i.k, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph41.preheader65
 

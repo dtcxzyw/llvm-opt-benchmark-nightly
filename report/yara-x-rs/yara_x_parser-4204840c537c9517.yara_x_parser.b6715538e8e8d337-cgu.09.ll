@@ -202,10 +202,15 @@ bb.h:                                             ; preds = %bb.f
   %min.iters.check = icmp ult i64 %i.s, 33
   br i1 %min.iters.check, label %.lr.ph.preheader56, label %vector.ph
 
-.lr.ph.preheader56:                               ; preds = %vector.body, %.lr.ph.preheader
-  %.sroa.05.046.ph = phi ptr [ %i.o, %.lr.ph.preheader ], [ %3, %vector.body ]
-  %.sroa.010.045.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %vector.body ]
-  %.sroa.021.144.ph = phi ptr [ %1, %.lr.ph.preheader ], [ %4, %vector.body ]
+.lr.ph.preheader56.loopexit:                      ; preds = %vector.body
+  %3 = getelementptr i8, ptr %i.o, i64 %n.vec
+  %4 = getelementptr i8, ptr %1, i64 %n.vec
+  br label %.lr.ph.preheader56
+
+.lr.ph.preheader56:                               ; preds = %.lr.ph.preheader56.loopexit, %.lr.ph.preheader
+  %.sroa.05.046.ph = phi ptr [ %i.o, %.lr.ph.preheader ], [ %3, %.lr.ph.preheader56.loopexit ]
+  %.sroa.010.045.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %.lr.ph.preheader56.loopexit ]
+  %.sroa.021.144.ph = phi ptr [ %1, %.lr.ph.preheader ], [ %4, %.lr.ph.preheader56.loopexit ]
   br label %.lr.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -213,8 +218,6 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
   %i.u = icmp eq i64 %i.t, 0
   %i.v = select i1 %i.u, i64 32, i64 %i.t
   %n.vec = sub i64 %i.s, %i.v                     ; 4 uses
-  %3 = getelementptr i8, ptr %i.o, i64 %n.vec
-  %4 = getelementptr i8, ptr %1, i64 %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -229,7 +232,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <16 x i8> %wide.load53, ptr %i.x, align 8
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.y = icmp eq i64 %index.next, %n.vec
-  br i1 %i.y, label %.lr.ph.preheader56, label %vector.body, !llvm.loop !86
+  br i1 %i.y, label %.lr.ph.preheader56.loopexit, label %vector.body, !llvm.loop !86
 
 ._crit_edge:                                      ; preds = %bb.k
   %.not40 = icmp eq ptr %i.aa, %2

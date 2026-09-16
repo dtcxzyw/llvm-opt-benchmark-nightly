@@ -205,7 +205,6 @@ vector.ph:                                        ; preds = %vector.scevcheck
   %i.af = icmp eq i64 %i.ae, 0
   %i.ag = select i1 %i.af, i64 4, i64 %i.ae
   %n.vec = sub nsw i64 %i.u, %i.ag                ; 3 uses
-  %3 = getelementptr i8, ptr %1, i64 %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -345,11 +344,15 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x i8> %i.fd, ptr %next.gep, align 1
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.fe = icmp eq i64 %index.next, %n.vec
-  br i1 %i.fe, label %.lr.ph.preheader61, label %vector.body, !llvm.loop !73
+  br i1 %i.fe, label %.lr.ph.preheader61.loopexit, label %vector.body, !llvm.loop !73
 
-.lr.ph.preheader61:                               ; preds = %vector.body, %vector.scevcheck, %.lr.ph.preheader
-  %.sroa.0.052.ph = phi ptr [ %1, %vector.scevcheck ], [ %1, %.lr.ph.preheader ], [ %3, %vector.body ]
-  %.sroa.7.051.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %vector.body ]
+.lr.ph.preheader61.loopexit:                      ; preds = %vector.body
+  %3 = getelementptr i8, ptr %1, i64 %n.vec
+  br label %.lr.ph.preheader61
+
+.lr.ph.preheader61:                               ; preds = %.lr.ph.preheader61.loopexit, %vector.scevcheck, %.lr.ph.preheader
+  %.sroa.0.052.ph = phi ptr [ %1, %vector.scevcheck ], [ %1, %.lr.ph.preheader ], [ %3, %.lr.ph.preheader61.loopexit ]
+  %.sroa.7.051.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %.lr.ph.preheader61.loopexit ]
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader61, %_RNvMNtCskKLDkoKarTP_4core5sliceSf8split_atCsl8OoimOLbh_6qdrant.exit25
@@ -752,7 +755,6 @@ _RINvYINtNtNtCskKLDkoKarTP_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterat
 
 vector.ph:                                        ; preds = %.lr.ph
   %n.vec = and i64 %i.t, -8                       ; 3 uses
-  %3 = add i64 %.sroa.526.0.copyload, %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -771,6 +773,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.aa, label %middle.block, label %vector.body, !llvm.loop !165
 
 middle.block:                                     ; preds = %vector.body
+  %3 = add i64 %.sroa.526.0.copyload, %n.vec
   %cmp.n = icmp eq i64 %i.t, %n.vec
   br i1 %cmp.n, label %.thread32, label %scalar.ph.preheader
 

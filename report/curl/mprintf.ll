@@ -204,9 +204,8 @@ bb.h:                                             ; preds = %.loopexit209
   br i1 %i.bc, label %bb.i, label %.loopexit207.a
 
 bb.i:                                             ; preds = %bb.h
-  %7 = sub nsw i32 %i.ax, %i.ay                   ; 2 uses
   %i.bd = icmp sgt i64 %.2.idx, -1
-  br i1 %i.bd, label %.lr.ph239.preheader, label %.loopexit207.a
+  br i1 %i.bd, label %.lr.ph239.preheader, label %.loopexit207
 
 .lr.ph239.preheader:                              ; preds = %bb.i
   %i.be = add i32 %spec.store.select192, %i.av
@@ -219,11 +218,16 @@ bb.i:                                             ; preds = %bb.h
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep, i8 48, i64 %i.bi, i1 false), !tbaa !15
   %i.bj = xor i64 %umin, -1
   %i.bk = add nsw i64 %.2.idx, %i.bj
+  br label %.loopexit207
+
+.loopexit207:                                     ; preds = %.lr.ph239.preheader, %bb.i
+  %.4.idx.lcssa = phi i64 [ %.2.idx, %bb.i ], [ %i.bk, %.lr.ph239.preheader ]
+  %7 = sub nsw i32 %i.ax, %i.ay
   br label %.loopexit207.a
 
-.loopexit207.a:                                   ; preds = %.lr.ph239.preheader, %bb.i, %.thread, %bb.h
-  %.4131 = phi i32 [ %i.bb, %.thread ], [ %i.ax, %bb.h ], [ %7, %bb.i ], [ %7, %.lr.ph239.preheader ] ; 2 uses
-  %.5.idx = phi i64 [ %.2.add, %.thread ], [ %.2.idx, %bb.h ], [ %.2.idx, %bb.i ], [ %i.bk, %.lr.ph239.preheader ] ; 2 uses
+.loopexit207.a:                                   ; preds = %.loopexit207, %.thread, %bb.h
+  %.4131 = phi i32 [ %i.bb, %.thread ], [ %i.ax, %bb.h ], [ %7, %.loopexit207 ] ; 2 uses
+  %.5.idx = phi i64 [ %.2.add, %.thread ], [ %.2.idx, %bb.h ], [ %.4.idx.lcssa, %.loopexit207 ] ; 2 uses
   %i.bl = add nsw i32 %.4131, -2
   %spec.select178 = select i1 %or.cond5188, i32 %i.bl, i32 %.4131
   %i.bm = and i32 %i.b, 2
