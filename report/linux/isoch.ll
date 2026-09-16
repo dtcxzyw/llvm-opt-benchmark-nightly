@@ -204,7 +204,7 @@ agp_3_5_dev_list_sort.exit.i:                     ; preds = %agp_3_5_dev_list_in
   %i.ep = and i16 %i.eo, -193
   %.0147.tr.i = trunc nuw nsw i32 %.0147.lcssa205.i to i16
   %i.eq = shl nuw nsw i16 %.0147.tr.i, 6
-  %1 = or i16 %i.ep, %i.eq                        ; 2 uses
+  %1 = add nuw nsw i16 %i.ep, %i.eq               ; 2 uses
   store i16 %1, ptr %i.f, align 2
   %i.er = load i32, ptr %i.o, align 8
   %i.es = add i32 %i.er, 32
