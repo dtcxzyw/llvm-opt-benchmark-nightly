@@ -1,0 +1,190 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 7125c32f4938a..802c857098838 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -9348,6 +9348,49 @@ ScalarEvolution::ExitLimit ScalarEvolution::computeExitLimitFromICmp(
+ 
+   ExitLimit EL = computeExitLimitFromICmp(L, Pred, LHS, RHS, ControlsOnlyExit,
+                                           AllowPredicates);
++
++  // A samesign with unsigned compare is canonicalized by InstCombine
++  // (foldICmpUsingKnownBits) to give later folds a single predicate form to
++  // match, as unsigned compares combine better with zext, masks and known
++  // bits, while the samesign flag keeps the signed meaning recoverable.
++  // The unsigned and signed interpretations of the loop-exit compare are both
++  // valid, hence they give us 2 constraints on the maximum iterations. There
++  // are many cases where signed interpretation of the compare is better than
++  // unsigned one, and vice versa. Hence, we re-use existing analysis to
++  // compute both signed and unsigned interpretations and choose the tighter
++  // (better) constraint on loop exit policy.
++  if (Pred.hasSameSign() && ICmpInst::isUnsigned(Pred)) {
++    ExitLimit SignedEL =
++        computeExitLimitFromICmp(L, ICmpInst::getSignedPredicate(Pred), LHS,
++                                 RHS, ControlsOnlyExit, AllowPredicates);
++    // A is tighter than B if A has a constant max and B has none or a larger
++    // one.
++    auto HasTighterConstantMax = [](const ExitLimit &A, const ExitLimit &B) {
++      auto *MaxA = dyn_cast<SCEVConstant>(A.ConstantMaxNotTaken);
++      if (!MaxA)
++        return false;
++      auto *MaxB = dyn_cast<SCEVConstant>(B.ConstantMaxNotTaken);
++      if (!MaxB)
++        return true;
++      const APInt &ValA = MaxA->getAPInt(), &ValB = MaxB->getAPInt();
++      unsigned BitWidth = std::max(ValA.getBitWidth(), ValB.getBitWidth());
++      return ValA.zext(BitWidth).ult(ValB.zext(BitWidth));
++    };
++    // Prefer, in order: a result with full info, a result that needs no
++    // runtime predicates, and a tighter constant max. Ties keep unsigned.
++    bool PreferSigned;
++    if (SignedEL.hasFullInfo() != EL.hasFullInfo())
++      PreferSigned = SignedEL.hasFullInfo();
++    else if (!SignedEL.hasFullInfo())
++      PreferSigned = !EL.hasAnyInfo() && SignedEL.hasAnyInfo();
++    else if (SignedEL.Predicates.empty() != EL.Predicates.empty())
++      PreferSigned = SignedEL.Predicates.empty();
++    else
++      PreferSigned = HasTighterConstantMax(SignedEL, EL);
++    if (PreferSigned)
++      EL = SignedEL;
++  }
++
+   if (EL.hasAnyInfo())
+     return EL;
+ 
+diff --git a/llvm/test/Analysis/ScalarEvolution/exit-count-non-strict.ll b/llvm/test/Analysis/ScalarEvolution/exit-count-non-strict.ll
+index 023f51265d08e..28962ba20ee9d 100644
+--- a/llvm/test/Analysis/ScalarEvolution/exit-count-non-strict.ll
++++ b/llvm/test/Analysis/ScalarEvolution/exit-count-non-strict.ll
+@@ -445,28 +445,23 @@ define void @le_from_int_min_no_nuw_nsw(i32 %M, i32 %N) {
+ ; CHECK-NEXT:  Determining loop execution counts for: @le_from_int_min_no_nuw_nsw
+ ; CHECK-NEXT:  Loop %loop: <multiple exits> Unpredictable backedge-taken count.
+ ; CHECK-NEXT:    exit count for loop: ***COULDNOTCOMPUTE***
+-; CHECK-NEXT:    predicated exit count for loop: (-2147483648 + (2147483648 umax (1 + (zext i32 %M to i64))<nuw><nsw>))<nsw>
++; CHECK-NEXT:    predicated exit count for loop: (2147483649 + (sext i32 %M to i64))<nsw>
+ ; CHECK-NEXT:     Predicates:
+-; CHECK-NEXT:      {-2147483648,+,1}<nsw><%loop> Added Flags: <nusw>
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:    exit count for latch: (-2147483648 + %N)
+ ; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -1
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-2147483648 + %N)
+ ; CHECK-NEXT:    symbolic max exit count for loop: ***COULDNOTCOMPUTE***
+-; CHECK-NEXT:    predicated symbolic max exit count for loop: (-2147483648 + (2147483648 umax (1 + (zext i32 %M to i64))<nuw><nsw>))<nsw>
++; CHECK-NEXT:    predicated symbolic max exit count for loop: (2147483649 + (sext i32 %M to i64))<nsw>
+ ; CHECK-NEXT:     Predicates:
+-; CHECK-NEXT:      {-2147483648,+,1}<nsw><%loop> Added Flags: <nusw>
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:    symbolic max exit count for latch: (-2147483648 + %N)
+-; CHECK-NEXT:  Loop %loop: Predicated backedge-taken count is ((-2147483648 + (2147483648 umax (1 + (zext i32 %M to i64))<nuw><nsw>))<nsw> umin_seq (zext i32 (-2147483648 + %N) to i64))
++; CHECK-NEXT:  Loop %loop: Predicated backedge-taken count is ((zext i32 (-2147483648 + %N) to i64) umin (2147483649 + (sext i32 %M to i64))<nsw>)
+ ; CHECK-NEXT:   Predicates:
+-; CHECK-NEXT:      {-2147483648,+,1}<nsw><%loop> Added Flags: <nusw>
+-; CHECK-NEXT:  Loop %loop: Predicated constant max backedge-taken count is i64 2147483648
++; CHECK-NEXT:  Loop %loop: Predicated constant max backedge-taken count is i64 4294967295
+ ; CHECK-NEXT:   Predicates:
+-; CHECK-NEXT:      {-2147483648,+,1}<nsw><%loop> Added Flags: <nusw>
+-; CHECK-NEXT:  Loop %loop: Predicated symbolic max backedge-taken count is ((-2147483648 + (2147483648 umax (1 + (zext i32 %M to i64))<nuw><nsw>))<nsw> umin_seq (zext i32 (-2147483648 + %N) to i64))
++; CHECK-NEXT:  Loop %loop: Predicated symbolic max backedge-taken count is ((zext i32 (-2147483648 + %N) to i64) umin (2147483649 + (sext i32 %M to i64))<nsw>)
+ ; CHECK-NEXT:   Predicates:
+-; CHECK-NEXT:      {-2147483648,+,1}<nsw><%loop> Added Flags: <nusw>
+ ;
+ entry:
+   br label %loop
+diff --git a/llvm/test/Transforms/IndVarSimplify/samesign-exit-nowrap.ll b/llvm/test/Transforms/IndVarSimplify/samesign-exit-nowrap.ll
+new file mode 100644
+index 0000000000000..692f047cd2290
+--- /dev/null
++++ b/llvm/test/Transforms/IndVarSimplify/samesign-exit-nowrap.ll
+@@ -0,0 +1,35 @@
++; RUN: opt -passes='loop(indvars)' -S < %s | FileCheck %s --check-prefix=INDVARS
++; RUN: opt -disable-output -passes='print<scalar-evolution>' < %s 2>&1 | FileCheck %s --check-prefix=SCEV
++
++; The latch compare is a samesign unsigned comparison against a positive
++; constant, so for every well-defined execution %remaining is non-negative.
++; Deriving the exit limit from the equivalent signed predicate bounds the trip
++; count by i32 signed range (2^24 - 1 for a step of 128) instead of the
++; unsigned one (2^25 - 1), which is exactly what allows the parallel
++; offset IV to be proven non-wrapping.
++
++declare void @use(i32)
++
++define void @countdown_with_offset(i32 %remaining.start) {
++; INDVARS-LABEL: @countdown_with_offset(
++; INDVARS:       loop:
++; INDVARS:         %offset.next = add nuw i32 %offset, 128
++;
++; SCEV-LABEL: Determining loop execution counts for: @countdown_with_offset
++; SCEV-NEXT:  Loop %loop: backedge-taken count is ((127 + (-1 * (128 smin %remaining.start)) + %remaining.start) /u 128)
++; SCEV-NEXT:  Loop %loop: constant max backedge-taken count is i32 16777215
++entry:
++  br label %loop
++
++loop:
++  %remaining = phi i32 [ %remaining.start, %entry ], [ %remaining.next, %loop ]
++  %offset = phi i32 [ 0, %entry ], [ %offset.next, %loop ]
++  call void @use(i32 %offset)
++  %remaining.next = add i32 %remaining, -128
++  %offset.next = add i32 %offset, 128
++  %continue = icmp samesign ugt i32 %remaining, 128
++  br i1 %continue, label %loop, label %exit
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Transforms/IndVarSimplify/turn-to-invariant.ll b/llvm/test/Transforms/IndVarSimplify/turn-to-invariant.ll
+index 406b6ecd944f4..96516cbcc0889 100644
+--- a/llvm/test/Transforms/IndVarSimplify/turn-to-invariant.ll
++++ b/llvm/test/Transforms/IndVarSimplify/turn-to-invariant.ll
+@@ -1065,7 +1065,7 @@ define i32 @not_invariant_samesign(i32 %unknown_limit, ptr %length_ptr) {
+ ; CHECK-NEXT:    br label [[HEADER:%.*]]
+ ; CHECK:       header:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ 1, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[LATCH:%.*]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add nuw i32 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i32 [[IV]], 1
+ ; CHECK-NEXT:    [[RANGE_CHECK1_FIRST_ITER:%.*]] = icmp samesign ult i32 [[IV_NEXT]], [[UNKNOWN_LIMIT:%.*]]
+ ; CHECK-NEXT:    [[IS_POSITIVE:%.*]] = icmp sgt i32 [[UNKNOWN_LIMIT]], 0
+ ; CHECK-NEXT:    [[OR_COND:%.*]] = and i1 [[RANGE_CHECK1_FIRST_ITER]], [[IS_POSITIVE]]
+diff --git a/llvm/test/Transforms/IndVarSimplify/unreachable-exit.ll b/llvm/test/Transforms/IndVarSimplify/unreachable-exit.ll
+index bee6e0a34daad..8cf733936b585 100644
+--- a/llvm/test/Transforms/IndVarSimplify/unreachable-exit.ll
++++ b/llvm/test/Transforms/IndVarSimplify/unreachable-exit.ll
+@@ -83,16 +83,17 @@ define void @optimize_two_trap(i32 %block_size, i32 %onebound, i32 %otherbound)
+ ; CHECK-NEXT:    [[CMP14_NOT:%.*]] = icmp eq i32 [[BLOCK_SIZE]], 0
+ ; CHECK-NEXT:    br i1 [[CMP14_NOT]], label %[[FOR_COND_CLEANUP:.*]], label %[[FOR_BODY_PREHEADER:.*]]
+ ; CHECK:       [[FOR_BODY_PREHEADER]]:
+-; CHECK-NEXT:    [[TMP7:%.*]] = zext i32 [[ONEBOUND]] to i64
+-; CHECK-NEXT:    [[TMP8:%.*]] = add nuw nsw i64 [[TMP7]], 1
+-; CHECK-NEXT:    [[TMP2:%.*]] = zext i32 [[OTHERBOUND]] to i64
+-; CHECK-NEXT:    [[TMP3:%.*]] = add nuw nsw i64 [[TMP2]], 1
+-; CHECK-NEXT:    [[UMIN:%.*]] = call i64 @llvm.umin.i64(i64 [[TMP3]], i64 [[TMP8]])
++; CHECK-NEXT:    [[SMAX:%.*]] = call i32 @llvm.smax.i32(i32 [[ONEBOUND]], i32 -1)
++; CHECK-NEXT:    [[TMP5:%.*]] = add i32 [[SMAX]], 1
+ ; CHECK-NEXT:    [[TMP4:%.*]] = add i32 [[BLOCK_SIZE]], -1
+-; CHECK-NEXT:    [[TMP5:%.*]] = zext i32 [[TMP4]] to i64
+-; CHECK-NEXT:    [[UMIN1:%.*]] = call i64 @llvm.umin.i64(i64 [[UMIN]], i64 [[TMP5]])
+-; CHECK-NEXT:    [[TMP6:%.*]] = icmp eq i64 [[TMP8]], [[UMIN1]]
+-; CHECK-NEXT:    [[CMP2:%.*]] = icmp eq i64 [[TMP3]], [[UMIN1]]
++; CHECK-NEXT:    [[TMP2:%.*]] = freeze i32 [[TMP4]]
++; CHECK-NEXT:    [[SMAX1:%.*]] = call i32 @llvm.smax.i32(i32 [[OTHERBOUND]], i32 -1)
++; CHECK-NEXT:    [[TMP3:%.*]] = add i32 [[SMAX1]], 1
++; CHECK-NEXT:    [[TMP7:%.*]] = freeze i32 [[TMP3]]
++; CHECK-NEXT:    [[UMIN:%.*]] = call i32 @llvm.umin.i32(i32 [[TMP2]], i32 [[TMP7]])
++; CHECK-NEXT:    [[UMIN2:%.*]] = call i32 @llvm.umin.i32(i32 [[UMIN]], i32 [[TMP5]])
++; CHECK-NEXT:    [[TMP6:%.*]] = icmp eq i32 [[TMP5]], [[UMIN2]]
++; CHECK-NEXT:    [[CMP2:%.*]] = icmp eq i32 [[TMP3]], [[UMIN2]]
+ ; CHECK-NEXT:    br label %[[FOR_BODY:.*]]
+ ; CHECK:       [[FOR_COND_CLEANUP_LOOPEXIT:.*]]:
+ ; CHECK-NEXT:    br label %[[FOR_COND_CLEANUP]]
+diff --git a/llvm/test/Transforms/LoopVectorize/RISCV/dbg-tail-folding-by-evl.ll b/llvm/test/Transforms/LoopVectorize/RISCV/dbg-tail-folding-by-evl.ll
+index e7405906b1668..7dc9c672a4f82 100644
+--- a/llvm/test/Transforms/LoopVectorize/RISCV/dbg-tail-folding-by-evl.ll
++++ b/llvm/test/Transforms/LoopVectorize/RISCV/dbg-tail-folding-by-evl.ll
+@@ -7,7 +7,7 @@ define void @reverse_store(ptr %a, i64 %n) !dbg !3 {
+ ; CHECK-LABEL: define void @reverse_store(
+ ; CHECK-SAME: ptr [[A:%.*]], i64 [[N:%.*]]) #[[ATTR0:[0-9]+]] !dbg [[DBG3:![0-9]+]] {
+ ; CHECK-NEXT:  [[ENTRY:.*:]]
+-; CHECK-NEXT:    [[UMIN:%.*]] = call i64 @llvm.umin.i64(i64 [[N]], i64 1)
++; CHECK-NEXT:    [[UMIN:%.*]] = call i64 @llvm.smin.i64(i64 [[N]], i64 1)
+ ; CHECK-NEXT:    [[TMP1:%.*]] = add i64 [[N]], 1
+ ; CHECK-NEXT:    [[TMP9:%.*]] = sub i64 [[TMP1]], [[UMIN]]
+ ; CHECK-NEXT:    br label %[[VECTOR_PH:.*]]
