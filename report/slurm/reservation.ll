@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.p
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.p ] ; 5 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.p ] ; 4 uses
   %.02637 = phi ptr [ %i.j, %.lr.ph ], [ %i.ah, %bb.p ] ; 3 uses
   %i.m = load i8, ptr %.02637, align 1
   %i.n = icmp eq i8 %i.m, 45
@@ -305,12 +305,13 @@ bb.p:                                             ; preds = %_is_account_valid.e
   br label %.sink.split
 
 bb.q:                                             ; preds = %bb.n, %bb.o, %bb.k, %bb.l, %bb.g, %bb.h
-  %5 = and i64 %indvars.iv, 4294967295
-  %.not43 = icmp eq i64 %5, 0
+  %.0253847 = trunc i64 %indvars.iv to i32        ; 2 uses
+  %.not43 = icmp eq i32 %.0253847, 0
   br i1 %.not43, label %._crit_edge42, label %.lr.ph41.preheader
 
 .lr.ph41.preheader:                               ; preds = %bb.q
-  %wide.trip.count = and i64 %indvars.iv, 4294967295
+  %smax = call i32 @llvm.smax.i32(i32 %.0253847, i32 1)
+  %wide.trip.count = zext nneg i32 %smax to i64
   %.pre = load ptr, ptr %i.d, align 8
   br label %.lr.ph41
 
@@ -713,11 +714,12 @@ bb.bl:                                            ; preds = %bb.bk, %bb.bj, %bb.
   br i1 %.not90.i.i, label %.lr.ph79.split.i.i, label %.lr.ph79.split.us.preheader.i.i
 
 .lr.ph79.split.us.preheader.i.i:                  ; preds = %.lr.ph79.i.i
+  %smax.i.i = call i32 @llvm.smax.i32(i32 %.fr89.i.i, i32 1)
   %i.gx = sext i32 %.05686.i.i to i64
   %i.gy = sext i32 %.fr89.i.i to i64
   %i.gz = mul i32 %.fr89.i.i, %i.gq
   %i.ha = add i32 %i.gz, %.05686.i.i
-  %wide.trip.count.i.i = zext i32 %.fr89.i.i to i64
+  %wide.trip.count.i.i = zext nneg i32 %smax.i.i to i64
   br label %.lr.ph79.split.us.i.i
 
 .lr.ph79.split.us.i.i:                            ; preds = %bb.bz, %.lr.ph79.split.us.preheader.i.i
@@ -1118,6 +1120,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #17

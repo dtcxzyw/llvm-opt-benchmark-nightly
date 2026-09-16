@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.y
 
 bb.h:                                             ; preds = %bb.f
-  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 14 uses
+  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 12 uses
   %i.o = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %.sroa.09.0 ; 16 uses
   %.not.i33 = icmp ult i64 %i.n, %.sroa.01.0
   br i1 %.not.i33, label %bb.i, label %bb.j
@@ -261,7 +261,11 @@ bb.m:                                             ; preds = %bb.l
 
 .preheader:                                       ; preds = %_RNvYNvYNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1b_3ops8function5FnMutTRB5_B2i_EE8call_mutBb_.exit49, %.split, %.split52, %.split53, %.split54
   %.not106 = icmp eq i64 %i.n, 2
-  br i1 %.not106, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i, label %.lr.ph90
+  br i1 %.not106, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i, label %.lr.ph90.preheader
+
+.lr.ph90.preheader:                               ; preds = %.preheader
+  %smax113 = tail call i64 @llvm.smax.i64(i64 %i.n, i64 3) ; 2 uses
+  br label %.lr.ph90
 
 .split53:                                         ; preds = %bb.l
   %i.af = load i64, ptr %i.z, align 8, !alias.scope !542, !noalias !543, !noundef !3
@@ -296,11 +300,15 @@ _RNvYNvYNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtNtCs4N
 
 .preheader72:                                     ; preds = %_RNvYNvYNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1b_3ops8function5FnMutTRB5_B2i_EE8call_mutBb_.exit49, %.split, %.split52, %.split53, %.split54
   %.not105 = icmp eq i64 %i.n, 2
-  br i1 %.not105, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i, label %.lr.ph
+  br i1 %.not105, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %.preheader72, %bb.p
-  %i.az = phi i64 [ %i.be, %bb.p ], [ %i.r, %.preheader72 ] ; 2 uses
-  %.sroa.01.0.i.i83 = phi i64 [ %i.cl, %bb.p ], [ 2, %.preheader72 ] ; 8 uses
+.lr.ph.preheader:                                 ; preds = %.preheader72
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.n, i64 3) ; 2 uses
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.p
+  %i.az = phi i64 [ %i.be, %bb.p ], [ %i.r, %.lr.ph.preheader ] ; 2 uses
+  %.sroa.01.0.i.i83 = phi i64 [ %i.cl, %bb.p ], [ 2, %.lr.ph.preheader ] ; 8 uses
   %i.ba = getelementptr inbounds nuw [24 x i8], ptr %i.o, i64 %.sroa.01.0.i.i83 ; 3 uses
   %i.bb = add nsw i64 %.sroa.01.0.i.i83, -1       ; 2 uses
   %i.bc = icmp ult i64 %i.bb, %i.n
@@ -377,13 +385,13 @@ _RNvYNvYNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtNtCs4N
   br i1 %i.ck, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i, label %bb.p
 
 bb.p:                                             ; preds = %.split58, %.split57, %.split56, %.split55, %_RNvYNvYNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1b_3ops8function5FnMutTRB5_B2i_EE8call_mutBb_.exit44
-  %i.cl = add nuw i64 %.sroa.01.0.i.i83, 1        ; 2 uses
-  %exitcond.not = icmp eq i64 %i.cl, %i.n
+  %i.cl = add nuw nsw i64 %.sroa.01.0.i.i83, 1    ; 2 uses
+  %exitcond.not = icmp eq i64 %i.cl, %smax
   br i1 %exitcond.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i, label %.lr.ph
 
-.lr.ph90:                                         ; preds = %.preheader, %bb.s
-  %i.cm = phi i64 [ %i.cr, %bb.s ], [ %i.r, %.preheader ] ; 2 uses
-  %.sroa.01.1.i.i89 = phi i64 [ %i.dy, %bb.s ], [ 2, %.preheader ] ; 8 uses
+.lr.ph90:                                         ; preds = %.lr.ph90.preheader, %bb.s
+  %i.cm = phi i64 [ %i.cr, %bb.s ], [ %i.r, %.lr.ph90.preheader ] ; 2 uses
+  %.sroa.01.1.i.i89 = phi i64 [ %i.dy, %bb.s ], [ 2, %.lr.ph90.preheader ] ; 8 uses
   %i.cn = getelementptr inbounds nuw [24 x i8], ptr %i.o, i64 %.sroa.01.1.i.i89 ; 3 uses
   %i.co = add nsw i64 %.sroa.01.1.i.i89, -1       ; 2 uses
   %i.cp = icmp ult i64 %i.co, %i.n
@@ -460,14 +468,14 @@ _RNvYNvYNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtNtCs4N
   br i1 %i.dx, label %bb.s, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i
 
 bb.s:                                             ; preds = %.split62, %.split61, %.split60, %.split59, %_RNvYNvYNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1b_3ops8function5FnMutTRB5_B2i_EE8call_mutBb_.exit
-  %i.dy = add nuw i64 %.sroa.01.1.i.i89, 1        ; 2 uses
-  %exitcond114.not = icmp eq i64 %i.dy, %i.n
+  %i.dy = add nuw nsw i64 %.sroa.01.1.i.i89, 1    ; 2 uses
+  %exitcond114.not = icmp eq i64 %i.dy, %smax113
   br i1 %exitcond114.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i, label %.lr.ph90
 
 _RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i: ; preds = %bb.p, %_RNvYNvYNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1b_3ops8function5FnMutTRB5_B2i_EE8call_mutBb_.exit44, %.split55, %.split56, %.split57, %.split58, %bb.s, %_RNvYNvYNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1b_3ops8function5FnMutTRB5_B2i_EE8call_mutBb_.exit, %.split59, %.split60, %.split61, %.split62, %.preheader72, %.preheader
   %.sroa.3.0.i.i = phi i1 [ true, %.preheader ], [ true, %bb.s ], [ false, %.preheader72 ], [ true, %.split62 ], [ true, %.split61 ], [ true, %.split60 ], [ true, %.split59 ], [ true, %_RNvYNvYNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1b_3ops8function5FnMutTRB5_B2i_EE8call_mutBb_.exit ], [ false, %.split58 ], [ false, %.split57 ], [ false, %.split56 ], [ false, %.split55 ], [ false, %_RNvYNvYNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1b_3ops8function5FnMutTRB5_B2i_EE8call_mutBb_.exit44 ], [ false, %bb.p ]
-  %.sroa.0.0.i.i = phi i64 [ 2, %.preheader ], [ %i.n, %bb.s ], [ 2, %.preheader72 ], [ %.sroa.01.1.i.i89, %_RNvYNvYNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1b_3ops8function5FnMutTRB5_B2i_EE8call_mutBb_.exit ], [ %.sroa.01.1.i.i89, %.split59 ], [ %.sroa.01.1.i.i89, %.split60 ], [ %.sroa.01.1.i.i89, %.split61 ], [ %.sroa.01.1.i.i89, %.split62 ], [ %i.n, %bb.p ], [ %.sroa.01.0.i.i83, %_RNvYNvYNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1b_3ops8function5FnMutTRB5_B2i_EE8call_mutBb_.exit44 ], [ %.sroa.01.0.i.i83, %.split55 ], [ %.sroa.01.0.i.i83, %.split56 ], [ %.sroa.01.0.i.i83, %.split57 ], [ %.sroa.01.0.i.i83, %.split58 ] ; 7 uses
-  %i.dz = icmp ule i64 %.sroa.0.0.i.i, %i.n
+  %.sroa.0.0.i.i = phi i64 [ 2, %.preheader ], [ %smax113, %bb.s ], [ 2, %.preheader72 ], [ %.sroa.01.1.i.i89, %_RNvYNvYNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1b_3ops8function5FnMutTRB5_B2i_EE8call_mutBb_.exit ], [ %.sroa.01.1.i.i89, %.split59 ], [ %.sroa.01.1.i.i89, %.split60 ], [ %.sroa.01.1.i.i89, %.split61 ], [ %.sroa.01.1.i.i89, %.split62 ], [ %smax, %bb.p ], [ %.sroa.01.0.i.i83, %_RNvYNvYNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1b_3ops8function5FnMutTRB5_B2i_EE8call_mutBb_.exit44 ], [ %.sroa.01.0.i.i83, %.split55 ], [ %.sroa.01.0.i.i83, %.split56 ], [ %.sroa.01.0.i.i83, %.split57 ], [ %.sroa.01.0.i.i83, %.split58 ] ; 7 uses
+  %i.dz = icmp samesign ule i64 %.sroa.0.0.i.i, %i.n
   tail call void @llvm.assume(i1 %i.dz)
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
   br i1 %.not5.i, label %bb.i, label %bb.t
@@ -870,7 +878,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.r
 
 bb.h:                                             ; preds = %bb.f
-  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 9 uses
   %i.o = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.09.0 ; 11 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !634)
   %.not.i33 = icmp ult i64 %i.n, %.sroa.01.0
@@ -904,15 +912,23 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.z, label %.preheader, label %.preheader52
 
 .preheader52:                                     ; preds = %bb.k
-  br i1 %.not74, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache14distinct_cache5cache5ValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i.thread, label %.lr.ph
+  br i1 %.not74, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache14distinct_cache5cache5ValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i.thread, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader52
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.n, i64 3) ; 2 uses
+  br label %.lr.ph
 
 .preheader:                                       ; preds = %bb.k
-  br i1 %.not74, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache14distinct_cache5cache5ValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i.thread102, label %.lr.ph61
+  br i1 %.not74, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache14distinct_cache5cache5ValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i.thread102, label %.lr.ph61.preheader
 
-.lr.ph:                                           ; preds = %.preheader52, %bb.l
-  %.val13.i = phi i64 [ %.val11.i, %bb.l ], [ %.val15.i, %.preheader52 ] ; 2 uses
-  %.val12.i = phi ptr [ %.val10.i, %bb.l ], [ %.val14.i, %.preheader52 ]
-  %.sroa.01.0.i.i57 = phi i64 [ %i.aj, %bb.l ], [ 2, %.preheader52 ] ; 3 uses
+.lr.ph61.preheader:                               ; preds = %.preheader
+  %smax81 = tail call i64 @llvm.smax.i64(i64 %i.n, i64 3) ; 2 uses
+  br label %.lr.ph61
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.l
+  %.val13.i = phi i64 [ %.val11.i, %bb.l ], [ %.val15.i, %.lr.ph.preheader ] ; 2 uses
+  %.val12.i = phi ptr [ %.val10.i, %bb.l ], [ %.val14.i, %.lr.ph.preheader ]
+  %.sroa.01.0.i.i57 = phi i64 [ %i.aj, %bb.l ], [ 2, %.lr.ph.preheader ] ; 3 uses
   %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.o, i64 %.sroa.01.0.i.i57 ; 2 uses
   %.val10.i = load ptr, ptr %i.aa, align 8, !alias.scope !634, !noalias !635, !nonnull !3, !noundef !3 ; 2 uses
   %i.ab = getelementptr i8, ptr %i.aa, i64 8
@@ -929,14 +945,14 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ai, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache14distinct_cache5cache5ValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.aj = add nuw i64 %.sroa.01.0.i.i57, 1        ; 2 uses
-  %exitcond.not = icmp eq i64 %i.aj, %i.n
+  %i.aj = add nuw nsw i64 %.sroa.01.0.i.i57, 1    ; 2 uses
+  %exitcond.not = icmp eq i64 %i.aj, %smax
   br i1 %exitcond.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache14distinct_cache5cache5ValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i, label %.lr.ph
 
-.lr.ph61:                                         ; preds = %.preheader, %bb.m
-  %.val9.i = phi i64 [ %.val7.i, %bb.m ], [ %.val15.i, %.preheader ] ; 2 uses
-  %.val8.i = phi ptr [ %.val.i, %bb.m ], [ %.val14.i, %.preheader ]
-  %.sroa.01.1.i.i60 = phi i64 [ %i.at, %bb.m ], [ 2, %.preheader ] ; 3 uses
+.lr.ph61:                                         ; preds = %.lr.ph61.preheader, %bb.m
+  %.val9.i = phi i64 [ %.val7.i, %bb.m ], [ %.val15.i, %.lr.ph61.preheader ] ; 2 uses
+  %.val8.i = phi ptr [ %.val.i, %bb.m ], [ %.val14.i, %.lr.ph61.preheader ]
+  %.sroa.01.1.i.i60 = phi i64 [ %i.at, %bb.m ], [ 2, %.lr.ph61.preheader ] ; 3 uses
   %i.ak = getelementptr inbounds nuw [16 x i8], ptr %i.o, i64 %.sroa.01.1.i.i60 ; 2 uses
   %.val.i = load ptr, ptr %i.ak, align 8, !alias.scope !634, !noalias !635, !nonnull !3, !noundef !3 ; 2 uses
   %i.al = getelementptr i8, ptr %i.ak, i64 8
@@ -953,12 +969,12 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.as, label %bb.m, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache14distinct_cache5cache5ValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph61
-  %i.at = add nuw i64 %.sroa.01.1.i.i60, 1        ; 2 uses
-  %exitcond81.not = icmp eq i64 %i.at, %i.n
+  %i.at = add nuw nsw i64 %.sroa.01.1.i.i60, 1    ; 2 uses
+  %exitcond81.not = icmp eq i64 %i.at, %smax81
   br i1 %exitcond81.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache14distinct_cache5cache5ValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i, label %.lr.ph61
 
 _RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache14distinct_cache5cache5ValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i: ; preds = %bb.l, %.lr.ph, %bb.m, %.lr.ph61
-  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i60, %.lr.ph61 ], [ %i.n, %bb.m ], [ %.sroa.01.0.i.i57, %.lr.ph ], [ %i.n, %bb.l ] ; 6 uses
+  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i60, %.lr.ph61 ], [ %smax81, %bb.m ], [ %.sroa.01.0.i.i57, %.lr.ph ], [ %smax, %bb.l ] ; 6 uses
   %i.au = icmp samesign ule i64 %.sroa.0.0.i.i, %i.n
   tail call void @llvm.assume(i1 %i.au)
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
@@ -1360,6 +1376,9 @@ declare i64 @llvm.umin.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #21

@@ -204,6 +204,7 @@ common.resume:                                    ; preds = %.body268, %bb.y, %b
   %i.by = getelementptr inbounds nuw i8, ptr %i.p, i64 32
   %i.bz = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.ca = getelementptr inbounds nuw i8, ptr %i.a, i64 48
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.an, i64 1)
   br label %bb.u
 
 ._crit_edge:                                      ; preds = %bb.ch, %_RNvMs1_NtCsbPnb37KEv9e_8indexmap3mapINtB5_8IndexMapNtNtCsbwPL7qM37dJ_14libsignal_core7address9ServiceIdNtNtCs4tP8yUXWbFU_18libsignal_protocol13sealed_sender34SealedSenderV2SentMessageRecipientE24with_capacity_and_hasherB1H_.exit.thread
@@ -216,7 +217,7 @@ bb.u:                                             ; preds = %.lr.ph, %bb.ch
   %.sroa.0202.0485 = phi i64 [ 0, %.lr.ph ], [ %i.cc, %bb.ch ]
   %.sroa.0.0484 = phi ptr [ %i.as, %.lr.ph ], [ %.sroa.0.4, %bb.ch ] ; 5 uses
   %.sroa.17.0483 = phi i64 [ %i.ar, %.lr.ph ], [ %.sroa.17.4, %bb.ch ] ; 4 uses
-  %i.cc = add nuw i64 %.sroa.0202.0485, 1         ; 2 uses
+  %i.cc = add nuw nsw i64 %.sroa.0202.0485, 1     ; 2 uses
   br i1 %i.bn, label %bb.ac, label %bb.ae
 
 bb.v:                                             ; preds = %._crit_edge
@@ -619,7 +620,7 @@ bb.cg:                                            ; preds = %bb.cf
 
 bb.ch:                                            ; preds = %bb.ci, %bb.cg
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q)
-  %exitcond.not = icmp eq i64 %i.cc, %i.an
+  %exitcond.not = icmp eq i64 %i.cc, %smax
   br i1 %exitcond.not, label %._crit_edge, label %bb.u
 
 bb.ci:                                            ; preds = %bb.bs
@@ -1021,6 +1022,9 @@ declare i32 @llvm.umin.i32(i32, i32) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #15
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

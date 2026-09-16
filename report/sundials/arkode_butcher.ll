@@ -205,7 +205,7 @@ arkode_butcher_dot.exit:                          ; preds = %bb.i, %.epilog-lcss
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc i32 @__ButcherSimplifyingAssumptions(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef nonnull readonly captures(none) %1, ptr nofree noundef nonnull readonly captures(none) %2, i32 noundef %3) unnamed_addr #10 {
+define internal fastcc range(i32 0, -2147483648) i32 @__ButcherSimplifyingAssumptions(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef nonnull readonly captures(none) %1, ptr nofree noundef nonnull readonly captures(none) %2, i32 noundef %3) unnamed_addr #10 {
 bb.a:
   %i.a = sext i32 %3 to i64
   %i.b = tail call noalias ptr @calloc(i64 noundef %i.a, i64 noundef 8) #17 ; 14 uses
@@ -499,10 +499,11 @@ bb.f:                                             ; preds = %._crit_edge.us.us
   %i.do = add i32 %i.dn, 2
   %i.dp = add nuw i32 %.080137, 1
   %i.dq = add i32 %i.dp, %.079133
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.do, i32 0)
+  %umin = tail call i32 @llvm.umin.i32(i32 %smax, i32 %i.dq)
   %4 = add nsw i32 %.081.lcssa, -1
-  %umin = tail call i32 @llvm.umin.i32(i32 %i.dq, i32 %4)
-  %umin187 = tail call i32 @llvm.umin.i32(i32 %umin, i32 %i.do)
-  %i.dr = add nuw i32 %umin187, 1
+  %umin187 = tail call i32 @llvm.umin.i32(i32 %umin, i32 %4)
+  %i.dr = add nuw nsw i32 %umin187, 1
   br label %arkode_butcher_vp.exit
 
 arkode_butcher_vp.exit:                           ; preds = %bb.d, %.loopexit, %.lr.ph.preheader, %bb.a

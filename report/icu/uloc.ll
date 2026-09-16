@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 .preheader132:                                    ; preds = %bb.b, %._crit_edge
   %.sroa.14.0 = phi ptr [ %.sroa.14.2, %._crit_edge ], [ %1, %bb.b ] ; 2 uses
   %.sroa.098.0 = phi i64 [ %i.at, %._crit_edge ], [ %0, %bb.b ] ; 2 uses
-  %.074 = phi i32 [ %spec.select, %._crit_edge ], [ 0, %bb.b ] ; 6 uses
+  %.074 = phi i32 [ %spec.select, %._crit_edge ], [ 0, %bb.b ] ; 7 uses
   %i.d = icmp eq i64 %.sroa.098.0, 0
   br i1 %i.d, label %.loopexit, label %.lr.ph.preheader
 
@@ -259,7 +259,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.v, label %.thread.sink.split, label %.preheader131
 
 .preheader131:                                    ; preds = %bb.e
-  %i.w = zext nneg i32 %.074 to i64               ; 2 uses
+  %i.w = zext nneg i32 %.074 to i64
   %i.x = getelementptr inbounds nuw [48 x i8], ptr %6, i64 %i.w ; 6 uses
   %i.y = add i64 %indvars.iv168, %i.m
   br label %bb.f
@@ -348,15 +348,19 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEcm.exit.thread:
   %i.az = getelementptr inbounds nuw i8, ptr %i.x, i64 40
   store i32 %i.ay, ptr %i.az, align 8, !tbaa !55
   %i.ba = icmp eq i32 %.074, 0
-  br i1 %i.ba, label %._crit_edge, label %.lr.ph149
+  br i1 %i.ba, label %._crit_edge, label %.lr.ph149.preheader
+
+.lr.ph149.preheader:                              ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEcm.exit.thread
+  %wide.trip.count = zext nneg i32 %.074 to i64
+  br label %.lr.ph149
 
 bb.l:                                             ; preds = %.lr.ph149
   %indvars.iv.next172 = add nuw nsw i64 %indvars.iv171, 1 ; 2 uses
-  %exitcond174.not = icmp eq i64 %indvars.iv.next172, %i.w
+  %exitcond174.not = icmp eq i64 %indvars.iv.next172, %wide.trip.count
   br i1 %exitcond174.not, label %._crit_edge, label %.lr.ph149, !llvm.loop !49
 
-.lr.ph149:                                        ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEcm.exit.thread, %bb.l
-  %indvars.iv171 = phi i64 [ %indvars.iv.next172, %bb.l ], [ 0, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEcm.exit.thread ] ; 2 uses
+.lr.ph149:                                        ; preds = %.lr.ph149.preheader, %bb.l
+  %indvars.iv171 = phi i64 [ 0, %.lr.ph149.preheader ], [ %indvars.iv.next172, %bb.l ] ; 2 uses
   %i.bb = getelementptr inbounds nuw [48 x i8], ptr %6, i64 %indvars.iv171
   %i.bc = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.bb, ptr noundef nonnull dereferenceable(1) %i.x) #18
   %i.bd = icmp eq i32 %i.bc, 0

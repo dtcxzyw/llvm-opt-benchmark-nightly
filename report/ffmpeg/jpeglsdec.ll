@@ -204,6 +204,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.fk = icmp slt i32 %i.fj, %i.fe               ; 4 uses
   %i.fl = sext i32 %.0289 to i64                  ; 4 uses
   %i.fm = sext i32 %i.fe to i64                   ; 4 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %.1282, i32 1)
   %i.fn = sext i32 %i.fj to i64
   %i.fo = sext i32 %i.fj to i64
   %i.fp = sext i32 %i.fj to i64
@@ -363,7 +364,7 @@ bb.ak:                                            ; preds = %.lr.ph436, %.loopex
   %i.jd = sext i32 %i.jc to i64
   %i.je = getelementptr inbounds i8, ptr %.0274434, i64 %i.jd
   %i.jf = add nuw nsw i32 %.2307433, 1            ; 2 uses
-  %exitcond479.not = icmp eq i32 %i.jf, %.1282
+  %exitcond479.not = icmp eq i32 %i.jf, %smax
   br i1 %exitcond479.not, label %.loopexit404, label %bb.ak, !llvm.loop !95
 
 bb.al:                                            ; preds = %bb.ai
@@ -397,6 +398,7 @@ bb.an:                                            ; preds = %bb.am
   %i.js = sext i32 %.0289 to i64                  ; 6 uses
   %i.jt = zext nneg i32 %.0288 to i64
   %i.ju = sext i32 %i.jl to i64                   ; 2 uses
+  %smax490 = tail call i32 @llvm.smax.i32(i32 %.1282, i32 1)
   %i.jv = sub nsw i64 %i.ju, %i.js                ; 7 uses
   %min.iters.check556 = icmp ugt i64 %i.jv, 3
   %ident.check.not = icmp eq i32 %.0288, 1
@@ -489,7 +491,7 @@ vec.epilog.scalar.ph572:                          ; preds = %vec.epilog.scalar.p
   %i.kq = sext i32 %i.kp to i64
   %i.kr = getelementptr inbounds i8, ptr %.0271445, i64 %i.kq
   %i.ks = add nuw nsw i32 %.3308444, 1            ; 2 uses
-  %exitcond489.not = icmp eq i32 %i.ks, %.1282
+  %exitcond489.not = icmp eq i32 %i.ks, %smax490
   br i1 %exitcond489.not, label %.loopexit, label %iter.check571, !llvm.loop !99
 
 bb.ao:                                            ; preds = %bb.am
@@ -507,6 +509,7 @@ bb.ao:                                            ; preds = %bb.am
 
 .preheader394.preheader:                          ; preds = %.preheader394.lr.ph
   %i.kz = load ptr, ptr %i.kt, align 8, !tbaa !12
+  %smax485 = tail call i32 @llvm.smax.i32(i32 %.1282, i32 1)
   %wide.trip.count483 = zext nneg i32 %i.jl to i64 ; 6 uses
   %min.iters.check = icmp ult i32 %i.jl, 4
   %min.iters.check547 = icmp ult i32 %i.jl, 16
@@ -592,7 +595,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 ._crit_edge:                                      ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
   %i.lu = getelementptr inbounds [2 x i8], ptr %.0440, i64 %i.ky
   %i.lv = add nuw nsw i32 %.4309439, 1            ; 2 uses
-  %exitcond485.not = icmp eq i32 %i.lv, %.1282
+  %exitcond485.not = icmp eq i32 %i.lv, %smax485
   br i1 %exitcond485.not, label %.loopexit, label %iter.check, !llvm.loop !103
 
 .loopexit:                                        ; preds = %._crit_edge, %._crit_edge443, %bb.ao, %.preheader394.lr.ph, %bb.an, %ff_mjpeg_handle_restart.exit, %bb.v, %bb.n, %bb.j, %bb.f, %bb.g, %bb.h, %bb.i, %.loopexit404, %bb.ag, %bb.af

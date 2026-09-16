@@ -205,12 +205,10 @@ bb.s:                                             ; preds = %bb.r
 
 _ZSt34__uninitialized_move_if_noexcept_aIPjS0_SaIjEET0_T_S3_S2_RT1_.exit: ; preds = %bb.q, %bb.r, %bb.s
   %i.dc = getelementptr i8, ptr %i.cw, i64 %i.cy
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.dc, ptr align 4 %2, i64 %i.c, i1 false), !tbaa !583
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.dc, ptr noundef nonnull align 4 dereferenceable(1) %2, i64 %i.c, i1 false), !tbaa !583
   %i.dd = add i64 %i.c, %i.cx
-  %4 = add i64 %i.dd, 4
-  %i.de = sub i64 %4, %i.cl
-  %5 = getelementptr i8, ptr %i.cw, i64 %i.de
-  %scevgep = getelementptr i8, ptr %5, i64 -4     ; 3 uses
+  %i.de = sub i64 %i.dd, %i.cl
+  %scevgep = getelementptr i8, ptr %i.cw, i64 %i.de ; 3 uses
   %i.df = sub i64 %i.j, %i.cx                     ; 4 uses
   %i.dg = icmp sgt i64 %i.df, 4
   br i1 %i.dg, label %bb.t, label %bb.u, !prof !585

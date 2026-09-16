@@ -205,8 +205,10 @@ bb.ci:                                            ; preds = %.noexc.i118.i, %bb.
   br i1 %i.sy, label %.lr.ph.i.i.i.i.i.i.i.i.preheader.i120.i, label %_ZN5Eigen6MatrixIdLin1ELi2ELi0ELin1ELi2EEaSINS_14CwiseNullaryOpINS_8internal18scalar_constant_opIdEENS0_IdLin1ELin1ELi0ELin1ELin1EEEEEEERS1_RKNS_9DenseBaseIT_EE.exit.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader.i120.i:          ; preds = %bb.ci
+  %39 = shl nuw i64 %i.sx, 1
   %i.sz = load ptr, ptr %20, align 8, !tbaa !202
-  %i.ta = shl i64 %i.sx, 4
+  %smax.i.i = call i64 @llvm.smax.i64(i64 %39, i64 2)
+  %i.ta = shl i64 %smax.i.i, 3
   call void @llvm.memset.p0.i64(ptr align 16 %i.sz, i8 0, i64 %i.ta, i1 false), !tbaa !133
   br label %_ZN5Eigen6MatrixIdLin1ELi2ELi0ELin1ELi2EEaSINS_14CwiseNullaryOpINS_8internal18scalar_constant_opIdEENS0_IdLin1ELin1ELi0ELin1ELin1EEEEEEERS1_RKNS_9DenseBaseIT_EE.exit.i.i
 

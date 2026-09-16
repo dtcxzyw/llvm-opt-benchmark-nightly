@@ -204,8 +204,8 @@ bb.e:                                             ; preds = %._crit_edge
   br label %.critedge159.thread
 
 ._crit_edge.thread:                               ; preds = %bb.d, %._crit_edge
-  %.0138.lcssa252 = phi i32 [ %spec.select.lcssa, %._crit_edge ], [ 0, %bb.d ] ; 2 uses
-  %i.aw = icmp slt i32 %i.v, %i.r                 ; 3 uses
+  %.0138.lcssa252 = phi i32 [ %spec.select.lcssa, %._crit_edge ], [ 0, %bb.d ]
+  %i.aw = icmp slt i32 %i.v, %i.r                 ; 2 uses
   %i.ax = zext i1 %i.aw to i32
   %spec.select155 = add nuw nsw i32 %.0138.lcssa252, %i.ax ; 7 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
@@ -439,16 +439,14 @@ _ZL11reorderLineP5UBiDihh.exit:                   ; preds = %.lr.ph.i, %bb.j, %.
   br i1 %.not210, label %._crit_edge203, label %.lr.ph202.preheader
 
 .lr.ph202.preheader:                              ; preds = %_ZL11reorderLineP5UBiDihh.exit
-  %wide.trip.count234 = zext i32 %spec.select155 to i64 ; 2 uses
-  %2 = zext i32 %.0138.lcssa252 to i64
-  %i.eb = zext i1 %i.aw to i64
-  %3 = add nuw nsw i64 %2, %i.eb
-  %xtraiter = and i64 %wide.trip.count234, 1
-  %4 = icmp eq i64 %3, 1
-  br i1 %4, label %.lr.ph202.epil.preheader, label %.lr.ph202.preheader.new
+  %smax = tail call i32 @llvm.smax.i32(i32 %spec.select155, i32 1) ; 2 uses
+  %i.eb = zext nneg i32 %smax to i64              ; 2 uses
+  %xtraiter = and i64 %i.eb, 1
+  %2 = icmp slt i32 %spec.select155, 2
+  br i1 %2, label %.lr.ph202.epil.preheader, label %.lr.ph202.preheader.new
 
 .lr.ph202.preheader.new:                          ; preds = %.lr.ph202.preheader
-  %unroll_iter = and i64 %wide.trip.count234, 4294967294
+  %unroll_iter = and i64 %i.eb, 2147483646
   br label %.lr.ph202
 
 .lr.ph202:                                        ; preds = %.lr.ph202, %.lr.ph202.preheader.new
@@ -496,7 +494,7 @@ _ZL11reorderLineP5UBiDihh.exit:                   ; preds = %.lr.ph.i, %bb.j, %.
 .lr.ph202.epil.preheader:                         ; preds = %._crit_edge203.loopexit.unr-lcssa, %.lr.ph202.preheader
   %indvars.iv230.epil.init = phi i64 [ 0, %.lr.ph202.preheader ], [ %indvars.iv.next231.1, %._crit_edge203.loopexit.unr-lcssa ]
   %.0145200.epil.init = phi i32 [ 0, %.lr.ph202.preheader ], [ %i.fa, %._crit_edge203.loopexit.unr-lcssa ]
-  %lcmp.mod331 = trunc i32 %spec.select155 to i1
+  %lcmp.mod331 = trunc i32 %smax to i1
   tail call void @llvm.assume(i1 %lcmp.mod331)
   %i.fb = getelementptr inbounds nuw [12 x i8], ptr %i.be, i64 %indvars.iv230.epil.init ; 3 uses
   %i.fc = load i32, ptr %i.fb, align 4, !tbaa !48 ; 2 uses

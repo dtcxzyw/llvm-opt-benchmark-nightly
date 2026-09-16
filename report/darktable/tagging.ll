@@ -202,13 +202,14 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not225, label %._crit_edge, label %.lr.ph209.preheader
 
 .lr.ph209.preheader:                              ; preds = %.loopexit198
-  %wide.trip.count = zext i32 %.0135.lcssa to i64 ; 2 uses
+  %smax = call i32 @llvm.smax.i32(i32 %.0135.lcssa, i32 1)
+  %wide.trip.count = zext nneg i32 %smax to i64
   br label %.lr.ph209
 
-._crit_edge:                                      ; preds = %.lr.ph209, %.loopexit198, %.loopexit198.thread
-  %.1255 = phi i32 [ 0, %.loopexit198 ], [ 0, %.loopexit198.thread ], [ %.0135.lcssa, %.lr.ph209 ]
-  %.pre-phi = phi i64 [ 0, %.loopexit198 ], [ 0, %.loopexit198.thread ], [ %wide.trip.count, %.lr.ph209 ]
-  %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.ap, i64 %.pre-phi ; 2 uses
+._crit_edge:                                      ; preds = %.lr.ph209, %.loopexit198.thread, %.loopexit198
+  %.1255 = phi i32 [ 0, %.loopexit198.thread ], [ 0, %.loopexit198 ], [ %.0135.lcssa, %.lr.ph209 ] ; 2 uses
+  %7 = zext nneg i32 %.1255 to i64
+  %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.ap, i64 %7 ; 2 uses
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !49 ; 2 uses
   %.not174210 = icmp eq ptr %i.bc, null
   br i1 %.not174210, label %._crit_edge215, label %.lr.ph214

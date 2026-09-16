@@ -204,8 +204,8 @@ bb.z:                                             ; preds = %bb.g, %resolve_back
   br i1 %i.de, label %.preheader627, label %._crit_edge, !llvm.loop !49
 
 ._crit_edge:                                      ; preds = %bb.z, %bb.c
-  %.0453.lcssa.ph.in = phi i64 [ %indvars.iv.next706, %bb.z ], [ %indvars.iv705, %bb.c ] ; 2 uses
-  %.0453.lcssa.ph = trunc i64 %.0453.lcssa.ph.in to i32 ; 22 uses
+  %.0453.lcssa.ph.in = phi i64 [ %indvars.iv.next706, %bb.z ], [ %indvars.iv705, %bb.c ]
+  %.0453.lcssa.ph = trunc i64 %.0453.lcssa.ph.in to i32 ; 23 uses
   %i.df = icmp eq i32 %.0453.lcssa.ph, 0
   br i1 %i.df, label %.loopexit, label %bb.aa
 
@@ -352,7 +352,8 @@ bb.ak:                                            ; preds = %.thread
   br i1 %i.fj, label %bb.al, label %.lr.ph681.preheader
 
 .lr.ph681.preheader:                              ; preds = %bb.ak
-  %wide.trip.count741 = and i64 %.0453.lcssa.ph.in, 4294967295
+  %smax = tail call i32 @llvm.smax.i32(i32 %.0453.lcssa.ph, i32 2)
+  %wide.trip.count741 = zext nneg i32 %smax to i64
   br label %.lr.ph681
 
 bb.al:                                            ; preds = %bb.ak

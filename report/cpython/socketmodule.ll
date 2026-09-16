@@ -202,14 +202,18 @@ bb.l:                                             ; preds = %bb.k
   %.2 = phi ptr [ %.182, %._crit_edge ], [ %i.q, %bb.k ] ; 3 uses
   %.0 = phi ptr [ %i.ak, %._crit_edge ], [ null, %bb.k ] ; 2 uses
   %.not68 = icmp eq i64 %.143, 0
-  br i1 %.not68, label %._crit_edge67, label %.lr.ph66
+  br i1 %.not68, label %._crit_edge67, label %.lr.ph66.preheader
 
-.lr.ph66:                                         ; preds = %.loopexit, %.lr.ph66
-  %.04464 = phi i64 [ %i.am, %.lr.ph66 ], [ 0, %.loopexit ] ; 2 uses
+.lr.ph66.preheader:                               ; preds = %.loopexit
+  %smax = call i64 @llvm.smax.i64(i64 %.143, i64 1)
+  br label %.lr.ph66
+
+.lr.ph66:                                         ; preds = %.lr.ph66.preheader, %.lr.ph66
+  %.04464 = phi i64 [ %i.am, %.lr.ph66 ], [ 0, %.lr.ph66.preheader ] ; 2 uses
   %i.al = getelementptr [80 x i8], ptr %.2, i64 %.04464
   call void @PyBuffer_Release(ptr noundef %i.al) #11
-  %i.am = add nuw i64 %.04464, 1                  ; 2 uses
-  %exitcond70.not = icmp eq i64 %i.am, %.143
+  %i.am = add nuw nsw i64 %.04464, 1              ; 2 uses
+  %exitcond70.not = icmp eq i64 %i.am, %smax
   br i1 %exitcond70.not, label %._crit_edge67, label %.lr.ph66, !llvm.loop !196
 
 ._crit_edge67:                                    ; preds = %.lr.ph66, %bb.h, %bb.d, %.loopexit

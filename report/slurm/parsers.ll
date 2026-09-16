@@ -202,6 +202,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not81.i, label %.thread72.i, label %.lr.ph77.i.preheader
 
 .lr.ph77.i.preheader:                             ; preds = %.preheader.i
+  %smax.i = call i32 @llvm.smax.i32(i32 %i.bg, i32 1)
   %umax = call i64 @llvm.umax.i64(i64 %i.j, i64 %.04143) ; 4 uses
   br label %.lr.ph77.i
 
@@ -224,9 +225,9 @@ bb.e:                                             ; preds = %bb.d
   %i.bz = icmp samesign ult i64 %indvars.iv.next.i, %i.by
   br i1 %i.bz, label %.lr.ph.i, label %.preheader.i, !llvm.loop !41
 
-.lr.ph77.i:                                       ; preds = %.lr.ph77.i.preheader, %bb.i
-  %.1 = phi i64 [ %i.cw, %bb.i ], [ %.04143, %.lr.ph77.i.preheader ] ; 4 uses
-  %.06276.i = phi i32 [ %i.cx, %bb.i ], [ 0, %.lr.ph77.i.preheader ] ; 3 uses
+.lr.ph77.i:                                       ; preds = %bb.i, %.lr.ph77.i.preheader
+  %.1 = phi i64 [ %.04143, %.lr.ph77.i.preheader ], [ %i.cw, %bb.i ] ; 4 uses
+  %.06276.i = phi i32 [ 0, %.lr.ph77.i.preheader ], [ %i.cx, %bb.i ] ; 3 uses
   %exitcond.not = icmp eq i64 %.1, %umax
   br i1 %exitcond.not, label %bb.j, label %bb.f
 
@@ -273,8 +274,8 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %.sink.split.i, %bb.g
   %i.cw = add i64 %.1, 1                          ; 2 uses
-  %i.cx = add nuw i32 %.06276.i, 1                ; 2 uses
-  %exitcond.not.i = icmp eq i32 %i.cx, %i.bg
+  %i.cx = add nuw nsw i32 %.06276.i, 1            ; 2 uses
+  %exitcond.not.i = icmp eq i32 %i.cx, %smax.i
   br i1 %exitcond.not.i, label %.thread72.i, label %.lr.ph77.i, !llvm.loop !42
 
 bb.j:                                             ; preds = %.lr.ph77.i
@@ -675,6 +676,9 @@ declare i16 @llvm.smin.i16(i16, i16) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.smax.i16(i16, i16) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #9

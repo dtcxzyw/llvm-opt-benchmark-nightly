@@ -205,7 +205,7 @@ bb.bk:                                            ; preds = %.preheader199.prehe
   %i.tb = getelementptr inbounds nuw i8, ptr %0, i64 30 ; 5 uses
   %i.tc = load i16, ptr %i.tb, align 2, !tbaa !133
   %i.td = zext i16 %i.tc to i32
-  %i.te = mul nuw i32 %i.td, %i.ta                ; 6 uses
+  %i.te = mul nuw i32 %i.td, %i.ta                ; 5 uses
   %i.tf = load ptr, ptr %0, align 8, !tbaa !88
   %i.tg = getelementptr inbounds nuw i8, ptr %i.tf, i64 136
   %i.th = load ptr, ptr %i.tg, align 8
@@ -231,6 +231,7 @@ bb.bm:                                            ; preds = %bb.bl, %bb.bk
   %i.tr = shl nuw i32 %i.te, 1
   %i.ts = zext i32 %i.tr to i64                   ; 2 uses
   %.not271 = icmp eq i32 %i.te, 0                 ; 2 uses
+  %smax = call i32 @llvm.smax.i32(i32 %i.te, i32 1) ; 2 uses
   %i.tt = fcmp oeq double %i.tj, 1.000000e+00
   br i1 %i.tt, label %bb.bt, label %bb.bn
 
@@ -240,8 +241,8 @@ bb.bn:                                            ; preds = %.preheader197
 
 .lr.ph262:                                        ; preds = %bb.bn
   %i.tv = load ptr, ptr %i.i, align 8, !tbaa !92  ; 15 uses
-  %wide.trip.count = zext i32 %i.te to i64        ; 7 uses
-  %min.iters.check = icmp ult i32 %i.te, 17
+  %wide.trip.count = zext nneg i32 %smax to i64   ; 7 uses
+  %min.iters.check = icmp slt i32 %i.te, 17
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 scalar.ph.preheader:                              ; preds = %vector.body, %vector.memcheck, %.lr.ph262
@@ -477,9 +478,9 @@ bb.bu:                                            ; preds = %bb.bt
 .lr.ph262.1:                                      ; preds = %bb.bu
   %i.yu = load ptr, ptr %i.i, align 8, !tbaa !92  ; 2 uses
   %invariant.gep.1 = getelementptr inbounds nuw i8, ptr %i.yu, i64 4 ; 14 uses
-  %wide.trip.count.1 = zext i32 %i.te to i64      ; 7 uses
-  %min.iters.check491 = icmp ult i32 %i.te, 17
-  br i1 %min.iters.check491, label %scalar.ph490.preheader, label %vector.memcheck484
+  %wide.trip.count.1 = zext nneg i32 %smax to i64 ; 7 uses
+  %min.iters.check489 = icmp slt i32 %i.te, 17
+  br i1 %min.iters.check489, label %scalar.ph490.preheader, label %vector.memcheck484
 
 vector.memcheck484:                               ; preds = %.lr.ph262.1
   %i.yv = shl nuw nsw i64 %wide.trip.count.1, 1

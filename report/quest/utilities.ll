@@ -205,14 +205,15 @@ define linkonce_odr void @_Z16setSuperoperatorISt6vectorIS0_IS0_ISt7complexIdESa
 bb.a:
   %i.a = and i64 %3, 4294967295                   ; 5 uses
   %i.b = shl nuw i64 1, %i.a                      ; 2 uses
-  %i.c = shl i64 %i.b, %i.a                       ; 5 uses
+  %i.c = shl i64 %i.b, %i.a                       ; 3 uses
   %.not = icmp eq i64 %i.c, 0
   br i1 %.not, label %.preheader78, label %.preheader79.preheader
 
 .preheader79.preheader:                           ; preds = %bb.a
-  %xtraiter = and i64 %i.c, 3                     ; 3 uses
-  %4 = icmp ult i64 %i.c, 4
-  %unroll_iter = and i64 %i.c, -4
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.c, i64 1) ; 3 uses
+  %xtraiter = and i64 %smax, 3                    ; 3 uses
+  %4 = icmp slt i64 %i.c, 4
+  %unroll_iter = and i64 %smax, 9223372036854775804
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod135 = icmp ne i64 %xtraiter, 0
   br label %.preheader79
@@ -253,7 +254,7 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
 
 .epilog-lcssa:                                    ; preds = %bb.b, %.unr-lcssa
   %i.i = add nuw nsw i64 %.04783, 1               ; 2 uses
-  %exitcond99.not = icmp eq i64 %i.i, %i.c
+  %exitcond99.not = icmp eq i64 %i.i, %smax
   br i1 %exitcond99.not, label %.preheader78, label %.preheader79, !llvm.loop !214
 
 .preheader79.new:                                 ; preds = %.preheader79, %.preheader79.new
@@ -275,7 +276,7 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 48
   %i.u = add nuw nsw i64 %.04682, 4               ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.t, i8 0, i64 16, i1 false)
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %.preheader79.new, !llvm.loop !215
 
@@ -678,14 +679,15 @@ define linkonce_odr void @_Z16setSuperoperatorIPPPSt7complexIdEEvS3_T_ix(ptr nou
 bb.a:
   %i.a = and i64 %3, 4294967295                   ; 5 uses
   %i.b = shl nuw i64 1, %i.a                      ; 2 uses
-  %i.c = shl i64 %i.b, %i.a                       ; 5 uses
+  %i.c = shl i64 %i.b, %i.a                       ; 3 uses
   %.not = icmp eq i64 %i.c, 0
   br i1 %.not, label %.preheader57, label %.preheader58.preheader
 
 .preheader58.preheader:                           ; preds = %bb.a
-  %xtraiter = and i64 %i.c, 3                     ; 3 uses
-  %4 = icmp ult i64 %i.c, 4
-  %unroll_iter = and i64 %i.c, -4
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.c, i64 1) ; 3 uses
+  %xtraiter = and i64 %smax, 3                    ; 3 uses
+  %4 = icmp slt i64 %i.c, 4
+  %unroll_iter = and i64 %smax, 9223372036854775804
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod88 = icmp ne i64 %xtraiter, 0
   br label %.preheader58
@@ -727,7 +729,7 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
 
 .epilog-lcssa:                                    ; preds = %bb.b, %.unr-lcssa
   %i.j = add nuw nsw i64 %.04860, 1               ; 2 uses
-  %exitcond72.not = icmp eq i64 %i.j, %i.c
+  %exitcond72.not = icmp eq i64 %i.j, %smax
   br i1 %exitcond72.not, label %.preheader57, label %.preheader58, !llvm.loop !224
 
 .preheader58.new:                                 ; preds = %.preheader58, %.preheader58.new
@@ -749,7 +751,7 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 48
   %i.v = add nuw nsw i64 %.04759, 4               ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.u, i8 0, i64 16, i1 false)
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %.preheader58.new, !llvm.loop !225
 

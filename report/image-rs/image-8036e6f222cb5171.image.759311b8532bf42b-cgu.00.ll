@@ -205,7 +205,7 @@ vector.body364:                                   ; preds = %vector.body364, %ve
 
 _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutfEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.preheader: ; preds = %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutfEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph
   %i.dt = sub nsw i64 %1, %i.d                    ; 2 uses
-  %umin = tail call i64 @llvm.umin.i64(i64 %i.a, i64 %i.dt)
+  %umin = tail call i64 @llvm.smin.i64(i64 %i.a, i64 %i.dt)
   br label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutfEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit
 
 _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutfEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us: ; preds = %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutfEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us.preheader376, %bb.g
@@ -402,7 +402,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.a
   %i.c = load float, ptr %i.b, align 4, !noundef !9 ; 6 uses
-  %i.d = and i64 %3, 2305843009213693948          ; 6 uses
+  %i.d = and i64 %3, 2305843009213693948          ; 7 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.d ; 5 uses
   %i.f = shl nuw nsw i64 %3, 2                    ; 3 uses
   %.idx = and i64 %i.f, 9223372036854775792       ; 2 uses
@@ -567,7 +567,7 @@ bb.e:                                             ; preds = %bb.a
   br i1 %i.cx, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutfEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.thread, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutfEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph
 
 _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutfEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph: ; preds = %._crit_edge174
-  %i.cy = and i64 %5, 2305843009213693950         ; 5 uses
+  %i.cy = and i64 %5, 2305843009213693950         ; 6 uses
   %i.cz = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %5
   %i.da = icmp eq i64 %i.a, 0
   br i1 %i.da, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutfEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split.us, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutfEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit
@@ -577,9 +577,12 @@ _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %i.db = add nsw i64 %.idx201, -4
   %i.dc = lshr exact i64 %i.db, 2
   %i.dd = sub nsw i64 %1, %i.d
+  %6 = tail call i64 @llvm.smin.i64(i64 %i.cy, i64 %i.dd)
+  %7 = add i64 %6, %i.d
+  %8 = sub i64 %1, %7
   %i.de = add nuw nsw i64 %1, 1
   %i.df = tail call i64 @llvm.usub.sat.i64(i64 %i.de, i64 %i.d)
-  %i.dg = tail call i64 @llvm.umin.i64(i64 %i.dc, i64 %i.dd)
+  %i.dg = tail call i64 @llvm.umin.i64(i64 %i.dc, i64 %8)
   %i.dh = tail call i64 @llvm.umin.i64(i64 %i.dg, i64 %i.df) ; 2 uses
   %min.iters.check357 = icmp samesign ult i64 %i.dh, 8
   br i1 %min.iters.check357, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutfEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us.preheader, label %vector.ph358
@@ -814,7 +817,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.a
   %i.c = load float, ptr %i.b, align 4, !noundef !9 ; 6 uses
-  %i.d = and i64 %3, 2305843009213693948          ; 6 uses
+  %i.d = and i64 %3, 2305843009213693948          ; 7 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.d ; 5 uses
   %i.f = shl nuw nsw i64 %3, 2                    ; 3 uses
   %.idx = and i64 %i.f, 9223372036854775792       ; 2 uses
@@ -979,7 +982,7 @@ bb.e:                                             ; preds = %bb.a
   br i1 %i.cx, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutfEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.thread, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutfEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph
 
 _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutfEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph: ; preds = %._crit_edge179
-  %i.cy = mul nuw nsw i64 %i.a, 3                 ; 5 uses
+  %i.cy = mul nuw nsw i64 %i.a, 3                 ; 6 uses
   %i.cz = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %5
   %i.da = icmp eq i64 %i.a, 0
   br i1 %i.da, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutfEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split.us, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutfEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit
@@ -989,9 +992,12 @@ _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %i.db = add nsw i64 %.idx206, -4
   %i.dc = lshr exact i64 %i.db, 2
   %i.dd = sub nsw i64 %1, %i.d
+  %6 = tail call i64 @llvm.smin.i64(i64 %i.cy, i64 %i.dd)
+  %7 = add i64 %6, %i.d
+  %8 = sub i64 %1, %7
   %i.de = add nuw nsw i64 %1, 1
   %i.df = tail call i64 @llvm.usub.sat.i64(i64 %i.de, i64 %i.d)
-  %i.dg = tail call i64 @llvm.umin.i64(i64 %i.dc, i64 %i.dd)
+  %i.dg = tail call i64 @llvm.umin.i64(i64 %i.dc, i64 %8)
   %i.dh = tail call i64 @llvm.umin.i64(i64 %i.dg, i64 %i.df) ; 2 uses
   %min.iters.check365 = icmp samesign ult i64 %i.dh, 8
   br i1 %min.iters.check365, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutfEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us.preheader, label %vector.ph366
@@ -1226,7 +1232,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.a
   %i.c = load float, ptr %i.b, align 4, !noundef !9 ; 6 uses
-  %i.d = and i64 %3, 2305843009213693948          ; 6 uses
+  %i.d = and i64 %3, 2305843009213693948          ; 7 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.d ; 5 uses
   %i.f = shl nuw nsw i64 %3, 2                    ; 3 uses
   %.idx = and i64 %i.f, 9223372036854775792       ; 2 uses
@@ -1391,7 +1397,7 @@ bb.e:                                             ; preds = %bb.a
   br i1 %i.cx, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutfEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.thread, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutfEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph
 
 _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutfEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph: ; preds = %._crit_edge171
-  %i.cy = shl nuw nsw i64 %i.a, 2                 ; 5 uses
+  %i.cy = shl nuw nsw i64 %i.a, 2                 ; 6 uses
   %i.cz = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %5
   %i.da = icmp eq i64 %i.a, 0
   br i1 %i.da, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutfEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split.us, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutfEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit
@@ -1401,9 +1407,12 @@ _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %i.db = add nsw i64 %.idx198, -4
   %i.dc = lshr exact i64 %i.db, 2
   %i.dd = sub nsw i64 %1, %i.d
+  %6 = tail call i64 @llvm.smin.i64(i64 %i.cy, i64 %i.dd)
+  %7 = add i64 %6, %i.d
+  %8 = sub i64 %1, %7
   %i.de = add nuw nsw i64 %1, 1
   %i.df = tail call i64 @llvm.usub.sat.i64(i64 %i.de, i64 %i.d)
-  %i.dg = tail call i64 @llvm.umin.i64(i64 %i.dc, i64 %i.dd)
+  %i.dg = tail call i64 @llvm.umin.i64(i64 %i.dc, i64 %8)
   %i.dh = tail call i64 @llvm.umin.i64(i64 %i.dg, i64 %i.df) ; 2 uses
   %min.iters.check345 = icmp samesign ult i64 %i.dh, 8
   br i1 %min.iters.check345, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutfEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us.preheader, label %vector.ph346
@@ -1717,7 +1726,7 @@ _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
 
 _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMuthEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.preheader: ; preds = %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMuthEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph
   %i.al = sub nsw i64 %1, %i.d                    ; 6 uses
-  %umin = tail call i64 @llvm.umin.i64(i64 %i.a, i64 %i.al) ; 3 uses
+  %umin = tail call i64 @llvm.smin.i64(i64 %i.a, i64 %i.al) ; 3 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.e, i64 1
   %i.an = icmp samesign ugt i64 %i.d, %1
   br i1 %i.an, label %.split191.us, label %bb.m, !prof !5
@@ -2120,7 +2129,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMuttEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.preheader: ; preds = %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMuttEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph
   %i.bi = sub nsw i64 %1, %i.d                    ; 2 uses
-  %umin = tail call i64 @llvm.umin.i64(i64 %i.a, i64 %i.bi)
+  %umin = tail call i64 @llvm.smin.i64(i64 %i.a, i64 %i.bi)
   br label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMuttEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit
 
 _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMuttEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us: ; preds = %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMuttEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us.preheader362, %bb.h
@@ -2336,7 +2345,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.a
   %i.c = load i32, ptr %i.b, align 4, !noundef !9 ; 5 uses
-  %i.d = and i64 %3, 4611686018427387900          ; 6 uses
+  %i.d = and i64 %3, 4611686018427387900          ; 7 uses
   %i.e = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.d ; 5 uses
   %i.f = shl nuw nsw i64 %3, 1                    ; 2 uses
   %.idx = and i64 %i.f, 9223372036854775800       ; 2 uses
@@ -2413,7 +2422,7 @@ bb.f:                                             ; preds = %bb.a
   br i1 %i.ak, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMuttEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.thread, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMuttEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph
 
 _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMuttEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph: ; preds = %._crit_edge178
-  %i.al = and i64 %5, 2305843009213693950         ; 5 uses
+  %i.al = and i64 %5, 2305843009213693950         ; 6 uses
   %i.am = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %5
   %i.an = icmp eq i64 %i.a, 0
   br i1 %i.an, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMuttEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split.us, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMuttEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit
@@ -2423,9 +2432,12 @@ _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %i.ao = add nsw i64 %.idx205, -2
   %i.ap = lshr exact i64 %i.ao, 1
   %i.aq = sub nsw i64 %1, %i.d
+  %6 = tail call i64 @llvm.smin.i64(i64 %i.al, i64 %i.aq)
+  %7 = add i64 %6, %i.d
+  %8 = sub i64 %1, %7
   %i.ar = add nuw nsw i64 %1, 1
   %i.as = tail call i64 @llvm.usub.sat.i64(i64 %i.ar, i64 %i.d)
-  %i.at = tail call i64 @llvm.umin.i64(i64 %i.ap, i64 %i.aq)
+  %i.at = tail call i64 @llvm.umin.i64(i64 %i.ap, i64 %8)
   %i.au = tail call i64 @llvm.umin.i64(i64 %i.at, i64 %i.as) ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.au, 8
   br i1 %min.iters.check, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMuttEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us.preheader, label %vector.ph
@@ -2679,7 +2691,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.a
   %i.c = load i32, ptr %i.b, align 4, !noundef !9 ; 5 uses
-  %i.d = and i64 %3, 4611686018427387900          ; 6 uses
+  %i.d = and i64 %3, 4611686018427387900          ; 7 uses
   %i.e = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.d ; 5 uses
   %i.f = shl nuw nsw i64 %3, 1                    ; 2 uses
   %.idx = and i64 %i.f, 9223372036854775800       ; 2 uses
@@ -2756,7 +2768,7 @@ bb.f:                                             ; preds = %bb.a
   br i1 %i.ak, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMuttEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.thread, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMuttEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph
 
 _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMuttEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph: ; preds = %._crit_edge183
-  %i.al = mul nuw nsw i64 %i.a, 3                 ; 5 uses
+  %i.al = mul nuw nsw i64 %i.a, 3                 ; 6 uses
   %i.am = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %5
   %i.an = icmp eq i64 %i.a, 0
   br i1 %i.an, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMuttEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split.us, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMuttEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit
@@ -2766,9 +2778,12 @@ _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %i.ao = add nsw i64 %.idx210, -2
   %i.ap = lshr exact i64 %i.ao, 1
   %i.aq = sub nsw i64 %1, %i.d
+  %6 = tail call i64 @llvm.smin.i64(i64 %i.al, i64 %i.aq)
+  %7 = add i64 %6, %i.d
+  %8 = sub i64 %1, %7
   %i.ar = add nuw nsw i64 %1, 1
   %i.as = tail call i64 @llvm.usub.sat.i64(i64 %i.ar, i64 %i.d)
-  %i.at = tail call i64 @llvm.umin.i64(i64 %i.ap, i64 %i.aq)
+  %i.at = tail call i64 @llvm.umin.i64(i64 %i.ap, i64 %8)
   %i.au = tail call i64 @llvm.umin.i64(i64 %i.at, i64 %i.as) ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.au, 8
   br i1 %min.iters.check, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMuttEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us.preheader, label %vector.ph
@@ -3022,7 +3037,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.a
   %i.c = load i32, ptr %i.b, align 4, !noundef !9 ; 5 uses
-  %i.d = and i64 %3, 4611686018427387900          ; 6 uses
+  %i.d = and i64 %3, 4611686018427387900          ; 7 uses
   %i.e = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.d ; 5 uses
   %i.f = shl nuw nsw i64 %3, 1                    ; 2 uses
   %.idx = and i64 %i.f, 9223372036854775800       ; 2 uses
@@ -3099,7 +3114,7 @@ bb.f:                                             ; preds = %bb.a
   br i1 %i.ak, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMuttEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.thread, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMuttEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph
 
 _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMuttEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph: ; preds = %._crit_edge175
-  %i.al = shl nuw nsw i64 %i.a, 2                 ; 5 uses
+  %i.al = shl nuw nsw i64 %i.a, 2                 ; 6 uses
   %i.am = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %5
   %i.an = icmp eq i64 %i.a, 0
   br i1 %i.an, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMuttEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split.us, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMuttEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit
@@ -3109,9 +3124,12 @@ _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %i.ao = add nsw i64 %.idx202, -2
   %i.ap = lshr exact i64 %i.ao, 1
   %i.aq = sub nsw i64 %1, %i.d
+  %6 = tail call i64 @llvm.smin.i64(i64 %i.al, i64 %i.aq)
+  %7 = add i64 %6, %i.d
+  %8 = sub i64 %1, %7
   %i.ar = add nuw nsw i64 %1, 1
   %i.as = tail call i64 @llvm.usub.sat.i64(i64 %i.ar, i64 %i.d)
-  %i.at = tail call i64 @llvm.umin.i64(i64 %i.ap, i64 %i.aq)
+  %i.at = tail call i64 @llvm.umin.i64(i64 %i.ap, i64 %8)
   %i.au = tail call i64 @llvm.umin.i64(i64 %i.at, i64 %i.as) ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.au, 8
   br i1 %min.iters.check, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMuttEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us.preheader, label %vector.ph
@@ -3512,6 +3530,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smin.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.umin.v4i32(<4 x i32>, <4 x i32>) #7

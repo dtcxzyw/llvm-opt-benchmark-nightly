@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   br i1 %i.p, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE5rfindEcm.exit.i, label %bb.c, !llvm.loop !175
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE5rfindEcm.exit.i: ; preds = %bb.d, %bb.c, %bb.a
-  %i.q = phi i64 [ 0, %bb.a ], [ 0, %bb.c ], [ %.1.i.i17, %bb.d ] ; 10 uses
+  %i.q = phi i64 [ 0, %bb.a ], [ 0, %bb.c ], [ %.1.i.i17, %bb.d ] ; 8 uses
   %i.r = icmp ult i64 %i.i, %i.f
   br i1 %i.r, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread.i
 
@@ -244,11 +244,12 @@ _ZN4moldL8get_lineESt17basic_string_viewIcSt11char_traitsIcEEPKc.exit: ; preds =
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %_ZN4moldL8get_lineESt17basic_string_viewIcSt11char_traitsIcEEPKc.exit
-  %min.iters.check = icmp ult i64 %i.q, 4
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.q, i64 1) ; 3 uses
+  %min.iters.check = icmp slt i64 %i.q, 4
   br i1 %min.iters.check, label %.lr.ph.preheader20, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %i.q, -4                       ; 3 uses
+  %n.vec = and i64 %smax, 9223372036854775804     ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -272,7 +273,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = add <2 x i64> %i.ak, %i.aj
   %i.am = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i64 %i.q, %n.vec
+  %cmp.n = icmp eq i64 %smax, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader20
 
 .lr.ph.preheader20:                               ; preds = %.lr.ph.preheader, %middle.block
@@ -329,7 +330,7 @@ middle.block:                                     ; preds = %vector.body
   %i.bd = zext i1 %i.bc to i64
   %spec.select = add nuw nsw i64 %.012, %i.bd     ; 2 uses
   %i.be = add nuw nsw i64 %.0711, 1               ; 2 uses
-  %exitcond.not = icmp eq i64 %i.be, %i.q
+  %exitcond.not = icmp eq i64 %i.be, %smax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !177
 }
 
@@ -731,6 +732,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #20
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #21

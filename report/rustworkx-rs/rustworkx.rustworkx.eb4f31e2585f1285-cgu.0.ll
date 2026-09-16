@@ -205,7 +205,7 @@ bb.lt:                                            ; preds = %.lr.ph4365, %bb.lu
   %.sroa.078.2.off04361 = phi i64 [ %.sroa.078.7.off0, %.lr.ph4365 ], [ %.sroa.078.6.off0, %bb.lu ] ; 6 uses
   %.sroa.13.24360 = phi i128 [ %.sroa.13.7, %.lr.ph4365 ], [ %.sroa.13.6, %bb.lu ] ; 6 uses
   %.sroa.0163.04359 = phi i64 [ 0, %.lr.ph4365 ], [ %i.bhh, %bb.lu ] ; 8 uses
-  %i.bhh = add nuw i64 %.sroa.0163.04359, 1       ; 2 uses
+  %i.bhh = add nuw nsw i64 %.sroa.0163.04359, 1   ; 2 uses
   %i.bhi = getelementptr inbounds nuw [16 x i8], ptr %i.gd, i64 %.sroa.0163.04359
   %i.bhj = load i64, ptr %i.bhi, align 8, !range !68, !noundef !67
   %.not344 = icmp eq i64 %i.bhj, 0
@@ -608,7 +608,7 @@ bb.f:                                             ; preds = %bb.e, %_RINvNtNtNtN
   br label %bb.q
 
 bb.g:                                             ; preds = %bb.e
-  %i.l = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.l = sub nuw nsw i64 %1, %.sroa.09.0          ; 9 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.09.0 ; 9 uses
   %.not.i31 = icmp ult i64 %i.l, %.sroa.01.0
   br i1 %.not.i31, label %bb.h, label %bb.i
@@ -629,39 +629,47 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.p, label %.preheader, label %.preheader45
 
 .preheader45:                                     ; preds = %bb.j
-  br i1 %.not66, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runNtNtCskcxRuJ53GpR_9rustworkx10dot_parser4RuleNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i.thread, label %.lr.ph
+  br i1 %.not66, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runNtNtCskcxRuJ53GpR_9rustworkx10dot_parser4RuleNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i.thread, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader45
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.l, i64 3) ; 2 uses
+  br label %.lr.ph
 
 .preheader:                                       ; preds = %bb.j
-  br i1 %.not66, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runNtNtCskcxRuJ53GpR_9rustworkx10dot_parser4RuleNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i.thread90, label %.lr.ph54
+  br i1 %.not66, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runNtNtCskcxRuJ53GpR_9rustworkx10dot_parser4RuleNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i.thread90, label %.lr.ph54.preheader
 
-.lr.ph:                                           ; preds = %.preheader45, %bb.k
-  %.val7.i = phi i8 [ %.val6.i, %bb.k ], [ %.val8.i, %.preheader45 ]
-  %.sroa.01.0.i.i50 = phi i64 [ %i.s, %bb.k ], [ 2, %.preheader45 ] ; 3 uses
+.lr.ph54.preheader:                               ; preds = %.preheader
+  %smax73 = tail call i64 @llvm.smax.i64(i64 %i.l, i64 3) ; 2 uses
+  br label %.lr.ph54
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.k
+  %.val7.i = phi i8 [ %.val6.i, %bb.k ], [ %.val8.i, %.lr.ph.preheader ]
+  %.sroa.01.0.i.i50 = phi i64 [ %i.s, %bb.k ], [ 2, %.lr.ph.preheader ] ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.m, i64 %.sroa.01.0.i.i50
   %.val6.i = load i8, ptr %i.q, align 1, !range !149, !alias.scope !37196, !noalias !37197, !noundef !67 ; 2 uses
   %i.r = icmp samesign ult i8 %.val6.i, %.val7.i
   br i1 %i.r, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runNtNtCskcxRuJ53GpR_9rustworkx10dot_parser4RuleNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph
-  %i.s = add nuw i64 %.sroa.01.0.i.i50, 1         ; 2 uses
-  %exitcond.not = icmp eq i64 %i.s, %i.l
+  %i.s = add nuw nsw i64 %.sroa.01.0.i.i50, 1     ; 2 uses
+  %exitcond.not = icmp eq i64 %i.s, %smax
   br i1 %exitcond.not, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runNtNtCskcxRuJ53GpR_9rustworkx10dot_parser4RuleNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i, label %.lr.ph
 
-.lr.ph54:                                         ; preds = %.preheader, %bb.l
-  %.val5.i = phi i8 [ %.val.i, %bb.l ], [ %.val8.i, %.preheader ]
-  %.sroa.01.1.i.i53 = phi i64 [ %i.v, %bb.l ], [ 2, %.preheader ] ; 3 uses
+.lr.ph54:                                         ; preds = %.lr.ph54.preheader, %bb.l
+  %.val5.i = phi i8 [ %.val.i, %bb.l ], [ %.val8.i, %.lr.ph54.preheader ]
+  %.sroa.01.1.i.i53 = phi i64 [ %i.v, %bb.l ], [ 2, %.lr.ph54.preheader ] ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.m, i64 %.sroa.01.1.i.i53
   %.val.i = load i8, ptr %i.t, align 1, !range !149, !alias.scope !37196, !noalias !37197, !noundef !67 ; 2 uses
   %i.u = icmp samesign ult i8 %.val.i, %.val5.i
   br i1 %i.u, label %bb.l, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runNtNtCskcxRuJ53GpR_9rustworkx10dot_parser4RuleNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i
 
 bb.l:                                             ; preds = %.lr.ph54
-  %i.v = add nuw i64 %.sroa.01.1.i.i53, 1         ; 2 uses
-  %exitcond73.not = icmp eq i64 %i.v, %i.l
+  %i.v = add nuw nsw i64 %.sroa.01.1.i.i53, 1     ; 2 uses
+  %exitcond73.not = icmp eq i64 %i.v, %smax73
   br i1 %exitcond73.not, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runNtNtCskcxRuJ53GpR_9rustworkx10dot_parser4RuleNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i, label %.lr.ph54
 
 _RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runNtNtCskcxRuJ53GpR_9rustworkx10dot_parser4RuleNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i: ; preds = %bb.k, %.lr.ph, %bb.l, %.lr.ph54
-  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i53, %.lr.ph54 ], [ %i.l, %bb.l ], [ %.sroa.01.0.i.i50, %.lr.ph ], [ %i.l, %bb.k ] ; 6 uses
+  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i53, %.lr.ph54 ], [ %smax73, %bb.l ], [ %.sroa.01.0.i.i50, %.lr.ph ], [ %smax, %bb.k ] ; 6 uses
   %i.w = icmp samesign ule i64 %.sroa.0.0.i.i, %i.l
   tail call void @llvm.assume(i1 %i.w)
   %.not4.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
@@ -1016,7 +1024,7 @@ bb.f:                                             ; preds = %bb.e, %_RINvNtNtNtN
   br label %bb.q
 
 bb.g:                                             ; preds = %bb.e
-  %i.l = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.l = sub nuw nsw i64 %1, %.sroa.09.0          ; 9 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.09.0 ; 12 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !37287)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !37288)
@@ -1044,15 +1052,23 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.r, label %.preheader80, label %.preheader81
 
 .preheader81:                                     ; preds = %bb.j
-  br i1 %.not187, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs1_0E0ECskcxRuJ53GpR_9rustworkx.exit.i.thread, label %.lr.ph
+  br i1 %.not187, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs1_0E0ECskcxRuJ53GpR_9rustworkx.exit.i.thread, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader81
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.l, i64 3) ; 2 uses
+  br label %.lr.ph
 
 .preheader80:                                     ; preds = %bb.j
-  br i1 %.not187, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs1_0E0ECskcxRuJ53GpR_9rustworkx.exit.i.thread263, label %.lr.ph136
+  br i1 %.not187, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs1_0E0ECskcxRuJ53GpR_9rustworkx.exit.i.thread263, label %.lr.ph136.preheader
 
-.lr.ph:                                           ; preds = %.preheader81, %bb.k
-  %.val13.i = phi i32 [ %.val11.i, %bb.k ], [ %.val16.i, %.preheader81 ]
-  %.val12.i = phi i32 [ %.val10.i, %bb.k ], [ %.val15.i, %.preheader81 ]
-  %.sroa.01.0.i.i132 = phi i64 [ %i.v, %bb.k ], [ 2, %.preheader81 ] ; 3 uses
+.lr.ph136.preheader:                              ; preds = %.preheader80
+  %smax228 = tail call i64 @llvm.smax.i64(i64 %i.l, i64 3) ; 2 uses
+  br label %.lr.ph136
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.k
+  %.val13.i = phi i32 [ %.val11.i, %bb.k ], [ %.val16.i, %.lr.ph.preheader ]
+  %.val12.i = phi i32 [ %.val10.i, %bb.k ], [ %.val15.i, %.lr.ph.preheader ]
+  %.sroa.01.0.i.i132 = phi i64 [ %i.v, %bb.k ], [ 2, %.lr.ph.preheader ] ; 3 uses
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %.sroa.01.0.i.i132 ; 2 uses
   %.val10.i = load i32, ptr %i.s, align 4, !alias.scope !37287, !noalias !37290 ; 2 uses
   %i.t = getelementptr i8, ptr %i.s, i64 4
@@ -1061,14 +1077,14 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.u, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs1_0E0ECskcxRuJ53GpR_9rustworkx.exit.i, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph
-  %i.v = add nuw i64 %.sroa.01.0.i.i132, 1        ; 2 uses
-  %exitcond.not = icmp eq i64 %i.v, %i.l
+  %i.v = add nuw nsw i64 %.sroa.01.0.i.i132, 1    ; 2 uses
+  %exitcond.not = icmp eq i64 %i.v, %smax
   br i1 %exitcond.not, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs1_0E0ECskcxRuJ53GpR_9rustworkx.exit.i, label %.lr.ph
 
-.lr.ph136:                                        ; preds = %.preheader80, %bb.l
-  %.val8.i = phi i32 [ %.val6.i, %bb.l ], [ %.val16.i, %.preheader80 ]
-  %.val7.i = phi i32 [ %.val5.i, %bb.l ], [ %.val15.i, %.preheader80 ]
-  %.sroa.01.1.i.i135 = phi i64 [ %i.z, %bb.l ], [ 2, %.preheader80 ] ; 3 uses
+.lr.ph136:                                        ; preds = %.lr.ph136.preheader, %bb.l
+  %.val8.i = phi i32 [ %.val6.i, %bb.l ], [ %.val16.i, %.lr.ph136.preheader ]
+  %.val7.i = phi i32 [ %.val5.i, %bb.l ], [ %.val15.i, %.lr.ph136.preheader ]
+  %.sroa.01.1.i.i135 = phi i64 [ %i.z, %bb.l ], [ 2, %.lr.ph136.preheader ] ; 3 uses
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %.sroa.01.1.i.i135 ; 2 uses
   %.val5.i = load i32, ptr %i.w, align 4, !alias.scope !37287, !noalias !37290 ; 2 uses
   %i.x = getelementptr i8, ptr %i.w, i64 4
@@ -1077,12 +1093,12 @@ bb.k:                                             ; preds = %.lr.ph
   br i1 %i.y, label %bb.l, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs1_0E0ECskcxRuJ53GpR_9rustworkx.exit.i
 
 bb.l:                                             ; preds = %.lr.ph136
-  %i.z = add nuw i64 %.sroa.01.1.i.i135, 1        ; 2 uses
-  %exitcond228.not = icmp eq i64 %i.z, %i.l
+  %i.z = add nuw nsw i64 %.sroa.01.1.i.i135, 1    ; 2 uses
+  %exitcond228.not = icmp eq i64 %i.z, %smax228
   br i1 %exitcond228.not, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs1_0E0ECskcxRuJ53GpR_9rustworkx.exit.i, label %.lr.ph136
 
 _RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs1_0E0ECskcxRuJ53GpR_9rustworkx.exit.i: ; preds = %bb.k, %.lr.ph, %bb.l, %.lr.ph136
-  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i135, %.lr.ph136 ], [ %i.l, %bb.l ], [ %.sroa.01.0.i.i132, %.lr.ph ], [ %i.l, %bb.k ] ; 6 uses
+  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i135, %.lr.ph136 ], [ %smax228, %bb.l ], [ %.sroa.01.0.i.i132, %.lr.ph ], [ %smax, %bb.k ] ; 6 uses
   %i.aa = icmp samesign ule i64 %.sroa.0.0.i.i, %i.l
   tail call void @llvm.assume(i1 %i.aa)
   %.not4.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
@@ -1485,7 +1501,7 @@ bb.f:                                             ; preds = %bb.e, %_RINvNtNtNtN
   br label %bb.q
 
 bb.g:                                             ; preds = %bb.e
-  %i.l = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.l = sub nuw nsw i64 %1, %.sroa.09.0          ; 9 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.09.0 ; 12 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !37405)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !37406)
@@ -1513,15 +1529,23 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.r, label %.preheader80, label %.preheader81
 
 .preheader81:                                     ; preds = %bb.j
-  br i1 %.not187, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs_0E0ECskcxRuJ53GpR_9rustworkx.exit.i.thread, label %.lr.ph
+  br i1 %.not187, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs_0E0ECskcxRuJ53GpR_9rustworkx.exit.i.thread, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader81
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.l, i64 3) ; 2 uses
+  br label %.lr.ph
 
 .preheader80:                                     ; preds = %bb.j
-  br i1 %.not187, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs_0E0ECskcxRuJ53GpR_9rustworkx.exit.i.thread263, label %.lr.ph136
+  br i1 %.not187, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs_0E0ECskcxRuJ53GpR_9rustworkx.exit.i.thread263, label %.lr.ph136.preheader
 
-.lr.ph:                                           ; preds = %.preheader81, %bb.k
-  %.val13.i = phi i32 [ %.val11.i, %bb.k ], [ %.val16.i, %.preheader81 ]
-  %.val12.i = phi i32 [ %.val10.i, %bb.k ], [ %.val15.i, %.preheader81 ]
-  %.sroa.01.0.i.i132 = phi i64 [ %i.v, %bb.k ], [ 2, %.preheader81 ] ; 3 uses
+.lr.ph136.preheader:                              ; preds = %.preheader80
+  %smax228 = tail call i64 @llvm.smax.i64(i64 %i.l, i64 3) ; 2 uses
+  br label %.lr.ph136
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.k
+  %.val13.i = phi i32 [ %.val11.i, %bb.k ], [ %.val16.i, %.lr.ph.preheader ]
+  %.val12.i = phi i32 [ %.val10.i, %bb.k ], [ %.val15.i, %.lr.ph.preheader ]
+  %.sroa.01.0.i.i132 = phi i64 [ %i.v, %bb.k ], [ 2, %.lr.ph.preheader ] ; 3 uses
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %.sroa.01.0.i.i132 ; 2 uses
   %.val10.i = load i32, ptr %i.s, align 4, !alias.scope !37405, !noalias !37408 ; 2 uses
   %i.t = getelementptr i8, ptr %i.s, i64 4
@@ -1530,14 +1554,14 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.u, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs_0E0ECskcxRuJ53GpR_9rustworkx.exit.i, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph
-  %i.v = add nuw i64 %.sroa.01.0.i.i132, 1        ; 2 uses
-  %exitcond.not = icmp eq i64 %i.v, %i.l
+  %i.v = add nuw nsw i64 %.sroa.01.0.i.i132, 1    ; 2 uses
+  %exitcond.not = icmp eq i64 %i.v, %smax
   br i1 %exitcond.not, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs_0E0ECskcxRuJ53GpR_9rustworkx.exit.i, label %.lr.ph
 
-.lr.ph136:                                        ; preds = %.preheader80, %bb.l
-  %.val8.i = phi i32 [ %.val6.i, %bb.l ], [ %.val16.i, %.preheader80 ]
-  %.val7.i = phi i32 [ %.val5.i, %bb.l ], [ %.val15.i, %.preheader80 ]
-  %.sroa.01.1.i.i135 = phi i64 [ %i.z, %bb.l ], [ 2, %.preheader80 ] ; 3 uses
+.lr.ph136:                                        ; preds = %.lr.ph136.preheader, %bb.l
+  %.val8.i = phi i32 [ %.val6.i, %bb.l ], [ %.val16.i, %.lr.ph136.preheader ]
+  %.val7.i = phi i32 [ %.val5.i, %bb.l ], [ %.val15.i, %.lr.ph136.preheader ]
+  %.sroa.01.1.i.i135 = phi i64 [ %i.z, %bb.l ], [ 2, %.lr.ph136.preheader ] ; 3 uses
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %.sroa.01.1.i.i135 ; 2 uses
   %.val5.i = load i32, ptr %i.w, align 4, !alias.scope !37405, !noalias !37408 ; 2 uses
   %i.x = getelementptr i8, ptr %i.w, i64 4
@@ -1546,12 +1570,12 @@ bb.k:                                             ; preds = %.lr.ph
   br i1 %i.y, label %bb.l, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs_0E0ECskcxRuJ53GpR_9rustworkx.exit.i
 
 bb.l:                                             ; preds = %.lr.ph136
-  %i.z = add nuw i64 %.sroa.01.1.i.i135, 1        ; 2 uses
-  %exitcond228.not = icmp eq i64 %i.z, %i.l
+  %i.z = add nuw nsw i64 %.sroa.01.1.i.i135, 1    ; 2 uses
+  %exitcond228.not = icmp eq i64 %i.z, %smax228
   br i1 %exitcond228.not, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs_0E0ECskcxRuJ53GpR_9rustworkx.exit.i, label %.lr.ph136
 
 _RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs_0E0ECskcxRuJ53GpR_9rustworkx.exit.i: ; preds = %bb.k, %.lr.ph, %bb.l, %.lr.ph136
-  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i135, %.lr.ph136 ], [ %i.l, %bb.l ], [ %.sroa.01.0.i.i132, %.lr.ph ], [ %i.l, %bb.k ] ; 6 uses
+  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i135, %.lr.ph136 ], [ %smax228, %bb.l ], [ %.sroa.01.0.i.i132, %.lr.ph ], [ %smax, %bb.k ] ; 6 uses
   %i.aa = icmp samesign ule i64 %.sroa.0.0.i.i, %i.l
   tail call void @llvm.assume(i1 %i.aa)
   %.not4.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
@@ -1952,6 +1976,9 @@ declare i32 @llvm.umax.i32(i32, i32) #41
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i128 @llvm.smin.i128(i128, i128) #41
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #41
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare { i64, i1 } @llvm.uadd.with.overflow.i64(i64, i64) #41

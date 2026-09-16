@@ -204,19 +204,21 @@ _ZN5Ipopt14DenseGenMatrix6ValuesEv.exit:          ; preds = %bb.aw
   br i1 %i.k, label %.lr.ph190.us.preheader, label %_ZN5Ipopt14DenseGenMatrix6ValuesEv.exit.split.preheader
 
 _ZN5Ipopt14DenseGenMatrix6ValuesEv.exit.split.preheader: ; preds = %_ZN5Ipopt14DenseGenMatrix6ValuesEv.exit
-  %wide.trip.count206 = zext i32 %.0105.lcssa to i64 ; 2 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %.0105.lcssa, i32 1)
+  %wide.trip.count206 = zext nneg i32 %smax to i64 ; 2 uses
   %xtraiter = and i64 %wide.trip.count206, 3      ; 3 uses
-  %5 = icmp ult i32 %.0105.lcssa, 4
+  %5 = icmp slt i32 %.0105.lcssa, 4
   br i1 %5, label %_ZN5Ipopt14DenseGenMatrix6ValuesEv.exit.split.epil.preheader, label %_ZN5Ipopt14DenseGenMatrix6ValuesEv.exit.split.preheader.new
 
 _ZN5Ipopt14DenseGenMatrix6ValuesEv.exit.split.preheader.new: ; preds = %_ZN5Ipopt14DenseGenMatrix6ValuesEv.exit.split.preheader
-  %unroll_iter = and i64 %wide.trip.count206, 4294967292
+  %unroll_iter = and i64 %wide.trip.count206, 2147483644
   br label %_ZN5Ipopt14DenseGenMatrix6ValuesEv.exit.split
 
 .lr.ph190.us.preheader:                           ; preds = %_ZN5Ipopt14DenseGenMatrix6ValuesEv.exit
   %i.hw = ptrtoaddr ptr %i.hv to i64
   %i.hx = zext nneg i32 %i.d to i64               ; 6 uses
-  %wide.trip.count217 = zext i32 %.0105.lcssa to i64
+  %smax216 = tail call i32 @llvm.smax.i32(i32 %.0105.lcssa, i32 1)
+  %wide.trip.count217 = zext nneg i32 %smax216 to i64
   %min.iters.check256 = icmp eq i32 %i.d, 1
   %i.hy = sub i64 %i.j, %i.hw
   %diff.check = icmp ugt i64 %i.hy, -16
@@ -617,6 +619,9 @@ declare i64 @llvm.umax.i64(i64, i64) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v2i32(<2 x i32>) #16

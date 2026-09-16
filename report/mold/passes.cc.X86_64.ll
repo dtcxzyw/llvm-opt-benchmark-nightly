@@ -205,12 +205,10 @@ bb.s:                                             ; preds = %bb.r
 
 _ZSt34__uninitialized_move_if_noexcept_aIPPN4mold9InputFileINS0_6X86_64EEES5_SaIS4_EET0_T_S8_S7_RT1_.exit: ; preds = %bb.q, %bb.r, %bb.s
   %i.dm = getelementptr i8, ptr %i.dg, i64 %i.di
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.dm, ptr align 8 %2, i64 %i.d, i1 false), !tbaa !671
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.dm, ptr noundef nonnull align 8 dereferenceable(1) %2, i64 %i.d, i1 false), !tbaa !671
   %i.dn = add i64 %i.d, %i.dh
-  %4 = add i64 %i.dn, 8
-  %i.do = sub i64 %4, %i.cv
-  %5 = getelementptr i8, ptr %i.dg, i64 %i.do
-  %scevgep = getelementptr i8, ptr %5, i64 -8     ; 3 uses
+  %i.do = sub i64 %i.dn, %i.cv
+  %scevgep = getelementptr i8, ptr %i.dg, i64 %i.do ; 3 uses
   %i.dp = sub i64 %i.k, %i.dh                     ; 4 uses
   %i.dq = icmp sgt i64 %i.dp, 8
   br i1 %i.dq, label %bb.t, label %bb.u, !prof !985
@@ -580,12 +578,10 @@ bb.s:                                             ; preds = %bb.r
 
 _ZSt34__uninitialized_move_if_noexcept_aIPPN4mold9InputFileINS0_6X86_64EEES5_SaIS4_EET0_T_S8_S7_RT1_.exit: ; preds = %bb.q, %bb.r, %bb.s
   %i.dm = getelementptr i8, ptr %i.dg, i64 %i.di
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.dm, ptr align 8 %2, i64 %i.d, i1 false), !tbaa !671
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.dm, ptr noundef nonnull align 8 dereferenceable(1) %2, i64 %i.d, i1 false), !tbaa !671
   %i.dn = add i64 %i.d, %i.dh
-  %4 = add i64 %i.dn, 8
-  %i.do = sub i64 %4, %i.cv
-  %5 = getelementptr i8, ptr %i.dg, i64 %i.do
-  %scevgep = getelementptr i8, ptr %5, i64 -8     ; 3 uses
+  %i.do = sub i64 %i.dn, %i.cv
+  %scevgep = getelementptr i8, ptr %i.dg, i64 %i.do ; 3 uses
   %i.dp = sub i64 %i.k, %i.dh                     ; 4 uses
   %i.dq = icmp sgt i64 %i.dp, 8
   br i1 %i.dq, label %bb.t, label %bb.u, !prof !985

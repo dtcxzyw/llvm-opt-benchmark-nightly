@@ -204,11 +204,9 @@ iter.check:                                       ; preds = %bb.a
   %i.i = load i32, ptr %i.h, align 8, !tbaa !189
   %i.j = mul i32 %i.i, 1431655765
   %i.k = zext i32 %i.j to i64                     ; 3 uses
-  %i.l = zext nneg i32 %i.e to i64                ; 7 uses
+  %i.l = zext nneg i32 %i.e to i64                ; 6 uses
   %i.m = zext nneg i32 %i.c to i64                ; 5 uses
-  %1 = add nsw i64 %i.l, -1
-  %umin = tail call i64 @llvm.umin.i64(i64 %1, i64 %i.m)
-  %i.n = sub nsw i64 %i.l, %umin                  ; 7 uses
+  %i.n = sub nsw i64 %i.l, %i.m                   ; 7 uses
   %min.iters.check = icmp ult i64 %i.n, 4
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -611,11 +609,9 @@ iter.check:                                       ; preds = %bb.a
   %i.i = load i32, ptr %i.h, align 8, !tbaa !189
   %i.j = mul i32 %i.i, 1431655765
   %i.k = zext i32 %i.j to i64                     ; 3 uses
-  %i.l = zext nneg i32 %i.e to i64                ; 7 uses
+  %i.l = zext nneg i32 %i.e to i64                ; 6 uses
   %i.m = zext nneg i32 %i.c to i64                ; 5 uses
-  %1 = add nsw i64 %i.l, -1
-  %umin = tail call i64 @llvm.umin.i64(i64 %1, i64 %i.m)
-  %i.n = sub nsw i64 %i.l, %umin                  ; 7 uses
+  %i.n = sub nsw i64 %i.l, %i.m                   ; 7 uses
   %min.iters.check = icmp ult i64 %i.n, 4
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -1016,9 +1012,6 @@ declare <2 x float> @llvm.floor.v2f32(<2 x float>) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #16
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.or.v4i64(<4 x i64>) #16

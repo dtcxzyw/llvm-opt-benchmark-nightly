@@ -204,8 +204,9 @@ _ZNSt6vectorIiSaIiEE9push_backEOi.exit:           ; preds = %_ZNSt6vectorIiSaIiE
   %i.v = add i32 %2, %1                           ; 4 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !20   ; 7 uses
-  %wide.trip.count = zext i32 %.0.lcssa to i64    ; 6 uses
-  %min.iters.check = icmp ult i32 %.0.lcssa, 4
+  %smax = tail call i32 @llvm.smax.i32(i32 %.0.lcssa, i32 1)
+  %wide.trip.count = zext nneg i32 %smax to i64   ; 6 uses
+  %min.iters.check = icmp slt i32 %.0.lcssa, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph56
@@ -227,7 +228,7 @@ vector.memcheck:                                  ; preds = %.lr.ph56
   br i1 %conflict.rdx82, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %wide.trip.count, 4294967292   ; 3 uses
+  %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.v, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert83 = insertelement <4 x i32> poison, i32 %1, i64 0
@@ -628,6 +629,9 @@ declare i64 @llvm.umin.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #8

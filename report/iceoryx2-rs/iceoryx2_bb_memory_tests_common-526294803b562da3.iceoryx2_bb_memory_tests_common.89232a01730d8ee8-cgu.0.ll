@@ -204,7 +204,7 @@ _RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultINtNtNtB4_3ptr8non_null7NonNullShE
   br i1 %i.aq, label %.split122.us.loopexit, label %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultINtNtNtB4_3ptr8non_null7NonNullShENtNtCs6KsCSdq2EJ7_29iceoryx2_bb_elementary_traits9allocator19AllocationGrowErrorE6expectCsbLYH4FncSaO_31iceoryx2_bb_memory_tests_common.exit.split.split
 
 .preheader.split127.split.preheader:              ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtCsbqH9stoieM8_5alloc3vec3VechEECsbLYH4FncSaO_31iceoryx2_bb_memory_tests_common.exit72
-  %umax = call i64 @llvm.umax.i64(i64 %i.an, i64 64) ; 2 uses
+  %umax = call i64 @llvm.smax.i64(i64 %i.an, i64 64) ; 2 uses
   br label %.preheader.split127.split
 
 _RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultINtNtNtB4_3ptr8non_null7NonNullShENtNtCs6KsCSdq2EJ7_29iceoryx2_bb_elementary_traits9allocator19AllocationGrowErrorE6expectCsbLYH4FncSaO_31iceoryx2_bb_memory_tests_common.exit.split.split: ; preds = %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultINtNtNtB4_3ptr8non_null7NonNullShENtNtCs6KsCSdq2EJ7_29iceoryx2_bb_elementary_traits9allocator19AllocationGrowErrorE6expectCsbLYH4FncSaO_31iceoryx2_bb_memory_tests_common.exit.split, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtCsbqH9stoieM8_5alloc3vec3VechEECsbLYH4FncSaO_31iceoryx2_bb_memory_tests_common.exit72
@@ -606,6 +606,9 @@ declare void @_RNvXs0_NtCsglnFQv1SDtP_18iceoryx2_bb_memory14heap_allocatorNtB5_1
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #14
 
 attributes #0 = { nounwind nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { cold nounwind nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

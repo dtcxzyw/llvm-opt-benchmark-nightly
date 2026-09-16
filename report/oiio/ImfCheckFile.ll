@@ -204,7 +204,7 @@ bb.hj:                                            ; preds = %_ZN27OpenImageIO_v3
 
 .preheader338.i:                                  ; preds = %bb.hj, %bb.hq
   %.sroa.0239.0.i = phi ptr [ %i.zs, %bb.hq ], [ %i.za, %bb.hj ] ; 2 uses
-  %.0157.i = phi i32 [ %i.zt, %bb.hq ], [ 0, %bb.hj ] ; 14 uses
+  %.0157.i = phi i32 [ %i.zt, %bb.hq ], [ 0, %bb.hj ] ; 13 uses
   %i.zb = invoke noundef nonnull align 8 dereferenceable(48) ptr @_ZNK27OpenImageIO_v3_1_Imf__3_3_56Header8channelsEv(ptr noundef nonnull align 8 dereferenceable(49) %i.yb)
           to label %bb.hk unwind label %bb.hp
 
@@ -217,7 +217,7 @@ bb.hl:                                            ; preds = %bb.hk
   br i1 %.not310.i, label %bb.hm, label %bb.hq
 
 bb.hm:                                            ; preds = %bb.hl
-  %i.zd = zext i32 %.0157.i to i64                ; 10 uses
+  %i.zd = zext i32 %.0157.i to i64                ; 2 uses
   %i.ze = mul nuw nsw i64 %i.zd, 24               ; 3 uses
   %i.zf = add nuw nsw i64 %i.ze, 8
   %i.zg = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.zf) #29
@@ -237,6 +237,8 @@ bb.hm:                                            ; preds = %bb.hl
   %i.zm = icmp ugt i64 %i.yo, 2305843009213693951
   %i.zn = shl nuw i64 %i.yo, 3
   %i.zo = select i1 %i.zm, i64 -1, i64 %i.zn
+  %smax.i = call i32 @llvm.smax.i32(i32 %.0157.i, i32 1)
+  %wide.trip.count.i = zext nneg i32 %smax.i to i64
   br label %bb.ht
 
 bb.hn:                                            ; preds = %bb.hi
@@ -302,7 +304,7 @@ bb.hv:                                            ; preds = %bb.hu, %.noexc206.i
   store i64 %i.ym, ptr %i.aab, align 8, !tbaa !99
   store ptr %i.zx, ptr %i.zy, align 8, !tbaa !97
   %indvars.iv.next.i144 = add nuw nsw i64 %indvars.iv.i143, 1 ; 2 uses
-  %exitcond.not.i145 = icmp eq i64 %indvars.iv.next.i144, %i.zd
+  %exitcond.not.i145 = icmp eq i64 %indvars.iv.next.i144, %wide.trip.count.i
   br i1 %exitcond.not.i145, label %._crit_edge.i146, label %bb.ht, !llvm.loop !189
 
 bb.hw:                                            ; preds = %bb.ht
@@ -411,10 +413,12 @@ bb.il:                                            ; preds = %bb.id
   %i.aay = icmp sgt i32 %.fr522, 0
   %i.aaz = icmp slt i32 %.fr, 1
   %i.aba = icmp slt i32 %.fr522, 1
+  %smax642.i = call i32 @llvm.smax.i32(i32 %.0157.i, i32 1) ; 4 uses
   %wide.trip.count626.i = zext nneg i32 %.fr522 to i64 ; 4 uses
   %wide.trip.count621.i = zext i32 %.fr to i64    ; 6 uses
   %brmerge.i154 = or i1 %i.aba, %i.aaz
-  %i.abb = add nsw i64 %i.zd, -1                  ; 3 uses
+  %wide.trip.count643.i = zext nneg i32 %smax642.i to i64 ; 7 uses
+  %i.abb = add nsw i64 %wide.trip.count643.i, -1  ; 3 uses
   %xtraiter980 = and i64 %wide.trip.count621.i, 3 ; 3 uses
   %i.abc = icmp ult i32 %.fr, 4
   %unroll_iter986 = and i64 %wide.trip.count621.i, 2147483644
@@ -425,21 +429,21 @@ bb.il:                                            ; preds = %bb.id
   %unroll_iter995 = and i64 %wide.trip.count621.i, 2147483646
   %lcmp.mod991.not = icmp eq i64 %xtraiter989, 0
   %lcmp.mod994 = trunc i32 %.fr to i1
-  %xtraiter998 = and i64 %i.zd, 1
+  %xtraiter998 = and i64 %wide.trip.count643.i, 1
   %i.abe = icmp eq i64 %i.abb, 0
-  %unroll_iter1003 = and i64 %i.zd, 4294967294
+  %unroll_iter1003 = and i64 %wide.trip.count643.i, 2147483646
   %lcmp.mod1000.not = icmp eq i64 %xtraiter998, 0
-  %lcmp.mod1002 = trunc i32 %.0157.i to i1
-  %xtraiter1005 = and i64 %i.zd, 1
+  %lcmp.mod1002 = trunc i32 %smax642.i to i1
+  %xtraiter1005 = and i64 %wide.trip.count643.i, 1
   %i.abf = icmp eq i64 %i.abb, 0
-  %unroll_iter1009 = and i64 %i.zd, 4294967294
+  %unroll_iter1009 = and i64 %wide.trip.count643.i, 2147483646
   %lcmp.mod1007.not = icmp eq i64 %xtraiter1005, 0
-  %lcmp.mod1008 = trunc i32 %.0157.i to i1
-  %xtraiter1012 = and i64 %i.zd, 1
+  %lcmp.mod1008 = trunc i32 %smax642.i to i1
+  %xtraiter1012 = and i64 %wide.trip.count643.i, 1
   %i.abg = icmp eq i64 %i.abb, 0
-  %unroll_iter1017 = and i64 %i.zd, 4294967294
+  %unroll_iter1017 = and i64 %wide.trip.count643.i, 2147483646
   %lcmp.mod1014.not = icmp eq i64 %xtraiter1012, 0
-  %lcmp.mod1016 = trunc i32 %.0157.i to i1
+  %lcmp.mod1016 = trunc i32 %smax642.i to i1
   br label %.preheader335.us.i
 
 .preheader335.us.i:                               ; preds = %..thread279_crit_edge.us.i, %.preheader335.us.preheader.i
@@ -842,7 +846,7 @@ bb.o:                                             ; preds = %_ZN27OpenImageIO_v3
 
 .preheader338:                                    ; preds = %bb.o, %bb.v
   %.sroa.0239.0 = phi ptr [ %i.ar, %bb.v ], [ %i.z, %bb.o ] ; 2 uses
-  %.0157 = phi i32 [ %i.as, %bb.v ], [ 0, %bb.o ] ; 14 uses
+  %.0157 = phi i32 [ %i.as, %bb.v ], [ 0, %bb.o ] ; 13 uses
   %i.aa = invoke noundef nonnull align 8 dereferenceable(48) ptr @_ZNK27OpenImageIO_v3_1_Imf__3_3_56Header8channelsEv(ptr noundef nonnull align 8 dereferenceable(49) %i.a)
           to label %bb.p unwind label %bb.u
 
@@ -855,7 +859,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not310, label %bb.r, label %bb.v
 
 bb.r:                                             ; preds = %bb.q
-  %i.ac = zext i32 %.0157 to i64                  ; 10 uses
+  %i.ac = zext i32 %.0157 to i64                  ; 2 uses
   %i.ad = mul nuw nsw i64 %i.ac, 24               ; 3 uses
   %i.ae = add nuw nsw i64 %i.ad, 8
   %i.af = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.ae) #29
@@ -875,6 +879,8 @@ bb.r:                                             ; preds = %bb.q
   %i.al = icmp ugt i64 %i.n, 2305843009213693951
   %i.am = shl nuw i64 %i.n, 3
   %i.an = select i1 %i.al, i64 -1, i64 %i.am
+  %smax = tail call i32 @llvm.smax.i32(i32 %.0157, i32 1)
+  %wide.trip.count = zext nneg i32 %smax to i64
   br label %bb.y
 
 bb.s:                                             ; preds = %bb.n
@@ -946,7 +952,7 @@ bb.aa:                                            ; preds = %bb.z, %.noexc206
   store i64 %i.l, ptr %i.bg, align 8, !tbaa !99
   store ptr %i.bc, ptr %i.bd, align 8, !tbaa !97
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.ac
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.y, !llvm.loop !232
 
 bb.ab:                                            ; preds = %bb.y
@@ -1055,15 +1061,17 @@ bb.aq:                                            ; preds = %bb.ai
 .preheader335.us.preheader:                       ; preds = %.preheader335.lr.ph
   %i.ce = icmp slt i32 %i.g, 1
   %i.cf = icmp slt i32 %i.i, 1
+  %smax642 = call i32 @llvm.smax.i32(i32 %.0157, i32 1) ; 4 uses
   %wide.trip.count626 = zext nneg i32 %i.i to i64
   %wide.trip.count636 = zext nneg i32 %i.i to i64
   %wide.trip.count631 = zext i32 %i.g to i64      ; 4 uses
   %brmerge = select i1 %i.cf, i1 true, i1 %i.ce
   %wide.trip.count652 = zext nneg i32 %i.i to i64
   %wide.trip.count647 = zext nneg i32 %i.g to i64
+  %wide.trip.count643 = zext nneg i32 %smax642 to i64 ; 7 uses
   %wide.trip.count685 = zext nneg i32 %i.i to i64
   %wide.trip.count669 = zext nneg i32 %i.g to i64
-  %i.cg = add nsw i64 %i.ac, -1                   ; 3 uses
+  %i.cg = add nsw i64 %wide.trip.count643, -1     ; 3 uses
   %xtraiter = and i64 %wide.trip.count631, 3      ; 3 uses
   %i.ch = icmp ult i32 %i.g, 4
   %unroll_iter = and i64 %wide.trip.count631, 2147483644
@@ -1074,21 +1082,21 @@ bb.aq:                                            ; preds = %bb.ai
   %unroll_iter848 = and i64 %wide.trip.count631, 2147483646
   %lcmp.mod844.not = icmp eq i64 %xtraiter842, 0
   %lcmp.mod847 = trunc i32 %i.g to i1
-  %xtraiter851 = and i64 %i.ac, 1
+  %xtraiter851 = and i64 %wide.trip.count643, 1
   %i.cj = icmp eq i64 %i.cg, 0
-  %unroll_iter856 = and i64 %i.ac, 4294967294
+  %unroll_iter856 = and i64 %wide.trip.count643, 2147483646
   %lcmp.mod853.not = icmp eq i64 %xtraiter851, 0
-  %lcmp.mod855 = trunc i32 %.0157 to i1
-  %xtraiter858 = and i64 %i.ac, 1
+  %lcmp.mod855 = trunc i32 %smax642 to i1
+  %xtraiter858 = and i64 %wide.trip.count643, 1
   %i.ck = icmp eq i64 %i.cg, 0
-  %unroll_iter862 = and i64 %i.ac, 4294967294
+  %unroll_iter862 = and i64 %wide.trip.count643, 2147483646
   %lcmp.mod860.not = icmp eq i64 %xtraiter858, 0
-  %lcmp.mod861 = trunc i32 %.0157 to i1
-  %xtraiter865 = and i64 %i.ac, 1
+  %lcmp.mod861 = trunc i32 %smax642 to i1
+  %xtraiter865 = and i64 %wide.trip.count643, 1
   %i.cl = icmp eq i64 %i.cg, 0
-  %unroll_iter870 = and i64 %i.ac, 4294967294
+  %unroll_iter870 = and i64 %wide.trip.count643, 2147483646
   %lcmp.mod867.not = icmp eq i64 %xtraiter865, 0
-  %lcmp.mod869 = trunc i32 %.0157 to i1
+  %lcmp.mod869 = trunc i32 %smax642 to i1
   br label %.preheader335.us
 
 .preheader335.us:                                 ; preds = %.preheader335.us.preheader, %..thread279_crit_edge.us

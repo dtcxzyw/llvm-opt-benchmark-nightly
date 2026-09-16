@@ -204,7 +204,8 @@ bb.b:                                             ; preds = %bb.a
 
 .preheader75.lr.ph:                               ; preds = %.preheader76
   %i.n = load ptr, ptr %i.a, align 8, !tbaa !76
-  %wide.trip.count = zext i32 %i.h to i64
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.h, i32 1)
+  %wide.trip.count = zext nneg i32 %smax to i64
   %i.o = load i32, ptr %i.i, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 136676
   %i.q = load i32, ptr %i.p, align 4
@@ -370,13 +371,14 @@ bb.k:                                             ; preds = %bb.b, %bb.a
 
 .preheader.lr.ph:                                 ; preds = %.preheader72
   %i.dz = load ptr, ptr %i.a, align 8, !tbaa !76  ; 9 uses
-  %wide.trip.count107 = zext i32 %i.h to i64      ; 3 uses
+  %smax108 = tail call i32 @llvm.smax.i32(i32 %i.h, i32 1)
+  %wide.trip.count107 = zext nneg i32 %smax108 to i64 ; 3 uses
   %i.ea = load <4 x float>, ptr %1, align 4, !tbaa !78 ; 5 uses
-  %min.iters.check = icmp ult i32 %i.h, 8
+  %min.iters.check = icmp slt i32 %i.h, 8
   br i1 %min.iters.check, label %.preheader.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.preheader.lr.ph
-  %n.vec = and i64 %wide.trip.count107, 4294967288 ; 3 uses
+  %n.vec = and i64 %wide.trip.count107, 2147483640 ; 3 uses
   %broadcast.splat = shufflevector <4 x float> %i.ea, <4 x float> poison, <8 x i32> zeroinitializer
   %broadcast.splat129 = shufflevector <4 x float> %i.ea, <4 x float> poison, <8 x i32> <i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1>
   %broadcast.splat131 = shufflevector <4 x float> %i.ea, <4 x float> poison, <8 x i32> <i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2>
@@ -521,7 +523,8 @@ bb.l:                                             ; preds = %bb.k
 
 .preheader73.lr.ph:                               ; preds = %bb.l
   %i.ip = load ptr, ptr %i.a, align 8, !tbaa !76
-  %wide.trip.count98 = zext i32 %i.h to i64
+  %smax98 = tail call i32 @llvm.smax.i32(i32 %i.h, i32 1)
+  %wide.trip.count98 = zext nneg i32 %smax98 to i64
   %i.iq = getelementptr inbounds nuw i8, ptr %0, i64 136676
   %i.ir = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.is = getelementptr inbounds nuw i8, ptr %0, i64 136680

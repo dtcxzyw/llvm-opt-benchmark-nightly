@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph58, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 9 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 8 uses
   %i.n = getelementptr inbounds nuw [40 x i8], ptr %0, i64 %.sroa.09.0 ; 6 uses
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
@@ -228,11 +228,15 @@ bb.k:                                             ; preds = %bb.j
 
 .preheader46:                                     ; preds = %bb.k
   %.not64 = icmp eq i64 %i.m, 2
-  br i1 %.not64, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runINtNtCsa9Jrx9KOzzM_16hickory_resolver11name_server15ConnectionStateNtNtNtCs4LZN9PPmi2I_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keybNCINvMB15_INtB15_10NameServerB27_E3newATNtNtB2d_4xfer8ProtocolINtNtB4V_12dns_exchange11DnsExchangeB27_EEj0_Es_0E0ECs44McOc0n4RX_13interop_tests.exit.i.thread, label %.lr.ph
+  br i1 %.not64, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runINtNtCsa9Jrx9KOzzM_16hickory_resolver11name_server15ConnectionStateNtNtNtCs4LZN9PPmi2I_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keybNCINvMB15_INtB15_10NameServerB27_E3newATNtNtB2d_4xfer8ProtocolINtNtB4V_12dns_exchange11DnsExchangeB27_EEj0_Es_0E0ECs44McOc0n4RX_13interop_tests.exit.i.thread, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %.preheader46, %bb.l
-  %.val9.i = phi i8 [ %.val8.i, %bb.l ], [ %.val10.i, %.preheader46 ]
-  %.sroa.01.0.i.i48 = phi i64 [ %i.x, %bb.l ], [ 2, %.preheader46 ] ; 3 uses
+.lr.ph.preheader:                                 ; preds = %.preheader46
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.m, i64 3) ; 2 uses
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.l
+  %.val9.i = phi i8 [ %.val8.i, %bb.l ], [ %.val10.i, %.lr.ph.preheader ]
+  %.sroa.01.0.i.i48 = phi i64 [ %i.x, %bb.l ], [ 2, %.lr.ph.preheader ] ; 3 uses
   %i.t = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.sroa.01.0.i.i48
   %i.u = getelementptr i8, ptr %i.t, i64 32
   %.val8.i = load i8, ptr %i.u, align 8, !range !32, !alias.scope !2488, !noalias !2489, !noundef !10 ; 2 uses
@@ -242,12 +246,12 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.w, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runINtNtCsa9Jrx9KOzzM_16hickory_resolver11name_server15ConnectionStateNtNtNtCs4LZN9PPmi2I_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keybNCINvMB15_INtB15_10NameServerB27_E3newATNtNtB2d_4xfer8ProtocolINtNtB4V_12dns_exchange11DnsExchangeB27_EEj0_Es_0E0ECs44McOc0n4RX_13interop_tests.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.x = add nuw i64 %.sroa.01.0.i.i48, 1         ; 2 uses
-  %exitcond.not = icmp eq i64 %i.x, %i.m
+  %i.x = add nuw nsw i64 %.sroa.01.0.i.i48, 1     ; 2 uses
+  %exitcond.not = icmp eq i64 %i.x, %smax
   br i1 %exitcond.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runINtNtCsa9Jrx9KOzzM_16hickory_resolver11name_server15ConnectionStateNtNtNtCs4LZN9PPmi2I_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keybNCINvMB15_INtB15_10NameServerB27_E3newATNtNtB2d_4xfer8ProtocolINtNtB4V_12dns_exchange11DnsExchangeB27_EEj0_Es_0E0ECs44McOc0n4RX_13interop_tests.exit.i, label %.lr.ph
 
 _RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runINtNtCsa9Jrx9KOzzM_16hickory_resolver11name_server15ConnectionStateNtNtNtCs4LZN9PPmi2I_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keybNCINvMB15_INtB15_10NameServerB27_E3newATNtNtB2d_4xfer8ProtocolINtNtB4V_12dns_exchange11DnsExchangeB27_EEj0_Es_0E0ECs44McOc0n4RX_13interop_tests.exit.i: ; preds = %bb.l, %.lr.ph, %bb.k
-  %.sroa.0.0.i.i = phi i64 [ 2, %bb.k ], [ %.sroa.01.0.i.i48, %.lr.ph ], [ %i.m, %bb.l ] ; 7 uses
+  %.sroa.0.0.i.i = phi i64 [ 2, %bb.k ], [ %.sroa.01.0.i.i48, %.lr.ph ], [ %smax, %bb.l ] ; 7 uses
   %i.y = icmp samesign ule i64 %.sroa.0.0.i.i, %i.m
   tail call void @llvm.assume(i1 %i.y)
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
@@ -649,6 +653,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #31
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #32

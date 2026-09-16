@@ -204,12 +204,14 @@ bb.a:
   br i1 %i.c, label %.split.us, label %.lr.ph156
 
 .lr.ph156:                                        ; preds = %.lr.ph.split.us.preheader
+  %6 = tail call i32 @llvm.smin.i32(i32 %5, i32 23)
+  %reass.sub = sub nsw i32 %5, %6
+  %i.d = add nuw i32 %reass.sub, 11
+  %7 = udiv i32 %i.d, 12
   %.neg = mul i32 %5, -357913941
-  %i.d = add i32 %.neg, -4
-  %6 = lshr i32 %i.d, 2
-  %i.e = add nsw i32 %5, -12
-  %7 = udiv i32 %i.e, 12
-  %i.f = tail call i32 @llvm.umin.i32(i32 %6, i32 %7) ; 2 uses
+  %i.e = add i32 %.neg, -4
+  %8 = lshr i32 %i.e, 2
+  %i.f = tail call i32 @llvm.umin.i32(i32 %7, i32 %8) ; 2 uses
   %i.g = add nuw nsw i32 %i.f, 1                  ; 2 uses
   %min.iters.check = icmp samesign ult i32 %i.f, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
@@ -610,6 +612,9 @@ declare ptr @print_address_prefix(ptr noundef, ptr noundef, i32 noundef, i32 nou
 
 ; Function Attrs: null_pointer_is_valid
 declare ptr @proto_tree_add_string(ptr noundef, i32 noundef, ptr noundef, i32 noundef, i32 noundef, ptr noundef) local_unnamed_addr #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #3

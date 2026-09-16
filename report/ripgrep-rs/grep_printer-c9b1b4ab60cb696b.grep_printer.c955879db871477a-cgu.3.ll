@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph57, label %._crit_edge, !dbg !499
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0, !dbg !500 ; 11 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0, !dbg !500 ; 9 uses
   %i.n = getelementptr inbounds nuw [56 x i8], ptr %0, i64 %.sroa.09.0, !dbg !501 ; 9 uses
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0, !dbg !502
   br i1 %.not.i31, label %bb.i, label %bb.j, !dbg !502
@@ -235,52 +235,60 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.w, label %.preheader, label %.preheader45, !dbg !510
 
 .preheader45:                                     ; preds = %bb.k
-  br i1 %.not64, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCshhHc5tDBDRu_12grep_printer9hyperlink14HyperlinkAliasNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keysNCNvXs5_B14_NtB14_20HyperlinkFormatErrorNtNtB8_3fmt7Display3fmt0E0EB16_.exit.i.thread, label %.lr.ph, !dbg !511
+  br i1 %.not64, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCshhHc5tDBDRu_12grep_printer9hyperlink14HyperlinkAliasNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keysNCNvXs5_B14_NtB14_20HyperlinkFormatErrorNtNtB8_3fmt7Display3fmt0E0EB16_.exit.i.thread, label %.lr.ph.preheader, !dbg !511
+
+.lr.ph.preheader:                                 ; preds = %.preheader45
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.m, i64 3), !dbg !512 ; 2 uses
+  br label %.lr.ph, !dbg !512
 
 .preheader:                                       ; preds = %bb.k
-  br i1 %.not64, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCshhHc5tDBDRu_12grep_printer9hyperlink14HyperlinkAliasNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keysNCNvXs5_B14_NtB14_20HyperlinkFormatErrorNtNtB8_3fmt7Display3fmt0E0EB16_.exit.i.thread88, label %.lr.ph51, !dbg !512
+  br i1 %.not64, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCshhHc5tDBDRu_12grep_printer9hyperlink14HyperlinkAliasNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keysNCNvXs5_B14_NtB14_20HyperlinkFormatErrorNtNtB8_3fmt7Display3fmt0E0EB16_.exit.i.thread88, label %.lr.ph51.preheader, !dbg !513
 
-.lr.ph:                                           ; preds = %.preheader45, %bb.l
-  %.val13.i = phi i16 [ %.val11.i, %bb.l ], [ %.val15.i, %.preheader45 ], !dbg !513
-  %.val12.i = phi i16 [ %.val10.i, %bb.l ], [ %.val14.i, %.preheader45 ], !dbg !513
-  %.sroa.01.0.i.i47 = phi i64 [ %i.ae, %bb.l ], [ 2, %.preheader45 ] ; 3 uses
-  %i.x = getelementptr inbounds nuw [56 x i8], ptr %i.n, i64 %.sroa.01.0.i.i47, !dbg !514 ; 2 uses
-  %i.y = getelementptr i8, ptr %i.x, i64 48, !dbg !513
-  %.val10.i = load i16, ptr %i.y, align 8, !dbg !513, !range !71, !alias.scope !431, !noalias !432, !noundef !60 ; 2 uses
-  %i.z = getelementptr i8, ptr %i.x, i64 50, !dbg !513
-  %.val11.i = load i16, ptr %i.z, align 2, !dbg !513, !alias.scope !431, !noalias !432 ; 2 uses
-  %i.aa = trunc nuw i16 %.val10.i to i1, !dbg !515
-  %i.ab = trunc nuw i16 %.val12.i to i1, !dbg !516
-  %.sroa.0.0.i4.i35 = select i1 %i.ab, i16 %.val13.i, i16 32767, !dbg !516
-  %i.ac = icmp slt i16 %.val11.i, %.sroa.0.0.i4.i35, !dbg !517
-  %i.ad = select i1 %i.aa, i1 %i.ac, i1 false, !dbg !515
-  br i1 %i.ad, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCshhHc5tDBDRu_12grep_printer9hyperlink14HyperlinkAliasNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keysNCNvXs5_B14_NtB14_20HyperlinkFormatErrorNtNtB8_3fmt7Display3fmt0E0EB16_.exit.i, label %bb.l, !dbg !513
+.lr.ph51.preheader:                               ; preds = %.preheader
+  %smax67 = tail call i64 @llvm.smax.i64(i64 %i.m, i64 3), !dbg !514 ; 2 uses
+  br label %.lr.ph51, !dbg !514
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.l
+  %.val13.i = phi i16 [ %.val11.i, %bb.l ], [ %.val15.i, %.lr.ph.preheader ], !dbg !512
+  %.val12.i = phi i16 [ %.val10.i, %bb.l ], [ %.val14.i, %.lr.ph.preheader ], !dbg !512
+  %.sroa.01.0.i.i47 = phi i64 [ %i.ae, %bb.l ], [ 2, %.lr.ph.preheader ] ; 3 uses
+  %i.x = getelementptr inbounds nuw [56 x i8], ptr %i.n, i64 %.sroa.01.0.i.i47, !dbg !515 ; 2 uses
+  %i.y = getelementptr i8, ptr %i.x, i64 48, !dbg !512
+  %.val10.i = load i16, ptr %i.y, align 8, !dbg !512, !range !71, !alias.scope !431, !noalias !432, !noundef !60 ; 2 uses
+  %i.z = getelementptr i8, ptr %i.x, i64 50, !dbg !512
+  %.val11.i = load i16, ptr %i.z, align 2, !dbg !512, !alias.scope !431, !noalias !432 ; 2 uses
+  %i.aa = trunc nuw i16 %.val10.i to i1, !dbg !516
+  %i.ab = trunc nuw i16 %.val12.i to i1, !dbg !517
+  %.sroa.0.0.i4.i35 = select i1 %i.ab, i16 %.val13.i, i16 32767, !dbg !517
+  %i.ac = icmp slt i16 %.val11.i, %.sroa.0.0.i4.i35, !dbg !518
+  %i.ad = select i1 %i.aa, i1 %i.ac, i1 false, !dbg !516
+  br i1 %i.ad, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCshhHc5tDBDRu_12grep_printer9hyperlink14HyperlinkAliasNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keysNCNvXs5_B14_NtB14_20HyperlinkFormatErrorNtNtB8_3fmt7Display3fmt0E0EB16_.exit.i, label %bb.l, !dbg !512
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.ae = add nuw i64 %.sroa.01.0.i.i47, 1, !dbg !518 ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ae, %i.m, !dbg !511
+  %i.ae = add nuw nsw i64 %.sroa.01.0.i.i47, 1, !dbg !519 ; 2 uses
+  %exitcond.not = icmp eq i64 %i.ae, %smax, !dbg !511
   br i1 %exitcond.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCshhHc5tDBDRu_12grep_printer9hyperlink14HyperlinkAliasNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keysNCNvXs5_B14_NtB14_20HyperlinkFormatErrorNtNtB8_3fmt7Display3fmt0E0EB16_.exit.i, label %.lr.ph, !dbg !511
 
-.lr.ph51:                                         ; preds = %.preheader, %bb.m
-  %.val9.i = phi i16 [ %.val7.i, %bb.m ], [ %.val15.i, %.preheader ], !dbg !519
-  %.sroa.01.1.i.i50 = phi i64 [ %i.al, %bb.m ], [ 2, %.preheader ] ; 3 uses
+.lr.ph51:                                         ; preds = %.lr.ph51.preheader, %bb.m
+  %.val9.i = phi i16 [ %.val7.i, %bb.m ], [ %.val15.i, %.lr.ph51.preheader ], !dbg !514
+  %.sroa.01.1.i.i50 = phi i64 [ %i.al, %bb.m ], [ 2, %.lr.ph51.preheader ] ; 3 uses
   %i.af = getelementptr inbounds nuw [56 x i8], ptr %i.n, i64 %.sroa.01.1.i.i50, !dbg !520 ; 2 uses
-  %i.ag = getelementptr i8, ptr %i.af, i64 48, !dbg !519
-  %.val.i = load i16, ptr %i.ag, align 8, !dbg !519, !range !71, !alias.scope !431, !noalias !432, !noundef !60
-  %i.ah = getelementptr i8, ptr %i.af, i64 50, !dbg !519
-  %.val7.i = load i16, ptr %i.ah, align 2, !dbg !519, !alias.scope !431, !noalias !432 ; 2 uses
+  %i.ag = getelementptr i8, ptr %i.af, i64 48, !dbg !514
+  %.val.i = load i16, ptr %i.ag, align 8, !dbg !514, !range !71, !alias.scope !431, !noalias !432, !noundef !60
+  %i.ah = getelementptr i8, ptr %i.af, i64 50, !dbg !514
+  %.val7.i = load i16, ptr %i.ah, align 2, !dbg !514, !alias.scope !431, !noalias !432 ; 2 uses
   %i.ai = trunc nuw i16 %.val.i to i1, !dbg !521
   %i.aj = icmp slt i16 %.val7.i, %.val9.i, !dbg !522
   %i.ak = select i1 %i.ai, i1 %i.aj, i1 false, !dbg !521
-  br i1 %i.ak, label %bb.m, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCshhHc5tDBDRu_12grep_printer9hyperlink14HyperlinkAliasNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keysNCNvXs5_B14_NtB14_20HyperlinkFormatErrorNtNtB8_3fmt7Display3fmt0E0EB16_.exit.i, !dbg !519
+  br i1 %i.ak, label %bb.m, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCshhHc5tDBDRu_12grep_printer9hyperlink14HyperlinkAliasNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keysNCNvXs5_B14_NtB14_20HyperlinkFormatErrorNtNtB8_3fmt7Display3fmt0E0EB16_.exit.i, !dbg !514
 
 bb.m:                                             ; preds = %.lr.ph51
-  %i.al = add nuw i64 %.sroa.01.1.i.i50, 1, !dbg !523 ; 2 uses
-  %exitcond67.not = icmp eq i64 %i.al, %i.m, !dbg !512
-  br i1 %exitcond67.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCshhHc5tDBDRu_12grep_printer9hyperlink14HyperlinkAliasNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keysNCNvXs5_B14_NtB14_20HyperlinkFormatErrorNtNtB8_3fmt7Display3fmt0E0EB16_.exit.i, label %.lr.ph51, !dbg !512
+  %i.al = add nuw nsw i64 %.sroa.01.1.i.i50, 1, !dbg !523 ; 2 uses
+  %exitcond67.not = icmp eq i64 %i.al, %smax67, !dbg !513
+  br i1 %exitcond67.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCshhHc5tDBDRu_12grep_printer9hyperlink14HyperlinkAliasNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keysNCNvXs5_B14_NtB14_20HyperlinkFormatErrorNtNtB8_3fmt7Display3fmt0E0EB16_.exit.i, label %.lr.ph51, !dbg !513
 
 _RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCshhHc5tDBDRu_12grep_printer9hyperlink14HyperlinkAliasNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keysNCNvXs5_B14_NtB14_20HyperlinkFormatErrorNtNtB8_3fmt7Display3fmt0E0EB16_.exit.i: ; preds = %bb.l, %.lr.ph, %bb.m, %.lr.ph51
-  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i50, %.lr.ph51 ], [ %i.m, %bb.m ], [ %.sroa.01.0.i.i47, %.lr.ph ], [ %i.m, %bb.l ], !dbg !524 ; 6 uses
+  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i50, %.lr.ph51 ], [ %smax67, %bb.m ], [ %.sroa.01.0.i.i47, %.lr.ph ], [ %smax, %bb.l ], !dbg !524 ; 6 uses
   %i.am = icmp samesign ule i64 %.sroa.0.0.i.i, %i.m, !dbg !525
   tail call void @llvm.assume(i1 %i.am), !dbg !526
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0, !dbg !527
@@ -682,6 +690,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #16
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #17
@@ -1085,14 +1096,14 @@ begin_hunk_2_@llvm.memset.p0.i64
 !509 = !DILocation(line: 0, scope: !270, inlinedAt: !258)
 !510 = !DILocation(line: 35, column: 12, scope: !270, inlinedAt: !258)
 !511 = !DILocation(line: 40, column: 19, scope: !270, inlinedAt: !258)
-!512 = !DILocation(line: 36, column: 19, scope: !270, inlinedAt: !258)
-!513 = !DILocation(line: 40, column: 37, scope: !270, inlinedAt: !258)
-!514 = !DILocation(line: 219, column: 13, scope: !271, inlinedAt: !274)
-!515 = !DILocation(line: 1042, column: 9, scope: !5, inlinedAt: !277)
-!516 = !DILocation(line: 1042, column: 9, scope: !5, inlinedAt: !279)
-!517 = !DILocation(line: 2192, column: 50, scope: !8, inlinedAt: !280)
-!518 = !DILocation(line: 42, column: 17, scope: !270, inlinedAt: !258)
-!519 = !DILocation(line: 36, column: 36, scope: !270, inlinedAt: !258)
+!512 = !DILocation(line: 40, column: 37, scope: !270, inlinedAt: !258)
+!513 = !DILocation(line: 36, column: 19, scope: !270, inlinedAt: !258)
+!514 = !DILocation(line: 36, column: 36, scope: !270, inlinedAt: !258)
+!515 = !DILocation(line: 219, column: 13, scope: !271, inlinedAt: !274)
+!516 = !DILocation(line: 1042, column: 9, scope: !5, inlinedAt: !277)
+!517 = !DILocation(line: 1042, column: 9, scope: !5, inlinedAt: !279)
+!518 = !DILocation(line: 2192, column: 50, scope: !8, inlinedAt: !280)
+!519 = !DILocation(line: 42, column: 17, scope: !270, inlinedAt: !258)
 !520 = !DILocation(line: 219, column: 13, scope: !271, inlinedAt: !282)
 !521 = !DILocation(line: 1042, column: 9, scope: !5, inlinedAt: !285)
 !522 = !DILocation(line: 2192, column: 50, scope: !8, inlinedAt: !286)

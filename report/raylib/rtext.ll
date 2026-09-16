@@ -205,9 +205,11 @@ TextLength.exit:                                  ; preds = %.preheader.i
   br label %._crit_edge34
 
 ._crit_edge:                                      ; preds = %GetCodepointNext.exit
-  %i.i = trunc nuw i64 %indvars.iv.next to i32
+  %i.i = trunc nuw i64 %indvars.iv.next to i32    ; 2 uses
   %i.j = tail call noalias ptr @calloc(i64 noundef %indvars.iv.next, i64 noundef 4) #40 ; 2 uses
-  %i.k = shl nuw nsw i64 %indvars.iv.next, 2
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.i, i32 1)
+  %2 = zext nneg i32 %smax to i64
+  %i.k = shl nuw nsw i64 %2, 2
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.j, ptr noundef nonnull align 4 dereferenceable(1) %i.f, i64 %i.k, i1 false)
   br label %._crit_edge34
 
@@ -321,7 +323,7 @@ GetCodepointNext.exit:                            ; preds = %bb.e, %bb.i, %bb.l,
   %i.bp = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv
   store i32 %.032.i, ptr %i.bp, align 4
   %i.bq = add nuw nsw i32 %.028, %.02330          ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 4 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.br = icmp slt i32 %i.bq, %.0.i
   br i1 %i.br, label %.lr.ph, label %._crit_edge
 

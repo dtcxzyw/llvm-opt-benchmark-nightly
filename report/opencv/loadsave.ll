@@ -204,7 +204,9 @@ _ZN2cvL9getCodecsEv.exit:                         ; preds = %.critedge, %bb.h, %
   br i1 %.not34, label %.lr.ph.split.split.us, label %.lr.ph.split.us.preheader
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %wide.trip.count.a = zext i32 %.049.lcssa to i64 ; 2 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %.049.lcssa, i32 1) ; 2 uses
+  %wide.trip.count = zext nneg i32 %smax to i64
+  %wide.trip.count.a = zext nneg i32 %.049.lcssa to i64
   br label %.lr.ph.split.us
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit66.us
@@ -234,13 +236,13 @@ _ZN2cvL9getCodecsEv.exit:                         ; preds = %.critedge, %bb.h, %
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.n, %.lr.ph.us.us
-  %indvars.iv41 = phi i64 [ %indvars.iv.next42, %bb.n ], [ 0, %.lr.ph.us.us ] ; 4 uses
+  %indvars.iv41 = phi i64 [ %indvars.iv.next42, %bb.n ], [ 0, %.lr.ph.us.us ] ; 5 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 %indvars.iv41
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !34
   %i.ae = sext i8 %i.ad to i32                    ; 2 uses
   %i.af = call i32 @isalnum(i32 noundef %i.ae) #34
   %.not55.us.us = icmp eq i32 %i.af, 0
-  br i1 %.not55.us.us, label %.critedge4.us.us, label %bb.m
+  br i1 %.not55.us.us, label %.critedge4.us.us.split.loop.exit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.ag = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv41
@@ -249,20 +251,27 @@ bb.m:                                             ; preds = %bb.l
   %i.aj = call i32 @tolower(i32 noundef %i.ai) #34
   %i.ak = call i32 @tolower(i32 noundef %i.ae) #34
   %.not56.us.us = icmp eq i32 %i.aj, %i.ak
-  br i1 %.not56.us.us, label %bb.n, label %.critedge4.us.us
+  br i1 %.not56.us.us, label %bb.n, label %.critedge4.us.us.split.loop.exit67
 
 bb.n:                                             ; preds = %bb.m
   %indvars.iv.next42 = add nuw nsw i64 %indvars.iv41, 1 ; 2 uses
-  %exitcond44.not = icmp eq i64 %indvars.iv.next42, %wide.trip.count.a
-  br i1 %exitcond44.not, label %.critedge4.us.us.thread, label %bb.l, !llvm.loop !349
+  %exitcond44.not = icmp eq i64 %indvars.iv.next42, %wide.trip.count
+  br i1 %exitcond44.not, label %.critedge4.us.us, label %bb.l, !llvm.loop !349
 
-.critedge4.us.us:                                 ; preds = %bb.l, %bb.m
-  %2 = trunc nuw nsw i64 %indvars.iv41 to i32     ; 3 uses
-  %i.al = icmp eq i32 %.049.lcssa, %2
+.critedge4.us.us.split.loop.exit:                 ; preds = %bb.l
+  %2 = trunc nuw nsw i64 %indvars.iv41 to i32
+  br label %.critedge4.us.us
+
+.critedge4.us.us.split.loop.exit67:               ; preds = %bb.m
+  %3 = trunc nuw nsw i64 %indvars.iv41 to i32
+  br label %.critedge4.us.us
+
+.critedge4.us.us:                                 ; preds = %bb.n, %.critedge4.us.us.split.loop.exit67, %.critedge4.us.us.split.loop.exit
+  %.045.lcssa.us.us = phi i32 [ %2, %.critedge4.us.us.split.loop.exit ], [ %3, %.critedge4.us.us.split.loop.exit67 ], [ %smax, %bb.n ] ; 2 uses
+  %i.al = icmp eq i32 %.045.lcssa.us.us, %.049.lcssa
   br i1 %i.al, label %.critedge4.us.us.thread, label %bb.o
 
-.critedge4.us.us.thread:                          ; preds = %bb.n, %.critedge4.us.us
-  %.045.lcssa.us.us61 = phi i32 [ %2, %.critedge4.us.us ], [ %.049.lcssa, %bb.n ]
+.critedge4.us.us.thread:                          ; preds = %.critedge4.us.us
   %i.am = getelementptr inbounds nuw i8, ptr %i.ab, i64 %wide.trip.count.a
   %i.an = load i8, ptr %i.am, align 1, !tbaa !34
   %i.ao = sext i8 %i.an to i32
@@ -271,8 +280,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not57.us.us, label %.split.us, label %bb.o
 
 bb.o:                                             ; preds = %.critedge4.us.us.thread, %.critedge4.us.us
-  %.045.lcssa.us.us60 = phi i32 [ %.045.lcssa.us.us61, %.critedge4.us.us.thread ], [ %2, %.critedge4.us.us ]
-  %i.aq = zext nneg i32 %.045.lcssa.us.us60 to i64
+  %i.aq = zext nneg i32 %.045.lcssa.us.us to i64
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.aq
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 1
   %i.at = call noundef ptr @strchr(ptr noundef nonnull dereferenceable(1) %i.as, i32 noundef 46) #34 ; 2 uses

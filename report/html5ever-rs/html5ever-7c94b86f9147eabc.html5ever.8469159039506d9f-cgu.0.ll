@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph55, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 9 uses
   %i.n = getelementptr inbounds nuw [40 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
@@ -223,13 +223,21 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.q, label %.preheader, label %.preheader43
 
 .preheader43:                                     ; preds = %bb.k
-  br i1 %.not62, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCsa2F6HLACPlS_11markup5ever9interface9AttributeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsbmOI1VUejFP_9html5ever.exit.i.thread, label %.lr.ph
+  br i1 %.not62, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCsa2F6HLACPlS_11markup5ever9interface9AttributeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsbmOI1VUejFP_9html5ever.exit.i.thread, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader43
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.m, i64 3) ; 2 uses
+  br label %.lr.ph
 
 .preheader:                                       ; preds = %bb.k
-  br i1 %.not62, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCsa2F6HLACPlS_11markup5ever9interface9AttributeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsbmOI1VUejFP_9html5ever.exit.i.thread78, label %.lr.ph49
+  br i1 %.not62, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCsa2F6HLACPlS_11markup5ever9interface9AttributeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsbmOI1VUejFP_9html5ever.exit.i.thread78, label %.lr.ph49.preheader
 
-.lr.ph:                                           ; preds = %.preheader43, %bb.l
-  %.sroa.01.0.i.i45 = phi i64 [ %i.v, %bb.l ], [ 2, %.preheader43 ] ; 4 uses
+.lr.ph49.preheader:                               ; preds = %.preheader
+  %smax65 = tail call i64 @llvm.smax.i64(i64 %i.m, i64 3) ; 2 uses
+  br label %.lr.ph49
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.l
+  %.sroa.01.0.i.i45 = phi i64 [ %i.v, %bb.l ], [ 2, %.lr.ph.preheader ] ; 4 uses
   %i.r = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.sroa.01.0.i.i45
   %i.s = getelementptr [40 x i8], ptr %i.n, i64 %.sroa.01.0.i.i45
   %i.t = getelementptr i8, ptr %i.s, i64 -40
@@ -237,12 +245,12 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.u, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCsa2F6HLACPlS_11markup5ever9interface9AttributeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsbmOI1VUejFP_9html5ever.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.v = add nuw i64 %.sroa.01.0.i.i45, 1         ; 2 uses
-  %exitcond.not = icmp eq i64 %i.v, %i.m
+  %i.v = add nuw nsw i64 %.sroa.01.0.i.i45, 1     ; 2 uses
+  %exitcond.not = icmp eq i64 %i.v, %smax
   br i1 %exitcond.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCsa2F6HLACPlS_11markup5ever9interface9AttributeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsbmOI1VUejFP_9html5ever.exit.i, label %.lr.ph
 
-.lr.ph49:                                         ; preds = %.preheader, %bb.m
-  %.sroa.01.1.i.i48 = phi i64 [ %i.aa, %bb.m ], [ 2, %.preheader ] ; 4 uses
+.lr.ph49:                                         ; preds = %.lr.ph49.preheader, %bb.m
+  %.sroa.01.1.i.i48 = phi i64 [ %i.aa, %bb.m ], [ 2, %.lr.ph49.preheader ] ; 4 uses
   %i.w = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.sroa.01.1.i.i48
   %i.x = getelementptr [40 x i8], ptr %i.n, i64 %.sroa.01.1.i.i48
   %i.y = getelementptr i8, ptr %i.x, i64 -40
@@ -250,12 +258,12 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.z, label %bb.m, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCsa2F6HLACPlS_11markup5ever9interface9AttributeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsbmOI1VUejFP_9html5ever.exit.i
 
 bb.m:                                             ; preds = %.lr.ph49
-  %i.aa = add nuw i64 %.sroa.01.1.i.i48, 1        ; 2 uses
-  %exitcond65.not = icmp eq i64 %i.aa, %i.m
+  %i.aa = add nuw nsw i64 %.sroa.01.1.i.i48, 1    ; 2 uses
+  %exitcond65.not = icmp eq i64 %i.aa, %smax65
   br i1 %exitcond65.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCsa2F6HLACPlS_11markup5ever9interface9AttributeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsbmOI1VUejFP_9html5ever.exit.i, label %.lr.ph49
 
 _RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCsa2F6HLACPlS_11markup5ever9interface9AttributeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsbmOI1VUejFP_9html5ever.exit.i: ; preds = %bb.l, %.lr.ph, %bb.m, %.lr.ph49
-  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i48, %.lr.ph49 ], [ %i.m, %bb.m ], [ %.sroa.01.0.i.i45, %.lr.ph ], [ %i.m, %bb.l ] ; 5 uses
+  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i48, %.lr.ph49 ], [ %smax65, %bb.m ], [ %.sroa.01.0.i.i45, %.lr.ph ], [ %smax, %bb.l ] ; 5 uses
   %i.ab = icmp samesign ule i64 %.sroa.0.0.i.i, %i.m
   tail call void @llvm.assume(i1 %i.ab)
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
@@ -657,6 +665,9 @@ declare i64 @llvm.umin.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #15
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

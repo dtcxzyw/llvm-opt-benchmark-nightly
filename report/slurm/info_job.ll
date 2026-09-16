@@ -202,7 +202,7 @@ bb.ey:                                            ; preds = %bb.fw, %.lr.ph697.i
   %i.ow = getelementptr inbounds nuw [2 x i8], ptr %i.ov, i64 %i.or
   %i.ox = load i16, ptr %i.ow, align 2
   %i.oy = zext i16 %i.ox to i32
-  %i.oz = mul nuw i32 %i.oy, %i.ou                ; 4 uses
+  %i.oz = mul nuw i32 %i.oy, %i.ou                ; 3 uses
   %i.pa = call ptr @hostlist_shift(ptr noundef nonnull %i.nw) #14 ; 4 uses
   %.not.i636.i.i = icmp eq ptr %i.pa, null
   br i1 %.not.i636.i.i, label %_threads_per_core.exit.i.i, label %bb.ez
@@ -308,6 +308,7 @@ _threads_per_core.exit.i.i:                       ; preds = %bb.fg, %bb.ff, %.pr
 .lr.ph683.i.i:                                    ; preds = %_threads_per_core.exit.i.i
   %.not710.i.i = icmp eq i32 %.015.i.i.i, 0
   %i.qc = sext i32 %.0430692.i.i to i64           ; 2 uses
+  %smax726.i.i = call i32 @llvm.smax.i32(i32 %i.oz, i32 1) ; 2 uses
   br i1 %.not710.i.i, label %.lr.ph683.split.i.i, label %.lr.ph683.split.us.preheader.i.i
 
 .lr.ph683.split.us.preheader.i.i:                 ; preds = %.lr.ph683.i.i
@@ -335,8 +336,8 @@ bb.fh:                                            ; preds = %.preheader.us.i.i, 
 
 ..loopexit_crit_edge.us.i.i:                      ; preds = %bb.fh, %.lr.ph683.split.us.i.i
   %indvars.iv.next720.i.i = add nsw i64 %indvars.iv719.i.i, 1 ; 2 uses
-  %i.qj = add nuw i32 %.1455680.us.i.i, 1         ; 2 uses
-  %exitcond722.not.i.i = icmp eq i32 %i.qj, %i.oz
+  %i.qj = add nuw nsw i32 %.1455680.us.i.i, 1     ; 2 uses
+  %exitcond722.not.i.i = icmp eq i32 %i.qj, %smax726.i.i
   br i1 %exitcond722.not.i.i, label %._crit_edge684.loopexit711.i.i, label %.lr.ph683.split.us.i.i, !llvm.loop !17
 
 .preheader.us.i.i:                                ; preds = %.lr.ph683.split.us.i.i
@@ -349,8 +350,8 @@ bb.fh:                                            ; preds = %.preheader.us.i.i, 
   %i.ql = load ptr, ptr %i.de, align 8
   %i.qm = call i32 @slurm_bit_test(ptr noundef %i.ql, i64 noundef %indvars.iv723.i.i) #14 ; 0 uses
   %indvars.iv.next724.i.i = add nsw i64 %indvars.iv723.i.i, 1 ; 2 uses
-  %i.qn = add nuw i32 %.1455680.i.i, 1            ; 2 uses
-  %exitcond726.not.i.i = icmp eq i32 %i.qn, %i.oz
+  %i.qn = add nuw nsw i32 %.1455680.i.i, 1        ; 2 uses
+  %exitcond726.not.i.i = icmp eq i32 %i.qn, %smax726.i.i
   br i1 %exitcond726.not.i.i, label %._crit_edge684.loopexit.i.i, label %.lr.ph683.split.i.i, !llvm.loop !17
 
 ._crit_edge684.loopexit.i.i:                      ; preds = %.lr.ph683.split.i.i
@@ -752,6 +753,9 @@ declare noundef i32 @putchar(i32 noundef) local_unnamed_addr #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #13
 
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

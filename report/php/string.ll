@@ -205,33 +205,39 @@ bb.c:                                             ; preds = %zend_parse_arg_str_
   %i.s = getelementptr i8, ptr %i.o, i64 24       ; 8 uses
   %i.t = load ptr, ptr %i.a, align 8, !tbaa !36   ; 6 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 16
-  %i.v = load i64, ptr %i.u, align 8, !tbaa !41   ; 10 uses
+  %i.v = load i64, ptr %i.u, align 8, !tbaa !41   ; 5 uses
   %.not5281 = icmp slt i64 %i.v, 1
   br i1 %.not5281, label %._crit_edge, label %iter.check
 
 iter.check:                                       ; preds = %.critedge
-  %.add53 = add nuw nsw i64 %i.v, 23              ; 6 uses
-  %min.iters.check = icmp ult i64 %i.v, 8
+  %.add53 = add nuw i64 %i.v, 23                  ; 8 uses
+  %2 = add nuw i64 %i.v, 24
+  %smin86 = call i64 @llvm.smin.i64(i64 %.add53, i64 24)
+  %3 = sub i64 %2, %smin86                        ; 7 uses
+  %min.iters.check = icmp ult i64 %3, 8
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.w = add nuw i64 %i.v, 24                     ; 2 uses
-  %scevgep.a = getelementptr i8, ptr %i.o, i64 %i.w
-  %scevgep84 = getelementptr i8, ptr %i.t, i64 24
-  %scevgep85 = getelementptr i8, ptr %i.t, i64 %i.w
+  %i.w = add nuw i64 %i.v, 48
+  %smin = call i64 @llvm.smin.i64(i64 %.add53, i64 24) ; 2 uses
+  %4 = sub i64 %i.w, %smin
+  %scevgep = getelementptr i8, ptr %i.o, i64 %4
+  %scevgep.a = getelementptr i8, ptr %i.t, i64 %smin
+  %scevgep84 = getelementptr i8, ptr %i.t, i64 %i.v
+  %scevgep85 = getelementptr i8, ptr %scevgep84, i64 24
   %bound0 = icmp ult ptr %i.s, %scevgep85
-  %bound1 = icmp ult ptr %scevgep84, %scevgep.a
+  %bound1 = icmp ult ptr %scevgep.a, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check86 = icmp ult i64 %i.v, 32
+  %min.iters.check86 = icmp ult i64 %3, 32
   br i1 %min.iters.check86, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.x = and i64 %i.v, 24
-  %n.vec = and i64 %i.v, 9223372036854775776      ; 5 uses
-  %i.y = sub nsw i64 %.add53, %n.vec
+  %i.x = and i64 %3, 24
+  %n.vec = and i64 %3, -32                        ; 5 uses
+  %i.y = sub i64 %.add53, %n.vec
   %i.z = getelementptr i8, ptr %i.s, i64 %n.vec   ; 2 uses
   br label %vector.body
 
@@ -254,7 +260,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.af, label %middle.block, label %vector.body, !llvm.loop !222
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %i.v, %n.vec
+  %cmp.n = icmp eq i64 %3, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
@@ -263,8 +269,8 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec90 = and i64 %i.v, 9223372036854775800    ; 4 uses
-  %i.ag = sub nsw i64 %.add53, %n.vec90
+  %n.vec90 = and i64 %3, -8                       ; 4 uses
+  %i.ag = sub i64 %.add53, %n.vec90
   %i.ah = getelementptr i8, ptr %i.s, i64 %n.vec90 ; 2 uses
   br label %vec.epilog.vector.body
 
@@ -282,7 +288,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.al, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !223
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n96 = icmp eq i64 %i.v, %n.vec90
+  %cmp.n96 = icmp eq i64 %3, %n.vec90
   br i1 %cmp.n96, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block

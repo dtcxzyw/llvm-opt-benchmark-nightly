@@ -21,11 +21,13 @@ bb.a:
   br i1 %i.a, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.b = add nsw i32 %1, -2                       ; 2 uses
-  %i.c = lshr i32 %i.b, 1
+  %2 = tail call i32 @llvm.smin.i32(i32 %1, i32 3)
+  %i.b = add nuw i32 %1, 1
+  %3 = sub i32 %i.b, %2                           ; 2 uses
+  %i.c = lshr i32 %3, 1
   %narrow = add nuw i32 %i.c, 1
   %i.d = zext i32 %narrow to i64                  ; 2 uses
-  %min.iters.check = icmp ult i32 %i.b, 6
+  %min.iters.check = icmp ult i32 %3, 6
   br i1 %min.iters.check, label %.lr.ph.preheader40, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -183,6 +185,9 @@ declare i64 @strtol(ptr noundef readonly, ptr noundef captures(none), i32 nounde
 
 ; Function Attrs: nofree nounwind
 declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #8

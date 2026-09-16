@@ -204,8 +204,8 @@ _ZNSt6vectorIdSaIdEE6resizeEm.exit24:             ; preds = %bb.e, %bb.f, %bb.g,
   %i.db = load ptr, ptr %i.aq, align 8, !tbaa !60
   %i.dc = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.dd = load ptr, ptr %i.co, align 8, !tbaa !25
-  %umax = tail call i32 @llvm.umax.i32(i32 %i.c, i32 1)
-  %wide.trip.count = zext i32 %umax to i64
+  %umax = tail call i32 @llvm.smax.i32(i32 %i.c, i32 1)
+  %wide.trip.count = zext nneg i32 %umax to i64
   br label %bb.h
 
 ._crit_edge:                                      ; preds = %bb.h, %_ZNSt6vectorIdSaIdEE6resizeEm.exit24
@@ -606,9 +606,6 @@ declare i64 @llvm.umin.i64(i64, i64) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #16
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #16

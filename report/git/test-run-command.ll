@@ -202,11 +202,10 @@ bb.ap:                                            ; preds = %bb.am
 bb.aq:                                            ; preds = %bb.as, %bb.ap
   %indvars.iv125.i = phi i64 [ 0, %bb.ap ], [ %indvars.iv.next126.i, %bb.as ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #15
-  %i.is = load i64, ptr @my_random_next, align 8, !tbaa !71
-  %.fr140 = freeze i64 %i.is                      ; 3 uses
-  %i.it = mul i64 %.fr140, 1103515245
+  %i.is = load i64, ptr @my_random_next, align 8, !tbaa !71 ; 2 uses
+  %i.it = mul i64 %i.is, 1103515245
   %i.iu = add i64 %i.it, 12345
-  %i.iv = urem i64 %.fr140, 19
+  %i.iv = urem i64 %i.is, 19                      ; 2 uses
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.ar, %bb.aq
@@ -224,9 +223,8 @@ bb.ar:                                            ; preds = %bb.ar, %bb.aq
   br i1 %exitcond.not.a, label %bb.as, label %bb.ar, !llvm.loop !41
 
 bb.as:                                            ; preds = %bb.ar
-  %14 = urem i64 %.fr140, 19
   store i64 %i.iy, ptr @my_random_next, align 8, !tbaa !71
-  %i.jd = getelementptr inbounds nuw i8, ptr %i.e, i64 %14
+  %i.jd = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.iv
   %i.je = getelementptr inbounds nuw i8, ptr %i.jd, i64 1
   store i8 0, ptr %i.je, align 1, !tbaa !66
   %i.jf = call ptr @strvec_push(ptr noundef nonnull %3, ptr noundef nonnull %i.e) #15 ; 0 uses

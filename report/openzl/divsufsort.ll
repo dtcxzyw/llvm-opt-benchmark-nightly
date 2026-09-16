@@ -204,9 +204,8 @@ bb.am:                                            ; preds = %.loopexit.i.i.i, %.
   br i1 %i.lr, label %.lr.ph.i.i.i.i.preheader, label %bb.an
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.am
-  %6 = icmp ne i32 %.087.i.i.i, 0
-  %.neg = sext i1 %6 to i32
-  %7 = add i32 %.087.i.i.i, %.neg                 ; 2 uses
+  %6 = tail call i32 @llvm.smin.i32(i32 %.087.i.i.i, i32 1)
+  %7 = sub i32 %.087.i.i.i, %6                    ; 2 uses
   %i.ls = zext i32 %7 to i64
   %i.lt = add nuw nsw i64 %i.ls, 1                ; 2 uses
   %min.iters.check = icmp ult i32 %7, 7
@@ -214,10 +213,9 @@ bb.am:                                            ; preds = %.loopexit.i.i.i, %.
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
   %scevgep = getelementptr i8, ptr %.06684.i.i.i, i64 4
-  %8 = icmp ne i32 %.087.i.i.i, 0
-  %umin.neg = sext i1 %8 to i32
-  %9 = add i32 %.087.i.i.i, %umin.neg
-  %i.lu = zext i32 %9 to i64
+  %smin = tail call i32 @llvm.smin.i32(i32 %.087.i.i.i, i32 1)
+  %8 = sub i32 %.087.i.i.i, %smin
+  %i.lu = zext i32 %8 to i64
   %i.lv = shl nuw nsw i64 %i.lu, 2                ; 2 uses
   %scevgep116 = getelementptr i8, ptr %scevgep, i64 %i.lv
   %scevgep117 = getelementptr i8, ptr %.051.i.i, i64 4

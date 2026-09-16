@@ -205,7 +205,8 @@ bb.be:                                            ; preds = %bb.ax, %bb.bb, %._c
 .lr.ph724:                                        ; preds = %bb.be
   %i.nw = mul i64 %.2463.lcssa, %.0401
   %i.nx = add i64 %i.nw, %.0402
-  %wide.trip.count = zext i32 %.1.lcssa to i64
+  %smax = call i32 @llvm.smax.i32(i32 %.1.lcssa, i32 1)
+  %wide.trip.count = zext nneg i32 %smax to i64
   br label %bb.bf
 
 bb.bf:                                            ; preds = %.lr.ph724, %._crit_edge716
@@ -606,6 +607,9 @@ declare i64 @llvm.umin.i64(i64, i64) #20
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.abs.i32(i32, i1 immarg) #21
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #20

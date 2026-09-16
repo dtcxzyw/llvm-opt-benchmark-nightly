@@ -33,15 +33,15 @@ bb.b:                                             ; preds = %bb.a
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !44
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !46
-  %i.j = tail call i32 @strcasecmp(ptr noundef %i.i, ptr noundef nonnull @.str) #8
+  %i.j = tail call i32 @strcasecmp(ptr noundef %i.i, ptr noundef nonnull @.str) #9
   %.not = icmp eq i32 %i.j, 0
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %.not83 = phi i1 [ %.not, %bb.b ], [ false, %bb.a ]
-  %i.k = tail call noalias dereferenceable_or_null(3180) ptr @zmalloc(i64 noundef 3180) #9 ; 33 uses
+  %i.k = tail call noalias dereferenceable_or_null(3180) ptr @zmalloc(i64 noundef 3180) #10 ; 33 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3180) %i.k, ptr noundef nonnull align 16 dereferenceable(3180) @__const.lolwut8Command.verses, i64 3180, i1 false)
-  %i.l = tail call i32 @rand() #10
+  %i.l = tail call i32 @rand() #11
   %i.m = srem i32 %i.l, 15
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.n = sext i32 %i.m to i64
@@ -51,7 +51,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.o, ptr noundef nonnull align 8 dereferenceable(212) getelementptr inbounds nuw (i8, ptr @__const.lolwut8Command.verses, i64 2968), i64 212, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.p, ptr noundef nonnull align 1 dereferenceable(212) %1, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
-  %i.q = tail call i32 @rand() #10
+  %i.q = tail call i32 @rand() #11
   %i.r = srem i32 %i.q, 14
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.s = sext i32 %i.r to i64
@@ -61,7 +61,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.t, ptr noundef nonnull align 1 dereferenceable(212) %i.u, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.u, ptr noundef nonnull align 1 dereferenceable(212) %1, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
-  %i.v = tail call i32 @rand() #10
+  %i.v = tail call i32 @rand() #11
   %i.w = srem i32 %i.v, 13
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.x = sext i32 %i.w to i64
@@ -71,7 +71,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.y, ptr noundef nonnull align 1 dereferenceable(212) %i.z, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.z, ptr noundef nonnull align 1 dereferenceable(212) %1, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
-  %i.aa = tail call i32 @rand() #10
+  %i.aa = tail call i32 @rand() #11
   %i.ab = srem i32 %i.aa, 12
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.ac = sext i32 %i.ab to i64
@@ -81,7 +81,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.ad, ptr noundef nonnull align 1 dereferenceable(212) %i.ae, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.ae, ptr noundef nonnull align 1 dereferenceable(212) %1, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
-  %i.af = tail call i32 @rand() #10
+  %i.af = tail call i32 @rand() #11
   %i.ag = srem i32 %i.af, 11
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.ah = sext i32 %i.ag to i64
@@ -91,7 +91,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.ai, ptr noundef nonnull align 1 dereferenceable(212) %i.aj, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.aj, ptr noundef nonnull align 1 dereferenceable(212) %1, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
-  %i.ak = tail call i32 @rand() #10
+  %i.ak = tail call i32 @rand() #11
   %i.al = srem i32 %i.ak, 10
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.am = sext i32 %i.al to i64
@@ -101,7 +101,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.an, ptr noundef nonnull align 1 dereferenceable(212) %i.ao, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.ao, ptr noundef nonnull align 1 dereferenceable(212) %1, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
-  %i.ap = tail call i32 @rand() #10
+  %i.ap = tail call i32 @rand() #11
   %i.aq = srem i32 %i.ap, 9
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.ar = sext i32 %i.aq to i64
@@ -111,7 +111,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.as, ptr noundef nonnull align 1 dereferenceable(212) %i.at, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.at, ptr noundef nonnull align 1 dereferenceable(212) %1, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
-  %i.au = tail call i32 @rand() #10
+  %i.au = tail call i32 @rand() #11
   %i.av = srem i32 %i.au, 8
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.aw = sext i32 %i.av to i64
@@ -121,7 +121,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.ax, ptr noundef nonnull align 1 dereferenceable(212) %i.ay, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.ay, ptr noundef nonnull align 1 dereferenceable(212) %1, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
-  %i.az = tail call i32 @rand() #10
+  %i.az = tail call i32 @rand() #11
   %i.ba = srem i32 %i.az, 7
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.bb = sext i32 %i.ba to i64
@@ -131,7 +131,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.bc, ptr noundef nonnull align 1 dereferenceable(212) %i.bd, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.bd, ptr noundef nonnull align 1 dereferenceable(212) %1, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
-  %i.be = tail call i32 @rand() #10
+  %i.be = tail call i32 @rand() #11
   %i.bf = srem i32 %i.be, 6
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.bg = sext i32 %i.bf to i64
@@ -141,7 +141,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.bh, ptr noundef nonnull align 1 dereferenceable(212) %i.bi, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.bi, ptr noundef nonnull align 1 dereferenceable(212) %1, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
-  %i.bj = tail call i32 @rand() #10
+  %i.bj = tail call i32 @rand() #11
   %i.bk = srem i32 %i.bj, 5
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.bl = sext i32 %i.bk to i64
@@ -151,7 +151,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.bm, ptr noundef nonnull align 1 dereferenceable(212) %i.bn, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.bn, ptr noundef nonnull align 1 dereferenceable(212) %1, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
-  %i.bo = tail call i32 @rand() #10
+  %i.bo = tail call i32 @rand() #11
   %i.bp = srem i32 %i.bo, 4
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.bq = sext i32 %i.bp to i64
@@ -161,7 +161,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.br, ptr noundef nonnull align 1 dereferenceable(212) %i.bs, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.bs, ptr noundef nonnull align 1 dereferenceable(212) %1, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
-  %i.bt = tail call i32 @rand() #10
+  %i.bt = tail call i32 @rand() #11
   %i.bu = srem i32 %i.bt, 3
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.bv = sext i32 %i.bu to i64
@@ -171,7 +171,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.bw, ptr noundef nonnull align 1 dereferenceable(212) %i.bx, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.bx, ptr noundef nonnull align 1 dereferenceable(212) %1, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
-  %i.by = tail call i32 @rand() #10
+  %i.by = tail call i32 @rand() #11
   %i.bz = srem i32 %i.by, 2
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.ca = sext i32 %i.bz to i64
@@ -181,7 +181,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.cb, ptr noundef nonnull align 1 dereferenceable(212) %i.cc, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(212) %i.cc, ptr noundef nonnull align 1 dereferenceable(212) %1, i64 212, i1 false), !tbaa.struct !48
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #11
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %._crit_edge, %bb.c
@@ -219,7 +219,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cj, i64 210
-  %i.ct = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.cs, ptr noundef nonnull dereferenceable(1) %i.cg) #8
+  %i.ct = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.cs, ptr noundef nonnull dereferenceable(1) %i.cg) #9
   %.not80 = icmp eq i32 %i.ct, 0
   br i1 %.not80, label %bb.h, label %.lr.ph.split.us.loopexit
 
@@ -253,17 +253,23 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
 bb.h:                                             ; preds = %bb.g, %bb.f
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %indvars.iv118
-  br i1 %exitcond.not, label %.lr.ph103, label %bb.d, !llvm.loop !13
+  br i1 %exitcond.not, label %.critedge.loopexit, label %bb.d, !llvm.loop !13
 
 ._crit_edge:                                      ; preds = %.lr.ph97.preheader, %.lr.ph.split.us
   %indvars.iv.next121 = add nuw nsw i64 %indvars.iv120, 1 ; 2 uses
   %exitcond125.not = icmp eq i64 %indvars.iv.next121, 10
   br i1 %exitcond125.not, label %.lr.ph103, label %.lr.ph, !llvm.loop !14
 
-.lr.ph103:                                        ; preds = %._crit_edge, %bb.h
-  %.07792 = phi i64 [ %indvars.iv120, %bb.h ], [ 10, %._crit_edge ] ; 2 uses
-  tail call void @zfree(ptr noundef nonnull %i.k) #10
-  %i.dg = tail call ptr @sdsempty() #10           ; 2 uses
+.critedge.loopexit:                               ; preds = %bb.h
+  %3 = trunc nuw nsw i64 %indvars.iv120 to i32
+  %4 = tail call i32 @llvm.smax.i32(i32 %3, i32 1)
+  %5 = zext nneg i32 %4 to i64
+  br label %.lr.ph103
+
+.lr.ph103:                                        ; preds = %._crit_edge, %.critedge.loopexit
+  %.07792 = phi i64 [ %5, %.critedge.loopexit ], [ 10, %._crit_edge ] ; 2 uses
+  tail call void @zfree(ptr noundef nonnull %i.k) #11
+  %i.dg = tail call ptr @sdsempty() #11           ; 2 uses
   br i1 %.not83, label %.lr.ph103.split.us, label %.lr.ph103.split
 
 .lr.ph103.split.us:                               ; preds = %.lr.ph103, %.lr.ph103.split.us
@@ -271,8 +277,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %.071101.us = phi ptr [ %i.dk, %.lr.ph103.split.us ], [ %i.dg, %.lr.ph103 ]
   %i.dh = getelementptr inbounds nuw [212 x i8], ptr %2, i64 %indvars.iv130
   %i.di = getelementptr inbounds nuw i8, ptr %i.dh, i64 100
-  %i.dj = call ptr @sdscat(ptr noundef %.071101.us, ptr noundef nonnull %i.di) #10
-  %i.dk = call ptr @sdscat(ptr noundef %i.dj, ptr noundef nonnull @.str.1) #10 ; 2 uses
+  %i.dj = call ptr @sdscat(ptr noundef %.071101.us, ptr noundef nonnull %i.di) #11
+  %i.dk = call ptr @sdscat(ptr noundef %i.dj, ptr noundef nonnull @.str.1) #11 ; 2 uses
   %indvars.iv.next131 = add nuw nsw i64 %indvars.iv130, 1 ; 2 uses
   %exitcond134.not = icmp eq i64 %indvars.iv.next131, %.07792
   br i1 %exitcond134.not, label %.preheader, label %.lr.ph103.split.us, !llvm.loop !15
@@ -294,8 +300,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %indvars.iv126 = phi i64 [ %indvars.iv.next127, %.lr.ph103.split ], [ 0, %.lr.ph103 ] ; 2 uses
   %.071101 = phi ptr [ %i.dv, %.lr.ph103.split ], [ %i.dg, %.lr.ph103 ]
   %i.dt = getelementptr inbounds nuw [212 x i8], ptr %2, i64 %indvars.iv126
-  %i.du = call ptr @sdscat(ptr noundef %.071101, ptr noundef nonnull %i.dt) #10
-  %i.dv = call ptr @sdscat(ptr noundef %i.du, ptr noundef nonnull @.str.1) #10 ; 2 uses
+  %i.du = call ptr @sdscat(ptr noundef %.071101, ptr noundef nonnull %i.dt) #11
+  %i.dv = call ptr @sdscat(ptr noundef %i.du, ptr noundef nonnull @.str.1) #11 ; 2 uses
   %indvars.iv.next127 = add nuw nsw i64 %indvars.iv126, 1 ; 2 uses
   %exitcond129.not = icmp eq i64 %indvars.iv.next127, %.07792
   br i1 %exitcond129.not, label %.preheader, label %.lr.ph103.split, !llvm.loop !15
@@ -338,9 +344,9 @@ sdslen.exit:                                      ; preds = %bb.i, %bb.j, %bb.k,
   br i1 %i.ed, label %bb.u, label %bb.o
 
 bb.o:                                             ; preds = %sdslen.exit
-  %i.ee = call ptr @sdscat(ptr noundef nonnull %.071.lcssa, ptr noundef nonnull @.str.2) #10
-  %i.ef = call ptr @sdscat(ptr noundef %i.ee, ptr noundef nonnull @.str.3) #10
-  %i.eg = call ptr @sdscatlen(ptr noundef %i.ef, ptr noundef nonnull @.str.1, i64 noundef 1) #10 ; 7 uses
+  %i.ee = call ptr @sdscat(ptr noundef nonnull %.071.lcssa, ptr noundef nonnull @.str.2) #11
+  %i.ef = call ptr @sdscat(ptr noundef %i.ee, ptr noundef nonnull @.str.3) #11
+  %i.eg = call ptr @sdscatlen(ptr noundef %i.ef, ptr noundef nonnull @.str.1, i64 noundef 1) #11 ; 7 uses
   %i.eh = getelementptr i8, ptr %i.eg, i64 -1
   %.val.i85 = load i8, ptr %i.eh, align 1, !tbaa !47 ; 2 uses
   %i.ei = and i8 %.val.i85, 7
@@ -382,13 +388,13 @@ bb.t:                                             ; preds = %bb.o
 
 sdslen.exit87:                                    ; preds = %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t
   %.0.i86 = phi i64 [ %i.ev, %bb.t ], [ %i.ek, %bb.p ], [ %i.en, %bb.q ], [ %i.eq, %bb.r ], [ %i.et, %bb.s ], [ 0, %bb.o ]
-  call void @addReplyVerbatim(ptr noundef %0, ptr noundef nonnull %i.eg, i64 noundef %.0.i86, ptr noundef nonnull @.str.4) #10
-  call void @sdsfree(ptr noundef nonnull %i.eg) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #10
+  call void @addReplyVerbatim(ptr noundef %0, ptr noundef nonnull %i.eg, i64 noundef %.0.i86, ptr noundef nonnull @.str.4) #11
+  call void @sdsfree(ptr noundef nonnull %i.eg) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #11
   ret void
 
 bb.u:                                             ; preds = %sdslen.exit
-  %i.ew = tail call ptr @__ctype_toupper_loc() #11
+  %i.ew = tail call ptr @__ctype_toupper_loc() #12
   %i.ex = load ptr, ptr %i.ew, align 8, !tbaa !54
   %i.ey = getelementptr inbounds nuw i8, ptr %.071.lcssa, i64 %.069 ; 2 uses
   %i.ez = load i8, ptr %i.ey, align 1, !tbaa !47
@@ -443,6 +449,9 @@ declare i32 @rand() local_unnamed_addr #7
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #1
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #8
+
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { mustprogress nocallback nofree nounwind willreturn memory(read) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -451,10 +460,11 @@ attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memo
 attributes #5 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { mustprogress nofree nosync nounwind willreturn memory(none) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { nounwind willreturn memory(read) }
-attributes #9 = { nounwind allocsize(0) }
-attributes #10 = { nounwind }
-attributes #11 = { nounwind willreturn memory(none) }
+attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #9 = { nounwind willreturn memory(read) }
+attributes #10 = { nounwind allocsize(0) }
+attributes #11 = { nounwind }
+attributes #12 = { nounwind willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5, !6, !7}
 !llvm.ident = !{!8}

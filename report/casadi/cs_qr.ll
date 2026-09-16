@@ -180,7 +180,8 @@ bb.h:                                             ; preds = %bb.f, %bb.g
 
 .lr.ph235.preheader:                              ; preds = %.preheader
   %i.co = sext i32 %.0193240 to i64               ; 5 uses
-  %min.iters.check = icmp ult i64 %indvars.iv, 7
+  %2 = add i64 %indvars.iv, 1                     ; 3 uses
+  %min.iters.check = icmp ult i64 %2, 8
   br i1 %min.iters.check, label %.lr.ph235.preheader312, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph235.preheader
@@ -190,9 +191,9 @@ vector.memcheck:                                  ; preds = %.lr.ph235.preheader
   br i1 %diff.check, label %.lr.ph235.preheader312, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %indvars.iv.next, 2147483640   ; 3 uses
-  %i.cq = sub nsw i64 %i.co, %n.vec               ; 2 uses
-  %2 = and i64 %indvars.iv.next, 7
+  %n.vec = and i64 %2, -8                         ; 4 uses
+  %i.cq = sub i64 %i.co, %n.vec                   ; 2 uses
+  %3 = sub i64 %indvars.iv.next, %n.vec
   %invariant.gep = getelementptr [4 x i8], ptr %i.aj, i64 %i.co
   br label %vector.body
 
@@ -215,12 +216,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.cy, label %middle.block, label %vector.body, !llvm.loop !8
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %indvars.iv.next, %n.vec
+  %cmp.n = icmp eq i64 %2, %n.vec
   br i1 %cmp.n, label %._crit_edge236.loopexit, label %.lr.ph235.preheader312
 
 .lr.ph235.preheader312:                           ; preds = %vector.memcheck, %.lr.ph235.preheader, %middle.block
   %indvars.iv270.ph = phi i64 [ %i.co, %vector.memcheck ], [ %i.co, %.lr.ph235.preheader ], [ %i.cq, %middle.block ]
-  %indvars.iv268.ph = phi i64 [ %indvars.iv.next, %vector.memcheck ], [ %indvars.iv.next, %.lr.ph235.preheader ], [ %2, %middle.block ]
+  %indvars.iv268.ph = phi i64 [ %indvars.iv.next, %vector.memcheck ], [ %indvars.iv.next, %.lr.ph235.preheader ], [ %3, %middle.block ]
   br label %.lr.ph235
 
 .lr.ph232:                                        ; preds = %.lr.ph242, %.lr.ph232
@@ -228,7 +229,7 @@ middle.block:                                     ; preds = %vector.body
   %i.cz = phi ptr [ %i.de, %.lr.ph232 ], [ %i.cj, %.lr.ph242 ]
   %i.da = phi i64 [ %i.dd, %.lr.ph232 ], [ %i.ci, %.lr.ph242 ]
   %.1203230 = phi i32 [ %.1203, %.lr.ph232 ], [ %.1203227, %.lr.ph242 ]
-  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 7 uses
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 5 uses
   %i.db = getelementptr inbounds nuw [4 x i8], ptr %i.aj, i64 %indvars.iv
   store i32 %.1203230, ptr %i.db, align 4, !tbaa !39
   store i32 %i.bn, ptr %i.cz, align 4, !tbaa !39

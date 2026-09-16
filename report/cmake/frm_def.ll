@@ -11,12 +11,12 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local noundef ptr @new_form(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call noalias dereferenceable_or_null(128) ptr @malloc(i64 noundef 128) #10 ; 19 uses
+  %i.a = tail call noalias dereferenceable_or_null(128) ptr @malloc(i64 noundef 128) #11 ; 19 uses
   %.not = icmp eq ptr %i.a, null
   br i1 %.not, label %._crit_edge, label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.a
-  %.pre = tail call ptr @__errno_location() #11
+  %.pre = tail call ptr @__errno_location() #12
   br label %bb.i
 
 bb.b:                                             ; preds = %bb.a
@@ -35,7 +35,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   store i16 0, ptr %i.h, align 4, !tbaa !21
-  %i.i = tail call i32 @form_driver(ptr noundef nonnull %i.a, i32 noundef -291056) #12 ; 0 uses
+  %i.i = tail call i32 @form_driver(ptr noundef nonnull %i.a, i32 noundef -291056) #13 ; 0 uses
   br label %bb.j
 
 bb.e:                                             ; preds = %bb.c
@@ -102,16 +102,16 @@ Disconnect_Fields.exit.i:                         ; preds = %bb.f
 
 Disconnect_Fields.exit.thread.sink.split.i:       ; preds = %Disconnect_Fields.exit.i, %._crit_edge.i.i
   %.sink.i = phi ptr [ %i.aa, %._crit_edge.i.i ], [ %.pre.i, %Disconnect_Fields.exit.i ]
-  tail call void @free(ptr noundef nonnull %.sink.i) #12
+  tail call void @free(ptr noundef nonnull %.sink.i) #13
   br label %Disconnect_Fields.exit.thread.i
 
 Disconnect_Fields.exit.thread.i:                  ; preds = %Disconnect_Fields.exit.thread.sink.split.i, %Disconnect_Fields.exit.i, %._crit_edge.i.i
-  tail call void @free(ptr noundef nonnull %i.a) #12
+  tail call void @free(ptr noundef nonnull %i.a) #13
   br label %free_form.exit
 
 free_form.exit:                                   ; preds = %Associate_Fields.exit, %Disconnect_Fields.exit.thread.i
   %.sink17.i = phi i32 [ 0, %Disconnect_Fields.exit.thread.i ], [ -3, %Associate_Fields.exit ]
-  %i.ab = tail call ptr @__errno_location() #11   ; 2 uses
+  %i.ab = tail call ptr @__errno_location() #12   ; 2 uses
   store i32 %.sink17.i, ptr %i.ab, align 4, !tbaa !13
   br label %bb.i
 
@@ -196,16 +196,16 @@ Disconnect_Fields.exit:                           ; preds = %bb.c
 
 Disconnect_Fields.exit.thread.sink.split:         ; preds = %Disconnect_Fields.exit, %._crit_edge.i
   %.sink = phi ptr [ %i.q, %._crit_edge.i ], [ %.pre, %Disconnect_Fields.exit ]
-  tail call void @free(ptr noundef nonnull %.sink) #12
+  tail call void @free(ptr noundef nonnull %.sink) #13
   br label %Disconnect_Fields.exit.thread
 
 Disconnect_Fields.exit.thread:                    ; preds = %Disconnect_Fields.exit.thread.sink.split, %._crit_edge.i, %Disconnect_Fields.exit
-  tail call void @free(ptr noundef nonnull %0) #12
+  tail call void @free(ptr noundef nonnull %0) #13
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.b, %bb.a, %Disconnect_Fields.exit.thread
   %.sink17 = phi i32 [ 0, %Disconnect_Fields.exit.thread ], [ -2, %bb.a ], [ -3, %bb.b ] ; 2 uses
-  %i.r = tail call ptr @__errno_location() #11
+  %i.r = tail call ptr @__errno_location() #12
   store i32 %.sink17, ptr %i.r, align 4, !tbaa !13
   ret i32 %.sink17
 }
@@ -273,7 +273,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i
   br i1 %.not19.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge.i
-  tail call void @free(ptr noundef nonnull %i.q) #12
+  tail call void @free(ptr noundef nonnull %i.q) #13
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %._crit_edge.i
@@ -294,7 +294,7 @@ bb.h:                                             ; preds = %Disconnect_Fields.e
 
 bb.i:                                             ; preds = %bb.h
   store i16 0, ptr %i.w, align 4, !tbaa !21
-  %i.x = tail call i32 @form_driver(ptr noundef nonnull %0, i32 noundef -291056) #12 ; 0 uses
+  %i.x = tail call i32 @form_driver(ptr noundef nonnull %0, i32 noundef -291056) #13 ; 0 uses
   br label %Associate_Fields.exit.thread
 
 bb.j:                                             ; preds = %bb.h
@@ -309,7 +309,7 @@ Associate_Fields.exit:                            ; preds = %Disconnect_Fields.e
 
 Associate_Fields.exit.thread:                     ; preds = %Associate_Fields.exit, %bb.i, %bb.j, %bb.b, %bb.a
   %.sink = phi i32 [ -3, %bb.b ], [ -2, %bb.a ], [ %i.r, %bb.j ], [ %i.r, %bb.i ], [ %i.r, %Associate_Fields.exit ] ; 2 uses
-  %i.aa = tail call ptr @__errno_location() #11
+  %i.aa = tail call ptr @__errno_location() #12
   store i32 %.sink, ptr %i.aa, align 4, !tbaa !13
   ret i32 %.sink
 }
@@ -375,7 +375,7 @@ bb.d:                                             ; preds = %bb.b, %._crit_edge.
   %.081.lcssa.ph = phi i32 [ %spec.select, %._crit_edge.loopexit.loopexit ], [ 1, %bb.b ] ; 3 uses
   %i.s = sext i32 %.081.lcssa.ph to i64
   %i.t = shl nsw i64 %i.s, 3
-  %i.u = tail call noalias ptr @malloc(i64 noundef %i.t) #10 ; 6 uses
+  %i.u = tail call noalias ptr @malloc(i64 noundef %i.t) #11 ; 6 uses
   %.not93 = icmp eq ptr %i.u, null
   br i1 %.not93, label %.loopexit, label %bb.e
 
@@ -384,7 +384,8 @@ bb.e:                                             ; preds = %bb.d
   store ptr %i.u, ptr %i.v, align 8, !tbaa !33
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
-  %wide.trip.count = zext i32 %.085.lcssa.ph to i64
+  %smax = tail call i32 @llvm.smax.i32(i32 %.085.lcssa.ph, i32 1)
+  %wide.trip.count = zext nneg i32 %smax to i64
   store i16 0, ptr %i.u, align 2, !tbaa !48
   %i.y = getelementptr inbounds nuw i8, ptr %i.d, i64 6
   %i.z = load i16, ptr %i.y, align 2, !tbaa !49
@@ -424,7 +425,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.av = phi i16 [ %i.au, %bb.h ], [ %i.ar, %bb.g ]
-  %exitcond.peel.not = icmp eq i32 %.085.lcssa.ph, 1
+  %exitcond.peel.not = icmp slt i32 %.085.lcssa.ph, 2
   br i1 %exitcond.peel.not, label %.loopexit123, label %.peel.next
 
 .peel.next:                                       ; preds = %bb.i, %bb.o
@@ -611,7 +612,7 @@ Insert_Field_By_Position.exit:                    ; preds = %bb.q, %.critedge2.i
 
 .loopexit:                                        ; preds = %.lr.ph, %._crit_edge111, %.loopexit123, %bb.d, %.preheader, %.lr.ph.preheader, %bb.a
   %.sink = phi i32 [ -1, %bb.d ], [ -2, %.preheader ], [ -4, %.lr.ph.preheader ], [ 0, %bb.a ], [ 0, %._crit_edge111 ], [ 0, %.loopexit123 ], [ -4, %.lr.ph ] ; 2 uses
-  %i.dz = tail call ptr @__errno_location() #11
+  %i.dz = tail call ptr @__errno_location() #12
   store i32 %.sink, ptr %i.dz, align 4, !tbaa !13
   ret i32 %.sink
 }
@@ -644,6 +645,9 @@ declare i32 @form_driver(ptr noundef, i32 noundef) local_unnamed_addr #8
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #9
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #10
+
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -654,9 +658,10 @@ attributes #6 = { nofree nounwind memory(readwrite, target_mem: none) uwtable "m
 attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #10 = { nounwind allocsize(0) }
-attributes #11 = { nounwind willreturn memory(none) }
-attributes #12 = { nounwind }
+attributes #10 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #11 = { nounwind allocsize(0) }
+attributes #12 = { nounwind willreturn memory(none) }
+attributes #13 = { nounwind }
 
 !llvm.module.flags = !{!1, !2, !3}
 !llvm.ident = !{!4}

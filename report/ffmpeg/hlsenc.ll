@@ -204,8 +204,10 @@ bb.ac:                                            ; preds = %.loopexit207.i.i
   br i1 %.not112.i.i, label %update_variant_stream_info.exit, label %bb.ad, !llvm.loop !165
 
 bb.ad:                                            ; preds = %.loopexit.i.i, %.lr.ph173.i.i
-  %indvars.iv224.i.i = phi i64 [ 0, %.lr.ph173.i.i ], [ %indvars.iv.next225.i.i, %.loopexit.i.i ] ; 6 uses
+  %indvars.iv224.i.i = phi i64 [ 0, %.lr.ph173.i.i ], [ %indvars.iv.next225.i.i, %.loopexit.i.i ] ; 5 uses
   %i.el = phi ptr [ %i.ef, %.lr.ph173.i.i ], [ %i.ek, %.loopexit.i.i ] ; 2 uses
+  %5 = trunc nuw i64 %indvars.iv224.i.i to i32    ; 4 uses
+  %smax.i.i = call i32 @llvm.smax.i32(i32 %5, i32 1)
   store ptr null, ptr %i.j, align 8, !tbaa !62
   %i.em = load i32, ptr %i.ed, align 8, !tbaa !29
   %i.en = zext i32 %i.em to i64
@@ -215,7 +217,6 @@ bb.ad:                                            ; preds = %.loopexit.i.i, %.lr
 bb.ae:                                            ; preds = %bb.ad
   %i.ep = load ptr, ptr %i.ec, align 8, !tbaa !30
   %i.eq = getelementptr inbounds nuw [12856 x i8], ptr %i.ep, i64 %indvars.iv224.i.i ; 10 uses
-  %5 = trunc nuw i64 %indvars.iv224.i.i to i32    ; 3 uses
   store i32 %5, ptr %i.eq, align 8, !tbaa !110
   %i.er = getelementptr inbounds nuw i8, ptr %i.eq, i64 12804 ; 2 uses
   store i32 0, ptr %i.er, align 4, !tbaa !111
@@ -274,6 +275,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.fk = getelementptr inbounds nuw i8, ptr %i.eq, i64 12824
   %i.fl = getelementptr inbounds nuw i8, ptr %i.eq, i64 12832
   %.not175.i.i = icmp eq i64 %indvars.iv224.i.i, 0
+  %wide.trip.count217.i.i = zext nneg i32 %smax.i.i to i64
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.bp, %.lr.ph169.i.i
@@ -494,7 +496,7 @@ bb.bn:                                            ; preds = %bb.bm, %.lr.ph158.i
 
 ._crit_edge.i35.i:                                ; preds = %bb.bm, %.preheader.i34.i
   %indvars.iv.next215.i.i = add nuw nsw i64 %indvars.iv214.i.i, 1 ; 2 uses
-  %exitcond218.not.i.i = icmp eq i64 %indvars.iv.next215.i.i, %indvars.iv224.i.i
+  %exitcond218.not.i.i = icmp eq i64 %indvars.iv.next215.i.i, %wide.trip.count217.i.i
   br i1 %exitcond218.not.i.i, label %._crit_edge160.i.i, label %.preheader.i34.i, !llvm.loop !169
 
 ._crit_edge160.i.i:                               ; preds = %._crit_edge.i35.i, %.preheader135.._crit_edge160_crit_edge.i.i
@@ -897,10 +899,10 @@ declare void @avformat_free_context(ptr noundef) local_unnamed_addr #1
 declare i64 @llvm.umin.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.bswap.i64(i64) #8
+declare i32 @llvm.smax.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #8
+declare i64 @llvm.bswap.i64(i64) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #8

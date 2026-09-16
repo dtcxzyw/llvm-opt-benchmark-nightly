@@ -205,7 +205,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit877: ; preds = %_Z
   call void @llvm.lifetime.end.p0(ptr nonnull %55) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %54) #24
   %.not2104 = icmp eq i32 %.043.lcssa, 0          ; 2 uses
-  br i1 %.not2104, label %._crit_edge.i.i878, label %.lr.ph2099
+  br i1 %.not2104, label %._crit_edge.i.i878, label %.lr.ph2099.preheader
+
+.lr.ph2099.preheader:                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit877
+  %smax = call i32 @llvm.smax.i32(i32 %.043.lcssa, i32 1)
+  br label %.lr.ph2099
 
 ._crit_edge.i.i878:                               ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit924, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit877
   call void @llvm.lifetime.start.p0(ptr nonnull %59) #24
@@ -252,8 +256,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit887: ; preds = %_Z
   call void @llvm.lifetime.end.p0(ptr nonnull %54) #24
   br label %common.resume
 
-.lr.ph2099:                                       ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit877, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit924
-  %storemerge2098 = phi i32 [ %i.bdd, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit924 ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit877 ] ; 2 uses
+.lr.ph2099:                                       ; preds = %.lr.ph2099.preheader, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit924
+  %storemerge2098 = phi i32 [ %i.bdd, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit924 ], [ 0, %.lr.ph2099.preheader ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %56) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %57) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %58) #24
@@ -512,8 +516,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit924: ; preds = %_Z
   call void @llvm.lifetime.end.p0(ptr nonnull %58) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %57) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %56) #24
-  %i.bdd = add nuw i32 %storemerge2098, 1         ; 2 uses
-  %exitcond.not = icmp eq i32 %i.bdd, %.043.lcssa
+  %i.bdd = add nuw nsw i32 %storemerge2098, 1     ; 2 uses
+  %exitcond.not = icmp eq i32 %i.bdd, %smax
   br i1 %exitcond.not, label %._crit_edge.i.i878, label %.lr.ph2099, !llvm.loop !1269
 
 bb.gm:                                            ; preds = %_Z8cvtToStrIiENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_.exit899
@@ -587,7 +591,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i93
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit938: ; preds = %_ZN21EmitCBaseVisitorConst4putsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit935, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i936
   call void @llvm.lifetime.end.p0(ptr nonnull %59) #24
-  br i1 %.not2104, label %_ZNK6AstVar11isNonOutputEv.exit, label %._crit_edge.i.i942
+  br i1 %.not2104, label %_ZNK6AstVar11isNonOutputEv.exit, label %._crit_edge.i.i942.preheader
+
+._crit_edge.i.i942.preheader:                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit938
+  %smax2196 = call i32 @llvm.smax.i32(i32 %.043.lcssa, i32 1)
+  br label %._crit_edge.i.i942
 
 bb.go:                                            ; preds = %._crit_edge.i.i878
   %i.bdw = landingpad { ptr, i32 }
@@ -606,8 +614,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit941: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %59) #24
   br label %common.resume
 
-._crit_edge.i.i942:                               ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit938, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit950
-  %.02100 = phi i32 [ %i.beg, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit950 ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit938 ]
+._crit_edge.i.i942:                               ; preds = %._crit_edge.i.i942.preheader, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit950
+  %.02100 = phi i32 [ %i.beg, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit950 ], [ 0, %._crit_edge.i.i942.preheader ]
   call void @llvm.lifetime.start.p0(ptr nonnull %60) #24
   store ptr %i.adn, ptr %60, align 8, !tbaa !163
   store i16 2685, ptr %i.adn, align 8
@@ -630,8 +638,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i94
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit950: ; preds = %_ZN21EmitCBaseVisitorConst4putsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit947, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i948
   call void @llvm.lifetime.end.p0(ptr nonnull %60) #24
-  %i.beg = add nuw i32 %.02100, 1                 ; 2 uses
-  %exitcond2196.not = icmp eq i32 %i.beg, %.043.lcssa
+  %i.beg = add nuw nsw i32 %.02100, 1             ; 2 uses
+  %exitcond2196.not = icmp eq i32 %i.beg, %smax2196
   br i1 %exitcond2196.not, label %_ZNK6AstVar11isNonOutputEv.exit, label %._crit_edge.i.i942, !llvm.loop !1270
 
 bb.gp:                                            ; preds = %._crit_edge.i.i942

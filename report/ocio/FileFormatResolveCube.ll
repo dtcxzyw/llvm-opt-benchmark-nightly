@@ -205,8 +205,8 @@ bb.cn:                                            ; preds = %_ZNSolsEf.exit217, 
 .preheader:                                       ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit195, %.loopexit406
   %i.jl = mul i32 %.sroa.speculated, %.sroa.speculated
   %i.jm = mul i32 %i.jl, %.sroa.speculated
-  %umax = call i32 @llvm.umax.i32(i32 %i.jm, i32 1)
-  %wide.trip.count425 = zext i32 %umax to i64
+  %umax = call i32 @llvm.smax.i32(i32 %i.jm, i32 1)
+  %wide.trip.count425 = zext nneg i32 %umax to i64
   br label %bb.co
 
 bb.co:                                            ; preds = %.preheader, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit231
@@ -608,9 +608,6 @@ declare i64 @llvm.umax.i64(i64, i64) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #21
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #21
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

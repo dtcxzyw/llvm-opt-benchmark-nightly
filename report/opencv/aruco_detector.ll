@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %bb.an, %_ZNSt6vecto
   %i.jh = ptrtoint ptr %i.jf to i64
   %i.ji = ptrtoint ptr %i.jg to i64
   %i.jj = sub i64 %i.jh, %i.ji                    ; 5 uses
-  %i.jk = ashr exact i64 %i.jj, 3                 ; 15 uses
+  %i.jk = ashr exact i64 %i.jj, 3                 ; 14 uses
   %i.jl = icmp ugt i64 %i.jk, 1
   br i1 %i.jl, label %bb.aa, label %bb.v
 
@@ -333,7 +333,8 @@ bb.ad:                                            ; preds = %_ZNK2cv7MatExprcvNS
   br label %.lr.ph.split.us.split.i.i
 
 .lr.ph.split.us.split.us.i.i.preheader:           ; preds = %.lr.ph.split.us.i.i
-  %min.iters.check = icmp ult i64 %i.jk, 16
+  %18 = call i64 @llvm.smax.i64(i64 %i.jk, i64 1) ; 2 uses
+  %min.iters.check = icmp slt i64 %i.jk, 20
   br i1 %min.iters.check, label %.lr.ph.split.us.split.us.i.i.preheader355, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.split.us.split.us.i.i.preheader
@@ -361,7 +362,7 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   br i1 %conflict.rdx353, label %.lr.ph.split.us.split.us.i.i.preheader355, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.jk, 8589934584              ; 3 uses
+  %n.vec = and i64 %18, 8589934584                ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -378,7 +379,7 @@ middle.block:                                     ; preds = %vector.body
   store float %i.le, ptr %i.ks, align 4, !tbaa !156, !alias.scope !774, !noalias !775
   %i.lf = extractelement <8 x float> %wide.vec, i64 6
   store float %i.lf, ptr %i.kv, align 4, !tbaa !156, !alias.scope !776, !noalias !773
-  %cmp.n = icmp eq i64 %i.jk, %n.vec
+  %cmp.n = icmp eq i64 %18, %n.vec
   br i1 %cmp.n, label %._crit_edge.i.i, label %.lr.ph.split.us.split.us.i.i.preheader355
 
 .lr.ph.split.us.split.us.i.i.preheader355:        ; preds = %vector.memcheck, %vector.scevcheck, %.lr.ph.split.us.split.us.i.i.preheader, %middle.block
@@ -780,6 +781,9 @@ declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #9
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }

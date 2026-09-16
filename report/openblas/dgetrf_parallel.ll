@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %blas_quickdivide.ex
   %.pre-phi408 = phi i64 [ %i.fb, %blas_quickdivide.exit373 ], [ %i.dq, %blas_quickdivide.exit367 ]
   %.1311 = phi i64 [ %i.fq, %blas_quickdivide.exit373 ], [ %i.dm, %blas_quickdivide.exit367 ] ; 2 uses
   %.1309 = phi i64 [ %i.ex, %blas_quickdivide.exit373 ], [ %i.ef, %blas_quickdivide.exit367 ]
-  %i.fv = freeze i64 %.pre-phi408                 ; 10 uses
+  %i.fv = freeze i64 %.pre-phi408                 ; 7 uses
   %i.fw = getelementptr inbounds nuw [168 x i8], ptr %7, i64 %.1385 ; 7 uses
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fw, i64 160
   store i32 3, ptr %i.fx, align 8, !tbaa !37
@@ -230,9 +230,10 @@ bb.q:                                             ; preds = %blas_quickdivide.ex
 
 .preheader381.preheader:                          ; preds = %bb.q
   store i64 %i.fv, ptr %i.bd, align 8, !tbaa !17
-  %xtraiter = and i64 %i.fv, 7                    ; 3 uses
-  %9 = icmp ult i64 %i.fv, 8
-  %unroll_iter = and i64 %i.fv, -8
+  %smax = call i64 @llvm.smax.i64(i64 %i.fv, i64 1) ; 4 uses
+  %xtraiter = and i64 %smax, 7                    ; 3 uses
+  %9 = icmp slt i64 %i.fv, 8
+  %unroll_iter = and i64 %smax, 9223372036854775800
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod427 = icmp ne i64 %xtraiter, 0
   br label %.preheader381
@@ -298,7 +299,7 @@ bb.q:                                             ; preds = %blas_quickdivide.ex
   store volatile i64 0, ptr %i.hi, align 16, !tbaa !15
   %i.hj = getelementptr inbounds nuw i8, ptr %i.hh, i64 960
   store volatile i64 0, ptr %i.hj, align 16, !tbaa !15
-  %i.hk = add nuw i64 %.0306388, 8                ; 2 uses
+  %i.hk = add nuw nsw i64 %.0306388, 8            ; 2 uses
   %niter.next.7 = add i64 %niter, 8               ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.unr-lcssa, label %.preheader379, !llvm.loop !24
@@ -318,14 +319,14 @@ bb.q:                                             ; preds = %blas_quickdivide.ex
   store volatile i64 0, ptr %i.hl, align 16, !tbaa !15
   %i.hm = getelementptr inbounds nuw i8, ptr %i.hl, i64 64
   store volatile i64 0, ptr %i.hm, align 16, !tbaa !15
-  %i.hn = add nuw i64 %.0306388.epil, 1
+  %i.hn = add nuw nsw i64 %.0306388.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %.epilog-lcssa, label %.preheader379.epil, !llvm.loop !25
 
 .epilog-lcssa:                                    ; preds = %.preheader379.epil, %.unr-lcssa
-  %i.ho = add nuw i64 %.0305389, 1                ; 2 uses
-  %exitcond402.not = icmp eq i64 %i.ho, %i.fv
+  %i.ho = add nuw nsw i64 %.0305389, 1            ; 2 uses
+  %exitcond402.not = icmp eq i64 %i.ho, %smax
   br i1 %exitcond402.not, label %bb.r, label %.preheader381, !llvm.loop !26
 
 bb.r:                                             ; preds = %.epilog-lcssa
@@ -356,8 +357,8 @@ bb.s:                                             ; preds = %.preheader380, %bb.
 
 bb.t:                                             ; preds = %bb.s
   call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #7, !srcloc !45
-  %i.hx = add nuw i64 %.1307390, 1                ; 2 uses
-  %exitcond403.not = icmp eq i64 %i.hx, %i.fv
+  %i.hx = add nuw nsw i64 %.1307390, 1            ; 2 uses
+  %exitcond403.not = icmp eq i64 %i.hx, %smax
   br i1 %exitcond403.not, label %bb.u, label %.preheader380, !llvm.loop !28
 
 bb.u:                                             ; preds = %bb.t
@@ -759,6 +760,9 @@ declare i64 @llvm.smin.i64(i64, i64) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #6

@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.r
 
 bb.h:                                             ; preds = %bb.f
-  %i.o = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.o = sub nuw nsw i64 %1, %.sroa.09.0          ; 9 uses
   %i.p = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !416)
   %.not.i31 = icmp ult i64 %i.o, %.sroa.01.0
@@ -236,14 +236,22 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ab, label %.preheader, label %.preheader44
 
 .preheader44:                                     ; preds = %bb.k
-  br i1 %.not66, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTRTReB15_ERfENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvNtCsfh9HxMbthk9_27candle_wasm_example_whisper6worker15detect_languages0_0E0EB26_.exit.i.thread, label %.lr.ph
+  br i1 %.not66, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTRTReB15_ERfENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvNtCsfh9HxMbthk9_27candle_wasm_example_whisper6worker15detect_languages0_0E0EB26_.exit.i.thread, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader44
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.o, i64 3) ; 2 uses
+  br label %.lr.ph
 
 .preheader:                                       ; preds = %bb.k
-  br i1 %.not66, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTRTReB15_ERfENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvNtCsfh9HxMbthk9_27candle_wasm_example_whisper6worker15detect_languages0_0E0EB26_.exit.i.thread94, label %.lr.ph53
+  br i1 %.not66, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTRTReB15_ERfENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvNtCsfh9HxMbthk9_27candle_wasm_example_whisper6worker15detect_languages0_0E0EB26_.exit.i.thread94, label %.lr.ph53.preheader
 
-.lr.ph:                                           ; preds = %.preheader44, %bb.l
-  %i.ac = phi i32 [ %i.af, %bb.l ], [ %i.u, %.preheader44 ] ; 2 uses
-  %.sroa.01.0.i.i49 = phi i64 [ %i.an, %bb.l ], [ 2, %.preheader44 ] ; 3 uses
+.lr.ph53.preheader:                               ; preds = %.preheader
+  %smax73 = tail call i64 @llvm.smax.i64(i64 %i.o, i64 3) ; 2 uses
+  br label %.lr.ph53
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.l
+  %i.ac = phi i32 [ %i.af, %bb.l ], [ %i.u, %.lr.ph.preheader ] ; 2 uses
+  %.sroa.01.0.i.i49 = phi i64 [ %i.an, %bb.l ], [ 2, %.lr.ph.preheader ] ; 3 uses
   %i.ad = getelementptr inbounds nuw [16 x i8], ptr %i.p, i64 %.sroa.01.0.i.i49
   %i.ae = getelementptr i8, ptr %i.ad, i64 8
   %.val5.i = load ptr, ptr %i.ae, align 8, !alias.scope !416, !noalias !417, !nonnull !4, !align !13, !noundef !4
@@ -258,13 +266,13 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.am, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTRTReB15_ERfENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvNtCsfh9HxMbthk9_27candle_wasm_example_whisper6worker15detect_languages0_0E0EB26_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.an = add nuw i64 %.sroa.01.0.i.i49, 1        ; 2 uses
-  %exitcond.not = icmp eq i64 %i.an, %i.o
+  %i.an = add nuw nsw i64 %.sroa.01.0.i.i49, 1    ; 2 uses
+  %exitcond.not = icmp eq i64 %i.an, %smax
   br i1 %exitcond.not, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTRTReB15_ERfENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvNtCsfh9HxMbthk9_27candle_wasm_example_whisper6worker15detect_languages0_0E0EB26_.exit.i, label %.lr.ph
 
-.lr.ph53:                                         ; preds = %.preheader, %bb.m
-  %i.ao = phi i32 [ %i.ar, %bb.m ], [ %i.u, %.preheader ] ; 2 uses
-  %.sroa.01.1.i.i52 = phi i64 [ %i.az, %bb.m ], [ 2, %.preheader ] ; 3 uses
+.lr.ph53:                                         ; preds = %.lr.ph53.preheader, %bb.m
+  %i.ao = phi i32 [ %i.ar, %bb.m ], [ %i.u, %.lr.ph53.preheader ] ; 2 uses
+  %.sroa.01.1.i.i52 = phi i64 [ %i.az, %bb.m ], [ 2, %.lr.ph53.preheader ] ; 3 uses
   %i.ap = getelementptr inbounds nuw [16 x i8], ptr %i.p, i64 %.sroa.01.1.i.i52
   %i.aq = getelementptr i8, ptr %i.ap, i64 8
   %.val.i = load ptr, ptr %i.aq, align 8, !alias.scope !416, !noalias !417, !nonnull !4, !align !13, !noundef !4
@@ -279,12 +287,12 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.ay, label %bb.m, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTRTReB15_ERfENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvNtCsfh9HxMbthk9_27candle_wasm_example_whisper6worker15detect_languages0_0E0EB26_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph53
-  %i.az = add nuw i64 %.sroa.01.1.i.i52, 1        ; 2 uses
-  %exitcond73.not = icmp eq i64 %i.az, %i.o
+  %i.az = add nuw nsw i64 %.sroa.01.1.i.i52, 1    ; 2 uses
+  %exitcond73.not = icmp eq i64 %i.az, %smax73
   br i1 %exitcond73.not, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTRTReB15_ERfENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvNtCsfh9HxMbthk9_27candle_wasm_example_whisper6worker15detect_languages0_0E0EB26_.exit.i, label %.lr.ph53
 
 _RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTRTReB15_ERfENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvNtCsfh9HxMbthk9_27candle_wasm_example_whisper6worker15detect_languages0_0E0EB26_.exit.i: ; preds = %bb.l, %.lr.ph, %bb.m, %.lr.ph53
-  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i52, %.lr.ph53 ], [ %i.o, %bb.m ], [ %.sroa.01.0.i.i49, %.lr.ph ], [ %i.o, %bb.l ] ; 6 uses
+  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i52, %.lr.ph53 ], [ %smax73, %bb.m ], [ %.sroa.01.0.i.i49, %.lr.ph ], [ %smax, %bb.l ] ; 6 uses
   %i.ba = icmp samesign ule i64 %.sroa.0.0.i.i, %i.o
   tail call void @llvm.assume(i1 %i.ba)
   %.not3.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
@@ -685,6 +693,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #24
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare { float, float } @llvm.sincos.f32(float) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.maximumnum.v4f32(<4 x float>, <4 x float>) #17

@@ -205,7 +205,7 @@ RSTRING_PTR.exit2805:                             ; preds = %buffer_size_check.e
 .loopexit2997:                                    ; preds = %.lr.ph, %.loopexit2997.loopexit
   %.01933 = phi i32 [ 3, %.loopexit2997.loopexit ], [ 9, %.lr.ph ]
   %i.eib = icmp slt i32 %.019283304, 1
-  %spec.select2343 = select i1 %i.eib, i32 %.01933, i32 %.019283304 ; 14 uses
+  %spec.select2343 = select i1 %i.eib, i32 %.01933, i32 %.019283304 ; 13 uses
   %i.eic = load ptr, ptr %i.b, align 8, !tbaa !18 ; 3 uses
   %.not2113 = icmp ult ptr %i.bl, %i.eic
   %i.eid = zext nneg i32 %spec.select2343 to i64  ; 2 uses
@@ -283,17 +283,18 @@ bb.qm:                                            ; preds = %buffer_size_check.e
   br i1 %i.ejc, label %bb.qn, label %.preheader2993
 
 .preheader2993:                                   ; preds = %bb.qm
-  %12 = sub i32 9, %spec.select2343               ; 3 uses
   %.not3356 = icmp eq i32 %spec.select2343, 9
   br i1 %.not3356, label %._crit_edge, label %.lr.ph3331.preheader
 
 .lr.ph3331.preheader:                             ; preds = %.preheader2993
-  %xtraiter = and i32 %12, 1
-  %13 = icmp eq i32 %spec.select2343, 8
+  %12 = sub i32 9, %spec.select2343               ; 2 uses
+  %smax = call i32 @llvm.smax.i32(i32 %12, i32 1) ; 3 uses
+  %xtraiter = and i32 %smax, 1
+  %13 = icmp slt i32 %12, 2
   br i1 %13, label %.lr.ph3331.epil.preheader, label %.lr.ph3331.preheader.new
 
 .lr.ph3331.preheader.new:                         ; preds = %.lr.ph3331.preheader
-  %unroll_iter = and i32 %12, -2
+  %unroll_iter = and i32 %smax, 2147483646
   br label %.lr.ph3331
 
 bb.qn:                                            ; preds = %bb.qm
@@ -321,7 +322,7 @@ bb.qn:                                            ; preds = %bb.qm
 
 .lr.ph3331.epil.preheader:                        ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph3331.preheader
   %.018973329.epil.init = phi i64 [ %i.ejb, %.lr.ph3331.preheader ], [ %i.ejk, %._crit_edge.loopexit.unr-lcssa ]
-  %lcmp.mod6862 = trunc i32 %12 to i1
+  %lcmp.mod6862 = trunc i32 %smax to i1
   call void @llvm.assume(i1 %lcmp.mod6862)
   %i.ejl = sdiv i64 %.018973329.epil.init, 10
   br label %._crit_edge

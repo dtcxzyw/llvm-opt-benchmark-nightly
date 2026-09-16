@@ -2,8 +2,7 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 7
 inline.NumDeleted: 1
 loop-unroll.NumCompletelyUnrolled: 4
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@PredictorAdd12_AVX2:bb.a
   %i.br = bitcast <32 x i8> %i.bq to <8 x i32>
   %i.bs = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
@@ -205,82 +204,34 @@ bb.d:                                             ; preds = %bb.c, %._crit_edge
 define internal void @ConvertBGRAToRGBA_AVX2(ptr noalias noundef %0, i32 noundef %1, ptr noalias noundef %2) #1 {
 bb.a:
   %i.a = icmp sgt i32 %1, 7
-  br i1 %i.a, label %.lr.ph.preheader, label %._crit_edge
+  br i1 %i.a, label %.lr.ph.prol, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %3 = add nsw i32 %1, -8                         ; 2 uses
-  %4 = lshr i32 %3, 3
-  %5 = add nuw nsw i32 %4, 1
-  %xtraiter = and i32 %5, 3                       ; 2 uses
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
-
-.lr.ph.prol:                                      ; preds = %.lr.ph.preheader, %.lr.ph.prol
-  %.015.prol = phi i32 [ %6, %.lr.ph.prol ], [ %1, %.lr.ph.preheader ]
-  %.01114.prol = phi ptr [ %i.b, %.lr.ph.prol ], [ %0, %.lr.ph.preheader ] ; 2 uses
-  %.01213.prol = phi ptr [ %i.e, %.lr.ph.prol ], [ %2, %.lr.ph.preheader ] ; 2 uses
-  %prol.iter = phi i32 [ %prol.iter.next, %.lr.ph.prol ], [ 0, %.lr.ph.preheader ]
-  %i.b = getelementptr inbounds nuw i8, ptr %.01114.prol, i64 32 ; 3 uses
+.lr.ph.prol:                                      ; preds = %bb.a, %.lr.ph.prol
+  %.015.prol = phi i32 [ %prol.iter.next, %.lr.ph.prol ], [ %1, %bb.a ] ; 2 uses
+  %.01114.prol = phi ptr [ %i.b, %.lr.ph.prol ], [ %0, %bb.a ] ; 2 uses
+  %.01213.prol = phi ptr [ %i.e, %.lr.ph.prol ], [ %2, %bb.a ] ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %.01114.prol, i64 32 ; 2 uses
   %i.c = load <32 x i8>, ptr %.01114.prol, align 1, !tbaa !10
   %i.d = shufflevector <32 x i8> %i.c, <32 x i8> poison, <32 x i32> <i32 2, i32 1, i32 0, i32 3, i32 6, i32 5, i32 4, i32 7, i32 10, i32 9, i32 8, i32 11, i32 14, i32 13, i32 12, i32 15, i32 18, i32 17, i32 16, i32 19, i32 22, i32 21, i32 20, i32 23, i32 26, i32 25, i32 24, i32 27, i32 30, i32 29, i32 28, i32 31>
-  %i.e = getelementptr inbounds nuw i8, ptr %.01213.prol, i64 32 ; 3 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %.01213.prol, i64 32 ; 2 uses
   store <32 x i8> %i.d, ptr %.01213.prol, align 1, !tbaa !10
-  %6 = add nsw i32 %.015.prol, -8                 ; 3 uses
-  %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
-  %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol, !llvm.loop !29
+  %prol.iter.next = add nsw i32 %.015.prol, -8    ; 2 uses
+  %3 = icmp samesign ugt i32 %.015.prol, 15
+  br i1 %3, label %.lr.ph.prol, label %.lr.ph, !llvm.loop !29
 
-.lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
-  %.015.unr = phi i32 [ %1, %.lr.ph.preheader ], [ %6, %.lr.ph.prol ]
-  %.01114.unr = phi ptr [ %0, %.lr.ph.preheader ], [ %i.b, %.lr.ph.prol ]
-  %.01213.unr = phi ptr [ %2, %.lr.ph.preheader ], [ %i.e, %.lr.ph.prol ]
-  %.lcssa25.unr = phi ptr [ poison, %.lr.ph.preheader ], [ %i.b, %.lr.ph.prol ]
-  %.lcssa24.unr = phi ptr [ poison, %.lr.ph.preheader ], [ %i.e, %.lr.ph.prol ]
-  %.lcssa.unr = phi i32 [ poison, %.lr.ph.preheader ], [ %6, %.lr.ph.prol ]
-  %7 = icmp ult i32 %3, 24
-  br i1 %7, label %._crit_edge, label %.lr.ph
+.lr.ph:                                           ; preds = %.lr.ph.prol, %bb.a
+  %.01114 = phi ptr [ %2, %bb.a ], [ %i.e, %.lr.ph.prol ]
+  %.01213 = phi ptr [ %0, %bb.a ], [ %i.b, %.lr.ph.prol ]
+  %.0.lcssa = phi i32 [ %1, %bb.a ], [ %prol.iter.next, %.lr.ph.prol ] ; 2 uses
+  %i.f = icmp sgt i32 %.0.lcssa, 0
+  br i1 %i.f, label %bb.b, label %bb.c
 
-.lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
-  %.015 = phi i32 [ %24, %.lr.ph ], [ %.015.unr, %.lr.ph.prol.loopexit ] ; 2 uses
-  %.01114 = phi ptr [ %20, %.lr.ph ], [ %.01114.unr, %.lr.ph.prol.loopexit ] ; 5 uses
-  %.01213 = phi ptr [ %23, %.lr.ph ], [ %.01213.unr, %.lr.ph.prol.loopexit ] ; 5 uses
-  %8 = getelementptr inbounds nuw i8, ptr %.01114, i64 32
-  %9 = load <32 x i8>, ptr %.01114, align 1, !tbaa !10
-  %10 = shufflevector <32 x i8> %9, <32 x i8> poison, <32 x i32> <i32 2, i32 1, i32 0, i32 3, i32 6, i32 5, i32 4, i32 7, i32 10, i32 9, i32 8, i32 11, i32 14, i32 13, i32 12, i32 15, i32 18, i32 17, i32 16, i32 19, i32 22, i32 21, i32 20, i32 23, i32 26, i32 25, i32 24, i32 27, i32 30, i32 29, i32 28, i32 31>
-  %11 = getelementptr inbounds nuw i8, ptr %.01213, i64 32
-  store <32 x i8> %10, ptr %.01213, align 1, !tbaa !10
-  %12 = getelementptr inbounds nuw i8, ptr %.01114, i64 64
-  %13 = load <32 x i8>, ptr %8, align 1, !tbaa !10
-  %14 = shufflevector <32 x i8> %13, <32 x i8> poison, <32 x i32> <i32 2, i32 1, i32 0, i32 3, i32 6, i32 5, i32 4, i32 7, i32 10, i32 9, i32 8, i32 11, i32 14, i32 13, i32 12, i32 15, i32 18, i32 17, i32 16, i32 19, i32 22, i32 21, i32 20, i32 23, i32 26, i32 25, i32 24, i32 27, i32 30, i32 29, i32 28, i32 31>
-  %15 = getelementptr inbounds nuw i8, ptr %.01213, i64 64
-  store <32 x i8> %14, ptr %11, align 1, !tbaa !10
-  %16 = getelementptr inbounds nuw i8, ptr %.01114, i64 96
-  %17 = load <32 x i8>, ptr %12, align 1, !tbaa !10
-  %18 = shufflevector <32 x i8> %17, <32 x i8> poison, <32 x i32> <i32 2, i32 1, i32 0, i32 3, i32 6, i32 5, i32 4, i32 7, i32 10, i32 9, i32 8, i32 11, i32 14, i32 13, i32 12, i32 15, i32 18, i32 17, i32 16, i32 19, i32 22, i32 21, i32 20, i32 23, i32 26, i32 25, i32 24, i32 27, i32 30, i32 29, i32 28, i32 31>
-  %19 = getelementptr inbounds nuw i8, ptr %.01213, i64 96
-  store <32 x i8> %18, ptr %15, align 1, !tbaa !10
-  %20 = getelementptr inbounds nuw i8, ptr %.01114, i64 128 ; 2 uses
-  %21 = load <32 x i8>, ptr %16, align 1, !tbaa !10
-  %22 = shufflevector <32 x i8> %21, <32 x i8> poison, <32 x i32> <i32 2, i32 1, i32 0, i32 3, i32 6, i32 5, i32 4, i32 7, i32 10, i32 9, i32 8, i32 11, i32 14, i32 13, i32 12, i32 15, i32 18, i32 17, i32 16, i32 19, i32 22, i32 21, i32 20, i32 23, i32 26, i32 25, i32 24, i32 27, i32 30, i32 29, i32 28, i32 31>
-  %23 = getelementptr inbounds nuw i8, ptr %.01213, i64 128 ; 2 uses
-  store <32 x i8> %22, ptr %19, align 1, !tbaa !10
-  %24 = add nsw i32 %.015, -32                    ; 2 uses
-  %i.f = icmp sgt i32 %.015, 39
-  br i1 %i.f, label %.lr.ph, label %._crit_edge, !llvm.loop !30
-
-._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.a
-  %.012.lcssa = phi ptr [ %2, %bb.a ], [ %.lcssa24.unr, %.lr.ph.prol.loopexit ], [ %23, %.lr.ph ]
-  %.011.lcssa = phi ptr [ %0, %bb.a ], [ %.lcssa25.unr, %.lr.ph.prol.loopexit ], [ %20, %.lr.ph ]
-  %.0.lcssa = phi i32 [ %1, %bb.a ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ %24, %.lr.ph ] ; 2 uses
-  %25 = icmp sgt i32 %.0.lcssa, 0
-  br i1 %25, label %bb.b, label %bb.c
-
-bb.b:                                             ; preds = %._crit_edge
+bb.b:                                             ; preds = %.lr.ph
   %i.g = load ptr, ptr @VP8LConvertBGRAToRGBA_SSE, align 8, !tbaa !9
-  tail call void %i.g(ptr noundef %.011.lcssa, i32 noundef %.0.lcssa, ptr noundef %.012.lcssa) #3
+  tail call void %i.g(ptr noundef %.01213, i32 noundef %.0.lcssa, ptr noundef %.01114) #3
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %._crit_edge
+bb.c:                                             ; preds = %bb.b, %.lr.ph
   ret void
 }
 
@@ -337,7 +288,5 @@ attributes #3 = { nounwind }
 !26 = !{!25, !4, i64 2}
 !27 = !{!25, !4, i64 0}
 !28 = !{!25, !4, i64 1}
-!29 = distinct !{!29, !31}
-!30 = distinct !{!30, !11}
-!31 = !{!"llvm.loop.unroll.disable"}
+!29 = distinct !{!29, !11}
 end_hunk_0

@@ -66,7 +66,8 @@ bytestream2_get_be16.exit409:                     ; preds = %bb.b
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 6
   %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.w = load i16, ptr %i.u, align 1, !tbaa !15   ; 2 uses
-  %i.x = tail call i16 @llvm.bswap.i16(i16 %i.w)
+  %i.x = tail call i16 @llvm.bswap.i16(i16 %i.w)  ; 2 uses
+  %5 = zext i16 %i.x to i32
   %i.y = load i16, ptr %i.v, align 1, !tbaa !15
   %i.z = tail call i16 @llvm.bswap.i16(i16 %i.y)
   %i.aa = zext i16 %i.z to i32
@@ -469,12 +470,14 @@ bb.ar:                                            ; preds = %.loopexit
 .lr.ph603:                                        ; preds = %bb.ar
   %i.hb = zext nneg i32 %i.q to i64
   %i.hc = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.hb
-  %i.hd = zext i16 %i.x to i64                    ; 3 uses
+  %i.hd = zext i16 %i.x to i64                    ; 2 uses
   %i.he = sub nsw i64 0, %i.hd
   %i.hf = getelementptr inbounds i8, ptr %i.f, i64 %i.he
   %.not378572.not = icmp eq i16 %i.w, 0
   %i.hg = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 7 uses
   %i.hh = getelementptr inbounds nuw i8, ptr %4, i64 12
+  %smax = tail call i32 @llvm.smax.i32(i32 %5, i32 1)
+  %wide.trip.count634 = zext nneg i32 %smax to i64
   br label %bb.as
 
 bb.as:                                            ; preds = %.lr.ph603, %.thread534
@@ -640,7 +643,7 @@ bb.bg:                                            ; preds = %bb.bf
 bb.bh:                                            ; preds = %bb.bg, %bb.bf
   %.9.us = phi i32 [ %i.jc, %bb.bf ], [ 0, %bb.bg ] ; 3 uses
   %indvars.iv.next632 = add nuw nsw i64 %indvars.iv631, 1 ; 2 uses
-  %exitcond635.not = icmp eq i64 %indvars.iv.next632, %i.hd
+  %exitcond635.not = icmp eq i64 %indvars.iv.next632, %wide.trip.count634
   br i1 %exitcond635.not, label %._crit_edge.us, label %bb.bf, !llvm.loop !44
 
 ._crit_edge.us:                                   ; preds = %bb.bh
@@ -1041,6 +1044,9 @@ declare i16 @llvm.bswap.i16(i16) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #7

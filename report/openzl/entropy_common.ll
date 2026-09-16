@@ -204,13 +204,13 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not.i.i, label %HUF_readStats_body_default.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.c = load i8, ptr %5, align 1, !tbaa !18      ; 2 uses
-  %i.d = zext i8 %i.c to i64                      ; 7 uses
+  %i.c = load i8, ptr %5, align 1, !tbaa !18      ; 4 uses
+  %i.d = zext i8 %i.c to i64                      ; 5 uses
   %i.e = icmp slt i8 %i.c, 0
   br i1 %i.e, label %bb.e, label %bb.g
 
 bb.e:                                             ; preds = %bb.d
-  %i.f = add nsw i64 %i.d, -127                   ; 6 uses
+  %i.f = add nsw i64 %i.d, -127                   ; 5 uses
   %i.g = add nsw i64 %i.d, -126
   %i.h = lshr i64 %i.g, 1                         ; 2 uses
   %.not90.i.i = icmp ult i64 %i.h, %6
@@ -222,16 +222,17 @@ bb.f:                                             ; preds = %bb.e
 
 iter.check:                                       ; preds = %bb.f
   %i.i = getelementptr inbounds nuw i8, ptr %5, i64 1 ; 4 uses
-  %umax29 = tail call i64 @llvm.umax.i64(i64 %i.f, i64 2)
+  %umax29 = tail call i64 @llvm.smax.i64(i64 %i.f, i64 2)
   %i.j = add nsw i64 %umax29, -1
   %i.k = lshr i64 %i.j, 1
-  %i.l = add nuw i64 %i.k, 1                      ; 5 uses
-  %min.iters.check = icmp ult i64 %i.f, 7
+  %i.l = add nuw nsw i64 %i.k, 1                  ; 5 uses
+  %min.iters.check = icmp ult i8 %i.c, -122
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.m = add nsw i64 %i.d, -128
-  %i.n = and i64 %i.d, 126
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.f, i64 2)
+  %i.m = add nsw i64 %smax, -1                    ; 2 uses
+  %i.n = and i64 %i.m, -2
   %i.o = getelementptr i8, ptr %0, i64 %i.n
   %scevgep = getelementptr i8, ptr %i.o, i64 2
   %i.p = lshr i64 %i.m, 1
@@ -243,13 +244,13 @@ vector.memcheck:                                  ; preds = %iter.check
   br i1 %found.conflict, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check30 = icmp ult i64 %i.f, 31
+  %min.iters.check30 = icmp ult i8 %i.c, -98
   br i1 %min.iters.check30, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.r = and i64 %i.l, 12
-  %n.vec = and i64 %i.l, -16                      ; 6 uses
-  %i.s = shl i64 %n.vec, 1
+  %n.vec = and i64 %i.l, 9223372036854775792      ; 6 uses
+  %i.s = shl nuw i64 %n.vec, 1
   %i.t = getelementptr inbounds nuw i8, ptr %5, i64 9
   %wide.load = load <8 x i8>, ptr %i.i, align 1, !tbaa !18, !alias.scope !29 ; 2 uses
   %wide.load31 = load <8 x i8>, ptr %i.t, align 1, !tbaa !18, !alias.scope !29 ; 2 uses
@@ -328,8 +329,8 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec33 = and i64 %i.l, -4                     ; 3 uses
-  %i.ba = shl i64 %n.vec33, 1
+  %n.vec33 = and i64 %i.l, 9223372036854775804    ; 3 uses
+  %i.ba = shl nuw i64 %n.vec33, 1
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -480,13 +481,13 @@ bb.a:
   br i1 %.not.i, label %HUF_readStats_body.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = load i8, ptr %5, align 1, !tbaa !18      ; 2 uses
-  %i.b = zext i8 %i.a to i64                      ; 7 uses
+  %i.a = load i8, ptr %5, align 1, !tbaa !18      ; 4 uses
+  %i.b = zext i8 %i.a to i64                      ; 5 uses
   %i.c = icmp slt i8 %i.a, 0
   br i1 %i.c, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = add nsw i64 %i.b, -127                   ; 6 uses
+  %i.d = add nsw i64 %i.b, -127                   ; 5 uses
   %i.e = add nsw i64 %i.b, -126
   %i.f = lshr i64 %i.e, 1                         ; 2 uses
   %.not90.i = icmp ult i64 %i.f, %6
@@ -498,16 +499,17 @@ bb.d:                                             ; preds = %bb.c
 
 iter.check:                                       ; preds = %bb.d
   %i.g = getelementptr inbounds nuw i8, ptr %5, i64 1 ; 4 uses
-  %umax33 = tail call i64 @llvm.umax.i64(i64 %i.d, i64 2)
+  %umax33 = tail call i64 @llvm.smax.i64(i64 %i.d, i64 2)
   %i.h = add nsw i64 %umax33, -1
   %i.i = lshr i64 %i.h, 1
-  %i.j = add nuw i64 %i.i, 1                      ; 5 uses
-  %min.iters.check = icmp ult i64 %i.d, 7
+  %i.j = add nuw nsw i64 %i.i, 1                  ; 5 uses
+  %min.iters.check = icmp ult i8 %i.a, -122
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.k = add nsw i64 %i.b, -128
-  %i.l = and i64 %i.b, 126
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.d, i64 2)
+  %i.k = add nsw i64 %smax, -1                    ; 2 uses
+  %i.l = and i64 %i.k, -2
   %i.m = getelementptr i8, ptr %0, i64 %i.l
   %scevgep = getelementptr i8, ptr %i.m, i64 2
   %i.n = lshr i64 %i.k, 1
@@ -519,13 +521,13 @@ vector.memcheck:                                  ; preds = %iter.check
   br i1 %found.conflict, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check34 = icmp ult i64 %i.d, 31
+  %min.iters.check34 = icmp ult i8 %i.a, -98
   br i1 %min.iters.check34, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.p = and i64 %i.j, 12
-  %n.vec = and i64 %i.j, -16                      ; 6 uses
-  %i.q = shl i64 %n.vec, 1
+  %n.vec = and i64 %i.j, 9223372036854775792      ; 6 uses
+  %i.q = shl nuw i64 %n.vec, 1
   %i.r = getelementptr inbounds nuw i8, ptr %5, i64 9
   %wide.load = load <8 x i8>, ptr %i.g, align 1, !tbaa !18, !alias.scope !36 ; 2 uses
   %wide.load35 = load <8 x i8>, ptr %i.r, align 1, !tbaa !18, !alias.scope !36 ; 2 uses
@@ -604,8 +606,8 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec37 = and i64 %i.j, -4                     ; 3 uses
-  %i.ay = shl i64 %n.vec37, 1
+  %n.vec37 = and i64 %i.j, 9223372036854775804    ; 3 uses
+  %i.ay = shl nuw i64 %n.vec37, 1
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -764,7 +766,7 @@ declare i32 @llvm.ctlz.i32(i32, i1 immarg) #8
 declare i64 @FSE_decompress_wksp_bmi2(ptr noundef, i64 noundef, ptr noundef, i64 noundef, i32 noundef, ptr noundef, i64 noundef, i32 noundef) local_unnamed_addr #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #9
+declare i64 @llvm.smax.i64(i64, i64) #9
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

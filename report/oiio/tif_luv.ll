@@ -205,25 +205,30 @@ bb.e:                                             ; preds = %bb.a, %bb.d
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 1128 ; 2 uses
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !58   ; 10 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 1136 ; 2 uses
-  %i.r = load i64, ptr %i.q, align 8, !tbaa !59
-  %.fr60 = freeze i64 %i.r                        ; 7 uses
+  %i.r = load i64, ptr %i.q, align 8, !tbaa !59   ; 9 uses
   %i.s = icmp sgt i64 %i.f, 0
-  %i.t = icmp sgt i64 %.fr60, 2
-  %4 = and i1 %i.s, %i.t
+  %i.t = icmp sgt i64 %i.r, 2
+  %4 = select i1 %i.s, i1 %i.t, i1 false
   br i1 %4, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.e
-  %i.u = add nsw i64 %.fr60, -3
-  %i.v = udiv i64 %i.u, 3
+  %5 = tail call i64 @llvm.smin.i64(i64 %i.r, i64 5)
+  %i.u = add nuw i64 %i.r, 2
+  %6 = sub i64 %i.u, %5
+  %.fr = freeze i64 %6
+  %i.v = udiv i64 %.fr, 3
   %i.w = add nsw i64 %i.f, -1
   %i.x = tail call i64 @llvm.umin.i64(i64 %i.v, i64 %i.w) ; 2 uses
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.x, 23
+  %min.iters.check = icmp samesign ult i64 %i.x, 27
   br i1 %min.iters.check, label %.lr.ph.preheader61, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %i.z = add nsw i64 %.fr60, -3
-  %i.aa = udiv i64 %i.z, 3
+  %i.z = add nuw i64 %i.r, 2
+  %smin = tail call i64 @llvm.smin.i64(i64 %i.r, i64 5)
+  %7 = sub i64 %i.z, %smin
+  %.fr60 = freeze i64 %7
+  %i.aa = udiv i64 %.fr60, 3
   %i.ab = add nsw i64 %i.f, -1
   %umin = tail call i64 @llvm.umin.i64(i64 %i.aa, i64 %i.ab) ; 2 uses
   %i.ac = shl i64 %umin, 2
@@ -242,7 +247,7 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.ag = mul i64 %n.vec, 3
   %i.ah = getelementptr i8, ptr %i.p, i64 %i.ag   ; 2 uses
   %i.ai = mul i64 %n.vec, -3
-  %i.aj = add i64 %.fr60, %i.ai                   ; 2 uses
+  %i.aj = add i64 %i.r, %i.ai                     ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -307,7 +312,7 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph.preheader61:                               ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
   %.03643.ph = phi ptr [ %i.p, %vector.memcheck ], [ %i.p, %.lr.ph.preheader ], [ %i.ah, %middle.block ]
   %.03742.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
-  %.03841.ph = phi i64 [ %.fr60, %vector.memcheck ], [ %.fr60, %.lr.ph.preheader ], [ %i.aj, %middle.block ]
+  %.03841.ph = phi i64 [ %i.r, %vector.memcheck ], [ %i.r, %.lr.ph.preheader ], [ %i.aj, %middle.block ]
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader61, %.lr.ph
@@ -337,7 +342,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.cv, label %.lr.ph, label %._crit_edge, !llvm.loop !90
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.e
-  %.038.lcssa = phi i64 [ %.fr60, %bb.e ], [ %i.aj, %middle.block ], [ %i.cr, %.lr.ph ]
+  %.038.lcssa = phi i64 [ %i.r, %bb.e ], [ %i.aj, %middle.block ], [ %i.cr, %.lr.ph ]
   %.037.lcssa = phi i64 [ 0, %bb.e ], [ %n.vec, %middle.block ], [ %i.cs, %.lr.ph ] ; 2 uses
   %.036.lcssa = phi ptr [ %i.p, %bb.e ], [ %i.ah, %middle.block ], [ %i.cq, %.lr.ph ]
   store ptr %.036.lcssa, ptr %i.o, align 8, !tbaa !58

@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.r
 
 bb.h:                                             ; preds = %bb.f
-  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 9 uses
   %i.o = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %.sroa.09.0 ; 7 uses
   %.not.i33 = icmp ult i64 %i.n, %.sroa.01.0
   br i1 %.not.i33, label %bb.i, label %bb.j
@@ -227,14 +227,22 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.s, label %.preheader, label %.preheader48
 
 .preheader48:                                     ; preds = %bb.k
-  br i1 %.not70, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runNtNtNtCs9JgWGBoX3PY_12lance_linalg8distance7hamming7ClusterNCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_11sort_by_keyyNCINvB14_13cluster_edgesINtNtNtNtB8_4iter8adapters3map3MapINtNtB3j_3zip3ZipINtNtB6_4iter4IteryEB43_ENCNvB14_23cluster_pairwise_result0EEs_0E0EB18_.exit.i.thread, label %.lr.ph
+  br i1 %.not70, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runNtNtNtCs9JgWGBoX3PY_12lance_linalg8distance7hamming7ClusterNCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_11sort_by_keyyNCINvB14_13cluster_edgesINtNtNtNtB8_4iter8adapters3map3MapINtNtB3j_3zip3ZipINtNtB6_4iter4IteryEB43_ENCNvB14_23cluster_pairwise_result0EEs_0E0EB18_.exit.i.thread, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader48
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.n, i64 3) ; 2 uses
+  br label %.lr.ph
 
 .preheader:                                       ; preds = %bb.k
-  br i1 %.not70, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runNtNtNtCs9JgWGBoX3PY_12lance_linalg8distance7hamming7ClusterNCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_11sort_by_keyyNCINvB14_13cluster_edgesINtNtNtNtB8_4iter8adapters3map3MapINtNtB3j_3zip3ZipINtNtB6_4iter4IteryEB43_ENCNvB14_23cluster_pairwise_result0EEs_0E0EB18_.exit.i.thread96, label %.lr.ph57
+  br i1 %.not70, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runNtNtNtCs9JgWGBoX3PY_12lance_linalg8distance7hamming7ClusterNCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_11sort_by_keyyNCINvB14_13cluster_edgesINtNtNtNtB8_4iter8adapters3map3MapINtNtB3j_3zip3ZipINtNtB6_4iter4IteryEB43_ENCNvB14_23cluster_pairwise_result0EEs_0E0EB18_.exit.i.thread96, label %.lr.ph57.preheader
 
-.lr.ph:                                           ; preds = %.preheader48, %bb.l
-  %.val9.i = phi i64 [ %.val8.i, %bb.l ], [ %.val10.i, %.preheader48 ]
-  %.sroa.01.0.i.i53 = phi i64 [ %i.w, %bb.l ], [ 2, %.preheader48 ] ; 3 uses
+.lr.ph57.preheader:                               ; preds = %.preheader
+  %smax77 = tail call i64 @llvm.smax.i64(i64 %i.n, i64 3) ; 2 uses
+  br label %.lr.ph57
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.l
+  %.val9.i = phi i64 [ %.val8.i, %bb.l ], [ %.val10.i, %.lr.ph.preheader ]
+  %.sroa.01.0.i.i53 = phi i64 [ %i.w, %bb.l ], [ 2, %.lr.ph.preheader ] ; 3 uses
   %i.t = getelementptr inbounds nuw [32 x i8], ptr %i.o, i64 %.sroa.01.0.i.i53
   %i.u = getelementptr i8, ptr %i.t, i64 24
   %.val8.i = load i64, ptr %i.u, align 8, !alias.scope !2013, !noalias !2014, !noundef !18 ; 2 uses
@@ -242,13 +250,13 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.v, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runNtNtNtCs9JgWGBoX3PY_12lance_linalg8distance7hamming7ClusterNCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_11sort_by_keyyNCINvB14_13cluster_edgesINtNtNtNtB8_4iter8adapters3map3MapINtNtB3j_3zip3ZipINtNtB6_4iter4IteryEB43_ENCNvB14_23cluster_pairwise_result0EEs_0E0EB18_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.w = add nuw i64 %.sroa.01.0.i.i53, 1         ; 2 uses
-  %exitcond.not = icmp eq i64 %i.w, %i.n
+  %i.w = add nuw nsw i64 %.sroa.01.0.i.i53, 1     ; 2 uses
+  %exitcond.not = icmp eq i64 %i.w, %smax
   br i1 %exitcond.not, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runNtNtNtCs9JgWGBoX3PY_12lance_linalg8distance7hamming7ClusterNCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_11sort_by_keyyNCINvB14_13cluster_edgesINtNtNtNtB8_4iter8adapters3map3MapINtNtB3j_3zip3ZipINtNtB6_4iter4IteryEB43_ENCNvB14_23cluster_pairwise_result0EEs_0E0EB18_.exit.i, label %.lr.ph
 
-.lr.ph57:                                         ; preds = %.preheader, %bb.m
-  %.val7.i = phi i64 [ %.val.i, %bb.m ], [ %.val10.i, %.preheader ]
-  %.sroa.01.1.i.i56 = phi i64 [ %i.aa, %bb.m ], [ 2, %.preheader ] ; 3 uses
+.lr.ph57:                                         ; preds = %.lr.ph57.preheader, %bb.m
+  %.val7.i = phi i64 [ %.val.i, %bb.m ], [ %.val10.i, %.lr.ph57.preheader ]
+  %.sroa.01.1.i.i56 = phi i64 [ %i.aa, %bb.m ], [ 2, %.lr.ph57.preheader ] ; 3 uses
   %i.x = getelementptr inbounds nuw [32 x i8], ptr %i.o, i64 %.sroa.01.1.i.i56
   %i.y = getelementptr i8, ptr %i.x, i64 24
   %.val.i = load i64, ptr %i.y, align 8, !alias.scope !2013, !noalias !2014, !noundef !18 ; 2 uses
@@ -256,12 +264,12 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.z, label %bb.m, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runNtNtNtCs9JgWGBoX3PY_12lance_linalg8distance7hamming7ClusterNCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_11sort_by_keyyNCINvB14_13cluster_edgesINtNtNtNtB8_4iter8adapters3map3MapINtNtB3j_3zip3ZipINtNtB6_4iter4IteryEB43_ENCNvB14_23cluster_pairwise_result0EEs_0E0EB18_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph57
-  %i.aa = add nuw i64 %.sroa.01.1.i.i56, 1        ; 2 uses
-  %exitcond77.not = icmp eq i64 %i.aa, %i.n
+  %i.aa = add nuw nsw i64 %.sroa.01.1.i.i56, 1    ; 2 uses
+  %exitcond77.not = icmp eq i64 %i.aa, %smax77
   br i1 %exitcond77.not, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runNtNtNtCs9JgWGBoX3PY_12lance_linalg8distance7hamming7ClusterNCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_11sort_by_keyyNCINvB14_13cluster_edgesINtNtNtNtB8_4iter8adapters3map3MapINtNtB3j_3zip3ZipINtNtB6_4iter4IteryEB43_ENCNvB14_23cluster_pairwise_result0EEs_0E0EB18_.exit.i, label %.lr.ph57
 
 _RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runNtNtNtCs9JgWGBoX3PY_12lance_linalg8distance7hamming7ClusterNCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_11sort_by_keyyNCINvB14_13cluster_edgesINtNtNtNtB8_4iter8adapters3map3MapINtNtB3j_3zip3ZipINtNtB6_4iter4IteryEB43_ENCNvB14_23cluster_pairwise_result0EEs_0E0EB18_.exit.i: ; preds = %bb.l, %.lr.ph, %bb.m, %.lr.ph57
-  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i56, %.lr.ph57 ], [ %i.n, %bb.m ], [ %.sroa.01.0.i.i53, %.lr.ph ], [ %i.n, %bb.l ] ; 6 uses
+  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i56, %.lr.ph57 ], [ %smax77, %bb.m ], [ %.sroa.01.0.i.i53, %.lr.ph ], [ %smax, %bb.l ] ; 6 uses
   %i.ab = icmp samesign ule i64 %.sroa.0.0.i.i, %i.n
   tail call void @llvm.assume(i1 %i.ab)
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
@@ -663,6 +671,9 @@ declare i64 @llvm.umin.i64(i64, i64) #62
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #62
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #62
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.abs.i16(i16, i1 immarg) #60

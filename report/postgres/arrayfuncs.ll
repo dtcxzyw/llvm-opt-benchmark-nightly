@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.l = tail call i32 @ArrayGetNItems(i32 noundef %i.c, ptr noundef nonnull %i.k) #16 ; 4 uses
+  %i.l = tail call i32 @ArrayGetNItems(i32 noundef %i.c, ptr noundef nonnull %i.k) #16 ; 3 uses
   %i.m = load i32, ptr %i.i, align 4              ; 2 uses
   %.not18.i = icmp eq i32 %i.m, 0                 ; 2 uses
   br i1 %.not18.i, label %bb.f, label %bb.e
@@ -218,21 +218,13 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %i.r = phi ptr [ %i.q, %bb.e ], [ null, %bb.d ] ; 3 uses
+  %i.r = phi ptr [ %i.q, %bb.e ], [ null, %bb.d ] ; 2 uses
   %i.s = icmp sgt i32 %i.l, 7
-  br i1 %i.s, label %.lr.ph.i.preheader, label %.preheader.i
-
-.lr.ph.i.preheader:                               ; preds = %bb.f
-  %6 = add nsw i32 %i.l, -8
-  %7 = lshr i32 %6, 3
-  %8 = zext nneg i32 %7 to i64
-  %9 = getelementptr i8, ptr %i.r, i64 %8
-  %scevgep = getelementptr i8, ptr %9, i64 1
-  br label %.lr.ph.i
+  br i1 %i.s, label %.lr.ph.i, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.g, %bb.f
   %.016.lcssa.i = phi i32 [ %i.l, %bb.f ], [ %i.y, %bb.g ] ; 2 uses
-  %.015.lcssa.i = phi ptr [ %i.r, %bb.f ], [ %scevgep, %bb.g ]
+  %.015.lcssa.i = phi ptr [ %i.r, %bb.f ], [ %i.x, %bb.g ]
   %i.t = icmp sgt i32 %.016.lcssa.i, 0
   br i1 %i.t, label %.lr.ph28.i, label %.loopexit154
 
@@ -241,15 +233,15 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.v = zext i8 %i.u to i32
   br label %bb.h
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.g
-  %.01524.i = phi ptr [ %i.x, %bb.g ], [ %i.r, %.lr.ph.i.preheader ] ; 2 uses
-  %.01623.i = phi i32 [ %i.y, %bb.g ], [ %i.l, %.lr.ph.i.preheader ] ; 2 uses
+.lr.ph.i:                                         ; preds = %bb.f, %bb.g
+  %.01524.i = phi ptr [ %i.x, %bb.g ], [ %i.r, %bb.f ] ; 2 uses
+  %.01623.i = phi i32 [ %i.y, %bb.g ], [ %i.l, %bb.f ] ; 2 uses
   %i.w = load i8, ptr %.01524.i, align 1
   %.not19.i = icmp eq i8 %i.w, -1
   br i1 %.not19.i, label %bb.g, label %array_contains_nulls.exit
 
 bb.g:                                             ; preds = %.lr.ph.i
-  %i.x = getelementptr inbounds nuw i8, ptr %.01524.i, i64 1
+  %i.x = getelementptr inbounds nuw i8, ptr %.01524.i, i64 1 ; 2 uses
   %i.y = add nsw i32 %.01623.i, -8                ; 2 uses
   %i.z = icmp samesign ugt i32 %.01623.i, 15
   br i1 %i.z, label %.lr.ph.i, label %.preheader.i, !llvm.loop !2
@@ -355,7 +347,7 @@ bb.r:                                             ; preds = %bb.p
 
 bb.s:                                             ; preds = %bb.r
   %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %i.bo = tail call i32 @ArrayGetNItems(i32 noundef %i.bf, ptr noundef nonnull %i.bn) #16 ; 4 uses
+  %i.bo = tail call i32 @ArrayGetNItems(i32 noundef %i.bf, ptr noundef nonnull %i.bn) #16 ; 3 uses
   %i.bp = load i32, ptr %i.bl, align 4            ; 3 uses
   %.not18.i123 = icmp eq i32 %i.bp, 0
   br i1 %.not18.i123, label %bb.u, label %bb.t
@@ -368,21 +360,13 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
-  %i.bu = phi ptr [ %i.bt, %bb.t ], [ null, %bb.s ] ; 3 uses
+  %i.bu = phi ptr [ %i.bt, %bb.t ], [ null, %bb.s ] ; 2 uses
   %i.bv = icmp sgt i32 %i.bo, 7
-  br i1 %i.bv, label %.lr.ph.i131.preheader, label %.preheader.i124
-
-.lr.ph.i131.preheader:                            ; preds = %bb.u
-  %10 = add nsw i32 %i.bo, -8
-  %11 = lshr i32 %10, 3
-  %12 = zext nneg i32 %11 to i64
-  %13 = getelementptr i8, ptr %i.bu, i64 %12
-  %scevgep167 = getelementptr i8, ptr %13, i64 1
-  br label %.lr.ph.i131
+  br i1 %i.bv, label %.lr.ph.i131, label %.preheader.i124
 
 .preheader.i124:                                  ; preds = %bb.v, %bb.u
   %.016.lcssa.i125 = phi i32 [ %i.bo, %bb.u ], [ %i.cb, %bb.v ] ; 2 uses
-  %.015.lcssa.i126 = phi ptr [ %i.bu, %bb.u ], [ %scevgep167, %bb.v ]
+  %.015.lcssa.i126 = phi ptr [ %i.bu, %bb.u ], [ %i.ca, %bb.v ]
   %i.bw = icmp sgt i32 %.016.lcssa.i125, 0
   br i1 %i.bw, label %.lr.ph28.i128, label %.loopexit152
 
@@ -391,15 +375,15 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %i.by = zext i8 %i.bx to i32
   br label %bb.w
 
-.lr.ph.i131:                                      ; preds = %.lr.ph.i131.preheader, %bb.v
-  %.01524.i132 = phi ptr [ %i.ca, %bb.v ], [ %i.bu, %.lr.ph.i131.preheader ] ; 2 uses
-  %.01623.i133 = phi i32 [ %i.cb, %bb.v ], [ %i.bo, %.lr.ph.i131.preheader ] ; 2 uses
+.lr.ph.i131:                                      ; preds = %bb.u, %bb.v
+  %.01524.i132 = phi ptr [ %i.ca, %bb.v ], [ %i.bu, %bb.u ] ; 2 uses
+  %.01623.i133 = phi i32 [ %i.cb, %bb.v ], [ %i.bo, %bb.u ] ; 2 uses
   %i.bz = load i8, ptr %.01524.i132, align 1
   %.not19.i134 = icmp eq i8 %i.bz, -1
   br i1 %.not19.i134, label %bb.v, label %array_contains_nulls.exit135
 
 bb.v:                                             ; preds = %.lr.ph.i131
-  %i.ca = getelementptr inbounds nuw i8, ptr %.01524.i132, i64 1
+  %i.ca = getelementptr inbounds nuw i8, ptr %.01524.i132, i64 1 ; 2 uses
   %i.cb = add nsw i32 %.01623.i133, -8            ; 2 uses
   %i.cc = icmp samesign ugt i32 %.01623.i133, 15
   br i1 %i.cc, label %.lr.ph.i131, label %.preheader.i124, !llvm.loop !2
@@ -802,7 +786,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.s = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 2 uses
-  %i.t = tail call i32 @ArrayGetNItems(i32 noundef %i.l, ptr noundef nonnull %i.s) #16 ; 4 uses
+  %i.t = tail call i32 @ArrayGetNItems(i32 noundef %i.l, ptr noundef nonnull %i.s) #16 ; 3 uses
   %i.u = load i32, ptr %i.q, align 4              ; 3 uses
   %.not18.i = icmp eq i32 %i.u, 0
   br i1 %.not18.i, label %bb.f, label %bb.e
@@ -815,21 +799,13 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %i.z = phi ptr [ %i.y, %bb.e ], [ null, %bb.d ] ; 3 uses
+  %i.z = phi ptr [ %i.y, %bb.e ], [ null, %bb.d ] ; 2 uses
   %i.aa = icmp sgt i32 %i.t, 7
-  br i1 %i.aa, label %.lr.ph.i.preheader, label %.preheader.i
-
-.lr.ph.i.preheader:                               ; preds = %bb.f
-  %3 = add nsw i32 %i.t, -8
-  %4 = lshr i32 %3, 3
-  %5 = zext nneg i32 %4 to i64
-  %6 = getelementptr i8, ptr %i.z, i64 %5
-  %scevgep = getelementptr i8, ptr %6, i64 1
-  br label %.lr.ph.i
+  br i1 %i.aa, label %.lr.ph.i, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.g, %bb.f
   %.016.lcssa.i = phi i32 [ %i.t, %bb.f ], [ %i.ag, %bb.g ] ; 2 uses
-  %.015.lcssa.i = phi ptr [ %i.z, %bb.f ], [ %scevgep, %bb.g ]
+  %.015.lcssa.i = phi ptr [ %i.z, %bb.f ], [ %i.af, %bb.g ]
   %i.ab = icmp sgt i32 %.016.lcssa.i, 0
   br i1 %i.ab, label %.lr.ph28.i, label %.loopexit
 
@@ -838,15 +814,15 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.ad = zext i8 %i.ac to i32
   br label %bb.h
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.g
-  %.01524.i = phi ptr [ %i.af, %bb.g ], [ %i.z, %.lr.ph.i.preheader ] ; 2 uses
-  %.01623.i = phi i32 [ %i.ag, %bb.g ], [ %i.t, %.lr.ph.i.preheader ] ; 2 uses
+.lr.ph.i:                                         ; preds = %bb.f, %bb.g
+  %.01524.i = phi ptr [ %i.af, %bb.g ], [ %i.z, %bb.f ] ; 2 uses
+  %.01623.i = phi i32 [ %i.ag, %bb.g ], [ %i.t, %bb.f ] ; 2 uses
   %i.ae = load i8, ptr %.01524.i, align 1
   %.not19.i = icmp eq i8 %i.ae, -1
   br i1 %.not19.i, label %bb.g, label %array_contains_nulls.exit
 
 bb.g:                                             ; preds = %.lr.ph.i
-  %i.af = getelementptr inbounds nuw i8, ptr %.01524.i, i64 1
+  %i.af = getelementptr inbounds nuw i8, ptr %.01524.i, i64 1 ; 2 uses
   %i.ag = add nsw i32 %.01623.i, -8               ; 2 uses
   %i.ah = icmp samesign ugt i32 %.01623.i, 15
   br i1 %i.ah, label %.lr.ph.i, label %.preheader.i, !llvm.loop !2

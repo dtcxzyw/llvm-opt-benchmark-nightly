@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph61, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 9 uses
   %i.n = getelementptr inbounds nuw [112 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
@@ -226,13 +226,21 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.sroa.0.0.i.i40.not97, label %.preheader49, label %.preheader
 
 .preheader49:                                     ; preds = %bb.k
-  br i1 %.not68, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCskIStwd7HrDO_12yara_x_proto4json2KVNvYB12_NtNtB8_3cmp10PartialOrd2ltECskSRqRFwaW70_9yara_x_py.exit.i.thread, label %.lr.ph
+  br i1 %.not68, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCskIStwd7HrDO_12yara_x_proto4json2KVNvYB12_NtNtB8_3cmp10PartialOrd2ltECskSRqRFwaW70_9yara_x_py.exit.i.thread, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader49
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.m, i64 3) ; 2 uses
+  br label %.lr.ph
 
 .preheader:                                       ; preds = %bb.k
-  br i1 %.not68, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCskIStwd7HrDO_12yara_x_proto4json2KVNvYB12_NtNtB8_3cmp10PartialOrd2ltECskSRqRFwaW70_9yara_x_py.exit.i.thread84, label %.lr.ph55
+  br i1 %.not68, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCskIStwd7HrDO_12yara_x_proto4json2KVNvYB12_NtNtB8_3cmp10PartialOrd2ltECskSRqRFwaW70_9yara_x_py.exit.i.thread84, label %.lr.ph55.preheader
 
-.lr.ph:                                           ; preds = %.preheader49, %bb.l
-  %.sroa.01.0.i.i51 = phi i64 [ %i.x, %bb.l ], [ 2, %.preheader49 ] ; 4 uses
+.lr.ph55.preheader:                               ; preds = %.preheader
+  %smax71 = tail call i64 @llvm.smax.i64(i64 %i.m, i64 3) ; 2 uses
+  br label %.lr.ph55
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.l
+  %.sroa.01.0.i.i51 = phi i64 [ %i.x, %bb.l ], [ 2, %.lr.ph.preheader ] ; 4 uses
   %i.s = getelementptr inbounds nuw [112 x i8], ptr %i.n, i64 %.sroa.01.0.i.i51
   %i.t = getelementptr [112 x i8], ptr %i.n, i64 %.sroa.01.0.i.i51
   %i.u = getelementptr i8, ptr %i.t, i64 -112
@@ -243,12 +251,12 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.sroa.0.0.i.i38, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCskIStwd7HrDO_12yara_x_proto4json2KVNvYB12_NtNtB8_3cmp10PartialOrd2ltECskSRqRFwaW70_9yara_x_py.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.x = add nuw i64 %.sroa.01.0.i.i51, 1         ; 2 uses
-  %exitcond.not = icmp eq i64 %i.x, %i.m
+  %i.x = add nuw nsw i64 %.sroa.01.0.i.i51, 1     ; 2 uses
+  %exitcond.not = icmp eq i64 %i.x, %smax
   br i1 %exitcond.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCskIStwd7HrDO_12yara_x_proto4json2KVNvYB12_NtNtB8_3cmp10PartialOrd2ltECskSRqRFwaW70_9yara_x_py.exit.i, label %.lr.ph
 
-.lr.ph55:                                         ; preds = %.preheader, %bb.m
-  %.sroa.01.1.i.i54 = phi i64 [ %i.ad, %bb.m ], [ 2, %.preheader ] ; 4 uses
+.lr.ph55:                                         ; preds = %.lr.ph55.preheader, %bb.m
+  %.sroa.01.1.i.i54 = phi i64 [ %i.ad, %bb.m ], [ 2, %.lr.ph55.preheader ] ; 4 uses
   %i.y = getelementptr inbounds nuw [112 x i8], ptr %i.n, i64 %.sroa.01.1.i.i54
   %i.z = getelementptr [112 x i8], ptr %i.n, i64 %.sroa.01.1.i.i54
   %i.aa = getelementptr i8, ptr %i.z, i64 -112
@@ -259,12 +267,12 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %.sroa.0.0.i.i36, label %bb.m, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCskIStwd7HrDO_12yara_x_proto4json2KVNvYB12_NtNtB8_3cmp10PartialOrd2ltECskSRqRFwaW70_9yara_x_py.exit.i
 
 bb.m:                                             ; preds = %.lr.ph55
-  %i.ad = add nuw i64 %.sroa.01.1.i.i54, 1        ; 2 uses
-  %exitcond71.not = icmp eq i64 %i.ad, %i.m
+  %i.ad = add nuw nsw i64 %.sroa.01.1.i.i54, 1    ; 2 uses
+  %exitcond71.not = icmp eq i64 %i.ad, %smax71
   br i1 %exitcond71.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCskIStwd7HrDO_12yara_x_proto4json2KVNvYB12_NtNtB8_3cmp10PartialOrd2ltECskSRqRFwaW70_9yara_x_py.exit.i, label %.lr.ph55
 
 _RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCskIStwd7HrDO_12yara_x_proto4json2KVNvYB12_NtNtB8_3cmp10PartialOrd2ltECskSRqRFwaW70_9yara_x_py.exit.i: ; preds = %bb.m, %.lr.ph55, %bb.l, %.lr.ph
-  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.0.i.i51, %.lr.ph ], [ %i.m, %bb.l ], [ %.sroa.01.1.i.i54, %.lr.ph55 ], [ %i.m, %bb.m ] ; 5 uses
+  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.0.i.i51, %.lr.ph ], [ %smax, %bb.l ], [ %.sroa.01.1.i.i54, %.lr.ph55 ], [ %smax71, %bb.m ] ; 5 uses
   %i.ae = icmp samesign ule i64 %.sroa.0.0.i.i, %i.m
   tail call void @llvm.assume(i1 %i.ae)
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
@@ -666,6 +674,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #21
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #21
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { cold nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

@@ -205,6 +205,7 @@ bb.l:                                             ; preds = %.thread.i.i.jt2
   %i.bu = phi ptr [ %i.g, %bb.k ], [ %i.g, %bb.l ], [ %i.bd, %bb.j ]
   %.25984.i.i27 = phi i64 [ %i.bi, %bb.k ], [ %i.bm, %bb.l ], [ %.lcssa, %bb.j ] ; 2 uses
   %.060.i.i25 = phi i32 [ 0, %bb.k ], [ 2, %bb.l ], [ %.060.i.i24, %bb.j ]
+  %smax.i.i = call i64 @llvm.smax.i64(i64 %.25984.i.i27, i64 1)
   %i.bv = getelementptr i8, ptr %i.bu, i64 2
   br label %.lr.ph.i.i
 
@@ -224,8 +225,8 @@ bb.l:                                             ; preds = %.thread.i.i.jt2
   %i.ca = trunc i64 %i.bz to i32
   br label %_ZN4node9inspector12_GLOBAL__N_119decode_frame_hybi17ERKSt6vectorIcSaIcEEbPiPS4_Pb.exit.i
 
-.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader, %.lr.ph.i.i
-  %.05488.i.i = phi i64 [ %i.cj, %.lr.ph.i.i ], [ 0, %.lr.ph.i.i.preheader ] ; 3 uses
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.i.i.preheader
+  %.05488.i.i = phi i64 [ 0, %.lr.ph.i.i.preheader ], [ %i.cj, %.lr.ph.i.i ] ; 3 uses
   %i.cb = load ptr, ptr %i.c, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bt, i64 %.05488.i.i
@@ -237,8 +238,8 @@ bb.l:                                             ; preds = %.thread.i.i.jt2
   store i8 %i.ch, ptr %i.a, align 1
   %i.ci = call ptr @_ZNSt6vectorIcSaIcEE14_M_insert_rvalEN9__gnu_cxx17__normal_iteratorIPKcS1_EEOc(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr %i.cb, ptr noundef nonnull align 1 dereferenceable(1) %i.a) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
-  %i.cj = add nuw i64 %.05488.i.i, 1              ; 2 uses
-  %exitcond92.not.i.i = icmp eq i64 %i.cj, %.25984.i.i27
+  %i.cj = add nuw nsw i64 %.05488.i.i, 1          ; 2 uses
+  %exitcond92.not.i.i = icmp eq i64 %i.cj, %smax.i.i
   br i1 %exitcond92.not.i.i, label %._crit_edge.loopexit.i.i, label %.lr.ph.i.i, !llvm.loop !48
 
 _ZN4node9inspector12_GLOBAL__N_119decode_frame_hybi17ERKSt6vectorIcSaIcEEbPiPS4_Pb.exit.i: ; preds = %.thread.i.i.jt0, %.thread.i.i.jt2, %._crit_edge.i.i

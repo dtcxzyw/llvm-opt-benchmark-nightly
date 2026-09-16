@@ -200,7 +200,6 @@ bb.am:                                            ; preds = %bb.ai
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.loopexit1181
   %indvar = phi i64 [ 0, %.lr.ph.preheader ], [ %indvar.next, %.loopexit1181 ] ; 5 uses
   %indvars.iv = phi i64 [ %i.ip, %.lr.ph.preheader ], [ %indvars.iv.next, %.loopexit1181 ] ; 11 uses
-  %7 = sub i64 %i.jb, %indvar
   %gep1038 = getelementptr [8 x i8], ptr %invariant.gep1037, i64 %indvars.iv ; 2 uses
   %i.jk = load double, ptr %gep1038, align 8, !tbaa !30 ; 2 uses
   %gep1040 = getelementptr [8 x i8], ptr %invariant.gep1039, i64 %indvars.iv ; 2 uses
@@ -214,17 +213,17 @@ bb.am:                                            ; preds = %bb.ai
   %i.js = fmul <2 x double> %i.jd, %i.jr          ; 5 uses
   %i.jt = mul nsw i64 %indvars.iv, %i.v
   %invariant.gep = getelementptr [8 x i8], ptr %i.f, i64 %i.jt ; 2 uses
-  %8 = icmp ne i64 %indvars.iv, 0
-  %.neg = sext i1 %8 to i64
-  %9 = add i64 %7, %.neg                          ; 3 uses
+  %7 = call i64 @llvm.smin.i64(i64 %indvars.iv, i64 1)
+  %8 = add i64 %indvar, %7
+  %9 = sub i64 %i.jb, %8                          ; 3 uses
   %min.iters.check1090 = icmp ult i64 %9, 4
   br i1 %min.iters.check1090, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
   %i.ju = mul nsw i64 %indvar, -8                 ; 2 uses
   %scevgep1086 = getelementptr i8, ptr %i.jf, i64 %i.ju
-  %.not1182 = icmp eq i64 %indvars.iv, 0
-  %10 = select i1 %.not1182, i64 0, i64 8         ; 3 uses
+  %smin = call i64 @llvm.smin.i64(i64 %indvars.iv, i64 1)
+  %10 = shl nsw i64 %smin, 3                      ; 3 uses
   %scevgep1085 = getelementptr i8, ptr %scevgep1084, i64 %10
   %scevgep1083 = getelementptr i8, ptr %i.jh, i64 %i.ju
   %scevgep1082 = getelementptr i8, ptr %scevgep1081, i64 %10
@@ -625,6 +624,9 @@ declare double @llvm.fabs.f64(double) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smin.i64(i64, i64) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x double> @llvm.fmuladd.v4f64(<4 x double>, <4 x double>, <4 x double>) #3

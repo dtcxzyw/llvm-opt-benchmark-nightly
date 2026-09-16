@@ -205,7 +205,8 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   br i1 %.not210, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.aj
-  %wide.trip.count = zext i32 %i.gc to i64
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.gc, i32 1)
+  %wide.trip.count = zext nneg i32 %smax to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZL10stbi__get8P13stbi__context.exit165

@@ -24,11 +24,13 @@ bb.a:
   br i1 %or.cond, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.g = add nsw i32 %1, -8                       ; 2 uses
-  %i.h = lshr i32 %i.g, 3
+  %2 = tail call i32 @llvm.smin.i32(i32 %1, i32 15)
+  %i.g = add nuw i32 %1, 7
+  %3 = sub i32 %i.g, %2                           ; 2 uses
+  %i.h = lshr i32 %3, 3
   %narrow = add nuw nsw i32 %i.h, 1
   %i.i = zext nneg i32 %narrow to i64             ; 2 uses
-  %min.iters.check = icmp ult i32 %i.g, 24
+  %min.iters.check = icmp ult i32 %3, 24
   br i1 %min.iters.check, label %.lr.ph.preheader43, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -174,11 +176,13 @@ bb.a:
   br i1 %or.cond, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.i = add nsw i32 %1, -8                       ; 2 uses
-  %i.j = lshr i32 %i.i, 3
+  %3 = tail call i32 @llvm.smin.i32(i32 %1, i32 15)
+  %i.i = add nuw i32 %1, 7
+  %4 = sub i32 %i.i, %3                           ; 2 uses
+  %i.j = lshr i32 %4, 3
   %narrow = add nuw nsw i32 %i.j, 1
   %i.k = zext nneg i32 %narrow to i64             ; 2 uses
-  %min.iters.check = icmp ult i32 %i.i, 24
+  %min.iters.check = icmp ult i32 %4, 24
   br i1 %min.iters.check, label %.lr.ph.preheader46, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -299,6 +303,9 @@ middle.block:                                     ; preds = %vector.body
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.ctpop.i64(i64) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i64> @llvm.ctpop.v2i64(<2 x i64>) #1

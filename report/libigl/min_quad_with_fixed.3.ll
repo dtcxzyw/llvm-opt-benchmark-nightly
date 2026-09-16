@@ -205,7 +205,7 @@ _ZNK5Eigen31CompleteOrthogonalDecompositionINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEEE4
   store i64 0, ptr %i.bp, align 8, !tbaa !107, !alias.scope !662
   store i64 4, ptr %i.bq, align 8, !tbaa !663, !alias.scope !662
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #14
-  %i.by = add nuw i64 %.061.i.i, 1                ; 4 uses
+  %i.by = add nuw nsw i64 %.061.i.i, 1            ; 4 uses
   %i.bz = sub nsw i64 3, %.061.i.i
   %i.ca = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.by
   %.idx.i.i.i.i.i.i.i = shl nuw nsw i64 %.061.i.i, 5
@@ -608,7 +608,7 @@ _ZNK5Eigen31CompleteOrthogonalDecompositionINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEEE4
   store i64 0, ptr %i.bp, align 8, !tbaa !107, !alias.scope !1091
   store i64 3, ptr %i.bq, align 8, !tbaa !1092, !alias.scope !1091
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #14
-  %i.by = add nuw i64 %.061.i.i, 1                ; 4 uses
+  %i.by = add nuw nsw i64 %.061.i.i, 1            ; 4 uses
   %i.bz = sub nsw i64 2, %.061.i.i
   %i.ca = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.by
   %.idx.i.i.i.i.i.i.i = mul nuw nsw i64 %.061.i.i, 24
@@ -653,7 +653,7 @@ _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i.
   %i.ch = ptrtoint ptr %2 to i64
   %i.ci = lshr exact i64 %i.ch, 3
   %i.cj = and i64 %i.ci, 1                        ; 2 uses
-  %i.ck = call i64 @llvm.smin.i64(i64 %i.cj, i64 %.lcssa) ; 8 uses
+  %i.ck = call i64 @llvm.smin.i64(i64 %i.cj, i64 %.lcssa) ; 5 uses
   %i.cl = sub i64 %.lcssa, %i.ck                  ; 4 uses
   %i.cm = and i64 %i.cl, 9223372036854775806      ; 2 uses
   %i.cn = or disjoint i64 %i.cm, %i.ck
@@ -673,15 +673,9 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   %i.cq = shl nuw i64 %i.ck, 3                    ; 2 uses
   %scevgep = getelementptr i8, ptr %2, i64 %i.cq
   %scevgep56 = getelementptr i8, ptr %7, i64 %i.cq
-  %10 = add nsw i64 %i.ck, %i.cm
-  %11 = add nsw i64 %i.ck, 2
-  %umax = call i64 @llvm.umax.i64(i64 %10, i64 %11)
-  %12 = xor i64 %i.ck, -1
-  %13 = add i64 %umax, %12
-  %i.cr = shl i64 %13, 3
-  %14 = and i64 %i.cr, -16
-  %15 = add i64 %14, 16
-  call void @llvm.memcpy.p0.p0.i64(ptr align 16 %scevgep, ptr align 8 %scevgep56, i64 %15, i1 false), !tbaa !9
+  %umax = call i64 @llvm.umax.i64(i64 %i.cm, i64 2)
+  %i.cr = shl i64 %umax, 3
+  call void @llvm.memcpy.p0.p0.i64(ptr align 16 %scevgep, ptr align 8 %scevgep56, i64 %i.cr, i1 false), !tbaa !9
   br label %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
 
 ._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader, %_ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dense_assignment_kernelINS0_9evaluatorINS_5BlockINS_6MatrixIdLi3ELi1ELi0ELi3ELi1EEELin1ELi1ELb0EEEEESA_NS0_9assign_opIddEELi0EEEEEvRT_ll.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
@@ -1084,7 +1078,7 @@ _ZNK5Eigen31CompleteOrthogonalDecompositionINS_6MatrixIdLi2ELi2ELi0ELi2ELi2EEEE4
   store i64 0, ptr %i.bl, align 8, !tbaa !107, !alias.scope !1330
   store i64 2, ptr %i.bm, align 8, !tbaa !1331, !alias.scope !1330
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #14
-  %i.bu = add nuw i64 %.061.i.i, 1                ; 4 uses
+  %i.bu = add nuw nsw i64 %.061.i.i, 1            ; 4 uses
   %i.bv = sub nsw i64 1, %.061.i.i
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.bu
   %.idx.i.i.i.i.i.i.i = shl nuw nsw i64 %.061.i.i, 4

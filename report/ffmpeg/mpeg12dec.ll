@@ -205,7 +205,7 @@ bb.ig:                                            ; preds = %.lr.ph.i.i
   br i1 %.not235.i.i, label %slice_end.exit, label %.critedge12.thread.i.i
 
 .critedge12.thread.i.i:                           ; preds = %bb.ig, %.critedge12.i.i
-  %.0198.lcssa.ph363.i.i = phi i32 [ %.0198306.i.i, %.critedge12.i.i ], [ %i.ayx, %bb.ig ] ; 3 uses
+  %.0198.lcssa.ph363.i.i = phi i32 [ %.0198306.i.i, %.critedge12.i.i ], [ %i.ayx, %bb.ig ] ; 2 uses
   %i.ayy = getelementptr inbounds nuw i8, ptr %i.akt, i64 6000 ; 3 uses
   %i.ayz = load ptr, ptr %i.ayy, align 16, !tbaa !117 ; 2 uses
   %.not236.i.i = icmp eq ptr %i.ayz, null
@@ -241,6 +241,7 @@ bb.ik:                                            ; preds = %bb.ij
   %i.azp = getelementptr inbounds i8, ptr %i.azo, i64 %i.azd ; 2 uses
   %i.azq = getelementptr inbounds nuw i8, ptr %i.fm, i64 5 ; 2 uses
   %i.azr = icmp slt i8 %.fr327.i.i, 0
+  %smax338.i.i = call i32 @llvm.smax.i32(i32 %.0198.lcssa.ph363.i.i, i32 1) ; 2 uses
   br i1 %i.azr, label %.split.split.us.i.i387, label %.split.us.split.i.i386
 
 .split.us.split.i.i386:                           ; preds = %bb.ik, %.split.us.split.i.i386
@@ -273,7 +274,7 @@ bb.ik:                                            ; preds = %bb.ij
   %i.bai = getelementptr inbounds nuw i8, ptr %.0196312.us.i.i, i64 6
   %i.baj = getelementptr inbounds nuw i8, ptr %.0205310.us.i.i, i64 6
   %i.bak = add nuw nsw i32 %.1311.us.i.i, 1       ; 2 uses
-  %exitcond337.not.i.i = icmp eq i32 %i.bak, %.0198.lcssa.ph363.i.i
+  %exitcond337.not.i.i = icmp eq i32 %i.bak, %smax338.i.i
   br i1 %exitcond337.not.i.i, label %.loopexit.i.i, label %.split.us.split.i.i386, !llvm.loop !167
 
 .split.split.us.i.i387:                           ; preds = %bb.ik, %.split.split.us.i.i387
@@ -305,7 +306,7 @@ bb.ik:                                            ; preds = %bb.ij
   %i.bba = getelementptr inbounds nuw i8, ptr %.0196312.us314.i.i, i64 6
   %i.bbb = getelementptr inbounds nuw i8, ptr %.0205310.us316.i.i, i64 6
   %i.bbc = add nuw nsw i32 %.1311.us315.i.i, 1    ; 2 uses
-  %exitcond339.not.i.i = icmp eq i32 %i.bbc, %.0198.lcssa.ph363.i.i
+  %exitcond339.not.i.i = icmp eq i32 %i.bbc, %smax338.i.i
   br i1 %exitcond339.not.i.i, label %.loopexit.i.i, label %.split.split.us.i.i387, !llvm.loop !167
 
 .loopexit.i.i:                                    ; preds = %.split.us.split.i.i386, %.split.split.us.i.i387, %bb.ij

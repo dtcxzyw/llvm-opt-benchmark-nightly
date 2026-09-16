@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 42
 inline.NumDeleted: 18
 loop-unroll.NumCompletelyUnrolled: 7
-loop-unroll.NumRuntimeUnrolled: 8
-loop-unroll.NumUnrolled: 15
+loop-unroll.NumRuntimeUnrolled: 7
+loop-unroll.NumUnrolled: 14
 begin_hunk_0_@_ZN4ojph5localL8rev_initEPNS0_10rev_structEPhii:bb.a
   store ptr %i.ao, ptr %0, align 8, !tbaa !37
   %i.ap = load i8, ptr %i.ah, align 1, !tbaa !12
@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %bb.a
   br label %.lr.ph.i
 
 bb.c:                                             ; preds = %bb.b
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 5 uses
-  %i.h = load i32, ptr %i.g, align 4, !tbaa !36   ; 9 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 3 uses
+  %i.h = load i32, ptr %i.g, align 4, !tbaa !36   ; 5 uses
   %i.i = icmp sgt i32 %i.h, 4
   br i1 %i.i, label %bb.d, label %bb.e
 
@@ -224,97 +224,42 @@ bb.e:                                             ; preds = %bb.c
 
 .preheader.i.i:                                   ; preds = %bb.e
   %.not.i.i = icmp eq i32 %i.h, 1
-  %.pre.i.i = load ptr, ptr %0, align 8, !tbaa !32 ; 3 uses
-  br i1 %.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i.preheader
+  %.pre.i.i = load ptr, ptr %0, align 8, !tbaa !32 ; 2 uses
+  br i1 %.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
 
-.lr.ph.i.i.preheader:                             ; preds = %.preheader.i.i
-  %1 = add nsw i32 %i.h, -1                       ; 3 uses
-  %xtraiter = and i32 %1, 1
-  %2 = icmp eq i32 %i.h, 2
-  br i1 %2, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
-
-.lr.ph.i.i.preheader.new:                         ; preds = %.lr.ph.i.i.preheader
-  %unroll_iter = and i32 %1, -2
-  br label %.lr.ph.i.i
-
-.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.i.i.preheader.new
-  %i.o = phi ptr [ %.pre.i.i, %.lr.ph.i.i.preheader.new ], [ %i.q, %.lr.ph.i.i ] ; 3 uses
-  %.058.i.i = phi i32 [ -1, %.lr.ph.i.i.preheader.new ], [ %i.x, %.lr.ph.i.i ]
-  %.05357.i.i.a = phi i32 [ 0, %.lr.ph.i.i.preheader.new ], [ %13, %.lr.ph.i.i ] ; 5 uses
-  %i.p = phi i32 [ %i.h, %.lr.ph.i.i.preheader.new ], [ %i.y, %.lr.ph.i.i ] ; 2 uses
-  %niter = phi i32 [ 0, %.lr.ph.i.i.preheader.new ], [ %niter.next.1, %.lr.ph.i.i ]
-  %3 = getelementptr inbounds nuw i8, ptr %i.o, i64 1 ; 2 uses
-  store ptr %3, ptr %0, align 8, !tbaa !32
-  %4 = load i8, ptr %i.o, align 1, !tbaa !12
-  %5 = zext i8 %4 to i32
-  %6 = shl i32 255, %.05357.i.i.a
-  %7 = xor i32 %6, -1
-  %8 = and i32 %.058.i.i, %7
-  %9 = shl i32 %5, %.05357.i.i.a
-  %10 = or i32 %9, %8
-  %11 = add nsw i32 %i.p, -1
-  store i32 %11, ptr %i.g, align 4, !tbaa !36
-  %12 = or disjoint i32 %.05357.i.i.a, 8
-  %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 2 ; 4 uses
+.lr.ph.i.i:                                       ; preds = %.preheader.i.i, %.lr.ph.i.i
+  %i.o = phi ptr [ %i.q, %.lr.ph.i.i ], [ %.pre.i.i, %.preheader.i.i ] ; 2 uses
+  %.05357.i.i.a = phi i32 [ %i.x, %.lr.ph.i.i ], [ -1, %.preheader.i.i ]
+  %i.p = phi i32 [ %niter.next.1, %.lr.ph.i.i ], [ 0, %.preheader.i.i ] ; 3 uses
+  %niter = phi i32 [ %i.y, %.lr.ph.i.i ], [ %i.h, %.preheader.i.i ] ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 1 ; 3 uses
   store ptr %i.q, ptr %0, align 8, !tbaa !32
-  %i.r = load i8, ptr %3, align 1, !tbaa !12
+  %i.r = load i8, ptr %i.o, align 1, !tbaa !12
   %i.s = zext i8 %i.r to i32
-  %i.t = shl i32 65280, %.05357.i.i.a
+  %i.t = shl i32 255, %i.p
   %i.u = xor i32 %i.t, -1
-  %i.v = and i32 %10, %i.u
-  %i.w = shl i32 %i.s, %12
-  %i.x = or i32 %i.w, %i.v                        ; 3 uses
-  %i.y = add nsw i32 %i.p, -2                     ; 3 uses
+  %i.v = and i32 %.05357.i.i.a, %i.u
+  %i.w = shl i32 %i.s, %i.p
+  %i.x = or i32 %i.w, %i.v                        ; 2 uses
+  %i.y = add nsw i32 %niter, -1                   ; 2 uses
   store i32 %i.y, ptr %i.g, align 4, !tbaa !36
-  %13 = add nuw nsw i32 %.05357.i.i.a, 16         ; 2 uses
-  %niter.next.1 = add i32 %niter, 2               ; 2 uses
-  %niter.ncmp.1.not = icmp eq i32 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1.not, label %._crit_edge.i.loopexit.i.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !67
+  %niter.next.1 = add nuw nsw i32 %i.p, 8         ; 2 uses
+  %1 = icmp samesign ugt i32 %niter, 2
+  br i1 %1, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !67
 
-._crit_edge.i.loopexit.i.unr-lcssa:               ; preds = %.lr.ph.i.i
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.i.loopexit.i, label %.lr.ph.i.i.epil.preheader
-
-.lr.ph.i.i.epil.preheader:                        ; preds = %._crit_edge.i.loopexit.i.unr-lcssa, %.lr.ph.i.i.preheader
-  %.epil.init = phi ptr [ %.pre.i.i, %.lr.ph.i.i.preheader ], [ %i.q, %._crit_edge.i.loopexit.i.unr-lcssa ] ; 2 uses
-  %.058.i.i.epil.init = phi i32 [ -1, %.lr.ph.i.i.preheader ], [ %i.x, %._crit_edge.i.loopexit.i.unr-lcssa ]
-  %.05357.i.i.epil.init = phi i32 [ 0, %.lr.ph.i.i.preheader ], [ %13, %._crit_edge.i.loopexit.i.unr-lcssa ] ; 2 uses
-  %.epil.init18 = phi i32 [ %i.h, %.lr.ph.i.i.preheader ], [ %i.y, %._crit_edge.i.loopexit.i.unr-lcssa ]
-  %lcmp.mod21 = trunc i32 %1 to i1
-  tail call void @llvm.assume(i1 %lcmp.mod21)
-  %14 = getelementptr inbounds nuw i8, ptr %.epil.init, i64 1 ; 2 uses
-  store ptr %14, ptr %0, align 8, !tbaa !32
-  %15 = load i8, ptr %.epil.init, align 1, !tbaa !12
-  %16 = zext i8 %15 to i32
-  %17 = shl i32 255, %.05357.i.i.epil.init
-  %18 = xor i32 %17, -1
-  %19 = and i32 %.058.i.i.epil.init, %18
-  %20 = shl i32 %16, %.05357.i.i.epil.init
-  %21 = or i32 %20, %19
-  %22 = add nsw i32 %.epil.init18, -1
-  store i32 %22, ptr %i.g, align 4, !tbaa !36
-  br label %._crit_edge.i.loopexit.i
-
-._crit_edge.i.loopexit.i:                         ; preds = %._crit_edge.i.loopexit.i.unr-lcssa, %.lr.ph.i.i.epil.preheader
-  %.lcssa16 = phi ptr [ %i.q, %._crit_edge.i.loopexit.i.unr-lcssa ], [ %14, %.lr.ph.i.i.epil.preheader ]
-  %.lcssa = phi i32 [ %i.x, %._crit_edge.i.loopexit.i.unr-lcssa ], [ %21, %.lr.ph.i.i.epil.preheader ]
-  %23 = shl nuw nsw i32 %i.h, 3
-  %24 = add nsw i32 %23, -8
-  br label %._crit_edge.i.i
-
-._crit_edge.i.i:                                  ; preds = %._crit_edge.i.loopexit.i, %.preheader.i.i
-  %i.z = phi ptr [ %.pre.i.i, %.preheader.i.i ], [ %.lcssa16, %._crit_edge.i.loopexit.i ] ; 2 uses
-  %.053.lcssa.i.i = phi i32 [ 0, %.preheader.i.i ], [ %24, %._crit_edge.i.loopexit.i ] ; 2 uses
-  %.0.lcssa.i.i = phi i32 [ -1, %.preheader.i.i ], [ %.lcssa, %._crit_edge.i.loopexit.i ]
+._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i, %.preheader.i.i
+  %i.z = phi ptr [ %.pre.i.i, %.preheader.i.i ], [ %i.q, %.lr.ph.i.i ] ; 2 uses
+  %.053.lcssa.i.i = phi i32 [ 0, %.preheader.i.i ], [ %niter.next.1, %.lr.ph.i.i ] ; 2 uses
+  %.0.lcssa.i.i = phi i32 [ -1, %.preheader.i.i ], [ %i.x, %.lr.ph.i.i ]
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 1
   store ptr %i.aa, ptr %0, align 8, !tbaa !32
   %i.ab = load i8, ptr %i.z, align 1, !tbaa !12
   %i.ac = or i8 %i.ab, 15
   %i.ad = zext i8 %i.ac to i32
-  %i.ae = shl nuw i32 255, %.053.lcssa.i.i
+  %i.ae = shl i32 255, %.053.lcssa.i.i
   %i.af = xor i32 %i.ae, -1
   %i.ag = and i32 %.0.lcssa.i.i, %i.af
-  %i.ah = shl nuw i32 %i.ad, %.053.lcssa.i.i
+  %i.ah = shl i32 %i.ad, %.053.lcssa.i.i
   %i.ai = or i32 %i.ah, %i.ag
   br label %.sink.split.i.i
 

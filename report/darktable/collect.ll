@@ -205,7 +205,7 @@ bb.bm:                                            ; preds = %bb.bl
 .loopexit:                                        ; preds = %.lr.ph411, %string_array_length.exit.thread, %.critedge, %string_array_length.exit
   %.not322478 = phi i1 [ true, %string_array_length.exit ], [ false, %.critedge ], [ true, %string_array_length.exit.thread ], [ false, %.lr.ph411 ]
   %.0.lcssa.i476 = phi i32 [ 0, %string_array_length.exit ], [ %.0.lcssa.i475484, %.critedge ], [ %i.gv, %string_array_length.exit.thread ], [ %.0.lcssa.i475484, %.lr.ph411 ]
-  %.1252 = phi i32 [ 0, %string_array_length.exit ], [ %.0251.lcssa, %.critedge ], [ 0, %string_array_length.exit.thread ], [ %.0251.lcssa, %.lr.ph411 ] ; 3 uses
+  %.1252 = phi i32 [ 0, %string_array_length.exit ], [ %.0251.lcssa, %.critedge ], [ 0, %string_array_length.exit.thread ], [ %.0251.lcssa, %.lr.ph411 ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #16
   store ptr null, ptr %i.e, align 8, !tbaa !87
   br i1 %i.ev, label %g_strdup_inline.exit343, label %bb.bn
@@ -221,12 +221,13 @@ bb.bn:                                            ; preds = %g_strdup_inline.exi
   br i1 %.not437, label %._crit_edge415, label %.lr.ph414.preheader
 
 .lr.ph414.preheader:                              ; preds = %bb.bn
-  %wide.trip.count = zext i32 %.1252 to i64       ; 2 uses
+  %smax = call i32 @llvm.smax.i32(i32 %.1252, i32 1)
+  %wide.trip.count = zext nneg i32 %smax to i64
   br label %.lr.ph414
 
 ._crit_edge415:                                   ; preds = %.lr.ph414, %bb.bn
-  %.pre-phi453 = phi i64 [ 0, %bb.bn ], [ %wide.trip.count, %.lr.ph414 ]
-  %i.hi = getelementptr inbounds nuw [8 x i8], ptr %.0253, i64 %.pre-phi453 ; 2 uses
+  %8 = zext nneg i32 %.1252 to i64
+  %i.hi = getelementptr inbounds nuw [8 x i8], ptr %.0253, i64 %8 ; 2 uses
   %i.hj = load ptr, ptr %i.hi, align 8, !tbaa !87
   %.not326420 = icmp eq ptr %i.hj, null
   br i1 %.not326420, label %._crit_edge426, label %.lr.ph425

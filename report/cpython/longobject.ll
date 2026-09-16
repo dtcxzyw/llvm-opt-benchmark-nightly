@@ -205,9 +205,8 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.af, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.j
-  %2 = icmp ne i64 %i.ab, 0
-  %umin = zext i1 %2 to i64                       ; 2 uses
-  %i.ag = sub nsw i64 %i.i, %umin
+  %smin = tail call i64 @llvm.smin.i64(i64 %i.ab, i64 1) ; 2 uses
+  %i.ag = sub i64 %i.i, %smin
   %xtraiter = and i64 %i.ag, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
@@ -229,7 +228,7 @@ bb.j:                                             ; preds = %bb.i
   %.0124224.unr = phi double [ %i.ae, %.lr.ph.preheader ], [ %i.al, %.lr.ph.prol ]
   %.0134223.unr = phi i64 [ %i.ab, %.lr.ph.preheader ], [ %i.ah, %.lr.ph.prol ]
   %.lcssa275.unr = phi double [ poison, %.lr.ph.preheader ], [ %i.al, %.lr.ph.prol ]
-  %i.am = sub nsw i64 %umin, %i.i
+  %i.am = sub i64 %smin, %i.i
   %i.an = icmp ugt i64 %i.am, -4
   br i1 %i.an, label %._crit_edge, label %.lr.ph
 

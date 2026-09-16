@@ -204,7 +204,7 @@ bb.cu:                                            ; preds = %bb.ct, %bb.an
 
 bb.cv:                                            ; preds = %bb.an
   %i.ob = load i32, ptr %2, align 4
-  %i.oc = call noundef i32 @_ZNK6icu_7816SimpleDateFormat11countDigitsERKNS_13UnicodeStringEii(ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(64) %1, i32 noundef %i.ob, i32 noundef %i.ex) ; 8 uses
+  %i.oc = call noundef i32 @_ZNK6icu_7816SimpleDateFormat11countDigitsERKNS_13UnicodeStringEii(ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(64) %1, i32 noundef %i.ob, i32 noundef %i.ex) ; 9 uses
   %i.od = icmp slt i32 %i.oc, 3
   br i1 %i.od, label %.preheader.preheader, label %.preheader969
 
@@ -245,12 +245,14 @@ middle.block1104:                                 ; preds = %vector.body1099
   br i1 %.not985, label %._crit_edge981, label %.lr.ph980.preheader
 
 .lr.ph980.preheader:                              ; preds = %.preheader969
-  %i.ol = add nsw i32 %i.oc, -3                   ; 3 uses
-  %min.iters.check = icmp ult i32 %i.ol, 8
+  %21 = call i32 @llvm.smin.i32(i32 %i.oc, i32 4)
+  %i.ol = add nuw i32 %i.oc, 1
+  %22 = sub i32 %i.ol, %21                        ; 3 uses
+  %min.iters.check = icmp ult i32 %22, 8
   br i1 %min.iters.check, label %.lr.ph980.preheader1122, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph980.preheader
-  %n.vec = and i32 %i.ol, -8                      ; 3 uses
+  %n.vec = and i32 %22, -8                        ; 3 uses
   %i.om = sub i32 %i.oc, %n.vec
   br label %vector.body
 
@@ -264,7 +266,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 middle.block:                                     ; preds = %vector.body
   %i.oo = call i32 @llvm.vector.reduce.mul.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i32 %i.ol, %n.vec
+  %cmp.n = icmp eq i32 %22, %n.vec
   br i1 %cmp.n, label %._crit_edge981, label %.lr.ph980.preheader1122
 
 .lr.ph980.preheader1122:                          ; preds = %.lr.ph980.preheader, %middle.block

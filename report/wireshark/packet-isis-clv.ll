@@ -200,7 +200,9 @@ bb.a:
   br i1 %i.b, label %.split.us, label %.lr.ph49
 
 .lr.ph49:                                         ; preds = %.preheader.split.us.preheader
-  %i.c = add nsw i32 %5, -4
+  %7 = tail call i32 @llvm.smin.i32(i32 %5, i32 7)
+  %reass.sub = sub nsw i32 %5, %7
+  %i.c = add nuw i32 %reass.sub, 3
   %i.d = lshr i32 %i.c, 2
   %.neg = mul i32 %5, -1073741823
   %i.e = add i32 %.neg, -4
@@ -523,6 +525,9 @@ bb.g:                                             ; preds = %._crit_edge, %.crit
 
 ; Function Attrs: null_pointer_is_valid
 declare ptr @proto_tree_add_expert_format(ptr noundef, ptr noundef, ptr noundef, ptr noundef, i32 noundef, i32 noundef, ptr noundef, ...) local_unnamed_addr #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #3

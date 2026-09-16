@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/f16_rem?download=true
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -71,7 +73,7 @@ bb.k:                                             ; preds = %bb.j, %bb.h
   %i.t = trunc i64 %.094 to i16
   %i.u = or i16 %i.t, 1024                        ; 3 uses
   %i.v = or i64 %.091, 1024                       ; 3 uses
-  %i.w = sub i8 %.095, %.093                      ; 4 uses
+  %i.w = sub i8 %.095, %.093                      ; 6 uses
   %i.x = icmp slt i8 %i.w, 1
   br i1 %i.x, label %bb.l, label %bb.q
 
@@ -102,38 +104,68 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.k
   %i.af = shl i64 %i.v, 21
   %i.ag = and i64 %i.af, 4292870144
-  %i.ah = udiv i64 9223372036854775807, %i.ag     ; 2 uses
+  %i.ah = udiv i64 9223372036854775807, %i.ag     ; 5 uses
   %i.ai = shl i16 %i.u, 4                         ; 2 uses
-  %i.aj = add nsw i8 %i.w, -31
-  %i.ak = shl i64 %i.v, 3                         ; 3 uses
-  %i.al = sext i8 %i.aj to i32                    ; 2 uses
+  %i.aj = add nsw i8 %i.w, -31                    ; 2 uses
+  %i.ak = shl i64 %i.v, 3                         ; 6 uses
+  %i.al = sext i8 %i.aj to i32                    ; 5 uses
   %i.am = zext i16 %i.ai to i64
   %i.an = mul nuw nsw i64 %i.ah, %i.am
   %i.ao = lshr i64 %i.an, 16                      ; 2 uses
   %i.ap = icmp samesign ult i8 %i.w, 31
   br i1 %i.ap, label %._crit_edge, label %.lr.ph
 
-.lr.ph:                                           ; preds = %bb.q, %.lr.ph
-  %2 = phi i64 [ %i.av, %.lr.ph ], [ %i.ao, %bb.q ]
-  %.088121 = phi i32 [ %i.ar, %.lr.ph ], [ %i.al, %bb.q ] ; 2 uses
-  %i.aq = mul i64 %2, %i.ak                       ; 2 uses
-  %i.ar = add nsw i32 %.088121, -29               ; 2 uses
+.lr.ph:                                           ; preds = %bb.q
+  %i.aq = mul i64 %i.ao, %i.ak                    ; 2 uses
+  %i.ar = add nsw i32 %i.al, -29
   %i.as = sub i64 0, %i.aq
   %i.at = and i64 %i.as, 65528
   %i.au = mul nuw nsw i64 %i.at, %i.ah
   %i.av = lshr i64 %i.au, 16                      ; 2 uses
-  %i.aw = icmp samesign ult i32 %.088121, 29
-  br i1 %i.aw, label %._crit_edge.loopexit, label %.lr.ph
+  %i.aw = icmp ult i8 %i.aj, 29
+  br i1 %i.aw, label %._crit_edge.loopexit, label %.lr.ph.1
 
-._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %i.ax = trunc i64 %i.aq to i16
+.lr.ph.1:                                         ; preds = %.lr.ph
+  %2 = mul i64 %i.av, %i.ak                       ; 2 uses
+  %3 = add nsw i32 %i.al, -58
+  %4 = sub i64 0, %2
+  %5 = and i64 %4, 65528
+  %6 = mul nuw nsw i64 %5, %i.ah
+  %7 = lshr i64 %6, 16                            ; 2 uses
+  %8 = icmp slt i8 %i.w, 89
+  br i1 %8, label %._crit_edge.loopexit, label %.lr.ph.2
+
+.lr.ph.2:                                         ; preds = %.lr.ph.1
+  %9 = mul i64 %7, %i.ak                          ; 2 uses
+  %10 = add nsw i32 %i.al, -87
+  %11 = sub i64 0, %9
+  %12 = and i64 %11, 65528
+  %13 = mul nuw nsw i64 %12, %i.ah
+  %14 = lshr i64 %13, 16                          ; 2 uses
+  %15 = icmp slt i8 %i.w, 118
+  br i1 %15, label %._crit_edge.loopexit, label %.lr.ph.3
+
+.lr.ph.3:                                         ; preds = %.lr.ph.2
+  %16 = mul i64 %14, %i.ak                        ; 2 uses
+  %17 = add nsw i32 %i.al, -116
+  %18 = sub i64 0, %16
+  %19 = and i64 %18, 65528
+  %20 = mul nuw nsw i64 %19, %i.ah
+  %21 = lshr i64 %20, 16
+  br label %._crit_edge.loopexit
+
+._crit_edge.loopexit:                             ; preds = %.lr.ph.3, %.lr.ph.2, %.lr.ph.1, %.lr.ph
+  %.lcssa143 = phi i64 [ %i.aq, %.lr.ph ], [ %2, %.lr.ph.1 ], [ %9, %.lr.ph.2 ], [ %16, %.lr.ph.3 ]
+  %.lcssa142 = phi i32 [ %i.ar, %.lr.ph ], [ %3, %.lr.ph.1 ], [ %10, %.lr.ph.2 ], [ %17, %.lr.ph.3 ]
+  %.lcssa141 = phi i64 [ %i.av, %.lr.ph ], [ %7, %.lr.ph.1 ], [ %14, %.lr.ph.2 ], [ %21, %.lr.ph.3 ]
+  %i.ax = trunc i64 %.lcssa143 to i16
   %i.ay = sub i16 0, %i.ax
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.q
   %.089.lcssa = phi i16 [ %i.ai, %bb.q ], [ %i.ay, %._crit_edge.loopexit ]
-  %.088.lcssa = phi i32 [ %i.al, %bb.q ], [ %i.ar, %._crit_edge.loopexit ] ; 2 uses
-  %.lcssa120 = phi i64 [ %i.ao, %bb.q ], [ %i.av, %._crit_edge.loopexit ]
+  %.088.lcssa = phi i32 [ %i.al, %bb.q ], [ %.lcssa142, %._crit_edge.loopexit ] ; 2 uses
+  %.lcssa120 = phi i64 [ %i.ao, %bb.q ], [ %.lcssa141, %._crit_edge.loopexit ]
   %i.az = trunc nuw i64 %.lcssa120 to i32
   %i.ba = xor i32 %.088.lcssa, -1
   %i.bb = lshr i32 %i.az, %i.ba

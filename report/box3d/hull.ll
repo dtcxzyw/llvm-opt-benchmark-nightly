@@ -205,7 +205,8 @@ bb.ci:                                            ; preds = %bb.cg
   br i1 %.not307, label %.preheader261, label %.lr.ph295.preheader
 
 .lr.ph295.preheader:                              ; preds = %._crit_edge290
-  %wide.trip.count = zext i32 %.0219.lcssa to i64
+  %smax = call i32 @llvm.smax.i32(i32 %.0219.lcssa, i32 1)
+  %wide.trip.count = zext nneg i32 %smax to i64
   br label %.lr.ph295
 
 .lr.ph289:                                        ; preds = %._crit_edge, %bb.cm
@@ -463,7 +464,8 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not308, label %.preheader, label %.lr.ph303.preheader
 
 .lr.ph303.preheader:                              ; preds = %._crit_edge300
-  %wide.trip.count349 = zext i32 %.0217.lcssa to i64
+  %smax349 = call i32 @llvm.smax.i32(i32 %.0217.lcssa, i32 1)
+  %wide.trip.count349 = zext nneg i32 %smax349 to i64
   br label %.lr.ph303
 
 .lr.ph299:                                        ; preds = %.lr.ph299.preheader, %.lr.ph299

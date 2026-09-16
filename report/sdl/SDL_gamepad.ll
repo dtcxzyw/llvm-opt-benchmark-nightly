@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %.not7792, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.c
-  %.053.lcssa = phi i32 [ 0, %bb.c ], [ %spec.select, %.lr.ph ] ; 6 uses
+  %.053.lcssa = phi i32 [ 0, %bb.c ], [ %spec.select, %.lr.ph ] ; 7 uses
   %i.a = add nuw nsw i32 %.053.lcssa, 1
   %i.b = zext nneg i32 %i.a to i64                ; 2 uses
   %i.c = tail call noalias ptr @SDL_calloc_REAL(i64 noundef %i.b, i64 noundef 8) #10 ; 5 uses
@@ -275,7 +275,7 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph100
   br i1 %.not81, label %bb.i, label %bb.g
 
 bb.g:                                             ; preds = %._crit_edge101
-  %i.v = zext i32 %.053.lcssa to i64              ; 3 uses
+  %i.v = zext nneg i32 %.053.lcssa to i64         ; 2 uses
   %.not113 = icmp eq i32 %.053.lcssa, 0
   br i1 %.not113, label %._crit_edge108, label %.lr.ph107.preheader
 
@@ -284,6 +284,8 @@ bb.g:                                             ; preds = %._crit_edge101
   %i.x = shl nuw nsw i64 %i.v, 3
   %.neg = xor i64 %i.x, -1
   %i.y = add i64 %.063.lcssa, %.neg
+  %smax = tail call i32 @llvm.smax.i32(i32 %.053.lcssa, i32 1)
+  %wide.trip.count = zext nneg i32 %smax to i64
   br label %.lr.ph107
 
 ._crit_edge108:                                   ; preds = %.lr.ph107, %bb.g
@@ -304,7 +306,7 @@ bb.g:                                             ; preds = %._crit_edge101
   %i.af = sub i64 %.5103, %i.ae
   %i.ag = getelementptr inbounds nuw i8, ptr %.055104, i64 %i.ae
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.v
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge108, label %.lr.ph107, !llvm.loop !26
 
 bb.h:                                             ; preds = %._crit_edge108
@@ -321,7 +323,8 @@ bb.i:                                             ; preds = %.thread85, %._crit_
   br i1 %.not114, label %._crit_edge112, label %.lr.ph111.preheader
 
 .lr.ph111.preheader:                              ; preds = %bb.i
-  %wide.trip.count119 = zext i32 %.053.lcssa to i64
+  %smax119 = tail call i32 @llvm.smax.i32(i32 %.053.lcssa, i32 1)
+  %wide.trip.count119 = zext nneg i32 %smax119 to i64
   br label %.lr.ph111
 
 ._crit_edge112:                                   ; preds = %.lr.ph111, %bb.i
@@ -722,6 +725,9 @@ declare i32 @llvm.umin.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #5

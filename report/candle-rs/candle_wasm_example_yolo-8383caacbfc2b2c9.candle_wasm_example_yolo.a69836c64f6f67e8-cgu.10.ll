@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.u
 
 bb.h:                                             ; preds = %bb.f
-  %i.o = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.o = sub nuw nsw i64 %1, %.sroa.09.0          ; 9 uses
   %i.p = getelementptr inbounds nuw [48 x i8], ptr %0, i64 %.sroa.09.0 ; 7 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !382)
   %.not.i31 = icmp ult i64 %i.o, %.sroa.01.0
@@ -236,14 +236,22 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCseiMiKruFR5A_24candle_wasm_example_yol
   br i1 %.mux.i40, label %.preheader, label %.preheader51
 
 .preheader51:                                     ; preds = %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4Bbox7sort_byNCNvBA_23non_maximum_suppression0E0BC_.exit41
-  br i1 %.not83, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4BboxNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvB14_23non_maximum_suppression0E0EB16_.exit.i.thread, label %.lr.ph
+  br i1 %.not83, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4BboxNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvB14_23non_maximum_suppression0E0EB16_.exit.i.thread, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader51
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.o, i64 3) ; 2 uses
+  br label %.lr.ph
 
 .preheader:                                       ; preds = %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4Bbox7sort_byNCNvBA_23non_maximum_suppression0E0BC_.exit41
-  br i1 %.not83, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4BboxNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvB14_23non_maximum_suppression0E0EB16_.exit.i.thread120, label %.lr.ph71
+  br i1 %.not83, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4BboxNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvB14_23non_maximum_suppression0E0EB16_.exit.i.thread120, label %.lr.ph71.preheader
 
-.lr.ph:                                           ; preds = %.preheader51, %bb.n
-  %.val6.i = phi float [ %.val5.i, %bb.n ], [ %.val7.i, %.preheader51 ] ; 2 uses
-  %.sroa.01.0.i.i68 = phi i64 [ %i.v, %bb.n ], [ 2, %.preheader51 ] ; 3 uses
+.lr.ph71.preheader:                               ; preds = %.preheader
+  %smax96 = tail call i64 @llvm.smax.i64(i64 %i.o, i64 3) ; 2 uses
+  br label %.lr.ph71
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.n
+  %.val6.i = phi float [ %.val5.i, %bb.n ], [ %.val7.i, %.lr.ph.preheader ] ; 2 uses
+  %.sroa.01.0.i.i68 = phi i64 [ %i.v, %bb.n ], [ 2, %.lr.ph.preheader ] ; 3 uses
   %i.t = getelementptr inbounds nuw [48 x i8], ptr %i.p, i64 %.sroa.01.0.i.i68
   %i.u = getelementptr i8, ptr %i.t, i64 40
   %.val5.i = load float, ptr %i.u, align 8, !alias.scope !382, !noalias !383, !noundef !4 ; 3 uses
@@ -259,13 +267,13 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCseiMiKruFR5A_24candle_wasm_example_yol
   br i1 %.mux.i37, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4BboxNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvB14_23non_maximum_suppression0E0EB16_.exit.i, label %bb.n
 
 bb.n:                                             ; preds = %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4Bbox7sort_byNCNvBA_23non_maximum_suppression0E0BC_.exit38
-  %i.v = add nuw i64 %.sroa.01.0.i.i68, 1         ; 2 uses
-  %exitcond.not = icmp eq i64 %i.v, %i.o
+  %i.v = add nuw nsw i64 %.sroa.01.0.i.i68, 1     ; 2 uses
+  %exitcond.not = icmp eq i64 %i.v, %smax
   br i1 %exitcond.not, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4BboxNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvB14_23non_maximum_suppression0E0EB16_.exit.i, label %.lr.ph
 
-.lr.ph71:                                         ; preds = %.preheader, %bb.p
-  %.val4.i = phi float [ %.val.i, %bb.p ], [ %.val7.i, %.preheader ] ; 2 uses
-  %.sroa.01.1.i.i70 = phi i64 [ %i.y, %bb.p ], [ 2, %.preheader ] ; 3 uses
+.lr.ph71:                                         ; preds = %.lr.ph71.preheader, %bb.p
+  %.val4.i = phi float [ %.val.i, %bb.p ], [ %.val7.i, %.lr.ph71.preheader ] ; 2 uses
+  %.sroa.01.1.i.i70 = phi i64 [ %i.y, %bb.p ], [ 2, %.lr.ph71.preheader ] ; 3 uses
   %i.w = getelementptr inbounds nuw [48 x i8], ptr %i.p, i64 %.sroa.01.1.i.i70
   %i.x = getelementptr i8, ptr %i.w, i64 40
   %.val.i = load float, ptr %i.x, align 8, !alias.scope !382, !noalias !383, !noundef !4 ; 3 uses
@@ -281,12 +289,12 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCseiMiKruFR5A_24candle_wasm_example_yol
   br i1 %.mux.i, label %bb.p, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4BboxNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvB14_23non_maximum_suppression0E0EB16_.exit.i
 
 bb.p:                                             ; preds = %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4Bbox7sort_byNCNvBA_23non_maximum_suppression0E0BC_.exit
-  %i.y = add nuw i64 %.sroa.01.1.i.i70, 1         ; 2 uses
-  %exitcond96.not = icmp eq i64 %i.y, %i.o
+  %i.y = add nuw nsw i64 %.sroa.01.1.i.i70, 1     ; 2 uses
+  %exitcond96.not = icmp eq i64 %i.y, %smax96
   br i1 %exitcond96.not, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4BboxNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvB14_23non_maximum_suppression0E0EB16_.exit.i, label %.lr.ph71
 
 _RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4BboxNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvB14_23non_maximum_suppression0E0EB16_.exit.i: ; preds = %bb.n, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4Bbox7sort_byNCNvBA_23non_maximum_suppression0E0BC_.exit38, %bb.p, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4Bbox7sort_byNCNvBA_23non_maximum_suppression0E0BC_.exit
-  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i70, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4Bbox7sort_byNCNvBA_23non_maximum_suppression0E0BC_.exit ], [ %i.o, %bb.p ], [ %.sroa.01.0.i.i68, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4Bbox7sort_byNCNvBA_23non_maximum_suppression0E0BC_.exit38 ], [ %i.o, %bb.n ] ; 6 uses
+  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i70, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4Bbox7sort_byNCNvBA_23non_maximum_suppression0E0BC_.exit ], [ %smax96, %bb.p ], [ %.sroa.01.0.i.i68, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4Bbox7sort_byNCNvBA_23non_maximum_suppression0E0BC_.exit38 ], [ %smax, %bb.n ] ; 6 uses
   %i.z = icmp samesign ule i64 %.sroa.0.0.i.i, %i.o
   tail call void @llvm.assume(i1 %i.z)
   %.not3.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
@@ -688,6 +696,9 @@ declare hidden noundef zeroext i1 @_RNvXs1g_NtCsf3Ta7LF998c_4core3fmtRhNtB6_5Deb
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #13
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { cold noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.u
 
 bb.h:                                             ; preds = %bb.f
-  %i.o = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
+  %i.o = sub nuw nsw i64 %1, %.sroa.09.0          ; 9 uses
   %i.p = getelementptr inbounds nuw [72 x i8], ptr %0, i64 %.sroa.09.0 ; 7 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !367)
   %.not.i31 = icmp ult i64 %i.o, %.sroa.01.0
@@ -236,14 +236,22 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_qua
   br i1 %.mux.i41, label %.preheader52, label %.preheader
 
 .preheader52:                                     ; preds = %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntry7sort_byNCNvMBA_NtBA_8Profiler11get_entriess_0E0BC_.exit42
-  br i1 %.not84, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntryNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvMB14_NtB14_8Profiler11get_entriess_0E0EB16_.exit.i.thread, label %.lr.ph
+  br i1 %.not84, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntryNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvMB14_NtB14_8Profiler11get_entriess_0E0EB16_.exit.i.thread, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader52
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.o, i64 3) ; 2 uses
+  br label %.lr.ph
 
 .preheader:                                       ; preds = %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntry7sort_byNCNvMBA_NtBA_8Profiler11get_entriess_0E0BC_.exit42
-  br i1 %.not84, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntryNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvMB14_NtB14_8Profiler11get_entriess_0E0EB16_.exit.i.thread122, label %.lr.ph72
+  br i1 %.not84, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntryNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvMB14_NtB14_8Profiler11get_entriess_0E0EB16_.exit.i.thread122, label %.lr.ph72.preheader
 
-.lr.ph:                                           ; preds = %.preheader52, %bb.n
-  %.val6.i = phi double [ %.val5.i, %bb.n ], [ %.val7.i, %.preheader52 ] ; 2 uses
-  %.sroa.01.0.i.i69 = phi i64 [ %i.v, %bb.n ], [ 2, %.preheader52 ] ; 3 uses
+.lr.ph72.preheader:                               ; preds = %.preheader
+  %smax97 = tail call i64 @llvm.smax.i64(i64 %i.o, i64 3) ; 2 uses
+  br label %.lr.ph72
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.n
+  %.val6.i = phi double [ %.val5.i, %bb.n ], [ %.val7.i, %.lr.ph.preheader ] ; 2 uses
+  %.sroa.01.0.i.i69 = phi i64 [ %i.v, %bb.n ], [ 2, %.lr.ph.preheader ] ; 3 uses
   %i.t = getelementptr inbounds nuw [72 x i8], ptr %i.p, i64 %.sroa.01.0.i.i69
   %i.u = getelementptr i8, ptr %i.t, i64 32
   %.val5.i = load double, ptr %i.u, align 8, !alias.scope !367, !noalias !368, !noundef !4 ; 3 uses
@@ -259,13 +267,13 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_qua
   br i1 %.mux.i38, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntryNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvMB14_NtB14_8Profiler11get_entriess_0E0EB16_.exit.i, label %bb.n
 
 bb.n:                                             ; preds = %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntry7sort_byNCNvMBA_NtBA_8Profiler11get_entriess_0E0BC_.exit39
-  %i.v = add nuw i64 %.sroa.01.0.i.i69, 1         ; 2 uses
-  %exitcond.not = icmp eq i64 %i.v, %i.o
+  %i.v = add nuw nsw i64 %.sroa.01.0.i.i69, 1     ; 2 uses
+  %exitcond.not = icmp eq i64 %i.v, %smax
   br i1 %exitcond.not, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntryNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvMB14_NtB14_8Profiler11get_entriess_0E0EB16_.exit.i, label %.lr.ph
 
-.lr.ph72:                                         ; preds = %.preheader, %bb.p
-  %.val4.i = phi double [ %.val.i, %bb.p ], [ %.val7.i, %.preheader ] ; 2 uses
-  %.sroa.01.1.i.i71 = phi i64 [ %i.y, %bb.p ], [ 2, %.preheader ] ; 3 uses
+.lr.ph72:                                         ; preds = %.lr.ph72.preheader, %bb.p
+  %.val4.i = phi double [ %.val.i, %bb.p ], [ %.val7.i, %.lr.ph72.preheader ] ; 2 uses
+  %.sroa.01.1.i.i71 = phi i64 [ %i.y, %bb.p ], [ 2, %.lr.ph72.preheader ] ; 3 uses
   %i.w = getelementptr inbounds nuw [72 x i8], ptr %i.p, i64 %.sroa.01.1.i.i71
   %i.x = getelementptr i8, ptr %i.w, i64 32
   %.val.i = load double, ptr %i.x, align 8, !alias.scope !367, !noalias !368, !noundef !4 ; 3 uses
@@ -281,12 +289,12 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_qua
   br i1 %.mux.i, label %bb.p, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntryNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvMB14_NtB14_8Profiler11get_entriess_0E0EB16_.exit.i
 
 bb.p:                                             ; preds = %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntry7sort_byNCNvMBA_NtBA_8Profiler11get_entriess_0E0BC_.exit
-  %i.y = add nuw i64 %.sroa.01.1.i.i71, 1         ; 2 uses
-  %exitcond97.not = icmp eq i64 %i.y, %i.o
+  %i.y = add nuw nsw i64 %.sroa.01.1.i.i71, 1     ; 2 uses
+  %exitcond97.not = icmp eq i64 %i.y, %smax97
   br i1 %exitcond97.not, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntryNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvMB14_NtB14_8Profiler11get_entriess_0E0EB16_.exit.i, label %.lr.ph72
 
 _RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntryNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCNvMB14_NtB14_8Profiler11get_entriess_0E0EB16_.exit.i: ; preds = %bb.p, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntry7sort_byNCNvMBA_NtBA_8Profiler11get_entriess_0E0BC_.exit, %bb.n, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntry7sort_byNCNvMBA_NtBA_8Profiler11get_entriess_0E0BC_.exit39
-  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.0.i.i69, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntry7sort_byNCNvMBA_NtBA_8Profiler11get_entriess_0E0BC_.exit39 ], [ %i.o, %bb.n ], [ %.sroa.01.1.i.i71, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntry7sort_byNCNvMBA_NtBA_8Profiler11get_entriess_0E0BC_.exit ], [ %i.o, %bb.p ] ; 5 uses
+  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.0.i.i69, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntry7sort_byNCNvMBA_NtBA_8Profiler11get_entriess_0E0BC_.exit39 ], [ %smax, %bb.n ], [ %.sroa.01.1.i.i71, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntry7sort_byNCNvMBA_NtBA_8Profiler11get_entriess_0E0BC_.exit ], [ %smax97, %bb.p ] ; 5 uses
   %i.z = icmp samesign ule i64 %.sroa.0.0.i.i, %i.o
   tail call void @llvm.assume(i1 %i.z)
   %.not3.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
@@ -687,6 +695,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #21
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.cttz.i64(i64, i1 immarg) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umin.i8(i8, i8) #11

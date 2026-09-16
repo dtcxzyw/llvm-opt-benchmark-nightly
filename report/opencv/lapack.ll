@@ -205,6 +205,7 @@ bb.g:                                             ; preds = %bb.e, %._crit_edge4
 
 .lr.ph456:                                        ; preds = %._crit_edge406
   %i.db = icmp samesign ugt i32 %5, 2
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.ar, i32 1)
   %wide.trip.count521 = zext nneg i32 %5 to i64
   %i.dc = shl nuw nsw i64 %wide.trip.count492, 2  ; 2 uses
   %scevgep = getelementptr i8, ptr %3, i64 %i.dc
@@ -607,8 +608,8 @@ bb.x:                                             ; preds = %bb.w
   br label %bb.y
 
 bb.y:                                             ; preds = %._crit_edge452.1, %bb.w
-  %i.pv = add nuw i32 %.0328455, 1                ; 2 uses
-  %exitcond533.not = icmp eq i32 %i.pv, %i.ar
+  %i.pv = add nuw nsw i32 %.0328455, 1            ; 2 uses
+  %exitcond533.not = icmp eq i32 %i.pv, %smax
   br i1 %exitcond533.not, label %.loopexit387, label %bb.h, !llvm.loop !282
 
 .loopexit387:                                     ; preds = %bb.y, %._crit_edge422
@@ -1011,6 +1012,7 @@ bb.g:                                             ; preds = %bb.e, %._crit_edge4
 
 .lr.ph456:                                        ; preds = %._crit_edge406
   %i.db = icmp samesign ugt i32 %5, 2
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.ar, i32 1)
   %wide.trip.count521 = zext nneg i32 %5 to i64
   %i.dc = shl nuw nsw i64 %wide.trip.count492, 3  ; 2 uses
   %scevgep = getelementptr i8, ptr %3, i64 %i.dc
@@ -1413,8 +1415,8 @@ bb.x:                                             ; preds = %bb.w
   br label %bb.y
 
 bb.y:                                             ; preds = %._crit_edge452.1, %bb.w
-  %i.pv = add nuw i32 %.0328455, 1                ; 2 uses
-  %exitcond533.not = icmp eq i32 %i.pv, %i.ar
+  %i.pv = add nuw nsw i32 %.0328455, 1            ; 2 uses
+  %exitcond533.not = icmp eq i32 %i.pv, %smax
   br i1 %exitcond533.not, label %.loopexit387, label %bb.h, !llvm.loop !317
 
 .loopexit387:                                     ; preds = %bb.y, %._crit_edge422

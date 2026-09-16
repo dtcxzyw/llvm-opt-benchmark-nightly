@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.r, !dbg !33633
 
 bb.h:                                             ; preds = %bb.f
-  %i.n = sub nuw nsw i64 %1, %.sroa.09.0, !dbg !33634 ; 11 uses
+  %i.n = sub nuw nsw i64 %1, %.sroa.09.0, !dbg !33634 ; 9 uses
   %i.o = getelementptr inbounds nuw [56 x i8], ptr %0, i64 %.sroa.09.0, !dbg !33635 ; 7 uses
   %.not.i33 = icmp ult i64 %i.n, %.sroa.01.0, !dbg !33636
   br i1 %.not.i33, label %bb.i, label %bb.j, !dbg !33636
@@ -226,41 +226,49 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.s, label %.preheader49, label %.preheader, !dbg !33642
 
 .preheader49:                                     ; preds = %bb.k
-  br i1 %.not71, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTANtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read6parser9LineStatsj2_jENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_11sort_by_keyjNCNCNvB16_26count_rows_from_reader_par0s0_0E0EB1c_.exit.i.thread, label %.lr.ph, !dbg !33643
+  br i1 %.not71, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTANtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read6parser9LineStatsj2_jENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_11sort_by_keyjNCNCNvB16_26count_rows_from_reader_par0s0_0E0EB1c_.exit.i.thread, label %.lr.ph.preheader, !dbg !33643
+
+.lr.ph.preheader:                                 ; preds = %.preheader49
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.n, i64 3), !dbg !33644 ; 2 uses
+  br label %.lr.ph, !dbg !33644
 
 .preheader:                                       ; preds = %bb.k
-  br i1 %.not71, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTANtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read6parser9LineStatsj2_jENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_11sort_by_keyjNCNCNvB16_26count_rows_from_reader_par0s0_0E0EB1c_.exit.i.thread98, label %.lr.ph58, !dbg !33644
+  br i1 %.not71, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTANtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read6parser9LineStatsj2_jENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_11sort_by_keyjNCNCNvB16_26count_rows_from_reader_par0s0_0E0EB1c_.exit.i.thread98, label %.lr.ph58.preheader, !dbg !33645
 
-.lr.ph:                                           ; preds = %.preheader49, %bb.l
-  %.val9.i = phi i64 [ %.val8.i, %bb.l ], [ %.val10.i, %.preheader49 ], !dbg !33645
-  %.sroa.01.0.i.i54 = phi i64 [ %i.w, %bb.l ], [ 2, %.preheader49 ] ; 3 uses
-  %i.t = getelementptr inbounds nuw [56 x i8], ptr %i.o, i64 %.sroa.01.0.i.i54, !dbg !33646
-  %i.u = getelementptr i8, ptr %i.t, i64 48, !dbg !33645
-  %.val8.i = load i64, ptr %i.u, align 8, !dbg !33645, !alias.scope !33576, !noalias !33577, !noundef !1513 ; 2 uses
-  %i.v = icmp ult i64 %.val8.i, %.val9.i, !dbg !33647
-  br i1 %i.v, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTANtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read6parser9LineStatsj2_jENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_11sort_by_keyjNCNCNvB16_26count_rows_from_reader_par0s0_0E0EB1c_.exit.i, label %bb.l, !dbg !33645
+.lr.ph58.preheader:                               ; preds = %.preheader
+  %smax78 = tail call i64 @llvm.smax.i64(i64 %i.n, i64 3), !dbg !33646 ; 2 uses
+  br label %.lr.ph58, !dbg !33646
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.l
+  %.val9.i = phi i64 [ %.val8.i, %bb.l ], [ %.val10.i, %.lr.ph.preheader ], !dbg !33644
+  %.sroa.01.0.i.i54 = phi i64 [ %i.w, %bb.l ], [ 2, %.lr.ph.preheader ] ; 3 uses
+  %i.t = getelementptr inbounds nuw [56 x i8], ptr %i.o, i64 %.sroa.01.0.i.i54, !dbg !33647
+  %i.u = getelementptr i8, ptr %i.t, i64 48, !dbg !33644
+  %.val8.i = load i64, ptr %i.u, align 8, !dbg !33644, !alias.scope !33576, !noalias !33577, !noundef !1513 ; 2 uses
+  %i.v = icmp ult i64 %.val8.i, %.val9.i, !dbg !33648
+  br i1 %i.v, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTANtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read6parser9LineStatsj2_jENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_11sort_by_keyjNCNCNvB16_26count_rows_from_reader_par0s0_0E0EB1c_.exit.i, label %bb.l, !dbg !33644
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.w = add nuw i64 %.sroa.01.0.i.i54, 1, !dbg !33648 ; 2 uses
-  %exitcond.not = icmp eq i64 %i.w, %i.n, !dbg !33643
+  %i.w = add nuw nsw i64 %.sroa.01.0.i.i54, 1, !dbg !33649 ; 2 uses
+  %exitcond.not = icmp eq i64 %i.w, %smax, !dbg !33643
   br i1 %exitcond.not, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTANtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read6parser9LineStatsj2_jENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_11sort_by_keyjNCNCNvB16_26count_rows_from_reader_par0s0_0E0EB1c_.exit.i, label %.lr.ph, !dbg !33643
 
-.lr.ph58:                                         ; preds = %.preheader, %bb.m
-  %.val7.i = phi i64 [ %.val.i, %bb.m ], [ %.val10.i, %.preheader ], !dbg !33649
-  %.sroa.01.1.i.i57 = phi i64 [ %i.aa, %bb.m ], [ 2, %.preheader ] ; 3 uses
+.lr.ph58:                                         ; preds = %.lr.ph58.preheader, %bb.m
+  %.val7.i = phi i64 [ %.val.i, %bb.m ], [ %.val10.i, %.lr.ph58.preheader ], !dbg !33646
+  %.sroa.01.1.i.i57 = phi i64 [ %i.aa, %bb.m ], [ 2, %.lr.ph58.preheader ] ; 3 uses
   %i.x = getelementptr inbounds nuw [56 x i8], ptr %i.o, i64 %.sroa.01.1.i.i57, !dbg !33650
-  %i.y = getelementptr i8, ptr %i.x, i64 48, !dbg !33649
-  %.val.i = load i64, ptr %i.y, align 8, !dbg !33649, !alias.scope !33576, !noalias !33577, !noundef !1513 ; 2 uses
+  %i.y = getelementptr i8, ptr %i.x, i64 48, !dbg !33646
+  %.val.i = load i64, ptr %i.y, align 8, !dbg !33646, !alias.scope !33576, !noalias !33577, !noundef !1513 ; 2 uses
   %i.z = icmp ult i64 %.val.i, %.val7.i, !dbg !33651
-  br i1 %i.z, label %bb.m, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTANtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read6parser9LineStatsj2_jENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_11sort_by_keyjNCNCNvB16_26count_rows_from_reader_par0s0_0E0EB1c_.exit.i, !dbg !33649
+  br i1 %i.z, label %bb.m, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTANtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read6parser9LineStatsj2_jENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_11sort_by_keyjNCNCNvB16_26count_rows_from_reader_par0s0_0E0EB1c_.exit.i, !dbg !33646
 
 bb.m:                                             ; preds = %.lr.ph58
-  %i.aa = add nuw i64 %.sroa.01.1.i.i57, 1, !dbg !33652 ; 2 uses
-  %exitcond78.not = icmp eq i64 %i.aa, %i.n, !dbg !33644
-  br i1 %exitcond78.not, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTANtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read6parser9LineStatsj2_jENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_11sort_by_keyjNCNCNvB16_26count_rows_from_reader_par0s0_0E0EB1c_.exit.i, label %.lr.ph58, !dbg !33644
+  %i.aa = add nuw nsw i64 %.sroa.01.1.i.i57, 1, !dbg !33652 ; 2 uses
+  %exitcond78.not = icmp eq i64 %i.aa, %smax78, !dbg !33645
+  br i1 %exitcond78.not, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTANtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read6parser9LineStatsj2_jENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_11sort_by_keyjNCNCNvB16_26count_rows_from_reader_par0s0_0E0EB1c_.exit.i, label %.lr.ph58, !dbg !33645
 
 _RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTANtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read6parser9LineStatsj2_jENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_11sort_by_keyjNCNCNvB16_26count_rows_from_reader_par0s0_0E0EB1c_.exit.i: ; preds = %bb.m, %.lr.ph58, %bb.l, %.lr.ph
-  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.0.i.i54, %.lr.ph ], [ %i.n, %bb.l ], [ %.sroa.01.1.i.i57, %.lr.ph58 ], [ %i.n, %bb.m ], !dbg !33653 ; 5 uses
+  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.0.i.i54, %.lr.ph ], [ %smax, %bb.l ], [ %.sroa.01.1.i.i57, %.lr.ph58 ], [ %smax78, %bb.m ], !dbg !33653 ; 5 uses
   %i.ab = icmp samesign ule i64 %.sroa.0.0.i.i, %i.n, !dbg !33654
   tail call void @llvm.assume(i1 %i.ab), !dbg !33655
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0, !dbg !33656
@@ -661,6 +669,9 @@ declare i32 @llvm.umin.i32(i32, i32) #26
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #26
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #26
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umin.i8(i8, i8) #26
@@ -1065,12 +1076,12 @@ begin_hunk_2_@llvm.umin.i8
 !33641 = !DILocation(line: 0, scope: !33384, inlinedAt: !33376)
 !33642 = !DILocation(line: 35, column: 12, scope: !33384, inlinedAt: !33376)
 !33643 = !DILocation(line: 40, column: 19, scope: !33384, inlinedAt: !33376)
-!33644 = !DILocation(line: 36, column: 19, scope: !33384, inlinedAt: !33376)
-!33645 = !DILocation(line: 40, column: 37, scope: !33384, inlinedAt: !33376)
-!33646 = !DILocation(line: 253, column: 13, scope: !33385, inlinedAt: !33388)
-!33647 = !DILocation(line: 1917, column: 50, scope: !921, inlinedAt: !33390)
-!33648 = !DILocation(line: 42, column: 17, scope: !33384, inlinedAt: !33376)
-!33649 = !DILocation(line: 36, column: 36, scope: !33384, inlinedAt: !33376)
+!33644 = !DILocation(line: 40, column: 37, scope: !33384, inlinedAt: !33376)
+!33645 = !DILocation(line: 36, column: 19, scope: !33384, inlinedAt: !33376)
+!33646 = !DILocation(line: 36, column: 36, scope: !33384, inlinedAt: !33376)
+!33647 = !DILocation(line: 253, column: 13, scope: !33385, inlinedAt: !33388)
+!33648 = !DILocation(line: 1917, column: 50, scope: !921, inlinedAt: !33390)
+!33649 = !DILocation(line: 42, column: 17, scope: !33384, inlinedAt: !33376)
 !33650 = !DILocation(line: 253, column: 13, scope: !33385, inlinedAt: !33392)
 !33651 = !DILocation(line: 1917, column: 50, scope: !921, inlinedAt: !33394)
 !33652 = !DILocation(line: 37, column: 17, scope: !33384, inlinedAt: !33376)

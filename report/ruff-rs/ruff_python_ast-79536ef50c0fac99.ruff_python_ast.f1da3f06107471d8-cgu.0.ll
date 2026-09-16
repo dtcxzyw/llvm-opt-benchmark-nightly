@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.x
 
 bb.h:                                             ; preds = %bb.f
-  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 13 uses
+  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 11 uses
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.09.0 ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4543)
   %.not.i33 = icmp ult i64 %i.n, %.sroa.01.0
@@ -245,14 +245,22 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSINtNtCs4NRVxsYgnAr_4core6option6OptionRNtNtC
   br i1 %i.r, label %.preheader, label %.preheader64
 
 .preheader64:                                     ; preds = %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSINtNtCs4NRVxsYgnAr_4core6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterE11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1c_NtB1c_10Parameters17iter_source_order0E0B1e_.exit54
-  br i1 %.not84, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runINtNtB8_6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1r_NtB1r_10Parameters17iter_source_order0E0EB1t_.exit.i.thread, label %.lr.ph
+  br i1 %.not84, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runINtNtB8_6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1r_NtB1r_10Parameters17iter_source_order0E0EB1t_.exit.i.thread, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader64
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.n, i64 3) ; 2 uses
+  br label %.lr.ph
 
 .preheader:                                       ; preds = %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSINtNtCs4NRVxsYgnAr_4core6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterE11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1c_NtB1c_10Parameters17iter_source_order0E0B1e_.exit54
-  br i1 %.not84, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runINtNtB8_6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1r_NtB1r_10Parameters17iter_source_order0E0EB1t_.exit.i.thread113, label %.lr.ph72
+  br i1 %.not84, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runINtNtB8_6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1r_NtB1r_10Parameters17iter_source_order0E0EB1t_.exit.i.thread113, label %.lr.ph72.preheader
 
-.lr.ph:                                           ; preds = %.preheader64, %bb.p
-  %.val9.i = phi ptr [ %.val8.i, %bb.p ], [ %.val10.i, %.preheader64 ] ; 2 uses
-  %.sroa.01.0.i.i69 = phi i64 [ %i.w, %bb.p ], [ 2, %.preheader64 ] ; 4 uses
+.lr.ph72.preheader:                               ; preds = %.preheader
+  %smax91 = tail call i64 @llvm.smax.i64(i64 %i.n, i64 3) ; 2 uses
+  br label %.lr.ph72
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.p
+  %.val9.i = phi ptr [ %.val8.i, %bb.p ], [ %.val10.i, %.lr.ph.preheader ] ; 2 uses
+  %.sroa.01.0.i.i69 = phi i64 [ %i.w, %bb.p ], [ 2, %.lr.ph.preheader ] ; 4 uses
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.sroa.01.0.i.i69
   %i.t = add nsw i64 %.sroa.01.0.i.i69, -1
   %i.u = icmp ult i64 %i.t, %i.n
@@ -280,13 +288,13 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSINtNtCs4NRVxsYgnAr_4core6option6OptionRNtNtC
   br i1 %i.v, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runINtNtB8_6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1r_NtB1r_10Parameters17iter_source_order0E0EB1t_.exit.i, label %bb.p
 
 bb.p:                                             ; preds = %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSINtNtCs4NRVxsYgnAr_4core6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterE11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1c_NtB1c_10Parameters17iter_source_order0E0B1e_.exit46
-  %i.w = add nuw i64 %.sroa.01.0.i.i69, 1         ; 2 uses
-  %exitcond.not = icmp eq i64 %i.w, %i.n
+  %i.w = add nuw nsw i64 %.sroa.01.0.i.i69, 1     ; 2 uses
+  %exitcond.not = icmp eq i64 %i.w, %smax
   br i1 %exitcond.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runINtNtB8_6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1r_NtB1r_10Parameters17iter_source_order0E0EB1t_.exit.i, label %.lr.ph
 
-.lr.ph72:                                         ; preds = %.preheader, %bb.s
-  %.val7.i = phi ptr [ %.val.i, %bb.s ], [ %.val10.i, %.preheader ] ; 2 uses
-  %.sroa.01.1.i.i71 = phi i64 [ %i.ab, %bb.s ], [ 2, %.preheader ] ; 4 uses
+.lr.ph72:                                         ; preds = %.lr.ph72.preheader, %bb.s
+  %.val7.i = phi ptr [ %.val.i, %bb.s ], [ %.val10.i, %.lr.ph72.preheader ] ; 2 uses
+  %.sroa.01.1.i.i71 = phi i64 [ %i.ab, %bb.s ], [ 2, %.lr.ph72.preheader ] ; 4 uses
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.sroa.01.1.i.i71
   %i.y = add nsw i64 %.sroa.01.1.i.i71, -1
   %i.z = icmp ult i64 %i.y, %i.n
@@ -314,12 +322,12 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSINtNtCs4NRVxsYgnAr_4core6option6OptionRNtNtC
   br i1 %i.aa, label %bb.s, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runINtNtB8_6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1r_NtB1r_10Parameters17iter_source_order0E0EB1t_.exit.i
 
 bb.s:                                             ; preds = %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSINtNtCs4NRVxsYgnAr_4core6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterE11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1c_NtB1c_10Parameters17iter_source_order0E0B1e_.exit
-  %i.ab = add nuw i64 %.sroa.01.1.i.i71, 1        ; 2 uses
-  %exitcond92.not = icmp eq i64 %i.ab, %i.n
+  %i.ab = add nuw nsw i64 %.sroa.01.1.i.i71, 1    ; 2 uses
+  %exitcond92.not = icmp eq i64 %i.ab, %smax91
   br i1 %exitcond92.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runINtNtB8_6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1r_NtB1r_10Parameters17iter_source_order0E0EB1t_.exit.i, label %.lr.ph72
 
 _RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runINtNtB8_6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1r_NtB1r_10Parameters17iter_source_order0E0EB1t_.exit.i: ; preds = %bb.p, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSINtNtCs4NRVxsYgnAr_4core6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterE11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1c_NtB1c_10Parameters17iter_source_order0E0B1e_.exit46, %bb.s, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSINtNtCs4NRVxsYgnAr_4core6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterE11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1c_NtB1c_10Parameters17iter_source_order0E0B1e_.exit
-  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i71, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSINtNtCs4NRVxsYgnAr_4core6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterE11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1c_NtB1c_10Parameters17iter_source_order0E0B1e_.exit ], [ %i.n, %bb.s ], [ %.sroa.01.0.i.i69, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSINtNtCs4NRVxsYgnAr_4core6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterE11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1c_NtB1c_10Parameters17iter_source_order0E0B1e_.exit46 ], [ %i.n, %bb.p ] ; 6 uses
+  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i71, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSINtNtCs4NRVxsYgnAr_4core6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterE11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1c_NtB1c_10Parameters17iter_source_order0E0B1e_.exit ], [ %smax91, %bb.s ], [ %.sroa.01.0.i.i69, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSINtNtCs4NRVxsYgnAr_4core6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterE11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1c_NtB1c_10Parameters17iter_source_order0E0B1e_.exit46 ], [ %smax, %bb.p ] ; 6 uses
   %i.ac = icmp samesign ule i64 %.sroa.0.0.i.i, %i.n
   tail call void @llvm.assume(i1 %i.ac)
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
@@ -720,6 +728,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #58
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #43
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #43
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umin.i8(i8, i8) #43

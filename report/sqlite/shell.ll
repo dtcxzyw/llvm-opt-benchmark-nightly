@@ -206,35 +206,44 @@ bb.f:                                             ; preds = %bb.e
 
 .critedge.i:                                      ; preds = %bb.f, %.critedge.split.loop.exit69.i
   %.0.lcssa.i = phi i32 [ %i.p, %.critedge.split.loop.exit69.i ], [ %i.j, %bb.f ]
-  %i.q = add nuw nsw i32 %.0.lcssa.i, %i.f        ; 6 uses
+  %i.q = add nuw nsw i32 %.0.lcssa.i, %i.f        ; 7 uses
   %.not48.i = icmp sgt i32 %i.j, %i.q
   br i1 %.not48.i, label %bb.g, label %decimal_round.exit
 
 bb.g:                                             ; preds = %.critedge.i
-  %i.r = zext i32 %i.q to i64                     ; 3 uses
+  %i.r = zext nneg i32 %i.q to i64                ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.r
   %i.t = load i8, ptr %i.s, align 1, !tbaa !52
   %i.u = icmp sgt i8 %i.t, 4
-  br i1 %i.u, label %.preheader.i, label %.critedge4.i
+  br i1 %i.u, label %.preheader.preheader.i, label %.critedge4.i
 
-.preheader.i:                                     ; preds = %bb.g, %bb.h
-  %indvars.iv56.i = phi i64 [ %indvars.iv.next57.i, %bb.h ], [ 0, %bb.g ] ; 3 uses
+.preheader.preheader.i:                           ; preds = %bb.g
+  %smax.i = tail call i32 @llvm.smax.i32(i32 %i.q, i32 1) ; 2 uses
+  %wide.trip.count59.i = zext nneg i32 %smax.i to i64
+  br label %.preheader.i
+
+.preheader.i:                                     ; preds = %bb.h, %.preheader.preheader.i
+  %indvars.iv56.i = phi i64 [ 0, %.preheader.preheader.i ], [ %indvars.iv.next57.i, %bb.h ] ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.l, i64 %indvars.iv56.i
   %i.w = load i8, ptr %i.v, align 1, !tbaa !52
   %i.x = icmp eq i8 %i.w, 9
-  br i1 %i.x, label %bb.h, label %.critedge2.i
+  br i1 %i.x, label %bb.h, label %.critedge2.split.loop.exit69.i
 
 bb.h:                                             ; preds = %.preheader.i
   %indvars.iv.next57.i = add nuw nsw i64 %indvars.iv56.i, 1 ; 2 uses
-  %exitcond60.not.i = icmp eq i64 %indvars.iv.next57.i, %i.r
-  br i1 %exitcond60.not.i, label %.critedge2.thread.i, label %.preheader.i, !llvm.loop !758
+  %exitcond60.not.i = icmp eq i64 %indvars.iv.next57.i, %wide.trip.count59.i
+  br i1 %exitcond60.not.i, label %.critedge2.i, label %.preheader.i, !llvm.loop !758
 
-.critedge2.i:                                     ; preds = %.preheader.i
+.critedge2.split.loop.exit69.i:                   ; preds = %.preheader.i
   %3 = trunc nuw nsw i64 %indvars.iv56.i to i32
-  %i.y = icmp eq i32 %i.q, %3
+  br label %.critedge2.i
+
+.critedge2.i:                                     ; preds = %bb.h, %.critedge2.split.loop.exit69.i
+  %.044.lcssa.i = phi i32 [ %3, %.critedge2.split.loop.exit69.i ], [ %smax.i, %bb.h ]
+  %i.y = icmp eq i32 %.044.lcssa.i, %i.q
   br i1 %i.y, label %.critedge2.thread.i, label %bb.l
 
-.critedge2.thread.i:                              ; preds = %bb.h, %.critedge2.i
+.critedge2.thread.i:                              ; preds = %.critedge2.i
   %i.z = icmp sgt i32 %i.j, 9999998
   br i1 %i.z, label %bb.i, label %bb.j
 
@@ -637,6 +646,7 @@ middle.block297:                                  ; preds = %vector.body294
 
 .lr.ph136.i.i:                                    ; preds = %.preheader.i.i
   %.not.i70.i = icmp eq i32 %.086119.i.i, 0
+  %smax.i.i = call i32 @llvm.smax.i32(i32 %.086119.i.i, i32 1) ; 2 uses
   %wide.trip.count159.i.i = zext i32 %.086119.i.i to i64 ; 2 uses
   br label %bb.ba
 
@@ -648,7 +658,7 @@ middle.block297:                                  ; preds = %vector.body294
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i34, %i.ij
   br i1 %exitcond.not.i.i, label %.preheader.i.i, label %.preheader115.i.i, !llvm.loop !811
 
-.loopexit114.i.i:                                 ; preds = %bb.bb, %.lr.ph135.i.i, %middle.block, %._crit_edge.i.i38
+.loopexit114.i.i:                                 ; preds = %.lr.ph135.i.i, %middle.block, %._crit_edge.i.i38
   %i.iw = load ptr, ptr %i.c, align 8, !tbaa !109
   %i.ix = call i32 @sqlite3_step(ptr noundef %i.iw) #45
   %i.iy = icmp eq i32 %i.ix, 100
@@ -668,17 +678,17 @@ bb.ba:                                            ; preds = %.loopexit114.i.i, %
   br i1 %i.jd, label %._crit_edge.i.i38, label %bb.bb
 
 bb.bb:                                            ; preds = %.lr.ph.i.i37
-  %i.je = add nuw i32 %.185130.i.i, 1             ; 2 uses
-  %exitcond155.not.i.i = icmp eq i32 %i.je, %.086119.i.i
-  br i1 %exitcond155.not.i.i, label %.loopexit114.i.i, label %.lr.ph.i.i37, !llvm.loop !813
+  %i.je = add nuw nsw i32 %.185130.i.i, 1         ; 2 uses
+  %exitcond155.not.i.i = icmp eq i32 %i.je, %smax.i.i
+  br i1 %exitcond155.not.i.i, label %._crit_edge.i.i38, label %.lr.ph.i.i37, !llvm.loop !813
 
-._crit_edge.i.i38:                                ; preds = %.lr.ph.i.i37, %bb.ba
-  %.185.lcssa.i.i = phi i32 [ 0, %bb.ba ], [ %.185130.i.i, %.lr.ph.i.i37 ] ; 2 uses
+._crit_edge.i.i38:                                ; preds = %bb.bb, %.lr.ph.i.i37, %bb.ba
+  %.185.lcssa.i.i = phi i32 [ 0, %bb.ba ], [ %.185130.i.i, %.lr.ph.i.i37 ], [ %smax.i.i, %bb.bb ] ; 2 uses
   %i.jf = icmp samesign ult i32 %.185.lcssa.i.i, %.086119.i.i
   br i1 %i.jf, label %.lr.ph135.preheader.i.i, label %.loopexit114.i.i
 
 .lr.ph135.preheader.i.i:                          ; preds = %._crit_edge.i.i38
-  %i.jg = zext i32 %.185.lcssa.i.i to i64         ; 4 uses
+  %i.jg = zext nneg i32 %.185.lcssa.i.i to i64    ; 4 uses
   %i.jh = sub nsw i64 %wide.trip.count159.i.i, %i.jg ; 3 uses
   %min.iters.check = icmp ult i64 %i.jh, 4
   br i1 %min.iters.check, label %.lr.ph135.i.i.preheader, label %vector.ph

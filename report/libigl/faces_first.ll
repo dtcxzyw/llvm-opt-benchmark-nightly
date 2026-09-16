@@ -204,8 +204,8 @@ bb.e:                                             ; preds = %bb.d
 
 _ZN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEC2IiEERKT_.exit: ; preds = %.preheader174, %._crit_edge181, %bb.d
   %.not.i.i.i.i104254 = phi i1 [ true, %._crit_edge181 ], [ false, %bb.d ], [ true, %.preheader174 ]
-  %i.bm = phi i64 [ 0, %._crit_edge181 ], [ %i.ay, %bb.d ], [ 0, %.preheader174 ] ; 5 uses
-  %.0169.lcssa253 = phi i32 [ 0, %._crit_edge181 ], [ %.lcssa, %bb.d ], [ 0, %.preheader174 ] ; 5 uses
+  %i.bm = phi i64 [ 0, %._crit_edge181 ], [ %i.ay, %bb.d ], [ 0, %.preheader174 ] ; 2 uses
+  %.0169.lcssa253 = phi i32 [ 0, %._crit_edge181 ], [ %.lcssa, %bb.d ], [ 0, %.preheader174 ] ; 7 uses
   %.sroa.0143.0 = phi ptr [ null, %._crit_edge181 ], [ %i.ba, %bb.d ], [ null, %.preheader174 ] ; 8 uses
   %i.bn = sub nsw i64 %i.q, %i.bm                 ; 4 uses
   %i.bo = icmp sgt i64 %i.bn, 0                   ; 2 uses
@@ -263,13 +263,14 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEE6resizeEl.exit: 
 
 .lr.ph190:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEE6resizeEl.exit
   %i.ca = load ptr, ptr %4, align 8, !tbaa !61    ; 5 uses
-  %5 = add nsw i64 %i.bm, -1
-  %xtraiter = and i64 %i.bm, 3                    ; 3 uses
-  %6 = icmp ult i64 %5, 3
-  br i1 %6, label %.epil.preheader, label %.lr.ph190.new
+  %smax = tail call i32 @llvm.smax.i32(i32 %.0169.lcssa253, i32 1)
+  %wide.trip.count = zext nneg i32 %smax to i64   ; 2 uses
+  %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
+  %5 = icmp slt i32 %.0169.lcssa253, 4
+  br i1 %5, label %.epil.preheader, label %.lr.ph190.new
 
 .lr.ph190.new:                                    ; preds = %.lr.ph190
-  %unroll_iter = and i64 %i.bm, 2147483644
+  %unroll_iter = and i64 %wide.trip.count, 2147483644
   br label %bb.m
 
 .lr.ph187:                                        ; preds = %_ZN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEC2IlEERKT_.exit, %bb.j
@@ -670,6 +671,9 @@ bb.f:                                             ; preds = %.sink.split, %bb.a
   store i64 %3, ptr %i.c, align 8, !tbaa !15
   ret void
 }
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v2i32(<2 x i32>) #10

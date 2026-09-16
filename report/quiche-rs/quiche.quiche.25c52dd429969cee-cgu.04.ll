@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.f
     #dbg_value(i64 %.sroa.09.0, !6567, !DIExpression(), !6570)
     #dbg_value(i64 %.sroa.09.0, !6572, !DIExpression(), !6576)
     #dbg_value(i64 %.sroa.09.0, !6640, !DIExpression(), !6645)
-  %i.n = sub nuw nsw i64 %1, %.sroa.09.0, !dbg !7017 ; 11 uses
+  %i.n = sub nuw nsw i64 %1, %.sroa.09.0, !dbg !7017 ; 9 uses
     #dbg_value(i64 %i.n, !6573, !DIExpression(), !6646)
     #dbg_value(i64 %i.n, !6642, !DIExpression(), !6645)
     #dbg_value(ptr %0, !6641, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6645)
@@ -281,59 +281,67 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.r, label %.preheader, label %.preheader97, !dbg !7026
 
 .preheader97:                                     ; preds = %bb.k
-  br i1 %.not119, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTyyENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCNvXs1z_NtNtNtB1e_11collections5btree3mapINtB20_8BTreeMapyyEINtNtB8_7convert4FromAB12_j4_E4from0E0ECs3f36owOmepS_6quiche.exit.i.thread, label %.lr.ph, !dbg !7027
+  br i1 %.not119, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTyyENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCNvXs1z_NtNtNtB1e_11collections5btree3mapINtB20_8BTreeMapyyEINtNtB8_7convert4FromAB12_j4_E4from0E0ECs3f36owOmepS_6quiche.exit.i.thread, label %.lr.ph.preheader, !dbg !7027
+
+.lr.ph.preheader:                                 ; preds = %.preheader97
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.n, i64 3), !dbg !7028 ; 2 uses
+  br label %.lr.ph, !dbg !7028
 
 .preheader:                                       ; preds = %bb.k
-  br i1 %.not119, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTyyENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCNvXs1z_NtNtNtB1e_11collections5btree3mapINtB20_8BTreeMapyyEINtNtB8_7convert4FromAB12_j4_E4from0E0ECs3f36owOmepS_6quiche.exit.i.thread143, label %.lr.ph106, !dbg !7028
+  br i1 %.not119, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTyyENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCNvXs1z_NtNtNtB1e_11collections5btree3mapINtB20_8BTreeMapyyEINtNtB8_7convert4FromAB12_j4_E4from0E0ECs3f36owOmepS_6quiche.exit.i.thread143, label %.lr.ph106.preheader, !dbg !7029
 
-.lr.ph:                                           ; preds = %.preheader97, %bb.l
-  %.val31.i = phi i64 [ %.val30.i, %bb.l ], [ %.val32.i, %.preheader97 ], !dbg !7029
-  %.sroa.01.0.i.i102 = phi i64 [ %i.u, %bb.l ], [ 2, %.preheader97 ] ; 3 uses
+.lr.ph106.preheader:                              ; preds = %.preheader
+  %smax126 = tail call i64 @llvm.smax.i64(i64 %i.n, i64 3), !dbg !7030 ; 2 uses
+  br label %.lr.ph106, !dbg !7030
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.l
+  %.val31.i = phi i64 [ %.val30.i, %bb.l ], [ %.val32.i, %.lr.ph.preheader ], !dbg !7028
+  %.sroa.01.0.i.i102 = phi i64 [ %i.u, %bb.l ], [ 2, %.lr.ph.preheader ] ; 3 uses
     #dbg_value(i64 %.sroa.01.0.i.i102, !6668, !DIExpression(), !6219)
     #dbg_value(i64 %.sroa.01.0.i.i102, !6675, !DIExpression(), !6211)
     #dbg_value(i64 %.sroa.01.0.i.i102, !6687, !DIExpression(), !6213)
-  %i.s = getelementptr inbounds nuw [16 x i8], ptr %i.o, i64 %.sroa.01.0.i.i102, !dbg !7030
+  %i.s = getelementptr inbounds nuw [16 x i8], ptr %i.o, i64 %.sroa.01.0.i.i102, !dbg !7031
     #dbg_value(i64 %.sroa.01.0.i.i102, !6675, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value), !6215)
     #dbg_value(i64 %.sroa.01.0.i.i102, !6687, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value), !6217)
-  %.val30.i = load i64, ptr %i.s, align 8, !dbg !7029, !alias.scope !6694, !noalias !6695, !noundef !584 ; 2 uses
+  %.val30.i = load i64, ptr %i.s, align 8, !dbg !7028, !alias.scope !6694, !noalias !6695, !noundef !584 ; 2 uses
     #dbg_value(ptr poison, !1898, !DIExpression(), !6231)
     #dbg_value(ptr poison, !1901, !DIExpression(), !6231)
     #dbg_value(ptr poison, !1907, !DIExpression(), !6233)
     #dbg_value(ptr poison, !1911, !DIExpression(), !6234)
-  %i.t = icmp ult i64 %.val30.i, %.val31.i, !dbg !7031
-  br i1 %i.t, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTyyENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCNvXs1z_NtNtNtB1e_11collections5btree3mapINtB20_8BTreeMapyyEINtNtB8_7convert4FromAB12_j4_E4from0E0ECs3f36owOmepS_6quiche.exit.i, label %bb.l, !dbg !7029
+  %i.t = icmp ult i64 %.val30.i, %.val31.i, !dbg !7032
+  br i1 %i.t, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTyyENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCNvXs1z_NtNtNtB1e_11collections5btree3mapINtB20_8BTreeMapyyEINtNtB8_7convert4FromAB12_j4_E4from0E0ECs3f36owOmepS_6quiche.exit.i, label %bb.l, !dbg !7028
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.u = add nuw i64 %.sroa.01.0.i.i102, 1, !dbg !7032 ; 2 uses
+  %i.u = add nuw nsw i64 %.sroa.01.0.i.i102, 1, !dbg !7033 ; 2 uses
     #dbg_value(i64 %i.u, !6668, !DIExpression(), !6219)
-  %exitcond.not = icmp eq i64 %i.u, %i.n, !dbg !7027
+  %exitcond.not = icmp eq i64 %i.u, %smax, !dbg !7027
   br i1 %exitcond.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTyyENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCNvXs1z_NtNtNtB1e_11collections5btree3mapINtB20_8BTreeMapyyEINtNtB8_7convert4FromAB12_j4_E4from0E0ECs3f36owOmepS_6quiche.exit.i, label %.lr.ph, !dbg !7027
 
-.lr.ph106:                                        ; preds = %.preheader, %bb.m
-  %.val29.i = phi i64 [ %.val.i, %bb.m ], [ %.val32.i, %.preheader ], !dbg !7033
-  %.sroa.01.1.i.i105 = phi i64 [ %i.x, %bb.m ], [ 2, %.preheader ] ; 3 uses
+.lr.ph106:                                        ; preds = %.lr.ph106.preheader, %bb.m
+  %.val29.i = phi i64 [ %.val.i, %bb.m ], [ %.val32.i, %.lr.ph106.preheader ], !dbg !7030
+  %.sroa.01.1.i.i105 = phi i64 [ %i.x, %bb.m ], [ 2, %.lr.ph106.preheader ] ; 3 uses
     #dbg_value(i64 %.sroa.01.1.i.i105, !6668, !DIExpression(), !6219)
     #dbg_value(i64 %.sroa.01.1.i.i105, !6675, !DIExpression(), !6203)
     #dbg_value(i64 %.sroa.01.1.i.i105, !6687, !DIExpression(), !6205)
   %i.v = getelementptr inbounds nuw [16 x i8], ptr %i.o, i64 %.sroa.01.1.i.i105, !dbg !7034
     #dbg_value(i64 %.sroa.01.1.i.i105, !6675, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value), !6207)
     #dbg_value(i64 %.sroa.01.1.i.i105, !6687, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value), !6209)
-  %.val.i = load i64, ptr %i.v, align 8, !dbg !7033, !alias.scope !6694, !noalias !6695, !noundef !584 ; 2 uses
+  %.val.i = load i64, ptr %i.v, align 8, !dbg !7030, !alias.scope !6694, !noalias !6695, !noundef !584 ; 2 uses
     #dbg_value(ptr poison, !1898, !DIExpression(), !6236)
     #dbg_value(ptr poison, !1901, !DIExpression(), !6236)
     #dbg_value(ptr poison, !1907, !DIExpression(), !6238)
     #dbg_value(ptr poison, !1911, !DIExpression(), !6239)
   %i.w = icmp ult i64 %.val.i, %.val29.i, !dbg !7035
-  br i1 %i.w, label %bb.m, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTyyENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCNvXs1z_NtNtNtB1e_11collections5btree3mapINtB20_8BTreeMapyyEINtNtB8_7convert4FromAB12_j4_E4from0E0ECs3f36owOmepS_6quiche.exit.i, !dbg !7033
+  br i1 %i.w, label %bb.m, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTyyENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCNvXs1z_NtNtNtB1e_11collections5btree3mapINtB20_8BTreeMapyyEINtNtB8_7convert4FromAB12_j4_E4from0E0ECs3f36owOmepS_6quiche.exit.i, !dbg !7030
 
 bb.m:                                             ; preds = %.lr.ph106
-  %i.x = add nuw i64 %.sroa.01.1.i.i105, 1, !dbg !7036 ; 2 uses
+  %i.x = add nuw nsw i64 %.sroa.01.1.i.i105, 1, !dbg !7036 ; 2 uses
     #dbg_value(i64 %i.x, !6668, !DIExpression(), !6219)
-  %exitcond126.not = icmp eq i64 %i.x, %i.n, !dbg !7028
-  br i1 %exitcond126.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTyyENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCNvXs1z_NtNtNtB1e_11collections5btree3mapINtB20_8BTreeMapyyEINtNtB8_7convert4FromAB12_j4_E4from0E0ECs3f36owOmepS_6quiche.exit.i, label %.lr.ph106, !dbg !7028
+  %exitcond126.not = icmp eq i64 %i.x, %smax126, !dbg !7029
+  br i1 %exitcond126.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTyyENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCNvXs1z_NtNtNtB1e_11collections5btree3mapINtB20_8BTreeMapyyEINtNtB8_7convert4FromAB12_j4_E4from0E0ECs3f36owOmepS_6quiche.exit.i, label %.lr.ph106, !dbg !7029
 
 _RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTyyENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCNvXs1z_NtNtNtB1e_11collections5btree3mapINtB20_8BTreeMapyyEINtNtB8_7convert4FromAB12_j4_E4from0E0ECs3f36owOmepS_6quiche.exit.i: ; preds = %bb.l, %.lr.ph, %bb.m, %.lr.ph106
-  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i105, %.lr.ph106 ], [ %i.n, %bb.m ], [ %.sroa.01.0.i.i102, %.lr.ph ], [ %i.n, %bb.l ], !dbg !7037 ; 6 uses
+  %.sroa.0.0.i.i = phi i64 [ %.sroa.01.1.i.i105, %.lr.ph106 ], [ %smax126, %bb.m ], [ %.sroa.01.0.i.i102, %.lr.ph ], [ %smax, %bb.l ], !dbg !7037 ; 6 uses
     #dbg_value(i64 %.sroa.0.0.i.i, !6655, !DIExpression(), !6240)
     #dbg_value(i64 %.sroa.0.0.i.i, !6696, !DIExpression(), !6243)
     #dbg_value(i1 poison, !6656, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !6240)
@@ -735,6 +743,9 @@ declare i64 @llvm.umax.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #17
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { cold noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
@@ -1138,12 +1149,12 @@ begin_hunk_2_@llvm.umin.i64/@llvm.smax.i64
 !7025 = !DILocation(line: 0, scope: !6185, inlinedAt: !6189)
 !7026 = !DILocation(line: 35, column: 12, scope: !6185, inlinedAt: !6189)
 !7027 = !DILocation(line: 40, column: 19, scope: !6185, inlinedAt: !6189)
-!7028 = !DILocation(line: 36, column: 19, scope: !6185, inlinedAt: !6189)
-!7029 = !DILocation(line: 40, column: 37, scope: !6185, inlinedAt: !6189)
-!7030 = !DILocation(line: 219, column: 13, scope: !6195, inlinedAt: !6212)
-!7031 = !DILocation(line: 410, column: 44, scope: !327, inlinedAt: !6232)
-!7032 = !DILocation(line: 42, column: 17, scope: !6185, inlinedAt: !6189)
-!7033 = !DILocation(line: 36, column: 36, scope: !6185, inlinedAt: !6189)
+!7028 = !DILocation(line: 40, column: 37, scope: !6185, inlinedAt: !6189)
+!7029 = !DILocation(line: 36, column: 19, scope: !6185, inlinedAt: !6189)
+!7030 = !DILocation(line: 36, column: 36, scope: !6185, inlinedAt: !6189)
+!7031 = !DILocation(line: 219, column: 13, scope: !6195, inlinedAt: !6212)
+!7032 = !DILocation(line: 410, column: 44, scope: !327, inlinedAt: !6232)
+!7033 = !DILocation(line: 42, column: 17, scope: !6185, inlinedAt: !6189)
 !7034 = !DILocation(line: 219, column: 13, scope: !6195, inlinedAt: !6204)
 !7035 = !DILocation(line: 410, column: 44, scope: !327, inlinedAt: !6237)
 !7036 = !DILocation(line: 37, column: 17, scope: !6185, inlinedAt: !6189)

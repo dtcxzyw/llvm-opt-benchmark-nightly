@@ -202,8 +202,9 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   br i1 %.not, label %.critedge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.r
-  %i.at = sub nsw i32 %i.ac, %i.ar                ; 2 uses
-  %wide.trip.count = zext i32 %i.at to i64
+  %i.at = sub nsw i32 %i.ac, %i.ar
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.at, i32 1) ; 2 uses
+  %wide.trip.count = zext nneg i32 %smax to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.s
@@ -223,7 +224,7 @@ bb.s:                                             ; preds = %.lr.ph
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.s, %.critedge.loopexit.split.loop.exit111, %bb.r
-  %.081.lcssa = phi i32 [ 0, %bb.r ], [ %i.aw, %.critedge.loopexit.split.loop.exit111 ], [ %i.at, %bb.s ]
+  %.081.lcssa = phi i32 [ 0, %bb.r ], [ %i.aw, %.critedge.loopexit.split.loop.exit111 ], [ %smax, %bb.s ]
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !16
   %i.az = getelementptr inbounds nuw i8, ptr %3, i64 %i.aa
@@ -624,6 +625,9 @@ declare i32 @llvm.bswap.i32(i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.bswap.i64(i64) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i16> @llvm.bswap.v8i16(<8 x i16>) #10

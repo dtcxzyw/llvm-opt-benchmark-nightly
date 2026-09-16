@@ -205,6 +205,7 @@ bb.a:
 
 .preheader173.us.us.preheader:                    ; preds = %.preheader173.lr.ph.split
   %smax238 = tail call i32 @llvm.smax.i32(i32 %i.h, i32 1)
+  %smax240 = tail call i32 @llvm.smax.i32(i32 %.09.i.fr, i32 1)
   br label %.preheader173.us.us
 
 .preheader173.us.us:                              ; preds = %.preheader173.us.us.preheader, %._crit_edge210.split.us.us.split.us.us
@@ -246,8 +247,8 @@ bb.f:                                             ; preds = %bb.f, %..preheader_
   %.3205.us.us.us.us = phi i32 [ 0, %..preheader_crit_edge.us.us.us.us ], [ %i.aq, %bb.f ] ; 3 uses
   %i.ao = add nsw i32 %.3205.us.us.us.us, %i.an
   %i.ap = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef %.3205.us.us.us.us, i32 noundef %i.ao) #22 ; 0 uses
-  %i.aq = add nuw i32 %.3205.us.us.us.us, 1       ; 2 uses
-  %exitcond240.not = icmp eq i32 %i.aq, %.09.i.fr
+  %i.aq = add nuw nsw i32 %.3205.us.us.us.us, 1   ; 2 uses
+  %exitcond240.not = icmp eq i32 %i.aq, %smax240
   br i1 %exitcond240.not, label %._crit_edge207.us.us.us.us, label %bb.f, !llvm.loop !95
 
 ._crit_edge207.us.us.us.us:                       ; preds = %bb.f

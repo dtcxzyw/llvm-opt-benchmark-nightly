@@ -204,7 +204,7 @@ bb.a:
   %i.w = mul nuw nsw i64 %i.e, 1000000000
   %i.x = add nsw i64 %i.w, -6554
   %or.cond.13 = icmp ult i64 %i.x, 58982
-  %.128.13 = select i1 %or.cond.13, i32 13, i32 %.128.12 ; 3 uses
+  %.128.13 = select i1 %or.cond.13, i32 13, i32 %.128.12 ; 2 uses
   %i.y = mul nuw nsw i64 %i.e, 10000000000
   %i.z = lshr i32 %0, 16
   %i.aa = lshr i64 %i.y, 16                       ; 4 uses
@@ -231,12 +231,9 @@ bb.a:
 
 .lr.ph39.preheader:                               ; preds = %.critedge
   %scevgep = getelementptr i8, ptr %1, i64 %i.ag
-  %i.ah = zext nneg i32 %.128.13 to i64
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 48, i64 %i.ah, i1 false), !tbaa !12
-  %2 = add nsw i32 %.128.13, -1
-  %3 = zext nneg i32 %2 to i64
-  %4 = add i64 %i.ag, %3
-  %i.ai = add i64 %4, 1
+  %i.ah = zext nneg i32 %.128.13 to i64           ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep, i8 48, i64 %i.ah, i1 false), !tbaa !12
+  %i.ai = add i64 %i.ag, %i.ah
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph39.preheader, %.critedge
