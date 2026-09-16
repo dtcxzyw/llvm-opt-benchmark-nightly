@@ -200,15 +200,12 @@ bb.a:
   %.03140 = phi i64 [ %3, %.preheader.lr.ph ], [ %i.af, %._crit_edge ]
   %.03239 = phi ptr [ %2, %.preheader.lr.ph ], [ %i.ag, %._crit_edge ] ; 2 uses
   %.03338 = phi ptr [ %1, %.preheader.lr.ph ], [ %i.ah, %._crit_edge ] ; 2 uses
-  %.not44 = icmp eq i64 %.141, 0
-  br i1 %.not44, label %._crit_edge, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %.preheader
   %4 = shl nuw nsw i64 %.141, 3
-  br label %.lr.ph
+  %.not44 = icmp eq i64 %.141, 0
+  br i1 %.not44, label %._crit_edge, label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.03037 = phi i64 [ %i.ae, %.lr.ph ], [ 0, %.lr.ph.preheader ] ; 3 uses
+.lr.ph:                                           ; preds = %.preheader, %.lr.ph
+  %.03037 = phi i64 [ %i.ae, %.lr.ph ], [ 0, %.preheader ] ; 3 uses
   %i.f = lshr i64 %.03037, 3                      ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.03239, i64 %i.f
   %i.h = load i8, ptr %i.g, align 1, !tbaa !8
@@ -238,7 +235,7 @@ bb.a:
   %i.ac = or i16 %i.ab, %i.x
   %i.ad = trunc nuw i16 %i.ac to i8
   store i8 %i.ad, ptr %i.s, align 1, !tbaa !8
-  %i.ae = add nuw i64 %.03037, 1                  ; 2 uses
+  %i.ae = add nuw nsw i64 %.03037, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.ae, %4
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !30
 
