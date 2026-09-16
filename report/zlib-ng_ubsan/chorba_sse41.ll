@@ -125,11 +125,10 @@ target triple = "x86_64-pc-linux-gnu"
 @114 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 302, i32 66 }, ptr @7 }
 @115 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 302, i32 49 } }
 @116 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 302, i32 15 } }
-@117 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 301, i32 37 }, ptr @7 }
 @.src.2 = private unnamed_addr constant [50 x i8] c"/usr/lib/llvm-24/lib/clang/24/include/emmintrin.h\00", align 1
-@118 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.2, i32 3905, i32 3 }, ptr @17, i8 4, i8 1 }
-@119 = private unnamed_addr constant { i16, i16, [49 x i8] } { i16 -1, i16 0, [49 x i8] c"'const __m128i' (vector of 2 'long long' values)\00" }
-@120 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.2, i32 3451, i32 10 }, ptr @119, i8 4, i8 0 }
+@117 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.2, i32 3905, i32 3 }, ptr @17, i8 4, i8 1 }
+@118 = private unnamed_addr constant { i16, i16, [49 x i8] } { i16 -1, i16 0, [49 x i8] c"'const __m128i' (vector of 2 'long long' values)\00" }
+@119 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src.2, i32 3451, i32 10 }, ptr @118, i8 4, i8 0 }
 
 ; Function Attrs: nounwind uwtable
 define hidden i32 @crc32_chorba_sse41(i32 noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #0 !func_sanitize !21 {
@@ -154,7 +153,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.028 = phi i64 [ %i.j, %bb.c ], [ %2, %bb.b ]  ; 17 uses
+  %.028 = phi i64 [ %i.j, %bb.c ], [ %2, %bb.b ]  ; 18 uses
   %.0 = phi i32 [ %i.i, %bb.c ], [ %i.c, %bb.b ]  ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 %i.f ; 11 uses
   %i.l = add i64 %i.f, %i.d, !nosanitize !22      ; 3 uses
@@ -271,7 +270,7 @@ bb.u:                                             ; preds = %bb.t, %.lr.ph.prehe
   br i1 %i.au, label %_mm_load_si128.exit117.peel, label %bb.v, !prof !23, !nosanitize !22
 
 bb.v:                                             ; preds = %bb.u
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @120, i64 %i.al) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @119, i64 %i.al) #6, !nosanitize !22
   br label %_mm_load_si128.exit117.peel, !nosanitize !22
 
 _mm_load_si128.exit117.peel:                      ; preds = %bb.v, %bb.u
@@ -395,7 +394,7 @@ bb.aa:                                            ; preds = %bb.z, %.lr.ph
   br i1 %i.cn, label %_mm_load_si128.exit117, label %bb.ab, !prof !23, !nosanitize !22
 
 bb.ab:                                            ; preds = %bb.aa
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @120, i64 %i.ch) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @119, i64 %i.ch) #6, !nosanitize !22
   br label %_mm_load_si128.exit117, !nosanitize !22
 
 _mm_load_si128.exit117:                           ; preds = %bb.aa, %bb.ab
@@ -449,7 +448,7 @@ _mm_load_si128.exit115._crit_edge:                ; preds = %bb.ae, %_mm_load_si
   br i1 %i.dj, label %bb.ag, label %bb.af, !prof !23, !nosanitize !22
 
 bb.af:                                            ; preds = %_mm_load_si128.exit115._crit_edge
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @118, i64 %.pre329) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %.pre329) #6, !nosanitize !22
   br label %bb.ag, !nosanitize !22
 
 bb.ag:                                            ; preds = %_mm_load_si128.exit115._crit_edge, %bb.af
@@ -467,7 +466,7 @@ bb.ag:                                            ; preds = %_mm_load_si128.exit
   br i1 %i.dp, label %bb.ai, label %bb.ah, !prof !23, !nosanitize !22
 
 bb.ah:                                            ; preds = %bb.ag
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @118, i64 %.pre337) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %.pre337) #6, !nosanitize !22
   br label %bb.ai, !nosanitize !22
 
 bb.ai:                                            ; preds = %bb.ag, %bb.ah
@@ -485,7 +484,7 @@ bb.ai:                                            ; preds = %bb.ag, %bb.ah
   br i1 %i.dv, label %bb.ak, label %bb.aj, !prof !23, !nosanitize !22
 
 bb.aj:                                            ; preds = %bb.ai
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @118, i64 %.pre345) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %.pre345) #6, !nosanitize !22
   br label %bb.ak, !nosanitize !22
 
 bb.ak:                                            ; preds = %bb.ai, %bb.aj
@@ -503,7 +502,7 @@ bb.ak:                                            ; preds = %bb.ai, %bb.aj
   br i1 %i.eb, label %_mm_store_si128.exit40, label %bb.al, !prof !23, !nosanitize !22
 
 bb.al:                                            ; preds = %bb.ak
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @118, i64 %.pre353) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %.pre353) #6, !nosanitize !22
   br label %_mm_store_si128.exit40, !nosanitize !22
 
 _mm_store_si128.exit40:                           ; preds = %bb.ak, %bb.al
@@ -536,7 +535,7 @@ _mm_store_si128.exit40:                           ; preds = %bb.ak, %bb.al
   %.1463.i.lcssa = phi i64 [ %i.gu, %.preheader149.loopexit ], [ %.lcssa621.a, %.preheader150 ] ; 2 uses
   %.1455.i.lcssa = phi <2 x i64> [ %i.gh, %.preheader149.loopexit ], [ %.lcssa617.a, %.preheader150 ] ; 2 uses
   %.1452.i.lcssa = phi <2 x i64> [ %i.fk, %.preheader149.loopexit ], [ %.lcssa617.a, %.preheader150 ] ; 4 uses
-  br i1 %.pre-phi, label %.lr.ph198, label %.preheader148.preheader
+  br i1 %.pre-phi, label %.lr.ph198, label %.preheader148
 
 .lr.ph180:                                        ; preds = %.preheader150, %_mm_store_si128.exit56
   %.1452.i179 = phi <2 x i64> [ %i.fk, %_mm_store_si128.exit56 ], [ %.lcssa617.a, %.preheader150 ]
@@ -565,7 +564,7 @@ bb.an:                                            ; preds = %bb.am, %.lr.ph180
   br i1 %i.es, label %_mm_load_si128.exit121, label %bb.ao, !prof !23, !nosanitize !22
 
 bb.ao:                                            ; preds = %bb.an
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @120, i64 %i.em) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @119, i64 %i.em) #6, !nosanitize !22
   br label %_mm_load_si128.exit121, !nosanitize !22
 
 _mm_load_si128.exit121:                           ; preds = %bb.an, %bb.ao
@@ -619,7 +618,7 @@ _mm_load_si128.exit119._crit_edge:                ; preds = %bb.ar, %_mm_load_si
   br i1 %i.fo, label %bb.at, label %bb.as, !prof !23, !nosanitize !22
 
 bb.as:                                            ; preds = %_mm_load_si128.exit119._crit_edge
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @118, i64 %.pre367) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %.pre367) #6, !nosanitize !22
   br label %bb.at, !nosanitize !22
 
 bb.at:                                            ; preds = %_mm_load_si128.exit119._crit_edge, %bb.as
@@ -657,7 +656,7 @@ bb.av:                                            ; preds = %bb.at, %bb.au
   br i1 %i.fw, label %bb.ax, label %bb.aw, !prof !23, !nosanitize !22
 
 bb.aw:                                            ; preds = %bb.av
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @118, i64 %i.fu) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %i.fu) #6, !nosanitize !22
   br label %bb.ax, !nosanitize !22
 
 bb.ax:                                            ; preds = %bb.aw, %bb.av
@@ -671,7 +670,7 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av
   br i1 %i.gk, label %bb.az, label %bb.ay, !prof !23, !nosanitize !22
 
 bb.ay:                                            ; preds = %bb.ax
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @118, i64 %.pre375) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %.pre375) #6, !nosanitize !22
   br label %bb.az, !nosanitize !22
 
 bb.az:                                            ; preds = %bb.ax, %bb.ay
@@ -689,7 +688,7 @@ bb.az:                                            ; preds = %bb.ax, %bb.ay
   br i1 %i.gq, label %_mm_store_si128.exit56, label %bb.ba, !prof !23, !nosanitize !22
 
 bb.ba:                                            ; preds = %bb.az
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @118, i64 %.pre383) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %.pre383) #6, !nosanitize !22
   br label %_mm_store_si128.exit56, !nosanitize !22
 
 _mm_store_si128.exit56:                           ; preds = %bb.az, %bb.ba
@@ -706,6 +705,19 @@ _mm_store_si128.exit56:                           ; preds = %bb.az, %bb.ba
   %i.gx = icmp samesign ult i64 %.1463.i177, 192
   %i.gy = and i1 %i.gw, %i.gx
   br i1 %i.gy, label %.lr.ph180, label %.preheader149.loopexit, !llvm.loop !13
+
+.preheader148:                                    ; preds = %_mm_store_si128.exit72, %.preheader149
+  %.2494.i.lcssa = phi ptr [ %.1493.i.lcssa, %.preheader149 ], [ %i.in, %_mm_store_si128.exit72 ]
+  %.2490.i.lcssa = phi ptr [ %.1489.i.lcssa, %.preheader149 ], [ %i.je, %_mm_store_si128.exit72 ]
+  %.2486.i.lcssa = phi ptr [ %.1485.i.lcssa, %.preheader149 ], [ %i.jo, %_mm_store_si128.exit72 ]
+  %.2482.i.lcssa = phi ptr [ %.1481.i.lcssa, %.preheader149 ], [ %i.jv, %_mm_store_si128.exit72 ]
+  %.2475.i.lcssa = phi ptr [ %.1474.i.lcssa, %.preheader149 ], [ %i.hq, %_mm_store_si128.exit72 ]
+  %.2464.i.lcssa = phi i64 [ %.1463.i.lcssa, %.preheader149 ], [ %i.jw, %_mm_store_si128.exit72 ] ; 2 uses
+  %.2460.i.lcssa = phi <2 x i64> [ %.1452.i.lcssa, %.preheader149 ], [ %i.ip, %_mm_store_si128.exit72 ]
+  %.2456.i.lcssa = phi <2 x i64> [ %.1455.i.lcssa, %.preheader149 ], [ %i.jg, %_mm_store_si128.exit72 ]
+  %.2453.i.lcssa = phi <2 x i64> [ %.1452.i.lcssa, %.preheader149 ], [ %i.hy, %_mm_store_si128.exit72 ]
+  %3 = sub i64 %.028, %.2464.i.lcssa
+  br label %.preheader148.a
 
 .lr.ph198:                                        ; preds = %.preheader149, %_mm_store_si128.exit72
   %.2453.i197 = phi <2 x i64> [ %i.hy, %_mm_store_si128.exit72 ], [ %.1452.i.lcssa, %.preheader149 ]
@@ -735,7 +747,7 @@ bb.bc:                                            ; preds = %bb.bb, %.lr.ph198
   br i1 %i.hg, label %_mm_load_si128.exit125, label %bb.bd, !prof !23, !nosanitize !22
 
 bb.bd:                                            ; preds = %bb.bc
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @120, i64 %i.ha) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @119, i64 %i.ha) #6, !nosanitize !22
   br label %_mm_load_si128.exit125, !nosanitize !22
 
 _mm_load_si128.exit125:                           ; preds = %bb.bc, %bb.bd
@@ -848,7 +860,7 @@ bb.bs:                                            ; preds = %bb.bq, %bb.br
   br i1 %i.ie, label %_mm_store_si128.exit84, label %bb.bt, !prof !23, !nosanitize !22
 
 bb.bt:                                            ; preds = %bb.bs
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @118, i64 %i.ic) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %i.ic) #6, !nosanitize !22
   br label %_mm_store_si128.exit84, !nosanitize !22
 
 _mm_store_si128.exit84:                           ; preds = %bb.bt, %bb.bs
@@ -922,7 +934,7 @@ bb.cf:                                            ; preds = %bb.cd, %bb.ce
   br i1 %i.iv, label %_mm_store_si128.exit80, label %bb.cg, !prof !23, !nosanitize !22
 
 bb.cg:                                            ; preds = %bb.cf
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @118, i64 %i.it) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %i.it) #6, !nosanitize !22
   br label %_mm_store_si128.exit80, !nosanitize !22
 
 _mm_store_si128.exit80:                           ; preds = %bb.cg, %bb.cf
@@ -945,7 +957,7 @@ bb.ci:                                            ; preds = %bb.ch, %_mm_store_s
   br i1 %i.jl, label %_mm_store_si128.exit76, label %bb.cj, !prof !23, !nosanitize !22
 
 bb.cj:                                            ; preds = %bb.ci
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @118, i64 %i.jj) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %i.jj) #6, !nosanitize !22
   br label %_mm_store_si128.exit76, !nosanitize !22
 
 _mm_store_si128.exit76:                           ; preds = %bb.ci, %bb.cj
@@ -971,7 +983,7 @@ bb.cl:                                            ; preds = %bb.ck, %_mm_store_s
   br i1 %i.js, label %_mm_store_si128.exit72, label %bb.cm, !prof !23, !nosanitize !22
 
 bb.cm:                                            ; preds = %bb.cl
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @118, i64 %i.jq) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %i.jq) #6, !nosanitize !22
   br label %_mm_store_si128.exit72, !nosanitize !22
 
 _mm_store_si128.exit72:                           ; preds = %bb.cl, %bb.cm
@@ -987,31 +999,20 @@ _mm_store_si128.exit72:                           ; preds = %bb.cl, %bb.cm
   %i.jy = icmp ult i64 %i.jx, %.028
   %i.jz = icmp samesign ult i64 %.2464.i194, 608
   %i.ka = and i1 %i.jy, %i.jz
-  br i1 %i.ka, label %.lr.ph198, label %.preheader148.preheader, !llvm.loop !14
+  br i1 %i.ka, label %.lr.ph198, label %.preheader148, !llvm.loop !14
 
-.preheader148.preheader:                          ; preds = %_mm_store_si128.exit72, %.preheader149
-  %.3495.i.ph = phi ptr [ %.1493.i.lcssa, %.preheader149 ], [ %i.in, %_mm_store_si128.exit72 ]
-  %.3491.i.ph = phi ptr [ %.1489.i.lcssa, %.preheader149 ], [ %i.je, %_mm_store_si128.exit72 ]
-  %.3487.i.ph = phi ptr [ %.1485.i.lcssa, %.preheader149 ], [ %i.jo, %_mm_store_si128.exit72 ]
-  %.3483.i.ph = phi ptr [ %.1481.i.lcssa, %.preheader149 ], [ %i.jv, %_mm_store_si128.exit72 ]
-  %.3476.i.ph = phi ptr [ %.1474.i.lcssa, %.preheader149 ], [ %i.hq, %_mm_store_si128.exit72 ]
-  %.3465.i.ph = phi i64 [ %.1463.i.lcssa, %.preheader149 ], [ %i.jw, %_mm_store_si128.exit72 ]
-  %.3461.i.ph = phi <2 x i64> [ %.1452.i.lcssa, %.preheader149 ], [ %i.ip, %_mm_store_si128.exit72 ]
-  %.3457.i.ph = phi <2 x i64> [ %.1455.i.lcssa, %.preheader149 ], [ %i.jg, %_mm_store_si128.exit72 ]
-  %.3.i.ph = phi <2 x i64> [ %.1452.i.lcssa, %.preheader149 ], [ %i.hy, %_mm_store_si128.exit72 ]
-  br label %.preheader148.a
-
-.preheader148.a:                                  ; preds = %.preheader148.backedge, %.preheader148.preheader
-  %.3495.i = phi ptr [ %.3495.i.ph, %.preheader148.preheader ], [ %i.nx, %.preheader148.backedge ] ; 12 uses
-  %.3491.i = phi ptr [ %.3491.i.ph, %.preheader148.preheader ], [ %i.pj, %.preheader148.backedge ] ; 12 uses
-  %.3487.i = phi ptr [ %.3487.i.ph, %.preheader148.preheader ], [ %i.rn, %.preheader148.backedge ] ; 18 uses
-  %.3483.i = phi ptr [ %.3483.i.ph, %.preheader148.preheader ], [ %i.se, %.preheader148.backedge ] ; 7 uses
-  %.0478.i = phi ptr [ %i.u, %.preheader148.preheader ], [ %.1479.i, %.preheader148.backedge ] ; 8 uses
-  %.3476.i = phi ptr [ %.3476.i.ph, %.preheader148.preheader ], [ %.4477.i, %.preheader148.backedge ] ; 10 uses
-  %.3465.i = phi i64 [ %.3465.i.ph, %.preheader148.preheader ], [ %i.si, %.preheader148.backedge ] ; 11 uses
-  %.3461.i = phi <2 x i64> [ %.3461.i.ph, %.preheader148.preheader ], [ %i.od, %.preheader148.backedge ] ; 2 uses
-  %.3457.i = phi <2 x i64> [ %.3457.i.ph, %.preheader148.preheader ], [ %i.pp, %.preheader148.backedge ] ; 2 uses
-  %.3.i = phi <2 x i64> [ %.3.i.ph, %.preheader148.preheader ], [ %.4.i, %.preheader148.backedge ] ; 2 uses
+.preheader148.a:                                  ; preds = %.preheader148, %.preheader148.backedge
+  %indvars.iv = phi i64 [ %3, %.preheader148 ], [ %indvars.iv.next, %.preheader148.backedge ] ; 2 uses
+  %.3495.i = phi ptr [ %.2494.i.lcssa, %.preheader148 ], [ %i.nx, %.preheader148.backedge ] ; 12 uses
+  %.3491.i = phi ptr [ %.2490.i.lcssa, %.preheader148 ], [ %i.pj, %.preheader148.backedge ] ; 12 uses
+  %.3487.i = phi ptr [ %.2486.i.lcssa, %.preheader148 ], [ %i.rn, %.preheader148.backedge ] ; 18 uses
+  %.3483.i = phi ptr [ %.2482.i.lcssa, %.preheader148 ], [ %i.se, %.preheader148.backedge ] ; 7 uses
+  %.0478.i = phi ptr [ %i.u, %.preheader148 ], [ %.1479.i, %.preheader148.backedge ] ; 8 uses
+  %.3476.i = phi ptr [ %.2475.i.lcssa, %.preheader148 ], [ %.4477.i, %.preheader148.backedge ] ; 10 uses
+  %.3465.i = phi i64 [ %.2464.i.lcssa, %.preheader148 ], [ %i.si, %.preheader148.backedge ] ; 11 uses
+  %.3461.i = phi <2 x i64> [ %.2460.i.lcssa, %.preheader148 ], [ %i.od, %.preheader148.backedge ] ; 2 uses
+  %.3457.i = phi <2 x i64> [ %.2456.i.lcssa, %.preheader148 ], [ %i.pp, %.preheader148.backedge ] ; 2 uses
+  %.3.i = phi <2 x i64> [ %.2453.i.lcssa, %.preheader148 ], [ %.4.i, %.preheader148.backedge ] ; 2 uses
   %i.kb = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %.3465.i, i64 2400), !nosanitize !22 ; 2 uses
   %i.kc = extractvalue { i64, i1 } %i.kb, 0, !nosanitize !22 ; 4 uses
   %i.kd = extractvalue { i64, i1 } %i.kb, 1, !nosanitize !22 ; 2 uses
@@ -1058,7 +1059,7 @@ bb.cu:                                            ; preds = %bb.ct, %bb.cs
   br i1 %i.kq, label %_mm_load_si128.exit129, label %bb.cv, !prof !23, !nosanitize !22
 
 bb.cv:                                            ; preds = %bb.cu
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @120, i64 %i.kk) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @119, i64 %i.kk) #6, !nosanitize !22
   br label %_mm_load_si128.exit129, !nosanitize !22
 
 _mm_load_si128.exit129:                           ; preds = %bb.cu, %bb.cv
@@ -1113,7 +1114,7 @@ bb.db:                                            ; preds = %bb.da, %bb.cz
   br i1 %i.le, label %_mm_load_si128.exit137, label %bb.dc, !prof !23, !nosanitize !22
 
 bb.dc:                                            ; preds = %bb.db
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @120, i64 %i.kk) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @119, i64 %i.kk) #6, !nosanitize !22
   br label %_mm_load_si128.exit137, !nosanitize !22
 
 _mm_load_si128.exit137:                           ; preds = %bb.db, %bb.dc
@@ -1136,7 +1137,7 @@ bb.de:                                            ; preds = %bb.dd, %_mm_load_si
   br i1 %i.ln, label %_mm_load_si128.exit136, label %bb.df, !prof !23, !nosanitize !22
 
 bb.df:                                            ; preds = %bb.de
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @120, i64 %i.lh) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @119, i64 %i.lh) #6, !nosanitize !22
   br label %_mm_load_si128.exit136, !nosanitize !22
 
 _mm_load_si128.exit136:                           ; preds = %bb.de, %bb.df
@@ -1320,7 +1321,7 @@ bb.dz:                                            ; preds = %bb.dy, %_mm_store_s
   br i1 %i.ne, label %_mm_store_si128.exit102, label %bb.ea, !prof !23, !nosanitize !22
 
 bb.ea:                                            ; preds = %bb.dz
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @118, i64 %i.nc) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %i.nc) #6, !nosanitize !22
   br label %_mm_store_si128.exit102, !nosanitize !22
 
 _mm_store_si128.exit102:                          ; preds = %bb.dz, %bb.ea
@@ -1435,7 +1436,7 @@ bb.ep:                                            ; preds = %bb.eo, %_mm_store_s
   br i1 %i.oq, label %_mm_store_si128.exit98, label %bb.eq, !prof !23, !nosanitize !22
 
 bb.eq:                                            ; preds = %bb.ep
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @118, i64 %i.oo) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %i.oo) #6, !nosanitize !22
   br label %_mm_store_si128.exit98, !nosanitize !22
 
 _mm_store_si128.exit98:                           ; preds = %bb.ep, %bb.eq
@@ -1562,7 +1563,7 @@ bb.fg:                                            ; preds = %bb.ff, %bb.fe
   br i1 %i.rg, label %_mm_store_si128.exit95, label %bb.fh, !prof !23, !nosanitize !22
 
 bb.fh:                                            ; preds = %bb.fg
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @118, i64 %.pre-phi416) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %.pre-phi416) #6, !nosanitize !22
   br label %_mm_store_si128.exit95, !nosanitize !22
 
 _mm_store_si128.exit95:                           ; preds = %bb.fg, %bb.fh
@@ -1621,7 +1622,7 @@ bb.fm:                                            ; preds = %bb.fl, %_mm_store_s
   br i1 %i.rx, label %_mm_store_si128.exit91, label %bb.fn, !prof !23, !nosanitize !22
 
 bb.fn:                                            ; preds = %bb.fm
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @118, i64 %i.rr) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %i.rr) #6, !nosanitize !22
   br label %_mm_store_si128.exit91, !nosanitize !22
 
 _mm_store_si128.exit91:                           ; preds = %bb.fm, %bb.fn
@@ -1672,6 +1673,7 @@ bb.fr:                                            ; preds = %_mm_store_si128.exi
   br label %.preheader148.backedge, !nosanitize !22
 
 .preheader148.backedge:                           ; preds = %bb.fr, %_mm_store_si128.exit88
+  %indvars.iv.next = add i64 %indvars.iv, -64
   br label %.preheader148.a, !llvm.loop !15
 
 bb.fs:                                            ; preds = %bb.cq
@@ -1681,7 +1683,7 @@ bb.fs:                                            ; preds = %bb.cq
   br i1 %i.sm, label %_mm_store_si128.exit114, label %bb.ft, !prof !23, !nosanitize !22
 
 bb.ft:                                            ; preds = %bb.fs
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @118, i64 %i.sk) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %i.sk) #6, !nosanitize !22
   br label %_mm_store_si128.exit114, !nosanitize !22
 
 _mm_store_si128.exit114:                          ; preds = %bb.fs, %bb.ft
@@ -1692,7 +1694,7 @@ _mm_store_si128.exit114:                          ; preds = %bb.fs, %bb.ft
   br i1 %i.sp, label %_mm_store_si128.exit113, label %bb.fu, !prof !23, !nosanitize !22
 
 bb.fu:                                            ; preds = %_mm_store_si128.exit114
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @118, i64 %i.sn) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %i.sn) #6, !nosanitize !22
   br label %_mm_store_si128.exit113, !nosanitize !22
 
 _mm_store_si128.exit113:                          ; preds = %_mm_store_si128.exit114, %bb.fu
@@ -1703,7 +1705,7 @@ _mm_store_si128.exit113:                          ; preds = %_mm_store_si128.exi
   br i1 %i.ss, label %_mm_store_si128.exit112, label %bb.fv, !prof !23, !nosanitize !22
 
 bb.fv:                                            ; preds = %_mm_store_si128.exit113
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @118, i64 %i.sq) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %i.sq) #6, !nosanitize !22
   br label %_mm_store_si128.exit112, !nosanitize !22
 
 _mm_store_si128.exit112:                          ; preds = %_mm_store_si128.exit113, %bb.fv
@@ -1775,7 +1777,7 @@ bb.ge:                                            ; preds = %.lr.ph210
   br i1 %i.tk, label %_mm_store_si128.exit107, label %bb.gf, !prof !23, !nosanitize !22
 
 bb.gf:                                            ; preds = %.lr.ph210._crit_edge
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @118, i64 %i.th) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %i.th) #6, !nosanitize !22
   br label %_mm_store_si128.exit107, !nosanitize !22
 
 _mm_store_si128.exit107:                          ; preds = %.lr.ph210._crit_edge, %bb.gf
@@ -1848,7 +1850,7 @@ bb.gk:                                            ; preds = %bb.gj, %.lr.ph215
   br i1 %i.uf, label %_mm_store_si128.exit108, label %bb.gl, !prof !23, !nosanitize !22
 
 bb.gl:                                            ; preds = %bb.gk
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @118, i64 %i.tz) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @117, i64 %i.tz) #6, !nosanitize !22
   br label %_mm_store_si128.exit108, !nosanitize !22
 
 _mm_store_si128.exit108:                          ; preds = %bb.gk, %bb.gl
@@ -1884,10 +1886,11 @@ bb.gn:                                            ; preds = %.lr.ph219, %bb.gm
   br label %bb.go
 
 bb.go:                                            ; preds = %.backedge588, %._crit_edge
-  %.4466.i = phi i64 [ %.3465.i, %._crit_edge ], [ %i.xt, %.backedge588 ] ; 13 uses
-  %.0438.i = phi <2 x i64> [ zeroinitializer, %._crit_edge ], [ %i.xn, %.backedge588 ] ; 2 uses
-  %.0437.i = phi <2 x i64> [ zeroinitializer, %._crit_edge ], [ %i.xq, %.backedge588 ] ; 2 uses
-  %.0436.i = phi <2 x i64> [ zeroinitializer, %._crit_edge ], [ %i.xr, %.backedge588 ] ; 2 uses
+  %indvars.iv251 = phi i64 [ %indvars.iv.next252, %.backedge588 ], [ %indvars.iv, %._crit_edge ] ; 2 uses
+  %.4466.i = phi i64 [ %i.xt, %.backedge588 ], [ %.3465.i, %._crit_edge ] ; 13 uses
+  %.0438.i = phi <2 x i64> [ %i.xn, %.backedge588 ], [ zeroinitializer, %._crit_edge ] ; 2 uses
+  %.0437.i = phi <2 x i64> [ %i.xq, %.backedge588 ], [ zeroinitializer, %._crit_edge ] ; 2 uses
+  %.0436.i = phi <2 x i64> [ %i.xr, %.backedge588 ], [ zeroinitializer, %._crit_edge ] ; 2 uses
   %i.uo = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %.4466.i, i64 72), !nosanitize !22 ; 2 uses
   %i.up = extractvalue { i64, i1 } %i.uo, 0, !nosanitize !22
   %i.uq = extractvalue { i64, i1 } %i.uo, 1, !nosanitize !22
@@ -1924,7 +1927,7 @@ bb.gt:                                            ; preds = %bb.gs, %bb.gr
   br i1 %i.vd, label %_mm_load_si128.exit141, label %bb.gu, !prof !23, !nosanitize !22
 
 bb.gu:                                            ; preds = %bb.gt
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @120, i64 %i.va) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @119, i64 %i.va) #6, !nosanitize !22
   br label %_mm_load_si128.exit141, !nosanitize !22
 
 _mm_load_si128.exit141:                           ; preds = %bb.gt, %bb.gu
@@ -1975,7 +1978,7 @@ bb.hb:                                            ; preds = %bb.ha, %bb.gz
   br i1 %i.vt, label %_mm_load_si128.exit139, label %bb.hc, !prof !23, !nosanitize !22
 
 bb.hc:                                            ; preds = %bb.hb
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @120, i64 %i.vr) #6, !nosanitize !22
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @119, i64 %i.vr) #6, !nosanitize !22
   br label %_mm_load_si128.exit139, !nosanitize !22
 
 _mm_load_si128.exit139:                           ; preds = %bb.hb, %bb.hc
@@ -2061,6 +2064,7 @@ bb.hi:                                            ; preds = %_mm_load_si128.exit
   br label %.backedge588, !nosanitize !22
 
 .backedge588:                                     ; preds = %bb.hi, %_mm_load_si128.exit138
+  %indvars.iv.next252 = add i64 %indvars.iv251, -32
   br label %bb.go, !llvm.loop !19
 
 bb.hj:                                            ; preds = %bb.gq
@@ -2074,7 +2078,7 @@ bb.hk:                                            ; preds = %bb.hj
 
 bb.hl:                                            ; preds = %bb.hk, %bb.hj
   %i.xx = call { i64, i1 } @llvm.usub.with.overflow.i64(i64 range(i64 8193, 32769) %.028, i64 %.4466.i), !nosanitize !22 ; 2 uses
-  %i.xy = extractvalue { i64, i1 } %i.xx, 0, !nosanitize !22 ; 2 uses
+  %i.xy = extractvalue { i64, i1 } %i.xx, 0, !nosanitize !22
   %i.xz = extractvalue { i64, i1 } %i.xx, 1, !nosanitize !22 ; 2 uses
   br i1 %i.xz, label %bb.hm, label %bb.hn, !prof !24, !nosanitize !22
 
@@ -2133,9 +2137,9 @@ _mm_load_si128.exit142.thread:                    ; preds = %_mm_load_si128.exit
   store <2 x i64> %i.ym, ptr %i.yk, align 16, !tbaa !25
   br label %bb.ht
 
-bb.ht:                                            ; preds = %.backedge, %_mm_load_si128.exit142.thread
-  %.0435.i = phi i32 [ 0, %_mm_load_si128.exit142.thread ], [ %i.zd, %.backedge ] ; 3 uses
-  %.0.i = phi i64 [ 0, %_mm_load_si128.exit142.thread ], [ %5, %.backedge ] ; 7 uses
+bb.ht:                                            ; preds = %bb.ie, %_mm_load_si128.exit142.thread
+  %.0435.i = phi i32 [ 0, %_mm_load_si128.exit142.thread ], [ %i.zd, %bb.ie ] ; 3 uses
+  %.0.i = phi i64 [ 0, %_mm_load_si128.exit142.thread ], [ %4, %bb.ie ] ; 6 uses
   br i1 %i.xz, label %bb.hu, label %bb.hv, !prof !24, !nosanitize !22
 
 bb.hu:                                            ; preds = %bb.ht
@@ -2143,8 +2147,8 @@ bb.hu:                                            ; preds = %bb.ht
   br label %bb.hv, !nosanitize !22
 
 bb.hv:                                            ; preds = %bb.hu, %bb.ht
-  %3 = icmp ult i64 %.0.i, %i.xy
-  br i1 %3, label %bb.hw, label %crc32_chorba_32768_nondestructive_sse41.exit
+  %exitcond.not = icmp eq i64 %.0.i, %indvars.iv251
+  br i1 %exitcond.not, label %crc32_chorba_32768_nondestructive_sse41.exit, label %bb.hw
 
 bb.hw:                                            ; preds = %bb.hv
   %i.yn = getelementptr inbounds nuw i8, ptr %i.b, i64 %.0.i
@@ -2197,16 +2201,7 @@ bb.ie:                                            ; preds = %bb.ic, %bb.id
   %i.zb = load i32, ptr %i.yy, align 4, !tbaa !30
   %i.zc = lshr i32 %.0435.i, 8
   %i.zd = xor i32 %i.zb, %i.zc
-  %4 = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %.0.i, i64 1), !nosanitize !22 ; 2 uses
-  %5 = extractvalue { i64, i1 } %4, 0, !nosanitize !22
-  %6 = extractvalue { i64, i1 } %4, 1, !nosanitize !22
-  br i1 %6, label %7, label %.backedge, !prof !24, !nosanitize !22
-
-7:                                                ; preds = %bb.ie
-  call void @__ubsan_handle_add_overflow(ptr nonnull @117, i64 %.0.i, i64 1) #7, !nosanitize !22
-  br label %.backedge, !nosanitize !22
-
-.backedge:                                        ; preds = %7, %bb.ie
+  %4 = add i64 %.0.i, 1
   br label %bb.ht, !llvm.loop !20
 
 crc32_chorba_32768_nondestructive_sse41.exit:     ; preds = %bb.hv
