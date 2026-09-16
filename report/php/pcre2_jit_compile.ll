@@ -205,7 +205,7 @@ bb.hp:                                            ; preds = %sljit_emit_op1.exit
   %i.aon = lshr i32 %i.anq, 3
   %i.aoo = urem i32 %i.aon, 3                     ; 3 uses
   %i.aop = shl nuw nsw i32 %i.aoo, 3
-  %i.aoq = sub nuw i32 %i.anq, %i.aop             ; 2 uses
+  %i.aoq = sub nuw i32 %i.anq, %i.aop
   %i.aor = zext i32 %i.aoq to i64                 ; 2 uses
   %i.aos = load i32, ptr %i.anp, align 8, !tbaa !129
   %.not.i49.i811 = icmp eq i32 %i.aos, 0
@@ -214,24 +214,20 @@ bb.hp:                                            ; preds = %sljit_emit_op1.exit
 bb.hq:                                            ; preds = %bb.hp
   %i.aot = getelementptr inbounds nuw i8, ptr %i.anp, i64 144
   store i32 0, ptr %i.aot, align 8, !tbaa !132
-  %or.cond.i94.i = icmp sgt i32 %i.aoq, -1
-  br i1 %or.cond.i94.i, label %5, label %emit_lea_binary.exit.thread.i
-
-5:                                                ; preds = %bb.hq
-  %6 = call fastcc ptr @emit_x86_instruction(ptr noundef nonnull %i.anp, i64 noundef 1, i32 noundef 4, i64 noundef 0, i32 noundef 129, i64 noundef %i.aor) ; 2 uses
-  %.not61.i.i = icmp eq ptr %6, null
+  %5 = call fastcc ptr @emit_x86_instruction(ptr noundef nonnull %i.anp, i64 noundef 1, i32 noundef 4, i64 noundef 0, i32 noundef 129, i64 noundef %i.aor) ; 2 uses
+  %.not61.i.i = icmp eq ptr %5, null
   br i1 %.not61.i.i, label %emit_lea_binary.exit.i, label %emit_lea_binary.exit.thread113.i, !prof !61
 
-emit_lea_binary.exit.thread113.i:                 ; preds = %5
-  store i8 -115, ptr %6, align 1, !tbaa !97
+emit_lea_binary.exit.thread113.i:                 ; preds = %bb.hq
+  store i8 -115, ptr %5, align 1, !tbaa !97
   br label %sljit_emit_op2.exit.i812
 
-emit_lea_binary.exit.i:                           ; preds = %5
+emit_lea_binary.exit.i:                           ; preds = %bb.hq
   %i.aou = load i32, ptr %i.anp, align 8, !tbaa !129
   %.not170.i.i = icmp eq i32 %i.aou, 4
   br i1 %.not170.i.i, label %emit_lea_binary.exit.thread.i, label %sljit_emit_op2.exit.i812
 
-emit_lea_binary.exit.thread.i:                    ; preds = %emit_lea_binary.exit.i, %bb.hq
+emit_lea_binary.exit.thread.i:                    ; preds = %emit_lea_binary.exit.i
   %i.aov = call fastcc i32 @emit_cum_binary(ptr noundef nonnull %i.anp, i32 noundef 84082944, i32 noundef 4, i64 noundef 0, i32 noundef 1, i64 noundef 0, i32 noundef 127, i64 noundef %i.aor) ; 0 uses
   br label %sljit_emit_op2.exit.i812
 

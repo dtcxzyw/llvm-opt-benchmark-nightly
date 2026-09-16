@@ -204,7 +204,7 @@ _ZN8rawspeed10ByteStream9skipBytesEj.exit:        ; preds = %bb.i
 bb.k:                                             ; preds = %_ZN8rawspeed10ByteStream9skipBytesEj.exit, %_ZNK8rawspeed17LJpegDecompressor15getInitialPredsILi2EEESt5arrayItXT_EEv.exit
   %.sroa.10429.1 = phi i32 [ %.sroa.10429.0917, %_ZNK8rawspeed17LJpegDecompressor15getInitialPredsILi2EEESt5arrayItXT_EEv.exit ], [ %i.dl, %_ZN8rawspeed10ByteStream9skipBytesEj.exit ] ; 3 uses
   %i.dn = zext i32 %.sroa.10429.1 to i64          ; 2 uses
-  %i.do = sub nuw i32 %.sroa.223.0.copyload, %.sroa.10429.1 ; 14 uses
+  %i.do = sub nuw nsw i32 %.sroa.223.0.copyload, %.sroa.10429.1 ; 14 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %.sroa.022.0.copyload, i64 %i.dn ; 6 uses
   %i.dq = icmp samesign ult i32 %i.do, 8
   br i1 %i.dq, label %bb.l, label %_ZN8rawspeed15BitStreamerJPEGCI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit.preheader
@@ -607,7 +607,7 @@ _ZN8rawspeed10ByteStream9skipBytesEj.exit:        ; preds = %bb.i
 bb.k:                                             ; preds = %_ZN8rawspeed10ByteStream9skipBytesEj.exit, %_ZNK8rawspeed17LJpegDecompressor15getInitialPredsILi3EEESt5arrayItXT_EEv.exit
   %.sroa.10425.1 = phi i32 [ %.sroa.10425.0916, %_ZNK8rawspeed17LJpegDecompressor15getInitialPredsILi3EEESt5arrayItXT_EEv.exit ], [ %i.dn, %_ZN8rawspeed10ByteStream9skipBytesEj.exit ] ; 3 uses
   %i.dp = zext i32 %.sroa.10425.1 to i64          ; 2 uses
-  %i.dq = sub nuw i32 %.sroa.221.0.copyload, %.sroa.10425.1 ; 14 uses
+  %i.dq = sub nuw nsw i32 %.sroa.221.0.copyload, %.sroa.10425.1 ; 14 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %.sroa.020.0.copyload, i64 %i.dp ; 6 uses
   %i.ds = icmp samesign ult i32 %i.dq, 8
   br i1 %i.ds, label %bb.l, label %_ZN8rawspeed15BitStreamerJPEGCI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit.preheader
@@ -1010,7 +1010,7 @@ _ZN8rawspeed10ByteStream9skipBytesEj.exit:        ; preds = %bb.i
 bb.k:                                             ; preds = %_ZN8rawspeed10ByteStream9skipBytesEj.exit, %_ZNK8rawspeed17LJpegDecompressor15getInitialPredsILi4EEESt5arrayItXT_EEv.exit
   %.sroa.10425.1 = phi i32 [ %.sroa.10425.0917, %_ZNK8rawspeed17LJpegDecompressor15getInitialPredsILi4EEESt5arrayItXT_EEv.exit ], [ %i.do, %_ZN8rawspeed10ByteStream9skipBytesEj.exit ] ; 3 uses
   %i.dq = zext i32 %.sroa.10425.1 to i64          ; 2 uses
-  %i.dr = sub nuw i32 %.sroa.221.0.copyload, %.sroa.10425.1 ; 14 uses
+  %i.dr = sub nuw nsw i32 %.sroa.221.0.copyload, %.sroa.10425.1 ; 14 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %.sroa.020.0.copyload, i64 %i.dq ; 6 uses
   %i.dt = icmp samesign ult i32 %i.dr, 8
   br i1 %i.dt, label %bb.l, label %_ZN8rawspeed15BitStreamerJPEGCI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit.preheader
@@ -1413,7 +1413,7 @@ _ZN8rawspeed10ByteStream9skipBytesEj.exit:        ; preds = %bb.i
 bb.k:                                             ; preds = %_ZN8rawspeed10ByteStream9skipBytesEj.exit, %_ZNK8rawspeed17LJpegDecompressor15getInitialPredsILi4EEESt5arrayItXT_EEv.exit
   %.sroa.10425.1 = phi i32 [ %.sroa.10425.0927, %_ZNK8rawspeed17LJpegDecompressor15getInitialPredsILi4EEESt5arrayItXT_EEv.exit ], [ %i.dv, %_ZN8rawspeed10ByteStream9skipBytesEj.exit ] ; 3 uses
   %i.dx = zext i32 %.sroa.10425.1 to i64          ; 2 uses
-  %i.dy = sub nuw i32 %.sroa.221.0.copyload, %.sroa.10425.1 ; 14 uses
+  %i.dy = sub nuw nsw i32 %.sroa.221.0.copyload, %.sroa.10425.1 ; 14 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %.sroa.020.0.copyload, i64 %i.dx ; 6 uses
   %i.ea = icmp samesign ult i32 %i.dy, 8
   br i1 %i.ea, label %bb.l, label %_ZN8rawspeed15BitStreamerJPEGCI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit.preheader

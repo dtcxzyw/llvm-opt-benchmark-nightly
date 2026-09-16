@@ -1,0 +1,92 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index 658b027820a84..7dcae8d73e075 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -559,14 +559,21 @@ static bool isKnownNoWrap(Value *V, const ConstraintInfo &Info, bool Signed) {
+   Value *Op1 = BO->getOperand(1);
+   auto Opcode = static_cast<Instruction::BinaryOps>(BO->getOpcode());
+ 
+-  // Op0 - Op1 does not wrap unsigned if Op0 >=u Op1.
+-  if (Opcode == Instruction::Sub)
+-    return !Signed && Info.doesHold(CmpInst::ICMP_UGE, Op0, Op1);
+-
+-  if (!Signed && BO->hasNoSignedWrap() &&
+-      (Opcode == Instruction::Shl || Info.isKnownNonNegative(Op1)) &&
+-      Info.isKnownNonNegative(Op0))
++  if (Opcode == Instruction::Sub) {
++    // Op0 - Op1 does not wrap unsigned if Op0 >=u Op1.
++    if (!Signed)
++      return Info.doesHold(CmpInst::ICMP_UGE, Op0, Op1);
++
++    // Subtracting a non-negative Op1 can only decrease the result, so a
++    // matching bound on Op0 keeps the exact result in the signed range.
++    if (Info.isKnownNonNegative(Op1) &&
++        Info.doesHold(CmpInst::ICMP_SGE, Op0, Op1))
++      return true;
++  } else if (!Signed && BO->hasNoSignedWrap() &&
++             (Opcode == Instruction::Shl || Info.isKnownNonNegative(Op1)) &&
++             Info.isKnownNonNegative(Op0)) {
+     return true;
++  }
+ 
+   // For a constant Op1, the ranges of Op0 for which the operation does not
+   // wrap are known exactly; check if the systems imply one of them.
+@@ -2465,16 +2472,14 @@ static bool eliminateConstraints(Function &F, DominatorTree &DT, LoopInfo &LI,
+           Value *X = BO->getOperand(0);
+           Value *N = BO->getOperand(1);
+           Constant *Zero = Constant::getNullValue(BO->getType());
+-          if (Info.doesHold(CmpInst::ICMP_SGE, X, Zero) ||
+-              isKnownNonNegative(X, F.getDataLayout())) {
++          if (Info.isKnownNonNegative(X)) {
+             // srem x, n: result >= 0, if x >= 0 (result has the sign of x)
+             AddFact(CmpInst::ICMP_SGE, BO, Zero);
+             // srem x, n: result <= x, if x >= 0 (|result| <= |x| and both are
+             // non-negative)
+             AddFact(CmpInst::ICMP_SLE, BO, X);
+           }
+-          if (Info.doesHold(CmpInst::ICMP_SGE, N, Zero) ||
+-              isKnownPositive(N, F.getDataLayout())) {
++          if (Info.isKnownNonNegative(N)) {
+             // srem x, n: result <= n, if n >= 0 (|result| < n, so result <= n -
+             // 1
+             AddFact(CmpInst::ICMP_SLT, BO, N);
+diff --git a/llvm/test/Transforms/ConstraintElimination/decompose-signed-preconditions.ll b/llvm/test/Transforms/ConstraintElimination/decompose-signed-preconditions.ll
+index a93f8615db127..b6e517204da55 100644
+--- a/llvm/test/Transforms/ConstraintElimination/decompose-signed-preconditions.ll
++++ b/llvm/test/Transforms/ConstraintElimination/decompose-signed-preconditions.ll
+@@ -109,8 +109,7 @@ define i1 @sub_via_operand_signs(i8 %a, i8 %b) {
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
+ ; CHECK-NEXT:    [[C_2:%.*]] = icmp sge i8 [[A]], [[B]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_2]])
+-; CHECK-NEXT:    [[C:%.*]] = icmp sle i8 [[S]], [[A]]
+-; CHECK-NEXT:    ret i1 [[C]]
++; CHECK-NEXT:    ret i1 true
+ ;
+ entry:
+   %s = sub i8 %a, %b
+diff --git a/llvm/test/Transforms/ConstraintElimination/srem.ll b/llvm/test/Transforms/ConstraintElimination/srem.ll
+index 3540b0f5978dc..dc7a001d305ef 100644
+--- a/llvm/test/Transforms/ConstraintElimination/srem.ll
++++ b/llvm/test/Transforms/ConstraintElimination/srem.ll
+@@ -37,6 +37,21 @@ define i1 @srem_slt_divisor_bound(i32 noundef %x, i32 noundef %n, i32 noundef %m
+   ret i1 %c
+ }
+ 
++; The divisor is only known to be non-negative via ValueTracking, with no facts
++; about it in the constraint system. It cannot be zero, as srem by zero is UB.
++define i1 @srem_slt_divisor_bound_masked_divisor(i32 noundef %x, i32 noundef %a) {
++; CHECK-LABEL: define i1 @srem_slt_divisor_bound_masked_divisor(
++; CHECK-SAME: i32 noundef [[X:%.*]], i32 noundef [[A:%.*]]) {
++; CHECK-NEXT:    [[N:%.*]] = and i32 [[A]], 2147483647
++; CHECK-NEXT:    [[R:%.*]] = srem i32 [[X]], [[N]]
++; CHECK-NEXT:    ret i1 true
++;
++  %n = and i32 %a, 2147483647
++  %r = srem i32 %x, %n
++  %c = icmp slt i32 %r, %n
++  ret i1 %c
++}
++
+ define i1 @srem_sle_dividend_bound(i32 noundef %x, i32 noundef %n, i32 noundef %limit) {
+ ; CHECK-LABEL: define i1 @srem_sle_dividend_bound(
+ ; CHECK-SAME: i32 noundef [[X:%.*]], i32 noundef [[N:%.*]], i32 noundef [[LIMIT:%.*]]) {

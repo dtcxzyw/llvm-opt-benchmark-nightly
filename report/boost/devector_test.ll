@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %bb.n, %.lr.ph.i.i.i
   %i.cy = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !259
   %i.cz = add i32 %i.cy, 1
   store i32 %i.cz, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !259
-  %i.da = add nuw i64 %.06.i.i.i.i.i498, 4        ; 2 uses
+  %i.da = add nuw nsw i64 %.06.i.i.i.i.i498, 4    ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN5boost9container8devectorINS0_4test11movable_intESaIS3_EvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i.unr-lcssa, label %bb.n, !llvm.loop !113
@@ -228,7 +228,7 @@ bb.o:                                             ; preds = %bb.o, %.epil.prehea
   %i.dc = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !259
   %i.dd = add i32 %i.dc, 1
   store i32 %i.dd, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !259
-  %i.de = add nuw i64 %.06.i.i.i.i.i498.epil, 1
+  %i.de = add nuw nsw i64 %.06.i.i.i.i.i498.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %_ZN5boost9container8devectorINS0_4test11movable_intESaIS3_EvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i, label %bb.o, !llvm.loop !3459
@@ -419,7 +419,7 @@ bb.z:                                             ; preds = %bb.z, %.lr.ph.i.i.i
   %i.fm = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !259
   %i.fn = add i32 %i.fm, 1
   store i32 %i.fn, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !259
-  %i.fo = add nuw i64 %.06.i.i.i.i.i523, 4        ; 2 uses
+  %i.fo = add nuw nsw i64 %.06.i.i.i.i.i523, 4    ; 2 uses
   %niter1040.next.3 = add i64 %niter1040, 4       ; 2 uses
   %niter1040.ncmp.3 = icmp eq i64 %niter1040.next.3, %unroll_iter1039
   br i1 %niter1040.ncmp.3, label %_ZN5boost9container8devectorINS0_4test11movable_intESaIS3_EvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i525.unr-lcssa, label %bb.z, !llvm.loop !113
@@ -442,7 +442,7 @@ bb.aa:                                            ; preds = %bb.aa, %.epil.prehe
   %i.fq = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !259
   %i.fr = add i32 %i.fq, 1
   store i32 %i.fr, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !259
-  %i.fs = add nuw i64 %.06.i.i.i.i.i523.epil, 1
+  %i.fs = add nuw nsw i64 %.06.i.i.i.i.i523.epil, 1
   %epil.iter1036.next = add i64 %epil.iter1036, 1 ; 2 uses
   %epil.iter1036.cmp.not = icmp eq i64 %epil.iter1036.next, %xtraiter1035
   br i1 %epil.iter1036.cmp.not, label %_ZN5boost9container8devectorINS0_4test11movable_intESaIS3_EvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i525, label %bb.aa, !llvm.loop !3460
@@ -845,7 +845,7 @@ bb.n:                                             ; preds = %bb.n, %.lr.ph.i.i.i
   %i.cy = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !259
   %i.cz = add i32 %i.cy, 1
   store i32 %i.cz, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !259
-  %i.da = add nuw i64 %.06.i.i.i.i.i498, 4        ; 2 uses
+  %i.da = add nuw nsw i64 %.06.i.i.i.i.i498, 4    ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN5boost9container8devectorINS0_4test24movable_and_copyable_intESaIS3_EvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i.unr-lcssa, label %bb.n, !llvm.loop !135
@@ -868,7 +868,7 @@ bb.o:                                             ; preds = %bb.o, %.epil.prehea
   %i.dc = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !259
   %i.dd = add i32 %i.dc, 1
   store i32 %i.dd, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !259
-  %i.de = add nuw i64 %.06.i.i.i.i.i498.epil, 1
+  %i.de = add nuw nsw i64 %.06.i.i.i.i.i498.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %_ZN5boost9container8devectorINS0_4test24movable_and_copyable_intESaIS3_EvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i, label %bb.o, !llvm.loop !4083
@@ -1059,7 +1059,7 @@ bb.z:                                             ; preds = %bb.z, %.lr.ph.i.i.i
   %i.fm = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !259
   %i.fn = add i32 %i.fm, 1
   store i32 %i.fn, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !259
-  %i.fo = add nuw i64 %.06.i.i.i.i.i523, 4        ; 2 uses
+  %i.fo = add nuw nsw i64 %.06.i.i.i.i.i523, 4    ; 2 uses
   %niter1040.next.3 = add i64 %niter1040, 4       ; 2 uses
   %niter1040.ncmp.3 = icmp eq i64 %niter1040.next.3, %unroll_iter1039
   br i1 %niter1040.ncmp.3, label %_ZN5boost9container8devectorINS0_4test24movable_and_copyable_intESaIS3_EvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i525.unr-lcssa, label %bb.z, !llvm.loop !135
@@ -1082,7 +1082,7 @@ bb.aa:                                            ; preds = %bb.aa, %.epil.prehe
   %i.fq = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !259
   %i.fr = add i32 %i.fq, 1
   store i32 %i.fr, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !259
-  %i.fs = add nuw i64 %.06.i.i.i.i.i523.epil, 1
+  %i.fs = add nuw nsw i64 %.06.i.i.i.i.i523.epil, 1
   %epil.iter1036.next = add i64 %epil.iter1036, 1 ; 2 uses
   %epil.iter1036.cmp.not = icmp eq i64 %epil.iter1036.next, %xtraiter1035
   br i1 %epil.iter1036.cmp.not, label %_ZN5boost9container8devectorINS0_4test24movable_and_copyable_intESaIS3_EvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i525, label %bb.aa, !llvm.loop !4084
@@ -1485,7 +1485,7 @@ bb.n:                                             ; preds = %bb.n, %.lr.ph.i.i.i
   %i.cy = load i32, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !259
   %i.cz = add i32 %i.cy, 1
   store i32 %i.cz, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !259
-  %i.da = add nuw i64 %.06.i.i.i.i.i498, 4        ; 2 uses
+  %i.da = add nuw nsw i64 %.06.i.i.i.i.i498, 4    ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN5boost9container8devectorINS0_4test12copyable_intESaIS3_EvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i.unr-lcssa, label %bb.n, !llvm.loop !158
@@ -1508,7 +1508,7 @@ bb.o:                                             ; preds = %bb.o, %.epil.prehea
   %i.dc = load i32, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !259
   %i.dd = add i32 %i.dc, 1
   store i32 %i.dd, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !259
-  %i.de = add nuw i64 %.06.i.i.i.i.i498.epil, 1
+  %i.de = add nuw nsw i64 %.06.i.i.i.i.i498.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %_ZN5boost9container8devectorINS0_4test12copyable_intESaIS3_EvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i, label %bb.o, !llvm.loop !5090
@@ -1699,7 +1699,7 @@ bb.z:                                             ; preds = %bb.z, %.lr.ph.i.i.i
   %i.fm = load i32, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !259
   %i.fn = add i32 %i.fm, 1
   store i32 %i.fn, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !259
-  %i.fo = add nuw i64 %.06.i.i.i.i.i523, 4        ; 2 uses
+  %i.fo = add nuw nsw i64 %.06.i.i.i.i.i523, 4    ; 2 uses
   %niter1040.next.3 = add i64 %niter1040, 4       ; 2 uses
   %niter1040.ncmp.3 = icmp eq i64 %niter1040.next.3, %unroll_iter1039
   br i1 %niter1040.ncmp.3, label %_ZN5boost9container8devectorINS0_4test12copyable_intESaIS3_EvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i525.unr-lcssa, label %bb.z, !llvm.loop !158
@@ -1722,7 +1722,7 @@ bb.aa:                                            ; preds = %bb.aa, %.epil.prehe
   %i.fq = load i32, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !259
   %i.fr = add i32 %i.fq, 1
   store i32 %i.fr, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !259
-  %i.fs = add nuw i64 %.06.i.i.i.i.i523.epil, 1
+  %i.fs = add nuw nsw i64 %.06.i.i.i.i.i523.epil, 1
   %epil.iter1036.next = add i64 %epil.iter1036, 1 ; 2 uses
   %epil.iter1036.cmp.not = icmp eq i64 %epil.iter1036.next, %xtraiter1035
   br i1 %epil.iter1036.cmp.not, label %_ZN5boost9container8devectorINS0_4test12copyable_intESaIS3_EvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i525, label %bb.aa, !llvm.loop !5091
@@ -2125,7 +2125,7 @@ bb.q:                                             ; preds = %bb.q, %.lr.ph.i.i.i
   %i.da = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !259
   %i.db = add i32 %i.da, 1
   store i32 %i.db, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !259
-  %i.dc = add nuw i64 %.06.i.i.i.i.i501, 4        ; 2 uses
+  %i.dc = add nuw nsw i64 %.06.i.i.i.i.i501, 4    ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN5boost9container8devectorINS0_4test11movable_intENS0_9allocatorIS3_Lj2ELj0EEEvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i.unr-lcssa, label %bb.q, !llvm.loop !192
@@ -2148,7 +2148,7 @@ bb.r:                                             ; preds = %bb.r, %.epil.prehea
   %i.de = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !259
   %i.df = add i32 %i.de, 1
   store i32 %i.df, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !259
-  %i.dg = add nuw i64 %.06.i.i.i.i.i501.epil, 1
+  %i.dg = add nuw nsw i64 %.06.i.i.i.i.i501.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %_ZN5boost9container8devectorINS0_4test11movable_intENS0_9allocatorIS3_Lj2ELj0EEEvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i, label %bb.r, !llvm.loop !6230
@@ -2339,7 +2339,7 @@ bb.ac:                                            ; preds = %bb.ac, %.lr.ph.i.i.
   %i.fo = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !259
   %i.fp = add i32 %i.fo, 1
   store i32 %i.fp, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !259
-  %i.fq = add nuw i64 %.06.i.i.i.i.i526, 4        ; 2 uses
+  %i.fq = add nuw nsw i64 %.06.i.i.i.i.i526, 4    ; 2 uses
   %niter1051.next.3 = add i64 %niter1051, 4       ; 2 uses
   %niter1051.ncmp.3 = icmp eq i64 %niter1051.next.3, %unroll_iter1050
   br i1 %niter1051.ncmp.3, label %_ZN5boost9container8devectorINS0_4test11movable_intENS0_9allocatorIS3_Lj2ELj0EEEvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i528.unr-lcssa, label %bb.ac, !llvm.loop !192
@@ -2362,7 +2362,7 @@ bb.ad:                                            ; preds = %bb.ad, %.epil.prehe
   %i.fs = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !259
   %i.ft = add i32 %i.fs, 1
   store i32 %i.ft, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !259
-  %i.fu = add nuw i64 %.06.i.i.i.i.i526.epil, 1
+  %i.fu = add nuw nsw i64 %.06.i.i.i.i.i526.epil, 1
   %epil.iter1047.next = add i64 %epil.iter1047, 1 ; 2 uses
   %epil.iter1047.cmp.not = icmp eq i64 %epil.iter1047.next, %xtraiter1046
   br i1 %epil.iter1047.cmp.not, label %_ZN5boost9container8devectorINS0_4test11movable_intENS0_9allocatorIS3_Lj2ELj0EEEvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i528, label %bb.ad, !llvm.loop !6231
@@ -2765,7 +2765,7 @@ bb.q:                                             ; preds = %bb.q, %.lr.ph.i.i.i
   %i.da = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !259
   %i.db = add i32 %i.da, 1
   store i32 %i.db, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !259
-  %i.dc = add nuw i64 %.06.i.i.i.i.i501, 4        ; 2 uses
+  %i.dc = add nuw nsw i64 %.06.i.i.i.i.i501, 4    ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN5boost9container8devectorINS0_4test24movable_and_copyable_intENS0_9allocatorIS3_Lj2ELj0EEEvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i.unr-lcssa, label %bb.q, !llvm.loop !204
@@ -2788,7 +2788,7 @@ bb.r:                                             ; preds = %bb.r, %.epil.prehea
   %i.de = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !259
   %i.df = add i32 %i.de, 1
   store i32 %i.df, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !259
-  %i.dg = add nuw i64 %.06.i.i.i.i.i501.epil, 1
+  %i.dg = add nuw nsw i64 %.06.i.i.i.i.i501.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %_ZN5boost9container8devectorINS0_4test24movable_and_copyable_intENS0_9allocatorIS3_Lj2ELj0EEEvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i, label %bb.r, !llvm.loop !6853
@@ -2979,7 +2979,7 @@ bb.ac:                                            ; preds = %bb.ac, %.lr.ph.i.i.
   %i.fo = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !259
   %i.fp = add i32 %i.fo, 1
   store i32 %i.fp, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !259
-  %i.fq = add nuw i64 %.06.i.i.i.i.i526, 4        ; 2 uses
+  %i.fq = add nuw nsw i64 %.06.i.i.i.i.i526, 4    ; 2 uses
   %niter1051.next.3 = add i64 %niter1051, 4       ; 2 uses
   %niter1051.ncmp.3 = icmp eq i64 %niter1051.next.3, %unroll_iter1050
   br i1 %niter1051.ncmp.3, label %_ZN5boost9container8devectorINS0_4test24movable_and_copyable_intENS0_9allocatorIS3_Lj2ELj0EEEvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i528.unr-lcssa, label %bb.ac, !llvm.loop !204
@@ -3002,7 +3002,7 @@ bb.ad:                                            ; preds = %bb.ad, %.epil.prehe
   %i.fs = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !259
   %i.ft = add i32 %i.fs, 1
   store i32 %i.ft, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !259
-  %i.fu = add nuw i64 %.06.i.i.i.i.i526.epil, 1
+  %i.fu = add nuw nsw i64 %.06.i.i.i.i.i526.epil, 1
   %epil.iter1047.next = add i64 %epil.iter1047, 1 ; 2 uses
   %epil.iter1047.cmp.not = icmp eq i64 %epil.iter1047.next, %xtraiter1046
   br i1 %epil.iter1047.cmp.not, label %_ZN5boost9container8devectorINS0_4test24movable_and_copyable_intENS0_9allocatorIS3_Lj2ELj0EEEvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i528, label %bb.ad, !llvm.loop !6854
@@ -3405,7 +3405,7 @@ bb.q:                                             ; preds = %bb.q, %.lr.ph.i.i.i
   %i.da = load i32, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !259
   %i.db = add i32 %i.da, 1
   store i32 %i.db, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !259
-  %i.dc = add nuw i64 %.06.i.i.i.i.i501, 4        ; 2 uses
+  %i.dc = add nuw nsw i64 %.06.i.i.i.i.i501, 4    ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN5boost9container8devectorINS0_4test12copyable_intENS0_9allocatorIS3_Lj2ELj0EEEvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i.unr-lcssa, label %bb.q, !llvm.loop !222
@@ -3428,7 +3428,7 @@ bb.r:                                             ; preds = %bb.r, %.epil.prehea
   %i.de = load i32, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !259
   %i.df = add i32 %i.de, 1
   store i32 %i.df, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !259
-  %i.dg = add nuw i64 %.06.i.i.i.i.i501.epil, 1
+  %i.dg = add nuw nsw i64 %.06.i.i.i.i.i501.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %_ZN5boost9container8devectorINS0_4test12copyable_intENS0_9allocatorIS3_Lj2ELj0EEEvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i, label %bb.r, !llvm.loop !7749
@@ -3619,7 +3619,7 @@ bb.ac:                                            ; preds = %bb.ac, %.lr.ph.i.i.
   %i.fo = load i32, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !259
   %i.fp = add i32 %i.fo, 1
   store i32 %i.fp, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !259
-  %i.fq = add nuw i64 %.06.i.i.i.i.i526, 4        ; 2 uses
+  %i.fq = add nuw nsw i64 %.06.i.i.i.i.i526, 4    ; 2 uses
   %niter1051.next.3 = add i64 %niter1051, 4       ; 2 uses
   %niter1051.ncmp.3 = icmp eq i64 %niter1051.next.3, %unroll_iter1050
   br i1 %niter1051.ncmp.3, label %_ZN5boost9container8devectorINS0_4test12copyable_intENS0_9allocatorIS3_Lj2ELj0EEEvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i528.unr-lcssa, label %bb.ac, !llvm.loop !222
@@ -3642,7 +3642,7 @@ bb.ad:                                            ; preds = %bb.ad, %.epil.prehe
   %i.fs = load i32, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !259
   %i.ft = add i32 %i.fs, 1
   store i32 %i.ft, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !259
-  %i.fu = add nuw i64 %.06.i.i.i.i.i526.epil, 1
+  %i.fu = add nuw nsw i64 %.06.i.i.i.i.i526.epil, 1
   %epil.iter1047.next = add i64 %epil.iter1047, 1 ; 2 uses
   %epil.iter1047.cmp.not = icmp eq i64 %epil.iter1047.next, %xtraiter1046
   br i1 %epil.iter1047.cmp.not, label %_ZN5boost9container8devectorINS0_4test12copyable_intENS0_9allocatorIS3_Lj2ELj0EEEvE11construct_nIJEEEvPS3_mDpOT_.exit.i.i.i528, label %bb.ad, !llvm.loop !7750
