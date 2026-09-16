@@ -38,24 +38,31 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 1136 ; 3 uses
   %i.d = load i64, ptr %i.c, align 8, !tbaa !29   ; 2 uses
   %i.e = icmp sgt i64 %2, 0
-  br i1 %i.e, label %.outer.split.a, label %.critedge
+  br i1 %i.e, label %.outer.split.a, label %.split.thread
 
 .outer.split.a:                                   ; preds = %bb.a, %.outer
-  %.053.ph121 = phi i64 [ %.154, %.outer ], [ %i.d, %bb.a ] ; 3 uses
-  %.056.ph120 = phi ptr [ %.157, %.outer ], [ %i.b, %bb.a ] ; 2 uses
-  %.060.ph119 = phi i64 [ %.161, %.outer ], [ %2, %bb.a ] ; 8 uses
+  %.053.ph121 = phi i64 [ %.161, %.outer ], [ %2, %bb.a ] ; 8 uses
+  %.053.ph207 = phi i64 [ %.154, %.outer ], [ %i.d, %bb.a ] ; 3 uses
+  %.056.ph206 = phi ptr [ %.157, %.outer ], [ %i.b, %bb.a ] ; 2 uses
   %.062.ph118 = phi ptr [ %.264, %.outer ], [ %1, %bb.a ] ; 4 uses
-  %i.f = icmp sgt i64 %.053.ph121, 0
+  %i.f = icmp sgt i64 %.053.ph207, 0
   br i1 %i.f, label %.lr.ph, label %.thread.loopexit
+
+.split.thread:                                    ; preds = %.outer, %bb.a
+  %.056.ph.lcssa = phi ptr [ %i.b, %bb.a ], [ %.157, %.outer ]
+  %.053.ph.lcssa = phi i64 [ %i.d, %bb.a ], [ %.154, %.outer ]
+  store ptr %.056.ph.lcssa, ptr %i.a, align 8, !tbaa !28
+  store i64 %.053.ph.lcssa, ptr %i.c, align 8, !tbaa !29
+  br label %bb.k
 
 bb.b:                                             ; preds = %bb.c
   %i.g = icmp sgt i64 %.053196, 1
   br i1 %i.g, label %.lr.ph, label %.thread.loopexit
 
 .lr.ph:                                           ; preds = %.outer.split.a, %bb.b
-  %.053196 = phi i64 [ %i.j, %bb.b ], [ %.053.ph121, %.outer.split.a ] ; 4 uses
-  %.056195 = phi ptr [ %i.h, %bb.b ], [ %.056.ph120, %.outer.split.a ] ; 3 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %.056195, i64 1 ; 7 uses
+  %.053196 = phi i64 [ %i.j, %bb.b ], [ %.053.ph207, %.outer.split.a ] ; 4 uses
+  %.056195 = phi ptr [ %i.h, %bb.b ], [ %.056.ph206, %.outer.split.a ] ; 3 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %.056195, i64 1 ; 6 uses
   %i.i = load i8, ptr %.056195, align 1, !tbaa !30 ; 4 uses
   %i.j = add nsw i64 %.053196, -1                 ; 4 uses
   %i.k = icmp slt i8 %i.i, 0
@@ -68,22 +75,18 @@ bb.c:                                             ; preds = %.lr.ph
 bb.d:                                             ; preds = %bb.c
   %i.m = sext i8 %i.i to i64
   %i.n = sub nsw i64 1, %i.m                      ; 3 uses
-  %i.o = icmp samesign ult i64 %.060.ph119, %i.n
+  %i.o = icmp samesign ult i64 %.053.ph121, %i.n
   br i1 %i.o, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.p = sub nuw nsw i64 %i.n, %.060.ph119
+  %i.p = sub nuw nsw i64 %i.n, %.053.ph121
   tail call void (ptr, ptr, ptr, ...) @TIFFWarningExtR(ptr noundef %0, ptr noundef nonnull @PackBitsDecode.module, ptr noundef nonnull @.str, i64 noundef %i.p) #5
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %.0 = phi i64 [ %.060.ph119, %bb.e ], [ %i.n, %bb.d ] ; 2 uses
+  %.0 = phi i64 [ %.053.ph121, %bb.e ], [ %i.n, %bb.d ] ; 2 uses
   %i.q = icmp eq i64 %i.j, 0
-  br i1 %i.q, label %4, label %.lr.ph.preheader
-
-4:                                                ; preds = %bb.f
-  tail call void (ptr, ptr, ptr, ...) @TIFFWarningExtR(ptr noundef %0, ptr noundef nonnull @PackBitsDecode.module, ptr noundef nonnull @.str.1) #5
-  br label %.thread.a
+  br i1 %i.q, label %.thread, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.f
   %i.r = add nsw i64 %.053196, -2
@@ -94,25 +97,21 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 bb.g:                                             ; preds = %.lr.ph
   %i.u = zext nneg i8 %i.i to i64                 ; 3 uses
-  %.not = icmp samesign ugt i64 %.060.ph119, %i.u
+  %.not = icmp samesign ugt i64 %.053.ph121, %i.u
   br i1 %.not, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %reass.sub = sub nuw nsw i64 %i.u, %.060.ph119
+  %reass.sub = sub nuw nsw i64 %i.u, %.053.ph121
   %i.v = add nuw nsw i64 %reass.sub, 1
   tail call void (ptr, ptr, ptr, ...) @TIFFWarningExtR(ptr noundef %0, ptr noundef nonnull @PackBitsDecode.module, ptr noundef nonnull @.str, i64 noundef %i.v) #5
-  %i.w = add nsw i64 %.060.ph119, -1
+  %i.w = add nsw i64 %.053.ph121, -1
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %.2 = phi i64 [ %i.w, %bb.h ], [ %i.u, %bb.g ]
   %i.x = add nuw nsw i64 %.2, 1                   ; 5 uses
   %.not73 = icmp samesign ugt i64 %.053196, %i.x
-  br i1 %.not73, label %bb.j, label %5
-
-5:                                                ; preds = %bb.i
-  tail call void (ptr, ptr, ptr, ...) @TIFFWarningExtR(ptr noundef %0, ptr noundef nonnull @PackBitsDecode.module, ptr noundef nonnull @.str.1) #5
-  br label %.thread.a
+  br i1 %.not73, label %bb.j, label %.thread
 
 bb.j:                                             ; preds = %bb.i
   tail call void @_TIFFmemcpy(ptr noundef %.062.ph118, ptr noundef nonnull %i.h, i64 noundef %i.x) #5
@@ -126,35 +125,33 @@ bb.j:                                             ; preds = %bb.i
   %.154 = phi i64 [ %i.z, %bb.j ], [ %i.r, %.lr.ph.preheader ] ; 2 uses
   %.0.pn.fr = freeze i64 %.0.pn                   ; 2 uses
   %.264 = getelementptr i8, ptr %.062.ph118, i64 %.0.pn.fr
-  %.161 = sub i64 %.060.ph119, %.0.pn.fr          ; 2 uses
+  %.161 = sub i64 %.053.ph121, %.0.pn.fr          ; 2 uses
   %i.aa = icmp sgt i64 %.161, 0
-  br i1 %i.aa, label %.outer.split.a, label %.critedge
+  br i1 %i.aa, label %.outer.split.a, label %.split.thread
 
-.thread.loopexit:                                 ; preds = %.outer.split.a, %bb.b
-  %.056.lcssa = phi ptr [ %i.h, %bb.b ], [ %.056.ph120, %.outer.split.a ]
-  %smin.le = tail call i64 @llvm.smin.i64(i64 %.053.ph121, i64 0)
+.thread:                                          ; preds = %bb.i, %bb.f
+  %.255.ph = phi i64 [ 0, %bb.f ], [ %i.j, %bb.i ]
+  tail call void (ptr, ptr, ptr, ...) @TIFFWarningExtR(ptr noundef %0, ptr noundef nonnull @PackBitsDecode.module, ptr noundef nonnull @.str.1) #5
   br label %.thread.a
 
-.thread.a:                                        ; preds = %.thread.loopexit, %4, %5
-  %storemerge126 = phi ptr [ %i.h, %4 ], [ %i.h, %5 ], [ %.056.lcssa, %.thread.loopexit ]
-  %storemerge = phi i64 [ 0, %4 ], [ %i.j, %5 ], [ %smin.le, %.thread.loopexit ]
-  store ptr %storemerge126, ptr %i.a, align 8, !tbaa !28
+.thread.loopexit:                                 ; preds = %.outer.split.a, %bb.b
+  %.056.lcssa = phi ptr [ %i.h, %bb.b ], [ %.056.ph206, %.outer.split.a ]
+  %smin.le = tail call i64 @llvm.smin.i64(i64 %.053.ph207, i64 0)
+  br label %.thread.a
+
+.thread.a:                                        ; preds = %.thread.loopexit, %.thread
+  %storemerge211 = phi ptr [ %i.h, %.thread ], [ %.056.lcssa, %.thread.loopexit ]
+  %storemerge = phi i64 [ %.255.ph, %.thread ], [ %smin.le, %.thread.loopexit ]
+  store ptr %storemerge211, ptr %i.a, align 8, !tbaa !28
   store i64 %storemerge, ptr %i.c, align 8, !tbaa !29
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.062.ph118, i8 0, i64 %.060.ph119, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.062.ph118, i8 0, i64 %.053.ph121, i1 false)
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 844
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !41
   tail call void (ptr, ptr, ptr, ...) @TIFFErrorExtR(ptr noundef nonnull %0, ptr noundef nonnull @PackBitsDecode.module, ptr noundef nonnull @.str.2, i32 noundef %i.ac) #5
   br label %bb.k
 
-.critedge:                                        ; preds = %.outer, %bb.a
-  %.us-phi99.ph = phi ptr [ %i.b, %bb.a ], [ %.157, %.outer ]
-  %.us-phi100.ph = phi i64 [ %i.d, %bb.a ], [ %.154, %.outer ]
-  store ptr %.us-phi99.ph, ptr %i.a, align 8, !tbaa !28
-  store i64 %.us-phi100.ph, ptr %i.c, align 8, !tbaa !29
-  br label %bb.k
-
-bb.k:                                             ; preds = %.critedge, %.thread.a
-  %.059 = phi i32 [ 0, %.thread.a ], [ 1, %.critedge ]
+bb.k:                                             ; preds = %.split.thread, %.thread.a
+  %.059 = phi i32 [ 0, %.thread.a ], [ 1, %.split.thread ]
   ret i32 %.059
 }
 

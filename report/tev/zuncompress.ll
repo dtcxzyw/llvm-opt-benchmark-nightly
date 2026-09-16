@@ -205,39 +205,27 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %.2135.ph279 = phi i64 [ %.lcssa186, %.outer ], [ %.1134, %bb.p ] ; 3 uses
   %.2139.ph278 = phi i8 [ %i.ec, %.outer ], [ %.1138, %bb.p ] ; 2 uses
   %i.cl = icmp sgt i64 %.2120.ph282, %.1116.ph
-  br i1 %i.cl, label %.lr.ph213.split.us, label %.lr.ph213.split
+  br i1 %i.cl, label %._crit_edge265, label %.lr.ph213.split.us
 
 .lr.ph213.split.us:                               ; preds = %.lr.ph213
-  %2 = add nsw i64 %.2131.ph280, -1
-  %3 = shl i32 %.1114.ph, 3
-  %4 = sext i32 %3 to i64                         ; 2 uses
-  %5 = add i64 %2, %4                             ; 2 uses
-  %6 = srem i64 %5, %4
-  %7 = sub i64 %5, %6
-  %8 = add nsw i32 %.1114.ph, 1                   ; 4 uses
-  %9 = load i32, ptr @maxbits, align 4, !tbaa !13
-  %10 = icmp eq i32 %8, %9
-  %11 = zext nneg i32 %8 to i64
-  %notmask = shl nsw i64 -1, %11
-  %12 = xor i64 %notmask, -1
-  %.2117 = select i1 %10, i64 %i.ae, i64 %12
-  %notmask161 = shl nsw i32 -1, %8
-  %13 = xor i32 %notmask161, -1
-  br label %.preheader165.outer.backedge
+  %2 = ashr i64 %.2131.ph280, 3
+  %3 = getelementptr inbounds i8, ptr @inbuf, i64 %2 ; 2 uses
+  %4 = load i16, ptr %3, align 1
+  %5 = zext i16 %4 to i64
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 2
+  %7 = load i8, ptr %6, align 1, !tbaa !17
+  %8 = zext i8 %7 to i64
+  %9 = shl nuw nsw i64 %8, 16
+  %10 = or disjoint i64 %9, %5
+  %11 = and i64 %.2131.ph280, 7
+  %12 = lshr i64 %10, %11
+  %13 = and i64 %12, %i.an                        ; 5 uses
+  %14 = add nsw i64 %.2131.ph280, %i.ao           ; 6 uses
+  %15 = icmp eq i64 %.2135.ph279, -1
+  br i1 %15, label %.lr.ph264, label %bb.s
 
-.preheader165.outer.backedge:                     ; preds = %.lr.ph213.split.us, %bb.t
-  %.1138.ph.be = phi i8 [ %.2139.lcssa180, %bb.t ], [ %.2139.ph278, %.lr.ph213.split.us ]
-  %.1134.ph.be = phi i64 [ %.2135.lcssa175, %bb.t ], [ %.2135.ph279, %.lr.ph213.split.us ]
-  %.1130.ph.be = phi i64 [ %i.dn, %bb.t ], [ %7, %.lr.ph213.split.us ]
-  %.1125.ph.be = phi i32 [ %.2126.lcssa167, %bb.t ], [ %.2126.ph281, %.lr.ph213.split.us ]
-  %.1123.ph.be = phi i32 [ 511, %bb.t ], [ %13, %.lr.ph213.split.us ]
-  %.1119.ph.be = phi i64 [ 256, %bb.t ], [ %.2120.ph282, %.lr.ph213.split.us ]
-  %.1116.ph.be = phi i64 [ 511, %bb.t ], [ %.2117, %.lr.ph213.split.us ]
-  %.1114.ph.be = phi i32 [ 9, %bb.t ], [ %8, %.lr.ph213.split.us ]
-  br label %.preheader165.outer
-
-.lr.ph213.split:                                  ; preds = %.lr.ph213
-  %i.cm = ashr i64 %.2131.ph280, 3
+.lr.ph213.split:                                  ; preds = %bb.r
+  %i.cm = ashr i64 %14, 3
   %i.cn = getelementptr inbounds i8, ptr @inbuf, i64 %i.cm ; 2 uses
   %i.co = load i16, ptr %i.cn, align 1
   %i.cp = zext i16 %i.co to i64
@@ -246,31 +234,43 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.cs = zext i8 %i.cr to i64
   %i.ct = shl nuw nsw i64 %i.cs, 16
   %i.cu = or disjoint i64 %i.ct, %i.cp
-  %i.cv = and i64 %.2131.ph280, 7
+  %i.cv = and i64 %14, 7
   %i.cw = lshr i64 %i.cu, %i.cv
-  %i.cx = and i64 %i.cw, %i.an                    ; 5 uses
-  %i.cy = add nsw i64 %.2131.ph280, %i.ao         ; 6 uses
-  %14 = icmp eq i64 %.2135.ph279, -1
-  br i1 %14, label %.lr.ph264, label %bb.s
-
-._crit_edge265:                                   ; preds = %bb.r
-  %15 = ashr i64 %i.cy, 3
-  %16 = getelementptr inbounds i8, ptr @inbuf, i64 %15 ; 2 uses
-  %17 = load i16, ptr %16, align 1
-  %18 = zext i16 %17 to i64
-  %19 = getelementptr inbounds nuw i8, ptr %16, i64 2
-  %20 = load i8, ptr %19, align 1, !tbaa !17
-  %21 = zext i8 %20 to i64
-  %22 = shl nuw nsw i64 %21, 16
-  %23 = or disjoint i64 %22, %18
-  %24 = and i64 %i.cy, 7
-  %25 = lshr i64 %23, %24
-  %26 = and i64 %25, %i.an
-  %27 = add nsw i64 %i.cy, %i.ao
+  %i.cx = and i64 %i.cw, %i.an
+  %i.cy = add nsw i64 %14, %i.ao
   br label %bb.s
 
-.lr.ph264:                                        ; preds = %.lr.ph213.split
-  %i.cz = icmp samesign ugt i64 %i.cx, 255
+._crit_edge265:                                   ; preds = %.lr.ph213
+  %16 = add nsw i64 %.2131.ph280, -1
+  %17 = shl i32 %.1114.ph, 3
+  %18 = sext i32 %17 to i64                       ; 2 uses
+  %19 = add i64 %16, %18                          ; 2 uses
+  %20 = srem i64 %19, %18
+  %21 = sub i64 %19, %20
+  %22 = add nsw i32 %.1114.ph, 1                  ; 4 uses
+  %23 = load i32, ptr @maxbits, align 4, !tbaa !13
+  %24 = icmp eq i32 %22, %23
+  %25 = zext nneg i32 %22 to i64
+  %notmask = shl nsw i64 -1, %25
+  %26 = xor i64 %notmask, -1
+  %.2117 = select i1 %24, i64 %i.ae, i64 %26
+  %notmask161 = shl nsw i32 -1, %22
+  %27 = xor i32 %notmask161, -1
+  br label %.preheader165.outer.backedge
+
+.preheader165.outer.backedge:                     ; preds = %._crit_edge265, %bb.t
+  %.1138.ph.be = phi i8 [ %.2139.lcssa180, %bb.t ], [ %.2139.ph278, %._crit_edge265 ]
+  %.1134.ph.be = phi i64 [ %.2135.lcssa175, %bb.t ], [ %.2135.ph279, %._crit_edge265 ]
+  %.1130.ph.be = phi i64 [ %i.dn, %bb.t ], [ %21, %._crit_edge265 ]
+  %.1125.ph.be = phi i32 [ %.2126.lcssa167, %bb.t ], [ %.2126.ph281, %._crit_edge265 ]
+  %.1123.ph.be = phi i32 [ 511, %bb.t ], [ %27, %._crit_edge265 ]
+  %.1119.ph.be = phi i64 [ 256, %bb.t ], [ %.2120.ph282, %._crit_edge265 ]
+  %.1116.ph.be = phi i64 [ 511, %bb.t ], [ %.2117, %._crit_edge265 ]
+  %.1114.ph.be = phi i32 [ 9, %bb.t ], [ %22, %._crit_edge265 ]
+  br label %.preheader165.outer
+
+.lr.ph264:                                        ; preds = %.lr.ph213.split.us
+  %i.cz = icmp samesign ugt i64 %13, 255
   br i1 %i.cz, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %.lr.ph264
@@ -279,20 +279,20 @@ bb.q:                                             ; preds = %.lr.ph264
   br label %.critedge
 
 bb.r:                                             ; preds = %.lr.ph264
-  %i.da = trunc nuw i64 %i.cx to i8               ; 3 uses
+  %i.da = trunc nuw i64 %13 to i8                 ; 3 uses
   %i.db = add nsw i32 %.2126.ph281, 1             ; 2 uses
   %i.dc = sext i32 %.2126.ph281 to i64
   %i.dd = getelementptr inbounds i8, ptr @outbuf, i64 %i.dc
   store i8 %i.da, ptr %i.dd, align 1, !tbaa !17
-  %i.de = icmp sgt i64 %i.cj, %i.cy
-  br i1 %i.de, label %._crit_edge265, label %.outer._crit_edge, !llvm.loop !27
+  %i.de = icmp sgt i64 %i.cj, %14
+  br i1 %i.de, label %.lr.ph213.split, label %.outer._crit_edge, !llvm.loop !27
 
-bb.s:                                             ; preds = %._crit_edge265, %.lr.ph213.split
-  %.lcssa186 = phi i64 [ %26, %._crit_edge265 ], [ %i.cx, %.lr.ph213.split ] ; 6 uses
-  %.lcssa = phi i64 [ %27, %._crit_edge265 ], [ %i.cy, %.lr.ph213.split ] ; 4 uses
-  %.2139.lcssa180 = phi i8 [ %i.da, %._crit_edge265 ], [ %.2139.ph278, %.lr.ph213.split ] ; 2 uses
-  %.2135.lcssa175 = phi i64 [ %i.cx, %._crit_edge265 ], [ %.2135.ph279, %.lr.ph213.split ] ; 3 uses
-  %.2126.lcssa167 = phi i32 [ %i.db, %._crit_edge265 ], [ %.2126.ph281, %.lr.ph213.split ] ; 7 uses
+bb.s:                                             ; preds = %.lr.ph213.split, %.lr.ph213.split.us
+  %.lcssa186 = phi i64 [ %i.cx, %.lr.ph213.split ], [ %13, %.lr.ph213.split.us ] ; 6 uses
+  %.lcssa = phi i64 [ %i.cy, %.lr.ph213.split ], [ %14, %.lr.ph213.split.us ] ; 4 uses
+  %.2139.lcssa180 = phi i8 [ %i.da, %.lr.ph213.split ], [ %.2139.ph278, %.lr.ph213.split.us ] ; 2 uses
+  %.2135.lcssa175 = phi i64 [ %13, %.lr.ph213.split ], [ %.2135.ph279, %.lr.ph213.split.us ] ; 3 uses
+  %.2126.lcssa167 = phi i32 [ %i.db, %.lr.ph213.split ], [ %.2126.ph281, %.lr.ph213.split.us ] ; 7 uses
   %i.df = icmp eq i64 %.lcssa186, 256
   %i.dg = load i32, ptr @block_mode, align 4
   %i.dh = icmp ne i32 %i.dg, 0
@@ -490,8 +490,8 @@ bb.al:                                            ; preds = %.loopexit
 .outer._crit_edge:                                ; preds = %bb.r, %.outer, %bb.p
   %.2120.ph.lcssa191 = phi i64 [ %.1119, %bb.p ], [ %.2120.ph282, %bb.r ], [ %.3121, %.outer ]
   %.2139.lcssa = phi i8 [ %.1138, %bb.p ], [ %i.da, %bb.r ], [ %i.ec, %.outer ]
-  %.2135.lcssa = phi i64 [ %.1134, %bb.p ], [ %i.cx, %bb.r ], [ %.lcssa186, %.outer ]
-  %.2131.lcssa = phi i64 [ 0, %bb.p ], [ %i.cy, %bb.r ], [ %.lcssa, %.outer ]
+  %.2135.lcssa = phi i64 [ %.1134, %bb.p ], [ %13, %bb.r ], [ %.lcssa186, %.outer ]
+  %.2131.lcssa = phi i64 [ 0, %bb.p ], [ %14, %bb.r ], [ %.lcssa, %.outer ]
   %.2126.lcssa = phi i32 [ %.1125, %bb.p ], [ %i.db, %bb.r ], [ %.6, %.outer ] ; 4 uses
   br i1 %.not159, label %bb.am, label %.preheader165, !llvm.loop !30
 

@@ -205,8 +205,8 @@ Vec_IntFind.exit.thread.thread129:                ; preds = %.lr.ph, %Vec_IntFin
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !42
   br label %.lr.ph.i.us
 
-.lr.ph.i.us:                                      ; preds = %Vec_IntFind.exit.us, %.lr.ph.split.us
-  %indvars.iv = phi i64 [ %indvars.iv.next, %Vec_IntFind.exit.us ], [ 1, %.lr.ph.split.us ] ; 3 uses
+.lr.ph.i.us:                                      ; preds = %.lr.ph.split.us, %Vec_IntFind.exit.us
+  %indvars.iv = phi i64 [ 1, %.lr.ph.split.us ], [ %indvars.iv.next, %Vec_IntFind.exit.us ] ; 3 uses
   %i.o = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv
   %i.p = load i32, ptr %i.o, align 4, !tbaa !43
   br label %bb.b

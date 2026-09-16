@@ -205,24 +205,38 @@ bb.g:                                             ; preds = %.split
 
 _RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.i: ; preds = %bb.g
   %cond = icmp eq i64 %i.p, 1
-  br i1 %cond, label %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us146.i, label %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split.split.i
+  br i1 %cond, label %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.split.split.us.i, label %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us146.i
 
 _RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us146.i: ; preds = %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.i
+  %3 = icmp ugt i64 %i.p, 2
+  br i1 %3, label %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split.split.i, label %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.i
+
+_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split.split.i: ; preds = %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us146.i
+  %i.as = icmp ugt i64 %i.p, %i.s
+  br i1 %i.as, label %_RINvNtNtNtCsa5QsYiPB8Gl_5image6codecs3bmp7decoder18set_1bit_pixel_runINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterhEEB8_.exit, label %.lr.ph59
+
+_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.split.split.us.i: ; preds = %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.i
   %.not12.us56.i = icmp eq i64 %i.s, 0
-  br i1 %.not12.us56.i, label %_RINvNtNtNtCsa5QsYiPB8Gl_5image6codecs3bmp7decoder18set_1bit_pixel_runINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterhEEB8_.exit, label %3
+  br i1 %.not12.us56.i, label %_RINvNtNtNtCsa5QsYiPB8Gl_5image6codecs3bmp7decoder18set_1bit_pixel_runINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterhEEB8_.exit, label %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us154.i.preheader
 
-_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split.split.i: ; preds = %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.i
-  %i.as = icmp ugt i64 %i.p, 2
-  br i1 %i.as, label %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us154.i.preheader, label %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.i
+_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us154.i.preheader: ; preds = %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.split.split.us.i
+  %4 = load i8, ptr %i.ao, align 1, !noalias !364, !noundef !5
+  %.lobit.i = lshr i8 %4, 7
+  %5 = zext nneg i8 %.lobit.i to i64              ; 3 uses
+  %.not12.us96.us.i57 = icmp samesign ugt i64 %i.an, %5
+  br i1 %.not12.us96.us.i57, label %.split64.us.i, label %.split.us.i
 
-_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us154.i.preheader: ; preds = %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split.split.i
-  %.not12.us96.us.i57 = icmp ugt i64 %i.p, %i.s
-  br i1 %.not12.us96.us.i57, label %_RINvNtNtNtCsa5QsYiPB8Gl_5image6codecs3bmp7decoder18set_1bit_pixel_runINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterhEEB8_.exit, label %.lr.ph59
+.split64.us.i:                                    ; preds = %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us154.i.preheader
+  %6 = getelementptr inbounds nuw [3 x i8], ptr %i.al, i64 %5
+  %.sroa.06.0.copyload.us.i = load i8, ptr %6, align 1, !alias.scope !363, !noalias !365
+  store i8 %.sroa.06.0.copyload.us.i, ptr %1, align 1, !noalias !364
+  tail call void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef 1, i64 noundef 1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @14) #32, !noalias !364
+  unreachable
 
-.lr.ph59:                                         ; preds = %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us154.i.preheader, %.loopexit18.split.us.us.i
-  %.sroa.0.0134.us155.i58 = phi ptr [ %i.av, %.loopexit18.split.us.us.i ], [ %i.ao, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us154.i.preheader ] ; 9 uses
-  %i.at = phi ptr [ %i.dl, %.loopexit18.split.us.us.i ], [ %1, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us154.i.preheader ] ; 5 uses
-  %i.au = phi i64 [ %i.dk, %.loopexit18.split.us.us.i ], [ %i.s, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us154.i.preheader ]
+.lr.ph59:                                         ; preds = %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split.split.i, %.loopexit18.split.us.us.i
+  %.sroa.0.0134.us155.i58 = phi ptr [ %i.av, %.loopexit18.split.us.us.i ], [ %i.ao, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split.split.i ] ; 9 uses
+  %i.at = phi ptr [ %i.dl, %.loopexit18.split.us.us.i ], [ %1, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split.split.i ] ; 5 uses
+  %i.au = phi i64 [ %i.dk, %.loopexit18.split.us.us.i ], [ %i.s, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split.split.i ]
   %i.av = getelementptr inbounds nuw i8, ptr %.sroa.0.0134.us155.i58, i64 1 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.p ; 4 uses
   %i.ax = sub nuw nsw i64 %i.au, %i.p             ; 2 uses
@@ -424,23 +438,9 @@ bb.u:                                             ; preds = %bb.t
   %or.cond185 = select i1 %i.dp, i1 true, i1 %.not12.us96.us.i
   br i1 %or.cond185, label %_RINvNtNtNtCsa5QsYiPB8Gl_5image6codecs3bmp7decoder18set_1bit_pixel_runINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterhEEB8_.exit, label %.lr.ph59
 
-_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.i: ; preds = %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split.split.i
+_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.i: ; preds = %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us146.i
   %.not12.i = icmp samesign ult i64 %i.s, 2
   br i1 %.not12.i, label %_RINvNtNtNtCsa5QsYiPB8Gl_5image6codecs3bmp7decoder18set_1bit_pixel_runINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterhEEB8_.exit, label %bb.v
-
-3:                                                ; preds = %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us146.i
-  %4 = load i8, ptr %i.ao, align 1, !noalias !364, !noundef !5
-  %.lobit.i = lshr i8 %4, 7
-  %5 = zext nneg i8 %.lobit.i to i64              ; 3 uses
-  %6 = icmp samesign ugt i64 %i.an, %5
-  br i1 %6, label %.split64.us.i, label %.split.us.i
-
-.split64.us.i:                                    ; preds = %3
-  %7 = getelementptr inbounds nuw [3 x i8], ptr %i.al, i64 %5
-  %.sroa.06.0.copyload.us.i = load i8, ptr %7, align 1, !alias.scope !363, !noalias !365
-  store i8 %.sroa.06.0.copyload.us.i, ptr %1, align 1, !noalias !364
-  tail call void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef 1, i64 noundef 1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @14) #32, !noalias !364
-  unreachable
 
 bb.v:                                             ; preds = %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.i
   %i.dq = load i8, ptr %i.ao, align 1, !noalias !364, !noundef !5
@@ -460,8 +460,8 @@ bb.w:                                             ; preds = %bb.v
   tail call void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef 2, i64 noundef 2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @15) #32, !noalias !364
   unreachable
 
-.split.us.i:                                      ; preds = %bb.u, %bb.s, %bb.q, %bb.o, %bb.m, %bb.k, %bb.i, %.lr.ph59, %bb.v, %3
-  %.us-phi.i = phi i64 [ %i.dr, %bb.v ], [ %5, %3 ], [ 1, %bb.i ], [ 1, %bb.k ], [ 1, %bb.m ], [ 1, %bb.o ], [ 1, %bb.q ], [ 1, %bb.s ], [ 1, %bb.u ], [ %i.az, %.lr.ph59 ]
+.split.us.i:                                      ; preds = %bb.u, %bb.s, %bb.q, %bb.o, %bb.m, %bb.k, %bb.i, %.lr.ph59, %bb.v, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us154.i.preheader
+  %.us-phi.i = phi i64 [ %i.dr, %bb.v ], [ %5, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us154.i.preheader ], [ 1, %bb.i ], [ 1, %bb.k ], [ 1, %bb.m ], [ 1, %bb.o ], [ 1, %bb.q ], [ 1, %bb.s ], [ 1, %bb.u ], [ %i.az, %.lr.ph59 ]
   tail call void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %.us-phi.i, i64 noundef range(i64 0, 3074457345618258603) %i.an, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @13) #32, !noalias !364
   unreachable
 
@@ -702,7 +702,7 @@ bb.aj:                                            ; preds = %.split
   %i.hn = call fastcc noundef zeroext i1 @_RINvNtNtNtCsa5QsYiPB8Gl_5image6codecs3bmp7decoder18set_8bit_pixel_runINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterhEEB8_(ptr noalias nofree noundef align 8 dereferenceable(40) %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.he, i64 noundef %i.hg, ptr noundef nonnull %i.hh, ptr noundef %i.hj, i64 noundef %i.hm) ; 0 uses
   br label %_RINvNtNtNtCsa5QsYiPB8Gl_5image6codecs3bmp7decoder18set_1bit_pixel_runINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterhEEB8_.exit
 
-_RINvNtNtNtCsa5QsYiPB8Gl_5image6codecs3bmp7decoder18set_1bit_pixel_runINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterhEEB8_.exit: ; preds = %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us114.i, %bb.z, %bb.ab, %bb.ad, %bb.af, %bb.h, %bb.j, %bb.l, %bb.n, %bb.p, %bb.r, %bb.t, %.loopexit18.split.us.us.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us114.i.preheader, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us154.i.preheader, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.i11, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us98.i, %bb.x, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us146.i, %bb.g, %bb.aj, %bb.ai
+_RINvNtNtNtCsa5QsYiPB8Gl_5image6codecs3bmp7decoder18set_1bit_pixel_runINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterhEEB8_.exit: ; preds = %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us114.i, %bb.z, %bb.ab, %bb.ad, %bb.af, %bb.h, %bb.j, %bb.l, %bb.n, %bb.p, %bb.r, %bb.t, %.loopexit18.split.us.us.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us114.i.preheader, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split.split.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.i11, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us98.i, %bb.x, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.split.split.us.i, %bb.g, %bb.aj, %bb.ai
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.am
 

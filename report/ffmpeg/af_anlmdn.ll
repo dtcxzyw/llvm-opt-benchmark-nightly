@@ -204,6 +204,22 @@ bb.f:                                             ; preds = %bb.b
   %i.cw = fcmp nsz olt float %i.cv, 0.000000e+00
   br i1 %i.cw, label %bb.g, label %bb.h
 
+.critedge.loopexit:                               ; preds = %bb.j
+  %4 = fadd nsz float %.1130.us, 1.000000e+00
+  br label %.critedge
+
+.critedge:                                        ; preds = %.preheader, %.critedge.loopexit, %.lr.ph145, %.loopexit
+  %.0131.lcssa = phi float [ 0.000000e+00, %.loopexit ], [ 0.000000e+00, %.lr.ph145 ], [ %.1132.us, %.critedge.loopexit ], [ 0.000000e+00, %.preheader ]
+  %.0129.lcssa = phi float [ 1.000000e+00, %.loopexit ], [ 1.000000e+00, %.lr.ph145 ], [ %4, %.critedge.loopexit ], [ 1.000000e+00, %.preheader ] ; 2 uses
+  %5 = getelementptr inbounds [4 x i8], ptr %i.u, i64 %indvars.iv161
+  %6 = load float, ptr %5, align 4, !tbaa !14     ; 3 uses
+  %7 = fadd nsz float %.0131.lcssa, %6            ; 2 uses
+  switch i32 %i.l, label %bb.m [
+    i32 0, label %.sink.split
+    i32 1, label %bb.k
+    i32 2, label %bb.l
+  ]
+
 bb.g:                                             ; preds = %.lr.ph145.split.us
   store float 0.000000e+00, ptr %i.cu, align 4, !tbaa !14
   br label %bb.h
@@ -229,28 +245,12 @@ bb.i:                                             ; preds = %bb.h
   %i.dj = fadd nsz float %.0129143.us, %i.dd
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.i, %bb.h
+bb.j:                                             ; preds = %bb.h, %bb.i
   %.1132.us = phi nsz float [ %i.di, %bb.i ], [ %.0131142.us, %bb.h ] ; 2 uses
   %.1130.us = phi nsz float [ %i.dj, %bb.i ], [ %.0129143.us, %bb.h ] ; 2 uses
   %indvars.iv.next157 = add nuw nsw i64 %indvars.iv156, 1 ; 2 uses
   %exitcond160.not = icmp eq i64 %indvars.iv.next157, %wide.trip.count159
   br i1 %exitcond160.not, label %.critedge.loopexit, label %.lr.ph145.split.us, !llvm.loop !89
-
-.critedge.loopexit:                               ; preds = %bb.j
-  %4 = fadd nsz float %.1130.us, 1.000000e+00
-  br label %.critedge
-
-.critedge:                                        ; preds = %.preheader, %.critedge.loopexit, %.lr.ph145, %.loopexit
-  %.0131.lcssa = phi float [ 0.000000e+00, %.loopexit ], [ 0.000000e+00, %.lr.ph145 ], [ %.1132.us, %.critedge.loopexit ], [ 0.000000e+00, %.preheader ]
-  %.0129.lcssa = phi float [ 1.000000e+00, %.loopexit ], [ 1.000000e+00, %.lr.ph145 ], [ %4, %.critedge.loopexit ], [ 1.000000e+00, %.preheader ] ; 2 uses
-  %5 = getelementptr inbounds [4 x i8], ptr %i.u, i64 %indvars.iv161
-  %6 = load float, ptr %5, align 4, !tbaa !14     ; 3 uses
-  %7 = fadd nsz float %.0131.lcssa, %6            ; 2 uses
-  switch i32 %i.l, label %bb.m [
-    i32 0, label %.sink.split
-    i32 1, label %bb.k
-    i32 2, label %bb.l
-  ]
 
 bb.k:                                             ; preds = %.critedge
   %i.dk = fdiv nsz float %7, %.0129.lcssa

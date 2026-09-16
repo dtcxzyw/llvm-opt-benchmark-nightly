@@ -204,9 +204,9 @@ bb.mg:                                            ; preds = %bb.mf, %bb.me
   %.not115179.i = icmp eq i32 %i.mu, 0
   br i1 %.not115179.i, label %gen_bitlen.exit, label %.lr.ph182.i
 
-.lr.ph182.i:                                      ; preds = %.preheader.i, %.outer.split.us.i
-  %indvars.iv208.i = phi i64 [ %indvars.iv.next209.i, %.outer.split.us.i ], [ %i.tu, %.preheader.i ] ; 9 uses
-  %.193180.i = phi i32 [ %.294.ph.lcssa.i, %.outer.split.us.i ], [ 573, %.preheader.i ] ; 2 uses
+.lr.ph182.i:                                      ; preds = %.preheader.i, %.outer._crit_edge.i
+  %indvars.iv208.i = phi i64 [ %indvars.iv.next205.i, %.outer._crit_edge.i ], [ %i.tu, %.preheader.i ] ; 9 uses
+  %.193180.i = phi i32 [ %.294.lcssa.i, %.outer._crit_edge.i ], [ 573, %.preheader.i ] ; 2 uses
   br i1 %i.e, label %bb.mi, label %bb.mh, !prof !14, !nosanitize !13
 
 bb.mh:                                            ; preds = %.lr.ph182.i
@@ -245,20 +245,13 @@ bb.mn:                                            ; preds = %bb.mm
 bb.mo:                                            ; preds = %bb.mn, %bb.mm
   %i.vx = load i16, ptr %i.vr, align 2, !tbaa !36 ; 2 uses
   %.not117175.i = icmp eq i16 %i.vx, 0
-  br i1 %.not117175.i, label %.outer.split.us.i, label %.outer.split.lr.ph.i
+  br i1 %.not117175.i, label %.outer._crit_edge.i, label %.outer.split.lr.ph.i
 
 .outer.split.lr.ph.i:                             ; preds = %bb.mo
   %i.vy = zext i16 %i.vx to i32
   %i.vz = trunc nuw i64 %indvars.iv208.i to i32
   %i.wa = trunc i64 %indvars.iv208.i to i16
   br label %.outer.split.i
-
-.outer.split.us.i:                                ; preds = %.outer.i, %bb.mo
-  %.294.ph.lcssa.i = phi i32 [ %.193180.i, %bb.mo ], [ %.us-phi174.i, %.outer.i ]
-  %indvars.iv.next209.i = add nsw i64 %indvars.iv208.i, -1 ; 2 uses
-  %2 = and i64 %indvars.iv.next209.i, 4294967295
-  %.not115.i = icmp eq i64 %2, 0
-  br i1 %.not115.i, label %gen_bitlen.exit, label %.lr.ph182.i, !llvm.loop !78
 
 .outer.split.i:                                   ; preds = %.outer.i, %.outer.split.lr.ph.i
   %.091.ph177.i = phi i32 [ %i.vy, %.outer.split.lr.ph.i ], [ %i.ze, %.outer.i ]
@@ -304,7 +297,7 @@ bb.mt:                                            ; preds = %bb.ms
 bb.mu:                                            ; preds = %bb.ms, %bb.mt
   %i.wp = load i32, ptr %i.wh, align 4, !tbaa !40 ; 2 uses
   %i.wq = icmp sgt i32 %i.wp, %i.lf
-  br i1 %i.wq, label %.outer.split.split.us.i, label %.split172.us.i, !llvm.loop !79
+  br i1 %i.wq, label %.outer.split.split.us.i, label %.split172.us.i, !llvm.loop !78
 
 .outer.split.split.i:                             ; preds = %.outer.split.i, %bb.nc
   %.294.i = phi i32 [ %i.ws, %bb.nc ], [ %.294.ph176.i, %.outer.split.i ] ; 2 uses
@@ -356,7 +349,7 @@ bb.nb:                                            ; preds = %bb.na
 bb.nc:                                            ; preds = %bb.nb, %bb.na
   %i.xi = load i32, ptr %i.wx, align 4, !tbaa !40 ; 2 uses
   %i.xj = icmp sgt i32 %i.xi, %i.lf
-  br i1 %i.xj, label %.outer.split.split.i, label %.split172.us.i, !llvm.loop !79
+  br i1 %i.xj, label %.outer.split.split.i, label %.split172.us.i, !llvm.loop !78
 
 .split172.us.i:                                   ; preds = %bb.nc, %bb.mu
   %.us-phi173.i = phi i32 [ %i.wp, %bb.mu ], [ %i.xi, %bb.nc ] ; 2 uses
@@ -565,9 +558,16 @@ bb.om:                                            ; preds = %bb.ol
 .outer.i:                                         ; preds = %.critedge143.i, %.critedge135.i
   %i.ze = add nsw i32 %.091.ph177.i, -1           ; 2 uses
   %.not117.i = icmp eq i32 %i.ze, 0
-  br i1 %.not117.i, label %.outer.split.us.i, label %.outer.split.i, !llvm.loop !79
+  br i1 %.not117.i, label %.outer._crit_edge.i, label %.outer.split.i, !llvm.loop !78
 
-gen_bitlen.exit:                                  ; preds = %.outer.split.us.i, %bb.ib, %._crit_edge.i, %.preheader.i
+.outer._crit_edge.i:                              ; preds = %.outer.i, %bb.mo
+  %.294.lcssa.i = phi i32 [ %.193180.i, %bb.mo ], [ %.us-phi174.i, %.outer.i ]
+  %indvars.iv.next205.i = add nsw i64 %indvars.iv208.i, -1 ; 2 uses
+  %2 = and i64 %indvars.iv.next205.i, 4294967295
+  %.not115.i = icmp eq i64 %2, 0
+  br i1 %.not115.i, label %gen_bitlen.exit, label %.lr.ph182.i, !llvm.loop !79
+
+gen_bitlen.exit:                                  ; preds = %.outer._crit_edge.i, %bb.ib, %._crit_edge.i, %.preheader.i
   br i1 %i.e, label %bb.oo, label %bb.on, !prof !14, !nosanitize !13
 
 bb.on:                                            ; preds = %gen_bitlen.exit

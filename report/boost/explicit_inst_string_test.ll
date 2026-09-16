@@ -204,7 +204,7 @@ _ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_
   br i1 %.not.i.i, label %_ZN5boost9container7find_ifIPcNS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS5_EEEET_S9_S9_T0_.exit.i, label %.lr.ph.i.i.preheader.i.i, !llvm.loop !10
 
 _ZN5boost9container7find_ifIPcNS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS5_EEEET_S9_S9_T0_.exit.i: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i, %bb.c, %.lr.ph.i.i, %bb.b
-  %.0.i.i = phi ptr [ %i.aa, %bb.b ], [ %.0716.i.i, %bb.c ], [ %i.ac, %.lr.ph.i.i ], [ %i.aa, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i ] ; 2 uses
+  %.0.i.i = phi ptr [ %i.ac, %.lr.ph.i.i ], [ %i.aa, %bb.b ], [ %.0716.i.i, %bb.c ], [ %i.aa, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i ] ; 2 uses
   %.not.i = icmp eq ptr %.0.i.i, %i.aa
   %i.ai = ptrtoint ptr %.0.i.i to i64
   %i.aj = ptrtoint ptr %i.x to i64
@@ -271,7 +271,7 @@ _ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_
   br i1 %.not.i, label %_ZN5boost9container7find_ifIPcNS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS5_EEEET_S9_S9_T0_.exit, label %.lr.ph.i.i.preheader.i, !llvm.loop !10
 
 _ZN5boost9container7find_ifIPcNS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS5_EEEET_S9_S9_T0_.exit: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i, %bb.c, %bb.b, %.lr.ph.i
-  %.0.i = phi ptr [ %i.q, %bb.b ], [ %.0716.i, %bb.c ], [ %i.s, %.lr.ph.i ], [ %i.q, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i ] ; 2 uses
+  %.0.i = phi ptr [ %i.s, %.lr.ph.i ], [ %i.q, %bb.b ], [ %.0716.i, %bb.c ], [ %i.q, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i ] ; 2 uses
   %.not = icmp eq ptr %.0.i, %i.q
   %i.y = ptrtoint ptr %.0.i to i64
   %i.z = ptrtoint ptr %i.m to i64
@@ -338,7 +338,7 @@ _ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_
   br i1 %.not.i.i, label %_ZN5boost9container7find_ifIPcNS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS5_EEEET_S9_S9_T0_.exit.i, label %.lr.ph.i.i.preheader.i.i, !llvm.loop !10
 
 _ZN5boost9container7find_ifIPcNS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS5_EEEET_S9_S9_T0_.exit.i: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i, %bb.c, %.lr.ph.i.i, %bb.b
-  %.0.i.i = phi ptr [ %i.q, %bb.b ], [ %.0716.i.i, %bb.c ], [ %i.s, %.lr.ph.i.i ], [ %i.q, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i ] ; 2 uses
+  %.0.i.i = phi ptr [ %i.s, %.lr.ph.i.i ], [ %i.q, %bb.b ], [ %.0716.i.i, %bb.c ], [ %i.q, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i ] ; 2 uses
   %.not.i = icmp eq ptr %.0.i.i, %i.q
   %i.y = ptrtoint ptr %.0.i.i to i64
   %i.z = ptrtoint ptr %i.n to i64
@@ -471,7 +471,7 @@ bb.c:                                             ; preds = %_ZNK5boost9containe
   br i1 %.not.i.i, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcmm.exit, label %.lr.ph.i.i.preheader.i.i, !llvm.loop !11
 
 _ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i, %bb.b, %.lr.ph.i.i
-  %storemerge.i.i = phi ptr [ %i.ac, %bb.b ], [ %i.ab, %.lr.ph.i.i ], [ %i.ac, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i ] ; 2 uses
+  %storemerge.i.i = phi ptr [ %i.ab, %.lr.ph.i.i ], [ %i.ac, %bb.b ], [ %i.ac, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i ] ; 2 uses
   %.not.i = icmp eq ptr %storemerge.i.i, %i.x
   br i1 %.not.i, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcmm.exit, label %bb.d
 
@@ -540,7 +540,7 @@ bb.c:                                             ; preds = %_ZNK5boost9containe
   br i1 %.not.i, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.thread, label %.lr.ph.i.i.preheader.i, !llvm.loop !11
 
 _ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i, %bb.b, %.lr.ph.i
-  %storemerge.i = phi ptr [ %i.r, %bb.b ], [ %i.q, %.lr.ph.i ], [ %i.r, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i ] ; 2 uses
+  %storemerge.i = phi ptr [ %i.q, %.lr.ph.i ], [ %i.r, %bb.b ], [ %i.r, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i ] ; 2 uses
   %.not = icmp eq ptr %storemerge.i, %i.m
   br i1 %.not, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.thread, label %bb.d
 
@@ -610,7 +610,7 @@ bb.c:                                             ; preds = %_ZNK5boost9containe
   br i1 %.not.i.i, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcmm.exit, label %.lr.ph.i.i.preheader.i.i, !llvm.loop !11
 
 _ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i, %bb.b, %.lr.ph.i.i
-  %storemerge.i.i = phi ptr [ %i.s, %bb.b ], [ %i.r, %.lr.ph.i.i ], [ %i.s, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i ] ; 2 uses
+  %storemerge.i.i = phi ptr [ %i.r, %.lr.ph.i.i ], [ %i.s, %bb.b ], [ %i.s, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i ] ; 2 uses
   %.not.i = icmp eq ptr %storemerge.i.i, %i.n
   br i1 %.not.i, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcmm.exit, label %bb.d
 
@@ -1013,7 +1013,7 @@ _ZNK5boost9container12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocato
   br i1 %.not.i.i, label %_ZN5boost9container7find_ifIPcNS0_12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS5_EEEET_SC_SC_T0_.exit.i, label %.lr.ph.i.i.preheader.i.i, !llvm.loop !22
 
 _ZN5boost9container7find_ifIPcNS0_12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS5_EEEET_SC_SC_T0_.exit.i: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS3_EclERKc.exit.i.i, %bb.c, %.lr.ph.i.i, %bb.b
-  %.0.i.i = phi ptr [ %i.aa, %bb.b ], [ %.0716.i.i, %bb.c ], [ %i.ac, %.lr.ph.i.i ], [ %i.aa, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS3_EclERKc.exit.i.i ] ; 2 uses
+  %.0.i.i = phi ptr [ %i.ac, %.lr.ph.i.i ], [ %i.aa, %bb.b ], [ %.0716.i.i, %bb.c ], [ %i.aa, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS3_EclERKc.exit.i.i ] ; 2 uses
   %.not.i = icmp eq ptr %.0.i.i, %i.aa
   %i.ai = ptrtoint ptr %.0.i.i to i64
   %i.aj = ptrtoint ptr %i.x to i64
@@ -1080,7 +1080,7 @@ _ZNK5boost9container12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocato
   br i1 %.not.i, label %_ZN5boost9container7find_ifIPcNS0_12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS5_EEEET_SC_SC_T0_.exit, label %.lr.ph.i.i.preheader.i, !llvm.loop !22
 
 _ZN5boost9container7find_ifIPcNS0_12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS5_EEEET_SC_SC_T0_.exit: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS3_EclERKc.exit.i, %bb.c, %bb.b, %.lr.ph.i
-  %.0.i = phi ptr [ %i.q, %bb.b ], [ %.0716.i, %bb.c ], [ %i.s, %.lr.ph.i ], [ %i.q, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS3_EclERKc.exit.i ] ; 2 uses
+  %.0.i = phi ptr [ %i.s, %.lr.ph.i ], [ %i.q, %bb.b ], [ %.0716.i, %bb.c ], [ %i.q, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS3_EclERKc.exit.i ] ; 2 uses
   %.not = icmp eq ptr %.0.i, %i.q
   %i.y = ptrtoint ptr %.0.i to i64
   %i.z = ptrtoint ptr %i.m to i64
@@ -1147,7 +1147,7 @@ _ZNK5boost9container12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocato
   br i1 %.not.i.i, label %_ZN5boost9container7find_ifIPcNS0_12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS5_EEEET_SC_SC_T0_.exit.i, label %.lr.ph.i.i.preheader.i.i, !llvm.loop !22
 
 _ZN5boost9container7find_ifIPcNS0_12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS5_EEEET_SC_SC_T0_.exit.i: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS3_EclERKc.exit.i.i, %bb.c, %.lr.ph.i.i, %bb.b
-  %.0.i.i = phi ptr [ %i.q, %bb.b ], [ %.0716.i.i, %bb.c ], [ %i.s, %.lr.ph.i.i ], [ %i.q, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS3_EclERKc.exit.i.i ] ; 2 uses
+  %.0.i.i = phi ptr [ %i.s, %.lr.ph.i.i ], [ %i.q, %bb.b ], [ %.0716.i.i, %bb.c ], [ %i.q, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS3_EclERKc.exit.i.i ] ; 2 uses
   %.not.i = icmp eq ptr %.0.i.i, %i.q
   %i.y = ptrtoint ptr %.0.i.i to i64
   %i.z = ptrtoint ptr %i.n to i64
@@ -1280,7 +1280,7 @@ bb.c:                                             ; preds = %_ZNK5boost9containe
   br i1 %.not.i.i, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE16find_last_not_ofEPKcmm.exit, label %.lr.ph.i.i.preheader.i.i, !llvm.loop !23
 
 _ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS9_EEEET_SG_SG_T0_.exit.i: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS3_EclERKc.exit.i.i, %bb.b, %.lr.ph.i.i
-  %storemerge.i.i = phi ptr [ %i.ac, %bb.b ], [ %i.ab, %.lr.ph.i.i ], [ %i.ac, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS3_EclERKc.exit.i.i ] ; 2 uses
+  %storemerge.i.i = phi ptr [ %i.ab, %.lr.ph.i.i ], [ %i.ac, %bb.b ], [ %i.ac, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS3_EclERKc.exit.i.i ] ; 2 uses
   %.not.i = icmp eq ptr %storemerge.i.i, %i.x
   br i1 %.not.i, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE16find_last_not_ofEPKcmm.exit, label %bb.d
 
@@ -1349,7 +1349,7 @@ bb.c:                                             ; preds = %_ZNK5boost9containe
   br i1 %.not.i, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS9_EEEET_SG_SG_T0_.exit.thread, label %.lr.ph.i.i.preheader.i, !llvm.loop !23
 
 _ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS9_EEEET_SG_SG_T0_.exit: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS3_EclERKc.exit.i, %bb.b, %.lr.ph.i
-  %storemerge.i = phi ptr [ %i.r, %bb.b ], [ %i.q, %.lr.ph.i ], [ %i.r, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS3_EclERKc.exit.i ] ; 2 uses
+  %storemerge.i = phi ptr [ %i.q, %.lr.ph.i ], [ %i.r, %bb.b ], [ %i.r, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS3_EclERKc.exit.i ] ; 2 uses
   %.not = icmp eq ptr %storemerge.i, %i.m
   br i1 %.not, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS9_EEEET_SG_SG_T0_.exit.thread, label %bb.d
 
@@ -1419,7 +1419,7 @@ bb.c:                                             ; preds = %_ZNK5boost9containe
   br i1 %.not.i.i, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE16find_last_not_ofEPKcmm.exit, label %.lr.ph.i.i.preheader.i.i, !llvm.loop !23
 
 _ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS9_EEEET_SG_SG_T0_.exit.i: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS3_EclERKc.exit.i.i, %bb.b, %.lr.ph.i.i
-  %storemerge.i.i = phi ptr [ %i.s, %bb.b ], [ %i.r, %.lr.ph.i.i ], [ %i.s, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS3_EclERKc.exit.i.i ] ; 2 uses
+  %storemerge.i.i = phi ptr [ %i.r, %.lr.ph.i.i ], [ %i.s, %bb.b ], [ %i.s, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE17Not_within_traitsIS3_EclERKc.exit.i.i ] ; 2 uses
   %.not.i = icmp eq ptr %storemerge.i.i, %i.n
   br i1 %.not.i, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvE16find_last_not_ofEPKcmm.exit, label %bb.d
 
@@ -1822,7 +1822,7 @@ bb.d:                                             ; preds = %_ZNK5boost9containe
   br i1 %.not.i.i, label %_ZN5boost9container7find_ifIPwNS0_12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS5_EEEET_SC_SC_T0_.exit.i, label %.lr.ph.i.i.preheader.i.i, !llvm.loop !34
 
 _ZN5boost9container7find_ifIPwNS0_12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS5_EEEET_SC_SC_T0_.exit.i: ; preds = %bb.d, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS3_EclERKw.exit.i.i, %bb.c, %.lr.ph.i.i, %bb.b
-  %.0.i.i = phi ptr [ %i.aa, %bb.b ], [ %.0716.i.i, %bb.c ], [ %i.ac, %.lr.ph.i.i ], [ %.0716.i.i, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS3_EclERKw.exit.i.i ], [ %i.aa, %bb.d ] ; 2 uses
+  %.0.i.i = phi ptr [ %i.ac, %.lr.ph.i.i ], [ %i.aa, %bb.b ], [ %.0716.i.i, %bb.c ], [ %.0716.i.i, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS3_EclERKw.exit.i.i ], [ %i.aa, %bb.d ] ; 2 uses
   %.not.i = icmp eq ptr %.0.i.i, %i.aa
   %i.aj = ptrtoint ptr %.0.i.i to i64
   %i.ak = ptrtoint ptr %i.x to i64
@@ -1895,7 +1895,7 @@ bb.d:                                             ; preds = %_ZNK5boost9containe
   br i1 %.not.i, label %_ZN5boost9container7find_ifIPwNS0_12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS5_EEEET_SC_SC_T0_.exit, label %.lr.ph.i.i.preheader.i, !llvm.loop !34
 
 _ZN5boost9container7find_ifIPwNS0_12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS5_EEEET_SC_SC_T0_.exit: ; preds = %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS3_EclERKw.exit.i, %bb.d, %bb.c, %bb.b, %.lr.ph.i
-  %.0.i = phi ptr [ %i.q, %bb.b ], [ %.0716.i, %bb.c ], [ %i.s, %.lr.ph.i ], [ %.0716.i, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS3_EclERKw.exit.i ], [ %i.q, %bb.d ] ; 2 uses
+  %.0.i = phi ptr [ %i.s, %.lr.ph.i ], [ %i.q, %bb.b ], [ %.0716.i, %bb.c ], [ %.0716.i, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS3_EclERKw.exit.i ], [ %i.q, %bb.d ] ; 2 uses
   %.not = icmp eq ptr %.0.i, %i.q
   %i.z = ptrtoint ptr %.0.i to i64
   %i.aa = ptrtoint ptr %i.m to i64
@@ -1968,7 +1968,7 @@ bb.d:                                             ; preds = %_ZNK5boost9containe
   br i1 %.not.i.i, label %_ZN5boost9container7find_ifIPwNS0_12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS5_EEEET_SC_SC_T0_.exit.i, label %.lr.ph.i.i.preheader.i.i, !llvm.loop !34
 
 _ZN5boost9container7find_ifIPwNS0_12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS5_EEEET_SC_SC_T0_.exit.i: ; preds = %bb.d, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS3_EclERKw.exit.i.i, %bb.c, %.lr.ph.i.i, %bb.b
-  %.0.i.i = phi ptr [ %i.q, %bb.b ], [ %.0716.i.i, %bb.c ], [ %i.s, %.lr.ph.i.i ], [ %.0716.i.i, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS3_EclERKw.exit.i.i ], [ %i.q, %bb.d ] ; 2 uses
+  %.0.i.i = phi ptr [ %i.s, %.lr.ph.i.i ], [ %i.q, %bb.b ], [ %.0716.i.i, %bb.c ], [ %.0716.i.i, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS3_EclERKw.exit.i.i ], [ %i.q, %bb.d ] ; 2 uses
   %.not.i = icmp eq ptr %.0.i.i, %i.q
   %i.z = ptrtoint ptr %.0.i.i to i64
   %i.aa = ptrtoint ptr %i.n to i64
@@ -2105,7 +2105,7 @@ bb.c:                                             ; preds = %_ZNK5boost9containe
   br i1 %.not.i.i, label %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE16find_last_not_ofEPKwmm.exit, label %.lr.ph.i.i.preheader.i.i, !llvm.loop !35
 
 _ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKwEENS0_12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS9_EEEET_SG_SG_T0_.exit.i: ; preds = %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS3_EclERKw.exit.i.i, %bb.b, %.lr.ph.i.i
-  %storemerge.i.i = phi ptr [ %i.ac, %bb.b ], [ %i.ab, %.lr.ph.i.i ], [ %i.ac, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS3_EclERKw.exit.i.i ] ; 2 uses
+  %storemerge.i.i = phi ptr [ %i.ab, %.lr.ph.i.i ], [ %i.ac, %bb.b ], [ %i.ac, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS3_EclERKw.exit.i.i ] ; 2 uses
   %.not.i = icmp eq ptr %storemerge.i.i, %i.x
   br i1 %.not.i, label %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE16find_last_not_ofEPKwmm.exit, label %bb.d
 
@@ -2177,7 +2177,7 @@ bb.c:                                             ; preds = %_ZNK5boost9containe
   br i1 %.not.i, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKwEENS0_12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS9_EEEET_SG_SG_T0_.exit.thread, label %.lr.ph.i.i.preheader.i, !llvm.loop !35
 
 _ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKwEENS0_12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS9_EEEET_SG_SG_T0_.exit: ; preds = %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS3_EclERKw.exit.i, %bb.b, %.lr.ph.i
-  %storemerge.i = phi ptr [ %i.r, %bb.b ], [ %i.q, %.lr.ph.i ], [ %i.r, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS3_EclERKw.exit.i ] ; 2 uses
+  %storemerge.i = phi ptr [ %i.q, %.lr.ph.i ], [ %i.r, %bb.b ], [ %i.r, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS3_EclERKw.exit.i ] ; 2 uses
   %.not = icmp eq ptr %storemerge.i, %i.m
   br i1 %.not, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKwEENS0_12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS9_EEEET_SG_SG_T0_.exit.thread, label %bb.d
 
@@ -2250,7 +2250,7 @@ bb.c:                                             ; preds = %_ZNK5boost9containe
   br i1 %.not.i.i, label %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE16find_last_not_ofEPKwmm.exit, label %.lr.ph.i.i.preheader.i.i, !llvm.loop !35
 
 _ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKwEENS0_12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS9_EEEET_SG_SG_T0_.exit.i: ; preds = %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS3_EclERKw.exit.i.i, %bb.b, %.lr.ph.i.i
-  %storemerge.i.i = phi ptr [ %i.s, %bb.b ], [ %i.r, %.lr.ph.i.i ], [ %i.s, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS3_EclERKw.exit.i.i ] ; 2 uses
+  %storemerge.i.i = phi ptr [ %i.r, %.lr.ph.i.i ], [ %i.s, %bb.b ], [ %i.s, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS3_EclERKw.exit.i.i ] ; 2 uses
   %.not.i = icmp eq ptr %storemerge.i.i, %i.n
   br i1 %.not.i, label %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE16find_last_not_ofEPKwmm.exit, label %bb.d
 
@@ -2653,7 +2653,7 @@ _ZNK5boost9container12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traits
   br i1 %.not.i.i, label %_ZN5boost9container7find_ifIPcNS0_12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS5_EEEET_SA_SA_T0_.exit.i, label %.lr.ph.i.i.preheader.i.i, !llvm.loop !46
 
 _ZN5boost9container7find_ifIPcNS0_12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS5_EEEET_SA_SA_T0_.exit.i: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS3_EclERKc.exit.i.i, %bb.c, %.lr.ph.i.i, %bb.b
-  %.0.i.i = phi ptr [ %i.aa, %bb.b ], [ %.0716.i.i, %bb.c ], [ %i.ac, %.lr.ph.i.i ], [ %i.aa, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS3_EclERKc.exit.i.i ] ; 2 uses
+  %.0.i.i = phi ptr [ %i.ac, %.lr.ph.i.i ], [ %i.aa, %bb.b ], [ %.0716.i.i, %bb.c ], [ %i.aa, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS3_EclERKc.exit.i.i ] ; 2 uses
   %.not.i = icmp eq ptr %.0.i.i, %i.aa
   %i.ai = ptrtoint ptr %.0.i.i to i64
   %i.aj = ptrtoint ptr %i.x to i64
@@ -2720,7 +2720,7 @@ _ZNK5boost9container12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traits
   br i1 %.not.i, label %_ZN5boost9container7find_ifIPcNS0_12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS5_EEEET_SA_SA_T0_.exit, label %.lr.ph.i.i.preheader.i, !llvm.loop !46
 
 _ZN5boost9container7find_ifIPcNS0_12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS5_EEEET_SA_SA_T0_.exit: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS3_EclERKc.exit.i, %bb.c, %bb.b, %.lr.ph.i
-  %.0.i = phi ptr [ %i.q, %bb.b ], [ %.0716.i, %bb.c ], [ %i.s, %.lr.ph.i ], [ %i.q, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS3_EclERKc.exit.i ] ; 2 uses
+  %.0.i = phi ptr [ %i.s, %.lr.ph.i ], [ %i.q, %bb.b ], [ %.0716.i, %bb.c ], [ %i.q, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS3_EclERKc.exit.i ] ; 2 uses
   %.not = icmp eq ptr %.0.i, %i.q
   %i.y = ptrtoint ptr %.0.i to i64
   %i.z = ptrtoint ptr %i.m to i64
@@ -2787,7 +2787,7 @@ _ZNK5boost9container12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traits
   br i1 %.not.i.i, label %_ZN5boost9container7find_ifIPcNS0_12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS5_EEEET_SA_SA_T0_.exit.i, label %.lr.ph.i.i.preheader.i.i, !llvm.loop !46
 
 _ZN5boost9container7find_ifIPcNS0_12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS5_EEEET_SA_SA_T0_.exit.i: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS3_EclERKc.exit.i.i, %bb.c, %.lr.ph.i.i, %bb.b
-  %.0.i.i = phi ptr [ %i.q, %bb.b ], [ %.0716.i.i, %bb.c ], [ %i.s, %.lr.ph.i.i ], [ %i.q, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS3_EclERKc.exit.i.i ] ; 2 uses
+  %.0.i.i = phi ptr [ %i.s, %.lr.ph.i.i ], [ %i.q, %bb.b ], [ %.0716.i.i, %bb.c ], [ %i.q, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS3_EclERKc.exit.i.i ] ; 2 uses
   %.not.i = icmp eq ptr %.0.i.i, %i.q
   %i.y = ptrtoint ptr %.0.i.i to i64
   %i.z = ptrtoint ptr %i.n to i64
@@ -2920,7 +2920,7 @@ bb.c:                                             ; preds = %_ZNK5boost9containe
   br i1 %.not.i.i, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcESaIcEvE16find_last_not_ofEPKcmm.exit, label %.lr.ph.i.i.preheader.i.i, !llvm.loop !47
 
 _ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS9_EEEET_SE_SE_T0_.exit.i: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS3_EclERKc.exit.i.i, %bb.b, %.lr.ph.i.i
-  %storemerge.i.i = phi ptr [ %i.ac, %bb.b ], [ %i.ab, %.lr.ph.i.i ], [ %i.ac, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS3_EclERKc.exit.i.i ] ; 2 uses
+  %storemerge.i.i = phi ptr [ %i.ab, %.lr.ph.i.i ], [ %i.ac, %bb.b ], [ %i.ac, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS3_EclERKc.exit.i.i ] ; 2 uses
   %.not.i = icmp eq ptr %storemerge.i.i, %i.x
   br i1 %.not.i, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcESaIcEvE16find_last_not_ofEPKcmm.exit, label %bb.d
 
@@ -2989,7 +2989,7 @@ bb.c:                                             ; preds = %_ZNK5boost9containe
   br i1 %.not.i, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS9_EEEET_SE_SE_T0_.exit.thread, label %.lr.ph.i.i.preheader.i, !llvm.loop !47
 
 _ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS9_EEEET_SE_SE_T0_.exit: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS3_EclERKc.exit.i, %bb.b, %.lr.ph.i
-  %storemerge.i = phi ptr [ %i.r, %bb.b ], [ %i.q, %.lr.ph.i ], [ %i.r, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS3_EclERKc.exit.i ] ; 2 uses
+  %storemerge.i = phi ptr [ %i.q, %.lr.ph.i ], [ %i.r, %bb.b ], [ %i.r, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS3_EclERKc.exit.i ] ; 2 uses
   %.not = icmp eq ptr %storemerge.i, %i.m
   br i1 %.not, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS9_EEEET_SE_SE_T0_.exit.thread, label %bb.d
 
@@ -3059,7 +3059,7 @@ bb.c:                                             ; preds = %_ZNK5boost9containe
   br i1 %.not.i.i, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcESaIcEvE16find_last_not_ofEPKcmm.exit, label %.lr.ph.i.i.preheader.i.i, !llvm.loop !47
 
 _ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS9_EEEET_SE_SE_T0_.exit.i: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS3_EclERKc.exit.i.i, %bb.b, %.lr.ph.i.i
-  %storemerge.i.i = phi ptr [ %i.s, %bb.b ], [ %i.r, %.lr.ph.i.i ], [ %i.s, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS3_EclERKc.exit.i.i ] ; 2 uses
+  %storemerge.i.i = phi ptr [ %i.r, %.lr.ph.i.i ], [ %i.s, %bb.b ], [ %i.s, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcESaIcEvE17Not_within_traitsIS3_EclERKc.exit.i.i ] ; 2 uses
   %.not.i = icmp eq ptr %storemerge.i.i, %i.n
   br i1 %.not.i, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcESaIcEvE16find_last_not_ofEPKcmm.exit, label %bb.d
 
@@ -3462,7 +3462,7 @@ bb.d:                                             ; preds = %_ZNK5boost9containe
   br i1 %.not.i.i, label %_ZN5boost9container7find_ifIPwNS0_12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS5_EEEET_SA_SA_T0_.exit.i, label %.lr.ph.i.i.preheader.i.i, !llvm.loop !58
 
 _ZN5boost9container7find_ifIPwNS0_12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS5_EEEET_SA_SA_T0_.exit.i: ; preds = %bb.d, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS3_EclERKw.exit.i.i, %bb.c, %.lr.ph.i.i, %bb.b
-  %.0.i.i = phi ptr [ %i.aa, %bb.b ], [ %.0716.i.i, %bb.c ], [ %i.ac, %.lr.ph.i.i ], [ %.0716.i.i, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS3_EclERKw.exit.i.i ], [ %i.aa, %bb.d ] ; 2 uses
+  %.0.i.i = phi ptr [ %i.ac, %.lr.ph.i.i ], [ %i.aa, %bb.b ], [ %.0716.i.i, %bb.c ], [ %.0716.i.i, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS3_EclERKw.exit.i.i ], [ %i.aa, %bb.d ] ; 2 uses
   %.not.i = icmp eq ptr %.0.i.i, %i.aa
   %i.aj = ptrtoint ptr %.0.i.i to i64
   %i.ak = ptrtoint ptr %i.x to i64
@@ -3535,7 +3535,7 @@ bb.d:                                             ; preds = %_ZNK5boost9containe
   br i1 %.not.i, label %_ZN5boost9container7find_ifIPwNS0_12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS5_EEEET_SA_SA_T0_.exit, label %.lr.ph.i.i.preheader.i, !llvm.loop !58
 
 _ZN5boost9container7find_ifIPwNS0_12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS5_EEEET_SA_SA_T0_.exit: ; preds = %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS3_EclERKw.exit.i, %bb.d, %bb.c, %bb.b, %.lr.ph.i
-  %.0.i = phi ptr [ %i.q, %bb.b ], [ %.0716.i, %bb.c ], [ %i.s, %.lr.ph.i ], [ %.0716.i, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS3_EclERKw.exit.i ], [ %i.q, %bb.d ] ; 2 uses
+  %.0.i = phi ptr [ %i.s, %.lr.ph.i ], [ %i.q, %bb.b ], [ %.0716.i, %bb.c ], [ %.0716.i, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS3_EclERKw.exit.i ], [ %i.q, %bb.d ] ; 2 uses
   %.not = icmp eq ptr %.0.i, %i.q
   %i.z = ptrtoint ptr %.0.i to i64
   %i.aa = ptrtoint ptr %i.m to i64
@@ -3608,7 +3608,7 @@ bb.d:                                             ; preds = %_ZNK5boost9containe
   br i1 %.not.i.i, label %_ZN5boost9container7find_ifIPwNS0_12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS5_EEEET_SA_SA_T0_.exit.i, label %.lr.ph.i.i.preheader.i.i, !llvm.loop !58
 
 _ZN5boost9container7find_ifIPwNS0_12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS5_EEEET_SA_SA_T0_.exit.i: ; preds = %bb.d, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS3_EclERKw.exit.i.i, %bb.c, %.lr.ph.i.i, %bb.b
-  %.0.i.i = phi ptr [ %i.q, %bb.b ], [ %.0716.i.i, %bb.c ], [ %i.s, %.lr.ph.i.i ], [ %.0716.i.i, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS3_EclERKw.exit.i.i ], [ %i.q, %bb.d ] ; 2 uses
+  %.0.i.i = phi ptr [ %i.s, %.lr.ph.i.i ], [ %i.q, %bb.b ], [ %.0716.i.i, %bb.c ], [ %.0716.i.i, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS3_EclERKw.exit.i.i ], [ %i.q, %bb.d ] ; 2 uses
   %.not.i = icmp eq ptr %.0.i.i, %i.q
   %i.z = ptrtoint ptr %.0.i.i to i64
   %i.aa = ptrtoint ptr %i.n to i64
@@ -3745,7 +3745,7 @@ bb.c:                                             ; preds = %_ZNK5boost9containe
   br i1 %.not.i.i, label %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE16find_last_not_ofEPKwmm.exit, label %.lr.ph.i.i.preheader.i.i, !llvm.loop !59
 
 _ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKwEENS0_12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS9_EEEET_SE_SE_T0_.exit.i: ; preds = %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS3_EclERKw.exit.i.i, %bb.b, %.lr.ph.i.i
-  %storemerge.i.i = phi ptr [ %i.ac, %bb.b ], [ %i.ab, %.lr.ph.i.i ], [ %i.ac, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS3_EclERKw.exit.i.i ] ; 2 uses
+  %storemerge.i.i = phi ptr [ %i.ab, %.lr.ph.i.i ], [ %i.ac, %bb.b ], [ %i.ac, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS3_EclERKw.exit.i.i ] ; 2 uses
   %.not.i = icmp eq ptr %storemerge.i.i, %i.x
   br i1 %.not.i, label %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE16find_last_not_ofEPKwmm.exit, label %bb.d
 
@@ -3817,7 +3817,7 @@ bb.c:                                             ; preds = %_ZNK5boost9containe
   br i1 %.not.i, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKwEENS0_12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS9_EEEET_SE_SE_T0_.exit.thread, label %.lr.ph.i.i.preheader.i, !llvm.loop !59
 
 _ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKwEENS0_12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS9_EEEET_SE_SE_T0_.exit: ; preds = %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS3_EclERKw.exit.i, %bb.b, %.lr.ph.i
-  %storemerge.i = phi ptr [ %i.r, %bb.b ], [ %i.q, %.lr.ph.i ], [ %i.r, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS3_EclERKw.exit.i ] ; 2 uses
+  %storemerge.i = phi ptr [ %i.q, %.lr.ph.i ], [ %i.r, %bb.b ], [ %i.r, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS3_EclERKw.exit.i ] ; 2 uses
   %.not = icmp eq ptr %storemerge.i, %i.m
   br i1 %.not, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKwEENS0_12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS9_EEEET_SE_SE_T0_.exit.thread, label %bb.d
 
@@ -3890,7 +3890,7 @@ bb.c:                                             ; preds = %_ZNK5boost9containe
   br i1 %.not.i.i, label %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE16find_last_not_ofEPKwmm.exit, label %.lr.ph.i.i.preheader.i.i, !llvm.loop !59
 
 _ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKwEENS0_12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS9_EEEET_SE_SE_T0_.exit.i: ; preds = %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS3_EclERKw.exit.i.i, %bb.b, %.lr.ph.i.i
-  %storemerge.i.i = phi ptr [ %i.s, %bb.b ], [ %i.r, %.lr.ph.i.i ], [ %i.s, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS3_EclERKw.exit.i.i ] ; 2 uses
+  %storemerge.i.i = phi ptr [ %i.r, %.lr.ph.i.i ], [ %i.s, %bb.b ], [ %i.s, %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS3_EclERKw.exit.i.i ] ; 2 uses
   %.not.i = icmp eq ptr %storemerge.i.i, %i.n
   br i1 %.not.i, label %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE16find_last_not_ofEPKwmm.exit, label %bb.d
 

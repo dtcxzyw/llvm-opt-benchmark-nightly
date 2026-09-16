@@ -204,17 +204,20 @@ define internal fastcc i32 @js_string_indexof(ptr nofree noundef captures(addres
 bb.a:
   %i.a = sub nsw i32 %4, %5
   %.not23 = icmp sgt i32 %3, %i.a
-  br i1 %.not23, label %.loopexit, label %.preheader.lr.ph.a
+  br i1 %.not23, label %.loopexit, label %.preheader.lr.ph
 
-.preheader.lr.ph.a:                               ; preds = %bb.a
+.preheader.lr.ph:                                 ; preds = %bb.a
   %6 = icmp sgt i32 %5, 0
+  br i1 %6, label %.preheader.lr.ph.a, label %.loopexit
+
+.preheader.lr.ph.a:                               ; preds = %.preheader.lr.ph
   %i.b = add i32 %4, 1
   %i.c = sub i32 %i.b, %5
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph.a, %bb.c
-  %.01624 = phi i32 [ %3, %.preheader.lr.ph.a ], [ %i.h, %bb.c ] ; 3 uses
-  br i1 %6, label %.lr.ph, label %.loopexit
+  %.01624 = phi i32 [ %i.h, %bb.c ], [ %3, %.preheader.lr.ph.a ] ; 3 uses
+  br label %.lr.ph
 
 bb.b:                                             ; preds = %.lr.ph
   %i.d = add nuw nsw i32 %.021, 1                 ; 2 uses
@@ -222,7 +225,7 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !358
 
 .lr.ph:                                           ; preds = %.preheader, %bb.b
-  %.021 = phi i32 [ %i.d, %bb.b ], [ 0, %.preheader ] ; 3 uses
+  %.021 = phi i32 [ 0, %.preheader ], [ %i.d, %bb.b ] ; 3 uses
   %i.e = add nsw i32 %.021, %.01624
   %i.f = tail call fastcc i32 @string_getcp(ptr noundef %0, i64 noundef %1, i32 noundef %i.e, i32 noundef 0) #28
   %i.g = tail call fastcc i32 @string_getcp(ptr noundef %0, i64 noundef %2, i32 noundef %.021, i32 noundef 0) #28
@@ -234,8 +237,8 @@ bb.c:                                             ; preds = %.lr.ph
   %exitcond27.not = icmp eq i32 %i.h, %i.c
   br i1 %exitcond27.not, label %.loopexit, label %.preheader, !llvm.loop !359
 
-.loopexit:                                        ; preds = %bb.c, %.preheader, %bb.b, %bb.a
-  %.017 = phi i32 [ -1, %bb.a ], [ %.01624, %bb.b ], [ -1, %bb.c ], [ %3, %.preheader ]
+.loopexit:                                        ; preds = %bb.c, %bb.b, %bb.a, %.preheader.lr.ph
+  %.017 = phi i32 [ -1, %bb.a ], [ %3, %.preheader.lr.ph ], [ %.01624, %bb.b ], [ -1, %bb.c ]
   ret i32 %.017
 }
 

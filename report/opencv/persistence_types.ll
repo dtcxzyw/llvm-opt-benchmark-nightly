@@ -204,19 +204,19 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %._cri
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 16
   br label %bb.g
 
+5:                                                ; preds = %bb.g
+  %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.us.i, 1 ; 2 uses
+  %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i, %wide.trip.count.i.i.i
+  br i1 %exitcond.not.i.i.i, label %_ZSt11__push_heapIN9__gnu_cxx17__normal_iteratorIPPKN2cv9SparseMat4NodeESt6vectorIS6_SaIS6_EEEElS6_NS0_5__ops14_Iter_comp_valINS2_13SparseNodeCmpEEEEvT_T0_SH_T1_RT2_.exit, label %bb.g, !llvm.loop !2
+
 bb.g:                                             ; preds = %5, %.lr.ph.i.i.us.i
-  %indvars.iv.i.i.us.i = phi i64 [ 0, %.lr.ph.i.i.us.i ], [ %indvars.iv.next.i.i.us.i, %5 ] ; 3 uses
+  %indvars.iv.i.i.us.i = phi i64 [ 0, %.lr.ph.i.i.us.i ], [ %indvars.iv.next.i.i.i, %5 ] ; 3 uses
   %i.as = getelementptr inbounds nuw [4 x i8], ptr %i.ar, i64 %indvars.iv.i.i.us.i
   %i.at = load i32, ptr %i.as, align 4, !tbaa !26 ; 2 uses
   %i.au = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %indvars.iv.i.i.us.i
   %i.av = load i32, ptr %i.au, align 4, !tbaa !26 ; 2 uses
   %.not.i.i.us.i = icmp eq i32 %i.at, %i.av
   br i1 %.not.i.i.us.i, label %5, label %_ZN9__gnu_cxx5__ops14_Iter_comp_valIN2cv13SparseNodeCmpEEclINS_17__normal_iteratorIPPKNS2_9SparseMat4NodeESt6vectorISA_SaISA_EEEESA_EEbT_RT0_.exit.us.i
-
-5:                                                ; preds = %bb.g
-  %indvars.iv.next.i.i.us.i = add nuw nsw i64 %indvars.iv.i.i.us.i, 1 ; 2 uses
-  %exitcond.not.i.i.us.i = icmp eq i64 %indvars.iv.next.i.i.us.i, %wide.trip.count.i.i.i
-  br i1 %exitcond.not.i.i.us.i, label %_ZSt11__push_heapIN9__gnu_cxx17__normal_iteratorIPPKN2cv9SparseMat4NodeESt6vectorIS6_SaIS6_EEEElS6_NS0_5__ops14_Iter_comp_valINS2_13SparseNodeCmpEEEEvT_T0_SH_T1_RT2_.exit, label %bb.g, !llvm.loop !2
 
 _ZN9__gnu_cxx5__ops14_Iter_comp_valIN2cv13SparseNodeCmpEEclINS_17__normal_iteratorIPPKNS2_9SparseMat4NodeESt6vectorISA_SaISA_EEEESA_EEbT_RT0_.exit.us.i: ; preds = %bb.g
   %i.aw = icmp slt i32 %i.at, %i.av
@@ -229,7 +229,7 @@ bb.h:                                             ; preds = %_ZN9__gnu_cxx5__ops
   br i1 %i.ay, label %.lr.ph.i.i.us.i, label %_ZSt11__push_heapIN9__gnu_cxx17__normal_iteratorIPPKN2cv9SparseMat4NodeESt6vectorIS6_SaIS6_EEEElS6_NS0_5__ops14_Iter_comp_valINS2_13SparseNodeCmpEEEEvT_T0_SH_T1_RT2_.exit, !llvm.loop !151
 
 _ZSt11__push_heapIN9__gnu_cxx17__normal_iteratorIPPKN2cv9SparseMat4NodeESt6vectorIS6_SaIS6_EEEElS6_NS0_5__ops14_Iter_comp_valINS2_13SparseNodeCmpEEEEvT_T0_SH_T1_RT2_.exit: ; preds = %_ZN9__gnu_cxx5__ops14_Iter_comp_valIN2cv13SparseNodeCmpEEclINS_17__normal_iteratorIPPKNS2_9SparseMat4NodeESt6vectorISA_SaISA_EEEESA_EEbT_RT0_.exit.us.i, %bb.h, %5, %bb.f, %.lr.ph.i
-  %.022.i = phi i64 [ %.025.us.i, %5 ], [ %.1, %bb.f ], [ %.1, %.lr.ph.i ], [ %.025.us.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIN2cv13SparseNodeCmpEEclINS_17__normal_iteratorIPPKNS2_9SparseMat4NodeESt6vectorISA_SaISA_EEEESA_EEbT_RT0_.exit.us.i ], [ %.0926.us.i, %bb.h ]
+  %.022.i = phi i64 [ %.1, %.lr.ph.i ], [ %.1, %bb.f ], [ %.025.us.i, %5 ], [ %.0926.us.i, %bb.h ], [ %.025.us.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIN2cv13SparseNodeCmpEEclINS_17__normal_iteratorIPPKNS2_9SparseMat4NodeESt6vectorISA_SaISA_EEEESA_EEbT_RT0_.exit.us.i ]
   %i.az = getelementptr inbounds [8 x i8], ptr %0, i64 %.022.i
   store ptr %3, ptr %i.az, align 8, !tbaa !35
   ret void

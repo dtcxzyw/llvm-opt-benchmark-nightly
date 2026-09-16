@@ -204,8 +204,8 @@ get_order.exit:                                   ; preds = %.sink.split, %bb.b
   %i.u = zext nneg i32 %.16.val.56.val to i64
   br label %.lr.ph.us
 
-.lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %._crit_edge15.us
-  %.056.us = phi i32 [ %5, %._crit_edge15.us ], [ %i.q, %.lr.ph.us.preheader ] ; 5 uses
+.lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %._crit_edge15
+  %.056.us = phi i32 [ %5, %._crit_edge15 ], [ %i.q, %.lr.ph.us.preheader ] ; 5 uses
   %i.v = add i32 %.056.us, 12
   %i.w = shl nuw i32 1, %i.v                      ; 5 uses
   %.pre = load i32, ptr @scatter_elem_sz_prev, align 4
@@ -224,7 +224,15 @@ bb.e:                                             ; preds = %.lr.ph.us, %bb.h
   %i.ac = getelementptr [8 x i8], ptr %i.ab, i64 %indvars.iv
   %i.ad = load ptr, ptr %i.ac, align 8
   %.not66.us = icmp eq ptr %i.ad, null
-  br i1 %.not66.us, label %.preheader.us, label %bb.f
+  br i1 %.not66.us, label %.preheader, label %bb.f
+
+.preheader:                                       ; preds = %bb.e
+  %.not16 = icmp eq i64 %indvars.iv, 0
+  br i1 %.not16, label %._crit_edge15, label %.lr.ph14.preheader
+
+.lr.ph14.preheader:                               ; preds = %.preheader
+  %wide.trip.count = zext nneg i32 %indvars.iv27 to i64
+  br label %.lr.ph14
 
 bb.f:                                             ; preds = %bb.e
   %i.ae = tail call i32 @llvm.smin.i32(i32 %.0586.us, i32 %i.x)
@@ -249,37 +257,14 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %indvars.iv.next28 = add nuw nsw i32 %indvars.iv27, 1
   br i1 %i.am, label %bb.e, label %._crit_edge9.loopexit, !llvm.loop !90
 
-.lr.ph14.us:                                      ; preds = %.lr.ph14.us.preheader, %.lr.ph14.us
-  %indvars.iv24 = phi i64 [ 0, %.lr.ph14.us.preheader ], [ %indvars.iv.next25, %.lr.ph14.us ] ; 2 uses
-  %2 = load ptr, ptr %i.g, align 8
-  %3 = getelementptr [8 x i8], ptr %2, i64 %indvars.iv24
-  %4 = load ptr, ptr %3, align 8
-  tail call void @__free_pages(ptr noundef %4, i32 noundef %.056.us) #17
-  %indvars.iv.next25 = add nuw nsw i64 %indvars.iv24, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next25, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge15.us, label %.lr.ph14.us, !llvm.loop !91
-
-._crit_edge15.us:                                 ; preds = %.lr.ph14.us, %.preheader.us
-  %5 = add i32 %.056.us, -1                       ; 2 uses
-  %6 = icmp sgt i32 %5, -1
-  br i1 %6, label %.lr.ph.us, label %sg_build_sgat.exit.thread
-
-.preheader.us:                                    ; preds = %bb.e
-  %.not18 = icmp eq i64 %indvars.iv, 0
-  br i1 %.not18, label %._crit_edge15.us, label %.lr.ph14.us.preheader
-
-.lr.ph14.us.preheader:                            ; preds = %.preheader.us
-  %wide.trip.count = zext nneg i32 %indvars.iv27 to i64
-  br label %.lr.ph14.us
-
 ._crit_edge9.loopexit:                            ; preds = %bb.h
   %i.an = trunc i64 %indvars.iv.next to i16
   br label %._crit_edge9
 
-._crit_edge9:                                     ; preds = %get_order.exit, %._crit_edge9.loopexit
-  %.056.lcssa = phi i32 [ %.056.us, %._crit_edge9.loopexit ], [ %i.q, %get_order.exit ]
-  %.059.lcssa = phi i16 [ %i.an, %._crit_edge9.loopexit ], [ 0, %get_order.exit ]
-  %.lcssa = phi i1 [ %i.ak, %._crit_edge9.loopexit ], [ %i.r, %get_order.exit ]
+._crit_edge9:                                     ; preds = %._crit_edge9.loopexit, %get_order.exit
+  %.056.lcssa = phi i32 [ %i.q, %get_order.exit ], [ %.056.us, %._crit_edge9.loopexit ]
+  %.059.lcssa = phi i16 [ 0, %get_order.exit ], [ %i.an, %._crit_edge9.loopexit ]
+  %.lcssa = phi i1 [ %i.r, %get_order.exit ], [ %i.ak, %._crit_edge9.loopexit ]
   %i.ao = getelementptr i8, ptr %0, i64 24
   store i32 %.056.lcssa, ptr %i.ao, align 8
   store i16 %.059.lcssa, ptr %0, align 8
@@ -288,8 +273,23 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %. = select i1 %.lcssa, i32 -12, i32 0
   br label %sg_build_sgat.exit.thread
 
-sg_build_sgat.exit.thread:                        ; preds = %._crit_edge15.us, %_kzalloc_noprof.exit.i, %._crit_edge9, %sg_build_sgat.exit, %bb.a
-  %.0 = phi i32 [ %.16.val.56.val, %sg_build_sgat.exit ], [ -14, %bb.a ], [ %., %._crit_edge9 ], [ -12, %_kzalloc_noprof.exit.i ], [ -12, %._crit_edge15.us ]
+.lr.ph14:                                         ; preds = %.lr.ph14.preheader, %.lr.ph14
+  %indvars.iv23 = phi i64 [ 0, %.lr.ph14.preheader ], [ %indvars.iv.next24, %.lr.ph14 ] ; 2 uses
+  %2 = load ptr, ptr %i.g, align 8
+  %3 = getelementptr [8 x i8], ptr %2, i64 %indvars.iv23
+  %4 = load ptr, ptr %3, align 8
+  tail call void @__free_pages(ptr noundef %4, i32 noundef %.056.us) #17
+  %indvars.iv.next24 = add nuw nsw i64 %indvars.iv23, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next24, %wide.trip.count
+  br i1 %exitcond.not, label %._crit_edge15, label %.lr.ph14, !llvm.loop !91
+
+._crit_edge15:                                    ; preds = %.lr.ph14, %.preheader
+  %5 = add i32 %.056.us, -1                       ; 2 uses
+  %6 = icmp sgt i32 %5, -1
+  br i1 %6, label %.lr.ph.us, label %sg_build_sgat.exit.thread
+
+sg_build_sgat.exit.thread:                        ; preds = %._crit_edge15, %_kzalloc_noprof.exit.i, %._crit_edge9, %sg_build_sgat.exit, %bb.a
+  %.0 = phi i32 [ %.16.val.56.val, %sg_build_sgat.exit ], [ -14, %bb.a ], [ %., %._crit_edge9 ], [ -12, %_kzalloc_noprof.exit.i ], [ -12, %._crit_edge15 ]
   ret i32 %.0
 }
 

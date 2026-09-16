@@ -204,11 +204,7 @@ _ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbEEE5be
 _ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbEEE3endEv.exit.preheader: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbEEE5beginEv.exit
   %i.cs = icmp eq ptr %i.cm, %i.cr
   %.not.i99 = icmp eq ptr %i.ao, null             ; 4 uses
-  br i1 %i.cs, label %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbEEE3endEv.exit.preheader.split.us, label %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbEEE3endEv.exit
-
-_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbEEE3endEv.exit.preheader.split.us: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbEEE3endEv.exit.preheader
-  %.not.i.i = icmp eq ptr %i.cm, null
-  br i1 %.not.i.i, label %_ZN7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbEEED2Ev.exit90, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbEEEEEclEPS8_.exit.i.i89
+  br i1 %i.cs, label %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbEEEneERKS7_.exit.a, label %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbEEE3endEv.exit
 
 _ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbEEE3endEv.exit: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbEEE3endEv.exit.preheader, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit161
   %.034 = phi i64 [ %i.nn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit161 ], [ 0, %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbEEE3endEv.exit.preheader ] ; 2 uses
@@ -217,13 +213,17 @@ _ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbEEE3en
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 48
   %i.cv = load ptr, ptr %i.cu, align 8
   %i.cw = invoke noundef zeroext i1 %i.cv(ptr noundef nonnull align 8 dereferenceable(8) %i.cm, ptr noundef nonnull align 8 dereferenceable(8) %i.cr)
-          to label %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbEEEneERKS7_.exit.a unwind label %bb.x, !inline_history !10224
+          to label %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbEEEneERKS7_.exit unwind label %bb.x, !inline_history !10224
 
-_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbEEEneERKS7_.exit.a: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbEEE3endEv.exit
+_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbEEEneERKS7_.exit: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbEEE3endEv.exit
   br i1 %i.cw, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbEEEEEclEPS8_.exit.i.i89, label %bb.y
 
-_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbEEEEEclEPS8_.exit.i.i89: ; preds = %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbEEEneERKS7_.exit.a, %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbEEE3endEv.exit.preheader.split.us
-  %.2342 = phi i1 [ %.1463, %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbEEE3endEv.exit.preheader.split.us ], [ %.2, %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbEEEneERKS7_.exit.a ]
+_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbEEEneERKS7_.exit.a: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbEEE3endEv.exit.preheader
+  %.not.i.i = icmp eq ptr %i.cm, null
+  br i1 %.not.i.i, label %_ZN7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbEEED2Ev.exit90, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbEEEEEclEPS8_.exit.i.i89
+
+_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbEEEEEclEPS8_.exit.i.i89: ; preds = %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbEEEneERKS7_.exit, %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbEEEneERKS7_.exit.a
+  %.2342 = phi i1 [ %.1463, %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbEEEneERKS7_.exit.a ], [ %.2, %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbEEEneERKS7_.exit ]
   %i.cx = load ptr, ptr %i.cr, align 8, !tbaa !267
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 8
   %i.cz = load ptr, ptr %i.cy, align 8
@@ -234,8 +234,8 @@ _ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21
   call void %i.dc(ptr noundef nonnull align 8 dereferenceable(8) %i.cm) #28, !call_target !1328, !inline_history !10225
   br label %_ZN7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbEEED2Ev.exit90
 
-_ZN7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbEEED2Ev.exit90: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbEEE3endEv.exit.preheader.split.us, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbEEEEEclEPS8_.exit.i.i89
-  %.2343606 = phi i1 [ %.2342, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbEEEEEclEPS8_.exit.i.i89 ], [ %.1463, %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbEEE3endEv.exit.preheader.split.us ] ; 2 uses
+_ZN7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbEEED2Ev.exit90: ; preds = %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbEEEneERKS7_.exit.a, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbEEEEEclEPS8_.exit.i.i89
+  %.2343606 = phi i1 [ %.2342, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbEEEEEclEPS8_.exit.i.i89 ], [ %.1463, %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbEEEneERKS7_.exit.a ] ; 2 uses
   %i.dd = load ptr, ptr %i.q, align 8, !tbaa !4889
   invoke void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St9_IdentityIS5_ESt4lessIS5_ESaIS5_EE8_M_eraseEPSt13_Rb_tree_nodeIS5_E(ptr noundef nonnull align 8 dereferenceable(48) %7, ptr noundef %i.dd)
           to label %_ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_EED2Ev.exit unwind label %bb.o
@@ -328,7 +328,7 @@ bb.x:                                             ; preds = %_ZNSt7__cxx1112basi
           cleanup
   br label %bb.ch
 
-bb.y:                                             ; preds = %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbEEEneERKS7_.exit.a
+bb.y:                                             ; preds = %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbEEEneERKS7_.exit
   %i.ea = load ptr, ptr %i.cm, align 8, !tbaa !267
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 40
   %i.ec = load ptr, ptr %i.eb, align 8
@@ -731,11 +731,7 @@ _ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbibEEE5
 _ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbibEEE3endEv.exit.preheader: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbibEEE5beginEv.exit
   %i.cs = icmp eq ptr %i.cm, %i.cr
   %.not.i99 = icmp eq ptr %i.ao, null             ; 4 uses
-  br i1 %i.cs, label %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbibEEE3endEv.exit.preheader.split.us, label %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbibEEE3endEv.exit
-
-_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbibEEE3endEv.exit.preheader.split.us: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbibEEE3endEv.exit.preheader
-  %.not.i.i = icmp eq ptr %i.cm, null
-  br i1 %.not.i.i, label %_ZN7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbibEEED2Ev.exit90, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbibEEEEEclEPS8_.exit.i.i89
+  br i1 %i.cs, label %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbibEEEneERKS7_.exit.a, label %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbibEEE3endEv.exit
 
 _ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbibEEE3endEv.exit: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbibEEE3endEv.exit.preheader, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit161
   %.034 = phi i64 [ %i.nn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit161 ], [ 0, %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbibEEE3endEv.exit.preheader ] ; 2 uses
@@ -744,13 +740,17 @@ _ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbibEEE3
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 48
   %i.cv = load ptr, ptr %i.cu, align 8
   %i.cw = invoke noundef zeroext i1 %i.cv(ptr noundef nonnull align 8 dereferenceable(8) %i.cm, ptr noundef nonnull align 8 dereferenceable(8) %i.cr)
-          to label %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbibEEEneERKS7_.exit.a unwind label %bb.x, !inline_history !12317
+          to label %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbibEEEneERKS7_.exit unwind label %bb.x, !inline_history !12317
 
-_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbibEEEneERKS7_.exit.a: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbibEEE3endEv.exit
+_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbibEEEneERKS7_.exit: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbibEEE3endEv.exit
   br i1 %i.cw, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbibEEEEEclEPS8_.exit.i.i89, label %bb.y
 
-_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbibEEEEEclEPS8_.exit.i.i89: ; preds = %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbibEEEneERKS7_.exit.a, %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbibEEE3endEv.exit.preheader.split.us
-  %.2342 = phi i1 [ %.1463, %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbibEEE3endEv.exit.preheader.split.us ], [ %.2, %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbibEEEneERKS7_.exit.a ]
+_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbibEEEneERKS7_.exit.a: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbibEEE3endEv.exit.preheader
+  %.not.i.i = icmp eq ptr %i.cm, null
+  br i1 %.not.i.i, label %_ZN7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbibEEED2Ev.exit90, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbibEEEEEclEPS8_.exit.i.i89
+
+_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbibEEEEEclEPS8_.exit.i.i89: ; preds = %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbibEEEneERKS7_.exit, %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbibEEEneERKS7_.exit.a
+  %.2342 = phi i1 [ %.1463, %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbibEEEneERKS7_.exit.a ], [ %.2, %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbibEEEneERKS7_.exit ]
   %i.cx = load ptr, ptr %i.cr, align 8, !tbaa !267
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 8
   %i.cz = load ptr, ptr %i.cy, align 8
@@ -761,8 +761,8 @@ _ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21
   call void %i.dc(ptr noundef nonnull align 8 dereferenceable(8) %i.cm) #28, !call_target !3961, !inline_history !12318
   br label %_ZN7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbibEEED2Ev.exit90
 
-_ZN7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbibEEED2Ev.exit90: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbibEEE3endEv.exit.preheader.split.us, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbibEEEEEclEPS8_.exit.i.i89
-  %.2343606 = phi i1 [ %.2342, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbibEEEEEclEPS8_.exit.i.i89 ], [ %.1463, %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbibEEE3endEv.exit.preheader.split.us ] ; 2 uses
+_ZN7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbibEEED2Ev.exit90: ; preds = %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbibEEEneERKS7_.exit.a, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbibEEEEEclEPS8_.exit.i.i89
+  %.2343606 = phi i1 [ %.2342, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbibEEEEEclEPS8_.exit.i.i89 ], [ %.1463, %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbibEEEneERKS7_.exit.a ] ; 2 uses
   %i.dd = load ptr, ptr %i.q, align 8, !tbaa !4889
   invoke void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St9_IdentityIS5_ESt4lessIS5_ESaIS5_EE8_M_eraseEPSt13_Rb_tree_nodeIS5_E(ptr noundef nonnull align 8 dereferenceable(48) %7, ptr noundef %i.dd)
           to label %_ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_EED2Ev.exit unwind label %bb.o
@@ -855,7 +855,7 @@ bb.x:                                             ; preds = %_ZNSt7__cxx1112basi
           cleanup
   br label %bb.ch
 
-bb.y:                                             ; preds = %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbibEEEneERKS7_.exit.a
+bb.y:                                             ; preds = %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbibEEEneERKS7_.exit
   %i.ea = load ptr, ptr %i.cm, align 8, !tbaa !267
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 40
   %i.ec = load ptr, ptr %i.eb, align 8
@@ -1258,11 +1258,7 @@ _ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbbiEEE5
 _ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbbiEEE3endEv.exit.preheader: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbbiEEE5beginEv.exit
   %i.cs = icmp eq ptr %i.cm, %i.cr
   %.not.i99 = icmp eq ptr %i.ao, null             ; 4 uses
-  br i1 %i.cs, label %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbbiEEE3endEv.exit.preheader.split.us, label %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbbiEEE3endEv.exit
-
-_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbbiEEE3endEv.exit.preheader.split.us: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbbiEEE3endEv.exit.preheader
-  %.not.i.i = icmp eq ptr %i.cm, null
-  br i1 %.not.i.i, label %_ZN7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbbiEEED2Ev.exit90, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbbiEEEEEclEPS8_.exit.i.i89
+  br i1 %i.cs, label %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbbiEEEneERKS7_.exit.a, label %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbbiEEE3endEv.exit
 
 _ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbbiEEE3endEv.exit: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbbiEEE3endEv.exit.preheader, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit161
   %.034 = phi i64 [ %i.nn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit161 ], [ 0, %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbbiEEE3endEv.exit.preheader ] ; 2 uses
@@ -1271,13 +1267,17 @@ _ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbbiEEE3
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 48
   %i.cv = load ptr, ptr %i.cu, align 8
   %i.cw = invoke noundef zeroext i1 %i.cv(ptr noundef nonnull align 8 dereferenceable(8) %i.cm, ptr noundef nonnull align 8 dereferenceable(8) %i.cr)
-          to label %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbbiEEEneERKS7_.exit.a unwind label %bb.x, !inline_history !14408
+          to label %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbbiEEEneERKS7_.exit unwind label %bb.x, !inline_history !14408
 
-_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbbiEEEneERKS7_.exit.a: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbbiEEE3endEv.exit
+_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbbiEEEneERKS7_.exit: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbbiEEE3endEv.exit
   br i1 %i.cw, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbbiEEEEEclEPS8_.exit.i.i89, label %bb.y
 
-_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbbiEEEEEclEPS8_.exit.i.i89: ; preds = %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbbiEEEneERKS7_.exit.a, %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbbiEEE3endEv.exit.preheader.split.us
-  %.2342 = phi i1 [ %.1463, %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbbiEEE3endEv.exit.preheader.split.us ], [ %.2, %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbbiEEEneERKS7_.exit.a ]
+_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbbiEEEneERKS7_.exit.a: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbbiEEE3endEv.exit.preheader
+  %.not.i.i = icmp eq ptr %i.cm, null
+  br i1 %.not.i.i, label %_ZN7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbbiEEED2Ev.exit90, label %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbbiEEEEEclEPS8_.exit.i.i89
+
+_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbbiEEEEEclEPS8_.exit.i.i89: ; preds = %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbbiEEEneERKS7_.exit, %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbbiEEEneERKS7_.exit.a
+  %.2342 = phi i1 [ %.1463, %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbbiEEEneERKS7_.exit.a ], [ %.2, %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbbiEEEneERKS7_.exit ]
   %i.cx = load ptr, ptr %i.cr, align 8, !tbaa !267
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 8
   %i.cz = load ptr, ptr %i.cy, align 8
@@ -1288,8 +1288,8 @@ _ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21
   call void %i.dc(ptr noundef nonnull align 8 dereferenceable(8) %i.cm) #28, !call_target !4824, !inline_history !14409
   br label %_ZN7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbbiEEED2Ev.exit90
 
-_ZN7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbbiEEED2Ev.exit90: ; preds = %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbbiEEE3endEv.exit.preheader.split.us, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbbiEEEEEclEPS8_.exit.i.i89
-  %.2343606 = phi i1 [ %.2342, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbbiEEEEEclEPS8_.exit.i.i89 ], [ %.1463, %_ZNK7testing8internal14ParamGeneratorISt5tupleIJPK21trust_token_method_stbbiEEE3endEv.exit.preheader.split.us ] ; 2 uses
+_ZN7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbbiEEED2Ev.exit90: ; preds = %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbbiEEEneERKS7_.exit.a, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbbiEEEEEclEPS8_.exit.i.i89
+  %.2343606 = phi i1 [ %.2342, %_ZNKSt14default_deleteIN7testing8internal22ParamIteratorInterfaceISt5tupleIJPK21trust_token_method_stbbiEEEEEclEPS8_.exit.i.i89 ], [ %.1463, %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbbiEEEneERKS7_.exit.a ] ; 2 uses
   %i.dd = load ptr, ptr %i.q, align 8, !tbaa !4889
   invoke void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St9_IdentityIS5_ESt4lessIS5_ESaIS5_EE8_M_eraseEPSt13_Rb_tree_nodeIS5_E(ptr noundef nonnull align 8 dereferenceable(48) %7, ptr noundef %i.dd)
           to label %_ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_EED2Ev.exit unwind label %bb.o
@@ -1382,7 +1382,7 @@ bb.x:                                             ; preds = %_ZNSt7__cxx1112basi
           cleanup
   br label %bb.ch
 
-bb.y:                                             ; preds = %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbbiEEEneERKS7_.exit.a
+bb.y:                                             ; preds = %_ZNK7testing8internal13ParamIteratorISt5tupleIJPK21trust_token_method_stbbiEEEneERKS7_.exit
   %i.ea = load ptr, ptr %i.cm, align 8, !tbaa !267
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 40
   %i.ec = load ptr, ptr %i.eb, align 8

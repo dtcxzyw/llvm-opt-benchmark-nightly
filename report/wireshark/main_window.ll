@@ -204,7 +204,7 @@ _ZN4QSetI7QStringE14const_iteratorppEv.exit:      ; preds = %bb.g, %._ZN4QSetI7Q
   %or.cond.not = and i1 %i.cg, %i.ch
   br i1 %or.cond.not, label %_ZNK4QSetI7QStringE8containsERKS0_.exit.thread13, label %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread, !llvm.loop !50
 
-_ZNK4QSetI7QStringE8containsERKS0_.exit.thread13: ; preds = %_ZNK4QSetI7QStringE8containsERKS0_.exit, %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread, %_ZN4QSetI7QStringE14const_iteratorppEv.exit, %_ZN12QHashPrivate4DataINS_4NodeI7QString15QHashDummyValueEEE6Bucket14advanceWrappedEPKS5_.exit.i.i.i, %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread.lr.ph, %_ZNK4QSetI7QStringE10constBeginEv.exit
+_ZNK4QSetI7QStringE8containsERKS0_.exit.thread13: ; preds = %_ZNK4QSetI7QStringE8containsERKS0_.exit, %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread, %_ZN4QSetI7QStringE14const_iteratorppEv.exit, %_ZN12QHashPrivate4DataINS_4NodeI7QString15QHashDummyValueEEE6Bucket14advanceWrappedEPKS5_.exit.i.i.i, %_ZNK4QSetI7QStringE10constBeginEv.exit, %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread.lr.ph
   %or.cond.not20 = phi i1 [ false, %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread.lr.ph ], [ true, %_ZNK4QSetI7QStringE10constBeginEv.exit ], [ false, %_ZN12QHashPrivate4DataINS_4NodeI7QString15QHashDummyValueEEE6Bucket14advanceWrappedEPKS5_.exit.i.i.i ], [ false, %_ZNK4QSetI7QStringE8containsERKS0_.exit ], [ false, %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread ], [ true, %_ZN4QSetI7QStringE14const_iteratorppEv.exit ]
   ret i1 %or.cond.not20
 }
