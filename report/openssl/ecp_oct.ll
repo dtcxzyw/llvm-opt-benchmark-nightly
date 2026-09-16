@@ -202,7 +202,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %i.ac = sext i32 %narrow to i64
   %scevgep = getelementptr i8, ptr %3, i64 1
   tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 0, i64 %i.ac, i1 false), !tbaa !19
-  %narrow140 = add nsw i32 %i.g, %.neg
+  %narrow140 = add nsw i32 %.neg, %i.g
   %i.ad = sext i32 %narrow140 to i64
   %i.ae = add nsw i64 %i.ad, 1
   br label %._crit_edge
@@ -238,9 +238,9 @@ bb.s:                                             ; preds = %bb.r, %bb.r
   %i.am = sext i32 %narrow105 to i64
   %scevgep133 = getelementptr i8, ptr %3, i64 %i.j
   tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep133, i8 0, i64 %i.am, i1 false), !tbaa !19
-  %6 = add nsw i64 %i.j, %i.h
-  %7 = sext i32 %.neg106 to i64
-  %i.an = add nsw i64 %6, %7
+  %6 = sext i32 %.neg106 to i64
+  %7 = add nsw i64 %i.j, %6
+  %i.an = add nsw i64 %7, %i.h
   br label %._crit_edge130
 
 ._crit_edge130:                                   ; preds = %.lr.ph129.preheader, %.preheader

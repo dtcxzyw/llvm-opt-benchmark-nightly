@@ -203,7 +203,7 @@ bb.k:                                             ; preds = %bb.d, %bb.d, %bb.i,
   br label %bb.l
 
 ..preheader124_crit_edge:                         ; preds = %._crit_edge150
-  %i.bd = mul i32 %.0103.lcssa, %.0107.lcssa
+  %i.bd = mul i32 %.0107.lcssa, %.0103.lcssa
   %i.be = add i32 %num_allocated.promoted152, %i.bd
   store i32 %i.be, ptr @num_allocated, align 4, !tbaa !7
   br label %.preheader124

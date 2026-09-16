@@ -204,7 +204,7 @@ bb.fo:                                            ; preds = %bb.fn
   %i.abk = trunc nuw i8 %i.abj to i1              ; 2 uses
   %i.abl = select i1 %i.abk, i32 562, i32 282     ; 2 uses
   %i.abm = select i1 %i.abk, i32 545, i32 264     ; 2 uses
-  %umax = call i32 @llvm.umax.i32(i32 %i.abm, i32 %i.abl)
+  %umax = call i32 @llvm.umax.i32(i32 %i.abl, i32 %i.abm)
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.fq

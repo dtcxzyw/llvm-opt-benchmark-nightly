@@ -205,7 +205,7 @@ bb.by:                                            ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %i.pp, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i, label %.lr.ph
 
 _RNvXs_NtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtNtCsdaEETE4DqmE_13typst_library4text4item5GlyphEINtB4_18SpecFromIterNestedB13_INtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtNtB2w_5slice4iter4IterNtNtNtCs7tN9tvpkfrg_12typst_layout6inline7shaping11ShapedGlyphENCNvMs1_B3E_NtB3E_10ShapedText5builds_0EE9from_iterB3I_.exit: ; preds = %.loopexit.i.i.i.i.i.i
-  %i.pq = add i64 %.sroa.0384.01158, %.sroa.0.1.i.i.i
+  %i.pq = add i64 %.sroa.0.1.i.i.i, %.sroa.0384.01158
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bp)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bo)
   store ptr %.sroa.0309.0.copyload, ptr %i.bo, align 8

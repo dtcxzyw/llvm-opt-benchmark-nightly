@@ -202,7 +202,7 @@ bb.bl:                                            ; preds = %switch.early.test, 
   br i1 %.not59110, label %.lr.ph.preheader, label %.critedge
 
 .lr.ph.preheader:                                 ; preds = %bb.bl
-  %i.dl = or i1 %i.dg, %i.dh                      ; 2 uses
+  %i.dl = or i1 %i.dh, %i.dg                      ; 2 uses
   %umax = zext i1 %i.dl to i64
   %i.dm = zext i1 %i.dl to i32
   %i.dn = add nuw i32 %i.dk, %i.dm
@@ -605,7 +605,7 @@ bb.ae:                                            ; preds = %bb.a
   br i1 %.not39115, label %.lr.ph.preheader, label %.critedge
 
 .lr.ph.preheader:                                 ; preds = %bb.ae
-  %i.fu = or i1 %i.fp, %i.fq                      ; 2 uses
+  %i.fu = or i1 %i.fq, %i.fp                      ; 2 uses
   %umax = zext i1 %i.fu to i64
   %i.fv = zext i1 %i.fu to i32
   %i.fw = add nuw i32 %i.ft, %i.fv
@@ -1008,7 +1008,7 @@ bb.ae:                                            ; preds = %bb.a
   br i1 %.not38114, label %.lr.ph.preheader, label %.critedge
 
 .lr.ph.preheader:                                 ; preds = %bb.ae
-  %i.fv = or i1 %i.fq, %i.fr                      ; 2 uses
+  %i.fv = or i1 %i.fr, %i.fq                      ; 2 uses
   %umax = zext i1 %i.fv to i64
   %i.fw = zext i1 %i.fv to i32
   %i.fx = add nuw i32 %i.fu, %i.fw

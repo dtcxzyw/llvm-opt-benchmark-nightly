@@ -205,15 +205,15 @@ bb.r:                                             ; preds = %_ZSt4findIN9__gnu_c
   %lcmp.mod195 = trunc i32 %smax to i1
   br label %.preheader.us
 
-.preheader.us:                                    ; preds = %._crit_edge.us, %.preheader.lr.ph.split.us
-  %indvar = phi i64 [ %indvar.next, %._crit_edge.us ], [ 0, %.preheader.lr.ph.split.us ] ; 2 uses
-  %indvars.iv122 = phi i64 [ %indvars.iv.next123, %._crit_edge.us ], [ %i.ca, %.preheader.lr.ph.split.us ] ; 3 uses
+.preheader.us:                                    ; preds = %.preheader.lr.ph.split.us, %._crit_edge
+  %indvar = phi i64 [ 0, %.preheader.lr.ph.split.us ], [ %indvar.next, %._crit_edge ] ; 2 uses
+  %indvars.iv122 = phi i64 [ %i.ca, %.preheader.lr.ph.split.us ], [ %indvars.iv.next122, %._crit_edge ] ; 3 uses
   %invariant.gep = getelementptr [8 x i8], ptr %i.bz, i64 %indvars.iv122 ; 5 uses
   %gep152 = getelementptr [8 x i8], ptr %invariant.gep151, i64 %indvars.iv122 ; 5 uses
   br i1 %min.iters.check168, label %scalar.ph167.preheader, label %vector.memcheck
 
 scalar.ph167.preheader:                           ; preds = %vector.memcheck, %.preheader.us
-  br i1 %i.cl, label %scalar.ph167.epil.preheader, label %scalar.ph167
+  br i1 %i.cl, label %scalar.ph166.epil.preheader, label %scalar.ph167
 
 vector.memcheck:                                  ; preds = %.preheader.us
   %i.cm = mul i64 %i.cg, %indvar                  ; 2 uses
@@ -240,7 +240,27 @@ vector.body171:                                   ; preds = %vector.memcheck, %v
   store <2 x i64> %wide.load174.a, ptr %i.cq, align 8, !tbaa !82, !alias.scope !219
   %index.next177 = add nuw i64 %index172, 4       ; 2 uses
   %i.cr = icmp eq i64 %index.next177, %n.vec170
-  br i1 %i.cr, label %._crit_edge.us, label %vector.body171, !llvm.loop !212
+  br i1 %i.cr, label %._crit_edge, label %vector.body171, !llvm.loop !212
+
+._crit_edge.loopexit.unr-lcssa:                   ; preds = %scalar.ph167
+  br i1 %lcmp.mod194.not, label %._crit_edge, label %scalar.ph166.epil.preheader
+
+scalar.ph166.epil.preheader:                      ; preds = %._crit_edge.loopexit.unr-lcssa, %scalar.ph167.preheader
+  %indvars.iv116.epil.init = phi i64 [ 0, %scalar.ph167.preheader ], [ %indvars.iv.next118.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
+  tail call void @llvm.assume(i1 %lcmp.mod195)
+  %gep.epil = getelementptr [8 x i8], ptr %invariant.gep, i64 %indvars.iv116.epil.init ; 2 uses
+  %2 = getelementptr [8 x i8], ptr %gep152, i64 %indvars.iv116.epil.init ; 2 uses
+  %3 = load i64, ptr %gep.epil, align 8, !tbaa !82
+  %4 = load i64, ptr %2, align 8, !tbaa !82
+  store i64 %4, ptr %gep.epil, align 8, !tbaa !82
+  store i64 %3, ptr %2, align 8, !tbaa !82
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %vector.body171, %scalar.ph166.epil.preheader, %._crit_edge.loopexit.unr-lcssa
+  %indvars.iv.next122 = add nsw i64 %indvars.iv122, %i.cb ; 2 uses
+  %5 = icmp slt i64 %indvars.iv.next122, %i.cc
+  %indvar.next = add i64 %indvar, 1
+  br i1 %5, label %.preheader.us, label %.loopexit, !llvm.loop !213
 
 scalar.ph167:                                     ; preds = %scalar.ph167.preheader, %scalar.ph167
   %indvars.iv117 = phi i64 [ %indvars.iv.next118.1, %scalar.ph167 ], [ 0, %scalar.ph167.preheader ] ; 4 uses
@@ -261,27 +281,7 @@ scalar.ph167:                                     ; preds = %scalar.ph167.prehea
   %indvars.iv.next118.1 = add nuw nsw i64 %indvars.iv117, 2 ; 2 uses
   %niter197.next.1 = add i64 %niter197, 2         ; 2 uses
   %niter197.ncmp.1 = icmp eq i64 %niter197.next.1, %unroll_iter196
-  br i1 %niter197.ncmp.1, label %._crit_edge.us.loopexit.unr-lcssa, label %scalar.ph167, !llvm.loop !213
-
-._crit_edge.us.loopexit.unr-lcssa:                ; preds = %scalar.ph167
-  br i1 %lcmp.mod194.not, label %._crit_edge.us, label %scalar.ph167.epil.preheader
-
-scalar.ph167.epil.preheader:                      ; preds = %._crit_edge.us.loopexit.unr-lcssa, %scalar.ph167.preheader
-  %indvars.iv117.epil.init = phi i64 [ 0, %scalar.ph167.preheader ], [ %indvars.iv.next118.1, %._crit_edge.us.loopexit.unr-lcssa ] ; 2 uses
-  tail call void @llvm.assume(i1 %lcmp.mod195)
-  %gep.epil = getelementptr [8 x i8], ptr %invariant.gep, i64 %indvars.iv117.epil.init ; 2 uses
-  %2 = getelementptr [8 x i8], ptr %gep152, i64 %indvars.iv117.epil.init ; 2 uses
-  %3 = load i64, ptr %gep.epil, align 8, !tbaa !82
-  %4 = load i64, ptr %2, align 8, !tbaa !82
-  store i64 %4, ptr %gep.epil, align 8, !tbaa !82
-  store i64 %3, ptr %2, align 8, !tbaa !82
-  br label %._crit_edge.us
-
-._crit_edge.us:                                   ; preds = %vector.body171, %scalar.ph167.epil.preheader, %._crit_edge.us.loopexit.unr-lcssa
-  %indvars.iv.next123 = add nsw i64 %indvars.iv122, %i.cb ; 2 uses
-  %5 = icmp slt i64 %indvars.iv.next123, %i.cc
-  %indvar.next = add i64 %indvar, 1
-  br i1 %5, label %.preheader.us, label %.loopexit, !llvm.loop !214
+  br i1 %niter197.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %scalar.ph167, !llvm.loop !214
 
 bb.s:                                             ; preds = %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEiET_S7_S7_RKT0_.exit64
   %i.cy = icmp eq i32 %i.bq, 7
@@ -443,7 +443,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store i64 %i.gc, ptr %i.fw, align 8, !tbaa !82
   br label %.loopexit
 
-.loopexit:                                        ; preds = %scalar.ph, %.epil.preheader, %.loopexit.loopexit182.unr-lcssa, %._crit_edge.us, %middle.block, %.preheader78, %.preheader76, %bb.r
+.loopexit:                                        ; preds = %scalar.ph, %.epil.preheader, %.loopexit.loopexit182.unr-lcssa, %._crit_edge, %middle.block, %.preheader78, %.preheader76, %bb.r
   ret void
 }
 
@@ -846,15 +846,15 @@ bb.b:                                             ; preds = %bb.a
   %lcmp.mod111 = trunc i32 %smax71 to i1
   br label %.preheader.us
 
-.preheader.us:                                    ; preds = %._crit_edge.us, %.preheader.lr.ph.split.us
-  %indvar = phi i64 [ %indvar.next, %._crit_edge.us ], [ 0, %.preheader.lr.ph.split.us ] ; 2 uses
-  %indvars.iv74 = phi i64 [ %indvars.iv.next75, %._crit_edge.us ], [ %i.m, %.preheader.lr.ph.split.us ] ; 3 uses
+.preheader.us:                                    ; preds = %.preheader.lr.ph.split.us, %._crit_edge
+  %indvar = phi i64 [ 0, %.preheader.lr.ph.split.us ], [ %indvar.next, %._crit_edge ] ; 2 uses
+  %indvars.iv74 = phi i64 [ %i.m, %.preheader.lr.ph.split.us ], [ %indvars.iv.next74, %._crit_edge ] ; 3 uses
   %invariant.gep = getelementptr [8 x i8], ptr %i.l, i64 %indvars.iv74 ; 5 uses
   %gep84 = getelementptr [8 x i8], ptr %invariant.gep83, i64 %indvars.iv74 ; 5 uses
   br i1 %min.iters.check92, label %scalar.ph91.preheader, label %vector.memcheck
 
 scalar.ph91.preheader:                            ; preds = %vector.memcheck, %.preheader.us
-  br i1 %i.x, label %scalar.ph91.epil.preheader, label %scalar.ph91
+  br i1 %i.x, label %scalar.ph90.epil.preheader, label %scalar.ph91
 
 vector.memcheck:                                  ; preds = %.preheader.us
   %i.y = mul i64 %i.s, %indvar                    ; 2 uses
@@ -881,7 +881,27 @@ vector.body95:                                    ; preds = %vector.memcheck, %v
   store <2 x i64> %wide.load98.a, ptr %i.ac, align 8, !tbaa !82, !alias.scope !285
   %index.next101 = add nuw i64 %index96, 4        ; 2 uses
   %i.ad = icmp eq i64 %index.next101, %n.vec94
-  br i1 %i.ad, label %._crit_edge.us, label %vector.body95, !llvm.loop !278
+  br i1 %i.ad, label %._crit_edge, label %vector.body95, !llvm.loop !278
+
+._crit_edge.loopexit.unr-lcssa:                   ; preds = %scalar.ph91
+  br i1 %lcmp.mod110.not, label %._crit_edge, label %scalar.ph90.epil.preheader
+
+scalar.ph90.epil.preheader:                       ; preds = %._crit_edge.loopexit.unr-lcssa, %scalar.ph91.preheader
+  %indvars.iv67.epil.init = phi i64 [ 0, %scalar.ph91.preheader ], [ %indvars.iv.next69.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
+  tail call void @llvm.assume(i1 %lcmp.mod111)
+  %gep.epil = getelementptr [8 x i8], ptr %invariant.gep, i64 %indvars.iv67.epil.init ; 2 uses
+  %2 = getelementptr [8 x i8], ptr %gep84, i64 %indvars.iv67.epil.init ; 2 uses
+  %3 = load i64, ptr %gep.epil, align 8, !tbaa !82
+  %4 = load i64, ptr %2, align 8, !tbaa !82
+  store i64 %4, ptr %gep.epil, align 8, !tbaa !82
+  store i64 %3, ptr %2, align 8, !tbaa !82
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %vector.body95, %scalar.ph90.epil.preheader, %._crit_edge.loopexit.unr-lcssa
+  %indvars.iv.next74 = add nsw i64 %indvars.iv74, %i.n ; 2 uses
+  %5 = icmp slt i64 %indvars.iv.next74, %i.o
+  %indvar.next = add i64 %indvar, 1
+  br i1 %5, label %.preheader.us, label %.critedge2, !llvm.loop !279
 
 scalar.ph91:                                      ; preds = %scalar.ph91.preheader, %scalar.ph91
   %indvars.iv68 = phi i64 [ %indvars.iv.next69.1, %scalar.ph91 ], [ 0, %scalar.ph91.preheader ] ; 4 uses
@@ -902,27 +922,7 @@ scalar.ph91:                                      ; preds = %scalar.ph91.prehead
   %indvars.iv.next69.1 = add nuw nsw i64 %indvars.iv68, 2 ; 2 uses
   %niter113.next.1 = add i64 %niter113, 2         ; 2 uses
   %niter113.ncmp.1 = icmp eq i64 %niter113.next.1, %unroll_iter112
-  br i1 %niter113.ncmp.1, label %._crit_edge.us.loopexit.unr-lcssa, label %scalar.ph91, !llvm.loop !279
-
-._crit_edge.us.loopexit.unr-lcssa:                ; preds = %scalar.ph91
-  br i1 %lcmp.mod110.not, label %._crit_edge.us, label %scalar.ph91.epil.preheader
-
-scalar.ph91.epil.preheader:                       ; preds = %._crit_edge.us.loopexit.unr-lcssa, %scalar.ph91.preheader
-  %indvars.iv68.epil.init = phi i64 [ 0, %scalar.ph91.preheader ], [ %indvars.iv.next69.1, %._crit_edge.us.loopexit.unr-lcssa ] ; 2 uses
-  tail call void @llvm.assume(i1 %lcmp.mod111)
-  %gep.epil = getelementptr [8 x i8], ptr %invariant.gep, i64 %indvars.iv68.epil.init ; 2 uses
-  %2 = getelementptr [8 x i8], ptr %gep84, i64 %indvars.iv68.epil.init ; 2 uses
-  %3 = load i64, ptr %gep.epil, align 8, !tbaa !82
-  %4 = load i64, ptr %2, align 8, !tbaa !82
-  store i64 %4, ptr %gep.epil, align 8, !tbaa !82
-  store i64 %3, ptr %2, align 8, !tbaa !82
-  br label %._crit_edge.us
-
-._crit_edge.us:                                   ; preds = %vector.body95, %scalar.ph91.epil.preheader, %._crit_edge.us.loopexit.unr-lcssa
-  %indvars.iv.next75 = add nsw i64 %indvars.iv74, %i.n ; 2 uses
-  %5 = icmp slt i64 %indvars.iv.next75, %i.o
-  %indvar.next = add i64 %indvar, 1
-  br i1 %5, label %.preheader.us, label %.critedge2, !llvm.loop !280
+  br i1 %niter113.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %scalar.ph91, !llvm.loop !280
 
 bb.c:                                             ; preds = %bb.a
   %i.ak = icmp eq i32 %i.c, 7
@@ -1086,7 +1086,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.new
   store i64 %i.dp, ptr %i.dj, align 8, !tbaa !82
   br label %.critedge2
 
-.critedge2:                                       ; preds = %.critedge, %.epil.preheader, %.critedge2.loopexit106.unr-lcssa, %._crit_edge.us, %middle.block, %.preheader52, %.preheader50, %bb.b
+.critedge2:                                       ; preds = %.critedge, %.epil.preheader, %.critedge2.loopexit106.unr-lcssa, %._crit_edge, %middle.block, %.preheader52, %.preheader50, %bb.b
   ret void
 }
 
@@ -1489,8 +1489,8 @@ begin_hunk_2_@llvm.ctpop.v2i64
 !210 = distinct !{!210, !209}
 !211 = distinct !{!211, !209}
 !212 = distinct !{!212, !47, !83, !85}
-!213 = distinct !{!213, !47, !83}
-!214 = distinct !{!214, !47}
+!213 = distinct !{!213, !47}
+!214 = distinct !{!214, !47, !83}
 !215 = distinct !{!215, !47, !83, !85}
 !216 = distinct !{!216, !47}
 !217 = distinct !{!217, !47, !85, !83}
@@ -1555,8 +1555,8 @@ begin_hunk_2_@llvm.ctpop.v2i64
 !276 = distinct !{!276, !275}
 !277 = distinct !{!277, !275}
 !278 = distinct !{!278, !47, !83, !85}
-!279 = distinct !{!279, !47, !83}
-!280 = distinct !{!280, !47}
+!279 = distinct !{!279, !47}
+!280 = distinct !{!280, !47, !83}
 !281 = distinct !{!281, !47, !83, !85}
 !282 = distinct !{!282, !47}
 !283 = distinct !{!283, !47, !85, !83}
