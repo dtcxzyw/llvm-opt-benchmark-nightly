@@ -1,0 +1,9 @@
+Delta,Added Lines,Removed Lines,Download URL
+180,655,475,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/typed_path-3b18bdea244d040d.typed_path.71bd01a4fe17ab8e-cgu.02.bc?download=true
+2,18,16,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/contours_approx.bc?download=true
+0,2,2,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dlaqr0.bc?download=true
+0,2,2,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dlaqr4.bc?download=true
+0,7,7,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/pifft.bc?download=true
+-4,6,10,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/ModuloSchedule.bc?download=true
+-19,18,37,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/magicyuv.bc?download=true
+-22,189,211,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/typed_path-3b18bdea244d040d.typed_path.71bd01a4fe17ab8e-cgu.00.bc?download=true
