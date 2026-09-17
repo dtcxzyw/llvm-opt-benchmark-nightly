@@ -204,9 +204,9 @@ _ZNK4QMapId6QColorE10constBeginEv.exit184:        ; preds = %_ZNK4QMapId6QColorE
   %i.oa = shufflevector <4 x double> %i.ny, <4 x double> %i.nz, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.ob = fmul <4 x double> %i.nw, %i.oa
   %i.oc = fptosi <4 x double> %i.ob to <4 x i32>
-  %6 = shl <4 x i32> %i.oc, <i32 16, i32 8, i32 0, i32 24>
-  %7 = and <4 x i32> %6, <i32 16711680, i32 65280, i32 255, i32 -1>
-  %8 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %7)
+  %6 = shufflevector <4 x i32> %i.oc, <4 x i32> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
+  %7 = trunc <4 x i32> %6 to <4 x i8>
+  %8 = bitcast <4 x i8> %7 to i32
   br label %.loopexit.sink.split
 
 .loopexit.sink.split:                             ; preds = %_ZNK4QMapId6QColorE4sizeEv.exit178, %_ZN5QListIjE6resizeEx.exit, %_ZNK4QMapId6QColorE10constBeginEv.exit184
@@ -609,11 +609,11 @@ bb.bb:                                            ; preds = %bb.ba
   %i.ey = uitofp <4 x i32> %i.ex to <4 x float>
   %i.ez = insertelement <4 x float> poison, float %i.ep, i64 0
   %i.fa = shufflevector <4 x float> %i.ez, <4 x float> poison, <4 x i32> zeroinitializer
-  %20 = fmul <4 x float> %i.fa, %i.ey
-  %21 = fptosi <4 x float> %20 to <4 x i32>
-  %22 = shl <4 x i32> %21, <i32 16, i32 8, i32 0, i32 24>
-  %23 = and <4 x i32> %22, <i32 16711680, i32 65280, i32 255, i32 -1>
-  %24 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %23)
+  %20 = shufflevector <4 x float> %i.ey, <4 x float> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
+  %21 = fmul <4 x float> %i.fa, %20
+  %22 = fptosi <4 x float> %21 to <4 x i32>
+  %23 = trunc <4 x i32> %22 to <4 x i8>
+  %24 = bitcast <4 x i8> %23 to i32
   br label %.sink.split
 
 bb.bc:                                            ; preds = %bb.at
@@ -1014,9 +1014,6 @@ declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #25
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.abs.v2i32(<2 x i32>, i1 immarg) #28
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #25

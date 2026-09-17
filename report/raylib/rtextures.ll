@@ -205,9 +205,9 @@ bb.e:                                             ; preds = %bb.d
   %i.dg = mul nuw nsw <4 x i32> %i.ce, %i.df
   %i.dh = add nuw nsw <4 x i32> %i.dd, %i.dg
   %i.di = udiv <4 x i32> %i.dh, splat (i32 255)
-  %7 = shl <4 x i32> %i.di, <i32 16, i32 8, i32 0, i32 24>
-  %8 = and <4 x i32> %7, <i32 16711680, i32 65280, i32 255, i32 -1>
-  %9 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %8)
+  %7 = shufflevector <4 x i32> %i.di, <4 x i32> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
+  %8 = trunc <4 x i32> %7 to <4 x i8>
+  %9 = bitcast <4 x i8> %8 to i32
   tail call void @ImageDrawPixel(ptr noundef %0, i32 noundef %.0212234, i32 noundef %.0216239, i32 %9)
   br label %bb.f
 
@@ -608,9 +608,6 @@ declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.smin.v2i32(<2 x i32>, <2 x i32>) #17
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #17

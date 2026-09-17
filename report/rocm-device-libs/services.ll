@@ -202,10 +202,7 @@ begin_hunk_0_@__ockl_fprintf_append_string_n:bb.a
   br label %.lr.ph214.i.i
 
 bb.e:                                             ; preds = %.loopexit172.i.i
-  %4 = load <8 x i8>, ptr %i.eq, align 1, !tbaa !9
-  %5 = zext <8 x i8> %4 to <8 x i64>
-  %6 = shl nuw <8 x i64> %5, <i64 0, i64 8, i64 16, i64 24, i64 32, i64 40, i64 48, i64 56>
-  %7 = tail call i64 @llvm.vector.reduce.or.v8i64(<8 x i64> %6)
+  %4 = load i64, ptr %i.eq, align 1, !tbaa !9
   br label %append_bytes.exit.i
 
 .lr.ph214.i.i:                                    ; preds = %.lr.ph214.i.i, %.lr.ph214.preheader.i.i
@@ -228,7 +225,7 @@ append_bytes.exit.i:                              ; preds = %.lr.ph.i.i, %.lr.ph
   %.1154240250268288314342.i.i = phi i64 [ %i.ad, %bb.e ], [ %i.ad, %.preheader.i.i ], [ %i.ad, %.preheader173.i.i ], [ %i.ad, %.lr.ph209.i.i ], [ %i.ad, %.preheader171.i.i ], [ %i.ad, %.preheader175.i.i ], [ %i.ad, %.lr.ph199.i.i ], [ %i.ad, %.preheader179.i.i ], [ %i.ad, %.lr.ph189.i.i ], [ %i.ad, %.lr.ph214.i.i ], [ 0, %.preheader181.i.i ], [ %i.ad, %.lr.ph194.i.i ], [ %i.ad, %.preheader177.i.i ], [ %i.ad, %.lr.ph204.i.i ], [ %i.q, %.lr.ph.i.i ]
   %.1148272286316340.i.i = phi i64 [ %i.bx, %bb.e ], [ %i.bx, %.preheader.i.i ], [ %i.bx, %.preheader173.i.i ], [ %i.bx, %.lr.ph209.i.i ], [ %i.bx, %.preheader171.i.i ], [ %i.bx, %.preheader175.i.i ], [ %i.bx, %.lr.ph199.i.i ], [ 0, %.preheader179.i.i ], [ 0, %.lr.ph189.i.i ], [ %i.bx, %.lr.ph214.i.i ], [ 0, %.preheader181.i.i ], [ %i.bk, %.lr.ph194.i.i ], [ 0, %.preheader177.i.i ], [ %i.bx, %.lr.ph204.i.i ], [ 0, %.lr.ph.i.i ]
   %.1142320338.i.i = phi i64 [ %i.dr, %bb.e ], [ %i.dr, %.preheader.i.i ], [ 0, %.preheader173.i.i ], [ %i.dr, %.lr.ph209.i.i ], [ %i.dr, %.preheader171.i.i ], [ 0, %.preheader175.i.i ], [ 0, %.lr.ph199.i.i ], [ 0, %.preheader179.i.i ], [ 0, %.lr.ph189.i.i ], [ %i.dr, %.lr.ph214.i.i ], [ 0, %.preheader181.i.i ], [ 0, %.lr.ph194.i.i ], [ 0, %.preheader177.i.i ], [ %i.de, %.lr.ph204.i.i ], [ 0, %.lr.ph.i.i ]
-  %.1.i.i = phi i64 [ %7, %bb.e ], [ 0, %.preheader.i.i ], [ 0, %.preheader173.i.i ], [ 0, %.lr.ph209.i.i ], [ 0, %.preheader171.i.i ], [ 0, %.preheader175.i.i ], [ 0, %.lr.ph199.i.i ], [ 0, %.preheader179.i.i ], [ 0, %.lr.ph189.i.i ], [ %i.ey, %.lr.ph214.i.i ], [ 0, %.preheader181.i.i ], [ 0, %.lr.ph194.i.i ], [ 0, %.preheader177.i.i ], [ 0, %.lr.ph204.i.i ], [ 0, %.lr.ph.i.i ]
+  %.1.i.i = phi i64 [ %4, %bb.e ], [ 0, %.preheader.i.i ], [ 0, %.preheader173.i.i ], [ 0, %.lr.ph209.i.i ], [ 0, %.preheader171.i.i ], [ 0, %.preheader175.i.i ], [ 0, %.lr.ph199.i.i ], [ 0, %.preheader179.i.i ], [ 0, %.lr.ph189.i.i ], [ %i.ey, %.lr.ph214.i.i ], [ 0, %.preheader181.i.i ], [ 0, %.lr.ph194.i.i ], [ 0, %.preheader177.i.i ], [ 0, %.lr.ph204.i.i ], [ 0, %.lr.ph.i.i ]
   %i.ez = shl nuw nsw i64 %.021.i, 2
   %i.fa = add nuw nsw i64 %i.ez, 28
   %i.fb = and i64 %i.fa, 480
@@ -294,9 +291,6 @@ bb.a:
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.or.v8i64(<8 x i64>) #2
 
 attributes #0 = { convergent norecurse nounwind denormal_fpenv(dynamic) uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" }
 attributes #1 = { convergent nounwind denormal_fpenv(dynamic) "no-trapping-math"="true" "stack-protector-buffer-size"="8" }

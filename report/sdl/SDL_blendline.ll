@@ -204,9 +204,8 @@ middle.block2263:                                 ; preds = %vector.body2258
   %i.gz = zext nneg <4 x i16> %i.gy to <4 x i32>
   %i.ha = add nuw nsw <4 x i32> %i.gh, %i.gz
   %i.hb = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %i.ha, <4 x i32> splat (i32 255))
-  %11 = shl nuw <4 x i32> %i.hb, <i32 0, i32 8, i32 16, i32 24>
-  %12 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %11)
-  store i32 %12, ptr %.214381890, align 4
+  %11 = trunc nuw <4 x i32> %i.hb to <4 x i8>
+  store <4 x i8> %11, ptr %.214381890, align 4
   %i.hc = getelementptr inbounds nuw i8, ptr %.214381890, i64 4
   %.not1742 = icmp eq i32 %i.gi, 0
   br i1 %.not1742, label %.loopexit, label %.lr.ph1892, !llvm.loop !98
@@ -609,9 +608,8 @@ bb.am:                                            ; preds = %.lr.ph1868, %bb.am
   %i.vi = zext nneg <4 x i16> %i.vh to <4 x i32>
   %i.vj = add nuw nsw <4 x i32> %i.uq, %i.vi
   %i.vk = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %i.vj, <4 x i32> splat (i32 255))
-  %13 = shl nuw <4 x i32> %i.vk, <i32 0, i32 8, i32 16, i32 24>
-  %14 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %13)
-  store i32 %14, ptr %.215281866, align 4
+  %12 = trunc nuw <4 x i32> %i.vk to <4 x i8>
+  store <4 x i8> %12, ptr %.215281866, align 4
   %i.vl = getelementptr inbounds [4 x i8], ptr %.215281866, i64 %i.up
   %.not1730 = icmp eq i32 %i.ur, 0
   br i1 %.not1730, label %.loopexit, label %bb.am, !llvm.loop !108
@@ -1014,9 +1012,8 @@ bb.bn:                                            ; preds = %.lr.ph1844, %bb.bn
   %i.agk = zext nneg <4 x i16> %i.agj to <4 x i32>
   %i.agl = add nuw nsw <4 x i32> %i.afs, %i.agk
   %i.agm = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %i.agl, <4 x i32> splat (i32 255))
-  %15 = shl nuw <4 x i32> %i.agm, <i32 0, i32 8, i32 16, i32 24>
-  %16 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %15)
-  store i32 %16, ptr %.216221842, align 4
+  %13 = trunc nuw <4 x i32> %i.agm to <4 x i8>
+  store <4 x i8> %13, ptr %.216221842, align 4
   %i.agn = getelementptr inbounds [4 x i8], ptr %.216221842, i64 %i.afr
   %.not1714 = icmp eq i32 %i.aft, 0
   br i1 %.not1714, label %.loopexit, label %bb.bn, !llvm.loop !115
@@ -1419,9 +1416,8 @@ bb.cr:                                            ; preds = %.lr.ph1818, %bb.cr
   %i.ara = zext nneg <4 x i16> %i.aqz to <4 x i32>
   %i.arb = add nuw nsw <4 x i32> %i.aqb, %i.ara
   %i.arc = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %i.arb, <4 x i32> splat (i32 255))
-  %17 = shl nuw <4 x i32> %i.arc, <i32 0, i32 8, i32 16, i32 24>
-  %18 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %17)
-  store i32 %18, ptr %i.aqj, align 4
+  %14 = trunc nuw <4 x i32> %i.arc to <4 x i8>
+  store <4 x i8> %14, ptr %i.aqj, align 4
   %i.ard = icmp slt i32 %.115161815, 0            ; 3 uses
   %.01514..01513 = select i1 %i.ard, i32 %.01514, i32 %.01513
   %spec.select1760.spec.select1761 = select i1 %i.ard, i32 %spec.select1760, i32 %spec.select1761

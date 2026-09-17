@@ -205,9 +205,9 @@ bb.p:                                             ; preds = %bb.o
   %i.dl = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.dk, <4 x float> %i.di, <4 x float> %i.dg)
   %i.dm = fadd <4 x float> %i.dl, splat (float 5.000000e-01)
   %i.dn = fptoui <4 x float> %i.dm to <4 x i32>
-  %8 = shl <4 x i32> %i.dn, <i32 16, i32 8, i32 0, i32 24>
-  %9 = and <4 x i32> %8, <i32 16711680, i32 65280, i32 255, i32 -1>
-  %10 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %9)
+  %8 = shufflevector <4 x i32> %i.dn, <4 x i32> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
+  %9 = trunc <4 x i32> %8 to <4 x i8>
+  %10 = bitcast <4 x i8> %9 to i32
   br label %.loopexit305
 
 bb.q:                                             ; preds = %bb.n
@@ -436,9 +436,9 @@ bb.ad:                                            ; preds = %bb.ac
   %i.hi = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.hh, <4 x float> %i.hf, <4 x float> %i.hd)
   %i.hj = fadd <4 x float> %i.hi, splat (float 5.000000e-01)
   %i.hk = fptoui <4 x float> %i.hj to <4 x i32>
-  %11 = shl <4 x i32> %i.hk, <i32 16, i32 8, i32 0, i32 24>
-  %12 = and <4 x i32> %11, <i32 16711680, i32 65280, i32 255, i32 -1>
-  %13 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %12)
+  %11 = shufflevector <4 x i32> %i.hk, <4 x i32> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
+  %12 = trunc <4 x i32> %11 to <4 x i8>
+  %13 = bitcast <4 x i8> %12 to i32
   tail call void %5(float noundef 0.000000e+00, i32 noundef %13, float noundef %i.gp, i32 noundef %.0254, ptr noundef %6) #63
   br label %bb.ag
 
@@ -480,9 +480,9 @@ bb.ah:                                            ; preds = %bb.ae
   %i.id = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ic, <4 x float> %i.ia, <4 x float> %i.hy)
   %i.ie = fadd <4 x float> %i.id, splat (float 5.000000e-01)
   %i.if = fptoui <4 x float> %i.ie to <4 x i32>
-  %14 = shl <4 x i32> %i.if, <i32 16, i32 8, i32 0, i32 24>
-  %15 = and <4 x i32> %14, <i32 16711680, i32 65280, i32 255, i32 -1>
-  %16 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %15)
+  %14 = shufflevector <4 x i32> %i.if, <4 x i32> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
+  %15 = trunc <4 x i32> %14 to <4 x i8>
+  %16 = bitcast <4 x i8> %15 to i32
   tail call void %5(float noundef %.0257, i32 noundef %.0255, float noundef f0x40C90FDB, i32 noundef %16, ptr noundef %6) #63
   br label %.loopexit306
 
@@ -533,9 +533,9 @@ bb.a:
   %i.y = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.x, <4 x float> %i.v, <4 x float> %i.s)
   %i.z = fadd <4 x float> %i.y, splat (float 5.000000e-01)
   %i.aa = fptoui <4 x float> %i.z to <4 x i32>
-  %3 = shl <4 x i32> %i.aa, <i32 16, i32 8, i32 0, i32 24>
-  %4 = and <4 x i32> %3, <i32 16711680, i32 65280, i32 255, i32 -1>
-  %5 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %4)
+  %3 = shufflevector <4 x i32> %i.aa, <4 x i32> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
+  %4 = trunc <4 x i32> %3 to <4 x i8>
+  %5 = bitcast <4 x i8> %4 to i32
   ret i32 %5
 }
 
@@ -936,9 +936,6 @@ declare <2 x i32> @llvm.bswap.v2i32(<2 x i32>) #30
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.umin.v2i32(<2 x i32>, <2 x i32>) #30
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #30
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x float> @llvm.fmuladd.v8f32(<8 x float>, <8 x float>, <8 x float>) #30
