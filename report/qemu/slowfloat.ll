@@ -204,9 +204,8 @@ bb.f:                                             ; preds = %bb.a
 
 f16ToFloatX.exit:                                 ; preds = %bb.d, %bb.b, %bb.c, %bb.e, %bb.f
   %.sroa.1425.0 = phi i64 [ %i.l, %bb.f ], [ undef, %bb.c ], [ %i.j, %bb.e ], [ undef, %bb.b ], [ undef, %bb.d ] ; 4 uses
-  %brmerge3644.i = phi i1 [ false, %bb.f ], [ false, %bb.c ], [ false, %bb.e ], [ false, %bb.b ], [ true, %bb.d ]
-  %.sroa.9.0 = phi i8 [ 0, %bb.f ], [ 0, %bb.c ], [ 0, %bb.e ], [ 0, %bb.b ], [ 1, %bb.d ] ; 3 uses
-  %.sroa.624.0 = phi i1 [ false, %bb.f ], [ true, %bb.c ], [ false, %bb.e ], [ false, %bb.b ], [ false, %bb.d ]
+  %.sroa.9.0 = phi i8 [ 0, %bb.f ], [ 0, %bb.c ], [ 0, %bb.e ], [ 0, %bb.b ], [ 1, %bb.d ] ; 4 uses
+  %.sroa.624.0 = phi i8 [ 0, %bb.f ], [ 1, %bb.c ], [ 0, %bb.e ], [ 0, %bb.b ], [ 0, %bb.d ] ; 2 uses
   %.sroa.022.0 = phi i1 [ false, %bb.f ], [ false, %bb.c ], [ false, %bb.e ], [ true, %bb.b ], [ false, %bb.d ]
   %.1.i = phi i64 [ %i.m, %bb.f ], [ 0, %bb.c ], [ %i.h, %bb.e ], [ %i.f, %bb.b ], [ 0, %bb.d ] ; 2 uses
   %i.n = lshr i16 %1, 10
@@ -280,7 +279,8 @@ bb.m:                                             ; preds = %bb.l
   br label %floatXLt.exit
 
 bb.n:                                             ; preds = %bb.l
-  br i1 %.sroa.624.0, label %bb.o, label %.thread.i
+  %2 = trunc nuw i8 %.sroa.624.0 to i1
+  br i1 %2, label %bb.o, label %.thread.i
 
 bb.o:                                             ; preds = %bb.n
   %i.af = trunc nuw i8 %.sroa.6.0 to i1
@@ -288,12 +288,15 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.ag = icmp slt i16 %0, 0
-  %spec.select.i = or i1 %i.ag, %brmerge3644.i
-  br label %floatXLt.exit
+  br i1 %i.ag, label %floatXLt.exit, label %bb.u
 
 .thread.i:                                        ; preds = %bb.n
   %i.ah = icmp slt i16 %0, 0
-  br i1 %i.ah, label %bb.q, label %bb.u
+  br i1 %i.ah, label %bb.q, label %.thread._crit_edge.i
+
+.thread._crit_edge.i:                             ; preds = %.thread.i
+  %3 = or i8 %.sroa.6.0, %.sroa.9.0
+  br label %bb.u
 
 bb.q:                                             ; preds = %.thread.i
   br i1 %.sroa.11.0, label %floatXLt.exit, label %bb.r
@@ -313,9 +316,11 @@ bb.t:                                             ; preds = %bb.s
   %spec.select = select i1 %i.ak, i1 %i.al, i1 false
   br label %floatXLt.exit
 
-bb.u:                                             ; preds = %.thread.i
-  %i.am = or i8 %.sroa.6.0, %.sroa.9.0
-  %brmerge36.not.i = icmp ne i8 %i.am, 0          ; 2 uses
+bb.u:                                             ; preds = %.thread._crit_edge.i, %bb.p
+  %4 = phi i8 [ %3, %.thread._crit_edge.i ], [ %.sroa.9.0, %bb.p ] ; 2 uses
+  %brmerge36.i = icmp ne i8 %4, 0
+  %i.am = or i8 %4, %.sroa.624.0
+  %brmerge36.not.i = icmp ne i8 %i.am, 0
   %brmerge = or i1 %.sroa.11.0, %brmerge36.not.i
   br i1 %brmerge, label %floatXLt.exit, label %bb.v
 
@@ -330,7 +335,7 @@ bb.w:                                             ; preds = %bb.v
   br label %floatXLt.exit
 
 floatXLt.exit:                                    ; preds = %bb.u, %bb.k, %bb.w, %bb.t, %.thread, %f16ToFloatX.exit11.thread, %bb.m, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.v
-  %.0.i12 = phi i1 [ true, %bb.q ], [ false, %bb.k ], [ %i.ae, %bb.m ], [ false, %.thread ], [ false, %bb.o ], [ %spec.select63, %bb.w ], [ false, %bb.r ], [ true, %bb.s ], [ %spec.select.i, %bb.p ], [ %spec.select, %bb.t ], [ %brmerge36.not.i, %bb.u ], [ false, %f16ToFloatX.exit11.thread ], [ true, %bb.v ]
+  %.0.i12 = phi i1 [ true, %bb.q ], [ false, %bb.k ], [ %i.ae, %bb.m ], [ false, %.thread ], [ false, %bb.o ], [ %spec.select63, %bb.w ], [ false, %bb.r ], [ true, %bb.s ], [ true, %bb.p ], [ %spec.select, %bb.t ], [ %brmerge36.i, %bb.u ], [ false, %f16ToFloatX.exit11.thread ], [ true, %bb.v ]
   ret i1 %.0.i12
 }
 
@@ -662,9 +667,8 @@ bb.f:                                             ; preds = %bb.a
 
 f16ToFloatX.exit:                                 ; preds = %bb.d, %bb.b, %bb.c, %bb.e, %bb.f
   %.sroa.1321.0 = phi i64 [ %i.l, %bb.f ], [ undef, %bb.c ], [ %i.j, %bb.e ], [ undef, %bb.b ], [ undef, %bb.d ] ; 4 uses
-  %brmerge3644.i = phi i1 [ false, %bb.f ], [ false, %bb.c ], [ false, %bb.e ], [ false, %bb.b ], [ true, %bb.d ]
-  %.sroa.8.0 = phi i8 [ 0, %bb.f ], [ 0, %bb.c ], [ 0, %bb.e ], [ 0, %bb.b ], [ 1, %bb.d ] ; 3 uses
-  %.sroa.520.0 = phi i1 [ false, %bb.f ], [ true, %bb.c ], [ false, %bb.e ], [ false, %bb.b ], [ false, %bb.d ]
+  %.sroa.8.0 = phi i8 [ 0, %bb.f ], [ 0, %bb.c ], [ 0, %bb.e ], [ 0, %bb.b ], [ 1, %bb.d ] ; 4 uses
+  %.sroa.520.0 = phi i8 [ 0, %bb.f ], [ 1, %bb.c ], [ 0, %bb.e ], [ 0, %bb.b ], [ 0, %bb.d ] ; 2 uses
   %.sroa.019.0 = phi i1 [ false, %bb.f ], [ false, %bb.c ], [ false, %bb.e ], [ true, %bb.b ], [ false, %bb.d ]
   %.1.i = phi i64 [ %i.m, %bb.f ], [ 0, %bb.c ], [ %i.h, %bb.e ], [ %i.f, %bb.b ], [ 0, %bb.d ] ; 2 uses
   %i.n = lshr i16 %1, 10
@@ -724,7 +728,8 @@ bb.l:                                             ; preds = %bb.k
   br label %floatXLt.exit
 
 bb.m:                                             ; preds = %bb.k
-  br i1 %.sroa.520.0, label %bb.n, label %.thread.i
+  %2 = trunc nuw i8 %.sroa.520.0 to i1
+  br i1 %2, label %bb.n, label %.thread.i
 
 bb.n:                                             ; preds = %bb.m
   %i.ac = trunc nuw i8 %.sroa.5.0 to i1
@@ -732,12 +737,15 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.ad = icmp slt i16 %0, 0
-  %spec.select.i = or i1 %i.ad, %brmerge3644.i
-  br label %floatXLt.exit
+  br i1 %i.ad, label %floatXLt.exit, label %bb.t
 
 .thread.i:                                        ; preds = %bb.m
   %i.ae = icmp slt i16 %0, 0
-  br i1 %i.ae, label %bb.p, label %bb.t
+  br i1 %i.ae, label %bb.p, label %.thread._crit_edge.i
+
+.thread._crit_edge.i:                             ; preds = %.thread.i
+  %3 = or i8 %.sroa.5.0, %.sroa.8.0
+  br label %bb.t
 
 bb.p:                                             ; preds = %.thread.i
   br i1 %.sroa.10.0, label %floatXLt.exit, label %bb.q
@@ -757,9 +765,11 @@ bb.s:                                             ; preds = %bb.r
   %spec.select = select i1 %i.ah, i1 %i.ai, i1 false
   br label %floatXLt.exit
 
-bb.t:                                             ; preds = %.thread.i
-  %i.aj = or i8 %.sroa.5.0, %.sroa.8.0
-  %brmerge36.not.i = icmp ne i8 %i.aj, 0          ; 2 uses
+bb.t:                                             ; preds = %.thread._crit_edge.i, %bb.o
+  %4 = phi i8 [ %3, %.thread._crit_edge.i ], [ %.sroa.8.0, %bb.o ] ; 2 uses
+  %brmerge36.i = icmp ne i8 %4, 0
+  %i.aj = or i8 %4, %.sroa.520.0
+  %brmerge36.not.i = icmp ne i8 %i.aj, 0
   %brmerge = or i1 %.sroa.10.0, %brmerge36.not.i
   br i1 %brmerge, label %floatXLt.exit, label %bb.u
 
@@ -774,7 +784,7 @@ bb.v:                                             ; preds = %bb.u
   br label %floatXLt.exit
 
 floatXLt.exit:                                    ; preds = %bb.g, %bb.t, %bb.v, %bb.s, %f16ToFloatX.exit9, %bb.l, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.u
-  %.0.i10 = phi i1 [ %spec.select.i, %bb.o ], [ false, %f16ToFloatX.exit9 ], [ %i.ab, %bb.l ], [ true, %bb.u ], [ false, %bb.n ], [ %spec.select27, %bb.v ], [ false, %bb.q ], [ true, %bb.r ], [ true, %bb.p ], [ %spec.select, %bb.s ], [ %brmerge36.not.i, %bb.t ], [ false, %bb.g ]
+  %.0.i10 = phi i1 [ true, %bb.o ], [ false, %f16ToFloatX.exit9 ], [ %i.ab, %bb.l ], [ true, %bb.u ], [ false, %bb.n ], [ %spec.select27, %bb.v ], [ false, %bb.q ], [ true, %bb.r ], [ true, %bb.p ], [ %spec.select, %bb.s ], [ %brmerge36.i, %bb.t ], [ false, %bb.g ]
   ret i1 %.0.i10
 }
 
@@ -1177,9 +1187,8 @@ bb.e:                                             ; preds = %bb.a
 
 f32ToFloatX.exit:                                 ; preds = %.preheader.i, %bb.d, %bb.b, %bb.c, %bb.e
   %.sroa.1426.0 = phi i64 [ %i.i, %bb.e ], [ undef, %bb.c ], [ undef, %bb.d ], [ undef, %bb.b ], [ %i.e, %.preheader.i ] ; 4 uses
-  %brmerge3644.i = phi i1 [ false, %bb.e ], [ false, %bb.c ], [ true, %bb.d ], [ false, %bb.b ], [ false, %.preheader.i ]
-  %.sroa.9.0 = phi i8 [ 0, %bb.e ], [ 0, %bb.c ], [ 1, %bb.d ], [ 0, %bb.b ], [ 0, %.preheader.i ] ; 3 uses
-  %.sroa.625.0 = phi i1 [ false, %bb.e ], [ true, %bb.c ], [ false, %bb.d ], [ false, %bb.b ], [ false, %.preheader.i ]
+  %.sroa.9.0 = phi i8 [ 0, %bb.e ], [ 0, %bb.c ], [ 1, %bb.d ], [ 0, %bb.b ], [ 0, %.preheader.i ] ; 4 uses
+  %.sroa.625.0 = phi i8 [ 0, %bb.e ], [ 1, %bb.c ], [ 0, %bb.d ], [ 0, %bb.b ], [ 0, %.preheader.i ] ; 2 uses
   %.sroa.023.0 = phi i1 [ false, %bb.e ], [ false, %bb.c ], [ false, %bb.d ], [ true, %bb.b ], [ false, %.preheader.i ]
   %.1.i = phi i64 [ %i.j, %bb.e ], [ 0, %bb.c ], [ 0, %bb.d ], [ %i.d, %bb.b ], [ %i.f, %.preheader.i ] ; 2 uses
   %i.k = zext i32 %1 to i64                       ; 2 uses
@@ -1248,7 +1257,8 @@ bb.k:                                             ; preds = %bb.j
   br label %floatXLt.exit
 
 bb.l:                                             ; preds = %bb.j
-  br i1 %.sroa.625.0, label %bb.m, label %.thread.i
+  %2 = trunc nuw i8 %.sroa.625.0 to i1
+  br i1 %2, label %bb.m, label %.thread.i
 
 bb.m:                                             ; preds = %bb.l
   %i.z = trunc nuw i8 %.sroa.6.0 to i1
@@ -1256,12 +1266,15 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.aa = icmp slt i32 %0, 0
-  %spec.select.i = or i1 %i.aa, %brmerge3644.i
-  br label %floatXLt.exit
+  br i1 %i.aa, label %floatXLt.exit, label %bb.s
 
 .thread.i:                                        ; preds = %bb.l
   %i.ab = icmp slt i32 %0, 0
-  br i1 %i.ab, label %bb.o, label %bb.s
+  br i1 %i.ab, label %bb.o, label %.thread._crit_edge.i
+
+.thread._crit_edge.i:                             ; preds = %.thread.i
+  %3 = or i8 %.sroa.6.0, %.sroa.9.0
+  br label %bb.s
 
 bb.o:                                             ; preds = %.thread.i
   br i1 %.sroa.11.0, label %floatXLt.exit, label %bb.p
@@ -1281,9 +1294,11 @@ bb.r:                                             ; preds = %bb.q
   %spec.select = select i1 %i.ae, i1 %i.af, i1 false
   br label %floatXLt.exit
 
-bb.s:                                             ; preds = %.thread.i
-  %i.ag = or i8 %.sroa.6.0, %.sroa.9.0
-  %brmerge36.not.i = icmp ne i8 %i.ag, 0          ; 2 uses
+bb.s:                                             ; preds = %.thread._crit_edge.i, %bb.n
+  %4 = phi i8 [ %3, %.thread._crit_edge.i ], [ %.sroa.9.0, %bb.n ] ; 2 uses
+  %brmerge36.i = icmp ne i8 %4, 0
+  %i.ag = or i8 %4, %.sroa.625.0
+  %brmerge36.not.i = icmp ne i8 %i.ag, 0
   %brmerge = or i1 %.sroa.11.0, %brmerge36.not.i
   br i1 %brmerge, label %floatXLt.exit, label %bb.t
 
@@ -1298,7 +1313,7 @@ bb.u:                                             ; preds = %bb.t
   br label %floatXLt.exit
 
 floatXLt.exit:                                    ; preds = %bb.s, %bb.i, %bb.u, %bb.r, %.thread, %f32ToFloatX.exit12.thread, %bb.k, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.t
-  %.0.i13 = phi i1 [ true, %bb.o ], [ false, %bb.i ], [ %i.y, %bb.k ], [ false, %.thread ], [ false, %bb.m ], [ %spec.select64, %bb.u ], [ false, %bb.p ], [ true, %bb.q ], [ %spec.select.i, %bb.n ], [ %spec.select, %bb.r ], [ %brmerge36.not.i, %bb.s ], [ false, %f32ToFloatX.exit12.thread ], [ true, %bb.t ]
+  %.0.i13 = phi i1 [ true, %bb.o ], [ false, %bb.i ], [ %i.y, %bb.k ], [ false, %.thread ], [ false, %bb.m ], [ %spec.select64, %bb.u ], [ false, %bb.p ], [ true, %bb.q ], [ true, %bb.n ], [ %spec.select, %bb.r ], [ %brmerge36.i, %bb.s ], [ false, %f32ToFloatX.exit12.thread ], [ true, %bb.t ]
   ret i1 %.0.i13
 }
 
@@ -1605,9 +1620,8 @@ bb.e:                                             ; preds = %bb.a
 
 f32ToFloatX.exit:                                 ; preds = %.preheader.i, %bb.d, %bb.b, %bb.c, %bb.e
   %.sroa.1322.0 = phi i64 [ %i.i, %bb.e ], [ undef, %bb.c ], [ undef, %bb.d ], [ undef, %bb.b ], [ %i.e, %.preheader.i ] ; 4 uses
-  %brmerge3644.i = phi i1 [ false, %bb.e ], [ false, %bb.c ], [ true, %bb.d ], [ false, %bb.b ], [ false, %.preheader.i ]
-  %.sroa.8.0 = phi i8 [ 0, %bb.e ], [ 0, %bb.c ], [ 1, %bb.d ], [ 0, %bb.b ], [ 0, %.preheader.i ] ; 3 uses
-  %.sroa.521.0 = phi i1 [ false, %bb.e ], [ true, %bb.c ], [ false, %bb.d ], [ false, %bb.b ], [ false, %.preheader.i ]
+  %.sroa.8.0 = phi i8 [ 0, %bb.e ], [ 0, %bb.c ], [ 1, %bb.d ], [ 0, %bb.b ], [ 0, %.preheader.i ] ; 4 uses
+  %.sroa.521.0 = phi i8 [ 0, %bb.e ], [ 1, %bb.c ], [ 0, %bb.d ], [ 0, %bb.b ], [ 0, %.preheader.i ] ; 2 uses
   %.sroa.020.0 = phi i1 [ false, %bb.e ], [ false, %bb.c ], [ false, %bb.d ], [ true, %bb.b ], [ false, %.preheader.i ]
   %.1.i = phi i64 [ %i.j, %bb.e ], [ 0, %bb.c ], [ 0, %bb.d ], [ %i.d, %bb.b ], [ %i.f, %.preheader.i ] ; 2 uses
   %i.k = zext i32 %1 to i64                       ; 2 uses
@@ -1662,7 +1676,8 @@ bb.j:                                             ; preds = %bb.i
   br label %floatXLt.exit
 
 bb.k:                                             ; preds = %bb.i
-  br i1 %.sroa.521.0, label %bb.l, label %.thread.i
+  %2 = trunc nuw i8 %.sroa.521.0 to i1
+  br i1 %2, label %bb.l, label %.thread.i
 
 bb.l:                                             ; preds = %bb.k
   %i.w = trunc nuw i8 %.sroa.5.0 to i1
@@ -1670,12 +1685,15 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.x = icmp slt i32 %0, 0
-  %spec.select.i = or i1 %i.x, %brmerge3644.i
-  br label %floatXLt.exit
+  br i1 %i.x, label %floatXLt.exit, label %bb.r
 
 .thread.i:                                        ; preds = %bb.k
   %i.y = icmp slt i32 %0, 0
-  br i1 %i.y, label %bb.n, label %bb.r
+  br i1 %i.y, label %bb.n, label %.thread._crit_edge.i
+
+.thread._crit_edge.i:                             ; preds = %.thread.i
+  %3 = or i8 %.sroa.5.0, %.sroa.8.0
+  br label %bb.r
 
 bb.n:                                             ; preds = %.thread.i
   br i1 %.sroa.10.0, label %floatXLt.exit, label %bb.o
@@ -1695,9 +1713,11 @@ bb.q:                                             ; preds = %bb.p
   %spec.select = select i1 %i.ab, i1 %i.ac, i1 false
   br label %floatXLt.exit
 
-bb.r:                                             ; preds = %.thread.i
-  %i.ad = or i8 %.sroa.5.0, %.sroa.8.0
-  %brmerge36.not.i = icmp ne i8 %i.ad, 0          ; 2 uses
+bb.r:                                             ; preds = %.thread._crit_edge.i, %bb.m
+  %4 = phi i8 [ %3, %.thread._crit_edge.i ], [ %.sroa.8.0, %bb.m ] ; 2 uses
+  %brmerge36.i = icmp ne i8 %4, 0
+  %i.ad = or i8 %4, %.sroa.521.0
+  %brmerge36.not.i = icmp ne i8 %i.ad, 0
   %brmerge = or i1 %.sroa.10.0, %brmerge36.not.i
   br i1 %brmerge, label %floatXLt.exit, label %bb.s
 
@@ -1712,7 +1732,7 @@ bb.t:                                             ; preds = %bb.s
   br label %floatXLt.exit
 
 floatXLt.exit:                                    ; preds = %bb.f, %bb.r, %bb.t, %bb.q, %f32ToFloatX.exit10, %bb.j, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.s
-  %.0.i11 = phi i1 [ %spec.select.i, %bb.m ], [ false, %f32ToFloatX.exit10 ], [ %i.v, %bb.j ], [ true, %bb.s ], [ false, %bb.l ], [ %spec.select28, %bb.t ], [ false, %bb.o ], [ true, %bb.p ], [ true, %bb.n ], [ %spec.select, %bb.q ], [ %brmerge36.not.i, %bb.r ], [ false, %bb.f ]
+  %.0.i11 = phi i1 [ true, %bb.m ], [ false, %f32ToFloatX.exit10 ], [ %i.v, %bb.j ], [ true, %bb.s ], [ false, %bb.l ], [ %spec.select28, %bb.t ], [ false, %bb.o ], [ true, %bb.p ], [ true, %bb.n ], [ %spec.select, %bb.q ], [ %brmerge36.i, %bb.r ], [ false, %bb.f ]
   ret i1 %.0.i11
 }
 
@@ -2115,9 +2135,8 @@ bb.e:                                             ; preds = %bb.a
 
 f64ToFloatX.exit:                                 ; preds = %.preheader.i, %bb.d, %bb.b, %bb.c, %bb.e
   %.sroa.1425.0 = phi i64 [ %i.g, %bb.e ], [ undef, %bb.c ], [ undef, %bb.d ], [ undef, %bb.b ], [ %i.d, %.preheader.i ] ; 4 uses
-  %brmerge3644.i = phi i1 [ false, %bb.e ], [ false, %bb.c ], [ true, %bb.d ], [ false, %bb.b ], [ false, %.preheader.i ]
-  %.sroa.9.0 = phi i8 [ 0, %bb.e ], [ 0, %bb.c ], [ 1, %bb.d ], [ 0, %bb.b ], [ 0, %.preheader.i ] ; 3 uses
-  %.sroa.624.0 = phi i1 [ false, %bb.e ], [ true, %bb.c ], [ false, %bb.d ], [ false, %bb.b ], [ false, %.preheader.i ]
+  %.sroa.9.0 = phi i8 [ 0, %bb.e ], [ 0, %bb.c ], [ 1, %bb.d ], [ 0, %bb.b ], [ 0, %.preheader.i ] ; 4 uses
+  %.sroa.624.0 = phi i8 [ 0, %bb.e ], [ 1, %bb.c ], [ 0, %bb.d ], [ 0, %bb.b ], [ 0, %.preheader.i ] ; 2 uses
   %.sroa.022.0 = phi i1 [ false, %bb.e ], [ false, %bb.c ], [ false, %bb.d ], [ true, %bb.b ], [ false, %.preheader.i ]
   %.1.i = phi i64 [ %i.h, %bb.e ], [ 0, %bb.c ], [ 0, %bb.d ], [ %i.c, %bb.b ], [ %i.e, %.preheader.i ]
   %i.i = shl i64 %.1.i, 3                         ; 2 uses
@@ -2185,7 +2204,8 @@ bb.k:                                             ; preds = %bb.j
   br label %floatXLt.exit
 
 bb.l:                                             ; preds = %bb.j
-  br i1 %.sroa.624.0, label %bb.m, label %.thread.i
+  %2 = trunc nuw i8 %.sroa.624.0 to i1
+  br i1 %2, label %bb.m, label %.thread.i
 
 bb.m:                                             ; preds = %bb.l
   %i.x = trunc nuw i8 %.sroa.6.0 to i1
@@ -2193,12 +2213,15 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.y = icmp slt i64 %0, 0
-  %spec.select.i = or i1 %i.y, %brmerge3644.i
-  br label %floatXLt.exit
+  br i1 %i.y, label %floatXLt.exit, label %bb.s
 
 .thread.i:                                        ; preds = %bb.l
   %i.z = icmp slt i64 %0, 0
-  br i1 %i.z, label %bb.o, label %bb.s
+  br i1 %i.z, label %bb.o, label %.thread._crit_edge.i
+
+.thread._crit_edge.i:                             ; preds = %.thread.i
+  %3 = or i8 %.sroa.6.0, %.sroa.9.0
+  br label %bb.s
 
 bb.o:                                             ; preds = %.thread.i
   br i1 %.sroa.11.0, label %floatXLt.exit, label %bb.p
@@ -2218,9 +2241,11 @@ bb.r:                                             ; preds = %bb.q
   %spec.select = select i1 %i.ac, i1 %i.ad, i1 false
   br label %floatXLt.exit
 
-bb.s:                                             ; preds = %.thread.i
-  %i.ae = or i8 %.sroa.6.0, %.sroa.9.0
-  %brmerge36.not.i = icmp ne i8 %i.ae, 0          ; 2 uses
+bb.s:                                             ; preds = %.thread._crit_edge.i, %bb.n
+  %4 = phi i8 [ %3, %.thread._crit_edge.i ], [ %.sroa.9.0, %bb.n ] ; 2 uses
+  %brmerge36.i = icmp ne i8 %4, 0
+  %i.ae = or i8 %4, %.sroa.624.0
+  %brmerge36.not.i = icmp ne i8 %i.ae, 0
   %brmerge = or i1 %.sroa.11.0, %brmerge36.not.i
   br i1 %brmerge, label %floatXLt.exit, label %bb.t
 
@@ -2235,7 +2260,7 @@ bb.u:                                             ; preds = %bb.t
   br label %floatXLt.exit
 
 floatXLt.exit:                                    ; preds = %bb.s, %bb.i, %bb.u, %bb.r, %.thread, %f64ToFloatX.exit11.thread, %bb.k, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.t
-  %.0.i12 = phi i1 [ true, %bb.o ], [ false, %bb.i ], [ %i.w, %bb.k ], [ false, %.thread ], [ false, %bb.m ], [ %spec.select59, %bb.u ], [ false, %bb.p ], [ true, %bb.q ], [ %spec.select.i, %bb.n ], [ %spec.select, %bb.r ], [ %brmerge36.not.i, %bb.s ], [ false, %f64ToFloatX.exit11.thread ], [ true, %bb.t ]
+  %.0.i12 = phi i1 [ true, %bb.o ], [ false, %bb.i ], [ %i.w, %bb.k ], [ false, %.thread ], [ false, %bb.m ], [ %spec.select59, %bb.u ], [ false, %bb.p ], [ true, %bb.q ], [ true, %bb.n ], [ %spec.select, %bb.r ], [ %brmerge36.i, %bb.s ], [ false, %f64ToFloatX.exit11.thread ], [ true, %bb.t ]
   ret i1 %.0.i12
 }
 
@@ -2531,9 +2556,8 @@ bb.e:                                             ; preds = %bb.a
 
 f64ToFloatX.exit:                                 ; preds = %.preheader.i, %bb.d, %bb.b, %bb.c, %bb.e
   %.sroa.1321.0 = phi i64 [ %i.g, %bb.e ], [ undef, %bb.c ], [ undef, %bb.d ], [ undef, %bb.b ], [ %i.d, %.preheader.i ] ; 4 uses
-  %brmerge3644.i = phi i1 [ false, %bb.e ], [ false, %bb.c ], [ true, %bb.d ], [ false, %bb.b ], [ false, %.preheader.i ]
-  %.sroa.8.0 = phi i8 [ 0, %bb.e ], [ 0, %bb.c ], [ 1, %bb.d ], [ 0, %bb.b ], [ 0, %.preheader.i ] ; 3 uses
-  %.sroa.520.0 = phi i1 [ false, %bb.e ], [ true, %bb.c ], [ false, %bb.d ], [ false, %bb.b ], [ false, %.preheader.i ]
+  %.sroa.8.0 = phi i8 [ 0, %bb.e ], [ 0, %bb.c ], [ 1, %bb.d ], [ 0, %bb.b ], [ 0, %.preheader.i ] ; 4 uses
+  %.sroa.520.0 = phi i8 [ 0, %bb.e ], [ 1, %bb.c ], [ 0, %bb.d ], [ 0, %bb.b ], [ 0, %.preheader.i ] ; 2 uses
   %.sroa.019.0 = phi i1 [ false, %bb.e ], [ false, %bb.c ], [ false, %bb.d ], [ true, %bb.b ], [ false, %.preheader.i ]
   %.1.i = phi i64 [ %i.h, %bb.e ], [ 0, %bb.c ], [ 0, %bb.d ], [ %i.c, %bb.b ], [ %i.e, %.preheader.i ]
   %i.i = shl i64 %.1.i, 3                         ; 2 uses
@@ -2587,7 +2611,8 @@ bb.j:                                             ; preds = %bb.i
   br label %floatXLt.exit
 
 bb.k:                                             ; preds = %bb.i
-  br i1 %.sroa.520.0, label %bb.l, label %.thread.i
+  %2 = trunc nuw i8 %.sroa.520.0 to i1
+  br i1 %2, label %bb.l, label %.thread.i
 
 bb.l:                                             ; preds = %bb.k
   %i.u = trunc nuw i8 %.sroa.5.0 to i1
@@ -2595,12 +2620,15 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.v = icmp slt i64 %0, 0
-  %spec.select.i = or i1 %i.v, %brmerge3644.i
-  br label %floatXLt.exit
+  br i1 %i.v, label %floatXLt.exit, label %bb.r
 
 .thread.i:                                        ; preds = %bb.k
   %i.w = icmp slt i64 %0, 0
-  br i1 %i.w, label %bb.n, label %bb.r
+  br i1 %i.w, label %bb.n, label %.thread._crit_edge.i
+
+.thread._crit_edge.i:                             ; preds = %.thread.i
+  %3 = or i8 %.sroa.5.0, %.sroa.8.0
+  br label %bb.r
 
 bb.n:                                             ; preds = %.thread.i
   br i1 %.sroa.10.0, label %floatXLt.exit, label %bb.o
@@ -2620,9 +2648,11 @@ bb.q:                                             ; preds = %bb.p
   %spec.select = select i1 %i.z, i1 %i.aa, i1 false
   br label %floatXLt.exit
 
-bb.r:                                             ; preds = %.thread.i
-  %i.ab = or i8 %.sroa.5.0, %.sroa.8.0
-  %brmerge36.not.i = icmp ne i8 %i.ab, 0          ; 2 uses
+bb.r:                                             ; preds = %.thread._crit_edge.i, %bb.m
+  %4 = phi i8 [ %3, %.thread._crit_edge.i ], [ %.sroa.8.0, %bb.m ] ; 2 uses
+  %brmerge36.i = icmp ne i8 %4, 0
+  %i.ab = or i8 %4, %.sroa.520.0
+  %brmerge36.not.i = icmp ne i8 %i.ab, 0
   %brmerge = or i1 %.sroa.10.0, %brmerge36.not.i
   br i1 %brmerge, label %floatXLt.exit, label %bb.s
 
@@ -2637,7 +2667,7 @@ bb.t:                                             ; preds = %bb.s
   br label %floatXLt.exit
 
 floatXLt.exit:                                    ; preds = %bb.f, %bb.r, %bb.t, %bb.q, %f64ToFloatX.exit9, %bb.j, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.s
-  %.0.i10 = phi i1 [ %spec.select.i, %bb.m ], [ false, %f64ToFloatX.exit9 ], [ %i.t, %bb.j ], [ true, %bb.s ], [ false, %bb.l ], [ %spec.select27, %bb.t ], [ false, %bb.o ], [ true, %bb.p ], [ true, %bb.n ], [ %spec.select, %bb.q ], [ %brmerge36.not.i, %bb.r ], [ false, %bb.f ]
+  %.0.i10 = phi i1 [ true, %bb.m ], [ false, %f64ToFloatX.exit9 ], [ %i.t, %bb.j ], [ true, %bb.s ], [ false, %bb.l ], [ %spec.select27, %bb.t ], [ false, %bb.o ], [ true, %bb.p ], [ true, %bb.n ], [ %spec.select, %bb.q ], [ %brmerge36.i, %bb.r ], [ false, %bb.f ]
   ret i1 %.0.i10
 }
 
@@ -3040,6 +3070,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = and i64 %.val5, 9223372036854775807
   %.not31.i = icmp eq i64 %i.d, 0                 ; 2 uses
+  %spec.select = zext i1 %.not31.i to i8
   %not..not31.i = xor i1 %.not31.i, true
   br label %extF80MToFloatX.exit
 
@@ -3064,9 +3095,8 @@ bb.d:                                             ; preds = %bb.c
 
 extF80MToFloatX.exit:                             ; preds = %.preheader.i, %bb.b, %bb.c, %bb.d
   %.sroa.1435.0 = phi i64 [ %i.e, %bb.d ], [ undef, %bb.b ], [ %i.e, %bb.c ], [ %i.f, %.preheader.i ] ; 4 uses
-  %brmerge3644.i = phi i1 [ true, %bb.d ], [ false, %bb.b ], [ false, %bb.c ], [ false, %.preheader.i ]
-  %.sroa.9.1 = phi i8 [ 1, %bb.d ], [ 0, %bb.b ], [ 0, %bb.c ], [ 0, %.preheader.i ] ; 3 uses
-  %.sroa.634.0 = phi i1 [ false, %bb.d ], [ %.not31.i, %bb.b ], [ false, %bb.c ], [ false, %.preheader.i ]
+  %.sroa.9.1 = phi i8 [ 1, %bb.d ], [ 0, %bb.b ], [ 0, %bb.c ], [ 0, %.preheader.i ] ; 4 uses
+  %.sroa.633.0 = phi i8 [ 0, %bb.d ], [ %spec.select, %bb.b ], [ 0, %bb.c ], [ 0, %.preheader.i ] ; 2 uses
   %.sroa.032.0 = phi i1 [ false, %bb.d ], [ %not..not31.i, %bb.b ], [ false, %bb.c ], [ false, %.preheader.i ]
   %.sroa.01.2.i = phi i64 [ 0, %bb.d ], [ %.val5, %bb.b ], [ %.val5, %bb.c ], [ %i.g, %.preheader.i ]
   %i.i = tail call { i64, i64 } @shortShiftLeft128(i64 %.sroa.01.2.i, i64 0, i32 noundef 56) #10 ; 2 uses
@@ -3141,7 +3171,8 @@ bb.j:                                             ; preds = %bb.i
   br label %floatXLt.exit
 
 bb.k:                                             ; preds = %bb.i
-  br i1 %.sroa.634.0, label %bb.l, label %.thread.i
+  %2 = trunc nuw i8 %.sroa.633.0 to i1
+  br i1 %2, label %bb.l, label %.thread.i
 
 bb.l:                                             ; preds = %bb.k
   %i.ac = trunc nuw i8 %.sroa.6.0 to i1
@@ -3149,12 +3180,15 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.ad = icmp slt i16 %.val6, 0
-  %spec.select.i22 = or i1 %i.ad, %brmerge3644.i
-  br label %floatXLt.exit
+  br i1 %i.ad, label %floatXLt.exit, label %bb.s
 
 .thread.i:                                        ; preds = %bb.k
   %i.ae = icmp slt i16 %.val6, 0
-  br i1 %i.ae, label %bb.n, label %bb.s
+  br i1 %i.ae, label %bb.n, label %.thread._crit_edge.i
+
+.thread._crit_edge.i:                             ; preds = %.thread.i
+  %3 = or i8 %.sroa.6.0, %.sroa.9.1
+  br label %bb.s
 
 bb.n:                                             ; preds = %.thread.i
   br i1 %.sroa.11.1, label %floatXLt.exit, label %bb.o
@@ -3180,9 +3214,11 @@ bb.r:                                             ; preds = %bb.q
   %i.am = select i1 %i.ai, i1 true, i1 %i.al
   br label %floatXLt.exit
 
-bb.s:                                             ; preds = %.thread.i
-  %i.an = or i8 %.sroa.6.0, %.sroa.9.1
-  %brmerge36.not.i = icmp ne i8 %i.an, 0          ; 2 uses
+bb.s:                                             ; preds = %.thread._crit_edge.i, %bb.m
+  %4 = phi i8 [ %3, %.thread._crit_edge.i ], [ %.sroa.9.1, %bb.m ] ; 2 uses
+  %brmerge36.i = icmp ne i8 %4, 0
+  %i.an = or i8 %4, %.sroa.633.0
+  %brmerge36.not.i = icmp ne i8 %i.an, 0
   %brmerge = or i1 %.sroa.11.1, %brmerge36.not.i
   br i1 %brmerge, label %floatXLt.exit, label %bb.t
 
@@ -3203,7 +3239,7 @@ bb.v:                                             ; preds = %bb.u
   br label %floatXLt.exit
 
 floatXLt.exit:                                    ; preds = %bb.s, %bb.h, %.thread, %extF80MToFloatX.exit21.thread, %bb.j, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.t, %bb.u, %bb.v
-  %.0.i = phi i1 [ %i.au, %bb.v ], [ false, %bb.h ], [ %i.ab, %bb.j ], [ false, %.thread ], [ false, %bb.l ], [ false, %bb.u ], [ false, %bb.o ], [ true, %bb.p ], [ %i.am, %bb.r ], [ false, %bb.q ], [ %brmerge36.not.i, %bb.s ], [ %spec.select.i22, %bb.m ], [ true, %bb.t ], [ false, %extF80MToFloatX.exit21.thread ], [ true, %bb.n ]
+  %.0.i = phi i1 [ %i.au, %bb.v ], [ false, %bb.h ], [ %i.ab, %bb.j ], [ false, %.thread ], [ false, %bb.l ], [ false, %bb.u ], [ false, %bb.o ], [ true, %bb.p ], [ %i.am, %bb.r ], [ false, %bb.q ], [ %brmerge36.i, %bb.s ], [ true, %bb.m ], [ true, %bb.t ], [ false, %extF80MToFloatX.exit21.thread ], [ true, %bb.n ]
   ret i1 %.0.i
 }
 
@@ -3502,6 +3538,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = and i64 %.val3, 9223372036854775807
   %.not31.i = icmp eq i64 %i.d, 0                 ; 2 uses
+  %spec.select = zext i1 %.not31.i to i8
   %not..not31.i = xor i1 %.not31.i, true
   br label %extF80MToFloatX.exit
 
@@ -3526,9 +3563,8 @@ bb.d:                                             ; preds = %bb.c
 
 extF80MToFloatX.exit:                             ; preds = %.preheader.i, %bb.b, %bb.c, %bb.d
   %.sroa.1331.0 = phi i64 [ %i.e, %bb.d ], [ undef, %bb.b ], [ %i.e, %bb.c ], [ %i.f, %.preheader.i ] ; 4 uses
-  %brmerge3644.i = phi i1 [ true, %bb.d ], [ false, %bb.b ], [ false, %bb.c ], [ false, %.preheader.i ]
-  %.sroa.8.1 = phi i8 [ 1, %bb.d ], [ 0, %bb.b ], [ 0, %bb.c ], [ 0, %.preheader.i ] ; 3 uses
-  %.sroa.530.0 = phi i1 [ false, %bb.d ], [ %.not31.i, %bb.b ], [ false, %bb.c ], [ false, %.preheader.i ]
+  %.sroa.8.1 = phi i8 [ 1, %bb.d ], [ 0, %bb.b ], [ 0, %bb.c ], [ 0, %.preheader.i ] ; 4 uses
+  %.sroa.529.0 = phi i8 [ 0, %bb.d ], [ %spec.select, %bb.b ], [ 0, %bb.c ], [ 0, %.preheader.i ] ; 2 uses
   %.sroa.029.0 = phi i1 [ false, %bb.d ], [ %not..not31.i, %bb.b ], [ false, %bb.c ], [ false, %.preheader.i ]
   %.sroa.01.2.i = phi i64 [ 0, %bb.d ], [ %.val3, %bb.b ], [ %.val3, %bb.c ], [ %i.g, %.preheader.i ]
   %i.i = tail call { i64, i64 } @shortShiftLeft128(i64 %.sroa.01.2.i, i64 0, i32 noundef 56) #10 ; 2 uses
@@ -3592,7 +3628,8 @@ bb.i:                                             ; preds = %bb.h
   br label %floatXLt.exit
 
 bb.j:                                             ; preds = %bb.h
-  br i1 %.sroa.530.0, label %bb.k, label %.thread.i
+  %2 = trunc nuw i8 %.sroa.529.0 to i1
+  br i1 %2, label %bb.k, label %.thread.i
 
 bb.k:                                             ; preds = %bb.j
   %i.y = trunc nuw i8 %.sroa.5.0 to i1
@@ -3600,12 +3637,15 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.z = icmp slt i16 %.val4, 0
-  %spec.select.i20 = or i1 %i.z, %brmerge3644.i
-  br label %floatXLt.exit
+  br i1 %i.z, label %floatXLt.exit, label %bb.r
 
 .thread.i:                                        ; preds = %bb.j
   %i.aa = icmp slt i16 %.val4, 0
-  br i1 %i.aa, label %bb.m, label %bb.r
+  br i1 %i.aa, label %bb.m, label %.thread._crit_edge.i
+
+.thread._crit_edge.i:                             ; preds = %.thread.i
+  %3 = or i8 %.sroa.5.0, %.sroa.8.1
+  br label %bb.r
 
 bb.m:                                             ; preds = %.thread.i
   br i1 %.sroa.10.1, label %floatXLt.exit, label %bb.n
@@ -3631,9 +3671,11 @@ bb.q:                                             ; preds = %bb.p
   %i.ai = select i1 %i.ae, i1 true, i1 %i.ah
   br label %floatXLt.exit
 
-bb.r:                                             ; preds = %.thread.i
-  %i.aj = or i8 %.sroa.5.0, %.sroa.8.1
-  %brmerge36.not.i = icmp ne i8 %i.aj, 0          ; 2 uses
+bb.r:                                             ; preds = %.thread._crit_edge.i, %bb.l
+  %4 = phi i8 [ %3, %.thread._crit_edge.i ], [ %.sroa.8.1, %bb.l ] ; 2 uses
+  %brmerge36.i = icmp ne i8 %4, 0
+  %i.aj = or i8 %4, %.sroa.529.0
+  %brmerge36.not.i = icmp ne i8 %i.aj, 0
   %brmerge = or i1 %.sroa.10.1, %brmerge36.not.i
   br i1 %brmerge, label %floatXLt.exit, label %bb.s
 
@@ -3654,7 +3696,7 @@ bb.u:                                             ; preds = %bb.t
   br label %floatXLt.exit
 
 floatXLt.exit:                                    ; preds = %bb.r, %extF80MToFloatX.exit19, %bb.i, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.s, %bb.t, %bb.u
-  %.0.i = phi i1 [ %i.aq, %bb.u ], [ false, %extF80MToFloatX.exit19 ], [ %i.x, %bb.i ], [ true, %bb.m ], [ false, %bb.k ], [ false, %bb.t ], [ false, %bb.n ], [ true, %bb.o ], [ %i.ai, %bb.q ], [ false, %bb.p ], [ %brmerge36.not.i, %bb.r ], [ %spec.select.i20, %bb.l ], [ true, %bb.s ]
+  %.0.i = phi i1 [ %i.aq, %bb.u ], [ false, %extF80MToFloatX.exit19 ], [ %i.x, %bb.i ], [ true, %bb.m ], [ false, %bb.k ], [ false, %bb.t ], [ false, %bb.n ], [ true, %bb.o ], [ %i.ai, %bb.q ], [ false, %bb.p ], [ %brmerge36.i, %bb.r ], [ true, %bb.l ], [ true, %bb.s ]
   ret i1 %.0.i
 }
 
@@ -4057,9 +4099,8 @@ bb.e:                                             ; preds = %bb.a
 
 f128MToFloatX.exit:                               ; preds = %.preheader.i, %bb.d, %bb.b, %bb.c, %bb.e
   %.sroa.1431.0 = phi i64 [ %i.n, %bb.e ], [ undef, %bb.b ], [ undef, %bb.c ], [ undef, %bb.d ], [ %i.i, %.preheader.i ] ; 4 uses
-  %brmerge3644.i = phi i1 [ false, %bb.e ], [ false, %bb.b ], [ false, %bb.c ], [ true, %bb.d ], [ false, %.preheader.i ]
-  %.sroa.9.0 = phi i8 [ 0, %bb.e ], [ 0, %bb.b ], [ 0, %bb.c ], [ 1, %bb.d ], [ 0, %.preheader.i ] ; 3 uses
-  %.sroa.630.0 = phi i1 [ false, %bb.e ], [ false, %bb.b ], [ true, %bb.c ], [ false, %bb.d ], [ false, %.preheader.i ]
+  %.sroa.9.0 = phi i8 [ 0, %bb.e ], [ 0, %bb.b ], [ 0, %bb.c ], [ 1, %bb.d ], [ 0, %.preheader.i ] ; 4 uses
+  %.sroa.630.0 = phi i8 [ 0, %bb.e ], [ 0, %bb.b ], [ 1, %bb.c ], [ 0, %bb.d ], [ 0, %.preheader.i ] ; 2 uses
   %.sroa.028.0 = phi i1 [ false, %bb.e ], [ true, %bb.b ], [ false, %bb.c ], [ false, %bb.d ], [ false, %.preheader.i ]
   %.sroa.08.1.i = phi i64 [ %.val5, %bb.e ], [ %.val5, %bb.b ], [ 0, %bb.c ], [ 0, %bb.d ], [ %i.k, %.preheader.i ]
   %.sroa.8.1.i = phi i64 [ %i.o, %bb.e ], [ %i.d, %bb.b ], [ 0, %bb.c ], [ 0, %bb.d ], [ %i.l, %.preheader.i ]
@@ -4144,7 +4185,8 @@ bb.k:                                             ; preds = %bb.j
   br label %floatXLt.exit
 
 bb.l:                                             ; preds = %bb.j
-  br i1 %.sroa.630.0, label %bb.m, label %.thread.i
+  %2 = trunc nuw i8 %.sroa.630.0 to i1
+  br i1 %2, label %bb.m, label %.thread.i
 
 bb.m:                                             ; preds = %bb.l
   %i.aq = trunc nuw i8 %.sroa.6.0 to i1
@@ -4152,12 +4194,15 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.ar = icmp slt i64 %.val6, 0
-  %spec.select.i = or i1 %i.ar, %brmerge3644.i
-  br label %floatXLt.exit
+  br i1 %i.ar, label %floatXLt.exit, label %bb.t
 
 .thread.i:                                        ; preds = %bb.l
   %i.as = icmp slt i64 %.val6, 0
-  br i1 %i.as, label %bb.o, label %bb.t
+  br i1 %i.as, label %bb.o, label %.thread._crit_edge.i
+
+.thread._crit_edge.i:                             ; preds = %.thread.i
+  %3 = or i8 %.sroa.6.0, %.sroa.9.0
+  br label %bb.t
 
 bb.o:                                             ; preds = %.thread.i
   br i1 %.sroa.11.0, label %floatXLt.exit, label %bb.p
@@ -4183,9 +4228,11 @@ bb.s:                                             ; preds = %bb.r
   %i.ba = select i1 %i.aw, i1 true, i1 %i.az
   br label %floatXLt.exit
 
-bb.t:                                             ; preds = %.thread.i
-  %i.bb = or i8 %.sroa.6.0, %.sroa.9.0
-  %brmerge36.not.i = icmp ne i8 %i.bb, 0          ; 2 uses
+bb.t:                                             ; preds = %.thread._crit_edge.i, %bb.n
+  %4 = phi i8 [ %3, %.thread._crit_edge.i ], [ %.sroa.9.0, %bb.n ] ; 2 uses
+  %brmerge36.i = icmp ne i8 %4, 0
+  %i.bb = or i8 %4, %.sroa.630.0
+  %brmerge36.not.i = icmp ne i8 %i.bb, 0
   %brmerge = or i1 %.sroa.11.0, %brmerge36.not.i
   br i1 %brmerge, label %floatXLt.exit, label %bb.u
 
@@ -4206,7 +4253,7 @@ bb.w:                                             ; preds = %bb.v
   br label %floatXLt.exit
 
 floatXLt.exit:                                    ; preds = %bb.t, %bb.i, %.thread, %f128MToFloatX.exit17.thread, %bb.k, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.u, %bb.v, %bb.w
-  %.0.i18 = phi i1 [ %i.bi, %bb.w ], [ false, %bb.i ], [ %i.ap, %bb.k ], [ false, %.thread ], [ false, %bb.m ], [ false, %bb.v ], [ false, %bb.p ], [ true, %bb.q ], [ %i.ba, %bb.s ], [ false, %bb.r ], [ %brmerge36.not.i, %bb.t ], [ %spec.select.i, %bb.n ], [ true, %bb.u ], [ false, %f128MToFloatX.exit17.thread ], [ true, %bb.o ]
+  %.0.i18 = phi i1 [ %i.bi, %bb.w ], [ false, %bb.i ], [ %i.ap, %bb.k ], [ false, %.thread ], [ false, %bb.m ], [ false, %bb.v ], [ false, %bb.p ], [ true, %bb.q ], [ %i.ba, %bb.s ], [ false, %bb.r ], [ %brmerge36.i, %bb.t ], [ true, %bb.n ], [ true, %bb.u ], [ false, %f128MToFloatX.exit17.thread ], [ true, %bb.o ]
   ret i1 %.0.i18
 }
 
@@ -4577,9 +4624,8 @@ bb.e:                                             ; preds = %bb.a
 
 f128MToFloatX.exit:                               ; preds = %.preheader.i, %bb.d, %bb.b, %bb.c, %bb.e
   %.sroa.1327.0 = phi i64 [ %i.n, %bb.e ], [ undef, %bb.b ], [ undef, %bb.c ], [ undef, %bb.d ], [ %i.i, %.preheader.i ] ; 4 uses
-  %brmerge3644.i = phi i1 [ false, %bb.e ], [ false, %bb.b ], [ false, %bb.c ], [ true, %bb.d ], [ false, %.preheader.i ]
-  %.sroa.8.0 = phi i8 [ 0, %bb.e ], [ 0, %bb.b ], [ 0, %bb.c ], [ 1, %bb.d ], [ 0, %.preheader.i ] ; 3 uses
-  %.sroa.526.0 = phi i1 [ false, %bb.e ], [ false, %bb.b ], [ true, %bb.c ], [ false, %bb.d ], [ false, %.preheader.i ]
+  %.sroa.8.0 = phi i8 [ 0, %bb.e ], [ 0, %bb.b ], [ 0, %bb.c ], [ 1, %bb.d ], [ 0, %.preheader.i ] ; 4 uses
+  %.sroa.526.0 = phi i8 [ 0, %bb.e ], [ 0, %bb.b ], [ 1, %bb.c ], [ 0, %bb.d ], [ 0, %.preheader.i ] ; 2 uses
   %.sroa.025.0 = phi i1 [ false, %bb.e ], [ true, %bb.b ], [ false, %bb.c ], [ false, %bb.d ], [ false, %.preheader.i ]
   %.sroa.08.1.i = phi i64 [ %.val3, %bb.e ], [ %.val3, %bb.b ], [ 0, %bb.c ], [ 0, %bb.d ], [ %i.k, %.preheader.i ]
   %.sroa.8.1.i = phi i64 [ %i.o, %bb.e ], [ %i.d, %bb.b ], [ 0, %bb.c ], [ 0, %bb.d ], [ %i.l, %.preheader.i ]
@@ -4653,7 +4699,8 @@ bb.j:                                             ; preds = %bb.i
   br label %floatXLt.exit
 
 bb.k:                                             ; preds = %bb.i
-  br i1 %.sroa.526.0, label %bb.l, label %.thread.i
+  %2 = trunc nuw i8 %.sroa.526.0 to i1
+  br i1 %2, label %bb.l, label %.thread.i
 
 bb.l:                                             ; preds = %bb.k
   %i.an = trunc nuw i8 %.sroa.5.0 to i1
@@ -4661,12 +4708,15 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.ao = icmp slt i64 %.val4, 0
-  %spec.select.i = or i1 %i.ao, %brmerge3644.i
-  br label %floatXLt.exit
+  br i1 %i.ao, label %floatXLt.exit, label %bb.s
 
 .thread.i:                                        ; preds = %bb.k
   %i.ap = icmp slt i64 %.val4, 0
-  br i1 %i.ap, label %bb.n, label %bb.s
+  br i1 %i.ap, label %bb.n, label %.thread._crit_edge.i
+
+.thread._crit_edge.i:                             ; preds = %.thread.i
+  %3 = or i8 %.sroa.5.0, %.sroa.8.0
+  br label %bb.s
 
 bb.n:                                             ; preds = %.thread.i
   br i1 %.sroa.10.0, label %floatXLt.exit, label %bb.o
@@ -4692,9 +4742,11 @@ bb.r:                                             ; preds = %bb.q
   %i.ax = select i1 %i.at, i1 true, i1 %i.aw
   br label %floatXLt.exit
 
-bb.s:                                             ; preds = %.thread.i
-  %i.ay = or i8 %.sroa.5.0, %.sroa.8.0
-  %brmerge36.not.i = icmp ne i8 %i.ay, 0          ; 2 uses
+bb.s:                                             ; preds = %.thread._crit_edge.i, %bb.m
+  %4 = phi i8 [ %3, %.thread._crit_edge.i ], [ %.sroa.8.0, %bb.m ] ; 2 uses
+  %brmerge36.i = icmp ne i8 %4, 0
+  %i.ay = or i8 %4, %.sroa.526.0
+  %brmerge36.not.i = icmp ne i8 %i.ay, 0
   %brmerge = or i1 %.sroa.10.0, %brmerge36.not.i
   br i1 %brmerge, label %floatXLt.exit, label %bb.t
 
@@ -4715,7 +4767,7 @@ bb.v:                                             ; preds = %bb.u
   br label %floatXLt.exit
 
 floatXLt.exit:                                    ; preds = %f128MToFloatX.exit15.thread, %bb.s, %f128MToFloatX.exit15, %bb.j, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.t, %bb.u, %bb.v
-  %.0.i16 = phi i1 [ %i.bf, %bb.v ], [ false, %f128MToFloatX.exit15 ], [ %i.am, %bb.j ], [ true, %bb.n ], [ false, %bb.l ], [ false, %bb.u ], [ false, %bb.o ], [ true, %bb.p ], [ %i.ax, %bb.r ], [ false, %bb.q ], [ %brmerge36.not.i, %bb.s ], [ %spec.select.i, %bb.m ], [ true, %bb.t ], [ false, %f128MToFloatX.exit15.thread ]
+  %.0.i16 = phi i1 [ %i.bf, %bb.v ], [ false, %f128MToFloatX.exit15 ], [ %i.am, %bb.j ], [ true, %bb.n ], [ false, %bb.l ], [ false, %bb.u ], [ false, %bb.o ], [ true, %bb.p ], [ %i.ax, %bb.r ], [ false, %bb.q ], [ %brmerge36.i, %bb.s ], [ true, %bb.m ], [ true, %bb.t ], [ false, %f128MToFloatX.exit15.thread ]
   ret i1 %.0.i16
 }
 

@@ -205,11 +205,12 @@ bb.i:                                             ; preds = %_ZN4llvm5ErrorD2Ev.
   %i.bw = load i16, ptr %i.bv, align 8
   %i.bx = and i16 %i.bw, 512
   %.not87 = icmp eq i16 %i.bx, 0                  ; 2 uses
+  %spec.select = zext i1 %.not87 to i8
   %spec.select91 = select i1 %.not87, i8 %i.bd, i8 0
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %_ZN4llvm5ErrorD2Ev.exit96
-  %.084 = phi i1 [ false, %_ZN4llvm5ErrorD2Ev.exit96 ], [ %.not87, %bb.i ] ; 2 uses
+  %.084 = phi i8 [ 0, %_ZN4llvm5ErrorD2Ev.exit96 ], [ %spec.select, %bb.i ] ; 2 uses
   %.083 = phi i8 [ %i.bd, %_ZN4llvm5ErrorD2Ev.exit96 ], [ %spec.select91, %bb.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #36
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
@@ -228,11 +229,13 @@ bb.j:                                             ; preds = %bb.i, %_ZN4llvm5Err
   %.sroa.0.1.i = select i1 %i.cc, ptr null, ptr %i.ce ; 2 uses
   store ptr %.sroa.0.1.i, ptr %12, align 8
   %i.cf = trunc nuw i8 %.083 to i1
-  %i.cg = or i8 %.083, %i.bf
-  %or.cond = icmp ne i8 %i.cg, 0                  ; 2 uses
-  %or.cond3 = or i1 %.084, %or.cond
+  %i.cg = or i8 %.083, %i.bf                      ; 2 uses
+  %or.cond.not = icmp eq i8 %i.cg, 0
+  %30 = trunc nuw i8 %.084 to i1
+  %31 = or i8 %i.cg, %.084
+  %or.cond3.not = icmp eq i8 %31, 0
   %.not155 = icmp eq ptr %.sroa.0.1.i, null       ; 2 uses
-  br i1 %or.cond3, label %bb.k, label %.thread149
+  br i1 %or.cond3.not, label %.thread149, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   br i1 %.not155, label %.thread, label %.thread148
@@ -251,7 +254,7 @@ bb.k:                                             ; preds = %bb.j
   %.not156 = icmp eq ptr %i.ck, null
   br i1 %.not156, label %bb.l, label %.thread148
 
-bb.l:                                             ; preds = %.thread149, %.thread
+bb.l:                                             ; preds = %.thread, %.thread149
   %i.cl = load i8, ptr %i.a, align 1, !tbaa !1011, !range !997, !noundef !177
   %i.cm = trunc nuw i8 %i.cl to i1
   br i1 %i.cm, label %bb.m, label %bb.n
@@ -363,7 +366,7 @@ bb.t:                                             ; preds = %bb.s
   store ptr %i.c, ptr %i.dx, align 8, !tbaa !1758
   %i.dy = getelementptr inbounds nuw i8, ptr %17, i64 40
   store ptr %16, ptr %i.dy, align 8, !tbaa !1766
-  br i1 %.084, label %bb.u, label %bb.v
+  br i1 %30, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %.thread148
   store i32 3, ptr %18, align 8
@@ -766,7 +769,7 @@ bb.ak:                                            ; preds = %_ZN4llvm11SmallVect
   %.sroa.0.0.copyload = load ptr, ptr %12, align 8, !tbaa !1757
   %i.ky = ptrtoint ptr %.sroa.0.0.copyload to i64
   %i.kz = and i64 %i.ky, -7
-  %i.la = select i1 %or.cond, i64 2, i64 0
+  %i.la = select i1 %or.cond.not, i64 0, i64 2
   %i.lb = select i1 %or.cond16.not, i64 4, i64 %i.la
   %i.lc = or disjoint i64 %i.kz, %i.lb            ; 2 uses
   %i.ld = load ptr, ptr %i.h, align 8, !tbaa !1749

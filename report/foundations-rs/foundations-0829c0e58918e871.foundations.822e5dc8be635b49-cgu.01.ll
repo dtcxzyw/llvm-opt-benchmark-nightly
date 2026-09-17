@@ -204,7 +204,7 @@ bb.a:
           to label %.noexc.i unwind label %bb.e, !dbg !10766, !noalias !10716
 
 .noexc.i:                                         ; preds = %bb.a
-  %i.l = load i16, ptr %i.i, align 4, !dbg !10767, !range !10720, !noalias !10721, !noundef !682 ; 3 uses
+  %i.l = load i16, ptr %i.i, align 4, !dbg !10767, !range !10720, !noalias !10721, !noundef !682 ; 4 uses
   %.not.i.i = icmp eq i16 %i.l, 2, !dbg !10767
   br i1 %.not.i.i, label %bb.f, label %bb.b, !dbg !10768
 
@@ -230,18 +230,19 @@ bb.b:                                             ; preds = %.noexc.i
 .noexc7.i:                                        ; preds = %bb.b
   %i.p = load ptr, ptr %i.h, align 8, !dbg !10775, !noalias !10735, !noundef !682
   %.not.i.i.i = icmp eq ptr %i.p, null, !dbg !10775
-  %i.q = trunc nuw i16 %i.l to i1, !dbg !10776    ; 3 uses
+  %i.q = trunc nuw i16 %i.l to i1, !dbg !10776    ; 2 uses
   br i1 %.not.i.i.i, label %bb.c, label %._crit_edge.i.i.i, !dbg !10777
 
 ._crit_edge.i.i.i:                                ; preds = %.noexc7.i
   br i1 %i.q, label %bb.h, label %bb.d, !dbg !10778
 
 bb.c:                                             ; preds = %.noexc7.i
-  %.sroa.0.0.i.sroa.speculated.i.i = select i1 %i.q, i16 %.sroa.724.0.copyload.i.i, i16 %.sroa.522.0.copyload.i.i, !dbg !10779
-  %2 = icmp ne i16 %.sroa.0.0.i.sroa.speculated.i.i, 0, !dbg !10780 ; 2 uses
-  %brmerge.i.i = or i1 %2, %i.q, !dbg !10780
-  %.sroa.724.0.copyload.mux.i.i = select i1 %2, i16 %.sroa.724.0.copyload.i.i, i16 %i.o, !dbg !10780
-  br i1 %brmerge.i.i, label %bb.h, label %bb.d, !dbg !10780
+  %.sroa.0.0.i.sroa.speculated.i.i = select i1 %i.q, i16 %.sroa.724.0.copyload.i.i, i16 %.sroa.522.0.copyload.i.i, !dbg !10779 ; 2 uses
+  %.not27.i.i = icmp eq i16 %.sroa.0.0.i.sroa.speculated.i.i, 0, !dbg !10780
+  %2 = or i16 %.sroa.0.0.i.sroa.speculated.i.i, %i.l, !dbg !10780
+  %brmerge.not.i.i = icmp eq i16 %2, 0, !dbg !10780
+  %.sroa.724.0.copyload.mux.i.i = select i1 %.not27.i.i, i16 %i.o, i16 %.sroa.724.0.copyload.i.i, !dbg !10780
+  br i1 %brmerge.not.i.i, label %bb.d, label %bb.h, !dbg !10780
 
 bb.d:                                             ; preds = %bb.c, %._crit_edge.i.i.i
   br label %bb.h, !dbg !10781
@@ -346,7 +347,7 @@ bb.k:                                             ; preds = %_RNvMs_NtCs1xwejQuc
           to label %.noexc.i.i.i unwind label %bb.p, !dbg !10811, !noalias !10716
 
 .noexc.i.i.i:                                     ; preds = %bb.k
-  %i.ah = load i16, ptr %i.e, align 4, !dbg !10812, !range !10720, !noalias !10751, !noundef !682 ; 3 uses
+  %i.ah = load i16, ptr %i.e, align 4, !dbg !10812, !range !10720, !noalias !10751, !noundef !682 ; 4 uses
   %.not.i.i.i.i = icmp eq i16 %i.ah, 2, !dbg !10812
   br i1 %.not.i.i.i.i, label %_RINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB6_3VecNtNtNtCs3oUPovFnLWP_4core3net11socket_addr10SocketAddrE16extend_desugaredINtNtNtNtBM_4iter8adapters3map3MapNtNtNtNtNtCsgrxNvLvgM5Z_10hyper_util6client6legacy7connect3dns8GaiAddrsNCNCNvMs3_NtB2t_4httpNtB3I_13HttpConnector10call_async00EECsbaWXNhtWAp9_11foundations.exit.i.i, label %bb.l, !dbg !10813
 
@@ -365,18 +366,19 @@ bb.l:                                             ; preds = %.noexc.i.i.i
 .noexc6.i.i.i:                                    ; preds = %bb.l
   %i.aj = load ptr, ptr %i.d, align 8, !dbg !10819, !noalias !10755, !noundef !682
   %.not.i.i.i.i.i = icmp eq ptr %i.aj, null, !dbg !10819
-  %i.ak = trunc nuw i16 %i.ah to i1, !dbg !10820  ; 3 uses
+  %i.ak = trunc nuw i16 %i.ah to i1, !dbg !10820  ; 2 uses
   br i1 %.not.i.i.i.i.i, label %bb.m, label %._crit_edge.i.i.i.i.i, !dbg !10821
 
 ._crit_edge.i.i.i.i.i:                            ; preds = %.noexc6.i.i.i
   br i1 %i.ak, label %bb.q, label %bb.n, !dbg !10822
 
 bb.m:                                             ; preds = %.noexc6.i.i.i
-  %.sroa.0.0.i.sroa.speculated.i.i.i.i = select i1 %i.ak, i16 %.sroa.724.0.copyload.i.i.i.i, i16 %.sroa.522.0.copyload.i.i.i.i, !dbg !10823
-  %3 = icmp ne i16 %.sroa.0.0.i.sroa.speculated.i.i.i.i, 0, !dbg !10824 ; 2 uses
-  %brmerge.i.i.i.i = or i1 %3, %i.ak, !dbg !10824
-  %.sroa.724.0.copyload.mux.i.i.i.i = select i1 %3, i16 %.sroa.724.0.copyload.i.i.i.i, i16 %i.ai, !dbg !10824
-  br i1 %brmerge.i.i.i.i, label %bb.q, label %bb.n, !dbg !10824
+  %.sroa.0.0.i.sroa.speculated.i.i.i.i = select i1 %i.ak, i16 %.sroa.724.0.copyload.i.i.i.i, i16 %.sroa.522.0.copyload.i.i.i.i, !dbg !10823 ; 2 uses
+  %.not27.i.i.i.i = icmp eq i16 %.sroa.0.0.i.sroa.speculated.i.i.i.i, 0, !dbg !10824
+  %3 = or i16 %.sroa.0.0.i.sroa.speculated.i.i.i.i, %i.ah, !dbg !10824
+  %brmerge.not.i.i.i.i = icmp eq i16 %3, 0, !dbg !10824
+  %.sroa.724.0.copyload.mux.i.i.i.i = select i1 %.not27.i.i.i.i, i16 %i.ai, i16 %.sroa.724.0.copyload.i.i.i.i, !dbg !10824
+  br i1 %brmerge.not.i.i.i.i, label %bb.n, label %bb.q, !dbg !10824
 
 bb.n:                                             ; preds = %bb.m, %._crit_edge.i.i.i.i.i
   br label %bb.q, !dbg !10825
