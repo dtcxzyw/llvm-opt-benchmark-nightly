@@ -204,16 +204,17 @@ bb.bd:                                            ; preds = %_ZNKSt6vectorIN12_G
   br i1 %i.lp, label %.lr.ph.i114.preheader, label %_ZN12_GLOBAL__N_114calc_new_startERSt6vectorINS_10ApproxItemESaIS1_EERm.exit
 
 .lr.ph.i114.preheader:                            ; preds = %.critedge
+  %10 = add nsw i64 %.pre-phi236, -1              ; 2 uses
   %i.lq = add i64 %.0, 7
   %i.lr = add i64 %.0, -2
   br label %.lr.ph.i114
 
-.lr.ph.i114:                                      ; preds = %.lr.ph.i114.preheader, %_ZN12_GLOBAL__N_111clear_untilERSt6vectorINS_10ApproxItemESaIS1_EEmm.exit.i118
-  %indvar327 = phi i64 [ 0, %.lr.ph.i114.preheader ], [ %indvar.next328, %_ZN12_GLOBAL__N_111clear_untilERSt6vectorINS_10ApproxItemESaIS1_EEmm.exit.i118 ] ; 3 uses
-  %.04.i = phi i64 [ %.0, %.lr.ph.i114.preheader ], [ %.1.i119, %_ZN12_GLOBAL__N_111clear_untilERSt6vectorINS_10ApproxItemESaIS1_EEmm.exit.i118 ] ; 2 uses
-  %.0413.i = phi i64 [ %.0, %.lr.ph.i114.preheader ], [ %i.nv, %_ZN12_GLOBAL__N_111clear_untilERSt6vectorINS_10ApproxItemESaIS1_EEmm.exit.i118 ] ; 19 uses
-  %.0422.i = phi i64 [ %.0, %.lr.ph.i114.preheader ], [ %.2.i, %_ZN12_GLOBAL__N_111clear_untilERSt6vectorINS_10ApproxItemESaIS1_EEmm.exit.i118 ] ; 4 uses
-  %.0441.i = phi i32 [ 1, %.lr.ph.i114.preheader ], [ %.246.i, %_ZN12_GLOBAL__N_111clear_untilERSt6vectorINS_10ApproxItemESaIS1_EEmm.exit.i118 ] ; 4 uses
+.lr.ph.i114:                                      ; preds = %_ZN12_GLOBAL__N_111clear_untilERSt6vectorINS_10ApproxItemESaIS1_EEmm.exit.i118, %.lr.ph.i114.preheader
+  %indvar327 = phi i64 [ %indvar.next328, %_ZN12_GLOBAL__N_111clear_untilERSt6vectorINS_10ApproxItemESaIS1_EEmm.exit.i118 ], [ 0, %.lr.ph.i114.preheader ] ; 3 uses
+  %.04.i = phi i64 [ %.1.i119, %_ZN12_GLOBAL__N_111clear_untilERSt6vectorINS_10ApproxItemESaIS1_EEmm.exit.i118 ], [ %.0, %.lr.ph.i114.preheader ] ; 2 uses
+  %.0413.i = phi i64 [ %i.nv, %_ZN12_GLOBAL__N_111clear_untilERSt6vectorINS_10ApproxItemESaIS1_EEmm.exit.i118 ], [ %.0, %.lr.ph.i114.preheader ] ; 20 uses
+  %.0422.i = phi i64 [ %.2.i, %_ZN12_GLOBAL__N_111clear_untilERSt6vectorINS_10ApproxItemESaIS1_EEmm.exit.i118 ], [ %.0, %.lr.ph.i114.preheader ] ; 4 uses
+  %.0441.i = phi i32 [ %.246.i, %_ZN12_GLOBAL__N_111clear_untilERSt6vectorINS_10ApproxItemESaIS1_EEmm.exit.i118 ], [ 1, %.lr.ph.i114.preheader ] ; 4 uses
   %i.ls = add i64 %i.lq, %indvar327
   %i.lt = add i64 %i.lr, %indvar327
   %i.lu = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.0, i64 %.0413.i ; 3 uses
@@ -223,27 +224,28 @@ bb.bd:                                            ; preds = %_ZNKSt6vectorIN12_G
   br i1 %i.lx, label %_ZN12_GLOBAL__N_111clear_untilERSt6vectorINS_10ApproxItemESaIS1_EEmm.exit.i118, label %.preheader.i115.preheader
 
 .preheader.i115.preheader:                        ; preds = %.lr.ph.i114
-  %.0.i.i117302 = add i64 %.0413.i, 1             ; 2 uses
-  %10 = icmp ult i64 %.0.i.i117302, %.pre-phi236
-  br i1 %10, label %.lr.ph304.a, label %_ZN12_GLOBAL__N_112get_next_idxERKSt6vectorINS_10ApproxItemESaIS1_EEm.exit.thread.i
+  %exitcond.not.i117298 = icmp eq i64 %.0413.i, %10
+  br i1 %exitcond.not.i117298, label %_ZN12_GLOBAL__N_112get_next_idxERKSt6vectorINS_10ApproxItemESaIS1_EEm.exit.thread.i, label %.lr.ph304.a
 
 .preheader.i115:                                  ; preds = %.lr.ph304.a
-  %.0.i.i117 = add i64 %.0.i.i117303, 1           ; 2 uses
-  %11 = icmp ult i64 %.0.i.i117, %.pre-phi236
-  br i1 %11, label %.lr.ph304.a, label %_ZN12_GLOBAL__N_112get_next_idxERKSt6vectorINS_10ApproxItemESaIS1_EEm.exit.thread.i, !llvm.loop !44
+  %exitcond.not.i117 = icmp eq i64 %.0.i.i118, %10
+  br i1 %exitcond.not.i117, label %_ZN12_GLOBAL__N_112get_next_idxERKSt6vectorINS_10ApproxItemESaIS1_EEm.exit.thread.i, label %.lr.ph304.a, !llvm.loop !44
 
 .lr.ph304.a:                                      ; preds = %.preheader.i115.preheader, %.preheader.i115
-  %.0.i.i117303 = phi i64 [ %.0.i.i117, %.preheader.i115 ], [ %.0.i.i117302, %.preheader.i115.preheader ] ; 3 uses
-  %i.ly = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.0, i64 %.0.i.i117303
+  %.0.i.i117303 = phi i64 [ %.0.i.i118, %.preheader.i115 ], [ %.0413.i, %.preheader.i115.preheader ]
+  %.0.i.i118 = add i64 %.0.i.i117303, 1           ; 5 uses
+  %i.ly = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.0, i64 %.0.i.i118
   %i.lz = getelementptr inbounds nuw i8, ptr %i.ly, i64 20
   %i.ma = load i8, ptr %i.lz, align 4, !tbaa !77, !range !80, !noundef !81
   %i.mb = trunc nuw i8 %i.ma to i1
   br i1 %i.mb, label %.preheader.i115, label %_ZN12_GLOBAL__N_112get_next_idxERKSt6vectorINS_10ApproxItemESaIS1_EEm.exit.i125, !llvm.loop !44
 
 _ZN12_GLOBAL__N_112get_next_idxERKSt6vectorINS_10ApproxItemESaIS1_EEm.exit.i125: ; preds = %.lr.ph304.a
-  %i.mc = sub i64 %.0.i.i117303, %.0413.i
+  %11 = icmp ne i64 %.0.i.i118, %.pre-phi236
+  %i.mc = sub i64 %.0.i.i118, %.0413.i
   %.not.i126 = icmp eq i64 %i.mc, 1
-  br i1 %.not.i126, label %bb.bm, label %_ZN12_GLOBAL__N_112get_next_idxERKSt6vectorINS_10ApproxItemESaIS1_EEm.exit.thread.i
+  %or.cond.i121 = and i1 %11, %.not.i126
+  br i1 %or.cond.i121, label %bb.bm, label %_ZN12_GLOBAL__N_112get_next_idxERKSt6vectorINS_10ApproxItemESaIS1_EEm.exit.thread.i
 
 _ZN12_GLOBAL__N_112get_next_idxERKSt6vectorINS_10ApproxItemESaIS1_EEm.exit.thread.i: ; preds = %.preheader.i115, %.preheader.i115.preheader, %_ZN12_GLOBAL__N_112get_next_idxERKSt6vectorINS_10ApproxItemESaIS1_EEm.exit.i125
   %i.md = icmp sgt i32 %.0441.i, 1
