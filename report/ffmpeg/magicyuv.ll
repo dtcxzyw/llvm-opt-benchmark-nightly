@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 40
 inline.NumDeleted: 18
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 7
-loop-unroll.NumUnrolled: 8
+loop-unroll.NumRuntimeUnrolled: 6
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@magy_decode_slice10:bb.a
   %wide.load629 = load <8 x i16>, ptr %i.ts, align 2, !tbaa !63, !alias.scope !125
   %i.tz = zext <8 x i16> %wide.load629 to <8 x i32>
@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.c
   %.sroa.0.1 = phi ptr [ %i.av, %bb.c ], [ %i.bb, %bb.e ] ; 2 uses
-  %.042 = phi i32 [ 1, %bb.c ], [ %i.be, %bb.e ]  ; 4 uses
+  %.042 = phi i32 [ 1, %bb.c ], [ %i.be, %bb.e ]  ; 2 uses
   %i.bf = add nuw nsw i32 %.042, %.04377          ; 3 uses
   %i.bg = icmp sgt i32 %i.bf, %3
   %i.bh = add nsw i8 %i.aw, -33
@@ -220,7 +220,7 @@ bb.g:                                             ; preds = %bb.f
   %i.bm = trunc nuw nsw i32 %.042 to i16
   %i.bn = add i16 %i.bl, %i.bm
   store i16 %i.bn, ptr %i.bk, align 2, !tbaa !63
-  %i.bo = sext i32 %.04377 to i64                 ; 3 uses
+  %i.bo = sext i32 %.04377 to i64                 ; 2 uses
   %scevgep82 = getelementptr i8, ptr %i.d, i64 %i.bo
   %i.bp = add i32 %.04377, 1
   %smax = tail call i32 @llvm.smax.i32(i32 %i.bf, i32 %i.bp)
@@ -230,34 +230,16 @@ bb.g:                                             ; preds = %bb.f
   %i.bt = add nuw nsw i64 %i.bs, 1
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep82, i8 %i.aw, i64 %i.bt, i1 false), !tbaa !29
   %i.bu = sext i32 %i.bf to i64
-  %4 = and i32 %.042, 7                           ; 2 uses
-  %xtraiter = zext nneg i32 %4 to i64
-  %lcmp.mod.not = icmp eq i32 %4, 0
-  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.preheader
+  br label %.new
 
-.prol.preheader:                                  ; preds = %bb.g, %.prol.preheader
-  %indvars.iv.prol = phi i64 [ %indvars.iv.next.prol, %.prol.preheader ], [ %i.bo, %bb.g ]
-  %prol.iter = phi i64 [ %prol.iter.next, %.prol.preheader ], [ 0, %bb.g ]
-  %indvars.iv.next.prol = add nsw i64 %indvars.iv.prol, 1 ; 3 uses
-  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
-  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.prol.loopexit, label %.prol.preheader, !llvm.loop !129
-
-.prol.loopexit:                                   ; preds = %.prol.preheader, %bb.g
-  %indvars.iv.unr = phi i64 [ %i.bo, %bb.g ], [ %indvars.iv.next.prol, %.prol.preheader ]
-  %indvars.iv.next.lcssa.unr = phi i64 [ poison, %bb.g ], [ %indvars.iv.next.prol, %.prol.preheader ]
-  %5 = icmp ult i32 %.042, 8
-  br i1 %5, label %.unr-lcssa, label %.new
-
-.new:                                             ; preds = %.prol.loopexit, %.new
-  %indvars.iv = phi i64 [ %indvars.iv.next.7, %.new ], [ %indvars.iv.unr, %.prol.loopexit ]
-  %indvars.iv.next.7 = add nsw i64 %indvars.iv, 8 ; 3 uses
+.new:                                             ; preds = %bb.g, %.new
+  %indvars.iv = phi i64 [ %i.bo, %bb.g ], [ %indvars.iv.next.7, %.new ]
+  %indvars.iv.next.7 = add nsw i64 %indvars.iv, 1 ; 3 uses
   %i.bv = icmp slt i64 %indvars.iv.next.7, %i.bu
-  br i1 %i.bv, label %.new, label %.unr-lcssa, !llvm.loop !130
+  br i1 %i.bv, label %.new, label %.unr-lcssa, !llvm.loop !129
 
-.unr-lcssa:                                       ; preds = %.new, %.prol.loopexit
-  %indvars.iv.next.lcssa = phi i64 [ %indvars.iv.next.lcssa.unr, %.prol.loopexit ], [ %indvars.iv.next.7, %.new ]
-  %i.bw = trunc nsw i64 %indvars.iv.next.lcssa to i32 ; 2 uses
+.unr-lcssa:                                       ; preds = %.new
+  %i.bw = trunc nsw i64 %indvars.iv.next.7 to i32 ; 2 uses
   %i.bx = icmp eq i32 %3, %i.bw
   br i1 %i.bx, label %bb.h, label %bb.k
 
@@ -420,7 +402,7 @@ bb.h:                                             ; preds = %.unr-lcssa
   %.sroa.3.0..sroa_idx.i.1 = getelementptr inbounds nuw i8, ptr %i.fl, i64 2
   store i16 %i.fn, ptr %.sroa.3.0..sroa_idx.i.1, align 2, !tbaa !63
   %.not.i58.1 = icmp eq i64 %i.fd, 0
-  br i1 %.not.i58.1, label %huff_build.exit, label %.preheader.i, !llvm.loop !131
+  br i1 %.not.i58.1, label %huff_build.exit, label %.preheader.i, !llvm.loop !130
 
 huff_build.exit:                                  ; preds = %.preheader.i, %.preheader.i.prol.loopexit
   %i.fo = sext i32 %.04476 to i64                 ; 2 uses
@@ -428,7 +410,7 @@ huff_build.exit:                                  ; preds = %.preheader.i, %.pre
   %i.fq = getelementptr inbounds [16 x i8], ptr %i.i, i64 %i.fo ; 2 uses
   tail call void @ff_vlc_free(ptr noundef nonnull %i.fp) #8
   tail call void @ff_vlc_free_multi(ptr noundef nonnull %i.fq) #8
-  %i.fr = load i8, ptr %i.ej, align 2, !tbaa !133
+  %i.fr = load i8, ptr %i.ej, align 2, !tbaa !132
   %narrow.i = tail call i8 @llvm.umin.i8(i8 %i.fr, i8 12)
   %spec.select.i = zext nneg i8 %narrow.i to i32
   %i.fs = getelementptr inbounds nuw i8, ptr %.val, i64 346
@@ -660,9 +642,8 @@ attributes #9 = { noreturn nounwind }
 !126 = !{!118}
 !127 = !{!"llvm.loop.isvectorized", i32 1}
 !128 = !{!"llvm.loop.unroll.runtime.disable"}
-!129 = distinct !{!129, !61}
+!129 = distinct !{!129, !42}
 !130 = distinct !{!130, !42}
-!131 = distinct !{!131, !42}
-!132 = !{!"HuffEntry", !5, i64 0, !62, i64 2}
-!133 = !{!132, !5, i64 0}
+!131 = !{!"HuffEntry", !5, i64 0, !62, i64 2}
+!132 = !{!131, !5, i64 0}
 end_hunk_0

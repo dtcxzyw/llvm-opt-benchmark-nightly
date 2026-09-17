@@ -202,13 +202,13 @@ bb.d:                                             ; preds = %.thread, %bb.c
 
 .split.us44.us.i.i:                               ; preds = %bb.d, %.split.us44.us.i.i.backedge
   %.sroa.0.033.us.us.i.i = phi ptr [ %i.aa, %.split.us44.us.i.i.backedge ], [ %i.k, %bb.d ] ; 4 uses
-  %.sroa.8.032.us.us.i.i = phi i64 [ %i.ab, %.split.us44.us.i.i.backedge ], [ %i.j, %bb.d ] ; 9 uses
+  %.sroa.8.032.us.us.i.i = phi i64 [ %i.ab, %.split.us44.us.i.i.backedge ], [ %i.j, %bb.d ] ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !519)
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.0.033.us.us.i.i, i64 %.sroa.8.032.us.us.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i.i, %.split.us44.us.i.i
-  %.sroa.2.018.i.i.i.us45.us.i.i = phi i64 [ %.sroa.8.032.us.us.i.i, %.split.us44.us.i.i ], [ %i.u, %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i.i ] ; 5 uses
+  %.sroa.2.018.i.i.i.us45.us.i.i = phi i64 [ %.sroa.8.032.us.us.i.i, %.split.us44.us.i.i ], [ %i.u, %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i.i ] ; 3 uses
   %i.s = phi ptr [ %i.r, %.split.us44.us.i.i ], [ %i.t, %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i.i ]
   %i.t = getelementptr inbounds i8, ptr %i.s, i64 -1 ; 3 uses
   %i.u = add nsw i64 %.sroa.2.018.i.i.i.us45.us.i.i, -1 ; 3 uses
@@ -228,15 +228,11 @@ _RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepE
 
 bb.f:                                             ; preds = %.split27.us.us.i.i
   %i.y = icmp ult i64 %i.u, %.sroa.8.032.us.us.i.i
-  br i1 %i.y, label %_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.us.us.i.i, label %.split50.us.i.i, !prof !522
+  br i1 %i.y, label %.loopexit.split.us48.us.i.i, label %.split50.us.i.i, !prof !522
 
-_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.us.us.i.i: ; preds = %bb.f
-  %2 = icmp ugt i64 %.sroa.2.018.i.i.i.us45.us.i.i, %.sroa.8.032.us.us.i.i
-  br i1 %2, label %.split54.us.i.i, label %.loopexit.split.us48.us.i.i, !prof !6
-
-.loopexit.split.us48.us.i.i:                      ; preds = %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i.i, %_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.us.us.i.i, %.split27.us.us.i.i
-  %.sroa.45.0.i.us.us.i.i = phi i64 [ %.sroa.8.032.us.us.i.i, %.split27.us.us.i.i ], [ %.sroa.2.018.i.i.i.us45.us.i.i, %_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.us.us.i.i ], [ 0, %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i.i ] ; 3 uses
-  %.sroa.04.0.i.us.us.i.i = phi ptr [ %.sroa.0.033.us.us.i.i, %.split27.us.us.i.i ], [ %.sroa.0.033.us.us.i.i, %_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.us.us.i.i ], [ inttoptr (i64 1 to ptr), %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i.i ] ; 3 uses
+.loopexit.split.us48.us.i.i:                      ; preds = %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i.i, %bb.f, %.split27.us.us.i.i
+  %.sroa.45.0.i.us.us.i.i = phi i64 [ %.sroa.8.032.us.us.i.i, %.split27.us.us.i.i ], [ %.sroa.2.018.i.i.i.us45.us.i.i, %bb.f ], [ 0, %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i.i ] ; 3 uses
+  %.sroa.04.0.i.us.us.i.i = phi ptr [ %.sroa.0.033.us.us.i.i, %.split27.us.us.i.i ], [ %.sroa.0.033.us.us.i.i, %bb.f ], [ inttoptr (i64 1 to ptr), %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i.i ] ; 3 uses
   %i.z = tail call { ptr, i64 } @_RINvMNtCs4NRVxsYgnAr_4core5sliceSh12strip_suffixBu_ECs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.04.0.i.us.us.i.i, i64 noundef %.sroa.45.0.i.us.us.i.i, ptr noalias noundef nonnull readonly captures(address, read_provenance) @14, i64 noundef 1), !noalias !523 ; 2 uses
   %i.aa = extractvalue { ptr, i64 } %i.z, 0       ; 4 uses
   %i.ab = extractvalue { ptr, i64 } %i.z, 1       ; 3 uses
@@ -291,10 +287,6 @@ bb.j:                                             ; preds = %_RNCNCINvNtNtNtCs9L
   tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %.us-phi52.i.i, i64 noundef range(i64 1, -9223372036854775808) %.us-phi51.i.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #12, !noalias !525
   unreachable
 
-.split54.us.i.i:                                  ; preds = %_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.us.us.i.i
-  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef %.sroa.2.018.i.i.i.us45.us.i.i, i64 noundef range(i64 1, -9223372036854775808) %.sroa.8.032.us.us.i.i, i64 noundef range(i64 1, -9223372036854775808) %.sroa.8.032.us.us.i.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #12, !noalias !526
-  unreachable
-
 _RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser17move_back_to_next0Bb_.exit.i: ; preds = %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us.i.i, %bb.h, %bb.g, %.loopexit.split.us48.us.i.i
   %.sroa.8.1.i.i = phi i64 [ %.sroa.45.0.i.us.us.i.i, %bb.h ], [ %.sroa.45.0.i.us.us.i.i, %.loopexit.split.us48.us.i.i ], [ 0, %bb.g ], [ 0, %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us.i.i ] ; 2 uses
   %.sroa.0.1.i.i = phi ptr [ %.sroa.04.0.i.us.us.i.i, %bb.h ], [ %.sroa.04.0.i.us.us.i.i, %.loopexit.split.us48.us.i.i ], [ %i.aa, %bb.g ], [ inttoptr (i64 1 to ptr), %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us.i.i ]
@@ -304,31 +296,31 @@ _RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser17mo
   br i1 %or.cond.i, label %bb.k, label %_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser17move_back_to_next0Bb_.exit.thread.i
 
 bb.k:                                             ; preds = %_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser17move_back_to_next0Bb_.exit.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !527
-  call fastcc void @_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser11parse_front0Bb_(ptr noalias noundef align 8 captures(address) dereferenceable(72) %i.d, i8 %i.p, i8 0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.k, i64 noundef range(i64 1, -9223372036854775808) %i.j), !noalias !528
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !526
+  call fastcc void @_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser11parse_front0Bb_(ptr noalias noundef align 8 captures(address) dereferenceable(72) %i.d, i8 %i.p, i8 0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.k, i64 noundef range(i64 1, -9223372036854775808) %i.j), !noalias !527
   %i.aq = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  %i.ar = load i8, ptr %i.aq, align 8, !range !3, !noalias !527, !noundef !4 ; 2 uses
+  %i.ar = load i8, ptr %i.aq, align 8, !range !3, !noalias !526, !noundef !4 ; 2 uses
   %i.as = icmp eq i8 %i.ar, -1
   br i1 %i.as, label %bb.l, label %_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser10parse_back0Bb_.exit.thread47
 
 bb.l:                                             ; preds = %bb.k
-  %i.at = load ptr, ptr %i.d, align 8, !noalias !527, !nonnull !4, !noundef !4
+  %i.at = load ptr, ptr %i.d, align 8, !noalias !526, !nonnull !4, !noundef !4
   %i.au = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.av = load i64, ptr %i.au, align 8, !noalias !527, !noundef !4
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !527
+  %i.av = load i64, ptr %i.au, align 8, !noalias !526, !noundef !4
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !526
   br label %_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser10parse_back0Bb_.exit.thread
 
 _RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser10parse_back0Bb_.exit.thread47: ; preds = %bb.k
   %.sroa.635.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(55) %.sroa.23, ptr noundef nonnull align 1 dereferenceable(55) %.sroa.635.0..sroa_idx.i, i64 55, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !527
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !526
   br label %bb.ar
 
 _RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser17move_back_to_next0Bb_.exit.thread.i: ; preds = %_RNCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtBc_7windows8non_utf810components6parser17move_back_to_next00E00Bc_.exit.i.i.i.i.i.us.i.i, %bb.j, %_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser17move_back_to_next0Bb_.exit.i
   %.sroa.0.1.i122.i = phi ptr [ %.sroa.0.1.i.i, %_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser17move_back_to_next0Bb_.exit.i ], [ %i.k, %bb.j ], [ %i.k, %_RNCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtBc_7windows8non_utf810components6parser17move_back_to_next00E00Bc_.exit.i.i.i.i.i.us.i.i ] ; 5 uses
   %.sroa.8.1.i121.i = phi i64 [ %.sroa.8.1.i.i, %_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser17move_back_to_next0Bb_.exit.i ], [ %.sroa.2.018.i.i.i.us.i.i, %bb.j ], [ %i.j, %_RNCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtBc_7windows8non_utf810components6parser17move_back_to_next00E00Bc_.exit.i.i.i.i.i.us.i.i ] ; 8 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !528)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !529)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !530)
   %cond = icmp eq i64 %.sroa.8.1.i121.i, 0
   br i1 %cond, label %_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser10parse_back0Bb_.exit.thread, label %.lr.ph
 
@@ -345,7 +337,7 @@ bb.m:                                             ; preds = %.lr.ph, %_RNCINvNvX
   %i.ay = phi ptr [ %i.aw, %.lr.ph ], [ %i.az, %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser10parse_back00E00E0E0B3S_.exit.i.i.i.i.i ]
   %i.az = getelementptr inbounds i8, ptr %i.ay, i64 -1 ; 3 uses
   %i.ba = add nsw i64 %.sroa.2.0.i.i.i.i.i230, -1 ; 3 uses
-  %i.bb = load i8, ptr %i.az, align 1, !alias.scope !531, !noalias !532, !noundef !4 ; 2 uses
+  %i.bb = load i8, ptr %i.az, align 1, !alias.scope !530, !noalias !531, !noundef !4 ; 2 uses
   %i.bc = icmp eq i8 %i.bb, 92
   %i.bd = icmp eq i8 %i.bb, 47
   %spec.select.i.i.i.i.i.i.i.i.i = and i1 %i.bd, %i.q
@@ -361,7 +353,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.bf, label %_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser18rtake_until_byte_1NCNCNvNtNtNtNtBa_7windows8non_utf810components6parser10parse_back00E0Ba_.exit.i, label %bb.p, !prof !522
 
 bb.p:                                             ; preds = %bb.o
-  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.ba, i64 noundef range(i64 0, -9223372036854775808) %.sroa.8.1.i121.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #12, !noalias !533
+  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.ba, i64 noundef range(i64 0, -9223372036854775808) %.sroa.8.1.i121.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #12, !noalias !532
   unreachable
 
 _RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser18rtake_until_byte_1NCNCNvNtNtNtNtBa_7windows8non_utf810components6parser10parse_back00E0Ba_.exit.i: ; preds = %bb.o
@@ -371,34 +363,34 @@ _RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser18rtake_until_byte
 
 _RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser18rtake_until_byte_1NCNCNvNtNtNtNtBa_7windows8non_utf810components6parser10parse_back00E0Ba_.exit.thread137.i: ; preds = %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser10parse_back00E00E0E0B3S_.exit.i.i.i.i.i, %_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser18rtake_until_byte_1NCNCNvNtNtNtNtBa_7windows8non_utf810components6parser10parse_back00E0Ba_.exit.i
   %.in.i = phi ptr [ %i.bh, %_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser18rtake_until_byte_1NCNCNvNtNtNtNtBa_7windows8non_utf810components6parser10parse_back00E0Ba_.exit.i ], [ %.sroa.0.1.i122.i, %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser10parse_back00E00E0E0B3S_.exit.i.i.i.i.i ]
-  %.sroa.45.0.i.i134144.i = phi i64 [ %.sroa.2.0.i.i.i.i.i230, %_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser18rtake_until_byte_1NCNCNvNtNtNtNtBa_7windows8non_utf810components6parser10parse_back00E0Ba_.exit.i ], [ 0, %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser10parse_back00E00E0E0B3S_.exit.i.i.i.i.i ] ; 19 uses
+  %.sroa.45.0.i.i134144.i = phi i64 [ %.sroa.2.0.i.i.i.i.i230, %_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser18rtake_until_byte_1NCNCNvNtNtNtNtBa_7windows8non_utf810components6parser10parse_back00E0Ba_.exit.i ], [ 0, %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser10parse_back00E00E0E0B3S_.exit.i.i.i.i.i ] ; 20 uses
   %.sroa.04.0.i.i135143.i = phi ptr [ %.sroa.0.1.i122.i, %_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser18rtake_until_byte_1NCNCNvNtNtNtNtBa_7windows8non_utf810components6parser10parse_back00E0Ba_.exit.i ], [ inttoptr (i64 1 to ptr), %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser10parse_back00E00E0E0B3S_.exit.i.i.i.i.i ] ; 8 uses
   %.sroa.47.0.i.i136142.i = phi i64 [ %i.bg, %_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser18rtake_until_byte_1NCNCNvNtNtNtNtBa_7windows8non_utf810components6parser10parse_back00E0Ba_.exit.i ], [ %.sroa.8.1.i121.i, %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser10parse_back00E00E0E0B3S_.exit.i.i.i.i.i ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !527
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !526
   %i.bi = insertelement <4 x i8> poison, i8 %i.p, i64 0
   %i.bj = shufflevector <4 x i8> %i.bi, <4 x i8> poison, <4 x i32> zeroinitializer
-  store <4 x i8> %i.bj, ptr %i.c, align 4, !noalias !527
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !534
-  call fastcc void @_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser8filename0Bb_(ptr noalias noundef align 8 captures(address) dereferenceable(72) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) dereferenceable(4) %i.c, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.in.i, i64 noundef range(i64 0, -9223372036854775808) %.sroa.47.0.i.i136142.i), !noalias !535
+  store <4 x i8> %i.bj, ptr %i.c, align 4, !noalias !526
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !533
+  call fastcc void @_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser8filename0Bb_(ptr noalias noundef align 8 captures(address) dereferenceable(72) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) dereferenceable(4) %i.c, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.in.i, i64 noundef range(i64 0, -9223372036854775808) %.sroa.47.0.i.i136142.i), !noalias !534
   %i.bk = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.bl = load i8, ptr %i.bk, align 8, !range !3, !noalias !534, !noundef !4 ; 3 uses
+  %i.bl = load i8, ptr %i.bk, align 8, !range !3, !noalias !533, !noundef !4 ; 3 uses
   %i.bm = icmp eq i8 %i.bl, -1
   br i1 %i.bm, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser18rtake_until_byte_1NCNCNvNtNtNtNtBa_7windows8non_utf810components6parser10parse_back00E0Ba_.exit.thread137.i
-  %i.bn = load ptr, ptr %i.a, align 8, !noalias !534, !nonnull !4, !noundef !4
+  %i.bn = load ptr, ptr %i.a, align 8, !noalias !533, !nonnull !4, !noundef !4
   %i.bo = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.bp = load i64, ptr %i.bo, align 8, !noalias !534, !noundef !4
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !534
+  %i.bp = load i64, ptr %i.bo, align 8, !noalias !533, !noundef !4
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !533
   br label %bb.t
 
 bb.r:                                             ; preds = %_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser18rtake_until_byte_1NCNCNvNtNtNtNtBa_7windows8non_utf810components6parser10parse_back00E0Ba_.exit.thread137.i
   %.sroa.414.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %.sroa.414.0.copyload.i.i = load i64, ptr %.sroa.414.0..sroa_idx.i.i, align 8, !noalias !534
+  %.sroa.414.0.copyload.i.i = load i64, ptr %.sroa.414.0..sroa_idx.i.i, align 8, !noalias !533
   %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 17
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.518.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(55) %.sroa.518.i.i, ptr noundef nonnull align 1 dereferenceable(55) %.sroa.6.0..sroa_idx.i.i, i64 55, i1 false), !noalias !534
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !534
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(55) %.sroa.518.i.i, ptr noundef nonnull align 1 dereferenceable(55) %.sroa.6.0..sroa_idx.i.i, i64 55, i1 false), !noalias !533
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !533
   %i.bq = icmp eq i64 %.sroa.414.0.copyload.i.i, 0
   br i1 %i.bq, label %bb.u, label %bb.s
 
@@ -409,17 +401,18 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.s, %bb.q
   %.sroa.7.0.ph.i = phi i64 [ 9, %bb.s ], [ %i.bp, %bb.q ]
   %.sroa.0100.0.ph.i = phi ptr [ @1, %bb.s ], [ %i.bn, %bb.q ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !527
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !526
   br label %_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser10parse_back0Bb_.exit.thread
 
 bb.u:                                             ; preds = %bb.r
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(55) %.sroa.252.i, ptr noundef nonnull align 1 dereferenceable(55) %.sroa.518.i.i, i64 55, i1 false), !noalias !527
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(55) %.sroa.252.i, ptr noundef nonnull align 1 dereferenceable(55) %.sroa.518.i.i, i64 55, i1 false), !noalias !526
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.518.i.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !527
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !526
   %i.br = trunc nuw i8 %i.n to i1
   br i1 %i.br, label %bb.v, label %bb.ac
 
 bb.v:                                             ; preds = %bb.al, %bb.u
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !535)
   %i.bs = icmp eq i64 %.sroa.45.0.i.i134144.i, 0
   br i1 %i.bs, label %_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser10parse_back0Bb_.exit.thread53, label %.lr.ph.i.i
 
@@ -432,13 +425,13 @@ _RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser10pa
 
 .split.us44.us.i78.i:                             ; preds = %.lr.ph.i.i, %.split.us44.us.i78.i.backedge
   %.sroa.0.033.us.us.i79.i = phi ptr [ %i.cc, %.split.us44.us.i78.i.backedge ], [ %.sroa.04.0.i.i135143.i, %.lr.ph.i.i ] ; 4 uses
-  %.sroa.8.032.us.us.i80.i = phi i64 [ %i.cd, %.split.us44.us.i78.i.backedge ], [ %.sroa.45.0.i.i134144.i, %.lr.ph.i.i ] ; 8 uses
+  %.sroa.8.032.us.us.i80.i = phi i64 [ %i.cd, %.split.us44.us.i78.i.backedge ], [ %.sroa.45.0.i.i134144.i, %.lr.ph.i.i ] ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !536)
   %i.bt = getelementptr inbounds nuw i8, ptr %.sroa.0.033.us.us.i79.i, i64 %.sroa.8.032.us.us.i80.i
   br label %bb.w
 
 bb.w:                                             ; preds = %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i82.i, %.split.us44.us.i78.i
-  %.sroa.2.018.i.i.i.us45.us.i81.i = phi i64 [ %.sroa.8.032.us.us.i80.i, %.split.us44.us.i78.i ], [ %i.bw, %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i82.i ] ; 5 uses
+  %.sroa.2.018.i.i.i.us45.us.i81.i = phi i64 [ %.sroa.8.032.us.us.i80.i, %.split.us44.us.i78.i ], [ %i.bw, %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i82.i ] ; 3 uses
   %i.bu = phi ptr [ %i.bt, %.split.us44.us.i78.i ], [ %i.bv, %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i82.i ]
   %i.bv = getelementptr inbounds i8, ptr %i.bu, i64 -1 ; 3 uses
   %i.bw = add nsw i64 %.sroa.2.018.i.i.i.us45.us.i81.i, -1 ; 3 uses
@@ -458,15 +451,11 @@ _RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepE
 
 bb.x:                                             ; preds = %.split27.us.us.i88.i
   %i.ca = icmp ult i64 %i.bw, %.sroa.8.032.us.us.i80.i
-  br i1 %i.ca, label %_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.us.us.i89.i, label %.split50.us.i68.i, !prof !522
+  br i1 %i.ca, label %.loopexit.split.us48.us.i83.i, label %.split50.us.i68.i, !prof !522
 
-_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.us.us.i89.i: ; preds = %bb.x
-  %3 = icmp ugt i64 %.sroa.2.018.i.i.i.us45.us.i81.i, %.sroa.8.032.us.us.i80.i
-  br i1 %3, label %.split54.us.i74.i, label %.loopexit.split.us48.us.i83.i, !prof !6
-
-.loopexit.split.us48.us.i83.i:                    ; preds = %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i82.i, %_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.us.us.i89.i, %.split27.us.us.i88.i
-  %.sroa.45.0.i.us.us.i84.i = phi i64 [ %.sroa.8.032.us.us.i80.i, %.split27.us.us.i88.i ], [ %.sroa.2.018.i.i.i.us45.us.i81.i, %_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.us.us.i89.i ], [ 0, %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i82.i ] ; 3 uses
-  %.sroa.04.0.i.us.us.i85.i = phi ptr [ %.sroa.0.033.us.us.i79.i, %.split27.us.us.i88.i ], [ %.sroa.0.033.us.us.i79.i, %_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.us.us.i89.i ], [ inttoptr (i64 1 to ptr), %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i82.i ]
+.loopexit.split.us48.us.i83.i:                    ; preds = %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i82.i, %bb.x, %.split27.us.us.i88.i
+  %.sroa.45.0.i.us.us.i84.i = phi i64 [ %.sroa.8.032.us.us.i80.i, %.split27.us.us.i88.i ], [ %.sroa.2.018.i.i.i.us45.us.i81.i, %bb.x ], [ 0, %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i82.i ] ; 3 uses
+  %.sroa.04.0.i.us.us.i85.i = phi ptr [ %.sroa.0.033.us.us.i79.i, %.split27.us.us.i88.i ], [ %.sroa.0.033.us.us.i79.i, %bb.x ], [ inttoptr (i64 1 to ptr), %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i82.i ]
   %i.cb = tail call { ptr, i64 } @_RINvMNtCs4NRVxsYgnAr_4core5sliceSh12strip_suffixBu_ECs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.04.0.i.us.us.i85.i, i64 noundef %.sroa.45.0.i.us.us.i84.i, ptr noalias noundef nonnull readonly captures(address, read_provenance) @14, i64 noundef 1), !noalias !539 ; 2 uses
   %i.cc = extractvalue { ptr, i64 } %i.cb, 0      ; 3 uses
   %i.cd = extractvalue { ptr, i64 } %i.cb, 1      ; 3 uses
@@ -525,10 +514,8 @@ _RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivej
   %i.cq = icmp ugt i64 %.sroa.2.018.i.i.i.us.i66.i, %.sroa.45.0.i.i134144.i
   br i1 %i.cq, label %.split54.us.i74.i, label %_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser10parse_back0Bb_.exit, !prof !6
 
-.split54.us.i74.i:                                ; preds = %_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.us.us.i89.i, %_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.i71.i
-  %.us-phi55.i75.i = phi i64 [ %.sroa.45.0.i.i134144.i, %_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.i71.i ], [ %.sroa.8.032.us.us.i80.i, %_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.us.us.i89.i ] ; 2 uses
-  %.us-phi56.i76.i = phi i64 [ %.sroa.2.018.i.i.i.us.i66.i, %_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.i71.i ], [ %.sroa.2.018.i.i.i.us45.us.i81.i, %_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.us.us.i89.i ]
-  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef %.us-phi56.i76.i, i64 noundef range(i64 1, -9223372036854775808) %.us-phi55.i75.i, i64 noundef range(i64 1, -9223372036854775808) %.us-phi55.i75.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #12, !noalias !542
+.split54.us.i74.i:                                ; preds = %_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.i71.i
+  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef %.sroa.2.018.i.i.i.us.i66.i, i64 noundef range(i64 1, -9223372036854775808) %.sroa.45.0.i.i134144.i, i64 noundef range(i64 1, -9223372036854775808) %.sroa.45.0.i.i134144.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #12, !noalias !542
   unreachable
 
 bb.ac:                                            ; preds = %bb.u
@@ -544,22 +531,22 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %or.cond1.i.i, label %.lr.ph.i.i.i, label %.thread.i
 
 bb.ae:                                            ; preds = %bb.ac
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !527
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !526
   store ptr @7, ptr %i.b, align 8, !alias.scope !545, !noalias !546
   %i.cu = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i64 11, ptr %i.cu, align 8, !alias.scope !545, !noalias !546
   br label %bb.al
 
 .thread.i:                                        ; preds = %bb.ad
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !527
-  call fastcc void @_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser7cur_dir0Bb_(ptr noalias noundef align 8 captures(none) dereferenceable(72) %i.b, i8 %i.p, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.04.0.i.i135143.i, i64 noundef %.sroa.45.0.i.i134144.i), !noalias !528
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !526
+  call fastcc void @_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser7cur_dir0Bb_(ptr noalias noundef align 8 captures(none) dereferenceable(72) %i.b, i8 %i.p, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.04.0.i.i135143.i, i64 noundef %.sroa.45.0.i.i134144.i), !noalias !527
   %i.cv = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %i.cw = load i8, ptr %i.cv, align 8, !range !3, !noalias !527, !noundef !4
+  %i.cw = load i8, ptr %i.cv, align 8, !range !3, !noalias !526, !noundef !4
   %.not55153.i = icmp eq i8 %i.cw, -1
   br i1 %.not55153.i, label %bb.al, label %_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser8root_dir0Bb_.exit.thread154.i
 
 _RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser8root_dir0Bb_.exit.thread154.i: ; preds = %.thread.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !527
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !526
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser8root_dir0Bb_.exit.thread154.i, %bb.ad
@@ -567,13 +554,13 @@ _RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser8roo
 
 .split.us44.us.i.i.i:                             ; preds = %.lr.ph.i.i.i, %.split.us44.us.i.i.i.backedge
   %.sroa.0.033.us.us.i.i.i = phi ptr [ %i.dg, %.split.us44.us.i.i.i.backedge ], [ %.sroa.04.0.i.i135143.i, %.lr.ph.i.i.i ] ; 4 uses
-  %.sroa.8.032.us.us.i.i.i = phi i64 [ %i.dh, %.split.us44.us.i.i.i.backedge ], [ %.sroa.45.0.i.i134144.i, %.lr.ph.i.i.i ] ; 9 uses
+  %.sroa.8.032.us.us.i.i.i = phi i64 [ %i.dh, %.split.us44.us.i.i.i.backedge ], [ %.sroa.45.0.i.i134144.i, %.lr.ph.i.i.i ] ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !547)
   %i.cx = getelementptr inbounds nuw i8, ptr %.sroa.0.033.us.us.i.i.i, i64 %.sroa.8.032.us.us.i.i.i
   br label %bb.af
 
 bb.af:                                            ; preds = %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i.i.i, %.split.us44.us.i.i.i
-  %.sroa.2.018.i.i.i.us45.us.i.i.i = phi i64 [ %.sroa.8.032.us.us.i.i.i, %.split.us44.us.i.i.i ], [ %i.da, %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i.i.i ] ; 5 uses
+  %.sroa.2.018.i.i.i.us45.us.i.i.i = phi i64 [ %.sroa.8.032.us.us.i.i.i, %.split.us44.us.i.i.i ], [ %i.da, %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i.i.i ] ; 3 uses
   %i.cy = phi ptr [ %i.cx, %.split.us44.us.i.i.i ], [ %i.cz, %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i.i.i ]
   %i.cz = getelementptr inbounds i8, ptr %i.cy, i64 -1 ; 3 uses
   %i.da = add nsw i64 %.sroa.2.018.i.i.i.us45.us.i.i.i, -1 ; 3 uses
@@ -593,15 +580,11 @@ _RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepE
 
 bb.ag:                                            ; preds = %.split27.us.us.i.i.i
   %i.de = icmp ult i64 %i.da, %.sroa.8.032.us.us.i.i.i
-  br i1 %i.de, label %_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.us.us.i.i.i, label %.split50.us.i.i.i, !prof !522
+  br i1 %i.de, label %.loopexit.split.us48.us.i.i.i, label %.split50.us.i.i.i, !prof !522
 
-_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.us.us.i.i.i: ; preds = %bb.ag
-  %4 = icmp ugt i64 %.sroa.2.018.i.i.i.us45.us.i.i.i, %.sroa.8.032.us.us.i.i.i
-  br i1 %4, label %.split54.us.i.i.i, label %.loopexit.split.us48.us.i.i.i, !prof !6
-
-.loopexit.split.us48.us.i.i.i:                    ; preds = %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i.i.i, %_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.us.us.i.i.i, %.split27.us.us.i.i.i
-  %.sroa.45.0.i.us.us.i.i.i = phi i64 [ %.sroa.8.032.us.us.i.i.i, %.split27.us.us.i.i.i ], [ %.sroa.2.018.i.i.i.us45.us.i.i.i, %_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.us.us.i.i.i ], [ 0, %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i.i.i ] ; 3 uses
-  %.sroa.04.0.i.us.us.i.i.i = phi ptr [ %.sroa.0.033.us.us.i.i.i, %.split27.us.us.i.i.i ], [ %.sroa.0.033.us.us.i.i.i, %_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.us.us.i.i.i ], [ inttoptr (i64 1 to ptr), %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i.i.i ]
+.loopexit.split.us48.us.i.i.i:                    ; preds = %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i.i.i, %bb.ag, %.split27.us.us.i.i.i
+  %.sroa.45.0.i.us.us.i.i.i = phi i64 [ %.sroa.8.032.us.us.i.i.i, %.split27.us.us.i.i.i ], [ %.sroa.2.018.i.i.i.us45.us.i.i.i, %bb.ag ], [ 0, %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i.i.i ] ; 3 uses
+  %.sroa.04.0.i.us.us.i.i.i = phi ptr [ %.sroa.0.033.us.us.i.i.i, %.split27.us.us.i.i.i ], [ %.sroa.0.033.us.us.i.i.i, %bb.ag ], [ inttoptr (i64 1 to ptr), %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us47.us.i.i.i ]
   %i.df = tail call { ptr, i64 } @_RINvMNtCs4NRVxsYgnAr_4core5sliceSh12strip_suffixBu_ECs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.04.0.i.us.us.i.i.i, i64 noundef %.sroa.45.0.i.us.us.i.i.i, ptr noalias noundef nonnull readonly captures(address, read_provenance) @14, i64 noundef 1), !noalias !550 ; 2 uses
   %i.dg = extractvalue { ptr, i64 } %i.df, 0      ; 3 uses
   %i.dh = extractvalue { ptr, i64 } %i.df, 1      ; 3 uses
@@ -656,12 +639,8 @@ bb.ak:                                            ; preds = %_RNCNCINvNtNtNtCs9L
   tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %.us-phi52.i.i.i, i64 noundef range(i64 1, -9223372036854775808) %.us-phi51.i.i.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #12, !noalias !552
   unreachable
 
-.split54.us.i.i.i:                                ; preds = %_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.us.us.i.i.i
-  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef %.sroa.2.018.i.i.i.us45.us.i.i.i, i64 noundef range(i64 1, -9223372036854775808) %.sroa.8.032.us.us.i.i.i, i64 noundef range(i64 1, -9223372036854775808) %.sroa.8.032.us.us.i.i.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #12, !noalias !553
-  unreachable
-
 bb.al:                                            ; preds = %bb.ae, %.thread.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !527
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !526
   br label %bb.v
 
 .loopexit.i:                                      ; preds = %bb.ai, %.loopexit.split.us48.us.i.i.i, %_RNCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtBc_7windows8non_utf810components6parser17move_back_to_next00E00Bc_.exit.i.i.i.i.i.us.i.i.i
@@ -681,7 +660,7 @@ _RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser10pa
   store i8 -1, ptr %0, align 8
   br label %bb.au
 
-_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser10parse_back0Bb_.exit: ; preds = %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us.i.i.i, %bb.ah, %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us.i77.i, %.loopexit.split.us48.us.i83.i, %bb.y, %bb.z, %_RNCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtBc_7windows8non_utf810components6parser17move_back_to_next00E00Bc_.exit.i.i.i.i.i.us.i67.i, %_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.i71.i, %bb.ak, %.loopexit.i
+_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser10parse_back0Bb_.exit: ; preds = %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us.i.i.i, %bb.ah, %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us.i77.i, %.loopexit.split.us48.us.i83.i, %bb.y, %bb.z, %.loopexit.i, %_RNCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtBc_7windows8non_utf810components6parser17move_back_to_next00E00Bc_.exit.i.i.i.i.i.us.i67.i, %_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.i71.i, %bb.ak
   %.sroa.454.0.i = phi i64 [ %.sroa.45.0.i.us.us.i84.i, %bb.z ], [ %.sroa.2.018.i.i.i.us.i.i.i, %bb.ak ], [ 0, %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us.i77.i ], [ %.sroa.2.018.i.i.i.us.i66.i, %_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path.exit.i.i71.i ], [ %.sroa.45.0.i.i134144.i, %_RNCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtBc_7windows8non_utf810components6parser17move_back_to_next00E00Bc_.exit.i.i.i.i.i.us.i67.i ], [ %.sroa.8.1.i.i.mux266.i, %.loopexit.i ], [ 1, %bb.ah ], [ %.sroa.45.0.i.us.us.i84.i, %.loopexit.split.us48.us.i83.i ], [ 0, %bb.y ], [ 1, %_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_.exit.i.i.i.us.i.i.i ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(55) %.sroa.23, ptr noundef nonnull align 1 dereferenceable(55) %.sroa.252.i, i64 55, i1 false)
   br label %bb.ar
@@ -772,7 +751,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.l, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.m = tail call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.f, i64 noundef range(i64 0, -9223372036854775808) %i.h, ptr noalias noundef nonnull readonly captures(address, read_provenance) @27, i64 noundef 3), !noalias !596
+  %i.m = tail call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.f, i64 noundef range(i64 0, -9223372036854775808) %i.h, ptr noalias noundef nonnull readonly captures(address, read_provenance) @27, i64 noundef 3), !noalias !595
   br i1 %i.m, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.c, %bb.e
@@ -788,14 +767,14 @@ bb.f:                                             ; preds = %bb.d, %bb.c, %bb.e
 bb.g:                                             ; preds = %bb.e
   %i.p = getelementptr inbounds nuw i8, ptr %i.f, i64 3 ; 2 uses
   %i.q = add nsw i64 %i.h, -3                     ; 3 uses
-  %i.r = tail call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.p, i64 noundef range(i64 0, -9223372036854775808) %i.q, ptr noalias noundef nonnull readonly captures(address, read_provenance) @17, i64 noundef 1), !noalias !597
+  %i.r = tail call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.p, i64 noundef range(i64 0, -9223372036854775808) %i.q, ptr noalias noundef nonnull readonly captures(address, read_provenance) @17, i64 noundef 1), !noalias !596
   br i1 %i.r, label %bb.j, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   br i1 %i.b, label %bb.l, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.s = tail call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.p, i64 noundef range(i64 0, -9223372036854775808) %i.q, ptr noalias noundef nonnull readonly captures(address, read_provenance) @18, i64 noundef 1), !noalias !597
+  %i.s = tail call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.p, i64 noundef range(i64 0, -9223372036854775808) %i.q, ptr noalias noundef nonnull readonly captures(address, read_provenance) @18, i64 noundef 1), !noalias !596
   br i1 %i.s, label %bb.j, label %bb.l
 
 bb.j:                                             ; preds = %bb.i, %bb.g
@@ -803,7 +782,7 @@ bb.j:                                             ; preds = %bb.i, %bb.g
   br i1 %i.t, label %bb.k, label %bb.m, !prof !6
 
 bb.k:                                             ; preds = %bb.j
-  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef 1, i64 noundef 0, i64 noundef 0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @20) #12, !noalias !597
+  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef 1, i64 noundef 0, i64 noundef 0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @20) #12, !noalias !596
   unreachable
 
 bb.l:                                             ; preds = %bb.i, %bb.h
@@ -817,9 +796,9 @@ bb.l:                                             ; preds = %bb.i, %bb.h
 bb.m:                                             ; preds = %bb.j
   %i.w = add nsw i64 %i.h, -4                     ; 7 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.f, i64 4 ; 4 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !597)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !598)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !599)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !600)
   %i.y = getelementptr i8, ptr %i.f, i64 %i.h     ; 2 uses
   %i.z = icmp samesign eq i64 %i.w, 0
   br i1 %i.z, label %bb.p, label %.lr.ph.i.i.i.preheader.i
@@ -830,7 +809,7 @@ bb.m:                                             ; preds = %bb.j
 .lr.ph.i.i.i.us.i:                                ; preds = %.lr.ph.i.i.i.preheader.i, %_RNCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtBc_7windows8non_utf810components6parser12normal_bytes00E00Bc_.exit.i.i.i.i.i.us.i
   %i.aa = phi ptr [ %i.ae, %_RNCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtBc_7windows8non_utf810components6parser12normal_bytes00E00Bc_.exit.i.i.i.i.i.us.i ], [ %i.x, %.lr.ph.i.i.i.preheader.i ] ; 2 uses
   %i.ab = phi i64 [ %i.af, %_RNCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtBc_7windows8non_utf810components6parser12normal_bytes00E00Bc_.exit.i.i.i.i.i.us.i ], [ 0, %.lr.ph.i.i.i.preheader.i ] ; 2 uses
-  %i.ac = load i8, ptr %i.aa, align 1, !alias.scope !601, !noalias !602, !noundef !4
+  %i.ac = load i8, ptr %i.aa, align 1, !alias.scope !600, !noalias !601, !noundef !4
   %i.ad = icmp eq i8 %i.ac, 92
   br i1 %i.ad, label %.split.us.i, label %_RNCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtBc_7windows8non_utf810components6parser12normal_bytes00E00Bc_.exit.i.i.i.i.i.us.i
 
@@ -843,7 +822,7 @@ _RNCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byt
 .lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.preheader.i, %_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRhuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB3y_7windows8non_utf810components6parser12normal_bytes00E00E0E0B3y_.exit.i.i.i.i
   %i.ah = phi ptr [ %i.ak, %_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRhuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB3y_7windows8non_utf810components6parser12normal_bytes00E00E0E0B3y_.exit.i.i.i.i ], [ %i.x, %.lr.ph.i.i.i.preheader.i ] ; 2 uses
   %i.ai = phi i64 [ %i.al, %_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRhuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB3y_7windows8non_utf810components6parser12normal_bytes00E00E0E0B3y_.exit.i.i.i.i ], [ 0, %.lr.ph.i.i.i.preheader.i ] ; 3 uses
-  %i.aj = load i8, ptr %i.ah, align 1, !alias.scope !601, !noalias !602, !noundef !4
+  %i.aj = load i8, ptr %i.ah, align 1, !alias.scope !600, !noalias !601, !noundef !4
   switch i8 %i.aj, label %_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRhuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB3y_7windows8non_utf810components6parser12normal_bytes00E00E0E0B3y_.exit.i.i.i.i [
     i8 92, label %.split.us.i
     i8 47, label %.split.us.i
@@ -870,7 +849,7 @@ bb.n:                                             ; preds = %.split.us.i
   br label %.loopexit
 
 bb.o:                                             ; preds = %bb.n
-  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef %.us-phi.i, i64 noundef range(i64 0, -9223372036854775808) %i.w, i64 noundef range(i64 0, -9223372036854775808) %i.w, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #12, !noalias !603
+  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef %.us-phi.i, i64 noundef range(i64 0, -9223372036854775808) %i.w, i64 noundef range(i64 0, -9223372036854775808) %i.w, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #12, !noalias !602
   unreachable
 
 bb.p:                                             ; preds = %.split.us.i, %bb.m
@@ -885,14 +864,14 @@ bb.p:                                             ; preds = %.split.us.i, %bb.m
   %.sroa.02.0.i14.i.i = phi ptr [ %i.aq, %.thread6.i.i ], [ inttoptr (i64 1 to ptr), %_RNCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtBc_7windows8non_utf810components6parser12normal_bytes00E00Bc_.exit.i.i.i.i.i.us.i ], [ inttoptr (i64 1 to ptr), %_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRhuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB3y_7windows8non_utf810components6parser12normal_bytes00E00E0E0B3y_.exit.i.i.i.i ] ; 10 uses
   %.sroa.4.0.i13.i.i = phi i64 [ %i.ap, %.thread6.i.i ], [ 0, %_RNCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtBc_7windows8non_utf810components6parser12normal_bytes00E00Bc_.exit.i.i.i.i.i.us.i ], [ 0, %_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRhuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB3y_7windows8non_utf810components6parser12normal_bytes00E00E0E0B3y_.exit.i.i.i.i ] ; 11 uses
   %.sroa.44.0.i11.i.i = phi i64 [ %.us-phi.i, %.thread6.i.i ], [ %i.w, %_RNCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtBc_7windows8non_utf810components6parser12normal_bytes00E00Bc_.exit.i.i.i.i.i.us.i ], [ %i.w, %_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRhuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB3y_7windows8non_utf810components6parser12normal_bytes00E00E0E0B3y_.exit.i.i.i.i ]
-  %i.at = tail call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.02.0.i14.i.i, i64 noundef range(i64 0, -9223372036854775808) %.sroa.4.0.i13.i.i, ptr noalias noundef nonnull readonly captures(address, read_provenance) @17, i64 noundef 1), !noalias !604
+  %i.at = tail call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.02.0.i14.i.i, i64 noundef range(i64 0, -9223372036854775808) %.sroa.4.0.i13.i.i, ptr noalias noundef nonnull readonly captures(address, read_provenance) @17, i64 noundef 1), !noalias !603
   br i1 %i.at, label %bb.s, label %bb.q
 
 bb.q:                                             ; preds = %.loopexit
   br i1 %i.b, label %.thread228, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.au = tail call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.02.0.i14.i.i, i64 noundef range(i64 0, -9223372036854775808) %.sroa.4.0.i13.i.i, ptr noalias noundef nonnull readonly captures(address, read_provenance) @18, i64 noundef 1), !noalias !604
+  %i.au = tail call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.02.0.i14.i.i, i64 noundef range(i64 0, -9223372036854775808) %.sroa.4.0.i13.i.i, ptr noalias noundef nonnull readonly captures(address, read_provenance) @18, i64 noundef 1), !noalias !603
   br i1 %i.au, label %bb.s, label %.thread227
 
 bb.s:                                             ; preds = %bb.r, %.loopexit
@@ -900,15 +879,15 @@ bb.s:                                             ; preds = %bb.r, %.loopexit
   br i1 %i.av, label %bb.t, label %bb.u, !prof !6
 
 bb.t:                                             ; preds = %bb.s
-  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef 1, i64 noundef 0, i64 noundef 0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @20) #12, !noalias !604
+  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef 1, i64 noundef 0, i64 noundef 0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @20) #12, !noalias !603
   unreachable
 
 bb.u:                                             ; preds = %bb.s
   %i.aw = add nsw i64 %.sroa.4.0.i13.i.i, -1      ; 3 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %.sroa.02.0.i14.i.i, i64 1 ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !604)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !605)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !606)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !607)
   %i.ay = icmp samesign eq i64 %i.aw, 0
   br i1 %i.ay, label %_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser12normal_bytes0Bb_.exit145.thread, label %.lr.ph.i.i.i.preheader.i129
 
@@ -941,7 +920,7 @@ bb.u:                                             ; preds = %bb.s
 .lr.ph.i.i.i.us.i131:                             ; preds = %.lr.ph.i.i.i.us.i131.preheader, %_RNCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtBc_7windows8non_utf810components6parser12normal_bytes00E00Bc_.exit.i.i.i.i.i.us.i132
   %i.bk = phi ptr [ %i.bo, %_RNCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtBc_7windows8non_utf810components6parser12normal_bytes00E00Bc_.exit.i.i.i.i.i.us.i132 ], [ %i.bi, %.lr.ph.i.i.i.us.i131.preheader ] ; 2 uses
   %i.bl = phi i64 [ %i.bp, %_RNCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtBc_7windows8non_utf810components6parser12normal_bytes00E00Bc_.exit.i.i.i.i.i.us.i132 ], [ 0, %.lr.ph.i.i.i.us.i131.preheader ] ; 2 uses
-  %i.bm = load i8, ptr %i.bk, align 1, !alias.scope !608, !noalias !609, !noundef !4
+  %i.bm = load i8, ptr %i.bk, align 1, !alias.scope !607, !noalias !608, !noundef !4
   %i.bn = icmp eq i8 %i.bm, 92
   br i1 %i.bn, label %.split.us.i140, label %_RNCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtBc_7windows8non_utf810components6parser12normal_bytes00E00Bc_.exit.i.i.i.i.i.us.i132
 
@@ -954,7 +933,7 @@ _RNCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byt
 .lr.ph.i.i.i.i143:                                ; preds = %.lr.ph.i.i.i.i143.preheader, %_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRhuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB3y_7windows8non_utf810components6parser12normal_bytes00E00E0E0B3y_.exit.i.i.i.i144
   %i.br = phi ptr [ %i.bu, %_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRhuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB3y_7windows8non_utf810components6parser12normal_bytes00E00E0E0B3y_.exit.i.i.i.i144 ], [ %i.bf, %.lr.ph.i.i.i.i143.preheader ] ; 2 uses
   %i.bs = phi i64 [ %i.bv, %_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRhuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB3y_7windows8non_utf810components6parser12normal_bytes00E00E0E0B3y_.exit.i.i.i.i144 ], [ 0, %.lr.ph.i.i.i.i143.preheader ] ; 3 uses
-  %i.bt = load i8, ptr %i.br, align 1, !alias.scope !608, !noalias !609, !noundef !4
+  %i.bt = load i8, ptr %i.br, align 1, !alias.scope !607, !noalias !608, !noundef !4
   switch i8 %i.bt, label %_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRhuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB3y_7windows8non_utf810components6parser12normal_bytes00E00E0E0B3y_.exit.i.i.i.i144 [
     i8 92, label %.split.us.i140
     i8 47, label %.split.us.i140
@@ -978,7 +957,7 @@ bb.v:                                             ; preds = %.split.us.i140
   br i1 %i.ca, label %bb.w, label %_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser12normal_bytes0Bb_.exit145, !prof !6
 
 bb.w:                                             ; preds = %bb.v
-  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef %.us-phi.i141, i64 noundef range(i64 0, -9223372036854775808) %i.bx, i64 noundef range(i64 0, -9223372036854775808) %i.bx, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #12, !noalias !610
+  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef %.us-phi.i141, i64 noundef range(i64 0, -9223372036854775808) %i.bx, i64 noundef range(i64 0, -9223372036854775808) %i.bx, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #12, !noalias !609
   unreachable
 
 _RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser12normal_bytes0Bb_.exit145: ; preds = %bb.v
@@ -1014,11 +993,11 @@ bb.x:                                             ; preds = %bb.b, %bb.l, %bb.p,
 define internal fastcc void @_RNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser8verbatim(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef range(i64 0, -9223372036854775808) %2) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [1 x i8], align 1                 ; 4 uses
-  %i.b = tail call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef range(i64 0, -9223372036854775808) %2, ptr noalias noundef nonnull readonly captures(address, read_provenance) @17, i64 noundef 1), !noalias !620
+  %i.b = tail call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef range(i64 0, -9223372036854775808) %2, ptr noalias noundef nonnull readonly captures(address, read_provenance) @17, i64 noundef 1), !noalias !619
   br i1 %i.b, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef range(i64 0, -9223372036854775808) %2, ptr noalias noundef nonnull readonly captures(address, read_provenance) @18, i64 noundef 1), !noalias !620
+  %i.c = tail call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef range(i64 0, -9223372036854775808) %2, ptr noalias noundef nonnull readonly captures(address, read_provenance) @18, i64 noundef 1), !noalias !619
   br i1 %i.c, label %bb.c, label %bb.p
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -1026,17 +1005,17 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %bb.d, label %bb.e, !prof !6
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef 1, i64 noundef 0, i64 noundef 0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @20) #12, !noalias !620
+  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef 1, i64 noundef 0, i64 noundef 0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @20) #12, !noalias !619
   unreachable
 
 bb.e:                                             ; preds = %bb.c
   %i.e = add nsw i64 %2, -1                       ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 2 uses
-  %i.g = tail call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.f, i64 noundef range(i64 0, -9223372036854775808) %i.e, ptr noalias noundef nonnull readonly captures(address, read_provenance) @17, i64 noundef 1), !noalias !621
+  %i.g = tail call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.f, i64 noundef range(i64 0, -9223372036854775808) %i.e, ptr noalias noundef nonnull readonly captures(address, read_provenance) @17, i64 noundef 1), !noalias !620
   br i1 %i.g, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.h = tail call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.f, i64 noundef range(i64 0, -9223372036854775808) %i.e, ptr noalias noundef nonnull readonly captures(address, read_provenance) @18, i64 noundef 1), !noalias !621
+  %i.h = tail call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.f, i64 noundef range(i64 0, -9223372036854775808) %i.e, ptr noalias noundef nonnull readonly captures(address, read_provenance) @18, i64 noundef 1), !noalias !620
   br i1 %i.h, label %bb.g, label %bb.p
 
 bb.g:                                             ; preds = %bb.f, %bb.e
@@ -1044,7 +1023,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.i, label %bb.h, label %bb.i, !prof !6
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef 1, i64 noundef 0, i64 noundef 0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @20) #12, !noalias !621
+  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef 1, i64 noundef 0, i64 noundef 0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @20) #12, !noalias !620
   unreachable
 
 bb.i:                                             ; preds = %bb.g
@@ -1054,20 +1033,20 @@ bb.i:                                             ; preds = %bb.g
 
 bb.j:                                             ; preds = %bb.i
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 2
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !622
-  store i8 63, ptr %i.a, align 1, !noalias !622
-  %i.m = call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.l, i64 noundef range(i64 0, -9223372036854775808) %i.j, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.a, i64 noundef 1), !noalias !623
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !622
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !621
+  store i8 63, ptr %i.a, align 1, !noalias !621
+  %i.m = call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.l, i64 noundef range(i64 0, -9223372036854775808) %i.j, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.a, i64 noundef 1), !noalias !622
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !621
   br i1 %i.m, label %bb.k, label %bb.p
 
 bb.k:                                             ; preds = %bb.j
   %i.n = add nsw i64 %2, -3                       ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 3 ; 2 uses
-  %i.p = call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.o, i64 noundef range(i64 0, -9223372036854775808) %i.n, ptr noalias noundef nonnull readonly captures(address, read_provenance) @17, i64 noundef 1), !noalias !624
+  %i.p = call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.o, i64 noundef range(i64 0, -9223372036854775808) %i.n, ptr noalias noundef nonnull readonly captures(address, read_provenance) @17, i64 noundef 1), !noalias !623
   br i1 %i.p, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.q = call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.o, i64 noundef range(i64 0, -9223372036854775808) %i.n, ptr noalias noundef nonnull readonly captures(address, read_provenance) @18, i64 noundef 1), !noalias !624
+  %i.q = call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.o, i64 noundef range(i64 0, -9223372036854775808) %i.n, ptr noalias noundef nonnull readonly captures(address, read_provenance) @18, i64 noundef 1), !noalias !623
   br i1 %i.q, label %bb.m, label %bb.p
 
 bb.m:                                             ; preds = %bb.l, %bb.k
@@ -1075,7 +1054,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %i.r, label %bb.n, label %bb.o, !prof !6
 
 bb.n:                                             ; preds = %bb.m
-  call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef 1, i64 noundef 0, i64 noundef 0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @20) #12, !noalias !624
+  call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef 1, i64 noundef 0, i64 noundef 0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @20) #12, !noalias !623
   unreachable
 
 bb.o:                                             ; preds = %bb.m
@@ -1478,23 +1457,23 @@ begin_hunk_1_@llvm.umax.i64
 !465 = distinct !{!465, !464, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser14fully_consumedNtNtNtNtNtBa_7windows8non_utf810components9component16WindowsComponentNCNvNtB1h_6parser8filename0E0Ba_: argument 2"}
 !466 = distinct !{!466, !464, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser14fully_consumedNtNtNtNtNtBa_7windows8non_utf810components9component16WindowsComponentNCNvNtB1h_6parser8filename0E0Ba_: argument 1"}
 !467 = distinct !{!467, !464, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser14fully_consumedNtNtNtNtNtBa_7windows8non_utf810components9component16WindowsComponentNCNvNtB1h_6parser8filename0E0Ba_: argument 0"}
-!468 = distinct !{!468, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtBa_7windows8non_utf810components6parser17move_back_to_next00E0Ba_"}
-!469 = distinct !{!469, !468, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtBa_7windows8non_utf810components6parser17move_back_to_next00E0Ba_: argument 1"}
-!470 = distinct !{!470, !"_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_"}
-!471 = distinct !{!471, !470, !"_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_: argument 1"}
-!472 = distinct !{!472, !"_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkTjRhENCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB1M_7windows8non_utf810components6parser17move_back_to_next00E00E0B1M_"}
-!473 = distinct !{!473, !472, !"_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkTjRhENCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB1M_7windows8non_utf810components6parser17move_back_to_next00E00E0B1M_: argument 0"}
-!474 = distinct !{!474, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser17move_back_to_next0Bb_"}
-!475 = distinct !{!475, !474, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser17move_back_to_next0Bb_: argument 1"}
-!476 = distinct !{!476, !474, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser17move_back_to_next0Bb_: argument 0"}
-!477 = distinct !{!477, !468, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtBa_7windows8non_utf810components6parser17move_back_to_next00E0Ba_: argument 0"}
-!478 = distinct !{!478, !"_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB6_9EnumerateINtNtNtBc_5slice4iter4IterhEENtNtNtBa_6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvB1C_5rfind5checkTjRhENCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3h_7windows8non_utf810components6parser17move_back_to_next00E00E0INtNtNtBc_3ops12control_flow11ControlFlowB2Z_EEB3h_"}
-!479 = distinct !{!479, !478, !"_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB6_9EnumerateINtNtNtBc_5slice4iter4IterhEENtNtNtBa_6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvB1C_5rfind5checkTjRhENCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3h_7windows8non_utf810components6parser17move_back_to_next00E00E0INtNtNtBc_3ops12control_flow11ControlFlowB2Z_EEB3h_: argument 0"}
-!480 = distinct !{!480, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvXs0_NtNtBR_8adapters9enumerateINtB23_9EnumeratepEBL_9try_rfold9enumerateRhuINtNtNtBa_3ops12control_flow11ControlFlowTjB39_EENCINvNvBL_5rfind5checkB3R_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB4C_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3c_EB4C_"}
-!481 = distinct !{!481, !480, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvXs0_NtNtBR_8adapters9enumerateINtB23_9EnumeratepEBL_9try_rfold9enumerateRhuINtNtNtBa_3ops12control_flow11ControlFlowTjB39_EENCINvNvBL_5rfind5checkB3R_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB4C_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3c_EB4C_: argument 1"}
-!482 = distinct !{!482, !480, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvXs0_NtNtBR_8adapters9enumerateINtB23_9EnumeratepEBL_9try_rfold9enumerateRhuINtNtNtBa_3ops12control_flow11ControlFlowTjB39_EENCINvNvBL_5rfind5checkB3R_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB4C_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3c_EB4C_: argument 0"}
-!483 = distinct !{!483, !470, !"_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_: argument 0"}
-!484 = distinct !{!484, !474, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser17move_back_to_next0Bb_: argument 2"}
+!468 = distinct !{!468, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser17move_back_to_next0Bb_"}
+!469 = distinct !{!469, !468, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser17move_back_to_next0Bb_: argument 2"}
+!470 = distinct !{!470, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtBa_7windows8non_utf810components6parser17move_back_to_next00E0Ba_"}
+!471 = distinct !{!471, !470, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtBa_7windows8non_utf810components6parser17move_back_to_next00E0Ba_: argument 1"}
+!472 = distinct !{!472, !"_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_"}
+!473 = distinct !{!473, !472, !"_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_: argument 1"}
+!474 = distinct !{!474, !"_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkTjRhENCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB1M_7windows8non_utf810components6parser17move_back_to_next00E00E0B1M_"}
+!475 = distinct !{!475, !474, !"_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkTjRhENCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB1M_7windows8non_utf810components6parser17move_back_to_next00E00E0B1M_: argument 0"}
+!476 = distinct !{!476, !468, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser17move_back_to_next0Bb_: argument 1"}
+!477 = distinct !{!477, !468, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser17move_back_to_next0Bb_: argument 0"}
+!478 = distinct !{!478, !470, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtBa_7windows8non_utf810components6parser17move_back_to_next00E0Ba_: argument 0"}
+!479 = distinct !{!479, !"_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB6_9EnumerateINtNtNtBc_5slice4iter4IterhEENtNtNtBa_6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvB1C_5rfind5checkTjRhENCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3h_7windows8non_utf810components6parser17move_back_to_next00E00E0INtNtNtBc_3ops12control_flow11ControlFlowB2Z_EEB3h_"}
+!480 = distinct !{!480, !479, !"_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB6_9EnumerateINtNtNtBc_5slice4iter4IterhEENtNtNtBa_6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvB1C_5rfind5checkTjRhENCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3h_7windows8non_utf810components6parser17move_back_to_next00E00E0INtNtNtBc_3ops12control_flow11ControlFlowB2Z_EEB3h_: argument 0"}
+!481 = distinct !{!481, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvXs0_NtNtBR_8adapters9enumerateINtB23_9EnumeratepEBL_9try_rfold9enumerateRhuINtNtNtBa_3ops12control_flow11ControlFlowTjB39_EENCINvNvBL_5rfind5checkB3R_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB4C_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3c_EB4C_"}
+!482 = distinct !{!482, !481, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvXs0_NtNtBR_8adapters9enumerateINtB23_9EnumeratepEBL_9try_rfold9enumerateRhuINtNtNtBa_3ops12control_flow11ControlFlowTjB39_EENCINvNvBL_5rfind5checkB3R_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB4C_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3c_EB4C_: argument 1"}
+!483 = distinct !{!483, !481, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvXs0_NtNtBR_8adapters9enumerateINtB23_9EnumeratepEBL_9try_rfold9enumerateRhuINtNtNtBa_3ops12control_flow11ControlFlowTjB39_EENCINvNvBL_5rfind5checkB3R_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB4C_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3c_EB4C_: argument 0"}
+!484 = distinct !{!484, !472, !"_RNCINvNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtBa_9EnumeratepENtNtNtBe_6traits12double_ended19DoubleEndedIterator9try_rfold9enumerateRhuINtNtNtBg_3ops12control_flow11ControlFlowTjB2o_EENCINvNvB1f_5rfind5checkB36_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser16rtake_until_byteNCNCNvNtNtNtNtB3S_7windows8non_utf810components6parser17move_back_to_next00E00E0E0B3S_: argument 0"}
 !485 = distinct !{!485, !"_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path"}
 !486 = distinct !{!486, !485, !"_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path: argument 1"}
 !487 = distinct !{!487, !485, !"_RNvXs8_NtNtCs4NRVxsYgnAr_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE5indexCs9LqqPKWwQFK_10typed_path: argument 0"}
@@ -1536,23 +1515,23 @@ begin_hunk_1_@llvm.umax.i64
 !523 = !{!433, !432, !430, !429}
 !524 = !{!428, !426, !424, !441, !422}
 !525 = !{!444, !443, !434, !424, !433, !432, !430, !429}
-!526 = !{!434, !424, !433, !432, !430, !429}
-!527 = !{!430, !429, !422}
-!528 = !{!430, !429}
-!529 = !{!446}
-!530 = !{!448}
-!531 = !{!452, !450, !448, !446}
-!532 = !{!460, !459, !458, !456, !454, !453, !430, !429}
-!533 = !{!463, !462, !454, !448, !453, !446, !430, !429}
-!534 = !{!467, !466, !465, !430, !429, !422}
-!535 = !{!467, !430, !429}
-!536 = !{!469}
-!537 = !{!473, !471, !469}
-!538 = !{!483, !482, !481, !479, !477, !476, !475, !430, !429}
-!539 = !{!476, !475, !430, !429}
-!540 = !{!473, !471, !469, !484}
-!541 = !{!487, !486, !477, !469, !476, !475, !430, !429}
-!542 = !{!477, !469, !476, !475, !430, !429}
+!526 = !{!430, !429, !422}
+!527 = !{!430, !429}
+!528 = !{!446}
+!529 = !{!448}
+!530 = !{!452, !450, !448, !446}
+!531 = !{!460, !459, !458, !456, !454, !453, !430, !429}
+!532 = !{!463, !462, !454, !448, !453, !446, !430, !429}
+!533 = !{!467, !466, !465, !430, !429, !422}
+!534 = !{!467, !430, !429}
+!535 = !{!469}
+!536 = !{!471}
+!537 = !{!475, !473, !471}
+!538 = !{!484, !483, !482, !480, !478, !477, !476, !430, !429}
+!539 = !{!477, !476, !430, !429}
+!540 = !{!475, !473, !471, !469}
+!541 = !{!487, !486, !478, !471, !477, !476, !430, !429}
+!542 = !{!478, !471, !477, !476, !469, !430, !429}
 !543 = !{!489}
 !544 = !{!490, !430, !429}
 !545 = !{!492}
@@ -1563,76 +1542,75 @@ begin_hunk_1_@llvm.umax.i64
 !550 = !{!504, !503, !501, !430, !429}
 !551 = !{!499, !497, !495, !513, !512}
 !552 = !{!516, !515, !505, !495, !504, !503, !501, !430, !429}
-!553 = !{!505, !495, !504, !503, !501, !430, !429}
-!554 = distinct !{!554, !"_RNCNvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser5bytes0B9_"}
-!555 = distinct !{!555, !554, !"_RNCNvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser5bytes0B9_: argument 0"}
-!556 = distinct !{!556, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser9separator0Bb_"}
-!557 = distinct !{!557, !556, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser9separator0Bb_: argument 0"}
-!558 = distinct !{!558, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser12normal_bytes0Bb_"}
-!559 = distinct !{!559, !558, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser12normal_bytes0Bb_: argument 2"}
-!560 = distinct !{!560, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser17take_until_byte_1NCNCNvNtNtNtNtBa_7windows8non_utf810components6parser12normal_bytes00E0Ba_"}
-!561 = distinct !{!561, !560, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser17take_until_byte_1NCNCNvNtNtNtNtBa_7windows8non_utf810components6parser12normal_bytes00E0Ba_: argument 1"}
-!562 = distinct !{!562, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtBa_7windows8non_utf810components6parser12normal_bytes00E0Ba_"}
-!563 = distinct !{!563, !562, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtBa_7windows8non_utf810components6parser12normal_bytes00E0Ba_: argument 1"}
-!564 = distinct !{!564, !"_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRhuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB3y_7windows8non_utf810components6parser12normal_bytes00E00E0E0B3y_"}
-!565 = distinct !{!565, !564, !"_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRhuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB3y_7windows8non_utf810components6parser12normal_bytes00E00E0E0B3y_: argument 0"}
-!566 = distinct !{!566, !"_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB1u_7windows8non_utf810components6parser12normal_bytes00E00E0B1u_"}
-!567 = distinct !{!567, !566, !"_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB1u_7windows8non_utf810components6parser12normal_bytes00E00E0B1u_: argument 0"}
-!568 = distinct !{!568, !558, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser12normal_bytes0Bb_: argument 1"}
-!569 = distinct !{!569, !558, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser12normal_bytes0Bb_: argument 0"}
-!570 = distinct !{!570, !560, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser17take_until_byte_1NCNCNvNtNtNtNtBa_7windows8non_utf810components6parser12normal_bytes00E0Ba_: argument 0"}
-!571 = distinct !{!571, !562, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtBa_7windows8non_utf810components6parser12normal_bytes00E0Ba_: argument 0"}
-!572 = distinct !{!572, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvXs_NtNtBR_8adapters9enumerateINtB1K_9EnumeratepEBL_8try_fold9enumerateRhuINtNtNtBa_3ops12control_flow11ControlFlowTjB2P_EENCINvNvBL_4find5checkB3x_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB4h_7windows8non_utf810components6parser12normal_bytes00E00E0E0B2S_EB4h_"}
-!573 = distinct !{!573, !572, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvXs_NtNtBR_8adapters9enumerateINtB1K_9EnumeratepEBL_8try_fold9enumerateRhuINtNtNtBa_3ops12control_flow11ControlFlowTjB2P_EENCINvNvBL_4find5checkB3x_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB4h_7windows8non_utf810components6parser12normal_bytes00E00E0E0B2S_EB4h_: argument 2"}
-!574 = distinct !{!574, !572, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvXs_NtNtBR_8adapters9enumerateINtB1K_9EnumeratepEBL_8try_fold9enumerateRhuINtNtNtBa_3ops12control_flow11ControlFlowTjB2P_EENCINvNvBL_4find5checkB3x_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB4h_7windows8non_utf810components6parser12normal_bytes00E00E0E0B2S_EB4h_: argument 1"}
-!575 = distinct !{!575, !572, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvXs_NtNtBR_8adapters9enumerateINtB1K_9EnumeratepEBL_8try_fold9enumerateRhuINtNtNtBa_3ops12control_flow11ControlFlowTjB2P_EENCINvNvBL_4find5checkB3x_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB4h_7windows8non_utf810components6parser12normal_bytes00E00E0E0B2S_EB4h_: argument 0"}
-!576 = distinct !{!576, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser9separator0Bb_"}
-!577 = distinct !{!577, !576, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser9separator0Bb_: argument 0"}
-!578 = distinct !{!578, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser12normal_bytes0Bb_"}
-!579 = distinct !{!579, !578, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser12normal_bytes0Bb_: argument 2"}
-!580 = distinct !{!580, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser17take_until_byte_1NCNCNvNtNtNtNtBa_7windows8non_utf810components6parser12normal_bytes00E0Ba_"}
-!581 = distinct !{!581, !580, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser17take_until_byte_1NCNCNvNtNtNtNtBa_7windows8non_utf810components6parser12normal_bytes00E0Ba_: argument 1"}
-!582 = distinct !{!582, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtBa_7windows8non_utf810components6parser12normal_bytes00E0Ba_"}
-!583 = distinct !{!583, !582, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtBa_7windows8non_utf810components6parser12normal_bytes00E0Ba_: argument 1"}
-!584 = distinct !{!584, !"_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRhuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB3y_7windows8non_utf810components6parser12normal_bytes00E00E0E0B3y_"}
-!585 = distinct !{!585, !584, !"_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRhuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB3y_7windows8non_utf810components6parser12normal_bytes00E00E0E0B3y_: argument 0"}
-!586 = distinct !{!586, !"_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB1u_7windows8non_utf810components6parser12normal_bytes00E00E0B1u_"}
-!587 = distinct !{!587, !586, !"_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB1u_7windows8non_utf810components6parser12normal_bytes00E00E0B1u_: argument 0"}
-!588 = distinct !{!588, !578, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser12normal_bytes0Bb_: argument 1"}
-!589 = distinct !{!589, !578, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser12normal_bytes0Bb_: argument 0"}
-!590 = distinct !{!590, !580, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser17take_until_byte_1NCNCNvNtNtNtNtBa_7windows8non_utf810components6parser12normal_bytes00E0Ba_: argument 0"}
-!591 = distinct !{!591, !582, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtBa_7windows8non_utf810components6parser12normal_bytes00E0Ba_: argument 0"}
-!592 = distinct !{!592, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvXs_NtNtBR_8adapters9enumerateINtB1K_9EnumeratepEBL_8try_fold9enumerateRhuINtNtNtBa_3ops12control_flow11ControlFlowTjB2P_EENCINvNvBL_4find5checkB3x_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB4h_7windows8non_utf810components6parser12normal_bytes00E00E0E0B2S_EB4h_"}
-!593 = distinct !{!593, !592, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvXs_NtNtBR_8adapters9enumerateINtB1K_9EnumeratepEBL_8try_fold9enumerateRhuINtNtNtBa_3ops12control_flow11ControlFlowTjB2P_EENCINvNvBL_4find5checkB3x_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB4h_7windows8non_utf810components6parser12normal_bytes00E00E0E0B2S_EB4h_: argument 2"}
-!594 = distinct !{!594, !592, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvXs_NtNtBR_8adapters9enumerateINtB1K_9EnumeratepEBL_8try_fold9enumerateRhuINtNtNtBa_3ops12control_flow11ControlFlowTjB2P_EENCINvNvBL_4find5checkB3x_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB4h_7windows8non_utf810components6parser12normal_bytes00E00E0E0B2S_EB4h_: argument 1"}
-!595 = distinct !{!595, !592, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvXs_NtNtBR_8adapters9enumerateINtB1K_9EnumeratepEBL_8try_fold9enumerateRhuINtNtNtBa_3ops12control_flow11ControlFlowTjB2P_EENCINvNvBL_4find5checkB3x_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB4h_7windows8non_utf810components6parser12normal_bytes00E00E0E0B2S_EB4h_: argument 0"}
-!596 = !{!555}
-!597 = !{!557}
-!598 = !{!559}
-!599 = !{!561}
-!600 = !{!563}
-!601 = !{!567, !565, !563, !561, !559}
-!602 = !{!575, !574, !573, !571, !570, !569, !568}
-!603 = !{!571, !563, !570, !561, !569, !568, !559}
-!604 = !{!577}
-!605 = !{!579}
-!606 = !{!581}
-!607 = !{!583}
-!608 = !{!587, !585, !583, !581, !579}
-!609 = !{!595, !594, !593, !591, !590, !589, !588}
-!610 = !{!591, !583, !590, !581, !589, !588, !579}
-!611 = distinct !{!611, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser9separator0Bb_"}
-!612 = distinct !{!612, !611, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser9separator0Bb_: argument 0"}
-!613 = distinct !{!613, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser9separator0Bb_"}
-!614 = distinct !{!614, !613, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser9separator0Bb_: argument 0"}
-!615 = distinct !{!615, !"_RNCNvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser4byte0B9_"}
-!616 = distinct !{!616, !615, !"_RNCNvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser4byte0B9_: argument 1"}
-!617 = distinct !{!617, !615, !"_RNCNvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser4byte0B9_: argument 0"}
-!618 = distinct !{!618, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser9separator0Bb_"}
-!619 = distinct !{!619, !618, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser9separator0Bb_: argument 0"}
-!620 = !{!612}
-!621 = !{!614}
-!622 = !{!617, !616}
-!623 = !{!617}
-!624 = !{!619}
+!553 = distinct !{!553, !"_RNCNvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser5bytes0B9_"}
+!554 = distinct !{!554, !553, !"_RNCNvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser5bytes0B9_: argument 0"}
+!555 = distinct !{!555, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser9separator0Bb_"}
+!556 = distinct !{!556, !555, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser9separator0Bb_: argument 0"}
+!557 = distinct !{!557, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser12normal_bytes0Bb_"}
+!558 = distinct !{!558, !557, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser12normal_bytes0Bb_: argument 2"}
+!559 = distinct !{!559, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser17take_until_byte_1NCNCNvNtNtNtNtBa_7windows8non_utf810components6parser12normal_bytes00E0Ba_"}
+!560 = distinct !{!560, !559, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser17take_until_byte_1NCNCNvNtNtNtNtBa_7windows8non_utf810components6parser12normal_bytes00E0Ba_: argument 1"}
+!561 = distinct !{!561, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtBa_7windows8non_utf810components6parser12normal_bytes00E0Ba_"}
+!562 = distinct !{!562, !561, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtBa_7windows8non_utf810components6parser12normal_bytes00E0Ba_: argument 1"}
+!563 = distinct !{!563, !"_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRhuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB3y_7windows8non_utf810components6parser12normal_bytes00E00E0E0B3y_"}
+!564 = distinct !{!564, !563, !"_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRhuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB3y_7windows8non_utf810components6parser12normal_bytes00E00E0E0B3y_: argument 0"}
+!565 = distinct !{!565, !"_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB1u_7windows8non_utf810components6parser12normal_bytes00E00E0B1u_"}
+!566 = distinct !{!566, !565, !"_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB1u_7windows8non_utf810components6parser12normal_bytes00E00E0B1u_: argument 0"}
+!567 = distinct !{!567, !557, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser12normal_bytes0Bb_: argument 1"}
+!568 = distinct !{!568, !557, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser12normal_bytes0Bb_: argument 0"}
+!569 = distinct !{!569, !559, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser17take_until_byte_1NCNCNvNtNtNtNtBa_7windows8non_utf810components6parser12normal_bytes00E0Ba_: argument 0"}
+!570 = distinct !{!570, !561, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtBa_7windows8non_utf810components6parser12normal_bytes00E0Ba_: argument 0"}
+!571 = distinct !{!571, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvXs_NtNtBR_8adapters9enumerateINtB1K_9EnumeratepEBL_8try_fold9enumerateRhuINtNtNtBa_3ops12control_flow11ControlFlowTjB2P_EENCINvNvBL_4find5checkB3x_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB4h_7windows8non_utf810components6parser12normal_bytes00E00E0E0B2S_EB4h_"}
+!572 = distinct !{!572, !571, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvXs_NtNtBR_8adapters9enumerateINtB1K_9EnumeratepEBL_8try_fold9enumerateRhuINtNtNtBa_3ops12control_flow11ControlFlowTjB2P_EENCINvNvBL_4find5checkB3x_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB4h_7windows8non_utf810components6parser12normal_bytes00E00E0E0B2S_EB4h_: argument 2"}
+!573 = distinct !{!573, !571, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvXs_NtNtBR_8adapters9enumerateINtB1K_9EnumeratepEBL_8try_fold9enumerateRhuINtNtNtBa_3ops12control_flow11ControlFlowTjB2P_EENCINvNvBL_4find5checkB3x_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB4h_7windows8non_utf810components6parser12normal_bytes00E00E0E0B2S_EB4h_: argument 1"}
+!574 = distinct !{!574, !571, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvXs_NtNtBR_8adapters9enumerateINtB1K_9EnumeratepEBL_8try_fold9enumerateRhuINtNtNtBa_3ops12control_flow11ControlFlowTjB2P_EENCINvNvBL_4find5checkB3x_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB4h_7windows8non_utf810components6parser12normal_bytes00E00E0E0B2S_EB4h_: argument 0"}
+!575 = distinct !{!575, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser9separator0Bb_"}
+!576 = distinct !{!576, !575, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser9separator0Bb_: argument 0"}
+!577 = distinct !{!577, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser12normal_bytes0Bb_"}
+!578 = distinct !{!578, !577, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser12normal_bytes0Bb_: argument 2"}
+!579 = distinct !{!579, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser17take_until_byte_1NCNCNvNtNtNtNtBa_7windows8non_utf810components6parser12normal_bytes00E0Ba_"}
+!580 = distinct !{!580, !579, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser17take_until_byte_1NCNCNvNtNtNtNtBa_7windows8non_utf810components6parser12normal_bytes00E0Ba_: argument 1"}
+!581 = distinct !{!581, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtBa_7windows8non_utf810components6parser12normal_bytes00E0Ba_"}
+!582 = distinct !{!582, !581, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtBa_7windows8non_utf810components6parser12normal_bytes00E0Ba_: argument 1"}
+!583 = distinct !{!583, !"_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRhuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB3y_7windows8non_utf810components6parser12normal_bytes00E00E0E0B3y_"}
+!584 = distinct !{!584, !583, !"_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRhuINtNtNtBf_3ops12control_flow11ControlFlowTjB25_EENCINvNvB1e_4find5checkB2N_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB3y_7windows8non_utf810components6parser12normal_bytes00E00E0E0B3y_: argument 0"}
+!585 = distinct !{!585, !"_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB1u_7windows8non_utf810components6parser12normal_bytes00E00E0B1u_"}
+!586 = distinct !{!586, !585, !"_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB1u_7windows8non_utf810components6parser12normal_bytes00E00E0B1u_: argument 0"}
+!587 = distinct !{!587, !577, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser12normal_bytes0Bb_: argument 1"}
+!588 = distinct !{!588, !577, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser12normal_bytes0Bb_: argument 0"}
+!589 = distinct !{!589, !579, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser17take_until_byte_1NCNCNvNtNtNtNtBa_7windows8non_utf810components6parser12normal_bytes00E0Ba_: argument 0"}
+!590 = distinct !{!590, !581, !"_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtBa_7windows8non_utf810components6parser12normal_bytes00E0Ba_: argument 0"}
+!591 = distinct !{!591, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvXs_NtNtBR_8adapters9enumerateINtB1K_9EnumeratepEBL_8try_fold9enumerateRhuINtNtNtBa_3ops12control_flow11ControlFlowTjB2P_EENCINvNvBL_4find5checkB3x_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB4h_7windows8non_utf810components6parser12normal_bytes00E00E0E0B2S_EB4h_"}
+!592 = distinct !{!592, !591, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvXs_NtNtBR_8adapters9enumerateINtB1K_9EnumeratepEBL_8try_fold9enumerateRhuINtNtNtBa_3ops12control_flow11ControlFlowTjB2P_EENCINvNvBL_4find5checkB3x_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB4h_7windows8non_utf810components6parser12normal_bytes00E00E0E0B2S_EB4h_: argument 2"}
+!593 = distinct !{!593, !591, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvXs_NtNtBR_8adapters9enumerateINtB1K_9EnumeratepEBL_8try_fold9enumerateRhuINtNtNtBa_3ops12control_flow11ControlFlowTjB2P_EENCINvNvBL_4find5checkB3x_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB4h_7windows8non_utf810components6parser12normal_bytes00E00E0E0B2S_EB4h_: argument 1"}
+!594 = distinct !{!594, !591, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvXs_NtNtBR_8adapters9enumerateINtB1K_9EnumeratepEBL_8try_fold9enumerateRhuINtNtNtBa_3ops12control_flow11ControlFlowTjB2P_EENCINvNvBL_4find5checkB3x_NCNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser15take_until_byteNCNCNvNtNtNtNtB4h_7windows8non_utf810components6parser12normal_bytes00E00E0E0B2S_EB4h_: argument 0"}
+!595 = !{!554}
+!596 = !{!556}
+!597 = !{!558}
+!598 = !{!560}
+!599 = !{!562}
+!600 = !{!566, !564, !562, !560, !558}
+!601 = !{!574, !573, !572, !570, !569, !568, !567}
+!602 = !{!570, !562, !569, !560, !568, !567, !558}
+!603 = !{!576}
+!604 = !{!578}
+!605 = !{!580}
+!606 = !{!582}
+!607 = !{!586, !584, !582, !580, !578}
+!608 = !{!594, !593, !592, !590, !589, !588, !587}
+!609 = !{!590, !582, !589, !580, !588, !587, !578}
+!610 = distinct !{!610, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser9separator0Bb_"}
+!611 = distinct !{!611, !610, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser9separator0Bb_: argument 0"}
+!612 = distinct !{!612, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser9separator0Bb_"}
+!613 = distinct !{!613, !612, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser9separator0Bb_: argument 0"}
+!614 = distinct !{!614, !"_RNCNvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser4byte0B9_"}
+!615 = distinct !{!615, !614, !"_RNCNvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser4byte0B9_: argument 1"}
+!616 = distinct !{!616, !614, !"_RNCNvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser4byte0B9_: argument 0"}
+!617 = distinct !{!617, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser9separator0Bb_"}
+!618 = distinct !{!618, !617, !"_RNCNvNtNtNtNtCs9LqqPKWwQFK_10typed_path7windows8non_utf810components6parser9separator0Bb_: argument 0"}
+!619 = !{!611}
+!620 = !{!613}
+!621 = !{!616, !615}
+!622 = !{!616}
+!623 = !{!618}
 end_hunk_1
