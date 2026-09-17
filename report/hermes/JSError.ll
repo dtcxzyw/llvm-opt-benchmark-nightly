@@ -205,8 +205,8 @@ bb.j:                                             ; preds = %.thread
   %.pre246 = zext i32 %.pre7.pre.i.i to i64
   br label %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit
 
-_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit: ; preds = %.thread.i, %.preheader223.preheader
-  %.pre-phi247 = phi i64 [ %.pre246, %.thread.i ], [ %i.am, %.preheader223.preheader ]
+_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit: ; preds = %.preheader223.preheader, %.thread.i
+  %.pre-phi247 = phi i64 [ %i.am, %.preheader223.preheader ], [ %.pre246, %.thread.i ]
   %i.at = load ptr, ptr %3, align 8, !tbaa !36
   %i.au = getelementptr inbounds nuw [2 x i8], ptr %i.at, i64 %.pre-phi247
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(70) %i.au, ptr noundef nonnull align 2 dereferenceable(70) @.str.4, i64 70, i1 false)
@@ -231,8 +231,8 @@ _ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit: ; preds = %.thread.i, %.p
   %.pre248 = zext i32 %.pre7.pre.i.i89 to i64
   br label %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit90
 
-_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit90: ; preds = %.thread.i88, %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit
-  %.pre-phi249 = phi i64 [ %.pre248, %.thread.i88 ], [ %i.ba, %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit ]
+_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit90: ; preds = %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit, %.thread.i88
+  %.pre-phi249 = phi i64 [ %i.ba, %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit ], [ %.pre248, %.thread.i88 ]
   %i.be = load ptr, ptr %3, align 8, !tbaa !36
   %i.bf = getelementptr inbounds nuw [2 x i8], ptr %i.be, i64 %.pre-phi249
   store i16 62, ptr %i.bf, align 1
@@ -377,8 +377,8 @@ _ZNSt6vectorIN6hermes2vm14StackTraceInfoESaIS2_EE2atEm.exit: ; preds = %bb.q
   %.pre237 = zext i32 %.pre7.pre.i.i103 to i64
   br label %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit104
 
-_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit104: ; preds = %.thread.i102, %_ZNSt6vectorIN6hermes2vm14StackTraceInfoESaIS2_EE2atEm.exit
-  %.pre-phi = phi i64 [ %.pre237, %.thread.i102 ], [ %i.dw, %_ZNSt6vectorIN6hermes2vm14StackTraceInfoESaIS2_EE2atEm.exit ]
+_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit104: ; preds = %_ZNSt6vectorIN6hermes2vm14StackTraceInfoESaIS2_EE2atEm.exit, %.thread.i102
+  %.pre-phi = phi i64 [ %i.dw, %_ZNSt6vectorIN6hermes2vm14StackTraceInfoESaIS2_EE2atEm.exit ], [ %.pre237, %.thread.i102 ]
   %i.ea = load ptr, ptr %3, align 8, !tbaa !36
   %i.eb = getelementptr inbounds nuw [2 x i8], ptr %i.ea, i64 %.pre-phi
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.eb, ptr noundef nonnull align 2 dereferenceable(16) @.str.8, i64 16, i1 false)
@@ -414,8 +414,8 @@ _ZN6hermes2vm7JSError25appendFunctionNameAtIndexERNS0_7RuntimeENS0_6HandleIS1_EE
   %.pre244 = zext i32 %.pre7.pre.i.i112 to i64
   br label %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit113
 
-_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit113: ; preds = %.thread.i111, %_ZN6hermes2vm7JSError25appendFunctionNameAtIndexERNS0_7RuntimeENS0_6HandleIS1_EEmRN4llvh15SmallVectorImplIDsEE.exit.preheader
-  %.pre-phi245 = phi i64 [ %.pre244, %.thread.i111 ], [ %i.em, %_ZN6hermes2vm7JSError25appendFunctionNameAtIndexERNS0_7RuntimeENS0_6HandleIS1_EEmRN4llvh15SmallVectorImplIDsEE.exit.preheader ]
+_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit113: ; preds = %_ZN6hermes2vm7JSError25appendFunctionNameAtIndexERNS0_7RuntimeENS0_6HandleIS1_EEmRN4llvh15SmallVectorImplIDsEE.exit.preheader, %.thread.i111
+  %.pre-phi245 = phi i64 [ %i.em, %_ZN6hermes2vm7JSError25appendFunctionNameAtIndexERNS0_7RuntimeENS0_6HandleIS1_EEmRN4llvh15SmallVectorImplIDsEE.exit.preheader ], [ %.pre244, %.thread.i111 ]
   %i.er = load ptr, ptr %3, align 8, !tbaa !36
   %i.es = getelementptr inbounds nuw [2 x i8], ptr %i.er, i64 %.pre-phi245
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(18) %i.es, ptr noundef nonnull align 2 dereferenceable(18) @.str.9, i64 18, i1 false)
@@ -445,8 +445,8 @@ bb.s:                                             ; preds = %_ZN6hermes2vm7JSErr
   %.pre238 = zext i32 %.pre7.pre.i.i121 to i64
   br label %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit122
 
-_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit122: ; preds = %.thread.i120, %.preheader.preheader
-  %.pre-phi239 = phi i64 [ %.pre238, %.thread.i120 ], [ %i.ey, %.preheader.preheader ]
+_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit122: ; preds = %.preheader.preheader, %.thread.i120
+  %.pre-phi239 = phi i64 [ %i.ey, %.preheader.preheader ], [ %.pre238, %.thread.i120 ]
   %i.fc = load ptr, ptr %3, align 8, !tbaa !36
   %i.fd = getelementptr inbounds nuw [2 x i8], ptr %i.fc, i64 %.pre-phi239
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(18) %i.fd, ptr noundef nonnull align 2 dereferenceable(18) @.str.10, i64 18, i1 false)
@@ -558,8 +558,8 @@ _ZNSt11char_traitsIDsE6lengthEPKDs.exit.i127:     ; preds = %bb.z, %bb.w
   %.pre240 = zext i32 %.pre7.pre.i.i132 to i64
   br label %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit133
 
-_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit133: ; preds = %.thread.i131, %_ZNSt11char_traitsIDsE6lengthEPKDs.exit.i127
-  %.pre-phi241 = phi i64 [ %.pre240, %.thread.i131 ], [ %i.gq, %_ZNSt11char_traitsIDsE6lengthEPKDs.exit.i127 ]
+_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit133: ; preds = %_ZNSt11char_traitsIDsE6lengthEPKDs.exit.i127, %.thread.i131
+  %.pre-phi241 = phi i64 [ %i.gq, %_ZNSt11char_traitsIDsE6lengthEPKDs.exit.i127 ], [ %.pre240, %.thread.i131 ]
   %i.gu = load ptr, ptr %3, align 8, !tbaa !36
   %i.gv = getelementptr inbounds nuw [2 x i8], ptr %i.gu, i64 %.pre-phi241
   store i32 2621472, ptr %i.gv, align 1
@@ -583,8 +583,8 @@ _ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit133: ; preds = %.thread.i13
   %.pre242 = zext i32 %.pre7.pre.i.i141 to i64
   br label %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit142
 
-_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit142: ; preds = %.thread.i140, %.preheader222.preheader
-  %.pre-phi243 = phi i64 [ %.pre242, %.thread.i140 ], [ %i.gz, %.preheader222.preheader ]
+_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEPKDs.exit142: ; preds = %.preheader222.preheader, %.thread.i140
+  %.pre-phi243 = phi i64 [ %i.gz, %.preheader222.preheader ], [ %.pre242, %.thread.i140 ]
   %i.hd = load ptr, ptr %3, align 8, !tbaa !36
   %i.he = getelementptr inbounds nuw [2 x i8], ptr %i.hd, i64 %.pre-phi243
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(22) %i.he, ptr noundef nonnull align 2 dereferenceable(22) @.str.12, i64 22, i1 false)

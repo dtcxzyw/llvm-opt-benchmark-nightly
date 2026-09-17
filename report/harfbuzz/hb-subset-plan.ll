@@ -205,17 +205,13 @@ bb.f:                                             ; preds = %bb.e, %bb.c
 _ZN2OTL19unicode_to_macromanEj.exit:              ; preds = %bb.d
   %i.l = getelementptr inbounds nuw i8, ptr @_ZZN2OTL19unicode_to_macromanEjE7mapping, i64 %i.f
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 2
-  %i.n = load i8, ptr %i.m, align 2, !tbaa !339   ; 2 uses
-  %.not = icmp eq i8 %i.n, 0
-  br i1 %.not, label %_ZN2OTL19unicode_to_macromanEj.exit.thread, label %3
-
-3:                                                ; preds = %_ZN2OTL19unicode_to_macromanEj.exit
-  %4 = zext i8 %i.n to i32
-  %5 = tail call noundef zeroext i1 @_ZNK2OT19CmapSubtableFormat413accelerator_t9get_glyphEjPj(ptr noundef nonnull align 8 dereferenceable(48) %0, i32 noundef %4, ptr noundef %2)
+  %i.n = load i8, ptr %i.m, align 2, !tbaa !339
+  %3 = zext i8 %i.n to i32
+  %4 = tail call noundef zeroext i1 @_ZNK2OT19CmapSubtableFormat413accelerator_t9get_glyphEjPj(ptr noundef nonnull align 8 dereferenceable(48) %0, i32 noundef %3, ptr noundef %2)
   br label %_ZN2OTL19unicode_to_macromanEj.exit.thread
 
-_ZN2OTL19unicode_to_macromanEj.exit.thread:       ; preds = %bb.f, %_ZN2OTL19unicode_to_macromanEj.exit, %3, %_ZN2OT4cmap13accelerator_t20get_glyph_from_asciiINS_19CmapSubtableFormat413accelerator_tEEEbPKvjPj.exit
-  %.0 = phi i1 [ true, %_ZN2OT4cmap13accelerator_t20get_glyph_from_asciiINS_19CmapSubtableFormat413accelerator_tEEEbPKvjPj.exit ], [ false, %_ZN2OTL19unicode_to_macromanEj.exit ], [ %5, %3 ], [ false, %bb.f ]
+_ZN2OTL19unicode_to_macromanEj.exit.thread:       ; preds = %bb.f, %_ZN2OTL19unicode_to_macromanEj.exit, %_ZN2OT4cmap13accelerator_t20get_glyph_from_asciiINS_19CmapSubtableFormat413accelerator_tEEEbPKvjPj.exit
+  %.0 = phi i1 [ true, %_ZN2OT4cmap13accelerator_t20get_glyph_from_asciiINS_19CmapSubtableFormat413accelerator_tEEEbPKvjPj.exit ], [ %4, %_ZN2OTL19unicode_to_macromanEj.exit ], [ false, %bb.f ]
   ret i1 %.0
 }
 
@@ -266,17 +262,13 @@ bb.f:                                             ; preds = %bb.e, %bb.c
 _ZN2OTL19unicode_to_macromanEj.exit:              ; preds = %bb.d
   %i.l = getelementptr inbounds nuw i8, ptr @_ZZN2OTL19unicode_to_macromanEjE7mapping, i64 %i.f
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 2
-  %i.n = load i8, ptr %i.m, align 2, !tbaa !339   ; 2 uses
-  %.not = icmp eq i8 %i.n, 0
-  br i1 %.not, label %_ZN2OTL19unicode_to_macromanEj.exit.thread, label %3
-
-3:                                                ; preds = %_ZN2OTL19unicode_to_macromanEj.exit
-  %4 = zext i8 %i.n to i32
-  %5 = tail call noundef zeroext i1 @_ZNK2OT12CmapSubtable9get_glyphEjPjj(ptr noundef nonnull align 1 dereferenceable(262) %0, i32 noundef %4, ptr noundef %2, i32 noundef 0)
+  %i.n = load i8, ptr %i.m, align 2, !tbaa !339
+  %3 = zext i8 %i.n to i32
+  %4 = tail call noundef zeroext i1 @_ZNK2OT12CmapSubtable9get_glyphEjPjj(ptr noundef nonnull align 1 dereferenceable(262) %0, i32 noundef %3, ptr noundef %2, i32 noundef 0)
   br label %_ZN2OTL19unicode_to_macromanEj.exit.thread
 
-_ZN2OTL19unicode_to_macromanEj.exit.thread:       ; preds = %bb.f, %_ZN2OTL19unicode_to_macromanEj.exit, %3, %_ZN2OT4cmap13accelerator_t20get_glyph_from_asciiINS_12CmapSubtableEEEbPKvjPj.exit
-  %.0 = phi i1 [ true, %_ZN2OT4cmap13accelerator_t20get_glyph_from_asciiINS_12CmapSubtableEEEbPKvjPj.exit ], [ false, %_ZN2OTL19unicode_to_macromanEj.exit ], [ %5, %3 ], [ false, %bb.f ]
+_ZN2OTL19unicode_to_macromanEj.exit.thread:       ; preds = %bb.f, %_ZN2OTL19unicode_to_macromanEj.exit, %_ZN2OT4cmap13accelerator_t20get_glyph_from_asciiINS_12CmapSubtableEEEbPKvjPj.exit
+  %.0 = phi i1 [ true, %_ZN2OT4cmap13accelerator_t20get_glyph_from_asciiINS_12CmapSubtableEEEbPKvjPj.exit ], [ %4, %_ZN2OTL19unicode_to_macromanEj.exit ], [ false, %bb.f ]
   ret i1 %.0
 }
 

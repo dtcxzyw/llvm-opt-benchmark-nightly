@@ -205,7 +205,7 @@ _ZN2v88internal9CopyCharsIhhEEvPT0_PKT_m.exit:    ; preds = %bb.u, %bb.v, %bb.w,
   %.013.i779 = phi i1 [ %.114.i, %bb.bh ], [ false, %bb.t ]
   %.sroa.6.0778 = phi ptr [ %.sroa.6.2, %bb.bh ], [ %i.ct, %bb.t ] ; 20 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.0.i46781
-  %i.de = load i8, ptr %i.dd, align 1
+  %i.de = load i8, ptr %i.dd, align 1             ; 2 uses
   %i.df = zext i8 %i.de to i64                    ; 2 uses
   %i.dg = getelementptr inbounds nuw i8, ptr @_ZN2v88internal12_GLOBAL__N_124JsonDoNotEscapeFlagTableE, i64 %i.df
   %i.dh = load i8, ptr %i.dg, align 1, !range !33, !noundef !34
@@ -218,7 +218,7 @@ _ZN2v88internal9CopyCharsIhhEEvPT0_PKT_m.exit:    ; preds = %bb.u, %bb.v, %bb.w,
 
 bb.an:                                            ; preds = %.lr.ph783
   %i.dj = icmp eq i64 %.012.i45780, %.0.i46781
-  br i1 %i.dj, label %_ZN2v88internal15JsonStringifier15NoExtendBuilderIhE15AppendSubstringIhEEvPKT_mm.exit15.i.a, label %bb.ao
+  br i1 %i.dj, label %_ZN2v88internal15JsonStringifier15NoExtendBuilderIhE15AppendSubstringIhEEvPKT_mm.exit15.i, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
   %i.dk = sub i64 %.0.i46781, %.012.i45780        ; 4 uses
@@ -321,15 +321,18 @@ bb.bg:                                            ; preds = %bb.bf
 
 _ZN2v88internal9CopyCharsIhhEEvPT0_PKT_m.exit63:  ; preds = %bb.ao, %bb.ap, %bb.aq, %bb.ar, %bb.as, %bb.at, %bb.au, %bb.av, %bb.aw, %bb.ax, %bb.ay, %bb.az, %bb.ba, %bb.bb, %bb.bc, %bb.bd, %bb.be, %bb.bf, %bb.bg
   %i.dr = getelementptr inbounds nuw i8, ptr %.sroa.6.0778, i64 %i.dk
-  br label %_ZN2v88internal15JsonStringifier15NoExtendBuilderIhE15AppendSubstringIhEEvPKT_mm.exit15.i.a
+  br label %_ZN2v88internal15JsonStringifier15NoExtendBuilderIhE15AppendSubstringIhEEvPKT_mm.exit15.i
 
-_ZN2v88internal15JsonStringifier15NoExtendBuilderIhE15AppendSubstringIhEEvPKT_mm.exit15.i.a: ; preds = %_ZN2v88internal9CopyCharsIhhEEvPT0_PKT_m.exit63, %bb.an
+_ZN2v88internal15JsonStringifier15NoExtendBuilderIhE15AppendSubstringIhEEvPKT_mm.exit15.i: ; preds = %_ZN2v88internal9CopyCharsIhhEEvPT0_PKT_m.exit63, %bb.an
   %.sroa.6.1 = phi ptr [ %.sroa.6.0778, %bb.an ], [ %i.dr, %_ZN2v88internal9CopyCharsIhhEEvPT0_PKT_m.exit63 ] ; 2 uses
+  %.not.i773 = icmp eq i8 %i.de, 96
+  br i1 %.not.i773, label %_ZN2v88internal15JsonStringifier15NoExtendBuilderIhE13AppendCStringEPKc.exit, label %_ZN2v88internal15JsonStringifier15NoExtendBuilderIhE15AppendSubstringIhEEvPKT_mm.exit15.i.a
+
+_ZN2v88internal15JsonStringifier15NoExtendBuilderIhE15AppendSubstringIhEEvPKT_mm.exit15.i.a: ; preds = %_ZN2v88internal15JsonStringifier15NoExtendBuilderIhE15AppendSubstringIhEEvPKT_mm.exit15.i
   %i.ds = shl nuw nsw i64 %i.df, 3
   %i.dt = getelementptr inbounds nuw i8, ptr @.str.33, i64 %i.ds ; 2 uses
-  %i.du = load i8, ptr %i.dt, align 1             ; 2 uses
-  %.not.i773 = icmp eq i8 %i.du, 0
-  br i1 %.not.i773, label %_ZN2v88internal15JsonStringifier15NoExtendBuilderIhE13AppendCStringEPKc.exit, label %.lr.ph776
+  %i.du = load i8, ptr %i.dt, align 1
+  br label %.lr.ph776
 
 .lr.ph776:                                        ; preds = %_ZN2v88internal15JsonStringifier15NoExtendBuilderIhE15AppendSubstringIhEEvPKT_mm.exit15.i.a, %.lr.ph776
   %i.dv = phi i8 [ %i.dy, %.lr.ph776 ], [ %i.du, %_ZN2v88internal15JsonStringifier15NoExtendBuilderIhE15AppendSubstringIhEEvPKT_mm.exit15.i.a ]
@@ -342,8 +345,8 @@ _ZN2v88internal15JsonStringifier15NoExtendBuilderIhE15AppendSubstringIhEEvPKT_mm
   %.not.i = icmp eq i8 %i.dy, 0
   br i1 %.not.i, label %_ZN2v88internal15JsonStringifier15NoExtendBuilderIhE13AppendCStringEPKc.exit, label %.lr.ph776, !llvm.loop !83
 
-_ZN2v88internal15JsonStringifier15NoExtendBuilderIhE13AppendCStringEPKc.exit: ; preds = %.lr.ph776, %_ZN2v88internal15JsonStringifier15NoExtendBuilderIhE15AppendSubstringIhEEvPKT_mm.exit15.i.a
-  %.sroa.6.4.lcssa = phi ptr [ %.sroa.6.1, %_ZN2v88internal15JsonStringifier15NoExtendBuilderIhE15AppendSubstringIhEEvPKT_mm.exit15.i.a ], [ %i.dx, %.lr.ph776 ]
+_ZN2v88internal15JsonStringifier15NoExtendBuilderIhE13AppendCStringEPKc.exit: ; preds = %.lr.ph776, %_ZN2v88internal15JsonStringifier15NoExtendBuilderIhE15AppendSubstringIhEEvPKT_mm.exit15.i
+  %.sroa.6.4.lcssa = phi ptr [ %.sroa.6.1, %_ZN2v88internal15JsonStringifier15NoExtendBuilderIhE15AppendSubstringIhEEvPKT_mm.exit15.i ], [ %i.dx, %.lr.ph776 ]
   %i.dz = add nuw nsw i64 %.0.i46781, 1           ; 2 uses
   br label %bb.bh
 
@@ -376,7 +379,7 @@ bb.bi:                                            ; preds = %.lr.ph797, %_ZN2v88
   %.011.i795 = phi i64 [ 0, %.lr.ph797 ], [ %.1.i, %_ZN2v88internal15JsonStringifier30EscapedLengthIfCurrentPartFitsEm.exit.i ] ; 2 uses
   %.012.i794 = phi i1 [ false, %.lr.ph797 ], [ %.113.i, %_ZN2v88internal15JsonStringifier30EscapedLengthIfCurrentPartFitsEm.exit.i ]
   %i.ef = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.0.i796
-  %i.eg = load i8, ptr %i.ef, align 1
+  %i.eg = load i8, ptr %i.ef, align 1             ; 2 uses
   %i.eh = zext i8 %i.eg to i64                    ; 2 uses
   %i.ei = getelementptr inbounds nuw i8, ptr @_ZN2v88internal12_GLOBAL__N_124JsonDoNotEscapeFlagTableE, i64 %i.eh
   %i.ej = load i8, ptr %i.ei, align 1, !range !33, !noundef !34
@@ -390,22 +393,29 @@ bb.bi:                                            ; preds = %.lr.ph797, %_ZN2v88
 bb.bj:                                            ; preds = %bb.bi
   call void @_ZN2v88internal15JsonStringifier15AppendSubstringIhEEvPKT_mm(ptr noundef nonnull align 8 dereferenceable(2688) %0, ptr noundef nonnull %i.cg, i64 noundef %.011.i795, i64 noundef %.0.i796)
   %i.el = shl nuw nsw i64 %i.eh, 3
-  %i.em = getelementptr inbounds nuw i8, ptr @.str.33, i64 %i.el ; 3 uses
+  %i.em = getelementptr inbounds nuw i8, ptr @.str.33, i64 %i.el ; 4 uses
   %i.en = load i32, ptr %i.at, align 8
   %i.eo = icmp eq i32 %i.en, 0
-  %9 = load i8, ptr %i.em, align 1                ; 3 uses
-  %.not5.i.i791 = icmp eq i8 %9, 0                ; 2 uses
+  %.not5.i.i791 = icmp eq i8 %i.eg, 96            ; 2 uses
   br i1 %i.eo, label %.preheader, label %.preheader664
 
 .preheader664:                                    ; preds = %bb.bj
-  br i1 %.not5.i.i791, label %_ZN2v88internal15JsonStringifier13AppendCStringIcEEvPKT_.exit.i, label %.lr.ph790
+  br i1 %.not5.i.i791, label %_ZN2v88internal15JsonStringifier13AppendCStringIcEEvPKT_.exit.i, label %.lr.ph790.preheader
+
+.lr.ph790.preheader:                              ; preds = %.preheader664
+  %9 = load i8, ptr %i.em, align 1
+  br label %.lr.ph790
 
 .preheader:                                       ; preds = %bb.bj
-  br i1 %.not5.i.i791, label %_ZN2v88internal15JsonStringifier13AppendCStringIcEEvPKT_.exit.i, label %.lr.ph793
+  br i1 %.not5.i.i791, label %_ZN2v88internal15JsonStringifier13AppendCStringIcEEvPKT_.exit.i, label %.lr.ph793.preheader
 
-.lr.ph793:                                        ; preds = %.preheader, %_ZN2v88internal15JsonStringifier6AppendIchEEvT_.exit.i
-  %i.ep = phi i8 [ %i.ey, %_ZN2v88internal15JsonStringifier6AppendIchEEvT_.exit.i ], [ %9, %.preheader ]
-  %.0.i.i13792 = phi ptr [ %i.eq, %_ZN2v88internal15JsonStringifier6AppendIchEEvT_.exit.i ], [ %i.em, %.preheader ]
+.lr.ph793.preheader:                              ; preds = %.preheader
+  %10 = load i8, ptr %i.em, align 1
+  br label %.lr.ph793
+
+.lr.ph793:                                        ; preds = %.lr.ph793.preheader, %_ZN2v88internal15JsonStringifier6AppendIchEEvT_.exit.i
+  %i.ep = phi i8 [ %i.ey, %_ZN2v88internal15JsonStringifier6AppendIchEEvT_.exit.i ], [ %10, %.lr.ph793.preheader ]
+  %.0.i.i13792 = phi ptr [ %i.eq, %_ZN2v88internal15JsonStringifier6AppendIchEEvT_.exit.i ], [ %i.em, %.lr.ph793.preheader ]
   %i.eq = getelementptr inbounds nuw i8, ptr %.0.i.i13792, i64 1 ; 2 uses
   %i.er = load ptr, ptr %i.bf, align 8
   %i.es = load i64, ptr %i.bh, align 8            ; 2 uses
@@ -427,9 +437,9 @@ _ZN2v88internal15JsonStringifier6AppendIchEEvT_.exit.i: ; preds = %bb.bk, %.lr.p
   %.not5.i.i = icmp eq i8 %i.ey, 0
   br i1 %.not5.i.i, label %_ZN2v88internal15JsonStringifier13AppendCStringIcEEvPKT_.exit.i, label %.lr.ph793, !llvm.loop !85
 
-.lr.ph790:                                        ; preds = %.preheader664, %_ZN2v88internal15JsonStringifier6AppendIctEEvT_.exit.i
-  %i.ez = phi i8 [ %i.fj, %_ZN2v88internal15JsonStringifier6AppendIctEEvT_.exit.i ], [ %9, %.preheader664 ]
-  %.1.i.i789 = phi ptr [ %i.fa, %_ZN2v88internal15JsonStringifier6AppendIctEEvT_.exit.i ], [ %i.em, %.preheader664 ]
+.lr.ph790:                                        ; preds = %.lr.ph790.preheader, %_ZN2v88internal15JsonStringifier6AppendIctEEvT_.exit.i
+  %i.ez = phi i8 [ %i.fj, %_ZN2v88internal15JsonStringifier6AppendIctEEvT_.exit.i ], [ %9, %.lr.ph790.preheader ]
+  %.1.i.i789 = phi ptr [ %i.fa, %_ZN2v88internal15JsonStringifier6AppendIctEEvT_.exit.i ], [ %i.em, %.lr.ph790.preheader ]
   %i.fa = getelementptr inbounds nuw i8, ptr %.1.i.i789, i64 1 ; 2 uses
   %i.fb = zext i8 %i.ez to i16
   %i.fc = load ptr, ptr %i.cl, align 8
@@ -708,7 +718,7 @@ bb.cg:                                            ; preds = %._crit_edge757
   %.013.i49752 = phi i1 [ %.114.i52, %bb.cj ], [ false, %bb.cf ]
   %.sroa.6234.0751 = phi ptr [ %.sroa.6234.2, %bb.cj ], [ %i.ix, %bb.cf ] ; 4 uses
   %i.jc = getelementptr inbounds nuw i8, ptr %i.ik, i64 %.0.i51754
-  %i.jd = load i8, ptr %i.jc, align 1
+  %i.jd = load i8, ptr %i.jc, align 1             ; 2 uses
   %i.je = zext i8 %i.jd to i64                    ; 2 uses
   %i.jf = getelementptr inbounds nuw i8, ptr @_ZN2v88internal12_GLOBAL__N_124JsonDoNotEscapeFlagTableE, i64 %i.je
   %i.jg = load i8, ptr %i.jf, align 1, !range !33, !noundef !34
@@ -721,22 +731,25 @@ bb.cg:                                            ; preds = %._crit_edge757
 
 bb.ch:                                            ; preds = %.lr.ph756
   %i.ji = icmp eq i64 %.012.i50753, %.0.i51754
-  br i1 %i.ji, label %_ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringIhEEvPKT_mm.exit15.i.a, label %bb.ci
+  br i1 %i.ji, label %_ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringIhEEvPKT_mm.exit15.i, label %bb.ci
 
 bb.ci:                                            ; preds = %bb.ch
   %i.jj = sub i64 %.0.i51754, %.012.i50753        ; 2 uses
   %i.jk = getelementptr inbounds nuw i8, ptr %i.ik, i64 %.012.i50753
   call void @_ZN2v88internal9CopyCharsIhtEEvPT0_PKT_m(ptr noundef %.sroa.6234.0751, ptr noundef %i.jk, i64 noundef %i.jj)
   %i.jl = getelementptr inbounds nuw [2 x i8], ptr %.sroa.6234.0751, i64 %i.jj
-  br label %_ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringIhEEvPKT_mm.exit15.i.a
+  br label %_ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringIhEEvPKT_mm.exit15.i
 
-_ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringIhEEvPKT_mm.exit15.i.a: ; preds = %bb.ci, %bb.ch
+_ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringIhEEvPKT_mm.exit15.i: ; preds = %bb.ci, %bb.ch
   %.sroa.6234.1 = phi ptr [ %.sroa.6234.0751, %bb.ch ], [ %i.jl, %bb.ci ] ; 2 uses
+  %.not.i55746 = icmp eq i8 %i.jd, 96
+  br i1 %.not.i55746, label %_ZN2v88internal15JsonStringifier15NoExtendBuilderItE13AppendCStringEPKc.exit, label %_ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringIhEEvPKT_mm.exit15.i.a
+
+_ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringIhEEvPKT_mm.exit15.i.a: ; preds = %_ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringIhEEvPKT_mm.exit15.i
   %i.jm = shl nuw nsw i64 %i.je, 3
   %i.jn = getelementptr inbounds nuw i8, ptr @.str.33, i64 %i.jm ; 2 uses
-  %i.jo = load i8, ptr %i.jn, align 1             ; 2 uses
-  %.not.i55746 = icmp eq i8 %i.jo, 0
-  br i1 %.not.i55746, label %_ZN2v88internal15JsonStringifier15NoExtendBuilderItE13AppendCStringEPKc.exit, label %.lr.ph749
+  %i.jo = load i8, ptr %i.jn, align 1
+  br label %.lr.ph749
 
 .lr.ph749:                                        ; preds = %_ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringIhEEvPKT_mm.exit15.i.a, %.lr.ph749
   %i.jp = phi i8 [ %i.jt, %.lr.ph749 ], [ %i.jo, %_ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringIhEEvPKT_mm.exit15.i.a ]
@@ -750,8 +763,8 @@ _ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringIhEEvPKT_mm
   %.not.i55 = icmp eq i8 %i.jt, 0
   br i1 %.not.i55, label %_ZN2v88internal15JsonStringifier15NoExtendBuilderItE13AppendCStringEPKc.exit, label %.lr.ph749, !llvm.loop !102
 
-_ZN2v88internal15JsonStringifier15NoExtendBuilderItE13AppendCStringEPKc.exit: ; preds = %.lr.ph749, %_ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringIhEEvPKT_mm.exit15.i.a
-  %.sroa.6234.4.lcssa = phi ptr [ %.sroa.6234.1, %_ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringIhEEvPKT_mm.exit15.i.a ], [ %i.js, %.lr.ph749 ]
+_ZN2v88internal15JsonStringifier15NoExtendBuilderItE13AppendCStringEPKc.exit: ; preds = %.lr.ph749, %_ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringIhEEvPKT_mm.exit15.i
+  %.sroa.6234.4.lcssa = phi ptr [ %.sroa.6234.1, %_ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringIhEEvPKT_mm.exit15.i ], [ %i.js, %.lr.ph749 ]
   %i.ju = add nuw nsw i64 %.0.i51754, 1           ; 2 uses
   br label %bb.cj
 
@@ -785,7 +798,7 @@ bb.ck:                                            ; preds = %.lr.ph770, %_ZN2v88
   %.011.i19768 = phi i64 [ 0, %.lr.ph770 ], [ %.1.i27, %_ZN2v88internal15JsonStringifier30EscapedLengthIfCurrentPartFitsEm.exit.i16 ] ; 2 uses
   %.012.i18767 = phi i1 [ false, %.lr.ph770 ], [ %.113.i26, %_ZN2v88internal15JsonStringifier30EscapedLengthIfCurrentPartFitsEm.exit.i16 ]
   %i.kb = getelementptr inbounds nuw i8, ptr %i.ik, i64 %.0.i20769
-  %i.kc = load i8, ptr %i.kb, align 1
+  %i.kc = load i8, ptr %i.kb, align 1             ; 2 uses
   %i.kd = zext i8 %i.kc to i64                    ; 2 uses
   %i.ke = getelementptr inbounds nuw i8, ptr @_ZN2v88internal12_GLOBAL__N_124JsonDoNotEscapeFlagTableE, i64 %i.kd
   %i.kf = load i8, ptr %i.ke, align 1, !range !33, !noundef !34
@@ -799,22 +812,29 @@ bb.ck:                                            ; preds = %.lr.ph770, %_ZN2v88
 bb.cl:                                            ; preds = %bb.ck
   call void @_ZN2v88internal15JsonStringifier15AppendSubstringIhEEvPKT_mm(ptr noundef nonnull align 8 dereferenceable(2688) %0, ptr noundef nonnull %i.ik, i64 noundef %.011.i19768, i64 noundef %.0.i20769)
   %i.kh = shl nuw nsw i64 %i.kd, 3
-  %i.ki = getelementptr inbounds nuw i8, ptr @.str.33, i64 %i.kh ; 3 uses
+  %i.ki = getelementptr inbounds nuw i8, ptr @.str.33, i64 %i.kh ; 4 uses
   %i.kj = load i32, ptr %i.at, align 8
   %i.kk = icmp eq i32 %i.kj, 0
-  %10 = load i8, ptr %i.ki, align 1               ; 3 uses
-  %.not5.i.i29764 = icmp eq i8 %10, 0             ; 2 uses
+  %.not5.i.i29764 = icmp eq i8 %i.kc, 96          ; 2 uses
   br i1 %i.kk, label %.preheader666, label %.preheader667
 
 .preheader667:                                    ; preds = %bb.cl
-  br i1 %.not5.i.i29764, label %_ZN2v88internal15JsonStringifier13AppendCStringIcEEvPKT_.exit.i25, label %.lr.ph763
+  br i1 %.not5.i.i29764, label %_ZN2v88internal15JsonStringifier13AppendCStringIcEEvPKT_.exit.i25, label %.lr.ph763.preheader
+
+.lr.ph763.preheader:                              ; preds = %.preheader667
+  %11 = load i8, ptr %i.ki, align 1
+  br label %.lr.ph763
 
 .preheader666:                                    ; preds = %bb.cl
-  br i1 %.not5.i.i29764, label %_ZN2v88internal15JsonStringifier13AppendCStringIcEEvPKT_.exit.i25, label %.lr.ph766
+  br i1 %.not5.i.i29764, label %_ZN2v88internal15JsonStringifier13AppendCStringIcEEvPKT_.exit.i25, label %.lr.ph766.preheader
 
-.lr.ph766:                                        ; preds = %.preheader666, %_ZN2v88internal15JsonStringifier6AppendIchEEvT_.exit.i30
-  %i.kl = phi i8 [ %i.ku, %_ZN2v88internal15JsonStringifier6AppendIchEEvT_.exit.i30 ], [ %10, %.preheader666 ]
-  %.0.i.i28765 = phi ptr [ %i.km, %_ZN2v88internal15JsonStringifier6AppendIchEEvT_.exit.i30 ], [ %i.ki, %.preheader666 ]
+.lr.ph766.preheader:                              ; preds = %.preheader666
+  %12 = load i8, ptr %i.ki, align 1
+  br label %.lr.ph766
+
+.lr.ph766:                                        ; preds = %.lr.ph766.preheader, %_ZN2v88internal15JsonStringifier6AppendIchEEvT_.exit.i30
+  %i.kl = phi i8 [ %i.ku, %_ZN2v88internal15JsonStringifier6AppendIchEEvT_.exit.i30 ], [ %12, %.lr.ph766.preheader ]
+  %.0.i.i28765 = phi ptr [ %i.km, %_ZN2v88internal15JsonStringifier6AppendIchEEvT_.exit.i30 ], [ %i.ki, %.lr.ph766.preheader ]
   %i.km = getelementptr inbounds nuw i8, ptr %.0.i.i28765, i64 1 ; 2 uses
   %i.kn = load ptr, ptr %i.ip, align 8
   %i.ko = load i64, ptr %i.gd, align 8            ; 2 uses
@@ -836,9 +856,9 @@ _ZN2v88internal15JsonStringifier6AppendIchEEvT_.exit.i30: ; preds = %bb.cm, %.lr
   %.not5.i.i29 = icmp eq i8 %i.ku, 0
   br i1 %.not5.i.i29, label %_ZN2v88internal15JsonStringifier13AppendCStringIcEEvPKT_.exit.i25, label %.lr.ph766, !llvm.loop !85
 
-.lr.ph763:                                        ; preds = %.preheader667, %_ZN2v88internal15JsonStringifier6AppendIctEEvT_.exit.i24
-  %i.kv = phi i8 [ %i.lf, %_ZN2v88internal15JsonStringifier6AppendIctEEvT_.exit.i24 ], [ %10, %.preheader667 ]
-  %.1.i.i22762 = phi ptr [ %i.kw, %_ZN2v88internal15JsonStringifier6AppendIctEEvT_.exit.i24 ], [ %i.ki, %.preheader667 ]
+.lr.ph763:                                        ; preds = %.lr.ph763.preheader, %_ZN2v88internal15JsonStringifier6AppendIctEEvT_.exit.i24
+  %i.kv = phi i8 [ %i.lf, %_ZN2v88internal15JsonStringifier6AppendIctEEvT_.exit.i24 ], [ %11, %.lr.ph763.preheader ]
+  %.1.i.i22762 = phi ptr [ %i.kw, %_ZN2v88internal15JsonStringifier6AppendIctEEvT_.exit.i24 ], [ %i.ki, %.lr.ph763.preheader ]
   %i.kw = getelementptr inbounds nuw i8, ptr %.1.i.i22762, i64 1 ; 2 uses
   %i.kx = zext i8 %i.kv to i16
   %i.ky = load ptr, ptr %i.gb, align 8
@@ -1180,7 +1200,7 @@ _ZN2v88internal9CopyCharsIttEEvPT0_PKT_m.exit:    ; preds = %bb.df, %bb.dg, %bb.
 .lr.ph700:                                        ; preds = %bb.de, %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread
   %.0.i56699 = phi i1 [ %.2.i61, %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread ], [ false, %bb.de ] ; 2 uses
   %.053.i698 = phi i64 [ %.255.i, %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread ], [ 0, %bb.de ] ; 7 uses
-  %.056.i697 = phi i64 [ %i.qy, %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread ], [ 0, %bb.de ] ; 12 uses
+  %.056.i697 = phi i64 [ %i.qy, %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread ], [ 0, %bb.de ] ; 11 uses
   %.sroa.6354.0696 = phi ptr [ %.sroa.6354.4, %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread ], [ %i.ok, %bb.de ] ; 40 uses
   %i.os = getelementptr inbounds nuw [2 x i8], ptr %i.nx, i64 %.056.i697
   %i.ot = load i16, ptr %i.os, align 2            ; 11 uses
@@ -1474,14 +1494,13 @@ _ZN2v88internal9CopyCharsIttEEvPT0_PKT_m.exit95:  ; preds = %bb.eu, %bb.ev, %bb.
   %i.qo = getelementptr inbounds nuw [2 x i8], ptr %.sroa.6354.0696, i64 %i.qj
   br label %_ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringItEEvPKT_mm.exit60.i
 
-_ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringItEEvPKT_mm.exit60.i: ; preds = %_ZN2v88internal9CopyCharsIttEEvPT0_PKT_m.exit95, %bb.et
-  %.sroa.6354.1 = phi ptr [ %.sroa.6354.0696, %bb.et ], [ %i.qo, %_ZN2v88internal9CopyCharsIttEEvPT0_PKT_m.exit95 ] ; 2 uses
+_ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringItEEvPKT_mm.exit60.i: ; preds = %bb.et, %_ZN2v88internal9CopyCharsIttEEvPT0_PKT_m.exit95
+  %.sroa.6354.1 = phi ptr [ %.sroa.6354.0696, %bb.et ], [ %i.qo, %_ZN2v88internal9CopyCharsIttEEvPT0_PKT_m.exit95 ]
   %i.qp = zext i16 %i.ot to i64
   %i.qq = shl nuw nsw i64 %i.qp, 3
   %i.qr = getelementptr inbounds nuw i8, ptr @.str.33, i64 %i.qq ; 2 uses
-  %i.qs = load i8, ptr %i.qr, align 1             ; 2 uses
-  %.not.i.i58687 = icmp eq i8 %i.qs, 0
-  br i1 %.not.i.i58687, label %_ZN2v88internal15JsonStringifier15NoExtendBuilderItE13AppendCStringEPKc.exit.i, label %.lr.ph
+  %i.qs = load i8, ptr %i.qr, align 1
+  br label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringItEEvPKT_mm.exit60.i, %.lr.ph
   %i.qt = phi i8 [ %i.qx, %.lr.ph ], [ %i.qs, %_ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringItEEvPKT_mm.exit60.i ]
@@ -1495,9 +1514,9 @@ _ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringItEEvPKT_mm
   %.not.i.i58 = icmp eq i8 %i.qx, 0
   br i1 %.not.i.i58, label %_ZN2v88internal15JsonStringifier15NoExtendBuilderItE13AppendCStringEPKc.exit.i, label %.lr.ph, !llvm.loop !102
 
-_ZN2v88internal15JsonStringifier15NoExtendBuilderItE13AppendCStringEPKc.exit.i: ; preds = %.lr.ph, %_ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringItEEvPKT_mm.exit60.i, %bb.es
-  %.sroa.6354.3 = phi ptr [ %.sroa.6354.7, %bb.es ], [ %.sroa.6354.1, %_ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringItEEvPKT_mm.exit60.i ], [ %i.qw, %.lr.ph ]
-  %.3.i59 = phi i64 [ %.258.i, %bb.es ], [ %.056.i697, %_ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringItEEvPKT_mm.exit60.i ], [ %.056.i697, %.lr.ph ] ; 2 uses
+_ZN2v88internal15JsonStringifier15NoExtendBuilderItE13AppendCStringEPKc.exit.i: ; preds = %.lr.ph, %bb.es
+  %.sroa.6354.3 = phi ptr [ %.sroa.6354.7, %bb.es ], [ %i.qw, %.lr.ph ]
+  %.3.i59 = phi i64 [ %.258.i, %bb.es ], [ %.056.i697, %.lr.ph ] ; 2 uses
   %.154.i = add nuw i64 %.3.i59, 1
   br label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread
 
@@ -1530,7 +1549,7 @@ _ZN2v88internal15JsonStringifier30EscapedLengthIfCurrentPartFitsEm.exit.i35._cri
 bb.fl:                                            ; preds = %.lr.ph743, %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit98.thread
   %.0.i36742 = phi i1 [ false, %.lr.ph743 ], [ %.2.i38, %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit98.thread ] ; 2 uses
   %.045.i741 = phi i64 [ 0, %.lr.ph743 ], [ %.247.i, %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit98.thread ] ; 3 uses
-  %.048.i740 = phi i64 [ 0, %.lr.ph743 ], [ %i.aar, %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit98.thread ] ; 21 uses
+  %.048.i740 = phi i64 [ 0, %.lr.ph743 ], [ %i.aar, %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit98.thread ] ; 19 uses
   %i.rg = getelementptr inbounds nuw [2 x i8], ptr %i.nx, i64 %.048.i740
   %i.rh = load i16, ptr %i.rg, align 2            ; 11 uses
   %i.ri = and i16 %i.rh, -2
@@ -1933,19 +1952,12 @@ bb.gu:                                            ; preds = %_ZN2v88internal12_G
   %i.zs = getelementptr inbounds nuw i8, ptr @.str.33, i64 %i.zr ; 3 uses
   %i.zt = load i32, ptr %i.at, align 8
   %i.zu = icmp eq i32 %i.zt, 0
-  %i.zv = load i8, ptr %i.zs, align 1             ; 3 uses
-  %.not5.i80.i707 = icmp eq i8 %i.zv, 0           ; 2 uses
-  br i1 %i.zu, label %.preheader680, label %.preheader681
+  %i.zv = load i8, ptr %i.zs, align 1             ; 2 uses
+  br i1 %i.zu, label %.lr.ph709, label %.lr.ph706
 
-.preheader681:                                    ; preds = %bb.gu
-  br i1 %.not5.i80.i707, label %_ZN2v88internal15JsonStringifier13AppendCStringIcEEvPKT_.exit81.i, label %.lr.ph706
-
-.preheader680:                                    ; preds = %bb.gu
-  br i1 %.not5.i80.i707, label %_ZN2v88internal15JsonStringifier13AppendCStringIcEEvPKT_.exit81.i, label %.lr.ph709
-
-.lr.ph709:                                        ; preds = %.preheader680, %_ZN2v88internal15JsonStringifier6AppendIchEEvT_.exit.i39
-  %i.zw = phi i8 [ %i.aaf, %_ZN2v88internal15JsonStringifier6AppendIchEEvT_.exit.i39 ], [ %i.zv, %.preheader680 ]
-  %.0.i79.i708 = phi ptr [ %i.zx, %_ZN2v88internal15JsonStringifier6AppendIchEEvT_.exit.i39 ], [ %i.zs, %.preheader680 ]
+.lr.ph709:                                        ; preds = %bb.gu, %_ZN2v88internal15JsonStringifier6AppendIchEEvT_.exit.i39
+  %i.zw = phi i8 [ %i.aaf, %_ZN2v88internal15JsonStringifier6AppendIchEEvT_.exit.i39 ], [ %i.zv, %bb.gu ]
+  %.0.i79.i708 = phi ptr [ %i.zx, %_ZN2v88internal15JsonStringifier6AppendIchEEvT_.exit.i39 ], [ %i.zs, %bb.gu ]
   %i.zx = getelementptr inbounds nuw i8, ptr %.0.i79.i708, i64 1 ; 2 uses
   %i.zy = load ptr, ptr %i.oc, align 8
   %i.zz = load i64, ptr %i.lq, align 8            ; 2 uses
@@ -1967,9 +1979,9 @@ _ZN2v88internal15JsonStringifier6AppendIchEEvT_.exit.i39: ; preds = %bb.gv, %.lr
   %.not5.i80.i = icmp eq i8 %i.aaf, 0
   br i1 %.not5.i80.i, label %_ZN2v88internal15JsonStringifier13AppendCStringIcEEvPKT_.exit81.i, label %.lr.ph709, !llvm.loop !85
 
-.lr.ph706:                                        ; preds = %.preheader681, %_ZN2v88internal15JsonStringifier6AppendIctEEvT_.exit.i37
-  %i.aag = phi i8 [ %i.aaq, %_ZN2v88internal15JsonStringifier6AppendIctEEvT_.exit.i37 ], [ %i.zv, %.preheader681 ]
-  %.1.i77.i705 = phi ptr [ %i.aah, %_ZN2v88internal15JsonStringifier6AppendIctEEvT_.exit.i37 ], [ %i.zs, %.preheader681 ]
+.lr.ph706:                                        ; preds = %bb.gu, %_ZN2v88internal15JsonStringifier6AppendIctEEvT_.exit.i37
+  %i.aag = phi i8 [ %i.aaq, %_ZN2v88internal15JsonStringifier6AppendIctEEvT_.exit.i37 ], [ %i.zv, %bb.gu ]
+  %.1.i77.i705 = phi ptr [ %i.aah, %_ZN2v88internal15JsonStringifier6AppendIctEEvT_.exit.i37 ], [ %i.zs, %bb.gu ]
   %i.aah = getelementptr inbounds nuw i8, ptr %.1.i77.i705, i64 1 ; 2 uses
   %i.aai = zext i8 %i.aag to i16
   %i.aaj = load ptr, ptr %i.lo, align 8
@@ -1992,8 +2004,8 @@ _ZN2v88internal15JsonStringifier6AppendIctEEvT_.exit.i37: ; preds = %bb.gw, %.lr
   %.not.i78.i = icmp eq i8 %i.aaq, 0
   br i1 %.not.i78.i, label %_ZN2v88internal15JsonStringifier13AppendCStringIcEEvPKT_.exit81.i, label %.lr.ph706, !llvm.loop !86
 
-_ZN2v88internal15JsonStringifier13AppendCStringIcEEvPKT_.exit81.i: ; preds = %_ZN2v88internal15JsonStringifier6AppendIctEEvT_.exit.i37, %_ZN2v88internal15JsonStringifier6AppendIchEEvT_.exit.i39, %.preheader681, %.preheader680, %_ZN2v88internal15JsonStringifier6AppendIttEEvT_.exit
-  %.351.i = phi i64 [ %.250.i, %_ZN2v88internal15JsonStringifier6AppendIttEEvT_.exit ], [ %.048.i740, %.preheader680 ], [ %.048.i740, %.preheader681 ], [ %.048.i740, %_ZN2v88internal15JsonStringifier6AppendIchEEvT_.exit.i39 ], [ %.048.i740, %_ZN2v88internal15JsonStringifier6AppendIctEEvT_.exit.i37 ] ; 2 uses
+_ZN2v88internal15JsonStringifier13AppendCStringIcEEvPKT_.exit81.i: ; preds = %_ZN2v88internal15JsonStringifier6AppendIctEEvT_.exit.i37, %_ZN2v88internal15JsonStringifier6AppendIchEEvT_.exit.i39, %_ZN2v88internal15JsonStringifier6AppendIttEEvT_.exit
+  %.351.i = phi i64 [ %.250.i, %_ZN2v88internal15JsonStringifier6AppendIttEEvT_.exit ], [ %.048.i740, %_ZN2v88internal15JsonStringifier6AppendIchEEvT_.exit.i39 ], [ %.048.i740, %_ZN2v88internal15JsonStringifier6AppendIctEEvT_.exit.i37 ] ; 2 uses
   %.146.i = add i64 %.351.i, 1
   br label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit98.thread
 

@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader, %bb.i
   %.021.i.i = phi i64 [ %.1.i.i, %bb.i ], [ 23, %.lr.ph.i.i.preheader ] ; 2 uses
   %.01620.i.i = phi i64 [ %.117.i.i, %bb.i ], [ 0, %.lr.ph.i.i.preheader ] ; 2 uses
-  %i.am = add i64 %.01620.i.i, %.021.i.i
+  %i.am = add i64 %.01620.i.i, %.021.i.i          ; 2 uses
   %i.an = lshr i64 %i.am, 1                       ; 3 uses
   %i.ao = mul i64 %i.an, 24                       ; 2 uses
   %i.ap = getelementptr i8, ptr @roon_disco_string_fields, i64 %i.ao
@@ -213,7 +213,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 bb.g:                                             ; preds = %.lr.ph.i.i
   %.not.i5.i = icmp eq i32 %i.ar, 0
-  br i1 %.not.i5.i, label %bsearch.exit.i, label %bb.h
+  br i1 %.not.i5.i, label %roon_map_name.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.at = add nuw i64 %i.an, 1
@@ -225,16 +225,13 @@ bb.i:                                             ; preds = %bb.h, %.lr.ph.i.i
   %i.au = icmp ult i64 %.117.i.i, %.1.i.i
   br i1 %i.au, label %.lr.ph.i.i, label %.lr.ph.i.i128, !llvm.loop !6
 
-bsearch.exit.i:                                   ; preds = %bb.g
-  %4 = getelementptr i8, ptr @roon_disco_string_fields, i64 %i.ao ; 2 uses
-  %.not.i = icmp eq ptr %4, null
-  br i1 %.not.i, label %.lr.ph.i.i128, label %roon_map_name.exit
-
-roon_map_name.exit:                               ; preds = %bsearch.exit.i
-  %i.av = getelementptr i8, ptr %4, i64 8
-  %5 = load ptr, ptr %i.av, align 8
-  %.not100 = icmp eq ptr %5, null
-  br i1 %.not100, label %.lr.ph.i.i128, label %.lr.ph.i.i108
+roon_map_name.exit:                               ; preds = %bb.g
+  %i.av = getelementptr i8, ptr @roon_disco_string_fields, i64 %i.ao
+  %.not.i = icmp eq ptr %i.av, null
+  %4 = and i64 %i.am, 4611686018427387902
+  %.not100 = icmp eq i64 %4, 46
+  %or.cond = or i1 %.not100, %.not.i
+  br i1 %or.cond, label %.lr.ph.i.i128, label %.lr.ph.i.i108
 
 .lr.ph.i.i108:                                    ; preds = %roon_map_name.exit, %bb.l
   %.021.i.i109 = phi i64 [ %.1.i.i113, %bb.l ], [ 23, %roon_map_name.exit ] ; 2 uses
@@ -341,7 +338,7 @@ bb.s:                                             ; preds = %bb.n
   %i.ci = tail call ptr @proto_tree_add_string(ptr noundef %i.p, i32 noundef %i.ch, ptr noundef %0, i32 noundef %.090170, i32 noundef %i.al, ptr noundef %i.aj) ; 0 uses
   br label %roon_map_name.exit136.thread
 
-.lr.ph.i.i128:                                    ; preds = %bb.i, %bsearch.exit.i, %roon_map_name.exit
+.lr.ph.i.i128:                                    ; preds = %bb.i, %roon_map_name.exit
   %i.cj = tail call i32 @strcmp(ptr noundef readonly %i.ac, ptr noundef nonnull dereferenceable(7) @.str.109) #6
   %.not.i5.i131 = icmp eq i32 %i.cj, 0
   br i1 %.not.i5.i131, label %.lr.ph.i.i141, label %roon_map_name.exit136.thread
