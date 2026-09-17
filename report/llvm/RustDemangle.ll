@@ -204,7 +204,7 @@ _ZN12_GLOBAL__N_19Demangler7consumeEv.exit13.i:   ; preds = %bb.h
   br i1 %.not.i4, label %_ZN12_GLOBAL__N_19Demangler9consumeIfEc.exit8, label %.lr.ph.i
 
 _ZN12_GLOBAL__N_19Demangler18parseDecimalNumberEv.exit: ; preds = %.lr.ph.i, %_ZNK12_GLOBAL__N_19Demangler4lookEv.exit10.i, %bb.g
-  %.3.i = phi i64 [ 0, %bb.g ], [ %.025.i27, %_ZNK12_GLOBAL__N_19Demangler4lookEv.exit10.i ], [ %i.w, %.lr.ph.i ] ; 3 uses
+  %.3.i = phi i64 [ 0, %bb.g ], [ %.025.i27, %_ZNK12_GLOBAL__N_19Demangler4lookEv.exit10.i ], [ %i.w, %.lr.ph.i ] ; 6 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 3 uses
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !20 ; 5 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -227,7 +227,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %_ZN12_GLOBAL__N_19Demangler18parseDecimalNumberEv.exit, %bb.i, %bb.j
   %i.aq = phi i64 [ %i.ai, %_ZN12_GLOBAL__N_19Demangler18parseDecimalNumberEv.exit ], [ %i.ai, %bb.i ], [ %i.ap, %bb.j ] ; 6 uses
-  %i.ar = sub i64 %i.ak, %i.aq                    ; 2 uses
+  %i.ar = sub i64 %i.ak, %i.aq
   %i.as = icmp ugt i64 %.3.i, %i.ar
   br i1 %i.as, label %_ZN12_GLOBAL__N_19Demangler9consumeIfEc.exit8, label %bb.l
 
@@ -245,20 +245,19 @@ bb.m:                                             ; preds = %bb.l
   unreachable
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit: ; preds = %bb.l
-  %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %i.ar, i64 %.3.i) ; 4 uses
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !34 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.aq ; 4 uses
   %i.ax = add i64 %i.aq, %.3.i
   store i64 %i.ax, ptr %i.ah, align 8, !tbaa !20
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.aw, i64 %.sroa.speculated.i ; 2 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.aw, i64 %.3.i ; 2 uses
   %i.az = ptrtoint ptr %i.ay to i64
-  %i.ba = ashr i64 %.sroa.speculated.i, 2         ; 2 uses
+  %i.ba = ashr i64 %.3.i, 2                       ; 2 uses
   %i.bb = icmp sgt i64 %i.ba, 0
   br i1 %i.bb, label %.lr.ph.i.i.i.i.preheader, label %._crit_edge.i.i.i.i
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit
-  %i.bc = and i64 %.sroa.speculated.i, -4
+  %i.bc = and i64 %.3.i, -4
   %i.bd = getelementptr i8, ptr %i.av, i64 %i.aq
   %scevgep = getelementptr i8, ptr %i.bd, i64 %i.bc
   br label %.lr.ph.i.i.i.i
@@ -415,7 +414,7 @@ bb.w:                                             ; preds = %_ZSt6all_ofIPKcPFbc
   br label %bb.x
 
 _ZSt6all_ofIPKcPFbcEEbT_S4_T0_.exit.thread:       ; preds = %bb.v, %._crit_edge.i.i.i.i, %_ZSt6all_ofIPKcPFbcEEbT_S4_T0_.exit
-  store i64 %.sroa.speculated.i, ptr %0, align 8, !tbaa !23
+  store i64 %.3.i, ptr %0, align 8, !tbaa !23
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.aw, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !24
   %i.ec = getelementptr inbounds nuw i8, ptr %0, i64 16
