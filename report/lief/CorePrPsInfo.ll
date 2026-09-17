@@ -205,12 +205,12 @@ define linkonce_odr hidden i64 @_ZN4LIEF3ELF15write_info_implINS0_7details5ELF32
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca i64, align 8                      ; 6 uses
-  %.sroa.16 = alloca { [16 x i8], [80 x i8] }, align 4 ; 8 uses
+  %.sroa.16 = alloca { [16 x i8], [80 x i8] }, align 8 ; 8 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %4 = alloca %"class.LIEF::vector_iostream", align 8 ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.16)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(96) %.sroa.16, i8 0, i64 96, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %.sroa.16, i8 0, i64 96, i1 false)
   %i.c = load <4 x i8>, ptr %1, align 8, !tbaa !60
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.e = load i64, ptr %i.d, align 8, !tbaa !69
@@ -314,7 +314,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit18: ; preds = 
   br i1 %i.ap, label %bb.h, label %bb.i, !prof !78
 
 bb.h:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit18
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.16, ptr align 1 %i.an, i64 %i.ao, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.16, ptr align 1 %i.an, i64 %i.ao, i1 false)
   br label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES2_ET0_T_SB_SA_.exit
 
 bb.i:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit18
@@ -323,7 +323,7 @@ bb.i:                                             ; preds = %_ZNSt7__cxx1112basi
 
 bb.j:                                             ; preds = %bb.i
   %i.ar = load i8, ptr %i.an, align 1, !tbaa !60
-  store i8 %i.ar, ptr %.sroa.16, align 4, !tbaa !60
+  store i8 %i.ar, ptr %.sroa.16, align 8, !tbaa !60
   br label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES2_ET0_T_SB_SA_.exit
 
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES2_ET0_T_SB_SA_.exit: ; preds = %bb.h, %bb.i, %bb.j
@@ -334,7 +334,7 @@ _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_t
 
 bb.k:                                             ; preds = %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES2_ET0_T_SB_SA_.exit
   %.sroa.16.16..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.16, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.16.16..sroa_idx, ptr align 1 %i.as, i64 %i.at, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.16.16..sroa_idx, ptr align 1 %i.as, i64 %i.at, i1 false)
   br label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES2_ET0_T_SB_SA_.exit19
 
 bb.l:                                             ; preds = %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES2_ET0_T_SB_SA_.exit
@@ -344,7 +344,7 @@ bb.l:                                             ; preds = %_ZSt4moveIN9__gnu_c
 bb.m:                                             ; preds = %bb.l
   %i.aw = load i8, ptr %i.as, align 1, !tbaa !60
   %.sroa.16.16..sroa_idx77 = getelementptr inbounds nuw i8, ptr %.sroa.16, i64 16
-  store i8 %i.aw, ptr %.sroa.16.16..sroa_idx77, align 4, !tbaa !60
+  store i8 %i.aw, ptr %.sroa.16.16..sroa_idx77, align 8, !tbaa !60
   br label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES2_ET0_T_SB_SA_.exit19
 
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES2_ET0_T_SB_SA_.exit19: ; preds = %bb.k, %bb.l, %bb.m
@@ -367,7 +367,7 @@ _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_t
   %.sroa.12.0..sroa_idx37 = getelementptr inbounds nuw i8, ptr %i.bc, i64 12
   store <4 x i32> %i.k, ptr %.sroa.12.0..sroa_idx37, align 1
   %.sroa.16.0..sroa_idx45 = getelementptr inbounds nuw i8, ptr %i.bc, i64 28
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(96) %.sroa.16.0..sroa_idx45, ptr noundef nonnull align 4 dereferenceable(96) %.sroa.16, i64 96, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(96) %.sroa.16.0..sroa_idx45, ptr noundef nonnull align 8 dereferenceable(96) %.sroa.16, i64 96, i1 false)
   %i.bd = load i64, ptr %i.ba, align 8, !tbaa !90
   %i.be = add nsw i64 %i.bd, 124
   store i64 %i.be, ptr %i.ba, align 8, !tbaa !90

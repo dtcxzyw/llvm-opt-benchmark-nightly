@@ -205,7 +205,7 @@ bb.a:
   %4 = alloca %"struct.__gnu_cxx::__ops::_Val_comp_iter", align 16 ; 5 uses
   %5 = alloca %"struct.mold::FdeRecord", align 4  ; 8 uses
   %6 = alloca %"struct.__gnu_cxx::__ops::_Iter_comp_iter", align 16 ; 4 uses
-  %.sroa.0 = alloca <{ i32, i32, i32, i16 }>, align 4 ; 4 uses
+  %.sroa.0 = alloca <{ i32, i32, i32, i16 }>, align 8 ; 4 uses
   store ptr %2, ptr %6, align 16
   %i.a = getelementptr inbounds nuw i8, ptr %6, i64 8
   store ptr %3, ptr %i.a, align 8
@@ -234,7 +234,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.s
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(14) %.sroa.0, ptr noundef nonnull align 4 dereferenceable(14) %.sroa.010.021, i64 14, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0, ptr noundef nonnull align 4 dereferenceable(14) %.sroa.010.021, i64 14, i1 false)
   %i.k = getelementptr inbounds nuw i8, ptr %.pn20, i64 30
   %i.l = load atomic i8, ptr %i.k monotonic, align 1, !range !107, !noundef !108
   %i.m = ptrtoint ptr %.sroa.010.021 to i64
@@ -290,7 +290,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.ak, label %.lr.ph.i.i.i.i.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4mold9FdeRecordINS2_6X86_64EEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit, !llvm.loop !13
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4mold9FdeRecordINS2_6X86_64EEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit: ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i, %bb.c
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(14) %0, ptr noundef nonnull align 4 dereferenceable(14) %.sroa.0, i64 14, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(14) %0, ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0, i64 14, i1 false)
   store atomic i8 %i.l, ptr %i.i monotonic, align 2
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br label %bb.s
@@ -693,7 +693,7 @@ define linkonce_odr dso_local void @_ZSt22__merge_without_bufferIN9__gnu_cxx17__
 bb.a:
   %6 = alloca %"struct.__gnu_cxx::__ops::_Val_comp_iter", align 8 ; 5 uses
   %7 = alloca %"struct.__gnu_cxx::__ops::_Iter_comp_val", align 8 ; 5 uses
-  %.sroa.0.i.i = alloca <{ i32, i32, i32, i16 }>, align 4 ; 4 uses
+  %.sroa.0.i.i = alloca <{ i32, i32, i32, i16 }>, align 8 ; 4 uses
   %i.a = icmp eq i64 %3, 0
   %i.b = icmp eq i64 %4, 0
   %or.cond = or i1 %i.a, %i.b
@@ -710,14 +710,14 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(14) %.sroa.0.i.i, ptr noundef nonnull align 4 dereferenceable(15) %0, i64 14, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0.i.i, ptr noundef nonnull align 4 dereferenceable(15) %0, i64 14, i1 false)
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 14 ; 2 uses
   %i.g = load atomic i8, ptr %i.f monotonic, align 2, !range !107, !noundef !108
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(15) %0, ptr noundef nonnull align 4 dereferenceable(15) %1, i64 14, i1 false)
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 14 ; 2 uses
   %i.i = load atomic i8, ptr %i.h monotonic, align 2, !range !107, !noundef !108
   store atomic i8 %i.i, ptr %i.f monotonic, align 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(15) %1, ptr noundef nonnull align 4 dereferenceable(14) %.sroa.0.i.i, i64 14, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(15) %1, ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0.i.i, i64 14, i1 false)
   store atomic i8 %i.g, ptr %i.h monotonic, align 2
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i)
   br label %bb.g
@@ -1120,9 +1120,9 @@ _ZSt8__invokeIRZN4mold10ObjectFileINS0_6X86_64EE13parse_ehframeERNS0_7ContextIS2
 ; Function Attrs: mustprogress nounwind
 define linkonce_odr dso_local ptr @_ZNSt3_V28__rotateIN9__gnu_cxx17__normal_iteratorIPN4mold9FdeRecordINS3_6X86_64EEESt6vectorIS6_SaIS6_EEEEEET_SC_SC_SC_St26random_access_iterator_tag(ptr %0, ptr %1, ptr %2) local_unnamed_addr #2 comdat {
 bb.a:
-  %.sroa.0.i.i24 = alloca <{ i32, i32, i32, i16 }>, align 4 ; 4 uses
-  %.sroa.0.i.i = alloca <{ i32, i32, i32, i16 }>, align 4 ; 4 uses
-  %.sroa.0.i.i.i = alloca <{ i32, i32, i32, i16 }>, align 4 ; 4 uses
+  %.sroa.0.i.i24 = alloca <{ i32, i32, i32, i16 }>, align 8 ; 4 uses
+  %.sroa.0.i.i = alloca <{ i32, i32, i32, i16 }>, align 8 ; 4 uses
+  %.sroa.0.i.i.i = alloca <{ i32, i32, i32, i16 }>, align 8 ; 4 uses
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPN4mold9FdeRecordINS2_6X86_64EEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit, label %bb.b
 
@@ -1146,14 +1146,14 @@ bb.c:                                             ; preds = %bb.b
   %.sroa.0.07.i = phi ptr [ %i.q, %.lr.ph.i ], [ %1, %bb.c ] ; 4 uses
   %.sroa.04.06.i = phi ptr [ %i.p, %.lr.ph.i ], [ %0, %bb.c ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(14) %.sroa.0.i.i.i, ptr noundef nonnull align 4 dereferenceable(15) %.sroa.04.06.i, i64 14, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0.i.i.i, ptr noundef nonnull align 4 dereferenceable(15) %.sroa.04.06.i, i64 14, i1 false)
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.04.06.i, i64 14 ; 2 uses
   %i.m = load atomic i8, ptr %i.l monotonic, align 2, !range !107, !noundef !108
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(15) %.sroa.04.06.i, ptr noundef nonnull align 4 dereferenceable(15) %.sroa.0.07.i, i64 14, i1 false)
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i, i64 14 ; 2 uses
   %i.o = load atomic i8, ptr %i.n monotonic, align 2, !range !107, !noundef !108
   store atomic i8 %i.o, ptr %i.l monotonic, align 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(15) %.sroa.0.07.i, ptr noundef nonnull align 4 dereferenceable(14) %.sroa.0.i.i.i, i64 14, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(15) %.sroa.0.07.i, ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0.i.i.i, i64 14, i1 false)
   store atomic i8 %i.m, ptr %i.n monotonic, align 2
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.i)
   %i.p = getelementptr inbounds nuw i8, ptr %.sroa.04.06.i, i64 16 ; 2 uses
@@ -1193,14 +1193,14 @@ bb.f:                                             ; preds = %bb.e
   %.sroa.026.064 = phi ptr [ %i.ae, %.lr.ph67 ], [ %i.x, %.lr.ph67.preheader ] ; 4 uses
   %.sroa.027.163 = phi ptr [ %i.ad, %.lr.ph67 ], [ %.sroa.027.0, %.lr.ph67.preheader ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(14) %.sroa.0.i.i, ptr noundef nonnull align 4 dereferenceable(15) %.sroa.027.163, i64 14, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0.i.i, ptr noundef nonnull align 4 dereferenceable(15) %.sroa.027.163, i64 14, i1 false)
   %i.z = getelementptr inbounds nuw i8, ptr %.sroa.027.163, i64 14 ; 2 uses
   %i.aa = load atomic i8, ptr %i.z monotonic, align 2, !range !107, !noundef !108
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(15) %.sroa.027.163, ptr noundef nonnull align 4 dereferenceable(15) %.sroa.026.064, i64 14, i1 false)
   %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.026.064, i64 14 ; 2 uses
   %i.ac = load atomic i8, ptr %i.ab monotonic, align 2, !range !107, !noundef !108
   store atomic i8 %i.ac, ptr %i.z monotonic, align 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(15) %.sroa.026.064, ptr noundef nonnull align 4 dereferenceable(14) %.sroa.0.i.i, i64 14, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(15) %.sroa.026.064, ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0.i.i, i64 14, i1 false)
   store atomic i8 %i.aa, ptr %i.ab monotonic, align 2
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i)
   %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.027.163, i64 16 ; 2 uses
@@ -1239,14 +1239,14 @@ bb.h:                                             ; preds = %bb.e
   %i.am = getelementptr inbounds i8, ptr %.sroa.027.260, i64 -16 ; 3 uses
   %i.an = getelementptr inbounds i8, ptr %.sroa.0.061, i64 -16 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i24)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(14) %.sroa.0.i.i24, ptr noundef nonnull align 4 dereferenceable(15) %i.am, i64 14, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0.i.i24, ptr noundef nonnull align 4 dereferenceable(15) %i.am, i64 14, i1 false)
   %i.ao = getelementptr inbounds i8, ptr %.sroa.027.260, i64 -2 ; 2 uses
   %i.ap = load atomic i8, ptr %i.ao monotonic, align 2, !range !107, !noundef !108
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(15) %i.am, ptr noundef nonnull align 4 dereferenceable(15) %i.an, i64 14, i1 false)
   %i.aq = getelementptr inbounds i8, ptr %.sroa.0.061, i64 -2 ; 2 uses
   %i.ar = load atomic i8, ptr %i.aq monotonic, align 2, !range !107, !noundef !108
   store atomic i8 %i.ar, ptr %i.ao monotonic, align 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(15) %i.an, ptr noundef nonnull align 4 dereferenceable(14) %.sroa.0.i.i24, i64 14, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(15) %i.an, ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0.i.i24, i64 14, i1 false)
   store atomic i8 %i.ap, ptr %i.aq monotonic, align 2
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i24)
   %i.as = add nuw nsw i64 %.01862, 1              ; 2 uses

@@ -205,7 +205,7 @@ _ZSt24__merge_sort_with_bufferIN9__gnu_cxx17__normal_iteratorIPSt4pairIPN4llvm4b
 define linkonce_odr void @_ZSt21__inplace_stable_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIPN4llvm4bolt13BinarySectionENS3_6object13Elf_Shdr_ImplINS7_7ELFTypeILNS3_10endiannessE1ELb0EEEEEESt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_comp_iterIZNS4_15RewriteInstance17getOutputSectionsISB_EESF_INS7_13ELFObjectFileIT_E8Elf_ShdrESaISQ_EEPSP_RSF_IjSaIjEEEUlRKSO_RKT0_E_EEEvSO_SO_SZ_(ptr %0, ptr %1) local_unnamed_addr #3 comdat {
 bb.a:
   %.sroa.4.i.i = alloca { %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048" }, align 8 ; 4 uses
-  %.sroa.6.i.i = alloca { %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048" }, align 4 ; 4 uses
+  %.sroa.6.i.i = alloca { %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048" }, align 8 ; 4 uses
   %.sroa.4.i = alloca %"struct.llvm::object::Elf_Shdr_Base", align 8 ; 4 uses
   %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.b = ptrtoint ptr %0 to i64                   ; 2 uses
@@ -279,7 +279,7 @@ bb.e:                                             ; preds = %bb.c
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.pn19.i, i64 56
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.0..sroa_idx.i.i, i64 16, i1 false)
   %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.pn19.i, i64 76
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.i.i, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.0..sroa_idx.i.i, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %.sroa.6.i.i, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.0..sroa_idx.i.i, i64 20, i1 false)
   %i.v = getelementptr inbounds nuw i8, ptr %.pn19.i, i64 24
   %.0.copyload.i.i.i2.i.i7.i.i = load i32, ptr %i.v, align 8
   %i.w = icmp ult i32 %.0.copyload.i.i.i.i.i.i, %.0.copyload.i.i.i2.i.i7.i.i
@@ -306,7 +306,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIPN4llvm4
   %.sroa.5.8..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.04.0.lcssa.i.i, i64 24
   store i32 %.0.copyload.i.i.i.i.i.i, ptr %.sroa.5.8..sroa_idx.i.i, align 8
   %.sroa.6.8..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.04.0.lcssa.i.i, i64 28
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.8..sroa_idx.i.i, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.i.i, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.8..sroa_idx.i.i, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.6.i.i, i64 20, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i.i)
   br label %bb.f
@@ -601,10 +601,10 @@ _ZSt21__move_merge_adaptiveIPSt4pairIPN4llvm4bolt13BinarySectionENS1_6object13El
 define linkonce_odr void @_ZSt22__chunk_insertion_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIPN4llvm4bolt13BinarySectionENS3_6object13Elf_Shdr_ImplINS7_7ELFTypeILNS3_10endiannessE1ELb0EEEEEESt6vectorISD_SaISD_EEEElNS0_5__ops15_Iter_comp_iterIZNS4_15RewriteInstance17getOutputSectionsISB_EESF_INS7_13ELFObjectFileIT_E8Elf_ShdrESaISQ_EEPSP_RSF_IjSaIjEEEUlRKSO_RKT0_E_EEEvSO_SO_SZ_T1_(ptr %0, ptr %1, i64 noundef %2) local_unnamed_addr #3 comdat {
 bb.a:
   %.sroa.4.i.i10 = alloca { %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048" }, align 8 ; 4 uses
-  %.sroa.6.i.i11 = alloca { %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048" }, align 4 ; 4 uses
+  %.sroa.6.i.i11 = alloca { %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048" }, align 8 ; 4 uses
   %.sroa.4.i12 = alloca %"struct.llvm::object::Elf_Shdr_Base", align 8 ; 4 uses
   %.sroa.4.i.i = alloca { %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048" }, align 8 ; 4 uses
-  %.sroa.6.i.i = alloca { %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048" }, align 4 ; 4 uses
+  %.sroa.6.i.i = alloca { %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048", %"struct.llvm::support::detail::packed_endian_specific_integral.2048" }, align 8 ; 4 uses
   %.sroa.4.i = alloca %"struct.llvm::object::Elf_Shdr_Base", align 8 ; 4 uses
   %i.a = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.b = ptrtoint ptr %0 to i64                   ; 3 uses
@@ -688,7 +688,7 @@ bb.d:                                             ; preds = %bb.b
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.pn19.i, i64 56
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.0..sroa_idx.i.i, i64 16, i1 false)
   %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.pn19.i, i64 76
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.i.i, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.0..sroa_idx.i.i, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %.sroa.6.i.i, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.0..sroa_idx.i.i, i64 20, i1 false)
   %i.aa = getelementptr inbounds nuw i8, ptr %.pn19.i, i64 24
   %.0.copyload.i.i.i2.i.i7.i.i = load i32, ptr %i.aa, align 8
   %i.ab = icmp ult i32 %.0.copyload.i.i.i.i.i.i, %.0.copyload.i.i.i2.i.i7.i.i
@@ -715,7 +715,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIPN4llvm4
   %.sroa.5.8..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.04.0.lcssa.i.i, i64 24
   store i32 %.0.copyload.i.i.i.i.i.i, ptr %.sroa.5.8..sroa_idx.i.i, align 8
   %.sroa.6.8..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.04.0.lcssa.i.i, i64 28
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.8..sroa_idx.i.i, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.i.i, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.8..sroa_idx.i.i, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.6.i.i, i64 20, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i.i)
   br label %bb.e
@@ -800,7 +800,7 @@ bb.h:                                             ; preds = %bb.f
   %.sroa.4.0..sroa_idx.i.i22 = getelementptr inbounds nuw i8, ptr %.pn19.i18, i64 56
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.i.i10, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.0..sroa_idx.i.i22, i64 16, i1 false)
   %.sroa.6.0..sroa_idx.i.i23 = getelementptr inbounds nuw i8, ptr %.pn19.i18, i64 76
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.i.i11, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.0..sroa_idx.i.i23, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %.sroa.6.i.i11, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.0..sroa_idx.i.i23, i64 20, i1 false)
   %i.bc = getelementptr inbounds nuw i8, ptr %.pn19.i18, i64 24
   %.0.copyload.i.i.i2.i.i7.i.i24 = load i32, ptr %i.bc, align 8
   %i.bd = icmp ult i32 %.0.copyload.i.i.i.i.i.i19, %.0.copyload.i.i.i2.i.i7.i.i24
@@ -827,7 +827,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIPN4llvm4
   %.sroa.5.8..sroa_idx.i.i27 = getelementptr inbounds nuw i8, ptr %.sroa.04.0.lcssa.i.i26, i64 24
   store i32 %.0.copyload.i.i.i.i.i.i19, ptr %.sroa.5.8..sroa_idx.i.i27, align 8
   %.sroa.6.8..sroa_idx.i.i28 = getelementptr inbounds nuw i8, ptr %.sroa.04.0.lcssa.i.i26, i64 28
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.8..sroa_idx.i.i28, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.i.i11, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.8..sroa_idx.i.i28, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.6.i.i11, i64 20, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i10)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i.i11)
   br label %bb.i
@@ -1230,7 +1230,7 @@ _ZSt24__merge_sort_with_bufferIN9__gnu_cxx17__normal_iteratorIPSt4pairIPN4llvm4b
 define linkonce_odr void @_ZSt21__inplace_stable_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIPN4llvm4bolt13BinarySectionENS3_6object13Elf_Shdr_ImplINS7_7ELFTypeILNS3_10endiannessE0ELb0EEEEEESt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_comp_iterIZNS4_15RewriteInstance17getOutputSectionsISB_EESF_INS7_13ELFObjectFileIT_E8Elf_ShdrESaISQ_EEPSP_RSF_IjSaIjEEEUlRKSO_RKT0_E_EEEvSO_SO_SZ_(ptr %0, ptr %1) local_unnamed_addr #3 comdat {
 bb.a:
   %.sroa.4.i.i = alloca { %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129" }, align 8 ; 4 uses
-  %.sroa.6.i.i = alloca { %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129" }, align 4 ; 4 uses
+  %.sroa.6.i.i = alloca { %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129" }, align 8 ; 4 uses
   %.sroa.4.i = alloca %"struct.llvm::object::Elf_Shdr_Base.2294", align 8 ; 4 uses
   %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.b = ptrtoint ptr %0 to i64                   ; 2 uses
@@ -1306,7 +1306,7 @@ bb.e:                                             ; preds = %bb.c
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.pn19.i, i64 56
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.0..sroa_idx.i.i, i64 16, i1 false)
   %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.pn19.i, i64 76
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.i.i, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.0..sroa_idx.i.i, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %.sroa.6.i.i, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.0..sroa_idx.i.i, i64 20, i1 false)
   %i.x = getelementptr inbounds nuw i8, ptr %.pn19.i, i64 24
   %.0.copyload.i.i.i2.i.i7.i.i = load i32, ptr %i.x, align 8
   %i.y = tail call noundef i32 @llvm.bswap.i32(i32 %.0.copyload.i.i.i2.i.i7.i.i)
@@ -1335,7 +1335,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIPN4llvm4
   %.sroa.5.8..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.04.0.lcssa.i.i, i64 24
   store i32 %.0.copyload.i.i.i.i.i.i, ptr %.sroa.5.8..sroa_idx.i.i, align 8
   %.sroa.6.8..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.04.0.lcssa.i.i, i64 28
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.8..sroa_idx.i.i, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.i.i, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.8..sroa_idx.i.i, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.6.i.i, i64 20, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i.i)
   br label %bb.f
@@ -1631,10 +1631,10 @@ _ZSt21__move_merge_adaptiveIPSt4pairIPN4llvm4bolt13BinarySectionENS1_6object13El
 define linkonce_odr void @_ZSt22__chunk_insertion_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIPN4llvm4bolt13BinarySectionENS3_6object13Elf_Shdr_ImplINS7_7ELFTypeILNS3_10endiannessE0ELb0EEEEEESt6vectorISD_SaISD_EEEElNS0_5__ops15_Iter_comp_iterIZNS4_15RewriteInstance17getOutputSectionsISB_EESF_INS7_13ELFObjectFileIT_E8Elf_ShdrESaISQ_EEPSP_RSF_IjSaIjEEEUlRKSO_RKT0_E_EEEvSO_SO_SZ_T1_(ptr %0, ptr %1, i64 noundef %2) local_unnamed_addr #3 comdat {
 bb.a:
   %.sroa.4.i.i10 = alloca { %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129" }, align 8 ; 4 uses
-  %.sroa.6.i.i11 = alloca { %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129" }, align 4 ; 4 uses
+  %.sroa.6.i.i11 = alloca { %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129" }, align 8 ; 4 uses
   %.sroa.4.i12 = alloca %"struct.llvm::object::Elf_Shdr_Base.2294", align 8 ; 4 uses
   %.sroa.4.i.i = alloca { %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129" }, align 8 ; 4 uses
-  %.sroa.6.i.i = alloca { %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129" }, align 4 ; 4 uses
+  %.sroa.6.i.i = alloca { %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129", %"struct.llvm::support::detail::packed_endian_specific_integral.2129" }, align 8 ; 4 uses
   %.sroa.4.i = alloca %"struct.llvm::object::Elf_Shdr_Base.2294", align 8 ; 4 uses
   %i.a = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.b = ptrtoint ptr %0 to i64                   ; 3 uses
@@ -1720,7 +1720,7 @@ bb.d:                                             ; preds = %bb.b
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.pn19.i, i64 56
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.0..sroa_idx.i.i, i64 16, i1 false)
   %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.pn19.i, i64 76
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.i.i, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.0..sroa_idx.i.i, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %.sroa.6.i.i, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.0..sroa_idx.i.i, i64 20, i1 false)
   %i.ac = getelementptr inbounds nuw i8, ptr %.pn19.i, i64 24
   %.0.copyload.i.i.i2.i.i7.i.i = load i32, ptr %i.ac, align 8
   %i.ad = tail call noundef i32 @llvm.bswap.i32(i32 %.0.copyload.i.i.i2.i.i7.i.i)
@@ -1749,7 +1749,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIPN4llvm4
   %.sroa.5.8..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.04.0.lcssa.i.i, i64 24
   store i32 %.0.copyload.i.i.i.i.i.i, ptr %.sroa.5.8..sroa_idx.i.i, align 8
   %.sroa.6.8..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.04.0.lcssa.i.i, i64 28
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.8..sroa_idx.i.i, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.i.i, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.8..sroa_idx.i.i, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.6.i.i, i64 20, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i.i)
   br label %bb.e
@@ -1836,7 +1836,7 @@ bb.h:                                             ; preds = %bb.f
   %.sroa.4.0..sroa_idx.i.i22 = getelementptr inbounds nuw i8, ptr %.pn19.i18, i64 56
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.i.i10, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.0..sroa_idx.i.i22, i64 16, i1 false)
   %.sroa.6.0..sroa_idx.i.i23 = getelementptr inbounds nuw i8, ptr %.pn19.i18, i64 76
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.i.i11, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.0..sroa_idx.i.i23, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %.sroa.6.i.i11, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.0..sroa_idx.i.i23, i64 20, i1 false)
   %i.bi = getelementptr inbounds nuw i8, ptr %.pn19.i18, i64 24
   %.0.copyload.i.i.i2.i.i7.i.i24 = load i32, ptr %i.bi, align 8
   %i.bj = tail call noundef i32 @llvm.bswap.i32(i32 %.0.copyload.i.i.i2.i.i7.i.i24)
@@ -1865,7 +1865,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIPN4llvm4
   %.sroa.5.8..sroa_idx.i.i27 = getelementptr inbounds nuw i8, ptr %.sroa.04.0.lcssa.i.i26, i64 24
   store i32 %.0.copyload.i.i.i.i.i.i19, ptr %.sroa.5.8..sroa_idx.i.i27, align 8
   %.sroa.6.8..sroa_idx.i.i28 = getelementptr inbounds nuw i8, ptr %.sroa.04.0.lcssa.i.i26, i64 28
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.8..sroa_idx.i.i28, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.i.i11, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.8..sroa_idx.i.i28, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.6.i.i11, i64 20, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i10)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i.i11)
   br label %bb.i

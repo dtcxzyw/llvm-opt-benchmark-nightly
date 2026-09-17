@@ -202,8 +202,8 @@ bb.ap:                                            ; preds = %_ZN2v88internal12_G
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc noundef i32 @_ZN2v88internal12_GLOBAL__N_114NfaInterpreterIhE21RunActiveThreadsToEndEv(ptr noundef nonnull align 8 dereferenceable(424) %0) unnamed_addr #0 align 2 {
 bb.a:
-  %.sroa.4.i = alloca <{ [4 x i8], ptr, ptr, ptr, ptr, ptr }>, align 4 ; 4 uses
-  %.sroa.12.i = alloca <{ [4 x i8], ptr, ptr, ptr, ptr, ptr }>, align 4 ; 4 uses
+  %.sroa.4.i = alloca <{ [4 x i8], ptr, ptr, ptr, ptr, ptr }>, align 8 ; 4 uses
+  %.sroa.12.i = alloca <{ [4 x i8], ptr, ptr, ptr, ptr, ptr }>, align 8 ; 4 uses
   %1 = alloca %"class.v8::internal::StackLimitCheck", align 8 ; 8 uses
   tail call fastcc void @_ZN2v88internal12_GLOBAL__N_114NfaInterpreterIhE16RunActiveThreadsEv(ptr noundef nonnull align 8 dereferenceable(424) %0)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 393 ; 2 uses
@@ -556,7 +556,7 @@ bb.aa:                                            ; preds = %_ZN2v88internal8Zon
   %i.ey = getelementptr inbounds nuw [56 x i8], ptr %.val.i, i64 %indvars.iv.next64.i ; 7 uses
   %.sroa.0.0.copyload.i = load i32, ptr %i.ey, align 8 ; 3 uses
   %.sroa.12.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ey, i64 4 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(44) %.sroa.12.i, ptr noundef nonnull align 4 dereferenceable(44) %.sroa.12.0..sroa_idx.i, i64 44, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(44) %.sroa.12.i, ptr noundef nonnull align 4 dereferenceable(44) %.sroa.12.0..sroa_idx.i, i64 44, i1 false)
   %i.ez = sext i32 %.sroa.0.0.copyload.i to i64   ; 2 uses
   %i.fa = load ptr, ptr %i.n, align 8             ; 2 uses
   %i.fb = getelementptr inbounds nuw [8 x i8], ptr %i.fa, i64 %i.ez ; 2 uses
@@ -618,7 +618,7 @@ bb.ad:                                            ; preds = %.thread50.i
   %i.fv = getelementptr inbounds [56 x i8], ptr %i.fs, i64 %i.fu ; 3 uses
   store i32 %i.fk, ptr %i.fv, align 8
   %.sroa.12.0..sroa_idx30.i = getelementptr inbounds nuw i8, ptr %i.fv, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(44) %.sroa.12.0..sroa_idx30.i, ptr noundef nonnull align 4 dereferenceable(44) %.sroa.12.i, i64 44, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(44) %.sroa.12.0..sroa_idx30.i, ptr noundef nonnull align 8 dereferenceable(44) %.sroa.12.i, i64 44, i1 false)
   %.sroa.1231.0..sroa_idx36.i = getelementptr inbounds nuw i8, ptr %i.fv, i64 48
   store i32 0, ptr %.sroa.1231.0..sroa_idx36.i, align 8
   br label %_ZN2v88internal8ZoneListINS0_12_GLOBAL__N_114NfaInterpreterIhE17InterpreterThreadEE3AddERKS5_PNS0_4ZoneE.exit.i
@@ -627,7 +627,7 @@ bb.ae:                                            ; preds = %.thread50.i
   %i.fw = shl nsw i32 %i.fq, 1
   %i.fx = or disjoint i32 %i.fw, 1                ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(44) %.sroa.4.i, ptr noundef nonnull align 4 dereferenceable(44) %.sroa.12.0..sroa_idx.i, i64 44, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(44) %.sroa.4.i, ptr noundef nonnull align 4 dereferenceable(44) %.sroa.12.0..sroa_idx.i, i64 44, i1 false)
   %i.fy = icmp sgt i32 %i.fq, -1
   br i1 %i.fy, label %bb.ag, label %bb.af, !prof !11
 
@@ -678,7 +678,7 @@ _ZN2v88internal8ZoneListINS0_12_GLOBAL__N_114NfaInterpreterIhE17InterpreterThrea
   %i.gs = getelementptr inbounds [56 x i8], ptr %i.gi, i64 %i.gr ; 3 uses
   store i32 %i.fk, ptr %i.gs, align 8
   %.sroa.4.0..sroa_idx.i16 = getelementptr inbounds nuw i8, ptr %i.gs, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(44) %.sroa.4.0..sroa_idx.i16, ptr noundef nonnull align 4 dereferenceable(44) %.sroa.4.i, i64 44, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(44) %.sroa.4.0..sroa_idx.i16, ptr noundef nonnull align 8 dereferenceable(44) %.sroa.4.i, i64 44, i1 false)
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.gs, i64 48
   store i32 0, ptr %.sroa.5.0..sroa_idx.i, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i)
@@ -1081,8 +1081,8 @@ bb.ap:                                            ; preds = %_ZN2v88internal12_G
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc noundef i32 @_ZN2v88internal12_GLOBAL__N_114NfaInterpreterItE21RunActiveThreadsToEndEv(ptr noundef nonnull align 8 dereferenceable(424) %0) unnamed_addr #0 align 2 {
 bb.a:
-  %.sroa.4.i = alloca <{ [4 x i8], ptr, ptr, ptr, ptr, ptr }>, align 4 ; 4 uses
-  %.sroa.12.i = alloca <{ [4 x i8], ptr, ptr, ptr, ptr, ptr }>, align 4 ; 4 uses
+  %.sroa.4.i = alloca <{ [4 x i8], ptr, ptr, ptr, ptr, ptr }>, align 8 ; 4 uses
+  %.sroa.12.i = alloca <{ [4 x i8], ptr, ptr, ptr, ptr, ptr }>, align 8 ; 4 uses
   %1 = alloca %"class.v8::internal::StackLimitCheck", align 8 ; 8 uses
   tail call fastcc void @_ZN2v88internal12_GLOBAL__N_114NfaInterpreterItE16RunActiveThreadsEv(ptr noundef nonnull align 8 dereferenceable(424) %0)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 393 ; 2 uses
@@ -1434,7 +1434,7 @@ bb.aa:                                            ; preds = %_ZN2v88internal8Zon
   %i.ey = getelementptr inbounds nuw [56 x i8], ptr %.val.i, i64 %indvars.iv.next64.i ; 7 uses
   %.sroa.0.0.copyload.i = load i32, ptr %i.ey, align 8 ; 3 uses
   %.sroa.12.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ey, i64 4 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(44) %.sroa.12.i, ptr noundef nonnull align 4 dereferenceable(44) %.sroa.12.0..sroa_idx.i, i64 44, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(44) %.sroa.12.i, ptr noundef nonnull align 4 dereferenceable(44) %.sroa.12.0..sroa_idx.i, i64 44, i1 false)
   %i.ez = sext i32 %.sroa.0.0.copyload.i to i64   ; 2 uses
   %i.fa = load ptr, ptr %i.n, align 8             ; 2 uses
   %i.fb = getelementptr inbounds nuw [8 x i8], ptr %i.fa, i64 %i.ez ; 2 uses
@@ -1496,7 +1496,7 @@ bb.ad:                                            ; preds = %.thread50.i
   %i.fv = getelementptr inbounds [56 x i8], ptr %i.fs, i64 %i.fu ; 3 uses
   store i32 %i.fk, ptr %i.fv, align 8
   %.sroa.12.0..sroa_idx30.i = getelementptr inbounds nuw i8, ptr %i.fv, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(44) %.sroa.12.0..sroa_idx30.i, ptr noundef nonnull align 4 dereferenceable(44) %.sroa.12.i, i64 44, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(44) %.sroa.12.0..sroa_idx30.i, ptr noundef nonnull align 8 dereferenceable(44) %.sroa.12.i, i64 44, i1 false)
   %.sroa.1231.0..sroa_idx36.i = getelementptr inbounds nuw i8, ptr %i.fv, i64 48
   store i32 0, ptr %.sroa.1231.0..sroa_idx36.i, align 8
   br label %_ZN2v88internal8ZoneListINS0_12_GLOBAL__N_114NfaInterpreterItE17InterpreterThreadEE3AddERKS5_PNS0_4ZoneE.exit.i
@@ -1505,7 +1505,7 @@ bb.ae:                                            ; preds = %.thread50.i
   %i.fw = shl nsw i32 %i.fq, 1
   %i.fx = or disjoint i32 %i.fw, 1                ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(44) %.sroa.4.i, ptr noundef nonnull align 4 dereferenceable(44) %.sroa.12.0..sroa_idx.i, i64 44, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(44) %.sroa.4.i, ptr noundef nonnull align 4 dereferenceable(44) %.sroa.12.0..sroa_idx.i, i64 44, i1 false)
   %i.fy = icmp sgt i32 %i.fq, -1
   br i1 %i.fy, label %bb.ag, label %bb.af, !prof !11
 
@@ -1556,7 +1556,7 @@ _ZN2v88internal8ZoneListINS0_12_GLOBAL__N_114NfaInterpreterItE17InterpreterThrea
   %i.gs = getelementptr inbounds [56 x i8], ptr %i.gi, i64 %i.gr ; 3 uses
   store i32 %i.fk, ptr %i.gs, align 8
   %.sroa.4.0..sroa_idx.i16 = getelementptr inbounds nuw i8, ptr %i.gs, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(44) %.sroa.4.0..sroa_idx.i16, ptr noundef nonnull align 4 dereferenceable(44) %.sroa.4.i, i64 44, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(44) %.sroa.4.0..sroa_idx.i16, ptr noundef nonnull align 8 dereferenceable(44) %.sroa.4.i, i64 44, i1 false)
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.gs, i64 48
   store i32 0, ptr %.sroa.5.0..sroa_idx.i, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i)

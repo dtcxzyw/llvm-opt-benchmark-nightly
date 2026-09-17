@@ -205,7 +205,7 @@ bb.a:
   %20 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %21 = alloca %"class.std::basic_string_view", align 8 ; 3 uses
   %22 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %.sroa.7 = alloca { [6 x i8], [24 x i8] }, align 2 ; 6 uses
+  %.sroa.7 = alloca { [6 x i8], [24 x i8] }, align 8 ; 6 uses
   %23 = alloca %"class.testing::AssertionResult", align 8 ; 8 uses
   %24 = alloca %"class.testing::internal::PredicateFormatterFromMatcher.2606", align 8 ; 5 uses
   %25 = alloca %"class.testing::Message", align 8 ; 7 uses

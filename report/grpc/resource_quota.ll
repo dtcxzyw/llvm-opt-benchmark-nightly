@@ -204,15 +204,15 @@ bb.c:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.c, ptr %1, align 8, !tbaa !25
   store i64 0, ptr %i.k, align 8, !tbaa !26
   store i8 0, ptr %i.c, align 8, !tbaa !27
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 18
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(62) %.sroa.5.0..sroa_idx, i8 -1, i64 62, i1 false)
   store ptr getelementptr inbounds nuw inrange(-16, 8) (i8, ptr @_ZTVN9grpc_core17instrument_detail15QueryableDomainE, i64 16), ptr %0, align 8, !tbaa !19
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr null, ptr %i.m, align 8, !tbaa !196
-  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 1, ptr %i.n, align 8, !tbaa !27
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 17
-  store i8 %2, ptr %.sroa.4.0..sroa_idx, align 1
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr null, ptr %5, align 8, !tbaa !196
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i8 1, ptr %i.m, align 8, !tbaa !27
+  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 17
+  store i8 %2, ptr %i.n, align 1
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 18
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(62) %.sroa.4.0..sroa_idx, i8 -1, i64 62, i1 false)
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 136
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)

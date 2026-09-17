@@ -205,7 +205,7 @@ _ZN2v88internal8compilerL20FilterRepresentationENS0_21MachineRepresentationE.exi
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef i32 @_ZN2v88internal8compiler19InstructionSequence22AddDeoptimizationEntryEPNS1_20FrameStateDescriptorENS0_14DeoptimizeKindENS0_16DeoptimizeReasonEjRKNS1_14FeedbackSourceE(ptr noundef nonnull align 8 dereferenceable(352) %0, ptr noundef %1, i8 noundef zeroext %2, i8 noundef zeroext %3, i32 noundef %4, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(12) %5) local_unnamed_addr #1 align 2 {
 bb.a:
-  %.sroa.6 = alloca { [6 x i8], %"struct.v8::internal::compiler::FeedbackSource" }, align 2 ; 4 uses
+  %.sroa.6 = alloca { [6 x i8], %"struct.v8::internal::compiler::FeedbackSource" }, align 8 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 328 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 320
@@ -243,7 +243,7 @@ _ZN2v88internal10ZoneVectorINS0_8compiler19DeoptimizationEntryEE9push_backEOS3_.
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 9
   store i8 %3, ptr %.sroa.5.0..sroa_idx, align 1
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 10
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(22) %.sroa.6.0..sroa_idx, ptr noundef nonnull align 2 dereferenceable(22) %.sroa.6, i64 22, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(22) %.sroa.6.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(22) %.sroa.6, i64 22, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   ret i32 %i.r
 }

@@ -204,7 +204,7 @@ bb.a:
   %.sroa.0.i.i.i = alloca i32, align 4            ; 5 uses
   %2 = alloca %"struct.std::array.65", align 8    ; 5 uses
   %3 = alloca %"struct.std::array.66", align 2    ; 19 uses
-  %.sroa.0 = alloca <16 x i16>, align 32          ; 21 uses
+  %.sroa.0 = alloca <16 x i16>, align 2           ; 21 uses
   %4 = alloca %"struct.std::array.60", align 2    ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
@@ -607,24 +607,24 @@ bb.ee:                                            ; preds = %bb.dw
   %i.wk = load i16, ptr %i.as, align 2, !tbaa !151, !noalias !152
   store i16 %i.wk, ptr %.sroa.0.30..sroa_idx709, align 2, !tbaa !151, !noalias !152
   %i.wl = load i16, ptr %i.at, align 2, !tbaa !151, !noalias !152
-  store i16 %i.wl, ptr %.sroa.0, align 32, !tbaa !151, !noalias !152
+  store i16 %i.wl, ptr %.sroa.0, align 2, !tbaa !151, !noalias !152
   %i.wm = load <12 x i16>, ptr %i.ap, align 2, !tbaa !151, !noalias !152
   %i.wn = shufflevector <12 x i16> %i.wm, <12 x i16> poison, <8 x i32> <i32 8, i32 0, i32 9, i32 1, i32 10, i32 2, i32 11, i32 3>
-  store <8 x i16> %i.wn, ptr %.sroa.0.4..sroa_idx696, align 4, !tbaa !151, !noalias !152
+  store <8 x i16> %i.wn, ptr %.sroa.0.4..sroa_idx696, align 2, !tbaa !151, !noalias !152
   %i.wo = load i16, ptr %i.au, align 2, !tbaa !151, !noalias !152
-  store i16 %i.wo, ptr %.sroa.0.20..sroa_idx698, align 4, !tbaa !151, !noalias !152
+  store i16 %i.wo, ptr %.sroa.0.20..sroa_idx698, align 2, !tbaa !151, !noalias !152
   %i.wp = load i16, ptr %i.av, align 2, !tbaa !151, !noalias !152
-  store i16 %i.wp, ptr %.sroa.0.24..sroa_idx702, align 8, !tbaa !151, !noalias !152
+  store i16 %i.wp, ptr %.sroa.0.24..sroa_idx702, align 2, !tbaa !151, !noalias !152
   br label %.preheader
 
 bb.ef:                                            ; preds = %bb.dw
-  store i16 %i.ux, ptr %.sroa.0, align 32, !tbaa !151, !noalias !152
+  store i16 %i.ux, ptr %.sroa.0, align 2, !tbaa !151, !noalias !152
   %i.wq = load i16, ptr %i.ax, align 2, !tbaa !151, !noalias !152
-  store i16 %i.wq, ptr %.sroa.0.20..sroa_idx699, align 4, !tbaa !151, !noalias !152
+  store i16 %i.wq, ptr %.sroa.0.20..sroa_idx699, align 2, !tbaa !151, !noalias !152
   %i.wr = load i16, ptr %i.ay, align 2, !tbaa !151, !noalias !152
-  store i16 %i.wr, ptr %.sroa.0.24..sroa_idx703, align 8, !tbaa !151, !noalias !152
+  store i16 %i.wr, ptr %.sroa.0.24..sroa_idx703, align 2, !tbaa !151, !noalias !152
   %i.ws = load i16, ptr %i.az, align 2, !tbaa !151, !noalias !152
-  store i16 %i.ws, ptr %.sroa.0.28..sroa_idx707, align 4, !tbaa !151, !noalias !152
+  store i16 %i.ws, ptr %.sroa.0.28..sroa_idx707, align 2, !tbaa !151, !noalias !152
   %i.wt = load <11 x i16>, ptr %i.aw, align 2, !tbaa !151, !noalias !152
   %i.wu = shufflevector <11 x i16> %i.wt, <11 x i16> poison, <8 x i32> <i32 7, i32 0, i32 8, i32 1, i32 9, i32 2, i32 10, i32 3>
   store <8 x i16> %i.wu, ptr %.sroa.0.2..sroa_idx694, align 2, !tbaa !151, !noalias !152
@@ -649,7 +649,7 @@ bb.ef:                                            ; preds = %bb.dw
   %i.xf = getelementptr inbounds nuw [2 x i8], ptr %i.xd, i64 %indvars.iv458
   %indvars.iv.next461.14 = or disjoint i64 %indvars.iv458, 15
   %i.xg = icmp samesign ult i64 %indvars.iv.next461.14, %i.xe
-  %.sroa.0.0..sroa.0.0. = load <16 x i16>, ptr %.sroa.0, align 32, !tbaa !151
+  %.sroa.0.0..sroa.0.0. = load <16 x i16>, ptr %.sroa.0, align 2, !tbaa !151
   %i.xh = sext <16 x i16> %.sroa.0.0..sroa.0.0. to <16 x i32>
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #15, !noalias !152
