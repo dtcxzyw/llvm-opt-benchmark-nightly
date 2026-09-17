@@ -205,8 +205,8 @@ bb.s:                                             ; preds = %_RNvMNtCs6JMX4GRUq9
   %.sroa.01.1.extract.trunc.i = trunc i48 %.sroa.01.1.extract.shift.i to i8 ; 3 uses
   %.sroa.01.2.extract.shift.i = lshr i48 %.sroa.059.0.copyload, 16
   %.sroa.01.2.extract.trunc.i = trunc i48 %.sroa.01.2.extract.shift.i to i8 ; 2 uses
-  %.sroa.01.3.extract.shift.i = lshr i48 %.sroa.059.0.copyload, 24 ; 2 uses
-  %.sroa.01.3.extract.trunc.i = trunc i48 %.sroa.01.3.extract.shift.i to i8
+  %.sroa.01.3.extract.shift.i = lshr i48 %.sroa.059.0.copyload, 24
+  %.sroa.01.3.extract.trunc.i = trunc i48 %.sroa.01.3.extract.shift.i to i8 ; 2 uses
   %i.by = add i8 %.sroa.01.1.extract.trunc.i, %.sroa.01.0.extract.trunc.i
   %i.bz = add i8 %i.by, %.sroa.01.2.extract.trunc.i
   %i.ca = add i8 %i.bz, %.sroa.01.3.extract.trunc.i ; 2 uses
@@ -359,13 +359,13 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringEC
   br label %bb.aj
 
 bb.ae:                                            ; preds = %_RNvCsgcf5BHVXlUt_7uu_sort21ordering_incompatible.exit.thread89
-  %4 = trunc i48 %.sroa.01.3.extract.shift.i to i1
-  %i.dx = or i8 %.sroa.01.1.extract.trunc.i, %.sroa.01.2.extract.trunc.i
-  %brmerge = icmp ne i8 %i.dx, 0                  ; 2 uses
+  %i.dx = or i8 %.sroa.01.1.extract.trunc.i, %.sroa.01.2.extract.trunc.i ; 2 uses
+  %brmerge.not = icmp eq i8 %i.dx, 0
   %.mux = add nuw nsw i8 %.sroa.01.1.extract.trunc.i, 1
-  %brmerge67 = or i1 %brmerge, %4
-  %.mux.mux = select i1 %brmerge, i8 %.mux, i8 3
-  br i1 %brmerge67, label %bb.ag, label %bb.af
+  %4 = or i8 %i.dx, %.sroa.01.3.extract.trunc.i
+  %brmerge67.not = icmp eq i8 %4, 0
+  %.mux.mux = select i1 %brmerge.not, i8 3, i8 %.mux
+  br i1 %brmerge67.not, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae
   %. = select i1 %.not, i8 6, i8 4
