@@ -139,8 +139,9 @@ bb.a:
   br label %bb.b
 
 .loopexit.i:                                      ; preds = %rev_list_push.exit.i, %rev_list_push.exit.us.i, %bb.f
-  %i.e = icmp eq ptr %.1.i, null
-  br i1 %i.e, label %bb.b, label %bb.m, !llvm.loop !34
+  %1 = and i64 %.fr.i, 17179869184
+  %i.e = icmp eq i64 %1, 0
+  br i1 %i.e, label %bb.m, label %bb.b, !llvm.loop !34
 
 bb.b:                                             ; preds = %.loopexit.i, %bb.a
   %i.f = load i64, ptr %i.c, align 8, !tbaa !36
@@ -175,9 +176,6 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.t = phi i64 [ %.pre.i, %bb.e ], [ %i.p, %bb.d ]
   %.fr.i = freeze i64 %i.t                        ; 2 uses
-  %1 = and i64 %.fr.i, 17179869184
-  %.not28.i = icmp eq i64 %1, 0
-  %.1.i = select i1 %.not28.i, ptr %i.j, ptr null ; 2 uses
   %.not3034.i = icmp eq ptr %i.n, null
   br i1 %.not3034.i, label %.loopexit.i, label %.lr.ph.i
 
@@ -259,7 +257,7 @@ rev_list_push.exit.i:                             ; preds = %bb.l, %bb.k, %bb.j,
   br i1 %.not30.i, label %.loopexit.i, label %.lr.ph.split.i, !llvm.loop !35
 
 bb.m:                                             ; preds = %.loopexit.i
-  %i.av = getelementptr inbounds nuw i8, ptr %.1.i, i64 8
+  %i.av = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   br label %get_rev.exit
 
 get_rev.exit:                                     ; preds = %bb.b, %bb.c, %bb.m

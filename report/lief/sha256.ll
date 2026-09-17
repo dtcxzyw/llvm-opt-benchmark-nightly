@@ -128,15 +128,11 @@ bb.g:                                             ; preds = %bb.f, %bb.d
   %.040 = phi ptr [ %i.o, %bb.f ], [ %1, %bb.d ]  ; 3 uses
   %.039 = phi i64 [ %i.p, %bb.f ], [ %2, %bb.d ]  ; 5 uses
   %i.q = icmp ugt i64 %.039, 63
-  br i1 %i.q, label %.preheader, label %bb.i
+  br i1 %i.q, label %bb.h, label %bb.i
 
-.preheader:                                       ; preds = %bb.g
-  %3 = and i64 %.039, 63
-  br label %bb.h
-
-bb.h:                                             ; preds = %.preheader, %bb.h
-  %.0711.i = phi i64 [ %i.s, %bb.h ], [ %.039, %.preheader ]
-  %.0810.i = phi ptr [ %i.r, %bb.h ], [ %.040, %.preheader ] ; 2 uses
+bb.h:                                             ; preds = %bb.g, %bb.h
+  %.0711.i = phi i64 [ %i.s, %bb.h ], [ %.039, %bb.g ]
+  %.0810.i = phi ptr [ %i.r, %bb.h ], [ %.040, %bb.g ] ; 2 uses
   tail call fastcc void @mbedtls_internal_sha256_process(ptr noundef nonnull %0, ptr noundef %.0810.i)
   %i.r = getelementptr inbounds nuw i8, ptr %.0810.i, i64 64
   %i.s = add i64 %.0711.i, -64                    ; 2 uses
@@ -144,6 +140,7 @@ bb.h:                                             ; preds = %.preheader, %bb.h
   br i1 %i.t, label %bb.h, label %mbedtls_internal_sha256_process_many.exit, !llvm.loop !0
 
 mbedtls_internal_sha256_process_many.exit:        ; preds = %bb.h
+  %3 = and i64 %.039, 63
   %i.u = and i64 %.039, -64
   %i.v = getelementptr inbounds nuw i8, ptr %.040, i64 %i.u
   br label %bb.i

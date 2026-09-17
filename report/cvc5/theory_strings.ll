@@ -205,16 +205,11 @@ bb.ad:                                            ; preds = %_ZNKSt3mapIN4cvc58i
   %i.df = load i64, ptr %i.de, align 8
   %i.dg = and i64 %i.df, 1099511627775
   %i.dh = icmp samesign ult i64 %i.cw, %i.dg
-  br i1 %i.dh, label %.critedge.i511.invoke, label %.lr.ph.i.i.i.i502
+  br i1 %i.dh, label %.critedge.i511.invoke, label %bb.ae
 
-.lr.ph.i.i.i.i502:                                ; preds = %bb.ad
-  %151 = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i, i64 56
-  %152 = load ptr, ptr %151, align 8, !tbaa !608  ; 3 uses
-  br label %bb.ae
-
-bb.ae:                                            ; preds = %bb.ae, %.lr.ph.i.i.i.i502
-  %.012.i.i.i.i503 = phi ptr [ %i.cs, %.lr.ph.i.i.i.i502 ], [ %.1.i.i.i.i508, %bb.ae ] ; 3 uses
-  %.0811.i.i.i.i504 = phi ptr [ %i.ct, %.lr.ph.i.i.i.i502 ], [ %.19.i.i.i.i505, %bb.ae ]
+bb.ae:                                            ; preds = %bb.ad, %bb.ae
+  %.012.i.i.i.i503 = phi ptr [ %.1.i.i.i.i508, %bb.ae ], [ %i.cs, %bb.ad ] ; 3 uses
+  %.0811.i.i.i.i504 = phi ptr [ %.19.i.i.i.i505, %bb.ae ], [ %i.ct, %bb.ad ]
   %i.di = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i503, i64 32
   %i.dj = load ptr, ptr %i.di, align 8, !tbaa !581
   %i.dk = load i64, ptr %i.dj, align 8
@@ -228,6 +223,8 @@ bb.ae:                                            ; preds = %bb.ae, %.lr.ph.i.i.
   br i1 %.not.i.i.i.i509, label %_ZNKSt3mapIN4cvc58internal8TypeNodeESt13unordered_setINS1_12NodeTemplateILb1EEESt4hashIS5_ESt8equal_toIS5_ESaIS5_EESt4lessIS2_ESaISt4pairIKS2_SB_EEE11lower_boundERSF_.exit.i510, label %bb.ae, !llvm.loop !747
 
 _ZNKSt3mapIN4cvc58internal8TypeNodeESt13unordered_setINS1_12NodeTemplateILb1EEESt4hashIS5_ESt8equal_toIS5_ESaIS5_EESt4lessIS2_ESaISt4pairIKS2_SB_EEE11lower_boundERSF_.exit.i510: ; preds = %bb.ae
+  %151 = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i, i64 56
+  %152 = load ptr, ptr %151, align 8, !tbaa !608  ; 3 uses
   %i.dn = icmp eq ptr %.19.i.i.i.i505, %i.ct
   br i1 %i.dn, label %.critedge.i511.invoke, label %bb.af
 

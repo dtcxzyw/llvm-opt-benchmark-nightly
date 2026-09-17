@@ -204,19 +204,12 @@ bb.l:                                             ; preds = %_ZN4pbrt6Tuple3INS_
   %i.di = icmp samesign uge i64 %.023.i, %i.k
   %i.dj = icmp ult i64 %i.dg, %i.dc
   %i.dk = select i1 %i.di, i1 %i.dj, i1 false
-  br i1 %i.dk, label %.lr.ph.i, label %.lr.ph.i66.preheader, !llvm.loop !226
+  br i1 %i.dk, label %.lr.ph.i, label %.lr.ph.i66, !llvm.loop !226
 
-.lr.ph.i66.preheader:                             ; preds = %.lr.ph.i
-  %16 = uitofp i64 %i.dg to float
-  %17 = fmul float %i.dh, %16                     ; 2 uses
-  %18 = fcmp ogt float %17, f0x3F7FFFFF
-  %.sroa.speculated.i64 = select i1 %18, float f0x3F7FFFFF, float %17
-  br label %.lr.ph.i66
-
-.lr.ph.i66:                                       ; preds = %.lr.ph.i66.preheader, %.lr.ph.i66
-  %.023.i67 = phi i64 [ %i.dl, %.lr.ph.i66 ], [ %indvars.iv, %.lr.ph.i66.preheader ] ; 3 uses
-  %.01922.i68 = phi i64 [ %i.dm, %.lr.ph.i66 ], [ 0, %.lr.ph.i66.preheader ]
-  %.02021.i69 = phi float [ %i.dn, %.lr.ph.i66 ], [ 1.000000e+00, %.lr.ph.i66.preheader ]
+.lr.ph.i66:                                       ; preds = %.lr.ph.i, %.lr.ph.i66
+  %.023.i67 = phi i64 [ %i.dl, %.lr.ph.i66 ], [ %indvars.iv, %.lr.ph.i ] ; 3 uses
+  %.01922.i68 = phi i64 [ %i.dm, %.lr.ph.i66 ], [ 0, %.lr.ph.i ]
+  %.02021.i69 = phi float [ %i.dn, %.lr.ph.i66 ], [ 1.000000e+00, %.lr.ph.i ]
   %i.dl = udiv i64 %.023.i67, %i.n                ; 2 uses
   %reass.add.i70 = sub i64 %.01922.i68, %i.dl
   %reass.mul.i71 = mul i64 %reass.add.i70, %i.n
@@ -228,6 +221,10 @@ bb.l:                                             ; preds = %_ZN4pbrt6Tuple3INS_
   br i1 %i.dq, label %.lr.ph.i66, label %._crit_edge.loopexit.i72, !llvm.loop !226
 
 ._crit_edge.loopexit.i72:                         ; preds = %.lr.ph.i66
+  %16 = uitofp i64 %i.dg to float
+  %17 = fmul float %i.dh, %16                     ; 2 uses
+  %18 = fcmp ogt float %17, f0x3F7FFFFF
+  %.sroa.speculated.i64 = select i1 %18, float f0x3F7FFFFF, float %17
   %i.dr = uitofp i64 %i.dm to float
   %i.ds = fmul float %i.dn, %i.dr
   br label %_ZN4pbrt14RadicalInverseEim.exit.thread
@@ -630,11 +627,11 @@ _ZN4pbrt6Tuple3INS_6Point3EfEixEi.exit180.2:      ; preds = %bb.c, %.noexc173
   %i.jf = extractelement <2 x double> %i.ja, i64 1
   %i.jg = call noundef double @pow(double noundef 1.000000e+01, double noundef %i.jf) #29
   %i.jh = fptrunc double %i.jg to float
+  store i64 %i.ii, ptr %1, align 8, !tbaa !73
   %i.ji = zext i1 %i.gz to i32
   %spec.select = add nsw i32 %.0139278, %i.ji
   %i.jj = zext nneg i8 %i.hg to i32
   %spec.select151 = add nsw i32 %spec.select, %i.jj
-  store i64 %i.ii, ptr %1, align 8, !tbaa !73
   %.sroa.0.sroa.5.0.copyload.i = load float, ptr %.sroa.0.sroa.5.0..sroa_idx.i, align 16
   %.sroa.0.sroa.6.0.copyload.i = load float, ptr %.sroa.0.sroa.6.0..sroa_idx.i, align 4
   %i.jk = fadd float %.sroa.0.sroa.5.0.copyload.i, %.sroa.0.sroa.6.0.copyload.i

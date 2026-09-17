@@ -205,14 +205,10 @@ bb.q:                                             ; preds = %bb.q, %"_ZSt22__mov
   %.1.val.i.i = load i32, ptr %i.dg, align 8, !tbaa !146
   %i.dh = icmp ult i32 %.1.val.i.i, %.val15.i.i
   %i.di = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 48 ; 2 uses
-  br i1 %i.dh, label %bb.q, label %.preheader.i.i.preheader, !llvm.loop !574
+  br i1 %i.dh, label %bb.q, label %.preheader.i.i, !llvm.loop !574
 
-.preheader.i.i.preheader:                         ; preds = %bb.q
-  %5 = getelementptr i8, ptr %.1.i.i, i64 8       ; 2 uses
-  br label %.preheader.i.i
-
-.preheader.i.i:                                   ; preds = %.preheader.i.i.preheader, %.preheader.i.i
-  %.013.pn.i.i = phi ptr [ %.114.i.i, %.preheader.i.i ], [ %.013.i.i, %.preheader.i.i.preheader ] ; 5 uses
+.preheader.i.i:                                   ; preds = %bb.q, %.preheader.i.i
+  %.013.pn.i.i = phi ptr [ %.114.i.i, %.preheader.i.i ], [ %.013.i.i, %bb.q ] ; 5 uses
   %.114.i.i = getelementptr inbounds i8, ptr %.013.pn.i.i, i64 -48 ; 5 uses
   %i.dj = getelementptr i8, ptr %.013.pn.i.i, i64 -40
   %.114.val.i.i = load i32, ptr %i.dj, align 8, !tbaa !146
@@ -225,6 +221,7 @@ bb.r:                                             ; preds = %.preheader.i.i
 
 bb.s:                                             ; preds = %bb.r
   %i.dm = getelementptr i8, ptr %.013.pn.i.i, i64 -40 ; 2 uses
+  %5 = getelementptr i8, ptr %.1.i.i, i64 8       ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i.i13.i)
   %i.dn = load ptr, ptr %.1.i.i, align 8, !tbaa !143
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.i.i.i13.i, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false)

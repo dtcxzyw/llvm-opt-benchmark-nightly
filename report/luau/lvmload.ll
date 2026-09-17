@@ -204,7 +204,6 @@ bb.n:                                             ; preds = %._crit_edge.i
 bb.o:                                             ; preds = %bb.t, %.lr.ph.i
   %.29961127.i = phi i64 [ %.29961124.i, %.lr.ph.i ], [ %.2996.i, %bb.t ]
   %.06301126.i = phi i8 [ %.06301123.i, %.lr.ph.i ], [ %.0630.i, %bb.t ] ; 2 uses
-  %.val688.i = load ptr, ptr %i.ay, align 8
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.p, %bb.o
@@ -228,6 +227,7 @@ _ZL10readVarIntPKcmRm.exit.i.i:                   ; preds = %bb.p
   br i1 %i.bz, label %_ZL10readStringR10TempBufferIP7TStringEPKcmRm.exit.i, label %bb.q
 
 bb.q:                                             ; preds = %_ZL10readVarIntPKcmRm.exit.i.i
+  %.val688.i = load ptr, ptr %i.ay, align 8
   %i.ca = add i32 %i.bw, -1
   %i.cb = zext i32 %i.ca to i64
   %i.cc = getelementptr inbounds nuw [8 x i8], ptr %.val688.i, i64 %i.cb
@@ -630,7 +630,7 @@ bb.bd:                                            ; preds = %_ZL10readVarIntPKcm
     i8 2, label %bb.bf
     i8 7, label %bb.bg
     i8 11, label %bb.bh
-    i8 3, label %4
+    i8 3, label %bb.bi
     i8 4, label %bb.bk
     i8 5, label %.preheader1006.i
     i8 8, label %.preheader1008.i
@@ -693,14 +693,10 @@ bb.bh:                                            ; preds = %.lr.ph1157.i
   store i32 5, ptr %i.on, align 4, !tbaa !23
   br label %bb.ck
 
-4:                                                ; preds = %.lr.ph1157.i
-  %.val687.i = load ptr, ptr %i.ay, align 8
-  br label %bb.bi
-
-bb.bi:                                            ; preds = %bb.bi, %4
-  %i.oo = phi i64 [ %i.nk, %4 ], [ %i.oq, %bb.bi ] ; 2 uses
-  %.08.i.i764.i = phi i32 [ 0, %4 ], [ %i.ou, %bb.bi ]
-  %.0.i.i765.i = phi i32 [ 0, %4 ], [ %i.ov, %bb.bi ] ; 2 uses
+bb.bi:                                            ; preds = %.lr.ph1157.i, %bb.bi
+  %i.oo = phi i64 [ %i.oq, %bb.bi ], [ %i.nk, %.lr.ph1157.i ] ; 2 uses
+  %.08.i.i764.i = phi i32 [ %i.ou, %bb.bi ], [ 0, %.lr.ph1157.i ]
+  %.0.i.i765.i = phi i32 [ %i.ov, %bb.bi ], [ 0, %.lr.ph1157.i ] ; 2 uses
   %i.op = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.oo
   %.0.copyload.i.i.i766.i = load i8, ptr %i.op, align 1 ; 2 uses
   %i.oq = add i64 %i.oo, 1                        ; 2 uses
@@ -717,6 +713,7 @@ _ZL10readVarIntPKcmRm.exit.i768.i:                ; preds = %bb.bi
   br i1 %i.ow, label %_ZL10readStringR10TempBufferIP7TStringEPKcmRm.exit769.i, label %bb.bj
 
 bb.bj:                                            ; preds = %_ZL10readVarIntPKcmRm.exit.i768.i
+  %.val687.i = load ptr, ptr %i.ay, align 8
   %i.ox = add i32 %i.ou, -1
   %i.oy = zext i32 %i.ox to i64
   %i.oz = getelementptr inbounds nuw [8 x i8], ptr %.val687.i, i64 %i.oy
@@ -1099,16 +1096,12 @@ _ZL10readVarIntPKcmRm.exit803.i:                  ; preds = %.preheader1009.i
   %i.uv = or i32 %i.uu, %.08.i805.i               ; 2 uses
   %i.uw = add i32 %.0.i806.i, 7
   %.not.i808.i = icmp sgt i8 %.0.copyload.i.i807.i, -1
-  br i1 %.not.i808.i, label %_ZL10readVarIntPKcmRm.exit809.i, label %.preheader1010.i, !llvm.loop !70
+  br i1 %.not.i808.i, label %bb.cg, label %.preheader1010.i, !llvm.loop !70
 
-_ZL10readVarIntPKcmRm.exit809.i:                  ; preds = %.preheader1010.i
-  %5 = load ptr, ptr %i.mm, align 8, !tbaa !121
-  br label %bb.cg
-
-bb.cg:                                            ; preds = %bb.cg, %_ZL10readVarIntPKcmRm.exit809.i
-  %i.ux = phi i64 [ %i.ur, %_ZL10readVarIntPKcmRm.exit809.i ], [ %i.uz, %bb.cg ] ; 2 uses
-  %.08.i811.i = phi i32 [ 0, %_ZL10readVarIntPKcmRm.exit809.i ], [ %i.vd, %bb.cg ]
-  %.0.i812.i = phi i32 [ 0, %_ZL10readVarIntPKcmRm.exit809.i ], [ %i.ve, %bb.cg ] ; 2 uses
+bb.cg:                                            ; preds = %.preheader1010.i, %bb.cg
+  %i.ux = phi i64 [ %i.uz, %bb.cg ], [ %i.ur, %.preheader1010.i ] ; 2 uses
+  %.08.i811.i = phi i32 [ %i.vd, %bb.cg ], [ 0, %.preheader1010.i ]
+  %.0.i812.i = phi i32 [ %i.ve, %bb.cg ], [ 0, %.preheader1010.i ] ; 2 uses
   %i.uy = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.ux
   %.0.copyload.i.i813.i = load i8, ptr %i.uy, align 1 ; 2 uses
   %i.uz = add i64 %i.ux, 1                        ; 2 uses
@@ -1136,8 +1129,7 @@ _ZL10readVarIntPKcmRm.exit815.i:                  ; preds = %bb.cg, %_ZL10readVa
   br i1 %.not.i820.i, label %_ZL10readVarIntPKcmRm.exit821.i, label %_ZL10readVarIntPKcmRm.exit815.i, !llvm.loop !70
 
 _ZL10readVarIntPKcmRm.exit821.i:                  ; preds = %_ZL10readVarIntPKcmRm.exit815.i
-  %6 = zext i32 %i.uv to i64
-  %7 = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %6
+  %4 = load ptr, ptr %i.mm, align 8, !tbaa !121
   %i.vn = add i32 %i.vl, %i.vd                    ; 3 uses
   %i.vo = zext i32 %i.vn to i64                   ; 2 uses
   %i.vp = shl nuw nsw i64 %i.vo, 3
@@ -1154,9 +1146,11 @@ _ZL10readVarIntPKcmRm.exit821.i:                  ; preds = %_ZL10readVarIntPKcm
 
 ._crit_edge1141.i:                                ; preds = %_ZL10readVarIntPKcmRm.exit827.i, %_ZL10readVarIntPKcmRm.exit821.i
   %.11.lcssa.i = phi i64 [ %i.vh, %_ZL10readVarIntPKcmRm.exit821.i ], [ %i.wb, %_ZL10readVarIntPKcmRm.exit827.i ]
+  %5 = zext i32 %i.uv to i64
+  %6 = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %5
   %i.vt = getelementptr inbounds nuw i8, ptr %i.vs, i64 4
   store i8 1, ptr %i.vt, align 4, !tbaa !136
-  %i.vu = load ptr, ptr %7, align 8, !tbaa !21
+  %i.vu = load ptr, ptr %6, align 8, !tbaa !21
   %i.vv = call noundef ptr @_Z13luaR_newclassP9lua_StateP7TStringP8LuaTablePS2_jj(ptr noundef %0, ptr noundef %i.vu, ptr noundef %i.vs, ptr noundef %i.vr, i32 noundef %i.vd, i32 noundef %i.vl)
   %i.vw = load ptr, ptr %i.mm, align 8, !tbaa !121
   %i.vx = getelementptr inbounds nuw [16 x i8], ptr %i.vw, i64 %indvars.iv1314.i ; 2 uses
@@ -1198,8 +1192,6 @@ _ZL10readVarIntPKcmRm.exit827.i:                  ; preds = %bb.ch
   br i1 %exitcond1308.not.i, label %._crit_edge1141.i, label %.preheader1004.i, !llvm.loop !83
 
 bb.ci:                                            ; preds = %.lr.ph1157.i
-  %8 = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.nk
-  %.0.copyload.i828.i = load i8, ptr %8, align 1
   %i.wq = add i64 %.81155.i, 2
   br label %bb.cj
 
@@ -1220,6 +1212,8 @@ bb.cj:                                            ; preds = %bb.cj, %bb.ci
   br i1 %.not.i833.i, label %_ZL12readVarInt64PKcmRm.exit.i, label %bb.cj, !llvm.loop !84
 
 _ZL12readVarInt64PKcmRm.exit.i:                   ; preds = %bb.cj
+  %7 = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.nk
+  %.0.copyload.i828.i = load i8, ptr %7, align 1
   %.not681.i = icmp eq i8 %.0.copyload.i828.i, 0
   %i.xa = load ptr, ptr %i.mm, align 8, !tbaa !121
   %i.xb = getelementptr inbounds nuw [16 x i8], ptr %i.xa, i64 %indvars.iv1314.i ; 2 uses
@@ -1407,7 +1401,6 @@ bb.cw:                                            ; preds = %_ZL10readVarIntPKcm
 _ZL10readVarIntPKcmRm.exit846.i:                  ; preds = %.preheader1017.i
   %i.zq = getelementptr inbounds nuw i8, ptr %i.en, i64 164
   store i32 %i.zo, ptr %i.zq, align 4, !tbaa !141
-  %.val686.i = load ptr, ptr %i.ay, align 8
   br label %bb.cx
 
 bb.cx:                                            ; preds = %bb.cx, %_ZL10readVarIntPKcmRm.exit846.i
@@ -1430,6 +1423,7 @@ _ZL10readVarIntPKcmRm.exit.i852.i:                ; preds = %bb.cx
   br i1 %i.zz, label %_ZL10readStringR10TempBufferIP7TStringEPKcmRm.exit853.i, label %bb.cy
 
 bb.cy:                                            ; preds = %_ZL10readVarIntPKcmRm.exit.i852.i
+  %.val686.i = load ptr, ptr %i.ay, align 8
   %i.aaa = add i32 %i.zx, -1
   %i.aab = zext i32 %i.aaa to i64
   %i.aac = getelementptr inbounds nuw [8 x i8], ptr %.val686.i, i64 %i.aab
@@ -1669,7 +1663,6 @@ _ZL10readVarIntPKcmRm.exit876.i:                  ; preds = %.preheader1013.i
 .lr.ph1181.i:                                     ; preds = %bb.dd, %_ZL10readVarIntPKcmRm.exit895.i
   %indvars.iv1330.i = phi i64 [ %indvars.iv.next1331.i, %_ZL10readVarIntPKcmRm.exit895.i ], [ 0, %bb.dd ] ; 2 uses
   %.171178.i = phi i64 [ %i.afg, %_ZL10readVarIntPKcmRm.exit895.i ], [ %i.adc, %bb.dd ]
-  %.val685.i = load ptr, ptr %i.ay, align 8
   br label %bb.df
 
 bb.df:                                            ; preds = %bb.df, %.lr.ph1181.i
@@ -1692,6 +1685,7 @@ _ZL10readVarIntPKcmRm.exit.i882.i:                ; preds = %bb.df
   br i1 %i.aeg, label %_ZL10readStringR10TempBufferIP7TStringEPKcmRm.exit883.i, label %bb.dg
 
 bb.dg:                                            ; preds = %_ZL10readVarIntPKcmRm.exit.i882.i
+  %.val685.i = load ptr, ptr %i.ay, align 8
   %i.aeh = add i32 %i.aee, -1
   %i.aei = zext i32 %i.aeh to i64
   %i.aej = getelementptr inbounds nuw [8 x i8], ptr %.val685.i, i64 %i.aei
@@ -1770,7 +1764,6 @@ bb.dk:                                            ; preds = %_ZL10readVarIntPKcm
 .lr.ph1186.i:                                     ; preds = %bb.dj, %_ZL10readStringR10TempBufferIP7TStringEPKcmRm.exit903.i
   %indvars.iv1336.i = phi i64 [ %indvars.iv.next1337.i, %_ZL10readStringR10TempBufferIP7TStringEPKcmRm.exit903.i ], [ 0, %bb.dj ] ; 2 uses
   %.181183.i = phi i64 [ %i.afq, %_ZL10readStringR10TempBufferIP7TStringEPKcmRm.exit903.i ], [ %i.adr, %bb.dj ]
-  %.val.i = load ptr, ptr %i.ay, align 8
   br label %bb.dl
 
 bb.dl:                                            ; preds = %bb.dl, %.lr.ph1186.i
@@ -1793,6 +1786,7 @@ _ZL10readVarIntPKcmRm.exit.i902.i:                ; preds = %bb.dl
   br i1 %i.afw, label %_ZL10readStringR10TempBufferIP7TStringEPKcmRm.exit903.i, label %bb.dm
 
 bb.dm:                                            ; preds = %_ZL10readVarIntPKcmRm.exit.i902.i
+  %.val.i = load ptr, ptr %i.ay, align 8
   %i.afx = add i32 %i.afu, -1
   %i.afy = zext i32 %i.afx to i64
   %i.afz = getelementptr inbounds nuw [8 x i8], ptr %.val.i, i64 %i.afy

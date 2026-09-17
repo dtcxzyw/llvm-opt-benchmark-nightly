@@ -205,14 +205,10 @@ bb.m:                                             ; preds = %bb.m, %_ZSt22__move
   %i.ar = load i64, ptr %i.aq, align 8, !tbaa !301 ; 2 uses
   %i.as = icmp ult i64 %i.ar, %i.ap
   %i.at = getelementptr inbounds nuw i8, ptr %.sroa.010.1.i.i, i64 16 ; 2 uses
-  br i1 %i.as, label %bb.m, label %.preheader.i.i.preheader, !llvm.loop !637
+  br i1 %i.as, label %bb.m, label %.preheader.i.i, !llvm.loop !637
 
-.preheader.i.i.preheader:                         ; preds = %bb.m
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.010.1.i.i, i64 8
-  br label %.preheader.i.i
-
-.preheader.i.i:                                   ; preds = %.preheader.i.i.preheader, %.preheader.i.i
-  %.sroa.0.0.pn.i.i = phi ptr [ %.sroa.0.1.i.i, %.preheader.i.i ], [ %.sroa.0.0.i.i, %.preheader.i.i.preheader ] ; 3 uses
+.preheader.i.i:                                   ; preds = %bb.m, %.preheader.i.i
+  %.sroa.0.0.pn.i.i = phi ptr [ %.sroa.0.1.i.i, %.preheader.i.i ], [ %.sroa.0.0.i.i, %bb.m ] ; 3 uses
   %.sroa.0.1.i.i = getelementptr inbounds i8, ptr %.sroa.0.0.pn.i.i, i64 -16 ; 5 uses
   %i.au = getelementptr inbounds i8, ptr %.sroa.0.0.pn.i.i, i64 -8
   %i.av = load i64, ptr %i.au, align 8, !tbaa !301 ; 2 uses
@@ -225,6 +221,7 @@ bb.n:                                             ; preds = %.preheader.i.i
 
 bb.o:                                             ; preds = %bb.n
   %i.ay = getelementptr inbounds i8, ptr %.sroa.0.0.pn.i.i, i64 -8
+  %5 = getelementptr inbounds nuw i8, ptr %.sroa.010.1.i.i, i64 8
   %i.az = load ptr, ptr %.sroa.010.1.i.i, align 8, !tbaa !240
   %i.ba = load ptr, ptr %.sroa.0.1.i.i, align 8, !tbaa !240
   store ptr %i.ba, ptr %.sroa.010.1.i.i, align 8, !tbaa !240
@@ -627,20 +624,17 @@ vector.ph:                                        ; preds = %_ZN12V3NumberData13
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.u, ptr %i.v, align 8, !tbaa !451
   store i64 0, ptr %i.t, align 4
-  %4 = getelementptr inbounds nuw i8, ptr %i.t, i64 8 ; 2 uses
-  %i.w = getelementptr i8, ptr %i.t, i64 %i.s     ; 2 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 8 ; 2 uses
   %i.x = add nsw i64 %i.s, -16
   %i.y = lshr exact i64 %i.x, 3
   %i.z = add nuw nsw i64 %i.y, 1                  ; 2 uses
   %n.vec = and i64 %i.z, 4611686018427387900      ; 3 uses
-  %5 = shl i64 %n.vec, 3
-  %6 = getelementptr i8, ptr %4, i64 %5
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.aa = shl i64 %index, 3
-  %next.gep = getelementptr i8, ptr %4, i64 %i.aa ; 2 uses
+  %next.gep = getelementptr i8, ptr %i.w, i64 %i.aa ; 2 uses
   %i.ab = load i64, ptr %i.t, align 4
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.ab, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -652,6 +646,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ad, label %middle.block, label %vector.body, !llvm.loop !721
 
 middle.block:                                     ; preds = %vector.body
+  %4 = getelementptr i8, ptr %i.t, i64 %i.s       ; 2 uses
+  %5 = shl i64 %n.vec, 3
+  %6 = getelementptr i8, ptr %i.w, i64 %5
   %cmp.n = icmp eq i64 %i.z, %n.vec
   br i1 %cmp.n, label %_ZN12V3NumberData17initDynamicNumberIJiEEEvDpOT_.exit.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i
 
@@ -660,12 +657,12 @@ middle.block:                                     ; preds = %vector.body
   %i.ae = load i64, ptr %i.t, align 4
   store i64 %i.ae, ptr %.06.i.i.i.i.i.i.i.i.i.i.i, align 4
   %i.af = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i.i.i.i.i, i64 8 ; 2 uses
-  %.not.i.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.af, %i.w
+  %.not.i.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.af, %4
   br i1 %.not.i.i.i.i.i.i.i.i.i.i.i, label %_ZN12V3NumberData17initDynamicNumberIJiEEEvDpOT_.exit.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !722
 
 _ZN12V3NumberData17initDynamicNumberIJiEEEvDpOT_.exit.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i, %middle.block
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %i.w, ptr %i.ag, align 8, !tbaa !454
+  store ptr %4, ptr %i.ag, align 8, !tbaa !454
   br label %_ZN12V3NumberData8setLogicEv.exit
 
 _ZN12V3NumberData8setLogicEv.exit:                ; preds = %_ZN12V3NumberData13destroyStringEv.exit.i, %bb.d, %_ZN12V3NumberData17initDynamicNumberIJiEEEvDpOT_.exit.i
@@ -920,8 +917,6 @@ bb.j:                                             ; preds = %_ZNSt6vectorIN12V3N
 
 vector.ph:                                        ; preds = %bb.j
   %n.vec = and i64 %i.av, 4611686018427387900     ; 3 uses
-  %2 = shl i64 %n.vec, 3
-  %3 = getelementptr i8, ptr %i.ap, i64 %2
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -939,6 +934,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.az, label %middle.block, label %vector.body, !llvm.loop !724
 
 middle.block:                                     ; preds = %vector.body
+  %2 = shl i64 %n.vec, 3
+  %3 = getelementptr i8, ptr %i.ap, i64 %2
   %cmp.n = icmp eq i64 %i.av, %n.vec
   br i1 %cmp.n, label %_ZN12V3NumberData17initDynamicNumberIJiEEEvDpOT_.exit, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader
 
@@ -1079,8 +1076,6 @@ bb.d:                                             ; preds = %bb.c
 
 vector.ph:                                        ; preds = %bb.d
   %n.vec = and i64 %i.v, 4611686018427387900      ; 3 uses
-  %2 = shl i64 %n.vec, 3
-  %3 = getelementptr i8, ptr %i.p, i64 %2
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1098,6 +1093,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.z, label %middle.block, label %vector.body, !llvm.loop !727
 
 middle.block:                                     ; preds = %vector.body
+  %2 = shl i64 %n.vec, 3
+  %3 = getelementptr i8, ptr %i.p, i64 %2
   %cmp.n = icmp eq i64 %i.v, %n.vec
   br i1 %cmp.n, label %_ZSt27__uninitialized_default_n_aIPN12V3NumberData9ValueAndXEmS1_ET_S3_T0_RSaIT1_E.exit, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
@@ -1150,8 +1147,6 @@ bb.g:                                             ; preds = %_ZNKSt6vectorIN12V3
 
 vector.ph46:                                      ; preds = %bb.g
   %n.vec47 = and i64 %i.ao, 4611686018427387900   ; 3 uses
-  %4 = shl i64 %n.vec47, 3
-  %5 = getelementptr i8, ptr %i.ak, i64 %4
   br label %vector.body48
 
 vector.body48:                                    ; preds = %vector.body48, %vector.ph46
@@ -1169,6 +1164,8 @@ vector.body48:                                    ; preds = %vector.body48, %vec
   br i1 %i.as, label %middle.block54, label %vector.body48, !llvm.loop !729
 
 middle.block54:                                   ; preds = %vector.body48
+  %4 = shl i64 %n.vec47, 3
+  %5 = getelementptr i8, ptr %i.ak, i64 %4
   %cmp.n55 = icmp eq i64 %i.ao, %n.vec47
   br i1 %cmp.n55, label %_ZSt27__uninitialized_default_n_aIPN12V3NumberData9ValueAndXEmS1_ET_S3_T0_RSaIT1_E.exit35, label %.lr.ph.i.i.i.i.i.i.i31.preheader
 

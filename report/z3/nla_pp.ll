@@ -202,14 +202,10 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   %i.d = load i32, ptr %i.c, align 8, !tbaa !326
   %i.e = icmp ult i32 %i.d, %i.b
   %i.f = getelementptr inbounds nuw i8, ptr %.sroa.012.1, i64 40 ; 2 uses
-  br i1 %i.e, label %bb.c, label %.preheader, !llvm.loop !481
+  br i1 %i.e, label %bb.c, label %bb.d, !llvm.loop !481
 
-.preheader:                                       ; preds = %bb.c
-  %3 = getelementptr inbounds nuw i8, ptr %.sroa.012.1, i64 32 ; 2 uses
-  br label %bb.d
-
-bb.d:                                             ; preds = %.preheader, %bb.d
-  %.sroa.0.0.pn = phi ptr [ %.sroa.0.1, %bb.d ], [ %.sroa.0.0, %.preheader ] ; 8 uses
+bb.d:                                             ; preds = %bb.c, %bb.d
+  %.sroa.0.0.pn = phi ptr [ %.sroa.0.1, %bb.d ], [ %.sroa.0.0, %bb.c ] ; 8 uses
   %.sroa.0.1 = getelementptr inbounds i8, ptr %.sroa.0.0.pn, i64 -40 ; 5 uses
   %i.g = getelementptr inbounds i8, ptr %.sroa.0.0.pn, i64 -8
   %i.h = load i32, ptr %i.g, align 8, !tbaa !326
@@ -225,6 +221,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.j = getelementptr inbounds i8, ptr %.sroa.0.0.pn, i64 -8 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.012.1, i64 32 ; 2 uses
   %i.k = load i32, ptr %.sroa.012.1, align 4, !tbaa !26
   %i.l = load i32, ptr %.sroa.0.1, align 4, !tbaa !26
   store i32 %i.l, ptr %.sroa.012.1, align 4, !tbaa !26

@@ -204,21 +204,14 @@ bb.f:                                             ; preds = %_RNvMs_NtCsgbWeKYPj
   %i.q = getelementptr inbounds nuw i8, ptr %.sroa.0.1, i64 4
   %i.r = load i32, ptr %i.q, align 4, !range !26, !noundef !9 ; 2 uses
   %i.s = icmp eq i32 %i.r, 39
-  br i1 %i.s, label %_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit.thread, label %3
+  br i1 %i.s, label %_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit.thread, label %bb.g
 
 _RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit.thread: ; preds = %bb.b, %bb.c, %bb.f, %_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit
   store i32 -1, ptr %0, align 8
   br label %bb.i
 
-3:                                                ; preds = %bb.f
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.0.1, i64 12
-  %5 = load i8, ptr %4, align 4, !range !27, !noundef !9
-  %6 = getelementptr inbounds nuw i8, ptr %.sroa.0.1, i64 8
-  %7 = load i32, ptr %6, align 4, !noundef !9
-  br label %bb.g
-
-bb.g:                                             ; preds = %bb.g, %3
-  %.pn = phi ptr [ %.sroa.0.1, %3 ], [ %.sroa.0.0, %bb.g ]
+bb.g:                                             ; preds = %bb.f, %bb.g
+  %.pn = phi ptr [ %.sroa.0.0, %bb.g ], [ %.sroa.0.1, %bb.f ]
   %.sroa.0.0 = getelementptr inbounds nuw i8, ptr %.pn, i64 32 ; 4 uses
   %i.t = load i32, ptr %.sroa.0.0, align 8, !range !21, !noundef !9
   %i.u = icmp ne i32 %i.t, 5
@@ -227,11 +220,15 @@ bb.g:                                             ; preds = %bb.g, %3
   br i1 %or.cond, label %bb.h, label %bb.g
 
 bb.h:                                             ; preds = %bb.g
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.0.1, i64 12
+  %4 = load i8, ptr %3, align 4, !range !27, !noundef !9
+  %5 = getelementptr inbounds nuw i8, ptr %.sroa.0.1, i64 8
+  %6 = load i32, ptr %5, align 4, !noundef !9
   store i32 %i.r, ptr %0, align 8
   %.sroa.0.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %7, ptr %.sroa.0.sroa.4.0..sroa_idx, align 4
+  store i32 %6, ptr %.sroa.0.sroa.4.0..sroa_idx, align 4
   %.sroa.0.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %5, ptr %.sroa.0.sroa.5.0..sroa_idx, align 8
+  store i8 %4, ptr %.sroa.0.sroa.5.0..sroa_idx, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %.sroa.0.0, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24

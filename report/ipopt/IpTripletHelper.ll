@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
   %wide.trip.count = zext nneg i32 %i.v to i64    ; 5 uses
   %min.iters.check = icmp ult i32 %i.v, 12
   %n.vec = and i64 %wide.trip.count, 2147483640   ; 4 uses
-  %6 = shl nuw nsw i64 %n.vec, 2                  ; 2 uses
   %broadcast.splatinsert94 = insertelement <4 x i32> poison, i32 %i.b, i64 0
   %broadcast.splat95 = shufflevector <4 x i32> %broadcast.splatinsert94, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %6 = shl nuw nsw i64 %n.vec, 2                  ; 2 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
   %xtraiter = and i64 %wide.trip.count, 3         ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -232,8 +232,6 @@ vector.memcheck:                                  ; preds = %.preheader54
   br i1 %conflict.rdx93, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %7 = getelementptr i8, ptr %.04061, i64 %6      ; 2 uses
-  %8 = getelementptr i8, ptr %.04260, i64 %6      ; 2 uses
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %.03662, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body
@@ -260,6 +258,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.aj, label %middle.block, label %vector.body, !llvm.loop !266
 
 middle.block:                                     ; preds = %vector.body
+  %7 = getelementptr i8, ptr %.04061, i64 %6      ; 2 uses
+  %8 = getelementptr i8, ptr %.04260, i64 %6      ; 2 uses
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.preheader54, %middle.block
@@ -362,12 +362,12 @@ bb.c:                                             ; preds = %bb.a
   %i.cb = add nuw nsw i64 %i.ca, 1                ; 2 uses
   %min.iters.check105 = icmp ult i32 %i.bz, 7
   %n.vec107 = and i64 %i.cb, 8589934584           ; 4 uses
-  %9 = trunc i64 %n.vec107 to i32
-  %10 = add i32 %i.b, %9
-  %11 = shl nuw nsw i64 %n.vec107, 2              ; 2 uses
   %broadcast.splatinsert110 = insertelement <4 x i32> poison, i32 %i.b, i64 0
   %broadcast.splat111 = shufflevector <4 x i32> %broadcast.splatinsert110, <4 x i32> poison, <4 x i32> zeroinitializer
   %induction = add nsw <4 x i32> %broadcast.splat111, <i32 0, i32 1, i32 2, i32 3>
+  %9 = trunc i64 %n.vec107 to i32
+  %10 = add i32 %i.b, %9
+  %11 = shl nuw nsw i64 %n.vec107, 2              ; 2 uses
   %cmp.n118 = icmp eq i64 %i.cb, %n.vec107
   br label %.preheader
 
@@ -383,8 +383,6 @@ bb.c:                                             ; preds = %bb.a
   br i1 %or.cond122, label %scalar.ph104.preheader, label %vector.ph106
 
 vector.ph106:                                     ; preds = %.preheader
-  %12 = getelementptr i8, ptr %.270, i64 %11      ; 2 uses
-  %13 = getelementptr i8, ptr %.24469, i64 %11    ; 2 uses
   %broadcast.splatinsert108 = insertelement <4 x i32> poison, i32 %.03471, i64 0
   %broadcast.splat109 = shufflevector <4 x i32> %broadcast.splatinsert108, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body112
@@ -408,6 +406,8 @@ vector.body112:                                   ; preds = %vector.body112, %ve
   br i1 %i.cg, label %middle.block117, label %vector.body112, !llvm.loop !270
 
 middle.block117:                                  ; preds = %vector.body112
+  %12 = getelementptr i8, ptr %.270, i64 %11      ; 2 uses
+  %13 = getelementptr i8, ptr %.24469, i64 %11    ; 2 uses
   br i1 %cmp.n118, label %._crit_edge66, label %scalar.ph104.preheader
 
 scalar.ph104.preheader:                           ; preds = %.preheader, %middle.block117
@@ -810,14 +810,10 @@ bb.c:                                             ; preds = %.lr.ph105.split.us
   %i.ak = sub i64 %i.u, %.047103.us197
   %diff.check = icmp ugt i64 %i.ak, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
-  br i1 %or.cond, label %.preheader93.us.preheader202, label %vector.ph
+  br i1 %or.cond, label %.preheader93.us.preheader202, label %vector.body
 
-vector.ph:                                        ; preds = %.preheader93.us.preheader
-  %3 = getelementptr i8, ptr %.047103.us, i64 %i.ad ; 2 uses
-  br label %vector.body
-
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
+vector.body:                                      ; preds = %.preheader93.us.preheader, %vector.body
+  %index = phi i64 [ %index.next, %vector.body ], [ 0, %.preheader93.us.preheader ] ; 3 uses
   %i.al = shl i64 %index, 3
   %next.gep = getelementptr i8, ptr %.047103.us, i64 %i.al ; 2 uses
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %index ; 2 uses
@@ -832,6 +828,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ap, label %middle.block, label %vector.body, !llvm.loop !388
 
 middle.block:                                     ; preds = %vector.body
+  %3 = getelementptr i8, ptr %.047103.us, i64 %i.ad ; 2 uses
   br i1 %cmp.n, label %.loopexit92.us, label %.preheader93.us.preheader202
 
 .preheader93.us.preheader202:                     ; preds = %.preheader93.us.preheader, %middle.block

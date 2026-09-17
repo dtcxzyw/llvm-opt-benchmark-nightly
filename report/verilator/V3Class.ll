@@ -202,7 +202,6 @@ _ZN7AstNode2asI21AstNodeUOrStructDType12AstNodeDTypeEEPT_PT0_.exit.us: ; preds =
 ._crit_edge250:                                   ; preds = %_ZNKSt3setIPK21AstNodeUOrStructDTypeSt4lessIS2_ESaIS2_EE5countERKS2_.exit.thread, %_ZN7AstNode2asI21AstNodeUOrStructDType12AstNodeDTypeEEPT_PT0_.exit.us, %._crit_edge244
   %i.il = phi ptr [ %i.ib, %_ZN7AstNode2asI21AstNodeUOrStructDType12AstNodeDTypeEEPT_PT0_.exit.us ], [ %i.ht, %._crit_edge244 ], [ %i.ht, %_ZNKSt3setIPK21AstNodeUOrStructDTypeSt4lessIS2_ESaIS2_EE5countERKS2_.exit.thread ] ; 3 uses
   %.pre275.pre328 = phi ptr [ null, %_ZN7AstNode2asI21AstNodeUOrStructDType12AstNodeDTypeEEPT_PT0_.exit.us ], [ %i.hs, %._crit_edge244 ], [ %i.hs, %_ZNKSt3setIPK21AstNodeUOrStructDTypeSt4lessIS2_ESaIS2_EE5countERKS2_.exit.thread ] ; 4 uses
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 3 uses
   %i.im = getelementptr inbounds nuw i8, ptr %0, i64 320
   %i.in = load ptr, ptr %i.im, align 8, !tbaa !75 ; 3 uses
   %i.io = getelementptr inbounds nuw i8, ptr %0, i64 304 ; 3 uses
@@ -210,7 +209,6 @@ _ZN7AstNode2asI21AstNodeUOrStructDType12AstNodeDTypeEEPT_PT0_.exit.us: ; preds =
   br i1 %.not201252, label %._crit_edge256, label %.lr.ph255
 
 ._crit_edge250.thread:                            ; preds = %._crit_edge244.thread
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 2 uses
   %i.ip = getelementptr inbounds nuw i8, ptr %0, i64 320
   %i.iq = load ptr, ptr %i.ip, align 8, !tbaa !75 ; 2 uses
   %i.ir = getelementptr inbounds nuw i8, ptr %0, i64 304 ; 2 uses
@@ -223,7 +221,6 @@ _ZN7AstNode2asI21AstNodeUOrStructDType12AstNodeDTypeEEPT_PT0_.exit.us: ; preds =
 
 _ZNKSt3setIPK21AstNodeUOrStructDTypeSt4lessIS2_ESaIS2_EE5countERKS2_.exit147.thread.us.preheader: ; preds = %._crit_edge250.thread, %.lr.ph255
   %i.is = phi ptr [ %i.il, %.lr.ph255 ], [ %i.hx, %._crit_edge250.thread ]
-  %14 = phi ptr [ %12, %.lr.ph255 ], [ %13, %._crit_edge250.thread ]
   %i.it = phi ptr [ %i.in, %.lr.ph255 ], [ %i.iq, %._crit_edge250.thread ]
   %i.iu = phi ptr [ %i.io, %.lr.ph255 ], [ %i.ir, %._crit_edge250.thread ]
   br label %_ZNKSt3setIPK21AstNodeUOrStructDTypeSt4lessIS2_ESaIS2_EE5countERKS2_.exit147.thread.us
@@ -327,10 +324,10 @@ _ZNKSt3setIPK21AstNodeUOrStructDTypeSt4lessIS2_ESaIS2_EE5countERKS2_.exit.thread
   br i1 %.not200, label %._crit_edge250, label %.lr.ph249.split
 
 ._crit_edge256:                                   ; preds = %bb.bo, %_ZNKSt3setIPK21AstNodeUOrStructDTypeSt4lessIS2_ESaIS2_EE5countERKS2_.exit147.thread.us, %._crit_edge250.thread, %._crit_edge250
-  %i.jx = phi ptr [ %13, %._crit_edge250.thread ], [ %14, %_ZNKSt3setIPK21AstNodeUOrStructDTypeSt4lessIS2_ESaIS2_EE5countERKS2_.exit147.thread.us ], [ %12, %._crit_edge250 ], [ %12, %bb.bo ]
-  %.pre275.pre328335 = phi ptr [ null, %._crit_edge250.thread ], [ null, %_ZNKSt3setIPK21AstNodeUOrStructDTypeSt4lessIS2_ESaIS2_EE5countERKS2_.exit147.thread.us ], [ %.pre275.pre328, %._crit_edge250 ], [ %.pre275.pre328, %bb.bo ]
-  %15 = phi ptr [ %i.hx, %._crit_edge250.thread ], [ %i.is, %_ZNKSt3setIPK21AstNodeUOrStructDTypeSt4lessIS2_ESaIS2_EE5countERKS2_.exit147.thread.us ], [ %i.il, %._crit_edge250 ], [ %i.il, %bb.bo ]
-  invoke void @_ZNSt8_Rb_treeIPK21AstNodeUOrStructDTypeS2_St9_IdentityIS2_ESt4lessIS2_ESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E(ptr noundef nonnull align 8 dereferenceable(48) %11, ptr noundef %.pre275.pre328335)
+  %i.jx = phi ptr [ null, %._crit_edge250.thread ], [ null, %_ZNKSt3setIPK21AstNodeUOrStructDTypeSt4lessIS2_ESaIS2_EE5countERKS2_.exit147.thread.us ], [ %.pre275.pre328, %._crit_edge250 ], [ %.pre275.pre328, %bb.bo ]
+  %.pre275.pre328335 = phi ptr [ %i.hx, %._crit_edge250.thread ], [ %i.is, %_ZNKSt3setIPK21AstNodeUOrStructDTypeSt4lessIS2_ESaIS2_EE5countERKS2_.exit147.thread.us ], [ %i.il, %._crit_edge250 ], [ %i.il, %bb.bo ]
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 296
+  invoke void @_ZNSt8_Rb_treeIPK21AstNodeUOrStructDTypeS2_St9_IdentityIS2_ESt4lessIS2_ESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E(ptr noundef nonnull align 8 dereferenceable(48) %11, ptr noundef %i.jx)
           to label %_ZNSt3setIPK21AstNodeUOrStructDTypeSt4lessIS2_ESaIS2_EED2Ev.exit unwind label %bb.bd
 
 bb.bd:                                            ; preds = %._crit_edge256
@@ -378,7 +375,7 @@ _ZNSt11_Deque_baseIP21AstNodeUOrStructDTypeSaIS1_EE16_M_destroy_nodesEPPS1_S5_.e
 _ZNSt5queueIP21AstNodeUOrStructDTypeSt5dequeIS1_SaIS1_EEED2Ev.exit: ; preds = %_ZNSt3setIPK21AstNodeUOrStructDTypeSt4lessIS2_ESaIS2_EED2Ev.exit, %_ZNSt11_Deque_baseIP21AstNodeUOrStructDTypeSaIS1_EE16_M_destroy_nodesEPPS1_S5_.exit.i.i.i
   %i.ko = getelementptr inbounds nuw i8, ptr %0, i64 312
   %i.kp = load ptr, ptr %i.ko, align 8, !tbaa !74
-  invoke void @_ZNSt8_Rb_treeIP21AstNodeUOrStructDTypeS1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE8_M_eraseEPSt13_Rb_tree_nodeIS1_E(ptr noundef nonnull align 8 dereferenceable(48) %i.jx, ptr noundef %i.kp)
+  invoke void @_ZNSt8_Rb_treeIP21AstNodeUOrStructDTypeS1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE8_M_eraseEPSt13_Rb_tree_nodeIS1_E(ptr noundef nonnull align 8 dereferenceable(48) %12, ptr noundef %i.kp)
           to label %_ZNSt3setIP21AstNodeUOrStructDTypeSt4lessIS1_ESaIS1_EED2Ev.exit unwind label %bb.bf
 
 bb.bf:                                            ; preds = %_ZNSt5queueIP21AstNodeUOrStructDTypeSt5dequeIS1_SaIS1_EEED2Ev.exit
@@ -391,7 +388,7 @@ bb.bf:                                            ; preds = %_ZNSt5queueIP21AstN
 _ZNSt3setIP21AstNodeUOrStructDTypeSt4lessIS1_ESaIS1_EED2Ev.exit: ; preds = %_ZNSt5queueIP21AstNodeUOrStructDTypeSt5dequeIS1_SaIS1_EEED2Ev.exit
   %i.ks = getelementptr inbounds nuw i8, ptr %0, i64 264
   %i.kt = load ptr, ptr %i.ks, align 8, !tbaa !74
-  invoke void @_ZNSt8_Rb_treeIP10AstTypedefS1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE8_M_eraseEPSt13_Rb_tree_nodeIS1_E(ptr noundef nonnull align 8 dereferenceable(48) %15, ptr noundef %i.kt)
+  invoke void @_ZNSt8_Rb_treeIP10AstTypedefS1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE8_M_eraseEPSt13_Rb_tree_nodeIS1_E(ptr noundef nonnull align 8 dereferenceable(48) %.pre275.pre328335, ptr noundef %i.kt)
           to label %_ZNSt3setIP10AstTypedefSt4lessIS1_ESaIS1_EED2Ev.exit unwind label %bb.bg
 
 bb.bg:                                            ; preds = %_ZNSt3setIP21AstNodeUOrStructDTypeSt4lessIS1_ESaIS1_EED2Ev.exit

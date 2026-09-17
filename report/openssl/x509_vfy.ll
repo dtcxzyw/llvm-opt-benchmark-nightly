@@ -202,19 +202,15 @@ bb.ac:                                            ; preds = %X509_self_signed.ex
   %or.cond4 = and i1 %i.bv, %i.bu
   %.not228 = icmp eq i32 %.lobit, 0
   %spec.select247 = select i1 %or.cond4, i1 %.not228, i1 false
-  br i1 %spec.select247, label %.lr.ph.preheader, label %bb.ad, !prof !196
+  br i1 %spec.select247, label %.lr.ph, label %bb.ad, !prof !196
 
 bb.ad:                                            ; preds = %bb.ac
   %i.bw = load ptr, ptr %i.a, align 8, !tbaa !95
   call void @X509_free(ptr noundef %i.bw) #11
   br label %.critedge.sink.split
 
-.lr.ph.preheader:                                 ; preds = %bb.ac
-  %1 = and i32 %.2183336, -5                      ; 4 uses
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.0192334 = phi i32 [ %i.bz, %.lr.ph ], [ %i.ba, %.lr.ph.preheader ]
+.lr.ph:                                           ; preds = %bb.ac, %.lr.ph
+  %.0192334 = phi i32 [ %i.bz, %.lr.ph ], [ %i.ba, %bb.ac ]
   %i.bx = load ptr, ptr %i.d, align 8, !tbaa !61
   %i.by = call ptr @OPENSSL_sk_pop(ptr noundef %i.bx) #11
   call void @X509_free(ptr noundef %i.by) #11
@@ -223,6 +219,7 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %i.ca, label %.lr.ph, label %._crit_edge, !llvm.loop !194
 
 ._crit_edge:                                      ; preds = %.lr.ph
+  %1 = and i32 %.2183336, -5                      ; 4 uses
   store i32 %.0172338, ptr %i.h, align 4, !tbaa !92
   br i1 %i.n, label %bb.ae, label %.critedge249.thread
 

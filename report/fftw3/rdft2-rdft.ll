@@ -204,7 +204,6 @@ bb.a:
 
 .lr.ph75:                                         ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 56 ; 5 uses
-  %5 = mul nsw i64 %i.l, %.fr121                  ; 10 uses
   %i.u = icmp sgt i64 %.fr121, 0
   %i.v = add i64 %.fr, -3                         ; 4 uses
   %i.w = lshr i64 %i.v, 1                         ; 9 uses
@@ -213,7 +212,8 @@ bb.a:
   %i.z = add i64 %i.y, 4
   %i.aa = icmp eq i64 %.fr, 2
   %i.ab = icmp eq i64 %i.z, %.fr
-  %i.ac = mul nsw i64 %i.x, %i.p                  ; 2 uses
+  %5 = mul nsw i64 %i.x, %i.p                     ; 2 uses
+  %i.ac = mul nsw i64 %i.l, %.fr121               ; 10 uses
   br i1 %i.u, label %.lr.ph75.split.us, label %.lr.ph75.split
 
 .lr.ph75.split.us:                                ; preds = %.lr.ph75
@@ -449,9 +449,9 @@ middle.block286:                                  ; preds = %vector.body277
 ._crit_edge.loopexit.i.us.us.us.us.us:            ; preds = %.lr.ph.i.us.us.us.us.us.prol.loopexit, %.lr.ph.i.us.us.us.us.us, %middle.block286
   %i.ej = getelementptr inbounds nuw [8 x i8], ptr %i.bz, i64 %i.x
   %i.ek = load double, ptr %i.ej, align 8, !tbaa !27
-  %i.el = getelementptr inbounds [8 x i8], ptr %.15054.us.us.us.us.us, i64 %i.ac
+  %i.el = getelementptr inbounds [8 x i8], ptr %.15054.us.us.us.us.us, i64 %5
   store double %i.ek, ptr %i.el, align 8, !tbaa !27
-  %i.em = getelementptr inbounds [8 x i8], ptr %.155.us.us.us.us.us, i64 %i.ac
+  %i.em = getelementptr inbounds [8 x i8], ptr %.155.us.us.us.us.us, i64 %5
   store double 0.000000e+00, ptr %i.em, align 8, !tbaa !27
   %i.en = add nuw nsw i64 %.056.us.us.us.us.us, 1 ; 2 uses
   %i.eo = getelementptr inbounds [8 x i8], ptr %.15054.us.us.us.us.us, i64 %i.n ; 3 uses
@@ -460,8 +460,8 @@ middle.block286:                                  ; preds = %vector.body277
   br i1 %exitcond148.not, label %._crit_edge.split.us.us.us.split.us.us, label %.lr.ph.preheader.i.us.us.us.us.us, !llvm.loop !59
 
 ._crit_edge.split.us.us.us.split.us.us:           ; preds = %._crit_edge.loopexit.i.us.us.us.us.us
-  %i.eq = getelementptr inbounds [8 x i8], ptr %.05269.us.us.us, i64 %5 ; 2 uses
-  %i.er = getelementptr inbounds [8 x i8], ptr %.05170.us.us.us, i64 %5 ; 2 uses
+  %i.eq = getelementptr inbounds [8 x i8], ptr %.05269.us.us.us, i64 %i.ac ; 2 uses
+  %i.er = getelementptr inbounds [8 x i8], ptr %.05170.us.us.us, i64 %i.ac ; 2 uses
   %i.es = add nuw nsw i64 %.04773.us.us.us, %.fr121 ; 2 uses
   %.not.us.us.us = icmp sgt i64 %i.es, %i.d
   br i1 %.not.us.us.us, label %._crit_edge76, label %.lr.ph.us.us.us, !llvm.loop !60
@@ -635,8 +635,8 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond147.not, label %._crit_edge.split.us.us.us.split, label %.lr.ph.preheader.i.us.us.us, !llvm.loop !59
 
 ._crit_edge.split.us.us.us.split:                 ; preds = %._crit_edge.loopexit.i.us.us.us
-  %i.hn = getelementptr inbounds [8 x i8], ptr %.05269.us.us, i64 %5 ; 2 uses
-  %i.ho = getelementptr inbounds [8 x i8], ptr %.05170.us.us, i64 %5 ; 2 uses
+  %i.hn = getelementptr inbounds [8 x i8], ptr %.05269.us.us, i64 %i.ac ; 2 uses
+  %i.ho = getelementptr inbounds [8 x i8], ptr %.05170.us.us, i64 %i.ac ; 2 uses
   %i.hp = add nuw nsw i64 %.04773.us.us, %.fr121  ; 2 uses
   %.not.us.us = icmp sgt i64 %i.hp, %i.d
   br i1 %.not.us.us, label %._crit_edge76, label %.lr.ph.us.us, !llvm.loop !60
@@ -645,18 +645,16 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.aa, label %.lr.ph.us.us98.preheader, label %.lr.ph.us.preheader
 
 .lr.ph.us.preheader:                              ; preds = %.lr.ph75.split.us.split
-  %6 = add nsw i64 %.fr121, -1
   %xtraiter = and i64 %.fr121, 7                  ; 3 uses
-  %i.hq = icmp ult i64 %6, 7
+  %i.hq = icmp ult i64 %.fr121, 8
   %unroll_iter = and i64 %.fr121, 9223372036854775800
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod313 = icmp ne i64 %xtraiter, 0
   br label %.lr.ph.us
 
 .lr.ph.us.us98.preheader:                         ; preds = %.lr.ph75.split.us.split
-  %7 = add nsw i64 %.fr121, -1
   %xtraiter314 = and i64 %.fr121, 3               ; 3 uses
-  %i.hr = icmp ult i64 %7, 3
+  %i.hr = icmp ult i64 %.fr121, 4
   %unroll_iter320 = and i64 %.fr121, 9223372036854775804
   %lcmp.mod316.not = icmp eq i64 %xtraiter314, 0
   %lcmp.mod319 = icmp ne i64 %xtraiter314, 0
@@ -773,8 +771,8 @@ middle.block:                                     ; preds = %vector.body
 ._crit_edge.split.split.us.us.us:                 ; preds = %._crit_edge.i.us59.us.us.epil, %._crit_edge.split.split.us.us.us.unr-lcssa
   %.lcssa300 = phi ptr [ %i.jf, %._crit_edge.split.split.us.us.us.unr-lcssa ], [ %i.jp, %._crit_edge.i.us59.us.us.epil ] ; 2 uses
   %.lcssa299 = phi ptr [ %i.jg, %._crit_edge.split.split.us.us.us.unr-lcssa ], [ %i.jq, %._crit_edge.i.us59.us.us.epil ] ; 2 uses
-  %i.jr = getelementptr inbounds [8 x i8], ptr %.05269.us.us103, i64 %5 ; 2 uses
-  %i.js = getelementptr inbounds [8 x i8], ptr %.05170.us.us102, i64 %5 ; 2 uses
+  %i.jr = getelementptr inbounds [8 x i8], ptr %.05269.us.us103, i64 %i.ac ; 2 uses
+  %i.js = getelementptr inbounds [8 x i8], ptr %.05170.us.us102, i64 %i.ac ; 2 uses
   %i.jt = add nuw nsw i64 %.04773.us.us99, %.fr121 ; 2 uses
   %.not.us.us104 = icmp sgt i64 %i.jt, %i.d
   br i1 %.not.us.us104, label %._crit_edge76, label %.lr.ph.us.us98, !llvm.loop !60
@@ -892,8 +890,8 @@ middle.block:                                     ; preds = %vector.body
 ._crit_edge.split.split.us86:                     ; preds = %._crit_edge.i.us.epil, %._crit_edge.split.split.us86.unr-lcssa
   %.lcssa305 = phi ptr [ %i.lp, %._crit_edge.split.split.us86.unr-lcssa ], [ %i.lv, %._crit_edge.i.us.epil ] ; 2 uses
   %.lcssa304 = phi ptr [ %i.lq, %._crit_edge.split.split.us86.unr-lcssa ], [ %i.lw, %._crit_edge.i.us.epil ] ; 2 uses
-  %i.lx = getelementptr inbounds [8 x i8], ptr %.05269.us, i64 %5 ; 2 uses
-  %i.ly = getelementptr inbounds [8 x i8], ptr %.05170.us, i64 %5 ; 2 uses
+  %i.lx = getelementptr inbounds [8 x i8], ptr %.05269.us, i64 %i.ac ; 2 uses
+  %i.ly = getelementptr inbounds [8 x i8], ptr %.05170.us, i64 %i.ac ; 2 uses
   %i.lz = add nuw nsw i64 %.04773.us, %.fr121     ; 2 uses
   %.not.us = icmp sgt i64 %i.lz, %i.d
   br i1 %.not.us, label %._crit_edge76, label %.lr.ph.us, !llvm.loop !60
@@ -904,8 +902,8 @@ middle.block:                                     ; preds = %vector.body
   %.05269 = phi ptr [ %i.mb, %.lr.ph75.split ], [ %1, %.lr.ph75 ] ; 2 uses
   %i.ma = load ptr, ptr %i.t, align 8, !tbaa !26
   tail call void %i.ma(ptr noundef %i.b, ptr noundef %.05269, ptr noundef %i.s) #4
-  %i.mb = getelementptr inbounds [8 x i8], ptr %.05269, i64 %5 ; 2 uses
-  %i.mc = getelementptr inbounds [8 x i8], ptr %.05170, i64 %5 ; 2 uses
+  %i.mb = getelementptr inbounds [8 x i8], ptr %.05269, i64 %i.ac ; 2 uses
+  %i.mc = getelementptr inbounds [8 x i8], ptr %.05170, i64 %i.ac ; 2 uses
   %i.md = add nsw i64 %.04773, %.fr121            ; 2 uses
   %.not = icmp sgt i64 %i.md, %i.d
   br i1 %.not, label %._crit_edge76, label %.lr.ph75.split, !llvm.loop !60
