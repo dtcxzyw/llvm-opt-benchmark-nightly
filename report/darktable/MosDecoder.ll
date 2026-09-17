@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %.sroa.047.0.copyload = load ptr, ptr %i.l, align 8 ; 2 uses
   %.sroa.750.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 24
-  %.sroa.750.0.copyload = load i32, ptr %.sroa.750.0..sroa_idx, align 8 ; 7 uses
+  %.sroa.750.0.copyload = load i32, ptr %.sroa.750.0..sroa_idx, align 8 ; 6 uses
   %.sroa.1558.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 32
   %.sroa.1558.0.copyload = load i32, ptr %.sroa.1558.0..sroa_idx, align 8 ; 3 uses
   %i.m = icmp sgt i32 %.sroa.750.0.copyload, -1
@@ -217,14 +217,13 @@ bb.b:                                             ; preds = %_ZNSt7__cxx1112basi
 
 .lr.ph.preheader:                                 ; preds = %bb.b
   %i.q = zext nneg i32 %.sroa.1558.0.copyload to i64
-  %i.r = zext nneg i32 %.sroa.750.0.copyload to i64 ; 2 uses
+  %i.r = zext nneg i32 %.sroa.750.0.copyload to i64 ; 3 uses
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN8rawspeed10ByteStream9skipBytesEj.exit41
-  %indvars.iv = phi i64 [ %i.q, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZN8rawspeed10ByteStream9skipBytesEj.exit41 ] ; 4 uses
-  %indvars89 = trunc i64 %indvars.iv to i32       ; 2 uses
-  %6 = add i32 %indvars89, 16
-  %i.s = icmp samesign ule i32 %6, %.sroa.750.0.copyload
+  %indvars.iv = phi i64 [ %i.q, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZN8rawspeed10ByteStream9skipBytesEj.exit41 ] ; 5 uses
+  %6 = add nuw nsw i64 %indvars.iv, 16
+  %i.s = icmp samesign ule i64 %6, %i.r
   call void @llvm.assume(i1 %i.s)
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.047.0.copyload, i64 %indvars.iv ; 16 uses
   %i.u = load i8, ptr %i.t, align 1, !tbaa !20
@@ -322,7 +321,8 @@ bb.b:                                             ; preds = %_ZNSt7__cxx1112basi
   br i1 %i.az, label %bb.c, label %_ZN8rawspeed10ByteStream9skipBytesEj.exit41
 
 bb.c:                                             ; preds = %.lr.ph.i.i.i.i.i.i.i.15
-  %narrow = add i32 %indvars89, 44                ; 3 uses
+  %7 = trunc nuw i64 %indvars.iv to i32
+  %narrow = add i32 %7, 44                        ; 3 uses
   %.not.i.i = icmp ugt i32 %narrow, %.sroa.750.0.copyload
   br i1 %.not.i.i, label %bb.d, label %_ZN8rawspeed10ByteStream9skipBytesEj.exit
 
