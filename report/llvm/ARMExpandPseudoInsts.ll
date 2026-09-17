@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %.173 = phi i32 [ %i.ap, %.lr.ph ], [ %.077, %.lr.ph.preheader ] ; 2 uses
-  %i.ap = add i32 %.173, 1                        ; 2 uses
+  %i.ap = add nsw i32 %.173, 1                    ; 2 uses
   %i.aq = add i32 %.173, 88
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #20
   store ptr null, ptr %i.j, align 8, !tbaa !198, !alias.scope !2045

@@ -204,15 +204,15 @@ bb.uw:                                            ; preds = %bb.uv
   %i.bxe = getelementptr inbounds nuw i8, ptr %i.bwy, i64 24
   %i.bxf = load float, ptr %i.bxe, align 4, !tbaa !1746 ; 3 uses
   %i.bxg = fcmp reassoc nsz arcp contract afn olt float %i.bxb, %i.bwz ; 2 uses
-  %111 = select i1 %i.bxg, float %i.bwz, float %i.bxb ; 2 uses
+  %111 = fcmp reassoc nsz arcp contract afn olt float %i.bxf, %i.bxd ; 2 uses
   %i.bxh = select i1 %i.bxg, float %i.bxb, float %i.bwz ; 2 uses
-  %112 = fcmp reassoc nsz arcp contract afn olt float %i.bxf, %i.bxd ; 2 uses
-  %..i = select i1 %112, float %i.bxf, float %i.bxd ; 2 uses
-  %.1274.i = select i1 %112, float %i.bxd, float %i.bxf ; 2 uses
+  %112 = select i1 %i.bxg, float %i.bwz, float %i.bxb ; 2 uses
+  %..i = select i1 %111, float %i.bxf, float %i.bxd ; 2 uses
+  %.1274.i = select i1 %111, float %i.bxd, float %i.bxf ; 2 uses
   %i.bxi = fcmp reassoc nsz arcp contract afn olt float %..i, %i.bxh
-  %i.bxj = fcmp reassoc nsz arcp contract afn olt float %.1274.i, %111
+  %i.bxj = fcmp reassoc nsz arcp contract afn olt float %.1274.i, %112
   %i.bxk = select i1 %i.bxi, float %..i, float %i.bxh
-  %i.bxl = select i1 %i.bxj, float %111, float %.1274.i
+  %i.bxl = select i1 %i.bxj, float %112, float %.1274.i
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8.i)
@@ -232,10 +232,10 @@ bb.uw:                                            ; preds = %bb.uv
   %i.bxu = fcmp reassoc nsz arcp contract afn olt float %i.bxp, %i.bxn ; 4 uses
   %spec.select.i.i352.i = select i1 %i.bxu, ptr %.sroa.5.i, ptr %.sroa.0.i
   %spec.select47.i.i353.i = select i1 %i.bxu, ptr %.sroa.0.i, ptr %.sroa.5.i
-  %113 = select i1 %i.bxu, float %i.bxn, float %i.bxp
+  %113 = fcmp reassoc nsz arcp contract afn olt float %i.bxt, %i.bxr
   %i.bxv = select i1 %i.bxu, float %i.bxp, float %i.bxn
-  %114 = fcmp reassoc nsz arcp contract afn olt float %i.bxt, %i.bxr
-  br i1 %114, label %bb.uy, label %bb.ux
+  %114 = select i1 %i.bxu, float %i.bxn, float %i.bxp
+  br i1 %113, label %bb.uy, label %bb.ux
 
 bb.ux:                                            ; preds = %.lr.ph.i.i351.i
   br label %bb.uy
@@ -247,7 +247,7 @@ bb.uy:                                            ; preds = %bb.ux, %.lr.ph.i.i3
   %.sroa.12.sink.i = phi ptr [ %.sroa.12.i, %bb.ux ], [ %.sroa.8.i, %.lr.ph.i.i351.i ]
   %i.bxw = fcmp reassoc nsz arcp contract afn olt float %.sink1273.i, %i.bxv
   %spec.select50.i.i361.i = select i1 %i.bxw, ptr %.sroa.8.sink.i, ptr %spec.select.i.i352.i
-  %i.bxx = fcmp reassoc nsz arcp contract afn olt float %.sink1272.i, %113
+  %i.bxx = fcmp reassoc nsz arcp contract afn olt float %.sink1272.i, %114
   %spec.select52.i.i362.i = select i1 %i.bxx, ptr %spec.select47.i.i353.i, ptr %.sroa.12.sink.i
   %i.bxy = load float, ptr %spec.select50.i.i361.i, align 4, !tbaa !1746
   %i.bxz = load float, ptr %spec.select52.i.i362.i, align 4, !tbaa !1746
