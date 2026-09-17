@@ -202,15 +202,16 @@ bb.a:
 .lr.ph.i:                                         ; preds = %compare_ipv6_block.exit, %bb.a
   %.021.i = phi i64 [ %.1.i, %compare_ipv6_block.exit ], [ 24, %bb.a ] ; 2 uses
   %.01620.i = phi i64 [ %.117.i, %compare_ipv6_block.exit ], [ 0, %bb.a ] ; 2 uses
-  %i.a = add i64 %.01620.i, %.021.i
+  %i.a = add i64 %.01620.i, %.021.i               ; 2 uses
   %i.b = lshr i64 %i.a, 1                         ; 3 uses
   %i.c = mul i64 %i.b, 56
   %i.d = getelementptr i8, ptr @__ipv6_special_block, i64 %i.c ; 4 uses
   %i.e = getelementptr i8, ptr %i.d, i64 4        ; 2 uses
   %i.f = getelementptr i8, ptr %i.d, i64 20
-  %i.g = load i32, ptr %i.f, align 4              ; 4 uses
-  %1 = icmp ugt i32 %i.g, 7
-  br i1 %1, label %.lr.ph.preheader.i, label %._crit_edge.i
+  %i.g = load i32, ptr %i.f, align 4              ; 3 uses
+  %1 = and i64 %i.a, 4611686018427387902
+  %.not = icmp eq i64 %1, 44
+  br i1 %.not, label %._crit_edge.i, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %.lr.ph.i
   %i.h = add i32 %i.g, -8
