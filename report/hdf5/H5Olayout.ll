@@ -204,13 +204,13 @@ bb.j:                                             ; preds = %bb.g
 bb.k:                                             ; preds = %bb.b
   %i.cd = load i32, ptr %i.h, align 4, !tbaa !22
   %i.ce = icmp ult i32 %i.cd, 4
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 3 ; 2 uses
   br i1 %i.ce, label %bb.l, label %bb.n
 
 bb.l:                                             ; preds = %bb.k
   %i.cf = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
   %i.cg = load i32, ptr %i.cf, align 8, !tbaa !21
   %i.ch = trunc i32 %i.cg to i8
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 3
   store ptr %5, ptr %i.a, align 8, !tbaa !10
   store i8 %i.ch, ptr %i.m, align 1, !tbaa !21
   %i.ci = getelementptr inbounds nuw i8, ptr %4, i64 2208
@@ -263,15 +263,15 @@ bb.m:                                             ; preds = %.lr.ph140, %bb.m
   br i1 %i.dj, label %bb.m, label %.loopexit, !llvm.loop !44
 
 bb.n:                                             ; preds = %bb.k
-  %i.dk = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 20 ; 2 uses
-  %7 = load i8, ptr %6, align 4, !tbaa !21
-  store i8 %7, ptr %i.m, align 1, !tbaa !21
+  %i.dk = getelementptr inbounds nuw i8, ptr %4, i64 20 ; 2 uses
+  %6 = load i8, ptr %i.dk, align 4, !tbaa !21
+  %7 = getelementptr inbounds nuw i8, ptr %3, i64 3
+  store i8 %6, ptr %i.m, align 1, !tbaa !21
   %i.dl = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
   %i.dm = load i32, ptr %i.dl, align 8, !tbaa !21
   %i.dn = trunc i32 %i.dm to i8
   %i.do = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i8 %i.dn, ptr %5, align 1, !tbaa !21
+  store i8 %i.dn, ptr %7, align 1, !tbaa !21
   %i.dp = getelementptr inbounds nuw i8, ptr %4, i64 296 ; 3 uses
   %i.dq = load i32, ptr %i.dp, align 8, !tbaa !21
   %i.dr = trunc i32 %i.dq to i8
@@ -333,12 +333,13 @@ bb.o:                                             ; preds = %.lr.ph133, %._crit_
 
 ._crit_edge134:                                   ; preds = %._crit_edge, %bb.n
   %i.en = phi ptr [ %i.ds, %bb.n ], [ %i.ek, %._crit_edge ] ; 2 uses
-  %i.eo = load i32, ptr %i.dk, align 8, !tbaa !21
+  %8 = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
+  %i.eo = load i32, ptr %8, align 8, !tbaa !21
   %i.ep = trunc i32 %i.eo to i8
   %i.eq = getelementptr inbounds nuw i8, ptr %i.en, i64 1
   store ptr %i.eq, ptr %i.a, align 8, !tbaa !10
   store i8 %i.ep, ptr %i.en, align 1, !tbaa !21
-  %i.er = load i32, ptr %i.dk, align 8, !tbaa !21
+  %i.er = load i32, ptr %8, align 8, !tbaa !21
   switch i32 %i.er, label %bb.z [
     i32 0, label %bb.p
     i32 2, label %bb.aa
@@ -355,7 +356,7 @@ bb.p:                                             ; preds = %._crit_edge134
   br label %.loopexit
 
 bb.q:                                             ; preds = %._crit_edge134
-  %i.ev = load i8, ptr %6, align 4, !tbaa !21
+  %i.ev = load i8, ptr %i.dk, align 4, !tbaa !21
   %i.ew = and i8 %i.ev, 2
   %.not = icmp eq i8 %i.ew, 0
   br i1 %.not, label %bb.aa, label %bb.r
@@ -758,7 +759,6 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.k = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %2, ptr noundef nonnull @.str.41, i32 noundef %3, ptr noundef nonnull @.str.39, i32 noundef %4, ptr noundef nonnull @.str.42, ptr noundef nonnull @.str.43) #10 ; 0 uses
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 4 uses
   %i.m = load i32, ptr %i.l, align 8, !tbaa !21
   %i.n = zext i32 %i.m to i64
@@ -788,6 +788,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.ac, label %.peel.next, label %._crit_edge, !llvm.loop !61
 
 ._crit_edge:                                      ; preds = %.peel.next, %.lr.ph107, %bb.c
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 16
   %fwrite = tail call i64 @fwrite(ptr nonnull @.str.50, i64 2, i64 1, ptr %2) ; 0 uses
   %i.ad = load i32, ptr %5, align 8, !tbaa !21    ; 2 uses
   switch i32 %i.ad, label %bb.j [

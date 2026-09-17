@@ -205,8 +205,6 @@ bb.a:
   %i.h = add nsw i32 %i.d, 8
   %i.i = sdiv i32 %i.h, 9
   %i.j = select i1 %i.g, i32 6, i32 %i.i          ; 2 uses
-  %1 = add nuw nsw i32 %i.d, 457
-  %2 = sdiv i32 %1, 512
   %i.k = sext i32 %i.b to i64
   %i.l = tail call noalias nonnull ptr @ruby_xmalloc2(i64 noundef %i.k, i64 noundef 4) #21 ; 3 uses
   %i.m = icmp sgt i32 %i.j, 0
@@ -235,8 +233,9 @@ bb.a:
   br i1 %i.t, label %.preheader43.preheader.i, label %succ_index_table_invert.exit
 
 .preheader43.preheader.i:                         ; preds = %.preheader44.i
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %2, i32 1)
-  %wide.trip.count71.i = zext nneg i32 %smax.i to i64
+  %1 = add nuw nsw i32 %i.d, 457
+  %2 = lshr i32 %1, 9
+  %wide.trip.count71.i = zext nneg i32 %2 to i64
   br label %.preheader43.i
 
 bb.b:                                             ; preds = %.preheader45.i
@@ -639,8 +638,6 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %.lr.p
   %i.ay = zext i32 %.151.i to i64
   %i.az = getelementptr [8 x i8], ptr %i.ab, i64 %i.ay
   %i.ba = load i64, ptr %i.az, align 8, !tbaa !19 ; 2 uses
-  %1 = getelementptr i8, ptr @rb_vm_insn_len_info, i64 %i.ba
-  %2 = load i8, ptr %1, align 1, !tbaa !89
   %i.bb = getelementptr [2 x i8], ptr @rb_vm_insn_op_offset, i64 %i.ba
   %i.bc = load i16, ptr %i.bb, align 2, !tbaa !223
   %i.bd = zext i16 %i.bc to i64
@@ -744,6 +741,8 @@ bb.v:                                             ; preds = %iseqw_new.exit, %bb
   br label %bb.k, !llvm.loop !5
 
 bb.w:                                             ; preds = %bb.k
+  %1 = getelementptr i8, ptr @rb_vm_insn_len_info, i64 %i.ba
+  %2 = load i8, ptr %1, align 1, !tbaa !89
   %i.cp = zext i8 %2 to i32
   %i.cq = add i32 %.151.i, %i.cp                  ; 2 uses
   %i.cr = load i32, ptr %i.aw, align 4, !tbaa !88
@@ -1146,8 +1145,6 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %.lr.p
   %i.w = zext i32 %.151 to i64
   %i.x = getelementptr [8 x i8], ptr %i.a, i64 %i.w
   %i.y = load i64, ptr %i.x, align 8, !tbaa !19   ; 2 uses
-  %3 = getelementptr i8, ptr @rb_vm_insn_len_info, i64 %i.y
-  %4 = load i8, ptr %3, align 1, !tbaa !89
   %i.z = getelementptr [2 x i8], ptr @rb_vm_insn_op_offset, i64 %i.y
   %i.aa = load i16, ptr %i.z, align 2, !tbaa !223
   %i.ab = zext i16 %i.aa to i64
@@ -1189,6 +1186,8 @@ bb.i:                                             ; preds = %bb.e, %bb.g, %bb.h,
   br label %bb.e, !llvm.loop !5
 
 bb.j:                                             ; preds = %bb.e
+  %3 = getelementptr i8, ptr @rb_vm_insn_len_info, i64 %i.y
+  %4 = load i8, ptr %3, align 1, !tbaa !89
   %i.aq = zext i8 %4 to i32
   %i.ar = add i32 %.151, %i.aq                    ; 2 uses
   %i.as = load i32, ptr %i.u, align 4, !tbaa !88
@@ -1591,7 +1590,6 @@ vm_ci_flag.exit482.thread:                        ; preds = %rbimpl_intern_const
   %i.kw = sext i32 %i.kv to i64
   %i.kx = tail call i64 @rb_ary_new_capa(i64 noundef %i.kw) #20 ; 2 uses
   %i.ky = load i32, ptr %i.ku, align 8, !tbaa !17 ; 2 uses
-  %1 = sub i32 %.0.i463653, %i.ky
   %i.kz = icmp sgt i32 %i.ky, 0
   br i1 %i.kz, label %.lr.ph729, label %._crit_edge730
 
@@ -1611,6 +1609,7 @@ bb.ba:                                            ; preds = %.lr.ph729, %bb.ba
   br i1 %i.lg, label %bb.ba, label %._crit_edge730, !llvm.loop !398
 
 ._crit_edge730:                                   ; preds = %bb.ba, %.thread
+  %1 = sub i32 %.0.i463653, %i.ky
   %.pr.i485 = load i64, ptr @iseq_data_to_ary.rbimpl_id.231, align 8, !tbaa !19 ; 2 uses
   %.not4.i486 = icmp eq i64 %.pr.i485, 0
   br i1 %.not4.i486, label %.lr.ph.i488, label %rbimpl_intern_const.exit490
@@ -2012,9 +2011,6 @@ declare i64 @rb_obj_is_proc(i64 noundef) local_unnamed_addr #2
 declare i64 @rb_obj_is_method(i64 noundef) local_unnamed_addr #2
 
 declare ptr @rb_method_iseq(i64 noundef) local_unnamed_addr #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #17
 
 attributes #0 = { nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

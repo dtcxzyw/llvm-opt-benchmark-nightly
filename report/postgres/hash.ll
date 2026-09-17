@@ -204,11 +204,9 @@ bb.f:                                             ; preds = %bb.d
   br label %BufferGetPage.exit
 
 BufferGetPage.exit:                               ; preds = %bb.e, %bb.f
-  %.0.i.i = phi ptr [ %i.l, %bb.e ], [ %i.q, %bb.f ] ; 7 uses
+  %.0.i.i = phi ptr [ %i.l, %bb.e ], [ %i.q, %bb.f ] ; 8 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 16
-  %i.s = load i16, ptr %i.r, align 8
-  %14 = zext i16 %i.s to i64
-  %15 = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 %14 ; 3 uses
+  %i.s = load i16, ptr %i.r, align 8              ; 2 uses
   %i.t = getelementptr i8, ptr %.0.i.i, i64 12
   %.val = load i16, ptr %i.t, align 4             ; 2 uses
   %i.u = icmp ult i16 %.val, 25
@@ -382,13 +380,17 @@ bb.n:                                             ; preds = %.critedge123, %bb.m
   br i1 %exitcond, label %._crit_edge, label %.lr.ph.split, !llvm.loop !10
 
 ._crit_edge.thread:                               ; preds = %BufferGetPage.exit, %._crit_edge.split.us.split, %.lr.ph.split.us.split
+  %14 = zext i16 %i.s to i64
+  %15 = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 %14
   %i.bt = getelementptr inbounds nuw i8, ptr %15, i64 4
   %i.bu = load i32, ptr %i.bt, align 4
   br label %bb.ad
 
 ._crit_edge:                                      ; preds = %bb.n, %bb.h
   %.0101.lcssa = phi i32 [ %.1.us.us, %bb.h ], [ %.1, %bb.n ] ; 3 uses
-  %i.bv = getelementptr inbounds nuw i8, ptr %15, i64 4
+  %16 = zext i16 %i.s to i64
+  %17 = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 %16 ; 2 uses
+  %i.bv = getelementptr inbounds nuw i8, ptr %17, i64 4
   %i.bw = load i32, ptr %i.bv, align 4            ; 2 uses
   %i.bx = icmp sgt i32 %.0101.lcssa, 0
   br i1 %i.bx, label %bb.o, label %bb.ad
@@ -406,7 +408,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.cb, label %bb.q, label %bb.s
 
 bb.q:                                             ; preds = %bb.p
-  %i.cc = getelementptr inbounds nuw i8, ptr %15, i64 12 ; 2 uses
+  %i.cc = getelementptr inbounds nuw i8, ptr %17, i64 12 ; 2 uses
   %i.cd = load i16, ptr %i.cc, align 4            ; 2 uses
   %i.ce = and i16 %i.cd, 128
   %.not116 = icmp eq i16 %i.ce, 0

@@ -205,8 +205,6 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.lr.ph, %_ZN4pugi4impl12_GLOBAL__N_112destroy_treeEPNS_15xml_node_structERNS1_13xml_allocatorE.exit
   %.0822 = phi ptr [ %i.h, %.lr.ph ], [ %2, %_ZN4pugi4impl12_GLOBAL__N_112destroy_treeEPNS_15xml_node_structERNS1_13xml_allocatorE.exit ] ; 5 uses
-  %1 = getelementptr inbounds nuw i8, ptr %.0822, i64 48
-  %2 = load ptr, ptr %1, align 8, !tbaa !120      ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %bb.c
@@ -217,6 +215,8 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   br i1 %.not.i, label %.preheader23.i, label %bb.d, !llvm.loop !15
 
 .preheader23.i:                                   ; preds = %bb.d
+  %1 = getelementptr inbounds nuw i8, ptr %.0822, i64 48
+  %2 = load ptr, ptr %1, align 8, !tbaa !120      ; 2 uses
   %.not2024.i = icmp eq ptr %.0.i, %.0822
   br i1 %.not2024.i, label %_ZN4pugi4impl12_GLOBAL__N_112destroy_treeEPNS_15xml_node_structERNS1_13xml_allocatorE.exit, label %.lr.ph.i
 
@@ -619,9 +619,6 @@ bb.ba:                                            ; preds = %bb.az
 
 vector.ph1450:                                    ; preds = %.lr.ph.i.i53.i.preheader
   %n.vec1451 = and i64 %i.hn, 4611686018427387900 ; 3 uses
-  %11 = and i64 %i.hn, 3
-  %12 = shl nuw i64 %n.vec1451, 2
-  %13 = getelementptr i8, ptr %3, i64 %12
   br label %vector.body1452
 
 vector.body1452:                                  ; preds = %vector.body1452, %vector.ph1450
@@ -652,6 +649,9 @@ vector.body1452:                                  ; preds = %vector.body1452, %v
   br i1 %i.ie, label %middle.block1460, label %vector.body1452, !llvm.loop !317
 
 middle.block1460:                                 ; preds = %vector.body1452
+  %11 = and i64 %i.hn, 3
+  %12 = shl nuw i64 %n.vec1451, 2
+  %13 = getelementptr i8, ptr %3, i64 %12
   %bin.rdx1461 = add <2 x i64> %i.id, %i.ic
   %i.if = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx1461) ; 2 uses
   %cmp.n1462 = icmp eq i64 %i.hn, %n.vec1451
@@ -971,8 +971,6 @@ _ZN4pugi4impl12_GLOBAL__N_129get_latin1_7bit_prefix_lengthEPKhm.exit.i.i: ; pred
 
 vector.ph:                                        ; preds = %_ZN4pugi4impl12_GLOBAL__N_129get_latin1_7bit_prefix_lengthEPKhm.exit.i.i
   %n.vec = and i64 %i.ms, -4                      ; 3 uses
-  %14 = and i64 %i.ms, 3
-  %15 = getelementptr i8, ptr %i.mr, i64 %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -994,6 +992,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.na, label %middle.block, label %vector.body, !llvm.loop !322
 
 middle.block:                                     ; preds = %vector.body
+  %14 = and i64 %i.ms, 3
+  %15 = getelementptr i8, ptr %i.mr, i64 %n.vec
   %bin.rdx = add <2 x i64> %i.mz, %i.my
   %i.nb = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx) ; 2 uses
   %cmp.n = icmp eq i64 %i.ms, %n.vec
@@ -1396,30 +1396,25 @@ bb.dk:                                            ; preds = %.preheader365.i.i
 bb.dl:                                            ; preds = %.preheader365.i.i
   %i.vq = load i8, ptr %.0197.i.i, align 1, !tbaa !86, !noalias !364 ; 2 uses
   %.not269.i.i = icmp eq i8 %i.vq, 0
-  br i1 %.not269.i.i, label %bb.do, label %bb.dm
+  br i1 %.not269.i.i, label %bb.dp, label %bb.dm
 
 bb.dm:                                            ; preds = %bb.dl
   %i.vr = icmp eq i8 %i.vi, 0
   %i.vs = icmp eq i8 %i.vq, %i.pj
   %or.cond293.i.i = and i1 %i.vr, %i.vs
-  br i1 %or.cond293.i.i, label %bb.dn, label %16
+  br i1 %or.cond293.i.i, label %bb.dn, label %bb.do
 
 bb.dn:                                            ; preds = %bb.dm
   %i.vt = getelementptr inbounds nuw i8, ptr %.0197.i.i, i64 1
   %i.vu = load i8, ptr %i.vt, align 1, !tbaa !86, !noalias !364
   %i.vv = icmp eq i8 %i.vu, 0
-  br i1 %i.vv, label %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i, label %16
+  br i1 %i.vv, label %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i, label %bb.do
 
-16:                                               ; preds = %bb.dn, %bb.dm
+bb.do:                                            ; preds = %bb.dn, %bb.dm
   br label %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i
 
-bb.do:                                            ; preds = %bb.dl
-  %17 = getelementptr inbounds nuw i8, ptr %.0.ph.i.i, i64 24
-  %18 = load ptr, ptr %17, align 8, !tbaa !122, !noalias !364 ; 2 uses
-  br label %bb.dp
-
-bb.dp:                                            ; preds = %bb.dp, %bb.do
-  %.14.i.i = phi ptr [ %.13.i.i, %bb.do ], [ %i.wb, %bb.dp ] ; 5 uses
+bb.dp:                                            ; preds = %bb.dl, %bb.dp
+  %.14.i.i = phi ptr [ %i.wb, %bb.dp ], [ %.13.i.i, %bb.dl ] ; 5 uses
   %i.vw = load i8, ptr %.14.i.i, align 1, !tbaa !86, !noalias !364 ; 2 uses
   %i.vx = zext i8 %i.vw to i64
   %i.vy = getelementptr inbounds nuw i8, ptr @_ZN4pugi4impl12_GLOBAL__N_114chartype_tableE, i64 %i.vx
@@ -1430,6 +1425,8 @@ bb.dp:                                            ; preds = %bb.dp, %bb.do
   br i1 %.not270.i.i, label %bb.dq, label %bb.dp, !llvm.loop !336
 
 bb.dq:                                            ; preds = %bb.dp
+  %16 = getelementptr inbounds nuw i8, ptr %.0.ph.i.i, i64 24
+  %17 = load ptr, ptr %16, align 8, !tbaa !122, !noalias !364 ; 2 uses
   switch i8 %i.vw, label %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i [
     i8 0, label %bb.dr
     i8 62, label %.outer.i.i.backedge
@@ -1832,7 +1829,7 @@ bb.hf:                                            ; preds = %.noexc67
   br label %.outer.i.i.backedge
 
 .outer.i.i.backedge:                              ; preds = %bb.hf, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser19parse_doctype_groupEPcc.exit.thread57.i, %bb.fw, %bb.fd, %_ZN4pugi4impl12_GLOBAL__N_115strconv_commentEPcc.exit.i.i.i, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser14parse_questionEPcRPNS_15xml_node_structEjc.exit.i.i, %bb.dr, %bb.dq, %bb.dh, %bb.dg, %bb.dd, %bb.dc, %bb.da, %bb.cy, %select.unfold.i.i
-  %.0.ph.i.i.be = phi ptr [ %i.qz, %bb.dh ], [ %.2.i.i, %bb.dd ], [ %i.us, %bb.da ], [ %i.uw, %bb.dc ], [ %.0.ph.i.i, %bb.hf ], [ %.9327.i.i, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser14parse_questionEPcRPNS_15xml_node_structEjc.exit.i.i ], [ %.2.i.i, %bb.cy ], [ %i.qz, %select.unfold.i.i ], [ %i.vc, %bb.dg ], [ %18, %bb.dr ], [ %.0.ph.i.i, %_ZN4pugi4impl12_GLOBAL__N_115strconv_commentEPcc.exit.i.i.i ], [ %.0.ph.i.i, %bb.fd ], [ %.0.ph.i.i, %bb.fw ], [ %.0.ph.i.i, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser19parse_doctype_groupEPcc.exit.thread57.i ], [ %18, %bb.dq ]
+  %.0.ph.i.i.be = phi ptr [ %i.qz, %bb.dh ], [ %.2.i.i, %bb.dd ], [ %i.us, %bb.da ], [ %i.uw, %bb.dc ], [ %.0.ph.i.i, %bb.hf ], [ %.9327.i.i, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser14parse_questionEPcRPNS_15xml_node_structEjc.exit.i.i ], [ %.2.i.i, %bb.cy ], [ %i.qz, %select.unfold.i.i ], [ %i.vc, %bb.dg ], [ %17, %bb.dr ], [ %.0.ph.i.i, %_ZN4pugi4impl12_GLOBAL__N_115strconv_commentEPcc.exit.i.i.i ], [ %.0.ph.i.i, %bb.fd ], [ %.0.ph.i.i, %bb.fw ], [ %.0.ph.i.i, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser19parse_doctype_groupEPcc.exit.thread57.i ], [ %17, %bb.dq ]
   %.0210.ph.i.i.be = phi ptr [ %.3213.ph.i.i, %bb.dh ], [ %.6216.i.i, %bb.dd ], [ %i.ut, %bb.da ], [ %i.sm, %bb.dc ], [ %.5.i303.i.i, %bb.hf ], [ %.285.i.i.i, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser14parse_questionEPcRPNS_15xml_node_structEjc.exit.i.i ], [ %i.sm, %bb.cy ], [ %i.se, %select.unfold.i.i ], [ %i.ve, %bb.dg ], [ %.14.i.i, %bb.dr ], [ %i.ace, %_ZN4pugi4impl12_GLOBAL__N_115strconv_commentEPcc.exit.i.i.i ], [ %i.acr, %bb.fd ], [ %i.afa, %bb.fw ], [ %.5.i303.i.i, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser19parse_doctype_groupEPcc.exit.thread57.i ], [ %i.wb, %bb.dq ]
   br label %.outer.i.i, !llvm.loop !351
 
@@ -2022,9 +2019,9 @@ _ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.e
   %i.ajx = getelementptr inbounds nuw i8, ptr %.1211.i.i, i64 2
   br label %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i
 
-_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i: ; preds = %.noexc69, %.noexc67, %bb.he, %bb.gc, %bb.gb, %bb.ga, %bb.fz, %bb.fy, %bb.fx, %.noexc66, %.noexc65, %bb.ed, %bb.eb, %.thread123.i.i.i, %.noexc63, %bb.dz, %bb.dt, %bb.ds, %bb.dr, %bb.dq, %bb.dj, %bb.dh, %bb.df, %bb.de, %bb.dd, %bb.db, %.noexc60, %.thread45.thread.i.i, %.critedge.i.i39.i, %bb.gg, %.preheader185.split.us.i.i.i, %.preheader185.split.i.i.i, %.preheader184.split.us.i.i.i, %.preheader184.split.i.i.i, %.preheader.split.us.i310.i.i, %.preheader.split.i311.i.i, %.preheader132.split.us.i.i.i, %.preheader132.split.i.i.i, %.preheader.split.us.i.i.i, %.preheader.split.i.i.i, %bb.cx, %bb.cv, %.loopexit1071.i.i, %.noexc61, %bb.dk, %bb.gv, %bb.gj, %bb.gy, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1050, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1053, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1056, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1059, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1062, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1065, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.loopexit90.split.loop.exit371.i, %.loopexit.i.i, %bb.hh, %.thread182.i.i.i, %bb.hg, %bb.fr, %bb.ez, %16, %bb.dn, %bb.cw
-  %.sroa.57.2.i = phi i32 [ 14, %bb.dk ], [ 7, %.preheader.split.i311.i.i ], [ %spec.select66.i, %bb.hh ], [ 6, %.preheader.split.us.i.i.i ], [ 7, %bb.hg ], [ %spec.select65.i, %.thread182.i.i.i ], [ 13, %bb.dn ], [ 8, %.preheader185.split.us.i.i.i ], [ 14, %16 ], [ 7, %bb.ez ], [ 8, %.preheader185.split.i.i.i ], [ 9, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.loopexit90.split.loop.exit371.i ], [ 6, %.preheader.split.i.i.i ], [ 8, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1056 ], [ 8, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1062 ], [ 8, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1065 ], [ 9, %.thread45.thread.i.i ], [ 12, %bb.cw ], [ 9, %bb.gj ], [ 7, %.preheader.split.us.i310.i.i ], [ 8, %bb.fr ], [ 6, %.preheader132.split.us.i.i.i ], [ 9, %bb.gv ], [ 6, %.preheader132.split.i.i.i ], [ %spec.select.i, %.loopexit.i.i ], [ 12, %.loopexit1071.i.i ], [ 8, %.preheader184.split.us.i.i.i ], [ 8, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1050 ], [ 9, %bb.gy ], [ 8, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1053 ], [ 8, %.preheader184.split.i.i.i ], [ 8, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1059 ], [ 7, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit ], [ 12, %bb.cx ], [ 3, %.noexc61 ], [ 12, %bb.cv ], [ 9, %bb.gg ], [ 9, %.critedge.i.i39.i ], [ 13, %bb.dq ], [ 11, %bb.de ], [ 6, %bb.ds ], [ 6, %bb.ed ], [ 5, %bb.gc ], [ 6, %bb.dz ], [ 3, %.thread123.i.i.i ], [ 6, %bb.eb ], [ 6, %bb.dt ], [ 3, %.noexc63 ], [ 3, %.noexc65 ], [ 3, %.noexc66 ], [ 11, %bb.dh ], [ 11, %bb.dd ], [ 11, %bb.df ], [ 3, %.noexc67 ], [ 3, %.noexc69 ], [ 14, %bb.dj ], [ 9, %bb.he ], [ 5, %bb.fz ], [ 5, %bb.fy ], [ 5, %bb.fx ], [ 5, %bb.gb ], [ 11, %bb.db ], [ 5, %bb.ga ], [ 13, %bb.dr ], [ 3, %.noexc60 ] ; 2 uses
-  %.sroa.11.2.i = phi ptr [ %i.vf, %bb.dk ], [ %.0124.i.i.i, %.preheader.split.i311.i.i ], [ %.1211.i.i, %bb.hh ], [ %.5.us.i.i.i, %.preheader.split.us.i.i.i ], [ %i.zf, %bb.hg ], [ %i.zf, %.thread182.i.i.i ], [ %.13.i.i, %bb.dn ], [ %.1125.us.i.i.i, %.preheader185.split.us.i.i.i ], [ %i.vf, %16 ], [ %i.acg, %bb.ez ], [ %.1125.i.i.i, %.preheader185.split.i.i.i ], [ %i.ajq, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.loopexit90.split.loop.exit371.i ], [ %.5.i.i.i, %.preheader.split.i.i.i ], [ %i.aju, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1056 ], [ %i.ajw, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1062 ], [ %i.ajx, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1065 ], [ %.031.i.i, %.thread45.thread.i.i ], [ %i.uk, %bb.cw ], [ %.017.i.i.i, %bb.gj ], [ %.0124.us.i.i.i, %.preheader.split.us.i310.i.i ], [ %i.aef, %bb.fr ], [ %.288.us.i.i.i, %.preheader132.split.us.i.i.i ], [ %.2.i.i40.i, %bb.gv ], [ %.288.i.i.i, %.preheader132.split.i.i.i ], [ %spec.select1069.i, %.loopexit.i.i ], [ %.10.i.i, %.loopexit1071.i.i ], [ %.2.us.i.i.i, %.preheader184.split.us.i.i.i ], [ %i.ajs, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1050 ], [ %.3.i.i.i, %bb.gy ], [ %i.ajt, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1053 ], [ %.2.i.i.i56, %.preheader184.split.i.i.i ], [ %i.ajv, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1059 ], [ %i.ajr, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit ], [ %i.ui, %bb.cx ], [ %.6216.i.i, %.noexc61 ], [ %.11.i.i, %bb.cv ], [ %.041.i.i.i, %.critedge.i.i39.i ], [ %.031.i.i, %bb.gg ], [ %.14.i.i, %bb.dq ], [ %i.se, %bb.de ], [ %.ptr98.i.i.i, %bb.ds ], [ %i.xk, %bb.ed ], [ %i.zf, %bb.gc ], [ %.086.ptr.i.i.i.le, %bb.dz ], [ %.086.ptr.i.i.i.le, %.thread123.i.i.i ], [ %i.xk, %bb.eb ], [ %.086.ptr.i.i.i.le, %bb.dt ], [ %.086.ptr.i.i.i.le, %.noexc63 ], [ %i.zk, %.noexc65 ], [ %i.adk, %.noexc66 ], [ %.3213.ph.i.i, %bb.dh ], [ %.6216.i.i, %bb.dd ], [ %i.se, %bb.df ], [ %.5.i303.i.i, %.noexc67 ], [ %i.aiv, %.noexc69 ], [ %i.vf, %bb.dj ], [ %.031.i.i, %bb.he ], [ %i.zf, %bb.fz ], [ %i.zf, %bb.fy ], [ %i.zf, %bb.fx ], [ %i.zf, %bb.gb ], [ %i.sm, %bb.db ], [ %i.zf, %bb.ga ], [ %.14.i.i, %bb.dr ], [ %.1211.i.i, %.noexc60 ] ; 2 uses
+_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i: ; preds = %.noexc69, %.noexc67, %bb.he, %bb.gc, %bb.gb, %bb.ga, %bb.fz, %bb.fy, %bb.fx, %.noexc66, %.noexc65, %bb.ed, %bb.eb, %.thread123.i.i.i, %.noexc63, %bb.dz, %bb.dt, %bb.ds, %bb.dr, %bb.dq, %bb.dj, %bb.dh, %bb.df, %bb.de, %bb.dd, %bb.db, %.noexc60, %.thread45.thread.i.i, %.critedge.i.i39.i, %bb.gg, %.preheader185.split.us.i.i.i, %.preheader185.split.i.i.i, %.preheader184.split.us.i.i.i, %.preheader184.split.i.i.i, %.preheader.split.us.i310.i.i, %.preheader.split.i311.i.i, %.preheader132.split.us.i.i.i, %.preheader132.split.i.i.i, %.preheader.split.us.i.i.i, %.preheader.split.i.i.i, %bb.cx, %bb.cv, %.loopexit1071.i.i, %.noexc61, %bb.dk, %bb.gv, %bb.gj, %bb.gy, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1050, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1053, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1056, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1059, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1062, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1065, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.loopexit90.split.loop.exit371.i, %.loopexit.i.i, %bb.hh, %.thread182.i.i.i, %bb.hg, %bb.fr, %bb.ez, %bb.do, %bb.dn, %bb.cw
+  %.sroa.57.2.i = phi i32 [ 14, %bb.dk ], [ 7, %.preheader.split.i311.i.i ], [ %spec.select66.i, %bb.hh ], [ 6, %.preheader.split.us.i.i.i ], [ 7, %bb.hg ], [ %spec.select65.i, %.thread182.i.i.i ], [ 13, %bb.dn ], [ 8, %.preheader185.split.us.i.i.i ], [ 14, %bb.do ], [ 7, %bb.ez ], [ 8, %.preheader185.split.i.i.i ], [ 9, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.loopexit90.split.loop.exit371.i ], [ 6, %.preheader.split.i.i.i ], [ 8, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1056 ], [ 8, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1062 ], [ 8, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1065 ], [ 9, %.thread45.thread.i.i ], [ 12, %bb.cw ], [ 9, %bb.gj ], [ 7, %.preheader.split.us.i310.i.i ], [ 8, %bb.fr ], [ 6, %.preheader132.split.us.i.i.i ], [ 9, %bb.gv ], [ 6, %.preheader132.split.i.i.i ], [ %spec.select.i, %.loopexit.i.i ], [ 12, %.loopexit1071.i.i ], [ 8, %.preheader184.split.us.i.i.i ], [ 8, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1050 ], [ 9, %bb.gy ], [ 8, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1053 ], [ 8, %.preheader184.split.i.i.i ], [ 8, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1059 ], [ 7, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit ], [ 12, %bb.cx ], [ 3, %.noexc61 ], [ 12, %bb.cv ], [ 9, %bb.gg ], [ 9, %.critedge.i.i39.i ], [ 13, %bb.dq ], [ 11, %bb.de ], [ 6, %bb.ds ], [ 6, %bb.ed ], [ 5, %bb.gc ], [ 6, %bb.dz ], [ 3, %.thread123.i.i.i ], [ 6, %bb.eb ], [ 6, %bb.dt ], [ 3, %.noexc63 ], [ 3, %.noexc65 ], [ 3, %.noexc66 ], [ 11, %bb.dh ], [ 11, %bb.dd ], [ 11, %bb.df ], [ 3, %.noexc67 ], [ 3, %.noexc69 ], [ 14, %bb.dj ], [ 9, %bb.he ], [ 5, %bb.fz ], [ 5, %bb.fy ], [ 5, %bb.fx ], [ 5, %bb.gb ], [ 11, %bb.db ], [ 5, %bb.ga ], [ 13, %bb.dr ], [ 3, %.noexc60 ] ; 2 uses
+  %.sroa.11.2.i = phi ptr [ %i.vf, %bb.dk ], [ %.0124.i.i.i, %.preheader.split.i311.i.i ], [ %.1211.i.i, %bb.hh ], [ %.5.us.i.i.i, %.preheader.split.us.i.i.i ], [ %i.zf, %bb.hg ], [ %i.zf, %.thread182.i.i.i ], [ %.13.i.i, %bb.dn ], [ %.1125.us.i.i.i, %.preheader185.split.us.i.i.i ], [ %i.vf, %bb.do ], [ %i.acg, %bb.ez ], [ %.1125.i.i.i, %.preheader185.split.i.i.i ], [ %i.ajq, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.loopexit90.split.loop.exit371.i ], [ %.5.i.i.i, %.preheader.split.i.i.i ], [ %i.aju, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1056 ], [ %i.ajw, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1062 ], [ %i.ajx, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1065 ], [ %.031.i.i, %.thread45.thread.i.i ], [ %i.uk, %bb.cw ], [ %.017.i.i.i, %bb.gj ], [ %.0124.us.i.i.i, %.preheader.split.us.i310.i.i ], [ %i.aef, %bb.fr ], [ %.288.us.i.i.i, %.preheader132.split.us.i.i.i ], [ %.2.i.i40.i, %bb.gv ], [ %.288.i.i.i, %.preheader132.split.i.i.i ], [ %spec.select1069.i, %.loopexit.i.i ], [ %.10.i.i, %.loopexit1071.i.i ], [ %.2.us.i.i.i, %.preheader184.split.us.i.i.i ], [ %i.ajs, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1050 ], [ %.3.i.i.i, %bb.gy ], [ %i.ajt, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1053 ], [ %.2.i.i.i56, %.preheader184.split.i.i.i ], [ %i.ajv, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit1059 ], [ %i.ajr, %_ZN4pugi4impl12_GLOBAL__N_110xml_parser10parse_treeEPcPNS_15xml_node_structEjc.exit.i.loopexit821.split.loop.exit ], [ %i.ui, %bb.cx ], [ %.6216.i.i, %.noexc61 ], [ %.11.i.i, %bb.cv ], [ %.041.i.i.i, %.critedge.i.i39.i ], [ %.031.i.i, %bb.gg ], [ %.14.i.i, %bb.dq ], [ %i.se, %bb.de ], [ %.ptr98.i.i.i, %bb.ds ], [ %i.xk, %bb.ed ], [ %i.zf, %bb.gc ], [ %.086.ptr.i.i.i.le, %bb.dz ], [ %.086.ptr.i.i.i.le, %.thread123.i.i.i ], [ %i.xk, %bb.eb ], [ %.086.ptr.i.i.i.le, %bb.dt ], [ %.086.ptr.i.i.i.le, %.noexc63 ], [ %i.zk, %.noexc65 ], [ %i.adk, %.noexc66 ], [ %.3213.ph.i.i, %bb.dh ], [ %.6216.i.i, %bb.dd ], [ %i.se, %bb.df ], [ %.5.i303.i.i, %.noexc67 ], [ %i.aiv, %.noexc69 ], [ %i.vf, %bb.dj ], [ %.031.i.i, %bb.he ], [ %i.zf, %bb.fz ], [ %i.zf, %bb.fy ], [ %i.zf, %bb.fx ], [ %i.zf, %bb.gb ], [ %i.sm, %bb.db ], [ %i.zf, %bb.ga ], [ %.14.i.i, %bb.dr ], [ %.1211.i.i, %.noexc60 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #49, !noalias !364
   %.not31.i = icmp eq ptr %.sroa.11.2.i, null
   %i.ajy = ptrtoint ptr %.sroa.11.2.i to i64
@@ -2427,8 +2424,6 @@ bb.a:
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.preheader
   %i.d = and i64 %wcslen.i.i, 3                   ; 3 uses
   %n.vec = sub nuw nsw i64 %i.c, %i.d             ; 2 uses
-  %2 = shl i64 %n.vec, 2
-  %3 = getelementptr i8, ptr %0, i64 %2
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -2459,6 +2454,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.u, label %middle.block, label %vector.body, !llvm.loop !455
 
 middle.block:                                     ; preds = %vector.body
+  %2 = shl i64 %n.vec, 2
+  %3 = getelementptr i8, ptr %0, i64 %2
   %bin.rdx = add <2 x i64> %i.t, %i.s
   %i.v = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx) ; 2 uses
   %cmp.n = icmp eq i64 %i.d, 0
@@ -2861,9 +2858,6 @@ bb.a:
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.preheader
   %n.vec = and i64 %2, -4                         ; 3 uses
-  %3 = and i64 %2, 3
-  %4 = shl i64 %n.vec, 2
-  %5 = getelementptr i8, ptr %1, i64 %4
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -2894,6 +2888,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.q, label %middle.block, label %vector.body, !llvm.loop !462
 
 middle.block:                                     ; preds = %vector.body
+  %3 = and i64 %2, 3
+  %4 = shl i64 %n.vec, 2
+  %5 = getelementptr i8, ptr %1, i64 %4
   %bin.rdx = add <2 x i64> %i.p, %i.o
   %i.r = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx) ; 2 uses
   %cmp.n = icmp eq i64 %2, %n.vec
@@ -3296,10 +3293,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check29, label %vec.epilog.ph, label %vector.ph30
 
 vector.ph30:                                      ; preds = %vector.main.loop.iter.check
-  %3 = and i64 %i.dp, 8
   %n.vec31 = and i64 %i.dp, -16                   ; 4 uses
-  %4 = shl i64 %n.vec31, 1
-  %5 = getelementptr i8, ptr %.ptr13, i64 %4
   br label %vector.body32
 
 vector.body32:                                    ; preds = %vector.body32, %vector.ph30
@@ -3318,6 +3312,9 @@ vector.body32:                                    ; preds = %vector.body32, %vec
   br i1 %i.du, label %middle.block38, label %vector.body32, !llvm.loop !636
 
 middle.block38:                                   ; preds = %vector.body32
+  %3 = and i64 %i.dp, 8
+  %4 = shl i64 %n.vec31, 1
+  %5 = getelementptr i8, ptr %.ptr13, i64 %4
   %cmp.n39 = icmp eq i64 %i.dp, %n.vec31
   br i1 %cmp.n39, label %_ZN4pugi4impl12_GLOBAL__N_129convert_buffer_output_genericINS1_12utf8_decoderENS1_12utf16_writerEEEmNT0_10value_typeEPKcmT_S5_b.exit.i, label %vec.epilog.iter.check
 
@@ -3328,8 +3325,6 @@ vec.epilog.iter.check:                            ; preds = %middle.block38
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec31, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec41 = and i64 %i.dp, -8                    ; 3 uses
-  %6 = shl i64 %n.vec41, 1
-  %7 = getelementptr i8, ptr %.ptr13, i64 %6
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -3344,6 +3339,8 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.dx, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !637
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
+  %6 = shl i64 %n.vec41, 1
+  %7 = getelementptr i8, ptr %.ptr13, i64 %6
   %cmp.n46 = icmp eq i64 %i.dp, %n.vec41
   br i1 %cmp.n46, label %_ZN4pugi4impl12_GLOBAL__N_129convert_buffer_output_genericINS1_12utf8_decoderENS1_12utf16_writerEEEmNT0_10value_typeEPKcmT_S5_b.exit.i, label %.lr.ph.i.i.preheader
 
@@ -3388,8 +3385,6 @@ bb.u:                                             ; preds = %bb.t
 
 vector.ph:                                        ; preds = %.lr.ph.i24.i.preheader
   %n.vec = and i64 %i.ei, 9223372036854775800     ; 3 uses
-  %8 = shl i64 %n.vec, 2
-  %9 = getelementptr i8, ptr %.ptr13, i64 %8
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -3408,6 +3403,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.en, label %middle.block, label %vector.body, !llvm.loop !639
 
 middle.block:                                     ; preds = %vector.body
+  %8 = shl i64 %n.vec, 2
+  %9 = getelementptr i8, ptr %.ptr13, i64 %8
   %cmp.n = icmp eq i64 %i.ei, %n.vec
   br i1 %cmp.n, label %_ZN4pugi4impl12_GLOBAL__N_129convert_buffer_output_genericINS1_12utf8_decoderENS1_12utf32_writerEEEmNT0_10value_typeEPKcmT_S5_b.exit.i, label %.lr.ph.i24.i.preheader48
 
@@ -3810,7 +3807,6 @@ bb.ah:                                            ; preds = %.lr.ph.i.i
   br label %_ZN4pugi4impl12_GLOBAL__N_114node_is_beforeEPNS_15xml_node_structES3_.exit
 
 .critedge46.i:                                    ; preds = %.preheader
-  %7 = xor i1 %i.cw, true
   %.not4367.i = icmp eq ptr %.031.i, null
   br i1 %.not4367.i, label %.preheader59.i, label %.lr.ph.i
 
@@ -3841,6 +3837,7 @@ bb.ah:                                            ; preds = %.lr.ph.i.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph73.i, %.preheader59.i
   %.033.lcssa.i = phi ptr [ %.sroa.014.0, %.preheader59.i ], [ %i.du, %.lr.ph73.i ] ; 2 uses
+  %7 = xor i1 %i.cw, true
   %i.dv = icmp eq ptr %.035.lcssa.i, %.033.lcssa.i
   br i1 %i.dv, label %_ZN4pugi4impl12_GLOBAL__N_114node_is_beforeEPNS_15xml_node_structES3_.exit, label %.preheader.i
 
@@ -4243,9 +4240,7 @@ bb.f:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #49
   %i.k = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull align 1 dereferenceable(32) %i.b, i64 noundef 32, ptr noundef nonnull @.str.106, i32 noundef 15, double noundef %1) #49 ; 0 uses
   %i.l = call noundef ptr @strchr(ptr noundef nonnull align 1 dereferenceable(32) %i.b, i32 noundef 101) #50 ; 6 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.l, i64 1
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 2 ; 2 uses
-  %4 = load i8, ptr %3, align 1, !tbaa !86
   %i.n = load i8, ptr %i.m, align 1, !tbaa !86    ; 2 uses
   %.not25.i = icmp eq i8 %i.n, 0
   br i1 %.not25.i, label %._crit_edge.i, label %.lr.ph.i
@@ -4265,6 +4260,8 @@ bb.f:                                             ; preds = %bb.c
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.f
   %.0.lcssa.i = phi i32 [ 0, %bb.f ], [ %i.t, %.lr.ph.i ] ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.l, i64 1
+  %4 = load i8, ptr %3, align 1, !tbaa !86
   %i.v = load i8, ptr %i.b, align 16, !tbaa !86   ; 2 uses
   %i.w = icmp eq i8 %i.v, 45                      ; 2 uses
   %.sroa.gep = getelementptr inbounds nuw i8, ptr %i.b, i64 1 ; 2 uses

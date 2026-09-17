@@ -205,8 +205,8 @@ bb.bj:                                            ; preds = %bb.bi
 
 _ZSt6fill_nIPsmsET_S1_T0_RKT1_.exit.loopexit.i.i.i.i298: ; preds = %bb.bj
   %.idx.i.i.i.i.i.i299 = shl nuw nsw i64 %i.ow, 1 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 2 %i.ov, i8 0, i64 %.idx.i.i.i.i.i.i299, i1 false), !tbaa !145
   %3 = getelementptr inbounds nuw i8, ptr %i.ov, i64 %.idx.i.i.i.i.i.i299
+  call void @llvm.memset.p0.i64(ptr align 2 %i.ov, i8 0, i64 %.idx.i.i.i.i.i.i299, i1 false), !tbaa !145
   br label %_ZN4core5arrayIsE8set_usedEj.exit238
 
 _ZNKSt6vectorIsSaIsEE12_M_check_lenEmPKc.exit.i302: ; preds = %bb.bi
@@ -609,8 +609,8 @@ bb.aj:                                            ; preds = %bb.ai
 
 _ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.loopexit.i.i.i.i: ; preds = %bb.aj
   %.idx.i.i.i.i.i.i = shl nuw nsw i64 %i.eo, 2    ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 4 %i.en, i8 0, i64 %.idx.i.i.i.i.i.i, i1 false), !tbaa !137
   %15 = getelementptr inbounds nuw i8, ptr %i.en, i64 %.idx.i.i.i.i.i.i
+  call void @llvm.memset.p0.i64(ptr align 4 %i.en, i8 0, i64 %.idx.i.i.i.i.i.i, i1 false), !tbaa !137
   br label %_ZN4core5arrayIjE8set_usedEj.exit298
 
 _ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i:  ; preds = %bb.ai
@@ -1013,8 +1013,8 @@ bb.bf:                                            ; preds = %bb.be
 
 _ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.loopexit.i.i.i.i170: ; preds = %bb.bf
   %.idx.i.i.i.i.i.i171 = shl nuw nsw i64 %i.ks, 2 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 4 %i.kr, i8 0, i64 %.idx.i.i.i.i.i.i171, i1 false), !tbaa !137
   %8 = getelementptr inbounds nuw i8, ptr %i.kr, i64 %.idx.i.i.i.i.i.i171
+  call void @llvm.memset.p0.i64(ptr align 4 %i.kr, i8 0, i64 %.idx.i.i.i.i.i.i171, i1 false), !tbaa !137
   br label %_ZN4core5arrayIjE8set_usedEj.exit102
 
 _ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i174: ; preds = %bb.be
@@ -1417,8 +1417,12 @@ _ZN4core5arrayItEixEj.exit:                       ; preds = %bb.t
   %min.iters.check = icmp ult i32 %i.dh, 21
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
-scalar.ph.preheader:                              ; preds = %vector.body, %vector.scevcheck, %.lr.ph
-  %.129119.ph = phi i32 [ %.028122, %vector.scevcheck ], [ %.028122, %.lr.ph ], [ %10, %vector.body ]
+scalar.ph.preheader.loopexit:                     ; preds = %vector.body
+  %10 = add i32 %.028122, %n.vec
+  br label %scalar.ph.preheader
+
+scalar.ph.preheader:                              ; preds = %scalar.ph.preheader.loopexit, %vector.scevcheck, %.lr.ph
+  %.129119.ph = phi i32 [ %.028122, %vector.scevcheck ], [ %.028122, %.lr.ph ], [ %10, %scalar.ph.preheader.loopexit ]
   br label %scalar.ph
 
 vector.scevcheck:                                 ; preds = %.lr.ph
@@ -1437,7 +1441,6 @@ vector.ph:                                        ; preds = %vector.scevcheck
   %i.dq = icmp eq i32 %i.dp, 0
   %i.dr = select i1 %i.dq, i32 8, i32 %i.dp
   %n.vec = sub i32 %i.dh, %i.dr                   ; 2 uses
-  %10 = add i32 %.028122, %n.vec
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %.127, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body
@@ -1452,7 +1455,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x i32> %broadcast.splat, ptr %i.dv, align 4, !tbaa !137
   %index.next = add nuw i32 %index, 8             ; 2 uses
   %i.dw = icmp eq i32 %index.next, %n.vec
-  br i1 %i.dw, label %scalar.ph.preheader, label %vector.body, !llvm.loop !316
+  br i1 %i.dw, label %scalar.ph.preheader.loopexit, label %vector.body, !llvm.loop !316
 
 ._crit_edge:                                      ; preds = %_ZN4core5arrayIjEixEj.exit, %_ZN4core5arrayItEixEj.exit
   %.129.lcssa = phi i32 [ %.028122, %_ZN4core5arrayItEixEj.exit ], [ %i.da, %_ZN4core5arrayIjEixEj.exit ]
@@ -1855,8 +1858,8 @@ bb.c:                                             ; preds = %bb.b
 
 _ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.loopexit.i.i.i: ; preds = %bb.c
   %.idx.i.i.i.i.i = shl nuw nsw i64 %i.q, 2       ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.p, i8 0, i64 %.idx.i.i.i.i.i, i1 false), !tbaa !137
   %2 = getelementptr inbounds nuw i8, ptr %i.p, i64 %.idx.i.i.i.i.i
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.p, i8 0, i64 %.idx.i.i.i.i.i, i1 false), !tbaa !137
   br label %_ZSt27__uninitialized_default_n_aIPjmjET_S1_T0_RSaIT1_E.exit
 
 _ZSt27__uninitialized_default_n_aIPjmjET_S1_T0_RSaIT1_E.exit: ; preds = %bb.c, %_ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.loopexit.i.i.i
@@ -2186,8 +2189,8 @@ bb.c:                                             ; preds = %bb.b
 
 _ZSt6fill_nIPtmtET_S1_T0_RKT1_.exit.loopexit.i.i.i: ; preds = %bb.c
   %.idx.i.i.i.i.i = shl nuw nsw i64 %i.q, 1       ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 2 %i.p, i8 0, i64 %.idx.i.i.i.i.i, i1 false), !tbaa !145
   %2 = getelementptr inbounds nuw i8, ptr %i.p, i64 %.idx.i.i.i.i.i
+  tail call void @llvm.memset.p0.i64(ptr align 2 %i.p, i8 0, i64 %.idx.i.i.i.i.i, i1 false), !tbaa !145
   br label %_ZSt27__uninitialized_default_n_aIPtmtET_S1_T0_RSaIT1_E.exit
 
 _ZSt27__uninitialized_default_n_aIPtmtET_S1_T0_RSaIT1_E.exit: ; preds = %bb.c, %_ZSt6fill_nIPtmtET_S1_T0_RKT1_.exit.loopexit.i.i.i

@@ -204,14 +204,10 @@ bb.c:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 10
   %i.g = load i8, ptr %i.f, align 1, !tbaa !20
   %i.h = icmp eq i8 %i.g, 0
-  br i1 %i.h, label %.loopexit.sink.split, label %.lr.ph.preheader
+  br i1 %i.h, label %.loopexit.sink.split, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.c
-  %2 = load ptr, ptr %0, align 8, !tbaa !86
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.04963 = phi ptr [ %i.j, %.lr.ph ], [ %0, %.lr.ph.preheader ]
+.lr.ph:                                           ; preds = %bb.c, %.lr.ph
+  %.04963 = phi ptr [ %i.j, %.lr.ph ], [ %0, %bb.c ]
   %i.i = getelementptr inbounds nuw i8, ptr %.04963, i64 256
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !86   ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 11
@@ -220,6 +216,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not.i, label %.lr.ph, label %._crit_edge, !llvm.loop !346
 
 ._crit_edge:                                      ; preds = %.lr.ph
+  %2 = load ptr, ptr %0, align 8, !tbaa !86
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.n = load i8, ptr %i.m, align 1, !tbaa !20
   %i.o = zext i8 %i.n to i64

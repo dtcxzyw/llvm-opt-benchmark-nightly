@@ -204,10 +204,10 @@ _ZN5faiss12quantize_lut12_GLOBAL__N_19round_tabEPfmff.exit.loopexit.us: ; preds 
   br i1 %epil.iter200.cmp.not, label %._crit_edge107, label %.lr.ph.us.us.epil, !llvm.loop !49
 
 ._crit_edge107:                                   ; preds = %._crit_edge.us, %._crit_edge107.loopexit185.unr-lcssa, %.lr.ph.us.us.epil, %._crit_edge107.loopexit.unr-lcssa, %.lr.ph106.split.epil, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
-  %i.ej = phi float [ 0.000000e+00, %._crit_edge107.loopexit185.unr-lcssa ], [ 0.000000e+00, %._crit_edge107.loopexit.unr-lcssa ], [ 0.000000e+00, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ], [ 0.000000e+00, %.lr.ph106.split.epil ], [ 0.000000e+00, %.lr.ph.us.us.epil ], [ %i.by, %._crit_edge.us ]
-  %.sroa.11.0140149 = phi ptr [ %i.d, %._crit_edge107.loopexit185.unr-lcssa ], [ %i.d, %._crit_edge107.loopexit.unr-lcssa ], [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ], [ %i.d, %.lr.ph106.split.epil ], [ %i.d, %.lr.ph.us.us.epil ], [ %i.d, %._crit_edge.us ]
-  %.sroa.079.0142147 = phi ptr [ %i.c, %._crit_edge107.loopexit185.unr-lcssa ], [ %i.c, %._crit_edge107.loopexit.unr-lcssa ], [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ], [ %i.c, %.lr.ph106.split.epil ], [ %i.c, %.lr.ph.us.us.epil ], [ %i.c, %._crit_edge.us ] ; 3 uses
-  %.049.lcssa = phi float [ %i.eh, %.lr.ph.us.us.epil ], [ %i.ed, %.lr.ph106.split.epil ], [ 0.000000e+00, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ], [ %i.fo, %._crit_edge107.loopexit.unr-lcssa ], [ %i.dd, %._crit_edge107.loopexit185.unr-lcssa ], [ %i.dz, %._crit_edge.us ]
+  %i.ej = phi float [ 0.000000e+00, %._crit_edge107.loopexit.unr-lcssa ], [ 0.000000e+00, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ], [ 0.000000e+00, %._crit_edge107.loopexit185.unr-lcssa ], [ 0.000000e+00, %.lr.ph106.split.epil ], [ 0.000000e+00, %.lr.ph.us.us.epil ], [ %i.by, %._crit_edge.us ]
+  %.sroa.11.0140149 = phi ptr [ %i.d, %._crit_edge107.loopexit.unr-lcssa ], [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ], [ %i.d, %._crit_edge107.loopexit185.unr-lcssa ], [ %i.d, %.lr.ph106.split.epil ], [ %i.d, %.lr.ph.us.us.epil ], [ %i.d, %._crit_edge.us ]
+  %.sroa.079.0142147 = phi ptr [ %i.c, %._crit_edge107.loopexit.unr-lcssa ], [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ], [ %i.c, %._crit_edge107.loopexit185.unr-lcssa ], [ %i.c, %.lr.ph106.split.epil ], [ %i.c, %.lr.ph.us.us.epil ], [ %i.c, %._crit_edge.us ] ; 3 uses
+  %.049.lcssa = phi float [ %i.ed, %.lr.ph106.split.epil ], [ 0.000000e+00, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ], [ %i.eh, %.lr.ph.us.us.epil ], [ %i.fo, %._crit_edge107.loopexit.unr-lcssa ], [ %i.dd, %._crit_edge107.loopexit185.unr-lcssa ], [ %i.dz, %._crit_edge.us ]
   %.not = icmp eq ptr %4, null
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -610,7 +610,6 @@ _ZN5faiss12quantize_lut12_GLOBAL__N_17tab_maxEPKfm.exit330: ; preds = %_ZN5faiss
   %i.gu = tail call float @llvm.fabs.f32(float %.sroa.speculated551)
   %i.gv = fcmp one float %i.gu, +inf
   %.1271 = select i1 %i.gv, float %.sroa.speculated551, float 0.000000e+00 ; 8 uses
-  %12 = fadd float %.08.lcssa.i321611, %.1597.lcssa ; 2 uses
   %.not.i355 = icmp eq i64 %2, 0
   %or.cond740 = or i1 %.not.i.i.i.i307, %.not.i355
   br i1 %or.cond740, label %._crit_edge642.split, label %.lr.ph.i356.preheader.preheader
@@ -771,6 +770,7 @@ _ZN5faiss12quantize_lut12_GLOBAL__N_17tab_maxEPKfm.exit347: ; preds = %_ZN5faiss
   br i1 %exitcond.not, label %._crit_edge, label %bb.o, !llvm.loop !63
 
 ._crit_edge642.split:                             ; preds = %_ZN5faiss12quantize_lut12_GLOBAL__N_19round_tabIhEEvPKfmffPT_.exit359.loopexit, %._crit_edge
+  %12 = fadd float %.08.lcssa.i321611, %.1597.lcssa ; 2 uses
   %i.iy = mul i64 %2, %1
   %i.iz = getelementptr inbounds nuw i8, ptr %6, i64 %i.iy
   %i.ja = sub i64 %7, %1
@@ -1049,7 +1049,6 @@ _ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i371: ; preds = %.noexc376
 
 .lr.ph663:                                        ; preds = %.lr.ph.i379.epil, %.lr.ph663.unr-lcssa
   %.1.i382.lcssa = phi float [ %.1.i382.3, %.lr.ph663.unr-lcssa ], [ %.1.i382.epil, %.lr.ph.i379.epil ]
-  %13 = ptrtoint ptr %i.lu to i64
   %.not743 = icmp eq i64 %1, 0
   %.not.i391 = icmp eq i64 %2, 0
   %i.mu = add i64 %2, -1                          ; 2 uses
@@ -1070,6 +1069,7 @@ _ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i371: ; preds = %.noexc376
   br label %bb.v
 
 ._crit_edge664.loopexit:                          ; preds = %._crit_edge650
+  %13 = ptrtoint ptr %i.lu to i64
   %i.mz = insertelement <2 x float> poison, float %.sroa.speculated528, i64 0
   %i.na = insertelement <2 x float> %i.mz, float %.1606.lcssa, i64 1
   br label %._crit_edge664
@@ -1472,14 +1472,10 @@ _ZNSt6vectorIfSaIfEEC2EmRKS0_.exit430:            ; preds = %_ZSt6fill_nIPfmfET_
   %.0240687.us.us = phi i64 [ 0, %.preheader631.lr.ph.us ], [ %i.uu, %._crit_edge684.us.us ]
   %.1243686.us.us = phi i64 [ %.0242691.us, %.preheader631.lr.ph.us ], [ %i.ug, %._crit_edge684.us.us ] ; 4 uses
   %i.ug = add i64 %2, %.1243686.us.us             ; 3 uses
-  br i1 %min.iters.check1003, label %scalar.ph1002.preheader, label %vector.ph1004
+  br i1 %min.iters.check1003, label %scalar.ph1002.preheader, label %vector.body1008
 
-vector.ph1004:                                    ; preds = %.preheader631.us.us
-  %14 = add i64 %.1243686.us.us, %n.vec1005
-  br label %vector.body1008
-
-vector.body1008:                                  ; preds = %vector.body1008, %vector.ph1004
-  %index1009 = phi i64 [ 0, %vector.ph1004 ], [ %index.next1012, %vector.body1008 ] ; 2 uses
+vector.body1008:                                  ; preds = %.preheader631.us.us, %vector.body1008
+  %index1009 = phi i64 [ %index.next1012, %vector.body1008 ], [ 0, %.preheader631.us.us ] ; 2 uses
   %i.uh = add i64 %.1243686.us.us, %index1009     ; 2 uses
   %i.ui = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.uh ; 2 uses
   %i.uj = getelementptr inbounds nuw i8, ptr %i.ui, i64 16
@@ -1496,6 +1492,7 @@ vector.body1008:                                  ; preds = %vector.body1008, %v
   br i1 %i.uo, label %middle.block1013, label %vector.body1008, !llvm.loop !87
 
 middle.block1013:                                 ; preds = %vector.body1008
+  %14 = add i64 %.1243686.us.us, %n.vec1005
   br i1 %cmp.n1014, label %._crit_edge684.us.us, label %scalar.ph1002.preheader
 
 scalar.ph1002.preheader:                          ; preds = %.preheader631.us.us, %middle.block1013
@@ -1553,8 +1550,6 @@ bb.y:                                             ; preds = %_ZNSt6vectorIfSaIfE
 
 vector.ph1018:                                    ; preds = %.noexc435
   %n.vec1019 = and i64 %i.vc, 9223372036854775800 ; 3 uses
-  %15 = shl i64 %n.vec1019, 2
-  %16 = getelementptr i8, ptr %i.uy, i64 %15
   br label %vector.body1020
 
 vector.body1020:                                  ; preds = %vector.body1020, %vector.ph1018
@@ -1569,6 +1564,8 @@ vector.body1020:                                  ; preds = %vector.body1020, %v
   br i1 %i.vf, label %middle.block1023, label %vector.body1020, !llvm.loop !91
 
 middle.block1023:                                 ; preds = %vector.body1020
+  %15 = shl i64 %n.vec1019, 2
+  %16 = getelementptr i8, ptr %i.uy, i64 %15
   %cmp.n1024 = icmp eq i64 %i.vc, %n.vec1019
   br i1 %cmp.n1024, label %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i436, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader
 
@@ -1598,8 +1595,6 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i436: ; preds = %.lr.ph.i.i.
 
 vector.ph1028:                                    ; preds = %.noexc444
   %n.vec1029 = and i64 %i.vm, 9223372036854775800 ; 3 uses
-  %17 = shl i64 %n.vec1029, 2
-  %18 = getelementptr i8, ptr %i.vi, i64 %17
   br label %vector.body1030
 
 vector.body1030:                                  ; preds = %vector.body1030, %vector.ph1028
@@ -1614,6 +1609,8 @@ vector.body1030:                                  ; preds = %vector.body1030, %v
   br i1 %i.vp, label %middle.block1034, label %vector.body1030, !llvm.loop !93
 
 middle.block1034:                                 ; preds = %vector.body1030
+  %17 = shl i64 %n.vec1029, 2
+  %18 = getelementptr i8, ptr %i.vi, i64 %17
   %cmp.n1035 = icmp eq i64 %i.vm, %n.vec1029
   br i1 %cmp.n1035, label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit445.loopexit, label %.lr.ph.i.i.i.i.i.i.i.i.i438.preheader
 

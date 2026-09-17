@@ -205,14 +205,10 @@ bb.e:                                             ; preds = %bb.e, %bb.d
   %i.af = icmp ugt i64 %i.ae, %i.z
   %.sroa.05.0.i.i.i.i.i.i = select i1 %i.ab, i1 %i.af, i1 %i.ac
   %i.ag = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 16 ; 2 uses
-  br i1 %.sroa.05.0.i.i.i.i.i.i, label %bb.e, label %.preheader.i.i.preheader, !llvm.loop !3652
+  br i1 %.sroa.05.0.i.i.i.i.i.i, label %bb.e, label %.preheader.i.i, !llvm.loop !3652
 
-.preheader.i.i.preheader:                         ; preds = %bb.e
-  %3 = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 8 ; 2 uses
-  br label %.preheader.i.i
-
-.preheader.i.i:                                   ; preds = %.preheader.i.i.preheader, %.preheader.i.i
-  %.013.pn.i.i = phi ptr [ %.114.i.i, %.preheader.i.i ], [ %.013.i.i, %.preheader.i.i.preheader ] ; 3 uses
+.preheader.i.i:                                   ; preds = %bb.e, %.preheader.i.i
+  %.013.pn.i.i = phi ptr [ %.114.i.i, %.preheader.i.i ], [ %.013.i.i, %bb.e ] ; 3 uses
   %.114.i.i = getelementptr inbounds i8, ptr %.013.pn.i.i, i64 -16 ; 5 uses
   %i.ah = load i64, ptr %.114.i.i, align 8, !tbaa !1669 ; 3 uses
   %i.ai = icmp eq i64 %i.y, %i.ah
@@ -229,6 +225,7 @@ bb.f:                                             ; preds = %.preheader.i.i
 
 bb.g:                                             ; preds = %bb.f
   %i.ao = getelementptr inbounds i8, ptr %.013.pn.i.i, i64 -8 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 8 ; 2 uses
   store i64 %i.ah, ptr %.1.i.i, align 8, !tbaa !1669
   store i64 %i.aa, ptr %.114.i.i, align 8, !tbaa !1669
   %i.ap = load i64, ptr %3, align 8, !tbaa !1669

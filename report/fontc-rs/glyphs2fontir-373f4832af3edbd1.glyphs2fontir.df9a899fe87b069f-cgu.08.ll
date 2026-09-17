@@ -204,9 +204,6 @@ _RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsjceH
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.preheader
   %n.vec = and i64 %i.as, 576460752303423486      ; 4 uses
-  %8 = shl nuw nsw i64 %n.vec, 4
-  %9 = getelementptr i8, ptr %1, i64 %8
-  %10 = sub i64 %i.al, %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -224,12 +221,18 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x double> %wide.load19, ptr %i.ax, align 8, !noalias !417
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.ay = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ay, label %.lr.ph.i.i.preheader22, label %vector.body, !llvm.loop !412
+  br i1 %i.ay, label %.lr.ph.i.i.preheader22.loopexit, label %vector.body, !llvm.loop !412
 
-.lr.ph.i.i.preheader22:                           ; preds = %vector.body, %.lr.ph.i.i.preheader
-  %.sroa.014.023.i.i.ph = phi ptr [ %1, %.lr.ph.i.i.preheader ], [ %9, %vector.body ]
-  %.sroa.7.022.i.i.ph = phi i64 [ 0, %.lr.ph.i.i.preheader ], [ %n.vec, %vector.body ]
-  %.sroa.10.021.i.i.ph = phi i64 [ %i.al, %.lr.ph.i.i.preheader ], [ %10, %vector.body ]
+.lr.ph.i.i.preheader22.loopexit:                  ; preds = %vector.body
+  %8 = shl nuw nsw i64 %n.vec, 4
+  %9 = getelementptr i8, ptr %1, i64 %8
+  %10 = sub i64 %i.al, %n.vec
+  br label %.lr.ph.i.i.preheader22
+
+.lr.ph.i.i.preheader22:                           ; preds = %.lr.ph.i.i.preheader22.loopexit, %.lr.ph.i.i.preheader
+  %.sroa.014.023.i.i.ph = phi ptr [ %1, %.lr.ph.i.i.preheader ], [ %9, %.lr.ph.i.i.preheader22.loopexit ]
+  %.sroa.7.022.i.i.ph = phi i64 [ 0, %.lr.ph.i.i.preheader ], [ %n.vec, %.lr.ph.i.i.preheader22.loopexit ]
+  %.sroa.10.021.i.i.ph = phi i64 [ %i.al, %.lr.ph.i.i.preheader ], [ %10, %.lr.ph.i.i.preheader22.loopexit ]
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader22, %bb.o

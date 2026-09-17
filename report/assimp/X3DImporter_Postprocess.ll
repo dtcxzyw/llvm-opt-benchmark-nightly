@@ -186,15 +186,12 @@ bb.d:                                             ; preds = %_ZNSt7__cxx114listI
 .loopexit:                                        ; preds = %bb.d
   %.pre = load ptr, ptr %2, align 8, !noalias !12 ; 3 uses
   %.not5367 = icmp eq ptr %2, %.pre
-  br i1 %.not5367, label %_ZNSt7__cxx1110_List_baseI12aiMatrix4x4tIfESaIS2_EED2Ev.exit.critedge, label %.lr.ph
+  br i1 %.not5367, label %_ZNSt7__cxx1110_List_baseI12aiMatrix4x4tIfESaIS2_EED2Ev.exit.critedge, label %bb.e
 
-.lr.ph:                                           ; preds = %.loopexit
+._crit_edge:                                      ; preds = %bb.e
   %.sroa.13.0..sroa_idx27 = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.21.0..sroa_idx35 = getelementptr inbounds nuw i8, ptr %0, i64 32
   %.sroa.29.0..sroa_idx43 = getelementptr inbounds nuw i8, ptr %0, i64 48
-  br label %bb.e
-
-._crit_edge:                                      ; preds = %bb.e
   store <4 x float> %i.ap, ptr %0, align 4
   store <4 x float> %i.ax, ptr %.sroa.13.0..sroa_idx27, align 4
   store <4 x float> %i.bf, ptr %.sroa.21.0..sroa_idx35, align 4
@@ -219,9 +216,9 @@ _ZNSt7__cxx1110_List_baseI12aiMatrix4x4tIfESaIS2_EED2Ev.exit: ; preds = %.lr.ph.
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #18
   ret void
 
-bb.e:                                             ; preds = %.lr.ph, %bb.e
-  %.sroa.052.069 = phi ptr [ %2, %.lr.ph ], [ %i.z, %bb.e ]
-  %i.x = phi <16 x float> [ <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, %.lr.ph ], [ %i.bs, %bb.e ] ; 16 uses
+bb.e:                                             ; preds = %.loopexit, %bb.e
+  %.sroa.052.069 = phi ptr [ %i.z, %bb.e ], [ %2, %.loopexit ]
+  %i.x = phi <16 x float> [ %i.bs, %bb.e ], [ <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, %.loopexit ] ; 16 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.052.069, i64 8
   %i.z = load ptr, ptr %i.y, align 8              ; 6 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 16

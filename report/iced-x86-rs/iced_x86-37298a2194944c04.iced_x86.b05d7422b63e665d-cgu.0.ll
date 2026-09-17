@@ -205,8 +205,6 @@ vector.ph97:                                      ; preds = %vector.main.loop.it
   %i.o = icmp eq i64 %i.n, 0
   %i.p = select i1 %i.o, i64 16, i64 %i.n         ; 2 uses
   %n.vec98 = sub i64 %i.m, %i.p                   ; 3 uses
-  %1 = shl i64 %n.vec98, 1
-  %2 = getelementptr i8, ptr %i.e, i64 %1
   br label %vector.body99
 
 vector.body99:                                    ; preds = %pred.store.continue148, %vector.ph97
@@ -427,6 +425,8 @@ pred.store.continue148:                           ; preds = %pred.store.if147, %
   br i1 %i.dk, label %vec.epilog.iter.check154, label %vector.body99, !llvm.loop !4996
 
 vec.epilog.iter.check154:                         ; preds = %pred.store.continue148
+  %1 = shl i64 %n.vec98, 1
+  %2 = getelementptr i8, ptr %i.e, i64 %1
   %min.epilog.iters.check155 = icmp samesign ult i64 %i.p, 9
   br i1 %min.epilog.iters.check155, label %vec.epilog.scalar.ph153.preheader, label %vec.epilog.ph156, !prof !5004
 
@@ -436,8 +436,6 @@ vec.epilog.ph156:                                 ; preds = %vector.main.loop.it
   %i.dm = icmp eq i64 %i.dl, 0
   %i.dn = select i1 %i.dm, i64 8, i64 %i.dl
   %n.vec157 = sub i64 %i.m, %i.dn                 ; 2 uses
-  %3 = shl i64 %n.vec157, 1
-  %4 = getelementptr i8, ptr %i.e, i64 %3
   br label %vec.epilog.vector.body158
 
 vec.epilog.vector.body158:                        ; preds = %pred.store.continue183, %vec.epilog.ph156
@@ -551,10 +549,15 @@ pred.store.if182:                                 ; preds = %pred.store.continue
 pred.store.continue183:                           ; preds = %pred.store.if182, %pred.store.continue181
   %index.next184 = add nuw i64 %index159, 8       ; 2 uses
   %i.fm = icmp eq i64 %index.next184, %n.vec157
-  br i1 %i.fm, label %vec.epilog.scalar.ph153.preheader, label %vec.epilog.vector.body158, !llvm.loop !4997
+  br i1 %i.fm, label %vec.epilog.scalar.ph153.preheader.loopexit, label %vec.epilog.vector.body158, !llvm.loop !4997
 
-vec.epilog.scalar.ph153.preheader:                ; preds = %pred.store.continue183, %iter.check152, %vec.epilog.iter.check154
-  %.sroa.0.0.us18.ph = phi ptr [ %i.e, %iter.check152 ], [ %2, %vec.epilog.iter.check154 ], [ %4, %pred.store.continue183 ]
+vec.epilog.scalar.ph153.preheader.loopexit:       ; preds = %pred.store.continue183
+  %3 = shl i64 %n.vec157, 1
+  %4 = getelementptr i8, ptr %i.e, i64 %3
+  br label %vec.epilog.scalar.ph153.preheader
+
+vec.epilog.scalar.ph153.preheader:                ; preds = %vec.epilog.scalar.ph153.preheader.loopexit, %iter.check152, %vec.epilog.iter.check154
+  %.sroa.0.0.us18.ph = phi ptr [ %i.e, %iter.check152 ], [ %2, %vec.epilog.iter.check154 ], [ %4, %vec.epilog.scalar.ph153.preheader.loopexit ]
   br label %vec.epilog.scalar.ph153
 
 vec.epilog.scalar.ph153:                          ; preds = %vec.epilog.scalar.ph153.preheader, %bb.f
@@ -619,8 +622,6 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.ge = icmp eq i64 %i.gd, 0
   %i.gf = select i1 %i.ge, i64 16, i64 %i.gd      ; 2 uses
   %n.vec = sub i64 %i.gc, %i.gf                   ; 3 uses
-  %5 = shl i64 %n.vec, 1
-  %6 = getelementptr i8, ptr %i.fu, i64 %5
   br label %vector.body
 
 vector.body:                                      ; preds = %pred.store.continue65, %vector.ph
@@ -873,6 +874,8 @@ pred.store.continue65:                            ; preds = %pred.store.if64, %p
   br i1 %i.lg, label %vec.epilog.iter.check, label %vector.body, !llvm.loop !4999
 
 vec.epilog.iter.check:                            ; preds = %pred.store.continue65
+  %5 = shl i64 %n.vec, 1
+  %6 = getelementptr i8, ptr %i.fu, i64 %5
   %min.epilog.iters.check = icmp samesign ult i64 %i.gf, 9
   br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !5004
 
@@ -882,8 +885,6 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %i.li = icmp eq i64 %i.lh, 0
   %i.lj = select i1 %i.li, i64 8, i64 %i.lh
   %n.vec66 = sub i64 %i.gc, %i.lj                 ; 2 uses
-  %7 = shl i64 %n.vec66, 1
-  %8 = getelementptr i8, ptr %i.fu, i64 %7
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %pred.store.continue91, %vec.epilog.ph
@@ -1013,10 +1014,15 @@ pred.store.if90:                                  ; preds = %pred.store.continue
 pred.store.continue91:                            ; preds = %pred.store.if90, %pred.store.continue89
   %index.next92 = add nuw i64 %index67, 8         ; 2 uses
   %i.ny = icmp eq i64 %index.next92, %n.vec66
-  br i1 %i.ny, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.vector.body, !llvm.loop !5000
+  br i1 %i.ny, label %vec.epilog.scalar.ph.preheader.loopexit, label %vec.epilog.vector.body, !llvm.loop !5000
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %pred.store.continue91, %iter.check, %vec.epilog.iter.check
-  %.sroa.0.0.us617.ph = phi ptr [ %i.fu, %iter.check ], [ %6, %vec.epilog.iter.check ], [ %8, %pred.store.continue91 ]
+vec.epilog.scalar.ph.preheader.loopexit:          ; preds = %pred.store.continue91
+  %7 = shl i64 %n.vec66, 1
+  %8 = getelementptr i8, ptr %i.fu, i64 %7
+  br label %vec.epilog.scalar.ph.preheader
+
+vec.epilog.scalar.ph.preheader:                   ; preds = %vec.epilog.scalar.ph.preheader.loopexit, %iter.check, %vec.epilog.iter.check
+  %.sroa.0.0.us617.ph = phi ptr [ %i.fu, %iter.check ], [ %6, %vec.epilog.iter.check ], [ %8, %vec.epilog.scalar.ph.preheader.loopexit ]
   br label %vec.epilog.scalar.ph
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %bb.j

@@ -204,7 +204,7 @@ define dso_local void @slow_f128M_mulAdd(ptr nofree noundef readonly captures(no
 bb.a:
   %4 = alloca %struct.floatX, align 8             ; 10 uses
   %5 = alloca %struct.uint256, align 8            ; 19 uses
-  %6 = alloca %struct.floatX256, align 8          ; 25 uses
+  %6 = alloca %struct.floatX256, align 8          ; 26 uses
   %7 = alloca %struct.floatX256, align 8          ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #10
@@ -414,7 +414,6 @@ bb.x:                                             ; preds = %bb.v
 bb.y:                                             ; preds = %bb.u
   %i.br = add nsw i64 %i.p, %.sroa.131.0.i10      ; 3 uses
   store i64 %i.br, ptr %i.aa, align 8, !tbaa !45
-  %8 = getelementptr inbounds nuw i8, ptr %6, i64 24
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.ab, %bb.y
@@ -457,6 +456,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
   br i1 %exitcond.not.i, label %bb.ac, label %bb.z
 
 bb.ac:                                            ; preds = %bb.ab
+  %8 = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.cn = icmp ugt i64 %.sroa.24.1.i, 72057594037927935
   br i1 %i.cn, label %bb.ad, label %bb.ae
 
@@ -636,7 +636,6 @@ bb.aw:                                            ; preds = %bb.av
 bb.ax:                                            ; preds = %bb.aw
   store i64 %.sroa.131.0.i24, ptr %i.aa, align 8, !tbaa !45
   %i.em = icmp samesign ult i64 %i.ek, -248
-  %9 = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 2 uses
   br i1 %i.em, label %bb.ay, label %.preheader.i.preheader
 
 .preheader.i.preheader:                           ; preds = %bb.ax
@@ -670,6 +669,7 @@ bb.ax:                                            ; preds = %bb.aw
   br i1 %i.ev, label %.loopexit.i, label %.preheader.i
 
 bb.ay:                                            ; preds = %bb.ax
+  %9 = getelementptr inbounds nuw i8, ptr %6, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %9, i8 0, i64 24, i1 false)
   store i64 1, ptr %i.ab, align 8, !tbaa !49
   br label %bb.az
@@ -700,8 +700,9 @@ bb.ay:                                            ; preds = %bb.ax
   %.lcssa178 = phi i64 [ %.lcssa178.unr, %.preheader.i.prol.loopexit ], [ %i.fj, %.preheader.i ] ; 2 uses
   %.lcssa177 = phi i64 [ %.lcssa177.unr, %.preheader.i.prol.loopexit ], [ %i.fk, %.preheader.i ] ; 2 uses
   %.lcssa176 = phi i64 [ %.lcssa176.unr, %.preheader.i.prol.loopexit ], [ %i.fl, %.preheader.i ] ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %6, i64 24
   store i64 %.lcssa176, ptr %i.ab, align 8, !tbaa !36
-  store i64 %.lcssa179, ptr %9, align 8, !tbaa !37
+  store i64 %.lcssa179, ptr %10, align 8, !tbaa !37
   store i64 %.lcssa178, ptr %i.ad, align 8, !tbaa !38
   store i64 %.lcssa177, ptr %i.ac, align 8, !tbaa !39
   br label %bb.az

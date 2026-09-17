@@ -204,8 +204,8 @@ bb.c:                                             ; preds = %bb.b
 
 _ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.loopexit.i.i.i: ; preds = %bb.c
   %.idx.i.i.i.i.i = shl nuw nsw i64 %i.q, 2       ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.p, i8 0, i64 %.idx.i.i.i.i.i, i1 false), !tbaa !17
   %2 = getelementptr inbounds nuw i8, ptr %i.p, i64 %.idx.i.i.i.i.i
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.p, i8 0, i64 %.idx.i.i.i.i.i, i1 false), !tbaa !17
   br label %_ZSt27__uninitialized_default_n_aIPjmjET_S1_T0_RSaIT1_E.exit
 
 _ZSt27__uninitialized_default_n_aIPjmjET_S1_T0_RSaIT1_E.exit: ; preds = %bb.c, %_ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.loopexit.i.i.i
@@ -332,16 +332,14 @@ bb.e:                                             ; preds = %bb.b, %bb.c, %bb.d,
   %i.z = phi i64 [ 11, %.lr.ph.i.i.i.preheader ], [ 7, %bb.b ], [ %i.y, %bb.d ], [ 5, %bb.c ] ; 2 uses
   %i.aa = sub i64 %i.k, %i.z
   %i.ab = lshr i64 %i.aa, 1                       ; 5 uses
-  %3 = add nuw i64 %i.ab, %i.z                    ; 4 uses
-  %i.ac = add nsw i64 %i.r, 1                     ; 4 uses
-  %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %i.ac, i64 %i.k) ; 4 uses
+  %i.ac = add nuw i64 %i.ab, %i.z                 ; 4 uses
   %i.ad = trunc i64 %i.r to i32
   %i.ae = add i32 %i.ad, 1371501266               ; 2 uses
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.ab ; 2 uses
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !17
   %i.ah = add i32 %i.ag, 1371501266
   store i32 %i.ah, ptr %i.af, align 4, !tbaa !17
-  %i.ai = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %3 ; 2 uses
+  %i.ai = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.ac ; 2 uses
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !17
   %i.ak = add i32 %i.aj, %i.ae
   store i32 %i.ak, ptr %i.ai, align 4, !tbaa !17
@@ -350,11 +348,14 @@ bb.e:                                             ; preds = %bb.b, %bb.c, %bb.d,
   br i1 %.not130, label %.preheader129, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.e
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.ac, i64 2)
+  %3 = add nsw i64 %i.r, 1                        ; 2 uses
+  %umax = tail call i64 @llvm.umax.i64(i64 %3, i64 2)
   br label %.lr.ph
 
 .preheader129:                                    ; preds = %.lr.ph, %bb.e
-  %i.al = icmp ugt i64 %i.k, %i.ac
+  %.pre-phi = phi i64 [ 1, %bb.e ], [ %3, %.lr.ph ] ; 3 uses
+  %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %.pre-phi, i64 %i.k) ; 4 uses
+  %i.al = icmp ugt i64 %i.k, %.pre-phi
   br i1 %i.al, label %.lr.ph133, label %.preheader
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -362,7 +363,7 @@ bb.e:                                             ; preds = %bb.b, %bb.c, %bb.d,
   %i.am = urem i64 %.0131, %i.k                   ; 2 uses
   %i.an = add i64 %.0131, %i.ab
   %i.ao = urem i64 %i.an, %i.k
-  %i.ap = add i64 %.0131, %3
+  %i.ap = add i64 %.0131, %i.ac
   %i.aq = urem i64 %i.ap, %i.k
   %i.ar = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.am ; 2 uses
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !17
@@ -399,11 +400,11 @@ bb.e:                                             ; preds = %bb.b, %bb.c, %bb.d,
   br i1 %i.bp, label %.lr.ph135, label %.loopexit
 
 .lr.ph133:                                        ; preds = %.preheader129, %.lr.ph133
-  %.0115132 = phi i64 [ %i.co, %.lr.ph133 ], [ %i.ac, %.preheader129 ] ; 5 uses
+  %.0115132 = phi i64 [ %i.co, %.lr.ph133 ], [ %.pre-phi, %.preheader129 ] ; 5 uses
   %i.bq = urem i64 %.0115132, %i.k                ; 2 uses
   %i.br = add i64 %.0115132, %i.ab
   %i.bs = urem i64 %i.br, %i.k
-  %i.bt = add i64 %.0115132, %3
+  %i.bt = add i64 %.0115132, %i.ac
   %i.bu = urem i64 %i.bt, %i.k
   %i.bv = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.bq ; 2 uses
   %i.bw = load i32, ptr %i.bv, align 4, !tbaa !17
@@ -436,7 +437,7 @@ bb.e:                                             ; preds = %bb.b, %bb.c, %bb.d,
   %i.cp = urem i64 %.0114134, %i.k                ; 2 uses
   %i.cq = add i64 %.0114134, %i.ab
   %i.cr = urem i64 %i.cq, %i.k
-  %i.cs = add i64 %.0114134, %3
+  %i.cs = add i64 %.0114134, %i.ac
   %i.ct = urem i64 %i.cs, %i.k
   %i.cu = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.cp ; 2 uses
   %i.cv = load i32, ptr %i.cu, align 4, !tbaa !17

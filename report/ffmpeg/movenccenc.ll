@@ -204,13 +204,12 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.k = tail call i16 @llvm.bswap.i16(i16 %i.f)
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  %6 = add i32 %2, -1
-  %7 = zext nneg i32 %6 to i64
   %xtraiter = and i32 %2, 3                       ; 3 uses
   %i.m = icmp ult i32 %2, 4
   %unroll_iter = and i32 %2, 2147483644
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   %lcmp.mod105 = icmp ne i32 %xtraiter, 0
+  %6 = zext nneg i32 %2 to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph66, %auxiliary_info_add_subsample.exit
@@ -283,8 +282,7 @@ bb.d:                                             ; preds = %bb.b
 
 ._crit_edge:                                      ; preds = %.lr.ph.epil, %._crit_edge.unr-lcssa
   %.lcssa = phi i32 [ %i.af, %._crit_edge.unr-lcssa ], [ %i.ak, %.lr.ph.epil ] ; 6 uses
-  %8 = getelementptr i8, ptr %.04164, i64 %7      ; 2 uses
-  %scevgep = getelementptr i8, ptr %8, i64 1
+  %scevgep = getelementptr i8, ptr %.04164, i64 %6 ; 2 uses
   %i.al = sub nsw i32 %.04065, %2                 ; 3 uses
   %i.am = icmp slt i32 %.lcssa, 1
   %i.an = icmp sgt i32 %.lcssa, %i.al
@@ -304,7 +302,7 @@ bb.e:                                             ; preds = %._crit_edge
   br i1 %.not55, label %mov_cenc_write_encrypted.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.e
-  %i.aq = getelementptr i8, ptr %8, i64 2
+  %i.aq = getelementptr inbounds nuw i8, ptr %scevgep, i64 1
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i

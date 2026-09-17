@@ -36,7 +36,6 @@ bb.c:                                             ; preds = %bb.b
   %i.i = udiv i64 %i.g, %i.h                      ; 3 uses
   %i.j = udiv i64 1000000000, %i.h                ; 2 uses
   %i.k = tail call i64 @gcd(i64 noundef %i.i, i64 noundef %i.f) #10 ; 3 uses
-  %1 = udiv i64 %i.i, %i.k
   %i.l = udiv i64 %i.f, %i.k                      ; 2 uses
   %mul40 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.l, i64 %i.j) ; 2 uses
   %mul.ov41 = extractvalue { i64, i1 } %mul40, 1
@@ -67,7 +66,11 @@ bb.d:                                             ; preds = %._crit_edge
 
 bb.e:                                             ; preds = %._crit_edge
   %mul.val.le = extractvalue { i64, i1 } %mul.lcssa, 0
-  %i.t = udiv i64 %mul.val.le, %1
+  %.lhs.trunc = trunc nuw i64 %i.i to i32
+  %.rhs.trunc = trunc i64 %i.k to i32
+  %1 = udiv i32 %.lhs.trunc, %.rhs.trunc
+  %.zext = zext i32 %1 to i64
+  %i.t = udiv i64 %mul.val.le, %.zext
   %i.u = mul i64 %i.t, %.036.lcssa
   %i.v = trunc i64 %i.u to i32
   br label %.sink.split

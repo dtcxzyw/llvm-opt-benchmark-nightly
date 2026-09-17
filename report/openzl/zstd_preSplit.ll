@@ -106,7 +106,6 @@ vector.body59:                                    ; preds = %vector.body59, %vec
 
 middle.block68:                                   ; preds = %vector.body59
   %bin.rdx69 = add <2 x i64> %i.aw, %i.av
-  %5 = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx69) ; 2 uses
   %i.ay = load i64, ptr %i.e, align 8, !tbaa !26
   %broadcast.splatinsert71 = insertelement <2 x i64> poison, i64 %i.ay, i64 0
   %broadcast.splat72 = shufflevector <2 x i64> %broadcast.splatinsert71, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -143,6 +142,7 @@ vector.body73:                                    ; preds = %vector.body73, %mid
   br i1 %i.br, label %fpDistance.exit28.i, label %vector.body73, !llvm.loop !13
 
 fpDistance.exit28.i:                              ; preds = %vector.body73
+  %5 = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx69) ; 2 uses
   %bin.rdx83 = add <2 x i64> %i.bq, %i.bp
   %i.bs = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx83) ; 2 uses
   %i.bt = add i64 %5, 87380
@@ -315,7 +315,7 @@ call.3.i:                                         ; preds = %bb.b
 
 .tail.i:                                          ; preds = %.lr.ph.i44.i, %.lr.ph.i41.i, %.lr.ph.i39.i, %.lr.ph.i.i
   %.sink = phi i64 [ 744, %.lr.ph.i39.i ], [ 190, %.lr.ph.i.i ], [ 1638, %.lr.ph.i41.i ], [ 8191, %.lr.ph.i44.i ] ; 2 uses
-  %i.fh = getelementptr inbounds nuw i8, ptr %3, i64 4096
+  %i.fh = getelementptr inbounds nuw i8, ptr %3, i64 4096 ; 2 uses
   store i64 %.sink, ptr %i.fh, align 8, !tbaa !26
   %i.fi = add i64 %1, -8192                       ; 2 uses
   %.not34.i = icmp ult i64 %i.fi, 8192
@@ -324,7 +324,6 @@ call.3.i:                                         ; preds = %bb.b
 .lr.ph.i:                                         ; preds = %.tail.i
   %i.fj = getelementptr inbounds nuw i8, ptr %3, i64 4104 ; 17 uses
   %i.fk = getelementptr inbounds nuw [4 x i8], ptr @ZSTD_splitBlock_byChunks.hashParams, i64 %i.bz
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 4096
   %i.fl = getelementptr inbounds nuw i8, ptr %3, i64 8200 ; 2 uses
   br label %bb.c
 
@@ -558,7 +557,7 @@ vector.body:                                      ; preds = %compareFingerprints
 
 mergeEvents.exit.i:                               ; preds = %vector.body
   %i.kc = add i64 %.sink.i, %i.fm                 ; 2 uses
-  store i64 %i.kc, ptr %6, align 8, !tbaa !26
+  store i64 %i.kc, ptr %i.fh, align 8, !tbaa !26
   %i.kd = icmp sgt i32 %.02435.i, 0
   %i.ke = sext i1 %i.kd to i32
   %spec.select.i = add nsw i32 %.02435.i, %i.ke

@@ -202,9 +202,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
   %i.x = and i64 %i.w, 3                          ; 2 uses
   %i.y = icmp eq i64 %i.x, 0
   %i.z = select i1 %i.y, i64 4, i64 %i.x
-  %n.vec = sub nsw i64 %i.w, %i.z                 ; 3 uses
-  %i.aa = sub i64 %.01029, %n.vec
-  %5 = add i64 %.01128, %n.vec
+  %i.aa = sub nsw i64 %i.w, %i.z                  ; 3 uses
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %.1.i, i64 %.01128
   br label %vector.body
 
@@ -215,12 +213,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x ptr> %broadcast.splat, ptr %i.ac, align 8, !tbaa !25
   store <2 x ptr> %broadcast.splat, ptr %i.ad, align 8, !tbaa !25
   %index.next = add nuw i64 %index, 4             ; 2 uses
-  %i.ae = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ae, label %.lr.ph.preheader41, label %vector.body, !llvm.loop !35
+  %i.ae = icmp eq i64 %index.next, %i.aa
+  br i1 %i.ae, label %.lr.ph.preheader41.loopexit, label %vector.body, !llvm.loop !35
 
-.lr.ph.preheader41:                               ; preds = %vector.body, %.lr.ph.preheader
-  %.124.ph = phi i64 [ %.01029, %.lr.ph.preheader ], [ %i.aa, %vector.body ]
-  %.11223.ph = phi i64 [ %.01128, %.lr.ph.preheader ], [ %5, %vector.body ]
+.lr.ph.preheader41.loopexit:                      ; preds = %vector.body
+  %5 = sub i64 %.01029, %i.aa
+  %6 = add i64 %.01128, %i.aa
+  br label %.lr.ph.preheader41
+
+.lr.ph.preheader41:                               ; preds = %.lr.ph.preheader41.loopexit, %.lr.ph.preheader
+  %.124.ph = phi i64 [ %.01029, %.lr.ph.preheader ], [ %5, %.lr.ph.preheader41.loopexit ]
+  %.11223.ph = phi i64 [ %.01128, %.lr.ph.preheader ], [ %6, %.lr.ph.preheader41.loopexit ]
   br label %.lr.ph
 
 bb.h:                                             ; preds = %.lr.ph

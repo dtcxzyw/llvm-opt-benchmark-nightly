@@ -205,10 +205,6 @@ LookupAllCompoundDictionaryMatches.exit:          ; preds = %bb.bf, %FindAllComp
 
 vector.ph761:                                     ; preds = %.lr.ph50.i.preheader
   %n.vec762 = and i64 %.024.lcssa.i, -4           ; 3 uses
-  %13 = and i64 %.024.lcssa.i, 3
-  %14 = shl i64 %n.vec762, 3                      ; 2 uses
-  %15 = getelementptr i8, ptr %.027.lcssa.i, i64 %14
-  %16 = getelementptr i8, ptr %.030.lcssa.i, i64 %14 ; 2 uses
   br label %vector.body763
 
 vector.body763:                                   ; preds = %vector.body763, %vector.ph761
@@ -227,6 +223,10 @@ vector.body763:                                   ; preds = %vector.body763, %ve
   br i1 %i.my, label %middle.block770, label %vector.body763, !llvm.loop !119
 
 middle.block770:                                  ; preds = %vector.body763
+  %13 = and i64 %.024.lcssa.i, 3
+  %14 = shl i64 %n.vec762, 3                      ; 2 uses
+  %15 = getelementptr i8, ptr %.027.lcssa.i, i64 %14
+  %16 = getelementptr i8, ptr %.030.lcssa.i, i64 %14 ; 2 uses
   %cmp.n771 = icmp eq i64 %.024.lcssa.i, %n.vec762
   br i1 %cmp.n771, label %.preheader.i, label %.lr.ph50.i.preheader778
 
@@ -326,10 +326,6 @@ bb.bk:                                            ; preds = %bb.bj, %bb.bi
 
 vector.ph:                                        ; preds = %.lr.ph56.i.preheader
   %n.vec = and i64 %.0.lcssa.i, -4                ; 3 uses
-  %17 = and i64 %.0.lcssa.i, 3
-  %18 = shl i64 %n.vec, 3                         ; 2 uses
-  %19 = getelementptr i8, ptr %.021.lcssa.i, i64 %18
-  %20 = getelementptr i8, ptr %.232.lcssa.i, i64 %18
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -348,6 +344,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.od, label %middle.block, label %vector.body, !llvm.loop !121
 
 middle.block:                                     ; preds = %vector.body
+  %17 = and i64 %.0.lcssa.i, 3
+  %18 = shl i64 %n.vec, 3                         ; 2 uses
+  %19 = getelementptr i8, ptr %.021.lcssa.i, i64 %18
+  %20 = getelementptr i8, ptr %.232.lcssa.i, i64 %18
   %cmp.n = icmp eq i64 %.0.lcssa.i, %n.vec
   br i1 %cmp.n, label %MergeMatches.exit, label %.lr.ph56.i.preheader777
 
@@ -750,7 +750,6 @@ BackwardMatchLengthCode.exit.lr.ph:               ; preds = %PrefixEncodeCopyDis
   %.not.i263 = icmp eq i64 %i.ko, 0
   %i.kp = and i64 %.sroa.4.0.extract.shift, 31
   %spec.select = select i1 %.not.i263, i64 %i.kl, i64 %i.kp
-  %13 = add nuw nsw i64 %i.kl, 1
   br label %BackwardMatchLengthCode.exit
 
 BackwardMatchLengthCode.exit:                     ; preds = %BackwardMatchLengthCode.exit.lr.ph, %bb.au
@@ -844,11 +843,15 @@ bb.au:                                            ; preds = %bb.at, %GetCopyLeng
   %.8 = phi i64 [ %i.mr, %bb.at ], [ %.7356, %GetCopyLengthCode.exit ] ; 2 uses
   %i.ms = add i64 %.2357, 1
   %exitcond.not = icmp eq i64 %.2357, %i.kl
-  br i1 %exitcond.not, label %._crit_edge, label %BackwardMatchLengthCode.exit, !llvm.loop !181
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %BackwardMatchLengthCode.exit, !llvm.loop !181
 
-._crit_edge:                                      ; preds = %bb.au, %PrefixEncodeCopyDistance.exit
-  %.7.lcssa = phi i64 [ %.6360, %PrefixEncodeCopyDistance.exit ], [ %.8, %bb.au ] ; 2 uses
-  %.2.lcssa = phi i64 [ %.1, %PrefixEncodeCopyDistance.exit ], [ %13, %bb.au ]
+._crit_edge.loopexit:                             ; preds = %bb.au
+  %13 = add nuw nsw i64 %i.kl, 1
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %PrefixEncodeCopyDistance.exit
+  %.7.lcssa = phi i64 [ %.6360, %PrefixEncodeCopyDistance.exit ], [ %.8, %._crit_edge.loopexit ] ; 2 uses
+  %.2.lcssa = phi i64 [ %.1, %PrefixEncodeCopyDistance.exit ], [ %13, %._crit_edge.loopexit ]
   %i.mt = add nuw i64 %.1212361, 1                ; 2 uses
   %exitcond383.not = icmp eq i64 %i.mt, %8
   br i1 %exitcond383.not, label %.loopexit303, label %bb.am, !llvm.loop !182
@@ -1251,10 +1254,6 @@ LookupAllCompoundDictionaryMatches.exit:          ; preds = %bb.bl, %FindAllComp
 
 vector.ph874:                                     ; preds = %.lr.ph50.i.preheader
   %n.vec875 = and i64 %.024.lcssa.i, -4           ; 3 uses
-  %16 = and i64 %.024.lcssa.i, 3
-  %17 = shl i64 %n.vec875, 3                      ; 2 uses
-  %18 = getelementptr i8, ptr %.027.lcssa.i, i64 %17
-  %19 = getelementptr i8, ptr %.030.lcssa.i, i64 %17 ; 2 uses
   br label %vector.body876
 
 vector.body876:                                   ; preds = %vector.body876, %vector.ph874
@@ -1273,6 +1272,10 @@ vector.body876:                                   ; preds = %vector.body876, %ve
   br i1 %i.mm, label %middle.block883, label %vector.body876, !llvm.loop !202
 
 middle.block883:                                  ; preds = %vector.body876
+  %16 = and i64 %.024.lcssa.i, 3
+  %17 = shl i64 %n.vec875, 3                      ; 2 uses
+  %18 = getelementptr i8, ptr %.027.lcssa.i, i64 %17
+  %19 = getelementptr i8, ptr %.030.lcssa.i, i64 %17 ; 2 uses
   %cmp.n884 = icmp eq i64 %.024.lcssa.i, %n.vec875
   br i1 %cmp.n884, label %.preheader.i, label %.lr.ph50.i.preheader905
 
@@ -1372,10 +1375,6 @@ bb.bq:                                            ; preds = %bb.bp, %bb.bo
 
 vector.ph:                                        ; preds = %.lr.ph56.i.preheader
   %n.vec = and i64 %.0.lcssa.i, -4                ; 3 uses
-  %20 = and i64 %.0.lcssa.i, 3
-  %21 = shl i64 %n.vec, 3                         ; 2 uses
-  %22 = getelementptr i8, ptr %.021.lcssa.i, i64 %21
-  %23 = getelementptr i8, ptr %.232.lcssa.i, i64 %21
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1394,6 +1393,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.nr, label %middle.block, label %vector.body, !llvm.loop !204
 
 middle.block:                                     ; preds = %vector.body
+  %20 = and i64 %.0.lcssa.i, 3
+  %21 = shl i64 %n.vec, 3                         ; 2 uses
+  %22 = getelementptr i8, ptr %.021.lcssa.i, i64 %21
+  %23 = getelementptr i8, ptr %.232.lcssa.i, i64 %21
   %cmp.n = icmp eq i64 %.0.lcssa.i, %n.vec
   br i1 %cmp.n, label %MergeMatches.exit, label %.lr.ph56.i.preheader904
 

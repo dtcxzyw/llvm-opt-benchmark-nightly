@@ -205,14 +205,10 @@ bb.o:                                             ; preds = %bb.o, %"_ZSt22__mov
   %.1.val.i.i = load i64, ptr %i.ci, align 8, !tbaa !455 ; 2 uses
   %i.cj = icmp ult i64 %.1.val.i.i, %.val15.i.i
   %i.ck = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 32 ; 2 uses
-  br i1 %i.cj, label %bb.o, label %.preheader.i.i.preheader, !llvm.loop !664
+  br i1 %i.cj, label %bb.o, label %.preheader.i.i, !llvm.loop !664
 
-.preheader.i.i.preheader:                         ; preds = %bb.o
-  %5 = getelementptr i8, ptr %.1.i.i, i64 8
-  br label %.preheader.i.i
-
-.preheader.i.i:                                   ; preds = %.preheader.i.i.preheader, %.preheader.i.i
-  %.013.pn.i.i = phi ptr [ %.114.i.i, %.preheader.i.i ], [ %.013.i.i, %.preheader.i.i.preheader ] ; 5 uses
+.preheader.i.i:                                   ; preds = %bb.o, %.preheader.i.i
+  %.013.pn.i.i = phi ptr [ %.114.i.i, %.preheader.i.i ], [ %.013.i.i, %bb.o ] ; 5 uses
   %.114.i.i = getelementptr inbounds i8, ptr %.013.pn.i.i, i64 -32 ; 4 uses
   %i.cl = getelementptr i8, ptr %.013.pn.i.i, i64 -24
   %.114.val.i.i = load i64, ptr %i.cl, align 8, !tbaa !455 ; 2 uses
@@ -225,6 +221,7 @@ bb.p:                                             ; preds = %.preheader.i.i
 
 bb.q:                                             ; preds = %bb.p
   %i.co = getelementptr i8, ptr %.013.pn.i.i, i64 -24
+  %5 = getelementptr i8, ptr %.1.i.i, i64 8
   %i.cp = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 24 ; 2 uses
   %i.cq = getelementptr inbounds i8, ptr %.013.pn.i.i, i64 -8 ; 2 uses
   %i.cr = load ptr, ptr %i.cp, align 8, !tbaa !457

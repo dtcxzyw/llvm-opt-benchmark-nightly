@@ -205,9 +205,7 @@ _ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEv.exit.i.i: ; pre
   br i1 %.not54.i.i, label %_ZN12_GLOBAL__N_119collectBPFFastCallsEPKN4llvm18TargetRegisterInfoERNS0_12LivePhysRegsERNS0_17MachineBasicBlockERNS0_15SmallVectorImplINS_11BPFFastCallEEE.exit.i, label %bb.at
 
 _ZN12_GLOBAL__N_119collectBPFFastCallsEPKN4llvm18TargetRegisterInfoERNS0_12LivePhysRegsERNS0_17MachineBasicBlockERNS0_15SmallVectorImplINS_11BPFFastCallEEE.exit.i: ; preds = %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEv.exit.i.i
-  %.pre.i25 = load i32, ptr %i.su, align 8, !tbaa !271 ; 3 uses
-  %.not.i.i26 = icmp ne i32 %.pre.i25, 0
-  %31 = or i1 %.095.i, %.not.i.i26                ; 2 uses
+  %.pre.i25 = load i32, ptr %i.su, align 8, !tbaa !271 ; 2 uses
   %.val.i = load ptr, ptr %10, align 8, !tbaa !24 ; 2 uses
   %i.afb = zext i32 %.pre.i25 to i64
   %.idx.i = shl nuw nsw i64 %i.afb, 4
@@ -225,7 +223,7 @@ _ZN12_GLOBAL__N_119collectBPFFastCallsEPKN4llvm18TargetRegisterInfoERNS0_12LiveP
   br label %bb.bk
 
 ._crit_edge.i29:                                  ; preds = %bb.bj, %_ZN12_GLOBAL__N_119collectBPFFastCallsEPKN4llvm18TargetRegisterInfoERNS0_12LivePhysRegsERNS0_17MachineBasicBlockERNS0_15SmallVectorImplINS_11BPFFastCallEEE.exit.i, %_ZN4llvm7reverseIRNS_17MachineBasicBlockEEEDaOT_.exit.i.i
-  %i.aff = phi i1 [ %.095.i, %_ZN4llvm7reverseIRNS_17MachineBasicBlockEEEDaOT_.exit.i.i ], [ %31, %_ZN12_GLOBAL__N_119collectBPFFastCallsEPKN4llvm18TargetRegisterInfoERNS0_12LivePhysRegsERNS0_17MachineBasicBlockERNS0_15SmallVectorImplINS_11BPFFastCallEEE.exit.i ], [ %31, %bb.bj ] ; 3 uses
+  %i.aff = phi i1 [ %.095.i, %_ZN4llvm7reverseIRNS_17MachineBasicBlockEEEDaOT_.exit.i.i ], [ %.095.i, %_ZN12_GLOBAL__N_119collectBPFFastCallsEPKN4llvm18TargetRegisterInfoERNS0_12LivePhysRegsERNS0_17MachineBasicBlockERNS0_15SmallVectorImplINS_11BPFFastCallEEE.exit.i ], [ true, %bb.bj ] ; 3 uses
   %i.afg = getelementptr inbounds nuw i8, ptr %.sroa.076.096.i, i64 8
   %.sroa.076.0.i = load ptr, ptr %i.afg, align 8, !tbaa !180 ; 2 uses
   %.not79.i = icmp eq ptr %.sroa.076.0.i, %i.uo

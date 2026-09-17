@@ -204,7 +204,6 @@ vector.ph:                                        ; preds = %._crit_edge
   %i.ar = icmp eq i64 %i.aq, 0
   %i.as = select i1 %i.ar, i64 16, i64 %i.aq
   %n.vec = sub nsw i64 %i.ap, %i.as               ; 3 uses
-  %4 = getelementptr i8, ptr %2, i64 %n.vec
   %invariant.gep = getelementptr i8, ptr %0, i64 %1
   br label %vector.body
 
@@ -216,11 +215,15 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <16 x i8> %wide.load, ptr %gep, align 1, !alias.scope !234, !noalias !235
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.at = icmp eq i64 %index.next, %n.vec
-  br i1 %i.at, label %.lr.ph.i.preheader, label %vector.body, !llvm.loop !228
+  br i1 %i.at, label %.lr.ph.i.preheader.loopexit, label %vector.body, !llvm.loop !228
 
-.lr.ph.i.preheader:                               ; preds = %vector.body, %._crit_edge
-  %.sroa.0.014.i.ph = phi ptr [ %2, %._crit_edge ], [ %4, %vector.body ]
-  %.sroa.7.013.i.ph = phi i64 [ 0, %._crit_edge ], [ %n.vec, %vector.body ]
+.lr.ph.i.preheader.loopexit:                      ; preds = %vector.body
+  %4 = getelementptr i8, ptr %2, i64 %n.vec
+  br label %.lr.ph.i.preheader
+
+.lr.ph.i.preheader:                               ; preds = %.lr.ph.i.preheader.loopexit, %._crit_edge
+  %.sroa.0.014.i.ph = phi ptr [ %2, %._crit_edge ], [ %4, %.lr.ph.i.preheader.loopexit ]
+  %.sroa.7.013.i.ph = phi i64 [ 0, %._crit_edge ], [ %n.vec, %.lr.ph.i.preheader.loopexit ]
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.h

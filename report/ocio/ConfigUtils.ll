@@ -204,9 +204,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check35, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %4 = and i64 %i.ac, 24
   %n.vec = and i64 %i.ac, -32                     ; 4 uses
-  %5 = getelementptr i8, ptr %i.ab, i64 %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -230,6 +228,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.an, label %middle.block, label %vector.body, !llvm.loop !98
 
 middle.block:                                     ; preds = %vector.body
+  %4 = and i64 %i.ac, 24
+  %5 = getelementptr i8, ptr %i.ab, i64 %n.vec
   %cmp.n = icmp eq i64 %i.ac, %n.vec
   br i1 %cmp.n, label %_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_ZN11StringUtils5LowerES8_EUlhE_ET0_T_SD_SC_T1_.exit.loopexit.i, label %vec.epilog.iter.check
 
@@ -240,7 +240,6 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec37 = and i64 %i.ac, -8                    ; 3 uses
-  %6 = getelementptr i8, ptr %i.ab, i64 %n.vec37
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -257,6 +256,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.as, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !99
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
+  %6 = getelementptr i8, ptr %i.ab, i64 %n.vec37
   %cmp.n42 = icmp eq i64 %i.ac, %n.vec37
   br i1 %cmp.n42, label %_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_ZN11StringUtils5LowerES8_EUlhE_ET0_T_SD_SC_T1_.exit.loopexit.i, label %.lr.ph.i.i.preheader
 
@@ -659,12 +659,13 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.a
 
 .noexc26:                                         ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.h = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #24 ; 3 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.f
   %i.i = add i64 %i.d, -4
   %i.j = sub i64 %i.i, %i.e
   %i.k = and i64 %i.j, -4
   %i.l = add i64 %i.k, 4
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.h, i8 0, i64 %i.l, i1 false), !tbaa !61
-  %6 = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.f
+  %7 = ptrtoint ptr %6 to i64
   %.pre = load ptr, ptr %1, align 8, !tbaa !59    ; 2 uses
   %.pre47 = load ptr, ptr %i.a, align 8, !tbaa !58
   %.pre48 = ptrtoint ptr %.pre47 to i64
@@ -677,8 +678,8 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.a
 _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit:            ; preds = %.noexc26, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %.pre-phi52 = phi i64 [ %i.n, %.noexc26 ], [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ]
   %i.o = phi ptr [ %.pre, %.noexc26 ], [ %i.c, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ]
-  %.sroa.13.0 = phi ptr [ %6, %.noexc26 ], [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ] ; 3 uses
-  %.sroa.030.0 = phi ptr [ %i.h, %.noexc26 ], [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ] ; 8 uses
+  %.sroa.13.0 = phi i64 [ %7, %.noexc26 ], [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ] ; 3 uses
+  %.sroa.030.0 = phi ptr [ %i.h, %.noexc26 ], [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ] ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
   invoke void @_ZN16OpenColorIO_v2_515PackedImageDescC1EPvllNS_15ChannelOrderingE(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull %i.o, i64 noundef %.pre-phi52, i64 noundef 1, i32 noundef 0)
           to label %bb.b unwind label %bb.p
@@ -707,10 +708,9 @@ bb.d:                                             ; preds = %bb.c
           to label %.preheader unwind label %bb.g
 
 .preheader:                                       ; preds = %bb.d
-  %7 = ptrtoint ptr %.sroa.13.0 to i64
-  %i.y = ptrtoint ptr %.sroa.030.0 to i64
-  %i.z = sub i64 %7, %i.y                         ; 2 uses
-  %.not40 = icmp eq ptr %.sroa.13.0, %.sroa.030.0
+  %i.y = ptrtoint ptr %.sroa.030.0 to i64         ; 2 uses
+  %i.z = sub i64 %.sroa.13.0, %i.y                ; 2 uses
+  %.not40 = icmp eq i64 %.sroa.13.0, %i.y
   br i1 %.not40, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
@@ -832,9 +832,8 @@ bb.p:                                             ; preds = %_ZNSt6vectorIfSaIfE
 
 bb.q:                                             ; preds = %.thread, %bb.p
   %.pn.pn.pn38 = phi { ptr, i32 } [ %.pn.pn, %.thread ], [ %i.bg, %bb.p ]
-  %8 = ptrtoint ptr %.sroa.13.0 to i64
   %i.bh = ptrtoint ptr %.sroa.030.0 to i64
-  %i.bi = sub i64 %8, %i.bh
+  %i.bi = sub i64 %.sroa.13.0, %i.bh
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.030.0, i64 noundef %i.bi) #23
   br label %_ZNSt6vectorIfSaIfEED2Ev.exit29
 
@@ -1237,9 +1236,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check129, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %9 = and i64 %i.dn, 24
   %n.vec = and i64 %i.dn, -32                     ; 4 uses
-  %10 = getelementptr i8, ptr %i.dm, i64 %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1263,6 +1260,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.dy, label %middle.block, label %vector.body, !llvm.loop !129
 
 middle.block:                                     ; preds = %vector.body
+  %9 = and i64 %i.dn, 24
+  %10 = getelementptr i8, ptr %i.dm, i64 %n.vec
   %cmp.n = icmp eq i64 %i.dn, %n.vec
   br i1 %cmp.n, label %_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_ZN11StringUtils5LowerES8_EUlhE_ET0_T_SD_SC_T1_.exit.loopexit.i, label %vec.epilog.iter.check
 
@@ -1273,7 +1272,6 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec131 = and i64 %i.dn, -8                   ; 3 uses
-  %11 = getelementptr i8, ptr %i.dm, i64 %n.vec131
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -1290,6 +1288,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.ed, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !130
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
+  %11 = getelementptr i8, ptr %i.dm, i64 %n.vec131
   %cmp.n136 = icmp eq i64 %i.dn, %n.vec131
   br i1 %cmp.n136, label %_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_ZN11StringUtils5LowerES8_EUlhE_ET0_T_SD_SC_T1_.exit.loopexit.i, label %.lr.ph.i.i.preheader
 

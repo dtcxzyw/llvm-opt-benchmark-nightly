@@ -205,8 +205,6 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.en = icmp eq i64 %i.em, 0
   %i.eo = select i1 %i.en, i64 16, i64 %i.em
   %n.vec = sub nsw i64 %i.ej, %i.eo               ; 3 uses
-  %52 = getelementptr i8, ptr %i.ee, i64 %n.vec
-  %53 = add nsw i64 %n.vec, 1
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -223,11 +221,16 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <8 x i8> %wide.load916, ptr %i.et, align 1, !tbaa !62
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.eu = icmp eq i64 %index.next, %n.vec
-  br i1 %i.eu, label %.lr.ph.i.i.i.i.i.preheader923, label %vector.body, !llvm.loop !350
+  br i1 %i.eu, label %.lr.ph.i.i.i.i.i.preheader924.loopexit, label %vector.body, !llvm.loop !350
 
-.lr.ph.i.i.i.i.i.preheader923:                    ; preds = %vector.body, %vector.memcheck, %.lr.ph.i.i.i.i.i.preheader
-  %.0512.i.i.i.i.i.pn.ph = phi ptr [ %i.ee, %vector.memcheck ], [ %i.ee, %.lr.ph.i.i.i.i.i.preheader ], [ %52, %vector.body ] ; 2 uses
-  %.sroa.4.011.i.i.i.i.i.ph = phi i64 [ 1, %vector.memcheck ], [ 1, %.lr.ph.i.i.i.i.i.preheader ], [ %53, %vector.body ] ; 3 uses
+.lr.ph.i.i.i.i.i.preheader924.loopexit:           ; preds = %vector.body
+  %52 = getelementptr i8, ptr %i.ee, i64 %n.vec
+  %53 = add nsw i64 %n.vec, 1
+  br label %.lr.ph.i.i.i.i.i.preheader923
+
+.lr.ph.i.i.i.i.i.preheader923:                    ; preds = %.lr.ph.i.i.i.i.i.preheader924.loopexit, %vector.memcheck, %.lr.ph.i.i.i.i.i.preheader
+  %.0512.i.i.i.i.i.pn.ph = phi ptr [ %i.ee, %vector.memcheck ], [ %i.ee, %.lr.ph.i.i.i.i.i.preheader ], [ %52, %.lr.ph.i.i.i.i.i.preheader924.loopexit ] ; 2 uses
+  %.sroa.4.011.i.i.i.i.i.ph = phi i64 [ 1, %vector.memcheck ], [ 1, %.lr.ph.i.i.i.i.i.preheader ], [ %53, %.lr.ph.i.i.i.i.i.preheader924.loopexit ] ; 3 uses
   %i.ev = sub nsw i64 %i.cp, %.sroa.4.011.i.i.i.i.i.ph
   %i.ew = freeze i64 %i.ev                        ; 2 uses
   %i.ex = add i64 %i.ew, -1

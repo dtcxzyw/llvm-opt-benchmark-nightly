@@ -205,7 +205,6 @@ bb.ad:                                            ; preds = %bb.ad, %.epil.prehe
   store float %i.cd, ptr %i.ce, align 4, !tbaa !317
   %i.do = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 16 uses
   %i.dp = load i32, ptr %i.do, align 4, !tbaa !217
-  %2 = and i32 %i.dp, 57344                       ; 2 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %0, i64 580 ; 2 uses
   store i8 1, ptr %i.dq, align 4, !tbaa !341
   %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 579 ; 2 uses
@@ -257,6 +256,7 @@ bb.ad:                                            ; preds = %bb.ad, %.epil.prehe
   %.0586.lcssa = phi i1 [ false, %.loopexit733 ], [ %i.eq, %._crit_edge752.loopexit ]
   %.0583.lcssa = phi float [ 0.000000e+00, %.loopexit733 ], [ %.2585, %._crit_edge752.loopexit ]
   %.0580.lcssa = phi float [ 0.000000e+00, %.loopexit733 ], [ %.2582, %._crit_edge752.loopexit ]
+  %2 = and i32 %i.dp, 57344                       ; 2 uses
   %i.er = load i32, ptr %i.do, align 4, !tbaa !217 ; 2 uses
   %i.es = and i32 %i.er, 8
   %.not620 = icmp eq i32 %i.es, 0
@@ -659,9 +659,6 @@ _ZN8ImVectorIcE7reserveEi.exit:                   ; preds = %._ZN8ImVectorIcE7re
   %i.ao = mul nsw i64 %i.ak, 3
   %i.ap = getelementptr inbounds i8, ptr %i.aj, i64 %i.ao
   store ptr %i.ap, ptr %i.k, align 8, !tbaa !626
-  %2 = shl nsw i32 %i.v, 2
-  %3 = sext i32 %2 to i64                         ; 2 uses
-  %4 = getelementptr i8, ptr %i.aj, i64 %3        ; 8 uses
   %i.aq = load i32, ptr %i.n, align 4, !tbaa !221 ; 2 uses
   %i.ar = icmp sgt i32 %i.aq, 0
   br i1 %i.ar, label %.lr.ph, label %._crit_edge.thread
@@ -676,6 +673,9 @@ _ZN8ImVectorIcE7reserveEi.exit:                   ; preds = %._ZN8ImVectorIcE7re
 
 ._crit_edge:                                      ; preds = %bb.aa
   %i.ax = icmp eq i32 %.3159, 0
+  %2 = shl nsw i32 %i.v, 2
+  %3 = sext i32 %2 to i64                         ; 2 uses
+  %4 = getelementptr i8, ptr %i.aj, i64 %3        ; 8 uses
   br i1 %i.ax, label %._crit_edge.thread, label %bb.ab
 
 bb.e:                                             ; preds = %.lr.ph, %bb.aa
@@ -1078,7 +1078,6 @@ bb.aq:                                            ; preds = %bb.ap
 
 bb.ar:                                            ; preds = %bb.aq, %bb.ap, %bb.ao
   %.sroa.0.3 = phi <4 x float> [ %.sroa.0.12.vec.insert, %bb.aq ], [ %.sroa.0.2, %bb.ap ], [ %.sroa.0.2, %bb.ao ] ; 2 uses
-  %5 = sub nsw i32 %.0145198, %i.ip               ; 2 uses
   br i1 %i.ie, label %.lr.ph191, label %.preheader183
 
 .lr.ph191:                                        ; preds = %bb.ar
@@ -1139,7 +1138,7 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
 .preheader183:                                    ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %bb.ar
   %i.jv = load i32, ptr %i.ga, align 4, !tbaa !212 ; 2 uses
   %i.jw = icmp sgt i32 %i.jv, 0
-  br i1 %i.jw, label %.lr.ph195, label %.loopexit.a
+  br i1 %i.jw, label %.lr.ph195, label %.loopexit
 
 .lr.ph195:                                        ; preds = %.preheader183
   %i.jx = getelementptr inbounds nuw i8, ptr %i.in, i64 24
@@ -1211,11 +1210,16 @@ bb.au:                                            ; preds = %bb.as, %bb.at
   %i.le = icmp slt i64 %indvars.iv.next213, %i.ld
   %i.lf = icmp ne i32 %.1, 0
   %i.lg = select i1 %i.le, i1 %i.lf, i1 false
-  br i1 %i.lg, label %bb.as, label %.loopexit.a, !llvm.loop !622
+  br i1 %i.lg, label %bb.as, label %.loopexit, !llvm.loop !622
 
-.loopexit.a:                                      ; preds = %bb.au, %.preheader183, %bb.ah
-  %.3150 = phi ptr [ %.0147197, %bb.ah ], [ %.0147197, %.preheader183 ], [ %.2149, %bb.au ] ; 3 uses
-  %.1146 = phi i32 [ %.0145198, %bb.ah ], [ %5, %.preheader183 ], [ %5, %bb.au ] ; 3 uses
+.loopexit:                                        ; preds = %bb.au, %.preheader183
+  %.1148.lcssa = phi ptr [ %.0147197, %.preheader183 ], [ %.2149, %bb.au ]
+  %5 = sub nsw i32 %.0145198, %i.ip
+  br label %.loopexit.a
+
+.loopexit.a:                                      ; preds = %.loopexit, %bb.ah
+  %.3150 = phi ptr [ %.0147197, %bb.ah ], [ %.1148.lcssa, %.loopexit ] ; 3 uses
+  %.1146 = phi i32 [ %.0145198, %bb.ah ], [ %5, %.loopexit ] ; 3 uses
   %i.lh = icmp eq i64 %indvars.iv215, 1
   %or.cond5 = select i1 %i.lh, i1 %i.l, i1 false
   br i1 %or.cond5, label %bb.av, label %bb.aw
@@ -1618,7 +1622,6 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check59, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %3 = and i64 %wide.trip.count, 12
   %n.vec = and i64 %wide.trip.count, 2147483632   ; 4 uses
   br label %vector.body
 
@@ -1697,6 +1700,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bz, label %middle.block, label %vector.body, !llvm.loop !648
 
 middle.block:                                     ; preds = %vector.body
+  %3 = and i64 %wide.trip.count, 12
   %rdx.minmax = tail call <8 x i16> @llvm.smax.v8i16(<8 x i16> %i.bx, <8 x i16> %i.by)
   %i.ca = tail call i16 @llvm.vector.reduce.smax.v8i16(<8 x i16> %rdx.minmax) ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count

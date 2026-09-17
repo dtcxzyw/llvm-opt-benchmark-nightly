@@ -205,7 +205,6 @@ bb.fa:                                            ; preds = %VP8LRefsCursorNext.
   br i1 %.not121.i.i, label %bb.fb, label %bb.ff
 
 bb.fb:                                            ; preds = %bb.fa
-  %19 = getelementptr inbounds nuw i8, ptr %.097144.i.i, i64 4 ; 2 uses
   %i.aah = load i32, ptr %.097144.i.i, align 4, !tbaa !34 ; 7 uses
   %i.aai = lshr i32 %i.aah, 24
   %i.aaj = lshr i32 %i.aah, 16
@@ -234,7 +233,7 @@ bb.fb:                                            ; preds = %bb.fa
   %i.abd = load i32, ptr %i.abc, align 4, !tbaa !34
   %i.abe = add i32 %i.abd, 1
   store i32 %i.abe, ptr %i.abc, align 4, !tbaa !34
-  br i1 %i.dm, label %.lr.ph139.preheader.i.i, label %.loopexit123.i.i.a
+  br i1 %i.dm, label %.lr.ph139.preheader.i.i, label %.loopexit123.i.i
 
 .lr.ph139.preheader.i.i:                          ; preds = %bb.fb
   %i.abf = mul i32 %i.aah, 506832829
@@ -294,7 +293,7 @@ bb.fe:                                            ; preds = %bb.fd, %bb.fc
   %indvars.iv.next170.i.i = add nsw i64 %indvars.iv169.i.i, -1
   %i.acm = ashr i32 %.090138.i.i, 1
   %i.acn = icmp sgt i64 %indvars.iv169.i.i, 1
-  br i1 %i.acn, label %.lr.ph139.i.i, label %.loopexit123.i.i.a, !llvm.loop !61
+  br i1 %i.acn, label %.lr.ph139.i.i, label %.loopexit123.i.i, !llvm.loop !61
 
 bb.ff:                                            ; preds = %bb.fa
   %i.aco = getelementptr i8, ptr %.sroa.0.0143.i.i, i64 2
@@ -462,8 +461,12 @@ bb.fi:                                            ; preds = %bb.fi, %.epil.prehe
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.preheader124.i.i.unr-lcssa, label %.lr.ph133.i.i.new, !llvm.loop !65
 
-.loopexit123.i.i.a:                               ; preds = %._crit_edge.us.i.i, %bb.fe, %.preheader124.split.preheader.i.i, %bb.fb
-  %.299.i.i = phi ptr [ %19, %bb.fb ], [ %19, %bb.fe ], [ %scevgep165.i.i, %.preheader124.split.preheader.i.i ], [ %i.aei, %._crit_edge.us.i.i ]
+.loopexit123.i.i:                                 ; preds = %bb.fe, %bb.fb
+  %19 = getelementptr inbounds nuw i8, ptr %.097144.i.i, i64 4
+  br label %.loopexit123.i.i.a
+
+.loopexit123.i.i.a:                               ; preds = %._crit_edge.us.i.i, %.loopexit123.i.i, %.preheader124.split.preheader.i.i
+  %.299.i.i = phi ptr [ %19, %.loopexit123.i.i ], [ %scevgep165.i.i, %.preheader124.split.preheader.i.i ], [ %i.aei, %._crit_edge.us.i.i ]
   %i.afp = getelementptr inbounds nuw i8, ptr %.sroa.0.0143.i.i, i64 8 ; 2 uses
   %i.afq = icmp eq ptr %i.afp, %.sroa.11.0141.i.i
   br i1 %i.afq, label %bb.fj, label %VP8LRefsCursorNext.exit.i.i44

@@ -202,14 +202,11 @@ _ZN4llvh4sortIRSt6vectorINS_10TimerGroup11PrintRecordESaIS3_EEEEvOT_.exit: ; pre
   %i.p = load ptr, ptr %i.a, align 8, !tbaa !60   ; 2 uses
   %i.q = load ptr, ptr %i.c, align 8, !tbaa !60   ; 2 uses
   %.not7981 = icmp eq ptr %i.p, %i.q
-  br i1 %.not7981, label %bb.e, label %.lr.ph
-
-.lr.ph:                                           ; preds = %_ZN4llvh4sortIRSt6vectorINS_10TimerGroup11PrintRecordESaIS3_EEEEvOT_.exit
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %7 = getelementptr inbounds nuw i8, ptr %2, i64 24
-  br label %bb.q
+  br i1 %.not7981, label %bb.e, label %bb.q
 
 ._crit_edge:                                      ; preds = %bb.q
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 24
   store <2 x double> %i.cz, ptr %6, align 8, !tbaa !71
   store i64 %i.dc, ptr %7, align 8, !tbaa !67
   br label %bb.e
@@ -388,11 +385,11 @@ _ZL20getDefaultTimerGroupv.exit:                  ; preds = %_ZNSt7__cxx1112basi
   %.not = icmp eq ptr %0, %i.cr
   br i1 %.not, label %bb.s, label %bb.r
 
-bb.q:                                             ; preds = %.lr.ph, %bb.q
-  %i.cs = phi i64 [ 0, %.lr.ph ], [ %i.dc, %bb.q ]
-  %.sroa.076.082 = phi ptr [ %i.p, %.lr.ph ], [ %i.dd, %bb.q ] ; 4 uses
-  %i.ct = phi double [ 0.000000e+00, %.lr.ph ], [ %i.cw, %bb.q ]
-  %i.cu = phi <2 x double> [ zeroinitializer, %.lr.ph ], [ %i.cz, %bb.q ]
+bb.q:                                             ; preds = %_ZN4llvh4sortIRSt6vectorINS_10TimerGroup11PrintRecordESaIS3_EEEEvOT_.exit, %bb.q
+  %i.cs = phi i64 [ %i.dc, %bb.q ], [ 0, %_ZN4llvh4sortIRSt6vectorINS_10TimerGroup11PrintRecordESaIS3_EEEEvOT_.exit ]
+  %.sroa.076.082 = phi ptr [ %i.dd, %bb.q ], [ %i.p, %_ZN4llvh4sortIRSt6vectorINS_10TimerGroup11PrintRecordESaIS3_EEEEvOT_.exit ] ; 4 uses
+  %i.ct = phi double [ %i.cw, %bb.q ], [ 0.000000e+00, %_ZN4llvh4sortIRSt6vectorINS_10TimerGroup11PrintRecordESaIS3_EEEEvOT_.exit ]
+  %i.cu = phi <2 x double> [ %i.cz, %bb.q ], [ zeroinitializer, %_ZN4llvh4sortIRSt6vectorINS_10TimerGroup11PrintRecordESaIS3_EEEEvOT_.exit ]
   %i.cv = load double, ptr %.sroa.076.082, align 8, !tbaa !80
   %i.cw = fadd double %i.cv, %i.ct                ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %.sroa.076.082, i64 8

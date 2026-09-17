@@ -205,14 +205,10 @@ bb.m:                                             ; preds = %bb.m, %bb.l
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !64
   %i.ar = icmp slt i64 %i.aq, %i.ao
   %i.as = getelementptr inbounds nuw i8, ptr %.sroa.010.1.i, i64 16 ; 2 uses
-  br i1 %i.ar, label %bb.m, label %.preheader.i.preheader, !llvm.loop !224
+  br i1 %i.ar, label %bb.m, label %.preheader.i, !llvm.loop !224
 
-.preheader.i.preheader:                           ; preds = %bb.m
-  %2 = getelementptr inbounds nuw i8, ptr %.sroa.010.1.i, i64 8 ; 2 uses
-  br label %.preheader.i
-
-.preheader.i:                                     ; preds = %.preheader.i.preheader, %.preheader.i
-  %.sroa.0.0.pn.i = phi ptr [ %.sroa.0.1.i, %.preheader.i ], [ %.sroa.0.0.i, %.preheader.i.preheader ] ; 3 uses
+.preheader.i:                                     ; preds = %bb.m, %.preheader.i
+  %.sroa.0.0.pn.i = phi ptr [ %.sroa.0.1.i, %.preheader.i ], [ %.sroa.0.0.i, %bb.m ] ; 3 uses
   %.sroa.0.1.i = getelementptr inbounds i8, ptr %.sroa.0.0.pn.i, i64 -16 ; 5 uses
   %i.at = getelementptr inbounds i8, ptr %.sroa.0.0.pn.i, i64 -8
   %i.au = load i64, ptr %i.at, align 8, !tbaa !64
@@ -225,6 +221,7 @@ bb.n:                                             ; preds = %.preheader.i
 
 bb.o:                                             ; preds = %bb.n
   %i.ax = getelementptr inbounds i8, ptr %.sroa.0.0.pn.i, i64 -8 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.sroa.010.1.i, i64 8 ; 2 uses
   %i.ay = load i64, ptr %.sroa.010.1.i, align 8, !tbaa !23
   %i.az = load i64, ptr %.sroa.0.1.i, align 8, !tbaa !23
   store i64 %i.az, ptr %.sroa.010.1.i, align 8, !tbaa !23
@@ -487,8 +484,8 @@ bb.c:                                             ; preds = %bb.b
 
 _ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i: ; preds = %bb.c
   %.idx.i.i.i.i.i = shl nuw nsw i64 %i.q, 3       ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.p, i8 0, i64 %.idx.i.i.i.i.i, i1 false), !tbaa !23
   %2 = getelementptr inbounds nuw i8, ptr %i.p, i64 %.idx.i.i.i.i.i
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.p, i8 0, i64 %.idx.i.i.i.i.i, i1 false), !tbaa !23
   br label %_ZSt27__uninitialized_default_n_aIPxmxET_S1_T0_RSaIT1_E.exit
 
 _ZSt27__uninitialized_default_n_aIPxmxET_S1_T0_RSaIT1_E.exit: ; preds = %bb.c, %_ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i

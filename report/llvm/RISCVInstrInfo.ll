@@ -204,7 +204,7 @@ _ZNK4llvm14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1E
   br i1 %.not4.i.i.i.i, label %_ZN4llvm26MachineInstrBundleIteratorIKNS_12MachineInstrELb0EEmmEv.exit.i, label %_ZNK4llvm14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb1EE5isEndEv.exit.i.i.i.i, !llvm.loop !2
 
 _ZN4llvm26MachineInstrBundleIteratorIKNS_12MachineInstrELb0EEmmEv.exit.i: ; preds = %_ZNK4llvm14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb1EE5isEndEv.exit.i.i.i.i, %_ZNK4llvm14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb1EE5isEndEv.exit.preheader.i.i.i.i, %bb.l
-  %.sroa.0.1.i.i.i.i = phi ptr [ %i.cv, %bb.l ], [ %i.cv, %_ZNK4llvm14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb1EE5isEndEv.exit.preheader.i.i.i.i ], [ %i.db, %_ZNK4llvm14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb1EE5isEndEv.exit.i.i.i.i ] ; 18 uses
+  %.sroa.0.1.i.i.i.i = phi ptr [ %i.cv, %bb.l ], [ %i.cv, %_ZNK4llvm14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb1EE5isEndEv.exit.preheader.i.i.i.i ], [ %i.db, %_ZNK4llvm14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb1EE5isEndEv.exit.i.i.i.i ] ; 19 uses
   %i.df = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i.i.i.i, i64 16
   %i.dg = load ptr, ptr %i.df, align 8, !tbaa !219
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 16
@@ -214,7 +214,6 @@ _ZN4llvm26MachineInstrBundleIteratorIKNS_12MachineInstrELb0EEmmEv.exit.i: ; pred
   br i1 %.not97.i, label %.lr.ph.i.i.i, label %bb.k, !llvm.loop !654
 
 .lr.ph.i.i.i:                                     ; preds = %_ZN4llvm26MachineInstrBundleIteratorIKNS_12MachineInstrELb0EEmmEv.exit.i
-  %16 = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i.i.i.i, i64 16 ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i.i.i.i, i64 52
   %i.dl = load i32, ptr %i.dk, align 4, !tbaa !74 ; 3 uses
   switch i32 %i.dl, label %.lr.ph.i.i.i.6 [
@@ -228,11 +227,13 @@ _ZN4llvm26MachineInstrBundleIteratorIKNS_12MachineInstrELb0EEmmEv.exit.i: ; pred
   ]
 
 .lr.ph.i.i.i.6:                                   ; preds = %.lr.ph.i.i.i
+  %16 = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i.i.i.i, i64 16 ; 2 uses
   %i.dm = add i32 %i.dl, -1
   %spec.select.i.i = icmp ult i32 %i.dm, 2
   br i1 %spec.select.i.i, label %_ZL22isConvertibleToVMV_V_VRKN4llvm14RISCVSubtargetERKNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorIKNS_12MachineInstrELb0EEERS9_NS_10RISCVVType5VLMULE.exit.thread, label %bb.s
 
 .critedge:                                        ; preds = %.lr.ph.i.i.i, %.lr.ph.i.i.i, %.lr.ph.i.i.i, %.lr.ph.i.i.i, %.lr.ph.i.i.i, %.lr.ph.i.i.i, %.lr.ph.i.i.i
+  %17 = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i.i.i.i, i64 16 ; 0 uses
   %i.dn = trunc nuw i8 %.044.ph.i.ph281 to i1
   br i1 %i.dn, label %bb.p, label %bb.m
 

@@ -205,9 +205,7 @@ bb.cl:                                            ; preds = %bb.ct
   %i.yy = load ptr, ptr %i.ic, align 8, !tbaa !135
   %foldExtExtBinop = fadd nnan <2 x double> %i.fc, %i.ff
   %i.yz = extractelement <2 x double> %foldExtExtBinop, i64 0
-  %2 = fmul nnan double %i.yz, 5.000000e-01       ; 2 uses
-  %i.za = fmul nnan double %2, 4.000000e+00
-  %3 = call double @llvm.round.f64(double %i.za)
+  %i.za = fmul nnan double %i.yz, 5.000000e-01    ; 2 uses
   br label %bb.cu
 
 bb.cm:                                            ; preds = %.preheader855, %bb.ct
@@ -289,9 +287,7 @@ bb.ct:                                            ; preds = %bb.cr, %bb.cs
   %i.aaq = load ptr, ptr %i.ig, align 8, !tbaa !136
   %foldExtExtBinop1198 = fadd nnan <2 x double> %i.fc, %i.ff
   %i.aar = extractelement <2 x double> %foldExtExtBinop1198, i64 1
-  %4 = fmul nnan double %i.aar, 5.000000e-01      ; 2 uses
-  %i.aas = fmul nnan double %4, 4.000000e+00
-  %5 = call double @llvm.round.f64(double %i.aas)
+  %i.aas = fmul nnan double %i.aar, 5.000000e-01  ; 2 uses
   %i.aat = zext nneg i32 %i.fl to i64
   %invariant.gep = getelementptr inbounds nuw [8 x i8], ptr %i.ye, i64 %i.aat
   br label %bb.db
@@ -314,8 +310,6 @@ bb.cu:                                            ; preds = %bb.cl, %._crit_edge
   br label %bb.cv
 
 ._crit_edge910:                                   ; preds = %.critedge
-  %6 = fmul double %.1450, 4.000000e+00
-  %7 = call double @llvm.round.f64(double %6)     ; 2 uses
   %i.abb = load ptr, ptr %i.sh, align 8, !tbaa !149 ; 3 uses
   %i.abc = add nsw i64 %wide.trip.count1048, -1   ; 2 uses
   %xtraiter1231 = and i64 %wide.trip.count1048, 1
@@ -328,7 +322,7 @@ bb.cu:                                            ; preds = %bb.cl, %._crit_edge
 
 bb.cv:                                            ; preds = %.lr.ph909, %.critedge
   %indvars.iv1044 = phi i64 [ 0, %.lr.ph909 ], [ %indvars.iv.next1045, %.critedge ] ; 2 uses
-  %.0449906 = phi double [ %2, %.lr.ph909 ], [ %.1450, %.critedge ]
+  %.0449906 = phi double [ %i.za, %.lr.ph909 ], [ %.1450, %.critedge ]
   %.0451905 = phi i32 [ %i.aax, %.lr.ph909 ], [ %.1452, %.critedge ] ; 2 uses
   %.0831904 = phi i32 [ %i.aax, %.lr.ph909 ], [ %.1832.lcssa, %.critedge ] ; 2 uses
   %i.abe = trunc nuw i64 %indvars.iv1044 to i32
@@ -374,7 +368,7 @@ bb.cx:                                            ; preds = %bb.cw
   %.sroa.speculated691 = call i32 @llvm.umax.i32(i32 %i.abz, i32 %.1832.lcssa) ; 2 uses
   %i.aca = icmp ult i32 %.sroa.speculated691, %.0451905
   %.1452 = call i32 @llvm.umin.i32(i32 %.sroa.speculated691, i32 %.0451905)
-  %.1450 = select i1 %i.aca, double %i.abm, double %.0449906 ; 2 uses
+  %.1450 = select i1 %i.aca, double %i.abm, double %.0449906 ; 3 uses
   %exitcond1049.not = icmp eq i64 %indvars.iv.next1045, %wide.trip.count1048
   br i1 %exitcond1049.not, label %._crit_edge910, label %bb.cv, !llvm.loop !114
 
@@ -483,9 +477,11 @@ bb.cy:                                            ; preds = %bb.cy, %._crit_edge
 
 ._crit_edge920:                                   ; preds = %.epil.preheader1238, %._crit_edge920.loopexit.unr-lcssa, %bb.cu
   %.1455.lcssa1155 = phi i32 [ %.0454922, %bb.cu ], [ %.lcssa1204, %._crit_edge920.loopexit.unr-lcssa ], [ %.lcssa1204, %.epil.preheader1238 ]
-  %.in = phi double [ %3, %bb.cu ], [ %7, %._crit_edge920.loopexit.unr-lcssa ], [ %7, %.epil.preheader1238 ]
+  %.in = phi double [ %i.za, %bb.cu ], [ %.1450, %._crit_edge920.loopexit.unr-lcssa ], [ %.1450, %.epil.preheader1238 ]
   %.2456.lcssa = phi i32 [ %.0454922, %bb.cu ], [ %i.afp, %._crit_edge920.loopexit.unr-lcssa ], [ %i.aed, %.epil.preheader1238 ] ; 2 uses
-  %i.aee = fptosi double %.in to i16
+  %2 = fmul double %.in, 4.000000e+00
+  %3 = call double @llvm.round.f64(double %2)
+  %i.aee = fptosi double %3 to i16
   %i.aef = trunc i32 %i.aax to i16
   %i.aeg = getelementptr inbounds nuw [8 x i8], ptr %i.ye, i64 %indvars.iv1062 ; 4 uses
   %i.aeh = getelementptr inbounds nuw i8, ptr %i.aeg, i64 16
@@ -570,8 +566,6 @@ bb.db:                                            ; preds = %.preheader853, %._c
   br label %bb.dc
 
 ._crit_edge937:                                   ; preds = %.critedge3
-  %8 = fmul double %.1442, 4.000000e+00
-  %9 = call double @llvm.round.f64(double %8)     ; 2 uses
   %i.agb = load ptr, ptr %i.sj, align 8, !tbaa !151 ; 3 uses
   %i.agc = add nsw i64 %wide.trip.count1076, -1   ; 2 uses
   %xtraiter1247 = and i64 %wide.trip.count1076, 1
@@ -584,7 +578,7 @@ bb.db:                                            ; preds = %.preheader853, %._c
 
 bb.dc:                                            ; preds = %.lr.ph936, %.critedge3
   %indvars.iv1072 = phi i64 [ 0, %.lr.ph936 ], [ %indvars.iv.next1073, %.critedge3 ] ; 2 uses
-  %.0441933 = phi double [ %4, %.lr.ph936 ], [ %.1442, %.critedge3 ]
+  %.0441933 = phi double [ %i.aas, %.lr.ph936 ], [ %.1442, %.critedge3 ]
   %.0443932 = phi i32 [ %i.afx, %.lr.ph936 ], [ %.1444, %.critedge3 ] ; 2 uses
   %.0931 = phi i32 [ %i.afx, %.lr.ph936 ], [ %.1.lcssa, %.critedge3 ] ; 2 uses
   %i.age = trunc nuw i64 %indvars.iv1072 to i32
@@ -631,7 +625,7 @@ bb.de:                                            ; preds = %bb.dd
   %.sroa.speculated = call i32 @llvm.umax.i32(i32 %i.aha, i32 %.1.lcssa) ; 2 uses
   %i.ahb = icmp ult i32 %.sroa.speculated, %.0443932
   %.1444 = call i32 @llvm.umin.i32(i32 %.sroa.speculated, i32 %.0443932)
-  %.1442 = select i1 %i.ahb, double %i.agm, double %.0441933 ; 2 uses
+  %.1442 = select i1 %i.ahb, double %i.agm, double %.0441933 ; 3 uses
   %exitcond1077.not = icmp eq i64 %indvars.iv.next1073, %wide.trip.count1076
   br i1 %exitcond1077.not, label %._crit_edge937, label %bb.dc, !llvm.loop !119
 
@@ -740,9 +734,11 @@ bb.df:                                            ; preds = %bb.df, %._crit_edge
 
 ._crit_edge947:                                   ; preds = %.epil.preheader1254, %._crit_edge947.loopexit.unr-lcssa, %bb.db
   %.4458.lcssa1159 = phi i32 [ %.3457949, %bb.db ], [ %.lcssa, %._crit_edge947.loopexit.unr-lcssa ], [ %.lcssa, %.epil.preheader1254 ]
-  %.in1189 = phi double [ %5, %bb.db ], [ %9, %._crit_edge947.loopexit.unr-lcssa ], [ %9, %.epil.preheader1254 ]
+  %.in1189 = phi double [ %i.aas, %bb.db ], [ %.1442, %._crit_edge947.loopexit.unr-lcssa ], [ %.1442, %.epil.preheader1254 ]
   %.5459.lcssa = phi i32 [ %.3457949, %bb.db ], [ %i.akp, %._crit_edge947.loopexit.unr-lcssa ], [ %i.aje, %.epil.preheader1254 ]
-  %i.ajf = fptosi double %.in1189 to i16
+  %4 = fmul double %.in1189, 4.000000e+00
+  %5 = call double @llvm.round.f64(double %4)
+  %i.ajf = fptosi double %5 to i16
   %i.ajg = trunc i32 %i.afx to i16
   %gep = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv1090 ; 4 uses
   %i.ajh = getelementptr inbounds nuw i8, ptr %gep, i64 16

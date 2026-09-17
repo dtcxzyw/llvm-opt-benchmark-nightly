@@ -205,10 +205,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check29, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %7 = and i64 %i.v, 24
   %n.vec = and i64 %i.v, 9223372036854775776      ; 5 uses
-  %8 = getelementptr i8, ptr %i.ad, i64 %n.vec
-  %9 = getelementptr i8, ptr %i.s, i64 %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -226,6 +223,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ai, label %middle.block, label %vector.body, !llvm.loop !257
 
 middle.block:                                     ; preds = %vector.body
+  %7 = and i64 %i.v, 24
+  %8 = getelementptr i8, ptr %i.ad, i64 %n.vec
+  %9 = getelementptr i8, ptr %i.s, i64 %n.vec
   %cmp.n = icmp eq i64 %i.v, %n.vec
   br i1 %cmp.n, label %_ZN3gsl7details14dyn_array_baseIcSaIcEE4copyIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcS2_EEEEEvT_SB_S7_.exit, label %vec.epilog.iter.check
 
@@ -236,8 +236,6 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec33 = and i64 %i.v, 9223372036854775800    ; 4 uses
-  %10 = getelementptr i8, ptr %i.ad, i64 %n.vec33
-  %11 = getelementptr i8, ptr %i.s, i64 %n.vec33
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -251,6 +249,8 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.aj, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !258
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
+  %10 = getelementptr i8, ptr %i.ad, i64 %n.vec33
+  %11 = getelementptr i8, ptr %i.s, i64 %n.vec33
   %cmp.n39 = icmp eq i64 %i.v, %n.vec33
   br i1 %cmp.n39, label %_ZN3gsl7details14dyn_array_baseIcSaIcEE4copyIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcS2_EEEEEvT_SB_S7_.exit, label %.lr.ph.i.preheader
 
@@ -653,8 +653,6 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.w = icmp eq i64 %i.v, 0
   %i.x = select i1 %i.w, i64 32, i64 %i.v
   %n.vec = sub i64 %i.s, %i.x                     ; 3 uses
-  %4 = getelementptr i8, ptr %i.k, i64 %n.vec
-  %5 = add i64 %.sroa.2.0.copyload, %n.vec
   %i.y = getelementptr i8, ptr %.fr.i, i64 %.sroa.2.0.copyload
   br label %vector.body
 
@@ -670,11 +668,16 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <16 x i8> %wide.load38, ptr %i.ab, align 1
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.ac = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ac, label %.lr.ph28.i.preheader, label %vector.body, !llvm.loop !268
+  br i1 %i.ac, label %.lr.ph28.i.preheader.loopexit, label %vector.body, !llvm.loop !268
 
-.lr.ph28.i.preheader:                             ; preds = %vector.body, %vector.memcheck, %.lr.ph28.preheader.i
-  %.08.us.us2127.i.ph = phi ptr [ %i.k, %vector.memcheck ], [ %i.k, %.lr.ph28.preheader.i ], [ %4, %vector.body ] ; 2 uses
-  %.ph = phi i64 [ %.sroa.2.0.copyload, %vector.memcheck ], [ %.sroa.2.0.copyload, %.lr.ph28.preheader.i ], [ %5, %vector.body ] ; 3 uses
+.lr.ph28.i.preheader.loopexit:                    ; preds = %vector.body
+  %4 = getelementptr i8, ptr %i.k, i64 %n.vec
+  %5 = add i64 %.sroa.2.0.copyload, %n.vec
+  br label %.lr.ph28.i.preheader
+
+.lr.ph28.i.preheader:                             ; preds = %.lr.ph28.i.preheader.loopexit, %vector.memcheck, %.lr.ph28.preheader.i
+  %.08.us.us2127.i.ph = phi ptr [ %i.k, %vector.memcheck ], [ %i.k, %.lr.ph28.preheader.i ], [ %4, %.lr.ph28.i.preheader.loopexit ] ; 2 uses
+  %.ph = phi i64 [ %.sroa.2.0.copyload, %vector.memcheck ], [ %.sroa.2.0.copyload, %.lr.ph28.preheader.i ], [ %5, %.lr.ph28.i.preheader.loopexit ] ; 3 uses
   %i.ad = sub i64 %.sroa.220.0.copyload, %.ph
   %i.ae = freeze i64 %i.ad                        ; 2 uses
   %i.af = add i64 %i.ae, -1

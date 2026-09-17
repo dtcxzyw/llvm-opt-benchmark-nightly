@@ -204,13 +204,13 @@ sum_w_vruntime_add.exit:                          ; preds = %sum_w_vruntime_add_
   %i.bm = load i64, ptr %i.bl, align 16
   %i.bn = getelementptr i8, ptr %1, i64 56
   store i64 %i.bm, ptr %i.bn, align 8
-  %2 = getelementptr i8, ptr %1, i64 16           ; 6 uses
   %i.bo = getelementptr i8, ptr %0, i64 64        ; 3 uses
   %i.bp = load ptr, ptr %i.bo, align 8            ; 2 uses
   %.not.i13 = icmp eq ptr %i.bp, null
   br i1 %.not.i13, label %min_vruntime_cb_propagate.exit.thread, label %.lr.ph
 
 min_vruntime_cb_propagate.exit.thread:            ; preds = %sum_w_vruntime_add.exit
+  %2 = getelementptr i8, ptr %1, i64 16           ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef align 16 dereferenceable(24) %2, i8 0, i64 24, i1 false)
   store ptr %2, ptr %i.bo, align 8
   br label %bb.v
@@ -236,11 +236,12 @@ bb.i:                                             ; preds = %.lr.ph, %bb.i
 
 .lr.ph.i.preheader:                               ; preds = %bb.i
   %.120.i.le = getelementptr i8, ptr %i.br, i64 %.120.i.v
+  %3 = getelementptr i8, ptr %1, i64 16           ; 4 uses
   %i.bw = ptrtoint ptr %i.br to i64
-  store i64 %i.bw, ptr %2, align 16
+  store i64 %i.bw, ptr %3, align 16
   %i.bx = getelementptr i8, ptr %1, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef align 8 dereferenceable(16) %i.bx, i8 0, i64 16, i1 false)
-  store ptr %2, ptr %.120.i.le, align 8
+  store ptr %3, ptr %.120.i.le, align 8
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %min_vruntime_update.exit.thread.i
@@ -368,12 +369,14 @@ min_vruntime_cb_propagate.exit:                   ; preds = %__max_slice_update.
   br i1 %.1.i, label %bb.v, label %rb_insert_augmented_cached.exit
 
 bb.v:                                             ; preds = %min_vruntime_cb_propagate.exit.thread, %min_vruntime_cb_propagate.exit
+  %4 = phi ptr [ %2, %min_vruntime_cb_propagate.exit.thread ], [ %3, %min_vruntime_cb_propagate.exit ] ; 2 uses
   %i.ds = getelementptr i8, ptr %0, i64 72
-  store ptr %2, ptr %i.ds, align 8
+  store ptr %4, ptr %i.ds, align 8
   br label %rb_insert_augmented_cached.exit
 
 rb_insert_augmented_cached.exit:                  ; preds = %min_vruntime_cb_propagate.exit, %bb.v
-  tail call void @__rb_insert_augmented(ptr noundef %2, ptr noundef %i.bo, ptr noundef nonnull @min_vruntime_cb_rotate) #26
+  %5 = phi ptr [ %3, %min_vruntime_cb_propagate.exit ], [ %4, %bb.v ]
+  tail call void @__rb_insert_augmented(ptr noundef %5, ptr noundef %i.bo, ptr noundef nonnull @min_vruntime_cb_rotate) #26
   ret void
 }
 

@@ -205,10 +205,10 @@ declare i64 @git_config_int64(ptr noundef, ptr noundef, ptr noundef) local_unnam
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @proc_receive_ref_append(ptr noundef nonnull %0) unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 3 uses
   %i.b = tail call ptr @xcalloc(i64 noundef 1, i64 noundef 24) #20 ; 11 uses
   %i.c = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %0, i32 noundef 58) #22 ; 4 uses
-  %i.d = ptrtoaddr ptr %i.c to i64                ; 2 uses
+  %i.d = ptrtoaddr ptr %i.c to i64                ; 3 uses
   %.not = icmp eq ptr %i.c, null
   br i1 %.not, label %bb.l, label %.preheader37
 
@@ -217,8 +217,7 @@ bb.a:
   br i1 %i.e, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader37
-  %i.f = sub i64 %i.d, %i.a                       ; 2 uses
-  %scevgep = getelementptr i8, ptr %0, i64 %i.f   ; 2 uses
+  %i.f = sub i64 %i.d, %i.a
   %xtraiter = and i64 %i.f, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
@@ -256,7 +255,7 @@ bb.d:                                             ; preds = %.lr.ph.prol
   %.03038.unr = phi ptr [ %0, %.lr.ph.preheader ], [ %i.j, %.lr.ph.prol.loopexit.unr-lcssa ]
   %i.k = add i64 %i.d, -1
   %i.l = icmp eq i64 %i.k, %i.a
-  br i1 %i.l, label %._crit_edge, label %.lr.ph
+  br i1 %i.l, label %._crit_edge.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %bb.k
   %.03038 = phi ptr [ %i.t, %bb.k ], [ %.03038.unr, %.lr.ph.prol.loopexit ] ; 3 uses
@@ -313,10 +312,15 @@ bb.j:                                             ; preds = %.lr.ph.1
 bb.k:                                             ; preds = %.sink.split.1, %.lr.ph.1
   %i.t = getelementptr inbounds nuw i8, ptr %.03038, i64 2 ; 2 uses
   %exitcond.not.1 = icmp eq ptr %i.t, %i.c
-  br i1 %exitcond.not.1, label %._crit_edge, label %.lr.ph, !llvm.loop !200
+  br i1 %exitcond.not.1, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !200
 
-._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %bb.k, %.preheader37
-  %.030.lcssa = phi ptr [ %0, %.preheader37 ], [ %scevgep, %bb.k ], [ %scevgep, %.lr.ph.prol.loopexit ]
+._crit_edge.loopexit:                             ; preds = %bb.k, %.lr.ph.prol.loopexit
+  %1 = sub i64 %i.d, %i.a
+  %scevgep = getelementptr i8, ptr %0, i64 %1
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader37
+  %.030.lcssa = phi ptr [ %0, %.preheader37 ], [ %scevgep, %._crit_edge.loopexit ]
   %i.u = getelementptr inbounds nuw i8, ptr %.030.lcssa, i64 1
   br label %bb.m
 

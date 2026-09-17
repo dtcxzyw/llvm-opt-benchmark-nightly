@@ -205,10 +205,6 @@ bb.cp:                                            ; preds = %bb.co
   %i.un = load i64, ptr %i.ar, align 8, !tbaa !83 ; 2 uses
   %i.uo = load i64, ptr %i.as, align 8, !tbaa !143 ; 5 uses
   %i.up = load i16, ptr %i.br, align 2, !tbaa !153
-  %6 = zext i16 %i.up to i64                      ; 2 uses
-  %7 = trunc i64 %i.un to i32                     ; 4 uses
-  %8 = shl nuw i32 1, %7
-  %9 = zext i32 %8 to i64                         ; 5 uses
   %.not.i454 = icmp eq i64 %i.uo, 0
   br i1 %.not.i454, label %.preheader.i457, label %.lr.ph.i455.preheader
 
@@ -248,6 +244,10 @@ bb.cp:                                            ; preds = %bb.co
 
 .preheader.i457:                                  ; preds = %.preheader.i457.loopexit.unr-lcssa, %.lr.ph.i455.epil, %bb.cp
   %.0.lcssa.i = phi i64 [ 16, %bb.cp ], [ %i.vo, %.preheader.i457.loopexit.unr-lcssa ], [ %i.uu, %.lr.ph.i455.epil ] ; 2 uses
+  %6 = zext i16 %i.up to i64                      ; 2 uses
+  %7 = trunc i64 %i.un to i32                     ; 4 uses
+  %8 = shl nuw i32 1, %7
+  %9 = zext i32 %8 to i64                         ; 5 uses
   %i.uv = icmp ult i64 %.0.lcssa.i, %6
   br i1 %i.uv, label %.lr.ph44.i, label %_ZN13duckdb_brotliL20CalculateDistanceLutEPNS_24BrotliDecoderStateStructE.exit
 
@@ -324,7 +324,6 @@ vector.memcheck:                                  ; preds = %bb.cq
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %10 = add i64 %.143.i, %n.vec
   %broadcast.splatinsert = insertelement <2 x i8> poison, i8 %i.vt, i64 0
   %broadcast.splat = shufflevector <2 x i8> %broadcast.splatinsert, <2 x i8> poison, <2 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert735 = insertelement <2 x i64> poison, i64 %i.vu, i64 0
@@ -349,7 +348,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %vec.ind.next = add nuw <2 x i64> %vec.ind, splat (i64 4)
   %i.wc = icmp eq i64 %index.next, %n.vec
-  br i1 %i.wc, label %middle.block, label %vector.body, !llvm.loop !139
+  br i1 %i.wc, label %middle.block.loopexit742, label %vector.body, !llvm.loop !139
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %.240.i = phi i64 [ %i.wl, %scalar.ph ], [ %.143.i, %scalar.ph.preheader ] ; 4 uses
@@ -388,8 +387,12 @@ scalar.ph.epil.preheader:                         ; preds = %middle.block.loopex
   %i.wq = add i64 %.240.i.epil.init, 1
   br label %middle.block
 
-middle.block:                                     ; preds = %vector.body, %scalar.ph.epil.preheader, %middle.block.loopexit.unr-lcssa
-  %.lcssa715 = phi i64 [ %i.wq, %scalar.ph.epil.preheader ], [ %i.wl, %middle.block.loopexit.unr-lcssa ], [ %10, %vector.body ] ; 2 uses
+middle.block.loopexit742:                         ; preds = %vector.body
+  %10 = add i64 %.143.i, %n.vec
+  br label %middle.block
+
+middle.block:                                     ; preds = %scalar.ph.epil.preheader, %middle.block.loopexit.unr-lcssa, %middle.block.loopexit742
+  %.lcssa715 = phi i64 [ %10, %middle.block.loopexit742 ], [ %i.wl, %middle.block.loopexit.unr-lcssa ], [ %i.wq, %scalar.ph.epil.preheader ] ; 2 uses
   %i.wr = add i64 %.03441.i, %.03342.i
   %i.ws = xor i64 %.03342.i, 1
   %i.wt = icmp ult i64 %.lcssa715, %6
@@ -792,10 +795,6 @@ bb.a:
 
 vector.ph:                                        ; preds = %bb.a
   %n.vec = and i64 %i.e, -8                       ; 4 uses
-  %3 = or disjoint i64 %n.vec, 1
-  %4 = trunc i64 %n.vec to i32
-  %5 = mul i32 %4, 67372036
-  %6 = add i32 %5, 50462976
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -814,6 +813,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.k, label %middle.block, label %vector.body, !llvm.loop !187
 
 middle.block:                                     ; preds = %vector.body
+  %3 = or disjoint i64 %n.vec, 1
+  %4 = trunc i64 %n.vec to i32
+  %5 = mul i32 %4, 67372036
+  %6 = add i32 %5, 50462976
   %cmp.n = icmp eq i64 %i.e, %n.vec
   br i1 %cmp.n, label %.preheader, label %scalar.ph.preheader
 

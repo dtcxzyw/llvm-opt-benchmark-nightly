@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.o
   %.0434 = phi i32 [ 0, %.preheader381.lr.ph ], [ %i.iq, %._crit_edge429 ] ; 2 uses
   %.0320433 = phi i32 [ 0, %.preheader381.lr.ph ], [ %.2, %._crit_edge429 ]
   %.0330432 = phi double [ %i.bf, %.preheader381.lr.ph ], [ %.2332, %._crit_edge429 ]
-  %.0335431 = phi double [ %i.bf, %.preheader381.lr.ph ], [ %i.in, %._crit_edge429 ] ; 7 uses
+  %.0335431 = phi double [ %i.bf, %.preheader381.lr.ph ], [ %5, %._crit_edge429 ] ; 7 uses
   br i1 %i.bh, label %._crit_edge393.split, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader381
@@ -607,14 +607,10 @@ bb.ay:                                            ; preds = %._crit_edge414
 ._crit_edge418:                                   ; preds = %.preheader380
   store double 1.000000e+00, ptr %i.q, align 8, !tbaa !72
   %.not374420 = icmp slt i32 %.2, 0
-  br i1 %.not374420, label %._crit_edge424.thread, label %.lr.ph423.preheader
-
-._crit_edge424.thread:                            ; preds = %._crit_edge418
-  %5 = tail call double @llvm.fabs.f64(double %.0335431)
-  br label %._crit_edge429
+  br i1 %.not374420, label %._crit_edge429, label %.lr.ph423.preheader
 
 .lr.ph423.preheader:                              ; preds = %._crit_edge418.thread, %._crit_edge418
-  %i.hb = phi double [ %i.ha, %._crit_edge418.thread ], [ %.0335431, %._crit_edge418 ] ; 3 uses
+  %i.hb = phi double [ %i.ha, %._crit_edge418.thread ], [ %.0335431, %._crit_edge418 ] ; 5 uses
   %wide.trip.count481 = zext i32 %i.fu to i64     ; 7 uses
   %min.iters.check536 = icmp ult i32 %i.fu, 4
   br i1 %min.iters.check536, label %.lr.ph423.preheader565, label %vector.ph537
@@ -658,7 +654,6 @@ middle.block544:                                  ; preds = %vector.body539
   br i1 %exitcond482.not, label %._crit_edge424, label %.lr.ph423, !llvm.loop !67
 
 ._crit_edge424:                                   ; preds = %.lr.ph423, %middle.block544
-  %6 = tail call double @llvm.fabs.f64(double %i.hb) ; 3 uses
   %wide.trip.count487 = zext i32 %i.fu to i64
   %min.iters.check = icmp ult i32 %i.fu, 4
   %brmerge593 = select i1 %min.iters.check, i1 true, i1 %conflict.rdx
@@ -741,8 +736,9 @@ middle.block:                                     ; preds = %vector.body
   %exitcond488.not.1 = icmp eq i64 %indvars.iv.next484.1, %wide.trip.count487
   br i1 %exitcond488.not.1, label %._crit_edge429, label %.lr.ph428, !llvm.loop !69
 
-._crit_edge429:                                   ; preds = %.lr.ph428.prol.loopexit, %.lr.ph428, %middle.block, %._crit_edge424.thread
-  %i.in = phi double [ %5, %._crit_edge424.thread ], [ %6, %middle.block ], [ %6, %.lr.ph428 ], [ %6, %.lr.ph428.prol.loopexit ]
+._crit_edge429:                                   ; preds = %.lr.ph428.prol.loopexit, %.lr.ph428, %middle.block, %._crit_edge418
+  %i.in = phi double [ %.0335431, %._crit_edge418 ], [ %i.hb, %middle.block ], [ %i.hb, %.lr.ph428 ], [ %i.hb, %.lr.ph428.prol.loopexit ]
+  %5 = tail call double @llvm.fabs.f64(double %i.in)
   %i.io = load ptr, ptr %i.h, align 8, !tbaa !71
   %i.ip = tail call i32 @N_VLinearCombination(i32 noundef %i.fu, ptr noundef nonnull %i.ak, ptr noundef nonnull %i.an, ptr noundef %i.io) #15 ; 0 uses
   %i.iq = add nuw nsw i32 %.0434, 1

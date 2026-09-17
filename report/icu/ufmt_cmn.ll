@@ -134,7 +134,6 @@ vector.ph:                                        ; preds = %.preheader
   %i.y = icmp eq i64 %i.x, 0
   %i.z = select i1 %i.y, i64 16, i64 %i.x
   %n.vec = sub nsw i64 %i.w, %i.z                 ; 2 uses
-  %6 = add nsw i64 %i.p, %n.vec
   %i.aa = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %i.p
   br label %vector.body
 
@@ -146,10 +145,14 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <8 x i16> splat (i16 48), ptr %i.ac, align 2, !tbaa !9
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.ad = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ad, label %scalar.ph.preheader, label %vector.body, !llvm.loop !13
+  br i1 %i.ad, label %scalar.ph.preheader.loopexit, label %vector.body, !llvm.loop !13
 
-scalar.ph.preheader:                              ; preds = %vector.body, %.preheader
-  %indvars.iv55.ph = phi i64 [ %i.p, %.preheader ], [ %6, %vector.body ]
+scalar.ph.preheader.loopexit:                     ; preds = %vector.body
+  %6 = add nsw i64 %i.p, %n.vec
+  br label %scalar.ph.preheader
+
+scalar.ph.preheader:                              ; preds = %scalar.ph.preheader.loopexit, %.preheader
+  %indvars.iv55.ph = phi i64 [ %i.p, %.preheader ], [ %6, %scalar.ph.preheader.loopexit ]
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %bb.b

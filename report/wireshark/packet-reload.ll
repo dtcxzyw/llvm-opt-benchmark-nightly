@@ -204,7 +204,6 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.n = add nuw nsw i32 %3, 1
   %i.o = add nsw i32 %i.c, -1
   %i.p = lshr i32 %i.o, 2                         ; 2 uses
-  %5 = add nuw nsw i32 %i.p, 1
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.d
@@ -217,10 +216,14 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
   %i.s = add nuw nsw i32 %.03438, 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   %exitcond.not = icmp eq i32 %.03339, %i.p
-  br i1 %exitcond.not, label %._crit_edge, label %bb.d
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.d
 
-._crit_edge:                                      ; preds = %bb.d, %bb.c
-  %.033.lcssa = phi i32 [ 0, %bb.c ], [ %5, %bb.d ]
+._crit_edge.loopexit:                             ; preds = %bb.d
+  %5 = add nuw nsw i32 %i.p, 1
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.c
+  %.033.lcssa = phi i32 [ 0, %bb.c ], [ %5, %._crit_edge.loopexit ]
   tail call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.i, ptr noundef nonnull @.str.699, i32 noundef %.033.lcssa)
   ret void
 }

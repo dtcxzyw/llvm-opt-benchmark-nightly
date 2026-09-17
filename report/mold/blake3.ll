@@ -39,14 +39,13 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.preheader:                                 ; preds = %bb.b
   %i.h = add i64 %1, -1024                        ; 2 uses
-  %i.i = lshr i64 %i.h, 10                        ; 2 uses
-  %i.j = add nuw nsw i64 %i.i, 1                  ; 3 uses
+  %i.i = lshr i64 %i.h, 10                        ; 3 uses
+  %i.j = add nuw nsw i64 %i.i, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.h, 3072
   br i1 %min.iters.check, label %.lr.ph.preheader110, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
   %n.vec = and i64 %i.j, 36028797018963964        ; 4 uses
-  %9 = shl i64 %n.vec, 10                         ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -65,6 +64,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.m, label %middle.block, label %vector.body, !llvm.loop !30
 
 middle.block:                                     ; preds = %vector.body
+  %9 = shl i64 %n.vec, 10                         ; 2 uses
   %cmp.n = icmp eq i64 %i.j, %n.vec
   br i1 %cmp.n, label %._crit_edge.loopexit, label %.lr.ph.preheader110
 
@@ -86,12 +86,13 @@ middle.block:                                     ; preds = %vector.body
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph, %middle.block
   %.lcssa88 = phi i64 [ %9, %middle.block ], [ %i.p, %.lr.ph ] ; 2 uses
+  %10 = add nuw nsw i64 %i.i, 1
   %i.r = sub i64 %1, %.lcssa88
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.b
   %.028.i.lcssa = phi i64 [ 0, %bb.b ], [ %.lcssa88, %._crit_edge.loopexit ] ; 2 uses
-  %.027.i.lcssa = phi i64 [ 0, %bb.b ], [ %i.j, %._crit_edge.loopexit ] ; 5 uses
+  %.027.i.lcssa = phi i64 [ 0, %bb.b ], [ %10, %._crit_edge.loopexit ] ; 5 uses
   %.lcssa48 = phi i64 [ %1, %bb.b ], [ %i.r, %._crit_edge.loopexit ] ; 3 uses
   call void @blake3_hash_many(ptr noundef nonnull %i.c, i64 noundef %.027.i.lcssa, i64 noundef 16, ptr noundef %2, i64 noundef %3, i1 noundef zeroext true, i8 noundef zeroext %4, i8 noundef zeroext 1, i8 noundef zeroext 2, ptr noundef %5) #9
   %i.s = icmp ugt i64 %1, %.028.i.lcssa
@@ -224,8 +225,8 @@ bb.f:                                             ; preds = %bb.d
 
 .lr.ph61.preheader:                               ; preds = %bb.f
   %i.ce = add i64 %i.cc, -2                       ; 2 uses
-  %i.cf = lshr i64 %i.ce, 1                       ; 2 uses
-  %i.cg = add nuw i64 %i.cf, 1                    ; 3 uses
+  %i.cf = lshr i64 %i.ce, 1                       ; 3 uses
+  %i.cg = add nuw i64 %i.cf, 1                    ; 2 uses
   %min.iters.check92 = icmp ult i64 %i.ce, 6
   br i1 %min.iters.check92, label %.lr.ph61.preheader106, label %vector.ph93
 
@@ -270,11 +271,12 @@ middle.block103:                                  ; preds = %vector.body95
 
 ._crit_edge62.loopexit:                           ; preds = %.lr.ph61, %middle.block103
   %.lcssa85 = phi i64 [ %n.vec94, %middle.block103 ], [ %i.cp, %.lr.ph61 ]
+  %11 = add nuw nsw i64 %i.cf, 1
   %i.cq = shl nuw i64 %.lcssa85, 1
   br label %._crit_edge62
 
 ._crit_edge62:                                    ; preds = %._crit_edge62.loopexit, %bb.f
-  %.0.i42.lcssa = phi i64 [ 0, %bb.f ], [ %i.cg, %._crit_edge62.loopexit ] ; 5 uses
+  %.0.i42.lcssa = phi i64 [ 0, %bb.f ], [ %11, %._crit_edge62.loopexit ] ; 5 uses
   %.lcssa = phi i64 [ 0, %bb.f ], [ %i.cq, %._crit_edge62.loopexit ]
   %i.cr = or i8 %4, 4
   call void @blake3_hash_many(ptr noundef nonnull %i.b, i64 noundef %.0.i42.lcssa, i64 noundef 1, ptr noundef %2, i64 noundef 0, i1 noundef zeroext false, i8 noundef zeroext %i.cr, i8 noundef zeroext 0, i8 noundef zeroext 0, ptr noundef %5) #9
@@ -677,12 +679,12 @@ bb.j:                                             ; preds = %hasher_merge_cv_sta
   %i.dl = getelementptr inbounds nuw i8, ptr %6, i64 105
   %i.dm = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 145 ; 3 uses
-  %i.do = getelementptr inbounds nuw i8, ptr %i.k, i64 32
-  %i.dp = getelementptr inbounds nuw i8, ptr %5, i64 40 ; 2 uses
-  %i.dq = getelementptr inbounds nuw i8, ptr %5, i64 104
-  %i.dr = getelementptr inbounds nuw i8, ptr %5, i64 32
-  %i.ds = getelementptr inbounds nuw i8, ptr %5, i64 105
-  %i.dt = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  %i.do = getelementptr inbounds nuw i8, ptr %5, i64 40 ; 2 uses
+  %i.dp = getelementptr inbounds nuw i8, ptr %5, i64 104
+  %i.dq = getelementptr inbounds nuw i8, ptr %5, i64 32
+  %i.dr = getelementptr inbounds nuw i8, ptr %5, i64 105
+  %i.ds = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  %i.dt = getelementptr inbounds nuw i8, ptr %i.k, i64 32
   %i.du = getelementptr inbounds nuw i8, ptr %9, i64 32 ; 4 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %9, i64 40 ; 2 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %9, i64 104 ; 3 uses
@@ -1023,17 +1025,17 @@ hasher_merge_cv_stack.exit34:                     ; preds = %hasher_merge_cv_sta
   %i.je = load i8, ptr %i.dg, align 2, !tbaa !29
   %i.jf = or i8 %i.je, 4                          ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %5, ptr noundef nonnull align 8 dereferenceable(32) %0, i64 32, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.dp, ptr noundef nonnull align 1 dereferenceable(64) %i.jd, i64 64, i1 false)
-  store i8 64, ptr %i.dq, align 8, !tbaa !23, !alias.scope !72
-  store i64 0, ptr %i.dr, align 8, !tbaa !24, !alias.scope !72
-  store i8 %i.jf, ptr %i.ds, align 1, !tbaa !25, !alias.scope !72
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.do, ptr noundef nonnull align 1 dereferenceable(64) %i.jd, i64 64, i1 false)
+  store i8 64, ptr %i.dp, align 8, !tbaa !23, !alias.scope !72
+  store i64 0, ptr %i.dq, align 8, !tbaa !24, !alias.scope !72
+  store i8 %i.jf, ptr %i.dr, align 1, !tbaa !25, !alias.scope !72
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #9
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.c, ptr noundef nonnull align 8 dereferenceable(32) %0, i64 32, i1 false)
-  call void @blake3_compress_in_place(ptr noundef nonnull %i.c, ptr noundef nonnull %i.dp, i8 noundef zeroext 64, i64 noundef 0, i8 noundef zeroext %i.jf) #9
+  call void @blake3_compress_in_place(ptr noundef nonnull %i.c, ptr noundef nonnull %i.do, i8 noundef zeroext 64, i64 noundef 0, i8 noundef zeroext %i.jf) #9
   %i.jg = load <4 x i32>, ptr %i.c, align 16, !tbaa !26
   store <4 x i32> %i.jg, ptr %i.jd, align 1
   %i.jh = getelementptr i8, ptr %i.jc, i64 97
-  %i.ji = load <4 x i32>, ptr %i.dt, align 16, !tbaa !26
+  %i.ji = load <4 x i32>, ptr %i.ds, align 16, !tbaa !26
   store <4 x i32> %i.ji, ptr %i.jh, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9
   %i.jj = load i8, ptr %i.dh, align 8, !tbaa !28
@@ -1052,7 +1054,7 @@ hasher_merge_cv_stack.exit35:                     ; preds = %hasher_merge_cv_sta
   %.lcssa72 = phi i8 [ %i.jk, %hasher_merge_cv_stack.exit35.loopexit ], [ %i.is, %hasher_merge_cv_stack.exit34 ]
   %i.jm = shl nuw nsw i64 %.pre-phi137, 5
   %i.jn = getelementptr inbounds nuw i8, ptr %i.dn, i64 %i.jm
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.jn, ptr noundef nonnull align 16 dereferenceable(32) %i.do, i64 32, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.jn, ptr noundef nonnull align 16 dereferenceable(32) %i.dt, i64 32, i1 false)
   %i.jo = add i8 %.lcssa72, 1
   store i8 %i.jo, ptr %i.dh, align 8, !tbaa !28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
