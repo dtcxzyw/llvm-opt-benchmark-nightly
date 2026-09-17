@@ -148,19 +148,17 @@ module asm(target_features: "+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoli
 ; Function Attrs: fn_ret_thunk_extern mustprogress nofree norecurse noredzone nosync nounwind null_pointer_is_valid sspstrong willreturn memory(argmem: write)
 define dso_local void @clocks_calc_mult_shift(ptr nofree noundef writeonly captures(none) initializes((0, 4)) %0, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %1, i32 noundef %2, i32 noundef %3, i32 noundef %4) #0 align 16 prefalign(16) {
 .preheader:
-  %5 = zext i32 %4 to i64
-  %i.a = zext i32 %2 to i64                       ; 33 uses
-  %6 = mul nuw i64 %5, %i.a
-  %7 = lshr i64 %6, 32
-  %8 = tail call range(i64 32, 65) i64 @llvm.ctlz.i64(i64 %7, i1 false)
-  %9 = add nsw i64 %8, -32                        ; 32 uses
+  %i.a = zext i32 %2 to i64                       ; 32 uses
+  %5 = tail call i32 @llvm.umulh.i32(i32 %4, i32 %2)
+  %6 = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %5, i1 false)
+  %7 = zext nneg i32 %6 to i64                    ; 32 uses
   %i.b = zext i32 %3 to i64                       ; 32 uses
   %i.c = lshr i32 %2, 1
   %i.d = zext nneg i32 %i.c to i64                ; 32 uses
   %i.e = shl nuw i64 %i.b, 32
   %i.f = or disjoint i64 %i.e, %i.d
   %i.g = udiv i64 %i.f, %i.a                      ; 2 uses
-  %i.h = lshr i64 %i.g, %9
+  %i.h = lshr i64 %i.g, %7
   %i.i = icmp eq i64 %i.h, 0
   br i1 %i.i, label %bb.af, label %bb.a
 
@@ -168,7 +166,7 @@ bb.a:                                             ; preds = %.preheader
   %i.j = shl nuw nsw i64 %i.b, 31
   %i.k = or disjoint i64 %i.j, %i.d
   %i.l = udiv i64 %i.k, %i.a                      ; 2 uses
-  %i.m = lshr i64 %i.l, %9
+  %i.m = lshr i64 %i.l, %7
   %i.n = icmp eq i64 %i.m, 0
   br i1 %i.n, label %bb.af, label %bb.b
 
@@ -176,7 +174,7 @@ bb.b:                                             ; preds = %bb.a
   %i.o = shl nuw nsw i64 %i.b, 30
   %i.p = add nuw nsw i64 %i.o, %i.d
   %i.q = udiv i64 %i.p, %i.a                      ; 2 uses
-  %i.r = lshr i64 %i.q, %9
+  %i.r = lshr i64 %i.q, %7
   %i.s = icmp eq i64 %i.r, 0
   br i1 %i.s, label %bb.af, label %bb.c
 
@@ -184,7 +182,7 @@ bb.c:                                             ; preds = %bb.b
   %i.t = shl nuw nsw i64 %i.b, 29
   %i.u = add nuw nsw i64 %i.t, %i.d
   %i.v = udiv i64 %i.u, %i.a                      ; 2 uses
-  %i.w = lshr i64 %i.v, %9
+  %i.w = lshr i64 %i.v, %7
   %i.x = icmp eq i64 %i.w, 0
   br i1 %i.x, label %bb.af, label %bb.d
 
@@ -192,7 +190,7 @@ bb.d:                                             ; preds = %bb.c
   %i.y = shl nuw nsw i64 %i.b, 28
   %i.z = add nuw nsw i64 %i.y, %i.d
   %i.aa = udiv i64 %i.z, %i.a                     ; 2 uses
-  %i.ab = lshr i64 %i.aa, %9
+  %i.ab = lshr i64 %i.aa, %7
   %i.ac = icmp eq i64 %i.ab, 0
   br i1 %i.ac, label %bb.af, label %bb.e
 
@@ -200,7 +198,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ad = shl nuw nsw i64 %i.b, 27
   %i.ae = add nuw nsw i64 %i.ad, %i.d
   %i.af = udiv i64 %i.ae, %i.a                    ; 2 uses
-  %i.ag = lshr i64 %i.af, %9
+  %i.ag = lshr i64 %i.af, %7
   %i.ah = icmp eq i64 %i.ag, 0
   br i1 %i.ah, label %bb.af, label %bb.f
 
@@ -208,7 +206,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ai = shl nuw nsw i64 %i.b, 26
   %i.aj = add nuw nsw i64 %i.ai, %i.d
   %i.ak = udiv i64 %i.aj, %i.a                    ; 2 uses
-  %i.al = lshr i64 %i.ak, %9
+  %i.al = lshr i64 %i.ak, %7
   %i.am = icmp eq i64 %i.al, 0
   br i1 %i.am, label %bb.af, label %bb.g
 
@@ -216,7 +214,7 @@ bb.g:                                             ; preds = %bb.f
   %i.an = shl nuw nsw i64 %i.b, 25
   %i.ao = add nuw nsw i64 %i.an, %i.d
   %i.ap = udiv i64 %i.ao, %i.a                    ; 2 uses
-  %i.aq = lshr i64 %i.ap, %9
+  %i.aq = lshr i64 %i.ap, %7
   %i.ar = icmp eq i64 %i.aq, 0
   br i1 %i.ar, label %bb.af, label %bb.h
 
@@ -224,7 +222,7 @@ bb.h:                                             ; preds = %bb.g
   %i.as = shl nuw nsw i64 %i.b, 24
   %i.at = add nuw nsw i64 %i.as, %i.d
   %i.au = udiv i64 %i.at, %i.a                    ; 2 uses
-  %i.av = lshr i64 %i.au, %9
+  %i.av = lshr i64 %i.au, %7
   %i.aw = icmp eq i64 %i.av, 0
   br i1 %i.aw, label %bb.af, label %bb.i
 
@@ -232,7 +230,7 @@ bb.i:                                             ; preds = %bb.h
   %i.ax = shl nuw nsw i64 %i.b, 23
   %i.ay = add nuw nsw i64 %i.ax, %i.d
   %i.az = udiv i64 %i.ay, %i.a                    ; 2 uses
-  %i.ba = lshr i64 %i.az, %9
+  %i.ba = lshr i64 %i.az, %7
   %i.bb = icmp eq i64 %i.ba, 0
   br i1 %i.bb, label %bb.af, label %bb.j
 
@@ -240,7 +238,7 @@ bb.j:                                             ; preds = %bb.i
   %i.bc = shl nuw nsw i64 %i.b, 22
   %i.bd = add nuw nsw i64 %i.bc, %i.d
   %i.be = udiv i64 %i.bd, %i.a                    ; 2 uses
-  %i.bf = lshr i64 %i.be, %9
+  %i.bf = lshr i64 %i.be, %7
   %i.bg = icmp eq i64 %i.bf, 0
   br i1 %i.bg, label %bb.af, label %bb.k
 
@@ -248,7 +246,7 @@ bb.k:                                             ; preds = %bb.j
   %i.bh = shl nuw nsw i64 %i.b, 21
   %i.bi = add nuw nsw i64 %i.bh, %i.d
   %i.bj = udiv i64 %i.bi, %i.a                    ; 2 uses
-  %i.bk = lshr i64 %i.bj, %9
+  %i.bk = lshr i64 %i.bj, %7
   %i.bl = icmp eq i64 %i.bk, 0
   br i1 %i.bl, label %bb.af, label %bb.l
 
@@ -256,7 +254,7 @@ bb.l:                                             ; preds = %bb.k
   %i.bm = shl nuw nsw i64 %i.b, 20
   %i.bn = add nuw nsw i64 %i.bm, %i.d
   %i.bo = udiv i64 %i.bn, %i.a                    ; 2 uses
-  %i.bp = lshr i64 %i.bo, %9
+  %i.bp = lshr i64 %i.bo, %7
   %i.bq = icmp eq i64 %i.bp, 0
   br i1 %i.bq, label %bb.af, label %bb.m
 
@@ -264,7 +262,7 @@ bb.m:                                             ; preds = %bb.l
   %i.br = shl nuw nsw i64 %i.b, 19
   %i.bs = add nuw nsw i64 %i.br, %i.d
   %i.bt = udiv i64 %i.bs, %i.a                    ; 2 uses
-  %i.bu = lshr i64 %i.bt, %9
+  %i.bu = lshr i64 %i.bt, %7
   %i.bv = icmp eq i64 %i.bu, 0
   br i1 %i.bv, label %bb.af, label %bb.n
 
@@ -272,7 +270,7 @@ bb.n:                                             ; preds = %bb.m
   %i.bw = shl nuw nsw i64 %i.b, 18
   %i.bx = add nuw nsw i64 %i.bw, %i.d
   %i.by = udiv i64 %i.bx, %i.a                    ; 2 uses
-  %i.bz = lshr i64 %i.by, %9
+  %i.bz = lshr i64 %i.by, %7
   %i.ca = icmp eq i64 %i.bz, 0
   br i1 %i.ca, label %bb.af, label %bb.o
 
@@ -280,7 +278,7 @@ bb.o:                                             ; preds = %bb.n
   %i.cb = shl nuw nsw i64 %i.b, 17
   %i.cc = add nuw nsw i64 %i.cb, %i.d
   %i.cd = udiv i64 %i.cc, %i.a                    ; 2 uses
-  %i.ce = lshr i64 %i.cd, %9
+  %i.ce = lshr i64 %i.cd, %7
   %i.cf = icmp eq i64 %i.ce, 0
   br i1 %i.cf, label %bb.af, label %bb.p
 
@@ -288,7 +286,7 @@ bb.p:                                             ; preds = %bb.o
   %i.cg = shl nuw nsw i64 %i.b, 16
   %i.ch = add nuw nsw i64 %i.cg, %i.d
   %i.ci = udiv i64 %i.ch, %i.a                    ; 2 uses
-  %i.cj = lshr i64 %i.ci, %9
+  %i.cj = lshr i64 %i.ci, %7
   %i.ck = icmp eq i64 %i.cj, 0
   br i1 %i.ck, label %bb.af, label %bb.q
 
@@ -296,7 +294,7 @@ bb.q:                                             ; preds = %bb.p
   %i.cl = shl nuw nsw i64 %i.b, 15
   %i.cm = add nuw nsw i64 %i.cl, %i.d
   %i.cn = udiv i64 %i.cm, %i.a                    ; 2 uses
-  %i.co = lshr i64 %i.cn, %9
+  %i.co = lshr i64 %i.cn, %7
   %i.cp = icmp eq i64 %i.co, 0
   br i1 %i.cp, label %bb.af, label %bb.r
 
@@ -304,7 +302,7 @@ bb.r:                                             ; preds = %bb.q
   %i.cq = shl nuw nsw i64 %i.b, 14
   %i.cr = add nuw nsw i64 %i.cq, %i.d
   %i.cs = udiv i64 %i.cr, %i.a                    ; 2 uses
-  %i.ct = lshr i64 %i.cs, %9
+  %i.ct = lshr i64 %i.cs, %7
   %i.cu = icmp eq i64 %i.ct, 0
   br i1 %i.cu, label %bb.af, label %bb.s
 
@@ -312,7 +310,7 @@ bb.s:                                             ; preds = %bb.r
   %i.cv = shl nuw nsw i64 %i.b, 13
   %i.cw = add nuw nsw i64 %i.cv, %i.d
   %i.cx = udiv i64 %i.cw, %i.a                    ; 2 uses
-  %i.cy = lshr i64 %i.cx, %9
+  %i.cy = lshr i64 %i.cx, %7
   %i.cz = icmp eq i64 %i.cy, 0
   br i1 %i.cz, label %bb.af, label %bb.t
 
@@ -320,7 +318,7 @@ bb.t:                                             ; preds = %bb.s
   %i.da = shl nuw nsw i64 %i.b, 12
   %i.db = add nuw nsw i64 %i.da, %i.d
   %i.dc = udiv i64 %i.db, %i.a                    ; 2 uses
-  %i.dd = lshr i64 %i.dc, %9
+  %i.dd = lshr i64 %i.dc, %7
   %i.de = icmp eq i64 %i.dd, 0
   br i1 %i.de, label %bb.af, label %bb.u
 
@@ -328,7 +326,7 @@ bb.u:                                             ; preds = %bb.t
   %i.df = shl nuw nsw i64 %i.b, 11
   %i.dg = add nuw nsw i64 %i.df, %i.d
   %i.dh = udiv i64 %i.dg, %i.a                    ; 2 uses
-  %i.di = lshr i64 %i.dh, %9
+  %i.di = lshr i64 %i.dh, %7
   %i.dj = icmp eq i64 %i.di, 0
   br i1 %i.dj, label %bb.af, label %bb.v
 
@@ -336,7 +334,7 @@ bb.v:                                             ; preds = %bb.u
   %i.dk = shl nuw nsw i64 %i.b, 10
   %i.dl = add nuw nsw i64 %i.dk, %i.d
   %i.dm = udiv i64 %i.dl, %i.a                    ; 2 uses
-  %i.dn = lshr i64 %i.dm, %9
+  %i.dn = lshr i64 %i.dm, %7
   %i.do = icmp eq i64 %i.dn, 0
   br i1 %i.do, label %bb.af, label %bb.w
 
@@ -344,7 +342,7 @@ bb.w:                                             ; preds = %bb.v
   %i.dp = shl nuw nsw i64 %i.b, 9
   %i.dq = add nuw nsw i64 %i.dp, %i.d
   %i.dr = udiv i64 %i.dq, %i.a                    ; 2 uses
-  %i.ds = lshr i64 %i.dr, %9
+  %i.ds = lshr i64 %i.dr, %7
   %i.dt = icmp eq i64 %i.ds, 0
   br i1 %i.dt, label %bb.af, label %bb.x
 
@@ -352,7 +350,7 @@ bb.x:                                             ; preds = %bb.w
   %i.du = shl nuw nsw i64 %i.b, 8
   %i.dv = add nuw nsw i64 %i.du, %i.d
   %i.dw = udiv i64 %i.dv, %i.a                    ; 2 uses
-  %i.dx = lshr i64 %i.dw, %9
+  %i.dx = lshr i64 %i.dw, %7
   %i.dy = icmp eq i64 %i.dx, 0
   br i1 %i.dy, label %bb.af, label %bb.y
 
@@ -360,7 +358,7 @@ bb.y:                                             ; preds = %bb.x
   %i.dz = shl nuw nsw i64 %i.b, 7
   %i.ea = add nuw nsw i64 %i.dz, %i.d
   %i.eb = udiv i64 %i.ea, %i.a                    ; 2 uses
-  %i.ec = lshr i64 %i.eb, %9
+  %i.ec = lshr i64 %i.eb, %7
   %i.ed = icmp eq i64 %i.ec, 0
   br i1 %i.ed, label %bb.af, label %bb.z
 
@@ -368,7 +366,7 @@ bb.z:                                             ; preds = %bb.y
   %i.ee = shl nuw nsw i64 %i.b, 6
   %i.ef = add nuw nsw i64 %i.ee, %i.d
   %i.eg = udiv i64 %i.ef, %i.a                    ; 2 uses
-  %i.eh = lshr i64 %i.eg, %9
+  %i.eh = lshr i64 %i.eg, %7
   %i.ei = icmp eq i64 %i.eh, 0
   br i1 %i.ei, label %bb.af, label %bb.aa
 
@@ -376,7 +374,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.ej = shl nuw nsw i64 %i.b, 5
   %i.ek = add nuw nsw i64 %i.ej, %i.d
   %i.el = udiv i64 %i.ek, %i.a                    ; 2 uses
-  %i.em = lshr i64 %i.el, %9
+  %i.em = lshr i64 %i.el, %7
   %i.en = icmp eq i64 %i.em, 0
   br i1 %i.en, label %bb.af, label %bb.ab
 
@@ -384,7 +382,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.eo = shl nuw nsw i64 %i.b, 4
   %i.ep = add nuw nsw i64 %i.eo, %i.d
   %i.eq = udiv i64 %i.ep, %i.a                    ; 2 uses
-  %i.er = lshr i64 %i.eq, %9
+  %i.er = lshr i64 %i.eq, %7
   %i.es = icmp eq i64 %i.er, 0
   br i1 %i.es, label %bb.af, label %bb.ac
 
@@ -392,7 +390,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.et = shl nuw nsw i64 %i.b, 3
   %i.eu = add nuw nsw i64 %i.et, %i.d
   %i.ev = udiv i64 %i.eu, %i.a                    ; 2 uses
-  %i.ew = lshr i64 %i.ev, %9
+  %i.ew = lshr i64 %i.ev, %7
   %i.ex = icmp eq i64 %i.ew, 0
   br i1 %i.ex, label %bb.af, label %bb.ad
 
@@ -400,7 +398,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.ey = shl nuw nsw i64 %i.b, 2
   %i.ez = add nuw nsw i64 %i.ey, %i.d
   %i.fa = udiv i64 %i.ez, %i.a                    ; 2 uses
-  %i.fb = lshr i64 %i.fa, %9
+  %i.fb = lshr i64 %i.fa, %7
   %i.fc = icmp eq i64 %i.fb, 0
   br i1 %i.fc, label %bb.af, label %bb.ae
 
@@ -408,7 +406,7 @@ bb.ae:                                            ; preds = %bb.ad
   %i.fd = shl nuw nsw i64 %i.b, 1
   %i.fe = add nuw nsw i64 %i.fd, %i.d
   %i.ff = udiv i64 %i.fe, %i.a                    ; 2 uses
-  %i.fg = lshr i64 %i.ff, %9
+  %i.fg = lshr i64 %i.ff, %7
   %i.fh = icmp eq i64 %i.fg, 0
   %spec.select = zext i1 %i.fh to i32
   br label %bb.af
@@ -811,6 +809,9 @@ declare dso_local noundef i32 @snprintf(ptr noalias noundef writeonly captures(n
 declare dso_local i64 @sized_strscpy(ptr noundef, ptr noundef, i64 noundef) local_unnamed_addr #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -820,7 +821,7 @@ declare i64 @llvm.smax.i64(i64, i64) #12
 declare i64 @llvm.abs.i64(i64, i1 immarg) #13
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.ctlz.i64(i64, i1 immarg) #13
+declare i32 @llvm.ctlz.i32(i32, i1 immarg) #13
 
 attributes #0 = { fn_ret_thunk_extern mustprogress nofree norecurse noredzone nosync nounwind null_pointer_is_valid sspstrong willreturn memory(argmem: write) "min-legal-vector-width"="0" "no-builtin-wcslen" "no-jump-tables"="true" "no-trapping-math"="true" "patchable-function-entry"="0" "patchable-function-prefix"="16" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" "warn-stack-size"="2048" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -82,7 +82,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %.0.i20 = select i1 %i.h, i32 -1076, i32 %i.t   ; 7 uses
   %i.u = shl nuw nsw i64 %i.c, 2                  ; 2 uses
   %i.v = or disjoint i64 %i.u, 18014398509481984
-  %i.w = select i1 %i.h, i64 %i.u, i64 %i.v       ; 10 uses
+  %i.w = select i1 %i.h, i64 %i.u, i64 %i.v       ; 12 uses
   %i.x = icmp ne i64 %i.c, 0
   %i.y = icmp samesign ult i32 %i.f, 2
   %i.z = or i1 %i.x, %i.y
@@ -100,17 +100,16 @@ bb.l:                                             ; preds = %bb.k
   %i.ah = lshr i32 %i.ag, 19
   %i.ai = zext i32 %i.af to i64
   %i.aj = getelementptr inbounds nuw [16 x i8], ptr @DOUBLE_POW5_INV_SPLIT, i64 %i.ai ; 2 uses
-  %.val168.i = load i64, ptr %i.aj, align 16
+  %.val168.i = load i64, ptr %i.aj, align 16      ; 3 uses
   %i.ak = getelementptr i8, ptr %i.aj, i64 8
   %.val169.i = load i64, ptr %i.ak, align 8
-  %i.al = or disjoint i64 %i.w, 2                 ; 2 uses
-  %i.am = zext nneg i64 %i.al to i128             ; 2 uses
-  %i.an = zext i64 %.val168.i to i128             ; 3 uses
+  %i.al = or disjoint i64 %i.w, 2                 ; 3 uses
+  %i.am = zext nneg i64 %i.al to i128
+  %i.an = zext i64 %.val169.i to i128             ; 3 uses
   %i.ao = mul nuw nsw i128 %i.an, %i.am
-  %2 = zext i64 %.val169.i to i128                ; 3 uses
-  %3 = mul nuw nsw i128 %2, %i.am
-  %4 = lshr i128 %i.ao, 64
-  %i.ap = add nuw nsw i128 %4, %3
+  %2 = tail call i64 @llvm.umulh.i64(i64 range(i64 -2, 36028797018963967) %i.al, i64 %.val168.i)
+  %3 = zext nneg i64 %2 to i128
+  %i.ap = add nuw nsw i128 %i.ao, %3
   %reass.sub = sub nsw i32 %i.af, %.0.i20
   %i.aq = add nsw i32 %reass.sub, 58
   %i.ar = add nsw i32 %i.aq, %i.ah
@@ -119,19 +118,19 @@ bb.l:                                             ; preds = %bb.k
   %i.au = trunc i128 %i.at to i64                 ; 4 uses
   %i.av = xor i32 %i.aa, -1
   %i.aw = sext i32 %i.av to i64
-  %i.ax = add nsw i64 %i.w, %i.aw
-  %i.ay = zext i64 %i.ax to i128                  ; 2 uses
+  %i.ax = add nsw i64 %i.w, %i.aw                 ; 2 uses
+  %i.ay = zext i64 %i.ax to i128
   %i.az = mul nuw i128 %i.an, %i.ay
-  %5 = mul nuw i128 %2, %i.ay
-  %6 = lshr i128 %i.az, 64
-  %i.ba = add nuw i128 %6, %5
+  %4 = tail call i64 @llvm.umulh.i64(i64 range(i64 -2, 36028797018963967) %i.ax, i64 %.val168.i)
+  %5 = zext i64 %4 to i128
+  %i.ba = add nuw i128 %i.az, %5
   %i.bb = lshr i128 %i.ba, %i.as
   %i.bc = trunc i128 %i.bb to i64                 ; 4 uses
-  %i.bd = zext nneg i64 %i.w to i128              ; 2 uses
+  %i.bd = zext nneg i64 %i.w to i128
   %i.be = mul nuw nsw i128 %i.an, %i.bd
-  %7 = mul nuw nsw i128 %2, %i.bd
-  %8 = lshr i128 %i.be, 64
-  %i.bf = add nuw nsw i128 %8, %7
+  %6 = tail call i64 @llvm.umulh.i64(i64 range(i64 -2, 36028797018963967) %i.w, i64 %.val168.i)
+  %7 = zext nneg i64 %6 to i128
+  %i.bf = add nuw nsw i128 %i.be, %7
   %i.bg = lshr i128 %i.bf, %i.as
   %i.bh = trunc i128 %i.bg to i64                 ; 4 uses
   %i.bi = icmp ult i32 %i.af, 22
@@ -190,17 +189,16 @@ bb.n:                                             ; preds = %bb.k
   %i.cf = add nsw i32 %i.cb, %.0.i20              ; 4 uses
   %i.cg = sext i32 %i.cc to i64
   %i.ch = getelementptr inbounds [16 x i8], ptr @DOUBLE_POW5_SPLIT, i64 %i.cg ; 2 uses
-  %.val.i = load i64, ptr %i.ch, align 16
+  %.val.i = load i64, ptr %i.ch, align 16         ; 3 uses
   %i.ci = getelementptr i8, ptr %i.ch, i64 8
   %.val167.i = load i64, ptr %i.ci, align 8
-  %i.cj = or disjoint i64 %i.w, 2
-  %i.ck = zext nneg i64 %i.cj to i128             ; 2 uses
-  %i.cl = zext i64 %.val.i to i128                ; 3 uses
+  %i.cj = or disjoint i64 %i.w, 2                 ; 2 uses
+  %i.ck = zext nneg i64 %i.cj to i128
+  %i.cl = zext i64 %.val167.i to i128             ; 3 uses
   %i.cm = mul nuw nsw i128 %i.cl, %i.ck
-  %9 = zext i64 %.val167.i to i128                ; 3 uses
-  %10 = mul nuw nsw i128 %9, %i.ck
-  %11 = lshr i128 %i.cm, 64
-  %i.cn = add nuw nsw i128 %11, %10
+  %8 = tail call i64 @llvm.umulh.i64(i64 range(i64 -2, 36028797018963967) %i.cj, i64 %.val.i)
+  %9 = zext nneg i64 %8 to i128
+  %i.cn = add nuw nsw i128 %i.cm, %9
   %i.co = add nsw i32 %i.cb, 56
   %i.cp = sub nsw i32 %i.co, %i.ce
   %i.cq = zext nneg i32 %i.cp to i128             ; 3 uses
@@ -208,19 +206,19 @@ bb.n:                                             ; preds = %bb.k
   %i.cs = trunc i128 %i.cr to i64                 ; 4 uses
   %i.ct = xor i32 %i.aa, -1
   %i.cu = sext i32 %i.ct to i64
-  %i.cv = add nsw i64 %i.w, %i.cu
-  %i.cw = zext i64 %i.cv to i128                  ; 2 uses
+  %i.cv = add nsw i64 %i.w, %i.cu                 ; 2 uses
+  %i.cw = zext i64 %i.cv to i128
   %i.cx = mul nuw i128 %i.cl, %i.cw
-  %12 = mul nuw i128 %9, %i.cw
-  %13 = lshr i128 %i.cx, 64
-  %i.cy = add nuw i128 %13, %12
+  %10 = tail call i64 @llvm.umulh.i64(i64 range(i64 -2, 36028797018963967) %i.cv, i64 %.val.i)
+  %11 = zext i64 %10 to i128
+  %i.cy = add nuw i128 %i.cx, %11
   %i.cz = lshr i128 %i.cy, %i.cq
   %i.da = trunc i128 %i.cz to i64                 ; 4 uses
-  %i.db = zext nneg i64 %i.w to i128              ; 2 uses
+  %i.db = zext nneg i64 %i.w to i128
   %i.dc = mul nuw nsw i128 %i.cl, %i.db
-  %14 = mul nuw nsw i128 %9, %i.db
-  %15 = lshr i128 %i.dc, 64
-  %i.dd = add nuw nsw i128 %15, %14
+  %12 = tail call i64 @llvm.umulh.i64(i64 range(i64 -2, 36028797018963967) %i.w, i64 %.val.i)
+  %13 = zext nneg i64 %12 to i128
+  %i.dd = add nuw nsw i128 %i.dc, %13
   %i.de = lshr i128 %i.dd, %i.cq
   %i.df = trunc i128 %i.de to i64                 ; 4 uses
   %i.dg = icmp ult i32 %i.cb, 2
@@ -623,7 +621,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define noundef ptr @double_to_shortest_decimal(double noundef %0) local_unnamed_addr #2 {
 bb.a:
-  %i.a = tail call ptr @palloc(i64 noundef 25) #5 ; 3 uses
+  %i.a = tail call ptr @palloc(i64 noundef 25) #6 ; 3 uses
   %i.b = tail call i32 @double_to_shortest_decimal_bufn(double noundef %0, ptr noundef %i.a)
   %i.c = sext i32 %i.b to i64
   %i.d = getelementptr inbounds i8, ptr %i.a, i64 %i.c
@@ -636,12 +634,16 @@ declare ptr @palloc(i64 noundef) local_unnamed_addr #3
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #4
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #5
+
 attributes #0 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #5 = { nounwind }
+attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}
