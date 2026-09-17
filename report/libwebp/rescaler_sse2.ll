@@ -43,7 +43,7 @@ bb.a:
   br i1 %or.cond, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @WebPRescalerImportRowExpand_C(ptr noundef nonnull %0, ptr noundef %1) #6
+  tail call void @WebPRescalerImportRowExpand_C(ptr noundef nonnull %0, ptr noundef %1) #7
   br label %.thread
 
 bb.c:                                             ; preds = %bb.a
@@ -251,7 +251,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  tail call void @WebPRescalerImportRowShrink_C(ptr noundef nonnull %0, ptr noundef %1) #6
+  tail call void @WebPRescalerImportRowShrink_C(ptr noundef nonnull %0, ptr noundef %1) #7
   br label %.loopexit
 
 bb.d:                                             ; preds = %.lr.ph73, %._crit_edge
@@ -654,7 +654,7 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.o = load i32, ptr %i.n, align 8, !tbaa !22
   %i.p = mul i32 %i.o, %i.m                       ; 2 uses
-  %i.q = sub i32 0, %i.p                          ; 3 uses
+  %i.q = sub i32 0, %i.p                          ; 4 uses
   %.not = icmp eq i32 %i.p, 0
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 5 uses
   %i.s = load i32, ptr %i.r, align 4, !tbaa !70   ; 3 uses
@@ -686,13 +686,12 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.ac, label %.lr.ph128.a, label %.loopexit
 
 .lr.ph128.a:                                      ; preds = %.preheader123
-  %1 = zext i32 %i.q to i64                       ; 2 uses
   %i.ad = zext i32 %.0.lcssa to i64               ; 8 uses
   %i.ae = xor i32 %.0.lcssa, -1
   %i.af = add i32 %i.i, %i.ae                     ; 2 uses
   %i.ag = zext i32 %i.af to i64
   %i.ah = add nuw nsw i64 %i.ag, 1                ; 2 uses
-  %min.iters.check = icmp ult i32 %i.af, 15
+  %min.iters.check = icmp ult i32 %i.af, 19
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph128.a
@@ -740,8 +739,8 @@ vector.ph:                                        ; preds = %vector.memcheck
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.as, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.at = zext <4 x i32> %broadcast.splat to <4 x i64>
-  %broadcast.splatinsert179 = insertelement <4 x i64> poison, i64 %1, i64 0
-  %broadcast.splat180 = shufflevector <4 x i64> %broadcast.splatinsert179, <4 x i64> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert179 = insertelement <4 x i32> poison, i32 %i.q, i64 0
+  %broadcast.splat180 = shufflevector <4 x i32> %broadcast.splatinsert179, <4 x i32> poison, <4 x i32> zeroinitializer
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -749,13 +748,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.au = add nuw i64 %index, %i.ad               ; 3 uses
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %i.au
   %wide.load = load <4 x i32>, ptr %i.av, align 4, !tbaa !23, !alias.scope !72
-  %2 = zext <4 x i32> %wide.load to <4 x i64>
-  %3 = mul nuw <4 x i64> %broadcast.splat180, %2
-  %4 = lshr <4 x i64> %3, splat (i64 32)
-  %5 = trunc nuw <4 x i64> %4 to <4 x i32>        ; 2 uses
+  %1 = tail call <4 x i32> @llvm.umulh.v4i32(<4 x i32> %wide.load, <4 x i32> %broadcast.splat180) ; 2 uses
   %i.aw = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %i.au ; 2 uses
   %wide.load181 = load <4 x i32>, ptr %i.aw, align 4, !tbaa !23, !alias.scope !73, !noalias !74
-  %i.ax = sub <4 x i32> %wide.load181, %5
+  %i.ax = sub <4 x i32> %wide.load181, %1
   %i.ay = zext <4 x i32> %i.ax to <4 x i64>
   %i.az = mul nuw <4 x i64> %i.ay, %i.at
   %i.ba = add nuw <4 x i64> %i.az, splat (i64 2147483648)
@@ -766,7 +762,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bf = select <4 x i1> %i.bd, <4 x i8> splat (i8 -1), <4 x i8> %i.be
   %i.bg = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.au
   store <4 x i8> %i.bf, ptr %i.bg, align 1, !tbaa !16, !alias.scope !75, !noalias !76
-  store <4 x i32> %5, ptr %i.aw, align 4, !tbaa !23, !alias.scope !73, !noalias !74
+  store <4 x i32> %1, ptr %i.aw, align 4, !tbaa !23, !alias.scope !73, !noalias !74
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bh = icmp eq i64 %index.next, %n.vec
   br i1 %i.bh, label %middle.block, label %vector.body, !llvm.loop !61
@@ -849,13 +845,10 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %indvars.iv142 = phi i64 [ %indvars.iv.next143, %scalar.ph ], [ %indvars.iv142.ph, %scalar.ph.preheader ] ; 4 uses
   %i.dh = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %indvars.iv142
   %i.di = load i32, ptr %i.dh, align 4, !tbaa !23
-  %6 = zext i32 %i.di to i64
-  %7 = mul nuw i64 %6, %1
-  %8 = lshr i64 %7, 32
-  %9 = trunc nuw i64 %8 to i32                    ; 2 uses
+  %2 = tail call i32 @llvm.umulh.i32(i32 %i.di, i32 %i.q) ; 2 uses
   %i.dj = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv142 ; 2 uses
   %i.dk = load i32, ptr %i.dj, align 4, !tbaa !23
-  %i.dl = sub i32 %i.dk, %9
+  %i.dl = sub i32 %i.dk, %2
   %i.dm = zext i32 %i.dl to i64
   %i.dn = load i32, ptr %i.r, align 4, !tbaa !70
   %i.do = zext i32 %i.dn to i64
@@ -868,7 +861,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.dv = select i1 %i.dt, i8 -1, i8 %i.du
   %i.dw = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv142
   store i8 %i.dv, ptr %i.dw, align 1, !tbaa !16
-  store i32 %9, ptr %i.dj, align 4, !tbaa !23
+  store i32 %2, ptr %i.dj, align 4, !tbaa !23
   %indvars.iv.next143 = add nuw nsw i64 %indvars.iv142, 1 ; 2 uses
   %i.dx = trunc nuw i64 %indvars.iv.next143 to i32
   %i.dy = icmp sgt i32 %i.i, %i.dx
@@ -1036,16 +1029,23 @@ declare <8 x i16> @llvm.x86.sse2.packssdw.128(<4 x i32>, <4 x i32>) #4
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(none)
 declare <16 x i8> @llvm.x86.sse2.packuswb.128(<8 x i16>, <8 x i16>) #4
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #5
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #5
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.umulh.v4i32(<4 x i32>, <4 x i32>) #5
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="128" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="128" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(none) }
-attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #6 = { nounwind }
+attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #7 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %bb.g, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = trunc nuw i64 %1 to i32
+  %i.c = trunc nuw i64 %1 to i32                  ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 304 ; 3 uses
   %i.e = load i64, ptr %i.d, align 16, !alias.scope !20687, !noalias !20688, !noundef !75 ; 2 uses
   %i.f = icmp ugt i64 %i.e, 63
@@ -245,12 +245,9 @@ _RINvYNtNtNtCs4Jn2LUi8st0_4rand4rngs3std6StdRngNtNtB9_3rng3Rng6randommECsjjpCCFG
   %i.v = load i32, ptr %i.u, align 4, !alias.scope !20690, !noalias !20688, !noundef !75
   %i.w = add nuw nsw i64 %i.t, 1
   store i64 %i.w, ptr %i.d, align 16, !alias.scope !20690, !noalias !20688
-  %2 = zext i32 %i.v to i64
-  %3 = mul nuw i64 %1, %2
-  %4 = lshr i64 %3, 32
-  %5 = trunc nuw i64 %4 to i32
+  %2 = tail call i32 @llvm.umulh.i32(i32 %i.v, i32 %i.c)
   %i.x = xor i32 %i.o, -1
-  %.not11.i.i.i.i = icmp ult i32 %i.x, %5
+  %.not11.i.i.i.i = icmp ugt i32 %2, %i.x
   %i.y = zext i1 %.not11.i.i.i.i to i64
   %i.z = add nuw nsw i64 %i.n, %i.y
   br label %_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultjNtNtNtCs4Jn2LUi8st0_4rand5distr7uniform5ErrorE6unwrapCsjjpCCFGI3ul_14lance_encoding.exit
@@ -296,7 +293,7 @@ _RINvYNtNtNtCs4Jn2LUi8st0_4rand4rngs3std6StdRngNtNtB9_3rng3Rng6randomyECsjjpCCFG
   %i.aq = phi i64 [ %i.ad, %bb.i ], [ 2, %bb.k ], [ 1, %bb.j ] ; 4 uses
   %.sroa.0.0.i.i.i9.i.i.i.i = phi i64 [ %i.af, %bb.i ], [ %i.ap, %bb.k ], [ %i.an, %bb.j ]
   %i.ar = zext i64 %.sroa.0.0.i.i.i9.i.i.i.i to i128
-  %i.as = zext nneg i64 %1 to i128                ; 2 uses
+  %i.as = zext nneg i64 %1 to i128
   %i.at = mul nuw nsw i128 %i.ar, %i.as           ; 2 uses
   %i.au = lshr i128 %i.at, 64
   %i.av = trunc nuw nsw i128 %i.au to i64         ; 2 uses
@@ -342,12 +339,9 @@ bb.p:                                             ; preds = %bb.m
 
 _RINvYNtNtNtCs4Jn2LUi8st0_4rand4rngs3std6StdRngNtNtB9_3rng3Rng6randomyECsjjpCCFGI3ul_14lance_encoding.exit13.i.i.i.i: ; preds = %bb.p, %bb.o, %bb.n
   %.sroa.0.0.i.i.i12.i.i.i.i = phi i64 [ %i.bc, %bb.n ], [ %i.bm, %bb.p ], [ %i.bk, %bb.o ]
-  %6 = zext i64 %.sroa.0.0.i.i.i12.i.i.i.i to i128
-  %7 = mul nuw nsw i128 %6, %i.as
-  %8 = lshr i128 %7, 64
-  %9 = trunc nuw nsw i128 %8 to i64
+  %3 = tail call i64 @llvm.umulh.i64(i64 %.sroa.0.0.i.i.i12.i.i.i.i, i64 range(i64 0, 2305843009213693952) %1)
   %i.bn = xor i64 %i.aw, -1
-  %.not7.i.i.i.i = icmp samesign ult i64 %i.bn, %9
+  %.not7.i.i.i.i = icmp ugt i64 %3, %i.bn
   %i.bo = zext i1 %.not7.i.i.i.i to i64
   %i.bp = add nuw nsw i64 %i.bo, %i.av
   br label %_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultjNtNtNtCs4Jn2LUi8st0_4rand5distr7uniform5ErrorE6unwrapCsjjpCCFGI3ul_14lance_encoding.exit
@@ -748,6 +742,12 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #56
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #56
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #56
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #56

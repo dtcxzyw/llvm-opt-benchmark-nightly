@@ -204,11 +204,11 @@ bb.a:
   %i.e = shl i32 %.0.copyload.i, 1
   %i.f = or disjoint i32 %i.e, 1
   %i.g = tail call i32 @llvm.umax.i32(i32 %3, i32 %i.f) ; 4 uses
-  %5 = icmp ule i32 %i.g, %.0.copyload.i
-  %umul = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %4, i32 %i.g)
-  %umul.overflow = extractvalue { i32, i1 } %umul, 1
-  %.0.not = or i1 %5, %umul.overflow
-  br i1 %.0.not, label %bb.b, label %bb.c
+  %5 = icmp ugt i32 %i.g, %.0.copyload.i
+  %6 = tail call i32 @llvm.umulh.i32(i32 %4, i32 %i.g)
+  %7 = icmp eq i32 %6, 0
+  %.0 = and i1 %5, %7
+  br i1 %.0, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @w2c_hermes_llvh0x3A0x3Areport_bad_alloc_error0x28char0x20const0x2A0x2C0x20bool0x29(ptr noundef nonnull %0, i32 noundef 41866)
@@ -611,7 +611,7 @@ declare double @llvm.floor.f64(double) #7
 declare i32 @llvm.umax.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #7
+declare i32 @llvm.umulh.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #7
