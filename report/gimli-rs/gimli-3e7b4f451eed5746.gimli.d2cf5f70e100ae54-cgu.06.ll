@@ -205,18 +205,6 @@ bb.n:                                             ; preds = %bb.a
   %i.ap = icmp ult i16 %i.am, 32
   br i1 %i.ap, label %.preheader222, label %.preheader224.preheader
 
-4:                                                ; preds = %bb.a
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %6 = load i64, ptr %5, align 8, !noundef !5     ; 3 uses
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %8 = load i16, ptr %7, align 8, !noundef !5     ; 2 uses
-  %9 = icmp ult i16 %8, 128
-  %10 = icmp ult i16 %8, 16384
-  %spec.select405 = select i1 %10, i64 2, i64 3
-  %.lcssa373 = select i1 %9, i64 1, i64 %spec.select405
-  %.not.i192 = icmp eq ptr %3, null
-  br i1 %.not.i192, label %bb.bc, label %bb.ax
-
 bb.o:                                             ; preds = %bb.a
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ar = load i8, ptr %i.aq, align 8, !noundef !5
@@ -358,9 +346,7 @@ bb.aj:                                            ; preds = %bb.a
 
 bb.ak:                                            ; preds = %bb.a
   %i.cs = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %11 = load i64, ptr %i.cs, align 8, !noundef !5
-  %12 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.ct = load i64, ptr %12, align 8, !noundef !5
+  %i.ct = load i64, ptr %i.cs, align 8, !noundef !5
   br label %bb.bz
 
 .loopexit:                                        ; preds = %bb.ce, %bb.bs, %bb.cb, %bb.cc, %bb.cd, %bb.by, %bb.br, %bb.bg, %bb.aw, %bb.as, %bb.an, %.preheader, %bb.ag, %bb.bm, %bb.ac, %bb.bj, %bb.ab, %bb.e, %bb.o, %bb.a, %bb.a, %bb.av, %.loopexit225, %bb.ar, %bb.am, %bb.ca, %.loopexit228, %bb.bu, %bb.bp, %bb.bf, %bb.bd, %bb.ap, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.p, %bb.d
@@ -471,22 +457,34 @@ bb.aw:                                            ; preds = %.preheader222
   %i.ee = add i64 %.sroa.084.4, 1                 ; 2 uses
   br i1 %i.ec, label %.loopexit, label %.preheader222
 
+4:                                                ; preds = %bb.a
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %6 = load i16, ptr %5, align 8, !noundef !5     ; 2 uses
+  %7 = icmp ult i16 %6, 128
+  %8 = icmp ult i16 %6, 16384
+  %spec.select405 = select i1 %8, i64 2, i64 3
+  %.lcssa373 = select i1 %7, i64 1, i64 %spec.select405
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %10 = load i64, ptr %9, align 8, !noundef !5    ; 3 uses
+  %.not.i192 = icmp eq ptr %3, null
+  br i1 %.not.i192, label %bb.bc, label %bb.ax
+
 bb.ax:                                            ; preds = %4
   %i.ef = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.eg = load i64, ptr %i.ef, align 8, !noalias !617, !noundef !5 ; 2 uses
-  %i.eh = icmp ult i64 %6, %i.eg
+  %i.eh = icmp ult i64 %10, %i.eg
   br i1 %i.eh, label %bb.ay, label %bb.az
 
 bb.ay:                                            ; preds = %bb.ax
   %i.ei = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ej = load ptr, ptr %i.ei, align 8, !noalias !617, !nonnull !5, !noundef !5
-  %i.ek = getelementptr inbounds nuw [8 x i8], ptr %i.ej, i64 %6
+  %i.ek = getelementptr inbounds nuw [8 x i8], ptr %i.ej, i64 %10
   %i.el = load i64, ptr %i.ek, align 8, !noalias !617, !noundef !5 ; 2 uses
   %i.em = icmp eq i64 %i.el, 0
   br i1 %i.em, label %bb.bc, label %bb.ba
 
 bb.az:                                            ; preds = %bb.ax
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %6, i64 noundef %i.eg, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #23, !noalias !617
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %10, i64 noundef %i.eg, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #23, !noalias !617
   unreachable
 
 bb.ba:                                            ; preds = %bb.ay
@@ -658,16 +656,21 @@ bb.by:                                            ; preds = %bb.by, %bb.aj
   br i1 %i.gl, label %.loopexit, label %bb.by
 
 bb.bz:                                            ; preds = %bb.bz, %bb.ak
-  %.sroa.0122.0 = phi i64 [ %11, %bb.ak ], [ %i.gm, %bb.bz ]
+  %.sroa.0122.0 = phi i64 [ %i.ct, %bb.ak ], [ %i.gm, %bb.bz ]
   %.sroa.0126.0 = phi i64 [ 0, %bb.ak ], [ %i.gn, %bb.bz ]
   %i.gm = lshr i64 %.sroa.0122.0, 7               ; 2 uses
   %i.gn = add nuw nsw i64 %.sroa.0126.0, 1        ; 2 uses
   %i.go = icmp eq i64 %i.gm, 0
-  br i1 %i.go, label %.preheader230.a, label %bb.bz
+  br i1 %i.go, label %.preheader230, label %bb.bz
 
-.preheader230.a:                                  ; preds = %bb.bz, %.preheader230.a
-  %.sroa.0124.0 = phi i64 [ %i.gp, %.preheader230.a ], [ %i.ct, %bb.bz ]
-  %.sroa.0128.0 = phi i64 [ %i.gq, %.preheader230.a ], [ 0, %bb.bz ]
+.preheader230:                                    ; preds = %bb.bz
+  %11 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %12 = load i64, ptr %11, align 8, !noundef !5
+  br label %.preheader230.a
+
+.preheader230.a:                                  ; preds = %.preheader230, %.preheader230.a
+  %.sroa.0124.0 = phi i64 [ %i.gp, %.preheader230.a ], [ %12, %.preheader230 ]
+  %.sroa.0128.0 = phi i64 [ %i.gq, %.preheader230.a ], [ 0, %.preheader230 ]
   %i.gp = lshr i64 %.sroa.0124.0, 7               ; 2 uses
   %i.gq = add nuw nsw i64 %.sroa.0128.0, 1        ; 2 uses
   %i.gr = icmp eq i64 %i.gp, 0

@@ -205,11 +205,10 @@ bb.aw:                                            ; preds = %.lr.ph, %.loopexit
   %.1112139 = phi i8 [ 0, %.lr.ph ], [ %.2113185, %.loopexit ] ; 3 uses
   %i.rd = load ptr, ptr %i.i, align 16, !tbaa !90 ; 2 uses
   %i.re = getelementptr inbounds nuw i8, ptr %i.rd, i64 96
-  %i.rf = load ptr, ptr %i.re, align 8, !tbaa !200 ; 8 uses
+  %i.rf = load ptr, ptr %i.re, align 8, !tbaa !200 ; 9 uses
   %i.rg = load ptr, ptr %i.e, align 8, !tbaa !22
   %i.rh = getelementptr inbounds nuw i8, ptr %i.rg, i64 2064
   %i.ri = load ptr, ptr %i.rh, align 8, !tbaa !75 ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.rf, i64 24 ; 2 uses
   %i.rj = getelementptr inbounds nuw i8, ptr %i.rf, i64 36
   %i.rk = load i32, ptr %i.rj, align 4, !tbaa !207 ; 11 uses
   %i.rl = getelementptr inbounds nuw i8, ptr %i.rf, i64 40
@@ -373,12 +372,14 @@ bb.bk:                                            ; preds = %.sink.split, %bb.be
   br i1 %i.ub, label %bb.ax, label %.preheader325.i, !llvm.loop !385
 
 .preheader.i89:                                   ; preds = %bb.cl
+  %2 = getelementptr inbounds nuw i8, ptr %i.rf, i64 24
   %i.uc = getelementptr inbounds nuw i8, ptr %i.rf, i64 22 ; 2 uses
   %i.ud = load i8, ptr %i.uc, align 2, !tbaa !201
   %.not285335.not.i = icmp eq i8 %i.ud, 0
   br i1 %.not285335.not.i, label %.loopexit, label %.lr.ph337.i
 
 .preheader.i89.thread:                            ; preds = %bb.aw
+  %3 = getelementptr inbounds nuw i8, ptr %i.rf, i64 24
   %i.ue = getelementptr inbounds nuw i8, ptr %i.rf, i64 22 ; 2 uses
   %i.uf = load i8, ptr %i.ue, align 2, !tbaa !201
   %.not285335.not.i183 = icmp eq i8 %i.uf, 0
@@ -698,7 +699,7 @@ bb.cl:                                            ; preds = %.thread, %bb.ck, %b
 
 .critedge298.i:                                   ; preds = %.preheader.i89.thread, %.critedge298.i
   %indvars.iv344.i = phi i64 [ %indvars.iv.next345.i, %.critedge298.i ], [ 0, %.preheader.i89.thread ] ; 2 uses
-  %i.aax = getelementptr inbounds nuw [72 x i8], ptr %2, i64 %indvars.iv344.i
+  %i.aax = getelementptr inbounds nuw [72 x i8], ptr %3, i64 %indvars.iv344.i
   %i.aay = tail call i32 @ff_vvc_palette_derive_scale(ptr noundef %0, ptr noundef nonnull %i.rf, ptr noundef nonnull %i.aax) #14 ; 0 uses
   %indvars.iv.next345.i = add nuw nsw i64 %indvars.iv344.i, 1 ; 2 uses
   %i.aaz = load i8, ptr %i.ue, align 2, !tbaa !201

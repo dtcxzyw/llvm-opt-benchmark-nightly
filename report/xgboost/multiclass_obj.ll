@@ -205,8 +205,12 @@ middle.block:                                     ; preds = %vector.body
   %min.iters.check85 = icmp ult i64 %i.ao, 5
   br i1 %min.iters.check85, label %scalar.ph84.preheader, label %vector.ph86
 
-scalar.ph84.preheader:                            ; preds = %vector.body90, %.preheader
-  %.sroa.6.065.ph = phi i64 [ %1, %.preheader ], [ %4, %vector.body90 ]
+scalar.ph84.preheader.loopexit:                   ; preds = %vector.body90
+  %4 = add i64 %1, %n.vec87
+  br label %scalar.ph84.preheader
+
+scalar.ph84.preheader:                            ; preds = %scalar.ph84.preheader.loopexit, %.preheader
+  %.sroa.6.065.ph = phi i64 [ %1, %.preheader ], [ %4, %scalar.ph84.preheader.loopexit ]
   br label %scalar.ph84
 
 vector.ph86:                                      ; preds = %.preheader
@@ -214,7 +218,6 @@ vector.ph86:                                      ; preds = %.preheader
   %i.aq = icmp eq i64 %i.ap, 0
   %i.ar = select i1 %i.aq, i64 4, i64 %i.ap
   %n.vec87 = sub i64 %i.ao, %i.ar                 ; 2 uses
-  %4 = add i64 %1, %n.vec87
   %broadcast.splatinsert88 = insertelement <4 x float> poison, float %i.ai, i64 0
   %broadcast.splat89 = shufflevector <4 x float> %broadcast.splatinsert88, <4 x float> poison, <4 x i32> zeroinitializer
   %i.as = getelementptr [4 x i8], ptr %i.d, i64 %1
@@ -228,7 +231,7 @@ vector.body90:                                    ; preds = %vector.body90, %vec
   store <4 x float> %i.au, ptr %i.at, align 4, !tbaa !146
   %index.next93 = add nuw i64 %index91, 4         ; 2 uses
   %i.av = icmp eq i64 %index.next93, %n.vec87
-  br i1 %i.av, label %scalar.ph84.preheader, label %vector.body90, !llvm.loop !602
+  br i1 %i.av, label %scalar.ph84.preheader.loopexit, label %vector.body90, !llvm.loop !602
 
 .lr.ph62:                                         ; preds = %.lr.ph62.preheader, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIfLm18446744073709551615EEELb0EEppEv.exit24
   %.01761 = phi double [ %i.bb, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIfLm18446744073709551615EEELb0EEppEv.exit24 ], [ 0.000000e+00, %.lr.ph62.preheader ]

@@ -205,7 +205,7 @@ bb.as:                                            ; preds = %._crit_edge
   %i.fz = lshr i32 %i.du, 13
   %i.ga = and i32 %i.fz, 1
   %i.gb = zext nneg i32 %i.ga to i64
-  %spec.select251 = add nsw i64 %.0168455, %i.gb  ; 3 uses
+  %spec.select251 = add nsw i64 %.0168455, %i.gb
   %.not.i.i = icmp eq ptr %.sroa.18.0452, %.sroa.30.0453
   br i1 %.not.i.i, label %bb.au, label %bb.at
 
@@ -279,12 +279,11 @@ _ZNSt6vectorIN7CaDiCaL10ClauseSizeESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_c
 _ZNSt6vectorIN7CaDiCaL10ClauseSizeESaIS1_EE9push_backEOS1_.exit: ; preds = %_ZNSt6vectorIN7CaDiCaL10ClauseSizeESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i, %bb.at
   %.idx504.pre-phi = phi i64 [ %.pre549, %_ZNSt6vectorIN7CaDiCaL10ClauseSizeESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ], [ %.idx503, %bb.at ] ; 2 uses
   %.not244447 = phi i1 [ %i.gr, %_ZNSt6vectorIN7CaDiCaL10ClauseSizeESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ], [ false, %bb.at ]
-  %.sroa.0335.7 = phi ptr [ %i.gm, %_ZNSt6vectorIN7CaDiCaL10ClauseSizeESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ], [ %.sroa.0335.0451, %bb.at ] ; 3 uses
+  %.sroa.0335.7 = phi ptr [ %i.gm, %_ZNSt6vectorIN7CaDiCaL10ClauseSizeESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ], [ %.sroa.0335.0451, %bb.at ]
   %.0.lcssa.i.i.i.i.i.i.i.pn = phi ptr [ %.0.lcssa.i.i.i.i.i.i.i, %_ZNSt6vectorIN7CaDiCaL10ClauseSizeESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ], [ %.sroa.18.0452, %bb.at ]
-  %.sroa.30.3 = phi ptr [ %i.gq, %_ZNSt6vectorIN7CaDiCaL10ClauseSizeESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ], [ %.sroa.30.0453, %bb.at ] ; 3 uses
-  %.sroa.18.3 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i.i.pn, i64 16 ; 3 uses
+  %.sroa.30.3 = phi ptr [ %i.gq, %_ZNSt6vectorIN7CaDiCaL10ClauseSizeESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ], [ %.sroa.30.0453, %bb.at ]
   %i.gs = getelementptr inbounds i8, ptr %i.eg, i64 %.idx504.pre-phi
-  br i1 %.not244447, label %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread363, label %.lr.ph449
+  br i1 %.not244447, label %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread363.loopexit, label %.lr.ph449
 
 .lr.ph449:                                        ; preds = %_ZNSt6vectorIN7CaDiCaL10ClauseSizeESaIS1_EE9push_backEOS1_.exit
   %i.gt = load ptr, ptr %i.df, align 8, !tbaa !197 ; 3 uses
@@ -308,7 +307,7 @@ _ZNSt6vectorIN7CaDiCaL10ClauseSizeESaIS1_EE9push_backEOS1_.exit: ; preds = %_ZNS
 .prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph449
   %.0155448.unr = phi ptr [ %i.eg, %.lr.ph449 ], [ %i.hd, %.prol.loopexit.unr-lcssa ]
   %i.he = icmp eq i64 %i.gu, 0
-  br i1 %i.he, label %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread363, label %.lr.ph449.new
+  br i1 %i.he, label %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread363.loopexit, label %.lr.ph449.new
 
 .loopexit403:                                     ; preds = %_ZNKSt6vectorIN7CaDiCaL10ClauseSizeESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
   %lpad.loopexit405 = landingpad { ptr, i32 }
@@ -341,13 +340,17 @@ _ZNSt6vectorIN7CaDiCaL10ClauseSizeESaIS1_EE9push_backEOS1_.exit: ; preds = %_ZNS
   store i64 %i.ht, ptr %i.hr, align 8, !tbaa !192
   %i.hu = getelementptr inbounds nuw i8, ptr %.0155448, i64 8 ; 2 uses
   %.not244.1 = icmp eq ptr %i.hu, %i.gs
-  br i1 %.not244.1, label %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread363, label %.lr.ph449.new
+  br i1 %.not244.1, label %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread363.loopexit, label %.lr.ph449.new
 
-_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread363: ; preds = %.prol.loopexit, %.lr.ph449.new, %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread, %_ZNSt6vectorIN7CaDiCaL10ClauseSizeESaIS1_EE9push_backEOS1_.exit, %bb.al, %._crit_edge, %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit, %bb.aj, %bb.ai
-  %.sroa.0335.1 = phi ptr [ %.sroa.0335.0451, %bb.aj ], [ %.sroa.0335.0451, %._crit_edge ], [ %.sroa.0335.0451, %bb.al ], [ %.sroa.0335.0451, %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit ], [ %.sroa.0335.0451, %bb.ai ], [ %.sroa.0335.7, %_ZNSt6vectorIN7CaDiCaL10ClauseSizeESaIS1_EE9push_backEOS1_.exit ], [ %.sroa.0335.0451, %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread ], [ %.sroa.0335.7, %.lr.ph449.new ], [ %.sroa.0335.7, %.prol.loopexit ] ; 9 uses
-  %.sroa.18.1 = phi ptr [ %.sroa.18.0452, %bb.aj ], [ %.sroa.18.0452, %._crit_edge ], [ %.sroa.18.0452, %bb.al ], [ %.sroa.18.0452, %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit ], [ %.sroa.18.0452, %bb.ai ], [ %.sroa.18.3, %_ZNSt6vectorIN7CaDiCaL10ClauseSizeESaIS1_EE9push_backEOS1_.exit ], [ %.sroa.18.0452, %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread ], [ %.sroa.18.3, %.lr.ph449.new ], [ %.sroa.18.3, %.prol.loopexit ] ; 5 uses
-  %.sroa.30.1 = phi ptr [ %.sroa.30.0453, %bb.aj ], [ %.sroa.30.0453, %._crit_edge ], [ %.sroa.30.0453, %bb.al ], [ %.sroa.30.0453, %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit ], [ %.sroa.30.0453, %bb.ai ], [ %.sroa.30.3, %_ZNSt6vectorIN7CaDiCaL10ClauseSizeESaIS1_EE9push_backEOS1_.exit ], [ %.sroa.30.0453, %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread ], [ %.sroa.30.3, %.lr.ph449.new ], [ %.sroa.30.3, %.prol.loopexit ] ; 3 uses
-  %.3171 = phi i64 [ %.0168455, %bb.aj ], [ %.0168455, %._crit_edge ], [ %.0168455, %bb.al ], [ %.0168455, %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit ], [ %.0168455, %bb.ai ], [ %spec.select251, %_ZNSt6vectorIN7CaDiCaL10ClauseSizeESaIS1_EE9push_backEOS1_.exit ], [ %.0168455, %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread ], [ %spec.select251, %.lr.ph449.new ], [ %spec.select251, %.prol.loopexit ] ; 2 uses
+_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread363.loopexit: ; preds = %.prol.loopexit, %.lr.ph449.new, %_ZNSt6vectorIN7CaDiCaL10ClauseSizeESaIS1_EE9push_backEOS1_.exit
+  %.sroa.18.3 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i.i.pn, i64 16
+  br label %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread363
+
+_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread363: ; preds = %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread, %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread363.loopexit, %bb.al, %._crit_edge, %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit, %bb.aj, %bb.ai
+  %.sroa.0335.1 = phi ptr [ %.sroa.0335.0451, %bb.aj ], [ %.sroa.0335.0451, %._crit_edge ], [ %.sroa.0335.0451, %bb.al ], [ %.sroa.0335.0451, %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit ], [ %.sroa.0335.0451, %bb.ai ], [ %.sroa.0335.7, %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread363.loopexit ], [ %.sroa.0335.0451, %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread ] ; 9 uses
+  %.sroa.18.1 = phi ptr [ %.sroa.18.0452, %bb.aj ], [ %.sroa.18.0452, %._crit_edge ], [ %.sroa.18.0452, %bb.al ], [ %.sroa.18.0452, %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit ], [ %.sroa.18.0452, %bb.ai ], [ %.sroa.18.3, %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread363.loopexit ], [ %.sroa.18.0452, %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread ] ; 5 uses
+  %.sroa.30.1 = phi ptr [ %.sroa.30.0453, %bb.aj ], [ %.sroa.30.0453, %._crit_edge ], [ %.sroa.30.0453, %bb.al ], [ %.sroa.30.0453, %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit ], [ %.sroa.30.0453, %bb.ai ], [ %.sroa.30.3, %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread363.loopexit ], [ %.sroa.30.0453, %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread ] ; 3 uses
+  %.3171 = phi i64 [ %.0168455, %bb.aj ], [ %.0168455, %._crit_edge ], [ %.0168455, %bb.al ], [ %.0168455, %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit ], [ %.0168455, %bb.ai ], [ %spec.select251, %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread363.loopexit ], [ %.0168455, %_ZN7CaDiCaL8Internal24likely_to_be_kept_clauseEPNS_6ClauseE.exit.thread ] ; 2 uses
   %i.hv = getelementptr inbounds nuw i8, ptr %.sroa.0332.0454, i64 8 ; 2 uses
   %.not386 = icmp eq ptr %i.hv, %i.cz
   br i1 %.not386, label %._crit_edge458, label %bb.ai

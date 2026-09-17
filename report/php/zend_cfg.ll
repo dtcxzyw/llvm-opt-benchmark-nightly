@@ -204,22 +204,23 @@ zend_worklist_push.exit191:                       ; preds = %bb.n, %bb.m
   br label %.loopexit233, !llvm.loop !148
 
 .loopexit233:                                     ; preds = %..loopexit233_crit_edge, %.preheader
-  %i.dc = icmp sgt i32 %2, 0
+  %i.dc = icmp sgt i32 %3, 0
   br i1 %i.dc, label %.lr.ph400, label %.outer._crit_edge
 
 .lr.ph400:                                        ; preds = %.preheader235, %.loopexit233
-  %.in = phi i32 [ %2, %.loopexit233 ], [ %.0165277, %.preheader235 ]
+  %.in = phi i32 [ %3, %.loopexit233 ], [ %.0165277, %.preheader235 ]
   %.0161.ph402 = phi i32 [ %.3, %.loopexit233 ], [ 8, %.preheader235 ] ; 2 uses
   %i.dd = zext nneg i32 %.in to i64
   br label %bb.p
 
 bb.o:                                             ; preds = %bb.p
+  %2 = trunc nuw i64 %i.df to i32
   %i.de = icmp sgt i32 %2, 0
   br i1 %i.de, label %bb.p, label %.outer._crit_edge, !llvm.loop !148
 
 bb.p:                                             ; preds = %.lr.ph400, %bb.o
   %indvars.iv322399 = phi i64 [ %i.dd, %.lr.ph400 ], [ %i.df, %bb.o ]
-  %i.df = add nsw i64 %indvars.iv322399, -1       ; 3 uses
+  %i.df = add nsw i64 %indvars.iv322399, -1       ; 4 uses
   %i.dg = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %i.df
   %i.dh = load i32, ptr %i.dg, align 4, !tbaa !42 ; 4 uses
   %i.di = sext i32 %i.dh to i64                   ; 3 uses
@@ -227,7 +228,6 @@ bb.p:                                             ; preds = %.lr.ph400, %bb.o
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 24
   %i.dl = load i32, ptr %i.dk, align 8, !tbaa !64 ; 2 uses
   %i.dm = icmp slt i32 %i.dl, 2
-  %2 = trunc i64 %i.df to i32                     ; 3 uses
   br i1 %i.dm, label %bb.o, label %.lr.ph282, !llvm.loop !148
 
 .lr.ph282:                                        ; preds = %bb.p
@@ -243,6 +243,7 @@ bb.p:                                             ; preds = %.lr.ph400, %bb.o
   br label %bb.q
 
 .preheader:                                       ; preds = %zend_worklist_push.exit193
+  %3 = trunc i64 %i.df to i32                     ; 2 uses
   %.not181290 = icmp eq i32 %.sroa.19.7, 0
   br i1 %.not181290, label %.loopexit233, label %.lr.ph292, !llvm.loop !148
 

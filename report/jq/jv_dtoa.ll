@@ -205,7 +205,6 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %.not575, label %bb.r, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %4 = add nsw i32 %i.br, %.1449                  ; 3 uses
   %.not576941 = icmp slt i32 %.2445, 1
   br i1 %.not576941, label %._crit_edge948, label %.lr.ph947.preheader
 
@@ -271,6 +270,7 @@ bb.n:                                             ; preds = %bb.m
   %.3458.lcssa = phi i32 [ %.2457, %bb.n ], [ %i.ck, %._crit_edge948.loopexit ] ; 3 uses
   %.4418.lcssa = phi i32 [ %.3417, %bb.n ], [ %.5419.lcssa, %._crit_edge948.loopexit ] ; 3 uses
   %.4412.lcssa = phi i32 [ %.3411, %bb.n ], [ %.5413.lcssa, %._crit_edge948.loopexit ] ; 3 uses
+  %4 = add nsw i32 %i.br, %.1449                  ; 3 uses
   %i.cl = add nsw i32 %.3458.lcssa, 1             ; 3 uses
   %i.cm = icmp slt i32 %.3458.lcssa, 9
   br i1 %i.cm, label %bb.o, label %bb.p
@@ -673,9 +673,6 @@ vector.memcheck:                                  ; preds = %.preheader.preheade
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.av, 9223372036854775800     ; 3 uses
-  %3 = shl i64 %n.vec, 2                          ; 2 uses
-  %4 = getelementptr i8, ptr %i.ai, i64 %3
-  %5 = getelementptr i8, ptr %.040.lcssa, i64 %3
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -694,6 +691,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bb, label %middle.block, label %vector.body, !llvm.loop !55
 
 middle.block:                                     ; preds = %vector.body
+  %3 = shl i64 %n.vec, 2                          ; 2 uses
+  %4 = getelementptr i8, ptr %i.ai, i64 %3
+  %5 = getelementptr i8, ptr %.040.lcssa, i64 %3
   %cmp.n = icmp eq i64 %i.av, %n.vec
   br i1 %cmp.n, label %.loopexit, label %.preheader.preheader78
 
@@ -1096,7 +1096,7 @@ bb.ap:                                            ; preds = %bb.ao
 bb.aq:                                            ; preds = %bb.ap, %.loopexit767
   %.promoted891 = phi double [ %i.ff, %bb.ap ], [ %i.fa, %.loopexit767 ] ; 6 uses
   %.6501 = phi i32 [ %i.fg, %bb.ap ], [ %.5500, %.loopexit767 ]
-  %.1490 = phi i32 [ %.0488710, %bb.ap ], [ %.0489707, %.loopexit767 ] ; 5 uses
+  %.1490 = phi i32 [ %.0488710, %bb.ap ], [ %.0489707, %.loopexit767 ] ; 6 uses
   %.3475 = phi i32 [ %i.fe, %bb.ap ], [ %.2474, %.loopexit767 ] ; 6 uses
   %i.fh = sitofp i32 %.6501 to double
   %i.fi = tail call double @llvm.fmuladd.f64(double %i.fh, double %.promoted891, double 7.000000e+00)
@@ -1121,13 +1121,13 @@ bb.as:                                            ; preds = %bb.ar
 
 bb.at:                                            ; preds = %bb.aq
   %.not561 = icmp eq i32 %.2470715, 0
-  %8 = zext nneg i32 %.1490 to i64
-  %9 = getelementptr [8 x i8], ptr @tens, i64 %8
-  %10 = getelementptr i8, ptr %9, i64 -8
-  %11 = load double, ptr %10, align 8, !tbaa !23  ; 2 uses
   br i1 %.not561, label %bb.bb, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
+  %8 = zext nneg i32 %.1490 to i64
+  %9 = getelementptr [8 x i8], ptr @tens, i64 %8
+  %10 = getelementptr i8, ptr %9, i64 -8
+  %11 = load double, ptr %10, align 8, !tbaa !23
   %i.fr = fdiv double 5.000000e-01, %11
   %i.fs = fsub double %i.fr, %i.fl                ; 3 uses
   %i.ft = icmp slt i32 %.2474, 0
@@ -1217,7 +1217,6 @@ bb.ba:                                            ; preds = %bb.az
   br i1 %i.ha, label %.loopexit764, label %.lr.ph887
 
 bb.bb:                                            ; preds = %bb.at
-  %12 = fmul double %11, %i.fl                    ; 2 uses
   %i.hb = fptosi double %.promoted891 to i32      ; 2 uses
   %i.hc = sitofp i32 %i.hb to double
   %i.hd = fsub double %.promoted891, %i.hc        ; 3 uses
@@ -1232,12 +1231,17 @@ bb.bb:                                            ; preds = %bb.at
 ._crit_edge900:                                   ; preds = %.lr.ph899, %bb.bb
   %.lcssa892 = phi double [ %i.hd, %bb.bb ], [ %i.hv, %.lr.ph899 ] ; 2 uses
   %.1.add.lcssa890 = phi i64 [ 5, %bb.bb ], [ %.1.add, %.lr.ph899 ] ; 2 uses
-  %i.hj = fadd double %12, 5.000000e-01
+  %12 = zext nneg i32 %.1490 to i64
+  %13 = getelementptr [8 x i8], ptr @tens, i64 %12
+  %14 = getelementptr i8, ptr %13, i64 -8
+  %15 = load double, ptr %14, align 8, !tbaa !23
+  %16 = fmul double %15, %i.fl                    ; 2 uses
+  %i.hj = fadd double %16, 5.000000e-01
   %i.hk = fcmp ogt double %.lcssa892, %i.hj
   br i1 %i.hk, label %.loopexit764, label %bb.bc
 
 bb.bc:                                            ; preds = %._crit_edge900
-  %i.hl = fsub double 5.000000e-01, %12
+  %i.hl = fsub double 5.000000e-01, %16
   %i.hm = fcmp olt double %.lcssa892, %i.hl
   br i1 %i.hm, label %.preheader762.preheader, label %.loopexit766
 

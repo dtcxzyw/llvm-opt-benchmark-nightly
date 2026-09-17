@@ -205,8 +205,6 @@ vector.ph:                                        ; preds = %.lr.ph665.preheader
   %i.xj = icmp eq i64 %i.xi, 0
   %i.xk = select i1 %i.xj, i64 4, i64 %i.xi
   %n.vec = sub nsw i64 %i.xh, %i.xk               ; 2 uses
-  %3 = mul i64 %n.vec, 12
-  %4 = getelementptr i8, ptr %i.te, i64 %3
   %broadcast.splat = shufflevector <2 x float> %i.wt, <2 x float> poison, <4 x i32> zeroinitializer
   %broadcast.splat823 = shufflevector <2 x float> %i.ws, <2 x float> poison, <4 x i32> zeroinitializer
   %broadcast.splat825 = shufflevector <2 x float> %i.wu, <2 x float> poison, <4 x i32> zeroinitializer
@@ -267,10 +265,15 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <12 x float> %interleaved.vec, ptr %next.gep, align 4
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.yv = icmp eq i64 %index.next, %n.vec
-  br i1 %i.yv, label %.lr.ph665.preheader847, label %vector.body, !llvm.loop !35
+  br i1 %i.yv, label %.lr.ph665.preheader847.loopexit, label %vector.body, !llvm.loop !35
 
-.lr.ph665.preheader847:                           ; preds = %vector.body, %.lr.ph665.preheader
-  %.0205663.ph = phi ptr [ %i.te, %.lr.ph665.preheader ], [ %4, %vector.body ]
+.lr.ph665.preheader847.loopexit:                  ; preds = %vector.body
+  %3 = mul i64 %n.vec, 12
+  %4 = getelementptr i8, ptr %i.te, i64 %3
+  br label %.lr.ph665.preheader847
+
+.lr.ph665.preheader847:                           ; preds = %.lr.ph665.preheader847.loopexit, %.lr.ph665.preheader
+  %.0205663.ph = phi ptr [ %i.te, %.lr.ph665.preheader ], [ %4, %.lr.ph665.preheader847.loopexit ]
   br label %.lr.ph665
 
 .lr.ph665:                                        ; preds = %.lr.ph665.preheader847, %.lr.ph665

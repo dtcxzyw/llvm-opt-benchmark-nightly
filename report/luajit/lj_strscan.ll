@@ -204,7 +204,6 @@ bb.h:                                             ; preds = %._crit_edge
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite, errnomem: write) uwtable
 define internal fastcc noundef i32 @strscan_hex(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef range(i32 0, 2) %5, i32 noundef %6) unnamed_addr #3 {
 bb.a:
-  %7 = icmp ugt i32 %6, 16                        ; 2 uses
   %.not79 = icmp eq i32 %6, 0
   br i1 %.not79, label %._crit_edge, label %.lr.ph.preheader
 
@@ -252,6 +251,7 @@ bb.b:                                             ; preds = %.lr.ph.epil.prehead
 .preheader:                                       ; preds = %.preheader.unr-lcssa, %.preheader.epilog-lcssa
   %.lcssa105 = phi i64 [ %i.ak, %.preheader.unr-lcssa ], [ %i.k, %.preheader.epilog-lcssa ] ; 3 uses
   %.lcssa104 = phi ptr [ %i.al, %.preheader.unr-lcssa ], [ %i.l, %.preheader.epilog-lcssa ] ; 2 uses
+  %7 = icmp ugt i32 %6, 16
   br i1 %7, label %.lr.ph88.preheader, label %._crit_edge
 
 .lr.ph88.preheader:                               ; preds = %.preheader
@@ -386,9 +386,10 @@ bb.i:                                             ; preds = %.lr.ph88.epil.prehe
   %i.bk = add i32 %i.bj, -64
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %bb.a, %._crit_edge.loopexit, %.preheader
-  %.060.lcssa = phi i32 [ %4, %.preheader ], [ %i.bk, %._crit_edge.loopexit ], [ %4, %bb.a ] ; 2 uses
-  %.155.lcssa = phi i64 [ %.lcssa105, %.preheader ], [ %.lcssa, %._crit_edge.loopexit ], [ 0, %bb.a ] ; 10 uses
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a, %.preheader
+  %8 = phi i1 [ false, %.preheader ], [ false, %bb.a ], [ true, %._crit_edge.loopexit ]
+  %.060.lcssa = phi i32 [ %4, %.preheader ], [ %4, %bb.a ], [ %i.bk, %._crit_edge.loopexit ] ; 2 uses
+  %.155.lcssa = phi i64 [ %.lcssa105, %.preheader ], [ 0, %bb.a ], [ %.lcssa, %._crit_edge.loopexit ] ; 10 uses
   switch i32 %2, label %bb.r [
     i32 3, label %bb.j
     i32 4, label %bb.n
@@ -436,7 +437,7 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.y
 
 bb.p:                                             ; preds = %._crit_edge, %._crit_edge
-  br i1 %7, label %bb.y, label %bb.q
+  br i1 %8, label %bb.y, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %.not68 = icmp eq i32 %5, 0
@@ -839,7 +840,6 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %i.dh, label %bb.ai, label %._crit_edge393
 
 bb.ai:                                            ; preds = %.lr.ph373
-  %7 = add nsw i32 %.0192371, -6                  ; 2 uses
   %i.di = add i32 %.0195370, 511
   %.0188360 = and i32 %i.di, 511                  ; 3 uses
   %i.dj = zext nneg i32 %.0188360 to i64
@@ -888,6 +888,7 @@ bb.ai:                                            ; preds = %.lr.ph373
 ._crit_edge366:                                   ; preds = %.lr.ph365, %bb.ai
   %.1196.lcssa = phi i32 [ %.0195370, %bb.ai ], [ %.3198.ph, %.lr.ph365 ] ; 5 uses
   %.lcssa340 = phi i32 [ %i.dp, %bb.ai ], [ %i.ej, %.lr.ph365 ] ; 2 uses
+  %7 = add nsw i32 %.0192371, -6                  ; 2 uses
   %.not285 = icmp eq i32 %.lcssa340, 0
   br i1 %.not285, label %bb.an, label %bb.aj
 

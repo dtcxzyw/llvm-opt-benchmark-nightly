@@ -204,9 +204,7 @@ vector.ph:                                        ; preds = %.lr.ph.i.i.preheade
   %i.il = and i64 %i.ik, 31                       ; 2 uses
   %i.im = icmp eq i64 %i.il, 0
   %i.in = select i1 %i.im, i64 32, i64 %i.il
-  %n.vec = sub i64 %i.ik, %i.in                   ; 4 uses
-  %3 = getelementptr i8, ptr %.val87, i64 %n.vec
-  %i.io = sub i64 %i.ib, %n.vec
+  %i.io = sub i64 %i.ik, %i.in                    ; 4 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -220,13 +218,18 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <16 x i8> %wide.load, ptr %i.iq, align 1, !noalias !26467
   store <16 x i8> %wide.load448, ptr %i.ir, align 1, !noalias !26467
   %index.next = add nuw i64 %index, 32            ; 2 uses
-  %i.is = icmp eq i64 %index.next, %n.vec
-  br i1 %i.is, label %.lr.ph.i.i.preheader451, label %vector.body, !llvm.loop !26384
+  %i.is = icmp eq i64 %index.next, %i.io
+  br i1 %i.is, label %.lr.ph.i.i.preheader451.loopexit, label %vector.body, !llvm.loop !26384
 
-.lr.ph.i.i.preheader451:                          ; preds = %vector.body, %.lr.ph.i.i.preheader
-  %.sroa.013.022.i.i.ph = phi ptr [ %.val87, %.lr.ph.i.i.preheader ], [ %3, %vector.body ]
-  %.sroa.7.021.i.i.ph = phi i64 [ 0, %.lr.ph.i.i.preheader ], [ %n.vec, %vector.body ]
-  %.sroa.10.020.i.i.ph = phi i64 [ %i.ib, %.lr.ph.i.i.preheader ], [ %i.io, %vector.body ]
+.lr.ph.i.i.preheader451.loopexit:                 ; preds = %vector.body
+  %3 = getelementptr i8, ptr %.val87, i64 %i.io
+  %4 = sub i64 %i.ib, %i.io
+  br label %.lr.ph.i.i.preheader451
+
+.lr.ph.i.i.preheader451:                          ; preds = %.lr.ph.i.i.preheader451.loopexit, %.lr.ph.i.i.preheader
+  %.sroa.013.022.i.i.ph = phi ptr [ %.val87, %.lr.ph.i.i.preheader ], [ %3, %.lr.ph.i.i.preheader451.loopexit ]
+  %.sroa.7.021.i.i.ph = phi i64 [ 0, %.lr.ph.i.i.preheader ], [ %i.io, %.lr.ph.i.i.preheader451.loopexit ]
+  %.sroa.10.020.i.i.ph = phi i64 [ %i.ib, %.lr.ph.i.i.preheader ], [ %4, %.lr.ph.i.i.preheader451.loopexit ]
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader451, %bb.cx
@@ -629,7 +632,6 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check19, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %3 = and i64 %2, 24
   %n.vec = and i64 %2, -32                        ; 4 uses
   br label %vector.body
 
@@ -654,6 +656,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.y, label %middle.block, label %vector.body, !llvm.loop !33933
 
 middle.block:                                     ; preds = %vector.body
+  %3 = and i64 %2, 24
   %cmp.n = icmp eq i64 %2, %n.vec
   br i1 %cmp.n, label %_RNvMs3_NtCs6Po7BT7Nknu_5alloc3stre18to_ascii_lowercase.exit, label %vec.epilog.iter.check
 

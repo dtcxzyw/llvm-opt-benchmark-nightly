@@ -204,8 +204,13 @@ _ZNSt15__new_allocatorIN11flip_detail6color3EE8allocateEmPKv.exit.i.i.i.i.i53..n
   %min.iters.check = icmp ult i64 %i.bm, 48
   br i1 %min.iters.check, label %.lr.ph.preheader289, label %vector.ph
 
-.lr.ph.preheader289:                              ; preds = %vector.body, %.lr.ph.preheader
-  %.sroa.0160.0169.ph = phi ptr [ %i.ah, %.lr.ph.preheader ], [ %18, %vector.body ]
+.lr.ph.preheader289.loopexit:                     ; preds = %vector.body
+  %17 = mul i64 %n.vec, 12
+  %18 = getelementptr i8, ptr %i.ah, i64 %17
+  br label %.lr.ph.preheader289
+
+.lr.ph.preheader289:                              ; preds = %.lr.ph.preheader289.loopexit, %.lr.ph.preheader
+  %.sroa.0160.0169.ph = phi ptr [ %i.ah, %.lr.ph.preheader ], [ %18, %.lr.ph.preheader289.loopexit ]
   br label %.lr.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -215,8 +220,6 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
   %i.bq = icmp eq i64 %i.bp, 0
   %i.br = select i1 %i.bq, i64 4, i64 %i.bp
   %n.vec = sub nsw i64 %i.bo, %i.br               ; 2 uses
-  %17 = mul i64 %n.vec, 12
-  %18 = getelementptr i8, ptr %i.ah, i64 %17
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -244,7 +247,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <12 x float> %interleaved.vec, ptr %next.gep, align 4, !tbaa !15
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ch = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ch, label %.lr.ph.preheader289, label %vector.body, !llvm.loop !53
+  br i1 %i.ch, label %.lr.ph.preheader289.loopexit, label %vector.body, !llvm.loop !53
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.loopexit
   %.not163170 = icmp eq ptr %i.bc, %i.bi
@@ -258,8 +261,13 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %min.iters.check275 = icmp ult i64 %i.cl, 48
   br i1 %min.iters.check275, label %.lr.ph173.preheader288, label %vector.ph276
 
-.lr.ph173.preheader288:                           ; preds = %vector.body278, %.lr.ph173.preheader
-  %.sroa.0153.0171.ph = phi ptr [ %i.bc, %.lr.ph173.preheader ], [ %20, %vector.body278 ]
+.lr.ph173.preheader288.loopexit:                  ; preds = %vector.body278
+  %19 = mul i64 %n.vec277, 12
+  %20 = getelementptr i8, ptr %i.bc, i64 %19
+  br label %.lr.ph173.preheader288
+
+.lr.ph173.preheader288:                           ; preds = %.lr.ph173.preheader288.loopexit, %.lr.ph173.preheader
+  %.sroa.0153.0171.ph = phi ptr [ %i.bc, %.lr.ph173.preheader ], [ %20, %.lr.ph173.preheader288.loopexit ]
   br label %.lr.ph173
 
 vector.ph276:                                     ; preds = %.lr.ph173.preheader
@@ -269,8 +277,6 @@ vector.ph276:                                     ; preds = %.lr.ph173.preheader
   %i.cp = icmp eq i64 %i.co, 0
   %i.cq = select i1 %i.cp, i64 4, i64 %i.co
   %n.vec277 = sub nsw i64 %i.cn, %i.cq            ; 2 uses
-  %19 = mul i64 %n.vec277, 12
-  %20 = getelementptr i8, ptr %i.bc, i64 %19
   br label %vector.body278
 
 vector.body278:                                   ; preds = %vector.body278, %vector.ph276
@@ -298,7 +304,7 @@ vector.body278:                                   ; preds = %vector.body278, %ve
   store <12 x float> %interleaved.vec284, ptr %next.gep280, align 4, !tbaa !15
   %index.next285 = add nuw i64 %index279, 4       ; 2 uses
   %i.dg = icmp eq i64 %index.next285, %n.vec277
-  br i1 %i.dg, label %.lr.ph173.preheader288, label %vector.body278, !llvm.loop !54
+  br i1 %i.dg, label %.lr.ph173.preheader288.loopexit, label %vector.body278, !llvm.loop !54
 
 bb.h:                                             ; preds = %_ZNSt15__new_allocatorIN11flip_detail6color3EE8allocateEmPKv.exit.i.i.i.i.i53, %.noexc.i.i.i60
   %i.dh = landingpad { ptr, i32 }

@@ -152,12 +152,15 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.preheader:                                 ; preds = %bb.g
   %narrow = add nuw i16 %i.aa, 1                  ; 2 uses
-  %5 = zext i16 %narrow to i32
   %wide.trip.count = zext i16 %narrow to i64
   br label %.lr.ph
 
-.preheader:                                       ; preds = %.lr.ph, %bb.g
-  %.0109.lcssa = phi i32 [ 1, %bb.g ], [ %5, %.lr.ph ] ; 2 uses
+.preheader.loopexit:                              ; preds = %.lr.ph
+  %5 = zext i16 %narrow to i32
+  br label %.preheader
+
+.preheader:                                       ; preds = %.preheader.loopexit, %bb.g
+  %.0109.lcssa = phi i32 [ 1, %bb.g ], [ %5, %.preheader.loopexit ] ; 2 uses
   %.not120129 = icmp sgt i32 %.0109.lcssa, %i.w
   br i1 %.not120129, label %._crit_edge, label %.lr.ph131.preheader
 
@@ -182,7 +185,7 @@ bb.g:                                             ; preds = %bb.f
   tail call void @TupleDescInitEntry(ptr noundef %i.ai, i16 noundef signext %i.aj, ptr noundef null, i32 noundef %i.ap, i32 noundef -1, i32 noundef 0) #5
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.preheader, label %.lr.ph, !llvm.loop !7
+  br i1 %exitcond.not, label %.preheader.loopexit, label %.lr.ph, !llvm.loop !7
 
 .lr.ph131:                                        ; preds = %.lr.ph131.preheader, %.lr.ph131
   %indvars.iv150 = phi i64 [ %i.ae, %.lr.ph131.preheader ], [ %indvars.iv.next151, %.lr.ph131 ] ; 3 uses

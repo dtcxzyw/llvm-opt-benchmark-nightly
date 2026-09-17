@@ -202,9 +202,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check170, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %5 = and i64 %i.du, 12
   %n.vec = and i64 %i.du, -16                     ; 3 uses
-  %6 = or disjoint i64 %n.vec, 1
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -230,13 +228,14 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ed, label %vec.epilog.iter.check, label %vector.body, !llvm.loop !11
 
 vec.epilog.iter.check:                            ; preds = %vector.body
+  %5 = and i64 %i.du, 12
+  %6 = or disjoint i64 %n.vec, 1
   %min.epilog.iters.check = icmp eq i64 %5, 0
   br i1 %min.epilog.iters.check, label %.lr.ph130.preheader, label %vec.epilog.ph, !prof !25
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec174 = and i64 %i.du, -4                   ; 2 uses
-  %7 = or disjoint i64 %n.vec174, 1
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -247,10 +246,14 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   store <4 x double> %i.ef, ptr %i.ee, align 8, !tbaa !20
   %index.next177 = add nuw i64 %index175, 4       ; 2 uses
   %i.eg = icmp eq i64 %index.next177, %n.vec174
-  br i1 %i.eg, label %.lr.ph130.preheader, label %vec.epilog.vector.body, !llvm.loop !12
+  br i1 %i.eg, label %.lr.ph130.preheader.loopexit, label %vec.epilog.vector.body, !llvm.loop !12
 
-.lr.ph130.preheader:                              ; preds = %vec.epilog.vector.body, %iter.check, %vec.epilog.iter.check
-  %indvars.iv150.ph = phi i64 [ 1, %iter.check ], [ %6, %vec.epilog.iter.check ], [ %7, %vec.epilog.vector.body ]
+.lr.ph130.preheader.loopexit:                     ; preds = %vec.epilog.vector.body
+  %7 = or disjoint i64 %n.vec174, 1
+  br label %.lr.ph130.preheader
+
+.lr.ph130.preheader:                              ; preds = %.lr.ph130.preheader.loopexit, %iter.check, %vec.epilog.iter.check
+  %indvars.iv150.ph = phi i64 [ 1, %iter.check ], [ %6, %vec.epilog.iter.check ], [ %7, %.lr.ph130.preheader.loopexit ]
   br label %.lr.ph130
 
 .lr.ph130:                                        ; preds = %.lr.ph130.preheader, %.lr.ph130

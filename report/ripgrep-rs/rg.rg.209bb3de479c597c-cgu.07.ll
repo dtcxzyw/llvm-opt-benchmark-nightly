@@ -204,9 +204,13 @@ bb.b:                                             ; preds = %bb.a
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !1885
   br i1 %or.cond, label %.lr.ph.preheader51, label %vector.ph, !dbg !1885
 
-.lr.ph.preheader51:                               ; preds = %vector.body, %.lr.ph.preheader
-  %.sroa.0.02336.ph = phi i64 [ %i.b, %.lr.ph.preheader ], [ %1, %vector.body ]
-  %.sroa.7.035.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %vector.body ]
+.lr.ph.preheader51.loopexit:                      ; preds = %vector.body
+  %1 = add i64 %i.b, %n.vec
+  br label %.lr.ph.preheader51, !dbg !1885
+
+.lr.ph.preheader51:                               ; preds = %.lr.ph.preheader51.loopexit, %.lr.ph.preheader
+  %.sroa.0.02336.ph = phi i64 [ %i.b, %.lr.ph.preheader ], [ %1, %.lr.ph.preheader51.loopexit ]
+  %.sroa.7.035.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %.lr.ph.preheader51.loopexit ]
   br label %.lr.ph, !dbg !1885
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -214,7 +218,6 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
   %i.q = icmp eq i64 %i.p, 0
   %i.r = select i1 %i.q, i64 32, i64 %i.p
   %n.vec = sub i64 %i.o, %i.r                     ; 3 uses
-  %1 = add i64 %i.b, %n.vec
   %i.s = getelementptr inbounds nuw i8, ptr %.val.i, i64 %i.b
   br label %vector.body, !dbg !1886
 
@@ -230,7 +233,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <16 x i8> %wide.load49, ptr %i.w, align 1, !dbg !1885
   %index.next = add nuw i64 %index, 32, !dbg !1886 ; 2 uses
   %i.x = icmp eq i64 %index.next, %n.vec, !dbg !1888
-  br i1 %i.x, label %.lr.ph.preheader51, label %vector.body, !dbg !1888, !llvm.loop !1864
+  br i1 %i.x, label %.lr.ph.preheader51.loopexit, label %vector.body, !dbg !1888, !llvm.loop !1864
 
 bb.c:                                             ; preds = %bb.j
   store i64 %i.k, ptr %i.c, align 8, !dbg !1879
@@ -336,9 +339,13 @@ bb.b:                                             ; preds = %bb.a
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !1934
   br i1 %or.cond, label %.lr.ph.preheader51, label %vector.ph, !dbg !1934
 
-.lr.ph.preheader51:                               ; preds = %vector.body, %.lr.ph.preheader
-  %.sroa.0.02336.ph = phi i64 [ %i.b, %.lr.ph.preheader ], [ %1, %vector.body ]
-  %.sroa.7.035.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %vector.body ]
+.lr.ph.preheader51.loopexit:                      ; preds = %vector.body
+  %1 = add i64 %i.b, %n.vec
+  br label %.lr.ph.preheader51, !dbg !1934
+
+.lr.ph.preheader51:                               ; preds = %.lr.ph.preheader51.loopexit, %.lr.ph.preheader
+  %.sroa.0.02336.ph = phi i64 [ %i.b, %.lr.ph.preheader ], [ %1, %.lr.ph.preheader51.loopexit ]
+  %.sroa.7.035.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %.lr.ph.preheader51.loopexit ]
   br label %.lr.ph, !dbg !1934
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -346,7 +353,6 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
   %i.q = icmp eq i64 %i.p, 0
   %i.r = select i1 %i.q, i64 32, i64 %i.p
   %n.vec = sub i64 %i.o, %i.r                     ; 3 uses
-  %1 = add i64 %i.b, %n.vec
   %i.s = getelementptr inbounds nuw i8, ptr %.val.i, i64 %i.b
   br label %vector.body, !dbg !1935
 
@@ -362,7 +368,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <16 x i8> %wide.load49, ptr %i.w, align 1, !dbg !1934
   %index.next = add nuw i64 %index, 32, !dbg !1935 ; 2 uses
   %i.x = icmp eq i64 %index.next, %n.vec, !dbg !1937
-  br i1 %i.x, label %.lr.ph.preheader51, label %vector.body, !dbg !1937, !llvm.loop !1913
+  br i1 %i.x, label %.lr.ph.preheader51.loopexit, label %vector.body, !dbg !1937, !llvm.loop !1913
 
 bb.c:                                             ; preds = %bb.j
   store i64 %i.k, ptr %i.c, align 8, !dbg !1928
@@ -468,9 +474,13 @@ bb.b:                                             ; preds = %bb.a
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !1983
   br i1 %or.cond, label %.lr.ph.preheader51, label %vector.ph, !dbg !1983
 
-.lr.ph.preheader51:                               ; preds = %vector.body, %.lr.ph.preheader
-  %.sroa.0.02336.ph = phi i64 [ %i.b, %.lr.ph.preheader ], [ %1, %vector.body ]
-  %.sroa.7.035.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %vector.body ]
+.lr.ph.preheader51.loopexit:                      ; preds = %vector.body
+  %1 = add i64 %i.b, %n.vec
+  br label %.lr.ph.preheader51, !dbg !1983
+
+.lr.ph.preheader51:                               ; preds = %.lr.ph.preheader51.loopexit, %.lr.ph.preheader
+  %.sroa.0.02336.ph = phi i64 [ %i.b, %.lr.ph.preheader ], [ %1, %.lr.ph.preheader51.loopexit ]
+  %.sroa.7.035.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %.lr.ph.preheader51.loopexit ]
   br label %.lr.ph, !dbg !1983
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -478,7 +488,6 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
   %i.q = icmp eq i64 %i.p, 0
   %i.r = select i1 %i.q, i64 32, i64 %i.p
   %n.vec = sub i64 %i.o, %i.r                     ; 3 uses
-  %1 = add i64 %i.b, %n.vec
   %i.s = getelementptr inbounds nuw i8, ptr %.val.i, i64 %i.b
   br label %vector.body, !dbg !1984
 
@@ -494,7 +503,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <16 x i8> %wide.load49, ptr %i.w, align 1, !dbg !1983
   %index.next = add nuw i64 %index, 32, !dbg !1984 ; 2 uses
   %i.x = icmp eq i64 %index.next, %n.vec, !dbg !1986
-  br i1 %i.x, label %.lr.ph.preheader51, label %vector.body, !dbg !1986, !llvm.loop !1962
+  br i1 %i.x, label %.lr.ph.preheader51.loopexit, label %vector.body, !dbg !1986, !llvm.loop !1962
 
 bb.c:                                             ; preds = %bb.j
   store i64 %i.k, ptr %i.c, align 8, !dbg !1977
@@ -600,9 +609,13 @@ bb.b:                                             ; preds = %bb.a
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !2032
   br i1 %or.cond, label %.lr.ph.preheader51, label %vector.ph, !dbg !2032
 
-.lr.ph.preheader51:                               ; preds = %vector.body, %.lr.ph.preheader
-  %.sroa.0.02336.ph = phi i64 [ %i.b, %.lr.ph.preheader ], [ %1, %vector.body ]
-  %.sroa.7.035.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %vector.body ]
+.lr.ph.preheader51.loopexit:                      ; preds = %vector.body
+  %1 = add i64 %i.b, %n.vec
+  br label %.lr.ph.preheader51, !dbg !2032
+
+.lr.ph.preheader51:                               ; preds = %.lr.ph.preheader51.loopexit, %.lr.ph.preheader
+  %.sroa.0.02336.ph = phi i64 [ %i.b, %.lr.ph.preheader ], [ %1, %.lr.ph.preheader51.loopexit ]
+  %.sroa.7.035.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %.lr.ph.preheader51.loopexit ]
   br label %.lr.ph, !dbg !2032
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -610,7 +623,6 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
   %i.q = icmp eq i64 %i.p, 0
   %i.r = select i1 %i.q, i64 32, i64 %i.p
   %n.vec = sub i64 %i.o, %i.r                     ; 3 uses
-  %1 = add i64 %i.b, %n.vec
   %i.s = getelementptr inbounds nuw i8, ptr %.val.i, i64 %i.b
   br label %vector.body, !dbg !2033
 
@@ -626,7 +638,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <16 x i8> %wide.load49, ptr %i.w, align 1, !dbg !2032
   %index.next = add nuw i64 %index, 32, !dbg !2033 ; 2 uses
   %i.x = icmp eq i64 %index.next, %n.vec, !dbg !2035
-  br i1 %i.x, label %.lr.ph.preheader51, label %vector.body, !dbg !2035, !llvm.loop !2011
+  br i1 %i.x, label %.lr.ph.preheader51.loopexit, label %vector.body, !dbg !2035, !llvm.loop !2011
 
 bb.c:                                             ; preds = %bb.j
   store i64 %i.k, ptr %i.c, align 8, !dbg !2026
@@ -732,9 +744,13 @@ bb.b:                                             ; preds = %bb.a
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !2081
   br i1 %or.cond, label %.lr.ph.preheader51, label %vector.ph, !dbg !2081
 
-.lr.ph.preheader51:                               ; preds = %vector.body, %.lr.ph.preheader
-  %.sroa.0.02336.ph = phi i64 [ %i.b, %.lr.ph.preheader ], [ %1, %vector.body ]
-  %.sroa.7.035.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %vector.body ]
+.lr.ph.preheader51.loopexit:                      ; preds = %vector.body
+  %1 = add i64 %i.b, %n.vec
+  br label %.lr.ph.preheader51, !dbg !2081
+
+.lr.ph.preheader51:                               ; preds = %.lr.ph.preheader51.loopexit, %.lr.ph.preheader
+  %.sroa.0.02336.ph = phi i64 [ %i.b, %.lr.ph.preheader ], [ %1, %.lr.ph.preheader51.loopexit ]
+  %.sroa.7.035.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %.lr.ph.preheader51.loopexit ]
   br label %.lr.ph, !dbg !2081
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -742,7 +758,6 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
   %i.q = icmp eq i64 %i.p, 0
   %i.r = select i1 %i.q, i64 32, i64 %i.p
   %n.vec = sub i64 %i.o, %i.r                     ; 3 uses
-  %1 = add i64 %i.b, %n.vec
   %i.s = getelementptr inbounds nuw i8, ptr %.val.i, i64 %i.b
   br label %vector.body, !dbg !2082
 
@@ -758,7 +773,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <16 x i8> %wide.load49, ptr %i.w, align 1, !dbg !2081
   %index.next = add nuw i64 %index, 32, !dbg !2082 ; 2 uses
   %i.x = icmp eq i64 %index.next, %n.vec, !dbg !2084
-  br i1 %i.x, label %.lr.ph.preheader51, label %vector.body, !dbg !2084, !llvm.loop !2060
+  br i1 %i.x, label %.lr.ph.preheader51.loopexit, label %vector.body, !dbg !2084, !llvm.loop !2060
 
 bb.c:                                             ; preds = %bb.j
   store i64 %i.k, ptr %i.c, align 8, !dbg !2075

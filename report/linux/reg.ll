@@ -205,13 +205,11 @@ bb.b:                                             ; preds = %.lr.ph, %bb.k
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.k ] ; 3 uses
   %i.f = phi i32 [ %i.d, %.lr.ph ], [ %i.aw, %bb.k ] ; 3 uses
   %.idx = mul nuw nsw i64 %indvars.iv, 96
-  %i.g = getelementptr i8, ptr %i.e, i64 %.idx    ; 6 uses
+  %i.g = getelementptr i8, ptr %i.e, i64 %.idx    ; 7 uses
   %i.h = getelementptr i8, ptr %i.g, i64 84       ; 2 uses
   %i.i = load i32, ptr %i.h, align 4              ; 5 uses
   %i.j = and i32 %i.i, 2048
   %.not = icmp eq i32 %i.j, 0
-  %1 = getelementptr i8, ptr %i.g, i64 8
-  %2 = load i32, ptr %1, align 4                  ; 2 uses
   br i1 %.not, label %bb.g, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -255,6 +253,8 @@ bb.e:                                             ; preds = %bb.e, %.epil.prehea
 
 .epilog-lcssa:                                    ; preds = %bb.e, %.unr-lcssa
   %indvars.iv.i.i.lcssa = phi i64 [ %indvars.iv.next.i.i.6, %.unr-lcssa ], [ %indvars.iv.i.i.epil, %bb.e ] ; 5 uses
+  %1 = getelementptr i8, ptr %i.g, i64 8
+  %2 = load i32, ptr %1, align 4
   %i.n = trunc nuw i64 %indvars.iv.i.i.lcssa to i32
   %i.o = icmp eq i32 %i.f, %i.n
   br i1 %i.o, label %reg_get_max_bandwidth.exit, label %.preheader.i.i.preheader
@@ -337,7 +337,9 @@ reg_get_max_bandwidth.exit:                       ; preds = %.epilog-lcssa, %spl
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.b
-  %i.ao = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 32, ptr noundef nonnull @.str.29, i32 noundef %2) #20 ; 0 uses
+  %3 = getelementptr i8, ptr %i.g, i64 8
+  %4 = load i32, ptr %3, align 4
+  %i.ao = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 32, ptr noundef nonnull @.str.29, i32 noundef %4) #20 ; 0 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %reg_get_max_bandwidth.exit

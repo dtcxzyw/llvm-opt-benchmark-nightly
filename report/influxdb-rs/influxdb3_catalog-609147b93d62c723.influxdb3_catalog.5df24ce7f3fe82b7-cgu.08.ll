@@ -205,9 +205,14 @@ bb.k:                                             ; preds = %bb.i
   %i.bc = icmp slt i64 %i.bb, 0
   br i1 %i.bc, label %bb.m, label %bb.l
 
-.loopexit.a:                                      ; preds = %bb.t, %_RNvMsh_NtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v2NtB5_14DatabaseSchema11table_count.exit, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArceEECs844E4pPEVZX_17influxdb3_catalog.exit15, %bb.i
-  %.sroa.02.1 = phi i64 [ %.sroa.02.022, %bb.i ], [ %.sroa.02.022, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArceEECs844E4pPEVZX_17influxdb3_catalog.exit15 ], [ %.sroa.02.022, %_RNvMsh_NtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v2NtB5_14DatabaseSchema11table_count.exit ], [ %.sroa.02.3, %bb.t ] ; 2 uses
-  %.sroa.0.1 = phi i64 [ %.sroa.0.023, %bb.i ], [ %.sroa.0.023, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArceEECs844E4pPEVZX_17influxdb3_catalog.exit15 ], [ %1, %_RNvMsh_NtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v2NtB5_14DatabaseSchema11table_count.exit ], [ %1, %bb.t ] ; 2 uses
+.loopexit:                                        ; preds = %bb.t, %_RNvMsh_NtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v2NtB5_14DatabaseSchema11table_count.exit
+  %.sroa.02.2.lcssa = phi i64 [ %.sroa.02.022, %_RNvMsh_NtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v2NtB5_14DatabaseSchema11table_count.exit ], [ %.sroa.02.3, %bb.t ]
+  %1 = add i64 %.sroa.0.0.lcssa.i.i.i14, %.sroa.0.023
+  br label %.loopexit.a
+
+.loopexit.a:                                      ; preds = %.loopexit, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArceEECs844E4pPEVZX_17influxdb3_catalog.exit15, %bb.i
+  %.sroa.02.1 = phi i64 [ %.sroa.02.022, %bb.i ], [ %.sroa.02.022, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArceEECs844E4pPEVZX_17influxdb3_catalog.exit15 ], [ %.sroa.02.2.lcssa, %.loopexit ] ; 2 uses
+  %.sroa.0.1 = phi i64 [ %.sroa.0.023, %bb.i ], [ %.sroa.0.023, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArceEECs844E4pPEVZX_17influxdb3_catalog.exit15 ], [ %1, %.loopexit ] ; 2 uses
   %i.bd = icmp eq ptr %i.aq, %i.k
   br i1 %i.bd, label %._crit_edge, label %bb.i
 
@@ -279,13 +284,12 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArceEECs84
 _RNvMsh_NtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v2NtB5_14DatabaseSchema11table_count.exit: ; preds = %.lr.ph.i.i.i12, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArceEECs844E4pPEVZX_17influxdb3_catalog.exit
   %.sroa.0.0.lcssa.i.i.i14 = phi i64 [ 0, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArceEECs844E4pPEVZX_17influxdb3_catalog.exit ], [ %i.cc, %.lr.ph.i.i.i12 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !4864
-  %1 = add i64 %.sroa.0.0.lcssa.i.i.i14, %.sroa.0.023 ; 2 uses
   %i.ce = load ptr, ptr %i.br, align 8, !nonnull !11, !noundef !11 ; 2 uses
   %i.cf = load i64, ptr %i.bt, align 8, !noundef !11 ; 2 uses
   %.idx27 = mul nuw nsw i64 %i.cf, 24
   %i.cg = getelementptr inbounds nuw i8, ptr %i.ce, i64 %.idx27
   %i.ch = icmp eq i64 %i.cf, 0
-  br i1 %i.ch, label %.loopexit.a, label %.lr.ph
+  br i1 %i.ch, label %.loopexit, label %.lr.ph
 
 bb.q:                                             ; preds = %bb.n
   %i.ci = atomicrmw sub ptr %i.ay, i64 1 release, align 8, !noalias !4867
@@ -320,7 +324,7 @@ bb.s:                                             ; preds = %.lr.ph
 bb.t:                                             ; preds = %bb.s, %.lr.ph
   %.sroa.02.3 = phi i64 [ %.sroa.02.220, %.lr.ph ], [ %i.cr, %bb.s ] ; 2 uses
   %i.cs = icmp eq ptr %i.ck, %i.cg
-  br i1 %i.cs, label %.loopexit.a, label %.lr.ph
+  br i1 %i.cs, label %.loopexit, label %.lr.ph
 }
 
 ; Function Attrs: nonlazybind uwtable

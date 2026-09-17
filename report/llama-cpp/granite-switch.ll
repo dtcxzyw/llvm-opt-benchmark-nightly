@@ -204,8 +204,6 @@ bb.e:                                             ; preds = %_ZSt6fill_nIPfmfET_
 
 vector.ph:                                        ; preds = %.noexc49
   %n.vec = and i64 %i.v, 9223372036854775800      ; 3 uses
-  %2 = shl i64 %n.vec, 2
-  %3 = getelementptr i8, ptr %i.r, i64 %2
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -220,6 +218,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.y, label %middle.block, label %vector.body, !llvm.loop !293
 
 middle.block:                                     ; preds = %vector.body
+  %2 = shl i64 %n.vec, 2
+  %3 = getelementptr i8, ptr %i.r, i64 %2
   %cmp.n = icmp eq i64 %i.v, %n.vec
   br i1 %cmp.n, label %.lr.ph, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader
 
@@ -235,8 +235,6 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not.i.i.i.i.i.i.i.i.i, label %.lr.ph, label %.lr.ph.i.i.i.i.i.i.i.i.i, !llvm.loop !294
 
 .lr.ph:                                           ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i, %middle.block
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %i.e
-  %5 = ptrtoint ptr %4 to i64
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !301, !nonnull !11, !align !162 ; 9 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 36920
@@ -254,15 +252,20 @@ middle.block:                                     ; preds = %vector.body
   %i.am = getelementptr inbounds nuw i8, ptr %i.ab, i64 36968
   br label %bb.f
 
-._crit_edge:                                      ; preds = %_ZNKSt13unordered_mapIiiSt4hashIiESt8equal_toIiESaISt4pairIKiiEEE4findERS5_.exit62.thread, %bb.b
-  %.sroa.10.0262 = phi i64 [ 0, %bb.b ], [ %5, %_ZNKSt13unordered_mapIiiSt4hashIiESt8equal_toIiESaISt4pairIKiiEEE4findERS5_.exit62.thread ] ; 2 uses
-  %.sroa.090.0261 = phi ptr [ null, %bb.b ], [ %i.r, %_ZNKSt13unordered_mapIiiSt4hashIiESt8equal_toIiESaISt4pairIKiiEEE4findERS5_.exit62.thread ] ; 7 uses
-  %.sroa.0102.0145156260 = phi ptr [ null, %bb.b ], [ %i.l, %_ZNKSt13unordered_mapIiiSt4hashIiESt8equal_toIiESaISt4pairIKiiEEE4findERS5_.exit62.thread ] ; 6 uses
-  %.sroa.12108.0140158259 = phi ptr [ null, %bb.b ], [ %i.m, %_ZNKSt13unordered_mapIiiSt4hashIiESt8equal_toIiESaISt4pairIKiiEEE4findERS5_.exit62.thread ] ; 3 uses
-  %.sroa.11116.0120138160258 = phi ptr [ null, %bb.b ], [ %i.h, %_ZNKSt13unordered_mapIiiSt4hashIiESt8equal_toIiESaISt4pairIKiiEEE4findERS5_.exit62.thread ] ; 3 uses
-  %.sroa.0111.0126136162257 = phi ptr [ null, %bb.b ], [ %i.g, %_ZNKSt13unordered_mapIiiSt4hashIiESt8equal_toIiESaISt4pairIKiiEEE4findERS5_.exit62.thread ] ; 6 uses
-  %.sroa.095.0164256 = phi ptr [ null, %bb.b ], [ %i.o, %_ZNKSt13unordered_mapIiiSt4hashIiESt8equal_toIiESaISt4pairIKiiEEE4findERS5_.exit62.thread ] ; 6 uses
-  %.sroa.12.0168255 = phi ptr [ null, %bb.b ], [ %i.p, %_ZNKSt13unordered_mapIiiSt4hashIiESt8equal_toIiESaISt4pairIKiiEEE4findERS5_.exit62.thread ] ; 2 uses
+._crit_edge.loopexit:                             ; preds = %_ZNKSt13unordered_mapIiiSt4hashIiESt8equal_toIiESaISt4pairIKiiEEE4findERS5_.exit62.thread
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %i.e
+  %5 = ptrtoint ptr %4 to i64
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.b
+  %.sroa.10.0262 = phi i64 [ 0, %bb.b ], [ %5, %._crit_edge.loopexit ] ; 2 uses
+  %.sroa.090.0261 = phi ptr [ null, %bb.b ], [ %i.r, %._crit_edge.loopexit ] ; 7 uses
+  %.sroa.0102.0145156260 = phi ptr [ null, %bb.b ], [ %i.l, %._crit_edge.loopexit ] ; 6 uses
+  %.sroa.12108.0140158259 = phi ptr [ null, %bb.b ], [ %i.m, %._crit_edge.loopexit ] ; 3 uses
+  %.sroa.11116.0120138160258 = phi ptr [ null, %bb.b ], [ %i.h, %._crit_edge.loopexit ] ; 3 uses
+  %.sroa.0111.0126136162257 = phi ptr [ null, %bb.b ], [ %i.g, %._crit_edge.loopexit ] ; 6 uses
+  %.sroa.095.0164256 = phi ptr [ null, %bb.b ], [ %i.o, %._crit_edge.loopexit ] ; 6 uses
+  %.sroa.12.0168255 = phi ptr [ null, %bb.b ], [ %i.p, %._crit_edge.loopexit ] ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !164 ; 2 uses
   %i.ap = invoke i64 @ggml_element_size(ptr noundef %i.ao)
@@ -424,7 +427,7 @@ _ZNKSt13unordered_mapIiiSt4hashIiESt8equal_toIiESaISt4pairIKiiEEE4findERS5_.exit
   store i32 %.in.sroa.speculated, ptr %i.cr, align 4, !tbaa !98
   %i.cs = add nuw nsw i64 %.0226, 1               ; 2 uses
   %exitcond.not = icmp eq i64 %i.cs, %i.e
-  br i1 %exitcond.not, label %._crit_edge, label %bb.f, !llvm.loop !296
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.f, !llvm.loop !296
 
 bb.r:                                             ; preds = %._crit_edge
   %i.ct = mul i64 %i.ap, %i.e

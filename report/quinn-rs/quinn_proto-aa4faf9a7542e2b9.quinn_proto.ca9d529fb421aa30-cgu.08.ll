@@ -204,8 +204,6 @@ _RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecyE7reserveCshovLROGBtMy_11quinn_proto
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.preheader
   %n.vec = and i64 %i.j, -4                       ; 4 uses
-  %3 = add i64 %i.f, %n.vec                       ; 2 uses
-  %4 = add i64 %1, %n.vec
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %1, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer
   %induction = add nuw <2 x i64> %broadcast.splat, <i64 0, i64 1>
@@ -226,6 +224,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.n, label %middle.block, label %vector.body, !dbg !10857, !llvm.loop !10684
 
 middle.block:                                     ; preds = %vector.body
+  %3 = add i64 %i.f, %n.vec                       ; 2 uses
+  %4 = add i64 %1, %n.vec
   %cmp.n = icmp eq i64 %i.j, %n.vec, !dbg !10857
   br i1 %cmp.n, label %_RINvYINtNtNtCskKLDkoKarTP_4core3ops5range5RangeyENtNtNtNtBa_4iter6traits8iterator8Iterator8for_eachNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB1I_3VecyE14extend_trustedB3_E0ECshovLROGBtMy_11quinn_proto.exit, label %.lr.ph.i.i.preheader16, !dbg !10857
 
@@ -628,6 +628,8 @@ _RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCshovLROGBtMy_11quinn_proto
 ._crit_edge.thread.i:                             ; preds = %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCshovLROGBtMy_11quinn_proto.exit.i
   %i.o = add i64 %i.e, -1, !dbg !18739            ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.m, i8 %2, i64 %i.o, i1 false), !dbg !18740
+  %i.p = add i64 %i.o, %i.i, !dbg !18739          ; 2 uses
+  %scevgep.i = getelementptr i8, ptr %i.k, i64 %i.p, !dbg !18739
     #dbg_value(ptr poison, !18718, !DIExpression(), !18660)
     #dbg_value(i64 poison, !18702, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !18661)
     #dbg_value(i64 poison, !18703, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !18662)
@@ -640,8 +642,6 @@ _RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCshovLROGBtMy_11quinn_proto
     #dbg_value(ptr undef, !18689, !DIExpression(), !18613)
     #dbg_value(ptr undef, !18680, !DIExpression(), !18612)
     #dbg_value(ptr undef, !18684, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !18663)
-  %i.p = add i64 %i.o, %i.i, !dbg !18739          ; 2 uses
-  %scevgep.i = getelementptr i8, ptr %i.k, i64 %i.p, !dbg !18739
   br label %._crit_edge.i, !dbg !18741
 
 ._crit_edge.i:                                    ; preds = %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCshovLROGBtMy_11quinn_proto.exit.i, %._crit_edge.thread.i
@@ -1044,9 +1044,6 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCshovL
 
 vector.ph:                                        ; preds = %.lr.ph.i.preheader
   %n.vec = and i64 %i.r, 1152921504606846974      ; 4 uses
-  %2 = shl nuw i64 %n.vec, 4
-  %3 = getelementptr i8, ptr %i.d, i64 %2
-  %4 = sub i64 %i.i, %n.vec
   br label %vector.body, !dbg !24786
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1064,12 +1061,18 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x i64> %wide.load4, ptr %i.w, align 8, !dbg !24790, !noalias !24751
   %index.next = add nuw i64 %index, 2, !dbg !24787 ; 2 uses
   %i.x = icmp eq i64 %index.next, %n.vec, !dbg !24785
-  br i1 %i.x, label %.lr.ph.i.preheader7, label %vector.body, !dbg !24785, !llvm.loop !24597
+  br i1 %i.x, label %.lr.ph.i.preheader7.loopexit, label %vector.body, !dbg !24785, !llvm.loop !24597
 
-.lr.ph.i.preheader7:                              ; preds = %vector.body, %.lr.ph.i.preheader
-  %.sroa.039.048.i.ph = phi ptr [ %i.d, %.lr.ph.i.preheader ], [ %3, %vector.body ]
-  %.sroa.7.047.i.ph = phi i64 [ 0, %.lr.ph.i.preheader ], [ %n.vec, %vector.body ]
-  %.sroa.10.046.i.ph = phi i64 [ %i.i, %.lr.ph.i.preheader ], [ %4, %vector.body ]
+.lr.ph.i.preheader7.loopexit:                     ; preds = %vector.body
+  %2 = shl nuw i64 %n.vec, 4
+  %3 = getelementptr i8, ptr %i.d, i64 %2
+  %4 = sub i64 %i.i, %n.vec
+  br label %.lr.ph.i.preheader7, !dbg !24786
+
+.lr.ph.i.preheader7:                              ; preds = %.lr.ph.i.preheader7.loopexit, %.lr.ph.i.preheader
+  %.sroa.039.048.i.ph = phi ptr [ %i.d, %.lr.ph.i.preheader ], [ %3, %.lr.ph.i.preheader7.loopexit ]
+  %.sroa.7.047.i.ph = phi i64 [ 0, %.lr.ph.i.preheader ], [ %n.vec, %.lr.ph.i.preheader7.loopexit ]
+  %.sroa.10.046.i.ph = phi i64 [ %i.i, %.lr.ph.i.preheader ], [ %4, %.lr.ph.i.preheader7.loopexit ]
   br label %.lr.ph.i, !dbg !24786
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader7, %bb.c

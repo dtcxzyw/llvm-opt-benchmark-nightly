@@ -204,9 +204,13 @@ _ZNK8rawspeed10ByteStream12getSubStreamEjj.exit:  ; preds = %bb.a
   %min.iters.check = icmp samesign ult i64 %i.al, 8
   br i1 %min.iters.check, label %.lr.ph.preheader86, label %vector.memcheck
 
-.lr.ph.preheader86:                               ; preds = %vector.body, %vector.memcheck, %.lr.ph.preheader
-  %indvars.iv64.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %2, %vector.body ]
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %vector.body ]
+.lr.ph.preheader86.loopexit:                      ; preds = %vector.body
+  %2 = shl nsw i64 %n.vec, 4
+  br label %.lr.ph.preheader86
+
+.lr.ph.preheader86:                               ; preds = %.lr.ph.preheader86.loopexit, %vector.memcheck, %.lr.ph.preheader
+  %indvars.iv64.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %2, %.lr.ph.preheader86.loopexit ]
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %.lr.ph.preheader86.loopexit ]
   br label %.lr.ph
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
@@ -231,7 +235,6 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.aw = icmp eq i64 %i.av, 0
   %i.ax = select i1 %i.aw, i64 8, i64 %i.av
   %n.vec = sub nsw i64 %i.am, %i.ax               ; 3 uses
-  %2 = shl nsw i64 %n.vec, 4
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -499,7 +502,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %vec.ind.next = add nuw nsw <8 x i64> %vec.ind, splat (i64 8)
   %i.hy = icmp eq i64 %index.next, %n.vec
-  br i1 %i.hy, label %.lr.ph.preheader86, label %vector.body, !llvm.loop !133
+  br i1 %i.hy, label %.lr.ph.preheader86.loopexit, label %vector.body, !llvm.loop !133
 
 ._crit_edge:                                      ; preds = %_ZN8rawspeed14BitStreamerLSBCI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit.8, %_ZNK8rawspeed10ByteStream12getSubStreamEjj.exit
   ret void

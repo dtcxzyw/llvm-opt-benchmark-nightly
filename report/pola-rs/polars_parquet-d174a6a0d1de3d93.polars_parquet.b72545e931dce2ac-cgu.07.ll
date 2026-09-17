@@ -204,9 +204,7 @@ vector.ph:                                        ; preds = %vector.scevcheck
   %i.fi = and i32 %i.ez, 31                       ; 2 uses
   %i.fj = icmp eq i32 %i.fi, 0
   %i.fk = select i1 %i.fj, i32 32, i32 %i.fi
-  %n.vec = sub i32 %i.ez, %i.fk                   ; 3 uses
-  %i.fl = sub i32 %i.ep, %n.vec
-  %5 = add i32 %.sroa.04.0168.i, %n.vec
+  %i.fl = sub i32 %i.ez, %i.fk                    ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -218,12 +216,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <16 x i8> zeroinitializer, ptr %i.fo, align 1, !dbg !1973, !noalias !1816
   store <16 x i8> zeroinitializer, ptr %i.fp, align 1, !dbg !1973, !noalias !1816
   %index.next = add nuw i32 %index, 32            ; 2 uses
-  %i.fq = icmp eq i32 %index.next, %n.vec, !dbg !1974
-  br i1 %i.fq, label %.preheader.i.preheader373, label %vector.body, !dbg !1974, !llvm.loop !1757
+  %i.fq = icmp eq i32 %index.next, %i.fl, !dbg !1974
+  br i1 %i.fq, label %.preheader.i.preheader373.loopexit, label %vector.body, !dbg !1974, !llvm.loop !1757
 
-.preheader.i.preheader373:                        ; preds = %vector.body, %vector.scevcheck, %.preheader.i.preheader
-  %.sroa.073.0.i.ph = phi i32 [ %i.ep, %vector.scevcheck ], [ %i.ep, %.preheader.i.preheader ], [ %i.fl, %vector.body ]
-  %.sroa.04.2.i.ph = phi i32 [ %.sroa.04.0168.i, %vector.scevcheck ], [ %.sroa.04.0168.i, %.preheader.i.preheader ], [ %5, %vector.body ]
+.preheader.i.preheader373.loopexit:               ; preds = %vector.body
+  %5 = sub i32 %i.ep, %i.fl
+  %6 = add i32 %.sroa.04.0168.i, %i.fl
+  br label %.preheader.i.preheader373, !dbg !1971
+
+.preheader.i.preheader373:                        ; preds = %.preheader.i.preheader373.loopexit, %vector.scevcheck, %.preheader.i.preheader
+  %.sroa.073.0.i.ph = phi i32 [ %i.ep, %vector.scevcheck ], [ %i.ep, %.preheader.i.preheader ], [ %5, %.preheader.i.preheader373.loopexit ]
+  %.sroa.04.2.i.ph = phi i32 [ %.sroa.04.0168.i, %vector.scevcheck ], [ %.sroa.04.0168.i, %.preheader.i.preheader ], [ %6, %.preheader.i.preheader373.loopexit ]
   br label %.preheader.i, !dbg !1971
 
 .preheader.i:                                     ; preds = %.preheader.i.preheader373, %bb.ap
@@ -626,10 +629,6 @@ vector.ph132:                                     ; preds = %.lr.ph.i
   %i.au = icmp eq i64 %i.at, 0
   %i.av = select i1 %i.au, i64 4, i64 %i.at
   %n.vec133 = sub nsw i64 %i.as, %i.av            ; 3 uses
-  %8 = trunc nsw i64 %n.vec133 to i32             ; 2 uses
-  %9 = sub i32 %.sroa.02.1, %8
-  %10 = shl i32 %8, 3
-  %11 = add i32 %i.s, %10
   %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %i.ai, i64 0
   %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert134 = insertelement <4 x i32> poison, i32 %i.s, i64 0
@@ -652,6 +651,10 @@ vector.body136:                                   ; preds = %vector.body136, %ve
   br i1 %i.bb, label %middle.block139, label %vector.body136, !dbg !5560, !llvm.loop !5496
 
 middle.block139:                                  ; preds = %vector.body136
+  %8 = trunc nsw i64 %n.vec133 to i32             ; 2 uses
+  %9 = sub i32 %.sroa.02.1, %8
+  %10 = shl i32 %8, 3
+  %11 = add i32 %i.s, %10
   %i.bc = extractelement <4 x i32> %vec.ind, i64 3
   %i.bd = add i32 %i.bc, 8
   store i32 %i.bd, ptr %i.e, align 8, !dbg !5564, !alias.scope !5522, !noalias !5524

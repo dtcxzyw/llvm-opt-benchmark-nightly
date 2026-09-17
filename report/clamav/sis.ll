@@ -204,7 +204,6 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.z = icmp eq i64 %i.y, 0
   %i.aa = select i1 %i.z, i64 16, i64 %i.y        ; 2 uses
   %n.vec = sub nsw i64 %i.x, %i.aa                ; 3 uses
-  %4 = shl i64 %n.vec, 1
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -280,11 +279,16 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.co, label %vec.epilog.iter.check, label %vector.body, !llvm.loop !83
 
 vec.epilog.iter.check:                            ; preds = %vector.body
+  %4 = shl i64 %n.vec, 1
   %min.epilog.iters.check = icmp samesign ult i64 %i.aa, 9
   br i1 %min.epilog.iters.check, label %.preheader.i.preheader, label %vec.epilog.ph, !prof !30
 
-.preheader.i.preheader:                           ; preds = %vec.epilog.vector.body, %iter.check, %vec.epilog.iter.check
-  %indvars.iv.i.ph = phi i64 [ 0, %iter.check ], [ %4, %vec.epilog.iter.check ], [ %5, %vec.epilog.vector.body ]
+.preheader.i.preheader.loopexit:                  ; preds = %vec.epilog.vector.body
+  %5 = shl i64 %n.vec2, 1
+  br label %.preheader.i.preheader
+
+.preheader.i.preheader:                           ; preds = %.preheader.i.preheader.loopexit, %iter.check, %vec.epilog.iter.check
+  %indvars.iv.i.ph = phi i64 [ 0, %iter.check ], [ %4, %vec.epilog.iter.check ], [ %5, %.preheader.i.preheader.loopexit ]
   br label %.preheader.i
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
@@ -293,7 +297,6 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %i.cq = icmp eq i64 %i.cp, 0
   %i.cr = select i1 %i.cq, i64 8, i64 %i.cp
   %n.vec2 = sub nsw i64 %i.x, %i.cr               ; 2 uses
-  %5 = shl i64 %n.vec2, 1
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -334,7 +337,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   store <8 x i8> %i.dx, ptr %i.dy, align 1, !tbaa !18
   %index.next4 = add nuw i64 %index3, 8           ; 2 uses
   %i.dz = icmp eq i64 %index.next4, %n.vec2
-  br i1 %i.dz, label %.preheader.i.preheader, label %vec.epilog.vector.body, !llvm.loop !84
+  br i1 %i.dz, label %.preheader.i.preheader.loopexit, label %vec.epilog.vector.body, !llvm.loop !84
 
 .critedge.i:                                      ; preds = %fmap_readn.exit.i, %bb.h, %bb.g
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.200) #9
@@ -437,7 +440,6 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.r = icmp eq i64 %i.q, 0
   %i.s = select i1 %i.r, i64 16, i64 %i.q         ; 2 uses
   %n.vec = sub nsw i64 %i.p, %i.s                 ; 3 uses
-  %3 = shl i64 %n.vec, 1
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -513,11 +515,16 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.cg, label %vec.epilog.iter.check, label %vector.body, !llvm.loop !88
 
 vec.epilog.iter.check:                            ; preds = %vector.body
+  %3 = shl i64 %n.vec, 1
   %min.epilog.iters.check = icmp samesign ult i64 %i.s, 9
   br i1 %min.epilog.iters.check, label %.preheader.preheader, label %vec.epilog.ph, !prof !30
 
-.preheader.preheader:                             ; preds = %vec.epilog.vector.body, %iter.check, %vec.epilog.iter.check
-  %indvars.iv.ph = phi i64 [ 0, %iter.check ], [ %3, %vec.epilog.iter.check ], [ %4, %vec.epilog.vector.body ]
+.preheader.preheader.loopexit:                    ; preds = %vec.epilog.vector.body
+  %4 = shl i64 %n.vec33, 1
+  br label %.preheader.preheader
+
+.preheader.preheader:                             ; preds = %.preheader.preheader.loopexit, %iter.check, %vec.epilog.iter.check
+  %indvars.iv.ph = phi i64 [ 0, %iter.check ], [ %3, %vec.epilog.iter.check ], [ %4, %.preheader.preheader.loopexit ]
   br label %.preheader
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
@@ -526,7 +533,6 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %i.ci = icmp eq i64 %i.ch, 0
   %i.cj = select i1 %i.ci, i64 8, i64 %i.ch
   %n.vec33 = sub nsw i64 %i.p, %i.cj              ; 2 uses
-  %4 = shl i64 %n.vec33, 1
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -567,7 +573,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   store <8 x i8> %i.dp, ptr %i.dq, align 1, !tbaa !18
   %index.next35 = add nuw i64 %index34, 8         ; 2 uses
   %i.dr = icmp eq i64 %index.next35, %n.vec33
-  br i1 %i.dr, label %.preheader.preheader, label %vec.epilog.vector.body, !llvm.loop !89
+  br i1 %i.dr, label %.preheader.preheader.loopexit, label %vec.epilog.vector.body, !llvm.loop !89
 
 .critedge:                                        ; preds = %bb.d, %bb.e, %fmap_readn.exit
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.200) #9

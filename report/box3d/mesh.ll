@@ -205,14 +205,14 @@ bb.e:                                             ; preds = %._crit_edge133.spli
   %i.ay = zext i32 %i.ap to i64
   %mul190 = shl nuw nsw i64 %i.ay, 1
   %n.vec = and i64 %i.aw, 2147483644              ; 5 uses
-  %6 = mul nuw nsw i64 %n.vec, 6
-  %7 = trunc nuw nsw i64 %n.vec to i32
   %broadcast.splatinsert199 = insertelement <4 x i32> poison, i32 %i.b, i64 0
   %broadcast.splatinsert201 = insertelement <4 x i32> poison, i32 %1, i64 0
   %broadcast.splat202 = shufflevector <4 x i32> %broadcast.splatinsert201, <4 x i32> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert203 = insertelement <4 x i32> poison, i32 %3, i64 0
   %broadcast.splat204 = shufflevector <4 x i32> %broadcast.splatinsert203, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.az = shufflevector <4 x i32> %broadcast.splatinsert199, <4 x i32> poison, <8 x i32> zeroinitializer
+  %6 = mul nuw nsw i64 %n.vec, 6
+  %7 = trunc nuw nsw i64 %n.vec to i32
   %cmp.n = icmp eq i64 %n.vec, %i.aw
   br label %.preheader.us
 
@@ -264,8 +264,6 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %8 = add i64 %.2142.us, %6                      ; 2 uses
-  %9 = add i64 %.0104143.us, %n.vec               ; 2 uses
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.ba, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.bw = trunc i64 %.0104143.us to i32
@@ -305,6 +303,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.cm, label %middle.block, label %vector.body, !llvm.loop !109
 
 middle.block:                                     ; preds = %vector.body
+  %8 = add i64 %.2142.us, %6                      ; 2 uses
+  %9 = add i64 %.0104143.us, %n.vec               ; 2 uses
   br i1 %cmp.n, label %._crit_edge138.split.us.us, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %vector.scevcheck, %.preheader.us, %middle.block
@@ -621,7 +621,6 @@ b3CopyVerticesWithStride.exit:                    ; preds = %.preheader.i.epil.p
   %i.bh = fmul float %i.be, %i.bg
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 47
   %i.bj = load i8, ptr %i.bi, align 1, !tbaa !123, !range !33, !noundef !34
-  %6 = trunc nuw i8 %i.bj to i1
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.sroa.4424.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %.sroa.5425.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 2 uses
@@ -631,6 +630,7 @@ b3CopyVerticesWithStride.exit:                    ; preds = %.preheader.i.epil.p
   br label %bb.k
 
 ._crit_edge:                                      ; preds = %bb.u
+  %6 = trunc nuw i8 %i.bj to i1
   %i.bl = tail call zeroext i1 @b3IsSaneAABB(ptr noundef nonnull byval(%struct.b3AABB) align 8 %3) #17
   br i1 %i.bl, label %bb.w, label %bb.v
 
@@ -1033,9 +1033,6 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %exitcond206.not, label %.preheader, label %.preheader168.us, !llvm.loop !138
 
 .preheader:                                       ; preds = %._crit_edge.us
-  %5 = trunc nsw i64 %indvars.iv.next to i32
-  %6 = sext i32 %.sroa.14.2.us to i64
-  %7 = mul nsw i64 %6, 12
   %.not = icmp eq i32 %1, 1
   %i.aj = add nsw i32 %1, -2
   br label %.lr.ph.us
@@ -1319,6 +1316,9 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %exitcond214.not, label %._crit_edge.loopexit, label %.lr.ph.us, !llvm.loop !140
 
 ._crit_edge.loopexit:                             ; preds = %..loopexit_crit_edge.us.peel.next
+  %5 = trunc nsw i64 %indvars.iv.next to i32
+  %6 = sext i32 %.sroa.14.2.us to i64
+  %7 = mul nsw i64 %6, 12
   %i.ev = trunc nsw i64 %indvars.iv.next208.peel to i32
   %i.ew = sdiv i32 %i.ev, 3
   %i.ex = sext i32 %.sroa.44.7.us.peel to i64
@@ -1721,8 +1721,6 @@ b3CreateSpatialHash.exit:                         ; preds = %b3VertexMap_min_buc
 .lr.ph:                                           ; preds = %b3CreateSpatialHash.exit
   %i.ac = shl i32 %i.c, 2
   %i.ad = tail call ptr @b3GrowAlloc(ptr noundef null, i32 noundef 0, i32 noundef %i.ac) #17 ; 4 uses
-  %4 = zext nneg i32 %i.c to i64
-  %5 = shl nuw nsw i64 %4, 2
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 56
   %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -1732,10 +1730,15 @@ b3CreateSpatialHash.exit:                         ; preds = %b3VertexMap_min_buc
   %.pre = load ptr, ptr %3, align 8               ; 2 uses
   br label %bb.f
 
-._crit_edge:                                      ; preds = %bb.ar, %b3CreateSpatialHash.exit, %bb.c
-  %.sroa.017.0120 = phi ptr [ null, %b3CreateSpatialHash.exit ], [ null, %bb.c ], [ %i.ad, %bb.ar ] ; 6 uses
-  %.sroa.13.0119 = phi i64 [ 0, %b3CreateSpatialHash.exit ], [ 0, %bb.c ], [ %5, %bb.ar ]
-  %.045.lcssa = phi i32 [ 0, %b3CreateSpatialHash.exit ], [ 0, %bb.c ], [ %.1, %bb.ar ]
+._crit_edge.loopexit:                             ; preds = %bb.ar
+  %4 = zext nneg i32 %i.c to i64
+  %5 = shl nuw nsw i64 %4, 2
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %b3CreateSpatialHash.exit, %bb.c
+  %.sroa.017.0120 = phi ptr [ null, %b3CreateSpatialHash.exit ], [ null, %bb.c ], [ %i.ad, %._crit_edge.loopexit ] ; 6 uses
+  %.sroa.13.0119 = phi i64 [ 0, %b3CreateSpatialHash.exit ], [ 0, %bb.c ], [ %5, %._crit_edge.loopexit ]
+  %.045.lcssa = phi i32 [ 0, %b3CreateSpatialHash.exit ], [ 0, %bb.c ], [ %.1, %._crit_edge.loopexit ]
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !41 ; 3 uses
   %i.al = icmp sgt i32 %i.ak, 0
@@ -2138,7 +2141,7 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap
   %.1 = phi i32 [ %i.jn, %bb.ap ], [ %.04569, %bb.aq ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.f, !llvm.loop !152
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.f, !llvm.loop !152
 
 ._crit_edge73.loopexit.unr-lcssa:                 ; preds = %bb.au
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -2541,11 +2544,6 @@ bb.a:
   %.0.i224 = select i1 %i.l, ptr null, ptr %i.o   ; 7 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.q = load i32, ptr %i.p, align 8, !tbaa !52   ; 2 uses
-  %4 = icmp eq i32 %i.q, 0
-  %5 = sext i32 %i.q to i64
-  %6 = add nsw i64 %5, %i.f
-  %7 = inttoptr i64 %6 to ptr
-  %.0.i225 = select i1 %4, ptr null, ptr %7       ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 76
   %i.s = load i32, ptr %i.r, align 4, !tbaa !48   ; 5 uses
   %i.t = mul nsw i32 %i.s, 3                      ; 3 uses
@@ -2563,6 +2561,11 @@ bb.a:
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %b3Normalize.exit, %bb.a
+  %4 = icmp eq i32 %i.q, 0
+  %5 = sext i32 %i.q to i64
+  %6 = add nsw i64 %5, %i.f
+  %7 = inttoptr i64 %6 to ptr
+  %.0.i225 = select i1 %4, ptr null, ptr %7       ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #17
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, i8 0, i64 24, i1 false)

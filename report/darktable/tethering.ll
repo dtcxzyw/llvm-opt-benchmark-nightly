@@ -204,8 +204,12 @@ bb.q:                                             ; preds = %bb.p
   %min.iters.check = icmp ult i64 %i.cp, 32
   br i1 %min.iters.check, label %.lr.ph.i.preheader44, label %vector.memcheck
 
-.lr.ph.i.preheader44:                             ; preds = %vector.body, %vector.memcheck, %.lr.ph.i.preheader
-  %.012122.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.preheader ], [ %8, %vector.body ]
+.lr.ph.i.preheader44.loopexit:                    ; preds = %vector.body
+  %8 = shl i64 %n.vec, 2
+  br label %.lr.ph.i.preheader44
+
+.lr.ph.i.preheader44:                             ; preds = %.lr.ph.i.preheader44.loopexit, %vector.memcheck, %.lr.ph.i.preheader
+  %.012122.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.preheader ], [ %8, %.lr.ph.i.preheader44.loopexit ]
   br label %.lr.ph.i
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
@@ -223,7 +227,6 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.cv = icmp eq i64 %i.cu, 0
   %i.cw = select i1 %i.cv, i64 8, i64 %i.cu
   %n.vec = sub nsw i64 %i.cr, %i.cw               ; 2 uses
-  %8 = shl i64 %n.vec, 2
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -324,7 +327,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %vec.ind.next = add nuw <8 x i64> %vec.ind, splat (i64 32)
   %i.gb = icmp eq i64 %index.next, %n.vec
-  br i1 %i.gb, label %.lr.ph.i.preheader44, label %vector.body, !llvm.loop !136
+  br i1 %i.gb, label %.lr.ph.i.preheader44.loopexit, label %vector.body, !llvm.loop !136
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.q
   %i.gc = tail call ptr @dt_ioppr_add_profile_info_to_list(ptr noundef %i.co, i32 noundef 1, ptr noundef nonnull @.str.19, i32 noundef 1) #17 ; 3 uses

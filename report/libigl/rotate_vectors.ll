@@ -204,7 +204,6 @@ bb.d:                                             ; preds = %_ZN5Eigen15PlainObj
 
 .lr.ph.i.i.i.i.i49.preheader:                     ; preds = %.lr.ph.i.i.i.i.i.epil, %.lr.ph.i.i.i.i.i49.preheader.unr-lcssa
   %.lcssa = phi double [ %i.fd, %.lr.ph.i.i.i.i.i49.preheader.unr-lcssa ], [ %i.fj, %.lr.ph.i.i.i.i.i.epil ]
-  %.scalar.i146178 = tail call noundef double @llvm.sqrt.f64(double %.lcssa) ; 2 uses
   %i.fl = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %i.ed ; 4 uses
   %i.fm = load double, ptr %i.fl, align 8, !tbaa !42
   %i.fn = fmul double %i.fm, %i.ef                ; 2 uses
@@ -265,8 +264,8 @@ bb.d:                                             ; preds = %_ZN5Eigen15PlainObj
   br label %bb.e
 
 bb.e:                                             ; preds = %.unr-lcssa, %.lr.ph.i.i.i.i.i49.epil.preheader
-  %.lcssa229 = phi double [ %i.gl, %.unr-lcssa ], [ %i.gu, %.lr.ph.i.i.i.i.i49.epil.preheader ] ; 2 uses
-  %i.gv = load ptr, ptr %3, align 8, !tbaa !17, !noalias !48 ; 3 uses
+  %.lcssa229 = phi double [ %i.gl, %.unr-lcssa ], [ %i.gu, %.lr.ph.i.i.i.i.i49.epil.preheader ]
+  %i.gv = load ptr, ptr %3, align 8, !tbaa !17, !noalias !48 ; 2 uses
   %i.gw = getelementptr inbounds nuw [8 x i8], ptr %i.gv, i64 %i.ed ; 4 uses
   %i.gx = load double, ptr %i.gw, align 8, !tbaa !42
   %i.gy = fmul double %i.gx, %i.ef                ; 2 uses
@@ -299,7 +298,7 @@ bb.e:                                             ; preds = %.unr-lcssa, %.lr.ph
   br i1 %niter246.ncmp.1, label %_ZNK5Eigen10MatrixBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE3dotIS5_EENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENS9_17scalar_product_opIdSD_EEE10ReturnTypeERKNS0_ISB_EE.exit66.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i.i62, !llvm.loop !30
 
 _ZNK5Eigen10MatrixBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE3dotIS5_EENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENS9_17scalar_product_opIdSD_EEE10ReturnTypeERKNS0_ISB_EE.exit66.loopexit.unr-lcssa: ; preds = %.lr.ph.i.i.i.i.i62
-  br i1 %lcmp.mod242.not, label %_ZNK5Eigen10MatrixBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE3dotIS5_EENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENS9_17scalar_product_opIdSD_EEE10ReturnTypeERKNS0_ISB_EE.exit66, label %.lr.ph.i.i.i.i.i62.epil.preheader
+  br i1 %lcmp.mod242.not, label %_ZNK5Eigen10MatrixBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE3dotIS5_EENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENS9_17scalar_product_opIdSD_EEE10ReturnTypeERKNS0_ISB_EE.exit66.loopexit, label %.lr.ph.i.i.i.i.i62.epil.preheader
 
 .lr.ph.i.i.i.i.i62.epil.preheader:                ; preds = %_ZNK5Eigen10MatrixBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE3dotIS5_EENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENS9_17scalar_product_opIdSD_EEE10ReturnTypeERKNS0_ISB_EE.exit66.loopexit.unr-lcssa, %bb.e
   %.01724.i.i.i.i.i63.epil.init = phi i64 [ 1, %bb.e ], [ %i.hq, %_ZNK5Eigen10MatrixBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE3dotIS5_EENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENS9_17scalar_product_opIdSD_EEE10ReturnTypeERKNS0_ISB_EE.exit66.loopexit.unr-lcssa ] ; 2 uses
@@ -313,13 +312,18 @@ _ZNK5Eigen10MatrixBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1
   %i.hw = load double, ptr %i.hv, align 8, !tbaa !42
   %i.hx = fmul double %i.ht, %i.hw
   %i.hy = fadd double %.02223.i.i.i.i.i64.epil.init, %i.hx
+  br label %_ZNK5Eigen10MatrixBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE3dotIS5_EENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENS9_17scalar_product_opIdSD_EEE10ReturnTypeERKNS0_ISB_EE.exit66.loopexit
+
+_ZNK5Eigen10MatrixBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE3dotIS5_EENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENS9_17scalar_product_opIdSD_EEE10ReturnTypeERKNS0_ISB_EE.exit66.loopexit: ; preds = %_ZNK5Eigen10MatrixBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE3dotIS5_EENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENS9_17scalar_product_opIdSD_EEE10ReturnTypeERKNS0_ISB_EE.exit66.loopexit.unr-lcssa, %.lr.ph.i.i.i.i.i62.epil.preheader
+  %.lcssa230 = phi double [ %i.hp, %_ZNK5Eigen10MatrixBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE3dotIS5_EENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENS9_17scalar_product_opIdSD_EEE10ReturnTypeERKNS0_ISB_EE.exit66.loopexit.unr-lcssa ], [ %i.hy, %.lr.ph.i.i.i.i.i62.epil.preheader ]
+  %.scalar.i146178 = tail call noundef double @llvm.sqrt.f64(double %.lcssa)
   br label %_ZNK5Eigen10MatrixBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE3dotIS5_EENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENS9_17scalar_product_opIdSD_EEE10ReturnTypeERKNS0_ISB_EE.exit66
 
-_ZNK5Eigen10MatrixBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE3dotIS5_EENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENS9_17scalar_product_opIdSD_EEE10ReturnTypeERKNS0_ISB_EE.exit66: ; preds = %.lr.ph.i.i.i.i.i62.epil.preheader, %_ZNK5Eigen10MatrixBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE3dotIS5_EENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENS9_17scalar_product_opIdSD_EEE10ReturnTypeERKNS0_ISB_EE.exit66.loopexit.unr-lcssa, %.thread157
-  %.scalar.i146179 = phi double [ %.scalar.i146, %.thread157 ], [ %.scalar.i146178, %_ZNK5Eigen10MatrixBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE3dotIS5_EENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENS9_17scalar_product_opIdSD_EEE10ReturnTypeERKNS0_ISB_EE.exit66.loopexit.unr-lcssa ], [ %.scalar.i146178, %.lr.ph.i.i.i.i.i62.epil.preheader ] ; 2 uses
-  %5 = phi ptr [ %i.fr, %.thread157 ], [ %i.gv, %_ZNK5Eigen10MatrixBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE3dotIS5_EENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENS9_17scalar_product_opIdSD_EEE10ReturnTypeERKNS0_ISB_EE.exit66.loopexit.unr-lcssa ], [ %i.gv, %.lr.ph.i.i.i.i.i62.epil.preheader ] ; 2 uses
-  %.0.i.i.i48156 = phi double [ %i.fq, %.thread157 ], [ %.lcssa229, %_ZNK5Eigen10MatrixBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE3dotIS5_EENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENS9_17scalar_product_opIdSD_EEE10ReturnTypeERKNS0_ISB_EE.exit66.loopexit.unr-lcssa ], [ %.lcssa229, %.lr.ph.i.i.i.i.i62.epil.preheader ]
-  %.0.i.i.i61 = phi double [ %i.fu, %.thread157 ], [ %i.hp, %_ZNK5Eigen10MatrixBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE3dotIS5_EENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENS9_17scalar_product_opIdSD_EEE10ReturnTypeERKNS0_ISB_EE.exit66.loopexit.unr-lcssa ], [ %i.hy, %.lr.ph.i.i.i.i.i62.epil.preheader ]
+_ZNK5Eigen10MatrixBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE3dotIS5_EENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENS9_17scalar_product_opIdSD_EEE10ReturnTypeERKNS0_ISB_EE.exit66: ; preds = %_ZNK5Eigen10MatrixBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE3dotIS5_EENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENS9_17scalar_product_opIdSD_EEE10ReturnTypeERKNS0_ISB_EE.exit66.loopexit, %.thread157
+  %.scalar.i146179 = phi double [ %.scalar.i146, %.thread157 ], [ %.scalar.i146178, %_ZNK5Eigen10MatrixBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE3dotIS5_EENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENS9_17scalar_product_opIdSD_EEE10ReturnTypeERKNS0_ISB_EE.exit66.loopexit ] ; 2 uses
+  %5 = phi ptr [ %i.fr, %.thread157 ], [ %i.gv, %_ZNK5Eigen10MatrixBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE3dotIS5_EENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENS9_17scalar_product_opIdSD_EEE10ReturnTypeERKNS0_ISB_EE.exit66.loopexit ] ; 2 uses
+  %.0.i.i.i48156 = phi double [ %i.fq, %.thread157 ], [ %.lcssa229, %_ZNK5Eigen10MatrixBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE3dotIS5_EENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENS9_17scalar_product_opIdSD_EEE10ReturnTypeERKNS0_ISB_EE.exit66.loopexit ]
+  %.0.i.i.i61 = phi double [ %i.fu, %.thread157 ], [ %.lcssa230, %_ZNK5Eigen10MatrixBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE3dotIS5_EENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENS9_17scalar_product_opIdSD_EEE10ReturnTypeERKNS0_ISB_EE.exit66.loopexit ]
   %i.hz = ptrtoaddr ptr %5 to i64
   %i.ia = tail call double @atan2(double noundef %.0.i.i.i48156, double noundef %.0.i.i.i61) #10
   %.in.idx = select i1 %i.t, i64 0, i64 %i.ed

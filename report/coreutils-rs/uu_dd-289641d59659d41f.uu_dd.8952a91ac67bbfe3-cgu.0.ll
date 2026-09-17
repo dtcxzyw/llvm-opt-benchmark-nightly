@@ -205,10 +205,7 @@ vector.main.loop.iter.check1094:                  ; preds = %vector.memcheck1090
   br i1 %min.iters.check1095, label %vec.epilog.ph1113, label %vector.ph1096
 
 vector.ph1096:                                    ; preds = %vector.main.loop.iter.check1094
-  %2 = and i64 %i.ll, 24
   %n.vec1097 = and i64 %i.ll, -32                 ; 5 uses
-  %3 = add i64 %i.lx, %n.vec1097                  ; 2 uses
-  %4 = getelementptr i8, ptr %.sroa.5.0.i.i, i64 %n.vec1097
   %i.mc = getelementptr i8, ptr %i.ly, i64 %i.lx
   br label %vector.body1098
 
@@ -227,6 +224,9 @@ vector.body1098:                                  ; preds = %vector.body1098, %v
   br i1 %i.mg, label %middle.block1104, label %vector.body1098, !llvm.loop !1969
 
 middle.block1104:                                 ; preds = %vector.body1098
+  %2 = and i64 %i.ll, 24
+  %3 = add i64 %i.lx, %n.vec1097                  ; 2 uses
+  %4 = getelementptr i8, ptr %.sroa.5.0.i.i, i64 %n.vec1097
   %cmp.n1105 = icmp eq i64 %i.ll, %n.vec1097
   br i1 %cmp.n1105, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtNtCs7tKScEop1B6_5alloc3vec5drain5DrainhEECsbMXVmEvvZJf_5uu_dd.exit.i.i.i, label %vec.epilog.iter.check1111
 
@@ -237,8 +237,6 @@ vec.epilog.iter.check1111:                        ; preds = %middle.block1104
 vec.epilog.ph1113:                                ; preds = %vector.main.loop.iter.check1094, %vec.epilog.iter.check1111
   %vec.epilog.resume.val1106 = phi i64 [ %n.vec1097, %vec.epilog.iter.check1111 ], [ 0, %vector.main.loop.iter.check1094 ]
   %n.vec1114 = and i64 %i.ll, -8                  ; 4 uses
-  %5 = add i64 %i.lx, %n.vec1114                  ; 2 uses
-  %6 = getelementptr i8, ptr %.sroa.5.0.i.i, i64 %n.vec1114
   %i.mh = getelementptr i8, ptr %i.ly, i64 %i.lx
   br label %vec.epilog.vector.body1115
 
@@ -253,6 +251,8 @@ vec.epilog.vector.body1115:                       ; preds = %vec.epilog.vector.b
   br i1 %i.mj, label %vec.epilog.middle.block1120, label %vec.epilog.vector.body1115, !llvm.loop !1970
 
 vec.epilog.middle.block1120:                      ; preds = %vec.epilog.vector.body1115
+  %5 = add i64 %i.lx, %n.vec1114                  ; 2 uses
+  %6 = getelementptr i8, ptr %.sroa.5.0.i.i, i64 %n.vec1114
   %cmp.n1121 = icmp eq i64 %i.ll, %n.vec1114
   br i1 %cmp.n1121, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtNtCs7tKScEop1B6_5alloc3vec5drain5DrainhEECsbMXVmEvvZJf_5uu_dd.exit.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader
 
@@ -292,10 +292,7 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck1065
   br i1 %min.iters.check1070, label %vec.epilog.ph, label %vector.ph1071
 
 vector.ph1071:                                    ; preds = %vector.main.loop.iter.check
-  %7 = and i64 %i.ll, 24
   %n.vec1072 = and i64 %i.ll, -32                 ; 5 uses
-  %8 = add i64 %i.lq, %n.vec1072
-  %9 = getelementptr i8, ptr %.sroa.5.0.i.i, i64 %n.vec1072 ; 2 uses
   %i.mt = getelementptr i8, ptr %i.ku, i64 %i.lq
   br label %vector.body1073
 
@@ -314,6 +311,9 @@ vector.body1073:                                  ; preds = %vector.body1073, %v
   br i1 %i.mx, label %middle.block1079, label %vector.body1073, !llvm.loop !1976
 
 middle.block1079:                                 ; preds = %vector.body1073
+  %7 = and i64 %i.ll, 24
+  %8 = add i64 %i.lq, %n.vec1072
+  %9 = getelementptr i8, ptr %.sroa.5.0.i.i, i64 %n.vec1072 ; 2 uses
   %cmp.n = icmp eq i64 %i.ll, %n.vec1072
   br i1 %cmp.n, label %.loopexit.i.i.i.loopexit.i, label %vec.epilog.iter.check
 
@@ -324,8 +324,6 @@ vec.epilog.iter.check:                            ; preds = %middle.block1079
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec1072, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec1082 = and i64 %i.ll, -8                  ; 4 uses
-  %10 = add i64 %i.lq, %n.vec1082
-  %11 = getelementptr i8, ptr %.sroa.5.0.i.i, i64 %n.vec1082 ; 2 uses
   %i.my = getelementptr i8, ptr %i.ku, i64 %i.lq
   br label %vec.epilog.vector.body
 
@@ -340,6 +338,8 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.na, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !1977
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
+  %10 = add i64 %i.lq, %n.vec1082
+  %11 = getelementptr i8, ptr %.sroa.5.0.i.i, i64 %n.vec1082 ; 2 uses
   %cmp.n1087 = icmp eq i64 %i.ll, %n.vec1082
   br i1 %cmp.n1087, label %.loopexit.i.i.i.loopexit.i, label %.lr.ph.i.i.preheader
 
@@ -500,8 +500,6 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.pl = icmp eq i64 %i.pk, 0
   %i.pm = select i1 %i.pl, i64 32, i64 %i.pk
   %n.vec = sub i64 %i.ph, %i.pm                   ; 3 uses
-  %12 = add i64 %.promoted97.i.i, %n.vec
-  %13 = getelementptr i8, ptr %.val18.i.i.i.i, i64 %n.vec
   %i.pn = getelementptr i8, ptr %i.op, i64 %.promoted97.i.i
   br label %vector.body
 
@@ -517,11 +515,16 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <16 x i8> %wide.load1063, ptr %i.pq, align 1, !noalias !2330
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.pr = icmp eq i64 %index.next, %n.vec
-  br i1 %i.pr, label %.lr.ph100.i.i.preheader1124, label %vector.body, !llvm.loop !1994
+  br i1 %i.pr, label %.lr.ph100.i.i.preheader1124.loopexit, label %vector.body, !llvm.loop !1994
 
-.lr.ph100.i.i.preheader1124:                      ; preds = %vector.body, %vector.memcheck, %.lr.ph100.i.i.preheader
-  %.sroa.01.03.i35.i.i99.i.i.ph = phi i64 [ %.promoted97.i.i, %vector.memcheck ], [ %.promoted97.i.i, %.lr.ph100.i.i.preheader ], [ %12, %vector.body ]
-  %.ph1125 = phi ptr [ %.val18.i.i.i.i, %vector.memcheck ], [ %.val18.i.i.i.i, %.lr.ph100.i.i.preheader ], [ %13, %vector.body ]
+.lr.ph100.i.i.preheader1124.loopexit:             ; preds = %vector.body
+  %12 = add i64 %.promoted97.i.i, %n.vec
+  %13 = getelementptr i8, ptr %.val18.i.i.i.i, i64 %n.vec
+  br label %.lr.ph100.i.i.preheader1124
+
+.lr.ph100.i.i.preheader1124:                      ; preds = %.lr.ph100.i.i.preheader1124.loopexit, %vector.memcheck, %.lr.ph100.i.i.preheader
+  %.sroa.01.03.i35.i.i99.i.i.ph = phi i64 [ %.promoted97.i.i, %vector.memcheck ], [ %.promoted97.i.i, %.lr.ph100.i.i.preheader ], [ %12, %.lr.ph100.i.i.preheader1124.loopexit ]
+  %.ph1125 = phi ptr [ %.val18.i.i.i.i, %vector.memcheck ], [ %.val18.i.i.i.i, %.lr.ph100.i.i.preheader ], [ %13, %.lr.ph100.i.i.preheader1124.loopexit ]
   br label %.lr.ph100.i.i
 
 .lr.ph.i33.i.i.i.i:                               ; preds = %.lr.ph100.i.i

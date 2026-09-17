@@ -204,7 +204,6 @@ bb.bc:                                            ; preds = %._crit_edge85
 _ZNSt6vectorIPN4llvm11InstructionESaIS2_EE5clearEv.exit.i: ; preds = %bb.bc, %._crit_edge85
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %21, i8 0, i64 24, i1 false)
-  %29 = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.lw = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 7 uses
   %i.lx = load ptr, ptr %i.lw, align 8, !tbaa !27 ; 2 uses
   %i.ly = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 8 uses
@@ -429,6 +428,7 @@ _ZN4llvm12DenseMapBaseINS_8DenseMapIPNS_11InstructionEiNS_12DenseMapInfoIS3_vEEN
   %.pre105.i = load ptr, ptr %i.mr, align 8, !tbaa !174
   %.pre106.i = load ptr, ptr %i.mg, align 8, !tbaa !174 ; 2 uses
   %i.qu = icmp eq ptr %.pre105.i, %.pre106.i
+  %29 = getelementptr inbounds nuw i8, ptr %0, i64 80
   br i1 %i.qu, label %._crit_edge95.i, label %.lr.ph94.i
 
 .lr.ph94.i:                                       ; preds = %.preheader.i
@@ -831,6 +831,7 @@ bb.fo:                                            ; preds = %._crit_edge94
 
 _ZNSt6vectorIPN4llvm11InstructionESaIS2_EE5clearEv.exit: ; preds = %._crit_edge89, %._crit_edge94, %bb.fo
   %i.auq = phi i1 [ true, %bb.fo ], [ false, %._crit_edge94 ], [ false, %._crit_edge89 ]
+  %30 = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.aur = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   %i.aus = load i32, ptr %i.aur, align 8, !tbaa !239 ; 2 uses
   %i.aut = icmp eq i32 %i.aus, 0
@@ -846,7 +847,7 @@ bb.fp:                                            ; preds = %_ZNSt6vectorIPN4llv
   br i1 %or.cond.i.i, label %bb.fq, label %bb.fr
 
 bb.fq:                                            ; preds = %bb.fp
-  call void @_ZN4llvm12DenseMapBaseINS_8DenseMapIPNS_11InstructionEjNS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_jEEEES3_jS5_S8_E16shrink_and_clearEv(ptr noundef nonnull align 8 dereferenceable(40) %29)
+  call void @_ZN4llvm12DenseMapBaseINS_8DenseMapIPNS_11InstructionEjNS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_jEEEES3_jS5_S8_E16shrink_and_clearEv(ptr noundef nonnull align 8 dereferenceable(40) %30)
   br label %_ZN4llvm12DenseMapBaseINS_8DenseMapIPNS_11InstructionEjNS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_jEEEES3_jS5_S8_E5clearEv.exit.i
 
 bb.fr:                                            ; preds = %bb.fp

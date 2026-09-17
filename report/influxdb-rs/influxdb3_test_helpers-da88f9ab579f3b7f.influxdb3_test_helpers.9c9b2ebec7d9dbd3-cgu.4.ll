@@ -204,9 +204,6 @@ _RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsdrBSO
 
 vector.ph:                                        ; preds = %.lr.ph.i.preheader
   %n.vec = and i64 %i.m, 576460752303423486       ; 4 uses
-  %3 = shl nuw nsw i64 %n.vec, 4
-  %4 = getelementptr i8, ptr %1, i64 %3
-  %5 = sub i64 %i.e, %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -224,12 +221,18 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x i64> %wide.load3, ptr %i.r, align 8, !noalias !575
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.s = icmp eq i64 %index.next, %n.vec
-  br i1 %i.s, label %.lr.ph.i.preheader6, label %vector.body, !llvm.loop !572
+  br i1 %i.s, label %.lr.ph.i.preheader6.loopexit, label %vector.body, !llvm.loop !572
 
-.lr.ph.i.preheader6:                              ; preds = %vector.body, %.lr.ph.i.preheader
-  %.sroa.014.023.i.ph = phi ptr [ %1, %.lr.ph.i.preheader ], [ %4, %vector.body ]
-  %.sroa.7.022.i.ph = phi i64 [ 0, %.lr.ph.i.preheader ], [ %n.vec, %vector.body ]
-  %.sroa.10.021.i.ph = phi i64 [ %i.e, %.lr.ph.i.preheader ], [ %5, %vector.body ]
+.lr.ph.i.preheader6.loopexit:                     ; preds = %vector.body
+  %3 = shl nuw nsw i64 %n.vec, 4
+  %4 = getelementptr i8, ptr %1, i64 %3
+  %5 = sub i64 %i.e, %n.vec
+  br label %.lr.ph.i.preheader6
+
+.lr.ph.i.preheader6:                              ; preds = %.lr.ph.i.preheader6.loopexit, %.lr.ph.i.preheader
+  %.sroa.014.023.i.ph = phi ptr [ %1, %.lr.ph.i.preheader ], [ %4, %.lr.ph.i.preheader6.loopexit ]
+  %.sroa.7.022.i.ph = phi i64 [ 0, %.lr.ph.i.preheader ], [ %n.vec, %.lr.ph.i.preheader6.loopexit ]
+  %.sroa.10.021.i.ph = phi i64 [ %i.e, %.lr.ph.i.preheader ], [ %5, %.lr.ph.i.preheader6.loopexit ]
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader6, %bb.c

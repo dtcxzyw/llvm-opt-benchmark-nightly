@@ -204,7 +204,6 @@ _ZN5boost9container5slistI5emptyvE12splice_afterENS0_3dtl23iterator_from_iiterat
 define weak_odr hidden void @_ZN5boost9container5slistI5emptyvE6spliceENS0_3dtl23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS6_8bhtraitsINS0_9base_nodeIS2_NS4_10slist_hookIPvEELb0EEENS6_17slist_node_traitsISB_EELNS6_14link_mode_typeE0ENS6_7dft_tagELj2EEELb0EEELb1EEEOS3_SK_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef align 8 dead_on_return %1, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef align 8 dead_on_return %3) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !30
-  %4 = load ptr, ptr %3, align 8, !tbaa !30       ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   br label %bb.b
 
@@ -215,6 +214,7 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   br i1 %.not.i.i.i.i.i.i.i, label %_ZN5boost9container5slistI5emptyvE8previousENS0_3dtl23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS6_8bhtraitsINS0_9base_nodeIS2_NS4_10slist_hookIPvEELb0EEENS6_17slist_node_traitsISB_EELNS6_14link_mode_typeE0ENS6_7dft_tagELj2EEELb0EEELb1EEE.exit.i, label %bb.b, !llvm.loop !7
 
 _ZN5boost9container5slistI5emptyvE8previousENS0_3dtl23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS6_8bhtraitsINS0_9base_nodeIS2_NS4_10slist_hookIPvEELb0EEENS6_17slist_node_traitsISB_EELNS6_14link_mode_typeE0ENS6_7dft_tagELj2EEELb0EEELb1EEE.exit.i: ; preds = %bb.b
+  %4 = load ptr, ptr %3, align 8, !tbaa !30       ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8
   br label %bb.c
 
@@ -322,8 +322,6 @@ _ZN5boost9container5slistI5emptyvE12splice_afterENS0_3dtl23iterator_from_iiterat
 define weak_odr hidden void @_ZN5boost9container5slistI5emptyvE6spliceENS0_3dtl23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS6_8bhtraitsINS0_9base_nodeIS2_NS4_10slist_hookIPvEELb0EEENS6_17slist_node_traitsISB_EELNS6_14link_mode_typeE0ENS6_7dft_tagELj2EEELb0EEELb1EEEOS3_SK_SK_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef align 8 dead_on_return %1, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef align 8 dead_on_return %3, ptr noundef align 8 dead_on_return %4) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !30
-  %5 = load ptr, ptr %3, align 8, !tbaa !30
-  %6 = load ptr, ptr %4, align 8, !tbaa !30
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   br label %bb.b
 
@@ -334,6 +332,7 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   br i1 %.not.i.i.i.i.i.i.i, label %_ZN5boost9container5slistI5emptyvE8previousENS0_3dtl23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS6_8bhtraitsINS0_9base_nodeIS2_NS4_10slist_hookIPvEELb0EEENS6_17slist_node_traitsISB_EELNS6_14link_mode_typeE0ENS6_7dft_tagELj2EEELb0EEELb1EEE.exit.i, label %bb.b, !llvm.loop !7
 
 _ZN5boost9container5slistI5emptyvE8previousENS0_3dtl23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS6_8bhtraitsINS0_9base_nodeIS2_NS4_10slist_hookIPvEELb0EEENS6_17slist_node_traitsISB_EELNS6_14link_mode_typeE0ENS6_7dft_tagELj2EEELb0EEELb1EEE.exit.i: ; preds = %bb.b
+  %5 = load ptr, ptr %3, align 8, !tbaa !30
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   br label %bb.c
 
@@ -341,10 +340,14 @@ bb.c:                                             ; preds = %bb.c, %_ZN5boost9co
   %.0.i.i.i.i.i.i4.i = phi ptr [ %i.d, %_ZN5boost9container5slistI5emptyvE8previousENS0_3dtl23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS6_8bhtraitsINS0_9base_nodeIS2_NS4_10slist_hookIPvEELb0EEENS6_17slist_node_traitsISB_EELNS6_14link_mode_typeE0ENS6_7dft_tagELj2EEELb0EEELb1EEE.exit.i ], [ %i.e, %bb.c ] ; 5 uses
   %i.e = load ptr, ptr %.0.i.i.i.i.i.i4.i, align 8, !tbaa !23, !noalias !529 ; 3 uses
   %.not.i.i.i.i.i.i5.i = icmp eq ptr %5, %i.e
-  br i1 %.not.i.i.i.i.i.i5.i, label %_ZN5boost9container5slistI5emptyvE8previousENS0_3dtl23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS6_8bhtraitsINS0_9base_nodeIS2_NS4_10slist_hookIPvEELb0EEENS6_17slist_node_traitsISB_EELNS6_14link_mode_typeE0ENS6_7dft_tagELj2EEELb0EEELb1EEE.exit6.i, label %bb.c, !llvm.loop !7
+  br i1 %.not.i.i.i.i.i.i5.i, label %_ZN5boost9container5slistI5emptyvE8previousENS0_3dtl23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS6_8bhtraitsINS0_9base_nodeIS2_NS4_10slist_hookIPvEELb0EEENS6_17slist_node_traitsISB_EELNS6_14link_mode_typeE0ENS6_7dft_tagELj2EEELb0EEELb1EEE.exit6.i.preheader, label %bb.c, !llvm.loop !7
 
-_ZN5boost9container5slistI5emptyvE8previousENS0_3dtl23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS6_8bhtraitsINS0_9base_nodeIS2_NS4_10slist_hookIPvEELb0EEENS6_17slist_node_traitsISB_EELNS6_14link_mode_typeE0ENS6_7dft_tagELj2EEELb0EEELb1EEE.exit6.i: ; preds = %bb.c, %_ZN5boost9container5slistI5emptyvE8previousENS0_3dtl23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS6_8bhtraitsINS0_9base_nodeIS2_NS4_10slist_hookIPvEELb0EEENS6_17slist_node_traitsISB_EELNS6_14link_mode_typeE0ENS6_7dft_tagELj2EEELb0EEELb1EEE.exit6.i
-  %.0.i.i.i.i.i.i7.i = phi ptr [ %i.f, %_ZN5boost9container5slistI5emptyvE8previousENS0_3dtl23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS6_8bhtraitsINS0_9base_nodeIS2_NS4_10slist_hookIPvEELb0EEENS6_17slist_node_traitsISB_EELNS6_14link_mode_typeE0ENS6_7dft_tagELj2EEELb0EEELb1EEE.exit6.i ], [ %i.d, %bb.c ] ; 5 uses
+_ZN5boost9container5slistI5emptyvE8previousENS0_3dtl23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS6_8bhtraitsINS0_9base_nodeIS2_NS4_10slist_hookIPvEELb0EEENS6_17slist_node_traitsISB_EELNS6_14link_mode_typeE0ENS6_7dft_tagELj2EEELb0EEELb1EEE.exit6.i.preheader: ; preds = %bb.c
+  %6 = load ptr, ptr %4, align 8, !tbaa !30
+  br label %_ZN5boost9container5slistI5emptyvE8previousENS0_3dtl23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS6_8bhtraitsINS0_9base_nodeIS2_NS4_10slist_hookIPvEELb0EEENS6_17slist_node_traitsISB_EELNS6_14link_mode_typeE0ENS6_7dft_tagELj2EEELb0EEELb1EEE.exit6.i
+
+_ZN5boost9container5slistI5emptyvE8previousENS0_3dtl23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS6_8bhtraitsINS0_9base_nodeIS2_NS4_10slist_hookIPvEELb0EEENS6_17slist_node_traitsISB_EELNS6_14link_mode_typeE0ENS6_7dft_tagELj2EEELb0EEELb1EEE.exit6.i: ; preds = %_ZN5boost9container5slistI5emptyvE8previousENS0_3dtl23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS6_8bhtraitsINS0_9base_nodeIS2_NS4_10slist_hookIPvEELb0EEENS6_17slist_node_traitsISB_EELNS6_14link_mode_typeE0ENS6_7dft_tagELj2EEELb0EEELb1EEE.exit6.i.preheader, %_ZN5boost9container5slistI5emptyvE8previousENS0_3dtl23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS6_8bhtraitsINS0_9base_nodeIS2_NS4_10slist_hookIPvEELb0EEENS6_17slist_node_traitsISB_EELNS6_14link_mode_typeE0ENS6_7dft_tagELj2EEELb0EEELb1EEE.exit6.i
+  %.0.i.i.i.i.i.i7.i = phi ptr [ %i.f, %_ZN5boost9container5slistI5emptyvE8previousENS0_3dtl23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS6_8bhtraitsINS0_9base_nodeIS2_NS4_10slist_hookIPvEELb0EEENS6_17slist_node_traitsISB_EELNS6_14link_mode_typeE0ENS6_7dft_tagELj2EEELb0EEELb1EEE.exit6.i ], [ %i.d, %_ZN5boost9container5slistI5emptyvE8previousENS0_3dtl23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS6_8bhtraitsINS0_9base_nodeIS2_NS4_10slist_hookIPvEELb0EEENS6_17slist_node_traitsISB_EELNS6_14link_mode_typeE0ENS6_7dft_tagELj2EEELb0EEELb1EEE.exit6.i.preheader ] ; 5 uses
   %i.f = load ptr, ptr %.0.i.i.i.i.i.i7.i, align 8, !tbaa !23, !noalias !530 ; 3 uses
   %.not.i.i.i.i.i.i8.i = icmp eq ptr %6, %i.f
   br i1 %.not.i.i.i.i.i.i8.i, label %_ZN5boost9container5slistI5emptyvE8previousENS0_3dtl23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS6_8bhtraitsINS0_9base_nodeIS2_NS4_10slist_hookIPvEELb0EEENS6_17slist_node_traitsISB_EELNS6_14link_mode_typeE0ENS6_7dft_tagELj2EEELb0EEELb1EEE.exit9.i, label %_ZN5boost9container5slistI5emptyvE8previousENS0_3dtl23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS6_8bhtraitsINS0_9base_nodeIS2_NS4_10slist_hookIPvEELb0EEENS6_17slist_node_traitsISB_EELNS6_14link_mode_typeE0ENS6_7dft_tagELj2EEELb0EEELb1EEE.exit6.i, !llvm.loop !7

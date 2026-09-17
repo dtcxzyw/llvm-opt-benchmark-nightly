@@ -200,9 +200,6 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.af = icmp eq i64 %i.ae, 0
   %i.ag = select i1 %i.af, i64 8, i64 %i.ae
   %n.vec = sub nsw i64 %i.x, %i.ag                ; 3 uses
-  %7 = shl nsw i64 %n.vec, 1                      ; 2 uses
-  %8 = add nsw i64 %7, %i.w
-  %9 = add nsw i64 %7, %i.v
   %broadcast.splatinsert = insertelement <8 x i64> poison, i64 %i.w, i64 0
   %broadcast.splat = shufflevector <8 x i64> %broadcast.splatinsert, <8 x i64> poison, <8 x i32> zeroinitializer
   %induction = add nsw <8 x i64> %broadcast.splat, <i64 0, i64 2, i64 4, i64 6, i64 8, i64 10, i64 12, i64 14>
@@ -254,12 +251,18 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %vec.ind.next = add nsw <8 x i64> %vec.ind, splat (i64 16)
   %vec.ind.next265 = add nsw <8 x i64> %vec.ind254, splat (i64 16)
   %i.ay = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ay, label %.lr.ph.preheader268, label %vector.body, !llvm.loop !18
+  br i1 %i.ay, label %.lr.ph.preheader268.loopexit, label %vector.body, !llvm.loop !18
 
-.lr.ph.preheader268:                              ; preds = %vector.body, %vector.memcheck, %.lr.ph.preheader
-  %indvars.iv86.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %vector.body ]
-  %indvars.iv84.ph = phi i64 [ %i.w, %vector.memcheck ], [ %i.w, %.lr.ph.preheader ], [ %8, %vector.body ]
-  %indvars.iv.ph = phi i64 [ %i.v, %vector.memcheck ], [ %i.v, %.lr.ph.preheader ], [ %9, %vector.body ]
+.lr.ph.preheader268.loopexit:                     ; preds = %vector.body
+  %7 = shl nsw i64 %n.vec, 1                      ; 2 uses
+  %8 = add nsw i64 %7, %i.w
+  %9 = add nsw i64 %7, %i.v
+  br label %.lr.ph.preheader268
+
+.lr.ph.preheader268:                              ; preds = %.lr.ph.preheader268.loopexit, %vector.memcheck, %.lr.ph.preheader
+  %indvars.iv86.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %.lr.ph.preheader268.loopexit ]
+  %indvars.iv84.ph = phi i64 [ %i.w, %vector.memcheck ], [ %i.w, %.lr.ph.preheader ], [ %8, %.lr.ph.preheader268.loopexit ]
+  %indvars.iv.ph = phi i64 [ %i.v, %vector.memcheck ], [ %i.v, %.lr.ph.preheader ], [ %9, %.lr.ph.preheader268.loopexit ]
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader268, %.lr.ph

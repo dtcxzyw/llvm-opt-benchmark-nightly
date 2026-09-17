@@ -202,32 +202,14 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.b
   %i.j = tail call ptr @lv_obj_get_style_prop(ptr noundef nonnull %0, i32 noundef 0, i8 noundef zeroext 27) #5
-  %1 = ptrtoint ptr %i.j to i64
-  %.sroa.0.0.extract.trunc.i.i = trunc i64 %1 to i32
   %i.k = tail call ptr @lv_obj_get_style_prop(ptr noundef nonnull %0, i32 noundef 0, i8 noundef zeroext 56) #5
-  %2 = ptrtoint ptr %i.k to i64
-  %.sroa.0.0.extract.trunc.i9.i = trunc i64 %2 to i32
   %i.l = tail call ptr @lv_obj_get_style_prop(ptr noundef nonnull %0, i32 noundef 0, i8 noundef zeroext 60) #5
-  %3 = ptrtoint ptr %i.l to i64
-  %4 = and i64 %3, 8
-  %.not.i = icmp eq i64 %4, 0
-  %5 = select i1 %.not.i, i32 0, i32 %.sroa.0.0.extract.trunc.i9.i
-  %6 = add nsw i32 %5, %.sroa.0.0.extract.trunc.i.i
   %i.m = tail call ptr @lv_obj_get_style_prop(ptr noundef nonnull %0, i32 noundef 0, i8 noundef zeroext 26) #5
-  %7 = ptrtoint ptr %i.m to i64
-  %.sroa.0.0.extract.trunc.i.i42 = trunc i64 %7 to i32
   %i.n = tail call ptr @lv_obj_get_style_prop(ptr noundef nonnull %0, i32 noundef 0, i8 noundef zeroext 56) #5
-  %8 = ptrtoint ptr %i.n to i64
-  %.sroa.0.0.extract.trunc.i9.i43 = trunc i64 %8 to i32
   %i.o = tail call ptr @lv_obj_get_style_prop(ptr noundef nonnull %0, i32 noundef 0, i8 noundef zeroext 60) #5
-  %9 = ptrtoint ptr %i.o to i64
-  %10 = and i64 %9, 4
-  %.not.i44 = icmp eq i64 %10, 0
-  %11 = select i1 %.not.i44, i32 0, i32 %.sroa.0.0.extract.trunc.i9.i43
-  %12 = add nsw i32 %11, %.sroa.0.0.extract.trunc.i.i42 ; 2 uses
   %i.p = tail call i32 @lv_obj_get_child_count(ptr noundef nonnull %0) #5 ; 2 uses
   %.not49 = icmp eq i32 %i.p, 0
-  br i1 %.not49, label %._crit_edge.thread, label %.lr.ph
+  br i1 %.not49, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.e
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -255,24 +237,43 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.f, %bb.g
-  %.1 = phi i32 [ %i.ab, %bb.g ], [ %.03548, %bb.f ] ; 3 uses
+  %.1 = phi i32 [ %i.ab, %bb.g ], [ %.03548, %bb.f ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.f, !llvm.loop !43
 
-._crit_edge:                                      ; preds = %bb.h
-  %.not41 = icmp eq i32 %.1, 536870911
+._crit_edge:                                      ; preds = %bb.h, %bb.e
+  %.035.lcssa = phi i32 [ 536870911, %bb.e ], [ %.1, %bb.h ] ; 2 uses
+  %1 = ptrtoint ptr %i.j to i64
+  %.sroa.0.0.extract.trunc.i.i = trunc i64 %1 to i32
+  %2 = ptrtoint ptr %i.k to i64
+  %.sroa.0.0.extract.trunc.i9.i = trunc i64 %2 to i32
+  %3 = ptrtoint ptr %i.l to i64
+  %4 = and i64 %3, 8
+  %.not.i = icmp eq i64 %4, 0
+  %5 = select i1 %.not.i, i32 0, i32 %.sroa.0.0.extract.trunc.i9.i
+  %6 = add nsw i32 %5, %.sroa.0.0.extract.trunc.i.i
+  %7 = ptrtoint ptr %i.m to i64
+  %.sroa.0.0.extract.trunc.i.i42 = trunc i64 %7 to i32
+  %8 = ptrtoint ptr %i.n to i64
+  %.sroa.0.0.extract.trunc.i9.i43 = trunc i64 %8 to i32
+  %9 = ptrtoint ptr %i.o to i64
+  %10 = and i64 %9, 4
+  %.not.i44 = icmp eq i64 %10, 0
+  %11 = select i1 %.not.i44, i32 0, i32 %.sroa.0.0.extract.trunc.i9.i43
+  %12 = add nsw i32 %11, %.sroa.0.0.extract.trunc.i.i42 ; 2 uses
+  %.not41 = icmp eq i32 %.035.lcssa, 536870911
   br i1 %.not41, label %._crit_edge.thread, label %bb.i
 
 bb.i:                                             ; preds = %._crit_edge
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ad = load i32, ptr %i.ac, align 8, !tbaa !32
-  %i.ae = sub i32 %12, %.1
+  %i.ae = sub i32 %12, %.035.lcssa
   %i.af = add i32 %i.ae, %i.ad
   br label %._crit_edge.thread
 
-._crit_edge.thread:                               ; preds = %bb.e, %._crit_edge, %bb.i
-  %.037 = phi i32 [ %i.af, %bb.i ], [ -536870911, %._crit_edge ], [ -536870911, %bb.e ]
+._crit_edge.thread:                               ; preds = %._crit_edge, %bb.i
+  %.037 = phi i32 [ %i.af, %bb.i ], [ -536870911, %._crit_edge ]
   %i.ag = tail call i32 @lv_obj_get_self_width(ptr noundef nonnull %0) #5
   %i.ah = tail call i32 @lv_obj_get_width(ptr noundef nonnull %0) #5
   %i.ai = add i32 %6, %12

@@ -202,9 +202,14 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %.noex
   %min.iters.check = icmp samesign ult i64 %i.as, 28
   br i1 %min.iters.check, label %.lr.ph.i.preheader36, label %vector.memcheck
 
-.lr.ph.i.preheader36:                             ; preds = %vector.body, %vector.memcheck, %.lr.ph.i.preheader
-  %.ph = phi ptr [ %i.ag, %vector.memcheck ], [ %i.ag, %.lr.ph.i.preheader ], [ %3, %vector.body ]
-  %.ph37 = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.preheader ], [ %n.vec, %vector.body ]
+.lr.ph.i.preheader36.loopexit:                    ; preds = %vector.body
+  %2 = shl nuw i64 %n.vec, 4
+  %3 = getelementptr i8, ptr %i.ag, i64 %2
+  br label %.lr.ph.i.preheader36
+
+.lr.ph.i.preheader36:                             ; preds = %.lr.ph.i.preheader36.loopexit, %vector.memcheck, %.lr.ph.i.preheader
+  %.ph = phi ptr [ %i.ag, %vector.memcheck ], [ %i.ag, %.lr.ph.i.preheader ], [ %3, %.lr.ph.i.preheader36.loopexit ]
+  %.ph37 = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.preheader ], [ %n.vec, %.lr.ph.i.preheader36.loopexit ]
   br label %.lr.ph.i
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
@@ -236,8 +241,6 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.as, 1152921504606846974     ; 3 uses
-  %2 = shl nuw i64 %n.vec, 4
-  %3 = getelementptr i8, ptr %i.ag, i64 %2
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -261,7 +264,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x float> %i.bi, ptr %i.bk, align 4, !alias.scope !537, !noalias !538
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.bl = icmp eq i64 %index.next, %n.vec
-  br i1 %i.bl, label %.lr.ph.i.preheader36, label %vector.body, !llvm.loop !520
+  br i1 %i.bl, label %.lr.ph.i.preheader36.loopexit, label %vector.body, !llvm.loop !520
 
 bb.k:                                             ; preds = %.invoke.i
   %i.bm = landingpad { ptr, i32 }

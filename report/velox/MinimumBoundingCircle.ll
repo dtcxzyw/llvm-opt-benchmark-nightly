@@ -202,10 +202,9 @@ _ZN4geos9algorithm21MinimumBoundingCircle11lowestPointERSt6vectorINS_4geom10Coor
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %spec.select.i, i64 24, i1 false), !tbaa.struct !53
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #14
   call void @llvm.experimental.noalias.scope.decl(metadata !108)
-  %9 = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %i.cc = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.cc = getelementptr inbounds nuw i8, ptr %5, i64 16
   store <2 x double> splat (double +qnan), ptr %5, align 16, !tbaa !18, !alias.scope !108
-  store double +qnan, ptr %9, align 16, !tbaa !57, !alias.scope !108
+  store double +qnan, ptr %i.cc, align 16, !tbaa !57, !alias.scope !108
   %i.cd = load double, ptr %4, align 8, !tbaa !15, !noalias !108 ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.cf = load double, ptr %i.ce, align 8, !noalias !108 ; 2 uses
@@ -244,10 +243,14 @@ bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q
   %.2.i = phi double [ %.02130.i, %bb.q ], [ %i.cs, %bb.s ], [ %.02130.i, %bb.r ]
   %i.cu = getelementptr inbounds nuw i8, ptr %.sroa.025.029.i, i64 24 ; 2 uses
   %.not.i25 = icmp eq ptr %i.cu, %i.bm
-  br i1 %.not.i25, label %_ZN4geos9algorithm21MinimumBoundingCircle21pointWitMinAngleWithXERSt6vectorINS_4geom10CoordinateESaIS4_EERS4_.exit, label %bb.q
+  br i1 %.not.i25, label %_ZN4geos9algorithm21MinimumBoundingCircle21pointWitMinAngleWithXERSt6vectorINS_4geom10CoordinateESaIS4_EERS4_.exit.loopexit, label %bb.q
 
-_ZN4geos9algorithm21MinimumBoundingCircle21pointWitMinAngleWithXERSt6vectorINS_4geom10CoordinateESaIS4_EERS4_.exit: ; preds = %bb.t, %_ZN4geos9algorithm21MinimumBoundingCircle11lowestPointERSt6vectorINS_4geom10CoordinateESaIS4_EE.exit.thread
-  %i.cv = phi ptr [ %i.bv, %_ZN4geos9algorithm21MinimumBoundingCircle11lowestPointERSt6vectorINS_4geom10CoordinateESaIS4_EE.exit.thread ], [ %i.cc, %bb.t ]
+_ZN4geos9algorithm21MinimumBoundingCircle21pointWitMinAngleWithXERSt6vectorINS_4geom10CoordinateESaIS4_EERS4_.exit.loopexit: ; preds = %bb.t
+  %9 = getelementptr inbounds nuw i8, ptr %5, i64 8
+  br label %_ZN4geos9algorithm21MinimumBoundingCircle21pointWitMinAngleWithXERSt6vectorINS_4geom10CoordinateESaIS4_EERS4_.exit
+
+_ZN4geos9algorithm21MinimumBoundingCircle21pointWitMinAngleWithXERSt6vectorINS_4geom10CoordinateESaIS4_EERS4_.exit: ; preds = %_ZN4geos9algorithm21MinimumBoundingCircle21pointWitMinAngleWithXERSt6vectorINS_4geom10CoordinateESaIS4_EERS4_.exit.loopexit, %_ZN4geos9algorithm21MinimumBoundingCircle11lowestPointERSt6vectorINS_4geom10CoordinateESaIS4_EE.exit.thread
+  %i.cv = phi ptr [ %i.bv, %_ZN4geos9algorithm21MinimumBoundingCircle11lowestPointERSt6vectorINS_4geom10CoordinateESaIS4_EE.exit.thread ], [ %9, %_ZN4geos9algorithm21MinimumBoundingCircle21pointWitMinAngleWithXERSt6vectorINS_4geom10CoordinateESaIS4_EERS4_.exit.loopexit ]
   %i.cw = getelementptr inbounds nuw i8, ptr %4, i64 8
   br label %bb.u
 

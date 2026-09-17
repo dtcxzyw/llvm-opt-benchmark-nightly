@@ -205,9 +205,13 @@ bb.f:                                             ; preds = %_ZL8pinIndexRll.exi
   %min.iters.check = icmp samesign ult i64 %i.ad, 16
   br i1 %min.iters.check, label %.lr.ph.split.split.us.preheader157, label %vector.memcheck
 
-.lr.ph.split.split.us.preheader157:               ; preds = %vector.body, %vector.memcheck, %.lr.ph.split.split.us.preheader
-  %indvars.iv122.ph = phi i64 [ %i.ab, %vector.memcheck ], [ %i.ab, %.lr.ph.split.split.us.preheader ], [ %6, %vector.body ]
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.split.split.us.preheader ], [ %n.vec, %vector.body ]
+.lr.ph.split.split.us.preheader157.loopexit:      ; preds = %vector.body
+  %6 = add nsw i64 %n.vec, %i.ab
+  br label %.lr.ph.split.split.us.preheader157
+
+.lr.ph.split.split.us.preheader157:               ; preds = %.lr.ph.split.split.us.preheader157.loopexit, %vector.memcheck, %.lr.ph.split.split.us.preheader
+  %indvars.iv122.ph = phi i64 [ %i.ab, %vector.memcheck ], [ %i.ab, %.lr.ph.split.split.us.preheader ], [ %6, %.lr.ph.split.split.us.preheader157.loopexit ]
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.split.split.us.preheader ], [ %n.vec, %.lr.ph.split.split.us.preheader157.loopexit ]
   br label %.lr.ph.split.split.us
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.split.us.preheader
@@ -222,7 +226,6 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.aj = icmp eq i64 %i.ai, 0
   %i.ak = select i1 %i.aj, i64 16, i64 %i.ai
   %n.vec = sub nsw i64 %i.ae, %i.ak               ; 3 uses
-  %6 = add nsw i64 %n.vec, %i.ab
   %invariant.gep = getelementptr [2 x i8], ptr %i.j, i64 %i.ab
   br label %vector.body
 
@@ -238,7 +241,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <8 x i16> %wide.load153, ptr %i.an, align 2, !tbaa !23
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.ao = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ao, label %.lr.ph.split.split.us.preheader157, label %vector.body, !llvm.loop !101
+  br i1 %i.ao, label %.lr.ph.split.split.us.preheader157.loopexit, label %vector.body, !llvm.loop !101
 
 .lr.ph.split.us.split.preheader:                  ; preds = %.lr.ph
   %i.ap = zext nneg i32 %4 to i64
