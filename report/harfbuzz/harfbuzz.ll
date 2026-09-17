@@ -205,23 +205,18 @@ bb.e:                                             ; preds = %bb.d, %bb.b
 
 _ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i: ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr @_ZL19_hb_ms_language_map, i64 %i.d
-  %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 2 ; 2 uses
-  %1 = load i8, ptr %i.l, align 2, !tbaa !280
-  %.not.i.i = icmp eq i8 %1, 0
-  br i1 %.not.i.i, label %_ZL24_hb_ot_name_language_forjPK20hb_ot_language_map_tj.exit, label %2
+  %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 2
+  %1 = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef nonnull readonly %i.l) ; 2 uses
+  %.not.i.i = icmp eq ptr %1, null
+  br i1 %.not.i.i, label %_ZL24_hb_ot_name_language_forjPK20hb_ot_language_map_tj.exit, label %bb.f, !prof !267
 
-2:                                                ; preds = %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i
-  %3 = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef nonnull readonly %i.l) ; 2 uses
-  %.not11.i.i = icmp eq ptr %3, null
-  br i1 %.not11.i.i, label %_ZL24_hb_ot_name_language_forjPK20hb_ot_language_map_tj.exit, label %bb.f, !prof !267
-
-bb.f:                                             ; preds = %2
-  %i.m = getelementptr inbounds nuw i8, ptr %3, i64 8
+bb.f:                                             ; preds = %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i
+  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !702
   br label %_ZL24_hb_ot_name_language_forjPK20hb_ot_language_map_tj.exit
 
-_ZL24_hb_ot_name_language_forjPK20hb_ot_language_map_tj.exit: ; preds = %bb.e, %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i, %2, %bb.f
-  %.0.i = phi ptr [ %i.n, %bb.f ], [ null, %2 ], [ null, %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i ], [ null, %bb.e ]
+_ZL24_hb_ot_name_language_forjPK20hb_ot_language_map_tj.exit: ; preds = %bb.e, %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i, %bb.f
+  %.0.i = phi ptr [ %i.n, %bb.f ], [ null, %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i ], [ null, %bb.e ]
   ret ptr %.0.i
 }
 
@@ -263,23 +258,18 @@ bb.e:                                             ; preds = %bb.d, %bb.b
 
 _ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i: ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr @_ZL20_hb_mac_language_map, i64 %i.d
-  %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 2 ; 2 uses
-  %1 = load i8, ptr %i.l, align 2, !tbaa !280
-  %.not.i.i = icmp eq i8 %1, 0
-  br i1 %.not.i.i, label %_ZL24_hb_ot_name_language_forjPK20hb_ot_language_map_tj.exit, label %2
+  %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 2
+  %1 = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef nonnull readonly %i.l) ; 2 uses
+  %.not.i.i = icmp eq ptr %1, null
+  br i1 %.not.i.i, label %_ZL24_hb_ot_name_language_forjPK20hb_ot_language_map_tj.exit, label %bb.f, !prof !267
 
-2:                                                ; preds = %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i
-  %3 = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef nonnull readonly %i.l) ; 2 uses
-  %.not11.i.i = icmp eq ptr %3, null
-  br i1 %.not11.i.i, label %_ZL24_hb_ot_name_language_forjPK20hb_ot_language_map_tj.exit, label %bb.f, !prof !267
-
-bb.f:                                             ; preds = %2
-  %i.m = getelementptr inbounds nuw i8, ptr %3, i64 8
+bb.f:                                             ; preds = %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i
+  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !702
   br label %_ZL24_hb_ot_name_language_forjPK20hb_ot_language_map_tj.exit
 
-_ZL24_hb_ot_name_language_forjPK20hb_ot_language_map_tj.exit: ; preds = %bb.e, %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i, %2, %bb.f
-  %.0.i = phi ptr [ %i.n, %bb.f ], [ null, %2 ], [ null, %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i ], [ null, %bb.e ]
+_ZL24_hb_ot_name_language_forjPK20hb_ot_language_map_tj.exit: ; preds = %bb.e, %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i, %bb.f
+  %.0.i = phi ptr [ %i.n, %bb.f ], [ null, %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i ], [ null, %bb.e ]
   ret ptr %.0.i
 }
 
@@ -682,17 +672,13 @@ bb.f:                                             ; preds = %bb.e, %bb.c
 _ZN2OTL19unicode_to_macromanEj.exit:              ; preds = %bb.d
   %i.l = getelementptr inbounds nuw i8, ptr @_ZZN2OTL19unicode_to_macromanEjE7mapping, i64 %i.f
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 2
-  %i.n = load i8, ptr %i.m, align 2, !tbaa !2061  ; 2 uses
-  %.not = icmp eq i8 %i.n, 0
-  br i1 %.not, label %_ZN2OTL19unicode_to_macromanEj.exit.thread, label %3
-
-3:                                                ; preds = %_ZN2OTL19unicode_to_macromanEj.exit
-  %4 = zext i8 %i.n to i32
-  %5 = tail call noundef zeroext i1 @_ZNK2OT19CmapSubtableFormat413accelerator_t9get_glyphEjPj(ptr noundef nonnull align 8 dereferenceable(48) %0, i32 noundef %4, ptr noundef %2)
+  %i.n = load i8, ptr %i.m, align 2, !tbaa !2061
+  %3 = zext i8 %i.n to i32
+  %4 = tail call noundef zeroext i1 @_ZNK2OT19CmapSubtableFormat413accelerator_t9get_glyphEjPj(ptr noundef nonnull align 8 dereferenceable(48) %0, i32 noundef %3, ptr noundef %2)
   br label %_ZN2OTL19unicode_to_macromanEj.exit.thread
 
-_ZN2OTL19unicode_to_macromanEj.exit.thread:       ; preds = %bb.f, %_ZN2OTL19unicode_to_macromanEj.exit, %3, %_ZN2OT4cmap13accelerator_t20get_glyph_from_asciiINS_19CmapSubtableFormat413accelerator_tEEEbPKvjPj.exit
-  %.0 = phi i1 [ true, %_ZN2OT4cmap13accelerator_t20get_glyph_from_asciiINS_19CmapSubtableFormat413accelerator_tEEEbPKvjPj.exit ], [ false, %_ZN2OTL19unicode_to_macromanEj.exit ], [ %5, %3 ], [ false, %bb.f ]
+_ZN2OTL19unicode_to_macromanEj.exit.thread:       ; preds = %bb.f, %_ZN2OTL19unicode_to_macromanEj.exit, %_ZN2OT4cmap13accelerator_t20get_glyph_from_asciiINS_19CmapSubtableFormat413accelerator_tEEEbPKvjPj.exit
+  %.0 = phi i1 [ true, %_ZN2OT4cmap13accelerator_t20get_glyph_from_asciiINS_19CmapSubtableFormat413accelerator_tEEEbPKvjPj.exit ], [ %4, %_ZN2OTL19unicode_to_macromanEj.exit ], [ false, %bb.f ]
   ret i1 %.0
 }
 
@@ -743,17 +729,13 @@ bb.f:                                             ; preds = %bb.e, %bb.c
 _ZN2OTL19unicode_to_macromanEj.exit:              ; preds = %bb.d
   %i.l = getelementptr inbounds nuw i8, ptr @_ZZN2OTL19unicode_to_macromanEjE7mapping, i64 %i.f
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 2
-  %i.n = load i8, ptr %i.m, align 2, !tbaa !2061  ; 2 uses
-  %.not = icmp eq i8 %i.n, 0
-  br i1 %.not, label %_ZN2OTL19unicode_to_macromanEj.exit.thread, label %3
-
-3:                                                ; preds = %_ZN2OTL19unicode_to_macromanEj.exit
-  %4 = zext i8 %i.n to i32
-  %5 = tail call noundef zeroext i1 @_ZNK2OT12CmapSubtable9get_glyphEjPjj(ptr noundef nonnull align 1 dereferenceable(262) %0, i32 noundef %4, ptr noundef %2, i32 noundef 0)
+  %i.n = load i8, ptr %i.m, align 2, !tbaa !2061
+  %3 = zext i8 %i.n to i32
+  %4 = tail call noundef zeroext i1 @_ZNK2OT12CmapSubtable9get_glyphEjPjj(ptr noundef nonnull align 1 dereferenceable(262) %0, i32 noundef %3, ptr noundef %2, i32 noundef 0)
   br label %_ZN2OTL19unicode_to_macromanEj.exit.thread
 
-_ZN2OTL19unicode_to_macromanEj.exit.thread:       ; preds = %bb.f, %_ZN2OTL19unicode_to_macromanEj.exit, %3, %_ZN2OT4cmap13accelerator_t20get_glyph_from_asciiINS_12CmapSubtableEEEbPKvjPj.exit
-  %.0 = phi i1 [ true, %_ZN2OT4cmap13accelerator_t20get_glyph_from_asciiINS_12CmapSubtableEEEbPKvjPj.exit ], [ false, %_ZN2OTL19unicode_to_macromanEj.exit ], [ %5, %3 ], [ false, %bb.f ]
+_ZN2OTL19unicode_to_macromanEj.exit.thread:       ; preds = %bb.f, %_ZN2OTL19unicode_to_macromanEj.exit, %_ZN2OT4cmap13accelerator_t20get_glyph_from_asciiINS_12CmapSubtableEEEbPKvjPj.exit
+  %.0 = phi i1 [ true, %_ZN2OT4cmap13accelerator_t20get_glyph_from_asciiINS_12CmapSubtableEEEbPKvjPj.exit ], [ %4, %_ZN2OTL19unicode_to_macromanEj.exit ], [ false, %bb.f ]
   ret i1 %.0
 }
 
@@ -1156,15 +1138,10 @@ bb.e:                                             ; preds = %bb.d, %bb.b
 
 _ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i.i: ; preds = %bb.c
   %i.q = getelementptr inbounds nuw i8, ptr @_ZL19_hb_ms_language_map, i64 %i.k
-  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 2 ; 2 uses
-  %2 = load i8, ptr %i.r, align 2, !tbaa !280
-  %.not.i.i.i.a = icmp eq i8 %2, 0
-  br i1 %.not.i.i.i.a, label %_Z32_hb_ot_name_language_for_ms_codej.exit, label %3
-
-3:                                                ; preds = %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i.i
-  %4 = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef nonnull readonly %i.r) ; 2 uses
-  %.not11.i.i.i = icmp eq ptr %4, null
-  br i1 %.not11.i.i.i, label %_Z32_hb_ot_name_language_for_ms_codej.exit, label %_Z32_hb_ot_name_language_for_ms_codej.exit.sink.split, !prof !267
+  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 2
+  %2 = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef nonnull readonly %i.r) ; 2 uses
+  %.not.i.i.i.a = icmp eq ptr %2, null
+  br i1 %.not.i.i.i.a, label %_Z32_hb_ot_name_language_for_ms_codej.exit, label %_Z32_hb_ot_name_language_for_ms_codej.exit.sink.split, !prof !267
 
 .lr.ph.i.i.i.i9:                                  ; preds = %bb.a, %bb.i
   %.0203.i.i.i.i10 = phi i32 [ %.2.i.i.i.i14, %bb.i ], [ 116, %bb.a ] ; 2 uses
@@ -1198,15 +1175,10 @@ bb.i:                                             ; preds = %bb.h, %bb.f
 
 _ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i.i17: ; preds = %bb.g
   %i.ab = getelementptr inbounds nuw i8, ptr @_ZL20_hb_mac_language_map, i64 %i.v
-  %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 2 ; 2 uses
-  %5 = load i8, ptr %i.ac, align 2, !tbaa !280
-  %.not.i.i.i18 = icmp eq i8 %5, 0
-  br i1 %.not.i.i.i18, label %_Z32_hb_ot_name_language_for_ms_codej.exit, label %6
-
-6:                                                ; preds = %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i.i17
-  %7 = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef nonnull readonly %i.ac) ; 2 uses
-  %.not11.i.i.i19 = icmp eq ptr %7, null
-  br i1 %.not11.i.i.i19, label %_Z32_hb_ot_name_language_for_ms_codej.exit, label %_Z32_hb_ot_name_language_for_ms_codej.exit.sink.split, !prof !267
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 2
+  %3 = tail call fastcc noundef ptr @_ZL19lang_find_or_insertPKc(ptr noundef nonnull readonly %i.ac) ; 2 uses
+  %.not.i.i.i18 = icmp eq ptr %3, null
+  br i1 %.not.i.i.i18, label %_Z32_hb_ot_name_language_for_ms_codej.exit, label %_Z32_hb_ot_name_language_for_ms_codej.exit.sink.split, !prof !267
 
 bb.j:                                             ; preds = %bb.a
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 376 ; 3 uses
@@ -1290,14 +1262,14 @@ bb.q:                                             ; preds = %bb.p
   %.not11.i.i = icmp eq ptr %i.bh, null
   br i1 %.not11.i.i, label %_Z32_hb_ot_name_language_for_ms_codej.exit, label %_Z32_hb_ot_name_language_for_ms_codej.exit.sink.split, !prof !267
 
-_Z32_hb_ot_name_language_for_ms_codej.exit.sink.split: ; preds = %bb.q, %6, %3
-  %.sink48 = phi ptr [ %7, %6 ], [ %4, %3 ], [ %i.bh, %bb.q ]
+_Z32_hb_ot_name_language_for_ms_codej.exit.sink.split: ; preds = %bb.q, %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i.i17, %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i.i
+  %.sink48 = phi ptr [ %3, %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i.i17 ], [ %2, %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i.i ], [ %i.bh, %bb.q ]
   %i.bi = getelementptr inbounds nuw i8, ptr %.sink48, i64 8
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !702
   br label %_Z32_hb_ot_name_language_for_ms_codej.exit
 
-_Z32_hb_ot_name_language_for_ms_codej.exit:       ; preds = %bb.i, %bb.e, %_Z32_hb_ot_name_language_for_ms_codej.exit.sink.split, %bb.q, %bb.p, %_ZNK2OT7ArrayOfIN3AAT13FTStringRangeENS_7NumTypeILb1EjLj4EEEEixEi.exit.i, %6, %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i.i17, %3, %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i.i, %bb.a
-  %.0 = phi ptr [ null, %bb.a ], [ null, %bb.q ], [ %i.bj, %_Z32_hb_ot_name_language_for_ms_codej.exit.sink.split ], [ null, %bb.p ], [ null, %3 ], [ null, %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i.i ], [ null, %bb.e ], [ null, %6 ], [ null, %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i.i17 ], [ null, %_ZNK2OT7ArrayOfIN3AAT13FTStringRangeENS_7NumTypeILb1EjLj4EEEEixEi.exit.i ], [ null, %bb.i ]
+_Z32_hb_ot_name_language_for_ms_codej.exit:       ; preds = %bb.i, %bb.e, %_Z32_hb_ot_name_language_for_ms_codej.exit.sink.split, %bb.q, %bb.p, %_ZNK2OT7ArrayOfIN3AAT13FTStringRangeENS_7NumTypeILb1EjLj4EEEEixEi.exit.i, %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i.i17, %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i.i, %bb.a
+  %.0 = phi ptr [ null, %bb.a ], [ null, %bb.q ], [ %i.bj, %_Z32_hb_ot_name_language_for_ms_codej.exit.sink.split ], [ null, %bb.p ], [ null, %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i.i ], [ null, %bb.e ], [ null, %_ZL10hb_bsearchIK20hb_ot_language_map_tjEPT_RKT0_S3_mmPFiPKvS8_E.exit.i.i17 ], [ null, %_ZNK2OT7ArrayOfIN3AAT13FTStringRangeENS_7NumTypeILb1EjLj4EEEEixEi.exit.i ], [ null, %bb.i ]
   ret ptr %.0
 }
 
