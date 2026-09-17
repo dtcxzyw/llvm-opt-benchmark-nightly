@@ -205,7 +205,7 @@ bb.a:
 define dso_local void @_ZN5clang4ento11bugreporter12StoreHandler13constructNoteENS1_9StoreInfoERNS0_18BugReporterContextEN4llvm9StringRefE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::shared_ptr.750") align 8 captures(none) initializes((0, 16)) %0, ptr nofree nonnull readnone align 8 captures(none) %1, ptr nofree noundef readonly byval(%"struct.clang::ento::bugreporter::StoreInfo") align 8 captures(none) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %3, ptr %4, i64 %5) local_unnamed_addr #3 align 2 {
 bb.a:
   %6 = alloca %"class.clang::ProgramPoint", align 8 ; 7 uses
-  %.sroa.6 = alloca <{ [4 x i8], ptr, ptr }>, align 4 ; 5 uses
+  %.sroa.6 = alloca <{ [4 x i8], ptr, ptr }>, align 8 ; 5 uses
   %.sroa.14 = alloca <{ %"class.clang::ento::PathDiagnosticRange", [4 x i8] }>, align 8 ; 5 uses
   %7 = alloca %"class.clang::ento::PathDiagnosticLocation", align 8 ; 14 uses
   %8 = alloca %"class.clang::ento::PathDiagnosticLocation", align 8 ; 9 uses
@@ -279,7 +279,7 @@ bb.b:                                             ; preds = %_ZNK5clang12Program
   store i8 %.fca.1.extract.i, ptr %.sroa.2.0..sroa_idx.i, align 8
   %.sroa.019.0.copyload20 = load i32, ptr %7, align 8
   %.sroa.6.0..sroa_idx22 = getelementptr inbounds nuw i8, ptr %7, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.0..sroa_idx22, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %.sroa.6, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.0..sroa_idx22, i64 20, i1 false)
   %.sroa.7.0.copyload25 = load ptr, ptr %i.ah, align 8 ; 2 uses
   %i.ap = load <2 x i32>, ptr %i.ai, align 8
   %.sroa.9.0.copyload30 = load i32, ptr %i.ai, align 8
@@ -304,7 +304,7 @@ bb.b:                                             ; preds = %_ZNK5clang12Program
   call void @_ZN5clang4ento22PathDiagnosticLocation6createERKNS_12ProgramPointERKNS_13SourceManagerE(ptr dead_on_unwind nonnull writable sret(%"class.clang::ento::PathDiagnosticLocation") align 8 %8, ptr noundef nonnull align 8 dereferenceable(48) %6, ptr noundef nonnull align 8 dereferenceable(776) %i.ax) #24
   %.sroa.019.0.copyload21 = load i32, ptr %8, align 8
   %.sroa.6.0..sroa_idx23 = getelementptr inbounds nuw i8, ptr %8, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.0..sroa_idx23, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %.sroa.6, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.0..sroa_idx23, i64 20, i1 false)
   %.sroa.7.0..sroa_idx26 = getelementptr inbounds nuw i8, ptr %8, i64 24
   %.sroa.7.0.copyload27 = load ptr, ptr %.sroa.7.0..sroa_idx26, align 8 ; 2 uses
   %.sroa.9.0..sroa_idx31 = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 2 uses
@@ -341,7 +341,7 @@ bb.b:                                             ; preds = %_ZNK5clang12Program
   %i.be = getelementptr inbounds nuw i8, ptr %i.ba, i64 144
   store i32 %.sroa.019.15976, ptr %i.be, align 8, !noalias !1335
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ba, i64 148
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6, i64 20, i1 false), !noalias !1335
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.6, i64 20, i1 false), !noalias !1335
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ba, i64 168
   store ptr %.sroa.7.16372, ptr %.sroa.7.0..sroa_idx, align 8, !noalias !1335
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ba, i64 176
@@ -744,7 +744,7 @@ bb.a:
   %10 = alloca %"class.std::optional.1526", align 8 ; 7 uses
   %11 = alloca %"class.llvm::SmallString", align 8 ; 8 uses
   %12 = alloca %"class.llvm::raw_svector_ostream", align 8 ; 16 uses
-  %.sroa.7 = alloca <{ [4 x i8], ptr, ptr }>, align 4 ; 6 uses
+  %.sroa.7 = alloca <{ [4 x i8], ptr, ptr }>, align 8 ; 6 uses
   %.sroa.12 = alloca <{ %"class.clang::ento::PathDiagnosticRange", [4 x i8] }>, align 8 ; 6 uses
   %13 = alloca %"class.clang::ento::PathDiagnosticLocation", align 8 ; 13 uses
   %14 = alloca %"class.clang::ento::PathDiagnosticLocation", align 8 ; 15 uses
@@ -906,7 +906,7 @@ bb.l:                                             ; preds = %bb.k
   store i8 %.fca.1.extract.i, ptr %.sroa.2.0..sroa_idx.i, align 8
   %.sroa.070.0.copyload72 = load i32, ptr %13, align 8
   %.sroa.7.0..sroa_idx75 = getelementptr inbounds nuw i8, ptr %13, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.7, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.7.0..sroa_idx75, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %.sroa.7, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.7.0..sroa_idx75, i64 20, i1 false)
   %.sroa.8.0.copyload80 = load ptr, ptr %i.bp, align 8
   %.sroa.9.0.copyload86 = load i32, ptr %i.bq, align 8
   %.sroa.10.0..sroa_idx91 = getelementptr inbounds nuw i8, ptr %13, i64 36
@@ -956,7 +956,7 @@ bb.l:                                             ; preds = %bb.k
   store i8 %.fca.1.extract.i32, ptr %.sroa.2.0..sroa_idx.i33, align 8
   %.sroa.070.0.copyload73 = load i32, ptr %14, align 8
   %.sroa.7.0..sroa_idx76 = getelementptr inbounds nuw i8, ptr %14, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.7, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.7.0..sroa_idx76, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %.sroa.7, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.7.0..sroa_idx76, i64 20, i1 false)
   %.sroa.8.0.copyload82 = load ptr, ptr %i.ci, align 8
   %.sroa.9.0.copyload88 = load i32, ptr %i.cj, align 8
   %.sroa.10.0..sroa_idx93 = getelementptr inbounds nuw i8, ptr %14, i64 36
@@ -1062,7 +1062,7 @@ bb.t:                                             ; preds = %_ZN4llvm11raw_ostre
   %i.dv = getelementptr inbounds nuw i8, ptr %i.dr, i64 144
   store i32 %.sroa.070.0, ptr %i.dv, align 8, !noalias !1451
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dr, i64 148
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.7.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.7, i64 20, i1 false), !noalias !1451
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.7.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.7, i64 20, i1 false), !noalias !1451
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dr, i64 168
   store ptr %.sroa.8.0, ptr %.sroa.8.0..sroa_idx, align 8, !noalias !1451
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dr, i64 176
@@ -1104,7 +1104,7 @@ bb.v:                                             ; preds = %_ZN4llvm11raw_ostre
   %i.eb = getelementptr inbounds nuw i8, ptr %i.dx, i64 144
   store i32 %.sroa.070.0, ptr %i.eb, align 8, !noalias !1453
   %.sroa.7.0..sroa_idx74 = getelementptr inbounds nuw i8, ptr %i.dx, i64 148
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.7.0..sroa_idx74, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.7, i64 20, i1 false), !noalias !1453
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.7.0..sroa_idx74, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.7, i64 20, i1 false), !noalias !1453
   %.sroa.8.0..sroa_idx77 = getelementptr inbounds nuw i8, ptr %i.dx, i64 168
   store ptr %.sroa.8.0, ptr %.sroa.8.0..sroa_idx77, align 8, !noalias !1453
   %.sroa.9.0..sroa_idx83 = getelementptr inbounds nuw i8, ptr %i.dx, i64 176

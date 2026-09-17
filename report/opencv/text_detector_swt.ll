@@ -147,10 +147,10 @@ bb.a:
   %i.a = alloca double, align 8                   ; 4 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %9 = alloca %"class.std::allocator.15", align 1 ; 3 uses
-  %.sroa.2022.i.i = alloca <{ %"struct.cv::text::(anonymous namespace)::Direction", i8, [3 x i8] }>, align 4 ; 4 uses
-  %.sroa.2012.i.i = alloca <{ %"struct.cv::text::(anonymous namespace)::Direction", i8, [3 x i8] }>, align 4 ; 4 uses
+  %.sroa.2022.i.i = alloca <{ %"struct.cv::text::(anonymous namespace)::Direction", i8, [3 x i8] }>, align 8 ; 4 uses
+  %.sroa.2012.i.i = alloca <{ %"struct.cv::text::(anonymous namespace)::Direction", i8, [3 x i8] }>, align 8 ; 4 uses
   %.sroa.16.i8.i.i = alloca <{ float, %"struct.cv::text::(anonymous namespace)::Direction", i8 }>, align 8 ; 4 uses
-  %.sroa.20.i.i = alloca <{ %"struct.cv::text::(anonymous namespace)::Direction", i8, [3 x i8] }>, align 4 ; 4 uses
+  %.sroa.20.i.i = alloca <{ %"struct.cv::text::(anonymous namespace)::Direction", i8, [3 x i8] }>, align 8 ; 4 uses
   %.sroa.16.i.i.i = alloca <{ float, %"struct.cv::text::(anonymous namespace)::Direction", i8 }>, align 8 ; 4 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %11 = alloca %"class.std::allocator.15", align 1 ; 3 uses
@@ -553,7 +553,7 @@ bb.ij:                                            ; preds = %bb.ig
   %i.bdq = load ptr, ptr %i.bdp, align 8, !tbaa !107, !noalias !261 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bdl, i8 0, i64 24, i1 false), !noalias !261
   %.sroa.2022.32..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.023.031.i13.ptr.i.i, i64 36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(9) %.sroa.2022.i.i, ptr noundef nonnull align 4 dereferenceable(9) %.sroa.2022.32..sroa_idx.i.i, i64 9, i1 false), !noalias !261
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %.sroa.2022.i.i, ptr noundef nonnull align 4 dereferenceable(9) %.sroa.2022.32..sroa_idx.i.i, i64 9, i1 false), !noalias !261
   %i.bdr = getelementptr inbounds i8, ptr %.sroa.023.031.i13.ptr.i.i, i64 -16
   %i.bds = load float, ptr %i.bdr, align 8, !tbaa !121, !noalias !261
   %i.bdt = fcmp olt float %i.bcc, %i.bds
@@ -622,7 +622,7 @@ _ZN2cv4text12_GLOBAL__N_116ChainedComponentaSEOS2_.exit10.i52.i.i: ; preds = %_Z
 _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN2cv4text12_GLOBAL__N_116ChainedComponentESt6vectorIS5_SaIS5_EEEENS0_5__ops14_Val_comp_iterIPFbRKS5_SE_EEEEvT_T0_.exit59.i.i: ; preds = %_ZN2cv4text12_GLOBAL__N_116ChainedComponentaSEOS2_.exit10.i52.i.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKN2cv4text12_GLOBAL__N_116ChainedComponentES7_EEclIS5_NS_17__normal_iteratorIPS5_St6vectorIS5_SaIS5_EEEEEEbRT_T0_.exit.i50._crit_edge.i.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKN2cv4text12_GLOBAL__N_116ChainedComponentES7_EEclIS5_NS_17__normal_iteratorIPS5_St6vectorIS5_SaIS5_EEEEEEbRT_T0_.exit.i50._crit_edge.thread.i.i
   %.sroa.0.0.i4531.lcssa.sink.i.i = phi ptr [ %.sroa.0.0.i4531.i.i, %_ZN2cv4text12_GLOBAL__N_116ChainedComponentaSEOS2_.exit10.i52.i.i ], [ %.sroa.023.031.i13.ptr.i.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKN2cv4text12_GLOBAL__N_116ChainedComponentES7_EEclIS5_NS_17__normal_iteratorIPS5_St6vectorIS5_SaIS5_EEEEEEbRT_T0_.exit.i50._crit_edge.thread.i.i ], [ %.sroa.0.0.i4531.i.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKN2cv4text12_GLOBAL__N_116ChainedComponentES7_EEclIS5_NS_17__normal_iteratorIPS5_St6vectorIS5_SaIS5_EEEEEEbRT_T0_.exit.i50._crit_edge.i.i ] ; 2 uses
   %.sroa.2022.32..sroa_idx23.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i4531.lcssa.sink.i.i, i64 36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(9) %.sroa.2022.32..sroa_idx23.i.i, ptr noundef nonnull align 4 dereferenceable(9) %.sroa.2022.i.i, i64 9, i1 false), !noalias !261
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(9) %.sroa.2022.32..sroa_idx23.i.i, ptr noundef nonnull align 8 dereferenceable(9) %.sroa.2022.i.i, i64 9, i1 false), !noalias !261
   %i.beq = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i4531.lcssa.sink.i.i, i64 32
   store float %i.bcc, ptr %i.beq, align 8, !noalias !261
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.2022.i.i)
@@ -652,7 +652,7 @@ _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN2cv4text12_GLOBAL__N_116
   %i.bez = getelementptr inbounds nuw i8, ptr %.sroa.0.08.i.i.i.i.i195, i64 32
   %.sroa.16.32.copyload.i.i = load float, ptr %i.bez, align 8, !noalias !261 ; 3 uses
   %.sroa.20.32..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.08.i.i.i.i.i195, i64 36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(9) %.sroa.20.i.i, ptr noundef nonnull align 4 dereferenceable(9) %.sroa.20.32..sroa_idx.i.i, i64 9, i1 false), !noalias !261
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %.sroa.20.i.i, ptr noundef nonnull align 4 dereferenceable(9) %.sroa.20.32..sroa_idx.i.i, i64 9, i1 false), !noalias !261
   %i.bfa = getelementptr inbounds i8, ptr %.sroa.0.08.i.i.i.i.i195, i64 -16
   %i.bfb = load float, ptr %i.bfa, align 8, !tbaa !121, !noalias !261
   %i.bfc = fcmp olt float %.sroa.16.32.copyload.i.i, %i.bfb
@@ -721,7 +721,7 @@ _ZN2cv4text12_GLOBAL__N_116ChainedComponentaSEOS2_.exit10.i.i.i: ; preds = %_ZN9
 _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN2cv4text12_GLOBAL__N_116ChainedComponentESt6vectorIS5_SaIS5_EEEENS0_5__ops14_Val_comp_iterIPFbRKS5_SE_EEEEvT_T0_.exit.i.i: ; preds = %_ZN2cv4text12_GLOBAL__N_116ChainedComponentaSEOS2_.exit10.i.i.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKN2cv4text12_GLOBAL__N_116ChainedComponentES7_EEclIS5_NS_17__normal_iteratorIPS5_St6vectorIS5_SaIS5_EEEEEEbRT_T0_.exit.i._crit_edge.i.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKN2cv4text12_GLOBAL__N_116ChainedComponentES7_EEclIS5_NS_17__normal_iteratorIPS5_St6vectorIS5_SaIS5_EEEEEEbRT_T0_.exit.i._crit_edge.thread.i.i
   %.sroa.0.0.i36.lcssa.sink.i.i = phi ptr [ %.sroa.0.0.i36.i.i, %_ZN2cv4text12_GLOBAL__N_116ChainedComponentaSEOS2_.exit10.i.i.i ], [ %.sroa.0.08.i.i.i.i.i195, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKN2cv4text12_GLOBAL__N_116ChainedComponentES7_EEclIS5_NS_17__normal_iteratorIPS5_St6vectorIS5_SaIS5_EEEEEEbRT_T0_.exit.i._crit_edge.thread.i.i ], [ %.sroa.0.0.i36.i.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKN2cv4text12_GLOBAL__N_116ChainedComponentES7_EEclIS5_NS_17__normal_iteratorIPS5_St6vectorIS5_SaIS5_EEEEEEbRT_T0_.exit.i._crit_edge.i.i ] ; 2 uses
   %.sroa.20.32..sroa_idx3.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i36.lcssa.sink.i.i, i64 36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(9) %.sroa.20.32..sroa_idx3.i.i, ptr noundef nonnull align 4 dereferenceable(9) %.sroa.20.i.i, i64 9, i1 false), !noalias !261
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(9) %.sroa.20.32..sroa_idx3.i.i, ptr noundef nonnull align 8 dereferenceable(9) %.sroa.20.i.i, i64 9, i1 false), !noalias !261
   %i.bfz = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i36.lcssa.sink.i.i, i64 32
   store float %.sroa.16.32.copyload.i.i, ptr %i.bfz, align 8, !noalias !261
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.20.i.i)
@@ -838,7 +838,7 @@ bb.ir:                                            ; preds = %bb.in
   %i.bhw = load ptr, ptr %i.bhv, align 8, !tbaa !107, !noalias !261 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bhr, i8 0, i64 24, i1 false), !noalias !261
   %.sroa.2012.32..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.023.031.i.i.i, i64 36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(9) %.sroa.2012.i.i, ptr noundef nonnull align 4 dereferenceable(9) %.sroa.2012.32..sroa_idx.i.i, i64 9, i1 false), !noalias !261
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %.sroa.2012.i.i, ptr noundef nonnull align 4 dereferenceable(9) %.sroa.2012.32..sroa_idx.i.i, i64 9, i1 false), !noalias !261
   %i.bhx = getelementptr inbounds i8, ptr %.sroa.023.031.i.i.i, i64 -16
   %i.bhy = load float, ptr %i.bhx, align 8, !tbaa !121, !noalias !261
   %i.bhz = fcmp olt float %i.bgf, %i.bhy
@@ -907,7 +907,7 @@ _ZN2cv4text12_GLOBAL__N_116ChainedComponentaSEOS2_.exit10.i36.i.i: ; preds = %_Z
 _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN2cv4text12_GLOBAL__N_116ChainedComponentESt6vectorIS5_SaIS5_EEEENS0_5__ops14_Val_comp_iterIPFbRKS5_SE_EEEEvT_T0_.exit43.i.i: ; preds = %_ZN2cv4text12_GLOBAL__N_116ChainedComponentaSEOS2_.exit10.i36.i.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKN2cv4text12_GLOBAL__N_116ChainedComponentES7_EEclIS5_NS_17__normal_iteratorIPS5_St6vectorIS5_SaIS5_EEEEEEbRT_T0_.exit.i34._crit_edge.i.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKN2cv4text12_GLOBAL__N_116ChainedComponentES7_EEclIS5_NS_17__normal_iteratorIPS5_St6vectorIS5_SaIS5_EEEEEEbRT_T0_.exit.i34._crit_edge.thread.i.i
   %.sroa.0.0.i2928.lcssa.sink.i.i = phi ptr [ %.sroa.0.0.i2928.i.i, %_ZN2cv4text12_GLOBAL__N_116ChainedComponentaSEOS2_.exit10.i36.i.i ], [ %.sroa.023.031.i.i.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKN2cv4text12_GLOBAL__N_116ChainedComponentES7_EEclIS5_NS_17__normal_iteratorIPS5_St6vectorIS5_SaIS5_EEEEEEbRT_T0_.exit.i34._crit_edge.thread.i.i ], [ %.sroa.0.0.i2928.i.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIPFbRKN2cv4text12_GLOBAL__N_116ChainedComponentES7_EEclIS5_NS_17__normal_iteratorIPS5_St6vectorIS5_SaIS5_EEEEEEbRT_T0_.exit.i34._crit_edge.i.i ] ; 2 uses
   %.sroa.2012.32..sroa_idx13.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i2928.lcssa.sink.i.i, i64 36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(9) %.sroa.2012.32..sroa_idx13.i.i, ptr noundef nonnull align 4 dereferenceable(9) %.sroa.2012.i.i, i64 9, i1 false), !noalias !261
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(9) %.sroa.2012.32..sroa_idx13.i.i, ptr noundef nonnull align 8 dereferenceable(9) %.sroa.2012.i.i, i64 9, i1 false), !noalias !261
   %i.biw = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i2928.lcssa.sink.i.i, i64 32
   store float %i.bgf, ptr %i.biw, align 8, !noalias !261
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.2012.i.i)

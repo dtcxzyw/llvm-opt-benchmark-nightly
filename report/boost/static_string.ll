@@ -206,13 +206,13 @@ _ZNSt11char_traitsIcE6assignEPcmc.exit:           ; preds = %bb.d, %bb.c
 ; Function Attrs: mustprogress nounwind uwtable
 define weak_odr hidden void @_ZN5boost14static_strings19basic_static_stringILm420EcSt11char_traitsIcEE4swapERS4_(ptr noundef nonnull align 2 dereferenceable(423) %0, ptr noundef nonnull align 2 dereferenceable(423) %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.4 = alloca <{ %"class.boost::static_strings::detail::static_string_base<420, char, std::char_traits<char>>::data::basic_static_string", i8 }>, align 2 ; 4 uses
+  %.sroa.4 = alloca <{ %"class.boost::static_strings::detail::static_string_base<420, char, std::char_traits<char>>::data::basic_static_string", i8 }>, align 8 ; 4 uses
   %i.a = load i16, ptr %0, align 2, !tbaa !25     ; 2 uses
   %i.b = zext i16 %i.a to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
   %.sroa.0.0.copyload = load i16, ptr %1, align 2 ; 2 uses
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 2 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(422) %.sroa.4, ptr noundef nonnull align 2 dereferenceable(422) %.sroa.4.0..sroa_idx, i64 422, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(422) %.sroa.4, ptr noundef nonnull align 2 dereferenceable(422) %.sroa.4.0..sroa_idx, i64 422, i1 false)
   store i16 %i.a, ptr %1, align 2, !tbaa !25
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 2 uses
   %i.d = add nuw nsw i64 %i.b, 1
@@ -220,7 +220,7 @@ bb.a:
   store i16 %.sroa.0.0.copyload, ptr %0, align 2, !tbaa !25
   %i.e = zext i16 %.sroa.0.0.copyload to i64
   %i.f = add nuw nsw i64 %i.e, 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %i.c, ptr noundef nonnull align 2 dereferenceable(1) %.sroa.4, i64 %i.f, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %i.c, ptr noundef nonnull align 8 dereferenceable(1) %.sroa.4, i64 %i.f, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
   ret void
 }

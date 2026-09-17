@@ -143,7 +143,7 @@ bb.a:
   %8 = alloca %struct.ImVec2, align 4             ; 5 uses
   %9 = alloca %struct.ImVec2, align 8             ; 4 uses
   %10 = alloca %struct.ImVec2, align 8            ; 4 uses
-  %.sroa.6 = alloca <{ float, %struct.ImRect, i32, float, float, float, float, float, float, float, i16, i8, i8, i8, i8, i8 }>, align 4 ; 5 uses
+  %.sroa.6 = alloca <{ float, %struct.ImRect, i32, float, float, float, float, float, float, float, i16, i8, i8, i8, i8, i8 }>, align 8 ; 5 uses
   %i.a = load ptr, ptr @GImGui, align 8, !tbaa !15 ; 22 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 7184 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !105  ; 13 uses
@@ -546,13 +546,13 @@ bb.bb:                                            ; preds = %bb.az
   %i.od = getelementptr inbounds nuw i8, ptr %i.oa, i64 20 ; 2 uses
   %i.oe = load float, ptr %i.od, align 4, !tbaa !218
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.oa, i8 0, i64 16, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(52) %.sroa.6, i8 0, i64 52, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.6, i8 0, i64 56, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(7) %.sroa.6.52..sroa_idx, i8 -1, i64 7, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.oa, i8 0, i64 16, i1 false)
   %.sroa.4.0..sroa_idx320 = getelementptr inbounds nuw i8, ptr %i.oa, i64 16
   store float -1.000000e+00, ptr %.sroa.4.0..sroa_idx320, align 4, !tbaa !131
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.oa, i64 28
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(59) %.sroa.6.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(59) %.sroa.6, i64 59, i1 false), !tbaa.struct !404
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(59) %.sroa.6.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(59) %.sroa.6, i64 59, i1 false), !tbaa.struct !404
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.oa, i64 87
   %i.of = getelementptr inbounds nuw i8, ptr %i.oa, i64 92
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(11) %i.of, i8 0, i64 11, i1 false)

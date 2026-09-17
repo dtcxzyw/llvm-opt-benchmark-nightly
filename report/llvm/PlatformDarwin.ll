@@ -204,10 +204,10 @@ bb.ax:                                            ; preds = %bb.aw
   br i1 %.not6.i.i, label %_ZN12lldb_private6GetLogINS_7LLDBLogEEEPNS_3LogET_.exit.thread, label %_ZN12lldb_private6GetLogINS_7LLDBLogEEEPNS_3LogET_.exit
 
 _ZN12lldb_private6GetLogINS_7LLDBLogEEEPNS_3LogET_.exit: ; preds = %bb.ax
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %28, i64 4
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(17) %.sroa.5.0..sroa_idx, i8 0, i64 17, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %27) #25
   store i32 %3, ptr %28, align 8, !tbaa !394
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %28, i64 4
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(17) %.sroa.5.0..sroa_idx, i8 0, i64 17, i1 false)
   call void @_ZN12lldb_private8XcodeSDK16GetCanonicalNameB5cxx11ENS0_4InfoE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %27, ptr noundef nonnull byval(%"struct.lldb_private::XcodeSDK::Info") align 8 %28) #25
   %i.jt = load ptr, ptr %27, align 8, !tbaa !41
   call void (ptr, ptr, i64, ptr, i64, ptr, ...) @_ZN12lldb_private3Log7FormatfEN4llvm9StringRefES2_PKcz(ptr noundef nonnull align 8 dereferenceable(104) %i.jq, ptr nonnull @.str.6, i64 88, ptr nonnull @__func__._ZN12lldb_private14PlatformDarwin42AddClangModuleCompilationOptionsForSDKTypeEPNS_6TargetERSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS9_EENS_8XcodeSDK4TypeE, i64 42, ptr noundef nonnull @.str.61, ptr noundef %i.jt) #25
@@ -610,10 +610,10 @@ _ZN12lldb_private6GetLogINS_7LLDBLogEEEPNS_3LogET_.exit: ; preds = %bb.b, %bb.c
   %.0.i.i = phi ptr [ null, %bb.c ], [ %i.d, %bb.b ] ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 760 ; 2 uses
   %i.h = tail call noundef i32 @_ZN12lldb_private8XcodeSDK19GetSDKTypeForTripleERKN4llvm6TripleE(ptr noundef nonnull align 8 dereferenceable(56) %i.g) #25
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %9, i64 4
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(17) %.sroa.5.0..sroa_idx, i8 0, i64 17, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #25
   store i32 %i.h, ptr %9, align 8, !tbaa !394
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %9, i64 4
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(17) %.sroa.5.0..sroa_idx, i8 0, i64 17, i1 false)
   call void @_ZN12lldb_private8XcodeSDKC1ENS0_4InfoE(ptr noundef nonnull align 8 dereferenceable(56) %8, ptr noundef nonnull byval(%"struct.lldb_private::XcodeSDK::Info") align 8 %9) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #25
   %i.i = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 5 uses

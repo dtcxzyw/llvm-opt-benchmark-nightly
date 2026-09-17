@@ -122,8 +122,8 @@ bb.c:                                             ; preds = %bb.a, %BusmasterPar
 define hidden void @BusmasterParser(ptr nofree noundef captures(address) initializes((16, 24)) %0, i32 noundef %1, ptr nofree noundef readonly byval(%struct.token_t) align 8 captures(none) %2, ptr noundef %3) local_unnamed_addr #2 {
 bb.a:
   %4 = alloca %union.YYMINORTYPE, align 8         ; 24 uses
-  %.sroa.64.i = alloca %struct.wtap_can_msg_data_t, align 4 ; 4 uses
-  %.sroa.6.i = alloca %struct.wtap_can_msg_data_t, align 4 ; 4 uses
+  %.sroa.64.i = alloca %struct.wtap_can_msg_data_t, align 8 ; 4 uses
+  %.sroa.6.i = alloca %struct.wtap_can_msg_data_t, align 8 ; 4 uses
   %i.a = getelementptr i8, ptr %0, i64 16         ; 10 uses
   store ptr %3, ptr %i.a, align 8
   %i.b = icmp eq i32 %1, 0
@@ -344,7 +344,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %i.cf = getelementptr i8, ptr %i.aq, i64 -232
   %i.cg = load i32, ptr %i.cf, align 8
   %i.ch = getelementptr i8, ptr %i.aq, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(65) %.sroa.64.i, ptr noundef align 8 dereferenceable(65) %i.ch, i64 65, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(65) %.sroa.64.i, ptr noundef align 8 dereferenceable(65) %i.ch, i64 65, i1 false)
   %i.ci = getelementptr i8, ptr %i.ar, i64 136
   call void @llvm.memmove.p0.p0.i64(ptr noundef align 8 dereferenceable(16) %i.ci, ptr noundef align 8 dereferenceable(16) %i.ce, i64 16, i1 false)
   %.sroa.42.0..sroa_idx.i = getelementptr i8, ptr %i.ar, i64 152
@@ -352,7 +352,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %.sroa.53.0..sroa_idx.i = getelementptr i8, ptr %i.ar, i64 156
   store i32 %i.cg, ptr %.sroa.53.0..sroa_idx.i, align 4
   %.sroa.64.0..sroa_idx.i = getelementptr i8, ptr %i.ar, i64 160
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(65) %.sroa.64.0..sroa_idx.i, ptr noundef nonnull align 4 dereferenceable(65) %.sroa.64.i, i64 65, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(65) %.sroa.64.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(65) %.sroa.64.i, i64 65, i1 false)
   %i.cj = getelementptr i8, ptr %i.ar, i64 72
   store i32 5, ptr %i.cj, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.64.i)
@@ -382,7 +382,7 @@ bb.u:                                             ; preds = %bb.i
   %i.cq = getelementptr i8, ptr %i.aq, i64 -632
   %i.cr = load i32, ptr %i.cq, align 8
   %i.cs = getelementptr i8, ptr %i.aq, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(65) %.sroa.6.i, ptr noundef align 8 dereferenceable(65) %i.cs, i64 65, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(65) %.sroa.6.i, ptr noundef align 8 dereferenceable(65) %i.cs, i64 65, i1 false)
   %i.ct = getelementptr i8, ptr %i.ar, i64 136
   call void @llvm.memmove.p0.p0.i64(ptr noundef align 8 dereferenceable(16) %i.ct, ptr noundef align 8 dereferenceable(16) %i.cp, i64 16, i1 false)
   %.sroa.4.0..sroa_idx.i = getelementptr i8, ptr %i.ar, i64 152
@@ -390,7 +390,7 @@ bb.u:                                             ; preds = %bb.i
   %.sroa.5.0..sroa_idx.i = getelementptr i8, ptr %i.ar, i64 156
   store i32 %i.cr, ptr %.sroa.5.0..sroa_idx.i, align 4
   %.sroa.6.0..sroa_idx.i = getelementptr i8, ptr %i.ar, i64 160
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(65) %.sroa.6.0..sroa_idx.i, ptr noundef nonnull align 4 dereferenceable(65) %.sroa.6.i, i64 65, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(65) %.sroa.6.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(65) %.sroa.6.i, i64 65, i1 false)
   %i.cu = getelementptr i8, ptr %i.ar, i64 72
   store i32 5, ptr %i.cu, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i)

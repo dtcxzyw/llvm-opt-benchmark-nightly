@@ -205,7 +205,7 @@ bb.a:
   %37 = alloca %"class.cxx20::expected.142", align 4 ; 10 uses
   %38 = alloca %"class.std::vector.40", align 8   ; 12 uses
   %39 = alloca %"class.std::allocator.42", align 1 ; 4 uses
-  %40 = alloca %"class.cxx20::expected.129", align 4 ; 3 uses
+  %40 = alloca %"class.cxx20::expected.129", align 4 ; 7 uses
   %41 = alloca %"class.cxx20::expected", align 4  ; 6 uses
   %42 = alloca %"class.cxx20::expected.142", align 4 ; 6 uses
   %43 = alloca %"class.cxx20::expected.129", align 4 ; 6 uses
@@ -608,13 +608,14 @@ bb.dn:                                            ; preds = %bb.dl
 .lr.ph3583:                                       ; preds = %bb.dm, %bb.ds
   %indvars.iv = phi i64 [ %i.ub, %bb.ds ], [ %i.tb, %bb.dm ]
   %i.ub = add nsw i64 %indvars.iv, -1             ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %40) #25
   %i.uc = getelementptr inbounds nuw [8 x i8], ptr %.sink4.i1903, i64 %i.ub
   %.sroa.0945.0.copyload = load i64, ptr %i.uc, align 4, !tbaa !101
   invoke void @_ZN8WasmEdge9Validator11FormChecker7popTypeENS_7ValTypeE(ptr dead_on_unwind nonnull writable sret(%"class.cxx20::expected.129") align 4 %40, ptr noundef nonnull align 8 dereferenceable(376) %1, i64 %.sroa.0945.0.copyload)
           to label %bb.do unwind label %bb.dt
 
 bb.do:                                            ; preds = %.lr.ph3583
-  %i.ud = load i8, ptr %40, align 4, !range !139, !noundef !140
+  %i.ud = load i8, ptr %40, align 4, !tbaa !160, !range !139, !noundef !140
   %i.ue = trunc nuw i8 %i.ud to i1
   br i1 %i.ue, label %bb.dp, label %.critedge1505
 
@@ -637,12 +638,14 @@ bb.dr:                                            ; preds = %bb.dp
   br label %bb.ds
 
 bb.ds:                                            ; preds = %bb.dq, %bb.dr
+  call void @llvm.lifetime.end.p0(ptr nonnull %40) #25
   %.not1353.wide = icmp eq i64 %i.ub, 0
   br i1 %.not1353.wide, label %.critedge1407, label %.lr.ph3583, !llvm.loop !318
 
 bb.dt:                                            ; preds = %.lr.ph3583
   %i.ul = landingpad { ptr, i32 }
           cleanup
+  call void @llvm.lifetime.end.p0(ptr nonnull %40) #25
   br label %bb.dy
 
 .critedge1407:                                    ; preds = %bb.ds, %bb.dm
@@ -727,10 +730,11 @@ _ZNSt6vectorISt8optionalIN8WasmEdge7ValTypeEESaIS3_EED2Ev.exit1910: ; preds = %b
   br label %bb.zw
 
 .critedge1505:                                    ; preds = %bb.do
-  %i.vz = load i32, ptr %i.su, align 4
+  %i.vz = load i32, ptr %i.su, align 4, !tbaa !101
   store i8 0, ptr %0, align 4, !tbaa !119
   %i.wa = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %i.vz, ptr %i.wa, align 4, !tbaa !101
+  call void @llvm.lifetime.end.p0(ptr nonnull %40) #25
   %i.wb = load ptr, ptr %38, align 8, !tbaa !23   ; 3 uses
   %.not.i.i.i1911 = icmp eq ptr %i.wb, null
   br i1 %.not.i.i.i1911, label %_ZNSt6vectorISt8optionalIN8WasmEdge7ValTypeEESaIS3_EED2Ev.exit1912, label %bb.ea
@@ -1133,6 +1137,7 @@ bb.a:
   %3 = alloca %"struct.spdlog::source_loc", align 8 ; 4 uses
   %4 = alloca %"struct.spdlog::source_loc", align 8 ; 4 uses
   %i.a = alloca i32, align 4                      ; 4 uses
+  %.sroa.0 = alloca %"struct.std::_Optional_payload.81", align 8 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 352
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 360 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !24   ; 2 uses
@@ -1199,11 +1204,14 @@ _ZN6spdlog5errorISt17basic_string_viewIcSt11char_traitsIcEEEEvRKT_.exit: ; preds
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.a
-  %5 = getelementptr inbounds i8, ptr %i.d, i64 -12 ; 2 uses
-  %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 4
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.ad, ptr noundef nonnull align 4 dereferenceable(12) %5, i64 12, i1 false)
-  store ptr %5, ptr %i.c, align 8, !tbaa !24
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  %i.ad = getelementptr inbounds i8, ptr %i.d, i64 -12 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, ptr noundef nonnull align 4 dereferenceable(12) %i.ad, i64 12, i1 false)
+  store ptr %i.ad, ptr %i.c, align 8, !tbaa !24
   store i8 1, ptr %0, align 4, !tbaa !160
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %5, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i64 12, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %_ZN6spdlog5errorISt17basic_string_viewIcSt11char_traitsIcEEEEvRKT_.exit, %bb.c

@@ -205,7 +205,7 @@ bb.a:
   %i.f = alloca i64, align 8                      ; 4 uses
   %14 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %15 = alloca %"class.std::allocator.20", align 1 ; 5 uses
-  %.sroa.0 = alloca <4 x double>, align 32        ; 5 uses
+  %.sroa.0 = alloca <4 x double>, align 16        ; 5 uses
   %16 = alloca %"class.duckdb::(anonymous namespace)::FixedSizeBlobWriter", align 8 ; 7 uses
   %17 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %18 = alloca %"class.std::allocator.20", align 1 ; 5 uses
@@ -584,9 +584,9 @@ bb.ao:                                            ; preds = %bb.aj
 bb.ap:                                            ; preds = %bb.ao
   %i.dx = tail call fastcc noundef ptr @_ZN6duckdb12_GLOBAL__N_110BlobReader7ReserveEm(ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 noundef %i.dg) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  store <4 x double> splat (double +qnan), ptr %.sroa.0, align 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 32 dereferenceable(1) %.sroa.0, ptr noundef nonnull align 1 dereferenceable(1) %i.dx, i64 %i.dg, i1 false)
-  %.sroa.0.0..sroa.0.0. = load <4 x double>, ptr %.sroa.0, align 32
+  store <4 x double> splat (double +qnan), ptr %.sroa.0, align 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %.sroa.0, ptr noundef nonnull align 1 dereferenceable(1) %i.dx, i64 %i.dg, i1 false)
+  %.sroa.0.0..sroa.0.0. = load <4 x double>, ptr %.sroa.0, align 16
   %.fr = freeze <4 x double> %.sroa.0.0..sroa.0.0.
   %i.dy = fcmp ord <4 x double> %.fr, zeroinitializer
   %i.dz = bitcast <4 x i1> %i.dy to i4

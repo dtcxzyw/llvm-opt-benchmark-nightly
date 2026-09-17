@@ -202,7 +202,7 @@ _ZN2v88internal4Zone3NewINS0_8compiler9Operator1IiNS3_9OpEqualToIiEENS3_6OpHashI
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef ptr @_ZN2v88internal8compiler25SimplifiedOperatorBuilder23SpeculativeBigIntAsIntNEiRKNS1_14FeedbackSourceE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, i32 noundef %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(12) %2) local_unnamed_addr #1 align 2 {
 bb.a:
-  %.sroa.4 = alloca { [4 x i8], %"struct.v8::internal::compiler::FeedbackSource" }, align 4 ; 2 uses
+  %.sroa.4 = alloca { [4 x i8], %"struct.v8::internal::compiler::FeedbackSource" }, align 8 ; 2 uses
   %i.a = icmp ugt i32 %1, 64
   br i1 %i.a, label %bb.b, label %bb.c, !prof !5
 
@@ -238,14 +238,14 @@ _ZN2v88internal4Zone3NewINS0_8compiler9Operator1INS3_30SpeculativeBigIntAsNParam
   %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 40
   store i32 %1, ptr %i.m, align 8
   %.sroa.412.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 44
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.412.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.4, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.412.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.4, i64 20, i1 false)
   ret ptr %i.k
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef ptr @_ZN2v88internal8compiler25SimplifiedOperatorBuilder24SpeculativeBigIntAsUintNEiRKNS1_14FeedbackSourceE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, i32 noundef %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(12) %2) local_unnamed_addr #1 align 2 {
 bb.a:
-  %.sroa.4 = alloca { [4 x i8], %"struct.v8::internal::compiler::FeedbackSource" }, align 4 ; 2 uses
+  %.sroa.4 = alloca { [4 x i8], %"struct.v8::internal::compiler::FeedbackSource" }, align 8 ; 2 uses
   %i.a = icmp ugt i32 %1, 64
   br i1 %i.a, label %bb.b, label %bb.c, !prof !5
 
@@ -281,7 +281,7 @@ _ZN2v88internal4Zone3NewINS0_8compiler9Operator1INS3_30SpeculativeBigIntAsNParam
   %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 40
   store i32 %1, ptr %i.m, align 8
   %.sroa.412.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 44
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.412.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.4, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.412.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.4, i64 20, i1 false)
   ret ptr %i.k
 }
 

@@ -164,7 +164,7 @@ bb.a:
   %9 = alloca %struct.ImVec2, align 4             ; 5 uses
   %10 = alloca %struct.ImVec2, align 8            ; 4 uses
   %11 = alloca %struct.ImVec2, align 8            ; 4 uses
-  %.sroa.6 = alloca <{ float, %struct.ImRect, i32, i32, float, float, float, float, float, float, float, i16, i16, i16, i16, i16, i16 }>, align 4 ; 5 uses
+  %.sroa.6 = alloca <{ float, %struct.ImRect, i32, i32, float, float, float, float, float, float, float, i16, i16, i16, i16, i16, i16 }>, align 8 ; 5 uses
   %i.a = load ptr, ptr @GImGui, align 8, !tbaa !19 ; 27 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 5312 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !149  ; 15 uses
@@ -567,25 +567,25 @@ bb.db:                                            ; preds = %bb.cz, %bb.cy
   %i.vq = getelementptr inbounds nuw i8, ptr %i.vg, i64 20 ; 3 uses
   %i.vr = load float, ptr %i.vq, align 4, !tbaa !306
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.6, i8 0, i64 56, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.6.56..sroa_idx, i8 -1, i64 12, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.vg, i8 0, i64 16, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(56) %.sroa.6, i8 0, i64 56, i1 false)
-  %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.vg, i64 106
-  %12 = getelementptr inbounds nuw i8, ptr %i.vg, i64 108
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(5) %12, i8 0, i64 5, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.6.56..sroa_idx, i8 -1, i64 12, i1 false)
   %.sroa.4.0..sroa_idx399 = getelementptr inbounds nuw i8, ptr %i.vg, i64 16
   store float -1.000000e+00, ptr %.sroa.4.0..sroa_idx399, align 4, !tbaa !177
   store i64 0, ptr %i.vq, align 4
   %.sroa.5400.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.vg, i64 28
   store float -1.000000e+00, ptr %.sroa.5400.0..sroa_idx, align 4, !tbaa !177
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.vg, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(68) %.sroa.6.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(68) %.sroa.6, i64 68, i1 false), !tbaa.struct !532
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(68) %.sroa.6.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(68) %.sroa.6, i64 68, i1 false), !tbaa.struct !532
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.vg, i64 100
   store i16 255, ptr %.sroa.7.0..sroa_idx, align 4, !tbaa !300
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.vg, i64 102
   store i16 255, ptr %.sroa.8.0..sroa_idx, align 2, !tbaa !300
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.vg, i64 104
   store i16 255, ptr %.sroa.9.0..sroa_idx, align 4, !tbaa !300
+  %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.vg, i64 106
+  %12 = getelementptr inbounds nuw i8, ptr %i.vg, i64 108
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(5) %12, i8 0, i64 5, i1 false)
   %.sroa.10401.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.vg, i64 113
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.vg, i64 114
   store i32 0, ptr %.sroa.11.0..sroa_idx, align 2
@@ -988,7 +988,7 @@ declare void @_ZN5ImGui39NavUpdateCurrentWindowIsScrollPushableXEv() local_unnam
 define void @_ZN5ImGui16TableSetupColumnEPKcifj(ptr noundef %0, i32 noundef %1, float noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
   %.sroa.0 = alloca [40 x i8], align 4            ; 5 uses
-  %.sroa.7 = alloca <{ float, %struct.ImRect, i32, i32, float, float, float, float, float, float, float, i16, i16, i16, i16, i16, i16 }>, align 4 ; 5 uses
+  %.sroa.7 = alloca <{ float, %struct.ImRect, i32, i32, float, float, float, float, float, float, float, i16, i16, i16, i16, i16, i16 }>, align 8 ; 5 uses
   %i.a = load ptr, ptr @GImGui, align 8, !tbaa !19
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8984
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !263  ; 14 uses
@@ -1213,9 +1213,9 @@ _ZN8ImVectorI29ImGuiTableReconcileColumnDataE7reserveEi.exit.thread: ; preds = %
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %.sroa.0, i8 0, i64 24, i1 false)
   %.sroa.0.24..sroa_idx81 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.0.24..sroa_idx81, i8 0, i64 16, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(56) %.sroa.7, i8 0, i64 56, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.7, i8 0, i64 56, i1 false)
   %.sroa.7.56..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.7, i64 56
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.7.56..sroa_idx, i8 -1, i64 12, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.7.56..sroa_idx, i8 -1, i64 12, i1 false)
   %i.cx = load i32, ptr %i.cw, align 8, !tbaa !210 ; 6 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cv, i64 36 ; 2 uses
   %i.cz = load i32, ptr %i.cy, align 4, !tbaa !209
@@ -1276,7 +1276,7 @@ _ZN8ImVectorI29ImGuiTableReconcileColumnDataE9push_backERKS0_.exit: ; preds = %.
   %.sroa.666.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ds, i64 52
   store float -1.000000e+00, ptr %.sroa.666.0..sroa_idx, align 4
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ds, i64 56
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(68) %.sroa.7.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(68) %.sroa.7, i64 68, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(68) %.sroa.7.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(68) %.sroa.7, i64 68, i1 false)
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ds, i64 124
   store i16 255, ptr %.sroa.8.0..sroa_idx, align 4
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ds, i64 126

@@ -205,7 +205,7 @@ _ZNK8seq_util3str9is_stringEPK4exprR7zstring.exit.thread: ; preds = %bb.b, %_ZNK
 ; Function Attrs: mustprogress uwtable
 define hidden noundef i32 @_ZNK8seq_util3rex10min_lengthEP4expr(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
-  %.sroa.5.i = alloca <{ i8, [3 x i8], i32, i32, i8, [3 x i8] }>, align 4 ; 5 uses
+  %.sroa.5.i = alloca <{ i8, [3 x i8], i32, i32, i8, [3 x i8] }>, align 8 ; 5 uses
   %2 = alloca %"struct.seq_util::rex::info", align 4 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #27
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5.i)
@@ -230,20 +230,20 @@ _ZNK8seq_util3rex14has_valid_infoEP4expr.exit.i.i: ; preds = %_ZNK6vectorIN8seq_
 
 _ZNK8seq_util3rex15get_cached_infoEP4expr.exit.thread.i: ; preds = %_ZNK8seq_util3rex14has_valid_infoEP4expr.exit.i.i
   %.sroa.5.0..sink.i.sroa_idx7.i = getelementptr inbounds nuw i8, ptr %i.i, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.5.i, ptr noundef nonnull align 4 dereferenceable(16) %.sroa.5.0..sink.i.sroa_idx7.i, i64 16, i1 false), !noalias !444
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.i, ptr noundef nonnull align 4 dereferenceable(16) %.sroa.5.0..sink.i.sroa_idx7.i, i64 16, i1 false), !noalias !444
   br label %bb.b
 
 _ZNK8seq_util3rex15get_cached_infoEP4expr.exit.i: ; preds = %_ZNK8seq_util3rex14has_valid_infoEP4expr.exit.i.i, %_ZNK6vectorIN8seq_util3rex4infoELb1EjE4sizeEv.exit.i.i.i, %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.sroa.0.0.copyload4.pr.i = load i32, ptr %i.k, align 8, !noalias !444
   %.sroa.5.0..sink.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 52
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.5.i, ptr noundef nonnull align 4 dereferenceable(16) %.sroa.5.0..sink.i.sroa_idx.i, i64 16, i1 false), !noalias !444
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.i, ptr noundef nonnull align 4 dereferenceable(16) %.sroa.5.0..sink.i.sroa_idx.i, i64 16, i1 false), !noalias !444
   %.not.i = icmp eq i32 %.sroa.0.0.copyload4.pr.i, 0
   br i1 %.not.i, label %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i, label %bb.b
 
 bb.b:                                             ; preds = %_ZNK8seq_util3rex15get_cached_infoEP4expr.exit.i, %_ZNK8seq_util3rex15get_cached_infoEP4expr.exit.thread.i
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.5.0..sroa_idx.i, ptr noundef nonnull align 4 dereferenceable(16) %.sroa.5.i, i64 16, i1 false), !tbaa.struct !254
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.5.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.i, i64 16, i1 false), !tbaa.struct !254
   br label %_ZNK8seq_util3rex8get_infoEP4expr.exit
 
 _ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i: ; preds = %_ZNK8seq_util3rex15get_cached_infoEP4expr.exit.i
@@ -294,7 +294,7 @@ _ZNK8seq_util3rex8get_infoEP4expr.exit:           ; preds = %bb.b, %_ZN15ref_vec
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZNK8seq_util3rex8get_infoEP4expr(ptr dead_on_unwind noalias nofree writable sret(%"struct.seq_util::rex::info") align 4 captures(address) initializes((0, 20)) %0, ptr noundef nonnull align 8 dereferenceable(88) %1, ptr noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
-  %.sroa.5 = alloca <{ i8, [3 x i8], i32, i32, i8, [3 x i8] }>, align 4 ; 5 uses
+  %.sroa.5 = alloca <{ i8, [3 x i8], i32, i32, i8, [3 x i8] }>, align 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
   %i.a = load i32, ptr %2, align 4, !tbaa !252, !noalias !447 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -317,14 +317,14 @@ _ZNK8seq_util3rex14has_valid_infoEP4expr.exit.i:  ; preds = %_ZNK6vectorIN8seq_u
 
 _ZNK8seq_util3rex15get_cached_infoEP4expr.exit.thread: ; preds = %_ZNK8seq_util3rex14has_valid_infoEP4expr.exit.i
   %.sroa.5.0..sink.i.sroa_idx7 = getelementptr inbounds nuw i8, ptr %i.i, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.5, ptr noundef nonnull align 4 dereferenceable(16) %.sroa.5.0..sink.i.sroa_idx7, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5, ptr noundef nonnull align 4 dereferenceable(16) %.sroa.5.0..sink.i.sroa_idx7, i64 16, i1 false)
   br label %bb.b
 
 _ZNK8seq_util3rex15get_cached_infoEP4expr.exit:   ; preds = %bb.a, %_ZNK6vectorIN8seq_util3rex4infoELb1EjE4sizeEv.exit.i.i, %_ZNK8seq_util3rex14has_valid_infoEP4expr.exit.i
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 48
   %.sroa.0.0.copyload4.pr = load i32, ptr %i.k, align 8 ; 2 uses
   %.sroa.5.0..sink.i.sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 52
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.5, ptr noundef nonnull align 4 dereferenceable(16) %.sroa.5.0..sink.i.sroa_idx, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5, ptr noundef nonnull align 4 dereferenceable(16) %.sroa.5.0..sink.i.sroa_idx, i64 16, i1 false)
   %.not = icmp eq i32 %.sroa.0.0.copyload4.pr, 0
   br i1 %.not, label %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i, label %bb.b
 
@@ -332,7 +332,7 @@ bb.b:                                             ; preds = %_ZNK8seq_util3rex15
   %.sroa.0.0.copyload48 = phi i32 [ %i.j, %_ZNK8seq_util3rex15get_cached_infoEP4expr.exit.thread ], [ %.sroa.0.0.copyload4.pr, %_ZNK8seq_util3rex15get_cached_infoEP4expr.exit ]
   store i32 %.sroa.0.0.copyload48, ptr %0, align 4, !tbaa !253
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(16) %.sroa.5, i64 16, i1 false), !tbaa.struct !254
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5, i64 16, i1 false), !tbaa.struct !254
   br label %bb.e
 
 _ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i: ; preds = %_ZNK8seq_util3rex15get_cached_infoEP4expr.exit

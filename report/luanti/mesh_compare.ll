@@ -128,7 +128,7 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress uwtable
 define internal fastcc void @_ZL16canonicalizeMeshRKSt6vectorIN5video9S3DVertexESaIS1_EERKS_ItSaItEE(ptr dead_on_unwind noalias nofree nonnull writable writeonly align 8 captures(none) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2) unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.0.i = alloca [3 x %"struct.video::S3DVertex"], align 4 ; 7 uses
+  %.sroa.0.i = alloca [3 x %"struct.video::S3DVertex"], align 8 ; 7 uses
   %3 = alloca %"struct.std::array.25", align 4    ; 5 uses
   %4 = alloca %"struct.std::array.25", align 8    ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !48)
@@ -300,7 +300,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.az = getelementptr inbounds nuw [40 x i8], ptr %i.au, i64 %i.as
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(38) %.sroa.0.i, ptr noundef nonnull align 4 dereferenceable(38) %i.az, i64 38, i1 false), !tbaa.struct !23, !noalias !48
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(38) %.sroa.0.i, ptr noundef nonnull align 4 dereferenceable(38) %i.az, i64 38, i1 false), !tbaa.struct !23, !noalias !48
   %i.ba = add nuw nsw i64 %i.an, 1                ; 3 uses
   %.not.i.i26.i = icmp ugt i64 %i.al, %i.ba
   br i1 %.not.i.i26.i, label %bb.i, label %.invoke.i
@@ -314,7 +314,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.be = getelementptr inbounds nuw [40 x i8], ptr %i.au, i64 %i.bd
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(38) %.sroa.0.40..sroa_idx.i, ptr noundef nonnull align 4 dereferenceable(38) %i.be, i64 38, i1 false), !tbaa.struct !23, !noalias !48
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(38) %.sroa.0.40..sroa_idx.i, ptr noundef nonnull align 4 dereferenceable(38) %i.be, i64 38, i1 false), !tbaa.struct !23, !noalias !48
   %i.bf = add nuw nsw i64 %i.an, 2                ; 3 uses
   %.not.i.i32.i = icmp ugt i64 %i.al, %i.bf
   br i1 %.not.i.i32.i, label %bb.k, label %.invoke.i
@@ -328,13 +328,13 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.bj = getelementptr inbounds nuw [40 x i8], ptr %i.au, i64 %i.bi
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(38) %.sroa.0.80..sroa_idx.i, ptr noundef nonnull align 4 dereferenceable(38) %i.bj, i64 38, i1 false), !tbaa.struct !23, !noalias !48
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(38) %.sroa.0.80..sroa_idx.i, ptr noundef nonnull align 4 dereferenceable(38) %i.bj, i64 38, i1 false), !tbaa.struct !23, !noalias !48
   %exitcond.not = icmp eq i64 %indvars.iv.i, %i.am
   br i1 %exitcond.not, label %.invoke.i, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.bk = getelementptr inbounds nuw [120 x i8], ptr %i.q, i64 %indvars.iv.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(120) %i.bk, ptr noundef nonnull align 4 dereferenceable(120) %.sroa.0.i, i64 120, i1 false), !tbaa.struct !25, !noalias !48
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(120) %i.bk, ptr noundef nonnull align 8 dereferenceable(120) %.sroa.0.i, i64 120, i1 false), !tbaa.struct !25, !noalias !48
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
   %indvars.iv.next.i = add nuw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
@@ -737,7 +737,7 @@ declare i64 @llvm.ctlz.i64(i64, i1 immarg) #9
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPSt5arrayIN5video9S3DVertexELm3EESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_T0_(ptr %0, ptr %1) local_unnamed_addr #0 comdat {
 bb.a:
-  %.sroa.05 = alloca [3 x %"struct.video::S3DVertex"], align 4 ; 8 uses
+  %.sroa.05 = alloca [3 x %"struct.video::S3DVertex"], align 8 ; 8 uses
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %.loopexit, label %.preheader
 
@@ -781,9 +781,9 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt5arrayIN5video
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt5arrayIN5video9S3DVertexELm3EESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.peel: ; preds = %.lr.ph, %.lr.ph.i.i.i.i.i.1.i.i.peel, %.lr.ph.i.i.i.i.i.2.i.i.peel
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.05)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(120) %.sroa.05, ptr noundef nonnull align 4 dereferenceable(120) %.sroa.0.017, i64 120, i1 false), !tbaa.struct !25
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %.sroa.05, ptr noundef nonnull align 4 dereferenceable(120) %.sroa.0.017, i64 120, i1 false), !tbaa.struct !25
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(120) %.sroa.0.017, ptr noundef nonnull align 4 dereferenceable(120) %0, i64 120, i1 false), !tbaa.struct !25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(120) %0, ptr noundef nonnull align 4 dereferenceable(120) %.sroa.05, i64 120, i1 false), !tbaa.struct !25
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(120) %0, ptr noundef nonnull align 8 dereferenceable(120) %.sroa.05, i64 120, i1 false), !tbaa.struct !25
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.05)
   br label %bb.e
 
@@ -822,7 +822,7 @@ bb.h:                                             ; preds = %.lr.ph.i.i.i.i.i.2.
 
 bb.i:                                             ; preds = %.peel.next, %.lr.ph.i.i.i.i.i.1.i.i, %.lr.ph.i.i.i.i.i.2.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.05)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(120) %.sroa.05, ptr noundef nonnull align 4 dereferenceable(120) %.sroa.0.020, i64 120, i1 false), !tbaa.struct !25
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %.sroa.05, ptr noundef nonnull align 4 dereferenceable(120) %.sroa.0.020, i64 120, i1 false), !tbaa.struct !25
   %i.o = ptrtoint ptr %.sroa.0.020 to i64
   %i.p = sub i64 %i.o, %i.b                       ; 4 uses
   %i.q = icmp sgt i64 %i.p, 120
@@ -846,7 +846,7 @@ bb.l:                                             ; preds = %bb.k
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt5arrayIN5video9S3DVertexELm3EESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt5arrayIN5video9S3DVertexELm3EESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit: ; preds = %bb.j, %bb.k, %bb.l
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(120) %0, ptr noundef nonnull align 4 dereferenceable(120) %.sroa.05, i64 120, i1 false), !tbaa.struct !25
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(120) %0, ptr noundef nonnull align 8 dereferenceable(120) %.sroa.05, i64 120, i1 false), !tbaa.struct !25
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.05)
   br label %bb.m
 

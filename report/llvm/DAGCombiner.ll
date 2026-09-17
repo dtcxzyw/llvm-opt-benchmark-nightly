@@ -205,11 +205,11 @@ _ZN4llvm14SDPatternMatch16sd_context_matchIRNS0_2OrIJNS2_IJNS0_15BinaryOpc_match
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN4llvm14SDPatternMatch10m_SMaxLikeINS0_10Value_bindINS0_11Value_matchEEES4_EEDaRKT_RKT0_(ptr dead_on_unwind noalias writable sret(%"struct.llvm::SDPatternMatch::Or.480") align 8 %0, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2) local_unnamed_addr #0 comdat {
 bb.a:
-  %.sroa.4.i11 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.485" }, align 4 ; 2 uses
+  %.sroa.4.i11 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.485" }, align 8 ; 2 uses
   %3 = alloca %"struct.llvm::SDPatternMatch::MaxMin_match", align 8 ; 3 uses
-  %.sroa.4.i6 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.493" }, align 4 ; 2 uses
+  %.sroa.4.i6 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.493" }, align 8 ; 2 uses
   %4 = alloca %"struct.llvm::SDPatternMatch::MaxMin_match.492", align 8 ; 3 uses
-  %.sroa.4.i = alloca <{ [4 x i8], %"struct.llvm::SDPatternMatch::Value_bind.258" }>, align 4 ; 2 uses
+  %.sroa.4.i = alloca <{ [4 x i8], %"struct.llvm::SDPatternMatch::Value_bind.258" }>, align 8 ; 2 uses
   %5 = alloca %"struct.llvm::SDPatternMatch::MaxMin_match.499", align 8 ; 3 uses
   %.sroa.4.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.4.i, i64 4
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %.sroa.4.8..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
@@ -237,7 +237,7 @@ bb.a:
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72
   store i32 190, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 76
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(36) %.sroa.4.i11, i64 36, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(36) %.sroa.4.i11, i64 36, i1 false)
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 144
   store i32 0, ptr %.sroa.7.0..sroa_idx, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 152
@@ -245,7 +245,7 @@ bb.a:
   %.sroa.417.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 216
   store i32 190, ptr %.sroa.417.0..sroa_idx, align 8
   %.sroa.518.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 220
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %.sroa.518.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(36) %.sroa.4.i6, i64 36, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %.sroa.518.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(36) %.sroa.4.i6, i64 36, i1 false)
   %.sroa.720.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 288
   store i32 0, ptr %.sroa.720.0..sroa_idx, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 296
@@ -253,7 +253,7 @@ bb.a:
   %.sroa.423.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 344
   store i32 188, ptr %.sroa.423.0..sroa_idx, align 8
   %.sroa.524.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 348
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.524.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(28) %.sroa.4.i, i64 28, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.524.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(28) %.sroa.4.i, i64 28, i1 false)
   %.sroa.726.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 400
   store i32 0, ptr %.sroa.726.0..sroa_idx, align 8
   ret void
@@ -310,11 +310,11 @@ _ZN4llvm14SDPatternMatch16sd_context_matchIRNS0_2OrIJNS2_IJNS0_15BinaryOpc_match
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN4llvm14SDPatternMatch10m_SMinLikeINS0_11Value_matchES2_EEDaRKT_RKT0_(ptr dead_on_unwind noalias writable sret(%"struct.llvm::SDPatternMatch::Or.500") align 8 %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 comdat {
 bb.a:
-  %.sroa.4.i11 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.506" }, align 4 ; 2 uses
+  %.sroa.4.i11 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.506" }, align 8 ; 2 uses
   %3 = alloca %"struct.llvm::SDPatternMatch::MaxMin_match.505", align 8 ; 3 uses
-  %.sroa.4.i6 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.514" }, align 4 ; 2 uses
+  %.sroa.4.i6 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.514" }, align 8 ; 2 uses
   %4 = alloca %"struct.llvm::SDPatternMatch::MaxMin_match.513", align 8 ; 3 uses
-  %.sroa.4.i = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::Value_match" }, align 4 ; 2 uses
+  %.sroa.4.i = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::Value_match" }, align 8 ; 2 uses
   %5 = alloca %"struct.llvm::SDPatternMatch::MaxMin_match.520", align 8 ; 3 uses
   %.sroa.4.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.4.i, i64 4
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.4.8..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false)
@@ -342,7 +342,7 @@ bb.a:
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i32 189, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 60
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(28) %.sroa.4.i11, i64 28, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(28) %.sroa.4.i11, i64 28, i1 false)
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112
   store i32 0, ptr %.sroa.7.0..sroa_idx, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 120
@@ -350,7 +350,7 @@ bb.a:
   %.sroa.417.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 168
   store i32 189, ptr %.sroa.417.0..sroa_idx, align 8
   %.sroa.518.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 172
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.518.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(28) %.sroa.4.i6, i64 28, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.518.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(28) %.sroa.4.i6, i64 28, i1 false)
   %.sroa.720.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 224
   store i32 0, ptr %.sroa.720.0..sroa_idx, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 232
@@ -358,7 +358,7 @@ bb.a:
   %.sroa.423.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 264
   store i32 187, ptr %.sroa.423.0..sroa_idx, align 8
   %.sroa.524.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 268
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.524.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.4.i, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.524.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.4.i, i64 20, i1 false)
   %.sroa.726.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 304
   store i32 0, ptr %.sroa.726.0..sroa_idx, align 8
   ret void
@@ -415,11 +415,11 @@ _ZN4llvm14SDPatternMatch16sd_context_matchIRNS0_2OrIJNS2_IJNS0_15BinaryOpc_match
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN4llvm14SDPatternMatch10m_SMinLikeINS0_10Value_bindINS0_11Value_matchEEES4_EEDaRKT_RKT0_(ptr dead_on_unwind noalias writable sret(%"struct.llvm::SDPatternMatch::Or.521") align 8 %0, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2) local_unnamed_addr #0 comdat {
 bb.a:
-  %.sroa.4.i11 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.485" }, align 4 ; 2 uses
+  %.sroa.4.i11 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.485" }, align 8 ; 2 uses
   %3 = alloca %"struct.llvm::SDPatternMatch::MaxMin_match.526", align 8 ; 3 uses
-  %.sroa.4.i6 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.493" }, align 4 ; 2 uses
+  %.sroa.4.i6 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.493" }, align 8 ; 2 uses
   %4 = alloca %"struct.llvm::SDPatternMatch::MaxMin_match.529", align 8 ; 3 uses
-  %.sroa.4.i = alloca <{ [4 x i8], %"struct.llvm::SDPatternMatch::Value_bind.258" }>, align 4 ; 2 uses
+  %.sroa.4.i = alloca <{ [4 x i8], %"struct.llvm::SDPatternMatch::Value_bind.258" }>, align 8 ; 2 uses
   %5 = alloca %"struct.llvm::SDPatternMatch::MaxMin_match.532", align 8 ; 3 uses
   %.sroa.4.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.4.i, i64 4
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %.sroa.4.8..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
@@ -447,7 +447,7 @@ bb.a:
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72
   store i32 189, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 76
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(36) %.sroa.4.i11, i64 36, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(36) %.sroa.4.i11, i64 36, i1 false)
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 144
   store i32 0, ptr %.sroa.7.0..sroa_idx, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 152
@@ -455,7 +455,7 @@ bb.a:
   %.sroa.417.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 216
   store i32 189, ptr %.sroa.417.0..sroa_idx, align 8
   %.sroa.518.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 220
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %.sroa.518.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(36) %.sroa.4.i6, i64 36, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %.sroa.518.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(36) %.sroa.4.i6, i64 36, i1 false)
   %.sroa.720.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 288
   store i32 0, ptr %.sroa.720.0..sroa_idx, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 296
@@ -463,7 +463,7 @@ bb.a:
   %.sroa.423.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 344
   store i32 187, ptr %.sroa.423.0..sroa_idx, align 8
   %.sroa.524.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 348
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.524.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(28) %.sroa.4.i, i64 28, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.524.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(28) %.sroa.4.i, i64 28, i1 false)
   %.sroa.726.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 400
   store i32 0, ptr %.sroa.726.0..sroa_idx, align 8
   ret void
@@ -520,11 +520,11 @@ _ZN4llvm14SDPatternMatch16sd_context_matchIRNS0_2OrIJNS2_IJNS0_15BinaryOpc_match
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN4llvm14SDPatternMatch10m_SMaxLikeINS0_11Value_matchES2_EEDaRKT_RKT0_(ptr dead_on_unwind noalias writable sret(%"struct.llvm::SDPatternMatch::Or.533") align 8 %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 comdat {
 bb.a:
-  %.sroa.4.i11 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.506" }, align 4 ; 2 uses
+  %.sroa.4.i11 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.506" }, align 8 ; 2 uses
   %3 = alloca %"struct.llvm::SDPatternMatch::MaxMin_match.538", align 8 ; 3 uses
-  %.sroa.4.i6 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.514" }, align 4 ; 2 uses
+  %.sroa.4.i6 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.514" }, align 8 ; 2 uses
   %4 = alloca %"struct.llvm::SDPatternMatch::MaxMin_match.541", align 8 ; 3 uses
-  %.sroa.4.i = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::Value_match" }, align 4 ; 2 uses
+  %.sroa.4.i = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::Value_match" }, align 8 ; 2 uses
   %5 = alloca %"struct.llvm::SDPatternMatch::MaxMin_match.544", align 8 ; 3 uses
   %.sroa.4.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.4.i, i64 4
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.4.8..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false)
@@ -552,7 +552,7 @@ bb.a:
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i32 190, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 60
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(28) %.sroa.4.i11, i64 28, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(28) %.sroa.4.i11, i64 28, i1 false)
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112
   store i32 0, ptr %.sroa.7.0..sroa_idx, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 120
@@ -560,7 +560,7 @@ bb.a:
   %.sroa.417.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 168
   store i32 190, ptr %.sroa.417.0..sroa_idx, align 8
   %.sroa.518.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 172
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.518.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(28) %.sroa.4.i6, i64 28, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.518.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(28) %.sroa.4.i6, i64 28, i1 false)
   %.sroa.720.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 224
   store i32 0, ptr %.sroa.720.0..sroa_idx, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 232
@@ -568,7 +568,7 @@ bb.a:
   %.sroa.423.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 264
   store i32 188, ptr %.sroa.423.0..sroa_idx, align 8
   %.sroa.524.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 268
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.524.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.4.i, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.524.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.4.i, i64 20, i1 false)
   %.sroa.726.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 304
   store i32 0, ptr %.sroa.726.0..sroa_idx, align 8
   ret void
@@ -627,11 +627,11 @@ _ZN4llvm14SDPatternMatch16sd_context_matchIRNS0_2OrIJNS2_IJNS0_15BinaryOpc_match
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN4llvm14SDPatternMatch10m_UMaxLikeINS0_10Value_bindINS0_11Value_matchEEES4_EEDaRKT_RKT0_(ptr dead_on_unwind noalias writable sret(%"struct.llvm::SDPatternMatch::Or.545") align 8 %0, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2) local_unnamed_addr #0 comdat {
 bb.a:
-  %.sroa.4.i11 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.485" }, align 4 ; 2 uses
+  %.sroa.4.i11 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.485" }, align 8 ; 2 uses
   %3 = alloca %"struct.llvm::SDPatternMatch::MaxMin_match.550", align 8 ; 3 uses
-  %.sroa.4.i6 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.493" }, align 4 ; 2 uses
+  %.sroa.4.i6 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.493" }, align 8 ; 2 uses
   %4 = alloca %"struct.llvm::SDPatternMatch::MaxMin_match.553", align 8 ; 3 uses
-  %.sroa.4.i = alloca <{ [4 x i8], %"struct.llvm::SDPatternMatch::Value_bind.258" }>, align 4 ; 2 uses
+  %.sroa.4.i = alloca <{ [4 x i8], %"struct.llvm::SDPatternMatch::Value_bind.258" }>, align 8 ; 2 uses
   %5 = alloca %"struct.llvm::SDPatternMatch::MaxMin_match.556", align 8 ; 3 uses
   %.sroa.4.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.4.i, i64 4
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %.sroa.4.8..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
@@ -659,7 +659,7 @@ bb.a:
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72
   store i32 188, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 76
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(36) %.sroa.4.i11, i64 36, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(36) %.sroa.4.i11, i64 36, i1 false)
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 144
   store i32 0, ptr %.sroa.7.0..sroa_idx, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 152
@@ -667,7 +667,7 @@ bb.a:
   %.sroa.417.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 216
   store i32 188, ptr %.sroa.417.0..sroa_idx, align 8
   %.sroa.518.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 220
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %.sroa.518.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(36) %.sroa.4.i6, i64 36, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %.sroa.518.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(36) %.sroa.4.i6, i64 36, i1 false)
   %.sroa.720.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 288
   store i32 0, ptr %.sroa.720.0..sroa_idx, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 296
@@ -675,7 +675,7 @@ bb.a:
   %.sroa.423.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 344
   store i32 190, ptr %.sroa.423.0..sroa_idx, align 8
   %.sroa.524.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 348
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.524.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(28) %.sroa.4.i, i64 28, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.524.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(28) %.sroa.4.i, i64 28, i1 false)
   %.sroa.726.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 400
   store i32 0, ptr %.sroa.726.0..sroa_idx, align 8
   ret void
@@ -732,11 +732,11 @@ _ZN4llvm14SDPatternMatch16sd_context_matchIRNS0_2OrIJNS2_IJNS0_15BinaryOpc_match
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN4llvm14SDPatternMatch10m_UMinLikeINS0_11Value_matchES2_EEDaRKT_RKT0_(ptr dead_on_unwind noalias writable sret(%"struct.llvm::SDPatternMatch::Or.557") align 8 %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 comdat {
 bb.a:
-  %.sroa.4.i11 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.506" }, align 4 ; 2 uses
+  %.sroa.4.i11 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.506" }, align 8 ; 2 uses
   %3 = alloca %"struct.llvm::SDPatternMatch::MaxMin_match.562", align 8 ; 3 uses
-  %.sroa.4.i6 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.514" }, align 4 ; 2 uses
+  %.sroa.4.i6 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.514" }, align 8 ; 2 uses
   %4 = alloca %"struct.llvm::SDPatternMatch::MaxMin_match.565", align 8 ; 3 uses
-  %.sroa.4.i = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::Value_match" }, align 4 ; 2 uses
+  %.sroa.4.i = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::Value_match" }, align 8 ; 2 uses
   %5 = alloca %"struct.llvm::SDPatternMatch::MaxMin_match.568", align 8 ; 3 uses
   %.sroa.4.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.4.i, i64 4
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.4.8..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false)
@@ -764,7 +764,7 @@ bb.a:
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i32 187, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 60
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(28) %.sroa.4.i11, i64 28, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(28) %.sroa.4.i11, i64 28, i1 false)
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112
   store i32 0, ptr %.sroa.7.0..sroa_idx, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 120
@@ -772,7 +772,7 @@ bb.a:
   %.sroa.417.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 168
   store i32 187, ptr %.sroa.417.0..sroa_idx, align 8
   %.sroa.518.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 172
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.518.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(28) %.sroa.4.i6, i64 28, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.518.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(28) %.sroa.4.i6, i64 28, i1 false)
   %.sroa.720.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 224
   store i32 0, ptr %.sroa.720.0..sroa_idx, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 232
@@ -780,7 +780,7 @@ bb.a:
   %.sroa.423.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 264
   store i32 189, ptr %.sroa.423.0..sroa_idx, align 8
   %.sroa.524.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 268
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.524.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.4.i, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.524.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.4.i, i64 20, i1 false)
   %.sroa.726.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 304
   store i32 0, ptr %.sroa.726.0..sroa_idx, align 8
   ret void
@@ -837,11 +837,11 @@ _ZN4llvm14SDPatternMatch16sd_context_matchIRNS0_2OrIJNS2_IJNS0_15BinaryOpc_match
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN4llvm14SDPatternMatch10m_UMinLikeINS0_10Value_bindINS0_11Value_matchEEES4_EEDaRKT_RKT0_(ptr dead_on_unwind noalias writable sret(%"struct.llvm::SDPatternMatch::Or.569") align 8 %0, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2) local_unnamed_addr #0 comdat {
 bb.a:
-  %.sroa.4.i11 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.485" }, align 4 ; 2 uses
+  %.sroa.4.i11 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.485" }, align 8 ; 2 uses
   %3 = alloca %"struct.llvm::SDPatternMatch::MaxMin_match.574", align 8 ; 3 uses
-  %.sroa.4.i6 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.493" }, align 4 ; 2 uses
+  %.sroa.4.i6 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.493" }, align 8 ; 2 uses
   %4 = alloca %"struct.llvm::SDPatternMatch::MaxMin_match.577", align 8 ; 3 uses
-  %.sroa.4.i = alloca <{ [4 x i8], %"struct.llvm::SDPatternMatch::Value_bind.258" }>, align 4 ; 2 uses
+  %.sroa.4.i = alloca <{ [4 x i8], %"struct.llvm::SDPatternMatch::Value_bind.258" }>, align 8 ; 2 uses
   %5 = alloca %"struct.llvm::SDPatternMatch::MaxMin_match.580", align 8 ; 3 uses
   %.sroa.4.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.4.i, i64 4
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %.sroa.4.8..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
@@ -869,7 +869,7 @@ bb.a:
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72
   store i32 187, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 76
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(36) %.sroa.4.i11, i64 36, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(36) %.sroa.4.i11, i64 36, i1 false)
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 144
   store i32 0, ptr %.sroa.7.0..sroa_idx, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 152
@@ -877,7 +877,7 @@ bb.a:
   %.sroa.417.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 216
   store i32 187, ptr %.sroa.417.0..sroa_idx, align 8
   %.sroa.518.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 220
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %.sroa.518.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(36) %.sroa.4.i6, i64 36, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %.sroa.518.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(36) %.sroa.4.i6, i64 36, i1 false)
   %.sroa.720.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 288
   store i32 0, ptr %.sroa.720.0..sroa_idx, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 296
@@ -885,7 +885,7 @@ bb.a:
   %.sroa.423.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 344
   store i32 189, ptr %.sroa.423.0..sroa_idx, align 8
   %.sroa.524.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 348
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.524.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(28) %.sroa.4.i, i64 28, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.524.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(28) %.sroa.4.i, i64 28, i1 false)
   %.sroa.726.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 400
   store i32 0, ptr %.sroa.726.0..sroa_idx, align 8
   ret void
@@ -942,11 +942,11 @@ _ZN4llvm14SDPatternMatch16sd_context_matchIRNS0_2OrIJNS2_IJNS0_15BinaryOpc_match
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN4llvm14SDPatternMatch10m_UMaxLikeINS0_11Value_matchES2_EEDaRKT_RKT0_(ptr dead_on_unwind noalias writable sret(%"struct.llvm::SDPatternMatch::Or.581") align 8 %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 comdat {
 bb.a:
-  %.sroa.4.i11 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.506" }, align 4 ; 2 uses
+  %.sroa.4.i11 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.506" }, align 8 ; 2 uses
   %3 = alloca %"struct.llvm::SDPatternMatch::MaxMin_match.586", align 8 ; 3 uses
-  %.sroa.4.i6 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.514" }, align 4 ; 2 uses
+  %.sroa.4.i6 = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::And.514" }, align 8 ; 2 uses
   %4 = alloca %"struct.llvm::SDPatternMatch::MaxMin_match.589", align 8 ; 3 uses
-  %.sroa.4.i = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::Value_match" }, align 4 ; 2 uses
+  %.sroa.4.i = alloca { [4 x i8], %"struct.llvm::SDPatternMatch::Value_match" }, align 8 ; 2 uses
   %5 = alloca %"struct.llvm::SDPatternMatch::MaxMin_match.592", align 8 ; 3 uses
   %.sroa.4.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.4.i, i64 4
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.4.8..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false)
@@ -974,7 +974,7 @@ bb.a:
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i32 188, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 60
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(28) %.sroa.4.i11, i64 28, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(28) %.sroa.4.i11, i64 28, i1 false)
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112
   store i32 0, ptr %.sroa.7.0..sroa_idx, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 120
@@ -982,7 +982,7 @@ bb.a:
   %.sroa.417.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 168
   store i32 188, ptr %.sroa.417.0..sroa_idx, align 8
   %.sroa.518.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 172
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.518.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(28) %.sroa.4.i6, i64 28, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.518.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(28) %.sroa.4.i6, i64 28, i1 false)
   %.sroa.720.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 224
   store i32 0, ptr %.sroa.720.0..sroa_idx, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 232
@@ -990,7 +990,7 @@ bb.a:
   %.sroa.423.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 264
   store i32 190, ptr %.sroa.423.0..sroa_idx, align 8
   %.sroa.524.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 268
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.524.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.4.i, i64 20, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.524.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.4.i, i64 20, i1 false)
   %.sroa.726.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 304
   store i32 0, ptr %.sroa.726.0..sroa_idx, align 8
   ret void
