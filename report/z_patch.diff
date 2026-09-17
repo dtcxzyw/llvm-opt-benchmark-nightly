@@ -1,0 +1,755 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index 658b027820a84..363ada56c4559 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -308,9 +308,13 @@ class ConstraintInfo {
+ 
+   const DataLayout &DL;
+ 
++  /// Used for dominance queries while decomposing values.
++  const DominatorTree &DT;
++
+ public:
+-  ConstraintInfo(const DataLayout &DL, ArrayRef<Value *> FunctionArgs)
+-      : UnsignedCS(FunctionArgs), SignedCS(FunctionArgs), DL(DL) {
++  ConstraintInfo(const DataLayout &DL, const DominatorTree &DT,
++                 ArrayRef<Value *> FunctionArgs)
++      : UnsignedCS(FunctionArgs), SignedCS(FunctionArgs), DL(DL), DT(DT) {
+     auto &Value2Index = getValue2Index(false);
+     // Add Arg > -1 constraints to unsigned system for all function arguments.
+     for (Value *Arg : FunctionArgs)
+@@ -318,6 +322,8 @@ class ConstraintInfo {
+                         Value2Index.size());
+   }
+ 
++  const DominatorTree &getDT() const { return DT; }
++
+   DenseMap<Value *, unsigned> &getValue2Index(bool Signed) {
+     return Signed ? SignedCS.getValue2Index() : UnsignedCS.getValue2Index();
+   }
+@@ -455,6 +461,15 @@ struct OffsetResult {
+       : BasePtr(GEP.getPointerOperand()), NW(GEP.getNoWrapFlags()) {
+     ConstantOffset = APInt(DL.getIndexTypeSizeInBits(BasePtr->getType()), 0);
+   }
++
++  /// Returns true if the collected offsets are added to BasePtr without
++  /// unsigned wrap, provided any variable offsets are non-negative: either the
++  /// GEP is nuw, or it is nusw with a non-negative constant offset, which
++  /// implies nuw.
++  bool canDecompose() const {
++    return BasePtr && NW != GEPNoWrapFlags::none() &&
++           (NW.hasNoUnsignedSignedWrap() || !ConstantOffset.isNegative());
++  }
+ };
+ } // namespace
+ 
+@@ -582,6 +597,147 @@ static bool isKnownNoWrap(Value *V, const ConstraintInfo &Info, bool Signed) {
+                          Signed);
+ }
+ 
++/// Convert \p C, interpreted as signed if \p IsSigned, to a constant offset for
++/// the constraint systems, or nullopt if it does not fit. A bit of headroom is
++/// kept so offsets can still be negated and subtracted.
++static std::optional<int64_t> toOffset(const APInt &C, bool IsSigned) {
++  if (IsSigned ? !C.isSignedIntN(63) : !C.isIntN(63))
++    return std::nullopt;
++  return IsSigned ? C.getSExtValue() : int64_t(C.getZExtValue());
++}
++
++/// Split \p V into a base value plus a constant offset that is exact in the
++/// system selected by \p IsSigned, or \p V itself with offset 0 if no such
++/// split can be established. The base is null if \p V is a constant.
++///
++/// Only flags on the instructions involved may be used. Unlike decompose(),
++/// which may look through an operation because the current query point implies
++/// it does not wrap, the result here has to hold wherever \p V is evaluated.
++static std::pair<Value *, int64_t>
++splitConstantOffset(Value *V, bool IsSigned, const DataLayout &DL) {
++  if (V->getType()->isPointerTy()) {
++    assert(!IsSigned && "pointers are only decomposed for unsigned predicates");
++    auto *GEP = dyn_cast<GEPOperator>(V);
++    if (!GEP)
++      return {V, 0};
++    // Only a constant offset is a step; a variable one would need the systems.
++    const OffsetResult Res = collectOffsets(*GEP, DL);
++    if (!Res.canDecompose() || !Res.VariableOffsets.empty())
++      return {V, 0};
++    // A GEP's constant offset is signed, even in the unsigned system.
++    if (auto Offset = toOffset(Res.ConstantOffset, /*IsSigned=*/true))
++      return {Res.BasePtr, *Offset};
++    return {V, 0};
++  }
++
++  const APInt *C;
++  Value *Op;
++  if (IsSigned ? match(V, m_c_NSWAdd(m_Value(Op), m_APInt(C)))
++               : match(V, m_c_NUWAdd(m_Value(Op), m_APInt(C)))) {
++    if (auto Offset = toOffset(*C, IsSigned))
++      return {Op, *Offset};
++  } else if (match(V, m_APInt(C))) {
++    if (auto Offset = toOffset(*C, IsSigned))
++      return {nullptr, *Offset};
++  }
++  return {V, 0};
++}
++
++/// Return the constant C with \p A == \p B + C, using only instruction flags,
++/// or nullopt if no such C can be established.
++static std::optional<int64_t> matchConstantDifference(Value *A, Value *B,
++                                                      bool IsSigned,
++                                                      const DataLayout &DL) {
++  auto [BaseA, OffsetA] = splitConstantOffset(A, IsSigned, DL);
++  auto [BaseB, OffsetB] = splitConstantOffset(B, IsSigned, DL);
++  int64_t Diff;
++  if (BaseA != BaseB || SubOverflow(OffsetA, OffsetB, Diff))
++    return std::nullopt;
++  return Diff;
++}
++
++/// If \p U carries \p PN advanced by a constant step into a phi, and that step
++/// is known not to wrap in the system selected by \p IsSigned, return it.
++static std::optional<int64_t> matchNoWrapStep(const Use &U, PHINode *PN,
++                                              const DominatorTree &DT,
++                                              bool IsSigned,
++                                              const DataLayout &DL) {
++  Value *Inc = U.get();
++  auto [Base, Offset] = splitConstantOffset(Inc, IsSigned, DL);
++  if (Base == PN)
++    return Offset;
++
++  // The value component of a checked add is the wrapped sum, but on an edge
++  // only taken when the addition did not overflow it is the exact sum.
++  const APInt *StepOffset;
++  WithOverflowInst *WO;
++  if (!match(Inc, m_ExtractValue<0>(m_WithOverflowInst(WO))) ||
++      WO->getBinaryOp() != Instruction::Add || WO->isSigned() != IsSigned ||
++      WO->getLHS() != PN || !match(WO->getRHS(), m_APInt(StepOffset)))
++    return std::nullopt;
++
++  // The overflow flag is false on the branch's false successor.
++  auto IsNoOverflowEdge = [&](const User *FlagUser) {
++    const auto *Br = dyn_cast<CondBrInst>(FlagUser);
++    return Br && DT.dominates({Br->getParent(), Br->getSuccessor(1)}, U);
++  };
++  for (User *Flag : WO->users())
++    if (match(Flag, m_ExtractValue<1>(m_Value())) &&
++        any_of(Flag->users(), IsNoOverflowEdge))
++      return toOffset(*StepOffset, IsSigned);
++  return std::nullopt;
++}
++
++/// A phi taking another phi of the same block on its backedge holds that phi's
++/// value from the previous iteration, so with a constant step the two differ by
++/// it and %delayed below decomposes as `%iv - 32`:
++///
++///   %delayed = phi i64 [ 0, %ph ],  [ %iv, %latch ]
++///   %iv      = phi i64 [ 32, %ph ], [ %iv.next, %latch ]
++///   %iv.next = add nsw i64 %iv, 32
++///
++/// The step may also be a constant-offset GEP, and the start values only have
++/// to be a constant apart.
++///
++/// Nothing inductive is needed: on the backedge %delayed takes the previous %iv
++/// while %iv takes that same value plus the step, and on the entry edge the
++/// start values differ by the step. Both phis are defined at the same point, so
++/// the relation holds at every use.
++static std::optional<Decomposition>
++decomposeDelayedPhi(Value *V, const DominatorTree &DT, bool IsSigned,
++                    const DataLayout &DL) {
++  auto *Delayed = dyn_cast<PHINode>(V);
++  if (!Delayed || Delayed->getNumIncomingValues() != 2)
++    return std::nullopt;
++
++  for (unsigned Back : {0, 1}) {
++    auto *IV = dyn_cast<PHINode>(Delayed->getIncomingValue(Back));
++    if (!IV || IV == Delayed || IV->getParent() != Delayed->getParent())
++      continue;
++    // IV's incoming value on Delayed's Back predecessor is derived from IV, so
++    // that predecessor really is a backedge.
++    int BackIdx = IV->getBasicBlockIndex(Delayed->getIncomingBlock(Back));
++    assert(BackIdx >= 0 && IV->getNumIncomingValues() == 2 &&
++           "phis of a block share its predecessors");
++
++    auto Step =
++        matchNoWrapStep(IV->getOperandUse(BackIdx), IV, DT, IsSigned, DL);
++    if (!Step)
++      continue;
++
++    // The start values have to be apart by the step as well.
++    auto EntryDiff = matchConstantDifference(
++        Delayed->getIncomingValue(1 - Back), IV->getIncomingValue(1 - BackIdx),
++        IsSigned, DL);
++    if (!EntryDiff || *EntryDiff != -*Step)
++      continue;
++
++    // IV is left as a variable; a chain of delayed phis is not followed.
++    return Decomposition(-*Step, DecompEntry(1, IV));
++  }
++  return std::nullopt;
++}
++
+ static Decomposition decomposeGEP(GEPOperator &GEP, const ConstraintInfo &Info,
+                                   bool IsSigned, const DataLayout &DL) {
+   // Do not reason about pointers where the index size is larger than 64 bits,
+@@ -591,17 +747,10 @@ static Decomposition decomposeGEP(GEPOperator &GEP, const ConstraintInfo &Info,
+ 
+   assert(!IsSigned && "The logic below only supports decomposition for "
+                       "unsigned predicates at the moment.");
+-  const auto &[BasePtr, ConstantOffset, VariableOffsets, NW] =
+-      collectOffsets(GEP, DL);
+-  // We support either plain gep nuw, or gep nusw with non-negative offset,
+-  // which implies gep nuw.
+-  if (!BasePtr || NW == GEPNoWrapFlags::none())
+-    return &GEP;
+-
+-  // For a nuw-only GEP (nuw without nusw/inbounds), the offset must be
+-  // interpreted as unsigned.
+-  if (!NW.hasNoUnsignedSignedWrap() && ConstantOffset.isNegative())
++  const OffsetResult Res = collectOffsets(GEP, DL);
++  if (!Res.canDecompose())
+     return &GEP;
++  const auto &[BasePtr, ConstantOffset, VariableOffsets, NW] = Res;
+ 
+   Decomposition Result(ConstantOffset.getSExtValue(), DecompEntry(1, BasePtr));
+   for (auto [Index, Scale] : VariableOffsets) {
+@@ -646,6 +795,8 @@ static Decomposition decompose(Value *V, const ConstraintInfo &Info,
+       return decomposeGEP(*GEP, Info, IsSigned, DL);
+     if (isa<ConstantPointerNull>(V))
+       return int64_t(0);
++    if (auto Decomp = decomposeDelayedPhi(V, Info.getDT(), IsSigned, DL))
++      return *Decomp;
+ 
+     return V;
+   }
+@@ -656,6 +807,11 @@ static Decomposition decompose(Value *V, const ConstraintInfo &Info,
+   if (!Ty->isIntegerTy() || Ty->getIntegerBitWidth() > 64)
+     return V;
+ 
++  // A phi holding another phi of the same block from the previous iteration is
++  // that phi plus a constant.
++  if (auto Decomp = decomposeDelayedPhi(V, Info.getDT(), IsSigned, DL))
++    return *Decomp;
++
+   if (auto *CI = dyn_cast<ConstantInt>(V)) {
+     if (IsSigned) {
+       if (canUseSExt(CI))
+@@ -2238,7 +2394,7 @@ static bool eliminateConstraints(Function &F, DominatorTree &DT, LoopInfo &LI,
+   bool Changed = false;
+   DT.updateDFSNumbers();
+   SmallVector<Value *> FunctionArgs(llvm::make_pointer_range(F.args()));
+-  ConstraintInfo Info(F.getDataLayout(), FunctionArgs);
++  ConstraintInfo Info(F.getDataLayout(), DT, FunctionArgs);
+   State S(DT, LI, SE, TLI);
+   std::unique_ptr<Module> ReproducerModule(
+       DumpReproducers ? new Module(F.getName(), F.getContext()) : nullptr);
+diff --git a/llvm/test/Transforms/ConstraintElimination/delayed-phi.ll b/llvm/test/Transforms/ConstraintElimination/delayed-phi.ll
+new file mode 100644
+index 0000000000000..f53a51fdec7b3
+--- /dev/null
++++ b/llvm/test/Transforms/ConstraintElimination/delayed-phi.ll
+@@ -0,0 +1,505 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=constraint-elimination -S %s | FileCheck %s
++
++declare void @llvm.trap()
++declare { i64, i1 } @llvm.sadd.with.overflow.i64(i64, i64)
++
++; %delayed holds %iv from the previous iteration, so it is %iv - 32. The latch
++; bounds %iv, which then bounds %delayed and discharges the guard.
++define void @delayed_phi_add_nsw(i64 %count) {
++; CHECK-LABEL: define void @delayed_phi_add_nsw(
++; CHECK-SAME: i64 [[COUNT:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[G:%.*]] = icmp sgt i64 [[COUNT]], 31
++; CHECK-NEXT:    br i1 [[G]], label %[[LOOP:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[DELAYED:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV:%.*]], %[[LATCH:.*]] ]
++; CHECK-NEXT:    [[IV]] = phi i64 [ 32, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LATCH]] ]
++; CHECK-NEXT:    br i1 true, label %[[LATCH]], label %[[TRAP:.*]]
++; CHECK:       [[LATCH]]:
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 32
++; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[COUNT]], [[IV_NEXT]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT]], label %[[LOOP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++; CHECK:       [[TRAP]]:
++; CHECK-NEXT:    call void @llvm.trap()
++; CHECK-NEXT:    unreachable
++;
++entry:
++  %g = icmp sgt i64 %count, 31
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %delayed = phi i64 [ 0, %entry ], [ %iv, %latch ]
++  %iv = phi i64 [ 32, %entry ], [ %iv.next, %latch ]
++  %c = icmp ult i64 %delayed, %count
++  br i1 %c, label %latch, label %trap
++
++latch:
++  %iv.next = add nsw i64 %iv, 32
++  %ec = icmp slt i64 %count, %iv.next
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret void
++
++trap:
++  call void @llvm.trap()
++  unreachable
++}
++
++; Same, with the step spelled as a checked add whose overflow flag branches away
++; from the backedge.
++define void @delayed_phi_checked_add(i64 %count) {
++; CHECK-LABEL: define void @delayed_phi_checked_add(
++; CHECK-SAME: i64 [[COUNT:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[G:%.*]] = icmp sgt i64 [[COUNT]], 31
++; CHECK-NEXT:    br i1 [[G]], label %[[LOOP:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[DELAYED:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV:%.*]], %[[LATCH:.*]] ]
++; CHECK-NEXT:    [[IV]] = phi i64 [ 32, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LATCH]] ]
++; CHECK-NEXT:    br i1 true, label %[[STEP:.*]], label %[[TRAP:.*]]
++; CHECK:       [[STEP]]:
++; CHECK-NEXT:    [[S:%.*]] = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 [[IV]], i64 32)
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i64, i1 } [[S]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = extractvalue { i64, i1 } [[S]], 0
++; CHECK-NEXT:    br i1 [[OV]], label %[[TRAP]], label %[[LATCH]]
++; CHECK:       [[LATCH]]:
++; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[COUNT]], [[IV_NEXT]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT]], label %[[LOOP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++; CHECK:       [[TRAP]]:
++; CHECK-NEXT:    call void @llvm.trap()
++; CHECK-NEXT:    unreachable
++;
++entry:
++  %g = icmp sgt i64 %count, 31
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %delayed = phi i64 [ 0, %entry ], [ %iv, %latch ]
++  %iv = phi i64 [ 32, %entry ], [ %iv.next, %latch ]
++  %c = icmp ult i64 %delayed, %count
++  br i1 %c, label %step, label %trap
++
++step:
++  %s = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %iv, i64 32)
++  %ov = extractvalue { i64, i1 } %s, 1
++  %iv.next = extractvalue { i64, i1 } %s, 0
++  br i1 %ov, label %trap, label %latch
++
++latch:
++  %ec = icmp slt i64 %count, %iv.next
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret void
++
++trap:
++  call void @llvm.trap()
++  unreachable
++}
++
++; Negative test: the increment may wrap, so %delayed is only %iv - 32 modulo the
++; bit width and the guard has to stay.
++define void @negative_wrapping_step(i64 %count) {
++; CHECK-LABEL: define void @negative_wrapping_step(
++; CHECK-SAME: i64 [[COUNT:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[G:%.*]] = icmp sgt i64 [[COUNT]], 31
++; CHECK-NEXT:    br i1 [[G]], label %[[LOOP:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[DELAYED:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV:%.*]], %[[LATCH:.*]] ]
++; CHECK-NEXT:    [[IV]] = phi i64 [ 32, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LATCH]] ]
++; CHECK-NEXT:    [[C:%.*]] = icmp ult i64 [[DELAYED]], [[COUNT]]
++; CHECK-NEXT:    br i1 [[C]], label %[[LATCH]], label %[[TRAP:.*]]
++; CHECK:       [[LATCH]]:
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 32
++; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[COUNT]], [[IV_NEXT]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT]], label %[[LOOP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++; CHECK:       [[TRAP]]:
++; CHECK-NEXT:    call void @llvm.trap()
++; CHECK-NEXT:    unreachable
++;
++entry:
++  %g = icmp sgt i64 %count, 31
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %delayed = phi i64 [ 0, %entry ], [ %iv, %latch ]
++  %iv = phi i64 [ 32, %entry ], [ %iv.next, %latch ]
++  %c = icmp ult i64 %delayed, %count
++  br i1 %c, label %latch, label %trap
++
++latch:
++  %iv.next = add i64 %iv, 32
++  %ec = icmp slt i64 %count, %iv.next
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret void
++
++trap:
++  call void @llvm.trap()
++  unreachable
++}
++
++; Negative test: the start values do not differ by the step, so the relation
++; does not hold on the first iteration.
++define void @negative_start_mismatch(i64 %count) {
++; CHECK-LABEL: define void @negative_start_mismatch(
++; CHECK-SAME: i64 [[COUNT:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[G:%.*]] = icmp sgt i64 [[COUNT]], 31
++; CHECK-NEXT:    br i1 [[G]], label %[[LOOP:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[DELAYED:%.*]] = phi i64 [ 1, %[[ENTRY]] ], [ [[IV:%.*]], %[[LATCH:.*]] ]
++; CHECK-NEXT:    [[IV]] = phi i64 [ 32, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LATCH]] ]
++; CHECK-NEXT:    [[C:%.*]] = icmp ult i64 [[DELAYED]], [[COUNT]]
++; CHECK-NEXT:    br i1 [[C]], label %[[LATCH]], label %[[TRAP:.*]]
++; CHECK:       [[LATCH]]:
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 32
++; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[COUNT]], [[IV_NEXT]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT]], label %[[LOOP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++; CHECK:       [[TRAP]]:
++; CHECK-NEXT:    call void @llvm.trap()
++; CHECK-NEXT:    unreachable
++;
++entry:
++  %g = icmp sgt i64 %count, 31
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %delayed = phi i64 [ 1, %entry ], [ %iv, %latch ]
++  %iv = phi i64 [ 32, %entry ], [ %iv.next, %latch ]
++  %c = icmp ult i64 %delayed, %count
++  br i1 %c, label %latch, label %trap
++
++latch:
++  %iv.next = add nsw i64 %iv, 32
++  %ec = icmp slt i64 %count, %iv.next
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret void
++
++trap:
++  call void @llvm.trap()
++  unreachable
++}
++
++; Negative test: the checked add's overflow flag does not guard the backedge, so
++; the value reaching %iv may be the wrapped sum.
++define void @negative_unguarded_checked_add(i64 %count, ptr %p) {
++; CHECK-LABEL: define void @negative_unguarded_checked_add(
++; CHECK-SAME: i64 [[COUNT:%.*]], ptr [[P:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[G:%.*]] = icmp sgt i64 [[COUNT]], 31
++; CHECK-NEXT:    br i1 [[G]], label %[[LOOP:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[DELAYED:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV:%.*]], %[[LATCH:.*]] ]
++; CHECK-NEXT:    [[IV]] = phi i64 [ 32, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LATCH]] ]
++; CHECK-NEXT:    [[C:%.*]] = icmp ult i64 [[DELAYED]], [[COUNT]]
++; CHECK-NEXT:    br i1 [[C]], label %[[LATCH]], label %[[TRAP:.*]]
++; CHECK:       [[LATCH]]:
++; CHECK-NEXT:    [[S:%.*]] = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 [[IV]], i64 32)
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i64, i1 } [[S]], 1
++; CHECK-NEXT:    store i1 [[OV]], ptr [[P]], align 1
++; CHECK-NEXT:    [[IV_NEXT]] = extractvalue { i64, i1 } [[S]], 0
++; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[COUNT]], [[IV_NEXT]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT]], label %[[LOOP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++; CHECK:       [[TRAP]]:
++; CHECK-NEXT:    call void @llvm.trap()
++; CHECK-NEXT:    unreachable
++;
++entry:
++  %g = icmp sgt i64 %count, 31
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %delayed = phi i64 [ 0, %entry ], [ %iv, %latch ]
++  %iv = phi i64 [ 32, %entry ], [ %iv.next, %latch ]
++  %c = icmp ult i64 %delayed, %count
++  br i1 %c, label %latch, label %trap
++
++latch:
++  %s = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %iv, i64 32)
++  %ov = extractvalue { i64, i1 } %s, 1
++  store i1 %ov, ptr %p
++  %iv.next = extractvalue { i64, i1 } %s, 0
++  %ec = icmp slt i64 %count, %iv.next
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret void
++
++trap:
++  call void @llvm.trap()
++  unreachable
++}
++
++; The no-overflow edge is the backedge itself.
++define void @nooverflow_edge_is_backedge(i64 %count) {
++; CHECK-LABEL: define void @nooverflow_edge_is_backedge(
++; CHECK-SAME: i64 [[COUNT:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[DELAYED:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV:%.*]], %[[LATCH:.*]] ]
++; CHECK-NEXT:    [[IV]] = phi i64 [ 32, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LATCH]] ]
++; CHECK-NEXT:    [[EC:%.*]] = icmp sgt i64 [[IV]], [[COUNT]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT:.*]], label %[[GUARD:.*]]
++; CHECK:       [[GUARD]]:
++; CHECK-NEXT:    br i1 true, label %[[LATCH]], label %[[TRAP:.*]]
++; CHECK:       [[LATCH]]:
++; CHECK-NEXT:    [[S:%.*]] = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 [[IV]], i64 32)
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i64, i1 } [[S]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = extractvalue { i64, i1 } [[S]], 0
++; CHECK-NEXT:    br i1 [[OV]], label %[[EXIT]], label %[[LOOP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++; CHECK:       [[TRAP]]:
++; CHECK-NEXT:    call void @llvm.trap()
++; CHECK-NEXT:    unreachable
++;
++entry:
++  br label %loop
++
++loop:
++  %delayed = phi i64 [ 0, %entry ], [ %iv, %latch ]
++  %iv = phi i64 [ 32, %entry ], [ %iv.next, %latch ]
++  %ec = icmp sgt i64 %iv, %count
++  br i1 %ec, label %exit, label %guard
++
++guard:
++  %c = icmp slt i64 %delayed, %count
++  br i1 %c, label %latch, label %trap
++
++latch:
++  %s = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %iv, i64 32)
++  %ov = extractvalue { i64, i1 } %s, 1
++  %iv.next = extractvalue { i64, i1 } %s, 0
++  br i1 %ov, label %exit, label %loop
++
++exit:
++  ret void
++
++trap:
++  call void @llvm.trap()
++  unreachable
++}
++
++; Negative test: the backedge is the edge on which the checked add did overflow.
++define void @negative_reversed_overflow_polarity(i64 %count) {
++; CHECK-LABEL: define void @negative_reversed_overflow_polarity(
++; CHECK-SAME: i64 [[COUNT:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[G:%.*]] = icmp sgt i64 [[COUNT]], 31
++; CHECK-NEXT:    br i1 [[G]], label %[[LOOP:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[DELAYED:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV:%.*]], %[[LATCH:.*]] ]
++; CHECK-NEXT:    [[IV]] = phi i64 [ 32, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LATCH]] ]
++; CHECK-NEXT:    [[C:%.*]] = icmp ult i64 [[DELAYED]], [[COUNT]]
++; CHECK-NEXT:    br i1 [[C]], label %[[STEP:.*]], label %[[TRAP:.*]]
++; CHECK:       [[STEP]]:
++; CHECK-NEXT:    [[S:%.*]] = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 [[IV]], i64 32)
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i64, i1 } [[S]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = extractvalue { i64, i1 } [[S]], 0
++; CHECK-NEXT:    br i1 [[OV]], label %[[LATCH]], label %[[TRAP]]
++; CHECK:       [[LATCH]]:
++; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[COUNT]], [[IV_NEXT]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT]], label %[[LOOP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++; CHECK:       [[TRAP]]:
++; CHECK-NEXT:    call void @llvm.trap()
++; CHECK-NEXT:    unreachable
++;
++entry:
++  %g = icmp sgt i64 %count, 31
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %delayed = phi i64 [ 0, %entry ], [ %iv, %latch ]
++  %iv = phi i64 [ 32, %entry ], [ %iv.next, %latch ]
++  %c = icmp ult i64 %delayed, %count
++  br i1 %c, label %step, label %trap
++
++step:
++  %s = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %iv, i64 32)
++  %ov = extractvalue { i64, i1 } %s, 1
++  %iv.next = extractvalue { i64, i1 } %s, 0
++  br i1 %ov, label %latch, label %trap
++
++latch:
++  %ec = icmp slt i64 %count, %iv.next
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret void
++
++trap:
++  call void @llvm.trap()
++  unreachable
++}
++
++; The start values do not have to be constants, only a constant apart.
++define i1 @nonconstant_start(i64 %n) {
++; CHECK-LABEL: define i1 @nonconstant_start(
++; CHECK-SAME: i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[N1:%.*]] = add nuw i64 [[N]], 1
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[N1]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LATCH:.*]] ]
++; CHECK-NEXT:    [[DELAYED:%.*]] = phi i64 [ [[N]], %[[ENTRY]] ], [ [[IV]], %[[LATCH]] ]
++; CHECK-NEXT:    br i1 true, label %[[LATCH]], label %[[EXIT:.*]]
++; CHECK:       [[LATCH]]:
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i64 [[IV]], 1
++; CHECK-NEXT:    [[EC:%.*]] = icmp eq i64 [[IV_NEXT]], 100
++; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT]], label %[[LOOP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %n1 = add nuw i64 %n, 1
++  br label %loop
++
++loop:
++  %iv = phi i64 [ %n1, %entry ], [ %iv.next, %latch ]
++  %delayed = phi i64 [ %n, %entry ], [ %iv, %latch ]
++  %c = icmp ult i64 %delayed, %iv
++  br i1 %c, label %latch, label %exit
++
++latch:
++  %iv.next = add nuw i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, 100
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret i1 %c
++}
++
++; Negative test: the start values are 2 apart while the step is 1.
++define i1 @negative_nonconstant_start_mismatch(i64 %n) {
++; CHECK-LABEL: define i1 @negative_nonconstant_start_mismatch(
++; CHECK-SAME: i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[N2:%.*]] = add nuw i64 [[N]], 2
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[N2]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LATCH:.*]] ]
++; CHECK-NEXT:    [[DELAYED:%.*]] = phi i64 [ [[N]], %[[ENTRY]] ], [ [[IV]], %[[LATCH]] ]
++; CHECK-NEXT:    [[C:%.*]] = icmp ult i64 [[DELAYED]], [[IV]]
++; CHECK-NEXT:    br i1 [[C]], label %[[LATCH]], label %[[EXIT:.*]]
++; CHECK:       [[LATCH]]:
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i64 [[IV]], 1
++; CHECK-NEXT:    [[EC:%.*]] = icmp eq i64 [[IV_NEXT]], 100
++; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT]], label %[[LOOP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i1 [[C]]
++;
++entry:
++  %n2 = add nuw i64 %n, 2
++  br label %loop
++
++loop:
++  %iv = phi i64 [ %n2, %entry ], [ %iv.next, %latch ]
++  %delayed = phi i64 [ %n, %entry ], [ %iv, %latch ]
++  %c = icmp ult i64 %delayed, %iv
++  br i1 %c, label %latch, label %exit
++
++latch:
++  %iv.next = add nuw i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, 100
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret i1 %c
++}
++
++; A pointer phi stepped by a GEP with a constant offset, as left behind by the
++; libc++ insertion sort inner loop: %j always trails %k by one element.
++define i1 @ptr_gep_step(ptr %first, ptr %end) {
++; CHECK-LABEL: define i1 @ptr_gep_step(
++; CHECK-SAME: ptr [[FIRST:%.*]], ptr [[END:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[FIRST_NEXT:%.*]] = getelementptr inbounds nuw i8, ptr [[FIRST]], i64 12
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[K:%.*]] = phi ptr [ [[FIRST]], %[[ENTRY]] ], [ [[K_NEXT:%.*]], %[[LATCH:.*]] ]
++; CHECK-NEXT:    [[J:%.*]] = phi ptr [ [[FIRST_NEXT]], %[[ENTRY]] ], [ [[K]], %[[LATCH]] ]
++; CHECK-NEXT:    br i1 true, label %[[LATCH]], label %[[EXIT:.*]]
++; CHECK:       [[LATCH]]:
++; CHECK-NEXT:    [[K_NEXT]] = getelementptr inbounds i8, ptr [[K]], i64 -12
++; CHECK-NEXT:    [[EC:%.*]] = icmp eq ptr [[K_NEXT]], [[END]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT]], label %[[LOOP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %first.next = getelementptr inbounds nuw i8, ptr %first, i64 12
++  br label %loop
++
++loop:
++  %k = phi ptr [ %first, %entry ], [ %k.next, %latch ]
++  %j = phi ptr [ %first.next, %entry ], [ %k, %latch ]
++  %c = icmp ugt ptr %j, %k
++  br i1 %c, label %latch, label %exit
++
++latch:
++  %k.next = getelementptr inbounds i8, ptr %k, i64 -12
++  %ec = icmp eq ptr %k.next, %end
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret i1 %c
++}
++
++; Negative test: the stepping GEP has no no-wrap flags, so it may wrap past the
++; end of the address space and %j is not %k + 12.
++define i1 @negative_ptr_gep_step_may_wrap(ptr %first, ptr %end) {
++; CHECK-LABEL: define i1 @negative_ptr_gep_step_may_wrap(
++; CHECK-SAME: ptr [[FIRST:%.*]], ptr [[END:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[FIRST_NEXT:%.*]] = getelementptr inbounds nuw i8, ptr [[FIRST]], i64 12
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[K:%.*]] = phi ptr [ [[FIRST]], %[[ENTRY]] ], [ [[K_NEXT:%.*]], %[[LATCH:.*]] ]
++; CHECK-NEXT:    [[J:%.*]] = phi ptr [ [[FIRST_NEXT]], %[[ENTRY]] ], [ [[K]], %[[LATCH]] ]
++; CHECK-NEXT:    [[C:%.*]] = icmp ugt ptr [[J]], [[K]]
++; CHECK-NEXT:    br i1 [[C]], label %[[LATCH]], label %[[EXIT:.*]]
++; CHECK:       [[LATCH]]:
++; CHECK-NEXT:    [[K_NEXT]] = getelementptr i8, ptr [[K]], i64 -12
++; CHECK-NEXT:    [[EC:%.*]] = icmp eq ptr [[K_NEXT]], [[END]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT]], label %[[LOOP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i1 [[C]]
++;
++entry:
++  %first.next = getelementptr inbounds nuw i8, ptr %first, i64 12
++  br label %loop
++
++loop:
++  %k = phi ptr [ %first, %entry ], [ %k.next, %latch ]
++  %j = phi ptr [ %first.next, %entry ], [ %k, %latch ]
++  %c = icmp ugt ptr %j, %k
++  br i1 %c, label %latch, label %exit
++
++latch:
++  %k.next = getelementptr i8, ptr %k, i64 -12
++  %ec = icmp eq ptr %k.next, %end
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret i1 %c
++}
