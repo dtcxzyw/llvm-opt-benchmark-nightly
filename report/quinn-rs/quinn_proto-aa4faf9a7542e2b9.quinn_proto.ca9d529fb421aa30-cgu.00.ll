@@ -204,7 +204,7 @@ bb.ff:                                            ; preds = %bb.fb, %bb.fc
   %i.afa = select i1 %.not965.not, i8 %.sroa.032.1897, i8 1, !dbg !32394
   %i.afb = select i1 %i.aez, i8 %i.afa, i8 0, !dbg !32394
   %i.afc = or i8 %i.afb, %.sroa.018.2, !dbg !32395 ; 3 uses
-    #dbg_value(i8 %i.afc, !28725, !DIExpression(), !30023)
+    #dbg_value(i8 %i.afc, !28725, !DIExpression(DW_OP_constu, 1, DW_OP_and, DW_OP_stack_value), !30023)
   br i1 %.sroa.015.0, label %bb.qp, label %bb.fg, !dbg !32396
 
 bb.fg:                                            ; preds = %bb.ff

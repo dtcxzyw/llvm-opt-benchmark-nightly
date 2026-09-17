@@ -205,8 +205,8 @@ bb.a:
   %i.a = load <4 x i32>, ptr %0, align 4, !tbaa !55
   %i.b = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.a, <4 x i32> zeroinitializer)
   %i.c = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %i.b, <4 x i32> splat (i32 255))
-  %1 = shl nuw <4 x i32> %i.c, <i32 0, i32 8, i32 16, i32 24>
-  %2 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %1)
+  %1 = trunc nuw <4 x i32> %i.c to <4 x i8>
+  %2 = bitcast <4 x i8> %1 to i32
   ret i32 %2
 }
 
@@ -607,9 +607,6 @@ declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.umin.v4i32(<4 x i32>, <4 x i32>) #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #5

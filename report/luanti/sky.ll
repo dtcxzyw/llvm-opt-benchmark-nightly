@@ -204,12 +204,11 @@ bb.b:                                             ; preds = %bb.a
   %i.al = fadd nsz <4 x float> %i.ak, splat (float 5.000000e-01)
   %i.am = tail call nsz <4 x float> @llvm.floor.v4f32(<4 x float> %i.al)
   %i.an = fptosi <4 x float> %i.am to <4 x i32>
-  %5 = shl <4 x i32> %i.an, <i32 16, i32 8, i32 0, i32 24>
-  %6 = and <4 x i32> %5, <i32 16711680, i32 65280, i32 255, i32 -1>
-  %7 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %6)
+  %5 = shufflevector <4 x i32> %i.an, <4 x i32> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
+  %6 = trunc <4 x i32> %5 to <4 x i8>
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 248
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 348
-  store i32 %7, ptr %i.ap, align 4, !tbaa !111
+  store <4 x i8> %6, ptr %i.ap, align 4, !tbaa !111
   %i.aq = fadd nsz float %2, -2.500000e-01
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 2064
   %i.as = load float, ptr %i.ar, align 8, !tbaa !154
@@ -612,9 +611,9 @@ bb.y:                                             ; preds = %bb.x
   %i.qq = shufflevector <4 x float> %i.qp, <4 x float> %i.qn, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.qr = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.qm, <4 x float> %i.qq, <4 x float> %i.qk)
   %i.qs = fptoui <4 x float> %i.qr to <4 x i32>
-  %8 = shl <4 x i32> %i.qs, <i32 16, i32 8, i32 0, i32 24>
-  %9 = and <4 x i32> %8, <i32 16711680, i32 65280, i32 255, i32 -1>
-  %10 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %9)
+  %8 = shufflevector <4 x i32> %i.qs, <4 x i32> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
+  %9 = trunc <4 x i32> %8 to <4 x i8>
+  %10 = bitcast <4 x i8> %9 to i32
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.t, %_ZN3Sky15m_horizon_blendEv.exit, %.thread306
@@ -666,10 +665,9 @@ _ZN3Sky15m_horizon_blendEv.exit198:               ; preds = %bb.q, %bb.p, %bb.aa
   %i.rx = shufflevector <4 x float> %i.rw, <4 x float> %i.ru, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.ry = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.rt, <4 x float> %i.rx, <4 x float> %i.rr)
   %i.rz = fptoui <4 x float> %i.ry to <4 x i32>
-  %11 = shl <4 x i32> %i.rz, <i32 16, i32 8, i32 0, i32 24>
-  %12 = and <4 x i32> %11, <i32 16711680, i32 65280, i32 255, i32 -1>
-  %13 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %12)
-  store i32 %13, ptr %i.hz, align 4, !tbaa !111
+  %11 = shufflevector <4 x i32> %i.rz, <4 x i32> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
+  %12 = trunc <4 x i32> %11 to <4 x i8>
+  store <4 x i8> %12, ptr %i.hz, align 4, !tbaa !111
   br i1 %4, label %bb.ad, label %bb.ai
 
 bb.ad:                                            ; preds = %_ZN3Sky15m_horizon_blendEv.exit198
@@ -719,10 +717,9 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag, %bb.
   %i.ta = shufflevector <4 x float> %i.sz, <4 x float> %i.sx, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.tb = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.sw, <4 x float> %i.ta, <4 x float> %i.su)
   %i.tc = fptoui <4 x float> %i.tb to <4 x i32>
-  %14 = shl <4 x i32> %i.tc, <i32 16, i32 8, i32 0, i32 24>
-  %15 = and <4 x i32> %14, <i32 16711680, i32 65280, i32 255, i32 -1>
-  %16 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %15)
-  store i32 %16, ptr %i.ii, align 8, !tbaa !111
+  %13 = shufflevector <4 x i32> %i.tc, <4 x i32> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
+  %14 = trunc <4 x i32> %13 to <4 x i8>
+  store <4 x i8> %14, ptr %i.ii, align 8, !tbaa !111
   br i1 %4, label %bb.ak, label %bb.aq
 
 .thread317:                                       ; preds = %bb.o
@@ -1123,9 +1120,6 @@ declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.floor.v4f32(<4 x float>) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #7

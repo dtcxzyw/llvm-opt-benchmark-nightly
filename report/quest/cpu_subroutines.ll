@@ -205,6 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %4, i64 12
   %i.o = getelementptr inbounds nuw i8, ptr %4, i64 56
   %i.p = getelementptr inbounds nuw i8, ptr %4, i64 72
+  %5 = load i64, ptr %i.b, align 8, !tbaa !25
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.c
@@ -212,10 +213,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.q = load i64, ptr %i.l, align 8, !tbaa !68   ; 2 uses
   %i.r = srem i64 %.025, %i.q
   %i.s = load ptr, ptr %i.m, align 8, !tbaa !43   ; 2 uses
-  %i.t = getelementptr inbounds [16 x i8], ptr %i.s, i64 %i.r ; 2 uses
-  %.sroa.02.sroa.0.0.copyload = load double, ptr %i.t, align 8 ; 2 uses
-  %.sroa.02.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.t, i64 8
-  %.sroa.02.sroa.4.0.copyload = load double, ptr %.sroa.02.sroa.4.0..sroa_idx, align 8, !tbaa !23 ; 2 uses
+  %i.t = getelementptr inbounds [16 x i8], ptr %i.s, i64 %i.r
   %i.u = load i32, ptr %i.n, align 4, !tbaa !29
   %i.v = sext i32 %i.u to i64
   %i.w = load i64, ptr %i.o, align 8, !tbaa !30
@@ -223,32 +221,30 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.y = shl i64 %i.v, %i.x
   %i.z = or i64 %i.y, %.025
   %i.aa = sdiv i64 %i.z, %i.q
-  %i.ab = getelementptr inbounds [16 x i8], ptr %i.s, i64 %i.aa ; 2 uses
-  %.sroa.0.0.copyload = load double, ptr %i.ab, align 8 ; 2 uses
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
-  %.sroa.6.0.copyload = load double, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !23 ; 2 uses
-  %5 = fmul fast double %.sroa.0.0.copyload, %.sroa.02.sroa.0.0.copyload
-  %6 = fmul fast double %.sroa.0.0.copyload, %.sroa.02.sroa.4.0.copyload
-  %7 = fmul fast double %.sroa.6.0.copyload, %.sroa.02.sroa.4.0.copyload
-  %8 = fadd fast double %7, %5                    ; 2 uses
-  %9 = fmul fast double %.sroa.6.0.copyload, %.sroa.02.sroa.0.0.copyload
-  %10 = fsub fast double %6, %9                   ; 2 uses
-  %11 = load ptr, ptr %i.p, align 8, !tbaa !22
-  %12 = getelementptr inbounds [16 x i8], ptr %11, i64 %.025 ; 3 uses
-  %13 = load double, ptr %12, align 8             ; 2 uses
-  %14 = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 2 uses
-  %15 = load double, ptr %14, align 8             ; 2 uses
-  %16 = fmul fast double %13, %8
-  %17 = fmul fast double %15, %10
-  %18 = fmul fast double %13, %10
-  %19 = fmul fast double %15, %8
-  %20 = fsub fast double %16, %17
-  %21 = fadd fast double %19, %18
-  store double %20, ptr %12, align 8
-  store double %21, ptr %14, align 8
+  %i.ab = getelementptr inbounds [16 x i8], ptr %i.s, i64 %i.aa
+  %6 = load ptr, ptr %i.p, align 8, !tbaa !22
+  %7 = getelementptr inbounds [16 x i8], ptr %6, i64 %.025 ; 2 uses
+  %8 = load <2 x double>, ptr %i.ab, align 8      ; 2 uses
+  %9 = load <2 x double>, ptr %i.t, align 8       ; 2 uses
+  %10 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %11 = fmul fast <2 x double> %8, %10            ; 2 uses
+  %12 = fmul fast <2 x double> %8, %9
+  %13 = call fast double @llvm.vector.reduce.fadd.v2f64(double 0.000000e+00, <2 x double> %12)
+  %14 = load <2 x double>, ptr %7, align 8        ; 2 uses
+  %15 = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %16 = shufflevector <2 x double> %11, <2 x double> poison, <2 x i32> zeroinitializer
+  %17 = shufflevector <2 x double> %11, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %18 = fsub fast <2 x double> %16, %17
+  %19 = fmul fast <2 x double> %15, %18           ; 2 uses
+  %20 = insertelement <2 x double> poison, double %13, i64 0
+  %21 = shufflevector <2 x double> %20, <2 x double> poison, <2 x i32> zeroinitializer
+  %22 = fmul fast <2 x double> %14, %21           ; 2 uses
+  %23 = fsub fast <2 x double> %22, %19
+  %24 = fadd fast <2 x double> %22, %19
+  %25 = shufflevector <2 x double> %23, <2 x double> %24, <2 x i32> <i32 0, i32 3>
+  store <2 x double> %25, ptr %7, align 8
   %i.ac = add nsw i64 %.025, 1
-  %22 = load i64, ptr %i.b, align 8, !tbaa !25
-  %.not.not = icmp slt i64 %.025, %22
+  %.not.not = icmp slt i64 %.025, %5
   br i1 %.not.not, label %bb.c, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.c, %bb.b

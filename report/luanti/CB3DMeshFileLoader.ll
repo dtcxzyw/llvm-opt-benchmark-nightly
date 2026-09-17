@@ -205,11 +205,10 @@ bb.ar:                                            ; preds = %_ZN5scene15SSkinMes
   %i.jt = fadd <4 x float> %i.js, splat (float 5.000000e-01)
   %i.ju = call <4 x float> @llvm.floor.v4f32(<4 x float> %i.jt)
   %i.jv = fptosi <4 x float> %i.ju to <4 x i32>
-  %4 = shl <4 x i32> %i.jv, <i32 16, i32 8, i32 0, i32 24>
-  %5 = and <4 x i32> %4, <i32 16711680, i32 65280, i32 255, i32 -1>
-  %6 = call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %5)
+  %4 = shufflevector <4 x i32> %i.jv, <4 x i32> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
+  %5 = trunc <4 x i32> %4 to <4 x i8>
   %i.jw = getelementptr inbounds nuw i8, ptr %.0.i, i64 24
-  store i32 %6, ptr %i.jw, align 4, !tbaa !89
+  store <4 x i8> %5, ptr %i.jw, align 4, !tbaa !89
   br label %bb.au
 
 bb.as:                                            ; preds = %_ZN5scene15SSkinMeshBuffer9getVertexEj.exit
@@ -611,9 +610,6 @@ declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.floor.v4f32(<4 x float>) #19
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #19
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

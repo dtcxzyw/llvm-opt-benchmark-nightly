@@ -204,14 +204,8 @@ bb.k:                                             ; preds = %bb.i
           to label %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsgCecv3eZDcN_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECsjceHdiZFn9b_13glyphs2fontir.exit unwind label %bb.n
 
 bb.l:                                             ; preds = %bb.i
-  %i.aj = getelementptr inbounds nuw [32 x i8], ptr %1, i64 %i.z ; 4 uses
-  %6 = load i64, ptr %i.aj, align 8, !noundef !5
-  %7 = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
-  %8 = load i64, ptr %7, align 8, !noundef !5
-  %9 = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
-  %10 = load i64, ptr %9, align 8, !noundef !5
-  %11 = getelementptr inbounds nuw i8, ptr %i.aj, i64 24
-  %12 = load i64, ptr %11, align 8, !noundef !5
+  %i.aj = getelementptr inbounds nuw [32 x i8], ptr %1, i64 %i.z
+  %6 = load <4 x i64>, ptr %i.aj, align 8
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #25
   %i.ak = tail call noundef dereferenceable_or_null(5) ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef range(i64 5, 81) 5, i64 noundef range(i64 1, 9) 1) #25 ; 3 uses
   %i.al = icmp eq ptr %i.ak, null
@@ -263,20 +257,9 @@ bb.q:                                             ; preds = %bb.bc, %bb.ba, %bb.
   unreachable
 
 bb.r:                                             ; preds = %bb.l
-  %13 = trunc i64 %12 to i32
-  %.sroa.6.0.insert.ext = shl i32 %13, 24
-  %14 = trunc i64 %10 to i32
-  %.sroa.518.0.insert.ext = shl i32 %14, 16
-  %.sroa.518.0.insert.shift = and i32 %.sroa.518.0.insert.ext, 16711680
-  %.sroa.518.0.insert.insert = or disjoint i32 %.sroa.6.0.insert.ext, %.sroa.518.0.insert.shift
-  %15 = trunc i64 %8 to i32
-  %.sroa.417.0.insert.ext = shl i32 %15, 8
-  %.sroa.417.0.insert.shift = and i32 %.sroa.417.0.insert.ext, 65280
-  %.sroa.417.0.insert.insert = or disjoint i32 %.sroa.518.0.insert.insert, %.sroa.417.0.insert.shift
-  %16 = trunc i64 %6 to i32
-  %.sroa.016.0.insert.ext = and i32 %16, 255
-  %.sroa.016.0.insert.insert = or disjoint i32 %.sroa.417.0.insert.insert, %.sroa.016.0.insert.ext
-  %.sroa.071.1.insert.ext = zext i32 %.sroa.016.0.insert.insert to i40
+  %7 = trunc <4 x i64> %6 to <4 x i8>
+  %8 = bitcast <4 x i8> %7 to i32
+  %.sroa.071.1.insert.ext = zext i32 %8 to i40
   %.sroa.071.1.insert.shift = shl nuw i40 %.sroa.071.1.insert.ext, 8
   %.sroa.071.1.insert.insert = or disjoint i40 %.sroa.071.1.insert.shift, 1
   store i40 %.sroa.071.1.insert.insert, ptr %i.ak, align 1
@@ -366,13 +349,7 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.c
   %i.bn = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %17 = load i64, ptr %i.bn, align 8, !noundef !5
-  %18 = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %19 = load i64, ptr %18, align 8, !noundef !5
-  %20 = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %21 = load i64, ptr %20, align 8, !noundef !5
-  %22 = getelementptr inbounds nuw i8, ptr %5, i64 32
-  %23 = load i64, ptr %22, align 8, !noundef !5
+  %9 = load <4 x i64>, ptr %i.bn, align 8
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #25
   %i.bo = tail call noundef dereferenceable_or_null(5) ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef range(i64 5, 81) 5, i64 noundef range(i64 1, 9) 1) #25 ; 3 uses
   %i.bp = icmp eq ptr %i.bo, null
@@ -392,20 +369,9 @@ bb.ad:                                            ; preds = %bb.c
   br i1 %.not, label %bb.ag, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ac
-  %24 = trunc i64 %23 to i32
-  %.sroa.626.0.insert.ext = shl i32 %24, 24
-  %25 = trunc i64 %21 to i32
-  %.sroa.525.0.insert.ext = shl i32 %25, 16
-  %.sroa.525.0.insert.shift = and i32 %.sroa.525.0.insert.ext, 16711680
-  %.sroa.525.0.insert.insert = or disjoint i32 %.sroa.626.0.insert.ext, %.sroa.525.0.insert.shift
-  %26 = trunc i64 %19 to i32
-  %.sroa.424.0.insert.ext = shl i32 %26, 8
-  %.sroa.424.0.insert.shift = and i32 %.sroa.424.0.insert.ext, 65280
-  %.sroa.424.0.insert.insert = or disjoint i32 %.sroa.525.0.insert.insert, %.sroa.424.0.insert.shift
-  %27 = trunc i64 %17 to i32
-  %.sroa.023.0.insert.ext = and i32 %27, 255
-  %.sroa.023.0.insert.insert = or disjoint i32 %.sroa.424.0.insert.insert, %.sroa.023.0.insert.ext
-  %.sroa.073.1.insert.ext = zext i32 %.sroa.023.0.insert.insert to i40
+  %10 = trunc <4 x i64> %9 to <4 x i8>
+  %11 = bitcast <4 x i8> %10 to i32
+  %.sroa.073.1.insert.ext = zext i32 %11 to i40
   %.sroa.073.1.insert.shift = shl nuw i40 %.sroa.073.1.insert.ext, 8
   %.sroa.073.1.insert.insert = or disjoint i40 %.sroa.073.1.insert.shift, 1
   store i40 %.sroa.073.1.insert.insert, ptr %i.bo, align 1

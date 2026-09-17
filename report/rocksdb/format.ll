@@ -204,10 +204,8 @@ bb.a:
   %i.f = load i32, ptr %i.e, align 1
   %i.g = tail call i32 @llvm.bswap.i32(i32 %i.f)
   %i.h = getelementptr i8, ptr %i.a, i64 6
-  %3 = load <8 x i8>, ptr %i.h, align 1, !tbaa !29
-  %4 = zext <8 x i8> %3 to <8 x i64>
-  %5 = shl nuw <8 x i64> %4, <i64 56, i64 48, i64 40, i64 32, i64 24, i64 16, i64 8, i64 0>
-  %i.i = tail call i64 @llvm.vector.reduce.or.v8i64(<8 x i64> %5)
+  %3 = load i64, ptr %i.h, align 1, !tbaa !29
+  %i.i = tail call i64 @llvm.bswap.i64(i64 %3)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !99)
   store ptr null, ptr %0, align 8, !tbaa !35, !alias.scope !99
   %i.j = tail call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #25, !noalias !100 ; 6 uses
@@ -300,10 +298,8 @@ bb.a:
   %i.c = getelementptr i8, ptr %i.a, i64 1
   %i.d = load i8, ptr %i.c, align 1, !tbaa !29
   %i.e = getelementptr i8, ptr %i.a, i64 2
-  %3 = load <8 x i8>, ptr %i.e, align 1, !tbaa !29
-  %4 = zext <8 x i8> %3 to <8 x i64>
-  %5 = shl nuw <8 x i64> %4, <i64 56, i64 48, i64 40, i64 32, i64 24, i64 16, i64 8, i64 0>
-  %i.f = tail call i64 @llvm.vector.reduce.or.v8i64(<8 x i64> %5)
+  %3 = load i64, ptr %i.e, align 1, !tbaa !29
+  %i.f = tail call i64 @llvm.bswap.i64(i64 %3)
   %i.g = getelementptr i8, ptr %i.a, i64 10
   %i.h = load i32, ptr %i.g, align 1
   %i.i = tail call i32 @llvm.bswap.i32(i32 %i.h)  ; 2 uses
@@ -402,10 +398,8 @@ bb.a:
   %i.c = getelementptr i8, ptr %i.a, i64 1
   %i.d = load i8, ptr %i.c, align 1, !tbaa !29
   %i.e = getelementptr i8, ptr %i.a, i64 2
-  %3 = load <8 x i8>, ptr %i.e, align 1, !tbaa !29
-  %4 = zext <8 x i8> %3 to <8 x i64>
-  %5 = shl nuw <8 x i64> %4, <i64 56, i64 48, i64 40, i64 32, i64 24, i64 16, i64 8, i64 0>
-  %i.f = tail call i64 @llvm.vector.reduce.or.v8i64(<8 x i64> %5)
+  %3 = load i64, ptr %i.e, align 1, !tbaa !29
+  %i.f = tail call i64 @llvm.bswap.i64(i64 %3)
   %i.g = getelementptr i8, ptr %i.a, i64 10
   %i.h = load i32, ptr %i.g, align 1
   %i.i = tail call i32 @llvm.bswap.i32(i32 %i.h)
@@ -808,10 +802,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr i8, ptr %1, i64 4
-  %9 = load <8 x i8>, ptr %i.b, align 1, !tbaa !29
-  %10 = zext <8 x i8> %9 to <8 x i64>
-  %11 = shl nuw <8 x i64> %10, <i64 56, i64 48, i64 40, i64 32, i64 24, i64 16, i64 8, i64 0>
-  %i.c = tail call i64 @llvm.vector.reduce.or.v8i64(<8 x i64> %11)
+  %9 = load i64, ptr %i.b, align 1, !tbaa !29
+  %i.c = tail call i64 @llvm.bswap.i64(i64 %9)
   %i.d = load i32, ptr %1, align 1
   %i.e = tail call i32 @llvm.bswap.i32(i32 %i.d)
   tail call void @_ZN7rocksdb9cassandra8RowValueC1Eil(ptr noundef nonnull align 8 dereferenceable(48) %0, i32 noundef %i.e, i64 noundef %i.c)
@@ -1214,7 +1206,7 @@ declare i64 @llvm.smax.i64(i64, i64) #21
 declare i32 @llvm.bswap.i32(i32) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.or.v8i64(<8 x i64>) #21
+declare i64 @llvm.bswap.i64(i64) #21
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "frame-pointer"="non-leaf-no-reserve" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="non-leaf-no-reserve" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }

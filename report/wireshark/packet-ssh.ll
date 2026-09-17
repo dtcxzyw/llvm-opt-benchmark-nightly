@@ -204,24 +204,9 @@ bb.ap:                                            ; preds = %bb.ao
 
 .thread346.i:                                     ; preds = %bb.ao, %bb.an
   %i.hg = getelementptr i8, ptr %2, i64 229       ; 2 uses
-  %5 = load i8, ptr %i.hg, align 1
-  %6 = zext i8 %5 to i32
-  %7 = shl nuw i32 %6, 24
-  %8 = getelementptr i8, ptr %2, i64 230
-  %9 = load i8, ptr %8, align 2
-  %10 = zext i8 %9 to i32
-  %11 = shl nuw nsw i32 %10, 16
-  %12 = or disjoint i32 %11, %7
-  %13 = getelementptr i8, ptr %2, i64 231
-  %14 = load i8, ptr %13, align 1
-  %15 = zext i8 %14 to i32
-  %16 = shl nuw nsw i32 %15, 8
-  %17 = or disjoint i32 %12, %16
-  %18 = getelementptr i8, ptr %2, i64 232
-  %19 = load i8, ptr %18, align 8
-  %20 = zext i8 %19 to i32                        ; 2 uses
-  %21 = or disjoint i32 %17, %20                  ; 4 uses
-  %i.hh = add i32 %21, -32769
+  %5 = load i32, ptr %i.hg, align 1
+  %6 = tail call i32 @llvm.bswap.i32(i32 %5)      ; 4 uses
+  %i.hh = add i32 %6, -32769
   %or.cond12.i = icmp ult i32 %i.hh, -32757
   br i1 %or.cond12.i, label %bb.aq, label %bb.ar
 
@@ -230,8 +215,10 @@ bb.aq:                                            ; preds = %.thread346.i
   br label %ssh_decrypt_packet.exit
 
 bb.ar:                                            ; preds = %.thread346.i
-  %22 = and i32 %20, 15
-  %.not321.i = icmp eq i32 %22, 12
+  %7 = getelementptr i8, ptr %2, i64 232
+  %8 = load i8, ptr %7, align 8
+  %9 = and i8 %8, 15
+  %.not321.i = icmp eq i8 %9, 12
   br i1 %.not321.i, label %bb.at, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
@@ -239,7 +226,7 @@ bb.as:                                            ; preds = %bb.ar
   br label %bb.at
 
 bb.at:                                            ; preds = %bb.as, %bb.ar
-  %i.hj = add nuw nsw i32 %21, 4                  ; 4 uses
+  %i.hj = add nuw nsw i32 %6, 4                   ; 4 uses
   %i.hk = add nuw i32 %i.hj, %spec.select.i       ; 2 uses
   %i.hl = icmp ult i32 %i.z, %i.hk
   br i1 %i.hl, label %bb.au, label %bb.ay
@@ -278,12 +265,12 @@ bb.ay:                                            ; preds = %bb.ax, %bb.at
   %i.hy = zext nneg i32 %i.hj to i64              ; 3 uses
   %i.hz = tail call noalias ptr @wmem_alloc(ptr noundef %i.hx, i64 noundef %i.hy) #23 ; 5 uses
   %i.ia = tail call ptr @__memcpy_chk(ptr noundef %i.hz, ptr noundef %i.hg, i64 noundef 16, i64 noundef %i.hy) #25, !alias.scope !30 ; 0 uses
-  %i.ib = icmp samesign ugt i32 %21, 12
+  %i.ib = icmp samesign ugt i32 %6, 12
   br i1 %i.ib, label %bb.az, label %.thread348.i
 
 bb.az:                                            ; preds = %bb.ay
   %i.ic = add i32 %3, 16
-  %i.id = add nsw i32 %21, -12                    ; 2 uses
+  %i.id = add nsw i32 %6, -12                     ; 2 uses
   %i.ie = tail call ptr @tvb_get_ptr(ptr noundef %0, i32 noundef %i.ic, i32 noundef %i.id)
   %i.if = load ptr, ptr %i.l, align 8
   %i.ig = getelementptr i8, ptr %i.hz, i64 16

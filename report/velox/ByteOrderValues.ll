@@ -91,10 +91,8 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %2 = load <8 x i8>, ptr %0, align 1, !tbaa !8
-  %3 = zext <8 x i8> %2 to <8 x i64>
-  %4 = shl nuw <8 x i64> %3, <i64 56, i64 48, i64 40, i64 32, i64 24, i64 16, i64 8, i64 0>
-  %i.b = tail call i64 @llvm.vector.reduce.or.v8i64(<8 x i64> %4)
+  %2 = load i64, ptr %0, align 1, !tbaa !8
+  %i.b = tail call i64 @llvm.bswap.i64(i64 %2)
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
@@ -160,10 +158,8 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %2 = load <8 x i8>, ptr %0, align 1, !tbaa !8
-  %3 = zext <8 x i8> %2 to <8 x i64>
-  %4 = shl nuw <8 x i64> %3, <i64 56, i64 48, i64 40, i64 32, i64 24, i64 16, i64 8, i64 0>
-  %i.b = tail call i64 @llvm.vector.reduce.or.v8i64(<8 x i64> %4)
+  %2 = load i64, ptr %0, align 1, !tbaa !8
+  %i.b = tail call i64 @llvm.bswap.i64(i64 %2)
   br label %_ZN4geos2io15ByteOrderValues7getLongEPKhi.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -228,7 +224,7 @@ _ZN4geos2io15ByteOrderValues7putLongElPhi.exit:   ; preds = %bb.b, %bb.c
 declare i32 @llvm.bswap.i32(i32) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.or.v8i64(<8 x i64>) #2
+declare i64 @llvm.bswap.i64(i64) #2
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }

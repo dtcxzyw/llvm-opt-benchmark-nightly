@@ -205,10 +205,9 @@ bb.a:
   %i.j = fadd <4 x float> %i.i, splat (float 5.000000e-01)
   %i.k = tail call <4 x float> @llvm.floor.v4f32(<4 x float> %i.j)
   %i.l = fptosi <4 x float> %i.k to <4 x i32>
-  %3 = shl <4 x i32> %i.l, <i32 16, i32 8, i32 0, i32 24>
-  %4 = and <4 x i32> %3, <i32 16711680, i32 65280, i32 255, i32 -1>
-  %5 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %4)
-  store i32 %5, ptr %1, align 4, !tbaa !137
+  %3 = shufflevector <4 x i32> %i.l, <4 x i32> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
+  %4 = trunc <4 x i32> %3 to <4 x i8>
+  store <4 x i8> %4, ptr %1, align 4, !tbaa !137
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.n = load i8, ptr %i.m, align 8, !tbaa !165, !range !78, !noundef !79
   %i.o = trunc nuw i8 %i.n to i1
@@ -610,9 +609,6 @@ declare double @llvm.sqrt.f64(double) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.floor.v4f32(<4 x float>) #22
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #22
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

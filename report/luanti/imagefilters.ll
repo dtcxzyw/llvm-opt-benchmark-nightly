@@ -204,9 +204,9 @@ bb.c:                                             ; preds = %._crit_edge147
   %i.cm = fdiv nsz <4 x float> %i.cg, %i.cl
   %i.cn = fadd nsz <4 x float> %i.cm, splat (float 5.000000e-01)
   %i.co = fptoui <4 x float> %i.cn to <4 x i32>
-  %4 = shl <4 x i32> %i.co, <i32 8, i32 16, i32 0, i32 24>
-  %5 = and <4 x i32> %4, <i32 65280, i32 16711680, i32 255, i32 -1>
-  %6 = call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %5)
+  %4 = shufflevector <4 x i32> %i.co, <4 x i32> poison, <4 x i32> <i32 2, i32 0, i32 1, i32 3>
+  %5 = trunc <4 x i32> %4 to <4 x i8>
+  %6 = bitcast <4 x i8> %5 to i32
   br label %._crit_edge147.thread
 
 ._crit_edge147.thread:                            ; preds = %.lr.ph146, %_Z8rangelimIfifET_RKS0_RKT0_RKT1_.exit, %._crit_edge147, %bb.c
@@ -607,9 +607,6 @@ declare i32 @llvm.smax.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.pow.v4f32(<4 x float>, <4 x float>) #3

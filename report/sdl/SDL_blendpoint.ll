@@ -200,9 +200,8 @@ bb.c:                                             ; preds = %.split
   %i.bx = insertelement <4 x i32> %i.bw, i32 %i.a, i64 3
   %i.by = add nuw nsw <4 x i32> %i.bx, %i.bt
   %i.bz = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %i.by, <4 x i32> splat (i32 255))
-  %8 = shl nuw <4 x i32> %i.bz, <i32 0, i32 8, i32 16, i32 24>
-  %9 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %8)
-  store i32 %9, ptr %i.az, align 4
+  %8 = trunc nuw <4 x i32> %i.bz to <4 x i8>
+  store <4 x i8> %8, ptr %i.az, align 4
   br label %bb.h
 
 bb.d:                                             ; preds = %.split, %.split

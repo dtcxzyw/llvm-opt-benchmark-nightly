@@ -204,18 +204,20 @@ bb.cb:                                            ; preds = %bb.bz
 
 bb.cc:                                            ; preds = %_ZNK4ncnn3Mat5emptyEv.exit369
   %i.va = load i16, ptr %i.c, align 2, !tbaa !120
-  %i.vb = zext i16 %i.va to i64
-  %7 = insertelement <4 x i64> poison, i64 %i.vb, i64 0
-  %8 = shufflevector <4 x i64> %7, <4 x i64> poison, <4 x i32> zeroinitializer
-  %9 = shl nuw <4 x i64> %8, <i64 0, i64 16, i64 32, i64 48>
-  %10 = tail call i64 @llvm.vector.reduce.or.v4i64(<4 x i64> %9)
+  %i.vb = zext i16 %i.va to i64                   ; 4 uses
+  %7 = shl nuw nsw i64 %i.vb, 16
+  %8 = shl nuw nsw i64 %i.vb, 32
+  %9 = shl nuw i64 %i.vb, 48
+  %10 = or disjoint i64 %8, %7
+  %11 = or disjoint i64 %10, %9
+  %12 = or disjoint i64 %11, %i.vb
   %i.vc = load <2 x i32>, ptr %i.tu, align 8, !tbaa !100
   %i.vd = sdiv <2 x i32> %i.vc, splat (i32 4)     ; 2 uses
   %i.ve = getelementptr inbounds nuw i8, ptr %2, i64 44
   %.val395 = load i32, ptr %i.ve, align 4, !tbaa !105
   %i.vf = extractelement <2 x i32> %i.vd, i64 0
   %i.vg = extractelement <2 x i32> %i.vd, i64 1
-  tail call fastcc void @_ZN4ncnnL38padding_constant_pack4_bf16s_fp16s_sseERKNS_3MatERS0_iiiil(ptr noundef nonnull align 8 dereferenceable(72) %1, ptr nonnull %i.uq, i32 %.val395, i32 noundef 0, i32 noundef 0, i32 noundef %i.vf, i32 noundef %i.vg, i64 noundef %10)
+  tail call fastcc void @_ZN4ncnnL38padding_constant_pack4_bf16s_fp16s_sseERKNS_3MatERS0_iiiil(ptr noundef nonnull align 8 dereferenceable(72) %1, ptr nonnull %i.uq, i32 %.val395, i32 noundef 0, i32 noundef 0, i32 noundef %i.vf, i32 noundef %i.vg, i64 noundef %12)
   br label %_ZN4ncnnL42padding_constant_pack16_bf16s_fp16s_avx512ERKNS_3MatERS0_iiiiRKDv4_x.exit.thread
 
 bb.cd:                                            ; preds = %bb.bw
@@ -281,11 +283,13 @@ bb.ch:                                            ; preds = %bb.cf
 
 bb.ci:                                            ; preds = %_ZNK4ncnn3Mat5emptyEv.exit368
   %i.wu = load i16, ptr %i.c, align 2, !tbaa !120
-  %i.wv = zext i16 %i.wu to i64
-  %11 = insertelement <4 x i64> poison, i64 %i.wv, i64 0
-  %12 = shufflevector <4 x i64> %11, <4 x i64> poison, <4 x i32> zeroinitializer
-  %13 = shl nuw <4 x i64> %12, <i64 0, i64 16, i64 32, i64 48>
-  %14 = tail call i64 @llvm.vector.reduce.or.v4i64(<4 x i64> %13)
+  %i.wv = zext i16 %i.wu to i64                   ; 4 uses
+  %13 = shl nuw nsw i64 %i.wv, 16
+  %14 = shl nuw nsw i64 %i.wv, 32
+  %15 = shl nuw i64 %i.wv, 48
+  %16 = or disjoint i64 %14, %13
+  %17 = or disjoint i64 %16, %15
+  %18 = or disjoint i64 %17, %i.wv
   %i.ww = load <2 x i32>, ptr %i.vo, align 8, !tbaa !100
   %i.wx = sdiv <2 x i32> %i.ww, splat (i32 4)     ; 2 uses
   %i.wy = load i32, ptr %i.vh, align 8, !tbaa !93
@@ -294,7 +298,7 @@ bb.ci:                                            ; preds = %_ZNK4ncnn3Mat5empty
   %.val397 = load i32, ptr %i.xa, align 4, !tbaa !105
   %i.xb = extractelement <2 x i32> %i.wx, i64 0
   %i.xc = extractelement <2 x i32> %i.wx, i64 1
-  tail call fastcc void @_ZN4ncnnL38padding_constant_pack4_bf16s_fp16s_sseERKNS_3MatERS0_iiiil(ptr noundef nonnull align 8 dereferenceable(72) %1, ptr nonnull %i.wk, i32 %.val397, i32 noundef %i.xb, i32 noundef %i.xc, i32 noundef %i.wy, i32 noundef %i.wz, i64 noundef %14)
+  tail call fastcc void @_ZN4ncnnL38padding_constant_pack4_bf16s_fp16s_sseERKNS_3MatERS0_iiiil(ptr noundef nonnull align 8 dereferenceable(72) %1, ptr nonnull %i.wk, i32 %.val397, i32 noundef %i.xb, i32 noundef %i.xc, i32 noundef %i.wy, i32 noundef %i.wz, i64 noundef %18)
   br label %_ZN4ncnnL42padding_constant_pack16_bf16s_fp16s_avx512ERKNS_3MatERS0_iiiiRKDv4_x.exit.thread
 
 bb.cj:                                            ; preds = %bb.bw
@@ -697,15 +701,17 @@ bb.c:                                             ; preds = %.noexc45
 
 bb.d:                                             ; preds = %.noexc45
   %i.bp = load i16, ptr %7, align 2, !tbaa !120
-  %i.bq = zext i16 %i.bp to i64
-  %12 = insertelement <4 x i64> poison, i64 %i.bq, i64 0
-  %13 = shufflevector <4 x i64> %12, <4 x i64> poison, <4 x i32> zeroinitializer
-  %14 = shl nuw <4 x i64> %13, <i64 0, i64 16, i64 32, i64 48>
-  %15 = call i64 @llvm.vector.reduce.or.v4i64(<4 x i64> %14)
+  %i.bq = zext i16 %i.bp to i64                   ; 4 uses
+  %12 = shl nuw nsw i64 %i.bq, 16
+  %13 = shl nuw nsw i64 %i.bq, 32
+  %14 = shl nuw i64 %i.bq, 48
+  %15 = or disjoint i64 %13, %12
+  %16 = or disjoint i64 %15, %14
+  %17 = or disjoint i64 %16, %i.bq
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.033 = phi i64 [ %i.bo, %bb.c ], [ %15, %bb.d ] ; 4 uses
+  %.033 = phi i64 [ %i.bo, %bb.c ], [ %17, %bb.d ] ; 4 uses
   %i.br = load i32, ptr %8, align 4, !tbaa !100
   %i.bs = trunc nsw i64 %indvars.iv163 to i32
   %i.bt = sub nsw i32 %i.bs, %i.br                ; 3 uses
@@ -1108,15 +1114,17 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.as = load i16, ptr %5, align 2, !tbaa !120
-  %i.at = zext i16 %i.as to i64
-  %10 = insertelement <4 x i64> poison, i64 %i.at, i64 0
-  %11 = shufflevector <4 x i64> %10, <4 x i64> poison, <4 x i32> zeroinitializer
-  %12 = shl nuw <4 x i64> %11, <i64 0, i64 16, i64 32, i64 48>
-  %13 = call i64 @llvm.vector.reduce.or.v4i64(<4 x i64> %12)
+  %i.at = zext i16 %i.as to i64                   ; 4 uses
+  %10 = shl nuw nsw i64 %i.at, 16
+  %11 = shl nuw nsw i64 %i.at, 32
+  %12 = shl nuw i64 %i.at, 48
+  %13 = or disjoint i64 %11, %10
+  %14 = or disjoint i64 %13, %12
+  %15 = or disjoint i64 %14, %i.at
   br label %.noexc63.lr.ph.us
 
 .noexc63.lr.ph.us:                                ; preds = %bb.e, %bb.d
-  %.037.us = phi i64 [ %i.ar, %bb.d ], [ %13, %bb.e ] ; 27 uses
+  %.037.us = phi i64 [ %i.ar, %bb.d ], [ %15, %bb.e ] ; 27 uses
   %broadcast.splatinsert480 = insertelement <8 x i64> poison, i64 %.037.us, i64 0
   %broadcast.splat481 = shufflevector <8 x i64> %broadcast.splatinsert480, <8 x i64> poison, <8 x i32> zeroinitializer ; 4 uses
   %broadcast.splatinsert497 = insertelement <8 x i64> poison, i64 %.037.us, i64 0
@@ -1518,9 +1526,6 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.or.v8i64(<8 x i64>) #20
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.or.v4i64(<4 x i64>) #20
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #23

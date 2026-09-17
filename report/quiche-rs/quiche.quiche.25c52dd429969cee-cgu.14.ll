@@ -204,9 +204,9 @@ bb.ak:                                            ; preds = %bb.aj
     #dbg_value(i8 %i.dc, !11738, !DIExpression(), !11801)
     #dbg_value(i64 63, !11809, !DIExpression(), !11812)
     #dbg_value(i64 63, !11816, !DIExpression(), !11819)
-    #dbg_value(i8 %i.dc, !11782, !DIExpression(), !11804)
-    #dbg_value(i8 %i.dc, !11813, !DIExpression(DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !11819)
-    #dbg_value(i8 %i.dc, !11806, !DIExpression(DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !11812)
+    #dbg_value(i8 %i.dc, !11782, !DIExpression(DW_OP_constu, 127, DW_OP_and, DW_OP_stack_value), !11804)
+    #dbg_value(i8 %i.dc, !11813, !DIExpression(DW_OP_constu, 127, DW_OP_and, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !11819)
+    #dbg_value(i8 %i.dc, !11806, !DIExpression(DW_OP_constu, 127, DW_OP_and, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !11812)
   %i.dd = zext i8 %i.dc to i64, !dbg !11870
     #dbg_value(i64 %i.dd, !11806, !DIExpression(), !11812)
     #dbg_value(i64 %i.dd, !11813, !DIExpression(), !11819)

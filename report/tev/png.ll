@@ -205,7 +205,7 @@ bb.a:
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
-  %.03440 = phi ptr [ %i.ah, %bb.e ], [ %i.d, %.lr.ph.preheader ] ; 10 uses
+  %.03440 = phi ptr [ %i.ah, %bb.e ], [ %i.d, %.lr.ph.preheader ] ; 8 uses
   %.03539 = phi i32 [ %i.ag, %bb.e ], [ 0, %.lr.ph.preheader ]
   %i.e = load i8, ptr %.03440, align 1, !tbaa !29
   %i.f = zext i8 %i.e to i32
@@ -224,32 +224,19 @@ bb.a:
   %i.s = load i8, ptr %i.r, align 1, !tbaa !29
   %i.t = zext i8 %i.s to i32
   %i.u = or disjoint i32 %i.q, %i.t               ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.03440, i64 4
-  %5 = load i8, ptr %4, align 1, !tbaa !29
-  %6 = zext i8 %5 to i32
-  %7 = shl nuw i32 %6, 24
-  %i.v = getelementptr inbounds nuw i8, ptr %.03440, i64 5
-  %8 = load i8, ptr %i.v, align 1, !tbaa !29
-  %9 = zext i8 %8 to i32
-  %10 = shl nuw nsw i32 %9, 16
-  %11 = or disjoint i32 %10, %7
-  %i.w = getelementptr inbounds nuw i8, ptr %.03440, i64 6
-  %12 = load i8, ptr %i.w, align 1, !tbaa !29
-  %13 = zext i8 %12 to i32
-  %14 = shl nuw nsw i32 %13, 8
-  %15 = or disjoint i32 %11, %14
-  %16 = getelementptr inbounds nuw i8, ptr %.03440, i64 7
-  %i.x = load i8, ptr %16, align 1, !tbaa !29
-  %17 = zext i8 %i.x to i32                       ; 2 uses
-  %18 = or disjoint i32 %15, %17                  ; 2 uses
-  %i.y = icmp ugt i32 %18, %2
+  %i.v = getelementptr inbounds nuw i8, ptr %.03440, i64 4
+  %i.w = getelementptr inbounds nuw i8, ptr %.03440, i64 7
+  %4 = load i32, ptr %i.v, align 1, !tbaa !29
+  %i.x = load i8, ptr %i.w, align 1, !tbaa !29
+  %5 = tail call i32 @llvm.bswap.i32(i32 %4)      ; 2 uses
+  %i.y = icmp ugt i32 %5, %2
   br i1 %i.y, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
   %i.z = getelementptr inbounds nuw i8, ptr %.03440, i64 8
   %i.aa = load i32, ptr %i.z, align 1
   %i.ab = tail call i32 @llvm.bswap.i32(i32 %i.aa)
-  %i.ac = sub nuw i32 %2, %18
+  %i.ac = sub nuw i32 %2, %5
   %i.ad = icmp ugt i32 %i.ab, %i.ac
   br i1 %i.ad, label %.critedge, label %bb.c
 
@@ -259,8 +246,8 @@ bb.b:                                             ; preds = %.lr.ph
   br label %.loopexit
 
 bb.c:                                             ; preds = %bb.b
-  %19 = and i32 %17, 3
-  %.not = icmp eq i32 %19, 0
+  %6 = and i8 %i.x, 3
+  %.not = icmp eq i8 %6, 0
   br i1 %.not, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c

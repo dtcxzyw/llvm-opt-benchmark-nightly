@@ -205,10 +205,9 @@ bb.ar:                                            ; preds = %.noexc254
   %i.ml = shufflevector <4 x i32> %i.mk, <4 x i32> %i.mi, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.mm = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.ml, <4 x i32> zeroinitializer)
   %i.mn = call <4 x i32> @llvm.umin.v4i32(<4 x i32> %i.mm, <4 x i32> splat (i32 255))
-  %14 = shl nuw <4 x i32> %i.mn, <i32 0, i32 8, i32 16, i32 24>
-  %15 = call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %14)
+  %14 = trunc nuw <4 x i32> %i.mn to <4 x i8>
   %i.mo = getelementptr inbounds nuw i8, ptr %0, i64 2016
-  store i32 %15, ptr %i.mo, align 8, !tbaa !387
+  store <4 x i8> %14, ptr %i.mo, align 8, !tbaa !387
   %i.mp = load ptr, ptr %6, align 8, !tbaa !253   ; 2 uses
   %i.mq = icmp eq ptr %i.mp, %i.lt
   br i1 %i.mq, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i259, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i258
@@ -610,9 +609,6 @@ declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.umin.v4i32(<4 x i32>, <4 x i32>) #14
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #14
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

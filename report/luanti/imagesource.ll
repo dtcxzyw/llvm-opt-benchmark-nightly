@@ -205,10 +205,9 @@ bb.l:                                             ; preds = %bb.k
   %i.ce = fadd nsz <4 x float> %i.cd, splat (float 5.000000e-01)
   %i.cf = call nsz <4 x float> @llvm.floor.v4f32(<4 x float> %i.ce)
   %i.cg = fptosi <4 x float> %i.cf to <4 x i32>
-  %8 = shl <4 x i32> %i.cg, <i32 16, i32 8, i32 0, i32 24>
-  %9 = and <4 x i32> %8, <i32 16711680, i32 65280, i32 255, i32 -1>
-  %10 = call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %9)
-  store i32 %10, ptr %7, align 4, !tbaa !110
+  %8 = shufflevector <4 x i32> %i.cg, <4 x i32> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
+  %9 = trunc <4 x i32> %8 to <4 x i8>
+  store <4 x i8> %9, ptr %7, align 4, !tbaa !110
   %i.ch = load ptr, ptr %0, align 8, !tbaa !41
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 24
   %i.cj = load ptr, ptr %i.ci, align 8
@@ -570,10 +569,9 @@ _ZNK5video9SColorHSL5toRGBERNS_7SColorfE.exit:    ; preds = %bb.m, %bb.w, %bb.x,
   %i.ez = fadd nsz <4 x float> %i.ey, splat (float 5.000000e-01)
   %i.fa = call nsz <4 x float> @llvm.floor.v4f32(<4 x float> %i.ez)
   %i.fb = fptosi <4 x float> %i.fa to <4 x i32>
-  %8 = shl <4 x i32> %i.fb, <i32 16, i32 8, i32 0, i32 24>
-  %9 = and <4 x i32> %8, <i32 16711680, i32 65280, i32 255, i32 -1>
-  %10 = call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %9)
-  store i32 %10, ptr %7, align 4
+  %8 = shufflevector <4 x i32> %i.fb, <4 x i32> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
+  %9 = trunc <4 x i32> %8 to <4 x i8>
+  store <4 x i8> %9, ptr %7, align 4
   %i.fc = load ptr, ptr %0, align 8, !tbaa !41
   %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 24
   %i.fe = load ptr, ptr %i.fd, align 8
@@ -974,9 +972,6 @@ declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.floor.v4f32(<4 x float>) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #10

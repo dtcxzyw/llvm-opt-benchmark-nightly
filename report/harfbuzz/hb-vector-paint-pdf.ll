@@ -205,16 +205,16 @@ bb.b:                                             ; preds = %_ZL25hb_pdf_encode_
   %i.bl = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.bk, <4 x float> %i.aq, <4 x float> %i.ao)
   %i.bm = fadd <4 x float> %i.bl, splat (float 5.000000e-01)
   %i.bn = fptoui <4 x float> %i.bm to <4 x i32>   ; 2 uses
-  %5 = shl <4 x i32> %i.bn, <i32 16, i32 8, i32 0, i32 24>
-  %6 = and <4 x i32> %5, <i32 16711680, i32 65280, i32 255, i32 -1>
-  %7 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %6) ; 2 uses
+  %5 = shufflevector <4 x i32> %i.bn, <4 x i32> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
+  %6 = trunc <4 x i32> %5 to <4 x i8>
+  %7 = bitcast <4 x i8> %6 to i32                 ; 2 uses
   %i.bo = shufflevector <2 x float> %i.bi, <2 x float> poison, <4 x i32> zeroinitializer
   %i.bp = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.bo, <4 x float> %i.aq, <4 x float> %i.ao)
   %i.bq = fadd <4 x float> %i.bp, splat (float 5.000000e-01)
   %i.br = fptoui <4 x float> %i.bq to <4 x i32>   ; 2 uses
-  %8 = shl <4 x i32> %i.br, <i32 16, i32 8, i32 0, i32 24>
-  %9 = and <4 x i32> %8, <i32 16711680, i32 65280, i32 255, i32 -1>
-  %10 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %9) ; 2 uses
+  %8 = shufflevector <4 x i32> %i.br, <4 x i32> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
+  %9 = trunc <4 x i32> %8 to <4 x i8>
+  %10 = bitcast <4 x i8> %9 to i32                ; 2 uses
   %i.bs = extractelement <2 x float> %i.bj, i64 0 ; 3 uses
   %i.bt = extractelement <2 x float> %i.bj, i64 1 ; 3 uses
   %i.bu = fsub float %i.bs, %i.bt
@@ -616,9 +616,6 @@ declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #7
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
