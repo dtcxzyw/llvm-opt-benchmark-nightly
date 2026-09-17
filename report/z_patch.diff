@@ -1,0 +1,195 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index 658b027820a84..8853786420229 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -352,7 +352,8 @@ class ConstraintInfo {
+   /// \p NewVariables.
+   ConstraintTy getConstraint(CmpInst::Predicate Pred, Value *Op0, Value *Op1,
+                              SmallVectorImpl<Value *> &NewVariables,
+-                             bool ForceSignedSystem = false) const;
++                             bool ForceSignedSystem = false,
++                             bool PreferExistingVars = false) const;
+ 
+   /// Turns a comparison of the form \p Op0 \p Pred \p Op1 into a vector of
+   /// constraints using getConstraint. Returns an empty constraint if the result
+@@ -492,7 +493,8 @@ static OffsetResult collectOffsets(GEPOperator &GEP, const DataLayout &DL) {
+ }
+ 
+ static Decomposition decompose(Value *V, const ConstraintInfo &Info,
+-                               bool IsSigned, const DataLayout &DL);
++                               bool IsSigned, const DataLayout &DL,
++                               bool PreferExistingVars = false);
+ 
+ static bool canUseSExt(ConstantInt *CI) {
+   const APInt &Val = CI->getValue();
+@@ -629,12 +631,20 @@ static Decomposition decomposeGEP(GEPOperator &GEP, const ConstraintInfo &Info,
+ // Looking through certain expressions is only valid if a pre-condition holds.
+ // Pre-conditions are checked against \p Info as needed.
+ static Decomposition decompose(Value *V, const ConstraintInfo &Info,
+-                               bool IsSigned, const DataLayout &DL) {
+-  auto MergeResults = [&Info, IsSigned,
+-                       &DL](Value *A, Value *B,
++                               bool IsSigned, const DataLayout &DL,
++                               bool PreferExistingVars) {
++  // The system stores facts using whichever decomposition was valid when they
++  // were added. Looking through a value that is already a variable in the
++  // system would express the query over a different set of variables, losing
++  // the connection to those facts. Keep such values opaque when asked to.
++  if (PreferExistingVars && Info.getValue2Index(IsSigned).contains(V))
++    return V;
++
++  auto MergeResults = [&Info, IsSigned, &DL,
++                       PreferExistingVars](Value *A, Value *B,
+                             bool IsSignedB) -> std::optional<Decomposition> {
+-    auto ResA = decompose(A, Info, IsSigned, DL);
+-    auto ResB = decompose(B, Info, IsSignedB, DL);
++    auto ResA = decompose(A, Info, IsSigned, DL, PreferExistingVars);
++    auto ResB = decompose(B, Info, IsSignedB, DL, PreferExistingVars);
+     if (ResA.add(ResB))
+       return std::nullopt;
+     return ResA;
+@@ -753,7 +763,8 @@ static Decomposition decompose(Value *V, const ConstraintInfo &Info,
+ ConstraintTy
+ ConstraintInfo::getConstraint(CmpInst::Predicate Pred, Value *Op0, Value *Op1,
+                               SmallVectorImpl<Value *> &NewVariables,
+-                              bool ForceSignedSystem) const {
++                              bool ForceSignedSystem,
++                              bool PreferExistingVars) const {
+   assert(NewVariables.empty() && "NewVariables must be empty when passed in");
+   assert((!ForceSignedSystem || CmpInst::isEquality(Pred)) &&
+          "signed system can only be forced on eq/ne");
+@@ -799,9 +810,9 @@ ConstraintInfo::getConstraint(CmpInst::Predicate Pred, Value *Op0, Value *Op1,
+   bool IsSigned = ForceSignedSystem || CmpInst::isSigned(Pred);
+   auto &Value2Index = getValue2Index(IsSigned);
+   auto ADec = decompose(Op0->stripPointerCastsSameRepresentation(), *this,
+-                        IsSigned, DL);
++                        IsSigned, DL, PreferExistingVars);
+   auto BDec = decompose(Op1->stripPointerCastsSameRepresentation(), *this,
+-                        IsSigned, DL);
++                        IsSigned, DL, PreferExistingVars);
+   int64_t Offset1 = ADec.Offset;
+   int64_t Offset2 = BDec.Offset;
+   if (MulOverflow(Offset1, int64_t(-1), Offset1))
+@@ -1803,9 +1814,40 @@ static std::optional<bool> checkCondition(CmpInst::Predicate Pred, Value *A,
+     return std::nullopt;
+   };
+ 
++  // Whether an expression can be looked through depends on the facts currently
++  // on the stack, so a value may be opaque when a fact about it is recorded and
++  // decomposable by the time it is queried. The query then talks about the
++  // operands while the fact talks about the value itself, and the two no longer
++  // connect. Detect that by checking whether \p V, despite being a variable in
++  // the system, has no coefficient in the constraint we just built.
++  auto WasDecomposedAway = [&Info](Value *V, const ConstraintTy &C) {
++    const auto &Value2Index = Info.getValue2Index(C.IsSigned);
++    auto It = Value2Index.find(V);
++    return It != Value2Index.end() && none_of(C.Coefficients, [&It](const Entry &E) {
++             return E.Id == It->second;
++           });
++  };
++
++  // Retry such a query with values that are already variables kept opaque.
++  auto TryKeepingExistingVarsOpaque =
++      [&](const ConstraintTy &C, bool ForceSignedSystem) -> std::optional<bool> {
++    if (C.empty() || (!WasDecomposedAway(A, C) && !WasDecomposedAway(B, C)))
++      return std::nullopt;
++    SmallVector<Value *> NewVariables;
++    auto OpaqueR = Info.getConstraint(Pred, A, B, NewVariables,
++                                      ForceSignedSystem,
++                                      /*PreferExistingVars=*/true);
++    if (!NewVariables.empty() || OpaqueR.empty())
++      return std::nullopt;
++    return TryWithConstraint(OpaqueR);
++  };
++
+   auto R = Info.getConstraintForSolving(Pred, A, B);
+   if (auto ImpliedCondition = TryWithConstraint(R))
+     return ImpliedCondition;
++  if (auto ImpliedCondition =
++          TryKeepingExistingVarsOpaque(R, /*ForceSignedSystem=*/false))
++    return ImpliedCondition;
+ 
+   // For non-negative operands unsigned queries can also be checked against the
+   // signed system.
+@@ -1832,6 +1874,9 @@ static std::optional<bool> checkCondition(CmpInst::Predicate Pred, Value *A,
+     if (NewVariables.empty())
+       if (auto ImpliedCondition = TryWithConstraint(SR))
+         return ImpliedCondition;
++    if (auto ImpliedCondition =
++            TryKeepingExistingVarsOpaque(SR, /*ForceSignedSystem=*/true))
++      return ImpliedCondition;
+   }
+   return std::nullopt;
+ }
+diff --git a/llvm/test/Transforms/ConstraintElimination/decomposition-stability.ll b/llvm/test/Transforms/ConstraintElimination/decomposition-stability.ll
+new file mode 100644
+index 0000000000000..aa98e939cea6e
+--- /dev/null
++++ b/llvm/test/Transforms/ConstraintElimination/decomposition-stability.ll
+@@ -0,0 +1,66 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=constraint-elimination -S %s | FileCheck %s
++
++define i1 @eq_after_unsigned_sub_becomes_decomposable(i64 %a, i64 %y, i64 %z) {
++; CHECK-LABEL: define i1 @eq_after_unsigned_sub_becomes_decomposable(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[Y:%.*]], i64 [[Z:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[S:%.*]] = sub i64 [[Y]], [[Z]]
++; CHECK-NEXT:    [[C:%.*]] = icmp ugt i64 [[A]], [[S]]
++; CHECK-NEXT:    br i1 [[C]], label %[[THEN:.*]], label %[[EXIT:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[PRECOND:%.*]] = icmp uge i64 [[Y]], [[Z]]
++; CHECK-NEXT:    br i1 [[PRECOND]], label %[[QUERY:.*]], label %[[EXIT]]
++; CHECK:       [[QUERY]]:
++; CHECK-NEXT:    ret i1 false
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %s = sub i64 %y, %z
++  %c = icmp ugt i64 %a, %s
++  br i1 %c, label %then, label %exit
++
++then:
++  %precond = icmp uge i64 %y, %z
++  br i1 %precond, label %query, label %exit
++
++query:
++  %eq = icmp eq i64 %a, %s
++  ret i1 %eq
++
++exit:
++  ret i1 false
++}
++
++define i1 @eq_with_stable_decomposition(i64 %a, i64 %y, i64 %z) {
++; CHECK-LABEL: define i1 @eq_with_stable_decomposition(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[Y:%.*]], i64 [[Z:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[S:%.*]] = sub nuw i64 [[Y]], [[Z]]
++; CHECK-NEXT:    [[PRECOND:%.*]] = icmp uge i64 [[Y]], [[Z]]
++; CHECK-NEXT:    br i1 [[PRECOND]], label %[[THEN:.*]], label %[[EXIT:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[C:%.*]] = icmp ugt i64 [[A]], [[S]]
++; CHECK-NEXT:    br i1 [[C]], label %[[QUERY:.*]], label %[[EXIT]]
++; CHECK:       [[QUERY]]:
++; CHECK-NEXT:    ret i1 false
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %s = sub i64 %y, %z
++  %precond = icmp uge i64 %y, %z
++  br i1 %precond, label %then, label %exit
++
++then:
++  %c = icmp ugt i64 %a, %s
++  br i1 %c, label %query, label %exit
++
++query:
++  %eq = icmp eq i64 %a, %s
++  ret i1 %eq
++
++exit:
++  ret i1 false
++}
