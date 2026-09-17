@@ -1,0 +1,91 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 30b5adfa266a2..39cd6ff1ec473 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -11297,21 +11297,12 @@ bool ScalarEvolution::isKnownMultipleOf(
+   if (M == 1)
+     return true;
+ 
+-  // Recursively check AddRec operands. An AddRecExpr S is a multiple of M if S
+-  // starts with a multiple of M and at every iteration step S only adds
+-  // multiples of M.
+-  if (auto *AddRec = dyn_cast<SCEVAddRecExpr>(S))
+-    return isKnownMultipleOf(AddRec->getStart(), M, Predicates) &&
+-           isKnownMultipleOf(AddRec->getStepRecurrence(*this), M, Predicates);
+-
+   // For a constant, check that "S % M == 0".
+   if (auto *Cst = dyn_cast<SCEVConstant>(S)) {
+     APInt C = Cst->getAPInt();
+     return C.urem(M) == 0;
+   }
+ 
+-  // TODO: Also check other SCEV expressions, i.e., SCEVAddRecExpr, etc.
+-
+   // Basic tests have failed.
+   // Check "S % M == 0" at compile time and record runtime Assumptions.
+   auto *STy = dyn_cast<IntegerType>(S->getType());
+@@ -11330,6 +11321,29 @@ bool ScalarEvolution::isKnownMultipleOf(
+   if (!Predicates)
+     return false;
+ 
++  // Look through Add and AddRec expressions with nuw to improve the
++  // precision of added predicates. S is a multiple of M if S starts with a
++  // multiple of M and at every iteration step S only adds multiples of M.
++  if (isa<SCEVAddExpr, SCEVAddRecExpr>(S) &&
++      cast<SCEVNAryExpr>(S)->hasNoUnsignedWrap() &&
++      all_of(S->operands(),
++             [&](SCEVUse Op) { return isKnownMultipleOf(Op, M, Predicates); }))
++    return true;
++
++  // Similarly, look through Mul with nuw, where any operand being a
++  // known-multiple is sufficient.
++  if (auto *Mul = dyn_cast<SCEVMulExpr>(S))
++    if (Mul->hasNoUnsignedWrap() && any_of(S->operands(), [&](SCEVUse Op) {
++          return isKnownMultipleOf(Op, M, Predicates);
++        }))
++      return true;
++
++  // Similarly, look through MinMax, with no wrapping arithmetic to consider.
++  if (isa<SCEVMinMaxExpr>(S) && all_of(S->operands(), [&](SCEVUse Op) {
++        return isKnownMultipleOf(Op, M, Predicates);
++      }))
++    return true;
++
+   const SCEVPredicate *P = getComparePredicate(ICmpInst::ICMP_EQ, SmodM, Zero);
+ 
+   // Detect redundant predicates.
+diff --git a/llvm/test/Analysis/DependenceAnalysis/DifferentOffsets.ll b/llvm/test/Analysis/DependenceAnalysis/DifferentOffsets.ll
+index 077d5bde44eac..f201400be1cbc 100644
+--- a/llvm/test/Analysis/DependenceAnalysis/DifferentOffsets.ll
++++ b/llvm/test/Analysis/DependenceAnalysis/DifferentOffsets.ll
+@@ -211,7 +211,9 @@ end:
+ define void @multidim_accesses2(ptr %A) {
+ ; CHECK-LABEL: 'multidim_accesses2'
+ ; CHECK-NEXT:  Src: store i64 1, ptr %idx, align 4 --> Dst: store i64 1, ptr %idx, align 4
+-; CHECK-NEXT:    da analyze - confused!
++; CHECK-NEXT:    da analyze - output [* * *]!
++; CHECK-NEXT:    Runtime Assumptions:
++; CHECK-NEXT:    Equal predicate: (zext i3 {0,+,-4}<%for.k> to i64) == 0
+ ;
+ entry:
+   br label %for.i
+diff --git a/llvm/test/Analysis/DependenceAnalysis/MIVCheckConst.ll b/llvm/test/Analysis/DependenceAnalysis/MIVCheckConst.ll
+index fd1dc2ad1ade7..97c9392265007 100644
+--- a/llvm/test/Analysis/DependenceAnalysis/MIVCheckConst.ll
++++ b/llvm/test/Analysis/DependenceAnalysis/MIVCheckConst.ll
+@@ -41,13 +41,11 @@ define void @test(ptr %A, ptr %B, i1 %arg, i32 %n, i32 %m) align 2 {
+ ; CHECK-NEXT:  Src: %v27 = load <32 x i32>, ptr %v25, align 256 --> Dst: %v27 = load <32 x i32>, ptr %v25, align 256
+ ; CHECK-NEXT:    da analyze - input [* S S]!
+ ; CHECK-NEXT:    Runtime Assumptions:
+-; CHECK-NEXT:    Equal predicate: (zext i7 (4 * (trunc i32 %v1 to i7) * (1 + (trunc i32 %n to i7))) to i32) == 0
+-; CHECK-NEXT:    Equal predicate: (8 * (zext i4 (trunc i32 %v1 to i4) to i32))<nuw><nsw> == 0
++; CHECK-NEXT:    Equal predicate: (zext i7 {(4 * (trunc i32 %v1 to i7) * (1 + (trunc i32 %n to i7))),+,(8 * (trunc i32 %v1 to i7))}<%bb13> to i32) == 0
+ ; CHECK-NEXT:  Src: %v27 = load <32 x i32>, ptr %v25, align 256 --> Dst: %v32 = load <32 x i32>, ptr %v30, align 128
+ ; CHECK-NEXT:    da analyze - input [* S S|<]!
+ ; CHECK-NEXT:    Runtime Assumptions:
+-; CHECK-NEXT:    Equal predicate: (zext i7 (4 * (trunc i32 %v1 to i7) * (1 + (trunc i32 %n to i7))) to i32) == 0
+-; CHECK-NEXT:    Equal predicate: (8 * (zext i4 (trunc i32 %v1 to i4) to i32))<nuw><nsw> == 0
++; CHECK-NEXT:    Equal predicate: (zext i7 {(4 * (trunc i32 %v1 to i7) * (1 + (trunc i32 %n to i7))),+,(8 * (trunc i32 %v1 to i7))}<%bb13> to i32) == 0
+ ; CHECK-NEXT:  Src: %v32 = load <32 x i32>, ptr %v30, align 128 --> Dst: %v32 = load <32 x i32>, ptr %v30, align 128
+ ; CHECK-NEXT:    da analyze - input [* S S]!
+ ;
