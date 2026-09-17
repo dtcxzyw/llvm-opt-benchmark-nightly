@@ -204,7 +204,7 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.o = load i32, ptr %i.n, align 8, !tbaa !22
   %i.p = mul i32 %i.o, %i.m                       ; 2 uses
-  %i.q = sub i32 0, %i.p
+  %i.q = sub i32 0, %i.p                          ; 2 uses
   %.not = icmp eq i32 %i.p, 0
   %i.r = icmp sgt i32 %i.i, 0                     ; 2 uses
   br i1 %.not, label %.preheader, label %.preheader37
@@ -213,10 +213,9 @@ bb.a:
   br i1 %i.r, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %.preheader37
-  %1 = zext i32 %i.q to i64                       ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 4 uses
   %wide.trip.count = zext nneg i32 %i.i to i64    ; 5 uses
-  %min.iters.check = icmp ult i32 %i.i, 12
+  %min.iters.check = icmp ult i32 %i.i, 16
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
@@ -252,21 +251,18 @@ vector.ph:                                        ; preds = %vector.memcheck
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.u, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.v = zext <4 x i32> %broadcast.splat to <4 x i64>
-  %broadcast.splatinsert69 = insertelement <4 x i64> poison, i64 %1, i64 0
-  %broadcast.splat70 = shufflevector <4 x i64> %broadcast.splatinsert69, <4 x i64> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert69 = insertelement <4 x i32> poison, i32 %i.q, i64 0
+  %broadcast.splat70 = shufflevector <4 x i32> %broadcast.splatinsert69, <4 x i32> poison, <4 x i32> zeroinitializer
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 4 uses
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %index
   %wide.load = load <4 x i32>, ptr %i.w, align 4, !tbaa !17, !alias.scope !71
-  %2 = zext <4 x i32> %wide.load to <4 x i64>
-  %3 = mul nuw <4 x i64> %broadcast.splat70, %2
-  %4 = lshr <4 x i64> %3, splat (i64 32)
-  %5 = trunc nuw <4 x i64> %4 to <4 x i32>        ; 2 uses
+  %1 = tail call <4 x i32> @llvm.umulh.v4i32(<4 x i32> %wide.load, <4 x i32> %broadcast.splat70) ; 2 uses
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %index ; 2 uses
   %wide.load71 = load <4 x i32>, ptr %i.x, align 4, !tbaa !17, !alias.scope !72, !noalias !73
-  %i.y = sub <4 x i32> %wide.load71, %5
+  %i.y = sub <4 x i32> %wide.load71, %1
   %i.z = zext <4 x i32> %i.y to <4 x i64>
   %i.aa = mul nuw <4 x i64> %i.z, %i.v
   %i.ab = add nuw <4 x i64> %i.aa, splat (i64 2147483648)
@@ -277,7 +273,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ag = select <4 x i1> %i.ae, <4 x i8> splat (i8 -1), <4 x i8> %i.af
   %i.ah = getelementptr inbounds nuw i8, ptr %i.b, i64 %index
   store <4 x i8> %i.ag, ptr %i.ah, align 1, !tbaa !16, !alias.scope !74, !noalias !75
-  store <4 x i32> %5, ptr %i.x, align 4, !tbaa !17, !alias.scope !72, !noalias !73
+  store <4 x i32> %1, ptr %i.x, align 4, !tbaa !17, !alias.scope !72, !noalias !73
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ai = icmp eq i64 %index.next, %n.vec
   br i1 %i.ai, label %middle.block, label %vector.body, !llvm.loop !62
@@ -383,13 +379,10 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 4 uses
   %i.bn = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %indvars.iv
   %i.bo = load i32, ptr %i.bn, align 4, !tbaa !17
-  %6 = zext i32 %i.bo to i64
-  %7 = mul nuw i64 %6, %1
-  %8 = lshr i64 %7, 32
-  %9 = trunc nuw i64 %8 to i32                    ; 2 uses
+  %2 = tail call i32 @llvm.umulh.i32(i32 %i.bo, i32 %i.q) ; 2 uses
   %i.bp = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv ; 2 uses
   %i.bq = load i32, ptr %i.bp, align 4, !tbaa !17
-  %i.br = sub i32 %i.bq, %9
+  %i.br = sub i32 %i.bq, %2
   %i.bs = zext i32 %i.br to i64
   %i.bt = load i32, ptr %i.s, align 4, !tbaa !26
   %i.bu = zext i32 %i.bt to i64
@@ -402,7 +395,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.cb = select i1 %i.bz, i8 -1, i8 %i.ca
   %i.cc = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv
   store i8 %i.cb, ptr %i.cc, align 1, !tbaa !16
-  store i32 %9, ptr %i.bp, align 4, !tbaa !17
+  store i32 %2, ptr %i.bp, align 4, !tbaa !17
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.loopexit, label %scalar.ph, !llvm.loop !68
@@ -456,7 +449,7 @@ bb.a:
   %WebPRescalerImportRowShrink.val = load ptr, ptr @WebPRescalerImportRowShrink, align 8
   %WebPRescalerImportRowExpand.val = load ptr, ptr @WebPRescalerImportRowExpand, align 8
   %i.b = select i1 %.not, ptr %WebPRescalerImportRowShrink.val, ptr %WebPRescalerImportRowExpand.val
-  tail call void %i.b(ptr noundef nonnull %0, ptr noundef %1) #5
+  tail call void %i.b(ptr noundef nonnull %0, ptr noundef %1) #6
   ret void
 }
 
@@ -518,7 +511,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
 .loopexit.sink.split:                             ; preds = %bb.c, %bb.b
   %WebPRescalerExportRowShrink.sink = phi ptr [ @WebPRescalerExportRowExpand, %bb.b ], [ @WebPRescalerExportRowShrink, %bb.c ]
   %i.ac = load ptr, ptr %WebPRescalerExportRowShrink.sink, align 8, !tbaa !27
-  tail call void %i.ac(ptr noundef nonnull %0) #5
+  tail call void %i.ac(ptr noundef nonnull %0) #6
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.d, %.loopexit.sink.split, %.preheader
@@ -547,7 +540,7 @@ bb.e:                                             ; preds = %.loopexit, %bb.a
 ; Function Attrs: nounwind uwtable
 define hidden void @WebPRescalerDspInit() local_unnamed_addr #2 {
 bb.a:
-  %i.a = tail call i32 @pthread_mutex_lock(ptr noundef nonnull @WebPRescalerDspInit_body_lock) #5
+  %i.a = tail call i32 @pthread_mutex_lock(ptr noundef nonnull @WebPRescalerDspInit_body_lock) #6
   %.not = icmp eq i32 %i.a, 0
   br i1 %.not, label %bb.b, label %bb.f
 
@@ -566,18 +559,18 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i, label %WebPRescalerDspInit_body.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 %i.c(i32 noundef 0) #5, !inline_history !86
+  %i.d = tail call i32 %i.c(i32 noundef 0) #6, !inline_history !86
   %.not1.i = icmp eq i32 %i.d, 0
   br i1 %.not1.i, label %WebPRescalerDspInit_body.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  tail call void @WebPRescalerDspInitSSE2() #5
+  tail call void @WebPRescalerDspInitSSE2() #6
   br label %WebPRescalerDspInit_body.exit
 
 WebPRescalerDspInit_body.exit:                    ; preds = %bb.e, %bb.d, %bb.c, %bb.b
   %i.e = load ptr, ptr @VP8GetCPUInfo, align 8, !tbaa !27
   store ptr %i.e, ptr @WebPRescalerDspInit_body_last_cpuinfo_used, align 8, !tbaa !27
-  %i.f = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull @WebPRescalerDspInit_body_lock) #5 ; 0 uses
+  %i.f = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull @WebPRescalerDspInit_body_lock) #6 ; 0 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.a, %WebPRescalerDspInit_body.exit
@@ -592,12 +585,19 @@ declare i32 @pthread_mutex_unlock(ptr noundef) local_unnamed_addr #3
 
 declare void @WebPRescalerDspInitSSE2() local_unnamed_addr #4
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.umulh.v4i32(<4 x i32>, <4 x i32>) #5
+
 attributes #0 = { nofree norecurse nosync nounwind memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { nounwind }
+attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %.val2 = load ptr, ptr %0, align 8, !nonnull !6, !noundef !6 ; 9 uses
-  %i.a = sub nuw i64 %2, %1
+  %i.a = sub nuw i64 %2, %1                       ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %.val2, i64 16 ; 9 uses
   %i.c = load i32, ptr %i.b, align 4, !noalias !1006, !noundef !6 ; 4 uses
   %i.d = icmp ult i32 %i.c, 63
@@ -253,7 +253,7 @@ _RINvYNtNtNtCsbZqQukzfxgd_4rand4rngs6thread9ThreadRngNtNtB9_3rng6RngExt6randomyE
   %i.v = zext i32 %.sroa.02.017.i.i.i.i12.i.i.i to i64
   %i.w = or disjoint i64 %i.u, %i.v
   %i.x = zext i64 %i.w to i128
-  %i.y = zext i64 %i.a to i128                    ; 2 uses
+  %i.y = zext i64 %i.a to i128
   %i.z = mul nuw i128 %i.x, %i.y                  ; 2 uses
   %i.aa = lshr i128 %i.z, 64
   %i.ab = trunc nuw i128 %i.aa to i64             ; 2 uses
@@ -308,12 +308,9 @@ _RINvYNtNtNtCsbZqQukzfxgd_4rand4rngs6thread9ThreadRngNtNtB9_3rng6RngExt6randomyE
   %i.aw = shl nuw i64 %i.av, 32
   %i.ax = zext i32 %.sroa.02.017.i.i.i.i18.i.i.i to i64
   %i.ay = or disjoint i64 %i.aw, %i.ax
-  %4 = zext i64 %i.ay to i128
-  %5 = mul nuw i128 %4, %i.y
-  %6 = lshr i128 %5, 64
-  %7 = trunc nuw i128 %6 to i64
+  %4 = tail call i64 @llvm.umulh.i64(i64 %i.ay, i64 %i.a)
   %i.az = xor i64 %i.ac, -1
-  %.not6.i.i.i = icmp ult i64 %i.az, %7
+  %.not6.i.i.i = icmp ugt i64 %4, %i.az
   %i.ba = zext i1 %.not6.i.i.i to i64
   %i.bb = add nuw i64 %i.ba, %i.ab
   br label %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultyNtNtNtCsbZqQukzfxgd_4rand5distr7uniform5ErrorE6unwrapCsi17nFaBu4HY_10ech_client.exit
@@ -715,6 +712,9 @@ declare void @_RNvXs5_NtNtNtCskruEhpekJ3V_5tokio7runtime9scheduler14current_thre
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #16
 
 ; Function Attrs: nocallback nofree nosync nounwind nonlazybind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #26

@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.c, %bb.a, %bb.d,
 define void @lv_color_premultiply(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %i.b = load i8, ptr %i.a, align 1, !tbaa !9     ; 2 uses
+  %i.b = load i8, ptr %i.a, align 1, !tbaa !9     ; 4 uses
   switch i8 %i.b, label %bb.c [
     i8 -1, label %bb.d
     i8 0, label %bb.b
@@ -213,27 +213,17 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %1 = zext i8 %i.b to i16                        ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 2 uses
   %i.d = load i8, ptr %i.c, align 1, !tbaa !10
-  %2 = zext i8 %i.d to i16
-  %3 = mul nuw i16 %2, %1
-  %4 = lshr i16 %3, 8
-  %5 = trunc nuw i16 %4 to i8
-  store i8 %5, ptr %i.c, align 1, !tbaa !10
+  %1 = tail call i8 @llvm.umulh.i8(i8 %i.d, i8 %i.b)
+  store i8 %1, ptr %i.c, align 1, !tbaa !10
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
   %i.f = load i8, ptr %i.e, align 1, !tbaa !11
-  %6 = zext i8 %i.f to i16
-  %7 = mul nuw i16 %6, %1
-  %8 = lshr i16 %7, 8
-  %9 = trunc nuw i16 %8 to i8
-  store i8 %9, ptr %i.e, align 1, !tbaa !11
+  %2 = tail call i8 @llvm.umulh.i8(i8 %i.f, i8 %i.b)
+  store i8 %2, ptr %i.e, align 1, !tbaa !11
   %i.g = load i8, ptr %0, align 1, !tbaa !12
-  %10 = zext i8 %i.g to i16
-  %11 = mul nuw i16 %10, %1
-  %12 = lshr i16 %11, 8
-  %13 = trunc nuw i16 %12 to i8
-  store i8 %13, ptr %0, align 1, !tbaa !12
+  %3 = tail call i8 @llvm.umulh.i8(i8 %i.g, i8 %i.b)
+  store i8 %3, ptr %0, align 1, !tbaa !12
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %bb.c, %bb.b
@@ -356,6 +346,9 @@ declare i32 @llvm.umin.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.umulh.i8(i8, i8) #4
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

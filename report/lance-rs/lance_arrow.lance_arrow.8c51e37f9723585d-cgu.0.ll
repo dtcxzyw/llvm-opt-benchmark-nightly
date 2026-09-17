@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %bb.aa, %.lr.ph.i
   br i1 %i.bs, label %bb.x, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.bt = trunc nuw i64 %i.br to i32
+  %i.bt = trunc nuw i64 %i.br to i32              ; 2 uses
   %i.bu = add i64 %i.bo, %i.bn                    ; 2 uses
   %i.bv = call noundef i64 @llvm.fshl.i64(i64 %i.bu, i64 %i.bu, i64 23)
   %i.bw = add i64 %i.bv, %i.bo
@@ -236,11 +236,10 @@ bb.w:                                             ; preds = %bb.v
   %i.cs = xor i64 %i.co, %i.cn
   %i.ct = call noundef i64 @llvm.fshl.i64(i64 %i.cp, i64 %i.cp, i64 45)
   %i.cu = lshr i64 %i.cm, 32
-  %3 = mul nuw i64 %i.cu, %i.br
-  %4 = lshr i64 %3, 32
-  %5 = trunc nuw i64 %4 to i32
+  %3 = trunc nuw i64 %i.cu to i32
+  %4 = call i32 @llvm.umulh.i32(i32 %3, i32 %i.bt)
   %i.cv = xor i32 %i.ch, -1
-  %.not11.i.i.i.i.i.i = icmp ult i32 %i.cv, %5
+  %.not11.i.i.i.i.i.i = icmp ugt i32 %4, %i.cv
   %i.cw = zext i1 %.not11.i.i.i.i.i.i to i64
   %i.cx = add nuw nsw i64 %i.cg, %i.cw
   br label %_RINvYNtNtNtCs4Jn2LUi8st0_4rand4rngs5small8SmallRngNtNtB9_3rng3Rng12random_rangejINtNtNtCscI6d9CVNmLh_4core3ops5range7RangeTojEECsc2V0exE7CWf_11lance_arrow.exit.i
@@ -257,7 +256,7 @@ bb.x:                                             ; preds = %bb.u
   %i.dg = xor i64 %i.dc, %i.db                    ; 2 uses
   %i.dh = call noundef i64 @llvm.fshl.i64(i64 %i.dd, i64 %i.dd, i64 45) ; 3 uses
   %i.di = zext i64 %i.da to i128
-  %i.dj = zext i64 %i.br to i128                  ; 2 uses
+  %i.dj = zext i64 %i.br to i128
   %i.dk = mul nuw i128 %i.di, %i.dj               ; 2 uses
   %i.dl = lshr i128 %i.dk, 64
   %i.dm = trunc nuw i128 %i.dl to i64             ; 2 uses
@@ -277,12 +276,9 @@ bb.y:                                             ; preds = %bb.x
   %i.dx = xor i64 %i.dv, %i.df
   %i.dy = xor i64 %i.du, %i.dt
   %i.dz = call noundef i64 @llvm.fshl.i64(i64 %i.dv, i64 %i.dv, i64 45)
-  %6 = zext i64 %i.ds to i128
-  %7 = mul nuw i128 %6, %i.dj
-  %8 = lshr i128 %7, 64
-  %9 = trunc nuw i128 %8 to i64
+  %5 = call i64 @llvm.umulh.i64(i64 %i.ds, i64 %i.br)
   %i.ea = xor i64 %i.dn, -1
-  %.not7.i.i.i.i.i.i = icmp ult i64 %i.ea, %9
+  %.not7.i.i.i.i.i.i = icmp ugt i64 %5, %i.ea
   %i.eb = zext i1 %.not7.i.i.i.i.i.i to i64
   %i.ec = add nuw i64 %i.eb, %i.dm
   br label %_RINvYNtNtNtCs4Jn2LUi8st0_4rand4rngs5small8SmallRngNtNtB9_3rng3Rng12random_rangejINtNtNtCscI6d9CVNmLh_4core3ops5range7RangeTojEECsc2V0exE7CWf_11lance_arrow.exit.i
@@ -684,6 +680,12 @@ declare noundef align 8 ptr @_RNvXs1_NtCs4ytUTZt2Gw9_11arrow_array4castINtNtCs40
 
 ; Function Attrs: nonlazybind uwtable
 declare noundef zeroext i1 @_RNvXs0_NtCsitxk4pdPh9M_9getrandom5errorNtB5_5ErrorNtNtCscI6d9CVNmLh_4core3fmt7Display3fmt(ptr noalias noundef readonly align 4 captures(address, read_provenance) dereferenceable(4), ptr noalias noundef align 8 dereferenceable(24)) unnamed_addr #0
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #25
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #25
 
 ; Function Attrs: nocallback nofree nosync nounwind nonlazybind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #34

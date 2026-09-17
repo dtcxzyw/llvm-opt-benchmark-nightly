@@ -89,14 +89,14 @@ _ZNK2v84base6Double20NormalizedBoundariesEPNS0_5DiyFpES3_.exit.i: ; preds = %.lr
   %i.ad = sub nsw i32 %.sroa.8.0.i.i, %.1.lcssa.i.i.i.i
   %i.ae = zext nneg i32 %i.ad to i64
   %i.af = shl i64 %.sroa.012.0.i.i, %i.ae
-  call void @llvm.lifetime.start.p0(ptr nonnull %8) #4
+  call void @llvm.lifetime.start.p0(ptr nonnull %8) #5
   store i64 0, ptr %8, align 8
   %i.ag = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
   store i32 0, ptr %i.ag, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #4
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #5
   %i.ah = sub nsw i32 -113, %.0.lcssa.i.i
   %i.ai = sub nsw i32 -85, %.0.lcssa.i.i
-  call void @_ZN2v84base16PowersOfTenCache36GetCachedPowerForBinaryExponentRangeEiiPNS0_5DiyFpEPi(i32 noundef %i.ah, i32 noundef %i.ai, ptr noundef nonnull %8, ptr noundef nonnull %i.b) #4
+  call void @_ZN2v84base16PowersOfTenCache36GetCachedPowerForBinaryExponentRangeEiiPNS0_5DiyFpEPi(i32 noundef %i.ah, i32 noundef %i.ai, ptr noundef nonnull %8, ptr noundef nonnull %i.b) #5
   %i.aj = zext i64 %i.s to i128
   %i.ak = load i64, ptr %8, align 8
   %i.al = zext i64 %i.ak to i128                  ; 3 uses
@@ -210,7 +210,7 @@ bb.l:                                             ; preds = %bb.k, %_ZNK2v84base
   br i1 %.not.i.i.i, label %_ZN2v84baseL9RoundWeedEPcmmmmm.exit.i.i, label %.lr.ph.preheader.i.i
 
 bb.m:                                             ; preds = %_ZNK2v84base6Double20NormalizedBoundariesEPNS0_5DiyFpES3_.exit.i
-  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str) #5
+  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str) #6
   unreachable
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c
@@ -239,14 +239,10 @@ bb.n:                                             ; preds = %.lr.ph.i40.i
   %i.cf = getelementptr i8, ptr %i.ce, i64 4
   %.val43.i.i = load i32, ptr %i.cf, align 4
   %.val.i.i = load i32, ptr %i.ce, align 8
-  %9 = zext i32 %.0115131.i.i to i64
-  %10 = zext i32 %.val.i.i to i64
-  %11 = mul nuw i64 %10, %9
-  %12 = lshr i64 %11, 32
-  %13 = trunc nuw i64 %12 to i32                  ; 2 uses
-  %i.cg = sub i32 %.0115131.i.i, %13
+  %9 = call i32 @llvm.umulh.i32(i32 %.0115131.i.i, i32 %.val.i.i) ; 2 uses
+  %i.cg = sub i32 %.0115131.i.i, %9
   %i.ch = lshr i32 %i.cg, 1
-  %i.ci = add i32 %i.ch, %13
+  %i.ci = add i32 %i.ch, %9
   %i.cj = lshr i32 %i.ci, %.val43.i.i             ; 2 uses
   %i.ck = mul i32 %i.cj, %.0113132.i.i
   %i.cl = sub i32 %.0115131.i.i, %i.ck
@@ -325,8 +321,8 @@ bb.r:                                             ; preds = %bb.q
   %i.dr = and i1 %.not48.i.i.i, %i.dq
   %i.ds = load i32, ptr %i.b, align 4
   %i.dt = sub nsw i32 %i.cp, %i.ds
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #5
   %i.du = ptrtoint ptr %i.co to i64
   %i.dv = ptrtoint ptr %3 to i64
   %i.dw = sub i64 %i.du, %i.dv
@@ -427,8 +423,8 @@ _ZN2v84baseL9RoundWeedEPcmmmmm.exit70.i.i:        ; preds = %bb.y, %bb.x, %bb.w,
   br i1 %.not.i39.i, label %_ZN2v84baseL6Grisu3EdPPcPi.exit, label %bb.t, !llvm.loop !9
 
 _ZN2v84baseL6Grisu3EdPPcPi.exit.thread:           ; preds = %bb.q, %bb.r
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #5
   %i.fg = ptrtoint ptr %i.co to i64
   %i.fh = ptrtoint ptr %3 to i64
   %i.fi = sub i64 %i.fg, %i.fh
@@ -439,8 +435,8 @@ _ZN2v84baseL6Grisu3EdPPcPi.exit.thread:           ; preds = %bb.q, %bb.r
 _ZN2v84baseL6Grisu3EdPPcPi.exit:                  ; preds = %_ZN2v84baseL9RoundWeedEPcmmmmm.exit70.i.i
   %i.fk = load i32, ptr %i.b, align 4
   %i.fl = sub nsw i32 %i.ei, %i.fk
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #5
   %i.fm = ptrtoint ptr %i.eg to i64
   %i.fn = ptrtoint ptr %3 to i64
   %i.fo = sub i64 %i.fm, %i.fn
@@ -472,14 +468,14 @@ _ZNK2v84base6Double17AsNormalizedDiyFpEv.exit.i10: ; preds = %.lr.ph.i.i25, %bb.
   %.07.lcssa.i.i11 = phi i64 [ %i.ft, %bb.z ], [ %i.fy, %.lr.ph.i.i25 ]
   %.0.lcssa.i.i12 = phi i32 [ %i.fx, %bb.z ], [ %i.fz, %.lr.ph.i.i25 ] ; 3 uses
   %i.gc = shl i64 %.07.lcssa.i.i11, 11
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #4
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #5
   store i64 0, ptr %7, align 8
   %i.gd = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
   store i32 0, ptr %i.gd, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   %i.ge = sub nsw i32 -113, %.0.lcssa.i.i12
   %i.gf = sub nsw i32 -85, %.0.lcssa.i.i12
-  call void @_ZN2v84base16PowersOfTenCache36GetCachedPowerForBinaryExponentRangeEiiPNS0_5DiyFpEPi(i32 noundef %i.ge, i32 noundef %i.gf, ptr noundef nonnull %7, ptr noundef nonnull %i.a) #4
+  call void @_ZN2v84base16PowersOfTenCache36GetCachedPowerForBinaryExponentRangeEiiPNS0_5DiyFpEPi(i32 noundef %i.ge, i32 noundef %i.gf, ptr noundef nonnull %7, ptr noundef nonnull %i.a) #5
   %i.gg = zext i64 %i.gc to i128
   %i.gh = load i64, ptr %7, align 8
   %i.gi = zext i64 %i.gh to i128
@@ -576,7 +572,7 @@ bb.aj:                                            ; preds = %bb.ai, %_ZNK2v84bas
   br i1 %.not.i.i.i18, label %._crit_edge.i.i, label %_ZN2v84baseL15BiggestPowerTenEjiPjS1_.exit.i.i
 
 bb.ak:                                            ; preds = %_ZNK2v84base6Double17AsNormalizedDiyFpEv.exit.i10
-  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str) #5
+  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str) #6
   unreachable
 
 _ZN2v84baseL15BiggestPowerTenEjiPjS1_.exit.i.i:   ; preds = %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa
@@ -602,14 +598,10 @@ bb.al:                                            ; preds = %.lr.ph.i19.i
   %i.hm = getelementptr i8, ptr %i.hl, i64 4
   %.val39.i.i = load i32, ptr %i.hm, align 4
   %.val.i.i20 = load i32, ptr %i.hl, align 8
-  %14 = zext i32 %.08195.i.i to i64
-  %15 = zext i32 %.val.i.i20 to i64
-  %16 = mul nuw i64 %15, %14
-  %17 = lshr i64 %16, 32
-  %18 = trunc nuw i64 %17 to i32                  ; 2 uses
-  %i.hn = sub i32 %.08195.i.i, %18
+  %10 = call i32 @llvm.umulh.i32(i32 %.08195.i.i, i32 %.val.i.i20) ; 2 uses
+  %i.hn = sub i32 %.08195.i.i, %10
   %i.ho = lshr i32 %i.hn, 1
-  %i.hp = add i32 %i.ho, %18
+  %i.hp = add i32 %i.ho, %10
   %i.hq = lshr i32 %i.hp, %.val39.i.i             ; 2 uses
   %i.hr = mul i32 %i.hq, %.07896.i.i
   %i.hs = sub i32 %.08195.i.i, %i.hr
@@ -826,13 +818,13 @@ _ZN2v84baseL16RoundWeedCountedENS0_6VectorIcEEimmmPi.exit.sink.split.i.i: ; pred
   br label %.thread50
 
 bb.ba:                                            ; preds = %bb.a
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str) #5
+  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str) #6
   unreachable
 
 .thread:                                          ; preds = %bb.aq, %bb.ap, %.thread86.i.i, %bb.ax, %bb.aw, %bb.at, %._crit_edge105.i.i, %.preheader.i.i
   %.5.ph = phi i32 [ %.0, %.preheader.i.i ], [ %i.jt, %._crit_edge105.i.i ], [ %i.jt, %bb.at ], [ %i.jt, %bb.aw ], [ %i.jt, %bb.ax ], [ %.3, %.thread86.i.i ], [ %.3, %bb.ap ], [ %.3, %bb.aq ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #5
   store i32 %.5.ph, ptr %5, align 4
   br label %bb.bd
 
@@ -841,16 +833,16 @@ bb.ba:                                            ; preds = %bb.a
   %.5.i.ph = phi i32 [ %.3.i15, %bb.ao ], [ %.3.i15, %._crit_edge.i.i.i ], [ %i.km, %_ZN2v84baseL16RoundWeedCountedENS0_6VectorIcEEimmmPi.exit.sink.split.i.i ], [ %i.jo, %._crit_edge.i46.i.i ]
   %i.kn = load i32, ptr %i.a, align 4
   %i.ko = sub nsw i32 %.5.i.ph, %i.kn
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #5
   store i32 %.5.ph49, ptr %5, align 4
   br label %bb.bc
 
 bb.bb:                                            ; preds = %bb.av
   %i.kp = load i32, ptr %i.a, align 4
   %i.kq = sub nsw i32 %i.jo, %i.kp
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #5
   store i32 %i.jt, ptr %5, align 4
   br i1 %.not31.i54.i.i, label %bb.bd, label %bb.bc
 
@@ -881,12 +873,16 @@ declare void @_Z8V8_FatalPKcz(ptr noundef, ...) local_unnamed_addr #2
 
 declare void @_ZN2v84base16PowersOfTenCache36GetCachedPowerForBinaryExponentRangeEiiPNS0_5DiyFpEPi(i32 noundef, i32 noundef, ptr noundef, ptr noundef) local_unnamed_addr #3
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #4
+
 attributes #0 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { noreturn "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { nounwind }
-attributes #5 = { noreturn nounwind }
+attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #5 = { nounwind }
+attributes #6 = { noreturn nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}

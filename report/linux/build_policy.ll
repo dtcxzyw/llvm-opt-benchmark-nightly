@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
   %i.u = load i32, ptr %i.t, align 4              ; 3 uses
   %i.v = zext i32 %i.u to i64
   %i.w = add nuw nsw i64 %i.q, %i.v               ; 17 uses
-  %i.x = lshr i64 %i.w, 10                        ; 15 uses
+  %i.x = lshr i64 %i.w, 10                        ; 14 uses
   %.not.i11 = icmp eq i64 %i.x, 0                 ; 2 uses
   br i1 %i.d, label %.split.i, label %.split18.i
 
@@ -253,20 +253,13 @@ bb.i:                                             ; preds = %bb.h
   store i64 %i.at, ptr %i.al, align 16
   %i.au = getelementptr i8, ptr %2, i64 280       ; 2 uses
   %i.av = load i32, ptr %i.au, align 8
-  %3 = zext i32 %i.av to i64
   %i.aw = getelementptr [4 x i8], ptr @runnable_avg_yN_inv, i64 %i.x
-  %i.ax = load i32, ptr %i.aw, align 4
-  %4 = zext i32 %i.ax to i64
-  %5 = mul nuw i64 %3, %4
-  %6 = lshr i64 %5, 32
-  %7 = trunc nuw i64 %6 to i32
-  store i32 %7, ptr %i.au, align 8
+  %i.ax = load i32, ptr %i.aw, align 4            ; 3 uses
+  %3 = tail call i32 @llvm.umulh.i32(i32 %i.av, i32 %i.ax)
+  store i32 %3, ptr %i.au, align 8
   %i.ay = sub i32 1024, %i.u
-  %8 = zext i32 %i.ay to i64
-  %9 = getelementptr [4 x i8], ptr @runnable_avg_yN_inv, i64 %i.x
-  %10 = load i32, ptr %9, align 4
-  %i.az = zext i32 %10 to i64                     ; 2 uses
-  %11 = mul nuw i64 %i.az, %8
+  %4 = tail call i32 @llvm.umulh.i32(i32 %i.ax, i32 %i.ay)
+  %i.az = zext i32 %i.ax to i64
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.h
@@ -315,20 +308,20 @@ bb.j:                                             ; preds = %bb.h
   %i.co = load i32, ptr %i.cn, align 4
   %i.cp = zext i32 %i.co to i64                   ; 2 uses
   %i.cq = mul nuw nsw i64 %i.cl, %i.cp
+  %5 = lshr i64 %i.cq, 32
+  %6 = trunc nuw nsw i64 %5 to i32
   %i.cr = lshr i64 47742, %i.ck
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
   %i.cs = phi i64 [ %i.ak, %bb.i ], [ %i.bj, %bb.j ]
   %.pre-phi.i = phi i64 [ %i.az, %bb.i ], [ %i.cp, %bb.j ]
-  %.in.in.i = phi i64 [ %11, %bb.i ], [ %i.cq, %bb.j ]
+  %7 = phi i32 [ %4, %bb.i ], [ %6, %bb.j ]
   %.011.i7.i = phi i64 [ 47742, %bb.i ], [ %i.cr, %bb.j ]
-  %.in.i = lshr i64 %.in.in.i, 32
-  %12 = trunc nuw i64 %.in.i to i32
   %i.ct = mul nuw nsw i64 %.011.i7.i, %.pre-phi.i
   %i.cu = lshr i64 %i.ct, 32
   %i.cv = trunc nuw nsw i64 %i.cu to i32
-  %i.cw = add i32 %12, 46718
+  %i.cw = add i32 %7, 46718
   %i.cx = sub i32 %i.cw, %i.cv
   br label %__accumulate_pelt_segments.exit
 
@@ -591,7 +584,7 @@ bb.d:                                             ; preds = %bb.c
   %i.q = load i32, ptr %i.p, align 4              ; 3 uses
   %i.r = zext i32 %i.q to i64
   %i.s = add nuw nsw i64 %i.m, %i.r               ; 17 uses
-  %i.t = lshr i64 %i.s, 10                        ; 15 uses
+  %i.t = lshr i64 %i.s, 10                        ; 14 uses
   %.not.i19 = icmp eq i64 %i.t, 0                 ; 2 uses
   br i1 %.not, label %.split18.i, label %.split.i
 
@@ -640,20 +633,13 @@ bb.g:                                             ; preds = %bb.f
   store i64 %i.ap, ptr %i.ah, align 16
   %i.aq = getelementptr i8, ptr %1, i64 152       ; 2 uses
   %i.ar = load i32, ptr %i.aq, align 8
-  %2 = zext i32 %i.ar to i64
   %i.as = getelementptr [4 x i8], ptr @runnable_avg_yN_inv, i64 %i.t
-  %i.at = load i32, ptr %i.as, align 4
-  %3 = zext i32 %i.at to i64
-  %4 = mul nuw i64 %2, %3
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32
-  store i32 %6, ptr %i.aq, align 8
+  %i.at = load i32, ptr %i.as, align 4            ; 3 uses
+  %2 = tail call i32 @llvm.umulh.i32(i32 %i.ar, i32 %i.at)
+  store i32 %2, ptr %i.aq, align 8
   %i.au = sub i32 1024, %i.q
-  %7 = zext i32 %i.au to i64
-  %8 = getelementptr [4 x i8], ptr @runnable_avg_yN_inv, i64 %i.t
-  %9 = load i32, ptr %8, align 4
-  %i.av = zext i32 %9 to i64                      ; 2 uses
-  %10 = mul nuw i64 %i.av, %7
+  %3 = tail call i32 @llvm.umulh.i32(i32 %i.at, i32 %i.au)
+  %i.av = zext i32 %i.at to i64
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
@@ -702,20 +688,20 @@ bb.h:                                             ; preds = %bb.f
   %i.ck = load i32, ptr %i.cj, align 4
   %i.cl = zext i32 %i.ck to i64                   ; 2 uses
   %i.cm = mul nuw nsw i64 %i.ch, %i.cl
+  %4 = lshr i64 %i.cm, 32
+  %5 = trunc nuw nsw i64 %4 to i32
   %i.cn = lshr i64 47742, %i.cg
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.co = phi i64 [ %i.ag, %bb.g ], [ %i.bf, %bb.h ]
   %.pre-phi.i = phi i64 [ %i.av, %bb.g ], [ %i.cl, %bb.h ]
-  %.in.in.i = phi i64 [ %10, %bb.g ], [ %i.cm, %bb.h ]
+  %6 = phi i32 [ %3, %bb.g ], [ %5, %bb.h ]
   %.011.i7.i = phi i64 [ 47742, %bb.g ], [ %i.cn, %bb.h ]
-  %.in.i = lshr i64 %.in.in.i, 32
-  %11 = trunc nuw i64 %.in.i to i32
   %i.cp = mul nuw nsw i64 %.011.i7.i, %.pre-phi.i
   %i.cq = lshr i64 %i.cp, 32
   %i.cr = trunc nuw nsw i64 %i.cq to i32
-  %i.cs = add i32 %11, 46718
+  %i.cs = add i32 %6, 46718
   %i.ct = sub i32 %i.cs, %i.cr
   br label %__accumulate_pelt_segments.exit
 
@@ -997,15 +983,12 @@ bb.g:                                             ; preds = %bb.f
   %i.ah = trunc nuw i128 %i.ag to i64
   %i.ai = getelementptr i8, ptr %1, i64 2904
   %i.aj = load i32, ptr %i.ai, align 8
-  %3 = zext i32 %i.aj to i64
   %i.ak = getelementptr [4 x i8], ptr @runnable_avg_yN_inv, i64 %i.m
-  %i.al = load i32, ptr %i.ak, align 4            ; 2 uses
-  %4 = zext i32 %i.al to i64
-  %5 = mul nuw i64 %3, %4
+  %i.al = load i32, ptr %i.ak, align 4            ; 3 uses
+  %3 = tail call i32 @llvm.umulh.i32(i32 %i.aj, i32 %i.al)
   %i.am = sub i32 1024, %i.j
-  %6 = zext i32 %i.am to i64
-  %i.an = zext i32 %i.al to i64                   ; 2 uses
-  %7 = mul nuw i64 %i.an, %6
+  %4 = tail call i32 @llvm.umulh.i32(i32 %i.al, i32 %i.am)
+  %i.an = zext i32 %i.al to i64
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
@@ -1041,6 +1024,8 @@ bb.h:                                             ; preds = %bb.f
   %i.br = load i32, ptr %i.bq, align 4
   %i.bs = zext i32 %i.br to i64
   %i.bt = mul nuw nsw i64 %i.bo, %i.bs
+  %5 = lshr i64 %i.bt, 32
+  %6 = trunc nuw nsw i64 %5 to i32
   %i.bu = sub i32 1024, %i.j
   %i.bv = zext i32 %i.bu to i64
   %i.bw = lshr i64 %i.l, 15                       ; 2 uses
@@ -1050,29 +1035,27 @@ bb.h:                                             ; preds = %bb.f
   %i.ca = load i32, ptr %i.bz, align 4
   %i.cb = zext i32 %i.ca to i64                   ; 2 uses
   %i.cc = mul nuw nsw i64 %i.bx, %i.cb
+  %7 = lshr i64 %i.cc, 32
+  %8 = trunc nuw nsw i64 %7 to i32
   %i.cd = lshr i64 47742, %i.bw
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %.in.in = phi i64 [ %5, %bb.g ], [ %i.bt, %bb.h ]
+  %9 = phi i32 [ %3, %bb.g ], [ %6, %bb.h ]
   %i.ce = phi i64 [ %i.y, %bb.g ], [ %i.ax, %bb.h ]
   %i.cf = phi i64 [ %i.ah, %bb.g ], [ %i.bj, %bb.h ]
   %.pre-phi.i = phi i64 [ %i.an, %bb.g ], [ %i.cb, %bb.h ]
-  %.in.in.i = phi i64 [ %7, %bb.g ], [ %i.cc, %bb.h ]
+  %10 = phi i32 [ %4, %bb.g ], [ %8, %bb.h ]
   %.011.i7.i = phi i64 [ 47742, %bb.g ], [ %i.cd, %bb.h ]
-  %.in = lshr i64 %.in.in, 32
-  %8 = trunc nuw i64 %.in to i32
-  %.in.i = lshr i64 %.in.in.i, 32
-  %9 = trunc nuw i64 %.in.i to i32
   %i.cg = mul nuw nsw i64 %.011.i7.i, %.pre-phi.i
   %i.ch = lshr i64 %i.cg, 32
   %i.ci = trunc nuw nsw i64 %i.ch to i32
-  %i.cj = add i32 %9, 46718
+  %i.cj = add i32 %10, 46718
   %i.ck = sub i32 %i.cj, %i.ci
   br label %__accumulate_pelt_segments.exit
 
 __accumulate_pelt_segments.exit:                  ; preds = %bb.e, %bb.i
-  %i.cl = phi i32 [ %8, %bb.i ], [ 0, %bb.e ]
+  %i.cl = phi i32 [ %9, %bb.i ], [ 0, %bb.e ]
   %i.cm = phi i64 [ %i.cf, %bb.i ], [ 0, %bb.e ]
   %i.cn = phi i64 [ %i.ce, %bb.i ], [ 0, %bb.e ]
   %reass.sub.i = phi i32 [ %i.ck, %bb.i ], [ 46718, %bb.e ]
@@ -1341,15 +1324,12 @@ bb.g:                                             ; preds = %bb.f
   %i.ah = trunc nuw i128 %i.ag to i64
   %i.ai = getelementptr i8, ptr %1, i64 2968
   %i.aj = load i32, ptr %i.ai, align 8
-  %3 = zext i32 %i.aj to i64
   %i.ak = getelementptr [4 x i8], ptr @runnable_avg_yN_inv, i64 %i.m
-  %i.al = load i32, ptr %i.ak, align 4            ; 2 uses
-  %4 = zext i32 %i.al to i64
-  %5 = mul nuw i64 %3, %4
+  %i.al = load i32, ptr %i.ak, align 4            ; 3 uses
+  %3 = tail call i32 @llvm.umulh.i32(i32 %i.aj, i32 %i.al)
   %i.am = sub i32 1024, %i.j
-  %6 = zext i32 %i.am to i64
-  %i.an = zext i32 %i.al to i64                   ; 2 uses
-  %7 = mul nuw i64 %i.an, %6
+  %4 = tail call i32 @llvm.umulh.i32(i32 %i.al, i32 %i.am)
+  %i.an = zext i32 %i.al to i64
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
@@ -1385,6 +1365,8 @@ bb.h:                                             ; preds = %bb.f
   %i.br = load i32, ptr %i.bq, align 4
   %i.bs = zext i32 %i.br to i64
   %i.bt = mul nuw nsw i64 %i.bo, %i.bs
+  %5 = lshr i64 %i.bt, 32
+  %6 = trunc nuw nsw i64 %5 to i32
   %i.bu = sub i32 1024, %i.j
   %i.bv = zext i32 %i.bu to i64
   %i.bw = lshr i64 %i.l, 15                       ; 2 uses
@@ -1394,29 +1376,27 @@ bb.h:                                             ; preds = %bb.f
   %i.ca = load i32, ptr %i.bz, align 4
   %i.cb = zext i32 %i.ca to i64                   ; 2 uses
   %i.cc = mul nuw nsw i64 %i.bx, %i.cb
+  %7 = lshr i64 %i.cc, 32
+  %8 = trunc nuw nsw i64 %7 to i32
   %i.cd = lshr i64 47742, %i.bw
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %.in.in = phi i64 [ %5, %bb.g ], [ %i.bt, %bb.h ]
+  %9 = phi i32 [ %3, %bb.g ], [ %6, %bb.h ]
   %i.ce = phi i64 [ %i.y, %bb.g ], [ %i.ax, %bb.h ]
   %i.cf = phi i64 [ %i.ah, %bb.g ], [ %i.bj, %bb.h ]
   %.pre-phi.i = phi i64 [ %i.an, %bb.g ], [ %i.cb, %bb.h ]
-  %.in.in.i = phi i64 [ %7, %bb.g ], [ %i.cc, %bb.h ]
+  %10 = phi i32 [ %4, %bb.g ], [ %8, %bb.h ]
   %.011.i7.i = phi i64 [ 47742, %bb.g ], [ %i.cd, %bb.h ]
-  %.in = lshr i64 %.in.in, 32
-  %8 = trunc nuw i64 %.in to i32
-  %.in.i = lshr i64 %.in.in.i, 32
-  %9 = trunc nuw i64 %.in.i to i32
   %i.cg = mul nuw nsw i64 %.011.i7.i, %.pre-phi.i
   %i.ch = lshr i64 %i.cg, 32
   %i.ci = trunc nuw nsw i64 %i.ch to i32
-  %i.cj = add i32 %9, 46718
+  %i.cj = add i32 %10, 46718
   %i.ck = sub i32 %i.cj, %i.ci
   br label %__accumulate_pelt_segments.exit
 
 __accumulate_pelt_segments.exit:                  ; preds = %bb.e, %bb.i
-  %i.cl = phi i32 [ %8, %bb.i ], [ 0, %bb.e ]
+  %i.cl = phi i32 [ %9, %bb.i ], [ 0, %bb.e ]
   %i.cm = phi i64 [ %i.cf, %bb.i ], [ 0, %bb.e ]
   %i.cn = phi i64 [ %i.ce, %bb.i ], [ 0, %bb.e ]
   %reass.sub.i = phi i32 [ %i.ck, %bb.i ], [ 46718, %bb.e ]
@@ -1818,6 +1798,9 @@ declare i32 @llvm.smin.i32(i32, i32) #30
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #30
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #30
 
 attributes #0 = { fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong memory(readwrite, inaccessiblemem: read, target_mem: read) "min-legal-vector-width"="0" "no-builtin-wcslen" "no-jump-tables"="true" "no-trapping-math"="true" "patchable-function-entry"="0" "patchable-function-prefix"="16" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" "warn-stack-size"="2048" }
 attributes #1 = { fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong "min-legal-vector-width"="0" "no-builtin-wcslen" "no-jump-tables"="true" "no-trapping-math"="true" "patchable-function-entry"="0" "patchable-function-prefix"="16" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" "warn-stack-size"="2048" }

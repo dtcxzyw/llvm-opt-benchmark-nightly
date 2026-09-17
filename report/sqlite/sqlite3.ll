@@ -206,11 +206,7 @@ bb.fr:                                            ; preds = %bb.fq
 
 powerOfTen.exit.i.i:                              ; preds = %bb.fr, %bb.fq, %bb.fp, %bb.fo, %.thread.i.i.i, %bb.fl
   %.027.i.i.i = phi i64 [ %i.tt, %bb.fo ], [ %i.uq, %bb.fq ], [ -3689348814741910324, %bb.fl ], [ %i.ut, %bb.fr ], [ %i.tk, %.thread.i.i.i ], [ %i.tz, %bb.fp ]
-  %4 = zext i64 %.0158.i to i128
-  %5 = zext i64 %.027.i.i.i to i128
-  %6 = mul nuw i128 %5, %4
-  %7 = lshr i128 %6, 64
-  %8 = trunc nuw i128 %7 to i64                   ; 2 uses
+  %4 = call i64 @llvm.umulh.i64(i64 %.027.i.i.i, i64 %.0158.i) ; 2 uses
   %i.uu = icmp eq i32 %i.sz, 18
   %i.uv = mul nsw i32 %i.tc, 108853
   %i.uw = ashr i32 %i.uv, 15
@@ -220,7 +216,7 @@ powerOfTen.exit.i.i:                              ; preds = %bb.fr, %bb.fq, %bb.
 bb.fs:                                            ; preds = %powerOfTen.exit.i.i
   %i.uy = sub nsw i32 -2, %i.ux
   %i.uz = zext nneg i32 %i.uy to i64
-  %i.va = lshr i64 %8, %i.uz                      ; 2 uses
+  %i.va = lshr i64 %4, %i.uz                      ; 2 uses
   %i.vb = shl i64 %i.va, 1
   %i.vc = and i64 %i.vb, 2
   %i.vd = add i64 %i.vc, %i.va
@@ -230,7 +226,7 @@ bb.fs:                                            ; preds = %powerOfTen.exit.i.i
 bb.ft:                                            ; preds = %powerOfTen.exit.i.i
   %i.vf = xor i32 %i.ux, -1
   %i.vg = zext nneg i32 %i.vf to i64
-  %i.vh = lshr i64 %8, %i.vg
+  %i.vh = lshr i64 %4, %i.vg
   br label %sqlite3Fp2Convert10.exit.i
 
 sqlite3Fp2Convert10.exit.i:                       ; preds = %bb.ft, %bb.fs
@@ -633,8 +629,8 @@ powerOfTen.exit.thread:                           ; preds = %bb.l, %bb.f, %power
 bb.m:                                             ; preds = %powerOfTen.exit.thread64, %powerOfTen.exit.thread, %powerOfTen.exit
   %.057 = phi i64 [ 0, %powerOfTen.exit ], [ %i.bp, %powerOfTen.exit.thread ], [ 0, %powerOfTen.exit.thread64 ]
   %.046 = phi i64 [ %.027.i, %powerOfTen.exit ], [ %i.bm, %powerOfTen.exit.thread ], [ %i.ac, %powerOfTen.exit.thread64 ]
-  %i.bq = shl i64 %0, %i.c
-  %i.br = zext i64 %i.bq to i128                  ; 2 uses
+  %i.bq = shl i64 %0, %i.c                        ; 2 uses
+  %i.br = zext i64 %i.bq to i128
   %i.bs = zext i64 %.046 to i128
   %i.bt = mul nuw i128 %i.bs, %i.br               ; 2 uses
   %i.bu = lshr i128 %i.bt, 64
@@ -650,15 +646,13 @@ bb.n:                                             ; preds = %bb.m
   %i.ca = trunc i128 %i.bt to i64
   %i.cb = lshr i64 %i.ca, 32                      ; 2 uses
   %i.cc = trunc nuw i64 %i.cb to i32
-  %2 = zext i64 %.057 to i128
-  %3 = mul nuw i128 %2, %i.br
-  %sum.shift = lshr i128 %3, 96                   ; 2 uses
-  %4 = trunc nuw nsw i128 %sum.shift to i64
-  %i.cd = trunc nuw i128 %sum.shift to i32
+  %2 = tail call i64 @llvm.umulh.i64(i64 %.057, i64 %i.bq)
+  %3 = lshr i64 %2, 32                            ; 2 uses
+  %i.cd = trunc nuw i64 %3 to i32
   %i.ce = sub i32 %i.cc, %i.cd
   %i.cf = icmp ugt i32 %i.ce, 1
   %i.cg = zext i1 %i.cf to i64
-  %i.ch = icmp samesign ult i64 %i.cb, %4
+  %i.ch = icmp samesign ult i64 %i.cb, %3
   %.neg = sext i1 %i.ch to i64
   %i.ci = add i64 %.neg, %i.bv
   br label %bb.o
@@ -1060,6 +1054,9 @@ declare i64 @llvm.umax.i64(i64, i64) #47
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare range(i32 -1, 2) i32 @llvm.scmp.i32.i64(i64, i64) #47
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #47
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #57

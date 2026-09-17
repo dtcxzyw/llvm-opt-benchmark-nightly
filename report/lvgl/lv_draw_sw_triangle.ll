@@ -202,12 +202,8 @@ bb.x:                                             ; preds = %bb.w
   br i1 %i.fk, label %bb.y, label %.thread.us.us
 
 bb.y:                                             ; preds = %.lr.ph170.split.us.split.us
-  %10 = zext i8 %i.fj to i16
-  %11 = zext i8 %i.fi to i16
-  %12 = mul nuw i16 %10, %11
-  %13 = lshr i16 %12, 8
-  %14 = trunc nuw i16 %13 to i8
-  store i8 %14, ptr %i.dk, align 8, !tbaa !35
+  %10 = call i8 @llvm.umulh.i8(i8 %i.fi, i8 %i.fj)
+  store i8 %10, ptr %i.dk, align 8, !tbaa !35
   br label %.thread.us.us
 
 .thread.us.us:                                    ; preds = %bb.y, %.lr.ph170.split.us.split.us
@@ -282,14 +278,10 @@ bb.aa:                                            ; preds = %.lr.ph170.split.spl
   br i1 %i.ga, label %bb.ab, label %.lr.ph.us.1
 
 bb.ab:                                            ; preds = %.lr.ph.us
-  %15 = zext i8 %i.fz to i16
   %i.gb = getelementptr inbounds nuw i8, ptr %i.dc, i64 %indvars.iv ; 2 uses
   %i.gc = load i8, ptr %i.gb, align 1, !tbaa !22
-  %16 = zext i8 %i.gc to i16
-  %17 = mul nuw i16 %16, %15
-  %18 = lshr i16 %17, 8
-  %19 = trunc nuw i16 %18 to i8
-  store i8 %19, ptr %i.gb, align 1, !tbaa !22
+  %11 = call i8 @llvm.umulh.i8(i8 %i.gc, i8 %i.fz)
+  store i8 %11, ptr %i.gb, align 1, !tbaa !22
   br label %.lr.ph.us.1
 
 .lr.ph.us.1:                                      ; preds = %bb.ab, %.lr.ph.us
@@ -300,14 +292,10 @@ bb.ab:                                            ; preds = %.lr.ph.us
   br i1 %i.gf, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %.lr.ph.us.1
-  %20 = zext i8 %i.ge to i16
   %i.gg = getelementptr inbounds nuw i8, ptr %i.dc, i64 %indvars.iv.next ; 2 uses
   %i.gh = load i8, ptr %i.gg, align 1, !tbaa !22
-  %21 = zext i8 %i.gh to i16
-  %22 = mul nuw i16 %21, %20
-  %23 = lshr i16 %22, 8
-  %24 = trunc nuw i16 %23 to i8
-  store i8 %24, ptr %i.gg, align 1, !tbaa !22
+  %12 = call i8 @llvm.umulh.i8(i8 %i.gh, i8 %i.ge)
+  store i8 %12, ptr %i.gg, align 1, !tbaa !22
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %.lr.ph.us.1
@@ -328,14 +316,10 @@ bb.ad:                                            ; preds = %bb.ac, %.lr.ph.us.1
   br i1 %i.gk, label %bb.ae, label %.thread.us172
 
 bb.ae:                                            ; preds = %.lr.ph.us.epil.preheader
-  %25 = zext i8 %i.gj to i16
   %i.gl = getelementptr inbounds nuw i8, ptr %i.dc, i64 %indvars.iv.epil.init ; 2 uses
   %i.gm = load i8, ptr %i.gl, align 1, !tbaa !22
-  %26 = zext i8 %i.gm to i16
-  %27 = mul nuw i16 %26, %25
-  %28 = lshr i16 %27, 8
-  %29 = trunc nuw i16 %28 to i8
-  store i8 %29, ptr %i.gl, align 1, !tbaa !22
+  %13 = call i8 @llvm.umulh.i8(i8 %i.gm, i8 %i.gj)
+  store i8 %13, ptr %i.gl, align 1, !tbaa !22
   br label %.thread.us172
 
 .thread.us172:                                    ; preds = %.thread.us172.loopexit.unr-lcssa, %bb.ae, %.lr.ph.us.epil.preheader, %bb.aa, %bb.z, %.lr.ph170.split.split.us
@@ -431,6 +415,9 @@ declare void @lv_free(ptr noundef) local_unnamed_addr #2
 declare void @lv_draw_sw_mask_free_param(ptr noundef) local_unnamed_addr #2
 
 declare void @lv_draw_sw_grad_cleanup(ptr noundef) local_unnamed_addr #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.umulh.i8(i8, i8) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #4

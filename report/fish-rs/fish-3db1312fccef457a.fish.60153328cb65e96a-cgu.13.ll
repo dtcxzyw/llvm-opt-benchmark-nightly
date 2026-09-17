@@ -205,13 +205,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %bb.l, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = trunc i64 %1 to i32                      ; 2 uses
-  %i.d = trunc nuw i64 %2 to i32                  ; 2 uses
+  %i.c = trunc i64 %1 to i32                      ; 3 uses
+  %i.d = trunc nuw i64 %2 to i32                  ; 3 uses
   %i.e = icmp ult i32 %i.c, %i.d
   br i1 %i.e, label %bb.d, label %bb.w
 
 bb.d:                                             ; preds = %bb.c
-  %4 = sub nuw i64 %2, %1                         ; 2 uses
+  %4 = sub nuw i32 %i.d, %i.c                     ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
   %i.f = getelementptr inbounds nuw i8, ptr %.val2, i64 16 ; 9 uses
   %i.g = load i32, ptr %i.f, align 4, !noalias !1404, !noundef !12 ; 3 uses
@@ -244,8 +244,9 @@ _RINvYNtNtNtCsfFbyYyxlmiH_4rand4rngs6thread9ThreadRngNtNtB9_3rng6RngExt6randommE
   %.sroa.6.0.extract.trunc.i.i.i.i.i.i14.i.i.i.i = phi i32 [ 1, %.thread.i.i.i.i15.i.i.i.i ], [ %i.n, %bb.g ] ; 4 uses
   %i.p = load i32, ptr %.in.i.i.i.i13.i.i.i.i, align 4, !alias.scope !1408, !noalias !1407, !noundef !12
   store i32 %.sroa.6.0.extract.trunc.i.i.i.i.i.i14.i.i.i.i, ptr %i.f, align 4, !alias.scope !1408, !noalias !1407
+  %5 = zext i32 %4 to i64
   %i.q = zext i32 %i.p to i64
-  %i.r = mul nuw i64 %4, %i.q                     ; 2 uses
+  %i.r = mul nuw i64 %i.q, %5                     ; 2 uses
   %i.s = lshr i64 %i.r, 32                        ; 2 uses
   %i.t = trunc i64 %i.r to i32                    ; 2 uses
   %i.u = sub i32 %i.c, %i.d
@@ -282,18 +283,15 @@ _RINvYNtNtNtCsfFbyYyxlmiH_4rand4rngs6thread9ThreadRngNtNtB9_3rng6RngExt6randommE
   %.sroa.6.0.extract.trunc.i.i.i.i.i.i18.i.i.i.i = phi i32 [ 1, %.thread.i.i.i.i19.i.i.i.i ], [ %i.ac, %bb.k ]
   %i.ae = load i32, ptr %.in.i.i.i.i17.i.i.i.i, align 4, !alias.scope !1412, !noalias !1411, !noundef !12
   store i32 %.sroa.6.0.extract.trunc.i.i.i.i.i.i18.i.i.i.i, ptr %i.f, align 4, !alias.scope !1412, !noalias !1411
-  %5 = zext i32 %i.ae to i64
-  %6 = mul nuw i64 %4, %5
-  %7 = lshr i64 %6, 32
-  %8 = trunc nuw i64 %7 to i32
+  %6 = tail call i32 @llvm.umulh.i32(i32 %i.ae, i32 %4)
   %i.af = xor i32 %i.t, -1
-  %.not10.i.i.i.i = icmp ult i32 %i.af, %8
+  %.not10.i.i.i.i = icmp ugt i32 %6, %i.af
   %i.ag = zext i1 %.not10.i.i.i.i to i64
   %i.ah = add nuw nsw i64 %i.s, %i.ag
   br label %_RINvXsl_NtNtNtCsfFbyYyxlmiH_4rand5distr7uniform3intINtB6_10UniformIntmENtB8_14UniformSampler13sample_singleNtNtNtBc_4rngs6thread9ThreadRngmmECs8frGy5WneL6_4fish.exit.i.i
 
 bb.l:                                             ; preds = %bb.b
-  %i.ai = sub nuw i64 %2, %1
+  %i.ai = sub nuw i64 %2, %1                      ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
   %i.aj = getelementptr inbounds nuw i8, ptr %.val2, i64 16 ; 9 uses
   %i.ak = load i32, ptr %i.aj, align 4, !noalias !1413, !noundef !12 ; 4 uses
@@ -342,7 +340,7 @@ _RINvYNtNtNtCsfFbyYyxlmiH_4rand4rngs6thread9ThreadRngNtNtB9_3rng6RngExt6randomyE
   %i.bc = shl nuw i64 %i.bb, 32
   %i.bd = zext i32 %.sroa.02.017.i.i.i.i13.i.i.i.i to i64
   %i.be = or disjoint i64 %i.bc, %i.bd
-  %i.bf = zext i64 %i.ai to i128                  ; 2 uses
+  %i.bf = zext i64 %i.ai to i128
   %i.bg = zext i64 %i.be to i128
   %i.bh = mul nuw i128 %i.bg, %i.bf               ; 2 uses
   %i.bi = lshr i128 %i.bh, 64
@@ -398,12 +396,9 @@ _RINvYNtNtNtCsfFbyYyxlmiH_4rand4rngs6thread9ThreadRngNtNtB9_3rng6RngExt6randomyE
   %i.ce = shl nuw i64 %i.cd, 32
   %i.cf = zext i32 %.sroa.02.017.i.i.i.i19.i.i.i.i to i64
   %i.cg = or disjoint i64 %i.ce, %i.cf
-  %9 = zext i64 %i.cg to i128
-  %10 = mul nuw i128 %9, %i.bf
-  %11 = lshr i128 %10, 64
-  %12 = trunc nuw i128 %11 to i64
+  %7 = tail call i64 @llvm.umulh.i64(i64 %i.cg, i64 %i.ai)
   %i.ch = xor i64 %i.bk, -1
-  %.not7.i.i.i.i = icmp ult i64 %i.ch, %12
+  %.not7.i.i.i.i = icmp ugt i64 %7, %i.ch
   %i.ci = zext i1 %.not7.i.i.i.i to i64
   %i.cj = add nuw i64 %i.ci, %i.bj
   br label %bb.v
@@ -805,6 +800,12 @@ declare hidden noundef i32 @_RNvNtNtCs8frGy5WneL6_4fish8builtins11fish_indent13t
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden noundef i32 @_RNvNtNtCs8frGy5WneL6_4fish8builtins15fish_key_reader13throwing_main() unnamed_addr #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #40
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #40
 
 ; Function Attrs: nocallback nofree nosync nounwind nonlazybind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #45

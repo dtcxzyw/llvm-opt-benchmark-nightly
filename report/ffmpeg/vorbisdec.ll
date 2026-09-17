@@ -205,7 +205,6 @@ bb.bk:                                            ; preds = %bb.bj
   %i.nc = add i32 %.0271.i81433.i.i, -1
   %.1.i124376.i.i = add i32 %i.nc, %i.mx          ; 3 uses
   %.not50.i377.i.i = icmp slt i32 %.1.i124376.i.i, %.0271.i81433.i.i ; 2 uses
-  %4 = zext i32 %i.nb to i64
   %i.nd = getelementptr inbounds nuw i8, ptr %i.mv, i64 40
   %i.ne = getelementptr inbounds nuw i8, ptr %i.mv, i64 16
   %i.nf = load ptr, ptr %i.ne, align 8, !tbaa !91 ; 3 uses
@@ -316,18 +315,15 @@ bb.br:                                            ; preds = %bb.bn
 
 .lr.ph381.i.i:                                    ; preds = %bb.br, %bb.bt
   %.1.i124379.i.i = phi i32 [ %.1.i124.i.i, %bb.bt ], [ %.1.i124376.i.i, %bb.br ] ; 3 uses
-  %.0.i123378.i.i = phi i32 [ %8, %bb.bt ], [ %.167.i.i120.i.i, %bb.br ] ; 2 uses
-  %5 = zext nneg i32 %.0.i123378.i.i to i64
-  %6 = mul nuw nsw i64 %5, %4
-  %7 = lshr i64 %6, 32
-  %8 = trunc nuw nsw i64 %7 to i32                ; 2 uses
+  %.0.i123378.i.i = phi i32 [ %4, %bb.bt ], [ %.167.i.i120.i.i, %bb.br ] ; 2 uses
+  %4 = tail call i32 @llvm.umulh.i32(i32 %.0.i123378.i.i, i32 %i.nb) ; 2 uses
   %i.pw = icmp slt i32 %.1.i124379.i.i, %.0281.i75.i.i
   br i1 %i.pw, label %bb.bs, label %bb.bt
 
 bb.bs:                                            ; preds = %.lr.ph381.i.i
   %i.px = load i8, ptr %i.mi, align 8, !tbaa !90
   %i.py = zext i8 %i.px to i32
-  %i.pz = mul nuw nsw i32 %i.py, %8
+  %i.pz = mul nuw nsw i32 %4, %i.py
   %i.qa = sub nsw i32 %.0.i123378.i.i, %i.pz
   %i.qb = trunc i32 %i.qa to i8
   %i.qc = load ptr, ptr %i.kr, align 8, !tbaa !83
@@ -730,7 +726,6 @@ bb.db:                                            ; preds = %bb.da
   %i.alh = add i32 %.0271.i34359.i.i, -1
   %.1.i135323.i.i = add i32 %i.alh, %i.ala        ; 3 uses
   %.not50.i136324.i.i = icmp slt i32 %.1.i135323.i.i, %.0271.i34359.i.i ; 2 uses
-  %9 = zext i32 %i.ale to i64
   br label %bb.dc
 
 bb.dc:                                            ; preds = %.loopexit229.i.i, %bb.db
@@ -852,18 +847,15 @@ bb.dk:                                            ; preds = %bb.dg
 
 .lr.ph328.i.i:                                    ; preds = %bb.dk, %bb.dm
   %.1.i135326.i.i = phi i32 [ %.1.i135.i.i, %bb.dm ], [ %.1.i135323.i.i, %bb.dk ] ; 3 uses
-  %.0.i134325.i.i = phi i32 [ %13, %bb.dm ], [ %.167.i.i130.i.i, %bb.dk ] ; 2 uses
-  %10 = zext nneg i32 %.0.i134325.i.i to i64
-  %11 = mul nuw nsw i64 %10, %9
-  %12 = lshr i64 %11, 32
-  %13 = trunc nuw nsw i64 %12 to i32              ; 2 uses
+  %.0.i134325.i.i = phi i32 [ %5, %bb.dm ], [ %.167.i.i130.i.i, %bb.dk ] ; 2 uses
+  %5 = tail call i32 @llvm.umulh.i32(i32 %.0.i134325.i.i, i32 %i.ale) ; 2 uses
   %i.aod = icmp slt i32 %.1.i135326.i.i, %.0281.i28.i.i
   br i1 %i.aod, label %bb.dl, label %bb.dm
 
 bb.dl:                                            ; preds = %.lr.ph328.i.i
   %i.aoe = load i8, ptr %i.ako, align 8, !tbaa !90
   %i.aof = zext i8 %i.aoe to i32
-  %i.aog = mul nuw nsw i32 %i.aof, %13
+  %i.aog = mul nuw nsw i32 %5, %i.aof
   %i.aoh = sub nsw i32 %.0.i134325.i.i, %i.aog
   %i.aoi = trunc i32 %i.aoh to i8
   %i.aoj = load ptr, ptr %i.aju, align 8, !tbaa !83
@@ -1266,7 +1258,6 @@ bb.ei:                                            ; preds = %bb.eh
   %i.ayu = add i32 %.0271.i312.i.i, -1
   %.1.i151288.i.i = add i32 %i.ayu, %i.ayn        ; 3 uses
   %.not50.i152289.i.i = icmp slt i32 %.1.i151288.i.i, %.0271.i312.i.i ; 2 uses
-  %14 = zext i32 %i.ayr to i64
   br label %bb.ej
 
 bb.ej:                                            ; preds = %.loopexit237.i.i, %bb.ei
@@ -1388,18 +1379,15 @@ bb.er:                                            ; preds = %bb.en
 
 .lr.ph.i.i:                                       ; preds = %bb.er, %bb.et
   %.1.i151291.i.i = phi i32 [ %.1.i151.i.i, %bb.et ], [ %.1.i151288.i.i, %bb.er ] ; 3 uses
-  %.0.i150290.i.i = phi i32 [ %18, %bb.et ], [ %.167.i.i146.i.i, %bb.er ] ; 2 uses
-  %15 = zext nneg i32 %.0.i150290.i.i to i64
-  %16 = mul nuw nsw i64 %15, %14
-  %17 = lshr i64 %16, 32
-  %18 = trunc nuw nsw i64 %17 to i32              ; 2 uses
+  %.0.i150290.i.i = phi i32 [ %6, %bb.et ], [ %.167.i.i146.i.i, %bb.er ] ; 2 uses
+  %6 = tail call i32 @llvm.umulh.i32(i32 %.0.i150290.i.i, i32 %i.ayr) ; 2 uses
   %i.bbq = icmp slt i32 %.1.i151291.i.i, %.0281.i.i.i
   br i1 %i.bbq, label %bb.es, label %bb.et
 
 bb.es:                                            ; preds = %.lr.ph.i.i
   %i.bbr = load i8, ptr %i.ayb, align 8, !tbaa !90
   %i.bbs = zext i8 %i.bbr to i32
-  %i.bbt = mul nuw nsw i32 %i.bbs, %18
+  %i.bbt = mul nuw nsw i32 %6, %i.bbs
   %i.bbu = sub nsw i32 %.0.i150290.i.i, %i.bbt
   %i.bbv = trunc i32 %i.bbu to i8
   %i.bbw = load ptr, ptr %i.axh, align 8, !tbaa !83
@@ -1800,6 +1788,9 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #6

@@ -205,13 +205,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = trunc i64 %1 to i32                      ; 2 uses
-  %i.d = trunc nuw i64 %2 to i32                  ; 2 uses
+  %i.c = trunc i64 %1 to i32                      ; 3 uses
+  %i.d = trunc nuw i64 %2 to i32                  ; 3 uses
   %i.e = icmp ult i32 %i.c, %i.d
   br i1 %i.e, label %bb.d, label %bb.i
 
 bb.d:                                             ; preds = %bb.c
-  %4 = sub nuw i64 %2, %1                         ; 2 uses
+  %4 = sub nuw i32 %i.d, %i.c                     ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
   %i.f = getelementptr inbounds nuw i8, ptr %.val2, i64 8 ; 3 uses
   %i.g = load i64, ptr %i.f, align 8, !noalias !521, !noundef !4 ; 4 uses
@@ -236,7 +236,8 @@ bb.d:                                             ; preds = %bb.c
   %i.w = tail call noundef i64 @llvm.fshl.i64(i64 %i.s, i64 %i.s, i64 45) ; 3 uses
   store i64 %i.w, ptr %i.h, align 8, !noalias !521
   %i.x = lshr i64 %i.l, 32
-  %i.y = mul nuw i64 %i.x, %4                     ; 2 uses
+  %5 = zext i32 %4 to i64
+  %i.y = mul nuw i64 %i.x, %5                     ; 2 uses
   %i.z = lshr i64 %i.y, 32                        ; 2 uses
   %i.aa = trunc i64 %i.y to i32                   ; 2 uses
   %i.ab = sub i32 %i.c, %i.d
@@ -259,17 +260,16 @@ bb.e:                                             ; preds = %bb.d
   %i.am = tail call noundef i64 @llvm.fshl.i64(i64 %i.ai, i64 %i.ai, i64 45)
   store i64 %i.am, ptr %i.h, align 8, !alias.scope !522, !noalias !521
   %i.an = lshr i64 %i.af, 32
-  %5 = mul nuw i64 %i.an, %4
-  %6 = lshr i64 %5, 32
-  %7 = trunc nuw i64 %6 to i32
+  %6 = trunc nuw i64 %i.an to i32
+  %7 = tail call i32 @llvm.umulh.i32(i32 %6, i32 %4)
   %i.ao = xor i32 %i.aa, -1
-  %.not10.i.i.i.i = icmp ult i32 %i.ao, %7
+  %.not10.i.i.i.i = icmp ugt i32 %7, %i.ao
   %i.ap = zext i1 %.not10.i.i.i.i to i64
   %i.aq = add nuw nsw i64 %i.z, %i.ap
   br label %_RINvXsl_NtNtNtCsfFbyYyxlmiH_4rand5distr7uniform3intINtB6_10UniformIntmENtB8_14UniformSampler13sample_singleINtNtNtNtCsaL1QbXo9JQH_3std4sync6poison5mutex10MutexGuardNtNtNtBc_4rngs5small8SmallRngEmmECs8frGy5WneL6_4fish.exit.i.i
 
 bb.f:                                             ; preds = %bb.b
-  %i.ar = sub nuw i64 %2, %1
+  %i.ar = sub nuw i64 %2, %1                      ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
   %i.as = getelementptr inbounds nuw i8, ptr %.val2, i64 8 ; 3 uses
   %i.at = load i64, ptr %i.as, align 8, !noalias !523, !noundef !4 ; 4 uses
@@ -293,7 +293,7 @@ bb.f:                                             ; preds = %bb.b
   store i64 %i.bi, ptr %i.bc, align 8, !noalias !523
   %i.bj = tail call noundef i64 @llvm.fshl.i64(i64 %i.bf, i64 %i.bf, i64 45) ; 3 uses
   store i64 %i.bj, ptr %i.au, align 8, !noalias !523
-  %i.bk = zext i64 %i.ar to i128                  ; 2 uses
+  %i.bk = zext i64 %i.ar to i128
   %i.bl = zext i64 %i.ay to i128
   %i.bm = mul nuw i128 %i.bl, %i.bk               ; 2 uses
   %i.bn = lshr i128 %i.bm, 64
@@ -318,12 +318,9 @@ bb.g:                                             ; preds = %bb.f
   store i64 %i.ca, ptr %i.bc, align 8, !alias.scope !524, !noalias !523
   %i.cb = tail call noundef i64 @llvm.fshl.i64(i64 %i.bx, i64 %i.bx, i64 45)
   store i64 %i.cb, ptr %i.au, align 8, !alias.scope !524, !noalias !523
-  %8 = zext i64 %i.bu to i128
-  %9 = mul nuw i128 %8, %i.bk
-  %10 = lshr i128 %9, 64
-  %11 = trunc nuw i128 %10 to i64
+  %8 = tail call i64 @llvm.umulh.i64(i64 %i.bu, i64 %i.ar)
   %i.cc = xor i64 %i.bp, -1
-  %.not7.i.i.i.i = icmp ult i64 %i.cc, %11
+  %.not7.i.i.i.i = icmp ugt i64 %8, %i.cc
   %i.cd = zext i1 %.not7.i.i.i.i to i64
   %i.ce = add nuw i64 %i.cd, %i.bo
   br label %bb.h
@@ -366,7 +363,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %.val4 = load ptr, ptr %0, align 8, !nonnull !4, !noundef !4 ; 4 uses
   %i.b = sub nuw i64 %.val1, %.val                ; 2 uses
-  %i.c = add i64 %i.b, 1                          ; 2 uses
+  %i.c = add i64 %i.b, 1                          ; 3 uses
   %i.d = icmp eq i64 %i.c, 0
   %i.e = getelementptr inbounds nuw i8, ptr %.val4, i64 8 ; 3 uses
   %i.f = load i64, ptr %i.e, align 8, !noalias !540, !noundef !4 ; 4 uses
@@ -393,7 +390,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultyNtNtNtCsfFbyYyxlmiH_4rand5distr7uniform5ErrorE6unwrapCs8frGy5WneL6_4fish.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.w = zext i64 %i.c to i128                    ; 2 uses
+  %i.w = zext i64 %i.c to i128
   %i.x = zext i64 %i.k to i128
   %i.y = mul nuw i128 %i.x, %i.w                  ; 2 uses
   %i.z = lshr i128 %i.y, 64
@@ -418,12 +415,9 @@ bb.d:                                             ; preds = %bb.c
   store i64 %i.am, ptr %i.o, align 8, !alias.scope !541, !noalias !540
   %i.an = tail call noundef i64 @llvm.fshl.i64(i64 %i.aj, i64 %i.aj, i64 45)
   store i64 %i.an, ptr %i.g, align 8, !alias.scope !541, !noalias !540
-  %3 = zext i64 %i.ag to i128
-  %4 = mul nuw i128 %3, %i.w
-  %5 = lshr i128 %4, 64
-  %6 = trunc nuw i128 %5 to i64
+  %3 = tail call i64 @llvm.umulh.i64(i64 %i.ag, i64 %i.c)
   %i.ao = xor i64 %i.ab, -1
-  %.not7.i.i = icmp ult i64 %i.ao, %6
+  %.not7.i.i = icmp ugt i64 %3, %i.ao
   %i.ap = zext i1 %.not7.i.i to i64
   %i.aq = add nuw i64 %i.ap, %i.aa
   br label %bb.e
@@ -825,6 +819,12 @@ declare hidden void @_RNvMs1_NtCslEmbWASCaJL_8bitflags4iterINtB5_9IterNamesNtNtN
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden noundef i64 @_RNvXs_NvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator10advance_byNtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32NtB4_13SpecAdvanceBy15spec_advance_byCs8frGy5WneL6_4fish(ptr noalias nofree noundef align 8 dereferenceable(16), i64 noundef) unnamed_addr #0
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #24
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #24
 
 ; Function Attrs: nocallback nofree nosync nounwind nonlazybind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #32

@@ -204,14 +204,13 @@ nf_ct_expect_dst_hash.exit:                       ; preds = %bb.b, %bb.e
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 23
   store i8 %i.v, ptr %i.w, align 1
   %i.x = call i64 @__siphash_unaligned(ptr noundef nonnull %3, i64 noundef 24, ptr noundef nonnull @nf_ct_expect_hashrnd) #9
-  %4 = load i32, ptr @nf_ct_expect_hsize, align 4
-  %5 = and i64 %i.x, 4294967295
-  %6 = zext i32 %4 to i64
-  %7 = mul nuw i64 %5, %6
-  %8 = lshr i64 %7, 32
+  %4 = trunc i64 %i.x to i32
+  %5 = load i32, ptr @nf_ct_expect_hsize, align 4
+  %6 = call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %4, i32 %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
   %i.y = load ptr, ptr @nf_ct_expect_hash, align 8
-  %i.z = getelementptr [8 x i8], ptr %i.y, i64 %8
+  %7 = zext i32 %6 to i64
+  %i.z = getelementptr [8 x i8], ptr %i.y, i64 %7
   %i.aa = load volatile ptr, ptr %i.z, align 8    ; 2 uses
   %.not32 = icmp eq ptr %i.aa, null
   %i.ab = getelementptr i8, ptr %i.aa, i64 -16    ; 2 uses
@@ -463,14 +462,13 @@ nf_ct_expect_dst_hash.exit:                       ; preds = %bb.b, %bb.e
   %i.w = getelementptr inbounds nuw i8, ptr %4, i64 23
   store i8 %i.v, ptr %i.w, align 1
   %i.x = call i64 @__siphash_unaligned(ptr noundef nonnull %4, i64 noundef 24, ptr noundef nonnull @nf_ct_expect_hashrnd) #9
-  %5 = load i32, ptr @nf_ct_expect_hsize, align 4
-  %6 = and i64 %i.x, 4294967295
-  %7 = zext i32 %5 to i64
-  %8 = mul nuw i64 %6, %7
-  %9 = lshr i64 %8, 32
+  %5 = trunc i64 %i.x to i32
+  %6 = load i32, ptr @nf_ct_expect_hsize, align 4
+  %7 = call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %5, i32 %6)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
   %i.y = load ptr, ptr @nf_ct_expect_hash, align 8
-  %i.z = getelementptr [8 x i8], ptr %i.y, i64 %9
+  %8 = zext i32 %7 to i64
+  %i.z = getelementptr [8 x i8], ptr %i.y, i64 %8
   %i.aa = load ptr, ptr %i.z, align 8             ; 2 uses
   %.not43 = icmp eq ptr %i.aa, null
   %i.ab = getelementptr i8, ptr %i.aa, i64 -16    ; 2 uses
@@ -873,14 +871,13 @@ nf_ct_expect_dst_hash.exit:                       ; preds = %bb.a, %bb.d
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 23
   store i8 %i.p, ptr %i.q, align 1
   %i.r = call i64 @__siphash_unaligned(ptr noundef nonnull %3, i64 noundef 24, ptr noundef nonnull @nf_ct_expect_hashrnd) #9
-  %4 = load i32, ptr @nf_ct_expect_hsize, align 4
-  %5 = and i64 %i.r, 4294967295
-  %6 = zext i32 %4 to i64
-  %7 = mul nuw i64 %5, %6
-  %8 = lshr i64 %7, 32
+  %4 = trunc i64 %i.r to i32
+  %5 = load i32, ptr @nf_ct_expect_hsize, align 4
+  %6 = call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %4, i32 %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
   %i.s = load ptr, ptr @nf_ct_expect_hash, align 8
-  %i.t = getelementptr [8 x i8], ptr %i.s, i64 %8
+  %7 = zext i32 %6 to i64
+  %i.t = getelementptr [8 x i8], ptr %i.s, i64 %7
   %i.u = load ptr, ptr %i.t, align 8              ; 2 uses
   %.not = icmp eq ptr %i.u, null
   %i.v = getelementptr i8, ptr %i.u, i64 -16      ; 2 uses
@@ -1283,11 +1280,9 @@ nf_ct_expect_dst_hash.exit:                       ; preds = %bb.a, %bb.d
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 23
   store i8 %i.o, ptr %i.p, align 1
   %i.q = call i64 @__siphash_unaligned(ptr noundef nonnull %2, i64 noundef 24, ptr noundef nonnull @nf_ct_expect_hashrnd) #9
-  %3 = load i32, ptr @nf_ct_expect_hsize, align 4
-  %4 = and i64 %i.q, 4294967295
-  %5 = zext i32 %3 to i64
-  %6 = mul nuw i64 %4, %5
-  %7 = lshr i64 %6, 32
+  %3 = trunc i64 %i.q to i32
+  %4 = load i32, ptr @nf_ct_expect_hsize, align 4
+  %5 = call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %3, i32 %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #11
   %i.r = getelementptr i8, ptr %0, i64 140        ; 3 uses
   %i.s = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.r, i32 1, ptr elementtype(i32) %i.r) #11, !srcloc !12 ; 3 uses
@@ -1343,7 +1338,8 @@ bb.h:                                             ; preds = %bb.g
 hlist_add_head_rcu.exit:                          ; preds = %bb.g, %bb.h
   %i.ak = getelementptr i8, ptr %0, i64 16        ; 3 uses
   %i.al = load ptr, ptr @nf_ct_expect_hash, align 8
-  %i.am = getelementptr [8 x i8], ptr %i.al, i64 %7 ; 3 uses
+  %6 = zext i32 %5 to i64
+  %i.am = getelementptr [8 x i8], ptr %i.al, i64 %6 ; 3 uses
   %i.an = load ptr, ptr %i.am, align 8            ; 3 uses
   store ptr %i.an, ptr %i.ak, align 8
   %i.ao = getelementptr i8, ptr %0, i64 24
@@ -1745,6 +1741,9 @@ declare dso_local i32 @_printk(ptr noundef, ...) local_unnamed_addr #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #8
 
 attributes #0 = { fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong "min-legal-vector-width"="0" "no-builtin-wcslen" "no-jump-tables"="true" "no-trapping-math"="true" "patchable-function-entry"="0" "patchable-function-prefix"="16" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" "warn-stack-size"="2048" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

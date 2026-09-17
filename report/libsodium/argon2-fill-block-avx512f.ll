@@ -204,6 +204,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.cs = urem i32 %.lhs.trunc, %i.cr
   %.zext = zext i32 %i.cs to i64
   %.060 = select i1 %or.cond7, i64 %.sroa.7.0.extract.shift, i64 %.zext ; 2 uses
+  %6 = trunc i64 %.061 to i32                     ; 2 uses
   %.not = icmp eq i64 %.060, %.sroa.7.0.extract.shift ; 2 uses
   br i1 %i.au, label %bb.m, label %bb.r
 
@@ -261,16 +262,13 @@ index_alpha.exit:                                 ; preds = %bb.n, %bb.p, %bb.q,
   %.0.i = phi i64 [ 0, %bb.u ], [ %i.dj, %bb.v ], [ 0, %bb.q ], [ 0, %bb.p ], [ 0, %bb.n ]
   %i.dk = add i32 %.03036.i, -1
   %i.dl = zext i32 %i.dk to i64
-  %6 = and i64 %.061, 4294967295                  ; 2 uses
-  %7 = mul nuw i64 %6, %6
-  %8 = lshr i64 %7, 32
-  %i.dm = zext i32 %.03036.i to i64
-  %9 = mul nuw i64 %8, %i.dm
-  %10 = lshr i64 %9, 32
-  %i.dn = add nuw nsw i64 %.0.i, %i.dl
-  %11 = sub nsw i64 %i.dn, %10
+  %7 = call i32 @llvm.umulh.i32(i32 %6, i32 %6)
+  %8 = call i32 @llvm.umulh.i32(i32 %.03036.i, i32 %7)
+  %i.dm = zext i32 %8 to i64
+  %9 = sub nsw i64 %.0.i, %i.dm
+  %i.dn = add nsw i64 %9, %i.dl
   %i.do = zext i32 %i.cg to i64                   ; 2 uses
-  %i.dp = urem i64 %11, %i.do
+  %i.dp = urem i64 %i.dn, %i.do
   %i.dq = load ptr, ptr %0, align 8
   %i.dr = getelementptr i8, ptr %i.dq, i64 8
   %i.ds = load ptr, ptr %i.dr, align 8            ; 2 uses
@@ -671,6 +669,9 @@ begin_hunk_1_@fill_block_with_xor:.preheader924.preheader
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i64> @llvm.fshl.v8i64(<8 x i64>, <8 x i64>, <8 x i64>) #3

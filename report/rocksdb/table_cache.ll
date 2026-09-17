@@ -204,14 +204,10 @@ bb.ab:                                            ; preds = %bb.w
 bb.ac:                                            ; preds = %bb.ab
   %i.cx = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.cy = load i64, ptr %i.cx, align 8, !tbaa !253
-  %31 = zext i64 %i.cy to i128
-  %32 = zext i64 %i.cw to i128
-  %33 = mul nuw i128 %31, %32
-  %34 = lshr i128 %33, 64
-  %35 = trunc nuw i128 %34 to i64
+  %31 = call noundef i64 @llvm.umulh.i64(i64 %i.cy, i64 %i.cw)
   %i.cz = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.da = load ptr, ptr %i.cz, align 8, !tbaa !254
-  %i.db = getelementptr inbounds nuw [64 x i8], ptr %i.da, i64 %35 ; 3 uses
+  %i.db = getelementptr inbounds nuw [64 x i8], ptr %i.da, i64 %31 ; 3 uses
   invoke void @_ZN7rocksdb4port5Mutex4LockEv(ptr noundef nonnull align 8 dereferenceable(40) %i.db)
           to label %_ZN7rocksdb9MutexLockC2EPNS_4port5MutexE.exit unwind label %bb.ae
 
@@ -430,14 +426,10 @@ bb.bc:                                            ; preds = %_ZN7rocksdb24BasicT
 bb.bd:                                            ; preds = %bb.bc
   %i.fh = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.fi = load i64, ptr %i.fh, align 8, !tbaa !253
-  %36 = zext i64 %i.fi to i128
-  %37 = zext i64 %i.fg to i128
-  %38 = mul nuw i128 %36, %37
-  %39 = lshr i128 %38, 64
-  %40 = trunc nuw i128 %39 to i64
+  %32 = call noundef i64 @llvm.umulh.i64(i64 %i.fi, i64 %i.fg)
   %i.fj = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !254
-  %i.fl = getelementptr inbounds nuw [64 x i8], ptr %i.fk, i64 %40 ; 3 uses
+  %i.fl = getelementptr inbounds nuw [64 x i8], ptr %i.fk, i64 %32 ; 3 uses
   invoke void @_ZN7rocksdb4port5Mutex4LockEv(ptr noundef nonnull align 8 dereferenceable(40) %i.fl)
           to label %_ZN7rocksdb9MutexLockC2EPNS_4port5MutexE.exit149 unwind label %bb.bg
 
@@ -839,6 +831,9 @@ declare i64 @llvm.umin.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.experimental.cttz.elts.i64.v32i1(<32 x i1>, i1 immarg) #20

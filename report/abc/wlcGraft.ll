@@ -205,13 +205,9 @@ define void @Sbc_Mult(i64 noundef %0, i64 noundef %1, ptr nofree noundef writeon
 bb.a:
   %i.a = mul i64 %1, %0
   store i64 %i.a, ptr %2, align 8, !tbaa !57
-  %3 = zext i64 %0 to i128
-  %4 = zext i64 %1 to i128
-  %5 = mul nuw i128 %4, %3
-  %6 = lshr i128 %5, 64
-  %7 = trunc nuw i128 %6 to i64
+  %3 = tail call i64 @llvm.umulh.i64(i64 %1, i64 %0)
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i64 %7, ptr %i.b, align 8, !tbaa !57
+  store i64 %3, ptr %i.b, align 8, !tbaa !57
   ret void
 }
 
@@ -536,11 +532,7 @@ bb.b:                                             ; preds = %bb.a
   %i.el = phi i64 [ %i.ei, %bb.b ], [ 0, %bb.a ]  ; 3 uses
   %i.em = phi i64 [ %i.ek, %bb.b ], [ 0, %bb.a ]  ; 3 uses
   %i.en = mul i64 %i.em, %i.el
-  %4 = zext i64 %i.el to i128
-  %5 = zext i64 %i.em to i128
-  %6 = mul nuw i128 %5, %4
-  %7 = lshr i128 %6, 64
-  %8 = trunc nuw i128 %7 to i64
+  %4 = tail call i64 @llvm.umulh.i64(i64 %i.em, i64 %i.el)
   %i.eo = shl nuw i64 1, %indvars.iv51            ; 4 uses
   br label %bb.c
 
@@ -583,7 +575,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %i.fc = and i64 %i.ep, %8
+  %i.fc = and i64 %i.ep, %4
   %.not42 = icmp eq i64 %i.fc, 0
   br i1 %.not42, label %bb.k, label %bb.j
 
@@ -984,6 +976,9 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare range(i32 -1, 2) i32 @llvm.scmp.i32.i32(i32, i32) #16

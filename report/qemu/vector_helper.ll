@@ -204,13 +204,9 @@ bb.a:
   %i.c = load i8, ptr %i.b, align 1
   %i.d = getelementptr inbounds i8, ptr %2, i64 %i.a
   %i.e = load i8, ptr %i.d, align 1
-  %4 = sext i8 %i.e to i16
-  %5 = sext i8 %i.c to i16
-  %6 = mul nsw i16 %4, %5
-  %7 = lshr i16 %6, 8
-  %8 = trunc nuw i16 %7 to i8
+  %4 = tail call range(i8 -64, 65) i8 @llvm.smulh.i8(i8 %i.e, i8 %i.c)
   %i.f = getelementptr inbounds i8, ptr %0, i64 %i.a
-  store i8 %8, ptr %i.f, align 1
+  store i8 %4, ptr %i.f, align 1
   ret void
 }
 
@@ -229,13 +225,9 @@ bb.a:
   %i.c = load i16, ptr %i.b, align 2
   %i.d = getelementptr inbounds [2 x i8], ptr %2, i64 %i.a
   %i.e = load i16, ptr %i.d, align 2
-  %4 = sext i16 %i.e to i32
-  %5 = sext i16 %i.c to i32
-  %6 = mul nsw i32 %4, %5
-  %7 = lshr i32 %6, 16
-  %8 = trunc nuw i32 %7 to i16
+  %4 = tail call range(i16 -16384, 16385) i16 @llvm.smulh.i16(i16 %i.e, i16 %i.c)
   %i.f = getelementptr inbounds [2 x i8], ptr %0, i64 %i.a
-  store i16 %8, ptr %i.f, align 2
+  store i16 %4, ptr %i.f, align 2
   ret void
 }
 
@@ -254,13 +246,9 @@ bb.a:
   %i.c = load i32, ptr %i.b, align 4
   %i.d = getelementptr inbounds [4 x i8], ptr %2, i64 %i.a
   %i.e = load i32, ptr %i.d, align 4
-  %4 = sext i32 %i.e to i64
-  %5 = sext i32 %i.c to i64
-  %6 = mul nsw i64 %4, %5
-  %7 = lshr i64 %6, 32
-  %8 = trunc nuw i64 %7 to i32
+  %4 = tail call range(i32 -1073741824, 1073741825) i32 @llvm.smulh.i32(i32 %i.e, i32 %i.c)
   %i.f = getelementptr inbounds [4 x i8], ptr %0, i64 %i.a
-  store i32 %8, ptr %i.f, align 4
+  store i32 %4, ptr %i.f, align 4
   ret void
 }
 
@@ -279,13 +267,9 @@ bb.a:
   %i.c = load i64, ptr %i.b, align 8
   %i.d = getelementptr inbounds [8 x i8], ptr %2, i64 %i.a
   %i.e = load i64, ptr %i.d, align 8
-  %4 = sext i64 %i.c to i128
-  %5 = sext i64 %i.e to i128
-  %6 = mul nsw i128 %5, %4
-  %7 = lshr i128 %6, 64
-  %8 = trunc nuw i128 %7 to i64
+  %4 = tail call noundef i64 @llvm.smulh.i64(i64 %i.e, i64 %i.c)
   %i.f = getelementptr inbounds [8 x i8], ptr %0, i64 %i.a
-  store i64 %8, ptr %i.f, align 8
+  store i64 %4, ptr %i.f, align 8
   ret void
 }
 
@@ -304,13 +288,9 @@ bb.a:
   %i.c = load i8, ptr %i.b, align 1
   %i.d = getelementptr inbounds i8, ptr %2, i64 %i.a
   %i.e = load i8, ptr %i.d, align 1
-  %4 = zext i8 %i.e to i16
-  %5 = zext i8 %i.c to i16
-  %6 = mul nuw i16 %4, %5
-  %7 = lshr i16 %6, 8
-  %8 = trunc nuw i16 %7 to i8
+  %4 = tail call range(i8 0, -1) i8 @llvm.umulh.i8(i8 %i.e, i8 %i.c)
   %i.f = getelementptr inbounds i8, ptr %0, i64 %i.a
-  store i8 %8, ptr %i.f, align 1
+  store i8 %4, ptr %i.f, align 1
   ret void
 }
 
@@ -329,13 +309,9 @@ bb.a:
   %i.c = load i16, ptr %i.b, align 2
   %i.d = getelementptr inbounds [2 x i8], ptr %2, i64 %i.a
   %i.e = load i16, ptr %i.d, align 2
-  %4 = zext i16 %i.e to i32
-  %5 = zext i16 %i.c to i32
-  %6 = mul nuw i32 %4, %5
-  %7 = lshr i32 %6, 16
-  %8 = trunc nuw i32 %7 to i16
+  %4 = tail call range(i16 0, -1) i16 @llvm.umulh.i16(i16 %i.e, i16 %i.c)
   %i.f = getelementptr inbounds [2 x i8], ptr %0, i64 %i.a
-  store i16 %8, ptr %i.f, align 2
+  store i16 %4, ptr %i.f, align 2
   ret void
 }
 
@@ -354,13 +330,9 @@ bb.a:
   %i.c = load i32, ptr %i.b, align 4
   %i.d = getelementptr inbounds [4 x i8], ptr %2, i64 %i.a
   %i.e = load i32, ptr %i.d, align 4
-  %4 = zext i32 %i.e to i64
-  %5 = zext i32 %i.c to i64
-  %6 = mul nuw i64 %4, %5
-  %7 = lshr i64 %6, 32
-  %8 = trunc nuw i64 %7 to i32
+  %4 = tail call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %i.e, i32 %i.c)
   %i.f = getelementptr inbounds [4 x i8], ptr %0, i64 %i.a
-  store i32 %8, ptr %i.f, align 4
+  store i32 %4, ptr %i.f, align 4
   ret void
 }
 
@@ -379,13 +351,9 @@ bb.a:
   %i.c = load i64, ptr %i.b, align 8
   %i.d = getelementptr inbounds [8 x i8], ptr %2, i64 %i.a
   %i.e = load i64, ptr %i.d, align 8
-  %4 = zext i64 %i.e to i128
-  %5 = zext i64 %i.c to i128
-  %6 = mul nuw i128 %4, %5
-  %7 = lshr i128 %6, 64
-  %8 = trunc nuw i128 %7 to i64
+  %4 = tail call range(i64 0, -1) i64 @llvm.umulh.i64(i64 %i.c, i64 %i.e)
   %i.f = getelementptr inbounds [8 x i8], ptr %0, i64 %i.a
-  store i64 %8, ptr %i.f, align 8
+  store i64 %4, ptr %i.f, align 8
   ret void
 }
 
@@ -479,14 +447,10 @@ bb.a:
   %i.c = load i64, ptr %i.b, align 8              ; 2 uses
   %i.d = getelementptr inbounds [8 x i8], ptr %2, i64 %i.a
   %i.e = load i64, ptr %i.d, align 8              ; 2 uses
-  %4 = zext i64 %i.e to i128
-  %5 = zext i64 %i.c to i128
-  %6 = mul nuw i128 %4, %5
-  %7 = lshr i128 %6, 64
-  %8 = trunc nuw i128 %7 to i64
+  %4 = tail call i64 @llvm.umulh.i64(i64 %i.c, i64 %i.e)
   %i.f = icmp slt i64 %i.e, 0
   %i.g = select i1 %i.f, i64 %i.c, i64 0
-  %i.h = sub i64 %8, %i.g
+  %i.h = sub i64 %4, %i.g
   %i.i = getelementptr inbounds [8 x i8], ptr %0, i64 %i.a
   store i64 %i.h, ptr %i.i, align 8
   ret void
@@ -585,13 +549,9 @@ bb.a:
   %i.b = getelementptr inbounds i8, ptr %2, i64 %i.a
   %i.c = load i8, ptr %i.b, align 1
   %i.d = trunc i64 %1 to i8
-  %4 = sext i8 %i.c to i16
-  %5 = sext i8 %i.d to i16
-  %6 = mul nsw i16 %4, %5
-  %7 = lshr i16 %6, 8
-  %8 = trunc nuw i16 %7 to i8
+  %4 = tail call range(i8 -64, 65) i8 @llvm.smulh.i8(i8 %i.c, i8 %i.d)
   %i.e = getelementptr inbounds i8, ptr %0, i64 %i.a
-  store i8 %8, ptr %i.e, align 1
+  store i8 %4, ptr %i.e, align 1
   ret void
 }
 
@@ -609,13 +569,9 @@ bb.a:
   %i.b = getelementptr inbounds [2 x i8], ptr %2, i64 %i.a
   %i.c = load i16, ptr %i.b, align 2
   %i.d = trunc i64 %1 to i16
-  %4 = sext i16 %i.c to i32
-  %5 = sext i16 %i.d to i32
-  %6 = mul nsw i32 %4, %5
-  %7 = lshr i32 %6, 16
-  %8 = trunc nuw i32 %7 to i16
+  %4 = tail call range(i16 -16384, 16385) i16 @llvm.smulh.i16(i16 %i.c, i16 %i.d)
   %i.e = getelementptr inbounds [2 x i8], ptr %0, i64 %i.a
-  store i16 %8, ptr %i.e, align 2
+  store i16 %4, ptr %i.e, align 2
   ret void
 }
 
@@ -632,14 +588,10 @@ bb.a:
   %i.a = sext i32 %3 to i64                       ; 2 uses
   %i.b = getelementptr inbounds [4 x i8], ptr %2, i64 %i.a
   %i.c = load i32, ptr %i.b, align 4
-  %4 = sext i32 %i.c to i64
-  %sext = shl i64 %1, 32
-  %5 = ashr exact i64 %sext, 32
-  %6 = mul nsw i64 %5, %4
-  %7 = lshr i64 %6, 32
-  %8 = trunc nuw i64 %7 to i32
+  %4 = trunc i64 %1 to i32
+  %5 = tail call range(i32 -1073741824, 1073741825) i32 @llvm.smulh.i32(i32 %i.c, i32 %4)
   %i.d = getelementptr inbounds [4 x i8], ptr %0, i64 %i.a
-  store i32 %8, ptr %i.d, align 4
+  store i32 %5, ptr %i.d, align 4
   ret void
 }
 
@@ -656,13 +608,9 @@ bb.a:
   %i.a = sext i32 %3 to i64                       ; 2 uses
   %i.b = getelementptr inbounds [8 x i8], ptr %2, i64 %i.a
   %i.c = load i64, ptr %i.b, align 8
-  %4 = sext i64 %1 to i128
-  %5 = sext i64 %i.c to i128
-  %6 = mul nsw i128 %5, %4
-  %7 = lshr i128 %6, 64
-  %8 = trunc nuw i128 %7 to i64
+  %4 = tail call noundef i64 @llvm.smulh.i64(i64 %i.c, i64 %1)
   %i.d = getelementptr inbounds [8 x i8], ptr %0, i64 %i.a
-  store i64 %8, ptr %i.d, align 8
+  store i64 %4, ptr %i.d, align 8
   ret void
 }
 
@@ -679,14 +627,10 @@ bb.a:
   %i.a = sext i32 %3 to i64                       ; 2 uses
   %i.b = getelementptr inbounds i8, ptr %2, i64 %i.a
   %i.c = load i8, ptr %i.b, align 1
-  %4 = trunc i64 %1 to i16
-  %5 = zext i8 %i.c to i16
-  %6 = and i16 %4, 255
-  %7 = mul nuw i16 %6, %5
-  %8 = lshr i16 %7, 8
-  %9 = trunc nuw i16 %8 to i8
+  %4 = trunc i64 %1 to i8
+  %5 = tail call range(i8 0, -1) i8 @llvm.umulh.i8(i8 %i.c, i8 %4)
   %i.d = getelementptr inbounds i8, ptr %0, i64 %i.a
-  store i8 %9, ptr %i.d, align 1
+  store i8 %5, ptr %i.d, align 1
   ret void
 }
 
@@ -703,14 +647,10 @@ bb.a:
   %i.a = sext i32 %3 to i64                       ; 2 uses
   %i.b = getelementptr inbounds [2 x i8], ptr %2, i64 %i.a
   %i.c = load i16, ptr %i.b, align 2
-  %4 = trunc i64 %1 to i32
-  %5 = zext i16 %i.c to i32
-  %6 = and i32 %4, 65535
-  %7 = mul nuw i32 %6, %5
-  %8 = lshr i32 %7, 16
-  %9 = trunc nuw i32 %8 to i16
+  %4 = trunc i64 %1 to i16
+  %5 = tail call range(i16 0, -1) i16 @llvm.umulh.i16(i16 %i.c, i16 %4)
   %i.d = getelementptr inbounds [2 x i8], ptr %0, i64 %i.a
-  store i16 %9, ptr %i.d, align 2
+  store i16 %5, ptr %i.d, align 2
   ret void
 }
 
@@ -727,13 +667,10 @@ bb.a:
   %i.a = sext i32 %3 to i64                       ; 2 uses
   %i.b = getelementptr inbounds [4 x i8], ptr %2, i64 %i.a
   %i.c = load i32, ptr %i.b, align 4
-  %4 = zext i32 %i.c to i64
-  %5 = and i64 %1, 4294967295
-  %6 = mul nuw i64 %5, %4
-  %7 = lshr i64 %6, 32
-  %8 = trunc nuw i64 %7 to i32
+  %4 = trunc i64 %1 to i32
+  %5 = tail call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %i.c, i32 %4)
   %i.d = getelementptr inbounds [4 x i8], ptr %0, i64 %i.a
-  store i32 %8, ptr %i.d, align 4
+  store i32 %5, ptr %i.d, align 4
   ret void
 }
 
@@ -750,13 +687,9 @@ bb.a:
   %i.a = sext i32 %3 to i64                       ; 2 uses
   %i.b = getelementptr inbounds [8 x i8], ptr %2, i64 %i.a
   %i.c = load i64, ptr %i.b, align 8
-  %4 = zext i64 %i.c to i128
-  %5 = zext i64 %1 to i128
-  %6 = mul nuw i128 %4, %5
-  %7 = lshr i128 %6, 64
-  %8 = trunc nuw i128 %7 to i64
+  %4 = tail call range(i64 0, -1) i64 @llvm.umulh.i64(i64 %1, i64 %i.c)
   %i.d = getelementptr inbounds [8 x i8], ptr %0, i64 %i.a
-  store i64 %8, ptr %i.d, align 8
+  store i64 %4, ptr %i.d, align 8
   ret void
 }
 
@@ -844,14 +777,10 @@ bb.a:
   %i.a = sext i32 %3 to i64                       ; 2 uses
   %i.b = getelementptr inbounds [8 x i8], ptr %2, i64 %i.a
   %i.c = load i64, ptr %i.b, align 8              ; 2 uses
-  %4 = zext i64 %i.c to i128
-  %5 = zext i64 %1 to i128
-  %6 = mul nuw i128 %4, %5
-  %7 = lshr i128 %6, 64
-  %8 = trunc nuw i128 %7 to i64
+  %4 = tail call i64 @llvm.umulh.i64(i64 %1, i64 %i.c)
   %i.d = icmp slt i64 %i.c, 0
   %i.e = select i1 %i.d, i64 %1, i64 0
-  %i.f = sub i64 %8, %i.e
+  %i.f = sub i64 %4, %i.e
   %i.g = getelementptr inbounds [8 x i8], ptr %0, i64 %i.a
   store i64 %i.f, ptr %i.g, align 8
   ret void
@@ -1254,7 +1183,31 @@ declare i64 @llvm.smax.i64(i64, i64) #15
 declare i64 @llvm.usub.sat.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.smulh.i8(i8, i8) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.smulh.i16(i16, i16) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smulh.i32(i32, i32) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.umulh.i8(i8, i8) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.umulh.i16(i16, i16) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.fshl.i64(i64, i64, i64) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smulh.i64(i64, i64) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1

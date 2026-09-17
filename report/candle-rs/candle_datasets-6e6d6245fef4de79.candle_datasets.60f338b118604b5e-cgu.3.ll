@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %bb.k, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = trunc nuw i64 %1 to i32
+  %i.c = trunc nuw i64 %1 to i32                  ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
   %i.d = getelementptr inbounds nuw i8, ptr %.val1, i64 16 ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.val1, i64 336 ; 3 uses
@@ -268,12 +268,9 @@ _RINvYNtNtNtCsVG4f6i5f9f_4rand4rngs6thread9ThreadRngNtNtB9_3rng3Rng6randommECs8k
   %i.ae = load i32, ptr %i.ad, align 4, !alias.scope !205, !noalias !204, !noundef !5
   %i.af = add nuw nsw i64 %i.ac, 1
   store i64 %i.af, ptr %i.e, align 16, !alias.scope !205, !noalias !204
-  %3 = zext i32 %i.ae to i64
-  %4 = mul nuw i64 %1, %3
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32
+  %3 = tail call i32 @llvm.umulh.i32(i32 %i.ae, i32 %i.c)
   %i.ag = xor i32 %i.t, -1
-  %.not9.i.i.i.i = icmp ult i32 %i.ag, %6
+  %.not9.i.i.i.i = icmp ugt i32 %3, %i.ag
   %i.ah = zext i1 %.not9.i.i.i.i to i64
   %i.ai = add nuw nsw i64 %i.s, %i.ah
   br label %_RNvMNtCsf3Ta7LF998c_4core6resultINtB2_6ResultjNtNtNtCsVG4f6i5f9f_4rand5distr7uniform5ErrorE6unwrapCs8k3UfHgJ3Xe_15candle_datasets.exit
@@ -351,7 +348,7 @@ _RINvYNtNtNtCsVG4f6i5f9f_4rand4rngs6thread9ThreadRngNtNtB9_3rng3Rng6randomyECs8k
   %i.bi = phi i64 [ %i.an, %bb.m ], [ 2, %_RNvMs_NtCsaVVYlBCAE9B_9rand_core5blockINtB4_8BlockRngINtNtNtCsVG4f6i5f9f_4rand4rngs9reseeding13ReseedingCoreNtNtCscHeDkCj8TjV_11rand_chacha6chacha12ChaCha12CoreNtNtB6_2os5OsRngEE16generate_and_setCs8k3UfHgJ3Xe_15candle_datasets.exit8.i.i.i10.i.i.i.i ], [ 1, %_RNvMs_NtCsaVVYlBCAE9B_9rand_core5blockINtB4_8BlockRngINtNtNtCsVG4f6i5f9f_4rand4rngs9reseeding13ReseedingCoreNtNtCscHeDkCj8TjV_11rand_chacha6chacha12ChaCha12CoreNtNtB6_2os5OsRngEE16generate_and_setCs8k3UfHgJ3Xe_15candle_datasets.exit.i.i.i12.i.i.i.i ] ; 4 uses
   %.sroa.0.0.i.i.i11.i.i.i.i = phi i64 [ %i.ap, %bb.m ], [ %i.bh, %_RNvMs_NtCsaVVYlBCAE9B_9rand_core5blockINtB4_8BlockRngINtNtNtCsVG4f6i5f9f_4rand4rngs9reseeding13ReseedingCoreNtNtCscHeDkCj8TjV_11rand_chacha6chacha12ChaCha12CoreNtNtB6_2os5OsRngEE16generate_and_setCs8k3UfHgJ3Xe_15candle_datasets.exit8.i.i.i10.i.i.i.i ], [ %i.bb, %_RNvMs_NtCsaVVYlBCAE9B_9rand_core5blockINtB4_8BlockRngINtNtNtCsVG4f6i5f9f_4rand4rngs9reseeding13ReseedingCoreNtNtCscHeDkCj8TjV_11rand_chacha6chacha12ChaCha12CoreNtNtB6_2os5OsRngEE16generate_and_setCs8k3UfHgJ3Xe_15candle_datasets.exit.i.i.i12.i.i.i.i ]
   %i.bj = zext i64 %.sroa.0.0.i.i.i11.i.i.i.i to i128
-  %i.bk = zext i64 %1 to i128                     ; 2 uses
+  %i.bk = zext i64 %1 to i128
   %i.bl = mul nuw i128 %i.bj, %i.bk               ; 2 uses
   %i.bm = lshr i128 %i.bl, 64
   %i.bn = trunc nuw i128 %i.bm to i64             ; 2 uses
@@ -427,12 +424,9 @@ _RNvMs_NtCsaVVYlBCAE9B_9rand_core5blockINtB4_8BlockRngINtNtNtCsVG4f6i5f9f_4rand4
 
 _RINvYNtNtNtCsVG4f6i5f9f_4rand4rngs6thread9ThreadRngNtNtB9_3rng3Rng6randomyECs8k3UfHgJ3Xe_15candle_datasets.exit18.i.i.i.i: ; preds = %_RNvMs_NtCsaVVYlBCAE9B_9rand_core5blockINtB4_8BlockRngINtNtNtCsVG4f6i5f9f_4rand4rngs9reseeding13ReseedingCoreNtNtCscHeDkCj8TjV_11rand_chacha6chacha12ChaCha12CoreNtNtB6_2os5OsRngEE16generate_and_setCs8k3UfHgJ3Xe_15candle_datasets.exit8.i.i.i15.i.i.i.i, %_RNvMs_NtCsaVVYlBCAE9B_9rand_core5blockINtB4_8BlockRngINtNtNtCsVG4f6i5f9f_4rand4rngs9reseeding13ReseedingCoreNtNtCscHeDkCj8TjV_11rand_chacha6chacha12ChaCha12CoreNtNtB6_2os5OsRngEE16generate_and_setCs8k3UfHgJ3Xe_15candle_datasets.exit.i.i.i17.i.i.i.i, %bb.v
   %.sroa.0.0.i.i.i16.i.i.i.i = phi i64 [ %i.bu, %bb.v ], [ %i.cm, %_RNvMs_NtCsaVVYlBCAE9B_9rand_core5blockINtB4_8BlockRngINtNtNtCsVG4f6i5f9f_4rand4rngs9reseeding13ReseedingCoreNtNtCscHeDkCj8TjV_11rand_chacha6chacha12ChaCha12CoreNtNtB6_2os5OsRngEE16generate_and_setCs8k3UfHgJ3Xe_15candle_datasets.exit8.i.i.i15.i.i.i.i ], [ %i.cg, %_RNvMs_NtCsaVVYlBCAE9B_9rand_core5blockINtB4_8BlockRngINtNtNtCsVG4f6i5f9f_4rand4rngs9reseeding13ReseedingCoreNtNtCscHeDkCj8TjV_11rand_chacha6chacha12ChaCha12CoreNtNtB6_2os5OsRngEE16generate_and_setCs8k3UfHgJ3Xe_15candle_datasets.exit.i.i.i17.i.i.i.i ]
-  %7 = zext i64 %.sroa.0.0.i.i.i16.i.i.i.i to i128
-  %8 = mul nuw i128 %7, %i.bk
-  %9 = lshr i128 %8, 64
-  %10 = trunc nuw i128 %9 to i64
+  %4 = tail call i64 @llvm.umulh.i64(i64 %.sroa.0.0.i.i.i16.i.i.i.i, i64 %1)
   %i.cn = xor i64 %i.bo, -1
-  %.not6.i.i.i.i = icmp ult i64 %i.cn, %10
+  %.not6.i.i.i.i = icmp ugt i64 %4, %i.cn
   %i.co = zext i1 %.not6.i.i.i.i to i64
   %i.cp = add nuw i64 %i.co, %i.bn
   br label %_RNvMNtCsf3Ta7LF998c_4core6resultINtB2_6ResultjNtNtNtCsVG4f6i5f9f_4rand5distr7uniform5ErrorE6unwrapCs8k3UfHgJ3Xe_15candle_datasets.exit
@@ -486,7 +480,7 @@ _RINvYQNtNtNtCsVG4f6i5f9f_4rand4rngs6thread9ThreadRngNtNtBa_3rng3Rng6randommECs8
   %i.o = add nuw nsw i64 %i.l, 1
   store i64 %i.o, ptr %i.d, align 16, !alias.scope !246, !noalias !245
   %i.p = zext i32 %i.n to i64
-  %i.q = zext i32 %1 to i64                       ; 2 uses
+  %i.q = zext i32 %1 to i64
   %i.r = mul nuw i64 %i.p, %i.q                   ; 2 uses
   %i.s = lshr i64 %i.r, 32                        ; 2 uses
   %i.t = trunc i64 %i.r to i32                    ; 2 uses
@@ -526,12 +520,9 @@ _RINvYQNtNtNtCsVG4f6i5f9f_4rand4rngs6thread9ThreadRngNtNtBa_3rng3Rng6randommECs8
   %i.ai = load i32, ptr %i.ah, align 4, !alias.scope !250, !noalias !249, !noundef !5
   %i.aj = add nuw nsw i64 %i.ag, 1
   store i64 %i.aj, ptr %i.y, align 16, !alias.scope !250, !noalias !249
-  %3 = zext i32 %i.ai to i64
-  %4 = mul nuw i64 %3, %i.q
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32
+  %3 = tail call i32 @llvm.umulh.i32(i32 %i.ai, i32 %1)
   %i.ak = xor i32 %i.t, -1
-  %.not9.i.i.i = icmp ult i32 %i.ak, %6
+  %.not9.i.i.i = icmp ugt i32 %3, %i.ak
   %i.al = zext i1 %.not9.i.i.i to i64
   %i.am = add nuw nsw i64 %i.s, %i.al
   br label %_RNvMNtCsf3Ta7LF998c_4core6resultINtB2_6ResultmNtNtNtCsVG4f6i5f9f_4rand5distr7uniform5ErrorE6unwrapCs8k3UfHgJ3Xe_15candle_datasets.exit
@@ -933,6 +924,12 @@ declare noundef zeroext i1 @_RNvMs6_NtNtCsf3Ta7LF998c_4core3fmt8buildersNtB5_9De
 
 ; Function Attrs: nonlazybind uwtable
 declare noundef zeroext i1 @_RNvMsa_NtCsf3Ta7LF998c_4core3fmtNtB5_9Formatter3pad(ptr noalias nofree noundef align 8 dereferenceable(24), ptr noalias nofree noundef nonnull readonly captures(address, read_provenance), i64 noundef) unnamed_addr #0
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #17

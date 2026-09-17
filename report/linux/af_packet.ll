@@ -204,11 +204,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %i.l = tail call i32 @__skb_get_hash_symmetric_net(ptr noundef null, ptr noundef %.052) #20
-  %4 = zext i32 %i.l to i64
-  %5 = zext i32 %i.d to i64
-  %6 = mul nuw i64 %4, %5
-  %7 = lshr i64 %6, 32
-  %8 = trunc nuw i64 %7 to i32
+  %4 = tail call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %i.l, i32 range(i32 1, 0) %i.d)
   br label %fanout_demux_rnd.exit
 
 bb.g:                                             ; preds = %bb.e
@@ -329,7 +325,7 @@ fanout_demux_bpf.exit:                            ; preds = %bb.r, %bb.s
   br label %fanout_demux_rnd.exit
 
 fanout_demux_rnd.exit:                            ; preds = %bb.o, %bb.q, %bb.i, %fanout_demux_bpf.exit, %bb.j, %bb.h, %bb.g, %bb.f
-  %.053 = phi i32 [ %8, %bb.f ], [ %i.p, %bb.g ], [ %i.r, %bb.h ], [ %.0.i60, %fanout_demux_bpf.exit ], [ %i.v, %bb.j ], [ %.050.i, %bb.o ], [ %i.s, %bb.i ], [ 0, %bb.q ] ; 2 uses
+  %.053 = phi i32 [ %4, %bb.f ], [ %i.p, %bb.g ], [ %i.r, %bb.h ], [ %.0.i60, %fanout_demux_bpf.exit ], [ %i.v, %bb.j ], [ %.050.i, %bb.o ], [ %i.s, %bb.i ], [ 0, %bb.q ] ; 2 uses
   %.val57 = load i8, ptr %i.h, align 1
   %i.az = and i8 %.val57, 16
   %.not84 = icmp eq i8 %i.az, 0
@@ -730,6 +726,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #6

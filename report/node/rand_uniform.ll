@@ -9,7 +9,7 @@ target triple = "x86_64-pc-linux-gnu"
 define dso_local i32 @ossl_rand_uniform_uint32(ptr noundef %0, i32 noundef %1, ptr nofree noundef writeonly captures(none) %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 24 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   switch i32 %1, label %bb.c [
     i32 0, label %bb.b
     i32 1, label %.loopexit
@@ -20,7 +20,7 @@ bb.b:                                             ; preds = %bb.a
   br label %.loopexit
 
 bb.c:                                             ; preds = %bb.a
-  %i.b = call i32 @RAND_bytes_ex(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4, i32 noundef 0) #3
+  %i.b = call i32 @RAND_bytes_ex(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4, i32 noundef 0) #4
   %i.c = icmp slt i32 %i.b, 1
   br i1 %i.c, label %bb.d, label %bb.e
 
@@ -29,7 +29,7 @@ bb.d:                                             ; preds = %bb.c
   br label %.loopexit
 
 bb.e:                                             ; preds = %bb.c
-  %i.d = zext i32 %1 to i64                       ; 11 uses
+  %i.d = zext i32 %1 to i64                       ; 10 uses
   %i.e = load i32, ptr %i.a, align 4, !tbaa !10
   %i.f = zext i32 %i.e to i64
   %i.g = mul nuw i64 %i.f, %i.d                   ; 2 uses
@@ -41,12 +41,12 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not31, label %.preheader.preheader, label %.loopexit, !prof !12
 
 .preheader.preheader:                             ; preds = %bb.e
-  %i.l = call i32 @RAND_bytes_ex(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4, i32 noundef 0) #3
+  %i.l = call i32 @RAND_bytes_ex(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4, i32 noundef 0) #4
   %i.m = icmp slt i32 %i.l, 1
   br i1 %i.m, label %bb.w, label %bb.x
 
 .preheader.1:                                     ; preds = %bb.z
-  %i.n = call i32 @RAND_bytes_ex(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4, i32 noundef 0) #3
+  %i.n = call i32 @RAND_bytes_ex(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4, i32 noundef 0) #4
   %i.o = icmp slt i32 %i.n, 1
   br i1 %i.o, label %bb.w, label %bb.f
 
@@ -66,7 +66,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not32.1, label %.preheader.2, label %.loopexit, !prof !12
 
 .preheader.2:                                     ; preds = %bb.g
-  %i.x = call i32 @RAND_bytes_ex(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4, i32 noundef 0) #3
+  %i.x = call i32 @RAND_bytes_ex(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4, i32 noundef 0) #4
   %i.y = icmp slt i32 %i.x, 1
   br i1 %i.y, label %bb.w, label %bb.h
 
@@ -86,7 +86,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not32.2, label %.preheader.3, label %.loopexit, !prof !12
 
 .preheader.3:                                     ; preds = %bb.i
-  %i.ah = call i32 @RAND_bytes_ex(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4, i32 noundef 0) #3
+  %i.ah = call i32 @RAND_bytes_ex(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4, i32 noundef 0) #4
   %i.ai = icmp slt i32 %i.ah, 1
   br i1 %i.ai, label %bb.w, label %bb.j
 
@@ -106,7 +106,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not32.3, label %.preheader.4, label %.loopexit, !prof !12
 
 .preheader.4:                                     ; preds = %bb.k
-  %i.ar = call i32 @RAND_bytes_ex(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4, i32 noundef 0) #3
+  %i.ar = call i32 @RAND_bytes_ex(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4, i32 noundef 0) #4
   %i.as = icmp slt i32 %i.ar, 1
   br i1 %i.as, label %bb.w, label %bb.l
 
@@ -126,7 +126,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not32.4, label %.preheader.5, label %.loopexit, !prof !12
 
 .preheader.5:                                     ; preds = %bb.m
-  %i.bb = call i32 @RAND_bytes_ex(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4, i32 noundef 0) #3
+  %i.bb = call i32 @RAND_bytes_ex(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4, i32 noundef 0) #4
   %i.bc = icmp slt i32 %i.bb, 1
   br i1 %i.bc, label %bb.w, label %bb.n
 
@@ -146,7 +146,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not32.5, label %.preheader.6, label %.loopexit, !prof !12
 
 .preheader.6:                                     ; preds = %bb.o
-  %i.bl = call i32 @RAND_bytes_ex(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4, i32 noundef 0) #3
+  %i.bl = call i32 @RAND_bytes_ex(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4, i32 noundef 0) #4
   %i.bm = icmp slt i32 %i.bl, 1
   br i1 %i.bm, label %bb.w, label %bb.p
 
@@ -166,7 +166,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not32.6, label %.preheader.7, label %.loopexit, !prof !12
 
 .preheader.7:                                     ; preds = %bb.q
-  %i.bv = call i32 @RAND_bytes_ex(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4, i32 noundef 0) #3
+  %i.bv = call i32 @RAND_bytes_ex(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4, i32 noundef 0) #4
   %i.bw = icmp slt i32 %i.bv, 1
   br i1 %i.bw, label %bb.w, label %bb.r
 
@@ -186,7 +186,7 @@ bb.s:                                             ; preds = %bb.r
   br i1 %.not32.7, label %.preheader.8, label %.loopexit, !prof !12
 
 .preheader.8:                                     ; preds = %bb.s
-  %i.cf = call i32 @RAND_bytes_ex(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4, i32 noundef 0) #3
+  %i.cf = call i32 @RAND_bytes_ex(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4, i32 noundef 0) #4
   %i.cg = icmp slt i32 %i.cf, 1
   br i1 %i.cg, label %bb.w, label %bb.t
 
@@ -206,18 +206,15 @@ bb.u:                                             ; preds = %bb.t
   br i1 %.not32.8, label %.preheader.9, label %.loopexit, !prof !12
 
 .preheader.9:                                     ; preds = %bb.u
-  %i.cp = call i32 @RAND_bytes_ex(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4, i32 noundef 0) #3
+  %i.cp = call i32 @RAND_bytes_ex(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4, i32 noundef 0) #4
   %i.cq = icmp slt i32 %i.cp, 1
   br i1 %i.cq, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %.preheader.9
   %i.cr = trunc i64 %i.ck to i32
   %i.cs = load i32, ptr %i.a, align 4, !tbaa !10
-  %3 = zext i32 %i.cs to i64
-  %4 = mul nuw i64 %3, %i.d
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32
-  %i.ct = xor i32 %6, -1
+  %3 = call i32 @llvm.umulh.i32(i32 %i.cs, i32 %1)
+  %i.ct = xor i32 %3, -1
   %i.cu = icmp ult i32 %i.ct, %i.cr
   br i1 %i.cu, label %bb.y, label %.loopexit
 
@@ -245,7 +242,7 @@ bb.z:                                             ; preds = %bb.x
 
 .loopexit:                                        ; preds = %bb.v, %bb.z, %bb.g, %bb.i, %bb.k, %bb.m, %bb.o, %bb.q, %bb.s, %bb.u, %bb.e, %bb.a, %bb.y, %bb.w, %bb.d, %bb.b
   %.027 = phi i32 [ 0, %bb.b ], [ 0, %bb.d ], [ 0, %bb.a ], [ 0, %bb.w ], [ %i.dc, %bb.y ], [ %i.i, %bb.e ], [ %i.i, %bb.z ], [ %i.i, %bb.g ], [ %i.i, %bb.u ], [ %i.i, %bb.s ], [ %i.i, %bb.q ], [ %i.i, %bb.o ], [ %i.i, %bb.m ], [ %i.i, %bb.k ], [ %i.i, %bb.i ], [ %i.i, %bb.v ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #3
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   ret i32 %.027
 }
 
@@ -278,10 +275,14 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   ret i32 %.0
 }
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #3
+
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { nounwind }
+attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}

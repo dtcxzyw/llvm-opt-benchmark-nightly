@@ -8,12 +8,8 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define dso_local noundef i32 @_ZN2v84base4bits15SignedMulHigh32Eii(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = sext i32 %0 to i64
-  %3 = sext i32 %1 to i64
-  %4 = mul nsw i64 %3, %2
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32
-  ret i32 %6
+  %2 = tail call i32 @llvm.smulh.i32(i32 %0, i32 %1)
+  ret i32 %2
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
@@ -41,34 +37,22 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define dso_local noundef range(i64 0, -1) i64 @_ZN2v84base4bits17UnsignedMulHigh64Emm(i64 noundef %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = zext i64 %0 to i128
-  %3 = zext i64 %1 to i128
-  %4 = mul nuw i128 %3, %2
-  %5 = lshr i128 %4, 64
-  %6 = trunc nuw i128 %5 to i64
-  ret i64 %6
+  %2 = tail call i64 @llvm.umulh.i64(i64 %1, i64 %0)
+  ret i64 %2
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define dso_local noundef range(i32 0, -1) i32 @_ZN2v84base4bits17UnsignedMulHigh32Ejj(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = zext i32 %0 to i64
-  %3 = zext i32 %1 to i64
-  %4 = mul nuw i64 %3, %2
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32
-  ret i32 %6
+  %2 = tail call i32 @llvm.umulh.i32(i32 %0, i32 %1)
+  ret i32 %2
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define dso_local noundef i32 @_ZN2v84base4bits21SignedMulHighAndAdd32Eiii(i32 noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = sext i32 %0 to i64
-  %4 = sext i32 %1 to i64
-  %5 = mul nsw i64 %4, %3
-  %6 = lshr i64 %5, 32
-  %7 = trunc nuw i64 %6 to i32
-  %i.a = add i32 %2, %7
+  %3 = tail call noundef i32 @llvm.smulh.i32(i32 %0, i32 %1)
+  %i.a = add i32 %2, %3
   ret i32 %i.a
 }
 
@@ -196,7 +180,17 @@ bb.e:                                             ; preds = %bb.c, %bb.b, %bb.d
   ret i64 %.0
 }
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smulh.i32(i32, i32) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #1
+
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}

@@ -202,19 +202,14 @@ bb.e:                                             ; preds = %bb.d
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 92 ; 5 uses
   %i.i = load i32, ptr %i.h, align 4              ; 2 uses
   %i.j = tail call ptr @lv_obj_get_style_prop(ptr noundef nonnull %1, i32 noundef 0, i8 noundef zeroext 112) #8
-  %i.k = ptrtoint ptr %i.j to i64                 ; 2 uses
-  %i.l = trunc i64 %i.k to i8
+  %i.k = ptrtoint ptr %i.j to i64
+  %i.l = trunc i64 %i.k to i8                     ; 2 uses
   %i.m = icmp ult i8 %i.l, -3
   br i1 %i.m, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %11 = trunc i64 %i.k to i16
-  %12 = and i16 %11, 255
-  %13 = zext i8 %i.g to i16
-  %14 = mul nuw i16 %12, %13
-  %15 = lshr i16 %14, 8
-  %16 = trunc nuw i16 %15 to i8
-  store i8 %16, ptr %i.f, align 1, !tbaa !68
+  %11 = tail call i8 @llvm.umulh.i8(i8 %i.g, i8 %i.l)
+  store i8 %11, ptr %i.f, align 1, !tbaa !68
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
@@ -615,6 +610,9 @@ declare void @lv_obj_get_transformed_area(ptr noundef, ptr noundef, i32 noundef)
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.umulh.i8(i8, i8) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #7

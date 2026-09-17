@@ -205,14 +205,13 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.u, %.lr.ph.i
-  %.sroa.08.020.i = phi i64 [ 0, %.lr.ph.i ], [ %i.av, %bb.u ] ; 5 uses
-  %i.av = add nuw nsw i64 %.sroa.08.020.i, 1      ; 5 uses
+  %.sroa.08.020.i = phi i64 [ 0, %.lr.ph.i ], [ %i.av, %bb.u ] ; 4 uses
+  %i.av = add nuw nsw i64 %.sroa.08.020.i, 1      ; 6 uses
   %i.aw = icmp samesign ugt i64 %.sroa.08.020.i, 4294967294
   br i1 %i.aw, label %bb.m, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ax = trunc nuw i64 %.sroa.08.020.i to i32
-  %.neg18.i = xor i32 %i.ax, -1
+  %i.ax = trunc nuw i64 %i.av to i32              ; 2 uses
   %i.ay = load i32, ptr %i.a, align 4, !alias.scope !429, !noalias !430, !noundef !4 ; 2 uses
   %i.az = zext nneg i32 %i.ay to i64
   %i.ba = icmp ugt i32 %i.ay, 63
@@ -233,7 +232,8 @@ _RINvYNtNtNtCs7g3JyErIm42_4rand4rngs3std6StdRngNtNtB9_3rng6RngExt6randommECs4jku
   %i.bf = mul nuw i64 %i.av, %i.be                ; 2 uses
   %i.bg = lshr i64 %i.bf, 32                      ; 2 uses
   %i.bh = trunc i64 %i.bf to i32                  ; 2 uses
-  %i.bi = icmp ult i32 %.neg18.i, %i.bh
+  %2 = sub i32 0, %i.ax
+  %i.bi = icmp ult i32 %2, %i.bh
   br i1 %i.bi, label %bb.k, label %_RINvYNtNtNtCs7g3JyErIm42_4rand4rngs3std6StdRngNtNtB9_3rng6RngExt12random_rangejINtNtNtCs6JMX4GRUq9U_4core3ops5range7RangeTojEECs4jkuqUqsG0h_8uu_shred.exit.i
 
 bb.k:                                             ; preds = %_RINvYNtNtNtCs7g3JyErIm42_4rand4rngs3std6StdRngNtNtB9_3rng6RngExt6randommECs4jkuqUqsG0h_8uu_shred.exit12.i.i.i.i.i.i
@@ -252,12 +252,9 @@ _RINvYNtNtNtCs7g3JyErIm42_4rand4rngs3std6StdRngNtNtB9_3rng6RngExt6randommECs4jku
   %i.bn = trunc nuw nsw i64 %.sroa.0.0.i.i.i.i13.i.i.i.i.i.i to i32
   %.sroa.6.0.extract.trunc.i.i.i.i.i.i14.i.i.i.i.i.i = add nuw nsw i32 %i.bn, 1
   store i32 %.sroa.6.0.extract.trunc.i.i.i.i.i.i14.i.i.i.i.i.i, ptr %i.a, align 4, !alias.scope !432, !noalias !430
-  %2 = zext i32 %i.bm to i64
-  %3 = mul nuw i64 %i.av, %2
-  %4 = lshr i64 %3, 32
-  %5 = trunc nuw i64 %4 to i32
+  %3 = tail call i32 @llvm.umulh.i32(i32 %i.bm, i32 %i.ax)
   %i.bo = xor i32 %i.bh, -1
-  %.not9.i.i.i.i.i.i = icmp ult i32 %i.bo, %5
+  %.not9.i.i.i.i.i.i = icmp ugt i32 %3, %i.bo
   %i.bp = zext i1 %.not9.i.i.i.i.i.i to i64
   %i.bq = add nuw nsw i64 %i.bg, %i.bp
   br label %_RINvYNtNtNtCs7g3JyErIm42_4rand4rngs3std6StdRngNtNtB9_3rng6RngExt12random_rangejINtNtNtCs6JMX4GRUq9U_4core3ops5range7RangeTojEECs4jkuqUqsG0h_8uu_shred.exit.i
@@ -297,7 +294,7 @@ _RINvYNtNtNtCs7g3JyErIm42_4rand4rngs3std6StdRngNtNtB9_3rng6RngExt6randomyECs4jku
   %i.ce = zext i32 %.sroa.02.017.i.i.i.i9.i.i.i.i.i.i to i64
   %i.cf = or disjoint i64 %i.cd, %i.ce
   %i.cg = zext i64 %i.cf to i128
-  %i.ch = zext nneg i64 %i.av to i128             ; 2 uses
+  %i.ch = zext nneg i64 %i.av to i128
   %i.ci = mul nuw nsw i128 %i.cg, %i.ch           ; 2 uses
   %i.cj = lshr i128 %i.ci, 64
   %i.ck = trunc nuw nsw i128 %i.cj to i64         ; 2 uses
@@ -339,12 +336,9 @@ _RINvYNtNtNtCs7g3JyErIm42_4rand4rngs3std6StdRngNtNtB9_3rng6RngExt6randomyECs4jku
   %i.cz = shl nuw i64 %i.cy, 32
   %i.da = zext i32 %.sroa.02.017.i.i.i.i14.i.i.i.i.i.i to i64
   %i.db = or disjoint i64 %i.cz, %i.da
-  %6 = zext i64 %i.db to i128
-  %7 = mul nuw nsw i128 %6, %i.ch
-  %8 = lshr i128 %7, 64
-  %9 = trunc nuw nsw i128 %8 to i64
+  %4 = tail call i64 @llvm.umulh.i64(i64 %i.db, i64 range(i64 1, 2305843009213693952) %i.av)
   %i.dc = xor i64 %i.cl, -1
-  %.not6.i.i.i.i.i.i = icmp samesign ult i64 %i.dc, %9
+  %.not6.i.i.i.i.i.i = icmp ugt i64 %4, %i.dc
   %i.dd = zext i1 %.not6.i.i.i.i.i.i to i64
   %i.de = add nuw nsw i64 %i.dd, %i.ck
   br label %_RINvYNtNtNtCs7g3JyErIm42_4rand4rngs3std6StdRngNtNtB9_3rng6RngExt12random_rangejINtNtNtCs6JMX4GRUq9U_4core3ops5range7RangeTojEECs4jkuqUqsG0h_8uu_shred.exit.i
@@ -400,7 +394,7 @@ bb.x:                                             ; preds = %.lr.ph25.i
   br i1 %i.dt, label %bb.ab, label %.thread.i.i.i, !prof !440
 
 .thread.i.i.i:                                    ; preds = %.preheader.i.i.i, %._crit_edge.i.i.i, %bb.x
-  %.sroa.03.010.i.i.i = phi i32 [ %i.eq, %._crit_edge.i.i.i ], [ 479001600, %bb.x ], [ %i.dk, %.preheader.i.i.i ] ; 2 uses
+  %.sroa.03.010.i.i.i = phi i32 [ %i.eq, %._crit_edge.i.i.i ], [ 479001600, %bb.x ], [ %i.dk, %.preheader.i.i.i ] ; 3 uses
   %.sroa.05.09.i.i.i = phi i8 [ %i.ds, %._crit_edge.i.i.i ], [ 10, %bb.x ], [ 0, %.preheader.i.i.i ]
   %i.du = load i32, ptr %i.a, align 4, !alias.scope !428, !noalias !441, !noundef !4 ; 2 uses
   %i.dv = zext nneg i32 %i.du to i64
@@ -419,7 +413,7 @@ _RINvYQNtNtNtCs7g3JyErIm42_4rand4rngs3std6StdRngNtNtBa_3rng6RngExt6randommECs4jk
   %.sroa.6.0.extract.trunc.i.i.i.i.i.i.i13.i.i.i.i.i.i.i = add nuw nsw i32 %i.dz, 1 ; 2 uses
   store i32 %.sroa.6.0.extract.trunc.i.i.i.i.i.i.i13.i.i.i.i.i.i.i, ptr %i.a, align 4, !alias.scope !442, !noalias !441
   %i.ea = zext i32 %i.dy to i64
-  %i.eb = zext i32 %.sroa.03.010.i.i.i to i64     ; 2 uses
+  %i.eb = zext i32 %.sroa.03.010.i.i.i to i64
   %i.ec = mul nuw i64 %i.ea, %i.eb                ; 2 uses
   %i.ed = lshr i64 %i.ec, 32                      ; 2 uses
   %i.ee = trunc i64 %i.ec to i32                  ; 2 uses
@@ -443,12 +437,9 @@ _RINvYQNtNtNtCs7g3JyErIm42_4rand4rngs3std6StdRngNtNtBa_3rng6RngExt6randommECs4jk
   %i.el = trunc nuw nsw i64 %.sroa.0.0.i.i.i.i.i15.i.i.i.i.i.i.i to i32
   %.sroa.6.0.extract.trunc.i.i.i.i.i.i.i16.i.i.i.i.i.i.i = add nuw nsw i32 %i.el, 1
   store i32 %.sroa.6.0.extract.trunc.i.i.i.i.i.i.i16.i.i.i.i.i.i.i, ptr %i.a, align 4, !alias.scope !443, !noalias !441
-  %10 = zext i32 %i.ek to i64
-  %11 = mul nuw i64 %10, %i.eb
-  %12 = lshr i64 %11, 32
-  %13 = trunc nuw i64 %12 to i32
+  %5 = tail call i32 @llvm.umulh.i32(i32 %i.ek, i32 %.sroa.03.010.i.i.i)
   %i.em = xor i32 %i.ee, -1
-  %.not9.i.i.i.i.i.i.i = icmp ult i32 %i.em, %13
+  %.not9.i.i.i.i.i.i.i = icmp ugt i32 %5, %i.em
   %i.en = zext i1 %.not9.i.i.i.i.i.i.i to i64
   %i.eo = add nuw nsw i64 %i.ed, %i.en
   br label %_RNCNvMNtNtCs7g3JyErIm42_4rand3seq18increasing_uniformINtB4_17IncreasingUniformQNtNtNtB8_4rngs3std6StdRngE10next_index0Cs4jkuqUqsG0h_8uu_shred.exit.i.i
@@ -849,6 +840,12 @@ declare void @_RNvMs6_NtCs7tKScEop1B6_5alloc2rcINtB5_2RcINtNtCs6JMX4GRUq9U_4core
 
 ; Function Attrs: nounwind nonlazybind uwtable
 declare { i64, ptr } @_RNvXsb_NtCs2vKOLqTMYjT_3std2fsNtB5_4FileNtNtNtCs6JMX4GRUq9U_4core2io5write5Write5write(ptr noalias nofree noundef align 4 dereferenceable(4), ptr noalias nofree noundef nonnull readonly captures(address, read_provenance), i64 noundef range(i64 0, -9223372036854775808)) unnamed_addr #0
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #18

@@ -205,16 +205,12 @@ bb.ba:                                            ; preds = %bb.ay
   %i.lx = getelementptr inbounds nuw i8, ptr @ff_sqrt_tab, i64 %i.lw
   %i.ly = load i8, ptr %i.lx, align 1, !tbaa !69  ; 2 uses
   %i.lz = zext i8 %i.ly to i32
-  %3 = zext nneg i32 %i.lt to i64
   %i.ma = zext i8 %i.ly to i64
   %i.mb = getelementptr inbounds nuw [4 x i8], ptr @ff_inverse, i64 %i.ma
   %i.mc = load i32, ptr %i.mb, align 4, !tbaa !61
-  %4 = zext i32 %i.mc to i64
-  %5 = mul nuw nsw i64 %3, %4
-  %6 = lshr i64 %5, 32
-  %7 = trunc nuw nsw i64 %6 to i32
+  %3 = tail call i32 @llvm.umulh.i32(i32 %i.lt, i32 %i.mc)
   %i.md = shl i32 %i.lz, %i.lr
-  %i.me = add i32 %i.md, %7
+  %i.me = add i32 %3, %i.md
   br label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba, %bb.az, %bb.ax, %bb.av
@@ -297,16 +293,12 @@ bb.bj:                                            ; preds = %bb.bh
   %i.nv = getelementptr inbounds nuw i8, ptr @ff_sqrt_tab, i64 %i.nu
   %i.nw = load i8, ptr %i.nv, align 1, !tbaa !69  ; 2 uses
   %i.nx = zext i8 %i.nw to i32
-  %8 = zext nneg i32 %i.nr to i64
   %i.ny = zext i8 %i.nw to i64
   %i.nz = getelementptr inbounds nuw [4 x i8], ptr @ff_inverse, i64 %i.ny
   %i.oa = load i32, ptr %i.nz, align 4, !tbaa !61
-  %9 = zext i32 %i.oa to i64
-  %10 = mul nuw nsw i64 %8, %9
-  %11 = lshr i64 %10, 32
-  %12 = trunc nuw nsw i64 %11 to i32
+  %4 = tail call i32 @llvm.umulh.i32(i32 %i.nr, i32 %i.oa)
   %i.ob = shl i32 %i.nx, %i.np
-  %i.oc = add i32 %i.ob, %12
+  %i.oc = add i32 %4, %i.ob
   br label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj, %bb.bi, %bb.bg, %bb.be
@@ -709,16 +701,12 @@ bb.cr:                                            ; preds = %bb.cp
   %i.yn = getelementptr inbounds nuw i8, ptr @ff_sqrt_tab, i64 %i.ym
   %i.yo = load i8, ptr %i.yn, align 1, !tbaa !69  ; 2 uses
   %i.yp = zext i8 %i.yo to i32
-  %13 = zext nneg i32 %i.yj to i64
   %i.yq = zext i8 %i.yo to i64
   %i.yr = getelementptr inbounds nuw [4 x i8], ptr @ff_inverse, i64 %i.yq
   %i.ys = load i32, ptr %i.yr, align 4, !tbaa !61
-  %14 = zext i32 %i.ys to i64
-  %15 = mul nuw nsw i64 %13, %14
-  %16 = lshr i64 %15, 32
-  %17 = trunc nuw nsw i64 %16 to i32
+  %5 = call i32 @llvm.umulh.i32(i32 %i.yj, i32 %i.ys)
   %i.yt = shl i32 %i.yp, %i.yh
-  %i.yu = add i32 %i.yt, %17
+  %i.yu = add i32 %5, %i.yt
   br label %bb.cs
 
 bb.cs:                                            ; preds = %bb.cr, %bb.cq, %bb.co, %bb.cm
@@ -801,16 +789,12 @@ bb.da:                                            ; preds = %bb.cy
   %i.aal = getelementptr inbounds nuw i8, ptr @ff_sqrt_tab, i64 %i.aak
   %i.aam = load i8, ptr %i.aal, align 1, !tbaa !69 ; 2 uses
   %i.aan = zext i8 %i.aam to i32
-  %18 = zext nneg i32 %i.aah to i64
   %i.aao = zext i8 %i.aam to i64
   %i.aap = getelementptr inbounds nuw [4 x i8], ptr @ff_inverse, i64 %i.aao
   %i.aaq = load i32, ptr %i.aap, align 4, !tbaa !61
-  %19 = zext i32 %i.aaq to i64
-  %20 = mul nuw nsw i64 %18, %19
-  %21 = lshr i64 %20, 32
-  %22 = trunc nuw nsw i64 %21 to i32
+  %6 = call i32 @llvm.umulh.i32(i32 %i.aah, i32 %i.aaq)
   %i.aar = shl i32 %i.aan, %i.aaf
-  %i.aas = add i32 %i.aar, %22
+  %i.aas = add i32 %6, %i.aar
   br label %bb.db
 
 bb.db:                                            ; preds = %bb.da, %bb.cz, %bb.cx, %bb.cv
@@ -1211,6 +1195,9 @@ declare i32 @llvm.smin.i32(i32, i32) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.ctpop.i32(i32) #12

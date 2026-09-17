@@ -205,16 +205,12 @@ bb.cn:                                            ; preds = %bb.cl
   %i.akg = getelementptr inbounds nuw i8, ptr @ff_sqrt_tab, i64 %i.akf
   %i.akh = load i8, ptr %i.akg, align 1, !tbaa !86 ; 2 uses
   %i.aki = zext i8 %i.akh to i32
-  %6 = zext nneg i32 %i.akc to i64
   %i.akj = zext i8 %i.akh to i64
   %i.akk = getelementptr inbounds nuw [4 x i8], ptr @ff_inverse, i64 %i.akj
   %i.akl = load i32, ptr %i.akk, align 4, !tbaa !87
-  %7 = zext i32 %i.akl to i64
-  %8 = mul nuw nsw i64 %6, %7
-  %9 = lshr i64 %8, 32
-  %10 = trunc nuw nsw i64 %9 to i32
+  %6 = call i32 @llvm.umulh.i32(i32 %i.akc, i32 %i.akl)
   %i.akm = shl i32 %i.aki, %i.aka
-  %i.akn = add i32 %i.akm, %10
+  %i.akn = add i32 %6, %i.akm
   br label %bb.co
 
 bb.co:                                            ; preds = %bb.cn, %bb.cm, %bb.ck, %bb.ci
@@ -297,16 +293,12 @@ bb.cw:                                            ; preds = %bb.cu
   %i.ame = getelementptr inbounds nuw i8, ptr @ff_sqrt_tab, i64 %i.amd
   %i.amf = load i8, ptr %i.ame, align 1, !tbaa !86 ; 2 uses
   %i.amg = zext i8 %i.amf to i32
-  %11 = zext nneg i32 %i.ama to i64
   %i.amh = zext i8 %i.amf to i64
   %i.ami = getelementptr inbounds nuw [4 x i8], ptr @ff_inverse, i64 %i.amh
   %i.amj = load i32, ptr %i.ami, align 4, !tbaa !87
-  %12 = zext i32 %i.amj to i64
-  %13 = mul nuw nsw i64 %11, %12
-  %14 = lshr i64 %13, 32
-  %15 = trunc nuw nsw i64 %14 to i32
+  %7 = call i32 @llvm.umulh.i32(i32 %i.ama, i32 %i.amj)
   %i.amk = shl i32 %i.amg, %i.aly
-  %i.aml = add i32 %i.amk, %15
+  %i.aml = add i32 %7, %i.amk
   br label %bb.cx
 
 bb.cx:                                            ; preds = %bb.cw, %bb.cv, %bb.ct, %bb.cr
@@ -707,6 +699,9 @@ declare i32 @llvm.smin.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.fshl.i32(i32, i32, i32) #6

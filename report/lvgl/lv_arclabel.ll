@@ -99,14 +99,10 @@ bb.c:                                             ; preds = %bb.b
   %.sroa.0.0.extract.trunc.i.i = trunc i64 %i.r to i24 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 101
   %i.t = load i8, ptr %i.s, align 1, !tbaa !43
-  %6 = zext i8 %i.t to i16
   %i.u = call ptr @lv_obj_get_style_prop(ptr noundef %i.l, i32 noundef 0, i8 noundef zeroext 84) #6
   %i.v = ptrtoint ptr %i.u to i64
-  %7 = trunc i64 %i.v to i16
-  %8 = and i16 %7, 255
-  %9 = mul nuw i16 %8, %6
-  %10 = lshr i16 %9, 8
-  %11 = trunc nuw i16 %10 to i8
+  %6 = trunc i64 %i.v to i8
+  %7 = call i8 @llvm.umulh.i8(i8 %i.t, i8 %6)
   %i.w = call ptr @lv_obj_get_style_prop(ptr noundef %i.l, i32 noundef 0, i8 noundef zeroext 102) #6
   %i.x = ptrtoint ptr %i.w to i64
   %.sroa.0.0.extract.trunc.i93.i = trunc i64 %i.x to i32
@@ -341,7 +337,7 @@ bb.v:                                             ; preds = %bb.t
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u
-  store i8 %11, ptr %i.bh, align 8, !tbaa !55
+  store i8 %7, ptr %i.bh, align 8, !tbaa !55
   %i.dv = load i32, ptr %i.ba, align 8, !tbaa !22
   %i.dw = icmp eq i32 %i.dv, 0
   %i.dx = mul i32 %i.cx, 10
@@ -743,6 +739,9 @@ declare i32 @lv_pct_to_px(i32 noundef, i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.umulh.i8(i8, i8) #5
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -205,13 +205,10 @@ hash_conntrack.exit.i.i:                          ; preds = %bb.f, %._crit_edge.
   %i.u = xor i64 %i.t, %i.s
   store i64 %i.u, ptr %i.k, align 8
   %i.v = call i64 @__siphash_unaligned(ptr noundef %i.i, i64 noundef 39, ptr noundef nonnull %4) #18
+  %5 = trunc i64 %i.v to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
   %i.w = load i32, ptr @nf_conntrack_htable_size, align 4
-  %5 = and i64 %i.v, 4294967295
-  %6 = zext i32 %i.w to i64
-  %7 = mul nuw i64 %5, %6
-  %8 = lshr i64 %7, 32                            ; 2 uses
-  %9 = trunc nuw i64 %8 to i32                    ; 2 uses
+  %6 = call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %5, i32 %i.w) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false), !annotation !19
   callbr void asm sideeffect "1:jmp ${2:l}\0A\09.pushsection __jump_table,  \22aw\22 \0A\09 .balign 8 \0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A.long 1b - . \0A\09.long ${2:l} - . \0A\09 .quad  ${0:c} + ${1:c} - . \0A\09.popsection \0A\09", "i,i,!i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @hash_conntrack_raw.___once_key, i1 false) #19
@@ -240,14 +237,11 @@ hash_conntrack.exit16.i.i:                        ; preds = %bb.i, %hash_conntra
   %i.aa = xor i64 %i.z, %i.y
   store i64 %i.aa, ptr %i.m, align 8
   %i.ab = call i64 @__siphash_unaligned(ptr noundef %i.l, i64 noundef 39, ptr noundef nonnull %3) #18
+  %7 = trunc i64 %i.ab to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #19
   %i.ac = load i32, ptr @nf_conntrack_htable_size, align 4
-  %10 = and i64 %i.ab, 4294967295
-  %11 = zext i32 %i.ac to i64
-  %12 = mul nuw i64 %10, %11
-  %13 = lshr i64 %12, 32                          ; 2 uses
-  %14 = trunc nuw i64 %13 to i32                  ; 2 uses
-  %i.ad = call fastcc zeroext i1 @nf_conntrack_double_lock(i32 noundef %9, i32 noundef %14, i32 noundef %.lcssa.i.i) #20, !srcloc !54
+  %8 = call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %7, i32 %i.ac) ; 2 uses
+  %i.ad = call fastcc zeroext i1 @nf_conntrack_double_lock(i32 noundef %6, i32 noundef %8, i32 noundef %.lcssa.i.i) #20, !srcloc !54
   br i1 %i.ad, label %bb.c, label %bb.j, !llvm.loop !53
 
 bb.j:                                             ; preds = %hash_conntrack.exit16.i.i
@@ -286,17 +280,17 @@ bb.l:                                             ; preds = %hlist_nulls_del_rcu
 clean_from_lists.exit.i.i:                        ; preds = %bb.l, %hlist_nulls_del_rcu.exit.i.i.i
   store volatile ptr inttoptr (i64 -2401263026318606046 to ptr), ptr %i.an, align 8
   call void @nf_ct_remove_expectations(ptr noundef %0) #18
-  %15 = and i64 %8, 1023
-  %16 = getelementptr [4 x i8], ptr @nf_conntrack_locks, i64 %15
-  call void @_raw_spin_unlock(ptr noundef %16) #18
-  %17 = xor i32 %14, %9
-  %18 = and i32 %17, 1023
-  %.not.i.i.i = icmp eq i32 %18, 0
+  %9 = and i32 %6, 1023                           ; 2 uses
+  %10 = and i32 %8, 1023                          ; 2 uses
+  %11 = zext nneg i32 %9 to i64
+  %12 = getelementptr [4 x i8], ptr @nf_conntrack_locks, i64 %11
+  call void @_raw_spin_unlock(ptr noundef %12) #18
+  %.not.i.i.i = icmp eq i32 %9, %10
   br i1 %.not.i.i.i, label %nf_ct_delete_from_lists.exit, label %bb.m
 
 bb.m:                                             ; preds = %clean_from_lists.exit.i.i
-  %19 = and i64 %13, 1023
-  %i.as = getelementptr [4 x i8], ptr @nf_conntrack_locks, i64 %19
+  %13 = zext nneg i32 %10 to i64
+  %i.as = getelementptr [4 x i8], ptr @nf_conntrack_locks, i64 %13
   call void @_raw_spin_unlock(ptr noundef %i.as) #18
   br label %nf_ct_delete_from_lists.exit
 
@@ -377,7 +371,6 @@ hash_conntrack_raw.exit:                          ; preds = %bb.a, %bb.d
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define internal fastcc ptr @__nf_conntrack_find_get(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) unnamed_addr #0 align 16 {
 bb.a:
-  %3 = zext i32 %2 to i64
   %i.a = getelementptr i8, ptr %1, i64 8          ; 2 uses
   %i.b = getelementptr i8, ptr %1, i64 16         ; 2 uses
   %i.c = getelementptr i8, ptr %1, i64 18         ; 2 uses
@@ -416,11 +409,10 @@ bb.b:                                             ; preds = %.backedge, %bb.a
   br label %bb.b, !llvm.loop !1
 
 nf_conntrack_get_ht.exit.i:                       ; preds = %._crit_edge.i.i
-  %4 = zext i32 %i.m to i64
-  %5 = mul nuw i64 %4, %3
-  %6 = lshr i64 %5, 32                            ; 2 uses
+  %3 = tail call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %2, i32 %i.m)
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #19, !srcloc !56
-  %i.p = getelementptr [8 x i8], ptr %i.n, i64 %6
+  %4 = zext i32 %3 to i64                         ; 2 uses
+  %i.p = getelementptr [8 x i8], ptr %i.n, i64 %4
   %i.q = load volatile ptr, ptr %i.p, align 8     ; 2 uses
   %i.r = ptrtoint ptr %i.q to i64                 ; 2 uses
   %i.s = and i64 %i.r, 1
@@ -603,7 +595,7 @@ nf_ct_key_equal.exit.i:                           ; preds = %nf_ct_is_confirmed.
 .critedge.i:                                      ; preds = %.thread6.i, %nf_conntrack_get_ht.exit.i
   %.lcssa17.i = phi i64 [ %i.r, %nf_conntrack_get_ht.exit.i ], [ %i.cg, %.thread6.i ]
   %i.ci = lshr i64 %.lcssa17.i, 1
-  %.not28.i = icmp eq i64 %i.ci, %6
+  %.not28.i = icmp eq i64 %i.ci, %4
   br i1 %.not28.i, label %____nf_conntrack_find.exit.thread, label %bb.o
 
 bb.o:                                             ; preds = %.critedge.i
@@ -796,13 +788,10 @@ hash_conntrack.exit:                              ; preds = %._crit_edge, %bb.e
   %i.q = xor i64 %i.p, %i.o
   store i64 %i.q, ptr %i.g, align 8
   %i.r = call i64 @__siphash_unaligned(ptr noundef %i.e, i64 noundef 39, ptr noundef nonnull %2) #18
+  %3 = trunc i64 %i.r to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #19
   %i.s = load i32, ptr @nf_conntrack_htable_size, align 4
-  %3 = and i64 %i.r, 4294967295
-  %4 = zext i32 %i.s to i64
-  %5 = mul nuw i64 %3, %4
-  %6 = lshr i64 %5, 32                            ; 5 uses
-  %7 = trunc nuw i64 %6 to i32                    ; 3 uses
+  %4 = call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %3, i32 %i.s) ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, i8 0, i64 16, i1 false), !annotation !19
   callbr void asm sideeffect "1:jmp ${2:l}\0A\09.pushsection __jump_table,  \22aw\22 \0A\09 .balign 8 \0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A.long 1b - . \0A\09.long ${2:l} - . \0A\09 .quad  ${0:c} + ${1:c} - . \0A\09.popsection \0A\09", "i,i,!i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @hash_conntrack_raw.___once_key, i1 false) #19
@@ -831,14 +820,11 @@ hash_conntrack.exit60:                            ; preds = %hash_conntrack.exit
   %i.w = xor i64 %i.v, %i.u
   store i64 %i.w, ptr %i.i, align 8
   %i.x = call i64 @__siphash_unaligned(ptr noundef %i.h, i64 noundef 39, ptr noundef nonnull %1) #18
+  %5 = trunc i64 %i.x to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #19
   %i.y = load i32, ptr @nf_conntrack_htable_size, align 4
-  %8 = and i64 %i.x, 4294967295
-  %9 = zext i32 %i.y to i64
-  %10 = mul nuw i64 %8, %9
-  %11 = lshr i64 %10, 32                          ; 5 uses
-  %12 = trunc nuw i64 %11 to i32                  ; 3 uses
-  %i.z = call fastcc zeroext i1 @nf_conntrack_double_lock(i32 noundef %7, i32 noundef %12, i32 noundef %.lcssa86) #20, !srcloc !67
+  %6 = call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %5, i32 %i.y) ; 4 uses
+  %i.z = call fastcc zeroext i1 @nf_conntrack_double_lock(i32 noundef %4, i32 noundef %6, i32 noundef %.lcssa86) #20, !srcloc !67
   br i1 %i.z, label %bb.b, label %.preheader, !llvm.loop !64
 
 .preheader:                                       ; preds = %hash_conntrack.exit60, %.preheader
@@ -852,7 +838,8 @@ hash_conntrack.exit60:                            ; preds = %hash_conntrack.exit
 get_random_u32_below.exit:                        ; preds = %.preheader
   %i.ae = lshr i32 %i.ac, 8                       ; 2 uses
   %i.af = load ptr, ptr @nf_conntrack_hash, align 8 ; 2 uses
-  %i.ag = getelementptr [8 x i8], ptr %i.af, i64 %6
+  %7 = zext i32 %4 to i64                         ; 2 uses
+  %i.ag = getelementptr [8 x i8], ptr %i.af, i64 %7
   %.05394 = load ptr, ptr %i.ag, align 8          ; 2 uses
   %i.ah = ptrtoint ptr %.05394 to i64
   %i.ai = and i64 %i.ah, 1
@@ -955,7 +942,8 @@ nf_ct_key_equal.exit.thread:                      ; preds = %bb.j, %bb.k, %bb.l,
   br i1 %exitcond, label %.loopexit83, label %bb.i
 
 .critedge:                                        ; preds = %bb.i, %get_random_u32_below.exit
-  %i.cb = getelementptr [8 x i8], ptr %i.af, i64 %11
+  %8 = zext i32 %6 to i64                         ; 2 uses
+  %i.cb = getelementptr [8 x i8], ptr %i.af, i64 %8
   %.199 = load ptr, ptr %i.cb, align 8            ; 2 uses
   %i.cc = ptrtoint ptr %.199 to i64
   %i.cd = and i64 %i.cc, 1
@@ -1062,7 +1050,7 @@ nf_ct_key_equal.exit79.thread:                    ; preds = %bb.o, %bb.p, %bb.q,
   store volatile i32 2, ptr %0, align 8
   %i.dw = getelementptr i8, ptr %0, i64 16        ; 3 uses
   %i.dx = load ptr, ptr @nf_conntrack_hash, align 8
-  %i.dy = getelementptr [8 x i8], ptr %i.dx, i64 %6 ; 3 uses
+  %i.dy = getelementptr [8 x i8], ptr %i.dx, i64 %7 ; 3 uses
   %i.dz = load ptr, ptr %i.dy, align 8            ; 3 uses
   store volatile ptr %i.dz, ptr %i.dw, align 8
   %i.ea = getelementptr i8, ptr %0, i64 24
@@ -1082,7 +1070,7 @@ bb.s:                                             ; preds = %.critedge2
 hlist_nulls_add_head_rcu.exit.i:                  ; preds = %bb.s, %.critedge2
   %i.ee = getelementptr i8, ptr %0, i64 72        ; 3 uses
   %i.ef = load ptr, ptr @nf_conntrack_hash, align 8
-  %i.eg = getelementptr [8 x i8], ptr %i.ef, i64 %11 ; 3 uses
+  %i.eg = getelementptr [8 x i8], ptr %i.ef, i64 %8 ; 3 uses
   %i.eh = load ptr, ptr %i.eg, align 8            ; 3 uses
   store volatile ptr %i.eh, ptr %i.ee, align 8
   %i.ei = getelementptr i8, ptr %0, i64 80
@@ -1100,17 +1088,17 @@ bb.t:                                             ; preds = %hlist_nulls_add_hea
   br label %__nf_conntrack_hash_insert.exit
 
 __nf_conntrack_hash_insert.exit:                  ; preds = %hlist_nulls_add_head_rcu.exit.i, %bb.t
-  %13 = and i64 %6, 1023
-  %14 = getelementptr [4 x i8], ptr @nf_conntrack_locks, i64 %13
-  call void @_raw_spin_unlock(ptr noundef %14) #18
-  %15 = xor i32 %12, %7
-  %16 = and i32 %15, 1023
-  %.not.i80 = icmp eq i32 %16, 0
+  %9 = and i32 %4, 1023                           ; 2 uses
+  %10 = and i32 %6, 1023                          ; 2 uses
+  %11 = zext nneg i32 %9 to i64
+  %12 = getelementptr [4 x i8], ptr @nf_conntrack_locks, i64 %11
+  call void @_raw_spin_unlock(ptr noundef %12) #18
+  %.not.i80 = icmp eq i32 %9, %10
   br i1 %.not.i80, label %nf_conntrack_double_unlock.exit, label %bb.u
 
 bb.u:                                             ; preds = %__nf_conntrack_hash_insert.exit
-  %17 = and i64 %11, 1023
-  %i.em = getelementptr [4 x i8], ptr @nf_conntrack_locks, i64 %17
+  %13 = zext nneg i32 %10 to i64
+  %i.em = getelementptr [4 x i8], ptr @nf_conntrack_locks, i64 %13
   call void @_raw_spin_unlock(ptr noundef %i.em) #18
   br label %nf_conntrack_double_unlock.exit
 
@@ -1130,17 +1118,17 @@ nf_conntrack_double_unlock.exit:                  ; preds = %__nf_conntrack_hash
 
 .loopexit:                                        ; preds = %nf_ct_key_equal.exit, %nf_ct_key_equal.exit79, %.loopexit83
   %.056 = phi i32 [ -17, %nf_ct_key_equal.exit79 ], [ -28, %.loopexit83 ], [ -17, %nf_ct_key_equal.exit ] ; 2 uses
-  %18 = and i64 %6, 1023
-  %19 = getelementptr [4 x i8], ptr @nf_conntrack_locks, i64 %18
-  call void @_raw_spin_unlock(ptr noundef %19) #18
-  %20 = xor i32 %12, %7
-  %21 = and i32 %20, 1023
-  %.not.i81 = icmp eq i32 %21, 0
+  %14 = and i32 %4, 1023                          ; 2 uses
+  %15 = and i32 %6, 1023                          ; 2 uses
+  %16 = zext nneg i32 %14 to i64
+  %17 = getelementptr [4 x i8], ptr @nf_conntrack_locks, i64 %16
+  call void @_raw_spin_unlock(ptr noundef %17) #18
+  %.not.i81 = icmp eq i32 %14, %15
   br i1 %.not.i81, label %nf_conntrack_double_unlock.exit82, label %bb.v
 
 bb.v:                                             ; preds = %.loopexit
-  %22 = and i64 %11, 1023
-  %i.et = getelementptr [4 x i8], ptr @nf_conntrack_locks, i64 %22
+  %18 = zext nneg i32 %15 to i64
+  %i.et = getelementptr [4 x i8], ptr @nf_conntrack_locks, i64 %18
   call void @_raw_spin_unlock(ptr noundef %i.et) #18
   br label %nf_conntrack_double_unlock.exit82
 
@@ -1322,12 +1310,9 @@ bb.c:                                             ; preds = %hash_conntrack.exit
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.c
   %.lcssa122 = phi i32 [ %i.m, %bb.c ], [ %i.o, %.lr.ph ]
   %i.q = load i64, ptr %i.i, align 8
-  %2 = load i32, ptr @nf_conntrack_htable_size, align 4
-  %3 = and i64 %i.q, 4294967295
-  %4 = zext i32 %2 to i64
-  %5 = mul nuw i64 %3, %4
-  %6 = lshr i64 %5, 32                            ; 5 uses
-  %7 = trunc nuw i64 %6 to i32                    ; 4 uses
+  %2 = trunc i64 %i.q to i32
+  %3 = load i32, ptr @nf_conntrack_htable_size, align 4
+  %4 = call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %2, i32 %3) ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, i8 0, i64 16, i1 false), !annotation !19
   callbr void asm sideeffect "1:jmp ${2:l}\0A\09.pushsection __jump_table,  \22aw\22 \0A\09 .balign 8 \0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A.long 1b - . \0A\09.long ${2:l} - . \0A\09 .quad  ${0:c} + ${1:c} - . \0A\09.popsection \0A\09", "i,i,!i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @hash_conntrack_raw.___once_key, i1 false) #19
@@ -1356,14 +1341,11 @@ hash_conntrack.exit:                              ; preds = %._crit_edge, %bb.f
   %i.u = xor i64 %i.t, %i.s
   store i64 %i.u, ptr %i.l, align 8
   %i.v = call i64 @__siphash_unaligned(ptr noundef %i.j, i64 noundef 39, ptr noundef nonnull %1) #18
+  %5 = trunc i64 %i.v to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #19
   %i.w = load i32, ptr @nf_conntrack_htable_size, align 4
-  %8 = and i64 %i.v, 4294967295
-  %9 = zext i32 %i.w to i64
-  %10 = mul nuw i64 %8, %9
-  %11 = lshr i64 %10, 32                          ; 5 uses
-  %12 = trunc nuw i64 %11 to i32                  ; 5 uses
-  %i.x = call fastcc zeroext i1 @nf_conntrack_double_lock(i32 noundef %7, i32 noundef %12, i32 noundef %.lcssa122) #20, !srcloc !75
+  %6 = call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %5, i32 %i.w) ; 6 uses
+  %i.x = call fastcc zeroext i1 @nf_conntrack_double_lock(i32 noundef %4, i32 noundef %6, i32 noundef %.lcssa122) #20, !srcloc !75
   br i1 %i.x, label %bb.c, label %nf_ct_is_confirmed.exit, !llvm.loop !72
 
 nf_ct_is_confirmed.exit:                          ; preds = %hash_conntrack.exit
@@ -1377,7 +1359,7 @@ bb.g:                                             ; preds = %nf_ct_is_confirmed.
   call void asm sideeffect "1042: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1042b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 1042) #19, !srcloc !76
   call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1b - ., 8; .popsection", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str, ptr nonnull @.str.1, i32 1226, i32 2307, i64 16) #19, !srcloc !77
   call void asm sideeffect "1043: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1043b - ., 4; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 1043) #19, !srcloc !78
-  call fastcc void @nf_conntrack_double_unlock(i32 noundef %7, i32 noundef %12) #20, !srcloc !79
+  call fastcc void @nf_conntrack_double_unlock(i32 noundef %4, i32 noundef %6) #20, !srcloc !79
   br label %.sink.split
 
 nf_ct_is_dying.exit:                              ; preds = %nf_ct_is_confirmed.exit
@@ -1404,7 +1386,8 @@ bb.h:                                             ; preds = %nf_ct_is_dying.exit
 get_random_u32_below.exit:                        ; preds = %.preheader
   %i.ak = lshr i32 %i.ai, 8                       ; 2 uses
   %i.al = load ptr, ptr @nf_conntrack_hash, align 8 ; 2 uses
-  %i.am = getelementptr [8 x i8], ptr %i.al, i64 %6
+  %7 = zext i32 %4 to i64                         ; 2 uses
+  %i.am = getelementptr [8 x i8], ptr %i.al, i64 %7
   %.074130 = load ptr, ptr %i.am, align 8         ; 2 uses
   %i.an = ptrtoint ptr %.074130 to i64
   %i.ao = and i64 %i.an, 1
@@ -1508,7 +1491,8 @@ nf_ct_key_equal.exit.thread:                      ; preds = %bb.j, %bb.k, %bb.l,
   br i1 %exitcond, label %.loopexit115, label %bb.i
 
 .critedge:                                        ; preds = %bb.i, %get_random_u32_below.exit
-  %i.ci = getelementptr [8 x i8], ptr %i.al, i64 %11
+  %8 = zext i32 %6 to i64                         ; 2 uses
+  %i.ci = getelementptr [8 x i8], ptr %i.al, i64 %8
   %.175135 = load ptr, ptr %i.ci, align 8         ; 2 uses
   %i.cj = ptrtoint ptr %.175135 to i64
   %i.ck = and i64 %i.cj, 1
@@ -1645,7 +1629,7 @@ bb.s:                                             ; preds = %.critedge2
 __nf_conntrack_insert_prepare.exit:               ; preds = %bb.s, %.sink.split.i.i.i.i
   %i.eq = getelementptr i8, ptr %i.d, i64 16      ; 3 uses
   %i.er = load ptr, ptr @nf_conntrack_hash, align 8
-  %i.es = getelementptr [8 x i8], ptr %i.er, i64 %6 ; 3 uses
+  %i.es = getelementptr [8 x i8], ptr %i.er, i64 %7 ; 3 uses
   %i.et = load ptr, ptr %i.es, align 8            ; 3 uses
   store volatile ptr %i.et, ptr %i.eq, align 8
   %i.eu = getelementptr i8, ptr %i.d, i64 24
@@ -1665,7 +1649,7 @@ bb.t:                                             ; preds = %__nf_conntrack_inse
 hlist_nulls_add_head_rcu.exit.i:                  ; preds = %bb.t, %__nf_conntrack_insert_prepare.exit
   %i.ey = getelementptr i8, ptr %i.d, i64 72      ; 3 uses
   %i.ez = load ptr, ptr @nf_conntrack_hash, align 8
-  %i.fa = getelementptr [8 x i8], ptr %i.ez, i64 %11 ; 3 uses
+  %i.fa = getelementptr [8 x i8], ptr %i.ez, i64 %8 ; 3 uses
   %i.fb = load ptr, ptr %i.fa, align 8            ; 3 uses
   store volatile ptr %i.fb, ptr %i.ey, align 8
   store volatile ptr %i.fa, ptr %i.i, align 8
@@ -1683,38 +1667,38 @@ bb.u:                                             ; preds = %hlist_nulls_add_hea
 
 __nf_conntrack_hash_insert.exit:                  ; preds = %hlist_nulls_add_head_rcu.exit.i, %bb.u
   call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock orb ${1:b},$0", "=*m,iq,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i8) %i.y, i32 8, ptr elementtype(i8) %i.y) #19, !srcloc !43
-  %13 = and i64 %6, 1023
-  %14 = getelementptr [4 x i8], ptr @nf_conntrack_locks, i64 %13
-  call void @_raw_spin_unlock(ptr noundef %14) #18
-  %15 = xor i32 %12, %7
-  %16 = and i32 %15, 1023
-  %.not.i108 = icmp eq i32 %16, 0
+  %9 = and i32 %4, 1023                           ; 2 uses
+  %10 = and i32 %6, 1023                          ; 2 uses
+  %11 = zext nneg i32 %9 to i64
+  %12 = getelementptr [4 x i8], ptr @nf_conntrack_locks, i64 %11
+  call void @_raw_spin_unlock(ptr noundef %12) #18
+  %.not.i108 = icmp eq i32 %9, %10
   br i1 %.not.i108, label %.sink.split, label %bb.v
 
 bb.v:                                             ; preds = %__nf_conntrack_hash_insert.exit
-  %17 = and i64 %11, 1023
-  %i.ff = getelementptr [4 x i8], ptr @nf_conntrack_locks, i64 %17
+  %13 = zext nneg i32 %10 to i64
+  %i.ff = getelementptr [4 x i8], ptr @nf_conntrack_locks, i64 %13
   call void @_raw_spin_unlock(ptr noundef %i.ff) #18
   br label %.sink.split
 
 .loopexit:                                        ; preds = %nf_ct_key_equal.exit, %nf_ct_key_equal.exit107
   %.073 = phi ptr [ %.175138, %nf_ct_key_equal.exit107 ], [ %.074133, %nf_ct_key_equal.exit ]
-  %i.fg = call fastcc i32 @nf_ct_resolve_clash(ptr noundef %0, ptr noundef %.073, i32 noundef %12) #23, !srcloc !83
+  %i.fg = call fastcc i32 @nf_ct_resolve_clash(ptr noundef %0, ptr noundef %.073, i32 noundef %6) #23, !srcloc !83
   br label %bb.w
 
 bb.w:                                             ; preds = %.loopexit, %.loopexit115, %bb.h
   %.076 = phi i32 [ 0, %bb.h ], [ %i.fg, %.loopexit ], [ 0, %.loopexit115 ] ; 2 uses
-  %18 = and i64 %6, 1023
-  %19 = getelementptr [4 x i8], ptr @nf_conntrack_locks, i64 %18
-  call void @_raw_spin_unlock(ptr noundef %19) #18
-  %20 = xor i32 %12, %7
-  %21 = and i32 %20, 1023
-  %.not.i110 = icmp eq i32 %21, 0
+  %14 = and i32 %4, 1023                          ; 2 uses
+  %15 = and i32 %6, 1023                          ; 2 uses
+  %16 = zext nneg i32 %14 to i64
+  %17 = getelementptr [4 x i8], ptr @nf_conntrack_locks, i64 %16
+  call void @_raw_spin_unlock(ptr noundef %17) #18
+  %.not.i110 = icmp eq i32 %14, %15
   br i1 %.not.i110, label %.sink.split, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %22 = and i64 %11, 1023
-  %i.fh = getelementptr [4 x i8], ptr @nf_conntrack_locks, i64 %22
+  %18 = zext nneg i32 %15 to i64
+  %i.fh = getelementptr [4 x i8], ptr @nf_conntrack_locks, i64 %18
   call void @_raw_spin_unlock(ptr noundef %i.fh) #18
   br label %.sink.split
 
@@ -2020,13 +2004,12 @@ __hash_conntrack.exit:                            ; preds = %nf_conntrack_get_ht
   %i.ae = xor i64 %i.ad, %i.ac
   store i64 %i.ae, ptr %i.d, align 8
   %i.af = call i64 @__siphash_unaligned(ptr noundef %0, i64 noundef 39, ptr noundef nonnull %2) #18
+  %3 = trunc i64 %i.af to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #19
-  %3 = and i64 %i.af, 4294967295
-  %4 = zext i32 %i.y to i64
-  %5 = mul nuw i64 %3, %4
-  %6 = lshr i64 %5, 32                            ; 2 uses
+  %4 = call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %3, i32 %i.y)
   call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #19, !srcloc !91
-  %i.ag = getelementptr [8 x i8], ptr %i.z, i64 %6
+  %5 = zext i32 %4 to i64                         ; 2 uses
+  %i.ag = getelementptr [8 x i8], ptr %i.z, i64 %5
   %i.ah = load volatile ptr, ptr %i.ag, align 8   ; 2 uses
   %i.ai = ptrtoint ptr %i.ah to i64               ; 2 uses
   %i.aj = and i64 %i.ai, 1
@@ -2189,7 +2172,7 @@ nf_ct_key_equal.exit.thread:                      ; preds = %bb.h, %bb.i, %bb.j,
 .critedge:                                        ; preds = %nf_ct_key_equal.exit.thread, %__hash_conntrack.exit
   %.lcssa43 = phi i64 [ %i.ai, %__hash_conntrack.exit ], [ %i.cz, %nf_ct_key_equal.exit.thread ]
   %i.db = lshr i64 %.lcssa43, 1
-  %.not38 = icmp eq i64 %i.db, %6
+  %.not38 = icmp eq i64 %i.db, %5
   br i1 %.not38, label %.loopexit, label %bb.p
 
 bb.p:                                             ; preds = %.critedge
@@ -2592,7 +2575,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %narrow.i = add nuw nsw i32 %0, 511
-  %i.c = and i32 %narrow.i, 536870400             ; 5 uses
+  %i.c = and i32 %narrow.i, 536870400             ; 6 uses
   %i.d = icmp samesign ugt i32 %i.c, 268435455
   br i1 %i.d, label %nf_ct_alloc_hashtable.exit.thread, label %bb.d
 
@@ -2604,7 +2587,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not41, label %nf_ct_alloc_hashtable.exit.thread, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.d
-  %wide.trip.count.i = zext nneg i32 %i.c to i64  ; 2 uses
+  %wide.trip.count.i = zext nneg i32 %i.c to i64
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
@@ -2745,10 +2728,10 @@ __hash_conntrack.exit:                            ; preds = %hlist_nulls_del_rcu
   %i.bd = xor i64 %i.bc, %i.bb
   store i64 %i.bd, ptr %i.ae, align 8
   %i.be = call i64 @__siphash_unaligned(ptr noundef %i.ax, i64 noundef 39, ptr noundef nonnull %1) #18
+  %2 = trunc i64 %i.be to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #19
-  %2 = and i64 %i.be, 4294967295
-  %3 = mul nuw nsw i64 %2, %wide.trip.count.i
-  %4 = lshr i64 %3, 32
+  %3 = call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %2, i32 %i.c)
+  %4 = zext nneg i32 %3 to i64
   %i.bf = getelementptr [8 x i8], ptr %i.g, i64 %4 ; 3 uses
   %i.bg = load ptr, ptr %i.bf, align 8            ; 3 uses
   store volatile ptr %i.bg, ptr %i.am, align 8
@@ -3151,7 +3134,6 @@ nf_ct_can_merge.exit.thread:                      ; preds = %bb.m, %bb.n, %bb.o,
 ; Function Attrs: fn_ret_thunk_extern noinline noredzone nounwind null_pointer_is_valid sspstrong
 define internal fastcc range(i32 0, 2) i32 @early_drop(ptr nofree noundef readonly captures(address) %0, i32 noundef %1) unnamed_addr #15 align 16 prefalign(16) {
 bb.a:
-  %2 = zext i32 %1 to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %.critedge
@@ -3189,10 +3171,7 @@ nf_conntrack_get_ht.exit:                         ; preds = %._crit_edge.i
   br i1 %.not, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %nf_conntrack_get_ht.exit
-  %3 = zext i32 %i.e to i64
-  %4 = mul nuw i64 %3, %2
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32
+  %2 = tail call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %1, i32 %i.e)
   br label %bb.f
 
 bb.e:                                             ; preds = %nf_conntrack_get_ht.exit
@@ -3201,7 +3180,7 @@ bb.e:                                             ; preds = %nf_conntrack_get_ht
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %.124 = phi i32 [ %i.i, %bb.e ], [ %6, %bb.d ]  ; 2 uses
+  %.124 = phi i32 [ %i.i, %bb.e ], [ %2, %bb.d ]  ; 2 uses
   %i.j = zext i32 %.124 to i64
   %i.k = getelementptr [8 x i8], ptr %i.f, i64 %i.j
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #19, !srcloc !128
@@ -3602,6 +3581,9 @@ declare dso_local void @nf_conntrack_tcp_set_closing(ptr noundef) local_unnamed_
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #17
