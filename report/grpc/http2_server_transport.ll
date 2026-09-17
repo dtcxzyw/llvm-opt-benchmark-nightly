@@ -205,11 +205,11 @@ bb.a:
   %10 = alloca %"class.std::variant.1448", align 8 ; 10 uses
   %11 = alloca %"class.absl::lts_20250512::log_internal::LogMessageFatal", align 8 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 33 ; 3 uses
-  %i.c = load i8, ptr %i.b, align 1, !tbaa !1136  ; 2 uses
+  %i.c = load i8, ptr %i.b, align 1, !tbaa !1136
   switch i8 %i.c, label %bb.u [
     i8 2, label %bb.b
     i8 1, label %bb.f
-    i8 0, label %bb.x
+    i8 0, label %19
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -243,9 +243,16 @@ _ZN4absl12lts_2025051212log_internal10LogMessagelsILi58EEERS2_RAT__Kc.exit: ; pr
 .critedge18:                                      ; preds = %bb.b, %_ZN4absl12lts_2025051212log_internal8VLogSite9IsEnabledEi.exit23, %.critedge
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 32
   store i8 0, ptr %i.h, align 32, !tbaa !1132
+  %12 = getelementptr inbounds nuw i8, ptr %1, i64 256
+  %13 = load i8, ptr %12, align 64, !tbaa !1133
+  store i8 0, ptr %0, align 8, !tbaa !457
+  %.sroa.548.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1
+  store i8 %13, ptr %.sroa.548.0..sroa_idx, align 1, !tbaa !1139
   %.sroa.649.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(14) %.sroa.649.0..sroa_idx, i8 0, i64 14, i1 false)
-  br label %.sink.split
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(15) %.sroa.649.0..sroa_idx, i8 0, i64 15, i1 false)
+  store i8 1, ptr %14, align 8, !tbaa !1138
+  br label %bb.x
 
 bb.e:                                             ; preds = %_ZN4absl12lts_2025051212log_internal10LogMessagelsILi58EEERS2_RAT__Kc.exit, %bb.d, %bb.c
   %i.i = landingpad { ptr, i32 }
@@ -435,10 +442,24 @@ _ZNSt14_Optional_baseIN9grpc_core5http211SimpleQueueISt7variantIJNS1_15StreamDat
 
 _ZN9grpc_core5http211SimpleQueueISt7variantIJNS0_15StreamDataQueueISt10unique_ptrI19grpc_metadata_batchNS_5Arena13PooledDeleterEEE19InitialMetadataTypeENS9_20TrailingMetadataTypeES4_INS_7MessageES7_ENS9_10HalfClosedEEEE5ClearEv.exit: ; preds = %_ZNSt14_Optional_baseIN9grpc_core5http211SimpleQueueISt7variantIJNS1_15StreamDataQueueISt10unique_ptrI19grpc_metadata_batchNS0_5Arena13PooledDeleterEEE19InitialMetadataTypeENSA_20TrailingMetadataTypeES5_INS0_7MessageES8_ENSA_10HalfClosedEEEE5EntryELb0ELb0EED2Ev.exit.i
   store i8 2, ptr %i.b, align 1, !tbaa !1136
+  %15 = load i8, ptr %i.n, align 32, !tbaa !1132, !range !406, !noundef !407
+  %16 = getelementptr inbounds nuw i8, ptr %1, i64 256
+  %17 = load i8, ptr %16, align 64, !tbaa !1133
+  store i8 %15, ptr %0, align 8, !tbaa !457
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1
+  store i8 %17, ptr %.sroa.5.0..sroa_idx, align 1, !tbaa !1139
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(14) %.sroa.6.0..sroa_idx, i8 0, i64 14, i1 false)
-  %12 = load i8, ptr %i.n, align 32, !tbaa !1132, !range !406, !noundef !407
-  br label %.sink.split
+  %.sroa.640.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i8 %.sroa.043.0, ptr %.sroa.640.0..sroa_idx, align 8, !tbaa !156
+  %18 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  store i8 1, ptr %18, align 8, !tbaa !1138
+  br label %bb.x
+
+19:                                               ; preds = %bb.a
+  %20 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  store i8 0, ptr %20, align 8, !tbaa !1138
+  br label %bb.x
 
 bb.u:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #44
@@ -468,22 +489,7 @@ bb.w:                                             ; preds = %bb.v, %_ZN4absl12lt
   call void @_ZN4absl12lts_2025051212log_internal15LogMessageFatalD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %11) #46
   unreachable
 
-.sink.split:                                      ; preds = %.critedge18, %_ZN9grpc_core5http211SimpleQueueISt7variantIJNS0_15StreamDataQueueISt10unique_ptrI19grpc_metadata_batchNS_5Arena13PooledDeleterEEE19InitialMetadataTypeENS9_20TrailingMetadataTypeES4_INS_7MessageES7_ENS9_10HalfClosedEEEE5ClearEv.exit
-  %.sink59 = phi i8 [ %12, %_ZN9grpc_core5http211SimpleQueueISt7variantIJNS0_15StreamDataQueueISt10unique_ptrI19grpc_metadata_batchNS_5Arena13PooledDeleterEEE19InitialMetadataTypeENS9_20TrailingMetadataTypeES4_INS_7MessageES7_ENS9_10HalfClosedEEEE5ClearEv.exit ], [ 0, %.critedge18 ]
-  %.sroa.043.0.sink = phi i8 [ %.sroa.043.0, %_ZN9grpc_core5http211SimpleQueueISt7variantIJNS0_15StreamDataQueueISt10unique_ptrI19grpc_metadata_batchNS_5Arena13PooledDeleterEEE19InitialMetadataTypeENS9_20TrailingMetadataTypeES4_INS_7MessageES7_ENS9_10HalfClosedEEEE5ClearEv.exit ], [ 0, %.critedge18 ]
-  %13 = getelementptr inbounds nuw i8, ptr %1, i64 256
-  %14 = load i8, ptr %13, align 64, !tbaa !1133
-  store i8 %.sink59, ptr %0, align 8, !tbaa !457
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %14, ptr %.sroa.5.0..sroa_idx, align 1, !tbaa !1139
-  %.sroa.640.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 %.sroa.043.0.sink, ptr %.sroa.640.0..sroa_idx, align 8, !tbaa !156
-  br label %bb.x
-
-bb.x:                                             ; preds = %.sink.split, %bb.a
-  %.sink = phi i8 [ %i.c, %bb.a ], [ 1, %.sink.split ]
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i8 %.sink, ptr %15, align 8, !tbaa !1138
+bb.x:                                             ; preds = %19, %_ZN9grpc_core5http211SimpleQueueISt7variantIJNS0_15StreamDataQueueISt10unique_ptrI19grpc_metadata_batchNS_5Arena13PooledDeleterEEE19InitialMetadataTypeENS9_20TrailingMetadataTypeES4_INS_7MessageES7_ENS9_10HalfClosedEEEE5ClearEv.exit, %.critedge18
   ret void
 
 bb.y:                                             ; preds = %bb.p, %bb.o, %bb.e
