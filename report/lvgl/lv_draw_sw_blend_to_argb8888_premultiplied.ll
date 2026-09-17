@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.f = load i32, ptr %i.e, align 4, !tbaa !24   ; 10 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.h = load i8, ptr %i.g, align 8, !tbaa !25    ; 4 uses
+  %i.h = load i8, ptr %i.g, align 8, !tbaa !25    ; 5 uses
   %i.i = load ptr, ptr %0, align 8, !tbaa !26     ; 5 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.k = load i32, ptr %i.j, align 8, !tbaa !27   ; 5 uses
@@ -237,7 +237,7 @@ bb.b:                                             ; preds = %bb.a
 
 .preheader419.lr.ph.i:                            ; preds = %.preheader420.i
   %i.ab = icmp sgt i32 %i.d, 0
-  %i.ac = zext i8 %i.h to i32                     ; 2 uses
+  %i.ac = zext i8 %i.h to i32
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 7
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 3
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 10 ; 2 uses
@@ -640,26 +640,26 @@ bb.am:                                            ; preds = %blend_non_normal_pi
   %.sroa.44.0..sroa_idx187.i = getelementptr inbounds nuw i8, ptr %i.fu, i64 2
   %.sroa.44.0.copyload188.i = load i8, ptr %.sroa.44.0..sroa_idx187.i, align 1, !tbaa !17
   %.sroa.58.0..sroa_idx231.i = getelementptr inbounds nuw i8, ptr %i.fu, i64 3
-  %.sroa.58.0.copyload232.i = load i8, ptr %.sroa.58.0..sroa_idx231.i, align 1, !tbaa !17
-  %3 = zext i8 %.sroa.58.0.copyload232.i to i32   ; 2 uses
+  %.sroa.58.0.copyload232.i = load i8, ptr %.sroa.58.0..sroa_idx231.i, align 1, !tbaa !17 ; 2 uses
   br i1 %i.ft, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %bb.am
-  %4 = mul nuw nsw i32 %3, %i.ac
-  %5 = lshr i32 %4, 8
+  %3 = call i8 @llvm.umulh.i8(i8 %.sroa.58.0.copyload232.i, i8 %i.h)
+  %4 = zext i8 %3 to i32
   br label %bb.ap
 
 bb.ao:                                            ; preds = %bb.am
+  %5 = zext i8 %.sroa.58.0.copyload232.i to i32
   %i.fv = getelementptr inbounds nuw i8, ptr %.2372424.i, i64 %indvars.iv.i
   %i.fw = load i8, ptr %i.fv, align 1, !tbaa !17
   %i.fx = zext i8 %i.fw to i32
-  %i.fy = mul nuw nsw i32 %3, %i.ac
+  %i.fy = mul nuw nsw i32 %5, %i.ac
   %i.fz = mul nuw nsw i32 %i.fy, %i.fx
   %i.ga = lshr i32 %i.fz, 16
   br label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao, %bb.an
-  %.sroa.58.0.i = phi i32 [ %5, %bb.an ], [ %i.ga, %bb.ao ] ; 12 uses
+  %.sroa.58.0.i = phi i32 [ %4, %bb.an ], [ %i.ga, %bb.ao ] ; 12 uses
   %i.gb = zext i8 %.sroa.44.0.copyload188.i to i32
   %i.gc = zext i8 %.sroa.30.0.copyload144.i to i32
   %i.gd = mul nuw nsw i32 %.sroa.58.0.i, %i.gc
@@ -674,10 +674,10 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   %.sroa.44.0.insert.shift191.i = and i32 %i.gk, 16711680
   %.sroa.30.0.insert.ext146.i = and i32 %i.gd, 65280
   %i.gl = or disjoint i32 %.sroa.44.0.insert.shift191.i, %.sroa.30.0.insert.ext146.i
-  %i.gm = or disjoint i32 %i.gl, %.sroa.58.0.insert.shift235.i
-  %.sroa.080.0.insert.insert113.i = or i32 %i.gm, %i.gg ; 2 uses
+  %i.gm = or disjoint i32 %i.gl, %.sroa.58.0.insert.shift235.i ; 2 uses
+  %.sroa.080.0.insert.insert113.i = or i32 %i.gm, %i.gg
   %.sroa.9.0.extract.shift.i.i = lshr i32 %.sroa.080.0.insert.insert113.i, 8 ; 4 uses
-  %.sroa.17.0.extract.shift.i.i = lshr i32 %.sroa.080.0.insert.insert113.i, 16 ; 4 uses
+  %.sroa.17.0.extract.shift.i.i = lshr i32 %i.gm, 16 ; 4 uses
   switch i32 %i.gi, label %blend_non_normal_pixel_premultiplied.exit.i [
     i32 1, label %bb.aq
     i32 2, label %bb.ar
@@ -1080,7 +1080,6 @@ bb.a:
 
 .preheader458.lr.ph:                              ; preds = %.preheader459
   %i.z = icmp sgt i32 %i.b, 0
-  %3 = zext i8 %.fr551 to i16
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 7
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 3
   %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 10 ; 2 uses
@@ -1483,14 +1482,11 @@ bb.ak:                                            ; preds = %.preheader458, %ble
 bb.al:                                            ; preds = %bb.ak
   %i.ln = getelementptr inbounds nuw i8, ptr %.3234465, i64 %indvars.iv575
   %i.lo = load i8, ptr %i.ln, align 1, !tbaa !17
-  %4 = zext i8 %i.lo to i16
-  %5 = mul nuw i16 %4, %3
-  %6 = lshr i16 %5, 8
-  %7 = trunc nuw i16 %6 to i8
+  %3 = call i8 @llvm.umulh.i8(i8 %i.lo, i8 %.fr551)
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.ak, %bb.al
-  %.sroa.6.0 = phi i8 [ %7, %bb.al ], [ %.fr551, %bb.ak ] ; 5 uses
+  %.sroa.6.0 = phi i8 [ %3, %bb.al ], [ %.fr551, %bb.ak ] ; 5 uses
   %i.lp = getelementptr inbounds nuw [4 x i8], ptr %.8250463, i64 %indvars.iv575 ; 15 uses
   %i.lq = load i32, ptr %i.v, align 4, !tbaa !32
   %.sroa.6.0.insert.ext = zext i8 %.sroa.6.0 to i32 ; 5 uses
@@ -1757,6 +1753,9 @@ declare i32 @lv_color_mix32_premultiplied(i32, i32) local_unnamed_addr #2
 declare zeroext i1 @lv_color32_eq(i32, i32) local_unnamed_addr #2
 
 declare void @lv_memset(ptr noundef, i8 noundef zeroext, i64 noundef) local_unnamed_addr #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.umulh.i8(i8, i8) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #4

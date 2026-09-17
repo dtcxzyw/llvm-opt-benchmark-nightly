@@ -205,25 +205,19 @@ BN_is_zero.exit.thread:                           ; preds = %bb.i, %bb.h, %bb.f,
 define zeroext i16 @bn_mod_u16_consttime(ptr nofree noundef readonly captures(none) %0, i16 noundef zeroext %1) local_unnamed_addr #11 {
 bb.a:
   %i.a = icmp ult i16 %1, 2
-  br i1 %i.a, label %.loopexit, label %2
+  br i1 %i.a, label %.loopexit, label %.lr.ph.a
 
-2:                                                ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %4 = load i32, ptr %3, align 8, !tbaa !93       ; 2 uses
-  %5 = icmp sgt i32 %4, 0
-  br i1 %5, label %.lr.ph.a, label %.loopexit
-
-.lr.ph.a:                                         ; preds = %2
+.lr.ph.a:                                         ; preds = %bb.a
   %i.b = zext i16 %1 to i64                       ; 2 uses
   %i.c = add nsw i64 %i.b, -1                     ; 3 uses
   %i.d = lshr i64 %i.c, 8                         ; 2 uses
   %.not53.i = icmp eq i64 %i.d, 0                 ; 2 uses
+  %2 = select i1 %.not53.i, i32 1, i32 9
   %i.e = select i1 %.not53.i, i64 %i.c, i64 %i.d  ; 2 uses
   %i.f = lshr i64 %i.e, 4                         ; 2 uses
   %.not54.i = icmp eq i64 %i.f, 0                 ; 2 uses
-  %6 = select i1 %.not54.i, i32 0, i32 4
-  %i.g = select i1 %.not53.i, i32 1, i32 9
-  %i.h = or disjoint i32 %6, %i.g
+  %i.g = select i1 %.not54.i, i32 0, i32 4
+  %i.h = or disjoint i32 %i.g, %2
   %i.i = select i1 %.not54.i, i64 %i.e, i64 %i.f  ; 2 uses
   %i.j = lshr i64 %i.i, 2                         ; 2 uses
   %.not55.i = icmp eq i64 %i.j, 0                 ; 2 uses
@@ -238,69 +232,63 @@ bb.a:
   %i.r = shl nuw nsw i64 1, %i.q
   %i.s = add nuw nsw i64 %i.c, %i.r
   %i.t = udiv i64 %i.s, %i.b
+  %3 = trunc i64 %i.t to i32                      ; 4 uses
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %5 = load i32, ptr %4, align 8, !tbaa !93       ; 2 uses
+  %6 = icmp sgt i32 %5, 0
+  br i1 %6, label %.lr.ph, label %.loopexit
+
+.lr.ph:                                           ; preds = %.lr.ph.a
   %7 = load ptr, ptr %0, align 8, !tbaa !92
-  %8 = and i64 %i.t, 4294967295                   ; 4 uses
-  %9 = add nsw i32 %i.o, -1                       ; 4 uses
-  %10 = zext i16 %1 to i32                        ; 4 uses
-  %11 = zext nneg i32 %4 to i64
+  %8 = add nsw i32 %i.o, -1                       ; 4 uses
+  %9 = zext i16 %1 to i32                         ; 4 uses
+  %10 = zext nneg i32 %5 to i64
   br label %bb.b
 
-bb.b:                                             ; preds = %.lr.ph.a, %bb.b
-  %indvars.iv = phi i64 [ %11, %.lr.ph.a ], [ %indvars.iv.next, %bb.b ] ; 2 uses
-  %.02124 = phi i32 [ 0, %.lr.ph.a ], [ %i.be, %bb.b ]
+bb.b:                                             ; preds = %.lr.ph, %bb.b
+  %indvars.iv = phi i64 [ %10, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 2 uses
+  %.02124 = phi i32 [ 0, %.lr.ph ], [ %i.be, %bb.b ]
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %indvars.iv.next
   %i.v = load i64, ptr %i.u, align 8, !tbaa !80   ; 2 uses
   %i.w = lshr i64 %i.v, 32
   %i.x = trunc nuw i64 %i.w to i32                ; 3 uses
   %i.y = tail call i32 @llvm.fshl.i32(i32 %.02124, i32 %i.x, i32 16) ; 3 uses
-  %12 = zext i32 %i.y to i64
-  %13 = mul nuw i64 %8, %12
-  %14 = lshr i64 %13, 32
-  %15 = trunc nuw i64 %14 to i32                  ; 2 uses
-  %i.z = sub i32 %i.y, %15
+  %11 = tail call i32 @llvm.umulh.i32(i32 %3, i32 %i.y) ; 2 uses
+  %i.z = sub i32 %i.y, %11
   %i.aa = lshr i32 %i.z, 1
-  %i.ab = add i32 %i.aa, %15
-  %i.ac = lshr i32 %i.ab, %9
-  %i.ad = mul i32 %i.ac, %10
+  %i.ab = add i32 %i.aa, %11
+  %i.ac = lshr i32 %i.ab, %8
+  %i.ad = mul i32 %i.ac, %9
   %i.ae = sub i32 %i.y, %i.ad
   %i.af = shl i32 %i.ae, 16
   %i.ag = and i32 %i.x, 65535
   %i.ah = or disjoint i32 %i.af, %i.ag            ; 2 uses
-  %16 = zext i32 %i.ah to i64
-  %17 = mul nuw i64 %8, %16
-  %18 = lshr i64 %17, 32
-  %19 = trunc nuw i64 %18 to i32                  ; 2 uses
-  %i.ai = sub i32 %i.ah, %19
+  %12 = tail call i32 @llvm.umulh.i32(i32 %3, i32 %i.ah) ; 2 uses
+  %i.ai = sub i32 %i.ah, %12
   %i.aj = lshr i32 %i.ai, 1
-  %i.ak = add i32 %i.aj, %19
-  %i.al = lshr i32 %i.ak, %9
-  %i.am = mul i32 %i.al, %10
+  %i.ak = add i32 %i.aj, %12
+  %i.al = lshr i32 %i.ak, %8
+  %i.am = mul i32 %i.al, %9
   %i.an = sub i32 %i.x, %i.am
   %i.ao = trunc i64 %i.v to i32                   ; 3 uses
   %i.ap = tail call i32 @llvm.fshl.i32(i32 %i.an, i32 %i.ao, i32 16) ; 3 uses
-  %20 = zext i32 %i.ap to i64
-  %21 = mul nuw i64 %8, %20
-  %22 = lshr i64 %21, 32
-  %23 = trunc nuw i64 %22 to i32                  ; 2 uses
-  %i.aq = sub i32 %i.ap, %23
+  %13 = tail call i32 @llvm.umulh.i32(i32 %3, i32 %i.ap) ; 2 uses
+  %i.aq = sub i32 %i.ap, %13
   %i.ar = lshr i32 %i.aq, 1
-  %i.as = add i32 %i.ar, %23
-  %i.at = lshr i32 %i.as, %9
-  %i.au = mul i32 %i.at, %10
+  %i.as = add i32 %i.ar, %13
+  %i.at = lshr i32 %i.as, %8
+  %i.au = mul i32 %i.at, %9
   %i.av = sub i32 %i.ap, %i.au
   %i.aw = shl i32 %i.av, 16
   %i.ax = and i32 %i.ao, 65535
   %i.ay = or disjoint i32 %i.aw, %i.ax            ; 2 uses
-  %24 = zext i32 %i.ay to i64
-  %25 = mul nuw i64 %8, %24
-  %26 = lshr i64 %25, 32
-  %27 = trunc nuw i64 %26 to i32                  ; 2 uses
-  %i.az = sub i32 %i.ay, %27
+  %14 = tail call i32 @llvm.umulh.i32(i32 %3, i32 %i.ay) ; 2 uses
+  %i.az = sub i32 %i.ay, %14
   %i.ba = lshr i32 %i.az, 1
-  %i.bb = add i32 %i.ba, %27
-  %i.bc = lshr i32 %i.bb, %9
-  %i.bd = mul i32 %i.bc, %10
+  %i.bb = add i32 %i.ba, %14
+  %i.bc = lshr i32 %i.bb, %8
+  %i.bd = mul i32 %i.bc, %9
   %i.be = sub i32 %i.ao, %i.bd                    ; 2 uses
   %i.bf = icmp samesign ugt i64 %indvars.iv, 1
   br i1 %i.bf, label %bb.b, label %.loopexit.loopexit, !llvm.loop !14
@@ -309,8 +297,8 @@ bb.b:                                             ; preds = %.lr.ph.a, %bb.b
   %i.bg = trunc i32 %i.be to i16
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.loopexit.loopexit, %2, %bb.a
-  %.022 = phi i16 [ 0, %bb.a ], [ 0, %2 ], [ %i.bg, %.loopexit.loopexit ]
+.loopexit:                                        ; preds = %.loopexit.loopexit, %.lr.ph.a, %bb.a
+  %.022 = phi i16 [ 0, %bb.a ], [ 0, %.lr.ph.a ], [ %i.bg, %.loopexit.loopexit ]
   ret i16 %.022
 }
 
@@ -713,26 +701,27 @@ bb.n:                                             ; preds = %.backedge
   %..i.i.i.i = select i1 %i.ap, i64 1024, i64 512
   %i.aq = icmp sgt i32 %.val.i.i.i, 0
   %i.ar = zext i32 %.val.i.i.i to i64             ; 3 uses
-  br i1 %i.aq, label %.split.us.i, label %.split.i
-
-.split.us.i:                                      ; preds = %.lr.ph.i
-  %6 = load ptr, ptr %0, align 8, !tbaa !92
   br label %.lr.ph.i.us.i
 
-.lr.ph.i.us.i:                                    ; preds = %28, %.split.us.i
-  %.0914.i.i.us.i = phi i64 [ 1, %.split.us.i ], [ %29, %28 ] ; 2 uses
+.split.us.i:                                      ; preds = %.split.i
+  %6 = add nuw nsw i64 %.0914.i.i.us.i, 1         ; 2 uses
+  %exitcond.not.i.i.i = icmp eq i64 %6, %..i.i.i.i
+  br i1 %exitcond.not.i.i.i, label %probable_prime.exit.thread, label %.lr.ph.i.us.i, !llvm.loop !16
+
+.lr.ph.i.us.i:                                    ; preds = %.split.us.i, %.lr.ph.i
+  %.0914.i.i.us.i = phi i64 [ 1, %.lr.ph.i ], [ %6, %.split.us.i ] ; 2 uses
   %i.as = getelementptr inbounds nuw [2 x i8], ptr @kPrimes, i64 %.0914.i.i.us.i
   %i.at = load i16, ptr %i.as, align 2, !tbaa !131 ; 2 uses
   %i.au = zext i16 %i.at to i64                   ; 3 uses
   %i.av = add nsw i64 %i.au, -1                   ; 3 uses
   %i.aw = lshr i64 %i.av, 8                       ; 2 uses
   %.not53.i.i.us.i = icmp eq i64 %i.aw, 0         ; 2 uses
+  %7 = select i1 %.not53.i.i.us.i, i32 1, i32 9
   %i.ax = select i1 %.not53.i.i.us.i, i64 %i.av, i64 %i.aw ; 2 uses
   %i.ay = lshr i64 %i.ax, 4                       ; 2 uses
   %.not54.i.i.us.i = icmp eq i64 %i.ay, 0         ; 2 uses
-  %7 = select i1 %.not54.i.i.us.i, i32 0, i32 4
-  %i.az = select i1 %.not53.i.i.us.i, i32 1, i32 9
-  %i.ba = or disjoint i32 %7, %i.az
+  %i.az = select i1 %.not54.i.i.us.i, i32 0, i32 4
+  %i.ba = or disjoint i32 %i.az, %7
   %i.bb = select i1 %.not54.i.i.us.i, i64 %i.ax, i64 %i.ay ; 2 uses
   %i.bc = lshr i64 %i.bb, 2                       ; 2 uses
   %.not55.i.i.us.i = icmp eq i64 %i.bc, 0         ; 2 uses
@@ -747,67 +736,59 @@ bb.n:                                             ; preds = %.backedge
   %i.bk = shl nuw nsw i64 1, %i.bj
   %i.bl = add nuw nsw i64 %i.bk, %i.av
   %i.bm = udiv i64 %i.bl, %i.au
-  %8 = and i64 %i.bm, 4294967295                  ; 4 uses
-  %9 = add nsw i32 %i.bh, -1                      ; 4 uses
-  %10 = zext i16 %i.at to i32                     ; 4 uses
+  %8 = trunc i64 %i.bm to i32                     ; 4 uses
+  br i1 %i.aq, label %.lr.ph.i.i, label %.split.i
+
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.us.i
+  %9 = load ptr, ptr %0, align 8, !tbaa !92
+  %10 = add nsw i32 %i.bh, -1                     ; 4 uses
+  %11 = zext i16 %i.at to i32                     ; 4 uses
   br label %bb.o
 
-bb.o:                                             ; preds = %bb.o, %.lr.ph.i.us.i
-  %indvars.iv.i.us.i = phi i64 [ %i.ar, %.lr.ph.i.us.i ], [ %indvars.iv.next.i.us.i, %bb.o ] ; 2 uses
-  %.02124.i.us.i = phi i32 [ 0, %.lr.ph.i.us.i ], [ %i.cx, %bb.o ]
+bb.o:                                             ; preds = %bb.o, %.lr.ph.i.i
+  %indvars.iv.i.us.i = phi i64 [ %i.ar, %.lr.ph.i.i ], [ %indvars.iv.next.i.us.i, %bb.o ] ; 2 uses
+  %.02124.i.us.i = phi i32 [ 0, %.lr.ph.i.i ], [ %i.cx, %bb.o ]
   %indvars.iv.next.i.us.i = add nsw i64 %indvars.iv.i.us.i, -1 ; 2 uses
-  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %indvars.iv.next.i.us.i
+  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %indvars.iv.next.i.us.i
   %i.bo = load i64, ptr %i.bn, align 8, !tbaa !80 ; 2 uses
   %i.bp = lshr i64 %i.bo, 32
   %i.bq = trunc nuw i64 %i.bp to i32              ; 3 uses
   %i.br = tail call i32 @llvm.fshl.i32(i32 %.02124.i.us.i, i32 %i.bq, i32 16) ; 3 uses
-  %11 = zext i32 %i.br to i64
-  %12 = mul nuw i64 %8, %11
-  %13 = lshr i64 %12, 32
-  %14 = trunc nuw i64 %13 to i32                  ; 2 uses
-  %i.bs = sub i32 %i.br, %14
+  %12 = tail call i32 @llvm.umulh.i32(i32 %8, i32 %i.br) ; 2 uses
+  %i.bs = sub i32 %i.br, %12
   %i.bt = lshr i32 %i.bs, 1
-  %i.bu = add i32 %i.bt, %14
-  %i.bv = lshr i32 %i.bu, %9
-  %i.bw = mul i32 %i.bv, %10
+  %i.bu = add i32 %i.bt, %12
+  %i.bv = lshr i32 %i.bu, %10
+  %i.bw = mul i32 %i.bv, %11
   %i.bx = sub i32 %i.br, %i.bw
   %i.by = shl i32 %i.bx, 16
   %i.bz = and i32 %i.bq, 65535
   %i.ca = or disjoint i32 %i.by, %i.bz            ; 2 uses
-  %15 = zext i32 %i.ca to i64
-  %16 = mul nuw i64 %8, %15
-  %17 = lshr i64 %16, 32
-  %18 = trunc nuw i64 %17 to i32                  ; 2 uses
-  %i.cb = sub i32 %i.ca, %18
+  %13 = tail call i32 @llvm.umulh.i32(i32 %8, i32 %i.ca) ; 2 uses
+  %i.cb = sub i32 %i.ca, %13
   %i.cc = lshr i32 %i.cb, 1
-  %i.cd = add i32 %i.cc, %18
-  %i.ce = lshr i32 %i.cd, %9
-  %i.cf = mul i32 %i.ce, %10
+  %i.cd = add i32 %i.cc, %13
+  %i.ce = lshr i32 %i.cd, %10
+  %i.cf = mul i32 %i.ce, %11
   %i.cg = sub i32 %i.bq, %i.cf
   %i.ch = trunc i64 %i.bo to i32                  ; 3 uses
   %i.ci = tail call i32 @llvm.fshl.i32(i32 %i.cg, i32 %i.ch, i32 16) ; 3 uses
-  %19 = zext i32 %i.ci to i64
-  %20 = mul nuw i64 %8, %19
-  %21 = lshr i64 %20, 32
-  %22 = trunc nuw i64 %21 to i32                  ; 2 uses
-  %i.cj = sub i32 %i.ci, %22
+  %14 = tail call i32 @llvm.umulh.i32(i32 %8, i32 %i.ci) ; 2 uses
+  %i.cj = sub i32 %i.ci, %14
   %i.ck = lshr i32 %i.cj, 1
-  %i.cl = add i32 %i.ck, %22
-  %i.cm = lshr i32 %i.cl, %9
-  %i.cn = mul i32 %i.cm, %10
+  %i.cl = add i32 %i.ck, %14
+  %i.cm = lshr i32 %i.cl, %10
+  %i.cn = mul i32 %i.cm, %11
   %i.co = sub i32 %i.ci, %i.cn
   %i.cp = shl i32 %i.co, 16
   %i.cq = and i32 %i.ch, 65535
   %i.cr = or disjoint i32 %i.cp, %i.cq            ; 2 uses
-  %23 = zext i32 %i.cr to i64
-  %24 = mul nuw i64 %8, %23
-  %25 = lshr i64 %24, 32
-  %26 = trunc nuw i64 %25 to i32                  ; 2 uses
-  %i.cs = sub i32 %i.cr, %26
+  %15 = tail call i32 @llvm.umulh.i32(i32 %8, i32 %i.cr) ; 2 uses
+  %i.cs = sub i32 %i.cr, %15
   %i.ct = lshr i32 %i.cs, 1
-  %i.cu = add i32 %i.ct, %26
-  %i.cv = lshr i32 %i.cu, %9
-  %i.cw = mul i32 %i.cv, %10
+  %i.cu = add i32 %i.ct, %15
+  %i.cv = lshr i32 %i.cu, %10
+  %i.cw = mul i32 %i.cv, %11
   %i.cx = sub i32 %i.ch, %i.cw                    ; 2 uses
   %i.cy = icmp samesign ugt i64 %indvars.iv.i.us.i, 1
   br i1 %i.cy, label %bb.o, label %.loopexit.loopexit.i.us.i, !llvm.loop !14
@@ -816,29 +797,22 @@ bb.o:                                             ; preds = %bb.o, %.lr.ph.i.us.
   %i.cz = and i32 %i.cx, 65535
   %i.da = icmp eq i32 %i.cz, 0
   %i.db = zext i1 %i.da to i32
-  %27 = tail call i32 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.db) #47, !srcloc !120
-  %.not.not.not.i.not.i.us.i = icmp eq i32 %27, 0
-  br i1 %.not.not.not.i.not.i.us.i, label %28, label %.split11.us.i
+  br label %.split.i
 
-28:                                               ; preds = %.loopexit.loopexit.i.us.i
-  %29 = add nuw nsw i64 %.0914.i.i.us.i, 1        ; 2 uses
-  %exitcond.not.i.i.us.i = icmp eq i64 %29, %..i.i.i.i
-  br i1 %exitcond.not.i.i.us.i, label %probable_prime.exit.thread, label %.lr.ph.i.us.i, !llvm.loop !16
-
-.split.i:                                         ; preds = %.lr.ph.i
-  %i.dc = tail call i32 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 1) #47, !srcloc !120
+.split.i:                                         ; preds = %.loopexit.loopexit.i.us.i, %.lr.ph.i.us.i
+  %.022.i.i = phi i32 [ %i.db, %.loopexit.loopexit.i.us.i ], [ 1, %.lr.ph.i.us.i ]
+  %i.dc = tail call i32 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %.022.i.i) #47, !srcloc !120
   %.not.not.not.i.not.i.i = icmp eq i32 %i.dc, 0
-  br i1 %.not.not.not.i.not.i.i, label %probable_prime.exit.thread, label %.split11.us.i
+  br i1 %.not.not.not.i.not.i.i, label %.split.us.i, label %.split11.us.i
 
-.split11.us.i:                                    ; preds = %.loopexit.loopexit.i.us.i, %.split.i
-  %.us-phi.i = phi i64 [ 3, %.split.i ], [ %i.au, %.loopexit.loopexit.i.us.i ]
+.split11.us.i:                                    ; preds = %.split.i
   %i.dd = icmp eq i32 %.val.i.i.i, 0
   br i1 %i.dd, label %.critedge.backedge.i, label %bb.p
 
 bb.p:                                             ; preds = %.split11.us.i
   %i.de = load ptr, ptr %0, align 8, !tbaa !92    ; 3 uses
   %i.df = load i64, ptr %i.de, align 8, !tbaa !80
-  %i.dg = xor i64 %i.df, %.us-phi.i               ; 3 uses
+  %i.dg = xor i64 %i.df, %i.au                    ; 3 uses
   %i.dh = icmp sgt i32 %.val.i.i.i, 1
   br i1 %i.dh, label %.lr.ph.i.i.i.i.preheader, label %BN_abs_is_word.exit.i.i.i
 
@@ -899,7 +873,7 @@ bn_odd_number_is_obviously_composite.exit.i:      ; preds = %BN_abs_is_word.exit
   %.not5.i = icmp eq i32 %i.dv, 0
   br i1 %.not5.i, label %probable_prime.exit.thread, label %.critedge.backedge.i
 
-.critedge.backedge.i:                             ; preds = %.split11.us.i, %bn_odd_number_is_obviously_composite.exit.i, %BN_abs_is_word.exit.i.i.i
+.critedge.backedge.i:                             ; preds = %bn_odd_number_is_obviously_composite.exit.i, %BN_abs_is_word.exit.i.i.i, %.split11.us.i
   %i.dw = tail call i32 @BN_rand(ptr noundef %0, i32 noundef range(i32 2, -2147483648) %1, i32 noundef 1, i32 noundef 1)
   %.not.i68 = icmp eq i32 %i.dw, 0
   br i1 %.not.i68, label %probable_prime.exit.thread115, label %.lr.ph.i, !llvm.loop !1483
@@ -1205,7 +1179,7 @@ bb.be:                                            ; preds = %.thread40.i
 probable_prime_dh.exit:                           ; preds = %.thread40.i, %bb.be
   br i1 %.not60, label %probable_prime.exit.thread115.loopexit187, label %probable_prime.exit.thread
 
-probable_prime.exit.thread:                       ; preds = %bn_odd_number_is_obviously_composite.exit.i, %.split.i, %28, %probable_prime_dh_safe.exit, %probable_prime_dh.exit
+probable_prime.exit.thread:                       ; preds = %bn_odd_number_is_obviously_composite.exit.i, %.split.us.i, %probable_prime_dh_safe.exit, %probable_prime_dh.exit
   %i.hf = add nuw nsw i32 %.0, 1
   br i1 %.not.i84, label %BN_GENCB_call.exit.thread, label %bb.bf
 
@@ -1301,11 +1275,11 @@ BN_GENCB_call.exit94.thread:                      ; preds = %bb.bk, %bb.bm, %BN_
   %exitcond.not = icmp eq i32 %i.hv, %.0.i98101
   br i1 %exitcond.not, label %probable_prime.exit.thread115, label %.preheader, !llvm.loop !1486
 
-probable_prime.exit.thread115.loopexit187:        ; preds = %bb.n, %bb.bh, %probable_prime_dh.exit, %probable_prime_dh_safe.exit, %bb.bf, %bb.bi, %BN_GENCB_call.exit
+probable_prime.exit.thread115.loopexit187:        ; preds = %bb.bh, %probable_prime_dh.exit, %probable_prime_dh_safe.exit, %bb.n, %bb.bf, %bb.bi, %BN_GENCB_call.exit
   br label %probable_prime.exit.thread115
 
 probable_prime.exit.thread115:                    ; preds = %.critedge.backedge.i, %BN_GENCB_call.exit94.thread, %bb.bl, %BN_GENCB_call.exit94, %.preheader, %bb.bj, %bb.bh, %probable_prime.exit.thread115.loopexit187, %BN_CTX_start.exit
-  %.052117 = phi i32 [ 0, %probable_prime.exit.thread115.loopexit187 ], [ 0, %bb.bj ], [ 0, %BN_CTX_start.exit ], [ 1, %bb.bh ], [ 1, %BN_GENCB_call.exit94.thread ], [ 0, %bb.bl ], [ 0, %BN_GENCB_call.exit94 ], [ 0, %.preheader ], [ 0, %.critedge.backedge.i ]
+  %.052117 = phi i32 [ 0, %probable_prime.exit.thread115.loopexit187 ], [ 0, %bb.bj ], [ 1, %bb.bh ], [ 0, %BN_CTX_start.exit ], [ 1, %BN_GENCB_call.exit94.thread ], [ 0, %bb.bl ], [ 0, %BN_GENCB_call.exit94 ], [ 0, %.preheader ], [ 0, %.critedge.backedge.i ]
   %i.hw = load i8, ptr %i.r, align 8, !tbaa !110
   %.not.i95 = icmp eq i8 %i.hw, 0
   br i1 %.not.i95, label %bb.bn, label %BN_CTX_free.exit
@@ -1706,6 +1680,9 @@ declare i8 @llvm.fshl.i8(i8, i8, i8) #38
 
 ; Function Attrs: nofree nounwind
 declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #44
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #38
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.fshl.v4i32(<4 x i32>, <4 x i32>, <4 x i32>) #38

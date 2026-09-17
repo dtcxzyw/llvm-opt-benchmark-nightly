@@ -205,20 +205,17 @@ bb.x:                                             ; preds = %_ZN7rocksdb12_GLOBA
   br i1 %.not.i55, label %.loopexit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.x
-  %i.cq = lshr i32 %i.br, 6
-  %11 = zext nneg i32 %i.cq to i64                ; 8 uses
+  %i.cq = lshr i32 %i.br, 6                       ; 8 uses
   %i.cr = load i64, ptr %i.ck, align 8, !tbaa !272 ; 2 uses
-  %12 = and i64 %i.cr, 4294967295
-  %13 = mul nuw nsw i64 %12, %11
-  %sh.diff.i.i = lshr i64 %13, 26                 ; 2 uses
-  %tr.sh.diff.i.i = trunc nuw i64 %sh.diff.i.i to i32
-  %14 = and i32 %tr.sh.diff.i.i, -64
-  %15 = and i64 %sh.diff.i.i, 4294967232
-  %i.cs = getelementptr inbounds nuw i8, ptr %i.bs, i64 %15 ; 2 uses
+  %11 = trunc i64 %i.cr to i32
+  %12 = call noundef i32 @llvm.umulh.i32(i32 %i.cq, i32 %11)
+  %13 = shl nuw i32 %12, 6                        ; 2 uses
+  %14 = zext i32 %13 to i64
+  %i.cs = getelementptr inbounds nuw i8, ptr %i.bs, i64 %14 ; 2 uses
   call void @llvm.prefetch.p0(ptr %i.cs, i32 0, i32 1, i32 1)
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 63
   call void @llvm.prefetch.p0(ptr nonnull %i.ct, i32 0, i32 1, i32 1)
-  store i32 %14, ptr %6, align 4, !tbaa !139
+  store i32 %13, ptr %6, align 4, !tbaa !139
   %i.cu = lshr i64 %i.cr, 32
   %i.cv = trunc nuw i64 %i.cu to i32
   store i32 %i.cv, ptr %5, align 4, !tbaa !139
@@ -244,7 +241,6 @@ bb.x:                                             ; preds = %_ZN7rocksdb12_GLOBA
 
 .lr.ph.i.preheader.us.i.preheader:                ; preds = %.preheader47.i
   %i.db = lshr i32 %i.br, 6
-  %16 = zext nneg i32 %i.db to i64
   %i.dc = add i32 %.0.i.i, -1
   %xtraiter = and i32 %.0.i.i, 3                  ; 3 uses
   %i.dd = icmp ult i32 %i.dc, 3
@@ -360,17 +356,15 @@ _ZN7rocksdb18FastLocalBloomImpl15AddHashPreparedEjiPc.exit.loopexit.us.i.unr-lcs
 
 _ZN7rocksdb18FastLocalBloomImpl15AddHashPreparedEjiPc.exit.loopexit.us.i: ; preds = %.lr.ph.i.us.i.epil, %_ZN7rocksdb18FastLocalBloomImpl15AddHashPreparedEjiPc.exit.loopexit.us.i.unr-lcssa
   %i.fo = load i64, ptr %.sroa.0.157.us.i, align 8, !tbaa !272 ; 2 uses
-  %17 = and i64 %i.fo, 4294967295
-  %18 = mul nuw nsw i64 %17, %16
-  %sh.diff.i34.us.i = lshr i64 %18, 26            ; 2 uses
-  %tr.sh.diff.i35.us.i = trunc nuw i64 %sh.diff.i34.us.i to i32
-  %19 = and i32 %tr.sh.diff.i35.us.i, -64
-  %20 = and i64 %sh.diff.i34.us.i, 4294967232
-  %i.fp = getelementptr inbounds nuw i8, ptr %i.bs, i64 %20 ; 2 uses
+  %15 = trunc i64 %i.fo to i32
+  %16 = call noundef i32 @llvm.umulh.i32(i32 %i.db, i32 %15)
+  %17 = shl nuw i32 %16, 6                        ; 2 uses
+  %18 = zext i32 %17 to i64
+  %i.fp = getelementptr inbounds nuw i8, ptr %i.bs, i64 %18 ; 2 uses
   call void @llvm.prefetch.p0(ptr %i.fp, i32 0, i32 1, i32 1)
   %i.fq = getelementptr inbounds nuw i8, ptr %i.fp, i64 63
   call void @llvm.prefetch.p0(ptr nonnull %i.fq, i32 0, i32 1, i32 1)
-  store i32 %19, ptr %i.dg, align 4, !tbaa !139
+  store i32 %17, ptr %i.dg, align 4, !tbaa !139
   %i.fr = lshr i64 %i.fo, 32
   %i.fs = trunc nuw i64 %i.fr to i32
   store i32 %i.fs, ptr %i.df, align 4, !tbaa !139
@@ -393,18 +387,16 @@ _ZNSt15_Deque_iteratorImRmPmEppEv.exit.i:         ; preds = %bb.z, %.lr.ph.i
 
 bb.aa:                                            ; preds = %_ZNSt15_Deque_iteratorImRmPmEppEv.exit.i
   %i.fy = load i64, ptr %.sroa.0.2.i, align 8, !tbaa !272 ; 2 uses
-  %21 = getelementptr inbounds nuw i8, ptr %6, i64 4
-  %22 = and i64 %i.fy, 4294967295
-  %23 = mul nuw nsw i64 %22, %11
-  %sh.diff.i.i.1 = lshr i64 %23, 26               ; 2 uses
-  %tr.sh.diff.i.i.1 = trunc nuw i64 %sh.diff.i.i.1 to i32
-  %24 = and i32 %tr.sh.diff.i.i.1, -64
-  %25 = and i64 %sh.diff.i.i.1, 4294967232
-  %i.fz = getelementptr inbounds nuw i8, ptr %i.bs, i64 %25 ; 2 uses
+  %19 = trunc i64 %i.fy to i32
+  %20 = getelementptr inbounds nuw i8, ptr %6, i64 4
+  %21 = call noundef i32 @llvm.umulh.i32(i32 %i.cq, i32 %19)
+  %22 = shl nuw i32 %21, 6                        ; 2 uses
+  %23 = zext i32 %22 to i64
+  %i.fz = getelementptr inbounds nuw i8, ptr %i.bs, i64 %23 ; 2 uses
   call void @llvm.prefetch.p0(ptr %i.fz, i32 0, i32 1, i32 1)
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fz, i64 63
   call void @llvm.prefetch.p0(ptr nonnull %i.ga, i32 0, i32 1, i32 1)
-  store i32 %24, ptr %21, align 4, !tbaa !139
+  store i32 %22, ptr %20, align 4, !tbaa !139
   %i.gb = lshr i64 %i.fy, 32
   %i.gc = trunc nuw i64 %i.gb to i32
   %i.gd = getelementptr inbounds nuw i8, ptr %5, i64 4
@@ -428,18 +420,16 @@ _ZNSt15_Deque_iteratorImRmPmEppEv.exit.i.1:       ; preds = %bb.ab, %bb.aa
 
 bb.ac:                                            ; preds = %_ZNSt15_Deque_iteratorImRmPmEppEv.exit.i.1
   %i.gj = load i64, ptr %.sroa.0.2.i.1, align 8, !tbaa !272 ; 2 uses
-  %26 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %27 = and i64 %i.gj, 4294967295
-  %28 = mul nuw nsw i64 %27, %11
-  %sh.diff.i.i.2 = lshr i64 %28, 26               ; 2 uses
-  %tr.sh.diff.i.i.2 = trunc nuw i64 %sh.diff.i.i.2 to i32
-  %29 = and i32 %tr.sh.diff.i.i.2, -64
-  %30 = and i64 %sh.diff.i.i.2, 4294967232
-  %i.gk = getelementptr inbounds nuw i8, ptr %i.bs, i64 %30 ; 2 uses
+  %24 = trunc i64 %i.gj to i32
+  %25 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %26 = call noundef i32 @llvm.umulh.i32(i32 %i.cq, i32 %24)
+  %27 = shl nuw i32 %26, 6                        ; 2 uses
+  %28 = zext i32 %27 to i64
+  %i.gk = getelementptr inbounds nuw i8, ptr %i.bs, i64 %28 ; 2 uses
   call void @llvm.prefetch.p0(ptr %i.gk, i32 0, i32 1, i32 1)
   %i.gl = getelementptr inbounds nuw i8, ptr %i.gk, i64 63
   call void @llvm.prefetch.p0(ptr nonnull %i.gl, i32 0, i32 1, i32 1)
-  store i32 %29, ptr %26, align 4, !tbaa !139
+  store i32 %27, ptr %25, align 4, !tbaa !139
   %i.gm = lshr i64 %i.gj, 32
   %i.gn = trunc nuw i64 %i.gm to i32
   %i.go = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -463,18 +453,16 @@ _ZNSt15_Deque_iteratorImRmPmEppEv.exit.i.2:       ; preds = %bb.ad, %bb.ac
 
 bb.ae:                                            ; preds = %_ZNSt15_Deque_iteratorImRmPmEppEv.exit.i.2
   %i.gu = load i64, ptr %.sroa.0.2.i.2, align 8, !tbaa !272 ; 2 uses
-  %31 = getelementptr inbounds nuw i8, ptr %6, i64 12
-  %32 = and i64 %i.gu, 4294967295
-  %33 = mul nuw nsw i64 %32, %11
-  %sh.diff.i.i.3 = lshr i64 %33, 26               ; 2 uses
-  %tr.sh.diff.i.i.3 = trunc nuw i64 %sh.diff.i.i.3 to i32
-  %34 = and i32 %tr.sh.diff.i.i.3, -64
-  %35 = and i64 %sh.diff.i.i.3, 4294967232
-  %i.gv = getelementptr inbounds nuw i8, ptr %i.bs, i64 %35 ; 2 uses
+  %29 = trunc i64 %i.gu to i32
+  %30 = getelementptr inbounds nuw i8, ptr %6, i64 12
+  %31 = call noundef i32 @llvm.umulh.i32(i32 %i.cq, i32 %29)
+  %32 = shl nuw i32 %31, 6                        ; 2 uses
+  %33 = zext i32 %32 to i64
+  %i.gv = getelementptr inbounds nuw i8, ptr %i.bs, i64 %33 ; 2 uses
   call void @llvm.prefetch.p0(ptr %i.gv, i32 0, i32 1, i32 1)
   %i.gw = getelementptr inbounds nuw i8, ptr %i.gv, i64 63
   call void @llvm.prefetch.p0(ptr nonnull %i.gw, i32 0, i32 1, i32 1)
-  store i32 %34, ptr %31, align 4, !tbaa !139
+  store i32 %32, ptr %30, align 4, !tbaa !139
   %i.gx = lshr i64 %i.gu, 32
   %i.gy = trunc nuw i64 %i.gx to i32
   %i.gz = getelementptr inbounds nuw i8, ptr %5, i64 12
@@ -498,18 +486,16 @@ _ZNSt15_Deque_iteratorImRmPmEppEv.exit.i.3:       ; preds = %bb.af, %bb.ae
 
 bb.ag:                                            ; preds = %_ZNSt15_Deque_iteratorImRmPmEppEv.exit.i.3
   %i.hf = load i64, ptr %.sroa.0.2.i.3, align 8, !tbaa !272 ; 2 uses
-  %36 = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %37 = and i64 %i.hf, 4294967295
-  %38 = mul nuw nsw i64 %37, %11
-  %sh.diff.i.i.4 = lshr i64 %38, 26               ; 2 uses
-  %tr.sh.diff.i.i.4 = trunc nuw i64 %sh.diff.i.i.4 to i32
-  %39 = and i32 %tr.sh.diff.i.i.4, -64
-  %40 = and i64 %sh.diff.i.i.4, 4294967232
-  %i.hg = getelementptr inbounds nuw i8, ptr %i.bs, i64 %40 ; 2 uses
+  %34 = trunc i64 %i.hf to i32
+  %35 = getelementptr inbounds nuw i8, ptr %6, i64 16
+  %36 = call noundef i32 @llvm.umulh.i32(i32 %i.cq, i32 %34)
+  %37 = shl nuw i32 %36, 6                        ; 2 uses
+  %38 = zext i32 %37 to i64
+  %i.hg = getelementptr inbounds nuw i8, ptr %i.bs, i64 %38 ; 2 uses
   call void @llvm.prefetch.p0(ptr %i.hg, i32 0, i32 1, i32 1)
   %i.hh = getelementptr inbounds nuw i8, ptr %i.hg, i64 63
   call void @llvm.prefetch.p0(ptr nonnull %i.hh, i32 0, i32 1, i32 1)
-  store i32 %39, ptr %36, align 4, !tbaa !139
+  store i32 %37, ptr %35, align 4, !tbaa !139
   %i.hi = lshr i64 %i.hf, 32
   %i.hj = trunc nuw i64 %i.hi to i32
   %i.hk = getelementptr inbounds nuw i8, ptr %5, i64 16
@@ -533,18 +519,16 @@ _ZNSt15_Deque_iteratorImRmPmEppEv.exit.i.4:       ; preds = %bb.ah, %bb.ag
 
 bb.ai:                                            ; preds = %_ZNSt15_Deque_iteratorImRmPmEppEv.exit.i.4
   %i.hq = load i64, ptr %.sroa.0.2.i.4, align 8, !tbaa !272 ; 2 uses
-  %41 = getelementptr inbounds nuw i8, ptr %6, i64 20
-  %42 = and i64 %i.hq, 4294967295
-  %43 = mul nuw nsw i64 %42, %11
-  %sh.diff.i.i.5 = lshr i64 %43, 26               ; 2 uses
-  %tr.sh.diff.i.i.5 = trunc nuw i64 %sh.diff.i.i.5 to i32
-  %44 = and i32 %tr.sh.diff.i.i.5, -64
-  %45 = and i64 %sh.diff.i.i.5, 4294967232
-  %i.hr = getelementptr inbounds nuw i8, ptr %i.bs, i64 %45 ; 2 uses
+  %39 = trunc i64 %i.hq to i32
+  %40 = getelementptr inbounds nuw i8, ptr %6, i64 20
+  %41 = call noundef i32 @llvm.umulh.i32(i32 %i.cq, i32 %39)
+  %42 = shl nuw i32 %41, 6                        ; 2 uses
+  %43 = zext i32 %42 to i64
+  %i.hr = getelementptr inbounds nuw i8, ptr %i.bs, i64 %43 ; 2 uses
   call void @llvm.prefetch.p0(ptr %i.hr, i32 0, i32 1, i32 1)
   %i.hs = getelementptr inbounds nuw i8, ptr %i.hr, i64 63
   call void @llvm.prefetch.p0(ptr nonnull %i.hs, i32 0, i32 1, i32 1)
-  store i32 %44, ptr %41, align 4, !tbaa !139
+  store i32 %42, ptr %40, align 4, !tbaa !139
   %i.ht = lshr i64 %i.hq, 32
   %i.hu = trunc nuw i64 %i.ht to i32
   %i.hv = getelementptr inbounds nuw i8, ptr %5, i64 20
@@ -568,18 +552,16 @@ _ZNSt15_Deque_iteratorImRmPmEppEv.exit.i.5:       ; preds = %bb.aj, %bb.ai
 
 bb.ak:                                            ; preds = %_ZNSt15_Deque_iteratorImRmPmEppEv.exit.i.5
   %i.ib = load i64, ptr %.sroa.0.2.i.5, align 8, !tbaa !272 ; 2 uses
-  %46 = getelementptr inbounds nuw i8, ptr %6, i64 24
-  %47 = and i64 %i.ib, 4294967295
-  %48 = mul nuw nsw i64 %47, %11
-  %sh.diff.i.i.6 = lshr i64 %48, 26               ; 2 uses
-  %tr.sh.diff.i.i.6 = trunc nuw i64 %sh.diff.i.i.6 to i32
-  %49 = and i32 %tr.sh.diff.i.i.6, -64
-  %50 = and i64 %sh.diff.i.i.6, 4294967232
-  %i.ic = getelementptr inbounds nuw i8, ptr %i.bs, i64 %50 ; 2 uses
+  %44 = trunc i64 %i.ib to i32
+  %45 = getelementptr inbounds nuw i8, ptr %6, i64 24
+  %46 = call noundef i32 @llvm.umulh.i32(i32 %i.cq, i32 %44)
+  %47 = shl nuw i32 %46, 6                        ; 2 uses
+  %48 = zext i32 %47 to i64
+  %i.ic = getelementptr inbounds nuw i8, ptr %i.bs, i64 %48 ; 2 uses
   call void @llvm.prefetch.p0(ptr %i.ic, i32 0, i32 1, i32 1)
   %i.id = getelementptr inbounds nuw i8, ptr %i.ic, i64 63
   call void @llvm.prefetch.p0(ptr nonnull %i.id, i32 0, i32 1, i32 1)
-  store i32 %49, ptr %46, align 4, !tbaa !139
+  store i32 %47, ptr %45, align 4, !tbaa !139
   %i.ie = lshr i64 %i.ib, 32
   %i.if = trunc nuw i64 %i.ie to i32
   %i.ig = getelementptr inbounds nuw i8, ptr %5, i64 24
@@ -603,18 +585,16 @@ _ZNSt15_Deque_iteratorImRmPmEppEv.exit.i.6:       ; preds = %bb.al, %bb.ak
 
 bb.am:                                            ; preds = %_ZNSt15_Deque_iteratorImRmPmEppEv.exit.i.6
   %i.im = load i64, ptr %.sroa.0.2.i.6, align 8, !tbaa !272 ; 2 uses
-  %51 = getelementptr inbounds nuw i8, ptr %6, i64 28
-  %52 = and i64 %i.im, 4294967295
-  %53 = mul nuw nsw i64 %52, %11
-  %sh.diff.i.i.7 = lshr i64 %53, 26               ; 2 uses
-  %tr.sh.diff.i.i.7 = trunc nuw i64 %sh.diff.i.i.7 to i32
-  %54 = and i32 %tr.sh.diff.i.i.7, -64
-  %55 = and i64 %sh.diff.i.i.7, 4294967232
-  %i.in = getelementptr inbounds nuw i8, ptr %i.bs, i64 %55 ; 2 uses
+  %49 = trunc i64 %i.im to i32
+  %50 = getelementptr inbounds nuw i8, ptr %6, i64 28
+  %51 = call noundef i32 @llvm.umulh.i32(i32 %i.cq, i32 %49)
+  %52 = shl nuw i32 %51, 6                        ; 2 uses
+  %53 = zext i32 %52 to i64
+  %i.in = getelementptr inbounds nuw i8, ptr %i.bs, i64 %53 ; 2 uses
   call void @llvm.prefetch.p0(ptr %i.in, i32 0, i32 1, i32 1)
   %i.io = getelementptr inbounds nuw i8, ptr %i.in, i64 63
   call void @llvm.prefetch.p0(ptr nonnull %i.io, i32 0, i32 1, i32 1)
-  store i32 %54, ptr %51, align 4, !tbaa !139
+  store i32 %52, ptr %50, align 4, !tbaa !139
   %i.ip = lshr i64 %i.im, 32
   %i.iq = trunc nuw i64 %i.ip to i32
   %i.ir = getelementptr inbounds nuw i8, ptr %5, i64 28
@@ -1017,16 +997,15 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load i64, ptr %i.b, align 8, !tbaa !180
   %i.d = tail call noundef i64 @_ZN7rocksdb6Hash64EPKcm(ptr noundef %i.a, i64 noundef %i.c) ; 2 uses
+  %2 = trunc i64 %i.d to i32
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.f = load i32, ptr %i.e, align 4, !tbaa !192
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !190
   %i.i = lshr i32 %i.f, 6
-  %2 = zext nneg i32 %i.i to i64
-  %3 = and i64 %i.d, 4294967295
-  %4 = mul nuw nsw i64 %3, %2
-  %sh.diff.i = lshr i64 %4, 26
-  %5 = and i64 %sh.diff.i, 4294967232
+  %3 = tail call noundef i32 @llvm.umulh.i32(i32 %i.i, i32 %2)
+  %4 = shl nuw i32 %3, 6
+  %5 = zext i32 %4 to i64
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 %5 ; 4 uses
   tail call void @llvm.prefetch.p0(ptr %i.j, i32 0, i32 1, i32 1)
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 63
@@ -1110,22 +1089,19 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.l = load i64, ptr %i.k, align 8, !tbaa !180
   %i.m = tail call noundef i64 @_ZN7rocksdb6Hash64EPKcm(ptr noundef %i.j, i64 noundef %i.l) ; 2 uses
+  %6 = trunc i64 %i.m to i32
   %i.n = load i32, ptr %i.b, align 4, !tbaa !192
   %i.o = load ptr, ptr %i.c, align 8, !tbaa !190
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %indvars.iv
   %i.q = lshr i32 %i.n, 6
-  %6 = zext nneg i32 %i.q to i64
-  %7 = and i64 %i.m, 4294967295
-  %8 = mul nuw nsw i64 %7, %6
-  %sh.diff.i = lshr i64 %8, 26                    ; 2 uses
-  %tr.sh.diff.i = trunc nuw i64 %sh.diff.i to i32
-  %9 = and i32 %tr.sh.diff.i, -64
-  %10 = and i64 %sh.diff.i, 4294967232
-  %i.r = getelementptr inbounds nuw i8, ptr %i.o, i64 %10 ; 2 uses
+  %7 = tail call noundef i32 @llvm.umulh.i32(i32 %i.q, i32 %6)
+  %8 = shl nuw i32 %7, 6                          ; 2 uses
+  %9 = zext i32 %8 to i64
+  %i.r = getelementptr inbounds nuw i8, ptr %i.o, i64 %9 ; 2 uses
   tail call void @llvm.prefetch.p0(ptr %i.r, i32 0, i32 1, i32 1)
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 63
   tail call void @llvm.prefetch.p0(ptr nonnull %i.s, i32 0, i32 1, i32 1)
-  store i32 %9, ptr %i.p, align 4, !tbaa !139
+  store i32 %8, ptr %i.p, align 4, !tbaa !139
   %i.t = lshr i64 %i.m, 32
   %i.u = trunc nuw i64 %i.t to i32
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv
@@ -1198,6 +1174,7 @@ _ZN7rocksdb18FastLocalBloomImpl20HashMayMatchPreparedEjiPKc.exit: ; preds = %bb.
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define internal noundef zeroext i1 @_ZN7rocksdb12_GLOBAL__N_124FastLocalBloomBitsReader12HashMayMatchEm(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, i64 noundef %1) unnamed_addr #31 align 2 {
 bb.a:
+  %2 = trunc i64 %1 to i32
   %i.a = lshr i64 %1, 32
   %i.b = trunc nuw i64 %i.a to i32
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 20
@@ -1207,11 +1184,9 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !190
   %i.i = lshr i32 %i.d, 6
-  %2 = zext nneg i32 %i.i to i64
-  %3 = and i64 %1, 4294967295
-  %4 = mul nuw nsw i64 %3, %2
-  %sh.diff.i = lshr i64 %4, 26
-  %5 = and i64 %sh.diff.i, 4294967232
+  %3 = tail call noundef i32 @llvm.umulh.i32(i32 %i.i, i32 %2)
+  %4 = shl nuw i32 %3, 6
+  %5 = zext i32 %4 to i64
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 %5 ; 2 uses
   %i.k = load <8 x i32>, ptr %i.j, align 1, !tbaa !63
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 32
@@ -1612,6 +1587,9 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #28
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #4

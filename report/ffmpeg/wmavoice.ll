@@ -205,12 +205,8 @@ bb.cc:                                            ; preds = %bb.cb
   %i.aws = mul i32 %spec.select.i.i.i.i, %i.awr
   %i.awt = getelementptr inbounds nuw i8, ptr %i.awq, i64 4
   %i.awu = load i32, ptr %i.awt, align 4, !tbaa !56
-  %5 = zext i32 %spec.select.i.i.i.i to i64
-  %6 = zext i32 %i.awu to i64
-  %7 = mul nuw i64 %5, %6
-  %8 = lshr i64 %7, 32
-  %9 = trunc nuw i64 %8 to i32
-  %i.awv = add i32 %i.aws, %9
+  %5 = call range(i32 0, -65536) i32 @llvm.umulh.i32(i32 range(i32 0, -65535) %spec.select.i.i.i.i, i32 %i.awu)
+  %i.awv = add i32 %5, %i.aws
   %.lhs.trunc.i.i.i.i = trunc i32 %i.awv to i16
   %i.aww = urem i16 %.lhs.trunc.i.i.i.i, %.rhs.trunc.i.i37.i.i
   %.zext.i.i.i.i = zext nneg i16 %i.aww to i32
@@ -613,16 +609,12 @@ aw_pulse_set2.exit.thread.i.i.i:                  ; preds = %bb.dk, %.loopexit10
   %i.bir = add i32 %.neg.i120.i.i.i, %spec.select.i119.i.i.i
   %i.bis = zext i32 %i.bir to i64
   %i.bit = getelementptr inbounds nuw [8 x i8], ptr @pRNG.div_tbl, i64 %i.bis ; 2 uses
-  %10 = load i32, ptr %i.bit, align 8, !tbaa !56
-  %11 = mul i32 %spec.select.i119.i.i.i, %10
-  %12 = zext i32 %spec.select.i119.i.i.i to i64
   %i.biu = getelementptr inbounds nuw i8, ptr %i.bit, i64 4
   %i.biv = load i32, ptr %i.biu, align 4, !tbaa !56
-  %13 = zext i32 %i.biv to i64
-  %14 = mul nuw i64 %12, %13
-  %15 = lshr i64 %14, 32
-  %16 = trunc nuw i64 %15 to i32
-  %i.biw = add i32 %11, %16
+  %6 = call range(i32 0, -65536) i32 @llvm.umulh.i32(i32 range(i32 0, -65535) %spec.select.i119.i.i.i, i32 %i.biv)
+  %7 = load i32, ptr %i.bit, align 8, !tbaa !56
+  %8 = mul i32 %spec.select.i119.i.i.i, %7
+  %i.biw = add i32 %6, %8
   %.lhs.trunc.i.i36.i.i = trunc i32 %i.biw to i16
   %i.bix = urem i16 %.lhs.trunc.i.i36.i.i, %.rhs.trunc.i.i37.i.i
   %i.biy = zext nneg i16 %i.bix to i64
@@ -1023,6 +1015,9 @@ declare i32 @llvm.bswap.i32(i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #9

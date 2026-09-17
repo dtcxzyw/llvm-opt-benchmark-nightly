@@ -205,19 +205,15 @@ bb.b:                                             ; preds = %_ZNKSt14default_del
 }
 
 ; Function Attrs: mustprogress uwtable
-define noundef range(i64 0, -1) i64 @_ZNK7rocksdb7LockMap9GetStripeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1) local_unnamed_addr #1 align 2 {
+define noundef i64 @_ZNK7rocksdb7LockMap9GetStripeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1) local_unnamed_addr #1 align 2 {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !44
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load i64, ptr %i.b, align 8, !tbaa !46
   %i.d = tail call noundef i64 @_ZN7rocksdb6Hash64EPKcm(ptr noundef %i.a, i64 noundef %i.c)
   %i.e = load i64, ptr %0, align 8, !tbaa !185
-  %2 = zext i64 %i.e to i128
-  %3 = zext i64 %i.d to i128
-  %4 = mul nuw i128 %2, %3
-  %5 = lshr i128 %4, 64
-  %6 = trunc nuw i128 %5 to i64
-  ret i64 %6
+  %2 = tail call noundef i64 @llvm.umulh.i64(i64 %i.e, i64 %i.d)
+  ret i64 %2
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -620,11 +616,7 @@ bb.d:                                             ; preds = %bb.a
 
 bb.e:                                             ; preds = %bb.d
   %i.m = load i64, ptr %i.b, align 8, !tbaa !185
-  %11 = zext i64 %i.m to i128
-  %12 = zext i64 %i.l to i128
-  %13 = mul nuw i128 %11, %12
-  %14 = lshr i128 %13, 64
-  %15 = trunc nuw i128 %14 to i64                 ; 3 uses
+  %11 = tail call noundef i64 @llvm.umulh.i64(i64 %i.m, i64 %i.l) ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !205
@@ -633,18 +625,18 @@ bb.e:                                             ; preds = %bb.d
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = sub i64 %i.r, %i.s
   %i.u = ashr exact i64 %i.t, 3                   ; 2 uses
-  %.not.i.i = icmp ugt i64 %i.u, %15
+  %.not.i.i = icmp ult i64 %11, %i.u
   br i1 %.not.i.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.47, i64 noundef %15, i64 noundef %i.u) #27
+  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.47, i64 noundef %11, i64 noundef %i.u) #27
           to label %.noexc unwind label %bb.n
 
 .noexc:                                           ; preds = %bb.f
   unreachable
 
 bb.g:                                             ; preds = %bb.e
-  %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %15
+  %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %11
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !208
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #28
   %i.x = load ptr, ptr %2, align 8, !tbaa !97
@@ -1047,11 +1039,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.g = load i64, ptr %i.a, align 8, !tbaa !185
-  %7 = zext i64 %i.g to i128
-  %8 = zext i64 %i.f to i128
-  %9 = mul nuw i128 %7, %8
-  %10 = lshr i128 %9, 64
-  %11 = trunc nuw i128 %10 to i64                 ; 3 uses
+  %7 = tail call noundef i64 @llvm.umulh.i64(i64 %i.g, i64 %i.f) ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !205
@@ -1060,18 +1048,18 @@ bb.c:                                             ; preds = %bb.b
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = sub i64 %i.l, %i.m
   %i.o = ashr exact i64 %i.n, 3                   ; 2 uses
-  %.not.i.i = icmp ugt i64 %i.o, %11
+  %.not.i.i = icmp ult i64 %7, %i.o
   br i1 %.not.i.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.47, i64 noundef %11, i64 noundef %i.o) #27
+  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.47, i64 noundef %7, i64 noundef %i.o) #27
           to label %.noexc unwind label %bb.q
 
 .noexc:                                           ; preds = %bb.d
   unreachable
 
 bb.e:                                             ; preds = %bb.c
-  %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %11
+  %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %7
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !208  ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !284  ; 2 uses
@@ -1365,13 +1353,9 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.u
   %i.ax = load i64, ptr %i.u, align 8, !tbaa !185
-  %8 = zext i64 %i.ax to i128
-  %9 = zext i64 %i.aw to i128
-  %10 = mul nuw i128 %8, %9
-  %11 = lshr i128 %10, 64
-  %12 = trunc nuw i128 %11 to i64                 ; 5 uses
+  %8 = call noundef i64 @llvm.umulh.i64(i64 %i.ax, i64 %i.aw) ; 5 uses
   %i.ay = load i64, ptr %i.f, align 8, !tbaa !342 ; 2 uses
-  %i.az = urem i64 %12, %i.ay                     ; 3 uses
+  %i.az = urem i64 %8, %i.ay                      ; 3 uses
   %i.ba = load ptr, ptr %6, align 8, !tbaa !341
   %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.ba, i64 %i.az
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !63 ; 2 uses
@@ -1382,11 +1366,11 @@ bb.w:                                             ; preds = %bb.v
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !64 ; 3 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 8
   %i.bf = load i64, ptr %i.be, align 8, !tbaa !80
-  %i.bg = icmp eq i64 %i.bf, %12
+  %i.bg = icmp eq i64 %8, %i.bf
   br i1 %i.bg, label %.loopexit, label %.lr.ph.i.i.i.i
 
 bb.x:                                             ; preds = %bb.y
-  %i.bh = icmp eq i64 %i.bk, %12
+  %i.bh = icmp eq i64 %8, %i.bk
   br i1 %i.bh, label %.loopexit, label %.lr.ph.i.i.i.i, !llvm.loop !15
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.w, %bb.x
@@ -1414,11 +1398,11 @@ bb.y:                                             ; preds = %.lr.ph.i.i.i.i
 .noexc:                                           ; preds = %.loopexit.i.i
   store ptr null, ptr %i.bm, align 8, !tbaa !64
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 8
-  store i64 %12, ptr %i.bn, align 8, !tbaa !354
+  store i64 %8, ptr %i.bn, align 8, !tbaa !354
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bm, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bo, i8 0, i64 24, i1 false)
   store ptr %i.bm, ptr %i.j, align 8, !tbaa !355
-  %i.bp = invoke ptr @_ZNSt10_HashtableImSt4pairIKmSt6vectorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEESaISD_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENSF_18_Mod_range_hashingENSF_20_Default_ranged_hashENSF_20_Prime_rehash_policyENSF_17_Hashtable_traitsILb0ELb0ELb1EEEE21_M_insert_unique_nodeEmmPNSF_10_Hash_nodeISD_Lb0EEEm(ptr noundef nonnull align 8 dereferenceable(56) %6, i64 noundef %i.az, i64 noundef %12, ptr noundef nonnull %i.bm, i64 noundef 1)
+  %i.bp = invoke ptr @_ZNSt10_HashtableImSt4pairIKmSt6vectorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEESaISD_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENSF_18_Mod_range_hashingENSF_20_Default_ranged_hashENSF_20_Prime_rehash_policyENSF_17_Hashtable_traitsILb0ELb0ELb1EEEE21_M_insert_unique_nodeEmmPNSF_10_Hash_nodeISD_Lb0EEEm(ptr noundef nonnull align 8 dereferenceable(56) %6, i64 noundef %i.az, i64 noundef %8, ptr noundef nonnull %i.bm, i64 noundef 1)
           to label %_ZNSt10_HashtableImSt4pairIKmSt6vectorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEESaISD_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENSF_18_Mod_range_hashingENSF_20_Default_ranged_hashENSF_20_Prime_rehash_policyENSF_17_Hashtable_traitsILb0ELb0ELb1EEEE12_Scoped_nodeD2Ev.exit.i.i unwind label %bb.z
 
 _ZNSt10_HashtableImSt4pairIKmSt6vectorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEESaISD_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENSF_18_Mod_range_hashingENSF_20_Default_ranged_hashENSF_20_Prime_rehash_policyENSF_17_Hashtable_traitsILb0ELb0ELb1EEEE12_Scoped_nodeD2Ev.exit.i.i: ; preds = %.noexc
@@ -1821,11 +1805,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.g = load i64, ptr %i.a, align 8, !tbaa !185
-  %7 = zext i64 %i.g to i128
-  %8 = zext i64 %i.f to i128
-  %9 = mul nuw i128 %7, %8
-  %10 = lshr i128 %9, 64
-  %11 = trunc nuw i128 %10 to i64                 ; 3 uses
+  %7 = tail call noundef i64 @llvm.umulh.i64(i64 %i.g, i64 %i.f) ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !205
@@ -1834,18 +1814,18 @@ bb.c:                                             ; preds = %bb.b
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = sub i64 %i.l, %i.m
   %i.o = ashr exact i64 %i.n, 3                   ; 2 uses
-  %.not.i.i = icmp ugt i64 %i.o, %11
+  %.not.i.i = icmp ult i64 %7, %i.o
   br i1 %.not.i.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.47, i64 noundef %11, i64 noundef %i.o) #27
+  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.47, i64 noundef %7, i64 noundef %i.o) #27
           to label %.noexc unwind label %bb.p
 
 .noexc:                                           ; preds = %bb.d
   unreachable
 
 bb.e:                                             ; preds = %bb.c
-  %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %11
+  %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %7
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !208  ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !284  ; 2 uses
@@ -2130,13 +2110,9 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.u
   %i.ax = load i64, ptr %i.u, align 8, !tbaa !185
-  %8 = zext i64 %i.ax to i128
-  %9 = zext i64 %i.aw to i128
-  %10 = mul nuw i128 %8, %9
-  %11 = lshr i128 %10, 64
-  %12 = trunc nuw i128 %11 to i64                 ; 5 uses
+  %8 = call noundef i64 @llvm.umulh.i64(i64 %i.ax, i64 %i.aw) ; 5 uses
   %i.ay = load i64, ptr %i.f, align 8, !tbaa !342 ; 2 uses
-  %i.az = urem i64 %12, %i.ay                     ; 3 uses
+  %i.az = urem i64 %8, %i.ay                      ; 3 uses
   %i.ba = load ptr, ptr %6, align 8, !tbaa !341
   %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.ba, i64 %i.az
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !63 ; 2 uses
@@ -2147,11 +2123,11 @@ bb.w:                                             ; preds = %bb.v
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !64 ; 3 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 8
   %i.bf = load i64, ptr %i.be, align 8, !tbaa !80
-  %i.bg = icmp eq i64 %i.bf, %12
+  %i.bg = icmp eq i64 %8, %i.bf
   br i1 %i.bg, label %.loopexit, label %.lr.ph.i.i.i.i
 
 bb.x:                                             ; preds = %bb.y
-  %i.bh = icmp eq i64 %i.bk, %12
+  %i.bh = icmp eq i64 %8, %i.bk
   br i1 %i.bh, label %.loopexit, label %.lr.ph.i.i.i.i, !llvm.loop !15
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.w, %bb.x
@@ -2179,11 +2155,11 @@ bb.y:                                             ; preds = %.lr.ph.i.i.i.i
 .noexc:                                           ; preds = %.loopexit.i.i
   store ptr null, ptr %i.bm, align 8, !tbaa !64
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 8
-  store i64 %12, ptr %i.bn, align 8, !tbaa !354
+  store i64 %8, ptr %i.bn, align 8, !tbaa !354
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bm, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bo, i8 0, i64 24, i1 false)
   store ptr %i.bm, ptr %i.j, align 8, !tbaa !355
-  %i.bp = invoke ptr @_ZNSt10_HashtableImSt4pairIKmSt6vectorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEESaISD_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENSF_18_Mod_range_hashingENSF_20_Default_ranged_hashENSF_20_Prime_rehash_policyENSF_17_Hashtable_traitsILb0ELb0ELb1EEEE21_M_insert_unique_nodeEmmPNSF_10_Hash_nodeISD_Lb0EEEm(ptr noundef nonnull align 8 dereferenceable(56) %6, i64 noundef %i.az, i64 noundef %12, ptr noundef nonnull %i.bm, i64 noundef 1)
+  %i.bp = invoke ptr @_ZNSt10_HashtableImSt4pairIKmSt6vectorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEESaISD_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENSF_18_Mod_range_hashingENSF_20_Default_ranged_hashENSF_20_Prime_rehash_policyENSF_17_Hashtable_traitsILb0ELb0ELb1EEEE21_M_insert_unique_nodeEmmPNSF_10_Hash_nodeISD_Lb0EEEm(ptr noundef nonnull align 8 dereferenceable(56) %6, i64 noundef %i.az, i64 noundef %8, ptr noundef nonnull %i.bm, i64 noundef 1)
           to label %_ZNSt10_HashtableImSt4pairIKmSt6vectorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEESaISD_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENSF_18_Mod_range_hashingENSF_20_Default_ranged_hashENSF_20_Prime_rehash_policyENSF_17_Hashtable_traitsILb0ELb0ELb1EEEE12_Scoped_nodeD2Ev.exit.i.i unwind label %bb.z
 
 _ZNSt10_HashtableImSt4pairIKmSt6vectorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEESaISD_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENSF_18_Mod_range_hashingENSF_20_Default_ranged_hashENSF_20_Prime_rehash_policyENSF_17_Hashtable_traitsILb0ELb0ELb1EEEE12_Scoped_nodeD2Ev.exit.i.i: ; preds = %.noexc
@@ -2584,6 +2560,9 @@ declare i64 @llvm.umax.i64(i64, i64) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #25
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #25

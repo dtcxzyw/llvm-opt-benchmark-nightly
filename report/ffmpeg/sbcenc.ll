@@ -204,22 +204,18 @@ bb.ad:                                            ; preds = %put_bits.exit108.i,
 bb.ae:                                            ; preds = %bb.ad
   %i.mk = getelementptr inbounds nuw [4 x i8], ptr %i.md, i64 %indvars.iv200.i
   %i.ml = load i32, ptr %i.mk, align 4, !tbaa !43
-  %4 = zext i32 %i.ml to i64
   %i.mm = getelementptr inbounds nuw [4 x i8], ptr %i.me, i64 %indvars.iv200.i
   %i.mn = load i32, ptr %i.mm, align 4, !tbaa !43
   %i.mo = getelementptr inbounds nuw [4 x i8], ptr %i.mf, i64 %indvars.iv200.i
   %i.mp = load i32, ptr %i.mo, align 4, !tbaa !84
   %i.mq = add i32 %i.mp, %i.mn
-  %5 = zext i32 %i.mq to i64
-  %6 = mul nuw i64 %5, %4
-  %7 = lshr i64 %6, 32
-  %8 = trunc nuw i64 %7 to i32                    ; 3 uses
+  %4 = call i32 @llvm.umulh.i32(i32 %i.ml, i32 %i.mq) ; 3 uses
   %i.mr = icmp slt i32 %i.mi, %.sroa.15.5156.i
   br i1 %i.mr, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae
   %i.ms = shl i32 %.sroa.0.5157.i, %i.mi
-  %i.mt = or i32 %i.ms, %8
+  %i.mt = or i32 %4, %i.ms
   %i.mu = sub nsw i32 %.sroa.15.5156.i, %i.mi
   br label %put_bits.exit108.i
 
@@ -232,7 +228,7 @@ bb.ag:                                            ; preds = %bb.ae
 bb.ah:                                            ; preds = %bb.ag
   %i.my = shl i32 %.sroa.0.5157.i, %.sroa.15.5156.i
   %i.mz = sub nsw i32 %i.mi, %.sroa.15.5156.i
-  %i.na = lshr i32 %8, %i.mz
+  %i.na = lshr i32 %4, %i.mz
   %i.nb = or i32 %i.na, %i.my
   %i.nc = call i32 @llvm.bswap.i32(i32 %i.nb)
   store i32 %i.nc, ptr %.sroa.28.5155.i, align 1, !tbaa !84
@@ -254,7 +250,7 @@ put_bits.exit108.i:                               ; preds = %bb.aj, %bb.af, %bb.
   %i.nf = phi i8 [ %i.mg, %bb.ad ], [ %i.mg, %bb.af ], [ %.pre214.i, %bb.aj ] ; 4 uses
   %.sroa.28.6.i = phi ptr [ %.sroa.28.5155.i, %bb.ad ], [ %.sroa.28.5155.i, %bb.af ], [ %.sroa.28.11.i, %bb.aj ] ; 2 uses
   %.sroa.15.6.i = phi i32 [ %.sroa.15.5156.i, %bb.ad ], [ %i.mu, %bb.af ], [ %i.ne, %bb.aj ] ; 2 uses
-  %.sroa.0.6.i = phi i32 [ %.sroa.0.5157.i, %bb.ad ], [ %i.mt, %bb.af ], [ %8, %bb.aj ] ; 2 uses
+  %.sroa.0.6.i = phi i32 [ %.sroa.0.5157.i, %bb.ad ], [ %i.mt, %bb.af ], [ %4, %bb.aj ] ; 2 uses
   %indvars.iv.next201.i = add nuw nsw i64 %indvars.iv200.i, 1 ; 2 uses
   %i.ng = zext i8 %i.nf to i64
   %i.nh = icmp samesign ult i64 %indvars.iv.next201.i, %i.ng
@@ -363,6 +359,9 @@ declare void @ff_sbc_calculate_bits(ptr noundef, ptr noundef) local_unnamed_addr
 
 ; Function Attrs: cold nofree noreturn nounwind
 declare void @abort() local_unnamed_addr #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #6

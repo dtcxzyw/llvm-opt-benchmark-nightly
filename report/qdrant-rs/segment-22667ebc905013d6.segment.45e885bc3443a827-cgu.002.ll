@@ -205,15 +205,12 @@ bb.d:                                             ; preds = %bb.c
   %i.x = zext i64 %i.v to i128
   %i.y = mul nuw i128 %i.w, %i.x                  ; 2 uses
   %i.z = lshr i128 %i.y, 64
+  %i.aa = xor i128 %i.z, %i.y
+  %2 = trunc i128 %i.aa to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !8767
-  %.masked.i.i.i = and i128 %i.y, 18446744073709551615
-  %i.aa = xor i128 %i.z, %.masked.i.i.i
-  %2 = zext i64 %i.n to i128
-  %3 = mul nuw i128 %i.aa, %2
-  %4 = lshr i128 %3, 64
-  %5 = trunc nuw i128 %4 to i64
+  %3 = tail call noundef range(i64 0, -1) i64 @llvm.umulh.i64(i64 %2, i64 %i.n)
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %.sroa.8.0.copyload, i64 %.val10.i
-  store i64 %5, ptr %i.ab, align 8, !noalias !8771
+  store i64 %3, ptr %i.ab, align 8, !noalias !8771
   %i.ac = add i64 %.val10.i, 1                    ; 2 uses
   %i.ad = add nuw i64 %.sroa.01.0.i, 1            ; 2 uses
   %i.ae = icmp eq i64 %i.ad, %i.i
@@ -358,14 +355,11 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   %i.x = xor i128 %i.w, %.masked.i.i.i.i
   %i.y = mul nuw i128 %i.x, 16952864883938283893  ; 2 uses
   %i.z = lshr i128 %i.y, 64
-  %.masked.i.i.i = and i128 %i.y, 18446744073709551615
-  %i.aa = xor i128 %i.z, %.masked.i.i.i
-  %2 = zext i64 %i.l to i128
-  %3 = mul nuw i128 %i.aa, %2
-  %4 = lshr i128 %3, 64
-  %5 = trunc nuw i128 %4 to i64
+  %i.aa = xor i128 %i.z, %i.y
+  %2 = trunc i128 %i.aa to i64
+  %3 = tail call noundef range(i64 0, -1) i64 @llvm.umulh.i64(i64 %2, i64 %i.l)
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %.sroa.7.0.copyload, i64 %i.i
-  store i64 %5, ptr %i.ab, align 8, !noalias !8809
+  store i64 %3, ptr %i.ab, align 8, !noalias !8809
   %i.ac = add i64 %i.i, 1                         ; 2 uses
   %i.ad = add nuw i64 %.sroa.01.0.i, 1            ; 2 uses
   %i.ae = icmp eq i64 %i.ad, %i.h
@@ -495,14 +489,11 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   %i.u = xor i128 %i.t, %.masked.i.i.i.i
   %i.v = mul nuw i128 %i.u, 16952864883938283885  ; 2 uses
   %i.w = lshr i128 %i.v, 64
-  %.masked.i.i.i = and i128 %i.v, 18446744073709551615
-  %i.x = xor i128 %i.w, %.masked.i.i.i
-  %2 = zext i64 %i.l to i128
-  %3 = mul nuw i128 %i.x, %2
-  %4 = lshr i128 %3, 64
-  %5 = trunc nuw i128 %4 to i64
+  %i.x = xor i128 %i.w, %i.v
+  %2 = trunc i128 %i.x to i64
+  %3 = tail call noundef range(i64 0, -1) i64 @llvm.umulh.i64(i64 %2, i64 %i.l)
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %.sroa.7.0.copyload, i64 %i.i
-  store i64 %5, ptr %i.y, align 8, !noalias !8848
+  store i64 %3, ptr %i.y, align 8, !noalias !8848
   %i.z = add i64 %i.i, 1                          ; 2 uses
   %i.aa = add nuw i64 %.sroa.01.0.i, 1            ; 2 uses
   %i.ab = icmp eq i64 %i.aa, %i.h
@@ -904,6 +895,9 @@ declare hidden { ptr, ptr } @_RNvMs1_NtNtNtCsawMg70ExlpE_9blobstore9blobstore8lo
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden noundef range(i8 -1, 2) i8 @_RNvXs9_NtNtCs607s0NAIaWN_7segment10data_types6facetsINtB5_8FacetHitNtB5_10FacetValueENtNtCskKLDkoKarTP_4core3cmp3Ord3cmpB9_(ptr noalias nofree noundef readonly align 16 captures(address, read_provenance) dereferenceable(48), ptr noalias nofree noundef readonly align 16 captures(address, read_provenance) dereferenceable(48)) unnamed_addr #0
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #28
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #34

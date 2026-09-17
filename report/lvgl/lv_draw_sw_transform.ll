@@ -202,28 +202,18 @@ bb.ch:                                            ; preds = %bb.cg, %bb.cf
   br label %._crit_edge320.i
 
 ._crit_edge320.i:                                 ; preds = %bb.ch, %bb.ce, %bb.cd
-  %i.st = phi i8 [ %i.sf, %bb.cd ], [ %i.ss, %bb.ch ], [ %.pre.i, %bb.ce ]
+  %i.st = phi i8 [ %i.sf, %bb.cd ], [ %i.ss, %bb.ch ], [ %.pre.i, %bb.ce ] ; 3 uses
   %i.su = getelementptr inbounds nuw i8, ptr %i.pe, i64 2 ; 2 uses
   %i.sv = load i8, ptr %i.su, align 1, !tbaa !13
-  %9 = zext i8 %i.sv to i16
-  %10 = zext i8 %i.st to i16                      ; 3 uses
-  %11 = mul nuw i16 %9, %10
-  %12 = lshr i16 %11, 8
-  %13 = trunc nuw i16 %12 to i8
-  store i8 %13, ptr %i.su, align 1, !tbaa !13
+  %9 = tail call i8 @llvm.umulh.i8(i8 %i.sv, i8 %i.st)
+  store i8 %9, ptr %i.su, align 1, !tbaa !13
   %i.sw = getelementptr inbounds nuw i8, ptr %i.pe, i64 1 ; 2 uses
   %i.sx = load i8, ptr %i.sw, align 1, !tbaa !14
-  %14 = zext i8 %i.sx to i16
-  %15 = mul nuw i16 %14, %10
-  %16 = lshr i16 %15, 8
-  %17 = trunc nuw i16 %16 to i8
-  store i8 %17, ptr %i.sw, align 1, !tbaa !14
+  %10 = tail call i8 @llvm.umulh.i8(i8 %i.sx, i8 %i.st)
+  store i8 %10, ptr %i.sw, align 1, !tbaa !14
   %i.sy = load i8, ptr %i.pe, align 1, !tbaa !15
-  %18 = zext i8 %i.sy to i16
-  %19 = mul nuw i16 %18, %10
-  %20 = lshr i16 %19, 8
-  %21 = trunc nuw i16 %20 to i8
-  store i8 %21, ptr %i.pe, align 1, !tbaa !15
+  %11 = tail call i8 @llvm.umulh.i8(i8 %i.sy, i8 %i.st)
+  store i8 %11, ptr %i.pe, align 1, !tbaa !15
   br label %bb.co
 
 bb.ci:                                            ; preds = %bb.bt, %bb.bs, %bb.br
@@ -260,12 +250,12 @@ bb.ck:                                            ; preds = %bb.cj
   br label %unpremultiply.exit301.i
 
 unpremultiply.exit301.i:                          ; preds = %bb.ck, %bb.cj
-  %i.tp = phi i32 [ %i.to, %bb.ck ], [ 0, %bb.cj ] ; 2 uses
+  %i.tp = phi i32 [ %i.to, %bb.ck ], [ 0, %bb.cj ] ; 3 uses
   %i.tq = getelementptr inbounds nuw i8, ptr %i.pe, i64 3
   %i.tr = sub nuw nsw i32 127, %.0243.i
   %i.ts = mul nuw nsw i32 %.sroa.11.0.extract.shift.i290.i, %i.tr
-  %i.tt = lshr i32 %i.ts, 7                       ; 3 uses
-  %i.tu = trunc nuw i32 %i.tt to i8
+  %i.tt = lshr i32 %i.ts, 7                       ; 2 uses
+  %i.tu = trunc nuw i32 %i.tt to i8               ; 3 uses
   store i8 %i.tu, ptr %i.tq, align 1, !tbaa !12
   %i.tv = getelementptr inbounds nuw i8, ptr %i.pe, i64 2
   %i.tw = lshr i32 %i.tp, 16
@@ -274,18 +264,13 @@ unpremultiply.exit301.i:                          ; preds = %bb.ck, %bb.cj
   %i.tz = trunc nuw i32 %i.ty to i8
   store i8 %i.tz, ptr %i.tv, align 1, !tbaa !13
   %i.ua = getelementptr inbounds nuw i8, ptr %i.pe, i64 1
-  %22 = trunc i32 %i.tp to i16                    ; 2 uses
-  %23 = lshr i16 %22, 8
-  %24 = trunc nuw nsw i32 %i.tt to i16            ; 2 uses
-  %25 = mul nuw i16 %23, %24
-  %26 = lshr i16 %25, 8
-  %i.ub = trunc nuw i16 %26 to i8
-  store i8 %i.ub, ptr %i.ua, align 1, !tbaa !14
-  %27 = and i16 %22, 255
-  %28 = mul nuw i16 %27, %24
-  %29 = lshr i16 %28, 8
-  %30 = trunc nuw i16 %29 to i8
-  store i8 %30, ptr %i.pe, align 1, !tbaa !15
+  %12 = lshr i32 %i.tp, 8
+  %i.ub = trunc i32 %12 to i8
+  %13 = tail call i8 @llvm.umulh.i8(i8 %i.ub, i8 %i.tu)
+  store i8 %13, ptr %i.ua, align 1, !tbaa !14
+  %14 = trunc i32 %i.tp to i8
+  %15 = tail call i8 @llvm.umulh.i8(i8 %14, i8 %i.tu)
+  store i8 %15, ptr %i.pe, align 1, !tbaa !15
   br label %bb.co
 
 bb.cl:                                            ; preds = %bb.ci
@@ -322,12 +307,12 @@ bb.cn:                                            ; preds = %bb.cm
   br label %unpremultiply.exit313.i
 
 unpremultiply.exit313.i:                          ; preds = %bb.cn, %bb.cm
-  %i.us = phi i32 [ %i.ur, %bb.cn ], [ 0, %bb.cm ] ; 2 uses
+  %i.us = phi i32 [ %i.ur, %bb.cn ], [ 0, %bb.cm ] ; 3 uses
   %i.ut = getelementptr inbounds nuw i8, ptr %i.pe, i64 3
   %i.uu = sub nuw nsw i32 127, %.0242.i
   %i.uv = mul nuw nsw i32 %.sroa.11.0.extract.shift.i302.i, %i.uu
-  %i.uw = lshr i32 %i.uv, 7                       ; 3 uses
-  %i.ux = trunc nuw i32 %i.uw to i8
+  %i.uw = lshr i32 %i.uv, 7                       ; 2 uses
+  %i.ux = trunc nuw i32 %i.uw to i8               ; 3 uses
   store i8 %i.ux, ptr %i.ut, align 1, !tbaa !12
   %i.uy = getelementptr inbounds nuw i8, ptr %i.pe, i64 2
   %i.uz = lshr i32 %i.us, 16
@@ -336,18 +321,13 @@ unpremultiply.exit313.i:                          ; preds = %bb.cn, %bb.cm
   %i.vc = trunc nuw i32 %i.vb to i8
   store i8 %i.vc, ptr %i.uy, align 1, !tbaa !13
   %i.vd = getelementptr inbounds nuw i8, ptr %i.pe, i64 1
-  %31 = trunc i32 %i.us to i16                    ; 2 uses
-  %32 = lshr i16 %31, 8
-  %33 = trunc nuw nsw i32 %i.uw to i16            ; 2 uses
-  %34 = mul nuw i16 %32, %33
-  %35 = lshr i16 %34, 8
-  %i.ve = trunc nuw i16 %35 to i8
-  store i8 %i.ve, ptr %i.vd, align 1, !tbaa !14
-  %36 = and i16 %31, 255
-  %37 = mul nuw i16 %36, %33
-  %38 = lshr i16 %37, 8
-  %39 = trunc nuw i16 %38 to i8
-  store i8 %39, ptr %i.pe, align 1, !tbaa !15
+  %16 = lshr i32 %i.us, 8
+  %i.ve = trunc i32 %16 to i8
+  %17 = tail call i8 @llvm.umulh.i8(i8 %i.ve, i8 %i.ux)
+  store i8 %17, ptr %i.vd, align 1, !tbaa !14
+  %18 = trunc i32 %i.us to i8
+  %19 = tail call i8 @llvm.umulh.i8(i8 %18, i8 %i.ux)
+  store i8 %19, ptr %i.pe, align 1, !tbaa !15
   br label %bb.co
 
 bb.co:                                            ; preds = %unpremultiply.exit313.i, %bb.cl, %unpremultiply.exit301.i, %._crit_edge320.i, %bb.bq
@@ -748,6 +728,9 @@ declare zeroext i1 @lv_color32_eq(i32, i32) local_unnamed_addr #1
 declare i32 @lv_color_mix32(i32, i32) local_unnamed_addr #1
 
 declare zeroext i16 @lv_color_16_16_mix(i16 noundef zeroext, i16 noundef zeroext, i8 noundef zeroext) local_unnamed_addr #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.umulh.i8(i8, i8) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.bswap.i16(i16) #3

@@ -204,16 +204,12 @@ bb.c:                                             ; preds = %._crit_edge
   %i.y = getelementptr inbounds nuw i8, ptr @ff_sqrt_tab, i64 %i.x
   %i.z = load i8, ptr %i.y, align 1, !tbaa !14    ; 2 uses
   %i.aa = zext i8 %i.z to i32
-  %1 = zext nneg i32 %i.u to i64
   %i.ab = zext i8 %i.z to i64
   %i.ac = getelementptr inbounds nuw [4 x i8], ptr @ff_inverse, i64 %i.ab
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !12
-  %2 = zext i32 %i.ad to i64
-  %3 = mul nuw nsw i64 %1, %2
-  %4 = lshr i64 %3, 32
-  %5 = trunc nuw nsw i64 %4 to i32
+  %1 = tail call i32 @llvm.umulh.i32(i32 %i.u, i32 %i.ad)
   %i.ae = shl i32 %i.aa, %i.s
-  %i.af = add i32 %i.ae, %5                       ; 3 uses
+  %i.af = add i32 %1, %i.ae                       ; 3 uses
   %i.ag = mul i32 %i.af, %i.af
   %i.ah = icmp ult i32 %i.e, %i.ag
   %.neg.i = sext i1 %i.ah to i32
@@ -522,16 +518,12 @@ bb.c:                                             ; preds = %._crit_edge.i
   %i.em = getelementptr inbounds nuw i8, ptr @ff_sqrt_tab, i64 %i.el
   %i.en = load i8, ptr %i.em, align 1, !tbaa !14  ; 2 uses
   %i.eo = zext i8 %i.en to i32
-  %1 = zext nneg i32 %i.ei to i64
   %i.ep = zext i8 %i.en to i64
   %i.eq = getelementptr inbounds nuw [4 x i8], ptr @ff_inverse, i64 %i.ep
   %i.er = load i32, ptr %i.eq, align 4, !tbaa !12
-  %2 = zext i32 %i.er to i64
-  %3 = mul nuw nsw i64 %1, %2
-  %4 = lshr i64 %3, 32
-  %5 = trunc nuw nsw i64 %4 to i32
+  %1 = tail call i32 @llvm.umulh.i32(i32 %i.ei, i32 %i.er)
   %i.es = shl i32 %i.eo, %i.eg
-  %i.et = add i32 %i.es, %5                       ; 3 uses
+  %i.et = add i32 %1, %i.es                       ; 3 uses
   %i.eu = mul i32 %i.et, %i.et
   %i.ev = icmp ult i32 %i.ds, %i.eu
   %.neg.i.i = sext i1 %i.ev to i32
@@ -695,16 +687,12 @@ bb.d:                                             ; preds = %._crit_edge.i.threa
   %i.ad = getelementptr inbounds nuw i8, ptr @ff_sqrt_tab, i64 %i.ac
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !14  ; 2 uses
   %i.af = zext i8 %i.ae to i32
-  %2 = zext nneg i32 %i.z to i64
   %i.ag = zext i8 %i.ae to i64
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr @ff_inverse, i64 %i.ag
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !12
-  %3 = zext i32 %i.ai to i64
-  %4 = mul nuw nsw i64 %2, %3
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw nsw i64 %5 to i32
+  %2 = tail call i32 @llvm.umulh.i32(i32 %i.z, i32 %i.ai)
   %i.aj = shl i32 %i.af, %i.x
-  %i.ak = add i32 %i.aj, %6                       ; 3 uses
+  %i.ak = add i32 %2, %i.aj                       ; 3 uses
   %i.al = mul i32 %i.ak, %i.ak
   %i.am = icmp ult i32 %i.r, %i.al
   %.neg.i.i = sext i1 %i.am to i32
@@ -816,16 +804,12 @@ bb.f:                                             ; preds = %._crit_edge.i.i, %.
   %i.av = getelementptr inbounds nuw i8, ptr @ff_sqrt_tab, i64 %i.au
   %i.aw = load i8, ptr %i.av, align 1, !tbaa !14  ; 2 uses
   %i.ax = zext i8 %i.aw to i32
-  %7 = zext nneg i32 %i.ar to i64
   %i.ay = zext i8 %i.aw to i64
   %i.az = getelementptr inbounds nuw [4 x i8], ptr @ff_inverse, i64 %i.ay
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !12
-  %8 = zext i32 %i.ba to i64
-  %9 = mul nuw nsw i64 %7, %8
-  %10 = lshr i64 %9, 32
-  %11 = trunc nuw nsw i64 %10 to i32
+  %7 = tail call i32 @llvm.umulh.i32(i32 %i.ar, i32 %i.ba)
   %i.bb = shl i32 %i.ax, %i.ap
-  %i.bc = add i32 %i.bb, %11                      ; 3 uses
+  %i.bc = add i32 %7, %i.bb                       ; 3 uses
   %i.bd = mul i32 %i.bc, %i.bc
   %i.be = icmp ult i32 %i.aj, %i.bd
   %.neg.i.i.i = sext i1 %i.be to i32
@@ -1225,6 +1209,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #8
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

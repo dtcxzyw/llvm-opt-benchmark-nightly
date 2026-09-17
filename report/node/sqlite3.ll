@@ -206,24 +206,16 @@ bb.fk:                                            ; preds = %bb.fj, %.thread27.i
   %i.sq = zext nneg i32 %.01930.i.i.i to i64
   %i.sr = getelementptr inbounds nuw [8 x i8], ptr @powerOfTen.aBase, i64 %i.sq
   %i.ss = load i64, ptr %i.sr, align 8, !tbaa !571
-  %4 = zext i64 %i.ss to i128
-  %5 = zext i64 %i.sp to i128
-  %6 = mul nuw i128 %4, %5                        ; 2 uses
-  %7 = lshr i128 %6, 64
-  %8 = trunc nuw i128 %7 to i64                   ; 2 uses
-  %i.st = shl nuw i64 %8, 1
+  %4 = call range(i64 0, -1) i64 @llvm.umulh.i64(i64 %i.ss, i64 %i.sp) ; 3 uses
+  %i.st = shl nuw i64 %4, 1
   %i.su = or disjoint i64 %i.st, 1
-  %i.sv = icmp slt i128 %6, 0
-  %.0.i.i.i = select i1 %i.sv, i64 %8, i64 %i.su
+  %i.sv = icmp slt i64 %4, 0
+  %.0.i.i.i = select i1 %i.sv, i64 %4, i64 %i.su
   br label %powerOfTen.exit.i.i
 
 powerOfTen.exit.i.i:                              ; preds = %bb.fk, %bb.fj, %bb.fi, %.thread.i.i.i
   %.021.i.i.i = phi i64 [ %i.sh, %bb.fi ], [ %.0.i.i.i, %bb.fk ], [ %i.sn, %bb.fj ], [ %i.rx, %.thread.i.i.i ]
-  %9 = zext i64 %.0158.i to i128
-  %10 = zext i64 %.021.i.i.i to i128
-  %11 = mul nuw i128 %10, %9
-  %12 = lshr i128 %11, 64
-  %13 = trunc nuw i128 %12 to i64                 ; 2 uses
+  %5 = call range(i64 0, -1) i64 @llvm.umulh.i64(i64 %.0158.i, i64 %.021.i.i.i) ; 2 uses
   %i.sw = icmp eq i32 %i.rn, 18
   %i.sx = mul nsw i32 %i.rq, 108853
   %i.sy = ashr i32 %i.sx, 15
@@ -233,7 +225,7 @@ powerOfTen.exit.i.i:                              ; preds = %bb.fk, %bb.fj, %bb.
 bb.fl:                                            ; preds = %powerOfTen.exit.i.i
   %i.ta = sub nsw i32 -2, %i.sz
   %i.tb = zext nneg i32 %i.ta to i64
-  %i.tc = lshr i64 %13, %i.tb                     ; 2 uses
+  %i.tc = lshr i64 %5, %i.tb                      ; 2 uses
   %i.td = shl i64 %i.tc, 1
   %i.te = and i64 %i.td, 2
   %i.tf = add i64 %i.te, %i.tc
@@ -243,7 +235,7 @@ bb.fl:                                            ; preds = %powerOfTen.exit.i.i
 bb.fm:                                            ; preds = %powerOfTen.exit.i.i
   %i.th = xor i32 %i.sz, -1
   %i.ti = zext nneg i32 %i.th to i64
-  %i.tj = lshr i64 %13, %i.ti
+  %i.tj = lshr i64 %5, %i.ti
   br label %sqlite3Fp2Convert10.exit.i
 
 sqlite3Fp2Convert10.exit.i:                       ; preds = %bb.fm, %bb.fl
@@ -646,29 +638,21 @@ bb.j:                                             ; preds = %bb.i, %.thread27.i
   %i.aj = zext nneg i16 %.01930.i.in to i64
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr @powerOfTen.aBase, i64 %i.aj
   %i.al = load i64, ptr %i.ak, align 8, !tbaa !571
-  %2 = zext i64 %i.al to i128
-  %3 = zext i64 %i.ai to i128
-  %4 = mul nuw i128 %2, %3                        ; 2 uses
-  %5 = lshr i128 %4, 64
-  %6 = trunc nuw i128 %5 to i64                   ; 2 uses
-  %i.am = shl nuw i64 %6, 1
+  %2 = tail call range(i64 0, -1) i64 @llvm.umulh.i64(i64 %i.al, i64 %i.ai) ; 3 uses
+  %i.am = shl nuw i64 %2, 1
   %i.an = or disjoint i64 %i.am, 1
-  %i.ao = icmp slt i128 %4, 0
-  %.0.i = select i1 %i.ao, i64 %6, i64 %i.an
+  %i.ao = icmp slt i64 %2, 0
+  %.0.i = select i1 %i.ao, i64 %2, i64 %i.an
   br label %powerOfTen.exit
 
 powerOfTen.exit:                                  ; preds = %.thread.i, %bb.h, %bb.i, %bb.j
   %.021.i = phi i64 [ %i.aa, %bb.h ], [ %.0.i, %bb.j ], [ %i.ag, %bb.i ], [ %i.r, %.thread.i ]
-  %7 = zext i64 %i.j to i128
-  %8 = zext i64 %.021.i to i128
-  %9 = mul nuw i128 %8, %7
-  %10 = lshr i128 %9, 64
-  %11 = trunc nuw i128 %10 to i64
+  %3 = tail call range(i64 0, -1) i64 @llvm.umulh.i64(i64 %i.j, i64 %.021.i)
   %.neg40 = add nsw i32 %i.d, -3
   %i.ap = add nsw i32 %i.f, %.0
   %i.aq = sub nsw i32 %.neg40, %i.ap
   %i.ar = zext nneg i32 %i.aq to i64
-  %i.as = lshr i64 %11, %i.ar                     ; 2 uses
+  %i.as = lshr i64 %3, %i.ar                      ; 2 uses
   %i.at = icmp ugt i64 %i.as, 36028797018963965   ; 2 uses
   %i.au = sext i1 %i.at to i32
   %.1 = add nsw i32 %.0, %i.au                    ; 2 uses
@@ -1069,6 +1053,9 @@ declare i32 @llvm.umin.i32(i32, i32) #47
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #57
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #47
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #47

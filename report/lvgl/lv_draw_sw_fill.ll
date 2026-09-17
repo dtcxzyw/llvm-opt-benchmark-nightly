@@ -204,14 +204,10 @@ bb.r:                                             ; preds = %bb.o
   br i1 %i.cw, label %bb.s, label %.lr.ph189.1
 
 bb.s:                                             ; preds = %.lr.ph189
-  %8 = zext i8 %i.cv to i16
   %i.cx = getelementptr inbounds nuw i8, ptr %.0156, i64 %indvars.iv206 ; 2 uses
   %i.cy = load i8, ptr %i.cx, align 1, !tbaa !48
-  %9 = zext i8 %i.cy to i16
-  %10 = mul nuw i16 %9, %8
-  %11 = lshr i16 %10, 8
-  %12 = trunc nuw i16 %11 to i8
-  store i8 %12, ptr %i.cx, align 1, !tbaa !48
+  %8 = call i8 @llvm.umulh.i8(i8 %i.cy, i8 %i.cv)
+  store i8 %8, ptr %i.cx, align 1, !tbaa !48
   br label %.lr.ph189.1
 
 .lr.ph189.1:                                      ; preds = %.lr.ph189, %bb.s
@@ -222,14 +218,10 @@ bb.s:                                             ; preds = %.lr.ph189
   br i1 %i.db, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %.lr.ph189.1
-  %13 = zext i8 %i.da to i16
   %i.dc = getelementptr inbounds nuw i8, ptr %.0156, i64 %indvars.iv.next207 ; 2 uses
   %i.dd = load i8, ptr %i.dc, align 1, !tbaa !48
-  %14 = zext i8 %i.dd to i16
-  %15 = mul nuw i16 %14, %13
-  %16 = lshr i16 %15, 8
-  %17 = trunc nuw i16 %16 to i8
-  store i8 %17, ptr %i.dc, align 1, !tbaa !48
+  %9 = call i8 @llvm.umulh.i8(i8 %i.dd, i8 %i.da)
+  store i8 %9, ptr %i.dc, align 1, !tbaa !48
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %.lr.ph189.1
@@ -250,14 +242,10 @@ bb.u:                                             ; preds = %bb.t, %.lr.ph189.1
   br i1 %i.dg, label %bb.v, label %._crit_edge
 
 bb.v:                                             ; preds = %.lr.ph189.epil.preheader
-  %18 = zext i8 %i.df to i16
   %i.dh = getelementptr inbounds nuw i8, ptr %.0156, i64 %indvars.iv206.epil.init ; 2 uses
   %i.di = load i8, ptr %i.dh, align 1, !tbaa !48
-  %19 = zext i8 %i.di to i16
-  %20 = mul nuw i16 %19, %18
-  %21 = lshr i16 %20, 8
-  %22 = trunc nuw i16 %21 to i8
-  store i8 %22, ptr %i.dh, align 1, !tbaa !48
+  %10 = call i8 @llvm.umulh.i8(i8 %i.di, i8 %i.df)
+  store i8 %10, ptr %i.dh, align 1, !tbaa !48
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %bb.v, %.lr.ph189.epil.preheader, %.preheader186
@@ -337,14 +325,10 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %i.dy, label %bb.ac, label %.lr.ph192.1
 
 bb.ac:                                            ; preds = %.lr.ph192
-  %23 = zext i8 %i.dx to i16
   %i.dz = getelementptr inbounds nuw i8, ptr %.0156, i64 %indvars.iv211 ; 2 uses
   %i.ea = load i8, ptr %i.dz, align 1, !tbaa !48
-  %24 = zext i8 %i.ea to i16
-  %25 = mul nuw i16 %24, %23
-  %26 = lshr i16 %25, 8
-  %27 = trunc nuw i16 %26 to i8
-  store i8 %27, ptr %i.dz, align 1, !tbaa !48
+  %11 = call i8 @llvm.umulh.i8(i8 %i.ea, i8 %i.dx)
+  store i8 %11, ptr %i.dz, align 1, !tbaa !48
   br label %.lr.ph192.1
 
 .lr.ph192.1:                                      ; preds = %.lr.ph192, %bb.ac
@@ -355,14 +339,10 @@ bb.ac:                                            ; preds = %.lr.ph192
   br i1 %i.ed, label %bb.ad, label %bb.ae
 
 bb.ad:                                            ; preds = %.lr.ph192.1
-  %28 = zext i8 %i.ec to i16
   %i.ee = getelementptr inbounds nuw i8, ptr %.0156, i64 %indvars.iv.next212 ; 2 uses
   %i.ef = load i8, ptr %i.ee, align 1, !tbaa !48
-  %29 = zext i8 %i.ef to i16
-  %30 = mul nuw i16 %29, %28
-  %31 = lshr i16 %30, 8
-  %32 = trunc nuw i16 %31 to i8
-  store i8 %32, ptr %i.ee, align 1, !tbaa !48
+  %12 = call i8 @llvm.umulh.i8(i8 %i.ef, i8 %i.ec)
+  store i8 %12, ptr %i.ee, align 1, !tbaa !48
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %.lr.ph192.1
@@ -383,14 +363,10 @@ bb.ae:                                            ; preds = %bb.ad, %.lr.ph192.1
   br i1 %i.ei, label %bb.af, label %._crit_edge193
 
 bb.af:                                            ; preds = %.lr.ph192.epil.preheader
-  %33 = zext i8 %i.eh to i16
   %i.ej = getelementptr inbounds nuw i8, ptr %.0156, i64 %indvars.iv211.epil.init ; 2 uses
   %i.ek = load i8, ptr %i.ej, align 1, !tbaa !48
-  %34 = zext i8 %i.ek to i16
-  %35 = mul nuw i16 %34, %33
-  %36 = lshr i16 %35, 8
-  %37 = trunc nuw i16 %36 to i8
-  store i8 %37, ptr %i.ej, align 1, !tbaa !48
+  %13 = call i8 @llvm.umulh.i8(i8 %i.ek, i8 %i.eh)
+  store i8 %13, ptr %i.ej, align 1, !tbaa !48
   br label %._crit_edge193
 
 ._crit_edge193:                                   ; preds = %._crit_edge193.loopexit.unr-lcssa, %bb.af, %.lr.ph192.epil.preheader, %.thread236
@@ -468,7 +444,6 @@ bb.an:                                            ; preds = %bb.aj, %bb.am, %bb.
   %i.ff = getelementptr inbounds nuw i8, ptr %7, i64 4 ; 2 uses
   %i.fg = getelementptr inbounds nuw i8, ptr %7, i64 12 ; 2 uses
   %cond = icmp eq i8 %i.m, 1
-  %38 = zext i8 %i.v to i16
   %i.fh = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
   br i1 %cond, label %.lr.ph201.split.us, label %.lr.ph201.split
 
@@ -488,11 +463,8 @@ bb.an:                                            ; preds = %bb.aj, %bb.am, %bb.
   %i.fn = load ptr, ptr %i.fh, align 8, !tbaa !43
   %i.fo = getelementptr inbounds i8, ptr %i.fn, i64 %i.fl
   %i.fp = load i8, ptr %i.fo, align 1, !tbaa !48  ; 2 uses
-  %39 = zext i8 %i.fp to i16
-  %40 = mul nuw i16 %39, %38
-  %41 = lshr i16 %40, 8
-  %42 = trunc nuw i16 %41 to i8
-  %storemerge = select i1 %i.w, i8 %i.fp, i8 %42
+  %14 = call i8 @llvm.umulh.i8(i8 %i.fp, i8 %i.v)
+  %storemerge = select i1 %i.w, i8 %i.fp, i8 %14
   store i8 %storemerge, ptr %i.an, align 8, !tbaa !28
   call void @lv_draw_sw_blend(ptr noundef %0, ptr noundef nonnull %5) #6
   %i.fq = add i32 %.1155199.us.us, 1
@@ -587,6 +559,9 @@ declare i32 @llvm.smin.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.umulh.i8(i8, i8) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #5

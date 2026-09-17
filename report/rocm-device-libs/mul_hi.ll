@@ -6,23 +6,15 @@ target triple = "amdgpu-amd-amdhsa"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn denormal_fpenv(dynamic) memory(none) uwtable
 define hidden range(i32 -1073741824, 1073741825) i32 @__ockl_mul_hi_i32(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = sext i32 %0 to i64
-  %3 = sext i32 %1 to i64
-  %4 = mul nsw i64 %3, %2
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32
-  ret i32 %6
+  %2 = tail call i32 @llvm.smulh.i32(i32 %0, i32 %1)
+  ret i32 %2
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn denormal_fpenv(dynamic) memory(none) uwtable
 define hidden range(i32 0, -1) i32 @__ockl_mul_hi_u32(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = zext i32 %0 to i64
-  %3 = zext i32 %1 to i64
-  %4 = mul nuw i64 %3, %2
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32
-  ret i32 %6
+  %2 = tail call i32 @llvm.umulh.i32(i32 %0, i32 %1)
+  ret i32 %2
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn denormal_fpenv(dynamic) memory(none) uwtable
@@ -50,15 +42,21 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn denormal_fpenv(dynamic) memory(none) uwtable
 define hidden range(i64 0, -1) i64 @__ockl_mul_hi_u64(i64 noundef %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = zext i64 %0 to i128
-  %3 = zext i64 %1 to i128
-  %4 = mul nuw i128 %3, %2
-  %5 = lshr i128 %4, 64
-  %6 = trunc nuw i128 %5 to i64
-  ret i64 %6
+  %2 = tail call i64 @llvm.umulh.i64(i64 %1, i64 %0)
+  ret i64 %2
 }
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smulh.i32(i32, i32) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #1
+
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn denormal_fpenv(dynamic) memory(none) uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" }
+attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 
 !opencl.ocl.version = !{!0}
 !llvm.module.flags = !{!1, !2}

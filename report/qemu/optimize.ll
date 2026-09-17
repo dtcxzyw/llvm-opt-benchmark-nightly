@@ -204,11 +204,7 @@ bb.aw:                                            ; preds = %bb.av
   br label %do_constant_folding_2.exit
 
 bb.ax:                                            ; preds = %bb.av
-  %4 = zext i64 %2 to i128
-  %5 = zext i64 %3 to i128
-  %6 = mul nuw i128 %5, %4
-  %7 = lshr i128 %6, 64
-  %8 = trunc nuw i128 %7 to i64
+  %4 = tail call i64 @llvm.umulh.i64(i64 %3, i64 %2)
   br label %do_constant_folding_2.exit
 
 bb.ay:                                            ; preds = %bb.a
@@ -225,11 +221,7 @@ bb.az:                                            ; preds = %bb.ay
   br label %do_constant_folding_2.exit
 
 bb.ba:                                            ; preds = %bb.ay
-  %9 = sext i64 %2 to i128
-  %10 = sext i64 %3 to i128
-  %11 = mul nsw i128 %10, %9
-  %12 = lshr i128 %11, 64
-  %13 = trunc nuw i128 %12 to i64
+  %5 = tail call i64 @llvm.smulh.i64(i64 %3, i64 %2)
   br label %do_constant_folding_2.exit
 
 bb.bb:                                            ; preds = %bb.a
@@ -305,7 +297,7 @@ bb.bn:                                            ; preds = %bb.a
   unreachable
 
 do_constant_folding_2.exit:                       ; preds = %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.i, %bb.j, %bb.l, %bb.m, %bb.o, %bb.p, %bb.r, %bb.s, %bb.u, %bb.v, %bb.w, %bb.x, %bb.y, %bb.z, %bb.aa, %bb.ab, %bb.ac, %bb.ae, %bb.af, %bb.ag, %bb.ah, %bb.aj, %bb.ak, %bb.al, %bb.an, %bb.ao, %bb.ap, %bb.aq, %bb.ar, %bb.as, %bb.at, %bb.au, %bb.aw, %bb.ax, %bb.az, %bb.ba, %bb.bc, %bb.bd, %bb.bf, %bb.bg, %bb.bi, %bb.bj, %bb.bl, %bb.bm
-  %.0.i = phi i64 [ %i.a, %bb.b ], [ %i.b, %bb.c ], [ %i.c, %bb.d ], [ %i.d, %bb.e ], [ %i.e, %bb.f ], [ %i.f, %bb.g ], [ %i.l, %bb.i ], [ %i.n, %bb.j ], [ %i.t, %bb.l ], [ %i.v, %bb.m ], [ %i.ab, %bb.o ], [ %i.ad, %bb.p ], [ %i.ai, %bb.r ], [ %i.aj, %bb.s ], [ %i.ao, %bb.u ], [ %i.ap, %bb.v ], [ %i.aq, %bb.w ], [ %i.ar, %bb.x ], [ %i.at, %bb.y ], [ %i.av, %bb.z ], [ %i.ax, %bb.aa ], [ %i.az, %bb.ab ], [ %i.bb, %bb.ac ], [ %i.do, %bb.bm ], [ %3, %bb.ae ], [ %3, %bb.ag ], [ %3, %bb.aj ], [ %spec.select.i, %bb.al ], [ %i.bw, %bb.ap ], [ %i.cc, %bb.aq ], [ %i.cd, %bb.ar ], [ %i.ce, %bb.as ], [ %i.cf, %bb.at ], [ %i.cg, %bb.au ], [ %i.cl, %bb.aw ], [ %8, %bb.ax ], [ %i.cq, %bb.az ], [ %13, %bb.ba ], [ %i.cv, %bb.bc ], [ %i.cw, %bb.bd ], [ %i.db, %bb.bf ], [ %i.dc, %bb.bg ], [ %i.dh, %bb.bi ], [ %i.di, %bb.bj ], [ %i.dn, %bb.bl ], [ %i.bf, %bb.af ], [ %i.bg, %bb.ah ], [ %i.bk, %bb.ak ], [ %i.bp, %bb.an ], [ %i.bq, %bb.ao ] ; 2 uses
+  %.0.i = phi i64 [ %i.a, %bb.b ], [ %i.b, %bb.c ], [ %i.c, %bb.d ], [ %i.d, %bb.e ], [ %i.e, %bb.f ], [ %i.f, %bb.g ], [ %i.l, %bb.i ], [ %i.n, %bb.j ], [ %i.t, %bb.l ], [ %i.v, %bb.m ], [ %i.ab, %bb.o ], [ %i.ad, %bb.p ], [ %i.ai, %bb.r ], [ %i.aj, %bb.s ], [ %i.ao, %bb.u ], [ %i.ap, %bb.v ], [ %i.aq, %bb.w ], [ %i.ar, %bb.x ], [ %i.at, %bb.y ], [ %i.av, %bb.z ], [ %i.ax, %bb.aa ], [ %i.az, %bb.ab ], [ %i.bb, %bb.ac ], [ %i.do, %bb.bm ], [ %3, %bb.ae ], [ %3, %bb.ag ], [ %3, %bb.aj ], [ %spec.select.i, %bb.al ], [ %i.bw, %bb.ap ], [ %i.cc, %bb.aq ], [ %i.cd, %bb.ar ], [ %i.ce, %bb.as ], [ %i.cf, %bb.at ], [ %i.cg, %bb.au ], [ %i.cl, %bb.aw ], [ %4, %bb.ax ], [ %i.cq, %bb.az ], [ %5, %bb.ba ], [ %i.cv, %bb.bc ], [ %i.cw, %bb.bd ], [ %i.db, %bb.bf ], [ %i.dc, %bb.bg ], [ %i.dh, %bb.bi ], [ %i.di, %bb.bj ], [ %i.dn, %bb.bl ], [ %i.bf, %bb.af ], [ %i.bg, %bb.ah ], [ %i.bk, %bb.ak ], [ %i.bp, %bb.an ], [ %i.bq, %bb.ao ] ; 2 uses
   %i.dp = icmp eq i32 %1, 0
   %sext = shl i64 %.0.i, 32
   %i.dq = ashr exact i64 %sext, 32
@@ -706,6 +698,12 @@ declare i32 @llvm.fshr.i32(i32, i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.fshl.i32(i32, i32, i32) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smulh.i64(i64, i64) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.fshl.i64(i64, i64, i64) #5

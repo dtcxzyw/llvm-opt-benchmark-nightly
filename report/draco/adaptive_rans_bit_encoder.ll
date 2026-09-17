@@ -202,15 +202,11 @@ bb.h:                                             ; preds = %.lr.ph155
 _ZNSt16reverse_iteratorISt13_Bit_iteratorEppEv.exit: ; preds = %bb.h, %.lr.ph155
   %.sroa.9.1 = phi i32 [ %.sroa.9.0149, %.lr.ph155 ], [ %i.bs, %bb.h ] ; 7 uses
   %i.bw = phi i32 [ %.sroa.19.0150, %.lr.ph155 ], [ %i.bv, %bb.h ] ; 3 uses
-  %2 = zext nneg i32 %i.bw to i64
   %i.bx = zext i8 %i.bo to i64
   %i.by = getelementptr inbounds nuw [8 x i8], ptr @_ZN5draco16vp10_fastdiv_tabE, i64 %i.bx ; 2 uses
   %i.bz = load i32, ptr %i.by, align 8, !tbaa !30
-  %3 = zext i32 %i.bz to i64
-  %4 = mul nuw nsw i64 %3, %2
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw nsw i64 %5 to i32
-  %i.ca = add nuw nsw i32 %i.bw, %6
+  %2 = tail call i32 @llvm.umulh.i32(i32 %i.bw, i32 %i.bz)
+  %i.ca = add i32 %2, %i.bw
   %i.cb = getelementptr inbounds nuw i8, ptr %i.by, i64 4
   %i.cc = load i32, ptr %i.cb, align 4, !tbaa !31
   %i.cd = lshr i32 %i.ca, %i.cc
@@ -611,6 +607,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #5

@@ -202,7 +202,6 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 bb.e:                                             ; preds = %bb.c
-  %1 = zext nneg i32 %i.ad to i64
   %i.af = getelementptr inbounds nuw i8, ptr %i.b, i64 1248 ; 2 uses
   %i.ag = load i64, ptr %i.af, align 8, !tbaa !22 ; 4 uses
   %i.ah = mul i64 %i.ag, 6364136223846793005
@@ -215,11 +214,8 @@ bb.e:                                             ; preds = %bb.c
   %i.an = lshr i64 %i.ag, 59
   %i.ao = trunc nuw nsw i64 %i.an to i32
   %i.ap = tail call noundef i32 @llvm.fshr.i32(i32 %i.am, i32 %i.am, i32 %i.ao)
-  %2 = zext i32 %i.ap to i64
-  %3 = mul nuw nsw i64 %2, %1
-  %4 = lshr i64 %3, 32
-  %5 = trunc nuw nsw i64 %4 to i32
-  %i.aq = add nuw nsw i32 %5, 1
+  %1 = tail call i32 @llvm.umulh.i32(i32 %i.ad, i32 %i.ap)
+  %i.aq = add nuw i32 %1, 1
   tail call void @_Z15lua_pushintegerP9lua_Statei(ptr noundef nonnull %0, i32 noundef %i.aq)
   br label %bb.l
 
@@ -244,7 +240,6 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.h
   %i.au = add nuw i32 %i.at, 1
-  %6 = zext i32 %i.au to i64
   %i.av = getelementptr inbounds nuw i8, ptr %i.b, i64 1248 ; 2 uses
   %i.aw = load i64, ptr %i.av, align 8, !tbaa !22 ; 4 uses
   %i.ax = mul i64 %i.aw, 6364136223846793005
@@ -257,11 +252,8 @@ bb.j:                                             ; preds = %bb.h
   %i.bd = lshr i64 %i.aw, 59
   %i.be = trunc nuw nsw i64 %i.bd to i32
   %i.bf = tail call noundef i32 @llvm.fshr.i32(i32 %i.bc, i32 %i.bc, i32 %i.be)
-  %7 = zext i32 %i.bf to i64
-  %8 = mul nuw i64 %7, %6
-  %9 = lshr i64 %8, 32
-  %10 = trunc nuw i64 %9 to i32
-  %i.bg = add i32 %i.ar, %10
+  %2 = tail call i32 @llvm.umulh.i32(i32 %i.au, i32 %i.bf)
+  %i.bg = add i32 %2, %i.ar
   tail call void @_Z15lua_pushintegerP9lua_Statei(ptr noundef nonnull %0, i32 noundef %i.bg)
   br label %bb.l
 
@@ -662,6 +654,9 @@ bb.a:
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.fshr.i32(i32, i32, i32) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.floor.v2f32(<2 x float>) #4

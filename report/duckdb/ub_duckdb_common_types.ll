@@ -205,14 +205,14 @@ bb.bf:                                            ; preds = %bb.be
 .noexc:                                           ; preds = %bb.bf
   %i.hg = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %.sroa.7.0.ph463483, i1 true) ; 2 uses
   %i.hh = trunc nuw nsw i64 %i.hg to i32
-  %i.hi = shl i64 %.sroa.7.0.ph463483, %i.hg
+  %i.hi = shl i64 %.sroa.7.0.ph463483, %i.hg      ; 2 uses
   %i.hj = trunc nsw i64 %.sroa.093.0.ph464480 to i32 ; 2 uses
   %i.hk = shl nsw i32 %i.hj, 1
   %i.hl = sext i32 %i.hk to i64
   %i.hm = getelementptr [8 x i8], ptr @_ZN17duckdb_fast_float15powers_templateIvE17power_of_five_128E, i64 %i.hl ; 2 uses
   %i.hn = getelementptr i8, ptr %i.hm, i64 5472
   %i.ho = load i64, ptr %i.hn, align 16, !tbaa !245
-  %i.hp = zext i64 %i.hi to i128                  ; 2 uses
+  %i.hp = zext i64 %i.hi to i128
   %i.hq = zext i64 %i.ho to i128
   %i.hr = mul nuw i128 %i.hq, %i.hp               ; 2 uses
   %i.hs = trunc i128 %i.hr to i64                 ; 2 uses
@@ -225,13 +225,10 @@ bb.bf:                                            ; preds = %bb.be
 .noexc73:                                         ; preds = %.noexc
   %i.hx = getelementptr i8, ptr %i.hm, i64 5480
   %i.hy = load i64, ptr %i.hx, align 8, !tbaa !245
-  %6 = zext i64 %i.hy to i128
-  %7 = mul nuw i128 %6, %i.hp
-  %8 = lshr i128 %7, 64
-  %9 = trunc nuw i128 %8 to i64                   ; 2 uses
-  %i.hz = add i64 %9, %i.hs                       ; 2 uses
-  %10 = icmp ult i64 %i.hz, %9
-  %i.ia = zext i1 %10 to i64
+  %6 = tail call i64 @llvm.umulh.i64(i64 %i.hi, i64 %i.hy) ; 2 uses
+  %i.hz = add i64 %6, %i.hs                       ; 2 uses
+  %7 = icmp ugt i64 %6, %i.hz
+  %i.ia = zext i1 %7 to i64
   %spec.select.i72 = add nuw i64 %i.ia, %i.hu
   br label %_ZN17duckdb_fast_float29compute_product_approximationILi55EEENS_8value128Elm.exit
 
@@ -326,14 +323,14 @@ bb.bi:                                            ; preds = %bb.bh
 .noexc76:                                         ; preds = %bb.bi
   %i.jn = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.jj, i1 true) ; 2 uses
   %i.jo = trunc nuw nsw i64 %i.jn to i32
-  %i.jp = shl i64 %i.jj, %i.jn
+  %i.jp = shl i64 %i.jj, %i.jn                    ; 2 uses
   %i.jq = trunc nsw i64 %.sroa.093.0.ph464481 to i32 ; 2 uses
   %i.jr = shl nsw i32 %i.jq, 1
   %i.js = sext i32 %i.jr to i64
   %i.jt = getelementptr [8 x i8], ptr @_ZN17duckdb_fast_float15powers_templateIvE17power_of_five_128E, i64 %i.js ; 2 uses
   %i.ju = getelementptr i8, ptr %i.jt, i64 5472
   %i.jv = load i64, ptr %i.ju, align 16, !tbaa !245
-  %i.jw = zext i64 %i.jp to i128                  ; 2 uses
+  %i.jw = zext i64 %i.jp to i128
   %i.jx = zext i64 %i.jv to i128
   %i.jy = mul nuw i128 %i.jx, %i.jw               ; 2 uses
   %i.jz = trunc i128 %i.jy to i64                 ; 2 uses
@@ -346,13 +343,10 @@ bb.bi:                                            ; preds = %bb.bh
 .noexc77:                                         ; preds = %.noexc76
   %i.ke = getelementptr i8, ptr %i.jt, i64 5480
   %i.kf = load i64, ptr %i.ke, align 8, !tbaa !245
-  %11 = zext i64 %i.kf to i128
-  %12 = mul nuw i128 %11, %i.jw
-  %13 = lshr i128 %12, 64
-  %14 = trunc nuw i128 %13 to i64                 ; 2 uses
-  %i.kg = add i64 %14, %i.jz                      ; 2 uses
-  %15 = icmp ult i64 %i.kg, %14
-  %i.kh = zext i1 %15 to i64
+  %8 = tail call i64 @llvm.umulh.i64(i64 %i.jp, i64 %i.kf) ; 2 uses
+  %i.kg = add i64 %8, %i.jz                       ; 2 uses
+  %9 = icmp ugt i64 %8, %i.kg
+  %i.kh = zext i1 %9 to i64
   %spec.select.i75 = add nuw i64 %i.kh, %i.kb
   br label %_ZN17duckdb_fast_float29compute_product_approximationILi55EEENS_8value128Elm.exit78
 
@@ -753,6 +747,9 @@ declare i32 @llvm.usub.sat.i32(i32, i32) #23
 declare i16 @llvm.abs.i16(i16, i1 immarg) #36
 
 declare double @exp2(double) local_unnamed_addr
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #23

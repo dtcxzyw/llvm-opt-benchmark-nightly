@@ -205,14 +205,11 @@ bb.b:                                             ; preds = %bb.d, %.preheader31
   %i.ad = zext i64 %i.ab to i128
   %i.ae = mul nuw i128 %i.ac, %i.ad               ; 2 uses
   %i.af = lshr i128 %i.ae, 64
+  %i.ag = xor i128 %i.af, %i.ae
+  %2 = trunc i128 %i.ag to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1177
-  %.masked.i.i.i = and i128 %i.ae, 18446744073709551615
-  %i.ag = xor i128 %i.af, %.masked.i.i.i
-  %2 = zext i64 %i.t to i128
-  %3 = mul nuw i128 %i.ag, %2
-  %4 = lshr i128 %3, 64
-  %5 = trunc nuw i128 %4 to i64                   ; 2 uses
-  %i.ah = lshr i64 %5, 6                          ; 3 uses
+  %3 = tail call i64 @llvm.umulh.i64(i64 %2, i64 %i.t) ; 2 uses
+  %i.ah = lshr i64 %3, 6                          ; 3 uses
   %i.ai = icmp ult i64 %i.ah, %i.k
   br i1 %i.ai, label %_RNCINvMs_NtCsexYYUdYSQU6_5alloc3vecINtB7_3VecReE6retainNCINvMs1_NtNtCsl6yn9iTqhmQ_2ph4fmph8functionINtB10_7BuilderNtCs3hXNDzclcbI_13seedable_hash11BuildWyHashE12build_levelsBH_uBx_Es4_0E0Cs607s0NAIaWN_7segment.exit.i, label %bb.c
 
@@ -223,7 +220,7 @@ bb.c:                                             ; preds = %bb.b
 _RNCINvMs_NtCsexYYUdYSQU6_5alloc3vecINtB7_3VecReE6retainNCINvMs1_NtNtCsl6yn9iTqhmQ_2ph4fmph8functionINtB10_7BuilderNtCs3hXNDzclcbI_13seedable_hash11BuildWyHashE12build_levelsBH_uBx_Es4_0E0Cs607s0NAIaWN_7segment.exit.i: ; preds = %bb.b
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.ah
   %i.ak = load i64, ptr %i.aj, align 8, !noalias !1176, !noundef !14
-  %i.al = and i64 %5, 63
+  %i.al = and i64 %3, 63
   %i.am = shl nuw i64 1, %i.al
   %i.an = and i64 %i.ak, %i.am
   %.not.i.i.i = icmp eq i64 %i.an, 0
@@ -277,14 +274,11 @@ bb.e:                                             ; preds = %bb.i, %.lr.ph.i
   %i.bf = zext i64 %i.bd to i128
   %i.bg = mul nuw i128 %i.be, %i.bf               ; 2 uses
   %i.bh = lshr i128 %i.bg, 64
+  %i.bi = xor i128 %i.bh, %i.bg
+  %4 = trunc i128 %i.bi to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1181
-  %.masked.i.i16.i = and i128 %i.bg, 18446744073709551615
-  %i.bi = xor i128 %i.bh, %.masked.i.i16.i
-  %6 = zext i64 %i.av to i128
-  %7 = mul nuw i128 %i.bi, %6
-  %8 = lshr i128 %7, 64
-  %9 = trunc nuw i128 %8 to i64                   ; 2 uses
-  %i.bj = lshr i64 %9, 6                          ; 3 uses
+  %5 = tail call i64 @llvm.umulh.i64(i64 %4, i64 %i.av) ; 2 uses
+  %i.bj = lshr i64 %5, 6                          ; 3 uses
   %i.bk = icmp ult i64 %i.bj, %i.k
   br i1 %i.bk, label %bb.g, label %bb.f
 
@@ -298,7 +292,7 @@ bb.f:                                             ; preds = %.noexc.i
 bb.g:                                             ; preds = %.noexc.i
   %i.bl = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.bj
   %i.bm = load i64, ptr %i.bl, align 8, !noalias !1180, !noundef !14
-  %i.bn = and i64 %9, 63
+  %i.bn = and i64 %5, 63
   %i.bo = shl nuw i64 1, %i.bn
   %i.bp = and i64 %i.bm, %i.bo
   %.not.i.i17.i = icmp eq i64 %i.bp, 0
@@ -534,7 +528,6 @@ bb.a:
   %i.m = load ptr, ptr %i.l, align 8, !alias.scope !1235, !noalias !1233, !nonnull !14, !align !22, !noundef !14 ; 2 uses
   %i.n = load i64, ptr %i.m, align 8, !noalias !1236, !noundef !14
   %i.o = zext i32 %i.k to i64
-  %2 = zext i64 %i.n to i128
   %i.p = load ptr, ptr %1, align 8, !alias.scope !1234, !noalias !1233, !nonnull !14, !align !22 ; 2 uses
   %invariant.op = xor i64 %i.o, -6884282663029611473
   br label %bb.b
@@ -563,12 +556,10 @@ bb.b:                                             ; preds = %bb.d, %.preheader33
   %i.z = xor i128 %i.y, %.masked.i.i.i.i
   %i.aa = mul nuw i128 %i.z, 16952864883938283893 ; 2 uses
   %i.ab = lshr i128 %i.aa, 64
-  %.masked.i.i.i = and i128 %i.aa, 18446744073709551615
-  %i.ac = xor i128 %i.ab, %.masked.i.i.i
-  %3 = mul nuw i128 %i.ac, %2
-  %4 = lshr i128 %3, 64
-  %5 = trunc nuw i128 %4 to i64                   ; 2 uses
-  %i.ad = lshr i64 %5, 6                          ; 3 uses
+  %i.ac = xor i128 %i.ab, %i.aa
+  %2 = trunc i128 %i.ac to i64
+  %3 = tail call i64 @llvm.umulh.i64(i64 %2, i64 %i.n) ; 2 uses
+  %i.ad = lshr i64 %3, 6                          ; 3 uses
   %i.ae = icmp ult i64 %i.ad, %i.h
   br i1 %i.ae, label %_RNCINvMs_NtCsexYYUdYSQU6_5alloc3vecINtB7_3VecRoE6retainNCINvMs1_NtNtCsl6yn9iTqhmQ_2ph4fmph8functionINtB10_7BuilderNtCs3hXNDzclcbI_13seedable_hash11BuildWyHashE12build_levelsBH_uBx_Es4_0E0Cs607s0NAIaWN_7segment.exit.i, label %bb.c
 
@@ -579,7 +570,7 @@ bb.c:                                             ; preds = %bb.b
 _RNCINvMs_NtCsexYYUdYSQU6_5alloc3vecINtB7_3VecRoE6retainNCINvMs1_NtNtCsl6yn9iTqhmQ_2ph4fmph8functionINtB10_7BuilderNtCs3hXNDzclcbI_13seedable_hash11BuildWyHashE12build_levelsBH_uBx_Es4_0E0Cs607s0NAIaWN_7segment.exit.i: ; preds = %bb.b
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.ad
   %i.ag = load i64, ptr %i.af, align 8, !noalias !1236, !noundef !14
-  %i.ah = and i64 %5, 63
+  %i.ah = and i64 %3, 63
   %i.ai = shl nuw i64 1, %i.ah
   %i.aj = and i64 %i.ag, %i.ai
   %.not.i.i.i = icmp eq i64 %i.aj, 0
@@ -627,13 +618,10 @@ bb.d:                                             ; preds = %_RNCINvMs_NtCsexYYU
   %i.bb = xor i128 %i.ba, %.masked.i.i.i18.i
   %i.bc = mul nuw i128 %i.bb, 16952864883938283893 ; 2 uses
   %i.bd = lshr i128 %i.bc, 64
-  %.masked.i.i19.i = and i128 %i.bc, 18446744073709551615
-  %i.be = xor i128 %i.bd, %.masked.i.i19.i
-  %6 = zext i64 %i.ap to i128
-  %7 = mul nuw i128 %i.be, %6
-  %8 = lshr i128 %7, 64
-  %9 = trunc nuw i128 %8 to i64                   ; 2 uses
-  %i.bf = lshr i64 %9, 6                          ; 3 uses
+  %i.be = xor i128 %i.bd, %i.bc
+  %4 = trunc i128 %i.be to i64
+  %5 = tail call i64 @llvm.umulh.i64(i64 %4, i64 %i.ap) ; 2 uses
+  %i.bf = lshr i64 %5, 6                          ; 3 uses
   %i.bg = icmp ult i64 %i.bf, %i.h
   %i.bh = ptrtoint ptr %.val9.i to i64
   br i1 %i.bg, label %bb.f, label %bb.e
@@ -648,7 +636,7 @@ bb.e:                                             ; preds = %.lr.ph.i
 bb.f:                                             ; preds = %.lr.ph.i
   %i.bi = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.bf
   %i.bj = load i64, ptr %i.bi, align 8, !noalias !1242, !noundef !14
-  %i.bk = and i64 %9, 63
+  %i.bk = and i64 %5, 63
   %i.bl = shl nuw i64 1, %i.bk
   %i.bm = and i64 %i.bj, %i.bl
   %.not.i.i20.i = icmp eq i64 %i.bm, 0
@@ -878,8 +866,7 @@ bb.a:
   %i.n = load i64, ptr %i.m, align 8, !noalias !1296, !noundef !14
   %i.o = zext i32 %i.k to i64
   %i.p = xor i64 %i.o, -6884282663029611473
-  %2 = zext i64 %i.p to i128
-  %i.q = zext i64 %i.n to i128
+  %i.q = zext i64 %i.p to i128
   %i.r = load ptr, ptr %1, align 8, !alias.scope !1294, !noalias !1293, !nonnull !14, !align !22 ; 2 uses
   br label %bb.b
 
@@ -892,18 +879,16 @@ bb.b:                                             ; preds = %bb.d, %.preheader28
   %i.t = tail call i64 @llvm.fshl.i64(i64 %.val.i.i.i.i.i.i, i64 %.val.i.i.i.i.i.i, i64 32)
   %i.u = xor i64 %i.t, -1800455987208640293
   %i.v = zext i64 %i.u to i128
-  %i.w = mul nuw i128 %i.v, %2                    ; 2 uses
+  %i.w = mul nuw i128 %i.v, %i.q                  ; 2 uses
   %i.x = lshr i128 %i.w, 64
   %.masked.i.i.i.i = and i128 %i.w, 18446744073709551615
   %i.y = xor i128 %i.x, %.masked.i.i.i.i
   %i.z = mul nuw i128 %i.y, 16952864883938283885  ; 2 uses
   %i.aa = lshr i128 %i.z, 64
-  %.masked.i.i.i = and i128 %i.z, 18446744073709551615
-  %i.ab = xor i128 %i.aa, %.masked.i.i.i
-  %3 = mul nuw i128 %i.ab, %i.q
-  %4 = lshr i128 %3, 64
-  %5 = trunc nuw i128 %4 to i64                   ; 2 uses
-  %i.ac = lshr i64 %5, 6                          ; 3 uses
+  %i.ab = xor i128 %i.aa, %i.z
+  %2 = trunc i128 %i.ab to i64
+  %3 = tail call i64 @llvm.umulh.i64(i64 %2, i64 %i.n) ; 2 uses
+  %i.ac = lshr i64 %3, 6                          ; 3 uses
   %i.ad = icmp ult i64 %i.ac, %i.h
   br i1 %i.ad, label %_RNCINvMs_NtCsexYYUdYSQU6_5alloc3vecINtB7_3VecRxE6retainNCINvMs1_NtNtCsl6yn9iTqhmQ_2ph4fmph8functionINtB10_7BuilderNtCs3hXNDzclcbI_13seedable_hash11BuildWyHashE12build_levelsBH_uBx_Es4_0E0Cs607s0NAIaWN_7segment.exit.i, label %bb.c
 
@@ -914,7 +899,7 @@ bb.c:                                             ; preds = %bb.b
 _RNCINvMs_NtCsexYYUdYSQU6_5alloc3vecINtB7_3VecRxE6retainNCINvMs1_NtNtCsl6yn9iTqhmQ_2ph4fmph8functionINtB10_7BuilderNtCs3hXNDzclcbI_13seedable_hash11BuildWyHashE12build_levelsBH_uBx_Es4_0E0Cs607s0NAIaWN_7segment.exit.i: ; preds = %bb.b
   %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %i.ac
   %i.af = load i64, ptr %i.ae, align 8, !noalias !1296, !noundef !14
-  %i.ag = and i64 %5, 63
+  %i.ag = and i64 %3, 63
   %i.ah = shl nuw i64 1, %i.ag
   %i.ai = and i64 %i.af, %i.ah
   %.not.i.i.i = icmp eq i64 %i.ai, 0
@@ -954,13 +939,10 @@ bb.d:                                             ; preds = %_RNCINvMs_NtCsexYYU
   %i.ax = xor i128 %i.aw, %.masked.i.i.i13.i
   %i.ay = mul nuw i128 %i.ax, 16952864883938283885 ; 2 uses
   %i.az = lshr i128 %i.ay, 64
-  %.masked.i.i14.i = and i128 %i.ay, 18446744073709551615
-  %i.ba = xor i128 %i.az, %.masked.i.i14.i
-  %6 = zext i64 %i.ao to i128
-  %7 = mul nuw i128 %i.ba, %6
-  %8 = lshr i128 %7, 64
-  %9 = trunc nuw i128 %8 to i64                   ; 2 uses
-  %i.bb = lshr i64 %9, 6                          ; 3 uses
+  %i.ba = xor i128 %i.az, %i.ay
+  %4 = trunc i128 %i.ba to i64
+  %5 = tail call i64 @llvm.umulh.i64(i64 %4, i64 %i.ao) ; 2 uses
+  %i.bb = lshr i64 %5, 6                          ; 3 uses
   %i.bc = icmp ult i64 %i.bb, %i.h
   %i.bd = ptrtoint ptr %.val9.i to i64
   br i1 %i.bc, label %bb.f, label %bb.e
@@ -975,7 +957,7 @@ bb.e:                                             ; preds = %.lr.ph.i
 bb.f:                                             ; preds = %.lr.ph.i
   %i.be = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %i.bb
   %i.bf = load i64, ptr %i.be, align 8, !noalias !1301, !noundef !14
-  %i.bg = and i64 %9, 63
+  %i.bg = and i64 %5, 63
   %i.bh = shl nuw i64 1, %i.bg
   %i.bi = and i64 %i.bf, %i.bh
   %.not.i.i15.i = icmp eq i64 %i.bi, 0
@@ -1377,6 +1359,9 @@ declare hidden void @_RNvXs0_NtCsgNzSnKyKfuE_6either8iteratorINtB7_6EitherINtNtN
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RNvXs0_NtCsexYYUdYSQU6_5alloc6borrowINtB5_3CoweENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs607s0NAIaWN_7segment(ptr dead_on_unwind noalias nofree noundef writable sret([24 x i8]) align 8 captures(none) dereferenceable(24), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #0
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #28

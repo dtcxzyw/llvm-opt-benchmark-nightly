@@ -205,17 +205,14 @@ bb.a:
   %i.l = shl i64 %i.k, 32
   %i.m = add i64 %i.f, %i.l
   %i.n = and i64 %i.m, -4294967296
-  %5 = zext i64 %i.d to i128
-  %6 = mul nuw i128 %5, 11400714785074694791
-  %7 = lshr i128 %6, 64
-  %8 = trunc nuw i128 %7 to i64
+  %5 = tail call i64 @llvm.umulh.i64(i64 %i.d, i64 -7046029288634856825)
   %i.o = or disjoint i64 %i.g, 270215977642229760
   %i.p = add i64 %i.o, %i.n
   %i.q = xor i64 %i.b, %0                         ; 2 uses
   %i.r = and i64 %i.q, 4294967295
   %i.s = mul nuw i64 %i.r, 2246822518
   %i.t = add i64 %i.s, %i.q
-  %i.u = add i64 %i.t, %8                         ; 2 uses
+  %i.u = add i64 %i.t, %5                         ; 2 uses
   %i.v = tail call noundef i64 @llvm.bswap.i64(i64 %i.u)
   %i.w = xor i64 %i.p, %i.v                       ; 4 uses
   %i.x = and i64 %i.w, 4294967295
@@ -226,12 +223,9 @@ bb.a:
   %i.ac = add i64 %i.aa, %i.ab
   %i.ad = shl i64 %i.ac, 32
   %i.ae = add i64 %i.y, %i.ad                     ; 2 uses
-  %9 = zext i64 %i.w to i128
-  %10 = mul nuw i128 %9, 14029467366897019727
-  %11 = lshr i128 %10, 64
-  %12 = trunc nuw i128 %11 to i64
+  %6 = tail call i64 @llvm.umulh.i64(i64 %i.w, i64 -4417276706812531889)
   %i.af = mul i64 %i.u, -4417276706812531889
-  %i.ag = add i64 %i.af, %12                      ; 2 uses
+  %i.ag = add i64 %6, %i.af                       ; 2 uses
   %i.ah = lshr i64 %i.ae, 37
   %i.ai = xor i64 %i.ah, %i.ae
   %i.aj = mul i64 %i.ai, 1609587791953885689      ; 2 uses
@@ -266,21 +260,15 @@ bb.a:
   %i.k = lshr i64 %i.j, 37
   %i.l = xor i64 %i.k, %i.j
   %i.m = mul i64 %i.g, 839798700976720815         ; 2 uses
-  %5 = zext i64 %i.m to i128
-  %6 = mul nuw i128 %5, 14029467366897019727
-  %7 = lshr i128 %6, 64
-  %8 = trunc nuw i128 %7 to i64
-  %i.n = sub i64 %i.l, %8
+  %5 = tail call i64 @llvm.umulh.i64(i64 %i.m, i64 -4417276706812531889)
+  %i.n = sub i64 %i.l, %5
   %i.o = mul i64 %i.n, 839798700976720815         ; 2 uses
   %i.p = tail call noundef i64 @llvm.bswap.i64(i64 %i.o)
   %i.q = xor i64 %i.p, %i.m
   %i.r = mul i64 %i.q, 614540362697595703
   %i.s = add i64 %i.r, -1026820715040473088       ; 2 uses
-  %9 = zext i64 %i.s to i128
-  %10 = mul nuw i128 %9, 11400714785074694791
-  %11 = lshr i128 %10, 64
-  %12 = trunc nuw i128 %11 to i64
-  %i.t = sub i64 %i.o, %12                        ; 2 uses
+  %6 = tail call i64 @llvm.umulh.i64(i64 %i.s, i64 -7046029288634856825)
+  %i.t = sub i64 %i.o, %6                         ; 2 uses
   %i.u = mul i64 %i.t, 3066638151
   %i.v = and i64 %i.u, 4294967295                 ; 3 uses
   %i.w = sub i64 %i.t, %i.v
@@ -312,17 +300,14 @@ bb.a:
   %i.j = shl i64 %i.i, 32
   %i.k = add i64 %i.j, %i.d
   %i.l = and i64 %i.k, -4294967296
-  %4 = zext i64 %i.b to i128
-  %5 = mul nuw i128 %4, 11400714785074694791
-  %6 = lshr i128 %5, 64
-  %7 = trunc nuw i128 %6 to i64
+  %4 = tail call i64 @llvm.umulh.i64(i64 %i.b, i64 -7046029288634856825)
   %i.m = or disjoint i64 %i.e, 270215977642229760
   %i.n = add i64 %i.m, %i.l
   %i.o = xor i64 %0, -4466874330221494952         ; 2 uses
   %i.p = and i64 %i.o, 4294967295
   %i.q = mul nuw i64 %i.p, 2246822518
   %i.r = add i64 %i.q, %i.o
-  %i.s = add i64 %i.r, %7                         ; 2 uses
+  %i.s = add i64 %i.r, %4                         ; 2 uses
   %i.t = tail call noundef i64 @llvm.bswap.i64(i64 %i.s)
   %i.u = xor i64 %i.n, %i.t                       ; 4 uses
   %i.v = and i64 %i.u, 4294967295
@@ -333,12 +318,9 @@ bb.a:
   %i.aa = add i64 %i.y, %i.z
   %i.ab = shl i64 %i.aa, 32
   %i.ac = add i64 %i.ab, %i.w                     ; 2 uses
-  %8 = zext i64 %i.u to i128
-  %9 = mul nuw i128 %8, 14029467366897019727
-  %10 = lshr i128 %9, 64
-  %11 = trunc nuw i128 %10 to i64
+  %5 = tail call i64 @llvm.umulh.i64(i64 %i.u, i64 -4417276706812531889)
   %i.ad = mul i64 %i.s, -4417276706812531889
-  %i.ae = add i64 %i.ad, %11                      ; 2 uses
+  %i.ae = add i64 %5, %i.ad                       ; 2 uses
   %i.af = lshr i64 %i.ac, 37
   %i.ag = xor i64 %i.af, %i.ac
   %i.ah = mul i64 %i.ag, 1609587791953885689      ; 2 uses
@@ -368,21 +350,15 @@ bb.a:
   %i.i = lshr i64 %i.h, 37
   %i.j = xor i64 %i.i, %i.h
   %i.k = mul i64 %i.e, 839798700976720815         ; 2 uses
-  %4 = zext i64 %i.k to i128
-  %5 = mul nuw i128 %4, 14029467366897019727
-  %6 = lshr i128 %5, 64
-  %7 = trunc nuw i128 %6 to i64
-  %i.l = sub i64 %i.j, %7
+  %4 = tail call i64 @llvm.umulh.i64(i64 %i.k, i64 -4417276706812531889)
+  %i.l = sub i64 %i.j, %4
   %i.m = mul i64 %i.l, 839798700976720815         ; 2 uses
   %i.n = tail call noundef i64 @llvm.bswap.i64(i64 %i.m)
   %i.o = xor i64 %i.n, %i.k
   %i.p = mul i64 %i.o, 614540362697595703
   %i.q = add i64 %i.p, -1026820715040473088       ; 2 uses
-  %8 = zext i64 %i.q to i128
-  %9 = mul nuw i128 %8, 11400714785074694791
-  %10 = lshr i128 %9, 64
-  %11 = trunc nuw i128 %10 to i64
-  %i.r = sub i64 %i.m, %11                        ; 2 uses
+  %5 = tail call i64 @llvm.umulh.i64(i64 %i.q, i64 -7046029288634856825)
+  %i.r = sub i64 %i.m, %5                         ; 2 uses
   %i.s = mul i64 %i.r, 3066638151
   %i.t = and i64 %i.s, 4294967295                 ; 3 uses
   %i.u = sub i64 %i.r, %i.t
@@ -783,6 +759,9 @@ declare i64 @llvm.umin.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v4i64(<4 x i64>) #15

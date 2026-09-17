@@ -205,12 +205,8 @@ _ZN7rocksdb22GetLengthPrefixedSliceEPKc.exit:     ; preds = %bb.b, %.thread.i.i
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %.val73 = load i64, ptr %i.aa, align 8, !tbaa !84
   %i.ab = call noundef i64 @_ZN7rocksdb6Hash64EPKcm(ptr noundef %i.w, i64 noundef %i.x)
-  %6 = zext i64 %.val73 to i128
-  %7 = zext i64 %i.ab to i128
-  %8 = mul nuw i128 %7, %6
-  %9 = lshr i128 %8, 64
-  %10 = trunc nuw i128 %9 to i64
-  %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %10 ; 4 uses
+  %6 = call noundef i64 @llvm.umulh.i64(i64 %.val73, i64 %i.ab)
+  %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %6 ; 4 uses
   %i.ad = load atomic ptr, ptr %i.ac monotonic, align 8 ; 9 uses
   %i.ae = icmp eq ptr %i.ad, null
   br i1 %i.ae, label %bb.c, label %bb.d
@@ -273,11 +269,7 @@ bb.j:                                             ; preds = %bb.i
   %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !88
   %.val70 = load i64, ptr %i.aa, align 8, !tbaa !84
   %i.bc = call noundef i64 @_ZN7rocksdb6Hash64EPKcm(ptr noundef %i.w, i64 noundef %i.x)
-  %11 = zext i64 %.val70 to i128
-  %12 = zext i64 %i.bc to i128
-  %13 = mul nuw i128 %12, %11
-  %14 = lshr i128 %13, 64
-  %15 = trunc nuw i128 %14 to i64
+  %7 = call noundef i64 @llvm.umulh.i64(i64 %.val70, i64 %i.bc)
   %i.bd = load atomic i32, ptr %i.ax monotonic, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #30
@@ -308,7 +300,7 @@ _ZN7rocksdb22GetLengthPrefixedSliceEPKc.exit81:   ; preds = %bb.k, %.thread.i.i7
   store i64 %i.bl, ptr %i.bm, align 8
   call void @_ZNK7rocksdb5Slice8ToStringB5cxx11Eb(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %4, ptr noundef nonnull align 8 dereferenceable(16) %5, i1 noundef zeroext true)
   %i.bn = load ptr, ptr %4, align 8, !tbaa !23
-  invoke void (ptr, ptr, ...) @_ZN7rocksdb4InfoEPNS_6LoggerEPKcz(ptr noundef %i.bb, ptr noundef nonnull @.str.50, i64 noundef %15, i32 noundef %i.bd, ptr noundef %i.bn)
+  invoke void (ptr, ptr, ...) @_ZN7rocksdb4InfoEPNS_6LoggerEPKcz(ptr noundef %i.bb, ptr noundef nonnull @.str.50, i64 noundef %7, i32 noundef %i.bd, ptr noundef %i.bn)
           to label %bb.l unwind label %bb.m
 
 bb.l:                                             ; preds = %_ZN7rocksdb22GetLengthPrefixedSliceEPKc.exit81
@@ -633,14 +625,10 @@ _ZN7rocksdb22GetLengthPrefixedSliceEPKc.exit:     ; preds = %bb.b, %.thread.i.i
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val.i = load i64, ptr %i.t, align 8, !tbaa !84
   %i.u = call noundef i64 @_ZN7rocksdb6Hash64EPKcm(ptr noundef %i.r, i64 noundef %i.s)
-  %4 = zext i64 %.val.i to i128
-  %5 = zext i64 %i.u to i128
-  %6 = mul nuw i128 %5, %4
-  %7 = lshr i128 %6, 64
-  %8 = trunc nuw i128 %7 to i64
+  %4 = call noundef i64 @llvm.umulh.i64(i64 %.val.i, i64 %i.u)
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.val4.i = load ptr, ptr %i.v, align 8, !tbaa !91
-  %i.w = getelementptr inbounds nuw [8 x i8], ptr %.val4.i, i64 %8 ; 4 uses
+  %i.w = getelementptr inbounds nuw [8 x i8], ptr %.val4.i, i64 %4 ; 4 uses
   %i.x = load atomic ptr, ptr %i.w acquire, align 8
   %i.y = icmp eq ptr %i.x, null
   br i1 %i.y, label %_ZNK7rocksdb12_GLOBAL__N_115HashLinkListRep16LinkListContainsEPNS0_4NodeERKNS_5SliceE.exit, label %bb.c
@@ -807,14 +795,10 @@ bb.a:
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val.i = load i64, ptr %i.q, align 8, !tbaa !84
   %i.r = call noundef i64 @_ZN7rocksdb6Hash64EPKcm(ptr noundef %i.o, i64 noundef %i.p)
-  %6 = zext i64 %.val.i to i128
-  %7 = zext i64 %i.r to i128
-  %8 = mul nuw i128 %7, %6
-  %9 = lshr i128 %8, 64
-  %10 = trunc nuw i128 %9 to i64
+  %6 = call noundef i64 @llvm.umulh.i64(i64 %.val.i, i64 %i.r)
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.val4.i = load ptr, ptr %i.s, align 8, !tbaa !91
-  %i.t = getelementptr inbounds nuw [8 x i8], ptr %.val4.i, i64 %10 ; 4 uses
+  %i.t = getelementptr inbounds nuw [8 x i8], ptr %.val4.i, i64 %6 ; 4 uses
   %i.u = load atomic ptr, ptr %i.t acquire, align 8
   %i.v = icmp eq ptr %i.u, null
   br i1 %i.v, label %.critedge, label %bb.b
@@ -1217,14 +1201,10 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   %.val.i = load i64, ptr %i.n, align 8, !tbaa !84
   %i.o = call noundef i64 @_ZN7rocksdb6Hash64EPKcm(ptr noundef %i.k, i64 noundef %i.l)
-  %5 = zext i64 %.val.i to i128
-  %6 = zext i64 %i.o to i128
-  %7 = mul nuw i128 %6, %5
-  %8 = lshr i128 %7, 64
-  %9 = trunc nuw i128 %8 to i64
+  %5 = call noundef i64 @llvm.umulh.i64(i64 %.val.i, i64 %i.o)
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 24
   %.val4.i = load ptr, ptr %i.p, align 8, !tbaa !91
-  %i.q = getelementptr inbounds nuw [8 x i8], ptr %.val4.i, i64 %9 ; 4 uses
+  %i.q = getelementptr inbounds nuw [8 x i8], ptr %.val4.i, i64 %5 ; 4 uses
   %i.r = load atomic ptr, ptr %i.q acquire, align 8
   %i.s = icmp eq ptr %i.r, null
   br i1 %i.s, label %bb.b, label %bb.c
@@ -1625,6 +1605,9 @@ declare void @llvm.assume(i1 noundef) #23
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #24
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #25

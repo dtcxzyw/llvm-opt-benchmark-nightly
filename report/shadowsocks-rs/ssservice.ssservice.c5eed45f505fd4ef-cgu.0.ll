@@ -205,12 +205,9 @@ _RINvYNtNtNtCs1jR6m42rQJO_4rand4rngs6thread9ThreadRngNtNtB9_3rng6RngExt6randomyE
   %i.fc = shl nuw i64 %i.fb, 32
   %i.fd = zext i32 %.sroa.02.017.i.i.i.i18.i.i.i.i.i.i.i.i.i.i.i.i.i to i64
   %i.fe = or disjoint i64 %i.fc, %i.fd
-  %2 = zext i64 %i.fe to i128
-  %3 = mul nuw nsw i128 %2, 31
-  %4 = lshr i128 %3, 64
-  %5 = trunc nuw nsw i128 %4 to i64
+  %2 = call i64 @llvm.umulh.i64(i64 %i.fe, i64 31)
   %i.ff = xor i64 %i.ej, -1
-  %.not6.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp samesign ult i64 %i.ff, %5
+  %.not6.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ugt i64 %2, %i.ff
   %i.fg = zext i1 %.not6.i.i.i.i.i.i.i.i.i.i.i.i.i to i32
   %i.fh = add nuw nsw i32 %i.fg, %i.ei
   br label %_RINvYNtNtNtCs1jR6m42rQJO_4rand4rngs6thread9ThreadRngNtNtB9_3rng6RngExt12random_rangeyINtNtNtCsf3Ta7LF998c_4core3ops5range5RangeyEECsgZAIVb0XKpv_9ssservice.exit.i.i.i.i.i.i.i.i.i
@@ -613,12 +610,9 @@ _RINvYNtNtNtCs1jR6m42rQJO_4rand4rngs6thread9ThreadRngNtNtB9_3rng6RngExt6randomyE
   %i.az = shl nuw i64 %i.ay, 32
   %i.ba = zext i32 %.sroa.02.017.i.i.i.i18.i.i.i.i.i to i64
   %i.bb = or disjoint i64 %i.az, %i.ba
-  %2 = zext i64 %i.bb to i128
-  %3 = mul nuw nsw i128 %2, 1001
-  %4 = lshr i128 %3, 64
-  %5 = trunc nuw nsw i128 %4 to i64
+  %2 = tail call i64 @llvm.umulh.i64(i64 %i.bb, i64 1001)
   %i.bc = xor i64 %i.ag, -1
-  %.not6.i.i.i.i.i = icmp samesign ult i64 %i.bc, %5
+  %.not6.i.i.i.i.i = icmp ugt i64 %2, %i.bc
   %i.bd = zext i1 %.not6.i.i.i.i.i to i64
   %i.be = add nuw nsw i64 %i.bd, %i.af
   br label %_RINvYNtNtNtCs1jR6m42rQJO_4rand4rngs6thread9ThreadRngNtNtB9_3rng6RngExt12random_rangeyINtNtNtCsf3Ta7LF998c_4core3ops5range14RangeInclusiveyEECsgZAIVb0XKpv_9ssservice.exit.i.i
@@ -1019,6 +1013,9 @@ bb.a:
 
 ; Function Attrs: nocallback nofree nosync nounwind nonlazybind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #58
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #42
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #42

@@ -205,13 +205,9 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.bq = shl i32 %i.bp, %i.bj
   %i.br = zext i32 %i.bq to i64
   %i.bs = shl nuw i64 %i.br, 32
-  %1 = zext i64 %i.bs to i128
-  %2 = zext i64 %i.bg to i128
-  %3 = mul nuw i128 %1, %2
-  %4 = lshr i128 %3, 64
-  %5 = trunc nuw i128 %4 to i64                   ; 2 uses
-  %i.bt = lshr i64 %5, 32                         ; 2 uses
-  %i.bu = and i64 %5, 4294967295
+  %1 = tail call noundef i64 @llvm.umulh.i64(i64 %i.bs, i64 %i.bg) ; 2 uses
+  %i.bt = lshr i64 %1, 32                         ; 2 uses
+  %i.bu = and i64 %1, 4294967295
   %i.bv = icmp ne i64 %i.bu, 0
   %.sroa.08.0.extract.trunc = trunc nuw i64 %i.bt to i32
   %i.bw = mul nuw nsw i64 %i.bt, 1374389535
@@ -614,18 +610,15 @@ bb.d:                                             ; preds = %bb.c
   %i.z = sub nsw i32 %i.m, %i.y                   ; 2 uses
   %i.aa = sext i32 %i.v to i64
   %i.ab = getelementptr inbounds [8 x i8], ptr @_ZZN3fmt3v126detail9dragonbox14cache_accessorIdE16get_cached_powerEiE14powers_of_5_64, i64 %i.aa
-  %i.ac = load i64, ptr %i.ab, align 8, !tbaa !200
+  %i.ac = load i64, ptr %i.ab, align 8, !tbaa !200 ; 2 uses
   %i.ad = zext i64 %.sroa.5.0.copyload.i to i128
-  %i.ae = zext i64 %i.ac to i128                  ; 2 uses
+  %i.ae = zext i64 %i.ac to i128
   %i.af = mul nuw i128 %i.ae, %i.ad               ; 2 uses
   %i.ag = lshr i128 %i.af, 64
   %i.ah = trunc nuw i128 %i.ag to i64
   %i.ai = trunc i128 %i.af to i64
-  %1 = zext i64 %.sroa.037.0.copyload.i to i128
-  %2 = mul nuw i128 %i.ae, %1
-  %3 = lshr i128 %2, 64
-  %4 = trunc nuw i128 %3 to i64
-  %i.aj = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.ai, i64 %4) ; 2 uses
+  %1 = tail call i64 @llvm.umulh.i64(i64 %i.ac, i64 %.sroa.037.0.copyload.i)
+  %i.aj = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.ai, i64 %1) ; 2 uses
   %i.ak = extractvalue { i64, i1 } %i.aj, 1
   %i.al = extractvalue { i64, i1 } %i.aj, 0
   %i.am = zext i1 %i.ak to i64
@@ -805,7 +798,7 @@ bb.o:                                             ; preds = %bb.n
 
 _ZN3fmt3v126detail9dragonbox14cache_accessorIdE16get_cached_powerEi.exit75: ; preds = %._ZN3fmt3v126detail9dragonbox14cache_accessorIdE16get_cached_powerEi.exit75_crit_edge, %bb.o
   %.pre-phi175 = phi i32 [ %.pre174, %._ZN3fmt3v126detail9dragonbox14cache_accessorIdE16get_cached_powerEi.exit75_crit_edge ], [ %i.cz, %bb.o ]
-  %.sroa.041.0.i71 = phi i64 [ %.sroa.037.0.copyload.i68, %._ZN3fmt3v126detail9dragonbox14cache_accessorIdE16get_cached_powerEi.exit75_crit_edge ], [ %i.eg, %bb.o ]
+  %.sroa.041.0.i71 = phi i64 [ %.sroa.037.0.copyload.i68, %._ZN3fmt3v126detail9dragonbox14cache_accessorIdE16get_cached_powerEi.exit75_crit_edge ], [ %i.eg, %bb.o ] ; 3 uses
   %.sroa.3.0.i72 = phi i64 [ %.sroa.5.0.copyload.i70, %._ZN3fmt3v126detail9dragonbox14cache_accessorIdE16get_cached_powerEi.exit75_crit_edge ], [ %i.ed, %bb.o ] ; 4 uses
   %i.eh = add nsw i32 %.pre-phi175, %.041         ; 4 uses
   %i.ei = sub nsw i32 63, %i.eh
@@ -815,28 +808,23 @@ _ZN3fmt3v126detail9dragonbox14cache_accessorIdE16get_cached_powerEi.exit75: ; pr
   %i.em = shl nuw nsw i64 %.042, 1                ; 4 uses
   %i.en = or disjoint i64 %i.em, 1
   %i.eo = zext nneg i32 %i.eh to i64              ; 3 uses
-  %i.ep = shl i64 %i.en, %i.eo
-  %i.eq = zext i64 %i.ep to i128                  ; 2 uses
+  %i.ep = shl i64 %i.en, %i.eo                    ; 2 uses
+  %i.eq = zext i64 %i.ep to i128
   %i.er = zext i64 %.sroa.3.0.i72 to i128
   %i.es = mul nuw i128 %i.er, %i.eq               ; 2 uses
   %i.et = lshr i128 %i.es, 64
   %i.eu = trunc nuw i128 %i.et to i64
   %i.ev = trunc i128 %i.es to i64
-  %5 = zext i64 %.sroa.041.0.i71 to i128          ; 3 uses
-  %6 = mul nuw i128 %5, %i.eq
-  %7 = lshr i128 %6, 64
-  %8 = trunc nuw i128 %7 to i64
-  %i.ew = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.ev, i64 %8) ; 2 uses
+  %2 = tail call noundef i64 @llvm.umulh.i64(i64 %i.ep, i64 %.sroa.041.0.i71)
+  %i.ew = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.ev, i64 %2) ; 2 uses
   %i.ex = extractvalue { i64, i1 } %i.ew, 1
   %i.ey = extractvalue { i64, i1 } %i.ew, 0
   %i.ez = zext i1 %i.ex to i64
   %i.fa = add nuw i64 %i.ez, %i.eu                ; 2 uses
   %i.fb = icmp ne i64 %i.ey, 0
-  %9 = zext i64 %i.fa to i128
-  %10 = mul nuw nsw i128 %9, 2361183241434822607
-  %sum.shift.i = lshr i128 %10, 71
-  %11 = trunc nuw nsw i128 %sum.shift.i to i64    ; 7 uses
-  %.neg = mul i64 %11, 4294966296
+  %3 = tail call noundef i64 @llvm.umulh.i64(i64 %i.fa, i64 2361183241434822607) ; 2 uses
+  %4 = lshr i64 %3, 7                             ; 6 uses
+  %.neg = mul i64 %4, 4294966296
   %i.fc = add i64 %.neg, %i.fa
   %i.fd = trunc i64 %i.fc to i32                  ; 5 uses
   %i.fe = icmp ugt i32 %i.el, %i.fd
@@ -853,7 +841,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not49, label %bb.u, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.fh = add nsw i64 %11, -1
+  %i.fh = add nsw i64 %4, -1
   br label %bb.y
 
 bb.s:                                             ; preds = %_ZN3fmt3v126detail9dragonbox14cache_accessorIdE16get_cached_powerEi.exit75
@@ -863,8 +851,9 @@ bb.s:                                             ; preds = %_ZN3fmt3v126detail9
 bb.t:                                             ; preds = %bb.s
   %i.fj = add nsw i64 %i.em, -1                   ; 2 uses
   %i.fk = mul i64 %.sroa.3.0.i72, %i.fj
-  %i.fl = zext nneg i64 %i.fj to i128
-  %i.fm = mul nuw nsw i128 %5, %i.fl              ; 2 uses
+  %5 = zext nneg i64 %i.fj to i128
+  %i.fl = zext i64 %.sroa.041.0.i71 to i128
+  %i.fm = mul nuw nsw i128 %i.fl, %5              ; 2 uses
   %i.fn = lshr i128 %i.fm, 64
   %i.fo = trunc nuw nsw i128 %i.fn to i64
   %i.fp = trunc i128 %i.fm to i64
@@ -887,13 +876,13 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.t, %bb.p, %bb.q
   %i.gd = add nsw i32 %i.co, 1
-  %i.ge = urem i64 %11, 100000000
-  %12 = udiv i64 %11, 100000000
+  %i.ge = urem i64 %4, 100000000
   %i.gf = icmp eq i64 %i.ge, 0
   br i1 %i.gf, label %bb.v, label %.preheader
 
 bb.v:                                             ; preds = %bb.u
-  %i.gg = trunc nuw nsw i64 %12 to i32
+  %6 = udiv i64 %3, 12800000000
+  %i.gg = trunc nuw nsw i64 %6 to i32
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.w, %bb.v
@@ -916,7 +905,7 @@ _ZN3fmt3v126detail9dragonbox21remove_trailing_zerosERji.exit.i63: ; preds = %bb.
   br label %_ZN3fmt3v126detail9dragonbox21remove_trailing_zerosERm.exit65
 
 .preheader:                                       ; preds = %bb.u, %.preheader
-  %.sroa.094.4 = phi i64 [ %i.gq, %.preheader ], [ %11, %bb.u ] ; 5 uses
+  %.sroa.094.4 = phi i64 [ %i.gq, %.preheader ], [ %4, %bb.u ] ; 5 uses
   %.0.i54 = phi i32 [ %i.gs, %.preheader ], [ 0, %bb.u ] ; 2 uses
   %i.gp = mul i64 %.sroa.094.4, -8116567392432202711
   %i.gq = tail call i64 @llvm.fshl.i64(i64 %.sroa.094.4, i64 %i.gp, i64 62) ; 2 uses
@@ -940,7 +929,7 @@ _ZN3fmt3v126detail9dragonbox21remove_trailing_zerosERm.exit65: ; preds = %bb.x, 
   br label %_ZN3fmt3v126detail9dragonbox21shorter_interval_caseIdEENS2_10decimal_fpIT_EEi.exit
 
 bb.y:                                             ; preds = %bb.t, %bb.s, %bb.r
-  %.sroa.094.0 = phi i64 [ %i.fh, %bb.r ], [ %11, %bb.s ], [ %11, %bb.t ]
+  %.sroa.094.0 = phi i64 [ %i.fh, %bb.r ], [ %4, %bb.s ], [ %4, %bb.t ]
   %.0 = phi i32 [ 1000, %bb.r ], [ %i.fd, %bb.s ], [ %i.fd, %bb.t ]
   %i.gx = mul nsw i64 %.sroa.094.0, 10
   %i.gy = lshr i32 %i.el, 1
@@ -957,7 +946,8 @@ bb.y:                                             ; preds = %bb.t, %bb.s, %bb.r
 bb.z:                                             ; preds = %bb.y
   %i.hh = mul i64 %.sroa.3.0.i72, %i.em
   %i.hi = zext nneg i64 %i.em to i128
-  %i.hj = mul nuw nsw i128 %5, %i.hi              ; 2 uses
+  %7 = zext i64 %.sroa.041.0.i71 to i128
+  %i.hj = mul nuw nsw i128 %7, %i.hi              ; 2 uses
   %i.hk = lshr i128 %i.hj, 64
   %i.hl = trunc nuw nsw i128 %i.hk to i64
   %i.hm = add i64 %i.hh, %i.hl                    ; 2 uses
@@ -1360,7 +1350,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.at = ashr i32 %i.as, 19                      ; 2 uses
   %i.au = add nsw i32 %i.at, %.0108
   %i.av = zext nneg i32 %i.au to i64
-  %i.aw = shl i64 %.0109, %i.av
+  %i.aw = shl i64 %.0109, %i.av                   ; 2 uses
   %i.ax = trunc nsw i32 %i.aq to i16
   %.lhs.trunc = sub nsw i16 294, %i.ax
   %i.ay = udiv i16 %.lhs.trunc, 27                ; 2 uses
@@ -1415,17 +1405,14 @@ bb.k:                                             ; preds = %bb.j
 _ZN3fmt3v126detail9dragonbox16get_cached_powerEi.exit: ; preds = %bb.j, %bb.k
   %.sroa.041.0.i.i = phi i64 [ %i.cl, %bb.k ], [ %.sroa.037.0.copyload.i.i, %bb.j ]
   %.sroa.3.0.i.i = phi i64 [ %i.ci, %bb.k ], [ %.sroa.5.0.copyload.i.i, %bb.j ]
-  %i.cm = zext i64 %i.aw to i128                  ; 2 uses
+  %i.cm = zext i64 %i.aw to i128
   %i.cn = zext i64 %.sroa.3.0.i.i to i128
   %i.co = mul nuw i128 %i.cn, %i.cm               ; 2 uses
   %i.cp = lshr i128 %i.co, 64
   %i.cq = trunc nuw i128 %i.cp to i64
   %i.cr = trunc i128 %i.co to i64
-  %6 = zext i64 %.sroa.041.0.i.i to i128
-  %7 = mul nuw i128 %6, %i.cm
-  %8 = lshr i128 %7, 64
-  %9 = trunc nuw i128 %8 to i64
-  %i.cs = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.cr, i64 %9) ; 2 uses
+  %6 = tail call noundef i64 @llvm.umulh.i64(i64 %i.aw, i64 %.sroa.041.0.i.i)
+  %i.cs = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.cr, i64 %6) ; 2 uses
   %i.ct = extractvalue { i64, i1 } %i.cs, 1
   %i.cu = extractvalue { i64, i1 } %i.cs, 0       ; 2 uses
   %i.cv = zext i1 %i.ct to i64
@@ -1520,11 +1507,9 @@ bb.w:                                             ; preds = %_ZN3fmt3v126detail6
 bb.x:                                             ; preds = %bb.q
   %i.dy = sub nsw i32 %i.di, %.0187               ; 2 uses
   store i32 %i.dy, ptr %i.a, align 4, !tbaa !67
-  %10 = zext i64 %.0107 to i128
-  %11 = mul nuw nsw i128 %10, 7922816251426433760
-  %sum.shift = lshr i128 %11, 96
-  %12 = trunc nuw nsw i128 %sum.shift to i64      ; 3 uses
-  %.neg126 = mul i64 %12, -10000000000
+  %7 = tail call noundef i64 @llvm.umulh.i64(i64 %.0107, i64 7922816251426433760)
+  %8 = lshr i64 %7, 32                            ; 3 uses
+  %.neg126 = mul i64 %8, -10000000000
   %i.dz = add i64 %.neg126, %.0107                ; 5 uses
   %i.ea = tail call i32 @llvm.umin.i32(i32 %.0187, i32 9) ; 3 uses
   %i.eb = load ptr, ptr %4, align 8, !tbaa !214   ; 6 uses
@@ -1533,7 +1518,7 @@ bb.x:                                             ; preds = %bb.q
   br i1 %.not.i, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %i.ed = mul nuw nsw i64 %12, 720575941
+  %i.ed = mul nuw nsw i64 %8, 720575941
   %i.ee = lshr i64 %i.ed, 24
   %i.ef = add nuw nsw i64 %i.ee, 1                ; 2 uses
   %i.eg = lshr i64 %i.ef, 32                      ; 2 uses
@@ -1543,7 +1528,7 @@ bb.y:                                             ; preds = %bb.x
   br label %bb.aa
 
 bb.z:                                             ; preds = %bb.x
-  %i.ej = mul nuw nsw i64 %12, 450359963
+  %i.ej = mul nuw nsw i64 %8, 450359963
   %i.ek = lshr i64 %i.ej, 20
   %i.el = add nuw nsw i64 %i.ek, 1                ; 2 uses
   %i.em = lshr i64 %i.el, 32                      ; 2 uses
@@ -1645,10 +1630,8 @@ bb.ag:                                            ; preds = %bb.af
   br i1 %or.cond223, label %.critedge134.thread, label %.critedge136
 
 bb.ah:                                            ; preds = %_ZZN3fmt3v126detail12format_floatIdEEiT_iRKNS0_12format_specsEbRNS1_6bufferIcEEENKUljPcE_clEjSA_.exit
-  %13 = zext i64 %i.dz to i128
-  %14 = mul nuw nsw i128 %13, 1844674407370955162
-  %15 = lshr i128 %14, 64                         ; 2 uses
-  %i.gi = trunc i128 %15 to i32
+  %9 = tail call noundef i64 @llvm.umulh.i64(i64 %i.dz, i64 1844674407370955162) ; 2 uses
+  %i.gi = trunc i64 %9 to i32
   %i.gj = trunc i64 %i.dz to i32
   %.neg127 = mul i32 %i.gi, -10
   %i.gk = add i32 %.neg127, %i.gj                 ; 3 uses
@@ -1657,8 +1640,7 @@ bb.ah:                                            ; preds = %_ZZN3fmt3v126detail
   %i.gn = getelementptr inbounds nuw i8, ptr %i.gm, i64 9 ; 3 uses
   %i.go = and i32 %i.gl, 1
   %.not.i142 = icmp eq i32 %i.go, 0
-  %16 = trunc nuw nsw i128 %15 to i64
-  %i.gp = and i64 %16, 4294967295                 ; 2 uses
+  %i.gp = and i64 %9, 4294967295                  ; 2 uses
   br i1 %.not.i142, label %bb.aj, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
@@ -2059,6 +2041,9 @@ declare i64 @llvm.umin.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #23
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #23

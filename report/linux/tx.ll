@@ -205,14 +205,12 @@ fq_flow_idx.exit.i:                               ; preds = %bb.h, %bb.g
   %i.bj = load i32, ptr %i.bi, align 8
   %i.bk = getelementptr i8, ptr %i.o, i64 244
   %i.bl = load i32, ptr %i.bk, align 4
-  %8 = zext i32 %i.bj to i64
-  %9 = zext i32 %i.bl to i64
-  %10 = mul nuw i64 %9, %8
-  %11 = lshr i64 %10, 32
+  %8 = tail call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %i.bj, i32 %i.bl)
   %i.bm = getelementptr i8, ptr %i.o, i64 240     ; 4 uses
   tail call void @_raw_spin_lock_bh(ptr noundef %i.bm) #16
   %i.bn = load ptr, ptr %i.p, align 8
-  %i.bo = getelementptr [56 x i8], ptr %i.bn, i64 %11 ; 2 uses
+  %9 = zext i32 %8 to i64
+  %i.bo = getelementptr [56 x i8], ptr %i.bn, i64 %9 ; 2 uses
   %i.bp = load ptr, ptr %i.bo, align 8            ; 3 uses
   %.not.i.i = icmp eq ptr %i.bp, null
   %.not12.i.i = icmp eq ptr %i.bp, %i.au
@@ -615,12 +613,10 @@ fq_flow_idx.exit.i:                               ; preds = %bb.v, %bb.u
   %i.br = load i32, ptr %i.bq, align 8
   %i.bs = getelementptr i8, ptr %0, i64 244       ; 3 uses
   %i.bt = load i32, ptr %i.bs, align 4
-  %4 = zext i32 %i.br to i64
-  %5 = zext i32 %i.bt to i64
-  %6 = mul nuw i64 %5, %4
-  %7 = lshr i64 %6, 32                            ; 2 uses
-  %8 = load ptr, ptr %i.bm, align 8
-  %i.bu = getelementptr [56 x i8], ptr %8, i64 %7 ; 2 uses
+  %4 = tail call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %i.br, i32 %i.bt)
+  %5 = load ptr, ptr %i.bm, align 8
+  %6 = zext i32 %4 to i64                         ; 2 uses
+  %i.bu = getelementptr [56 x i8], ptr %5, i64 %6 ; 2 uses
   %i.bv = load ptr, ptr %i.bu, align 8            ; 3 uses
   %.not.i.i.i = icmp eq ptr %i.bv, null
   %.not12.i.i.i = icmp eq ptr %i.bv, %i.at
@@ -667,7 +663,7 @@ bb.z:                                             ; preds = %fq_flow_classify.ex
 ._crit_edge10.i.i:                                ; preds = %bb.z
   %i.ck = getelementptr i8, ptr %0, i64 216
   %i.cl = load ptr, ptr %i.ck, align 8
-  tail call void asm sideeffect " btsq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.cl, i64 range(i64 0, 4294967295) %7) #17, !srcloc !114
+  tail call void asm sideeffect " btsq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.cl, i64 range(i64 0, 4294967295) %6) #17, !srcloc !114
   br label %bb.ac
 
 bb.aa:                                            ; preds = %bb.z
@@ -1070,13 +1066,10 @@ INET_ECN_set_ce.exit.thread4.i.i:                 ; preds = %INET_ECN_set_ce.exi
   %i.kb = load i32, ptr %i.hf, align 4
   %i.kc = load i32, ptr %i.bh, align 8
   %i.kd = load i16, ptr %i.hj, align 2
-  %3 = zext i16 %i.kd to i64
-  %4 = zext i32 %i.kc to i64
-  %5 = shl nuw nsw i64 %4, 16
-  %6 = mul nuw i64 %5, %3
-  %7 = lshr i64 %6, 32
-  %8 = trunc nuw i64 %7 to i32
-  %i.ke = add i32 %i.kb, %8
+  %3 = zext i16 %i.kd to i32
+  %4 = shl nuw i32 %3, 16
+  %5 = call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %i.kc, i32 %4)
+  %i.ke = add i32 %5, %i.kb
   store volatile i32 %i.ke, ptr %i.hf, align 4
   br label %.critedge..critedge.thread_crit_edge.i.i
 
@@ -1247,13 +1240,10 @@ bb.bd:                                            ; preds = %codel_should_drop.e
   %i.nj = load i32, ptr %i.hf, align 4
   %i.nk = load i32, ptr %i.bh, align 8
   %i.nl = load i16, ptr %i.hj, align 2
-  %9 = zext i16 %i.nl to i64
-  %10 = zext i32 %i.nk to i64
-  %11 = shl nuw nsw i64 %10, 16
-  %12 = mul nuw i64 %11, %9
-  %13 = lshr i64 %12, 32
-  %14 = trunc nuw i64 %13 to i32
-  %i.nm = add i32 %i.nj, %14                      ; 2 uses
+  %6 = zext i16 %i.nl to i32
+  %7 = shl nuw i32 %6, 16
+  %8 = call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %i.nk, i32 %7)
+  %i.nm = add i32 %8, %i.nj                       ; 2 uses
   store volatile i32 %i.nm, ptr %i.hf, align 4
   %.pre.i.i = load i8, ptr %i.hc, align 4, !range !15
   %i.nn = trunc nuw i8 %.pre.i.i to i1
@@ -1478,8 +1468,8 @@ bb.by:                                            ; preds = %bb.bx
   %i.rk = lshr i64 %i.rj, 47                      ; 2 uses
   %i.rl = trunc i64 %i.rk to i16
   store i16 %i.rl, ptr %i.qz, align 2
-  %15 = shl nuw nsw i64 %i.rk, 16
-  %16 = and i64 %15, 4294901760
+  %9 = trunc nuw nsw i64 %i.rk to i32
+  %10 = shl i32 %9, 16
   br label %bb.ca
 
 bb.bz:                                            ; preds = %bb.bx, %codel_should_drop.exit156.i.i
@@ -1489,15 +1479,12 @@ bb.bz:                                            ; preds = %bb.bx, %codel_shoul
   br label %bb.ca
 
 bb.ca:                                            ; preds = %bb.bz, %bb.by
-  %17 = phi i64 [ %16, %bb.by ], [ 4294901760, %bb.bz ]
+  %11 = phi i32 [ %10, %bb.by ], [ -65536, %bb.bz ]
   %i.rn = phi i32 [ %i.qr, %bb.by ], [ 1, %bb.bz ]
   store volatile i32 %i.rn, ptr %i.qp, align 4
   %i.ro = load i32, ptr %i.bh, align 8
-  %18 = zext i32 %i.ro to i64
-  %19 = mul nuw i64 %17, %18
-  %20 = lshr i64 %19, 32
-  %21 = trunc nuw i64 %20 to i32
-  %i.rp = add i32 %21, %i.gg
+  %12 = call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %i.ro, i32 %11)
+  %i.rp = add i32 %12, %i.gg
   %i.rq = getelementptr i8, ptr %.0.i186203, i64 16
   store volatile i32 %i.rp, ptr %i.rq, align 4
   br label %.critedge.i.i
@@ -1898,6 +1885,9 @@ declare i8 @llvm.umin.i8(i8, i8) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.umin.i16(i16, i16) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #8

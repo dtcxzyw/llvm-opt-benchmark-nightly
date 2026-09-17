@@ -204,7 +204,7 @@ scalar.ph167:                                     ; preds = %scalar.ph167.prehea
   br i1 %exitcond6.not.i, label %init_word_distrib.exit, label %bb.c, !llvm.loop !14
 
 init_word_distrib.exit:                           ; preds = %._crit_edge.i, %bb.a
-  %i.cp = phi i32 [ %i.a, %bb.a ], [ %i.bx, %._crit_edge.i ]
+  %i.cp = phi i32 [ %i.a, %bb.a ], [ %i.bx, %._crit_edge.i ] ; 3 uses
   %.not = icmp eq i32 %3, 0
   br i1 %.not, label %generateFirstSentence.exit, label %bb.d
 
@@ -607,7 +607,6 @@ bb.bf:                                            ; preds = %.loopexit.i
 
 generateFirstSentence.exit:                       ; preds = %bb.bb, %bb.be, %writeLastCharacters.exit.sink.split.sink.split.i.i14.i, %bb.bf, %bb.bc, %bb.az, %init_word_distrib.exit
   %g_nbChars.promoted = phi i64 [ 0, %init_word_distrib.exit ], [ %1, %bb.bc ], [ %g_nbChars.promoted73, %bb.az ], [ %i.ks, %bb.bf ], [ %1, %writeLastCharacters.exit.sink.split.sink.split.i.i14.i ], [ %1, %bb.be ], [ %1, %bb.bb ] ; 2 uses
-  %5 = zext i32 %i.cp to i64                      ; 3 uses
   %i.kt = getelementptr i8, ptr %0, i64 %1
   %i.ku = getelementptr i8, ptr %i.kt, i64 -1     ; 3 uses
   %.not6 = icmp eq i32 %4, 0
@@ -624,19 +623,13 @@ bb.bh:                                            ; preds = %bb.bg
   %i.ky = mul i32 %.lcssa.i.i.lcssa26, -1640531535
   %i.kz = xor i32 %i.ky, -2048144777              ; 2 uses
   %i.la = tail call i32 @llvm.fshl.i32(i32 %i.kz, i32 %i.kz, i32 13) ; 2 uses
-  %6 = zext i32 %i.la to i64
-  %7 = mul nuw nsw i64 %6, 7
-  %8 = lshr i64 %7, 32
-  %9 = trunc nuw nsw i64 %8 to i32
+  %5 = tail call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %i.la, i32 7)
   %i.lb = mul i32 %i.la, -1640531535
   %i.lc = xor i32 %i.lb, -2048144777              ; 2 uses
   %i.ld = tail call i32 @llvm.fshl.i32(i32 %i.lc, i32 %i.lc, i32 13) ; 2 uses
-  %10 = zext i32 %i.ld to i64
-  %11 = mul nuw nsw i64 %10, 7
-  %12 = lshr i64 %11, 32
-  %13 = trunc nuw nsw i64 %12 to i32
-  %i.le = add nuw nsw i32 %9, 1
-  %i.lf = add nuw nsw i32 %i.le, %13
+  %6 = tail call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %i.ld, i32 7)
+  %i.le = add nuw nsw i32 %5, 1
+  %i.lf = add nuw nsw i32 %i.le, %6
   br label %bb.bi
 
 bb.bi:                                            ; preds = %generateSentence.exit.i, %bb.bh
@@ -649,66 +642,45 @@ bb.bi:                                            ; preds = %generateSentence.ex
   %i.lk = mul i32 %.lcssa.i68.i, -1640531535
   %i.ll = xor i32 %i.lk, -2048144777              ; 2 uses
   %i.lm = tail call i32 @llvm.fshl.i32(i32 %i.ll, i32 %i.ll, i32 13) ; 2 uses
-  %14 = zext i32 %i.lm to i64
-  %15 = mul nuw nsw i64 %14, 11
-  %16 = lshr i64 %15, 32
-  %17 = trunc nuw nsw i64 %16 to i32              ; 2 uses
+  %7 = tail call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %i.lm, i32 11) ; 2 uses
   %i.ln = mul i32 %i.lm, -1640531535
   %i.lo = xor i32 %i.ln, -2048144777              ; 2 uses
   %i.lp = tail call i32 @llvm.fshl.i32(i32 %i.lo, i32 %i.lo, i32 13) ; 2 uses
-  %18 = zext i32 %i.lp to i64
-  %19 = mul nuw nsw i64 %18, 11
-  %20 = lshr i64 %19, 32
-  %21 = trunc nuw nsw i64 %20 to i32              ; 2 uses
-  %i.lq = add nuw nsw i32 %21, %17                ; 4 uses
+  %8 = tail call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %i.lp, i32 11) ; 2 uses
+  %i.lq = add nuw nsw i32 %8, %7                  ; 4 uses
   %i.lr = mul i32 %i.lp, -1640531535
   %i.ls = xor i32 %i.lr, -2048144777              ; 2 uses
   %i.lt = tail call i32 @llvm.fshl.i32(i32 %i.ls, i32 %i.ls, i32 13) ; 2 uses
-  %22 = zext i32 %i.lt to i64
-  %23 = mul nuw nsw i64 %22, 9
-  %24 = lshr i64 %23, 32
-  %25 = trunc nuw nsw i64 %24 to i32
+  %9 = tail call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %i.lt, i32 9)
   %i.lu = mul i32 %i.lt, -1640531535
   %i.lv = xor i32 %i.lu, -2048144777              ; 2 uses
   %i.lw = tail call i32 @llvm.fshl.i32(i32 %i.lv, i32 %i.lv, i32 13) ; 2 uses
-  %26 = zext i32 %i.lw to i64
-  %27 = mul nuw nsw i64 %26, 9
-  %28 = lshr i64 %27, 32
-  %29 = trunc nuw nsw i64 %28 to i32
-  %i.lx = add nuw nsw i32 %25, 1
-  %i.ly = add nuw nsw i32 %i.lx, %29              ; 3 uses
+  %10 = tail call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %i.lw, i32 9)
+  %i.lx = add nuw nsw i32 %9, 1
+  %i.ly = add nuw nsw i32 %i.lx, %10              ; 3 uses
   %i.lz = mul i32 %i.lw, -1640531535
   %i.ma = xor i32 %i.lz, -2048144777              ; 2 uses
   %i.mb = tail call i32 @llvm.fshl.i32(i32 %i.ma, i32 %i.ma, i32 13) ; 2 uses
-  %30 = zext i32 %i.mb to i64
-  %31 = mul nuw nsw i64 %30, 7
-  %32 = lshr i64 %31, 32
-  %33 = trunc nuw nsw i64 %32 to i32
+  %11 = tail call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %i.mb, i32 7)
   %i.mc = mul i32 %i.mb, -1640531535
   %i.md = xor i32 %i.mc, -2048144777              ; 2 uses
   %i.me = tail call i32 @llvm.fshl.i32(i32 %i.md, i32 %i.md, i32 13) ; 2 uses
-  %34 = zext i32 %i.me to i64
-  %35 = mul nuw nsw i64 %34, 7
-  %36 = lshr i64 %35, 32
-  %37 = trunc nuw nsw i64 %36 to i32
+  %12 = tail call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %i.me, i32 7)
   %i.mf = add nuw nsw i32 %i.ly, 1
-  %i.mg = add nuw nsw i32 %i.mf, %33
-  %i.mh = add nuw nsw i32 %i.mg, %37              ; 2 uses
+  %i.mg = add nuw nsw i32 %i.mf, %11
+  %i.mh = add nuw nsw i32 %i.mg, %12              ; 2 uses
   %i.mi = mul i32 %i.me, -1640531535
   %i.mj = xor i32 %i.mi, -2048144777              ; 2 uses
   %i.mk = tail call i32 @llvm.fshl.i32(i32 %i.mj, i32 %i.mj, i32 13) ; 2 uses
-  %38 = zext i32 %i.mk to i64
-  %39 = mul nuw nsw i64 %38, 11
-  %.mask.i.i = and i64 %39, 64424509440
-  %i.ml = icmp eq i64 %.mask.i.i, 30064771072
+  %13 = tail call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %i.mk, i32 11)
+  %i.ml = icmp eq i32 %13, 7
   %.val.i.i = select i1 %i.ml, i16 8255, i16 8238 ; 2 uses
   %i.mm = mul i32 %i.mk, -1640531535
   %i.mn = xor i32 %i.mm, -2048144777              ; 2 uses
   %i.mo = tail call i32 @llvm.fshl.i32(i32 %i.mn, i32 %i.mn, i32 13) ; 4 uses
-  %40 = zext i32 %i.mo to i64
-  %41 = mul nuw i64 %40, %5
-  %42 = lshr i64 %41, 32
-  %i.mp = getelementptr inbounds nuw [4 x i8], ptr @g_distrib, i64 %42
+  %14 = tail call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %i.mo, i32 %i.cp)
+  %15 = zext i32 %14 to i64
+  %i.mp = getelementptr inbounds nuw [4 x i8], ptr @g_distrib, i64 %15
   %i.mq = load i32, ptr %i.mp, align 4, !tbaa !21
   %i.mr = sext i32 %i.mq to i64                   ; 2 uses
   %i.ms = getelementptr inbounds [8 x i8], ptr @g_words, i64 %i.mr
@@ -800,8 +772,8 @@ generateWord.exit.peel.i.i:                       ; preds = %bb.bj, %bb.bn, %bb.
   br i1 %exitcond.peel.not.i.i, label %generateSentence.exit.i, label %.peel.next.i.preheader.i
 
 .peel.next.i.preheader.i:                         ; preds = %generateWord.exit.peel.i.i
-  %i.oh = add nsw i32 %21, -1
-  %i.oi = sub nsw i32 0, %17
+  %i.oh = add nsw i32 %8, -1
+  %i.oi = sub nsw i32 0, %7
   %.not.i13 = icmp eq i32 %i.oh, %i.oi
   br i1 %.not.i13, label %generateSentence.exit.loopexit.peel.begin.i, label %.peel.next.i.preheader.split.i
 
@@ -820,10 +792,9 @@ generateWord.exit.peel.i.i:                       ; preds = %bb.bj, %bb.bn, %bb.
   %i.oq = mul i32 %i.oo, -1640531535
   %i.or = xor i32 %i.oq, -2048144777              ; 2 uses
   %i.os = tail call i32 @llvm.fshl.i32(i32 %i.or, i32 %i.or, i32 13) ; 3 uses
-  %43 = zext i32 %i.os to i64
-  %44 = mul nuw i64 %43, %5
-  %45 = lshr i64 %44, 32
-  %i.ot = getelementptr inbounds nuw [4 x i8], ptr @g_distrib, i64 %45
+  %16 = tail call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %i.os, i32 %i.cp)
+  %17 = zext i32 %16 to i64
+  %i.ot = getelementptr inbounds nuw [4 x i8], ptr @g_distrib, i64 %17
   %i.ou = load i32, ptr %i.ot, align 4, !tbaa !21
   %i.ov = sext i32 %i.ou to i64                   ; 2 uses
   %i.ow = getelementptr inbounds [8 x i8], ptr @g_words, i64 %i.ov
@@ -923,10 +894,9 @@ generateSentence.exit.loopexit.peel.begin.i:      ; preds = %generateWord.exit.i
   %i.qr = mul i32 %i.qp, -1640531535
   %i.qs = xor i32 %i.qr, -2048144777              ; 2 uses
   %i.qt = tail call i32 @llvm.fshl.i32(i32 %i.qs, i32 %i.qs, i32 13) ; 7 uses
-  %46 = zext i32 %i.qt to i64
-  %47 = mul nuw i64 %46, %5
-  %48 = lshr i64 %47, 32
-  %i.qu = getelementptr inbounds nuw [4 x i8], ptr @g_distrib, i64 %48
+  %18 = tail call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %i.qt, i32 %i.cp)
+  %19 = zext i32 %18 to i64
+  %i.qu = getelementptr inbounds nuw [4 x i8], ptr @g_distrib, i64 %19
   %i.qv = load i32, ptr %i.qu, align 4, !tbaa !21
   %i.qw = sext i32 %i.qv to i64                   ; 2 uses
   %i.qx = getelementptr inbounds [8 x i8], ptr @g_words, i64 %i.qw
@@ -1078,6 +1048,9 @@ declare i64 @llvm.umax.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.fshl.i32(i32, i32, i32) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #6

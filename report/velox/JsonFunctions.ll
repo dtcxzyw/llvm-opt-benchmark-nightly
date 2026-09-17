@@ -205,14 +205,14 @@ bb.bs:                                            ; preds = %bb.br
   %i.md = mul nsw i64 %.3.i.i.i, 217706
   %i.me = ashr i64 %i.md, 16
   %i.mf = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 1, 0) %.3754.i, i1 true) ; 2 uses
-  %i.mg = shl i64 %.3754.i, %i.mf
+  %i.mg = shl i64 %.3754.i, %i.mf                 ; 2 uses
   %i.mh = trunc nsw i64 %.3.i.i.i to i32
   %i.mi = shl nsw i32 %i.mh, 1
   %i.mj = sext i32 %i.mi to i64
   %i.mk = getelementptr [8 x i8], ptr @_ZN8simdjson8internal17power_of_five_128E, i64 %i.mj ; 2 uses
   %i.ml = getelementptr i8, ptr %i.mk, i64 5472
   %i.mm = load i64, ptr %i.ml, align 8, !tbaa !144
-  %i.mn = zext i64 %i.mg to i128                  ; 2 uses
+  %i.mn = zext i64 %i.mg to i128
   %i.mo = zext i64 %i.mm to i128
   %i.mp = mul nuw i128 %i.mo, %i.mn               ; 2 uses
   %i.mq = trunc i128 %i.mp to i64                 ; 2 uses
@@ -225,13 +225,10 @@ bb.bs:                                            ; preds = %bb.br
 bb.bt:                                            ; preds = %bb.bs
   %i.mv = getelementptr i8, ptr %i.mk, i64 5480
   %i.mw = load i64, ptr %i.mv, align 8, !tbaa !144
-  %3 = zext i64 %i.mw to i128
-  %4 = mul nuw i128 %3, %i.mn
-  %5 = lshr i128 %4, 64
-  %6 = trunc nuw i128 %5 to i64                   ; 2 uses
-  %i.mx = add i64 %6, %i.mq                       ; 2 uses
-  %7 = icmp ult i64 %i.mx, %6
-  %i.my = zext i1 %7 to i64
+  %3 = call i64 @llvm.umulh.i64(i64 %i.mg, i64 %i.mw) ; 2 uses
+  %i.mx = add i64 %3, %i.mq                       ; 2 uses
+  %4 = icmp ugt i64 %3, %i.mx
+  %i.my = zext i1 %4 to i64
   %spec.select.i.i.i = add nuw i64 %i.my, %i.ms
   br label %bb.bu
 
@@ -634,14 +631,14 @@ bb.bd:                                            ; preds = %bb.bc
   %i.kp = mul nsw i64 %.3.i, 217706
   %i.kq = ashr i64 %i.kp, 16
   %i.kr = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 1, 0) %.1596, i1 true) ; 2 uses
-  %i.ks = shl i64 %.1596, %i.kr
+  %i.ks = shl i64 %.1596, %i.kr                   ; 2 uses
   %i.kt = trunc nsw i64 %.3.i to i32
   %i.ku = shl nsw i32 %i.kt, 1
   %i.kv = sext i32 %i.ku to i64
   %i.kw = getelementptr [8 x i8], ptr @_ZN8simdjson8internal17power_of_five_128E, i64 %i.kv ; 2 uses
   %i.kx = getelementptr i8, ptr %i.kw, i64 5472
   %i.ky = load i64, ptr %i.kx, align 8, !tbaa !144
-  %i.kz = zext i64 %i.ks to i128                  ; 2 uses
+  %i.kz = zext i64 %i.ks to i128
   %i.la = zext i64 %i.ky to i128
   %i.lb = mul nuw i128 %i.la, %i.kz               ; 2 uses
   %i.lc = trunc i128 %i.lb to i64                 ; 2 uses
@@ -654,13 +651,10 @@ bb.bd:                                            ; preds = %bb.bc
 bb.be:                                            ; preds = %bb.bd
   %i.lh = getelementptr i8, ptr %i.kw, i64 5480
   %i.li = load i64, ptr %i.lh, align 8, !tbaa !144
-  %3 = zext i64 %i.li to i128
-  %4 = mul nuw i128 %3, %i.kz
-  %5 = lshr i128 %4, 64
-  %6 = trunc nuw i128 %5 to i64                   ; 2 uses
-  %i.lj = add i64 %6, %i.lc                       ; 2 uses
-  %7 = icmp ult i64 %i.lj, %6
-  %i.lk = zext i1 %7 to i64
+  %3 = tail call i64 @llvm.umulh.i64(i64 %i.ks, i64 %i.li) ; 2 uses
+  %i.lj = add i64 %3, %i.lc                       ; 2 uses
+  %4 = icmp ugt i64 %3, %i.lj
+  %i.lk = zext i1 %4 to i64
   %spec.select.i = add nuw i64 %i.lk, %i.le
   br label %bb.bf
 
@@ -1063,14 +1057,14 @@ bb.ao:                                            ; preds = %bb.an
   %i.il = mul nsw i64 %.3.i.i.i, 217706
   %i.im = ashr i64 %i.il, 16
   %i.in = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 1, 0) %.3.i, i1 true) ; 2 uses
-  %i.io = shl i64 %.3.i, %i.in
+  %i.io = shl i64 %.3.i, %i.in                    ; 2 uses
   %i.ip = trunc nsw i64 %.3.i.i.i to i32
   %i.iq = shl nsw i32 %i.ip, 1
   %i.ir = sext i32 %i.iq to i64
   %i.is = getelementptr [8 x i8], ptr @_ZN8simdjson8internal17power_of_five_128E, i64 %i.ir ; 2 uses
   %i.it = getelementptr i8, ptr %i.is, i64 5472
   %i.iu = load i64, ptr %i.it, align 8, !tbaa !144
-  %i.iv = zext i64 %i.io to i128                  ; 2 uses
+  %i.iv = zext i64 %i.io to i128
   %i.iw = zext i64 %i.iu to i128
   %i.ix = mul nuw i128 %i.iw, %i.iv               ; 2 uses
   %i.iy = trunc i128 %i.ix to i64                 ; 2 uses
@@ -1083,13 +1077,10 @@ bb.ao:                                            ; preds = %bb.an
 bb.ap:                                            ; preds = %bb.ao
   %i.jd = getelementptr i8, ptr %i.is, i64 5480
   %i.je = load i64, ptr %i.jd, align 8, !tbaa !144
-  %10 = zext i64 %i.je to i128
-  %11 = mul nuw i128 %10, %i.iv
-  %12 = lshr i128 %11, 64
-  %13 = trunc nuw i128 %12 to i64                 ; 2 uses
-  %i.jf = add i64 %13, %i.iy                      ; 2 uses
-  %14 = icmp ult i64 %i.jf, %13
-  %i.jg = zext i1 %14 to i64
+  %10 = call i64 @llvm.umulh.i64(i64 %i.io, i64 %i.je) ; 2 uses
+  %i.jf = add i64 %10, %i.iy                      ; 2 uses
+  %11 = icmp ugt i64 %10, %i.jf
+  %i.jg = zext i1 %11 to i64
   %spec.select.i.i.i = add nuw i64 %i.jg, %i.ja
   br label %bb.aq
 
@@ -1492,14 +1483,14 @@ bb.dj:                                            ; preds = %bb.di
   %i.ya = mul nsw i64 %.3.i.i.i57, 217706
   %i.yb = ashr i64 %i.ya, 16
   %i.yc = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 1, 0) %.3.i46, i1 true) ; 2 uses
-  %i.yd = shl i64 %.3.i46, %i.yc
+  %i.yd = shl i64 %.3.i46, %i.yc                  ; 2 uses
   %i.ye = trunc nsw i64 %.3.i.i.i57 to i32
   %i.yf = shl nsw i32 %i.ye, 1
   %i.yg = sext i32 %i.yf to i64
   %i.yh = getelementptr [8 x i8], ptr @_ZN8simdjson8internal17power_of_five_128E, i64 %i.yg ; 2 uses
   %i.yi = getelementptr i8, ptr %i.yh, i64 5472
   %i.yj = load i64, ptr %i.yi, align 8, !tbaa !144
-  %i.yk = zext i64 %i.yd to i128                  ; 2 uses
+  %i.yk = zext i64 %i.yd to i128
   %i.yl = zext i64 %i.yj to i128
   %i.ym = mul nuw i128 %i.yl, %i.yk               ; 2 uses
   %i.yn = trunc i128 %i.ym to i64                 ; 2 uses
@@ -1512,13 +1503,10 @@ bb.dj:                                            ; preds = %bb.di
 bb.dk:                                            ; preds = %bb.dj
   %i.ys = getelementptr i8, ptr %i.yh, i64 5480
   %i.yt = load i64, ptr %i.ys, align 8, !tbaa !144
-  %15 = zext i64 %i.yt to i128
-  %16 = mul nuw i128 %15, %i.yk
-  %17 = lshr i128 %16, 64
-  %18 = trunc nuw i128 %17 to i64                 ; 2 uses
-  %i.yu = add i64 %18, %i.yn                      ; 2 uses
-  %19 = icmp ult i64 %i.yu, %18
-  %i.yv = zext i1 %19 to i64
+  %12 = call i64 @llvm.umulh.i64(i64 %i.yd, i64 %i.yt) ; 2 uses
+  %i.yu = add i64 %12, %i.yn                      ; 2 uses
+  %13 = icmp ugt i64 %12, %i.yu
+  %i.yv = zext i1 %13 to i64
   %spec.select.i.i.i73 = add nuw i64 %i.yv, %i.yp
   br label %bb.dl
 
@@ -1921,14 +1909,14 @@ bb.aa:                                            ; preds = %bb.z
   %i.fx = mul nsw i64 %.3.i, 217706
   %i.fy = ashr i64 %i.fx, 16
   %i.fz = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 1, 0) %.1325, i1 true) ; 2 uses
-  %i.ga = shl i64 %.1325, %i.fz
+  %i.ga = shl i64 %.1325, %i.fz                   ; 2 uses
   %i.gb = trunc nsw i64 %.3.i to i32
   %i.gc = shl nsw i32 %i.gb, 1
   %i.gd = sext i32 %i.gc to i64
   %i.ge = getelementptr [8 x i8], ptr @_ZN8simdjson8internal17power_of_five_128E, i64 %i.gd ; 2 uses
   %i.gf = getelementptr i8, ptr %i.ge, i64 5472
   %i.gg = load i64, ptr %i.gf, align 8, !tbaa !144
-  %i.gh = zext i64 %i.ga to i128                  ; 2 uses
+  %i.gh = zext i64 %i.ga to i128
   %i.gi = zext i64 %i.gg to i128
   %i.gj = mul nuw i128 %i.gi, %i.gh               ; 2 uses
   %i.gk = trunc i128 %i.gj to i64                 ; 2 uses
@@ -1941,13 +1929,10 @@ bb.aa:                                            ; preds = %bb.z
 bb.ab:                                            ; preds = %bb.aa
   %i.gp = getelementptr i8, ptr %i.ge, i64 5480
   %i.gq = load i64, ptr %i.gp, align 8, !tbaa !144
-  %4 = zext i64 %i.gq to i128
-  %5 = mul nuw i128 %4, %i.gh
-  %6 = lshr i128 %5, 64
-  %7 = trunc nuw i128 %6 to i64                   ; 2 uses
-  %i.gr = add i64 %7, %i.gk                       ; 2 uses
-  %8 = icmp ult i64 %i.gr, %7
-  %i.gs = zext i1 %8 to i64
+  %4 = tail call i64 @llvm.umulh.i64(i64 %i.ga, i64 %i.gq) ; 2 uses
+  %i.gr = add i64 %4, %i.gk                       ; 2 uses
+  %5 = icmp ugt i64 %4, %i.gr
+  %i.gs = zext i1 %5 to i64
   %spec.select.i = add nuw i64 %i.gs, %i.gm
   br label %bb.ac
 
@@ -2350,14 +2335,14 @@ bb.aa:                                            ; preds = %bb.z
   %i.fx = mul nsw i64 %.3.i, 217706
   %i.fy = ashr i64 %i.fx, 16
   %i.fz = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 1, 0) %.1325, i1 true) ; 2 uses
-  %i.ga = shl i64 %.1325, %i.fz
+  %i.ga = shl i64 %.1325, %i.fz                   ; 2 uses
   %i.gb = trunc nsw i64 %.3.i to i32
   %i.gc = shl nsw i32 %i.gb, 1
   %i.gd = sext i32 %i.gc to i64
   %i.ge = getelementptr [8 x i8], ptr @_ZN8simdjson8internal17power_of_five_128E, i64 %i.gd ; 2 uses
   %i.gf = getelementptr i8, ptr %i.ge, i64 5472
   %i.gg = load i64, ptr %i.gf, align 8, !tbaa !144
-  %i.gh = zext i64 %i.ga to i128                  ; 2 uses
+  %i.gh = zext i64 %i.ga to i128
   %i.gi = zext i64 %i.gg to i128
   %i.gj = mul nuw i128 %i.gi, %i.gh               ; 2 uses
   %i.gk = trunc i128 %i.gj to i64                 ; 2 uses
@@ -2370,13 +2355,10 @@ bb.aa:                                            ; preds = %bb.z
 bb.ab:                                            ; preds = %bb.aa
   %i.gp = getelementptr i8, ptr %i.ge, i64 5480
   %i.gq = load i64, ptr %i.gp, align 8, !tbaa !144
-  %4 = zext i64 %i.gq to i128
-  %5 = mul nuw i128 %4, %i.gh
-  %6 = lshr i128 %5, 64
-  %7 = trunc nuw i128 %6 to i64                   ; 2 uses
-  %i.gr = add i64 %7, %i.gk                       ; 2 uses
-  %8 = icmp ult i64 %i.gr, %7
-  %i.gs = zext i1 %8 to i64
+  %4 = tail call i64 @llvm.umulh.i64(i64 %i.ga, i64 %i.gq) ; 2 uses
+  %i.gr = add i64 %4, %i.gk                       ; 2 uses
+  %5 = icmp ugt i64 %4, %i.gr
+  %i.gs = zext i1 %5 to i64
   %spec.select.i = add nuw i64 %i.gs, %i.gm
   br label %bb.ac
 
@@ -2777,6 +2759,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #46
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fabs.f64(double) #23
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #23

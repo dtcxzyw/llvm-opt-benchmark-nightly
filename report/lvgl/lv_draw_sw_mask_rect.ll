@@ -19,17 +19,17 @@ bb.a:
   %3 = alloca %struct.lv_area_t, align 4          ; 14 uses
   %4 = alloca %struct._lv_draw_sw_mask_radius_param_t, align 8 ; 5 uses
   %i.a = alloca [2 x ptr], align 16               ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #6
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 4 uses
-  %i.d = call zeroext i1 @lv_area_intersect(ptr noundef nonnull %2, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c) #5
+  %i.d = call zeroext i1 @lv_area_intersect(ptr noundef nonnull %2, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c) #6
   br i1 %i.d, label %bb.b, label %bb.m
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !16   ; 6 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 40 ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #6
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 84
   %i.i = load i8, ptr %i.h, align 4
   %i.j = and i8 %i.i, 1
@@ -46,14 +46,14 @@ bb.c:                                             ; preds = %bb.b
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 68 ; 3 uses
   %i.s = load i32, ptr %i.r, align 4, !tbaa !31
   %i.t = add nsw i32 %i.s, -1
-  call void @lv_area_set(ptr noundef nonnull %3, i32 noundef %i.m, i32 noundef %i.o, i32 noundef %i.q, i32 noundef %i.t) #5
+  call void @lv_area_set(ptr noundef nonnull %3, i32 noundef %i.m, i32 noundef %i.o, i32 noundef %i.q, i32 noundef %i.t) #6
   %i.u = load i32, ptr %i.g, align 8, !tbaa !32
   %i.v = sub nsw i32 0, %i.u
   %i.w = getelementptr inbounds nuw i8, ptr %i.f, i64 44 ; 4 uses
   %i.x = load i32, ptr %i.w, align 4, !tbaa !33
   %i.y = sub nsw i32 0, %i.x
-  call void @lv_area_move(ptr noundef nonnull %3, i32 noundef %i.v, i32 noundef %i.y) #5
-  call void @lv_draw_buf_clear(ptr noundef %i.l, ptr noundef nonnull %3) #5
+  call void @lv_area_move(ptr noundef nonnull %3, i32 noundef %i.v, i32 noundef %i.y) #6
+  call void @lv_draw_buf_clear(ptr noundef %i.l, ptr noundef nonnull %3) #6
   %i.z = load i32, ptr %i.c, align 4, !tbaa !22
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 76 ; 3 uses
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !34
@@ -61,52 +61,52 @@ bb.c:                                             ; preds = %bb.b
   %i.ad = load i32, ptr %i.p, align 4, !tbaa !24
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.af = load i32, ptr %i.ae, align 8, !tbaa !35
-  call void @lv_area_set(ptr noundef nonnull %3, i32 noundef %i.z, i32 noundef %i.ac, i32 noundef %i.ad, i32 noundef %i.af) #5
+  call void @lv_area_set(ptr noundef nonnull %3, i32 noundef %i.z, i32 noundef %i.ac, i32 noundef %i.ad, i32 noundef %i.af) #6
   %i.ag = load i32, ptr %i.g, align 8, !tbaa !32
   %i.ah = sub nsw i32 0, %i.ag
   %i.ai = load i32, ptr %i.w, align 4, !tbaa !33
   %i.aj = sub nsw i32 0, %i.ai
-  call void @lv_area_move(ptr noundef nonnull %3, i32 noundef %i.ah, i32 noundef %i.aj) #5
-  call void @lv_draw_buf_clear(ptr noundef %i.l, ptr noundef nonnull %3) #5
+  call void @lv_area_move(ptr noundef nonnull %3, i32 noundef %i.ah, i32 noundef %i.aj) #6
+  call void @lv_draw_buf_clear(ptr noundef %i.l, ptr noundef nonnull %3) #6
   %i.ak = load i32, ptr %i.c, align 4, !tbaa !22
   %i.al = load i32, ptr %i.r, align 4, !tbaa !31
   %i.am = load i32, ptr %i.b, align 8, !tbaa !36
   %i.an = add nsw i32 %i.am, -1
   %i.ao = load i32, ptr %i.aa, align 4, !tbaa !34
-  call void @lv_area_set(ptr noundef nonnull %3, i32 noundef %i.ak, i32 noundef %i.al, i32 noundef %i.an, i32 noundef %i.ao) #5
+  call void @lv_area_set(ptr noundef nonnull %3, i32 noundef %i.ak, i32 noundef %i.al, i32 noundef %i.an, i32 noundef %i.ao) #6
   %i.ap = load i32, ptr %i.g, align 8, !tbaa !32
   %i.aq = sub nsw i32 0, %i.ap
   %i.ar = load i32, ptr %i.w, align 4, !tbaa !33
   %i.as = sub nsw i32 0, %i.ar
-  call void @lv_area_move(ptr noundef nonnull %3, i32 noundef %i.aq, i32 noundef %i.as) #5
-  call void @lv_draw_buf_clear(ptr noundef %i.l, ptr noundef nonnull %3) #5
+  call void @lv_area_move(ptr noundef nonnull %3, i32 noundef %i.aq, i32 noundef %i.as) #6
+  call void @lv_draw_buf_clear(ptr noundef %i.l, ptr noundef nonnull %3) #6
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.au = load i32, ptr %i.at, align 8, !tbaa !37
   %i.av = add nsw i32 %i.au, 1
   %i.aw = load i32, ptr %i.r, align 4, !tbaa !31
   %i.ax = load i32, ptr %i.p, align 4, !tbaa !24
   %i.ay = load i32, ptr %i.aa, align 4, !tbaa !34
-  call void @lv_area_set(ptr noundef nonnull %3, i32 noundef %i.av, i32 noundef %i.aw, i32 noundef %i.ax, i32 noundef %i.ay) #5
+  call void @lv_area_set(ptr noundef nonnull %3, i32 noundef %i.av, i32 noundef %i.aw, i32 noundef %i.ax, i32 noundef %i.ay) #6
   %i.az = load i32, ptr %i.g, align 8, !tbaa !32
   %i.ba = sub nsw i32 0, %i.az
   %i.bb = load i32, ptr %i.w, align 4, !tbaa !33
   %i.bc = sub nsw i32 0, %i.bb
-  call void @lv_area_move(ptr noundef nonnull %3, i32 noundef %i.ba, i32 noundef %i.bc) #5
-  call void @lv_draw_buf_clear(ptr noundef %i.l, ptr noundef nonnull %3) #5
+  call void @lv_area_move(ptr noundef nonnull %3, i32 noundef %i.ba, i32 noundef %i.bc) #6
+  call void @lv_draw_buf_clear(ptr noundef %i.l, ptr noundef nonnull %3) #6
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #6
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.be = load i32, ptr %i.bd, align 8, !tbaa !38
-  call void @lv_draw_sw_mask_radius_init(ptr noundef nonnull %4, ptr noundef nonnull %i.b, i32 noundef %i.be, i1 noundef zeroext false) #5
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
+  call void @lv_draw_sw_mask_radius_init(ptr noundef nonnull %4, ptr noundef nonnull %i.b, i32 noundef %i.be, i1 noundef zeroext false) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
   store ptr %4, ptr %i.a, align 16, !tbaa !39
-  %i.bf = call i32 @lv_area_get_width(ptr noundef nonnull %2) #5
+  %i.bf = call i32 @lv_area_get_width(ptr noundef nonnull %2) #6
   %.fr71 = freeze i32 %i.bf                       ; 5 uses
   %i.bg = zext i32 %.fr71 to i64                  ; 6 uses
-  %i.bh = call ptr @lv_malloc(i64 noundef %i.bg) #5 ; 8 uses
+  %i.bh = call ptr @lv_malloc(i64 noundef %i.bg) #6 ; 8 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.bj = load i32, ptr %i.bi, align 4, !tbaa !33 ; 3 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 3 uses
@@ -130,9 +130,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 .lr.ph70.split.us:                                ; preds = %.lr.ph70.split.us.preheader, %..loopexit_crit_edge.us
   %.06369.us = phi i32 [ %i.co, %..loopexit_crit_edge.us ], [ %i.bj, %.lr.ph70.split.us.preheader ] ; 4 uses
-  call void @lv_memset(ptr noundef %i.bh, i8 noundef zeroext -1, i64 noundef %i.bg) #5
+  call void @lv_memset(ptr noundef %i.bh, i8 noundef zeroext -1, i64 noundef %i.bg) #6
   %i.bp = load i32, ptr %2, align 4, !tbaa !32
-  %i.bq = call i32 @lv_draw_sw_mask_apply(ptr noundef nonnull %i.a, ptr noundef %i.bh, i32 noundef %i.bp, i32 noundef %.06369.us, i32 noundef %.fr71) #5 ; 2 uses
+  %i.bq = call i32 @lv_draw_sw_mask_apply(ptr noundef nonnull %i.a, ptr noundef %i.bh, i32 noundef %i.bp, i32 noundef %.06369.us, i32 noundef %.fr71) #6 ; 2 uses
   %i.br = icmp eq i32 %i.bq, 1
   br i1 %i.br, label %..loopexit_crit_edge.us, label %bb.e
 
@@ -142,7 +142,7 @@ bb.e:                                             ; preds = %.lr.ph70.split.us
   %i.bu = sub nsw i32 %i.bs, %i.bt
   %i.bv = load i32, ptr %i.bm, align 4, !tbaa !33
   %i.bw = sub nsw i32 %.06369.us, %i.bv
-  %i.bx = call ptr @lv_draw_layer_go_to_xy(ptr noundef %i.f, i32 noundef %i.bu, i32 noundef %i.bw) #5 ; 4 uses
+  %i.bx = call ptr @lv_draw_layer_go_to_xy(ptr noundef %i.f, i32 noundef %i.bu, i32 noundef %i.bw) #6 ; 4 uses
   %i.by = icmp eq i32 %i.bq, 0
   br i1 %i.by, label %bb.i, label %.preheader.us.preheader
 
@@ -158,15 +158,11 @@ bb.e:                                             ; preds = %.lr.ph70.split.us
   br i1 %.not66.us, label %.preheader.us.1, label %bb.f
 
 bb.f:                                             ; preds = %.preheader.us
-  %5 = zext i8 %i.ca to i16
   %i.cb = getelementptr inbounds nuw [4 x i8], ptr %i.bx, i64 %indvars.iv
   %i.cc = getelementptr inbounds nuw i8, ptr %i.cb, i64 3 ; 2 uses
   %i.cd = load i8, ptr %i.cc, align 1, !tbaa !42
-  %6 = zext i8 %i.cd to i16
-  %7 = mul nuw i16 %6, %5
-  %8 = lshr i16 %7, 8
-  %9 = trunc nuw i16 %8 to i8
-  store i8 %9, ptr %i.cc, align 1, !tbaa !42
+  %5 = call i8 @llvm.umulh.i8(i8 %i.cd, i8 %i.ca)
+  store i8 %5, ptr %i.cc, align 1, !tbaa !42
   br label %.preheader.us.1
 
 .preheader.us.1:                                  ; preds = %bb.f, %.preheader.us
@@ -177,15 +173,11 @@ bb.f:                                             ; preds = %.preheader.us
   br i1 %.not66.us.1, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %.preheader.us.1
-  %10 = zext i8 %i.cf to i16
   %i.cg = getelementptr inbounds nuw [4 x i8], ptr %i.bx, i64 %indvars.iv.next
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 3 ; 2 uses
   %i.ci = load i8, ptr %i.ch, align 1, !tbaa !42
-  %11 = zext i8 %i.ci to i16
-  %12 = mul nuw i16 %11, %10
-  %13 = lshr i16 %12, 8
-  %14 = trunc nuw i16 %13 to i8
-  store i8 %14, ptr %i.ch, align 1, !tbaa !42
+  %6 = call i8 @llvm.umulh.i8(i8 %i.ci, i8 %i.cf)
+  store i8 %6, ptr %i.ch, align 1, !tbaa !42
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %.preheader.us.1
@@ -195,7 +187,7 @@ bb.h:                                             ; preds = %bb.g, %.preheader.u
   br i1 %niter.ncmp.1, label %..loopexit_crit_edge.us.loopexit.unr-lcssa, label %.preheader.us, !llvm.loop !8
 
 bb.i:                                             ; preds = %bb.e
-  call void @lv_memset(ptr noundef %i.bx, i8 noundef zeroext 0, i64 noundef range(i64 0, 17179869181) %i.bn) #5
+  call void @lv_memset(ptr noundef %i.bx, i8 noundef zeroext 0, i64 noundef range(i64 0, 17179869181) %i.bn) #6
   br label %..loopexit_crit_edge.us
 
 ..loopexit_crit_edge.us.loopexit.unr-lcssa:       ; preds = %bb.h
@@ -210,15 +202,11 @@ bb.i:                                             ; preds = %bb.e
   br i1 %.not66.us.epil, label %..loopexit_crit_edge.us, label %bb.j
 
 bb.j:                                             ; preds = %.preheader.us.epil.preheader
-  %15 = zext i8 %i.ck to i16
   %i.cl = getelementptr inbounds nuw [4 x i8], ptr %i.bx, i64 %indvars.iv.epil.init
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 3 ; 2 uses
   %i.cn = load i8, ptr %i.cm, align 1, !tbaa !42
-  %16 = zext i8 %i.cn to i16
-  %17 = mul nuw i16 %16, %15
-  %18 = lshr i16 %17, 8
-  %19 = trunc nuw i16 %18 to i8
-  store i8 %19, ptr %i.cm, align 1, !tbaa !42
+  %7 = call i8 @llvm.umulh.i8(i8 %i.cn, i8 %i.ck)
+  store i8 %7, ptr %i.cm, align 1, !tbaa !42
   br label %..loopexit_crit_edge.us
 
 ..loopexit_crit_edge.us:                          ; preds = %..loopexit_crit_edge.us.loopexit.unr-lcssa, %bb.j, %.preheader.us.epil.preheader, %bb.i, %.lr.ph70.split.us
@@ -229,9 +217,9 @@ bb.j:                                             ; preds = %.preheader.us.epil.
 
 .lr.ph70.split:                                   ; preds = %.lr.ph70, %.preheader
   %.06369 = phi i32 [ %i.da, %.preheader ], [ %i.bj, %.lr.ph70 ] ; 4 uses
-  call void @lv_memset(ptr noundef %i.bh, i8 noundef zeroext -1, i64 noundef %i.bg) #5
+  call void @lv_memset(ptr noundef %i.bh, i8 noundef zeroext -1, i64 noundef %i.bg) #6
   %i.cq = load i32, ptr %2, align 4, !tbaa !32
-  %i.cr = call i32 @lv_draw_sw_mask_apply(ptr noundef nonnull %i.a, ptr noundef %i.bh, i32 noundef %i.cq, i32 noundef %.06369, i32 noundef 0) #5 ; 2 uses
+  %i.cr = call i32 @lv_draw_sw_mask_apply(ptr noundef nonnull %i.a, ptr noundef %i.bh, i32 noundef %i.cq, i32 noundef %.06369, i32 noundef 0) #6 ; 2 uses
   %i.cs = icmp eq i32 %i.cr, 1
   br i1 %i.cs, label %.preheader, label %bb.k
 
@@ -241,12 +229,12 @@ bb.k:                                             ; preds = %.lr.ph70.split
   %i.cv = sub nsw i32 %i.ct, %i.cu
   %i.cw = load i32, ptr %i.bm, align 4, !tbaa !33
   %i.cx = sub nsw i32 %.06369, %i.cw
-  %i.cy = call ptr @lv_draw_layer_go_to_xy(ptr noundef %i.f, i32 noundef %i.cv, i32 noundef %i.cx) #5
+  %i.cy = call ptr @lv_draw_layer_go_to_xy(ptr noundef %i.f, i32 noundef %i.cv, i32 noundef %i.cx) #6
   %i.cz = icmp eq i32 %i.cr, 0
   br i1 %i.cz, label %bb.l, label %.preheader
 
 bb.l:                                             ; preds = %bb.k
-  call void @lv_memset(ptr noundef %i.cy, i8 noundef zeroext 0, i64 noundef range(i64 0, 17179869181) %i.bn) #5
+  call void @lv_memset(ptr noundef %i.cy, i8 noundef zeroext 0, i64 noundef range(i64 0, 17179869181) %i.bn) #6
   br label %.preheader
 
 .preheader:                                       ; preds = %bb.k, %bb.l, %.lr.ph70.split
@@ -256,15 +244,15 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not.not, label %.lr.ph70.split, label %._crit_edge, !llvm.loop !9
 
 ._crit_edge:                                      ; preds = %..loopexit_crit_edge.us, %.preheader, %bb.d
-  call void @lv_free(ptr noundef %i.bh) #5
-  call void @lv_draw_sw_mask_free_param(ptr noundef nonnull %4) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #5
+  call void @lv_free(ptr noundef %i.bh) #6
+  call void @lv_draw_sw_mask_free_param(ptr noundef nonnull %4) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #6
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.a, %._crit_edge
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #6
   ret void
 }
 
@@ -301,15 +289,19 @@ declare void @lv_free(ptr noundef) local_unnamed_addr #2
 
 declare void @lv_draw_sw_mask_free_param(ptr noundef) local_unnamed_addr #2
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.umulh.i8(i8, i8) #4
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #4
+declare void @llvm.assume(i1 noundef) #5
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #4 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #5 = { nounwind }
+attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #5 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

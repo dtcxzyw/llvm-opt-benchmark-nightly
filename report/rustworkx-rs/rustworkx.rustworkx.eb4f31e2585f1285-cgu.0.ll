@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = trunc nuw i64 %1 to i32
+  %i.c = trunc nuw i64 %1 to i32                  ; 2 uses
   %i.d = load i128, ptr %0, align 16, !alias.scope !50554, !noalias !50555, !noundef !67
   %i.e = mul i128 %i.d, 47026247687942121848144207491837523525
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -236,12 +236,10 @@ bb.d:                                             ; preds = %bb.c
   %i.z = xor i128 %i.y, %i.v
   %i.aa = trunc i128 %i.z to i64                  ; 2 uses
   %i.ab = tail call noundef i64 @llvm.fshr.i64(i64 %i.aa, i64 %i.aa, i64 %i.x)
-  %3 = and i64 %i.ab, 4294967295
-  %4 = mul nuw i64 %3, %1
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32
+  %3 = trunc i64 %i.ab to i32
+  %4 = tail call i32 @llvm.umulh.i32(i32 %3, i32 %i.c)
   %i.ac = xor i32 %i.r, -1
-  %.not9.i.i.i.i = icmp ult i32 %i.ac, %6
+  %.not9.i.i.i.i = icmp ugt i32 %4, %i.ac
   %i.ad = zext i1 %.not9.i.i.i.i to i64
   %i.ae = add nuw nsw i64 %i.q, %i.ad
   br label %_RNvMNtCslwFuT2d6ECx_4core6resultINtB2_6ResultjNtNtNtCsjH8OHv3LeEG_4rand5distr7uniform5ErrorE6unwrapCskcxRuJ53GpR_9rustworkx.exit
@@ -260,7 +258,7 @@ bb.e:                                             ; preds = %bb.b
   %i.ao = trunc i128 %i.an to i64                 ; 2 uses
   %i.ap = tail call noundef i64 @llvm.fshr.i64(i64 %i.ao, i64 %i.ao, i64 %i.al)
   %i.aq = zext i64 %i.ap to i128
-  %i.ar = zext i64 %1 to i128                     ; 2 uses
+  %i.ar = zext i64 %1 to i128
   %i.as = mul nuw i128 %i.aq, %i.ar               ; 2 uses
   %i.at = lshr i128 %i.as, 64
   %i.au = trunc nuw i128 %i.at to i64             ; 2 uses
@@ -279,12 +277,9 @@ bb.f:                                             ; preds = %bb.e
   %i.bd = xor i128 %i.bc, %i.az
   %i.be = trunc i128 %i.bd to i64                 ; 2 uses
   %i.bf = tail call noundef i64 @llvm.fshr.i64(i64 %i.be, i64 %i.be, i64 %i.bb)
-  %7 = zext i64 %i.bf to i128
-  %8 = mul nuw i128 %7, %i.ar
-  %9 = lshr i128 %8, 64
-  %10 = trunc nuw i128 %9 to i64
+  %5 = tail call i64 @llvm.umulh.i64(i64 %i.bf, i64 %1)
   %i.bg = xor i64 %i.av, -1
-  %.not6.i.i.i.i = icmp ult i64 %i.bg, %10
+  %.not6.i.i.i.i = icmp ugt i64 %5, %i.bg
   %i.bh = zext i1 %.not6.i.i.i.i to i64
   %i.bi = add nuw i64 %i.bh, %i.au
   br label %_RNvMNtCslwFuT2d6ECx_4core6resultINtB2_6ResultjNtNtNtCsjH8OHv3LeEG_4rand5distr7uniform5ErrorE6unwrapCskcxRuJ53GpR_9rustworkx.exit
@@ -687,14 +682,13 @@ bb.ag:                                            ; preds = %bb.af
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.ag, %bb.al
   %i.ir = phi i128 [ %i.ku, %bb.al ], [ %.promoted.i.i.i.i, %bb.ag ] ; 2 uses
-  %.sroa.06.017.i.i.i.i = phi i64 [ %i.is, %bb.al ], [ 0, %bb.ag ] ; 5 uses
-  %i.is = add nuw nsw i64 %.sroa.06.017.i.i.i.i, 1 ; 5 uses
+  %.sroa.06.017.i.i.i.i = phi i64 [ %i.is, %bb.al ], [ 0, %bb.ag ] ; 4 uses
+  %i.is = add nuw nsw i64 %.sroa.06.017.i.i.i.i, 1 ; 6 uses
   %i.it = icmp samesign ugt i64 %.sroa.06.017.i.i.i.i, 4294967294
   br i1 %i.it, label %bb.aj, label %bb.ah
 
 bb.ah:                                            ; preds = %.lr.ph.i.i.i.i
-  %i.iu = trunc nuw i64 %.sroa.06.017.i.i.i.i to i32
-  %.neg576.i.i.i = xor i32 %i.iu, -1
+  %i.iu = trunc nuw i64 %i.is to i32              ; 2 uses
   %i.iv = mul i128 %i.ir, 47026247687942121848144207491837523525
   %i.iw = add i128 %i.iv, %i.iq                   ; 5 uses
   %i.ix = lshr i128 %i.iw, 122
@@ -707,7 +701,8 @@ bb.ah:                                            ; preds = %.lr.ph.i.i.i.i
   %i.je = mul nuw i64 %i.jd, %i.is                ; 2 uses
   %i.jf = lshr i64 %i.je, 32                      ; 2 uses
   %i.jg = trunc i64 %i.je to i32                  ; 2 uses
-  %i.jh = icmp ult i32 %.neg576.i.i.i, %i.jg
+  %5 = sub i32 0, %i.iu
+  %i.jh = icmp ult i32 %5, %i.jg
   br i1 %i.jh, label %bb.ai, label %.noexc68.i.i.i
 
 bb.ai:                                            ; preds = %bb.ah
@@ -719,12 +714,10 @@ bb.ai:                                            ; preds = %bb.ah
   %i.jn = xor i128 %i.jm, %i.jj
   %i.jo = trunc i128 %i.jn to i64                 ; 2 uses
   %i.jp = call noundef i64 @llvm.fshr.i64(i64 %i.jo, i64 %i.jo, i64 %i.jl)
-  %5 = and i64 %i.jp, 4294967295
-  %6 = mul nuw i64 %5, %i.is
-  %7 = lshr i64 %6, 32
-  %8 = trunc nuw i64 %7 to i32
+  %6 = trunc i64 %i.jp to i32
+  %7 = call i32 @llvm.umulh.i32(i32 %6, i32 %i.iu)
   %i.jq = xor i32 %i.jg, -1
-  %.not9.i.i.i.i.i.i.i.i = icmp ult i32 %i.jq, %8
+  %.not9.i.i.i.i.i.i.i.i = icmp ugt i32 %7, %i.jq
   %i.jr = zext i1 %.not9.i.i.i.i.i.i.i.i to i64
   %i.js = add nuw nsw i64 %i.jf, %i.jr
   br label %.noexc68.i.i.i
@@ -739,7 +732,7 @@ bb.aj:                                            ; preds = %.lr.ph.i.i.i.i
   %i.jz = trunc i128 %i.jy to i64                 ; 2 uses
   %i.ka = call noundef i64 @llvm.fshr.i64(i64 %i.jz, i64 %i.jz, i64 %i.jw)
   %i.kb = zext i64 %i.ka to i128
-  %i.kc = zext nneg i64 %i.is to i128             ; 2 uses
+  %i.kc = zext nneg i64 %i.is to i128
   %i.kd = mul nuw nsw i128 %i.kb, %i.kc           ; 2 uses
   %i.ke = lshr i128 %i.kd, 64
   %i.kf = trunc nuw nsw i128 %i.ke to i64         ; 2 uses
@@ -757,12 +750,9 @@ bb.ak:                                            ; preds = %bb.aj
   %i.ko = xor i128 %i.kn, %i.kk
   %i.kp = trunc i128 %i.ko to i64                 ; 2 uses
   %i.kq = call noundef i64 @llvm.fshr.i64(i64 %i.kp, i64 %i.kp, i64 %i.km)
-  %9 = zext i64 %i.kq to i128
-  %10 = mul nuw nsw i128 %9, %i.kc
-  %11 = lshr i128 %10, 64
-  %12 = trunc nuw nsw i128 %11 to i64
+  %8 = call i64 @llvm.umulh.i64(i64 %i.kq, i64 %i.is)
   %i.kr = xor i64 %i.kg, -1
-  %.not6.i.i.i.i.i.i.i.i = icmp ult i64 %i.kr, %12
+  %.not6.i.i.i.i.i.i.i.i = icmp ugt i64 %8, %i.kr
   %i.ks = zext i1 %.not6.i.i.i.i.i.i.i.i to i64
   %i.kt = add nuw i64 %i.ks, %i.kf
   br label %.noexc68.i.i.i
@@ -817,7 +807,7 @@ bb.an:                                            ; preds = %.lr.ph22.i.i.i.i
   br i1 %i.ll, label %bb.ap, label %.thread.i.i.i.i.i.i, !prof !116191
 
 .thread.i.i.i.i.i.i:                              ; preds = %._crit_edge.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i, %bb.an
-  %.sroa.03.010.i.i.i.i.i.i = phi i32 [ %i.mn, %._crit_edge.i.i.i.i.i.i ], [ 479001600, %bb.an ], [ %i.lc, %.preheader.i.i.i.i.i.i ] ; 2 uses
+  %.sroa.03.010.i.i.i.i.i.i = phi i32 [ %i.mn, %._crit_edge.i.i.i.i.i.i ], [ 479001600, %bb.an ], [ %i.lc, %.preheader.i.i.i.i.i.i ] ; 3 uses
   %.sroa.05.09.i.i.i.i.i.i = phi i8 [ %i.lk, %._crit_edge.i.i.i.i.i.i ], [ 10, %bb.an ], [ 0, %.preheader.i.i.i.i.i.i ]
   %i.lm = mul i128 %i.la, 47026247687942121848144207491837523525
   %i.ln = add i128 %i.lm, %i.iq                   ; 5 uses
@@ -828,7 +818,7 @@ bb.an:                                            ; preds = %.lr.ph22.i.i.i.i
   %i.ls = trunc i128 %i.lr to i64                 ; 2 uses
   %i.lt = call noundef i64 @llvm.fshr.i64(i64 %i.ls, i64 %i.ls, i64 %i.lp)
   %i.lu = and i64 %i.lt, 4294967295
-  %i.lv = zext i32 %.sroa.03.010.i.i.i.i.i.i to i64 ; 2 uses
+  %i.lv = zext i32 %.sroa.03.010.i.i.i.i.i.i to i64
   %i.lw = mul nuw i64 %i.lu, %i.lv                ; 2 uses
   %i.lx = lshr i64 %i.lw, 32                      ; 2 uses
   %i.ly = trunc i64 %i.lw to i32                  ; 2 uses
@@ -845,12 +835,10 @@ bb.ao:                                            ; preds = %.thread.i.i.i.i.i.i
   %i.mg = xor i128 %i.mf, %i.mc
   %i.mh = trunc i128 %i.mg to i64                 ; 2 uses
   %i.mi = call noundef i64 @llvm.fshr.i64(i64 %i.mh, i64 %i.mh, i64 %i.me)
-  %13 = and i64 %i.mi, 4294967295
-  %14 = mul nuw i64 %13, %i.lv
-  %15 = lshr i64 %14, 32
-  %16 = trunc nuw i64 %15 to i32
+  %9 = trunc i64 %i.mi to i32
+  %10 = call i32 @llvm.umulh.i32(i32 %9, i32 %.sroa.03.010.i.i.i.i.i.i)
   %i.mj = xor i32 %i.ly, -1
-  %.not9.i.i.i.i.i.i.i.i.i.i = icmp ult i32 %i.mj, %16
+  %.not9.i.i.i.i.i.i.i.i.i.i = icmp ugt i32 %10, %i.mj
   %i.mk = zext i1 %.not9.i.i.i.i.i.i.i.i.i.i to i64
   %i.ml = add nuw nsw i64 %i.lx, %i.mk
   br label %_RNCNvMNtNtCsjH8OHv3LeEG_4rand3seq18increasing_uniformINtB4_17IncreasingUniformQNtNtCs6EUok6QJynq_8rand_pcg6pcg12811Lcg128Xsl64E10next_index0CskcxRuJ53GpR_9rustworkx.exit.i.i.i.i.i
@@ -1251,6 +1239,12 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare { double, double } @llvm.sincos.f64(double) #47
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #41
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #41
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i1 @llvm.is.fpclass.f64(double, i32 immarg) #41

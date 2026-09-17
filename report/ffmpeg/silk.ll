@@ -205,13 +205,11 @@ scalar.ph223:                                     ; preds = %middle.block232, %s
   br i1 %i.uf, label %silk_is_lpc_stable.exit.thread, label %.lr.ph90.i.preheader
 
 .lr.ph90.i.preheader:                             ; preds = %.preheader.i
-  %.neg.i207 = mul nsw i32 %i.ud, -128
-  %3 = sext i32 %.neg.i207 to i64                 ; 3 uses
-  %4 = mul nsw i64 %3, %3
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32
-  %7 = sub nsw i32 1073741824, %6                 ; 2 uses
-  %8 = and i32 %7, -4                             ; 2 uses
+  %.neg.i207 = mul nsw i32 %i.ud, -128            ; 3 uses
+  %3 = tail call range(i32 -1073741824, 1073741824) i32 @llvm.smulh.i32(i32 %.neg.i207, i32 range(i32 -2147483647, -2147483648) %.neg.i207)
+  %4 = sub nsw i32 1073741824, %3                 ; 2 uses
+  %5 = tail call range(i32 -1073741824, 1073741824) i32 @llvm.smulh.i32(i32 range(i32 -2147483647, -2147483648) %4, i32 1073741824)
+  %6 = shl i32 %5, 2                              ; 2 uses
   br i1 %i.tk, label %silk_is_lpc_stable.exit, label %.lr.ph.i124
 
 .loopexit.i.loopexit:                             ; preds = %bb.i
@@ -223,25 +221,18 @@ scalar.ph223:                                     ; preds = %middle.block232, %s
   br i1 %i.uj, label %silk_is_lpc_stable.exit.thread, label %.lr.ph90.i
 
 .lr.ph90.i:                                       ; preds = %.loopexit.i.loopexit
-  %.neg.i = mul nsw i32 %i.uh, -128
-  %9 = sext i32 %.neg.i to i64                    ; 3 uses
-  %10 = mul nsw i64 %9, %9
-  %11 = lshr i64 %10, 32
-  %12 = trunc nuw i64 %11 to i32
-  %i.uk = sub nsw i32 1073741824, %12             ; 2 uses
-  %13 = sext i32 %i.um to i64
-  %14 = sext i32 %i.uk to i64
-  %15 = mul nsw i64 %14, %13
-  %sh.diff.i = lshr i64 %15, 30
-  %tr.sh.diff.i = trunc i64 %sh.diff.i to i32
-  %16 = and i32 %tr.sh.diff.i, -4                 ; 2 uses
+  %.neg.i = mul nsw i32 %i.uh, -128               ; 3 uses
+  %7 = tail call range(i32 -1073741824, 1073741824) i32 @llvm.smulh.i32(i32 %.neg.i, i32 range(i32 -2147483647, -2147483648) %.neg.i)
+  %i.uk = sub nsw i32 1073741824, %7              ; 2 uses
+  %8 = tail call range(i32 -1073741824, 1073741824) i32 @llvm.smulh.i32(i32 %i.um, i32 range(i32 -2147483647, -2147483648) %i.uk)
+  %9 = shl i32 %8, 2                              ; 2 uses
   %i.ul = icmp eq i64 %indvars.iv.next102.i, 0
   br i1 %i.ul, label %silk_is_lpc_stable.exit, label %.lr.ph.i124
 
 .lr.ph.i124:                                      ; preds = %.lr.ph90.i.preheader, %.lr.ph90.i
-  %i.um = phi i32 [ %16, %.lr.ph90.i ], [ %8, %.lr.ph90.i.preheader ]
-  %i.un = phi i32 [ %i.uk, %.lr.ph90.i ], [ %7, %.lr.ph90.i.preheader ] ; 5 uses
-  %17 = phi i64 [ %9, %.lr.ph90.i ], [ %3, %.lr.ph90.i.preheader ]
+  %i.um = phi i32 [ %9, %.lr.ph90.i ], [ %6, %.lr.ph90.i.preheader ]
+  %i.un = phi i32 [ %i.uk, %.lr.ph90.i ], [ %4, %.lr.ph90.i.preheader ] ; 5 uses
+  %.neg.i210 = phi i32 [ %.neg.i, %.lr.ph90.i ], [ %.neg.i207, %.lr.ph90.i.preheader ]
   %.06088.i211 = phi ptr [ %i.up, %.lr.ph90.i ], [ %i.a, %.lr.ph90.i.preheader ] ; 2 uses
   %indvars.iv101.i210 = phi i64 [ %indvars.iv.next102.i, %.lr.ph90.i ], [ %i.tc, %.lr.ph90.i.preheader ] ; 4 uses
   %i.uo = and i64 %indvars.iv101.i210, 1
@@ -265,17 +256,18 @@ scalar.ph223:                                     ; preds = %middle.block232, %s
   %i.vb = sext i32 %i.va to i64
   %i.vc = add nsw i32 %i.uy, -14
   %i.vd = lshr i32 %i.un, %i.vc
-  %18 = sdiv i32 536870911, %i.vd                 ; 3 uses
-  %i.ve = zext nneg i32 %18 to i64
+  %10 = udiv i32 536870911, %i.vd                 ; 3 uses
+  %i.ve = zext nneg i32 %10 to i64
   %i.vf = mul nsw i64 %i.vb, %i.ve
   %i.vg = lshr i64 %i.vf, 16
   %i.vh = trunc i64 %i.vg to i32
   %i.vi = sub i32 536870912, %i.vh
-  %i.vj = mul nsw i32 %i.vi, %18
+  %i.vj = mul nsw i32 %i.vi, %10
   %i.vk = ashr i32 %i.vj, 13
-  %i.vl = shl i32 %18, 16
+  %i.vl = shl i32 %10, 16
   %i.vm = add nsw i32 %i.vk, %i.vl
-  %i.vn = shl nsw i64 %17, 1
+  %11 = sext i32 %.neg.i210 to i64
+  %i.vn = shl nsw i64 %11, 1
   %i.vo = sext i32 %i.vm to i64
   %i.vp = zext nneg i32 %i.uy to i64
   %wide.trip.count99.i = and i64 %indvars.iv101.i210, 4294967295
@@ -317,7 +309,7 @@ silk_is_lpc_stable.exit.thread:                   ; preds = %.loopexit.i.loopexi
   br label %bb.j
 
 silk_is_lpc_stable.exit:                          ; preds = %.lr.ph90.i, %.lr.ph90.i.preheader
-  %.lcssa203 = phi i32 [ %8, %.lr.ph90.i.preheader ], [ %16, %.lr.ph90.i ]
+  %.lcssa203 = phi i32 [ %6, %.lr.ph90.i.preheader ], [ %9, %.lr.ph90.i ]
   %i.wk = icmp slt i32 %.lcssa203, 107374
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   br i1 %i.wk, label %bb.j, label %vector.ph235
@@ -417,6 +409,9 @@ declare i32 @llvm.smax.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smulh.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #5

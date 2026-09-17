@@ -200,14 +200,10 @@ bb.n:                                             ; preds = %bb.d
   %i.bb = load i64, ptr %i.ba, align 8
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ar, i64 48
   %i.bd = load i8, ptr %i.bc, align 8
-  %3 = zext i64 %i.ax to i128
-  %4 = zext i64 %i.bb to i128
-  %5 = mul nuw i128 %4, %3
-  %6 = lshr i128 %5, 64
-  %7 = trunc nuw i128 %6 to i64                   ; 2 uses
-  %i.be = sub i64 %i.ax, %7
+  %3 = tail call range(i64 0, -1) i64 @llvm.umulh.i64(i64 %i.ax, i64 %i.bb) ; 2 uses
+  %i.be = sub i64 %i.ax, %3
   %i.bf = lshr i64 %i.be, 1
-  %i.bg = add i64 %i.bf, %7
+  %i.bg = add i64 %i.bf, %3
   %i.bh = zext nneg i8 %i.bd to i64
   %i.bi = lshr i64 %i.bg, %i.bh                   ; 2 uses
   %i.bj = zext i32 %i.az to i64                   ; 3 uses
@@ -255,14 +251,10 @@ bb.p:                                             ; preds = %bb.d
   %i.ch = load i64, ptr %i.cg, align 8
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ca, i64 48
   %i.cj = load i8, ptr %i.ci, align 8
-  %8 = zext i64 %i.cd to i128
-  %9 = zext i64 %i.ch to i128
-  %10 = mul nuw i128 %9, %8
-  %11 = lshr i128 %10, 64
-  %12 = trunc nuw i128 %11 to i64                 ; 2 uses
-  %i.ck = sub i64 %i.cd, %12
+  %4 = tail call range(i64 0, -1) i64 @llvm.umulh.i64(i64 %i.cd, i64 %i.ch) ; 2 uses
+  %i.ck = sub i64 %i.cd, %4
   %i.cl = lshr i64 %i.ck, 1
-  %i.cm = add i64 %i.cl, %12
+  %i.cm = add i64 %i.cl, %4
   %i.cn = zext nneg i8 %i.cj to i64
   %i.co = lshr i64 %i.cm, %i.cn                   ; 2 uses
   %i.cp = zext i32 %i.cf to i64                   ; 3 uses
@@ -323,6 +315,9 @@ declare dso_local i32 @nxsem_destroy(ptr noundef) local_unnamed_addr #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #9
 
 attributes #0 = { alwaysinline nobuiltin noredzone nounwind optsize uwtable "no-builtin-memcpy" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+rdrnd,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

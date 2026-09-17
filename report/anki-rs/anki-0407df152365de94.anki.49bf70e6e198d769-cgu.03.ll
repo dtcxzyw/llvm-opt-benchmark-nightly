@@ -204,7 +204,7 @@ _ZN4rand3rng3Rng6random17h1e082a1226d18c05E.exit14.i.i.i: ; preds = %bb.c, %bb.b
   %i.l = add nuw nsw i64 %i.i, 1
   store i64 %i.l, ptr %i.e, align 16, !alias.scope !6338, !noalias !6337
   %i.m = zext i32 %i.k to i64
-  %i.n = zext i32 %1 to i64                       ; 2 uses
+  %i.n = zext i32 %1 to i64
   %i.o = mul nuw i64 %i.m, %i.n                   ; 2 uses
   %i.p = lshr i64 %i.o, 32                        ; 2 uses
   %i.q = trunc i64 %i.o to i32                    ; 2 uses
@@ -232,12 +232,9 @@ _ZN4rand3rng3Rng6random17h1e082a1226d18c05E.exit15.i.i.i: ; preds = %bb.e, %bb.d
   %i.ab = load i32, ptr %i.aa, align 4, !alias.scope !6340, !noalias !6339, !noundef !7
   %i.ac = add nuw nsw i64 %i.z, 1
   store i64 %i.ac, ptr %i.v, align 16, !alias.scope !6340, !noalias !6339
-  %3 = zext i32 %i.ab to i64
-  %4 = mul nuw i64 %3, %i.n
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32
+  %3 = tail call i32 @llvm.umulh.i32(i32 %i.ab, i32 %1)
   %i.ad = xor i32 %i.q, -1
-  %.not11.i.i.i = icmp ult i32 %i.ad, %6
+  %.not11.i.i.i = icmp ugt i32 %3, %i.ad
   %i.ae = zext i1 %.not11.i.i.i to i64
   %i.af = add nuw nsw i64 %i.p, %i.ae
   br label %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h5608f5975910b17bE.exit"
@@ -640,13 +637,13 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.c, label %bb.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = trunc i64 %1 to i32                      ; 2 uses
-  %i.e = trunc nuw i64 %2 to i32                  ; 2 uses
+  %i.d = trunc i64 %1 to i32                      ; 3 uses
+  %i.e = trunc nuw i64 %2 to i32                  ; 3 uses
   %i.f = icmp ult i32 %i.d, %i.e
   br i1 %i.f, label %bb.e, label %"_ZN105_$LT$rand..distr..uniform..int..UniformInt$LT$u32$GT$$u20$as$u20$rand..distr..uniform..UniformSampler$GT$13sample_single17hcf314eb01c2d39ddE.exit.thread"
 
 bb.e:                                             ; preds = %bb.d
-  %3 = sub nuw i64 %2, %1                         ; 2 uses
+  %3 = sub nuw i32 %i.e, %i.d                     ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.g = getelementptr inbounds nuw i8, ptr %.0.val, i64 16 ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.0.val, i64 336 ; 3 uses
@@ -665,8 +662,9 @@ _ZN4rand3rng3Rng6random17hdda41ce35fde6830E.exit14.i.i: ; preds = %bb.f, %bb.e
   %i.n = load i32, ptr %i.m, align 4, !alias.scope !9657, !noalias !9656, !noundef !7
   %i.o = add nuw nsw i64 %i.l, 1                  ; 2 uses
   store i64 %i.o, ptr %i.h, align 16, !alias.scope !9657, !noalias !9656
-  %i.p = zext i32 %i.n to i64
-  %i.q = mul nuw i64 %3, %i.p                     ; 2 uses
+  %4 = zext i32 %i.n to i64
+  %i.p = zext i32 %3 to i64
+  %i.q = mul nuw i64 %4, %i.p                     ; 2 uses
   %i.r = lshr i64 %i.q, 32                        ; 2 uses
   %i.s = trunc i64 %i.q to i32                    ; 2 uses
   %i.t = sub i32 %i.d, %i.e
@@ -688,18 +686,15 @@ _ZN4rand3rng3Rng6random17hdda41ce35fde6830E.exit15.i.i: ; preds = %bb.h, %bb.g
   %i.z = load i32, ptr %i.y, align 4, !alias.scope !9659, !noalias !9658, !noundef !7
   %i.aa = add nuw nsw i64 %i.x, 1
   store i64 %i.aa, ptr %i.h, align 16, !alias.scope !9659, !noalias !9658
-  %4 = zext i32 %i.z to i64
-  %5 = mul nuw i64 %3, %4
-  %6 = lshr i64 %5, 32
-  %7 = trunc nuw i64 %6 to i32
+  %5 = tail call i32 @llvm.umulh.i32(i32 %i.z, i32 %3)
   %i.ab = xor i32 %i.s, -1
-  %.not11.i.i = icmp ult i32 %i.ab, %7
+  %.not11.i.i = icmp ugt i32 %5, %i.ab
   %i.ac = zext i1 %.not11.i.i to i64
   %i.ad = add nuw nsw i64 %i.r, %i.ac
   br label %"_ZN105_$LT$rand..distr..uniform..int..UniformInt$LT$u32$GT$$u20$as$u20$rand..distr..uniform..UniformSampler$GT$13sample_single17hcf314eb01c2d39ddE.exit"
 
 bb.i:                                             ; preds = %bb.c
-  %i.ae = sub nuw i64 %2, %1
+  %i.ae = sub nuw i64 %2, %1                      ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.af = getelementptr inbounds nuw i8, ptr %.0.val, i64 16 ; 10 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.0.val, i64 336 ; 7 uses
@@ -742,7 +737,7 @@ _ZN4rand3rng3Rng6random17h7769193f77ea40b2E.exit12.i.i: ; preds = %bb.m, %bb.l, 
   %i.aw = phi i64 [ %i.aj, %bb.k ], [ 2, %bb.m ], [ 1, %bb.l ] ; 4 uses
   %.sroa.0.0.i.i.i11.i.i = phi i64 [ %i.al, %bb.k ], [ %i.av, %bb.m ], [ %i.at, %bb.l ]
   %i.ax = zext i64 %.sroa.0.0.i.i.i11.i.i to i128
-  %i.ay = zext i64 %i.ae to i128                  ; 2 uses
+  %i.ay = zext i64 %i.ae to i128
   %i.az = mul nuw i128 %i.ax, %i.ay               ; 2 uses
   %i.ba = lshr i128 %i.az, 64
   %i.bb = trunc nuw i128 %i.ba to i64             ; 2 uses
@@ -788,12 +783,9 @@ bb.r:                                             ; preds = %bb.o
 
 _ZN4rand3rng3Rng6random17h7769193f77ea40b2E.exit15.i.i: ; preds = %bb.r, %bb.q, %bb.p
   %.sroa.0.0.i.i.i14.i.i = phi i64 [ %i.bi, %bb.p ], [ %i.bs, %bb.r ], [ %i.bq, %bb.q ]
-  %8 = zext i64 %.sroa.0.0.i.i.i14.i.i to i128
-  %9 = mul nuw i128 %8, %i.ay
-  %10 = lshr i128 %9, 64
-  %11 = trunc nuw i128 %10 to i64
+  %6 = tail call i64 @llvm.umulh.i64(i64 %.sroa.0.0.i.i.i14.i.i, i64 %i.ae)
   %i.bt = xor i64 %i.bc, -1
-  %.not7.i.i = icmp ult i64 %i.bt, %11
+  %.not7.i.i = icmp ugt i64 %6, %i.bt
   %i.bu = zext i1 %.not7.i.i to i64
   %i.bv = add nuw i64 %i.bu, %i.bb
   br label %bb.t
@@ -1195,6 +1187,12 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #14
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nofree nosync nounwind nonlazybind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #29
