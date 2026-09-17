@@ -205,9 +205,9 @@ bb.f:                                             ; preds = %bb.d
   %i.ah = load ptr, ptr %i.o, align 8, !tbaa !43
   store ptr %i.ah, ptr %i.ag, align 8, !tbaa !43
   %i.ai = load i32, ptr %i.a, align 8, !tbaa !47
-  %.fr.i.i = freeze i32 %i.ai                     ; 7 uses
+  %.fr.i.i = freeze i32 %i.ai                     ; 3 uses
   %i.aj = icmp samesign ult i32 %.fr.i.i, 129
-  %.026193 = add nsw i32 %.fr.i.i, -1             ; 5 uses
+  %.026193 = add nsw i32 %.fr.i.i, -1             ; 3 uses
   %i.ak = icmp sgt i32 %.fr.i.i, 0
   br i1 %i.ak, label %.lr.ph, label %._crit_edge220
 
@@ -216,34 +216,17 @@ bb.f:                                             ; preds = %bb.d
   %i.am = load i8, ptr %i.al, align 4, !tbaa !48
   %i.an = add i8 %i.am, -3
   %spec.select.i.i = icmp ult i8 %i.an, -2
-  %6 = lshr i32 %.026193, 5
-  %7 = zext nneg i32 %6 to i64                    ; 2 uses
-  %8 = and i32 %.026193, 31
-  %9 = zext nneg i32 %8 to i64
-  %10 = shl nuw nsw i64 1, %9                     ; 2 uses
   br i1 %spec.select.i.i, label %.preheader.lr.ph, label %.lr.ph.split.split
 
 .lr.ph.split.split:                               ; preds = %.lr.ph
-  br i1 %i.aj, label %.lr.ph.split.split.split.us.preheader, label %.lr.ph.split.split.split.preheader
+  br i1 %i.aj, label %_ZNK12V3NumberData3numEv.exit.i.us205, label %.lr.ph.split.split.split.preheader
 
 .lr.ph.split.split.split.preheader:               ; preds = %.lr.ph.split.split
-  %i.ao = load ptr, ptr %1, align 8               ; 2 uses
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %7
-  %.sroa.3.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %11, i64 4
-  br label %.lr.ph.split.split.split
+  %i.ao = load ptr, ptr %1, align 8
+  br label %_ZNK12V3NumberData3numEv.exit.i
 
-.lr.ph.split.split.split.us.preheader:            ; preds = %.lr.ph.split.split
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %7
-  %.sroa.3.0..sroa_idx.i.i.us = getelementptr inbounds nuw i8, ptr %12, i64 4
-  br label %.lr.ph.split.split.split.us
-
-.lr.ph.split.split.split.us:                      ; preds = %.lr.ph.split.split.split.us.preheader, %_ZNK8V3Number6bitIs0Ei.exit.backedge.us206
-  %.026195.us202 = phi i32 [ %.026.us207, %_ZNK8V3Number6bitIs0Ei.exit.backedge.us206 ], [ %.026193, %.lr.ph.split.split.split.us.preheader ] ; 7 uses
-  %.026.in194.us203 = phi i32 [ %.026195.us202, %_ZNK8V3Number6bitIs0Ei.exit.backedge.us206 ], [ %.fr.i.i, %.lr.ph.split.split.split.us.preheader ]
-  %.not.i.not.us204 = icmp sgt i32 %.026.in194.us203, %.fr.i.i
-  br i1 %.not.i.not.us204, label %tailrecurse.preheader.i.i.us, label %_ZNK12V3NumberData3numEv.exit.i.us205
-
-_ZNK12V3NumberData3numEv.exit.i.us205:            ; preds = %.lr.ph.split.split.split.us
+_ZNK12V3NumberData3numEv.exit.i.us205:            ; preds = %.lr.ph.split.split, %_ZNK8V3Number6bitIs0Ei.exit.backedge.us206
+  %.026195.us202 = phi i32 [ %.026.us207, %_ZNK8V3Number6bitIs0Ei.exit.backedge.us206 ], [ %.026193, %.lr.ph.split.split ] ; 5 uses
   %i.ap = lshr i32 %.026195.us202, 5
   %i.aq = zext nneg i32 %i.ap to i64
   %i.ar = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.aq ; 2 uses
@@ -259,32 +242,13 @@ _ZNK12V3NumberData3numEv.exit.i.us205:            ; preds = %.lr.ph.split.split.
   %i.ay = icmp eq i64 %i.ax, 0
   br i1 %i.ay, label %_ZNK8V3Number6bitIs0Ei.exit.backedge.us206, label %.preheader.lr.ph
 
-tailrecurse.preheader.i.i.us:                     ; preds = %.lr.ph.split.split.split.us
-  %.sroa.3.0.copyload.i.i.us = load i32, ptr %.sroa.3.0..sroa_idx.i.i.us, align 4, !tbaa !69
-  %13 = zext i32 %.sroa.3.0.copyload.i.i.us to i64
-  %14 = and i64 %10, %13
-  %15 = icmp eq i64 %14, 0
-  br i1 %15, label %_ZNK8V3Number6bitIs0Ei.exit.backedge.us206, label %.preheader.lr.ph
-
-_ZNK8V3Number6bitIs0Ei.exit.backedge.us206:       ; preds = %_ZNK12V3NumberData3numEv.exit.i.us205, %tailrecurse.preheader.i.i.us
+_ZNK8V3Number6bitIs0Ei.exit.backedge.us206:       ; preds = %_ZNK12V3NumberData3numEv.exit.i.us205
   %.026.us207 = add nsw i32 %.026195.us202, -1
   %i.az = icmp sgt i32 %.026195.us202, 0
-  br i1 %i.az, label %.lr.ph.split.split.split.us, label %._crit_edge220, !llvm.loop !360
+  br i1 %i.az, label %_ZNK12V3NumberData3numEv.exit.i.us205, label %._crit_edge220, !llvm.loop !360
 
-.lr.ph.split.split.split:                         ; preds = %.lr.ph.split.split.split.preheader, %_ZNK8V3Number6bitIs0Ei.exit.backedge
-  %.026195 = phi i32 [ %.026, %_ZNK8V3Number6bitIs0Ei.exit.backedge ], [ %.026193, %.lr.ph.split.split.split.preheader ] ; 7 uses
-  %.026.in194 = phi i32 [ %.026195, %_ZNK8V3Number6bitIs0Ei.exit.backedge ], [ %.fr.i.i, %.lr.ph.split.split.split.preheader ]
-  %.not.i.not = icmp sgt i32 %.026.in194, %.fr.i.i
-  br i1 %.not.i.not, label %tailrecurse.preheader.i.i, label %_ZNK12V3NumberData3numEv.exit.i
-
-tailrecurse.preheader.i.i:                        ; preds = %.lr.ph.split.split.split
-  %.sroa.3.0.copyload.i.i = load i32, ptr %.sroa.3.0..sroa_idx.i.i, align 4, !tbaa !69
-  %16 = zext i32 %.sroa.3.0.copyload.i.i to i64
-  %17 = and i64 %10, %16
-  %18 = icmp eq i64 %17, 0
-  br i1 %18, label %_ZNK8V3Number6bitIs0Ei.exit.backedge, label %.preheader.lr.ph
-
-_ZNK12V3NumberData3numEv.exit.i:                  ; preds = %.lr.ph.split.split.split
+_ZNK12V3NumberData3numEv.exit.i:                  ; preds = %.lr.ph.split.split.split.preheader, %_ZNK8V3Number6bitIs0Ei.exit.backedge
+  %.026195 = phi i32 [ %.026, %_ZNK8V3Number6bitIs0Ei.exit.backedge ], [ %.026193, %.lr.ph.split.split.split.preheader ] ; 5 uses
   %i.ba = lshr i32 %.026195, 5
   %i.bb = zext nneg i32 %i.ba to i64
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %i.bb ; 2 uses
@@ -300,10 +264,10 @@ _ZNK12V3NumberData3numEv.exit.i:                  ; preds = %.lr.ph.split.split.
   %i.bj = icmp eq i64 %i.bi, 0
   br i1 %i.bj, label %_ZNK8V3Number6bitIs0Ei.exit.backedge, label %.preheader.lr.ph
 
-_ZNK8V3Number6bitIs0Ei.exit.backedge:             ; preds = %_ZNK12V3NumberData3numEv.exit.i, %tailrecurse.preheader.i.i
+_ZNK8V3Number6bitIs0Ei.exit.backedge:             ; preds = %_ZNK12V3NumberData3numEv.exit.i
   %.026 = add nsw i32 %.026195, -1
   %i.bk = icmp sgt i32 %.026195, 0
-  br i1 %i.bk, label %.lr.ph.split.split.split, label %._crit_edge220, !llvm.loop !360
+  br i1 %i.bk, label %_ZNK12V3NumberData3numEv.exit.i, label %._crit_edge220, !llvm.loop !360
 
 .loopexit177:                                     ; preds = %._crit_edge
   %lpad.loopexit179 = landingpad { ptr, i32 }
@@ -315,8 +279,8 @@ _ZNK8V3Number6bitIs0Ei.exit.backedge:             ; preds = %_ZNK12V3NumberData3
           cleanup
   br label %.body147
 
-.preheader.lr.ph:                                 ; preds = %_ZNK12V3NumberData3numEv.exit.i, %tailrecurse.preheader.i.i, %tailrecurse.preheader.i.i.us, %_ZNK12V3NumberData3numEv.exit.i.us205, %.lr.ph
-  %.026.lcssa.ph = phi i32 [ %.026193, %.lr.ph ], [ %.026195.us202, %tailrecurse.preheader.i.i.us ], [ %.026195.us202, %_ZNK12V3NumberData3numEv.exit.i.us205 ], [ %.026195, %tailrecurse.preheader.i.i ], [ %.026195, %_ZNK12V3NumberData3numEv.exit.i ]
+.preheader.lr.ph:                                 ; preds = %_ZNK12V3NumberData3numEv.exit.i, %_ZNK12V3NumberData3numEv.exit.i.us205, %.lr.ph
+  %.026.lcssa.ph = phi i32 [ %.026193, %.lr.ph ], [ %.026195.us202, %_ZNK12V3NumberData3numEv.exit.i.us205 ], [ %.026195, %_ZNK12V3NumberData3numEv.exit.i ]
   %i.bl = icmp sgt i32 %i.d, 2
   %i.bm = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 3 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %5, i64 36 ; 4 uses
