@@ -204,18 +204,14 @@ bb.cb:                                            ; preds = %bb.ca, %._crit_edge
 
 .lr.ph240.i:                                      ; preds = %.critedge.thread.i119, %.lr.ph240.preheader.i
   %.10.ptr238.i = phi ptr [ %.10.ptr.i, %.critedge.thread.i119 ], [ %.10.ptr235.i, %.lr.ph240.preheader.i ] ; 3 uses
-  %.pn196237.i = phi ptr [ %.10.ptr238.i, %.critedge.thread.i119 ], [ %0, %.lr.ph240.preheader.i ] ; 5 uses
+  %.pn196237.i = phi ptr [ %.10.ptr238.i, %.critedge.thread.i119 ], [ %0, %.lr.ph240.preheader.i ] ; 4 uses
   %i.acl = load i32, ptr %.10.ptr238.i, align 4
   store i32 %i.acl, ptr %i.zk, align 4
-  %.not198223.i = icmp ult ptr %.pn196237.i, %0
-  br i1 %.not198223.i, label %.critedge.thread.i119, label %.lr.ph229.i.preheader
-
-.lr.ph229.i.preheader:                            ; preds = %.lr.ph240.i
   %8 = tail call i32 %3(ptr noundef %4, ptr noundef %.pn196237.i, ptr noundef nonnull %i.zk) #4, !inline_history !120
   %9 = icmp sgt i32 %8, 0
   br i1 %9, label %.lr.ph.preheader, label %.critedge.thread.i119
 
-.lr.ph.preheader:                                 ; preds = %.lr.ph229.i.preheader
+.lr.ph.preheader:                                 ; preds = %.lr.ph240.i
   %.0.ptr222.i = getelementptr inbounds nuw i8, ptr %.pn196237.i, i64 4
   br label %.lr.ph
 
@@ -247,7 +243,7 @@ bb.cc:                                            ; preds = %.critedge.i118
   store i32 %i.acq, ptr %.0166.ptr226.i144, align 4
   br label %.critedge.thread.i119
 
-.critedge.thread.i119:                            ; preds = %.lr.ph229.i.preheader, %bb.cc, %.critedge.i118, %.lr.ph240.i
+.critedge.thread.i119:                            ; preds = %.lr.ph240.i, %bb.cc, %.critedge.i118
   %.10.ptr.i = getelementptr inbounds nuw i8, ptr %.10.ptr238.i, i64 4 ; 2 uses
   %.not197.i = icmp eq ptr %.10.ptr.i, %i.ack
   br i1 %.not197.i, label %qsort_r_words.exit, label %.lr.ph240.i, !llvm.loop !17
@@ -650,18 +646,14 @@ bb.df:                                            ; preds = %bb.de, %._crit_edge
 
 .lr.ph240.i.i:                                    ; preds = %.critedge.thread.i119.i, %.lr.ph240.preheader.i.i
   %.10.ptr238.i.i = phi ptr [ %.10.ptr.i.i, %.critedge.thread.i119.i ], [ %.10.ptr235.i.i, %.lr.ph240.preheader.i.i ] ; 3 uses
-  %.pn196237.i.i = phi ptr [ %.10.ptr238.i.i, %.critedge.thread.i119.i ], [ %0, %.lr.ph240.preheader.i.i ] ; 5 uses
+  %.pn196237.i.i = phi ptr [ %.10.ptr238.i.i, %.critedge.thread.i119.i ], [ %0, %.lr.ph240.preheader.i.i ] ; 4 uses
   %i.ain = load i32, ptr %.10.ptr238.i.i, align 4
   store i32 %i.ain, ptr %i.adm, align 4
-  %.not198223.i.i = icmp ult ptr %.pn196237.i.i, %0
-  br i1 %.not198223.i.i, label %.critedge.thread.i119.i, label %.lr.ph229.i.preheader.i
-
-.lr.ph229.i.preheader.i:                          ; preds = %.lr.ph240.i.i
   %7 = tail call i32 %3(ptr noundef %.pn196237.i.i, ptr noundef nonnull %i.adm) #4, !inline_history !243
   %8 = icmp sgt i32 %7, 0
   br i1 %8, label %.lr.ph.i.preheader, label %.critedge.thread.i119.i
 
-.lr.ph.i.preheader:                               ; preds = %.lr.ph229.i.preheader.i
+.lr.ph.i.preheader:                               ; preds = %.lr.ph240.i.i
   %.0.ptr222.i.i = getelementptr inbounds nuw i8, ptr %.pn196237.i.i, i64 4
   br label %.lr.ph.i
 
@@ -689,7 +681,7 @@ bb.df:                                            ; preds = %bb.de, %._crit_edge
   store i32 %i.air, ptr %.0166.ptr226.i144.i, align 4
   br label %.critedge.thread.i119.i
 
-.critedge.thread.i119.i:                          ; preds = %.critedge.i118.i, %.lr.ph229.i.preheader.i, %.lr.ph240.i.i
+.critedge.thread.i119.i:                          ; preds = %.critedge.i118.i, %.lr.ph240.i.i
   %.10.ptr.i.i = getelementptr inbounds nuw i8, ptr %.10.ptr238.i.i, i64 4 ; 2 uses
   %.not197.i.i = icmp eq ptr %.10.ptr.i.i, %i.aim
   br i1 %.not197.i.i, label %qsort_r_words.exit.i, label %.lr.ph240.i.i, !llvm.loop !17
