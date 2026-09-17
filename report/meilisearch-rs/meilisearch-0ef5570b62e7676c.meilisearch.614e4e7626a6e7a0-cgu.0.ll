@@ -205,9 +205,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 _ZN3std3sys4sync6rwlock5futex6RwLock4read17h0b59d37cbee5e3f0E.exit.i: ; preds = %bb.c, %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  %i.i = load atomic i8, ptr %i.h monotonic, align 4, !noalias !4979
-  %.not.i = icmp ne i8 %i.i, 0                    ; 2 uses
-  br i1 %.not.i, label %bb.j, label %bb.d
+  %i.i = load atomic i8, ptr %i.h monotonic, align 4, !noalias !4979 ; 2 uses
+  %.not.i.not = icmp eq i8 %i.i, 0
+  br i1 %.not.i.not, label %bb.d, label %bb.j
 
 bb.d:                                             ; preds = %_ZN3std3sys4sync6rwlock5futex6RwLock4read17h0b59d37cbee5e3f0E.exit.i
   %.sink.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 32
@@ -314,12 +314,13 @@ bb.p:                                             ; preds = %bb.l, %bb.k
 
 "_ZN108_$LT$tracing_subscriber..reload..Layer$LT$L$C$S$GT$$u20$as$u20$tracing_subscriber..layer..Layer$LT$S$GT$$GT$17register_callsite17h6d525684ed11897fE.exit": ; preds = %"_ZN4core3ptr421drop_in_place$LT$std..sync..poison..rwlock..RwLockReadGuard$LT$tracing_subscriber..filter..layer_filters..Filtered$LT$core..option..Option$LT$alloc..boxed..Box$LT$dyn$u20$tracing_subscriber..layer..Layer$LT$tracing_subscriber..registry..sharded..Registry$GT$$u2b$core..marker..Sync$u2b$core..marker..Send$GT$$GT$$C$tracing_subscriber..filter..targets..Targets$C$tracing_subscriber..registry..sharded..Registry$GT$$GT$$GT$17h0db54a8eadde1c86E.exit15.sink.split.i", %bb.o
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 553
-  %i.aj = load i8, ptr %i.ai, align 1, !range !52, !noundef !45
-  %i.ak = trunc nuw i8 %i.aj to i1                ; 2 uses
+  %i.aj = load i8, ptr %i.ai, align 1, !range !52, !noundef !45 ; 2 uses
+  %i.ak = trunc nuw i8 %i.aj to i1
   %i.al = tail call noundef range(i8 0, 3) i8 @"_ZN104_$LT$tracing_subscriber..registry..sharded..Registry$u20$as$u20$tracing_core..subscriber..Subscriber$GT$17register_callsite17h3dd40210358399f9E"(ptr noundef nonnull align 8 %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1) ; 2 uses
-  %brmerge = or i1 %.not.i, %i.ak
+  %2 = or i8 %i.i, %i.aj
+  %brmerge.not = icmp eq i8 %2, 0
   %.mux = select i1 %i.ak, i8 %i.al, i8 1
-  br i1 %brmerge, label %"_ZN18tracing_subscriber5layer7layered24Layered$LT$A$C$B$C$S$GT$13pick_interest17h77a28ec84bfd3ad4E.exit", label %.thread
+  br i1 %brmerge.not, label %.thread, label %"_ZN18tracing_subscriber5layer7layered24Layered$LT$A$C$B$C$S$GT$13pick_interest17h77a28ec84bfd3ad4E.exit"
 
 "_ZN108_$LT$tracing_subscriber..reload..Layer$LT$L$C$S$GT$$u20$as$u20$tracing_subscriber..layer..Layer$LT$S$GT$$GT$17register_callsite17h6d525684ed11897fE.exit.thread": ; preds = %"_ZN130_$LT$tracing_subscriber..filter..layer_filters..Filtered$LT$L$C$F$C$S$GT$$u20$as$u20$tracing_subscriber..layer..Layer$LT$S$GT$$GT$17register_callsite17hbf640b739553738bE.exit.i"
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 553
@@ -365,9 +366,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 _ZN3std3sys4sync6rwlock5futex6RwLock4read17h0b59d37cbee5e3f0E.exit.i: ; preds = %bb.c, %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %i.h = load atomic i8, ptr %i.g monotonic, align 4, !noalias !4997
-  %.not.i = icmp ne i8 %i.h, 0                    ; 2 uses
-  br i1 %.not.i, label %bb.i, label %bb.d
+  %i.h = load atomic i8, ptr %i.g monotonic, align 4, !noalias !4997 ; 2 uses
+  %.not.i.not = icmp eq i8 %i.h, 0
+  br i1 %.not.i.not, label %bb.d, label %bb.i
 
 bb.d:                                             ; preds = %_ZN3std3sys4sync6rwlock5futex6RwLock4read17h0b59d37cbee5e3f0E.exit.i
   %.sink.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 32
@@ -470,13 +471,14 @@ bb.o:                                             ; preds = %bb.k, %bb.j
 
 "_ZN108_$LT$tracing_subscriber..reload..Layer$LT$L$C$S$GT$$u20$as$u20$tracing_subscriber..layer..Layer$LT$S$GT$$GT$17register_callsite17h2c07211a7dc4f7e2E.exit": ; preds = %"_ZN4core3ptr1383drop_in_place$LT$std..sync..poison..rwlock..RwLockReadGuard$LT$tracing_subscriber..filter..layer_filters..Filtered$LT$alloc..boxed..Box$LT$dyn$u20$tracing_subscriber..layer..Layer$LT$tracing_subscriber..layer..layered..Layered$LT$tracing_subscriber..reload..Layer$LT$tracing_subscriber..filter..layer_filters..Filtered$LT$core..option..Option$LT$alloc..boxed..Box$LT$dyn$u20$tracing_subscriber..layer..Layer$LT$tracing_subscriber..registry..sharded..Registry$GT$$u2b$core..marker..Sync$u2b$core..marker..Send$GT$$GT$$C$tracing_subscriber..filter..targets..Targets$C$tracing_subscriber..registry..sharded..Registry$GT$$C$tracing_subscriber..registry..sharded..Registry$GT$$C$tracing_subscriber..registry..sharded..Registry$GT$$GT$$u2b$core..marker..Sync$u2b$core..marker..Send$GT$$C$tracing_subscriber..filter..targets..Targets$C$tracing_subscriber..layer..layered..Layered$LT$tracing_subscriber..reload..Layer$LT$tracing_subscriber..filter..layer_filters..Filtered$LT$core..option..Option$LT$alloc..boxed..56", %bb.n
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 569
-  %i.ai = load i8, ptr %i.ah, align 1, !range !52, !noundef !45
-  %i.aj = trunc nuw i8 %i.ai to i1                ; 2 uses
+  %i.ai = load i8, ptr %i.ah, align 1, !range !52, !noundef !45 ; 2 uses
+  %i.aj = trunc nuw i8 %i.ai to i1
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.al = tail call fastcc noundef range(i8 0, 3) i8 @"_ZN113_$LT$tracing_subscriber..layer..layered..Layered$LT$L$C$S$GT$$u20$as$u20$tracing_core..subscriber..Subscriber$GT$17register_callsite17h0912f09c9adfbeceE"(ptr noundef nonnull align 8 %i.ak, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1) ; 2 uses
-  %brmerge = or i1 %.not.i, %i.aj
+  %2 = or i8 %i.h, %i.ai
+  %brmerge.not = icmp eq i8 %2, 0
   %.mux = select i1 %i.aj, i8 %i.al, i8 1
-  br i1 %brmerge, label %"_ZN18tracing_subscriber5layer7layered24Layered$LT$A$C$B$C$S$GT$13pick_interest17h2d7035818dc17f26E.exit", label %.thread
+  br i1 %brmerge.not, label %.thread, label %"_ZN18tracing_subscriber5layer7layered24Layered$LT$A$C$B$C$S$GT$13pick_interest17h2d7035818dc17f26E.exit"
 
 "_ZN108_$LT$tracing_subscriber..reload..Layer$LT$L$C$S$GT$$u20$as$u20$tracing_subscriber..layer..Layer$LT$S$GT$$GT$17register_callsite17h2c07211a7dc4f7e2E.exit.thread": ; preds = %"_ZN130_$LT$tracing_subscriber..filter..layer_filters..Filtered$LT$L$C$F$C$S$GT$$u20$as$u20$tracing_subscriber..layer..Layer$LT$S$GT$$GT$17register_callsite17h36f4fd4a8d0b4915E.exit.i"
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 569

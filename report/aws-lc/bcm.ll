@@ -205,10 +205,9 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.bh = load i64, ptr %i.bg, align 8, !tbaa !80 ; 2 uses
   %i.bi = add i64 %i.bf, %.04448                  ; 2 uses
   %i.bj = add i64 %i.bi, %i.bh                    ; 2 uses
-  %5 = icmp ne i64 %i.bi, 0
   %.not47 = icmp ule i64 %i.bj, %i.bh
-  %.044.tr = trunc nuw i64 %.04448 to i1
-  %.narrow = or i1 %5, %.044.tr
+  %5 = or i64 %i.bi, %.04448
+  %.narrow = icmp ne i64 %5, 0
   %narrow = select i1 %.not47, i1 %.narrow, i1 false
   %i.bk = zext i1 %narrow to i64                  ; 2 uses
   store i64 %i.bj, ptr %i.bg, align 8, !tbaa !80

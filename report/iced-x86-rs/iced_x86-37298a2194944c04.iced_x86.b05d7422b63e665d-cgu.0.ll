@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.c, %bb.e, %bb.d
   %.sroa.040.0 = phi i64 [ %12, %bb.d ], [ %i.bj, %bb.e ], [ %12, %bb.c ] ; 3 uses
   %.sroa.033.1 = phi i64 [ %.sroa.033.2, %bb.d ], [ %.sroa.033.0, %bb.e ], [ %12, %bb.c ] ; 2 uses
   %.sroa.031.0 = phi i32 [ 8, %bb.d ], [ 4, %bb.e ], [ %11, %bb.c ] ; 2 uses
-  %.sroa.0.1 = phi i8 [ %.sroa.0.2, %bb.d ], [ %.sroa.0.0, %bb.e ], [ %8, %bb.c ] ; 7 uses
+  %.sroa.0.1 = phi i8 [ %.sroa.0.2, %bb.d ], [ %.sroa.0.0, %bb.e ], [ %8, %bb.c ] ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 328
   %i.bq = load ptr, ptr %i.bp, align 8, !noundef !21 ; 2 uses
@@ -229,11 +229,12 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.bw = load i32, ptr %i.i, align 8             ; 5 uses
   %i.bx = lshr i32 %i.bw, 11
   %i.by = trunc i32 %i.bx to i8
-  %.sroa.043.0 = select i1 %i.bv, i8 %i.by, i8 1  ; 2 uses
-  %15 = trunc i8 %.sroa.043.0 to i1
-  %16 = icmp ne i8 %.sroa.0.1, 0                  ; 2 uses
-  %or.cond19.not = or i1 %16, %15
-  %spec.store.select = select i1 %or.cond19.not, i8 %.sroa.043.0, i8 1 ; 2 uses
+  %15 = and i8 %i.by, 1
+  %.sroa.043.0 = select i1 %i.bv, i8 %15, i8 1    ; 2 uses
+  %.not105.not = icmp eq i8 %.sroa.0.1, 0
+  %16 = or i8 %.sroa.043.0, %.sroa.0.1
+  %or.cond19.not.not = icmp eq i8 %16, 0
+  %spec.store.select = select i1 %or.cond19.not.not, i8 1, i8 %.sroa.043.0 ; 2 uses
   %i.bz = icmp eq i32 %13, 2
   br i1 %i.bz, label %bb.j, label %bb.k
 
@@ -325,7 +326,7 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.q, %.thread, %bb.m, %bb.p
   %.sroa.058.0 = phi i1 [ %i.cu, %bb.q ], [ %i.cs, %.thread ], [ true, %bb.m ], [ true, %bb.p ] ; 3 uses
-  %spec.select = select i1 %.sroa.048.0, i1 true, i1 %.sroa.058.0
+  %spec.select = select i1 %.sroa.048.0, i1 true, i1 %.sroa.058.0 ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %3, i64 32
   %.val131 = load i16, ptr %i.cw, align 8, !range !28, !noundef !21 ; 3 uses
   %i.cx = and i32 %i.cg, 67108864
@@ -728,10 +729,10 @@ bb.bk:                                            ; preds = %.thread212
           to label %bb.bl unwind label %.loopexit.split-lp
 
 bb.bl:                                            ; preds = %bb.bk, %.thread212
-  br i1 %spec.select, label %bb.bn, label %bb.cr
+  br i1 %spec.select, label %bb.bn, label %bb.bm
 
-bb.bm:                                            ; preds = %bb.bp, %bb.bo
-  br i1 %16, label %bb.bt, label %bb.bq
+bb.bm:                                            ; preds = %bb.bp, %bb.bo, %bb.bl
+  br i1 %.not105.not, label %bb.bq, label %bb.bt
 
 bb.bn:                                            ; preds = %bb.bl
   invoke void %.val137(ptr noundef nonnull %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @414, i64 noundef 1, i8 noundef 6)
@@ -753,10 +754,10 @@ bb.bq:                                            ; preds = %bb.bm
 
 bb.br:                                            ; preds = %.invoke, %bb.ci, %bb.bu, %bb.bq
   %.sroa.072.0 = phi i1 [ false, %bb.bq ], [ true, %bb.ci ], [ true, %.invoke ], [ true, %bb.bu ] ; 2 uses
-  br i1 %.sroa.058.0, label %bb.cq, label %bb.ct
+  br i1 %.sroa.058.0, label %bb.cq, label %17
 
 bb.bs:                                            ; preds = %bb.bz, %bb.by, %bb.bq
-  %i.hu = trunc i8 %.sroa.043.1 to i1
+  %i.hu = trunc nuw i8 %.sroa.043.1 to i1
   br i1 %i.hu, label %bb.ca, label %bb.cb
 
 bb.bt:                                            ; preds = %bb.bm
@@ -964,12 +965,15 @@ bb.cp:                                            ; preds = %._crit_edge, %bb.cn
   %i.ku = getelementptr inbounds nuw [48 x i8], ptr %i.kt, i64 %i.kr
   br label %.invoke
 
+17:                                               ; preds = %bb.cq, %bb.br
+  br i1 %spec.select, label %bb.ct, label %bb.cr
+
 bb.cq:                                            ; preds = %bb.br
   %i.kv = xor i1 %.sroa.072.0, true
   invoke fastcc void @_RNvMs_NtNtCsf8MNnN4IDbl_8iced_x869formatter4masmNtB4_13MasmFormatter19format_memory_displ(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(304) %i.d, ptr noalias nofree noundef align 8 dereferenceable(24) %0, ptr noalias nofree noundef align 8 dereferenceable(56) %i.b, ptr noundef nonnull %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(80) %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) %3, i32 noundef %4, i32 noundef %5, i32 %6, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.a, i64 noundef %.sroa.040.0, i64 noundef %.sroa.033.1, i32 noundef %.sroa.031.0, i32 noundef %13, i1 noundef zeroext %.sroa.072.0, i1 noundef zeroext %i.kv)
-          to label %bb.ct unwind label %.loopexit.split-lp
+          to label %17 unwind label %.loopexit.split-lp
 
-bb.cr:                                            ; preds = %bb.bl, %bb.cu
+bb.cr:                                            ; preds = %bb.cu, %17
   %.0.val.off.i186 = add i64 %i.cp, -1
   %switch.i187 = icmp ult i64 %.0.val.off.i186, -4
   br i1 %switch.i187, label %bb.cs, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsf8MNnN4IDbl_8iced_x869formatter6symres12SymbolResultEEB13_.exit188
@@ -986,7 +990,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsf8MNnN4IDb
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   ret void
 
-bb.ct:                                            ; preds = %bb.cq, %bb.br
+bb.ct:                                            ; preds = %17
   %i.kx = load i32, ptr %i.i, align 8, !noundef !21
   %i.ky = and i32 %i.kx, 128
   %.not127 = icmp eq i32 %i.ky, 0
@@ -1389,7 +1393,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g, %bb.c,
   %.sroa.052.1 = phi i32 [ %.sroa.052.2, %bb.d ], [ %15, %bb.c ], [ %15, %bb.g ], [ %i.bo, %bb.f ] ; 5 uses
   %.sroa.032.1 = phi i64 [ %.sroa.032.2, %bb.d ], [ %13, %bb.c ], [ %i.br, %bb.g ], [ %13, %bb.f ] ; 11 uses
   %.sroa.027.0 = phi i32 [ 8, %bb.d ], [ %12, %bb.c ], [ 4, %bb.g ], [ 4, %bb.f ] ; 3 uses
-  %.sroa.0.1 = phi i8 [ %.sroa.0.2, %bb.d ], [ %9, %bb.c ], [ 69, %bb.g ], [ 0, %bb.f ] ; 5 uses
+  %.sroa.0.1 = phi i8 [ %.sroa.0.2, %bb.d ], [ %9, %bb.c ], [ 69, %bb.g ], [ 0, %bb.f ] ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 328
   %i.bt = load ptr, ptr %i.bs, align 8, !noundef !21 ; 2 uses
@@ -1413,11 +1417,12 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.bz = load i32, ptr %i.i, align 8             ; 2 uses
   %i.ca = lshr i32 %i.bz, 11
   %i.cb = trunc i32 %i.ca to i8
-  %.sroa.059.0 = select i1 %i.by, i8 %i.cb, i8 1  ; 2 uses
-  %16 = trunc i8 %.sroa.059.0 to i1
-  %17 = icmp ne i8 %.sroa.0.1, 0                  ; 2 uses
-  %or.cond8.not = or i1 %17, %16
-  %spec.store.select = select i1 %or.cond8.not, i8 %.sroa.059.0, i8 1 ; 2 uses
+  %16 = and i8 %i.cb, 1
+  %.sroa.059.0 = select i1 %i.by, i8 %16, i8 1    ; 2 uses
+  %.not121 = icmp eq i8 %.sroa.0.1, 0
+  %17 = or i8 %.sroa.059.0, %.sroa.0.1
+  %or.cond8.not.not = icmp eq i8 %17, 0
+  %spec.store.select = select i1 %or.cond8.not.not, i8 1, i8 %.sroa.059.0 ; 2 uses
   %i.cc = icmp eq i32 %14, 2
   br i1 %i.cc, label %bb.l, label %bb.m
 
@@ -1662,24 +1667,30 @@ bb.ai:                                            ; preds = %bb.af
   %i.ex = load i32, ptr %i.i, align 8, !noundef !21 ; 2 uses
   %i.ey = and i32 %i.ex, 4096
   %.not126 = icmp eq i32 %i.ey, 0
-  br i1 %.not126, label %bb.al, label %bb.aq
+  br i1 %.not126, label %bb.ak, label %bb.aq
 
 bb.aj:                                            ; preds = %bb.ah
-  %i.ez = load i32, ptr %i.i, align 8, !noundef !21 ; 3 uses
+  %i.ez = load i32, ptr %i.i, align 8, !noundef !21 ; 4 uses
   %i.fa = and i32 %i.ez, 4096
   %.not124 = icmp eq i32 %i.fa, 0
-  br i1 %.not124, label %bb.ak, label %bb.aq
+  br i1 %.not124, label %18, label %bb.aq
 
-bb.ak:                                            ; preds = %bb.aj
-  %.not123 = icmp eq i8 %.sroa.0.1, 41
-  br i1 %.not123, label %bb.am, label %bb.al
+18:                                               ; preds = %bb.aj
+  switch i8 %.sroa.0.1, label %bb.at [
+    i8 41, label %bb.am
+    i8 0, label %bb.as
+  ]
 
-bb.al:                                            ; preds = %.split244, %.split, %bb.ai, %bb.ar, %_RNvNtNtCsf8MNnN4IDbl_8iced_x869formatter9fmt_utils19show_segment_prefix.exit, %bb.ap, %bb.ak
-  br i1 %17, label %bb.at, label %bb.as
+bb.ak:                                            ; preds = %.split244, %.split, %bb.ai, %bb.ar, %_RNvNtNtCsf8MNnN4IDbl_8iced_x869formatter9fmt_utils19show_segment_prefix.exit, %bb.ap
+  br i1 %.not121, label %bb.as, label %bb.al
 
-bb.am:                                            ; preds = %._crit_edge, %bb.ak
-  %.val171250 = phi i32 [ %i.ev, %._crit_edge ], [ %i.ez, %bb.ak ] ; 3 uses
-  %i.fb = phi i16 [ %.pre, %._crit_edge ], [ %i.eu, %bb.ak ]
+bb.al:                                            ; preds = %bb.ak
+  %.val170.pre = load i32, ptr %i.i, align 8
+  br label %bb.at
+
+bb.am:                                            ; preds = %._crit_edge, %18
+  %.val171250 = phi i32 [ %i.ev, %._crit_edge ], [ %i.ez, %18 ] ; 3 uses
+  %i.fb = phi i16 [ %.pre, %._crit_edge ], [ %i.eu, %18 ]
   %i.fc = getelementptr inbounds nuw i8, ptr %0, i64 260
   %.val = load i32, ptr %i.fc, align 4, !noundef !21
   %i.fd = and i32 %.val, 4
@@ -1709,7 +1720,7 @@ bb.an:                                            ; preds = %bb.am
   %i.ff = add nsw i32 %narrow9.i.i, -75
   %or.cond.i.i200 = icmp ult i32 %i.ff, 2
   %..i.i201 = or i1 %or.cond.i.i200, %i.fe
-  br i1 %..i.i201, label %bb.aq, label %bb.al
+  br i1 %..i.i201, label %bb.aq, label %bb.ak
 
 bb.ao:                                            ; preds = %bb.an
   %i.fg = getelementptr inbounds nuw i8, ptr %3, i64 35
@@ -1729,10 +1740,10 @@ switch.lookup:                                    ; preds = %bb.ao
   %.sroa.0.0.i.i202 = phi i32 [ %switch.ext, %switch.lookup ], [ 74, %bb.ao ]
   %.not.i.i = icmp ne i32 %narrow9.i.i, %.sroa.0.0.i.i202
   %.8.i.i = or i1 %i.fe, %.not.i.i
-  br i1 %.8.i.i, label %bb.aq, label %bb.al
+  br i1 %.8.i.i, label %bb.aq, label %bb.ak
 
 bb.ap:                                            ; preds = %bb.ag
-  br i1 %.sroa.061.1, label %._crit_edge, label %bb.al
+  br i1 %.sroa.061.1, label %._crit_edge, label %bb.ak
 
 ._crit_edge:                                      ; preds = %bb.ap
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %3, i64 32
@@ -1740,7 +1751,7 @@ bb.ap:                                            ; preds = %bb.ag
   br label %bb.am
 
 _RNvNtNtCsf8MNnN4IDbl_8iced_x869formatter9fmt_utils19show_segment_prefix.exit: ; preds = %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am
-  br i1 %i.fe, label %bb.aq, label %bb.al
+  br i1 %i.fe, label %bb.aq, label %bb.ak
 
 bb.aq:                                            ; preds = %bb.ag, %bb.ai, %bb.aj, %_RNvNtNtCsf8MNnN4IDbl_8iced_x869formatter9fmt_utils19show_segment_prefix.exit, %.split, %.split244
   %.val171.a = phi i32 [ %i.ev, %bb.ag ], [ %i.ex, %bb.ai ], [ %i.ez, %bb.aj ], [ %.val171250, %_RNvNtNtCsf8MNnN4IDbl_8iced_x869formatter9fmt_utils19show_segment_prefix.exit ], [ %.val171250, %.split ], [ %.val171250, %.split244 ]
@@ -1763,20 +1774,20 @@ bb.aq:                                            ; preds = %bb.ag, %bb.ai, %bb.
 
 bb.ar:                                            ; preds = %bb.aq
   invoke void %.val162(ptr noundef nonnull %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @400, i64 noundef 1, i8 noundef 6)
-          to label %bb.al unwind label %bb.v
+          to label %bb.ak unwind label %bb.v
 
-bb.as:                                            ; preds = %bb.at, %bb.al
-  %.sroa.074.0 = phi i8 [ 0, %bb.al ], [ 1, %bb.at ] ; 2 uses
+bb.as:                                            ; preds = %bb.at, %bb.ak, %18
+  %.sroa.074.0 = phi i8 [ 0, %bb.ak ], [ %.sroa.0.1, %18 ], [ 1, %bb.at ] ; 2 uses
   %.not127 = icmp eq i8 %10, 0
   br i1 %.not127, label %bb.au, label %bb.av
 
-bb.at:                                            ; preds = %bb.al
-  %.val169 = load i32, ptr %i.i, align 8, !noundef !21
+bb.at:                                            ; preds = %bb.al, %18
+  %.val170 = phi i32 [ %.val170.pre, %bb.al ], [ %i.ez, %18 ]
   %i.fq = getelementptr inbounds nuw i8, ptr %0, i64 288
   %.val170.a = load ptr, ptr %i.fq, align 8, !nonnull !21, !align !25, !noundef !21
   %i.fr = zext i8 %.sroa.0.1 to i64
   %i.fs = getelementptr inbounds nuw [48 x i8], ptr %.val170.a, i64 %i.fr ; 2 uses
-  %i.ft = and i32 %.val169, 36
+  %i.ft = and i32 %.val170, 36
   %or.cond.i203 = icmp eq i32 %i.ft, 0            ; 2 uses
   %.sroa.3.0.in.v.i204 = select i1 %or.cond.i203, i64 16, i64 40
   %.sroa.3.0.in.i205 = getelementptr inbounds nuw i8, ptr %i.fs, i64 %.sroa.3.0.in.v.i204
@@ -1801,7 +1812,7 @@ bb.av:                                            ; preds = %bb.as
   br i1 %i.fy, label %bb.ax, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.bb, %bb.ba, %bb.av
-  %i.fz = trunc i8 %.sroa.059.1 to i1
+  %i.fz = trunc nuw i8 %.sroa.059.1 to i1
   %i.ga = load i32, ptr %i.i, align 8, !noundef !21 ; 3 uses
   br i1 %i.fz, label %bb.bc, label %.invoke260
 
@@ -2204,7 +2215,7 @@ bb.f:                                             ; preds = %bb.c, %bb.e, %bb.d
   %.sroa.052.0 = phi i64 [ %12, %bb.d ], [ %i.bj, %bb.e ], [ %12, %bb.c ] ; 2 uses
   %.sroa.032.1 = phi i64 [ %.sroa.032.2, %bb.d ], [ %.sroa.032.0, %bb.e ], [ %12, %bb.c ] ; 12 uses
   %.sroa.027.0 = phi i32 [ 8, %bb.d ], [ 4, %bb.e ], [ %11, %bb.c ] ; 3 uses
-  %.sroa.0.1 = phi i8 [ %.sroa.0.2, %bb.d ], [ %.sroa.0.0, %bb.e ], [ %8, %bb.c ] ; 6 uses
+  %.sroa.0.1 = phi i8 [ %.sroa.0.2, %bb.d ], [ %.sroa.0.0, %bb.e ], [ %8, %bb.c ] ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 328
   %i.bq = load ptr, ptr %i.bp, align 8, !noundef !21 ; 2 uses
@@ -2228,11 +2239,12 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.bw = load i32, ptr %i.i, align 8             ; 2 uses
   %i.bx = lshr i32 %i.bw, 11
   %i.by = trunc i32 %i.bx to i8
-  %.sroa.054.0 = select i1 %i.bv, i8 %i.by, i8 1  ; 2 uses
-  %15 = trunc i8 %.sroa.054.0 to i1
-  %16 = icmp ne i8 %.sroa.0.1, 0                  ; 2 uses
-  %or.cond8.not = or i1 %16, %15
-  %spec.store.select = select i1 %or.cond8.not, i8 %.sroa.054.0, i8 1 ; 2 uses
+  %15 = and i8 %i.by, 1
+  %.sroa.054.0 = select i1 %i.bv, i8 %15, i8 1    ; 2 uses
+  %.not116 = icmp eq i8 %.sroa.0.1, 0
+  %16 = or i8 %.sroa.054.0, %.sroa.0.1
+  %or.cond8.not.not = icmp eq i8 %16, 0
+  %spec.store.select = select i1 %or.cond8.not.not, i8 1, i8 %.sroa.054.0 ; 2 uses
   %i.bz = icmp eq i32 %13, 2
   br i1 %i.bz, label %bb.j, label %bb.k
 
@@ -2635,7 +2647,7 @@ bb.ap:                                            ; preds = %bb.ai
   br i1 %.not121, label %bb.aq, label %bb.ar
 
 bb.aq:                                            ; preds = %bb.ar, %bb.ap
-  br i1 %16, label %bb.at, label %bb.as
+  br i1 %.not116, label %bb.as, label %bb.at
 
 bb.ar:                                            ; preds = %bb.ap
   invoke void %.val159(ptr noundef nonnull %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @371, i64 noundef 1, i8 noundef 0)
@@ -2684,7 +2696,7 @@ bb.av:                                            ; preds = %bb.as
   br i1 %i.ha, label %bb.ax, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.bb, %bb.ba, %bb.av
-  %i.hb = trunc i8 %.sroa.054.1 to i1
+  %i.hb = trunc nuw i8 %.sroa.054.1 to i1
   br i1 %i.hb, label %bb.bc, label %bb.bd
 
 bb.ax:                                            ; preds = %bb.av

@@ -154,8 +154,8 @@ define dso_local range(i32 -1, 1) i32 @riscv_pmu_incr_ctr(ptr noundef %0, i32 no
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16496
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 21536
-  %i.c = load i8, ptr %i.b, align 16, !range !7, !noundef !8
-  %i.d = trunc nuw i8 %i.c to i1                  ; 4 uses
+  %i.c = load i8, ptr %i.b, align 16, !range !7, !noundef !8 ; 2 uses
+  %i.d = trunc nuw i8 %i.c to i1                  ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32312
   %i.f = load i32, ptr %i.e, align 8
   %.not = icmp eq i32 %i.f, 0
@@ -207,7 +207,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ad = load i64, ptr %i.ac, align 8
   %i.ae = and i64 %i.ad, 4611686018427387904
   %.not49 = icmp eq i64 %i.ae, 0
-  br i1 %.not49, label %.thread62, label %riscv_pmu_counter_enabled.exit
+  br i1 %.not49, label %bb.l, label %riscv_pmu_counter_enabled.exit
 
 bb.g:                                             ; preds = %bb.e
   %i.af = icmp eq i8 %i.z, 1
@@ -220,7 +220,7 @@ bb.h:                                             ; preds = %bb.g
   %i.ai = load i64, ptr %i.ah, align 8
   %i.aj = and i64 %i.ai, 576460752303423488
   %.not50 = icmp eq i64 %i.aj, 0
-  br i1 %.not50, label %.thread62, label %riscv_pmu_counter_enabled.exit
+  br i1 %.not50, label %bb.l, label %riscv_pmu_counter_enabled.exit
 
 bb.i:                                             ; preds = %bb.g
   %i.ak = icmp eq i8 %i.z, 0
@@ -233,7 +233,7 @@ bb.j:                                             ; preds = %bb.i
   %i.an = load i64, ptr %i.am, align 8
   %i.ao = and i64 %i.an, 288230376151711744
   %.not51 = icmp eq i64 %i.ao, 0
-  br i1 %.not51, label %.thread62, label %riscv_pmu_counter_enabled.exit
+  br i1 %.not51, label %bb.l, label %riscv_pmu_counter_enabled.exit
 
 .thread57:                                        ; preds = %bb.i
   %i.ap = icmp ne i8 %i.z, 1
@@ -246,12 +246,12 @@ bb.k:                                             ; preds = %.thread57
   %i.as = load i64, ptr %i.ar, align 8
   %i.at = and i64 %i.as, 2305843009213693952
   %.not52 = icmp eq i64 %i.at, 0
-  br i1 %.not52, label %.thread62, label %riscv_pmu_counter_enabled.exit
+  br i1 %.not52, label %bb.l, label %riscv_pmu_counter_enabled.exit
 
-bb.l:                                             ; preds = %.thread57
-  %2 = icmp ne i8 %i.z, 0
-  %or.cond7 = or i1 %2, %i.d
-  br i1 %or.cond7, label %.thread62, label %bb.m
+bb.l:                                             ; preds = %bb.h, %bb.f, %bb.j, %bb.k, %.thread57
+  %2 = or i8 %i.z, %i.c
+  %or.cond7.not = icmp eq i8 %2, 0
+  br i1 %or.cond7.not, label %bb.m, label %.thread62
 
 bb.m:                                             ; preds = %bb.l
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 29152
@@ -261,7 +261,7 @@ bb.m:                                             ; preds = %bb.l
   %.not53 = icmp eq i64 %i.ax, 0
   br i1 %.not53, label %.thread62, label %riscv_pmu_counter_enabled.exit
 
-.thread62:                                        ; preds = %bb.f, %bb.h, %bb.j, %bb.k, %bb.m, %bb.l
+.thread62:                                        ; preds = %bb.m, %bb.l
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 28384
   %i.az = getelementptr inbounds nuw [24 x i8], ptr %i.ay, i64 %i.r ; 3 uses
   %i.ba = load i64, ptr %i.az, align 8            ; 2 uses

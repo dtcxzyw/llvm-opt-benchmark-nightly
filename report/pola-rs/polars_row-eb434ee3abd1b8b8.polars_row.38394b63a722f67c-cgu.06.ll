@@ -202,11 +202,10 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 16, !dbg !1470
   %i.f = load i8, ptr %i.e, align 8, !dbg !1470, !range !334, !noundef !275
-  %3 = trunc nuw i8 %i.f to i1, !dbg !1470
   %i.g = and i8 %1, 4
-  %.not33 = icmp ne i8 %i.g, 0
-  %or.cond.not = or i1 %.not33, %3, !dbg !1470
-  br i1 %or.cond.not, label %bb.e, label %_RNvXs3_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldEIBX_INtNtBb_6option6OptionNtNtCs4PheDXcg4wa_10polars_row3row18RowEncodingContextEEEINtB5_7ZipImplBW_B2h_E4nextB2L_.exit.thread, !dbg !1470
+  %3 = or disjoint i8 %i.f, %i.g, !dbg !1470
+  %or.cond.not.not = icmp eq i8 %3, 0, !dbg !1470
+  br i1 %or.cond.not.not, label %_RNvXs3_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldEIBX_INtNtBb_6option6OptionNtNtCs4PheDXcg4wa_10polars_row3row18RowEncodingContextEEEINtB5_7ZipImplBW_B2h_E4nextB2L_.exit.thread, label %bb.e, !dbg !1470
 
 bb.e:                                             ; preds = %bb.d, %bb.b
   %i.h = load i8, ptr %0, align 8, !dbg !1468, !range !318, !noundef !275
@@ -609,11 +608,10 @@ bb.j:                                             ; preds = %bb.f
   call void @llvm.experimental.noalias.scope.decl(metadata !5525), !dbg !5858
   %i.br = getelementptr inbounds nuw i8, ptr %4, i64 16, !dbg !5859
   %i.bs = load i8, ptr %i.br, align 8, !dbg !5859, !range !334, !alias.scope !5525, !noalias !5526, !noundef !275
-  %7 = trunc nuw i8 %i.bs to i1, !dbg !5859
   %i.bt = and i8 %3, 4
-  %.not.i = icmp ne i8 %i.bt, 0
-  %or.cond.not.i = or i1 %.not.i, %7, !dbg !5859
-  br i1 %or.cond.not.i, label %bb.k, label %bb.l, !dbg !5859
+  %7 = or disjoint i8 %i.bs, %i.bt, !dbg !5859
+  %or.cond.not.not.i = icmp eq i8 %7, 0, !dbg !5859
+  br i1 %or.cond.not.not.i, label %bb.l, label %bb.k, !dbg !5859
 
 bb.k:                                             ; preds = %bb.j
   call void @_RINvNtNtCs4PheDXcg4wa_10polars_row5fixed7numeric6encodehEB6_(ptr noalias noundef nonnull %0, i64 noundef range(i64 0, -9223372036854775808) %1, ptr noundef nonnull align 8 %i.ax, i8 noundef %3, ptr noalias noundef nonnull align 8 %5, i64 noundef range(i64 0, 1152921504606846976) %6), !dbg !5860, !noalias !5525
@@ -646,11 +644,10 @@ bb.n:                                             ; preds = %bb.g
   call void @llvm.experimental.noalias.scope.decl(metadata !5529), !dbg !5873
   %i.cc = getelementptr inbounds nuw i8, ptr %4, i64 16, !dbg !5874
   %i.cd = load i8, ptr %i.cc, align 8, !dbg !5874, !range !334, !alias.scope !5529, !noalias !5530, !noundef !275
-  %8 = trunc nuw i8 %i.cd to i1, !dbg !5874
   %i.ce = and i8 %3, 4
-  %.not.i47 = icmp ne i8 %i.ce, 0
-  %or.cond.not.i48 = or i1 %.not.i47, %8, !dbg !5874
-  br i1 %or.cond.not.i48, label %bb.o, label %bb.p, !dbg !5874
+  %8 = or disjoint i8 %i.cd, %i.ce, !dbg !5874
+  %or.cond.not.not.i47 = icmp eq i8 %8, 0, !dbg !5874
+  br i1 %or.cond.not.not.i47, label %bb.p, label %bb.o, !dbg !5874
 
 bb.o:                                             ; preds = %bb.n
   call void @_RINvNtNtCs4PheDXcg4wa_10polars_row5fixed7numeric6encodetEB6_(ptr noalias noundef nonnull %0, i64 noundef range(i64 0, -9223372036854775808) %1, ptr noundef nonnull align 8 %i.be, i8 noundef %3, ptr noalias noundef nonnull align 8 %5, i64 noundef range(i64 0, 1152921504606846976) %6), !dbg !5875, !noalias !5529
@@ -683,11 +680,10 @@ bb.r:                                             ; preds = %bb.h
   call void @llvm.experimental.noalias.scope.decl(metadata !5533), !dbg !5888
   %i.cn = getelementptr inbounds nuw i8, ptr %4, i64 16, !dbg !5889
   %i.co = load i8, ptr %i.cn, align 8, !dbg !5889, !range !334, !alias.scope !5533, !noalias !5534, !noundef !275
-  %9 = trunc nuw i8 %i.co to i1, !dbg !5889
   %i.cp = and i8 %3, 4
-  %.not.i51 = icmp ne i8 %i.cp, 0
-  %or.cond.not.i52 = or i1 %.not.i51, %9, !dbg !5889
-  br i1 %or.cond.not.i52, label %bb.s, label %bb.t, !dbg !5889
+  %9 = or disjoint i8 %i.co, %i.cp, !dbg !5889
+  %or.cond.not.not.i50 = icmp eq i8 %9, 0, !dbg !5889
+  br i1 %or.cond.not.not.i50, label %bb.t, label %bb.s, !dbg !5889
 
 bb.s:                                             ; preds = %bb.r
   call void @_RINvNtNtCs4PheDXcg4wa_10polars_row5fixed7numeric6encodemEB6_(ptr noalias noundef nonnull %0, i64 noundef range(i64 0, -9223372036854775808) %1, ptr noundef nonnull align 8 %i.bl, i8 noundef %3, ptr noalias noundef nonnull align 8 %5, i64 noundef range(i64 0, 1152921504606846976) %6), !dbg !5890, !noalias !5533

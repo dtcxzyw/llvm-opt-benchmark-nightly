@@ -204,11 +204,11 @@ bb.ai:                                            ; preds = %bb.ah
   %i.ey = load i8, ptr %i.ex, align 1, !range !14, !noundef !5
   %i.ez = getelementptr inbounds nuw i8, ptr %1, i64 882
   %i.fa = load i8, ptr %i.ez, align 2, !range !14
-  %4 = or i8 %i.ey, %i.da
-  %5 = icmp ne i8 %4, 0
-  %i.fb = or i8 %i.fa, %i.ac
+  %4 = trunc nuw i8 %i.fa to i1
+  %5 = or i8 %i.ac, %i.ey
+  %i.fb = or i8 %5, %i.da
   %i.fc = icmp ne i8 %i.fb, 0
-  %or.cond23 = select i1 %5, i1 true, i1 %i.fc
+  %or.cond23 = select i1 %i.fc, i1 true, i1 %4
   br i1 %or.cond23, label %bb.an, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai

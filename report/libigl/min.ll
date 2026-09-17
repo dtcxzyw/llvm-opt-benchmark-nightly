@@ -204,15 +204,17 @@ bb.f:                                             ; preds = %.lr.ph.split, %_ZNK
 
 _ZN5Eigen8internal12visitor_implINS0_17min_coeff_visitorINS_5BlockIKNS_5ArrayIbLin1ELi3ELi0ELin1ELi3EEELi1ELi3ELb0EEELi0EEENS0_17visitor_evaluatorIS7_EELi2EE3runERKSA_RS8_.exit.i.i.i.i: ; preds = %bb.f
   %i.cx = getelementptr i8, ptr %i.cs, i64 %i.cr
-  %i.cy = load i8, ptr %i.cx, align 1, !tbaa !40, !range !41, !noundef !38
-  %.not = icmp samesign ult i8 %i.cy, %i.ct       ; 2 uses
-  %4 = select i1 %.not, i8 0, i8 %i.ct
-  %i.cz = select i1 %.not, i32 2, i32 0
+  %i.cy = load i8, ptr %i.cx, align 1, !tbaa !40, !range !41, !noundef !38 ; 2 uses
+  %.not5.i.i = icmp samesign ult i8 %i.cy, %i.ct
+  %4 = add nsw i8 %i.ct, -1
+  %.not = icmp ult i8 %4, %i.cy
+  %5 = zext i1 %.not to i8
+  %i.cz = select i1 %.not5.i.i, i32 2, i32 0
   br label %_ZNK5Eigen9DenseBaseINS_5BlockIKNS_5ArrayIbLin1ELi3ELi0ELin1ELi3EEELi1ELi3ELb0EEEE8minCoeffIlEEbPT_S9_.exit
 
 _ZNK5Eigen9DenseBaseINS_5BlockIKNS_5ArrayIbLin1ELi3ELi0ELin1ELi3EEELi1ELi3ELb0EEEE8minCoeffIlEEbPT_S9_.exit: ; preds = %_ZN5Eigen8internal12visitor_implINS0_17min_coeff_visitorINS_5BlockIKNS_5ArrayIbLin1ELi3ELi0ELin1ELi3EEELi1ELi3ELb0EEELi0EEENS0_17visitor_evaluatorIS7_EELi2EE3runERKSA_RS8_.exit.i.i.i.i, %bb.f
   %.0 = phi i32 [ 1, %bb.f ], [ %i.cz, %_ZN5Eigen8internal12visitor_implINS0_17min_coeff_visitorINS_5BlockIKNS_5ArrayIbLin1ELi3ELi0ELin1ELi3EEELi1ELi3ELb0EEELi0EEENS0_17visitor_evaluatorIS7_EELi2EE3runERKSA_RS8_.exit.i.i.i.i ]
-  %.0.in = phi i8 [ 0, %bb.f ], [ %4, %_ZN5Eigen8internal12visitor_implINS0_17min_coeff_visitorINS_5BlockIKNS_5ArrayIbLin1ELi3ELi0ELin1ELi3EEELi1ELi3ELb0EEELi0EEENS0_17visitor_evaluatorIS7_EELi2EE3runERKSA_RS8_.exit.i.i.i.i ]
+  %.0.in = phi i8 [ 0, %bb.f ], [ %5, %_ZN5Eigen8internal12visitor_implINS0_17min_coeff_visitorINS_5BlockIKNS_5ArrayIbLin1ELi3ELi0ELin1ELi3EEELi1ELi3ELb0EEELi0EEENS0_17visitor_evaluatorIS7_EELi2EE3runERKSA_RS8_.exit.i.i.i.i ]
   %i.da = getelementptr inbounds nuw i8, ptr %i.p, i64 %indvars.iv
   store i8 %.0.in, ptr %i.da, align 1, !tbaa !40
   %i.db = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %indvars.iv

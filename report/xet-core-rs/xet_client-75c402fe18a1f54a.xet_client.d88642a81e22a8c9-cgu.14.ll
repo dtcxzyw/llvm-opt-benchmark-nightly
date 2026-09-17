@@ -202,10 +202,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.o = load i64, ptr %i.m, align 8, !range !15, !alias.scope !2911, !noalias !2912, !noundef !6
-  %2 = trunc nuw i64 %i.n to i1
-  %3 = icmp ne i64 %i.o, 0
-  %or.cond.i = or i1 %3, %2
-  br i1 %or.cond.i, label %bb.c, label %bb.d
+  %2 = or i64 %i.o, %i.n
+  %or.cond.not.i = icmp eq i64 %2, 0
+  br i1 %or.cond.not.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.g, %bb.f, %bb.d, %bb.b, %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 184 ; 2 uses
@@ -608,10 +607,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.o = load i64, ptr %i.m, align 8, !range !15, !alias.scope !2963, !noalias !2964, !noundef !6
-  %2 = trunc nuw i64 %i.n to i1
-  %3 = icmp ne i64 %i.o, 0
-  %or.cond.i = or i1 %3, %2
-  br i1 %or.cond.i, label %bb.c, label %bb.d
+  %2 = or i64 %i.o, %i.n
+  %or.cond.not.i = icmp eq i64 %2, 0
+  br i1 %or.cond.not.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.g, %bb.f, %bb.d, %bb.b, %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 184 ; 2 uses

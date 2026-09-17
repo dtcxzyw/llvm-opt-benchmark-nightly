@@ -204,15 +204,14 @@ bb.o:                                             ; preds = %_ZN4llvm18Intrusive
   %i.dd = xor i8 %i.dc, 1
   %i.de = xor i8 %i.db, 1
   %i.df = xor i8 %i.da, 1
-  %spec.select.i45 = and i8 %i.cz, %i.dd          ; 3 uses
+  %spec.select.i45 = and i8 %i.cz, %i.dd          ; 2 uses
   %i.dg = and i8 %i.cy, %i.de                     ; 3 uses
-  %i.dh = and i8 %i.cx, %i.df                     ; 3 uses
+  %i.dh = and i8 %i.cx, %i.df                     ; 2 uses
   %i.di = trunc nuw i8 %i.dg to i1
-  %i.dj = or i8 %i.dg, %spec.select.i45
-  %or.cond.i53 = icmp ne i8 %i.dj, 0
-  %18 = trunc nuw i8 %i.dh to i1
-  %19 = or i1 %or.cond.i53, %18
-  br i1 %19, label %bb.p, label %bb.y
+  %i.dj = or i8 %i.dh, %spec.select.i45           ; 2 uses
+  %18 = or i8 %i.dj, %i.dg
+  %.not130 = icmp eq i8 %18, 0
+  br i1 %.not130, label %bb.y, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #22
@@ -285,8 +284,7 @@ _ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEEC2ERKS5_.exit59: ; pre
   %i.ej = getelementptr inbounds nuw i8, ptr %i.v, i64 15
   %i.ek = load i8, ptr %i.ej, align 1, !tbaa !834, !range !35, !noundef !36
   %i.el = trunc nuw i8 %i.ek to i1
-  %20 = or i8 %i.dh, %spec.select.i45
-  %.not130.a = icmp eq i8 %20, 0
+  %.not130.a = icmp eq i8 %i.dj, 0
   %i.em = and i1 %.not130.a, %i.di
   %i.en = xor i1 %i.em, true
   %i.eo = select i1 %i.el, i1 %i.en, i1 false

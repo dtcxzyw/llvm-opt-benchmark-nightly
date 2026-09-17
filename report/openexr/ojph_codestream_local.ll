@@ -204,7 +204,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #14
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 200
   store ptr %i.b, ptr %2, align 8, !tbaa !125
-  %i.c = call noundef zeroext i1 @_ZNK4ojph9param_cod13is_reversibleEv(ptr noundef nonnull align 8 dereferenceable(8) %2) ; 4 uses
+  %i.c = call noundef zeroext i1 @_ZNK4ojph9param_cod13is_reversibleEv(ptr noundef nonnull align 8 dereferenceable(8) %2) ; 5 uses
   %i.d = call i64 @_ZNK4ojph9param_siz16get_image_extentEv(ptr noundef nonnull align 8 dereferenceable(8) %1) ; 0 uses
   %i.e = call i64 @_ZNK4ojph9param_siz16get_image_offsetEv(ptr noundef nonnull align 8 dereferenceable(8) %1)
   %i.f = and i64 %i.e, 4294967295
@@ -400,15 +400,17 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q
-  %i.bx = icmp ult i32 %i.bc, 6                   ; 2 uses
+  %i.bx = icmp ult i32 %i.bc, 6                   ; 3 uses
   %i.by = and i1 %i.c, %i.bx
   %i.bz = icmp ult i32 %i.bc, 7                   ; 2 uses
   %i.ca = and i1 %i.c, %i.bz                      ; 2 uses
-  %i.cb = icmp ult i32 %i.bc, 8                   ; 2 uses
-  %i.cc = and i1 %i.c, %i.cb                      ; 3 uses
-  %3 = add i32 %i.bc, -1
-  %brmerge.not = icmp ult i32 %3, 7
-  br i1 %brmerge.not, label %bb.u, label %bb.t
+  %i.cb = icmp ult i32 %i.bc, 8                   ; 3 uses
+  %i.cc = and i1 %i.c, %i.cb                      ; 4 uses
+  %3 = icmp ne i32 %i.bc, 0
+  %or.cond41 = select i1 %i.c, i1 %i.bx, i1 %i.cb
+  %or.cond45 = or i1 %or.cond41, %i.cc
+  %or.cond = and i1 %3, %or.cond45
+  br i1 %or.cond, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   %i.cd = call noundef ptr @_ZN4ojph9get_errorEv() ; 2 uses
