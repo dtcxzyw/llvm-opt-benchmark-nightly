@@ -204,12 +204,11 @@ bb.cs:                                            ; preds = %bb.cr
   br i1 %or.cond.i.i.i.i, label %bb.cu, label %bb.ct
 
 bb.ct:                                            ; preds = %bb.cs
-  %2 = trunc nuw i8 %i.lz to i1
   %i.mh = load i32, ptr %.sroa.gep.i.i.i, align 8, !range !31, !alias.scope !1314, !noalias !1310, !noundef !14
-  %i.mi = or i8 %i.mb, %i.ma
-  %or.cond5.demorgan.not.i.i.i.i = icmp ne i8 %i.mi, 0
-  %or.cond18.not.i.i.i.i = or i1 %or.cond5.demorgan.not.i.i.i.i, %2
-  br i1 %or.cond18.not.i.i.i.i, label %_RNvMs0_NtNtCs8frGy5WneL6_4fish5input5inputNtB5_8KeyEvent14codepoint_text.exit.thread.i.i.i, label %bb.cv
+  %i.mi = or i8 %i.ma, %i.lz
+  %2 = or i8 %i.mi, %i.mb
+  %or.cond18.not.not.i.i.i.i = icmp eq i8 %2, 0
+  br i1 %or.cond18.not.not.i.i.i.i, label %bb.cv, label %_RNvMs0_NtNtCs8frGy5WneL6_4fish5input5inputNtB5_8KeyEvent14codepoint_text.exit.thread.i.i.i
 
 bb.cu:                                            ; preds = %bb.cs
   %i.mj = or i8 %i.ma, %i.lz
@@ -612,12 +611,11 @@ bb.hb:                                            ; preds = %bb.gz
 
 bb.hc:                                            ; preds = %bb.hb
   %i.vi = getelementptr inbounds nuw i8, ptr %i.by, i64 24
-  %3 = trunc nuw i8 %i.uw to i1
   %i.vj = load i32, ptr %i.vi, align 8, !range !31, !alias.scope !1347, !noundef !14
-  %i.vk = or i8 %i.va, %i.uy
-  %or.cond5.demorgan.not.i = icmp ne i8 %i.vk, 0
-  %or.cond18.not.i = or i1 %or.cond5.demorgan.not.i, %3
-  br i1 %or.cond18.not.i, label %select.unfold, label %bb.he
+  %i.vk = or i8 %i.uy, %i.uw
+  %3 = or i8 %i.vk, %i.va
+  %or.cond18.not.not.i = icmp eq i8 %3, 0
+  br i1 %or.cond18.not.not.i, label %bb.he, label %select.unfold
 
 bb.hd:                                            ; preds = %bb.hb
   %i.vl = or i8 %i.uy, %i.uw
@@ -1020,12 +1018,11 @@ bb.ad:                                            ; preds = %bb.ap, %bb.ac, %bb.
   br i1 %or.cond.i.i.i.i, label %bb.af, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  %2 = trunc nuw i8 %i.dk to i1
   %i.ds = load i32, ptr %i.cd, align 8, !range !31, !alias.scope !1586, !noalias !1582, !noundef !14
-  %i.dt = or i8 %i.dm, %i.dl
-  %or.cond5.demorgan.not.i.i.i.i = icmp ne i8 %i.dt, 0
-  %or.cond18.not.i.i.i.i = or i1 %or.cond5.demorgan.not.i.i.i.i, %2
-  br i1 %or.cond18.not.i.i.i.i, label %_RNvMs0_NtNtCs8frGy5WneL6_4fish5input5inputNtB5_8KeyEvent14codepoint_text.exit.thread.invoke.i.i.i, label %bb.ag
+  %i.dt = or i8 %i.dl, %i.dk
+  %2 = or i8 %i.dt, %i.dm
+  %or.cond18.not.not.i.i.i.i = icmp eq i8 %2, 0
+  br i1 %or.cond18.not.not.i.i.i.i, label %bb.ag, label %_RNvMs0_NtNtCs8frGy5WneL6_4fish5input5inputNtB5_8KeyEvent14codepoint_text.exit.thread.invoke.i.i.i
 
 bb.af:                                            ; preds = %bb.ad
   %i.du = or i8 %i.dl, %i.dk
@@ -1428,12 +1425,11 @@ bb.cp:                                            ; preds = %bb.co, %bb.cn, %bb.
   br i1 %or.cond.i164, label %bb.cr, label %bb.cq
 
 bb.cq:                                            ; preds = %bb.cp
-  %3 = trunc i64 %i.hp to i1
-  %i.im = or i64 %i.hr, %i.hq
+  %3 = or i64 %i.hp, %i.hr
+  %i.im = or i64 %3, %i.hq
   %i.in = and i64 %i.im, 255
-  %or.cond5.demorgan.not.i = icmp ne i64 %i.in, 0
-  %or.cond18.not.i = or i1 %or.cond5.demorgan.not.i, %3
-  br i1 %or.cond18.not.i, label %_RNvMs0_NtNtCs8frGy5WneL6_4fish5input5inputNtB5_8KeyEvent14codepoint_text.exit.thread, label %bb.cs
+  %or.cond18.not.not.i = icmp eq i64 %i.in, 0
+  br i1 %or.cond18.not.not.i, label %bb.cs, label %_RNvMs0_NtNtCs8frGy5WneL6_4fish5input5inputNtB5_8KeyEvent14codepoint_text.exit.thread
 
 bb.cr:                                            ; preds = %bb.cp
   %i.io = or i64 %i.hq, %i.hp

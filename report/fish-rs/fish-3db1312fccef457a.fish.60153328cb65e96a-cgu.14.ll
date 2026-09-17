@@ -204,10 +204,10 @@ bb.dj:                                            ; preds = %bb.dg
 bb.dk:                                            ; preds = %bb.di
   %i.kr = trunc nuw i8 %.sroa.0143.0 to i1
   %i.ks = trunc nuw i8 %.sroa.0133.0 to i1        ; 2 uses
-  %4 = trunc nuw i8 %.sroa.0120.0 to i1           ; 3 uses
-  %i.kt = or i8 %.sroa.0120.0, %.sroa.0139.0
-  %5 = or i8 %.sroa.0133.0, %i.kt
-  %i.ku = or i8 %5, %.sroa.0143.0
+  %4 = or i8 %.sroa.0143.0, %.sroa.0133.0
+  %i.kt = or i8 %4, %.sroa.0139.0
+  %5 = trunc nuw i8 %.sroa.0120.0 to i1           ; 3 uses
+  %i.ku = or i8 %i.kt, %.sroa.0120.0
   %or.cond17.not = icmp eq i8 %i.ku, 0
   br i1 %or.cond17.not, label %bb.dn, label %bb.dm
 
@@ -245,27 +245,24 @@ bb.dq:                                            ; preds = %bb.do
 bb.dr:                                            ; preds = %bb.dq
   %i.lc = trunc nuw i8 %.sroa.0110.0 to i1
   %i.ld = or i8 %.sroa.0139.0, %.sroa.0143.0
-  %i.le = or i8 %.sroa.0147.0, %i.ld
-  %i.lf = or i8 %.sroa.0133.0, %i.le
-  %i.lg = or i8 %i.lf, %.sroa.0120.0
-  %or.cond35 = icmp ne i8 %i.lg, 0
-  %6 = trunc nuw i8 %.sroa.0151.0 to i1
-  %or.cond38 = or i1 %or.cond35, %6
+  %i.le = or i8 %.sroa.0133.0, %i.ld
+  %i.lf = or i8 %i.le, %.sroa.0120.0
+  %i.lg = or i8 %i.lf, %.sroa.0147.0
+  %6 = or i8 %i.lg, %.sroa.0151.0
+  %or.cond38.not3866 = icmp eq i8 %6, 0
   %i.lh = and i8 %.sroa.0153.0, %.sroa.0120.0
-  %or.cond41 = icmp eq i8 %i.lh, 0
-  %or.cond1268.not = and i1 %or.cond41, %or.cond38
-  br i1 %or.cond1268.not, label %bb.dt, label %bb.ds
+  %or.cond41 = icmp ne i8 %i.lh, 0
+  %or.cond1268 = or i1 %or.cond38.not3866, %or.cond41
+  br i1 %or.cond1268, label %bb.ds, label %bb.dt
 
 .thread:                                          ; preds = %bb.do
   %i.li = or i8 %.sroa.0139.0, %.sroa.0143.0
-  %i.lj = or i8 %.sroa.0147.0, %i.li
-  %i.lk = or i8 %.sroa.0133.0, %i.lj
-  %i.ll = or i8 %i.lk, %.sroa.0120.0
-  %or.cond351232 = icmp ne i8 %i.ll, 0
-  %7 = trunc nuw i8 %.sroa.0151.0 to i1
-  %or.cond381233 = or i1 %or.cond351232, %7
-  %or.cond381233.not = xor i1 %or.cond381233, true
-  %brmerge1266 = or i1 %or.cond381233.not, %4
+  %i.lj = or i8 %.sroa.0133.0, %i.li
+  %i.lk = or i8 %i.lj, %.sroa.0120.0
+  %i.ll = or i8 %i.lk, %.sroa.0147.0
+  %7 = or i8 %i.ll, %.sroa.0151.0
+  %or.cond381233.not3865 = icmp eq i8 %7, 0
+  %brmerge1266 = or i1 %or.cond381233.not3865, %5
   br i1 %brmerge1266, label %.thread._crit_edge, label %bb.dt
 
 .thread._crit_edge:                               ; preds = %.thread
@@ -571,7 +568,7 @@ bb.fj:                                            ; preds = %bb.fi
   br label %.thread1253
 
 bb.fk:                                            ; preds = %bb.fa
-  %.not = xor i1 %4, true
+  %.not = xor i1 %5, true
   %or.cond53 = or i1 %i.ko, %.not
   br i1 %or.cond53, label %bb.fm, label %bb.fl
 
@@ -748,7 +745,7 @@ bb.gg:                                            ; preds = %bb.gb
 bb.gh:                                            ; preds = %bb.gi, %_RNvNtCs8frGy5WneL6_4fish10parse_util18get_process_extent.exit, %_RNvNtCs8frGy5WneL6_4fish10parse_util14get_job_extent.exit, %bb.gd, %bb.gc
   %.sroa.0476.0 = phi i64 [ 0, %bb.gc ], [ 0, %bb.gd ], [ %i.pr, %_RNvNtCs8frGy5WneL6_4fish10parse_util14get_job_extent.exit ], [ %i.pt, %_RNvNtCs8frGy5WneL6_4fish10parse_util18get_process_extent.exit ], [ %i.pv, %bb.gi ] ; 6 uses
   %.sroa.9.0 = phi i64 [ %i.oy, %bb.gc ], [ %i.pb, %bb.gd ], [ %i.ps, %_RNvNtCs8frGy5WneL6_4fish10parse_util14get_job_extent.exit ], [ %i.pu, %_RNvNtCs8frGy5WneL6_4fish10parse_util18get_process_extent.exit ], [ %i.px, %bb.gi ] ; 2 uses
-  br i1 %4, label %bb.gk, label %bb.gj
+  br i1 %5, label %bb.gk, label %bb.gj
 
 _RNvNtCs8frGy5WneL6_4fish10parse_util14get_job_extent.exit: ; preds = %bb.ge
   %i.pr = extractvalue { i64, i64 } %i.ph, 0
@@ -1151,13 +1148,12 @@ bb.ne:                                            ; preds = %bb.dh
   %i.abg = icmp ne i8 %.sroa.0327.0, -1
   %i.abh = or i8 %.sroa.0133.0, %.sroa.0120.0
   %i.abi = or i8 %.sroa.0139.0, %i.abh
-  %i.abj = or i8 %i.abi, %.sroa.0143.0
+  %i.abj = or i8 %.sroa.0143.0, %i.abi
   %i.abk = or i8 %.sroa.0147.0, %i.abj
-  %i.abl = or i8 %i.abk, %.sroa.0127.0
-  %8 = icmp ne i8 %i.abl, 0
-  %or.cond84 = or i1 %i.abg, %8
-  %9 = trunc nuw i8 %.sroa.0130.0 to i1
-  %or.cond87 = or i1 %or.cond84, %9
+  %i.abl = or i8 %.sroa.0127.0, %i.abk
+  %8 = or i8 %.sroa.0130.0, %i.abl
+  %9 = icmp ne i8 %8, 0
+  %or.cond87 = or i1 %i.abg, %9
   br i1 %or.cond87, label %bb.nd, label %bb.nf
 
 bb.nf:                                            ; preds = %bb.ne
