@@ -29,7 +29,7 @@ bb.a:
   %i.h = uitofp nneg i32 %i.f to float
   %i.i = fmul nnan float %i.h, 2.500000e-01
   %i.j = uitofp nneg i32 %i.g to float
-  %i.k = fsub float %i.i, %i.j                    ; 3 uses
+  %i.k = fsub float %i.i, %i.j                    ; 2 uses
   %i.l = zext nneg i32 %i.g to i64
   %i.m = getelementptr inbounds nuw [1024 x i8], ptr %2, i64 %i.l ; 4 uses
   %i.n = fsub float 1.000000e+00, %i.k            ; 6 uses
@@ -39,10 +39,15 @@ bb.a:
   %i.r = icmp slt i32 %i.q, %0
   %i.s = zext nneg i32 %i.q to i64
   %i.t = getelementptr inbounds nuw [1024 x i8], ptr %2, i64 %i.s
-  br i1 %i.r, label %.lr.ph.split.us, label %.lr.ph.split
+  br i1 %i.r, label %.lr.ph.split.us.preheader, label %.lr.ph.split
 
-.lr.ph.split.us:                                  ; preds = %.preheader, %bb.c
-  %indvars.iv73 = phi i64 [ %indvars.iv.next74, %bb.c ], [ 0, %.preheader ] ; 3 uses
+.lr.ph.split.us.preheader:                        ; preds = %.preheader
+  %4 = insertelement <2 x float> poison, float %i.k, i64 0
+  %5 = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> zeroinitializer
+  br label %.lr.ph.split.us
+
+.lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %bb.c
+  %indvars.iv73 = phi i64 [ %indvars.iv.next74, %bb.c ], [ 0, %.lr.ph.split.us.preheader ] ; 3 uses
   %i.u = trunc nuw nsw i64 %indvars.iv73 to i32   ; 2 uses
   %i.v = lshr i32 %i.u, 2                         ; 3 uses
   %i.w = uitofp nneg i32 %i.u to float
@@ -73,13 +78,12 @@ bb.b:                                             ; preds = %.lr.ph.split.us
   %i.ap = tail call float @llvm.fmuladd.f32(float %i.ah, float %i.n, float %i.ao)
   %i.aq = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %i.ac
   %i.ar = load <2 x i32>, ptr %i.aq, align 4, !tbaa !7
-  %i.as = sitofp <2 x i32> %i.ar to <2 x float>   ; 2 uses
-  %4 = extractelement <2 x float> %i.as, i64 0
-  %5 = fmul float %i.k, %4
-  %i.at = tail call float @llvm.fmuladd.f32(float %5, float %i.ag, float %i.ap)
-  %i.au = extractelement <2 x float> %i.as, i64 1
-  %6 = fmul float %i.k, %i.au
-  %i.av = tail call float @llvm.fmuladd.f32(float %6, float %i.z, float %i.at)
+  %i.as = sitofp <2 x i32> %i.ar to <2 x float>
+  %6 = fmul <2 x float> %5, %i.as                 ; 2 uses
+  %7 = extractelement <2 x float> %6, i64 0
+  %i.at = tail call float @llvm.fmuladd.f32(float %7, float %i.ag, float %i.ap)
+  %i.au = extractelement <2 x float> %6, i64 1
+  %i.av = tail call float @llvm.fmuladd.f32(float %i.au, float %i.z, float %i.at)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.critedge.us

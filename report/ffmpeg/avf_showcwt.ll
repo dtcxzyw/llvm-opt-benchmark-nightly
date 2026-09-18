@@ -204,6 +204,10 @@ bb.a:
   %i.bz = ashr exact i64 %sext, 32
   %i.ca = insertelement <2 x float> poison, float %i.t, i64 0
   %i.cb = shufflevector <2 x float> %i.ca, <2 x float> poison, <2 x i32> zeroinitializer ; 5 uses
+  %4 = insertelement <2 x float> poison, float %i.bx, i64 0
+  %5 = insertelement <2 x float> %4, float %cos292, i64 1
+  %6 = insertelement <2 x float> poison, float %cos292, i64 0
+  %7 = insertelement <2 x float> %6, float %sin291, i64 1
   %i.cc = insertelement <2 x float> poison, float %i.al, i64 1
   br label %bb.b
 
@@ -502,24 +506,27 @@ remap_log.exit345:                                ; preds = %bb.p, %bb.q, %bb.r,
   %i.ix = fcmp nsz ogt float %i.iw, 1.000000e+00
   %..i.i342 = select nsz i1 %i.ix, float 1.000000e+00, float %i.iw ; 2 uses
   %i.iy = extractelement <2 x float> %i.iu, i64 0 ; 2 uses
+  %8 = fsub nsz float %i.iy, %..i.i342
   %i.iz = fsub nsz float %..i.i342, %i.iy
+  %9 = fpext nsz float %8 to double
   %i.ja = fpext nsz float %i.iz to double
-  %i.jb = fmul nsz double %i.ja, f0x3FF921FB54442D18
-  %4 = fptrunc nsz double %i.jb to float
-  %5 = tail call nsz float @llvm.sin.f32(float %4) ; 2 uses
-  %6 = fsub nsz float %i.iy, %..i.i342
-  %7 = fpext nsz float %6 to double
-  %8 = fmul nsz double %7, f0x3FF921FB54442D18
-  %9 = fptrunc nsz double %8 to float
-  %10 = tail call nsz float @llvm.sin.f32(float %9) ; 2 uses
-  %11 = fmul nsz float %10, %i.bx
-  %12 = tail call nsz float @llvm.fmuladd.f32(float %5, float %cos292, float %11)
-  %13 = fmul nsz float %cos292, %10
-  %14 = tail call nsz float @llvm.fmuladd.f32(float %5, float %sin291, float %13)
+  %i.jb = fmul nsz double %9, f0x3FF921FB54442D18
+  %10 = fmul nsz double %i.ja, f0x3FF921FB54442D18
+  %11 = fptrunc nsz double %i.jb to float
+  %12 = fptrunc nsz double %10 to float
+  %13 = tail call nsz float @llvm.sin.f32(float %11)
+  %14 = tail call nsz float @llvm.sin.f32(float %12)
+  %15 = insertelement <2 x float> poison, float %13, i64 0
+  %16 = shufflevector <2 x float> %15, <2 x float> poison, <2 x i32> zeroinitializer
+  %17 = fmul nsz <2 x float> %16, %5
+  %18 = insertelement <2 x float> poison, float %14, i64 0
+  %19 = shufflevector <2 x float> %18, <2 x float> poison, <2 x i32> zeroinitializer
+  %20 = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %19, <2 x float> %7, <2 x float> %17)
   %i.jc = extractelement <2 x float> %i.iu, i64 1 ; 3 uses
-  %i.jd = fmul nsz float %i.jc, 5.000000e-01      ; 2 uses
-  %15 = tail call nsz float @llvm.fmuladd.f32(float %i.jd, float %12, float 5.000000e-01) ; 2 uses
-  %16 = tail call nsz float @llvm.fmuladd.f32(float %i.jd, float %14, float 5.000000e-01) ; 2 uses
+  %i.jd = fmul nsz float %i.jc, 5.000000e-01
+  %21 = insertelement <2 x float> poison, float %i.jd, i64 0
+  %22 = shufflevector <2 x float> %21, <2 x float> poison, <2 x i32> zeroinitializer
+  %23 = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %22, <2 x float> %20, <2 x float> splat (float 5.000000e-01)) ; 4 uses
   br i1 %i.br, label %bb.u, label %bb.w
 
 bb.u:                                             ; preds = %remap_log.exit345
@@ -532,7 +539,8 @@ bb.u:                                             ; preds = %remap_log.exit345
   %i.ji = trunc i64 %i.jf to i8
   %.0.i323 = select i1 %.not.i321, i8 %i.ji, i8 %i.jh
   store i8 %.0.i323, ptr %.2279, align 1, !tbaa !106
-  %i.jj = fmul nsz float %15, 2.550000e+02
+  %24 = extractelement <2 x float> %23, i64 0
+  %i.jj = fmul nsz float %24, 2.550000e+02
   %i.jk = tail call i64 @llvm.lrint.i64.f32(float %i.jj) ; 2 uses
   %i.jl = trunc i64 %i.jk to i32                  ; 2 uses
   %.not.i318 = icmp ult i32 %i.jl, 256
@@ -541,7 +549,8 @@ bb.u:                                             ; preds = %remap_log.exit345
   %i.jn = trunc i64 %i.jk to i8
   %.0.i320 = select i1 %.not.i318, i8 %i.jn, i8 %i.jm
   store i8 %.0.i320, ptr %.2276, align 1, !tbaa !106
-  %i.jo = fmul nsz float %16, 2.550000e+02
+  %25 = extractelement <2 x float> %23, i64 1
+  %i.jo = fmul nsz float %25, 2.550000e+02
   %i.jp = tail call i64 @llvm.lrint.i64.f32(float %i.jo) ; 2 uses
   %i.jq = trunc i64 %i.jp to i32                  ; 2 uses
   %.not.i315 = icmp ult i32 %i.jq, 256
@@ -563,7 +572,9 @@ bb.w:                                             ; preds = %bb.u, %bb.v, %remap
 
 bb.x:                                             ; preds = %bb.w
   %i.ju = trunc nsw i64 %indvars.iv422 to i32
-  tail call fastcc void @draw_bar(ptr noundef nonnull %i.b, i32 noundef %i.ju, float noundef %i.jc, float noundef %15, float noundef %16)
+  %26 = extractelement <2 x float> %23, i64 0
+  %27 = extractelement <2 x float> %23, i64 1
+  tail call fastcc void @draw_bar(ptr noundef nonnull %i.b, i32 noundef %i.ju, float noundef %i.jc, float noundef %26, float noundef %27)
   br label %bb.bi
 
 bb.y:                                             ; preds = %bb.n

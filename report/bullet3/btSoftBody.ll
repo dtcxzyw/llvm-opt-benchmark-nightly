@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e
-  %i.cn = phi float [ %i.cm, %bb.e ], [ 0.000000e+00, %bb.d ] ; 5 uses
+  %i.cn = phi float [ %i.cm, %bb.e ], [ 0.000000e+00, %bb.d ] ; 6 uses
   %i.co = fadd float %i.ci, %i.cn
   %i.cp = fcmp ogt float %i.co, 0.000000e+00
   br i1 %i.cp, label %bb.g, label %bb.ap
@@ -468,7 +468,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k
   %i.ju = shufflevector <3 x float> %i.iz, <3 x float> %i.hq, <2 x i32> <i32 1, i32 3>
   %i.jv = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.jt, <2 x float> %i.ju, <2 x float> %i.js)
   %i.jw = shufflevector <3 x float> %i.iz, <3 x float> %i.hq, <2 x i32> <i32 0, i32 5>
-  %i.jx = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.jw, <2 x float> zeroinitializer, <2 x float> %i.jv) ; 3 uses
+  %i.jx = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.jw, <2 x float> zeroinitializer, <2 x float> %i.jv) ; 4 uses
   %i.jy = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.cn, i64 0
   %i.jz = fsub <2 x float> %i.jy, %i.im           ; 3 uses
   %i.ka = fsub float 0.000000e+00, %i.is          ; 3 uses
@@ -476,12 +476,15 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k
 
 bb.o:                                             ; preds = %bb.n
   %.sroa.3.12.vec.insert.i.i.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.ka, i64 0
-  %i.kb = insertelement <2 x float> <float 0.000000e+00, float poison>, float %i.cn, i64 1 ; 2 uses
+  %i.kb = insertelement <2 x float> <float 0.000000e+00, float poison>, float %i.cn, i64 1
   %i.kc = fsub <2 x float> %i.kb, %i.jh
-  %20 = fsub <2 x float> %i.kb, %i.jx             ; 2 uses
-  %i.kd = insertelement <2 x float> %20, float 0.000000e+00, i64 1
+  %20 = extractelement <2 x float> %i.jx, i64 0
+  %21 = fsub float 0.000000e+00, %20
+  %i.kd = insertelement <2 x float> <float poison, float 0.000000e+00>, float %21, i64 0
   %i.ke = fsub <2 x float> zeroinitializer, %i.jo
-  %21 = shufflevector <2 x float> <float poison, float 0.000000e+00>, <2 x float> %20, <2 x i32> <i32 3, i32 1>
+  %22 = extractelement <2 x float> %i.jx, i64 1
+  %23 = fsub float %i.cn, %22
+  %.sroa.3.12.vec.insert.i.2.i.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %23, i64 0
   %i.kf = getelementptr inbounds nuw i8, ptr %4, i64 64
   store <2 x float> %i.jz, ptr %i.kf, align 8
   %.sroa.589.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 72
@@ -493,7 +496,7 @@ bb.o:                                             ; preds = %bb.n
   %i.kh = getelementptr inbounds nuw i8, ptr %4, i64 96
   store <2 x float> %i.ke, ptr %i.kh, align 8
   %.sroa.1192.32..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 104
-  store <2 x float> %21, ptr %.sroa.1192.32..sroa_idx, align 8, !tbaa !259
+  store <2 x float> %.sroa.3.12.vec.insert.i.2.i.i, ptr %.sroa.1192.32..sroa_idx, align 8, !tbaa !259
   br label %bb.s
 
 bb.p:                                             ; preds = %bb.b

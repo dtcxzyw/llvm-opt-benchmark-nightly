@@ -205,19 +205,17 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph51, %._crit_edge
-  %1 = phi i32 [ 0, %.lr.ph51 ], [ %16, %._crit_edge ] ; 2 uses
-  %i.v = phi i32 [ 0, %.lr.ph51 ], [ %17, %._crit_edge ] ; 2 uses
-  %.03550 = phi i32 [ 0, %.lr.ph51 ], [ %i.ef, %._crit_edge ] ; 4 uses
+  %i.v = phi i32 [ 0, %.lr.ph51 ], [ %i.ef, %._crit_edge ] ; 4 uses
+  %1 = phi <2 x i32> [ zeroinitializer, %.lr.ph51 ], [ %19, %._crit_edge ] ; 2 uses
   tail call void @_ZN6LibRaw11checkCancelEv(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.w = load i16, ptr %i.o, align 2, !tbaa !93
   %.not54 = icmp eq i16 %i.w, 0
   br i1 %.not54, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c, %.loopexit
-  %2 = phi i32 [ %10, %.loopexit ], [ %1, %bb.c ]
-  %i.x = phi i32 [ %11, %.loopexit ], [ %i.v, %bb.c ]
-  %.03449 = phi i32 [ %i.eb, %.loopexit ], [ 0, %bb.c ] ; 5 uses
-  %i.y = and i32 %.03449, 1                       ; 2 uses
+  %i.x = phi i32 [ %i.eb, %.loopexit ], [ 0, %bb.c ] ; 5 uses
+  %2 = phi <2 x i32> [ %10, %.loopexit ], [ %1, %bb.c ]
+  %i.y = and i32 %i.x, 1                          ; 2 uses
   %.not39 = icmp eq i32 %i.y, 0
   br i1 %.not39, label %.preheader42.preheader, label %.loopexit
 
@@ -276,31 +274,34 @@ bb.c:                                             ; preds = %.lr.ph51, %._crit_e
   %i.bx = and i32 %i.bw, 4095
   store i32 %i.bx, ptr %i.s, align 4, !tbaa !96
   %i.by = lshr i64 %i.bs, 24
-  %3 = trunc i64 %i.by to i32
-  %4 = and i32 %3, 4095
-  %5 = add nsw i32 %4, -2048
-  %6 = lshr i64 %i.bs, 36
-  %7 = trunc nuw nsw i64 %6 to i32
-  %8 = and i32 %7, 4095
-  %9 = add nsw i32 %8, -2048
+  %3 = lshr i64 %i.bs, 36
+  %4 = trunc i64 %i.by to i32
+  %5 = trunc nuw nsw i64 %3 to i32
+  %6 = insertelement <2 x i32> poison, i32 %5, i64 0
+  %7 = insertelement <2 x i32> %6, i32 %4, i64 1
+  %8 = and <2 x i32> %7, splat (i32 4095)
+  %9 = add nsw <2 x i32> %8, splat (i32 -2048)
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader42.preheader, %.lr.ph
-  %10 = phi i32 [ %5, %.preheader42.preheader ], [ %2, %.lr.ph ] ; 3 uses
-  %11 = phi i32 [ %9, %.preheader42.preheader ], [ %i.x, %.lr.ph ] ; 3 uses
+  %10 = phi <2 x i32> [ %9, %.preheader42.preheader ], [ %2, %.lr.ph ] ; 3 uses
   %i.bz = zext nneg i32 %i.y to i64
   %i.ca = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.bz
   %i.cb = load i32, ptr %i.ca, align 4, !tbaa !96
+  %11 = sitofp <2 x i32> %10 to <2 x float>       ; 3 uses
   %i.cc = sitofp i32 %i.cb to float               ; 3 uses
-  %12 = sitofp i32 %11 to float                   ; 2 uses
+  %12 = extractelement <2 x float> %11, i64 0
   %i.cd = tail call float @llvm.fmuladd.f32(float %12, float f0x3FAF7343, float %i.cc)
   %i.ce = fptosi float %i.cd to i32
-  %13 = sitofp i32 %10 to float                   ; 2 uses
+  %13 = extractelement <2 x float> %11, i64 1
   %i.cf = tail call float @llvm.fmuladd.f32(float %13, float -3.376330e-01, float %i.cc)
-  %14 = tail call float @llvm.fmuladd.f32(float %12, float -6.980010e-01, float %i.cf)
-  %i.cg = fptosi float %14 to i32
-  %15 = tail call float @llvm.fmuladd.f32(float %13, float f0x3FDDC0CA, float %i.cc)
-  %i.ch = fptosi float %15 to i32
+  %14 = insertelement <2 x float> poison, float %i.cf, i64 0
+  %15 = insertelement <2 x float> %14, float %i.cc, i64 1
+  %16 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %11, <2 x float> <float -6.980010e-01, float f0x3FDDC0CA>, <2 x float> %15) ; 2 uses
+  %17 = extractelement <2 x float> %16, i64 0
+  %i.cg = fptosi float %17 to i32
+  %18 = extractelement <2 x float> %16, i64 1
+  %i.ch = fptosi float %18 to i32
   %i.ci = load ptr, ptr %i.b, align 8, !tbaa !115 ; 3 uses
   %i.cj = tail call i32 @llvm.smax.i32(i32 %i.ce, i32 0)
   %i.ck = tail call i32 @llvm.umin.i32(i32 %i.cj, i32 4095)
@@ -312,8 +313,8 @@ bb.c:                                             ; preds = %.lr.ph51, %._crit_e
   %i.cq = fptoui float %i.cp to i16
   %i.cr = load i16, ptr %i.r, align 2, !tbaa !114
   %i.cs = zext i16 %i.cr to i32
-  %i.ct = mul nuw nsw i32 %.03550, %i.cs
-  %i.cu = add nuw nsw i32 %i.ct, %.03449
+  %i.ct = mul nuw nsw i32 %i.v, %i.cs
+  %i.cu = add nuw nsw i32 %i.ct, %i.x
   %i.cv = zext nneg i32 %i.cu to i64
   %i.cw = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %i.cv
   store i16 %i.cq, ptr %i.cw, align 2, !tbaa !87
@@ -327,8 +328,8 @@ bb.c:                                             ; preds = %.lr.ph51, %._crit_e
   %i.de = fptoui float %i.dd to i16
   %i.df = load i16, ptr %i.r, align 2, !tbaa !114
   %i.dg = zext i16 %i.df to i32
-  %i.dh = mul nuw nsw i32 %.03550, %i.dg
-  %i.di = add nuw nsw i32 %i.dh, %.03449
+  %i.dh = mul nuw nsw i32 %i.v, %i.dg
+  %i.di = add nuw nsw i32 %i.dh, %i.x
   %i.dj = zext nneg i32 %i.di to i64
   %i.dk = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %i.dj
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dk, i64 2
@@ -343,22 +344,21 @@ bb.c:                                             ; preds = %.lr.ph51, %._crit_e
   %i.dt = fptoui float %i.ds to i16
   %i.du = load i16, ptr %i.r, align 2, !tbaa !114
   %i.dv = zext i16 %i.du to i32
-  %i.dw = mul nuw nsw i32 %.03550, %i.dv
-  %i.dx = add nuw nsw i32 %i.dw, %.03449
+  %i.dw = mul nuw nsw i32 %i.v, %i.dv
+  %i.dx = add nuw nsw i32 %i.dw, %i.x
   %i.dy = zext nneg i32 %i.dx to i64
   %i.dz = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %i.dy
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dz, i64 4
   store i16 %i.dt, ptr %i.ea, align 2, !tbaa !87
-  %i.eb = add nuw nsw i32 %.03449, 1              ; 2 uses
+  %i.eb = add nuw nsw i32 %i.x, 1                 ; 2 uses
   %i.ec = load i16, ptr %i.o, align 2, !tbaa !93
   %i.ed = zext i16 %i.ec to i32
   %i.ee = icmp samesign ult i32 %i.eb, %i.ed
   br i1 %i.ee, label %.lr.ph, label %._crit_edge, !llvm.loop !185
 
 ._crit_edge:                                      ; preds = %.loopexit, %bb.c
-  %16 = phi i32 [ %1, %bb.c ], [ %10, %.loopexit ]
-  %17 = phi i32 [ %i.v, %bb.c ], [ %11, %.loopexit ]
-  %i.ef = add nuw nsw i32 %.03550, 1              ; 2 uses
+  %19 = phi <2 x i32> [ %1, %bb.c ], [ %10, %.loopexit ]
+  %i.ef = add nuw nsw i32 %i.v, 1                 ; 2 uses
   %i.eg = load i16, ptr %i.m, align 8, !tbaa !92
   %i.eh = zext i16 %i.eg to i32
   %i.ei = icmp samesign ult i32 %i.ef, %i.eh
@@ -760,6 +760,9 @@ declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.umin.v4i32(<4 x i32>, <4 x i32>) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #9
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

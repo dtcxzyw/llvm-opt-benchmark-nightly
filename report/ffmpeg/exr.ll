@@ -205,9 +205,13 @@ bb.ao:                                            ; preds = %.preheader431, %to_
   %i.sl = load float, ptr %i.sk, align 4, !tbaa !213 ; 2 uses
   %i.sm = call nsz float @llvm.fmuladd.f32(float %i.sl, float 1.574700e+00, float %i.sh) ; 2 uses
   %i.sn = call nsz float @llvm.fmuladd.f32(float %i.sj, float -1.873000e-01, float %i.sh)
-  %6 = call nsz float @llvm.fmuladd.f32(float %i.sl, float -4.682000e-01, float %i.sn) ; 2 uses
-  %7 = call nsz float @llvm.fmuladd.f32(float %i.sj, float 1.855600e+00, float %i.sh) ; 2 uses
-  %i.so = call nsz float @llvm.fabs.f32(float %7) ; 3 uses
+  %6 = insertelement <2 x float> poison, float %i.sl, i64 0
+  %7 = insertelement <2 x float> %6, float %i.sj, i64 1
+  %8 = insertelement <2 x float> poison, float %i.sn, i64 0
+  %9 = insertelement <2 x float> %8, float %i.sh, i64 1
+  %10 = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %7, <2 x float> <float -4.682000e-01, float 1.855600e+00>, <2 x float> %9) ; 2 uses
+  %11 = extractelement <2 x float> %10, i64 1     ; 2 uses
+  %i.so = call nsz float @llvm.fabs.f32(float %11) ; 3 uses
   %i.sp = fcmp nsz ugt float %i.so, 1.000000e+00
   br i1 %i.sp, label %bb.aq, label %bb.ap
 
@@ -222,7 +226,7 @@ bb.aq:                                            ; preds = %bb.ao
 
 to_linear.exit:                                   ; preds = %bb.ap, %bb.aq
   %.sink13.i = phi float [ %i.ss, %bb.aq ], [ %i.sq, %bb.ap ] ; 2 uses
-  %i.st = fcmp nsz ogt float %7, 0.000000e+00
+  %i.st = fcmp nsz ogt float %11, 0.000000e+00
   %i.su = fneg nsz float %.sink13.i
   %i.sv = select nsz i1 %i.st, float %.sink13.i, float %i.su
   %i.sw = bitcast float %i.sv to i32              ; 2 uses
@@ -239,7 +243,8 @@ to_linear.exit:                                   ; preds = %bb.ap, %bb.aq
   %i.th = add i16 %i.ta, %i.tg
   %i.ti = getelementptr inbounds nuw [2 x i8], ptr %.0334444, i64 %indvars.iv479
   store i16 %i.th, ptr %i.ti, align 2, !tbaa !92
-  %i.tj = call nsz float @llvm.fabs.f32(float %6) ; 3 uses
+  %12 = extractelement <2 x float> %10, i64 0     ; 2 uses
+  %i.tj = call nsz float @llvm.fabs.f32(float %12) ; 3 uses
   %i.tk = fcmp nsz ugt float %i.tj, 1.000000e+00
   br i1 %i.tk, label %bb.as, label %bb.ar
 
@@ -254,7 +259,7 @@ bb.as:                                            ; preds = %to_linear.exit
 
 to_linear.exit382:                                ; preds = %bb.ar, %bb.as
   %.sink13.i381 = phi float [ %i.tn, %bb.as ], [ %i.tl, %bb.ar ] ; 2 uses
-  %i.to = fcmp nsz ogt float %6, 0.000000e+00
+  %i.to = fcmp nsz ogt float %12, 0.000000e+00
   %i.tp = fneg nsz float %.sink13.i381
   %i.tq = select nsz i1 %i.to, float %.sink13.i381, float %i.tp
   %i.tr = bitcast float %i.tq to i32              ; 2 uses
@@ -359,7 +364,6 @@ bb.aw:                                            ; preds = %.preheader432, %to_
   %indvars.iv473 = phi i64 [ 0, %.preheader432 ], [ %indvars.iv.next474, %to_linear.exit390 ] ; 5 uses
   %i.wb = add nuw nsw i64 %indvars.iv473, %i.vw   ; 3 uses
   %i.wc = getelementptr inbounds nuw [4 x i8], ptr %i.fd, i64 %i.wb
-  %8 = load float, ptr %i.wc, align 4, !tbaa !213 ; 3 uses
   %i.wd = getelementptr inbounds nuw [4 x i8], ptr %i.fe, i64 %i.wb
   %i.we = load float, ptr %i.wd, align 4, !tbaa !213 ; 2 uses
   %i.wf = getelementptr inbounds nuw [4 x i8], ptr %i.ff, i64 %i.wb
@@ -367,13 +371,19 @@ bb.aw:                                            ; preds = %.preheader432, %to_
   %i.wh = getelementptr inbounds nuw [4 x i8], ptr %.0329438, i64 %indvars.iv473
   %i.wi = getelementptr inbounds nuw [4 x i8], ptr %.0328439, i64 %indvars.iv473 ; 3 uses
   %i.wj = getelementptr inbounds nuw [4 x i8], ptr %.0327440, i64 %indvars.iv473 ; 3 uses
-  %i.wk = call nsz float @llvm.fmuladd.f32(float %i.wg, float 1.574700e+00, float %8)
+  %13 = load float, ptr %i.wc, align 4, !tbaa !213 ; 3 uses
+  %i.wk = call nsz float @llvm.fmuladd.f32(float %i.wg, float 1.574700e+00, float %13)
   store float %i.wk, ptr %i.wj, align 4, !tbaa !213
-  %i.wl = call nsz float @llvm.fmuladd.f32(float %i.we, float -1.873000e-01, float %8)
-  %9 = call nsz float @llvm.fmuladd.f32(float %i.wg, float -4.682000e-01, float %i.wl)
-  store float %9, ptr %i.wi, align 4, !tbaa !213
-  %10 = call nsz float @llvm.fmuladd.f32(float %i.we, float 1.855600e+00, float %8) ; 2 uses
-  %i.wm = call nsz float @llvm.fabs.f32(float %10) ; 3 uses
+  %i.wl = call nsz float @llvm.fmuladd.f32(float %i.we, float -1.873000e-01, float %13)
+  %14 = insertelement <2 x float> poison, float %i.wg, i64 0
+  %15 = insertelement <2 x float> %14, float %i.we, i64 1
+  %16 = insertelement <2 x float> poison, float %i.wl, i64 0
+  %17 = insertelement <2 x float> %16, float %13, i64 1
+  %18 = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %15, <2 x float> <float -4.682000e-01, float 1.855600e+00>, <2 x float> %17) ; 2 uses
+  %19 = extractelement <2 x float> %18, i64 0
+  store float %19, ptr %i.wi, align 4, !tbaa !213
+  %20 = extractelement <2 x float> %18, i64 1     ; 2 uses
+  %i.wm = call nsz float @llvm.fabs.f32(float %20) ; 3 uses
   %i.wn = fcmp nsz ugt float %i.wm, 1.000000e+00
   br i1 %i.wn, label %bb.ay, label %bb.ax
 
@@ -388,7 +398,7 @@ bb.ay:                                            ; preds = %bb.aw
 
 to_linear.exit386:                                ; preds = %bb.ax, %bb.ay
   %.sink13.i385 = phi float [ %i.wq, %bb.ay ], [ %i.wo, %bb.ax ] ; 2 uses
-  %i.wr = fcmp nsz ogt float %10, 0.000000e+00
+  %i.wr = fcmp nsz ogt float %20, 0.000000e+00
   %i.ws = fneg nsz float %.sink13.i385
   %i.wt = select nsz i1 %i.wr, float %.sink13.i385, float %i.ws
   store float %i.wt, ptr %i.wh, align 4, !tbaa !213
@@ -790,6 +800,9 @@ declare void @llvm.assume(i1 noundef) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #10
 
 attributes #0 = { cold nounwind optsize uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

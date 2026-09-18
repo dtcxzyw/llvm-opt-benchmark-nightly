@@ -205,10 +205,8 @@ _ZNK4core8vector3dIfEneERKS1_.exit.thread:        ; preds = %bb.a, %_ZNK4core8ve
   store float %i.cm, ptr %i.m, align 4, !tbaa !82
   %i.cn = fmul nsz float %i.bp, 0.000000e+00
   store float %i.cn, ptr %.sroa.3172.0..sroa_idx, align 4, !tbaa !82
-  %2 = tail call nsz float @llvm.fmuladd.f32(float %i.ae, float 0.000000e+00, float %i.by) ; 2 uses
-  %i.co = tail call nsz float @llvm.fmuladd.f32(float %i.bb, float %i.br, float %2)
-  %i.cp = tail call nsz float @llvm.fmuladd.f32(float %i.be, float 0.000000e+00, float %i.co)
-  store float %i.cp, ptr %i.c, align 4, !tbaa !82
+  %i.co = tail call nsz float @llvm.fmuladd.f32(float %i.ae, float 0.000000e+00, float %i.by) ; 2 uses
+  %i.cp = tail call nsz float @llvm.fmuladd.f32(float %i.bb, float %i.br, float %i.co)
   %i.cq = fmul nsz float %i.br, 0.000000e+00
   store float %i.cq, ptr %.sroa.4788.0..sroa_idx, align 4, !tbaa !82
   %i.cr = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ac, <2 x float> zeroinitializer, <2 x float> %i.bs) ; 2 uses
@@ -220,8 +218,15 @@ _ZNK4core8vector3dIfEneERKS1_.exit.thread:        ; preds = %bb.a, %_ZNK4core8ve
   %i.cw = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.az, <2 x float> zeroinitializer, <2 x float> %i.cr)
   %i.cx = fadd nsz <2 x float> %i.bc, %i.cw
   store <2 x float> %i.cx, ptr %i.q, align 4, !tbaa !82
-  %3 = tail call nsz float @llvm.fmuladd.f32(float %i.bb, float 0.000000e+00, float %2)
-  %i.cy = fadd nsz float %3, %i.be
+  %2 = insertelement <2 x float> poison, float %i.be, i64 0
+  %3 = insertelement <2 x float> %2, float %i.bb, i64 1
+  %4 = insertelement <2 x float> poison, float %i.cp, i64 0
+  %5 = insertelement <2 x float> %4, float %i.co, i64 1
+  %6 = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %3, <2 x float> zeroinitializer, <2 x float> %5) ; 2 uses
+  %7 = extractelement <2 x float> %6, i64 0
+  store float %7, ptr %i.c, align 4, !tbaa !82
+  %8 = extractelement <2 x float> %6, i64 1
+  %i.cy = fadd nsz float %8, %i.be
   store float %i.cy, ptr %i.bf, align 4, !tbaa !82
   store float 1.000000e+00, ptr %i.b, align 4, !tbaa !82
   br label %bb.b

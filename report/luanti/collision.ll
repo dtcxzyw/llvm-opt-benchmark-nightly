@@ -202,7 +202,7 @@ bb.a:
   %i.c = alloca i64, align 8                      ; 5 uses
   %13 = alloca %class.ScopeProfiler, align 8      ; 8 uses
   %14 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
-  %15 = alloca %"class.core::aabbox3d", align 16  ; 10 uses
+  %15 = alloca %"class.core::aabbox3d", align 4   ; 13 uses
   %i.d = alloca float, align 4                    ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #6
   %i.e = load ptr, ptr @g_profiler, align 8, !tbaa !22
@@ -571,7 +571,10 @@ bb.ab:                                            ; preds = %bb.aa
   br label %_ZN19collisionMoveResultD2Ev.exit
 
 bb.ac:                                            ; preds = %bb.aa, %.critedge420
-  %i.fc = getelementptr inbounds nuw i8, ptr %15, i64 16 ; 2 uses
+  %16 = getelementptr inbounds nuw i8, ptr %15, i64 4 ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %15, i64 8
+  %18 = getelementptr inbounds nuw i8, ptr %15, i64 16 ; 2 uses
+  %i.fc = getelementptr inbounds nuw i8, ptr %15, i64 20
   %i.fd = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.fe = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.ff = extractelement <4 x float> %i.cv, i64 2
@@ -694,24 +697,32 @@ bb.an:                                            ; preds = %bb.ac, %bb.cg
   %.sroa.15767.0878 = phi float [ %9, %bb.ac ], [ %.sroa.15767.1800, %bb.cg ] ; 9 uses
   %.sroa.0744.0877 = phi <2 x float> [ %8, %bb.ac ], [ %.sroa.0744.1799, %bb.cg ] ; 10 uses
   %.sroa.0713.0876 = phi <2 x float> [ %i.cw, %bb.ac ], [ %i.nt, %bb.cg ] ; 5 uses
-  %.sroa.21.0875 = phi float [ %i.ff, %bb.ac ], [ %i.nx, %bb.cg ] ; 5 uses
+  %.sroa.21.0875 = phi float [ %i.ff, %bb.ac ], [ %i.nx, %bb.cg ] ; 4 uses
   %i.gm = phi i8 [ 0, %bb.ac ], [ %i.mz, %bb.cg ] ; 8 uses
   %i.gn = phi i8 [ 0, %bb.ac ], [ %i.my, %bb.cg ] ; 8 uses
   %i.go = phi ptr [ null, %bb.ac ], [ %i.mx, %bb.cg ] ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #6
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %15, ptr noundef nonnull align 4 dereferenceable(24) %3, i64 24, i1 false), !tbaa.struct !60
-  %i.gp = load <2 x float>, ptr %6, align 4, !tbaa !19 ; 6 uses
-  %i.gq = load float, ptr %i.de, align 4, !tbaa !37 ; 5 uses
-  %16 = load <4 x float>, ptr %15, align 16, !tbaa !19
-  %17 = shufflevector <2 x float> %i.gp, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 0>
-  %18 = insertelement <4 x float> %17, float %i.gq, i64 2
-  %i.gr = fadd nsz <4 x float> %18, %16           ; 5 uses
-  store <4 x float> %i.gr, ptr %15, align 16, !tbaa !19
-  %19 = load <2 x float>, ptr %i.fc, align 16, !tbaa !19
-  %20 = shufflevector <2 x float> %i.gp, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %21 = insertelement <2 x float> %20, float %i.gq, i64 1
-  %22 = fadd nsz <2 x float> %21, %19             ; 3 uses
-  store <2 x float> %22, ptr %i.fc, align 16, !tbaa !19
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %15, ptr noundef nonnull align 4 dereferenceable(24) %3, i64 24, i1 false), !tbaa.struct !60
+  %i.gp = load <2 x float>, ptr %6, align 4, !tbaa !19 ; 5 uses
+  %19 = load float, ptr %16, align 4, !tbaa !36
+  %20 = extractelement <2 x float> %i.gp, i64 1   ; 3 uses
+  %21 = fadd nsz float %20, %19                   ; 4 uses
+  store float %21, ptr %16, align 4, !tbaa !36
+  %i.gq = load float, ptr %i.de, align 4, !tbaa !37 ; 4 uses
+  %22 = load float, ptr %18, align 4, !tbaa !36
+  %23 = fadd nsz float %20, %22                   ; 3 uses
+  store float %23, ptr %18, align 4, !tbaa !36
+  %24 = load <6 x float>, ptr %15, align 4, !tbaa !19
+  %25 = shufflevector <6 x float> %24, <6 x float> poison, <4 x i32> <i32 0, i32 2, i32 3, i32 5>
+  %26 = insertelement <2 x float> %i.gp, float %i.gq, i64 1
+  %27 = shufflevector <2 x float> %26, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %i.gr = fadd nsz <4 x float> %27, %25           ; 4 uses
+  %28 = extractelement <4 x float> %i.gr, i64 0
+  store float %28, ptr %15, align 4, !tbaa !35
+  %29 = shufflevector <4 x float> %i.gr, <4 x float> poison, <2 x i32> <i32 1, i32 2>
+  store <2 x float> %29, ptr %17, align 4, !tbaa !19
+  %30 = extractelement <4 x float> %i.gr, i64 3
+  store float %30, ptr %i.fc, align 4, !tbaa !37
   %.val421 = load ptr, ptr %i.cy, align 8, !tbaa !58 ; 5 uses
   %.val422 = load ptr, ptr %i.da, align 8, !tbaa !59 ; 3 uses
   %i.gs = ptrtoint ptr %.val422 to i64
@@ -810,67 +821,67 @@ bb.at:                                            ; preds = %._crit_edge
   %i.ij = sext i32 %.2374 to i64
   %i.ik = getelementptr inbounds nuw [40 x i8], ptr %.val421, i64 %i.ij ; 9 uses
   %.not401 = icmp eq i8 %.2368, 1
-  br i1 %.not401, label %_Z23wouldCollideWithCeilingRKSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EERKN4core8aabbox3dIfEEff.exit, label %bb.au
+  br i1 %.not401, label %_Z23wouldCollideWithCeilingRKSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EERKN4core8aabbox3dIfEEff.exit, label %31
 
-bb.au:                                            ; preds = %bb.at
-  %23 = fsub nsz float %.1880, %.2371
-  %24 = call nsz float @llvm.fabs.f32(float %23)
-  %25 = call nsz float @llvm.fmuladd.f32(float %24, float 1.000000e-01, float %.2371) ; 4 uses
-  %.sroa.0713.0.vec.extract = extractelement <2 x float> %.sroa.0713.0876, i64 0 ; 2 uses
-  %26 = extractelement <4 x float> %i.gr, i64 0
-  %27 = call nsz float @llvm.fmuladd.f32(float %.sroa.0713.0.vec.extract, float %25, float %26)
-  %28 = extractelement <4 x float> %i.gr, i64 2
-  %i.il = call nsz float @llvm.fmuladd.f32(float %.sroa.21.0875, float %25, float %28)
-  %29 = extractelement <4 x float> %i.gr, i64 3
-  %30 = call nsz float @llvm.fmuladd.f32(float %.sroa.0713.0.vec.extract, float %25, float %29)
-  %31 = extractelement <2 x float> %22, i64 1
-  %32 = call nsz float @llvm.fmuladd.f32(float %.sroa.21.0875, float %25, float %31)
-  %33 = getelementptr inbounds nuw i8, ptr %i.ik, i64 24
-  %34 = load float, ptr %33, align 4, !tbaa !15   ; 3 uses
-  %i.im = extractelement <4 x float> %i.gr, i64 1 ; 3 uses
-  %35 = fcmp nsz olt float %i.im, %34
-  %36 = fadd nsz float %4, %i.im
-  %37 = fcmp nsz ogt float %36, %34
-  %or.cond415.not1084.not = and i1 %35, %37
-  br i1 %or.cond415.not1084.not, label %.lr.ph.i, label %_Z23wouldCollideWithCeilingRKSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EERKN4core8aabbox3dIfEEff.exit
+31:                                               ; preds = %bb.at
+  %32 = getelementptr inbounds nuw i8, ptr %i.ik, i64 24
+  %33 = load float, ptr %32, align 4, !tbaa !15   ; 3 uses
+  %34 = fcmp nsz olt float %21, %33
+  %35 = fadd nsz float %4, %21
+  %36 = fcmp nsz ogt float %35, %33
+  %or.cond415.not1084.not = and i1 %34, %36
+  br i1 %or.cond415.not1084.not, label %bb.au, label %_Z23wouldCollideWithCeilingRKSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EERKN4core8aabbox3dIfEEff.exit
 
-.lr.ph.i:                                         ; preds = %bb.au
-  %38 = fsub nsz float %34, %i.im
-  %39 = extractelement <2 x float> %22, i64 0     ; 2 uses
-  %40 = fadd nsz float %39, %38
+bb.au:                                            ; preds = %31
+  %37 = shufflevector <2 x float> %.sroa.0713.0876, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 0, i32 poison>
+  %38 = insertelement <4 x float> poison, float %.sroa.21.0875, i64 0
+  %39 = shufflevector <4 x float> %38, <4 x float> poison, <4 x i32> <i32 poison, i32 0, i32 poison, i32 0>
+  %40 = shufflevector <4 x float> %37, <4 x float> %39, <4 x i32> <i32 0, i32 5, i32 2, i32 7>
+  %41 = fsub nsz float %.1880, %.2371
+  %42 = call nsz float @llvm.fabs.f32(float %41)
+  %i.il = call nsz float @llvm.fmuladd.f32(float %42, float 1.000000e-01, float %.2371)
+  %43 = insertelement <4 x float> poison, float %i.il, i64 0
+  %44 = shufflevector <4 x float> %43, <4 x float> poison, <4 x i32> zeroinitializer
+  %45 = call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %40, <4 x float> %44, <4 x float> %i.gr) ; 4 uses
+  %46 = fsub nsz float %33, %21
+  %47 = fadd nsz float %23, %46
+  %i.im = extractelement <4 x float> %45, i64 0
+  %48 = extractelement <4 x float> %45, i64 1
+  %49 = extractelement <4 x float> %45, i64 2
+  %50 = extractelement <4 x float> %45, i64 3
   br label %bb.av
 
-bb.av:                                            ; preds = %.critedge.i, %.lr.ph.i
-  %.sroa.01.04.i = phi ptr [ %.val421, %.lr.ph.i ], [ %i.jd, %.critedge.i ] ; 6 uses
+bb.av:                                            ; preds = %.critedge.i, %bb.au
+  %.sroa.01.04.i = phi ptr [ %.val421, %bb.au ], [ %i.jd, %.critedge.i ] ; 6 uses
   %i.in = getelementptr inbounds nuw i8, ptr %.sroa.01.04.i, i64 8
   %i.io = getelementptr inbounds nuw i8, ptr %.sroa.01.04.i, i64 12
   %i.ip = load float, ptr %i.io, align 4, !tbaa !16 ; 2 uses
-  %i.iq = fcmp nsz ole float %39, %i.ip
-  %i.ir = fcmp nsz ogt float %40, %i.ip
+  %i.iq = fcmp nsz ole float %23, %i.ip
+  %i.ir = fcmp nsz ogt float %47, %i.ip
   %or.cond.i = and i1 %i.iq, %i.ir
   br i1 %or.cond.i, label %bb.aw, label %.critedge.i
 
 bb.aw:                                            ; preds = %bb.av
   %i.is = getelementptr inbounds nuw i8, ptr %.sroa.01.04.i, i64 20
   %i.it = load float, ptr %i.is, align 4, !tbaa !13
-  %i.iu = fcmp nsz olt float %27, %i.it
+  %i.iu = fcmp nsz olt float %i.im, %i.it
   br i1 %i.iu, label %bb.ax, label %.critedge.i
 
 bb.ax:                                            ; preds = %bb.aw
   %i.iv = load float, ptr %i.in, align 4, !tbaa !14
-  %i.iw = fcmp nsz ogt float %30, %i.iv
+  %i.iw = fcmp nsz ogt float %49, %i.iv
   br i1 %i.iw, label %bb.ay, label %.critedge.i
 
 bb.ay:                                            ; preds = %bb.ax
   %i.ix = getelementptr inbounds nuw i8, ptr %.sroa.01.04.i, i64 28
   %i.iy = load float, ptr %i.ix, align 4, !tbaa !17
-  %i.iz = fcmp nsz olt float %i.il, %i.iy
+  %i.iz = fcmp nsz olt float %48, %i.iy
   br i1 %i.iz, label %bb.az, label %.critedge.i
 
 bb.az:                                            ; preds = %bb.ay
   %i.ja = getelementptr inbounds nuw i8, ptr %.sroa.01.04.i, i64 16
   %i.jb = load float, ptr %i.ja, align 4, !tbaa !18
-  %i.jc = fcmp nsz ogt float %32, %i.jb
+  %i.jc = fcmp nsz ogt float %50, %i.jb
   br i1 %i.jc, label %_Z23wouldCollideWithCeilingRKSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EERKN4core8aabbox3dIfEEff.exit, label %.critedge.i
 
 .critedge.i:                                      ; preds = %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av
@@ -878,8 +889,8 @@ bb.az:                                            ; preds = %bb.ay
   %.not.not.i = icmp eq ptr %i.jd, %.val422
   br i1 %.not.not.i, label %_Z23wouldCollideWithCeilingRKSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EERKN4core8aabbox3dIfEEff.exit, label %bb.av
 
-_Z23wouldCollideWithCeilingRKSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EERKN4core8aabbox3dIfEEff.exit: ; preds = %.critedge.i, %bb.az, %bb.au, %bb.at
-  %.0376 = phi i1 [ false, %bb.at ], [ false, %bb.au ], [ false, %bb.az ], [ true, %.critedge.i ] ; 3 uses
+_Z23wouldCollideWithCeilingRKSt6vectorIN12_GLOBAL__N_119NearbyCollisionInfoESaIS1_EERKN4core8aabbox3dIfEEff.exit: ; preds = %.critedge.i, %bb.az, %31, %bb.at
+  %.0376 = phi i1 [ false, %bb.at ], [ false, %31 ], [ false, %bb.az ], [ true, %.critedge.i ] ; 3 uses
   %i.je = getelementptr inbounds nuw i8, ptr %i.ik, i64 38
   %i.jf = load i8, ptr %i.je, align 2, !tbaa !66
   %i.jg = uitofp nsz i8 %i.jf to float
@@ -910,8 +921,7 @@ bb.bc:                                            ; preds = %bb.bb
 
 bb.bd:                                            ; preds = %bb.bb
   %.sroa.0713.4.vec.extract = extractelement <2 x float> %.sroa.0713.0876, i64 1
-  %41 = extractelement <2 x float> %i.gp, i64 1
-  %i.jl = call nsz float @llvm.fmuladd.f32(float %.sroa.0713.4.vec.extract, float %.2371, float %41)
+  %i.jl = call nsz float @llvm.fmuladd.f32(float %.sroa.0713.4.vec.extract, float %.2371, float %20)
   store float %i.jl, ptr %i.dd, align 4, !tbaa !36
   br label %.thread
 
@@ -1314,14 +1324,14 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %8, i8 0, i64 24, i1 false)
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %i.q = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.s = load float, ptr %i.r, align 4, !tbaa !37
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 2 uses
   %i.u = load float, ptr %i.t, align 4, !tbaa !35
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.w = load float, ptr %i.v, align 4, !tbaa !36
-  %i.x = getelementptr inbounds nuw i8, ptr %2, i64 20 ; 2 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %2, i64 20
   %i.y = load float, ptr %i.x, align 4, !tbaa !37
   %i.z = load <2 x float>, ptr %2, align 4, !tbaa !19
   %i.aa = load <3 x float>, ptr %3, align 4, !tbaa !19 ; 2 uses
@@ -1414,64 +1424,67 @@ bb.l:                                             ; preds = %bb.j, %bb.i
   %.sroa.7.0.copyload = load float, ptr %i.p, align 4, !tbaa !19
   %.sroa.10.0.copyload = load float, ptr %i.r, align 4, !tbaa !19
   %.sroa.13.0.copyload = load float, ptr %i.t, align 4, !tbaa !19
-  %.sroa.16.0.copyload = load float, ptr %i.v, align 4, !tbaa !19
-  %.sroa.19.0.copyload = load float, ptr %i.x, align 4, !tbaa !19
   %i.bk = load float, ptr %3, align 4, !tbaa !35  ; 2 uses
   %i.bl = fadd nsz float %i.bk, 1.000000e+00
-  %9 = load float, ptr %i.o, align 4, !tbaa !36   ; 2 uses
-  %i.bm = fadd nsz float %9, 1.000000e+00
-  %10 = load float, ptr %i.q, align 4, !tbaa !37  ; 2 uses
-  %11 = fadd nsz float %10, 1.000000e+00
-  %12 = fadd nsz float %.sroa.0140.0.copyload, %i.bl
-  %i.bn = fadd nsz float %.sroa.7.0.copyload, %i.bm
-  %13 = fadd nsz float %.sroa.10.0.copyload, %11
-  %i.bo = fadd nsz float %i.bk, -1.000000e+00
-  %i.bp = fadd nsz float %9, -1.000000e+00
-  %i.bq = fadd nsz float %10, -1.000000e+00
-  %14 = fadd nsz float %.sroa.13.0.copyload, %i.bo
-  %i.br = fadd nsz float %.sroa.16.0.copyload, %i.bp
-  %15 = fadd nsz float %.sroa.19.0.copyload, %i.bq
+  %9 = fadd nsz float %.sroa.0140.0.copyload, %i.bl
+  %i.bm = fadd nsz float %i.bk, -1.000000e+00
+  %10 = load <2 x float>, ptr %i.v, align 4, !tbaa !19
+  %11 = load <2 x float>, ptr %i.o, align 4, !tbaa !19 ; 3 uses
+  %12 = extractelement <2 x float> %11, i64 0
+  %i.bn = fadd nsz float %12, 1.000000e+00
+  %13 = extractelement <2 x float> %11, i64 1
+  %i.bo = fadd nsz float %13, 1.000000e+00
+  %i.bp = fadd nsz float %.sroa.7.0.copyload, %i.bn
+  %i.bq = fadd nsz float %.sroa.10.0.copyload, %i.bo
+  %14 = fadd nsz <2 x float> %11, splat (float -1.000000e+00)
+  %i.br = fadd nsz float %.sroa.13.0.copyload, %i.bm
+  %15 = fadd nsz <2 x float> %10, %14             ; 2 uses
   %.val90 = load ptr, ptr %8, align 8, !tbaa !70  ; 5 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %8, i64 8
   %.val = load ptr, ptr %i.bs, align 8, !tbaa !70 ; 2 uses
   %.not162163 = icmp eq ptr %.val90, %.val
-  br i1 %.not162163, label %.critedge, label %.lr.ph
+  br i1 %.not162163, label %.critedge, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %bb.l, %_ZNK4core8aabbox3dIfE17intersectsWithBoxERKS1_.exit.thread
-  %.sroa.0136.0164 = phi ptr [ %i.cl, %_ZNK4core8aabbox3dIfE17intersectsWithBoxERKS1_.exit.thread ], [ %.val90, %bb.l ] ; 7 uses
+.lr.ph.preheader:                                 ; preds = %bb.l
+  %16 = extractelement <2 x float> %15, i64 0
+  %17 = extractelement <2 x float> %15, i64 1
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNK4core8aabbox3dIfE17intersectsWithBoxERKS1_.exit.thread
+  %.sroa.0136.0164 = phi ptr [ %i.cl, %_ZNK4core8aabbox3dIfE17intersectsWithBoxERKS1_.exit.thread ], [ %.val90, %.lr.ph.preheader ] ; 7 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %.sroa.0136.0164, i64 8
   %i.bu = load float, ptr %i.bt, align 4, !tbaa !14
-  %i.bv = fcmp nsz ugt float %i.bu, %14
+  %i.bv = fcmp nsz ugt float %i.bu, %i.br
   br i1 %i.bv, label %_ZNK4core8aabbox3dIfE17intersectsWithBoxERKS1_.exit.thread, label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph
   %i.bw = getelementptr inbounds nuw i8, ptr %.sroa.0136.0164, i64 12
   %i.bx = load float, ptr %i.bw, align 4, !tbaa !16
-  %i.by = fcmp nsz ugt float %i.bx, %i.br
+  %i.by = fcmp nsz ugt float %i.bx, %16
   br i1 %i.by, label %_ZNK4core8aabbox3dIfE17intersectsWithBoxERKS1_.exit.thread, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.bz = getelementptr inbounds nuw i8, ptr %.sroa.0136.0164, i64 16
   %i.ca = load float, ptr %i.bz, align 4, !tbaa !18
-  %i.cb = fcmp nsz ugt float %i.ca, %15
+  %i.cb = fcmp nsz ugt float %i.ca, %17
   br i1 %i.cb, label %_ZNK4core8aabbox3dIfE17intersectsWithBoxERKS1_.exit.thread, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   %i.cc = getelementptr inbounds nuw i8, ptr %.sroa.0136.0164, i64 20
   %i.cd = load float, ptr %i.cc, align 4, !tbaa !13
-  %i.ce = fcmp nsz ult float %i.cd, %12
+  %i.ce = fcmp nsz ult float %i.cd, %9
   br i1 %i.ce, label %_ZNK4core8aabbox3dIfE17intersectsWithBoxERKS1_.exit.thread, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.cf = getelementptr inbounds nuw i8, ptr %.sroa.0136.0164, i64 24
   %i.cg = load float, ptr %i.cf, align 4, !tbaa !15
-  %i.ch = fcmp nsz ult float %i.cg, %i.bn
+  %i.ch = fcmp nsz ult float %i.cg, %i.bp
   br i1 %i.ch, label %_ZNK4core8aabbox3dIfE17intersectsWithBoxERKS1_.exit.thread, label %_ZNK4core8aabbox3dIfE17intersectsWithBoxERKS1_.exit
 
 _ZNK4core8aabbox3dIfE17intersectsWithBoxERKS1_.exit: ; preds = %bb.p
   %i.ci = getelementptr inbounds nuw i8, ptr %.sroa.0136.0164, i64 28
   %i.cj = load float, ptr %i.ci, align 4, !tbaa !17
-  %i.ck = fcmp nsz ult float %i.cj, %13
+  %i.ck = fcmp nsz ult float %i.cj, %i.bq
   br i1 %i.ck, label %_ZNK4core8aabbox3dIfE17intersectsWithBoxERKS1_.exit.thread, label %.critedge
 
 _ZNK4core8aabbox3dIfE17intersectsWithBoxERKS1_.exit.thread: ; preds = %.lr.ph, %bb.m, %bb.n, %bb.o, %bb.p, %_ZNK4core8aabbox3dIfE17intersectsWithBoxERKS1_.exit
@@ -1873,6 +1886,9 @@ declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.trunc.v2f32(<2 x float>) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #2
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="64" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

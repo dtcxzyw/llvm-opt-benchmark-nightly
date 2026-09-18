@@ -205,24 +205,26 @@ bb.x:                                             ; preds = %bb.b
   %i.te = fdiv <2 x float> %i.tc, %i.td
   %i.tf = fadd <2 x float> %i.te, %i.sb           ; 2 uses
   %i.tg = load ptr, ptr %i.j, align 8, !tbaa !851, !nonnull !199, !align !289 ; 2 uses
-  %i.th = load <4 x float>, ptr %i.tg, align 4    ; 2 uses
+  %i.th = load <4 x float>, ptr %i.tg, align 4
   %i.ti = getelementptr inbounds nuw i8, ptr %i.tg, i64 12
-  %i.tj = load <4 x float>, ptr %i.ti, align 4    ; 2 uses
-  %i.tk = tail call noundef float @_ZNK3tev9VgCommand4dataEm(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.04.018, i64 noundef 2) ; 2 uses
-  %i.tl = tail call noundef float @_ZNK3tev9VgCommand4dataEm(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.04.018, i64 noundef 3) ; 2 uses
-  %.sroa.0244.0.vec.extract.i = extractelement <4 x float> %i.th, i64 0
-  %3 = tail call float @llvm.fmuladd.f32(float %.sroa.0244.0.vec.extract.i, float %i.tk, float 0.000000e+00)
-  %.sroa.0244.4.vec.extract.i = extractelement <4 x float> %i.th, i64 1
-  %4 = tail call float @llvm.fmuladd.f32(float %.sroa.0244.4.vec.extract.i, float %i.tk, float 0.000000e+00)
-  %.sroa.5245.8.vec.extract.i = extractelement <4 x float> %i.tj, i64 0
-  %5 = tail call float @llvm.fmuladd.f32(float %.sroa.5245.8.vec.extract.i, float %i.tl, float %3)
-  %.sroa.5245.12.vec.extract.i = extractelement <4 x float> %i.tj, i64 1
-  %6 = tail call float @llvm.fmuladd.f32(float %.sroa.5245.12.vec.extract.i, float %i.tl, float %4)
+  %i.tj = load <4 x float>, ptr %i.ti, align 4
+  %i.tk = tail call noundef float @_ZNK3tev9VgCommand4dataEm(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.04.018, i64 noundef 2)
+  %i.tl = tail call noundef float @_ZNK3tev9VgCommand4dataEm(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.04.018, i64 noundef 3)
+  %3 = shufflevector <4 x float> %i.th, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %4 = insertelement <2 x float> poison, float %i.tk, i64 0
+  %5 = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> zeroinitializer
+  %6 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %3, <2 x float> %5, <2 x float> zeroinitializer)
+  %7 = shufflevector <4 x float> %i.tj, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %8 = insertelement <2 x float> poison, float %i.tl, i64 0
+  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
+  %10 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %7, <2 x float> %9, <2 x float> %6) ; 2 uses
   %i.tm = load ptr, ptr %.8.val, align 8, !tbaa !850, !nonnull !199, !align !274
   %i.tn = load ptr, ptr %i.tm, align 8, !tbaa !257
+  %11 = extractelement <2 x float> %10, i64 0
+  %12 = extractelement <2 x float> %10, i64 1
   %i.to = extractelement <2 x float> %i.tf, i64 0
   %i.tp = extractelement <2 x float> %i.tf, i64 1
-  tail call void @nvgEllipse(ptr noundef %i.tn, float noundef %i.to, float noundef %i.tp, float noundef %5, float noundef %6)
+  tail call void @nvgEllipse(ptr noundef %i.tn, float noundef %i.to, float noundef %i.tp, float noundef %11, float noundef %12)
   br label %_ZN4tlog7warningENSt3__117basic_string_viewIcNS0_11char_traitsIcEEEE.exit
 
 bb.y:                                             ; preds = %bb.b
@@ -350,24 +352,26 @@ bb.z:                                             ; preds = %bb.b
   %i.xx = fdiv <2 x float> %i.xv, %i.xw
   %i.xy = fadd <2 x float> %i.xx, %i.wu           ; 2 uses
   %i.xz = load ptr, ptr %i.j, align 8, !tbaa !851, !nonnull !199, !align !289 ; 2 uses
-  %i.ya = load <4 x float>, ptr %i.xz, align 4    ; 2 uses
+  %i.ya = load <4 x float>, ptr %i.xz, align 4
   %i.yb = getelementptr inbounds nuw i8, ptr %i.xz, i64 12
-  %i.yc = load <4 x float>, ptr %i.yb, align 4    ; 2 uses
-  %i.yd = tail call noundef float @_ZNK3tev9VgCommand4dataEm(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.04.018, i64 noundef 2) ; 2 uses
-  %i.ye = tail call noundef float @_ZNK3tev9VgCommand4dataEm(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.04.018, i64 noundef 3) ; 2 uses
-  %.sroa.0230.0.vec.extract.i = extractelement <4 x float> %i.ya, i64 0
-  %7 = tail call float @llvm.fmuladd.f32(float %.sroa.0230.0.vec.extract.i, float %i.yd, float 0.000000e+00)
-  %.sroa.0230.4.vec.extract.i = extractelement <4 x float> %i.ya, i64 1
-  %8 = tail call float @llvm.fmuladd.f32(float %.sroa.0230.4.vec.extract.i, float %i.yd, float 0.000000e+00)
-  %.sroa.5231.8.vec.extract.i = extractelement <4 x float> %i.yc, i64 0
-  %9 = tail call float @llvm.fmuladd.f32(float %.sroa.5231.8.vec.extract.i, float %i.ye, float %7)
-  %.sroa.5231.12.vec.extract.i = extractelement <4 x float> %i.yc, i64 1
-  %10 = tail call float @llvm.fmuladd.f32(float %.sroa.5231.12.vec.extract.i, float %i.ye, float %8)
+  %i.yc = load <4 x float>, ptr %i.yb, align 4
+  %i.yd = tail call noundef float @_ZNK3tev9VgCommand4dataEm(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.04.018, i64 noundef 2)
+  %i.ye = tail call noundef float @_ZNK3tev9VgCommand4dataEm(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.04.018, i64 noundef 3)
+  %13 = shufflevector <4 x float> %i.ya, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %14 = insertelement <2 x float> poison, float %i.yd, i64 0
+  %15 = shufflevector <2 x float> %14, <2 x float> poison, <2 x i32> zeroinitializer
+  %16 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %13, <2 x float> %15, <2 x float> zeroinitializer)
+  %17 = shufflevector <4 x float> %i.yc, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %18 = insertelement <2 x float> poison, float %i.ye, i64 0
+  %19 = shufflevector <2 x float> %18, <2 x float> poison, <2 x i32> zeroinitializer
+  %20 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %17, <2 x float> %19, <2 x float> %16) ; 2 uses
   %i.yf = load ptr, ptr %.8.val, align 8, !tbaa !850, !nonnull !199, !align !274
   %i.yg = load ptr, ptr %i.yf, align 8, !tbaa !257
+  %21 = extractelement <2 x float> %20, i64 0
+  %22 = extractelement <2 x float> %20, i64 1
   %i.yh = extractelement <2 x float> %i.xy, i64 0
   %i.yi = extractelement <2 x float> %i.xy, i64 1
-  tail call void @nvgRect(ptr noundef %i.yg, float noundef %i.yh, float noundef %i.yi, float noundef %9, float noundef %10)
+  tail call void @nvgRect(ptr noundef %i.yg, float noundef %i.yh, float noundef %i.yi, float noundef %21, float noundef %22)
   br label %_ZN4tlog7warningENSt3__117basic_string_viewIcNS0_11char_traitsIcEEEE.exit
 
 bb.aa:                                            ; preds = %bb.b

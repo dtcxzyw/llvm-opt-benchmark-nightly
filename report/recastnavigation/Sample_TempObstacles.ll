@@ -205,13 +205,11 @@ bb.e:                                             ; preds = %bb.c
   %i.aa = sitofp i32 %i.z to float
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.ac = load float, ptr %i.ab, align 4, !tbaa !232
-  %i.ad = fmul float %i.ac, %i.aa                 ; 3 uses
+  %i.ad = fmul float %i.ac, %i.aa
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #12
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(92) %8, ptr noundef nonnull align 4 dereferenceable(92) %3, i64 92, i1 false)
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.af = load float, ptr %i.ae, align 4, !tbaa !41 ; 2 uses
-  %11 = sitofp i32 %1 to float
-  %12 = tail call float @llvm.fmuladd.f32(float %11, float %i.ad, float %i.af)
   %i.ag = getelementptr inbounds nuw i8, ptr %8, i64 24 ; 3 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 28
   %i.ai = load float, ptr %i.ah, align 4, !tbaa !41
@@ -225,35 +223,40 @@ bb.e:                                             ; preds = %bb.c
   %i.ap = load float, ptr %i.ao, align 4, !tbaa !41
   %i.aq = getelementptr inbounds nuw i8, ptr %8, i64 40
   store float %i.ap, ptr %i.aq, align 4, !tbaa !41
-  %13 = add nsw i32 %2, 1
-  %14 = sitofp i32 %13 to float
-  %15 = tail call float @llvm.fmuladd.f32(float %14, float %i.ad, float %i.al)
   %i.ar = getelementptr inbounds nuw i8, ptr %8, i64 44 ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %8, i64 12 ; 2 uses
   %i.at = load i32, ptr %i.as, align 4, !tbaa !42
-  %i.au = sitofp i32 %i.at to float               ; 3 uses
+  %i.au = sitofp i32 %i.at to float               ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %8, i64 16
-  %i.aw = load float, ptr %i.av, align 4, !tbaa !232 ; 4 uses
-  %i.ax = fneg float %i.au                        ; 2 uses
-  %16 = tail call float @llvm.fmuladd.f32(float %i.ax, float %i.aw, float %12)
-  store float %16, ptr %i.ag, align 4, !tbaa !41
+  %i.aw = load float, ptr %i.av, align 4, !tbaa !232 ; 2 uses
+  %i.ax = fneg float %i.au
   %i.ay = insertelement <2 x i32> poison, i32 %2, i64 0
   %i.az = insertelement <2 x i32> %i.ay, i32 %1, i64 1
   %i.ba = add nsw <2 x i32> %i.az, <i32 0, i32 1>
   %i.bb = sitofp <2 x i32> %i.ba to <2 x float>
   %i.bc = insertelement <2 x float> poison, float %i.ad, i64 0
-  %i.bd = shufflevector <2 x float> %i.bc, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.bd = shufflevector <2 x float> %i.bc, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.be = insertelement <2 x float> poison, float %i.al, i64 0
   %i.bf = insertelement <2 x float> %i.be, float %i.af, i64 1
   %i.bg = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bb, <2 x float> %i.bd, <2 x float> %i.bf)
   %i.bh = insertelement <2 x float> poison, float %i.ax, i64 0
-  %i.bi = insertelement <2 x float> %i.bh, float %i.au, i64 1
+  %i.bi = insertelement <2 x float> %i.bh, float %i.au, i64 1 ; 2 uses
   %i.bj = insertelement <2 x float> poison, float %i.aw, i64 0
-  %i.bk = shufflevector <2 x float> %i.bj, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.bl = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bi, <2 x float> %i.bk, <2 x float> %i.bg)
-  store <2 x float> %i.bl, ptr %i.am, align 4, !tbaa !41
-  %17 = tail call float @llvm.fmuladd.f32(float %i.au, float %i.aw, float %15)
-  store float %17, ptr %i.ar, align 4, !tbaa !41
+  %i.bk = shufflevector <2 x float> %i.bj, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %11 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bi, <2 x float> %i.bk, <2 x float> %i.bg)
+  store <2 x float> %11, ptr %i.am, align 4, !tbaa !41
+  %12 = insertelement <2 x i32> poison, i32 %1, i64 0
+  %13 = insertelement <2 x i32> %12, i32 %2, i64 1
+  %14 = add nsw <2 x i32> %13, <i32 0, i32 1>
+  %15 = sitofp <2 x i32> %14 to <2 x float>
+  %16 = insertelement <2 x float> poison, float %i.af, i64 0
+  %17 = insertelement <2 x float> %16, float %i.al, i64 1
+  %18 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %15, <2 x float> %i.bd, <2 x float> %17)
+  %i.bl = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bi, <2 x float> %i.bk, <2 x float> %18) ; 2 uses
+  %19 = extractelement <2 x float> %i.bl, i64 0
+  store float %19, ptr %i.ag, align 4, !tbaa !41
+  %20 = extractelement <2 x float> %i.bl, i64 1
+  store float %20, ptr %i.ar, align 4, !tbaa !41
   %i.bm = tail call noundef ptr @_Z18rcAllocHeightfieldv() #12 ; 3 uses
   store ptr %i.bm, ptr %7, align 8, !tbaa !48
   %.not95 = icmp eq ptr %i.bm, null

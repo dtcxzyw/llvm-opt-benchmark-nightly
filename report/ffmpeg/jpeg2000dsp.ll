@@ -95,19 +95,24 @@ middle.block:                                     ; preds = %vector.body
   %.01823 = phi ptr [ %i.w, %.lr.ph ], [ %.01823.ph, %.lr.ph.preheader41 ] ; 3 uses
   %.01922 = phi ptr [ %i.v, %.lr.ph ], [ %.01922.ph, %.lr.ph.preheader41 ] ; 3 uses
   %.02021 = phi ptr [ %i.u, %.lr.ph ], [ %.02021.ph, %.lr.ph.preheader41 ] ; 3 uses
-  %i.r = load float, ptr %.02021, align 4, !tbaa !22 ; 3 uses
-  %i.s = load float, ptr %.01823, align 4, !tbaa !22 ; 2 uses
-  %i.t = tail call nsz float @llvm.fmuladd.f32(float %i.s, float 1.402000e+00, float %i.r)
-  %4 = load float, ptr %.01922, align 4, !tbaa !22 ; 2 uses
-  %5 = tail call nsz float @llvm.fmuladd.f32(float %4, float -3.441300e-01, float %i.r)
-  %6 = tail call nsz float @llvm.fmuladd.f32(float %i.s, float f0xBF36D1E1, float %5)
-  %7 = tail call nsz float @llvm.fmuladd.f32(float %4, float 1.772000e+00, float %i.r)
+  %4 = load float, ptr %.01823, align 4, !tbaa !22 ; 2 uses
+  %i.r = load float, ptr %.01922, align 4, !tbaa !22 ; 2 uses
+  %i.s = load float, ptr %.02021, align 4, !tbaa !22 ; 3 uses
+  %5 = tail call nsz float @llvm.fmuladd.f32(float %4, float 1.402000e+00, float %i.s)
+  %i.t = tail call nsz float @llvm.fmuladd.f32(float %i.r, float -3.441300e-01, float %i.s)
+  %6 = insertelement <2 x float> poison, float %4, i64 0
+  %7 = insertelement <2 x float> %6, float %i.r, i64 1
+  %8 = insertelement <2 x float> poison, float %i.t, i64 0
+  %9 = insertelement <2 x float> %8, float %i.s, i64 1
+  %10 = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %7, <2 x float> <float f0xBF36D1E1, float 1.772000e+00>, <2 x float> %9) ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %.02021, i64 4
-  store float %i.t, ptr %.02021, align 4, !tbaa !22
+  store float %5, ptr %.02021, align 4, !tbaa !22
   %i.v = getelementptr inbounds nuw i8, ptr %.01922, i64 4
-  store float %6, ptr %.01922, align 4, !tbaa !22
+  %11 = extractelement <2 x float> %10, i64 0
+  store float %11, ptr %.01922, align 4, !tbaa !22
   %i.w = getelementptr inbounds nuw i8, ptr %.01823, i64 4
-  store float %7, ptr %.01823, align 4, !tbaa !22
+  %12 = extractelement <2 x float> %10, i64 1
+  store float %12, ptr %.01823, align 4, !tbaa !22
   %i.x = add nuw nsw i32 %.024, 1                 ; 2 uses
   %exitcond.not = icmp eq i32 %i.x, %3
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !20
@@ -393,6 +398,9 @@ declare float @llvm.fmuladd.f32(float, float, float) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #2
 
 attributes #0 = { cold mustprogress nofree norecurse nosync nounwind optsize willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

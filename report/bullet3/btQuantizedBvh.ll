@@ -205,27 +205,33 @@ bb.a:
   %i.d = fsub <2 x float> %i.a, %i.c              ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.f = load float, ptr %i.e, align 4, !tbaa !49
-  %i.g = fsub float %i.f, %3                      ; 4 uses
+  %i.g = fsub float %i.f, %3                      ; 5 uses
   %.sroa.3.12.vec.insert.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.g, i64 0
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   store <2 x float> %i.d, ptr %i.h, align 8
   %.sroa.416.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store <2 x float> %.sroa.3.12.vec.insert.i, ptr %.sroa.416.0..sroa_idx, align 8, !tbaa !50
-  %4 = load <2 x float>, ptr %2, align 4, !tbaa !49
-  %5 = fadd <2 x float> %i.c, %4                  ; 6 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %6 = load float, ptr %i.i, align 4, !tbaa !49
-  %7 = fadd float %3, %6                          ; 5 uses
-  %.sroa.3.12.vec.insert.i21 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %7, i64 0
+  %4 = load float, ptr %2, align 4, !tbaa !49
+  %5 = fadd float %3, %4                          ; 5 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %2, i64 4
+  %6 = load <2 x float>, ptr %i.i, align 4, !tbaa !49
+  %7 = fadd <2 x float> %i.c, %6                  ; 6 uses
+  %.sroa.3.12.vec.insert.i21 = insertelement <2 x float> poison, float %5, i64 0
+  %8 = shufflevector <2 x float> %.sroa.3.12.vec.insert.i21, <2 x float> %7, <2 x i32> <i32 0, i32 2>
+  %9 = shufflevector <2 x float> <float poison, float 0.000000e+00>, <2 x float> %7, <2 x i32> <i32 3, i32 1>
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  store <2 x float> %5, ptr %i.j, align 8
+  store <2 x float> %8, ptr %i.j, align 8
   %.sroa.414.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  store <2 x float> %.sroa.3.12.vec.insert.i21, ptr %.sroa.414.0..sroa_idx, align 8, !tbaa !50
+  store <2 x float> %9, ptr %.sroa.414.0..sroa_idx, align 8, !tbaa !50
   %i.k = extractelement <2 x float> %i.d, i64 0   ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.n = fsub float %7, %i.g
-  %i.o = fsub <2 x float> %5, %i.d
+  %10 = extractelement <2 x float> %i.d, i64 1    ; 2 uses
+  %11 = extractelement <2 x float> %7, i64 1      ; 3 uses
+  %i.n = fsub float %11, %i.g
+  %12 = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
+  %13 = insertelement <2 x float> %12, float %5, i64 0
+  %i.o = fsub <2 x float> %13, %i.d
   %i.p = fdiv <2 x float> splat (float 6.553300e+04), %i.o ; 4 uses
   %i.q = fdiv float 6.553300e+04, %i.n            ; 2 uses
   %.sroa.3.12.vec.insert.i31 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.q, i64 0
@@ -243,9 +249,8 @@ bb.a:
   %i.w = and i16 %i.v, -2
   %i.x = uitofp i16 %i.w to float
   %i.y = fdiv float %i.x, %i.t
-  %8 = fadd float %i.k, %i.y
   %i.z = shufflevector <2 x float> %i.d, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %i.aa = insertelement <2 x float> %i.z, float %i.g, i64 1 ; 3 uses
+  %i.aa = insertelement <2 x float> %i.z, float %i.g, i64 1 ; 2 uses
   %i.ab = fsub <2 x float> %i.aa, %i.aa
   %i.ac = shufflevector <2 x float> %i.p, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.ad = insertelement <2 x float> %i.ac, float %i.q, i64 1 ; 2 uses
@@ -253,27 +258,28 @@ bb.a:
   %i.af = fptoui <2 x float> %i.ae to <2 x i16>
   %i.ag = and <2 x i16> %i.af, splat (i16 -2)
   %i.ah = uitofp <2 x i16> %i.ag to <2 x float>
-  %i.ai = fdiv <2 x float> %i.ah, %i.ad
-  %9 = fadd <2 x float> %i.aa, %i.ai              ; 2 uses
-  %10 = fsub float %8, %3                         ; 2 uses
-  %i.aj = extractelement <2 x float> %9, i64 0
-  %i.ak = fsub float %i.aj, %3                    ; 2 uses
-  %11 = extractelement <2 x float> %9, i64 1
-  %i.al = fsub float %11, %3                      ; 2 uses
-  %i.am = fcmp olt float %10, %i.k
+  %i.ai = fdiv <2 x float> %i.ah, %i.ad           ; 2 uses
+  %14 = fadd float %i.k, %i.y
+  %15 = extractelement <2 x float> %i.ai, i64 0
+  %16 = fadd float %10, %15
+  %i.aj = extractelement <2 x float> %i.ai, i64 1
+  %17 = fadd float %i.aj, %i.g
+  %i.ak = fsub float %14, %3                      ; 2 uses
+  %18 = fsub float %16, %3                        ; 2 uses
+  %i.al = fsub float %17, %3                      ; 2 uses
+  %i.am = fcmp olt float %i.ak, %i.k
   br i1 %i.am, label %bb.b, label %_Z8btSetMinIfEvRT_RKS0_.exit.i
 
 bb.b:                                             ; preds = %bb.a
-  store float %10, ptr %i.h, align 8, !tbaa !49
+  store float %i.ak, ptr %i.h, align 8, !tbaa !49
   br label %_Z8btSetMinIfEvRT_RKS0_.exit.i
 
 _Z8btSetMinIfEvRT_RKS0_.exit.i:                   ; preds = %bb.b, %bb.a
-  %12 = extractelement <2 x float> %i.d, i64 1
-  %i.an = fcmp olt float %i.ak, %12
+  %i.an = fcmp olt float %18, %10
   br i1 %i.an, label %bb.c, label %_Z8btSetMinIfEvRT_RKS0_.exit5.i
 
 bb.c:                                             ; preds = %_Z8btSetMinIfEvRT_RKS0_.exit.i
-  store float %i.ak, ptr %i.m, align 4, !tbaa !49
+  store float %18, ptr %i.m, align 4, !tbaa !49
   br label %_Z8btSetMinIfEvRT_RKS0_.exit5.i
 
 _Z8btSetMinIfEvRT_RKS0_.exit5.i:                  ; preds = %bb.c, %_Z8btSetMinIfEvRT_RKS0_.exit.i
@@ -285,59 +291,56 @@ bb.d:                                             ; preds = %_Z8btSetMinIfEvRT_R
   br label %_ZN9btVector36setMinERKS_.exit
 
 _ZN9btVector36setMinERKS_.exit:                   ; preds = %_Z8btSetMinIfEvRT_RKS0_.exit5.i, %bb.d
-  %i.ap = load <2 x float>, ptr %i.h, align 8, !tbaa !49 ; 5 uses
-  %13 = extractelement <2 x float> %i.ap, i64 0
-  %14 = extractelement <2 x float> %5, i64 0      ; 2 uses
-  %foldExtExtBinop145 = fsub <2 x float> %5, %i.ap
-  %i.aq = extractelement <2 x float> %foldExtExtBinop145, i64 0 ; 2 uses
-  %15 = extractelement <2 x float> %5, i64 1      ; 2 uses
+  %i.ap = load <2 x float>, ptr %i.h, align 8, !tbaa !49 ; 4 uses
+  %i.aq = extractelement <2 x float> %i.ap, i64 0 ; 2 uses
+  %19 = fsub float %5, %i.aq                      ; 2 uses
   %i.ar = load float, ptr %.sroa.416.0..sroa_idx, align 8, !tbaa !49 ; 3 uses
-  %i.as = fdiv float 6.553300e+04, %i.aq          ; 2 uses
-  %i.at = fmul float %i.aq, %i.as
-  %16 = fsub float %7, %i.ar
-  %foldExtExtBinop147 = fsub <2 x float> %5, %i.ap
-  %17 = shufflevector <2 x float> %foldExtExtBinop147, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %18 = insertelement <2 x float> %17, float %16, i64 1 ; 2 uses
-  %19 = fdiv <2 x float> splat (float 6.553300e+04), %18 ; 2 uses
-  %20 = fmul <2 x float> %18, %19
-  %21 = fadd float %i.at, 1.000000e+00
-  %22 = fptoui float %21 to i16
-  %23 = or i16 %22, 1
-  %24 = uitofp i16 %23 to float
-  %25 = fdiv float %24, %i.as
-  %26 = fadd float %13, %25
-  %i.au = fadd <2 x float> %20, splat (float 1.000000e+00)
+  %i.as = fdiv float 6.553300e+04, %19            ; 2 uses
+  %i.at = fmul float %19, %i.as
+  %20 = fadd float %i.at, 1.000000e+00
+  %21 = fptoui float %20 to i16
+  %22 = or i16 %21, 1
+  %23 = uitofp i16 %22 to float
+  %24 = fdiv float %23, %i.as
+  %25 = shufflevector <2 x float> %i.ap, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %26 = insertelement <2 x float> %25, float %i.ar, i64 1
+  %27 = fsub <2 x float> %7, %26                  ; 2 uses
+  %28 = fdiv <2 x float> splat (float 6.553300e+04), %27 ; 2 uses
+  %29 = fmul <2 x float> %27, %28
+  %i.au = fadd <2 x float> %29, splat (float 1.000000e+00)
   %i.av = fptoui <2 x float> %i.au to <2 x i16>
   %i.aw = or <2 x i16> %i.av, splat (i16 1)
   %i.ax = uitofp <2 x i16> %i.aw to <2 x float>
-  %i.ay = fdiv <2 x float> %i.ax, %19
-  %27 = shufflevector <2 x float> %i.ap, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %28 = insertelement <2 x float> %27, float %i.ar, i64 1
-  %i.az = fadd <2 x float> %28, %i.ay             ; 2 uses
-  %29 = fadd float %3, %26                        ; 3 uses
-  %i.ba = extractelement <2 x float> %i.az, i64 0
-  %i.bb = fadd float %3, %i.ba                    ; 3 uses
-  %30 = extractelement <2 x float> %i.az, i64 1
-  %i.bc = fadd float %3, %30                      ; 3 uses
-  %i.bd = fcmp olt float %14, %29
+  %i.ay = fdiv <2 x float> %i.ax, %28             ; 2 uses
+  %30 = fadd float %i.aq, %24
+  %shift = shufflevector <2 x float> %i.ap, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %i.az = fadd <2 x float> %shift, %i.ay
+  %31 = extractelement <2 x float> %i.az, i64 0
+  %i.ba = extractelement <2 x float> %i.ay, i64 1
+  %32 = fadd float %i.ar, %i.ba
+  %i.bb = fadd float %3, %30                      ; 3 uses
+  %33 = fadd float %3, %31                        ; 3 uses
+  %i.bc = fadd float %3, %32                      ; 3 uses
+  %i.bd = fcmp olt float %5, %i.bb
   br i1 %i.bd, label %bb.e, label %_Z8btSetMaxIfEvRT_RKS0_.exit.i
 
 bb.e:                                             ; preds = %_ZN9btVector36setMinERKS_.exit
-  store float %29, ptr %i.j, align 8, !tbaa !49
+  store float %i.bb, ptr %i.j, align 8, !tbaa !49
   br label %_Z8btSetMaxIfEvRT_RKS0_.exit.i
 
 _Z8btSetMaxIfEvRT_RKS0_.exit.i:                   ; preds = %bb.e, %_ZN9btVector36setMinERKS_.exit
-  %i.be = phi float [ %29, %bb.e ], [ %14, %_ZN9btVector36setMinERKS_.exit ]
-  %i.bf = fcmp olt float %15, %i.bb
+  %i.be = phi float [ %i.bb, %bb.e ], [ %5, %_ZN9btVector36setMinERKS_.exit ]
+  %34 = extractelement <2 x float> %7, i64 0      ; 2 uses
+  %i.bf = fcmp olt float %34, %33
   br i1 %i.bf, label %bb.f, label %_Z8btSetMaxIfEvRT_RKS0_.exit5.i
 
 bb.f:                                             ; preds = %_Z8btSetMaxIfEvRT_RKS0_.exit.i
-  store float %i.bb, ptr %i.l, align 4, !tbaa !49
+  store float %33, ptr %i.l, align 4, !tbaa !49
   br label %_Z8btSetMaxIfEvRT_RKS0_.exit5.i
 
 _Z8btSetMaxIfEvRT_RKS0_.exit5.i:                  ; preds = %bb.f, %_Z8btSetMaxIfEvRT_RKS0_.exit.i
-  %i.bg = phi float [ %i.bb, %bb.f ], [ %15, %_Z8btSetMaxIfEvRT_RKS0_.exit.i ]
-  %i.bh = fcmp olt float %7, %i.bc
+  %i.bg = phi float [ %33, %bb.f ], [ %34, %_Z8btSetMaxIfEvRT_RKS0_.exit.i ]
+  %i.bh = fcmp olt float %11, %i.bc
   br i1 %i.bh, label %bb.g, label %_ZN9btVector36setMaxERKS_.exit
 
 bb.g:                                             ; preds = %_Z8btSetMaxIfEvRT_RKS0_.exit5.i
@@ -345,7 +348,7 @@ bb.g:                                             ; preds = %_Z8btSetMaxIfEvRT_R
   br label %_ZN9btVector36setMaxERKS_.exit
 
 _ZN9btVector36setMaxERKS_.exit:                   ; preds = %_Z8btSetMaxIfEvRT_RKS0_.exit5.i, %bb.g
-  %i.bi = phi float [ %i.bc, %bb.g ], [ %7, %_Z8btSetMaxIfEvRT_RKS0_.exit5.i ]
+  %i.bi = phi float [ %i.bc, %bb.g ], [ %11, %_Z8btSetMaxIfEvRT_RKS0_.exit5.i ]
   %i.bj = insertelement <2 x float> poison, float %i.be, i64 0
   %i.bk = insertelement <2 x float> %i.bj, float %i.bg, i64 1
   %i.bl = fsub <2 x float> %i.bk, %i.ap

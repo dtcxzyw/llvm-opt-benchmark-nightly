@@ -205,16 +205,21 @@ begin_hunk_0_@LossyDctDecoder_execute:bb.a
   br label %.lr.ph380.split.us.preheader
 
 .thread:                                          ; preds = %bb.aj
-  %i.pw = load float, ptr %i.gp, align 4, !tbaa !100 ; 3 uses
-  %i.px = load float, ptr %i.gq, align 4, !tbaa !100 ; 2 uses
-  %i.py = load float, ptr %i.gr, align 4, !tbaa !100 ; 2 uses
-  %i.pz = tail call float @llvm.fmuladd.f32(float %i.py, float 1.574700e+00, float %i.pw)
+  %i.pw = load float, ptr %i.gq, align 4, !tbaa !100 ; 2 uses
+  %i.px = load float, ptr %i.gr, align 4, !tbaa !100 ; 2 uses
+  %i.py = load float, ptr %i.gp, align 4, !tbaa !100 ; 3 uses
+  %i.pz = tail call float @llvm.fmuladd.f32(float %i.px, float 1.574700e+00, float %i.py)
   store float %i.pz, ptr %i.gp, align 4, !tbaa !100
-  %i.qa = tail call float @llvm.fmuladd.f32(float %i.px, float -1.873000e-01, float %i.pw)
-  %3 = tail call float @llvm.fmuladd.f32(float %i.py, float -4.682000e-01, float %i.qa)
-  store float %3, ptr %i.gq, align 4, !tbaa !100
-  %4 = tail call float @llvm.fmuladd.f32(float %i.px, float 1.855600e+00, float %i.pw)
-  store float %4, ptr %i.gr, align 4, !tbaa !100
+  %i.qa = tail call float @llvm.fmuladd.f32(float %i.pw, float -1.873000e-01, float %i.py)
+  %3 = insertelement <2 x float> poison, float %i.px, i64 0
+  %4 = insertelement <2 x float> %3, float %i.pw, i64 1
+  %5 = insertelement <2 x float> poison, float %i.qa, i64 0
+  %6 = insertelement <2 x float> %5, float %i.py, i64 1
+  %7 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %4, <2 x float> <float -4.682000e-01, float 1.855600e+00>, <2 x float> %6) ; 2 uses
+  %8 = extractelement <2 x float> %7, i64 0
+  store float %8, ptr %i.gq, align 4, !tbaa !100
+  %9 = extractelement <2 x float> %7, i64 1
+  store float %9, ptr %i.gr, align 4, !tbaa !100
   %i.qb = shl nuw nsw i64 %indvars.iv468, 6
   br label %.lr.ph380.split.preheader
 
@@ -616,6 +621,9 @@ declare <4 x float> @llvm.fabs.v4f32(<4 x float>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i16> @llvm.ctpop.v2i16(<2 x i16>) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #9
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
