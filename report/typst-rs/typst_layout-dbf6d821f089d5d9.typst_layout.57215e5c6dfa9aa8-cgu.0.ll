@@ -205,7 +205,7 @@ bb.na:                                            ; preds = %bb.mz
   br i1 %i.bih, label %bb.nb, label %_RNvNtNtCs3oUPovFnLWP_4core3str6traits11check_range.exit.thread171.invoke.i.i.i.i
 
 bb.nb:                                            ; preds = %bb.na
-  %i.bii = sub nuw i64 %i.ani, %.sroa.68.0.i.i.i.i
+  %i.bii = sub nuw nsw i64 %i.ani, %.sroa.68.0.i.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bz), !noalias !39081
   store i32 12369903, ptr %i.bz, align 4, !noalias !39081
   %.not.i96.i.i.i.i = icmp samesign ult i64 %i.bii, 3

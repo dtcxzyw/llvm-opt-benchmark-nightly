@@ -205,7 +205,7 @@ bb.aa:                                            ; preds = %_RNvMs9_Csgcf5BHVXl
   br i1 %i.ia, label %bb.as, label %bb.ap, !prof !21
 
 bb.ab:                                            ; preds = %bb.y
-  %i.ib = sub nuw i64 %.sroa.8.2.i.i.i.i.i, %.sroa.0.1.i.i.i.i.i
+  %i.ib = sub nuw nsw i64 %.sroa.8.2.i.i.i.i.i, %.sroa.0.1.i.i.i.i.i
   %i.ic = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 %.sroa.0.1.i.i.i.i.i
   call fastcc void @_RNvMs_NtCsgcf5BHVXlUt_7uu_sort15numeric_str_cmpNtB4_7NumInfo5parse(ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %i.y, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ic, i64 noundef %i.ib, ptr noalias nofree noundef readonly captures(address, read_provenance) dereferenceable(5) %i.z) #34, !noalias !422
   %i.id = load i64, ptr %i.bs, align 8, !noalias !431, !noundef !11 ; 5 uses
@@ -343,7 +343,7 @@ _RNvNtNtCs6JMX4GRUq9U_4core5slice6memchr6memchr.exit._crit_edge.i.i.i.i: ; preds
   br i1 %.not121.i.i.i.i, label %_RNvNtNtCs6JMX4GRUq9U_4core5slice6memchr6memchr.exit160.i.i.i.i, label %.lr.ph.i155.i.i.i.i
 
 bb.am:                                            ; preds = %bb.z
-  %i.jd = sub nuw i64 %.sroa.8.2.i.i.i.i.i, %.sroa.0.1.i.i.i.i.i
+  %i.jd = sub nuw nsw i64 %.sroa.8.2.i.i.i.i.i, %.sroa.0.1.i.i.i.i.i
   %i.je = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 %.sroa.0.1.i.i.i.i.i
   %i.jf = call { ptr, i64 } @_RNvNtNtNtCsh036I4OHgIr_6uucore8features4i18n7decimal24locale_decimal_separator() #34, !noalias !422 ; 2 uses
   %i.jg = extractvalue { ptr, i64 } %i.jf, 1
@@ -746,7 +746,7 @@ bb.aa:                                            ; preds = %_RNvMs9_Csgcf5BHVXl
   br i1 %i.ia, label %bb.as, label %bb.ap, !prof !21
 
 bb.ab:                                            ; preds = %bb.y
-  %i.ib = sub nuw i64 %.sroa.8.2.i.i.i.i.i, %.sroa.0.1.i.i.i.i.i
+  %i.ib = sub nuw nsw i64 %.sroa.8.2.i.i.i.i.i, %.sroa.0.1.i.i.i.i.i
   %i.ic = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 %.sroa.0.1.i.i.i.i.i
   call fastcc void @_RNvMs_NtCsgcf5BHVXlUt_7uu_sort15numeric_str_cmpNtB4_7NumInfo5parse(ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %i.y, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ic, i64 noundef %i.ib, ptr noalias nofree noundef readonly captures(address, read_provenance) dereferenceable(5) %i.z) #34, !noalias !888
   %i.id = load i64, ptr %i.bs, align 8, !noalias !897, !noundef !11 ; 5 uses
@@ -884,7 +884,7 @@ _RNvNtNtCs6JMX4GRUq9U_4core5slice6memchr6memchr.exit._crit_edge.i.i.i.i: ; preds
   br i1 %.not121.i.i.i.i, label %_RNvNtNtCs6JMX4GRUq9U_4core5slice6memchr6memchr.exit160.i.i.i.i, label %.lr.ph.i155.i.i.i.i
 
 bb.am:                                            ; preds = %bb.z
-  %i.jd = sub nuw i64 %.sroa.8.2.i.i.i.i.i, %.sroa.0.1.i.i.i.i.i
+  %i.jd = sub nuw nsw i64 %.sroa.8.2.i.i.i.i.i, %.sroa.0.1.i.i.i.i.i
   %i.je = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 %.sroa.0.1.i.i.i.i.i
   %i.jf = call { ptr, i64 } @_RNvNtNtNtCsh036I4OHgIr_6uucore8features4i18n7decimal24locale_decimal_separator() #34, !noalias !888 ; 2 uses
   %i.jg = extractvalue { ptr, i64 } %i.jf, 1
@@ -1287,7 +1287,7 @@ bb.t:                                             ; preds = %_RNvMs9_Csgcf5BHVXl
   br i1 %i.eo, label %bb.al, label %bb.ai, !prof !21
 
 bb.u:                                             ; preds = %bb.r
-  %i.ep = sub nuw i64 %.sroa.8.2.i.i, %.sroa.0.1.i.i
+  %i.ep = sub nuw nsw i64 %.sroa.8.2.i.i, %.sroa.0.1.i.i
   %i.eq = getelementptr inbounds nuw i8, ptr %.0.val, i64 %.sroa.0.1.i.i
   call fastcc void @_RNvMs_NtCsgcf5BHVXlUt_7uu_sort15numeric_str_cmpNtB4_7NumInfo5parse(ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %i.t, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.eq, i64 noundef %i.ep, ptr noalias nofree noundef readonly captures(address, read_provenance) dereferenceable(5) %i.u) #34, !noalias !1550
   %i.er = load i64, ptr %i.dd, align 8, !noalias !1571, !noundef !11 ; 5 uses
@@ -1425,7 +1425,7 @@ _RNvNtNtCs6JMX4GRUq9U_4core5slice6memchr6memchr.exit._crit_edge.i: ; preds = %_R
   br i1 %.not121.i, label %_RNvNtNtCs6JMX4GRUq9U_4core5slice6memchr6memchr.exit160.i, label %.lr.ph.i155.i
 
 bb.af:                                            ; preds = %bb.s
-  %i.fr = sub nuw i64 %.sroa.8.2.i.i, %.sroa.0.1.i.i
+  %i.fr = sub nuw nsw i64 %.sroa.8.2.i.i, %.sroa.0.1.i.i
   %i.fs = getelementptr inbounds nuw i8, ptr %.0.val, i64 %.sroa.0.1.i.i
   %i.ft = call { ptr, i64 } @_RNvNtNtNtCsh036I4OHgIr_6uucore8features4i18n7decimal24locale_decimal_separator() #34, !noalias !1550 ; 2 uses
   %i.fu = extractvalue { ptr, i64 } %i.ft, 1
