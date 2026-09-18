@@ -205,23 +205,22 @@ _ZN2v88internal8TextNode6LengthEv.exit53:         ; preds = %bb.t, %_ZNK2v88inte
   br label %bb.x
 
 bb.x:                                             ; preds = %_ZN2v88internal8TextNode6LengthEv.exit53, %_ZN2v88internal8TextNode6LengthEv.exit45
-  %i.bu = phi i32 [ %i.bo, %_ZN2v88internal8TextNode6LengthEv.exit45 ], [ %i.bt, %_ZN2v88internal8TextNode6LengthEv.exit53 ] ; 7 uses
+  %i.bu = phi i32 [ %i.bo, %_ZN2v88internal8TextNode6LengthEv.exit45 ], [ %i.bt, %_ZN2v88internal8TextNode6LengthEv.exit53 ] ; 8 uses
   store i32 0, ptr %i.at, align 8
-  %i.bv = load i32, ptr %i.aw, align 8            ; 6 uses
+  %i.bv = load i32, ptr %i.aw, align 8            ; 5 uses
   %i.bw = icmp sge i32 %i.bu, %i.bv
   %i.bx = icmp slt i32 %i.bu, 0
   %or.cond.i.i = or i1 %i.bx, %i.bw
   br i1 %or.cond.i.i, label %bb.y, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.x
-  %i.by = sub nuw i32 %i.bv, %i.bu                ; 5 uses
+  %i.by = sub nuw nsw i32 %i.bv, %i.bu            ; 5 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %3, i64 44 ; 5 uses
   %i.ca = zext nneg i32 %i.bu to i64
-  %smax.i.i = tail call i32 @llvm.smax.i32(i32 %i.by, i32 1) ; 2 uses
-  %wide.trip.count.i.i = zext nneg i32 %smax.i.i to i64 ; 2 uses
+  %wide.trip.count.i.i = zext nneg i32 %i.by to i64 ; 2 uses
   %invariant.gep.i.i = getelementptr inbounds nuw [12 x i8], ptr %i.bz, i64 %i.ca ; 3 uses
   %xtraiter = and i64 %wide.trip.count.i.i, 1
-  %4 = icmp slt i32 %i.by, 2
+  %4 = icmp eq i32 %i.by, 1
   br i1 %4, label %.epil.preheader, label %.lr.ph.i.i.new
 
 .lr.ph.i.i.new:                                   ; preds = %.lr.ph.i.i
@@ -280,7 +279,7 @@ bb.z:                                             ; preds = %bb.z, %.lr.ph.i.i.i
 
 .epil.preheader:                                  ; preds = %.preheader.i.i.unr-lcssa, %.lr.ph.i.i
   %indvars.iv.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i.1, %.preheader.i.i.unr-lcssa ] ; 2 uses
-  %lcmp.mod70 = trunc i32 %smax.i.i to i1
+  %lcmp.mod70 = trunc i32 %i.by to i1
   tail call void @llvm.assume(i1 %lcmp.mod70)
   %gep.i.i.epil = getelementptr inbounds nuw [12 x i8], ptr %invariant.gep.i.i, i64 %indvars.iv.i.i.epil.init
   %i.ct = getelementptr inbounds nuw [12 x i8], ptr %i.bz, i64 %indvars.iv.i.i.epil.init
@@ -288,8 +287,8 @@ bb.z:                                             ; preds = %bb.z, %.lr.ph.i.i.i
   br label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %.preheader.i.i.unr-lcssa, %.epil.preheader
-  %5 = icmp slt i32 %i.by, %i.bv
-  br i1 %5, label %.lr.ph24.i.i, label %_ZN2v88internal17QuickCheckDetails7AdvanceEib.exit.i
+  %.not.i = icmp eq i32 %i.bu, 0
+  br i1 %.not.i, label %_ZN2v88internal17QuickCheckDetails7AdvanceEib.exit.i, label %.lr.ph24.i.i
 
 .lr.ph24.i.i:                                     ; preds = %.preheader.i.i
   %i.cu = sext i32 %i.by to i64
@@ -398,21 +397,20 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i32 0, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
-  %i.c = load i32, ptr %i.b, align 8              ; 6 uses
+  %i.c = load i32, ptr %i.b, align 8              ; 5 uses
   %i.d = icmp sge i32 %1, %i.c
   %i.e = icmp slt i32 %1, 0
   %or.cond.i = or i1 %i.e, %i.d
   br i1 %or.cond.i, label %bb.b, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %i.f = sub nuw i32 %i.c, %1                     ; 5 uses
+  %i.f = sub nuw nsw i32 %i.c, %1                 ; 5 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 5 uses
   %i.h = zext nneg i32 %1 to i64
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %i.f, i32 1) ; 2 uses
-  %wide.trip.count.i = zext nneg i32 %smax.i to i64 ; 2 uses
+  %wide.trip.count.i = zext nneg i32 %i.f to i64  ; 2 uses
   %invariant.gep.i = getelementptr inbounds nuw [12 x i8], ptr %i.g, i64 %i.h ; 3 uses
   %xtraiter = and i64 %wide.trip.count.i, 1
-  %3 = icmp slt i32 %i.f, 2
+  %3 = icmp eq i32 %i.f, 1
   br i1 %3, label %.epil.preheader, label %.lr.ph.i.new
 
 .lr.ph.i.new:                                     ; preds = %.lr.ph.i
@@ -471,7 +469,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.n
 
 .epil.preheader:                                  ; preds = %.preheader.i.unr-lcssa, %.lr.ph.i
   %indvars.iv.i.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i.1, %.preheader.i.unr-lcssa ] ; 2 uses
-  %lcmp.mod11 = trunc i32 %smax.i to i1
+  %lcmp.mod11 = trunc i32 %i.f to i1
   tail call void @llvm.assume(i1 %lcmp.mod11)
   %gep.i.epil = getelementptr inbounds nuw [12 x i8], ptr %invariant.gep.i, i64 %indvars.iv.i.epil.init
   %i.aa = getelementptr inbounds nuw [12 x i8], ptr %i.g, i64 %indvars.iv.i.epil.init
@@ -479,8 +477,8 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.n
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.preheader.i.unr-lcssa, %.epil.preheader
-  %4 = icmp slt i32 %i.f, %i.c
-  br i1 %4, label %.lr.ph24.i, label %_ZN2v88internal17QuickCheckDetails7AdvanceEib.exit
+  %.not = icmp eq i32 %1, 0
+  br i1 %.not, label %_ZN2v88internal17QuickCheckDetails7AdvanceEib.exit, label %.lr.ph24.i
 
 .lr.ph24.i:                                       ; preds = %.preheader.i
   %i.ab = sext i32 %i.f to i64

@@ -205,11 +205,10 @@ bb.l:                                             ; preds = %bb.d
 .preheader56.i.i.i:                               ; preds = %.lr.ph.i75.i.i, %.lr.ph.i75.i.i.prol.loopexit
   %.lcssa24 = phi i64 [ %.lcssa24.unr, %.lr.ph.i75.i.i.prol.loopexit ], [ %i.bv, %.lr.ph.i75.i.i ] ; 2 uses
   %spec.select.i76.i.i.lcssa = phi i64 [ %spec.select.i76.i.i.lcssa.unr, %.lr.ph.i75.i.i.prol.loopexit ], [ %spec.select.i76.i.i.1, %.lr.ph.i75.i.i ]
-  %i.ai = sub i64 %1, %3                          ; 2 uses
-  %5 = icmp sgt i64 %i.ai, -1
-  br i1 %5, label %.lr.ph66.split.us.i.i.i, label %stringlib_rfind.exit
+  %i.ai = sub nsw i64 %1, %3
+  br label %.lr.ph66.split.us.i.i.i
 
-.lr.ph66.split.us.i.i.i:                          ; preds = %.preheader56.i.i.i, %bb.r
+.lr.ph66.split.us.i.i.i:                          ; preds = %bb.r, %.preheader56.i.i.i
   %.14865.us.i.i.i = phi i64 [ %i.bg, %bb.r ], [ %i.ai, %.preheader56.i.i.i ] ; 5 uses
   %i.aj = getelementptr i8, ptr %0, i64 %.14865.us.i.i.i ; 4 uses
   %i.ak = load i8, ptr %i.aj, align 1, !tbaa !22
@@ -302,8 +301,8 @@ fastsearch.exit.i:                                ; preds = %bb.o, %bb.k, %bb.h
   %spec.select.i = add i64 %i.ca, %.0.i.fr.i
   br label %stringlib_rfind.exit
 
-stringlib_rfind.exit:                             ; preds = %bb.m, %bb.r, %bb.j, %bb.i, %bb.b, %bb.c, %bb.e, %bb.g, %.preheader56.i.i.i, %fastsearch.exit.i
-  %.011.i = phi i64 [ %i.b, %bb.b ], [ -1, %bb.i ], [ %spec.select.i, %fastsearch.exit.i ], [ -1, %.preheader56.i.i.i ], [ -1, %bb.c ], [ -1, %bb.e ], [ -1, %bb.g ], [ -1, %bb.j ], [ -1, %bb.r ], [ -1, %bb.m ]
+stringlib_rfind.exit:                             ; preds = %bb.m, %bb.r, %bb.j, %bb.i, %bb.b, %bb.c, %bb.e, %bb.g, %fastsearch.exit.i
+  %.011.i = phi i64 [ %i.b, %bb.b ], [ -1, %bb.g ], [ %spec.select.i, %fastsearch.exit.i ], [ -1, %bb.i ], [ -1, %bb.c ], [ -1, %bb.e ], [ -1, %bb.j ], [ -1, %bb.r ], [ -1, %bb.m ]
   ret i64 %.011.i
 }
 
@@ -706,14 +705,13 @@ bb.w:                                             ; preds = %bb.v, %bb.u
 ._crit_edge.i:                                    ; preds = %._crit_edge.i.unr-lcssa, %.lr.ph.i73.epil.preheader
   %.lcssa159 = phi i64 [ %i.du, %._crit_edge.i.unr-lcssa ], [ %i.bt, %.lr.ph.i73.epil.preheader ]
   %.171.i.lcssa = phi i64 [ %.171.i.1, %._crit_edge.i.unr-lcssa ], [ %.171.i.epil, %.lr.ph.i73.epil.preheader ]
-  %i.bx = sub i64 %1, %3                          ; 4 uses
+  %i.bx = sub nsw i64 %1, %3                      ; 3 uses
   %i.by = getelementptr i8, ptr %0, i64 %i.bk     ; 3 uses
   %i.bz = and i8 %i.bm, 63
   %i.ca = zext nneg i8 %i.bz to i64
   %i.cb = shl nuw i64 1, %i.ca
   %i.cc = or i64 %.lcssa159, %i.cb                ; 2 uses
-  %.not108.i = icmp slt i64 %i.bx, 0
-  br i1 %.not108.i, label %.loopexit.i, label %.lr.ph113.split.us.i
+  br label %.lr.ph113.split.us.i
 
 .lr.ph113.split.us.i:                             ; preds = %._crit_edge.i, %bb.ag
   %.066110.us.i = phi i64 [ %i.dd, %bb.ag ], [ 0, %._crit_edge.i ] ; 9 uses
@@ -831,9 +829,8 @@ bb.ag:                                            ; preds = %bb.af, %bb.ad, %bb.
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.unr-lcssa, label %.lr.ph.i73, !llvm.loop !159
 
-.loopexit.i:                                      ; preds = %bb.ag, %._crit_edge.i
-  %.375.ph.i = phi i64 [ 0, %._crit_edge.i ], [ %.274.us.i, %bb.ag ]
-  %i.dz = select i1 %i.b, i64 %.375.ph.i, i64 -1
+.loopexit.i:                                      ; preds = %bb.ag
+  %i.dz = select i1 %i.b, i64 %.274.us.i, i64 -1
   br label %stringlib_find_char.exit
 
 bb.ah:                                            ; preds = %bb.v
@@ -893,9 +890,8 @@ bb.am:                                            ; preds = %bb.t
 .preheader56.i:                                   ; preds = %.lr.ph.i75, %.lr.ph.i75.prol.loopexit
   %.lcssa156 = phi i64 [ %.lcssa156.unr, %.lr.ph.i75.prol.loopexit ], [ %i.gj, %.lr.ph.i75 ] ; 2 uses
   %spec.select.i76.lcssa = phi i64 [ %spec.select.i76.lcssa.unr, %.lr.ph.i75.prol.loopexit ], [ %spec.select.i76.1, %.lr.ph.i75 ]
-  %i.ew = sub i64 %1, %3                          ; 2 uses
-  %6 = icmp sgt i64 %i.ew, -1
-  br i1 %6, label %.lr.ph66.split.us.i, label %stringlib_find_char.exit
+  %i.ew = sub nsw i64 %1, %3
+  br label %.lr.ph66.split.us.i
 
 .lr.ph66.split.us.i:                              ; preds = %.preheader56.i, %bb.as
   %.14865.us.i = phi i64 [ %i.fu, %bb.as ], [ %i.ew, %.preheader56.i ] ; 5 uses
@@ -982,8 +978,8 @@ bb.as:                                            ; preds = %bb.ar, %bb.aq, %bb.
   %i.gm = icmp sgt i64 %.04759.i, 2
   br i1 %i.gm, label %.lr.ph.i75, label %.preheader56.i, !llvm.loop !5
 
-stringlib_find_char.exit:                         ; preds = %bb.ae, %._crit_edge104.us.thread.i.loopexit, %bb.as, %bb.an, %bb.ap, %bb.o, %bb.j, %bb.s, %bb.r, %.lr.ph.i68, %bb.n, %middle.block, %.preheader56.i, %.loopexit.i, %bb.p, %bb.m, %bb.l, %bb.i, %bb.h, %bb.g, %.preheader.i, %bb.d, %bb.a, %bb.b, %bb.al, %bb.ak, %bb.aj
-  %.0 = phi i64 [ -1, %.preheader56.i ], [ -1, %bb.a ], [ -1, %bb.d ], [ %4, %bb.r ], [ %.14865.us.i, %bb.ap ], [ -1, %bb.n ], [ %spec.select.i, %.lr.ph.i68 ], [ %i.ef, %bb.aj ], [ %i.eg, %bb.ak ], [ %i.eh, %bb.al ], [ -1, %bb.b ], [ %i.m, %bb.h ], [ -1, %bb.g ], [ %i.r, %bb.i ], [ -1, %.preheader.i ], [ %i.z, %bb.m ], [ -1, %bb.l ], [ %i.ai, %bb.p ], [ -1, %bb.o ], [ -1, %bb.j ], [ %i.dz, %.loopexit.i ], [ %i.au, %middle.block ], [ -1, %bb.as ], [ %.1.i, %bb.s ], [ -1, %bb.an ], [ %4, %bb.ae ], [ %.066110.us.i, %._crit_edge104.us.thread.i.loopexit ]
+stringlib_find_char.exit:                         ; preds = %bb.ae, %._crit_edge104.us.thread.i.loopexit, %bb.as, %bb.an, %bb.ap, %bb.o, %bb.j, %bb.s, %bb.r, %.lr.ph.i68, %bb.n, %middle.block, %.loopexit.i, %bb.p, %bb.m, %bb.l, %bb.i, %bb.h, %bb.g, %.preheader.i, %bb.d, %bb.a, %bb.b, %bb.al, %bb.ak, %bb.aj
+  %.0 = phi i64 [ -1, %bb.o ], [ -1, %bb.a ], [ -1, %bb.d ], [ %4, %bb.r ], [ %.14865.us.i, %bb.ap ], [ -1, %bb.n ], [ %spec.select.i, %.lr.ph.i68 ], [ %i.ef, %bb.aj ], [ %i.eg, %bb.ak ], [ %i.eh, %bb.al ], [ -1, %bb.b ], [ %i.m, %bb.h ], [ -1, %bb.g ], [ %i.r, %bb.i ], [ -1, %.preheader.i ], [ %i.z, %bb.m ], [ -1, %bb.l ], [ %i.ai, %bb.p ], [ %i.dz, %.loopexit.i ], [ -1, %bb.j ], [ %i.au, %middle.block ], [ -1, %bb.as ], [ %.1.i, %bb.s ], [ -1, %bb.an ], [ %.066110.us.i, %._crit_edge104.us.thread.i.loopexit ], [ %4, %bb.ae ]
   ret i64 %.0
 }
 
@@ -1386,7 +1382,7 @@ bb.m:                                             ; preds = %.lr.ph
 
 bb.n:                                             ; preds = %.lr.ph62, %bb.n
   %.061 = phi i64 [ %i.bf, %.lr.ph62 ], [ %i.bn, %bb.n ] ; 3 uses
-  %i.bg = sub nuw i64 %i.ar, %.061
+  %i.bg = sub nuw nsw i64 %i.ar, %.061
   %i.bh = trunc i64 %i.bg to i8
   %i.bi = getelementptr i8, ptr %0, i64 %.061
   %i.bj = load i8, ptr %i.bi, align 1, !tbaa !22
@@ -1789,7 +1785,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.h = getelementptr i8, ptr %i.c, i64 %.val4
-  %i.i = sub nuw i64 %.val21.i, %.val4
+  %i.i = sub nuw nsw i64 %.val21.i, %.val4
   %i.j = call ptr @PyBytes_FromStringAndSize(ptr noundef %i.h, i64 noundef %i.i), !inline_history !212
   br label %bytes_removeprefix_impl.exit
 
@@ -1860,7 +1856,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.j, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = sub nuw i64 %.val22.i, %.val4
+  %i.k = sub nuw nsw i64 %.val22.i, %.val4
   %i.l = call ptr @PyBytes_FromStringAndSize(ptr noundef %i.c, i64 noundef %i.k), !inline_history !213
   br label %bytes_removesuffix_impl.exit
 
@@ -2263,11 +2259,10 @@ bb.n:                                             ; preds = %bb.f
 .preheader56.i.i.i.i:                             ; preds = %.lr.ph.i75.i.i.i, %.lr.ph.i75.i.i.i.prol.loopexit
   %.lcssa30 = phi i64 [ %.lcssa30.unr, %.lr.ph.i75.i.i.i.prol.loopexit ], [ %i.ce, %.lr.ph.i75.i.i.i ] ; 2 uses
   %spec.select.i76.i.i.i.lcssa = phi i64 [ %spec.select.i76.i.i.i.lcssa.unr, %.lr.ph.i75.i.i.i.prol.loopexit ], [ %spec.select.i76.i.i.i.1, %.lr.ph.i75.i.i.i ]
-  %i.ar = sub i64 %.val.i, %i.h                   ; 2 uses
-  %3 = icmp sgt i64 %i.ar, -1
-  br i1 %3, label %.lr.ph66.split.us.i.i.i.i, label %fastsearch.exit.thread.i.i
+  %i.ar = sub nsw i64 %.val.i, %i.h
+  br label %.lr.ph66.split.us.i.i.i.i
 
-.lr.ph66.split.us.i.i.i.i:                        ; preds = %.preheader56.i.i.i.i, %bb.t
+.lr.ph66.split.us.i.i.i.i:                        ; preds = %bb.t, %.preheader56.i.i.i.i
   %.14865.us.i.i.i.i = phi i64 [ %i.bp, %bb.t ], [ %i.ar, %.preheader56.i.i.i.i ] ; 5 uses
   %i.as = getelementptr i8, ptr %i.b, i64 %.14865.us.i.i.i.i ; 4 uses
   %i.at = load i8, ptr %i.as, align 1, !tbaa !22
@@ -2357,7 +2352,7 @@ fastsearch.exit.i.i:                              ; preds = %bb.q, %bb.m, %bb.j
   %i.ci = icmp slt i64 %.0.i.i.i, 0
   br i1 %i.ci, label %fastsearch.exit.thread.i.i, label %bb.x
 
-fastsearch.exit.thread.i.i:                       ; preds = %bb.t, %bb.o, %bb.l, %bb.k, %fastsearch.exit.i.i, %.preheader56.i.i.i.i, %bb.i, %bb.g, %bb.e
+fastsearch.exit.thread.i.i:                       ; preds = %bb.t, %bb.o, %bb.l, %bb.k, %fastsearch.exit.i.i, %bb.i, %bb.g, %bb.e
   %i.cj = load i32, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 47096), align 8, !tbaa !22 ; 2 uses
   %i.ck = icmp ugt i32 %i.cj, -1073741825
   br i1 %i.ck, label %Py_INCREF.exit38.i.i, label %bb.u
@@ -2760,11 +2755,10 @@ bb.bm:                                            ; preds = %bb.aj
   %.lcssa335 = phi i64 [ %.lcssa335.unr, %.lr.ph.i75.i.i.i.prol.loopexit ], [ %i.hk, %.lr.ph.i75.i.i.i ] ; 2 uses
   %spec.select.i76.i.i.i.lcssa = phi i64 [ %spec.select.i76.i.i.i.lcssa.unr, %.lr.ph.i75.i.i.i.prol.loopexit ], [ %spec.select.i76.i.i.i.1, %.lr.ph.i75.i.i.i ]
   %i.fw = add nsw i64 %.in.i.i, -1
-  %i.fx = sub i64 %.057116.i.i, %i.cv             ; 2 uses
-  %5 = icmp sgt i64 %i.fx, -1
-  br i1 %5, label %.lr.ph66.split.us.i.i.i.i, label %fastsearch.exit.thread.i.i
+  %i.fx = sub nsw i64 %.057116.i.i, %i.cv
+  br label %.lr.ph66.split.us.i.i.i.i
 
-.lr.ph66.split.us.i.i.i.i:                        ; preds = %.preheader56.i.i.i.i, %bb.bs
+.lr.ph66.split.us.i.i.i.i:                        ; preds = %bb.bs, %.preheader56.i.i.i.i
   %.14865.us.i.i.i.i = phi i64 [ %i.gv, %bb.bs ], [ %i.fx, %.preheader56.i.i.i.i ] ; 9 uses
   %i.fy = getelementptr i8, ptr %i.w, i64 %.14865.us.i.i.i.i ; 4 uses
   %i.fz = load i8, ptr %i.fy, align 1, !tbaa !22
@@ -2907,7 +2901,7 @@ Py_DECREF.exit72.i.i:                             ; preds = %bb.ca, %bb.bz, %bb.
   %or.cond.i.i = or i1 %i.id, %i.ie
   br i1 %or.cond.i.i, label %fastsearch.exit.thread.thread.i.i, label %.lr.ph.split.i.i, !llvm.loop !228
 
-fastsearch.exit.thread.i.i:                       ; preds = %fastsearch.exit.loopexit.i.i, %.preheader56.i.i.i.i, %bb.bs, %bb.bn
+fastsearch.exit.thread.i.i:                       ; preds = %fastsearch.exit.loopexit.i.i, %bb.bs, %bb.bn
   %i.if = icmp eq i64 %.0117.i.i, 0
   br i1 %i.if, label %fastsearch.exit.thread.thread218.i.i, label %fastsearch.exit.thread.thread.i.i
 

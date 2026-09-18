@@ -205,7 +205,7 @@ bb.bf:                                            ; preds = %bb.be
   %i.gy = getelementptr inbounds nuw i8, ptr %.035159.i.i, i64 %i.gx ; 3 uses
   %i.gz = load i8, ptr %i.gy, align 1, !tbaa !106
   %i.ha = icmp eq i8 %i.gz, 45
-  %i.hb = sub nuw i64 %.036158.i.i, %i.gx         ; 2 uses
+  %i.hb = sub nuw nsw i64 %.036158.i.i, %i.gx     ; 2 uses
   br i1 %i.ha, label %bb.bg, label %bb.bh
 
 bb.bg:                                            ; preds = %bb.bf
@@ -608,7 +608,7 @@ bb.cr:                                            ; preds = %bb.cq
   %i.nf = getelementptr inbounds nuw i8, ptr %.035159.i.i, i64 %i.ne ; 3 uses
   %i.ng = load i8, ptr %i.nf, align 1, !tbaa !106
   %i.nh = icmp eq i8 %i.ng, 45
-  %i.ni = sub nuw i64 %.036158.i.i, %i.ne         ; 2 uses
+  %i.ni = sub nuw nsw i64 %.036158.i.i, %i.ne     ; 2 uses
   br i1 %i.nh, label %bb.cs, label %bb.ct
 
 bb.cs:                                            ; preds = %bb.cr
@@ -1011,7 +1011,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.eh = getelementptr inbounds nuw i8, ptr %.035159.i.i, i64 %i.eg ; 3 uses
   %i.ei = load i8, ptr %i.eh, align 1, !tbaa !106
   %i.ej = icmp eq i8 %i.ei, 45
-  %i.ek = sub nuw i64 %.036158.i.i, %i.eg         ; 2 uses
+  %i.ek = sub nuw nsw i64 %.036158.i.i, %i.eg     ; 2 uses
   br i1 %i.ej, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
@@ -1414,7 +1414,7 @@ bb.bs:                                            ; preds = %bb.br
   %i.ko = getelementptr inbounds nuw i8, ptr %.035159.i.i, i64 %i.kn ; 3 uses
   %i.kp = load i8, ptr %i.ko, align 1, !tbaa !106
   %i.kq = icmp eq i8 %i.kp, 45
-  %i.kr = sub nuw i64 %.036158.i.i, %i.kn         ; 2 uses
+  %i.kr = sub nuw nsw i64 %.036158.i.i, %i.kn     ; 2 uses
   br i1 %i.kq, label %bb.bt, label %bb.bu
 
 bb.bt:                                            ; preds = %bb.bs
@@ -1817,7 +1817,7 @@ bb.bf:                                            ; preds = %bb.be
   %i.hg = getelementptr inbounds nuw i8, ptr %.035159.i.i, i64 %i.hf ; 3 uses
   %i.hh = load i8, ptr %i.hg, align 1, !tbaa !106
   %i.hi = icmp eq i8 %i.hh, 45
-  %i.hj = sub nuw i64 %.036158.i.i, %i.hf         ; 2 uses
+  %i.hj = sub nuw nsw i64 %.036158.i.i, %i.hf     ; 2 uses
   br i1 %i.hi, label %bb.bg, label %bb.bh
 
 bb.bg:                                            ; preds = %bb.bf
@@ -2220,7 +2220,7 @@ bb.cr:                                            ; preds = %bb.cq
   %i.nn = getelementptr inbounds nuw i8, ptr %.035159.i.i, i64 %i.nm ; 3 uses
   %i.no = load i8, ptr %i.nn, align 1, !tbaa !106
   %i.np = icmp eq i8 %i.no, 45
-  %i.nq = sub nuw i64 %.036158.i.i, %i.nm         ; 2 uses
+  %i.nq = sub nuw nsw i64 %.036158.i.i, %i.nm     ; 2 uses
   br i1 %i.np, label %bb.cs, label %bb.ct
 
 bb.cs:                                            ; preds = %bb.cr
@@ -2623,7 +2623,7 @@ bb.bf:                                            ; preds = %bb.be
   %i.hg = getelementptr inbounds nuw i8, ptr %.035143.i.i, i64 %i.hf ; 3 uses
   %i.hh = load i8, ptr %i.hg, align 1, !tbaa !106
   %i.hi = icmp eq i8 %i.hh, 45
-  %i.hj = sub nuw i64 %.036142.i.i, %i.hf         ; 2 uses
+  %i.hj = sub nuw nsw i64 %.036142.i.i, %i.hf     ; 2 uses
   br i1 %i.hi, label %bb.bg, label %bb.bh
 
 bb.bg:                                            ; preds = %bb.bf
@@ -3026,7 +3026,7 @@ bb.cr:                                            ; preds = %bb.cq
   %i.nh = getelementptr inbounds nuw i8, ptr %.035143.i.i, i64 %i.ng ; 3 uses
   %i.ni = load i8, ptr %i.nh, align 1, !tbaa !106
   %i.nj = icmp eq i8 %i.ni, 45
-  %i.nk = sub nuw i64 %.036142.i.i, %i.ng         ; 2 uses
+  %i.nk = sub nuw nsw i64 %.036142.i.i, %i.ng     ; 2 uses
   br i1 %i.nj, label %bb.cs, label %bb.ct
 
 bb.cs:                                            ; preds = %bb.cr
@@ -3429,7 +3429,7 @@ bb.bb:                                            ; preds = %bb.ba
   %i.hc = getelementptr inbounds nuw i8, ptr %.042169.i.i, i64 %i.hb ; 3 uses
   %i.hd = load i8, ptr %i.hc, align 1, !tbaa !106
   %i.he = icmp eq i8 %i.hd, 45
-  %i.hf = sub nuw i64 %.043168.i.i, %i.hb         ; 2 uses
+  %i.hf = sub nuw nsw i64 %.043168.i.i, %i.hb     ; 2 uses
   br i1 %i.he, label %bb.bc, label %bb.bd
 
 bb.bc:                                            ; preds = %bb.bb
@@ -3832,7 +3832,7 @@ bb.cn:                                            ; preds = %bb.cm
   %i.nf = getelementptr inbounds nuw i8, ptr %.042169.i.i, i64 %i.ne ; 3 uses
   %i.ng = load i8, ptr %i.nf, align 1, !tbaa !106
   %i.nh = icmp eq i8 %i.ng, 45
-  %i.ni = sub nuw i64 %.043168.i.i, %i.ne         ; 2 uses
+  %i.ni = sub nuw nsw i64 %.043168.i.i, %i.ne     ; 2 uses
   br i1 %i.nh, label %bb.co, label %bb.cp
 
 bb.co:                                            ; preds = %bb.cn
@@ -4235,7 +4235,7 @@ bb.bb:                                            ; preds = %bb.ba
   %i.hi = getelementptr inbounds nuw i8, ptr %.042169.i.i, i64 %i.hh ; 3 uses
   %i.hj = load i8, ptr %i.hi, align 1, !tbaa !106
   %i.hk = icmp eq i8 %i.hj, 45
-  %i.hl = sub nuw i64 %.043168.i.i, %i.hh         ; 2 uses
+  %i.hl = sub nuw nsw i64 %.043168.i.i, %i.hh     ; 2 uses
   br i1 %i.hk, label %bb.bc, label %bb.bd
 
 bb.bc:                                            ; preds = %bb.bb
@@ -4638,7 +4638,7 @@ bb.cn:                                            ; preds = %bb.cm
   %i.nl = getelementptr inbounds nuw i8, ptr %.042169.i.i, i64 %i.nk ; 3 uses
   %i.nm = load i8, ptr %i.nl, align 1, !tbaa !106
   %i.nn = icmp eq i8 %i.nm, 45
-  %i.no = sub nuw i64 %.043168.i.i, %i.nk         ; 2 uses
+  %i.no = sub nuw nsw i64 %.043168.i.i, %i.nk     ; 2 uses
   br i1 %i.nn, label %bb.co, label %bb.cp
 
 bb.co:                                            ; preds = %bb.cn
@@ -5041,7 +5041,7 @@ bb.bb:                                            ; preds = %bb.ba
   %i.hk = getelementptr inbounds nuw i8, ptr %.042169.i.i, i64 %i.hj ; 3 uses
   %i.hl = load i8, ptr %i.hk, align 1, !tbaa !106
   %i.hm = icmp eq i8 %i.hl, 45
-  %i.hn = sub nuw i64 %.043168.i.i, %i.hj         ; 2 uses
+  %i.hn = sub nuw nsw i64 %.043168.i.i, %i.hj     ; 2 uses
   br i1 %i.hm, label %bb.bc, label %bb.bd
 
 bb.bc:                                            ; preds = %bb.bb
@@ -5444,7 +5444,7 @@ bb.cn:                                            ; preds = %bb.cm
   %i.nn = getelementptr inbounds nuw i8, ptr %.042169.i.i, i64 %i.nm ; 3 uses
   %i.no = load i8, ptr %i.nn, align 1, !tbaa !106
   %i.np = icmp eq i8 %i.no, 45
-  %i.nq = sub nuw i64 %.043168.i.i, %i.nm         ; 2 uses
+  %i.nq = sub nuw nsw i64 %.043168.i.i, %i.nm     ; 2 uses
   br i1 %i.np, label %bb.co, label %bb.cp
 
 bb.co:                                            ; preds = %bb.cn
@@ -5847,7 +5847,7 @@ bb.az:                                            ; preds = %bb.ay
   %i.hz = getelementptr inbounds nuw i8, ptr %.042161.i.i, i64 %i.hy ; 3 uses
   %i.ia = load i8, ptr %i.hz, align 1, !tbaa !106
   %i.ib = icmp eq i8 %i.ia, 45
-  %i.ic = sub nuw i64 %.043160.i.i, %i.hy         ; 2 uses
+  %i.ic = sub nuw nsw i64 %.043160.i.i, %i.hy     ; 2 uses
   br i1 %i.ib, label %bb.ba, label %bb.bb
 
 bb.ba:                                            ; preds = %bb.az
@@ -6250,7 +6250,7 @@ bb.cj:                                            ; preds = %bb.ci
   %i.ob = getelementptr inbounds nuw i8, ptr %.042161.i.i, i64 %i.oa ; 3 uses
   %i.oc = load i8, ptr %i.ob, align 1, !tbaa !106
   %i.od = icmp eq i8 %i.oc, 45
-  %i.oe = sub nuw i64 %.043160.i.i, %i.oa         ; 2 uses
+  %i.oe = sub nuw nsw i64 %.043160.i.i, %i.oa     ; 2 uses
   br i1 %i.od, label %bb.ck, label %bb.cl
 
 bb.ck:                                            ; preds = %bb.cj
@@ -6653,7 +6653,7 @@ bb.r:                                             ; preds = %bb.q
   %i.bn = getelementptr inbounds nuw i8, ptr %.035109.i, i64 %i.bm ; 3 uses
   %i.bo = load i8, ptr %i.bn, align 1, !tbaa !106
   %i.bp = icmp eq i8 %i.bo, 45
-  %i.bq = sub nuw i64 %.036108.i, %i.bm           ; 2 uses
+  %i.bq = sub nuw nsw i64 %.036108.i, %i.bm       ; 2 uses
   br i1 %i.bp, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
@@ -6961,7 +6961,7 @@ bb.ax:                                            ; preds = %bb.aw
   %i.fj = getelementptr inbounds nuw i8, ptr %.035109.i, i64 %i.fi ; 3 uses
   %i.fk = load i8, ptr %i.fj, align 1, !tbaa !106
   %i.fl = icmp eq i8 %i.fk, 45
-  %i.fm = sub nuw i64 %.036108.i, %i.fi           ; 2 uses
+  %i.fm = sub nuw nsw i64 %.036108.i, %i.fi       ; 2 uses
   br i1 %i.fl, label %bb.ay, label %bb.az
 
 bb.ay:                                            ; preds = %bb.ax
@@ -7275,7 +7275,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bl = getelementptr inbounds nuw i8, ptr %.042112.i, i64 %i.bk ; 3 uses
   %i.bm = load i8, ptr %i.bl, align 1, !tbaa !106
   %i.bn = icmp eq i8 %i.bm, 45
-  %i.bo = sub nuw i64 %.043111.i, %i.bk           ; 2 uses
+  %i.bo = sub nuw nsw i64 %.043111.i, %i.bk       ; 2 uses
   br i1 %i.bn, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
@@ -7565,7 +7565,7 @@ bb.as:                                            ; preds = %bb.ar
   %i.fc = getelementptr inbounds nuw i8, ptr %.042112.i, i64 %i.fb ; 3 uses
   %i.fd = load i8, ptr %i.fc, align 1, !tbaa !106
   %i.fe = icmp eq i8 %i.fd, 45
-  %i.ff = sub nuw i64 %.043111.i, %i.fb           ; 2 uses
+  %i.ff = sub nuw nsw i64 %.043111.i, %i.fb       ; 2 uses
   br i1 %i.fe, label %bb.at, label %bb.au
 
 bb.at:                                            ; preds = %bb.as

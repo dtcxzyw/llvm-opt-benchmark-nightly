@@ -205,7 +205,7 @@ _RNCINvNtNtNtCslwFuT2d6ECx_4core4iter8adapters3map8map_foldjTjjEuNCINvMNtNtCsbNM
   br i1 %i.dr, label %_RNCINvMNtNtCsbNMRYq9Xj9a_14rustworkx_core10generators23hexagonal_lattice_graphNtB5_23HexagonalLatticeBuilder41build_with_position_dependent_node_weightINtNtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB3B_5types3any5PyAnyEB3w_NtB2w_10UndirectedEB3w_NCNvNtCskcxRuJ53GpR_9rustworkx10generators23hexagonal_lattice_graphs_0NCB50_0B3w_E0B54_.exit.i.i.i.i.i.i.i.i.i.i.i, label %bb.ab
 
 bb.ab:                                            ; preds = %.lr.ph.i.i.i.i.i.i.i.i.split.i.i
-  %i.ds = sub nuw i64 %.val4.i.i.i.i.i.i.i.i.i.i, %i.cm ; 2 uses
+  %i.ds = sub nuw nsw i64 %.val4.i.i.i.i.i.i.i.i.i.i, %i.cm ; 2 uses
   %i.dt = udiv i64 %i.ds, %.sroa.012.0.i.i66      ; 3 uses
   %i.du = add nuw i64 %i.dt, 1
   %i.dv = urem i64 %i.ds, %.sroa.012.0.i.i66
@@ -608,7 +608,7 @@ _RNCINvNtNtNtCslwFuT2d6ECx_4core4iter8adapters3map8map_foldjTjjEuNCINvMNtNtCsbNM
   br i1 %i.dx, label %_RNCINvMNtNtCsbNMRYq9Xj9a_14rustworkx_core10generators23hexagonal_lattice_graphNtB5_23HexagonalLatticeBuilder41build_with_position_dependent_node_weightINtNtNtCs68Jln09rRqb_8petgraph10graph_impl12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB3B_5types3any5PyAnyEB3w_EB3w_NCNvNtCskcxRuJ53GpR_9rustworkx10generators32directed_hexagonal_lattice_graphs_0NCB4I_0B3w_E0B4M_.exit.i.i.i.i.i.i.i.i.i.i.i, label %bb.ab
 
 bb.ab:                                            ; preds = %.lr.ph.i.i.i.i.i.i.i.i.split.i.i
-  %i.dy = sub nuw i64 %.val4.i.i.i.i.i.i.i.i.i.i, %i.cs ; 2 uses
+  %i.dy = sub nuw nsw i64 %.val4.i.i.i.i.i.i.i.i.i.i, %i.cs ; 2 uses
   %i.dz = udiv i64 %i.dy, %.sroa.012.0.i.i68      ; 3 uses
   %i.ea = add nuw i64 %i.dz, 1
   %i.eb = urem i64 %i.dy, %.sroa.012.0.i.i68

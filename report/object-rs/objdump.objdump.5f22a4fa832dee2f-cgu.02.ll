@@ -90,7 +90,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.aa, label %.split.us, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.ab = sub nuw i64 %.sroa.7.0.us.us.us.us, %i.z
+  %i.ab = sub nuw nsw i64 %.sroa.7.0.us.us.us.us, %i.z
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.0.0313.us.us.us.us, i64 %i.z
   br label %bb.i
 
@@ -148,7 +148,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.ar, label %.split.us, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.as = sub nuw i64 %.sroa.7.0.us.us, %i.aq
+  %i.as = sub nuw nsw i64 %.sroa.7.0.us.us, %i.aq
   %i.at = getelementptr inbounds nuw i8, ptr %.sroa.0.0313.us.us, i64 %i.aq
   br label %bb.p
 
@@ -206,7 +206,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %i.bf, label %.split.us, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.bg = sub nuw i64 %.sroa.7.0.us418.us, %i.be
+  %i.bg = sub nuw nsw i64 %.sroa.7.0.us418.us, %i.be
   %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.0.0313.us419.us, i64 %i.be
   br label %bb.w
 
@@ -269,7 +269,7 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %i.bw, label %.split.us, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.bx = sub nuw i64 %.sroa.7.0, %i.bv
+  %i.bx = sub nuw nsw i64 %.sroa.7.0, %i.bv
   %i.by = getelementptr inbounds nuw i8, ptr %.sroa.0.0313, i64 %i.bv
   br label %bb.ad
 
@@ -392,7 +392,7 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %i.dc, label %_RNvMs7_NtNtNtCseHTIzroA4w0_6object4read3elf7versionINtB5_15VernauxIteratorINtNtBb_3elf12FileHeader32NtNtBb_6endian10EndiannessEE4nextCs8aoZCP6pRcV_7objdump.exit, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.dd = sub nuw i64 %.sroa.7260.0674, %i.db     ; 3 uses
+  %i.dd = sub nuw nsw i64 %.sroa.7260.0674, %i.db ; 3 uses
   %i.de = getelementptr inbounds nuw i8, ptr %.sroa.0259.0675, i64 %i.db ; 3 uses
   %i.df = getelementptr inbounds nuw i8, ptr %.sroa.0259.0675, i64 2
   %.sroa.028.0.copyload.i.i192 = load i16, ptr %i.df, align 1, !noalias !62 ; 2 uses
@@ -411,7 +411,7 @@ bb.al:                                            ; preds = %bb.ak
   br i1 %i.dl, label %_RNvMs7_NtNtNtCseHTIzroA4w0_6object4read3elf7versionINtB5_15VernauxIteratorINtNtBb_3elf12FileHeader32NtNtBb_6endian10EndiannessEE4nextCs8aoZCP6pRcV_7objdump.exit, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  %i.dm = sub nuw i64 %.sroa.7260.0674, %i.dk
+  %i.dm = sub nuw nsw i64 %.sroa.7260.0674, %i.dk
   %i.dn = getelementptr inbounds nuw i8, ptr %.sroa.0259.0675, i64 %i.dk
   br label %.preheader
 
@@ -443,7 +443,7 @@ bb.an:                                            ; preds = %.lr.ph.split.us
 bb.ao:                                            ; preds = %bb.an
   %i.du = add i16 %.sroa.11271.0462.us, -1        ; 2 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %.sroa.0269.0464.us, i64 %i.ds
-  %i.dw = sub nuw i64 %.sroa.7270.0463.us, %i.ds
+  %i.dw = sub nuw nsw i64 %.sroa.7270.0463.us, %i.ds
   %i.dx = getelementptr inbounds nuw i8, ptr %.sroa.0269.0464.us, i64 6
   %.sroa.0152.0.copyload.us = load i16, ptr %i.dx, align 1 ; 2 uses
   %i.dy = tail call i16 @llvm.bswap.i16(i16 %.sroa.0152.0.copyload.us)
@@ -474,7 +474,7 @@ bb.ap:                                            ; preds = %.lr.ph.split.split.
 bb.aq:                                            ; preds = %bb.ap
   %i.ef = add i16 %.sroa.11271.0462.us476, -1     ; 2 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %.sroa.0269.0464.us474, i64 %i.ed
-  %i.eh = sub nuw i64 %.sroa.7270.0463.us475, %i.ed
+  %i.eh = sub nuw nsw i64 %.sroa.7270.0463.us475, %i.ed
   %i.ei = getelementptr inbounds nuw i8, ptr %.sroa.0269.0464.us474, i64 6
   %.sroa.0152.0.copyload.us479 = load i16, ptr %i.ei, align 1
   %i.ej = and i16 %.sroa.0152.0.copyload.us479, -129
@@ -501,7 +501,7 @@ bb.ar:                                            ; preds = %.lr.ph.split.split
 bb.as:                                            ; preds = %bb.ar
   %i.eq = add i16 %.sroa.11271.0462, -1           ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %.sroa.0269.0464, i64 %i.eo
-  %i.es = sub nuw i64 %.sroa.7270.0463, %i.eo
+  %i.es = sub nuw nsw i64 %.sroa.7270.0463, %i.eo
   %i.et = getelementptr inbounds nuw i8, ptr %.sroa.0269.0464, i64 6
   %.sroa.0152.0.copyload = load i16, ptr %i.et, align 1
   %i.eu = and i16 %.sroa.0152.0.copyload, 32767
@@ -560,7 +560,7 @@ bb.av:                                            ; preds = %bb.au
   br i1 %i.fk, label %_RNvMs7_NtNtNtCseHTIzroA4w0_6object4read3elf7versionINtB5_15VernauxIteratorINtNtBb_3elf12FileHeader32NtNtBb_6endian10EndiannessEE4nextCs8aoZCP6pRcV_7objdump.exit251, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  %i.fl = sub nuw i64 %.sroa.7279.0678, %i.fj     ; 2 uses
+  %i.fl = sub nuw nsw i64 %.sroa.7279.0678, %i.fj ; 2 uses
   %i.fm = getelementptr inbounds nuw i8, ptr %.sroa.0278.0679, i64 %i.fj ; 2 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %.sroa.0278.0679, i64 6
   %.sroa.028.0.copyload.i.i210 = load i16, ptr %i.fn, align 1, !noalias !64 ; 2 uses
@@ -579,7 +579,7 @@ bb.ax:                                            ; preds = %bb.aw
   br i1 %i.ft, label %_RNvMs7_NtNtNtCseHTIzroA4w0_6object4read3elf7versionINtB5_15VernauxIteratorINtNtBb_3elf12FileHeader32NtNtBb_6endian10EndiannessEE4nextCs8aoZCP6pRcV_7objdump.exit251, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
-  %i.fu = sub nuw i64 %.sroa.7279.0678, %i.fs
+  %i.fu = sub nuw nsw i64 %.sroa.7279.0678, %i.fs
   %i.fv = getelementptr inbounds nuw i8, ptr %.sroa.0278.0679, i64 %i.fs
   br label %bb.az
 
@@ -753,7 +753,7 @@ bb.bl:                                            ; preds = %bb.bk
   br i1 %i.hl, label %_RNvMs7_NtNtNtCseHTIzroA4w0_6object4read3elf7versionINtB5_15VernauxIteratorINtNtBb_3elf12FileHeader32NtNtBb_6endian10EndiannessEE4nextCs8aoZCP6pRcV_7objdump.exit251, label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl
-  %i.hm = sub nuw i64 %.sroa.7295.0681, %i.hk
+  %i.hm = sub nuw nsw i64 %.sroa.7295.0681, %i.hk
   %i.hn = getelementptr inbounds nuw i8, ptr %.sroa.0294.0682, i64 %i.hk
   %i.ho = getelementptr inbounds nuw i8, ptr %.sroa.0294.0682, i64 2
   %.sroa.028.0.copyload.i.i233 = load i16, ptr %i.ho, align 1, !noalias !66 ; 2 uses
@@ -772,7 +772,7 @@ bb.bn:                                            ; preds = %bb.bm
   br i1 %i.hu, label %_RNvMs7_NtNtNtCseHTIzroA4w0_6object4read3elf7versionINtB5_15VernauxIteratorINtNtBb_3elf12FileHeader32NtNtBb_6endian10EndiannessEE4nextCs8aoZCP6pRcV_7objdump.exit251, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn
-  %i.hv = sub nuw i64 %.sroa.7295.0681, %i.ht
+  %i.hv = sub nuw nsw i64 %.sroa.7295.0681, %i.ht
   %i.hw = getelementptr inbounds nuw i8, ptr %.sroa.0294.0682, i64 %i.ht
   br label %_RNvMs5_NtNtNtCseHTIzroA4w0_6object4read3elf7versionINtB5_15VerneedIteratorINtNtBb_3elf12FileHeader32NtNtBb_6endian10EndiannessEE4nextCs8aoZCP6pRcV_7objdump.exit246
 
@@ -803,7 +803,7 @@ bb.bp:                                            ; preds = %.lr.ph493
   br i1 %i.id, label %.loopexit394, label %bb.bk
 
 bb.bq:                                            ; preds = %bb.bp
-  %i.ie = sub nuw i64 %.sroa.7307.0491, %i.ib
+  %i.ie = sub nuw nsw i64 %.sroa.7307.0491, %i.ib
   %i.if = getelementptr inbounds nuw i8, ptr %.sroa.0306.0490, i64 %i.ib
   %i.ig = add i16 %.sroa.11308.0492, -1           ; 2 uses
   %i.ih = getelementptr inbounds nuw i8, ptr %.sroa.0306.0490, i64 6
@@ -960,7 +960,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.aa, label %.split.us, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.ab = sub nuw i64 %.sroa.7.0.us.us.us.us, %i.z
+  %i.ab = sub nuw nsw i64 %.sroa.7.0.us.us.us.us, %i.z
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.0.0313.us.us.us.us, i64 %i.z
   br label %bb.i
 
@@ -1018,7 +1018,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.ar, label %.split.us, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.as = sub nuw i64 %.sroa.7.0.us.us, %i.aq
+  %i.as = sub nuw nsw i64 %.sroa.7.0.us.us, %i.aq
   %i.at = getelementptr inbounds nuw i8, ptr %.sroa.0.0313.us.us, i64 %i.aq
   br label %bb.p
 
@@ -1076,7 +1076,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %i.bf, label %.split.us, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.bg = sub nuw i64 %.sroa.7.0.us418.us, %i.be
+  %i.bg = sub nuw nsw i64 %.sroa.7.0.us418.us, %i.be
   %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.0.0313.us419.us, i64 %i.be
   br label %bb.w
 
@@ -1139,7 +1139,7 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %i.bw, label %.split.us, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.bx = sub nuw i64 %.sroa.7.0, %i.bv
+  %i.bx = sub nuw nsw i64 %.sroa.7.0, %i.bv
   %i.by = getelementptr inbounds nuw i8, ptr %.sroa.0.0313, i64 %i.bv
   br label %bb.ad
 
@@ -1262,7 +1262,7 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %i.dc, label %_RNvMs7_NtNtNtCseHTIzroA4w0_6object4read3elf7versionINtB5_15VernauxIteratorINtNtBb_3elf12FileHeader64NtNtBb_6endian10EndiannessEE4nextCs8aoZCP6pRcV_7objdump.exit, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.dd = sub nuw i64 %.sroa.7260.0674, %i.db     ; 3 uses
+  %i.dd = sub nuw nsw i64 %.sroa.7260.0674, %i.db ; 3 uses
   %i.de = getelementptr inbounds nuw i8, ptr %.sroa.0259.0675, i64 %i.db ; 3 uses
   %i.df = getelementptr inbounds nuw i8, ptr %.sroa.0259.0675, i64 2
   %.sroa.028.0.copyload.i.i192 = load i16, ptr %i.df, align 1, !noalias !117 ; 2 uses
@@ -1281,7 +1281,7 @@ bb.al:                                            ; preds = %bb.ak
   br i1 %i.dl, label %_RNvMs7_NtNtNtCseHTIzroA4w0_6object4read3elf7versionINtB5_15VernauxIteratorINtNtBb_3elf12FileHeader64NtNtBb_6endian10EndiannessEE4nextCs8aoZCP6pRcV_7objdump.exit, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  %i.dm = sub nuw i64 %.sroa.7260.0674, %i.dk
+  %i.dm = sub nuw nsw i64 %.sroa.7260.0674, %i.dk
   %i.dn = getelementptr inbounds nuw i8, ptr %.sroa.0259.0675, i64 %i.dk
   br label %.preheader
 
@@ -1313,7 +1313,7 @@ bb.an:                                            ; preds = %.lr.ph.split.us
 bb.ao:                                            ; preds = %bb.an
   %i.du = add i16 %.sroa.11271.0462.us, -1        ; 2 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %.sroa.0269.0464.us, i64 %i.ds
-  %i.dw = sub nuw i64 %.sroa.7270.0463.us, %i.ds
+  %i.dw = sub nuw nsw i64 %.sroa.7270.0463.us, %i.ds
   %i.dx = getelementptr inbounds nuw i8, ptr %.sroa.0269.0464.us, i64 6
   %.sroa.0152.0.copyload.us = load i16, ptr %i.dx, align 1 ; 2 uses
   %i.dy = tail call i16 @llvm.bswap.i16(i16 %.sroa.0152.0.copyload.us)
@@ -1344,7 +1344,7 @@ bb.ap:                                            ; preds = %.lr.ph.split.split.
 bb.aq:                                            ; preds = %bb.ap
   %i.ef = add i16 %.sroa.11271.0462.us476, -1     ; 2 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %.sroa.0269.0464.us474, i64 %i.ed
-  %i.eh = sub nuw i64 %.sroa.7270.0463.us475, %i.ed
+  %i.eh = sub nuw nsw i64 %.sroa.7270.0463.us475, %i.ed
   %i.ei = getelementptr inbounds nuw i8, ptr %.sroa.0269.0464.us474, i64 6
   %.sroa.0152.0.copyload.us479 = load i16, ptr %i.ei, align 1
   %i.ej = and i16 %.sroa.0152.0.copyload.us479, -129
@@ -1371,7 +1371,7 @@ bb.ar:                                            ; preds = %.lr.ph.split.split
 bb.as:                                            ; preds = %bb.ar
   %i.eq = add i16 %.sroa.11271.0462, -1           ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %.sroa.0269.0464, i64 %i.eo
-  %i.es = sub nuw i64 %.sroa.7270.0463, %i.eo
+  %i.es = sub nuw nsw i64 %.sroa.7270.0463, %i.eo
   %i.et = getelementptr inbounds nuw i8, ptr %.sroa.0269.0464, i64 6
   %.sroa.0152.0.copyload = load i16, ptr %i.et, align 1
   %i.eu = and i16 %.sroa.0152.0.copyload, 32767
@@ -1430,7 +1430,7 @@ bb.av:                                            ; preds = %bb.au
   br i1 %i.fk, label %_RNvMs7_NtNtNtCseHTIzroA4w0_6object4read3elf7versionINtB5_15VernauxIteratorINtNtBb_3elf12FileHeader64NtNtBb_6endian10EndiannessEE4nextCs8aoZCP6pRcV_7objdump.exit251, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  %i.fl = sub nuw i64 %.sroa.7279.0678, %i.fj     ; 2 uses
+  %i.fl = sub nuw nsw i64 %.sroa.7279.0678, %i.fj ; 2 uses
   %i.fm = getelementptr inbounds nuw i8, ptr %.sroa.0278.0679, i64 %i.fj ; 2 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %.sroa.0278.0679, i64 6
   %.sroa.028.0.copyload.i.i210 = load i16, ptr %i.fn, align 1, !noalias !119 ; 2 uses
@@ -1449,7 +1449,7 @@ bb.ax:                                            ; preds = %bb.aw
   br i1 %i.ft, label %_RNvMs7_NtNtNtCseHTIzroA4w0_6object4read3elf7versionINtB5_15VernauxIteratorINtNtBb_3elf12FileHeader64NtNtBb_6endian10EndiannessEE4nextCs8aoZCP6pRcV_7objdump.exit251, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
-  %i.fu = sub nuw i64 %.sroa.7279.0678, %i.fs
+  %i.fu = sub nuw nsw i64 %.sroa.7279.0678, %i.fs
   %i.fv = getelementptr inbounds nuw i8, ptr %.sroa.0278.0679, i64 %i.fs
   br label %bb.az
 
@@ -1623,7 +1623,7 @@ bb.bl:                                            ; preds = %bb.bk
   br i1 %i.hl, label %_RNvMs7_NtNtNtCseHTIzroA4w0_6object4read3elf7versionINtB5_15VernauxIteratorINtNtBb_3elf12FileHeader64NtNtBb_6endian10EndiannessEE4nextCs8aoZCP6pRcV_7objdump.exit251, label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl
-  %i.hm = sub nuw i64 %.sroa.7295.0681, %i.hk
+  %i.hm = sub nuw nsw i64 %.sroa.7295.0681, %i.hk
   %i.hn = getelementptr inbounds nuw i8, ptr %.sroa.0294.0682, i64 %i.hk
   %i.ho = getelementptr inbounds nuw i8, ptr %.sroa.0294.0682, i64 2
   %.sroa.028.0.copyload.i.i233 = load i16, ptr %i.ho, align 1, !noalias !121 ; 2 uses
@@ -1642,7 +1642,7 @@ bb.bn:                                            ; preds = %bb.bm
   br i1 %i.hu, label %_RNvMs7_NtNtNtCseHTIzroA4w0_6object4read3elf7versionINtB5_15VernauxIteratorINtNtBb_3elf12FileHeader64NtNtBb_6endian10EndiannessEE4nextCs8aoZCP6pRcV_7objdump.exit251, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn
-  %i.hv = sub nuw i64 %.sroa.7295.0681, %i.ht
+  %i.hv = sub nuw nsw i64 %.sroa.7295.0681, %i.ht
   %i.hw = getelementptr inbounds nuw i8, ptr %.sroa.0294.0682, i64 %i.ht
   br label %_RNvMs5_NtNtNtCseHTIzroA4w0_6object4read3elf7versionINtB5_15VerneedIteratorINtNtBb_3elf12FileHeader64NtNtBb_6endian10EndiannessEE4nextCs8aoZCP6pRcV_7objdump.exit246
 
@@ -1673,7 +1673,7 @@ bb.bp:                                            ; preds = %.lr.ph493
   br i1 %i.id, label %.loopexit394, label %bb.bk
 
 bb.bq:                                            ; preds = %bb.bp
-  %i.ie = sub nuw i64 %.sroa.7307.0491, %i.ib
+  %i.ie = sub nuw nsw i64 %.sroa.7307.0491, %i.ib
   %i.if = getelementptr inbounds nuw i8, ptr %.sroa.0306.0490, i64 %i.ib
   %i.ig = add i16 %.sroa.11308.0492, -1           ; 2 uses
   %i.ih = getelementptr inbounds nuw i8, ptr %.sroa.0306.0490, i64 6
