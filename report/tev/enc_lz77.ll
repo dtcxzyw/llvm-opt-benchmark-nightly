@@ -204,7 +204,6 @@ bb.dk:                                            ; preds = %bb.dj, %bb.dh
   %i.age = getelementptr inbounds i8, ptr %i.afz, i64 -4 ; 2 uses
   %.0133299.i = add nsw i64 %i.agd, -1
   %i.agf = load i32, ptr %i.age, align 4, !tbaa !93, !noalias !230
-  %12 = zext i32 %i.agf to i64
   br label %.lr.ph304.i
 
 .lr.ph306.i.loopexit:                             ; preds = %.lr.ph304.i
@@ -221,13 +220,11 @@ bb.dk:                                            ; preds = %bb.dj, %bb.dh
 
 .lr.ph304.i:                                      ; preds = %.lr.ph304.i, %.lr.ph304.preheader.i
   %.0133302.i = phi i64 [ %.0133.i, %.lr.ph304.i ], [ %.0133299.i, %.lr.ph304.preheader.i ] ; 2 uses
-  %.0134301.i = phi i64 [ %spec.select.i, %.lr.ph304.i ], [ %12, %.lr.ph304.preheader.i ]
+  %.0134301.i = phi i32 [ %spec.select.i, %.lr.ph304.i ], [ %i.agf, %.lr.ph304.preheader.i ]
   %i.agm = getelementptr inbounds nuw [4 x i8], ptr %storemerge.i220273.i, i64 %.0133302.i ; 2 uses
   %i.agn = load i32, ptr %i.agm, align 4, !tbaa !93, !noalias !230
-  %13 = zext i32 %i.agn to i64
-  %spec.select.i = call i64 @llvm.umin.i64(i64 %.0134301.i, i64 %13) ; 2 uses
-  %14 = trunc nuw i64 %spec.select.i to i32
-  store i32 %14, ptr %i.agm, align 4, !tbaa !93, !noalias !230
+  %spec.select.i = call i32 @llvm.umin.i32(i32 %.0134301.i, i32 %i.agn) ; 2 uses
+  store i32 %spec.select.i, ptr %i.agm, align 4, !tbaa !93, !noalias !230
   %.0133.i = add i64 %.0133302.i, -1              ; 2 uses
   %.not148.i = icmp ult i64 %.0133.i, %i.tm
   br i1 %.not148.i, label %.lr.ph306.i.loopexit, label %.lr.ph304.i, !llvm.loop !201

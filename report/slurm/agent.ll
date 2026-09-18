@@ -202,12 +202,11 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 
 bb.d:                                             ; preds = %bb.y, %bb.c
   %.sroa.25.0 = phi i32 [ 0, %bb.c ], [ %.sroa.25.3, %bb.y ] ; 2 uses
-  %.0 = phi i64 [ 5000, %bb.c ], [ %4, %bb.y ]    ; 2 uses
+  %.0 = phi i32 [ 5000, %bb.c ], [ %3, %bb.y ]    ; 2 uses
   %i.h = tail call i64 @time(ptr noundef null) #14 ; 2 uses
-  %2 = trunc nuw nsw i64 %.0 to i32
-  %i.i = tail call i32 @usleep(i32 noundef %2) #14 ; 0 uses
-  %3 = shl nuw nsw i64 %.0, 1
-  %4 = tail call i64 @llvm.umin.i64(i64 %3, i64 1000000)
+  %i.i = tail call i32 @usleep(i32 noundef %.0) #14 ; 0 uses
+  %2 = shl nuw nsw i32 %.0, 1
+  %3 = tail call i32 @llvm.umin.i32(i32 %2, i32 1000000)
   %i.j = tail call i32 @pthread_mutex_lock(ptr noundef nonnull %0) #14 ; 2 uses
   %.not = icmp eq i32 %i.j, 0
   br i1 %.not, label %.preheader, label %bb.e
@@ -608,9 +607,6 @@ declare i32 @pick_batch_host(ptr noundef) local_unnamed_addr #2
 declare ptr @bitmap2node_name(ptr noundef) local_unnamed_addr #2
 
 declare void @job_config_fini(ptr noundef) local_unnamed_addr #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.umax.i16(i16, i16) #12
