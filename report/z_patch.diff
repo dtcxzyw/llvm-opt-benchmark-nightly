@@ -1,0 +1,244 @@
+diff --git a/llvm/include/llvm/Analysis/ValueTracking.h b/llvm/include/llvm/Analysis/ValueTracking.h
+index 9a1fdd0ca05a95..99e0121adb6d79 100644
+--- a/llvm/include/llvm/Analysis/ValueTracking.h
++++ b/llvm/include/llvm/Analysis/ValueTracking.h
+@@ -660,7 +660,8 @@ inline bool isValidAssumeForContext(const Instruction *I,
+ /// Returns true, if no instruction between \p Assume and \p CtxI may free
+ /// (including through synchronization).
+ LLVM_ABI bool willNotFreeBetween(const Instruction *Assume,
+-                                 const Instruction *CtxI);
++                                 const Instruction *CtxI,
++                                 const DominatorTree *DT = nullptr);
+ 
+ enum class OverflowResult {
+   /// Always overflows in the direction of signed/unsigned min value.
+diff --git a/llvm/lib/Analysis/Loads.cpp b/llvm/lib/Analysis/Loads.cpp
+index de9022c540d42c..4a75a7841fcb9c 100644
+--- a/llvm/lib/Analysis/Loads.cpp
++++ b/llvm/lib/Analysis/Loads.cpp
+@@ -54,7 +54,7 @@ static bool isDereferenceableAndAlignedPointerViaAssumption(
+           // Dereferenceable information from assumptions is only valid if the
+           // value cannot be freed between the assumption and use.
+           if (!IsDerefable &&
+-              (!PtrCanBeFreed || willNotFreeBetween(Assume, SQ.CxtI)) &&
++              (!PtrCanBeFreed || willNotFreeBetween(Assume, SQ.CxtI, SQ.DT)) &&
+               CheckSize(RK))
+             IsDerefable = true;
+         }
+@@ -149,7 +149,7 @@ static bool isDereferenceableAndAlignedPointer(
+         DefI = &cast<Argument>(V)->getParent()->getEntryBlock().front();
+       }
+ 
+-      if (!SQ.CxtI || !willNotFreeBetween(DefI, SQ.CxtI))
++      if (!SQ.CxtI || !willNotFreeBetween(DefI, SQ.CxtI, SQ.DT))
+         return false;
+     }
+ 
+diff --git a/llvm/lib/Analysis/ValueTracking.cpp b/llvm/lib/Analysis/ValueTracking.cpp
+index ac49dbc8d76d3a..d27f25c1911281 100644
+--- a/llvm/lib/Analysis/ValueTracking.cpp
++++ b/llvm/lib/Analysis/ValueTracking.cpp
+@@ -733,50 +733,85 @@ bool llvm::isValidAssumeForContext(const Instruction *Inv,
+   return false;
+ }
+ 
+-bool llvm::willNotFreeBetween(const Instruction *Assume,
+-                              const Instruction *CtxI) {
+-  // Helper to check if there are any calls in the range that may free memory.
+-  unsigned NumChecked = 0;
+-  auto hasNoFreeInRange = [&NumChecked](auto Range) {
+-    for (const Instruction &I : Range) {
+-      if (NumChecked++ > MaxInstrsToCheckForFree)
+-        return false;
+-
+-      if (auto *CB = dyn_cast<CallBase>(&I)) {
+-        if (!CB->hasFnAttr(Attribute::NoFree))
+-          return false;
+-      } else if (I.maySynchronize())
++static bool hasNoFreeInRange(BasicBlock::const_iterator Begin,
++                             BasicBlock::const_iterator End,
++                             unsigned &NumChecked) {
++  for (const Instruction &I : make_range(Begin, End)) {
++    if (NumChecked++ > MaxInstrsToCheckForFree)
++      return false;
++    if (auto *CB = dyn_cast<CallBase>(&I)) {
++      if (!CB->hasFnAttr(Attribute::NoFree))
+         return false;
++    } else if (I.maySynchronize()) {
++      return false;
+     }
+-    return true;
+-  };
++  }
++  return true;
++}
++
++bool llvm::willNotFreeBetween(const Instruction *Assume,
++                              const Instruction *CtxI,
++                              const DominatorTree *DT) {
+ 
+   const BasicBlock *CtxBB = CtxI->getParent();
+   const BasicBlock *AssumeBB = Assume->getParent();
++  unsigned NumChecked = 0;
+   BasicBlock::const_iterator CtxIter = CtxI->getIterator();
++
+   if (CtxBB == AssumeBB) {
+-    // Same block case: check that Assume comes before CtxI.
+     if (Assume != CtxI && !Assume->comesBefore(CtxI))
+       return false;
+-    return hasNoFreeInRange(make_range(Assume->getIterator(), CtxIter));
++    return hasNoFreeInRange(Assume->getIterator(), CtxIter, NumChecked);
+   }
+ 
+-  // Handle chain of single-predecessor blocks.
+-  const BasicBlock *CurBB = CtxBB;
+-  while (true) {
+-    if (CurBB == AssumeBB)
+-      return hasNoFreeInRange(
+-          make_range(Assume->getIterator(), AssumeBB->end()));
++  if (DT && !DT->dominates(Assume, CtxI))
++    return false;
++
++  if (!hasNoFreeInRange(CtxBB->begin(), CtxIter, NumChecked))
++    return false;
++  if (pred_empty(CtxBB))
++    return false;
++
++  SmallVector<const BasicBlock *, 16> Worklist;
++  SmallPtrSet<const BasicBlock *, 16> Visited;
++  // Enqueue all predecessors of CtxBB.
++  // Note: CtxBB is NOT pre-inserted to ensure that loop
++  // backedges returning to CtxBB are enqueued and checked correclty.
++  for (const BasicBlock *Pred : predecessors(CtxBB)) {
++    if (Visited.insert(Pred).second)
++      Worklist.push_back(Pred);
++  }
++  while (!Worklist.empty()) {
++    const BasicBlock *CurBB = Worklist.pop_back_val();
+ 
+-    const BasicBlock *PredBB = CurBB->getSinglePredecessor();
+-    if (!PredBB)
++    if (CurBB == AssumeBB) {
++      if (!hasNoFreeInRange(Assume->getIterator(), AssumeBB->end(), NumChecked))
++        return false;
++      continue;
++    }
++
++    if (DT && !DT->dominates(AssumeBB, CurBB))
+       return false;
+ 
+-    if (!hasNoFreeInRange(make_range(CurBB->begin(),
+-                                     CurBB == CtxBB ? CtxIter : CurBB->end())))
++    if (pred_empty(CurBB))
+       return false;
+-    CurBB = PredBB;
++    // If CurBB == CtxBB (due to a loop backedge targeting CtxBB), check
++    // instructions from CtxIter to the end of CtxBB (instructions before
++    // CtxIter were checked above). Otherwise, check the entire block.
++    BasicBlock::const_iterator Start =
++        (CurBB == CtxBB) ? CtxIter : CurBB->begin();
++    if (!hasNoFreeInRange(Start, CurBB->end(), NumChecked))
++      return false;
++    // If we reached CtxBB via a backedge, do not re-expand its predecessors
++    // as they were already enqueued at initialization.
++    if (CurBB == CtxBB)
++      continue;
++    for (const BasicBlock *Pred : predecessors(CurBB)) {
++      if (Visited.insert(Pred).second)
++        Worklist.push_back(Pred);
++    }
+   }
++  return true;
+ }
+ 
+ // TODO: cmpExcludesZero misses many cases where `RHS` is non-constant but
+diff --git a/llvm/test/Analysis/ValueTracking/memory-dereferenceable.ll b/llvm/test/Analysis/ValueTracking/memory-dereferenceable.ll
+index 9fbf27c3d7e72f..b632de12f8abf4 100644
+--- a/llvm/test/Analysis/ValueTracking/memory-dereferenceable.ll
++++ b/llvm/test/Analysis/ValueTracking/memory-dereferenceable.ll
+@@ -411,6 +411,50 @@ declare ptr addrspace(1) @func1(ptr addrspace(1) returned) nounwind argmemonly
+ ; Can free any object accessible in memory
+ declare void @mayfree()
+ 
++; CHECK-LABEL: 'dereferenceable_arg_multi_pred_nofree'
++; CHECK: %a
++define void @dereferenceable_arg_multi_pred_nofree(ptr dereferenceable(16) %a, i1 %cond) {
++entry:
++  br i1 %cond, label %if.then, label %if.else
++  
++if.then:
++  call void @mayfree() nofree
++  br label %merge
++if.else:
++  br label %merge
++merge:
++  %v = load i32, ptr %a
++  ret void
++}
++; CHECK-LABEL: 'dereferenceable_arg_multi_pred_freed'
++; GLOBAL: %a
++; POINT-NOT: %a
++define void @dereferenceable_arg_multi_pred_freed(ptr dereferenceable(16) %a, i1 %cond) {
++entry:
++  br i1 %cond, label %if.then, label %if.else
++if.then:
++  call void @mayfree()
++  br label %merge
++if.else:
++  br label %merge
++merge:
++  %v = load i32, ptr %a
++  ret void
++}
++; CHECK-LABEL: 'dereferenceable_arg_loop_backedge_freed'
++; GLOBAL: %a
++; POINT-NOT: %a
++define void @dereferenceable_arg_loop_backedge_freed(ptr dereferenceable(16) %a, i1 %again) {
++entry:
++  br label %loop
++loop:
++  %v = load i32, ptr %a
++  call void @mayfree()
++  br i1 %again, label %loop, label %exit
++exit:
++  ret void
++}
++
+ !0 = !{i64 4}
+ !1 = !{i64 2}
+ !2 = !{}
+diff --git a/llvm/test/Transforms/LICM/hoist-speculatable-load.ll b/llvm/test/Transforms/LICM/hoist-speculatable-load.ll
+index ab754a1f9a9d64..05c3982e080e6f 100644
+--- a/llvm/test/Transforms/LICM/hoist-speculatable-load.ll
++++ b/llvm/test/Transforms/LICM/hoist-speculatable-load.ll
+@@ -66,12 +66,12 @@ define void @f_nofree_nosync(i32 %ptr_i, ptr %ptr2, i1 %cond) nofree nosync {
+ ; CHECK-NEXT:    store i32 0, ptr [[PTR2:%.*]], align 4
+ ; CHECK-NEXT:    br label [[FOR_BODY_LR_PH]]
+ ; CHECK:       for.body.lr.ph:
++; CHECK-NEXT:    [[TMP0:%.*]] = load i32, ptr [[PTR]], align 4
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[I_08:%.*]] = phi i32 [ 0, [[FOR_BODY_LR_PH]] ], [ [[INC:%.*]], [[IF_END:%.*]] ]
+ ; CHECK-NEXT:    br i1 [[COND]], label [[IF_END]], label [[IF:%.*]]
+ ; CHECK:       if:
+-; CHECK-NEXT:    [[TMP0:%.*]] = load i32, ptr [[PTR]], align 4, !invariant.load [[META0]]
+ ; CHECK-NEXT:    store i32 [[TMP0]], ptr [[PTR2]], align 4
+ ; CHECK-NEXT:    br label [[IF_END]]
+ ; CHECK:       if.end:
+diff --git a/llvm/test/Transforms/LoopVectorize/dereferenceable-info-from-assumption-constant-size.ll b/llvm/test/Transforms/LoopVectorize/dereferenceable-info-from-assumption-constant-size.ll
+index 21a2dd94542b88..20e49af5e4b7ea 100644
+--- a/llvm/test/Transforms/LoopVectorize/dereferenceable-info-from-assumption-constant-size.ll
++++ b/llvm/test/Transforms/LoopVectorize/dereferenceable-info-from-assumption-constant-size.ll
+@@ -1182,9 +1182,9 @@ define void @deref_assumption_in_header_constant_trip_count_multiple_loop_predec
+ ; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr i32, ptr [[A]], i64 [[INDEX]]
+ ; CHECK-NEXT:    [[TMP1:%.*]] = getelementptr inbounds i32, ptr [[B]], i64 [[INDEX]]
+ ; CHECK-NEXT:    [[WIDE_LOAD:%.*]] = load <2 x i32>, ptr [[TMP1]], align 4
+-; CHECK-NEXT:    [[TMP2:%.*]] = icmp slt <2 x i32> [[WIDE_LOAD]], zeroinitializer
+-; CHECK-NEXT:    [[WIDE_MASKED_LOAD:%.*]] = call <2 x i32> @llvm.masked.load.v2i32.p0(ptr align 4 [[TMP0]], <2 x i1> [[TMP2]], <2 x i32> poison)
+-; CHECK-NEXT:    [[PREDPHI:%.*]] = select <2 x i1> [[TMP2]], <2 x i32> [[WIDE_MASKED_LOAD]], <2 x i32> [[WIDE_LOAD]]
++; CHECK-NEXT:    [[TMP2:%.*]] = icmp sge <2 x i32> [[WIDE_LOAD]], zeroinitializer
++; CHECK-NEXT:    [[WIDE_LOAD1:%.*]] = load <2 x i32>, ptr [[TMP0]], align 4
++; CHECK-NEXT:    [[PREDPHI:%.*]] = select <2 x i1> [[TMP2]], <2 x i32> [[WIDE_LOAD]], <2 x i32> [[WIDE_LOAD1]]
+ ; CHECK-NEXT:    [[TMP3:%.*]] = getelementptr inbounds i32, ptr [[C]], i64 [[INDEX]]
+ ; CHECK-NEXT:    store <2 x i32> [[PREDPHI]], ptr [[TMP3]], align 4
+ ; CHECK-NEXT:    [[INDEX_NEXT]] = add nuw i64 [[INDEX]], 2
