@@ -205,17 +205,16 @@ _ZNK4llvm14iterator_rangeINS_6object16content_iteratorINS1_22MachOChainedFixupEn
   br label %bb.ur
 
 ._crit_edge.loopexit.i:                           ; preds = %bb.uv
-  %191 = trunc i64 %.sroa.speculated235.i to i32
-  %i.dov = trunc i64 %.sroa.speculated229.i to i32
-  %i.dow = trunc nuw nsw i64 %.sroa.speculated223.i to i32
+  %i.dov = trunc i64 %.sroa.speculated235.i to i32
+  %i.dow = trunc i64 %.sroa.speculated229.i to i32
   br label %._crit_edge.i239
 
 ._crit_edge.i239:                                 ; preds = %._crit_edge.loopexit.i, %_ZNK4llvm14iterator_rangeINS_6object16content_iteratorINS1_22MachOChainedFixupEntryEEEE3endEv.exit.i
   %.0266.lcssa.i = phi i64 [ 5, %_ZNK4llvm14iterator_rangeINS_6object16content_iteratorINS1_22MachOChainedFixupEntryEEEE3endEv.exit.i ], [ %.1267.i, %._crit_edge.loopexit.i ] ; 2 uses
   %.0265.lcssa.i = phi i64 [ 6, %_ZNK4llvm14iterator_rangeINS_6object16content_iteratorINS1_22MachOChainedFixupEntryEEEE3endEv.exit.i ], [ %.1.i, %._crit_edge.loopexit.i ] ; 2 uses
-  %.0264.lcssa.i = phi i32 [ 7, %_ZNK4llvm14iterator_rangeINS_6object16content_iteratorINS1_22MachOChainedFixupEntryEEEE3endEv.exit.i ], [ %i.dow, %._crit_edge.loopexit.i ] ; 2 uses
-  %.0263.lcssa.i = phi i32 [ 7, %_ZNK4llvm14iterator_rangeINS_6object16content_iteratorINS1_22MachOChainedFixupEntryEEEE3endEv.exit.i ], [ %i.dov, %._crit_edge.loopexit.i ] ; 2 uses
-  %.0.lcssa.i = phi i32 [ 7, %_ZNK4llvm14iterator_rangeINS_6object16content_iteratorINS1_22MachOChainedFixupEntryEEEE3endEv.exit.i ], [ %191, %._crit_edge.loopexit.i ] ; 2 uses
+  %.0264.lcssa.i = phi i32 [ 7, %_ZNK4llvm14iterator_rangeINS_6object16content_iteratorINS1_22MachOChainedFixupEntryEEEE3endEv.exit.i ], [ %.sroa.speculated223.i, %._crit_edge.loopexit.i ] ; 2 uses
+  %.0263.lcssa.i = phi i32 [ 7, %_ZNK4llvm14iterator_rangeINS_6object16content_iteratorINS1_22MachOChainedFixupEntryEEEE3endEv.exit.i ], [ %i.dow, %._crit_edge.loopexit.i ] ; 2 uses
+  %.0.lcssa.i = phi i32 [ 7, %_ZNK4llvm14iterator_rangeINS_6object16content_iteratorINS1_22MachOChainedFixupEntryEEEE3endEv.exit.i ], [ %i.dov, %._crit_edge.loopexit.i ] ; 2 uses
   %i.dox = load ptr, ptr %i.dop, align 8, !tbaa !296 ; 3 uses
   %i.doy = getelementptr inbounds nuw i8, ptr %33, i64 128
   %i.doz = load ptr, ptr %i.doy, align 8, !tbaa !297 ; 2 uses
@@ -345,7 +344,7 @@ _ZN4llvm6object16content_iteratorINS0_22MachOChainedFixupEntryEED2Ev.exit57.i: ;
 bb.ur:                                            ; preds = %bb.uv, %.lr.ph.i237
   %.0285.i = phi i64 [ 7, %.lr.ph.i237 ], [ %.sroa.speculated235.i, %bb.uv ]
   %.0263284.i = phi i64 [ 7, %.lr.ph.i237 ], [ %.sroa.speculated229.i, %bb.uv ]
-  %.0264283.i = phi i64 [ 7, %.lr.ph.i237 ], [ %.sroa.speculated223.i, %bb.uv ]
+  %.0264283.i = phi i32 [ 7, %.lr.ph.i237 ], [ %.sroa.speculated223.i, %bb.uv ]
   %.0265282.i = phi i64 [ 6, %.lr.ph.i237 ], [ %.1.i, %bb.uv ] ; 2 uses
   %.0266281.i = phi i64 [ 5, %.lr.ph.i237 ], [ %.1267.i, %bb.uv ] ; 2 uses
   %i.dqq = call { ptr, i64 } @_ZNK4llvm6object23MachOAbstractFixupEntry11segmentNameEv(ptr noundef nonnull align 8 dereferenceable(96) %32) #27
@@ -368,12 +367,11 @@ bb.us:                                            ; preds = %bb.ur
   %i.dra = lshr i32 %i.dqz, 2
   %i.drb = select i1 %i.dqy, i32 3, i32 2
   %narrow.i = add nuw nsw i32 %i.dra, %i.drb
-  %192 = zext nneg i32 %narrow.i to i64
   br label %"_ZZL13PrintDyldInfoPN4llvm6object15MachOObjectFileEENK3$_0clEm.exit.i"
 
 "_ZZL13PrintDyldInfoPN4llvm6object15MachOObjectFileEENK3$_0clEm.exit.i": ; preds = %bb.us, %bb.ur
-  %193 = phi i64 [ %192, %bb.us ], [ 3, %bb.ur ]
-  %.sroa.speculated223.i = call i64 @llvm.umax.i64(i64 %.0264283.i, i64 %193) ; 2 uses
+  %191 = phi i32 [ %narrow.i, %bb.us ], [ 3, %bb.ur ]
+  %.sroa.speculated223.i = call i32 @llvm.umax.i32(i32 %.0264283.i, i32 %191) ; 2 uses
   %i.drc = load i32, ptr %i.dou, align 8, !tbaa !1146
   %i.drd = icmp eq i32 %i.drc, 0
   br i1 %i.drd, label %bb.ut, label %bb.uv

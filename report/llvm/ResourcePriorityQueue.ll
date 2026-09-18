@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %.lr.ph, %_ZN4llvm21
 
 _ZNK4llvm6SDNode12getGluedNodeEv.exit.i:          ; preds = %bb.m, %.lr.ph.i
   %.01423.i = phi ptr [ %i.y, %.lr.ph.i ], [ %i.au, %bb.m ] ; 4 uses
-  %.01522.i = phi i32 [ 0, %.lr.ph.i ], [ %.2.i, %bb.m ] ; 3 uses
+  %.01522.i = phi i16 [ 0, %.lr.ph.i ], [ %.2.i, %bb.m ] ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.01423.i, i64 24
   %i.ac = load i32, ptr %i.ab, align 8, !tbaa !111 ; 4 uses
   %i.ad = icmp slt i32 %i.ac, 0
@@ -212,7 +212,7 @@ _ZNK4llvm6SDNode12getGluedNodeEv.exit.i:          ; preds = %bb.m, %.lr.ph.i
 
 bb.g:                                             ; preds = %_ZNK4llvm6SDNode12getGluedNodeEv.exit.i
   %.not16.i = icmp eq i32 %i.ac, -11
-  br i1 %.not16.i, label %.thread.loopexit.i, label %bb.h
+  br i1 %.not16.i, label %_ZN4llvm21ResourcePriorityQueue18initNumRegDefsLeftEPNS_5SUnitE.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.ae = xor i32 %i.ac, -1
@@ -222,11 +222,10 @@ bb.h:                                             ; preds = %bb.g
   %i.ai = getelementptr inbounds [32 x i8], ptr %i.af, i64 %i.ah
   %i.aj = getelementptr inbounds nuw i8, ptr %.01423.i, i64 66
   %i.ak = load i16, ptr %i.aj, align 2, !tbaa !112
-  %2 = zext i16 %i.ak to i32
   %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 6
   %i.am = load i8, ptr %i.al, align 2, !tbaa !134
-  %3 = zext i8 %i.am to i32
-  %.sroa.speculated.i = call i32 @llvm.umin.i32(i32 %3, i32 %2)
+  %2 = zext i8 %i.am to i16
+  %.sroa.speculated.i = call i16 @llvm.umin.i16(i16 %2, i16 %i.ak)
   br label %bb.l
 
 bb.i:                                             ; preds = %_ZNK4llvm6SDNode12getGluedNodeEv.exit.i
@@ -237,19 +236,19 @@ bb.i:                                             ; preds = %_ZNK4llvm6SDNode12g
   ]
 
 bb.j:                                             ; preds = %bb.i
-  %4 = add i32 %.01522.i, 1
+  %3 = add i16 %.01522.i, 1
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.i, %bb.i
-  %5 = add i32 %.01522.i, 1
+  %4 = add i16 %.01522.i, 1
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i, %bb.h
-  %.2.i = phi i32 [ %.sroa.speculated.i, %bb.h ], [ %.01522.i, %bb.i ], [ %4, %bb.j ], [ %5, %bb.k ] ; 3 uses
+  %.2.i = phi i16 [ %.sroa.speculated.i, %bb.h ], [ %.01522.i, %bb.i ], [ %3, %bb.j ], [ %4, %bb.k ] ; 3 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.01423.i, i64 64
   %i.ao = load i16, ptr %i.an, align 8, !tbaa !118 ; 2 uses
   %.not.i.i6 = icmp eq i16 %i.ao, 0
-  br i1 %.not.i.i6, label %.thread.loopexit.i, label %bb.m
+  br i1 %.not.i.i6, label %_ZN4llvm21ResourcePriorityQueue18initNumRegDefsLeftEPNS_5SUnitE.exit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.ap = zext i16 %i.ao to i64
@@ -270,15 +269,10 @@ bb.m:                                             ; preds = %bb.l
   %.not.i.i.i.i = icmp eq i16 %.sroa.0.0.copyload.i.i.i.i, 249
   %i.bb = icmp eq ptr %.sroa.21.0.copyload.i.i.i.i, null
   %.not4.i.i.i = select i1 %.not.i.i.i.i, i1 %i.bb, i1 false
-  br i1 %.not4.i.i.i, label %_ZNK4llvm6SDNode12getGluedNodeEv.exit.i, label %.thread.loopexit.i, !llvm.loop !3
+  br i1 %.not4.i.i.i, label %_ZNK4llvm6SDNode12getGluedNodeEv.exit.i, label %_ZN4llvm21ResourcePriorityQueue18initNumRegDefsLeftEPNS_5SUnitE.exit, !llvm.loop !3
 
-.thread.loopexit.i:                               ; preds = %bb.m, %bb.l, %bb.g
-  %.3.ph.i = phi i32 [ 0, %bb.g ], [ %.2.i, %bb.l ], [ %.2.i, %bb.m ]
-  %6 = trunc i32 %.3.ph.i to i16
-  br label %_ZN4llvm21ResourcePriorityQueue18initNumRegDefsLeftEPNS_5SUnitE.exit
-
-_ZN4llvm21ResourcePriorityQueue18initNumRegDefsLeftEPNS_5SUnitE.exit: ; preds = %bb.f, %.thread.loopexit.i
-  %.3.i = phi i16 [ 0, %bb.f ], [ %6, %.thread.loopexit.i ]
+_ZN4llvm21ResourcePriorityQueue18initNumRegDefsLeftEPNS_5SUnitE.exit: ; preds = %bb.g, %bb.l, %bb.m, %bb.f
+  %.3.i = phi i16 [ 0, %bb.f ], [ 0, %bb.g ], [ %.2.i, %bb.l ], [ %.2.i, %bb.m ]
   %i.bc = getelementptr inbounds nuw i8, ptr %.sroa.07.011, i64 254
   store i16 %.3.i, ptr %i.bc, align 2, !tbaa !145
   %i.bd = getelementptr inbounds nuw i8, ptr %.sroa.07.011, i64 204
@@ -303,7 +297,7 @@ bb.a:
 
 _ZNK4llvm6SDNode12getGluedNodeEv.exit:            ; preds = %bb.h, %.lr.ph
   %.01423 = phi ptr [ %i.a, %.lr.ph ], [ %i.x, %bb.h ] ; 4 uses
-  %.01522 = phi i32 [ 0, %.lr.ph ], [ %.2, %bb.h ] ; 3 uses
+  %.01522 = phi i16 [ 0, %.lr.ph ], [ %.2, %bb.h ] ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.01423, i64 24
   %i.f = load i32, ptr %i.e, align 8, !tbaa !111  ; 4 uses
   %i.g = icmp slt i32 %i.f, 0
@@ -311,7 +305,7 @@ _ZNK4llvm6SDNode12getGluedNodeEv.exit:            ; preds = %bb.h, %.lr.ph
 
 bb.b:                                             ; preds = %_ZNK4llvm6SDNode12getGluedNodeEv.exit
   %.not16 = icmp eq i32 %i.f, -11
-  br i1 %.not16, label %.thread.loopexit, label %bb.c
+  br i1 %.not16, label %.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.h = xor i32 %i.f, -1
@@ -321,11 +315,10 @@ bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds [32 x i8], ptr %i.i, i64 %i.k
   %i.m = getelementptr inbounds nuw i8, ptr %.01423, i64 66
   %i.n = load i16, ptr %i.m, align 2, !tbaa !112
-  %2 = zext i16 %i.n to i32
   %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 6
   %i.p = load i8, ptr %i.o, align 2, !tbaa !134
-  %3 = zext i8 %i.p to i32
-  %.sroa.speculated = tail call i32 @llvm.umin.i32(i32 %3, i32 %2)
+  %2 = zext i8 %i.p to i16
+  %.sroa.speculated = tail call i16 @llvm.umin.i16(i16 %2, i16 %i.n)
   br label %bb.g
 
 bb.d:                                             ; preds = %_ZNK4llvm6SDNode12getGluedNodeEv.exit
@@ -336,19 +329,19 @@ bb.d:                                             ; preds = %_ZNK4llvm6SDNode12g
   ]
 
 bb.e:                                             ; preds = %bb.d
-  %4 = add i32 %.01522, 1
+  %3 = add i16 %.01522, 1
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d, %bb.d
-  %5 = add i32 %.01522, 1
+  %4 = add i16 %.01522, 1
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.c, %bb.d, %bb.f, %bb.e
-  %.2 = phi i32 [ %.sroa.speculated, %bb.c ], [ %.01522, %bb.d ], [ %4, %bb.e ], [ %5, %bb.f ] ; 3 uses
+  %.2 = phi i16 [ %.sroa.speculated, %bb.c ], [ %.01522, %bb.d ], [ %3, %bb.e ], [ %4, %bb.f ] ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.01423, i64 64
   %i.r = load i16, ptr %i.q, align 8, !tbaa !118  ; 2 uses
   %.not.i = icmp eq i16 %i.r, 0
-  br i1 %.not.i, label %.thread.loopexit, label %bb.h
+  br i1 %.not.i, label %.thread, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.s = zext i16 %i.r to i64
@@ -369,15 +362,10 @@ bb.h:                                             ; preds = %bb.g
   %.not.i.i.i = icmp eq i16 %.sroa.0.0.copyload.i.i.i, 249
   %i.ae = icmp eq ptr %.sroa.21.0.copyload.i.i.i, null
   %.not4.i.i = select i1 %.not.i.i.i, i1 %i.ae, i1 false
-  br i1 %.not4.i.i, label %_ZNK4llvm6SDNode12getGluedNodeEv.exit, label %.thread.loopexit, !llvm.loop !3
+  br i1 %.not4.i.i, label %_ZNK4llvm6SDNode12getGluedNodeEv.exit, label %.thread, !llvm.loop !3
 
-.thread.loopexit:                                 ; preds = %bb.h, %bb.g, %bb.b
-  %.3.ph = phi i32 [ 0, %bb.b ], [ %.2, %bb.g ], [ %.2, %bb.h ]
-  %6 = trunc i32 %.3.ph to i16
-  br label %.thread
-
-.thread:                                          ; preds = %.thread.loopexit, %bb.a
-  %.3 = phi i16 [ 0, %bb.a ], [ %6, %.thread.loopexit ]
+.thread:                                          ; preds = %bb.h, %bb.g, %bb.b, %bb.a
+  %.3 = phi i16 [ 0, %bb.a ], [ %.2, %bb.h ], [ %.2, %bb.g ], [ 0, %bb.b ]
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 254
   store i16 %.3, ptr %i.af, align 2, !tbaa !145
   ret void
@@ -779,6 +767,9 @@ declare i64 @llvm.umin.i64(i64, i64) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.umin.i16(i16, i16) #16
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

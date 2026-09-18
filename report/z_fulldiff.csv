@@ -1,0 +1,14 @@
+Delta,Added Lines,Removed Lines,Download URL
+39,115,76,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/vp6.bc?download=true
+39,203,164,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/ilbcdec.bc?download=true
+26,485,459,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/vf_xfade.bc?download=true
+3,7,4,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/grpc/original/service.pb.bc?download=true
+3,7,4,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/grpc/original/struct.pb.bc?download=true
+3,7,4,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/protobuf/original/struct.pb.bc?download=true
+2,11,9,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/Disasm.bc?download=true
+-2,8,10,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/MachODump.bc?download=true
+-3,3,6,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/enc_lz77.bc?download=true
+-4,4,8,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/slurm/original/agent.bc?download=true
+-5,11,16,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/harfbuzz/original/hb-subset-table-other.bc?download=true
+-9,15,24,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/postgres/original/network_gist.bc?download=true
+-9,27,36,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/ResourcePriorityQueue.bc?download=true
