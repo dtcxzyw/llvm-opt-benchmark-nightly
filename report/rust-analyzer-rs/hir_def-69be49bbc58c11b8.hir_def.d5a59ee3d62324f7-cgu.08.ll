@@ -205,7 +205,7 @@ _RINvNtCsjsNuU4yXw23_3fst5bytes12pack_uint_inQQINtNtNtB4_3raw15counting_writer14
   store i64 0, ptr %i.j, align 8, !noalias !632
   %wide.trip.count.i.i = zext nneg i8 %.sroa.04.0.lcssa.i to i64 ; 4 uses
   %xtraiter76 = and i64 %wide.trip.count.i.i, 3   ; 3 uses
-  %i.dt = add i8 %.sroa.04.0.lcssa.i, -1
+  %i.dt = add nsw i8 %.sroa.04.0.lcssa.i, -1
   %i.du = icmp ult i8 %i.dt, 3
   br i1 %i.du, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.preheader.i.i.new
 

@@ -205,7 +205,7 @@ _ZN6embree11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEE11add_primrefINS_9PrimRefMBEEEvR
   %i.da = zext i32 %i.bx to i64
   %i.db = add i64 %i.ae, %i.da                    ; 2 uses
   %i.dc = zext i32 %i.ca to i64                   ; 2 uses
-  %i.dd = icmp ult i64 %i.af, %i.dc
+  %i.dd = icmp samesign ult i64 %i.af, %i.dc
   %i.de = insertelement <2 x i1> poison, i1 %i.dd, i64 0
   %i.df = shufflevector <2 x i1> %i.de, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.dg = select <2 x i1> %i.df, <2 x float> %.sroa.0.0.copyload.i6.i, <2 x float> %i.ag ; 2 uses
@@ -608,7 +608,7 @@ _ZN6embree11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEE11add_primrefINS_9PrimRefMBEEEvR
   %i.dh = zext i32 %i.cd to i64
   %i.di = add i64 %i.ai, %i.dh                    ; 2 uses
   %i.dj = zext i32 %i.cg to i64                   ; 2 uses
-  %i.dk = icmp ult i64 %i.aj, %i.dj
+  %i.dk = icmp samesign ult i64 %i.aj, %i.dj
   %i.dl = insertelement <2 x i1> poison, i1 %i.dk, i64 0
   %i.dm = shufflevector <2 x i1> %i.dl, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.dn = select <2 x i1> %i.dm, <2 x float> %.sroa.0.0.copyload.i6, <2 x float> %i.ak ; 2 uses
@@ -1011,7 +1011,7 @@ _ZN6embree11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEE11add_primrefINS_9PrimRefMBEEEvR
   %i.dr = zext i32 %i.cn to i64
   %i.ds = add i64 %i.as, %i.dr                    ; 2 uses
   %i.dt = zext i32 %i.cq to i64                   ; 2 uses
-  %i.du = icmp ult i64 %i.at, %i.dt
+  %i.du = icmp samesign ult i64 %i.at, %i.dt
   %i.dv = insertelement <2 x i1> poison, i1 %i.du, i64 0
   %i.dw = shufflevector <2 x i1> %i.dv, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.dx = select <2 x i1> %i.dw, <2 x float> %.sroa.0.0.copyload.i6.i.i.i, <2 x float> %i.au ; 2 uses

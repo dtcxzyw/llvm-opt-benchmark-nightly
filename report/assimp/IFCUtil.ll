@@ -205,8 +205,8 @@ bb.a:
 
 _ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %.lr.ph, %bb.a
   %.094.lcssa = phi i64 [ 0, %bb.a ], [ %.sroa.speculated, %.lr.ph ] ; 2 uses
-  %i.i = shl i64 %.094.lcssa, 5
-  %i.j = add i64 %i.i, 64                         ; 3 uses
+  %i.i = shl nsw i64 %.094.lcssa, 5
+  %i.j = add nsw i64 %i.i, 64                     ; 3 uses
   %i.k = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.j) #26 ; 18 uses
   store double 0.000000e+00, ptr %i.k, align 8
   %i.l = getelementptr i8, ptr %i.k, i64 8        ; 2 uses

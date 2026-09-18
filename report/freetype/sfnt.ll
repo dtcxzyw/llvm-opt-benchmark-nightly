@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %bb.t, %bb.u, %.lr.p
 
 .loopexit:                                        ; preds = %bb.v, %bb.p, %bb.s, %bb.l
   %.5 = phi ptr [ %i.bm, %bb.l ], [ %i.bm, %bb.p ], [ %i.bm, %bb.s ], [ %i.cj, %bb.v ]
-  %i.cv = add nuw i32 %.178105, 1
+  %i.cv = add nuw nsw i32 %.178105, 1
   %exitcond109.not = icmp eq i32 %.178105, %umax
   br i1 %exitcond109.not, label %bb.w, label %bb.l, !llvm.loop !364
 
@@ -608,7 +608,7 @@ bb.e:                                             ; preds = %bb.g, %.lr.ph.i
   %i.ac = zext i32 %i.ab to i64
   %i.ad = load i32, ptr %i.y, align 1             ; 2 uses
   %spec.select.i = tail call i64 @llvm.umax.i64(i64 %.03843.i, i64 %i.x) ; 4 uses
-  %.not.i = icmp ugt i64 %spec.select.i, %i.ac
+  %.not.i = icmp samesign ugt i64 %spec.select.i, %i.ac
   %.not41.i = icmp eq i32 %i.ad, 0
   %or.cond.i = select i1 %.not.i, i1 true, i1 %.not41.i
   br i1 %or.cond.i, label %bb.g, label %bb.f
@@ -1011,7 +1011,7 @@ bb.j:                                             ; preds = %bb.k, %.lr.ph.i
   %i.bq = load i32, ptr %i.bl, align 1            ; 2 uses
   %i.br = tail call i32 @llvm.bswap.i32(i32 %i.bq) ; 3 uses
   %spec.select.i = tail call i64 @llvm.umax.i64(i64 %.03843.i, i64 %i.bk) ; 4 uses
-  %.not.i = icmp ule i64 %spec.select.i, %i.bp
+  %.not.i = icmp samesign ule i64 %spec.select.i, %i.bp
   %.not41.i = icmp ne i32 %i.bq, 0
   %i.bs = icmp ult i32 %i.br, %i.ba
   %i.bt = and i1 %.not41.i, %i.bs

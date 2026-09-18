@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.h
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(80) %0, ptr noundef nonnull align 16 dereferenceable(80) %i.c, i64 80, i1 false), !dbg !84420
-  %i.n = icmp ugt i64 %.sroa.018.0.i.i.ph, 1, !dbg !84421
+  %i.n = icmp samesign ugt i64 %.sroa.018.0.i.i.ph, 1, !dbg !84421
   br i1 %i.n, label %.lr.ph.i.i, label %_RINvNtNtCscgRAwXFJnXP_4core5slice6rotate14ptr_rotate_gcdINtCse4dvU5uQ85g_8indexmap6BucketNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtNtCs1LHh8CLbVkQ_11polars_core9datatypes5dtype8DataTypeEECsfcROwRM8ZtH_11polars_plan.exit.i, !dbg !84421
 
 bb.j:                                             ; preds = %bb.h
