@@ -1,0 +1,70 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+index 317d587ddedd6..9991dc6ab9bc7 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+@@ -2041,6 +2041,34 @@ Instruction *InstCombinerImpl::visitAdd(BinaryOperator &I) {
+   if (Instruction *Res = foldBinOpOfSelectAndCastOfSelectCondition(I))
+     return Res;
+ 
++  {
++    Value *X, *Y, *P0, *P1, *Base, *Default, *CmpP0EqC0, *SelYOrZero;
++    ConstantInt *C0, *C1;
++    // Transform:
++    //   ((P == C0 ? X : Default) + Base) + (P == C1 ? Y : 0)
++    // into:
++    //   Base + (P == C0 ? X : (Default + (P == C1 ? Y : 0)))
++    // This provides more opportunities for CSE and predication in
++    // exclusive-sum reduction patterns, which can reduce register pressure.
++    if (match(&I, m_c_Add(m_c_Add(m_Value(Base),
++                                  m_Select(m_Value(CmpP0EqC0), m_Value(X),
++                                           m_Value(Default))),
++                          m_Value(SelYOrZero))) &&
++        match(SelYOrZero, m_Select(m_SpecificICmp(CmpInst::ICMP_EQ, m_Value(P1),
++                                                  m_ConstantInt(C1)),
++                                   m_Value(Y), m_ZeroInt())) &&
++        match(CmpP0EqC0, m_SpecificICmp(CmpInst::ICMP_EQ, m_Value(P0),
++                                        m_ConstantInt(C0))) &&
++        P0 == P1 && !C0->isElementWiseEqual(C1)) {
++
++      Value *DefaultPlusYOrZero = Builder.CreateAdd(Default, SelYOrZero);
++      Value *XorDorYPlusD =
++          Builder.CreateSelect(CmpP0EqC0, X, DefaultPlusYOrZero);
++      Value *NewAdd = Builder.CreateAdd(Base, XorDorYPlusD);
++      return replaceInstUsesWith(I, NewAdd);
++    }
++  }
++
+   if (Instruction *Res = foldDivCeil(I))
+     return Res;
+ 
+diff --git a/llvm/test/Transforms/InstCombine/select-sum.ll b/llvm/test/Transforms/InstCombine/select-sum.ll
+new file mode 100644
+index 0000000000000..201e56b8df759
+--- /dev/null
++++ b/llvm/test/Transforms/InstCombine/select-sum.ll
+@@ -0,0 +1,25 @@
++; RUN: opt < %s -passes=instcombine -S | FileCheck %s
++
++target datalayout = "e-p:64:64-p1:16:16-p2:32:32:32-p3:64:64:64"
++
++; Test transform of:
++;   ((P == A ? X : Def) + Base) + (P == B ? Y : 0)
++; into:
++;   Base + (P == A ? X : (Def + (P == B ? Y : 0))
++define i32 @test_sum_selects(i32 %p, i32 %x, i32 %y, i32 %default, i32 %base) {
++; CHECK-LABEL: @test_sum_selects
++; CHECK-DAG: [[C0:%.*]] = icmp eq i32 %p, 288
++; CHECK-DAG: [[C1:%.*]] = icmp eq i32 %p, 128
++; CHECK-DAG: [[SELY:%.*]] = select i1 [[C1]], i32 %y, i32 0
++; CHECK-DAG: [[SELY_DEF:%.*]] = add i32 %default, [[SELY]]
++; CHECK-DAG: [[SELX:%.*]] = select i1 [[C0]], i32 %x, i32 [[SELY_DEF]]
++; CHECK-DAG: [[SUM:%.*]] = add i32 %base, [[SELX]]
++; CHECK-DAG: ret i32 [[SUM]]
++  %c0 = icmp eq i32 %p, 288
++  %sel0 = select i1 %c0, i32 %x, i32 %default
++  %c1 = icmp eq i32 %p, 128
++  %sel1 = select i1 %c1, i32 %y, i32 0
++  %sum1 = add i32 %sel0, %base
++  %sum2 = add i32 %sum1, %sel1
++  ret i32 %sum2
++}
