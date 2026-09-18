@@ -202,24 +202,21 @@ bb.ch:                                            ; preds = %bb.cg
   br i1 %i.ou, label %.loopexit, label %bb.ci
 
 bb.ci:                                            ; preds = %bb.ch
-  %i.ov = add nuw nsw i32 %i.b, 41                ; 2 uses
+  %i.ov = add nuw nsw i32 %i.b, 41                ; 3 uses
   %i.ow = load i32, ptr @hf_tprof_b39, align 4
   %i.ox = load i32, ptr @ett_tprof_b39, align 4
   %i.oy = tail call ptr @proto_tree_add_bitmask(ptr noundef %8, ptr noundef %5, i32 noundef %i.oq, i32 noundef %i.ow, i32 noundef %i.ox, ptr noundef nonnull @tprof_b39_fields, i32 noundef 0) ; 0 uses
-  %.not737 = icmp eq i16 %3, 39
-  br i1 %.not737, label %.loopexit, label %.lr.ph.preheader
+  %invariant.op = add nuw nsw i32 %i.hk, %i.hl    ; 3 uses
+  %10 = icmp samesign ult i32 %i.ov, %invariant.op
+  br i1 %10, label %.lr.ph, label %.loopexit
 
-.lr.ph.preheader:                                 ; preds = %bb.ci
-  %invariant.op = add nuw nsw i32 %i.hk, %i.hl
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.3735 = phi i32 [ %i.pa, %.lr.ph ], [ %i.ov, %.lr.ph.preheader ] ; 2 uses
+.lr.ph:                                           ; preds = %bb.ci, %.lr.ph
+  %.3735 = phi i32 [ %i.pa, %.lr.ph ], [ %i.ov, %bb.ci ] ; 2 uses
   %i.oz = load i32, ptr @hf_tprof_unknown_byte, align 4
-  %i.pa = add nuw nsw i32 %.3735, 1               ; 3 uses
+  %i.pa = add nuw nsw i32 %.3735, 1               ; 2 uses
   %i.pb = tail call ptr @proto_tree_add_item(ptr noundef %8, i32 noundef %i.oz, ptr noundef %5, i32 noundef %.3735, i32 noundef 1, i32 noundef 0) ; 0 uses
-  %10 = icmp samesign ult i32 %i.pa, %invariant.op
-  br i1 %10, label %.lr.ph, label %.loopexit, !llvm.loop !10
+  %exitcond.not = icmp eq i32 %i.pa, %invariant.op
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !10
 
 bb.cj:                                            ; preds = %bb.w
   %..i712 = select i1 %4, i32 3, i32 1
@@ -622,7 +619,7 @@ bb.dj:                                            ; preds = %bb.di
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.ci, %bb.y, %dissect_apdu_le.exit, %dissect_apdu_le.exit697, %bb.ak, %bb.ao, %bb.ap, %bb.cj, %dissect_terminal_capability.exit, %dissect_apdu_le.exit719, %bb.da, %bb.ai, %bb.ah, %dissect_apdu_le.exit704, %bb.an, %dissect_apdu_le.exit708, %bb.au, %bb.av, %bb.aw, %bb.ax, %bb.ay, %bb.az, %bb.ba, %bb.bb, %bb.bc, %bb.bd, %bb.be, %bb.bf, %bb.bg, %bb.bh, %bb.bi, %bb.bj, %bb.bk, %bb.bl, %bb.bm, %bb.bn, %bb.bo, %bb.bp, %bb.bq, %bb.br, %bb.bs, %bb.bt, %bb.bu, %bb.bv, %bb.bw, %bb.bx, %bb.by, %bb.bz, %bb.ca, %bb.cb, %bb.cc, %bb.cd, %bb.ce, %bb.cf, %bb.cg, %bb.ch, %dissect_apdu_le.exit723, %bb.cw, %bb.dj, %bb.di, %dissect_storage_data_command.exit, %bb.w
-  %.0678 = phi i32 [ -1, %bb.w ], [ %i.dg, %bb.y ], [ %i.en, %bb.ai ], [ %i.ek, %bb.ah ], [ %i.er, %dissect_apdu_le.exit ], [ %i.eu, %dissect_apdu_le.exit697 ], [ %i.fc, %bb.ak ], [ %i.fx, %dissect_apdu_le.exit704 ], [ %i.ft, %bb.an ], [ %i.fy, %bb.ao ], [ %i.gb, %bb.ap ], [ %i.hh, %dissect_apdu_le.exit708 ], [ %.2, %bb.au ], [ %i.hk, %bb.av ], [ %i.hn, %bb.aw ], [ %i.hs, %bb.ax ], [ %i.hx, %bb.ay ], [ %i.ic, %bb.az ], [ %i.ih, %bb.ba ], [ %i.im, %bb.bb ], [ %i.ir, %bb.bc ], [ %i.iw, %bb.bd ], [ %i.jb, %bb.be ], [ %i.jg, %bb.bf ], [ %i.jl, %bb.bg ], [ %i.jq, %bb.bh ], [ %i.jv, %bb.bi ], [ %i.ka, %bb.bj ], [ %i.kf, %bb.bk ], [ %i.kk, %bb.bl ], [ %i.kp, %bb.bm ], [ %i.ku, %bb.bn ], [ %i.kz, %bb.bo ], [ %i.le, %bb.bp ], [ %i.lj, %bb.bq ], [ %i.lo, %bb.br ], [ %i.lt, %bb.bs ], [ %i.ly, %bb.bt ], [ %i.md, %bb.bu ], [ %i.mi, %bb.bv ], [ %i.mn, %bb.bw ], [ %i.ms, %bb.bx ], [ %i.mx, %bb.by ], [ %i.nc, %bb.bz ], [ %i.nh, %bb.ca ], [ %i.nm, %bb.cb ], [ %i.nr, %bb.cc ], [ %i.nw, %bb.cd ], [ %i.ob, %bb.ce ], [ %i.og, %bb.cf ], [ %i.ol, %bb.cg ], [ %i.oq, %bb.ch ], [ %i.wo, %dissect_storage_data_command.exit ], [ %i.pm, %bb.cj ], [ %i.tx, %dissect_terminal_capability.exit ], [ %i.ub, %dissect_apdu_le.exit719 ], [ %i.up, %dissect_apdu_le.exit723 ], [ %i.ul, %bb.cw ], [ %i.vn, %bb.da ], [ %i.wr, %bb.dj ], [ %i.wo, %bb.di ], [ %i.ov, %bb.ci ], [ %i.pa, %.lr.ph ]
+  %.0678 = phi i32 [ -1, %bb.w ], [ %i.dg, %bb.y ], [ %i.en, %bb.ai ], [ %i.ek, %bb.ah ], [ %i.er, %dissect_apdu_le.exit ], [ %i.eu, %dissect_apdu_le.exit697 ], [ %i.fc, %bb.ak ], [ %i.fx, %dissect_apdu_le.exit704 ], [ %i.ft, %bb.an ], [ %i.fy, %bb.ao ], [ %i.gb, %bb.ap ], [ %i.hh, %dissect_apdu_le.exit708 ], [ %.2, %bb.au ], [ %i.hk, %bb.av ], [ %i.hn, %bb.aw ], [ %i.hs, %bb.ax ], [ %i.hx, %bb.ay ], [ %i.ic, %bb.az ], [ %i.ih, %bb.ba ], [ %i.im, %bb.bb ], [ %i.ir, %bb.bc ], [ %i.iw, %bb.bd ], [ %i.jb, %bb.be ], [ %i.jg, %bb.bf ], [ %i.jl, %bb.bg ], [ %i.jq, %bb.bh ], [ %i.jv, %bb.bi ], [ %i.ka, %bb.bj ], [ %i.kf, %bb.bk ], [ %i.kk, %bb.bl ], [ %i.kp, %bb.bm ], [ %i.ku, %bb.bn ], [ %i.kz, %bb.bo ], [ %i.le, %bb.bp ], [ %i.lj, %bb.bq ], [ %i.lo, %bb.br ], [ %i.lt, %bb.bs ], [ %i.ly, %bb.bt ], [ %i.md, %bb.bu ], [ %i.mi, %bb.bv ], [ %i.mn, %bb.bw ], [ %i.ms, %bb.bx ], [ %i.mx, %bb.by ], [ %i.nc, %bb.bz ], [ %i.nh, %bb.ca ], [ %i.nm, %bb.cb ], [ %i.nr, %bb.cc ], [ %i.nw, %bb.cd ], [ %i.ob, %bb.ce ], [ %i.og, %bb.cf ], [ %i.ol, %bb.cg ], [ %i.oq, %bb.ch ], [ %i.wo, %dissect_storage_data_command.exit ], [ %i.pm, %bb.cj ], [ %i.tx, %dissect_terminal_capability.exit ], [ %i.ub, %dissect_apdu_le.exit719 ], [ %i.up, %dissect_apdu_le.exit723 ], [ %i.ul, %bb.cw ], [ %i.vn, %bb.da ], [ %i.wr, %bb.dj ], [ %i.wo, %bb.di ], [ %i.ov, %bb.ci ], [ %invariant.op, %.lr.ph ]
   ret i32 %.0678
 }
 

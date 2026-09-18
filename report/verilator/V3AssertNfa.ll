@@ -205,7 +205,7 @@ bb.gn:                                            ; preds = %_ZN12_GLOBAL__N_113
   unreachable
 
 bb.go:                                            ; preds = %_ZN12_GLOBAL__N_113SvaNfaBuilder11getConstIntEP11AstNodeExpr.exit77.i
-  %i.yg = sub nuw i32 %i.ya, %i.vq                ; 2 uses
+  %i.yg = sub nuw nsw i32 %i.ya, %i.vq            ; 2 uses
   %i.yh = add nuw nsw i32 %i.yg, 1                ; 2 uses
   %i.yi = tail call fastcc noundef zeroext i1 @_ZN12_GLOBAL__N_113SvaNfaBuilder24exceedsAssertUnrollLimitEP7AstNodei(ptr noundef nonnull %2, i32 noundef %i.yh), !noalias !808
   br i1 %i.yi, label %bb.gp, label %bb.gq
@@ -608,8 +608,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit189.i: ; preds = %
 bb.li:                                            ; preds = %bb.jr
   %i.auu = getelementptr inbounds nuw i8, ptr %2, i64 88
   %i.auv = load ptr, ptr %i.auu, align 8, !tbaa !184, !noalias !817 ; 11 uses
-  %i.auw = sub nuw i32 %i.aks, %i.akp             ; 2 uses
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %i.auw, i32 0)
+  %i.auw = sub nuw nsw i32 %i.aks, %i.akp         ; 2 uses
   br label %bb.ll
 
 bb.lj:                                            ; preds = %_ZN6AstSOrC2EP8FileLineP11AstNodeExprS3_.exit.i
@@ -1012,7 +1011,7 @@ bb.mm:                                            ; preds = %.noexc241.i848
 _ZN6AstSOrC2EP8FileLineP11AstNodeExprS3_.exit.i:  ; preds = %bb.mm, %.noexc241.i848, %_ZN7AstNode11dtypeSetBitEv.exit235.i
   %i.ayb = phi ptr [ %.1.i, %_ZN7AstNode11dtypeSetBitEv.exit235.i ], [ %i.axu, %.noexc241.i848 ], [ %i.axu, %bb.mm ] ; 2 uses
   %i.ayc = add nuw i32 %.066324.i, 1
-  %exitcond.not.i850 = icmp eq i32 %.066324.i, %smax.i
+  %exitcond.not.i850 = icmp eq i32 %.066324.i, %i.auw
   br i1 %exitcond.not.i850, label %bb.lj, label %bb.ll, !llvm.loop !786
 
 bb.mn:                                            ; preds = %.noexc240.i, %.noexc239.i, %.noexc238.i, %bb.ml
@@ -1413,9 +1412,6 @@ declare i64 @llvm.smax.i64(i64, i64) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #24
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #24

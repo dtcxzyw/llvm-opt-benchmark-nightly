@@ -202,7 +202,7 @@ bb.at:                                            ; preds = %bb.as
 
 .thread223.i:                                     ; preds = %.loopexit.i
   %narrow.i = sub nuw nsw i16 %.0136.i, %i.cz
-  %narrow = add nuw i16 %narrow.i, 1
+  %narrow = add nuw nsw i16 %narrow.i, 1
   %i.gi = uitofp i16 %narrow to double
   %.sink260.i = select i1 %.not172.i, double %i.gi, double %.2.i
   %i.gj = load double, ptr %i.au, align 8

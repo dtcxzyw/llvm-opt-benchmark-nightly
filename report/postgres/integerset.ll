@@ -204,9 +204,9 @@ bb.v:                                             ; preds = %intset_update_upper
 
 bb.w:                                             ; preds = %._crit_edge.i
   %i.fc = getelementptr inbounds [8 x i8], ptr %i.o, i64 %i.ex
-  %i.fd = sub nuw i32 %i.fa, %i.ew
-  %2 = sext i32 %i.fd to i64
-  %i.fe = shl nsw i64 %2, 3
+  %i.fd = sub nuw nsw i32 %i.fa, %i.ew
+  %2 = zext nneg i32 %i.fd to i64
+  %i.fe = shl nuw nsw i64 %2, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.o, ptr nonnull align 8 %i.fc, i64 %i.fe, i1 false)
   %.pre60.i = load i32, ptr %i.l, align 8
   br label %intset_flush_buffered_values.exit
