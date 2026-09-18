@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %.lr.ph51
 define linkonce_odr void @_ZN6google8protobuf8internal10KeyMapBaseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE6ResizeEPNS0_5ArenaEj(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !70   ; 4 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !70   ; 5 uses
   %i.c = icmp eq i32 %i.b, 1
   br i1 %i.c, label %bb.b, label %bb.d
 
@@ -261,7 +261,7 @@ _ZN6google8protobuf8internal14UntypedMapBase16CreateEmptyTableEPNS0_5ArenaEj.exi
   br label %bb.m
 
 ._crit_edge29:                                    ; preds = %._crit_edge, %_ZN6google8protobuf8internal14UntypedMapBase16CreateEmptyTableEPNS0_5ArenaEj.exit21
-  %.pre-phi = phi i64 [ 0, %_ZN6google8protobuf8internal14UntypedMapBase16CreateEmptyTableEPNS0_5ArenaEj.exit21 ], [ %wide.trip.count, %._crit_edge ] ; 3 uses
+  %.pre-phi = phi i64 [ 0, %_ZN6google8protobuf8internal14UntypedMapBase16CreateEmptyTableEPNS0_5ArenaEj.exit21 ], [ %wide.trip.count, %._crit_edge ] ; 2 uses
   %i.u = shl nuw nsw i64 %.pre-phi, 3             ; 3 uses
   br i1 %i.m, label %bb.l, label %bb.f
 
@@ -318,8 +318,8 @@ _ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_
 
 _ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i: ; preds = %.lr.ph.preheader.i.i.i.i.i.i.i, %_ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_.exit.i.i.i.i
   store ptr %i.l, ptr %i.ah, align 8, !tbaa !187
-  %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umin.i64(i64 %.pre-phi, i64 64)
-  %i.ap = trunc nuw nsw i64 %.sroa.speculated.i.i.i.i to i8
+  %.sroa.speculated.i.i.i.i = tail call i32 @llvm.umin.i32(i32 %i.b, i32 64)
+  %i.ap = trunc nuw nsw i32 %.sroa.speculated.i.i.i.i to i8
   store i8 %i.ap, ptr %i.ab, align 8, !tbaa !186
   br label %_ZN6google8protobuf8internal14UntypedMapBase11DeleteTableEPNS0_5ArenaEPPNS1_8NodeBaseEj.exit
 
@@ -720,6 +720,9 @@ declare i32 @llvm.smax.i32(i32, i32) #19
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #24
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #19

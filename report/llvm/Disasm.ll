@@ -205,6 +205,7 @@ begin_hunk_0_@_ZNK5clang6interp8Function4dumpERN4llvm11raw_ostreamENS0_7CodePtrE
 ._crit_edge:                                      ; preds = %_ZZNK5clang6interp8Function4dumpERN4llvm11raw_ostreamENS0_7CodePtrEEN6OpTextD2Ev.exit
   %.val102.pre = load ptr, ptr %4, align 8, !tbaa !114 ; 2 uses
   %.val106.pre = load i32, ptr %i.eh, align 8, !tbaa !115 ; 2 uses
+  %2910 = add nuw nsw i32 %.sroa.speculated8916, 4
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %2904) #17
   %i.dml = getelementptr inbounds nuw i8, ptr %2904, i64 16 ; 4 uses
@@ -221,7 +222,7 @@ begin_hunk_0_@_ZNK5clang6interp8Function4dumpERN4llvm11raw_ostreamENS0_7CodePtrE
 
 bb.z:                                             ; preds = %.lr.ph, %_ZZNK5clang6interp8Function4dumpERN4llvm11raw_ostreamENS0_7CodePtrEEN6OpTextD2Ev.exit
   %i.dmq = phi ptr [ %i.ek, %.lr.ph ], [ %i.xtg, %_ZZNK5clang6interp8Function4dumpERN4llvm11raw_ostreamENS0_7CodePtrEEN6OpTextD2Ev.exit ] ; 3 uses
-  %.089378953 = phi i64 [ 0, %.lr.ph ], [ %.sroa.speculated8916, %_ZZNK5clang6interp8Function4dumpERN4llvm11raw_ostreamENS0_7CodePtrEEN6OpTextD2Ev.exit ]
+  %.089378953 = phi i32 [ 0, %.lr.ph ], [ %.sroa.speculated8916, %_ZZNK5clang6interp8Function4dumpERN4llvm11raw_ostreamENS0_7CodePtrEEN6OpTextD2Ev.exit ]
   %.089388952 = phi i64 [ 0, %.lr.ph ], [ %.sroa.speculated8920, %_ZZNK5clang6interp8Function4dumpERN4llvm11raw_ostreamENS0_7CodePtrEEN6OpTextD2Ev.exit ]
   %i.dmr = ptrtoint ptr %i.dmq to i64
   %i.dms = sub i64 %i.dmr, %.cast
@@ -624,12 +625,12 @@ _ZN4llvm23SmallVectorTemplateBaseIZNK5clang6interp8Function4dumpERNS_11raw_ostre
 
 .lr.ph.10.i:                                      ; preds = %.lr.ph.8.i
   %.not.10.i = icmp ult i64 %i.dmt, 3567587328
-  %spec.select.i8833 = select i1 %.not.10.i, i64 12, i64 20
+  %spec.select.i8833 = select i1 %.not.10.i, i32 12, i32 20
   br label %_ZL18getNumDisplayWidthm.exit
 
 _ZL18getNumDisplayWidthm.exit:                    ; preds = %_ZN4llvm23SmallVectorTemplateBaseIZNK5clang6interp8Function4dumpERNS_11raw_ostreamENS2_7CodePtrEE6OpTextLb0EE9push_backERKS7_.exit, %.lr.ph.preheader.i, %.lr.ph.1.i, %.lr.ph.2.i, %.lr.ph.3.i, %.lr.ph.4.i, %.lr.ph.5.i, %.lr.ph.6.i, %.lr.ph.7.i, %.lr.ph.8.i, %.lr.ph.10.i
-  %.1.i = phi i64 [ 1, %_ZN4llvm23SmallVectorTemplateBaseIZNK5clang6interp8Function4dumpERNS_11raw_ostreamENS2_7CodePtrEE6OpTextLb0EE9push_backERKS7_.exit ], [ 9, %.lr.ph.7.i ], [ 2, %.lr.ph.preheader.i ], [ %spec.select.i8833, %.lr.ph.10.i ], [ 3, %.lr.ph.1.i ], [ 10, %.lr.ph.8.i ], [ 4, %.lr.ph.2.i ], [ 8, %.lr.ph.6.i ], [ 5, %.lr.ph.3.i ], [ 7, %.lr.ph.5.i ], [ 6, %.lr.ph.4.i ]
-  %.sroa.speculated8916 = call i64 @llvm.umax.i64(i64 %.1.i, i64 %.089378953) ; 2 uses
+  %.1.i = phi i32 [ 1, %_ZN4llvm23SmallVectorTemplateBaseIZNK5clang6interp8Function4dumpERNS_11raw_ostreamENS2_7CodePtrEE6OpTextLb0EE9push_backERKS7_.exit ], [ 9, %.lr.ph.7.i ], [ 2, %.lr.ph.preheader.i ], [ %spec.select.i8833, %.lr.ph.10.i ], [ 3, %.lr.ph.1.i ], [ 10, %.lr.ph.8.i ], [ 4, %.lr.ph.2.i ], [ 8, %.lr.ph.6.i ], [ 5, %.lr.ph.3.i ], [ 7, %.lr.ph.5.i ], [ 6, %.lr.ph.4.i ]
+  %.sroa.speculated8916 = call i32 @llvm.umax.i32(i32 %.1.i, i32 %.089378953) ; 2 uses
   %i.xsn = load ptr, ptr %i.eu, align 8, !tbaa !114 ; 3 uses
   %i.xso = load i32, ptr %i.ew, align 8, !tbaa !115 ; 2 uses
   %.not4.i.i.i = icmp eq i32 %i.xso, 0
@@ -942,14 +943,12 @@ _ZN4llvm11raw_ostreamlsEPKc.exit8839:             ; preds = %bb.buu, %bb.but, %b
 
 .lr.ph.10.i8862:                                  ; preds = %.lr.ph.8.i8860
   %.not.10.i8863 = icmp ult i64 %i.xwb, 3567587328
-  %spec.select.i8864.neg = select i1 %.not.10.i8863, i64 -12, i64 -20
+  %spec.select.i8864.neg = select i1 %.not.10.i8863, i32 -12, i32 -20
   br label %_ZL18getNumDisplayWidthm.exit8866
 
 _ZL18getNumDisplayWidthm.exit8866:                ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit8839, %.lr.ph.preheader.i8844, %.lr.ph.1.i8846, %.lr.ph.2.i8848, %.lr.ph.3.i8850, %.lr.ph.4.i8852, %.lr.ph.5.i8854, %.lr.ph.6.i8856, %.lr.ph.7.i8858, %.lr.ph.8.i8860, %.lr.ph.10.i8862
-  %.1.i8865.neg = phi i64 [ -1, %_ZN4llvm11raw_ostreamlsEPKc.exit8839 ], [ -9, %.lr.ph.7.i8858 ], [ -2, %.lr.ph.preheader.i8844 ], [ %spec.select.i8864.neg, %.lr.ph.10.i8862 ], [ -3, %.lr.ph.1.i8846 ], [ -10, %.lr.ph.8.i8860 ], [ -4, %.lr.ph.2.i8848 ], [ -8, %.lr.ph.6.i8856 ], [ -5, %.lr.ph.3.i8850 ], [ -7, %.lr.ph.5.i8854 ], [ -6, %.lr.ph.4.i8852 ]
-  %2910 = add nsw i64 %.1.i8865.neg, %.sroa.speculated8916
-  %2911 = trunc nsw i64 %2910 to i32
-  %i.xwc = add nsw i32 %2911, 4
+  %.1.i8865.neg = phi i32 [ -1, %_ZN4llvm11raw_ostreamlsEPKc.exit8839 ], [ -9, %.lr.ph.7.i8858 ], [ -2, %.lr.ph.preheader.i8844 ], [ %spec.select.i8864.neg, %.lr.ph.10.i8862 ], [ -3, %.lr.ph.1.i8846 ], [ -10, %.lr.ph.8.i8860 ], [ -4, %.lr.ph.2.i8848 ], [ -8, %.lr.ph.6.i8856 ], [ -5, %.lr.ph.3.i8850 ], [ -7, %.lr.ph.5.i8854 ], [ -6, %.lr.ph.4.i8852 ]
+  %i.xwc = add nsw i32 %2910, %.1.i8865.neg
   %i.xwd = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream6indentEj(ptr noundef nonnull align 8 dereferenceable(48) %2907, i32 noundef %i.xwc) #17 ; 0 uses
   %i.xwe = getelementptr inbounds nuw i8, ptr %.0938966, i64 8
   %i.xwf = load ptr, ptr %i.xwe, align 8, !tbaa !106
@@ -1350,6 +1349,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #16
