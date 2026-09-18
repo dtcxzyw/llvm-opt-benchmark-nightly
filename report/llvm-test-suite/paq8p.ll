@@ -205,7 +205,7 @@ declare double @sqrt(double noundef) local_unnamed_addr #22
 declare double @llvm.floor.f64(double) #21
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local noundef i32 @_Z6execxtii(i32 noundef %0, i32 noundef %1) local_unnamed_addr #23 {
+define dso_local noundef range(i32 0, -229376) i32 @_Z6execxtii(i32 noundef %0, i32 noundef %1) local_unnamed_addr #23 {
 bb.a:
   %i.a = load i32, ptr @pos, align 4, !tbaa !18   ; 2 uses
   %reass.sub = sub i32 %i.a, %0                   ; 3 uses
@@ -253,19 +253,18 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.ai = select i1 %i.ah, i32 3, i32 0
   %i.aj = add nuw nsw i32 %i.ag, %i.ai
   %i.ak = icmp eq i8 %i.n, 15
-  %2 = select i1 %i.ak, i32 4, i32 0
-  %3 = add nuw nsw i32 %i.aj, %2
-  %i.al = icmp eq i8 %i.n, 102
-  %i.am = select i1 %i.al, i32 8, i32 0
+  %2 = icmp eq i8 %i.n, 102
+  %3 = select i1 %2, i32 8, i32 0
+  %i.al = icmp eq i8 %i.n, 103
+  %i.am = select i1 %i.al, i32 12, i32 0
   %i.an = add nuw nsw i32 %3, %i.am
-  %4 = icmp eq i8 %i.n, 103
-  %i.ao = select i1 %4, i32 12, i32 0
-  %i.ap = add nuw nsw i32 %i.an, %i.ao
+  %i.ao = select i1 %i.ak, i32 4, i32 %i.an
+  %i.ap = add nuw nsw i32 %i.aj, %i.ao
   %i.aq = shl nuw nsw i32 %i.ab, 4
+  %4 = or i32 %i.ap, %i.aq
   %5 = shl i32 %1, 20
-  %6 = or disjoint i32 %i.aq, %5
-  %i.ar = or i32 %6, %i.ap
-  %i.as = or i32 %i.ar, %i.aa
+  %i.ar = or disjoint i32 %4, %5
+  %i.as = or disjoint i32 %i.ar, %i.aa
   ret i32 %i.as
 }
 
@@ -328,14 +327,13 @@ bb.e:                                             ; preds = %bb.d, %bb.b, %bb.a
   %i.ah = select i1 %i.ag, i32 3, i32 0
   %i.ai = add nuw nsw i32 %i.af, %i.ah
   %i.aj = icmp eq i8 %i.p, 15
-  %1 = select i1 %i.aj, i32 4, i32 0
-  %2 = add nuw nsw i32 %i.ai, %1
-  %i.ak = icmp eq i8 %i.p, 102
-  %i.al = select i1 %i.ak, i32 8, i32 0
+  %1 = icmp eq i8 %i.p, 102
+  %2 = select i1 %1, i32 8, i32 0
+  %i.ak = icmp eq i8 %i.p, 103
+  %i.al = select i1 %i.ak, i32 12, i32 0
   %i.am = add nuw nsw i32 %2, %i.al
-  %3 = icmp eq i8 %i.p, 103
-  %i.an = select i1 %3, i32 12, i32 0
-  %i.ao = add nuw nsw i32 %i.am, %i.an
+  %i.an = select i1 %i.aj, i32 4, i32 %i.am
+  %i.ao = add nuw nsw i32 %i.ai, %i.an
   %i.ap = shl nuw nsw i32 %i.aa, 4
   %i.aq = or i32 %i.ao, %i.ap
   %i.ar = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZ8exeModelR5MixerE2cm, i64 136), align 8, !tbaa !90 ; 4 uses
@@ -403,20 +401,19 @@ _Z6execxtii.exit:                                 ; preds = %.peel.next, %_Z6exe
   %i.co = select i1 %i.cn, i32 3, i32 0
   %i.cp = add nuw nsw i32 %i.cm, %i.co
   %i.cq = icmp eq i8 %i.bu, 15
-  %4 = select i1 %i.cq, i32 4, i32 0
-  %5 = add nuw nsw i32 %i.cp, %4
-  %i.cr = icmp eq i8 %i.bu, 102
-  %i.cs = select i1 %i.cr, i32 8, i32 0
-  %i.ct = add nuw nsw i32 %5, %i.cs
-  %6 = icmp eq i8 %i.bu, 103
-  %i.cu = select i1 %6, i32 12, i32 0
-  %i.cv = add nuw nsw i32 %i.ct, %i.cu
+  %3 = icmp eq i8 %i.bu, 102
+  %4 = select i1 %3, i32 8, i32 0
+  %i.cr = icmp eq i8 %i.bu, 103
+  %i.cs = select i1 %i.cr, i32 12, i32 0
+  %i.ct = add nuw nsw i32 %4, %i.cs
+  %i.cu = select i1 %i.cq, i32 4, i32 %i.ct
+  %i.cv = add nuw nsw i32 %i.cp, %i.cu
   %i.cw = shl nuw nsw i32 %i.ch, 4
-  %7 = shl nuw nsw i32 %i.bj, 20
-  %8 = select i1 %i.bk, i32 %7, i32 0
-  %9 = or disjoint i32 %i.cw, %8
-  %i.cx = or i32 %i.cv, %9
-  %i.cy = or i32 %i.cx, %i.cg
+  %5 = or i32 %i.cv, %i.cw
+  %6 = shl nuw nsw i32 %i.bj, 20
+  %7 = select i1 %i.bk, i32 %6, i32 0
+  %i.cx = or disjoint i32 %5, %7
+  %i.cy = or disjoint i32 %i.cx, %i.cg
   %i.cz = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZ8exeModelR5MixerE2cm, i64 136), align 8, !tbaa !90 ; 4 uses
   %i.da = add nsw i32 %i.cz, 1
   store i32 %i.da, ptr getelementptr inbounds nuw (i8, ptr @_ZZ8exeModelR5MixerE2cm, i64 136), align 8, !tbaa !90
