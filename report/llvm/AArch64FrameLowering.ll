@@ -205,7 +205,8 @@ _ZNK4llvm9BitVector5countEv.exit287.loopexit:     ; preds = %.lr.ph.i282, %middl
 
 _ZNK4llvm9BitVector5countEv.exit287:              ; preds = %_ZNK4llvm9BitVector5countEv.exit287.loopexit, %_ZNK4llvm20AArch64FrameLowering25windowsRequiresStackProbeERKNS_15MachineFunctionEm.exit.thread
   %.0.lcssa.i286 = phi i1 [ true, %_ZNK4llvm20AArch64FrameLowering25windowsRequiresStackProbeERKNS_15MachineFunctionEm.exit.thread ], [ %i.tf, %_ZNK4llvm9BitVector5countEv.exit287.loopexit ]
-  %.not223 = icmp ult i64 %i.sg, 16
+  %.not223 = icmp ult i64 %i.sg, 16               ; 2 uses
+  %spec.select230 = select i1 %.0.lcssa.i286, i1 %.not223, i1 false
   %i.tg = getelementptr inbounds nuw i8, ptr %1, i64 304
   %i.th = getelementptr inbounds nuw i8, ptr %1, i64 296 ; 2 uses
   %.sroa.042.072.i = load ptr, ptr %i.tg, align 8, !tbaa !560 ; 2 uses
@@ -355,9 +356,9 @@ _ZL24estimateRSStackSizeLimitRN4llvm15MachineFunctionE.exit: ; preds = %._crit_e
   %i.vb = zext i32 %i.qe to i64
   %i.vc = add i64 %i.rc, %i.vb
   %i.vd = add i64 %i.vc, %.0198.lcssa
-  %i.ve = icmp ule i64 %i.vd, %i.uo
-  %.not424 = select i1 %.not223, i1 %i.ve, i1 false ; 2 uses
-  %or.cond = select i1 %.0.lcssa.i286, i1 %.not424, i1 false
+  %i.ve = icmp ule i64 %i.vd, %i.uo               ; 2 uses
+  %.not424 = select i1 %.not223, i1 %i.ve, i1 false
+  %or.cond = select i1 %spec.select230, i1 %i.ve, i1 false
   br i1 %or.cond, label %bb.bf, label %bb.bg
 
 bb.be:                                            ; preds = %bb.be, %.lr.ph462.new
