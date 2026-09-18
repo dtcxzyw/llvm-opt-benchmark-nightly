@@ -204,7 +204,7 @@ _ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i.peel:   ; preds = %bb.ap
   br label %_ZNSt6vectorIfSaIfEE6resizeEm.exit.peel
 
 bb.aq:                                            ; preds = %.split.peel
-  %i.il = sub nuw i64 %.0120.lcssa, %i.ih
+  %i.il = sub nuw nsw i64 %.0120.lcssa, %i.ih
   invoke void @_ZNSt6vectorIfSaIfEE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %i.hx, i64 noundef %i.il)
           to label %._ZNSt6vectorIfSaIfEE6resizeEm.exit.peel_crit_edge390 unwind label %.loopexit.split-lp
 
@@ -260,7 +260,7 @@ _ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i.peel379: ; preds = %bb.at
   br label %_ZNSt6vectorIfSaIfEE6resizeEm.exit.peel380
 
 bb.au:                                            ; preds = %bb.ar
-  %i.jg = sub nuw i64 %.0120.lcssa, %i.jc
+  %i.jg = sub nuw nsw i64 %.0120.lcssa, %i.jc
   invoke void @_ZNSt6vectorIfSaIfEE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %i.ix, i64 noundef %i.jg)
           to label %._ZNSt6vectorIfSaIfEE6resizeEm.exit.peel380_crit_edge unwind label %.loopexit.split-lp
 
@@ -302,7 +302,7 @@ bb.av:                                            ; preds = %.lr.ph.preheader.i.
   br i1 %i.jt, label %bb.aw, label %bb.ax
 
 bb.aw:                                            ; preds = %.lr.ph320.peel.next372
-  %i.ju = sub nuw i64 %.0120.lcssa, %i.js
+  %i.ju = sub nuw nsw i64 %.0120.lcssa, %i.js
   invoke void @_ZNSt6vectorIfSaIfEE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %i.jl, i64 noundef %i.ju)
           to label %._ZNSt6vectorIfSaIfEE6resizeEm.exit_crit_edge402 unwind label %.loopexit382
 
@@ -397,7 +397,7 @@ bb.ba:                                            ; preds = %.split146, %.split1
   br i1 %i.lc, label %bb.bb, label %bb.bc
 
 bb.bb:                                            ; preds = %bb.ba
-  %i.ld = sub nuw i64 %.0120.lcssa, %i.lb
+  %i.ld = sub nuw nsw i64 %.0120.lcssa, %i.lb
   invoke void @_ZNSt6vectorIfSaIfEE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %phi.call147, i64 noundef %i.ld)
           to label %._ZNSt6vectorIfSaIfEE6resizeEm.exit214_crit_edge unwind label %bb.be
 

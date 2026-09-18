@@ -202,14 +202,14 @@ bb.at:                                            ; preds = %bb.as
   %i.dw = getelementptr inbounds nuw [32 x i8], ptr %.val40.i, i64 %..i
   %i.dx = shl i64 %i.dp, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.dw, ptr nonnull align 8 %i.dv, i64 %i.dx, i1 false), !noalias !73
-  %i.dy = sub nuw i64 %i.cq, %i.dp
+  %i.dy = sub nuw nsw i64 %i.cq, %i.dp
   %i.dz = getelementptr [32 x i8], ptr %i.dv, i64 %i.dp
   %i.ea = shl i64 %i.dy, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %.val40.i, ptr align 8 %i.dz, i64 %i.ea, i1 false), !noalias !73
   br label %_RNvMs3_NtNtCscdodAO9FK5_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsdXn3xun2LFY_7argfile8argument8ArgumentE10insert_mutCs2bbjMbSOFjy_2ty.exit
 
 bb.au:                                            ; preds = %bb.as
-  %i.eb = sub nuw i64 %i.cq, %i.dp
+  %i.eb = sub nuw nsw i64 %i.cq, %i.dp
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val40.i) ], !noalias !73
   %i.ec = getelementptr [32 x i8], ptr %.val40.i, i64 %i.dg ; 2 uses
   %i.ed = getelementptr [32 x i8], ptr %i.ec, i64 %i.dp
@@ -232,7 +232,7 @@ bb.aw:                                            ; preds = %bb.aq
 bb.ax:                                            ; preds = %bb.av
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val40.i) ], !noalias !73
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ei, ptr nonnull align 8 %i.eh, i64 %i.ej, i1 false), !noalias !73
-  %i.ek = sub nuw i64 %i.cq, %i.do
+  %i.ek = sub nuw nsw i64 %i.cq, %i.do
   %i.el = getelementptr [32 x i8], ptr %i.ei, i64 %i.do
   %i.em = shl i64 %i.ek, 5
   call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.el, ptr nonnull align 8 %.val40.i, i64 %i.em, i1 false), !noalias !73
@@ -244,7 +244,7 @@ bb.ay:                                            ; preds = %bb.av
   %i.eo = getelementptr [32 x i8], ptr %i.ei, i64 %i.do
   %i.ep = shl i64 %i.en, 5
   call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.eo, ptr nonnull align 8 %.val40.i, i64 %i.ep, i1 false), !noalias !73
-  %i.eq = sub nuw i64 %i.cq, %i.dp
+  %i.eq = sub nuw nsw i64 %i.cq, %i.dp
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val40.i) ], !noalias !73
   %i.er = getelementptr inbounds nuw [32 x i8], ptr %.val40.i, i64 %i.en
   %i.es = shl i64 %i.eq, 5
@@ -252,7 +252,7 @@ bb.ay:                                            ; preds = %bb.av
   br label %_RNvMs3_NtNtCscdodAO9FK5_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsdXn3xun2LFY_7argfile8argument8ArgumentE10insert_mutCs2bbjMbSOFjy_2ty.exit
 
 bb.az:                                            ; preds = %bb.aw
-  %i.et = sub nuw i64 %i.cq, %i.do
+  %i.et = sub nuw nsw i64 %i.cq, %i.do
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val40.i) ], !noalias !73
   %i.eu = getelementptr [32 x i8], ptr %.val40.i, i64 %..i ; 2 uses
   %i.ev = getelementptr [32 x i8], ptr %i.eu, i64 %i.do
@@ -265,7 +265,7 @@ bb.az:                                            ; preds = %bb.aw
 
 bb.ba:                                            ; preds = %bb.aw
   %i.ez = sub i64 %i.do, %i.dp                    ; 3 uses
-  %i.fa = sub nuw i64 %i.cq, %i.do
+  %i.fa = sub nuw nsw i64 %i.cq, %i.do
   %i.fb = getelementptr inbounds nuw [32 x i8], ptr %.val40.i, i64 %i.ez
   %i.fc = shl i64 %i.fa, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.fb, ptr nonnull align 8 %.val40.i, i64 %i.fc, i1 false), !noalias !73
@@ -330,14 +330,14 @@ bb.bh:                                            ; preds = %bb.bg
   %i.ga = getelementptr inbounds nuw [32 x i8], ptr %.val38.i, i64 %.sroa.02.0.i
   %i.gb = shl i64 %i.ft, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ga, ptr nonnull align 8 %i.fz, i64 %i.gb, i1 false), !noalias !73
-  %i.gc = sub nuw i64 %i.de, %i.ft
+  %i.gc = sub nuw nsw i64 %i.de, %i.ft
   %i.gd = getelementptr [32 x i8], ptr %i.fz, i64 %i.ft
   %i.ge = shl i64 %i.gc, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %.val38.i, ptr align 8 %i.gd, i64 %i.ge, i1 false), !noalias !73
   br label %_RNvMs3_NtNtCscdodAO9FK5_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsdXn3xun2LFY_7argfile8argument8ArgumentE10insert_mutCs2bbjMbSOFjy_2ty.exit
 
 bb.bi:                                            ; preds = %bb.bg
-  %i.gf = sub nuw i64 %i.de, %i.ft
+  %i.gf = sub nuw nsw i64 %i.de, %i.ft
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val38.i) ], !noalias !73
   %i.gg = getelementptr [32 x i8], ptr %.val38.i, i64 %.sroa.01.0.i ; 2 uses
   %i.gh = getelementptr [32 x i8], ptr %i.gg, i64 %i.ft
@@ -360,7 +360,7 @@ bb.bk:                                            ; preds = %bb.be
 bb.bl:                                            ; preds = %bb.bj
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val38.i) ], !noalias !73
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.gm, ptr nonnull align 8 %i.gl, i64 %i.gn, i1 false), !noalias !73
-  %i.go = sub nuw i64 %i.de, %i.fs
+  %i.go = sub nuw nsw i64 %i.de, %i.fs
   %i.gp = getelementptr [32 x i8], ptr %i.gm, i64 %i.fs
   %i.gq = shl i64 %i.go, 5
   call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.gp, ptr nonnull align 8 %.val38.i, i64 %i.gq, i1 false), !noalias !73
@@ -372,7 +372,7 @@ bb.bm:                                            ; preds = %bb.bj
   %i.gs = getelementptr [32 x i8], ptr %i.gm, i64 %i.fs
   %i.gt = shl i64 %i.gr, 5
   call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.gs, ptr nonnull align 8 %.val38.i, i64 %i.gt, i1 false), !noalias !73
-  %i.gu = sub nuw i64 %i.de, %i.ft
+  %i.gu = sub nuw nsw i64 %i.de, %i.ft
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val38.i) ], !noalias !73
   %i.gv = getelementptr inbounds nuw [32 x i8], ptr %.val38.i, i64 %i.gr
   %i.gw = shl i64 %i.gu, 5
@@ -380,7 +380,7 @@ bb.bm:                                            ; preds = %bb.bj
   br label %_RNvMs3_NtNtCscdodAO9FK5_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsdXn3xun2LFY_7argfile8argument8ArgumentE10insert_mutCs2bbjMbSOFjy_2ty.exit
 
 bb.bn:                                            ; preds = %bb.bk
-  %i.gx = sub nuw i64 %i.de, %i.fs
+  %i.gx = sub nuw nsw i64 %i.de, %i.fs
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val38.i) ], !noalias !73
   %i.gy = getelementptr [32 x i8], ptr %.val38.i, i64 %.sroa.02.0.i ; 2 uses
   %i.gz = getelementptr [32 x i8], ptr %i.gy, i64 %i.fs
@@ -393,7 +393,7 @@ bb.bn:                                            ; preds = %bb.bk
 
 bb.bo:                                            ; preds = %bb.bk
   %i.hd = sub i64 %i.fs, %i.ft                    ; 3 uses
-  %i.he = sub nuw i64 %i.de, %i.fs
+  %i.he = sub nuw nsw i64 %i.de, %i.fs
   %i.hf = getelementptr inbounds nuw [32 x i8], ptr %.val38.i, i64 %i.hd
   %i.hg = shl i64 %i.he, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.hf, ptr nonnull align 8 %.val38.i, i64 %i.hg, i1 false), !noalias !73

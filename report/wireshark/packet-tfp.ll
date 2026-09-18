@@ -196,15 +196,15 @@ bb.a:
   %i.q = zext nneg i32 %i.n to i64
   %i.r = getelementptr i8, ptr @BASE58_ALPHABET, i64 %i.q
   %i.s = load i8, ptr %i.r, align 1
-  %i.t = sext i32 %i.o to i64
+  %i.t = sext i32 %i.o to i64                     ; 2 uses
   %i.u = getelementptr i8, ptr %i.a, i64 %i.t
   store i8 %i.s, ptr %i.u, align 1
   %.not23.i = icmp slt i32 %i.o, 0
   br i1 %.not23.i, label %.lr.ph29.preheader.i, label %iter.check
 
 iter.check:                                       ; preds = %._crit_edge.i, %._crit_edge.thread.i
-  %.018.lcssa40.i = phi i32 [ 0, %._crit_edge.thread.i ], [ %i.o, %._crit_edge.i ] ; 2 uses
-  %3 = zext nneg i32 %.018.lcssa40.i to i64       ; 3 uses
+  %3 = phi i64 [ 0, %._crit_edge.thread.i ], [ %i.t, %._crit_edge.i ] ; 3 uses
+  %.018.lcssa40.i = phi i32 [ 0, %._crit_edge.thread.i ], [ %i.o, %._crit_edge.i ]
   %i.v = add nuw i32 %.018.lcssa40.i, 1           ; 4 uses
   %smax.i = tail call i32 @llvm.smax.i32(i32 %i.v, i32 1) ; 2 uses
   %wide.trip.count.i = zext nneg i32 %smax.i to i64 ; 6 uses

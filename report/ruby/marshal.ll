@@ -205,7 +205,7 @@ ruby_nonempty_memcpy.exit55:                      ; preds = %bb.q
   %i.as = zext nneg i32 %i.s to i64               ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.ar, ptr noundef nonnull readonly align 1 %i.l, i64 noundef range(i64 1, 0) %i.as, i1 noundef false) #21
   %i.at = add nuw i32 %i.s, %.0                   ; 3 uses
-  %i.au = sub i32 %i.r, %i.s                      ; 3 uses
+  %i.au = sub nsw i32 %i.r, %i.s                  ; 3 uses
   %i.av = icmp sgt i32 %i.au, 0
   br i1 %i.av, label %ruby_nonempty_memcpy.exit58, label %bb.v
 
@@ -219,7 +219,7 @@ ruby_nonempty_memcpy.exit58:                      ; preds = %ruby_nonempty_memcp
   %i.bb = getelementptr i8, ptr %i.l, i64 %i.as
   %i.bc = zext nneg i32 %i.au to i64
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.ba, ptr noundef nonnull readonly align 1 %i.bb, i64 noundef range(i64 1, 0) %i.bc, i1 noundef false) #21
-  %i.bd = add i32 %i.au, %i.aw
+  %i.bd = add nuw i32 %i.au, %i.aw
   br label %bb.v
 
 bb.r:                                             ; preds = %bb.q

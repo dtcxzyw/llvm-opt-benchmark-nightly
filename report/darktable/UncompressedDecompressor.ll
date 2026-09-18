@@ -155,7 +155,7 @@ bb.a:
   tail call void @llvm.assume(i1 %i.m)
   %i.n = icmp sgt i32 %i.i, -1
   tail call void @llvm.assume(i1 %i.n)
-  %i.o = sub nuw i32 %i.i, %i.l                   ; 2 uses
+  %i.o = sub nuw nsw i32 %i.i, %i.l               ; 2 uses
   %i.p = udiv i32 %i.o, %i.c                      ; 2 uses
   %.not.i.i = icmp ult i32 %i.p, %i.e
   br i1 %.not.i.i, label %bb.b, label %_ZNK8rawspeed24UncompressedDecompressor11sanityCheckEjPKji.exit
@@ -288,7 +288,7 @@ bb.a:
   tail call void @llvm.assume(i1 %i.l)
   %i.m = icmp sgt i32 %i.h, -1
   tail call void @llvm.assume(i1 %i.m)
-  %i.n = sub nuw i32 %i.h, %i.k                   ; 2 uses
+  %i.n = sub nuw nsw i32 %i.h, %i.k               ; 2 uses
   %i.o = udiv i32 %i.n, %i.c                      ; 2 uses
   %.not.i = icmp ult i32 %i.o, %i.d
   br i1 %.not.i, label %bb.b, label %_ZNK8rawspeed24UncompressedDecompressor11sanityCheckEPKji.exit
@@ -333,7 +333,7 @@ bb.a:
   tail call void @llvm.assume(i1 %i.l)
   %i.m = icmp sgt i32 %i.h, -1
   tail call void @llvm.assume(i1 %i.m)
-  %i.n = sub nuw i32 %i.h, %i.k                   ; 2 uses
+  %i.n = sub nuw nsw i32 %i.h, %i.k               ; 2 uses
   %i.o = udiv i32 %i.n, %i.b                      ; 2 uses
   %.not.i.i = icmp ult i32 %i.o, %i.d
   br i1 %.not.i.i, label %bb.b, label %_ZNK8rawspeed24UncompressedDecompressor11sanityCheckEjPKji.exit
@@ -609,7 +609,7 @@ _ZN8rawspeed24UncompressedDecompressor12bytesPerLineEib.exit: ; preds = %bb.a
   tail call void @llvm.assume(i1 %i.r)
   %i.s = icmp sgt i32 %i.n, -1
   tail call void @llvm.assume(i1 %i.s)
-  %i.t = sub nuw i32 %i.n, %i.q                   ; 2 uses
+  %i.t = sub nuw nsw i32 %i.n, %i.q               ; 2 uses
   %i.u = udiv i32 %i.t, %i.k                      ; 2 uses
   %.not.i33 = icmp ult i32 %i.u, %i.d
   br i1 %.not.i33, label %bb.c, label %_ZNK8rawspeed24UncompressedDecompressor11sanityCheckEPKji.exit
@@ -792,7 +792,7 @@ bb.a:
   tail call void @llvm.assume(i1 %i.i)
   %i.j = icmp sgt i32 %i.e, -1
   tail call void @llvm.assume(i1 %i.j)
-  %i.k = sub nuw i32 %i.e, %i.h                   ; 2 uses
+  %i.k = sub nuw nsw i32 %i.e, %i.h               ; 2 uses
   %i.l = udiv i32 %i.k, %2                        ; 2 uses
   %.not = icmp ult i32 %i.l, %i.a
   br i1 %.not, label %bb.c, label %bb.b
@@ -851,7 +851,7 @@ _ZN8rawspeed24UncompressedDecompressor12bytesPerLineEib.exit: ; preds = %bb.a
   tail call void @llvm.assume(i1 %i.r)
   %i.s = icmp sgt i32 %i.n, -1
   tail call void @llvm.assume(i1 %i.s)
-  %i.t = sub nuw i32 %i.n, %i.q                   ; 2 uses
+  %i.t = sub nuw nsw i32 %i.n, %i.q               ; 2 uses
   %i.u = udiv i32 %i.t, %i.k                      ; 2 uses
   %.not.i33 = icmp ult i32 %i.u, %i.d
   br i1 %.not.i33, label %bb.c, label %_ZNK8rawspeed24UncompressedDecompressor11sanityCheckEPKji.exit
@@ -1010,7 +1010,7 @@ bb.a:
   tail call void @llvm.assume(i1 %i.n)
   %i.o = icmp sgt i32 %i.j, -1
   tail call void @llvm.assume(i1 %i.o)
-  %i.p = sub nuw i32 %i.j, %i.m                   ; 2 uses
+  %i.p = sub nuw nsw i32 %i.j, %i.m               ; 2 uses
   %i.q = udiv i32 %i.p, %i.f                      ; 2 uses
   %.not.i.i = icmp ult i32 %i.q, %i.d
   br i1 %.not.i.i, label %bb.b, label %_ZNK8rawspeed24UncompressedDecompressor11sanityCheckEjPKji.exit
@@ -1311,7 +1311,7 @@ bb.a:
   tail call void @llvm.assume(i1 %i.n)
   %i.o = icmp sgt i32 %i.j, -1
   tail call void @llvm.assume(i1 %i.o)
-  %i.p = sub nuw i32 %i.j, %i.m                   ; 2 uses
+  %i.p = sub nuw nsw i32 %i.j, %i.m               ; 2 uses
   %i.q = udiv i32 %i.p, %i.f                      ; 2 uses
   %.not.i.i = icmp ult i32 %i.q, %i.d
   br i1 %.not.i.i, label %bb.b, label %_ZNK8rawspeed24UncompressedDecompressor11sanityCheckEjPKji.exit
@@ -1714,7 +1714,7 @@ bb.a:
   %i.v = icmp sgt i32 %i.t, -1
   tail call void @llvm.assume(i1 %i.v)
   %i.w = zext i32 %i.r to i64
-  %i.x = sub nuw i32 %i.t, %i.r                   ; 2 uses
+  %i.x = sub nuw nsw i32 %i.t, %i.r               ; 2 uses
   %i.y = load ptr, ptr %0, align 8, !tbaa !105
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.w
   store i64 0, ptr %3, align 8, !tbaa !136
@@ -1940,7 +1940,7 @@ bb.a:
   %i.v = icmp sgt i32 %i.t, -1
   tail call void @llvm.assume(i1 %i.v)
   %i.w = zext i32 %i.r to i64
-  %i.x = sub nuw i32 %i.t, %i.r                   ; 2 uses
+  %i.x = sub nuw nsw i32 %i.t, %i.r               ; 2 uses
   %i.y = load ptr, ptr %0, align 8, !tbaa !105
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.w
   store i64 0, ptr %3, align 8, !tbaa !136
@@ -2163,7 +2163,7 @@ bb.a:
   %i.v = icmp sgt i32 %i.t, -1
   tail call void @llvm.assume(i1 %i.v)
   %i.w = zext i32 %i.r to i64
-  %i.x = sub nuw i32 %i.t, %i.r                   ; 2 uses
+  %i.x = sub nuw nsw i32 %i.t, %i.r               ; 2 uses
   %i.y = load ptr, ptr %0, align 8, !tbaa !105
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.w
   store i64 0, ptr %3, align 8, !tbaa !136
@@ -2389,7 +2389,7 @@ bb.a:
   %i.v = icmp sgt i32 %i.t, -1
   tail call void @llvm.assume(i1 %i.v)
   %i.w = zext i32 %i.r to i64
-  %i.x = sub nuw i32 %i.t, %i.r                   ; 2 uses
+  %i.x = sub nuw nsw i32 %i.t, %i.r               ; 2 uses
   %i.y = load ptr, ptr %0, align 8, !tbaa !105
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.w
   store i64 0, ptr %3, align 8, !tbaa !136
@@ -2612,7 +2612,7 @@ bb.a:
   %i.v = icmp sgt i32 %i.t, -1
   tail call void @llvm.assume(i1 %i.v)
   %i.w = zext i32 %i.r to i64
-  %i.x = sub nuw i32 %i.t, %i.r                   ; 2 uses
+  %i.x = sub nuw nsw i32 %i.t, %i.r               ; 2 uses
   %i.y = load ptr, ptr %0, align 8, !tbaa !105
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.w
   store i64 0, ptr %3, align 8, !tbaa !136
@@ -2812,7 +2812,7 @@ bb.a:
   %i.v = icmp sgt i32 %i.t, -1
   tail call void @llvm.assume(i1 %i.v)
   %i.w = zext i32 %i.r to i64
-  %i.x = sub nuw i32 %i.t, %i.r                   ; 2 uses
+  %i.x = sub nuw nsw i32 %i.t, %i.r               ; 2 uses
   %i.y = load ptr, ptr %0, align 8, !tbaa !105
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.w
   store i64 0, ptr %3, align 8, !tbaa !136
@@ -3020,7 +3020,7 @@ bb.a:
   %i.v = icmp sgt i32 %i.t, -1
   tail call void @llvm.assume(i1 %i.v)
   %i.w = zext i32 %i.r to i64
-  %i.x = sub nuw i32 %i.t, %i.r                   ; 2 uses
+  %i.x = sub nuw nsw i32 %i.t, %i.r               ; 2 uses
   %i.y = load ptr, ptr %0, align 8, !tbaa !105
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.w
   store i64 0, ptr %3, align 8, !tbaa !136
@@ -3222,7 +3222,7 @@ bb.a:
   %i.v = icmp sgt i32 %i.t, -1
   tail call void @llvm.assume(i1 %i.v)
   %i.w = zext i32 %i.r to i64
-  %i.x = sub nuw i32 %i.t, %i.r                   ; 2 uses
+  %i.x = sub nuw nsw i32 %i.t, %i.r               ; 2 uses
   %i.y = load ptr, ptr %0, align 8, !tbaa !105
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.w
   store i64 0, ptr %3, align 8, !tbaa !136
