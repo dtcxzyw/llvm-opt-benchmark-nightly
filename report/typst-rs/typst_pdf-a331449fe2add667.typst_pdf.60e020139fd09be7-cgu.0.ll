@@ -205,56 +205,43 @@ bb.qt:                                            ; preds = %bb.qn
   %i.bye = insertelement <2 x double> poison, double %i.byc, i64 0
   %i.byf = insertelement <2 x double> %i.bye, double %i.byd, i64 1
   %i.byg = fdiv <2 x double> %i.byf, splat (double 1.270000e+02) ; 2 uses
-  %6 = extractelement <2 x double> %i.byg, i64 0
-  %7 = fptrunc double %6 to float                 ; 2 uses
-  %8 = call nsz float @llvm.maximumnum.f32(float %7, float -inf)
-  %9 = extractelement <2 x double> %i.byg, i64 1
-  %10 = fptrunc double %9 to float                ; 2 uses
-  %11 = call nsz float @llvm.maximumnum.f32(float %8, float %10)
   %i.byh = extractvalue { double, double } %i.bya, 1
   %i.byi = extractvalue { double, double } %i.bxy, 0
   %i.byj = insertelement <2 x double> poison, double %i.byh, i64 0
   %i.byk = insertelement <2 x double> %i.byj, double %i.byi, i64 1
   %i.byl = fdiv <2 x double> %i.byk, splat (double 1.270000e+02) ; 2 uses
-  %12 = extractelement <2 x double> %i.byl, i64 0
-  %13 = fptrunc double %12 to float               ; 2 uses
-  %14 = call nsz float @llvm.maximumnum.f32(float %11, float %13)
-  %15 = extractelement <2 x double> %i.byl, i64 1
-  %16 = fptrunc double %15 to float               ; 2 uses
-  %17 = call nsz float @llvm.maximumnum.f32(float %16, float -inf)
   %i.bym = extractvalue { double, double } %i.bxz, 0
   %i.byn = extractvalue { double, double } %i.bya, 0
   %i.byo = insertelement <2 x double> poison, double %i.bym, i64 0
   %i.byp = insertelement <2 x double> %i.byo, double %i.byn, i64 1
   %i.byq = fdiv <2 x double> %i.byp, splat (double 1.270000e+02) ; 2 uses
-  %18 = extractelement <2 x double> %i.byq, i64 0
-  %19 = fptrunc double %18 to float               ; 2 uses
-  %20 = call nsz float @llvm.maximumnum.f32(float %17, float %19)
-  %21 = extractelement <2 x double> %i.byq, i64 1
-  %22 = fptrunc double %21 to float               ; 2 uses
-  %23 = call nsz float @llvm.maximumnum.f32(float %20, float %22)
-  %24 = call nsz float @llvm.minimumnum.f32(float %7, float +inf)
-  %25 = call nsz float @llvm.minimumnum.f32(float %24, float %10)
-  %26 = call nsz float @llvm.minimumnum.f32(float %25, float %13)
-  %27 = call nsz float @llvm.minimumnum.f32(float %16, float +inf)
-  %28 = call nsz float @llvm.minimumnum.f32(float %27, float %19)
-  %29 = call nsz float @llvm.minimumnum.f32(float %28, float %22)
-  %30 = extractvalue { double, double } %i.byb, 0
-  %31 = extractvalue { double, double } %i.byb, 1
+  %6 = extractvalue { double, double } %i.byb, 0
+  %7 = extractvalue { double, double } %i.byb, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dk), !noalias !16836
-  %32 = insertelement <2 x double> poison, double %30, i64 0
-  %33 = insertelement <2 x double> %32, double %31, i64 1
-  %34 = fdiv <2 x double> %33, splat (double 1.270000e+02) ; 2 uses
-  %35 = extractelement <2 x double> %34, i64 0
-  %36 = fptrunc double %35 to float               ; 2 uses
-  %37 = extractelement <2 x double> %34, i64 1
-  %38 = fptrunc double %37 to float               ; 2 uses
-  %39 = call nsz float @llvm.minimumnum.f32(float %29, float %36)
-  %40 = call nsz float @llvm.minimumnum.f32(float %26, float %38)
-  %41 = call nsz float @llvm.maximumnum.f32(float %23, float %36)
-  %42 = call nsz float @llvm.maximumnum.f32(float %14, float %38)
+  %8 = insertelement <2 x double> poison, double %6, i64 0
+  %9 = insertelement <2 x double> %8, double %7, i64 1
+  %10 = fdiv <2 x double> %9, splat (double 1.270000e+02)
+  %11 = shufflevector <2 x double> %i.byl, <2 x double> %i.byg, <2 x i32> <i32 1, i32 2>
+  %12 = fptrunc <2 x double> %11 to <2 x float>   ; 2 uses
+  %13 = call nsz <2 x float> @llvm.maximumnum.v2f32(<2 x float> %12, <2 x float> splat (float -inf))
+  %14 = shufflevector <2 x double> %i.byq, <2 x double> %i.byg, <2 x i32> <i32 0, i32 3>
+  %15 = fptrunc <2 x double> %14 to <2 x float>   ; 2 uses
+  %16 = call nsz <2 x float> @llvm.maximumnum.v2f32(<2 x float> %13, <2 x float> %15)
+  %17 = shufflevector <2 x double> %i.byq, <2 x double> %i.byl, <2 x i32> <i32 1, i32 2>
+  %18 = fptrunc <2 x double> %17 to <2 x float>   ; 2 uses
+  %19 = call nsz <2 x float> @llvm.maximumnum.v2f32(<2 x float> %16, <2 x float> %18)
+  %20 = fptrunc <2 x double> %10 to <2 x float>   ; 2 uses
+  %21 = call nsz <2 x float> @llvm.minimumnum.v2f32(<2 x float> %12, <2 x float> splat (float +inf))
+  %22 = call nsz <2 x float> @llvm.minimumnum.v2f32(<2 x float> %21, <2 x float> %15)
+  %23 = call nsz <2 x float> @llvm.minimumnum.v2f32(<2 x float> %22, <2 x float> %18)
+  %24 = call nsz <2 x float> @llvm.minimumnum.v2f32(<2 x float> %23, <2 x float> %20) ; 2 uses
+  %25 = call nsz <2 x float> @llvm.maximumnum.v2f32(<2 x float> %19, <2 x float> %20) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dj), !noalias !16836
-  invoke void @_RNvMs2_NtCsidf7BFzONoc_6krilla4geomNtB5_4Rect9from_ltrb(ptr noalias nofree noundef nonnull sret([20 x i8]) align 4 captures(none) dereferenceable(20) %i.dj, float noundef %39, float noundef %40, float noundef %41, float noundef %42)
+  %26 = extractelement <2 x float> %25, i64 0
+  %27 = extractelement <2 x float> %25, i64 1
+  %28 = extractelement <2 x float> %24, i64 0
+  %29 = extractelement <2 x float> %24, i64 1
+  invoke void @_RNvMs2_NtCsidf7BFzONoc_6krilla4geomNtB5_4Rect9from_ltrb(ptr noalias nofree noundef nonnull sret([20 x i8]) align 4 captures(none) dereferenceable(20) %i.dj, float noundef %28, float noundef %29, float noundef %26, float noundef %27)
           to label %.noexc178.i unwind label %.body.thread373.i.loopexit, !noalias !16826
 
 .noexc178.i:                                      ; preds = %.noexc177.i
@@ -655,9 +642,6 @@ declare void @_RNvMs4_NtCsf1gSX8u3EQ2_10rayon_core8registryNtB5_8Registry25incre
 
 ; Function Attrs: nonlazybind uwtable
 declare void @_RNvMs2_NtCsidf7BFzONoc_6krilla4geomNtB5_4Rect9transform(ptr dead_on_unwind noalias nofree noundef writable sret([20 x i8]) align 4 captures(none) dereferenceable(20), ptr noalias nofree noundef readonly align 4 captures(address) dead_on_return dereferenceable(16), ptr noalias nofree noundef readonly align 4 captures(none) dead_on_return dereferenceable(24)) unnamed_addr #0
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.minimumnum.f32(float, float) #27
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.maximumnum.f32(float, float) #27

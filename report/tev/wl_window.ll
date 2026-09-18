@@ -204,26 +204,23 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 520
-  %9 = load double, ptr %8, align 8, !tbaa !634
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 512
-  %10 = load double, ptr %i.c, align 8, !tbaa !635
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 528
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !636
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !634
   %.not16 = icmp eq i32 %i.e, 0                   ; 2 uses
-  %. = select i1 %.not16, i32 %4, i32 %6
-  %.18.a = select i1 %.not16, i32 %5, i32 %7
-  %.pn17.in.in.in = sext i32 %.18.a to i64
-  %.pn17.in.in = add nsw i64 %.pn17.in.in.in, 4807592602218004480
-  %.pn17.in = bitcast i64 %.pn17.in.in to double
-  %.pn17 = fadd double %.pn17.in, f0xC2B8000000000000
-  %.pn.in.in.in = sext i32 %. to i64
-  %.pn.in.in = add nsw i64 %.pn.in.in.in, 4807592602218004480
-  %.pn.in = bitcast i64 %.pn.in.in to double
-  %.pn = fadd double %.pn.in, f0xC2B8000000000000
-  %.0 = fadd double %9, %.pn17
-  %.015 = fadd double %10, %.pn
-  tail call void @_glfwInputCursorPos(ptr noundef nonnull %0, double noundef %.015, double noundef %.0) #19
+  %8 = load <2 x double>, ptr %i.c, align 8, !tbaa !235
+  %.18.a = select i1 %.not16, i32 %4, i32 %6
+  %.18 = select i1 %.not16, i32 %5, i32 %7
+  %9 = insertelement <2 x i32> poison, i32 %.18.a, i64 0
+  %10 = insertelement <2 x i32> %9, i32 %.18, i64 1
+  %11 = sext <2 x i32> %10 to <2 x i64>
+  %12 = add nsw <2 x i64> %11, splat (i64 4807592602218004480)
+  %13 = bitcast <2 x i64> %12 to <2 x double>
+  %14 = fadd <2 x double> %13, splat (double f0xC2B8000000000000)
+  %15 = fadd <2 x double> %8, %14                 ; 2 uses
+  %16 = extractelement <2 x double> %15, i64 0
+  %17 = extractelement <2 x double> %15, i64 1
+  tail call void @_glfwInputCursorPos(ptr noundef nonnull %0, double noundef %16, double noundef %17) #19
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -300,7 +297,7 @@ bb.d:                                             ; preds = %.lr.ph
   %i.g = tail call ptr @__errno_location() #20
   %i.h = load i32, ptr %i.g, align 4, !tbaa !196  ; 2 uses
   %i.i = icmp eq i32 %i.h, 4
-  br i1 %i.i, label %bb.f, label %.thread, !llvm.loop !637
+  br i1 %i.i, label %bb.f, label %.thread, !llvm.loop !635
 
 .thread:                                          ; preds = %bb.d
   %i.j = tail call ptr @strerror(i32 noundef %i.h) #19
@@ -703,8 +700,6 @@ begin_hunk_1_@pipe2
 !631 = distinct !{null}
 !632 = !{!132, !42, i64 137704}
 !633 = !{!132, !76, i64 133840}
-!634 = !{!172, !99, i64 520}
-!635 = !{!172, !99, i64 512}
-!636 = !{!172, !39, i64 528}
-!637 = distinct !{!637, !180}
+!634 = !{!172, !39, i64 528}
+!635 = distinct !{!635, !180}
 end_hunk_1

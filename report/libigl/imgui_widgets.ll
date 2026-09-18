@@ -205,9 +205,9 @@ define dso_local noundef zeroext i1 @_ZN5ImGui16SplitterBehaviorERK6ImRectj9ImGu
 bb.a:
   %i.a = alloca i8, align 1                       ; 4 uses
   %i.b = alloca i8, align 1                       ; 4 uses
-  %9 = alloca %struct.ImRect, align 16            ; 8 uses
+  %9 = alloca %struct.ImRect, align 16            ; 7 uses
   %10 = alloca %struct.ImRect, align 16           ; 11 uses
-  %i.c = load ptr, ptr @GImGui, align 8, !tbaa !22 ; 11 uses
+  %i.c = load ptr, ptr @GImGui, align 8, !tbaa !22 ; 9 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 7184
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !111
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 7344 ; 3 uses
@@ -224,7 +224,6 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #36
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %9, ptr noundef nonnull align 4 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !182
   %i.j = icmp eq i32 %2, 1                        ; 5 uses
-  %11 = getelementptr inbounds nuw i8, ptr %9, i64 4
   %.sroa.668.0 = select i1 %i.j, float %7, float 0.000000e+00
   %.sroa.066.0 = select i1 %i.j, float 0.000000e+00, float %7
   %i.k = load <4 x float>, ptr %9, align 16, !tbaa !141 ; 2 uses
@@ -289,18 +288,13 @@ bb.i:                                             ; preds = %bb.h
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %10, ptr noundef nonnull align 4 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !182
   %i.aj = getelementptr inbounds nuw i8, ptr %i.c, i64 296
   %i.ak = getelementptr inbounds nuw i8, ptr %i.c, i64 7296
-  %.val57 = load float, ptr %i.aj, align 8, !tbaa !144
-  %12 = getelementptr i8, ptr %i.c, i64 300
-  %.val58 = load float, ptr %12, align 4, !tbaa !147
-  %.val59 = load float, ptr %i.ak, align 8, !tbaa !144
-  %13 = getelementptr i8, ptr %i.c, i64 7300
-  %.val60 = load float, ptr %13, align 4, !tbaa !147
-  %14 = fsub float %.val57, %.val59
-  %15 = fsub float %.val58, %.val60
-  %.val55 = load float, ptr %9, align 16, !tbaa !144
-  %.val56 = load float, ptr %11, align 4, !tbaa !147
-  %16 = fsub float %14, %.val55
-  %17 = fsub float %15, %.val56
+  %11 = load <2 x float>, ptr %i.aj, align 8, !tbaa !141
+  %12 = load <2 x float>, ptr %i.ak, align 8, !tbaa !141
+  %13 = fsub <2 x float> %11, %12
+  %14 = load <2 x float>, ptr %9, align 16, !tbaa !141
+  %15 = fsub <2 x float> %13, %14                 ; 2 uses
+  %16 = extractelement <2 x float> %15, i64 0
+  %17 = extractelement <2 x float> %15, i64 1
   %i.al = select i1 %i.j, float %17, float %16    ; 2 uses
   %i.am = load float, ptr %3, align 4, !tbaa !141 ; 2 uses
   %i.an = fsub float %i.am, %5                    ; 2 uses
