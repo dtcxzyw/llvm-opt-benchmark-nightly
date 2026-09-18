@@ -205,11 +205,10 @@ bb.kb:                                            ; preds = %bb.ka
 
 bb.kc:                                            ; preds = %bb.kb
   %i.afn = icmp eq i8 %i.afa, 0
-  %3 = select i1 %i.afn, i32 2097152, i32 0
   %i.afo = icmp eq i8 %i.afa, 1
   %i.afp = select i1 %i.afo, i32 4194304, i32 0
-  %4 = or disjoint i32 %i.afp, %3
-  %i.afq = or disjoint i32 %4, %.sroa.040.0.i
+  %3 = select i1 %i.afn, i32 2097152, i32 %i.afp
+  %i.afq = or disjoint i32 %3, %.sroa.040.0.i
   br label %.thread439.i
 
 .thread441.i:                                     ; preds = %bb.kd, %.thread439.i
@@ -229,11 +228,10 @@ bb.kc:                                            ; preds = %bb.kb
 
 bb.kd:                                            ; preds = %.thread439.i
   %i.aga = icmp eq i8 %i.afm, 0
-  %5 = select i1 %i.aga, i32 33554432, i32 0
   %i.agb = icmp eq i8 %i.afm, 1
   %i.agc = select i1 %i.agb, i32 67108864, i32 0
-  %6 = or disjoint i32 %5, %i.agc
-  %i.agd = or i32 %6, %i.afk
+  %4 = select i1 %i.aga, i32 33554432, i32 %i.agc
+  %i.agd = or i32 %4, %i.afk
   br label %.thread441.i
 
 bb.ke:                                            ; preds = %bb.ku, %bb.kr, %bb.kk, %.thread441.i

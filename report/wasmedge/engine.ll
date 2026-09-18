@@ -205,13 +205,11 @@ bb.a:
   %i.b = tail call <4 x float> @llvm.trunc.v4f32(<4 x float> %i.a) ; 4 uses
   %i.c = fptosi <4 x float> %i.b to <4 x i32>
   %i.d = fcmp ord <4 x float> %i.b, zeroinitializer
-  %i.e = fcmp ugt <4 x float> %i.b, splat (float f0xCF000000) ; 2 uses
-  %i.f = select <4 x i1> %i.e, <4 x i32> zeroinitializer, <4 x i32> splat (i32 -2147483648)
-  %3 = and <4 x i1> %i.e, %i.d
-  %i.g = select <4 x i1> %3, <4 x i32> %i.c, <4 x i32> zeroinitializer
-  %4 = or disjoint <4 x i32> %i.g, %i.f
+  %i.e = fcmp ugt <4 x float> %i.b, splat (float f0xCF000000)
+  %i.f = select <4 x i1> %i.d, <4 x i32> %i.c, <4 x i32> zeroinitializer
+  %i.g = select <4 x i1> %i.e, <4 x i32> %i.f, <4 x i32> splat (i32 -2147483648)
   %i.h = fcmp ult <4 x float> %i.b, splat (float f0x4F000000)
-  %i.i = select <4 x i1> %i.h, <4 x i32> %4, <4 x i32> splat (i32 2147483647)
+  %i.i = select <4 x i1> %i.h, <4 x i32> %i.g, <4 x i32> splat (i32 2147483647)
   store <4 x i32> %i.i, ptr %2, align 16, !tbaa !93
   store i64 1, ptr %0, align 4
   ret void

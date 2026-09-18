@@ -205,13 +205,12 @@ bb.ah:                                            ; preds = %bb.ag
   %i.ge = load i32, ptr %i.gd, align 8, !tbaa !398 ; 2 uses
   %i.gf = icmp eq i32 %i.ge, 2
   %i.gg = icmp eq i32 %i.ge, 3
-  %i.gh = select i1 %i.gf, i32 65280, i32 0
-  %i.gi = select i1 %i.gg, i32 65537, i32 1
-  %10 = or disjoint i32 %i.gi, %i.gh
+  %i.gh = select i1 %i.gg, i32 65537, i32 1
+  %i.gi = select i1 %i.gf, i32 65281, i32 %i.gh
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ag
-  %.sroa.5.8.insert.insert.i.i = phi i32 [ %10, %bb.ah ], [ 1, %bb.ag ]
+  %.sroa.5.8.insert.insert.i.i = phi i32 [ %i.gi, %bb.ah ], [ 1, %bb.ag ]
   %i.gj = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #35
   %i.gk = fptosi float %.0191.i to i32

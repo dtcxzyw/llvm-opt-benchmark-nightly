@@ -202,17 +202,13 @@ bb.a:
   %i.ck = fcmp uge <4 x float> %i.br, splat (float -1.260000e+02)
   %i.cl = fcmp oge <4 x float> %i.br, splat (float 1.280000e+02)
   %i.cm = fcmp ogt <4 x float> %i.ax, zeroinitializer
-  %i.cn = fcmp olt <4 x float> %i.aj, %i.av       ; 2 uses
-  %4 = bitcast <4 x float> %i.cj to <4 x i32>
-  %5 = select <4 x i1> %i.ck, <4 x i32> %4, <4 x i32> zeroinitializer
-  %6 = select <4 x i1> %i.cl, <4 x i32> splat (i32 2139095040), <4 x i32> %5
-  %7 = select <4 x i1> %i.cn, <4 x i1> %i.cm, <4 x i1> zeroinitializer
-  %8 = select <4 x i1> %7, <4 x i32> %6, <4 x i32> zeroinitializer
-  %9 = fmul <4 x float> %i.at, %i.av
-  %10 = bitcast <4 x float> %9 to <4 x i32>
-  %11 = select <4 x i1> %i.cn, <4 x i32> zeroinitializer, <4 x i32> %10
-  %12 = or <4 x i32> %8, %11
-  store <4 x i32> %12, ptr %.02528, align 1, !tbaa !66
+  %i.cn = fcmp olt <4 x float> %i.aj, %i.av
+  %4 = fmul <4 x float> %i.at, %i.av
+  %5 = select <4 x i1> %i.ck, <4 x float> %i.cj, <4 x float> zeroinitializer
+  %6 = select <4 x i1> %i.cl, <4 x float> splat (float +inf), <4 x float> %5
+  %7 = select <4 x i1> %i.cm, <4 x float> %6, <4 x float> zeroinitializer
+  %8 = select <4 x i1> %i.cn, <4 x float> %7, <4 x float> %4
+  store <4 x float> %8, ptr %.02528, align 1, !tbaa !66
   %i.co = getelementptr inbounds nuw i8, ptr %.029, i64 16
   %i.cp = getelementptr inbounds nuw i8, ptr %.02528, i64 16
   %i.cq = add nuw nsw i64 %.02627, 1              ; 2 uses
@@ -615,17 +611,15 @@ bb.a:
   %i.cn = fcmp uge <4 x float> %i.bu, splat (float -1.260000e+02)
   %i.co = fcmp oge <4 x float> %i.bu, splat (float 1.280000e+02)
   %i.cp = fcmp ogt <4 x float> %i.ba, zeroinitializer
-  %i.cq = fcmp olt <4 x float> %i.aj, %i.ay       ; 2 uses
+  %i.cq = fcmp olt <4 x float> %i.aj, %i.ay
   %i.cr = bitcast <4 x float> %i.cm to <4 x i32>
-  %4 = select <4 x i1> %i.cn, <4 x i32> %i.cr, <4 x i32> zeroinitializer
-  %i.cs = select <4 x i1> %i.co, <4 x i32> splat (i32 2139095040), <4 x i32> %4
-  %5 = select <4 x i1> %i.cq, <4 x i1> %i.cp, <4 x i1> zeroinitializer
-  %i.ct = select <4 x i1> %5, <4 x i32> %i.cs, <4 x i32> zeroinitializer
+  %i.cs = select <4 x i1> %i.cn, <4 x i32> %i.cr, <4 x i32> zeroinitializer
+  %i.ct = select <4 x i1> %i.co, <4 x i32> splat (i32 2139095040), <4 x i32> %i.cs
   %i.cu = fmul <4 x float> %i.at, %i.ay
   %i.cv = bitcast <4 x float> %i.cu to <4 x i32>
-  %i.cw = select <4 x i1> %i.cq, <4 x i32> zeroinitializer, <4 x i32> %i.cv
-  %6 = or <4 x i32> %i.cw, %i.ax
-  %i.cx = or <4 x i32> %6, %i.ct
+  %i.cw = select <4 x i1> %i.cp, <4 x i32> %i.ct, <4 x i32> zeroinitializer
+  %4 = select <4 x i1> %i.cq, <4 x i32> %i.cw, <4 x i32> %i.cv
+  %i.cx = or <4 x i32> %4, %i.ax
   store <4 x i32> %i.cx, ptr %.02932, align 1, !tbaa !66
   %i.cy = getelementptr inbounds nuw i8, ptr %.033, i64 16
   %i.cz = getelementptr inbounds nuw i8, ptr %.02932, i64 16

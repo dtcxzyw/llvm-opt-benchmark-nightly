@@ -126,12 +126,10 @@ bb.c:                                             ; preds = %bb.a, %bb.a, %bb.a,
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 2 uses
   %i.e = load i32, ptr %i.d, align 4
   %i.f = and i32 %i.e, -8339456
-  %i.g = icmp eq i32 %2, 1                        ; 2 uses
-  %storemerge.i.v = select i1 %i.g, i32 6930, i32 786
-  %4 = and i1 %i.g, %3
-  %i.h = select i1 %4, i32 6291456, i32 0
-  %storemerge.i = or disjoint i32 %i.h, %storemerge.i.v
-  %i.i = or disjoint i32 %storemerge.i, %i.f
+  %i.g = icmp eq i32 %2, 1
+  %storemerge.i.v = select i1 %3, i32 6298386, i32 6930
+  %i.h = select i1 %i.g, i32 %storemerge.i.v, i32 786
+  %i.i = or disjoint i32 %i.h, %i.f
   store i32 %i.i, ptr %i.d, align 4
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 300 ; 2 uses
   %i.k = load i32, ptr %i.j, align 4

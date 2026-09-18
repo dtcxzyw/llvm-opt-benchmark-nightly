@@ -205,13 +205,10 @@ _ZN11OpenImageIO4v3_14simddvERKNS1_5vint4ES4_.exit:
   %i.al = xor <4 x i32> %.sroa.0.8.vecblend173, splat (i32 -1)
   %i.am = add <4 x i32> %i.al, %i.y
   %i.an = bitcast <2 x i64> %i.t to <4 x i32>
-  %i.ao = and <4 x i32> %i.an, splat (i32 1)      ; 2 uses
-  %3 = icmp eq <4 x i32> %i.ao, zeroinitializer
-  %4 = select <4 x i1> %3, <4 x i32> zeroinitializer, <4 x i32> %i.am
+  %i.ao = and <4 x i32> %i.an, splat (i32 1)
   %i.ap = icmp eq <4 x i32> %i.ao, zeroinitializer
-  %.inner182 = select <4 x i1> %i.ap, <4 x i32> %.sroa.0.8.vecblend173, <4 x i32> zeroinitializer
-  %.inner183 = or <4 x i32> %.inner182, %4
-  %i.aq = bitcast <4 x i32> %.inner183 to <2 x i64> ; 2 uses
+  %.inner182 = select <4 x i1> %i.ap, <4 x i32> %.sroa.0.8.vecblend173, <4 x i32> %i.am
+  %i.aq = bitcast <4 x i32> %.inner182 to <2 x i64> ; 2 uses
   %.sroa.0109.0.vec.extract = extractelement <2 x i64> %i.aq, i64 0
   %.sroa.0109.8.vec.extract = extractelement <2 x i64> %i.aq, i64 1
   %i.ar = bitcast i64 %.sroa.0109.0.vec.extract to <2 x i32>
