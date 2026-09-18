@@ -204,13 +204,14 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 4 uses
-  %vec.ind = phi <2 x i64> [ <i64 1, i64 2>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 4 uses
+  %vec.ind = phi <2 x i64> [ <i64 1, i64 2>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
+  %vec.ind190 = phi <2 x i32> [ <i32 1, i32 2>, %vector.ph ], [ %vec.ind.next194, %vector.body ] ; 2 uses
   %vec.ind190.a = phi <2 x i32> [ <i32 1, i32 2>, %vector.ph ], [ %vec.ind.next193, %vector.body ] ; 2 uses
   %i.bi = or disjoint i64 %index, 1
   %i.bj = trunc i64 %index to i32
   %i.bk = shl i32 %i.bj, 1
   %i.bl = add i32 %.07276.us, %i.bk
-  %i.bm = uitofp nneg <2 x i32> %vec.ind190.a to <2 x double>
+  %i.bm = uitofp nneg <2 x i32> %vec.ind190 to <2 x double>
   %i.bn = fdiv <2 x double> %i.bm, %broadcast.splat183
   %i.bo = add nuw nsw i64 %i.bi, %indvars.iv85    ; 2 uses
   %.reass = add i64 %index, %invariant.op
@@ -233,8 +234,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.cb = getelementptr [4 x i8], ptr %i.bw, i64 %i.az
   %interleaved.vec = shufflevector <2 x i32> %i.bx, <2 x i32> %i.ca, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
   store <4 x i32> %interleaved.vec, ptr %i.bw, align 4, !tbaa !35
-  %4 = trunc <2 x i64> %vec.ind to <2 x i32>
-  %i.cc = add <2 x i32> %broadcast.splat, %4
+  %i.cc = add <2 x i32> %broadcast.splat, %vec.ind190.a
   %interleaved.vec191 = shufflevector <2 x i32> %i.ca, <2 x i32> %i.cc, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
   store <4 x i32> %interleaved.vec191, ptr %i.by, align 4, !tbaa !35
   %i.cd = shufflevector <2 x i64> %i.bq, <2 x i64> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
@@ -243,6 +243,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x i32> %interleaved.vec192, ptr %i.cb, align 4, !tbaa !35
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %vec.ind.next = add nuw nsw <2 x i64> %vec.ind, splat (i64 2)
+  %vec.ind.next194 = add <2 x i32> %vec.ind190, splat (i32 2)
   %vec.ind.next193 = add <2 x i32> %vec.ind190.a, splat (i32 2)
   %i.cf = icmp eq i64 %index.next, %n.vec
   br i1 %i.cf, label %middle.block, label %vector.body, !llvm.loop !25
