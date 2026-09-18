@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %bb.b
   %i.au = zext nneg i32 %.fr429 to i64            ; 4 uses
   %wide.trip.count199 = zext nneg i32 %1 to i64   ; 4 uses
   switch i32 %.fr164, label %.preheader82.preheader [
-    i32 0, label %.preheader82.us.preheader
-    i32 1, label %.preheader82.us102.preheader
+    i32 1, label %.preheader82.us.preheader
+    i32 0, label %.preheader82.us102.preheader
     i32 2, label %.preheader82.us105.preheader
   ]
 
@@ -235,27 +235,27 @@ bb.d:                                             ; preds = %bb.b
   %.085.us.us = phi i64 [ %i.bp, %.preheader82.us.new ], [ 0, %.preheader82.us ]
   %niter414 = phi i64 [ %niter414.next.1, %.preheader82.us.new ], [ 0, %.preheader82.us ]
   %i.ba = getelementptr inbounds nuw [8 x i8], ptr %.199.us, i64 %indvars.iv261
-  %i.bb = load volatile i64, ptr %i.ba, align 8, !tbaa !16
+  %i.bb = load volatile i64, ptr %i.ba, align 8, !tbaa !16 ; 0 uses
   %gep378.a = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep377.a, i64 %indvars.iv261
-  %i.bc = load volatile i64, ptr %gep378.a, align 8, !tbaa !16 ; 0 uses
+  %i.bc = load volatile i64, ptr %gep378.a, align 8, !tbaa !16
   %gep380.a = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep379.a, i64 %indvars.iv261
   %i.bd = load volatile i64, ptr %gep380.a, align 8, !tbaa !16 ; 0 uses
   %gep382.a = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep381.a, i64 %indvars.iv261
   %i.be = load volatile i64, ptr %gep382.a, align 8, !tbaa !16 ; 0 uses
   %i.bf = icmp eq i64 %indvars.iv261, %i.ay
-  %i.bg = select i1 %i.bf, i64 %i.bb, i64 0
+  %i.bg = select i1 %i.bf, i64 %i.bc, i64 0
   %i.bh = or i64 %i.bg, %.085.us.us
   %indvars.iv.next262 = or disjoint i64 %indvars.iv261, 1 ; 5 uses
   %i.bi = getelementptr inbounds nuw [8 x i8], ptr %.199.us, i64 %indvars.iv.next262
-  %i.bj = load volatile i64, ptr %i.bi, align 8, !tbaa !16
+  %i.bj = load volatile i64, ptr %i.bi, align 8, !tbaa !16 ; 0 uses
   %gep378.1.a = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep377.a, i64 %indvars.iv.next262
-  %i.bk = load volatile i64, ptr %gep378.1.a, align 8, !tbaa !16 ; 0 uses
+  %i.bk = load volatile i64, ptr %gep378.1.a, align 8, !tbaa !16
   %gep380.1.a = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep379.a, i64 %indvars.iv.next262
   %i.bl = load volatile i64, ptr %gep380.1.a, align 8, !tbaa !16 ; 0 uses
   %gep382.1.a = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep381.a, i64 %indvars.iv.next262
   %i.bm = load volatile i64, ptr %gep382.1.a, align 8, !tbaa !16 ; 0 uses
   %i.bn = icmp eq i64 %indvars.iv.next262, %i.ay
-  %i.bo = select i1 %i.bn, i64 %i.bj, i64 0
+  %i.bo = select i1 %i.bn, i64 %i.bk, i64 0
   %i.bp = or i64 %i.bo, %i.bh                     ; 3 uses
   %indvars.iv.next262.1 = add nuw nsw i64 %indvars.iv261, 2 ; 2 uses
   %niter414.next.1 = add i64 %niter414, 2         ; 2 uses
@@ -270,15 +270,15 @@ bb.d:                                             ; preds = %bb.b
   %.085.us.us.epil.init = phi i64 [ 0, %.preheader82.us ], [ %i.bp, %.split.us.us.split.split.split.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod412)
   %i.bq = getelementptr inbounds nuw [8 x i8], ptr %.199.us, i64 %indvars.iv261.epil.init
-  %i.br = load volatile i64, ptr %i.bq, align 8, !tbaa !16
+  %i.br = load volatile i64, ptr %i.bq, align 8, !tbaa !16 ; 0 uses
   %gep378.epil.a = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep377.a, i64 %indvars.iv261.epil.init
-  %i.bs = load volatile i64, ptr %gep378.epil.a, align 8, !tbaa !16 ; 0 uses
+  %i.bs = load volatile i64, ptr %gep378.epil.a, align 8, !tbaa !16
   %gep380.epil.a = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep379.a, i64 %indvars.iv261.epil.init
   %i.bt = load volatile i64, ptr %gep380.epil.a, align 8, !tbaa !16 ; 0 uses
   %gep382.epil.a = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep381.a, i64 %indvars.iv261.epil.init
   %i.bu = load volatile i64, ptr %gep382.epil.a, align 8, !tbaa !16 ; 0 uses
   %i.bv = icmp eq i64 %indvars.iv261.epil.init, %i.ay
-  %i.bw = select i1 %i.bv, i64 %i.br, i64 0
+  %i.bw = select i1 %i.bv, i64 %i.bs, i64 0
   %i.bx = or i64 %i.bw, %.085.us.us.epil.init
   br label %.split.us.us.split.split.split
 
@@ -317,27 +317,27 @@ bb.d:                                             ; preds = %bb.b
   %.085.us86.us = phi i64 [ %i.cv, %.preheader82.us102.new ], [ 0, %.preheader82.us102 ]
   %niter407 = phi i64 [ %niter407.next.1, %.preheader82.us102.new ], [ 0, %.preheader82.us102 ]
   %i.cg = getelementptr inbounds nuw [8 x i8], ptr %.199.us103, i64 %indvars.iv221
-  %i.ch = load volatile i64, ptr %i.cg, align 8, !tbaa !16 ; 0 uses
+  %i.ch = load volatile i64, ptr %i.cg, align 8, !tbaa !16
   %gep372.a = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep371.a, i64 %indvars.iv221
-  %i.ci = load volatile i64, ptr %gep372.a, align 8, !tbaa !16
+  %i.ci = load volatile i64, ptr %gep372.a, align 8, !tbaa !16 ; 0 uses
   %gep374.a = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep373.a, i64 %indvars.iv221
   %i.cj = load volatile i64, ptr %gep374.a, align 8, !tbaa !16 ; 0 uses
   %gep376.a = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep375.a, i64 %indvars.iv221
   %i.ck = load volatile i64, ptr %gep376.a, align 8, !tbaa !16 ; 0 uses
   %i.cl = icmp eq i64 %indvars.iv221, %i.ce
-  %i.cm = select i1 %i.cl, i64 %i.ci, i64 0
+  %i.cm = select i1 %i.cl, i64 %i.ch, i64 0
   %i.cn = or i64 %i.cm, %.085.us86.us
   %indvars.iv.next222 = or disjoint i64 %indvars.iv221, 1 ; 5 uses
   %i.co = getelementptr inbounds nuw [8 x i8], ptr %.199.us103, i64 %indvars.iv.next222
-  %i.cp = load volatile i64, ptr %i.co, align 8, !tbaa !16 ; 0 uses
+  %i.cp = load volatile i64, ptr %i.co, align 8, !tbaa !16
   %gep372.1.a = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep371.a, i64 %indvars.iv.next222
-  %i.cq = load volatile i64, ptr %gep372.1.a, align 8, !tbaa !16
+  %i.cq = load volatile i64, ptr %gep372.1.a, align 8, !tbaa !16 ; 0 uses
   %gep374.1.a = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep373.a, i64 %indvars.iv.next222
   %i.cr = load volatile i64, ptr %gep374.1.a, align 8, !tbaa !16 ; 0 uses
   %gep376.1.a = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep375.a, i64 %indvars.iv.next222
   %i.cs = load volatile i64, ptr %gep376.1.a, align 8, !tbaa !16 ; 0 uses
   %i.ct = icmp eq i64 %indvars.iv.next222, %i.ce
-  %i.cu = select i1 %i.ct, i64 %i.cq, i64 0
+  %i.cu = select i1 %i.ct, i64 %i.cp, i64 0
   %i.cv = or i64 %i.cu, %i.cn                     ; 3 uses
   %indvars.iv.next222.1 = add nuw nsw i64 %indvars.iv221, 2 ; 2 uses
   %niter407.next.1 = add i64 %niter407, 2         ; 2 uses
@@ -352,15 +352,15 @@ bb.d:                                             ; preds = %bb.b
   %.085.us86.us.epil.init = phi i64 [ 0, %.preheader82.us102 ], [ %i.cv, %.split.split.us.us.split.split.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod405)
   %i.cw = getelementptr inbounds nuw [8 x i8], ptr %.199.us103, i64 %indvars.iv221.epil.init
-  %i.cx = load volatile i64, ptr %i.cw, align 8, !tbaa !16 ; 0 uses
+  %i.cx = load volatile i64, ptr %i.cw, align 8, !tbaa !16
   %gep372.epil.a = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep371.a, i64 %indvars.iv221.epil.init
-  %i.cy = load volatile i64, ptr %gep372.epil.a, align 8, !tbaa !16
+  %i.cy = load volatile i64, ptr %gep372.epil.a, align 8, !tbaa !16 ; 0 uses
   %gep374.epil.a = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep373.a, i64 %indvars.iv221.epil.init
   %i.cz = load volatile i64, ptr %gep374.epil.a, align 8, !tbaa !16 ; 0 uses
   %gep376.epil.a = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep375.a, i64 %indvars.iv221.epil.init
   %i.da = load volatile i64, ptr %gep376.epil.a, align 8, !tbaa !16 ; 0 uses
   %i.db = icmp eq i64 %indvars.iv221.epil.init, %i.ce
-  %i.dc = select i1 %i.db, i64 %i.cy, i64 0
+  %i.dc = select i1 %i.db, i64 %i.cx, i64 0
   %i.dd = or i64 %i.dc, %.085.us86.us.epil.init
   br label %.split.split.us.us.split.split
 

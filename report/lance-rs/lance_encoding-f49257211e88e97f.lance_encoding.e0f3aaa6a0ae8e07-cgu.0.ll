@@ -205,7 +205,7 @@ bb.ac:                                            ; preds = %bb.ab
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef range(i24 0, 65794) i24 @_RNvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB5_17ControlWordParser10parse_desc(ptr noalias noundef readonly align 4 captures(none) dereferenceable(8) %0, ptr noalias noundef nonnull readonly captures(none) %1, i64 noundef range(i64 0, -9223372036854775808) %2, i16 noundef %3, i16 noundef %4) unnamed_addr #0 {
+define noundef range(i24 0, 130818) i24 @_RNvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB5_17ControlWordParser10parse_desc(ptr noalias noundef readonly align 4 captures(none) dereferenceable(8) %0, ptr noalias noundef nonnull readonly captures(none) %1, i64 noundef range(i64 0, -9223372036854775808) %2, i16 noundef %3, i16 noundef %4) unnamed_addr #0 {
 bb.a:
   %i.a = load i8, ptr %0, align 4, !range !198, !noundef !75
   switch i8 %i.a, label %default.unreachable91 [
@@ -218,7 +218,7 @@ bb.a:
     i8 6, label %bb.ab
     i8 7, label %bb.ad
     i8 8, label %bb.ag
-    i8 9, label %.split.thread
+    i8 9, label %bb.ao
   ]
 
 default.unreachable91:                            ; preds = %bb.a
@@ -244,11 +244,13 @@ _RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_
   %i.i = trunc i32 %i.e to i8
   %i.j = and i8 %i.f, %i.i                        ; 2 uses
   %i.k = zext i8 %i.j to i16
-  %.not1.i = icmp uge i16 %4, %i.k                ; 2 uses
+  %.not1.i = icmp uge i16 %4, %i.k
   %i.l = zext i8 %i.h to i16
-  %i.m = icmp eq i16 %3, %i.l                     ; 2 uses
+  %i.m = icmp eq i16 %3, %i.l
   %i.n = icmp eq i8 %i.j, 0
-  br i1 %i.n, label %.split, label %14
+  %.sroa.041.1.extract.trunc = zext i1 %.not1.i to i8
+  %.sroa.041.2.extract.trunc = zext i1 %i.n to i8
+  br label %bb.ao
 
 bb.d:                                             ; preds = %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 1
@@ -256,7 +258,7 @@ bb.d:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.r = load i32, ptr %i.q, align 4, !noundef !75
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46615)
-  switch i64 %2, label %bb.ao [
+  switch i64 %2, label %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh2_EB8_.exit [
     i64 0, label %bb.e
     i64 1, label %bb.f
   ]
@@ -268,6 +270,24 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d
   tail call void @_RNvNtCscI6d9CVNmLh_4core9panicking18panic_bounds_check(i64 noundef 1, i64 noundef 1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @258) #66, !noalias !46615
   unreachable
+
+_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh2_EB8_.exit: ; preds = %bb.d
+  %5 = load i16, ptr %1, align 1, !alias.scope !46615 ; 2 uses
+  %6 = and i8 %i.p, 15
+  %7 = zext nneg i8 %6 to i16
+  %8 = lshr i16 %5, %7
+  %9 = trunc i32 %i.r to i16
+  %10 = and i16 %5, %9                            ; 2 uses
+  %.not3.i = icmp ugt i16 %10, %4
+  %11 = icmp eq i16 %8, %3
+  %12 = icmp eq i16 %10, 0
+  %.sroa.2.0.insert.shift.i58 = select i1 %.not3.i, i24 0, i24 256
+  %.sroa.2.0.insert.insert.i59 = select i1 %12, i24 65792, i24 %.sroa.2.0.insert.shift.i58 ; 2 uses
+  %.sroa.042.1.extract.shift = lshr exact i24 %.sroa.2.0.insert.insert.i59, 8
+  %.sroa.042.1.extract.trunc = trunc i24 %.sroa.042.1.extract.shift to i8
+  %.sroa.042.2.extract.shift = lshr i24 %.sroa.2.0.insert.insert.i59, 16
+  %.sroa.042.2.extract.trunc = trunc nuw nsw i24 %.sroa.042.2.extract.shift to i8
+  br label %bb.ao
 
 bb.g:                                             ; preds = %bb.a
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 1
@@ -318,18 +338,19 @@ _RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_
   %.sroa.4.0.insert.shift.i = shl nuw nsw i32 %.sroa.4.0.insert.ext.i, 8
   %.sroa.01.0.insert.ext.i = zext i8 %i.w to i32
   %.sroa.4.0.insert.insert.i = or disjoint i32 %.sroa.4.0.insert.shift.i, %.sroa.01.0.insert.ext.i
-  %.sroa.01.0.insert.insert.i = or disjoint i32 %.sroa.4.0.insert.insert.i, %i.ad
-  %.sroa.01.0.insert.insert.i.fr = freeze i32 %.sroa.01.0.insert.insert.i ; 2 uses
+  %.sroa.01.0.insert.insert.i = or disjoint i32 %.sroa.4.0.insert.insert.i, %i.ad ; 2 uses
   %i.ae = and i8 %i.t, 31
   %i.af = zext nneg i8 %i.ae to i32
-  %i.ag = lshr i32 %.sroa.01.0.insert.insert.i.fr, %i.af
-  %i.ah = and i32 %.sroa.01.0.insert.insert.i.fr, %i.v ; 2 uses
+  %i.ag = lshr i32 %.sroa.01.0.insert.insert.i, %i.af
+  %i.ah = and i32 %.sroa.01.0.insert.insert.i, %i.v ; 2 uses
   %i.ai = trunc i32 %i.ah to i16
-  %.not4.i = icmp uge i16 %4, %i.ai               ; 2 uses
+  %.not4.i = icmp uge i16 %4, %i.ai
   %i.aj = trunc i32 %i.ag to i16
-  %i.ak = icmp eq i16 %3, %i.aj                   ; 2 uses
+  %i.ak = icmp eq i16 %3, %i.aj
   %i.al = icmp eq i32 %i.ah, 0
-  br i1 %i.al, label %.split, label %14
+  %.sroa.044.1.extract.trunc = zext i1 %.not4.i to i8
+  %.sroa.044.2.extract.trunc = zext i1 %i.al to i8
+  br label %bb.ao
 
 bb.o:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46617)
@@ -344,7 +365,7 @@ _RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_
   %i.am = load i8, ptr %1, align 1, !alias.scope !46617, !noundef !75
   %i.an = zext i8 %i.am to i16
   %i.ao = icmp eq i16 %3, %i.an
-  br label %.split.thread
+  br label %bb.ao
 
 bb.q:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46618)
@@ -364,7 +385,7 @@ bb.s:                                             ; preds = %bb.q
 _RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh2_EB8_.exit: ; preds = %bb.q
   %i.ap = load i16, ptr %1, align 1, !alias.scope !46618
   %i.aq = icmp eq i16 %i.ap, %3
-  br label %.split.thread
+  br label %bb.ao
 
 bb.t:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46619)
@@ -408,7 +429,7 @@ _RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_
   %.sroa.01.0.insert.ext.i80 = zext i8 %i.ar to i16
   %.sroa.01.0.insert.insert.i81 = or disjoint i16 %.sroa.4.0.insert.shift.i79, %.sroa.01.0.insert.ext.i80
   %i.av = icmp eq i16 %.sroa.01.0.insert.insert.i81, %3
-  br label %.split.thread
+  br label %bb.ao
 
 bb.ab:                                            ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46620)
@@ -422,7 +443,8 @@ bb.ac:                                            ; preds = %bb.ab
 _RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh1_EB8_.exit: ; preds = %bb.ab
   %i.aw = load i8, ptr %1, align 1, !alias.scope !46620, !noundef !75
   %i.ax = icmp eq i8 %i.aw, 0
-  br i1 %i.ax, label %.split.thread, label %.thread104
+  %.sroa.052.2.extract.trunc = zext i1 %i.ax to i8
+  br label %bb.ao
 
 bb.ad:                                            ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46621)
@@ -441,9 +463,9 @@ bb.af:                                            ; preds = %bb.ad
 
 _RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh2_EB8_.exit: ; preds = %bb.ad
   %i.ay = load i16, ptr %1, align 1, !alias.scope !46621
-  %.fr = freeze i16 %i.ay
-  %5 = icmp eq i16 %.fr, 0
-  br i1 %5, label %.split.thread, label %.thread104
+  %13 = icmp eq i16 %i.ay, 0
+  %.sroa.054.2.extract.trunc = zext i1 %13 to i8
+  br label %bb.ao
 
 bb.ag:                                            ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46622)
@@ -484,44 +506,19 @@ bb.an:                                            ; preds = %bb.al
 _RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh4_EB8_.exit: ; preds = %bb.al
   %i.bd = or i8 %i.bb, %i.az
   %i.be = icmp eq i8 %i.bd, 0
-  br i1 %i.be, label %.split.thread, label %.thread104
+  %.sroa.056.2.extract.trunc = zext i1 %i.be to i8
+  br label %bb.ao
 
-bb.ao:                                            ; preds = %bb.d
-  %6 = load i16, ptr %1, align 1, !alias.scope !46615
-  %.fr116 = freeze i16 %6                         ; 2 uses
-  %7 = and i8 %i.p, 15
-  %8 = zext nneg i8 %7 to i16
-  %9 = lshr i16 %.fr116, %8
-  %10 = trunc i32 %i.r to i16
-  %11 = and i16 %.fr116, %10                      ; 2 uses
-  %.not3.i = icmp ule i16 %11, %4                 ; 2 uses
-  %12 = icmp eq i16 %9, %3                        ; 2 uses
-  %13 = icmp eq i16 %11, 0
-  br i1 %13, label %.split, label %14
-
-.split.thread:                                    ; preds = %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh4_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh2_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh1_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh1_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh2_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh4_EB8_.exit, %bb.a
-  %.sroa.0.0.shrunk99.ph = phi i1 [ %i.ao, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh1_EB8_.exit ], [ %i.aq, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh2_EB8_.exit ], [ %i.av, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh4_EB8_.exit ], [ true, %bb.a ], [ true, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh1_EB8_.exit ], [ true, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh2_EB8_.exit ], [ true, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh4_EB8_.exit ]
-  br label %.thread104
-
-.split:                                           ; preds = %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh4_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh1_EB8_.exit, %bb.ao
-  %.sroa.0.0.shrunk99 = phi i1 [ %i.ak, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh4_EB8_.exit ], [ %12, %bb.ao ], [ %i.m, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh1_EB8_.exit ] ; 2 uses
-  %.sroa.11.0.shrunk97 = phi i1 [ %.not4.i, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh4_EB8_.exit ], [ %.not3.i, %bb.ao ], [ %.not1.i, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh1_EB8_.exit ]
-  br i1 %.sroa.11.0.shrunk97, label %.thread104, label %16
-
-14:                                               ; preds = %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh4_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh1_EB8_.exit, %bb.ao
-  %.sroa.0.0.shrunk98 = phi i1 [ %i.ak, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh4_EB8_.exit ], [ %12, %bb.ao ], [ %i.m, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh1_EB8_.exit ] ; 2 uses
-  %.sroa.11.0.shrunk96 = phi i1 [ %.not4.i, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh4_EB8_.exit ], [ %.not3.i, %bb.ao ], [ %.not1.i, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh1_EB8_.exit ]
-  br i1 %.sroa.11.0.shrunk96, label %.thread104, label %16
-
-.thread104:                                       ; preds = %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh1_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh2_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh4_EB8_.exit, %.split.thread, %.split, %14
-  %15 = phi i24 [ 65792, %.split.thread ], [ 256, %14 ], [ 65792, %.split ], [ 256, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh4_EB8_.exit ], [ 256, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh2_EB8_.exit ], [ 256, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh1_EB8_.exit ]
-  %.sroa.0.0.shrunk98109 = phi i1 [ %.sroa.0.0.shrunk99.ph, %.split.thread ], [ %.sroa.0.0.shrunk98, %14 ], [ %.sroa.0.0.shrunk99, %.split ], [ true, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh4_EB8_.exit ], [ true, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh2_EB8_.exit ], [ true, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh1_EB8_.exit ]
-  br label %16
-
-16:                                               ; preds = %.split, %14, %.thread104
-  %.sroa.0.0.shrunk98108 = phi i1 [ %.sroa.0.0.shrunk98109, %.thread104 ], [ %.sroa.0.0.shrunk98, %14 ], [ %.sroa.0.0.shrunk99, %.split ]
-  %.sroa.11.0.insert.insert = phi i24 [ %15, %.thread104 ], [ 0, %14 ], [ 65536, %.split ]
-  %.sroa.0.0.insert.ext = zext i1 %.sroa.0.0.shrunk98108 to i24
+bb.ao:                                            ; preds = %bb.a, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh4_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh2_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh1_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh4_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh2_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh1_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh4_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh2_EB8_.exit, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh1_EB8_.exit
+  %.sroa.12.0 = phi i8 [ %.sroa.041.2.extract.trunc, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh1_EB8_.exit ], [ %.sroa.042.2.extract.trunc, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh2_EB8_.exit ], [ %.sroa.044.2.extract.trunc, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh4_EB8_.exit ], [ 1, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh1_EB8_.exit ], [ 1, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh2_EB8_.exit ], [ 1, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh4_EB8_.exit ], [ %.sroa.052.2.extract.trunc, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh1_EB8_.exit ], [ %.sroa.054.2.extract.trunc, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh2_EB8_.exit ], [ %.sroa.056.2.extract.trunc, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh4_EB8_.exit ], [ 1, %bb.a ]
+  %.sroa.11.0 = phi i8 [ %.sroa.041.1.extract.trunc, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh1_EB8_.exit ], [ %.sroa.042.1.extract.trunc, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh2_EB8_.exit ], [ %.sroa.044.1.extract.trunc, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh4_EB8_.exit ], [ 1, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh1_EB8_.exit ], [ 1, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh2_EB8_.exit ], [ 1, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh4_EB8_.exit ], [ 1, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh1_EB8_.exit ], [ 1, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh2_EB8_.exit ], [ 1, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh4_EB8_.exit ], [ 1, %bb.a ]
+  %.sroa.0.0.shrunk = phi i1 [ %i.m, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh1_EB8_.exit ], [ %11, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh2_EB8_.exit ], [ %i.ak, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser15parse_desc_bothKh4_EB8_.exit ], [ %i.ao, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh1_EB8_.exit ], [ %i.aq, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh2_EB8_.exit ], [ %i.av, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_rep_desc_oneKh4_EB8_.exit ], [ true, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh1_EB8_.exit ], [ true, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh2_EB8_.exit ], [ true, %_RINvMsf_NtCsjjpCCFGI3ul_14lance_encoding6repdefNtB6_17ControlWordParser18parse_def_desc_oneKh4_EB8_.exit ], [ true, %bb.a ]
+  %.sroa.12.0.insert.ext = zext nneg i8 %.sroa.12.0 to i24
+  %.sroa.12.0.insert.shift = shl nuw nsw i24 %.sroa.12.0.insert.ext, 16
+  %.sroa.11.0.insert.ext = zext i8 %.sroa.11.0 to i24
+  %.sroa.11.0.insert.shift = shl nuw nsw i24 %.sroa.11.0.insert.ext, 8
+  %.sroa.11.0.insert.insert = or disjoint i24 %.sroa.11.0.insert.shift, %.sroa.12.0.insert.shift
+  %.sroa.0.0.insert.ext = zext i1 %.sroa.0.0.shrunk to i24
   %.sroa.0.0.insert.insert = or disjoint i24 %.sroa.11.0.insert.insert, %.sroa.0.0.insert.ext
   ret i24 %.sroa.0.0.insert.insert
 }

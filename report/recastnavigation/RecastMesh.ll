@@ -204,16 +204,14 @@ vector.body366:                                   ; preds = %pred.store.continue
   %i.jw = and <8 x i1> %i.jk, %i.jq
   %i.jx = and <8 x i1> %i.jj, %i.jr
   %i.jy = and <8 x i1> %i.jk, %i.js
-  %i.jz = select <8 x i1> %i.jx, <8 x i1> %broadcast.splat361, <8 x i1> zeroinitializer
-  %i.ka = select <8 x i1> %i.jy, <8 x i1> %broadcast.splat361, <8 x i1> zeroinitializer
-  %i.kb = select <8 x i1> %i.jv, <8 x i1> %broadcast.splat363, <8 x i1> zeroinitializer
-  %i.kc = select <8 x i1> %i.jw, <8 x i1> %broadcast.splat363, <8 x i1> zeroinitializer
-  %4 = or <8 x i1> %i.jz, %i.kb
-  %5 = or <8 x i1> %i.ka, %i.kc
+  %i.jz = select <8 x i1> %i.jv, <8 x i1> %broadcast.splat363, <8 x i1> zeroinitializer
+  %i.ka = select <8 x i1> %i.jw, <8 x i1> %broadcast.splat363, <8 x i1> zeroinitializer
+  %i.kb = select <8 x i1> %i.jx, <8 x i1> %broadcast.splat361, <8 x i1> %i.jz
+  %i.kc = select <8 x i1> %i.jy, <8 x i1> %broadcast.splat361, <8 x i1> %i.ka
   %i.kd = select <8 x i1> %i.jt, <8 x i1> %broadcast.splat365, <8 x i1> zeroinitializer
   %i.ke = select <8 x i1> %i.ju, <8 x i1> %broadcast.splat365, <8 x i1> zeroinitializer
-  %i.kf = or <8 x i1> %4, %i.kd                   ; 8 uses
-  %i.kg = or <8 x i1> %5, %i.ke                   ; 8 uses
+  %i.kf = or <8 x i1> %i.kb, %i.kd                ; 8 uses
+  %i.kg = or <8 x i1> %i.kc, %i.ke                ; 8 uses
   %i.kh = extractelement <8 x i1> %i.kf, i64 0
   br i1 %i.kh, label %pred.store.if370, label %pred.store.continue371
 
@@ -420,11 +418,10 @@ vec.epilog.vector.body:                           ; preds = %pred.store.continue
   %i.nb = and <8 x i1> %i.mw, %i.my
   %i.nc = and <8 x i1> %i.mw, %i.mz
   %i.nd = and <8 x i1> %i.mw, %i.na
-  %i.ne = select <8 x i1> %i.nd, <8 x i1> %broadcast.splat408, <8 x i1> zeroinitializer
-  %i.nf = select <8 x i1> %i.nc, <8 x i1> %broadcast.splat410, <8 x i1> zeroinitializer
-  %6 = or <8 x i1> %i.ne, %i.nf
+  %i.ne = select <8 x i1> %i.nc, <8 x i1> %broadcast.splat410, <8 x i1> zeroinitializer
+  %i.nf = select <8 x i1> %i.nd, <8 x i1> %broadcast.splat408, <8 x i1> %i.ne
   %i.ng = select <8 x i1> %i.nb, <8 x i1> %broadcast.splat412, <8 x i1> zeroinitializer
-  %i.nh = or <8 x i1> %6, %i.ng                   ; 8 uses
+  %i.nh = or <8 x i1> %i.nf, %i.ng                ; 8 uses
   %i.ni = extractelement <8 x i1> %i.nh, i64 0
   br i1 %i.ni, label %pred.store.if415, label %pred.store.continue416
 
@@ -596,11 +593,10 @@ vector.body:                                      ; preds = %pred.store.continue
   %i.pj = and <8 x i1> %i.pc, %i.pf
   %i.pk = and <8 x i1> %i.pc, %i.pg
   %i.pl = and <8 x i1> %i.pc, %i.ph
-  %i.pm = select <8 x i1> %i.pi, <8 x i1> %broadcast.splat338, <8 x i1> zeroinitializer
-  %i.pn = select <8 x i1> %i.pj, <8 x i1> %broadcast.splat336, <8 x i1> zeroinitializer
-  %7 = or <8 x i1> %i.pm, %i.pn
+  %i.pm = select <8 x i1> %i.pj, <8 x i1> %broadcast.splat336, <8 x i1> zeroinitializer
+  %i.pn = select <8 x i1> %i.pi, <8 x i1> %broadcast.splat338, <8 x i1> %i.pm
   %i.po = select <8 x i1> %i.pk, <8 x i1> %broadcast.splat, <8 x i1> zeroinitializer
-  %i.pp = or <8 x i1> %7, %i.po
+  %i.pp = or <8 x i1> %i.pn, %i.po
   %i.pq = or <8 x i1> %i.pp, %i.pl                ; 8 uses
   %i.pr = extractelement <8 x i1> %i.pq, i64 0
   br i1 %i.pr, label %pred.store.if, label %pred.store.continue

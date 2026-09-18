@@ -205,11 +205,12 @@ bb.a:
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %i.a = load i32, ptr %4, align 4, !tbaa !188, !noalias !13094 ; 3 uses
   %i.b = and i32 %i.a, -65536
-  %isneg.i = icmp slt i32 %i.a, 0
-  %.sroa.6.6.insert.insert.i = select i1 %isneg.i, i64 -4294967296, i64 0
+  %.lobit.i = ashr i32 %i.a, 31
   %8 = load i64, ptr %3, align 2, !noalias !13094
+  %9 = zext i32 %.lobit.i to i64
+  %10 = shl nuw i64 %9, 32
   %i.c = zext i32 %i.b to i64
-  %i.d = or disjoint i64 %.sroa.6.6.insert.insert.i, %i.c
+  %i.d = or disjoint i64 %10, %i.c
   %i.e = and i32 %i.a, 65535
   %i.f = zext nneg i32 %i.e to i64
   %i.g = or disjoint i64 %i.d, %i.f

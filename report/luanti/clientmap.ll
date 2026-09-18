@@ -205,9 +205,8 @@ bb.dg:                                            ; preds = %bb.df
   %i.ahg = icmp samesign ugt i16 %i.agz, %i.agr
   %i.ahh = icmp samesign ugt i16 %i.agz, %i.agx
   %i.ahi = select i1 %i.ahg, i1 %i.ahh, i1 false
-  %i.ahj = select i1 %i.ahi, i8 4, i8 0
-  %22 = or disjoint i8 %i.ahj, %i.ahf
-  %i.ahk = or disjoint i8 %22, %i.ahb
+  %i.ahj = select i1 %i.ahi, i8 4, i8 %i.ahf
+  %i.ahk = or disjoint i8 %i.ahj, %i.ahb
   store i8 %i.ahk, ptr %i.o, align 1, !tbaa !65
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p) #2
   store i16 0, ptr %i.p, align 2, !tbaa !162

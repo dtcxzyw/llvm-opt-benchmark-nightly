@@ -1,0 +1,320 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+index 4b09510933d0c..f58f96eded289 100644
+--- a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+@@ -1396,17 +1396,40 @@ Value *InstCombinerImpl::SimplifySelectsFeedingBinaryOp(BinaryOperator &I,
+     return nullptr;
+   };
+ 
+-  if (LHSIsSelect && RHSIsSelect && A == D) {
+-    // (A ? B : C) op (A ? E : F) -> A ? (B op E) : (C op F)
+-    Cond = A;
+-    True = simplifyBinOp(Opcode, B, E, FMF, Q);
+-    False = simplifyBinOp(Opcode, C, F, FMF, Q);
+-
+-    if (LHS->hasOneUse() && RHS->hasOneUse()) {
+-      if (False && !True)
+-        True = Builder.CreateBinOp(Opcode, B, E);
+-      else if (True && !False)
+-        False = Builder.CreateBinOp(Opcode, C, F);
++  if (LHSIsSelect && RHSIsSelect) {
++    if (A == D) {
++      // (A ? B : C) op (A ? E : F) -> A ? (B op E) : (C op F)
++      Cond = A;
++      True = simplifyBinOp(Opcode, B, E, FMF, Q);
++      False = simplifyBinOp(Opcode, C, F, FMF, Q);
++
++      if (LHS->hasOneUse() && RHS->hasOneUse()) {
++        if (False && !True)
++          True = Builder.CreateBinOp(Opcode, B, E);
++        else if (True && !False)
++          False = Builder.CreateBinOp(Opcode, C, F);
++      }
++    } else if (A->getType() == D->getType() && LHS->hasOneUse()) {
++      // (A ? B : C) op (D ? E : F) ->
++      // A ? (B op (D ? E : F)) : (C op (D ? E : F))
++      // only if D can be implied by A
++      Cond = A;
++      Value *TrueRHS = RHS, *FalseRHS = RHS;
++      bool SimplifiedRHS = false;
++      if (std::optional<bool> Implied = isImpliedCondition(A, D, DL, true)) {
++        TrueRHS = *Implied ? E : F;
++        SimplifiedRHS = true;
++      }
++      if (std::optional<bool> Implied = isImpliedCondition(A, D, DL, false)) {
++        FalseRHS = *Implied ? E : F;
++        SimplifiedRHS = true;
++      }
++      if (SimplifiedRHS) {
++        True = simplifyBinOp(Opcode, B, TrueRHS, FMF, Q);
++        False = simplifyBinOp(Opcode, C, FalseRHS, FMF, Q);
++        if (Value *NewSel = foldAddNegate(B, C, RHS))
++          return NewSel;
++      }
+     }
+   } else if (LHSIsSelect && LHS->hasOneUse()) {
+     // (A ? B : C) op Y -> A ? (B op Y) : (C op Y)
+diff --git a/llvm/test/Transforms/InstCombine/logical-select-inseltpoison.ll b/llvm/test/Transforms/InstCombine/logical-select-inseltpoison.ll
+index 834d48f925305..ba2b623a47d6a 100644
+--- a/llvm/test/Transforms/InstCombine/logical-select-inseltpoison.ll
++++ b/llvm/test/Transforms/InstCombine/logical-select-inseltpoison.ll
+@@ -67,11 +67,8 @@ define i32 @poo(i32 %a, i32 %b, i32 %c, i32 %d) {
+ 
+ define i32 @fold_inverted_icmp_preds(i32 %a, i32 %b, i32 %c, i32 %d) {
+ ; CHECK-LABEL: @fold_inverted_icmp_preds(
+-; CHECK-NEXT:    [[CMP1:%.*]] = icmp slt i32 [[A:%.*]], [[B:%.*]]
+-; CHECK-NEXT:    [[SEL1:%.*]] = select i1 [[CMP1]], i32 [[C:%.*]], i32 0
+-; CHECK-NEXT:    [[CMP2_NOT:%.*]] = icmp slt i32 [[A]], [[B]]
+-; CHECK-NEXT:    [[SEL2:%.*]] = select i1 [[CMP2_NOT]], i32 0, i32 [[D:%.*]]
+-; CHECK-NEXT:    [[OR:%.*]] = or i32 [[SEL1]], [[SEL2]]
++; CHECK-NEXT:    [[CMP2_NOT:%.*]] = icmp slt i32 [[A:%.*]], [[B:%.*]]
++; CHECK-NEXT:    [[OR:%.*]] = select i1 [[CMP2_NOT]], i32 [[C:%.*]], i32 [[D:%.*]]
+ ; CHECK-NEXT:    ret i32 [[OR]]
+ ;
+   %cmp1 = icmp slt i32 %a, %b
+@@ -86,11 +83,8 @@ define i32 @fold_inverted_icmp_preds(i32 %a, i32 %b, i32 %c, i32 %d) {
+ 
+ define i32 @fold_inverted_icmp_preds_reverse(i32 %a, i32 %b, i32 %c, i32 %d) {
+ ; CHECK-LABEL: @fold_inverted_icmp_preds_reverse(
+-; CHECK-NEXT:    [[CMP1:%.*]] = icmp slt i32 [[A:%.*]], [[B:%.*]]
+-; CHECK-NEXT:    [[SEL1:%.*]] = select i1 [[CMP1]], i32 0, i32 [[C:%.*]]
+-; CHECK-NEXT:    [[CMP2_NOT:%.*]] = icmp slt i32 [[A]], [[B]]
+-; CHECK-NEXT:    [[SEL2:%.*]] = select i1 [[CMP2_NOT]], i32 [[D:%.*]], i32 0
+-; CHECK-NEXT:    [[OR:%.*]] = or i32 [[SEL1]], [[SEL2]]
++; CHECK-NEXT:    [[CMP2_NOT:%.*]] = icmp slt i32 [[A:%.*]], [[B:%.*]]
++; CHECK-NEXT:    [[OR:%.*]] = select i1 [[CMP2_NOT]], i32 [[D:%.*]], i32 [[C:%.*]]
+ ; CHECK-NEXT:    ret i32 [[OR]]
+ ;
+   %cmp1 = icmp slt i32 %a, %b
+@@ -106,10 +100,7 @@ define i32 @fold_inverted_icmp_preds_reverse(i32 %a, i32 %b, i32 %c, i32 %d) {
+ define i32 @fold_inverted_fcmp_preds(float %a, float %b, i32 %c, i32 %d) {
+ ; CHECK-LABEL: @fold_inverted_fcmp_preds(
+ ; CHECK-NEXT:    [[CMP1:%.*]] = fcmp olt float [[A:%.*]], [[B:%.*]]
+-; CHECK-NEXT:    [[SEL1:%.*]] = select i1 [[CMP1]], i32 [[C:%.*]], i32 0
+-; CHECK-NEXT:    [[CMP2:%.*]] = fcmp uge float [[A]], [[B]]
+-; CHECK-NEXT:    [[SEL2:%.*]] = select i1 [[CMP2]], i32 [[D:%.*]], i32 0
+-; CHECK-NEXT:    [[OR:%.*]] = or i32 [[SEL1]], [[SEL2]]
++; CHECK-NEXT:    [[OR:%.*]] = select i1 [[CMP1]], i32 [[C:%.*]], i32 [[D:%.*]]
+ ; CHECK-NEXT:    ret i32 [[OR]]
+ ;
+   %cmp1 = fcmp olt float %a, %b
+@@ -124,11 +115,8 @@ define i32 @fold_inverted_fcmp_preds(float %a, float %b, i32 %c, i32 %d) {
+ 
+ define <2 x i32> @fold_inverted_icmp_vector_preds(<2 x i32> %a, <2 x i32> %b, <2 x i32> %c, <2 x i32> %d) {
+ ; CHECK-LABEL: @fold_inverted_icmp_vector_preds(
+-; CHECK-NEXT:    [[CMP1_NOT:%.*]] = icmp eq <2 x i32> [[A:%.*]], [[B:%.*]]
+-; CHECK-NEXT:    [[SEL1:%.*]] = select <2 x i1> [[CMP1_NOT]], <2 x i32> zeroinitializer, <2 x i32> [[C:%.*]]
+-; CHECK-NEXT:    [[CMP2:%.*]] = icmp eq <2 x i32> [[A]], [[B]]
+-; CHECK-NEXT:    [[SEL2:%.*]] = select <2 x i1> [[CMP2]], <2 x i32> [[D:%.*]], <2 x i32> zeroinitializer
+-; CHECK-NEXT:    [[OR:%.*]] = or <2 x i32> [[SEL1]], [[SEL2]]
++; CHECK-NEXT:    [[CMP2:%.*]] = icmp eq <2 x i32> [[A:%.*]], [[B:%.*]]
++; CHECK-NEXT:    [[OR:%.*]] = select <2 x i1> [[CMP2]], <2 x i32> [[D:%.*]], <2 x i32> [[C:%.*]]
+ ; CHECK-NEXT:    ret <2 x i32> [[OR]]
+ ;
+   %cmp1 = icmp ne <2 x i32> %a, %b
+@@ -408,11 +396,8 @@ define i1 @bools_multi_uses1(i1 %a, i1 %b, i1 %c) {
+ 
+ define i1 @bools_multi_uses1_logical(i1 %a, i1 %b, i1 %c) {
+ ; CHECK-LABEL: @bools_multi_uses1_logical(
+-; CHECK-NEXT:    [[NOT:%.*]] = xor i1 [[C:%.*]], true
+-; CHECK-NEXT:    [[AND1:%.*]] = select i1 [[NOT]], i1 [[A:%.*]], i1 false
+-; CHECK-NEXT:    [[OR:%.*]] = select i1 [[C]], i1 [[B:%.*]], i1 [[A]]
+-; CHECK-NEXT:    [[XOR:%.*]] = xor i1 [[OR]], [[AND1]]
+-; CHECK-NEXT:    ret i1 [[XOR]]
++; CHECK-NEXT:    [[AND1:%.*]] = select i1 [[NOT:%.*]], i1 [[A:%.*]], i1 false
++; CHECK-NEXT:    ret i1 [[AND1]]
+ ;
+   %not = xor i1 %c, -1
+   %and1 = select i1 %not, i1 %a, i1 false
+@@ -582,11 +567,8 @@ define <4 x i32> @vec_sel_xor_multi_use(<4 x i32> %a, <4 x i32> %b, <4 x i1> %c)
+ 
+ define i32 @allSignBits(i32 %cond, i32 %tval, i32 %fval) {
+ ; CHECK-LABEL: @allSignBits(
+-; CHECK-NEXT:    [[ISNEG1:%.*]] = icmp slt i32 [[COND:%.*]], 0
+-; CHECK-NEXT:    [[A1:%.*]] = select i1 [[ISNEG1]], i32 [[TVAL:%.*]], i32 0
+-; CHECK-NEXT:    [[ISNEG:%.*]] = icmp slt i32 [[COND]], 0
+-; CHECK-NEXT:    [[A2:%.*]] = select i1 [[ISNEG]], i32 0, i32 [[FVAL:%.*]]
+-; CHECK-NEXT:    [[SEL:%.*]] = or i32 [[A1]], [[A2]]
++; CHECK-NEXT:    [[ISNEG:%.*]] = icmp slt i32 [[COND:%.*]], 0
++; CHECK-NEXT:    [[SEL:%.*]] = select i1 [[ISNEG]], i32 [[TVAL:%.*]], i32 [[FVAL:%.*]]
+ ; CHECK-NEXT:    ret i32 [[SEL]]
+ ;
+   %bitmask = ashr i32 %cond, 31
+@@ -599,11 +581,8 @@ define i32 @allSignBits(i32 %cond, i32 %tval, i32 %fval) {
+ 
+ define <4 x i8> @allSignBits_vec(<4 x i8> %cond, <4 x i8> %tval, <4 x i8> %fval) {
+ ; CHECK-LABEL: @allSignBits_vec(
+-; CHECK-NEXT:    [[ISNEG1:%.*]] = icmp slt <4 x i8> [[COND:%.*]], zeroinitializer
+-; CHECK-NEXT:    [[A1:%.*]] = select <4 x i1> [[ISNEG1]], <4 x i8> [[TVAL:%.*]], <4 x i8> zeroinitializer
+-; CHECK-NEXT:    [[ISNEG:%.*]] = icmp slt <4 x i8> [[COND]], zeroinitializer
+-; CHECK-NEXT:    [[A2:%.*]] = select <4 x i1> [[ISNEG]], <4 x i8> zeroinitializer, <4 x i8> [[FVAL:%.*]]
+-; CHECK-NEXT:    [[SEL:%.*]] = or <4 x i8> [[A2]], [[A1]]
++; CHECK-NEXT:    [[ISNEG:%.*]] = icmp slt <4 x i8> [[COND:%.*]], zeroinitializer
++; CHECK-NEXT:    [[SEL:%.*]] = select <4 x i1> [[ISNEG]], <4 x i8> [[TVAL:%.*]], <4 x i8> [[FVAL:%.*]]
+ ; CHECK-NEXT:    ret <4 x i8> [[SEL]]
+ ;
+   %bitmask = ashr <4 x i8> %cond, <i8 7, i8 7, i8 7, i8 7>
+diff --git a/llvm/test/Transforms/InstCombine/logical-select.ll b/llvm/test/Transforms/InstCombine/logical-select.ll
+index 149472d099bd0..568a6b6f31948 100644
+--- a/llvm/test/Transforms/InstCombine/logical-select.ll
++++ b/llvm/test/Transforms/InstCombine/logical-select.ll
+@@ -72,11 +72,8 @@ define i32 @poo(i32 %a, i32 %b, i32 %c, i32 %d) {
+ 
+ define i32 @fold_inverted_icmp_preds(i32 %a, i32 %b, i32 %c, i32 %d) {
+ ; CHECK-LABEL: @fold_inverted_icmp_preds(
+-; CHECK-NEXT:    [[CMP1:%.*]] = icmp slt i32 [[A:%.*]], [[B:%.*]]
+-; CHECK-NEXT:    [[SEL1:%.*]] = select i1 [[CMP1]], i32 [[C:%.*]], i32 0
+-; CHECK-NEXT:    [[CMP2_NOT:%.*]] = icmp slt i32 [[A]], [[B]]
+-; CHECK-NEXT:    [[SEL2:%.*]] = select i1 [[CMP2_NOT]], i32 0, i32 [[D:%.*]]
+-; CHECK-NEXT:    [[OR:%.*]] = or i32 [[SEL1]], [[SEL2]]
++; CHECK-NEXT:    [[CMP2_NOT:%.*]] = icmp slt i32 [[A:%.*]], [[B:%.*]]
++; CHECK-NEXT:    [[OR:%.*]] = select i1 [[CMP2_NOT]], i32 [[C:%.*]], i32 [[D:%.*]]
+ ; CHECK-NEXT:    ret i32 [[OR]]
+ ;
+   %cmp1 = icmp slt i32 %a, %b
+@@ -91,11 +88,8 @@ define i32 @fold_inverted_icmp_preds(i32 %a, i32 %b, i32 %c, i32 %d) {
+ 
+ define i32 @fold_inverted_icmp_preds_reverse(i32 %a, i32 %b, i32 %c, i32 %d) {
+ ; CHECK-LABEL: @fold_inverted_icmp_preds_reverse(
+-; CHECK-NEXT:    [[CMP1:%.*]] = icmp slt i32 [[A:%.*]], [[B:%.*]]
+-; CHECK-NEXT:    [[SEL1:%.*]] = select i1 [[CMP1]], i32 0, i32 [[C:%.*]]
+-; CHECK-NEXT:    [[CMP2_NOT:%.*]] = icmp slt i32 [[A]], [[B]]
+-; CHECK-NEXT:    [[SEL2:%.*]] = select i1 [[CMP2_NOT]], i32 [[D:%.*]], i32 0
+-; CHECK-NEXT:    [[OR:%.*]] = or i32 [[SEL1]], [[SEL2]]
++; CHECK-NEXT:    [[CMP2_NOT:%.*]] = icmp slt i32 [[A:%.*]], [[B:%.*]]
++; CHECK-NEXT:    [[OR:%.*]] = select i1 [[CMP2_NOT]], i32 [[D:%.*]], i32 [[C:%.*]]
+ ; CHECK-NEXT:    ret i32 [[OR]]
+ ;
+   %cmp1 = icmp slt i32 %a, %b
+@@ -111,10 +105,7 @@ define i32 @fold_inverted_icmp_preds_reverse(i32 %a, i32 %b, i32 %c, i32 %d) {
+ define i32 @fold_inverted_fcmp_preds(float %a, float %b, i32 %c, i32 %d) {
+ ; CHECK-LABEL: @fold_inverted_fcmp_preds(
+ ; CHECK-NEXT:    [[CMP1:%.*]] = fcmp olt float [[A:%.*]], [[B:%.*]]
+-; CHECK-NEXT:    [[SEL1:%.*]] = select i1 [[CMP1]], i32 [[C:%.*]], i32 0
+-; CHECK-NEXT:    [[CMP2:%.*]] = fcmp uge float [[A]], [[B]]
+-; CHECK-NEXT:    [[SEL2:%.*]] = select i1 [[CMP2]], i32 [[D:%.*]], i32 0
+-; CHECK-NEXT:    [[OR:%.*]] = or i32 [[SEL1]], [[SEL2]]
++; CHECK-NEXT:    [[OR:%.*]] = select i1 [[CMP1]], i32 [[C:%.*]], i32 [[D:%.*]]
+ ; CHECK-NEXT:    ret i32 [[OR]]
+ ;
+   %cmp1 = fcmp olt float %a, %b
+@@ -129,11 +120,8 @@ define i32 @fold_inverted_fcmp_preds(float %a, float %b, i32 %c, i32 %d) {
+ 
+ define <2 x i32> @fold_inverted_icmp_vector_preds(<2 x i32> %a, <2 x i32> %b, <2 x i32> %c, <2 x i32> %d) {
+ ; CHECK-LABEL: @fold_inverted_icmp_vector_preds(
+-; CHECK-NEXT:    [[CMP1_NOT:%.*]] = icmp eq <2 x i32> [[A:%.*]], [[B:%.*]]
+-; CHECK-NEXT:    [[SEL1:%.*]] = select <2 x i1> [[CMP1_NOT]], <2 x i32> zeroinitializer, <2 x i32> [[C:%.*]]
+-; CHECK-NEXT:    [[CMP2:%.*]] = icmp eq <2 x i32> [[A]], [[B]]
+-; CHECK-NEXT:    [[SEL2:%.*]] = select <2 x i1> [[CMP2]], <2 x i32> [[D:%.*]], <2 x i32> zeroinitializer
+-; CHECK-NEXT:    [[OR:%.*]] = or <2 x i32> [[SEL1]], [[SEL2]]
++; CHECK-NEXT:    [[CMP2:%.*]] = icmp eq <2 x i32> [[A:%.*]], [[B:%.*]]
++; CHECK-NEXT:    [[OR:%.*]] = select <2 x i1> [[CMP2]], <2 x i32> [[D:%.*]], <2 x i32> [[C:%.*]]
+ ; CHECK-NEXT:    ret <2 x i32> [[OR]]
+ ;
+   %cmp1 = icmp ne <2 x i32> %a, %b
+@@ -413,11 +401,8 @@ define i1 @bools_multi_uses1(i1 %a, i1 %b, i1 %c) {
+ 
+ define i1 @bools_multi_uses1_logical(i1 %a, i1 %b, i1 %c) {
+ ; CHECK-LABEL: @bools_multi_uses1_logical(
+-; CHECK-NEXT:    [[NOT:%.*]] = xor i1 [[C:%.*]], true
+-; CHECK-NEXT:    [[AND1:%.*]] = select i1 [[NOT]], i1 [[A:%.*]], i1 false
+-; CHECK-NEXT:    [[OR:%.*]] = select i1 [[C]], i1 [[B:%.*]], i1 [[A]]
+-; CHECK-NEXT:    [[XOR:%.*]] = xor i1 [[OR]], [[AND1]]
+-; CHECK-NEXT:    ret i1 [[XOR]]
++; CHECK-NEXT:    [[AND1:%.*]] = select i1 [[NOT:%.*]], i1 [[A:%.*]], i1 false
++; CHECK-NEXT:    ret i1 [[AND1]]
+ ;
+   %not = xor i1 %c, -1
+   %and1 = select i1 %not, i1 %a, i1 false
+@@ -618,11 +603,8 @@ define <4 x i32> @vec_sel_xor_multi_use(<4 x i32> %a, <4 x i32> %b, <4 x i1> %c)
+ 
+ define i32 @allSignBits(i32 %cond, i32 %tval, i32 %fval) {
+ ; CHECK-LABEL: @allSignBits(
+-; CHECK-NEXT:    [[ISNEG1:%.*]] = icmp slt i32 [[COND:%.*]], 0
+-; CHECK-NEXT:    [[A1:%.*]] = select i1 [[ISNEG1]], i32 [[TVAL:%.*]], i32 0
+-; CHECK-NEXT:    [[ISNEG:%.*]] = icmp slt i32 [[COND]], 0
+-; CHECK-NEXT:    [[A2:%.*]] = select i1 [[ISNEG]], i32 0, i32 [[FVAL:%.*]]
+-; CHECK-NEXT:    [[SEL:%.*]] = or i32 [[A1]], [[A2]]
++; CHECK-NEXT:    [[ISNEG:%.*]] = icmp slt i32 [[COND:%.*]], 0
++; CHECK-NEXT:    [[SEL:%.*]] = select i1 [[ISNEG]], i32 [[TVAL:%.*]], i32 [[FVAL:%.*]]
+ ; CHECK-NEXT:    ret i32 [[SEL]]
+ ;
+   %bitmask = ashr i32 %cond, 31
+@@ -635,11 +617,8 @@ define i32 @allSignBits(i32 %cond, i32 %tval, i32 %fval) {
+ 
+ define <4 x i8> @allSignBits_vec(<4 x i8> %cond, <4 x i8> %tval, <4 x i8> %fval) {
+ ; CHECK-LABEL: @allSignBits_vec(
+-; CHECK-NEXT:    [[ISNEG1:%.*]] = icmp slt <4 x i8> [[COND:%.*]], zeroinitializer
+-; CHECK-NEXT:    [[A1:%.*]] = select <4 x i1> [[ISNEG1]], <4 x i8> [[TVAL:%.*]], <4 x i8> zeroinitializer
+-; CHECK-NEXT:    [[ISNEG:%.*]] = icmp slt <4 x i8> [[COND]], zeroinitializer
+-; CHECK-NEXT:    [[A2:%.*]] = select <4 x i1> [[ISNEG]], <4 x i8> zeroinitializer, <4 x i8> [[FVAL:%.*]]
+-; CHECK-NEXT:    [[SEL:%.*]] = or <4 x i8> [[A2]], [[A1]]
++; CHECK-NEXT:    [[ISNEG:%.*]] = icmp slt <4 x i8> [[COND:%.*]], zeroinitializer
++; CHECK-NEXT:    [[SEL:%.*]] = select <4 x i1> [[ISNEG]], <4 x i8> [[TVAL:%.*]], <4 x i8> [[FVAL:%.*]]
+ ; CHECK-NEXT:    ret <4 x i8> [[SEL]]
+ ;
+   %bitmask = ashr <4 x i8> %cond, <i8 7, i8 7, i8 7, i8 7>
+diff --git a/llvm/test/Transforms/InstCombine/selects-feeding-binop.ll b/llvm/test/Transforms/InstCombine/selects-feeding-binop.ll
+new file mode 100644
+index 0000000000000..249ce139ed4b6
+--- /dev/null
++++ b/llvm/test/Transforms/InstCombine/selects-feeding-binop.ll
+@@ -0,0 +1,40 @@
++; RUN: opt < %s -passes=instcombine -S | FileCheck %s
++
++target datalayout = "e-p:64:64-p1:16:16-p2:32:32:32-p3:64:64:64"
++
++; Test transformation of:
++;  (p == c0 ? X : 0) + (p == c1 ? Y : 0)
++; into:
++;  p == c0 ? X : (p == c1 : Y : 0)
++define i32 @test_sum_select_zero(i32 %p, i32 %x, i32 %y) {
++; CHECK-LABEL: @test_sum_select_zero
++; CHECK-DAG: [[C0:%.*]] = icmp eq i32 %p, 288
++; CHECK-DAG: [[C1:%.*]] = icmp eq i32 %p, 128
++; CHECK-DAG: [[SELY:%.*]] = select i1 [[C1]], i32 %y, i32 0
++; CHECK-DAG: [[SELX:%.*]] = select i1 [[C0]], i32 %x, i32 [[SELY]]
++; CHECK-DAG: ret i32 [[SELX]]
++  %c0 = icmp eq i32 %p, 288
++  %s0 = select i1 %c0, i32 %x, i32 0
++  %c1 = icmp eq i32 %p, 128
++  %s1 = select i1 %c1, i32 %y, i32 0
++  %sum = add i32 %s0, %s1
++  ret i32 %sum
++}
++
++; Verify that resolving the nested select using the implied condition is not
++; limited to addition.
++define i32 @test_or_select_zero(i32 %p, i32 %x, i32 %y) {
++; CHECK-LABEL: @test_or_select_zero(
++; CHECK-NEXT:    [[C0:%.*]] = icmp eq i32 [[P:%.*]], 288
++; CHECK-NEXT:    [[C1:%.*]] = icmp eq i32 [[P]], 128
++; CHECK-NEXT:    [[S1:%.*]] = select i1 [[C1]], i32 [[Y:%.*]], i32 0
++; CHECK-NEXT:    [[SUM:%.*]] = select i1 [[C0]], i32 [[X:%.*]], i32 [[S1]]
++; CHECK-NEXT:    ret i32 [[SUM]]
++;
++  %c0 = icmp eq i32 %p, 288
++  %s0 = select i1 %c0, i32 %x, i32 0
++  %c1 = icmp eq i32 %p, 128
++  %s1 = select i1 %c1, i32 %y, i32 0
++  %sum = or i32 %s0, %s1
++  ret i32 %sum
++}
+diff --git a/llvm/test/Transforms/InstCombine/vec_sext.ll b/llvm/test/Transforms/InstCombine/vec_sext.ll
+index 925f491d29841..5aa3f85e738ef 100644
+--- a/llvm/test/Transforms/InstCombine/vec_sext.ll
++++ b/llvm/test/Transforms/InstCombine/vec_sext.ll
+@@ -4,11 +4,8 @@
+ define <4 x i32> @vec_select(<4 x i32> %a, <4 x i32> %b) {
+ ; CHECK-LABEL: @vec_select(
+ ; CHECK-NEXT:    [[SUB:%.*]] = sub nsw <4 x i32> zeroinitializer, [[A:%.*]]
+-; CHECK-NEXT:    [[ISNEG:%.*]] = icmp slt <4 x i32> [[B:%.*]], zeroinitializer
+-; CHECK-NEXT:    [[T2:%.*]] = select <4 x i1> [[ISNEG]], <4 x i32> zeroinitializer, <4 x i32> [[A]]
+-; CHECK-NEXT:    [[ISNEG1:%.*]] = icmp slt <4 x i32> [[B]], zeroinitializer
+-; CHECK-NEXT:    [[T3:%.*]] = select <4 x i1> [[ISNEG1]], <4 x i32> [[SUB]], <4 x i32> zeroinitializer
+-; CHECK-NEXT:    [[COND:%.*]] = or <4 x i32> [[T2]], [[T3]]
++; CHECK-NEXT:    [[ISNEG1:%.*]] = icmp slt <4 x i32> [[B:%.*]], zeroinitializer
++; CHECK-NEXT:    [[COND:%.*]] = select <4 x i1> [[ISNEG1]], <4 x i32> [[SUB]], <4 x i32> [[A]]
+ ; CHECK-NEXT:    ret <4 x i32> [[COND]]
+ ;
+   %cmp = icmp slt <4 x i32> %b, zeroinitializer

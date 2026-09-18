@@ -205,12 +205,11 @@ bb.z:                                             ; preds = %bb.y
   %.sroa.24.0.insert.shift.i.i = shl nuw i64 %.sroa.24.0.insert.ext.i.i, 32
   %.sroa.03.0.insert.ext.i.i = zext i32 %i.ef to i64
   %.sroa.03.0.insert.insert.i.i = or disjoint i64 %.sroa.24.0.insert.shift.i.i, %.sroa.03.0.insert.ext.i.i
-  %.sroa.5.8.insert.shift.i.i = select i1 %i.dx, i32 65280, i32 0
-  %.sroa.5.8.insert.insert.i.i = select i1 %i.dz, i32 65537, i32 1
-  %.sroa.3.8.insert.insert.i.i = or disjoint i32 %.sroa.5.8.insert.insert.i.i, %.sroa.5.8.insert.shift.i.i ; 2 uses
+  %.sroa.5.8.insert.shift.i.i = select i1 %i.dz, i32 65537, i32 1
+  %.sroa.5.8.insert.insert.i.i = select i1 %i.dx, i32 65281, i32 %.sroa.5.8.insert.shift.i.i ; 2 uses
   store i64 %.sroa.03.0.insert.insert.i.i, ptr %4, align 8
   %.sroa.250.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i32 %.sroa.3.8.insert.insert.i.i, ptr %.sroa.250.0..sroa_idx.i, align 8
+  store i32 %.sroa.5.8.insert.insert.i.i, ptr %.sroa.250.0..sroa_idx.i, align 8
   call void @_ZN8ImVectorI21ImGuiListClipperRangeE9push_backERKS0_(ptr noundef nonnull align 8 dereferenceable(16) %i.ea, ptr noundef nonnull align 4 dereferenceable(12) %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #41
   %i.eh = getelementptr inbounds nuw i8, ptr %i.b, i64 8428
@@ -236,7 +235,7 @@ bb.aa:                                            ; preds = %bb.z
   %.sroa.03.0.insert.insert.i230.i = or disjoint i64 %.sroa.24.0.insert.shift.i228.i, %.sroa.03.0.insert.ext.i229.i
   store i64 %.sroa.03.0.insert.insert.i230.i, ptr %5, align 8
   %.sroa.246.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store i32 %.sroa.3.8.insert.insert.i.i, ptr %.sroa.246.0..sroa_idx.i, align 8
+  store i32 %.sroa.5.8.insert.insert.i.i, ptr %.sroa.246.0..sroa_idx.i, align 8
   call void @_ZN8ImVectorI21ImGuiListClipperRangeE9push_backERKS0_(ptr noundef nonnull align 8 dereferenceable(16) %i.ea, ptr noundef nonnull align 4 dereferenceable(12) %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #41
   br label %bb.ab

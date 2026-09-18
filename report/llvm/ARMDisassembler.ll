@@ -204,9 +204,9 @@ bb.h:                                             ; preds = %switch.lookup
   br label %_ZN4llvm6MCInst10addOperandENS_9MCOperandE.exit
 
 _ZN4llvm6MCInst10addOperandENS_9MCOperandE.exit:  ; preds = %bb.h, %bb.g
-  %i.ak = icmp eq i32 %i.a, 15
-  %i.al = icmp eq i32 %i.e, 15
-  %i.am = or i1 %i.ak, %i.al
+  %i.ak = icmp eq i32 %i.e, 15
+  %i.al = icmp eq i32 %i.a, 15
+  %i.am = or i1 %i.al, %i.ak
   %i.an = select i1 %i.am, i32 1, i32 3
   ret i32 %i.an
 }
@@ -609,13 +609,13 @@ bb.n:                                             ; preds = %bb.l
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.m, %bb.n
+  %3 = icmp eq i32 %i.b, 15
   %i.bd = and i32 %1, 3840
   %.not = icmp ne i32 %i.bd, 0
   %i.be = icmp eq i32 %i.b, %i.d
   %or.cond = or i1 %.not, %i.be
   %i.bf = icmp eq i32 %i.d, 15
   %i.bg = or i1 %i.bf, %or.cond
-  %3 = icmp eq i32 %i.b, 15
   %i.bh = or i1 %3, %i.bg
   %i.bi = lshr i32 %1, 28
   %i.bj = icmp eq i32 %i.e, 15
