@@ -205,132 +205,167 @@ bb.a:
   br i1 %.not87, label %._crit_edge86, label %.lr.ph85
 
 .lr.ph85:                                         ; preds = %._crit_edge
-  %i.af = load float, ptr %.0.lcssa, align 4, !tbaa !14 ; 3 uses
-  %i.ag = load float, ptr %.074.lcssa, align 4, !tbaa !14 ; 2 uses
-  %i.ah = load float, ptr %.075.lcssa, align 4, !tbaa !14 ; 2 uses
-  %i.ai = tail call float @llvm.fmuladd.f32(float %i.ah, float 1.402000e+00, float %i.af)
-  %4 = fneg float %i.ag
-  %5 = tail call float @llvm.fmuladd.f32(float %4, float 3.441300e-01, float %i.af)
-  %6 = fneg float %i.ah
-  %7 = tail call float @llvm.fmuladd.f32(float %6, float f0x3F36D1E1, float %5)
-  %8 = tail call float @llvm.fmuladd.f32(float %i.ag, float 1.772000e+00, float %i.af)
-  store float %i.ai, ptr %.0.lcssa, align 4, !tbaa !14
-  store float %7, ptr %.074.lcssa, align 4, !tbaa !14
-  store float %8, ptr %.075.lcssa, align 4, !tbaa !14
+  %i.af = load float, ptr %.074.lcssa, align 4, !tbaa !14 ; 2 uses
+  %i.ag = load float, ptr %.075.lcssa, align 4, !tbaa !14 ; 2 uses
+  %4 = fneg float %i.af
+  %5 = fneg float %i.ag
+  %i.ah = load float, ptr %.0.lcssa, align 4, !tbaa !14 ; 3 uses
+  %6 = tail call float @llvm.fmuladd.f32(float %i.ag, float 1.402000e+00, float %i.ah)
+  %i.ai = tail call float @llvm.fmuladd.f32(float %4, float 3.441300e-01, float %i.ah)
+  %7 = insertelement <2 x float> poison, float %5, i64 0
+  %8 = insertelement <2 x float> %7, float %i.af, i64 1
+  %9 = insertelement <2 x float> poison, float %i.ai, i64 0
+  %10 = insertelement <2 x float> %9, float %i.ah, i64 1
+  %11 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %8, <2 x float> <float f0x3F36D1E1, float 1.772000e+00>, <2 x float> %10) ; 2 uses
+  store float %6, ptr %.0.lcssa, align 4, !tbaa !14
+  %12 = extractelement <2 x float> %11, i64 0
+  store float %12, ptr %.074.lcssa, align 4, !tbaa !14
+  %13 = extractelement <2 x float> %11, i64 1
+  store float %13, ptr %.075.lcssa, align 4, !tbaa !14
   %exitcond90.not = icmp eq i64 %i.ae, 1
   br i1 %exitcond90.not, label %._crit_edge86, label %.lr.ph85.1
 
 .lr.ph85.1:                                       ; preds = %.lr.ph85
   %i.aj = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 4 ; 2 uses
-  %9 = load float, ptr %i.aj, align 4, !tbaa !14  ; 3 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %.074.lcssa, i64 4 ; 2 uses
   %i.al = load float, ptr %i.ak, align 4, !tbaa !14 ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %.075.lcssa, i64 4 ; 2 uses
   %i.an = load float, ptr %i.am, align 4, !tbaa !14 ; 2 uses
-  %10 = tail call float @llvm.fmuladd.f32(float %i.an, float 1.402000e+00, float %9)
-  %i.ao = fneg float %i.al
-  %i.ap = tail call float @llvm.fmuladd.f32(float %i.ao, float 3.441300e-01, float %9)
-  %11 = fneg float %i.an
-  %12 = tail call float @llvm.fmuladd.f32(float %11, float f0x3F36D1E1, float %i.ap)
-  %13 = tail call float @llvm.fmuladd.f32(float %i.al, float 1.772000e+00, float %9)
-  store float %10, ptr %i.aj, align 4, !tbaa !14
-  store float %12, ptr %i.ak, align 4, !tbaa !14
-  store float %13, ptr %i.am, align 4, !tbaa !14
+  %14 = fneg float %i.al
+  %i.ao = fneg float %i.an
+  %15 = load float, ptr %i.aj, align 4, !tbaa !14 ; 3 uses
+  %16 = tail call float @llvm.fmuladd.f32(float %i.an, float 1.402000e+00, float %15)
+  %i.ap = tail call float @llvm.fmuladd.f32(float %14, float 3.441300e-01, float %15)
+  %17 = insertelement <2 x float> poison, float %i.ao, i64 0
+  %18 = insertelement <2 x float> %17, float %i.al, i64 1
+  %19 = insertelement <2 x float> poison, float %i.ap, i64 0
+  %20 = insertelement <2 x float> %19, float %15, i64 1
+  %21 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %18, <2 x float> <float f0x3F36D1E1, float 1.772000e+00>, <2 x float> %20) ; 2 uses
+  store float %16, ptr %i.aj, align 4, !tbaa !14
+  %22 = extractelement <2 x float> %21, i64 0
+  store float %22, ptr %i.ak, align 4, !tbaa !14
+  %23 = extractelement <2 x float> %21, i64 1
+  store float %23, ptr %i.am, align 4, !tbaa !14
   %exitcond90.not.1 = icmp eq i64 %i.ae, 2
   br i1 %exitcond90.not.1, label %._crit_edge86, label %.lr.ph85.2
 
 .lr.ph85.2:                                       ; preds = %.lr.ph85.1
   %i.aq = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 8 ; 2 uses
-  %14 = load float, ptr %i.aq, align 4, !tbaa !14 ; 3 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %.074.lcssa, i64 8 ; 2 uses
   %i.as = load float, ptr %i.ar, align 4, !tbaa !14 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %.075.lcssa, i64 8 ; 2 uses
   %i.au = load float, ptr %i.at, align 4, !tbaa !14 ; 2 uses
-  %15 = tail call float @llvm.fmuladd.f32(float %i.au, float 1.402000e+00, float %14)
-  %i.av = fneg float %i.as
-  %i.aw = tail call float @llvm.fmuladd.f32(float %i.av, float 3.441300e-01, float %14)
-  %16 = fneg float %i.au
-  %17 = tail call float @llvm.fmuladd.f32(float %16, float f0x3F36D1E1, float %i.aw)
-  %18 = tail call float @llvm.fmuladd.f32(float %i.as, float 1.772000e+00, float %14)
-  store float %15, ptr %i.aq, align 4, !tbaa !14
-  store float %17, ptr %i.ar, align 4, !tbaa !14
-  store float %18, ptr %i.at, align 4, !tbaa !14
+  %24 = fneg float %i.as
+  %i.av = fneg float %i.au
+  %25 = load float, ptr %i.aq, align 4, !tbaa !14 ; 3 uses
+  %26 = tail call float @llvm.fmuladd.f32(float %i.au, float 1.402000e+00, float %25)
+  %i.aw = tail call float @llvm.fmuladd.f32(float %24, float 3.441300e-01, float %25)
+  %27 = insertelement <2 x float> poison, float %i.av, i64 0
+  %28 = insertelement <2 x float> %27, float %i.as, i64 1
+  %29 = insertelement <2 x float> poison, float %i.aw, i64 0
+  %30 = insertelement <2 x float> %29, float %25, i64 1
+  %31 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %28, <2 x float> <float f0x3F36D1E1, float 1.772000e+00>, <2 x float> %30) ; 2 uses
+  store float %26, ptr %i.aq, align 4, !tbaa !14
+  %32 = extractelement <2 x float> %31, i64 0
+  store float %32, ptr %i.ar, align 4, !tbaa !14
+  %33 = extractelement <2 x float> %31, i64 1
+  store float %33, ptr %i.at, align 4, !tbaa !14
   %exitcond90.not.2 = icmp eq i64 %i.ae, 3
   br i1 %exitcond90.not.2, label %._crit_edge86, label %.lr.ph85.3
 
 .lr.ph85.3:                                       ; preds = %.lr.ph85.2
   %i.ax = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 12 ; 2 uses
-  %19 = load float, ptr %i.ax, align 4, !tbaa !14 ; 3 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %.074.lcssa, i64 12 ; 2 uses
   %i.az = load float, ptr %i.ay, align 4, !tbaa !14 ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %.075.lcssa, i64 12 ; 2 uses
   %i.bb = load float, ptr %i.ba, align 4, !tbaa !14 ; 2 uses
-  %20 = tail call float @llvm.fmuladd.f32(float %i.bb, float 1.402000e+00, float %19)
-  %i.bc = fneg float %i.az
-  %i.bd = tail call float @llvm.fmuladd.f32(float %i.bc, float 3.441300e-01, float %19)
-  %21 = fneg float %i.bb
-  %22 = tail call float @llvm.fmuladd.f32(float %21, float f0x3F36D1E1, float %i.bd)
-  %23 = tail call float @llvm.fmuladd.f32(float %i.az, float 1.772000e+00, float %19)
-  store float %20, ptr %i.ax, align 4, !tbaa !14
-  store float %22, ptr %i.ay, align 4, !tbaa !14
-  store float %23, ptr %i.ba, align 4, !tbaa !14
+  %34 = fneg float %i.az
+  %i.bc = fneg float %i.bb
+  %35 = load float, ptr %i.ax, align 4, !tbaa !14 ; 3 uses
+  %36 = tail call float @llvm.fmuladd.f32(float %i.bb, float 1.402000e+00, float %35)
+  %i.bd = tail call float @llvm.fmuladd.f32(float %34, float 3.441300e-01, float %35)
+  %37 = insertelement <2 x float> poison, float %i.bc, i64 0
+  %38 = insertelement <2 x float> %37, float %i.az, i64 1
+  %39 = insertelement <2 x float> poison, float %i.bd, i64 0
+  %40 = insertelement <2 x float> %39, float %35, i64 1
+  %41 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %38, <2 x float> <float f0x3F36D1E1, float 1.772000e+00>, <2 x float> %40) ; 2 uses
+  store float %36, ptr %i.ax, align 4, !tbaa !14
+  %42 = extractelement <2 x float> %41, i64 0
+  store float %42, ptr %i.ay, align 4, !tbaa !14
+  %43 = extractelement <2 x float> %41, i64 1
+  store float %43, ptr %i.ba, align 4, !tbaa !14
   %exitcond90.not.3 = icmp eq i64 %i.ae, 4
   br i1 %exitcond90.not.3, label %._crit_edge86, label %.lr.ph85.4
 
 .lr.ph85.4:                                       ; preds = %.lr.ph85.3
   %i.be = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 16 ; 2 uses
-  %24 = load float, ptr %i.be, align 4, !tbaa !14 ; 3 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.074.lcssa, i64 16 ; 2 uses
   %i.bg = load float, ptr %i.bf, align 4, !tbaa !14 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.075.lcssa, i64 16 ; 2 uses
   %i.bi = load float, ptr %i.bh, align 4, !tbaa !14 ; 2 uses
-  %25 = tail call float @llvm.fmuladd.f32(float %i.bi, float 1.402000e+00, float %24)
-  %i.bj = fneg float %i.bg
-  %i.bk = tail call float @llvm.fmuladd.f32(float %i.bj, float 3.441300e-01, float %24)
-  %26 = fneg float %i.bi
-  %27 = tail call float @llvm.fmuladd.f32(float %26, float f0x3F36D1E1, float %i.bk)
-  %28 = tail call float @llvm.fmuladd.f32(float %i.bg, float 1.772000e+00, float %24)
-  store float %25, ptr %i.be, align 4, !tbaa !14
-  store float %27, ptr %i.bf, align 4, !tbaa !14
-  store float %28, ptr %i.bh, align 4, !tbaa !14
+  %44 = fneg float %i.bg
+  %i.bj = fneg float %i.bi
+  %45 = load float, ptr %i.be, align 4, !tbaa !14 ; 3 uses
+  %46 = tail call float @llvm.fmuladd.f32(float %i.bi, float 1.402000e+00, float %45)
+  %i.bk = tail call float @llvm.fmuladd.f32(float %44, float 3.441300e-01, float %45)
+  %47 = insertelement <2 x float> poison, float %i.bj, i64 0
+  %48 = insertelement <2 x float> %47, float %i.bg, i64 1
+  %49 = insertelement <2 x float> poison, float %i.bk, i64 0
+  %50 = insertelement <2 x float> %49, float %45, i64 1
+  %51 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %48, <2 x float> <float f0x3F36D1E1, float 1.772000e+00>, <2 x float> %50) ; 2 uses
+  store float %46, ptr %i.be, align 4, !tbaa !14
+  %52 = extractelement <2 x float> %51, i64 0
+  store float %52, ptr %i.bf, align 4, !tbaa !14
+  %53 = extractelement <2 x float> %51, i64 1
+  store float %53, ptr %i.bh, align 4, !tbaa !14
   %exitcond90.not.4 = icmp eq i64 %i.ae, 5
   br i1 %exitcond90.not.4, label %._crit_edge86, label %.lr.ph85.5
 
 .lr.ph85.5:                                       ; preds = %.lr.ph85.4
   %i.bl = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 20 ; 2 uses
-  %29 = load float, ptr %i.bl, align 4, !tbaa !14 ; 3 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %.074.lcssa, i64 20 ; 2 uses
   %i.bn = load float, ptr %i.bm, align 4, !tbaa !14 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %.075.lcssa, i64 20 ; 2 uses
   %i.bp = load float, ptr %i.bo, align 4, !tbaa !14 ; 2 uses
-  %30 = tail call float @llvm.fmuladd.f32(float %i.bp, float 1.402000e+00, float %29)
-  %i.bq = fneg float %i.bn
-  %i.br = tail call float @llvm.fmuladd.f32(float %i.bq, float 3.441300e-01, float %29)
-  %31 = fneg float %i.bp
-  %32 = tail call float @llvm.fmuladd.f32(float %31, float f0x3F36D1E1, float %i.br)
-  %33 = tail call float @llvm.fmuladd.f32(float %i.bn, float 1.772000e+00, float %29)
-  store float %30, ptr %i.bl, align 4, !tbaa !14
-  store float %32, ptr %i.bm, align 4, !tbaa !14
-  store float %33, ptr %i.bo, align 4, !tbaa !14
+  %54 = fneg float %i.bn
+  %i.bq = fneg float %i.bp
+  %55 = load float, ptr %i.bl, align 4, !tbaa !14 ; 3 uses
+  %56 = tail call float @llvm.fmuladd.f32(float %i.bp, float 1.402000e+00, float %55)
+  %i.br = tail call float @llvm.fmuladd.f32(float %54, float 3.441300e-01, float %55)
+  %57 = insertelement <2 x float> poison, float %i.bq, i64 0
+  %58 = insertelement <2 x float> %57, float %i.bn, i64 1
+  %59 = insertelement <2 x float> poison, float %i.br, i64 0
+  %60 = insertelement <2 x float> %59, float %55, i64 1
+  %61 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %58, <2 x float> <float f0x3F36D1E1, float 1.772000e+00>, <2 x float> %60) ; 2 uses
+  store float %56, ptr %i.bl, align 4, !tbaa !14
+  %62 = extractelement <2 x float> %61, i64 0
+  store float %62, ptr %i.bm, align 4, !tbaa !14
+  %63 = extractelement <2 x float> %61, i64 1
+  store float %63, ptr %i.bo, align 4, !tbaa !14
   %exitcond90.not.5 = icmp eq i64 %i.ae, 6
   br i1 %exitcond90.not.5, label %._crit_edge86, label %.lr.ph85.6
 
 .lr.ph85.6:                                       ; preds = %.lr.ph85.5
   %i.bs = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 24 ; 2 uses
-  %34 = load float, ptr %i.bs, align 4, !tbaa !14 ; 3 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %.074.lcssa, i64 24 ; 2 uses
   %i.bu = load float, ptr %i.bt, align 4, !tbaa !14 ; 2 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %.075.lcssa, i64 24 ; 2 uses
   %i.bw = load float, ptr %i.bv, align 4, !tbaa !14 ; 2 uses
-  %35 = tail call float @llvm.fmuladd.f32(float %i.bw, float 1.402000e+00, float %34)
-  %i.bx = fneg float %i.bu
-  %i.by = tail call float @llvm.fmuladd.f32(float %i.bx, float 3.441300e-01, float %34)
-  %36 = fneg float %i.bw
-  %37 = tail call float @llvm.fmuladd.f32(float %36, float f0x3F36D1E1, float %i.by)
-  %38 = tail call float @llvm.fmuladd.f32(float %i.bu, float 1.772000e+00, float %34)
-  store float %35, ptr %i.bs, align 4, !tbaa !14
-  store float %37, ptr %i.bt, align 4, !tbaa !14
-  store float %38, ptr %i.bv, align 4, !tbaa !14
+  %64 = fneg float %i.bu
+  %i.bx = fneg float %i.bw
+  %65 = load float, ptr %i.bs, align 4, !tbaa !14 ; 3 uses
+  %66 = tail call float @llvm.fmuladd.f32(float %i.bw, float 1.402000e+00, float %65)
+  %i.by = tail call float @llvm.fmuladd.f32(float %64, float 3.441300e-01, float %65)
+  %67 = insertelement <2 x float> poison, float %i.bx, i64 0
+  %68 = insertelement <2 x float> %67, float %i.bu, i64 1
+  %69 = insertelement <2 x float> poison, float %i.by, i64 0
+  %70 = insertelement <2 x float> %69, float %65, i64 1
+  %71 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %68, <2 x float> <float f0x3F36D1E1, float 1.772000e+00>, <2 x float> %70) ; 2 uses
+  store float %66, ptr %i.bs, align 4, !tbaa !14
+  %72 = extractelement <2 x float> %71, i64 0
+  store float %72, ptr %i.bt, align 4, !tbaa !14
+  %73 = extractelement <2 x float> %71, i64 1
+  store float %73, ptr %i.bv, align 4, !tbaa !14
   br label %._crit_edge86
 
 ._crit_edge86:                                    ; preds = %.lr.ph85, %.lr.ph85.1, %.lr.ph85.2, %.lr.ph85.3, %.lr.ph85.4, %.lr.ph85.5, %.lr.ph85.6, %._crit_edge
@@ -731,6 +766,9 @@ declare double @llvm.fmuladd.f64(double, double, double) #2
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare double @sqrt(double noundef) local_unnamed_addr #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #2

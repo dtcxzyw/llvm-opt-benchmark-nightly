@@ -205,7 +205,7 @@ declare float @llvm.exp.f32(float) #10
 define internal fastcc void @calculate_cubic_bc_coeffs(float noundef %0, ptr nofree noundef nonnull writeonly captures(none) initializes((0, 16)) %1) unnamed_addr #8 {
 bb.a:
   %i.a = fadd nsz float %0, 1.000000e+00          ; 3 uses
-  %i.b = tail call nsz float @llvm.fabs.f32(float %i.a) ; 10 uses
+  %i.b = tail call nsz float @llvm.fabs.f32(float %i.a) ; 7 uses
   %i.c = fcmp nsz olt float %i.b, 1.000000e+00
   br i1 %i.c, label %bb.b, label %bb.c
 
@@ -227,18 +227,21 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.n, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %2 = tail call nnan nsz float @llvm.fmuladd.f32(float %i.b, float f0xBEC71C73, float 2.000000e+00)
-  %3 = tail call nnan nsz float @llvm.fmuladd.f32(float %i.b, float %2, float f0xC0555555)
-  %4 = tail call nnan nsz float @llvm.fmuladd.f32(float %i.b, float %3, float f0x3FE38E39)
-  %5 = fmul nnan nsz float %i.b, 5.000000e-01
-  %6 = tail call nnan nsz float @llvm.fmuladd.f32(float %5, float f0xBEC71C73, float 2.000000e+00)
-  %i.o = fmul nnan nsz float %i.b, %6
+  %2 = insertelement <2 x float> <float poison, float -0.000000e+00>, float %i.b, i64 0 ; 3 uses
+  %3 = tail call nnan nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %2, <2 x float> <float f0xBEC71C73, float 0.000000e+00>, <2 x float> <float 2.000000e+00, float 0.000000e+00>)
+  %4 = tail call nnan nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %2, <2 x float> %3, <2 x float> <float f0xC0555555, float f0xBEC71C73>)
+  %5 = shufflevector <2 x float> %2, <2 x float> poison, <2 x i32> zeroinitializer
+  %6 = fmul nnan nsz <2 x float> %5, <float 1.000000e+00, float 5.000000e-01>
+  %7 = tail call nnan nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %6, <2 x float> %4, <2 x float> <float f0x3FE38E39, float 2.000000e+00>) ; 2 uses
+  %8 = extractelement <2 x float> %7, i64 1
+  %i.o = fmul nnan nsz float %i.b, %8
   %i.p = fmul nnan nsz float %i.o, 5.000000e-01
   %i.q = fadd nnan nsz float %i.p, f0xC0555555
   %i.r = fmul nnan nsz float %i.b, %i.q
   %i.s = fmul nnan nsz float %i.r, 5.000000e-01
   %i.t = fadd nnan nsz float %i.s, f0x3FE38E39
-  %i.u = fmul nsz float %4, %i.t
+  %9 = extractelement <2 x float> %7, i64 0
+  %i.u = fmul nsz float %9, %i.t
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
@@ -246,7 +249,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
   store float %.sink, ptr %1, align 4, !tbaa !29
   %i.v = fadd nsz float %0, -1.000000e+00
   %i.w = fadd nsz float %i.v, 1.000000e+00        ; 3 uses
-  %i.x = tail call nsz float @llvm.fabs.f32(float %i.w) ; 10 uses
+  %i.x = tail call nsz float @llvm.fabs.f32(float %i.w) ; 7 uses
   %i.y = fcmp nsz olt float %i.x, 1.000000e+00
   br i1 %i.y, label %bb.h, label %bb.f
 
@@ -255,18 +258,21 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.z, label %bb.g, label %bb.i
 
 bb.g:                                             ; preds = %bb.f
-  %7 = tail call nnan nsz float @llvm.fmuladd.f32(float %i.x, float f0xBEC71C73, float 2.000000e+00)
-  %8 = tail call nnan nsz float @llvm.fmuladd.f32(float %i.x, float %7, float f0xC0555555)
-  %9 = tail call nnan nsz float @llvm.fmuladd.f32(float %i.x, float %8, float f0x3FE38E39)
-  %10 = fmul nnan nsz float %i.x, 5.000000e-01
-  %11 = tail call nnan nsz float @llvm.fmuladd.f32(float %10, float f0xBEC71C73, float 2.000000e+00)
-  %i.aa = fmul nnan nsz float %i.x, %11
+  %10 = insertelement <2 x float> <float poison, float -0.000000e+00>, float %i.x, i64 0 ; 3 uses
+  %11 = tail call nnan nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %10, <2 x float> <float f0xBEC71C73, float 0.000000e+00>, <2 x float> <float 2.000000e+00, float 0.000000e+00>)
+  %12 = tail call nnan nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %10, <2 x float> %11, <2 x float> <float f0xC0555555, float f0xBEC71C73>)
+  %13 = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> zeroinitializer
+  %14 = fmul nnan nsz <2 x float> %13, <float 1.000000e+00, float 5.000000e-01>
+  %15 = tail call nnan nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %14, <2 x float> %12, <2 x float> <float f0x3FE38E39, float 2.000000e+00>) ; 2 uses
+  %16 = extractelement <2 x float> %15, i64 1
+  %i.aa = fmul nnan nsz float %i.x, %16
   %i.ab = fmul nnan nsz float %i.aa, 5.000000e-01
   %i.ac = fadd nnan nsz float %i.ab, f0xC0555555
   %i.ad = fmul nnan nsz float %i.x, %i.ac
   %i.ae = fmul nnan nsz float %i.ad, 5.000000e-01
   %i.af = fadd nnan nsz float %i.ae, f0x3FE38E39
-  %i.ag = fmul nsz float %9, %i.af
+  %17 = extractelement <2 x float> %15, i64 0
+  %i.ag = fmul nsz float %17, %i.af
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.e
@@ -286,7 +292,7 @@ bb.i:                                             ; preds = %bb.f, %bb.h, %bb.g
   %i.ar = phi float [ %i.aq, %bb.h ], [ %i.ag, %bb.g ], [ 0.000000e+00, %bb.f ] ; 2 uses
   %i.as = fadd nsz float %0, -2.000000e+00
   %i.at = fadd nsz float %i.as, 1.000000e+00      ; 3 uses
-  %i.au = tail call nsz float @llvm.fabs.f32(float %i.at) ; 10 uses
+  %i.au = tail call nsz float @llvm.fabs.f32(float %i.at) ; 7 uses
   %i.av = fcmp nsz olt float %i.au, 1.000000e+00
   br i1 %i.av, label %bb.l, label %bb.j
 
@@ -295,18 +301,21 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.aw, label %bb.k, label %bb.m
 
 bb.k:                                             ; preds = %bb.j
-  %12 = tail call nnan nsz float @llvm.fmuladd.f32(float %i.au, float f0xBEC71C73, float 2.000000e+00)
-  %13 = tail call nnan nsz float @llvm.fmuladd.f32(float %i.au, float %12, float f0xC0555555)
-  %14 = tail call nnan nsz float @llvm.fmuladd.f32(float %i.au, float %13, float f0x3FE38E39)
-  %15 = fmul nnan nsz float %i.au, 5.000000e-01
-  %16 = tail call nnan nsz float @llvm.fmuladd.f32(float %15, float f0xBEC71C73, float 2.000000e+00)
-  %i.ax = fmul nnan nsz float %i.au, %16
+  %18 = insertelement <2 x float> <float poison, float -0.000000e+00>, float %i.au, i64 0 ; 3 uses
+  %19 = tail call nnan nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %18, <2 x float> <float f0xBEC71C73, float 0.000000e+00>, <2 x float> <float 2.000000e+00, float 0.000000e+00>)
+  %20 = tail call nnan nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %18, <2 x float> %19, <2 x float> <float f0xC0555555, float f0xBEC71C73>)
+  %21 = shufflevector <2 x float> %18, <2 x float> poison, <2 x i32> zeroinitializer
+  %22 = fmul nnan nsz <2 x float> %21, <float 1.000000e+00, float 5.000000e-01>
+  %23 = tail call nnan nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %22, <2 x float> %20, <2 x float> <float f0x3FE38E39, float 2.000000e+00>) ; 2 uses
+  %24 = extractelement <2 x float> %23, i64 1
+  %i.ax = fmul nnan nsz float %i.au, %24
   %i.ay = fmul nnan nsz float %i.ax, 5.000000e-01
   %i.az = fadd nnan nsz float %i.ay, f0xC0555555
   %i.ba = fmul nnan nsz float %i.au, %i.az
   %i.bb = fmul nnan nsz float %i.ba, 5.000000e-01
   %i.bc = fadd nnan nsz float %i.bb, f0x3FE38E39
-  %i.bd = fmul nsz float %14, %i.bc
+  %25 = extractelement <2 x float> %23, i64 0
+  %i.bd = fmul nsz float %25, %i.bc
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.i
@@ -326,7 +335,7 @@ bb.m:                                             ; preds = %bb.j, %bb.l, %bb.k
   %i.bo = phi float [ %i.bn, %bb.l ], [ %i.bd, %bb.k ], [ 0.000000e+00, %bb.j ] ; 2 uses
   %i.bp = fadd nsz float %0, -3.000000e+00
   %i.bq = fadd nsz float %i.bp, 1.000000e+00      ; 3 uses
-  %i.br = tail call nsz float @llvm.fabs.f32(float %i.bq) ; 10 uses
+  %i.br = tail call nsz float @llvm.fabs.f32(float %i.bq) ; 7 uses
   %i.bs = fcmp nsz olt float %i.br, 1.000000e+00
   br i1 %i.bs, label %bb.p, label %bb.n
 
@@ -335,18 +344,21 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.bt, label %bb.o, label %.preheader
 
 bb.o:                                             ; preds = %bb.n
-  %17 = tail call nnan nsz float @llvm.fmuladd.f32(float %i.br, float f0xBEC71C73, float 2.000000e+00)
-  %18 = tail call nnan nsz float @llvm.fmuladd.f32(float %i.br, float %17, float f0xC0555555)
-  %19 = tail call nnan nsz float @llvm.fmuladd.f32(float %i.br, float %18, float f0x3FE38E39)
-  %20 = fmul nnan nsz float %i.br, 5.000000e-01
-  %21 = tail call nnan nsz float @llvm.fmuladd.f32(float %20, float f0xBEC71C73, float 2.000000e+00)
-  %i.bu = fmul nnan nsz float %i.br, %21
+  %26 = insertelement <2 x float> <float poison, float -0.000000e+00>, float %i.br, i64 0 ; 3 uses
+  %27 = tail call nnan nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %26, <2 x float> <float f0xBEC71C73, float 0.000000e+00>, <2 x float> <float 2.000000e+00, float 0.000000e+00>)
+  %28 = tail call nnan nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %26, <2 x float> %27, <2 x float> <float f0xC0555555, float f0xBEC71C73>)
+  %29 = shufflevector <2 x float> %26, <2 x float> poison, <2 x i32> zeroinitializer
+  %30 = fmul nnan nsz <2 x float> %29, <float 1.000000e+00, float 5.000000e-01>
+  %31 = tail call nnan nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %30, <2 x float> %28, <2 x float> <float f0x3FE38E39, float 2.000000e+00>) ; 2 uses
+  %32 = extractelement <2 x float> %31, i64 1
+  %i.bu = fmul nnan nsz float %i.br, %32
   %i.bv = fmul nnan nsz float %i.bu, 5.000000e-01
   %i.bw = fadd nnan nsz float %i.bv, f0xC0555555
   %i.bx = fmul nnan nsz float %i.br, %i.bw
   %i.by = fmul nnan nsz float %i.bx, 5.000000e-01
   %i.bz = fadd nnan nsz float %i.by, f0x3FE38E39
-  %i.ca = fmul nsz float %19, %i.bz
+  %33 = extractelement <2 x float> %31, i64 0
+  %i.ca = fmul nsz float %33, %i.bz
   br label %.preheader
 
 bb.p:                                             ; preds = %bb.m

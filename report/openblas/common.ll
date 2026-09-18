@@ -202,11 +202,11 @@ bb.a:
 .preheader.lr.ph:                                 ; preds = %bb.a
   %.not3839 = icmp eq i32 %0, 0
   %i.d = sitofp i32 %7 to float                   ; 3 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 3 uses
-  %8 = fneg float %i.d                            ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
   br i1 %.not3839, label %._crit_edge43.split, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
+  %8 = fneg float %i.d
   %i.f = shl i32 %0, 1
   %i.g = sext i32 %i.b to i64                     ; 5 uses
   %i.h = zext i32 %i.f to i64                     ; 4 uses
@@ -229,7 +229,7 @@ bb.a:
   %scevgep58 = getelementptr i8, ptr %i.w, i64 8  ; 3 uses
   %i.x = mul i64 %i.t, %i.g
   %i.y = shl i64 %i.x, 2                          ; 2 uses
-  %i.z = insertelement <2 x float> poison, float %8, i64 0
+  %i.z = insertelement <2 x float> poison, float %8, i64 0 ; 2 uses
   %i.aa = insertelement <2 x float> %i.z, float %i.d, i64 1
   %i.ab = getelementptr i8, ptr %3, i64 %i.y
   %i.ac = getelementptr i8, ptr %i.ab, i64 4
@@ -386,13 +386,14 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.cp = tail call float @llvm.fmuladd.f32(float %i.cg, float %i.cj, float %i.co)
   %gep49 = getelementptr [4 x i8], ptr %invariant.gep48, i64 %indvars.iv ; 2 uses
   store float %i.cp, ptr %gep49, align 4, !tbaa !9
-  %i.cq = load float, ptr %2, align 4, !tbaa !9
-  %9 = fmul float %i.cq, %8
-  %10 = load float, ptr %i.cm, align 4, !tbaa !9
-  %11 = load float, ptr %i.e, align 4, !tbaa !9
-  %12 = load float, ptr %gep, align 4, !tbaa !9
-  %13 = fmul float %11, %12
-  %i.cr = tail call float @llvm.fmuladd.f32(float %9, float %10, float %13)
+  %9 = load float, ptr %i.cm, align 4, !tbaa !9
+  %i.cq = load float, ptr %gep, align 4, !tbaa !9
+  %10 = load <2 x float>, ptr %2, align 4, !tbaa !9
+  %11 = insertelement <2 x float> %i.z, float %i.cq, i64 1
+  %12 = fmul <2 x float> %10, %11                 ; 2 uses
+  %13 = extractelement <2 x float> %12, i64 0
+  %14 = extractelement <2 x float> %12, i64 1
+  %i.cr = tail call float @llvm.fmuladd.f32(float %13, float %9, float %14)
   %i.cs = getelementptr i8, ptr %gep49, i64 4
   store float %i.cr, ptr %i.cs, align 4, !tbaa !9
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
@@ -795,11 +796,11 @@ bb.a:
 .preheader.lr.ph:                                 ; preds = %bb.a
   %.not3839 = icmp eq i32 %1, 0
   %i.c = sitofp i32 %7 to float                   ; 3 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 3 uses
-  %8 = fneg float %i.c                            ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
   br i1 %.not3839, label %._crit_edge43.split, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
+  %8 = fneg float %i.c
   %i.e = shl i32 %1, 1
   %i.f = zext i32 %i.e to i64                     ; 5 uses
   %i.g = sext i32 %i.b to i64                     ; 3 uses
@@ -818,7 +819,7 @@ bb.a:
   %i.r = add i64 %i.q, %i.f
   %i.s = shl i64 %i.r, 2
   %scevgep53 = getelementptr i8, ptr %3, i64 %i.s
-  %i.t = insertelement <2 x float> poison, float %8, i64 0
+  %i.t = insertelement <2 x float> poison, float %8, i64 0 ; 2 uses
   %i.u = insertelement <2 x float> %i.t, float %i.c, i64 1
   %i.v = add nsw i64 %i.f, -2                     ; 2 uses
   %i.w = lshr exact i64 %i.v, 1
@@ -926,13 +927,14 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.bo = tail call float @llvm.fmuladd.f32(float %i.bh, float %i.bi, float %i.bn)
   %gep49 = getelementptr [4 x i8], ptr %invariant.gep48, i64 %indvars.iv ; 2 uses
   store float %i.bo, ptr %gep49, align 4, !tbaa !9
-  %i.bp = load float, ptr %2, align 4, !tbaa !9
-  %9 = fmul float %i.bp, %8
-  %10 = load float, ptr %i.bl, align 4, !tbaa !9
-  %11 = load float, ptr %i.d, align 4, !tbaa !9
-  %12 = load float, ptr %gep, align 4, !tbaa !9
-  %13 = fmul float %11, %12
-  %i.bq = tail call float @llvm.fmuladd.f32(float %9, float %10, float %13)
+  %9 = load float, ptr %i.bl, align 4, !tbaa !9
+  %i.bp = load float, ptr %gep, align 4, !tbaa !9
+  %10 = load <2 x float>, ptr %2, align 4, !tbaa !9
+  %11 = insertelement <2 x float> %i.t, float %i.bp, i64 1
+  %12 = fmul <2 x float> %10, %11                 ; 2 uses
+  %13 = extractelement <2 x float> %12, i64 0
+  %14 = extractelement <2 x float> %12, i64 1
+  %i.bq = tail call float @llvm.fmuladd.f32(float %13, float %9, float %14)
   %i.br = getelementptr i8, ptr %gep49, i64 4
   store float %i.bq, ptr %i.br, align 4, !tbaa !9
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses

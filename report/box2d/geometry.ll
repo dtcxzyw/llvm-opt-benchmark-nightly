@@ -202,9 +202,9 @@ bb.a:
   br i1 %i.c, label %bb.b, label %bb.l
 
 bb.b:                                             ; preds = %bb.a
-  %.sroa.033.0.copyload = load <2 x float>, ptr %1, align 4 ; 3 uses
+  %.sroa.033.0.copyload = load <2 x float>, ptr %1, align 4 ; 2 uses
   %i.d = load <2 x float>, ptr %2, align 4        ; 3 uses
-  %i.e = fsub <2 x float> %i.d, %.sroa.033.0.copyload ; 2 uses
+  %i.e = fsub <2 x float> %i.d, %.sroa.033.0.copyload
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.030.0.copyload = load <2 x float>, ptr %i.f, align 4 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -231,14 +231,12 @@ bb.d:                                             ; preds = %.lr.ph, %bb.c
   %.056102 = phi float [ %i.h, %.lr.ph ], [ %.157, %bb.c ] ; 4 uses
   %.059101 = phi float [ 0.000000e+00, %.lr.ph ], [ %.160, %bb.c ] ; 4 uses
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
-  %i.m = load <2 x float>, ptr %i.l, align 4      ; 2 uses
-  %foldExtExtBinop = fsub <2 x float> %i.m, %.sroa.033.0.copyload
-  %foldExtExtBinop113 = fsub <2 x float> %i.m, %.sroa.033.0.copyload
+  %i.m = load <2 x float>, ptr %i.l, align 4
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %indvars.iv
-  %foldExtExtBinop115.a = fsub <2 x float> %foldExtExtBinop, %i.e
-  %foldExtExtBinop117 = fsub <2 x float> %foldExtExtBinop113, %i.e
+  %foldExtExtBinop115.a = fsub <2 x float> %i.m, %.sroa.033.0.copyload
+  %foldExtExtBinop117 = fsub <2 x float> %foldExtExtBinop115.a, %i.e ; 2 uses
   %i.o = load <2 x float>, ptr %i.n, align 4      ; 3 uses
-  %foldExtExtBinop119 = fmul <2 x float> %i.o, %foldExtExtBinop115.a
+  %foldExtExtBinop119 = fmul <2 x float> %i.o, %foldExtExtBinop117
   %foldExtExtBinop121 = fmul <2 x float> %i.o, %foldExtExtBinop117
   %shift = shufflevector <2 x float> %foldExtExtBinop121, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop123 = fadd <2 x float> %foldExtExtBinop119, %shift

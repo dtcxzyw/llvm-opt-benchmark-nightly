@@ -205,29 +205,27 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %indvars.iv.i137 = phi i64 [ %indvars.iv.next.i139, %_ZL9_lim16bitf.exit52.us.i ], [ %indvars.iv.i137.ph, %scalar.ph.preheader ] ; 3 uses
   %i.sj = add nuw nsw i64 %indvars.iv.i137, %i.ly
   %.idx.i138 = mul nuw nsw i64 %i.sj, 6
-  %i.sk = getelementptr inbounds nuw i8, ptr %i.ku, i64 %.idx.i138 ; 3 uses
+  %i.sk = getelementptr inbounds nuw i8, ptr %i.ku, i64 %.idx.i138 ; 2 uses
   %i.sl = load i16, ptr %i.sk, align 2, !tbaa !53
   %i.sm = uitofp i16 %i.sl to float               ; 3 uses
   %i.sn = getelementptr i8, ptr %i.sk, i64 2
-  %3 = load i16, ptr %i.sn, align 2, !tbaa !53
-  %4 = zext i16 %3 to i32
-  %5 = add nsw i32 %4, -16383
-  %6 = sitofp i32 %5 to float                     ; 2 uses
-  %7 = getelementptr i8, ptr %i.sk, i64 4
-  %8 = load i16, ptr %7, align 2, !tbaa !53
-  %9 = zext i16 %8 to i32
-  %10 = add nsw i32 %9, -16383
-  %11 = sitofp i32 %10 to float                   ; 2 uses
-  %i.so = call float @llvm.fmuladd.f32(float %11, float 1.402000e+00, float %i.sm) ; 3 uses
-  %12 = call float @llvm.fmuladd.f32(float %6, float -3.441400e-01, float %i.sm)
-  %13 = call float @llvm.fmuladd.f32(float %11, float f0xBF36D1E1, float %12) ; 3 uses
-  %14 = call float @llvm.fmuladd.f32(float %6, float 1.772000e+00, float %i.sm) ; 3 uses
-  %i.sp = fcmp olt float %i.so, 0.000000e+00
+  %3 = load <2 x i16>, ptr %i.sn, align 2, !tbaa !53
+  %4 = zext <2 x i16> %3 to <2 x i32>
+  %5 = add nsw <2 x i32> %4, splat (i32 -16383)
+  %6 = sitofp <2 x i32> %5 to <2 x float>         ; 3 uses
+  %7 = extractelement <2 x float> %6, i64 1
+  %8 = call float @llvm.fmuladd.f32(float %7, float 1.402000e+00, float %i.sm) ; 3 uses
+  %9 = extractelement <2 x float> %6, i64 0
+  %i.so = call float @llvm.fmuladd.f32(float %9, float -3.441400e-01, float %i.sm)
+  %10 = insertelement <2 x float> poison, float %i.sm, i64 0
+  %11 = insertelement <2 x float> %10, float %i.so, i64 1
+  %12 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %6, <2 x float> <float 1.772000e+00, float f0xBF36D1E1>, <2 x float> %11) ; 2 uses
+  %i.sp = fcmp olt float %8, 0.000000e+00
   br i1 %i.sp, label %_ZL9_lim16bitf.exit.us.i, label %bb.aw
 
 bb.aw:                                            ; preds = %scalar.ph
-  %i.sq = fcmp ogt float %i.so, 6.553500e+04
-  %spec.store.select.i.us.i = select i1 %i.sq, float 6.553500e+04, float %i.so
+  %i.sq = fcmp ogt float %8, 6.553500e+04
+  %spec.store.select.i.us.i = select i1 %i.sq, float 6.553500e+04, float %8
   %i.sr = fptoui float %spec.store.select.i.us.i to i32
   %i.ss = trunc i32 %i.sr to i16
   br label %_ZL9_lim16bitf.exit.us.i
@@ -236,6 +234,7 @@ _ZL9_lim16bitf.exit.us.i:                         ; preds = %bb.aw, %scalar.ph
   %.0.i.us.i = phi i16 [ %i.ss, %bb.aw ], [ 0, %scalar.ph ]
   %i.st = getelementptr inbounds nuw [8 x i8], ptr %gep.i136, i64 %indvars.iv.i137 ; 3 uses
   store i16 %.0.i.us.i, ptr %i.st, align 2, !tbaa !53
+  %13 = extractelement <2 x float> %12, i64 1     ; 3 uses
   %i.su = fcmp olt float %13, 0.000000e+00
   br i1 %i.su, label %_ZL9_lim16bitf.exit49.us.i, label %bb.ax
 
@@ -250,6 +249,7 @@ _ZL9_lim16bitf.exit49.us.i:                       ; preds = %bb.ax, %_ZL9_lim16b
   %.0.i48.us.i = phi i16 [ %i.sx, %bb.ax ], [ 0, %_ZL9_lim16bitf.exit.us.i ]
   %i.sy = getelementptr inbounds nuw i8, ptr %i.st, i64 2
   store i16 %.0.i48.us.i, ptr %i.sy, align 2, !tbaa !53
+  %14 = extractelement <2 x float> %12, i64 0     ; 3 uses
   %i.sz = fcmp olt float %14, 0.000000e+00
   br i1 %i.sz, label %_ZL9_lim16bitf.exit52.us.i, label %bb.ay
 
@@ -651,6 +651,9 @@ declare i64 @llvm.smax.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x float> @llvm.fmuladd.v8f32(<8 x float>, <8 x float>, <8 x float>) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #11
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.d, %bb.d, %bb.b
   %or.cond3 = and i1 %i.d, %i.e
   %i.f = insertelement <2 x double> poison, double %3, i64 0
   %i.g = insertelement <2 x double> %i.f, double %2, i64 1
-  %i.h = fptrunc <2 x double> %i.g to <2 x float> ; 5 uses
+  %i.h = fptrunc <2 x double> %i.g to <2 x float> ; 10 uses
   br i1 %or.cond3, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
@@ -309,14 +309,11 @@ _ZNKSt6vectorIN2cv11hough_indexESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i.i: ; pred
   %i.an = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.ao = load i32, ptr %i.an, align 8, !tbaa !41 ; 3 uses
   %i.ap = fdiv <2 x float> splat (float 1.000000e+00), %i.h ; 3 uses
-  %20 = sitofp i32 %i.l to float                  ; 2 uses
-  %21 = extractelement <2 x float> %i.h, i64 1    ; 4 uses
-  %22 = fdiv float %21, %20                       ; 2 uses
-  %23 = sitofp i32 %i.n to float
-  %24 = extractelement <2 x float> %i.h, i64 0    ; 5 uses
-  %25 = fdiv float %24, %23                       ; 5 uses
-  %26 = fdiv float 1.000000e+00, %22
-  %27 = fdiv float 1.000000e+00, %25
+  %20 = insertelement <2 x i32> poison, i32 %i.n, i64 0
+  %21 = insertelement <2 x i32> %20, i32 %i.l, i64 1
+  %22 = sitofp <2 x i32> %21 to <2 x float>       ; 2 uses
+  %23 = fdiv <2 x float> %i.h, %22                ; 4 uses
+  %24 = fdiv <2 x float> splat (float 1.000000e+00), %23 ; 2 uses
   %i.aq = sitofp i32 %i.am to double              ; 2 uses
   %i.ar = sitofp i32 %i.ao to double              ; 2 uses
   %i.as = fmul nnan double %i.ar, %i.ar
@@ -373,6 +370,7 @@ _ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i: ; preds = %.noexc342.i
 
 .lr.ph.preheader.i:                               ; preds = %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i, %.noexc342.i
   %wide.trip.count.i = zext nneg i32 %i.bd to i64 ; 2 uses
+  %25 = extractelement <2 x float> %23, i64 0     ; 3 uses
   %xtraiter = and i64 %wide.trip.count.i, 1
   %i.bm = icmp eq i32 %i.bd, 1
   br i1 %i.bm, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
@@ -601,6 +599,8 @@ _ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i353.i: ; preds = %.noexc35
   %.sroa.10429.0.i = phi ptr [ %i.ds, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i353.i ], [ %i.ds, %.noexc358.i ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i ] ; 4 uses
   %i.du = extractelement <2 x double> %i.au, i64 0
   %i.dv = extractelement <2 x float> %i.ap, i64 0
+  %26 = extractelement <2 x float> %i.h, i64 0    ; 2 uses
+  %27 = extractelement <2 x float> %i.h, i64 1
   br label %.preheader583.i
 
 .preheader583.i:                                  ; preds = %._crit_edge649.i, %.preheader583.preheader.i
@@ -741,9 +741,9 @@ bb.ac:                                            ; preds = %bb.ab
   %i.fv = load i8, ptr %i.fu, align 1, !tbaa !37
   %i.fw = add i8 %i.fv, 1
   store i8 %i.fw, ptr %i.fu, align 1, !tbaa !37
-  %i.fx = fdiv float %21, %i.fn                   ; 2 uses
-  %i.fy = fcmp olt float %i.fx, %24
-  %i.fz = select i1 %i.fy, float %i.fx, float %24 ; 4 uses
+  %i.fx = fdiv float %27, %i.fn                   ; 2 uses
+  %i.fy = fcmp olt float %i.fx, %26
+  %i.fz = select i1 %i.fy, float %i.fx, float %26 ; 4 uses
   %i.ga = fpext float %i.fz to double
   %i.gb = fdiv double f0x400921FB54442D18, %i.ga
   %i.gc = call double @llvm.floor.f64(double %i.gb)
@@ -902,7 +902,9 @@ bb.ap:                                            ; preds = %bb.aj
   br i1 %i.hv, label %bb.aq, label %._crit_edge662.thread.i
 
 bb.aq:                                            ; preds = %._crit_edge662.i
-  invoke fastcc void @_ZN2cvL18HoughLinesStandardERKNS_11_InputArrayERKNS_12_OutputArrayEiffiiddb(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i32 noundef %.0, float noundef %21, float noundef %24, i32 noundef %i.ag, double noundef %7, double noundef %8, i1 noundef zeroext false)
+  %28 = extractelement <2 x float> %i.h, i64 0
+  %29 = extractelement <2 x float> %i.h, i64 1
+  invoke fastcc void @_ZN2cvL18HoughLinesStandardERKNS_11_InputArrayERKNS_12_OutputArrayEiffiiddb(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i32 noundef %.0, float noundef %29, float noundef %28, i32 noundef %i.ag, double noundef %7, double noundef %8, i1 noundef zeroext false)
           to label %_ZNSt6vectorIhSaIhEED2Ev.exit.i unwind label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
@@ -951,9 +953,11 @@ _ZNSt6vectorIhSaIhEEC2EmRKS0_.exit.i:             ; preds = %bb.au, %.noexc371.i
 
 .preheader579.lr.ph.i:                            ; preds = %_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit.i
   %i.ig = sext i32 %i.v to i64
-  %i.ih = fpext float %27 to double
+  %30 = extractelement <2 x float> %24, i64 0
+  %i.ih = fpext float %30 to double
   %i.ii = icmp sgt i32 %i.n, 0
-  %i.ij = fneg float %20
+  %31 = extractelement <2 x float> %22, i64 1
+  %i.ij = fneg float %31
   %i.ik = icmp sgt i32 %i.v, 0
   br i1 %i.ef, label %.preheader579.us.preheader.i, label %._crit_edge704.i
 
@@ -961,6 +965,11 @@ _ZNSt6vectorIhSaIhEEC2EmRKS0_.exit.i:             ; preds = %bb.au, %.noexc371.i
   %i.il = zext nneg i32 %i.bb to i64              ; 2 uses
   %wide.trip.count802.i = zext nneg i32 %i.ci to i64
   %wide.trip.count792.i = zext nneg i32 %i.v to i64
+  %32 = extractelement <2 x float> %i.h, i64 1
+  %33 = extractelement <2 x float> %i.h, i64 0
+  %34 = extractelement <2 x float> %24, i64 1
+  %35 = extractelement <2 x float> %23, i64 0
+  %36 = extractelement <2 x float> %23, i64 1
   br label %.preheader579.us.i
 
 .preheader579.us.i:                               ; preds = %._crit_edge694.us.i, %.preheader579.us.preheader.i
@@ -972,7 +981,7 @@ _ZNSt6vectorIhSaIhEEC2EmRKS0_.exit.i:             ; preds = %bb.au, %.noexc371.i
   %i.in = trunc nuw nsw i64 %indvars.iv799.i to i32
   %i.io = uitofp nneg i32 %i.in to float          ; 2 uses
   %i.ip = fmul nnan float %i.ij, %i.io
-  %i.iq = fmul float %21, %i.io
+  %i.iq = fmul float %32, %i.io
   %invariant.gep921.i = getelementptr inbounds nuw i8, ptr %.sroa.0439.0.i, i64 %i.im
   br label %bb.av
 
@@ -1047,10 +1056,10 @@ bb.az:                                            ; preds = %bb.ay, %._crit_edge
   %i.jr = trunc nuw nsw i64 %indvars.iv789.i to i32 ; 2 uses
   %i.js = sdiv i32 %i.jr, %i.n
   %i.jt = sitofp i32 %i.js to float
-  %i.ju = call float @llvm.fmuladd.f32(float %i.jt, float %22, float %i.iq) ; 3 uses
+  %i.ju = call float @llvm.fmuladd.f32(float %i.jt, float %36, float %i.iq) ; 3 uses
   %i.jv = srem i32 %i.jr, %i.n
   %i.jw = uitofp nneg i32 %i.jv to float
-  %i.jx = call float @llvm.fmuladd.f32(float %i.jw, float %25, float %i.ms)
+  %i.jx = call float @llvm.fmuladd.f32(float %i.jw, float %35, float %i.ms)
   %i.jy = fadd float %i.jx, f0xBFC90FDB           ; 3 uses
   %.not.i.us.i = icmp eq ptr %.sroa.26.2680.us.i, %.sroa.41.2679.us.i
   br i1 %.not.i.us.i, label %bb.bb, label %bb.ba
@@ -1187,7 +1196,7 @@ bb.bd:                                            ; preds = %._crit_edge675.us.i
   %i.lj = call double @llvm.fmuladd.f64(double %i.lg, double %i.lg, double %i.li)
   %sqrt578.us.i.us = call double @llvm.sqrt.f64(double %i.lj)
   %i.lk = fptrunc double %sqrt578.us.i.us to float
-  %i.ll = fmul float %26, %i.lk
+  %i.ll = fmul float %34, %i.lk
   %i.lm = fmul float %i.lf, f0x3C8EFA35
   %i.ln = call noundef float @llvm.fabs.f32(float %i.lm)
   %i.lo = fpext float %i.ln to double
@@ -1242,7 +1251,7 @@ bb.be:                                            ; preds = %.lr.ph668.us.i.us
 .lr.ph683.us.i:                                   ; preds = %.preheader.us.i
   %i.mq = trunc nuw nsw i64 %indvars.iv794.i to i32
   %i.mr = uitofp nneg i32 %i.mq to float
-  %i.ms = fmul float %24, %i.mr
+  %i.ms = fmul float %33, %i.mr
   br label %bb.ax
 
 ._crit_edge694.us.i:                              ; preds = %.loopexit.us.i

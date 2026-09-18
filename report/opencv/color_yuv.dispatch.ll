@@ -204,14 +204,13 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !521, !nonnull !236, !align !400 ; 8 uses
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !521, !nonnull !236, !align !400 ; 7 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.u = load i32, ptr %i.t, align 8, !tbaa !77   ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.s, i64 12
-  %i.v = getelementptr inbounds nuw i8, ptr %i.s, i64 16
-  %i.w = getelementptr inbounds nuw i8, ptr %i.s, i64 20
-  %i.x = getelementptr inbounds nuw i8, ptr %i.s, i64 24
-  %i.y = getelementptr inbounds nuw i8, ptr %i.s, i64 28
+  %i.v = getelementptr inbounds nuw i8, ptr %i.s, i64 12
+  %i.w = getelementptr inbounds nuw i8, ptr %i.s, i64 16
+  %i.x = getelementptr inbounds nuw i8, ptr %i.s, i64 20
+  %i.y = getelementptr inbounds nuw i8, ptr %i.s, i64 24
   %i.z = icmp sgt i32 %i.u, 0
   br i1 %i.z, label %.lr.ph.split, label %._crit_edge.split
 
@@ -256,11 +255,10 @@ _ZN2cv5utils5trace7details6RegionD2Ev.exit:       ; preds = %._crit_edge.split, 
   %.016 = phi ptr [ %i.h, %.lr.ph.split ], [ %i.bk, %_ZNK2cv3hal12cpu_baseline12_GLOBAL__N_111RGB2YCrCb_fIfEclEPKfPfi.exit.loopexit ] ; 2 uses
   %.01215 = phi ptr [ %i.n, %.lr.ph.split ], [ %i.bl, %_ZNK2cv3hal12cpu_baseline12_GLOBAL__N_111RGB2YCrCb_fIfEclEPKfPfi.exit.loopexit ] ; 2 uses
   %.01314 = phi i32 [ %i.c, %.lr.ph.split ], [ %i.bj, %_ZNK2cv3hal12cpu_baseline12_GLOBAL__N_111RGB2YCrCb_fIfEclEPKfPfi.exit.loopexit ]
-  %4 = load float, ptr %3, align 4, !tbaa !70
   %i.aq = load float, ptr %i.v, align 4, !tbaa !70
   %i.ar = load float, ptr %i.w, align 4, !tbaa !70
   %i.as = load float, ptr %i.x, align 4, !tbaa !70
-  %5 = load float, ptr %i.y, align 4, !tbaa !70
+  %3 = load <2 x float>, ptr %i.y, align 4, !tbaa !70
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %.lr.ph.i
@@ -270,25 +268,29 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i
   %i.at = load float, ptr %.034.i, align 4, !tbaa !70
   %i.au = getelementptr inbounds nuw i8, ptr %.034.i, i64 4
   %i.av = load float, ptr %i.au, align 4, !tbaa !70
-  %i.aw = fmul float %i.aq, %i.av
-  %i.ax = call float @llvm.fmuladd.f32(float %i.at, float %4, float %i.aw)
+  %i.aw = fmul float %i.ar, %i.av
+  %i.ax = call float @llvm.fmuladd.f32(float %i.at, float %i.aq, float %i.aw)
   %i.ay = getelementptr inbounds nuw i8, ptr %.034.i, i64 8
   %i.az = load float, ptr %i.ay, align 4, !tbaa !70
-  %i.ba = call float @llvm.fmuladd.f32(float %i.az, float %i.ar, float %i.ax) ; 3 uses
-  %i.bb = getelementptr inbounds [4 x i8], ptr %.034.i, i64 %i.ah
+  %i.ba = call float @llvm.fmuladd.f32(float %i.az, float %i.as, float %i.ax) ; 2 uses
+  %4 = getelementptr inbounds [4 x i8], ptr %.034.i, i64 %i.ah
+  %5 = load float, ptr %4, align 4, !tbaa !70
+  %i.bb = getelementptr inbounds [4 x i8], ptr %.034.i, i64 %i.ai
   %i.bc = load float, ptr %i.bb, align 4, !tbaa !70
-  %6 = fsub float %i.bc, %i.ba
-  %7 = call float @llvm.fmuladd.f32(float %6, float %i.as, float 5.000000e-01)
-  %8 = getelementptr inbounds [4 x i8], ptr %.034.i, i64 %i.ai
-  %9 = load float, ptr %8, align 4, !tbaa !70
-  %10 = fsub float %9, %i.ba
-  %11 = call float @llvm.fmuladd.f32(float %10, float %5, float 5.000000e-01)
+  %6 = insertelement <2 x float> poison, float %5, i64 0
+  %7 = insertelement <2 x float> %6, float %i.bc, i64 1
+  %8 = insertelement <2 x float> poison, float %i.ba, i64 0
+  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
+  %10 = fsub <2 x float> %7, %9
+  %11 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %10, <2 x float> %3, <2 x float> splat (float 5.000000e-01)) ; 2 uses
   store float %i.ba, ptr %.03033.i, align 4, !tbaa !70
   %i.bd = getelementptr inbounds nuw [4 x i8], ptr %.03033.i, i64 %i.aj
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 4
-  store float %7, ptr %i.be, align 4, !tbaa !70
+  %12 = extractelement <2 x float> %11, i64 0
+  store float %12, ptr %i.be, align 4, !tbaa !70
   %i.bf = getelementptr inbounds nuw [4 x i8], ptr %.03033.i, i64 %i.ak
-  store float %11, ptr %i.bf, align 4, !tbaa !70
+  %13 = extractelement <2 x float> %11, i64 1
+  store float %13, ptr %i.bf, align 4, !tbaa !70
   %i.bg = add nuw nsw i32 %.03132.i, 1            ; 2 uses
   %i.bh = getelementptr inbounds [4 x i8], ptr %.034.i, i64 %i.al
   %i.bi = getelementptr inbounds nuw i8, ptr %.03033.i, i64 12
@@ -689,6 +691,9 @@ declare i32 @llvm.umin.i32(i32, i32) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umax.i8(i8, i8) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i8> @llvm.umax.v4i8(<4 x i8>, <4 x i8>) #12

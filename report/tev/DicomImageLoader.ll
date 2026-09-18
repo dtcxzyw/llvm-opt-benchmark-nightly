@@ -205,7 +205,6 @@ bb.b:                                             ; preds = %.lr.ph14, %_ZZN3tev
   %i.l = load i64, ptr %i.k, align 8, !tbaa !687
   %i.m = mul i64 %i.l, %.113
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.m
-  %4 = load float, ptr %i.n, align 4, !tbaa !90   ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 24
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !686
   %i.q = getelementptr inbounds nuw i8, ptr %i.i, i64 32
@@ -221,29 +220,32 @@ bb.b:                                             ; preds = %.lr.ph14, %_ZZN3tev
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %i.z
   %i.ab = load float, ptr %i.aa, align 4, !tbaa !90
   %i.ac = load ptr, ptr %i.c, align 8, !tbaa !706, !nonnull !203, !align !219
-  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !150 ; 2 uses
+  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !150
   %i.ae = load ptr, ptr %i.d, align 8, !tbaa !707, !nonnull !203, !align !219
-  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !150 ; 4 uses
-  %i.ag = load float, ptr %i.ad, align 4, !tbaa !90
-  %5 = fsub float %i.u, %i.ag                     ; 2 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.ad, i64 4
-  %i.ai = load float, ptr %i.ah, align 4, !tbaa !90
-  %6 = fsub float %i.ab, %i.ai                    ; 2 uses
-  %7 = load float, ptr %i.af, align 4, !tbaa !90
-  %8 = call float @llvm.fmuladd.f32(float %7, float %6, float %4)
-  %9 = getelementptr inbounds nuw i8, ptr %i.af, i64 4
-  %10 = load float, ptr %9, align 4, !tbaa !90
-  %i.aj = call float @llvm.fmuladd.f32(float %10, float %5, float %4)
-  %11 = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  %12 = load float, ptr %11, align 4, !tbaa !90
-  %13 = call float @llvm.fmuladd.f32(float %12, float %6, float %i.aj)
-  %14 = getelementptr inbounds nuw i8, ptr %i.af, i64 12
-  %15 = load float, ptr %14, align 4, !tbaa !90
-  %16 = call float @llvm.fmuladd.f32(float %15, float %5, float %4)
-  %.sroa.0.0.vec.insert.i13.i = insertelement <2 x float> poison, float %8, i64 0
-  %.sroa.0.4.vec.insert.i14.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i13.i, float %13, i64 1
-  store <2 x float> %.sroa.0.4.vec.insert.i14.i, ptr %3, align 8
-  store float %16, ptr %.sroa.211.0..sroa_idx.i, align 8, !tbaa !91
+  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !150 ; 3 uses
+  %i.ag = load float, ptr %i.af, align 4, !tbaa !90
+  %4 = getelementptr inbounds nuw i8, ptr %i.af, i64 4
+  %5 = load float, ptr %4, align 4, !tbaa !90
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.af, i64 8
+  %i.ai = load float, ptr %i.n, align 4, !tbaa !90 ; 3 uses
+  %6 = load <2 x float>, ptr %i.ad, align 4, !tbaa !90
+  %7 = insertelement <2 x float> poison, float %i.u, i64 0
+  %8 = insertelement <2 x float> %7, float %i.ab, i64 1
+  %9 = fsub <2 x float> %8, %6                    ; 3 uses
+  %10 = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> <i32 1, i32 0>
+  %11 = extractelement <2 x float> %9, i64 1
+  %i.aj = call float @llvm.fmuladd.f32(float %i.ag, float %11, float %i.ai)
+  %12 = extractelement <2 x float> %9, i64 0
+  %13 = call float @llvm.fmuladd.f32(float %5, float %12, float %i.ai)
+  %14 = load <2 x float>, ptr %i.ah, align 4, !tbaa !90
+  %15 = insertelement <2 x float> poison, float %13, i64 0
+  %16 = insertelement <2 x float> %15, float %i.ai, i64 1
+  %17 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %14, <2 x float> %10, <2 x float> %16) ; 2 uses
+  %.sroa.0.0.vec.insert.i13.i = insertelement <2 x float> poison, float %i.aj, i64 0
+  %18 = shufflevector <2 x float> %.sroa.0.0.vec.insert.i13.i, <2 x float> %17, <2 x i32> <i32 0, i32 2>
+  store <2 x float> %18, ptr %3, align 8
+  %19 = extractelement <2 x float> %17, i64 1
+  store float %19, ptr %.sroa.211.0..sroa_idx.i, align 8, !tbaa !91
   %i.ak = invoke { <2 x float>, float } @_ZN3tev8ituth27318invTransferRgbImplILNS0_9ETransferE13EfEEN7nanogui5ArrayIT0_Lm3EEENSt3__117integral_constantIS2_XT_EEERKS6_(ptr noundef nonnull align 4 dereferenceable(12) %3)
           to label %_ZZN3tev10yCbCrToRgbILb1EEENS_4TaskIvEENS_16MultiChannelViewIfEEiPKfS6_ENKUlTymE_clIfEEDam.exit unwind label %bb.c ; 2 uses
 
@@ -645,6 +647,9 @@ declare <2 x float> @llvm.rint.v2f32(<2 x float>) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.copysign.v2f32(<2 x float>, <2 x float>) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #3
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -202,12 +202,11 @@ bb.v:                                             ; preds = %bb.u
   br i1 %i.bh, label %.lr.ph.peel.next, label %._crit_edge.loopexit.loopexit, !llvm.loop !8
 
 ._crit_edge.loopexit.loopexit:                    ; preds = %bb.v
-  %i.bi = add i64 %spec.select113, 1
-  %4 = and i64 %i.bi, 4294967295
+  %i.bi = add nuw nsw i64 %spec.select113, 1
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.t, %._crit_edge.loopexit.loopexit, %.preheader
-  %.092.lcssa = phi i64 [ 2, %.preheader ], [ 2, %bb.t ], [ %4, %._crit_edge.loopexit.loopexit ]
+  %.092.lcssa = phi i64 [ 2, %.preheader ], [ 2, %bb.t ], [ %i.bi, %._crit_edge.loopexit.loopexit ]
   %i.bj = tail call noalias ptr @g_try_malloc(i64 noundef %.092.lcssa) #12 ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.b, i64 72
   store ptr %i.bj, ptr %i.bk, align 8

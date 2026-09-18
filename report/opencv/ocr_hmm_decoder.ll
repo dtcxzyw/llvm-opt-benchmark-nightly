@@ -205,8 +205,7 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN2cv5Rect_IiEESt6vectorIS4_SaIS4_EEEEP
   %i.st = ptrtoint ptr %.sroa.0866.0.lcssa2719 to i64
   %i.su = sub i64 %i.ss, %i.st
   %i.sv = ashr exact i64 %i.su, 4                 ; 3 uses
-  %i.sw = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0962.8, i64 %indvars.iv2500 ; 2 uses
-  %67 = getelementptr inbounds nuw i8, ptr %i.sw, i64 4
+  %i.sw = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0962.8, i64 %indvars.iv2500
   call void @llvm.lifetime.start.p0(ptr nonnull %54) #23
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %54, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %55) #23
@@ -430,31 +429,27 @@ bb.fs:                                            ; preds = %_ZNSt6vectorIiSaIiE
   %.sroa.14.018733689 = phi ptr [ %.sroa.14.1, %bb.fs ], [ null, %.lr.ph1876 ] ; 4 uses
   %.sroa.19.018743688 = phi ptr [ %.sroa.19.2, %bb.fs ], [ null, %.lr.ph1876 ] ; 8 uses
   %indvars.iv24453687 = phi i64 [ %indvars.iv.next2446, %bb.fs ], [ 0, %.lr.ph1876 ] ; 2 uses
-  %i.us = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0866.0.lcssa2719, i64 %indvars.iv24453687 ; 4 uses
-  %68 = load i32, ptr %i.us, align 4, !tbaa !124
-  %69 = getelementptr inbounds nuw i8, ptr %i.us, i64 8
-  %70 = load i32, ptr %69, align 4, !tbaa !126    ; 2 uses
-  %71 = sdiv i32 %70, 2
-  %72 = add nsw i32 %71, %68
-  %i.ut = getelementptr inbounds nuw i8, ptr %i.us, i64 4
-  %73 = load i32, ptr %i.ut, align 4, !tbaa !125
-  %74 = getelementptr inbounds nuw i8, ptr %i.us, i64 12
-  %75 = load i32, ptr %74, align 4, !tbaa !127    ; 2 uses
-  %76 = sdiv i32 %75, 2
-  %77 = add nsw i32 %76, %73
-  %78 = load i32, ptr %i.sw, align 4, !tbaa !124
-  %79 = add nsw i32 %72, %78
-  %80 = load i32, ptr %67, align 4, !tbaa !125
-  %81 = add nsw i32 %77, %80
-  %i.uu = call i32 @llvm.smax.i32(i32 %70, i32 %75) ; 2 uses
+  %i.us = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0866.0.lcssa2719, i64 %indvars.iv24453687 ; 2 uses
+  %i.ut = getelementptr inbounds nuw i8, ptr %i.us, i64 8
+  %67 = load <2 x i32>, ptr %i.us, align 4, !tbaa !93
+  %68 = load <2 x i32>, ptr %i.ut, align 4, !tbaa !93 ; 3 uses
+  %69 = sdiv <2 x i32> %68, splat (i32 2)
+  %70 = add nsw <2 x i32> %69, %67
+  %71 = load <2 x i32>, ptr %i.sw, align 4, !tbaa !93
+  %72 = add nsw <2 x i32> %70, %71                ; 2 uses
+  %73 = extractelement <2 x i32> %68, i64 0
+  %74 = extractelement <2 x i32> %68, i64 1
+  %i.uu = call i32 @llvm.smax.i32(i32 %73, i32 %74) ; 2 uses
   %i.uv = sitofp i32 %i.uu to double
   %i.uw = fmul nnan double %i.uv, 6.000000e-01
   %i.ux = fptosi double %i.uw to i32
   %i.uy = add nsw i32 %i.uu, %i.ux                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %56) #23
   %.neg1930 = sdiv i32 %i.uy, -2                  ; 2 uses
-  %i.uz = add i32 %79, %.neg1930                  ; 3 uses
-  %i.va = add i32 %81, %.neg1930                  ; 3 uses
+  %75 = extractelement <2 x i32> %72, i64 0
+  %i.uz = add i32 %75, %.neg1930                  ; 3 uses
+  %76 = extractelement <2 x i32> %72, i64 1
+  %i.va = add i32 %76, %.neg1930                  ; 3 uses
   %i.vb = load i32, ptr %i.v, align 4, !tbaa !107 ; 3 uses
   %i.vc = load i32, ptr %i.y, align 8, !tbaa !106 ; 3 uses
   %i.vd = icmp slt i32 %i.uy, 1

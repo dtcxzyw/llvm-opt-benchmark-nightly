@@ -205,7 +205,7 @@ bb.a:
   %i.dk = insertelement <2 x i32> poison, i32 %i.j, i64 0
   %i.dl = shufflevector <2 x i32> %i.dk, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.dm = insertelement <2 x i32> poison, i32 %5, i64 0
-  %i.dn = shufflevector <2 x i32> %i.dm, <2 x i32> poison, <2 x i32> zeroinitializer
+  %i.dn = shufflevector <2 x i32> %i.dm, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.do = insertelement <2 x i32> poison, i32 %8, i64 0
   %i.dp = shufflevector <2 x i32> %i.do, <2 x i32> poison, <2 x i32> zeroinitializer
   %i.dq = insertelement <2 x i32> poison, i32 %i.j, i64 0
@@ -287,7 +287,7 @@ bb.a:
   %i.gd = insertelement <2 x i32> poison, i32 %i.j, i64 0
   %i.ge = shufflevector <2 x i32> %i.gd, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.gf = insertelement <2 x i32> poison, i32 %5, i64 0
-  %i.gg = shufflevector <2 x i32> %i.gf, <2 x i32> poison, <2 x i32> zeroinitializer
+  %i.gg = shufflevector <2 x i32> %i.gf, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.gh = insertelement <2 x i32> poison, i32 %8, i64 0
   %i.gi = shufflevector <2 x i32> %i.gh, <2 x i32> poison, <2 x i32> zeroinitializer
   %i.gj = insertelement <2 x i32> poison, i32 %i.j, i64 0
@@ -348,50 +348,51 @@ _ZNK4ncnn3Mat7channelEi.exit3601.lr.ph:           ; preds = %bb.c
 _ZNK4ncnn3Mat7channelEi.exit3601:                 ; preds = %_ZNK4ncnn3Mat7channelEi.exit3601.lr.ph, %_ZNK4ncnn3Mat7channelEi.exit3601
   %.11316 = phi ptr [ %.027571326, %_ZNK4ncnn3Mat7channelEi.exit3601.lr.ph ], [ %i.ml, %_ZNK4ncnn3Mat7channelEi.exit3601 ] ; 33 uses
   %.027681315 = phi i32 [ 0, %_ZNK4ncnn3Mat7channelEi.exit3601.lr.ph ], [ %i.mm, %_ZNK4ncnn3Mat7channelEi.exit3601 ] ; 2 uses
-  %i.hz = add nsw i32 %.027681315, %3             ; 2 uses
-  %i.ia = add nsw i32 %i.hz, 1
+  %i.hz = add nsw i32 %.027681315, %3             ; 3 uses
+  %i.ia = add nsw i32 %i.hz, 1                    ; 2 uses
   %i.ib = insertelement <2 x i32> poison, i32 %i.hz, i64 0
   %i.ic = insertelement <2 x i32> %i.ib, i32 %i.ia, i64 1
-  %.frozen = freeze <2 x i32> %i.ic               ; 2 uses
-  %i.id = sdiv <2 x i32> %.frozen, %i.dl          ; 2 uses
+  %i.id = sdiv <2 x i32> %i.ic, %i.dl
   %i.ie = sext <2 x i32> %i.id to <2 x i64>
   %i.if = mul <2 x i64> %i.hy, %i.ie              ; 2 uses
   %i.ig = extractelement <2 x i64> %i.if, i64 0
   %i.ih = getelementptr inbounds nuw i8, ptr %i.ho, i64 %i.ig
   %i.ii = extractelement <2 x i64> %i.if, i64 1
   %i.ij = getelementptr inbounds nuw i8, ptr %i.ho, i64 %i.ii
-  %11 = mul <2 x i32> %i.id, %i.dl
-  %.decomposed = sub <2 x i32> %.frozen, %11      ; 3 uses
-  %i.ik = sdiv <2 x i32> %.decomposed, %i.dn
-  %i.il = mul nsw <2 x i32> %i.ik, %i.dp          ; 2 uses
-  %12 = extractelement <2 x i32> %i.il, i64 0
-  %13 = add nsw i32 %12, %i.ht
-  %14 = sext i32 %13 to i64
-  %15 = mul i64 %i.hu, %14
-  %16 = getelementptr inbounds nuw i8, ptr %i.ih, i64 %15
-  %i.im = extractelement <2 x i32> %.decomposed, i64 1
-  %17 = srem i32 %i.im, %5
-  %18 = extractelement <2 x i32> %.decomposed, i64 0
-  %19 = srem i32 %18, %5
-  %20 = mul nsw i32 %19, %7
-  %i.in = add nsw i32 %20, %i.hw
+  %11 = insertelement <2 x i32> poison, i32 %i.ia, i64 0
+  %12 = insertelement <2 x i32> %11, i32 %i.hz, i64 1
+  %13 = srem <2 x i32> %12, %i.dl
+  %.frozen = freeze <2 x i32> %13                 ; 2 uses
+  %i.ik = sdiv <2 x i32> %.frozen, %i.dn          ; 2 uses
+  %i.il = mul <2 x i32> %i.ik, %i.dn
+  %.decomposed = sub <2 x i32> %.frozen, %i.il    ; 2 uses
+  %14 = extractelement <2 x i32> %.decomposed, i64 1
+  %15 = mul nsw i32 %14, %7
+  %16 = add nsw i32 %15, %i.hw
+  %17 = sext i32 %16 to i64
+  %i.im = extractelement <2 x i32> %.decomposed, i64 0
+  %18 = mul nsw i32 %i.im, %7
+  %19 = add nsw i32 %18, %i.hw
+  %20 = mul nsw <2 x i32> %i.ik, %i.dp            ; 2 uses
+  %21 = extractelement <2 x i32> %20, i64 1
+  %i.in = add nsw i32 %21, %i.ht
   %i.io = sext i32 %i.in to i64
-  %21 = getelementptr inbounds [2 x i8], ptr %16, i64 %i.io ; 16 uses
-  %22 = mul nsw i32 %17, %7
-  %23 = add nsw i32 %22, %i.hw
-  %i.ip = extractelement <2 x i32> %i.il, i64 1
+  %22 = mul i64 %i.hu, %i.io
+  %23 = getelementptr inbounds nuw i8, ptr %i.ih, i64 %22
+  %24 = getelementptr inbounds [2 x i8], ptr %23, i64 %17 ; 16 uses
+  %i.ip = extractelement <2 x i32> %20, i64 0
   %i.iq = add nsw i32 %i.ip, %i.ht
   %i.ir = sext i32 %i.iq to i64
   %i.is = mul i64 %i.hu, %i.ir
   %i.it = getelementptr inbounds nuw i8, ptr %i.ij, i64 %i.is
-  %i.iu = sext i32 %23 to i64
+  %i.iu = sext i32 %19 to i64
   %i.iv = getelementptr inbounds [2 x i8], ptr %i.it, i64 %i.iu ; 16 uses
-  %i.iw = load i16, ptr %21, align 2, !tbaa !24
+  %i.iw = load i16, ptr %24, align 2, !tbaa !24
   store i16 %i.iw, ptr %.11316, align 2, !tbaa !24
   %i.ix = load i16, ptr %i.iv, align 2, !tbaa !24
   %i.iy = getelementptr inbounds nuw i8, ptr %.11316, i64 2
   store i16 %i.ix, ptr %i.iy, align 2, !tbaa !24
-  %i.iz = getelementptr inbounds [2 x i8], ptr %21, i64 %i.p
+  %i.iz = getelementptr inbounds [2 x i8], ptr %24, i64 %i.p
   %i.ja = load i16, ptr %i.iz, align 2, !tbaa !24
   %i.jb = getelementptr inbounds nuw i8, ptr %.11316, i64 4
   store i16 %i.ja, ptr %i.jb, align 2, !tbaa !24
@@ -399,7 +400,7 @@ _ZNK4ncnn3Mat7channelEi.exit3601:                 ; preds = %_ZNK4ncnn3Mat7chann
   %i.jd = load i16, ptr %i.jc, align 2, !tbaa !24
   %i.je = getelementptr inbounds nuw i8, ptr %.11316, i64 6
   store i16 %i.jd, ptr %i.je, align 2, !tbaa !24
-  %i.jf = getelementptr inbounds [2 x i8], ptr %21, i64 %i.r
+  %i.jf = getelementptr inbounds [2 x i8], ptr %24, i64 %i.r
   %i.jg = load i16, ptr %i.jf, align 2, !tbaa !24
   %i.jh = getelementptr inbounds nuw i8, ptr %.11316, i64 8
   store i16 %i.jg, ptr %i.jh, align 2, !tbaa !24
@@ -407,7 +408,7 @@ _ZNK4ncnn3Mat7channelEi.exit3601:                 ; preds = %_ZNK4ncnn3Mat7chann
   %i.jj = load i16, ptr %i.ji, align 2, !tbaa !24
   %i.jk = getelementptr inbounds nuw i8, ptr %.11316, i64 10
   store i16 %i.jj, ptr %i.jk, align 2, !tbaa !24
-  %i.jl = getelementptr inbounds [2 x i8], ptr %21, i64 %i.t
+  %i.jl = getelementptr inbounds [2 x i8], ptr %24, i64 %i.t
   %i.jm = load i16, ptr %i.jl, align 2, !tbaa !24
   %i.jn = getelementptr inbounds nuw i8, ptr %.11316, i64 12
   store i16 %i.jm, ptr %i.jn, align 2, !tbaa !24
@@ -415,7 +416,7 @@ _ZNK4ncnn3Mat7channelEi.exit3601:                 ; preds = %_ZNK4ncnn3Mat7chann
   %i.jp = load i16, ptr %i.jo, align 2, !tbaa !24
   %i.jq = getelementptr inbounds nuw i8, ptr %.11316, i64 14
   store i16 %i.jp, ptr %i.jq, align 2, !tbaa !24
-  %i.jr = getelementptr inbounds [2 x i8], ptr %21, i64 %i.v
+  %i.jr = getelementptr inbounds [2 x i8], ptr %24, i64 %i.v
   %i.js = load i16, ptr %i.jr, align 2, !tbaa !24
   %i.jt = getelementptr inbounds nuw i8, ptr %.11316, i64 16
   store i16 %i.js, ptr %i.jt, align 2, !tbaa !24
@@ -423,7 +424,7 @@ _ZNK4ncnn3Mat7channelEi.exit3601:                 ; preds = %_ZNK4ncnn3Mat7chann
   %i.jv = load i16, ptr %i.ju, align 2, !tbaa !24
   %i.jw = getelementptr inbounds nuw i8, ptr %.11316, i64 18
   store i16 %i.jv, ptr %i.jw, align 2, !tbaa !24
-  %i.jx = getelementptr inbounds [2 x i8], ptr %21, i64 %i.x
+  %i.jx = getelementptr inbounds [2 x i8], ptr %24, i64 %i.x
   %i.jy = load i16, ptr %i.jx, align 2, !tbaa !24
   %i.jz = getelementptr inbounds nuw i8, ptr %.11316, i64 20
   store i16 %i.jy, ptr %i.jz, align 2, !tbaa !24
@@ -431,7 +432,7 @@ _ZNK4ncnn3Mat7channelEi.exit3601:                 ; preds = %_ZNK4ncnn3Mat7chann
   %i.kb = load i16, ptr %i.ka, align 2, !tbaa !24
   %i.kc = getelementptr inbounds nuw i8, ptr %.11316, i64 22
   store i16 %i.kb, ptr %i.kc, align 2, !tbaa !24
-  %i.kd = getelementptr inbounds [2 x i8], ptr %21, i64 %i.z
+  %i.kd = getelementptr inbounds [2 x i8], ptr %24, i64 %i.z
   %i.ke = load i16, ptr %i.kd, align 2, !tbaa !24
   %i.kf = getelementptr inbounds nuw i8, ptr %.11316, i64 24
   store i16 %i.ke, ptr %i.kf, align 2, !tbaa !24
@@ -439,7 +440,7 @@ _ZNK4ncnn3Mat7channelEi.exit3601:                 ; preds = %_ZNK4ncnn3Mat7chann
   %i.kh = load i16, ptr %i.kg, align 2, !tbaa !24
   %i.ki = getelementptr inbounds nuw i8, ptr %.11316, i64 26
   store i16 %i.kh, ptr %i.ki, align 2, !tbaa !24
-  %i.kj = getelementptr inbounds [2 x i8], ptr %21, i64 %i.ab
+  %i.kj = getelementptr inbounds [2 x i8], ptr %24, i64 %i.ab
   %i.kk = load i16, ptr %i.kj, align 2, !tbaa !24
   %i.kl = getelementptr inbounds nuw i8, ptr %.11316, i64 28
   store i16 %i.kk, ptr %i.kl, align 2, !tbaa !24
@@ -447,7 +448,7 @@ _ZNK4ncnn3Mat7channelEi.exit3601:                 ; preds = %_ZNK4ncnn3Mat7chann
   %i.kn = load i16, ptr %i.km, align 2, !tbaa !24
   %i.ko = getelementptr inbounds nuw i8, ptr %.11316, i64 30
   store i16 %i.kn, ptr %i.ko, align 2, !tbaa !24
-  %i.kp = getelementptr inbounds [2 x i8], ptr %21, i64 %i.ad
+  %i.kp = getelementptr inbounds [2 x i8], ptr %24, i64 %i.ad
   %i.kq = load i16, ptr %i.kp, align 2, !tbaa !24
   %i.kr = getelementptr inbounds nuw i8, ptr %.11316, i64 32
   store i16 %i.kq, ptr %i.kr, align 2, !tbaa !24
@@ -455,7 +456,7 @@ _ZNK4ncnn3Mat7channelEi.exit3601:                 ; preds = %_ZNK4ncnn3Mat7chann
   %i.kt = load i16, ptr %i.ks, align 2, !tbaa !24
   %i.ku = getelementptr inbounds nuw i8, ptr %.11316, i64 34
   store i16 %i.kt, ptr %i.ku, align 2, !tbaa !24
-  %i.kv = getelementptr inbounds [2 x i8], ptr %21, i64 %i.af
+  %i.kv = getelementptr inbounds [2 x i8], ptr %24, i64 %i.af
   %i.kw = load i16, ptr %i.kv, align 2, !tbaa !24
   %i.kx = getelementptr inbounds nuw i8, ptr %.11316, i64 36
   store i16 %i.kw, ptr %i.kx, align 2, !tbaa !24
@@ -463,7 +464,7 @@ _ZNK4ncnn3Mat7channelEi.exit3601:                 ; preds = %_ZNK4ncnn3Mat7chann
   %i.kz = load i16, ptr %i.ky, align 2, !tbaa !24
   %i.la = getelementptr inbounds nuw i8, ptr %.11316, i64 38
   store i16 %i.kz, ptr %i.la, align 2, !tbaa !24
-  %i.lb = getelementptr inbounds [2 x i8], ptr %21, i64 %i.ah
+  %i.lb = getelementptr inbounds [2 x i8], ptr %24, i64 %i.ah
   %i.lc = load i16, ptr %i.lb, align 2, !tbaa !24
   %i.ld = getelementptr inbounds nuw i8, ptr %.11316, i64 40
   store i16 %i.lc, ptr %i.ld, align 2, !tbaa !24
@@ -471,7 +472,7 @@ _ZNK4ncnn3Mat7channelEi.exit3601:                 ; preds = %_ZNK4ncnn3Mat7chann
   %i.lf = load i16, ptr %i.le, align 2, !tbaa !24
   %i.lg = getelementptr inbounds nuw i8, ptr %.11316, i64 42
   store i16 %i.lf, ptr %i.lg, align 2, !tbaa !24
-  %i.lh = getelementptr inbounds [2 x i8], ptr %21, i64 %i.aj
+  %i.lh = getelementptr inbounds [2 x i8], ptr %24, i64 %i.aj
   %i.li = load i16, ptr %i.lh, align 2, !tbaa !24
   %i.lj = getelementptr inbounds nuw i8, ptr %.11316, i64 44
   store i16 %i.li, ptr %i.lj, align 2, !tbaa !24
@@ -479,7 +480,7 @@ _ZNK4ncnn3Mat7channelEi.exit3601:                 ; preds = %_ZNK4ncnn3Mat7chann
   %i.ll = load i16, ptr %i.lk, align 2, !tbaa !24
   %i.lm = getelementptr inbounds nuw i8, ptr %.11316, i64 46
   store i16 %i.ll, ptr %i.lm, align 2, !tbaa !24
-  %i.ln = getelementptr inbounds [2 x i8], ptr %21, i64 %i.al
+  %i.ln = getelementptr inbounds [2 x i8], ptr %24, i64 %i.al
   %i.lo = load i16, ptr %i.ln, align 2, !tbaa !24
   %i.lp = getelementptr inbounds nuw i8, ptr %.11316, i64 48
   store i16 %i.lo, ptr %i.lp, align 2, !tbaa !24
@@ -487,7 +488,7 @@ _ZNK4ncnn3Mat7channelEi.exit3601:                 ; preds = %_ZNK4ncnn3Mat7chann
   %i.lr = load i16, ptr %i.lq, align 2, !tbaa !24
   %i.ls = getelementptr inbounds nuw i8, ptr %.11316, i64 50
   store i16 %i.lr, ptr %i.ls, align 2, !tbaa !24
-  %i.lt = getelementptr inbounds [2 x i8], ptr %21, i64 %i.an
+  %i.lt = getelementptr inbounds [2 x i8], ptr %24, i64 %i.an
   %i.lu = load i16, ptr %i.lt, align 2, !tbaa !24
   %i.lv = getelementptr inbounds nuw i8, ptr %.11316, i64 52
   store i16 %i.lu, ptr %i.lv, align 2, !tbaa !24
@@ -495,7 +496,7 @@ _ZNK4ncnn3Mat7channelEi.exit3601:                 ; preds = %_ZNK4ncnn3Mat7chann
   %i.lx = load i16, ptr %i.lw, align 2, !tbaa !24
   %i.ly = getelementptr inbounds nuw i8, ptr %.11316, i64 54
   store i16 %i.lx, ptr %i.ly, align 2, !tbaa !24
-  %i.lz = getelementptr inbounds [2 x i8], ptr %21, i64 %i.ap
+  %i.lz = getelementptr inbounds [2 x i8], ptr %24, i64 %i.ap
   %i.ma = load i16, ptr %i.lz, align 2, !tbaa !24
   %i.mb = getelementptr inbounds nuw i8, ptr %.11316, i64 56
   store i16 %i.ma, ptr %i.mb, align 2, !tbaa !24
@@ -503,7 +504,7 @@ _ZNK4ncnn3Mat7channelEi.exit3601:                 ; preds = %_ZNK4ncnn3Mat7chann
   %i.md = load i16, ptr %i.mc, align 2, !tbaa !24
   %i.me = getelementptr inbounds nuw i8, ptr %.11316, i64 58
   store i16 %i.md, ptr %i.me, align 2, !tbaa !24
-  %i.mf = getelementptr inbounds [2 x i8], ptr %21, i64 %i.ar
+  %i.mf = getelementptr inbounds [2 x i8], ptr %24, i64 %i.ar
   %i.mg = load i16, ptr %i.mf, align 2, !tbaa !24
   %i.mh = getelementptr inbounds nuw i8, ptr %.11316, i64 60
   store i16 %i.mg, ptr %i.mh, align 2, !tbaa !24
@@ -906,7 +907,7 @@ _ZN4ncnn3MatD2Ev.exit3339:                        ; preds = %bb.i, %.thread1239,
   %i.bvc = insertelement <2 x i32> poison, i32 %i.j, i64 0
   %i.bvd = shufflevector <2 x i32> %i.bvc, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.bve = insertelement <2 x i32> poison, i32 %5, i64 0
-  %i.bvf = shufflevector <2 x i32> %i.bve, <2 x i32> poison, <2 x i32> zeroinitializer
+  %i.bvf = shufflevector <2 x i32> %i.bve, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.bvg = insertelement <2 x i32> poison, i32 %8, i64 0
   %i.bvh = shufflevector <2 x i32> %i.bvg, <2 x i32> poison, <2 x i32> zeroinitializer
   %i.bvi = insertelement <2 x i32> poison, i32 %i.j, i64 0
@@ -962,50 +963,51 @@ _ZNK4ncnn3Mat7channelEi.exit3595.lr.ph:           ; preds = %bb.n
 _ZNK4ncnn3Mat7channelEi.exit3595:                 ; preds = %_ZNK4ncnn3Mat7channelEi.exit3595.lr.ph, %_ZNK4ncnn3Mat7channelEi.exit3595
   %.171337 = phi ptr [ %.161348, %_ZNK4ncnn3Mat7channelEi.exit3595.lr.ph ], [ %i.bzj, %_ZNK4ncnn3Mat7channelEi.exit3595 ] ; 17 uses
   %.030541336 = phi i32 [ 0, %_ZNK4ncnn3Mat7channelEi.exit3595.lr.ph ], [ %i.bzk, %_ZNK4ncnn3Mat7channelEi.exit3595 ] ; 2 uses
-  %i.bwt = add nsw i32 %.030541336, %3            ; 2 uses
-  %i.bwu = add nsw i32 %i.bwt, 1
+  %i.bwt = add nsw i32 %.030541336, %3            ; 3 uses
+  %i.bwu = add nsw i32 %i.bwt, 1                  ; 2 uses
   %i.bwv = insertelement <2 x i32> poison, i32 %i.bwt, i64 0
   %i.bww = insertelement <2 x i32> %i.bwv, i32 %i.bwu, i64 1
-  %.frozen1547 = freeze <2 x i32> %i.bww          ; 2 uses
-  %i.bwx = sdiv <2 x i32> %.frozen1547, %i.ge     ; 2 uses
+  %i.bwx = sdiv <2 x i32> %i.bww, %i.ge
   %i.bwy = sext <2 x i32> %i.bwx to <2 x i64>
   %i.bwz = mul <2 x i64> %i.bws, %i.bwy           ; 2 uses
   %i.bxa = extractelement <2 x i64> %i.bwz, i64 0
   %i.bxb = getelementptr inbounds nuw i8, ptr %i.bwi, i64 %i.bxa
   %i.bxc = extractelement <2 x i64> %i.bwz, i64 1
   %i.bxd = getelementptr inbounds nuw i8, ptr %i.bwi, i64 %i.bxc
-  %24 = mul <2 x i32> %i.bwx, %i.ge
-  %.decomposed1548 = sub <2 x i32> %.frozen1547, %24 ; 3 uses
-  %i.bxe = sdiv <2 x i32> %.decomposed1548, %i.gg
-  %i.bxf = mul nsw <2 x i32> %i.bxe, %i.gi        ; 2 uses
-  %25 = extractelement <2 x i32> %i.bxf, i64 0
-  %26 = add nsw i32 %25, %i.bwn
-  %27 = sext i32 %26 to i64
-  %28 = mul i64 %i.bwo, %27
-  %29 = getelementptr inbounds nuw i8, ptr %i.bxb, i64 %28
-  %i.bxg = extractelement <2 x i32> %.decomposed1548, i64 1
-  %30 = srem i32 %i.bxg, %5
-  %31 = extractelement <2 x i32> %.decomposed1548, i64 0
-  %32 = srem i32 %31, %5
-  %33 = mul nsw i32 %32, %7
-  %i.bxh = add nsw i32 %33, %i.bwq
+  %25 = insertelement <2 x i32> poison, i32 %i.bwu, i64 0
+  %26 = insertelement <2 x i32> %25, i32 %i.bwt, i64 1
+  %27 = srem <2 x i32> %26, %i.ge
+  %.frozen1547 = freeze <2 x i32> %27             ; 2 uses
+  %i.bxe = sdiv <2 x i32> %.frozen1547, %i.gg     ; 2 uses
+  %i.bxf = mul <2 x i32> %i.bxe, %i.gg
+  %.decomposed1548 = sub <2 x i32> %.frozen1547, %i.bxf ; 2 uses
+  %28 = extractelement <2 x i32> %.decomposed1548, i64 1
+  %29 = mul nsw i32 %28, %7
+  %30 = add nsw i32 %29, %i.bwq
+  %31 = sext i32 %30 to i64
+  %i.bxg = extractelement <2 x i32> %.decomposed1548, i64 0
+  %32 = mul nsw i32 %i.bxg, %7
+  %33 = add nsw i32 %32, %i.bwq
+  %34 = mul nsw <2 x i32> %i.bxe, %i.gi           ; 2 uses
+  %35 = extractelement <2 x i32> %34, i64 1
+  %i.bxh = add nsw i32 %35, %i.bwn
   %i.bxi = sext i32 %i.bxh to i64
-  %34 = getelementptr inbounds [2 x i8], ptr %29, i64 %i.bxi ; 8 uses
-  %35 = mul nsw i32 %30, %7
-  %36 = add nsw i32 %35, %i.bwq
-  %i.bxj = extractelement <2 x i32> %i.bxf, i64 1
+  %36 = mul i64 %i.bwo, %i.bxi
+  %37 = getelementptr inbounds nuw i8, ptr %i.bxb, i64 %36
+  %38 = getelementptr inbounds [2 x i8], ptr %37, i64 %31 ; 8 uses
+  %i.bxj = extractelement <2 x i32> %34, i64 0
   %i.bxk = add nsw i32 %i.bxj, %i.bwn
   %i.bxl = sext i32 %i.bxk to i64
   %i.bxm = mul i64 %i.bwo, %i.bxl
   %i.bxn = getelementptr inbounds nuw i8, ptr %i.bxd, i64 %i.bxm
-  %i.bxo = sext i32 %36 to i64
+  %i.bxo = sext i32 %33 to i64
   %i.bxp = getelementptr inbounds [2 x i8], ptr %i.bxn, i64 %i.bxo ; 8 uses
-  %i.bxq = load i16, ptr %34, align 2, !tbaa !24
+  %i.bxq = load i16, ptr %38, align 2, !tbaa !24
   store i16 %i.bxq, ptr %.171337, align 2, !tbaa !24
   %i.bxr = load i16, ptr %i.bxp, align 2, !tbaa !24
   %i.bxs = getelementptr inbounds nuw i8, ptr %.171337, i64 2
   store i16 %i.bxr, ptr %i.bxs, align 2, !tbaa !24
-  %i.bxt = getelementptr inbounds [2 x i8], ptr %34, i64 %i.dy
+  %i.bxt = getelementptr inbounds [2 x i8], ptr %38, i64 %i.dy
   %i.bxu = load i16, ptr %i.bxt, align 2, !tbaa !24
   %i.bxv = getelementptr inbounds nuw i8, ptr %.171337, i64 4
   store i16 %i.bxu, ptr %i.bxv, align 2, !tbaa !24
@@ -1013,7 +1015,7 @@ _ZNK4ncnn3Mat7channelEi.exit3595:                 ; preds = %_ZNK4ncnn3Mat7chann
   %i.bxx = load i16, ptr %i.bxw, align 2, !tbaa !24
   %i.bxy = getelementptr inbounds nuw i8, ptr %.171337, i64 6
   store i16 %i.bxx, ptr %i.bxy, align 2, !tbaa !24
-  %i.bxz = getelementptr inbounds [2 x i8], ptr %34, i64 %i.ea
+  %i.bxz = getelementptr inbounds [2 x i8], ptr %38, i64 %i.ea
   %i.bya = load i16, ptr %i.bxz, align 2, !tbaa !24
   %i.byb = getelementptr inbounds nuw i8, ptr %.171337, i64 8
   store i16 %i.bya, ptr %i.byb, align 2, !tbaa !24
@@ -1021,7 +1023,7 @@ _ZNK4ncnn3Mat7channelEi.exit3595:                 ; preds = %_ZNK4ncnn3Mat7chann
   %i.byd = load i16, ptr %i.byc, align 2, !tbaa !24
   %i.bye = getelementptr inbounds nuw i8, ptr %.171337, i64 10
   store i16 %i.byd, ptr %i.bye, align 2, !tbaa !24
-  %i.byf = getelementptr inbounds [2 x i8], ptr %34, i64 %i.ec
+  %i.byf = getelementptr inbounds [2 x i8], ptr %38, i64 %i.ec
   %i.byg = load i16, ptr %i.byf, align 2, !tbaa !24
   %i.byh = getelementptr inbounds nuw i8, ptr %.171337, i64 12
   store i16 %i.byg, ptr %i.byh, align 2, !tbaa !24
@@ -1029,7 +1031,7 @@ _ZNK4ncnn3Mat7channelEi.exit3595:                 ; preds = %_ZNK4ncnn3Mat7chann
   %i.byj = load i16, ptr %i.byi, align 2, !tbaa !24
   %i.byk = getelementptr inbounds nuw i8, ptr %.171337, i64 14
   store i16 %i.byj, ptr %i.byk, align 2, !tbaa !24
-  %i.byl = getelementptr inbounds [2 x i8], ptr %34, i64 %i.ee
+  %i.byl = getelementptr inbounds [2 x i8], ptr %38, i64 %i.ee
   %i.bym = load i16, ptr %i.byl, align 2, !tbaa !24
   %i.byn = getelementptr inbounds nuw i8, ptr %.171337, i64 16
   store i16 %i.bym, ptr %i.byn, align 2, !tbaa !24
@@ -1037,7 +1039,7 @@ _ZNK4ncnn3Mat7channelEi.exit3595:                 ; preds = %_ZNK4ncnn3Mat7chann
   %i.byp = load i16, ptr %i.byo, align 2, !tbaa !24
   %i.byq = getelementptr inbounds nuw i8, ptr %.171337, i64 18
   store i16 %i.byp, ptr %i.byq, align 2, !tbaa !24
-  %i.byr = getelementptr inbounds [2 x i8], ptr %34, i64 %i.eg
+  %i.byr = getelementptr inbounds [2 x i8], ptr %38, i64 %i.eg
   %i.bys = load i16, ptr %i.byr, align 2, !tbaa !24
   %i.byt = getelementptr inbounds nuw i8, ptr %.171337, i64 20
   store i16 %i.bys, ptr %i.byt, align 2, !tbaa !24
@@ -1045,7 +1047,7 @@ _ZNK4ncnn3Mat7channelEi.exit3595:                 ; preds = %_ZNK4ncnn3Mat7chann
   %i.byv = load i16, ptr %i.byu, align 2, !tbaa !24
   %i.byw = getelementptr inbounds nuw i8, ptr %.171337, i64 22
   store i16 %i.byv, ptr %i.byw, align 2, !tbaa !24
-  %i.byx = getelementptr inbounds [2 x i8], ptr %34, i64 %i.ei
+  %i.byx = getelementptr inbounds [2 x i8], ptr %38, i64 %i.ei
   %i.byy = load i16, ptr %i.byx, align 2, !tbaa !24
   %i.byz = getelementptr inbounds nuw i8, ptr %.171337, i64 24
   store i16 %i.byy, ptr %i.byz, align 2, !tbaa !24
@@ -1053,7 +1055,7 @@ _ZNK4ncnn3Mat7channelEi.exit3595:                 ; preds = %_ZNK4ncnn3Mat7chann
   %i.bzb = load i16, ptr %i.bza, align 2, !tbaa !24
   %i.bzc = getelementptr inbounds nuw i8, ptr %.171337, i64 26
   store i16 %i.bzb, ptr %i.bzc, align 2, !tbaa !24
-  %i.bzd = getelementptr inbounds [2 x i8], ptr %34, i64 %i.ek
+  %i.bzd = getelementptr inbounds [2 x i8], ptr %38, i64 %i.ek
   %i.bze = load i16, ptr %i.bzd, align 2, !tbaa !24
   %i.bzf = getelementptr inbounds nuw i8, ptr %.171337, i64 28
   store i16 %i.bze, ptr %i.bzf, align 2, !tbaa !24
@@ -1456,50 +1458,51 @@ _ZNK4ncnn3Mat7channelEi.exit3589.lr.ph:           ; preds = %bb.ab
 _ZNK4ncnn3Mat7channelEi.exit3589:                 ; preds = %_ZNK4ncnn3Mat7channelEi.exit3589.lr.ph, %_ZNK4ncnn3Mat7channelEi.exit3589
   %.331360 = phi ptr [ %.321371, %_ZNK4ncnn3Mat7channelEi.exit3589.lr.ph ], [ %i.dmg, %_ZNK4ncnn3Mat7channelEi.exit3589 ] ; 9 uses
   %.027651359 = phi i32 [ 0, %_ZNK4ncnn3Mat7channelEi.exit3589.lr.ph ], [ %i.dmh, %_ZNK4ncnn3Mat7channelEi.exit3589 ] ; 2 uses
-  %i.dko = add nsw i32 %.027651359, %3            ; 2 uses
-  %i.dkp = add nsw i32 %i.dko, 1
+  %i.dko = add nsw i32 %.027651359, %3            ; 3 uses
+  %i.dkp = add nsw i32 %i.dko, 1                  ; 2 uses
   %i.dkq = insertelement <2 x i32> poison, i32 %i.dko, i64 0
   %i.dkr = insertelement <2 x i32> %i.dkq, i32 %i.dkp, i64 1
-  %.frozen1551 = freeze <2 x i32> %i.dkr          ; 2 uses
-  %i.dks = sdiv <2 x i32> %.frozen1551, %i.bvd    ; 2 uses
+  %i.dks = sdiv <2 x i32> %i.dkr, %i.bvd
   %i.dkt = sext <2 x i32> %i.dks to <2 x i64>
   %i.dku = mul <2 x i64> %i.dkn, %i.dkt           ; 2 uses
   %i.dkv = extractelement <2 x i64> %i.dku, i64 0
   %i.dkw = getelementptr inbounds nuw i8, ptr %i.dkd, i64 %i.dkv
   %i.dkx = extractelement <2 x i64> %i.dku, i64 1
   %i.dky = getelementptr inbounds nuw i8, ptr %i.dkd, i64 %i.dkx
-  %37 = mul <2 x i32> %i.dks, %i.bvd
-  %.decomposed1552 = sub <2 x i32> %.frozen1551, %37 ; 3 uses
-  %i.dkz = sdiv <2 x i32> %.decomposed1552, %i.bvf
-  %i.dla = mul nsw <2 x i32> %i.dkz, %i.bvh       ; 2 uses
-  %38 = extractelement <2 x i32> %i.dla, i64 0
-  %39 = add nsw i32 %38, %i.dki
-  %40 = sext i32 %39 to i64
-  %41 = mul i64 %i.dkj, %40
-  %42 = getelementptr inbounds nuw i8, ptr %i.dkw, i64 %41
-  %i.dlb = extractelement <2 x i32> %.decomposed1552, i64 1
-  %43 = srem i32 %i.dlb, %5
-  %44 = extractelement <2 x i32> %.decomposed1552, i64 0
-  %45 = srem i32 %44, %5
-  %46 = mul nsw i32 %45, %7
-  %i.dlc = add nsw i32 %46, %i.dkl
+  %39 = insertelement <2 x i32> poison, i32 %i.dkp, i64 0
+  %40 = insertelement <2 x i32> %39, i32 %i.dko, i64 1
+  %41 = srem <2 x i32> %40, %i.bvd
+  %.frozen1551 = freeze <2 x i32> %41             ; 2 uses
+  %i.dkz = sdiv <2 x i32> %.frozen1551, %i.bvf    ; 2 uses
+  %i.dla = mul <2 x i32> %i.dkz, %i.bvf
+  %.decomposed1552 = sub <2 x i32> %.frozen1551, %i.dla ; 2 uses
+  %42 = extractelement <2 x i32> %.decomposed1552, i64 1
+  %43 = mul nsw i32 %42, %7
+  %44 = add nsw i32 %43, %i.dkl
+  %45 = sext i32 %44 to i64
+  %i.dlb = extractelement <2 x i32> %.decomposed1552, i64 0
+  %46 = mul nsw i32 %i.dlb, %7
+  %47 = add nsw i32 %46, %i.dkl
+  %48 = mul nsw <2 x i32> %i.dkz, %i.bvh          ; 2 uses
+  %49 = extractelement <2 x i32> %48, i64 1
+  %i.dlc = add nsw i32 %49, %i.dki
   %i.dld = sext i32 %i.dlc to i64
-  %47 = getelementptr inbounds [2 x i8], ptr %42, i64 %i.dld ; 4 uses
-  %48 = mul nsw i32 %43, %7
-  %49 = add nsw i32 %48, %i.dkl
-  %i.dle = extractelement <2 x i32> %i.dla, i64 1
+  %50 = mul i64 %i.dkj, %i.dld
+  %51 = getelementptr inbounds nuw i8, ptr %i.dkw, i64 %50
+  %52 = getelementptr inbounds [2 x i8], ptr %51, i64 %45 ; 4 uses
+  %i.dle = extractelement <2 x i32> %48, i64 0
   %i.dlf = add nsw i32 %i.dle, %i.dki
   %i.dlg = sext i32 %i.dlf to i64
   %i.dlh = mul i64 %i.dkj, %i.dlg
   %i.dli = getelementptr inbounds nuw i8, ptr %i.dky, i64 %i.dlh
-  %i.dlj = sext i32 %49 to i64
+  %i.dlj = sext i32 %47 to i64
   %i.dlk = getelementptr inbounds [2 x i8], ptr %i.dli, i64 %i.dlj ; 4 uses
-  %i.dll = load i16, ptr %47, align 2, !tbaa !24
+  %i.dll = load i16, ptr %52, align 2, !tbaa !24
   store i16 %i.dll, ptr %.331360, align 2, !tbaa !24
   %i.dlm = load i16, ptr %i.dlk, align 2, !tbaa !24
   %i.dln = getelementptr inbounds nuw i8, ptr %.331360, i64 2
   store i16 %i.dlm, ptr %i.dln, align 2, !tbaa !24
-  %i.dlo = getelementptr inbounds [2 x i8], ptr %47, i64 %i.btu
+  %i.dlo = getelementptr inbounds [2 x i8], ptr %52, i64 %i.btu
   %i.dlp = load i16, ptr %i.dlo, align 2, !tbaa !24
   %i.dlq = getelementptr inbounds nuw i8, ptr %.331360, i64 4
   store i16 %i.dlp, ptr %i.dlq, align 2, !tbaa !24
@@ -1507,7 +1510,7 @@ _ZNK4ncnn3Mat7channelEi.exit3589:                 ; preds = %_ZNK4ncnn3Mat7chann
   %i.dls = load i16, ptr %i.dlr, align 2, !tbaa !24
   %i.dlt = getelementptr inbounds nuw i8, ptr %.331360, i64 6
   store i16 %i.dls, ptr %i.dlt, align 2, !tbaa !24
-  %i.dlu = getelementptr inbounds [2 x i8], ptr %47, i64 %i.btw
+  %i.dlu = getelementptr inbounds [2 x i8], ptr %52, i64 %i.btw
   %i.dlv = load i16, ptr %i.dlu, align 2, !tbaa !24
   %i.dlw = getelementptr inbounds nuw i8, ptr %.331360, i64 8
   store i16 %i.dlv, ptr %i.dlw, align 2, !tbaa !24
@@ -1515,7 +1518,7 @@ _ZNK4ncnn3Mat7channelEi.exit3589:                 ; preds = %_ZNK4ncnn3Mat7chann
   %i.dly = load i16, ptr %i.dlx, align 2, !tbaa !24
   %i.dlz = getelementptr inbounds nuw i8, ptr %.331360, i64 10
   store i16 %i.dly, ptr %i.dlz, align 2, !tbaa !24
-  %i.dma = getelementptr inbounds [2 x i8], ptr %47, i64 %i.bty
+  %i.dma = getelementptr inbounds [2 x i8], ptr %52, i64 %i.bty
   %i.dmb = load i16, ptr %i.dma, align 2, !tbaa !24
   %i.dmc = getelementptr inbounds nuw i8, ptr %.331360, i64 12
   store i16 %i.dmb, ptr %i.dmc, align 2, !tbaa !24
