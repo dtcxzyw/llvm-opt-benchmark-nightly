@@ -204,10 +204,9 @@ ZL_PartitionEncodeU32_canUseHybridLUT.exit.thread118: ; preds = %ZL_PartitionEnc
   call void @ZL_PartitionParams_computeBasesU64(ptr noundef nonnull %6, ptr noundef nonnull %i.c) #8
   call void @ZL_PartitionParams_computeBits(ptr noundef nonnull %6, ptr noundef nonnull %i.d) #8
   %i.lp = call i64 @ZL_PartitionParams_getNumTrailingZeros(ptr noundef nonnull %6) #8 ; 3 uses
-  %i.lq = trunc i64 %i.lp to i32                  ; 5 uses
-  %14 = lshr i32 65536, %i.lq
-  %15 = icmp ugt i32 %i.lq, 16
-  %narrow.i = select i1 %15, i32 1, i32 %14
+  %i.lq = trunc i64 %i.lp to i32                  ; 4 uses
+  %14 = call i32 @llvm.umin.i32(i32 %i.lq, i32 16)
+  %narrow.i = lshr i32 65536, %14
   %i.lr = zext nneg i32 %narrow.i to i64          ; 6 uses
   %i.ls = call ptr %.val28(ptr noundef %.val27, i64 noundef range(i64 0, 65537) %i.lr) #8, !inline_history !23 ; 7 uses
   %i.lt = icmp eq ptr %i.ls, null
@@ -608,6 +607,9 @@ declare i64 @llvm.cttz.i64(i64, i1 immarg) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #6
