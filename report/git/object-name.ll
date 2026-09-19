@@ -204,7 +204,7 @@ bb.ay:                                            ; preds = %bb.ax
 bb.az:                                            ; preds = %bb.ax
   %i.ex = trunc nuw nsw i64 %indvars.iv.i to i32  ; 7 uses
   %i.ey = trunc nuw i64 %i.et to i32              ; 2 uses
-  %i.ez = sub nsw i32 %2, %i.ex                   ; 2 uses
+  %i.ez = sub nuw nsw i32 %2, %i.ex               ; 2 uses
   %.not.i.i.i = icmp slt i32 %i.ez, 11
   br i1 %.not.i.i.i, label %.thread.i.i, label %bb.ba
 
@@ -223,14 +223,14 @@ upstream_mark.exit.i:                             ; preds = %.thread.i.i
   br i1 %.not.i.i142.i, label %.thread.i, label %push_mark.exit.i
 
 .thread.i:                                        ; preds = %upstream_mark.exit.i
-  %i.fc = sub nsw i32 %i.ef, %i.ey
+  %i.fc = sub nuw nsw i32 %i.ef, %i.ey
   br label %upstream_mark.exit.thread.i
 
 push_mark.exit.i:                                 ; preds = %upstream_mark.exit.i
   %i.fd = call i32 @strncasecmp(ptr noundef nonnull readonly %i.en, ptr noundef nonnull @.str.22, i64 noundef 7) #17
   %.fr.i = freeze i32 %i.fd
   %.not16.i.i143.not.i = icmp eq i32 %.fr.i, 0    ; 2 uses
-  %i.fe = sub nsw i32 %i.ef, %i.ey
+  %i.fe = sub nuw nsw i32 %i.ef, %i.ey
   %spec.select132 = select i1 %.not16.i.i143.not.i, i32 0, i32 %i.fe
   %spec.select133 = select i1 %.not16.i.i143.not.i, i32 %2, i32 %i.ex
   br label %upstream_mark.exit.thread.i

@@ -204,8 +204,8 @@ _ZNSt6vectorISt10unique_ptrIN8LightGBM4TreeESt14default_deleteIS2_EESaIS5_EED2Ev
   %i.ay = add i32 %i.ax, 2531011                  ; 2 uses
   %i.az = lshr i32 %i.ay, 16
   %i.ba = and i32 %i.az, 32767
-  %i.bb = trunc nuw i64 %indvars.iv.next116 to i32
-  %i.bc = sub nsw i32 %.sroa.speculated76, %i.bb
+  %i.bb = trunc i64 %indvars.iv.next116 to i32
+  %i.bc = sub i32 %.sroa.speculated76, %i.bb
   %i.bd = srem i32 %i.ba, %i.bc
   %i.be = zext nneg i32 %i.bd to i64
   %i.bf = getelementptr inbounds nuw [4 x i8], ptr %.sroa.063.0150, i64 %indvars.iv115 ; 2 uses

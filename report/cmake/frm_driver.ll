@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.d
   %i.w = load i32, ptr %i.v, align 8, !tbaa !31
   %i.x = sub nsw i32 %i.w, %spec.select29.i
   store i32 %i.x, ptr %i.v, align 8, !tbaa !31
-  %i.y = sub nsw i32 %i.i, %spec.select29.i
+  %i.y = sub nuw nsw i32 %i.i, %spec.select29.i
   br label %VSC_Generic.exit.sink.split
 
 VSC_Generic.exit.sink.split:                      ; preds = %bb.e, %bb.c
@@ -258,7 +258,7 @@ bb.e:                                             ; preds = %bb.d
   %i.w = load i32, ptr %i.v, align 8, !tbaa !31
   %i.x = sub nsw i32 %i.w, %spec.select29.i
   store i32 %i.x, ptr %i.v, align 8, !tbaa !31
-  %i.y = sub nsw i32 %i.i, %spec.select29.i
+  %i.y = sub nuw nsw i32 %i.i, %spec.select29.i
   br label %VSC_Generic.exit.sink.split
 
 VSC_Generic.exit.sink.split:                      ; preds = %bb.e, %bb.c
@@ -316,7 +316,7 @@ bb.e:                                             ; preds = %bb.d
   %i.y = load i32, ptr %i.x, align 8, !tbaa !31
   %i.z = sub nsw i32 %i.y, %spec.select29.i
   store i32 %i.z, ptr %i.x, align 8, !tbaa !31
-  %i.aa = sub nsw i32 %i.k, %spec.select29.i
+  %i.aa = sub nuw nsw i32 %i.k, %spec.select29.i
   br label %VSC_Generic.exit.sink.split
 
 VSC_Generic.exit.sink.split:                      ; preds = %bb.e, %bb.c
@@ -374,7 +374,7 @@ bb.e:                                             ; preds = %bb.d
   %i.x = load i32, ptr %i.w, align 8, !tbaa !31
   %i.y = sub nsw i32 %i.x, %spec.select29.i
   store i32 %i.y, ptr %i.w, align 8, !tbaa !31
-  %i.z = sub nsw i32 %i.j, %spec.select29.i
+  %i.z = sub nuw nsw i32 %i.j, %spec.select29.i
   br label %VSC_Generic.exit.sink.split
 
 VSC_Generic.exit.sink.split:                      ; preds = %bb.e, %bb.c
@@ -485,7 +485,7 @@ bb.e:                                             ; preds = %bb.d
   %i.w = load i32, ptr %i.v, align 4, !tbaa !32
   %i.x = sub nsw i32 %i.w, %spec.select29.i
   store i32 %i.x, ptr %i.v, align 4, !tbaa !32
-  %i.y = sub nsw i32 %i.i, %spec.select29.i
+  %i.y = sub nuw nsw i32 %i.i, %spec.select29.i
   br label %HSC_Generic.exit.sink.split
 
 HSC_Generic.exit.sink.split:                      ; preds = %bb.e, %bb.c
@@ -541,7 +541,7 @@ bb.e:                                             ; preds = %bb.d
   %i.w = load i32, ptr %i.v, align 4, !tbaa !32
   %i.x = sub nsw i32 %i.w, %spec.select29.i
   store i32 %i.x, ptr %i.v, align 4, !tbaa !32
-  %i.y = sub nsw i32 %i.i, %spec.select29.i
+  %i.y = sub nuw nsw i32 %i.i, %spec.select29.i
   br label %HSC_Generic.exit.sink.split
 
 HSC_Generic.exit.sink.split:                      ; preds = %bb.e, %bb.c
@@ -599,7 +599,7 @@ bb.e:                                             ; preds = %bb.d
   %i.y = load i32, ptr %i.x, align 4, !tbaa !32
   %i.z = sub nsw i32 %i.y, %spec.select29.i
   store i32 %i.z, ptr %i.x, align 4, !tbaa !32
-  %i.aa = sub nsw i32 %i.k, %spec.select29.i
+  %i.aa = sub nuw nsw i32 %i.k, %spec.select29.i
   br label %HSC_Generic.exit.sink.split
 
 HSC_Generic.exit.sink.split:                      ; preds = %bb.e, %bb.c
@@ -657,7 +657,7 @@ bb.e:                                             ; preds = %bb.d
   %i.x = load i32, ptr %i.w, align 4, !tbaa !32
   %i.y = sub nsw i32 %i.x, %spec.select29.i
   store i32 %i.y, ptr %i.w, align 4, !tbaa !32
-  %i.z = sub nsw i32 %i.j, %spec.select29.i
+  %i.z = sub nuw nsw i32 %i.j, %spec.select29.i
   br label %HSC_Generic.exit.sink.split
 
 HSC_Generic.exit.sink.split:                      ; preds = %bb.e, %bb.c

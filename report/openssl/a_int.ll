@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.a, %asn1_get_uin
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: write) uwtable
-define i32 @ossl_i2c_uint64_int(ptr nofree noundef writeonly captures(address_is_null) %0, i64 noundef %1, i32 noundef %2) local_unnamed_addr #3 {
+define range(i32 0, 11) i32 @ossl_i2c_uint64_int(ptr nofree noundef writeonly captures(address_is_null) %0, i64 noundef %1, i32 noundef %2) local_unnamed_addr #3 {
 bb.a:
   %i.a = alloca [8 x i8], align 1                 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
@@ -214,7 +214,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.b, %bb.a
   %indvar = phi i64 [ %indvar.next, %bb.b ], [ 0, %bb.a ] ; 5 uses
   %.04.i = phi i64 [ %i.e, %bb.b ], [ %1, %bb.a ] ; 2 uses
-  %.0.i = phi i64 [ %i.c, %bb.b ], [ 8, %bb.a ]   ; 3 uses
+  %.0.i = phi i64 [ %i.c, %bb.b ], [ 8, %bb.a ]   ; 4 uses
   %i.b = trunc i64 %.04.i to i8                   ; 4 uses
   %i.c = add nsw i64 %.0.i, -1                    ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.c
@@ -226,7 +226,7 @@ bb.b:                                             ; preds = %bb.b, %bb.a
 
 asn1_put_uint64.exit:                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.c ; 2 uses
-  %i.g = sub nsw i64 9, %.0.i                     ; 6 uses
+  %i.g = sub nsw i64 9, %.0.i                     ; 5 uses
   %i.h = icmp eq i32 %2, 0
   %i.i = icmp slt i8 %i.b, 0
   br i1 %i.h, label %bb.e, label %bb.c
@@ -240,7 +240,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.k, label %.preheader.i, label %bb.e
 
 .preheader.i:                                     ; preds = %bb.d
-  %3 = icmp ugt i64 %i.g, 1
+  %3 = icmp ult i64 %.0.i, 8
   br i1 %3, label %.lr.ph.i.preheader, label %._crit_edge.i
 
 .lr.ph.i.preheader:                               ; preds = %.preheader.i
@@ -368,8 +368,8 @@ bb.e:                                             ; preds = %._crit_edge.i, %bb.
   br i1 %.not16.i.i.1, label %i2c_ibuf.exit, label %.lr.ph.i.i, !llvm.loop !0
 
 i2c_ibuf.exit:                                    ; preds = %.lr.ph.i.i.prol.loopexit, %.lr.ph.i.i, %bb.e
-  %i.bj = add i64 %i.g, %.139.i
-  %i.bk = trunc i64 %i.bj to i32
+  %i.bj = add nuw nsw i64 %i.g, %.139.i
+  %i.bk = trunc nuw nsw i64 %i.bj to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   ret i32 %i.bk
 }
