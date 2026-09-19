@@ -205,8 +205,8 @@ bb.f:                                             ; preds = %trace_pcnet_init.ex
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %.077 = phi i32 [ %i.s, %bb.e ], [ %i.am, %bb.f ] ; 4 uses
-  %.076 = phi i32 [ %i.w, %bb.e ], [ %i.an, %bb.f ] ; 4 uses
+  %.077 = phi i32 [ %i.s, %bb.e ], [ %i.am, %bb.f ] ; 3 uses
+  %.076 = phi i32 [ %i.w, %bb.e ], [ %i.an, %bb.f ] ; 3 uses
   %.074 = phi i32 [ %i.aa, %bb.e ], [ %i.ao, %bb.f ] ; 2 uses
   %.0 = phi i32 [ %i.ac, %bb.e ], [ %i.ap, %bb.f ] ; 2 uses
   %i.aq = phi <8 x i16> [ %i.y, %bb.e ], [ %i.ah, %bb.f ]
@@ -230,18 +230,16 @@ bb.j:                                             ; preds = %bb.i
   br label %trace_pcnet_rlen_tlen.exit
 
 trace_pcnet_rlen_tlen.exit:                       ; preds = %bb.g, %bb.h, %bb.i, %bb.j
-  %3 = icmp samesign ult i32 %.077, 9
-  %i.av = shl nuw nsw i32 1, %.077
-  %i.aw = trunc nuw i32 %i.av to i16
-  %4 = select i1 %3, i16 %i.aw, i16 512           ; 3 uses
+  %3 = call i32 @llvm.umin.i32(i32 %.077, i32 9)
+  %i.av = shl nuw nsw i32 1, %3                   ; 2 uses
+  %i.aw = trunc nuw nsw i32 %i.av to i16          ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 8420
-  store i16 %4, ptr %i.ax, align 4
-  %5 = icmp samesign ult i32 %.076, 9
-  %i.ay = shl nuw nsw i32 1, %.076
-  %i.az = trunc nuw i32 %i.ay to i16
-  %6 = select i1 %5, i16 %i.az, i16 512           ; 3 uses
+  store i16 %i.aw, ptr %i.ax, align 4
+  %4 = call i32 @llvm.umin.i32(i32 %.076, i32 9)
+  %i.ay = shl nuw nsw i32 1, %4                   ; 2 uses
+  %i.az = trunc nuw nsw i32 %i.ay to i16          ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 8424
-  store i16 %6, ptr %i.ba, align 4
+  store i16 %i.az, ptr %i.ba, align 4
   %i.bb = shl nuw nsw i32 %.076, 12
   %i.bc = shl nuw nsw i32 %.077, 8
   %i.bd = or i32 %i.bb, %i.bc
@@ -274,14 +272,12 @@ bb.l:                                             ; preds = %trace_pcnet_rlen_tl
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 8248
   store i32 %i.br, ptr %i.bt, align 8
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 8412
-  store i16 %4, ptr %i.bu, align 4
+  store i16 %i.aw, ptr %i.bu, align 4
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 8416
-  store i16 %6, ptr %i.bv, align 8
+  store i16 %i.az, ptr %i.bv, align 8
   %i.bw = lshr i16 %i.bi, 8
   %.lobit = and i16 %i.bw, 1
-  %7 = zext nneg i16 %.lobit to i32
-  %8 = zext i16 %4 to i32
-  %i.bx = zext i16 %6 to i32
+  %i.bx = zext nneg i16 %.lobit to i32
   %i.by = load i32, ptr @trace_events_enabled_count, align 4
   %.not.i85 = icmp eq i32 %i.by, 0
   br i1 %.not.i85, label %trace_pcnet_ss32_rdra_tdra.exit, label %bb.m, !prof !11
@@ -298,7 +294,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not6.i, label %trace_pcnet_ss32_rdra_tdra.exit, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.20, ptr noundef nonnull %0, i32 noundef range(i32 0, 2) %7, i32 noundef %.074.sink, i32 noundef range(i32 0, 65536) %8, i32 noundef %i.br, i32 noundef range(i32 0, 65536) %i.bx) #10
+  call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.20, ptr noundef nonnull %0, i32 noundef range(i32 0, 2) %i.bx, i32 noundef %.074.sink, i32 noundef range(i32 0, 65536) %i.av, i32 noundef %i.br, i32 noundef range(i32 0, 65536) %i.ay) #10
   br label %trace_pcnet_ss32_rdra_tdra.exit
 
 trace_pcnet_ss32_rdra_tdra.exit:                  ; preds = %bb.l, %bb.m, %bb.n, %bb.o
