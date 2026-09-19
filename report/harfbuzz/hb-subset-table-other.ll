@@ -205,12 +205,12 @@ bb.a:
   br i1 %i.s, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.t = add i32 %.02856, -1                      ; 3 uses
+  %i.t = add i32 %.02856, -1                      ; 2 uses
   %i.u = icmp ugt i32 %i.t, 1
   br i1 %i.u, label %.lr.ph, label %.critedge, !llvm.loop !2729
 
 .critedge:                                        ; preds = %.lr.ph, %bb.b, %bb.a
-  %.028.lcssa = phi i32 [ %.sroa.speculated, %bb.a ], [ %i.t, %bb.b ], [ %.02856, %.lr.ph ] ; 2 uses
+  %.028.lcssa = phi i32 [ %.sroa.speculated, %bb.a ], [ 1, %bb.b ], [ %.02856, %.lr.ph ] ; 2 uses
   %i.v = load ptr, ptr %i.e, align 8, !tbaa !167  ; 3 uses
   %i.w = getelementptr i8, ptr %i.v, i64 196
   %.val = load i32, ptr %i.w, align 4, !tbaa !182
@@ -613,12 +613,12 @@ bb.a:
   br i1 %i.s, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.t = add i32 %.02856, -1                      ; 3 uses
+  %i.t = add i32 %.02856, -1                      ; 2 uses
   %i.u = icmp ugt i32 %i.t, 1
   br i1 %i.u, label %.lr.ph, label %.critedge, !llvm.loop !2767
 
 .critedge:                                        ; preds = %.lr.ph, %bb.b, %bb.a
-  %.028.lcssa = phi i32 [ %.sroa.speculated, %bb.a ], [ %i.t, %bb.b ], [ %.02856, %.lr.ph ] ; 2 uses
+  %.028.lcssa = phi i32 [ %.sroa.speculated, %bb.a ], [ 1, %bb.b ], [ %.02856, %.lr.ph ] ; 2 uses
   %i.v = load ptr, ptr %i.e, align 8, !tbaa !167  ; 3 uses
   %i.w = getelementptr i8, ptr %i.v, i64 196
   %.val = load i32, ptr %i.w, align 4, !tbaa !182
