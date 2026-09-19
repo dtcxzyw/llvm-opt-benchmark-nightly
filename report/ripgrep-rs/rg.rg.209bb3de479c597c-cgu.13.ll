@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ripgrep-rs/original/rg.rg.209bb3de479c597c-cgu.13?download=true
 inline.NumInlined: 887
 inline.NumDeleted: 421
-loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_RNvXsZ_NtCsexYYUdYSQU6_5alloc6stringNtB5_6StringNtNtCskKLDkoKarTP_4core3fmt5Write9write_str:bb.a
   store i64 %i.h, ptr %i.a, align 8, !dbg !13315, !alias.scope !13306, !noalias !13302
   ret i1 false, !dbg !13317
@@ -204,24 +204,51 @@ bb.b:                                             ; preds = %bb.a
 _RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i.lr.ph: ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !13822), !dbg !13914
   tail call void @llvm.experimental.noalias.scope.decl(metadata !13823), !dbg !13914
-  %i.f = load i8, ptr %0, align 1, !dbg !13915, !alias.scope !13822, !noalias !13823, !noundef !413 ; 2 uses
+  %i.f = load i8, ptr %0, align 1, !dbg !13915, !alias.scope !13822, !noalias !13823, !noundef !413 ; 5 uses
   %i.g = add nsw i64 %1, -1, !dbg !13916          ; 2 uses
-  %i.h = add nsw i64 %1, -4, !dbg !13917
-  br label %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i, !dbg !13918
+  %i.h = add nsw i64 %1, -4, !dbg !13917          ; 3 uses
+  %4 = add nsw i64 %1, -1, !dbg !13918            ; 3 uses
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 %4, !dbg !13919
+  %6 = load i8, ptr %5, align 1, !dbg !13919, !alias.scope !13822, !noalias !13834, !noundef !413 ; 2 uses
+  %.not.i.not.i.i = icmp eq i8 %6, %i.f, !dbg !13919
+  br i1 %.not.i.not.i.i, label %7, label %bb.d, !dbg !13920
 
-bb.c:                                             ; preds = %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i
-  %i.i = icmp ult i64 %i.h, %i.j, !dbg !13919
-  br i1 %i.i, label %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i, label %_RNvNtNtCskKLDkoKarTP_4core3str7pattern13simd_contains.exit, !dbg !13918
+7:                                                ; preds = %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i.lr.ph
+  %8 = icmp samesign ult i64 %i.h, %4, !dbg !13921
+  br i1 %8, label %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i.1, label %_RNvNtNtCskKLDkoKarTP_4core3str7pattern13simd_contains.exit, !dbg !13922
 
-_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i: ; preds = %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i.lr.ph, %bb.c
-  %4 = phi i64 [ %1, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i.lr.ph ], [ %i.j, %bb.c ]
-  %i.j = add nsw i64 %4, -1, !dbg !13920          ; 9 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %i.j, !dbg !13921
-  %i.l = load i8, ptr %i.k, align 1, !dbg !13921, !alias.scope !13822, !noalias !13835, !noundef !413 ; 2 uses
-  %.not.i.not.i.i.a = icmp eq i8 %i.l, %i.f, !dbg !13921
-  br i1 %.not.i.not.i.i.a, label %bb.c, label %bb.d, !dbg !13922
+_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i.1: ; preds = %7
+  %9 = add nsw i64 %1, -2, !dbg !13918            ; 3 uses
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 %9, !dbg !13919
+  %11 = load i8, ptr %10, align 1, !dbg !13919, !alias.scope !13822, !noalias !13834, !noundef !413 ; 2 uses
+  %.not.i.not.i.i.1 = icmp eq i8 %11, %i.f, !dbg !13919
+  br i1 %.not.i.not.i.i.1, label %12, label %bb.d, !dbg !13920
 
-bb.d:                                             ; preds = %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i
+12:                                               ; preds = %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i.1
+  %13 = icmp samesign ult i64 %i.h, %9, !dbg !13921
+  br i1 %13, label %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i.2, label %_RNvNtNtCskKLDkoKarTP_4core3str7pattern13simd_contains.exit, !dbg !13922
+
+_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i.2: ; preds = %12
+  %14 = add nsw i64 %1, -3, !dbg !13918           ; 3 uses
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 %14, !dbg !13919
+  %16 = load i8, ptr %15, align 1, !dbg !13919, !alias.scope !13822, !noalias !13834, !noundef !413 ; 2 uses
+  %.not.i.not.i.i.2 = icmp eq i8 %16, %i.f, !dbg !13919
+  br i1 %.not.i.not.i.i.2, label %bb.c, label %bb.d, !dbg !13920
+
+bb.c:                                             ; preds = %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i.2
+  %i.i = icmp samesign ult i64 %i.h, %14, !dbg !13921
+  br i1 %i.i, label %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i, label %_RNvNtNtCskKLDkoKarTP_4core3str7pattern13simd_contains.exit, !dbg !13922
+
+_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i: ; preds = %bb.c
+  %i.j = add nsw i64 %1, -4, !dbg !13918          ; 2 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %i.j, !dbg !13919
+  %i.l = load i8, ptr %i.k, align 1, !dbg !13919, !alias.scope !13822, !noalias !13834, !noundef !413 ; 2 uses
+  %.not.i.not.i.i.a = icmp eq i8 %i.l, %i.f, !dbg !13919
+  br i1 %.not.i.not.i.i.a, label %_RNvNtNtCskKLDkoKarTP_4core3str7pattern13simd_contains.exit, label %bb.d, !dbg !13920
+
+bb.d:                                             ; preds = %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i.2, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i.1, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i.lr.ph
+  %.lcssa161 = phi i64 [ %4, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i.lr.ph ], [ %9, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i.1 ], [ %14, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i.2 ], [ %i.j, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i ], !dbg !13918 ; 6 uses
+  %.lcssa159 = phi i8 [ %6, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i.lr.ph ], [ %11, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i.1 ], [ %16, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i.2 ], [ %i.l, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i ], !dbg !13919
   %i.m = add nuw nsw i64 %1, 15, !dbg !13923      ; 3 uses
   %i.n = icmp ult i64 %3, %i.m, !dbg !13924
   br i1 %i.n, label %.lr.ph.split.us.i.i, label %bb.e, !dbg !13924
@@ -252,7 +279,7 @@ _RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3any5checkRShN
 bb.e:                                             ; preds = %bb.d
   %i.u = insertelement <16 x i8> poison, i8 %i.f, i64 0, !dbg !13930
   %i.v = shufflevector <16 x i8> %i.u, <16 x i8> poison, <16 x i32> zeroinitializer, !dbg !13930 ; 6 uses
-  %i.w = insertelement <16 x i8> poison, i8 %i.l, i64 0, !dbg !13931
+  %i.w = insertelement <16 x i8> poison, i8 %.lcssa159, i64 0, !dbg !13931
   %i.x = shufflevector <16 x i8> %i.w, <16 x i8> poison, <16 x i32> zeroinitializer, !dbg !13931 ; 6 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 1, !dbg !13932
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !13933, !noalias !13836
@@ -280,7 +307,7 @@ bb.e:                                             ; preds = %bb.d
   %.sroa.06.097.i = phi i64 [ %i.bx, %bb.i ], [ 0, %bb.e ] ; 6 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 %.sroa.06.097.i ; 5 uses
   %.sroa.0.0.copyload.i.i = load <16 x i8>, ptr %i.ag, align 1, !dbg !13939, !alias.scope !13823, !noalias !13846
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.j, !dbg !13940
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 %.lcssa161, !dbg !13940
   %.sroa.01.0.copyload.i.i = load <16 x i8>, ptr %i.ah, align 1, !dbg !13941, !alias.scope !13823, !noalias !13846
   %i.ai = icmp eq <16 x i8> %.sroa.0.0.copyload.i.i, %i.v, !dbg !13942
   %i.aj = icmp eq <16 x i8> %.sroa.01.0.copyload.i.i, %i.x, !dbg !13943
@@ -288,7 +315,7 @@ bb.e:                                             ; preds = %bb.d
   %i.al = bitcast <16 x i1> %i.ak to i16, !dbg !13945 ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.ag, i64 16, !dbg !13946 ; 2 uses
   %.sroa.0.0.copyload.i.1.i = load <16 x i8>, ptr %i.am, align 1, !dbg !13939, !alias.scope !13823, !noalias !13846
-  %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.j, !dbg !13940
+  %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 %.lcssa161, !dbg !13940
   %.sroa.01.0.copyload.i.1.i = load <16 x i8>, ptr %i.an, align 1, !dbg !13941, !alias.scope !13823, !noalias !13846
   %i.ao = icmp eq <16 x i8> %.sroa.0.0.copyload.i.1.i, %i.v, !dbg !13942
   %i.ap = icmp eq <16 x i8> %.sroa.01.0.copyload.i.1.i, %i.x, !dbg !13943
@@ -296,7 +323,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ar = bitcast <16 x i1> %i.aq to i16, !dbg !13945 ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ag, i64 32, !dbg !13946 ; 2 uses
   %.sroa.0.0.copyload.i.2.i = load <16 x i8>, ptr %i.as, align 1, !dbg !13939, !alias.scope !13823, !noalias !13846
-  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.j, !dbg !13940
+  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 %.lcssa161, !dbg !13940
   %.sroa.01.0.copyload.i.2.i = load <16 x i8>, ptr %i.at, align 1, !dbg !13941, !alias.scope !13823, !noalias !13846
   %i.au = icmp eq <16 x i8> %.sroa.0.0.copyload.i.2.i, %i.v, !dbg !13942
   %i.av = icmp eq <16 x i8> %.sroa.01.0.copyload.i.2.i, %i.x, !dbg !13943
@@ -304,7 +331,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ax = bitcast <16 x i1> %i.aw to i16, !dbg !13945 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ag, i64 48, !dbg !13946 ; 2 uses
   %.sroa.0.0.copyload.i.3.i = load <16 x i8>, ptr %i.ay, align 1, !dbg !13939, !alias.scope !13823, !noalias !13846
-  %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 %i.j, !dbg !13940
+  %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 %.lcssa161, !dbg !13940
   %.sroa.01.0.copyload.i.3.i = load <16 x i8>, ptr %i.az, align 1, !dbg !13941, !alias.scope !13823, !noalias !13846
   %i.ba = icmp eq <16 x i8> %.sroa.0.0.copyload.i.3.i, %i.v, !dbg !13942
   %i.bb = icmp eq <16 x i8> %.sroa.01.0.copyload.i.3.i, %i.x, !dbg !13943
@@ -373,7 +400,7 @@ bb.j:                                             ; preds = %.lr.ph.i
   %i.ce = add i64 %i.cd, -16, !dbg !13955         ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %2, i64 %i.ce, !dbg !13956 ; 2 uses
   %.sroa.0.0.copyload.i57.i = load <16 x i8>, ptr %i.cf, align 1, !dbg !13957, !alias.scope !13823, !noalias !13857
-  %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 %i.j, !dbg !13958
+  %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 %.lcssa161, !dbg !13958
   %.sroa.01.0.copyload.i58.i = load <16 x i8>, ptr %i.cg, align 1, !dbg !13959, !alias.scope !13823, !noalias !13857
   %i.ch = icmp eq <16 x i8> %.sroa.0.0.copyload.i57.i, %i.v, !dbg !13960
   %i.ci = icmp eq <16 x i8> %.sroa.01.0.copyload.i58.i, %i.x, !dbg !13961
@@ -386,7 +413,7 @@ bb.j:                                             ; preds = %.lr.ph.i
   %.sroa.06.1100.i = phi i64 [ %i.ct, %bb.k ], [ %.sroa.06.0.lcssa.i, %.preheader.i ] ; 3 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %2, i64 %.sroa.06.1100.i, !dbg !13965 ; 2 uses
   %.sroa.0.0.copyload.i59.i = load <16 x i8>, ptr %i.cm, align 1, !dbg !13966, !alias.scope !13823, !noalias !13861
-  %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 %i.j, !dbg !13967
+  %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 %.lcssa161, !dbg !13967
   %.sroa.01.0.copyload.i60.i = load <16 x i8>, ptr %i.cn, align 1, !dbg !13968, !alias.scope !13823, !noalias !13861
   %i.co = icmp eq <16 x i8> %.sroa.0.0.copyload.i59.i, %i.v, !dbg !13969
   %i.cp = icmp eq <16 x i8> %.sroa.01.0.copyload.i60.i, %i.x, !dbg !13970
@@ -420,7 +447,7 @@ bb.n:                                             ; preds = %._crit_edge.i
   %i.db = or i8 %.sroa.014.3.lcssa.i, %i.da, !dbg !13981
   br label %bb.m, !dbg !13982
 
-_RNvNtNtCskKLDkoKarTP_4core3str7pattern13simd_contains.exit: ; preds = %bb.c
+_RNvNtNtCskKLDkoKarTP_4core3str7pattern13simd_contains.exit: ; preds = %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg.exit.i.i, %bb.c, %12, %7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !13983
   call void @_RNvMsu_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcher3new(ptr noalias nofree noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1), !dbg !13984
   tail call void @llvm.experimental.noalias.scope.decl(metadata !13863), !dbg !13985
@@ -823,34 +850,34 @@ begin_hunk_1_@llvm.umax.i64
 !13477 = distinct !DISubprogram(name: "saturating_sub", linkageName: "_RNvMs9_NtCskKLDkoKarTP_4core3numj14saturating_sub", scope: !770, file: !636, line: 2569, type: !422, scopeLine: 2569, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
 !13478 = distinct !DILexicalBlock(scope: !13476, file: !632, line: 1905, column: 5)
 !13479 = distinct !DILocation(line: 1915, column: 27, scope: !13478, inlinedAt: !13475)
-!13480 = distinct !DISubprogram(name: "spec_next_back<usize>", linkageName: "_RNvXs3_NtNtCskKLDkoKarTP_4core4iter5rangeINtNtNtB9_3ops5range5RangejENtB5_17RangeIteratorImpl14spec_next_backCs2NzvFoTxuAy_2rg", scope: !13826, file: !13824, line: 1141, type: !422, scopeLine: 1141, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
-!13481 = distinct !DISubprogram(name: "next_back<usize>", linkageName: "_RNvXs5_NtNtCskKLDkoKarTP_4core4iter5rangeINtNtNtB9_3ops5range5RangejENtNtNtB7_6traits12double_ended19DoubleEndedIterator9next_backCs2NzvFoTxuAy_2rg", scope: !13827, file: !13824, line: 1315, type: !422, scopeLine: 1315, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
-!13482 = distinct !DISubprogram(name: "try_rfold<core::ops::range::Range<usize>, (), core::iter::traits::double_ended::DoubleEndedIterator::rfind::check::{closure_env#0}<usize, core::str::pattern::simd_contains::{closure_env#0}>, core::ops::control_flow::ControlFlow<usize, ()>>", linkageName: "_RINvYINtNtNtCskKLDkoKarTP_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvBL_5rfind5checkjNCNvNtNtBa_3str7pattern13simd_contains0E0INtNtB8_12control_flow11ControlFlowjEECs2NzvFoTxuAy_2rg", scope: !13830, file: !13828, line: 282, type: !422, scopeLine: 282, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
-!13483 = distinct !DILexicalBlock(scope: !13482, file: !13828, line: 288, column: 9)
-!13484 = distinct !DILexicalBlock(scope: !13483, file: !13828, line: 289, column: 46)
-!13485 = distinct !DISubprogram(name: "rfind<core::ops::range::Range<usize>, core::str::pattern::simd_contains::{closure_env#0}>", linkageName: "_RINvYINtNtNtCskKLDkoKarTP_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator5rfindNCNvNtNtBa_3str7pattern13simd_contains0ECs2NzvFoTxuAy_2rg", scope: !13830, file: !13828, line: 419, type: !422, scopeLine: 419, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
-!13486 = distinct !DILocation(line: 1915, column: 60, scope: !13478, inlinedAt: !13475)
-!13487 = distinct !DILocation(line: 431, column: 14, scope: !13485, inlinedAt: !13486)
-!13488 = distinct !DILocation(line: 289, column: 34, scope: !13484, inlinedAt: !13487)
-!13489 = distinct !DILocation(line: 1316, column: 14, scope: !13481, inlinedAt: !13488)
-!13490 = distinct !DISubprogram(name: "lt", linkageName: "_RNvXsU_NtNtCskKLDkoKarTP_4core3cmp5implsjNtB7_10PartialOrd2lt", scope: !13831, file: !646, line: 2192, type: !422, scopeLine: 2192, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
-!13491 = distinct !DILocation(line: 1142, column: 12, scope: !13480, inlinedAt: !13489)
-!13492 = distinct !DISubprogram(name: "unchecked_sub", linkageName: "_RNvMs9_NtCskKLDkoKarTP_4core3numj13unchecked_sub", scope: !770, file: !636, line: 1210, type: !422, scopeLine: 1210, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
-!13493 = distinct !DISubprogram(name: "backward_unchecked", linkageName: "_RNvXsL_NtNtCskKLDkoKarTP_4core4iter5rangejNtB5_4Step18backward_unchecked", scope: !13832, file: !13824, line: 269, type: !422, scopeLine: 269, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
-!13494 = distinct !DILocation(line: 1144, column: 33, scope: !13480, inlinedAt: !13489)
-!13495 = distinct !DILocation(line: 271, column: 28, scope: !13493, inlinedAt: !13494)
-!13496 = distinct !DISubprogram(name: "{closure#0}", linkageName: "_RNCNvNtNtCskKLDkoKarTP_4core3str7pattern13simd_contains0Cs2NzvFoTxuAy_2rg", scope: !635, file: !632, line: 1915, type: !414, scopeLine: 1915, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
-!13497 = distinct !DILexicalBlock(scope: !13496, file: !632, line: 1915, column: 73)
-!13498 = distinct !DISubprogram(name: "{closure#0}<usize, core::str::pattern::simd_contains::{closure_env#0}>", linkageName: "_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg", scope: !13834, file: !13828, line: 426, type: !422, scopeLine: 426, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
-!13499 = distinct !DILocation(line: 290, column: 21, scope: !13484, inlinedAt: !13487)
-!13500 = distinct !DILocation(line: 427, column: 20, scope: !13498, inlinedAt: !13499)
-!13501 = distinct !{!13501, !"_RINvYINtNtNtCskKLDkoKarTP_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvBL_5rfind5checkjNCNvNtNtBa_3str7pattern13simd_contains0E0INtNtB8_12control_flow11ControlFlowjEECs2NzvFoTxuAy_2rg"}
-!13502 = distinct !{!13502, !13501, !"_RINvYINtNtNtCskKLDkoKarTP_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvBL_5rfind5checkjNCNvNtNtBa_3str7pattern13simd_contains0E0INtNtB8_12control_flow11ControlFlowjEECs2NzvFoTxuAy_2rg: argument 1"}
-!13503 = distinct !{!13503, !13501, !"_RINvYINtNtNtCskKLDkoKarTP_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvBL_5rfind5checkjNCNvNtNtBa_3str7pattern13simd_contains0E0INtNtB8_12control_flow11ControlFlowjEECs2NzvFoTxuAy_2rg: argument 0"}
-!13504 = distinct !{!13504, !"_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg"}
-!13505 = distinct !{!13505, !13504, !"_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg: argument 0"}
-!13506 = distinct !{!13506, !"_RNCNvNtNtCskKLDkoKarTP_4core3str7pattern13simd_contains0Cs2NzvFoTxuAy_2rg"}
-!13507 = distinct !{!13507, !13506, !"_RNCNvNtNtCskKLDkoKarTP_4core3str7pattern13simd_contains0Cs2NzvFoTxuAy_2rg: argument 0"}
+!13480 = distinct !DISubprogram(name: "unchecked_sub", linkageName: "_RNvMs9_NtCskKLDkoKarTP_4core3numj13unchecked_sub", scope: !770, file: !636, line: 1210, type: !422, scopeLine: 1210, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
+!13481 = distinct !DISubprogram(name: "backward_unchecked", linkageName: "_RNvXsL_NtNtCskKLDkoKarTP_4core4iter5rangejNtB5_4Step18backward_unchecked", scope: !13826, file: !13824, line: 269, type: !422, scopeLine: 269, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
+!13482 = distinct !DISubprogram(name: "spec_next_back<usize>", linkageName: "_RNvXs3_NtNtCskKLDkoKarTP_4core4iter5rangeINtNtNtB9_3ops5range5RangejENtB5_17RangeIteratorImpl14spec_next_backCs2NzvFoTxuAy_2rg", scope: !13827, file: !13824, line: 1141, type: !422, scopeLine: 1141, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
+!13483 = distinct !DISubprogram(name: "next_back<usize>", linkageName: "_RNvXs5_NtNtCskKLDkoKarTP_4core4iter5rangeINtNtNtB9_3ops5range5RangejENtNtNtB7_6traits12double_ended19DoubleEndedIterator9next_backCs2NzvFoTxuAy_2rg", scope: !13828, file: !13824, line: 1315, type: !422, scopeLine: 1315, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
+!13484 = distinct !DISubprogram(name: "try_rfold<core::ops::range::Range<usize>, (), core::iter::traits::double_ended::DoubleEndedIterator::rfind::check::{closure_env#0}<usize, core::str::pattern::simd_contains::{closure_env#0}>, core::ops::control_flow::ControlFlow<usize, ()>>", linkageName: "_RINvYINtNtNtCskKLDkoKarTP_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvBL_5rfind5checkjNCNvNtNtBa_3str7pattern13simd_contains0E0INtNtB8_12control_flow11ControlFlowjEECs2NzvFoTxuAy_2rg", scope: !13831, file: !13829, line: 282, type: !422, scopeLine: 282, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
+!13485 = distinct !DILexicalBlock(scope: !13484, file: !13829, line: 288, column: 9)
+!13486 = distinct !DILexicalBlock(scope: !13485, file: !13829, line: 289, column: 46)
+!13487 = distinct !DISubprogram(name: "rfind<core::ops::range::Range<usize>, core::str::pattern::simd_contains::{closure_env#0}>", linkageName: "_RINvYINtNtNtCskKLDkoKarTP_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator5rfindNCNvNtNtBa_3str7pattern13simd_contains0ECs2NzvFoTxuAy_2rg", scope: !13831, file: !13829, line: 419, type: !422, scopeLine: 419, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
+!13488 = distinct !DILocation(line: 1915, column: 60, scope: !13478, inlinedAt: !13475)
+!13489 = distinct !DILocation(line: 431, column: 14, scope: !13487, inlinedAt: !13488)
+!13490 = distinct !DILocation(line: 289, column: 34, scope: !13486, inlinedAt: !13489)
+!13491 = distinct !DILocation(line: 1316, column: 14, scope: !13483, inlinedAt: !13490)
+!13492 = distinct !DILocation(line: 1144, column: 33, scope: !13482, inlinedAt: !13491)
+!13493 = distinct !DILocation(line: 271, column: 28, scope: !13481, inlinedAt: !13492)
+!13494 = distinct !DISubprogram(name: "{closure#0}", linkageName: "_RNCNvNtNtCskKLDkoKarTP_4core3str7pattern13simd_contains0Cs2NzvFoTxuAy_2rg", scope: !635, file: !632, line: 1915, type: !414, scopeLine: 1915, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
+!13495 = distinct !DILexicalBlock(scope: !13494, file: !632, line: 1915, column: 73)
+!13496 = distinct !DISubprogram(name: "{closure#0}<usize, core::str::pattern::simd_contains::{closure_env#0}>", linkageName: "_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg", scope: !13833, file: !13829, line: 426, type: !422, scopeLine: 426, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
+!13497 = distinct !DILocation(line: 290, column: 21, scope: !13486, inlinedAt: !13489)
+!13498 = distinct !DILocation(line: 427, column: 20, scope: !13496, inlinedAt: !13497)
+!13499 = distinct !{!13499, !"_RINvYINtNtNtCskKLDkoKarTP_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvBL_5rfind5checkjNCNvNtNtBa_3str7pattern13simd_contains0E0INtNtB8_12control_flow11ControlFlowjEECs2NzvFoTxuAy_2rg"}
+!13500 = distinct !{!13500, !13499, !"_RINvYINtNtNtCskKLDkoKarTP_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvBL_5rfind5checkjNCNvNtNtBa_3str7pattern13simd_contains0E0INtNtB8_12control_flow11ControlFlowjEECs2NzvFoTxuAy_2rg: argument 1"}
+!13501 = distinct !{!13501, !13499, !"_RINvYINtNtNtCskKLDkoKarTP_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvBL_5rfind5checkjNCNvNtNtBa_3str7pattern13simd_contains0E0INtNtB8_12control_flow11ControlFlowjEECs2NzvFoTxuAy_2rg: argument 0"}
+!13502 = distinct !{!13502, !"_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg"}
+!13503 = distinct !{!13503, !13502, !"_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2NzvFoTxuAy_2rg: argument 0"}
+!13504 = distinct !{!13504, !"_RNCNvNtNtCskKLDkoKarTP_4core3str7pattern13simd_contains0Cs2NzvFoTxuAy_2rg"}
+!13505 = distinct !{!13505, !13504, !"_RNCNvNtNtCskKLDkoKarTP_4core3str7pattern13simd_contains0Cs2NzvFoTxuAy_2rg: argument 0"}
+!13506 = distinct !DISubprogram(name: "lt", linkageName: "_RNvXsU_NtNtCskKLDkoKarTP_4core3cmp5implsjNtB7_10PartialOrd2lt", scope: !13835, file: !646, line: 2192, type: !422, scopeLine: 2192, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
+!13507 = distinct !DILocation(line: 1142, column: 12, scope: !13482, inlinedAt: !13491)
 !13508 = distinct !DILexicalBlock(scope: !13478, file: !632, line: 1908, column: 5)
 !13509 = distinct !{!13509, !"_RINvYINtNtNtCskKLDkoKarTP_4core5slice4iter7WindowshENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvBO_3any5checkRShNCNvNtNtBa_3str7pattern13simd_containss_0E0INtNtNtBa_3ops12control_flow11ControlFlowuEECs2NzvFoTxuAy_2rg"}
 !13510 = distinct !{!13510, !13509, !"_RINvYINtNtNtCskKLDkoKarTP_4core5slice4iter7WindowshENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvBO_3any5checkRShNCNvNtNtBa_3str7pattern13simd_containss_0E0INtNtNtBa_3ops12control_flow11ControlFlowuEECs2NzvFoTxuAy_2rg: argument 1"}
@@ -1096,8 +1123,8 @@ begin_hunk_1_@llvm.umax.i64
 !13750 = distinct !DISubprogram(name: "max<usize>", linkageName: "_RINvNtCskKLDkoKarTP_4core3cmp3maxjECs2NzvFoTxuAy_2rg", scope: !647, file: !646, line: 1741, type: !422, scopeLine: 1741, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
 !13751 = distinct !DILocation(line: 1575, column: 57, scope: !13747, inlinedAt: !13742)
 !13752 = distinct !DILocation(line: 1742, column: 8, scope: !13750, inlinedAt: !13751)
-!13753 = distinct !DISubprogram(name: "lt", linkageName: "_RNvXsU_NtNtCskKLDkoKarTP_4core3cmp5implsjNtB7_10PartialOrd2lt", scope: !13831, file: !646, line: 2192, type: !422, scopeLine: 2192, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
-!13754 = distinct !DISubprogram(name: "spec_next<usize>", linkageName: "_RNvXs3_NtNtCskKLDkoKarTP_4core4iter5rangeINtNtNtB9_3ops5range5RangejENtB5_17RangeIteratorImpl9spec_nextCs2NzvFoTxuAy_2rg", scope: !13826, file: !13824, line: 1099, type: !422, scopeLine: 1099, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
+!13753 = distinct !DISubprogram(name: "lt", linkageName: "_RNvXsU_NtNtCskKLDkoKarTP_4core3cmp5implsjNtB7_10PartialOrd2lt", scope: !13835, file: !646, line: 2192, type: !422, scopeLine: 2192, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
+!13754 = distinct !DISubprogram(name: "spec_next<usize>", linkageName: "_RNvXs3_NtNtCskKLDkoKarTP_4core4iter5rangeINtNtNtB9_3ops5range5RangejENtB5_17RangeIteratorImpl9spec_nextCs2NzvFoTxuAy_2rg", scope: !13827, file: !13824, line: 1099, type: !422, scopeLine: 1099, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
 !13755 = distinct !DISubprogram(name: "next<usize>", linkageName: "_RNvXs4_NtNtCskKLDkoKarTP_4core4iter5rangeINtNtNtB9_3ops5range5RangejENtNtNtB7_6traits8iterator8Iterator4nextCs2NzvFoTxuAy_2rg", scope: !13894, file: !13824, line: 1184, type: !422, scopeLine: 1184, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
 !13756 = distinct !DILexicalBlock(scope: !13747, file: !632, line: 1574, column: 13)
 !13757 = distinct !DILexicalBlock(scope: !13756, file: !632, line: 1576, column: 13)
@@ -1105,12 +1132,12 @@ begin_hunk_1_@llvm.umax.i64
 !13759 = distinct !DILocation(line: 1185, column: 14, scope: !13755, inlinedAt: !13758)
 !13760 = distinct !DILocation(line: 1100, column: 12, scope: !13754, inlinedAt: !13759)
 !13761 = distinct !DISubprogram(name: "unchecked_add", linkageName: "_RNvMs9_NtCskKLDkoKarTP_4core3numj13unchecked_add", scope: !770, file: !636, line: 1031, type: !422, scopeLine: 1031, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
-!13762 = distinct !DISubprogram(name: "forward_unchecked", linkageName: "_RNvXsL_NtNtCskKLDkoKarTP_4core4iter5rangejNtB5_4Step17forward_unchecked", scope: !13832, file: !13824, line: 263, type: !422, scopeLine: 263, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
+!13762 = distinct !DISubprogram(name: "forward_unchecked", linkageName: "_RNvXsL_NtNtCskKLDkoKarTP_4core4iter5rangejNtB5_4Step17forward_unchecked", scope: !13826, file: !13824, line: 263, type: !422, scopeLine: 263, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
 !13763 = distinct !DILexicalBlock(scope: !13754, file: !13824, line: 1101, column: 13)
 !13764 = distinct !DILocation(line: 1103, column: 35, scope: !13763, inlinedAt: !13759)
 !13765 = distinct !DILocation(line: 265, column: 28, scope: !13762, inlinedAt: !13764)
-!13766 = distinct !DISubprogram(name: "spec_next_back<usize>", linkageName: "_RNvXs3_NtNtCskKLDkoKarTP_4core4iter5rangeINtNtNtB9_3ops5range5RangejENtB5_17RangeIteratorImpl14spec_next_backCs2NzvFoTxuAy_2rg", scope: !13826, file: !13824, line: 1141, type: !422, scopeLine: 1141, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
-!13767 = distinct !DISubprogram(name: "next_back<usize>", linkageName: "_RNvXs5_NtNtCskKLDkoKarTP_4core4iter5rangeINtNtNtB9_3ops5range5RangejENtNtNtB7_6traits12double_ended19DoubleEndedIterator9next_backCs2NzvFoTxuAy_2rg", scope: !13827, file: !13824, line: 1315, type: !422, scopeLine: 1315, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
+!13766 = distinct !DISubprogram(name: "spec_next_back<usize>", linkageName: "_RNvXs3_NtNtCskKLDkoKarTP_4core4iter5rangeINtNtNtB9_3ops5range5RangejENtB5_17RangeIteratorImpl14spec_next_backCs2NzvFoTxuAy_2rg", scope: !13827, file: !13824, line: 1141, type: !422, scopeLine: 1141, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
+!13767 = distinct !DISubprogram(name: "next_back<usize>", linkageName: "_RNvXs5_NtNtCskKLDkoKarTP_4core4iter5rangeINtNtNtB9_3ops5range5RangejENtNtNtB7_6traits12double_ended19DoubleEndedIterator9next_backCs2NzvFoTxuAy_2rg", scope: !13828, file: !13824, line: 1315, type: !422, scopeLine: 1315, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
 !13768 = distinct !DISubprogram(name: "next<core::ops::range::Range<usize>>", linkageName: "_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters3revINtB4_3RevINtNtNtBa_3ops5range5RangejEENtNtNtB8_6traits8iterator8Iterator4nextCs2NzvFoTxuAy_2rg", scope: !13896, file: !777, line: 52, type: !422, scopeLine: 52, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
 !13769 = distinct !DILexicalBlock(scope: !13756, file: !632, line: 1593, column: 13)
 !13770 = distinct !DILexicalBlock(scope: !13769, file: !632, line: 1594, column: 13)
@@ -1124,7 +1151,7 @@ begin_hunk_1_@llvm.umax.i64
 !13778 = distinct !DILocation(line: 1583, column: 52, scope: !13775, inlinedAt: !13742)
 !13779 = distinct !DILocation(line: 647, column: 26, scope: !13777, inlinedAt: !13778)
 !13780 = distinct !DISubprogram(name: "unchecked_sub", linkageName: "_RNvMs9_NtCskKLDkoKarTP_4core3numj13unchecked_sub", scope: !770, file: !636, line: 1210, type: !422, scopeLine: 1210, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
-!13781 = distinct !DISubprogram(name: "backward_unchecked", linkageName: "_RNvXsL_NtNtCskKLDkoKarTP_4core4iter5rangejNtB5_4Step18backward_unchecked", scope: !13832, file: !13824, line: 269, type: !422, scopeLine: 269, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
+!13781 = distinct !DISubprogram(name: "backward_unchecked", linkageName: "_RNvXsL_NtNtCskKLDkoKarTP_4core4iter5rangejNtB5_4Step18backward_unchecked", scope: !13826, file: !13824, line: 269, type: !422, scopeLine: 269, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !413)
 !13782 = distinct !DILocation(line: 1144, column: 33, scope: !13766, inlinedAt: !13773)
 !13783 = distinct !DILocation(line: 271, column: 28, scope: !13781, inlinedAt: !13782)
 !13784 = distinct !DILexicalBlock(scope: !13770, file: !632, line: 1594, column: 13)
@@ -1169,16 +1196,16 @@ begin_hunk_1_@llvm.umax.i64
 !13823 = !{!13471}
 !13824 = !DIFile(filename: "library/core/src/iter/range.rs", directory: "/rustc/bff8e12ff5e6bcd53dfb1dbccdcec80a60a856ed", checksumkind: CSK_MD5, checksum: "6038fbd2305f6e8ce8c79c7d50b4046d")
 !13825 = !DINamespace(name: "range", scope: !495)
-!13826 = !DINamespace(name: "{impl#5}", scope: !13825)
-!13827 = !DINamespace(name: "{impl#7}", scope: !13825)
-!13828 = !DIFile(filename: "library/core/src/iter/traits/double_ended.rs", directory: "/rustc/bff8e12ff5e6bcd53dfb1dbccdcec80a60a856ed", checksumkind: CSK_MD5, checksum: "61d88747ca72259b35301c3c51fbcdbe")
-!13829 = !DINamespace(name: "double_ended", scope: !500)
-!13830 = !DINamespace(name: "DoubleEndedIterator", scope: !13829)
-!13831 = !DINamespace(name: "{impl#58}", scope: !648)
-!13832 = !DINamespace(name: "{impl#49}", scope: !13825)
-!13833 = !DINamespace(name: "rfind", scope: !13830)
-!13834 = !DINamespace(name: "check", scope: !13833)
-!13835 = !{!13507, !13505, !13503, !13502, !13471}
+!13826 = !DINamespace(name: "{impl#49}", scope: !13825)
+!13827 = !DINamespace(name: "{impl#5}", scope: !13825)
+!13828 = !DINamespace(name: "{impl#7}", scope: !13825)
+!13829 = !DIFile(filename: "library/core/src/iter/traits/double_ended.rs", directory: "/rustc/bff8e12ff5e6bcd53dfb1dbccdcec80a60a856ed", checksumkind: CSK_MD5, checksum: "61d88747ca72259b35301c3c51fbcdbe")
+!13830 = !DINamespace(name: "double_ended", scope: !500)
+!13831 = !DINamespace(name: "DoubleEndedIterator", scope: !13830)
+!13832 = !DINamespace(name: "rfind", scope: !13831)
+!13833 = !DINamespace(name: "check", scope: !13832)
+!13834 = !{!13505, !13503, !13501, !13500, !13471}
+!13835 = !DINamespace(name: "{impl#58}", scope: !648)
 !13836 = !{!13469, !13471}
 !13837 = !{!13511, !13510}
 !13838 = !DINamespace(name: "any", scope: !502)
@@ -1261,11 +1288,11 @@ begin_hunk_1_@llvm.umax.i64
 !13915 = !DILocation(line: 1904, column: 23, scope: !13474, inlinedAt: !13475)
 !13916 = !DILocation(line: 1905, column: 28, scope: !13476, inlinedAt: !13475)
 !13917 = !DILocation(line: 2570, column: 13, scope: !13477, inlinedAt: !13479)
-!13918 = !DILocation(line: 1142, column: 12, scope: !13480, inlinedAt: !13489)
-!13919 = !DILocation(line: 2192, column: 50, scope: !13490, inlinedAt: !13491)
-!13920 = !DILocation(line: 1222, column: 17, scope: !13492, inlinedAt: !13495)
-!13921 = !DILocation(line: 1915, column: 73, scope: !13497, inlinedAt: !13500)
-!13922 = !DILocation(line: 290, column: 21, scope: !13484, inlinedAt: !13487)
+!13918 = !DILocation(line: 1222, column: 17, scope: !13480, inlinedAt: !13493)
+!13919 = !DILocation(line: 1915, column: 73, scope: !13495, inlinedAt: !13498)
+!13920 = !DILocation(line: 290, column: 21, scope: !13486, inlinedAt: !13489)
+!13921 = !DILocation(line: 2192, column: 50, scope: !13506, inlinedAt: !13507)
+!13922 = !DILocation(line: 1142, column: 12, scope: !13482, inlinedAt: !13491)
 !13923 = !DILocation(line: 1925, column: 25, scope: !13508, inlinedAt: !13475)
 !13924 = !DILocation(line: 1925, column: 8, scope: !13508, inlinedAt: !13475)
 !13925 = !DILocation(line: 157, column: 13, scope: !13513, inlinedAt: !13529)
