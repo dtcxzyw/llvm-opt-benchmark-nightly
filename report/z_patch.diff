@@ -1,0 +1,119 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index 40fd6fd2ed060a..16e2c10fce7ec4 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -544,13 +544,17 @@ static bool isKnownNoWrap(Instruction::BinaryOps Opcode, Value *Op0, Value *Op1,
+ 
+   if (Opcode == Instruction::Sub) {
+     // Op0 - Op1 does not wrap unsigned if Op0 >=u Op1.
+-    if (!Signed)
+-      return Info.doesHold(CmpInst::ICMP_UGE, Op0, Op1);
++    if (!Signed && Info.doesHold(CmpInst::ICMP_UGE, Op0, Op1))
++      return true;
+ 
+-    // Op0 - Op1 does not wrap signed if 0 <=s Op1 <=s Op0.
++    // Op0 - Op1 does not wrap signed or unsigned if 0 <=s Op1 <=s Op0.
+     if (Info.isKnownNonNegative(Op1) &&
+         Info.doesHold(CmpInst::ICMP_SGE, Op0, Op1))
+       return true;
++
++    // No other rule applies to unsigned sub.
++    if (!Signed)
++      return false;
+   }
+ 
+   if (!Signed && (NoWrapFlags & OBO::NoSignedWrap) &&
+diff --git a/llvm/test/Transforms/ConstraintElimination/materialize-flags.ll b/llvm/test/Transforms/ConstraintElimination/materialize-flags.ll
+index b8cc032274b2d2..5205f079112687 100644
+--- a/llvm/test/Transforms/ConstraintElimination/materialize-flags.ll
++++ b/llvm/test/Transforms/ConstraintElimination/materialize-flags.ll
+@@ -204,6 +204,54 @@ entry:
+   ret i32 %sub
+ }
+ 
++define i32 @sub_nuw_from_transitive_signed_facts(i32 %a, i32 %b, i32 %n) {
++; CHECK-LABEL: define i32 @sub_nuw_from_transitive_signed_facts(
++; CHECK-SAME: i32 [[A:%.*]], i32 [[B:%.*]], i32 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[B_NNEG:%.*]] = icmp sge i32 [[B]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[B_NNEG]])
++; CHECK-NEXT:    [[N_NNEG:%.*]] = icmp sge i32 [[N]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[N_NNEG]])
++; CHECK-NEXT:    [[REM:%.*]] = sub nuw nsw i32 [[A]], [[N]]
++; CHECK-NEXT:    [[FITS:%.*]] = icmp sge i32 [[REM]], [[B]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[FITS]])
++; CHECK-NEXT:    [[SUB:%.*]] = sub nuw nsw i32 [[A]], [[B]]
++; CHECK-NEXT:    ret i32 [[SUB]]
++;
++entry:
++  %b.nneg = icmp sge i32 %b, 0
++  call void @llvm.assume(i1 %b.nneg)
++  %n.nneg = icmp sge i32 %n, 0
++  call void @llvm.assume(i1 %n.nneg)
++  %rem = sub nsw i32 %a, %n
++  %fits = icmp sge i32 %rem, %b
++  call void @llvm.assume(i1 %fits)
++  %sub = sub i32 %a, %b
++  ret i32 %sub
++}
++
++define i32 @sub_no_nuw_from_transitive_signed_facts(i32 %a, i32 %b, i32 %n) {
++; CHECK-LABEL: define i32 @sub_no_nuw_from_transitive_signed_facts(
++; CHECK-SAME: i32 [[A:%.*]], i32 [[B:%.*]], i32 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[N_NNEG:%.*]] = icmp sge i32 [[N]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[N_NNEG]])
++; CHECK-NEXT:    [[REM:%.*]] = sub nsw i32 [[A]], [[N]]
++; CHECK-NEXT:    [[FITS:%.*]] = icmp sge i32 [[REM]], [[B]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[FITS]])
++; CHECK-NEXT:    [[SUB:%.*]] = sub i32 [[A]], [[B]]
++; CHECK-NEXT:    ret i32 [[SUB]]
++;
++entry:
++  %n.nneg = icmp sge i32 %n, 0
++  call void @llvm.assume(i1 %n.nneg)
++  %rem = sub nsw i32 %a, %n
++  %fits = icmp sge i32 %rem, %b
++  call void @llvm.assume(i1 %fits)
++  %sub = sub i32 %a, %b
++  ret i32 %sub
++}
++
+ define ptr @gep_nuw_transitive(ptr %p, i64 %i, i64 %j) {
+ ; CHECK-LABEL: define ptr @gep_nuw_transitive(
+ ; CHECK-SAME: ptr [[P:%.*]], i64 [[I:%.*]], i64 [[J:%.*]]) {
+diff --git a/llvm/test/Transforms/ConstraintElimination/uadd-usub-sat.ll b/llvm/test/Transforms/ConstraintElimination/uadd-usub-sat.ll
+index 09189ca89271e9..f49792ea9745a4 100644
+--- a/llvm/test/Transforms/ConstraintElimination/uadd-usub-sat.ll
++++ b/llvm/test/Transforms/ConstraintElimination/uadd-usub-sat.ll
+@@ -95,7 +95,7 @@ define i1 @usub_sat_span_offset(i64 %count, i64 %base, i64 %n) {
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[BASE_NNEG]])
+ ; CHECK-NEXT:    [[N_NNEG:%.*]] = icmp sge i64 [[N]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[N_NNEG]])
+-; CHECK-NEXT:    [[REM:%.*]] = sub nsw i64 [[COUNT]], [[N]]
++; CHECK-NEXT:    [[REM:%.*]] = sub nuw nsw i64 [[COUNT]], [[N]]
+ ; CHECK-NEXT:    [[FITS:%.*]] = icmp sge i64 [[REM]], [[BASE]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[FITS]])
+ ; CHECK-NEXT:    [[AVAIL:%.*]] = sub nuw nsw i64 [[COUNT]], [[BASE]]
+diff --git a/llvm/test/Transforms/ConstraintElimination/unsigned-query-signed-system.ll b/llvm/test/Transforms/ConstraintElimination/unsigned-query-signed-system.ll
+index f85f858a720603..9260e4565a5769 100644
+--- a/llvm/test/Transforms/ConstraintElimination/unsigned-query-signed-system.ll
++++ b/llvm/test/Transforms/ConstraintElimination/unsigned-query-signed-system.ll
+@@ -6,7 +6,7 @@ define i1 @ult_query_via_signed_system(i64 %a, i64 %b, i64 %n) {
+ ; CHECK-SAME: i64 [[A:%.*]], i64 [[B:%.*]], i64 [[N:%.*]]) {
+ ; CHECK-NEXT:    [[PRE_0:%.*]] = icmp sgt i64 [[B]], -1
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE_0]])
+-; CHECK-NEXT:    [[S:%.*]] = sub nsw i64 [[A]], [[B]]
++; CHECK-NEXT:    [[S:%.*]] = sub nuw nsw i64 [[A]], [[B]]
+ ; CHECK-NEXT:    [[PRE_1:%.*]] = icmp sgt i64 [[S]], -1
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE_1]])
+ ; CHECK-NEXT:    [[PRE_2:%.*]] = icmp slt i64 [[A]], [[N]]
+@@ -31,7 +31,7 @@ define i1 @uge_query_via_signed_system(i64 %a, i64 %b, i64 %n) {
+ ; CHECK-SAME: i64 [[A:%.*]], i64 [[B:%.*]], i64 [[N:%.*]]) {
+ ; CHECK-NEXT:    [[PRE_0:%.*]] = icmp sgt i64 [[B]], -1
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE_0]])
+-; CHECK-NEXT:    [[S:%.*]] = sub nsw i64 [[A]], [[B]]
++; CHECK-NEXT:    [[S:%.*]] = sub nuw nsw i64 [[A]], [[B]]
+ ; CHECK-NEXT:    [[PRE_1:%.*]] = icmp sgt i64 [[S]], -1
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE_1]])
+ ; CHECK-NEXT:    [[PRE_2:%.*]] = icmp slt i64 [[A]], [[N]]
