@@ -107,7 +107,7 @@ bb.e:                                             ; preds = %bytestream2_init.ex
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 116 ; 2 uses
   %i.ac = icmp eq i16 %i.q, 1
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.e, i64 276 ; 3 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.e, i64 276 ; 2 uses
   %i.ae = mul nuw nsw i32 %i.r, 12
   %i.af = or disjoint i32 %i.ae, 2
   %i.ag = getelementptr inbounds nuw i8, ptr %i.b, i64 124 ; 4 uses
@@ -162,7 +162,7 @@ bb.h:                                             ; preds = %bb.g
 bytestream2_get_le16.exit155:                     ; preds = %bb.g, %bb.h
   %.pre-phi = phi i64 [ %.pre, %bb.h ], [ %i.ba, %bb.g ]
   %i.bm = phi ptr [ %i.bj, %bb.h ], [ %i.ay, %bb.g ] ; 2 uses
-  %.0.i154 = phi i32 [ %i.bl, %bb.h ], [ 0, %bb.g ] ; 4 uses
+  %.0.i154 = phi i32 [ %i.bl, %bb.h ], [ 0, %bb.g ] ; 3 uses
   %i.bn = sub i64 %i.ba, %.pre-phi
   %i.bo = icmp slt i64 %i.bn, 2
   br i1 %i.bo, label %bytestream2_get_le16.exit153, label %bb.i
@@ -178,7 +178,7 @@ bb.i:                                             ; preds = %bytestream2_get_le1
 bytestream2_get_le16.exit153:                     ; preds = %bytestream2_get_le16.exit155, %bb.i
   %.pre-phi212 = phi i64 [ %.pre211, %bb.i ], [ %i.ba, %bytestream2_get_le16.exit155 ]
   %i.bs = phi ptr [ %i.bp, %bb.i ], [ %i.ay, %bytestream2_get_le16.exit155 ] ; 2 uses
-  %.0.i152 = phi i32 [ %i.br, %bb.i ], [ 0, %bytestream2_get_le16.exit155 ] ; 4 uses
+  %.0.i152 = phi i32 [ %i.br, %bb.i ], [ 0, %bytestream2_get_le16.exit155 ] ; 3 uses
   %i.bt = sub i64 %i.ba, %.pre-phi212
   %i.bu = icmp slt i64 %i.bt, 2
   br i1 %i.bu, label %bytestream2_get_le16.exit151, label %bb.j
@@ -241,41 +241,25 @@ bb.p:                                             ; preds = %bb.o
   %i.cn = ptrtoint ptr %i.ce to i64
   %i.co = sub i64 %i.ba, %i.cn
   %i.cp = icmp slt i64 %i.co, 4
-  br i1 %i.cp, label %bytestream2_get_le32.exit162, label %bb.q
+  br i1 %i.cp, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.cq = getelementptr inbounds nuw i8, ptr %i.ce, i64 4
   store ptr %i.cq, ptr %i.c, align 8, !tbaa !49
   %i.cr = load i32, ptr %i.ce, align 1, !tbaa !50
-  br label %bytestream2_get_le32.exit162
+  br label %bb.r
 
-bytestream2_get_le32.exit162:                     ; preds = %bb.p, %bb.q
-  %.0.i161 = phi i32 [ %i.cr, %bb.q ], [ 0, %bb.p ] ; 3 uses
+bb.r:                                             ; preds = %bb.p, %bb.q
+  %storemerge.a = phi i32 [ %i.cr, %bb.q ], [ 0, %bb.p ] ; 3 uses
   %4 = icmp eq i32 %i.cf, %i.ci
   %or.cond185 = and i1 %i.ac, %4
-  br i1 %or.cond185, label %5, label %12
-
-5:                                                ; preds = %bytestream2_get_le32.exit162
-  %6 = icmp eq i32 %i.cg, %i.cl
-  %7 = icmp eq i32 %.0.i154, 0
-  %or.cond8 = select i1 %6, i1 %7, i1 false
-  %8 = icmp eq i32 %.0.i152, 0
-  %or.cond10 = select i1 %or.cond8, i1 %8, i1 false
-  br i1 %or.cond10, label %9, label %12
-
-9:                                                ; preds = %5
-  %10 = load i32, ptr %i.ad, align 4, !tbaa !59
-  %11 = or i32 %10, 2
-  br label %bb.r
-
-12:                                               ; preds = %5, %bytestream2_get_le32.exit162
-  %13 = load i32, ptr %i.ad, align 4, !tbaa !59
-  %14 = and i32 %13, -3
-  br label %bb.r
-
-bb.r:                                             ; preds = %12, %9
-  %storemerge.a = phi i32 [ %14, %12 ], [ %11, %9 ]
-  store i32 %storemerge.a, ptr %i.ad, align 4, !tbaa !59
+  %5 = icmp eq i32 %i.cg, %i.cl
+  %or.cond201 = select i1 %or.cond185, i1 %5, i1 false
+  %6 = load i32, ptr %i.ad, align 4, !tbaa !59
+  %7 = and i32 %6, -3
+  %masksel = select i1 %or.cond201, i32 2, i32 0
+  %storemerge = or disjoint i32 %7, %masksel
+  store i32 %storemerge, ptr %i.ad, align 4, !tbaa !59
   %i.cs = add nsw i32 %i.af, %.0126198            ; 2 uses
   %i.ct = icmp slt i32 %i.cs, 0
   %..i168 = tail call i32 @llvm.smin.i32(i32 %i.cs, i32 %i.bd)
@@ -319,7 +303,7 @@ bytestream2_get_le32.exit160:                     ; preds = %bytestream2_get_be3
   br i1 %.not144, label %bb.u, label %.thread183
 
 bb.u:                                             ; preds = %bytestream2_get_le32.exit160
-  %i.dh = add i32 %.0.i161, %.0126198
+  %i.dh = add i32 %storemerge.a, %.0126198
   store i32 0, ptr %i.ag, align 4, !tbaa !60
   %i.di = mul nuw nsw i32 %i.cf, 3                ; 3 uses
   store i32 %i.di, ptr %i.ah, align 4, !tbaa !61
@@ -360,12 +344,12 @@ bb.w:                                             ; preds = %bb.v
   store ptr %i.ec, ptr %i.ar, align 8, !tbaa !69
   %i.ed = sub nsw i32 0, %i.dw
   store i32 %i.ed, ptr %i.as, align 8, !tbaa !70
-  %i.ee = icmp sgt i32 %.0.i161, 16
+  %i.ee = icmp sgt i32 %storemerge.a, 16
   br i1 %i.ee, label %.lr.ph, label %decode_idat.exit
 
 .lr.ph:                                           ; preds = %bb.w, %bytestream2_get_le32.exit
   %.0196 = phi i32 [ %.0.i163, %bytestream2_get_le32.exit ], [ %.0.i164, %bb.w ] ; 4 uses
-  %.0122195 = phi i32 [ %i.fq, %bytestream2_get_le32.exit ], [ %.0.i161, %bb.w ]
+  %.0122195 = phi i32 [ %i.fq, %bytestream2_get_le32.exit ], [ %storemerge.a, %bb.w ]
   %i.ef = load ptr, ptr %i.o, align 8, !tbaa !48
   %i.eg = load ptr, ptr %i.c, align 8, !tbaa !51  ; 3 uses
   %i.eh = ptrtoint ptr %i.ef to i64

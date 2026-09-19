@@ -205,8 +205,7 @@ bb.j:                                             ; preds = %.lr.ph
 
 bb.k:                                             ; preds = %bb.j, %bb.i
   %i.bn = sub i64 %spec.select216, %indvars.iv
-  %sext = shl i64 %i.bn, 32
-  %6 = ashr exact i64 %sext, 32                   ; 2 uses
+  %6 = and i64 %i.bn, 4294967295                  ; 2 uses
   %i.bo = load i64, ptr %i.b, align 8, !tbaa !55
   %i.bp = load i64, ptr %i.a, align 8, !tbaa !55
   %i.bq = add i64 %i.bo, %indvars.iv
