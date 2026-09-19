@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   %i.s = add i64 %.fr52, 2879
   %i.t = srem i64 %i.s, 2880                      ; 3 uses
   %i.u = trunc nsw i64 %i.t to i32
-  %i.v = sub nsw i32 2879, %i.u                   ; 4 uses
+  %i.v = sub nsw i32 2879, %i.u                   ; 5 uses
   %i.w = icmp slt i64 %i.t, 0
   br i1 %i.w, label %bb.e, label %bb.f
 
@@ -235,34 +235,43 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.f
   %i.ag = call i32 @ffmbyt(ptr noundef nonnull %0, i64 noundef %.fr52, i32 noundef 0, ptr noundef nonnull %i.b) #28 ; 0 uses
-  %i.ah = zext nneg i32 %i.v to i64               ; 2 uses
+  %i.ah = zext nneg i32 %i.v to i64
   %i.ai = call i32 @ffgbyt(ptr noundef nonnull %0, i64 noundef %i.ah, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #28 ; 0 uses
   %i.aj = load i32, ptr %i.b, align 4, !tbaa !27
   %i.ak = icmp eq i32 %i.aj, 0
-  br i1 %i.ak, label %.lr.ph, label %bb.k
+  br i1 %i.ak, label %.lr.ph.preheader, label %bb.k
 
-.lr.ph:                                           ; preds = %bb.i, %bb.j
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.j ], [ 0, %bb.i ] ; 3 uses
+.lr.ph.preheader:                                 ; preds = %bb.i
+  %umax = call i32 @llvm.umax.i32(i32 %i.v, i32 1) ; 2 uses
+  %wide.trip.count = zext nneg i32 %umax to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.j
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.j ] ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
   %i.am = load i8, ptr %i.al, align 1, !tbaa !29
   %.not54 = icmp eq i8 %i.am, %.
-  br i1 %.not54, label %bb.j, label %._crit_edge
+  br i1 %.not54, label %bb.j, label %._crit_edge.split.loop.exit65
 
 bb.j:                                             ; preds = %.lr.ph
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.ah
-  br i1 %exitcond.not, label %._crit_edge.thread, label %.lr.ph, !llvm.loop !200
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !200
 
-._crit_edge:                                      ; preds = %.lr.ph
+._crit_edge.split.loop.exit65:                    ; preds = %.lr.ph
   %2 = trunc nuw nsw i64 %indvars.iv to i32
-  %i.an = icmp eq i32 %i.v, %2
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %bb.j, %._crit_edge.split.loop.exit65
+  %.0.lcssa.ph = phi i32 [ %2, %._crit_edge.split.loop.exit65 ], [ %umax, %bb.j ]
+  %i.an = icmp eq i32 %.0.lcssa.ph, %i.v
   br i1 %i.an, label %._crit_edge.thread, label %bb.k
 
-._crit_edge.thread:                               ; preds = %bb.j, %._crit_edge
+._crit_edge.thread:                               ; preds = %._crit_edge
   %i.ao = load i32, ptr %1, align 4, !tbaa !27
   br label %bb.m
 
-bb.k:                                             ; preds = %bb.i, %._crit_edge, %bb.g
+bb.k:                                             ; preds = %bb.g, %bb.i, %._crit_edge
   %.046 = phi i64 [ %.fr52, %._crit_edge ], [ %.fr52, %bb.i ], [ %i.aa, %bb.g ]
   %.045 = phi i32 [ %i.v, %._crit_edge ], [ %i.v, %bb.i ], [ 1, %bb.g ]
   %i.ap = zext nneg i32 %.045 to i64              ; 2 uses
@@ -663,6 +672,9 @@ declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly 
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #18

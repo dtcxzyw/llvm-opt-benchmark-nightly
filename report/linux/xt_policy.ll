@@ -111,12 +111,14 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not31.i, label %._crit_edge.i, label %.lr.ph.split.us.i
 
 .thread.i:                                        ; preds = %bb.d
+  %2 = zext i8 %i.w to i32                        ; 3 uses
   %.not3146.i = icmp eq i8 %i.w, 0
   br i1 %.not3146.i, label %._crit_edge.i, label %.lr.ph.split.preheader.i
 
 .lr.ph.split.preheader.i:                         ; preds = %.thread.i
-  %2 = zext i8 %i.w to i64                        ; 2 uses
-  %i.z = zext nneg i16 %i.u to i64
+  %.02840.i = add nsw i32 %2, -1
+  %3 = zext nneg i16 %i.u to i32
+  %i.z = zext nneg i32 %.02840.i to i64
   br label %.lr.ph.split.i
 
 .lr.ph.split.us.i:                                ; preds = %bb.e
@@ -142,22 +144,25 @@ bb.f:                                             ; preds = %.lr.ph.split.us.spl
   br i1 %i.ag, label %.lr.ph.split.us.split.i, label %._crit_edge.i, !llvm.loop !10
 
 .lr.ph.split.i:                                   ; preds = %bb.h, %.lr.ph.split.preheader.i
-  %indvars.iv34.i = phi i64 [ %2, %.lr.ph.split.preheader.i ], [ %indvars.iv.next35.i, %bb.h ] ; 3 uses
-  %indvars.iv.next35.i = add nsw i64 %indvars.iv34.i, -1 ; 2 uses
-  %3 = sub nuw nsw i64 %2, %indvars.iv34.i        ; 2 uses
-  %.not.i = icmp samesign ult i64 %3, %i.z
+  %indvars.iv34.i = phi i64 [ %i.z, %.lr.ph.split.preheader.i ], [ %indvars.iv.next.i, %bb.h ] ; 4 uses
+  %.0.in29.i = phi i32 [ %2, %.lr.ph.split.preheader.i ], [ %7, %bb.h ]
+  %4 = sub nuw nsw i32 %2, %.0.in29.i             ; 2 uses
+  %.not.i = icmp samesign ult i32 %4, %3
   br i1 %.not.i, label %bb.g, label %.loopexit
 
 bb.g:                                             ; preds = %.lr.ph.split.i
-  %i.ah = getelementptr [76 x i8], ptr %i.b, i64 %3
-  %i.ai = getelementptr [8 x i8], ptr %i.q, i64 %indvars.iv.next35.i
+  %5 = zext nneg i32 %4 to i64
+  %i.ah = getelementptr [76 x i8], ptr %i.b, i64 %5
+  %i.ai = getelementptr [8 x i8], ptr %i.q, i64 %indvars.iv34.i
   %i.aj = load ptr, ptr %i.ai, align 8
   %i.ak = tail call fastcc zeroext i1 @match_xfrm_state(ptr noundef %i.aj, ptr noundef readonly %i.ah, i16 noundef zeroext range(i16 0, 256) %i.h) #7, !srcloc !12
   br i1 %i.ak, label %bb.h, label %.loopexit
 
 bb.h:                                             ; preds = %bb.g
-  %4 = icmp samesign ugt i64 %indvars.iv34.i, 1
-  br i1 %4, label %.lr.ph.split.i, label %._crit_edge.i, !llvm.loop !10
+  %indvars.iv.next.i = add nsw i64 %indvars.iv34.i, -1
+  %6 = icmp sgt i64 %indvars.iv34.i, 0
+  %7 = trunc nuw nsw i64 %indvars.iv34.i to i32
+  br i1 %6, label %.lr.ph.split.i, label %._crit_edge.i, !llvm.loop !10
 
 ._crit_edge.i:                                    ; preds = %bb.h, %bb.f, %.thread.i, %bb.e
   %.lobit.i = lshr exact i16 %i.s, 3
