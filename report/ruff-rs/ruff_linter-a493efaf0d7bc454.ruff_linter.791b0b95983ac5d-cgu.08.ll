@@ -204,13 +204,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8568)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8569)
-  %i.g = load i8, ptr %0, align 1, !alias.scope !8568, !noalias !8569, !noundef !13 ; 8 uses
+  %i.g = load i8, ptr %0, align 1, !alias.scope !8568, !noalias !8569, !noundef !13 ; 6 uses
   %i.h = add nsw i64 %1, -1                       ; 2 uses
   %i.i = icmp eq i64 %1, 2
   br i1 %i.i, label %.thread.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.j = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 7) %1, i64 4) ; 6 uses
+  %i.j = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 7) %1, i64 4) ; 4 uses
   %i.k = icmp samesign ult i64 %i.j, %1
   br i1 %i.k, label %.lr.ph, label %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern13simd_contains.exit
 
@@ -245,42 +245,12 @@ bb.g:                                             ; preds = %_RNCINvNvNtNtNtNtCs
   br i1 %i.u, label %.lr.ph.3, label %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern13simd_contains.exit
 
 .lr.ph.3:                                         ; preds = %bb.g
-  %i.v = add nsw i64 %1, -4                       ; 4 uses
+  %i.v = add nsw i64 %1, -4                       ; 3 uses
   %.not = icmp eq i64 %1, 3
-  br i1 %.not, label %bb.h, label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.3
+  br i1 %.not, label %bb.h, label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.5
 
-_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.3: ; preds = %.lr.ph.3
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 %i.v
-  %5 = load i8, ptr %4, align 1, !alias.scope !8568, !noalias !8570, !noundef !13 ; 2 uses
-  %.not.i.not.i.i.3 = icmp eq i8 %5, %i.g
-  br i1 %.not.i.not.i.i.3, label %6, label %bb.i
-
-6:                                                ; preds = %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.3
-  %7 = icmp ult i64 %i.j, %i.v
-  br i1 %7, label %.lr.ph.4, label %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern13simd_contains.exit
-
-.lr.ph.4:                                         ; preds = %6
-  %8 = add nsw i64 %1, -5                         ; 4 uses
-  %9 = icmp samesign ugt i64 %1, 4
-  br i1 %9, label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.4, label %bb.h
-
-_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.4: ; preds = %.lr.ph.4
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 %8
-  %11 = load i8, ptr %10, align 1, !alias.scope !8568, !noalias !8570, !noundef !13 ; 2 uses
-  %.not.i.not.i.i.4 = icmp eq i8 %11, %i.g
-  br i1 %.not.i.not.i.i.4, label %12, label %bb.i
-
-12:                                               ; preds = %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.4
-  %13 = icmp ult i64 %i.j, %8
-  br i1 %13, label %.lr.ph.5, label %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern13simd_contains.exit
-
-.lr.ph.5:                                         ; preds = %12
-  %14 = add nsw i64 %1, -6                        ; 3 uses
-  %.not44 = icmp eq i64 %1, 5
-  br i1 %.not44, label %bb.h, label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.5
-
-_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.5: ; preds = %.lr.ph.5
-  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 %14
+_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.5: ; preds = %.lr.ph.3
+  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 %i.v
   %i.x = load i8, ptr %i.w, align 1, !alias.scope !8568, !noalias !8570, !noundef !13 ; 2 uses
   %.not.i.not.i.i.5 = icmp eq i8 %i.x, %i.g
   br i1 %.not.i.not.i.i.5, label %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern13simd_contains.exit, label %bb.i
@@ -292,14 +262,14 @@ _RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedItera
   %.not.i.not.i.i = icmp eq i8 %i.aa, %i.g
   br i1 %.not.i.not.i.i, label %bb.e, label %bb.i
 
-bb.h:                                             ; preds = %.lr.ph.5, %.lr.ph.4, %.lr.ph.3, %.lr.ph.2
-  %.lcssa39 = phi i64 [ %14, %.lr.ph.5 ], [ %8, %.lr.ph.4 ], [ %i.q, %.lr.ph.2 ], [ %i.v, %.lr.ph.3 ]
+bb.h:                                             ; preds = %.lr.ph.3, %.lr.ph.2
+  %.lcssa39 = phi i64 [ %i.v, %.lr.ph.3 ], [ %i.q, %.lr.ph.2 ]
   tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %.lcssa39, i64 noundef range(i64 2, 7) %1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @49) #40, !noalias !8571
   unreachable
 
-bb.i:                                             ; preds = %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.5, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.4, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.3, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.2, %.lr.ph.1, %.lr.ph
-  %.lcssa42 = phi i8 [ %i.aa, %.lr.ph ], [ %i.o, %.lr.ph.1 ], [ %i.t, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.2 ], [ %5, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.3 ], [ %11, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.4 ], [ %i.x, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.5 ]
-  %.lcssa40 = phi i64 [ %i.y, %.lr.ph ], [ %i.m, %.lr.ph.1 ], [ %i.q, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.2 ], [ %i.v, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.3 ], [ %8, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.4 ], [ %14, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.5 ]
+bb.i:                                             ; preds = %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.5, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.2, %.lr.ph.1, %.lr.ph
+  %.lcssa42 = phi i8 [ %i.aa, %.lr.ph ], [ %i.o, %.lr.ph.1 ], [ %i.t, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.2 ], [ %i.x, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.5 ]
+  %.lcssa40 = phi i64 [ %i.y, %.lr.ph ], [ %i.m, %.lr.ph.1 ], [ %i.q, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.2 ], [ %i.v, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.5 ]
   %i.ab = add nuw nsw i64 %1, 15
   %i.ac = icmp ult i64 %3, %i.ab
   br i1 %i.ac, label %.lr.ph.split.us.i.i, label %bb.j
@@ -516,7 +486,7 @@ bb.t:                                             ; preds = %._crit_edge.i
   %i.dw = or i8 %.sroa.014.3.lcssa.i, %i.dv
   br label %bb.s
 
-_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern13simd_contains.exit: ; preds = %bb.e, %bb.f, %bb.g, %6, %12, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.5, %bb.d
+_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern13simd_contains.exit: ; preds = %bb.e, %bb.f, %bb.g, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.5, %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvMsu_NtNtCs4NRVxsYgnAr_4core3str7patternNtB5_11StrSearcher3new(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.b, ptr noalias noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3, ptr noalias noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1)

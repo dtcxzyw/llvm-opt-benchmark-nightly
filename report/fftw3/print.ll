@@ -204,17 +204,14 @@ bb.av:                                            ; preds = %bb.av, %bb.au
 
 .preheader17.i117:                                ; preds = %bb.av
   %i.fe = ptrtoint ptr %i.fc to i64
-  %i.ff = sub i64 %i.fe, %i.j                     ; 2 uses
+  %i.ff = sub i64 %i.fe, %i.j
   %i.fg = icmp slt i64 %i.ff, 0
   br i1 %i.fg, label %.lr.ph.i121, label %.preheader.i118.preheader
 
-.lr.ph.i121:                                      ; preds = %.preheader17.i117, %.lr.ph.i121
-  %indvars.iv.i122 = phi i64 [ %indvars.iv.next.i123, %.lr.ph.i121 ], [ 0, %.preheader17.i117 ]
+.lr.ph.i121:                                      ; preds = %.preheader17.i117
   %i.fh = load ptr, ptr %i.i, align 8, !tbaa !11
   call void %i.fh(ptr noundef %0, i8 noundef signext 48) #4, !inline_history !18
-  %indvars.iv.next.i123 = add nsw i64 %indvars.iv.i122, -1 ; 2 uses
-  %3 = icmp slt i64 %i.ff, %indvars.iv.next.i123
-  br i1 %3, label %.lr.ph.i121, label %.preheader.i118.preheader, !llvm.loop !19
+  br label %.preheader.i118.preheader
 
 .preheader.i118.preheader:                        ; preds = %.lr.ph.i121, %.preheader17.i117
   br label %.preheader.i118

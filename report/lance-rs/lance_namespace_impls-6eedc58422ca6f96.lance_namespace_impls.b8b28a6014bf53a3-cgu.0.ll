@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lance-rs/original/lance_namespace_impls-6eedc58422ca6f96.lance_namespace_impls.b8b28a6014bf53a3-cgu.0?download=true
 inline.NumInlined: 73510
 inline.NumDeleted: 27553
-loop-unroll.NumCompletelyUnrolled: 87
+loop-unroll.NumCompletelyUnrolled: 88
 loop-unroll.NumRuntimeUnrolled: 193
-loop-unroll.NumUnrolled: 284
+loop-unroll.NumUnrolled: 285
 begin_hunk_0_@_RNvXstQ_NtCs40MM8ukkVQd_9sqlparser3astNtB6_15ContextModifierNtNtCscI6d9CVNmLh_4core3fmt5Debug3fmt:switch.lookup
   %i.b = zext nneg i8 %i.a to i64
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXstQ_NtCs40MM8ukkVQd_9sqlparser3astNtB6_15ContextModifierNtNtCscI6d9CVNmLh_4core3fmt5Debug3fmt, i64 %i.b
@@ -205,37 +205,72 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !251242)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !251243)
-  %i.g = load i8, ptr %0, align 1, !alias.scope !251242, !noalias !251243, !noundef !416 ; 3 uses
+  %i.g = load i8, ptr %0, align 1, !alias.scope !251242, !noalias !251243, !noundef !416 ; 6 uses
   %i.h = add nsw i64 %1, -1                       ; 2 uses
   %i.i = icmp eq i64 %1, 2
   br i1 %i.i, label %.thread.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.j = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 24) %1, i64 4) ; 2 uses
+  %i.j = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 24) %1, i64 4) ; 4 uses
   %i.k = icmp samesign ult i64 %i.j, %1
-  br i1 %i.k, label %.lr.ph.a, label %_RNvNtNtCscI6d9CVNmLh_4core3str7pattern13simd_contains.exit
+  br i1 %i.k, label %_RNCINvNvNtNtNtNtCscI6d9CVNmLh_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i, label %_RNvNtNtCscI6d9CVNmLh_4core3str7pattern13simd_contains.exit
 
-bb.e:                                             ; preds = %_RNCINvNvNtNtNtNtCscI6d9CVNmLh_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i
-  %i.l = icmp ult i64 %i.j, %5
-  br i1 %i.l, label %.lr.ph.a, label %_RNvNtNtCscI6d9CVNmLh_4core3str7pattern13simd_contains.exit
+4:                                                ; preds = %_RNCINvNvNtNtNtNtCscI6d9CVNmLh_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i
+  %5 = icmp ult i64 %i.j, %18
+  br i1 %5, label %.lr.ph.1, label %_RNvNtNtCscI6d9CVNmLh_4core3str7pattern13simd_contains.exit
 
-.lr.ph.a:                                         ; preds = %bb.d, %bb.e
-  %4 = phi i64 [ %5, %bb.e ], [ %1, %bb.d ]
-  %5 = add nsw i64 %4, -1                         ; 6 uses
-  %6 = icmp ult i64 %5, %1
-  br i1 %6, label %_RNCINvNvNtNtNtNtCscI6d9CVNmLh_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i, label %bb.f
+.lr.ph.1:                                         ; preds = %4
+  %6 = add nsw i64 %1, -2                         ; 3 uses
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 %6
+  %8 = load i8, ptr %7, align 1, !alias.scope !251242, !noalias !251244, !noundef !416 ; 2 uses
+  %.not.i.not.i.i.1 = icmp eq i8 %8, %i.g
+  br i1 %.not.i.not.i.i.1, label %bb.e, label %bb.g
 
-bb.f:                                             ; preds = %.lr.ph.a
-  tail call void @_RNvNtCscI6d9CVNmLh_4core9panicking18panic_bounds_check(i64 noundef %5, i64 noundef range(i64 2, 24) %1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2500) #72, !noalias !251244
+bb.e:                                             ; preds = %.lr.ph.1
+  %i.l = icmp ult i64 %i.j, %6
+  br i1 %i.l, label %.lr.ph.2, label %_RNvNtNtCscI6d9CVNmLh_4core3str7pattern13simd_contains.exit
+
+.lr.ph.2:                                         ; preds = %bb.e
+  %9 = add nsw i64 %1, -3                         ; 4 uses
+  %10 = icmp samesign ugt i64 %1, 2
+  br i1 %10, label %.lr.ph.a, label %19
+
+.lr.ph.a:                                         ; preds = %.lr.ph.2
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 %9
+  %12 = load i8, ptr %11, align 1, !alias.scope !251242, !noalias !251244, !noundef !416 ; 2 uses
+  %.not.i.not.i.i.2 = icmp eq i8 %12, %i.g
+  br i1 %.not.i.not.i.i.2, label %13, label %bb.g
+
+13:                                               ; preds = %.lr.ph.a
+  %14 = icmp ult i64 %i.j, %9
+  br i1 %14, label %.lr.ph.3, label %_RNvNtNtCscI6d9CVNmLh_4core3str7pattern13simd_contains.exit
+
+.lr.ph.3:                                         ; preds = %13
+  %15 = add nsw i64 %1, -4                        ; 3 uses
+  %.not = icmp eq i64 %1, 3
+  br i1 %.not, label %19, label %bb.f
+
+bb.f:                                             ; preds = %.lr.ph.3
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 %15
+  %17 = load i8, ptr %16, align 1, !alias.scope !251242, !noalias !251244, !noundef !416 ; 2 uses
+  %.not.i.not.i.i.3 = icmp eq i8 %17, %i.g
+  br i1 %.not.i.not.i.i.3, label %_RNvNtNtCscI6d9CVNmLh_4core3str7pattern13simd_contains.exit, label %bb.g
+
+_RNCINvNvNtNtNtNtCscI6d9CVNmLh_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i: ; preds = %bb.d
+  %18 = add nsw i64 %1, -1                        ; 3 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %18
+  %i.n = load i8, ptr %i.m, align 1, !alias.scope !251242, !noalias !251244, !noundef !416 ; 2 uses
+  %.not.i.not.i.i = icmp eq i8 %i.n, %i.g
+  br i1 %.not.i.not.i.i, label %4, label %bb.g
+
+19:                                               ; preds = %.lr.ph.3, %.lr.ph.2
+  %.lcssa39 = phi i64 [ %15, %.lr.ph.3 ], [ %9, %.lr.ph.2 ]
+  tail call void @_RNvNtCscI6d9CVNmLh_4core9panicking18panic_bounds_check(i64 noundef %.lcssa39, i64 noundef range(i64 2, 24) %1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2500) #72, !noalias !251245
   unreachable
 
-_RNCINvNvNtNtNtNtCscI6d9CVNmLh_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i: ; preds = %.lr.ph.a
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %5
-  %i.n = load i8, ptr %i.m, align 1, !alias.scope !251242, !noalias !251245, !noundef !416 ; 2 uses
-  %.not.i.not.i.i = icmp eq i8 %i.n, %i.g
-  br i1 %.not.i.not.i.i, label %bb.e, label %bb.g
-
-bb.g:                                             ; preds = %_RNCINvNvNtNtNtNtCscI6d9CVNmLh_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i
+bb.g:                                             ; preds = %bb.f, %.lr.ph.a, %.lr.ph.1, %_RNCINvNvNtNtNtNtCscI6d9CVNmLh_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i
+  %.lcssa42 = phi i8 [ %i.n, %_RNCINvNvNtNtNtNtCscI6d9CVNmLh_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i ], [ %8, %.lr.ph.1 ], [ %12, %.lr.ph.a ], [ %17, %bb.f ]
+  %.lcssa40 = phi i64 [ %18, %_RNCINvNvNtNtNtNtCscI6d9CVNmLh_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i ], [ %6, %.lr.ph.1 ], [ %9, %.lr.ph.a ], [ %15, %bb.f ]
   %i.o = add nuw nsw i64 %1, 15
   %i.p = icmp ult i64 %3, %i.o
   br i1 %i.p, label %.lr.ph.split.us.i.i, label %bb.h
@@ -280,9 +315,9 @@ _RNCINvNvNtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator3any5checkRShN
   br i1 %.not28.i.i, label %_RNvNtNtCscI6d9CVNmLh_4core3str7pattern13simd_contains.exit.thread, label %.split.us.i.i
 
 bb.i:                                             ; preds = %bb.h, %.thread93.i
-  %i.ab = phi i8 [ %.pre.i, %.thread93.i ], [ %i.n, %bb.h ]
+  %i.ab = phi i8 [ %.pre.i, %.thread93.i ], [ %.lcssa42, %bb.h ]
   %i.ac = phi <16 x i8> [ %i.s, %.thread93.i ], [ %i.u, %bb.h ] ; 6 uses
-  %storemerge9295.i = phi i64 [ 1, %.thread93.i ], [ %5, %bb.h ] ; 6 uses
+  %storemerge9295.i = phi i64 [ 1, %.thread93.i ], [ %.lcssa40, %bb.h ] ; 6 uses
   %i.ad = insertelement <16 x i8> poison, i8 %i.ab, i64 0
   %i.ae = shufflevector <16 x i8> %i.ad, <16 x i8> poison, <16 x i32> zeroinitializer ; 6 uses
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 1
@@ -452,7 +487,7 @@ bb.r:                                             ; preds = %._crit_edge.i
   %i.dj = or i8 %.sroa.014.3.lcssa.i, %i.di
   br label %bb.q
 
-_RNvNtNtCscI6d9CVNmLh_4core3str7pattern13simd_contains.exit: ; preds = %bb.e, %bb.d
+_RNvNtNtCscI6d9CVNmLh_4core3str7pattern13simd_contains.exit: ; preds = %4, %bb.e, %13, %bb.f, %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvMsu_NtNtCscI6d9CVNmLh_4core3str7patternNtB5_11StrSearcher3new(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.b, ptr noalias noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3, ptr noalias noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1)
@@ -855,8 +890,8 @@ begin_hunk_1_@llvm.vector.reduce.umax.v4i16
 !251241 = distinct !{!251241, !251240, !"_RNCNvNtNtCscI6d9CVNmLh_4core3str7pattern13simd_containss1_0CsfR8GmIBoxTX_21lance_namespace_impls: argument 0"}
 !251242 = !{!251224}
 !251243 = !{!251225}
-!251244 = !{!251232, !251230, !251228, !251227, !251224, !251225}
-!251245 = !{!251232, !251230, !251228, !251227, !251225}
+!251244 = !{!251232, !251230, !251228, !251227, !251225}
+!251245 = !{!251232, !251230, !251228, !251227, !251224, !251225}
 !251246 = !{!251224, !251225}
 !251247 = !{!251235, !251234}
 !251248 = !{!251237, !251224}

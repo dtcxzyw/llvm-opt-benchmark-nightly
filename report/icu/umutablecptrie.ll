@@ -205,7 +205,7 @@ _ZN6icu_7812_GLOBAL__N_116findAllSameBlockEPKjiiji.exit.i.i.i: ; preds = %bb.cm
 
 bb.cn:                                            ; preds = %.lr.ph.i130.i.i.i
   %indvars.iv.next.i132.i.i.i = add nsw i64 %indvars.iv.i131.i.i.i, -1 ; 2 uses
-  %7 = icmp sgt i64 %indvars.iv.next.i132.i.i.i, %i.sb
+  %7 = icmp samesign ugt i64 %indvars.iv.next.i132.i.i.i, %i.sb
   br i1 %7, label %.lr.ph.i130.i.i.i, label %_ZN6icu_7812_GLOBAL__N_117getAllSameOverlapEPKjiji.exit.i.i.i, !llvm.loop !87
 
 .critedge.loopexit.split.loop.exit16.i.i.i.i:     ; preds = %.lr.ph.i130.i.i.i
