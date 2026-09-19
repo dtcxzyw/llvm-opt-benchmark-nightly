@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.p
   %i.jv = shl nuw nsw i32 %i.ju, %i.jb
   %i.jw = add nsw i32 %i.jv, %.neg.i.i
   %i.jx = add i32 %i.jw, %i.jt
-  %i.jy = add nuw nsw i32 %i.jq, %.2.i101.i
+  %i.jy = add nsw i32 %i.jq, %.2.i101.i
   br label %bb.u
 
 bb.r:                                             ; preds = %.lr.ph104.i
@@ -212,7 +212,7 @@ bb.r:                                             ; preds = %.lr.ph104.i
   br i1 %.not159.i.i, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.jz = sub nsw i32 32, %i.jl                   ; 2 uses
+  %i.jz = sub nuw nsw i32 32, %i.jl               ; 2 uses
   %i.ka = shl i32 %i.iu, %i.jz
   %i.kb = add nsw i32 %i.jz, %.2.i101.i
   %.161.i.i = call i32 @llvm.umin.i32(i32 %i.hj, i32 %i.kb)
@@ -221,7 +221,7 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.r
-  %reass.sub.i.i = add nuw nsw i32 %.2.i101.i, 32
+  %reass.sub.i.i = add nsw i32 %.2.i101.i, 32
   %i.ke = sub nsw i32 %reass.sub.i.i, %i.jl
   br label %bb.u
 
@@ -362,9 +362,9 @@ bb.aa:                                            ; preds = %bb.x
   br i1 %.not197.i.i, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.ng = sub nsw i32 32, %i.ms                   ; 2 uses
+  %i.ng = sub nuw nsw i32 32, %i.ms               ; 2 uses
   %i.nh = shl i32 %i.mb, %i.ng
-  %i.ni = add nsw i32 %i.ng, %.0161.i108.i
+  %i.ni = add nuw nsw i32 %i.ng, %.0161.i108.i
   %..i51.i = call i32 @llvm.umin.i32(i32 %i.hj, i32 %i.ni)
   %i.nj = call i32 @llvm.fshl.i32(i32 %i.mt, i32 %i.nh, i32 %i.mi)
   %i.nk = add nuw nsw i32 %..i51.i, %i.mi
@@ -448,7 +448,7 @@ bb.ah:                                            ; preds = %bb.ag
 
 bb.ai:                                            ; preds = %bb.af
   %.not199.i.i = icmp eq i32 %i.oe, 0
-  %i.pe = sub nsw i32 32, %i.oo                   ; 2 uses
+  %i.pe = sub nuw nsw i32 32, %i.oo               ; 2 uses
   %i.pf = shl i32 %i.nx, %i.pe                    ; 3 uses
   %i.pg = add nuw nsw i32 %i.pe, %.201.i.i
   %.203.i.i = call i32 @llvm.umin.i32(i32 %i.hj, i32 %i.pg) ; 2 uses
@@ -849,7 +849,7 @@ bb.i:                                             ; preds = %.lr.ph102
   br i1 %.not159.i, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.ce = sub nsw i32 32, %i.bq                   ; 2 uses
+  %i.ce = sub nuw nsw i32 32, %i.bq               ; 2 uses
   %i.cf = shl i32 %i.az, %i.ce
   %i.cg = add i32 %i.ce, %.2.i99
   %.161.i = call i32 @llvm.umin.i32(i32 %i.o, i32 %i.cg)
@@ -999,7 +999,7 @@ bb.r:                                             ; preds = %bb.o
   br i1 %.not197.i, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.fl = sub nsw i32 32, %i.ex                   ; 2 uses
+  %i.fl = sub nuw nsw i32 32, %i.ex               ; 2 uses
   %i.fm = shl i32 %i.eg, %i.fl
   %i.fn = add i32 %i.fl, %.0161.i106
   %..i49 = call i32 @llvm.umin.i32(i32 %i.o, i32 %i.fn)
@@ -1085,9 +1085,9 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.w
   %.not199.i = icmp eq i32 %i.gj, 0
-  %i.hj = sub nsw i32 32, %i.gt                   ; 2 uses
+  %i.hj = sub nuw nsw i32 32, %i.gt               ; 2 uses
   %i.hk = shl i32 %i.gc, %i.hj                    ; 3 uses
-  %i.hl = add i32 %i.hj, %.201.i
+  %i.hl = add nuw i32 %i.hj, %.201.i
   %.203.i = call i32 @llvm.umin.i32(i32 %i.o, i32 %i.hl) ; 2 uses
   br i1 %.not199.i, label %bb.ab, label %bb.aa
 

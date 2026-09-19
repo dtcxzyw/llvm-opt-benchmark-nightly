@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %.lr.ph
   br i1 %.not38, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e, %.lr.ph
-  %i.t = sub nsw i32 %2, %.042
+  %i.t = sub nuw nsw i32 %2, %.042
   tail call void (ptr, ptr, ...) @udata_printError_78(ptr noundef %0, ptr noundef nonnull @.str, i32 noundef %2, i32 noundef %i.t)
   br label %.loopexit.sink.split
 
@@ -284,7 +284,7 @@ bb.f:                                             ; preds = %.lr.ph
   br i1 %.not42, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f, %.lr.ph
-  %i.t = sub nsw i32 %2, %.047
+  %i.t = sub nuw nsw i32 %2, %.047
   tail call void (ptr, ptr, ...) @udata_printError_78(ptr noundef %0, ptr noundef nonnull @.str.1, i32 noundef %2, i32 noundef %i.t)
   store i32 10, ptr %4, align 4, !tbaa !14
   br label %._crit_edge.thread
@@ -370,7 +370,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not46, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %i.v = sub nsw i32 %2, %.050
+  %i.v = sub nuw nsw i32 %2, %.050
   tail call void (ptr, ptr, ...) @udata_printError_78(ptr noundef %0, ptr noundef nonnull @.str.2, i32 noundef %2, i32 noundef %i.v)
   br label %.loopexit.sink.split
 
@@ -453,7 +453,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not49, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %i.v = sub nsw i32 %2, %.054
+  %i.v = sub nuw nsw i32 %2, %.054
   tail call void (ptr, ptr, ...) @udata_printError_78(ptr noundef %0, ptr noundef nonnull @.str.3, i32 noundef %2, i32 noundef %i.v)
   store i32 10, ptr %4, align 4, !tbaa !14
   br label %._crit_edge.thread

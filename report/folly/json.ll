@@ -205,8 +205,8 @@ define linkonce_odr void @_ZN3fmt2v96detail6bigint6squareEv(ptr noundef nonnull 
 bb.a:
   %1 = alloca %"class.fmt::v9::basic_memory_buffer.87", align 8 ; 12 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !321  ; 11 uses
-  %i.c = trunc i64 %i.b to i32                    ; 9 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !321  ; 12 uses
+  %i.c = trunc i64 %i.b to i32                    ; 8 uses
   %i.d = shl nsw i32 %i.c, 1                      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #34
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 8 uses
@@ -395,7 +395,6 @@ _ZN3fmt2v919basic_memory_bufferIjLm32ESaIjEE6resizeEm.exit: ; preds = %bb.o, %.n
   %i.av = ashr exact i64 %sext, 32                ; 2 uses
   %i.aw = and i64 %i.b, 4294967295
   %i.ax = add i32 %i.c, -2
-  %invariant.op = sub i32 1, %i.c
   %indvars.iv85.prol = add nsw i64 %i.av, -1      ; 2 uses
   %i.ay = getelementptr inbounds [4 x i8], ptr %i.au, i64 %indvars.iv85.prol
   br label %bb.v
@@ -518,8 +517,9 @@ bb.v:                                             ; preds = %.lr.ph61, %._crit_e
   %indvars.iv91 = phi i64 [ %i.aw, %.lr.ph61 ], [ %indvars.iv.next92, %._crit_edge ] ; 3 uses
   %indvars.iv81 = phi i32 [ 1, %.lr.ph61 ], [ %indvars.iv.next82, %._crit_edge ] ; 3 uses
   %.259 = phi i128 [ %.037.lcssa, %.lr.ph61 ], [ %i.ef, %._crit_edge ] ; 3 uses
-  %i.cv = trunc nuw i64 %indvars.iv91 to i32
-  %.reass.reass = add i32 %i.cv, %invariant.op
+  %reass.sub = sub i64 %indvars.iv91, %i.b
+  %i.cv = trunc i64 %reass.sub to i32
+  %.reass.reass = add i32 %i.cv, 1
   %i.cw = icmp slt i32 %.reass.reass, %i.c
   br i1 %i.cw, label %.lr.ph.preheader, label %._crit_edge
 
