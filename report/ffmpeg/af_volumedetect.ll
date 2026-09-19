@@ -122,28 +122,29 @@ logdb.exit.i:                                     ; preds = %bb.g, %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.j, %logdb.exit.i
-  %indvars.iv95.i = phi i64 [ 32768, %logdb.exit.i ], [ %indvars.iv.next96.i, %bb.j ] ; 5 uses
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv95.i
+  %.06282.i = phi i32 [ 32768, %logdb.exit.i ], [ %4, %bb.j ] ; 6 uses
+  %1 = zext nneg i32 %.06282.i to i64
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %1
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 262144
   %i.al = load i64, ptr %i.ak, align 8, !tbaa !21
   %.not66.i = icmp eq i64 %i.al, 0
   br i1 %.not66.i, label %bb.i, label %bb.k
 
 bb.i:                                             ; preds = %bb.h
-  %1 = sub nuw nsw i64 32768, %indvars.iv95.i
-  %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %1
+  %2 = sub nuw nsw i32 32768, %.06282.i
+  %3 = zext nneg i32 %2 to i64
+  %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %3
   %i.an = load i64, ptr %i.am, align 8, !tbaa !21
   %.not67.i = icmp eq i64 %i.an, 0
   br i1 %.not67.i, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  %indvars.iv.next96.i = add nsw i64 %indvars.iv95.i, -1
-  %i.ao = icmp samesign ugt i64 %indvars.iv95.i, 1
+  %4 = add nsw i32 %.06282.i, -1
+  %i.ao = icmp samesign ugt i32 %.06282.i, 1
   br i1 %i.ao, label %bb.h, label %logdb.exit73.i, !llvm.loop !25
 
 bb.k:                                             ; preds = %bb.i, %bb.h
-  %2 = trunc nuw nsw i64 %indvars.iv95.i to i32   ; 2 uses
-  %i.ap = mul nsw i32 %2, %2
+  %i.ap = mul nsw i32 %.06282.i, %.06282.i
   %i.aq = uitofp nneg i32 %i.ap to double
   %i.ar = fmul nnan nsz double %i.aq, f0x3E10000000000000
   %i.as = tail call nnan nsz double @llvm.log10.f64(double %i.ar)
