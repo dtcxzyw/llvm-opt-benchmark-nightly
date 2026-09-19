@@ -1,0 +1,712 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 50e0170b55089..663fc136d01b3 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -16112,6 +16112,18 @@ void ScalarEvolution::LoopGuards::collectFromBlock(
+       append_range(Worklist, S->operands());
+     };
+ 
++    // A non-decreasing recurrence -- one for which "AR >= X" can only go from
++    // false to true -- never goes below its own start value, so it is only
++    // bounded from above by RHS if its start value is. An upper bound therefore
++    // carries over to the start value.
++    auto EnqueueAddRecStart = [&Worklist, &SE](const SCEV *S, bool IsSigned) {
++      const auto *AR = dyn_cast<SCEVAddRecExpr>(S);
++      if (AR && SE.getMonotonicPredicateType(
++                    AR, IsSigned ? ICmpInst::ICMP_SGE : ICmpInst::ICMP_UGE) ==
++                    ScalarEvolution::MonotonicallyIncreasing)
++        Worklist.push_back(AR->getStart());
++    };
++
+     while (!Worklist.empty()) {
+       const SCEV *From = Worklist.pop_back_val();
+       if (isa<SCEVConstant>(From))
+@@ -16127,12 +16139,14 @@ void ScalarEvolution::LoopGuards::collectFromBlock(
+         To = SE.getUMinExpr(FromRewritten, RHS);
+         if (auto *UMax = dyn_cast<SCEVUMaxExpr>(FromRewritten))
+           EnqueueOperands(UMax);
++        EnqueueAddRecStart(FromRewritten, /*IsSigned=*/false);
+         break;
+       case CmpInst::ICMP_SLT:
+       case CmpInst::ICMP_SLE:
+         To = SE.getSMinExpr(FromRewritten, RHS);
+         if (auto *SMax = dyn_cast<SCEVSMaxExpr>(FromRewritten))
+           EnqueueOperands(SMax);
++        EnqueueAddRecStart(FromRewritten, /*IsSigned=*/true);
+         break;
+       case CmpInst::ICMP_UGT:
+       case CmpInst::ICMP_UGE:
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+index a4061bbd60770..0fd92cd9861fe 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+@@ -2415,6 +2415,72 @@ static Instruction *foldICmpUSubSatWithAndForMostSignificantBitCmp(
+   return BinaryOperator::CreateAnd(Or, MSBConst);
+ }
+ 
++/// Fold a select between a shift and the constant that shift produces at the
++/// value the condition compares against, into a shift by a clamped amount:
++///   (X u< C) ? (A shift C) : (A shift X) --> A shift umax(X, C)
++///   (X u> C) ? (A shift C) : (A shift X) --> A shift umin(X, C)
++/// and the same with the arms swapped and the predicate inverted. The constant
++/// arm is exactly the shift evaluated at the boundary, so clamping the shift
++/// amount gives the same value on both sides of the compare. This recovers the
++/// min/max form when the compare is against the shift amount instead of the
++/// shift itself.
++static Value *
++foldSelectWithClampedShiftAmount(SelectInst &SI, ICmpInst &ICI,
++                                 InstCombiner::BuilderTy &Builder) {
++  const APInt *CmpC;
++  if (!ICI.isUnsigned() || !match(ICI.getOperand(1), m_APInt(CmpC)))
++    return nullptr;
++  Value *X = ICI.getOperand(0);
++
++  // Normalize so that the constant is the arm selected when the compare holds.
++  CmpInst::Predicate Pred = ICI.getPredicate();
++  Value *ConstArm = SI.getTrueValue(), *ShiftArm = SI.getFalseValue();
++  if (!isa<Constant>(ConstArm)) {
++    std::swap(ConstArm, ShiftArm);
++    Pred = CmpInst::getInversePredicate(Pred);
++    if (!isa<Constant>(ConstArm))
++      return nullptr;
++  }
++
++  // The shift has to be by the compared value, and go away with the select.
++  auto *Shift = dyn_cast<BinaryOperator>(ShiftArm);
++  Constant *ShiftedC;
++  if (!Shift || !Shift->hasOneUse() ||
++      !match(Shift, m_Shift(m_Constant(ShiftedC), m_Specific(X))))
++    return nullptr;
++
++  // The compare selects the constant arm for a contiguous low (X u<= B) or high
++  // (X u>= B) range of X, with B the boundary. Clamping the shift amount from
++  // below to B pins a low range to a single amount and leaves the rest of X
++  // alone, clamping from above to B does the same for a high range, and so does
++  // clamping to the first value past the boundary. Both candidates have to be
++  // tried, because only one of them may reproduce the constant arm. Ruling out
++  // the empty and full ranges keeps that neighbour from wrapping.
++  ConstantRange CR = ConstantRange::makeExactICmpRegion(Pred, *CmpC);
++  if (CR.isEmptySet() || CR.isFullSet())
++    return nullptr;
++  bool IsLowRange = CR.getUnsignedMin().isZero();
++  APInt B = IsLowRange ? CR.getUnsignedMax() : CR.getUnsignedMin();
++
++  for (const APInt &ClampC : {B, IsLowRange ? B + 1 : B - 1}) {
++    // An out-of-range shift amount would be poison where the source selected
++    // the constant arm, so such a candidate is never usable.
++    if (ClampC.uge(CmpC->getBitWidth()))
++      continue;
++    Constant *ClampCV = ConstantInt::get(X->getType(), ClampC);
++    if (ConstantFoldBinaryOpOperands(Shift->getOpcode(), ShiftedC, ClampCV,
++                                     SI.getDataLayout()) != ConstArm)
++      continue;
++
++    Value *Clamped = Builder.CreateBinaryIntrinsic(
++        IsLowRange ? Intrinsic::umax : Intrinsic::umin, X, ClampCV);
++    // The shift by the clamped amount can lose bits the original could not, so
++    // the no-wrap and exact flags do not carry over.
++    return Builder.CreateBinOp(Shift->getOpcode(), ShiftedC, Clamped);
++  }
++  return nullptr;
++}
++
+ /// Visit a SelectInst that has an ICmpInst as its first operand.
+ Instruction *InstCombinerImpl::foldSelectInstWithICmp(SelectInst &SI,
+                                                       ICmpInst *ICI) {
+@@ -2428,6 +2494,9 @@ Instruction *InstCombinerImpl::foldSelectInstWithICmp(SelectInst &SI,
+   if (Value *V = canonicalizeClampLike(SI, *ICI, Builder, *this))
+     return replaceInstUsesWith(SI, V);
+ 
++  if (Value *V = foldSelectWithClampedShiftAmount(SI, *ICI, Builder))
++    return replaceInstUsesWith(SI, V);
++
+   if (Instruction *NewSel =
+           tryToReuseConstantFromSelectInComparison(SI, *ICI, *this))
+     return NewSel;
+diff --git a/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info-addrec-start.ll b/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info-addrec-start.ll
+new file mode 100644
+index 0000000000000..ad19505a31e07
+--- /dev/null
++++ b/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info-addrec-start.ll
+@@ -0,0 +1,155 @@
++; NOTE: Assertions have been autogenerated by utils/update_analyze_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes='print<scalar-evolution>' -scalar-evolution-classify-expressions=0 -disable-output %s 2>&1 | FileCheck %s
++
++; The guard bounds %iv, which never goes below %start, so %start is bounded by
++; the same value. That bounds the max backedge-taken count of %inner, which
++; runs %start times.
++define void @max_btc_improved_by_ult_guard_on_increasing_addrec(i32 %start) {
++; CHECK-LABEL: 'max_btc_improved_by_ult_guard_on_increasing_addrec'
++; CHECK-NEXT:  Determining loop execution counts for: @max_btc_improved_by_ult_guard_on_increasing_addrec
++; CHECK-NEXT:  Loop %inner: backedge-taken count is %start
++; CHECK-NEXT:  Loop %inner: constant max backedge-taken count is i32 3
++; CHECK-NEXT:  Loop %inner: symbolic max backedge-taken count is %start
++; CHECK-NEXT:  Loop %inner: Trip multiple is 1
++; CHECK-NEXT:  Loop %outer.header: backedge-taken count is ((-1 * %start) + (4 umax %start))
++; CHECK-NEXT:  Loop %outer.header: constant max backedge-taken count is i32 4
++; CHECK-NEXT:  Loop %outer.header: symbolic max backedge-taken count is ((-1 * %start) + (4 umax %start))
++; CHECK-NEXT:  Loop %outer.header: Trip multiple is 1
++;
++entry:
++  br label %outer.header
++
++outer.header:
++  %iv = phi i32 [ %start, %entry ], [ %iv.next, %outer.latch ]
++  %c = icmp ult i32 %iv, 4
++  br i1 %c, label %inner, label %exit
++
++inner:
++  %i = phi i32 [ %start, %outer.header ], [ %i.next, %inner ]
++  %i.next = add i32 %i, -1
++  %ec = icmp eq i32 %i, 0
++  br i1 %ec, label %outer.latch, label %inner
++
++outer.latch:
++  %iv.next = add nuw i32 %iv, 1
++  br label %outer.header
++
++exit:
++  ret void
++}
++
++; Same as @max_btc_improved_by_ult_guard_on_increasing_addrec, but with a
++; signed guard on a signed monotonically increasing recurrence. %start is known
++; positive, so the signed upper bound also bounds it in the unsigned sense.
++define void @max_btc_improved_by_slt_guard_on_increasing_addrec(i32 %start) {
++; CHECK-LABEL: 'max_btc_improved_by_slt_guard_on_increasing_addrec'
++; CHECK-NEXT:  Determining loop execution counts for: @max_btc_improved_by_slt_guard_on_increasing_addrec
++; CHECK-NEXT:  Loop %inner: backedge-taken count is (-1 + %start)
++; CHECK-NEXT:  Loop %inner: constant max backedge-taken count is i32 2
++; CHECK-NEXT:  Loop %inner: symbolic max backedge-taken count is (-1 + %start)
++; CHECK-NEXT:  Loop %inner: Trip multiple is 1
++; CHECK-NEXT:  Loop %outer.header: backedge-taken count is ((-1 * %start) + (4 smax %start))
++; CHECK-NEXT:  Loop %outer.header: constant max backedge-taken count is i32 -2147483644
++; CHECK-NEXT:  Loop %outer.header: symbolic max backedge-taken count is ((-1 * %start) + (4 smax %start))
++; CHECK-NEXT:  Loop %outer.header: Trip multiple is 1
++;
++entry:
++  br label %outer.header
++
++outer.header:
++  %iv = phi i32 [ %start, %entry ], [ %iv.next, %outer.latch ]
++  %c = icmp slt i32 %iv, 4
++  br i1 %c, label %inner.ph, label %exit
++
++inner.ph:
++  %positive = icmp sgt i32 %start, 0
++  br i1 %positive, label %inner, label %outer.latch
++
++inner:
++  %i = phi i32 [ 0, %inner.ph ], [ %i.next, %inner ]
++  %i.next = add nsw i32 %i, 1
++  %ec = icmp eq i32 %i.next, %start
++  br i1 %ec, label %outer.latch, label %inner
++
++outer.latch:
++  %iv.next = add nsw i32 %iv, 1
++  br label %outer.header
++
++exit:
++  ret void
++}
++
++; Negative test: without nuw, %iv may wrap around and become unsigned smaller
++; than %start, so the guard says nothing about %start.
++define void @max_btc_not_improved_by_ult_guard_on_wrapping_addrec(i32 %start) {
++; CHECK-LABEL: 'max_btc_not_improved_by_ult_guard_on_wrapping_addrec'
++; CHECK-NEXT:  Determining loop execution counts for: @max_btc_not_improved_by_ult_guard_on_wrapping_addrec
++; CHECK-NEXT:  Loop %inner: backedge-taken count is %start
++; CHECK-NEXT:  Loop %inner: constant max backedge-taken count is i32 -1
++; CHECK-NEXT:  Loop %inner: symbolic max backedge-taken count is %start
++; CHECK-NEXT:  Loop %inner: Trip multiple is 1
++; CHECK-NEXT:  Loop %outer.header: backedge-taken count is ((-1 * %start) + (4 umax %start))
++; CHECK-NEXT:  Loop %outer.header: constant max backedge-taken count is i32 4
++; CHECK-NEXT:  Loop %outer.header: symbolic max backedge-taken count is ((-1 * %start) + (4 umax %start))
++; CHECK-NEXT:  Loop %outer.header: Trip multiple is 1
++;
++entry:
++  br label %outer.header
++
++outer.header:
++  %iv = phi i32 [ %start, %entry ], [ %iv.next, %outer.latch ]
++  %c = icmp ult i32 %iv, 4
++  br i1 %c, label %inner, label %exit
++
++inner:
++  %i = phi i32 [ %start, %outer.header ], [ %i.next, %inner ]
++  %i.next = add i32 %i, -1
++  %ec = icmp eq i32 %i, 0
++  br i1 %ec, label %outer.latch, label %inner
++
++outer.latch:
++  %iv.next = add i32 %iv, 1
++  br label %outer.header
++
++exit:
++  ret void
++}
++
++; Negative test: %iv decreases, so it is below %start after the first iteration
++; and an upper bound on %iv does not bound %start.
++define void @max_btc_not_improved_by_slt_guard_on_decreasing_addrec(i32 %start) {
++; CHECK-LABEL: 'max_btc_not_improved_by_slt_guard_on_decreasing_addrec'
++; CHECK-NEXT:  Determining loop execution counts for: @max_btc_not_improved_by_slt_guard_on_decreasing_addrec
++; CHECK-NEXT:  Loop %inner: backedge-taken count is (-1 + %start)
++; CHECK-NEXT:  Loop %inner: constant max backedge-taken count is i32 2147483646
++; CHECK-NEXT:  Loop %inner: symbolic max backedge-taken count is (-1 + %start)
++; CHECK-NEXT:  Loop %inner: Trip multiple is 1
++; CHECK-NEXT:  Loop %outer.header: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %outer.header: Unpredictable constant max backedge-taken count.
++; CHECK-NEXT:  Loop %outer.header: Unpredictable symbolic max backedge-taken count.
++;
++entry:
++  br label %outer.header
++
++outer.header:
++  %iv = phi i32 [ %start, %entry ], [ %iv.next, %outer.latch ]
++  %c = icmp slt i32 %iv, 4
++  br i1 %c, label %inner.ph, label %exit
++
++inner.ph:
++  %positive = icmp sgt i32 %start, 0
++  br i1 %positive, label %inner, label %outer.latch
++
++inner:
++  %i = phi i32 [ 0, %inner.ph ], [ %i.next, %inner ]
++  %i.next = add nsw i32 %i, 1
++  %ec = icmp eq i32 %i.next, %start
++  br i1 %ec, label %outer.latch, label %inner
++
++outer.latch:
++  %iv.next = add nsw i32 %iv, -1
++  br label %outer.header
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Transforms/InstCombine/select-of-shift-to-clamped-amount.ll b/llvm/test/Transforms/InstCombine/select-of-shift-to-clamped-amount.ll
+new file mode 100644
+index 0000000000000..418a05f3e9117
+--- /dev/null
++++ b/llvm/test/Transforms/InstCombine/select-of-shift-to-clamped-amount.ll
+@@ -0,0 +1,234 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py
++; RUN: opt -passes=instcombine -S %s | FileCheck %s
++
++declare void @use8(i8)
++
++; select (icmp ult X, C), (shl A, C), (shl A, X)  ==  shl A, umax(X, C)
++; 36 == 9 << 2, so this is "shl 9, umax(%x, 2)".
++define i32 @clamped_shl(i32 %x) {
++; CHECK-LABEL: @clamped_shl(
++; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @llvm.umax.i32(i32 [[X:%.*]], i32 2)
++; CHECK-NEXT:    [[R:%.*]] = shl i32 9, [[TMP1]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %c = icmp ult i32 %x, 2
++  %s = shl i32 9, %x
++  %r = select i1 %c, i32 36, i32 %s
++  ret i32 %r
++}
++
++; select (icmp ugt X, C), (lshr A, C), (lshr A, X)  ==  lshr A, umin(X, C)
++; 31 == 255 >> 3.
++define i8 @clamped_lshr_umin(i8 %x) {
++; CHECK-LABEL: @clamped_lshr_umin(
++; CHECK-NEXT:    [[TMP1:%.*]] = call i8 @llvm.umin.i8(i8 [[X:%.*]], i8 3)
++; CHECK-NEXT:    [[R:%.*]] = lshr i8 -1, [[TMP1]]
++; CHECK-NEXT:    ret i8 [[R]]
++;
++  %c = icmp ugt i8 %x, 3
++  %s = lshr i8 -1, %x
++  %r = select i1 %c, i8 31, i8 %s
++  ret i8 %r
++}
++
++; ashr with a negative shifted constant. -2 == -8 >> 2.
++define i8 @clamped_ashr_umin(i8 %x) {
++; CHECK-LABEL: @clamped_ashr_umin(
++; CHECK-NEXT:    [[TMP1:%.*]] = call i8 @llvm.umin.i8(i8 [[X:%.*]], i8 2)
++; CHECK-NEXT:    [[R:%.*]] = ashr exact i8 -8, [[TMP1]]
++; CHECK-NEXT:    ret i8 [[R]]
++;
++  %c = icmp ugt i8 %x, 2
++  %s = ashr i8 -8, %x
++  %r = select i1 %c, i8 -2, i8 %s
++  ret i8 %r
++}
++
++; lshr in the umax direction.
++define i8 @clamped_lshr_umax(i8 %x) {
++; CHECK-LABEL: @clamped_lshr_umax(
++; CHECK-NEXT:    [[TMP1:%.*]] = call i8 @llvm.umax.i8(i8 [[X:%.*]], i8 3)
++; CHECK-NEXT:    [[R:%.*]] = lshr i8 -1, [[TMP1]]
++; CHECK-NEXT:    ret i8 [[R]]
++;
++  %c = icmp ult i8 %x, 3
++  %s = lshr i8 -1, %x
++  %r = select i1 %c, i8 31, i8 %s
++  ret i8 %r
++}
++
++; The boundary value can be reached by more than one shift amount: 4 >> K is 0
++; for every K in [3, 8). The fold still holds.
++define i8 @clamped_saturated_boundary(i8 %x) {
++; CHECK-LABEL: @clamped_saturated_boundary(
++; CHECK-NEXT:    [[TMP1:%.*]] = call i8 @llvm.umax.i8(i8 [[X:%.*]], i8 3)
++; CHECK-NEXT:    [[R:%.*]] = lshr i8 4, [[TMP1]]
++; CHECK-NEXT:    ret i8 [[R]]
++;
++  %c = icmp ult i8 %x, 3
++  %s = lshr i8 4, %x
++  %r = select i1 %c, i8 0, i8 %s
++  ret i8 %r
++}
++
++; Vector splat.
++define <2 x i8> @clamped_lshr_vector(<2 x i8> %x) {
++; CHECK-LABEL: @clamped_lshr_vector(
++; CHECK-NEXT:    [[TMP1:%.*]] = call <2 x i8> @llvm.umax.v2i8(<2 x i8> [[X:%.*]], <2 x i8> splat (i8 3))
++; CHECK-NEXT:    [[R:%.*]] = lshr <2 x i8> splat (i8 -1), [[TMP1]]
++; CHECK-NEXT:    ret <2 x i8> [[R]]
++;
++  %c = icmp ult <2 x i8> %x, splat (i8 3)
++  %s = lshr <2 x i8> splat (i8 -1), %x
++  %r = select <2 x i1> %c, <2 x i8> splat (i8 31), <2 x i8> %s
++  ret <2 x i8> %r
++}
++
++; The shifted value and the constant arm need not be splats, as long as the
++; compare is against a single shift amount: 255 >> 3 is 31 and 4 >> 3 is 0.
++define <2 x i8> @clamped_lshr_vector_non_splat(<2 x i8> %x) {
++; CHECK-LABEL: @clamped_lshr_vector_non_splat(
++; CHECK-NEXT:    [[TMP1:%.*]] = call <2 x i8> @llvm.umax.v2i8(<2 x i8> [[X:%.*]], <2 x i8> splat (i8 3))
++; CHECK-NEXT:    [[R:%.*]] = lshr <2 x i8> <i8 -1, i8 4>, [[TMP1]]
++; CHECK-NEXT:    ret <2 x i8> [[R]]
++;
++  %c = icmp ult <2 x i8> %x, splat (i8 3)
++  %s = lshr <2 x i8> <i8 -1, i8 4>, %x
++  %r = select <2 x i1> %c, <2 x i8> <i8 31, i8 0>, <2 x i8> %s
++  ret <2 x i8> %r
++}
++
++; The rebuilt shift must not keep the original no-wrap flags: 3 shl 7 wraps to
++; -128, so the true arm is defined for every %x u< 7 while `shl nuw i8 3, 7`
++; would be poison.
++define i8 @drops_nuw(i8 %x) {
++; CHECK-LABEL: @drops_nuw(
++; CHECK-NEXT:    [[TMP1:%.*]] = call i8 @llvm.umax.i8(i8 [[X:%.*]], i8 7)
++; CHECK-NEXT:    [[R:%.*]] = shl i8 3, [[TMP1]]
++; CHECK-NEXT:    ret i8 [[R]]
++;
++  %c = icmp ult i8 %x, 7
++  %s = shl nuw i8 3, %x
++  %r = select i1 %c, i8 -128, i8 %s
++  ret i8 %r
++}
++
++; The swapped-arm spelling of @clamped_lshr_umax: the shift is the true arm and
++; the boundary constant the false arm. Inverting the predicate makes it
++; non-strict (canonical IR has already turned `uge 3` into `ugt 2`), so the clamp
++; constant comes from the past-the-boundary candidate.
++define i8 @swapped_arms(i8 %x) {
++; CHECK-LABEL: @swapped_arms(
++; CHECK-NEXT:    [[TMP1:%.*]] = call i8 @llvm.umax.i8(i8 [[X:%.*]], i8 3)
++; CHECK-NEXT:    [[R:%.*]] = lshr i8 -1, [[TMP1]]
++; CHECK-NEXT:    ret i8 [[R]]
++;
++  %c = icmp uge i8 %x, 3
++  %s = lshr i8 -1, %x
++  %r = select i1 %c, i8 %s, i8 31
++  ret i8 %r
++}
++
++; Swapped arms in the umin direction: `ult 4` inverts to UGE(4) and the clamp
++; constant is the boundary itself. 15 == 255 >> 4.
++define i8 @swapped_arms_umin(i8 %x) {
++; CHECK-LABEL: @swapped_arms_umin(
++; CHECK-NEXT:    [[TMP1:%.*]] = call i8 @llvm.umin.i8(i8 [[X:%.*]], i8 4)
++; CHECK-NEXT:    [[R:%.*]] = lshr i8 -1, [[TMP1]]
++; CHECK-NEXT:    ret i8 [[R]]
++;
++  %c = icmp ult i8 %x, 4
++  %s = lshr i8 -1, %x
++  %r = select i1 %c, i8 %s, i8 15
++  ret i8 %r
++}
++
++; Negative test: the compare constant is not a valid shift amount for the type,
++; so clamping to it would make the shift poison at e.g. %x == 10, where the
++; original selected the constant arm.
++define i8 @negative_cmp_constant_out_of_range(i8 %x) {
++; CHECK-LABEL: @negative_cmp_constant_out_of_range(
++; CHECK-NEXT:    [[C:%.*]] = icmp ult i8 [[X:%.*]], 20
++; CHECK-NEXT:    [[S:%.*]] = lshr i8 -1, [[X]]
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[C]], i8 0, i8 [[S]]
++; CHECK-NEXT:    ret i8 [[R]]
++;
++  %c = icmp ult i8 %x, 20
++  %s = lshr i8 -1, %x
++  %r = select i1 %c, i8 0, i8 %s
++  ret i8 %r
++}
++
++; Negative test: the constant arm is not the shift evaluated at the boundary
++; (255 >> 3 is 31, not 30).
++define i8 @negative_not_boundary_value(i8 %x) {
++; CHECK-LABEL: @negative_not_boundary_value(
++; CHECK-NEXT:    [[C:%.*]] = icmp ult i8 [[X:%.*]], 3
++; CHECK-NEXT:    [[S:%.*]] = lshr i8 -1, [[X]]
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[C]], i8 30, i8 [[S]]
++; CHECK-NEXT:    ret i8 [[R]]
++;
++  %c = icmp ult i8 %x, 3
++  %s = lshr i8 -1, %x
++  %r = select i1 %c, i8 30, i8 %s
++  ret i8 %r
++}
++
++; Negative test: signed predicate.
++define i8 @negative_signed_predicate(i8 %x) {
++; CHECK-LABEL: @negative_signed_predicate(
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i8 [[X:%.*]], 3
++; CHECK-NEXT:    [[S:%.*]] = lshr i8 -1, [[X]]
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[C]], i8 31, i8 [[S]]
++; CHECK-NEXT:    ret i8 [[R]]
++;
++  %c = icmp slt i8 %x, 3
++  %s = lshr i8 -1, %x
++  %r = select i1 %c, i8 31, i8 %s
++  ret i8 %r
++}
++
++; Negative test: the shift has another use, so folding would not remove it.
++define i8 @negative_shift_multi_use(i8 %x) {
++; CHECK-LABEL: @negative_shift_multi_use(
++; CHECK-NEXT:    [[C:%.*]] = icmp ult i8 [[X:%.*]], 3
++; CHECK-NEXT:    [[S:%.*]] = lshr i8 -1, [[X]]
++; CHECK-NEXT:    call void @use8(i8 [[S]])
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[C]], i8 31, i8 [[S]]
++; CHECK-NEXT:    ret i8 [[R]]
++;
++  %c = icmp ult i8 %x, 3
++  %s = lshr i8 -1, %x
++  call void @use8(i8 %s)
++  %r = select i1 %c, i8 31, i8 %s
++  ret i8 %r
++}
++
++; Negative test: the shifted value is not a constant, so the boundary value
++; cannot be computed.
++define i8 @negative_variable_shifted_value(i8 %x, i8 %a) {
++; CHECK-LABEL: @negative_variable_shifted_value(
++; CHECK-NEXT:    [[C:%.*]] = icmp ult i8 [[X:%.*]], 3
++; CHECK-NEXT:    [[S:%.*]] = lshr i8 [[A:%.*]], [[X]]
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[C]], i8 31, i8 [[S]]
++; CHECK-NEXT:    ret i8 [[R]]
++;
++  %c = icmp ult i8 %x, 3
++  %s = lshr i8 %a, %x
++  %r = select i1 %c, i8 31, i8 %s
++  ret i8 %r
++}
++
++; Negative test: the shift amount is not the value the compare tests.
++define i8 @negative_shift_amount_not_compared(i8 %x, i8 %y) {
++; CHECK-LABEL: @negative_shift_amount_not_compared(
++; CHECK-NEXT:    [[C:%.*]] = icmp ult i8 [[X:%.*]], 3
++; CHECK-NEXT:    [[S:%.*]] = lshr i8 -1, [[Y:%.*]]
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[C]], i8 31, i8 [[S]]
++; CHECK-NEXT:    ret i8 [[R]]
++;
++  %c = icmp ult i8 %x, 3
++  %s = lshr i8 -1, %y
++  %r = select i1 %c, i8 31, i8 %s
++  ret i8 %r
++}
+diff --git a/llvm/test/Transforms/PhaseOrdering/X86/guard-bounds-addrec-start.ll b/llvm/test/Transforms/PhaseOrdering/X86/guard-bounds-addrec-start.ll
+new file mode 100644
+index 0000000000000..e3f007fa28f7d
+--- /dev/null
++++ b/llvm/test/Transforms/PhaseOrdering/X86/guard-bounds-addrec-start.ll
+@@ -0,0 +1,180 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -O3 -S %s | FileCheck %s
++
++target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
++target triple = "x86_64-pc-linux-gnu"
++
++; Reduced from php's zend_jit_vm_helpers.c. After inlining @find_recursive_ret,
++; nothing compares %depth to 4 directly any longer; the only bound left is the
++; guard on the search loop's induction variable, which starts at %depth. SCEV
++; recovers %depth s<= 3 from that guard, so the summing loop inlined into
++; @trace_execute runs at most 4 times and is not vectorized, while @sum_frames
++; on its own still is.
++
++define i32 @trace_execute(ptr %frames, i32 %depth) {
++; CHECK-LABEL: define i32 @trace_execute(
++; CHECK-SAME: ptr nofree readonly captures(address_is_null) [[FRAMES:%.*]], i32 [[DEPTH:%.*]]) local_unnamed_addr #[[ATTR0:[0-9]+]] {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[F_IS_NULL1_I:%.*]] = icmp eq ptr [[FRAMES]], null
++; CHECK-NEXT:    br i1 [[F_IS_NULL1_I]], label %[[COMMON_RET:.*]], label %[[LOOP_BODY_I:.*]]
++; CHECK:       [[LOOP_BODY_I]]:
++; CHECK-NEXT:    [[D3_I:%.*]] = phi i32 [ [[D_NEXT_I:%.*]], %[[LOOP_LATCH_I:.*]] ], [ [[DEPTH]], %[[ENTRY]] ]
++; CHECK-NEXT:    [[F2_I:%.*]] = phi ptr [ [[NEXT_I:%.*]], %[[LOOP_LATCH_I]] ], [ [[FRAMES]], %[[ENTRY]] ]
++; CHECK-NEXT:    [[NUM_ARGS_ADDR_I:%.*]] = getelementptr i8, ptr [[F2_I]], i64 8
++; CHECK-NEXT:    [[NUM_ARGS_I:%.*]] = load i32, ptr [[NUM_ARGS_ADDR_I]], align 4
++; CHECK-NEXT:    [[HAS_ARGS_I:%.*]] = icmp ne i32 [[NUM_ARGS_I]], 0
++; CHECK-NEXT:    [[IN_RANGE_I:%.*]] = icmp slt i32 [[D3_I]], 4
++; CHECK-NEXT:    [[CONT_I:%.*]] = select i1 [[HAS_ARGS_I]], i1 [[IN_RANGE_I]], i1 false
++; CHECK-NEXT:    br i1 [[CONT_I]], label %[[LOOP_CHECK_I:.*]], label %[[COMMON_RET]]
++; CHECK:       [[LOOP_CHECK_I]]:
++; CHECK-NEXT:    [[RECURSIVE_ADDR_I:%.*]] = getelementptr i8, ptr [[F2_I]], i64 12
++; CHECK-NEXT:    [[RECURSIVE_I:%.*]] = load i32, ptr [[RECURSIVE_ADDR_I]], align 4
++; CHECK-NEXT:    [[IS_RECURSIVE_NOT_I:%.*]] = icmp eq i32 [[RECURSIVE_I]], 0
++; CHECK-NEXT:    br i1 [[IS_RECURSIVE_NOT_I]], label %[[LOOP_LATCH_I]], label %[[COUNT:.*]]
++; CHECK:       [[LOOP_LATCH_I]]:
++; CHECK-NEXT:    [[NEXT_I]] = load ptr, ptr [[F2_I]], align 8
++; CHECK-NEXT:    [[D_NEXT_I]] = add nsw i32 [[D3_I]], 1
++; CHECK-NEXT:    [[F_IS_NULL_I:%.*]] = icmp eq ptr [[NEXT_I]], null
++; CHECK-NEXT:    br i1 [[F_IS_NULL_I]], label %[[COMMON_RET]], label %[[LOOP_BODY_I]]
++; CHECK:       [[COMMON_RET]]:
++; CHECK-NEXT:    [[COMMON_RET_OP:%.*]] = phi i32 [ [[SUM_NEXT_I:%.*]], %[[LOOP_LATCH_I1:.*]] ], [ 0, %[[COUNT]] ], [ 0, %[[ENTRY]] ], [ 0, %[[LOOP_BODY_I]] ], [ 0, %[[LOOP_LATCH_I]] ]
++; CHECK-NEXT:    ret i32 [[COMMON_RET_OP]]
++; CHECK:       [[COUNT]]:
++; CHECK-NEXT:    [[C1_I:%.*]] = icmp sgt i32 [[DEPTH]], 0
++; CHECK-NEXT:    br i1 [[C1_I]], label %[[LOOP_LATCH_PREHEADER_I:.*]], label %[[COMMON_RET]]
++; CHECK:       [[LOOP_LATCH_PREHEADER_I]]:
++; CHECK-NEXT:    [[WIDE_TRIP_COUNT_I:%.*]] = zext nneg i32 [[DEPTH]] to i64
++; CHECK-NEXT:    br label %[[LOOP_LATCH_I1]]
++; CHECK:       [[LOOP_LATCH_I1]]:
++; CHECK-NEXT:    [[INDVARS_IV_I:%.*]] = phi i64 [ 0, %[[LOOP_LATCH_PREHEADER_I]] ], [ [[INDVARS_IV_NEXT_I:%.*]], %[[LOOP_LATCH_I1]] ]
++; CHECK-NEXT:    [[SUM3_I:%.*]] = phi i32 [ 0, %[[LOOP_LATCH_PREHEADER_I]] ], [ [[SUM_NEXT_I]], %[[LOOP_LATCH_I1]] ]
++; CHECK-NEXT:    [[GEP_I:%.*]] = getelementptr [4 x i8], ptr [[FRAMES]], i64 [[INDVARS_IV_I]]
++; CHECK-NEXT:    [[L_I:%.*]] = load i32, ptr [[GEP_I]], align 4
++; CHECK-NEXT:    [[SUM_NEXT_I]] = add i32 [[L_I]], [[SUM3_I]]
++; CHECK-NEXT:    [[INDVARS_IV_NEXT_I]] = add nuw nsw i64 [[INDVARS_IV_I]], 1
++; CHECK-NEXT:    [[EXITCOND_NOT_I:%.*]] = icmp eq i64 [[INDVARS_IV_NEXT_I]], [[WIDE_TRIP_COUNT_I]]
++; CHECK-NEXT:    br i1 [[EXITCOND_NOT_I]], label %[[COMMON_RET]], label %[[LOOP_LATCH_I1]]
++;
++entry:
++  %found = call i32 @find_recursive_ret(ptr %frames, i32 %depth)
++  %c = icmp eq i32 %found, 0
++  br i1 %c, label %exit, label %count
++
++count:
++  %sum = call i32 @sum_frames(ptr %frames, i32 %depth)
++  ret i32 %sum
++
++exit:
++  ret i32 0
++}
++
++define internal i32 @find_recursive_ret(ptr %frame, i32 %depth) {
++entry:
++  br label %loop.header
++
++loop.header:
++  %f = phi ptr [ %frame, %entry ], [ %next, %loop.latch ]
++  %d = phi i32 [ %depth, %entry ], [ %d.next, %loop.latch ]
++  %f.is.null = icmp eq ptr %f, null
++  br i1 %f.is.null, label %not.found, label %loop.body
++
++loop.body:
++  %num.args.addr = getelementptr i8, ptr %f, i64 8
++  %num.args = load i32, ptr %num.args.addr, align 4
++  %has.args = icmp ne i32 %num.args, 0
++  %in.range = icmp slt i32 %d, 4
++  %cont = select i1 %has.args, i1 %in.range, i1 false
++  br i1 %cont, label %loop.check, label %not.found
++
++loop.check:
++  %recursive.addr = getelementptr i8, ptr %f, i64 12
++  %recursive = load i32, ptr %recursive.addr, align 4
++  %is.recursive = icmp ne i32 %recursive, 0
++  br i1 %is.recursive, label %found, label %loop.latch
++
++loop.latch:
++  %next = load ptr, ptr %f, align 8
++  %d.next = add nsw i32 %d, 1
++  br label %loop.header
++
++found:
++  ret i32 1
++
++not.found:
++  ret i32 0
++}
++
++define i32 @sum_frames(ptr %p, i32 %n) {
++; CHECK-LABEL: define i32 @sum_frames(
++; CHECK-SAME: ptr nofree readonly captures(none) [[P:%.*]], i32 [[N:%.*]]) local_unnamed_addr #[[ATTR1:[0-9]+]] {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[C1:%.*]] = icmp sgt i32 [[N]], 0
++; CHECK-NEXT:    br i1 [[C1]], label %[[LOOP_LATCH_PREHEADER:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_LATCH_PREHEADER]]:
++; CHECK-NEXT:    [[WIDE_TRIP_COUNT:%.*]] = zext nneg i32 [[N]] to i64
++; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i32 [[N]], 8
++; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], label %[[LOOP_LATCH_PREHEADER7:.*]], label %[[VECTOR_PH:.*]]
++; CHECK:       [[VECTOR_PH]]:
++; CHECK-NEXT:    [[N_VEC:%.*]] = and i64 [[WIDE_TRIP_COUNT]], 2147483640
++; CHECK-NEXT:    br label %[[VECTOR_BODY:.*]]
++; CHECK:       [[VECTOR_BODY]]:
++; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], %[[VECTOR_BODY]] ]
++; CHECK-NEXT:    [[VEC_PHI:%.*]] = phi <4 x i32> [ zeroinitializer, %[[VECTOR_PH]] ], [ [[TMP2:%.*]], %[[VECTOR_BODY]] ]
++; CHECK-NEXT:    [[VEC_PHI5:%.*]] = phi <4 x i32> [ zeroinitializer, %[[VECTOR_PH]] ], [ [[TMP3:%.*]], %[[VECTOR_BODY]] ]
++; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr [4 x i8], ptr [[P]], i64 [[INDEX]]
++; CHECK-NEXT:    [[TMP1:%.*]] = getelementptr i8, ptr [[TMP0]], i64 16
++; CHECK-NEXT:    [[WIDE_LOAD:%.*]] = load <4 x i32>, ptr [[TMP0]], align 4
++; CHECK-NEXT:    [[WIDE_LOAD6:%.*]] = load <4 x i32>, ptr [[TMP1]], align 4
++; CHECK-NEXT:    [[TMP2]] = add <4 x i32> [[WIDE_LOAD]], [[VEC_PHI]]
++; CHECK-NEXT:    [[TMP3]] = add <4 x i32> [[WIDE_LOAD6]], [[VEC_PHI5]]
++; CHECK-NEXT:    [[INDEX_NEXT]] = add nuw i64 [[INDEX]], 8
++; CHECK-NEXT:    [[TMP4:%.*]] = icmp eq i64 [[INDEX_NEXT]], [[N_VEC]]
++; CHECK-NEXT:    br i1 [[TMP4]], label %[[MIDDLE_BLOCK:.*]], label %[[VECTOR_BODY]], !llvm.loop [[LOOP0:![0-9]+]]
++; CHECK:       [[MIDDLE_BLOCK]]:
++; CHECK-NEXT:    [[BIN_RDX:%.*]] = add <4 x i32> [[TMP3]], [[TMP2]]
++; CHECK-NEXT:    [[TMP5:%.*]] = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> [[BIN_RDX]])
++; CHECK-NEXT:    [[CMP_N:%.*]] = icmp eq i64 [[N_VEC]], [[WIDE_TRIP_COUNT]]
++; CHECK-NEXT:    br i1 [[CMP_N]], label %[[EXIT]], label %[[LOOP_LATCH_PREHEADER7]]
++; CHECK:       [[LOOP_LATCH_PREHEADER7]]:
++; CHECK-NEXT:    [[INDVARS_IV_PH:%.*]] = phi i64 [ 0, %[[LOOP_LATCH_PREHEADER]] ], [ [[N_VEC]], %[[MIDDLE_BLOCK]] ]
++; CHECK-NEXT:    [[SUM3_PH:%.*]] = phi i32 [ 0, %[[LOOP_LATCH_PREHEADER]] ], [ [[TMP5]], %[[MIDDLE_BLOCK]] ]
++; CHECK-NEXT:    br label %[[LOOP_LATCH:.*]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ [[INDVARS_IV_NEXT:%.*]], %[[LOOP_LATCH]] ], [ [[INDVARS_IV_PH]], %[[LOOP_LATCH_PREHEADER7]] ]
++; CHECK-NEXT:    [[SUM3:%.*]] = phi i32 [ [[SUM_NEXT:%.*]], %[[LOOP_LATCH]] ], [ [[SUM3_PH]], %[[LOOP_LATCH_PREHEADER7]] ]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr [4 x i8], ptr [[P]], i64 [[INDVARS_IV]]
++; CHECK-NEXT:    [[L:%.*]] = load i32, ptr [[GEP]], align 4
++; CHECK-NEXT:    [[SUM_NEXT]] = add i32 [[L]], [[SUM3]]
++; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add nuw nsw i64 [[INDVARS_IV]], 1
++; CHECK-NEXT:    [[EXITCOND_NOT:%.*]] = icmp eq i64 [[INDVARS_IV_NEXT]], [[WIDE_TRIP_COUNT]]
++; CHECK-NEXT:    br i1 [[EXITCOND_NOT]], label %[[EXIT]], label %[[LOOP_LATCH]], !llvm.loop [[LOOP3:![0-9]+]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[SUM_LCSSA:%.*]] = phi i32 [ 0, %[[ENTRY]] ], [ [[TMP5]], %[[MIDDLE_BLOCK]] ], [ [[SUM_NEXT]], %[[LOOP_LATCH]] ]
++; CHECK-NEXT:    ret i32 [[SUM_LCSSA]]
++;
++entry:
++  br label %loop.header
++
++loop.header:
++  %iv = phi i32 [ 0, %entry ], [ %iv.next, %loop.latch ]
++  %sum = phi i32 [ 0, %entry ], [ %sum.next, %loop.latch ]
++  %c = icmp slt i32 %iv, %n
++  br i1 %c, label %loop.latch, label %exit
++
++loop.latch:
++  %idx = zext i32 %iv to i64
++  %gep = getelementptr i32, ptr %p, i64 %idx
++  %l = load i32, ptr %gep, align 4
++  %sum.next = add i32 %sum, %l
++  %iv.next = add i32 %iv, 1
++  br label %loop.header
++
++exit:
++  ret i32 %sum
++}
++;.
++; CHECK: [[LOOP0]] = distinct !{[[LOOP0]], [[META1:![0-9]+]], [[META2:![0-9]+]]}
++; CHECK: [[META1]] = !{!"llvm.loop.isvectorized", i32 1}
++; CHECK: [[META2]] = !{!"llvm.loop.unroll.runtime.disable"}
++; CHECK: [[LOOP3]] = distinct !{[[LOOP3]], [[META2]], [[META1]]}
++;.
