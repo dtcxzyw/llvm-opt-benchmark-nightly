@@ -205,7 +205,7 @@ _ZNSt6vectorImSaImEEC2EmRKmRKS0_.exit124:         ; preds = %.lr.ph.i.i.i.i.i.i.
 .lr.ph239:                                        ; preds = %.preheader
   %i.fw = load ptr, ptr %i.cd, align 8, !tbaa !93
   %i.fx = load ptr, ptr %i.dq, align 8, !tbaa !93
-  %i.fy = add nsw i32 %narrow.i88, -3
+  %i.fy = add nsw i32 %narrow.i88, -3             ; 4 uses
   %i.fz = icmp sgt i32 %i.i, 2
   %i.ga = getelementptr inbounds nuw i8, ptr %5, i64 12
   %i.gb = zext i32 %i.fy to i64
@@ -362,9 +362,9 @@ bb.ar:                                            ; preds = %.lr.ph239, %._crit_
   %narrow.i161 = call i32 @llvm.smax.i32(i32 %i.hr, i32 1)
   %i.hs = load i32, ptr %21, align 4
   %narrow.i170 = call i32 @llvm.smax.i32(i32 %i.hs, i32 1)
-  %22 = zext nneg i32 %narrow.i170 to i64
-  %23 = zext nneg i32 %narrow.i161 to i64
-  %24 = zext nneg i32 %narrow.i143 to i64
+  %.first_iter = icmp ult i32 %i.fy, %narrow.i143
+  %.first_iter247 = icmp samesign ult i32 %i.fy, %narrow.i161
+  %.first_iter248 = icmp samesign ult i32 %i.fy, %narrow.i170
   br label %bb.as
 
 ._crit_edge:                                      ; preds = %bb.bi, %bb.ar
@@ -397,12 +397,11 @@ bb.ar:                                            ; preds = %.lr.ph239, %._crit_
   br i1 %i.im, label %bb.ar, label %._crit_edge240, !llvm.loop !223
 
 bb.as:                                            ; preds = %.lr.ph236, %bb.bi
-  %indvars.iv244 = phi i64 [ %i.gb, %.lr.ph236 ], [ %indvars.iv.next245, %bb.bi ] ; 10 uses
+  %indvars.iv244 = phi i64 [ %i.gb, %.lr.ph236 ], [ %indvars.iv.next245, %bb.bi ] ; 7 uses
   %.070234 = phi i64 [ 0, %.lr.ph236 ], [ %i.kd, %bb.bi ]
   %.071233 = phi i64 [ 0, %.lr.ph236 ], [ %i.jo, %bb.bi ]
   %.073232 = phi i64 [ %.072238, %.lr.ph236 ], [ %i.iw, %bb.bi ] ; 2 uses
-  %25 = icmp ult i64 %indvars.iv244, %24
-  br i1 %25, label %bb.aw, label %bb.at
+  br i1 %.first_iter, label %bb.aw, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #23
@@ -444,8 +443,7 @@ bb.aw:                                            ; preds = %bb.as
   %i.ix = zext i32 %i.iu to i64
   %i.iy = mul i64 %i.iw, %i.ix
   %i.iz = sub i64 %.073232, %i.iy                 ; 2 uses
-  %26 = icmp ult i64 %indvars.iv244, %23
-  br i1 %26, label %bb.ba, label %bb.ax
+  br i1 %.first_iter247, label %bb.ba, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #23
@@ -496,8 +494,7 @@ bb.bb:                                            ; preds = %bb.ba
 bb.bc:                                            ; preds = %bb.ba, %bb.bb
   %i.jn = phi i64 [ %i.jm, %bb.bb ], [ 0, %bb.ba ]
   %i.jo = add i64 %i.jn, %.071233                 ; 2 uses
-  %27 = icmp ult i64 %indvars.iv244, %22
-  br i1 %27, label %bb.bg, label %bb.bd
+  br i1 %.first_iter248, label %bb.bg, label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #23
@@ -549,7 +546,8 @@ bb.bi:                                            ; preds = %bb.bg, %bb.bh
   %i.kc = phi i64 [ %i.kb, %bb.bh ], [ 0, %bb.bg ]
   %i.kd = add i64 %i.kc, %.070234                 ; 2 uses
   %indvars.iv.next245 = add nsw i64 %indvars.iv244, -1
-  %i.ke = icmp sgt i64 %indvars.iv244, 0
+  %22 = trunc nuw i64 %indvars.iv244 to i32
+  %i.ke = icmp sgt i32 %22, 0
   br i1 %i.ke, label %bb.as, label %._crit_edge, !llvm.loop !224
 
 bb.bj:                                            ; preds = %bb.at
