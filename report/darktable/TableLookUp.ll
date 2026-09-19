@@ -204,9 +204,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.sroa.speculated.peel = phi i32 [ %i.da, %bb.g ], [ %i.cw, %bb.f ]
-  %i.db = sub nsw i32 %.sroa.speculated.peel, %i.cw ; 3 uses
-  %3 = icmp sgt i32 %i.db, -1
-  tail call void @llvm.assume(i1 %3)
+  %i.db = sub nuw nsw i32 %.sroa.speculated.peel, %i.cw ; 2 uses
   %i.dc = add nuw nsw i32 %i.db, 2
   %i.dd = lshr i32 %i.dc, 2
   %i.de = sub nsw i32 %i.cw, %i.dd
@@ -268,7 +266,7 @@ vector.body125:                                   ; preds = %vector.body125, %ve
   %i.dz = tail call <16 x i16> @llvm.umax.v16i16(<16 x i16> %wide.masked.load, <16 x i16> %wide.load)
   %i.ea = zext <16 x i16> %i.dz to <16 x i32>
   %predphi = select <16 x i1> %i.dx, <16 x i32> %i.ea, <16 x i32> %i.dt
-  %i.eb = sub nsw <16 x i32> %predphi, %i.dw      ; 2 uses
+  %i.eb = sub nuw nsw <16 x i32> %predphi, %i.dw  ; 2 uses
   %i.ec = add nuw nsw <16 x i32> %i.eb, splat (i32 2)
   %i.ed = lshr <16 x i32> %i.ec, splat (i32 2)
   %i.ee = sub nsw <16 x i32> %i.dt, %i.ed
@@ -321,7 +319,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.eu = tail call <4 x i16> @llvm.umax.v4i16(<4 x i16> %wide.masked.load141, <4 x i16> %wide.load139)
   %i.ev = zext <4 x i16> %i.eu to <4 x i32>
   %predphi142 = select <4 x i1> %i.es, <4 x i32> %i.ev, <4 x i32> %i.eo
-  %i.ew = sub nsw <4 x i32> %predphi142, %i.er    ; 2 uses
+  %i.ew = sub nuw nsw <4 x i32> %predphi142, %i.er ; 2 uses
   %i.ex = add nuw nsw <4 x i32> %i.ew, splat (i32 2)
   %i.ey = lshr <4 x i32> %i.ex, splat (i32 2)
   %i.ez = sub nsw <4 x i32> %i.eo, %i.ey
@@ -367,9 +365,7 @@ bb.i:                                             ; preds = %.peel.next.prol
 
 .peel.next.prol.loopexit.unr-lcssa:               ; preds = %bb.i, %.peel.next.prol
   %.sroa.speculated.prol = phi i32 [ %i.fr, %bb.i ], [ %i.fi, %.peel.next.prol ]
-  %i.fs = sub nsw i32 %.sroa.speculated.prol, %i.fm ; 3 uses
-  %4 = icmp sgt i32 %i.fs, -1
-  tail call void @llvm.assume(i1 %4)
+  %i.fs = sub nuw nsw i32 %.sroa.speculated.prol, %i.fm ; 2 uses
   %i.ft = add nuw nsw i32 %i.fs, 2
   %i.fu = lshr i32 %i.ft, 2
   %i.fv = sub nsw i32 %i.fi, %i.fu
@@ -611,9 +607,7 @@ bb.j:                                             ; preds = %.peel.next
 
 .peel.next.1:                                     ; preds = %.peel.next, %bb.j
   %.sroa.speculated = phi i32 [ %i.jo, %bb.j ], [ %i.jf, %.peel.next ]
-  %i.jp = sub nsw i32 %.sroa.speculated, %i.jj    ; 3 uses
-  %5 = icmp sgt i32 %i.jp, -1
-  tail call void @llvm.assume(i1 %5)
+  %i.jp = sub nuw nsw i32 %.sroa.speculated, %i.jj ; 2 uses
   %i.jq = add nuw nsw i32 %i.jp, 2
   %i.jr = lshr i32 %i.jq, 2
   %i.js = sub nsw i32 %i.jf, %i.jr
@@ -647,9 +641,7 @@ bb.k:                                             ; preds = %.peel.next.1
 
 bb.l:                                             ; preds = %bb.k, %.peel.next.1
   %.sroa.speculated.1 = phi i32 [ %i.kj, %bb.k ], [ %i.ka, %.peel.next.1 ]
-  %i.kk = sub nsw i32 %.sroa.speculated.1, %i.ke  ; 3 uses
-  %6 = icmp sgt i32 %i.kk, -1
-  tail call void @llvm.assume(i1 %6)
+  %i.kk = sub nuw nsw i32 %.sroa.speculated.1, %i.ke ; 2 uses
   %i.kl = add nuw nsw i32 %i.kk, 2
   %i.km = lshr i32 %i.kl, 2
   %i.kn = sub nsw i32 %i.ka, %i.km

@@ -205,12 +205,11 @@ bb.aw:                                            ; preds = %._crit_edge2113.i
   br i1 %or.cond.i, label %bb.ax, label %._crit_edge2113.thread.i
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.qc = sub i32 %.01481.i, %i.pl
-  %2 = and i32 %i.qc, -2147483647
-  %3 = icmp eq i32 %2, 1                          ; 2 uses
-  %spec.select = select i1 %3, i32 %.014772110.i, i32 %i.pu
-  %4 = sext i1 %3 to i32
-  %spec.select183 = add nsw i32 %i.py, %4
+  %i.qc = sub i32 %.01481.i, %i.pl                ; 2 uses
+  %.not2211.i = trunc i32 %i.qc to i1
+  %spec.select = select i1 %.not2211.i, i32 %.014772110.i, i32 %i.pu
+  %2 = and i32 %i.qc, 1
+  %spec.select183 = sub nsw i32 %i.py, %2
   br label %._crit_edge2113.thread.i
 
 ._crit_edge2113.thread.i:                         ; preds = %bb.ax, %bb.aw, %._crit_edge2113.i, %bb.av
