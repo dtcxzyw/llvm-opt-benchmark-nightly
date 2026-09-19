@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   %i.k = and i64 %i.h, 2147483647                 ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.015, ptr align 1 %i.e, i64 %i.k, i1 false)
   %i.l = getelementptr inbounds nuw i8, ptr %.015, i64 %i.k
-  %i.m = sub nsw i32 %.0, %i.i
+  %i.m = sub nuw nsw i32 %.0, %i.i
   %i.n = load ptr, ptr %0, align 8, !tbaa !24
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.k
   store ptr %i.o, ptr %0, align 8, !tbaa !24
@@ -218,10 +218,10 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %i.p, label %bb.c, label %.loopexit, !llvm.loop !0
 
 bb.g:                                             ; preds = %bb.c
-  %3 = sext i32 %.0 to i64                        ; 2 uses
+  %3 = zext nneg i32 %.0 to i64                   ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.015, ptr align 1 %i.e, i64 %3, i1 false)
   %i.q = load ptr, ptr %0, align 8, !tbaa !24
-  %i.r = getelementptr inbounds i8, ptr %i.q, i64 %3
+  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %3
   store ptr %i.r, ptr %0, align 8, !tbaa !24
   br label %.loopexit
 
@@ -546,7 +546,7 @@ bb.b:                                             ; preds = %bb.a
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = ptrtoint ptr %i.l to i64
   %i.o = sub i64 %i.m, %i.n                       ; 2 uses
-  %i.p = trunc i64 %i.o to i32                    ; 3 uses
+  %i.p = trunc i64 %i.o to i32                    ; 2 uses
   %.not.i = icmp sgt i32 %.0.i, %i.p
   br i1 %.not.i, label %bb.c, label %_ZN6google8protobuf2io16CodedInputStream7ReadRawEPvi.exit.thread
 
@@ -558,7 +558,7 @@ bb.d:                                             ; preds = %bb.c
   %i.r = and i64 %i.o, 2147483647                 ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.015.i, ptr align 1 %i.l, i64 %i.r, i1 false)
   %i.s = getelementptr inbounds nuw i8, ptr %.015.i, i64 %i.r
-  %2 = sub nsw i32 %.0.i, %i.p
+  %2 = add nsw i32 %.0.i, -1
   %i.t = load ptr, ptr %0, align 8, !tbaa !24
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.r
   store ptr %i.u, ptr %0, align 8, !tbaa !24
@@ -571,10 +571,10 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.v, label %.preheader, label %_ZN6google8protobuf2io16CodedInputStream7ReadRawEPvi.exit, !llvm.loop !0
 
 _ZN6google8protobuf2io16CodedInputStream7ReadRawEPvi.exit.thread: ; preds = %.preheader
-  %3 = sext i32 %.0.i to i64                      ; 2 uses
+  %3 = zext nneg i32 %.0.i to i64                 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.015.i, ptr align 1 %i.l, i64 %3, i1 false)
   %i.w = load ptr, ptr %0, align 8, !tbaa !24
-  %i.x = getelementptr inbounds i8, ptr %i.w, i64 %3
+  %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 %3
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZN6google8protobuf2io16CodedInputStream7ReadRawEPvi.exit.thread, %bb.b
@@ -630,7 +630,7 @@ bb.d:                                             ; preds = %bb.c
   %i.r = and i64 %i.o, 2147483647                 ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.015.i, ptr align 1 %i.l, i64 %i.r, i1 false)
   %i.s = getelementptr inbounds nuw i8, ptr %.015.i, i64 %i.r
-  %i.t = sub nsw i32 %.0.i, %i.p
+  %i.t = sub nuw nsw i32 %.0.i, %i.p
   %i.u = load ptr, ptr %0, align 8, !tbaa !24
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.r
   store ptr %i.v, ptr %0, align 8, !tbaa !24
@@ -643,10 +643,10 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.w, label %.preheader, label %_ZN6google8protobuf2io16CodedInputStream7ReadRawEPvi.exit, !llvm.loop !0
 
 _ZN6google8protobuf2io16CodedInputStream7ReadRawEPvi.exit.thread: ; preds = %.preheader
-  %2 = sext i32 %.0.i to i64                      ; 2 uses
+  %2 = zext nneg i32 %.0.i to i64                 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.015.i, ptr align 1 %i.l, i64 %2, i1 false)
   %i.x = load ptr, ptr %0, align 8, !tbaa !24
-  %i.y = getelementptr inbounds i8, ptr %i.x, i64 %2
+  %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 %2
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZN6google8protobuf2io16CodedInputStream7ReadRawEPvi.exit.thread, %bb.b
@@ -702,7 +702,7 @@ bb.d:                                             ; preds = %bb.c
   %i.r = and i64 %i.o, 2147483647                 ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.015.i, ptr align 1 %i.l, i64 %i.r, i1 false)
   %i.s = getelementptr inbounds nuw i8, ptr %.015.i, i64 %i.r
-  %i.t = sub nsw i32 %.0.i, %i.p
+  %i.t = sub nuw nsw i32 %.0.i, %i.p
   %i.u = load ptr, ptr %0, align 8, !tbaa !24
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.r
   store ptr %i.v, ptr %0, align 8, !tbaa !24
@@ -715,10 +715,10 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.w, label %.preheader, label %_ZN6google8protobuf2io16CodedInputStream7ReadRawEPvi.exit, !llvm.loop !0
 
 _ZN6google8protobuf2io16CodedInputStream7ReadRawEPvi.exit.thread: ; preds = %.preheader
-  %2 = sext i32 %.0.i to i64                      ; 2 uses
+  %2 = zext nneg i32 %.0.i to i64                 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.015.i, ptr align 1 %i.l, i64 %2, i1 false)
   %i.x = load ptr, ptr %0, align 8, !tbaa !24
-  %i.y = getelementptr inbounds i8, ptr %i.x, i64 %2
+  %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 %2
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZN6google8protobuf2io16CodedInputStream7ReadRawEPvi.exit.thread, %bb.b

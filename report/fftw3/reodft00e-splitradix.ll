@@ -204,8 +204,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ho = fadd <2 x double> %wide.load275, %i.hi
   store <2 x double> %i.ho, ptr %i.hn, align 8, !tbaa !30, !alias.scope !73, !noalias !74
   %i.hp = fsub <2 x double> %wide.load275, %i.hi
-  %i.hq = sub nsw i64 %i.z, %i.ha
-  %i.hr = getelementptr inbounds [8 x i8], ptr %.0126152, i64 %i.hq
+  %i.hq = sub nuw nsw i64 %i.z, %i.ha
+  %i.hr = getelementptr inbounds nuw [8 x i8], ptr %.0126152, i64 %i.hq
   %i.hs = getelementptr inbounds i8, ptr %i.hr, i64 -8
   %reverse276 = shufflevector <2 x double> %i.hp, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   store <2 x double> %reverse276, ptr %i.hs, align 8, !tbaa !30, !alias.scope !75, !noalias !76
@@ -260,7 +260,7 @@ middle.block:                                     ; preds = %vector.body
   %i.iv = fadd double %i.iu, %i.ip
   store double %i.iv, ptr %i.it, align 8, !tbaa !30
   %i.iw = fsub double %i.iu, %i.ip
-  %i.ix = sub nsw i64 %i.z, %.2145
+  %i.ix = sub nuw nsw i64 %i.z, %.2145
   %i.iy = mul nsw i64 %i.ix, %i.d
   %i.iz = getelementptr inbounds [8 x i8], ptr %.0126152, i64 %i.iy
   store double %i.iw, ptr %i.iz, align 8, !tbaa !30
@@ -663,7 +663,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.lt = getelementptr inbounds i8, ptr %i.ls, i64 -8
   %reverse292 = shufflevector <2 x double> %i.lq, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   store <2 x double> %reverse292, ptr %i.lt, align 8, !tbaa !30, !alias.scope !108, !noalias !109
-  %i.lu = sub nsw i64 %i.z, %i.lb
+  %i.lu = sub nuw nsw i64 %i.z, %i.lb
   %i.lv = getelementptr inbounds [8 x i8], ptr %.0138165, i64 %i.lu
   %i.lw = getelementptr inbounds i8, ptr %i.lv, i64 -8 ; 2 uses
   %wide.load293 = load <2 x double>, ptr %i.lw, align 8, !tbaa !30, !alias.scope !110, !noalias !111 ; 2 uses
@@ -720,7 +720,7 @@ middle.block:                                     ; preds = %vector.body
   %i.nb = mul nsw i64 %i.na, %i.d
   %i.nc = getelementptr inbounds [8 x i8], ptr %.0138165, i64 %i.nb
   store double %i.my, ptr %i.nc, align 8, !tbaa !30
-  %i.nd = sub nsw i64 %i.z, %.3158
+  %i.nd = sub nuw nsw i64 %i.z, %.3158
   %i.ne = mul nsw i64 %i.nd, %i.d
   %i.nf = getelementptr inbounds [8 x i8], ptr %.0138165, i64 %i.ne ; 2 uses
   %i.ng = load double, ptr %i.nf, align 8, !tbaa !30 ; 2 uses

@@ -204,9 +204,7 @@ bb.ao:                                            ; preds = %bb.an
 
 .preheader597.preheader:                          ; preds = %bb.an
   call void @set_vector_val(i32 noundef %1, double noundef 0.000000e+00, ptr noundef nonnull %i.ki) #11
-  %9 = zext nneg i32 %1 to i64
   %wide.trip.count839 = zext nneg i32 %i.ft to i64
-  %invariant.op = add nsw i64 %9, -1
   br label %.preheader597
 
 .preheader597:                                    ; preds = %.preheader597.preheader, %._crit_edge677
@@ -216,8 +214,10 @@ bb.ao:                                            ; preds = %bb.an
   %i.kn = zext i32 %indvars.iv832 to i64
   %i.ko = add nsw i64 %i.kn, -1                   ; 3 uses
   %.1445672 = add i32 %.0444681, 1                ; 2 uses
-  %10 = icmp slt i64 %indvars.iv836, %invariant.op
-  br i1 %10, label %.lr.ph676.preheader, label %._crit_edge677
+  %9 = trunc i64 %indvars.iv836 to i32
+  %10 = sub i32 %1, %9
+  %11 = icmp sgt i32 %10, 1
+  br i1 %11, label %.lr.ph676.preheader, label %._crit_edge677
 
 .lr.ph676.preheader:                              ; preds = %.preheader597
   %i.kp = sext i32 %.1445672 to i64               ; 2 uses

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 ; Function Attrs: nounwind uwtable
 define internal void @ff_tx_dctII_double_c(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2, i64 %3) #3 {
 bb.a:
-  %i.a = load i32, ptr %0, align 8, !tbaa !21     ; 5 uses
+  %i.a = load i32, ptr %0, align 8, !tbaa !21     ; 6 uses
   %i.b = ashr i32 %i.a, 1                         ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !23   ; 4 uses
@@ -222,7 +222,7 @@ bb.a:
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.._crit_edge_crit_edge
-  %.pre-phi = phi i64 [ %.pre, %.._crit_edge_crit_edge ], [ %i.f, %.lr.ph ] ; 3 uses
+  %.pre-phi = phi i64 [ %.pre, %.._crit_edge_crit_edge ], [ %i.f, %.lr.ph ] ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !10
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -231,7 +231,11 @@ bb.a:
   %i.k = getelementptr inbounds [8 x i8], ptr %1, i64 %.pre-phi
   %i.l = load double, ptr %i.k, align 8, !tbaa !24 ; 2 uses
   %i.m = icmp sgt i32 %i.a, 2
-  br i1 %i.m, label %.lr.ph74, label %._crit_edge75
+  br i1 %i.m, label %.lr.ph74.preheader, label %._crit_edge75
+
+.lr.ph74.preheader:                               ; preds = %._crit_edge
+  %4 = zext nneg i32 %i.a to i64
+  br label %.lr.ph74
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 4 uses
@@ -267,12 +271,12 @@ bb.a:
   store double %.069.lcssa, ptr %i.af, align 8, !tbaa !24
   ret void
 
-.lr.ph74:                                         ; preds = %._crit_edge, %.lr.ph74
-  %indvars.iv77 = phi i64 [ %indvars.iv.next78, %.lr.ph74 ], [ %.pre-phi, %._crit_edge ] ; 2 uses
-  %.06971 = phi double [ %i.ba, %.lr.ph74 ], [ %i.l, %._crit_edge ] ; 2 uses
+.lr.ph74:                                         ; preds = %.lr.ph74.preheader, %.lr.ph74
+  %indvars.iv77 = phi i64 [ %4, %.lr.ph74.preheader ], [ %indvars.iv.next78, %.lr.ph74 ] ; 2 uses
+  %.06971 = phi double [ %i.l, %.lr.ph74.preheader ], [ %i.ba, %.lr.ph74 ] ; 2 uses
   %indvars.iv.next78 = add nsw i64 %indvars.iv77, -2 ; 4 uses
-  %i.ag = sub nsw i64 %.pre-phi, %indvars.iv.next78
-  %i.ah = getelementptr inbounds [8 x i8], ptr %i.d, i64 %i.ag
+  %i.ag = sub nuw nsw i64 %.pre-phi, %indvars.iv.next78
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.ag
   %i.ai = load double, ptr %i.ah, align 8, !tbaa !24
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.next78 ; 3 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv.next78
@@ -294,8 +298,8 @@ bb.a:
   store double %.06971, ptr %i.am, align 8, !tbaa !24
   %i.az = extractelement <2 x double> %i.ax, i64 0
   %i.ba = fadd nsz double %.06971, %i.az          ; 2 uses
-  %4 = icmp sgt i64 %indvars.iv77, 4
-  br i1 %4, label %.lr.ph74, label %._crit_edge75, !llvm.loop !143
+  %5 = icmp samesign ugt i64 %indvars.iv77, 4
+  br i1 %5, label %.lr.ph74, label %._crit_edge75, !llvm.loop !143
 }
 
 ; Function Attrs: cold nounwind optsize uwtable
@@ -421,18 +425,22 @@ bb.f:                                             ; preds = %.lr.ph, %bb.f
 ; Function Attrs: nounwind uwtable
 define internal void @ff_tx_dctIII_double_c(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2, i64 %3) #3 {
 bb.a:
-  %i.a = load i32, ptr %0, align 8, !tbaa !21     ; 4 uses
+  %i.a = load i32, ptr %0, align 8, !tbaa !21     ; 5 uses
   %i.b = ashr i32 %i.a, 1                         ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !23   ; 3 uses
-  %i.e = sext i32 %i.a to i64                     ; 4 uses
+  %i.e = sext i32 %i.a to i64                     ; 3 uses
   %i.f = getelementptr [8 x i8], ptr %2, i64 %i.e ; 2 uses
   %i.g = getelementptr i8, ptr %i.f, i64 -8
   %i.h = load double, ptr %i.g, align 8, !tbaa !24
   %i.i = fmul nsz double %i.h, 2.000000e+00
   store double %i.i, ptr %i.f, align 8, !tbaa !24
   %i.j = icmp sgt i32 %i.a, 3
-  br i1 %i.j, label %.lr.ph, label %._crit_edge
+  br i1 %i.j, label %.lr.ph.preheader, label %._crit_edge
+
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %4 = zext nneg i32 %i.a to i64
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -448,8 +456,8 @@ bb.a:
   %invariant.gep = getelementptr [8 x i8], ptr %i.d, i64 %i.e
   br label %.lr.ph70
 
-.lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %i.e, %bb.a ] ; 2 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
+  %indvars.iv = phi i64 [ %4, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, -2  ; 4 uses
   %i.p = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.next ; 4 uses
   %i.q = load double, ptr %i.p, align 8, !tbaa !24 ; 2 uses
@@ -458,8 +466,8 @@ bb.a:
   %i.t = getelementptr inbounds nuw i8, ptr %i.p, i64 8 ; 2 uses
   %i.u = load double, ptr %i.t, align 8, !tbaa !24
   %i.v = fsub nsz double %i.s, %i.u               ; 2 uses
-  %i.w = sub nsw i64 %i.e, %indvars.iv.next
-  %i.x = getelementptr inbounds [8 x i8], ptr %i.d, i64 %i.w ; 2 uses
+  %i.w = sub nuw nsw i64 %i.e, %indvars.iv.next
+  %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.w ; 2 uses
   %i.y = load double, ptr %i.x, align 8, !tbaa !24
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv.next ; 2 uses
   %i.aa = load double, ptr %i.z, align 8, !tbaa !24

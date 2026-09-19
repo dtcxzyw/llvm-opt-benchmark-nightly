@@ -1,0 +1,428 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index 40fd6fd2ed060..9e2533eda4e93 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -544,13 +544,17 @@ static bool isKnownNoWrap(Instruction::BinaryOps Opcode, Value *Op0, Value *Op1,
+ 
+   if (Opcode == Instruction::Sub) {
+     // Op0 - Op1 does not wrap unsigned if Op0 >=u Op1.
+-    if (!Signed)
+-      return Info.doesHold(CmpInst::ICMP_UGE, Op0, Op1);
++    if (!Signed && Info.doesHold(CmpInst::ICMP_UGE, Op0, Op1))
++      return true;
+ 
+-    // Op0 - Op1 does not wrap signed if 0 <=s Op1 <=s Op0.
++    // Op0 - Op1 does not wrap signed or unsigned if 0 <=s Op1 <=s Op0.
+     if (Info.isKnownNonNegative(Op1) &&
+         Info.doesHold(CmpInst::ICMP_SGE, Op0, Op1))
+       return true;
++
++    // No other rule applies to unsigned sub.
++    if (!Signed)
++      return false;
+   }
+ 
+   if (!Signed && (NoWrapFlags & OBO::NoSignedWrap) &&
+@@ -1512,6 +1516,8 @@ void State::addInfoFor(BasicBlock &BB) {
+     // Enqueue intrinsics for simplification.
+     case Intrinsic::sadd_with_overflow:
+     case Intrinsic::ssub_with_overflow:
++    case Intrinsic::sadd_sat:
++    case Intrinsic::ssub_sat:
+     case Intrinsic::ucmp:
+     case Intrinsic::scmp:
+       WorkList.push_back(
+@@ -1522,12 +1528,11 @@ void State::addInfoFor(BasicBlock &BB) {
+     case Intrinsic::umax:
+     case Intrinsic::smin:
+     case Intrinsic::smax:
++    case Intrinsic::uadd_sat:
+     case Intrinsic::usub_sat:
+       // TODO: handle llvm.abs as well
+       WorkList.push_back(
+           FactOrCheck::getCheck(DT.getNode(&BB), cast<CallInst>(&I)));
+-      [[fallthrough]];
+-    case Intrinsic::uadd_sat:
+       // TODO: Check if it is possible to instead only added the min/max facts
+       // when simplifying uses of the min/max intrinsics.
+       if (!isGuaranteedNotToBePoison(&I))
+@@ -1966,22 +1971,35 @@ static bool checkAndReplaceCmp(CmpIntrinsic *I, ConstraintInfo &Info,
+   return false;
+ }
+ 
+-/// Try to replace \p USub by a plain subtract, if \p Info proves it cannot
+-/// saturate. Returns true if \p USub was replaced.
+-static bool checkAndReplaceUSubSat(SaturatingInst *USub, ConstraintInfo &Info,
+-                                   SmallVectorImpl<Instruction *> &ToRemove) {
+-  // usub.sat(A, B) is A - B exactly when A >=u B.
+-  Value *A = USub->getLHS();
+-  Value *B = USub->getRHS();
+-  if (!checkCondition(CmpInst::ICMP_UGE, A, B, USub, Info).value_or(false))
++/// Try to replace \p SatI by the plain binary operation it performs, if \p Info
++/// proves that it cannot saturate. Returns true if \p SatI was replaced.
++static bool
++checkAndReplaceSaturating(SaturatingInst *SatI, ConstraintInfo &Info,
++                          SmallVectorImpl<Instruction *> &ToRemove) {
++  using OBO = OverflowingBinaryOperator;
++  Instruction::BinaryOps Opcode = SatI->getBinaryOp();
++  Value *A = SatI->getLHS(), *B = SatI->getRHS();
++  bool Signed = SatI->isSigned();
++
++  // A saturating intrinsic saturates exactly when the plain operation wraps.
++  if (!isKnownNoWrap(Opcode, A, B, /*NoWrapFlags=*/0, Info, Signed))
+     return false;
+ 
+-  IRBuilder<> Builder(USub);
+-  Value *Sub = Builder.CreateSub(A, B, "", /*HasNUW=*/true,
+-                                 /*HasNSW=*/Info.isKnownNonNegative(A));
+-  USub->replaceAllUsesWith(Sub);
+-  Sub->takeName(USub);
+-  ToRemove.push_back(USub);
++  // The intrinsic is going to be replaced, so the extra query to also derive
++  // the no-wrap flag for the other signedness is worth it.
++  unsigned NoWrapFlags = Signed ? OBO::NoSignedWrap : OBO::NoUnsignedWrap;
++  if (isKnownNoWrap(Opcode, A, B, NoWrapFlags, Info, !Signed))
++    NoWrapFlags |= Signed ? OBO::NoUnsignedWrap : OBO::NoSignedWrap;
++
++  IRBuilder<> Builder(SatI);
++  Value *Res = Builder.CreateBinOp(Opcode, A, B);
++  if (auto *BO = dyn_cast<BinaryOperator>(Res)) {
++    BO->setHasNoSignedWrap(NoWrapFlags & OBO::NoSignedWrap);
++    BO->setHasNoUnsignedWrap(NoWrapFlags & OBO::NoUnsignedWrap);
++  }
++  SatI->replaceAllUsesWith(Res);
++  Res->takeName(SatI);
++  ToRemove.push_back(SatI);
+   return true;
+ }
+ 
+@@ -2365,9 +2383,8 @@ static bool eliminateConstraints(Function &F, DominatorTree &DT, LoopInfo &LI,
+         Changed |= checkAndReplaceMinMax(MinMax, Info, ToRemove);
+       } else if (auto *CmpIntr = dyn_cast<CmpIntrinsic>(Inst)) {
+         Changed |= checkAndReplaceCmp(CmpIntr, Info, ToRemove);
+-      } else if (match(Inst, m_Intrinsic<Intrinsic::usub_sat>())) {
+-        Changed |=
+-            checkAndReplaceUSubSat(cast<SaturatingInst>(Inst), Info, ToRemove);
++      } else if (auto *SatI = dyn_cast<SaturatingInst>(Inst)) {
++        Changed |= checkAndReplaceSaturating(SatI, Info, ToRemove);
+       }
+       continue;
+     }
+diff --git a/llvm/test/Transforms/ConstraintElimination/materialize-flags.ll b/llvm/test/Transforms/ConstraintElimination/materialize-flags.ll
+index b8cc032274b2d..5205f07911268 100644
+--- a/llvm/test/Transforms/ConstraintElimination/materialize-flags.ll
++++ b/llvm/test/Transforms/ConstraintElimination/materialize-flags.ll
+@@ -204,6 +204,54 @@ entry:
+   ret i32 %sub
+ }
+ 
++define i32 @sub_nuw_from_transitive_signed_facts(i32 %a, i32 %b, i32 %n) {
++; CHECK-LABEL: define i32 @sub_nuw_from_transitive_signed_facts(
++; CHECK-SAME: i32 [[A:%.*]], i32 [[B:%.*]], i32 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[B_NNEG:%.*]] = icmp sge i32 [[B]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[B_NNEG]])
++; CHECK-NEXT:    [[N_NNEG:%.*]] = icmp sge i32 [[N]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[N_NNEG]])
++; CHECK-NEXT:    [[REM:%.*]] = sub nuw nsw i32 [[A]], [[N]]
++; CHECK-NEXT:    [[FITS:%.*]] = icmp sge i32 [[REM]], [[B]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[FITS]])
++; CHECK-NEXT:    [[SUB:%.*]] = sub nuw nsw i32 [[A]], [[B]]
++; CHECK-NEXT:    ret i32 [[SUB]]
++;
++entry:
++  %b.nneg = icmp sge i32 %b, 0
++  call void @llvm.assume(i1 %b.nneg)
++  %n.nneg = icmp sge i32 %n, 0
++  call void @llvm.assume(i1 %n.nneg)
++  %rem = sub nsw i32 %a, %n
++  %fits = icmp sge i32 %rem, %b
++  call void @llvm.assume(i1 %fits)
++  %sub = sub i32 %a, %b
++  ret i32 %sub
++}
++
++define i32 @sub_no_nuw_from_transitive_signed_facts(i32 %a, i32 %b, i32 %n) {
++; CHECK-LABEL: define i32 @sub_no_nuw_from_transitive_signed_facts(
++; CHECK-SAME: i32 [[A:%.*]], i32 [[B:%.*]], i32 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[N_NNEG:%.*]] = icmp sge i32 [[N]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[N_NNEG]])
++; CHECK-NEXT:    [[REM:%.*]] = sub nsw i32 [[A]], [[N]]
++; CHECK-NEXT:    [[FITS:%.*]] = icmp sge i32 [[REM]], [[B]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[FITS]])
++; CHECK-NEXT:    [[SUB:%.*]] = sub i32 [[A]], [[B]]
++; CHECK-NEXT:    ret i32 [[SUB]]
++;
++entry:
++  %n.nneg = icmp sge i32 %n, 0
++  call void @llvm.assume(i1 %n.nneg)
++  %rem = sub nsw i32 %a, %n
++  %fits = icmp sge i32 %rem, %b
++  call void @llvm.assume(i1 %fits)
++  %sub = sub i32 %a, %b
++  ret i32 %sub
++}
++
+ define ptr @gep_nuw_transitive(ptr %p, i64 %i, i64 %j) {
+ ; CHECK-LABEL: define ptr @gep_nuw_transitive(
+ ; CHECK-SAME: ptr [[P:%.*]], i64 [[I:%.*]], i64 [[J:%.*]]) {
+diff --git a/llvm/test/Transforms/ConstraintElimination/sadd-ssub-sat.ll b/llvm/test/Transforms/ConstraintElimination/sadd-ssub-sat.ll
+new file mode 100644
+index 0000000000000..7514b83da4dfb
+--- /dev/null
++++ b/llvm/test/Transforms/ConstraintElimination/sadd-ssub-sat.ll
+@@ -0,0 +1,166 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=constraint-elimination -S %s | FileCheck %s
++
++declare i8 @llvm.sadd.sat.i8(i8, i8)
++declare i8 @llvm.ssub.sat.i8(i8, i8)
++
++define i8 @sadd_sat_no_saturation_due_to_bounds(i8 %a) {
++; CHECK-LABEL: define i8 @sadd_sat_no_saturation_due_to_bounds(
++; CHECK-SAME: i8 [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_1:%.*]] = icmp sle i8 [[A]], 100
++; CHECK-NEXT:    [[C_2:%.*]] = icmp sge i8 [[A]], 0
++; CHECK-NEXT:    [[AND:%.*]] = and i1 [[C_1]], [[C_2]]
++; CHECK-NEXT:    br i1 [[AND]], label %[[THEN:.*]], label %[[EXIT:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[ADD_SAT:%.*]] = add nuw nsw i8 [[A]], 20
++; CHECK-NEXT:    ret i8 [[ADD_SAT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i8 0
++;
++entry:
++  %c.1 = icmp sle i8 %a, 100
++  %c.2 = icmp sge i8 %a, 0
++  %and = and i1 %c.1, %c.2
++  br i1 %and, label %then, label %exit
++
++then:
++  %add.sat = call i8 @llvm.sadd.sat.i8(i8 %a, i8 20)
++  ret i8 %add.sat
++
++exit:
++  ret i8 0
++}
++
++; 108 + 20 does not fit in i8.
++define i8 @sadd_sat_may_saturate(i8 %a) {
++; CHECK-LABEL: define i8 @sadd_sat_may_saturate(
++; CHECK-SAME: i8 [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_1:%.*]] = icmp sle i8 [[A]], 108
++; CHECK-NEXT:    [[C_2:%.*]] = icmp sge i8 [[A]], 0
++; CHECK-NEXT:    [[AND:%.*]] = and i1 [[C_1]], [[C_2]]
++; CHECK-NEXT:    br i1 [[AND]], label %[[THEN:.*]], label %[[EXIT:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[ADD_SAT:%.*]] = call i8 @llvm.sadd.sat.i8(i8 [[A]], i8 20)
++; CHECK-NEXT:    ret i8 [[ADD_SAT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i8 0
++;
++entry:
++  %c.1 = icmp sle i8 %a, 108
++  %c.2 = icmp sge i8 %a, 0
++  %and = and i1 %c.1, %c.2
++  br i1 %and, label %then, label %exit
++
++then:
++  %add.sat = call i8 @llvm.sadd.sat.i8(i8 %a, i8 20)
++  ret i8 %add.sat
++
++exit:
++  ret i8 0
++}
++
++define i8 @ssub_sat_no_saturation_due_to_non_negative_operands(i8 %a, i8 %b) {
++; CHECK-LABEL: define i8 @ssub_sat_no_saturation_due_to_non_negative_operands(
++; CHECK-SAME: i8 [[A:%.*]], i8 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_1:%.*]] = icmp sge i8 [[B]], 0
++; CHECK-NEXT:    [[C_2:%.*]] = icmp sge i8 [[A]], [[B]]
++; CHECK-NEXT:    [[AND:%.*]] = and i1 [[C_1]], [[C_2]]
++; CHECK-NEXT:    br i1 [[AND]], label %[[THEN:.*]], label %[[EXIT:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[SUB_SAT:%.*]] = sub nuw nsw i8 [[A]], [[B]]
++; CHECK-NEXT:    ret i8 [[SUB_SAT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i8 0
++;
++entry:
++  %c.1 = icmp sge i8 %b, 0
++  %c.2 = icmp sge i8 %a, %b
++  %and = and i1 %c.1, %c.2
++  br i1 %and, label %then, label %exit
++
++then:
++  %sub.sat = call i8 @llvm.ssub.sat.i8(i8 %a, i8 %b)
++  ret i8 %sub.sat
++
++exit:
++  ret i8 0
++}
++
++define i8 @ssub_sat_may_saturate(i8 %a, i8 %b) {
++; CHECK-LABEL: define i8 @ssub_sat_may_saturate(
++; CHECK-SAME: i8 [[A:%.*]], i8 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_1:%.*]] = icmp sge i8 [[B]], 0
++; CHECK-NEXT:    br i1 [[C_1]], label %[[THEN:.*]], label %[[EXIT:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[SUB_SAT:%.*]] = call i8 @llvm.ssub.sat.i8(i8 [[A]], i8 [[B]])
++; CHECK-NEXT:    ret i8 [[SUB_SAT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i8 0
++;
++entry:
++  %c.1 = icmp sge i8 %b, 0
++  br i1 %c.1, label %then, label %exit
++
++then:
++  %sub.sat = call i8 @llvm.ssub.sat.i8(i8 %a, i8 %b)
++  ret i8 %sub.sat
++
++exit:
++  ret i8 0
++}
++
++define i8 @sadd_sat_nsw_only(i8 %a) {
++; CHECK-LABEL: define i8 @sadd_sat_nsw_only(
++; CHECK-SAME: i8 [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_1:%.*]] = icmp sle i8 [[A]], 100
++; CHECK-NEXT:    [[C_2:%.*]] = icmp sge i8 [[A]], -100
++; CHECK-NEXT:    [[AND:%.*]] = and i1 [[C_1]], [[C_2]]
++; CHECK-NEXT:    br i1 [[AND]], label %[[THEN:.*]], label %[[EXIT:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[ADD_SAT:%.*]] = add nsw i8 [[A]], 20
++; CHECK-NEXT:    ret i8 [[ADD_SAT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i8 0
++;
++entry:
++  %c.1 = icmp sle i8 %a, 100
++  %c.2 = icmp sge i8 %a, -100
++  %and = and i1 %c.1, %c.2
++  br i1 %and, label %then, label %exit
++
++then:
++  %add.sat = call i8 @llvm.sadd.sat.i8(i8 %a, i8 20)
++  ret i8 %add.sat
++
++exit:
++  ret i8 0
++}
++
++define i8 @ssub_sat_nsw_only(i8 %a) {
++; CHECK-LABEL: define i8 @ssub_sat_nsw_only(
++; CHECK-SAME: i8 [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_1:%.*]] = icmp sle i8 [[A]], 100
++; CHECK-NEXT:    br i1 [[C_1]], label %[[THEN:.*]], label %[[EXIT:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[SUB_SAT:%.*]] = sub nsw i8 [[A]], -5
++; CHECK-NEXT:    ret i8 [[SUB_SAT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i8 0
++;
++entry:
++  %c.1 = icmp sle i8 %a, 100
++  br i1 %c.1, label %then, label %exit
++
++then:
++  %sub.sat = call i8 @llvm.ssub.sat.i8(i8 %a, i8 -5)
++  ret i8 %sub.sat
++
++exit:
++  ret i8 0
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/uadd-usub-sat.ll b/llvm/test/Transforms/ConstraintElimination/uadd-usub-sat.ll
+index 09189ca89271e..c88da2da210f6 100644
+--- a/llvm/test/Transforms/ConstraintElimination/uadd-usub-sat.ll
++++ b/llvm/test/Transforms/ConstraintElimination/uadd-usub-sat.ll
+@@ -95,7 +95,7 @@ define i1 @usub_sat_span_offset(i64 %count, i64 %base, i64 %n) {
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[BASE_NNEG]])
+ ; CHECK-NEXT:    [[N_NNEG:%.*]] = icmp sge i64 [[N]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[N_NNEG]])
+-; CHECK-NEXT:    [[REM:%.*]] = sub nsw i64 [[COUNT]], [[N]]
++; CHECK-NEXT:    [[REM:%.*]] = sub nuw nsw i64 [[COUNT]], [[N]]
+ ; CHECK-NEXT:    [[FITS:%.*]] = icmp sge i64 [[REM]], [[BASE]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[FITS]])
+ ; CHECK-NEXT:    [[AVAIL:%.*]] = sub nuw nsw i64 [[COUNT]], [[BASE]]
+@@ -211,3 +211,51 @@ use:
+ unguarded:
+   ret i64 %sub
+ }
++
++define i64 @uadd_sat_no_saturation_due_to_upper_bound(i64 %a) {
++; CHECK-LABEL: define i64 @uadd_sat_no_saturation_due_to_upper_bound(
++; CHECK-SAME: i64 [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_1:%.*]] = icmp ule i64 [[A]], 10
++; CHECK-NEXT:    br i1 [[C_1]], label %[[THEN:.*]], label %[[EXIT:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[ADD_SAT:%.*]] = add nuw nsw i64 [[A]], 100
++; CHECK-NEXT:    ret i64 [[ADD_SAT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i64 0
++;
++entry:
++  %c.1 = icmp ule i64 %a, 10
++  br i1 %c.1, label %then, label %exit
++
++then:
++  %add.sat = call i64 @llvm.uadd.sat.i64(i64 %a, i64 100)
++  ret i64 %add.sat
++
++exit:
++  ret i64 0
++}
++
++define i64 @uadd_sat_may_saturate(i64 %a, i64 %b) {
++; CHECK-LABEL: define i64 @uadd_sat_may_saturate(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_1:%.*]] = icmp ule i64 [[A]], 10
++; CHECK-NEXT:    br i1 [[C_1]], label %[[THEN:.*]], label %[[EXIT:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[ADD_SAT:%.*]] = call i64 @llvm.uadd.sat.i64(i64 [[A]], i64 [[B]])
++; CHECK-NEXT:    ret i64 [[ADD_SAT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i64 0
++;
++entry:
++  %c.1 = icmp ule i64 %a, 10
++  br i1 %c.1, label %then, label %exit
++
++then:
++  %add.sat = call i64 @llvm.uadd.sat.i64(i64 %a, i64 %b)
++  ret i64 %add.sat
++
++exit:
++  ret i64 0
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/unsigned-query-signed-system.ll b/llvm/test/Transforms/ConstraintElimination/unsigned-query-signed-system.ll
+index f85f858a72060..9260e4565a576 100644
+--- a/llvm/test/Transforms/ConstraintElimination/unsigned-query-signed-system.ll
++++ b/llvm/test/Transforms/ConstraintElimination/unsigned-query-signed-system.ll
+@@ -6,7 +6,7 @@ define i1 @ult_query_via_signed_system(i64 %a, i64 %b, i64 %n) {
+ ; CHECK-SAME: i64 [[A:%.*]], i64 [[B:%.*]], i64 [[N:%.*]]) {
+ ; CHECK-NEXT:    [[PRE_0:%.*]] = icmp sgt i64 [[B]], -1
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE_0]])
+-; CHECK-NEXT:    [[S:%.*]] = sub nsw i64 [[A]], [[B]]
++; CHECK-NEXT:    [[S:%.*]] = sub nuw nsw i64 [[A]], [[B]]
+ ; CHECK-NEXT:    [[PRE_1:%.*]] = icmp sgt i64 [[S]], -1
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE_1]])
+ ; CHECK-NEXT:    [[PRE_2:%.*]] = icmp slt i64 [[A]], [[N]]
+@@ -31,7 +31,7 @@ define i1 @uge_query_via_signed_system(i64 %a, i64 %b, i64 %n) {
+ ; CHECK-SAME: i64 [[A:%.*]], i64 [[B:%.*]], i64 [[N:%.*]]) {
+ ; CHECK-NEXT:    [[PRE_0:%.*]] = icmp sgt i64 [[B]], -1
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE_0]])
+-; CHECK-NEXT:    [[S:%.*]] = sub nsw i64 [[A]], [[B]]
++; CHECK-NEXT:    [[S:%.*]] = sub nuw nsw i64 [[A]], [[B]]
+ ; CHECK-NEXT:    [[PRE_1:%.*]] = icmp sgt i64 [[S]], -1
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE_1]])
+ ; CHECK-NEXT:    [[PRE_2:%.*]] = icmp slt i64 [[A]], [[N]]

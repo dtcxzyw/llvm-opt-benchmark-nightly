@@ -205,8 +205,8 @@ bb.o:                                             ; preds = %bb.n
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bh, i64 80
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bz, i64 8
   %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !38
-  %i.cd = sub nsw i32 %i.k, %.090162239
-  %i.ce = zext i32 %i.cd to i64
+  %i.cd = sub nuw nsw i32 %i.k, %.090162239
+  %i.ce = zext nneg i32 %i.cd to i64
   %i.cf = shl nuw nsw i64 %i.ce, 3                ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ca, ptr align 8 %i.cc, i64 %i.cf, i1 false)
   %i.cg = getelementptr inbounds nuw i8, ptr %i.br, i64 8
