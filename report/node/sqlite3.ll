@@ -206,10 +206,9 @@ sqlite3VdbeMemRelease.exit:                       ; preds = %bb.l, %bb.m
   br i1 %.not24, label %sqlite3_mutex_leave.exit28, label %bb.n
 
 bb.n:                                             ; preds = %sqlite3VdbeMemRelease.exit
-  %2 = icmp ugt i32 %1, 30
-  %i.al = shl nuw nsw i32 1, %1
-  %3 = select i1 %2, i32 -2147483648, i32 %i.al
-  %i.am = and i32 %i.ak, %3
+  %2 = tail call i32 @llvm.umin.i32(i32 %1, i32 31)
+  %i.al = shl nuw i32 1, %2
+  %i.am = and i32 %i.ak, %i.al
   %.not25 = icmp eq i32 %i.am, 0
   br i1 %.not25, label %sqlite3_mutex_leave.exit28, label %bb.o
 
@@ -612,12 +611,11 @@ bb.l:                                             ; preds = %.lr.ph.epil.prehead
   br i1 %or.cond89, label %.loopexit62, label %.lr.ph75.split
 
 .lr.ph75.split:                                   ; preds = %.loopexit64, %..loopexit_crit_edge
-  %indvars.iv80 = phi i64 [ %indvars.iv.next81, %..loopexit_crit_edge ], [ 0, %.loopexit64 ] ; 4 uses
+  %indvars.iv80 = phi i64 [ %indvars.iv.next81, %..loopexit_crit_edge ], [ 0, %.loopexit64 ] ; 3 uses
   %.04374 = phi i32 [ %.3, %..loopexit_crit_edge ], [ 0, %.loopexit64 ] ; 2 uses
-  %1 = icmp samesign ult i64 %indvars.iv80, 63
-  %i.ay = shl nuw i64 1, %indvars.iv80
-  %2 = select i1 %1, i64 %i.ay, i64 -9223372036854775808
-  %i.az = and i64 %2, %.2
+  %1 = tail call i64 @llvm.umin.i64(i64 %indvars.iv80, i64 63)
+  %i.ay = shl nuw i64 1, %1
+  %i.az = and i64 %i.ay, %.2
   %.not55 = icmp eq i64 %i.az, 0
   br i1 %.not55, label %.preheader, label %..loopexit_crit_edge
 
@@ -1020,10 +1018,10 @@ declare i32 @llvm.fshl.i32(i32, i32, i32) #47
 declare i64 @llvm.smax.i64(i64, i64) #47
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #47
+declare i32 @llvm.umin.i32(i32, i32) #47
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #47
+declare i64 @llvm.umin.i64(i64, i64) #47
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #57

@@ -205,10 +205,9 @@ bb.hk:                                            ; preds = %bb.id, %.lr.ph19.i
   %i.dbz = getelementptr inbounds [92 x i8], ptr %i.i, i64 %i.dby
   %i.dca = sub nsw i64 %i.dbr, %.01484.i.us       ; 2 uses
   %i.dcb = icmp slt i64 %.01484.i.us, 0
-  %i.dcc = add nsw i32 %i.dbv, -111               ; 2 uses
-  %or.cond3.i.us = icmp ult i32 %i.dcc, 24
-  %i.dcd = lshr i32 8388736, %i.dcc
-  %spec.select1.i.us = select i1 %or.cond3.i.us, i32 %i.dcd, i32 1
+  %i.dcc = add nsw i32 %i.dbv, -111
+  %3 = call i32 @llvm.umin.i32(i32 %i.dcc, i32 23)
+  %i.dcd = lshr i32 8388736, %3
   %.not167.i.us = icmp eq i32 %.01475.i.us, %i.dbv
   br label %.lr.ph.split.us.i649.us
 
@@ -228,7 +227,7 @@ bb.hm:                                            ; preds = %bb.hl
   br label %bb.hn
 
 bb.hn:                                            ; preds = %bb.hm, %bb.hl, %.lr.ph.split.us.i649.us
-  %.0144.us.i.us = phi i32 [ %i.dch, %bb.hm ], [ 1, %.lr.ph.split.us.i649.us ], [ %spec.select1.i.us, %bb.hl ] ; 4 uses
+  %.0144.us.i.us = phi i32 [ %i.dch, %bb.hm ], [ 1, %.lr.ph.split.us.i649.us ], [ %i.dcd, %bb.hl ] ; 4 uses
   %i.dci = sdiv i32 %.0144.us.i.us, 2
   %i.dcj = sext i32 %i.dci to i64
   %i.dck = add nsw i64 %i.dca, %i.dcj
@@ -304,10 +303,9 @@ bb.hq:                                            ; preds = %bb.hp, %bb.ho, %bb.
   %i.ddp = getelementptr inbounds [92 x i8], ptr %i.i, i64 %i.ddo
   %i.ddq = sub nsw i64 %i.ddh, %.01484.i          ; 2 uses
   %i.ddr = icmp slt i64 %.01484.i, 0
-  %i.dds = add nsw i32 %i.ddl, -111               ; 2 uses
-  %or.cond3.i = icmp ult i32 %i.dds, 24
-  %i.ddt = lshr i32 8388736, %i.dds
-  %spec.select1.i = select i1 %or.cond3.i, i32 %i.ddt, i32 1
+  %i.dds = add nsw i32 %i.ddl, -111
+  %4 = call i32 @llvm.umin.i32(i32 %i.dds, i32 23)
+  %i.ddt = lshr i32 8388736, %4
   %.not167.i = icmp eq i32 %.01475.i, %i.ddl
   br label %.lr.ph.split.i644
 
@@ -327,7 +325,7 @@ bb.hs:                                            ; preds = %bb.hr
   br label %bb.ht
 
 bb.ht:                                            ; preds = %bb.hs, %bb.hr, %.lr.ph.split.i644
-  %.0144.i = phi i32 [ %i.ddx, %bb.hs ], [ 1, %.lr.ph.split.i644 ], [ %spec.select1.i, %bb.hr ] ; 4 uses
+  %.0144.i = phi i32 [ %i.ddx, %bb.hs ], [ 1, %.lr.ph.split.i644 ], [ %i.ddt, %bb.hr ] ; 4 uses
   %i.ddy = sdiv i32 %.0144.i, 2
   %i.ddz = sext i32 %i.ddy to i64
   %i.dea = add nsw i64 %i.ddq, %i.ddz
