@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %.loopexit
   %i.da = zext nneg i32 %i.e to i64
-  %gepdiff = sub nsw i64 %i.cm, %i.da
+  %gepdiff = sub nuw nsw i64 %i.cm, %i.da
   %i.db = add nsw i64 %gepdiff, 1
   %.sroa.05.0.lcssa.i.i152 = add i64 %i.db, %.sroa.0186.10 ; 2 uses
   %i.dc = load i32, ptr %i.f, align 8, !tbaa !1985 ; 2 uses

@@ -1,0 +1,221 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index 40fd6fd2ed060..5ba5809c4f37e 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -534,9 +534,15 @@ static bool doesHoldInRange(const ConstraintInfo &Info, Value *Op,
+ 
+ /// Returns true if \p Opcode applied to \p Op0 and \p Op1 with \p NoWrapFlags
+ /// is known to not wrap in signed or unsigned, depending on \p Signed.
++///
++/// \p UseSignedFactsForSub enables the one rule that answers an unsigned
++/// query about a subtract with an independent query in the signed system.
++/// decompose() must not enable it: it already decomposes both operands to
++/// answer a query, and a second, independent query per level makes decomposing
++/// a chain of subtracts take time exponential in its length.
+ static bool isKnownNoWrap(Instruction::BinaryOps Opcode, Value *Op0, Value *Op1,
+                           unsigned NoWrapFlags, const ConstraintInfo &Info,
+-                          bool Signed) {
++                          bool Signed, bool UseSignedFactsForSub) {
+   using OBO = OverflowingBinaryOperator;
+ 
+   if (NoWrapFlags & (Signed ? OBO::NoSignedWrap : OBO::NoUnsignedWrap))
+@@ -544,13 +550,18 @@ static bool isKnownNoWrap(Instruction::BinaryOps Opcode, Value *Op0, Value *Op1,
+ 
+   if (Opcode == Instruction::Sub) {
+     // Op0 - Op1 does not wrap unsigned if Op0 >=u Op1.
+-    if (!Signed)
+-      return Info.doesHold(CmpInst::ICMP_UGE, Op0, Op1);
++    if (!Signed && Info.doesHold(CmpInst::ICMP_UGE, Op0, Op1))
++      return true;
+ 
+-    // Op0 - Op1 does not wrap signed if 0 <=s Op1 <=s Op0.
+-    if (Info.isKnownNonNegative(Op1) &&
++    // Op0 - Op1 does not wrap signed or unsigned if 0 <=s Op1 <=s Op0. For an
++    // unsigned query this reasons in the signed system, hence the extra guard.
++    if ((Signed || UseSignedFactsForSub) && Info.isKnownNonNegative(Op1) &&
+         Info.doesHold(CmpInst::ICMP_SGE, Op0, Op1))
+       return true;
++
++    // No other rule applies to unsigned sub.
++    if (!Signed)
++      return false;
+   }
+ 
+   if (!Signed && (NoWrapFlags & OBO::NoSignedWrap) &&
+@@ -572,8 +583,9 @@ static bool isKnownNoWrap(Instruction::BinaryOps Opcode, Value *Op0, Value *Op1,
+ }
+ 
+ /// Returns true if \p V is known to not wrap in signed or unsigned, depending
+-/// on \p Signed.
+-static bool isKnownNoWrap(Value *V, const ConstraintInfo &Info, bool Signed) {
++/// on \p Signed. See the overload above for \p UseSignedFactsForSub.
++static bool isKnownNoWrap(Value *V, const ConstraintInfo &Info, bool Signed,
++                          bool UseSignedFactsForSub) {
+   if (match(V, m_DisjointOr(m_Value(), m_Value())))
+     return true;
+ 
+@@ -592,7 +604,8 @@ static bool isKnownNoWrap(Value *V, const ConstraintInfo &Info, bool Signed) {
+   return BO &&
+          isKnownNoWrap(static_cast<Instruction::BinaryOps>(BO->getOpcode()),
+                        BO->getOperand(0), BO->getOperand(1),
+-                       BO->getNoWrapKind(), Info, Signed);
++                       BO->getNoWrapKind(), Info, Signed,
++                       UseSignedFactsForSub);
+ }
+ 
+ static Decomposition decomposeGEP(GEPOperator &GEP, const ConstraintInfo &Info,
+@@ -695,12 +708,12 @@ static Decomposition decompose(Value *V, const ConstraintInfo &Info,
+     V = Op0;
+   } else if (auto *Trunc = dyn_cast<TruncInst>(V)) {
+     if (Trunc->getSrcTy()->getScalarSizeInBits() <= 64 &&
+-        isKnownNoWrap(Trunc, Info, IsSigned))
++        isKnownNoWrap(Trunc, Info, IsSigned, /*UseSignedFactsForSub=*/false))
+       V = Trunc->getOperand(0);
+   }
+ 
+   if (match(V, m_AddLike(m_Value(Op0), m_Value(Op1)))) {
+-    if (isKnownNoWrap(V, Info, IsSigned)) {
++    if (isKnownNoWrap(V, Info, IsSigned, /*UseSignedFactsForSub=*/false)) {
+       if (auto Decomp = MergeResults(Op0, Op1, IsSigned))
+         return *Decomp;
+       return V;
+@@ -725,7 +738,7 @@ static Decomposition decompose(Value *V, const ConstraintInfo &Info,
+   }
+ 
+   if (match(V, m_Sub(m_Value(Op0), m_Value(Op1)))) {
+-    if (isKnownNoWrap(V, Info, IsSigned)) {
++    if (isKnownNoWrap(V, Info, IsSigned, /*UseSignedFactsForSub=*/false)) {
+       auto ResA = decompose(Op0, Info, IsSigned, DL);
+       auto ResB = decompose(Op1, Info, IsSigned, DL);
+       if (!ResA.sub(ResB))
+@@ -738,7 +751,7 @@ static Decomposition decompose(Value *V, const ConstraintInfo &Info,
+     // A negative constant is only a valid coefficient in the signed system; in
+     // the unsigned system the multiplier is the constant's unsigned value.
+     if (canUseSExt(CI) && (IsSigned || !CI->isNegative()) &&
+-        isKnownNoWrap(V, Info, IsSigned)) {
++        isKnownNoWrap(V, Info, IsSigned, /*UseSignedFactsForSub=*/false)) {
+       auto Result = decompose(Op0, Info, IsSigned, DL);
+       if (!Result.mul(CI->getSExtValue()))
+         return Result;
+@@ -752,7 +765,7 @@ static Decomposition decompose(Value *V, const ConstraintInfo &Info,
+     // which the product is not representable.
+     int64_t MaxShift = IsSigned ? Ty->getIntegerBitWidth() - 1 : 63;
+     if (!CI->isNegative() && CI->getSExtValue() < MaxShift &&
+-        isKnownNoWrap(V, Info, IsSigned)) {
++        isKnownNoWrap(V, Info, IsSigned, /*UseSignedFactsForSub=*/false)) {
+       auto Result = decompose(Op0, Info, IsSigned, DL);
+       if (!Result.mul(int64_t{1} << CI->getSExtValue()))
+         return Result;
+@@ -1427,12 +1440,16 @@ static bool tryToStrengthenFlags(Instruction *I, ConstraintInfo &Info) {
+   assert(canStrengthenFlags(I) && "not a candidate for flag strengthening");
+ 
+   bool Changed = false;
+-  if (!I->hasNoSignedWrap() && isKnownNoWrap(I, Info, /*Signed=*/true)) {
++  if (!I->hasNoSignedWrap() &&
++      isKnownNoWrap(I, Info, /*Signed=*/true,
++                    /*UseSignedFactsForSub=*/true)) {
+     LLVM_DEBUG(dbgs() << "Adding nsw to " << *I << "\n");
+     I->setHasNoSignedWrap();
+     Changed = true;
+   }
+-  if (!I->hasNoUnsignedWrap() && isKnownNoWrap(I, Info, /*Signed=*/false)) {
++  if (!I->hasNoUnsignedWrap() &&
++      isKnownNoWrap(I, Info, /*Signed=*/false,
++                    /*UseSignedFactsForSub=*/true)) {
+     LLVM_DEBUG(dbgs() << "Adding nuw to " << *I << "\n");
+     I->setHasNoUnsignedWrap();
+     Changed = true;
+diff --git a/llvm/test/Transforms/ConstraintElimination/materialize-flags.ll b/llvm/test/Transforms/ConstraintElimination/materialize-flags.ll
+index b8cc032274b2d..5205f07911268 100644
+--- a/llvm/test/Transforms/ConstraintElimination/materialize-flags.ll
++++ b/llvm/test/Transforms/ConstraintElimination/materialize-flags.ll
+@@ -204,6 +204,54 @@ entry:
+   ret i32 %sub
+ }
+ 
++define i32 @sub_nuw_from_transitive_signed_facts(i32 %a, i32 %b, i32 %n) {
++; CHECK-LABEL: define i32 @sub_nuw_from_transitive_signed_facts(
++; CHECK-SAME: i32 [[A:%.*]], i32 [[B:%.*]], i32 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[B_NNEG:%.*]] = icmp sge i32 [[B]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[B_NNEG]])
++; CHECK-NEXT:    [[N_NNEG:%.*]] = icmp sge i32 [[N]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[N_NNEG]])
++; CHECK-NEXT:    [[REM:%.*]] = sub nuw nsw i32 [[A]], [[N]]
++; CHECK-NEXT:    [[FITS:%.*]] = icmp sge i32 [[REM]], [[B]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[FITS]])
++; CHECK-NEXT:    [[SUB:%.*]] = sub nuw nsw i32 [[A]], [[B]]
++; CHECK-NEXT:    ret i32 [[SUB]]
++;
++entry:
++  %b.nneg = icmp sge i32 %b, 0
++  call void @llvm.assume(i1 %b.nneg)
++  %n.nneg = icmp sge i32 %n, 0
++  call void @llvm.assume(i1 %n.nneg)
++  %rem = sub nsw i32 %a, %n
++  %fits = icmp sge i32 %rem, %b
++  call void @llvm.assume(i1 %fits)
++  %sub = sub i32 %a, %b
++  ret i32 %sub
++}
++
++define i32 @sub_no_nuw_from_transitive_signed_facts(i32 %a, i32 %b, i32 %n) {
++; CHECK-LABEL: define i32 @sub_no_nuw_from_transitive_signed_facts(
++; CHECK-SAME: i32 [[A:%.*]], i32 [[B:%.*]], i32 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[N_NNEG:%.*]] = icmp sge i32 [[N]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[N_NNEG]])
++; CHECK-NEXT:    [[REM:%.*]] = sub nsw i32 [[A]], [[N]]
++; CHECK-NEXT:    [[FITS:%.*]] = icmp sge i32 [[REM]], [[B]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[FITS]])
++; CHECK-NEXT:    [[SUB:%.*]] = sub i32 [[A]], [[B]]
++; CHECK-NEXT:    ret i32 [[SUB]]
++;
++entry:
++  %n.nneg = icmp sge i32 %n, 0
++  call void @llvm.assume(i1 %n.nneg)
++  %rem = sub nsw i32 %a, %n
++  %fits = icmp sge i32 %rem, %b
++  call void @llvm.assume(i1 %fits)
++  %sub = sub i32 %a, %b
++  ret i32 %sub
++}
++
+ define ptr @gep_nuw_transitive(ptr %p, i64 %i, i64 %j) {
+ ; CHECK-LABEL: define ptr @gep_nuw_transitive(
+ ; CHECK-SAME: ptr [[P:%.*]], i64 [[I:%.*]], i64 [[J:%.*]]) {
+diff --git a/llvm/test/Transforms/ConstraintElimination/uadd-usub-sat.ll b/llvm/test/Transforms/ConstraintElimination/uadd-usub-sat.ll
+index 09189ca89271e..f49792ea9745a 100644
+--- a/llvm/test/Transforms/ConstraintElimination/uadd-usub-sat.ll
++++ b/llvm/test/Transforms/ConstraintElimination/uadd-usub-sat.ll
+@@ -95,7 +95,7 @@ define i1 @usub_sat_span_offset(i64 %count, i64 %base, i64 %n) {
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[BASE_NNEG]])
+ ; CHECK-NEXT:    [[N_NNEG:%.*]] = icmp sge i64 [[N]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[N_NNEG]])
+-; CHECK-NEXT:    [[REM:%.*]] = sub nsw i64 [[COUNT]], [[N]]
++; CHECK-NEXT:    [[REM:%.*]] = sub nuw nsw i64 [[COUNT]], [[N]]
+ ; CHECK-NEXT:    [[FITS:%.*]] = icmp sge i64 [[REM]], [[BASE]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[FITS]])
+ ; CHECK-NEXT:    [[AVAIL:%.*]] = sub nuw nsw i64 [[COUNT]], [[BASE]]
+diff --git a/llvm/test/Transforms/ConstraintElimination/unsigned-query-signed-system.ll b/llvm/test/Transforms/ConstraintElimination/unsigned-query-signed-system.ll
+index f85f858a72060..9260e4565a576 100644
+--- a/llvm/test/Transforms/ConstraintElimination/unsigned-query-signed-system.ll
++++ b/llvm/test/Transforms/ConstraintElimination/unsigned-query-signed-system.ll
+@@ -6,7 +6,7 @@ define i1 @ult_query_via_signed_system(i64 %a, i64 %b, i64 %n) {
+ ; CHECK-SAME: i64 [[A:%.*]], i64 [[B:%.*]], i64 [[N:%.*]]) {
+ ; CHECK-NEXT:    [[PRE_0:%.*]] = icmp sgt i64 [[B]], -1
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE_0]])
+-; CHECK-NEXT:    [[S:%.*]] = sub nsw i64 [[A]], [[B]]
++; CHECK-NEXT:    [[S:%.*]] = sub nuw nsw i64 [[A]], [[B]]
+ ; CHECK-NEXT:    [[PRE_1:%.*]] = icmp sgt i64 [[S]], -1
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE_1]])
+ ; CHECK-NEXT:    [[PRE_2:%.*]] = icmp slt i64 [[A]], [[N]]
+@@ -31,7 +31,7 @@ define i1 @uge_query_via_signed_system(i64 %a, i64 %b, i64 %n) {
+ ; CHECK-SAME: i64 [[A:%.*]], i64 [[B:%.*]], i64 [[N:%.*]]) {
+ ; CHECK-NEXT:    [[PRE_0:%.*]] = icmp sgt i64 [[B]], -1
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE_0]])
+-; CHECK-NEXT:    [[S:%.*]] = sub nsw i64 [[A]], [[B]]
++; CHECK-NEXT:    [[S:%.*]] = sub nuw nsw i64 [[A]], [[B]]
+ ; CHECK-NEXT:    [[PRE_1:%.*]] = icmp sgt i64 [[S]], -1
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE_1]])
+ ; CHECK-NEXT:    [[PRE_2:%.*]] = icmp slt i64 [[A]], [[N]]

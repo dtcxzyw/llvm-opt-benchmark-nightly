@@ -69,9 +69,9 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.af, label %.thread469, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.ag = sub nsw i32 %i.w, %i.y
+  %i.ag = sub nuw nsw i32 %i.w, %i.y
   %i.ah = load i32, ptr %6, align 4, !tbaa !11
-  %i.ai = tail call i32 @llvm.smax.i32(i32 %i.ag, i32 1)
+  %i.ai = tail call i32 @llvm.umax.i32(i32 %i.ag, i32 1)
   %i.aj = icmp slt i32 %i.ah, %i.ai
   br i1 %i.aj, label %.thread469, label %bb.f
 
@@ -473,6 +473,9 @@ declare double @llvm.sqrt.f64(double) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #4
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

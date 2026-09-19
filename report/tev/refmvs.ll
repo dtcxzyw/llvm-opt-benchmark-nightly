@@ -205,6 +205,9 @@ bb.a:
   %spec.select = select i1 %i.c, i32 0, i32 %1
   %i.d = icmp sgt i32 %4, -1
   tail call void @llvm.assume(i1 %i.d)
+  %6 = sub nuw nsw i32 %5, %4
+  %7 = icmp ult i32 %6, 17
+  tail call void @llvm.assume(i1 %7)
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.f = load i32, ptr %i.e, align 4, !tbaa !88
   %i.g = tail call noundef i32 @llvm.smin.i32(i32 %5, i32 %i.f) ; 4 uses

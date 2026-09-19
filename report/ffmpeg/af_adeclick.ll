@@ -204,16 +204,16 @@ bb.a:
   %niter = phi i64 [ %niter.next.1, %.preheader76.new ], [ 0, %.preheader76 ]
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv
   %i.s = load double, ptr %i.r, align 8, !tbaa !50
-  %i.t = sub nsw i64 %indvars.iv94, %indvars.iv
-  %i.u = getelementptr inbounds [8 x i8], ptr %7, i64 %i.t
+  %i.t = sub nuw nsw i64 %indvars.iv94, %indvars.iv
+  %i.u = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.t
   %i.v = load double, ptr %i.u, align 8, !tbaa !50
   %i.w = tail call nsz double @llvm.fmuladd.f64(double %i.s, double %i.v, double %i.q) ; 2 uses
   store double %i.w, ptr %i.n, align 8, !tbaa !50
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv.next
   %i.y = load double, ptr %i.x, align 8, !tbaa !50
-  %i.z = sub nsw i64 %indvars.iv94, %indvars.iv.next
-  %i.aa = getelementptr inbounds [8 x i8], ptr %7, i64 %i.z
+  %i.z = sub nuw nsw i64 %indvars.iv94, %indvars.iv.next
+  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.z
   %i.ab = load double, ptr %i.aa, align 8, !tbaa !50
   %i.ac = tail call nsz double @llvm.fmuladd.f64(double %i.y, double %i.ab, double %i.w) ; 3 uses
   store double %i.ac, ptr %i.n, align 8, !tbaa !50
@@ -231,8 +231,8 @@ bb.a:
   tail call void @llvm.assume(i1 %lcmp.mod121)
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv.epil.init
   %i.ae = load double, ptr %i.ad, align 8, !tbaa !50
-  %i.af = sub nsw i64 %indvars.iv94, %indvars.iv.epil.init
-  %i.ag = getelementptr inbounds [8 x i8], ptr %7, i64 %i.af
+  %i.af = sub nuw nsw i64 %indvars.iv94, %indvars.iv.epil.init
+  %i.ag = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.af
   %i.ah = load double, ptr %i.ag, align 8, !tbaa !50
   %i.ai = tail call nsz double @llvm.fmuladd.f64(double %i.ae, double %i.ah, double %.epil.init)
   store double %i.ai, ptr %i.n, align 8, !tbaa !50

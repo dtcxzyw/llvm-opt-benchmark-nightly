@@ -204,7 +204,7 @@ bb.v:                                             ; preds = %bb.u
   %i.fv = load i32, ptr %3, align 4
   %i.fw = add i32 %i.fv, %spec.select.i
   store i32 %i.fw, ptr %3, align 4
-  %i.fx = sub nsw i32 %i.fm, %spec.select.i
+  %i.fx = sub nuw nsw i32 %i.fm, %spec.select.i
   br label %dissect_qnet6_kif_msgsend_msg_extra.exit
 
 dissect_qnet6_kif_msgsend_msg_extra.exit:         ; preds = %bb.t, %bb.u, %bb.v
@@ -323,7 +323,7 @@ bb.ae:                                            ; preds = %bb.ad
   %i.ib = load i32, ptr %3, align 4
   %i.ic = add i32 %i.ib, %spec.select.i531
   store i32 %i.ic, ptr %3, align 4
-  %i.id = sub nsw i32 %.0540, %spec.select.i531
+  %i.id = sub nuw nsw i32 %.0540, %spec.select.i531
   %.pre546 = load i32, ptr %i.v, align 4
   br label %dissect_qnet6_kif_msgsend_msg_extra.exit532
 
@@ -431,7 +431,7 @@ bb.al:                                            ; preds = %bb.ak
   %i.kd = load i32, ptr %3, align 4
   %i.ke = add i32 %i.kd, %spec.select.i533        ; 2 uses
   store i32 %i.ke, ptr %3, align 4
-  %i.kf = sub nsw i32 %.0541, %spec.select.i533
+  %i.kf = sub nuw nsw i32 %.0541, %spec.select.i533
   %.pre545 = load i32, ptr %i.u, align 4
   br label %dissect_qnet6_kif_msgsend_msg_extra.exit534
 
@@ -503,7 +503,7 @@ bb.as:                                            ; preds = %bb.ar
   %i.ll = load i32, ptr %3, align 4
   %i.lm = add i32 %i.ll, %spec.select.i340
   store i32 %i.lm, ptr %3, align 4
-  %i.ln = sub nsw i32 %i.lc, %spec.select.i340
+  %i.ln = sub nuw nsw i32 %i.lc, %spec.select.i340
   %.pre489 = load i16, ptr %i.t, align 2
   br label %dissect_qnet6_kif_msgsend_msg_extra.exit341
 
@@ -557,7 +557,7 @@ bb.aw:                                            ; preds = %bb.av
   %i.ml = load i32, ptr %3, align 4
   %i.mm = add i32 %i.ml, %spec.select.i342
   store i32 %i.mm, ptr %3, align 4
-  %i.mn = sub nsw i32 %i.md, %spec.select.i342
+  %i.mn = sub nuw nsw i32 %i.md, %spec.select.i342
   %.pre488 = load i32, ptr %i.s, align 4
   br label %dissect_qnet6_kif_msgsend_msg_extra.exit343
 
@@ -622,7 +622,7 @@ bb.ba:                                            ; preds = %bb.az
   %i.nu = load i32, ptr %3, align 4
   %i.nv = add i32 %i.nu, %spec.select.i344
   store i32 %i.nv, ptr %3, align 4
-  %i.nw = sub nsw i32 %i.nm, %spec.select.i344
+  %i.nw = sub nuw nsw i32 %i.nm, %spec.select.i344
   %.pre487 = load i32, ptr %i.r, align 4
   br label %dissect_qnet6_kif_msgsend_msg_extra.exit345
 
@@ -679,7 +679,7 @@ bb.be:                                            ; preds = %bb.bd
   %i.ox = load i32, ptr %3, align 4
   %i.oy = add i32 %i.ox, %spec.select.i346
   store i32 %i.oy, ptr %3, align 4
-  %i.oz = sub nsw i32 %i.oo, %spec.select.i346
+  %i.oz = sub nuw nsw i32 %i.oo, %spec.select.i346
   %.pre486 = load i16, ptr %i.q, align 2
   br label %dissect_qnet6_kif_msgsend_msg_extra.exit347
 
@@ -738,7 +738,7 @@ bb.bi:                                            ; preds = %bb.bh
   %i.qb = load i32, ptr %3, align 4
   %i.qc = add i32 %i.qb, %spec.select.i348
   store i32 %i.qc, ptr %3, align 4
-  %i.qd = sub nsw i32 %i.pt, %spec.select.i348
+  %i.qd = sub nuw nsw i32 %i.pt, %spec.select.i348
   %.pre485 = load i32, ptr %i.p, align 4
   br label %dissect_qnet6_kif_msgsend_msg_extra.exit349
 
@@ -804,7 +804,7 @@ bb.bm:                                            ; preds = %bb.bl
   %i.rl = load i32, ptr %3, align 4
   %i.rm = add i32 %i.rl, %spec.select.i350
   store i32 %i.rm, ptr %3, align 4
-  %i.rn = sub nsw i32 %i.rd, %spec.select.i350
+  %i.rn = sub nuw nsw i32 %i.rd, %spec.select.i350
   %.pre484 = load i32, ptr %i.o, align 4
   br label %dissect_qnet6_kif_msgsend_msg_extra.exit351
 
@@ -934,7 +934,7 @@ bb.bv:                                            ; preds = %bb.bu
   %i.ub = load i32, ptr %3, align 4
   %i.uc = add i32 %i.ub, %spec.select.i354
   store i32 %i.uc, ptr %3, align 4
-  %i.ud = sub nsw i32 %i.ts, %spec.select.i354
+  %i.ud = sub nuw nsw i32 %i.ts, %spec.select.i354
   %.pre482 = load i16, ptr %i.m, align 2
   br label %dissect_qnet6_kif_msgsend_msg_extra.exit355
 
@@ -1004,7 +1004,7 @@ bb.bz:                                            ; preds = %bb.by
   %i.vo = load i32, ptr %3, align 4
   %i.vp = add i32 %i.vo, %spec.select.i356
   store i32 %i.vp, ptr %3, align 4
-  %i.vq = sub nsw i32 %i.vf, %spec.select.i356
+  %i.vq = sub nuw nsw i32 %i.vf, %spec.select.i356
   %.pre481 = load i16, ptr %i.l, align 2
   br label %dissect_qnet6_kif_msgsend_msg_extra.exit357
 
@@ -1053,7 +1053,7 @@ bb.cd:                                            ; preds = %bb.cc
   %i.wk = load i32, ptr %3, align 4
   %i.wl = add i32 %i.wk, %spec.select.i358
   store i32 %i.wl, ptr %3, align 4
-  %i.wm = sub nsw i32 %i.wc, %spec.select.i358
+  %i.wm = sub nuw nsw i32 %i.wc, %spec.select.i358
   %.pre480 = load i32, ptr %i.k, align 4
   br label %dissect_qnet6_kif_msgsend_msg_extra.exit359
 
@@ -1113,7 +1113,7 @@ bb.ch:                                            ; preds = %bb.cg
   %i.xp = load i32, ptr %3, align 4
   %i.xq = add i32 %i.xp, %spec.select.i360
   store i32 %i.xq, ptr %3, align 4
-  %i.xr = sub nsw i32 %i.xh, %spec.select.i360
+  %i.xr = sub nuw nsw i32 %i.xh, %spec.select.i360
   %.pre479 = load i32, ptr %i.j, align 4
   br label %dissect_qnet6_kif_msgsend_msg_extra.exit361
 
@@ -1193,7 +1193,7 @@ bb.cl:                                            ; preds = %bb.ck
   %i.zk = load i32, ptr %3, align 4
   %i.zl = add i32 %i.zk, %spec.select.i362
   store i32 %i.zl, ptr %3, align 4
-  %i.zm = sub nsw i32 %i.zc, %spec.select.i362
+  %i.zm = sub nuw nsw i32 %i.zc, %spec.select.i362
   %.pre478 = load i32, ptr %i.i, align 4
   br label %dissect_qnet6_kif_msgsend_msg_extra.exit363
 
@@ -1243,7 +1243,7 @@ bb.cp:                                            ; preds = %bb.co
   %i.aah = load i32, ptr %3, align 4
   %i.aai = add i32 %i.aah, %spec.select.i364
   store i32 %i.aai, ptr %3, align 4
-  %i.aaj = sub nsw i32 %i.zz, %spec.select.i364
+  %i.aaj = sub nuw nsw i32 %i.zz, %spec.select.i364
   %.pre477 = load i32, ptr %i.h, align 4
   br label %dissect_qnet6_kif_msgsend_msg_extra.exit365
 
@@ -1313,7 +1313,7 @@ bb.ct:                                            ; preds = %bb.cs
   %i.abu = load i32, ptr %3, align 4
   %i.abv = add i32 %i.abu, %spec.select.i366
   store i32 %i.abv, ptr %3, align 4
-  %i.abw = sub nsw i32 %i.abm, %spec.select.i366
+  %i.abw = sub nuw nsw i32 %i.abm, %spec.select.i366
   %.pre476 = load i32, ptr %i.g, align 4
   br label %dissect_qnet6_kif_msgsend_msg_extra.exit367
 
@@ -1373,7 +1373,7 @@ bb.cx:                                            ; preds = %bb.cw
   %i.acz = load i32, ptr %3, align 4
   %i.ada = add i32 %i.acz, %spec.select.i368
   store i32 %i.ada, ptr %3, align 4
-  %i.adb = sub nsw i32 %i.acr, %spec.select.i368
+  %i.adb = sub nuw nsw i32 %i.acr, %spec.select.i368
   %.pre475 = load i32, ptr %i.f, align 4
   br label %dissect_qnet6_kif_msgsend_msg_extra.exit369
 
@@ -1669,7 +1669,7 @@ bb.dt:                                            ; preds = %bb.ds
   %i.aiy = load i32, ptr %3, align 4
   %i.aiz = add i32 %i.aiy, %spec.select.i370
   store i32 %i.aiz, ptr %3, align 4
-  %i.aja = sub nsw i32 %i.aio, %spec.select.i370
+  %i.aja = sub nuw nsw i32 %i.aio, %spec.select.i370
   %.pre474 = load i32, ptr %i.b, align 4
   br label %dissect_qnet6_kif_msgsend_msg_extra.exit371
 
@@ -1737,7 +1737,7 @@ bb.dx:                                            ; preds = %bb.dw
   %i.akg = load i32, ptr %3, align 4
   %i.akh = add i32 %i.akg, %spec.select.i372
   store i32 %i.akh, ptr %3, align 4
-  %i.aki = sub nsw i32 %i.ajy, %spec.select.i372
+  %i.aki = sub nuw nsw i32 %i.ajy, %spec.select.i372
   %.pre = load i32, ptr %i.a, align 4
   br label %dissect_qnet6_kif_msgsend_msg_extra.exit373
 

@@ -205,7 +205,7 @@ bb.cu:                                            ; preds = %.lr.ph1038
   br i1 %.not981, label %.thread930, label %bb.cv
 
 bb.cv:                                            ; preds = %bb.cu
-  %i.dp = sub nsw i32 %i.de, %.06961037           ; 2 uses
+  %i.dp = sub nuw nsw i32 %i.de, %.06961037       ; 2 uses
   %i.dq = icmp slt i32 %i.dp, 7
   br i1 %i.dq, label %bb.cw, label %.thread930
 
@@ -251,7 +251,7 @@ bb.cy:                                            ; preds = %bb.cx
   br i1 %.not800, label %bb.da, label %bb.cz
 
 bb.cz:                                            ; preds = %._crit_edge.thread
-  %11 = sext i32 %i.dp to i64
+  %11 = zext nneg i32 %i.dp to i64
   %i.eh = tail call ptr @strncpy(ptr noundef nonnull %4, ptr noundef nonnull %i.dt, i64 noundef %11) #28 ; 0 uses
   br label %bb.da
 
@@ -654,7 +654,7 @@ bb.as:                                            ; preds = %.lr.ph221, %bb.ar
 
 bb.at:                                            ; preds = %bb.as
   %i.cg = icmp ne i64 %indvars.iv180220, 1
-  %i.ch = sub nsw i32 %i.bv, %i.cf
+  %i.ch = sub nuw nsw i32 %i.bv, %i.cf
   %i.ci = icmp slt i32 %i.ch, 5
   %or.cond151 = select i1 %i.cg, i1 %i.ci, i1 false
   br i1 %or.cond151, label %.preheader, label %.thread
