@@ -206,7 +206,7 @@ bb.d:                                             ; preds = %bb.c
   %i.q = load i32, ptr %i.h, align 8, !tbaa !69
   %i.r = add i32 %i.q, %i.p
   store i32 %i.r, ptr %i.h, align 8, !tbaa !69
-  %i.s = sub nsw i32 %i.m, %i.p
+  %i.s = sub nuw nsw i32 %i.m, %i.p
   store i32 %i.s, ptr %i.b, align 4, !tbaa !45
   %i.t = tail call ptr @rb_errno_ptr() #28
   store i32 11, ptr %i.t, align 4, !tbaa !16
@@ -609,7 +609,7 @@ bb.i:                                             ; preds = %bb.h
   %i.ai = load i32, ptr %i.z, align 8, !tbaa !69
   %i.aj = add i32 %i.ai, %i.ah
   store i32 %i.aj, ptr %i.z, align 8, !tbaa !69
-  %i.ak = sub nsw i32 %i.ae, %i.ah
+  %i.ak = sub nuw nsw i32 %i.ae, %i.ah
   store i32 %i.ak, ptr %i.o, align 4, !tbaa !45
   %i.al = tail call ptr @rb_errno_ptr() #28
   store i32 11, ptr %i.al, align 4, !tbaa !16

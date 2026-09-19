@@ -205,12 +205,11 @@ bb.m:                                             ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(22928) %0, i8 0, i64 22928, i1 false)
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 6148 ; 2 uses
   %i.ct = add nsw i32 %2, -4                      ; 2 uses
-  %7 = zext nneg i32 %2 to i64
   %wide.trip.count.i = zext nneg i32 %i.ct to i64
   br label %.lr.ph125.i
 
 .lr.ph125.i:                                      ; preds = %ma_dr_mp3_hdr_valid.exit.thread.i, %.lr.ph125.preheader.i
-  %indvars.iv140.i = phi i64 [ 0, %.lr.ph125.preheader.i ], [ %indvars.iv.next141.i, %ma_dr_mp3_hdr_valid.exit.thread.i ] ; 6 uses
+  %indvars.iv140.i = phi i64 [ 0, %.lr.ph125.preheader.i ], [ %indvars.iv.next141.i, %ma_dr_mp3_hdr_valid.exit.thread.i ] ; 5 uses
   %.063121.i = phi ptr [ %1, %.lr.ph125.preheader.i ], [ %i.kc, %ma_dr_mp3_hdr_valid.exit.thread.i ] ; 6 uses
   %i.cu = load i8, ptr %.063121.i, align 1, !tbaa !119
   %i.cv = icmp eq i8 %i.cu, -1
@@ -286,7 +285,7 @@ ma_dr_mp3_hdr_padding.exit.i:                     ; preds = %bb.o
   %spec.select.i141 = select i1 %.not.i76.i, i32 0, i32 %i.es
   %i.et = add nuw nsw i32 %spec.select.i.i, %spec.select.i141 ; 2 uses
   %i.eu = icmp eq i32 %spec.select.i.i, 0
-  %i.ev = trunc nuw nsw i64 %indvars.iv140.i to i32 ; 3 uses
+  %i.ev = trunc i64 %indvars.iv140.i to i32       ; 5 uses
   br i1 %i.eu, label %.lr.ph.i, label %.critedge.i
 
 .lr.ph.i:                                         ; preds = %ma_dr_mp3_hdr_padding.exit.i
@@ -440,10 +439,10 @@ ma_dr_mp3_hdr_compare.exit.thread.i:              ; preds = %bb.z, %bb.y, %bb.x,
   br i1 %or.cond72.i, label %.critedge.thread.i, label %bb.aa
 
 bb.aa:                                            ; preds = %.critedge.i
-  %8 = sub nuw nsw i64 %7, %indvars.iv140.i
   %.val.pre.i.i = load i8, ptr %i.cw, align 1, !tbaa !119 ; 2 uses
   %.val16.pre.i.i = load i8, ptr %i.de, align 1, !tbaa !119 ; 3 uses
   %i.hm = icmp ult i8 %.val16.pre.i.i, 16
+  %7 = sub i32 %2, %i.ev
   br label %ma_dr_mp3_hdr_padding.exit.i.i
 
 ma_dr_mp3_hdr_padding.exit.i.i:                   ; preds = %bb.af, %bb.aa
@@ -500,9 +499,8 @@ ma_dr_mp3_hdr_padding.exit.i.i:                   ; preds = %bb.af, %bb.aa
   %i.jb = add i32 %spec.select.i90.i, %.01420.i.i
   %i.jc = add i32 %i.jb, %i.iy                    ; 3 uses
   %i.jd = add nsw i32 %i.jc, 4
-  %9 = sext i32 %i.jd to i64
-  %10 = icmp slt i64 %8, %9
-  br i1 %10, label %ma_dr_mp3d_match_frame.exit.i, label %bb.ab
+  %8 = icmp sgt i32 %i.jd, %7
+  br i1 %8, label %ma_dr_mp3d_match_frame.exit.i, label %bb.ab
 
 bb.ab:                                            ; preds = %ma_dr_mp3_hdr_padding.exit.i.i
   %i.je = sext i32 %i.jc to i64
@@ -576,27 +574,25 @@ ma_dr_mp3_hdr_valid.exit.thread.i:                ; preds = %.thread.i, %bb.o, %
 
 ma_dr_mp3d_find_frame.exit.loopexit332:           ; preds = %ma_dr_mp3d_match_frame.exit.i, %.critedge.thread.i
   %storemerge.i.ph = phi i32 [ %2, %.critedge.thread.i ], [ %.054.lcssa.i, %ma_dr_mp3d_match_frame.exit.i ] ; 2 uses
-  %.3.i.ph = phi i32 [ 0, %.critedge.thread.i ], [ %i.ev, %ma_dr_mp3d_match_frame.exit.i ] ; 2 uses
-  %.pre408 = add nsw i32 %.3.i.ph, %storemerge.i.ph
+  %.pre408 = add nsw i32 %storemerge.i.ph, %i.ev
   br label %ma_dr_mp3d_find_frame.exit
 
 ma_dr_mp3d_find_frame.exit:                       ; preds = %bb.af, %ma_dr_mp3d_find_frame.exit.loopexit332
   %.pre-phi = phi i32 [ %.pre408, %ma_dr_mp3d_find_frame.exit.loopexit332 ], [ %i.hl, %bb.af ]
   %storemerge.i = phi i32 [ %storemerge.i.ph, %ma_dr_mp3d_find_frame.exit.loopexit332 ], [ %.054.lcssa.i, %bb.af ] ; 2 uses
-  %.3.i = phi i32 [ %.3.i.ph, %ma_dr_mp3d_find_frame.exit.loopexit332 ], [ %i.ev, %bb.af ] ; 2 uses
   %.not113 = icmp eq i32 %storemerge.i, 0
   %i.kd = icmp sgt i32 %.pre-phi, %2
   %or.cond117 = select i1 %.not113, i1 true, i1 %i.kd
   br i1 %or.cond117, label %ma_dr_mp3d_find_frame.exit.thread, label %.thread212
 
 ma_dr_mp3d_find_frame.exit.thread:                ; preds = %ma_dr_mp3_hdr_valid.exit.thread.i, %bb.m, %ma_dr_mp3d_find_frame.exit
-  %.3.i222 = phi i32 [ %.3.i, %ma_dr_mp3d_find_frame.exit ], [ %2, %bb.m ], [ %2, %ma_dr_mp3_hdr_valid.exit.thread.i ]
+  %.3.i222 = phi i32 [ %i.ev, %ma_dr_mp3d_find_frame.exit ], [ %2, %bb.m ], [ %2, %ma_dr_mp3_hdr_valid.exit.thread.i ]
   store i32 %.3.i222, ptr %4, align 4, !tbaa !775
   br label %bb.fz
 
 .thread212:                                       ; preds = %bb.l, %ma_dr_mp3_hdr_padding.exit, %ma_dr_mp3d_find_frame.exit
   %.1 = phi i32 [ %storemerge.i, %ma_dr_mp3d_find_frame.exit ], [ %i.bt, %bb.l ], [ %2, %ma_dr_mp3_hdr_padding.exit ] ; 2 uses
-  %.095 = phi i32 [ %.3.i, %ma_dr_mp3d_find_frame.exit ], [ 0, %bb.l ], [ 0, %ma_dr_mp3_hdr_padding.exit ] ; 2 uses
+  %.095 = phi i32 [ %i.ev, %ma_dr_mp3d_find_frame.exit ], [ 0, %bb.l ], [ 0, %ma_dr_mp3_hdr_padding.exit ] ; 2 uses
   %i.ke = sext i32 %.095 to i64
   %i.kf = getelementptr inbounds i8, ptr %1, i64 %i.ke ; 6 uses
   %i.kg = load i32, ptr %i.kf, align 1
