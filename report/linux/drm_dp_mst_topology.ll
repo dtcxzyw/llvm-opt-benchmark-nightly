@@ -205,7 +205,7 @@ drm_dp_encode_sideband_msg_hdr.exit:              ; preds = %.lr.ph.i.i
 
 bb.j:                                             ; preds = %.split.us.i
   %i.dm = add i32 %i.da, %.041.us.i
-  %i.dn = sub nsw i32 %.042.us.i, %i.da           ; 2 uses
+  %i.dn = sub nuw nsw i32 %.042.us.i, %i.da       ; 2 uses
   %i.do = icmp sgt i32 %i.dn, 0
   br i1 %i.do, label %.split.us.i, label %.loopexit, !llvm.loop !175
 
@@ -257,7 +257,7 @@ bb.l:                                             ; preds = %.split.1.i
 
 bb.m:                                             ; preds = %bb.l
   %i.es = add i32 %i.ef, %.041.1.i
-  %i.et = sub nsw i32 %.042.1.i, %i.ef            ; 2 uses
+  %i.et = sub nuw nsw i32 %.042.1.i, %i.ef        ; 2 uses
   %i.eu = icmp sgt i32 %i.et, 0
   br i1 %i.eu, label %.split.1.i, label %.loopexit, !llvm.loop !175
 
@@ -288,7 +288,7 @@ bb.n:                                             ; preds = %.split.2.i
 
 bb.o:                                             ; preds = %bb.n
   %i.fk = add i32 %i.ex, %.041.2.i
-  %i.fl = sub nsw i32 %.042.2.i, %i.ex            ; 2 uses
+  %i.fl = sub nuw nsw i32 %.042.2.i, %i.ex        ; 2 uses
   %i.fm = icmp sgt i32 %i.fl, 0
   br i1 %i.fm, label %.split.2.i, label %.loopexit, !llvm.loop !175
 
@@ -319,7 +319,7 @@ bb.p:                                             ; preds = %.split.3.i
 
 bb.q:                                             ; preds = %bb.p
   %i.gc = add i32 %i.fp, %.041.3.i
-  %i.gd = sub nsw i32 %.042.3.i, %i.fp            ; 2 uses
+  %i.gd = sub nuw nsw i32 %.042.3.i, %i.fp        ; 2 uses
   %i.ge = icmp sgt i32 %i.gd, 0
   br i1 %i.ge, label %.split.3.i, label %.loopexit, !llvm.loop !175
 
@@ -350,7 +350,7 @@ bb.r:                                             ; preds = %.split.4.i
 
 bb.s:                                             ; preds = %bb.r
   %i.gu = add i32 %i.gh, %.041.4.i
-  %i.gv = sub nsw i32 %.042.4.i, %i.gh            ; 2 uses
+  %i.gv = sub nuw nsw i32 %.042.4.i, %i.gh        ; 2 uses
   %i.gw = icmp sgt i32 %i.gv, 0
   br i1 %i.gw, label %.split.4.i, label %.loopexit, !llvm.loop !175
 
@@ -378,7 +378,7 @@ bb.u:                                             ; preds = %.split52.us.i
 
 bb.v:                                             ; preds = %bb.t
   %i.hc = add i32 %i.dr, %.041.i
-  %i.hd = sub nsw i32 %.042.i, %i.dr              ; 2 uses
+  %i.hd = sub nuw nsw i32 %.042.i, %i.dr          ; 2 uses
   %i.he = icmp sgt i32 %i.hd, 0
   br i1 %i.he, label %bb.k, label %.loopexit, !llvm.loop !175
 

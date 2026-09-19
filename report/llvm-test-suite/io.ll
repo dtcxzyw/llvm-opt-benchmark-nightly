@@ -205,9 +205,7 @@ bb.a:
 
 .preheader51.preheader:                           ; preds = %bb.a
   %i.b = add nsw i32 %1, -1
-  %4 = zext nneg i32 %1 to i64
   %wide.trip.count72 = zext nneg i32 %i.b to i64
-  %invariant.op = add nsw i64 %4, -1
   br label %.preheader51
 
 .preheader51:                                     ; preds = %.preheader51.preheader, %._crit_edge
@@ -216,8 +214,10 @@ bb.a:
   %.055 = phi double [ 0.000000e+00, %.preheader51.preheader ], [ %.1.lcssa, %._crit_edge ] ; 3 uses
   %i.c = zext i32 %indvars.iv67 to i64
   %i.d = add nsw i64 %i.c, -1                     ; 3 uses
-  %5 = icmp slt i64 %indvars.iv69, %invariant.op
-  br i1 %5, label %.lr.ph, label %._crit_edge
+  %4 = trunc i64 %indvars.iv69 to i32
+  %5 = sub i32 %1, %4
+  %6 = icmp sgt i32 %5, 1
+  br i1 %6, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.preheader51
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv69
@@ -357,9 +357,7 @@ bb.a:
 
 .preheader51.preheader:                           ; preds = %bb.a
   %i.b = add nsw i32 %1, -1
-  %4 = zext nneg i32 %1 to i64
   %wide.trip.count72 = zext nneg i32 %i.b to i64
-  %invariant.op = add nsw i64 %4, -1
   br label %.preheader51
 
 .preheader51:                                     ; preds = %.preheader51.preheader, %._crit_edge
@@ -368,8 +366,10 @@ bb.a:
   %.055 = phi double [ 0.000000e+00, %.preheader51.preheader ], [ %.1.lcssa, %._crit_edge ] ; 3 uses
   %i.c = zext i32 %indvars.iv67 to i64
   %i.d = add nsw i64 %i.c, -1                     ; 3 uses
-  %5 = icmp slt i64 %indvars.iv69, %invariant.op
-  br i1 %5, label %.lr.ph, label %._crit_edge
+  %4 = trunc i64 %indvars.iv69 to i32
+  %5 = sub i32 %1, %4
+  %6 = icmp sgt i32 %5, 1
+  br i1 %6, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.preheader51
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv69
