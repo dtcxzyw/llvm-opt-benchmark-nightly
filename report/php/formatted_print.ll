@@ -204,9 +204,8 @@ php_sprintf_appenduint.exit:                      ; preds = %bb.cc
   %i.mk = icmp eq i8 %.2132, 48
   %or.cond.i260 = and i1 %i.mj, %i.mk
   %spec.store.select.i261 = select i1 %or.cond.i260, i8 32, i8 %.2132
-  %i.ml = sub nsw i64 500, %indvars.iv.i257
-  %5 = and i64 %i.ml, 4294967295
-  call fastcc void @php_sprintf_appendstring(ptr noundef nonnull %i.p, ptr noundef nonnull %i.o, ptr noundef nonnull %i.mg, i64 noundef range(i64 -2147483648, 2147483648) %i.mh, i64 noundef 0, i8 noundef signext %spec.store.select.i261, i64 noundef range(i64 0, 2) %i.mi, i64 noundef %5, i1 noundef zeroext false, i32 noundef 0, i32 noundef 0)
+  %i.ml = sub nuw nsw i64 500, %indvars.iv.i257
+  call fastcc void @php_sprintf_appendstring(ptr noundef nonnull %i.p, ptr noundef nonnull %i.o, ptr noundef nonnull %i.mg, i64 noundef range(i64 -2147483648, 2147483648) %i.mh, i64 noundef 0, i8 noundef signext %spec.store.select.i261, i64 noundef range(i64 0, 2) %i.mi, i64 noundef %i.ml, i1 noundef zeroext false, i32 noundef 0, i32 noundef 0)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #14
   br label %zend_tmp_string_release.exit
 
