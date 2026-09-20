@@ -1,0 +1,85 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 50e0170b550894..5bce3e01d36973 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -13890,13 +13890,13 @@ ScalarEvolution::ExitLimit ScalarEvolution::howManyGreaterThans(
+     MayAddOverflow = true;
+   }
+ 
+-  if (!isLoopEntryGuardedByCond(L, Cond, getAddExpr(Start, Stride), RHS)) {
+-    // If we know that Start >= RHS in the context of loop, then we know that
+-    // min(RHS, Start) = RHS at this point.
+-    if (isLoopEntryGuardedByCond(
+-            L, IsSigned ? ICmpInst::ICMP_SGE : ICmpInst::ICMP_UGE, Start, RHS))
+-      End = RHS;
+-    else
++  // If we know that Start >= RHS in the context of loop, then we know that
++  // min(RHS, Start) = RHS at this point and End needs no clamping.
++  if (!isLoopEntryGuardedByCond(
++          L, IsSigned ? ICmpInst::ICMP_SGE : ICmpInst::ICMP_UGE, Start, RHS)) {
++    // Otherwise clamp End to min(RHS, Start) when needed.
++    if (MayAddOverflow ||
++        !isLoopEntryGuardedByCond(L, Cond, getAddExpr(Start, Stride), RHS))
+       End = IsSigned ? getSMinExpr(RHS, Start) : getUMinExpr(RHS, Start);
+   }
+ 
+@@ -13915,10 +13915,9 @@ ScalarEvolution::ExitLimit ScalarEvolution::howManyGreaterThans(
+   const SCEV *BECount;
+   if (MayAddOverflow) {
+     // The ceiling division instead needs Start >= End, so that (Start - End) is
+-    // the exact unsigned distance between them.
+-    if (!isLoopEntryGuardedByCond(
+-            L, IsSigned ? ICmpInst::ICMP_SGE : ICmpInst::ICMP_UGE, Start, End))
+-      return getCouldNotCompute();
++    // the exact unsigned distance between them. It holds, either either because
++    // the loop is guarded by Start >= RHS or because End has been clamped to
++    // min(RHS, Start) above,
+     BECount = getUDivCeilSCEV(Delta, Stride);
+   } else {
+     // Compute ((Start - End) + (Stride - 1)) / Stride, if the IV cannot
+diff --git a/llvm/test/Analysis/ScalarEvolution/exit-count-greater-than.ll b/llvm/test/Analysis/ScalarEvolution/exit-count-greater-than.ll
+index e976506d87619f..cb5870aff29ab2 100644
+--- a/llvm/test/Analysis/ScalarEvolution/exit-count-greater-than.ll
++++ b/llvm/test/Analysis/ScalarEvolution/exit-count-greater-than.ll
+@@ -86,9 +86,10 @@ exit:
+ define i32 @sgt_stride_4_variable_bound(i32 %n, i32 %m) {
+ ; CHECK-LABEL: 'sgt_stride_4_variable_bound'
+ ; CHECK-NEXT:  Determining loop execution counts for: @sgt_stride_4_variable_bound
+-; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
+-; CHECK-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
+-; CHECK-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((((-1 * (1 umin ((-1 * (%n smin %m)) + %n)))<nuw><nsw> + (-1 * (%n smin %m)) + %n) /u 4) + (1 umin ((-1 * (%n smin %m)) + %n)))
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 1073741823
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((((-1 * (1 umin ((-1 * (%n smin %m)) + %n)))<nuw><nsw> + (-1 * (%n smin %m)) + %n) /u 4) + (1 umin ((-1 * (%n smin %m)) + %n)))
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+ entry:
+   %add = add nsw i32 %n, 4
+@@ -115,9 +116,10 @@ ret:
+ define i32 @ugt_stride_4_variable_bound(i32 %n, i32 %m) {
+ ; CHECK-LABEL: 'ugt_stride_4_variable_bound'
+ ; CHECK-NEXT:  Determining loop execution counts for: @ugt_stride_4_variable_bound
+-; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
+-; CHECK-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
+-; CHECK-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((((-1 * (1 umin ((-1 * (%n umin %m)) + %n)))<nuw><nsw> + (-1 * (%n umin %m)) + %n) /u 4) + (1 umin ((-1 * (%n umin %m)) + %n)))
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 1073741823
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((((-1 * (1 umin ((-1 * (%n umin %m)) + %n)))<nuw><nsw> + (-1 * (%n umin %m)) + %n) /u 4) + (1 umin ((-1 * (%n umin %m)) + %n)))
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+ entry:
+   %add = add nuw i32 %n, 4
+@@ -145,9 +147,10 @@ ret:
+ define i32 @sgt_stride_3_variable_bound(i32 %n, i32 %m) {
+ ; CHECK-LABEL: 'sgt_stride_3_variable_bound'
+ ; CHECK-NEXT:  Determining loop execution counts for: @sgt_stride_3_variable_bound
+-; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
+-; CHECK-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
+-; CHECK-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((((-1 * (1 umin ((-1 * (%n smin %m)) + %n)))<nuw><nsw> + (-1 * (%n smin %m)) + %n) /u 3) + (1 umin ((-1 * (%n smin %m)) + %n)))
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 1431655765
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((((-1 * (1 umin ((-1 * (%n smin %m)) + %n)))<nuw><nsw> + (-1 * (%n smin %m)) + %n) /u 3) + (1 umin ((-1 * (%n smin %m)) + %n)))
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+ entry:
+   %add = add nsw i32 %n, 3
