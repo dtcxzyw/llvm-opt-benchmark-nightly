@@ -1,0 +1,239 @@
+diff --git a/llvm/include/llvm/Analysis/ValueTracking.h b/llvm/include/llvm/Analysis/ValueTracking.h
+index b2f664a9c9c0d..30d34f41d3a2d 100644
+--- a/llvm/include/llvm/Analysis/ValueTracking.h
++++ b/llvm/include/llvm/Analysis/ValueTracking.h
+@@ -1043,6 +1043,13 @@ isImpliedCondition(const Value *LHS, CmpPredicate RHSPred, const Value *RHSOp0,
+                    const Value *RHSOp1, const DataLayout &DL,
+                    bool LHSIsTrue = true, unsigned Depth = 0);
+ 
++/// If @llvm.assume encodes LHS => RHS, return whether that
++/// implication holds for the given LHS.
++LLVM_ABI std::optional<bool> isImpliedByAssume(const Value *LHS,
++                                               const Value *RHS,
++                                               const SimplifyQuery &Q,
++                                               bool LHSIsTrue = true);
++
+ /// Return the boolean condition value in the context of the given instruction
+ /// if it is known based on dominating conditions.
+ LLVM_ABI std::optional<bool>
+diff --git a/llvm/lib/Analysis/InstructionSimplify.cpp b/llvm/lib/Analysis/InstructionSimplify.cpp
+index 4780c18bec421..8dc4a6301eeb1 100644
+--- a/llvm/lib/Analysis/InstructionSimplify.cpp
++++ b/llvm/lib/Analysis/InstructionSimplify.cpp
+@@ -2223,6 +2223,20 @@ static Value *simplifyAndInst(Value *Op0, Value *Op1, const SimplifyQuery &Q,
+     return Constant::getNullValue(Op0->getType());
+ 
+   if (Op0->getType()->isIntOrIntVectorTy(1)) {
++    if (Q.AC && Q.CxtI) {
++      if (auto Implied = isImpliedByAssume(Op0, Op1, Q, /*LHSIsTrue=*/true)) {
++        if (*Implied == true)
++          return Op0;
++        if (*Implied == false)
++          return ConstantInt::getFalse(Op0->getType());
++      }
++      if (auto Implied = isImpliedByAssume(Op1, Op0, Q, /*LHSIsTrue=*/true)) {
++        if (*Implied)
++          return Op1;
++        if (!*Implied)
++          return ConstantInt::getFalse(Op1->getType());
++      }
++    }
+     if (std::optional<bool> Implied = isImpliedCondition(Op0, Op1, Q.DL)) {
+       // If Op0 is true implies Op1 is true, then Op0 is a subset of Op1.
+       if (*Implied == true)
+@@ -2495,6 +2509,20 @@ static Value *simplifyOrInst(Value *Op0, Value *Op1, const SimplifyQuery &Q,
+     return Constant::getAllOnesValue(Op0->getType());
+ 
+   if (Op0->getType()->isIntOrIntVectorTy(1)) {
++    if (Q.AC && Q.CxtI) {
++      if (auto Imp = isImpliedByAssume(Op0, Op1, Q, /*LHSIsTrue=*/false)) {
++        if (*Imp == false)
++          return Op0;
++        if (*Imp == true)
++          return ConstantInt::getTrue(Op0->getType());
++      }
++      if (auto Imp = isImpliedByAssume(Op1, Op0, Q, /*LHSIsTrue=*/false)) {
++        if (*Imp == false)
++          return Op1;
++        if (*Imp == true)
++          return ConstantInt::getTrue(Op1->getType());
++      }
++    }
+     if (std::optional<bool> Implied =
+             isImpliedCondition(Op0, Op1, Q.DL, false)) {
+       // If Op0 is false implies Op1 is false, then Op1 is a subset of Op0.
+diff --git a/llvm/lib/Analysis/ValueTracking.cpp b/llvm/lib/Analysis/ValueTracking.cpp
+index 3be0db5ad9c7e..5b22dffdfa4e7 100644
+--- a/llvm/lib/Analysis/ValueTracking.cpp
++++ b/llvm/lib/Analysis/ValueTracking.cpp
+@@ -9978,6 +9978,40 @@ std::optional<bool> llvm::isImpliedByDomCondition(CmpPredicate Pred,
+   return std::nullopt;
+ }
+ 
++std::optional<bool> llvm::isImpliedByAssume(const Value *LHS, const Value *RHS,
++                                            const SimplifyQuery &Q,
++                                            bool LHSIsTrue) {
++  if (!Q.AC || !Q.CxtI)
++    return std::nullopt;
++  if (!LHS->getType()->isIntOrIntVectorTy(1))
++    return std::nullopt;
++
++  const Value *Antecedent = LHSIsTrue ? LHS : RHS;
++  const Value *Consequent = LHSIsTrue ? RHS : LHS;
++
++  auto CheckAssumes = [&](const Value *IndexedVal) -> std::optional<bool> {
++    for (auto &AssumeVH : Q.AC->assumptionsFor(IndexedVal)) {
++      if (!AssumeVH)
++        continue;
++      auto *Assume = cast<CallInst>(AssumeVH);
++      assert(Assume->getIntrinsicID() == Intrinsic::assume);
++      if (!isValidAssumeForContext(Assume, Q.CxtI, Q.DT))
++        continue;
++
++      if (match(Assume->getArgOperand(0),
++                m_c_Or(m_Not(m_Specific(Antecedent)), m_Specific(Consequent))))
++        return LHSIsTrue;
++    }
++    return std::nullopt;
++  };
++
++  if (auto R = CheckAssumes(LHS))
++    return R;
++  if (auto R = CheckAssumes(RHS))
++    return R;
++  return std::nullopt;
++}
++
+ static void setLimitsForBinOp(const BinaryOperator &BO, APInt &Lower,
+                               APInt &Upper, const InstrInfoQuery &IIQ,
+                               bool PreferSignedRange) {
+@@ -10536,7 +10570,11 @@ void llvm::findValuesAffectedByCondition(
+         AddAffected(X);
+     }
+ 
+-    if (match(V, m_LogicalOp(m_Value(A), m_Value(B)))) {
++    Value *P, *Q;
++    if (IsAssume && match(V, m_c_Or(m_Not(m_Value(P)), m_Value(Q)))) {
++      AddAffected(P);
++      AddAffected(Q);
++    } else if (match(V, m_LogicalOp(m_Value(A), m_Value(B)))) {
+       // assume(A && B) is split to -> assume(A); assume(B);
+       // assume(!(A || B)) is split to -> assume(!A); assume(!B);
+       // Finally, assume(A || B) / assume(!(A && B)) generally don't provide
+diff --git a/llvm/test/Transforms/InstCombine/assume2.ll b/llvm/test/Transforms/InstCombine/assume2.ll
+index 6c5dd142af7c9..96b962a1bc3da 100644
+--- a/llvm/test/Transforms/InstCombine/assume2.ll
++++ b/llvm/test/Transforms/InstCombine/assume2.ll
+@@ -154,6 +154,112 @@ define i32 @test11(i32 %a) #0 {
+   ret i32 %and1
+ }
+ 
++define i1 @fold_or_using_assume_implication(i1 %p, i1 %q) {
++; CHECK-LABEL: @fold_or_using_assume_implication(
++; CHECK-NEXT:    [[NOT_P:%.*]] = xor i1 [[P:%.*]], true
++; CHECK-NEXT:    [[IMPL:%.*]] = or i1 [[Q:%.*]], [[NOT_P]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[IMPL]])
++; CHECK-NEXT:    ret i1 [[Q]]
++;
++  %not_p = xor i1 %p, true
++  %impl = or i1 %not_p, %q
++  call void @llvm.assume(i1 %impl)
++  %or = or i1 %p, %q
++  ret i1 %or
++}
++
++define i1 @fold_or_using_assume_implication_commuted(i1 %p, i1 %q) {
++; CHECK-LABEL: @fold_or_using_assume_implication_commuted(
++; CHECK-NEXT:    [[NOT_P:%.*]] = xor i1 [[P:%.*]], true
++; CHECK-NEXT:    [[IMPL:%.*]] = or i1 [[Q:%.*]], [[NOT_P]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[IMPL]])
++; CHECK-NEXT:    ret i1 [[Q]]
++;
++  %not_p = xor i1 %p, true
++  %impl = or i1 %not_p, %q
++  call void @llvm.assume(i1 %impl)
++  %or = or i1 %q, %p
++  ret i1 %or
++}
++
++define i1 @fold_and_using_assume_implication(i1 %p, i1 %q) {
++; CHECK-LABEL: @fold_and_using_assume_implication(
++; CHECK-NEXT:    [[NOT_P:%.*]] = xor i1 [[P:%.*]], true
++; CHECK-NEXT:    [[IMPL:%.*]] = or i1 [[Q:%.*]], [[NOT_P]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[IMPL]])
++; CHECK-NEXT:    ret i1 [[P]]
++;
++  %not_p = xor i1 %p, true
++  %impl = or i1 %not_p, %q
++  call void @llvm.assume(i1 %impl)
++  %and = and i1 %p, %q
++  ret i1 %and
++}
++
++define i1 @fold_and_using_assume_implication_commuted(i1 %p, i1 %q) {
++; CHECK-LABEL: @fold_and_using_assume_implication_commuted(
++; CHECK-NEXT:    [[NOT_P:%.*]] = xor i1 [[P:%.*]], true
++; CHECK-NEXT:    [[IMPL:%.*]] = or i1 [[Q:%.*]], [[NOT_P]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[IMPL]])
++; CHECK-NEXT:    ret i1 [[P]]
++;
++  %not_p = xor i1 %p, true
++  %impl = or i1 %not_p, %q
++  call void @llvm.assume(i1 %impl)
++  %and = and i1 %q, %p
++  ret i1 %and
++}
++
++define i1 @dont_fold_or_using_implication_when_no_assume(i1 %p, i1 %q) {
++; CHECK-LABEL: @dont_fold_or_using_implication_when_no_assume(
++; CHECK-NEXT:    [[OR:%.*]] = or i1 [[P:%.*]], [[Q:%.*]]
++; CHECK-NEXT:    ret i1 [[OR]]
++;
++  %not_p = xor i1 %p, true
++  %impl = or i1 %not_p, %q
++  %or = or i1 %p, %q
++  ret i1 %or
++}
++
++define i1 @dont_fold_and_using_implication_when_no_assume(i1 %p, i1 %q) {
++; CHECK-LABEL: @dont_fold_and_using_implication_when_no_assume(
++; CHECK-NEXT:    [[AND:%.*]] = and i1 [[P:%.*]], [[Q:%.*]]
++; CHECK-NEXT:    ret i1 [[AND]]
++;
++  %not_p = xor i1 %p, true
++  %impl = or i1 %not_p, %q
++  %and = and i1 %p, %q
++  ret i1 %and
++}
++
++define i1 @dont_fold_or_using_assume_when_wrong_implication(i1 %p, i1 %q) {
++; CHECK-LABEL: @dont_fold_or_using_assume_when_wrong_implication(
++; CHECK-NEXT:    [[NOT_Q:%.*]] = xor i1 [[Q:%.*]], true
++; CHECK-NEXT:    [[WRONG_IMPL:%.*]] = or i1 [[P:%.*]], [[NOT_Q]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[WRONG_IMPL]])
++; CHECK-NEXT:    ret i1 [[P]]
++;
++  %not_q = xor i1 %q, true
++  %wrong_impl = or i1 %not_q, %p
++  call void @llvm.assume(i1 %wrong_impl)
++  %or = or i1 %p, %q
++  ret i1 %or
++}
++
++define i1 @dont_fold_and_using_assume_when_wrong_implication(i1 %p, i1 %q) {
++; CHECK-LABEL: @dont_fold_and_using_assume_when_wrong_implication(
++; CHECK-NEXT:    [[NOT_Q:%.*]] = xor i1 [[Q:%.*]], true
++; CHECK-NEXT:    [[WRONG_IMPL:%.*]] = or i1 [[P:%.*]], [[NOT_Q]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[WRONG_IMPL]])
++; CHECK-NEXT:    ret i1 [[Q]]
++;
++  %not_q = xor i1 %q, true
++  %wrong_impl = or i1 %not_q, %p
++  call void @llvm.assume(i1 %wrong_impl)
++  %and = and i1 %p, %q
++  ret i1 %and
++}
++
+ attributes #0 = { nounwind uwtable }
+ attributes #1 = { nounwind }
+ 
