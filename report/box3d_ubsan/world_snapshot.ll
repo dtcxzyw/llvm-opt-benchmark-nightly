@@ -204,7 +204,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
   store i32 0, ptr %i.b, align 4, !tbaa !14
   call fastcc void @b3SnapR_Bytes(ptr noundef nonnull %0, ptr noundef nonnull %i.b, i32 noundef 4)
-  %i.bp = load i32, ptr %i.b, align 4, !tbaa !14  ; 8 uses
+  %i.bp = load i32, ptr %i.b, align 4, !tbaa !14  ; 7 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
   %i.bq = load i8, ptr %i.h, align 8, !tbaa !204  ; 3 uses
   %i.br = icmp ult i8 %i.bq, 2
@@ -235,7 +235,7 @@ b3SnapCheckCount.exit107:                         ; preds = %bb.z
   %i.bz = sext i32 %i.by to i64
   %i.ca = sub nsw i64 %i.bx, %i.bz
   %narrow125 = mul nuw nsw i32 %i.bp, 268         ; 2 uses
-  %i.cb = zext nneg i32 %narrow125 to i64
+  %i.cb = zext nneg i32 %narrow125 to i64         ; 2 uses
   %.not126 = icmp slt i64 %i.ca, %i.cb
   br i1 %.not126, label %.critedge.sink.split, label %bb.aa
 
@@ -364,9 +364,7 @@ bb.ak:                                            ; preds = %bb.aj
   unreachable, !nosanitize !9
 
 b3AllocateManifolds.exit:                         ; preds = %bb.aj
-  %narrow1002 = mul nuw i32 %i.bp, 268
-  %3 = zext i32 %narrow1002 to i64
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.eb, i8 0, i64 %3, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.eb, i8 0, i64 %i.cb, i1 false)
   store ptr %i.eb, ptr %i.bc, align 8, !tbaa !125
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ap, i64 80
   store i32 %i.bp, ptr %i.ed, align 8, !tbaa !129
