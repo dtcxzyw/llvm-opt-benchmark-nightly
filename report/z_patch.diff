@@ -1,0 +1,838 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index 918d1facc0bb8..166c32e48c24f 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -61,6 +61,10 @@ static cl::opt<unsigned>
+     MaxRows("constraint-elimination-max-rows", cl::init(500), cl::Hidden,
+             cl::desc("Maximum number of rows to keep in constraint system"));
+ 
++static cl::opt<unsigned> MaxDecomposeDepth(
++    "constraint-elimination-max-decompose-depth", cl::init(16), cl::Hidden,
++    cl::desc("Maximum recursion depth when decomposing a value"));
++
+ static cl::opt<bool> DumpReproducers(
+     "constraint-elimination-dump-reproducers", cl::init(false), cl::Hidden,
+     cl::desc("Dump IR to reproduce successful transformations."));
+@@ -337,11 +341,12 @@ class ConstraintInfo {
+     getCS(Signed).popLastNVariables(N);
+   }
+ 
+-  bool doesHold(CmpInst::Predicate Pred, Value *A, Value *B) const;
++  bool doesHold(CmpInst::Predicate Pred, Value *A, Value *B,
++                unsigned Depth = 0) const;
+ 
+   /// Returns true if \p V is known to be non-negative, either because the
+   /// signed system implies it or because ValueTracking can prove it.
+-  bool isKnownNonNegative(Value *V) const;
++  bool isKnownNonNegative(Value *V, unsigned Depth = 0) const;
+ 
+   void addFact(CmpInst::Predicate Pred, Value *A, Value *B, unsigned NumIn,
+                unsigned NumOut, SmallVectorImpl<StackEntry> &DFSInStack);
+@@ -352,7 +357,8 @@ class ConstraintInfo {
+   /// \p NewVariables.
+   ConstraintTy getConstraint(CmpInst::Predicate Pred, Value *Op0, Value *Op1,
+                              SmallVectorImpl<Value *> &NewVariables,
+-                             bool ForceSignedSystem = false) const;
++                             bool ForceSignedSystem = false,
++                             unsigned Depth = 0) const;
+ 
+   /// Turns a comparison of the form \p Op0 \p Pred \p Op1 into a vector of
+   /// constraints using getConstraint. Returns an empty constraint if the result
+@@ -362,7 +368,7 @@ class ConstraintInfo {
+   /// which increases the effectiveness of the signed <-> unsigned transfer
+   /// logic.
+   ConstraintTy getConstraintForSolving(CmpInst::Predicate Pred, Value *Op0,
+-                                       Value *Op1) const;
++                                       Value *Op1, unsigned Depth = 0) const;
+ 
+   /// Try to add information from \p A \p Pred \p B to the unsigned/signed
+   /// system if \p Pred is signed/unsigned.
+@@ -491,8 +497,15 @@ static OffsetResult collectOffsets(GEPOperator &GEP, const DataLayout &DL) {
+   return Result;
+ }
+ 
++/// Decompose \p V, which is nested \p Depth levels below the value the current
++/// query started from. Decomposition descends into the operands of \p V in 2
++/// ways: directly, and via the pre-condition checks that prove \p V does not
++/// wrap, which re-enter decompose through ConstraintInfo::getConstraint. Both
++/// must decompose the operands at \p Depth + 1, otherwise the depth does not
++/// track the nesting level and MaxDecomposeDepth does not bound the recursion.
+ static Decomposition decompose(Value *V, const ConstraintInfo &Info,
+-                               bool IsSigned, const DataLayout &DL);
++                               bool IsSigned, const DataLayout &DL,
++                               unsigned Depth = 0);
+ 
+ static bool canUseSExt(ConstantInt *CI) {
+   const APInt &Val = CI->getValue();
+@@ -502,7 +515,8 @@ static bool canUseSExt(ConstantInt *CI) {
+ /// Returns true if \p Info implies that \p Op is in \p R, interpreting \p R as
+ /// a signed range if \p Signed is set and as an unsigned range otherwise.
+ static bool doesHoldInRange(const ConstraintInfo &Info, Value *Op,
+-                            const ConstantRange &R, bool Signed) {
++                            const ConstantRange &R, bool Signed,
++                            unsigned Depth) {
+   if (R.isEmptySet() || (Signed ? R.isSignWrappedSet() : R.isWrappedSet()))
+     return false;
+ 
+@@ -523,11 +537,11 @@ static bool doesHoldInRange(const ConstraintInfo &Info, Value *Op,
+   Type *Ty = Op->getType();
+   if (Min != MinVal &&
+       !Info.doesHold(Signed ? CmpInst::ICMP_SGE : CmpInst::ICMP_UGE, Op,
+-                     ConstantInt::get(Ty, Min)))
++                     ConstantInt::get(Ty, Min), Depth))
+     return false;
+   if (Max != MaxVal &&
+       !Info.doesHold(Signed ? CmpInst::ICMP_SLE : CmpInst::ICMP_ULE, Op,
+-                     ConstantInt::get(Ty, Max)))
++                     ConstantInt::get(Ty, Max), Depth))
+     return false;
+   return true;
+ }
+@@ -536,7 +550,7 @@ static bool doesHoldInRange(const ConstraintInfo &Info, Value *Op,
+ /// is known to not wrap in signed or unsigned, depending on \p Signed.
+ static bool isKnownNoWrap(Instruction::BinaryOps Opcode, Value *Op0, Value *Op1,
+                           unsigned NoWrapFlags, const ConstraintInfo &Info,
+-                          bool Signed) {
++                          bool Signed, unsigned Depth = 0) {
+   using OBO = OverflowingBinaryOperator;
+ 
+   if (NoWrapFlags & (Signed ? OBO::NoSignedWrap : OBO::NoUnsignedWrap))
+@@ -545,17 +559,17 @@ static bool isKnownNoWrap(Instruction::BinaryOps Opcode, Value *Op0, Value *Op1,
+   if (Opcode == Instruction::Sub) {
+     // Op0 - Op1 does not wrap unsigned if Op0 >=u Op1.
+     if (!Signed)
+-      return Info.doesHold(CmpInst::ICMP_UGE, Op0, Op1);
++      return Info.doesHold(CmpInst::ICMP_UGE, Op0, Op1, Depth);
+ 
+     // Op0 - Op1 does not wrap signed if 0 <=s Op1 <=s Op0.
+-    if (Info.isKnownNonNegative(Op1) &&
+-        Info.doesHold(CmpInst::ICMP_SGE, Op0, Op1))
++    if (Info.isKnownNonNegative(Op1, Depth) &&
++        Info.doesHold(CmpInst::ICMP_SGE, Op0, Op1, Depth))
+       return true;
+   }
+ 
+   if (!Signed && (NoWrapFlags & OBO::NoSignedWrap) &&
+-      (Opcode == Instruction::Shl || Info.isKnownNonNegative(Op1)) &&
+-      Info.isKnownNonNegative(Op0))
++      (Opcode == Instruction::Shl || Info.isKnownNonNegative(Op1, Depth)) &&
++      Info.isKnownNonNegative(Op0, Depth))
+     return true;
+ 
+   // For a constant Op1, the ranges of Op0 for which the operation does not
+@@ -568,12 +582,13 @@ static bool isKnownNoWrap(Instruction::BinaryOps Opcode, Value *Op0, Value *Op1,
+                          ConstantRange::makeExactNoWrapRegion(
+                              Opcode, C->getValue(),
+                              Signed ? OBO::NoSignedWrap : OBO::NoUnsignedWrap),
+-                         Signed);
++                         Signed, Depth);
+ }
+ 
+ /// Returns true if \p V is known to not wrap in signed or unsigned, depending
+ /// on \p Signed.
+-static bool isKnownNoWrap(Value *V, const ConstraintInfo &Info, bool Signed) {
++static bool isKnownNoWrap(Value *V, const ConstraintInfo &Info, bool Signed,
++                          unsigned Depth = 0) {
+   if (match(V, m_DisjointOr(m_Value(), m_Value())))
+     return true;
+ 
+@@ -585,18 +600,19 @@ static bool isKnownNoWrap(Value *V, const ConstraintInfo &Info, bool Signed) {
+     // non-negative.
+     return Trunc->hasNoUnsignedWrap() ||
+            (Trunc->hasNoSignedWrap() &&
+-            Info.isKnownNonNegative(Trunc->getOperand(0)));
++            Info.isKnownNonNegative(Trunc->getOperand(0), Depth));
+   }
+ 
+   auto *BO = dyn_cast<OverflowingBinaryOperator>(V);
+   return BO &&
+          isKnownNoWrap(static_cast<Instruction::BinaryOps>(BO->getOpcode()),
+                        BO->getOperand(0), BO->getOperand(1),
+-                       BO->getNoWrapKind(), Info, Signed);
++                       BO->getNoWrapKind(), Info, Signed, Depth);
+ }
+ 
+ static Decomposition decomposeGEP(GEPOperator &GEP, const ConstraintInfo &Info,
+-                                  bool IsSigned, const DataLayout &DL) {
++                                  bool IsSigned, const DataLayout &DL,
++                                  unsigned Depth) {
+   // Do not reason about pointers where the index size is larger than 64 bits,
+   // as the coefficients used to encode constraints are 64 bit integers.
+   if (DL.getIndexTypeSizeInBits(GEP.getPointerOperand()->getType()) > 64)
+@@ -622,11 +638,11 @@ static Decomposition decomposeGEP(GEPOperator &GEP, const ConstraintInfo &Info,
+       // Try to prove nuw from nusw and nneg. If the index cannot be proven
+       // non-negative, keep the GEP as-is instead of decomposing it.
+       assert(NW.hasNoUnsignedSignedWrap() && "Must have nusw flag");
+-      if (!Info.isKnownNonNegative(Index))
++      if (!Info.isKnownNonNegative(Index, Depth))
+         return &GEP;
+     }
+ 
+-    auto IdxResult = decompose(Index, Info, IsSigned, DL);
++    auto IdxResult = decompose(Index, Info, IsSigned, DL, Depth + 1);
+     if (IdxResult.mul(Scale.getSExtValue()))
+       return &GEP;
+     if (Result.add(IdxResult))
+@@ -642,12 +658,16 @@ static Decomposition decomposeGEP(GEPOperator &GEP, const ConstraintInfo &Info,
+ // Looking through certain expressions is only valid if a pre-condition holds.
+ // Pre-conditions are checked against \p Info as needed.
+ static Decomposition decompose(Value *V, const ConstraintInfo &Info,
+-                               bool IsSigned, const DataLayout &DL) {
+-  auto MergeResults = [&Info, IsSigned,
+-                       &DL](Value *A, Value *B,
+-                            bool IsSignedB) -> std::optional<Decomposition> {
+-    auto ResA = decompose(A, Info, IsSigned, DL);
+-    auto ResB = decompose(B, Info, IsSignedB, DL);
++                               bool IsSigned, const DataLayout &DL,
++                               unsigned Depth) {
++  if (Depth >= MaxDecomposeDepth)
++    return V;
++
++  auto MergeResults = [&Info, IsSigned, &DL,
++                       Depth](Value *A, Value *B,
++                              bool IsSignedB) -> std::optional<Decomposition> {
++    auto ResA = decompose(A, Info, IsSigned, DL, Depth + 1);
++    auto ResB = decompose(B, Info, IsSignedB, DL, Depth + 1);
+     if (ResA.add(ResB))
+       return std::nullopt;
+     return ResA;
+@@ -656,7 +676,7 @@ static Decomposition decompose(Value *V, const ConstraintInfo &Info,
+   Type *Ty = V->getType()->getScalarType();
+   if (Ty->isPointerTy() && !IsSigned) {
+     if (auto *GEP = dyn_cast<GEPOperator>(V))
+-      return decomposeGEP(*GEP, Info, IsSigned, DL);
++      return decomposeGEP(*GEP, Info, IsSigned, DL, Depth);
+     if (isa<ConstantPointerNull>(V))
+       return int64_t(0);
+ 
+@@ -690,17 +710,17 @@ static Decomposition decompose(Value *V, const ConstraintInfo &Info,
+     V = Op0;
+   } else if (match(V, m_SExt(m_Value(Op0)))) {
+     // In the unsigned system, the SExt operand must be non-negative.
+-    if (!IsSigned && !Info.isKnownNonNegative(Op0))
++    if (!IsSigned && !Info.isKnownNonNegative(Op0, Depth))
+       return V;
+     V = Op0;
+   } else if (auto *Trunc = dyn_cast<TruncInst>(V)) {
+     if (Trunc->getSrcTy()->getScalarSizeInBits() <= 64 &&
+-        isKnownNoWrap(Trunc, Info, IsSigned))
++        isKnownNoWrap(Trunc, Info, IsSigned, Depth))
+       V = Trunc->getOperand(0);
+   }
+ 
+   if (match(V, m_AddLike(m_Value(Op0), m_Value(Op1)))) {
+-    if (isKnownNoWrap(V, Info, IsSigned)) {
++    if (isKnownNoWrap(V, Info, IsSigned, Depth)) {
+       if (auto Decomp = MergeResults(Op0, Op1, IsSigned))
+         return *Decomp;
+       return V;
+@@ -710,7 +730,8 @@ static Decomposition decompose(Value *V, const ConstraintInfo &Info,
+     if (!IsSigned && match(Op1, m_ConstantInt(CI)) && CI->isNegative() &&
+         canUseSExt(CI) &&
+         Info.doesHold(CmpInst::ICMP_UGE, Op0,
+-                      ConstantInt::get(Op0->getType(), -CI->getSExtValue())))
++                      ConstantInt::get(Op0->getType(), -CI->getSExtValue()),
++                      Depth))
+       if (auto Decomp = MergeResults(Op0, CI, /*IsSignedB=*/true))
+         return *Decomp;
+     return V;
+@@ -719,15 +740,15 @@ static Decomposition decompose(Value *V, const ConstraintInfo &Info,
+   // `xor %x, -1` is equivalent to `sub nsw -1, %x`.
+   if (IsSigned && match(V, m_Not(m_Value(Op0)))) {
+     Decomposition Result(-1);
+-    if (!Result.sub(decompose(Op0, Info, IsSigned, DL)))
++    if (!Result.sub(decompose(Op0, Info, IsSigned, DL, Depth + 1)))
+       return Result;
+     return V;
+   }
+ 
+   if (match(V, m_Sub(m_Value(Op0), m_Value(Op1)))) {
+-    if (isKnownNoWrap(V, Info, IsSigned)) {
+-      auto ResA = decompose(Op0, Info, IsSigned, DL);
+-      auto ResB = decompose(Op1, Info, IsSigned, DL);
++    if (isKnownNoWrap(V, Info, IsSigned, Depth)) {
++      auto ResA = decompose(Op0, Info, IsSigned, DL, Depth + 1);
++      auto ResB = decompose(Op1, Info, IsSigned, DL, Depth + 1);
+       if (!ResA.sub(ResB))
+         return ResA;
+     }
+@@ -738,8 +759,8 @@ static Decomposition decompose(Value *V, const ConstraintInfo &Info,
+     // A negative constant is only a valid coefficient in the signed system; in
+     // the unsigned system the multiplier is the constant's unsigned value.
+     if (canUseSExt(CI) && (IsSigned || !CI->isNegative()) &&
+-        isKnownNoWrap(V, Info, IsSigned)) {
+-      auto Result = decompose(Op0, Info, IsSigned, DL);
++        isKnownNoWrap(V, Info, IsSigned, Depth)) {
++      auto Result = decompose(Op0, Info, IsSigned, DL, Depth + 1);
+       if (!Result.mul(CI->getSExtValue()))
+         return Result;
+     }
+@@ -752,8 +773,8 @@ static Decomposition decompose(Value *V, const ConstraintInfo &Info,
+     // which the product is not representable.
+     int64_t MaxShift = IsSigned ? Ty->getIntegerBitWidth() - 1 : 63;
+     if (!CI->isNegative() && CI->getSExtValue() < MaxShift &&
+-        isKnownNoWrap(V, Info, IsSigned)) {
+-      auto Result = decompose(Op0, Info, IsSigned, DL);
++        isKnownNoWrap(V, Info, IsSigned, Depth)) {
++      auto Result = decompose(Op0, Info, IsSigned, DL, Depth + 1);
+       if (!Result.mul(int64_t{1} << CI->getSExtValue()))
+         return Result;
+     }
+@@ -814,7 +835,7 @@ static RowTy getRowForLessEqual(const Decomposition &ADec,
+ ConstraintTy
+ ConstraintInfo::getConstraint(CmpInst::Predicate Pred, Value *Op0, Value *Op1,
+                               SmallVectorImpl<Value *> &NewVariables,
+-                              bool ForceSignedSystem) const {
++                              bool ForceSignedSystem, unsigned Depth) const {
+   assert(NewVariables.empty() && "NewVariables must be empty when passed in");
+   assert((!ForceSignedSystem || CmpInst::isEquality(Pred)) &&
+          "signed system can only be forced on eq/ne");
+@@ -860,9 +881,9 @@ ConstraintInfo::getConstraint(CmpInst::Predicate Pred, Value *Op0, Value *Op1,
+   bool IsSigned = ForceSignedSystem || CmpInst::isSigned(Pred);
+   auto &Value2Index = getValue2Index(IsSigned);
+   auto ADec = decompose(Op0->stripPointerCastsSameRepresentation(), *this,
+-                        IsSigned, DL);
++                        IsSigned, DL, Depth + 1);
+   auto BDec = decompose(Op1->stripPointerCastsSameRepresentation(), *this,
+-                        IsSigned, DL);
++                        IsSigned, DL, Depth + 1);
+   RowTy R = getRowForLessEqual(ADec, BDec, Value2Index, NewVariables);
+   if (R.empty())
+     return {};
+@@ -880,8 +901,8 @@ ConstraintInfo::getConstraint(CmpInst::Predicate Pred, Value *Op0, Value *Op1,
+ }
+ 
+ ConstraintTy ConstraintInfo::getConstraintForSolving(CmpInst::Predicate Pred,
+-                                                     Value *Op0,
+-                                                     Value *Op1) const {
++                                                     Value *Op0, Value *Op1,
++                                                     unsigned Depth) const {
+   Constant *NullC = Constant::getNullValue(Op0->getType());
+   // Handle trivially true compares directly to avoid adding V UGE 0 constraints
+   // for all variables in the unsigned system.
+@@ -901,7 +922,8 @@ ConstraintTy ConstraintInfo::getConstraintForSolving(CmpInst::Predicate Pred,
+     Pred = ICmpInst::getUnsignedPredicate(Pred);
+ 
+   SmallVector<Value *> NewVariables;
+-  ConstraintTy R = getConstraint(Pred, Op0, Op1, NewVariables);
++  ConstraintTy R = getConstraint(Pred, Op0, Op1, NewVariables,
++                                 /*ForceSignedSystem=*/false, Depth);
+   if (!NewVariables.empty())
+     return {};
+   return R;
+@@ -953,18 +975,19 @@ ConstraintTy::isImpliedBy(const ConstraintSystem &CS) const {
+   return std::nullopt;
+ }
+ 
+-bool ConstraintInfo::doesHold(CmpInst::Predicate Pred, Value *A,
+-                              Value *B) const {
+-  auto R = getConstraintForSolving(Pred, A, B);
++bool ConstraintInfo::doesHold(CmpInst::Predicate Pred, Value *A, Value *B,
++                              unsigned Depth) const {
++  auto R = getConstraintForSolving(Pred, A, B, Depth);
+   return !R.empty() &&
+          getCS(R.IsSigned).isConditionImpliedInSubSystem(R.Coefficients);
+ }
+ 
+-bool ConstraintInfo::isKnownNonNegative(Value *V) const {
++bool ConstraintInfo::isKnownNonNegative(Value *V, unsigned Depth) const {
+   if (auto *CI = dyn_cast<ConstantInt>(V))
+     return !CI->isNegative();
+   return ::isKnownNonNegative(V, DL) ||
+-         doesHold(CmpInst::ICMP_SGE, V, ConstantInt::get(V->getType(), 0));
++         doesHold(CmpInst::ICMP_SGE, V, ConstantInt::get(V->getType(), 0),
++                  Depth);
+ }
+ 
+ void ConstraintInfo::transferToOtherSystem(
+@@ -2241,7 +2264,7 @@ tryToSimplifyOverflowMath(IntrinsicInst *II, ConstraintInfo &Info,
+                          ConstantRange::makeGuaranteedNoWrapRegion(
+                              Instruction::Add, ConstantRange(C->getValue()),
+                              OverflowingBinaryOperator::NoSignedWrap),
+-                         /*Signed=*/true))
++                         /*Signed=*/true, /*Depth=*/0))
+       return false;
+     return replaceOverflowUses(II, Instruction::Add, A, B, ToRemove);
+   }
+diff --git a/llvm/test/Transforms/ConstraintElimination/decompose-sub-chain-compile-time.ll b/llvm/test/Transforms/ConstraintElimination/decompose-sub-chain-compile-time.ll
+new file mode 100644
+index 0000000000000..4a78c1210ea8f
+--- /dev/null
++++ b/llvm/test/Transforms/ConstraintElimination/decompose-sub-chain-compile-time.ll
+@@ -0,0 +1,417 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py
++; RUN: opt -passes=constraint-elimination -S %s | FileCheck --check-prefixes=CHECK,DEFAULT %s
++; RUN: opt -passes=constraint-elimination -constraint-elimination-max-decompose-depth=32 -S %s | FileCheck --check-prefixes=CHECK,DEEP %s
++
++; Decomposing a value decomposes its operands, and looking through an operation
++; requires proving that it does not wrap, a check that decomposes the operands
++; again. The cost of decomposing an expression therefore grows quickly with its
++; depth, and -constraint-elimination-max-decompose-depth bounds it.
++;
++; A chain of 15 subtracts is within the default limit, so the final compare
++; folds.
++
++define i1 @sub_nsw_chain_short(i32 %start, i16 %step) {
++; CHECK-LABEL: @sub_nsw_chain_short(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[STEP_EXT:%.*]] = zext i16 [[STEP:%.*]] to i32
++; CHECK-NEXT:    [[STEP_POS:%.*]] = icmp sgt i32 [[STEP_EXT]], 0
++; CHECK-NEXT:    br i1 [[STEP_POS]], label [[CHAIN_0:%.*]], label [[EXIT:%.*]]
++; CHECK:       chain.0:
++; CHECK-NEXT:    [[C_1:%.*]] = icmp slt i32 [[START:%.*]], 1
++; CHECK-NEXT:    br i1 [[C_1]], label [[EXIT]], label [[CHAIN_1:%.*]]
++; CHECK:       chain.1:
++; CHECK-NEXT:    [[REM_1:%.*]] = sub nsw i32 [[START]], [[STEP_EXT]]
++; CHECK-NEXT:    [[C_2:%.*]] = icmp slt i32 [[REM_1]], 1
++; CHECK-NEXT:    br i1 [[C_2]], label [[EXIT]], label [[CHAIN_2:%.*]]
++; CHECK:       chain.2:
++; CHECK-NEXT:    [[REM_2:%.*]] = sub nsw i32 [[REM_1]], [[STEP_EXT]]
++; CHECK-NEXT:    [[C_3:%.*]] = icmp slt i32 [[REM_2]], 1
++; CHECK-NEXT:    br i1 [[C_3]], label [[EXIT]], label [[CHAIN_3:%.*]]
++; CHECK:       chain.3:
++; CHECK-NEXT:    [[REM_3:%.*]] = sub nsw i32 [[REM_2]], [[STEP_EXT]]
++; CHECK-NEXT:    [[C_4:%.*]] = icmp slt i32 [[REM_3]], 1
++; CHECK-NEXT:    br i1 [[C_4]], label [[EXIT]], label [[CHAIN_4:%.*]]
++; CHECK:       chain.4:
++; CHECK-NEXT:    [[REM_4:%.*]] = sub nsw i32 [[REM_3]], [[STEP_EXT]]
++; CHECK-NEXT:    [[C_5:%.*]] = icmp slt i32 [[REM_4]], 1
++; CHECK-NEXT:    br i1 [[C_5]], label [[EXIT]], label [[CHAIN_5:%.*]]
++; CHECK:       chain.5:
++; CHECK-NEXT:    [[REM_5:%.*]] = sub nsw i32 [[REM_4]], [[STEP_EXT]]
++; CHECK-NEXT:    [[C_6:%.*]] = icmp slt i32 [[REM_5]], 1
++; CHECK-NEXT:    br i1 [[C_6]], label [[EXIT]], label [[CHAIN_6:%.*]]
++; CHECK:       chain.6:
++; CHECK-NEXT:    [[REM_6:%.*]] = sub nsw i32 [[REM_5]], [[STEP_EXT]]
++; CHECK-NEXT:    [[C_7:%.*]] = icmp slt i32 [[REM_6]], 1
++; CHECK-NEXT:    br i1 [[C_7]], label [[EXIT]], label [[CHAIN_7:%.*]]
++; CHECK:       chain.7:
++; CHECK-NEXT:    [[REM_7:%.*]] = sub nsw i32 [[REM_6]], [[STEP_EXT]]
++; CHECK-NEXT:    [[C_8:%.*]] = icmp slt i32 [[REM_7]], 1
++; CHECK-NEXT:    br i1 [[C_8]], label [[EXIT]], label [[CHAIN_8:%.*]]
++; CHECK:       chain.8:
++; CHECK-NEXT:    [[REM_8:%.*]] = sub nsw i32 [[REM_7]], [[STEP_EXT]]
++; CHECK-NEXT:    [[C_9:%.*]] = icmp slt i32 [[REM_8]], 1
++; CHECK-NEXT:    br i1 [[C_9]], label [[EXIT]], label [[CHAIN_9:%.*]]
++; CHECK:       chain.9:
++; CHECK-NEXT:    [[REM_9:%.*]] = sub nsw i32 [[REM_8]], [[STEP_EXT]]
++; CHECK-NEXT:    [[C_10:%.*]] = icmp slt i32 [[REM_9]], 1
++; CHECK-NEXT:    br i1 [[C_10]], label [[EXIT]], label [[CHAIN_10:%.*]]
++; CHECK:       chain.10:
++; CHECK-NEXT:    [[REM_10:%.*]] = sub nsw i32 [[REM_9]], [[STEP_EXT]]
++; CHECK-NEXT:    [[C_11:%.*]] = icmp slt i32 [[REM_10]], 1
++; CHECK-NEXT:    br i1 [[C_11]], label [[EXIT]], label [[CHAIN_11:%.*]]
++; CHECK:       chain.11:
++; CHECK-NEXT:    [[REM_11:%.*]] = sub nsw i32 [[REM_10]], [[STEP_EXT]]
++; CHECK-NEXT:    [[C_12:%.*]] = icmp slt i32 [[REM_11]], 1
++; CHECK-NEXT:    br i1 [[C_12]], label [[EXIT]], label [[CHAIN_12:%.*]]
++; CHECK:       chain.12:
++; CHECK-NEXT:    [[REM_12:%.*]] = sub nsw i32 [[REM_11]], [[STEP_EXT]]
++; CHECK-NEXT:    [[C_13:%.*]] = icmp slt i32 [[REM_12]], 1
++; CHECK-NEXT:    br i1 [[C_13]], label [[EXIT]], label [[CHAIN_13:%.*]]
++; CHECK:       chain.13:
++; CHECK-NEXT:    [[REM_13:%.*]] = sub nsw i32 [[REM_12]], [[STEP_EXT]]
++; CHECK-NEXT:    [[C_14:%.*]] = icmp slt i32 [[REM_13]], 1
++; CHECK-NEXT:    br i1 [[C_14]], label [[EXIT]], label [[CHAIN_14:%.*]]
++; CHECK:       chain.14:
++; CHECK-NEXT:    [[REM_14:%.*]] = sub nsw i32 [[REM_13]], [[STEP_EXT]]
++; CHECK-NEXT:    [[C_15:%.*]] = icmp slt i32 [[REM_14]], 1
++; CHECK-NEXT:    br i1 [[C_15]], label [[EXIT]], label [[CHAIN_15:%.*]]
++; CHECK:       chain.15:
++; CHECK-NEXT:    [[REM_15:%.*]] = sub nsw i32 [[REM_14]], [[STEP_EXT]]
++; CHECK-NEXT:    ret i1 true
++; CHECK:       exit:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %step.ext = zext i16 %step to i32
++  %step.pos = icmp sgt i32 %step.ext, 0
++  br i1 %step.pos, label %chain.0, label %exit
++
++chain.0:
++  %c.1 = icmp slt i32 %start, 1
++  br i1 %c.1, label %exit, label %chain.1
++
++chain.1:
++  %rem.1 = sub nsw i32 %start, %step.ext
++  %c.2 = icmp slt i32 %rem.1, 1
++  br i1 %c.2, label %exit, label %chain.2
++
++chain.2:
++  %rem.2 = sub nsw i32 %rem.1, %step.ext
++  %c.3 = icmp slt i32 %rem.2, 1
++  br i1 %c.3, label %exit, label %chain.3
++
++chain.3:
++  %rem.3 = sub nsw i32 %rem.2, %step.ext
++  %c.4 = icmp slt i32 %rem.3, 1
++  br i1 %c.4, label %exit, label %chain.4
++
++chain.4:
++  %rem.4 = sub nsw i32 %rem.3, %step.ext
++  %c.5 = icmp slt i32 %rem.4, 1
++  br i1 %c.5, label %exit, label %chain.5
++
++chain.5:
++  %rem.5 = sub nsw i32 %rem.4, %step.ext
++  %c.6 = icmp slt i32 %rem.5, 1
++  br i1 %c.6, label %exit, label %chain.6
++
++chain.6:
++  %rem.6 = sub nsw i32 %rem.5, %step.ext
++  %c.7 = icmp slt i32 %rem.6, 1
++  br i1 %c.7, label %exit, label %chain.7
++
++chain.7:
++  %rem.7 = sub nsw i32 %rem.6, %step.ext
++  %c.8 = icmp slt i32 %rem.7, 1
++  br i1 %c.8, label %exit, label %chain.8
++
++chain.8:
++  %rem.8 = sub nsw i32 %rem.7, %step.ext
++  %c.9 = icmp slt i32 %rem.8, 1
++  br i1 %c.9, label %exit, label %chain.9
++
++chain.9:
++  %rem.9 = sub nsw i32 %rem.8, %step.ext
++  %c.10 = icmp slt i32 %rem.9, 1
++  br i1 %c.10, label %exit, label %chain.10
++
++chain.10:
++  %rem.10 = sub nsw i32 %rem.9, %step.ext
++  %c.11 = icmp slt i32 %rem.10, 1
++  br i1 %c.11, label %exit, label %chain.11
++
++chain.11:
++  %rem.11 = sub nsw i32 %rem.10, %step.ext
++  %c.12 = icmp slt i32 %rem.11, 1
++  br i1 %c.12, label %exit, label %chain.12
++
++chain.12:
++  %rem.12 = sub nsw i32 %rem.11, %step.ext
++  %c.13 = icmp slt i32 %rem.12, 1
++  br i1 %c.13, label %exit, label %chain.13
++
++chain.13:
++  %rem.13 = sub nsw i32 %rem.12, %step.ext
++  %c.14 = icmp slt i32 %rem.13, 1
++  br i1 %c.14, label %exit, label %chain.14
++
++chain.14:
++  %rem.14 = sub nsw i32 %rem.13, %step.ext
++  %c.15 = icmp slt i32 %rem.14, 1
++  br i1 %c.15, label %exit, label %chain.15
++
++chain.15:
++  %rem.15 = sub nsw i32 %rem.14, %step.ext
++  %res = icmp slt i32 %rem.15, %start
++  ret i1 %res
++
++exit:
++  ret i1 false
++}
++
++; A chain of 16 subtracts exceeds the default limit, so the final compare is
++; left alone. Raising the limit folds it again, showing the depth limit is what
++; stops it.
++
++define i1 @sub_nsw_chain_long(i32 %start, i16 %step) {
++; DEFAULT-LABEL: @sub_nsw_chain_long(
++; DEFAULT-NEXT:  entry:
++; DEFAULT-NEXT:    [[STEP_EXT:%.*]] = zext i16 [[STEP:%.*]] to i32
++; DEFAULT-NEXT:    [[STEP_POS:%.*]] = icmp sgt i32 [[STEP_EXT]], 0
++; DEFAULT-NEXT:    br i1 [[STEP_POS]], label [[CHAIN_0:%.*]], label [[EXIT:%.*]]
++; DEFAULT:       chain.0:
++; DEFAULT-NEXT:    [[C_1:%.*]] = icmp slt i32 [[START:%.*]], 1
++; DEFAULT-NEXT:    br i1 [[C_1]], label [[EXIT]], label [[CHAIN_1:%.*]]
++; DEFAULT:       chain.1:
++; DEFAULT-NEXT:    [[REM_1:%.*]] = sub nsw i32 [[START]], [[STEP_EXT]]
++; DEFAULT-NEXT:    [[C_2:%.*]] = icmp slt i32 [[REM_1]], 1
++; DEFAULT-NEXT:    br i1 [[C_2]], label [[EXIT]], label [[CHAIN_2:%.*]]
++; DEFAULT:       chain.2:
++; DEFAULT-NEXT:    [[REM_2:%.*]] = sub nsw i32 [[REM_1]], [[STEP_EXT]]
++; DEFAULT-NEXT:    [[C_3:%.*]] = icmp slt i32 [[REM_2]], 1
++; DEFAULT-NEXT:    br i1 [[C_3]], label [[EXIT]], label [[CHAIN_3:%.*]]
++; DEFAULT:       chain.3:
++; DEFAULT-NEXT:    [[REM_3:%.*]] = sub nsw i32 [[REM_2]], [[STEP_EXT]]
++; DEFAULT-NEXT:    [[C_4:%.*]] = icmp slt i32 [[REM_3]], 1
++; DEFAULT-NEXT:    br i1 [[C_4]], label [[EXIT]], label [[CHAIN_4:%.*]]
++; DEFAULT:       chain.4:
++; DEFAULT-NEXT:    [[REM_4:%.*]] = sub nsw i32 [[REM_3]], [[STEP_EXT]]
++; DEFAULT-NEXT:    [[C_5:%.*]] = icmp slt i32 [[REM_4]], 1
++; DEFAULT-NEXT:    br i1 [[C_5]], label [[EXIT]], label [[CHAIN_5:%.*]]
++; DEFAULT:       chain.5:
++; DEFAULT-NEXT:    [[REM_5:%.*]] = sub nsw i32 [[REM_4]], [[STEP_EXT]]
++; DEFAULT-NEXT:    [[C_6:%.*]] = icmp slt i32 [[REM_5]], 1
++; DEFAULT-NEXT:    br i1 [[C_6]], label [[EXIT]], label [[CHAIN_6:%.*]]
++; DEFAULT:       chain.6:
++; DEFAULT-NEXT:    [[REM_6:%.*]] = sub nsw i32 [[REM_5]], [[STEP_EXT]]
++; DEFAULT-NEXT:    [[C_7:%.*]] = icmp slt i32 [[REM_6]], 1
++; DEFAULT-NEXT:    br i1 [[C_7]], label [[EXIT]], label [[CHAIN_7:%.*]]
++; DEFAULT:       chain.7:
++; DEFAULT-NEXT:    [[REM_7:%.*]] = sub nsw i32 [[REM_6]], [[STEP_EXT]]
++; DEFAULT-NEXT:    [[C_8:%.*]] = icmp slt i32 [[REM_7]], 1
++; DEFAULT-NEXT:    br i1 [[C_8]], label [[EXIT]], label [[CHAIN_8:%.*]]
++; DEFAULT:       chain.8:
++; DEFAULT-NEXT:    [[REM_8:%.*]] = sub nsw i32 [[REM_7]], [[STEP_EXT]]
++; DEFAULT-NEXT:    [[C_9:%.*]] = icmp slt i32 [[REM_8]], 1
++; DEFAULT-NEXT:    br i1 [[C_9]], label [[EXIT]], label [[CHAIN_9:%.*]]
++; DEFAULT:       chain.9:
++; DEFAULT-NEXT:    [[REM_9:%.*]] = sub nsw i32 [[REM_8]], [[STEP_EXT]]
++; DEFAULT-NEXT:    [[C_10:%.*]] = icmp slt i32 [[REM_9]], 1
++; DEFAULT-NEXT:    br i1 [[C_10]], label [[EXIT]], label [[CHAIN_10:%.*]]
++; DEFAULT:       chain.10:
++; DEFAULT-NEXT:    [[REM_10:%.*]] = sub nsw i32 [[REM_9]], [[STEP_EXT]]
++; DEFAULT-NEXT:    [[C_11:%.*]] = icmp slt i32 [[REM_10]], 1
++; DEFAULT-NEXT:    br i1 [[C_11]], label [[EXIT]], label [[CHAIN_11:%.*]]
++; DEFAULT:       chain.11:
++; DEFAULT-NEXT:    [[REM_11:%.*]] = sub nsw i32 [[REM_10]], [[STEP_EXT]]
++; DEFAULT-NEXT:    [[C_12:%.*]] = icmp slt i32 [[REM_11]], 1
++; DEFAULT-NEXT:    br i1 [[C_12]], label [[EXIT]], label [[CHAIN_12:%.*]]
++; DEFAULT:       chain.12:
++; DEFAULT-NEXT:    [[REM_12:%.*]] = sub nsw i32 [[REM_11]], [[STEP_EXT]]
++; DEFAULT-NEXT:    [[C_13:%.*]] = icmp slt i32 [[REM_12]], 1
++; DEFAULT-NEXT:    br i1 [[C_13]], label [[EXIT]], label [[CHAIN_13:%.*]]
++; DEFAULT:       chain.13:
++; DEFAULT-NEXT:    [[REM_13:%.*]] = sub nsw i32 [[REM_12]], [[STEP_EXT]]
++; DEFAULT-NEXT:    [[C_14:%.*]] = icmp slt i32 [[REM_13]], 1
++; DEFAULT-NEXT:    br i1 [[C_14]], label [[EXIT]], label [[CHAIN_14:%.*]]
++; DEFAULT:       chain.14:
++; DEFAULT-NEXT:    [[REM_14:%.*]] = sub nsw i32 [[REM_13]], [[STEP_EXT]]
++; DEFAULT-NEXT:    [[C_15:%.*]] = icmp slt i32 [[REM_14]], 1
++; DEFAULT-NEXT:    br i1 [[C_15]], label [[EXIT]], label [[CHAIN_15:%.*]]
++; DEFAULT:       chain.15:
++; DEFAULT-NEXT:    [[REM_15:%.*]] = sub nsw i32 [[REM_14]], [[STEP_EXT]]
++; DEFAULT-NEXT:    [[C_16:%.*]] = icmp slt i32 [[REM_15]], 1
++; DEFAULT-NEXT:    br i1 [[C_16]], label [[EXIT]], label [[CHAIN_16:%.*]]
++; DEFAULT:       chain.16:
++; DEFAULT-NEXT:    [[REM_16:%.*]] = sub nsw i32 [[REM_15]], [[STEP_EXT]]
++; DEFAULT-NEXT:    [[RES:%.*]] = icmp slt i32 [[REM_16]], [[START]]
++; DEFAULT-NEXT:    ret i1 [[RES]]
++; DEFAULT:       exit:
++; DEFAULT-NEXT:    ret i1 false
++;
++; DEEP-LABEL: @sub_nsw_chain_long(
++; DEEP-NEXT:  entry:
++; DEEP-NEXT:    [[STEP_EXT:%.*]] = zext i16 [[STEP:%.*]] to i32
++; DEEP-NEXT:    [[STEP_POS:%.*]] = icmp sgt i32 [[STEP_EXT]], 0
++; DEEP-NEXT:    br i1 [[STEP_POS]], label [[CHAIN_0:%.*]], label [[EXIT:%.*]]
++; DEEP:       chain.0:
++; DEEP-NEXT:    [[C_1:%.*]] = icmp slt i32 [[START:%.*]], 1
++; DEEP-NEXT:    br i1 [[C_1]], label [[EXIT]], label [[CHAIN_1:%.*]]
++; DEEP:       chain.1:
++; DEEP-NEXT:    [[REM_1:%.*]] = sub nsw i32 [[START]], [[STEP_EXT]]
++; DEEP-NEXT:    [[C_2:%.*]] = icmp slt i32 [[REM_1]], 1
++; DEEP-NEXT:    br i1 [[C_2]], label [[EXIT]], label [[CHAIN_2:%.*]]
++; DEEP:       chain.2:
++; DEEP-NEXT:    [[REM_2:%.*]] = sub nsw i32 [[REM_1]], [[STEP_EXT]]
++; DEEP-NEXT:    [[C_3:%.*]] = icmp slt i32 [[REM_2]], 1
++; DEEP-NEXT:    br i1 [[C_3]], label [[EXIT]], label [[CHAIN_3:%.*]]
++; DEEP:       chain.3:
++; DEEP-NEXT:    [[REM_3:%.*]] = sub nsw i32 [[REM_2]], [[STEP_EXT]]
++; DEEP-NEXT:    [[C_4:%.*]] = icmp slt i32 [[REM_3]], 1
++; DEEP-NEXT:    br i1 [[C_4]], label [[EXIT]], label [[CHAIN_4:%.*]]
++; DEEP:       chain.4:
++; DEEP-NEXT:    [[REM_4:%.*]] = sub nsw i32 [[REM_3]], [[STEP_EXT]]
++; DEEP-NEXT:    [[C_5:%.*]] = icmp slt i32 [[REM_4]], 1
++; DEEP-NEXT:    br i1 [[C_5]], label [[EXIT]], label [[CHAIN_5:%.*]]
++; DEEP:       chain.5:
++; DEEP-NEXT:    [[REM_5:%.*]] = sub nsw i32 [[REM_4]], [[STEP_EXT]]
++; DEEP-NEXT:    [[C_6:%.*]] = icmp slt i32 [[REM_5]], 1
++; DEEP-NEXT:    br i1 [[C_6]], label [[EXIT]], label [[CHAIN_6:%.*]]
++; DEEP:       chain.6:
++; DEEP-NEXT:    [[REM_6:%.*]] = sub nsw i32 [[REM_5]], [[STEP_EXT]]
++; DEEP-NEXT:    [[C_7:%.*]] = icmp slt i32 [[REM_6]], 1
++; DEEP-NEXT:    br i1 [[C_7]], label [[EXIT]], label [[CHAIN_7:%.*]]
++; DEEP:       chain.7:
++; DEEP-NEXT:    [[REM_7:%.*]] = sub nsw i32 [[REM_6]], [[STEP_EXT]]
++; DEEP-NEXT:    [[C_8:%.*]] = icmp slt i32 [[REM_7]], 1
++; DEEP-NEXT:    br i1 [[C_8]], label [[EXIT]], label [[CHAIN_8:%.*]]
++; DEEP:       chain.8:
++; DEEP-NEXT:    [[REM_8:%.*]] = sub nsw i32 [[REM_7]], [[STEP_EXT]]
++; DEEP-NEXT:    [[C_9:%.*]] = icmp slt i32 [[REM_8]], 1
++; DEEP-NEXT:    br i1 [[C_9]], label [[EXIT]], label [[CHAIN_9:%.*]]
++; DEEP:       chain.9:
++; DEEP-NEXT:    [[REM_9:%.*]] = sub nsw i32 [[REM_8]], [[STEP_EXT]]
++; DEEP-NEXT:    [[C_10:%.*]] = icmp slt i32 [[REM_9]], 1
++; DEEP-NEXT:    br i1 [[C_10]], label [[EXIT]], label [[CHAIN_10:%.*]]
++; DEEP:       chain.10:
++; DEEP-NEXT:    [[REM_10:%.*]] = sub nsw i32 [[REM_9]], [[STEP_EXT]]
++; DEEP-NEXT:    [[C_11:%.*]] = icmp slt i32 [[REM_10]], 1
++; DEEP-NEXT:    br i1 [[C_11]], label [[EXIT]], label [[CHAIN_11:%.*]]
++; DEEP:       chain.11:
++; DEEP-NEXT:    [[REM_11:%.*]] = sub nsw i32 [[REM_10]], [[STEP_EXT]]
++; DEEP-NEXT:    [[C_12:%.*]] = icmp slt i32 [[REM_11]], 1
++; DEEP-NEXT:    br i1 [[C_12]], label [[EXIT]], label [[CHAIN_12:%.*]]
++; DEEP:       chain.12:
++; DEEP-NEXT:    [[REM_12:%.*]] = sub nsw i32 [[REM_11]], [[STEP_EXT]]
++; DEEP-NEXT:    [[C_13:%.*]] = icmp slt i32 [[REM_12]], 1
++; DEEP-NEXT:    br i1 [[C_13]], label [[EXIT]], label [[CHAIN_13:%.*]]
++; DEEP:       chain.13:
++; DEEP-NEXT:    [[REM_13:%.*]] = sub nsw i32 [[REM_12]], [[STEP_EXT]]
++; DEEP-NEXT:    [[C_14:%.*]] = icmp slt i32 [[REM_13]], 1
++; DEEP-NEXT:    br i1 [[C_14]], label [[EXIT]], label [[CHAIN_14:%.*]]
++; DEEP:       chain.14:
++; DEEP-NEXT:    [[REM_14:%.*]] = sub nsw i32 [[REM_13]], [[STEP_EXT]]
++; DEEP-NEXT:    [[C_15:%.*]] = icmp slt i32 [[REM_14]], 1
++; DEEP-NEXT:    br i1 [[C_15]], label [[EXIT]], label [[CHAIN_15:%.*]]
++; DEEP:       chain.15:
++; DEEP-NEXT:    [[REM_15:%.*]] = sub nsw i32 [[REM_14]], [[STEP_EXT]]
++; DEEP-NEXT:    [[C_16:%.*]] = icmp slt i32 [[REM_15]], 1
++; DEEP-NEXT:    br i1 [[C_16]], label [[EXIT]], label [[CHAIN_16:%.*]]
++; DEEP:       chain.16:
++; DEEP-NEXT:    [[REM_16:%.*]] = sub nsw i32 [[REM_15]], [[STEP_EXT]]
++; DEEP-NEXT:    ret i1 true
++; DEEP:       exit:
++; DEEP-NEXT:    ret i1 false
++;
++entry:
++  %step.ext = zext i16 %step to i32
++  %step.pos = icmp sgt i32 %step.ext, 0
++  br i1 %step.pos, label %chain.0, label %exit
++
++chain.0:
++  %c.1 = icmp slt i32 %start, 1
++  br i1 %c.1, label %exit, label %chain.1
++
++chain.1:
++  %rem.1 = sub nsw i32 %start, %step.ext
++  %c.2 = icmp slt i32 %rem.1, 1
++  br i1 %c.2, label %exit, label %chain.2
++
++chain.2:
++  %rem.2 = sub nsw i32 %rem.1, %step.ext
++  %c.3 = icmp slt i32 %rem.2, 1
++  br i1 %c.3, label %exit, label %chain.3
++
++chain.3:
++  %rem.3 = sub nsw i32 %rem.2, %step.ext
++  %c.4 = icmp slt i32 %rem.3, 1
++  br i1 %c.4, label %exit, label %chain.4
++
++chain.4:
++  %rem.4 = sub nsw i32 %rem.3, %step.ext
++  %c.5 = icmp slt i32 %rem.4, 1
++  br i1 %c.5, label %exit, label %chain.5
++
++chain.5:
++  %rem.5 = sub nsw i32 %rem.4, %step.ext
++  %c.6 = icmp slt i32 %rem.5, 1
++  br i1 %c.6, label %exit, label %chain.6
++
++chain.6:
++  %rem.6 = sub nsw i32 %rem.5, %step.ext
++  %c.7 = icmp slt i32 %rem.6, 1
++  br i1 %c.7, label %exit, label %chain.7
++
++chain.7:
++  %rem.7 = sub nsw i32 %rem.6, %step.ext
++  %c.8 = icmp slt i32 %rem.7, 1
++  br i1 %c.8, label %exit, label %chain.8
++
++chain.8:
++  %rem.8 = sub nsw i32 %rem.7, %step.ext
++  %c.9 = icmp slt i32 %rem.8, 1
++  br i1 %c.9, label %exit, label %chain.9
++
++chain.9:
++  %rem.9 = sub nsw i32 %rem.8, %step.ext
++  %c.10 = icmp slt i32 %rem.9, 1
++  br i1 %c.10, label %exit, label %chain.10
++
++chain.10:
++  %rem.10 = sub nsw i32 %rem.9, %step.ext
++  %c.11 = icmp slt i32 %rem.10, 1
++  br i1 %c.11, label %exit, label %chain.11
++
++chain.11:
++  %rem.11 = sub nsw i32 %rem.10, %step.ext
++  %c.12 = icmp slt i32 %rem.11, 1
++  br i1 %c.12, label %exit, label %chain.12
++
++chain.12:
++  %rem.12 = sub nsw i32 %rem.11, %step.ext
++  %c.13 = icmp slt i32 %rem.12, 1
++  br i1 %c.13, label %exit, label %chain.13
++
++chain.13:
++  %rem.13 = sub nsw i32 %rem.12, %step.ext
++  %c.14 = icmp slt i32 %rem.13, 1
++  br i1 %c.14, label %exit, label %chain.14
++
++chain.14:
++  %rem.14 = sub nsw i32 %rem.13, %step.ext
++  %c.15 = icmp slt i32 %rem.14, 1
++  br i1 %c.15, label %exit, label %chain.15
++
++chain.15:
++  %rem.15 = sub nsw i32 %rem.14, %step.ext
++  %c.16 = icmp slt i32 %rem.15, 1
++  br i1 %c.16, label %exit, label %chain.16
++
++chain.16:
++  %rem.16 = sub nsw i32 %rem.15, %step.ext
++  %res = icmp slt i32 %rem.16, %start
++  ret i1 %res
++
++exit:
++  ret i1 false
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/materialize-flags.ll b/llvm/test/Transforms/ConstraintElimination/materialize-flags.ll
+index b8cc032274b2d..33b6a0e34c6d1 100644
+--- a/llvm/test/Transforms/ConstraintElimination/materialize-flags.ll
++++ b/llvm/test/Transforms/ConstraintElimination/materialize-flags.ll
+@@ -204,6 +204,54 @@ entry:
+   ret i32 %sub
+ }
+ 
++define i32 @sub_nuw_from_transitive_signed_facts(i32 %a, i32 %b, i32 %n) {
++; CHECK-LABEL: define i32 @sub_nuw_from_transitive_signed_facts(
++; CHECK-SAME: i32 [[A:%.*]], i32 [[B:%.*]], i32 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[B_NNEG:%.*]] = icmp sge i32 [[B]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[B_NNEG]])
++; CHECK-NEXT:    [[N_NNEG:%.*]] = icmp sge i32 [[N]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[N_NNEG]])
++; CHECK-NEXT:    [[REM:%.*]] = sub nsw i32 [[A]], [[N]]
++; CHECK-NEXT:    [[FITS:%.*]] = icmp sge i32 [[REM]], [[B]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[FITS]])
++; CHECK-NEXT:    [[SUB:%.*]] = sub nsw i32 [[A]], [[B]]
++; CHECK-NEXT:    ret i32 [[SUB]]
++;
++entry:
++  %b.nneg = icmp sge i32 %b, 0
++  call void @llvm.assume(i1 %b.nneg)
++  %n.nneg = icmp sge i32 %n, 0
++  call void @llvm.assume(i1 %n.nneg)
++  %rem = sub nsw i32 %a, %n
++  %fits = icmp sge i32 %rem, %b
++  call void @llvm.assume(i1 %fits)
++  %sub = sub i32 %a, %b
++  ret i32 %sub
++}
++
++define i32 @sub_no_nuw_from_transitive_signed_facts(i32 %a, i32 %b, i32 %n) {
++; CHECK-LABEL: define i32 @sub_no_nuw_from_transitive_signed_facts(
++; CHECK-SAME: i32 [[A:%.*]], i32 [[B:%.*]], i32 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[N_NNEG:%.*]] = icmp sge i32 [[N]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[N_NNEG]])
++; CHECK-NEXT:    [[REM:%.*]] = sub nsw i32 [[A]], [[N]]
++; CHECK-NEXT:    [[FITS:%.*]] = icmp sge i32 [[REM]], [[B]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[FITS]])
++; CHECK-NEXT:    [[SUB:%.*]] = sub i32 [[A]], [[B]]
++; CHECK-NEXT:    ret i32 [[SUB]]
++;
++entry:
++  %n.nneg = icmp sge i32 %n, 0
++  call void @llvm.assume(i1 %n.nneg)
++  %rem = sub nsw i32 %a, %n
++  %fits = icmp sge i32 %rem, %b
++  call void @llvm.assume(i1 %fits)
++  %sub = sub i32 %a, %b
++  ret i32 %sub
++}
++
+ define ptr @gep_nuw_transitive(ptr %p, i64 %i, i64 %j) {
+ ; CHECK-LABEL: define ptr @gep_nuw_transitive(
+ ; CHECK-SAME: ptr [[P:%.*]], i64 [[I:%.*]], i64 [[J:%.*]]) {
