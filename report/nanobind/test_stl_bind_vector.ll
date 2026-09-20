@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %bb.q
   %.val18.i.i.i.i = load ptr, ptr %.val, align 8, !tbaa !123 ; 5 uses
   %i.ao = ptrtoint ptr %i.al to i64
   %i.ap = ptrtoint ptr %.val18.i.i.i.i to i64     ; 2 uses
-  %i.aq = sub i64 %i.ao, %i.ap                    ; 3 uses
+  %i.aq = sub i64 %i.ao, %i.ap                    ; 4 uses
   %i.ar = icmp eq i64 %i.aq, 9223372036854775804
   br i1 %i.ar, label %bb.t, label %_ZNKSt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElSaIS2_EE12_M_check_lenEmPKc.exit.i.i.i.i
 
@@ -216,9 +216,9 @@ bb.t:                                             ; preds = %bb.s
   unreachable
 
 _ZNKSt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElSaIS2_EE12_M_check_lenEmPKc.exit.i.i.i.i: ; preds = %bb.s
-  %i.as = ashr exact i64 %i.aq, 2                 ; 3 uses
-  %.sroa.speculated.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.as, i64 1)
-  %12 = add nsw i64 %.sroa.speculated.i.i.i.i.i, %i.as ; 2 uses
+  %i.as = ashr exact i64 %i.aq, 2
+  %mul2.i.i.i.i = ashr exact i64 %i.aq, 1
+  %12 = call i64 @llvm.umax.i64(i64 %mul2.i.i.i.i, i64 1) ; 2 uses
   %i.at = icmp ult i64 %12, %i.as
   %i.au = call i64 @llvm.umin.i64(i64 %12, i64 2305843009213693951)
   %i.av = select i1 %i.at, i64 2305843009213693951, i64 %i.au ; 2 uses
@@ -559,7 +559,7 @@ bb.a:
   %.val19 = load ptr, ptr %i.a, align 8, !tbaa !124 ; 3 uses
   %i.b = ptrtoint ptr %.val19 to i64
   %i.c = ptrtoint ptr %.val18 to i64              ; 3 uses
-  %i.d = sub i64 %i.b, %i.c                       ; 2 uses
+  %i.d = sub i64 %i.b, %i.c                       ; 3 uses
   %i.e = icmp eq i64 %i.d, 9223372036854775804
   br i1 %i.e, label %bb.b, label %_ZNKSt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElSaIS2_EE12_M_check_lenEmPKc.exit
 
@@ -568,9 +568,9 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNKSt6vectorIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElSaIS2_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
-  %i.f = ashr exact i64 %i.d, 2                   ; 3 uses
-  %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.f, i64 1)
-  %3 = add nsw i64 %.sroa.speculated.i, %i.f      ; 2 uses
+  %i.f = ashr exact i64 %i.d, 2
+  %mul2 = ashr exact i64 %i.d, 1
+  %3 = tail call i64 @llvm.umax.i64(i64 %mul2, i64 1) ; 2 uses
   %i.g = icmp ult i64 %3, %i.f
   %i.h = tail call i64 @llvm.umin.i64(i64 %3, i64 2305843009213693951)
   %i.i = select i1 %i.g, i64 2305843009213693951, i64 %i.h ; 2 uses
@@ -973,9 +973,9 @@ bb.u:                                             ; preds = %bb.t
   unreachable
 
 _ZNKSt6vectorIS_IZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElSaIS2_EESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i: ; preds = %bb.t
-  %i.av = sdiv exact i64 %i.at, 24                ; 3 uses
-  %.sroa.speculated.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.av, i64 1)
-  %13 = add nsw i64 %.sroa.speculated.i.i.i.i.i, %i.av ; 2 uses
+  %i.av = sdiv exact i64 %i.at, 24                ; 2 uses
+  %mul2.i.i.i.i = shl nsw i64 %i.av, 1
+  %13 = call i64 @llvm.umax.i64(i64 %mul2.i.i.i.i, i64 1) ; 2 uses
   %i.aw = icmp ult i64 %13, %i.av
   %i.ax = call i64 @llvm.umin.i64(i64 %13, i64 384307168202282325)
   %i.ay = select i1 %i.aw, i64 384307168202282325, i64 %i.ax ; 2 uses
@@ -1365,9 +1365,9 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNKSt6vectorIS_IZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElSaIS2_EESaIS4_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
-  %i.f = sdiv exact i64 %i.d, 24                  ; 3 uses
-  %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.f, i64 1)
-  %3 = add nsw i64 %.sroa.speculated.i, %i.f      ; 2 uses
+  %i.f = sdiv exact i64 %i.d, 24                  ; 2 uses
+  %mul2 = shl nsw i64 %i.f, 1
+  %3 = tail call i64 @llvm.umax.i64(i64 %mul2, i64 1) ; 2 uses
   %i.g = icmp ult i64 %3, %i.f
   %i.h = tail call i64 @llvm.umin.i64(i64 %3, i64 384307168202282325)
   %i.i = select i1 %i.g, i64 384307168202282325, i64 %i.h ; 3 uses
@@ -1770,7 +1770,7 @@ bb.r:                                             ; preds = %bb.p
   %.val18.i.i.i.i = load ptr, ptr %.val, align 8, !tbaa !145 ; 5 uses
   %i.at = ptrtoint ptr %i.ao to i64
   %i.au = ptrtoint ptr %.val18.i.i.i.i to i64     ; 2 uses
-  %i.av = sub i64 %i.at, %i.au                    ; 3 uses
+  %i.av = sub i64 %i.at, %i.au                    ; 4 uses
   %i.aw = icmp eq i64 %i.av, 9223372036854775792
   br i1 %i.aw, label %bb.s, label %_ZNKSt6vectorISt10shared_ptrIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i
 
@@ -1782,9 +1782,9 @@ bb.s:                                             ; preds = %bb.r
   unreachable
 
 _ZNKSt6vectorISt10shared_ptrIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i: ; preds = %bb.r
-  %i.ax = ashr exact i64 %i.av, 4                 ; 3 uses
-  %.sroa.speculated.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.ax, i64 1)
-  %13 = add nsw i64 %.sroa.speculated.i.i.i.i.i, %i.ax ; 2 uses
+  %i.ax = ashr exact i64 %i.av, 4
+  %mul2.i.i.i.i = ashr exact i64 %i.av, 3
+  %13 = call i64 @llvm.umax.i64(i64 %mul2.i.i.i.i, i64 1) ; 2 uses
   %i.ay = icmp ult i64 %13, %i.ax
   %i.az = call i64 @llvm.umin.i64(i64 %13, i64 576460752303423487)
   %i.ba = select i1 %i.ay, i64 576460752303423487, i64 %i.az ; 2 uses
@@ -2187,7 +2187,7 @@ bb.a:
   %.val21 = load ptr, ptr %i.a, align 8, !tbaa !146 ; 3 uses
   %i.b = ptrtoint ptr %.val21 to i64
   %i.c = ptrtoint ptr %.val20 to i64              ; 3 uses
-  %i.d = sub i64 %i.b, %i.c                       ; 2 uses
+  %i.d = sub i64 %i.b, %i.c                       ; 3 uses
   %i.e = icmp eq i64 %i.d, 9223372036854775792
   br i1 %i.e, label %bb.b, label %_ZNKSt6vectorISt10shared_ptrIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElESaIS4_EE12_M_check_lenEmPKc.exit
 
@@ -2196,9 +2196,9 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNKSt6vectorISt10shared_ptrIZL43nanobind_test_stl_bind_vector_ext_exec_implN8nanobind7module_EE2ElESaIS4_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
-  %i.f = ashr exact i64 %i.d, 4                   ; 3 uses
-  %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.f, i64 1)
-  %3 = add nsw i64 %.sroa.speculated.i, %i.f      ; 2 uses
+  %i.f = ashr exact i64 %i.d, 4
+  %mul2 = ashr exact i64 %i.d, 3
+  %3 = tail call i64 @llvm.umax.i64(i64 %mul2, i64 1) ; 2 uses
   %i.g = icmp ult i64 %3, %i.f
   %i.h = tail call i64 @llvm.umin.i64(i64 %3, i64 576460752303423487)
   %i.i = select i1 %i.g, i64 576460752303423487, i64 %i.h ; 2 uses
