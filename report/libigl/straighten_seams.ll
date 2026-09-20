@@ -205,16 +205,14 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNKSt6vectorIS_IiSaIiEESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
-  %i.h = sdiv exact i64 %i.f, 24                  ; 3 uses
-  %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
-  %3 = add nsw i64 %.sroa.speculated.i, %i.h      ; 2 uses
+  %i.h = sdiv exact i64 %i.f, 24                  ; 2 uses
+  %mul2 = shl nsw i64 %i.h, 1
+  %3 = tail call i64 @llvm.umax.i64(i64 %mul2, i64 1) ; 2 uses
   %i.i = icmp ult i64 %3, %i.h
   %i.j = tail call i64 @llvm.umin.i64(i64 %3, i64 384307168202282325)
-  %i.k = select i1 %i.i, i64 384307168202282325, i64 %i.j ; 3 uses
+  %i.k = select i1 %i.i, i64 384307168202282325, i64 %i.j ; 2 uses
   %i.l = ptrtoint ptr %1 to i64
   %i.m = sub i64 %i.l, %i.e
-  %.not.i = icmp ne i64 %i.k, 0
-  tail call void @llvm.assume(i1 %.not.i)
   %i.n = mul nuw nsw i64 %i.k, 24
   %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #27 ; 5 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.m ; 2 uses
@@ -617,11 +615,11 @@ declare double @llvm.sqrt.f64(double) #19
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #19
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #22
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.smax.v4i32(<4 x i32>) #19
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #19

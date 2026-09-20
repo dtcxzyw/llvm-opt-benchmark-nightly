@@ -205,14 +205,12 @@ bb.w:                                             ; preds = %bb.v
   unreachable
 
 _ZNKSt6vectorIZN8facebook5velox10FlatVectorINS1_10StringViewEE30transferAndUpdateStringBuffersEPNS1_6memory10MemoryPoolEE21StringBufferRemappingSaIS8_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.v
-  %i.ci = sdiv exact i64 %i.cg, 24                ; 3 uses
-  %.sroa.speculated.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.ci, i64 1)
-  %10 = add nsw i64 %.sroa.speculated.i.i.i.i, %i.ci ; 2 uses
+  %i.ci = sdiv exact i64 %i.cg, 24                ; 2 uses
+  %mul2.i.i.i = shl nsw i64 %i.ci, 1
+  %10 = call i64 @llvm.umax.i64(i64 %mul2.i.i.i, i64 1) ; 2 uses
   %i.cj = icmp ult i64 %10, %i.ci
   %i.ck = call i64 @llvm.umin.i64(i64 %10, i64 384307168202282325)
-  %i.cl = select i1 %i.cj, i64 384307168202282325, i64 %i.ck ; 3 uses
-  %.not.i.i.i.i59 = icmp ne i64 %i.cl, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i59)
+  %i.cl = select i1 %i.cj, i64 384307168202282325, i64 %i.ck ; 2 uses
   %i.cm = mul nuw nsw i64 %i.cl, 24
   %i.cn = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cm) #39
           to label %.noexc61 unwind label %.loopexit133 ; 5 uses

@@ -202,14 +202,12 @@ bb.ai:                                            ; preds = %bb.ah
   unreachable
 
 _ZNKSt6vectorIN4ncnn21Yolov3DetectionOutput8BBoxRectESaIS2_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.ah
-  %i.ew = sdiv exact i64 %i.eu, 28                ; 3 uses
-  %.sroa.speculated.i.i.i = call i64 @llvm.umax.i64(i64 %i.ew, i64 1)
-  %7 = add nsw i64 %.sroa.speculated.i.i.i, %i.ew ; 2 uses
+  %i.ew = sdiv exact i64 %i.eu, 28                ; 2 uses
+  %mul2.i.i = shl nsw i64 %i.ew, 1
+  %7 = call i64 @llvm.umax.i64(i64 %mul2.i.i, i64 1) ; 2 uses
   %i.ex = icmp ult i64 %7, %i.ew
   %i.ey = call i64 @llvm.umin.i64(i64 %7, i64 329406144173384850)
-  %i.ez = select i1 %i.ex, i64 329406144173384850, i64 %i.ey ; 3 uses
-  %.not.i.i.i91 = icmp ne i64 %i.ez, 0
-  call void @llvm.assume(i1 %.not.i.i.i91)
+  %i.ez = select i1 %i.ex, i64 329406144173384850, i64 %i.ey ; 2 uses
   %i.fa = mul nuw nsw i64 %i.ez, 28
   %i.fb = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fa) #21
           to label %.noexc93 unwind label %.loopexit ; 4 uses
@@ -612,14 +610,12 @@ bb.i:                                             ; preds = %bb.h
   unreachable
 
 _ZNKSt6vectorIN4ncnn21Yolov3DetectionOutput8BBoxRectESaIS2_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.h
-  %i.he = sdiv exact i64 %i.hc, 28                ; 3 uses
-  %.sroa.speculated.i.i.i = call i64 @llvm.umax.i64(i64 %i.he, i64 1)
-  %11 = add nsw i64 %.sroa.speculated.i.i.i, %i.he ; 2 uses
+  %i.he = sdiv exact i64 %i.hc, 28                ; 2 uses
+  %mul2.i.i = shl nsw i64 %i.he, 1
+  %11 = call i64 @llvm.umax.i64(i64 %mul2.i.i, i64 1) ; 2 uses
   %i.hf = icmp ult i64 %11, %i.he
   %i.hg = call i64 @llvm.umin.i64(i64 %11, i64 329406144173384850)
-  %i.hh = select i1 %i.hf, i64 329406144173384850, i64 %i.hg ; 3 uses
-  %.not.i.i.i = icmp ne i64 %i.hh, 0
-  call void @llvm.assume(i1 %.not.i.i.i)
+  %i.hh = select i1 %i.hf, i64 329406144173384850, i64 %i.hg ; 2 uses
   %i.hi = mul nuw nsw i64 %i.hh, 28
   %i.hj = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.hi) #21
           to label %.noexc190 unwind label %.loopexit ; 4 uses

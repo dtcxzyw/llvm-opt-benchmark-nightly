@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a, %_ZNSt6vector
   %i.e = phi ptr [ null, %bb.a ], [ %i.y, %_ZNSt6vectorIPKN5osgeo4proj9operation17ESRIMethodMappingESaIS5_EE9push_backEOS5_.exit ] ; 10 uses
   %.0.ptr20 = getelementptr inbounds nuw i8, ptr @_ZN5osgeo4proj9operationL12esriMappingsE, i64 %.0.idx19 ; 3 uses
   %i.f = load ptr, ptr %.0.ptr20, align 16, !tbaa !14
-  %i.g = tail call noundef zeroext i1 @_ZN5osgeo4proj8internal8ci_equalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKc(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef %i.f) #10
+  %i.g = tail call noundef zeroext i1 @_ZN5osgeo4proj8internal8ci_equalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKc(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef %i.f) #9
   br i1 %i.g, label %bb.c, label %_ZNSt6vectorIPKN5osgeo4proj9operation17ESRIMethodMappingESaIS5_EE9push_backEOS5_.exit
 
 bb.c:                                             ; preds = %bb.b
@@ -218,29 +218,27 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.i = ptrtoint ptr %i.c to i64
   %i.j = ptrtoint ptr %i.e to i64
-  %i.k = sub i64 %i.i, %i.j                       ; 7 uses
+  %i.k = sub i64 %i.i, %i.j                       ; 8 uses
   %i.l = icmp eq i64 %i.k, 9223372036854775800
   br i1 %i.l, label %bb.f, label %_ZNKSt6vectorIPKN5osgeo4proj9operation17ESRIMethodMappingESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i
 
 bb.f:                                             ; preds = %bb.e
   store ptr %i.e, ptr %0, align 8
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.195) #11
+  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.195) #10
           to label %.noexc unwind label %.loopexit.split-lp
 
 .noexc:                                           ; preds = %bb.f
   unreachable
 
 _ZNKSt6vectorIPKN5osgeo4proj9operation17ESRIMethodMappingESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.e
-  %i.m = ashr exact i64 %i.k, 3                   ; 3 uses
-  %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.m, i64 1)
-  %2 = add nsw i64 %.sroa.speculated.i.i.i.i, %i.m ; 2 uses
+  %i.m = ashr exact i64 %i.k, 3
+  %mul2.i.i.i = ashr exact i64 %i.k, 2
+  %2 = tail call i64 @llvm.umax.i64(i64 %mul2.i.i.i, i64 1) ; 2 uses
   %i.n = icmp ult i64 %2, %i.m
   %i.o = tail call i64 @llvm.umin.i64(i64 %2, i64 1152921504606846975)
-  %i.p = select i1 %i.n, i64 1152921504606846975, i64 %i.o ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %i.p, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.p = select i1 %i.n, i64 1152921504606846975, i64 %i.o ; 2 uses
   %i.q = shl nuw nsw i64 %i.p, 3
-  %i.r = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.q) #12
+  %i.r = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.q) #11
           to label %.noexc9 unwind label %.loopexit ; 4 uses
 
 .noexc9:                                          ; preds = %_ZNKSt6vectorIPKN5osgeo4proj9operation17ESRIMethodMappingESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -259,7 +257,7 @@ _ZNSt6vectorIPKN5osgeo4proj9operation17ESRIMethodMappingESaIS5_EE11_S_relocateEP
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIPKN5osgeo4proj9operation17ESRIMethodMappingESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i, label %bb.h
 
 bb.h:                                             ; preds = %_ZNSt6vectorIPKN5osgeo4proj9operation17ESRIMethodMappingESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit16.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.e, i64 noundef %i.k) #13
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.e, i64 noundef %i.k) #12
   br label %_ZNSt6vectorIPKN5osgeo4proj9operation17ESRIMethodMappingESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIPKN5osgeo4proj9operation17ESRIMethodMappingESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i: ; preds = %bb.h, %_ZNSt6vectorIPKN5osgeo4proj9operation17ESRIMethodMappingESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit16.i.i.i
@@ -285,7 +283,7 @@ bb.i:                                             ; preds = %.loopexit.split-lp,
   br i1 %.not.i.i.i, label %_ZNSt6vectorIPKN5osgeo4proj9operation17ESRIMethodMappingESaIS5_EED2Ev.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.e, i64 noundef %i.k) #13
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.e, i64 noundef %i.k) #12
   br label %_ZNSt6vectorIPKN5osgeo4proj9operation17ESRIMethodMappingESaIS5_EED2Ev.exit
 
 _ZNSt6vectorIPKN5osgeo4proj9operation17ESRIMethodMappingESaIS5_EED2Ev.exit: ; preds = %bb.i, %bb.j
@@ -330,9 +328,6 @@ declare i64 @llvm.umax.i64(i64, i64) #8
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #8
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #9
-
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -342,11 +337,10 @@ attributes #5 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protec
 attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #7 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #9 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #10 = { nounwind }
-attributes #11 = { noreturn }
-attributes #12 = { builtin allocsize(0) }
-attributes #13 = { builtin nounwind }
+attributes #9 = { nounwind }
+attributes #10 = { noreturn }
+attributes #11 = { builtin allocsize(0) }
+attributes #12 = { builtin nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

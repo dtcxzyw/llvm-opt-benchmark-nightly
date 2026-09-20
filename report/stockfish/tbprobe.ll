@@ -205,19 +205,17 @@ bb.aa:                                            ; preds = %bb.z
 bb.ab:                                            ; preds = %bb.z
   %i.ed = ptrtoint ptr %.sroa.7280.2374.us to i64 ; 2 uses
   %i.ee = ptrtoint ptr %.sroa.0277.2375.us to i64 ; 3 uses
-  %i.ef = sub i64 %i.ed, %i.ee                    ; 4 uses
+  %i.ef = sub i64 %i.ed, %i.ee                    ; 5 uses
   %i.eg = icmp eq i64 %i.ef, 9223372036854775800
   br i1 %i.eg, label %.split.us, label %_ZNKSt6vectorISt4pairIiN9Stockfish6SquareEESaIS3_EE12_M_check_lenEmPKc.exit.i.i.us
 
 _ZNKSt6vectorISt4pairIiN9Stockfish6SquareEESaIS3_EE12_M_check_lenEmPKc.exit.i.i.us: ; preds = %bb.ab
-  %i.eh = ashr exact i64 %i.ef, 3                 ; 3 uses
-  %.sroa.speculated.i.i.i87.us = tail call i64 @llvm.umax.i64(i64 %i.eh, i64 1)
-  %12 = add nsw i64 %.sroa.speculated.i.i.i87.us, %i.eh ; 2 uses
+  %i.eh = ashr exact i64 %i.ef, 3
+  %mul2.i.i.us = ashr exact i64 %i.ef, 2
+  %12 = tail call i64 @llvm.umax.i64(i64 %mul2.i.i.us, i64 1) ; 2 uses
   %i.ei = icmp ult i64 %12, %i.eh
   %i.ej = tail call i64 @llvm.umin.i64(i64 %12, i64 1152921504606846975)
-  %i.ek = select i1 %i.ei, i64 1152921504606846975, i64 %i.ej ; 3 uses
-  %.not.i.i.i88.us = icmp ne i64 %i.ek, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i88.us)
+  %i.ek = select i1 %i.ei, i64 1152921504606846975, i64 %i.ej ; 2 uses
   %i.el = shl nuw nsw i64 %i.ek, 3
   %i.em = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.el) #29 ; 10 uses
   %i.en = getelementptr inbounds nuw i8, ptr %i.em, i64 %i.ef ; 2 uses

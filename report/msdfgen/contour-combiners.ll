@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.k
   %i.aw = load ptr, ptr %i.a, align 8, !tbaa !17  ; 4 uses
   %i.ax = ptrtoint ptr %i.at to i64
   %i.ay = ptrtoint ptr %i.aw to i64               ; 2 uses
-  %i.az = sub i64 %i.ax, %i.ay                    ; 5 uses
+  %i.az = sub i64 %i.ax, %i.ay                    ; 6 uses
   %i.ba = icmp eq i64 %i.az, 9223372036854775804
   br i1 %i.ba, label %bb.n, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -216,14 +216,12 @@ bb.n:                                             ; preds = %bb.m
   unreachable
 
 _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.m
-  %i.bb = ashr exact i64 %i.az, 2                 ; 3 uses
-  %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.bb, i64 1)
-  %2 = add nsw i64 %.sroa.speculated.i.i.i.i, %i.bb ; 2 uses
+  %i.bb = ashr exact i64 %i.az, 2
+  %mul2.i.i.i = ashr exact i64 %i.az, 1
+  %2 = tail call i64 @llvm.umax.i64(i64 %mul2.i.i.i, i64 1) ; 2 uses
   %i.bc = icmp ult i64 %2, %i.bb
   %i.bd = tail call i64 @llvm.umin.i64(i64 %2, i64 2305843009213693951)
-  %i.be = select i1 %i.bc, i64 2305843009213693951, i64 %i.bd ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %i.be, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.be = select i1 %i.bc, i64 2305843009213693951, i64 %i.bd ; 2 uses
   %i.bf = shl nuw nsw i64 %i.be, 2
   %i.bg = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bf) #13
           to label %.noexc12 unwind label %.loopexit ; 4 uses
@@ -626,7 +624,7 @@ bb.m:                                             ; preds = %bb.k
   %i.aw = load ptr, ptr %i.a, align 8, !tbaa !17  ; 4 uses
   %i.ax = ptrtoint ptr %i.at to i64
   %i.ay = ptrtoint ptr %i.aw to i64               ; 2 uses
-  %i.az = sub i64 %i.ax, %i.ay                    ; 5 uses
+  %i.az = sub i64 %i.ax, %i.ay                    ; 6 uses
   %i.ba = icmp eq i64 %i.az, 9223372036854775804
   br i1 %i.ba, label %bb.n, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -638,14 +636,12 @@ bb.n:                                             ; preds = %bb.m
   unreachable
 
 _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.m
-  %i.bb = ashr exact i64 %i.az, 2                 ; 3 uses
-  %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.bb, i64 1)
-  %2 = add nsw i64 %.sroa.speculated.i.i.i.i, %i.bb ; 2 uses
+  %i.bb = ashr exact i64 %i.az, 2
+  %mul2.i.i.i = ashr exact i64 %i.az, 1
+  %2 = tail call i64 @llvm.umax.i64(i64 %mul2.i.i.i, i64 1) ; 2 uses
   %i.bc = icmp ult i64 %2, %i.bb
   %i.bd = tail call i64 @llvm.umin.i64(i64 %2, i64 2305843009213693951)
-  %i.be = select i1 %i.bc, i64 2305843009213693951, i64 %i.bd ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %i.be, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.be = select i1 %i.bc, i64 2305843009213693951, i64 %i.bd ; 2 uses
   %i.bf = shl nuw nsw i64 %i.be, 2
   %i.bg = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bf) #13
           to label %.noexc12 unwind label %.loopexit ; 4 uses
@@ -1048,7 +1044,7 @@ bb.m:                                             ; preds = %bb.k
   %i.aw = load ptr, ptr %i.a, align 8, !tbaa !17  ; 4 uses
   %i.ax = ptrtoint ptr %i.at to i64
   %i.ay = ptrtoint ptr %i.aw to i64               ; 2 uses
-  %i.az = sub i64 %i.ax, %i.ay                    ; 5 uses
+  %i.az = sub i64 %i.ax, %i.ay                    ; 6 uses
   %i.ba = icmp eq i64 %i.az, 9223372036854775804
   br i1 %i.ba, label %bb.n, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -1060,14 +1056,12 @@ bb.n:                                             ; preds = %bb.m
   unreachable
 
 _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.m
-  %i.bb = ashr exact i64 %i.az, 2                 ; 3 uses
-  %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.bb, i64 1)
-  %2 = add nsw i64 %.sroa.speculated.i.i.i.i, %i.bb ; 2 uses
+  %i.bb = ashr exact i64 %i.az, 2
+  %mul2.i.i.i = ashr exact i64 %i.az, 1
+  %2 = tail call i64 @llvm.umax.i64(i64 %mul2.i.i.i, i64 1) ; 2 uses
   %i.bc = icmp ult i64 %2, %i.bb
   %i.bd = tail call i64 @llvm.umin.i64(i64 %2, i64 2305843009213693951)
-  %i.be = select i1 %i.bc, i64 2305843009213693951, i64 %i.bd ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %i.be, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.be = select i1 %i.bc, i64 2305843009213693951, i64 %i.bd ; 2 uses
   %i.bf = shl nuw nsw i64 %i.be, 2
   %i.bg = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bf) #13
           to label %.noexc12 unwind label %.loopexit ; 4 uses
@@ -1470,7 +1464,7 @@ bb.m:                                             ; preds = %bb.k
   %i.aw = load ptr, ptr %i.a, align 8, !tbaa !17  ; 4 uses
   %i.ax = ptrtoint ptr %i.at to i64
   %i.ay = ptrtoint ptr %i.aw to i64               ; 2 uses
-  %i.az = sub i64 %i.ax, %i.ay                    ; 5 uses
+  %i.az = sub i64 %i.ax, %i.ay                    ; 6 uses
   %i.ba = icmp eq i64 %i.az, 9223372036854775804
   br i1 %i.ba, label %bb.n, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -1482,14 +1476,12 @@ bb.n:                                             ; preds = %bb.m
   unreachable
 
 _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.m
-  %i.bb = ashr exact i64 %i.az, 2                 ; 3 uses
-  %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.bb, i64 1)
-  %2 = add nsw i64 %.sroa.speculated.i.i.i.i, %i.bb ; 2 uses
+  %i.bb = ashr exact i64 %i.az, 2
+  %mul2.i.i.i = ashr exact i64 %i.az, 1
+  %2 = tail call i64 @llvm.umax.i64(i64 %mul2.i.i.i, i64 1) ; 2 uses
   %i.bc = icmp ult i64 %2, %i.bb
   %i.bd = tail call i64 @llvm.umin.i64(i64 %2, i64 2305843009213693951)
-  %i.be = select i1 %i.bc, i64 2305843009213693951, i64 %i.bd ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %i.be, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.be = select i1 %i.bc, i64 2305843009213693951, i64 %i.bd ; 2 uses
   %i.bf = shl nuw nsw i64 %i.be, 2
   %i.bg = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bf) #13
           to label %.noexc12 unwind label %.loopexit ; 4 uses

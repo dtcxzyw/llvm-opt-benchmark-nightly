@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %_ZL9Py_DECREFP7_obj
   %i.ak = load ptr, ptr %i.ad, align 8            ; 4 uses
   %i.al = ptrtoint ptr %i.af to i64
   %i.am = ptrtoint ptr %i.ak to i64
-  %i.an = sub i64 %i.al, %i.am                    ; 6 uses
+  %i.an = sub i64 %i.al, %i.am                    ; 7 uses
   %i.ao = icmp eq i64 %i.an, 9223372036854775800
   br i1 %i.ao, label %bb.x, label %_ZNKSt6vectorIPN8nanobind6detail12import_cacheESaIS3_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -217,14 +217,12 @@ bb.x:                                             ; preds = %bb.w
   unreachable
 
 _ZNKSt6vectorIPN8nanobind6detail12import_cacheESaIS3_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.w
-  %i.ap = ashr exact i64 %i.an, 3                 ; 3 uses
-  %.sroa.speculated.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.ap, i64 1)
-  %2 = add nsw i64 %.sroa.speculated.i.i.i, %i.ap ; 2 uses
+  %i.ap = ashr exact i64 %i.an, 3
+  %mul2.i.i = ashr exact i64 %i.an, 2
+  %2 = tail call i64 @llvm.umax.i64(i64 %mul2.i.i, i64 1) ; 2 uses
   %i.aq = icmp ult i64 %2, %i.ap
   %i.ar = tail call i64 @llvm.umin.i64(i64 %2, i64 1152921504606846975)
-  %i.as = select i1 %i.aq, i64 1152921504606846975, i64 %i.ar ; 3 uses
-  %.not.i.i.i = icmp ne i64 %i.as, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i)
+  %i.as = select i1 %i.aq, i64 1152921504606846975, i64 %i.ar ; 2 uses
   %i.at = shl nuw nsw i64 %i.as, 3
   %i.au = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.at) #33
           to label %.noexc40 unwind label %bb.aa  ; 4 uses
@@ -627,7 +625,7 @@ bb.bq:                                            ; preds = %bb.bp
 bb.br:                                            ; preds = %bb.bp
   %i.dw = ptrtoint ptr %i.dr to i64
   %i.dx = ptrtoint ptr %i.dq to i64
-  %i.dy = sub i64 %i.dw, %i.dx                    ; 6 uses
+  %i.dy = sub i64 %i.dw, %i.dx                    ; 7 uses
   %i.dz = icmp eq i64 %i.dy, 9223372036854775800
   br i1 %i.dz, label %bb.bs, label %_ZNKSt6vectorIPN8nanobind6detail12nb_internalsESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -639,14 +637,12 @@ bb.bs:                                            ; preds = %bb.br
   unreachable
 
 _ZNKSt6vectorIPN8nanobind6detail12nb_internalsESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.br
-  %i.ea = ashr exact i64 %i.dy, 3                 ; 3 uses
-  %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.ea, i64 1)
-  %2 = add nsw i64 %.sroa.speculated.i.i.i.i, %i.ea ; 2 uses
+  %i.ea = ashr exact i64 %i.dy, 3
+  %mul2.i.i.i = ashr exact i64 %i.dy, 2
+  %2 = tail call i64 @llvm.umax.i64(i64 %mul2.i.i.i, i64 1) ; 2 uses
   %i.eb = icmp ult i64 %2, %i.ea
   %i.ec = tail call i64 @llvm.umin.i64(i64 %2, i64 1152921504606846975)
-  %i.ed = select i1 %i.eb, i64 1152921504606846975, i64 %i.ec ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %i.ed, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.ed = select i1 %i.eb, i64 1152921504606846975, i64 %i.ec ; 2 uses
   %i.ee = shl nuw nsw i64 %i.ed, 3
   %i.ef = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ee) #33
           to label %.noexc59 unwind label %bb.by  ; 4 uses

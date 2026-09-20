@@ -112,7 +112,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i, label %.body, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @_ZdlPv(ptr noundef nonnull %i.i) #13
+  tail call void @_ZdlPv(ptr noundef nonnull %i.i) #12
   br label %.body
 
 _ZNSt6vectorIN4YAML5RegExESaIS1_EEC2IN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvEET_SG_RKS2_.exit: ; preds = %bb.a
@@ -156,7 +156,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c, %bb.b
   %i.j = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZN4YAML5RegExD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %0) #14
+  tail call void @_ZN4YAML5RegExD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %0) #13
   resume { ptr, i32 } %i.j
 
 _ZNSt6vectorIN4YAML5RegExESaIS1_EE9push_backERKS1_.exit: ; preds = %.noexc, %bb.c
@@ -190,7 +190,7 @@ _ZSt8_DestroyIPN4YAML5RegExES1_EvT_S3_RSaIT0_E.exit.i: ; preds = %_ZSt8_DestroyI
   br i1 %.not.i.i1.i, label %_ZNSt6vectorIN4YAML5RegExESaIS1_EED2Ev.exit, label %bb.b
 
 bb.b:                                             ; preds = %_ZSt8_DestroyIPN4YAML5RegExES1_EvT_S3_RSaIT0_E.exit.i
-  tail call void @_ZdlPv(ptr noundef nonnull %i.f) #13, !inline_history !32
+  tail call void @_ZdlPv(ptr noundef nonnull %i.f) #12, !inline_history !32
   br label %_ZNSt6vectorIN4YAML5RegExESaIS1_EED2Ev.exit
 
 _ZNSt6vectorIN4YAML5RegExESaIS1_EED2Ev.exit:      ; preds = %_ZSt8_DestroyIPN4YAML5RegExES1_EvT_S3_RSaIT0_E.exit.i, %bb.b
@@ -256,7 +256,7 @@ bb.e:                                             ; preds = %_ZNSt6vectorIN4YAML
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c, %bb.b
   %i.p = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZN4YAML5RegExD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %0) #14
+  tail call void @_ZN4YAML5RegExD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %0) #13
   resume { ptr, i32 } %i.p
 
 _ZNSt6vectorIN4YAML5RegExESaIS1_EE9push_backERKS1_.exit8: ; preds = %.noexc6, %bb.e
@@ -322,7 +322,7 @@ bb.e:                                             ; preds = %_ZNSt6vectorIN4YAML
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c, %bb.b
   %i.p = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZN4YAML5RegExD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %0) #14
+  tail call void @_ZN4YAML5RegExD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %0) #13
   resume { ptr, i32 } %i.p
 
 _ZNSt6vectorIN4YAML5RegExESaIS1_EE9push_backERKS1_.exit8: ; preds = %.noexc6, %bb.e
@@ -388,7 +388,7 @@ bb.e:                                             ; preds = %_ZNSt6vectorIN4YAML
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c, %bb.b
   %i.p = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZN4YAML5RegExD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %0) #14
+  tail call void @_ZN4YAML5RegExD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %0) #13
   resume { ptr, i32 } %i.p
 
 _ZNSt6vectorIN4YAML5RegExESaIS1_EE9push_backERKS1_.exit8: ; preds = %.noexc6, %bb.e
@@ -398,8 +398,8 @@ _ZNSt6vectorIN4YAML5RegExESaIS1_EE9push_backERKS1_.exit8: ; preds = %.noexc6, %b
 ; Function Attrs: noinline noreturn nounwind uwtable
 define linkonce_odr hidden void @__clang_call_terminate(ptr noundef %0) local_unnamed_addr #4 comdat {
 bb.a:
-  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #14 ; 0 uses
-  tail call void @_ZSt9terminatev() #15
+  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #13 ; 0 uses
+  tail call void @_ZSt9terminatev() #14
   unreachable
 }
 
@@ -435,7 +435,7 @@ _ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit.i:       ; preds = %_ZSt8_DestroyIPN4YA
   br i1 %.not.i.i1.i, label %_ZNSt6vectorIN4YAML5RegExESaIS1_EED2Ev.exit, label %bb.b
 
 bb.b:                                             ; preds = %_ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit.i
-  tail call void @_ZdlPv(ptr noundef nonnull %i.f) #13, !inline_history !34
+  tail call void @_ZdlPv(ptr noundef nonnull %i.f) #12, !inline_history !34
   br label %_ZNSt6vectorIN4YAML5RegExESaIS1_EED2Ev.exit
 
 _ZNSt6vectorIN4YAML5RegExESaIS1_EED2Ev.exit:      ; preds = %_ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit.i, %bb.b
@@ -455,7 +455,7 @@ bb.a:
   br i1 %i.d, label %bb.b, label %_ZNSt6vectorIN4YAML5RegExESaIS1_EE17_S_check_init_lenEmRKS2_.exit
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #16
+  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #15
   unreachable
 
 _ZNSt6vectorIN4YAML5RegExESaIS1_EE17_S_check_init_lenEmRKS2_.exit: ; preds = %bb.a
@@ -471,7 +471,7 @@ _ZNSt12_Vector_baseIN4YAML5RegExESaIS1_EE11_M_allocateEm.exit.thread: ; preds = 
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt6vectorIN4YAML5RegExESaIS1_EE17_S_check_init_lenEmRKS2_.exit
   %i.g = shl nuw nsw i64 %i.c, 5
-  %i.h = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.g) #17 ; 5 uses
+  %i.h = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.g) #16 ; 5 uses
   store ptr %i.h, ptr %0, align 8, !tbaa !21
   %i.i = getelementptr inbounds nuw [32 x i8], ptr %i.h, i64 %i.c
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -495,7 +495,7 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i.i
   %i.n = landingpad { ptr, i32 }
           catch ptr null
   %i.o = extractvalue { ptr, i32 } %i.n, 0
-  %i.p = tail call ptr @__cxa_begin_catch(ptr %i.o) #14 ; 0 uses
+  %i.p = tail call ptr @__cxa_begin_catch(ptr %i.o) #13 ; 0 uses
   %.not.i2.i.i.i.i.i = icmp eq ptr %i.h, %.014.i.i.i.i
   br i1 %.not.i2.i.i.i.i.i, label %_ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit.i.i.i.i, label %.lr.ph.i.i.i.i.i
 
@@ -507,7 +507,7 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i.i
   br i1 %.not.i.i.i.i.i.i, label %_ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit.i.i.i.i, label %.lr.ph.i.i.i.i.i, !llvm.loop !0
 
 _ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i, %bb.c
-  invoke void @__cxa_rethrow() #16
+  invoke void @__cxa_rethrow() #15
           to label %bb.g unwind label %bb.d
 
 bb.d:                                             ; preds = %_ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit.i.i.i.i
@@ -523,7 +523,7 @@ bb.f:                                             ; preds = %bb.d
   %i.s = landingpad { ptr, i32 }
           catch ptr null
   %i.t = extractvalue { ptr, i32 } %i.s, 0
-  tail call void @__clang_call_terminate(ptr %i.t) #15
+  tail call void @__clang_call_terminate(ptr %i.t) #14
   unreachable
 
 bb.g:                                             ; preds = %_ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit.i.i.i.i
@@ -560,27 +560,25 @@ bb.a:
   %i.c = load ptr, ptr %0, align 8, !tbaa !21     ; 7 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
-  %i.f = sub i64 %i.d, %i.e                       ; 2 uses
+  %i.f = sub i64 %i.d, %i.e                       ; 3 uses
   %i.g = icmp eq i64 %i.f, 9223372036854775776
   br i1 %i.g, label %bb.b, label %_ZNKSt6vectorIN4YAML5RegExESaIS1_EE12_M_check_lenEmPKc.exit
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.1) #16
+  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.1) #15
   unreachable
 
 _ZNKSt6vectorIN4YAML5RegExESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
-  %i.h = ashr exact i64 %i.f, 5                   ; 3 uses
-  %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
-  %3 = add nsw i64 %.sroa.speculated.i, %i.h      ; 2 uses
+  %i.h = ashr exact i64 %i.f, 5
+  %mul2 = ashr exact i64 %i.f, 4
+  %3 = tail call i64 @llvm.umax.i64(i64 %mul2, i64 1) ; 2 uses
   %i.i = icmp ult i64 %3, %i.h
   %i.j = tail call i64 @llvm.umin.i64(i64 %3, i64 288230376151711743)
-  %i.k = select i1 %i.i, i64 288230376151711743, i64 %i.j ; 3 uses
+  %i.k = select i1 %i.i, i64 288230376151711743, i64 %i.j ; 2 uses
   %i.l = ptrtoint ptr %1 to i64
   %i.m = sub i64 %i.l, %i.e
-  %.not.i = icmp ne i64 %i.k, 0
-  tail call void @llvm.assume(i1 %.not.i)
   %i.n = shl nuw nsw i64 %i.k, 5
-  %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #17 ; 10 uses
+  %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #16 ; 10 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.m ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.p, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 6, i1 false)
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 8
@@ -611,7 +609,7 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i.i.i
   %i.w = landingpad { ptr, i32 }
           catch ptr null
   %i.x = extractvalue { ptr, i32 } %i.w, 0
-  %i.y = tail call ptr @__cxa_begin_catch(ptr %i.x) #14 ; 0 uses
+  %i.y = tail call ptr @__cxa_begin_catch(ptr %i.x) #13 ; 0 uses
   %.not.i2.i.i.i.i.i.i = icmp eq ptr %i.o, %.016.i.i.i.i.i
   br i1 %.not.i2.i.i.i.i.i.i, label %_ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
@@ -623,7 +621,7 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i.i.i
   br i1 %.not.i.i.i.i.i.i.i, label %_ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !0
 
 _ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i, %bb.c
-  invoke void @__cxa_rethrow() #16
+  invoke void @__cxa_rethrow() #15
           to label %bb.f unwind label %bb.d
 
 bb.d:                                             ; preds = %_ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit.i.i.i.i.i
@@ -636,7 +634,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ab = landingpad { ptr, i32 }
           catch ptr null
   %i.ac = extractvalue { ptr, i32 } %i.ab, 0
-  tail call void @__clang_call_terminate(ptr %i.ac) #15
+  tail call void @__clang_call_terminate(ptr %i.ac) #14
   unreachable
 
 bb.f:                                             ; preds = %_ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit.i.i.i.i.i
@@ -668,7 +666,7 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i.i.i29
   %i.ag = landingpad { ptr, i32 }
           catch ptr null
   %i.ah = extractvalue { ptr, i32 } %i.ag, 0
-  %i.ai = tail call ptr @__cxa_begin_catch(ptr %i.ah) #14 ; 0 uses
+  %i.ai = tail call ptr @__cxa_begin_catch(ptr %i.ah) #13 ; 0 uses
   %.not.i2.i.i.i.i.i.i32 = icmp eq i64 %.016.i.i.i.i.i30.idx, 32
   br i1 %.not.i2.i.i.i.i.i.i32, label %_ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit.i.i.i.i.i36, label %.lr.ph.i.i.i.i.i.i33
 
@@ -680,7 +678,7 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i.i.i29
   br i1 %.not.i.i.i.i.i.i.i35, label %_ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit.i.i.i.i.i36, label %.lr.ph.i.i.i.i.i.i33, !llvm.loop !0
 
 _ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit.i.i.i.i.i36: ; preds = %.lr.ph.i.i.i.i.i.i33, %bb.g
-  invoke void @__cxa_rethrow() #16
+  invoke void @__cxa_rethrow() #15
           to label %bb.j unwind label %bb.h
 
 bb.h:                                             ; preds = %_ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit.i.i.i.i.i36
@@ -693,7 +691,7 @@ bb.i:                                             ; preds = %bb.h
   %i.al = landingpad { ptr, i32 }
           catch ptr null
   %i.am = extractvalue { ptr, i32 } %i.al, 0
-  tail call void @__clang_call_terminate(ptr %i.am) #15
+  tail call void @__clang_call_terminate(ptr %i.am) #14
   unreachable
 
 bb.j:                                             ; preds = %_ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit.i.i.i.i.i36
@@ -720,7 +718,7 @@ _ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit:         ; preds = %.lr.ph.i, %_ZSt34__
   br i1 %.not.i44, label %_ZNSt12_Vector_baseIN4YAML5RegExESaIS1_EE13_M_deallocateEPS1_m.exit, label %bb.k
 
 bb.k:                                             ; preds = %_ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit
-  tail call void @_ZdlPv(ptr noundef nonnull %i.c) #13
+  tail call void @_ZdlPv(ptr noundef nonnull %i.c) #12
   br label %_ZNSt12_Vector_baseIN4YAML5RegExESaIS1_EE13_M_deallocateEPS1_m.exit
 
 _ZNSt12_Vector_baseIN4YAML5RegExESaIS1_EE13_M_deallocateEPS1_m.exit: ; preds = %_ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit, %bb.k
@@ -735,18 +733,18 @@ _ZNSt12_Vector_baseIN4YAML5RegExESaIS1_EE13_M_deallocateEPS1_m.exit: ; preds = %
   %i.aq = landingpad { ptr, i32 }
           catch ptr null
   %i.ar = extractvalue { ptr, i32 } %i.aq, 0
-  %i.as = tail call ptr @__cxa_begin_catch(ptr %i.ar) #14 ; 0 uses
+  %i.as = tail call ptr @__cxa_begin_catch(ptr %i.ar) #13 ; 0 uses
   br label %_ZSt8_DestroyIPN4YAML5RegExES1_EvT_S3_RSaIT0_E.exit
 
 _ZSt8_DestroyIPN4YAML5RegExES1_EvT_S3_RSaIT0_E.exit.thread: ; preds = %bb.d
   %i.at = extractvalue { ptr, i32 } %i.aa, 0
-  %i.au = tail call ptr @__cxa_begin_catch(ptr %i.at) #14 ; 0 uses
-  tail call void @_ZN4YAML5RegExD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %i.p) #14
+  %i.au = tail call ptr @__cxa_begin_catch(ptr %i.at) #13 ; 0 uses
+  tail call void @_ZN4YAML5RegExD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %i.p) #13
   br label %_ZSt8_DestroyIPN4YAML5RegExES1_EvT_S3_RSaIT0_E.exit
 
 bb.l:                                             ; preds = %bb.h
   %i.av = extractvalue { ptr, i32 } %i.ak, 0
-  %i.aw = tail call ptr @__cxa_begin_catch(ptr %i.av) #14 ; 0 uses
+  %i.aw = tail call ptr @__cxa_begin_catch(ptr %i.av) #13 ; 0 uses
   %.not.i2.i45 = icmp eq ptr %i.o, %.ptr
   br i1 %.not.i2.i45, label %_ZSt8_DestroyIPN4YAML5RegExES1_EvT_S3_RSaIT0_E.exit, label %.lr.ph.i46
 
@@ -764,8 +762,8 @@ bb.m:                                             ; preds = %_ZSt8_DestroyIPN4YA
           to label %bb.n unwind label %bb.o
 
 _ZSt8_DestroyIPN4YAML5RegExES1_EvT_S3_RSaIT0_E.exit: ; preds = %.lr.ph.i46, %.thread, %bb.l, %_ZSt8_DestroyIPN4YAML5RegExES1_EvT_S3_RSaIT0_E.exit.thread
-  tail call void @_ZdlPv(ptr noundef nonnull %i.o) #13
-  invoke void @__cxa_rethrow() #16
+  tail call void @_ZdlPv(ptr noundef nonnull %i.o) #12
+  invoke void @__cxa_rethrow() #15
           to label %bb.p unwind label %bb.m
 
 bb.n:                                             ; preds = %bb.m
@@ -775,7 +773,7 @@ bb.o:                                             ; preds = %bb.m
   %i.az = landingpad { ptr, i32 }
           catch ptr null
   %i.ba = extractvalue { ptr, i32 } %i.az, 0
-  tail call void @__clang_call_terminate(ptr %i.ba) #15
+  tail call void @__clang_call_terminate(ptr %i.ba) #14
   unreachable
 
 bb.p:                                             ; preds = %_ZSt8_DestroyIPN4YAML5RegExES1_EvT_S3_RSaIT0_E.exit
@@ -800,11 +798,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.g, label %.noexc.i, label %_ZNSt15__new_allocatorIN4YAML5RegExEE8allocateEmPKv.exit.i.i.i, !prof !44
 
 .noexc.i:                                         ; preds = %bb.b
-  tail call void @_ZSt28__throw_bad_array_new_lengthv() #16
+  tail call void @_ZSt28__throw_bad_array_new_lengthv() #15
   unreachable
 
 _ZNSt15__new_allocatorIN4YAML5RegExEE8allocateEmPKv.exit.i.i.i: ; preds = %bb.b
-  %i.h = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #17
+  %i.h = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #16
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZNSt15__new_allocatorIN4YAML5RegExEE8allocateEmPKv.exit.i.i.i, %bb.a
@@ -839,7 +837,7 @@ bb.d:                                             ; preds = %.lr.ph.i
   %i.s = landingpad { ptr, i32 }
           catch ptr null
   %i.t = extractvalue { ptr, i32 } %i.s, 0
-  %i.u = tail call ptr @__cxa_begin_catch(ptr %i.t) #14, !inline_history !42 ; 0 uses
+  %i.u = tail call ptr @__cxa_begin_catch(ptr %i.t) #13, !inline_history !42 ; 0 uses
   %.not.i2.i.i = icmp eq ptr %i.i, %.014.i
   br i1 %.not.i2.i.i, label %_ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit.i, label %.lr.ph.i.i
 
@@ -851,7 +849,7 @@ bb.d:                                             ; preds = %.lr.ph.i
   br i1 %.not.i.i.i14, label %_ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit.i, label %.lr.ph.i.i, !llvm.loop !0
 
 _ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit.i:       ; preds = %.lr.ph.i.i, %bb.d
-  invoke void @__cxa_rethrow() #16
+  invoke void @__cxa_rethrow() #15
           to label %bb.g unwind label %bb.e, !inline_history !42
 
 bb.e:                                             ; preds = %_ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit.i
@@ -864,7 +862,7 @@ bb.f:                                             ; preds = %bb.e
   %i.x = landingpad { ptr, i32 }
           catch ptr null
   %i.y = extractvalue { ptr, i32 } %i.x, 0
-  tail call void @__clang_call_terminate(ptr %i.y) #15, !inline_history !42
+  tail call void @__clang_call_terminate(ptr %i.y) #14, !inline_history !42
   unreachable
 
 bb.g:                                             ; preds = %_ZSt8_DestroyIPN4YAML5RegExEEvT_S3_.exit.i
@@ -881,7 +879,7 @@ _ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPKN4YAML5RegExESt6ve
   br i1 %.not.i.i, label %_ZNSt12_Vector_baseIN4YAML5RegExESaIS1_EED2Ev.exit, label %bb.h
 
 bb.h:                                             ; preds = %.body
-  tail call void @_ZdlPv(ptr noundef nonnull %i.z) #13
+  tail call void @_ZdlPv(ptr noundef nonnull %i.z) #12
   br label %_ZNSt12_Vector_baseIN4YAML5RegExESaIS1_EED2Ev.exit
 
 _ZNSt12_Vector_baseIN4YAML5RegExESaIS1_EED2Ev.exit: ; preds = %bb.h, %.body
@@ -893,9 +891,6 @@ declare i64 @llvm.umax.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #11
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #12
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
@@ -909,12 +904,11 @@ attributes #8 = { nocallback nofree nosync nounwind willreturn memory(argmem: re
 attributes #9 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #10 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #11 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #12 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #13 = { builtin nounwind }
-attributes #14 = { nounwind }
-attributes #15 = { noreturn nounwind }
-attributes #16 = { noreturn }
-attributes #17 = { builtin allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write) }
+attributes #12 = { builtin nounwind }
+attributes #13 = { nounwind }
+attributes #14 = { noreturn nounwind }
+attributes #15 = { noreturn }
+attributes #16 = { builtin allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write) }
 
 !llvm.module.flags = !{!2, !3}
 !llvm.ident = !{!4}
