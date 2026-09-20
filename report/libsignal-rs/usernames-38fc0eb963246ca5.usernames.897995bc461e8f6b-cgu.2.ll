@@ -1,8 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libsignal-rs/original/usernames-38fc0eb963246ca5.usernames.897995bc461e8f6b-cgu.2?download=true
 inline.NumInlined: 161
 inline.NumDeleted: 95
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintQRShECsbNM6vbj4kjf_9usernames:bb.a
   %i.aj = getelementptr inbounds nuw i8, ptr %.val.i, i64 3
   %i.ak = load i8, ptr %i.aj, align 1, !alias.scope !62, !noalias !63, !noundef !4 ; 2 uses
@@ -204,164 +203,60 @@ define { i64, ptr } @_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint18decode_varin
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   %i.b = alloca [48 x i8], align 8                ; 4 uses
-  %.val = load ptr, ptr %0, align 8, !nonnull !4, !align !5, !noundef !4 ; 11 uses
+  %.val = load ptr, ptr %0, align 8, !nonnull !4, !align !5, !noundef !4 ; 2 uses
   %i.c = getelementptr i8, ptr %.val, i64 8
-  %.val.i = load i64, ptr %i.c, align 8, !noundef !4 ; 10 uses
+  %.val.i = load i64, ptr %i.c, align 8, !noundef !4 ; 2 uses
+  %.sroa.0.0.i = tail call noundef i64 @llvm.umin.i64(i64 %.val.i, i64 10)
   %exitcond.not.a = icmp eq i64 %.val.i, 0
-  br i1 %exitcond.not.a, label %1, label %6
+  br i1 %exitcond.not.a, label %bb.c, label %bb.d
 
-1:                                                ; preds = %66, %65, %58, %57, %50, %43, %35, %27, %19, %11, %bb.a
+bb.b:                                             ; preds = %bb.d
+  %1 = add nuw nsw i64 %.sroa.04.021, 1           ; 2 uses
+  %exitcond.not = icmp eq i64 %1, %.sroa.0.0.i
+  br i1 %exitcond.not, label %bb.c, label %bb.d
+
+bb.c:                                             ; preds = %bb.b, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 -9223372036854775807, ptr %i.a, align 8
   %2 = call noundef nonnull align 8 ptr @_RNvXs1_NtCs43OB2dM8s8d_5prost5errorNtB5_11DecodeErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtB5_15DecodeErrorKindE4from(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  br label %3
+  br label %bb.e
 
-3:                                                ; preds = %.thread, %bb.g, %1
-  %.sroa.4.0 = phi ptr [ %2, %1 ], [ %i.k, %bb.g ], [ %i.j, %.thread ]
-  %.sroa.0.0 = phi i64 [ 1, %1 ], [ 1, %bb.g ], [ 0, %.thread ]
+bb.d:                                             ; preds = %bb.a, %bb.b
+  %.sroa.01.022 = phi i64 [ %i.h, %bb.b ], [ 0, %bb.a ]
+  %.sroa.04.021 = phi i64 [ %1, %bb.b ], [ 0, %bb.a ] ; 3 uses
+  %i.d = tail call noundef i8 @_RNvYRShNtNtNtCs17cqnTMcAHA_5bytes3buf8buf_impl3Buf6get_u8CsbNM6vbj4kjf_9usernames(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %.val) ; 3 uses
+  %i.e = and i8 %i.d, 127
+  %i.f = zext nneg i8 %i.e to i64
+  %3 = mul nuw nsw i64 %.sroa.04.021, 7
+  %i.g = shl i64 %i.f, %3
+  %i.h = or i64 %i.g, %.sroa.01.022               ; 2 uses
+  %i.i = icmp sgt i8 %i.d, -1
+  br i1 %i.i, label %bb.f, label %bb.b
+
+bb.e:                                             ; preds = %.thread, %bb.g, %bb.c
+  %.sroa.4.0 = phi ptr [ %2, %bb.c ], [ %i.k, %bb.g ], [ %i.j, %.thread ]
+  %.sroa.0.0 = phi i64 [ 1, %bb.c ], [ 1, %bb.g ], [ 0, %.thread ]
   %4 = insertvalue { i64, ptr } poison, i64 %.sroa.0.0, 0
   %5 = insertvalue { i64, ptr } %4, ptr %.sroa.4.0, 1
   ret { i64, ptr } %5
 
-6:                                                ; preds = %bb.a
-  %7 = tail call noundef i8 @_RNvYRShNtNtNtCs17cqnTMcAHA_5bytes3buf8buf_impl3Buf6get_u8CsbNM6vbj4kjf_9usernames(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %.val) ; 2 uses
-  %8 = and i8 %7, 127
-  %9 = zext nneg i8 %8 to i64                     ; 2 uses
-  %10 = icmp sgt i8 %7, -1
-  br i1 %10, label %.thread, label %11
+bb.f:                                             ; preds = %bb.d
+  %6 = icmp eq i64 %.sroa.04.021, 9
+  %7 = icmp samesign ugt i8 %i.d, 1
+  %or.cond = and i1 %6, %7
+  br i1 %or.cond, label %bb.g, label %.thread
 
-11:                                               ; preds = %6
-  %exitcond.1.not = icmp eq i64 %.val.i, 1
-  br i1 %exitcond.1.not, label %1, label %12
-
-12:                                               ; preds = %11
-  %13 = tail call noundef i8 @_RNvYRShNtNtNtCs17cqnTMcAHA_5bytes3buf8buf_impl3Buf6get_u8CsbNM6vbj4kjf_9usernames(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %.val) ; 2 uses
-  %14 = and i8 %13, 127
-  %15 = zext nneg i8 %14 to i64
-  %16 = shl nuw nsw i64 %15, 7
-  %17 = or disjoint i64 %16, %9                   ; 2 uses
-  %18 = icmp sgt i8 %13, -1
-  br i1 %18, label %.thread, label %19
-
-19:                                               ; preds = %12
-  %exitcond.2.not = icmp eq i64 %.val.i, 2
-  br i1 %exitcond.2.not, label %1, label %20
-
-20:                                               ; preds = %19
-  %21 = tail call noundef i8 @_RNvYRShNtNtNtCs17cqnTMcAHA_5bytes3buf8buf_impl3Buf6get_u8CsbNM6vbj4kjf_9usernames(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %.val) ; 2 uses
-  %22 = and i8 %21, 127
-  %23 = zext nneg i8 %22 to i64
-  %24 = shl nuw nsw i64 %23, 14
-  %25 = or disjoint i64 %24, %17                  ; 2 uses
-  %26 = icmp sgt i8 %21, -1
-  br i1 %26, label %.thread, label %27
-
-27:                                               ; preds = %20
-  %exitcond.3.not = icmp eq i64 %.val.i, 3
-  br i1 %exitcond.3.not, label %1, label %28
-
-28:                                               ; preds = %27
-  %29 = tail call noundef i8 @_RNvYRShNtNtNtCs17cqnTMcAHA_5bytes3buf8buf_impl3Buf6get_u8CsbNM6vbj4kjf_9usernames(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %.val) ; 2 uses
-  %30 = and i8 %29, 127
-  %31 = zext nneg i8 %30 to i64
-  %32 = shl nuw nsw i64 %31, 21
-  %33 = or disjoint i64 %32, %25                  ; 2 uses
-  %34 = icmp sgt i8 %29, -1
-  br i1 %34, label %.thread, label %35
-
-35:                                               ; preds = %28
-  %exitcond.4.not = icmp eq i64 %.val.i, 4
-  br i1 %exitcond.4.not, label %1, label %36
-
-36:                                               ; preds = %35
-  %37 = tail call noundef i8 @_RNvYRShNtNtNtCs17cqnTMcAHA_5bytes3buf8buf_impl3Buf6get_u8CsbNM6vbj4kjf_9usernames(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %.val) ; 2 uses
-  %38 = and i8 %37, 127
-  %39 = zext nneg i8 %38 to i64
-  %40 = shl nuw nsw i64 %39, 28
-  %41 = or disjoint i64 %40, %33                  ; 2 uses
-  %42 = icmp sgt i8 %37, -1
-  br i1 %42, label %.thread, label %43
-
-43:                                               ; preds = %36
-  %exitcond.5.not = icmp eq i64 %.val.i, 5
-  br i1 %exitcond.5.not, label %1, label %bb.b
-
-bb.b:                                             ; preds = %43
-  %44 = tail call noundef i8 @_RNvYRShNtNtNtCs17cqnTMcAHA_5bytes3buf8buf_impl3Buf6get_u8CsbNM6vbj4kjf_9usernames(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %.val) ; 2 uses
-  %45 = and i8 %44, 127
-  %46 = zext nneg i8 %45 to i64
-  %47 = shl nuw nsw i64 %46, 35
-  %48 = or i64 %47, %41                           ; 2 uses
-  %49 = icmp sgt i8 %44, -1
-  br i1 %49, label %.thread, label %50
-
-50:                                               ; preds = %bb.b
-  %exitcond.6.not = icmp eq i64 %.val.i, 6
-  br i1 %exitcond.6.not, label %1, label %bb.c
-
-bb.c:                                             ; preds = %50
-  %51 = tail call noundef i8 @_RNvYRShNtNtNtCs17cqnTMcAHA_5bytes3buf8buf_impl3Buf6get_u8CsbNM6vbj4kjf_9usernames(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %.val) ; 2 uses
-  %52 = and i8 %51, 127
-  %53 = zext nneg i8 %52 to i64
-  %54 = shl nuw nsw i64 %53, 42
-  %55 = or i64 %54, %48                           ; 2 uses
-  %56 = icmp sgt i8 %51, -1
-  br i1 %56, label %.thread, label %57
-
-57:                                               ; preds = %bb.c
-  %exitcond.7.not = icmp eq i64 %.val.i, 7
-  br i1 %exitcond.7.not, label %1, label %bb.d
-
-bb.d:                                             ; preds = %57
-  %i.d = tail call noundef i8 @_RNvYRShNtNtNtCs17cqnTMcAHA_5bytes3buf8buf_impl3Buf6get_u8CsbNM6vbj4kjf_9usernames(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %.val) ; 2 uses
-  %i.e = and i8 %i.d, 127
-  %i.f = zext nneg i8 %i.e to i64
-  %i.g = shl nuw nsw i64 %i.f, 49
-  %i.h = or i64 %i.g, %55                         ; 2 uses
-  %i.i = icmp sgt i8 %i.d, -1
-  br i1 %i.i, label %.thread, label %58
-
-58:                                               ; preds = %bb.d
-  %exitcond.8.not = icmp eq i64 %.val.i, 8
-  br i1 %exitcond.8.not, label %1, label %bb.e
-
-bb.e:                                             ; preds = %58
-  %59 = tail call noundef i8 @_RNvYRShNtNtNtCs17cqnTMcAHA_5bytes3buf8buf_impl3Buf6get_u8CsbNM6vbj4kjf_9usernames(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %.val) ; 2 uses
-  %60 = and i8 %59, 127
-  %61 = zext nneg i8 %60 to i64
-  %62 = shl nuw nsw i64 %61, 56
-  %63 = or i64 %62, %i.h                          ; 2 uses
-  %64 = icmp sgt i8 %59, -1
-  br i1 %64, label %.thread, label %65
-
-65:                                               ; preds = %bb.e
-  %exitcond.9.not = icmp eq i64 %.val.i, 9
-  br i1 %exitcond.9.not, label %1, label %66
-
-66:                                               ; preds = %65
-  %67 = tail call noundef i8 @_RNvYRShNtNtNtCs17cqnTMcAHA_5bytes3buf8buf_impl3Buf6get_u8CsbNM6vbj4kjf_9usernames(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %.val) ; 3 uses
-  %68 = icmp sgt i8 %67, -1
-  br i1 %68, label %bb.f, label %1
-
-bb.f:                                             ; preds = %66
-  %69 = zext nneg i8 %67 to i64
-  %70 = shl i64 %69, 63
-  %71 = or i64 %70, %63
-  %72 = icmp samesign ugt i8 %67, 1
-  br i1 %72, label %bb.g, label %.thread
-
-.thread:                                          ; preds = %bb.e, %bb.d, %bb.c, %bb.b, %36, %28, %20, %12, %6, %bb.f
-  %.lcssa1943 = phi i64 [ %71, %bb.f ], [ %63, %bb.e ], [ %i.h, %bb.d ], [ %55, %bb.c ], [ %48, %bb.b ], [ %41, %36 ], [ %33, %28 ], [ %25, %20 ], [ %17, %12 ], [ %9, %6 ]
-  %i.j = inttoptr i64 %.lcssa1943 to ptr
-  br label %3
+.thread:                                          ; preds = %bb.f
+  %i.j = inttoptr i64 %i.h to ptr
+  br label %bb.e
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 -9223372036854775807, ptr %i.b, align 8
   %i.k = call noundef nonnull align 8 ptr @_RNvXs1_NtCs43OB2dM8s8d_5prost5errorNtB5_11DecodeErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtB5_15DecodeErrorKindE4from(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  br label %3
+  br label %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable

@@ -22,15 +22,14 @@ target triple = "x86_64-pc-linux-gnu"
 @1 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 100, i32 12 } }
 @2 = private unnamed_addr constant { i16, i16, [34 x i8] } { i16 0, i16 12, [34 x i8] c"'uintptr_t' (aka 'unsigned long')\00" }
 @3 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 128, i32 42 }, ptr @2 }
-@4 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 128, i32 24 }, ptr @2 }
-@5 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 129, i32 33 }, ptr @2 }
-@6 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 131, i32 20 }, ptr @2 }
-@7 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 134, i32 31 }, ptr @0 }
+@4 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 129, i32 33 }, ptr @2 }
+@5 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 131, i32 20 }, ptr @2 }
+@6 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 134, i32 31 }, ptr @0 }
 @.src.10 = private unnamed_addr constant [22 x i8] c"/usr/include/string.h\00", align 1
-@8 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src, i32 135, i32 12 }, { ptr, i32, i32 } { ptr @.src.10, i32 44, i32 28 }, i32 1 }
-@9 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 146, i32 50 }, ptr @0 }
-@10 = private unnamed_addr constant { i16, i16, [9 x i8] } { i16 -1, i16 0, [9 x i8] c"'void *'\00" }
-@11 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 147, i32 22 }, ptr @10, i8 3, i8 0 }
+@7 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src, i32 135, i32 12 }, { ptr, i32, i32 } { ptr @.src.10, i32 44, i32 28 }, i32 1 }
+@8 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 146, i32 50 }, ptr @0 }
+@9 = private unnamed_addr constant { i16, i16, [9 x i8] } { i16 -1, i16 0, [9 x i8] c"'void *'\00" }
+@10 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 147, i32 22 }, ptr @9, i8 3, i8 0 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define dso_local noundef nonnull ptr @zlibng_version() local_unnamed_addr #0 !func_sanitize !15 {
@@ -102,7 +101,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define hidden ptr @zng_alloc_aligned(i32 noundef %0, i32 noundef %1) local_unnamed_addr #3 !func_sanitize !22 {
 bb.a:
-  %i.a = zext i32 %1 to i64                       ; 5 uses
+  %i.a = zext i32 %1 to i64                       ; 4 uses
   %i.b = add i32 %0, 8
   %i.c = add i32 %i.b, %1
   %i.d = zext i32 %i.c to i64
@@ -120,50 +119,40 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d, !nosanitize !12
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.g = urem i64 %i.f, %i.a                      ; 2 uses
-  %i.h = call { i64, i1 } @llvm.usub.with.overflow.i64(i64 %i.a, i64 %i.g), !nosanitize !12 ; 2 uses
-  %i.i = extractvalue { i64, i1 } %i.h, 0, !nosanitize !12
+  %i.g = urem i64 %i.f, %i.a
+  %2 = sub nuw nsw i64 %i.a, %i.g                 ; 3 uses
+  %i.h = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.f, i64 %2), !nosanitize !12 ; 2 uses
+  %i.i = extractvalue { i64, i1 } %i.h, 0, !nosanitize !12 ; 3 uses
   %i.j = extractvalue { i64, i1 } %i.h, 1, !nosanitize !12
-  br i1 %i.j, label %2, label %3, !prof !13, !nosanitize !12
+  br i1 %i.j, label %bb.e, label %bb.f, !prof !13, !nosanitize !12
 
-2:                                                ; preds = %bb.d
-  call void @__ubsan_handle_sub_overflow(ptr nonnull @4, i64 %i.a, i64 %i.g) #10, !nosanitize !12
-  br label %3, !nosanitize !12
-
-3:                                                ; preds = %2, %bb.d
-  %4 = and i64 %i.i, 4294967295                   ; 3 uses
-  %5 = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.f, i64 %4), !nosanitize !12 ; 2 uses
-  %6 = extractvalue { i64, i1 } %5, 0, !nosanitize !12 ; 3 uses
-  %7 = extractvalue { i64, i1 } %5, 1, !nosanitize !12
-  br i1 %7, label %bb.e, label %bb.f, !prof !13, !nosanitize !12
-
-bb.e:                                             ; preds = %3
-  call void @__ubsan_handle_add_overflow(ptr nonnull @5, i64 %i.f, i64 %4) #10, !nosanitize !12
+bb.e:                                             ; preds = %bb.d
+  call void @__ubsan_handle_add_overflow(ptr nonnull @4, i64 %i.f, i64 %2) #10, !nosanitize !12
   br label %bb.f, !nosanitize !12
 
-bb.f:                                             ; preds = %bb.e, %3
-  %i.k = icmp samesign ult i64 %4, 8
+bb.f:                                             ; preds = %bb.e, %bb.d
+  %i.k = icmp samesign ult i64 %2, 8
   br i1 %i.k, label %bb.g, label %bb.i
 
 bb.g:                                             ; preds = %bb.f
-  %i.l = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %6, i64 %i.a), !nosanitize !12 ; 2 uses
+  %i.l = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.i, i64 %i.a), !nosanitize !12 ; 2 uses
   %i.m = extractvalue { i64, i1 } %i.l, 0, !nosanitize !12 ; 2 uses
   %i.n = extractvalue { i64, i1 } %i.l, 1, !nosanitize !12
   br i1 %i.n, label %bb.h, label %bb.i, !prof !13, !nosanitize !12
 
 bb.h:                                             ; preds = %bb.g
-  call void @__ubsan_handle_add_overflow(ptr nonnull @6, i64 %6, i64 %i.a) #10, !nosanitize !12
+  call void @__ubsan_handle_add_overflow(ptr nonnull @5, i64 %i.i, i64 %i.a) #10, !nosanitize !12
   br label %bb.i, !nosanitize !12
 
 bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
-  %.0 = phi i64 [ %6, %bb.f ], [ %i.m, %bb.h ], [ %i.m, %bb.g ] ; 3 uses
+  %.0 = phi i64 [ %i.i, %bb.f ], [ %i.m, %bb.h ], [ %i.m, %bb.g ] ; 3 uses
   %i.o = call { i64, i1 } @llvm.usub.with.overflow.i64(i64 %.0, i64 8), !nosanitize !12 ; 2 uses
   %i.p = extractvalue { i64, i1 } %i.o, 0, !nosanitize !12 ; 2 uses
   %i.q = extractvalue { i64, i1 } %i.o, 1, !nosanitize !12
   br i1 %i.q, label %bb.j, label %bb.k, !prof !13, !nosanitize !12
 
 bb.j:                                             ; preds = %bb.i
-  call void @__ubsan_handle_sub_overflow(ptr nonnull @7, i64 %.0, i64 8) #10, !nosanitize !12
+  call void @__ubsan_handle_sub_overflow(ptr nonnull @6, i64 %.0, i64 8) #10, !nosanitize !12
   br label %bb.k, !nosanitize !12
 
 bb.k:                                             ; preds = %bb.j, %bb.i
@@ -172,7 +161,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   br i1 %.not16, label %bb.l, label %bb.m, !prof !13, !nosanitize !12
 
 bb.l:                                             ; preds = %bb.k
-  call void @__ubsan_handle_nonnull_arg(ptr nonnull @8) #8, !nosanitize !12
+  call void @__ubsan_handle_nonnull_arg(ptr nonnull @7) #8, !nosanitize !12
   br label %bb.m, !nosanitize !12
 
 bb.m:                                             ; preds = %bb.k, %bb.l
@@ -208,7 +197,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.c, label %bb.d, !prof !13, !nosanitize !12
 
 bb.c:                                             ; preds = %bb.b
-  call void @__ubsan_handle_sub_overflow(ptr nonnull @9, i64 %i.a, i64 8) #10, !nosanitize !12
+  call void @__ubsan_handle_sub_overflow(ptr nonnull @8, i64 %i.a, i64 8) #10, !nosanitize !12
   br label %bb.d, !nosanitize !12
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -220,7 +209,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.i, label %bb.f, label %bb.e, !prof !24, !nosanitize !12
 
 bb.e:                                             ; preds = %bb.d
-  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @11, i64 %i.c) #8, !nosanitize !12
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @10, i64 %i.c) #8, !nosanitize !12
   br label %bb.f, !nosanitize !12
 
 bb.f:                                             ; preds = %bb.e, %bb.d
