@@ -51,25 +51,23 @@ bb.c:                                             ; preds = %bb.a
   %i.l = load ptr, ptr %i.f, align 8, !tbaa !27   ; 4 uses
   %i.m = ptrtoint ptr %i.h to i64
   %i.n = ptrtoint ptr %i.l to i64                 ; 2 uses
-  %i.o = sub i64 %i.m, %i.n                       ; 5 uses
+  %i.o = sub i64 %i.m, %i.n                       ; 6 uses
   %i.p = icmp eq i64 %i.o, 9223372036854775800
   br i1 %i.p, label %bb.d, label %_ZNKSt6vectorIP10ConstraintSaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.6) #9
+  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.6) #8
   unreachable
 
 _ZNKSt6vectorIP10ConstraintSaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.c
-  %i.q = ashr exact i64 %i.o, 3                   ; 3 uses
-  %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.q, i64 1)
-  %4 = add nsw i64 %.sroa.speculated.i.i.i.i, %i.q ; 2 uses
+  %i.q = ashr exact i64 %i.o, 3
+  %mul2.i.i.i = ashr exact i64 %i.o, 2
+  %4 = tail call i64 @llvm.umax.i64(i64 %mul2.i.i.i, i64 1) ; 2 uses
   %i.r = icmp ult i64 %4, %i.q
   %i.s = tail call i64 @llvm.umin.i64(i64 %4, i64 1152921504606846975)
-  %i.t = select i1 %i.r, i64 1152921504606846975, i64 %i.s ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %i.t, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.t = select i1 %i.r, i64 1152921504606846975, i64 %i.s ; 2 uses
   %i.u = shl nuw nsw i64 %i.t, 3
-  %i.v = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.u) #10 ; 4 uses
+  %i.v = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.u) #9 ; 4 uses
   %i.w = getelementptr inbounds i8, ptr %i.v, i64 %i.o ; 2 uses
   store ptr %0, ptr %i.w, align 8, !tbaa !23
   %i.x = icmp sgt i64 %i.o, 0
@@ -88,7 +86,7 @@ bb.f:                                             ; preds = %_ZNSt6vectorIP10Con
   %i.z = load ptr, ptr %i.i, align 8, !tbaa !26
   %i.aa = ptrtoint ptr %i.z to i64
   %i.ab = sub i64 %i.aa, %i.n
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef %i.ab) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef %i.ab) #10
   br label %_ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i: ; preds = %bb.f, %_ZNSt6vectorIP10ConstraintSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i
@@ -119,25 +117,23 @@ bb.h:                                             ; preds = %_ZNSt6vectorIP10Con
   %i.ak = load ptr, ptr %i.ae, align 8, !tbaa !27 ; 4 uses
   %i.al = ptrtoint ptr %i.ag to i64
   %i.am = ptrtoint ptr %i.ak to i64               ; 2 uses
-  %i.an = sub i64 %i.al, %i.am                    ; 5 uses
+  %i.an = sub i64 %i.al, %i.am                    ; 6 uses
   %i.ao = icmp eq i64 %i.an, 9223372036854775800
   br i1 %i.ao, label %bb.i, label %_ZNKSt6vectorIP10ConstraintSaIS1_EE12_M_check_lenEmPKc.exit.i.i.i5
 
 bb.i:                                             ; preds = %bb.h
-  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.6) #9
+  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.6) #8
   unreachable
 
 _ZNKSt6vectorIP10ConstraintSaIS1_EE12_M_check_lenEmPKc.exit.i.i.i5: ; preds = %bb.h
-  %i.ap = ashr exact i64 %i.an, 3                 ; 3 uses
-  %.sroa.speculated.i.i.i.i6 = tail call i64 @llvm.umax.i64(i64 %i.ap, i64 1)
-  %5 = add nsw i64 %.sroa.speculated.i.i.i.i6, %i.ap ; 2 uses
+  %i.ap = ashr exact i64 %i.an, 3
+  %mul2.i.i.i6 = ashr exact i64 %i.an, 2
+  %5 = tail call i64 @llvm.umax.i64(i64 %mul2.i.i.i6, i64 1) ; 2 uses
   %i.aq = icmp ult i64 %5, %i.ap
   %i.ar = tail call i64 @llvm.umin.i64(i64 %5, i64 1152921504606846975)
-  %i.as = select i1 %i.aq, i64 1152921504606846975, i64 %i.ar ; 3 uses
-  %.not.i.i.i.i7 = icmp ne i64 %i.as, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i7)
+  %i.as = select i1 %i.aq, i64 1152921504606846975, i64 %i.ar ; 2 uses
   %i.at = shl nuw nsw i64 %i.as, 3
-  %i.au = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.at) #10 ; 4 uses
+  %i.au = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.at) #9 ; 4 uses
   %i.av = getelementptr inbounds i8, ptr %i.au, i64 %i.an ; 2 uses
   store ptr %0, ptr %i.av, align 8, !tbaa !23
   %i.aw = icmp sgt i64 %i.an, 0
@@ -156,7 +152,7 @@ bb.k:                                             ; preds = %_ZNSt6vectorIP10Con
   %i.ay = load ptr, ptr %i.ah, align 8, !tbaa !26
   %i.az = ptrtoint ptr %i.ay to i64
   %i.ba = sub i64 %i.az, %i.am
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.ak, i64 noundef %i.ba) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.ak, i64 noundef %i.ba) #10
   br label %_ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i10
 
 _ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i10: ; preds = %bb.k, %_ZNSt6vectorIP10ConstraintSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i8
@@ -355,9 +351,6 @@ declare i64 @llvm.umax.i64(i64, i64) #7
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #7
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #8
-
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -366,10 +359,9 @@ attributes #4 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protec
 attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #6 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #8 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #9 = { noreturn }
-attributes #10 = { builtin allocsize(0) }
-attributes #11 = { builtin nounwind }
+attributes #8 = { noreturn }
+attributes #9 = { builtin allocsize(0) }
+attributes #10 = { builtin nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

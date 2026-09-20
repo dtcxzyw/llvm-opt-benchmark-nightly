@@ -205,8 +205,8 @@ bb.p:                                             ; preds = %._crit_edge.i, %.lr
   br i1 %.not.not59126.i, label %.lr.ph.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %bb.p, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i
-  %i.ci = phi i64 [ %i.cz, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i ], [ %i.cg, %bb.p ] ; 3 uses
-  %i.cj = phi i64 [ %i.cy, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i ], [ %i.cf, %bb.p ] ; 4 uses
+  %i.ci = phi i64 [ %i.cz, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i ], [ %i.cg, %bb.p ]
+  %i.cj = phi i64 [ %i.cy, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i ], [ %i.cf, %bb.p ] ; 5 uses
   %i.ck = phi i64 [ %i.cx, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i ], [ %i.ce, %bb.p ]
   %.sroa.087.1129.i = phi ptr [ %.sroa.087.4.i, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i ], [ %.sroa.087.0134.i, %bb.p ] ; 6 uses
   %.sroa.16.1128.i = phi ptr [ %.sroa.16.2.i, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i ], [ %.sroa.16.0133.i, %bb.p ] ; 6 uses
@@ -230,13 +230,11 @@ bb.s:                                             ; preds = %bb.r
   unreachable
 
 _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i.i: ; preds = %bb.r
-  %.sroa.speculated.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.ci, i64 1)
-  %6 = add nsw i64 %.sroa.speculated.i.i.i.i.i, %i.ci ; 2 uses
+  %mul2.i.i.i.i = ashr exact i64 %i.cj, 1
+  %6 = tail call i64 @llvm.umax.i64(i64 %mul2.i.i.i.i, i64 1) ; 2 uses
   %i.cm = icmp ult i64 %6, %i.ci
   %i.cn = tail call i64 @llvm.umin.i64(i64 %6, i64 2305843009213693951)
-  %i.co = select i1 %i.cm, i64 2305843009213693951, i64 %i.cn ; 3 uses
-  %.not.i.i.i.i69.i = icmp ne i64 %i.co, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i69.i)
+  %i.co = select i1 %i.cm, i64 2305843009213693951, i64 %i.cn ; 2 uses
   %i.cp = shl nuw nsw i64 %i.co, 2
   %i.cq = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cp) #30
           to label %.noexc71.i unwind label %.loopexit.i ; 4 uses

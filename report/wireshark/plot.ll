@@ -202,7 +202,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
 bb.k:                                             ; preds = %bb.a
   %i.x = getelementptr i8, ptr %i.a, i64 %i.d
   %i.y = ptrtoint ptr %i.f to i64                 ; 2 uses
-  %i.z = sub i64 %i.y, %i.c                       ; 2 uses
+  %i.z = sub i64 %i.y, %i.c                       ; 3 uses
   %i.aa = icmp eq i64 %i.z, 9223372036854775776
   br i1 %i.aa, label %bb.l, label %_ZNKSt6vectorI12_plot_item_tSaIS0_EE12_M_check_lenEmPKc.exit.i
 
@@ -211,39 +211,31 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 _ZNKSt6vectorI12_plot_item_tSaIS0_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.k
-  %i.ab = ashr exact i64 %i.z, 5                  ; 3 uses
-  %.sroa.speculated.i.i = tail call i64 @llvm.umax.i64(i64 %i.ab, i64 1)
-  %3 = add nsw i64 %.sroa.speculated.i.i, %i.ab   ; 2 uses
+  %i.ab = ashr exact i64 %i.z, 5
+  %mul2.i = ashr exact i64 %i.z, 4
+  %3 = tail call i64 @llvm.umax.i64(i64 %mul2.i, i64 1) ; 2 uses
   %i.ac = icmp ult i64 %3, %i.ab
   %i.ad = tail call i64 @llvm.umin.i64(i64 %3, i64 288230376151711743)
-  %i.ae = select i1 %i.ac, i64 288230376151711743, i64 %i.ad ; 3 uses
-  %.not.i.i = icmp eq i64 %i.ae, 0
-  br i1 %.not.i.i, label %_ZNSt12_Vector_baseI12_plot_item_tSaIS0_EE11_M_allocateEm.exit.i, label %4
+  %i.ae = select i1 %i.ac, i64 288230376151711743, i64 %i.ad ; 2 uses
+  %4 = shl nuw nsw i64 %i.ae, 5
+  %5 = tail call noalias noundef ptr @_Znwm(i64 noundef %4) #22 ; 4 uses
+  %6 = getelementptr i8, ptr %5, i64 %i.d         ; 2 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(32) %6, ptr noundef align 8 dereferenceable(32) %2, i64 32, i1 false)
+  %7 = icmp sgt i64 %i.d, 0
+  br i1 %7, label %bb.m, label %_ZNSt6vectorI12_plot_item_tSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit.i
 
-4:                                                ; preds = %_ZNKSt6vectorI12_plot_item_tSaIS0_EE12_M_check_lenEmPKc.exit.i
-  %5 = shl nuw nsw i64 %i.ae, 5
-  %6 = tail call noalias noundef ptr @_Znwm(i64 noundef %5) #22
-  br label %_ZNSt12_Vector_baseI12_plot_item_tSaIS0_EE11_M_allocateEm.exit.i
-
-_ZNSt12_Vector_baseI12_plot_item_tSaIS0_EE11_M_allocateEm.exit.i: ; preds = %4, %_ZNKSt6vectorI12_plot_item_tSaIS0_EE12_M_check_lenEmPKc.exit.i
-  %7 = phi ptr [ %6, %4 ], [ null, %_ZNKSt6vectorI12_plot_item_tSaIS0_EE12_M_check_lenEmPKc.exit.i ] ; 4 uses
-  %8 = getelementptr i8, ptr %7, i64 %i.d         ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(32) %8, ptr noundef align 8 dereferenceable(32) %2, i64 32, i1 false)
-  %9 = icmp sgt i64 %i.d, 0
-  br i1 %9, label %bb.m, label %_ZNSt6vectorI12_plot_item_tSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit.i
-
-bb.m:                                             ; preds = %_ZNSt12_Vector_baseI12_plot_item_tSaIS0_EE11_M_allocateEm.exit.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %7, ptr align 8 %i.a, i64 %i.d, i1 false)
+bb.m:                                             ; preds = %_ZNKSt6vectorI12_plot_item_tSaIS0_EE12_M_check_lenEmPKc.exit.i
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %5, ptr align 8 %i.a, i64 %i.d, i1 false)
   br label %_ZNSt6vectorI12_plot_item_tSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit.i
 
-_ZNSt6vectorI12_plot_item_tSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit.i: ; preds = %bb.m, %_ZNSt12_Vector_baseI12_plot_item_tSaIS0_EE11_M_allocateEm.exit.i
-  %i.af = getelementptr i8, ptr %8, i64 32        ; 2 uses
+_ZNSt6vectorI12_plot_item_tSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit.i: ; preds = %bb.m, %_ZNKSt6vectorI12_plot_item_tSaIS0_EE12_M_check_lenEmPKc.exit.i
+  %i.af = getelementptr i8, ptr %6, i64 32        ; 2 uses
   %i.ag = sub i64 %i.y, %i.b                      ; 3 uses
   %i.ah = icmp sgt i64 %i.ag, 0
   br i1 %i.ah, label %bb.n, label %_ZNSt6vectorI12_plot_item_tSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit16.i
 
 bb.n:                                             ; preds = %_ZNSt6vectorI12_plot_item_tSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.af, ptr align 8 %i.x, i64 %i.ag, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.af, ptr align 8 %i.x, i64 %i.ag, i1 false)
   br label %_ZNSt6vectorI12_plot_item_tSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit16.i
 
 _ZNSt6vectorI12_plot_item_tSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit16.i: ; preds = %bb.n, %_ZNSt6vectorI12_plot_item_tSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit.i
@@ -259,9 +251,9 @@ bb.o:                                             ; preds = %_ZNSt6vectorI12_plo
 
 _ZNSt6vectorI12_plot_item_tSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit: ; preds = %_ZNSt6vectorI12_plot_item_tSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit16.i, %bb.o
   %i.al = getelementptr i8, ptr %i.af, i64 %i.ag
-  store ptr %7, ptr %0, align 8
+  store ptr %5, ptr %0, align 8
   store ptr %i.al, ptr %i.e, align 8
-  %i.am = getelementptr [32 x i8], ptr %7, i64 %i.ae
+  %i.am = getelementptr [32 x i8], ptr %5, i64 %i.ae
   store ptr %i.am, ptr %i.g, align 8
   br label %bb.p
 

@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   %i.g = load ptr, ptr %i.a, align 8, !tbaa !120  ; 4 uses
   %i.h = ptrtoint ptr %i.c to i64
   %i.i = ptrtoint ptr %i.g to i64                 ; 2 uses
-  %i.j = sub i64 %i.h, %i.i                       ; 5 uses
+  %i.j = sub i64 %i.h, %i.i                       ; 6 uses
   %i.k = icmp eq i64 %i.j, 9223372036854775800
   br i1 %i.k, label %bb.d, label %_ZNKSt6vectorIPKN5Ipopt7SubjectESaIS3_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -213,14 +213,12 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _ZNKSt6vectorIPKN5Ipopt7SubjectESaIS3_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.c
-  %i.l = ashr exact i64 %i.j, 3                   ; 3 uses
-  %.sroa.speculated.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.l, i64 1)
-  %3 = add nsw i64 %.sroa.speculated.i.i.i, %i.l  ; 2 uses
+  %i.l = ashr exact i64 %i.j, 3
+  %mul2.i.i = ashr exact i64 %i.j, 2
+  %3 = tail call i64 @llvm.umax.i64(i64 %mul2.i.i, i64 1) ; 2 uses
   %i.m = icmp ult i64 %3, %i.l
   %i.n = tail call i64 @llvm.umin.i64(i64 %3, i64 1152921504606846975)
-  %i.o = select i1 %i.m, i64 1152921504606846975, i64 %i.n ; 3 uses
-  %.not.i.i.i = icmp ne i64 %i.o, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i)
+  %i.o = select i1 %i.m, i64 1152921504606846975, i64 %i.n ; 2 uses
   %i.p = shl nuw nsw i64 %i.o, 3
   %i.q = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.p) #19 ; 4 uses
   %i.r = getelementptr inbounds i8, ptr %i.q, i64 %i.j ; 2 uses
@@ -270,7 +268,7 @@ bb.h:                                             ; preds = %_ZNSt6vectorIPKN5Ip
   %i.ae = load ptr, ptr %i.y, align 8, !tbaa !81  ; 4 uses
   %i.af = ptrtoint ptr %i.aa to i64
   %i.ag = ptrtoint ptr %i.ae to i64               ; 2 uses
-  %i.ah = sub i64 %i.af, %i.ag                    ; 5 uses
+  %i.ah = sub i64 %i.af, %i.ag                    ; 6 uses
   %i.ai = icmp eq i64 %i.ah, 9223372036854775800
   br i1 %i.ai, label %bb.i, label %_ZNKSt6vectorIPN5Ipopt8ObserverESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -279,14 +277,12 @@ bb.i:                                             ; preds = %bb.h
   unreachable
 
 _ZNKSt6vectorIPN5Ipopt8ObserverESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.h
-  %i.aj = ashr exact i64 %i.ah, 3                 ; 3 uses
-  %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.aj, i64 1)
-  %4 = add nsw i64 %.sroa.speculated.i.i.i.i, %i.aj ; 2 uses
+  %i.aj = ashr exact i64 %i.ah, 3
+  %mul2.i.i.i = ashr exact i64 %i.ah, 2
+  %4 = tail call i64 @llvm.umax.i64(i64 %mul2.i.i.i, i64 1) ; 2 uses
   %i.ak = icmp ult i64 %4, %i.aj
   %i.al = tail call i64 @llvm.umin.i64(i64 %4, i64 1152921504606846975)
-  %i.am = select i1 %i.ak, i64 1152921504606846975, i64 %i.al ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %i.am, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.am = select i1 %i.ak, i64 1152921504606846975, i64 %i.al ; 2 uses
   %i.an = shl nuw nsw i64 %i.am, 3
   %i.ao = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.an) #19 ; 4 uses
   %i.ap = getelementptr inbounds i8, ptr %i.ao, i64 %i.ah ; 2 uses
@@ -689,11 +685,11 @@ declare i64 @llvm.umax.i64(i64, i64) #7
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #7
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #17
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #7
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #17
 
 attributes #0 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

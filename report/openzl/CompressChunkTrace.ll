@@ -202,7 +202,7 @@ bb.v:                                             ; preds = %_ZL11ZL_Input_idPK1
   %i.eu = load ptr, ptr %i.eo, align 8, !tbaa !87 ; 4 uses
   %i.ev = ptrtoint ptr %i.eq to i64
   %i.ew = ptrtoint ptr %i.eu to i64
-  %i.ex = sub i64 %i.ev, %i.ew                    ; 6 uses
+  %i.ex = sub i64 %i.ev, %i.ew                    ; 7 uses
   %i.ey = icmp eq i64 %i.ex, 9223372036854775804
   br i1 %i.ey, label %bb.w, label %_ZNKSt6vectorI9ZL_DataIDSaIS0_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -214,14 +214,12 @@ bb.w:                                             ; preds = %bb.v
   unreachable
 
 _ZNKSt6vectorI9ZL_DataIDSaIS0_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.v
-  %i.ez = ashr exact i64 %i.ex, 2                 ; 3 uses
-  %.sroa.speculated.i.i.i = call i64 @llvm.umax.i64(i64 %i.ez, i64 1)
-  %8 = add nsw i64 %.sroa.speculated.i.i.i, %i.ez ; 2 uses
+  %i.ez = ashr exact i64 %i.ex, 2
+  %mul2.i.i = ashr exact i64 %i.ex, 1
+  %8 = call i64 @llvm.umax.i64(i64 %mul2.i.i, i64 1) ; 2 uses
   %i.fa = icmp ult i64 %8, %i.ez
   %i.fb = call i64 @llvm.umin.i64(i64 %8, i64 2305843009213693951)
-  %i.fc = select i1 %i.fa, i64 2305843009213693951, i64 %i.fb ; 3 uses
-  %.not.i.i.i = icmp ne i64 %i.fc, 0
-  call void @llvm.assume(i1 %.not.i.i.i)
+  %i.fc = select i1 %i.fa, i64 2305843009213693951, i64 %i.fb ; 2 uses
   %i.fd = shl nuw nsw i64 %i.fc, 2
   %i.fe = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fd) #28
           to label %.noexc37 unwind label %.loopexit ; 4 uses
@@ -309,7 +307,7 @@ bb.ae:                                            ; preds = %bb.ac
   %i.fx = load ptr, ptr %i.fq, align 8, !tbaa !229 ; 4 uses
   %i.fy = ptrtoint ptr %i.fs to i64
   %i.fz = ptrtoint ptr %i.fx to i64
-  %i.ga = sub i64 %i.fy, %i.fz                    ; 6 uses
+  %i.ga = sub i64 %i.fy, %i.fz                    ; 7 uses
   %i.gb = icmp eq i64 %i.ga, 9223372036854775800
   br i1 %i.gb, label %bb.af, label %_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i
 
@@ -321,14 +319,12 @@ bb.af:                                            ; preds = %bb.ae
   unreachable
 
 _ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.ae
-  %i.gc = ashr exact i64 %i.ga, 3                 ; 3 uses
-  %.sroa.speculated.i.i.i39 = call i64 @llvm.umax.i64(i64 %i.gc, i64 1)
-  %9 = add nsw i64 %.sroa.speculated.i.i.i39, %i.gc ; 2 uses
+  %i.gc = ashr exact i64 %i.ga, 3
+  %mul2.i.i39 = ashr exact i64 %i.ga, 2
+  %9 = call i64 @llvm.umax.i64(i64 %mul2.i.i39, i64 1) ; 2 uses
   %i.gd = icmp ult i64 %9, %i.gc
   %i.ge = call i64 @llvm.umin.i64(i64 %9, i64 1152921504606846975)
-  %i.gf = select i1 %i.gd, i64 1152921504606846975, i64 %i.ge ; 3 uses
-  %.not.i.i.i40 = icmp ne i64 %i.gf, 0
-  call void @llvm.assume(i1 %.not.i.i.i40)
+  %i.gf = select i1 %i.gd, i64 1152921504606846975, i64 %i.ge ; 2 uses
   %i.gg = shl nuw nsw i64 %i.gf, 3
   %i.gh = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.gg) #28
           to label %.noexc43 unwind label %bb.s   ; 4 uses
@@ -731,7 +727,7 @@ bb.v:                                             ; preds = %bb.t
   %i.dq = load ptr, ptr %i.dj, align 8, !tbaa !87 ; 4 uses
   %i.dr = ptrtoint ptr %i.dl to i64
   %i.ds = ptrtoint ptr %i.dq to i64
-  %i.dt = sub i64 %i.dr, %i.ds                    ; 6 uses
+  %i.dt = sub i64 %i.dr, %i.ds                    ; 7 uses
   %i.du = icmp eq i64 %i.dt, 9223372036854775804
   br i1 %i.du, label %bb.w, label %_ZNKSt6vectorI9ZL_DataIDSaIS0_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -743,14 +739,12 @@ bb.w:                                             ; preds = %bb.v
   unreachable
 
 _ZNKSt6vectorI9ZL_DataIDSaIS0_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.v
-  %i.dv = ashr exact i64 %i.dt, 2                 ; 3 uses
-  %.sroa.speculated.i.i.i = call i64 @llvm.umax.i64(i64 %i.dv, i64 1)
-  %16 = add nsw i64 %.sroa.speculated.i.i.i, %i.dv ; 2 uses
+  %i.dv = ashr exact i64 %i.dt, 2
+  %mul2.i.i = ashr exact i64 %i.dt, 1
+  %16 = call i64 @llvm.umax.i64(i64 %mul2.i.i, i64 1) ; 2 uses
   %i.dw = icmp ult i64 %16, %i.dv
   %i.dx = call i64 @llvm.umin.i64(i64 %16, i64 2305843009213693951)
-  %i.dy = select i1 %i.dw, i64 2305843009213693951, i64 %i.dx ; 3 uses
-  %.not.i.i.i = icmp ne i64 %i.dy, 0
-  call void @llvm.assume(i1 %.not.i.i.i)
+  %i.dy = select i1 %i.dw, i64 2305843009213693951, i64 %i.dx ; 2 uses
   %i.dz = shl nuw nsw i64 %i.dy, 2
   %i.ea = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.dz) #28
           to label %.noexc50 unwind label %.loopexit ; 4 uses
@@ -1153,7 +1147,7 @@ bb.c:                                             ; preds = %.lr.ph
 bb.d:                                             ; preds = %.lr.ph
   %i.i = ptrtoint ptr %.sroa.18.054 to i64
   %i.j = ptrtoint ptr %.sroa.0.052 to i64
-  %i.k = sub i64 %i.i, %i.j                       ; 6 uses
+  %i.k = sub i64 %i.i, %i.j                       ; 7 uses
   %i.l = icmp eq i64 %i.k, 9223372036854775800
   br i1 %i.l, label %bb.e, label %_ZNKSt6vectorIP9ZL_Edge_sSaIS1_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -1165,14 +1159,12 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 _ZNKSt6vectorIP9ZL_Edge_sSaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.d
-  %i.m = ashr exact i64 %i.k, 3                   ; 3 uses
-  %.sroa.speculated.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.m, i64 1)
-  %7 = add nsw i64 %.sroa.speculated.i.i.i, %i.m  ; 2 uses
+  %i.m = ashr exact i64 %i.k, 3
+  %mul2.i.i = ashr exact i64 %i.k, 2
+  %7 = tail call i64 @llvm.umax.i64(i64 %mul2.i.i, i64 1) ; 2 uses
   %i.n = icmp ult i64 %7, %i.m
   %i.o = tail call i64 @llvm.umin.i64(i64 %7, i64 1152921504606846975)
-  %i.p = select i1 %i.n, i64 1152921504606846975, i64 %i.o ; 3 uses
-  %.not.i.i.i = icmp ne i64 %i.p, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i)
+  %i.p = select i1 %i.n, i64 1152921504606846975, i64 %i.o ; 2 uses
   %i.q = shl nuw nsw i64 %i.p, 3
   %i.r = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.q) #28
           to label %.noexc22 unwind label %.loopexit ; 4 uses
@@ -1575,7 +1567,7 @@ bb.k:                                             ; preds = %_ZNSt6vectorIN6open
   %i.eb = load ptr, ptr %i.du, align 8, !tbaa !229 ; 4 uses
   %i.ec = ptrtoint ptr %i.dw to i64
   %i.ed = ptrtoint ptr %i.eb to i64
-  %i.ee = sub i64 %i.ec, %i.ed                    ; 6 uses
+  %i.ee = sub i64 %i.ec, %i.ed                    ; 7 uses
   %i.ef = icmp eq i64 %i.ee, 9223372036854775800
   br i1 %i.ef, label %bb.l, label %_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i
 
@@ -1587,14 +1579,12 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 _ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.k
-  %i.eg = ashr exact i64 %i.ee, 3                 ; 3 uses
-  %.sroa.speculated.i.i.i = call i64 @llvm.umax.i64(i64 %i.eg, i64 1)
-  %8 = add nsw i64 %.sroa.speculated.i.i.i, %i.eg ; 2 uses
+  %i.eg = ashr exact i64 %i.ee, 3
+  %mul2.i.i = ashr exact i64 %i.ee, 2
+  %8 = call i64 @llvm.umax.i64(i64 %mul2.i.i, i64 1) ; 2 uses
   %i.eh = icmp ult i64 %8, %i.eg
   %i.ei = call i64 @llvm.umin.i64(i64 %8, i64 1152921504606846975)
-  %i.ej = select i1 %i.eh, i64 1152921504606846975, i64 %i.ei ; 3 uses
-  %.not.i.i.i = icmp ne i64 %i.ej, 0
-  call void @llvm.assume(i1 %.not.i.i.i)
+  %i.ej = select i1 %i.eh, i64 1152921504606846975, i64 %i.ei ; 2 uses
   %i.ek = shl nuw nsw i64 %i.ej, 3
   %i.el = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ek) #28
           to label %.noexc27 unwind label %bb.q   ; 4 uses
@@ -1748,7 +1738,7 @@ bb.v:                                             ; preds = %bb.t
   %i.gk = load ptr, ptr %i.gd, align 8, !tbaa !87 ; 4 uses
   %i.gl = ptrtoint ptr %i.gf to i64
   %i.gm = ptrtoint ptr %i.gk to i64
-  %i.gn = sub i64 %i.gl, %i.gm                    ; 6 uses
+  %i.gn = sub i64 %i.gl, %i.gm                    ; 7 uses
   %i.go = icmp eq i64 %i.gn, 9223372036854775804
   br i1 %i.go, label %bb.w, label %_ZNKSt6vectorI9ZL_DataIDSaIS0_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -1760,14 +1750,12 @@ bb.w:                                             ; preds = %bb.v
   unreachable
 
 _ZNKSt6vectorI9ZL_DataIDSaIS0_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.v
-  %i.gp = ashr exact i64 %i.gn, 2                 ; 3 uses
-  %.sroa.speculated.i.i.i30 = call i64 @llvm.umax.i64(i64 %i.gp, i64 1)
-  %9 = add nsw i64 %.sroa.speculated.i.i.i30, %i.gp ; 2 uses
+  %i.gp = ashr exact i64 %i.gn, 2
+  %mul2.i.i30 = ashr exact i64 %i.gn, 1
+  %9 = call i64 @llvm.umax.i64(i64 %mul2.i.i30, i64 1) ; 2 uses
   %i.gq = icmp ult i64 %9, %i.gp
   %i.gr = call i64 @llvm.umin.i64(i64 %9, i64 2305843009213693951)
-  %i.gs = select i1 %i.gq, i64 2305843009213693951, i64 %i.gr ; 3 uses
-  %.not.i.i.i31 = icmp ne i64 %i.gs, 0
-  call void @llvm.assume(i1 %.not.i.i.i31)
+  %i.gs = select i1 %i.gq, i64 2305843009213693951, i64 %i.gr ; 2 uses
   %i.gt = shl nuw nsw i64 %i.gs, 2
   %i.gu = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.gt) #28
           to label %.noexc34 unwind label %.loopexit ; 4 uses
@@ -1981,7 +1969,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   %i.f = ptrtoint ptr %.sroa.12.072 to i64
   %i.g = ptrtoint ptr %.sroa.052.073 to i64
-  %i.h = sub i64 %i.f, %i.g                       ; 6 uses
+  %i.h = sub i64 %i.f, %i.g                       ; 7 uses
   %i.i = icmp eq i64 %i.h, 9223372036854775800
   br i1 %i.i, label %bb.e, label %_ZNKSt6vectorIPK10ZL_Input_sSaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -1993,14 +1981,12 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 _ZNKSt6vectorIPK10ZL_Input_sSaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.d
-  %i.j = ashr exact i64 %i.h, 3                   ; 3 uses
-  %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.j, i64 1)
-  %4 = add nsw i64 %.sroa.speculated.i.i.i.i, %i.j ; 2 uses
+  %i.j = ashr exact i64 %i.h, 3
+  %mul2.i.i.i = ashr exact i64 %i.h, 2
+  %4 = tail call i64 @llvm.umax.i64(i64 %mul2.i.i.i, i64 1) ; 2 uses
   %i.k = icmp ult i64 %4, %i.j
   %i.l = tail call i64 @llvm.umin.i64(i64 %4, i64 1152921504606846975)
-  %i.m = select i1 %i.k, i64 1152921504606846975, i64 %i.l ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %i.m, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.m = select i1 %i.k, i64 1152921504606846975, i64 %i.l ; 2 uses
   %i.n = shl nuw nsw i64 %i.m, 3
   %i.o = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #28
           to label %.noexc35 unwind label %.loopexit58 ; 4 uses
@@ -2403,7 +2389,7 @@ bb.ac:                                            ; preds = %_ZL11ZL_Input_idPK1
   %i.ft = load ptr, ptr %i.fn, align 8, !tbaa !87 ; 4 uses
   %i.fu = ptrtoint ptr %i.fp to i64
   %i.fv = ptrtoint ptr %i.ft to i64
-  %i.fw = sub i64 %i.fu, %i.fv                    ; 6 uses
+  %i.fw = sub i64 %i.fu, %i.fv                    ; 7 uses
   %i.fx = icmp eq i64 %i.fw, 9223372036854775804
   br i1 %i.fx, label %bb.ad, label %_ZNKSt6vectorI9ZL_DataIDSaIS0_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -2415,14 +2401,12 @@ bb.ad:                                            ; preds = %bb.ac
   unreachable
 
 _ZNKSt6vectorI9ZL_DataIDSaIS0_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.ac
-  %i.fy = ashr exact i64 %i.fw, 2                 ; 3 uses
-  %.sroa.speculated.i.i.i = call i64 @llvm.umax.i64(i64 %i.fy, i64 1)
-  %5 = add nsw i64 %.sroa.speculated.i.i.i, %i.fy ; 2 uses
+  %i.fy = ashr exact i64 %i.fw, 2
+  %mul2.i.i = ashr exact i64 %i.fw, 1
+  %5 = call i64 @llvm.umax.i64(i64 %mul2.i.i, i64 1) ; 2 uses
   %i.fz = icmp ult i64 %5, %i.fy
   %i.ga = call i64 @llvm.umin.i64(i64 %5, i64 2305843009213693951)
-  %i.gb = select i1 %i.fz, i64 2305843009213693951, i64 %i.ga ; 3 uses
-  %.not.i.i.i46 = icmp ne i64 %i.gb, 0
-  call void @llvm.assume(i1 %.not.i.i.i46)
+  %i.gb = select i1 %i.fz, i64 2305843009213693951, i64 %i.ga ; 2 uses
   %i.gc = shl nuw nsw i64 %i.gb, 2
   %i.gd = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.gc) #28
           to label %.noexc48 unwind label %.loopexit ; 4 uses
@@ -2825,16 +2809,14 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNKSt6vectorIN6openzl10visualizer5CodecESaIS2_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
-  %i.h = sdiv exact i64 %i.f, 360                 ; 3 uses
-  %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
-  %3 = add nsw i64 %.sroa.speculated.i, %i.h      ; 2 uses
+  %i.h = sdiv exact i64 %i.f, 360                 ; 2 uses
+  %mul2 = shl nsw i64 %i.h, 1
+  %3 = tail call i64 @llvm.umax.i64(i64 %mul2, i64 1) ; 2 uses
   %i.i = icmp ult i64 %3, %i.h
   %i.j = tail call i64 @llvm.umin.i64(i64 %3, i64 25620477880152155)
-  %i.k = select i1 %i.i, i64 25620477880152155, i64 %i.j ; 3 uses
+  %i.k = select i1 %i.i, i64 25620477880152155, i64 %i.j ; 2 uses
   %i.l = ptrtoint ptr %1 to i64
   %i.m = sub i64 %i.l, %i.e
-  %.not.i = icmp ne i64 %i.k, 0
-  tail call void @llvm.assume(i1 %.not.i)
   %i.n = mul nuw nsw i64 %i.k, 360
   %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #28 ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.m
@@ -3220,16 +3202,14 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNKSt6vectorIN6openzl10visualizer5GraphESaIS2_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
-  %i.h = sdiv exact i64 %i.f, 320                 ; 3 uses
-  %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
-  %3 = add nsw i64 %.sroa.speculated.i, %i.h      ; 2 uses
+  %i.h = sdiv exact i64 %i.f, 320                 ; 2 uses
+  %mul2 = shl nsw i64 %i.h, 1
+  %3 = tail call i64 @llvm.umax.i64(i64 %mul2, i64 1) ; 2 uses
   %i.i = icmp ult i64 %3, %i.h
   %i.j = tail call i64 @llvm.umin.i64(i64 %3, i64 28823037615171174)
-  %i.k = select i1 %i.i, i64 28823037615171174, i64 %i.j ; 3 uses
+  %i.k = select i1 %i.i, i64 28823037615171174, i64 %i.j ; 2 uses
   %i.l = ptrtoint ptr %1 to i64
   %i.m = sub i64 %i.l, %i.e
-  %.not.i = icmp ne i64 %i.k, 0
-  tail call void @llvm.assume(i1 %.not.i)
   %i.n = mul nuw nsw i64 %i.k, 320
   %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #28 ; 5 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.m

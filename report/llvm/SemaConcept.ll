@@ -205,14 +205,12 @@ bb.i:                                             ; preds = %bb.h
   unreachable
 
 _ZNKSt6vectorIN5clang18SubsumptionChecker25FoldExpendedConstraintKeyESaIS2_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.h
-  %i.z = sdiv exact i64 %i.x, 24                  ; 3 uses
-  %.sroa.speculated.i.i = tail call i64 @llvm.umax.i64(i64 %i.z, i64 1)
-  %3 = add nsw i64 %.sroa.speculated.i.i, %i.z    ; 2 uses
+  %i.z = sdiv exact i64 %i.x, 24                  ; 2 uses
+  %mul2.i = shl nsw i64 %i.z, 1
+  %3 = tail call i64 @llvm.umax.i64(i64 %mul2.i, i64 1) ; 2 uses
   %i.aa = icmp ult i64 %3, %i.z
   %i.ab = tail call i64 @llvm.umin.i64(i64 %3, i64 384307168202282325)
-  %i.ac = select i1 %i.aa, i64 384307168202282325, i64 %i.ab ; 3 uses
-  %.not.i.i = icmp ne i64 %i.ac, 0
-  tail call void @llvm.assume(i1 %.not.i.i)
+  %i.ac = select i1 %i.aa, i64 384307168202282325, i64 %i.ab ; 2 uses
   %i.ad = mul nuw nsw i64 %i.ac, 24
   %i.ae = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ad) #26 ; 4 uses
   %i.af = getelementptr inbounds i8, ptr %i.ae, i64 %i.d ; 2 uses

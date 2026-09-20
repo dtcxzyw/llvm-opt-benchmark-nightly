@@ -204,8 +204,8 @@ bb.c:                                             ; preds = %bb.b
   %i.w = load ptr, ptr %i.q, align 8, !tbaa !30   ; 5 uses
   %i.x = ptrtoint ptr %i.v to i64
   %i.y = ptrtoint ptr %i.w to i64
-  %i.z = sub i64 %i.x, %i.y                       ; 6 uses
-  %i.aa = ashr exact i64 %i.z, 2                  ; 3 uses
+  %i.z = sub i64 %i.x, %i.y                       ; 7 uses
+  %i.aa = ashr exact i64 %i.z, 2                  ; 2 uses
   %i.ab = icmp ult i64 %i.aa, 256
   br i1 %i.ab, label %bb.d, label %bb.j
 
@@ -230,9 +230,12 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 _ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.f
-  %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.aa, i64 1)
-  %2 = add nuw nsw i64 %.sroa.speculated.i.i.i.i, %i.aa ; 2 uses
-  %i.ag = shl nuw nsw i64 %2, 2
+  %mul2.i.i.i = ashr exact i64 %i.z, 1
+  %2 = tail call i64 @llvm.umax.i64(i64 %mul2.i.i.i, i64 1) ; 2 uses
+  %3 = icmp ult i64 %2, %i.aa
+  %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umin.i64(i64 %2, i64 2305843009213693951)
+  %4 = select i1 %3, i64 2305843009213693951, i64 %.sroa.speculated.i.i.i.i ; 2 uses
+  %i.ag = shl nuw nsw i64 %4, 2
   %i.ah = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ag) #14 ; 4 uses
   %i.ai = getelementptr inbounds i8, ptr %i.ah, i64 %i.z ; 2 uses
   store float %i.t, ptr %i.ai, align 4, !tbaa !71
@@ -255,7 +258,7 @@ bb.i:                                             ; preds = %_ZNSt6vectorIfSaIfE
 _ZNSt6vectorIfSaIfEE17_M_realloc_insertIJRKfEEEvN9__gnu_cxx17__normal_iteratorIPfS1_EEDpOT_.exit.i.i: ; preds = %bb.i, %_ZNSt6vectorIfSaIfEE11_S_relocateEPfS2_S2_RS0_.exit16.i.i.i
   store ptr %i.ah, ptr %i.q, align 8, !tbaa !30
   store ptr %i.ak, ptr %i.u, align 8, !tbaa !31
-  %i.al = getelementptr inbounds nuw [4 x i8], ptr %i.ah, i64 %2
+  %i.al = getelementptr inbounds nuw [4 x i8], ptr %i.ah, i64 %4
   store ptr %i.al, ptr %i.ac, align 8, !tbaa !32
   br label %_ZN12ValueHistory9addSampleEf.exit
 
@@ -281,8 +284,8 @@ _ZN12ValueHistory9addSampleEf.exit:               ; preds = %bb.e, %_ZNSt6vector
   %i.az = load ptr, ptr %i.as, align 8, !tbaa !30 ; 5 uses
   %i.ba = ptrtoint ptr %i.ay to i64
   %i.bb = ptrtoint ptr %i.az to i64
-  %i.bc = sub i64 %i.ba, %i.bb                    ; 6 uses
-  %i.bd = ashr exact i64 %i.bc, 2                 ; 3 uses
+  %i.bc = sub i64 %i.ba, %i.bb                    ; 7 uses
+  %i.bd = ashr exact i64 %i.bc, 2                 ; 2 uses
   %i.be = icmp ult i64 %i.bd, 256
   br i1 %i.be, label %bb.k, label %bb.q
 
@@ -307,9 +310,12 @@ bb.n:                                             ; preds = %bb.m
   unreachable
 
 _ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i.i23: ; preds = %bb.m
-  %.sroa.speculated.i.i.i.i24 = tail call i64 @llvm.umax.i64(i64 %i.bd, i64 1)
-  %3 = add nuw nsw i64 %.sroa.speculated.i.i.i.i24, %i.bd ; 2 uses
-  %i.bj = shl nuw nsw i64 %3, 2
+  %mul2.i.i.i24 = ashr exact i64 %i.bc, 1
+  %5 = tail call i64 @llvm.umax.i64(i64 %mul2.i.i.i24, i64 1) ; 2 uses
+  %6 = icmp ult i64 %5, %i.bd
+  %.sroa.speculated.i.i.i.i24 = tail call i64 @llvm.umin.i64(i64 %5, i64 2305843009213693951)
+  %7 = select i1 %6, i64 2305843009213693951, i64 %.sroa.speculated.i.i.i.i24 ; 2 uses
+  %i.bj = shl nuw nsw i64 %7, 2
   %i.bk = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bj) #14 ; 4 uses
   %i.bl = getelementptr inbounds i8, ptr %i.bk, i64 %i.bc ; 2 uses
   store float %i.aw, ptr %i.bl, align 4, !tbaa !71
@@ -332,7 +338,7 @@ bb.p:                                             ; preds = %_ZNSt6vectorIfSaIfE
 _ZNSt6vectorIfSaIfEE17_M_realloc_insertIJRKfEEEvN9__gnu_cxx17__normal_iteratorIPfS1_EEDpOT_.exit.i.i27: ; preds = %bb.p, %_ZNSt6vectorIfSaIfEE11_S_relocateEPfS2_S2_RS0_.exit16.i.i.i25
   store ptr %i.bk, ptr %i.as, align 8, !tbaa !30
   store ptr %i.bn, ptr %i.ax, align 8, !tbaa !31
-  %i.bo = getelementptr inbounds nuw [4 x i8], ptr %i.bk, i64 %3
+  %i.bo = getelementptr inbounds nuw [4 x i8], ptr %i.bk, i64 %7
   store ptr %i.bo, ptr %i.bf, align 8, !tbaa !32
   br label %_ZN12ValueHistory9addSampleEf.exit28
 
@@ -733,6 +739,9 @@ declare float @llvm.fabs.f32(float) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umin.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #6

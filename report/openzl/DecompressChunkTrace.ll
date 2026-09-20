@@ -202,7 +202,7 @@ bb.aw:                                            ; preds = %bb.au
   %i.jn = load ptr, ptr %i.jh, align 8, !tbaa !87 ; 4 uses
   %i.jo = ptrtoint ptr %i.jj to i64
   %i.jp = ptrtoint ptr %i.jn to i64
-  %i.jq = sub i64 %i.jo, %i.jp                    ; 6 uses
+  %i.jq = sub i64 %i.jo, %i.jp                    ; 7 uses
   %i.jr = icmp eq i64 %i.jq, 9223372036854775804
   br i1 %i.jr, label %bb.ax, label %_ZNKSt6vectorI9ZL_DataIDSaIS0_EE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -214,14 +214,12 @@ bb.ax:                                            ; preds = %bb.aw
   unreachable
 
 _ZNKSt6vectorI9ZL_DataIDSaIS0_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.aw
-  %i.js = ashr exact i64 %i.jq, 2                 ; 3 uses
-  %.sroa.speculated.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.js, i64 1)
-  %13 = add nsw i64 %.sroa.speculated.i.i.i.i, %i.js ; 2 uses
+  %i.js = ashr exact i64 %i.jq, 2
+  %mul2.i.i.i = ashr exact i64 %i.jq, 1
+  %13 = call i64 @llvm.umax.i64(i64 %mul2.i.i.i, i64 1) ; 2 uses
   %i.jt = icmp ult i64 %13, %i.js
   %i.ju = call i64 @llvm.umin.i64(i64 %13, i64 2305843009213693951)
-  %i.jv = select i1 %i.jt, i64 2305843009213693951, i64 %i.ju ; 3 uses
-  %.not.i.i.i.i61 = icmp ne i64 %i.jv, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i61)
+  %i.jv = select i1 %i.jt, i64 2305843009213693951, i64 %i.ju ; 2 uses
   %i.jw = shl nuw nsw i64 %i.jv, 2
   %i.jx = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.jw) #23
           to label %.noexc63 unwind label %.loopexit ; 4 uses
@@ -624,7 +622,7 @@ bb.ad:                                            ; preds = %bb.ab
   %i.dr = load ptr, ptr %i.dk, align 8, !tbaa !87 ; 4 uses
   %i.ds = ptrtoint ptr %i.dm to i64
   %i.dt = ptrtoint ptr %i.dr to i64
-  %i.du = sub i64 %i.ds, %i.dt                    ; 6 uses
+  %i.du = sub i64 %i.ds, %i.dt                    ; 7 uses
   %i.dv = icmp eq i64 %i.du, 9223372036854775804
   br i1 %i.dv, label %bb.ae, label %_ZNKSt6vectorI9ZL_DataIDSaIS0_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -633,14 +631,12 @@ bb.ae:                                            ; preds = %bb.ad
   unreachable
 
 _ZNKSt6vectorI9ZL_DataIDSaIS0_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.ad
-  %i.dw = ashr exact i64 %i.du, 2                 ; 3 uses
-  %.sroa.speculated.i.i.i = call i64 @llvm.umax.i64(i64 %i.dw, i64 1)
-  %13 = add nsw i64 %.sroa.speculated.i.i.i, %i.dw ; 2 uses
+  %i.dw = ashr exact i64 %i.du, 2
+  %mul2.i.i = ashr exact i64 %i.du, 1
+  %13 = call i64 @llvm.umax.i64(i64 %mul2.i.i, i64 1) ; 2 uses
   %i.dx = icmp ult i64 %13, %i.dw
   %i.dy = call i64 @llvm.umin.i64(i64 %13, i64 2305843009213693951)
-  %i.dz = select i1 %i.dx, i64 2305843009213693951, i64 %i.dy ; 3 uses
-  %.not.i.i.i42 = icmp ne i64 %i.dz, 0
-  call void @llvm.assume(i1 %.not.i.i.i42)
+  %i.dz = select i1 %i.dx, i64 2305843009213693951, i64 %i.dy ; 2 uses
   %i.ea = shl nuw nsw i64 %i.dz, 2
   %i.eb = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ea) #23 ; 4 uses
   %i.ec = getelementptr inbounds i8, ptr %i.eb, i64 %i.du ; 2 uses
@@ -1043,16 +1039,14 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNKSt6vectorIN6openzl10visualizer5CodecESaIS2_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
-  %i.h = sdiv exact i64 %i.f, 360                 ; 3 uses
-  %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
-  %3 = add nsw i64 %.sroa.speculated.i, %i.h      ; 2 uses
+  %i.h = sdiv exact i64 %i.f, 360                 ; 2 uses
+  %mul2 = shl nsw i64 %i.h, 1
+  %3 = tail call i64 @llvm.umax.i64(i64 %mul2, i64 1) ; 2 uses
   %i.i = icmp ult i64 %3, %i.h
   %i.j = tail call i64 @llvm.umin.i64(i64 %3, i64 25620477880152155)
-  %i.k = select i1 %i.i, i64 25620477880152155, i64 %i.j ; 3 uses
+  %i.k = select i1 %i.i, i64 25620477880152155, i64 %i.j ; 2 uses
   %i.l = ptrtoint ptr %1 to i64
   %i.m = sub i64 %i.l, %i.e
-  %.not.i = icmp ne i64 %i.k, 0
-  tail call void @llvm.assume(i1 %.not.i)
   %i.n = mul nuw nsw i64 %i.k, 360
   %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #23 ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.m

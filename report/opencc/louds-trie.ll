@@ -205,14 +205,12 @@ bb.i:                                             ; preds = %bb.h
   unreachable
 
 _ZNKSt6vectorIN6marisa8grimoire4trie7HistoryESaIS3_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.h
-  %i.af = sdiv exact i64 %i.ad, 20                ; 3 uses
-  %.sroa.speculated.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.af, i64 1)
-  %2 = add nsw i64 %.sroa.speculated.i.i.i, %i.af ; 2 uses
+  %i.af = sdiv exact i64 %i.ad, 20                ; 2 uses
+  %mul2.i.i = shl nsw i64 %i.af, 1
+  %2 = tail call i64 @llvm.umax.i64(i64 %mul2.i.i, i64 1) ; 2 uses
   %i.ag = icmp ult i64 %2, %i.af
   %i.ah = tail call i64 @llvm.umin.i64(i64 %2, i64 461168601842738790)
-  %i.ai = select i1 %i.ag, i64 461168601842738790, i64 %i.ah ; 3 uses
-  %.not.i.i.i = icmp ne i64 %i.ai, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i)
+  %i.ai = select i1 %i.ag, i64 461168601842738790, i64 %i.ah ; 2 uses
   %i.aj = mul nuw nsw i64 %i.ai, 20
   %i.ak = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aj) #22 ; 5 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.ad ; 5 uses
@@ -361,14 +359,12 @@ bb.p:                                             ; preds = %bb.o
   unreachable
 
 _ZNKSt6vectorIN6marisa8grimoire4trie7HistoryESaIS3_EE12_M_check_lenEmPKc.exit.i.i74: ; preds = %bb.o
-  %i.dc = sdiv exact i64 %i.da, 20                ; 3 uses
-  %.sroa.speculated.i.i.i75 = tail call i64 @llvm.umax.i64(i64 %i.dc, i64 1)
-  %3 = add nsw i64 %.sroa.speculated.i.i.i75, %i.dc ; 2 uses
+  %i.dc = sdiv exact i64 %i.da, 20                ; 2 uses
+  %mul2.i.i75 = shl nsw i64 %i.dc, 1
+  %3 = tail call i64 @llvm.umax.i64(i64 %mul2.i.i75, i64 1) ; 2 uses
   %i.dd = icmp ult i64 %3, %i.dc
   %i.de = tail call i64 @llvm.umin.i64(i64 %3, i64 461168601842738790)
-  %i.df = select i1 %i.dd, i64 461168601842738790, i64 %i.de ; 3 uses
-  %.not.i.i.i76 = icmp ne i64 %i.df, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i76)
+  %i.df = select i1 %i.dd, i64 461168601842738790, i64 %i.de ; 2 uses
   %i.dg = mul nuw nsw i64 %i.df, 20
   %i.dh = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.dg) #22 ; 6 uses
   %i.di = getelementptr inbounds nuw i8, ptr %i.dh, i64 %i.da ; 5 uses
