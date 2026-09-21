@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %bb.k
 
 .critedge.thread:                                 ; preds = %.prol.loopexit, %.lr.ph.new, %bb.l, %bb.k, %seekpoint_array_new_.exit
   store i32 %1, ptr %i.f, align 8, !tbaa !19
-  %i.bq = mul i32 %1, 18
+  %i.bq = mul nuw i32 %1, 18
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 %i.bq, ptr %i.br, align 8, !tbaa !14
   br label %.critedge

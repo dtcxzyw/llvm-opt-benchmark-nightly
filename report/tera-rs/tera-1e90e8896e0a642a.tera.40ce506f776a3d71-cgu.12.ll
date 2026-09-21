@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d, !dbg !6824, !noalias !6794
 
 bb.c:                                             ; preds = %.lr.ph4
-  %i.j = add i64 %.sroa.0.1.i.i3, 1, !dbg !6824   ; 2 uses
+  %i.j = add nuw nsw i64 %.sroa.0.1.i.i3, 1, !dbg !6824 ; 2 uses
   %i.k = icmp eq i64 %i.j, %i.e, !dbg !6824
   br i1 %i.k, label %.body.i, label %.lr.ph4, !dbg !6824
 
@@ -607,7 +607,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringEC
   ret void, !dbg !9690
 
 bb.f:                                             ; preds = %.lr.ph21
-  %i.j = add i64 %.sroa.0.120, 1, !dbg !9690      ; 2 uses
+  %i.j = add nuw nsw i64 %.sroa.0.120, 1, !dbg !9690 ; 2 uses
   %i.k = icmp eq i64 %i.j, %1, !dbg !9690
   br i1 %i.k, label %._crit_edge22, label %.lr.ph21, !dbg !9690
 

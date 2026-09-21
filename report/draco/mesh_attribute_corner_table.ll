@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %_ZNK5draco11CornerT
   %i.ak = zext i32 %i.aj to i64
   br label %_ZNK5draco11CornerTable8OppositeENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit
 
-_ZNK5draco11CornerTable8OppositeENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit: ; preds = %bb.d, %_ZNK5draco11CornerTable8PreviousENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit
+_ZNK5draco11CornerTable8OppositeENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit: ; preds = %_ZNK5draco11CornerTable8PreviousENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit, %bb.d
   %storemerge.i7 = phi i64 [ %i.ak, %bb.d ], [ 4294967295, %_ZNK5draco11CornerTable8PreviousENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit ] ; 2 uses
   %.zext75 = lshr i64 %storemerge.i7, 6
   %i.al = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %.zext75 ; 2 uses

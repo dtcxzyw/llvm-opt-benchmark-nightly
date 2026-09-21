@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.c
   unreachable
 
 bb.f:                                             ; preds = %.lr.ph17
-  %i.u = add i64 %.sroa.0.1.i.i16, 1              ; 2 uses
+  %i.u = add nuw nsw i64 %.sroa.0.1.i.i16, 1      ; 2 uses
   %i.v = icmp eq i64 %i.u, %i.g
   br i1 %i.v, label %.body.i, label %.lr.ph17
 
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %.lr.ph
           to label %bb.c unwind label %bb.e, !noalias !29634, !inline_history !29629
 
 bb.d:                                             ; preds = %.lr.ph5
-  %i.q = add i64 %.sroa.0.1.i.i.i4, 1             ; 2 uses
+  %i.q = add nuw nsw i64 %.sroa.0.1.i.i.i4, 1     ; 2 uses
   %i.r = icmp eq i64 %i.q, %i.g
   br i1 %i.r, label %.body.i.i, label %.lr.ph5
 
@@ -1011,7 +1011,7 @@ bb.c:                                             ; preds = %.lr.ph
           to label %bb.c unwind label %bb.e, !noalias !29842, !inline_history !29837
 
 bb.d:                                             ; preds = %.lr.ph5
-  %i.q = add i64 %.sroa.0.1.i.i.i4, 1             ; 2 uses
+  %i.q = add nuw nsw i64 %.sroa.0.1.i.i.i4, 1     ; 2 uses
   %i.r = icmp eq i64 %i.q, %i.g
   br i1 %i.r, label %.body.i.i, label %.lr.ph5
 
@@ -1414,7 +1414,7 @@ bb.c:                                             ; preds = %.lr.ph
           to label %bb.c unwind label %bb.e, !noalias !31933, !inline_history !31930
 
 bb.d:                                             ; preds = %.lr.ph5
-  %i.q = add i64 %.sroa.0.1.i.i4, 1               ; 2 uses
+  %i.q = add nuw nsw i64 %.sroa.0.1.i.i4, 1       ; 2 uses
   %i.r = icmp eq i64 %i.q, %i.g
   br i1 %i.r, label %.body.i, label %.lr.ph5
 
@@ -1817,12 +1817,12 @@ bb.dh:                                            ; preds = %.lr.ph2031
 .lr.ph2031:                                       ; preds = %bb.dg, %bb.dh
   %.sroa.0.0.i.i.i2030 = phi i64 [ %i.hg, %bb.dh ], [ 0, %bb.dg ] ; 2 uses
   %i.hf = getelementptr inbounds nuw [464 x i8], ptr %i.w, i64 %.sroa.0.0.i.i.i2030
-  %i.hg = add i64 %.sroa.0.0.i.i.i2030, 1         ; 4 uses
+  %i.hg = add nuw nsw i64 %.sroa.0.0.i.i.i2030, 1 ; 4 uses
   invoke fastcc void @"_ZN4core3ptr58drop_in_place$LT$lsp_types..completion..CompletionItem$GT$17h72d57bb2a92e3f4dE"(ptr noalias noundef readonly align 8 dereferenceable(464) %i.hf)
           to label %bb.dh unwind label %bb.dj, !noalias !36701
 
 bb.di:                                            ; preds = %.lr.ph2034
-  %i.hh = add i64 %.sroa.0.1.i.i.i2032, 1         ; 2 uses
+  %i.hh = add nuw nsw i64 %.sroa.0.1.i.i.i2032, 1 ; 2 uses
   %i.hi = icmp eq i64 %i.hh, %.sroa.7.0704.i
   br i1 %i.hi, label %"_ZN4core3ptr88drop_in_place$LT$alloc..raw_vec..RawVec$LT$lsp_types..completion..CompletionItem$GT$$GT$17h55280cb01fe317afE.exit.i", label %.lr.ph2034
 
@@ -2225,7 +2225,7 @@ bb.al:                                            ; preds = %bb.ak
 .lr.ph.i.i.i.i.i.i40.i.i.i.i:                     ; preds = %.loopexit30.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i40.i.i.i.i
   %.sroa.0.07.i.i.i.i.i.i41.i.i.i.i = phi i64 [ %i.cj, %.lr.ph.i.i.i.i.i.i40.i.i.i.i ], [ 0, %.loopexit30.i.i.i.i.i.i.i ] ; 2 uses
   %i.ci = getelementptr inbounds nuw [208 x i8], ptr %.val.i8.i.i.i.i.i.i.i, i64 %.sroa.0.07.i.i.i.i.i.i41.i.i.i.i
-  %i.cj = add nuw i64 %.sroa.0.07.i.i.i.i.i.i41.i.i.i.i, 1 ; 2 uses
+  %i.cj = add nuw nsw i64 %.sroa.0.07.i.i.i.i.i.i41.i.i.i.i, 1 ; 2 uses
   call fastcc void @"_ZN4core3ptr55drop_in_place$LT$lsp_types..DocumentChangeOperation$GT$17hb65b72f8b62c0f6dE"(ptr noalias noundef readonly align 8 dereferenceable(208) %i.ci), !noalias !38782
   %i.ck = icmp eq i64 %i.cj, %.val1.i9.i.i.i.i.i.i.i
   br i1 %i.ck, label %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17ha6f1935b9e14a85fE.exit.i.i.i.i.i.i.i.i", label %.lr.ph.i.i.i.i.i.i40.i.i.i.i

@@ -205,8 +205,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader25, %bb.c
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.c ], [ %indvars.iv.ph, %.lr.ph.preheader25 ] ; 4 uses
-  %3 = icmp ugt i64 %i.h, %indvars.iv
-  br i1 %3, label %bb.c, label %.critedge
+  %exitcond.not = icmp eq i64 %indvars.iv, %i.h
+  br i1 %exitcond.not, label %.critedge, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph
   %i.s = getelementptr inbounds nuw [168 x i8], ptr %i.b, i64 %indvars.iv
@@ -304,8 +304,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader25, %bb.c
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.c ], [ %indvars.iv.ph, %.lr.ph.preheader25 ] ; 4 uses
-  %3 = icmp ugt i64 %i.h, %indvars.iv
-  br i1 %3, label %bb.c, label %.critedge
+  %exitcond.not = icmp eq i64 %indvars.iv, %i.h
+  br i1 %exitcond.not, label %.critedge, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph
   %i.s = getelementptr inbounds nuw [48 x i8], ptr %i.b, i64 %indvars.iv
@@ -708,8 +708,8 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 4 uses
-  %2 = icmp ugt i64 %i.c, %indvars.iv
-  br i1 %2, label %bb.b, label %.critedge
+  %exitcond.not = icmp eq i64 %indvars.iv, %i.c
+  br i1 %exitcond.not, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
   %i.e = getelementptr inbounds nuw [224 x i8], ptr %i.b, i64 %indvars.iv
@@ -810,8 +810,8 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.c ] ; 4 uses
-  %3 = icmp ugt i64 %i.h, %indvars.iv
-  br i1 %3, label %bb.c, label %.critedge
+  %exitcond.not = icmp eq i64 %indvars.iv, %i.h
+  br i1 %exitcond.not, label %.critedge, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv

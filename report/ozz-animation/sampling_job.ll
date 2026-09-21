@@ -204,8 +204,8 @@ bb.a:
   %i.a = shl i32 %.tr, 2                          ; 9 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !123  ; 2 uses
-  %i.e = trunc i64 %i.d to i32                    ; 2 uses
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !123
+  %i.e = trunc i64 %i.d to i32                    ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
   %i.g = load i32, ptr %i.f, align 8, !tbaa !124  ; 4 uses
   %i.h = fsub float %0, %1                        ; 2 uses
@@ -464,7 +464,6 @@ _ZN3ozz9animation12_GLOBAL__N_112OutdateCacheERKNS_4spanIhEEm.exit: ; preds = %_
   %.not.i80 = icmp ugt i64 %.8.val, 255
   %i.cs = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.ct = zext i32 %.1 to i64
-  %wide.trip.count = and i64 %i.d, 4294967295
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %_ZN3ozz9animation12_GLOBAL__N_112TrackForwardENS_4spanIKjEERKNS2_IKtEEjjj.exit
@@ -555,7 +554,8 @@ _ZN3ozz9animation12_GLOBAL__N_112TrackForwardENS_4spanIKjEERKNS2_IKtEEjjj.exit: 
   %i.ee = getelementptr inbounds nuw [4 x i8], ptr %i.ed, i64 %.pre-phi20
   store i32 %i.cy, ptr %i.ee, align 4, !tbaa !58
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
+  %exitcond.not = icmp eq i32 %lftr.wideiv, %i.e
   br i1 %exitcond.not, label %.critedge, label %bb.i, !llvm.loop !119
 
 .critedge:                                        ; preds = %_ZN3ozz9animation12_GLOBAL__N_18KeyRatioERKNS_4spanIKfEERKNS2_IKhEEm.exit, %_ZN3ozz9animation12_GLOBAL__N_112TrackForwardENS_4spanIKjEERKNS2_IKtEEjjj.exit, %.thread3
