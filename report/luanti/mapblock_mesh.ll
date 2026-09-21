@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j
 _ZN7irr_ptrIN5scene5SMeshEED2Ev.exit.1:           ; preds = %bb.k, %bb.j, %bb.i
   store ptr %i.bb, ptr %.091.ptr481.1, align 8, !tbaa !224
   %i.bq = getelementptr inbounds nuw i8, ptr %2, i64 56
-  %i.br = load i16, ptr %i.bq, align 8, !tbaa !42 ; 5 uses
+  %i.br = load i16, ptr %i.bq, align 8, !tbaa !42 ; 6 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 2 uses
   %.sroa.0314.0.copyload = load i16, ptr %i.bs, align 8, !tbaa !42 ; 2 uses
   %.sroa.6316.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 50
@@ -213,7 +213,7 @@ _ZN7irr_ptrIN5scene5SMeshEED2Ev.exit.1:           ; preds = %bb.k, %bb.j, %bb.i
   %.sroa.8318.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 52
   %.sroa.8318.0.copyload = load i16, ptr %.sroa.8318.0..sroa_idx, align 4, !tbaa !42 ; 2 uses
   %i.bt = sext i16 %.sroa.0314.0.copyload to i32
-  %i.bu = zext i16 %i.br to i32                   ; 12 uses
+  %i.bu = zext i16 %i.br to i32                   ; 10 uses
   %i.bv = srem i32 %i.bt, %i.bu
   %i.bw = icmp eq i32 %i.bv, 0
   br i1 %i.bw, label %bb.d, label %_ZNK8MeshGrid9isMeshPosERN4core8vector3dIsEE.exit.thread
@@ -278,6 +278,7 @@ _ZNSt6vectorIP15MinimapMapblockSaIS1_EE6resizeEmRKS1_.exit: ; preds = %_ZSt8_Des
   %i.cz = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.da = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.db = getelementptr inbounds nuw i8, ptr %2, i64 72
+  %umax = call i16 @llvm.umax.i16(i16 %i.br, i16 1) ; 2 uses
   br label %.preheader363
 
 .preheader363:                                    ; preds = %_ZNSt6vectorIP15MinimapMapblockSaIS1_EE6resizeEmRKS1_.exit, %bb.ab
@@ -416,16 +417,14 @@ bb.z:                                             ; preds = %bb.x, %bb.w
   br label %bb.en
 
 bb.aa:                                            ; preds = %bb.y
-  %i.fl = add i16 %storemerge118483, 1            ; 2 uses
-  %11 = sext i16 %i.fl to i32
-  %12 = icmp slt i32 %11, %i.bu
-  br i1 %12, label %.preheader, label %bb.ab, !llvm.loop !376
+  %i.fl = add nuw i16 %storemerge118483, 1        ; 2 uses
+  %exitcond.not = icmp eq i16 %i.fl, %umax
+  br i1 %exitcond.not, label %bb.ab, label %.preheader, !llvm.loop !376
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.fm = add i16 %storemerge484, 1               ; 2 uses
-  %13 = sext i16 %i.fm to i32
-  %14 = icmp slt i32 %13, %i.bu
-  br i1 %14, label %.preheader363, label %_ZNK8MeshGrid9isMeshPosERN4core8vector3dIsEE.exit.thread, !llvm.loop !377
+  %i.fm = add nuw i16 %storemerge484, 1           ; 2 uses
+  %exitcond528.not = icmp eq i16 %i.fm, %umax
+  br i1 %exitcond528.not, label %_ZNK8MeshGrid9isMeshPosERN4core8vector3dIsEE.exit.thread, label %.preheader363, !llvm.loop !377
 
 _ZNK8MeshGrid9isMeshPosERN4core8vector3dIsEE.exit.thread: ; preds = %bb.ab, %_ZN7irr_ptrIN5scene5SMeshEED2Ev.exit.1, %bb.d, %bb.m, %_ZNK8MeshGrid9isMeshPosERN4core8vector3dIsEE.exit
   %.sroa.045.0.copyload = load i48, ptr %i.bs, align 8 ; 5 uses
@@ -826,6 +825,9 @@ declare i64 @llvm.umax.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.umax.i16(i16, i16) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.exp2.v2f32(<2 x float>) #9

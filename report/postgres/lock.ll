@@ -205,11 +205,16 @@ bb.i:                                             ; preds = %bb.h
   %.not65 = icmp eq ptr %i.al, null
   %.not668392 = icmp eq ptr %i.al, %i.aj
   %.not6683 = select i1 %.not65, i1 true, i1 %.not668392
-  br i1 %.not6683, label %.critedge, label %.lr.ph87.split
+  br i1 %.not6683, label %.critedge, label %.lr.ph87.split.preheader
 
-.lr.ph87.split:                                   ; preds = %bb.i, %bb.p
-  %.sroa.0.085 = phi ptr [ %i.bd, %bb.p ], [ %i.al, %bb.i ] ; 4 uses
-  %.284 = phi i32 [ %.6, %bb.p ], [ %.152, %bb.i ] ; 4 uses
+.lr.ph87.split.preheader:                         ; preds = %bb.i
+  %4 = add nuw i32 %.fr, 1
+  %wide.trip.count98 = zext i32 %4 to i64
+  br label %.lr.ph87.split
+
+.lr.ph87.split:                                   ; preds = %.lr.ph87.split.preheader, %bb.p
+  %.sroa.0.085 = phi ptr [ %i.bd, %bb.p ], [ %i.al, %.lr.ph87.split.preheader ] ; 4 uses
+  %.284 = phi i32 [ %.6, %bb.p ], [ %.152, %.lr.ph87.split.preheader ] ; 4 uses
   %i.am = getelementptr inbounds i8, ptr %.sroa.0.085, i64 -32
   %.not67 = icmp eq ptr %3, %i.am
   br i1 %.not67, label %bb.p, label %bb.j
@@ -228,16 +233,16 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not68, label %bb.p, label %.preheader
 
 .preheader:                                       ; preds = %bb.k, %bb.o
-  %.15079 = phi i32 [ %5, %bb.o ], [ 1, %bb.k ]   ; 3 uses
-  %.378 = phi i32 [ %.4, %bb.o ], [ %.284, %bb.k ] ; 2 uses
-  %i.at = shl nuw i32 1, %.15079
+  %indvars.iv95 = phi i64 [ %indvars.iv.next96, %bb.o ], [ 1, %bb.k ] ; 3 uses
+  %.15079 = phi i32 [ %.4, %bb.o ], [ %.284, %bb.k ] ; 2 uses
+  %5 = trunc nuw nsw i64 %indvars.iv95 to i32
+  %i.at = shl nuw i32 1, %5
   %i.au = and i32 %i.at, %i.as
   %.not71 = icmp eq i32 %i.au, 0
   br i1 %.not71, label %bb.o, label %bb.l
 
 bb.l:                                             ; preds = %.preheader
-  %4 = sext i32 %.15079 to i64
-  %i.av = getelementptr inbounds [4 x i8], ptr %i.a, i64 %4 ; 2 uses
+  %i.av = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv95 ; 2 uses
   %i.aw = load i32, ptr %i.av, align 4            ; 2 uses
   %i.ax = icmp slt i32 %i.aw, 1
   br i1 %i.ax, label %bb.m, label %bb.n
@@ -251,14 +256,14 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.l
   %i.ba = add nsw i32 %i.aw, -1
   store i32 %i.ba, ptr %i.av, align 4
-  %i.bb = add i32 %.378, -1
+  %i.bb = add i32 %.15079, -1
   br label %bb.o
 
 bb.o:                                             ; preds = %.preheader, %bb.n
-  %.4 = phi i32 [ %i.bb, %bb.n ], [ %.378, %.preheader ] ; 3 uses
-  %5 = add i32 %.15079, 1                         ; 2 uses
-  %.not69 = icmp sgt i32 %5, %.fr
-  br i1 %.not69, label %._crit_edge81, label %.preheader, !llvm.loop !17
+  %.4 = phi i32 [ %i.bb, %bb.n ], [ %.15079, %.preheader ] ; 3 uses
+  %indvars.iv.next96 = add nuw nsw i64 %indvars.iv95, 1 ; 2 uses
+  %exitcond99.not = icmp eq i64 %indvars.iv.next96, %wide.trip.count98
+  br i1 %exitcond99.not, label %._crit_edge81, label %.preheader, !llvm.loop !17
 
 ._crit_edge81:                                    ; preds = %bb.o
   %.not70 = icmp eq i32 %.4, 0

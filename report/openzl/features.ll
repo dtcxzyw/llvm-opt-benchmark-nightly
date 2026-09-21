@@ -112,9 +112,9 @@ bb.b:                                             ; preds = %.split
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 4
   %i.l = load i32, ptr %i.k, align 4, !tbaa !41, !noalias !39
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 20 ; 6 uses
-  %i.n = add i32 %i.l, 1                          ; 2 uses
+  %i.n = add i32 %i.l, 1                          ; 3 uses
   %umax.i = call i32 @llvm.umax.i32(i32 %i.n, i32 1)
-  %wide.trip.count.i = zext i32 %umax.i to i64    ; 3 uses
+  %wide.trip.count.i = zext i32 %umax.i to i64    ; 2 uses
   %xtraiter1867 = and i64 %wide.trip.count.i, 3   ; 3 uses
   %i.o = icmp ult i32 %i.n, 4
   br i1 %i.o, label %.epil.preheader, label %.new
@@ -242,7 +242,8 @@ bb.e:                                             ; preds = %.preheader.i
   %i.cl = fmul double %i.ca, %i.cf
   %i.cm = call double @llvm.fmuladd.f64(double %i.cl, double %i.cd, double %.05665.i) ; 2 uses
   %indvars.iv.next72.i = add nuw nsw i64 %indvars.iv71.i, 1 ; 2 uses
-  %exitcond75.i = icmp eq i64 %indvars.iv.next72.i, %wide.trip.count.i
+  %lftr.wideiv = trunc i64 %indvars.iv.next72.i to i32
+  %exitcond75.i = icmp eq i32 %i.n, %lftr.wideiv
   br i1 %exitcond75.i, label %bb.e, label %.preheader.i, !llvm.loop !23
 
 calcMoments_uint8.exit:                           ; preds = %.epilog-lcssa, %bb.e

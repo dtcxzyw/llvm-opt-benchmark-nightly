@@ -204,15 +204,20 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.z = tail call ptr @PQgetvalue(ptr noundef %i.f, i32 noundef %.0133227, i32 noundef %i.g) #14
   %i.aa = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.v, ptr noundef nonnull dereferenceable(1) %i.z) #15
   %.not137 = icmp eq i32 %i.aa, 0
-  br i1 %.not137, label %bb.f, label %._crit_edge
+  br i1 %.not137, label %bb.f, label %._crit_edge.loopexit
 
 bb.f:                                             ; preds = %.lr.ph
-  %i.ab = add nsw i32 %.0133227, 1                ; 2 uses
+  %i.ab = add i32 %.0133227, 1                    ; 2 uses
   %exitcond.not = icmp eq i32 %i.ab, %i.t
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !15
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !15
 
-._crit_edge:                                      ; preds = %bb.f, %.lr.ph, %.preheader174
-  %.0133.lcssa = phi i32 [ %.0134267, %.preheader174 ], [ %.0133227, %.lr.ph ], [ %i.t, %bb.f ] ; 5 uses
+._crit_edge.loopexit:                             ; preds = %.lr.ph, %bb.f
+  %.0133.lcssa.ph = phi i32 [ %i.t, %bb.f ], [ %.0133227, %.lr.ph ]
+  %1 = freeze i32 %.0133.lcssa.ph
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader174
+  %.0133.lcssa = phi i32 [ %.0134267, %.preheader174 ], [ %1, %._crit_edge.loopexit ] ; 5 uses
   %i.ac = sub i32 %.0133.lcssa, %.0134267         ; 4 uses
   %i.ad = sext i32 %i.ac to i64
   %i.ae = tail call ptr @pg_malloc0_mul(i64 noundef 1, i64 noundef %i.ad) #14 ; 2 uses
@@ -281,8 +286,7 @@ rolename_create.exit:                             ; preds = %rolename_compute_si
   br i1 %i.bm, label %.lr.ph239.split.us.preheader, label %.split.us
 
 .lr.ph239.split.us.preheader:                     ; preds = %.lr.ph239
-  %1 = sext i32 %.0134267 to i64
-  %wide.trip.count = sext i32 %.0133.lcssa to i64
+  %2 = zext i32 %.0134267 to i64
   br label %.lr.ph239.split.us
 
 .lr.ph239.split.us:                               ; preds = %.lr.ph239.split.us.preheader, %..loopexit_crit_edge.us
@@ -292,9 +296,9 @@ rolename_create.exit:                             ; preds = %rolename_compute_si
   br i1 %i.bo, label %.split.us, label %.preheader.us
 
 .preheader.us:                                    ; preds = %.lr.ph239.split.us, %rolename_lookup.exit.thread.us
-  %indvars.iv = phi i64 [ %indvars.iv.next, %rolename_lookup.exit.thread.us ], [ %1, %.lr.ph239.split.us ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %rolename_lookup.exit.thread.us ], [ %2, %.lr.ph239.split.us ] ; 2 uses
   %.1131234.us = phi i32 [ %.2.us, %rolename_lookup.exit.thread.us ], [ %.0130237.us, %.lr.ph239.split.us ] ; 5 uses
-  %i.bp = trunc nsw i64 %indvars.iv to i32        ; 11 uses
+  %i.bp = trunc i64 %indvars.iv to i32            ; 11 uses
   %i.bq = sub i32 %i.bp, %.0134267
   %i.br = sext i32 %i.bq to i64
   %i.bs = getelementptr inbounds i8, ptr %i.ae, i64 %i.br ; 3 uses
@@ -697,8 +701,9 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
 
 rolename_lookup.exit.thread.us:                   ; preds = %bb.s, %bb.aw, %bb.q, %bb.j, %.preheader.us
   %.2.us = phi i32 [ %i.db, %bb.aw ], [ %i.bx, %bb.j ], [ %.1131234.us, %.preheader.us ], [ %.1131234.us, %bb.q ], [ %.1131234.us, %bb.s ] ; 3 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %exitcond319.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
+  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
+  %exitcond319.not = icmp eq i32 %.0133.lcssa, %lftr.wideiv
   br i1 %exitcond319.not, label %..loopexit_crit_edge.us, label %.preheader.us, !llvm.loop !19
 
 ..loopexit_crit_edge.us:                          ; preds = %rolename_lookup.exit.thread.us

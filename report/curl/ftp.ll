@@ -204,8 +204,8 @@ bb.a:
   %i.i = alloca i64, align 8                      ; 4 uses
   %i.j = alloca i64, align 8                      ; 4 uses
   %i.k = alloca i32, align 4                      ; 10 uses
-  %3 = alloca %struct.Curl_sockaddr_storage, align 8 ; 15 uses
-  %i.l = alloca i32, align 4                      ; 14 uses
+  %3 = alloca %struct.Curl_sockaddr_storage, align 8 ; 18 uses
+  %i.l = alloca i32, align 4                      ; 17 uses
   %i.m = alloca [1025 x i8], align 16             ; 8 uses
   %i.n = alloca ptr, align 8                      ; 7 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -405,8 +405,8 @@ ftp_port_default_host.exit:                       ; preds = %bb.p, %bb.q, %bb.r
   br label %bb.s
 
 bb.s:                                             ; preds = %ftp_port_parse_string.exit.thread, %ftp_port_default_host.exit
-  %.098121 = phi i16 [ %.098.ph, %ftp_port_parse_string.exit.thread ], [ %.098, %ftp_port_default_host.exit ] ; 7 uses
-  %.099120 = phi i16 [ %.099.ph, %ftp_port_parse_string.exit.thread ], [ %.099, %ftp_port_default_host.exit ] ; 5 uses
+  %.098121 = phi i16 [ %.098.ph, %ftp_port_parse_string.exit.thread ], [ %.098, %ftp_port_default_host.exit ] ; 4 uses
+  %.099120 = phi i16 [ %.099.ph, %ftp_port_parse_string.exit.thread ], [ %.099, %ftp_port_default_host.exit ] ; 9 uses
   %.0104 = phi ptr [ %.2106.ph, %ftp_port_parse_string.exit.thread ], [ %.3107, %ftp_port_default_host.exit ] ; 2 uses
   %.096 = phi i1 [ true, %ftp_port_parse_string.exit.thread ], [ %.197, %ftp_port_default_host.exit ] ; 2 uses
   %.0 = phi i32 [ %.172.i.ph, %ftp_port_parse_string.exit.thread ], [ %.0.i, %ftp_port_default_host.exit ] ; 2 uses
@@ -506,7 +506,7 @@ bb.ab:                                            ; preds = %bb.z, %bb.aa
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa, %bb.z, %bb.x, %bb.w
-  %i.cp = load i32, ptr %i.k, align 4, !tbaa !12  ; 4 uses
+  %i.cp = load i32, ptr %i.k, align 4, !tbaa !12  ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #10
   %i.cq = getelementptr inbounds nuw i8, ptr %.01728.i, i64 32
   %i.cr = load ptr, ptr %i.cq, align 8, !tbaa !227
@@ -517,29 +517,32 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa, %bb.
   %i.cv = load i32, ptr %i.cs, align 8, !tbaa !228
   store i32 %i.cv, ptr %i.l, align 4, !tbaa !12
   %.not91.i = icmp ugt i16 %.099120, %.098121
-  %i.cw = getelementptr inbounds nuw i8, ptr %3, i64 2 ; 5 uses
+  %i.cw = getelementptr inbounds nuw i8, ptr %3, i64 2 ; 8 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 2187 ; 4 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 4504 ; 4 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %i.p, i64 280 ; 2 uses
   br i1 %.not91.i, label %.outer._crit_edge.i, label %.split112.i
 
 .split112.i:                                      ; preds = %bb.ac
-  br i1 %.not62, label %.outer.us.i, label %.outer.i.a
+  %rev.i.us116.i225 = call i16 @llvm.bswap.i16(i16 %.099120) ; 3 uses
+  br i1 %.not62, label %.outer.us.i, label %.outer.i
 
 .outer.us.i:                                      ; preds = %.split112.i
-  br i1 %.096, label %.lr.ph.split.us113.i.a, label %.lr.ph.split.us.i.preheader
+  br i1 %.096, label %.lr.ph.split.us113.i.a, label %.lr.ph.split.us.i
 
-.lr.ph.split.us113.i.a:                           ; preds = %.outer.us.i, %bb.af
-  %.06292.us114.i = phi i16 [ %i.de, %bb.af ], [ %.099120, %.outer.us.i ] ; 5 uses
-  %rev.i.us116.i = call noundef i16 @llvm.bswap.i16(i16 %.06292.us114.i)
-  store i16 %rev.i.us116.i, ptr %i.cw, align 2, !tbaa !229
+.lr.ph.split.us113.i.a:                           ; preds = %.outer.us.i
+  store i16 %rev.i.us116.i225, ptr %i.cw, align 2, !tbaa !229
   %i.da = load i32, ptr %i.l, align 4, !tbaa !12
   %i.db = call i32 @bind(i32 noundef %i.cp, ptr nonnull %3, i32 noundef %i.da) #10
   %.not70.us117.i.a = icmp eq i32 %i.db, 0
-  br i1 %.not70.us117.i.a, label %.outer._crit_edge.i, label %bb.ad
+  br i1 %.not70.us117.i.a, label %.outer._crit_edge.i, label %.lr.ph228
 
-bb.ad:                                            ; preds = %.lr.ph.split.us113.i.a
+.lr.ph228:                                        ; preds = %.lr.ph.split.us113.i.a
   %4 = tail call ptr @__errno_location() #11      ; 2 uses
+  br label %bb.ad
+
+bb.ad:                                            ; preds = %.lr.ph228, %bb.af
+  %.06292.us114.i227 = phi i16 [ %.099120, %.lr.ph228 ], [ %i.de, %bb.af ] ; 3 uses
   %i.dc = load i32, ptr %4, align 4, !tbaa !12    ; 2 uses
   switch i32 %i.dc, label %.split.us.i [
     i32 99, label %bb.ag
@@ -548,31 +551,41 @@ bb.ad:                                            ; preds = %.lr.ph.split.us113.
   ]
 
 bb.ae:                                            ; preds = %bb.ad, %bb.ad
-  %i.dd = icmp eq i16 %.06292.us114.i, %.098121
+  %i.dd = icmp eq i16 %.06292.us114.i227, %.098121
   br i1 %i.dd, label %.split99.us.i, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %i.de = add i16 %.06292.us114.i, 1              ; 3 uses
-  %.not.us118.i = icmp ugt i16 %i.de, %.098121
-  br i1 %.not.us118.i, label %.outer._crit_edge.i, label %.lr.ph.split.us113.i.a, !llvm.loop !210
+  %i.de = add nuw i16 %.06292.us114.i227, 1       ; 3 uses
+  %rev.i.us116.i = call noundef i16 @llvm.bswap.i16(i16 %i.de)
+  store i16 %rev.i.us116.i, ptr %i.cw, align 2, !tbaa !229
+  %5 = load i32, ptr %i.l, align 4, !tbaa !12
+  %6 = call i32 @bind(i32 noundef %i.cp, ptr nonnull %3, i32 noundef %5) #10
+  %.not70.us117.i = icmp eq i32 %6, 0
+  br i1 %.not70.us117.i, label %.outer._crit_edge.i, label %bb.ad
 
 bb.ag:                                            ; preds = %bb.ad
   store i32 128, ptr %i.l, align 4, !tbaa !12
   %i.df = load i32, ptr %i.cz, align 8, !tbaa !12
   %i.dg = call i32 @getsockname(i32 noundef %i.df, ptr nonnull %3, ptr noundef nonnull %i.l) #10
   %.not78.us.i = icmp eq i32 %i.dg, 0
-  br i1 %.not78.us.i, label %.lr.ph.split.us.i.preheader, label %.split130.us.i, !llvm.loop !210
+  br i1 %.not78.us.i, label %.lr.ph.split.us.i, label %.split130.us.i, !llvm.loop !210
 
-.outer.i.a:                                       ; preds = %.split112.i
-  br i1 %.096, label %.lr.ph.split.i.a, label %.lr.ph.split.us.i.preheader
+.outer.i:                                         ; preds = %.split112.i
+  br i1 %.096, label %.outer.i.a, label %.lr.ph.split.us.i
 
-.lr.ph.split.us.i.preheader:                      ; preds = %.outer.i.a, %bb.ap, %.outer.us.i, %bb.ag
-  br label %.lr.ph.split.us.i
+.outer.i.a:                                       ; preds = %.outer.i
+  store i16 %rev.i.us116.i225, ptr %i.cw, align 2, !tbaa !229
+  %7 = load i32, ptr %i.l, align 4, !tbaa !12
+  %8 = call i32 @bind(i32 noundef %i.cp, ptr nonnull %3, i32 noundef %7) #10
+  %.not70.i222 = icmp eq i32 %8, 0
+  br i1 %.not70.i222, label %.outer._crit_edge.i, label %.lr.ph.split.us.i.preheader
 
-.lr.ph.split.us.i:                                ; preds = %.lr.ph.split.us.i.preheader, %bb.aj
-  %.06292.us.i = phi i16 [ %7, %bb.aj ], [ %.099120, %.lr.ph.split.us.i.preheader ] ; 5 uses
-  %rev.i.us.i = call noundef i16 @llvm.bswap.i16(i16 %.06292.us.i)
-  store i16 %rev.i.us.i, ptr %i.cw, align 2, !tbaa !229
+.lr.ph.split.us.i.preheader:                      ; preds = %.outer.i.a
+  %9 = tail call ptr @__errno_location() #11      ; 2 uses
+  br label %bb.ak
+
+.lr.ph.split.us.i:                                ; preds = %.outer.i, %bb.ap, %.outer.us.i, %bb.ag
+  store i16 %rev.i.us116.i225, ptr %i.cw, align 2, !tbaa !229
   %i.dh = load i32, ptr %i.l, align 4, !tbaa !12
   %i.di = call i32 @bind(i32 noundef %i.cp, ptr nonnull %3, i32 noundef %i.dh) #10
   %.not70.us.i.a = icmp eq i32 %i.di, 0
@@ -580,33 +593,32 @@ bb.ag:                                            ; preds = %bb.ad
 
 bb.ah:                                            ; preds = %.lr.ph.split.us.i
   %i.dj = tail call ptr @__errno_location() #11
-  %5 = load i32, ptr %i.dj, align 4, !tbaa !12    ; 2 uses
-  switch i32 %5, label %.split.us.i [
-    i32 98, label %bb.ai
-    i32 13, label %bb.ai
+  br label %bb.ai
+
+bb.ai:                                            ; preds = %bb.ah, %.lr.ph.split.i.a
+  %.06292.us.i233 = phi i16 [ %.099120, %bb.ah ], [ %12, %.lr.ph.split.i.a ] ; 3 uses
+  %10 = load i32, ptr %i.dj, align 4, !tbaa !12   ; 2 uses
+  switch i32 %10, label %.split.us.i [
+    i32 98, label %bb.aj
+    i32 13, label %bb.aj
   ]
 
-bb.ai:                                            ; preds = %bb.ah, %bb.ah
-  %6 = icmp eq i16 %.06292.us.i, %.098121
-  br i1 %6, label %.split99.us.i, label %bb.aj
+bb.aj:                                            ; preds = %bb.ai, %bb.ai
+  %11 = icmp eq i16 %.06292.us.i233, %.098121
+  br i1 %11, label %.split99.us.i, label %.lr.ph.split.i.a
 
-bb.aj:                                            ; preds = %bb.ai
-  %7 = add i16 %.06292.us.i, 1                    ; 3 uses
-  %.not.us.i = icmp ugt i16 %7, %.098121
-  br i1 %.not.us.i, label %.outer._crit_edge.i, label %.lr.ph.split.us.i, !llvm.loop !210
-
-.lr.ph.split.i.a:                                 ; preds = %.outer.i.a, %bb.ar
-  %.06292.i = phi i16 [ %i.ec, %bb.ar ], [ %.099120, %.outer.i.a ] ; 6 uses
-  %rev.i.i.a = call noundef i16 @llvm.bswap.i16(i16 %.06292.i)
+.lr.ph.split.i.a:                                 ; preds = %bb.aj
+  %12 = add i16 %.06292.us.i233, 1                ; 3 uses
+  %rev.i.i.a = call noundef i16 @llvm.bswap.i16(i16 %12)
   store i16 %rev.i.i.a, ptr %i.cw, align 2, !tbaa !229
   %i.dk = load i32, ptr %i.l, align 4, !tbaa !12
   %i.dl = call i32 @bind(i32 noundef %i.cp, ptr nonnull %3, i32 noundef %i.dk) #10
   %.not70.i.a = icmp eq i32 %i.dl, 0
-  br i1 %.not70.i.a, label %.outer._crit_edge.i, label %bb.ak
+  br i1 %.not70.i.a, label %.outer._crit_edge.i, label %bb.ai
 
-bb.ak:                                            ; preds = %.lr.ph.split.i.a
-  %8 = tail call ptr @__errno_location() #11      ; 2 uses
-  %i.dm = load i32, ptr %8, align 4, !tbaa !12    ; 2 uses
+bb.ak:                                            ; preds = %.lr.ph.split.us.i.preheader, %bb.ar
+  %.06292.i223 = phi i16 [ %.099120, %.lr.ph.split.us.i.preheader ], [ %i.ec, %bb.ar ] ; 4 uses
+  %i.dm = load i32, ptr %9, align 4, !tbaa !12    ; 2 uses
   switch i32 %i.dm, label %.split.us.i [
     i32 99, label %bb.al
     i32 98, label %bb.aq
@@ -614,7 +626,7 @@ bb.ak:                                            ; preds = %.lr.ph.split.i.a
   ]
 
 bb.al:                                            ; preds = %bb.ak
-  %i.dn = zext i16 %.06292.i to i32
+  %i.dn = zext i16 %.06292.i223 to i32
   %i.do = load i64, ptr %i.cx, align 1
   %i.dp = and i64 %i.do, 536870912
   %.not76.i = icmp eq i64 %i.dp, 0
@@ -641,38 +653,42 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an, %bb.
   %i.dv = load i32, ptr %i.cz, align 8, !tbaa !12
   %i.dw = call i32 @getsockname(i32 noundef %i.dv, ptr nonnull %3, ptr noundef nonnull %i.l) #10
   %.not78.i = icmp eq i32 %i.dw, 0
-  br i1 %.not78.i, label %.lr.ph.split.us.i.preheader, label %.split130.us.i, !llvm.loop !210
+  br i1 %.not78.i, label %.lr.ph.split.us.i, label %.split130.us.i, !llvm.loop !210
 
 .split130.us.i:                                   ; preds = %bb.ap, %bb.ag
-  %.us-phi131.i = phi ptr [ %4, %bb.ag ], [ %8, %bb.ap ]
+  %.us-phi131.i = phi ptr [ %4, %bb.ag ], [ %9, %bb.ap ]
   %i.dx = load i32, ptr %.us-phi131.i, align 4, !tbaa !12
   %i.dy = call ptr @curlx_strerror(i32 noundef %i.dx, ptr noundef nonnull %i.d, i64 noundef 256) #10
   call void (ptr, ptr, ...) @Curl_failf(ptr noundef %0, ptr noundef nonnull @.str.71, ptr noundef %i.dy) #10
   br label %bb.az
 
-.split.us.i:                                      ; preds = %bb.ak, %bb.ad, %bb.ah
-  %.us-phi96.i = phi i16 [ %.06292.us.i, %bb.ah ], [ %.06292.us114.i, %bb.ad ], [ %.06292.i, %bb.ak ]
-  %.us-phi97.i = phi i32 [ %5, %bb.ah ], [ %i.dc, %bb.ad ], [ %i.dm, %bb.ak ]
+.split.us.i:                                      ; preds = %bb.ak, %bb.ad, %bb.ai
+  %.us-phi96.i = phi i16 [ %.06292.us.i233, %bb.ai ], [ %.06292.us114.i227, %bb.ad ], [ %.06292.i223, %bb.ak ]
+  %.us-phi97.i = phi i32 [ %10, %bb.ai ], [ %i.dc, %bb.ad ], [ %i.dm, %bb.ak ]
   %i.dz = zext i16 %.us-phi96.i to i32
   %i.ea = call ptr @curlx_strerror(i32 noundef %.us-phi97.i, ptr noundef nonnull %i.d, i64 noundef 256) #10
   call void (ptr, ptr, ...) @Curl_failf(ptr noundef %0, ptr noundef nonnull @.str.75, i32 noundef %i.dz, ptr noundef %i.ea) #10
   br label %bb.az
 
 bb.aq:                                            ; preds = %bb.ak, %bb.ak
-  %i.eb = icmp eq i16 %.06292.i, %.098121
+  %i.eb = icmp eq i16 %.06292.i223, %.098121
   br i1 %i.eb, label %.split99.us.i, label %bb.ar
 
-.split99.us.i:                                    ; preds = %bb.aq, %bb.ae, %bb.ai
+.split99.us.i:                                    ; preds = %bb.aq, %bb.ae, %bb.aj
   call void (ptr, ptr, ...) @Curl_failf(ptr noundef %0, ptr noundef nonnull @.str.76) #10
   br label %bb.az
 
 bb.ar:                                            ; preds = %bb.aq
-  %i.ec = add i16 %.06292.i, 1                    ; 3 uses
-  %.not.i77 = icmp ugt i16 %i.ec, %.098121
-  br i1 %.not.i77, label %.outer._crit_edge.i, label %.lr.ph.split.i.a, !llvm.loop !210
+  %i.ec = add nuw i16 %.06292.i223, 1             ; 3 uses
+  %rev.i.i = call noundef i16 @llvm.bswap.i16(i16 %i.ec)
+  store i16 %rev.i.i, ptr %i.cw, align 2, !tbaa !229
+  %13 = load i32, ptr %i.l, align 4, !tbaa !12
+  %14 = call i32 @bind(i32 noundef %i.cp, ptr nonnull %3, i32 noundef %13) #10
+  %.not70.i = icmp eq i32 %14, 0
+  br i1 %.not70.i, label %.outer._crit_edge.i, label %bb.ak
 
-.outer._crit_edge.i:                              ; preds = %bb.ar, %.lr.ph.split.i.a, %bb.af, %.lr.ph.split.us113.i.a, %bb.aj, %.lr.ph.split.us.i, %bb.ac
-  %.062.lcssa90.i = phi i16 [ %.099120, %bb.ac ], [ %i.de, %bb.af ], [ %.06292.us.i, %.lr.ph.split.us.i ], [ %7, %bb.aj ], [ %.06292.us114.i, %.lr.ph.split.us113.i.a ], [ %i.ec, %bb.ar ], [ %.06292.i, %.lr.ph.split.i.a ]
+.outer._crit_edge.i:                              ; preds = %bb.ar, %bb.af, %.lr.ph.split.i.a, %.outer.i.a, %.lr.ph.split.us113.i.a, %.lr.ph.split.us.i, %bb.ac
+  %.062.lcssa90.i = phi i16 [ %.099120, %bb.ac ], [ %12, %.lr.ph.split.i.a ], [ %i.de, %bb.af ], [ %.099120, %.lr.ph.split.us.i ], [ %.099120, %.outer.i.a ], [ %.099120, %.lr.ph.split.us113.i.a ], [ %i.ec, %bb.ar ]
   %i.ed = zext i16 %.062.lcssa90.i to i32
   store i32 128, ptr %i.l, align 4, !tbaa !12
   %i.ee = call i32 @getsockname(i32 noundef %i.cp, ptr nonnull %3, ptr noundef nonnull %i.l) #10

@@ -202,9 +202,8 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 
 .lr.ph3014:                                       ; preds = %._crit_edge3022, %.lr.ph3026
   %indvar4699 = phi i32 [ %indvar.next4700, %._crit_edge3022 ], [ 0, %.lr.ph3026 ] ; 3 uses
-  %indvars.iv3599 = phi i64 [ %indvars.iv.next3600, %._crit_edge3022 ], [ %i.atv, %.lr.ph3026 ] ; 9 uses
+  %indvars.iv3599 = phi i64 [ %indvars.iv.next3600.pre-phi, %._crit_edge3022 ], [ %i.atv, %.lr.ph3026 ] ; 9 uses
   %indvars.iv3592 = phi i32 [ %indvars.iv.next3593, %._crit_edge3022 ], [ %i.atx, %.lr.ph3026 ] ; 2 uses
-  %13 = add i64 %indvars.iv3599, 1                ; 2 uses
   %i.aui = sub nsw i64 %i.atw, %indvars.iv3599
   %i.auj = add nuw nsw i64 %i.aui, 1              ; 2 uses
   %i.auk = mul nsw i64 %indvars.iv3599, %i.bb
@@ -213,6 +212,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.aun = mul nsw i64 %indvars.iv3599, %i.bc
   %i.auo = getelementptr [8 x i8], ptr %i.s, i64 %i.auj
   %i.aup = getelementptr [8 x i8], ptr %i.auo, i64 %i.aun ; 3 uses
+  %13 = add i64 %indvars.iv3599, 1                ; 2 uses
   %i.auq = and i32 %indvar4699, 1
   %lcmp.mod4702.not.not = icmp eq i32 %i.auq, 0
   br i1 %lcmp.mod4702.not.not, label %.prol.loopexit4698.unr-lcssa, label %.prol.loopexit4698
@@ -303,7 +303,11 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %exitcond3595.not.1, label %._crit_edge3015, label %.lr.ph3014.new, !llvm.loop !56
 
 ._crit_edge3015:                                  ; preds = %.lr.ph3014.new, %.prol.loopexit4698
-  br i1 %.not26743017, label %._crit_edge3022, label %.lr.ph3021
+  br i1 %.not26743017, label %._crit_edge3015.._crit_edge3022_crit_edge, label %.lr.ph3021
+
+._crit_edge3015.._crit_edge3022_crit_edge:        ; preds = %._crit_edge3015
+  %.pre3974 = add nsw i64 %indvars.iv3599, 1
+  br label %._crit_edge3022
 
 .lr.ph3021:                                       ; preds = %._crit_edge3015
   %i.axc = mul nsw i64 %indvars.iv3599, %i.bc
@@ -312,7 +316,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.axf = sext i32 %i.axe to i64
   %i.axg = getelementptr [8 x i8], ptr %i.s, i64 %i.axc
   %i.axh = getelementptr [8 x i8], ptr %i.axg, i64 %i.axf
-  %i.axi = add i64 %indvars.iv3599, 1
+  %i.axi = add nsw i64 %indvars.iv3599, 1         ; 2 uses
   br label %bb.bo
 
 bb.bo:                                            ; preds = %.lr.ph3021, %bb.bo
@@ -338,11 +342,11 @@ bb.bo:                                            ; preds = %.lr.ph3021, %bb.bo
   %.not2674.not = icmp samesign ult i64 %indvars.iv3596, %i.atz
   br i1 %.not2674.not, label %bb.bo, label %._crit_edge3022, !llvm.loop !57
 
-._crit_edge3022:                                  ; preds = %bb.bo, %._crit_edge3015
-  %indvars.iv.next3600 = add nsw i64 %indvars.iv3599, 1 ; 2 uses
+._crit_edge3022:                                  ; preds = %bb.bo, %._crit_edge3015.._crit_edge3022_crit_edge
+  %indvars.iv.next3600.pre-phi = phi i64 [ %.pre3974, %._crit_edge3015.._crit_edge3022_crit_edge ], [ %i.axi, %bb.bo ] ; 2 uses
+  %lftr.wideiv3602.pre-phi = trunc i64 %indvars.iv.next3600.pre-phi to i32
   %indvars.iv.next3593 = add i32 %indvars.iv3592, 1
-  %lftr.wideiv3602 = trunc i64 %indvars.iv.next3600 to i32
-  %exitcond3603.not = icmp eq i32 %i.br, %lftr.wideiv3602
+  %exitcond3603.not = icmp eq i32 %i.br, %lftr.wideiv3602.pre-phi
   %indvar.next4700 = add i32 %indvar4699, 1
   br i1 %exitcond3603.not, label %._crit_edge3027, label %.lr.ph3014, !llvm.loop !58
 
@@ -365,13 +369,17 @@ bb.bp:                                            ; preds = %._crit_edge3027, %.
   br label %bb.bq
 
 bb.bq:                                            ; preds = %.lr.ph3038, %._crit_edge3034
-  %indvars.iv3609 = phi i64 [ %i.ayb, %.lr.ph3038 ], [ %indvars.iv.next3610, %._crit_edge3034 ] ; 4 uses
+  %indvars.iv3609 = phi i64 [ %i.ayb, %.lr.ph3038 ], [ %indvars.iv.next3610.pre-phi, %._crit_edge3034 ] ; 4 uses
   %indvars.iv3604 = phi i32 [ %i.arv, %.lr.ph3038 ], [ %indvars.iv.next3605, %._crit_edge3034 ] ; 2 uses
   %i.ayd = trunc i64 %indvars.iv3609 to i32
   %i.aye = sub i32 %i.ayd, %.pre3791              ; 2 uses
   %i.ayf = call i32 @llvm.smax.i32(i32 %i.aye, i32 %i.bw)
   %.not26713029 = icmp sgt i32 %i.ayf, %i.bs
-  br i1 %.not26713029, label %._crit_edge3034, label %.lr.ph3033
+  br i1 %.not26713029, label %.._crit_edge3034_crit_edge, label %.lr.ph3033
+
+.._crit_edge3034_crit_edge:                       ; preds = %bb.bq
+  %.pre3972 = add i64 %indvars.iv3609, 1
+  br label %._crit_edge3034
 
 .lr.ph3033:                                       ; preds = %bb.bq
   %i.ayg = call i32 @llvm.smax.i32(i32 %indvars.iv3604, i32 %i.bw)
@@ -380,7 +388,7 @@ bb.bq:                                            ; preds = %.lr.ph3038, %._crit
   %i.ayi = add i32 %i.axz, %i.ayh
   %i.ayj = sext i32 %i.ayi to i64
   %i.ayk = getelementptr inbounds [8 x i8], ptr %i.p, i64 %i.ayj
-  %i.ayl = add i64 %indvars.iv3609, 1
+  %i.ayl = add i64 %indvars.iv3609, 1             ; 2 uses
   br label %bb.br
 
 bb.br:                                            ; preds = %.lr.ph3033, %bb.br
@@ -407,11 +415,11 @@ bb.br:                                            ; preds = %.lr.ph3033, %bb.br
   %.not2671.not = icmp slt i64 %indvars.iv3607, %i.aya
   br i1 %.not2671.not, label %bb.br, label %._crit_edge3034, !llvm.loop !59
 
-._crit_edge3034:                                  ; preds = %bb.br, %bb.bq
-  %indvars.iv.next3610 = add i64 %indvars.iv3609, 1 ; 2 uses
+._crit_edge3034:                                  ; preds = %bb.br, %.._crit_edge3034_crit_edge
+  %indvars.iv.next3610.pre-phi = phi i64 [ %.pre3972, %.._crit_edge3034_crit_edge ], [ %i.ayl, %bb.br ] ; 2 uses
+  %lftr.wideiv3612.pre-phi = trunc i64 %indvars.iv.next3610.pre-phi to i32
   %indvars.iv.next3605 = add i32 %indvars.iv3604, 1
-  %lftr.wideiv3612 = trunc i64 %indvars.iv.next3610 to i32
-  %exitcond3613.not = icmp eq i32 %i.ayc, %lftr.wideiv3612
+  %exitcond3613.not = icmp eq i32 %i.ayc, %lftr.wideiv3612.pre-phi
   br i1 %exitcond3613.not, label %._crit_edge3039, label %bb.bq, !llvm.loop !60
 
 ._crit_edge3039:                                  ; preds = %._crit_edge3034

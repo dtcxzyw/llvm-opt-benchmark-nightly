@@ -204,29 +204,29 @@ _ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit194: ; preds = %_ZNK4
   br label %bb.bn, !llvm.loop !158
 
 .loopexit451:                                     ; preds = %_ZNK4llvh5APIntneEm.exit.peel, %_ZNK4llvh5APIntneEm.exit
-  %i.lg = load i32, ptr %i.jf, align 8, !tbaa !57 ; 7 uses
+  %i.lg = load i32, ptr %i.jf, align 8, !tbaa !57 ; 6 uses
   %.not.i195 = icmp ult i32 %.0112, %i.lg
   br i1 %.not.i195, label %bb.bq, label %_ZN4llvh6detail12_GLOBAL__N_117AdjustToPrecisionERNS_15SmallVectorImplIcEERij.exit
 
 bb.bq:                                            ; preds = %.loopexit451
-  %i.lh = sub nuw i32 %i.lg, %.0112               ; 3 uses
+  %i.lh = sub nuw i32 %i.lg, %.0112               ; 2 uses
   %i.li = add i32 %i.lh, -1
   %i.lj = zext i32 %i.li to i64
   %i.lk = load ptr, ptr %13, align 8, !tbaa !58   ; 8 uses
   %i.ll = getelementptr inbounds nuw i8, ptr %i.lk, i64 %i.lj
   %i.lm = load i8, ptr %i.ll, align 1, !tbaa !35
   %i.ln = icmp slt i8 %i.lm, 53
+  %17 = zext i32 %i.lh to i64                     ; 3 uses
+  %18 = zext i32 %i.lg to i64                     ; 4 uses
   br i1 %i.ln, label %.lr.ph53.preheader.i, label %.lr.ph.i
 
 .lr.ph53.preheader.i:                             ; preds = %bb.bq
-  %17 = zext i32 %i.lh to i64                     ; 2 uses
-  %18 = zext i32 %i.lg to i64                     ; 3 uses
   %i.lo = add nuw nsw i64 %17, 1
   %umax = call i64 @llvm.umax.i64(i64 %i.lo, i64 %18)
   br label %.lr.ph53.i
 
-.lr.ph53.i:                                       ; preds = %bb.br, %.lr.ph53.preheader.i
-  %indvars.iv.i.a = phi i64 [ %17, %.lr.ph53.preheader.i ], [ %indvars.iv.next.i.a, %bb.br ] ; 3 uses
+.lr.ph53.i:                                       ; preds = %.lr.ph53.preheader.i, %bb.br
+  %indvars.iv.i.a = phi i64 [ %indvars.iv.next.i.a, %bb.br ], [ %17, %.lr.ph53.preheader.i ] ; 3 uses
   %i.lp = getelementptr inbounds nuw i8, ptr %i.lk, i64 %indvars.iv.i.a
   %i.lq = load i8, ptr %i.lp, align 1, !tbaa !35
   %i.lr = icmp eq i8 %i.lq, 48
@@ -268,23 +268,23 @@ _ZN4llvh15SmallVectorImplIcE5eraseEPKcS3_.exit.i: ; preds = %bb.bu, %bb.bt, %bb.
   br label %.sink.split.i
 
 .lr.ph.i:                                         ; preds = %bb.bq, %bb.bv
-  %.051.i = phi i32 [ %20, %bb.bv ], [ %i.lh, %bb.bq ] ; 4 uses
-  %19 = zext i32 %.051.i to i64                   ; 4 uses
-  %i.md = getelementptr inbounds nuw i8, ptr %i.lk, i64 %19
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.bv ], [ %17, %bb.bq ] ; 5 uses
+  %i.md = getelementptr inbounds nuw i8, ptr %i.lk, i64 %indvars.iv.i
   %i.me = load i8, ptr %i.md, align 1, !tbaa !35  ; 2 uses
   %i.mf = icmp eq i8 %i.me, 57
   br i1 %i.mf, label %bb.bv, label %.loopexit.i
 
 bb.bv:                                            ; preds = %.lr.ph.i
-  %20 = add i32 %.051.i, 1                        ; 2 uses
-  %.not41.i = icmp eq i32 %20, %i.lg
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %.not41.i = icmp eq i64 %indvars.iv.next.i, %18
   br i1 %.not41.i, label %.loopexit.thread.i, label %.lr.ph.i, !llvm.loop !160
 
 .loopexit.i:                                      ; preds = %.lr.ph.i
-  %i.mg = getelementptr inbounds nuw i8, ptr %i.lk, i64 %19
+  %i.mg = getelementptr inbounds nuw i8, ptr %i.lk, i64 %indvars.iv.i
+  %indvars64.i = trunc i64 %indvars.iv.i to i32   ; 2 uses
   %i.mh = add i8 %i.me, 1
   store i8 %i.mh, ptr %i.mg, align 1, !tbaa !35
-  %i.mi = icmp eq i32 %.051.i, %i.lg
+  %i.mi = icmp eq i32 %i.lg, %indvars64.i
   br i1 %i.mi, label %.loopexit.thread.i, label %bb.bx
 
 .loopexit.thread.i:                               ; preds = %bb.bv, %.loopexit.i
@@ -310,6 +310,7 @@ _ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit.i: ; preds = %bb.bw,
 
 bb.bx:                                            ; preds = %.loopexit.i
   %i.mq = load ptr, ptr %13, align 8, !tbaa !58   ; 4 uses
+  %19 = and i64 %indvars.iv.i, 4294967295         ; 2 uses
   %i.mr = getelementptr inbounds nuw i8, ptr %i.mq, i64 %19 ; 2 uses
   %i.ms = load i32, ptr %i.jf, align 8, !tbaa !57
   %i.mt = zext i32 %i.ms to i64
@@ -340,7 +341,7 @@ _ZN4llvh15SmallVectorImplIcE5eraseEPKcS3_.exit42.i: ; preds = %bb.ca, %bb.bz, %b
   br label %.sink.split.i
 
 .sink.split.i:                                    ; preds = %_ZN4llvh15SmallVectorImplIcE5eraseEPKcS3_.exit42.i, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit.i, %_ZN4llvh15SmallVectorImplIcE5eraseEPKcS3_.exit.i
-  %.038.lcssa.ph.i.pn = phi i32 [ %.038.lcssa.ph.i, %_ZN4llvh15SmallVectorImplIcE5eraseEPKcS3_.exit.i ], [ %i.lg, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit.i ], [ %.051.i, %_ZN4llvh15SmallVectorImplIcE5eraseEPKcS3_.exit42.i ]
+  %.038.lcssa.ph.i.pn = phi i32 [ %.038.lcssa.ph.i, %_ZN4llvh15SmallVectorImplIcE5eraseEPKcS3_.exit.i ], [ %i.lg, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit.i ], [ %indvars64.i, %_ZN4llvh15SmallVectorImplIcE5eraseEPKcS3_.exit42.i ]
   %.sink.i = phi i32 [ %i.mc, %_ZN4llvh15SmallVectorImplIcE5eraseEPKcS3_.exit.i ], [ %i.mp, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit.i ], [ %i.nc, %_ZN4llvh15SmallVectorImplIcE5eraseEPKcS3_.exit42.i ] ; 2 uses
   %.6 = add i32 %.038.lcssa.ph.i.pn, %.1286.ph
   store i32 %.sink.i, ptr %i.jf, align 8, !tbaa !57
@@ -743,7 +744,7 @@ _ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit232: ; preds = %bb.db
   %i.tv = load i32, ptr %i.sx, align 8, !tbaa !57
   %i.tw = add i32 %i.tv, 1                        ; 2 uses
   store i32 %i.tw, ptr %i.sx, align 8, !tbaa !57
-  %i.tx = add nuw i32 %.0103323, 1                ; 2 uses
+  %i.tx = add nuw nsw i32 %.0103323, 1            ; 2 uses
   %.not136 = icmp eq i32 %i.tx, %.7
   br i1 %.not136, label %.loopexit300, label %bb.db, !llvm.loop !165
 

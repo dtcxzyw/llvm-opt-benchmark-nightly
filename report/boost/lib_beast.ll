@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 3033
 inline.NumDeleted: 950
 loop-unroll.NumCompletelyUnrolled: 64
-loop-unroll.NumRuntimeUnrolled: 11
-loop-unroll.NumUnrolled: 78
+loop-unroll.NumRuntimeUnrolled: 12
+loop-unroll.NumUnrolled: 79
 begin_hunk_0_@_ZN5boost5beast4zlib6detail14inflate_stream7doWriteERNS1_8z_paramsENS1_5FlushERNS_6system10error_codeE:bb.a
 
 bb.ao:                                            ; preds = %.lr.ph, %bb.aq
@@ -205,7 +205,7 @@ bb.au:                                            ; preds = %.loopexit405
   store i32 %i.jz, ptr %i.y, align 4, !tbaa !403
   %i.ka = lshr i32 %i.jn, %i.jy
   store i32 %i.ka, ptr %0, align 8, !tbaa !404
-  %i.kb = add i32 %i.jb, 1                        ; 2 uses
+  %i.kb = add nuw i32 %i.jb, 1                    ; 2 uses
   store i32 %i.kb, ptr %i.ac, align 8, !tbaa !1198
   %i.kc = zext i32 %i.jb to i64
   %i.kd = getelementptr inbounds nuw [2 x i8], ptr %i.ad, i64 %i.kc
@@ -608,7 +608,7 @@ define hidden void @_ZN5boost5beast4zlib6detail14inflate_stream13inflate_tableEN
   %9 = alloca %"class.std::logic_error", align 8  ; 5 uses
   %10 = alloca %"struct.boost::source_location", align 8 ; 7 uses
   %i.a = alloca [16 x i16], align 16              ; 36 uses
-  %i.b = alloca [16 x i16], align 16              ; 18 uses
+  %i.b = alloca [16 x i16], align 16              ; 20 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #48
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #48
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, i8 0, i64 32, i1 false), !tbaa !197
@@ -1009,18 +1009,47 @@ bb.ai:                                            ; preds = %_ZN5boost6system10e
   %i.fy = add i16 %i.ea, %i.fw
   %i.fz = getelementptr inbounds nuw i8, ptr %i.b, i64 30
   store i16 %i.fy, ptr %i.fz, align 2, !tbaa !197
-  br i1 %.not285, label %._crit_edge276, label %.lr.ph275
+  br i1 %.not285, label %._crit_edge276, label %.lr.ph275.preheader
 
-.lr.ph275:                                        ; preds = %.preheader254, %bb.ak
-  %indvars.iv311.a = phi i64 [ %indvars.iv.next312.a, %bb.ak ], [ 0, %.preheader254 ] ; 3 uses
-  %i.ga = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %indvars.iv311.a
+.lr.ph275.preheader:                              ; preds = %.preheader254
+  %xtraiter = and i64 %2, 1
+  %11 = icmp eq i64 %2, 1
+  br i1 %11, label %.lr.ph275.epil.preheader, label %.lr.ph275.preheader.new
+
+.lr.ph275.preheader.new:                          ; preds = %.lr.ph275.preheader
+  %unroll_iter = and i64 %2, -2
+  br label %.lr.ph275
+
+.lr.ph275:                                        ; preds = %bb.ak, %.lr.ph275.preheader.new
+  %indvars.iv311 = phi i64 [ 0, %.lr.ph275.preheader.new ], [ %indvars.iv.next312.a, %bb.ak ] ; 4 uses
+  %indvars.iv311.a = phi i64 [ 0, %.lr.ph275.preheader.new ], [ %niter.next.1, %bb.ak ]
+  %i.ga = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %indvars.iv311
   %i.gb = load i16, ptr %i.ga, align 2, !tbaa !197 ; 2 uses
   %.not223 = icmp eq i16 %i.gb, 0
-  br i1 %.not223, label %bb.ak, label %bb.aj
+  br i1 %.not223, label %.lr.ph275.1, label %12
 
-bb.aj:                                            ; preds = %.lr.ph275
-  %i.gc = trunc i64 %indvars.iv311.a to i16
-  %i.gd = zext i16 %i.gb to i64
+12:                                               ; preds = %.lr.ph275
+  %13 = trunc i64 %indvars.iv311 to i16
+  %14 = zext i16 %i.gb to i64
+  %15 = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %14 ; 2 uses
+  %16 = load i16, ptr %15, align 2, !tbaa !197    ; 2 uses
+  %17 = add i16 %16, 1
+  store i16 %17, ptr %15, align 2, !tbaa !197
+  %18 = zext i16 %16 to i64
+  %19 = getelementptr inbounds nuw [2 x i8], ptr %5, i64 %18
+  store i16 %13, ptr %19, align 2, !tbaa !197
+  br label %.lr.ph275.1
+
+.lr.ph275.1:                                      ; preds = %.lr.ph275, %12
+  %indvars.iv.next312 = or disjoint i64 %indvars.iv311, 1 ; 2 uses
+  %20 = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %indvars.iv.next312
+  %21 = load i16, ptr %20, align 2, !tbaa !197    ; 2 uses
+  %.not223.1 = icmp eq i16 %21, 0
+  br i1 %.not223.1, label %bb.ak, label %bb.aj
+
+bb.aj:                                            ; preds = %.lr.ph275.1
+  %i.gc = trunc i64 %indvars.iv.next312 to i16
+  %i.gd = zext i16 %21 to i64
   %i.ge = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %i.gd ; 2 uses
   %i.gf = load i16, ptr %i.ge, align 2, !tbaa !197 ; 2 uses
   %i.gg = add i16 %i.gf, 1
@@ -1030,13 +1059,38 @@ bb.aj:                                            ; preds = %.lr.ph275
   store i16 %i.gc, ptr %i.gi, align 2, !tbaa !197
   br label %bb.ak
 
-bb.ak:                                            ; preds = %.lr.ph275, %bb.aj
-  %indvars.iv.next312.a = add i64 %indvars.iv311.a, 1 ; 2 uses
-  %11 = and i64 %indvars.iv.next312.a, 4294967295
-  %12 = icmp ugt i64 %2, %11
-  br i1 %12, label %.lr.ph275, label %._crit_edge276, !llvm.loop !1235
+bb.ak:                                            ; preds = %bb.aj, %.lr.ph275.1
+  %indvars.iv.next312.a = add nuw i64 %indvars.iv311, 2 ; 2 uses
+  %niter.next.1 = add nuw i64 %indvars.iv311.a, 2 ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
+  br i1 %niter.ncmp.1, label %._crit_edge276.loopexit.unr-lcssa, label %.lr.ph275, !llvm.loop !1235
 
-._crit_edge276:                                   ; preds = %bb.ak, %.preheader254
+._crit_edge276.loopexit.unr-lcssa:                ; preds = %bb.ak
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %._crit_edge276, label %.lr.ph275.epil.preheader
+
+.lr.ph275.epil.preheader:                         ; preds = %._crit_edge276.loopexit.unr-lcssa, %.lr.ph275.preheader
+  %indvars.iv311.epil.init = phi i64 [ 0, %.lr.ph275.preheader ], [ %indvars.iv.next312.a, %._crit_edge276.loopexit.unr-lcssa ] ; 2 uses
+  %lcmp.mod381 = trunc i64 %2 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod381)
+  %22 = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %indvars.iv311.epil.init
+  %23 = load i16, ptr %22, align 2, !tbaa !197    ; 2 uses
+  %.not223.epil = icmp eq i16 %23, 0
+  br i1 %.not223.epil, label %._crit_edge276, label %24
+
+24:                                               ; preds = %.lr.ph275.epil.preheader
+  %25 = trunc i64 %indvars.iv311.epil.init to i16
+  %26 = zext i16 %23 to i64
+  %27 = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %26 ; 2 uses
+  %28 = load i16, ptr %27, align 2, !tbaa !197    ; 2 uses
+  %29 = add i16 %28, 1
+  store i16 %29, ptr %27, align 2, !tbaa !197
+  %30 = zext i16 %28 to i64
+  %31 = getelementptr inbounds nuw [2 x i8], ptr %5, i64 %30
+  store i16 %25, ptr %31, align 2, !tbaa !197
+  br label %._crit_edge276
+
+._crit_edge276:                                   ; preds = %._crit_edge276.loopexit.unr-lcssa, %24, %.lr.ph275.epil.preheader, %.preheader254
   switch i32 %0, label %bb.am [
     i32 0, label %.preheader
     i32 1, label %bb.al

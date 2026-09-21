@@ -204,7 +204,6 @@ _ZNK7MapNode8getLightE9LightBank20ContentLightingFlags.exit: ; preds = %.lr.ph, 
   br i1 %.not259, label %_ZN7voxalgo10LightQueue4pushEhN4core8vector3dIsEES3_P8MapBlockh.exit, label %bb.u
 
 bb.u:                                             ; preds = %_ZNK7MapNode8getLightE9LightBank20ContentLightingFlags.exit
-  %6 = trunc nsw i64 %indvars.iv to i32
   %i.hg = trunc i64 %indvars.iv to i16
   %.sroa.0.0.copyload.i202 = load i48, ptr %i.fv, align 8 ; 3 uses
   %.sroa.0244.0.extract.trunc = trunc i48 %.sroa.0.0.copyload.i202 to i16
@@ -452,7 +451,8 @@ bb.at:                                            ; preds = %_ZNKSt4lessIN4core8
   %i.jz = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i, i64 40
   store ptr %indvars.iv295.sroa.phi374.sroa.speculated, ptr %i.jz, align 8, !tbaa !30
   %.sroa.0.0.copyload.i215 = load i48, ptr %i.gc, align 2 ; 2 uses
-  %i.ka = shl i32 %6, 16
+  %indvars.iv.tr = trunc nsw i64 %indvars.iv to i32
+  %i.ka = shl nsw i32 %indvars.iv.tr, 16
   %.sroa.2.0.insert.shift = zext i32 %i.ka to i48
   %.sroa.0243.0.insert.insert.reass = or disjoint i48 %invariant.op, %.sroa.2.0.insert.shift ; 2 uses
   %i.kb = zext nneg i8 %i.hf to i64
@@ -855,7 +855,7 @@ bb.b:                                             ; preds = %_ZNK9VoxelArea14has
   %.sroa.0.0.insert.ext.i.i = zext nneg i32 %.mask5.i.i to i48
   %i.ab = or disjoint i48 %.sroa.3.0.insert.shift.i.i, %.sroa.0.0.insert.ext.i.i
   %.sroa.0.0.insert.insert.i.i = or disjoint i48 %i.ab, %.sroa.2.0.insert.shift.i.i
-  %.sroa.078.0.extract.trunc = trunc nsw i32 %i.o to i16 ; 2 uses
+  %.sroa.078.0.extract.trunc = trunc nsw i32 %i.o to i16 ; 3 uses
   %.sroa.780.0.extract.trunc = trunc nsw i32 %i.t to i16 ; 2 uses
   %.sroa.982.0.extract.trunc = trunc nsw i32 %i.z to i16 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 14 ; 2 uses
@@ -1232,7 +1232,11 @@ _ZN7voxalgo10LightQueueC2Em.exit229:              ; preds = %_ZNSt6vectorIN7voxa
   %i.fk = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.fl = getelementptr inbounds nuw i8, ptr %1, i64 32
   %brmerge = select i1 %.not128401, i1 true, i1 %.not130396
-  br i1 %brmerge, label %._crit_edge406.split, label %.preheader339
+  br i1 %brmerge, label %._crit_edge406.split, label %.preheader339.preheader
+
+.preheader339.preheader:                          ; preds = %.preheader339.lr.ph
+  %smax = tail call i16 @llvm.smax.i16(i16 %.sroa.078.0.extract.trunc, i16 %.sroa.071.0.extract.trunc)
+  br label %.preheader339
 
 ._crit_edge375:                                   ; preds = %._crit_edge
   %i.fm = add nsw i16 %.0120377, 1
@@ -1635,8 +1639,8 @@ bb.ar:                                            ; preds = %bb.aq, %bb.y
   %exitcond433 = icmp eq i16 %.0121373, %.sroa.9.0.extract.trunc
   br i1 %exitcond433, label %._crit_edge375, label %bb.g, !llvm.loop !272
 
-.preheader339:                                    ; preds = %.preheader339.lr.ph, %._crit_edge403
-  %storemerge405 = phi i16 [ %i.wk, %._crit_edge403 ], [ %.sroa.078.0.extract.trunc, %.preheader339.lr.ph ] ; 3 uses
+.preheader339:                                    ; preds = %.preheader339.preheader, %._crit_edge403
+  %storemerge405 = phi i16 [ %i.wk, %._crit_edge403 ], [ %.sroa.078.0.extract.trunc, %.preheader339.preheader ] ; 3 uses
   %.sroa.0302.0.insert.ext303 = zext i16 %storemerge405 to i48
   br label %.preheader
 
@@ -2039,7 +2043,7 @@ _ZN7voxalgo10LightQueue4pushEhN4core8vector3dIsEES3_P8MapBlockh.exit.1: ; preds 
 
 ._crit_edge403:                                   ; preds = %._crit_edge399
   %i.wk = add nsw i16 %storemerge405, 1
-  %exitcond437 = icmp eq i16 %storemerge405, %.sroa.071.0.extract.trunc
+  %exitcond437 = icmp eq i16 %storemerge405, %smax
   br i1 %exitcond437, label %._crit_edge406.split, label %.preheader339, !llvm.loop !281
 
 ._crit_edge406.split:                             ; preds = %._crit_edge403, %_ZN7voxalgo10LightQueueC2Em.exit229, %.preheader339.lr.ph

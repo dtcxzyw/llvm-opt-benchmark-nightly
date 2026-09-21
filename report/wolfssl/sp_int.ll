@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 293
 inline.NumDeleted: 40
 loop-unroll.NumCompletelyUnrolled: 14
-loop-unroll.NumRuntimeUnrolled: 57
-loop-unroll.NumUnrolled: 75
+loop-unroll.NumRuntimeUnrolled: 58
+loop-unroll.NumUnrolled: 76
 begin_hunk_0_@sp_set_bit:bb.a
 }
 
@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %.lr.ph.i
   br i1 %i.z, label %bb.f, label %_sp_add_d.exit
 
 bb.f:                                             ; preds = %._crit_edge.thread.i
-  %i.aa = add i16 %i.e, 1
+  %i.aa = add nuw i16 %i.e, 1
   store i16 %i.aa, ptr %2, align 8, !tbaa !40
   %i.ab = zext i16 %i.q to i64
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.ab
@@ -608,7 +608,7 @@ bb.ag:                                            ; preds = %._crit_edge.i191
   %i.hy = getelementptr inbounds nuw [8 x i8], ptr %i.de, i64 %i.ej
   %i.hz = getelementptr inbounds nuw [8 x i8], ptr %i.hy, i64 %i.hw
   store i64 %i.ey, ptr %i.hz, align 8, !tbaa !36
-  %i.ia = add i16 %i.e, 1
+  %i.ia = add nuw i16 %i.e, 1
   br label %.thread70.i
 
 bb.ah:                                            ; preds = %bb.af
@@ -1011,7 +1011,7 @@ sp_sub.exit:                                      ; preds = %bb.s, %sp_sub.exit.
 }
 
 ; Function Attrs: nounwind uwtable
-define range(i32 -98, 1) i32 @sp_invmod_mont_ct(ptr nofree noundef readonly captures(address_is_null) %0, ptr nofree noundef readonly captures(address) %1, ptr nofree noundef captures(address) %2, i64 noundef %3) local_unnamed_addr #14 {
+define range(i32 -98, 1) i32 @sp_invmod_mont_ct(ptr nofree noundef readonly captures(address_is_null) %0, ptr nofree noundef readonly captures(address) %1, ptr noundef %2, i64 noundef %3) local_unnamed_addr #14 {
 bb.a:
   %i.a = ptrtoaddr ptr %1 to i64
   %i.b = alloca [10 x ptr], align 16              ; 16 uses
@@ -1414,7 +1414,7 @@ bb.o:                                             ; preds = %._crit_edge.i
   %i.dy = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %i.dx
   %i.dz = getelementptr inbounds nuw [8 x i8], ptr %i.dy, i64 %i.dv
   store i64 %i.av, ptr %i.dz, align 8, !tbaa !36
-  %i.ea = add i16 %i.ah, 1
+  %i.ea = add nuw i16 %i.ah, 1
   br label %.thread70.i
 
 bb.p:                                             ; preds = %bb.n
@@ -1817,7 +1817,7 @@ bb.g:                                             ; preds = %sp_mod.exit, %bb.b
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable
-define range(i32 -98, 1) i32 @sp_mont_red_ex(ptr nofree noundef captures(address) %0, ptr nofree noundef readonly captures(address_is_null) %1, i64 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
+define range(i32 -98, 1) i32 @sp_mont_red_ex(ptr noundef %0, ptr nofree noundef readonly captures(address_is_null) %1, i64 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   %i.b = icmp eq ptr %1, null
@@ -1848,7 +1848,7 @@ bb.e:                                             ; preds = %bb.c, %bb.a, %bb.b,
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable
-define internal fastcc void @_sp_mont_red(ptr nofree noundef captures(address) %0, ptr nofree noundef readonly captures(address_is_null) %1, i64 noundef %2, i32 noundef %3) unnamed_addr #0 {
+define internal fastcc void @_sp_mont_red(ptr nofree noundef %0, ptr nofree noundef readonly captures(address_is_null) %1, i64 noundef %2, i32 noundef %3) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i16, align 2                      ; 10 uses
   %i.b = alloca i64, align 8                      ; 5 uses
@@ -2016,11 +2016,17 @@ bb.j:                                             ; preds = %.loopexit186
   store volatile i64 %i.bl, ptr %i.b, align 8, !tbaa !36
   %i.bm = zext i16 %i.bh to i32                   ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
-  %i.bo = add nsw i32 %i.bm, -1                   ; 2 uses
-  %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
+  %i.bo = add nsw i32 %i.bm, -1                   ; 4 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
   %.not278 = icmp eq i16 %i.bh, 2
   %i.bq = zext nneg i32 %i.bo to i64              ; 2 uses
   %wide.trip.count228 = zext i16 %i.bh to i64
+  %4 = add nsw i64 %i.bq, -1                      ; 3 uses
+  %xtraiter51 = and i64 %4, 1
+  %5 = icmp eq i32 %i.bo, 2
+  %unroll_iter56 = and i64 %4, -2
+  %lcmp.mod53.not = icmp eq i64 %xtraiter51, 0
+  %lcmp.mod55 = trunc i64 %4 to i1
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %._crit_edge
@@ -2045,48 +2051,86 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k
   %.0127 = phi i64 [ %i.bv, %bb.m ], [ %i.bt, %bb.l ], [ %i.bt, %bb.k ]
   %i.bw = zext i64 %i.bs to i128
-  %i.bx = zext i64 %.0127 to i128                 ; 3 uses
+  %i.bx = zext i64 %.0127 to i128                 ; 5 uses
   %i.by = load i64, ptr %i.bp, align 8, !tbaa !36
   %i.bz = zext i64 %i.by to i128
   %i.ca = mul nuw i128 %i.bz, %i.bx
   %i.cb = add nuw i128 %i.ca, %i.bw               ; 2 uses
   %i.cc = trunc i128 %i.cb to i64
   store i64 %i.cc, ptr %i.br, align 8, !tbaa !36
-  %.0128199 = lshr i128 %i.cb, 64                 ; 2 uses
-  br i1 %.not278, label %._crit_edge, label %.lr.ph202
+  %.0128199 = lshr i128 %i.cb, 64                 ; 3 uses
+  br i1 %.not278, label %._crit_edge, label %.lr.ph202.preheader
 
-.lr.ph202:                                        ; preds = %bb.n, %.lr.ph202
-  %indvars.iv220 = phi i64 [ %indvars.iv.next221, %.lr.ph202 ], [ 1, %bb.n ] ; 3 uses
-  %.0128201 = phi i128 [ %.0128.a, %.lr.ph202 ], [ %.0128199, %bb.n ]
-  %i.cd = add nuw i64 %indvars.iv220, %indvars.iv225
-  %4 = and i64 %i.cd, 4294967295
-  %i.ce = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %4 ; 2 uses
+.lr.ph202.preheader:                              ; preds = %bb.n
+  %invariant.gep = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %indvars.iv225 ; 3 uses
+  br i1 %5, label %.lr.ph202.epil.preheader, label %.lr.ph202
+
+.lr.ph202:                                        ; preds = %.lr.ph202.preheader, %.lr.ph202
+  %indvars.iv220 = phi i64 [ %indvars.iv.next221, %.lr.ph202 ], [ 1, %.lr.ph202.preheader ] ; 4 uses
+  %.0128201 = phi i128 [ %.0128.a, %.lr.ph202 ], [ %.0128199, %.lr.ph202.preheader ]
+  %niter57 = phi i64 [ %niter57.next.1, %.lr.ph202 ], [ 0, %.lr.ph202.preheader ]
+  %gep = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv220 ; 2 uses
+  %6 = load i64, ptr %gep, align 8, !tbaa !36
+  %7 = zext i64 %6 to i128
+  %8 = add nuw nsw i128 %.0128201, %7
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.bp, i64 %indvars.iv220
+  %10 = load i64, ptr %9, align 8, !tbaa !36
+  %11 = zext i64 %10 to i128
+  %12 = mul nuw i128 %11, %i.bx
+  %13 = add nuw i128 %8, %12                      ; 2 uses
+  %14 = trunc i128 %13 to i64
+  store i64 %14, ptr %gep, align 8, !tbaa !36
+  %i.cd = add nuw nsw i64 %indvars.iv220, 1       ; 2 uses
+  %.0128 = lshr i128 %13, 64
+  %i.ce = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %i.cd ; 2 uses
   %i.cf = load i64, ptr %i.ce, align 8, !tbaa !36
   %i.cg = zext i64 %i.cf to i128
-  %i.ch = add nuw nsw i128 %.0128201, %i.cg
-  %i.ci = getelementptr inbounds nuw [8 x i8], ptr %i.bp, i64 %indvars.iv220
+  %i.ch = add nuw nsw i128 %.0128, %i.cg
+  %i.ci = getelementptr inbounds nuw [8 x i8], ptr %i.bp, i64 %i.cd
   %i.cj = load i64, ptr %i.ci, align 8, !tbaa !36
   %i.ck = zext i64 %i.cj to i128
   %i.cl = mul nuw i128 %i.ck, %i.bx
   %i.cm = add nuw i128 %i.ch, %i.cl               ; 2 uses
   %i.cn = trunc i128 %i.cm to i64
   store i64 %i.cn, ptr %i.ce, align 8, !tbaa !36
-  %indvars.iv.next221 = add nuw nsw i64 %indvars.iv220, 1 ; 2 uses
-  %.0128.a = lshr i128 %i.cm, 64                  ; 2 uses
-  %exitcond224.not = icmp eq i64 %indvars.iv.next221, %i.bq
-  br i1 %exitcond224.not, label %._crit_edge, label %.lr.ph202, !llvm.loop !168
+  %indvars.iv.next221 = add nuw nsw i64 %indvars.iv220, 2 ; 2 uses
+  %.0128.a = lshr i128 %i.cm, 64                  ; 3 uses
+  %niter57.next.1 = add nuw i64 %niter57, 2       ; 2 uses
+  %exitcond224.not = icmp eq i64 %niter57.next.1, %unroll_iter56
+  br i1 %exitcond224.not, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph202, !llvm.loop !168
 
-._crit_edge:                                      ; preds = %.lr.ph202, %bb.n
-  %.0125.lcssa = phi i32 [ 1, %bb.n ], [ %i.bo, %.lr.ph202 ] ; 2 uses
-  %.0128.lcssa = phi i128 [ %.0128199, %bb.n ], [ %.0128.a, %.lr.ph202 ]
-  %.pre-phi240 = trunc i64 %indvars.iv225 to i32
-  %5 = add nuw nsw i128 %.0128.lcssa, %.0126206
-  %i.co = add i32 %.0125.lcssa, %.pre-phi240
+._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph202
+  br i1 %lcmp.mod53.not, label %._crit_edge, label %.lr.ph202.epil.preheader
+
+.lr.ph202.epil.preheader:                         ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph202.preheader
+  %indvars.iv220.epil.init = phi i64 [ 1, %.lr.ph202.preheader ], [ %indvars.iv.next221, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
+  %.0128201.epil.init = phi i128 [ %.0128199, %.lr.ph202.preheader ], [ %.0128.a, %._crit_edge.loopexit.unr-lcssa ]
+  tail call void @llvm.assume(i1 %lcmp.mod55)
+  %gep.epil = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv220.epil.init ; 2 uses
+  %15 = load i64, ptr %gep.epil, align 8, !tbaa !36
+  %16 = zext i64 %15 to i128
+  %17 = add nuw nsw i128 %.0128201.epil.init, %16
+  %18 = getelementptr inbounds nuw [8 x i8], ptr %i.bp, i64 %indvars.iv220.epil.init
+  %19 = load i64, ptr %18, align 8, !tbaa !36
+  %20 = zext i64 %19 to i128
+  %21 = mul nuw i128 %20, %i.bx
+  %22 = add nuw i128 %17, %21                     ; 2 uses
+  %23 = trunc i128 %22 to i64
+  store i64 %23, ptr %gep.epil, align 8, !tbaa !36
+  %.0128.epil = lshr i128 %22, 64
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %.lr.ph202.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.n
+  %.0125.lcssa = phi i32 [ 1, %bb.n ], [ %i.bo, %._crit_edge.loopexit.unr-lcssa ], [ %i.bo, %.lr.ph202.epil.preheader ] ; 2 uses
+  %.0128.lcssa = phi i128 [ %.0128199, %bb.n ], [ %.0128.a, %._crit_edge.loopexit.unr-lcssa ], [ %.0128.epil, %.lr.ph202.epil.preheader ]
+  %24 = add nuw nsw i128 %.0128.lcssa, %.0126206
+  %25 = trunc nuw nsw i64 %indvars.iv225 to i32
+  %i.co = add i32 %.0125.lcssa, %25
   %i.cp = zext i32 %i.co to i64
   %i.cq = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %i.cp ; 2 uses
   %i.cr = load i64, ptr %i.cq, align 8, !tbaa !36
   %i.cs = zext i64 %i.cr to i128
-  %i.ct = add nuw nsw i128 %5, %i.cs              ; 2 uses
+  %i.ct = add nuw nsw i128 %24, %i.cs             ; 2 uses
   %i.cu = lshr i128 %i.ct, 64
   %i.cv = zext nneg i32 %.0125.lcssa to i64
   %i.cw = getelementptr inbounds nuw [8 x i8], ptr %i.bp, i64 %i.cv

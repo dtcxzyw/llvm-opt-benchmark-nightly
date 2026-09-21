@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.j, %bb.j
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
-  %i.y = load i32, ptr %i.x, align 8, !tbaa !29   ; 5 uses
+  %i.y = load i32, ptr %i.x, align 8, !tbaa !29   ; 6 uses
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.aa = load i32, ptr %i.z, align 8, !tbaa !30  ; 10 uses
   %.not.i.not.i.i.i.i.i = icmp ult i32 %i.y, %i.aa
@@ -219,13 +219,13 @@ bb.n:                                             ; preds = %bb.m
   unreachable
 
 bb.o:                                             ; preds = %bb.m
-  %i.ab = zext i32 %i.y to i64                    ; 2 uses
+  %i.ab = zext i32 %i.y to i64
   %i.ac = load ptr, ptr %2, align 8, !tbaa !32    ; 6 uses
   %i.ad = icmp sgt i32 %i.aa, -1
   tail call void @llvm.assume(i1 %i.ad)
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.ab
   %.0.copyload.i.i.i.i.i.i = load i8, ptr %i.ae, align 1 ; 3 uses
-  %i.af = add nuw i32 %i.y, 1                     ; 2 uses
+  %i.af = add nuw nsw i32 %i.y, 1                 ; 2 uses
   %i.ag = zext i8 %.0.copyload.i.i.i.i.i.i to i32 ; 2 uses
   %.not.i.not.i.i.i.i.i23 = icmp ult i32 %i.af, %i.aa
   br i1 %.not.i.not.i.i.i.i.i23, label %bb.p, label %.invoke
@@ -246,13 +246,14 @@ bb.q:                                             ; preds = %bb.p
   br i1 %or.cond, label %bb.r, label %bb.u
 
 bb.r:                                             ; preds = %bb.q
-  %i.an = add nuw nsw i64 %i.ab, 2112
+  %5 = zext nneg i32 %i.y to i64
+  %i.an = add nuw nsw i64 %5, 2112
   %i.ao = zext nneg i32 %i.aa to i64
   %.not.i.i = icmp samesign ugt i64 %i.an, %i.ao
   br i1 %.not.i.i, label %.invoke, label %_ZN8rawspeed10ByteStream9skipBytesEj.exit
 
 _ZN8rawspeed10ByteStream9skipBytesEj.exit:        ; preds = %bb.r
-  %i.ap = add nuw i32 %i.y, 2112                  ; 2 uses
+  %i.ap = add nuw nsw i32 %i.y, 2112              ; 2 uses
   %i.aq = icmp samesign ule i32 %i.ap, %i.aa
   tail call void @llvm.assume(i1 %i.aq)
   br label %bb.u
@@ -288,7 +289,7 @@ bb.x:                                             ; preds = %bb.w
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.w
-  %i.az = zext i32 %i.at to i64                   ; 2 uses
+  %i.az = zext nneg i32 %i.at to i64              ; 2 uses
   %i.ba = add nuw nsw i64 %i.az, 2
   %i.bb = zext nneg i32 %i.aa to i64              ; 4 uses
   %.not.i.i.i.i.i.i = icmp samesign ugt i64 %i.ba, %i.bb

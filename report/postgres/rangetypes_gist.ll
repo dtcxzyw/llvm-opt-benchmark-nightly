@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not242.i, label %._crit_edge286.thread.critedge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.d
-  %i.cr = trunc i32 %i.cl to i16                  ; 2 uses
+  %i.cr = trunc i32 %i.cl to i16
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %.lr.ph.i
@@ -229,7 +229,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i
   call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.cq, ptr align 8 %i.cp, i64 %i.db, i1 false)
   call void @qsort_arg(ptr noundef %i.cp, i64 noundef %i.co, i64 noundef 32, ptr noundef nonnull @interval_cmp_lower, ptr noundef nonnull %i.r) #8
   call void @qsort_arg(ptr noundef %i.cq, i64 noundef %i.co, i64 noundef 32, ptr noundef nonnull @interval_cmp_upper, ptr noundef nonnull %i.r) #8
-  %i.dc = add nuw nsw i32 %i.cm, 1
+  %i.dc = add nuw nsw i32 %i.cm, 1                ; 2 uses
   %i.dd = lshr i32 %i.dc, 1                       ; 2 uses
   %i.de = lshr i32 %i.cm, 1                       ; 2 uses
   %i.df = uitofp nneg i32 %i.cm to float          ; 2 uses
@@ -511,19 +511,20 @@ bb.y:                                             ; preds = %._crit_edge286.i
   %i.gn = getelementptr inbounds nuw i8, ptr %i.j, i64 40 ; 7 uses
   store i32 0, ptr %i.gn, align 8
   %i.go = call ptr @palloc_mul(i64 noundef 16, i64 noundef %i.co) #8 ; 3 uses
+  %umax = call i32 @llvm.umax.i32(i32 %i.dc, i32 2)
+  %wide.trip.count = zext nneg i32 %umax to i64
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.ak, %bb.y
-  %3 = phi i32 [ 1, %bb.y ], [ %6, %bb.ak ]
-  %.1319.i = phi i16 [ 1, %bb.y ], [ %5, %bb.ak ] ; 4 uses
+  %indvars.iv359.i = phi i64 [ 1, %bb.y ], [ %indvars.iv.next360.i, %bb.ak ] ; 5 uses
   %.0185318.i = phi i32 [ 0, %bb.y ], [ %.1186.i, %bb.ak ] ; 4 uses
   %.0187317.i = phi ptr [ null, %bb.y ], [ %.2189.i, %bb.ak ] ; 3 uses
   %.0191316.i = phi ptr [ null, %bb.y ], [ %.2193.i, %bb.ak ] ; 3 uses
+  %indvars135 = trunc i64 %indvars.iv359.i to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
-  %4 = zext i16 %.1319.i to i64
-  %i.gp = getelementptr inbounds nuw [32 x i8], ptr %i.k, i64 %4
+  %i.gp = getelementptr inbounds nuw [32 x i8], ptr %i.k, i64 %indvars.iv359.i
   %i.gq = load i64, ptr %i.gp, align 8
   %i.gr = inttoptr i64 %i.gq to ptr
   %i.gs = call ptr @pg_detoast_datum(ptr noundef %i.gr) #8 ; 5 uses
@@ -540,7 +541,7 @@ bb.aa:                                            ; preds = %bb.z
 bb.ab:                                            ; preds = %bb.aa
   %i.gx = sext i32 %.0185318.i to i64
   %i.gy = getelementptr inbounds [16 x i8], ptr %i.go, i64 %i.gx ; 2 uses
-  store i32 %3, ptr %i.gy, align 8
+  store i32 %indvars135, ptr %i.gy, align 8
   br i1 %.not235.i, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
@@ -586,7 +587,8 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   store i32 %i.hr, ptr %i.gm, align 8
   %i.hs = sext i32 %i.hp to i64
   %i.ht = getelementptr inbounds [2 x i8], ptr %i.hq, i64 %i.hs
-  store i16 %.1319.i, ptr %i.ht, align 2
+  %3 = trunc nuw i64 %indvars.iv359.i to i16
+  store i16 %3, ptr %i.ht, align 2
   br label %bb.ak
 
 bb.ah:                                            ; preds = %bb.z
@@ -607,7 +609,8 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   store i32 %i.hz, ptr %i.gn, align 8
   %i.ia = sext i32 %i.hx to i64
   %i.ib = getelementptr inbounds [2 x i8], ptr %i.hy, i64 %i.ia
-  store i16 %.1319.i, ptr %i.ib, align 2
+  %4 = trunc nuw i64 %indvars.iv359.i to i16
+  store i16 %4, ptr %i.ib, align 2
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ag, %bb.ad
@@ -617,10 +620,9 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ag, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #8
-  %5 = add i16 %.1319.i, 1                        ; 3 uses
-  %6 = zext i16 %5 to i32
-  %.not203.i = icmp ugt i16 %5, %i.cr
-  br i1 %.not203.i, label %._crit_edge322.i, label %bb.z, !llvm.loop !14
+  %indvars.iv.next360.i = add nuw nsw i64 %indvars.iv359.i, 1 ; 2 uses
+  %exitcond = icmp eq i64 %indvars.iv.next360.i, %wide.trip.count
+  br i1 %exitcond, label %._crit_edge322.i, label %bb.z, !llvm.loop !14
 
 ._crit_edge322.i:                                 ; preds = %bb.ak
   %i.ic = icmp sgt i32 %.1186.i, 0
@@ -1022,6 +1024,9 @@ declare i32 @llvm.smin.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #7
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

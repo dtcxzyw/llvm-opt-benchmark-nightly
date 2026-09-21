@@ -160,20 +160,24 @@ bb.b:                                             ; preds = %.lr.ph226, %.loopex
 
 .lr.ph:                                           ; preds = %.preheader213
   %i.by = xor i32 %i.bu, 1
+  %4 = zext i32 %i.be to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.c
-  %.0177218 = phi i32 [ 0, %.lr.ph ], [ %4, %bb.c ] ; 2 uses
-  %4 = add i32 %.0177218, 8                       ; 3 uses
-  %5 = zext i32 %.0177218 to i64
-  %i.bz = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %5
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.c ] ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 8 ; 3 uses
+  %i.bz = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv
   tail call void %2(ptr noundef %i.bz, ptr noundef %i.av, i32 noundef %i.bj, i32 noundef %i.by, i32 noundef %i.g, i32 noundef 8) #15, !callees !103
-  %6 = or disjoint i32 %4, 7
-  %i.ca = icmp ult i32 %6, %i.be
-  br i1 %i.ca, label %bb.c, label %._crit_edge, !llvm.loop !95
+  %5 = or disjoint i64 %indvars.iv.next, 7
+  %i.ca = icmp samesign ult i64 %5, %4
+  br i1 %i.ca, label %bb.c, label %._crit_edge.loopexit, !llvm.loop !95
 
-._crit_edge:                                      ; preds = %bb.c, %.preheader213
-  %.0177.lcssa = phi i32 [ 0, %.preheader213 ], [ %4, %bb.c ] ; 3 uses
+._crit_edge.loopexit:                             ; preds = %bb.c
+  %6 = trunc nuw i64 %indvars.iv.next to i32
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader213
+  %.0177.lcssa = phi i32 [ 0, %.preheader213 ], [ %6, %._crit_edge.loopexit ] ; 3 uses
   %i.cb = icmp ult i32 %.0177.lcssa, %i.be
   br i1 %i.cb, label %bb.d, label %bb.k
 
@@ -576,8 +580,8 @@ bb.an:                                            ; preds = %bb.ar, %.lr.ph223.i
 
 .thread194.i.i:                                   ; preds = %bb.an
   %.not179.not.i.i = icmp sgt i64 %indvars.iv237.i.i, %i.nw
-  %i.wd = shl nuw i64 %indvars.iv237.i.i, 1
-  %i.we = add i64 %i.wd, 4294967295
+  %i.wd = shl nuw nsw i64 %indvars.iv237.i.i, 1
+  %i.we = add nuw i64 %i.wd, 4294967295
   %i.wf = and i64 %i.we, 4294967295
   %.pn206.i.i = select i1 %.not179.not.i.i, i64 %i.nn, i64 %i.wf
   %.in180.ph.i.i = getelementptr inbounds [4 x i8], ptr %i.hg, i64 %.pn206.i.i
@@ -811,7 +815,7 @@ bb.bc:                                            ; preds = %bb.bb, %bb.ba, %bb.
 
 .lr.ph215.i.i:                                    ; preds = %.preheader209.i.i, %bb.bf
   %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.bf ], [ %i.nf, %.preheader209.i.i ] ; 6 uses
-  %.idx.i.i = shl i64 %indvars.iv.i.i, 3
+  %.idx.i.i = shl nsw i64 %indvars.iv.i.i, 3
   %i.aac = getelementptr i8, ptr %i.hg, i64 %.idx.i.i ; 4 uses
   %i.aad = load i32, ptr %i.aac, align 4, !tbaa !12
   %i.aae = icmp slt i64 %indvars.iv.i.i, 0
@@ -1214,7 +1218,7 @@ vector.body108:                                   ; preds = %vector.body108, %ve
   %i.qk = tail call float @llvm.fmuladd.f32(float %i.qh, float f0xBD5901AE, float %i.qj)
   store float %i.qk, ptr %i.qi, align 4, !tbaa !76
   %i.ql = getelementptr inbounds nuw i8, ptr %.14146.i50.i, i64 8 ; 2 uses
-  %i.qm = add nuw i32 %.147.i49.i, 1              ; 2 uses
+  %i.qm = add nuw nsw i32 %.147.i49.i, 1          ; 2 uses
   %exitcond.not.i51.i = icmp eq i32 %i.qm, %i.ig
   br i1 %exitcond.not.i51.i, label %.loopexit.i46.i, label %.lr.ph48.i48.i, !llvm.loop !222
 
@@ -1617,7 +1621,7 @@ vector.body174:                                   ; preds = %vector.body174, %ve
   %i.ahj = tail call float @llvm.fmuladd.f32(float %i.ahg, float f0x3EE31355, float %i.ahi)
   store float %i.ahj, ptr %i.ahh, align 4, !tbaa !76
   %i.ahk = getelementptr inbounds nuw i8, ptr %.14146.i80.i, i64 8 ; 2 uses
-  %i.ahl = add nuw i32 %.147.i79.i, 1             ; 2 uses
+  %i.ahl = add nuw nsw i32 %.147.i79.i, 1         ; 2 uses
   %exitcond.not.i81.i = icmp eq i32 %i.ahl, %i.ig
   br i1 %exitcond.not.i81.i, label %.loopexit.i76.i, label %.lr.ph48.i78.i, !llvm.loop !230
 
@@ -1750,7 +1754,7 @@ middle.block215:                                  ; preds = %vector.body207
   %i.aje = fmul <2 x float> %i.ajd, <float f0x3F5019C3, float f0x3F9D7658>
   store <2 x float> %i.aje, ptr %.137.i.i, align 4, !tbaa !76
   %i.ajf = getelementptr inbounds nuw i8, ptr %.137.i.i, i64 8 ; 2 uses
-  %i.ajg = add nuw i32 %.13236.i.i, 1             ; 2 uses
+  %i.ajg = add nuw nsw i32 %.13236.i.i, 1         ; 2 uses
   %exitcond.not.i89.i = icmp eq i32 %i.ajg, %i.ahs
   br i1 %exitcond.not.i89.i, label %._crit_edge.i.i, label %.lr.ph38.i.i, !llvm.loop !233
 
@@ -1887,7 +1891,7 @@ middle.block200:                                  ; preds = %vector.body193
   %i.aky = fmul <2 x float> %i.akx, <float f0x3F9D7658, float f0x3F5019C3>
   store <2 x float> %i.aky, ptr %.137.i99.i, align 4, !tbaa !76
   %i.akz = getelementptr inbounds nuw i8, ptr %.137.i99.i, i64 8 ; 2 uses
-  %i.ala = add nuw i32 %.13236.i100.i, 1          ; 2 uses
+  %i.ala = add nuw nsw i32 %.13236.i100.i, 1      ; 2 uses
   %exitcond.not.i101.i = icmp eq i32 %i.ala, %i.ahs
   br i1 %exitcond.not.i101.i, label %._crit_edge.i95.i, label %.lr.ph38.i98.i, !llvm.loop !235
 
@@ -2290,7 +2294,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 ._crit_edge.i:                                    ; preds = %scalar.ph, %bb.e
   %i.jn = getelementptr inbounds nuw [4 x i8], ptr %.0226323.i, i64 %i.bw ; 2 uses
-  %i.jo = add i32 %.0224324.i, 8                  ; 3 uses
+  %i.jo = add nuw i32 %.0224324.i, 8              ; 3 uses
   %i.jp = or disjoint i32 %i.jo, 7
   %i.jq = icmp ult i32 %i.jp, %i.db
   %indvar.next = add i64 %indvar, 1
@@ -2693,7 +2697,7 @@ bb.an:                                            ; preds = %bb.am
   br i1 %or.cond261.i, label %.lr.ph.i198.i, label %._crit_edge282.i
 
 ._crit_edge282.i:                                 ; preds = %bb.an
-  %.pre.i = add i32 %.0158266.i, 8
+  %.pre.i = add nuw i32 %.0158266.i, 8
   br label %bb.ap
 
 .lr.ph.i198.i:                                    ; preds = %bb.an, %bb.am
@@ -2718,7 +2722,7 @@ bb.an:                                            ; preds = %bb.am
   %i.abb = add nuw nsw i32 %.0158266.i, 7         ; 4 uses
   %i.abc = tail call i32 @opj_sparse_array_int32_read(ptr noundef nonnull %i.rx, i32 noundef %i.xv, i32 noundef %i.aay, i32 noundef %i.xx, i32 noundef %i.abb, ptr noundef nonnull %i.aac, i32 noundef 16, i32 noundef 0, i32 noundef 1) #15, !noalias !326 ; 0 uses
   %i.abd = tail call i32 @opj_sparse_array_int32_read(ptr noundef nonnull %i.rx, i32 noundef %i.zj, i32 noundef %i.aay, i32 noundef %i.zk, i32 noundef %i.abb, ptr noundef nonnull %i.aad, i32 noundef 16, i32 noundef 0, i32 noundef 1) #15, !noalias !326 ; 0 uses
-  %i.abe = add i32 %.0158266.i, 8                 ; 4 uses
+  %i.abe = add nuw i32 %.0158266.i, 8             ; 4 uses
   %i.abf = tail call i32 @opj_sparse_array_int32_read(ptr noundef nonnull %i.rx, i32 noundef %i.xv, i32 noundef %i.abb, i32 noundef %i.xx, i32 noundef %i.abe, ptr noundef nonnull %i.aae, i32 noundef 16, i32 noundef 0, i32 noundef 1) #15, !noalias !326 ; 0 uses
   %i.abg = tail call i32 @opj_sparse_array_int32_read(ptr noundef nonnull %i.rx, i32 noundef %i.zj, i32 noundef %i.abb, i32 noundef %i.zk, i32 noundef %i.abe, ptr noundef nonnull %i.aaf, i32 noundef 16, i32 noundef 0, i32 noundef 1) #15, !noalias !326 ; 0 uses
   call fastcc void @opj_v8dwt_decode(ptr noundef nonnull %3), !noalias !326

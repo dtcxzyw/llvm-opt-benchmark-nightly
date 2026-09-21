@@ -206,15 +206,18 @@ bb.h:                                             ; preds = %bb.g
   %i.z = icmp eq i64 %i.y, 0
   %i.aa = icmp ugt i32 %i.d, 7
   %or.cond33.i = and i1 %i.aa, %i.z
-  br i1 %or.cond33.i, label %.lr.ph.i.a, label %.loopexit29.i
+  br i1 %or.cond33.i, label %.lr.ph.i, label %.loopexit29.i
 
-.lr.ph.i.a:                                       ; preds = %bb.h, %bb.j
-  %4 = phi i32 [ %i.al, %bb.j ], [ 0, %bb.h ]
-  %.030.i = phi i32 [ %6, %bb.j ], [ 0, %bb.h ]   ; 2 uses
-  %5 = zext i32 %.030.i to i64
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.u, i64 %5
+.lr.ph.i:                                         ; preds = %bb.h
+  %4 = zext i32 %i.d to i64
+  br label %.lr.ph.i.a
+
+.lr.ph.i.a:                                       ; preds = %bb.j, %.lr.ph.i
+  %.030.i = phi i32 [ 0, %.lr.ph.i ], [ %i.al, %bb.j ]
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.j ] ; 2 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.u, i64 %indvars.iv.i
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !130
-  %i.ad = lshr i32 %4, 3
+  %i.ad = lshr i32 %.030.i, 3
   %i.ae = zext nneg i32 %i.ad to i64
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.ae ; 2 uses
   %i.ag = load i64, ptr %i.af, align 8, !tbaa !52
@@ -234,14 +237,18 @@ bb.i:                                             ; preds = %.lr.ph.i.a
 
 bb.j:                                             ; preds = %bb.i, %.lr.ph.i.a
   %i.al = phi i32 [ %i.aj, %.lr.ph.i.a ], [ 0, %bb.i ] ; 2 uses
-  %6 = add i32 %.030.i, 8                         ; 3 uses
-  %7 = or disjoint i32 %6, 7
-  %i.am = icmp ult i32 %7, %i.d
-  br i1 %i.am, label %.lr.ph.i.a, label %.loopexit29.i, !llvm.loop !8
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 8 ; 3 uses
+  %5 = or disjoint i64 %indvars.iv.next.i, 7
+  %i.am = icmp samesign ult i64 %5, %4
+  br i1 %i.am, label %.lr.ph.i.a, label %.loopexit29.loopexit.i, !llvm.loop !8
 
-.loopexit29.i:                                    ; preds = %bb.j, %bb.h
-  %i.an = phi i32 [ 0, %bb.h ], [ %i.al, %bb.j ]
-  %.1.i = phi i32 [ 0, %bb.h ], [ %6, %bb.j ]     ; 2 uses
+.loopexit29.loopexit.i:                           ; preds = %bb.j
+  %6 = trunc nuw i64 %indvars.iv.next.i to i32
+  br label %.loopexit29.i
+
+.loopexit29.i:                                    ; preds = %.loopexit29.loopexit.i, %bb.h
+  %i.an = phi i32 [ 0, %bb.h ], [ %i.al, %.loopexit29.loopexit.i ]
+  %.1.i = phi i32 [ 0, %bb.h ], [ %6, %.loopexit29.loopexit.i ] ; 2 uses
   %i.ao = icmp ult i32 %.1.i, %i.d
   br i1 %i.ao, label %.lr.ph32.i, label %SHA3Update.exit
 
@@ -290,15 +297,18 @@ bb.o:                                             ; preds = %bb.n
   %i.bh = icmp eq i64 %i.bg, 0
   %i.bi = icmp ugt i32 %i.d, 7
   %or.cond33.i25 = and i1 %i.bi, %i.bh
-  br i1 %or.cond33.i25, label %.lr.ph.i33.a, label %.loopexit29.i26
+  br i1 %or.cond33.i25, label %.lr.ph.i33, label %.loopexit29.i26
 
-.lr.ph.i33.a:                                     ; preds = %bb.o, %bb.q
-  %8 = phi i32 [ %i.bt, %bb.q ], [ 0, %bb.o ]
-  %.030.i34 = phi i32 [ %10, %bb.q ], [ 0, %bb.o ] ; 2 uses
-  %9 = zext i32 %.030.i34 to i64
-  %i.bj = getelementptr inbounds nuw i8, ptr %i.bc, i64 %9
+.lr.ph.i33:                                       ; preds = %bb.o
+  %7 = zext i32 %i.d to i64
+  br label %.lr.ph.i33.a
+
+.lr.ph.i33.a:                                     ; preds = %bb.q, %.lr.ph.i33
+  %.030.i34 = phi i32 [ 0, %.lr.ph.i33 ], [ %i.bt, %bb.q ]
+  %indvars.iv.i34 = phi i64 [ 0, %.lr.ph.i33 ], [ %indvars.iv.next.i36, %bb.q ] ; 2 uses
+  %i.bj = getelementptr inbounds nuw i8, ptr %i.bc, i64 %indvars.iv.i34
   %i.bk = load i64, ptr %i.bj, align 8, !tbaa !130
-  %i.bl = lshr i32 %8, 3
+  %i.bl = lshr i32 %.030.i34, 3
   %i.bm = zext nneg i32 %i.bl to i64
   %i.bn = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.bm ; 2 uses
   %i.bo = load i64, ptr %i.bn, align 8, !tbaa !52
@@ -318,14 +328,18 @@ bb.p:                                             ; preds = %.lr.ph.i33.a
 
 bb.q:                                             ; preds = %bb.p, %.lr.ph.i33.a
   %i.bt = phi i32 [ %i.br, %.lr.ph.i33.a ], [ 0, %bb.p ] ; 2 uses
-  %10 = add i32 %.030.i34, 8                      ; 3 uses
-  %11 = or disjoint i32 %10, 7
-  %i.bu = icmp ult i32 %11, %i.d
-  br i1 %i.bu, label %.lr.ph.i33.a, label %.loopexit29.i26, !llvm.loop !8
+  %indvars.iv.next.i36 = add nuw nsw i64 %indvars.iv.i34, 8 ; 3 uses
+  %8 = or disjoint i64 %indvars.iv.next.i36, 7
+  %i.bu = icmp samesign ult i64 %8, %7
+  br i1 %i.bu, label %.lr.ph.i33.a, label %.loopexit29.loopexit.i37, !llvm.loop !8
 
-.loopexit29.i26:                                  ; preds = %bb.q, %bb.o
-  %i.bv = phi i32 [ 0, %bb.o ], [ %i.bt, %bb.q ]
-  %.1.i27 = phi i32 [ 0, %bb.o ], [ %10, %bb.q ]  ; 2 uses
+.loopexit29.loopexit.i37:                         ; preds = %bb.q
+  %9 = trunc nuw i64 %indvars.iv.next.i36 to i32
+  br label %.loopexit29.i26
+
+.loopexit29.i26:                                  ; preds = %.loopexit29.loopexit.i37, %bb.o
+  %i.bv = phi i32 [ 0, %bb.o ], [ %i.bt, %.loopexit29.loopexit.i37 ]
+  %.1.i27 = phi i32 [ 0, %bb.o ], [ %9, %.loopexit29.loopexit.i37 ] ; 2 uses
   %i.bw = icmp ult i32 %.1.i27, %i.d
   br i1 %i.bw, label %.lr.ph32.i28, label %SHA3Update.exit
 
@@ -566,8 +580,8 @@ bb.j:                                             ; preds = %bb.h
   br i1 %.not38, label %SHA3Update.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.am = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.al) #46
-  %i.an = trunc i64 %i.am to i32                  ; 5 uses
+  %i.am = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.al) #46 ; 2 uses
+  %i.an = trunc i64 %i.am to i32                  ; 4 uses
   call void (ptr, ptr, ...) @sha3_step_vformat(ptr noundef %3, ptr noundef nonnull @.str.298, i32 noundef %i.an)
   %i.ao = load i32, ptr %i.u, align 4, !tbaa !131 ; 3 uses
   %i.ap = and i32 %i.ao, 7
@@ -578,15 +592,18 @@ bb.k:                                             ; preds = %bb.j
   %or.cond.i39 = and i1 %i.at, %i.aq
   %i.au = icmp ugt i32 %i.an, 7
   %or.cond33.i = and i1 %i.au, %or.cond.i39
-  br i1 %or.cond33.i, label %.lr.ph.i.a, label %.loopexit29.i
+  br i1 %or.cond33.i, label %.lr.ph.i, label %.loopexit29.i
 
-.lr.ph.i.a:                                       ; preds = %bb.k, %bb.m
-  %4 = phi i32 [ %i.bf, %bb.m ], [ %i.ao, %bb.k ]
-  %.030.i = phi i32 [ %6, %bb.m ], [ 0, %bb.k ]   ; 2 uses
-  %5 = zext i32 %.030.i to i64
-  %i.av = getelementptr inbounds nuw i8, ptr %i.al, i64 %5
+.lr.ph.i:                                         ; preds = %bb.k
+  %4 = and i64 %i.am, 4294967295
+  br label %.lr.ph.i.a
+
+.lr.ph.i.a:                                       ; preds = %bb.m, %.lr.ph.i
+  %.030.i = phi i32 [ %i.ao, %.lr.ph.i ], [ %i.bf, %bb.m ]
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.m ] ; 2 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %i.al, i64 %indvars.iv.i
   %i.aw = load i64, ptr %i.av, align 8, !tbaa !130
-  %i.ax = lshr i32 %4, 3
+  %i.ax = lshr i32 %.030.i, 3
   %i.ay = zext nneg i32 %i.ax to i64
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.ay ; 2 uses
   %i.ba = load i64, ptr %i.az, align 8, !tbaa !52
@@ -606,14 +623,18 @@ bb.l:                                             ; preds = %.lr.ph.i.a
 
 bb.m:                                             ; preds = %bb.l, %.lr.ph.i.a
   %i.bf = phi i32 [ %i.bd, %.lr.ph.i.a ], [ 0, %bb.l ] ; 2 uses
-  %6 = add i32 %.030.i, 8                         ; 3 uses
-  %7 = or disjoint i32 %6, 7
-  %i.bg = icmp ult i32 %7, %i.an
-  br i1 %i.bg, label %.lr.ph.i.a, label %.loopexit29.i, !llvm.loop !8
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 8 ; 3 uses
+  %5 = or disjoint i64 %indvars.iv.next.i, 7
+  %i.bg = icmp samesign ult i64 %5, %4
+  br i1 %i.bg, label %.lr.ph.i.a, label %.loopexit29.loopexit.i, !llvm.loop !8
 
-.loopexit29.i:                                    ; preds = %bb.m, %bb.k
-  %i.bh = phi i32 [ %i.ao, %bb.k ], [ %i.bf, %bb.m ]
-  %.1.i = phi i32 [ 0, %bb.k ], [ %6, %bb.m ]     ; 2 uses
+.loopexit29.loopexit.i:                           ; preds = %bb.m
+  %6 = trunc nuw i64 %indvars.iv.next.i to i32
+  br label %.loopexit29.i
+
+.loopexit29.i:                                    ; preds = %.loopexit29.loopexit.i, %bb.k
+  %i.bh = phi i32 [ %i.ao, %bb.k ], [ %i.bf, %.loopexit29.loopexit.i ]
+  %.1.i = phi i32 [ 0, %bb.k ], [ %6, %.loopexit29.loopexit.i ] ; 2 uses
   %i.bi = icmp ult i32 %.1.i, %i.an
   br i1 %i.bi, label %.lr.ph32.i, label %SHA3Update.exit
 
@@ -647,7 +668,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.bv = phi i32 [ %i.bs, %bb.n ], [ 0, %bb.o ]
   %indvars.iv.next.i.a = add nuw nsw i64 %indvars.iv.i.a, 1 ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next.i.a to i32
-  %exitcond = icmp eq i32 %lftr.wideiv, %i.an
+  %exitcond = icmp eq i32 %i.an, %lftr.wideiv
   br i1 %exitcond, label %SHA3Update.exit, label %bb.n, !llvm.loop !9
 
 SHA3Update.exit:                                  ; preds = %bb.p, %.loopexit29.i, %bb.j
@@ -1050,15 +1071,15 @@ bb.n:                                             ; preds = %bb.m
 
 .lr.ph.i60:                                       ; preds = %bb.n
   %i.ei = getelementptr inbounds nuw i8, ptr %0, i64 1600
+  %2 = zext i32 %i.dx to i64
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.q, %.lr.ph.i60
-  %2 = phi i32 [ %i.eb, %.lr.ph.i60 ], [ %i.et, %bb.q ]
-  %.030.i61 = phi i32 [ 0, %.lr.ph.i60 ], [ %4, %bb.q ] ; 2 uses
-  %3 = zext i32 %.030.i61 to i64
-  %i.ej = getelementptr inbounds nuw i8, ptr %i.dy, i64 %3
+  %.030.i61 = phi i32 [ %i.eb, %.lr.ph.i60 ], [ %i.et, %bb.q ]
+  %indvars.iv.i63 = phi i64 [ 0, %.lr.ph.i60 ], [ %indvars.iv.next.i65, %bb.q ] ; 2 uses
+  %i.ej = getelementptr inbounds nuw i8, ptr %i.dy, i64 %indvars.iv.i63
   %i.ek = load i64, ptr %i.ej, align 8, !tbaa !130
-  %i.el = lshr i32 %2, 3
+  %i.el = lshr i32 %.030.i61, 3
   %i.em = zext nneg i32 %i.el to i64
   %i.en = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.em ; 2 uses
   %i.eo = load i64, ptr %i.en, align 8, !tbaa !52
@@ -1078,14 +1099,18 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p, %bb.o
   %i.et = phi i32 [ %i.er, %bb.o ], [ 0, %bb.p ]  ; 2 uses
-  %4 = add i32 %.030.i61, 8                       ; 3 uses
-  %5 = or disjoint i32 %4, 7
-  %i.eu = icmp ult i32 %5, %i.dx
-  br i1 %i.eu, label %bb.o, label %.loopexit29.i53, !llvm.loop !8
+  %indvars.iv.next.i65 = add nuw nsw i64 %indvars.iv.i63, 8 ; 3 uses
+  %3 = or disjoint i64 %indvars.iv.next.i65, 7
+  %i.eu = icmp samesign ult i64 %3, %2
+  br i1 %i.eu, label %bb.o, label %.loopexit29.loopexit.i66, !llvm.loop !8
 
-.loopexit29.i53:                                  ; preds = %bb.q, %bb.n
-  %i.ev = phi i32 [ %i.eb, %bb.n ], [ %i.et, %bb.q ]
-  %.1.i54 = phi i32 [ 0, %bb.n ], [ %4, %bb.q ]   ; 2 uses
+.loopexit29.loopexit.i66:                         ; preds = %bb.q
+  %4 = trunc nuw i64 %indvars.iv.next.i65 to i32
+  br label %.loopexit29.i53
+
+.loopexit29.i53:                                  ; preds = %.loopexit29.loopexit.i66, %bb.n
+  %i.ev = phi i32 [ %i.eb, %bb.n ], [ %i.et, %.loopexit29.loopexit.i66 ]
+  %.1.i54 = phi i32 [ 0, %bb.n ], [ %4, %.loopexit29.loopexit.i66 ] ; 2 uses
   %i.ew = icmp ult i32 %.1.i54, %i.dx
   br i1 %i.ew, label %.lr.ph32.i55, label %SHA3Update.exit
 
@@ -1145,15 +1170,15 @@ bb.v:                                             ; preds = %bb.u
 
 .lr.ph.i73:                                       ; preds = %bb.v
   %i.fw = getelementptr inbounds nuw i8, ptr %0, i64 1600
+  %5 = zext i32 %i.fl to i64
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.y, %.lr.ph.i73
-  %6 = phi i32 [ %i.fp, %.lr.ph.i73 ], [ %i.gh, %bb.y ]
-  %.030.i74 = phi i32 [ 0, %.lr.ph.i73 ], [ %8, %bb.y ] ; 2 uses
-  %7 = zext i32 %.030.i74 to i64
-  %i.fx = getelementptr inbounds nuw i8, ptr %i.fm, i64 %7
+  %.030.i74 = phi i32 [ %i.fp, %.lr.ph.i73 ], [ %i.gh, %bb.y ]
+  %indvars.iv.i78 = phi i64 [ 0, %.lr.ph.i73 ], [ %indvars.iv.next.i80, %bb.y ] ; 2 uses
+  %i.fx = getelementptr inbounds nuw i8, ptr %i.fm, i64 %indvars.iv.i78
   %i.fy = load i64, ptr %i.fx, align 8, !tbaa !130
-  %i.fz = lshr i32 %6, 3
+  %i.fz = lshr i32 %.030.i74, 3
   %i.ga = zext nneg i32 %i.fz to i64
   %i.gb = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ga ; 2 uses
   %i.gc = load i64, ptr %i.gb, align 8, !tbaa !52
@@ -1173,14 +1198,18 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x, %bb.w
   %i.gh = phi i32 [ %i.gf, %bb.w ], [ 0, %bb.x ]  ; 2 uses
-  %8 = add i32 %.030.i74, 8                       ; 3 uses
-  %9 = or disjoint i32 %8, 7
-  %i.gi = icmp ult i32 %9, %i.fl
-  br i1 %i.gi, label %bb.w, label %.loopexit29.i66, !llvm.loop !8
+  %indvars.iv.next.i80 = add nuw nsw i64 %indvars.iv.i78, 8 ; 3 uses
+  %6 = or disjoint i64 %indvars.iv.next.i80, 7
+  %i.gi = icmp samesign ult i64 %6, %5
+  br i1 %i.gi, label %bb.w, label %.loopexit29.loopexit.i81, !llvm.loop !8
 
-.loopexit29.i66:                                  ; preds = %bb.y, %bb.v
-  %i.gj = phi i32 [ %i.fp, %bb.v ], [ %i.gh, %bb.y ]
-  %.1.i67 = phi i32 [ 0, %bb.v ], [ %8, %bb.y ]   ; 2 uses
+.loopexit29.loopexit.i81:                         ; preds = %bb.y
+  %7 = trunc nuw i64 %indvars.iv.next.i80 to i32
+  br label %.loopexit29.i66
+
+.loopexit29.i66:                                  ; preds = %.loopexit29.loopexit.i81, %bb.v
+  %i.gj = phi i32 [ %i.fp, %bb.v ], [ %i.gh, %.loopexit29.loopexit.i81 ]
+  %.1.i67 = phi i32 [ 0, %bb.v ], [ %7, %.loopexit29.loopexit.i81 ] ; 2 uses
   %i.gk = icmp ult i32 %.1.i67, %i.fl
   br i1 %i.gk, label %.lr.ph32.i68, label %SHA3Update.exit
 
@@ -1252,9 +1281,9 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %.lr.ph.i
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.d ], [ 0, %.lr.ph.i ] ; 2 uses
-  %3 = phi i32 [ %i.v, %bb.d ], [ %i.f, %.lr.ph.i ]
-  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
+  %3 = phi i32 [ %i.f, %.lr.ph.i ], [ %i.v, %bb.d ]
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next, %bb.d ] ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i
   %i.m = load i64, ptr %i.l, align 8, !tbaa !130
   %i.n = lshr i32 %3, 3
   %i.o = zext nneg i32 %i.n to i64
@@ -1276,9 +1305,9 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %i.v = phi i32 [ %i.t, %bb.b ], [ 0, %bb.c ]    ; 2 uses
-  %indvars.iv.next = add nuw i64 %indvars.iv, 8   ; 3 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv.i, 8 ; 3 uses
   %i.w = or disjoint i64 %indvars.iv.next, 7
-  %i.x = icmp ult i64 %i.w, %i.k
+  %i.x = icmp samesign ult i64 %i.w, %i.k
   br i1 %i.x, label %bb.b, label %.loopexit29.i.loopexit, !llvm.loop !8
 
 .loopexit29.i.loopexit:                           ; preds = %bb.d

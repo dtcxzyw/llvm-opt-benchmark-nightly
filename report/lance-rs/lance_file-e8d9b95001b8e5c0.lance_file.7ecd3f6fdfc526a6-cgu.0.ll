@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph9
-  %i.g = add i64 %.sroa.0.1.i.i8, 1               ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i8, 1       ; 2 uses
   %i.h = icmp eq i64 %i.g, %.val1
   br i1 %i.h, label %.body, label %.lr.ph9
 
@@ -276,7 +276,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph9
-  %i.g = add i64 %.sroa.0.1.i.i8, 1               ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i8, 1       ; 2 uses
   %i.h = icmp eq i64 %i.g, %.val1
   br i1 %i.h, label %.body, label %.lr.ph9
 
@@ -471,7 +471,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCs40k4W9msRzi_5allo
   br i1 %i.s, label %_RNvXso_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecINtNtCscI6d9CVNmLh_4core3pin3PinINtNtB7_5boxed3BoxDNtNtNtBK_6future6future6Futurep6OutputINtNtBK_6result6ResultNtNtCsjjpCCFGI3ul_14lance_encoding7encoder11EncodedPageNtNtCs63DIHKhvmTb_10lance_core5error5ErrorENtNtBK_6marker4SendEL_EEENtNtNtBK_3ops4drop4Drop4dropCsaSXGKSfiU2E_10lance_file.exit, label %.lr.ph.i.i
 
 bb.e:                                             ; preds = %.lr.ph
-  %i.t = add i64 %.sroa.0.1.i.i22, 1              ; 2 uses
+  %i.t = add nuw nsw i64 %.sroa.0.1.i.i22, 1      ; 2 uses
   %i.u = icmp eq i64 %i.t, %.val1
   br i1 %i.u, label %.body, label %.lr.ph
 
@@ -563,7 +563,7 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph12.i.i:                                     ; preds = %bb.d, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCsjjpCCFGI3ul_14lance_encoding7decoder10ColumnInfoEEECsaSXGKSfiU2E_10lance_file.exit8.i.i
   %.sroa.0.110.i.i = phi i64 [ %i.n, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCsjjpCCFGI3ul_14lance_encoding7decoder10ColumnInfoEEECsaSXGKSfiU2E_10lance_file.exit8.i.i ], [ %i.e, %bb.d ] ; 2 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %.val, i64 %.sroa.0.110.i.i ; 2 uses
-  %i.n = add i64 %.sroa.0.110.i.i, 1              ; 2 uses
+  %i.n = add nuw nsw i64 %.sroa.0.110.i.i, 1      ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4205)
   %i.o = load ptr, ptr %i.m, align 8, !alias.scope !4206, !noundef !62 ; 2 uses
   %i.p = icmp eq ptr %i.o, null
@@ -651,7 +651,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph12.i.i:                                     ; preds = %bb.c, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5FieldEECsaSXGKSfiU2E_10lance_file.exit8.i.i
   %.sroa.0.110.i.i = phi i64 [ %i.l, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5FieldEECsaSXGKSfiU2E_10lance_file.exit8.i.i ], [ %i.e, %bb.c ] ; 2 uses
   %i.k = getelementptr inbounds nuw [192 x i8], ptr %.val, i64 %.sroa.0.110.i.i ; 2 uses
-  %i.l = add i64 %.sroa.0.110.i.i, 1              ; 2 uses
+  %i.l = add nuw nsw i64 %.sroa.0.110.i.i, 1      ; 2 uses
   %i.m = load i64, ptr %i.k, align 8, !range !83, !alias.scope !4215, !noundef !62
   %i.n = icmp eq i64 %i.m, -1
   br i1 %i.n, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5FieldEECsaSXGKSfiU2E_10lance_file.exit8.i.i, label %bb.d
@@ -736,7 +736,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph12.i.i:                                     ; preds = %bb.c, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_EECsaSXGKSfiU2E_10lance_file.exit8.i.i
   %.sroa.0.110.i.i = phi i64 [ %i.m, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_EECsaSXGKSfiU2E_10lance_file.exit8.i.i ], [ %i.e, %bb.c ] ; 2 uses
   %i.l = getelementptr inbounds nuw [16 x i8], ptr %.val, i64 %.sroa.0.110.i.i ; 2 uses
-  %i.m = add i64 %.sroa.0.110.i.i, 1              ; 2 uses
+  %i.m = add nuw nsw i64 %.sroa.0.110.i.i, 1      ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4230)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4231)
   %i.n = load ptr, ptr %i.l, align 8, !alias.scope !4232, !nonnull !62, !noundef !62
@@ -825,7 +825,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph12.i.i:                                     ; preds = %bb.c, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCsjjpCCFGI3ul_14lance_encoding7decoder10ColumnInfoEECsaSXGKSfiU2E_10lance_file.exit8.i.i
   %.sroa.0.110.i.i = phi i64 [ %i.m, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCsjjpCCFGI3ul_14lance_encoding7decoder10ColumnInfoEECsaSXGKSfiU2E_10lance_file.exit8.i.i ], [ %i.e, %bb.c ] ; 2 uses
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %.val, i64 %.sroa.0.110.i.i ; 2 uses
-  %i.m = add i64 %.sroa.0.110.i.i, 1              ; 2 uses
+  %i.m = add nuw nsw i64 %.sroa.0.110.i.i, 1      ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4248)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4249)
   %i.n = load ptr, ptr %i.l, align 8, !alias.scope !4250, !nonnull !62, !noundef !62
@@ -934,7 +934,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNt
   br i1 %i.s, label %_RNvXso_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecINtNtB7_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7encoder12FieldEncoderEL_EENtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4dropCsaSXGKSfiU2E_10lance_file.exit, label %.lr.ph.i.i
 
 bb.e:                                             ; preds = %.lr.ph
-  %i.t = add i64 %.sroa.0.1.i.i22, 1              ; 2 uses
+  %i.t = add nuw nsw i64 %.sroa.0.1.i.i22, 1      ; 2 uses
   %i.u = icmp eq i64 %i.t, %.val1
   br i1 %i.u, label %.body, label %.lr.ph
 
@@ -1094,7 +1094,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph9
-  %i.g = add i64 %.sroa.0.1.i.i8, 1               ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i8, 1       ; 2 uses
   %i.h = icmp eq i64 %i.g, %.val1
   br i1 %i.h, label %.body, label %.lr.ph9
 
@@ -1177,7 +1177,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesECsa
           to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesECsaSXGKSfiU2E_10lance_file.exit.i.i unwind label %bb.b, !noalias !4281, !inline_history !5
 
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesECsaSXGKSfiU2E_10lance_file.exit7.i.i: ; preds = %.lr.ph9
-  %i.p = add i64 %.sroa.0.1.i.i8, 1               ; 2 uses
+  %i.p = add nuw nsw i64 %.sroa.0.1.i.i8, 1       ; 2 uses
   %i.q = icmp eq i64 %i.p, %.val5
   br i1 %i.q, label %.body, label %.lr.ph9
 
@@ -1354,7 +1354,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs8SUNSmrkv52_12arrow_schema5field5F
   br i1 %i.m, label %_RNvXso_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecNtNtCs8SUNSmrkv52_12arrow_schema5field5FieldENtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4dropCsaSXGKSfiU2E_10lance_file.exit, label %.lr.ph.i.i
 
 bb.c:                                             ; preds = %.lr.ph
-  %i.n = add i64 %.sroa.0.1.i.i19, 1              ; 2 uses
+  %i.n = add nuw nsw i64 %.sroa.0.1.i.i19, 1      ; 2 uses
   %i.o = icmp eq i64 %i.n, %.val1
   br i1 %i.o, label %.body, label %.lr.ph
 
@@ -1515,7 +1515,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph12.i.i:                                     ; preds = %bb.c, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer9immutable6BufferECsaSXGKSfiU2E_10lance_file.exit8.i.i
   %.sroa.0.110.i.i = phi i64 [ %i.m, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer9immutable6BufferECsaSXGKSfiU2E_10lance_file.exit8.i.i ], [ %i.e, %bb.c ] ; 2 uses
   %i.l = getelementptr inbounds nuw [24 x i8], ptr %.val, i64 %.sroa.0.110.i.i ; 2 uses
-  %i.m = add i64 %.sroa.0.110.i.i, 1              ; 2 uses
+  %i.m = add nuw nsw i64 %.sroa.0.110.i.i, 1      ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4321)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4322)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4323)
@@ -1860,7 +1860,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCsjjpCCFGI3ul_14lance_encoding6for
   br i1 %i.w, label %_RNvXso_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecNtNtNtCsjjpCCFGI3ul_14lance_encoding6format4pb2121SparseStructuralLayerENtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4dropCsaSXGKSfiU2E_10lance_file.exit, label %.lr.ph.i.i
 
 bb.h:                                             ; preds = %.lr.ph
-  %i.x = add i64 %.sroa.0.1.i.i12, 1              ; 2 uses
+  %i.x = add nuw nsw i64 %.sroa.0.1.i.i12, 1      ; 2 uses
   %i.y = icmp eq i64 %i.x, %.val1
   br i1 %i.y, label %.body, label %.lr.ph
 
@@ -2052,7 +2052,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtNtNtCsaSXGKSfiU2E_10lance_file8ver
           to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binary14TakeChunksPlanEBL_.exit.i.i unwind label %bb.b
 
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binary14TakeChunksPlanEBL_.exit7.i.i: ; preds = %.lr.ph9
-  %i.g = add i64 %.sroa.0.1.i.i8, 1               ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i8, 1       ; 2 uses
   %i.h = icmp eq i64 %i.g, %.val5
   br i1 %i.h, label %.body, label %.lr.ph9
 
@@ -2169,7 +2169,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueTINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtC
   br i1 %i.s, label %_RNvXso_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecTINtNtB7_4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema5field5FieldEIBH_DNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_EEENtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4dropCsaSXGKSfiU2E_10lance_file.exit, label %.lr.ph.i.i
 
 bb.g:                                             ; preds = %.lr.ph
-  %i.t = add i64 %.sroa.0.1.i.i27, 1              ; 2 uses
+  %i.t = add nuw nsw i64 %.sroa.0.1.i.i27, 1      ; 2 uses
   %i.u = icmp eq i64 %i.t, %.val1
   br i1 %i.u, label %.body, label %.lr.ph
 
@@ -2308,7 +2308,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph12.i.i:                                     ; preds = %bb.c, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueTjINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_EEECsaSXGKSfiU2E_10lance_file.exit8.i.i
   %.sroa.0.110.i.i = phi i64 [ %i.n, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueTjINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_EEECsaSXGKSfiU2E_10lance_file.exit8.i.i ], [ %i.e, %bb.c ] ; 2 uses
   %i.m = getelementptr inbounds nuw [24 x i8], ptr %.val, i64 %.sroa.0.110.i.i
-  %i.n = add i64 %.sroa.0.110.i.i, 1              ; 2 uses
+  %i.n = add nuw nsw i64 %.sroa.0.110.i.i, 1      ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4436)
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4437)
@@ -2401,7 +2401,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueTNtNtNtCs63DIHKhvmTb_10lance_core9dataty
           to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueTlTNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5FieldNtNtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v16writer10statistics17StatisticsBuilderEEEB1G_.exit.i.i unwind label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph21
-  %i.l = add i64 %.sroa.0.1.i.i20, 1              ; 2 uses
+  %i.l = add nuw nsw i64 %.sroa.0.1.i.i20, 1      ; 2 uses
   %i.m = icmp eq i64 %i.l, %.val1
   br i1 %i.m, label %.body, label %.lr.ph21
 
@@ -2804,7 +2804,7 @@ bb.e:                                             ; preds = %bb.d
 .lr.ph12.i.i.i.i.i:                               ; preds = %bb.e, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCsjjpCCFGI3ul_14lance_encoding7decoder10ColumnInfoEEECsaSXGKSfiU2E_10lance_file.exit8.i.i.i.i.i
   %.sroa.0.110.i.i.i.i.i = phi i64 [ %i.w, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCsjjpCCFGI3ul_14lance_encoding7decoder10ColumnInfoEEECsaSXGKSfiU2E_10lance_file.exit8.i.i.i.i.i ], [ %i.n, %bb.e ] ; 2 uses
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %.val.i.i.i.i, i64 %.sroa.0.110.i.i.i.i.i ; 2 uses
-  %i.w = add i64 %.sroa.0.110.i.i.i.i.i, 1        ; 2 uses
+  %i.w = add nuw nsw i64 %.sroa.0.110.i.i.i.i.i, 1 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5326)
   %i.x = load ptr, ptr %i.v, align 8, !alias.scope !5327, !noalias !5322, !noundef !62 ; 2 uses
   %i.y = icmp eq ptr %i.x, null
@@ -2894,7 +2894,7 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph12.i.i.i.i.i.i:                             ; preds = %bb.d, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive21PrimitivePageEncodingECsaSXGKSfiU2E_10lance_file.exit8.i.i.i.i.i.i
   %.sroa.0.110.i.i.i.i.i.i = phi i64 [ %i.q, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive21PrimitivePageEncodingECsaSXGKSfiU2E_10lance_file.exit8.i.i.i.i.i.i ], [ %i.i, %bb.d ] ; 2 uses
   %i.p = getelementptr inbounds nuw [16 x i8], ptr %i.g, i64 %.sroa.0.110.i.i.i.i.i.i ; 2 uses
-  %i.q = add i64 %.sroa.0.110.i.i.i.i.i.i, 1      ; 2 uses
+  %i.q = add nuw nsw i64 %.sroa.0.110.i.i.i.i.i.i, 1 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5359)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5360)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5361)
@@ -2970,7 +2970,7 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph12.i.i.i.i.i.i:                             ; preds = %bb.d, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive21PrimitivePageEncodingECsaSXGKSfiU2E_10lance_file.exit8.i.i.i.i.i.i
   %.sroa.0.110.i.i.i.i.i.i = phi i64 [ %i.q, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive21PrimitivePageEncodingECsaSXGKSfiU2E_10lance_file.exit8.i.i.i.i.i.i ], [ %i.i, %bb.d ] ; 2 uses
   %i.p = getelementptr inbounds nuw [16 x i8], ptr %i.g, i64 %.sroa.0.110.i.i.i.i.i.i ; 2 uses
-  %i.q = add i64 %.sroa.0.110.i.i.i.i.i.i, 1      ; 2 uses
+  %i.q = add nuw nsw i64 %.sroa.0.110.i.i.i.i.i.i, 1 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5394)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5395)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5396)
@@ -3045,7 +3045,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCs9p5Dg9WVwvP_12futures_util6stre
   br i1 %i.l, label %_RNvXso_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecINtNtNtCs9p5Dg9WVwvP_12futures_util6stream15futures_ordered12OrderWrapperINtNtCscI6d9CVNmLh_4core6result6ResultINtNtB7_4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_ENtNtCs63DIHKhvmTb_10lance_core5error5ErrorEEENtNtNtB1V_3ops4drop4Drop4dropCsaSXGKSfiU2E_10lance_file.exit.i, label %.lr.ph.i.i.i
 
 bb.e:                                             ; preds = %.lr.ph
-  %i.m = add i64 %.sroa.0.1.i.i.i5, 1             ; 2 uses
+  %i.m = add nuw nsw i64 %.sroa.0.1.i.i.i5, 1     ; 2 uses
   %i.n = icmp eq i64 %i.m, %.val1.i
   br i1 %i.n, label %.body.i, label %.lr.ph
 
@@ -3156,7 +3156,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCs9p5Dg9WVwvP_12futures_util6stre
   br i1 %i.o, label %_RNvXso_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecINtNtNtCs9p5Dg9WVwvP_12futures_util6stream15futures_ordered12OrderWrapperINtNtCscI6d9CVNmLh_4core6result6ResultNtNtCs4ytUTZt2Gw9_11arrow_array12record_batch11RecordBatchNtNtCs63DIHKhvmTb_10lance_core5error5ErrorEEENtNtNtB1V_3ops4drop4Drop4dropCsaSXGKSfiU2E_10lance_file.exit.i, label %.lr.ph.i.i.i
 
 bb.g:                                             ; preds = %.lr.ph
-  %i.p = add i64 %.sroa.0.1.i.i.i13, 1            ; 2 uses
+  %i.p = add nuw nsw i64 %.sroa.0.1.i.i.i13, 1    ; 2 uses
   %i.q = icmp eq i64 %i.p, %.val1.i
   br i1 %i.q, label %.body.i, label %.lr.ph
 
@@ -3279,7 +3279,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCs9p5Dg9WVwvP_12futures_util6stre
   br i1 %i.s, label %_RNvXso_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecINtNtNtCs9p5Dg9WVwvP_12futures_util6stream15futures_ordered12OrderWrapperINtNtCscI6d9CVNmLh_4core6result6ResultTNtNtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binary14TakeChunksPlanmINtNtB7_4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_EENtNtCs63DIHKhvmTb_10lance_core5error5ErrorEEENtNtNtB1V_3ops4drop4Drop4dropB2D_.exit.i, label %.lr.ph.i.i.i
 
 bb.h:                                             ; preds = %.lr.ph
-  %i.t = add i64 %.sroa.0.1.i.i.i21, 1            ; 2 uses
+  %i.t = add nuw nsw i64 %.sroa.0.1.i.i.i21, 1    ; 2 uses
   %i.u = icmp eq i64 %i.t, %.val1.i
   br i1 %i.u, label %.body.i, label %.lr.ph
 
@@ -3371,7 +3371,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph12.i.i:                                     ; preds = %bb.c, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCsjjpCCFGI3ul_14lance_encoding7decoder10ColumnInfoEECsaSXGKSfiU2E_10lance_file.exit8.i.i
   %.sroa.0.110.i.i = phi i64 [ %i.o, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCsjjpCCFGI3ul_14lance_encoding7decoder10ColumnInfoEECsaSXGKSfiU2E_10lance_file.exit8.i.i ], [ %i.g, %bb.c ] ; 2 uses
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %.0.val, i64 %.sroa.0.110.i.i ; 2 uses
-  %i.o = add i64 %.sroa.0.110.i.i, 1              ; 2 uses
+  %i.o = add nuw nsw i64 %.sroa.0.110.i.i, 1      ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5484)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5485)
   %i.p = load ptr, ptr %i.n, align 8, !alias.scope !5486, !nonnull !62, !noundef !62
@@ -3442,7 +3442,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph12.i.i:                                     ; preds = %bb.c, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCsjjpCCFGI3ul_14lance_encoding7decoder10ColumnInfoEECsaSXGKSfiU2E_10lance_file.exit8.i.i
   %.sroa.0.110.i.i = phi i64 [ %i.p, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCsjjpCCFGI3ul_14lance_encoding7decoder10ColumnInfoEECsaSXGKSfiU2E_10lance_file.exit8.i.i ], [ %i.h, %bb.c ] ; 2 uses
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.sroa.0.110.i.i ; 2 uses
-  %i.p = add i64 %.sroa.0.110.i.i, 1              ; 2 uses
+  %i.p = add nuw nsw i64 %.sroa.0.110.i.i, 1      ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5505)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5506)
   %i.q = load ptr, ptr %i.o, align 8, !alias.scope !5507, !noalias !5500, !nonnull !62, !noundef !62
@@ -3541,7 +3541,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesECsa
           to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesECsaSXGKSfiU2E_10lance_file.exit.i.i unwind label %bb.c, !noalias !5527, !inline_history !5
 
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs4XDKJNDGLq7_5bytes5bytes5BytesECsaSXGKSfiU2E_10lance_file.exit7.i.i: ; preds = %.lr.ph5
-  %i.y = add i64 %.sroa.0.1.i.i4, 1               ; 2 uses
+  %i.y = add nuw nsw i64 %.sroa.0.1.i.i4, 1       ; 2 uses
   %i.z = icmp eq i64 %i.y, %i.f
   br i1 %i.z, label %.body.i, label %.lr.ph5
 
@@ -3944,7 +3944,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtNtNtCsaSXGKSfiU2E_10lance_file8ver
           to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binary14TakeChunksPlanEBL_.exit.i.i.i unwind label %bb.c, !noalias !7531
 
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binary14TakeChunksPlanEBL_.exit7.i.i.i: ; preds = %.lr.ph5
-  %i.p = add i64 %.sroa.0.1.i.i.i4, 1             ; 2 uses
+  %i.p = add nuw nsw i64 %.sroa.0.1.i.i.i4, 1     ; 2 uses
   %i.q = icmp eq i64 %i.p, %i.f
   br i1 %i.q, label %.body.i.i, label %.lr.ph5
 
@@ -4218,7 +4218,7 @@ bb.c:                                             ; preds = %.lr.ph
           to label %bb.c unwind label %bb.e, !noalias !7592
 
 bb.d:                                             ; preds = %.lr.ph5
-  %i.q = add i64 %.sroa.0.1.i.i.i4, 1             ; 2 uses
+  %i.q = add nuw nsw i64 %.sroa.0.1.i.i.i4, 1     ; 2 uses
   %i.r = icmp eq i64 %i.q, %i.g
   br i1 %i.r, label %.body.i.i, label %.lr.ph5
 
@@ -4406,7 +4406,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueTNtNtNtCs63DIHKhvmTb_10lance_core9dataty
           to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueTlTNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5FieldNtNtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v16writer10statistics17StatisticsBuilderEEEB1G_.exit.i.i.i.i unwind label %bb.f, !noalias !7628
 
 bb.e:                                             ; preds = %.lr.ph17
-  %i.v = add i64 %.sroa.0.1.i.i.i.i16, 1          ; 2 uses
+  %i.v = add nuw nsw i64 %.sroa.0.1.i.i.i.i16, 1  ; 2 uses
   %i.w = icmp eq i64 %i.v, %i.g
   br i1 %i.w, label %.body.i.i.i, label %.lr.ph17
 
@@ -4809,7 +4809,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d, !noalias !9554
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.h = add i64 %.sroa.0.1.i.i.i2, 1             ; 2 uses
+  %i.h = add nuw nsw i64 %.sroa.0.1.i.i.i2, 1     ; 2 uses
   %i.i = icmp eq i64 %i.h, %.val1.i
   br i1 %i.i, label %.body.i, label %.lr.ph3
 
@@ -5212,7 +5212,7 @@ bb.b:                                             ; preds = %.lr.ph
   ret void
 
 bb.c:                                             ; preds = %.lr.ph10
-  %i.e = add i64 %.sroa.0.18, 1                   ; 2 uses
+  %i.e = add nuw nsw i64 %.sroa.0.18, 1           ; 2 uses
   %i.f = icmp eq i64 %i.e, %1
   br i1 %i.f, label %._crit_edge11, label %.lr.ph10
 
@@ -5287,7 +5287,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsaSXGKSfiU2E_10lance_file9datatypes
   ret void
 
 bb.f:                                             ; preds = %.lr.ph20
-  %i.n = add i64 %.sroa.0.119, 1                  ; 2 uses
+  %i.n = add nuw nsw i64 %.sroa.0.119, 1          ; 2 uses
   %i.o = icmp eq i64 %i.n, %1
   br i1 %i.o, label %._crit_edge21, label %.lr.ph20
 
@@ -5379,7 +5379,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsjjpCCFGI3ul_14lance_encoding7decod
   ret void
 
 bb.h:                                             ; preds = %.lr.ph28
-  %i.r = add i64 %.sroa.0.127, 1                  ; 2 uses
+  %i.r = add nuw nsw i64 %.sroa.0.127, 1          ; 2 uses
   %i.s = icmp eq i64 %i.r, %1
   br i1 %i.s, label %._crit_edge29, label %.lr.ph28
 
@@ -5782,7 +5782,7 @@ bb.fi:                                            ; preds = %bb.fi, %_RINvNtNtCs
   %i.amk = lshr i32 %i.amj, 6
   %i.aml = zext nneg i32 %i.amk to i64
   %i.amm = add i64 %i.amc, %i.aml                 ; 3 uses
-  %i.amn = add nuw i64 %.sroa.04.0.i.i.i, 2       ; 2 uses
+  %i.amn = add nuw nsw i64 %.sroa.04.0.i.i.i, 2   ; 2 uses
   %niter501.next.1 = add i64 %niter501, 2         ; 2 uses
   %niter501.ncmp.1 = icmp eq i64 %niter501.next.1, %unroll_iter500
   br i1 %niter501.ncmp.1, label %.lr.ph.preheader.i.i.unr-lcssa, label %bb.fi
@@ -6185,7 +6185,7 @@ bb.hu:                                            ; preds = %bb.ht
 .lr.ph12.i.i.i.i.i.i.i.i.i.i:                     ; preds = %bb.hu, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCsjjpCCFGI3ul_14lance_encoding7decoder10ColumnInfoEEECsaSXGKSfiU2E_10lance_file.exit8.i.i.i.i.i.i.i.i.i.i
   %.sroa.0.110.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.ags, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCsjjpCCFGI3ul_14lance_encoding7decoder10ColumnInfoEEECsaSXGKSfiU2E_10lance_file.exit8.i.i.i.i.i.i.i.i.i.i ], [ %i.agj, %bb.hu ] ; 2 uses
   %i.agr = getelementptr inbounds nuw [8 x i8], ptr %.val2.i.i.i.i.i.i.i.i.i, i64 %.sroa.0.110.i.i.i.i.i.i.i.i.i.i ; 2 uses
-  %i.ags = add i64 %.sroa.0.110.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
+  %i.ags = add nuw nsw i64 %.sroa.0.110.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !30070)
   %i.agt = load ptr, ptr %i.agr, align 8, !alias.scope !30071, !noalias !30068, !noundef !62 ; 2 uses
   %i.agu = icmp eq ptr %i.agt, null
@@ -6588,7 +6588,7 @@ bb.af:                                            ; preds = %.lr.ph
           to label %bb.af unwind label %bb.ah, !noalias !31892
 
 bb.ag:                                            ; preds = %.lr.ph35
-  %i.bj = add i64 %.sroa.0.1.i.i.i.i34, 1         ; 2 uses
+  %i.bj = add nuw nsw i64 %.sroa.0.1.i.i.i.i34, 1 ; 2 uses
   %i.bk = icmp eq i64 %i.bj, %.sroa.9.0.i
   br i1 %i.bk, label %.body.i.i, label %.lr.ph35
 
@@ -6991,7 +6991,7 @@ bb.a:
   %i.d = alloca [24 x i8], align 8                ; 7 uses
   %i.e = alloca [24 x i8], align 8                ; 12 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.g = load i64, ptr %i.f, align 8, !noundef !62 ; 7 uses
+  %i.g = load i64, ptr %i.f, align 8, !noundef !62 ; 8 uses
   %i.h = icmp ult i64 %i.g, 2305843009213693952
   tail call void @llvm.assume(i1 %i.h)
   %i.i = icmp eq i64 %i.g, 0
@@ -7085,7 +7085,7 @@ bb.j:                                             ; preds = %.lr.ph219, %_RNvMs2
   br i1 %i.af, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.j
-  %i.ag = sext i32 %.sroa.0.0218 to i64
+  %i.ag = sext i32 %.sroa.0.0218 to i64           ; 2 uses
   br label %.lr.ph
 
 ._crit_edge220:                                   ; preds = %_RNvMs2_NtNtNtNtCs40k4W9msRzi_5alloc11collections5btree3map5entryINtB5_5EntrylINtNtBd_3vec3VecmEE9or_insertCsaSXGKSfiU2E_10lance_file.exit, %bb.a
@@ -7476,7 +7476,7 @@ _RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldTRlRINtNtCs40k4W9msRz
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.ai
   %indvars.iv = phi i64 [ %i.ag, %.lr.ph.preheader ], [ %i.et, %bb.ai ] ; 2 uses
-  %i.et = add nsw i64 %indvars.iv, 1              ; 5 uses
+  %i.et = add nsw i64 %indvars.iv, 1              ; 4 uses
   %i.eu = icmp ult i64 %i.et, %i.g
   br i1 %i.eu, label %bb.af, label %bb.ag
 
@@ -7549,7 +7549,9 @@ bb.af:                                            ; preds = %.lr.ph
   br i1 %.not44, label %._crit_edge.loopexit.split.loop.exit, label %bb.ai
 
 bb.ag:                                            ; preds = %.lr.ph
-  invoke void @_RNvNtCscI6d9CVNmLh_4core9panicking18panic_bounds_check(i64 noundef %i.et, i64 noundef %i.g, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @686) #49
+  %4 = add nsw i64 %i.ag, 1
+  %umax.le = call i64 @llvm.umax.i64(i64 %i.g, i64 %4)
+  invoke void @_RNvNtCscI6d9CVNmLh_4core9panicking18panic_bounds_check(i64 noundef %umax.le, i64 noundef %i.g, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @686) #49
           to label %bb.ah unwind label %.loopexit.split-lp
 
 bb.ah:                                            ; preds = %bb.ag, %bb.d
@@ -7952,7 +7954,7 @@ bb.af:                                            ; preds = %.lr.ph
           to label %bb.af unwind label %bb.ah, !noalias !36234
 
 bb.ag:                                            ; preds = %.lr.ph35
-  %i.bj = add i64 %.sroa.0.1.i.i.i.i34, 1         ; 2 uses
+  %i.bj = add nuw nsw i64 %.sroa.0.1.i.i.i.i34, 1 ; 2 uses
   %i.bk = icmp eq i64 %i.bj, %.sroa.9.0.i
   br i1 %i.bk, label %.body.i.i, label %.lr.ph35
 
@@ -8355,7 +8357,7 @@ bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !37769
   %i.z = getelementptr inbounds nuw [24 x i8], ptr %i.s, i64 %.val15.i.i.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.z, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.e, i64 24, i1 false), !noalias !37771
-  %i.aa = add i64 %.val15.i.i.i.i.i.i, 1          ; 2 uses
+  %i.aa = add nuw nsw i64 %.val15.i.i.i.i.i.i, 1  ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !37768
   %i.ab = icmp eq i64 %i.aa, %2
   br i1 %i.ab, label %_RNvXs_NtNtCs40k4W9msRzi_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtB8_6string6StringEINtB4_18SpecFromIterNestedB13_INtNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map3MapINtNtNtB22_5slice4iter4IterTReyEENCNvNtCsaSXGKSfiU2E_10lance_file6reader22verify_uniform_lengthss0_0EE9from_iterB3k_.exit, label %bb.f
@@ -8758,7 +8760,7 @@ bb.g:                                             ; preds = %.preheader.i.i.i.i.
   %i.y = getelementptr inbounds nuw [16 x i8], ptr %.val16.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 %.val13.i.i.i.i.i.i
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %.val15.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   store ptr %i.y, ptr %i.z, align 8, !noalias !39453
-  %i.aa = add nuw i64 %.val15.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
+  %i.aa = add nuw nsw i64 %.val15.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %i.ab = icmp eq i64 %i.aa, %2
   br i1 %i.ab, label %.loopexit.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.i.i.i.i.i.i.i
 
@@ -9161,12 +9163,12 @@ bb.ck:                                            ; preds = %.lr.ph864
 .lr.ph864:                                        ; preds = %bb.cj, %bb.ck
   %.sroa.0.0.i.i.i247863 = phi i64 [ %i.pc, %bb.ck ], [ 0, %bb.cj ] ; 2 uses
   %i.pb = getelementptr inbounds nuw [192 x i8], ptr %.sroa.7.0.i, i64 %.sroa.0.0.i.i.i247863
-  %i.pc = add i64 %.sroa.0.0.i.i.i247863, 1       ; 4 uses
+  %i.pc = add nuw nsw i64 %.sroa.0.0.i.i.i247863, 1 ; 4 uses
   invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5FieldECsaSXGKSfiU2E_10lance_file(ptr noalias noundef align 8 dereferenceable(192) %i.pb)
           to label %bb.ck unwind label %bb.cm, !noalias !48024, !inline_history !2
 
 bb.cl:                                            ; preds = %.lr.ph866
-  %i.pd = add i64 %.sroa.0.1.i.i.i865, 1          ; 2 uses
+  %i.pd = add nuw nsw i64 %.sroa.0.1.i.i.i865, 1  ; 2 uses
   %i.pe = icmp eq i64 %i.pd, %.sroa.9.0.i
   br i1 %i.pe, label %.body.i.i, label %.lr.ph866
 
@@ -9569,7 +9571,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 _RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types10UInt16TypeENtB7_5Array7is_nullCsaSXGKSfiU2E_10lance_file.exit120.thread.us.i: ; preds = %.lr.ph127.i, %bb.l
   %.sroa.068.0125.us.i = phi i64 [ %i.bl, %bb.l ], [ %.sroa.0.0.i117.i, %.lr.ph127.i ] ; 2 uses
-  %i.bl = add i64 %.sroa.068.0125.us.i, 1         ; 2 uses
+  %i.bl = add nuw nsw i64 %.sroa.068.0125.us.i, 1 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !50164)
   %i.bm = load ptr, ptr %1, align 8, !alias.scope !50154, !noalias !50159, !nonnull !62, !noundef !62
   %i.bn = load ptr, ptr %i.f, align 8, !alias.scope !50154, !noalias !50159, !nonnull !62, !align !63, !noundef !62
@@ -9596,7 +9598,7 @@ bb.l:                                             ; preds = %bb.k
 
 .lr.ph127.split.i:                                ; preds = %.lr.ph127.i, %bb.p
   %.sroa.068.0125.i = phi i64 [ %i.bx, %bb.p ], [ %.sroa.0.0.i117.i, %.lr.ph127.i ] ; 4 uses
-  %i.bx = add i64 %.sroa.068.0125.i, 1            ; 2 uses
+  %i.bx = add nuw nsw i64 %.sroa.068.0125.i, 1    ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !50164)
   %i.by = icmp ult i64 %.sroa.068.0125.i, %i.bf
   br i1 %i.by, label %_RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types10UInt16TypeENtB7_5Array7is_nullCsaSXGKSfiU2E_10lance_file.exit120.i, label %bb.m, !prof !71
@@ -9999,7 +10001,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 _RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types9Int16TypeENtB7_5Array7is_nullCsaSXGKSfiU2E_10lance_file.exit120.thread.us.i: ; preds = %.lr.ph127.i, %bb.l
   %.sroa.068.0125.us.i = phi i64 [ %i.bl, %bb.l ], [ %.sroa.0.0.i117.i, %.lr.ph127.i ] ; 2 uses
-  %i.bl = add i64 %.sroa.068.0125.us.i, 1         ; 2 uses
+  %i.bl = add nuw nsw i64 %.sroa.068.0125.us.i, 1 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !50624)
   %i.bm = load ptr, ptr %1, align 8, !alias.scope !50614, !noalias !50619, !nonnull !62, !noundef !62
   %i.bn = load ptr, ptr %i.f, align 8, !alias.scope !50614, !noalias !50619, !nonnull !62, !align !63, !noundef !62
@@ -10026,7 +10028,7 @@ bb.l:                                             ; preds = %bb.k
 
 .lr.ph127.split.i:                                ; preds = %.lr.ph127.i, %bb.p
   %.sroa.068.0125.i = phi i64 [ %i.bx, %bb.p ], [ %.sroa.0.0.i117.i, %.lr.ph127.i ] ; 4 uses
-  %i.bx = add i64 %.sroa.068.0125.i, 1            ; 2 uses
+  %i.bx = add nuw nsw i64 %.sroa.068.0125.i, 1    ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !50624)
   %i.by = icmp ult i64 %.sroa.068.0125.i, %i.bf
   br i1 %i.by, label %_RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types9Int16TypeENtB7_5Array7is_nullCsaSXGKSfiU2E_10lance_file.exit120.i, label %bb.m, !prof !71

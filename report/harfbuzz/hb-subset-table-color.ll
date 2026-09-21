@@ -205,7 +205,7 @@ _ZNK14hb_sparseset_tI23hb_bit_set_invertible_tEcvbEv.exit.i: ; preds = %bb.bh, %
 _ZL24_try_isolating_subgraphsRK11hb_vector_tIN5graph17overflow_record_tELb0EERNS0_7graph_tE.exit.thread: ; preds = %_ZNK14hb_sparseset_tI23hb_bit_set_invertible_tEcvbEv.exit.i
   call void @_ZN14hb_sparseset_tI23hb_bit_set_invertible_tED2Ev(ptr noundef nonnull align 8 dead_on_return(72) dereferenceable(72) %5) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20
-  %i.pz = add i32 %.046206, 1                     ; 2 uses
+  %i.pz = add nuw i32 %.046206, 1                 ; 2 uses
   %i.qa = load i32, ptr %i.ol, align 4, !tbaa !335
   %.02180.i = add i32 %i.qa, -1                   ; 2 uses
   %i.qb = icmp sgt i32 %.02180.i, -1
@@ -608,7 +608,7 @@ bb.d:                                             ; preds = %bb.c, %_ZL9hb_memcp
   br label %bb.e
 
 ._crit_edge:                                      ; preds = %_ZNK5graph14PairPosFormat222transfer_device_tablesERNS0_15split_context_tEjRK11hb_vector_tIjLb0EEjj.exit65
-  %i.ap = add nuw i32 %.04270, 1                  ; 2 uses
+  %i.ap = add i32 %.04270, 1                      ; 2 uses
   %exitcond74.not = icmp eq i32 %i.ap, %4
   br i1 %exitcond74.not, label %.loopexit, label %.preheader, !llvm.loop !1663
 
@@ -1011,14 +1011,14 @@ _ZN2OT13IndexSubtable15populate_headerEjjjPj.exit: ; preds = %_ZN22hb_serialize_
   %i.al = getelementptr inbounds nuw i8, ptr %3, i64 2 ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.an = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %7 = zext i32 %i.ag to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.s
-  %.0154 = phi i32 [ %i.ag, %.lr.ph ], [ %8, %bb.s ] ; 3 uses
+  %indvars.iv = phi i64 [ %7, %.lr.ph ], [ %indvars.iv.next, %bb.s ] ; 3 uses
   %.083153 = phi i32 [ 0, %.lr.ph ], [ %i.eu, %bb.s ] ; 5 uses
   %i.ao = load ptr, ptr %i.ak, align 8
-  %7 = zext i32 %.0154 to i64
-  %i.ap = getelementptr inbounds nuw [16 x i8], ptr %i.ao, i64 %7 ; 2 uses
+  %i.ap = getelementptr inbounds nuw [16 x i8], ptr %i.ao, i64 %indvars.iv ; 2 uses
   %i.aq = load i32, ptr %i.ap, align 8, !tbaa !3419 ; 7 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !774 ; 2 uses
@@ -1030,7 +1030,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.s
   %i.ay = getelementptr inbounds nuw i8, ptr %5, i64 %i.ax
   %.0.i.i.i67 = select i1 %i.av, ptr @_hb_NullPool, ptr %i.ay, !prof !92 ; 2 uses
   %.not64 = icmp eq ptr %.0.i.i.i67, %.0.i.i.i
-  br i1 %.not64, label %bb.d, label %.thread116.a
+  br i1 %.not64, label %bb.d, label %.thread116
 
 bb.d:                                             ; preds = %bb.c
   %i.az = load i16, ptr %3, align 1, !tbaa !228
@@ -1256,14 +1256,19 @@ bb.r:                                             ; preds = %_ZNK12hb_hashmap_tI
 
 bb.s:                                             ; preds = %bb.r
   %i.eu = add i32 %.689, 1                        ; 2 uses
-  %8 = add nuw i32 %.0154, 1                      ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ev = load i32, ptr %i.ah, align 4, !tbaa !768 ; 2 uses
-  %i.ew = icmp ult i32 %8, %i.ev
+  %8 = zext i32 %i.ev to i64
+  %i.ew = icmp samesign ult i64 %indvars.iv.next, %8
   br i1 %i.ew, label %bb.c, label %.thread116.a, !llvm.loop !3418
 
-.thread116.a:                                     ; preds = %bb.s, %bb.c, %_ZN2OT13IndexSubtable15populate_headerEjjjPj.exit
-  %storemerge = phi i32 [ %i.ai, %_ZN2OT13IndexSubtable15populate_headerEjjjPj.exit ], [ %i.ev, %bb.s ], [ %.0154, %bb.c ]
-  %.083152 = phi i32 [ 0, %_ZN2OT13IndexSubtable15populate_headerEjjjPj.exit ], [ %i.eu, %bb.s ], [ %.083153, %bb.c ]
+.thread116:                                       ; preds = %bb.c
+  %9 = trunc nuw i64 %indvars.iv to i32
+  br label %.thread116.a
+
+.thread116.a:                                     ; preds = %bb.s, %_ZN2OT13IndexSubtable15populate_headerEjjjPj.exit, %.thread116
+  %storemerge = phi i32 [ %9, %.thread116 ], [ %i.ai, %_ZN2OT13IndexSubtable15populate_headerEjjjPj.exit ], [ %i.ev, %bb.s ]
+  %.083152 = phi i32 [ %.083153, %.thread116 ], [ 0, %_ZN2OT13IndexSubtable15populate_headerEjjjPj.exit ], [ %i.eu, %bb.s ]
   store i32 %storemerge, ptr %6, align 4, !tbaa !197
   %i.ex = load ptr, ptr %i.a, align 8, !tbaa !189
   %i.ey = load ptr, ptr %i.u, align 8, !tbaa !758
