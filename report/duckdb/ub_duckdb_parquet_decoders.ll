@@ -205,8 +205,8 @@ vector.ph:                                        ; preds = %.split.us.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %vec.phi = phi <2 x i64> [ zeroinitializer, %vector.ph ], [ %2, %vector.body ]
-  %vec.phi163 = phi <2 x i64> [ zeroinitializer, %vector.ph ], [ %3, %vector.body ]
+  %vec.phi = phi <2 x i32> [ zeroinitializer, %vector.ph ], [ %2, %vector.body ]
+  %vec.phi163 = phi <2 x i32> [ zeroinitializer, %vector.ph ], [ %3, %vector.body ]
   %vec.phi164 = phi <2 x i64> [ zeroinitializer, %vector.ph ], [ %i.cb, %vector.body ]
   %vec.phi165 = phi <2 x i64> [ zeroinitializer, %vector.ph ], [ %i.cc, %vector.body ]
   %i.bt = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %index ; 2 uses
@@ -217,21 +217,22 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 8
   %wide.load167 = load <2 x i32>, ptr %i.bv, align 4, !tbaa !13
   %wide.load168 = load <2 x i32>, ptr %i.bw, align 4, !tbaa !13
-  %i.bx = add <2 x i32> %wide.load167, %wide.load
-  %i.by = add <2 x i32> %wide.load168, %wide.load166
-  %i.bz = zext <2 x i32> %i.bx to <2 x i64>       ; 2 uses
-  %i.ca = zext <2 x i32> %i.by to <2 x i64>       ; 2 uses
+  %i.bx = add <2 x i32> %wide.load167, %wide.load ; 2 uses
+  %i.by = add <2 x i32> %wide.load168, %wide.load166 ; 2 uses
+  %i.bz = zext <2 x i32> %i.bx to <2 x i64>
+  %i.ca = zext <2 x i32> %i.by to <2 x i64>
   %i.cb = add <2 x i64> %vec.phi164, %i.bz        ; 2 uses
   %i.cc = add <2 x i64> %vec.phi165, %i.ca        ; 2 uses
-  %2 = tail call <2 x i64> @llvm.umax.v2i64(<2 x i64> %vec.phi, <2 x i64> %i.bz) ; 2 uses
-  %3 = tail call <2 x i64> @llvm.umax.v2i64(<2 x i64> %vec.phi163, <2 x i64> %i.ca) ; 2 uses
+  %2 = tail call <2 x i32> @llvm.umax.v2i32(<2 x i32> %vec.phi, <2 x i32> %i.bx) ; 2 uses
+  %3 = tail call <2 x i32> @llvm.umax.v2i32(<2 x i32> %vec.phi163, <2 x i32> %i.by) ; 2 uses
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.cd = icmp eq i64 %index.next, %n.vec
   br i1 %i.cd, label %middle.block, label %vector.body, !llvm.loop !388
 
 middle.block:                                     ; preds = %vector.body
-  %rdx.minmax = tail call <2 x i64> @llvm.umax.v2i64(<2 x i64> %2, <2 x i64> %3)
-  %4 = tail call i64 @llvm.vector.reduce.umax.v2i64(<2 x i64> %rdx.minmax) ; 2 uses
+  %rdx.minmax = tail call <2 x i32> @llvm.umax.v2i32(<2 x i32> %2, <2 x i32> %3)
+  %4 = tail call i32 @llvm.vector.reduce.umax.v2i32(<2 x i32> %rdx.minmax)
+  %5 = zext i32 %4 to i64                         ; 2 uses
   %bin.rdx = add <2 x i64> %i.cc, %i.cb
   %i.ce = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx) ; 2 uses
   %cmp.n = icmp eq i64 %i.bi, %n.vec
@@ -239,7 +240,7 @@ middle.block:                                     ; preds = %vector.body
 
 .split.us.preheader174:                           ; preds = %.split.us.preheader, %middle.block
   %.063109.us.ph = phi i64 [ 0, %.split.us.preheader ], [ %n.vec, %middle.block ]
-  %.064108.us.ph = phi i64 [ 0, %.split.us.preheader ], [ %4, %middle.block ]
+  %.064108.us.ph = phi i64 [ 0, %.split.us.preheader ], [ %5, %middle.block ]
   %.065107.us.ph = phi i64 [ 0, %.split.us.preheader ], [ %i.ce, %middle.block ]
   br label %.split.us
 
@@ -265,7 +266,7 @@ middle.block:                                     ; preds = %vector.body
 
 .split111.us:                                     ; preds = %.split.us, %bb.ac, %middle.block
   %.us-phi = phi i64 [ %i.dp, %bb.ac ], [ %i.ce, %middle.block ], [ %i.cm, %.split.us ]
-  %.us-phi112 = phi i64 [ %i.cf, %bb.ac ], [ %4, %middle.block ], [ %i.cn, %.split.us ] ; 3 uses
+  %.us-phi112 = phi i64 [ %i.cf, %bb.ac ], [ %5, %middle.block ], [ %i.cn, %.split.us ] ; 3 uses
   %i.cp = shl i64 %i.bi, 2
   %i.cq = select i1 %.not125, i64 0, i64 %i.cp
   %.166 = add i64 %.us-phi, %i.cq                 ; 4 uses
@@ -668,10 +669,10 @@ declare i32 @llvm.umin.i32(i32, i32) #19
 declare void @llvm.experimental.noalias.scope.decl(metadata) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x i64> @llvm.umax.v2i64(<2 x i64>, <2 x i64>) #19
+declare <2 x i32> @llvm.umax.v2i32(<2 x i32>, <2 x i32>) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.umax.v2i64(<2 x i64>) #19
+declare i32 @llvm.vector.reduce.umax.v2i32(<2 x i32>) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #19

@@ -205,28 +205,27 @@ vector.ph:                                        ; preds = %PyUnicode_READ.exit
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %4, %vector.body ]
-  %vec.phi134 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %5, %vector.body ]
+  %vec.phi = phi <4 x i16> [ zeroinitializer, %vector.ph ], [ %2, %vector.body ]
+  %vec.phi134 = phi <4 x i16> [ zeroinitializer, %vector.ph ], [ %3, %vector.body ]
   %i.ac = getelementptr [2 x i8], ptr %.0.i, i64 %index ; 2 uses
   %i.ad = getelementptr i8, ptr %i.ac, i64 8
   %wide.load = load <4 x i16>, ptr %i.ac, align 2, !tbaa !240
   %wide.load135 = load <4 x i16>, ptr %i.ad, align 2, !tbaa !240
-  %2 = zext <4 x i16> %wide.load to <4 x i32>
-  %3 = zext <4 x i16> %wide.load135 to <4 x i32>
-  %4 = tail call <4 x i32> @llvm.umax.v4i32(<4 x i32> %2, <4 x i32> %vec.phi) ; 2 uses
-  %5 = tail call <4 x i32> @llvm.umax.v4i32(<4 x i32> %3, <4 x i32> %vec.phi134) ; 2 uses
+  %2 = tail call <4 x i16> @llvm.umax.v4i16(<4 x i16> %wide.load, <4 x i16> %vec.phi) ; 2 uses
+  %3 = tail call <4 x i16> @llvm.umax.v4i16(<4 x i16> %wide.load135, <4 x i16> %vec.phi134) ; 2 uses
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.ae = icmp eq i64 %index.next, %n.vec
   br i1 %i.ae, label %middle.block, label %vector.body, !llvm.loop !333
 
 middle.block:                                     ; preds = %vector.body
-  %rdx.minmax = tail call <4 x i32> @llvm.umax.v4i32(<4 x i32> %4, <4 x i32> %5)
-  %6 = tail call i32 @llvm.vector.reduce.umax.v4i32(<4 x i32> %rdx.minmax) ; 2 uses
+  %rdx.minmax = tail call <4 x i16> @llvm.umax.v4i16(<4 x i16> %2, <4 x i16> %3)
+  %4 = tail call i16 @llvm.vector.reduce.umax.v4i16(<4 x i16> %rdx.minmax)
+  %5 = zext i16 %4 to i32                         ; 2 uses
   %cmp.n = icmp eq i64 %i.aa, %n.vec
   br i1 %cmp.n, label %._crit_edge.thread131, label %PyUnicode_READ.exit.us111.preheader173
 
 PyUnicode_READ.exit.us111.preheader173:           ; preds = %PyUnicode_READ.exit.us111.preheader, %middle.block
-  %.0105.us109.ph = phi i32 [ 0, %PyUnicode_READ.exit.us111.preheader ], [ %6, %middle.block ]
+  %.0105.us109.ph = phi i32 [ 0, %PyUnicode_READ.exit.us111.preheader ], [ %5, %middle.block ]
   %.081104.us110.ph = phi i64 [ 0, %PyUnicode_READ.exit.us111.preheader ], [ %n.vec, %middle.block ]
   br label %PyUnicode_READ.exit.us111
 
@@ -239,28 +238,27 @@ vector.ph138:                                     ; preds = %PyUnicode_READ.exit
 
 vector.body140:                                   ; preds = %vector.body140, %vector.ph138
   %index141 = phi i64 [ 0, %vector.ph138 ], [ %index.next146, %vector.body140 ] ; 2 uses
-  %vec.phi142 = phi <4 x i32> [ zeroinitializer, %vector.ph138 ], [ %9, %vector.body140 ]
-  %vec.phi143 = phi <4 x i32> [ zeroinitializer, %vector.ph138 ], [ %10, %vector.body140 ]
+  %vec.phi142 = phi <4 x i8> [ zeroinitializer, %vector.ph138 ], [ %6, %vector.body140 ]
+  %vec.phi143 = phi <4 x i8> [ zeroinitializer, %vector.ph138 ], [ %7, %vector.body140 ]
   %i.af = getelementptr i8, ptr %.0.i, i64 %index141 ; 2 uses
   %i.ag = getelementptr i8, ptr %i.af, i64 4
   %wide.load144 = load <4 x i8>, ptr %i.af, align 1, !tbaa !237
   %wide.load145 = load <4 x i8>, ptr %i.ag, align 1, !tbaa !237
-  %7 = zext <4 x i8> %wide.load144 to <4 x i32>
-  %8 = zext <4 x i8> %wide.load145 to <4 x i32>
-  %9 = tail call <4 x i32> @llvm.umax.v4i32(<4 x i32> %7, <4 x i32> %vec.phi142) ; 2 uses
-  %10 = tail call <4 x i32> @llvm.umax.v4i32(<4 x i32> %8, <4 x i32> %vec.phi143) ; 2 uses
+  %6 = tail call <4 x i8> @llvm.umax.v4i8(<4 x i8> %wide.load144, <4 x i8> %vec.phi142) ; 2 uses
+  %7 = tail call <4 x i8> @llvm.umax.v4i8(<4 x i8> %wide.load145, <4 x i8> %vec.phi143) ; 2 uses
   %index.next146 = add nuw i64 %index141, 8       ; 2 uses
   %i.ah = icmp eq i64 %index.next146, %n.vec139
   br i1 %i.ah, label %middle.block147, label %vector.body140, !llvm.loop !334
 
 middle.block147:                                  ; preds = %vector.body140
-  %rdx.minmax148 = tail call <4 x i32> @llvm.umax.v4i32(<4 x i32> %9, <4 x i32> %10)
-  %11 = tail call i32 @llvm.vector.reduce.umax.v4i32(<4 x i32> %rdx.minmax148) ; 2 uses
+  %rdx.minmax148 = tail call <4 x i8> @llvm.umax.v4i8(<4 x i8> %6, <4 x i8> %7)
+  %8 = tail call i8 @llvm.vector.reduce.umax.v4i8(<4 x i8> %rdx.minmax148)
+  %9 = zext i8 %8 to i32                          ; 2 uses
   %cmp.n149 = icmp eq i64 %i.aa, %n.vec139
   br i1 %cmp.n149, label %._crit_edge.thread, label %PyUnicode_READ.exit.us.preheader170
 
 PyUnicode_READ.exit.us.preheader170:              ; preds = %PyUnicode_READ.exit.us.preheader, %middle.block147
-  %.0105.us.ph = phi i32 [ 0, %PyUnicode_READ.exit.us.preheader ], [ %11, %middle.block147 ]
+  %.0105.us.ph = phi i32 [ 0, %PyUnicode_READ.exit.us.preheader ], [ %9, %middle.block147 ]
   %.081104.us.ph = phi i64 [ 0, %PyUnicode_READ.exit.us.preheader ], [ %n.vec139, %middle.block147 ]
   br label %PyUnicode_READ.exit.us
 
@@ -336,7 +334,7 @@ PyUnicode_READ.exit:                              ; preds = %PyUnicode_READ.exit
   ]
 
 ._crit_edge.thread:                               ; preds = %PyUnicode_READ.exit.us, %middle.block147, %._crit_edge
-  %.0.lcssa130 = phi i32 [ %.0.lcssa, %._crit_edge ], [ %11, %middle.block147 ], [ %spec.select.us, %PyUnicode_READ.exit.us ] ; 3 uses
+  %.0.lcssa130 = phi i32 [ %.0.lcssa, %._crit_edge ], [ %9, %middle.block147 ], [ %spec.select.us, %PyUnicode_READ.exit.us ] ; 3 uses
   br i1 %.not86, label %bb.ad, label %bb.ah
 
 bb.ad:                                            ; preds = %._crit_edge.thread
@@ -364,7 +362,7 @@ bb.ai:                                            ; preds = %bb.ah
   unreachable
 
 ._crit_edge.thread131:                            ; preds = %PyUnicode_READ.exit.us111, %middle.block, %._crit_edge
-  %.0.lcssa133 = phi i32 [ %.0.lcssa, %._crit_edge ], [ %6, %middle.block ], [ %spec.select.us113, %PyUnicode_READ.exit.us111 ] ; 2 uses
+  %.0.lcssa133 = phi i32 [ %.0.lcssa, %._crit_edge ], [ %5, %middle.block ], [ %spec.select.us113, %PyUnicode_READ.exit.us111 ] ; 2 uses
   %i.bc = icmp ugt i32 %.0.lcssa133, 255
   br i1 %i.bc, label %bb.ak, label %bb.aj
 
@@ -765,6 +763,18 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #18
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #32
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i16> @llvm.umax.v4i16(<4 x i16>, <4 x i16>) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.vector.reduce.umax.v4i16(<4 x i16>) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i8> @llvm.umax.v4i8(<4 x i8>, <4 x i8>) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.vector.reduce.umax.v4i8(<4 x i8>) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.umax.v4i32(<4 x i32>, <4 x i32>) #22

@@ -205,7 +205,7 @@ bb.nq:                                            ; preds = %.preheader1042.us.i
 
 vector.body2614:                                  ; preds = %bb.nq, %vector.body2614
   %index2615 = phi i64 [ %index.next2617, %vector.body2614 ], [ 0, %bb.nq ] ; 10 uses
-  %vec.phi2616 = phi <8 x i32> [ %7, %vector.body2614 ], [ zeroinitializer, %bb.nq ]
+  %vec.phi2616 = phi <8 x i8> [ %6, %vector.body2614 ], [ zeroinitializer, %bb.nq ]
   %i.itr = getelementptr inbounds nuw [14884 x i8], ptr %invariant.gep1222.us.i, i64 %index2615
   %i.its = getelementptr inbounds nuw [14884 x i8], ptr %invariant.gep1222.us.i, i64 %index2615
   %i.itt = getelementptr inbounds nuw i8, ptr %i.its, i64 14884
@@ -239,14 +239,14 @@ vector.body2614:                                  ; preds = %bb.nq, %vector.body
   %i.iuv = insertelement <8 x i8> %i.iuu, i8 %i.iun, i64 7 ; 2 uses
   %i.iuw = getelementptr inbounds nuw i8, ptr %i.g, i64 %index2615
   store <8 x i8> %i.iuv, ptr %i.iuw, align 8, !tbaa !133
-  %6 = zext <8 x i8> %i.iuv to <8 x i32>
-  %7 = call <8 x i32> @llvm.umax.v8i32(<8 x i32> %vec.phi2616, <8 x i32> %6) ; 2 uses
+  %6 = call <8 x i8> @llvm.umax.v8i8(<8 x i8> %vec.phi2616, <8 x i8> %i.iuv) ; 2 uses
   %index.next2617 = add nuw i64 %index2615, 8     ; 2 uses
   %i.iux = icmp eq i64 %index.next2617, %n.vec2613
   br i1 %i.iux, label %middle.block2618, label %vector.body2614, !llvm.loop !251
 
 middle.block2618:                                 ; preds = %vector.body2614
-  %8 = call i32 @llvm.vector.reduce.umax.v8i32(<8 x i32> %7)
+  %7 = call i8 @llvm.vector.reduce.umax.v8i8(<8 x i8> %6)
+  %8 = zext i8 %7 to i32
   br label %.loopexit
 
 scalar.ph2610:                                    ; preds = %bb.nq, %scalar.ph2610
@@ -649,7 +649,10 @@ declare <8 x float> @llvm.fabs.v8f32(<8 x float>) #12
 declare void @llvm.masked.store.v4i8.p0(<4 x i8>, ptr captures(none), <4 x i1>) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.umax.v8i32(<8 x i32>) #12
+declare <8 x i8> @llvm.umax.v8i8(<8 x i8>, <8 x i8>) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.vector.reduce.umax.v8i8(<8 x i8>) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i32> @llvm.abs.v8i32(<8 x i32>, i1 immarg) #19

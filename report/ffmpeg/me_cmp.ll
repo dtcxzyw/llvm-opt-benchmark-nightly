@@ -204,8 +204,8 @@ vector.ph:
   %i.bd = call <4 x i16> @llvm.abs.v4i16(<4 x i16> %wide.load44.7, i1 false)
   %i.be = call <4 x i16> @llvm.umax.v4i16(<4 x i16> %i.bc, <4 x i16> %i.bd)
   %i.bf = call <4 x i16> @llvm.umax.v4i16(<4 x i16> %i.ap, <4 x i16> %i.be)
-  %rdx.minmax = zext <4 x i16> %i.bf to <4 x i32>
-  %5 = call i32 @llvm.vector.reduce.umax.v4i32(<4 x i32> %rdx.minmax)
+  %5 = call i16 @llvm.vector.reduce.umax.v4i16(<4 x i16> %i.bf)
+  %6 = zext i16 %5 to i32
   %i.bg = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %wide.load50 = load <4 x i16>, ptr %i.c, align 16, !tbaa !14
   %wide.load51 = load <4 x i16>, ptr %i.bg, align 8, !tbaa !14
@@ -268,10 +268,10 @@ vector.ph:
   %i.cx = call <4 x i16> @llvm.umax.v4i16(<4 x i16> %i.cr, <4 x i16> %i.cv)
   %i.cy = call <4 x i16> @llvm.umax.v4i16(<4 x i16> %i.cs, <4 x i16> %i.cw)
   %i.cz = call <4 x i16> @llvm.umax.v4i16(<4 x i16> %i.cx, <4 x i16> %i.cy)
-  %rdx.minmax54 = zext <4 x i16> %i.cz to <4 x i32>
-  %6 = call i32 @llvm.vector.reduce.umax.v4i32(<4 x i32> %rdx.minmax54)
+  %7 = call i16 @llvm.vector.reduce.umax.v4i16(<4 x i16> %i.cz)
+  %8 = zext i16 %7 to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
-  %i.da = add nuw nsw i32 %6, %5                  ; 2 uses
+  %i.da = add nuw nsw i32 %8, %6                  ; 2 uses
   %i.db = icmp eq i32 %4, 16
   br i1 %i.db, label %vector.ph55, label %bb.a
 
@@ -354,8 +354,8 @@ vector.ph55:                                      ; preds = %vector.ph
   %i.fc = call <4 x i16> @llvm.abs.v4i16(<4 x i16> %wide.load61.7, i1 false)
   %i.fd = call <4 x i16> @llvm.umax.v4i16(<4 x i16> %i.fb, <4 x i16> %i.fc)
   %i.fe = call <4 x i16> @llvm.umax.v4i16(<4 x i16> %i.eo, <4 x i16> %i.fd)
-  %rdx.minmax64 = zext <4 x i16> %i.fe to <4 x i32>
-  %7 = call i32 @llvm.vector.reduce.umax.v4i32(<4 x i32> %rdx.minmax64)
+  %9 = call i16 @llvm.vector.reduce.umax.v4i16(<4 x i16> %i.fe)
+  %10 = zext i16 %9 to i32
   %i.ff = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %wide.load70 = load <4 x i16>, ptr %i.a, align 16, !tbaa !14
   %wide.load71 = load <4 x i16>, ptr %i.ff, align 8, !tbaa !14
@@ -418,11 +418,11 @@ vector.ph55:                                      ; preds = %vector.ph
   %i.gw = call <4 x i16> @llvm.umax.v4i16(<4 x i16> %i.gq, <4 x i16> %i.gu)
   %i.gx = call <4 x i16> @llvm.umax.v4i16(<4 x i16> %i.gr, <4 x i16> %i.gv)
   %i.gy = call <4 x i16> @llvm.umax.v4i16(<4 x i16> %i.gw, <4 x i16> %i.gx)
-  %rdx.minmax74 = zext <4 x i16> %i.gy to <4 x i32>
-  %8 = call i32 @llvm.vector.reduce.umax.v4i32(<4 x i32> %rdx.minmax74)
-  %i.gz = add nuw nsw i32 %7, %i.da
+  %11 = call i16 @llvm.vector.reduce.umax.v4i16(<4 x i16> %i.gy)
+  %12 = zext i16 %11 to i32
+  %i.gz = add nuw nsw i32 %i.da, %10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
-  %i.ha = add nuw nsw i32 %i.gz, %8
+  %i.ha = add nuw nsw i32 %i.gz, %12
   br label %bb.a
 
 bb.a:                                             ; preds = %vector.ph55, %vector.ph
@@ -503,10 +503,10 @@ vector.ph:
   %i.aw = call <4 x i16> @llvm.umax.v4i16(<4 x i16> %i.aq, <4 x i16> %i.au)
   %i.ax = call <4 x i16> @llvm.umax.v4i16(<4 x i16> %i.ar, <4 x i16> %i.av)
   %i.ay = call <4 x i16> @llvm.umax.v4i16(<4 x i16> %i.aw, <4 x i16> %i.ax)
-  %rdx.minmax = zext <4 x i16> %i.ay to <4 x i32>
-  %5 = call i32 @llvm.vector.reduce.umax.v4i32(<4 x i32> %rdx.minmax)
+  %5 = call i16 @llvm.vector.reduce.umax.v4i16(<4 x i16> %i.ay)
+  %6 = zext i16 %5 to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
-  ret i32 %5
+  ret i32 %6
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: read) uwtable
@@ -909,10 +909,10 @@ declare <8 x i32> @llvm.abs.v8i32(<8 x i32>, i1 immarg) #9
 declare <4 x i32> @llvm.abs.v4i32(<4 x i32>, i1 immarg) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.umax.v4i32(<4 x i32>) #10
+declare <4 x i16> @llvm.umax.v4i16(<4 x i16>, <4 x i16>) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i16> @llvm.umax.v4i16(<4 x i16>, <4 x i16>) #10
+declare i16 @llvm.vector.reduce.umax.v4i16(<4 x i16>) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare <12 x i32> @llvm.abs.v12i32(<12 x i32>, i1 immarg) #9
