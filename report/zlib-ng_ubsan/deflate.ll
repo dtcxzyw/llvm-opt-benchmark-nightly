@@ -202,22 +202,42 @@ bb.a:
   br i1 %.not68, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.d = ptrtoint ptr %1 to i64, !nosanitize !13  ; 3 uses
-  %3 = icmp ne ptr %1, null, !nosanitize !13      ; 2 uses
-  br label %bb.b
+  %i.d = ptrtoint ptr %1 to i64, !nosanitize !13  ; 4 uses
+  %.not69 = icmp eq ptr %1, null, !nosanitize !13
+  br i1 %.not69, label %.lr.ph.split.us, label %bb.b, !prof !14
+
+.lr.ph.split.us:                                  ; preds = %.lr.ph, %10
+  %.03860.us = phi i64 [ %13, %10 ], [ 0, %.lr.ph ] ; 4 uses
+  %3 = getelementptr inbounds nuw [32 x i8], ptr null, i64 %.03860.us ; 2 uses
+  %4 = add i64 %.03860.us, 288230376151711744
+  %5 = icmp ult i64 %4, 576460752303423488
+  %6 = shl i64 %.03860.us, 5                      ; 2 uses
+  %7 = icmp eq i64 %6, 0
+  %8 = and i1 %5, %7
+  br i1 %8, label %10, label %9, !prof !12, !nosanitize !13
+
+9:                                                ; preds = %.lr.ph.split.us
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @907, i64 %i.d, i64 %6) #8, !nosanitize !13
+  br label %10, !nosanitize !13
+
+10:                                               ; preds = %9, %.lr.ph.split.us
+  %11 = ptrtoint ptr %3 to i64, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @909, i64 %11) #8, !nosanitize !13
+  %12 = getelementptr inbounds nuw i8, ptr %3, i64 24
+  store i32 0, ptr %12, align 8, !tbaa !111
+  %13 = add nuw i64 %.03860.us, 1                 ; 2 uses
+  %exitcond72.not = icmp eq i64 %13, %2
+  br i1 %exitcond72.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !164
 
 bb.b:                                             ; preds = %.lr.ph, %bb.h
-  %.03860 = phi i64 [ 0, %.lr.ph ], [ %i.s, %bb.h ] ; 4 uses
+  %.03860 = phi i64 [ %i.s, %bb.h ], [ 0, %.lr.ph ] ; 4 uses
   %i.e = getelementptr inbounds nuw [32 x i8], ptr %1, i64 %.03860 ; 2 uses
   %i.f = add i64 %.03860, 288230376151711744
   %i.g = icmp ult i64 %i.f, 576460752303423488
   %i.h = shl i64 %.03860, 5
-  %i.i = add i64 %i.h, %i.d, !nosanitize !13      ; 3 uses
-  %4 = icmp eq i64 %i.i, 0
-  %5 = xor i1 %3, %4
+  %i.i = add i64 %i.h, %i.d, !nosanitize !13      ; 2 uses
   %i.j = icmp uge i64 %i.i, %i.d, !nosanitize !13
-  %6 = and i1 %i.g, %i.j, !nosanitize !13
-  %i.k = and i1 %5, %6, !nosanitize !13
+  %i.k = and i1 %i.g, %i.j, !nosanitize !13
   br i1 %i.k, label %bb.d, label %bb.c, !prof !12, !nosanitize !13
 
 bb.c:                                             ; preds = %bb.b
@@ -228,8 +248,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.l = ptrtoint ptr %i.e to i64, !nosanitize !13 ; 2 uses
   %i.m = and i64 %i.l, 7, !nosanitize !13
   %i.n = icmp eq i64 %i.m, 0, !nosanitize !13
-  %7 = and i1 %3, %i.n
-  br i1 %7, label %bb.f, label %bb.e, !prof !12, !nosanitize !13
+  br i1 %i.n, label %bb.f, label %bb.e, !prof !12, !nosanitize !13
 
 bb.e:                                             ; preds = %bb.d
   call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @909, i64 %i.l) #8, !nosanitize !13
@@ -246,13 +265,13 @@ bb.g:                                             ; preds = %bb.f
   call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @910, i64 %i.p) #8, !nosanitize !13
   br label %bb.h, !nosanitize !13
 
-bb.h:                                             ; preds = %bb.f, %bb.g
+bb.h:                                             ; preds = %bb.g, %bb.f
   store i32 0, ptr %i.o, align 8, !tbaa !111
   %i.s = add nuw i64 %.03860, 1                   ; 2 uses
   %exitcond.not = icmp eq i64 %i.s, %2
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !164
 
-._crit_edge:                                      ; preds = %bb.h, %bb.a
+._crit_edge:                                      ; preds = %bb.h, %10, %bb.a
   %i.t = call fastcc i32 @deflateStateCheck(ptr noundef %0)
   %.not = icmp eq i32 %i.t, 0
   br i1 %.not, label %bb.i, label %._crit_edge66.thread90
@@ -406,7 +425,7 @@ bb.ah:                                            ; preds = %bb.ag
   call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @924, i64 %i.ba) #8, !nosanitize !13
   br label %.thread84, !nosanitize !13
 
-bb.ai:                                            ; preds = %bb.ab, %.thread
+bb.ai:                                            ; preds = %.thread, %bb.ab
   %.13659 = phi i32 [ 1, %.thread ], [ %.03562, %bb.ab ] ; 2 uses
   %i.bd = add nuw i64 %.13961, 1                  ; 2 uses
   %exitcond70.not = icmp eq i64 %i.bd, %2
@@ -796,22 +815,42 @@ bb.a:
   br i1 %.not55, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.a = ptrtoint ptr %1 to i64, !nosanitize !13  ; 3 uses
-  %3 = icmp ne ptr %1, null, !nosanitize !13      ; 2 uses
-  br label %bb.b
+  %i.a = ptrtoint ptr %1 to i64, !nosanitize !13  ; 4 uses
+  %.not56 = icmp eq ptr %1, null, !nosanitize !13
+  br i1 %.not56, label %.lr.ph.split.us, label %bb.b, !prof !14
+
+.lr.ph.split.us:                                  ; preds = %.lr.ph, %10
+  %.04147.us = phi i64 [ %13, %10 ], [ 0, %.lr.ph ] ; 4 uses
+  %3 = getelementptr inbounds nuw [32 x i8], ptr null, i64 %.04147.us ; 2 uses
+  %4 = add i64 %.04147.us, 288230376151711744
+  %5 = icmp ult i64 %4, 576460752303423488
+  %6 = shl i64 %.04147.us, 5                      ; 2 uses
+  %7 = icmp eq i64 %6, 0
+  %8 = and i1 %5, %7
+  br i1 %8, label %10, label %9, !prof !12, !nosanitize !13
+
+9:                                                ; preds = %.lr.ph.split.us
+  call void @__ubsan_handle_pointer_overflow(ptr nonnull @944, i64 %i.a, i64 %6) #8, !nosanitize !13
+  br label %10, !nosanitize !13
+
+10:                                               ; preds = %9, %.lr.ph.split.us
+  %11 = ptrtoint ptr %3 to i64, !nosanitize !13
+  call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @945, i64 %11) #8, !nosanitize !13
+  %12 = getelementptr inbounds nuw i8, ptr %3, i64 24
+  store i32 0, ptr %12, align 8, !tbaa !111
+  %13 = add nuw i64 %.04147.us, 1                 ; 2 uses
+  %exitcond59.not = icmp eq i64 %13, %2
+  br i1 %exitcond59.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !168
 
 bb.b:                                             ; preds = %.lr.ph, %bb.h
-  %.04147 = phi i64 [ 0, %.lr.ph ], [ %i.p, %bb.h ] ; 4 uses
+  %.04147 = phi i64 [ %i.p, %bb.h ], [ 0, %.lr.ph ] ; 4 uses
   %i.b = getelementptr inbounds nuw [32 x i8], ptr %1, i64 %.04147 ; 2 uses
   %i.c = add i64 %.04147, 288230376151711744
   %i.d = icmp ult i64 %i.c, 576460752303423488
   %i.e = shl i64 %.04147, 5
-  %i.f = add i64 %i.e, %i.a, !nosanitize !13      ; 3 uses
-  %4 = icmp eq i64 %i.f, 0
-  %5 = xor i1 %3, %4
+  %i.f = add i64 %i.e, %i.a, !nosanitize !13      ; 2 uses
   %i.g = icmp uge i64 %i.f, %i.a, !nosanitize !13
-  %6 = and i1 %i.d, %i.g, !nosanitize !13
-  %i.h = and i1 %5, %6, !nosanitize !13
+  %i.h = and i1 %i.d, %i.g, !nosanitize !13
   br i1 %i.h, label %bb.d, label %bb.c, !prof !12, !nosanitize !13
 
 bb.c:                                             ; preds = %bb.b
@@ -822,8 +861,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.i = ptrtoint ptr %i.b to i64, !nosanitize !13 ; 2 uses
   %i.j = and i64 %i.i, 7, !nosanitize !13
   %i.k = icmp eq i64 %i.j, 0, !nosanitize !13
-  %7 = and i1 %3, %i.k
-  br i1 %7, label %bb.f, label %bb.e, !prof !12, !nosanitize !13
+  br i1 %i.k, label %bb.f, label %bb.e, !prof !12, !nosanitize !13
 
 bb.e:                                             ; preds = %bb.d
   call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @945, i64 %i.i) #8, !nosanitize !13
@@ -840,13 +878,13 @@ bb.g:                                             ; preds = %bb.f
   call void @__ubsan_handle_type_mismatch_v1(ptr nonnull @946, i64 %i.m) #8, !nosanitize !13
   br label %bb.h, !nosanitize !13
 
-bb.h:                                             ; preds = %bb.f, %bb.g
+bb.h:                                             ; preds = %bb.g, %bb.f
   store i32 0, ptr %i.l, align 8, !tbaa !111
   %i.p = add nuw i64 %.04147, 1                   ; 2 uses
   %exitcond.not = icmp eq i64 %i.p, %2
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !168
 
-._crit_edge:                                      ; preds = %bb.h, %bb.a
+._crit_edge:                                      ; preds = %bb.h, %10, %bb.a
   %i.q = call fastcc i32 @deflateStateCheck(ptr noundef %0)
   %.not = icmp eq i32 %i.q, 0
   br i1 %.not, label %bb.i, label %._crit_edge53

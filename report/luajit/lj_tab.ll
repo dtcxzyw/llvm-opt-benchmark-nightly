@@ -204,7 +204,7 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8, !tbaa !23
   %i.c = inttoptr i64 %i.b to ptr                 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 3 uses
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !19   ; 9 uses
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !19   ; 10 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 52 ; 4 uses
   %i.g = load i32, ptr %i.f, align 4, !tbaa !22   ; 3 uses
   %i.h = icmp ugt i32 %2, %i.e
@@ -445,7 +445,6 @@ bb.l:                                             ; preds = %clearhpart.exit
   %i.cm = inttoptr i64 %i.cl to ptr               ; 2 uses
   store i32 %2, ptr %i.d, align 8, !tbaa !19
   %i.cn = zext i32 %2 to i64                      ; 2 uses
-  %wide.trip.count118 = zext i32 %i.e to i64      ; 2 uses
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.r
@@ -511,7 +510,8 @@ lj_tab_setinth.exit:                              ; preds = %bb.o, %bb.q
 
 bb.r:                                             ; preds = %bb.m, %lj_tab_setinth.exit
   %indvars.iv.next116 = add nuw nsw i64 %indvars.iv115, 1 ; 2 uses
-  %exitcond119.not = icmp eq i64 %indvars.iv.next116, %wide.trip.count118
+  %lftr.wideiv = trunc i64 %indvars.iv.next116 to i32
+  %exitcond119.not = icmp eq i32 %i.e, %lftr.wideiv
   br i1 %exitcond119.not, label %bb.s, label %bb.m, !llvm.loop !67
 
 bb.s:                                             ; preds = %bb.r
@@ -521,7 +521,8 @@ bb.s:                                             ; preds = %bb.r
   br i1 %i.dv, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
-  %i.dw = shl nuw nsw i64 %wide.trip.count118, 3
+  %5 = zext i32 %i.e to i64
+  %i.dw = shl nuw nsw i64 %5, 3
   %i.dx = shl nuw nsw i64 %i.cn, 3
   %i.dy = call ptr @lj_mem_realloc(ptr noundef %0, ptr noundef %i.cm, i64 noundef %i.dw, i64 noundef %i.dx) #12
   %i.dz = ptrtoint ptr %i.dy to i64

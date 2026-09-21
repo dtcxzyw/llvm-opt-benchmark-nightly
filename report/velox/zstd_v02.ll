@@ -205,7 +205,6 @@ middle.block:                                     ; preds = %vector.body
   %.sroa.5.0.insert.ext = zext nneg i8 %i.ac to i16
   %.sroa.5.0.insert.shift = shl nuw nsw i16 %.sroa.5.0.insert.ext, 8
   %i.ak = zext i32 %i.af to i64                   ; 2 uses
-  %wide.trip.count103 = zext i32 %8 to i64        ; 2 uses
   br i1 %i.aj, label %.lr.ph80.split.us.preheader, label %.lr.ph80.split.preheader
 
 .lr.ph80.split.preheader:                         ; preds = %.lr.ph80
@@ -213,11 +212,12 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph80.split
 
 .lr.ph80.split.us.preheader:                      ; preds = %.lr.ph80
+  %wide.trip.count102 = zext i32 %8 to i64
   %broadcast.splatinsert158 = insertelement <4 x i8> poison, i8 %i.ac, i64 0
   br label %.lr.ph80.split.us
 
 .lr.ph80.split.us:                                ; preds = %.lr.ph80.split.us.preheader, %.loopexit.us
-  %indvars.iv100 = phi i64 [ %indvars.iv.next101, %.loopexit.us ], [ %i.ak, %.lr.ph80.split.us.preheader ] ; 2 uses
+  %indvars.iv100 = phi i64 [ %i.ak, %.lr.ph80.split.us.preheader ], [ %indvars.iv.next101, %.loopexit.us ] ; 2 uses
   %i.al = getelementptr inbounds nuw [2 x i8], ptr %7, i64 %indvars.iv100 ; 2 uses
   %i.am = load i8, ptr %i.al, align 1, !tbaa !39
   %i.an = getelementptr inbounds nuw i8, ptr %i.al, i64 1
@@ -272,7 +272,7 @@ scalar.ph150:                                     ; preds = %scalar.ph150.prol.l
 .loopexit.us:                                     ; preds = %scalar.ph150.prol.loopexit, %scalar.ph150, %middle.block165, %.lr.ph80.split.us
   store i32 %i.ay, ptr %i.at, align 4, !tbaa !22
   %indvars.iv.next101 = add nuw nsw i64 %indvars.iv100, 1 ; 2 uses
-  %exitcond104.not = icmp eq i64 %indvars.iv.next101, %wide.trip.count103
+  %exitcond104.not = icmp eq i64 %indvars.iv.next101, %wide.trip.count102
   br i1 %exitcond104.not, label %._crit_edge, label %.lr.ph80.split.us, !llvm.loop !123
 
 .lr.ph78.us:                                      ; preds = %.lr.ph80.split.us
@@ -507,7 +507,8 @@ scalar.ph125:                                     ; preds = %scalar.ph125.prol.l
   %.pre-phi = phi i32 [ %.pre, %bb.c ], [ %i.cw, %bb.d ], [ %i.cw, %middle.block139 ], [ %i.cw, %scalar.ph125 ], [ %i.cw, %scalar.ph125.prol.loopexit ]
   store i32 %.pre-phi, ptr %i.ck, align 4, !tbaa !22
   %indvars.iv.next91 = add nuw nsw i64 %indvars.iv90, 1 ; 2 uses
-  %exitcond94.not = icmp eq i64 %indvars.iv.next91, %wide.trip.count103
+  %lftr.wideiv = trunc i64 %indvars.iv.next91 to i32
+  %exitcond94.not = icmp eq i32 %8, %lftr.wideiv
   br i1 %exitcond94.not, label %._crit_edge, label %.lr.ph80.split, !llvm.loop !123
 
 ._crit_edge:                                      ; preds = %.loopexit, %.loopexit.us, %.loopexit75
