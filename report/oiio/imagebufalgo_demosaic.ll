@@ -205,17 +205,18 @@ define internal fastcc void @_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBas
   %i.d = add i32 %0, 4
   %i.e = srem i32 %i.d, 6
   %i.f = sext i32 %i.e to i64                     ; 6 uses
-  %3 = add i32 %0, 3
-  %4 = srem i32 %3, 6
-  %5 = sext i32 %4 to i64                         ; 6 uses
-  %6 = add i32 %0, 2
-  %7 = srem i32 %6, 6
+  %3 = insertelement <4 x i32> poison, i32 %0, i64 0
+  %4 = shufflevector <4 x i32> %3, <4 x i32> poison, <4 x i32> zeroinitializer
+  %5 = add <4 x i32> %4, <i32 0, i32 1, i32 2, i32 3>
+  %6 = srem <4 x i32> %5, splat (i32 6)           ; 4 uses
+  %7 = extractelement <4 x i32> %6, i64 3
   %i.g = sext i32 %7 to i64                       ; 6 uses
-  %8 = add i32 %0, 1
-  %9 = srem i32 %8, 6
-  %i.h = sext i32 %9 to i64                       ; 6 uses
-  %10 = srem i32 %0, 6
-  %i.i = sext i32 %10 to i64                      ; 6 uses
+  %8 = extractelement <4 x i32> %6, i64 2
+  %9 = sext i32 %8 to i64                         ; 6 uses
+  %10 = extractelement <4 x i32> %6, i64 1
+  %i.h = sext i32 %10 to i64                      ; 6 uses
+  %11 = extractelement <4 x i32> %6, i64 0
+  %i.i = sext i32 %11 to i64                      ; 6 uses
   %i.j = srem i32 %1, 6
   %i.k = sext i32 %i.j to i64
   %i.l = getelementptr inbounds [48 x i8], ptr @_ZN11OpenImageIO4v3_112ImageBufAlgoL18xtrans_channel_mapE, i64 %i.k ; 6 uses
@@ -236,7 +237,7 @@ define internal fastcc void @_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBas
   %i.x = load ptr, ptr %2, align 8, !tbaa !85
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 1
   store i8 %i.w, ptr %i.y, align 1, !tbaa !78
-  %i.z = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.g
+  %i.z = getelementptr inbounds [8 x i8], ptr %i.l, i64 %9
   %i.aa = load i64, ptr %i.z, align 8, !tbaa !200
   %sext.2 = shl i64 %i.aa, 32
   %i.ab = ashr exact i64 %sext.2, 32
@@ -245,7 +246,7 @@ define internal fastcc void @_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBas
   %i.ae = load ptr, ptr %2, align 8, !tbaa !85
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 2
   store i8 %i.ad, ptr %i.af, align 1, !tbaa !78
-  %i.ag = getelementptr inbounds [8 x i8], ptr %i.l, i64 %5
+  %i.ag = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.g
   %i.ah = load i64, ptr %i.ag, align 8, !tbaa !200
   %sext.3 = shl i64 %i.ah, 32
   %i.ai = ashr exact i64 %sext.3, 32
@@ -294,7 +295,7 @@ define internal fastcc void @_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBas
   %i.br = load ptr, ptr %2, align 8, !tbaa !85
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 7
   store i8 %i.bq, ptr %i.bs, align 1, !tbaa !78
-  %i.bt = getelementptr inbounds [8 x i8], ptr %i.be, i64 %i.g
+  %i.bt = getelementptr inbounds [8 x i8], ptr %i.be, i64 %9
   %i.bu = load i64, ptr %i.bt, align 8, !tbaa !200
   %sext.2.1 = shl i64 %i.bu, 32
   %i.bv = ashr exact i64 %sext.2.1, 32
@@ -303,7 +304,7 @@ define internal fastcc void @_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBas
   %i.by = load ptr, ptr %2, align 8, !tbaa !85
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 8
   store i8 %i.bx, ptr %i.bz, align 1, !tbaa !78
-  %i.ca = getelementptr inbounds [8 x i8], ptr %i.be, i64 %5
+  %i.ca = getelementptr inbounds [8 x i8], ptr %i.be, i64 %i.g
   %i.cb = load i64, ptr %i.ca, align 8, !tbaa !200
   %sext.3.1 = shl i64 %i.cb, 32
   %i.cc = ashr exact i64 %sext.3.1, 32
@@ -352,7 +353,7 @@ define internal fastcc void @_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBas
   %i.dl = load ptr, ptr %2, align 8, !tbaa !85
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 13
   store i8 %i.dk, ptr %i.dm, align 1, !tbaa !78
-  %i.dn = getelementptr inbounds [8 x i8], ptr %i.cy, i64 %i.g
+  %i.dn = getelementptr inbounds [8 x i8], ptr %i.cy, i64 %9
   %i.do = load i64, ptr %i.dn, align 8, !tbaa !200
   %sext.2.2 = shl i64 %i.do, 32
   %i.dp = ashr exact i64 %sext.2.2, 32
@@ -361,7 +362,7 @@ define internal fastcc void @_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBas
   %i.ds = load ptr, ptr %2, align 8, !tbaa !85
   %i.dt = getelementptr inbounds nuw i8, ptr %i.ds, i64 14
   store i8 %i.dr, ptr %i.dt, align 1, !tbaa !78
-  %i.du = getelementptr inbounds [8 x i8], ptr %i.cy, i64 %5
+  %i.du = getelementptr inbounds [8 x i8], ptr %i.cy, i64 %i.g
   %i.dv = load i64, ptr %i.du, align 8, !tbaa !200
   %sext.3.2 = shl i64 %i.dv, 32
   %i.dw = ashr exact i64 %sext.3.2, 32
@@ -410,7 +411,7 @@ define internal fastcc void @_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBas
   %i.ff = load ptr, ptr %2, align 8, !tbaa !85
   %i.fg = getelementptr inbounds nuw i8, ptr %i.ff, i64 19
   store i8 %i.fe, ptr %i.fg, align 1, !tbaa !78
-  %i.fh = getelementptr inbounds [8 x i8], ptr %i.es, i64 %i.g
+  %i.fh = getelementptr inbounds [8 x i8], ptr %i.es, i64 %9
   %i.fi = load i64, ptr %i.fh, align 8, !tbaa !200
   %sext.2.3 = shl i64 %i.fi, 32
   %i.fj = ashr exact i64 %sext.2.3, 32
@@ -419,7 +420,7 @@ define internal fastcc void @_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBas
   %i.fm = load ptr, ptr %2, align 8, !tbaa !85
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fm, i64 20
   store i8 %i.fl, ptr %i.fn, align 1, !tbaa !78
-  %i.fo = getelementptr inbounds [8 x i8], ptr %i.es, i64 %5
+  %i.fo = getelementptr inbounds [8 x i8], ptr %i.es, i64 %i.g
   %i.fp = load i64, ptr %i.fo, align 8, !tbaa !200
   %sext.3.3 = shl i64 %i.fp, 32
   %i.fq = ashr exact i64 %sext.3.3, 32
@@ -468,7 +469,7 @@ define internal fastcc void @_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBas
   %i.gz = load ptr, ptr %2, align 8, !tbaa !85
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gz, i64 25
   store i8 %i.gy, ptr %i.ha, align 1, !tbaa !78
-  %i.hb = getelementptr inbounds [8 x i8], ptr %i.gm, i64 %i.g
+  %i.hb = getelementptr inbounds [8 x i8], ptr %i.gm, i64 %9
   %i.hc = load i64, ptr %i.hb, align 8, !tbaa !200
   %sext.2.4 = shl i64 %i.hc, 32
   %i.hd = ashr exact i64 %sext.2.4, 32
@@ -477,7 +478,7 @@ define internal fastcc void @_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBas
   %i.hg = load ptr, ptr %2, align 8, !tbaa !85
   %i.hh = getelementptr inbounds nuw i8, ptr %i.hg, i64 26
   store i8 %i.hf, ptr %i.hh, align 1, !tbaa !78
-  %i.hi = getelementptr inbounds [8 x i8], ptr %i.gm, i64 %5
+  %i.hi = getelementptr inbounds [8 x i8], ptr %i.gm, i64 %i.g
   %i.hj = load i64, ptr %i.hi, align 8, !tbaa !200
   %sext.3.4 = shl i64 %i.hj, 32
   %i.hk = ashr exact i64 %sext.3.4, 32
@@ -526,7 +527,7 @@ define internal fastcc void @_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBas
   %i.it = load ptr, ptr %2, align 8, !tbaa !85
   %i.iu = getelementptr inbounds nuw i8, ptr %i.it, i64 31
   store i8 %i.is, ptr %i.iu, align 1, !tbaa !78
-  %i.iv = getelementptr inbounds [8 x i8], ptr %i.ig, i64 %i.g
+  %i.iv = getelementptr inbounds [8 x i8], ptr %i.ig, i64 %9
   %i.iw = load i64, ptr %i.iv, align 8, !tbaa !200
   %sext.2.5 = shl i64 %i.iw, 32
   %i.ix = ashr exact i64 %sext.2.5, 32
@@ -535,7 +536,7 @@ define internal fastcc void @_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBas
   %i.ja = load ptr, ptr %2, align 8, !tbaa !85
   %i.jb = getelementptr inbounds nuw i8, ptr %i.ja, i64 32
   store i8 %i.iz, ptr %i.jb, align 1, !tbaa !78
-  %i.jc = getelementptr inbounds [8 x i8], ptr %i.ig, i64 %5
+  %i.jc = getelementptr inbounds [8 x i8], ptr %i.ig, i64 %i.g
   %i.jd = load i64, ptr %i.jc, align 8, !tbaa !200
   %sext.3.5 = shl i64 %i.jd, 32
   %i.je = ashr exact i64 %sext.3.5, 32

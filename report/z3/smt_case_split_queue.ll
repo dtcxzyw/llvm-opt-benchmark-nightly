@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZNK11ast_manager6is_andEPK4expr.exit
 
 _ZNK11ast_manager6is_andEPK4expr.exit:            ; preds = %bb.c, %bb.b, %bb.d
-  %i.ac = phi <2 x i1> [ %i.ab, %bb.d ], [ zeroinitializer, %bb.b ], [ zeroinitializer, %bb.c ] ; 3 uses
+  %i.ac = phi <2 x i1> [ %i.ab, %bb.d ], [ zeroinitializer, %bb.b ], [ zeroinitializer, %bb.c ] ; 2 uses
   %i.ad = load ptr, ptr %i.h, align 8, !tbaa !670, !nonnull !51, !align !565 ; 3 uses
   %i.ae = load i32, ptr %i.n, align 4, !tbaa !642 ; 3 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 8928
@@ -240,16 +240,15 @@ bb.f:                                             ; preds = %_ZNK3smt7context14b
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !638
   %i.at = zext i32 %i.aq to i64
   %i.au = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.at
-  %i.av = load i8, ptr %i.au, align 1, !tbaa !639 ; 4 uses
+  %i.av = load i8, ptr %i.au, align 1, !tbaa !639 ; 3 uses
   %i.aw = sext i8 %i.av to i32
-  %5 = icmp eq i8 %i.av, 1
-  %6 = extractelement <2 x i1> %i.ac, i64 0
-  %or.cond = and i1 %6, %5
-  %7 = icmp eq i8 %i.av, -1
-  %8 = extractelement <2 x i1> %i.ac, i64 1
-  %or.cond4 = and i1 %8, %7
-  %or.cond34 = or i1 %or.cond, %or.cond4
-  br i1 %or.cond34, label %bb.g, label %bb.k
+  %5 = insertelement <2 x i8> poison, i8 %i.av, i64 0
+  %6 = shufflevector <2 x i8> %5, <2 x i8> poison, <2 x i32> zeroinitializer
+  %7 = icmp eq <2 x i8> %6, <i8 1, i8 -1>
+  %8 = and <2 x i1> %i.ac, %7
+  %9 = bitcast <2 x i1> %8 to i2
+  %.not69 = icmp eq i2 %9, 0
+  br i1 %.not69, label %bb.k, label %bb.g
 
 .thread:                                          ; preds = %_ZNK3smt7context14b_internalizedEPK4expr.exit
   %i.ax = extractelement <2 x i1> %i.ac, i64 0
@@ -652,25 +651,21 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !662
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 24
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !665  ; 3 uses
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !665  ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.j, null
   br i1 %.not.i.i.i.i, label %_ZNK11ast_manager6is_andEPK4expr.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %4 = load i32, ptr %i.j, align 8, !tbaa !669    ; 2 uses
-  %5 = icmp eq i32 %4, 0
-  %6 = getelementptr inbounds nuw i8, ptr %i.j, i64 4
-  %7 = load i32, ptr %6, align 4                  ; 2 uses
-  %8 = icmp eq i32 %7, 6
-  %9 = select i1 %5, i1 %8, i1 false
-  %10 = icmp eq i32 %4, 0
-  %11 = icmp eq i32 %7, 5
-  %12 = select i1 %10, i1 %11, i1 false
+  %4 = load <2 x i32>, ptr %i.j, align 8          ; 2 uses
+  %5 = icmp eq <2 x i32> %4, zeroinitializer
+  %6 = shufflevector <2 x i1> %5, <2 x i1> poison, <2 x i32> zeroinitializer
+  %7 = shufflevector <2 x i32> %4, <2 x i32> poison, <2 x i32> <i32 1, i32 1>
+  %8 = icmp eq <2 x i32> %7, <i32 6, i32 5>
+  %9 = select <2 x i1> %6, <2 x i1> %8, <2 x i1> zeroinitializer
   br label %_ZNK11ast_manager6is_andEPK4expr.exit
 
 _ZNK11ast_manager6is_andEPK4expr.exit:            ; preds = %bb.b, %bb.a, %bb.c
-  %13 = phi i1 [ %9, %bb.c ], [ false, %bb.a ], [ false, %bb.b ] ; 2 uses
-  %14 = phi i1 [ %12, %bb.c ], [ false, %bb.a ], [ false, %bb.b ]
+  %10 = phi <2 x i1> [ %9, %bb.c ], [ zeroinitializer, %bb.a ], [ zeroinitializer, %bb.b ] ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !600, !nonnull !51, !align !565 ; 3 uses
   %i.m = load i32, ptr %1, align 4, !tbaa !642    ; 3 uses
@@ -706,17 +701,19 @@ bb.e:                                             ; preds = %_ZNK3smt7context14b
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !638
   %i.ab = zext i32 %i.y to i64
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.ab
-  %i.ad = load i8, ptr %i.ac, align 1, !tbaa !639 ; 4 uses
+  %i.ad = load i8, ptr %i.ac, align 1, !tbaa !639 ; 3 uses
   %i.ae = sext i8 %i.ad to i32
-  %15 = icmp eq i8 %i.ad, 1
-  %or.cond = and i1 %13, %15
-  %16 = icmp eq i8 %i.ad, -1
-  %or.cond3 = and i1 %14, %16
-  %or.cond24 = or i1 %or.cond, %or.cond3
-  br i1 %or.cond24, label %bb.f, label %bb.j
+  %11 = insertelement <2 x i8> poison, i8 %i.ad, i64 0
+  %12 = shufflevector <2 x i8> %11, <2 x i8> poison, <2 x i32> zeroinitializer
+  %13 = icmp eq <2 x i8> %12, <i8 1, i8 -1>
+  %14 = and <2 x i1> %10, %13
+  %15 = bitcast <2 x i1> %14 to i2
+  %.not41 = icmp eq i2 %15, 0
+  br i1 %.not41, label %bb.j, label %bb.f
 
 .thread:                                          ; preds = %_ZNK3smt7context14b_internalizedEPK4expr.exit
-  br i1 %13, label %bb.f, label %.thread33
+  %16 = extractelement <2 x i1> %10, i64 0
+  br i1 %16, label %bb.f, label %.thread33
 
 bb.f:                                             ; preds = %.thread, %bb.e
   %.02331 = phi i32 [ 1, %.thread ], [ %i.ae, %bb.e ]

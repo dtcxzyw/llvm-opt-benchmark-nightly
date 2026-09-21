@@ -50,26 +50,22 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %5 = insertelement <2 x i32> poison, i32 %0, i64 0
-  %6 = shufflevector <2 x i32> %5, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
-  %7 = lshr <2 x i32> %6, <i32 16, i32 65535>
-  %8 = and <2 x i32> %6, <i32 poison, i32 65535>
-  %9 = shufflevector <2 x i32> %7, <2 x i32> %8, <2 x i32> <i32 0, i32 3>
+  %5 = lshr i32 %0, 16
+  %6 = and i32 %0, 65535
   %.not132 = icmp eq i32 %4, 0                    ; 4 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.ap, %bb.c
+  %.0122 = phi i32 [ %5, %bb.c ], [ %17, %bb.ap ] ; 3 uses
+  %.0114 = phi i32 [ %6, %bb.c ], [ %i.eg, %bb.ap ] ; 3 uses
   %.0112 = phi i64 [ %3, %bb.c ], [ %i.ba, %bb.ap ] ; 7 uses
   %.0108 = phi ptr [ %2, %bb.c ], [ %.3111.lcssa, %bb.ap ] ; 5 uses
   %.0106 = phi ptr [ %1, %bb.c ], [ %.4.lcssa, %bb.ap ] ; 3 uses
   %.0105 = phi i32 [ %0, %bb.c ], [ %i.ei, %bb.ap ] ; 2 uses
-  %10 = phi <2 x i32> [ %9, %bb.c ], [ %i.ef, %bb.ap ] ; 4 uses
   %i.c = icmp ult i64 %.0112, 16
   br i1 %i.c, label %bb.e, label %bb.v
 
 bb.e:                                             ; preds = %bb.d
-  %11 = extractelement <2 x i32> %10, i64 0       ; 2 uses
-  %12 = extractelement <2 x i32> %10, i64 1       ; 2 uses
   br i1 %.not132, label %.preheader, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -78,10 +74,10 @@ bb.f:                                             ; preds = %bb.e
 
 .lr.ph.i:                                         ; preds = %bb.o, %bb.f
   %i.e = phi i64 [ %i.x, %bb.o ], [ %i.d, %bb.f ]
-  %.023.i = phi i32 [ %i.s, %bb.o ], [ %11, %bb.f ] ; 2 uses
+  %.023.i = phi i32 [ %i.s, %bb.o ], [ %.0122, %bb.f ] ; 2 uses
   %.01122.i = phi ptr [ %i.i, %bb.o ], [ %.0106, %bb.f ] ; 6 uses
   %.01221.i = phi ptr [ %i.f, %bb.o ], [ %.0108, %bb.f ] ; 4 uses
-  %.01320.i = phi i32 [ %i.n, %bb.o ], [ %12, %bb.f ] ; 2 uses
+  %.01320.i = phi i32 [ %i.n, %bb.o ], [ %.0114, %bb.f ] ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.01221.i, i64 1
   %.not16.i = icmp eq ptr %.01221.i, inttoptr (i64 -1 to ptr)
   br i1 %.not16.i, label %bb.g, label %bb.h, !prof !19, !nosanitize !20
@@ -146,17 +142,20 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 
 adler32_copy_len_16.exit:                         ; preds = %bb.o
   call void @__ubsan_handle_sub_overflow(ptr nonnull @9, i64 0, i64 1) #7, !nosanitize !20
-  %13 = urem i32 %i.s, 65521
-  %14 = urem i32 %i.n, 65521
-  %i.z = shl nuw i32 %13, 16
-  %i.aa = or disjoint i32 %i.z, %14
+  %7 = insertelement <2 x i32> poison, i32 %i.s, i64 0
+  %8 = insertelement <2 x i32> %7, i32 %i.n, i64 1
+  %9 = urem <2 x i32> %8, splat (i32 65521)       ; 2 uses
+  %10 = extractelement <2 x i32> %9, i64 0
+  %i.z = shl nuw i32 %10, 16
+  %11 = extractelement <2 x i32> %9, i64 1
+  %i.aa = or disjoint i32 %i.z, %11
   br label %.loopexit
 
 .preheader:                                       ; preds = %bb.e, %bb.u
-  %.017.i = phi i32 [ %i.am, %bb.u ], [ %11, %bb.e ] ; 2 uses
+  %.017.i = phi i32 [ %i.am, %bb.u ], [ %.0122, %bb.e ] ; 2 uses
   %.0916.i = phi i64 [ %i.ab, %bb.u ], [ %.0112, %bb.e ]
   %.01015.i = phi ptr [ %i.ac, %bb.u ], [ %.0108, %bb.e ] ; 4 uses
-  %.01114.i = phi i32 [ %i.ah, %bb.u ], [ %12, %bb.e ] ; 2 uses
+  %.01114.i = phi i32 [ %i.ah, %bb.u ], [ %.0114, %bb.e ] ; 2 uses
   %i.ab = add nsw i64 %.0916.i, -1                ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.01015.i, i64 1
   %.not12.i = icmp eq ptr %.01015.i, inttoptr (i64 -1 to ptr)
@@ -198,20 +197,18 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   br i1 %.not.i, label %adler32_len_16.exit, label %.preheader, !llvm.loop !14
 
 adler32_len_16.exit:                              ; preds = %bb.u
-  %15 = urem i32 %i.am, 65521
-  %16 = urem i32 %i.ah, 65521
+  %12 = insertelement <2 x i32> poison, i32 %i.am, i64 0
+  %13 = insertelement <2 x i32> %12, i32 %i.ah, i64 1
+  %14 = urem <2 x i32> %13, splat (i32 65521)     ; 2 uses
+  %15 = extractelement <2 x i32> %14, i64 0
   %i.aq = shl nuw i32 %15, 16
+  %16 = extractelement <2 x i32> %14, i64 1
   %i.ar = or disjoint i32 %i.aq, %16
   br label %.loopexit
 
 bb.v:                                             ; preds = %bb.d
   %i.as = icmp ult i64 %.0112, 32
-  br i1 %i.as, label %bb.w, label %.preheader153.preheader
-
-.preheader153.preheader:                          ; preds = %bb.v
-  %17 = extractelement <2 x i32> %10, i64 1
-  %18 = extractelement <2 x i32> %10, i64 0
-  br label %.preheader153
+  br i1 %i.as, label %bb.w, label %.preheader153
 
 bb.w:                                             ; preds = %bb.v
   br i1 %.not132, label %bb.y, label %bb.x
@@ -224,12 +221,12 @@ bb.y:                                             ; preds = %bb.w
   %i.au = call i32 @adler32_ssse3(i32 noundef %.0105, ptr noundef %.0108, i64 noundef %.0112) #6
   br label %.loopexit
 
-.preheader153:                                    ; preds = %.preheader153.preheader, %._crit_edge192
-  %.1107202 = phi ptr [ %.4.lcssa, %._crit_edge192 ], [ %.0106, %.preheader153.preheader ] ; 2 uses
-  %.1109201 = phi ptr [ %.3111.lcssa, %._crit_edge192 ], [ %.0108, %.preheader153.preheader ] ; 2 uses
-  %.1113200 = phi i64 [ %i.ba, %._crit_edge192 ], [ %.0112, %.preheader153.preheader ] ; 4 uses
-  %.1115199 = phi i32 [ %20, %._crit_edge192 ], [ %17, %.preheader153.preheader ]
-  %.1123198 = phi i32 [ %i.eg, %._crit_edge192 ], [ %18, %.preheader153.preheader ]
+.preheader153:                                    ; preds = %bb.v, %._crit_edge192
+  %.1107202 = phi ptr [ %.4.lcssa, %._crit_edge192 ], [ %.0106, %bb.v ] ; 2 uses
+  %.1109201 = phi ptr [ %.3111.lcssa, %._crit_edge192 ], [ %.0108, %bb.v ] ; 2 uses
+  %.1113200 = phi i64 [ %i.ba, %._crit_edge192 ], [ %.0112, %bb.v ] ; 4 uses
+  %.1115199 = phi i32 [ %i.eg, %._crit_edge192 ], [ %.0114, %bb.v ]
+  %.1123198 = phi i32 [ %17, %._crit_edge192 ], [ %.0122, %bb.v ]
   %i.av = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.1115199, i64 0
   %i.aw = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.1123198, i64 0
   %i.ax = call i64 @llvm.umin.i64(i64 %.1113200, i64 5552)
@@ -437,18 +434,18 @@ bb.ao:                                            ; preds = %_mm256_storeu_si256
   %i.dz = add <4 x i32> %i.dx, %i.dy              ; 2 uses
   %i.ea = shufflevector <4 x i32> %i.dz, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 2, i32 3>
   %i.eb = add <4 x i32> %i.dz, %i.ea              ; 2 uses
-  %i.ec = shufflevector <4 x i32> %i.eb, <4 x i32> %i.dw, <2 x i32> <i32 1, i32 5>
-  %i.ed = shufflevector <4 x i32> %i.eb, <4 x i32> %i.dw, <2 x i32> <i32 0, i32 4>
+  %i.ec = shufflevector <4 x i32> %i.dw, <4 x i32> %i.eb, <2 x i32> <i32 1, i32 5>
+  %i.ed = shufflevector <4 x i32> %i.dw, <4 x i32> %i.eb, <2 x i32> <i32 0, i32 4>
   %i.ee = add <2 x i32> %i.ec, %i.ed
-  %i.ef = urem <2 x i32> %i.ee, splat (i32 65521) ; 3 uses
-  %19 = icmp ugt i64 %i.ba, 31
-  %i.eg = extractelement <2 x i32> %i.ef, i64 0   ; 2 uses
-  %20 = extractelement <2 x i32> %i.ef, i64 1     ; 2 uses
-  br i1 %19, label %.preheader153, label %bb.ap, !llvm.loop !17
+  %i.ef = urem <2 x i32> %i.ee, splat (i32 65521) ; 2 uses
+  %17 = extractelement <2 x i32> %i.ef, i64 1     ; 3 uses
+  %i.eg = extractelement <2 x i32> %i.ef, i64 0   ; 3 uses
+  %18 = icmp ugt i64 %i.ba, 31
+  br i1 %18, label %.preheader153, label %bb.ap, !llvm.loop !17
 
 bb.ap:                                            ; preds = %._crit_edge192
-  %i.eh = shl nuw i32 %i.eg, 16
-  %i.ei = or disjoint i32 %20, %i.eh              ; 2 uses
+  %i.eh = shl nuw i32 %17, 16
+  %i.ei = or disjoint i32 %i.eg, %i.eh            ; 2 uses
   %.not = icmp eq i64 %i.ba, 0
   br i1 %.not, label %.loopexit, label %bb.d
 

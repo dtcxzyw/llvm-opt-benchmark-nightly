@@ -200,18 +200,23 @@ bb.b:                                             ; preds = %bb.a
   %i.f = sdiv i32 %0, 1152
   %i.g = srem i32 %0, 1152                        ; 2 uses
   %.lhs.trunc = trunc nsw i32 %i.g to i16         ; 2 uses
-  %1 = sdiv i16 %.lhs.trunc, 576
-  %.sext = sext i16 %1 to i32
-  %i.h = srem i16 %.lhs.trunc, 576                ; 3 uses
-  %2 = sdiv i16 %i.h, 288
-  %.sext336 = sext i16 %2 to i32
-  %3 = srem i16 %i.h, 288                         ; 3 uses
-  %4 = sdiv i16 %3, 144
-  %.sext340.a = sext i16 %4 to i32
-  %5 = srem i16 %3, 144                           ; 2 uses
-  %6 = sdiv i16 %5, 36                            ; 5 uses
-  %.sext344 = sext i16 %6 to i32
-  %i.i = srem i16 %5, 36
+  %1 = srem i16 %.lhs.trunc, 576                  ; 3 uses
+  %2 = srem i16 %1, 288                           ; 3 uses
+  %i.h = srem i16 %2, 144                         ; 2 uses
+  %3 = insertelement <4 x i16> poison, i16 %.lhs.trunc, i64 0
+  %4 = insertelement <4 x i16> %3, i16 %1, i64 1
+  %5 = insertelement <4 x i16> %4, i16 %2, i64 2
+  %6 = insertelement <4 x i16> %5, i16 %i.h, i64 3
+  %7 = sdiv <4 x i16> %6, <i16 576, i16 288, i16 144, i16 36> ; 4 uses
+  %8 = extractelement <4 x i16> %7, i64 3         ; 5 uses
+  %9 = extractelement <4 x i16> %7, i64 0
+  %.sext = sext i16 %9 to i32
+  %10 = extractelement <4 x i16> %7, i64 1
+  %.sext340.a = sext i16 %10 to i32
+  %11 = extractelement <4 x i16> %7, i64 2
+  %.sext340 = sext i16 %11 to i32
+  %.sext344 = sext i16 %8 to i32
+  %i.i = srem i16 %i.h, 36
   %.lhs.trunc347 = trunc nsw i16 %i.i to i8       ; 2 uses
   %i.j = sdiv i8 %.lhs.trunc347, 18               ; 2 uses
   %.sext348 = sext i8 %i.j to i32
@@ -230,7 +235,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not200, label %.thread329, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.q = icmp ult i16 %6, 4
+  %i.q = icmp ult i16 %8, 4
   br i1 %i.q, label %switch.lookup, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -238,13 +243,13 @@ bb.e:                                             ; preds = %bb.d
   br label %.thread329
 
 switch.lookup:                                    ; preds = %bb.d
-  %i.s = zext nneg i16 %6 to i64
+  %i.s = zext nneg i16 %8 to i64
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.test_rpk, i64 %i.s
   %switch.load = load ptr, ptr %switch.gep, align 8
-  %i.t = zext nneg i16 %6 to i64
+  %i.t = zext nneg i16 %8 to i64
   %switch.gep356 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.test_rpk.1, i64 %i.t
   %switch.load357 = load ptr, ptr %switch.gep356, align 8
-  %i.u = zext nneg i16 %6 to i64
+  %i.u = zext nneg i16 %8 to i64
   %switch.gep358 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.test_rpk.2, i64 %i.u
   %switch.load359 = load ptr, ptr %switch.gep358, align 8
   %.0184 = load ptr, ptr %switch.load359, align 8, !tbaa !11
@@ -326,7 +331,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not206, label %.thread329, label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
-  %narrow355 = add nsw i16 %i.h, -288             ; 5 uses
+  %narrow355 = add nsw i16 %1, -288               ; 5 uses
   %i.az = icmp ult i16 %narrow355, -575           ; 7 uses
   br i1 %i.az, label %bb.q, label %bb.r
 
@@ -340,7 +345,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not207, label %.thread329, label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p
-  %narrow = add nsw i16 %3, -144
+  %narrow = add nsw i16 %2, -144
   %i.bf = icmp ult i16 %narrow, -287              ; 5 uses
   br i1 %i.bf, label %bb.s, label %bb.t
 
@@ -743,7 +748,7 @@ bb.fe:                                            ; preds = %bb.fd
   br i1 %i.sh, label %bb.ff, label %bb.fg
 
 bb.ff:                                            ; preds = %.thread329
-  call void (ptr, i32, ptr, ...) @test_info(ptr noundef nonnull @.str.14, i32 noundef 669, ptr noundef nonnull @.str.104, i32 noundef %i.f, i32 noundef %.sext, i32 noundef %.sext336, i32 noundef %.sext340.a, i32 noundef %.sext344, i32 noundef %.sext348, i32 noundef %.sext350) #4
+  call void (ptr, i32, ptr, ...) @test_info(ptr noundef nonnull @.str.14, i32 noundef 669, ptr noundef nonnull @.str.104, i32 noundef %i.f, i32 noundef %.sext, i32 noundef %.sext340.a, i32 noundef %.sext340, i32 noundef %.sext344, i32 noundef %.sext348, i32 noundef %.sext350) #4
   br label %bb.fg
 
 bb.fg:                                            ; preds = %.thread329, %bb.ff, %bb.a

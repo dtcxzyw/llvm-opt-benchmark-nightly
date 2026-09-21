@@ -205,31 +205,26 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph.i
 
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i, %middle.block
-  %.lcssa = phi i32 [ %i.ak, %middle.block ], [ %1, %.lr.ph.i ]
+  %.lcssa = phi i32 [ %i.ak, %middle.block ], [ %spec.select.i, %.lr.ph.i ]
   %.4.i.lcssa = phi i32 [ %i.al, %middle.block ], [ %.4.i, %.lr.ph.i ]
   %i.am = mul i32 %.lcssa, 5
   br label %_ZN6google8protobuf8internalL10VarintSizeILb0ELb1EiEEmPKT1_i.exit
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ %indvars.iv.i.ph, %.lr.ph.i.preheader ] ; 2 uses
-  %.01821.i = phi i32 [ %1, %.lr.ph.i ], [ %.01821.i.ph, %.lr.ph.i.preheader ]
+  %.01821.i = phi i32 [ %spec.select.i, %.lr.ph.i ], [ %.01821.i.ph, %.lr.ph.i.preheader ]
   %.01920.i = phi i32 [ %.4.i, %.lr.ph.i ], [ %.01920.i.ph, %.lr.ph.i.preheader ]
   %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.i
-  %i.ao = load i32, ptr %i.an, align 4, !tbaa !40 ; 5 uses
+  %i.ao = load i32, ptr %i.an, align 4, !tbaa !40 ; 2 uses
   %i.ap = lshr i32 %i.ao, 31
-  %1 = add i32 %i.ap, %.01821.i                   ; 2 uses
-  %2 = icmp ugt i32 %i.ao, 127
-  %3 = zext i1 %2 to i32
-  %spec.select.i = add i32 %.01920.i, %3
-  %4 = icmp ugt i32 %i.ao, 16383
-  %5 = zext i1 %4 to i32
-  %.2.i = add i32 %spec.select.i, %5
-  %6 = icmp ugt i32 %i.ao, 2097151
-  %7 = zext i1 %6 to i32
-  %.3.i = add i32 %.2.i, %7
-  %8 = icmp ugt i32 %i.ao, 268435455
-  %i.aq = zext i1 %8 to i32
-  %.4.i = add i32 %.3.i, %i.aq                    ; 2 uses
+  %spec.select.i = add i32 %i.ap, %.01821.i       ; 2 uses
+  %1 = insertelement <4 x i32> poison, i32 %i.ao, i64 0
+  %2 = shufflevector <4 x i32> %1, <4 x i32> poison, <4 x i32> zeroinitializer
+  %3 = icmp ugt <4 x i32> %2, <i32 127, i32 16383, i32 2097151, i32 268435455>
+  %4 = bitcast <4 x i1> %3 to i4
+  %5 = tail call range(i4 0, 5) i4 @llvm.ctpop.i4(i4 %4)
+  %i.aq = zext nneg i4 %5 to i32
+  %.4.i = add i32 %.01920.i, %i.aq                ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %._crit_edge.loopexit.i, label %.lr.ph.i, !llvm.loop !65
@@ -312,19 +307,14 @@ middle.block:                                     ; preds = %vector.body
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ %indvars.iv.i.ph, %.lr.ph.i.preheader ] ; 2 uses
   %.01415.i = phi i32 [ %.4.i, %.lr.ph.i ], [ %.01415.i.ph, %.lr.ph.i.preheader ]
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.i
-  %i.ai = load i32, ptr %i.ah, align 4, !tbaa !40 ; 4 uses
-  %1 = icmp ugt i32 %i.ai, 127
-  %2 = zext i1 %1 to i32
-  %spec.select.i = add i32 %.01415.i, %2
-  %3 = icmp ugt i32 %i.ai, 16383
-  %4 = zext i1 %3 to i32
-  %.2.i = add i32 %spec.select.i, %4
-  %5 = icmp ugt i32 %i.ai, 2097151
-  %6 = zext i1 %5 to i32
-  %.3.i = add i32 %.2.i, %6
-  %7 = icmp ugt i32 %i.ai, 268435455
-  %i.aj = zext i1 %7 to i32
-  %.4.i = add i32 %.3.i, %i.aj                    ; 2 uses
+  %i.ai = load i32, ptr %i.ah, align 4, !tbaa !40
+  %1 = insertelement <4 x i32> poison, i32 %i.ai, i64 0
+  %2 = shufflevector <4 x i32> %1, <4 x i32> poison, <4 x i32> zeroinitializer
+  %3 = icmp ugt <4 x i32> %2, <i32 127, i32 16383, i32 2097151, i32 268435455>
+  %4 = bitcast <4 x i1> %3 to i4
+  %5 = tail call range(i4 0, 5) i4 @llvm.ctpop.i4(i4 %4)
+  %i.aj = zext nneg i4 %5 to i32
+  %.4.i = add i32 %.01415.i, %i.aj                ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %_ZN6google8protobuf8internalL10VarintSizeILb0ELb0EjEEmPKT1_i.exit, label %.lr.ph.i, !llvm.loop !67
@@ -414,19 +404,14 @@ middle.block:                                     ; preds = %vector.body
   %i.ao = load i32, ptr %i.an, align 4, !tbaa !40 ; 2 uses
   %i.ap = shl i32 %i.ao, 1
   %i.aq = ashr i32 %i.ao, 31
-  %i.ar = xor i32 %i.ap, %i.aq                    ; 4 uses
-  %1 = icmp ugt i32 %i.ar, 127
-  %2 = zext i1 %1 to i32
-  %spec.select.i = add i32 %.01516.i, %2
-  %3 = icmp ugt i32 %i.ar, 16383
-  %4 = zext i1 %3 to i32
-  %.2.i = add i32 %spec.select.i, %4
-  %5 = icmp ugt i32 %i.ar, 2097151
-  %6 = zext i1 %5 to i32
-  %.3.i = add i32 %.2.i, %6
-  %7 = icmp ugt i32 %i.ar, 268435455
-  %i.as = zext i1 %7 to i32
-  %.4.i = add i32 %.3.i, %i.as                    ; 2 uses
+  %i.ar = xor i32 %i.ap, %i.aq
+  %1 = insertelement <4 x i32> poison, i32 %i.ar, i64 0
+  %2 = shufflevector <4 x i32> %1, <4 x i32> poison, <4 x i32> zeroinitializer
+  %3 = icmp ugt <4 x i32> %2, <i32 127, i32 16383, i32 2097151, i32 268435455>
+  %4 = bitcast <4 x i1> %3 to i4
+  %5 = tail call range(i4 0, 5) i4 @llvm.ctpop.i4(i4 %4)
+  %i.as = zext nneg i4 %5 to i32
+  %.4.i = add i32 %.01516.i, %i.as                ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %_ZN6google8protobuf8internalL10VarintSizeILb1ELb0EiEEmPKT1_i.exit, label %.lr.ph.i, !llvm.loop !72
@@ -513,31 +498,26 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph.i
 
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i, %middle.block
-  %.lcssa = phi i32 [ %i.ak, %middle.block ], [ %1, %.lr.ph.i ]
+  %.lcssa = phi i32 [ %i.ak, %middle.block ], [ %spec.select.i, %.lr.ph.i ]
   %.4.i.lcssa = phi i32 [ %i.al, %middle.block ], [ %.4.i, %.lr.ph.i ]
   %i.am = mul i32 %.lcssa, 5
   br label %_ZN6google8protobuf8internalL10VarintSizeILb0ELb1EiEEmPKT1_i.exit
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ %indvars.iv.i.ph, %.lr.ph.i.preheader ] ; 2 uses
-  %.01821.i = phi i32 [ %1, %.lr.ph.i ], [ %.01821.i.ph, %.lr.ph.i.preheader ]
+  %.01821.i = phi i32 [ %spec.select.i, %.lr.ph.i ], [ %.01821.i.ph, %.lr.ph.i.preheader ]
   %.01920.i = phi i32 [ %.4.i, %.lr.ph.i ], [ %.01920.i.ph, %.lr.ph.i.preheader ]
   %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.i
-  %i.ao = load i32, ptr %i.an, align 4, !tbaa !40 ; 5 uses
+  %i.ao = load i32, ptr %i.an, align 4, !tbaa !40 ; 2 uses
   %i.ap = lshr i32 %i.ao, 31
-  %1 = add i32 %i.ap, %.01821.i                   ; 2 uses
-  %2 = icmp ugt i32 %i.ao, 127
-  %3 = zext i1 %2 to i32
-  %spec.select.i = add i32 %.01920.i, %3
-  %4 = icmp ugt i32 %i.ao, 16383
-  %5 = zext i1 %4 to i32
-  %.2.i = add i32 %spec.select.i, %5
-  %6 = icmp ugt i32 %i.ao, 2097151
-  %7 = zext i1 %6 to i32
-  %.3.i = add i32 %.2.i, %7
-  %8 = icmp ugt i32 %i.ao, 268435455
-  %i.aq = zext i1 %8 to i32
-  %.4.i = add i32 %.3.i, %i.aq                    ; 2 uses
+  %spec.select.i = add i32 %i.ap, %.01821.i       ; 2 uses
+  %1 = insertelement <4 x i32> poison, i32 %i.ao, i64 0
+  %2 = shufflevector <4 x i32> %1, <4 x i32> poison, <4 x i32> zeroinitializer
+  %3 = icmp ugt <4 x i32> %2, <i32 127, i32 16383, i32 2097151, i32 268435455>
+  %4 = bitcast <4 x i1> %3 to i4
+  %5 = tail call range(i4 0, 5) i4 @llvm.ctpop.i4(i4 %4)
+  %i.aq = zext nneg i4 %5 to i32
+  %.4.i = add i32 %.01920.i, %i.aq                ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %._crit_edge.loopexit.i, label %.lr.ph.i, !llvm.loop !74
@@ -829,6 +809,9 @@ declare void @llvm.assume(i1 noundef) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i4 @llvm.ctpop.i4(i4) #11
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

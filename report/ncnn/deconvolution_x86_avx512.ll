@@ -205,34 +205,36 @@ vec.epilog.middle.block3295:                      ; preds = %vec.epilog.vector.b
   %i.hrf = add i64 %i.hrc, %i.hqo
   %i.hrg = mul i64 %i.hpz, %i.hrf
   %scevgep3144 = getelementptr i8, ptr %scevgep3143, i64 %i.hrg
+  %15 = insertelement <4 x ptr> poison, ptr %scevgep3138, i64 0
+  %16 = insertelement <4 x ptr> %15, ptr %scevgep3135, i64 1
+  %17 = insertelement <4 x ptr> %16, ptr %scevgep3141, i64 2
+  %18 = insertelement <4 x ptr> %17, ptr %scevgep3144, i64 3
+  %19 = insertelement <4 x ptr> poison, ptr %scevgep3136, i64 0
+  %20 = insertelement <4 x ptr> %19, ptr %scevgep3133, i64 1
+  %21 = insertelement <4 x ptr> %20, ptr %scevgep3139, i64 2
+  %22 = insertelement <4 x ptr> %21, ptr %scevgep3142, i64 3
   %stride.check3152 = icmp slt i64 %i.hqr, 0
   br label %iter.check3182
 
 iter.check3182:                                   ; preds = %._crit_edge2141.i, %.preheader1771.preheader.i
   %indvars.iv2691.i = phi i64 [ %i.hqc, %.preheader1771.preheader.i ], [ %indvars.iv.next2692.i, %._crit_edge2141.i ] ; 2 uses
-  %.167852143.i = phi ptr [ %.12781.lcssa.i, %.preheader1771.preheader.i ], [ %.lcssa430, %._crit_edge2141.i ] ; 11 uses
+  %.167852143.i = phi ptr [ %.12781.lcssa.i, %.preheader1771.preheader.i ], [ %.lcssa430, %._crit_edge2141.i ] ; 8 uses
   %.reass2147.i = mul i64 %factor.op.mul2146.i, %indvars.iv2691.i
   %invariant.gep2134.i = getelementptr i8, ptr %i.hpy, i64 %.reass2147.i ; 5 uses
   br i1 %min.iters.check3164, label %.preheader1766.i.preheader, label %vector.memcheck3131
 
 vector.memcheck3131:                              ; preds = %iter.check3182
-  %scevgep3132 = getelementptr i8, ptr %.167852143.i, i64 %i.csn ; 4 uses
-  %bound03145 = icmp ult ptr %.167852143.i, %scevgep3135
-  %bound13146 = icmp ult ptr %scevgep3133, %scevgep3132
-  %found.conflict3147 = and i1 %bound03145, %bound13146
-  %bound03149 = icmp ult ptr %.167852143.i, %scevgep3138
-  %bound13150 = icmp ult ptr %scevgep3136, %scevgep3132
-  %found.conflict3151 = and i1 %bound03149, %bound13150
-  %15 = or i1 %found.conflict3151, %stride.check3152
-  %conflict.rdx3153 = or i1 %found.conflict3147, %15
-  %bound03154 = icmp ult ptr %.167852143.i, %scevgep3141
-  %bound13155 = icmp ult ptr %scevgep3139, %scevgep3132
-  %found.conflict3156 = and i1 %bound03154, %bound13155
-  %conflict.rdx3158 = or i1 %found.conflict3156, %conflict.rdx3153
-  %bound03159 = icmp ult ptr %.167852143.i, %scevgep3144
-  %bound13160 = icmp ult ptr %scevgep3142, %scevgep3132
-  %found.conflict3161 = and i1 %bound03159, %bound13160
-  %conflict.rdx3163 = or i1 %found.conflict3161, %conflict.rdx3158
+  %scevgep3132 = getelementptr i8, ptr %.167852143.i, i64 %i.csn
+  %23 = insertelement <4 x ptr> poison, ptr %.167852143.i, i64 0
+  %24 = shufflevector <4 x ptr> %23, <4 x ptr> poison, <4 x i32> zeroinitializer
+  %25 = icmp ult <4 x ptr> %24, %18
+  %26 = insertelement <4 x ptr> poison, ptr %scevgep3132, i64 0
+  %27 = shufflevector <4 x ptr> %26, <4 x ptr> poison, <4 x i32> zeroinitializer
+  %28 = icmp ult <4 x ptr> %22, %27
+  %29 = and <4 x i1> %25, %28
+  %30 = bitcast <4 x i1> %29 to i4
+  %31 = icmp ne i4 %30, 0
+  %conflict.rdx3163 = or i1 %31, %stride.check3152
   br i1 %conflict.rdx3163, label %.preheader1766.i.preheader, label %vector.main.loop.iter.check3165
 
 vector.main.loop.iter.check3165:                  ; preds = %vector.memcheck3131

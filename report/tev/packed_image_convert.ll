@@ -205,21 +205,21 @@ bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a,
 
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %3 = load double, ptr %i.f, align 8, !tbaa !222 ; 6 uses
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %5 = load double, ptr %4, align 8, !tbaa !222   ; 6 uses
+  %3 = load <2 x double>, ptr %i.f, align 8, !tbaa !222 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.h = load i8, ptr %i.g, align 4, !tbaa !241, !range !164, !noundef !165
   %i.i = trunc nuw i8 %i.h to i1
   %.not = xor i1 %i.i, true
-  %i.j = fcmp oeq double %3, 0.000000e+00
+  %4 = extractelement <2 x double> %3, i64 0      ; 5 uses
+  %i.j = fcmp oeq double %4, 0.000000e+00
   %or.cond = select i1 %.not, i1 true, i1 %i.j
+  %5 = extractelement <2 x double> %3, i64 1      ; 5 uses
   %i.k = fcmp oeq double %5, 0.000000e+00
   %or.cond91 = select i1 %or.cond, i1 true, i1 %i.k
   br i1 %or.cond91, label %_ZN3jxl3cmsL22WhitePointFromExternalE13JxlWhitePointPNS0_10WhitePointE.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.l = fadd double %3, -3.127000e-01
+  %i.l = fadd double %4, -3.127000e-01
   %i.m = tail call noundef double @llvm.fabs.f64(double %i.l)
   %i.n = fcmp ugt double %i.m, 1.000000e-03
   br i1 %i.n, label %bb.f, label %bb.e
@@ -231,7 +231,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.q, label %bb.f, label %.thread.sink.split
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %i.r = fadd double %3, f0xBFD5555555555555
+  %i.r = fadd double %4, f0xBFD5555555555555
   %i.s = tail call noundef double @llvm.fabs.f64(double %i.r)
   %i.t = fcmp ugt double %i.s, 1.000000e-03
   br i1 %i.t, label %bb.h, label %bb.g
@@ -243,7 +243,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.w, label %bb.h, label %.thread.sink.split
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %i.x = fadd double %3, -3.140000e-01
+  %i.x = fadd double %4, -3.140000e-01
   %i.y = tail call noundef double @llvm.fabs.f64(double %i.x)
   %i.z = fcmp ugt double %i.y, 1.000000e-03
   br i1 %i.z, label %bb.j, label %bb.i
@@ -256,16 +256,15 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   store i32 2, ptr %0, align 8, !tbaa !242
-  %6 = tail call noundef double @llvm.fabs.f64(double %3)
-  %7 = fcmp olt double %6, 4.000000e+00
-  %8 = tail call double @llvm.fabs.f64(double %5)
-  %9 = fcmp olt double %8, 4.000000e+00
-  %or.cond.i = and i1 %7, %9
-  br i1 %or.cond.i, label %bb.k, label %_ZN3jxl3cmsL22WhitePointFromExternalE13JxlWhitePointPNS0_10WhitePointE.exit
+  %6 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %3)
+  %7 = fcmp uge <2 x double> %6, splat (double 4.000000e+00)
+  %8 = bitcast <2 x i1> %7 to i2
+  %9 = icmp eq i2 %8, 0
+  br i1 %9, label %bb.k, label %_ZN3jxl3cmsL22WhitePointFromExternalE13JxlWhitePointPNS0_10WhitePointE.exit
 
 bb.k:                                             ; preds = %bb.j
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 60
-  %i.ae = fmul nnan double %3, 1.000000e+06
+  %i.ae = fmul nnan double %4, 1.000000e+06
   %i.af = fptrunc double %i.ae to float
   %i.ag = tail call float @llvm.round.f32(float %i.af)
   %i.ah = fptosi float %i.ag to i32               ; 2 uses
@@ -666,6 +665,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umax.i8(i8, i8) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x double> @llvm.fmuladd.v4f64(<4 x double>, <4 x double>, <4 x double>) #7

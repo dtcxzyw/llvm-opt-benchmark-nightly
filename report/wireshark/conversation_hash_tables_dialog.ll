@@ -124,16 +124,14 @@ bb.d:                                             ; preds = %bb.c
   %i.j = load <2 x i32>, ptr %i.i, align 4
   %i.k = load <2 x i32>, ptr %i.h, align 4
   %i.l = add <2 x i32> %i.j, splat (i32 1)
-  %i.m = sub <2 x i32> %i.l, %i.k                 ; 2 uses
-  %19 = extractelement <2 x i32> %i.m, i64 0
-  %20 = mul i32 %19, 3
-  %21 = sdiv i32 %20, 4
-  %22 = extractelement <2 x i32> %i.m, i64 1
-  %23 = mul i32 %22, 3
-  %24 = sdiv i32 %23, 4
+  %i.m = sub <2 x i32> %i.l, %i.k
+  %19 = mul <2 x i32> %i.m, splat (i32 3)
+  %20 = sdiv <2 x i32> %19, splat (i32 4)         ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) dereferenceable_or_null(24) %7, i8 0, i64 24, i1 false)
-  invoke void @_ZN19GeometryStateDialog12loadGeometryEiiRK7QString(ptr noundef align 8 dereferenceable_or_null(72) %0, i32 noundef %21, i32 noundef %24, ptr noundef nonnull align 8 dereferenceable(24) %7)
+  %21 = extractelement <2 x i32> %20, i64 0
+  %22 = extractelement <2 x i32> %20, i64 1
+  invoke void @_ZN19GeometryStateDialog12loadGeometryEiiRK7QString(ptr noundef align 8 dereferenceable_or_null(72) %0, i32 noundef %21, i32 noundef %22, ptr noundef nonnull align 8 dereferenceable(24) %7)
           to label %bb.e unwind label %bb.h
 
 bb.e:                                             ; preds = %bb.d

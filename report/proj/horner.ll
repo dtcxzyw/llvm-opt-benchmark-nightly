@@ -204,21 +204,20 @@ bb.a:
   %.pn.in.i = load ptr, ptr %.pn.in.in.i, align 8, !tbaa !58
   %i.c = load <2 x double>, ptr %0, align 8, !tbaa !59
   %i.d = load <2 x double>, ptr %.pn.in.i, align 8, !tbaa !59
-  %i.e = fsub <2 x double> %i.c, %i.d             ; 4 uses
+  %i.e = fsub <2 x double> %i.c, %i.d             ; 3 uses
   %i.f = load <2 x i32>, ptr %i.b, align 8, !tbaa !60
   %i.g = icmp eq <2 x i32> %i.f, zeroinitializer
   %i.h = fneg <2 x double> %i.e
   %i.i = select <2 x i1> %i.g, <2 x double> %i.e, <2 x double> %i.h ; 2 uses
   %i.j = getelementptr i8, ptr %i.b, i64 16
-  %.val.i = load double, ptr %i.j, align 8, !tbaa !56 ; 2 uses
-  %2 = extractelement <2 x double> %i.e, i64 1
-  %3 = tail call double @llvm.fabs.f64(double %2)
-  %4 = fcmp ogt double %3, %.val.i
-  %5 = extractelement <2 x double> %i.e, i64 0
-  %6 = tail call double @llvm.fabs.f64(double %5)
-  %7 = fcmp ogt double %6, %.val.i
-  %or.cond.i.i = or i1 %4, %7
-  br i1 %or.cond.i.i, label %bb.b, label %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i
+  %.val.i = load double, ptr %i.j, align 8, !tbaa !56
+  %2 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.e)
+  %3 = insertelement <2 x double> poison, double %.val.i, i64 0
+  %4 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
+  %5 = fcmp ogt <2 x double> %2, %4
+  %6 = bitcast <2 x i1> %5 to i2
+  %.not = icmp eq i2 %6, 0
+  br i1 %.not, label %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.k = tail call i32 @proj_errno_set(ptr noundef nonnull %1, i32 noundef 2050) ; 0 uses
@@ -273,21 +272,20 @@ bb.a:
   %.pn.in.i = load ptr, ptr %.pn.in.in.i, align 8, !tbaa !58
   %i.c = load <2 x double>, ptr %0, align 8, !tbaa !59
   %i.d = load <2 x double>, ptr %.pn.in.i, align 8, !tbaa !59
-  %i.e = fsub <2 x double> %i.c, %i.d             ; 4 uses
+  %i.e = fsub <2 x double> %i.c, %i.d             ; 3 uses
   %i.f = load <2 x i32>, ptr %i.b, align 8, !tbaa !60
   %i.g = icmp eq <2 x i32> %i.f, zeroinitializer
   %i.h = fneg <2 x double> %i.e
   %i.i = select <2 x i1> %i.g, <2 x double> %i.e, <2 x double> %i.h ; 2 uses
   %i.j = getelementptr i8, ptr %i.b, i64 16
-  %.val.i = load double, ptr %i.j, align 8, !tbaa !56 ; 2 uses
-  %2 = extractelement <2 x double> %i.e, i64 1
-  %3 = tail call double @llvm.fabs.f64(double %2)
-  %4 = fcmp ogt double %3, %.val.i
-  %5 = extractelement <2 x double> %i.e, i64 0
-  %6 = tail call double @llvm.fabs.f64(double %5)
-  %7 = fcmp ogt double %6, %.val.i
-  %or.cond.i.i = or i1 %4, %7
-  br i1 %or.cond.i.i, label %bb.b, label %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i
+  %.val.i = load double, ptr %i.j, align 8, !tbaa !56
+  %2 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.e)
+  %3 = insertelement <2 x double> poison, double %.val.i, i64 0
+  %4 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
+  %5 = fcmp ogt <2 x double> %2, %4
+  %6 = bitcast <2 x i1> %5 to i2
+  %.not = icmp eq i2 %6, 0
+  br i1 %.not, label %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.k = tail call i32 @proj_errno_set(ptr noundef nonnull %1, i32 noundef 2050) ; 0 uses
@@ -356,7 +354,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i: ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  %i.j = load double, ptr %i.i, align 8, !tbaa !57 ; 2 uses
+  %i.j = load double, ptr %i.i, align 8, !tbaa !57
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 72 ; 2 uses
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !47   ; 2 uses
   %i.m = load double, ptr %i.l, align 8, !tbaa !59
@@ -365,12 +363,13 @@ _ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i: ; preds = 
   %i.p = load double, ptr %i.o, align 8, !tbaa !59
   %i.q = fsub double %.sroa.0.0.copyload, %i.p
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %2 = insertelement <2 x double> poison, double %i.j, i64 0
+  %3 = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i, %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i
   %i.s = phi i32 [ 31, %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i ], [ %i.ap, %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i ] ; 2 uses
-  %.sroa.038.049.i = phi double [ 0.000000e+00, %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i ], [ %i.an, %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i ] ; 2 uses
-  %.sroa.7.048.i = phi double [ 0.000000e+00, %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i ], [ %i.ao, %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i ] ; 2 uses
+  %4 = phi <2 x double> [ zeroinitializer, %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i ], [ %7, %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i ] ; 3 uses
   %i.t = load ptr, ptr %i.k, align 8, !tbaa !47   ; 2 uses
   %i.u = load i32, ptr %i.r, align 8, !tbaa !46
   %i.v = shl i32 %i.u, 1
@@ -384,10 +383,8 @@ bb.c:                                             ; preds = %_ZL19complex_horner
   br i1 %i.z, label %.lr.ph.i.i.preheader, label %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.c
-  %2 = insertelement <2 x double> poison, double %.sroa.7.048.i, i64 0
-  %i.aa = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer
-  %3 = insertelement <2 x double> poison, double %.sroa.038.049.i, i64 0
-  %4 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.aa = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
+  %5 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader, %.lr.ph.i.i
@@ -398,7 +395,7 @@ bb.c:                                             ; preds = %_ZL19complex_horner
   %i.ac = fneg <2 x double> %i.ab
   %i.ad = shufflevector <2 x double> %i.ac, <2 x double> %i.ab, <2 x i32> <i32 1, i32 2>
   %i.ae = fmul <2 x double> %i.aa, %i.ad
-  %i.af = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %4, <2 x double> %i.ab, <2 x double> %i.ae)
+  %i.af = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %5, <2 x double> %i.ab, <2 x double> %i.ae)
   %i.ag = load <2 x double>, ptr %.ptr.i, align 8, !tbaa !59
   %i.ah = fadd <2 x double> %i.af, %i.ag          ; 2 uses
   %i.ai = icmp sgt i64 %.02425.i.idx.i, 32
@@ -409,36 +406,34 @@ _ZL19complex_horner_evaljPKd5PJ_UVj.exit.i:       ; preds = %.lr.ph.i.i, %bb.c
   %i.ak = extractelement <2 x double> %i.aj, i64 0
   %i.al = extractelement <2 x double> %i.aj, i64 1
   %i.am = tail call noundef { double, double } @__divdc3(double noundef %i.n, double noundef %i.q, double noundef %i.ak, double noundef %i.al) #10 ; 2 uses
-  %i.an = extractvalue { double, double } %i.am, 0 ; 3 uses
-  %i.ao = extractvalue { double, double } %i.am, 1 ; 3 uses
-  %5 = fsub double %i.an, %.sroa.038.049.i
-  %6 = tail call double @llvm.fabs.f64(double %5)
-  %7 = fcmp olt double %6, %i.j
-  %8 = fsub double %i.ao, %.sroa.7.048.i
-  %9 = tail call double @llvm.fabs.f64(double %8)
-  %10 = fcmp olt double %9, %i.j
-  %11 = and i1 %7, %10                            ; 2 uses
+  %i.an = extractvalue { double, double } %i.am, 0
+  %i.ao = extractvalue { double, double } %i.am, 1
+  %6 = insertelement <2 x double> poison, double %i.ao, i64 0
+  %7 = insertelement <2 x double> %6, double %i.an, i64 1 ; 4 uses
+  %8 = fsub <2 x double> %7, %4
+  %9 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %8)
+  %10 = fcmp uge <2 x double> %9, %3
+  %11 = bitcast <2 x i1> %10 to i2
+  %12 = icmp eq i2 %11, 0                         ; 2 uses
   %i.ap = add nsw i32 %i.s, -1
   %i.aq = icmp eq i32 %i.s, 0
-  %.not35.i = select i1 %i.aq, i1 true, i1 %11
+  %.not35.i = select i1 %i.aq, i1 true, i1 %12
   br i1 %.not35.i, label %bb.d, label %bb.c, !llvm.loop !72
 
 bb.d:                                             ; preds = %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i
-  br i1 %11, label %bb.f, label %bb.e
+  br i1 %12, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.ar = tail call i32 @proj_errno_set(ptr noundef %1, i32 noundef 2048) ; 0 uses
   br label %_ZL30complex_iterative_inverse_implP8PJconstsPKN12_GLOBAL__N_16hornerE5PJ_UV.exit
 
 bb.f:                                             ; preds = %bb.d
-  %12 = insertelement <2 x double> poison, double %i.ao, i64 0
-  %13 = insertelement <2 x double> %12, double %i.an, i64 1 ; 2 uses
-  %i.as = fneg <2 x double> %13
+  %i.as = fneg <2 x double> %7
   %i.at = getelementptr inbounds nuw i8, ptr %i.b, i64 88
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !53
   %i.av = load <2 x i32>, ptr %i.b, align 8, !tbaa !60
   %i.aw = icmp eq <2 x i32> %i.av, zeroinitializer
-  %i.ax = select <2 x i1> %i.aw, <2 x double> %13, <2 x double> %i.as
+  %i.ax = select <2 x i1> %i.aw, <2 x double> %7, <2 x double> %i.as
   %i.ay = load <2 x double>, ptr %i.au, align 8, !tbaa !59
   %i.az = fadd <2 x double> %i.ax, %i.ay
   br label %_ZL30complex_iterative_inverse_implP8PJconstsPKN12_GLOBAL__N_16hornerE5PJ_UV.exit
@@ -458,17 +453,16 @@ bb.a:
   %.pn.in.i = load ptr, ptr %.pn.in.in.i, align 8, !tbaa !58
   %i.c = load <2 x double>, ptr %0, align 8, !tbaa !59
   %i.d = load <2 x double>, ptr %.pn.in.i, align 8, !tbaa !59
-  %i.e = fsub <2 x double> %i.c, %i.d             ; 4 uses
+  %i.e = fsub <2 x double> %i.c, %i.d             ; 3 uses
   %i.f = getelementptr i8, ptr %i.b, i64 16
-  %.val.i = load double, ptr %i.f, align 8, !tbaa !56 ; 2 uses
-  %2 = extractelement <2 x double> %i.e, i64 1
-  %3 = tail call double @llvm.fabs.f64(double %2)
-  %4 = fcmp ogt double %3, %.val.i
-  %5 = extractelement <2 x double> %i.e, i64 0
-  %6 = tail call double @llvm.fabs.f64(double %5)
-  %7 = fcmp ogt double %6, %.val.i
-  %or.cond.i.i = or i1 %4, %7
-  br i1 %or.cond.i.i, label %bb.b, label %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i
+  %.val.i = load double, ptr %i.f, align 8, !tbaa !56
+  %2 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.e)
+  %3 = insertelement <2 x double> poison, double %.val.i, i64 0
+  %4 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
+  %5 = fcmp ogt <2 x double> %2, %4
+  %6 = bitcast <2 x i1> %5 to i2
+  %.not = icmp eq i2 %6, 0
+  br i1 %.not, label %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.g = tail call i32 @proj_errno_set(ptr noundef nonnull %1, i32 noundef 2050) ; 0 uses
@@ -552,17 +546,16 @@ bb.a:
   %.pn.in.i = load ptr, ptr %.pn.in.in.i, align 8, !tbaa !58
   %i.c = load <2 x double>, ptr %0, align 8, !tbaa !59
   %i.d = load <2 x double>, ptr %.pn.in.i, align 8, !tbaa !59
-  %i.e = fsub <2 x double> %i.c, %i.d             ; 4 uses
+  %i.e = fsub <2 x double> %i.c, %i.d             ; 3 uses
   %i.f = getelementptr i8, ptr %i.b, i64 16
-  %.val.i = load double, ptr %i.f, align 8, !tbaa !56 ; 2 uses
-  %2 = extractelement <2 x double> %i.e, i64 1
-  %3 = tail call double @llvm.fabs.f64(double %2)
-  %4 = fcmp ogt double %3, %.val.i
-  %5 = extractelement <2 x double> %i.e, i64 0
-  %6 = tail call double @llvm.fabs.f64(double %5)
-  %7 = fcmp ogt double %6, %.val.i
-  %or.cond.i.i = or i1 %4, %7
-  br i1 %or.cond.i.i, label %bb.b, label %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i
+  %.val.i = load double, ptr %i.f, align 8, !tbaa !56
+  %2 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.e)
+  %3 = insertelement <2 x double> poison, double %.val.i, i64 0
+  %4 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
+  %5 = fcmp ogt <2 x double> %2, %4
+  %6 = bitcast <2 x i1> %5 to i2
+  %.not = icmp eq i2 %6, 0
+  br i1 %.not, label %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.g = tail call i32 @proj_errno_set(ptr noundef nonnull %1, i32 noundef 2050) ; 0 uses
@@ -642,17 +635,16 @@ define internal void @_ZL27horner_iterative_inverse_4dR8PJ_COORDP8PJconsts(ptr n
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !55   ; 6 uses
-  %i.c = load <2 x double>, ptr %0, align 8, !tbaa !59 ; 3 uses
+  %i.c = load <2 x double>, ptr %0, align 8, !tbaa !59 ; 2 uses
   %i.d = getelementptr i8, ptr %i.b, i64 16
-  %.val.i = load double, ptr %i.d, align 8, !tbaa !56 ; 2 uses
-  %2 = extractelement <2 x double> %i.c, i64 1
-  %3 = tail call double @llvm.fabs.f64(double %2)
-  %4 = fcmp ogt double %3, %.val.i
-  %5 = extractelement <2 x double> %i.c, i64 0
-  %6 = tail call double @llvm.fabs.f64(double %5)
-  %7 = fcmp ogt double %6, %.val.i
-  %or.cond.i.i = or i1 %4, %7
-  br i1 %or.cond.i.i, label %bb.b, label %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i
+  %.val.i = load double, ptr %i.d, align 8, !tbaa !56
+  %2 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.c)
+  %3 = insertelement <2 x double> poison, double %.val.i, i64 0
+  %4 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
+  %5 = fcmp ogt <2 x double> %2, %4
+  %6 = bitcast <2 x i1> %5 to i2
+  %.not = icmp eq i2 %6, 0
+  br i1 %.not, label %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.e = tail call i32 @proj_errno_set(ptr noundef nonnull %1, i32 noundef 2050) ; 0 uses

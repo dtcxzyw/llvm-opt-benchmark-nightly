@@ -204,11 +204,11 @@ bb.a:
   %7 = alloca %"class.ncnn::Option", align 8      ; 5 uses
   %8 = alloca %"class.ncnn::Option", align 8      ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 44
-  %9 = load <2 x i32>, ptr %i.a, align 4, !tbaa !58
-  %10 = freeze <2 x i32> %9                       ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 220
   %i.c = add nsw i32 %3, -1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 224
+  %9 = load <2 x i32>, ptr %i.a, align 4, !tbaa !58
+  %10 = freeze <2 x i32> %9                       ; 2 uses
   %i.e = load i32, ptr %i.b, align 4, !tbaa !41
   %i.f = load i32, ptr %i.d, align 8, !tbaa !42
   %i.g = mul nsw i32 %i.e, %i.c                   ; 2 uses
@@ -345,13 +345,13 @@ bb.m:                                             ; preds = %bb.l
   %i.bn = add nsw <2 x i32> %10, splat (i32 -1)
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 228
   %i.bp = load <2 x i32>, ptr %i.bo, align 4, !tbaa !58
-  %i.bq = srem <2 x i32> %i.bn, %i.bp             ; 2 uses
-  %11 = extractelement <2 x i32> %i.bq, i64 0
-  %12 = sub i32 %i.g, %11                         ; 3 uses
-  %13 = extractelement <2 x i32> %i.bq, i64 1
-  %14 = sub i32 %i.i, %13                         ; 3 uses
-  %15 = icmp sgt i32 %12, 0
-  %16 = icmp sgt i32 %14, 0
+  %i.bq = srem <2 x i32> %i.bn, %i.bp
+  %11 = insertelement <2 x i32> poison, i32 %i.g, i64 0
+  %12 = insertelement <2 x i32> %11, i32 %i.i, i64 1
+  %13 = sub <2 x i32> %12, %i.bq                  ; 3 uses
+  %14 = icmp sgt <2 x i32> %13, zeroinitializer   ; 2 uses
+  %15 = extractelement <2 x i1> %14, i64 0
+  %16 = extractelement <2 x i1> %14, i64 1
   %or.cond = select i1 %15, i1 true, i1 %16
   br i1 %or.cond, label %bb.n, label %bb.r
 
@@ -362,13 +362,15 @@ bb.n:                                             ; preds = %bb.m
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !77
   %i.bt = getelementptr inbounds nuw i8, ptr %7, i64 8
   store ptr %i.bs, ptr %i.bt, align 8, !tbaa !68
-  %17 = sdiv i32 %14, 2                           ; 2 uses
-  %18 = sub nsw i32 %14, %17
-  %19 = sdiv i32 %12, 2                           ; 2 uses
-  %20 = sub nsw i32 %12, %19
-  %21 = getelementptr inbounds nuw i8, ptr %0, i64 252
-  %22 = load float, ptr %21, align 4, !tbaa !49
-  call void @_ZN4ncnn16copy_make_borderERKNS_3MatERS0_iiiiifRKNS_6OptionE(ptr noundef nonnull align 8 dereferenceable(72) %1, ptr noundef nonnull align 8 dereferenceable(72) %2, i32 noundef %17, i32 noundef %18, i32 noundef %19, i32 noundef %20, i32 noundef 0, float noundef nofpclass(nan inf) %22, ptr noundef nonnull align 8 dereferenceable(64) %7)
+  %17 = sdiv <2 x i32> %13, splat (i32 2)         ; 3 uses
+  %18 = sub nsw <2 x i32> %13, %17                ; 2 uses
+  %19 = getelementptr inbounds nuw i8, ptr %0, i64 252
+  %20 = load float, ptr %19, align 4, !tbaa !49
+  %21 = extractelement <2 x i32> %18, i64 0
+  %22 = extractelement <2 x i32> %18, i64 1
+  %23 = extractelement <2 x i32> %17, i64 0
+  %24 = extractelement <2 x i32> %17, i64 1
+  call void @_ZN4ncnn16copy_make_borderERKNS_3MatERS0_iiiiifRKNS_6OptionE(ptr noundef nonnull align 8 dereferenceable(72) %1, ptr noundef nonnull align 8 dereferenceable(72) %2, i32 noundef %24, i32 noundef %22, i32 noundef %23, i32 noundef %21, i32 noundef 0, float noundef nofpclass(nan inf) %20, ptr noundef nonnull align 8 dereferenceable(64) %7)
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #9
   br label %bb.r
 

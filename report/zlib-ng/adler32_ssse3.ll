@@ -202,10 +202,10 @@ bb.h:                                             ; preds = %bb.g
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %.preheader, !llvm.loop !11
 
 bb.i:                                             ; preds = %bb.f, %.epilog-lcssa, %bb.n
-  %.1130 = phi i32 [ %5, %bb.n ], [ %.lcssa212, %.epilog-lcssa ], [ %i.b, %bb.f ] ; 4 uses
+  %.1130 = phi i32 [ %8, %bb.n ], [ %.lcssa212, %.epilog-lcssa ], [ %i.b, %bb.f ] ; 4 uses
   %.1127 = phi ptr [ %.3, %bb.n ], [ %scevgep, %.epilog-lcssa ], [ %1, %bb.f ] ; 4 uses
   %.0123 = phi i64 [ %.1124, %bb.n ], [ %i.bh, %.epilog-lcssa ], [ %2, %bb.f ] ; 9 uses
-  %.1122 = phi i32 [ %7, %bb.n ], [ %.lcssa211, %.epilog-lcssa ], [ %i.a, %bb.f ] ; 4 uses
+  %.1122 = phi i32 [ %9, %bb.n ], [ %.lcssa211, %.epilog-lcssa ], [ %i.a, %bb.f ] ; 4 uses
   %.0106 = phi i64 [ 5552, %bb.n ], [ %i.bi, %.epilog-lcssa ], [ 5552, %bb.f ]
   %i.cd = icmp ugt i64 %.0123, 15
   br i1 %i.cd, label %bb.j, label %bb.o
@@ -296,13 +296,15 @@ bb.m:                                             ; preds = %bb.l, %bb.h
 
 bb.n:                                             ; preds = %bb.k
   %i.dt = shl <4 x i32> %i.di, splat (i32 4)
-  %i.du = add <4 x i32> %.1109.in, %i.dt
-  %3 = shufflevector <4 x i32> %.1112.in, <4 x i32> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
-  %i.dv = add <4 x i32> %.1112.in, %3
-  %4 = extractelement <4 x i32> %i.dv, i64 0
-  %5 = urem i32 %4, 65521
-  %6 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.du)
-  %7 = urem i32 %6, 65521
+  %i.du = add <4 x i32> %.1109.in, %i.dt          ; 2 uses
+  %3 = shufflevector <4 x i32> %i.du, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 2, i32 3>
+  %i.dv = add <4 x i32> %i.du, %3                 ; 2 uses
+  %4 = shufflevector <4 x i32> %.1112.in, <4 x i32> %i.dv, <2 x i32> <i32 0, i32 5>
+  %5 = shufflevector <4 x i32> %.1112.in, <4 x i32> %i.dv, <2 x i32> <i32 2, i32 4>
+  %6 = add <2 x i32> %4, %5
+  %7 = urem <2 x i32> %6, splat (i32 65521)       ; 2 uses
+  %8 = extractelement <2 x i32> %7, i64 0
+  %9 = extractelement <2 x i32> %7, i64 1
   br label %bb.i, !llvm.loop !14
 
 bb.o:                                             ; preds = %bb.i
@@ -394,9 +396,6 @@ declare <4 x i32> @llvm.x86.sse2.pmadd.wd(<8 x i16>, <8 x i16>) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #2
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #3

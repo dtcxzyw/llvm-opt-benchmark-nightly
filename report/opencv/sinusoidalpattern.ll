@@ -205,12 +205,10 @@ bb.a:
   %15 = alloca %"class.cv::_InputArray", align 8  ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !34   ; 6 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 12 ; 3 uses
-  %16 = load i32, ptr %i.e, align 4, !tbaa !75
-  %17 = sdiv i32 %16, 2                           ; 3 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 12 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 3 uses
-  %18 = load i32, ptr %i.f, align 8, !tbaa !76
-  %19 = sdiv i32 %18, 2                           ; 3 uses
+  %16 = load <2 x i32>, ptr %i.f, align 8, !tbaa !96
+  %17 = sdiv <2 x i32> %16, splat (i32 2)         ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #28
   call void @_ZN2cv3MatC1Ev(ptr noundef nonnull align 8 dereferenceable(208) %4) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #28
@@ -228,7 +226,8 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #28
   %i.j = load i32, ptr %i.e, align 4, !tbaa !75
-  %i.k = add nsw i32 %19, -5                      ; 2 uses
+  %18 = extractelement <2 x i32> %17, i64 0       ; 2 uses
+  %i.k = add nsw i32 %18, -5                      ; 2 uses
   store i32 0, ptr %7, align 4, !tbaa !91
   %i.l = getelementptr inbounds nuw i8, ptr %7, i64 4
   store i32 0, ptr %i.l, align 4, !tbaa !92
@@ -249,7 +248,7 @@ bb.c:                                             ; preds = %_ZNK2cv3MatclERKNS_
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #28
-  %i.p = add nsw i32 %19, 5
+  %i.p = add nsw i32 %18, 5
   %i.q = load i32, ptr %i.e, align 4, !tbaa !75
   store i32 0, ptr %9, align 4, !tbaa !91
   %i.r = getelementptr inbounds nuw i8, ptr %9, i64 4
@@ -308,7 +307,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 bb.k:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #28
-  %i.z = add nsw i32 %17, -5                      ; 2 uses
+  %19 = extractelement <2 x i32> %17, i64 1       ; 2 uses
+  %i.z = add nsw i32 %19, -5                      ; 2 uses
   %i.aa = load i32, ptr %i.f, align 8, !tbaa !76
   store i32 0, ptr %11, align 4, !tbaa !91
   %i.ab = getelementptr inbounds nuw i8, ptr %11, i64 4
@@ -330,7 +330,7 @@ bb.l:                                             ; preds = %_ZNK2cv3MatclERKNS_
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #28
-  %i.af = add nsw i32 %17, 5
+  %i.af = add nsw i32 %19, 5
   %i.ag = load i32, ptr %i.f, align 8, !tbaa !76
   store i32 %i.af, ptr %13, align 4, !tbaa !91
   %i.ah = getelementptr inbounds nuw i8, ptr %13, i64 4
@@ -428,7 +428,8 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %bb.x
   %i.az = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !80
-  %i.bb = add nsw i32 %19, 5
+  %20 = extractelement <2 x i32> %17, i64 0
+  %i.bb = add nsw i32 %20, 5
   %i.bc = add i32 %i.bb, %i.ba
   store i32 %i.bc, ptr %i.az, align 4, !tbaa !80
   br label %bb.ac
@@ -447,7 +448,8 @@ bb.aa:                                            ; preds = %bb.w, %bb.v
 
 bb.ab:                                            ; preds = %bb.x
   %i.bf = load i32, ptr %3, align 4, !tbaa !79
-  %i.bg = add nsw i32 %17, 5
+  %21 = extractelement <2 x i32> %17, i64 1
+  %i.bg = add nsw i32 %21, 5
   %i.bh = add i32 %i.bg, %i.bf
   store i32 %i.bh, ptr %3, align 4, !tbaa !79
   br label %bb.ac

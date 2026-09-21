@@ -204,10 +204,13 @@ bb.d:                                             ; preds = %bb.b
 _RNvNtNtCs7kNFBubu20U_7zlib_rs7adler327generic14adler32_len_16.exit: ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %bb.d
   %.sroa.04.0.lcssa.i = phi i32 [ %i.p, %bb.d ], [ %.lcssa87.unr, %.lr.ph.i.prol.loopexit ], [ %i.bo, %.lr.ph.i ]
   %.sroa.0.0.lcssa.i = phi i32 [ %i.q, %bb.d ], [ %.lcssa88.unr, %.lr.ph.i.prol.loopexit ], [ %i.bn, %.lr.ph.i ]
-  %3 = urem i32 %.sroa.0.0.lcssa.i, 65521
-  %4 = urem i32 %.sroa.04.0.lcssa.i, 65521
-  %i.bq = shl nuw i32 %4, 16
-  %i.br = or disjoint i32 %3, %i.bq
+  %3 = insertelement <2 x i32> poison, i32 %.sroa.0.0.lcssa.i, i64 0
+  %4 = insertelement <2 x i32> %3, i32 %.sroa.04.0.lcssa.i, i64 1
+  %5 = urem <2 x i32> %4, splat (i32 65521)       ; 2 uses
+  %6 = extractelement <2 x i32> %5, i64 1
+  %i.bq = shl nuw i32 %6, 16
+  %7 = extractelement <2 x i32> %5, i64 0
+  %i.br = or disjoint i32 %7, %i.bq
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
@@ -227,8 +230,8 @@ bb.f:                                             ; preds = %bb.e, %bb.c, %_RNvN
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph, %_RNvNtNtCs7kNFBubu20U_7zlib_rs7adler324avx215helper_32_bytes.exit
-  %.sroa.09.051 = phi i32 [ %i.bu, %.lr.ph ], [ %6, %_RNvNtNtCs7kNFBubu20U_7zlib_rs7adler324avx215helper_32_bytes.exit ]
-  %.sroa.015.050 = phi i32 [ %i.bt, %.lr.ph ], [ %8, %_RNvNtNtCs7kNFBubu20U_7zlib_rs7adler324avx215helper_32_bytes.exit ]
+  %.sroa.09.051 = phi i32 [ %i.bu, %.lr.ph ], [ %19, %_RNvNtNtCs7kNFBubu20U_7zlib_rs7adler324avx215helper_32_bytes.exit ]
+  %.sroa.015.050 = phi i32 [ %i.bt, %.lr.ph ], [ %20, %_RNvNtNtCs7kNFBubu20U_7zlib_rs7adler324avx215helper_32_bytes.exit ]
   %.sroa.536.049 = phi i64 [ %i.k, %.lr.ph ], [ %i.bz, %_RNvNtNtCs7kNFBubu20U_7zlib_rs7adler324avx215helper_32_bytes.exit ] ; 2 uses
   %.sroa.035.048 = phi ptr [ %i.i, %.lr.ph ], [ %i.by, %_RNvNtNtCs7kNFBubu20U_7zlib_rs7adler324avx215helper_32_bytes.exit ] ; 2 uses
   %.sroa.0.0.i.i = call noundef i64 @llvm.umin.i64(i64 %.sroa.536.049, i64 173) ; 2 uses
@@ -272,22 +275,31 @@ bb.g:                                             ; preds = %.lr.ph, %_RNvNtNtCs
 
 _RNvNtNtCs7kNFBubu20U_7zlib_rs7adler324avx215helper_32_bytes.exit: ; preds = %bb.g, %._crit_edge.loopexit.i
   %.sroa.023.0.lcssa.i = phi <8 x i32> [ %i.ca, %bb.g ], [ %i.cm, %._crit_edge.loopexit.i ]
-  %.sroa.0.0.lcssa.i23 = phi <8 x i32> [ %i.cb, %bb.g ], [ %i.ci, %._crit_edge.loopexit.i ]
+  %.sroa.0.0.lcssa.i23 = phi <8 x i32> [ %i.cb, %bb.g ], [ %i.ci, %._crit_edge.loopexit.i ] ; 2 uses
   %.lcssa.i = phi <8 x i32> [ zeroinitializer, %bb.g ], [ %i.cp, %._crit_edge.loopexit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !68
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !68
-  %i.cq = add <8 x i32> %.lcssa.i, %.sroa.023.0.lcssa.i
+  %i.cq = add <8 x i32> %.lcssa.i, %.sroa.023.0.lcssa.i ; 2 uses
   %i.cr = shufflevector <8 x i32> %.sroa.0.0.lcssa.i23, <8 x i32> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
-  %5 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.cr)
-  %6 = urem i32 %5, 65521                         ; 2 uses
-  %7 = call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %i.cq)
-  %8 = urem i32 %7, 65521                         ; 2 uses
+  %8 = shufflevector <8 x i32> %.sroa.0.0.lcssa.i23, <8 x i32> poison, <4 x i32> <i32 4, i32 6, i32 4, i32 6>
+  %9 = add <4 x i32> %8, %i.cr                    ; 2 uses
+  %10 = shufflevector <8 x i32> %i.cq, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
+  %11 = shufflevector <8 x i32> %i.cq, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %12 = add <4 x i32> %11, %10                    ; 2 uses
+  %13 = shufflevector <4 x i32> %12, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 2, i32 3>
+  %14 = add <4 x i32> %12, %13                    ; 2 uses
+  %15 = shufflevector <4 x i32> %9, <4 x i32> %14, <2 x i32> <i32 1, i32 5>
+  %16 = shufflevector <4 x i32> %9, <4 x i32> %14, <2 x i32> <i32 0, i32 4>
+  %17 = add <2 x i32> %15, %16
+  %18 = urem <2 x i32> %17, splat (i32 65521)     ; 2 uses
   %i.cs = icmp eq i64 %i.bz, 0
+  %19 = extractelement <2 x i32> %18, i64 0       ; 2 uses
+  %20 = extractelement <2 x i32> %18, i64 1       ; 2 uses
   br i1 %i.cs, label %._crit_edge, label %bb.g
 
 ._crit_edge:                                      ; preds = %_RNvNtNtCs7kNFBubu20U_7zlib_rs7adler324avx215helper_32_bytes.exit, %bb.f
-  %.sroa.015.0.lcssa = phi i32 [ %i.bt, %bb.f ], [ %8, %_RNvNtNtCs7kNFBubu20U_7zlib_rs7adler324avx215helper_32_bytes.exit ] ; 4 uses
-  %.sroa.09.0.lcssa = phi i32 [ %i.bu, %bb.f ], [ %6, %_RNvNtNtCs7kNFBubu20U_7zlib_rs7adler324avx215helper_32_bytes.exit ] ; 4 uses
+  %.sroa.015.0.lcssa = phi i32 [ %i.bt, %bb.f ], [ %20, %_RNvNtNtCs7kNFBubu20U_7zlib_rs7adler324avx215helper_32_bytes.exit ] ; 4 uses
+  %.sroa.09.0.lcssa = phi i32 [ %i.bu, %bb.f ], [ %19, %_RNvNtNtCs7kNFBubu20U_7zlib_rs7adler324avx215helper_32_bytes.exit ] ; 4 uses
   %i.ct = icmp eq i64 %i.o, 0
   br i1 %i.ct, label %bb.i, label %bb.h
 
@@ -383,10 +395,13 @@ bb.k:                                             ; preds = %bb.h
 _RNvNtNtCs7kNFBubu20U_7zlib_rs7adler327generic14adler32_len_16.exit31: ; preds = %.lr.ph.i25, %.lr.ph.i25.prol.loopexit
   %.lcssa81 = phi i32 [ %.lcssa81.unr, %.lr.ph.i25.prol.loopexit ], [ %i.er, %.lr.ph.i25 ]
   %.lcssa = phi i32 [ %.lcssa.unr, %.lr.ph.i25.prol.loopexit ], [ %i.es, %.lr.ph.i25 ]
-  %9 = urem i32 %.lcssa81, 65521
-  %10 = urem i32 %.lcssa, 65521
-  %i.eu = shl nuw i32 %10, 16
-  %i.ev = or disjoint i32 %i.eu, %9
+  %21 = insertelement <2 x i32> poison, i32 %.lcssa, i64 0
+  %22 = insertelement <2 x i32> %21, i32 %.lcssa81, i64 1
+  %23 = urem <2 x i32> %22, splat (i32 65521)     ; 2 uses
+  %24 = extractelement <2 x i32> %23, i64 0
+  %i.eu = shl nuw i32 %24, 16
+  %25 = extractelement <2 x i32> %23, i64 1
+  %i.ev = or disjoint i32 %i.eu, %25
   br label %bb.n
 
 bb.l:                                             ; preds = %bb.j
@@ -712,12 +727,6 @@ declare i64 @llvm.umin.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #13
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #6
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.add.v8i32(<8 x i32>) #6
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(inaccessiblemem: write) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { nofree norecurse nosync nounwind nonlazybind memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

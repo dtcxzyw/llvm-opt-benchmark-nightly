@@ -205,39 +205,46 @@ bb.m:                                             ; preds = %bb.a
   br i1 %i.br, label %bb.n, label %bb.w
 
 bb.n:                                             ; preds = %bb.m
-  %i.bs = udiv i64 %0, 100000000
-  %i.bt = trunc nuw nsw i64 %i.bs to i32          ; 3 uses
-  %2 = urem i64 %0, 100000000
-  %i.bu = trunc nuw nsw i64 %2 to i32             ; 3 uses
-  %3 = udiv i32 %i.bt, 10000
-  %4 = urem i32 %i.bt, 10000
-  %5 = udiv i32 %i.bt, 1000000
-  %6 = shl nuw nsw i32 %5, 1                      ; 2 uses
-  %.lhs.trunc265 = trunc nuw nsw i32 %3 to i16
-  %7 = urem i16 %.lhs.trunc265, 100
-  %i.bv = shl nuw nsw i16 %7, 1                   ; 2 uses
-  %.lhs.trunc267 = trunc nuw nsw i32 %4 to i16    ; 2 uses
-  %8 = udiv i16 %.lhs.trunc267, 100
+  %i.bs = udiv i64 %0, 100000000                  ; 3 uses
+  %2 = urem i64 %0, 100000000                     ; 3 uses
+  %i.bt = trunc nuw i64 %i.bs to i32
+  %3 = insertelement <2 x i32> poison, i32 %i.bt, i64 0
+  %i.bu = trunc nuw nsw i64 %2 to i32
+  %4 = insertelement <2 x i32> %3, i32 %i.bu, i64 1
+  %5 = urem <2 x i32> %4, splat (i32 10000)
+  %6 = trunc nuw nsw <2 x i32> %5 to <2 x i16>    ; 2 uses
+  %7 = udiv <2 x i16> %6, splat (i16 100)         ; 2 uses
+  %8 = extractelement <2 x i16> %7, i64 0
   %9 = shl nuw nsw i16 %8, 1                      ; 2 uses
-  %10 = urem i16 %.lhs.trunc267, 100
-  %11 = shl nuw nsw i16 %10, 1                    ; 2 uses
-  %i.bw = udiv i32 %i.bu, 10000
-  %12 = urem i32 %i.bu, 10000
-  %i.bx = udiv i32 %i.bu, 1000000
+  %10 = extractelement <2 x i16> %7, i64 1
+  %i.bv = shl nuw nsw i16 %10, 1
+  %11 = trunc nuw nsw i64 %2 to i32
+  %12 = trunc nuw i64 %i.bs to i32
+  %13 = insertelement <2 x i32> poison, i32 %12, i64 0
+  %14 = trunc nuw nsw i64 %2 to i32
+  %15 = insertelement <2 x i32> %13, i32 %14, i64 1
+  %16 = trunc nuw nsw i64 %i.bs to i32
+  %i.bw = udiv i32 %16, 1000000
+  %17 = shl nuw nsw i32 %i.bw, 1                  ; 2 uses
+  %18 = udiv <2 x i32> %15, splat (i32 10000)
+  %i.bx = udiv i32 %11, 1000000
   %i.by = shl nuw nsw i32 %i.bx, 1
-  %.lhs.trunc271 = trunc nuw nsw i32 %i.bw to i16
-  %13 = urem i16 %.lhs.trunc271, 100
-  %i.bz = shl nuw nsw i16 %13, 1
-  %.lhs.trunc273 = trunc nuw nsw i32 %12 to i16   ; 2 uses
-  %14 = udiv i16 %.lhs.trunc273, 100
-  %i.ca = shl nuw nsw i16 %14, 1
-  %15 = urem i16 %.lhs.trunc273, 100
-  %i.cb = shl nuw nsw i16 %15, 1
+  %19 = trunc nuw <2 x i32> %18 to <2 x i16>
+  %20 = shufflevector <2 x i16> %19, <2 x i16> %6, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  %21 = urem <4 x i16> %20, splat (i16 100)       ; 4 uses
+  %22 = extractelement <4 x i16> %21, i64 0
+  %i.bz = shl nuw nsw i16 %22, 1                  ; 2 uses
+  %23 = extractelement <4 x i16> %21, i64 1
+  %24 = shl nuw nsw i16 %23, 1                    ; 2 uses
+  %25 = extractelement <4 x i16> %21, i64 2
+  %i.ca = shl nuw nsw i16 %25, 1
+  %26 = extractelement <4 x i16> %21, i64 3
+  %i.cb = shl nuw nsw i16 %26, 1
   %i.cc = icmp samesign ugt i64 %0, 999999999999999
   br i1 %i.cc, label %.thread239, label %bb.o
 
 .thread239:                                       ; preds = %bb.n
-  %i.cd = zext nneg i32 %6 to i64                 ; 2 uses
+  %i.cd = zext nneg i32 %17 to i64                ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr @_ZZN9rapidjson8internal12GetDigitsLutEvE10cDigitsLut, i64 %i.cd
   %i.cf = load i8, ptr %i.ce, align 2, !tbaa !47
   %i.cg = getelementptr inbounds nuw i8, ptr %1, i64 1
@@ -249,7 +256,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.ch, label %..thread242_crit_edge, label %bb.p
 
 ..thread242_crit_edge:                            ; preds = %bb.o
-  %.pre305 = zext nneg i32 %6 to i64
+  %.pre305 = zext nneg i32 %17 to i64
   br label %.thread242
 
 .thread242:                                       ; preds = %..thread242_crit_edge, %.thread239
@@ -268,7 +275,7 @@ bb.p:                                             ; preds = %bb.o
 
 .thread245:                                       ; preds = %bb.p, %.thread242
   %.8244 = phi ptr [ %i.cl, %.thread242 ], [ %1, %bb.p ] ; 2 uses
-  %i.cn = zext nneg i16 %i.bv to i64              ; 2 uses
+  %i.cn = zext nneg i16 %i.bz to i64              ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr @_ZZN9rapidjson8internal12GetDigitsLutEvE10cDigitsLut, i64 %i.cn
   %i.cp = load i8, ptr %i.co, align 2, !tbaa !47
   %i.cq = getelementptr inbounds nuw i8, ptr %.8244, i64 1
@@ -280,7 +287,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.cr, label %..thread248_crit_edge, label %bb.r
 
 ..thread248_crit_edge:                            ; preds = %bb.q
-  %.pre307 = zext nneg i16 %i.bv to i64
+  %.pre307 = zext nneg i16 %i.bz to i64
   br label %.thread248
 
 .thread248:                                       ; preds = %..thread248_crit_edge, %.thread245
@@ -329,12 +336,12 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.dg, label %bb.u, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.t
-  %.pre311 = zext nneg i16 %11 to i64
+  %.pre311 = zext nneg i16 %24 to i64
   br label %bb.v
 
 bb.u:                                             ; preds = %.thread254, %bb.t
   %.12256 = phi ptr [ %i.df, %.thread254 ], [ %1, %bb.t ] ; 2 uses
-  %i.dh = zext nneg i16 %11 to i64                ; 2 uses
+  %i.dh = zext nneg i16 %24 to i64                ; 2 uses
   %i.di = getelementptr inbounds nuw i8, ptr @_ZZN9rapidjson8internal12GetDigitsLutEvE10cDigitsLut, i64 %i.dh
   %i.dj = load i8, ptr %i.di, align 2, !tbaa !47
   %i.dk = getelementptr inbounds nuw i8, ptr %.12256, i64 1
@@ -358,7 +365,7 @@ bb.v:                                             ; preds = %._crit_edge, %bb.u
   %i.du = load i8, ptr %i.dt, align 1, !tbaa !47
   %i.dv = getelementptr inbounds nuw i8, ptr %.13, i64 3
   store i8 %i.du, ptr %i.ds, align 1, !tbaa !47
-  %i.dw = zext nneg i16 %i.bz to i64
+  %i.dw = zext nneg i16 %i.ca to i64
   %i.dx = getelementptr inbounds nuw i8, ptr @_ZZN9rapidjson8internal12GetDigitsLutEvE10cDigitsLut, i64 %i.dw ; 2 uses
   %i.dy = load i8, ptr %i.dx, align 2, !tbaa !47
   %i.dz = getelementptr inbounds nuw i8, ptr %.13, i64 4
@@ -367,7 +374,7 @@ bb.v:                                             ; preds = %._crit_edge, %bb.u
   %i.eb = load i8, ptr %i.ea, align 1, !tbaa !47
   %i.ec = getelementptr inbounds nuw i8, ptr %.13, i64 5
   store i8 %i.eb, ptr %i.dz, align 1, !tbaa !47
-  %i.ed = zext nneg i16 %i.ca to i64
+  %i.ed = zext nneg i16 %i.bv to i64
   %i.ee = getelementptr inbounds nuw i8, ptr @_ZZN9rapidjson8internal12GetDigitsLutEvE10cDigitsLut, i64 %i.ed ; 2 uses
   %i.ef = load i8, ptr %i.ee, align 2, !tbaa !47
   %i.eg = getelementptr inbounds nuw i8, ptr %.13, i64 6
@@ -466,35 +473,42 @@ bb.ac:                                            ; preds = %bb.aa
 
 bb.ad:                                            ; preds = %bb.z, %bb.ac, %bb.ab, %bb.x
   %.14 = phi ptr [ %i.ew, %bb.x ], [ %i.fe, %bb.z ], [ %i.ft, %bb.ab ], [ %i.gj, %bb.ac ] ; 17 uses
-  %i.gk = udiv i64 %i.es, 100000000
-  %i.gl = trunc nuw nsw i64 %i.gk to i32          ; 3 uses
-  %16 = urem i64 %i.es, 100000000
-  %i.gm = trunc nuw nsw i64 %16 to i32            ; 3 uses
-  %17 = udiv i32 %i.gl, 10000
-  %18 = urem i32 %i.gl, 10000
-  %19 = udiv i32 %i.gl, 1000000
-  %20 = shl nuw nsw i32 %19, 1
-  %.lhs.trunc277 = trunc nuw nsw i32 %17 to i16
-  %21 = urem i16 %.lhs.trunc277, 100
-  %i.gn = shl nuw nsw i16 %21, 1
-  %.lhs.trunc279 = trunc nuw nsw i32 %18 to i16   ; 2 uses
-  %22 = udiv i16 %.lhs.trunc279, 100
-  %23 = shl nuw nsw i16 %22, 1
-  %24 = urem i16 %.lhs.trunc279, 100
-  %25 = shl nuw nsw i16 %24, 1
-  %i.go = udiv i32 %i.gm, 10000
-  %26 = urem i32 %i.gm, 10000
-  %i.gp = udiv i32 %i.gm, 1000000
+  %i.gk = udiv i64 %i.es, 100000000               ; 3 uses
+  %27 = urem i64 %i.es, 100000000                 ; 3 uses
+  %i.gl = trunc nuw nsw i64 %i.gk to i32
+  %28 = insertelement <2 x i32> poison, i32 %i.gl, i64 0
+  %i.gm = trunc nuw nsw i64 %27 to i32
+  %29 = insertelement <2 x i32> %28, i32 %i.gm, i64 1
+  %30 = urem <2 x i32> %29, splat (i32 10000)
+  %31 = trunc nuw nsw <2 x i32> %30 to <2 x i16>  ; 2 uses
+  %32 = udiv <2 x i16> %31, splat (i16 100)       ; 2 uses
+  %33 = extractelement <2 x i16> %32, i64 0
+  %34 = shl nuw nsw i16 %33, 1
+  %35 = extractelement <2 x i16> %32, i64 1
+  %i.gn = shl nuw nsw i16 %35, 1
+  %36 = trunc nuw nsw i64 %27 to i32
+  %37 = trunc nuw nsw i64 %i.gk to i32
+  %38 = insertelement <2 x i32> poison, i32 %37, i64 0
+  %39 = trunc nuw nsw i64 %27 to i32
+  %40 = insertelement <2 x i32> %38, i32 %39, i64 1
+  %41 = trunc nuw nsw i64 %i.gk to i32
+  %i.go = udiv i32 %41, 1000000
+  %42 = shl nuw nsw i32 %i.go, 1
+  %43 = udiv <2 x i32> %40, splat (i32 10000)
+  %i.gp = udiv i32 %36, 1000000
   %i.gq = shl nuw nsw i32 %i.gp, 1
-  %.lhs.trunc283 = trunc nuw nsw i32 %i.go to i16
-  %27 = urem i16 %.lhs.trunc283, 100
-  %i.gr = shl nuw nsw i16 %27, 1
-  %.lhs.trunc285 = trunc nuw nsw i32 %26 to i16   ; 2 uses
-  %28 = udiv i16 %.lhs.trunc285, 100
-  %i.gs = shl nuw nsw i16 %28, 1
-  %29 = urem i16 %.lhs.trunc285, 100
-  %i.gt = shl nuw nsw i16 %29, 1
-  %i.gu = zext nneg i32 %20 to i64
+  %44 = trunc nuw nsw <2 x i32> %43 to <2 x i16>
+  %45 = shufflevector <2 x i16> %44, <2 x i16> %31, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  %46 = urem <4 x i16> %45, splat (i16 100)       ; 4 uses
+  %47 = extractelement <4 x i16> %46, i64 0
+  %i.gr = shl nuw nsw i16 %47, 1
+  %48 = extractelement <4 x i16> %46, i64 1
+  %49 = shl nuw nsw i16 %48, 1
+  %50 = extractelement <4 x i16> %46, i64 2
+  %i.gs = shl nuw nsw i16 %50, 1
+  %51 = extractelement <4 x i16> %46, i64 3
+  %i.gt = shl nuw nsw i16 %51, 1
+  %i.gu = zext nneg i32 %42 to i64
   %i.gv = getelementptr inbounds nuw i8, ptr @_ZZN9rapidjson8internal12GetDigitsLutEvE10cDigitsLut, i64 %i.gu ; 2 uses
   %i.gw = load i8, ptr %i.gv, align 2, !tbaa !47
   %i.gx = getelementptr inbounds nuw i8, ptr %.14, i64 1
@@ -503,7 +517,7 @@ bb.ad:                                            ; preds = %bb.z, %bb.ac, %bb.a
   %i.gz = load i8, ptr %i.gy, align 1, !tbaa !47
   %i.ha = getelementptr inbounds nuw i8, ptr %.14, i64 2
   store i8 %i.gz, ptr %i.gx, align 1, !tbaa !47
-  %i.hb = zext nneg i16 %i.gn to i64
+  %i.hb = zext nneg i16 %i.gr to i64
   %i.hc = getelementptr inbounds nuw i8, ptr @_ZZN9rapidjson8internal12GetDigitsLutEvE10cDigitsLut, i64 %i.hb ; 2 uses
   %i.hd = load i8, ptr %i.hc, align 2, !tbaa !47
   %i.he = getelementptr inbounds nuw i8, ptr %.14, i64 3
@@ -512,7 +526,7 @@ bb.ad:                                            ; preds = %bb.z, %bb.ac, %bb.a
   %i.hg = load i8, ptr %i.hf, align 1, !tbaa !47
   %i.hh = getelementptr inbounds nuw i8, ptr %.14, i64 4
   store i8 %i.hg, ptr %i.he, align 1, !tbaa !47
-  %i.hi = zext nneg i16 %23 to i64
+  %i.hi = zext nneg i16 %34 to i64
   %i.hj = getelementptr inbounds nuw i8, ptr @_ZZN9rapidjson8internal12GetDigitsLutEvE10cDigitsLut, i64 %i.hi ; 2 uses
   %i.hk = load i8, ptr %i.hj, align 2, !tbaa !47
   %i.hl = getelementptr inbounds nuw i8, ptr %.14, i64 5
@@ -521,7 +535,7 @@ bb.ad:                                            ; preds = %bb.z, %bb.ac, %bb.a
   %i.hn = load i8, ptr %i.hm, align 1, !tbaa !47
   %i.ho = getelementptr inbounds nuw i8, ptr %.14, i64 6
   store i8 %i.hn, ptr %i.hl, align 1, !tbaa !47
-  %i.hp = zext nneg i16 %25 to i64
+  %i.hp = zext nneg i16 %49 to i64
   %i.hq = getelementptr inbounds nuw i8, ptr @_ZZN9rapidjson8internal12GetDigitsLutEvE10cDigitsLut, i64 %i.hp ; 2 uses
   %i.hr = load i8, ptr %i.hq, align 2, !tbaa !47
   %i.hs = getelementptr inbounds nuw i8, ptr %.14, i64 7
@@ -539,7 +553,7 @@ bb.ad:                                            ; preds = %bb.z, %bb.ac, %bb.a
   %i.ib = load i8, ptr %i.ia, align 1, !tbaa !47
   %i.ic = getelementptr inbounds nuw i8, ptr %.14, i64 10
   store i8 %i.ib, ptr %i.hz, align 1, !tbaa !47
-  %i.id = zext nneg i16 %i.gr to i64
+  %i.id = zext nneg i16 %i.gs to i64
   %i.ie = getelementptr inbounds nuw i8, ptr @_ZZN9rapidjson8internal12GetDigitsLutEvE10cDigitsLut, i64 %i.id ; 2 uses
   %i.if = load i8, ptr %i.ie, align 2, !tbaa !47
   %i.ig = getelementptr inbounds nuw i8, ptr %.14, i64 11
@@ -548,7 +562,7 @@ bb.ad:                                            ; preds = %bb.z, %bb.ac, %bb.a
   %i.ii = load i8, ptr %i.ih, align 1, !tbaa !47
   %i.ij = getelementptr inbounds nuw i8, ptr %.14, i64 12
   store i8 %i.ii, ptr %i.ig, align 1, !tbaa !47
-  %i.ik = zext nneg i16 %i.gs to i64
+  %i.ik = zext nneg i16 %i.gn to i64
   %i.il = getelementptr inbounds nuw i8, ptr @_ZZN9rapidjson8internal12GetDigitsLutEvE10cDigitsLut, i64 %i.ik ; 2 uses
   %i.im = load i8, ptr %i.il, align 2, !tbaa !47
   %i.in = getelementptr inbounds nuw i8, ptr %.14, i64 13

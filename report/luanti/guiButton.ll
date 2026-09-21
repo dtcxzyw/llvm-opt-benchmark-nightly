@@ -205,21 +205,13 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 bb.h:                                             ; preds = %.sink.split, %bb.g
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
-  %6 = load i32, ptr %i.aw, align 8, !tbaa !115
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %7 = load i32, ptr %i.ax, align 8, !tbaa !121
-  %8 = add nsw i32 %7, %6
-  %9 = sdiv i32 %8, 2                             ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 68
-  %11 = load i32, ptr %10, align 4, !tbaa !116
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 76
-  %13 = load i32, ptr %12, align 4, !tbaa !117
-  %14 = add nsw i32 %13, %11
-  %15 = sdiv i32 %14, 2                           ; 2 uses
-  %.sroa.2.0.insert.ext.i = zext i32 %15 to i64
-  %.sroa.2.0.insert.shift.i = shl nuw i64 %.sroa.2.0.insert.ext.i, 32
-  %.sroa.0.0.insert.ext.i = zext i32 %9 to i64
-  %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.2.0.insert.shift.i, %.sroa.0.0.insert.ext.i
+  %6 = load <2 x i32>, ptr %i.aw, align 8, !tbaa !82
+  %7 = load <2 x i32>, ptr %i.ax, align 8, !tbaa !82
+  %8 = add nsw <2 x i32> %7, %6
+  %9 = sdiv <2 x i32> %8, splat (i32 2)           ; 3 uses
+  %10 = extractelement <2 x i32> %9, i64 1
+  %11 = extractelement <2 x i32> %9, i64 0
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 400 ; 6 uses
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !89 ; 4 uses
   %.not25 = icmp eq ptr %i.az, null
@@ -228,9 +220,9 @@ bb.h:                                             ; preds = %.sink.split, %bb.g
 bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #28
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 408 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %i.ba, i64 16, i1 false), !tbaa.struct !122
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %i.ba, i64 16, i1 false), !tbaa.struct !121
   %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.bc = load i32, ptr %i.bb, align 8, !tbaa !121 ; 4 uses
+  %i.bc = load i32, ptr %i.bb, align 8, !tbaa !122 ; 4 uses
   %i.bd = load i32, ptr %1, align 8, !tbaa !115   ; 2 uses
   %i.be = icmp eq i32 %i.bc, %i.bd
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
@@ -260,11 +252,11 @@ bb.k:                                             ; preds = %bb.j
   %i.br = phi i32 [ %i.bl, %bb.k ], [ %i.bc, %bb.j ], [ %i.bc, %bb.i ] ; 3 uses
   %i.bs = sub nsw i32 %i.br, %i.bq
   %.neg = sdiv i32 %i.bs, -2
-  %i.bt = add nsw i32 %.neg, %9                   ; 5 uses
+  %i.bt = add nsw i32 %.neg, %11                  ; 5 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   %i.bv = sub nsw i32 %i.bp, %i.bo
   %.neg26 = sdiv i32 %i.bv, -2
-  %i.bw = add nsw i32 %.neg26, %15                ; 5 uses
+  %i.bw = add nsw i32 %.neg26, %10                ; 5 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 7367
   %i.by = load i8, ptr %i.bx, align 1, !tbaa !107, !range !76, !noundef !77
   %i.bz = trunc nuw i8 %i.by to i1
@@ -392,7 +384,7 @@ _ZNK9GUIButton11ButtonImageeqERKS0_.exit.thread:  ; preds = %bb.p, %_ZNK9GUIButt
   store <4 x i32> %i.ei, ptr %2, align 16, !tbaa !82
   %i.ej = getelementptr inbounds nuw i8, ptr %0, i64 7408 ; 2 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %0, i64 7416
-  %i.el = load i32, ptr %i.ek, align 8, !tbaa !121
+  %i.el = load i32, ptr %i.ek, align 8, !tbaa !122
   %i.em = load i32, ptr %i.ej, align 8, !tbaa !115
   %i.en = sub nsw i32 %i.el, %i.em
   %i.eo = getelementptr inbounds nuw i8, ptr %0, i64 7420
@@ -412,7 +404,7 @@ bb.q:                                             ; preds = %_ZNK9GUIButton11But
   br i1 %i.ex, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %i.aw, i64 16, i1 false), !tbaa.struct !122
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %i.aw, i64 16, i1 false), !tbaa.struct !121
   br label %bb.t
 
 bb.s:                                             ; preds = %bb.q
@@ -451,7 +443,7 @@ bb.u:                                             ; preds = %_ZNK9GUIButton11But
   br i1 %i.fn, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %i.aw, i64 16, i1 false), !tbaa.struct !122
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %i.aw, i64 16, i1 false), !tbaa.struct !121
   br label %bb.x
 
 bb.w:                                             ; preds = %bb.u
@@ -497,7 +489,7 @@ bb.aa:                                            ; preds = %bb.z
 
 bb.ab:                                            ; preds = %bb.aa
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #28
-  store i64 %.sroa.0.0.insert.insert.i, ptr %5, align 8
+  store <2 x i32> %9, ptr %5, align 8
   %i.gc = getelementptr inbounds nuw i8, ptr %0, i64 7367
   %i.gd = load i8, ptr %i.gc, align 1, !tbaa !107, !range !76, !noundef !77
   %i.ge = zext nneg i8 %i.gd to i32
@@ -900,7 +892,7 @@ bb.f:                                             ; preds = %bb.e
 _ZNK17IReferenceCounted4dropEv.exit:              ; preds = %bb.f, %bb.e, %bb.d
   store ptr %2, ptr %i.k, align 8, !tbaa !89
   %i.w = getelementptr inbounds nuw i8, ptr %i.k, i64 8
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.w, ptr noundef nonnull align 4 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !122
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.w, ptr noundef nonnull align 4 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !121
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.a, %_ZNK17IReferenceCounted4dropEv.exit
@@ -1303,7 +1295,7 @@ _ZNK9StyleSpec10getTextureENS_8PropertyEP20ISimpleTextureSource.exit: ; preds = 
   %i.qv = getelementptr inbounds nuw i8, ptr %i.qu, i64 16
   %i.qw = load ptr, ptr %i.qv, align 8
   %i.qx = call noundef ptr %i.qw(ptr noundef nonnull align 8 dereferenceable(8) %i.qt, ptr noundef nonnull align 8 dereferenceable(32) %i.qr, ptr noundef null), !inline_history !223 ; 2 uses
-  %i.qy = load i32, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !121
+  %i.qy = load i32, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !122
   %i.qz = load i32, ptr %i.qd, align 8, !tbaa !115
   %i.ra = sub nsw i32 %i.qy, %i.qz
   %i.rb = getelementptr inbounds nuw i8, ptr %0, i64 7420
@@ -1324,7 +1316,7 @@ bb.k:                                             ; preds = %_ZNK9StyleSpec10get
   %i.rn = call noundef ptr %i.rm(ptr noundef nonnull align 8 dereferenceable(8) %i.rj)
   %i.ro = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.rp = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.rq = load i32, ptr %i.rp, align 8, !tbaa !121
+  %i.rq = load i32, ptr %i.rp, align 8, !tbaa !122
   %i.rr = load i32, ptr %i.ro, align 8, !tbaa !115
   %i.rs = sub nsw i32 %i.rq, %i.rr
   %i.rt = getelementptr inbounds nuw i8, ptr %0, i64 76
@@ -1727,13 +1719,13 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 48
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.i, i8 0, i64 24, i1 false)
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.l, ptr noundef nonnull align 4 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !122
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.l, ptr noundef nonnull align 4 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !121
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 64
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.m, ptr noundef nonnull align 4 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !122
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.m, ptr noundef nonnull align 4 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !121
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 80
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.n, ptr noundef nonnull align 4 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !122
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.n, ptr noundef nonnull align 4 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !121
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 96
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.o, ptr noundef nonnull align 4 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !122
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.o, ptr noundef nonnull align 4 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !121
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 152
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.p, i8 0, i64 40, i1 false)
@@ -1921,7 +1913,7 @@ bb.c:                                             ; preds = %.sink.split, %bb.a
   %i.j = sub nsw i32 %.sroa.1272.0, %.sroa.063.0  ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
-  %i.m = load i32, ptr %i.l, align 8, !tbaa !121
+  %i.m = load i32, ptr %i.l, align 8, !tbaa !122
   %i.n = load i32, ptr %i.k, align 8, !tbaa !115
   %.neg = sub i32 %i.n, %i.m
   %i.o = add i32 %.neg, %i.j                      ; 4 uses
@@ -2104,9 +2096,9 @@ bb.x:                                             ; preds = %bb.u
 bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v, %bb.u
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 4 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cs, ptr noundef nonnull align 8 dereferenceable(16) %i.cr, i64 16, i1 false), !tbaa.struct !122
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cs, ptr noundef nonnull align 8 dereferenceable(16) %i.cr, i64 16, i1 false), !tbaa.struct !121
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 5 uses
-  %i.cu = load i32, ptr %i.ct, align 8, !tbaa !121 ; 2 uses
+  %i.cu = load i32, ptr %i.ct, align 8, !tbaa !122 ; 2 uses
   %i.cv = load i32, ptr %i.cs, align 8, !tbaa !115 ; 5 uses
   %i.cw = sub nsw i32 %i.cu, %i.cv                ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 4 uses
@@ -2170,7 +2162,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   br i1 %i.dw, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
-  store i32 %i.cv, ptr %i.ct, align 8, !tbaa !121
+  store i32 %i.cv, ptr %i.ct, align 8, !tbaa !122
   store i32 %i.dq, ptr %i.cs, align 8, !tbaa !115
   br label %bb.ai
 
@@ -2219,14 +2211,14 @@ bb.al:                                            ; preds = %bb.ak, %_ZN4core4re
   %.sroa.10.1 = phi i32 [ %i.ea, %bb.ak ], [ %.sroa.10.0, %_ZN4core4rectIiE6repairEv.exit ] ; 6 uses
   %.sroa.12.1 = phi i32 [ %i.eb, %bb.ak ], [ %.sroa.12.0, %_ZN4core4rectIiE6repairEv.exit ] ; 6 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 4 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ed, ptr noundef nonnull align 8 dereferenceable(16) %i.ec, i64 16, i1 false), !tbaa.struct !122
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ed, ptr noundef nonnull align 8 dereferenceable(16) %i.ec, i64 16, i1 false), !tbaa.struct !121
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 3 uses
-  %i.ef = load i32, ptr %i.ee, align 8, !tbaa !121 ; 2 uses
+  %i.ef = load i32, ptr %i.ee, align 8, !tbaa !122 ; 2 uses
   %i.eg = icmp slt i32 %.sroa.10.1, %i.ef
   br i1 %i.eg, label %bb.am, label %bb.an
 
 bb.am:                                            ; preds = %bb.al
-  store i32 %.sroa.10.1, ptr %i.ee, align 8, !tbaa !121
+  store i32 %.sroa.10.1, ptr %i.ee, align 8, !tbaa !122
   br label %bb.an
 
 bb.an:                                            ; preds = %bb.am, %bb.al
@@ -2246,7 +2238,7 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   br i1 %i.em, label %bb.aq, label %bb.ar
 
 bb.aq:                                            ; preds = %bb.ap
-  store i32 %.sroa.041.1, ptr %i.ee, align 8, !tbaa !121
+  store i32 %.sroa.041.1, ptr %i.ee, align 8, !tbaa !122
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq, %bb.ap
@@ -2649,8 +2641,8 @@ attributes #33 = { noreturn }
 !118 = !{!59, !26, i64 160}
 !119 = !{ptr @_ZNK9GUIButton9isHoveredEv}
 !120 = !{ptr @_ZNK9GUIButton9isFocusedEv}
-!121 = !{!43, !20, i64 8}
-!122 = !{i64 0, i64 4, !82, i64 4, i64 4, !82, i64 8, i64 4, !82, i64 12, i64 4, !82}
+!121 = !{i64 0, i64 4, !82, i64 4, i64 4, !82, i64 8, i64 4, !82, i64 12, i64 4, !82}
+!122 = !{!43, !20, i64 8}
 !123 = !{!47, !20, i64 0}
 !124 = !{!47, !20, i64 4}
 !125 = !{!66, !26, i64 7368}

@@ -200,11 +200,17 @@ bb.bp:                                            ; preds = %bb.bo
   %i.hf = load double, ptr %i.n, align 8          ; 2 uses
   %i.hg = load double, ptr %i.o, align 8          ; 2 uses
   %i.hh = load double, ptr %i.d, align 8          ; 2 uses
-  %26 = fdiv double %i.hg, %i.hh                  ; 2 uses
-  %27 = load double, ptr %i.m, align 8            ; 2 uses
-  %28 = fdiv double %i.hh, %i.hg                  ; 2 uses
+  %26 = load double, ptr %i.m, align 8
+  %27 = insertelement <2 x double> poison, double %i.hh, i64 0
+  %28 = insertelement <2 x double> %27, double %i.hg, i64 1
+  %29 = insertelement <2 x double> poison, double %i.hg, i64 0
+  %30 = insertelement <2 x double> %29, double %i.hh, i64 1
+  %31 = fdiv <2 x double> %28, %30                ; 2 uses
   %i.hi = add nuw i32 %i.he, 1
   %wide.trip.count = zext i32 %i.hi to i64
+  %32 = insertelement <2 x double> poison, double %26, i64 0 ; 2 uses
+  %33 = insertelement <2 x double> poison, double %i.hf, i64 1
+  %34 = insertelement <2 x double> poison, double %i.hf, i64 1
   br label %bb.bq
 
 bb.bq:                                            ; preds = %.lr.ph622, %bb.bv
@@ -218,11 +224,13 @@ bb.bq:                                            ; preds = %.lr.ph622, %bb.bv
 bb.br:                                            ; preds = %bb.bq
   %i.hm = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %indvars.iv643 ; 3 uses
   %i.hn = load double, ptr %i.hm, align 8, !tbaa !14 ; 3 uses
-  %29 = fdiv double %i.hn, %i.hf
-  %30 = fcmp ogt double %29, %26
-  %31 = fdiv double %27, %i.hn
-  %32 = fcmp ogt double %31, %28
-  %or.cond = select i1 %30, i1 true, i1 %32
+  %35 = insertelement <2 x double> %32, double %i.hn, i64 1
+  %36 = insertelement <2 x double> %33, double %i.hn, i64 0
+  %37 = fdiv <2 x double> %35, %36
+  %38 = fcmp ogt <2 x double> %37, %31            ; 2 uses
+  %39 = extractelement <2 x i1> %38, i64 0
+  %40 = extractelement <2 x i1> %38, i64 1
+  %or.cond = select i1 %40, i1 true, i1 %39
   br i1 %or.cond, label %bb.bs, label %bb.bt
 
 bb.bs:                                            ; preds = %bb.br
@@ -234,12 +242,13 @@ bb.bs:                                            ; preds = %bb.br
   br label %.sink.split680
 
 bb.bt:                                            ; preds = %bb.br
-  %33 = fdiv double %i.hk, %i.hf
-  %34 = fcmp ogt double %33, %26
-  %35 = fdiv double %27, %i.hk
-  %36 = fcmp ogt double %35, %28
-  %or.cond577 = or i1 %34, %36
-  br i1 %or.cond577, label %bb.bu, label %bb.bv
+  %41 = insertelement <2 x double> %32, double %i.hk, i64 1
+  %42 = insertelement <2 x double> %34, double %i.hk, i64 0
+  %43 = fdiv <2 x double> %41, %42
+  %44 = fcmp ogt <2 x double> %43, %31
+  %45 = bitcast <2 x i1> %44 to i2
+  %.not709 = icmp eq i2 %45, 0
+  br i1 %.not709, label %bb.bv, label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bt
   %i.ht = add nuw nsw i32 %indvars645, 1

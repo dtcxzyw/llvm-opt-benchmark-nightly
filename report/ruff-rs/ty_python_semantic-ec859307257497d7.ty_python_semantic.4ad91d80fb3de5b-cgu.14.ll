@@ -204,22 +204,16 @@ bb.b:                                             ; preds = %.lr.ph
   %i.t = load i32, ptr %i.s, align 4, !noalias !14221, !noundef !22
   %i.u = tail call noundef nonnull align 8 ptr %.val.i(ptr noundef nonnull %2), !noalias !14222, !inline_history !14216 ; 2 uses
   %i.v = tail call noundef nonnull align 8 ptr @_RINvMs_NtNtCs45bxiIjzMqg_5salsa16ingredient_cache3impINtB5_15IngredientCacheINtNtB9_8interned14IngredientImplNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar15TypeVarInstanceEE13get_or_createINtB1f_7JarImplB1J_EKj0_EB1P_(ptr noundef nonnull align 4 @_RNvNvMs2_NvNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar1__NtB9_15TypeVarInstance10ingredient5CACHE, ptr noundef nonnull align 8 %i.u), !noalias !14222
-  %i.w = tail call noundef nonnull align 4 ptr @_RNvMs6_NtCs45bxiIjzMqg_5salsa8internedINtB5_14IngredientImplNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar15TypeVarInstanceE6fieldsB12_(ptr noundef nonnull align 8 %i.v, ptr noundef nonnull align 8 %i.u, i32 noundef range(i32 1, 0) %i.r, i32 noundef %i.t), !noalias !14222 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.w, i64 16
-  %7 = load i32, ptr %6, align 4, !range !24, !noalias !14222, !noundef !22
-  %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 20
-  %8 = load i32, ptr %i.x, align 4, !noalias !14222, !noundef !22
+  %i.w = tail call noundef nonnull align 4 ptr @_RNvMs6_NtCs45bxiIjzMqg_5salsa8internedINtB5_14IngredientImplNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar15TypeVarInstanceE6fieldsB12_(ptr noundef nonnull align 8 %i.v, ptr noundef nonnull align 8 %i.u, i32 noundef range(i32 1, 0) %i.r, i32 noundef %i.t), !noalias !14222
+  %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 16
+  %6 = load i64, ptr %i.x, align 4, !noalias !14222
   %i.y = tail call noundef nonnull align 8 ptr %.val.i(ptr noundef nonnull %2), !noalias !14223, !inline_history !14216 ; 2 uses
   %i.z = tail call noundef nonnull align 8 ptr @_RINvMs_NtNtCs45bxiIjzMqg_5salsa16ingredient_cache3impINtB5_15IngredientCacheINtNtB9_8interned14IngredientImplNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar15TypeVarInstanceEE13get_or_createINtB1f_7JarImplB1J_EKj0_EB1P_(ptr noundef nonnull align 4 @_RNvNvMs2_NvNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar1__NtB9_15TypeVarInstance10ingredient5CACHE, ptr noundef nonnull align 8 %i.y), !noalias !14223
-  %i.aa = tail call noundef nonnull align 4 ptr @_RNvMs6_NtCs45bxiIjzMqg_5salsa8internedINtB5_14IngredientImplNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar15TypeVarInstanceE6fieldsB12_(ptr noundef nonnull align 8 %i.z, ptr noundef nonnull align 8 %i.y, i32 noundef range(i32 1, 0) %4, i32 noundef %5), !noalias !14223 ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
-  %10 = load i32, ptr %9, align 4, !range !24, !noalias !14223, !noundef !22
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 20
-  %11 = load i32, ptr %i.ab, align 4, !noalias !14223, !noundef !22
-  %12 = icmp ne i32 %8, %11
-  %13 = icmp ne i32 %7, %10
-  %.sroa.0.0.i.i.i.not.i = or i1 %13, %12
-  br i1 %.sroa.0.0.i.i.i.not.i, label %bb.b, label %_RINvYINtNtNtCs5e9M2GLoJMY_8indexmap3map4iter6ValuesNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar20BoundTypeVarIdentityNtBP_20BoundTypeVarInstanceENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8try_folduNCINvNtNtB2y_8adapters6copied13copy_try_foldB20_uINtNtNtB2A_3ops12control_flow11ControlFlowB20_ENCINvNvB2s_4find5checkB20_NCNvMs_NtBR_8genericsNtB5C_14GenericContext13binds_typevar0E0E0B4k_EBT_.exit
+  %i.aa = tail call noundef nonnull align 4 ptr @_RNvMs6_NtCs45bxiIjzMqg_5salsa8internedINtB5_14IngredientImplNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar15TypeVarInstanceE6fieldsB12_(ptr noundef nonnull align 8 %i.z, ptr noundef nonnull align 8 %i.y, i32 noundef range(i32 1, 0) %4, i32 noundef %5), !noalias !14223
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
+  %7 = load i64, ptr %i.ab, align 4, !noalias !14223
+  %.not = icmp eq i64 %6, %7
+  br i1 %.not, label %_RINvYINtNtNtCs5e9M2GLoJMY_8indexmap3map4iter6ValuesNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar20BoundTypeVarIdentityNtBP_20BoundTypeVarInstanceENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8try_folduNCINvNtNtB2y_8adapters6copied13copy_try_foldB20_uINtNtNtB2A_3ops12control_flow11ControlFlowB20_ENCINvNvB2s_4find5checkB20_NCNvMs_NtBR_8genericsNtB5C_14GenericContext13binds_typevar0E0E0B4k_EBT_.exit, label %bb.b
 
 _RINvYINtNtNtCs5e9M2GLoJMY_8indexmap3map4iter6ValuesNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar20BoundTypeVarIdentityNtBP_20BoundTypeVarInstanceENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8try_folduNCINvNtNtB2y_8adapters6copied13copy_try_foldB20_uINtNtNtB2A_3ops12control_flow11ControlFlowB20_ENCINvNvB2s_4find5checkB20_NCNvMs_NtBR_8genericsNtB5C_14GenericContext13binds_typevar0E0E0B4k_EBT_.exit: ; preds = %.lr.ph, %bb.b, %bb.a
   %.sroa.3.0.i = phi i32 [ undef, %bb.a ], [ %.val10.i, %bb.b ], [ %.val10.i, %.lr.ph ]

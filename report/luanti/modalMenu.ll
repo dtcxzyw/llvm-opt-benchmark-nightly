@@ -204,46 +204,39 @@ bb.a:
   %.sroa.3.0.extract.shift = lshr i64 %3, 32
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 332
   %i.b = load float, ptr %i.a, align 4, !tbaa !67 ; 2 uses
-  %.sroa.4.0.extract.trunc = trunc nuw i64 %.sroa.4.0.extract.shift to i32 ; 2 uses
-  %.sroa.06.0.extract.trunc = trunc i64 %2 to i32 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 12
+  %6 = bitcast i64 %2 to <2 x i32>
   %.sroa.3.0.extract.trunc = trunc nuw i64 %.sroa.3.0.extract.shift to i32
   %.sroa.0.0.extract.trunc = trunc i64 %3 to i32
-  %i.c = uitofp nsz i32 %.sroa.4.0.extract.trunc to float
-  %i.d = uitofp nsz i32 %.sroa.06.0.extract.trunc to float
-  %4 = uitofp nsz i32 %.sroa.3.0.extract.trunc to float ; 2 uses
-  %5 = uitofp nsz i32 %.sroa.0.0.extract.trunc to float ; 2 uses
-  %6 = insertelement <2 x float> poison, float %i.d, i64 0
-  %7 = insertelement <2 x float> %6, float %i.c, i64 1
-  %i.e = insertelement <2 x float> poison, float %5, i64 0
-  %i.f = insertelement <2 x float> %i.e, float %4, i64 1
-  %i.g = fdiv nsz <2 x float> %7, %i.f            ; 2 uses
+  %i.c = uitofp nsz i32 %.sroa.3.0.extract.trunc to float
+  %i.d = uitofp nsz i32 %.sroa.0.0.extract.trunc to float
+  %7 = insertelement <2 x float> poison, float %i.d, i64 0
+  %8 = insertelement <2 x float> %7, float %i.c, i64 1 ; 2 uses
+  %.sroa.4.0.extract.trunc = trunc nuw i64 %.sroa.4.0.extract.shift to i32
+  %.sroa.06.0.extract.trunc = trunc i64 %2 to i32
+  %9 = uitofp nsz i32 %.sroa.4.0.extract.trunc to float
+  %10 = uitofp nsz i32 %.sroa.06.0.extract.trunc to float
+  %i.e = insertelement <2 x float> poison, float %10, i64 0
+  %i.f = insertelement <2 x float> %i.e, float %9, i64 1
+  %i.g = fdiv nsz <2 x float> %i.f, %8            ; 2 uses
   %i.h = extractelement <2 x float> %i.g, i64 0   ; 2 uses
   %i.i = fcmp nsz olt float %i.h, %i.b
   %.sroa.speculated13 = select i1 %i.i, float %i.h, float %i.b ; 2 uses
   %i.j = extractelement <2 x float> %i.g, i64 1   ; 2 uses
   %i.k = fcmp nsz olt float %i.j, %.sroa.speculated13
-  %.sroa.speculated = select i1 %i.k, float %i.j, float %.sroa.speculated13 ; 3 uses
-  %8 = fmul nsz float %.sroa.speculated, %5
-  %9 = fptosi float %8 to i32
-  %10 = fmul nsz float %.sroa.speculated, %4
-  %11 = fptosi float %10 to i32
+  %.sroa.speculated = select i1 %i.k, float %i.j, float %.sroa.speculated13 ; 2 uses
+  %11 = insertelement <2 x float> poison, float %.sroa.speculated, i64 0
+  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
+  %13 = fmul nsz <2 x float> %12, %8
+  %14 = fptosi <2 x float> %13 to <2 x i32>
   store float %.sroa.speculated, ptr %0, align 4, !tbaa !127
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %13 = lshr i32 %.sroa.06.0.extract.trunc, 1     ; 2 uses
-  %14 = sdiv i32 %9, 2                            ; 2 uses
-  %15 = sub i32 %13, %14
-  %16 = lshr i32 %.sroa.4.0.extract.trunc, 1      ; 2 uses
-  %17 = sdiv i32 %11, 2                           ; 2 uses
-  %18 = sub i32 %16, %17
-  %19 = add i32 %14, %13
-  %20 = add i32 %17, %16
-  store i32 %15, ptr %12, align 4, !tbaa !25
-  %21 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %18, ptr %21, align 4, !tbaa !26
-  %22 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %19, ptr %22, align 4, !tbaa !25
-  %23 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i32 %20, ptr %23, align 4, !tbaa !26
+  %15 = lshr <2 x i32> %6, splat (i32 1)          ; 2 uses
+  %16 = sdiv <2 x i32> %14, splat (i32 2)         ; 2 uses
+  %17 = sub <2 x i32> %15, %16
+  %18 = add <2 x i32> %16, %15
+  store <2 x i32> %17, ptr %4, align 4, !tbaa !27
+  store <2 x i32> %18, ptr %5, align 4, !tbaa !27
   ret void
 }
 

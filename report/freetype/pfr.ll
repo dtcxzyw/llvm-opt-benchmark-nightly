@@ -205,14 +205,17 @@ bb.dc:                                            ; preds = %bb.da
   %i.ach = load i16, ptr %i.ze, align 2, !tbaa !192
   %i.aci = getelementptr inbounds nuw i8, ptr %1, i64 146
   store i16 %i.ach, ptr %i.aci, align 2, !tbaa !201
-  %i.acj = load i16, ptr %i.ys, align 8, !tbaa !189 ; 2 uses
-  %6 = udiv i16 %i.acj, 10
-  %.neg = sub nsw i16 0, %6
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 148
-  store i16 %.neg, ptr %7, align 4, !tbaa !202
-  %8 = udiv i16 %i.acj, 30
+  %i.acj = load i16, ptr %i.ys, align 8, !tbaa !189
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 148
+  %7 = insertelement <2 x i16> poison, i16 %i.acj, i64 0
+  %8 = shufflevector <2 x i16> %7, <2 x i16> poison, <2 x i32> zeroinitializer
+  %9 = udiv <2 x i16> %8, <i16 10, i16 30>        ; 2 uses
+  %10 = extractelement <2 x i16> %9, i64 0
+  %.neg = sub nsw i16 0, %10
+  store i16 %.neg, ptr %6, align 4, !tbaa !202
   %i.ack = getelementptr inbounds nuw i8, ptr %1, i64 150
-  store i16 %8, ptr %i.ack, align 2, !tbaa !203
+  %11 = extractelement <2 x i16> %9, i64 1
+  store i16 %11, ptr %i.ack, align 2, !tbaa !203
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
   store ptr %1, ptr %5, align 8, !tbaa !204
   %i.acl = getelementptr inbounds nuw i8, ptr %5, i64 12

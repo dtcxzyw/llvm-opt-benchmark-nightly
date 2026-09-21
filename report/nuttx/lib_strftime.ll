@@ -202,12 +202,12 @@ bb.g:                                             ; preds = %bb.f
   %i.aj = insertelement <2 x i32> poison, i32 %i.ag, i64 0
   %i.ak = shufflevector <2 x i32> %i.aj, <2 x i32> poison, <2 x i32> zeroinitializer
   %i.al = srem <2 x i32> %i.ak, <i32 100, i32 400> ; 2 uses
-  %1 = extractelement <2 x i32> %i.al, i64 0
-  %.not.i21 = icmp ne i32 %1, 0
-  %2 = extractelement <2 x i32> %i.al, i64 1
-  %3 = icmp eq i32 %2, 0
-  %or.cond = or i1 %.not.i21, %3
-  br i1 %or.cond, label %is_leap.exit.thread23, label %is_leap.exit22.thread24
+  %1 = icmp ne <2 x i32> %i.al, zeroinitializer
+  %2 = icmp eq <2 x i32> %i.al, zeroinitializer
+  %3 = shufflevector <2 x i1> %1, <2 x i1> %2, <2 x i32> <i32 0, i32 3>
+  %4 = bitcast <2 x i1> %3 to i2
+  %.not = icmp eq i2 %4, 0
+  br i1 %.not, label %is_leap.exit22.thread24, label %is_leap.exit.thread23
 
 is_leap.exit22.thread24:                          ; preds = %bb.g, %bb.f, %bb.e
   br label %is_leap.exit.thread23

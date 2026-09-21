@@ -43,8 +43,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.ae, %bb.a
-  %.095 = phi i32 [ %i.a, %bb.a ], [ %10, %bb.ae ] ; 3 uses
-  %.093 = phi i32 [ %i.b, %bb.a ], [ %8, %bb.ae ] ; 3 uses
+  %.095 = phi i32 [ %i.a, %bb.a ], [ %14, %bb.ae ] ; 3 uses
+  %.093 = phi i32 [ %i.b, %bb.a ], [ %15, %bb.ae ] ; 3 uses
   %.091 = phi i64 [ %3, %bb.a ], [ %i.ai, %bb.ae ] ; 3 uses
   %.087 = phi ptr [ %2, %bb.a ], [ %.390.lcssa, %bb.ae ] ; 2 uses
   %.085 = phi ptr [ %1, %bb.a ], [ %.3.lcssa, %bb.ae ] ; 2 uses
@@ -138,18 +138,21 @@ adler32_copy_len_16.exit:                         ; preds = %bb.n, %bb.c
   %.013.lcssa.i = phi i32 [ %.093, %bb.c ], [ %i.s, %bb.n ]
   %.0.lcssa.i = phi i32 [ %.095, %bb.c ], [ %i.x, %bb.n ]
   call void @__ubsan_handle_sub_overflow(ptr nonnull @9, i64 0, i64 1) #5, !nosanitize !17
-  %4 = urem i32 %.0.lcssa.i, 65521
-  %5 = urem i32 %.013.lcssa.i, 65521
-  %i.ad = shl nuw i32 %4, 16
-  %i.ae = or disjoint i32 %i.ad, %5
+  %4 = insertelement <2 x i32> poison, i32 %.0.lcssa.i, i64 0
+  %5 = insertelement <2 x i32> %4, i32 %.013.lcssa.i, i64 1
+  %6 = urem <2 x i32> %5, splat (i32 65521)       ; 2 uses
+  %7 = extractelement <2 x i32> %6, i64 0
+  %i.ad = shl nuw i32 %7, 16
+  %8 = extractelement <2 x i32> %6, i64 1
+  %i.ae = or disjoint i32 %i.ad, %8
   br label %bb.ag
 
 .preheader:                                       ; preds = %bb.b, %._crit_edge151
   %.186161 = phi ptr [ %.3.lcssa, %._crit_edge151 ], [ %.085, %bb.b ] ; 2 uses
   %.188160 = phi ptr [ %.390.lcssa, %._crit_edge151 ], [ %.087, %bb.b ] ; 2 uses
   %.192159 = phi i64 [ %i.ai, %._crit_edge151 ], [ %.091, %bb.b ] ; 4 uses
-  %.194158 = phi i32 [ %8, %._crit_edge151 ], [ %.093, %bb.b ]
-  %.196157 = phi i32 [ %10, %._crit_edge151 ], [ %.095, %bb.b ]
+  %.194158 = phi i32 [ %15, %._crit_edge151 ], [ %.093, %bb.b ]
+  %.196157 = phi i32 [ %14, %._crit_edge151 ], [ %.095, %bb.b ]
   %i.af = call i64 @llvm.umin.i64(i64 %.192159, i64 5552)
   %i.ag = and i64 %i.af, 8176                     ; 4 uses
   %i.ah = call { i64, i1 } @llvm.usub.with.overflow.i64(i64 %.192159, i64 %i.ag), !nosanitize !17 ; 2 uses
@@ -358,13 +361,15 @@ bb.ad:                                            ; preds = %bb.ac, %_mm_storeu_
   %.199.in.lcssa = phi <4 x i32> [ %i.ce, %._crit_edge ], [ %i.cu, %._crit_edge151.loopexit ]
   %.390.lcssa = phi ptr [ %.289.lcssa, %._crit_edge ], [ %i.ch, %._crit_edge151.loopexit ] ; 2 uses
   %.3.lcssa = phi ptr [ %.2.lcssa, %._crit_edge ], [ %i.cv, %._crit_edge151.loopexit ] ; 2 uses
-  %i.db = add <4 x i32> %.199.in.lcssa, %.lcssa126
-  %6 = shufflevector <4 x i32> %.1101.in.lcssa, <4 x i32> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
-  %i.dc = add <4 x i32> %.1101.in.lcssa, %6
-  %7 = extractelement <4 x i32> %i.dc, i64 0
-  %8 = urem i32 %7, 65521                         ; 3 uses
-  %9 = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.db)
-  %10 = urem i32 %9, 65521                        ; 3 uses
+  %i.db = add <4 x i32> %.199.in.lcssa, %.lcssa126 ; 2 uses
+  %9 = shufflevector <4 x i32> %i.db, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 2, i32 3>
+  %i.dc = add <4 x i32> %i.db, %9                 ; 2 uses
+  %10 = shufflevector <4 x i32> %.1101.in.lcssa, <4 x i32> %i.dc, <2 x i32> <i32 0, i32 5>
+  %11 = shufflevector <4 x i32> %.1101.in.lcssa, <4 x i32> %i.dc, <2 x i32> <i32 2, i32 4>
+  %12 = add <2 x i32> %10, %11
+  %13 = urem <2 x i32> %12, splat (i32 65521)     ; 2 uses
+  %14 = extractelement <2 x i32> %13, i64 1       ; 3 uses
+  %15 = extractelement <2 x i32> %13, i64 0       ; 3 uses
   %i.dd = icmp ugt i64 %i.ai, 15
   br i1 %i.dd, label %.preheader, label %bb.ae, !llvm.loop !15
 
@@ -373,8 +378,8 @@ bb.ae:                                            ; preds = %._crit_edge151
   br i1 %.not, label %bb.af, label %bb.b
 
 bb.af:                                            ; preds = %bb.ae
-  %i.de = shl nuw i32 %10, 16
-  %i.df = or disjoint i32 %8, %i.de
+  %i.de = shl nuw i32 %14, 16
+  %i.df = or disjoint i32 %15, %i.de
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af, %adler32_copy_len_16.exit
@@ -411,9 +416,6 @@ declare <4 x i32> @llvm.x86.sse2.pmadd.wd(<8 x i16>, <8 x i16>) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #1
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #1
 
 attributes #0 = { nounwind uwtable "disable-tail-calls"="true" "frame-pointer"="all" "min-legal-vector-width"="128" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }

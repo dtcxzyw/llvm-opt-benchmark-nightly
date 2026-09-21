@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.b, %bb.b
 
 bb.f:                                             ; preds = %bb.e, %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 80
-  %i.j = load ptr, ptr %i.i, align 8, !align !9, !noundef !5 ; 7 uses
+  %i.j = load ptr, ptr %i.i, align 8, !align !9, !noundef !5 ; 6 uses
   %.not = icmp eq ptr %i.j, null
   br i1 %.not, label %.loopexit54, label %bb.g
 
@@ -277,7 +277,6 @@ bb.j:                                             ; preds = %bb.i
   %i.aq = getelementptr inbounds nuw i8, ptr %3, i64 168
   %i.ar = load ptr, ptr %i.aq, align 8, !alias.scope !5329, !noalias !5330, !nonnull !5
   %i.as = getelementptr inbounds nuw i8, ptr %i.j, i64 24
-  %9 = getelementptr inbounds nuw i8, ptr %i.j, i64 28
   br label %bb.k
 
 bb.k:                                             ; preds = %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8find_map5checkNtNtCs7bpTdHNYxeX_20ruff_python_semantic7binding9BindingIdRNtB1i_7BindingNCNvNtNtNtCsEhZmuQNqkz_11ruff_linter5rules6refurb7helpers17resolve_file_open0E0B2B_.exit.i, %bb.j
@@ -364,17 +363,12 @@ _RNvXNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successorsINtB2_10SuccessorsNtNtCs7
   br i1 %i.ca, label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8find_map5checkNtNtCs7bpTdHNYxeX_20ruff_python_semantic7binding9BindingIdRNtB1i_7BindingNCNvNtNtNtCsEhZmuQNqkz_11ruff_linter5rules6refurb7helpers17resolve_file_open0E0B2B_.exit.i, label %.invoke
 
 _RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8find_map5checkNtNtCs7bpTdHNYxeX_20ruff_python_semantic7binding9BindingIdRNtB1i_7BindingNCNvNtNtNtCsEhZmuQNqkz_11ruff_linter5rules6refurb7helpers17resolve_file_open0E0B2B_.exit.i: ; preds = %_RNvXNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successorsINtB2_10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic7binding9BindingIdNCNvMNtB1c_5scopeNtB29_5Scope7get_all0ENtNtNtB6_6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit.thread9.i
-  %i.cb = getelementptr inbounds nuw [72 x i8], ptr %i.ar, i64 %i.bz ; 5 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.cb, i64 48
-  %11 = load i32, ptr %10, align 8, !noalias !5339, !noundef !5
-  %i.cc = getelementptr inbounds nuw i8, ptr %i.cb, i64 52
-  %12 = load i32, ptr %i.cc, align 4, !noalias !5339, !noundef !5
-  %13 = load i32, ptr %i.as, align 8, !noalias !5339, !noundef !5
-  %14 = load i32, ptr %9, align 4, !noalias !5339, !noundef !5
-  %15 = icmp ne i32 %11, %13
-  %16 = icmp ne i32 %12, %14
-  %or.cond.i.i.not.i = or i1 %15, %16
-  br i1 %or.cond.i.i.not.i, label %bb.k, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic7binding9BindingIdNCNvMNtB1a_5scopeNtB27_5Scope7get_all0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB2F_8find_map5checkB16_RNtB18_7BindingNCNvNtNtNtCsEhZmuQNqkz_11ruff_linter5rules6refurb7helpers17resolve_file_open0E0INtNtNtBc_3ops12control_flow11ControlFlowB3R_EEB4g_.exit
+  %i.cb = getelementptr inbounds nuw [72 x i8], ptr %i.ar, i64 %i.bz ; 4 uses
+  %i.cc = getelementptr inbounds nuw i8, ptr %i.cb, i64 48
+  %9 = load i64, ptr %i.cc, align 8, !noalias !5339
+  %10 = load i64, ptr %i.as, align 8, !noalias !5339
+  %.not152 = icmp eq i64 %9, %10
+  br i1 %.not152, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic7binding9BindingIdNCNvMNtB1a_5scopeNtB27_5Scope7get_all0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB2F_8find_map5checkB16_RNtB18_7BindingNCNvNtNtNtCsEhZmuQNqkz_11ruff_linter5rules6refurb7helpers17resolve_file_open0E0INtNtNtBc_3ops12control_flow11ControlFlowB3R_EEB4g_.exit, label %bb.k
 
 _RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic7binding9BindingIdNCNvMNtB1a_5scopeNtB27_5Scope7get_all0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB2F_8find_map5checkB16_RNtB18_7BindingNCNvNtNtNtCsEhZmuQNqkz_11ruff_linter5rules6refurb7helpers17resolve_file_open0E0INtNtNtBc_3ops12control_flow11ControlFlowB3R_EEB4g_.exit: ; preds = %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8find_map5checkNtNtCs7bpTdHNYxeX_20ruff_python_semantic7binding9BindingIdRNtB1i_7BindingNCNvNtNtNtCsEhZmuQNqkz_11ruff_linter5rules6refurb7helpers17resolve_file_open0E0B2B_.exit.i
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cb, i64 8

@@ -204,13 +204,14 @@ define void @_ZN8facebook5velox9functions10geospatial25validateLatitudeLongitude
 bb.a:
   %3 = alloca %"struct.fmt::v11::detail::format_arg_store.161", align 16 ; 9 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %5 = tail call double @llvm.fabs.f64(double %1)
-  %or.cond = fcmp ogt double %5, 9.000000e+01
-  %6 = tail call double @llvm.fabs.f64(double %2)
-  %7 = fcmp ogt double %6, 1.800000e+02
-  %or.cond5 = or i1 %or.cond, %7
+  %5 = insertelement <2 x double> poison, double %1, i64 0
+  %6 = insertelement <2 x double> %5, double %2, i64 1
+  %7 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %6)
+  %8 = fcmp ogt <2 x double> %7, <double 9.000000e+01, double 1.800000e+02>
+  %9 = bitcast <2 x i1> %8 to i2
+  %10 = icmp ne i2 %9, 0
   %i.a = fcmp uno double %2, %1
-  %or.cond12 = or i1 %i.a, %or.cond5
+  %or.cond12 = or i1 %i.a, %10
   br i1 %or.cond12, label %.critedge, label %bb.d, !prof !176
 
 .critedge:                                        ; preds = %bb.a
@@ -613,23 +614,21 @@ bb.c:                                             ; preds = %.peel.next, %_ZN12_
   %.sroa.28.034 = phi double [ %i.bd, %.peel.next ], [ %i.de, %_ZN12_GLOBAL__N_125SphericalExcessCalculator3addERKN4geos4geom10CoordinateE.exit ]
   %.sroa.25.033 = phi double [ %i.bc, %.peel.next ], [ %i.dd, %_ZN12_GLOBAL__N_125SphericalExcessCalculator3addERKN4geos4geom10CoordinateE.exit ] ; 2 uses
   %.sroa.19.031 = phi double [ %i.bu, %.peel.next ], [ %i.dv, %_ZN12_GLOBAL__N_125SphericalExcessCalculator3addERKN4geos4geom10CoordinateE.exit ]
-  %i.ci = phi <2 x double> [ %i.am, %.peel.next ], [ %i.cp, %_ZN12_GLOBAL__N_125SphericalExcessCalculator3addERKN4geos4geom10CoordinateE.exit ] ; 3 uses
+  %i.ci = phi <2 x double> [ %i.am, %.peel.next ], [ %i.cp, %_ZN12_GLOBAL__N_125SphericalExcessCalculator3addERKN4geos4geom10CoordinateE.exit ] ; 2 uses
   %i.cj = load ptr, ptr %0, align 8, !tbaa !33
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 24
   %i.cl = load ptr, ptr %i.ck, align 8
   %i.cm = tail call noundef nonnull align 8 dereferenceable(24) ptr %i.cl(ptr noundef nonnull align 8 dereferenceable(8) %0, i64 noundef %indvars.iv)
   %i.cn = load <2 x double>, ptr %i.cm, align 8
   %i.co = fmul <2 x double> %i.cn, splat (double f0x400921FB54442D18)
-  %i.cp = fdiv <2 x double> %i.co, splat (double 1.800000e+02) ; 5 uses
+  %i.cp = fdiv <2 x double> %i.co, splat (double 1.800000e+02) ; 4 uses
   %i.cq = extractelement <2 x double> %i.cp, i64 1 ; 3 uses
   %i.cr = fmul double %i.cq, 5.000000e-01
   %i.cs = tail call double @tan(double noundef %i.cr) #26 ; 3 uses
-  %1 = fcmp oeq <2 x double> %i.cp, %i.ci
-  %2 = fcmp oeq <2 x double> %i.cp, %i.ci
-  %shift52 = shufflevector <2 x i1> %2, <2 x i1> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop53 = and <2 x i1> %1, %shift52
-  %or.cond.i = extractelement <2 x i1> %foldExtExtBinop53, i64 0
-  br i1 %or.cond.i, label %.loopexit, label %_ZN12_GLOBAL__N_125SphericalExcessCalculator3addERKN4geos4geom10CoordinateE.exit, !prof !114
+  %1 = fcmp une <2 x double> %i.cp, %i.ci
+  %2 = bitcast <2 x i1> %1 to i2
+  %3 = icmp eq i2 %2, 0
+  br i1 %3, label %.loopexit, label %_ZN12_GLOBAL__N_125SphericalExcessCalculator3addERKN4geos4geom10CoordinateE.exit, !prof !114
 
 .loopexit:                                        ; preds = %bb.c, %.peel.begin
   tail call void @_ZN8facebook5velox6detail14veloxCheckFailINS0_14VeloxUserErrorEPKcEEvRKNS1_18VeloxCheckFailArgsET0_(ptr noundef nonnull align 8 dereferenceable(56) @_ZZN12_GLOBAL__N_125SphericalExcessCalculator3addERKN4geos4geom10CoordinateEE18veloxCheckFailArgs_0, ptr noundef nonnull @.str.44) #25
@@ -1031,6 +1030,9 @@ declare i64 @llvm.smin.i64(i64, i64) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.sqrt.f64(double) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #20
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

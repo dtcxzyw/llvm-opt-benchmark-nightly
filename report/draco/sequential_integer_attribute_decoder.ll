@@ -205,19 +205,21 @@ bb.a:
   %8 = alloca %"class.draco::VectorD.115", align 4 ; 7 uses
   %9 = alloca %"class.draco::VectorD.115", align 4 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.b = load i32, ptr %1, align 4, !tbaa !186    ; 6 uses
+  %i.b = load i32, ptr %1, align 4, !tbaa !186    ; 5 uses
   %i.c = icmp eq i32 %i.b, -1
   br i1 %i.c, label %_ZNK5draco24MeshAttributeCornerTable8PreviousENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %10 = add nuw i32 %i.b, 1                       ; 2 uses
-  %11 = urem i32 %10, 3
-  %.not.i.i = icmp eq i32 %11, 0
-  %12 = add i32 %i.b, -2
-  %spec.select.i.i.a = select i1 %.not.i.i, i32 %12, i32 %10 ; 2 uses
-  %13 = urem i32 %i.b, 3
-  %.not.i.i86 = icmp eq i32 %13, 0
-  br i1 %.not.i.i86, label %bb.d, label %bb.c
+  %10 = insertelement <2 x i32> poison, i32 %i.b, i64 0
+  %11 = shufflevector <2 x i32> %10, <2 x i32> poison, <2 x i32> zeroinitializer
+  %12 = add nuw <2 x i32> %11, <i32 0, i32 1>
+  %13 = urem <2 x i32> %12, splat (i32 3)
+  %14 = icmp eq <2 x i32> %13, zeroinitializer    ; 2 uses
+  %15 = extractelement <2 x i1> %14, i64 1
+  %spec.select.i.i.a = select i1 %15, i32 -2, i32 1
+  %spec.select.i.i = add i32 %i.b, %spec.select.i.i.a ; 2 uses
+  %16 = extractelement <2 x i1> %14, i64 0
+  br i1 %16, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.d = add i32 %i.b, -1
@@ -228,7 +230,7 @@ bb.d:                                             ; preds = %bb.b
   br label %_ZNK5draco24MeshAttributeCornerTable8PreviousENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit
 
 _ZNK5draco24MeshAttributeCornerTable8PreviousENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit: ; preds = %bb.a, %bb.c, %bb.d
-  %.sink.i.i157 = phi i32 [ %spec.select.i.i.a, %bb.c ], [ %spec.select.i.i.a, %bb.d ], [ -1, %bb.a ]
+  %.sink.i.i157 = phi i32 [ %spec.select.i.i, %bb.c ], [ %spec.select.i.i, %bb.d ], [ -1, %bb.a ]
   %.sink.i.i87 = phi i32 [ %i.d, %bb.c ], [ %i.e, %bb.d ], [ -1, %bb.a ]
   %i.f = load ptr, ptr %i.a, align 8, !tbaa !128
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 88
@@ -631,19 +633,21 @@ bb.a:
   %8 = alloca %"class.draco::VectorD.120", align 8 ; 8 uses
   %9 = alloca %"class.draco::VectorD.120", align 8 ; 8 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.b = load i32, ptr %1, align 4, !tbaa !186    ; 6 uses
+  %i.b = load i32, ptr %1, align 4, !tbaa !186    ; 5 uses
   %i.c = icmp eq i32 %i.b, -1
   br i1 %i.c, label %_ZNK5draco24MeshAttributeCornerTable8PreviousENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %10 = add nuw i32 %i.b, 1                       ; 2 uses
-  %11 = urem i32 %10, 3
-  %.not.i.i = icmp eq i32 %11, 0
-  %12 = add i32 %i.b, -2
-  %spec.select.i.i.a = select i1 %.not.i.i, i32 %12, i32 %10 ; 2 uses
-  %13 = urem i32 %i.b, 3
-  %.not.i.i58 = icmp eq i32 %13, 0
-  br i1 %.not.i.i58, label %bb.d, label %bb.c
+  %10 = insertelement <2 x i32> poison, i32 %i.b, i64 0
+  %11 = shufflevector <2 x i32> %10, <2 x i32> poison, <2 x i32> zeroinitializer
+  %12 = add nuw <2 x i32> %11, <i32 0, i32 1>
+  %13 = urem <2 x i32> %12, splat (i32 3)
+  %14 = icmp eq <2 x i32> %13, zeroinitializer    ; 2 uses
+  %15 = extractelement <2 x i1> %14, i64 1
+  %spec.select.i.i.a = select i1 %15, i32 -2, i32 1
+  %spec.select.i.i = add i32 %i.b, %spec.select.i.i.a ; 2 uses
+  %16 = extractelement <2 x i1> %14, i64 0
+  br i1 %16, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.d = add i32 %i.b, -1
@@ -654,7 +658,7 @@ bb.d:                                             ; preds = %bb.b
   br label %_ZNK5draco24MeshAttributeCornerTable8PreviousENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit
 
 _ZNK5draco24MeshAttributeCornerTable8PreviousENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit: ; preds = %bb.a, %bb.c, %bb.d
-  %.sink.i.i193 = phi i32 [ %spec.select.i.i.a, %bb.c ], [ %spec.select.i.i.a, %bb.d ], [ -1, %bb.a ]
+  %.sink.i.i193 = phi i32 [ %spec.select.i.i, %bb.c ], [ %spec.select.i.i, %bb.d ], [ -1, %bb.a ]
   %.sink.i.i59 = phi i32 [ %i.d, %bb.c ], [ %i.e, %bb.d ], [ -1, %bb.a ]
   %i.f = load ptr, ptr %i.a, align 8, !tbaa !128
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 88
@@ -1057,27 +1061,29 @@ bb.a:
   %7 = alloca %"class.draco::VectorD.115", align 4 ; 7 uses
   %8 = alloca %"class.draco::VectorD.115", align 4 ; 7 uses
   %9 = alloca %"class.draco::VectorD.115", align 4 ; 7 uses
-  %i.a = load i32, ptr %1, align 4, !tbaa !186    ; 5 uses
+  %i.a = load i32, ptr %1, align 4, !tbaa !186    ; 4 uses
   %i.b = icmp eq i32 %i.a, -1
   br i1 %i.b, label %_ZNK5draco11CornerTable6VertexENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit89, label %_ZNK5draco11CornerTable8PreviousENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit
 
 _ZNK5draco11CornerTable8PreviousENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit: ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %10 = add nuw i32 %i.a, 1                       ; 2 uses
-  %11 = urem i32 %10, 3
-  %.not.i = icmp eq i32 %11, 0
-  %12 = add i32 %i.a, -2
-  %spec.select.i.a = select i1 %.not.i, i32 %12, i32 %10 ; 2 uses
-  %13 = urem i32 %i.a, 3
-  %.not.i86 = icmp eq i32 %13, 0
-  %.sink.i87.v = select i1 %.not.i86, i32 2, i32 -1
+  %10 = insertelement <2 x i32> poison, i32 %i.a, i64 0
+  %11 = shufflevector <2 x i32> %10, <2 x i32> poison, <2 x i32> zeroinitializer
+  %12 = add nuw <2 x i32> %11, <i32 0, i32 1>
+  %13 = urem <2 x i32> %12, splat (i32 3)
+  %14 = icmp eq <2 x i32> %13, zeroinitializer    ; 2 uses
+  %15 = extractelement <2 x i1> %14, i64 1
+  %spec.select.i.a = select i1 %15, i32 -2, i32 1
+  %spec.select.i = add i32 %i.a, %spec.select.i.a ; 2 uses
+  %16 = extractelement <2 x i1> %14, i64 0
+  %.sink.i87.v = select i1 %16, i32 2, i32 -1
   %.sink.i87 = add i32 %.sink.i87.v, %i.a         ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !134  ; 2 uses
-  %i.e = icmp eq i32 %spec.select.i.a, -1
+  %i.e = icmp eq i32 %spec.select.i, -1
   br i1 %i.e, label %_ZNK5draco11CornerTable6VertexENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit, label %bb.b
 
 bb.b:                                             ; preds = %_ZNK5draco11CornerTable8PreviousENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit
-  %i.f = zext i32 %spec.select.i.a to i64
+  %i.f = zext i32 %spec.select.i to i64
   %i.g = load ptr, ptr %i.d, align 8, !tbaa !205, !noalias !772
   %i.h = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.f
   %i.i = load i32, ptr %i.h, align 4, !tbaa !207, !noalias !772
@@ -1480,27 +1486,29 @@ bb.a:
   %7 = alloca %"class.draco::VectorD.120", align 8 ; 8 uses
   %8 = alloca %"class.draco::VectorD.120", align 8 ; 8 uses
   %9 = alloca %"class.draco::VectorD.120", align 8 ; 8 uses
-  %i.a = load i32, ptr %1, align 4, !tbaa !186    ; 5 uses
+  %i.a = load i32, ptr %1, align 4, !tbaa !186    ; 4 uses
   %i.b = icmp eq i32 %i.a, -1
   br i1 %i.b, label %_ZNK5draco11CornerTable6VertexENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit61, label %_ZNK5draco11CornerTable8PreviousENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit
 
 _ZNK5draco11CornerTable8PreviousENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit: ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %10 = add nuw i32 %i.a, 1                       ; 2 uses
-  %11 = urem i32 %10, 3
-  %.not.i = icmp eq i32 %11, 0
-  %12 = add i32 %i.a, -2
-  %spec.select.i.a = select i1 %.not.i, i32 %12, i32 %10 ; 2 uses
-  %13 = urem i32 %i.a, 3
-  %.not.i58 = icmp eq i32 %13, 0
-  %.sink.i59.v = select i1 %.not.i58, i32 2, i32 -1
+  %10 = insertelement <2 x i32> poison, i32 %i.a, i64 0
+  %11 = shufflevector <2 x i32> %10, <2 x i32> poison, <2 x i32> zeroinitializer
+  %12 = add nuw <2 x i32> %11, <i32 0, i32 1>
+  %13 = urem <2 x i32> %12, splat (i32 3)
+  %14 = icmp eq <2 x i32> %13, zeroinitializer    ; 2 uses
+  %15 = extractelement <2 x i1> %14, i64 1
+  %spec.select.i.a = select i1 %15, i32 -2, i32 1
+  %spec.select.i = add i32 %i.a, %spec.select.i.a ; 2 uses
+  %16 = extractelement <2 x i1> %14, i64 0
+  %.sink.i59.v = select i1 %16, i32 2, i32 -1
   %.sink.i59 = add i32 %.sink.i59.v, %i.a         ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !134  ; 2 uses
-  %i.e = icmp eq i32 %spec.select.i.a, -1
+  %i.e = icmp eq i32 %spec.select.i, -1
   br i1 %i.e, label %_ZNK5draco11CornerTable6VertexENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit, label %bb.b
 
 bb.b:                                             ; preds = %_ZNK5draco11CornerTable8PreviousENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit
-  %i.f = zext i32 %spec.select.i.a to i64
+  %i.f = zext i32 %spec.select.i to i64
   %i.g = load ptr, ptr %i.d, align 8, !tbaa !205, !noalias !816
   %i.h = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.f
   %i.i = load i32, ptr %i.h, align 4, !tbaa !207, !noalias !816

@@ -205,15 +205,9 @@ bb.a:
   %i.e = lshr i48 %1, 32
   %i.f = trunc nuw i48 %i.e to i16
   %i.g = extractelement <2 x i16> %i.d, i64 0
-  %i.h = sub i16 %i.f, %i.g                       ; 5 uses
+  %i.h = sub i16 %i.f, %i.g                       ; 4 uses
   %i.i = add i16 %2, -1                           ; 3 uses
-  %i.j = add i16 %i.i, %i.h                       ; 3 uses
-  %4 = sext i16 %i.h to i32                       ; 2 uses
-  %5 = add nsw i32 %4, -15
-  %.not157158 = icmp slt i16 %i.h, 0
-  %6 = select i1 %.not157158, i32 %5, i32 %4
-  %7 = sdiv i32 %6, 16                            ; 2 uses
-  %.sroa.534.0.extract.trunc = trunc nsw i32 %7 to i16
+  %i.j = add i16 %i.i, %i.h                       ; 2 uses
   %.sroa.2.0.extract.trunc = trunc i48 %.sroa.2.0.extract.shift to i16 ; 2 uses
   %.sroa.046.0.extract.trunc = trunc i48 %1 to i16
   %i.k = insertelement <2 x i16> poison, i16 %.sroa.046.0.extract.trunc, i64 0
@@ -238,12 +232,17 @@ bb.a:
   %i.ab = icmp slt <2 x i16> %i.q, zeroinitializer
   %i.ac = select <2 x i1> %i.ab, <2 x i32> %i.aa, <2 x i32> %i.z
   %i.ad = sdiv <2 x i32> %i.ac, splat (i32 16)    ; 3 uses
-  %8 = sext i16 %i.j to i32                       ; 2 uses
-  %9 = add nsw i32 %8, -15
-  %.not159160 = icmp slt i16 %i.j, 0
-  %10 = select i1 %.not159160, i32 %9, i32 %8
-  %11 = sdiv i32 %10, 16
-  %.mask.i.i64 = and i32 %11, 65535
+  %4 = insertelement <2 x i16> poison, i16 %i.h, i64 0
+  %5 = insertelement <2 x i16> %4, i16 %i.j, i64 1 ; 2 uses
+  %6 = sext <2 x i16> %5 to <2 x i32>             ; 2 uses
+  %7 = add nsw <2 x i32> %6, splat (i32 -15)
+  %8 = icmp slt <2 x i16> %5, zeroinitializer
+  %9 = select <2 x i1> %8, <2 x i32> %7, <2 x i32> %6
+  %10 = sdiv <2 x i32> %9, splat (i32 16)         ; 2 uses
+  %11 = extractelement <2 x i32> %10, i64 0       ; 2 uses
+  %.sroa.534.0.extract.trunc = trunc nsw i32 %11 to i16
+  %12 = extractelement <2 x i32> %10, i64 1
+  %.mask.i.i64 = and i32 %12, 65535
   %.sroa.3.0.insert.ext.i.i65 = zext nneg i32 %.mask.i.i64 to i48
   %.sroa.3.0.insert.shift.i.i66 = shl nuw i48 %.sroa.3.0.insert.ext.i.i65, 32
   %i.ae = bitcast <2 x i32> %i.ad to <4 x i16>
@@ -271,7 +270,7 @@ bb.a:
 .preheader163:                                    ; preds = %._crit_edge, %bb.a
   %i.al = ashr exact i48 %.sroa.3.0.insert.shift.i.i66, 32
   %i.am = trunc nsw i48 %i.al to i32              ; 2 uses
-  %.not181 = icmp sgt i32 %7, %i.am
+  %.not181 = icmp sgt i32 %11, %i.am
   br i1 %.not181, label %._crit_edge185, label %.preheader162.lr.ph
 
 .preheader162.lr.ph:                              ; preds = %.preheader163

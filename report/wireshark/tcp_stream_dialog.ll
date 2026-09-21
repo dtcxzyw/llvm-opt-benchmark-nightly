@@ -205,22 +205,26 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.bi = getelementptr i8, ptr %1, i64 32
-  %i.bj = load ptr, ptr %i.bi, align 8            ; 2 uses
+  %i.bj = load ptr, ptr %i.bi, align 8            ; 4 uses
   %i.bk = getelementptr i8, ptr %i.bj, i64 20
   %i.bl = getelementptr i8, ptr %i.bj, i64 28
-  %106 = load <2 x i32>, ptr %i.bl, align 4
-  %107 = load <2 x i32>, ptr %i.bk, align 4
-  %108 = add <2 x i32> %106, splat (i32 1)
-  %109 = sub <2 x i32> %108, %107                 ; 2 uses
-  %110 = extractelement <2 x i32> %109, i64 0
-  %111 = shl i32 %110, 1
-  %112 = sdiv i32 %111, 3
-  %113 = extractelement <2 x i32> %109, i64 1
-  %i.bm = shl i32 %113, 2
+  %106 = load i32, ptr %i.bl, align 4
+  %107 = load i32, ptr %i.bk, align 4
+  %108 = add i32 %106, 1
+  %109 = sub i32 %108, %107
+  %110 = shl i32 %109, 1
+  %111 = sdiv i32 %110, 3
+  %112 = getelementptr i8, ptr %i.bj, i64 32
+  %113 = load i32, ptr %112, align 4
+  %114 = getelementptr i8, ptr %i.bj, i64 24
+  %115 = load i32, ptr %114, align 4
+  %116 = add i32 %113, 1
+  %117 = sub i32 %116, %115
+  %i.bm = shl i32 %117, 2
   %i.bn = sdiv i32 %i.bm, 5
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #28
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) dereferenceable_or_null(24) %15, i8 0, i64 24, i1 false)
-  invoke void @_ZN19GeometryStateDialog12loadGeometryEiiRK7QString(ptr noundef align 8 dereferenceable_or_null(72) %0, i32 noundef %112, i32 noundef %i.bn, ptr noundef nonnull align 8 dereferenceable(24) %15)
+  invoke void @_ZN19GeometryStateDialog12loadGeometryEiiRK7QString(ptr noundef align 8 dereferenceable_or_null(72) %0, i32 noundef %111, i32 noundef %i.bn, ptr noundef nonnull align 8 dereferenceable(24) %15)
           to label %bb.f unwind label %bb.k
 
 bb.f:                                             ; preds = %bb.e

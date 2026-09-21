@@ -205,11 +205,10 @@ _lib_histogram_vectorscope_bkgd.exit:             ; preds = %bb.d, %.loopexit.i
   %i.ox = add <2 x i32> %i.ov, %i.ow
   %i.oy = sub <2 x i32> %i.ou, %i.ox              ; 2 uses
   %i.oz = call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.oy, <2 x i32> splat (i32 1))
-  %5 = icmp slt <2 x i32> %i.oy, splat (i32 2)    ; 2 uses
-  %6 = extractelement <2 x i1> %5, i64 0
-  %7 = extractelement <2 x i1> %5, i64 1
-  %or.cond = and i1 %6, %7
-  br i1 %or.cond, label %bb.am, label %bb.an
+  %5 = icmp sgt <2 x i32> %i.oy, splat (i32 1)
+  %6 = bitcast <2 x i1> %5 to i2
+  %7 = icmp eq i2 %6, 0
+  br i1 %7, label %bb.am, label %bb.an
 
 bb.am:                                            ; preds = %_lib_histogram_vectorscope_bkgd.exit
   store i32 0, ptr %i.ot, align 4, !tbaa !164

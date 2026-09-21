@@ -205,14 +205,15 @@ _ZNK8facebook5velox13DecodedVector7valueAtIdEET_i.exit63.peel: ; preds = %_ZNK8f
   br i1 %.not43.peel, label %.loopexit, label %bb.l, !prof !60
 
 bb.l:                                             ; preds = %_ZNK8facebook5velox13DecodedVector7valueAtIdEET_i.exit63.peel
-  %6 = tail call double @llvm.fabs.f64(double %i.do)
-  %7 = fcmp ueq double %6, +inf
-  %8 = tail call double @llvm.fabs.f64(double %i.dp)
-  %9 = fcmp ueq double %8, +inf
-  %or.cond.not90.peel = or i1 %9, %7
+  %6 = insertelement <2 x double> poison, double %i.dp, i64 0
+  %7 = insertelement <2 x double> %6, double %i.do, i64 1
+  %8 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %7)
+  %9 = fcmp ueq <2 x double> %8, splat (double +inf)
+  %10 = bitcast <2 x i1> %9 to i2
+  %11 = icmp ne i2 %10, 0
   %i.dv = tail call double @llvm.fabs.f64(double %i.ds)
   %i.dw = fcmp ueq double %i.dv, +inf
-  %or.cond83.peel = or i1 %or.cond.not90.peel, %i.dw
+  %or.cond83.peel = or i1 %11, %i.dw
   br i1 %or.cond83.peel, label %.critedge45, label %bb.m, !prof !684
 
 bb.m:                                             ; preds = %bb.l
@@ -423,14 +424,15 @@ _ZNK8facebook5velox13DecodedVector7valueAtIdEET_i.exit63: ; preds = %_ZNK8facebo
   unreachable
 
 bb.u:                                             ; preds = %_ZNK8facebook5velox13DecodedVector7valueAtIdEET_i.exit63
-  %10 = tail call double @llvm.fabs.f64(double %i.hr)
-  %11 = fcmp ueq double %10, +inf
-  %12 = tail call double @llvm.fabs.f64(double %i.hq)
-  %13 = fcmp ueq double %12, +inf
-  %or.cond.not90 = or i1 %13, %11
+  %12 = insertelement <2 x double> poison, double %i.hq, i64 0
+  %13 = insertelement <2 x double> %12, double %i.hr, i64 1
+  %14 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %13)
+  %15 = fcmp ueq <2 x double> %14, splat (double +inf)
+  %16 = bitcast <2 x i1> %15 to i2
+  %17 = icmp ne i2 %16, 0
   %i.hx = tail call double @llvm.fabs.f64(double %i.hu)
   %i.hy = fcmp ueq double %i.hx, +inf
-  %or.cond83 = or i1 %or.cond.not90, %i.hy
+  %or.cond83 = or i1 %17, %i.hy
   br i1 %or.cond83, label %.critedge45, label %bb.v, !prof !684
 
 .critedge45:                                      ; preds = %bb.u, %bb.l
@@ -832,6 +834,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #21
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #21
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

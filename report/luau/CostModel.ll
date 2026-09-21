@@ -205,50 +205,47 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define dso_local noundef range(i32 -2147483647, -2147483648) i32 @_ZN4Luau7Compile12getTripCountEddd(double noundef %0, double noundef %1, double noundef %2) local_unnamed_addr #5 {
 bb.a:
-  %3 = tail call double @llvm.fabs.f64(double %0)
-  %or.cond = fcmp ugt double %3, 3.276700e+04
-  %4 = fptosi double %0 to i32                    ; 2 uses
-  %5 = sitofp i32 %4 to double
-  %6 = fcmp une double %0, %5
-  %7 = select i1 %or.cond, i1 true, i1 %6
-  %8 = select i1 %7, i32 -2147483648, i32 %4      ; 4 uses
-  %i.a = tail call double @llvm.fabs.f64(double %1)
+  %3 = insertelement <2 x double> poison, double %0, i64 0
+  %4 = insertelement <2 x double> %3, double %1, i64 1 ; 3 uses
+  %5 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %4)
+  %6 = fptosi <2 x double> %4 to <2 x i32>        ; 2 uses
+  %i.a = tail call double @llvm.fabs.f64(double %2)
   %or.cond3 = fcmp ugt double %i.a, 3.276700e+04
-  %i.b = fptosi double %1 to i32                  ; 2 uses
+  %i.b = fptosi double %2 to i32                  ; 2 uses
   %i.c = sitofp i32 %i.b to double
-  %i.d = fcmp une double %1, %i.c
+  %i.d = fcmp une double %2, %i.c
   %i.e = select i1 %or.cond3, i1 true, i1 %i.d
   %i.f = select i1 %i.e, i32 -2147483648, i32 %i.b ; 4 uses
-  %9 = tail call double @llvm.fabs.f64(double %2)
-  %or.cond5 = fcmp ugt double %9, 3.276700e+04
-  %10 = fptosi double %2 to i32                   ; 2 uses
-  %11 = sitofp i32 %10 to double
-  %12 = fcmp une double %2, %11
-  %13 = select i1 %or.cond5, i1 true, i1 %12
-  %14 = select i1 %13, i32 -2147483648, i32 %10   ; 4 uses
-  %15 = icmp eq i32 %8, -2147483648
-  %16 = icmp eq i32 %i.f, -2147483648
-  %or.cond7 = or i1 %15, %16
-  %i.g = and i32 %14, 2147483647
+  %7 = fcmp ugt <2 x double> %5, splat (double 3.276700e+04)
+  %8 = sitofp <2 x i32> %6 to <2 x double>
+  %9 = fcmp une <2 x double> %4, %8
+  %10 = select <2 x i1> %7, <2 x i1> splat (i1 true), <2 x i1> %9
+  %11 = select <2 x i1> %10, <2 x i32> splat (i32 -2147483648), <2 x i32> %6 ; 3 uses
+  %12 = icmp eq <2 x i32> %11, splat (i32 -2147483648)
+  %13 = bitcast <2 x i1> %12 to i2
+  %14 = icmp ne i2 %13, 0
+  %i.g = and i32 %i.f, 2147483647
   %i.h = icmp eq i32 %i.g, 0
-  %or.cond11 = or i1 %or.cond7, %i.h
+  %or.cond11 = or i1 %14, %i.h
   br i1 %or.cond11, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.i = icmp slt i32 %14, 0
-  %i.j = icmp sgt i32 %i.f, %8
+  %i.i = icmp slt i32 %i.f, 0
+  %15 = extractelement <2 x i32> %11, i64 0       ; 3 uses
+  %16 = extractelement <2 x i32> %11, i64 1       ; 3 uses
+  %i.j = icmp sgt i32 %16, %15
   %or.cond47 = and i1 %i.j, %i.i
   br i1 %or.cond47, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.k = icmp sgt i32 %14, 0
-  %i.l = icmp slt i32 %i.f, %8
+  %i.k = icmp sgt i32 %i.f, 0
+  %i.l = icmp slt i32 %16, %15
   %or.cond48 = and i1 %i.l, %i.k
   br i1 %or.cond48, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.m = sub nsw i32 %i.f, %8
-  %i.n = sdiv i32 %i.m, %14
+  %i.m = sub nsw i32 %16, %15
+  %i.n = sdiv i32 %i.m, %i.f
   %i.o = add nsw i32 %i.n, 1
   br label %bb.e
 
@@ -651,7 +648,7 @@ bb.i:                                             ; preds = %bb.f
 
 bb.j:                                             ; preds = %bb.i
   %i.bj = getelementptr inbounds nuw i8, ptr %i.ba, i64 16
-  %i.bk = load double, ptr %i.bj, align 8, !tbaa !83 ; 3 uses
+  %i.bk = load double, ptr %i.bj, align 8, !tbaa !83
   %i.bl = load ptr, ptr %i.n, align 8, !tbaa !109 ; 3 uses
   %i.bm = icmp eq ptr %i.bl, %i.aq
   br i1 %i.bm, label %_ZN4Luau7Compile12getTripCountEddd.exit.thread, label %bb.k
@@ -690,7 +687,7 @@ bb.o:                                             ; preds = %bb.l
 
 bb.p:                                             ; preds = %bb.o
   %i.ca = getelementptr inbounds nuw i8, ptr %i.br, i64 16
-  %i.cb = load double, ptr %i.ca, align 8, !tbaa !83 ; 3 uses
+  %i.cb = load double, ptr %i.ca, align 8, !tbaa !83
   %i.cc = load ptr, ptr %i.y, align 8, !tbaa !110 ; 4 uses
   %.not12 = icmp eq ptr %i.cc, null
   br i1 %.not12, label %bb.w, label %bb.q
@@ -738,50 +735,47 @@ _ZN4Luau7Compile11CostVisitor9getNumberEPNS_7AstExprERd.exit24: ; preds = %bb.v
 
 bb.w:                                             ; preds = %_ZN4Luau7Compile11CostVisitor9getNumberEPNS_7AstExprERd.exit24, %bb.p
   %.035 = phi double [ 1.000000e+00, %bb.p ], [ %i.cs, %_ZN4Luau7Compile11CostVisitor9getNumberEPNS_7AstExprERd.exit24 ] ; 3 uses
-  %2 = tail call double @llvm.fabs.f64(double %i.bk)
-  %or.cond.i = fcmp ugt double %2, 3.276700e+04
-  %3 = fptosi double %i.bk to i32                 ; 2 uses
-  %4 = sitofp i32 %3 to double
-  %5 = fcmp une double %i.bk, %4
-  %6 = select i1 %or.cond.i, i1 true, i1 %5
-  %7 = select i1 %6, i32 -2147483648, i32 %3      ; 4 uses
-  %i.ct = tail call double @llvm.fabs.f64(double %i.cb)
+  %2 = insertelement <2 x double> poison, double %i.bk, i64 0
+  %3 = insertelement <2 x double> %2, double %i.cb, i64 1 ; 3 uses
+  %4 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %3)
+  %5 = fptosi <2 x double> %3 to <2 x i32>        ; 2 uses
+  %i.ct = tail call double @llvm.fabs.f64(double %.035)
   %or.cond3.i = fcmp ugt double %i.ct, 3.276700e+04
-  %i.cu = fptosi double %i.cb to i32              ; 2 uses
+  %i.cu = fptosi double %.035 to i32              ; 2 uses
   %i.cv = sitofp i32 %i.cu to double
-  %i.cw = fcmp une double %i.cb, %i.cv
+  %i.cw = fcmp une double %.035, %i.cv
   %i.cx = select i1 %or.cond3.i, i1 true, i1 %i.cw
   %i.cy = select i1 %i.cx, i32 -2147483648, i32 %i.cu ; 4 uses
-  %8 = tail call double @llvm.fabs.f64(double %.035)
-  %or.cond5.i = fcmp ugt double %8, 3.276700e+04
-  %9 = fptosi double %.035 to i32                 ; 2 uses
-  %10 = sitofp i32 %9 to double
-  %11 = fcmp une double %.035, %10
-  %12 = select i1 %or.cond5.i, i1 true, i1 %11
-  %13 = select i1 %12, i32 -2147483648, i32 %9    ; 4 uses
-  %14 = icmp eq i32 %7, -2147483648
-  %15 = icmp eq i32 %i.cy, -2147483648
-  %or.cond7.i = or i1 %14, %15
-  %i.cz = and i32 %13, 2147483647
+  %6 = fcmp ugt <2 x double> %4, splat (double 3.276700e+04)
+  %7 = sitofp <2 x i32> %5 to <2 x double>
+  %8 = fcmp une <2 x double> %3, %7
+  %9 = select <2 x i1> %6, <2 x i1> splat (i1 true), <2 x i1> %8
+  %10 = select <2 x i1> %9, <2 x i32> splat (i32 -2147483648), <2 x i32> %5 ; 3 uses
+  %11 = icmp eq <2 x i32> %10, splat (i32 -2147483648)
+  %12 = bitcast <2 x i1> %11 to i2
+  %13 = icmp ne i2 %12, 0
+  %i.cz = and i32 %i.cy, 2147483647
   %i.da = icmp eq i32 %i.cz, 0
-  %or.cond11.i = or i1 %or.cond7.i, %i.da
+  %or.cond11.i = or i1 %13, %i.da
   br i1 %or.cond11.i, label %_ZN4Luau7Compile12getTripCountEddd.exit.thread, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.db = icmp slt i32 %13, 0
-  %i.dc = icmp sgt i32 %i.cy, %7
+  %i.db = icmp slt i32 %i.cy, 0
+  %14 = extractelement <2 x i32> %10, i64 0       ; 3 uses
+  %15 = extractelement <2 x i32> %10, i64 1       ; 3 uses
+  %i.dc = icmp sgt i32 %15, %14
   %or.cond47.i = and i1 %i.dc, %i.db
   br i1 %or.cond47.i, label %_ZN4Luau7Compile12getTripCountEddd.exit.thread, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %i.dd = icmp sgt i32 %13, 0
-  %i.de = icmp slt i32 %i.cy, %7
+  %i.dd = icmp sgt i32 %i.cy, 0
+  %i.de = icmp slt i32 %15, %14
   %or.cond48.i = and i1 %i.de, %i.dd
   br i1 %or.cond48.i, label %_ZN4Luau7Compile12getTripCountEddd.exit.thread, label %_ZN4Luau7Compile12getTripCountEddd.exit
 
 _ZN4Luau7Compile12getTripCountEddd.exit:          ; preds = %bb.y
-  %i.df = sub nsw i32 %i.cy, %7
-  %i.dg = sdiv i32 %i.df, %13
+  %i.df = sub nsw i32 %15, %14
+  %i.dg = sdiv i32 %i.df, %i.cy
   %.fr = freeze i32 %i.dg                         ; 2 uses
   %i.dh = icmp slt i32 %.fr, -1
   %i.di = tail call i32 @llvm.smin.i32(i32 %.fr, i32 126)
@@ -1183,6 +1177,9 @@ declare void @llvm.assume(i1 noundef) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #11
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

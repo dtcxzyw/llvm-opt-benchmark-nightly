@@ -205,12 +205,11 @@ bb.e:                                             ; preds = %bb.d, %_ZNSt3__14fi
 define hidden void @_ZN7nanogui6Screen13center_windowEPNS_6WindowE(ptr nofree noundef nonnull readonly align 16 captures(none) dereferenceable(520) %0, ptr noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 4 uses
-  %i.b = load <2 x i32>, ptr %i.a, align 4        ; 3 uses
-  %2 = extractelement <2 x i32> %i.b, i64 0
-  %.not.i = icmp eq i32 %2, 0
-  %3 = extractelement <2 x i32> %i.b, i64 1
-  %.not.1.i = icmp eq i32 %3, 0
-  %.not.lcssa.i = select i1 %.not.i, i1 %.not.1.i, i1 false
+  %i.b = load <2 x i32>, ptr %i.a, align 4        ; 2 uses
+  %2 = icmp eq <2 x i32> %i.b, zeroinitializer    ; 2 uses
+  %3 = extractelement <2 x i1> %2, i64 0
+  %4 = extractelement <2 x i1> %2, i64 1
+  %.not.lcssa.i = select i1 %3, i1 %4, i1 false
   br i1 %.not.lcssa.i, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a

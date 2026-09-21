@@ -21,14 +21,15 @@ bb.a:
   br i1 %i.j, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = tail call half @llvm.fabs.f16(half %0)
-  %4 = fcmp oeq half %3, +inf
-  %5 = tail call half @llvm.fabs.f16(half %1)
-  %6 = fcmp oeq half %5, +inf
-  %7 = or i1 %4, %6
+  %3 = insertelement <2 x half> poison, half %0, i64 0
+  %4 = insertelement <2 x half> %3, half %1, i64 1
+  %5 = tail call <2 x half> @llvm.fabs.v2f16(<2 x half> %4)
+  %6 = fcmp oeq <2 x half> %5, splat (half +inf)
+  %7 = bitcast <2 x i1> %6 to i2
+  %8 = icmp ne i2 %7, 0
   %i.k = tail call half @llvm.fabs.f16(half %2)
   %i.l = fcmp oeq half %i.k, +inf
-  %i.m = or i1 %7, %i.l
+  %i.m = or i1 %8, %i.l
   %i.n = select i1 %i.m, half 0.000000e+00, half %i.h
   br label %bb.c
 
@@ -45,6 +46,9 @@ declare float @llvm.amdgcn.rsq.f32(float) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare half @llvm.fabs.f16(half) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x half> @llvm.fabs.v2f16(<2 x half>) #1
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn denormal_fpenv(dynamic) memory(none) uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" }
 attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }

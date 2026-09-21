@@ -204,18 +204,23 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1448
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !31   ; 11 uses
   %i.c = shl i32 %3, 1
-  %9 = udiv i32 %i.c, 10                          ; 7 uses
-  %10 = shl i32 %4, 1                             ; 2 uses
-  %11 = udiv i32 %10, 10                          ; 2 uses
-  %12 = udiv i32 %5, 10                           ; 6 uses
-  %13 = udiv i32 %6, 10
-  %i.d = add nsw i32 %11, -1                      ; 3 uses
-  %i.e = add nsw i32 %i.d, %9                     ; 6 uses
-  %i.f = add nsw i32 %13, -1                      ; 3 uses
-  %i.g = add nsw i32 %i.f, %12                    ; 6 uses
-  tail call fastcc void @merge(ptr noundef %i.b, i32 noundef %9, i32 noundef %12, i32 noundef 10, i32 noundef 0, ptr noundef %1)
-  tail call fastcc void @merge(ptr noundef %i.b, i32 noundef %i.e, i32 noundef %12, i32 noundef 6, i32 noundef 0, ptr noundef %1)
-  tail call fastcc void @merge(ptr noundef %i.b, i32 noundef %9, i32 noundef %i.g, i32 noundef 9, i32 noundef 0, ptr noundef %1)
+  %9 = shl i32 %4, 1
+  %10 = insertelement <4 x i32> poison, i32 %i.c, i64 0
+  %11 = insertelement <4 x i32> %10, i32 %9, i64 1
+  %12 = insertelement <4 x i32> %11, i32 %5, i64 2
+  %13 = insertelement <4 x i32> %12, i32 %6, i64 3
+  %14 = udiv <4 x i32> %13, splat (i32 10)        ; 4 uses
+  %15 = extractelement <4 x i32> %14, i64 2       ; 6 uses
+  %16 = extractelement <4 x i32> %14, i64 0       ; 7 uses
+  %17 = extractelement <4 x i32> %14, i64 1       ; 3 uses
+  %i.d = add nsw i32 %17, -1                      ; 3 uses
+  %i.e = add nsw i32 %i.d, %16                    ; 6 uses
+  %18 = extractelement <4 x i32> %14, i64 3
+  %i.f = add nsw i32 %18, -1                      ; 3 uses
+  %i.g = add nsw i32 %i.f, %15                    ; 6 uses
+  tail call fastcc void @merge(ptr noundef %i.b, i32 noundef %16, i32 noundef %15, i32 noundef 10, i32 noundef 0, ptr noundef %1)
+  tail call fastcc void @merge(ptr noundef %i.b, i32 noundef %i.e, i32 noundef %15, i32 noundef 6, i32 noundef 0, ptr noundef %1)
+  tail call fastcc void @merge(ptr noundef %i.b, i32 noundef %16, i32 noundef %i.g, i32 noundef 9, i32 noundef 0, ptr noundef %1)
   tail call fastcc void @merge(ptr noundef %i.b, i32 noundef %i.e, i32 noundef %i.g, i32 noundef 5, i32 noundef 0, ptr noundef %1)
   %i.h = icmp ugt i32 %i.d, 1
   br i1 %i.h, label %.lr.ph, label %.preheader65
@@ -226,20 +231,20 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %.06266 = phi i32 [ %i.k, %.lr.ph ], [ 1, %bb.a ] ; 2 uses
-  %i.j = add i32 %.06266, %9                      ; 2 uses
-  tail call fastcc void @merge(ptr noundef %i.b, i32 noundef %i.j, i32 noundef %12, i32 noundef 12, i32 noundef 2, ptr noundef %1)
+  %i.j = add i32 %.06266, %16                     ; 2 uses
+  tail call fastcc void @merge(ptr noundef %i.b, i32 noundef %i.j, i32 noundef %15, i32 noundef 12, i32 noundef 2, ptr noundef %1)
   tail call fastcc void @merge(ptr noundef %i.b, i32 noundef %i.j, i32 noundef %i.g, i32 noundef 12, i32 noundef 1, ptr noundef %1)
   %i.k = add nuw i32 %.06266, 1                   ; 2 uses
   %exitcond.not = icmp eq i32 %i.k, %i.d
   br i1 %exitcond.not, label %.preheader65, label %.lr.ph, !llvm.loop !75
 
 .preheader64:                                     ; preds = %.lr.ph68, %.preheader65
-  %.172 = add nuw nsw i32 %12, 1                  ; 3 uses
+  %.172 = add nuw nsw i32 %15, 1                  ; 3 uses
   %i.l = icmp ult i32 %.172, %i.g
   br i1 %i.l, label %.preheader.lr.ph, label %._crit_edge.split
 
 .preheader.lr.ph:                                 ; preds = %.preheader64
-  %.16369 = add nuw nsw i32 %9, 1                 ; 5 uses
+  %.16369 = add nuw nsw i32 %16, 1                ; 5 uses
   %i.m = icmp ult i32 %.16369, %i.e
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 4 uses
@@ -252,13 +257,12 @@ bb.a:
   br i1 %.not22.i, label %.preheader.us.preheader, label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph.split
-  %xtraiter = and i32 %11, 1
+  %xtraiter = and i32 %17, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0        ; 2 uses
   %.not.i.us.us.prol = icmp slt i32 %.16369, %i.q
   %i.r = zext nneg i32 %.16369 to i64
-  %.163.us.us.prol = add nuw nsw i32 %9, 2        ; 3 uses
-  %.off = add i32 %10, -30
-  %14 = icmp ult i32 %.off, 10
+  %.off = add nuw nsw i32 %16, 2                  ; 3 uses
+  %19 = icmp eq i32 %17, 3
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %..loopexit_crit_edge.split.us.us
@@ -266,7 +270,7 @@ bb.a:
   %i.s = sext i32 %.173.us to i64                 ; 3 uses
   %.not.i.us.us.prol.not = xor i1 %.not.i.us.us.prol, true
   %brmerge = select i1 %lcmp.mod.not, i1 true, i1 %.not.i.us.us.prol.not
-  %.16369.mux = select i1 %lcmp.mod.not, i32 %.16369, i32 %.163.us.us.prol
+  %.16369.mux = select i1 %lcmp.mod.not, i32 %.16369, i32 %.off
   br i1 %brmerge, label %.prol.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %.preheader.us
@@ -283,8 +287,8 @@ bb.c:                                             ; preds = %bb.b
   br label %.prol.loopexit
 
 .prol.loopexit:                                   ; preds = %.preheader.us, %bb.b, %bb.c
-  %.16370.us.us.unr = phi i32 [ %.16369.mux, %.preheader.us ], [ %.163.us.us.prol, %bb.c ], [ %.163.us.us.prol, %bb.b ]
-  br i1 %14, label %..loopexit_crit_edge.split.us.us, label %.preheader.us.new
+  %.16370.us.us.unr = phi i32 [ %.16369.mux, %.preheader.us ], [ %.off, %bb.c ], [ %.off, %bb.b ]
+  br i1 %19, label %..loopexit_crit_edge.split.us.us, label %.preheader.us.new
 
 .preheader.us.new:                                ; preds = %.prol.loopexit, %put.exit.us.us.1
   %.16370.us.us = phi i32 [ %.163.us.us.1, %put.exit.us.us.1 ], [ %.16370.us.us.unr, %.prol.loopexit ] ; 4 uses
@@ -336,8 +340,8 @@ put.exit.us.us.1:                                 ; preds = %bb.g, %bb.f, %put.e
 
 .lr.ph68:                                         ; preds = %.preheader65, %.lr.ph68
   %.067 = phi i32 [ %i.al, %.lr.ph68 ], [ 1, %.preheader65 ] ; 2 uses
-  %i.ak = add i32 %.067, %12                      ; 2 uses
-  tail call fastcc void @merge(ptr noundef %i.b, i32 noundef %9, i32 noundef %i.ak, i32 noundef 3, i32 noundef 8, ptr noundef %1)
+  %i.ak = add i32 %.067, %15                      ; 2 uses
+  tail call fastcc void @merge(ptr noundef %i.b, i32 noundef %16, i32 noundef %i.ak, i32 noundef 3, i32 noundef 8, ptr noundef %1)
   tail call fastcc void @merge(ptr noundef %i.b, i32 noundef %i.e, i32 noundef %i.ak, i32 noundef 3, i32 noundef 4, ptr noundef %1)
   %i.al = add nuw i32 %.067, 1                    ; 2 uses
   %exitcond78.not = icmp eq i32 %i.al, %i.f
@@ -389,17 +393,22 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1448
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !31   ; 6 uses
   %i.c = shl i32 %2, 1
-  %8 = udiv i32 %i.c, 10                          ; 3 uses
-  %9 = udiv i32 %3, 10                            ; 3 uses
-  %10 = shl i32 %4, 1
-  %11 = udiv i32 %10, 10                          ; 3 uses
-  %12 = udiv i32 %5, 10                           ; 3 uses
-  %spec.select = tail call i32 @llvm.umax.i32(i32 %8, i32 %11) ; 3 uses
-  %spec.select58 = tail call i32 @llvm.umin.i32(i32 %8, i32 %11) ; 5 uses
-  %.049 = tail call i32 @llvm.umax.i32(i32 %9, i32 %12) ; 3 uses
-  %.048 = tail call i32 @llvm.umin.i32(i32 %9, i32 %12) ; 5 uses
-  %i.d = icmp eq i32 %11, %8
-  %i.e = icmp eq i32 %12, %9                      ; 2 uses
+  %8 = shl i32 %4, 1
+  %9 = insertelement <4 x i32> poison, i32 %i.c, i64 0
+  %10 = insertelement <4 x i32> %9, i32 %3, i64 1
+  %11 = insertelement <4 x i32> %10, i32 %8, i64 2
+  %12 = insertelement <4 x i32> %11, i32 %5, i64 3
+  %13 = udiv <4 x i32> %12, splat (i32 10)        ; 4 uses
+  %14 = extractelement <4 x i32> %13, i64 0       ; 3 uses
+  %15 = extractelement <4 x i32> %13, i64 2       ; 3 uses
+  %spec.select = tail call i32 @llvm.umax.i32(i32 %14, i32 %15) ; 3 uses
+  %spec.select58 = tail call i32 @llvm.umin.i32(i32 %14, i32 %15) ; 5 uses
+  %16 = extractelement <4 x i32> %13, i64 1       ; 3 uses
+  %17 = extractelement <4 x i32> %13, i64 3       ; 3 uses
+  %.049 = tail call i32 @llvm.umax.i32(i32 %16, i32 %17) ; 3 uses
+  %.048 = tail call i32 @llvm.umin.i32(i32 %16, i32 %17) ; 5 uses
+  %i.d = icmp eq i32 %15, %14
+  %i.e = icmp eq i32 %17, %16                     ; 2 uses
   br i1 %i.d, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a

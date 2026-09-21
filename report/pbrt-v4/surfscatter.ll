@@ -204,14 +204,12 @@ bb.u:                                             ; preds = %_ZN4pbrt12FrDielect
 _ZN4pstd8optionalIN4pbrt10BSDFSampleEEptEv.exit.i: ; preds = %bb.u, %bb.t
   %.sroa.17.0.ph.i = phi float [ %i.xr, %bb.u ], [ %i.wb, %bb.t ] ; 2 uses
   %.sroa.22.0.ph.i = phi float [ %i.xt, %bb.u ], [ %i.xn, %bb.t ] ; 3 uses
-  %.sroa.9.0.ph.i = phi <2 x float> [ %.sroa.063.4.vec.insert.i.i, %bb.u ], [ %.sroa.076.4.vec.insert.i.i, %bb.t ] ; 3 uses
-  %.sroa.0.0.vec.extract.i = extractelement <2 x float> %.sroa.9.0.ph.i, i64 0
-  %27 = fcmp oeq float %.sroa.0.0.vec.extract.i, 0.000000e+00
-  %.sroa.0.4.vec.extract.i = extractelement <2 x float> %.sroa.9.0.ph.i, i64 1
-  %28 = fcmp oeq float %.sroa.0.4.vec.extract.i, 0.000000e+00
-  %or.cond17.i.not79.i = and i1 %27, %28
+  %.sroa.9.0.ph.i = phi <2 x float> [ %.sroa.063.4.vec.insert.i.i, %bb.u ], [ %.sroa.076.4.vec.insert.i.i, %bb.t ] ; 2 uses
+  %27 = fcmp une <2 x float> %.sroa.9.0.ph.i, zeroinitializer
+  %28 = bitcast <2 x i1> %27 to i2
+  %29 = icmp eq i2 %28, 0
   %i.xu = fcmp oeq float %.sroa.22.0.ph.i, 0.000000e+00
-  %or.cond.i603 = or i1 %i.xu, %or.cond17.i.not79.i
+  %or.cond.i603 = or i1 %i.xu, %29
   br i1 %or.cond.i603, label %_ZNK4pbrt4BSDF8Sample_fINS_18ThinDielectricBxDFEEEN4pstd8optionalINS_10BSDFSampleEEENS_7Vector3IfEEfNS_6Point2IfEENS_13TransportModeENS_18BxDFReflTransFlagsE.exit.thread, label %bb.v
 
 bb.v:                                             ; preds = %_ZN4pstd8optionalIN4pbrt10BSDFSampleEEptEv.exit.i
@@ -614,14 +612,12 @@ bb.u:                                             ; preds = %_ZN4pbrt12FrDielect
 _ZN4pstd8optionalIN4pbrt10BSDFSampleEEptEv.exit.i: ; preds = %bb.u, %bb.t
   %.sroa.17.0.ph.i = phi float [ %i.xr, %bb.u ], [ %i.wb, %bb.t ] ; 2 uses
   %.sroa.22.0.ph.i = phi float [ %i.xt, %bb.u ], [ %i.xn, %bb.t ] ; 3 uses
-  %.sroa.9.0.ph.i = phi <2 x float> [ %.sroa.063.4.vec.insert.i.i, %bb.u ], [ %.sroa.076.4.vec.insert.i.i, %bb.t ] ; 3 uses
-  %.sroa.0.0.vec.extract.i = extractelement <2 x float> %.sroa.9.0.ph.i, i64 0
-  %27 = fcmp oeq float %.sroa.0.0.vec.extract.i, 0.000000e+00
-  %.sroa.0.4.vec.extract.i = extractelement <2 x float> %.sroa.9.0.ph.i, i64 1
-  %28 = fcmp oeq float %.sroa.0.4.vec.extract.i, 0.000000e+00
-  %or.cond17.i.not79.i = and i1 %27, %28
+  %.sroa.9.0.ph.i = phi <2 x float> [ %.sroa.063.4.vec.insert.i.i, %bb.u ], [ %.sroa.076.4.vec.insert.i.i, %bb.t ] ; 2 uses
+  %27 = fcmp une <2 x float> %.sroa.9.0.ph.i, zeroinitializer
+  %28 = bitcast <2 x i1> %27 to i2
+  %29 = icmp eq i2 %28, 0
   %i.xu = fcmp oeq float %.sroa.22.0.ph.i, 0.000000e+00
-  %or.cond.i603 = or i1 %i.xu, %or.cond17.i.not79.i
+  %or.cond.i603 = or i1 %i.xu, %29
   br i1 %or.cond.i603, label %_ZNK4pbrt4BSDF8Sample_fINS_18ThinDielectricBxDFEEEN4pstd8optionalINS_10BSDFSampleEEENS_7Vector3IfEEfNS_6Point2IfEENS_13TransportModeENS_18BxDFReflTransFlagsE.exit.thread, label %bb.v
 
 bb.v:                                             ; preds = %_ZN4pstd8optionalIN4pbrt10BSDFSampleEEptEv.exit.i

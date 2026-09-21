@@ -18,22 +18,18 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %adler32_fold_copy_impl.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %3 = insertelement <2 x i32> poison, i32 %0, i64 0
-  %4 = shufflevector <2 x i32> %3, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
-  %5 = lshr <2 x i32> %4, <i32 16, i32 65535>
-  %6 = and <2 x i32> %4, <i32 poison, i32 65535>
-  %7 = shufflevector <2 x i32> %5, <2 x i32> %6, <2 x i32> <i32 0, i32 3>
+  %3 = lshr i32 %0, 16
+  %4 = and i32 %0, 65535
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.g, %bb.c
+  %.0122.i = phi i32 [ %3, %bb.c ], [ %11, %bb.g ] ; 3 uses
+  %.0105.i.a = phi i32 [ %4, %bb.c ], [ %i.di, %bb.g ] ; 3 uses
   %.0112.i = phi i64 [ %2, %bb.c ], [ %i.am, %bb.g ] ; 8 uses
   %.0108.i = phi ptr [ %1, %bb.c ], [ %.3111.lcssa.i, %bb.g ] ; 4 uses
-  %.0105.i.a = phi i32 [ %0, %bb.c ], [ %i.dk, %bb.g ]
-  %8 = phi <2 x i32> [ %7, %bb.c ], [ %i.dh, %bb.g ] ; 2 uses
-  %9 = icmp ult i64 %.0112.i, 16
-  %10 = extractelement <2 x i32> %8, i64 0        ; 3 uses
-  %11 = extractelement <2 x i32> %8, i64 1        ; 3 uses
-  br i1 %9, label %.preheader.i.preheader, label %bb.e
+  %.0105.i = phi i32 [ %0, %bb.c ], [ %i.dk, %bb.g ]
+  %5 = icmp ult i64 %.0112.i, 16
+  br i1 %5, label %.preheader.i.preheader, label %bb.e
 
 .preheader.i.preheader:                           ; preds = %bb.d
   %xtraiter136 = and i64 %.0112.i, 3              ; 2 uses
@@ -41,10 +37,10 @@ bb.d:                                             ; preds = %bb.g, %bb.c
   br i1 %lcmp.mod137.not, label %.preheader.i.prol.loopexit, label %.preheader.i.prol
 
 .preheader.i.prol:                                ; preds = %.preheader.i.preheader, %.preheader.i.prol
-  %.015.i.i.prol = phi i32 [ %i.h, %.preheader.i.prol ], [ %10, %.preheader.i.preheader ]
+  %.015.i.i.prol = phi i32 [ %i.h, %.preheader.i.prol ], [ %.0122.i, %.preheader.i.preheader ]
   %.0914.i.i.prol = phi i64 [ %i.c, %.preheader.i.prol ], [ %.0112.i, %.preheader.i.preheader ]
   %.01013.i.i.prol = phi ptr [ %i.d, %.preheader.i.prol ], [ %.0108.i, %.preheader.i.preheader ] ; 2 uses
-  %.01112.i.i.prol = phi i32 [ %i.g, %.preheader.i.prol ], [ %11, %.preheader.i.preheader ]
+  %.01112.i.i.prol = phi i32 [ %i.g, %.preheader.i.prol ], [ %.0105.i.a, %.preheader.i.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.preheader.i.prol ], [ 0, %.preheader.i.preheader ]
   %i.c = add nsw i64 %.0914.i.i.prol, -1          ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %.01013.i.i.prol, i64 1 ; 2 uses
@@ -59,10 +55,10 @@ bb.d:                                             ; preds = %bb.g, %bb.c
 .preheader.i.prol.loopexit:                       ; preds = %.preheader.i.prol, %.preheader.i.preheader
   %.lcssa105.unr = phi i32 [ poison, %.preheader.i.preheader ], [ %i.g, %.preheader.i.prol ]
   %.lcssa.unr = phi i32 [ poison, %.preheader.i.preheader ], [ %i.h, %.preheader.i.prol ]
-  %.015.i.i.unr = phi i32 [ %10, %.preheader.i.preheader ], [ %i.h, %.preheader.i.prol ]
+  %.015.i.i.unr = phi i32 [ %.0122.i, %.preheader.i.preheader ], [ %i.h, %.preheader.i.prol ]
   %.0914.i.i.unr = phi i64 [ %.0112.i, %.preheader.i.preheader ], [ %i.c, %.preheader.i.prol ]
   %.01013.i.i.unr = phi ptr [ %.0108.i, %.preheader.i.preheader ], [ %i.d, %.preheader.i.prol ]
-  %.01112.i.i.unr = phi i32 [ %11, %.preheader.i.preheader ], [ %i.g, %.preheader.i.prol ]
+  %.01112.i.i.unr = phi i32 [ %.0105.i.a, %.preheader.i.preheader ], [ %i.g, %.preheader.i.prol ]
   %i.i = icmp ult i64 %.0112.i, 4
   br i1 %i.i, label %adler32_len_16.exit.i, label %.preheader.i
 
@@ -98,10 +94,13 @@ bb.d:                                             ; preds = %bb.g, %bb.c
 adler32_len_16.exit.i:                            ; preds = %.preheader.i, %.preheader.i.prol.loopexit
   %.lcssa105 = phi i32 [ %.lcssa105.unr, %.preheader.i.prol.loopexit ], [ %i.ac, %.preheader.i ]
   %.lcssa = phi i32 [ %.lcssa.unr, %.preheader.i.prol.loopexit ], [ %i.ad, %.preheader.i ]
-  %12 = urem i32 %.lcssa105, 65521
-  %13 = urem i32 %.lcssa, 65521
-  %i.ae = shl nuw i32 %13, 16
-  %i.af = or disjoint i32 %i.ae, %12
+  %6 = insertelement <2 x i32> poison, i32 %.lcssa, i64 0
+  %7 = insertelement <2 x i32> %6, i32 %.lcssa105, i64 1
+  %8 = urem <2 x i32> %7, splat (i32 65521)       ; 2 uses
+  %9 = extractelement <2 x i32> %8, i64 0
+  %i.ae = shl nuw i32 %9, 16
+  %10 = extractelement <2 x i32> %8, i64 1
+  %i.af = or disjoint i32 %i.ae, %10
   br label %adler32_fold_copy_impl.exit
 
 bb.e:                                             ; preds = %bb.d
@@ -109,14 +108,14 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.ag, label %bb.f, label %.preheader138.i
 
 bb.f:                                             ; preds = %bb.e
-  %i.ah = tail call i32 @adler32_ssse3(i32 noundef %.0105.i.a, ptr noundef nonnull %.0108.i, i64 noundef %.0112.i) #4
+  %i.ah = tail call i32 @adler32_ssse3(i32 noundef %.0105.i, ptr noundef nonnull %.0108.i, i64 noundef %.0112.i) #4
   br label %adler32_fold_copy_impl.exit
 
 .preheader138.i:                                  ; preds = %bb.e, %._crit_edge183.i
   %.1109197.i = phi ptr [ %.3111.lcssa.i, %._crit_edge183.i ], [ %.0108.i, %bb.e ] ; 2 uses
   %.1113196.i = phi i64 [ %i.am, %._crit_edge183.i ], [ %.0112.i, %bb.e ] ; 3 uses
-  %.1115195.i = phi i32 [ %15, %._crit_edge183.i ], [ %11, %bb.e ]
-  %.1123194.i = phi i32 [ %i.di, %._crit_edge183.i ], [ %10, %bb.e ]
+  %.1115195.i = phi i32 [ %i.di, %._crit_edge183.i ], [ %.0105.i.a, %bb.e ]
+  %.1123194.i = phi i32 [ %11, %._crit_edge183.i ], [ %.0122.i, %bb.e ]
   %i.ai = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.1115195.i, i64 0
   %i.aj = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.1123194.i, i64 0
   %i.ak = tail call i64 @llvm.umin.i64(i64 %.1113196.i, i64 5552)
@@ -246,18 +245,18 @@ bb.f:                                             ; preds = %bb.e
   %i.db = add <4 x i32> %i.cz, %i.da              ; 2 uses
   %i.dc = shufflevector <4 x i32> %i.db, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 2, i32 3>
   %i.dd = add <4 x i32> %i.db, %i.dc              ; 2 uses
-  %i.de = shufflevector <4 x i32> %i.dd, <4 x i32> %i.cy, <2 x i32> <i32 1, i32 5>
-  %i.df = shufflevector <4 x i32> %i.dd, <4 x i32> %i.cy, <2 x i32> <i32 0, i32 4>
+  %i.de = shufflevector <4 x i32> %i.cy, <4 x i32> %i.dd, <2 x i32> <i32 1, i32 5>
+  %i.df = shufflevector <4 x i32> %i.cy, <4 x i32> %i.dd, <2 x i32> <i32 0, i32 4>
   %i.dg = add <2 x i32> %i.de, %i.df
-  %i.dh = urem <2 x i32> %i.dg, splat (i32 65521) ; 3 uses
-  %14 = icmp ugt i64 %i.am, 31
-  %i.di = extractelement <2 x i32> %i.dh, i64 0   ; 2 uses
-  %15 = extractelement <2 x i32> %i.dh, i64 1     ; 2 uses
-  br i1 %14, label %.preheader138.i, label %bb.g, !llvm.loop !2
+  %i.dh = urem <2 x i32> %i.dg, splat (i32 65521) ; 2 uses
+  %11 = extractelement <2 x i32> %i.dh, i64 1     ; 3 uses
+  %i.di = extractelement <2 x i32> %i.dh, i64 0   ; 3 uses
+  %12 = icmp ugt i64 %i.am, 31
+  br i1 %12, label %.preheader138.i, label %bb.g, !llvm.loop !2
 
 bb.g:                                             ; preds = %._crit_edge183.i
-  %i.dj = shl nuw i32 %i.di, 16
-  %i.dk = or disjoint i32 %i.dj, %15              ; 2 uses
+  %i.dj = shl nuw i32 %11, 16
+  %i.dk = or disjoint i32 %i.dj, %i.di            ; 2 uses
   %.not.i = icmp eq i64 %i.am, 0
   br i1 %.not.i, label %adler32_fold_copy_impl.exit, label %bb.d
 
@@ -277,22 +276,18 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %adler32_fold_copy_impl.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %4 = insertelement <2 x i32> poison, i32 %0, i64 0
-  %5 = shufflevector <2 x i32> %4, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
-  %6 = lshr <2 x i32> %5, <i32 16, i32 65535>
-  %7 = and <2 x i32> %5, <i32 poison, i32 65535>
-  %8 = shufflevector <2 x i32> %6, <2 x i32> %7, <2 x i32> <i32 0, i32 3>
+  %4 = lshr i32 %0, 16
+  %5 = and i32 %0, 65535
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.g, %bb.c
+  %.0122.i = phi i32 [ %4, %bb.c ], [ %11, %bb.g ] ; 3 uses
+  %.0114.i = phi i32 [ %5, %bb.c ], [ %i.dy, %bb.g ] ; 3 uses
   %.0112.i = phi i64 [ %3, %bb.c ], [ %i.as, %bb.g ] ; 8 uses
   %.0108.i = phi ptr [ %2, %bb.c ], [ %.3111.lcssa.i, %bb.g ] ; 4 uses
   %.0106.i = phi ptr [ %1, %bb.c ], [ %.4.lcssa.i, %bb.g ] ; 4 uses
   %.0105.i = phi i32 [ %0, %bb.c ], [ %i.ea, %bb.g ]
-  %9 = phi <2 x i32> [ %8, %bb.c ], [ %i.dx, %bb.g ] ; 2 uses
   %i.c = icmp ult i64 %.0112.i, 16
-  %10 = extractelement <2 x i32> %9, i64 0        ; 3 uses
-  %11 = extractelement <2 x i32> %9, i64 1        ; 3 uses
   br i1 %i.c, label %.preheader137.i.preheader, label %bb.e
 
 .preheader137.i.preheader:                        ; preds = %bb.d
@@ -301,11 +296,11 @@ bb.d:                                             ; preds = %bb.g, %bb.c
   br i1 %lcmp.mod161.not, label %.preheader137.i.prol.loopexit, label %.preheader137.i.prol
 
 .preheader137.i.prol:                             ; preds = %.preheader137.i.preheader, %.preheader137.i.prol
-  %.018.i.i.prol = phi i32 [ %i.j, %.preheader137.i.prol ], [ %10, %.preheader137.i.preheader ]
+  %.018.i.i.prol = phi i32 [ %i.j, %.preheader137.i.prol ], [ %.0122.i, %.preheader137.i.preheader ]
   %.01017.i.i.prol = phi i64 [ %i.d, %.preheader137.i.prol ], [ %.0112.i, %.preheader137.i.preheader ]
   %.01116.i.i.prol = phi ptr [ %i.g, %.preheader137.i.prol ], [ %.0106.i, %.preheader137.i.preheader ] ; 2 uses
   %.01215.i.i.prol = phi ptr [ %i.e, %.preheader137.i.prol ], [ %.0108.i, %.preheader137.i.preheader ] ; 2 uses
-  %.01314.i.i.prol = phi i32 [ %i.i, %.preheader137.i.prol ], [ %11, %.preheader137.i.preheader ]
+  %.01314.i.i.prol = phi i32 [ %i.i, %.preheader137.i.prol ], [ %.0114.i, %.preheader137.i.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.preheader137.i.prol ], [ 0, %.preheader137.i.preheader ]
   %i.d = add nsw i64 %.01017.i.i.prol, -1         ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.01215.i.i.prol, i64 1 ; 2 uses
@@ -322,11 +317,11 @@ bb.d:                                             ; preds = %bb.g, %bb.c
 .preheader137.i.prol.loopexit:                    ; preds = %.preheader137.i.prol, %.preheader137.i.preheader
   %.lcssa125.unr = phi i32 [ poison, %.preheader137.i.preheader ], [ %i.i, %.preheader137.i.prol ]
   %.lcssa.unr = phi i32 [ poison, %.preheader137.i.preheader ], [ %i.j, %.preheader137.i.prol ]
-  %.018.i.i.unr = phi i32 [ %10, %.preheader137.i.preheader ], [ %i.j, %.preheader137.i.prol ]
+  %.018.i.i.unr = phi i32 [ %.0122.i, %.preheader137.i.preheader ], [ %i.j, %.preheader137.i.prol ]
   %.01017.i.i.unr = phi i64 [ %.0112.i, %.preheader137.i.preheader ], [ %i.d, %.preheader137.i.prol ]
   %.01116.i.i.unr = phi ptr [ %.0106.i, %.preheader137.i.preheader ], [ %i.g, %.preheader137.i.prol ]
   %.01215.i.i.unr = phi ptr [ %.0108.i, %.preheader137.i.preheader ], [ %i.e, %.preheader137.i.prol ]
-  %.01314.i.i.unr = phi i32 [ %11, %.preheader137.i.preheader ], [ %i.i, %.preheader137.i.prol ]
+  %.01314.i.i.unr = phi i32 [ %.0114.i, %.preheader137.i.preheader ], [ %i.i, %.preheader137.i.prol ]
   %i.k = icmp ult i64 %.0112.i, 4
   br i1 %i.k, label %adler32_copy_len_16.exit.i, label %.preheader137.i
 
@@ -371,10 +366,13 @@ bb.d:                                             ; preds = %bb.g, %bb.c
 adler32_copy_len_16.exit.i:                       ; preds = %.preheader137.i, %.preheader137.i.prol.loopexit
   %.lcssa125 = phi i32 [ %.lcssa125.unr, %.preheader137.i.prol.loopexit ], [ %i.ai, %.preheader137.i ]
   %.lcssa = phi i32 [ %.lcssa.unr, %.preheader137.i.prol.loopexit ], [ %i.aj, %.preheader137.i ]
-  %12 = urem i32 %.lcssa125, 65521
-  %13 = urem i32 %.lcssa, 65521
-  %i.ak = shl nuw i32 %13, 16
-  %i.al = or disjoint i32 %i.ak, %12
+  %6 = insertelement <2 x i32> poison, i32 %.lcssa, i64 0
+  %7 = insertelement <2 x i32> %6, i32 %.lcssa125, i64 1
+  %8 = urem <2 x i32> %7, splat (i32 65521)       ; 2 uses
+  %9 = extractelement <2 x i32> %8, i64 0
+  %i.ak = shl nuw i32 %9, 16
+  %10 = extractelement <2 x i32> %8, i64 1
+  %i.al = or disjoint i32 %i.ak, %10
   br label %adler32_fold_copy_impl.exit
 
 bb.e:                                             ; preds = %bb.d
@@ -389,8 +387,8 @@ bb.f:                                             ; preds = %bb.e
   %.1107198.i = phi ptr [ %.4.lcssa.i, %._crit_edge183.i ], [ %.0106.i, %bb.e ] ; 2 uses
   %.1109197.i = phi ptr [ %.3111.lcssa.i, %._crit_edge183.i ], [ %.0108.i, %bb.e ] ; 2 uses
   %.1113196.i = phi i64 [ %i.as, %._crit_edge183.i ], [ %.0112.i, %bb.e ] ; 3 uses
-  %.1115195.i = phi i32 [ %15, %._crit_edge183.i ], [ %11, %bb.e ]
-  %.1123194.i = phi i32 [ %i.dy, %._crit_edge183.i ], [ %10, %bb.e ]
+  %.1115195.i = phi i32 [ %i.dy, %._crit_edge183.i ], [ %.0114.i, %bb.e ]
+  %.1123194.i = phi i32 [ %11, %._crit_edge183.i ], [ %.0122.i, %bb.e ]
   %i.ao = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.1115195.i, i64 0
   %i.ap = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.1123194.i, i64 0
   %i.aq = tail call i64 @llvm.umin.i64(i64 %.1113196.i, i64 5552)
@@ -542,18 +540,18 @@ bb.f:                                             ; preds = %bb.e
   %i.dr = add <4 x i32> %i.dp, %i.dq              ; 2 uses
   %i.ds = shufflevector <4 x i32> %i.dr, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 2, i32 3>
   %i.dt = add <4 x i32> %i.dr, %i.ds              ; 2 uses
-  %i.du = shufflevector <4 x i32> %i.dt, <4 x i32> %i.do, <2 x i32> <i32 1, i32 5>
-  %i.dv = shufflevector <4 x i32> %i.dt, <4 x i32> %i.do, <2 x i32> <i32 0, i32 4>
+  %i.du = shufflevector <4 x i32> %i.do, <4 x i32> %i.dt, <2 x i32> <i32 1, i32 5>
+  %i.dv = shufflevector <4 x i32> %i.do, <4 x i32> %i.dt, <2 x i32> <i32 0, i32 4>
   %i.dw = add <2 x i32> %i.du, %i.dv
-  %i.dx = urem <2 x i32> %i.dw, splat (i32 65521) ; 3 uses
-  %14 = icmp ugt i64 %i.as, 31
-  %i.dy = extractelement <2 x i32> %i.dx, i64 0   ; 2 uses
-  %15 = extractelement <2 x i32> %i.dx, i64 1     ; 2 uses
-  br i1 %14, label %.preheader138.i, label %bb.g, !llvm.loop !2
+  %i.dx = urem <2 x i32> %i.dw, splat (i32 65521) ; 2 uses
+  %11 = extractelement <2 x i32> %i.dx, i64 1     ; 3 uses
+  %i.dy = extractelement <2 x i32> %i.dx, i64 0   ; 3 uses
+  %12 = icmp ugt i64 %i.as, 31
+  br i1 %12, label %.preheader138.i, label %bb.g, !llvm.loop !2
 
 bb.g:                                             ; preds = %._crit_edge183.i
-  %i.dz = shl nuw i32 %i.dy, 16
-  %i.ea = or disjoint i32 %i.dz, %15              ; 2 uses
+  %i.dz = shl nuw i32 %11, 16
+  %i.ea = or disjoint i32 %i.dz, %i.dy            ; 2 uses
   %.not.i = icmp eq i64 %i.as, 0
   br i1 %.not.i, label %adler32_fold_copy_impl.exit, label %bb.d
 

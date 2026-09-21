@@ -64,42 +64,48 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.p, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %4 = load i32, ptr %i.k, align 4, !tbaa !18     ; 2 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %i.k, i64 4
-  %i.r = load i32, ptr %i.q, align 4, !tbaa !18   ; 2 uses
-  %5 = srem i32 %4, %2
-  %i.s = sdiv i32 %4, %2                          ; 3 uses
-  %6 = srem i32 %i.r, %2
+  %4 = getelementptr inbounds nuw i8, ptr %i.k, i64 4
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.r = load i32, ptr %4, align 4, !tbaa !18     ; 2 uses
+  %5 = load i32, ptr %i.k, align 4, !tbaa !18     ; 2 uses
+  %i.s = sdiv i32 %5, %2                          ; 2 uses
   %i.t = sdiv i32 %i.r, %2                        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
-  %i.u = sext i32 %5 to i64
+  %6 = insertelement <4 x i32> poison, i32 %5, i64 0
+  %7 = insertelement <4 x i32> %6, i32 %i.r, i64 1
+  %8 = insertelement <4 x i32> %7, i32 %i.s, i64 2
+  %9 = shufflevector <4 x i32> %8, <4 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 2>
+  %10 = add nsw <4 x i32> %9, <i32 0, i32 0, i32 1, i32 2>
+  %11 = insertelement <4 x i32> <i32 poison, i32 poison, i32 3, i32 3>, i32 %2, i64 0
+  %12 = shufflevector <4 x i32> %11, <4 x i32> poison, <4 x i32> <i32 0, i32 0, i32 2, i32 3>
+  %13 = srem <4 x i32> %10, %12                   ; 4 uses
+  %14 = extractelement <4 x i32> %13, i64 0
+  %i.u = sext i32 %14 to i64
   %i.v = sext i32 %i.s to i64
   %i.w = load ptr, ptr %0, align 8, !tbaa !40     ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.x = load i64, ptr %7, align 8, !tbaa !41     ; 5 uses
+  %i.x = load i64, ptr %i.q, align 8, !tbaa !41   ; 5 uses
   %i.y = mul nsw i64 %i.x, %i.v
   %i.z = getelementptr [8 x i8], ptr %i.w, i64 %i.u ; 3 uses
   %i.aa = getelementptr [8 x i8], ptr %i.z, i64 %i.y
   %i.ab = load double, ptr %i.aa, align 8, !tbaa !22
   store double %i.ab, ptr %i.a, align 8, !tbaa !22
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
-  %8 = add nsw i32 %i.s, 1
-  %9 = srem i32 %8, 3
-  %i.ac = sext i32 %9 to i64
+  %15 = extractelement <4 x i32> %13, i64 2
+  %i.ac = sext i32 %15 to i64
   %i.ad = mul nsw i64 %i.x, %i.ac
   %i.ae = getelementptr [8 x i8], ptr %i.z, i64 %i.ad
   %i.af = load double, ptr %i.ae, align 8, !tbaa !22
   store double %i.af, ptr %i.b, align 8, !tbaa !22
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #12
-  %10 = add nsw i32 %i.s, 2
-  %11 = srem i32 %10, 3
-  %i.ag = sext i32 %11 to i64
+  %16 = extractelement <4 x i32> %13, i64 3
+  %i.ag = sext i32 %16 to i64
   %i.ah = mul nsw i64 %i.x, %i.ag
   %i.ai = getelementptr [8 x i8], ptr %i.z, i64 %i.ah
   %i.aj = load double, ptr %i.ai, align 8, !tbaa !22
   store double %i.aj, ptr %i.c, align 8, !tbaa !22
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #12
-  %i.ak = sext i32 %6 to i64
+  %17 = extractelement <4 x i32> %13, i64 1
+  %i.ak = sext i32 %17 to i64
   %i.al = add nsw i32 %i.t, 1
   %i.am = srem i32 %i.al, 3
   %i.an = sext i32 %i.am to i64
@@ -169,42 +175,48 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.p, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %4 = load i32, ptr %i.k, align 4, !tbaa !18     ; 2 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %i.k, i64 4
-  %i.r = load i32, ptr %i.q, align 4, !tbaa !18   ; 2 uses
-  %5 = srem i32 %4, %2
-  %i.s = sdiv i32 %4, %2                          ; 3 uses
-  %6 = srem i32 %i.r, %2
+  %4 = getelementptr inbounds nuw i8, ptr %i.k, i64 4
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.r = load i32, ptr %4, align 4, !tbaa !18     ; 2 uses
+  %5 = load i32, ptr %i.k, align 4, !tbaa !18     ; 2 uses
+  %i.s = sdiv i32 %5, %2                          ; 2 uses
   %i.t = sdiv i32 %i.r, %2                        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
-  %i.u = sext i32 %5 to i64
+  %6 = insertelement <4 x i32> poison, i32 %5, i64 0
+  %7 = insertelement <4 x i32> %6, i32 %i.r, i64 1
+  %8 = insertelement <4 x i32> %7, i32 %i.s, i64 2
+  %9 = shufflevector <4 x i32> %8, <4 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 2>
+  %10 = add nsw <4 x i32> %9, <i32 0, i32 0, i32 1, i32 2>
+  %11 = insertelement <4 x i32> <i32 poison, i32 poison, i32 3, i32 3>, i32 %2, i64 0
+  %12 = shufflevector <4 x i32> %11, <4 x i32> poison, <4 x i32> <i32 0, i32 0, i32 2, i32 3>
+  %13 = srem <4 x i32> %10, %12                   ; 4 uses
+  %14 = extractelement <4 x i32> %13, i64 0
+  %i.u = sext i32 %14 to i64
   %i.v = sext i32 %i.s to i64
   %i.w = load ptr, ptr %0, align 8, !tbaa !43     ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.x = load i64, ptr %7, align 8, !tbaa !44     ; 5 uses
+  %i.x = load i64, ptr %i.q, align 8, !tbaa !44   ; 5 uses
   %i.y = mul nsw i64 %i.x, %i.v
   %i.z = getelementptr [8 x i8], ptr %i.w, i64 %i.u ; 3 uses
   %i.aa = getelementptr [8 x i8], ptr %i.z, i64 %i.y
   %i.ab = load double, ptr %i.aa, align 8, !tbaa !22
   store double %i.ab, ptr %i.a, align 8, !tbaa !22
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
-  %8 = add nsw i32 %i.s, 1
-  %9 = srem i32 %8, 3
-  %i.ac = sext i32 %9 to i64
+  %15 = extractelement <4 x i32> %13, i64 2
+  %i.ac = sext i32 %15 to i64
   %i.ad = mul nsw i64 %i.x, %i.ac
   %i.ae = getelementptr [8 x i8], ptr %i.z, i64 %i.ad
   %i.af = load double, ptr %i.ae, align 8, !tbaa !22
   store double %i.af, ptr %i.b, align 8, !tbaa !22
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #12
-  %10 = add nsw i32 %i.s, 2
-  %11 = srem i32 %10, 3
-  %i.ag = sext i32 %11 to i64
+  %16 = extractelement <4 x i32> %13, i64 3
+  %i.ag = sext i32 %16 to i64
   %i.ah = mul nsw i64 %i.x, %i.ag
   %i.ai = getelementptr [8 x i8], ptr %i.z, i64 %i.ah
   %i.aj = load double, ptr %i.ai, align 8, !tbaa !22
   store double %i.aj, ptr %i.c, align 8, !tbaa !22
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #12
-  %i.ak = sext i32 %6 to i64
+  %17 = extractelement <4 x i32> %13, i64 1
+  %i.ak = sext i32 %17 to i64
   %i.al = add nsw i32 %i.t, 1
   %i.am = srem i32 %i.al, 3
   %i.an = sext i32 %i.am to i64

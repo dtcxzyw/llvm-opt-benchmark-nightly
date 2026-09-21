@@ -205,11 +205,11 @@ bb.c:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 36 ; 4 uses
   %i.i = load i32, ptr %i.h, align 4
   %i.j = load i32, ptr %2, align 4
-  %i.k = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.l = load i32, ptr %i.k, align 4
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.n = load i32, ptr %i.m, align 4
-  %i.o = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %2, i64 12
   %i.p = load i32, ptr %i.o, align 4
   %i.q = getelementptr inbounds nuw i8, ptr %i.d, i64 32 ; 5 uses
   %i.r = tail call fastcc zeroext i1 @VULKAN_UpdateTextureInternal(ptr noundef %i.b, ptr noundef %i.g, i32 noundef %i.i, i32 noundef 0, i32 noundef %i.j, i32 noundef %i.l, i32 noundef %i.n, i32 noundef %i.p, ptr noundef %3, i32 noundef %4, ptr noundef nonnull %i.q)
@@ -220,20 +220,19 @@ bb.d:                                             ; preds = %bb.c
   %i.t = icmp eq i32 %i.s, 842094169
   %i.u = load ptr, ptr %i.f, align 8              ; 2 uses
   %i.v = load i32, ptr %i.h, align 4              ; 2 uses
-  %9 = load i32, ptr %2, align 4
-  %10 = sdiv i32 %9, 2                            ; 2 uses
-  %11 = load i32, ptr %i.k, align 4
-  %12 = sdiv i32 %11, 2                           ; 2 uses
-  %13 = load i32, ptr %i.m, align 4
-  %14 = add nsw i32 %13, 1
-  %15 = sdiv i32 %14, 2                           ; 2 uses
-  %16 = load i32, ptr %i.o, align 4
-  %17 = add nsw i32 %16, 1
-  %18 = sdiv i32 %17, 2                           ; 2 uses
+  %9 = load <2 x i32>, ptr %2, align 4
+  %10 = load <2 x i32>, ptr %i.m, align 4
+  %11 = add nsw <2 x i32> %10, splat (i32 1)
+  %12 = shufflevector <2 x i32> %9, <2 x i32> %11, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %13 = sdiv <4 x i32> %12, splat (i32 2)         ; 8 uses
   br i1 %i.t, label %bb.e, label %bb.g
 
 bb.e:                                             ; preds = %bb.d
-  %i.w = tail call fastcc zeroext i1 @VULKAN_UpdateTextureInternal(ptr noundef %i.b, ptr noundef %i.u, i32 noundef %i.v, i32 noundef 1, i32 noundef %10, i32 noundef %12, i32 noundef %15, i32 noundef %18, ptr noundef %7, i32 noundef %8, ptr noundef nonnull %i.q)
+  %14 = extractelement <4 x i32> %13, i64 0
+  %15 = extractelement <4 x i32> %13, i64 1
+  %16 = extractelement <4 x i32> %13, i64 2
+  %17 = extractelement <4 x i32> %13, i64 3
+  %i.w = tail call fastcc zeroext i1 @VULKAN_UpdateTextureInternal(ptr noundef %i.b, ptr noundef %i.u, i32 noundef %i.v, i32 noundef 1, i32 noundef %14, i32 noundef %15, i32 noundef %16, i32 noundef %17, ptr noundef %7, i32 noundef %8, ptr noundef nonnull %i.q)
   br i1 %i.w, label %bb.f, label %bb.j
 
 bb.f:                                             ; preds = %bb.e
@@ -250,7 +249,11 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ag, label %bb.i, label %bb.j
 
 bb.g:                                             ; preds = %bb.d
-  %i.ah = tail call fastcc zeroext i1 @VULKAN_UpdateTextureInternal(ptr noundef %i.b, ptr noundef %i.u, i32 noundef %i.v, i32 noundef 1, i32 noundef %10, i32 noundef %12, i32 noundef %15, i32 noundef %18, ptr noundef %5, i32 noundef %6, ptr noundef nonnull %i.q)
+  %18 = extractelement <4 x i32> %13, i64 0
+  %19 = extractelement <4 x i32> %13, i64 1
+  %20 = extractelement <4 x i32> %13, i64 2
+  %21 = extractelement <4 x i32> %13, i64 3
+  %i.ah = tail call fastcc zeroext i1 @VULKAN_UpdateTextureInternal(ptr noundef %i.b, ptr noundef %i.u, i32 noundef %i.v, i32 noundef 1, i32 noundef %18, i32 noundef %19, i32 noundef %20, i32 noundef %21, ptr noundef %5, i32 noundef %6, ptr noundef nonnull %i.q)
   br i1 %i.ah, label %bb.h, label %bb.j
 
 bb.h:                                             ; preds = %bb.g

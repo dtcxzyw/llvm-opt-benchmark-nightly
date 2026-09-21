@@ -204,22 +204,24 @@ bb.h:                                             ; preds = %bb.g, %bb.a
   %i.cd = add nuw nsw i64 %i.h, 2496              ; 2 uses
   %.val311 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ce = getelementptr inbounds nuw i8, ptr %.val311, i64 %i.cd
-  %.0.copyload.i337 = load i32, ptr %i.ce, align 1 ; 4 uses
+  %.0.copyload.i337 = load i32, ptr %i.ce, align 1 ; 3 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i337) #8, !srcloc !19
-  %i.cf = add i32 %.0.copyload.i337, 156
-  %5 = urem i32 %i.cf, 312
-  %6 = shl nuw nsw i32 %5, 3
-  %7 = add i32 %6, %.0.copyload.i
-  %8 = zext i32 %7 to i64
   %.val326 = load ptr, ptr %i.d, align 8, !tbaa !18
-  %9 = getelementptr inbounds nuw i8, ptr %.val326, i64 %8
-  %.0.copyload.i338 = load i64, ptr %9, align 1   ; 2 uses
-  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i64 %.0.copyload.i338) #8, !srcloc !20
-  %10 = add i32 %.0.copyload.i337, 1
-  %11 = shl i32 %.0.copyload.i337, 3
+  %5 = shl i32 %.0.copyload.i337, 3
+  %i.cf = add i32 %5, %.0.copyload.i
+  %6 = insertelement <2 x i32> poison, i32 %.0.copyload.i337, i64 0
+  %7 = shufflevector <2 x i32> %6, <2 x i32> poison, <2 x i32> zeroinitializer
+  %8 = add <2 x i32> %7, <i32 156, i32 1>
+  %9 = urem <2 x i32> %8, splat (i32 312)         ; 2 uses
+  %10 = extractelement <2 x i32> %9, i64 0
+  %11 = shl nuw nsw i32 %10, 3
   %12 = add i32 %11, %.0.copyload.i
-  %13 = urem i32 %10, 312                         ; 2 uses
-  %i.cg = shl nuw nsw i32 %13, 3
+  %13 = zext i32 %12 to i64
+  %14 = getelementptr inbounds nuw i8, ptr %.val326, i64 %13
+  %.0.copyload.i338 = load i64, ptr %14, align 1  ; 2 uses
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i64 %.0.copyload.i338) #8, !srcloc !20
+  %15 = extractelement <2 x i32> %9, i64 1        ; 2 uses
+  %i.cg = shl nuw nsw i32 %15, 3
   %i.ch = add i32 %i.cg, %.0.copyload.i
   %i.ci = zext i32 %i.ch to i64
   %.val325 = load ptr, ptr %i.d, align 8, !tbaa !18
@@ -227,7 +229,7 @@ bb.h:                                             ; preds = %bb.g, %bb.a
   %.0.copyload.i339 = load i64, ptr %i.cj, align 1 ; 3 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i64 %.0.copyload.i339) #8, !srcloc !20
   %i.ck = and i64 %.0.copyload.i339, 2147483646
-  %i.cl = zext i32 %12 to i64                     ; 2 uses
+  %i.cl = zext i32 %i.cf to i64                   ; 2 uses
   %.val324 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.cm = getelementptr inbounds nuw i8, ptr %.val324, i64 %i.cl
   %.0.copyload.i340 = load i64, ptr %i.cm, align 1 ; 2 uses
@@ -245,7 +247,7 @@ bb.h:                                             ; preds = %bb.g, %bb.a
   store i64 %i.cu, ptr %i.cv, align 1
   %.val307 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.cw = getelementptr inbounds nuw i8, ptr %.val307, i64 %i.cd
-  store i32 %13, ptr %i.cw, align 1
+  store i32 %15, ptr %i.cw, align 1
   %i.cx = zext i32 %1 to i64                      ; 2 uses
   %.val = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.cy = getelementptr inbounds nuw i8, ptr %.val, i64 %i.cx

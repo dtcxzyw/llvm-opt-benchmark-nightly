@@ -202,8 +202,8 @@ bb.f:                                             ; preds = %bb.c, %bb.e, %bb.d
 bb.g:                                             ; preds = %.lr.ph, %_RNvNtNtCsehVNULHUZqJ_7zlib_rs7adler324avx215helper_32_bytes.exit
   %i.cr = phi ptr [ %i.co, %.lr.ph ], [ %i.ep, %_RNvNtNtCsehVNULHUZqJ_7zlib_rs7adler324avx215helper_32_bytes.exit ]
   %i.cs = phi { ptr, i64 } [ %i.cn, %.lr.ph ], [ %i.eo, %_RNvNtNtCsehVNULHUZqJ_7zlib_rs7adler324avx215helper_32_bytes.exit ]
-  %.sroa.01.022 = phi i32 [ %i.cl, %.lr.ph ], [ %4, %_RNvNtNtCsehVNULHUZqJ_7zlib_rs7adler324avx215helper_32_bytes.exit ]
-  %.sroa.07.021 = phi i32 [ %i.cm, %.lr.ph ], [ %3, %_RNvNtNtCsehVNULHUZqJ_7zlib_rs7adler324avx215helper_32_bytes.exit ]
+  %.sroa.01.022 = phi i32 [ %i.cl, %.lr.ph ], [ %7, %_RNvNtNtCsehVNULHUZqJ_7zlib_rs7adler324avx215helper_32_bytes.exit ]
+  %.sroa.07.021 = phi i32 [ %i.cm, %.lr.ph ], [ %6, %_RNvNtNtCsehVNULHUZqJ_7zlib_rs7adler324avx215helper_32_bytes.exit ]
   %i.ct = extractvalue { ptr, i64 } %i.cs, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ak)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.al)
@@ -369,7 +369,6 @@ _RNvNtNtCsehVNULHUZqJ_7zlib_rs7adler324avx215helper_32_bytes.exit: ; preds = %.l
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ah)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ai)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aj)
-  %3 = urem i32 %i.ee, 65521                      ; 2 uses
   %i.ef = load <4 x i64>, ptr %i.bn, align 32     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -436,7 +435,9 @@ _RNvNtNtCsehVNULHUZqJ_7zlib_rs7adler324avx215helper_32_bytes.exit: ; preds = %.l
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s)
-  %4 = urem i32 %i.en, 65521                      ; 2 uses
+  %3 = insertelement <2 x i32> poison, i32 %i.ee, i64 0
+  %4 = insertelement <2 x i32> %3, i32 %i.en, i64 1
+  %5 = urem <2 x i32> %4, splat (i32 65521)       ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ak)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.al)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.am)
@@ -471,11 +472,13 @@ _RNvNtNtCsehVNULHUZqJ_7zlib_rs7adler324avx215helper_32_bytes.exit: ; preds = %.l
   %i.eo = call { ptr, i64 } @_RNvXs17_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_6ChunksNtNtNtBa_9core_arch3x867___m256iENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsehVNULHUZqJ_7zlib_rs(ptr nonnull align 8 %i.bp) ; 2 uses
   %i.ep = extractvalue { ptr, i64 } %i.eo, 0      ; 2 uses
   %.not = icmp eq ptr %i.ep, null
+  %6 = extractelement <2 x i32> %5, i64 0         ; 2 uses
+  %7 = extractelement <2 x i32> %5, i64 1         ; 2 uses
   br i1 %.not, label %._crit_edge, label %bb.g
 
 ._crit_edge:                                      ; preds = %_RNvNtNtCsehVNULHUZqJ_7zlib_rs7adler324avx215helper_32_bytes.exit, %bb.f
-  %.sroa.07.0.lcssa = phi i32 [ %i.cm, %bb.f ], [ %3, %_RNvNtNtCsehVNULHUZqJ_7zlib_rs7adler324avx215helper_32_bytes.exit ] ; 3 uses
-  %.sroa.01.0.lcssa = phi i32 [ %i.cl, %bb.f ], [ %4, %_RNvNtNtCsehVNULHUZqJ_7zlib_rs7adler324avx215helper_32_bytes.exit ] ; 3 uses
+  %.sroa.07.0.lcssa = phi i32 [ %i.cm, %bb.f ], [ %6, %_RNvNtNtCsehVNULHUZqJ_7zlib_rs7adler324avx215helper_32_bytes.exit ] ; 3 uses
+  %.sroa.01.0.lcssa = phi i32 [ %i.cl, %bb.f ], [ %7, %_RNvNtNtCsehVNULHUZqJ_7zlib_rs7adler324avx215helper_32_bytes.exit ] ; 3 uses
   %i.eq = call zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh8is_emptyCsehVNULHUZqJ_7zlib_rs(ptr %i.cc, i64 %i.ce)
   br i1 %i.eq, label %bb.i, label %bb.h
 

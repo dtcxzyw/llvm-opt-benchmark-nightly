@@ -204,13 +204,14 @@ bb.pr:                                            ; preds = %bb.pq
   %i.ard = getelementptr inbounds nuw i8, ptr %i.ara, i64 88
   %i.are = load ptr, ptr %i.ard, align 8, !tbaa !31
   %i.arf = getelementptr inbounds nuw i8, ptr %i.are, i64 12
-  %i.arg = load i32, ptr %i.arf, align 4, !tbaa !34 ; 2 uses
-  %16 = and i32 %i.arg, 4
-  %.not.i377 = icmp eq i32 %16, 0
-  %17 = and i32 %i.arg, 33
-  %or.cond.i = icmp eq i32 %17, 32
-  %or.cond66.i = or i1 %.not.i377, %or.cond.i
-  br i1 %or.cond66.i, label %bb.ps, label %bb.pu
+  %i.arg = load i32, ptr %i.arf, align 4, !tbaa !34
+  %16 = insertelement <2 x i32> poison, i32 %i.arg, i64 0
+  %17 = shufflevector <2 x i32> %16, <2 x i32> poison, <2 x i32> zeroinitializer
+  %18 = and <2 x i32> %17, <i32 4, i32 33>
+  %19 = icmp eq <2 x i32> %18, <i32 0, i32 32>
+  %20 = bitcast <2 x i1> %19 to i2
+  %.not719 = icmp eq i2 %20, 0
+  br i1 %.not719, label %bb.pu, label %bb.ps
 
 bb.ps:                                            ; preds = %bb.pr
   %i.arh = getelementptr inbounds nuw i8, ptr %i.aqy, i64 32

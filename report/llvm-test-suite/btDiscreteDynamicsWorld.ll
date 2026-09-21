@@ -205,13 +205,8 @@ bb.f:                                             ; preds = %.lr.ph, %bb.f
 
 bb.g:                                             ; preds = %bb.a
   %i.ju = getelementptr inbounds nuw i8, ptr %2, i64 64
-  %i.jv = load i32, ptr %i.ju, align 8, !tbaa !238 ; 3 uses
-  %57 = add nsw i32 %i.jv, 2
-  %58 = srem i32 %57, 3
+  %i.jv = load i32, ptr %i.ju, align 8, !tbaa !238 ; 2 uses
   %i.jw = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
-  %59 = sext i32 %58 to i64                       ; 3 uses
-  %60 = getelementptr inbounds [4 x i8], ptr %i.jw, i64 %59
-  %61 = load float, ptr %60, align 4, !tbaa !9    ; 7 uses
   %i.jx = sext i32 %i.jv to i64                   ; 3 uses
   %i.jy = getelementptr inbounds [4 x i8], ptr %i.jw, i64 %i.jx
   %i.jz = load float, ptr %i.jy, align 4, !tbaa !9 ; 2 uses
@@ -229,12 +224,26 @@ bb.g:                                             ; preds = %bb.a
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %14, i8 0, i64 16, i1 false)
   store float %i.jz, ptr %i.kg, align 4, !tbaa !9
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #20
+  %57 = getelementptr inbounds nuw i8, ptr %15, i64 16
+  %58 = getelementptr inbounds nuw i8, ptr %15, i64 32
+  %59 = getelementptr inbounds nuw i8, ptr %15, i64 48
+  %60 = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 3 uses
+  %.sroa.430.0..sroa_idx = getelementptr inbounds nuw i8, ptr %15, i64 56
+  %61 = getelementptr inbounds nuw i8, ptr %16, i64 16
+  %i.kh = getelementptr inbounds nuw i8, ptr %16, i64 32
+  %62 = getelementptr inbounds nuw i8, ptr %16, i64 48
+  %i.ki = getelementptr inbounds nuw i8, ptr %16, i64 56
+  %63 = insertelement <2 x i32> poison, i32 %i.jv, i64 0
+  %64 = shufflevector <2 x i32> %63, <2 x i32> poison, <2 x i32> zeroinitializer
+  %65 = add nsw <2 x i32> %64, <i32 2, i32 1>
+  %66 = srem <2 x i32> %65, splat (i32 3)         ; 2 uses
+  %67 = extractelement <2 x i32> %66, i64 0
+  %68 = sext i32 %67 to i64                       ; 3 uses
+  %69 = getelementptr inbounds [4 x i8], ptr %i.jw, i64 %68
+  %70 = load float, ptr %69, align 4, !tbaa !9    ; 7 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %15, ptr noundef nonnull align 4 dereferenceable(64) %1, i64 16, i1 false), !tbaa.struct !88
-  %i.kh = getelementptr inbounds nuw i8, ptr %15, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.kh, ptr noundef nonnull align 4 dereferenceable(16) %i.i, i64 16, i1 false), !tbaa.struct !88
-  %i.ki = getelementptr inbounds nuw i8, ptr %15, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.ki, ptr noundef nonnull align 4 dereferenceable(16) %i.m, i64 16, i1 false), !tbaa.struct !88
-  %62 = getelementptr inbounds nuw i8, ptr %15, i64 48
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %57, ptr noundef nonnull align 4 dereferenceable(16) %i.i, i64 16, i1 false), !tbaa.struct !88
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %58, ptr noundef nonnull align 4 dereferenceable(16) %i.m, i64 16, i1 false), !tbaa.struct !88
   %i.kj = load float, ptr %i.g, align 4, !tbaa !9
   %i.kk = load float, ptr %i.k, align 4, !tbaa !9
   %i.kl = load <2 x float>, ptr %1, align 4, !tbaa !9 ; 2 uses
@@ -263,22 +272,17 @@ bb.g:                                             ; preds = %bb.a
   %i.li = call float @llvm.fmuladd.f32(float %i.lf, float %i.kn, float %i.lh)
   %i.lj = load float, ptr %i.r, align 4, !tbaa !9
   %i.lk = call noundef float @llvm.fmuladd.f32(float %i.lj, float %i.ko, float %i.li)
-  %63 = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 3 uses
-  %i.ll = load float, ptr %63, align 4, !tbaa !9
+  %i.ll = load float, ptr %60, align 4, !tbaa !9
   %i.lm = fadd float %i.ll, %i.lk
   %.sroa.3.12.vec.insert.i.i198 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.lm, i64 0
-  store <2 x float> %i.le, ptr %62, align 4
-  %.sroa.430.0..sroa_idx = getelementptr inbounds nuw i8, ptr %15, i64 56
+  store <2 x float> %i.le, ptr %59, align 4
   store <2 x float> %.sroa.3.12.vec.insert.i.i198, ptr %.sroa.430.0..sroa_idx, align 4, !tbaa !76
-  call void @_ZN23btDiscreteDynamicsWorld15debugDrawSphereEfRK11btTransformRK9btVector3(ptr noundef nonnull align 8 dereferenceable(372) %0, float noundef %61, ptr noundef nonnull align 4 dereferenceable(64) %15, ptr noundef nonnull align 4 dereferenceable(16) %3)
+  call void @_ZN23btDiscreteDynamicsWorld15debugDrawSphereEfRK11btTransformRK9btVector3(ptr noundef nonnull align 8 dereferenceable(372) %0, float noundef %70, ptr noundef nonnull align 4 dereferenceable(64) %15, ptr noundef nonnull align 4 dereferenceable(16) %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #20
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %16, ptr noundef nonnull align 4 dereferenceable(64) %1, i64 16, i1 false), !tbaa.struct !88
-  %64 = getelementptr inbounds nuw i8, ptr %16, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %64, ptr noundef nonnull align 4 dereferenceable(16) %i.i, i64 16, i1 false), !tbaa.struct !88
-  %65 = getelementptr inbounds nuw i8, ptr %16, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %65, ptr noundef nonnull align 4 dereferenceable(16) %i.m, i64 16, i1 false), !tbaa.struct !88
-  %66 = getelementptr inbounds nuw i8, ptr %16, i64 48
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %61, ptr noundef nonnull align 4 dereferenceable(16) %i.i, i64 16, i1 false), !tbaa.struct !88
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.kh, ptr noundef nonnull align 4 dereferenceable(16) %i.m, i64 16, i1 false), !tbaa.struct !88
   %i.ln = load float, ptr %i.g, align 4, !tbaa !9
   %i.lo = load float, ptr %i.k, align 4, !tbaa !9
   %i.lp = load <2 x float>, ptr %1, align 4, !tbaa !9 ; 2 uses
@@ -307,22 +311,20 @@ bb.g:                                             ; preds = %bb.a
   %i.mm = call float @llvm.fmuladd.f32(float %i.mj, float %i.lr, float %i.ml)
   %i.mn = load float, ptr %i.r, align 4, !tbaa !9
   %i.mo = call noundef float @llvm.fmuladd.f32(float %i.mn, float %i.ls, float %i.mm)
-  %i.mp = load float, ptr %63, align 4, !tbaa !9
+  %i.mp = load float, ptr %60, align 4, !tbaa !9
   %i.mq = fadd float %i.mp, %i.mo
   %.sroa.3.12.vec.insert.i.i201 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.mq, i64 0
-  store <2 x float> %i.mi, ptr %66, align 4
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %16, i64 56
-  store <2 x float> %.sroa.3.12.vec.insert.i.i201, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !76
-  call void @_ZN23btDiscreteDynamicsWorld15debugDrawSphereEfRK11btTransformRK9btVector3(ptr noundef nonnull align 8 dereferenceable(372) %0, float noundef %61, ptr noundef nonnull align 4 dereferenceable(64) %16, ptr noundef nonnull align 4 dereferenceable(16) %3)
+  store <2 x float> %i.mi, ptr %62, align 4
+  store <2 x float> %.sroa.3.12.vec.insert.i.i201, ptr %i.ki, align 4, !tbaa !76
+  call void @_ZN23btDiscreteDynamicsWorld15debugDrawSphereEfRK11btTransformRK9btVector3(ptr noundef nonnull align 8 dereferenceable(372) %0, float noundef %70, ptr noundef nonnull align 4 dereferenceable(64) %16, ptr noundef nonnull align 4 dereferenceable(16) %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #20
-  %.sroa.19744.0.copyload = load float, ptr %63, align 4 ; 7 uses
-  %67 = add nsw i32 %i.jv, 1
-  %68 = srem i32 %67, 3
-  %i.mr = sext i32 %68 to i64                     ; 2 uses
+  %.sroa.19744.0.copyload = load float, ptr %60, align 4 ; 7 uses
+  %71 = extractelement <2 x i32> %66, i64 1
+  %i.mr = sext i32 %71 to i64                     ; 2 uses
   %i.ms = getelementptr inbounds [4 x i8], ptr %13, i64 %i.mr ; 3 uses
-  store float %61, ptr %i.ms, align 4, !tbaa !9
+  store float %70, ptr %i.ms, align 4, !tbaa !9
   %i.mt = getelementptr inbounds [4 x i8], ptr %14, i64 %i.mr ; 3 uses
-  store float %61, ptr %i.mt, align 4, !tbaa !9
+  store float %70, ptr %i.mt, align 4, !tbaa !9
   %i.mu = load ptr, ptr %0, align 8, !tbaa !12
   %i.mv = getelementptr inbounds nuw i8, ptr %i.mu, i64 32
   %i.mw = load ptr, ptr %i.mv, align 8
@@ -389,7 +391,7 @@ bb.g:                                             ; preds = %bb.a
   call void %i.ow(ptr noundef nonnull align 8 dereferenceable(8) %i.my, ptr noundef nonnull align 4 dereferenceable(16) %17, ptr noundef nonnull align 4 dereferenceable(16) %18, ptr noundef nonnull align 4 dereferenceable(16) %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #20
-  %i.ox = fneg float %61                          ; 4 uses
+  %i.ox = fneg float %70                          ; 4 uses
   store float %i.ox, ptr %i.ms, align 4, !tbaa !9
   store float %i.ox, ptr %i.mt, align 4, !tbaa !9
   %i.oy = load ptr, ptr %0, align 8, !tbaa !12
@@ -459,10 +461,10 @@ bb.g:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #20
   store float 0.000000e+00, ptr %i.ms, align 4, !tbaa !9
   store float 0.000000e+00, ptr %i.mt, align 4, !tbaa !9
-  %i.ra = getelementptr inbounds [4 x i8], ptr %13, i64 %59 ; 2 uses
-  store float %61, ptr %i.ra, align 4, !tbaa !9
-  %i.rb = getelementptr inbounds [4 x i8], ptr %14, i64 %59 ; 2 uses
-  store float %61, ptr %i.rb, align 4, !tbaa !9
+  %i.ra = getelementptr inbounds [4 x i8], ptr %13, i64 %68 ; 2 uses
+  store float %70, ptr %i.ra, align 4, !tbaa !9
+  %i.rb = getelementptr inbounds [4 x i8], ptr %14, i64 %68 ; 2 uses
+  store float %70, ptr %i.rb, align 4, !tbaa !9
   %i.rc = load ptr, ptr %0, align 8, !tbaa !12
   %i.rd = getelementptr inbounds nuw i8, ptr %i.rc, i64 32
   %i.re = load ptr, ptr %i.rd, align 8

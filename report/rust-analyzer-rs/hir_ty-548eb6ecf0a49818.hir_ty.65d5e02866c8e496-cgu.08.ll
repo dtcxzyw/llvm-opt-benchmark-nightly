@@ -205,7 +205,7 @@ bb.a:
   %i.p = alloca [40 x i8], align 8                ; 4 uses
   %i.q = alloca [8 x i8], align 8                 ; 4 uses
   %i.r = alloca [24 x i8], align 8                ; 6 uses
-  %i.s = alloca [16 x i8], align 4                ; 8 uses
+  %i.s = alloca [16 x i8], align 4                ; 7 uses
   %i.t = alloca [40 x i8], align 8                ; 4 uses
   %i.u = alloca [24 x i8], align 8                ; 9 uses
   %i.v = alloca [24 x i8], align 8                ; 12 uses
@@ -450,7 +450,6 @@ bb.t:                                             ; preds = %_RNvNtCs8K4cjrcxBsw
 _RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtCsileJQcQObtj_7hir_def13DefWithBodyIdENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextCs8K4cjrcxBsw_6hir_ty.exit.lr.ph.i: ; preds = %bb.t
   %.sroa.5.0..sroa_idx.i51.i = getelementptr inbounds nuw i8, ptr %i.i, i64 4
   %i.ck = getelementptr inbounds nuw i8, ptr %i.s, i64 8
-  %5 = getelementptr inbounds nuw i8, ptr %i.s, i64 12
   %i.cl = getelementptr inbounds nuw i8, ptr %i.s, i64 4
   %i.cm = getelementptr inbounds nuw i8, ptr %i.x, i64 4
   %i.cn = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -462,6 +461,9 @@ _RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtCsileJQcQObtj_7hi
   %i.co = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.cp = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %i.cq = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %5 = insertelement <2 x i32> poison, i32 %3, i64 0
+  %6 = insertelement <2 x i32> %5, i32 %4, i64 1
+  %.scalar67 = bitcast <2 x i32> %6 to i64
   br label %_RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtCsileJQcQObtj_7hir_def13DefWithBodyIdENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextCs8K4cjrcxBsw_6hir_ty.exit.i
 
 .loopexit116.i:                                   ; preds = %bb.cd, %_RINvMs_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer2atNtB5_2At2eqNtNtB9_2ty2TyEBb_.exit.thread.i.i, %bb.cc, %bb.bt, %bb.bq, %bb.bp, %bb.bk, %.backedge.i
@@ -840,14 +842,11 @@ bb.bm:                                            ; preds = %bb.bk
   br i1 %i.et, label %bb.bn, label %bb.bo
 
 bb.bn:                                            ; preds = %bb.bm
-  %6 = load i32, ptr %i.ck, align 4, !range !35, !noalias !8364, !noundef !18
-  %i.eu = load i32, ptr %5, align 4, !noalias !8364, !noundef !18
-  %7 = load i32, ptr %i.cl, align 4, !noalias !8364, !noundef !18
+  %i.eu = load i32, ptr %i.cl, align 4, !noalias !8364, !noundef !18
+  %7 = load i64, ptr %i.ck, align 4, !noalias !8364
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !8364
-  %8 = icmp eq i32 %i.eu, %4
-  %.not30.i = icmp eq i32 %6, %3
-  %or.cond.i = and i1 %.not30.i, %8
-  br i1 %or.cond.i, label %bb.bp, label %.backedge.i.backedge
+  %.not30.i = icmp eq i64 %7, %.scalar67
+  br i1 %.not30.i, label %bb.bp, label %.backedge.i.backedge
 
 bb.bo:                                            ; preds = %bb.bm
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !8364
@@ -860,7 +859,7 @@ bb.bp:                                            ; preds = %bb.bn
           to label %bb.bq unwind label %.loopexit116.i, !noalias !8362 ; 3 uses
 
 bb.bq:                                            ; preds = %bb.bp
-  %i.ex = invoke { i64, ptr } @_RNvMNtCsbq3eHDLgq0Z_8la_arena3mapINtB2_8ArenaMapINtB4_3IdxNtNtCs8K4cjrcxBsw_6hir_ty5lower9ImplTraitEINtNtNtBY_11next_solver6binder17StoredEarlyBinderNtNtB1F_2ty8StoredTyEE5entryBY_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.u, i32 noundef %7)
+  %i.ex = invoke { i64, ptr } @_RNvMNtCsbq3eHDLgq0Z_8la_arena3mapINtB2_8ArenaMapINtB4_3IdxNtNtCs8K4cjrcxBsw_6hir_ty5lower9ImplTraitEINtNtNtBY_11next_solver6binder17StoredEarlyBinderNtNtB1F_2ty8StoredTyEE5entryBY_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.u, i32 noundef %i.eu)
           to label %bb.br unwind label %.loopexit116.i, !noalias !8362 ; 2 uses
 
 bb.br:                                            ; preds = %bb.bq

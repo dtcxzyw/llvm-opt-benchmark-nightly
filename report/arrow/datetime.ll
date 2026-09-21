@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.k, %bb.l
           to label %_ZNSolsEj.exit31 unwind label %bb.u ; 0 uses
 
 _ZNSolsEj.exit31:                                 ; preds = %bb.m
-  %i.bm = load i16, ptr %1, align 2, !tbaa !407   ; 4 uses
+  %i.bm = load i16, ptr %1, align 2, !tbaa !407   ; 3 uses
   %.not.i32 = icmp eq i16 %i.bm, -32768
   br i1 %.not.i32, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.thread, label %bb.n
 
@@ -227,12 +227,15 @@ bb.p:                                             ; preds = %bb.o
   br i1 %or.cond.i, label %bb.q, label %.thread.i.i
 
 bb.q:                                             ; preds = %bb.p
-  %4 = srem i16 %i.bm, 100
-  %.not.i.i.i = icmp ne i16 %4, 0
-  %5 = srem i16 %i.bm, 400
-  %6 = icmp eq i16 %5, 0
-  %or.cond.i.i = or i1 %.not.i.i.i, %6
-  br i1 %or.cond.i.i, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit, label %.thread.i.i
+  %4 = insertelement <2 x i16> poison, i16 %i.bm, i64 0
+  %5 = shufflevector <2 x i16> %4, <2 x i16> poison, <2 x i32> zeroinitializer
+  %6 = srem <2 x i16> %5, <i16 100, i16 400>      ; 2 uses
+  %7 = icmp ne <2 x i16> %6, zeroinitializer
+  %8 = icmp eq <2 x i16> %6, zeroinitializer
+  %9 = shufflevector <2 x i1> %7, <2 x i1> %8, <2 x i32> <i32 0, i32 3>
+  %10 = bitcast <2 x i1> %9 to i2
+  %.not42 = icmp eq i2 %10, 0
+  br i1 %.not42, label %.thread.i.i, label %_ZNK14arrow_vendored4date14year_month_day2okEv.exit
 
 .thread.i.i:                                      ; preds = %bb.q, %bb.p
   %i.bs = zext nneg i8 %i.bn to i64

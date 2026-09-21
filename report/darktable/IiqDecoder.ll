@@ -205,15 +205,14 @@ _ZN8rawspeed10ByteStream6getU16Ev.exit.us.5:      ; preds = %_ZN8rawspeed10ByteS
   %i.ap = phi <2 x i16> [ %i.am, %_ZN8rawspeed10ByteStream6getU16Ev.exit.us.5 ], [ %i.bf, %_ZN8rawspeed10ByteStream6getU16Ev.exit.5 ] ; 4 uses
   %.promoted491 = trunc nuw i64 %.promoted491.in to i32
   store i32 %.promoted491, ptr %i.r, align 8
-  %4 = icmp eq i16 %.sroa.9.0, 0
-  %5 = icmp eq i16 %.sroa.12.0, 0
-  %or.cond634 = select i1 %4, i1 true, i1 %5
-  %6 = icmp eq <2 x i16> %i.ap, zeroinitializer   ; 2 uses
-  %7 = extractelement <2 x i1> %6, i64 0
-  %or.cond635 = select i1 %or.cond634, i1 true, i1 %7
-  %8 = extractelement <2 x i1> %6, i64 1
-  %or.cond636 = select i1 %or.cond635, i1 true, i1 %8
-  br i1 %or.cond636, label %_ZNSt6vectorIfSaIfEED2Ev.exit, label %_ZN8rawspeed19roundUpDivisionSafeEmm.exit142
+  %4 = shufflevector <2 x i16> %i.ap, <2 x i16> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 1>
+  %5 = insertelement <4 x i16> %4, i16 %.sroa.9.0, i64 0
+  %6 = insertelement <4 x i16> %5, i16 %.sroa.12.0, i64 1
+  %.fr = freeze <4 x i16> %6
+  %7 = icmp eq <4 x i16> %.fr, zeroinitializer
+  %8 = bitcast <4 x i1> %7 to i4
+  %.not664 = icmp eq i4 %8, 0
+  br i1 %.not664, label %_ZN8rawspeed19roundUpDivisionSafeEmm.exit142, label %_ZNSt6vectorIfSaIfEED2Ev.exit
 
 .split.us:                                        ; preds = %"_ZZNK8rawspeed10IiqDecoder17PhaseOneFlatFieldENS_10ByteStreamENS0_7IiqCorrEENK3$_0clEv.exit.split.preheader", %_ZN8rawspeed10ByteStream6getU16Ev.exit, %_ZN8rawspeed10ByteStream6getU16Ev.exit.1, %_ZN8rawspeed10ByteStream6getU16Ev.exit.2, %_ZN8rawspeed10ByteStream6getU16Ev.exit.3, %_ZN8rawspeed10ByteStream6getU16Ev.exit.5, %"_ZZNK8rawspeed10IiqDecoder17PhaseOneFlatFieldENS_10ByteStreamENS0_7IiqCorrEENK3$_0clEv.exit.split.us.preheader", %_ZN8rawspeed10ByteStream6getU16Ev.exit.us, %_ZN8rawspeed10ByteStream6getU16Ev.exit.us.1, %_ZN8rawspeed10ByteStream6getU16Ev.exit.us.2, %_ZN8rawspeed10ByteStream6getU16Ev.exit.us.3, %_ZN8rawspeed10ByteStream6getU16Ev.exit.us.5
   tail call void (ptr, ...) @_ZN8rawspeed14ThrowExceptionINS_11IOExceptionEEEvPKcz(ptr noundef nonnull @.str.22, ptr noundef nonnull @__PRETTY_FUNCTION__._ZNK8rawspeed6Buffer10getSubViewEjj) #18

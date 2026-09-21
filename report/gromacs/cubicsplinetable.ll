@@ -205,12 +205,13 @@ _ZNKSt8functionIFddEEclEd.exit68.i:               ; preds = %.noexc105
 bb.aq:                                            ; preds = %.noexc107, %.noexc103
   %i.dy = phi double [ %i.du, %.noexc107 ], [ 0.000000e+00, %.noexc103 ]
   %i.dz = phi double [ %i.dx, %.noexc107 ], [ 0.000000e+00, %.noexc103 ] ; 2 uses
-  %18 = call noundef double @llvm.fabs.f64(double %i.dm)
-  %19 = fcmp ogt double %18, f0x471A36E2D0E56042
-  %20 = call double @llvm.fabs.f64(double %i.dp)
-  %21 = fcmp ogt double %20, f0x471A36E2D0E56042
-  %or.cond85.i = or i1 %19, %21
-  br i1 %or.cond85.i, label %._crit_edge90.i, label %bb.ar
+  %18 = insertelement <2 x double> poison, double %i.dm, i64 0
+  %19 = insertelement <2 x double> %18, double %i.dp, i64 1
+  %20 = call <2 x double> @llvm.fabs.v2f64(<2 x double> %19)
+  %21 = fcmp ogt <2 x double> %20, splat (double f0x471A36E2D0E56042)
+  %22 = bitcast <2 x i1> %21 to i2
+  %.not395 = icmp eq i2 %22, 0
+  br i1 %.not395, label %bb.ar, label %._crit_edge90.i
 
 bb.ar:                                            ; preds = %bb.aq
   %i.ea = fmul double %i.ai, %i.dp
@@ -612,6 +613,9 @@ declare i64 @llvm.umin.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #17
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare <4 x double> @llvm.masked.load.v4f64.p0(ptr captures(none), <4 x i1>, <4 x double>) #21

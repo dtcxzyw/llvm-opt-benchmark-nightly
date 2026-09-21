@@ -204,7 +204,7 @@ _ZN2v84base11SmallVectorIcLm128ESaIcEE6resizeEm.exit: ; preds = %_ZN2v88internal
 define hidden noundef double @_ZN2v88internal19ParseDateTimeStringEPNS0_7IsolateENS0_12DirectHandleINS0_6StringEEE(ptr noundef %0, ptr %1) local_unnamed_addr #0 {
 bb.a:
   %2 = alloca %"class.v8::internal::SharedStringAccessGuardIfNeeded", align 8 ; 6 uses
-  %i.a = alloca [8 x double], align 16            ; 12 uses
+  %i.a = alloca [8 x double], align 16            ; 11 uses
   %3 = alloca %"class.v8::internal::PerThreadAssertScopeEmpty", align 1 ; 4 uses
   %4 = alloca %"class.v8::internal::String::FlatContent", align 8 ; 10 uses
   %i.b = load i64, ptr %1, align 8                ; 2 uses
@@ -442,24 +442,23 @@ bb.w:                                             ; preds = %_ZN2v88internal31Sh
   br i1 %i.cy, label %bb.x, label %_ZN2v88internal9DateCache11TryTimeClipEPd.exit
 
 bb.x:                                             ; preds = %.split, %bb.w
-  %5 = load double, ptr %i.a, align 16            ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %7 = load double, ptr %6, align 8               ; 2 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.da = load double, ptr %i.cz, align 16        ; 5 uses
-  %8 = call double @llvm.fabs.f64(double %5)
-  %or.cond.i = fcmp ugt double %8, 1.000000e+06
-  %9 = call double @llvm.fabs.f64(double %7)
-  %10 = fcmp ugt double %9, 1.000000e+07
-  %or.cond5.not42.i = or i1 %or.cond.i, %10
+  %5 = load <2 x double>, ptr %i.a, align 16      ; 3 uses
+  %6 = call <2 x double> @llvm.fabs.v2f64(<2 x double> %5)
+  %7 = fcmp ugt <2 x double> %6, <double 1.000000e+06, double 1.000000e+07>
+  %8 = bitcast <2 x i1> %7 to i2
+  %9 = icmp ne i2 %8, 0
   %i.db = call double @llvm.fabs.f64(double %i.da)
   %i.dc = fcmp ueq double %i.db, +inf
-  %or.cond40.i = or i1 %or.cond5.not42.i, %i.dc
+  %or.cond40.i = or i1 %9, %i.dc
   br i1 %or.cond40.i, label %_ZN2v88internal7MakeDayEddd.exit, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %i.dd = fptosi double %5 to i32
-  %i.de = fptosi double %7 to i32                 ; 2 uses
+  %10 = extractelement <2 x double> %5, i64 0
+  %i.dd = fptosi double %10 to i32
+  %11 = extractelement <2 x double> %5, i64 1
+  %i.de = fptosi double %11 to i32                ; 2 uses
   %i.df = sdiv i32 %i.de, 12
   %i.dg = add nsw i32 %i.df, %i.dd
   %i.dh = srem i32 %i.de, 12                      ; 4 uses
@@ -861,6 +860,9 @@ declare i64 @llvm.umax.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #7
 
 attributes #0 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -204,21 +204,16 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %_ZN
 
 .lr.ph.i24:                                       ; preds = %.split.us, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit13.i
   %.019.i = phi ptr [ %i.yj, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit13.i ], [ %i.xd, %.split.us ] ; 2 uses
-  %i.xg = load i8, ptr %.019.i, align 1, !tbaa !31, !noalias !219 ; 7 uses
-  %35 = icmp eq i8 %i.xg, 96
-  %36 = zext i1 %35 to i64
-  %37 = icmp eq i8 %i.xg, 42
-  %38 = zext i1 %37 to i64
-  %spec.select.i.1.i = add nuw nsw i64 %36, %38
-  %39 = icmp eq i8 %i.xg, 124
-  %40 = zext i1 %39 to i64
-  %spec.select.i.2.i = add nuw nsw i64 %spec.select.i.1.i, %40
-  %i.xh = icmp eq i8 %i.xg, 91
+  %i.xg = load i8, ptr %.019.i, align 1, !tbaa !31, !noalias !219 ; 4 uses
+  %35 = insertelement <4 x i8> poison, i8 %i.xg, i64 0
+  %36 = shufflevector <4 x i8> %35, <4 x i8> poison, <4 x i32> zeroinitializer
+  %37 = icmp eq <4 x i8> %36, <i8 96, i8 42, i8 124, i8 91>
+  %i.xh = icmp eq i8 %i.xg, 93
   %i.xi = zext i1 %i.xh to i64
-  %spec.select.i.3.i = add nuw nsw i64 %spec.select.i.2.i, %i.xi
-  %41 = icmp eq i8 %i.xg, 93
-  %i.xj = zext i1 %41 to i64
-  %spec.select.i.4.i = add nuw nsw i64 %spec.select.i.3.i, %i.xj
+  %38 = bitcast <4 x i1> %37 to i4
+  %39 = call range(i4 0, 5) i4 @llvm.ctpop.i4(i4 %38)
+  %i.xj = zext nneg i4 %39 to i64
+  %spec.select.i.4.i = add nuw nsw i64 %i.xj, %i.xi
   %i.xk = icmp eq i8 %i.xg, 92
   %i.xl = zext i1 %i.xk to i64
   %i.xm = or i64 %spec.select.i.4.i, %i.xl
@@ -621,21 +616,16 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit13
   %.019 = phi ptr [ %i.ag, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit13 ], [ %1, %bb.a ] ; 2 uses
-  %i.d = load i8, ptr %.019, align 1, !tbaa !31   ; 7 uses
-  %3 = icmp eq i8 %i.d, 96
-  %4 = zext i1 %3 to i64
-  %5 = icmp eq i8 %i.d, 42
-  %6 = zext i1 %5 to i64
-  %spec.select.i.1 = add nuw nsw i64 %4, %6
-  %7 = icmp eq i8 %i.d, 124
-  %8 = zext i1 %7 to i64
-  %spec.select.i.2 = add nuw nsw i64 %spec.select.i.1, %8
-  %i.e = icmp eq i8 %i.d, 91
+  %i.d = load i8, ptr %.019, align 1, !tbaa !31   ; 4 uses
+  %3 = insertelement <4 x i8> poison, i8 %i.d, i64 0
+  %4 = shufflevector <4 x i8> %3, <4 x i8> poison, <4 x i32> zeroinitializer
+  %5 = icmp eq <4 x i8> %4, <i8 96, i8 42, i8 124, i8 91>
+  %i.e = icmp eq i8 %i.d, 93
   %i.f = zext i1 %i.e to i64
-  %spec.select.i.3 = add nuw nsw i64 %spec.select.i.2, %i.f
-  %9 = icmp eq i8 %i.d, 93
-  %i.g = zext i1 %9 to i64
-  %spec.select.i.4 = add nuw nsw i64 %spec.select.i.3, %i.g
+  %6 = bitcast <4 x i1> %5 to i4
+  %7 = tail call range(i4 0, 5) i4 @llvm.ctpop.i4(i4 %6)
+  %i.g = zext nneg i4 %7 to i64
+  %spec.select.i.4 = add nuw nsw i64 %i.g, %i.f
   %i.h = icmp eq i8 %i.d, 92
   %i.i = zext i1 %i.h to i64
   %i.j = or i64 %spec.select.i.4, %i.i
@@ -1037,6 +1027,9 @@ declare i64 @llvm.smin.i64(i64, i64) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i4 @llvm.ctpop.i4(i4) #18
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

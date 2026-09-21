@@ -205,32 +205,26 @@ bb.i:                                             ; preds = %.preheader, %_Z13is
   %.sink.i29 = getelementptr inbounds nuw i8, ptr %i.ar, i64 %.sink.idx.i28
   %i.bb = getelementptr inbounds nuw [8 x i8], ptr %.sink.i29, i64 %indvars.iv
   %i.bc = load <2 x float>, ptr %i.bb, align 4    ; 3 uses
-  %.sroa.0.0.vec.extract.i = extractelement <2 x float> %i.ay, i64 0 ; 2 uses
+  %.sroa.0.0.vec.extract.i = extractelement <2 x float> %i.ay, i64 0
   %i.bd = fcmp ord float %.sroa.0.0.vec.extract.i, 0.000000e+00
   br i1 %i.bd, label %bb.j, label %_Z13isFlowCorrectN2cv6Point_IfEE.exit.thread
 
 bb.j:                                             ; preds = %bb.i
-  %.sroa.0.4.vec.extract.i = extractelement <2 x float> %i.ay, i64 1
-  %5 = tail call float @llvm.fabs.f32(float %.sroa.0.0.vec.extract.i)
-  %6 = fcmp olt float %5, 1.000000e+09
-  %7 = tail call float @llvm.fabs.f32(float %.sroa.0.4.vec.extract.i)
-  %8 = fcmp olt float %7, 1.000000e+09
-  %or.cond = and i1 %8, %6
-  br i1 %or.cond, label %9, label %_Z13isFlowCorrectN2cv6Point_IfEE.exit.thread
+  %5 = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %i.ay)
+  %6 = fcmp uge <2 x float> %5, splat (float 1.000000e+09)
+  %7 = bitcast <2 x i1> %6 to i2
+  %8 = icmp eq i2 %7, 0
+  %.sroa.0.0.vec.extract.i30 = extractelement <2 x float> %i.bc, i64 0
+  %9 = fcmp ord float %.sroa.0.0.vec.extract.i30, 0.000000e+00
+  %or.cond = select i1 %8, i1 %9, i1 false
+  br i1 %or.cond, label %bb.k, label %_Z13isFlowCorrectN2cv6Point_IfEE.exit.thread
 
-9:                                                ; preds = %bb.j
-  %.sroa.0.0.vec.extract.i30 = extractelement <2 x float> %i.bc, i64 0 ; 2 uses
-  %10 = fcmp ord float %.sroa.0.0.vec.extract.i30, 0.000000e+00
-  br i1 %10, label %bb.k, label %_Z13isFlowCorrectN2cv6Point_IfEE.exit.thread
-
-bb.k:                                             ; preds = %9
-  %.sroa.0.4.vec.extract.i31 = extractelement <2 x float> %i.bc, i64 1
-  %11 = tail call float @llvm.fabs.f32(float %.sroa.0.0.vec.extract.i30)
-  %12 = fcmp olt float %11, 1.000000e+09
-  %13 = tail call float @llvm.fabs.f32(float %.sroa.0.4.vec.extract.i31)
-  %14 = fcmp olt float %13, 1.000000e+09
-  %or.cond50 = and i1 %14, %12
-  br i1 %or.cond50, label %bb.l, label %_Z13isFlowCorrectN2cv6Point_IfEE.exit.thread
+bb.k:                                             ; preds = %bb.j
+  %10 = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %i.bc)
+  %11 = fcmp uge <2 x float> %10, splat (float 1.000000e+09)
+  %12 = bitcast <2 x i1> %11 to i2
+  %13 = icmp eq i2 %12, 0
+  br i1 %13, label %bb.l, label %_Z13isFlowCorrectN2cv6Point_IfEE.exit.thread
 
 bb.l:                                             ; preds = %bb.k
   %i.be = fsub <2 x float> %i.ay, %i.bc           ; 2 uses
@@ -244,8 +238,8 @@ bb.l:                                             ; preds = %bb.k
   %sqrt = tail call float @llvm.sqrt.f32(float %i.bl)
   br label %_Z13isFlowCorrectN2cv6Point_IfEE.exit.thread
 
-_Z13isFlowCorrectN2cv6Point_IfEE.exit.thread:     ; preds = %bb.j, %bb.i, %bb.k, %9, %bb.l
-  %.sink = phi float [ %sqrt, %bb.l ], [ +qnan, %9 ], [ +qnan, %bb.k ], [ +qnan, %bb.i ], [ +qnan, %bb.j ]
+_Z13isFlowCorrectN2cv6Point_IfEE.exit.thread:     ; preds = %bb.j, %bb.i, %bb.k, %bb.l
+  %.sink = phi float [ %sqrt, %bb.l ], [ +qnan, %bb.j ], [ +qnan, %bb.k ], [ +qnan, %bb.i ]
   %i.bm = load i64, ptr %i.ah, align 8
   %i.bn = mul i64 %i.bm, %indvars.iv55
   %.sink.idx.i36 = select i1 %i.at, i64 0, i64 %i.bn
@@ -646,6 +640,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.sqrt.f32(float) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #14

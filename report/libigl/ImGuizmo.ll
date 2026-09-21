@@ -204,19 +204,21 @@ split.i:                                          ; preds = %.preheader.i, %._cr
 .backedge:                                        ; preds = %.backedge.backedge, %.thread.thread.i
   %indvars.iv708.i = phi i64 [ 0, %.thread.thread.i ], [ %indvars.iv708.i.be, %.backedge.backedge ] ; 4 uses
   %i.bkk = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %indvars.iv708.i
-  %i.bkl = load i32, ptr %i.bkk, align 4, !tbaa !52 ; 5 uses
+  %i.bkl = load i32, ptr %i.bkk, align 4, !tbaa !52 ; 4 uses
   %i.bkm = getelementptr inbounds nuw [16 x i8], ptr %42, i64 %indvars.iv708.i ; 2 uses
   %.sroa.0658.0.copyload661.i = load <2 x float>, ptr %i.bkm, align 16 ; 4 uses
   %.sroa.10664.0..sroa_idx665.i = getelementptr inbounds nuw i8, ptr %i.bkm, i64 8
   %.sroa.10664.0.copyload666.i = load <2 x float>, ptr %.sroa.10664.0..sroa_idx665.i, align 8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %43) #19
-  %65 = add nuw nsw i32 %i.bkl, 1
-  %66 = srem i32 %65, 3                           ; 3 uses
-  %67 = add nuw nsw i32 %i.bkl, 2
-  %68 = srem i32 %67, 3                           ; 3 uses
+  %65 = insertelement <2 x i32> poison, i32 %i.bkl, i64 0
+  %66 = shufflevector <2 x i32> %65, <2 x i32> poison, <2 x i32> zeroinitializer
+  %67 = add nuw nsw <2 x i32> %66, <i32 1, i32 2>
+  %68 = srem <2 x i32> %67, splat (i32 3)         ; 2 uses
   %i.bkn = sext i32 %i.bkl to i64                 ; 4 uses
-  %i.bko = sext i32 %66 to i64                    ; 7 uses
-  %i.bkp = sext i32 %68 to i64                    ; 7 uses
+  %69 = extractelement <2 x i32> %68, i64 0       ; 3 uses
+  %i.bko = sext i32 %69 to i64                    ; 7 uses
+  %70 = extractelement <2 x i32> %68, i64 1       ; 3 uses
+  %i.bkp = sext i32 %70 to i64                    ; 7 uses
   %i.bkq = getelementptr inbounds nuw [4 x i8], ptr %43, i64 %i.bkn
   store float 0.000000e+00, ptr %i.bkq, align 4, !tbaa !10
   store float 0.000000e+00, ptr %i.bkd, align 4, !tbaa !10
@@ -577,8 +579,8 @@ bb.cm:                                            ; preds = %bb.cl
   store <2 x float> %i.blt, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 848), align 8
   store <2 x float> %.sroa.3.8.vec.insert.i.i110, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 856), align 8
   store i32 %i.bkl, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 880), align 8, !tbaa !75
-  store i32 %66, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 884), align 4, !tbaa !52
-  store i32 %68, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 888), align 8, !tbaa !52
+  store i32 %69, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 884), align 4, !tbaa !52
+  store i32 %70, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 888), align 8, !tbaa !52
   %i.btu = getelementptr inbounds nuw [4 x i8], ptr %i.bsr, i64 %i.bko
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 864), i8 0, i64 16, i1 false)
   %i.btv = load float, ptr %i.btu, align 4, !tbaa !10
@@ -655,8 +657,8 @@ bb.cq:                                            ; preds = %bb.cp
   store <2 x float> %.sroa.3.8.vec.insert.i278.i, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 856), align 8
   store i32 %i.bkl, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 880), align 8, !tbaa !75
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #19
-  store i32 %66, ptr %i.l, align 4, !tbaa !52
-  store i32 %68, ptr %i.bjn, align 4, !tbaa !52
+  store i32 %69, ptr %i.l, align 4, !tbaa !52
+  store i32 %70, ptr %i.bjn, align 4, !tbaa !52
   %i.bvo = and i64 %indvars.iv701.i, 1
   %i.bvp = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.bvo
   %i.bvq = load i32, ptr %i.bvp, align 4, !tbaa !52 ; 2 uses

@@ -206,18 +206,24 @@ computeYMD.exit:                                  ; preds = %computeYMD.exitthre
   %i.bj = insertelement <4 x i32> %i.bi, i32 %i.bg, i64 1
   %i.bk = insertelement <4 x i32> %i.bj, i32 %i.ar, i64 2
   %i.bl = insertelement <4 x i32> %i.bk, i32 %i.aq, i64 3
-  %i.bm = srem <4 x i32> %i.bl, splat (i32 10)
-  %4 = trunc nsw <4 x i32> %i.bm to <4 x i8>
-  %5 = add nsw <4 x i8> %4, splat (i8 48)         ; 4 uses
-  %6 = extractelement <4 x i8> %5, i64 0
+  %i.bm = srem <4 x i32> %i.bl, splat (i32 10)    ; 4 uses
+  %4 = bitcast <4 x i32> %i.bm to <16 x i8>
+  %5 = extractelement <16 x i8> %4, i64 0
+  %6 = add nsw i8 %5, 48
   store i8 %6, ptr %i.bc, align 2, !tbaa !733
-  %i.bn = extractelement <4 x i8> %5, i64 2
-  store i8 %i.bn, ptr %i.bd, align 1, !tbaa !733
-  %i.bo = extractelement <4 x i8> %5, i64 1
-  store i8 %i.bo, ptr %i.bf, align 1, !tbaa !733
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 10
-  %i.bp = extractelement <4 x i8> %5, i64 3
-  store i8 %i.bp, ptr %7, align 2, !tbaa !733
+  %7 = bitcast <4 x i32> %i.bm to <16 x i8>
+  %i.bn = extractelement <16 x i8> %7, i64 8
+  %8 = add nsw i8 %i.bn, 48
+  store i8 %8, ptr %i.bd, align 1, !tbaa !733
+  %9 = bitcast <4 x i32> %i.bm to <16 x i8>
+  %i.bo = extractelement <16 x i8> %9, i64 4
+  %10 = add nsw i8 %i.bo, 48
+  store i8 %10, ptr %i.bf, align 1, !tbaa !733
+  %11 = bitcast <4 x i32> %i.bm to <16 x i8>
+  %i.bp = extractelement <16 x i8> %11, i64 12
+  %12 = add nsw i8 %i.bp, 48
+  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 10
+  store i8 %12, ptr %13, align 2, !tbaa !733
   %i.bq = getelementptr inbounds nuw i8, ptr %i.a, i64 11
   store i8 0, ptr %i.bq, align 1, !tbaa !733
   br i1 %i.at, label %bb.i, label %bb.j
@@ -403,33 +409,38 @@ computeHMS.exit:                                  ; preds = %.computeHMS.exit_cr
 
 .split12:                                         ; preds = %computeHMS.exit
   %i.cb = call double @llvm.fmuladd.f64(double %i.ca, double 1.000000e+03, double 5.000000e-01)
+  %4 = fptosi double %i.cb to i32                 ; 2 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %i.a, i64 6
   %i.cd = getelementptr inbounds nuw i8, ptr %i.a, i64 7
   %i.ce = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i8 46, ptr %i.ce, align 8, !tbaa !733
   %i.cf = getelementptr inbounds nuw i8, ptr %i.a, i64 9
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 10
-  %5 = fptosi double %i.cb to i32                 ; 2 uses
-  %6 = sdiv i32 %5, 10000
-  %7 = srem i32 %6, 10
-  %8 = trunc nsw i32 %7 to i8
-  %i.cg = add nsw i8 %8, 48
+  %5 = insertelement <4 x i32> poison, i32 %4, i64 0
+  %6 = shufflevector <4 x i32> %5, <4 x i32> poison, <4 x i32> zeroinitializer
+  %7 = sdiv <4 x i32> %6, <i32 10000, i32 1000, i32 100, i32 10>
+  %8 = srem <4 x i32> %7, splat (i32 10)          ; 4 uses
+  %9 = bitcast <4 x i32> %8 to <16 x i8>
+  %10 = extractelement <16 x i8> %9, i64 0
+  %i.cg = add nsw i8 %10, 48
   store i8 %i.cg, ptr %i.cc, align 2, !tbaa !733
-  %9 = insertelement <4 x i32> poison, i32 %5, i64 0
-  %10 = shufflevector <4 x i32> %9, <4 x i32> poison, <4 x i32> zeroinitializer
-  %11 = sdiv <4 x i32> %10, <i32 1000, i32 100, i32 10, i32 1>
-  %12 = srem <4 x i32> %11, splat (i32 10)
-  %13 = trunc nsw <4 x i32> %12 to <4 x i8>
-  %14 = add nsw <4 x i8> %13, splat (i8 48)       ; 4 uses
-  %15 = extractelement <4 x i8> %14, i64 0
-  store i8 %15, ptr %i.cd, align 1, !tbaa !733
-  %i.ch = extractelement <4 x i8> %14, i64 1
-  store i8 %i.ch, ptr %i.cf, align 1, !tbaa !733
-  %16 = extractelement <4 x i8> %14, i64 2
-  store i8 %16, ptr %4, align 2, !tbaa !733
-  %17 = getelementptr inbounds nuw i8, ptr %i.a, i64 11
-  %18 = extractelement <4 x i8> %14, i64 3
-  store i8 %18, ptr %17, align 1, !tbaa !733
+  %11 = bitcast <4 x i32> %8 to <16 x i8>
+  %12 = extractelement <16 x i8> %11, i64 4
+  %13 = add nsw i8 %12, 48
+  store i8 %13, ptr %i.cd, align 1, !tbaa !733
+  %14 = bitcast <4 x i32> %8 to <16 x i8>
+  %15 = extractelement <16 x i8> %14, i64 8
+  %16 = add nsw i8 %15, 48
+  store i8 %16, ptr %i.cf, align 1, !tbaa !733
+  %17 = bitcast <4 x i32> %8 to <16 x i8>
+  %i.ch = extractelement <16 x i8> %17, i64 12
+  %18 = add nsw i8 %i.ch, 48
+  %19 = getelementptr inbounds nuw i8, ptr %i.a, i64 10
+  store i8 %18, ptr %19, align 2, !tbaa !733
+  %20 = srem i32 %4, 10
+  %21 = trunc nsw i32 %20 to i8
+  %22 = add nsw i8 %21, 48
+  %23 = getelementptr inbounds nuw i8, ptr %i.a, i64 11
+  store i8 %22, ptr %23, align 1, !tbaa !733
   %i.ci = getelementptr inbounds nuw i8, ptr %i.a, i64 12
   store i8 0, ptr %i.ci, align 4, !tbaa !733
   br label %bb.h
@@ -502,34 +513,46 @@ bb.b:                                             ; preds = %bb.a
   %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 13
   %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 14
   store i8 58, ptr %i.x, align 2, !tbaa !733
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 15
   %i.y = load <4 x i32>, ptr %i.o, align 4, !tbaa !570 ; 3 uses
   %i.z = sdiv <4 x i32> %i.y, splat (i32 10)      ; 2 uses
-  %5 = shufflevector <4 x i32> %i.z, <4 x i32> %i.y, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %i.aa = srem <4 x i32> %5, splat (i32 10)
-  %6 = trunc nsw <4 x i32> %i.aa to <4 x i8>
-  %7 = add nsw <4 x i8> %6, splat (i8 48)         ; 4 uses
-  %8 = extractelement <4 x i8> %7, i64 0
-  store i8 %8, ptr %i.p, align 2, !tbaa !733
-  %i.ab = extractelement <4 x i8> %7, i64 2
-  store i8 %i.ab, ptr %i.q, align 1, !tbaa !733
-  %i.ac = extractelement <4 x i8> %7, i64 1
-  store i8 %i.ac, ptr %i.s, align 1, !tbaa !733
-  %i.ad = extractelement <4 x i8> %7, i64 3
-  store i8 %i.ad, ptr %i.t, align 2, !tbaa !733
-  %9 = shufflevector <4 x i32> %i.z, <4 x i32> %i.y, <4 x i32> <i32 2, i32 3, i32 6, i32 7>
-  %i.ae = srem <4 x i32> %9, splat (i32 10)
-  %10 = trunc nsw <4 x i32> %i.ae to <4 x i8>
-  %11 = add nsw <4 x i8> %10, splat (i8 48)       ; 4 uses
-  %12 = extractelement <4 x i8> %11, i64 0
-  store i8 %12, ptr %i.v, align 4, !tbaa !733
-  %i.af = extractelement <4 x i8> %11, i64 2
-  store i8 %i.af, ptr %i.w, align 1, !tbaa !733
-  %i.ag = extractelement <4 x i8> %11, i64 1
-  store i8 %i.ag, ptr %4, align 1, !tbaa !733
-  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.ah = extractelement <4 x i8> %11, i64 3
-  store i8 %i.ah, ptr %13, align 16, !tbaa !733
+  %4 = shufflevector <4 x i32> %i.z, <4 x i32> %i.y, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
+  %i.aa = srem <4 x i32> %4, splat (i32 10)       ; 4 uses
+  %5 = bitcast <4 x i32> %i.aa to <16 x i8>
+  %6 = extractelement <16 x i8> %5, i64 0
+  %7 = add nsw i8 %6, 48
+  store i8 %7, ptr %i.p, align 2, !tbaa !733
+  %8 = bitcast <4 x i32> %i.aa to <16 x i8>
+  %i.ab = extractelement <16 x i8> %8, i64 4
+  %9 = add nsw i8 %i.ab, 48
+  store i8 %9, ptr %i.q, align 1, !tbaa !733
+  %10 = bitcast <4 x i32> %i.aa to <16 x i8>
+  %i.ac = extractelement <16 x i8> %10, i64 8
+  %11 = add nsw i8 %i.ac, 48
+  store i8 %11, ptr %i.s, align 1, !tbaa !733
+  %12 = bitcast <4 x i32> %i.aa to <16 x i8>
+  %i.ad = extractelement <16 x i8> %12, i64 12
+  %13 = add nsw i8 %i.ad, 48
+  store i8 %13, ptr %i.t, align 2, !tbaa !733
+  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 15
+  %15 = shufflevector <4 x i32> %i.z, <4 x i32> %i.y, <4 x i32> <i32 2, i32 6, i32 3, i32 7>
+  %i.ae = srem <4 x i32> %15, splat (i32 10)      ; 4 uses
+  %16 = bitcast <4 x i32> %i.ae to <16 x i8>
+  %17 = extractelement <16 x i8> %16, i64 0
+  %18 = add nsw i8 %17, 48
+  store i8 %18, ptr %i.v, align 4, !tbaa !733
+  %19 = bitcast <4 x i32> %i.ae to <16 x i8>
+  %i.af = extractelement <16 x i8> %19, i64 4
+  %20 = add nsw i8 %i.af, 48
+  store i8 %20, ptr %i.w, align 1, !tbaa !733
+  %21 = bitcast <4 x i32> %i.ae to <16 x i8>
+  %i.ag = extractelement <16 x i8> %21, i64 8
+  %22 = add nsw i8 %i.ag, 48
+  store i8 %22, ptr %14, align 1, !tbaa !733
+  %23 = bitcast <4 x i32> %i.ae to <16 x i8>
+  %i.ah = extractelement <16 x i8> %23, i64 12
+  %24 = add nsw i8 %i.ah, 48
+  %25 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  store i8 %24, ptr %25, align 16, !tbaa !733
   %i.ai = getelementptr inbounds nuw i8, ptr %i.a, i64 17
   store i8 58, ptr %i.ai, align 1, !tbaa !733
   %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 44

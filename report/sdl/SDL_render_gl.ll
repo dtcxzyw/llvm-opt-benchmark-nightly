@@ -204,9 +204,9 @@ switch.edge.thread:                               ; preds = %.preheader, %bb.d, 
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 400 ; 4 uses
   %i.u = load ptr, ptr %i.t, align 8
   %i.v = load i32, ptr %2, align 4
-  %i.w = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 3 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 4 uses
   %i.x = load i32, ptr %i.w, align 4
-  %i.y = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
   %i.z = load i32, ptr %i.y, align 4
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 6 uses
   %i.ab = load i32, ptr %i.aa, align 4
@@ -237,16 +237,19 @@ bb.e:                                             ; preds = %switch.edge.thread
   %i.au = load i32, ptr %i.at, align 8
   tail call void %i.as(i32 noundef %i.d, i32 noundef %i.au) #7
   %i.av = load ptr, ptr %i.t, align 8
-  %5 = load <4 x i32>, ptr %2, align 4
-  %6 = add nsw <4 x i32> %5, <i32 0, i32 0, i32 1, i32 1>
-  %7 = sdiv <4 x i32> %6, splat (i32 2)           ; 4 uses
-  %i.aw = load i32, ptr %i.ac, align 8
-  %i.ax = load i32, ptr %i.ae, align 4
-  %8 = extractelement <4 x i32> %7, i64 0
-  %9 = extractelement <4 x i32> %7, i64 1
-  %10 = extractelement <4 x i32> %7, i64 2
-  %11 = extractelement <4 x i32> %7, i64 3
-  tail call void %i.av(i32 noundef %i.d, i32 noundef 0, i32 noundef %8, i32 noundef %9, i32 noundef %10, i32 noundef %11, i32 noundef %i.aw, i32 noundef %i.ax, ptr noundef %i.ap) #7
+  %5 = load i32, ptr %2, align 4
+  %6 = sdiv i32 %5, 2
+  %7 = load i32, ptr %i.w, align 4
+  %8 = sdiv i32 %7, 2
+  %i.aw = load i32, ptr %i.y, align 4
+  %9 = add nsw i32 %i.aw, 1
+  %10 = sdiv i32 %9, 2
+  %i.ax = load i32, ptr %i.aa, align 4
+  %11 = add nsw i32 %i.ax, 1
+  %12 = sdiv i32 %11, 2
+  %13 = load i32, ptr %i.ac, align 8
+  %14 = load i32, ptr %i.ae, align 4
+  tail call void %i.av(i32 noundef %i.d, i32 noundef 0, i32 noundef %6, i32 noundef %8, i32 noundef %10, i32 noundef %12, i32 noundef %13, i32 noundef %14, ptr noundef %i.ap) #7
   %i.ay = load i32, ptr %i.aa, align 4
   %i.az = add nsw i32 %i.ay, 1
   %i.ba = sdiv i32 %i.az, 2
@@ -265,15 +268,14 @@ bb.e:                                             ; preds = %switch.edge.thread
   %i.bl = sdiv i32 %i.bk, 2
   %i.bm = load i32, ptr %i.w, align 4
   %i.bn = sdiv i32 %i.bm, 2
-  %12 = load i32, ptr %i.y, align 4
-  %13 = add nsw i32 %12, 1
-  %14 = sdiv i32 %13, 2
-  %i.bo = load i32, ptr %i.aa, align 4
-  %15 = add nsw i32 %i.bo, 1
-  %16 = sdiv i32 %15, 2
-  %17 = load i32, ptr %i.ac, align 8
+  %15 = load <2 x i32>, ptr %i.y, align 4
+  %16 = add nsw <2 x i32> %15, splat (i32 1)
+  %17 = sdiv <2 x i32> %16, splat (i32 2)         ; 2 uses
+  %i.bo = load i32, ptr %i.ac, align 8
   %18 = load i32, ptr %i.ae, align 4
-  tail call void %i.bj(i32 noundef %i.d, i32 noundef 0, i32 noundef %i.bl, i32 noundef %i.bn, i32 noundef %14, i32 noundef %16, i32 noundef %17, i32 noundef %18, ptr noundef %i.bd) #7
+  %19 = extractelement <2 x i32> %17, i64 0
+  %20 = extractelement <2 x i32> %17, i64 1
+  tail call void %i.bj(i32 noundef %i.d, i32 noundef 0, i32 noundef %i.bl, i32 noundef %i.bn, i32 noundef %19, i32 noundef %20, i32 noundef %i.bo, i32 noundef %18, ptr noundef %i.bd) #7
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %switch.edge.thread

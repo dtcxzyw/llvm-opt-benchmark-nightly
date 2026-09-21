@@ -204,15 +204,13 @@ bb.e:                                             ; preds = %bb.d
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef zeroext i1 @_ZN7rocksdb13isSpecialCharEc(i8 noundef signext %0) local_unnamed_addr #8 {
 bb.a:
-  %1 = icmp eq i8 %0, 92
-  %2 = icmp eq i8 %0, 35
-  %or.cond = or i1 %1, %2
-  %3 = icmp eq i8 %0, 58
-  %or.cond5 = or i1 %3, %or.cond
-  %i.a = icmp eq i8 %0, 13
-  %or.cond8 = or i1 %i.a, %or.cond5
-  %4 = icmp eq i8 %0, 10
-  %or.cond11 = or i1 %4, %or.cond8
+  %1 = insertelement <4 x i8> poison, i8 %0, i64 0
+  %2 = shufflevector <4 x i8> %1, <4 x i8> poison, <4 x i32> zeroinitializer
+  %3 = icmp eq <4 x i8> %2, <i8 92, i8 35, i8 58, i8 13>
+  %i.a = icmp eq i8 %0, 10
+  %4 = bitcast <4 x i1> %3 to i4
+  %5 = icmp ne i4 %4, 0
+  %or.cond11 = or i1 %5, %i.a
   ret i1 %or.cond11
 }
 

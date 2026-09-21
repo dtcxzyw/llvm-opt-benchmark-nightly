@@ -204,22 +204,21 @@ bb.i:                                             ; preds = %.preheader55.us.us,
   %indvars.iv75 = phi i64 [ 0, %.preheader55.us.us ], [ %indvars.iv.next76, %_Z13isFlowCorrectN2cv6Point_IfEE.exit.thread.us.us ] ; 2 uses
   %.156.us.us = phi float [ %.05058.us.us, %.preheader55.us.us ], [ %.2.us.us, %_Z13isFlowCorrectN2cv6Point_IfEE.exit.thread.us.us ] ; 4 uses
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %indvars.iv75
-  %.sroa.011.0.copyload.us.us = load <2 x float>, ptr %i.ao, align 4 ; 2 uses
-  %.sroa.0.0.vec.extract.i.us.us = extractelement <2 x float> %.sroa.011.0.copyload.us.us, i64 0 ; 4 uses
+  %.sroa.011.0.copyload.us.us = load <2 x float>, ptr %i.ao, align 4 ; 4 uses
+  %.sroa.0.0.vec.extract.i.us.us = extractelement <2 x float> %.sroa.011.0.copyload.us.us, i64 0 ; 3 uses
   %i.ap = fcmp ord float %.sroa.0.0.vec.extract.i.us.us, 0.000000e+00
   br i1 %i.ap, label %bb.j, label %_Z13isFlowCorrectN2cv6Point_IfEE.exit.thread.us.us
 
 bb.j:                                             ; preds = %bb.i
-  %.sroa.0.4.vec.extract.i.us.us = extractelement <2 x float> %.sroa.011.0.copyload.us.us, i64 1 ; 3 uses
-  %6 = call float @llvm.fabs.f32(float %.sroa.0.0.vec.extract.i.us.us)
-  %7 = fcmp olt float %6, 1.000000e+09
-  %8 = call float @llvm.fabs.f32(float %.sroa.0.4.vec.extract.i.us.us)
-  %9 = fcmp olt float %8, 1.000000e+09
-  %or.cond.us.us = and i1 %9, %7
-  br i1 %or.cond.us.us, label %bb.k, label %_Z13isFlowCorrectN2cv6Point_IfEE.exit.thread.us.us
+  %6 = call <2 x float> @llvm.fabs.v2f32(<2 x float> %.sroa.011.0.copyload.us.us)
+  %7 = fcmp uge <2 x float> %6, splat (float 1.000000e+09)
+  %8 = bitcast <2 x i1> %7 to i2
+  %9 = icmp eq i2 %8, 0
+  br i1 %9, label %bb.k, label %_Z13isFlowCorrectN2cv6Point_IfEE.exit.thread.us.us
 
 bb.k:                                             ; preds = %bb.j
-  %10 = fmul nnan float %.sroa.0.4.vec.extract.i.us.us, %.sroa.0.4.vec.extract.i.us.us
+  %foldExtExtBinop = fmul nnan <2 x float> %.sroa.011.0.copyload.us.us, %.sroa.011.0.copyload.us.us
+  %10 = extractelement <2 x float> %foldExtExtBinop, i64 1
   %i.aq = call float @llvm.fmuladd.f32(float %.sroa.0.0.vec.extract.i.us.us, float %.sroa.0.0.vec.extract.i.us.us, float %10)
   %sqrt.us.us = call float @llvm.sqrt.f32(float %i.aq) ; 2 uses
   %i.ar = fcmp olt float %.156.us.us, %sqrt.us.us
@@ -248,22 +247,21 @@ bb.l:                                             ; preds = %.preheader55.us, %_
   %indvars.iv = phi i64 [ 0, %.preheader55.us ], [ %indvars.iv.next, %_Z13isFlowCorrectN2cv6Point_IfEE.exit.thread.us ] ; 2 uses
   %.156.us = phi float [ %.05058.us, %.preheader55.us ], [ %.2.us, %_Z13isFlowCorrectN2cv6Point_IfEE.exit.thread.us ] ; 4 uses
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %.sink.i.us, i64 %indvars.iv
-  %.sroa.011.0.copyload.us = load <2 x float>, ptr %i.au, align 4 ; 2 uses
-  %.sroa.0.0.vec.extract.i.us = extractelement <2 x float> %.sroa.011.0.copyload.us, i64 0 ; 4 uses
+  %.sroa.011.0.copyload.us = load <2 x float>, ptr %i.au, align 4 ; 4 uses
+  %.sroa.0.0.vec.extract.i.us = extractelement <2 x float> %.sroa.011.0.copyload.us, i64 0 ; 3 uses
   %i.av = fcmp ord float %.sroa.0.0.vec.extract.i.us, 0.000000e+00
   br i1 %i.av, label %bb.m, label %_Z13isFlowCorrectN2cv6Point_IfEE.exit.thread.us
 
 bb.m:                                             ; preds = %bb.l
-  %.sroa.0.4.vec.extract.i.us = extractelement <2 x float> %.sroa.011.0.copyload.us, i64 1 ; 3 uses
-  %11 = call float @llvm.fabs.f32(float %.sroa.0.0.vec.extract.i.us)
-  %12 = fcmp olt float %11, 1.000000e+09
-  %13 = call float @llvm.fabs.f32(float %.sroa.0.4.vec.extract.i.us)
-  %14 = fcmp olt float %13, 1.000000e+09
-  %or.cond.us = and i1 %14, %12
-  br i1 %or.cond.us, label %bb.n, label %_Z13isFlowCorrectN2cv6Point_IfEE.exit.thread.us
+  %11 = call <2 x float> @llvm.fabs.v2f32(<2 x float> %.sroa.011.0.copyload.us)
+  %12 = fcmp uge <2 x float> %11, splat (float 1.000000e+09)
+  %13 = bitcast <2 x i1> %12 to i2
+  %14 = icmp eq i2 %13, 0
+  br i1 %14, label %bb.n, label %_Z13isFlowCorrectN2cv6Point_IfEE.exit.thread.us
 
 bb.n:                                             ; preds = %bb.m
-  %15 = fmul nnan float %.sroa.0.4.vec.extract.i.us, %.sroa.0.4.vec.extract.i.us
+  %foldExtExtBinop3 = fmul nnan <2 x float> %.sroa.011.0.copyload.us, %.sroa.011.0.copyload.us
+  %15 = extractelement <2 x float> %foldExtExtBinop3, i64 1
   %i.aw = call float @llvm.fmuladd.f32(float %.sroa.0.0.vec.extract.i.us, float %.sroa.0.0.vec.extract.i.us, float %15)
   %sqrt.us = call float @llvm.sqrt.f32(float %i.aw) ; 2 uses
   %i.ax = fcmp olt float %.156.us, %sqrt.us
@@ -665,9 +663,6 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fmuladd.f32(float, float, float) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.fabs.f32(float) #9
 
 ; Function Attrs: nofree nounwind
 declare i32 @__cxa_guard_acquire(ptr) local_unnamed_addr #10

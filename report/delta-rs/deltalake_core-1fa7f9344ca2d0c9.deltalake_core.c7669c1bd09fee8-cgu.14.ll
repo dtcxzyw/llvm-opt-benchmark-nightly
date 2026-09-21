@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/delta-rs/original/deltalake_core-1fa7f9344ca2d0c9.deltalake_core.c7669c1bd09fee8-cgu.14?download=true
 inline.NumInlined: 8054
 inline.NumDeleted: 3226
-loop-unroll.NumCompletelyUnrolled: 5
+loop-unroll.NumCompletelyUnrolled: 6
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 6
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@_RNvXss1_NtCs4lawaffTVVK_9sqlparser3astNtB6_12OutputClauseNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp:bb.a
   %.val.i7 = load ptr, ptr %i.cb, align 8, !alias.scope !17397, !noalias !17398, !nonnull !29, !noundef !29
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -205,37 +205,72 @@ bb.f:                                             ; preds = %.lr.ph.i
 bb.g:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !17431)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !17432)
-  %i.r = load i8, ptr %0, align 1, !alias.scope !17431, !noalias !17432, !noundef !29 ; 3 uses
+  %i.r = load i8, ptr %0, align 1, !alias.scope !17431, !noalias !17432, !noundef !29 ; 6 uses
   %i.s = add nsw i64 %1, -1                       ; 2 uses
   %i.t = icmp eq i64 %1, 2
   br i1 %i.t, label %.thread.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.u = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 24) %1, i64 4) ; 2 uses
+  %i.u = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 24) %1, i64 4) ; 4 uses
   %i.v = icmp samesign ult i64 %i.u, %1
-  br i1 %i.v, label %.lr.ph.a, label %_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit
+  br i1 %i.v, label %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs14kWLkQVSKO_14deltalake_core.exit.i.i, label %_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit
 
-bb.i:                                             ; preds = %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs14kWLkQVSKO_14deltalake_core.exit.i.i
-  %i.w = icmp ult i64 %i.u, %5
-  br i1 %i.w, label %.lr.ph.a, label %_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit
+4:                                                ; preds = %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs14kWLkQVSKO_14deltalake_core.exit.i.i
+  %5 = icmp ult i64 %i.u, %18
+  br i1 %5, label %.lr.ph.1, label %_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit
 
-.lr.ph.a:                                         ; preds = %bb.h, %bb.i
-  %4 = phi i64 [ %5, %bb.i ], [ %1, %bb.h ]
-  %5 = add nsw i64 %4, -1                         ; 6 uses
-  %6 = icmp ult i64 %5, %1
-  br i1 %6, label %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs14kWLkQVSKO_14deltalake_core.exit.i.i, label %bb.j
+.lr.ph.1:                                         ; preds = %4
+  %6 = add nsw i64 %1, -2                         ; 3 uses
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 %6
+  %8 = load i8, ptr %7, align 1, !alias.scope !17431, !noalias !17433, !noundef !29 ; 2 uses
+  %.not.i.not.i.i.1 = icmp eq i8 %8, %i.r
+  br i1 %.not.i.not.i.i.1, label %bb.i, label %bb.k
 
-bb.j:                                             ; preds = %.lr.ph.a
-  tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking18panic_bounds_check(i64 noundef %5, i64 noundef range(i64 2, 24) %1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @250) #56, !noalias !17433
+bb.i:                                             ; preds = %.lr.ph.1
+  %i.w = icmp ult i64 %i.u, %6
+  br i1 %i.w, label %.lr.ph.2, label %_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit
+
+.lr.ph.2:                                         ; preds = %bb.i
+  %9 = add nsw i64 %1, -3                         ; 4 uses
+  %10 = icmp samesign ugt i64 %1, 2
+  br i1 %10, label %.lr.ph.a, label %19
+
+.lr.ph.a:                                         ; preds = %.lr.ph.2
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 %9
+  %12 = load i8, ptr %11, align 1, !alias.scope !17431, !noalias !17433, !noundef !29 ; 2 uses
+  %.not.i.not.i.i.2 = icmp eq i8 %12, %i.r
+  br i1 %.not.i.not.i.i.2, label %13, label %bb.k
+
+13:                                               ; preds = %.lr.ph.a
+  %14 = icmp ult i64 %i.u, %9
+  br i1 %14, label %.lr.ph.3, label %_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit
+
+.lr.ph.3:                                         ; preds = %13
+  %15 = add nsw i64 %1, -4                        ; 3 uses
+  %.not = icmp eq i64 %1, 3
+  br i1 %.not, label %19, label %bb.j
+
+bb.j:                                             ; preds = %.lr.ph.3
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 %15
+  %17 = load i8, ptr %16, align 1, !alias.scope !17431, !noalias !17433, !noundef !29 ; 2 uses
+  %.not.i.not.i.i.3 = icmp eq i8 %17, %i.r
+  br i1 %.not.i.not.i.i.3, label %_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit, label %bb.k
+
+_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs14kWLkQVSKO_14deltalake_core.exit.i.i: ; preds = %bb.h
+  %18 = add nsw i64 %1, -1                        ; 3 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 %18
+  %i.y = load i8, ptr %i.x, align 1, !alias.scope !17431, !noalias !17433, !noundef !29 ; 2 uses
+  %.not.i.not.i.i = icmp eq i8 %i.y, %i.r
+  br i1 %.not.i.not.i.i, label %4, label %bb.k
+
+19:                                               ; preds = %.lr.ph.3, %.lr.ph.2
+  %.lcssa51 = phi i64 [ %15, %.lr.ph.3 ], [ %9, %.lr.ph.2 ]
+  tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking18panic_bounds_check(i64 noundef %.lcssa51, i64 noundef range(i64 2, 24) %1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @250) #56, !noalias !17434
   unreachable
 
-_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs14kWLkQVSKO_14deltalake_core.exit.i.i: ; preds = %.lr.ph.a
-  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 %5
-  %i.y = load i8, ptr %i.x, align 1, !alias.scope !17431, !noalias !17434, !noundef !29 ; 2 uses
-  %.not.i.not.i.i = icmp eq i8 %i.y, %i.r
-  br i1 %.not.i.not.i.i, label %bb.i, label %bb.k
-
-bb.k:                                             ; preds = %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs14kWLkQVSKO_14deltalake_core.exit.i.i
+bb.k:                                             ; preds = %bb.j, %.lr.ph.a, %.lr.ph.1, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs14kWLkQVSKO_14deltalake_core.exit.i.i
+  %.lcssa54 = phi i8 [ %i.y, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs14kWLkQVSKO_14deltalake_core.exit.i.i ], [ %8, %.lr.ph.1 ], [ %12, %.lr.ph.a ], [ %17, %bb.j ]
+  %.lcssa52 = phi i64 [ %18, %_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs14kWLkQVSKO_14deltalake_core.exit.i.i ], [ %6, %.lr.ph.1 ], [ %9, %.lr.ph.a ], [ %15, %bb.j ]
   %i.z = add nuw nsw i64 %1, 15
   %i.aa = icmp ult i64 %3, %i.z
   br i1 %i.aa, label %.lr.ph.split.us.i.i, label %bb.l
@@ -280,9 +315,9 @@ _RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator3any5checkRShN
   br i1 %.not28.i.i, label %_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit.thread, label %.split.us.i.i
 
 bb.m:                                             ; preds = %bb.l, %.thread93.i
-  %i.am = phi i8 [ %.pre.i, %.thread93.i ], [ %i.y, %bb.l ]
+  %i.am = phi i8 [ %.pre.i, %.thread93.i ], [ %.lcssa54, %bb.l ]
   %i.an = phi <16 x i8> [ %i.ad, %.thread93.i ], [ %i.af, %bb.l ] ; 6 uses
-  %storemerge9295.i = phi i64 [ 1, %.thread93.i ], [ %5, %bb.l ] ; 6 uses
+  %storemerge9295.i = phi i64 [ 1, %.thread93.i ], [ %.lcssa52, %bb.l ] ; 6 uses
   %i.ao = insertelement <16 x i8> poison, i8 %i.am, i64 0
   %i.ap = shufflevector <16 x i8> %i.ao, <16 x i8> poison, <16 x i32> zeroinitializer ; 6 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 1
@@ -452,7 +487,7 @@ bb.v:                                             ; preds = %._crit_edge.i7
   %i.du = or i8 %.sroa.014.3.lcssa.i, %i.dt
   br label %bb.u
 
-_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit: ; preds = %bb.i, %bb.h
+_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_contains.exit: ; preds = %4, %bb.i, %13, %bb.j, %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvMsu_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcher3new(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.b, ptr noalias noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3, ptr noalias noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1)
@@ -855,8 +890,8 @@ begin_hunk_1_@llvm.bswap.i64
 !17430 = !{!17410}
 !17431 = !{!17412}
 !17432 = !{!17413}
-!17433 = !{!17420, !17418, !17416, !17415, !17412, !17413}
-!17434 = !{!17420, !17418, !17416, !17415, !17413}
+!17433 = !{!17420, !17418, !17416, !17415, !17413}
+!17434 = !{!17420, !17418, !17416, !17415, !17412, !17413}
 !17435 = !{!17412, !17413}
 !17436 = !{!17423, !17422}
 !17437 = !{!17425, !17412}
