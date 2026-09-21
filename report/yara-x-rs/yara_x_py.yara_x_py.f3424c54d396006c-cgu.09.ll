@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.g, %.lr.ph.i.i
   ]
 
 bb.g:                                             ; preds = %bb.f, %bb.f, %bb.f, %bb.f
-  %i.q = add i64 %i.n, 1                          ; 3 uses
+  %i.q = add nuw i64 %i.n, 1                      ; 3 uses
   store i64 %i.q, ptr %i.i, align 8, !alias.scope !92, !noalias !88
   %exitcond.not.i.i = icmp eq i64 %i.q, %i.k
   br i1 %exitcond.not.i.i, label %.loopexit, label %bb.f
@@ -607,7 +607,7 @@ bb.b:                                             ; preds = %bb.c, %.lr.ph.i
   ]
 
 bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b, %bb.b
-  %i.q = add i64 %i.n, 1                          ; 3 uses
+  %i.q = add nuw i64 %i.n, 1                      ; 3 uses
   store i64 %i.q, ptr %i.h, align 8, !alias.scope !186, !noalias !182
   %exitcond.not.i = icmp eq i64 %i.q, %i.j
   br i1 %exitcond.not.i, label %.loopexit22, label %bb.b
@@ -662,7 +662,7 @@ bb.h:                                             ; preds = %bb.f
   ], !prof !21
 
 bb.i:                                             ; preds = %.lr.ph.i7, %.lr.ph.i7, %.lr.ph.i7, %.lr.ph.i7
-  %i.ae = add i64 %i.ab, 1                        ; 3 uses
+  %i.ae = add nuw i64 %i.ab, 1                    ; 3 uses
   store i64 %i.ae, ptr %i.h, align 8, !alias.scope !190, !noalias !191
   %exitcond.not.i8 = icmp eq i64 %i.ae, %i.j
   br i1 %exitcond.not.i8, label %.loopexit, label %.lr.ph.i7
@@ -796,7 +796,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !428)
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 31 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 4 uses
-  %i.bh = load i64, ptr %i.bg, align 8, !alias.scope !429, !noalias !430, !noundef !5 ; 10 uses
+  %i.bh = load i64, ptr %i.bg, align 8, !alias.scope !429, !noalias !430, !noundef !5 ; 14 uses
   %.promoted.i61 = load i64, ptr %i.bf, align 8, !alias.scope !428, !noalias !431 ; 2 uses
   %i.bi = icmp ult i64 %.promoted.i61, %i.bh
   br i1 %i.bi, label %.lr.ph.i, label %.loopexit269
@@ -820,7 +820,7 @@ bb.b:                                             ; preds = %bb.c, %.lr.ph.i
   ]
 
 bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b, %bb.b
-  %i.bo = add i64 %i.bl, 1                        ; 3 uses
+  %i.bo = add nuw i64 %i.bl, 1                    ; 3 uses
   store i64 %i.bo, ptr %i.bf, align 8, !alias.scope !435, !noalias !431
   %exitcond.not.i62 = icmp eq i64 %i.bo, %i.bh
   br i1 %exitcond.not.i62, label %.loopexit269, label %bb.b
@@ -853,10 +853,9 @@ bb.d:                                             ; preds = %_RNvMs3_NtCsbbTh99n
   br i1 %or.cond8.i, label %bb.eg, label %bb.ef, !prof !18
 
 bb.e:                                             ; preds = %_RNvMs3_NtCsbbTh99npV2h_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE16parse_whitespaceCskSRqRFwaW70_9yara_x_py.exit
-  %i.bs = add i64 %i.bl, 1                        ; 4 uses
+  %i.bs = add nuw i64 %i.bl, 1                    ; 3 uses
   store i64 %i.bs, ptr %i.bf, align 8, !alias.scope !437, !noalias !426
   tail call void @llvm.experimental.noalias.scope.decl(metadata !438)
-  %umax.i53 = tail call i64 @llvm.umax.i64(i64 %i.bs, i64 %i.bh) ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !439), !noalias !426
   tail call void @llvm.experimental.noalias.scope.decl(metadata !440), !noalias !426
   %exitcond.not.i55.not = icmp ult i64 %i.bs, %i.bh
@@ -865,7 +864,7 @@ bb.e:                                             ; preds = %_RNvMs3_NtCsbbTh99n
 bb.f:                                             ; preds = %bb.e
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bk, i64 %i.bs
   %i.bu = load i8, ptr %i.bt, align 1, !noalias !441, !noundef !5
-  %i.bv = add i64 %i.bl, 2                        ; 3 uses
+  %i.bv = add nuw i64 %i.bl, 2                    ; 3 uses
   store i64 %i.bv, ptr %i.bf, align 8, !alias.scope !442, !noalias !443
   %.not.i56 = icmp eq i8 %i.bu, 117
   br i1 %.not.i56, label %bb.g, label %bb.k, !prof !22
@@ -873,13 +872,13 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   tail call void @llvm.experimental.noalias.scope.decl(metadata !444), !noalias !426
   tail call void @llvm.experimental.noalias.scope.decl(metadata !445), !noalias !426
-  %exitcond.not.i55.1 = icmp eq i64 %i.bv, %umax.i53
+  %exitcond.not.i55.1 = icmp eq i64 %i.bv, %i.bh
   br i1 %exitcond.not.i55.1, label %_RNvXs8_NtCsbbTh99npV2h_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.i59, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bk, i64 %i.bv
   %i.bx = load i8, ptr %i.bw, align 1, !noalias !446, !noundef !5
-  %i.by = add i64 %i.bl, 3                        ; 3 uses
+  %i.by = add nuw i64 %i.bl, 3                    ; 3 uses
   store i64 %i.by, ptr %i.bf, align 8, !alias.scope !447, !noalias !443
   %.not.i56.1 = icmp eq i8 %i.bx, 108
   br i1 %.not.i56.1, label %bb.i, label %bb.k, !prof !22
@@ -887,13 +886,13 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   tail call void @llvm.experimental.noalias.scope.decl(metadata !448), !noalias !426
   tail call void @llvm.experimental.noalias.scope.decl(metadata !449), !noalias !426
-  %exitcond.not.i55.2 = icmp eq i64 %i.by, %umax.i53
+  %exitcond.not.i55.2 = icmp eq i64 %i.by, %i.bh
   br i1 %exitcond.not.i55.2, label %_RNvXs8_NtCsbbTh99npV2h_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.i59, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bk, i64 %i.by
   %i.ca = load i8, ptr %i.bz, align 1, !noalias !450, !noundef !5
-  %i.cb = add i64 %i.bl, 4
+  %i.cb = add nuw i64 %i.bl, 4
   store i64 %i.cb, ptr %i.bf, align 8, !alias.scope !451, !noalias !443
   %.not.i56.2 = icmp eq i8 %i.ca, 108
   br i1 %.not.i56.2, label %.thread, label %bb.k, !prof !22
@@ -913,10 +912,9 @@ bb.k:                                             ; preds = %bb.j, %bb.h, %bb.f
   br label %bb.af
 
 bb.l:                                             ; preds = %_RNvMs3_NtCsbbTh99npV2h_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE16parse_whitespaceCskSRqRFwaW70_9yara_x_py.exit
-  %i.ce = add i64 %i.bl, 1                        ; 4 uses
+  %i.ce = add nuw i64 %i.bl, 1                    ; 3 uses
   store i64 %i.ce, ptr %i.bf, align 8, !alias.scope !454, !noalias !426
   tail call void @llvm.experimental.noalias.scope.decl(metadata !455)
-  %umax.i44 = tail call i64 @llvm.umax.i64(i64 %i.ce, i64 %i.bh) ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !456), !noalias !426
   tail call void @llvm.experimental.noalias.scope.decl(metadata !457), !noalias !426
   %exitcond.not.i46.not = icmp ult i64 %i.ce, %i.bh
@@ -925,7 +923,7 @@ bb.l:                                             ; preds = %_RNvMs3_NtCsbbTh99n
 bb.m:                                             ; preds = %bb.l
   %i.cf = getelementptr inbounds nuw i8, ptr %i.bk, i64 %i.ce
   %i.cg = load i8, ptr %i.cf, align 1, !noalias !458, !noundef !5
-  %i.ch = add i64 %i.bl, 2                        ; 3 uses
+  %i.ch = add nuw i64 %i.bl, 2                    ; 3 uses
   store i64 %i.ch, ptr %i.bf, align 8, !alias.scope !459, !noalias !460
   %.not.i47 = icmp eq i8 %i.cg, 114
   br i1 %.not.i47, label %bb.n, label %bb.r, !prof !22
@@ -933,13 +931,13 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m
   tail call void @llvm.experimental.noalias.scope.decl(metadata !461), !noalias !426
   tail call void @llvm.experimental.noalias.scope.decl(metadata !462), !noalias !426
-  %exitcond.not.i46.1 = icmp eq i64 %i.ch, %umax.i44
+  %exitcond.not.i46.1 = icmp eq i64 %i.ch, %i.bh
   br i1 %exitcond.not.i46.1, label %_RNvXs8_NtCsbbTh99npV2h_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.i50, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   %i.ci = getelementptr inbounds nuw i8, ptr %i.bk, i64 %i.ch
   %i.cj = load i8, ptr %i.ci, align 1, !noalias !463, !noundef !5
-  %i.ck = add i64 %i.bl, 3                        ; 3 uses
+  %i.ck = add nuw i64 %i.bl, 3                    ; 3 uses
   store i64 %i.ck, ptr %i.bf, align 8, !alias.scope !464, !noalias !460
   %.not.i47.1 = icmp eq i8 %i.cj, 117
   br i1 %.not.i47.1, label %bb.p, label %bb.r, !prof !22
@@ -947,13 +945,13 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.o
   tail call void @llvm.experimental.noalias.scope.decl(metadata !465), !noalias !426
   tail call void @llvm.experimental.noalias.scope.decl(metadata !466), !noalias !426
-  %exitcond.not.i46.2 = icmp eq i64 %i.ck, %umax.i44
+  %exitcond.not.i46.2 = icmp eq i64 %i.ck, %i.bh
   br i1 %exitcond.not.i46.2, label %_RNvXs8_NtCsbbTh99npV2h_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.i50, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.cl = getelementptr inbounds nuw i8, ptr %i.bk, i64 %i.ck
   %i.cm = load i8, ptr %i.cl, align 1, !noalias !467, !noundef !5
-  %i.cn = add i64 %i.bl, 4
+  %i.cn = add nuw i64 %i.bl, 4
   store i64 %i.cn, ptr %i.bf, align 8, !alias.scope !468, !noalias !460
   %.not.i47.2 = icmp eq i8 %i.cm, 101
   br i1 %.not.i47.2, label %.thread, label %bb.r, !prof !22
@@ -973,10 +971,9 @@ bb.r:                                             ; preds = %bb.q, %bb.o, %bb.m
   br label %bb.ai
 
 bb.s:                                             ; preds = %_RNvMs3_NtCsbbTh99npV2h_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE16parse_whitespaceCskSRqRFwaW70_9yara_x_py.exit
-  %i.cq = add i64 %i.bl, 1                        ; 4 uses
+  %i.cq = add nuw i64 %i.bl, 1                    ; 3 uses
   store i64 %i.cq, ptr %i.bf, align 8, !alias.scope !471, !noalias !426
   tail call void @llvm.experimental.noalias.scope.decl(metadata !472)
-  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.cq, i64 %i.bh) ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !473), !noalias !426
   tail call void @llvm.experimental.noalias.scope.decl(metadata !474), !noalias !426
   %exitcond.not.i.not = icmp ult i64 %i.cq, %i.bh
@@ -985,7 +982,7 @@ bb.s:                                             ; preds = %_RNvMs3_NtCsbbTh99n
 bb.t:                                             ; preds = %bb.s
   %i.cr = getelementptr inbounds nuw i8, ptr %i.bk, i64 %i.cq
   %i.cs = load i8, ptr %i.cr, align 1, !noalias !475, !noundef !5
-  %i.ct = add i64 %i.bl, 2                        ; 3 uses
+  %i.ct = add nuw i64 %i.bl, 2                    ; 3 uses
   store i64 %i.ct, ptr %i.bf, align 8, !alias.scope !476, !noalias !477
   %.not.i41 = icmp eq i8 %i.cs, 97
   br i1 %.not.i41, label %bb.u, label %bb.aa, !prof !22
@@ -993,13 +990,13 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.t
   tail call void @llvm.experimental.noalias.scope.decl(metadata !478), !noalias !426
   tail call void @llvm.experimental.noalias.scope.decl(metadata !479), !noalias !426
-  %exitcond.not.i.1 = icmp eq i64 %i.ct, %umax.i
+  %exitcond.not.i.1 = icmp eq i64 %i.ct, %i.bh
   br i1 %exitcond.not.i.1, label %_RNvXs8_NtCsbbTh99npV2h_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.i, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   %i.cu = getelementptr inbounds nuw i8, ptr %i.bk, i64 %i.ct
   %i.cv = load i8, ptr %i.cu, align 1, !noalias !480, !noundef !5
-  %i.cw = add i64 %i.bl, 3                        ; 3 uses
+  %i.cw = add nuw i64 %i.bl, 3                    ; 3 uses
   store i64 %i.cw, ptr %i.bf, align 8, !alias.scope !481, !noalias !477
   %.not.i41.1 = icmp eq i8 %i.cv, 108
   br i1 %.not.i41.1, label %bb.w, label %bb.aa, !prof !22
@@ -1007,13 +1004,13 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.v
   tail call void @llvm.experimental.noalias.scope.decl(metadata !482), !noalias !426
   tail call void @llvm.experimental.noalias.scope.decl(metadata !483), !noalias !426
-  %exitcond.not.i.2 = icmp eq i64 %i.cw, %umax.i
+  %exitcond.not.i.2 = icmp eq i64 %i.cw, %i.bh
   br i1 %exitcond.not.i.2, label %_RNvXs8_NtCsbbTh99npV2h_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.i, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
   %i.cx = getelementptr inbounds nuw i8, ptr %i.bk, i64 %i.cw
   %i.cy = load i8, ptr %i.cx, align 1, !noalias !484, !noundef !5
-  %i.cz = add i64 %i.bl, 4                        ; 3 uses
+  %i.cz = add nuw i64 %i.bl, 4                    ; 3 uses
   store i64 %i.cz, ptr %i.bf, align 8, !alias.scope !485, !noalias !477
   %.not.i41.2 = icmp eq i8 %i.cy, 115
   br i1 %.not.i41.2, label %bb.y, label %bb.aa, !prof !22
@@ -1021,13 +1018,13 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %bb.x
   tail call void @llvm.experimental.noalias.scope.decl(metadata !486), !noalias !426
   tail call void @llvm.experimental.noalias.scope.decl(metadata !487), !noalias !426
-  %exitcond.not.i.3 = icmp eq i64 %i.cz, %umax.i
+  %exitcond.not.i.3 = icmp eq i64 %i.cz, %i.bh
   br i1 %exitcond.not.i.3, label %_RNvXs8_NtCsbbTh99npV2h_10serde_json4readNtB5_7StrReadNtB5_4Read4next.exit.i, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
   %i.da = getelementptr inbounds nuw i8, ptr %i.bk, i64 %i.cz
   %i.db = load i8, ptr %i.da, align 1, !noalias !488, !noundef !5
-  %i.dc = add i64 %i.bl, 5
+  %i.dc = add nuw i64 %i.bl, 5
   store i64 %i.dc, ptr %i.bf, align 8, !alias.scope !489, !noalias !477
   %.not.i41.3 = icmp eq i8 %i.db, 101
   br i1 %.not.i41.3, label %.thread, label %bb.aa, !prof !22
@@ -1047,7 +1044,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.x, %bb.v,
   br label %bb.aj
 
 bb.ab:                                            ; preds = %_RNvMs3_NtCsbbTh99npV2h_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE16parse_whitespaceCskSRqRFwaW70_9yara_x_py.exit
-  %i.df = add i64 %i.bl, 1
+  %i.df = add nuw i64 %i.bl, 1
   store i64 %i.df, ptr %i.bf, align 8, !alias.scope !492, !noalias !426
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bd), !noalias !436
   call fastcc void @_RNvMs3_NtCsbbTh99npV2h_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE13parse_integerCskSRqRFwaW70_9yara_x_py(ptr noalias nofree noundef align 8 captures(address) dereferenceable(16) %i.bd, ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %1, i1 noundef zeroext false), !noalias !426, !inline_history !206
@@ -1057,7 +1054,7 @@ bb.ab:                                            ; preds = %_RNvMs3_NtCsbbTh99n
   br i1 %i.dh, label %bb.ak, label %bb.al
 
 bb.ac:                                            ; preds = %_RNvMs3_NtCsbbTh99npV2h_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE16parse_whitespaceCskSRqRFwaW70_9yara_x_py.exit
-  %i.dj = add i64 %i.bl, 1
+  %i.dj = add nuw i64 %i.bl, 1
   store i64 %i.dj, ptr %i.bf, align 8, !alias.scope !494, !noalias !426
   %i.dk = getelementptr inbounds nuw i8, ptr %1, i64 16
   store i64 0, ptr %i.dk, align 8, !alias.scope !427, !noalias !426
@@ -1264,7 +1261,7 @@ bb.ay:                                            ; preds = %bb.ad
   br label %bb.ah
 
 bb.az:                                            ; preds = %bb.ad
-  %i.fc = add i64 %i.bl, 1                        ; 3 uses
+  %i.fc = add nuw i64 %i.bl, 1                    ; 3 uses
   store i64 %i.fc, ptr %i.bf, align 8, !alias.scope !504, !noalias !426
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v), !noalias !505
@@ -1306,7 +1303,7 @@ bb.ba:                                            ; preds = %bb.bb, %.lr.ph.i.i.
   ]
 
 bb.bb:                                            ; preds = %bb.ba, %bb.ba, %bb.ba, %bb.ba
-  %i.fl = add i64 %i.fi, 1                        ; 3 uses
+  %i.fl = add nuw i64 %i.fi, 1                    ; 3 uses
   store i64 %i.fl, ptr %i.bf, align 8, !alias.scope !513, !noalias !514
   %exitcond.not.i.i.i77 = icmp eq i64 %i.fl, %i.fg
   br i1 %exitcond.not.i.i.i77, label %.loopexit22.i.i, label %bb.ba
@@ -1329,7 +1326,7 @@ bb.bd:                                            ; preds = %bb.bc
   br i1 %i.fn, label %bb.be, label %bb.bg, !prof !20
 
 bb.be:                                            ; preds = %bb.bd
-  %i.fo = add i64 %i.fi, 1                        ; 3 uses
+  %i.fo = add nuw i64 %i.fi, 1                    ; 3 uses
   store i64 %i.fo, ptr %i.bf, align 8, !alias.scope !516, !noalias !515
   call void @llvm.experimental.noalias.scope.decl(metadata !517), !noalias !507
   %i.fp = icmp ult i64 %i.fo, %i.fg
@@ -1348,7 +1345,7 @@ bb.be:                                            ; preds = %bb.bd
   ], !prof !519
 
 bb.bf:                                            ; preds = %.lr.ph.i7.i.i, %.lr.ph.i7.i.i, %.lr.ph.i7.i.i, %.lr.ph.i7.i.i
-  %i.ft = add i64 %i.fq, 1                        ; 3 uses
+  %i.ft = add nuw i64 %i.fq, 1                    ; 3 uses
   store i64 %i.ft, ptr %i.bf, align 8, !alias.scope !520, !noalias !521
   %exitcond.not.i8.i.i = icmp eq i64 %i.ft, %i.fg
   br i1 %exitcond.not.i8.i.i, label %.loopexit.i.i78, label %.lr.ph.i7.i.i
@@ -1532,7 +1529,7 @@ bb.bs:                                            ; preds = %bb.bt, %.lr.ph.i.i9
   ], !prof !21
 
 bb.bt:                                            ; preds = %bb.bs, %bb.bs, %bb.bs, %bb.bs
-  %i.gv = add i64 %i.gs, 1                        ; 3 uses
+  %i.gv = add nuw i64 %i.gs, 1                    ; 3 uses
   store i64 %i.gv, ptr %i.bf, align 8, !alias.scope !538, !noalias !526
   %exitcond.not.i.i10 = icmp eq i64 %i.gv, %i.gn
   br i1 %exitcond.not.i.i10, label %.loopexit.i7, label %bb.bs
@@ -1558,7 +1555,7 @@ bb.bu:                                            ; preds = %bb.bs
   br label %_RNvMs3_NtCsbbTh99npV2h_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE7end_seqCskSRqRFwaW70_9yara_x_py.exit
 
 bb.bv:                                            ; preds = %bb.bs
-  %i.gy = add i64 %i.gs, 1                        ; 3 uses
+  %i.gy = add nuw i64 %i.gs, 1                    ; 3 uses
   store i64 %i.gy, ptr %i.bf, align 8, !alias.scope !540, !noalias !426
   call void @llvm.experimental.noalias.scope.decl(metadata !541), !noalias !426
   %i.gz = icmp ult i64 %i.gy, %i.gn
@@ -1577,7 +1574,7 @@ bb.bv:                                            ; preds = %bb.bs
   ]
 
 bb.bw:                                            ; preds = %.lr.ph.i12.i, %.lr.ph.i12.i, %.lr.ph.i12.i, %.lr.ph.i12.i
-  %i.hd = add i64 %i.ha, 1                        ; 3 uses
+  %i.hd = add nuw i64 %i.ha, 1                    ; 3 uses
   store i64 %i.hd, ptr %i.bf, align 8, !alias.scope !543, !noalias !544
   %exitcond.not.i13.i = icmp eq i64 %i.hd, %i.gn
   br i1 %exitcond.not.i13.i, label %_RNvMs3_NtCsbbTh99npV2h_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE16parse_whitespaceCskSRqRFwaW70_9yara_x_py.exit16.thread.i, label %.lr.ph.i12.i
@@ -1619,7 +1616,7 @@ _RNvMs3_NtCsbbTh99npV2h_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE
   br i1 %i.hj, label %bb.cb, label %bb.bz
 
 _RNvMs3_NtCsbbTh99npV2h_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE7end_seqCskSRqRFwaW70_9yara_x_py.exit.thread: ; preds = %bb.bs
-  %i.hk = add i64 %i.gs, 1
+  %i.hk = add nuw i64 %i.gs, 1
   store i64 %i.hk, ptr %i.bf, align 8, !alias.scope !545, !noalias !426
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.az, ptr noundef nonnull align 8 dereferenceable(72) %i.ay, i64 72, i1 false), !noalias !436
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ay), !noalias !436
@@ -1684,7 +1681,7 @@ bb.cc:                                            ; preds = %bb.ae
   br label %bb.ah
 
 bb.cd:                                            ; preds = %bb.ae
-  %i.hx = add i64 %i.bl, 1
+  %i.hx = add nuw i64 %i.bl, 1
   store i64 %i.hx, ptr %i.bf, align 8, !alias.scope !546, !noalias !426
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aw), !noalias !436
   tail call void @llvm.experimental.noalias.scope.decl(metadata !547)
@@ -2014,7 +2011,7 @@ bb.dg:                                            ; preds = %bb.dh, %.lr.ph.i.i.
   ], !prof !23
 
 bb.dh:                                            ; preds = %bb.dg, %bb.dg, %bb.dg, %bb.dg
-  %i.kr = add i64 %i.ko, 1                        ; 3 uses
+  %i.kr = add nuw i64 %i.ko, 1                    ; 3 uses
   store i64 %i.kr, ptr %i.ki, align 8, !alias.scope !583, !noalias !579
   %exitcond.not.i.i.i = icmp eq i64 %i.kr, %i.kk
   br i1 %exitcond.not.i.i.i, label %.loopexit.i.i, label %bb.dg
@@ -2040,7 +2037,7 @@ bb.di:                                            ; preds = %bb.dg
   br label %.loopexit266
 
 bb.dj:                                            ; preds = %bb.dg
-  %i.ku = add i64 %i.ko, 1
+  %i.ku = add nuw i64 %i.ko, 1
   store i64 %i.ku, ptr %i.ki, align 8, !alias.scope !585, !noalias !573
   invoke fastcc void @_RINvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB5_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeQINtNtB7_2de12DeserializerNtNtB7_4read7StrReadEECskSRqRFwaW70_9yara_x_py(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(72) %i.l, ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.ke) #25
           to label %_RINvXs9_NtCsbbTh99npV2h_10serde_json2deINtB6_9MapAccessNtNtB8_4read7StrReadENtNtCsaeRQ2XwCvzm_10serde_core2de9MapAccess15next_value_seedINtNtCskKLDkoKarTP_4core6marker11PhantomDataNtNtB8_5value5ValueEECskSRqRFwaW70_9yara_x_py.exit.i unwind label %.loopexit261, !noalias !573, !inline_history !399
@@ -2243,7 +2240,7 @@ bb.dy:                                            ; preds = %bb.dz, %.lr.ph.i.i
   ], !prof !21
 
 bb.dz:                                            ; preds = %bb.dy, %bb.dy, %bb.dy, %bb.dy
-  %i.lr = add i64 %i.lo, 1                        ; 3 uses
+  %i.lr = add nuw i64 %i.lo, 1                    ; 3 uses
   store i64 %i.lr, ptr %i.bf, align 8, !alias.scope !596, !noalias !592
   %exitcond.not.i.i = icmp eq i64 %i.lr, %i.ll
   br i1 %exitcond.not.i.i, label %.loopexit.i, label %bb.dy
@@ -2295,7 +2292,7 @@ _RNvMs3_NtCsbbTh99npV2h_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE
   br i1 %i.ly, label %bb.ee, label %bb.ed
 
 _RNvMs3_NtCsbbTh99npV2h_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE7end_mapCskSRqRFwaW70_9yara_x_py.exit.thread: ; preds = %bb.dy
-  %i.lz = add i64 %i.lo, 1
+  %i.lz = add nuw i64 %i.lo, 1
   store i64 %i.lz, ptr %i.bf, align 8, !alias.scope !598, !noalias !426
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.av, ptr noundef nonnull align 8 dereferenceable(72) %i.aw, i64 72, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.au), !noalias !436
@@ -2546,7 +2543,7 @@ bb.b:                                             ; preds = %bb.c, %.lr.ph.i.i
   ], !prof !23
 
 bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b, %bb.b
-  %i.m = add i64 %i.j, 1                          ; 3 uses
+  %i.m = add nuw i64 %i.j, 1                      ; 3 uses
   store i64 %i.m, ptr %i.d, align 8, !alias.scope !629, !noalias !625
   %exitcond.not.i.i = icmp eq i64 %i.m, %i.f
   br i1 %exitcond.not.i.i, label %.loopexit.i, label %bb.b
@@ -2573,7 +2570,7 @@ bb.e:                                             ; preds = %bb.d, %.loopexit.i
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.b
-  %i.q = add i64 %i.j, 1
+  %i.q = add nuw i64 %i.j, 1
   store i64 %i.q, ptr %i.d, align 8, !alias.scope !630
   tail call fastcc void @_RINvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB5_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeQINtNtB7_2de12DeserializerNtNtB7_4read7StrReadEECskSRqRFwaW70_9yara_x_py(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(72) %0, ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.c) #25, !inline_history !619
   br label %bb.g
@@ -2969,7 +2966,7 @@ bb.m:                                             ; preds = %bb.d
   br i1 %or.cond1.i, label %bb.o, label %bb.n, !prof !11
 
 bb.n:                                             ; preds = %bb.m, %bb.d
-  %i.be = add i64 %i.v, 1                         ; 3 uses
+  %i.be = add nuw i64 %i.v, 1                     ; 3 uses
   store i64 %i.be, ptr %i.g, align 8, !alias.scope !667, !noalias !658
   %i.bf = mul nuw i64 %.sroa.0.061.i, 10
   %i.bg = add i64 %i.bf, %i.ab                    ; 2 uses

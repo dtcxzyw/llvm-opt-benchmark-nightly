@@ -204,21 +204,19 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %vec.phi = phi <2 x i64> [ %i.an, %vector.ph ], [ %i.aq, %vector.body ]
   %vec.phi38 = phi <2 x i64> [ zeroinitializer, %vector.ph ], [ %i.ar, %vector.body ]
   %vec.ind = phi <2 x i32> [ %induction, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %step.add = add <2 x i32> %vec.ind, splat (i32 200)
-  %2 = srem <2 x i32> %vec.ind, splat (i32 400)   ; 2 uses
-  %3 = srem <2 x i32> %step.add, splat (i32 400)  ; 2 uses
-  %4 = icmp eq <2 x i32> %2, zeroinitializer
-  %5 = icmp eq <2 x i32> %3, zeroinitializer
-  %6 = icmp sgt <2 x i32> %2, splat (i32 300)
-  %7 = icmp sgt <2 x i32> %3, splat (i32 300)
-  %8 = or <2 x i1> %4, %6
-  %9 = or <2 x i1> %5, %7
-  %i.ao = select <2 x i1> %8, <2 x i64> splat (i64 3155760000), <2 x i64> splat (i64 3155673600)
-  %i.ap = select <2 x i1> %9, <2 x i64> splat (i64 3155760000), <2 x i64> splat (i64 3155673600)
+  %step.add = add nuw nsw <2 x i32> %vec.ind, splat (i32 200)
+  %2 = urem <2 x i32> %vec.ind, splat (i32 400)
+  %3 = urem <2 x i32> %step.add, splat (i32 400)
+  %4 = add nsw <2 x i32> %2, splat (i32 -301)
+  %5 = add nsw <2 x i32> %3, splat (i32 -301)
+  %6 = icmp ult <2 x i32> %4, splat (i32 -300)
+  %7 = icmp ult <2 x i32> %5, splat (i32 -300)
+  %i.ao = select <2 x i1> %6, <2 x i64> splat (i64 3155760000), <2 x i64> splat (i64 3155673600)
+  %i.ap = select <2 x i1> %7, <2 x i64> splat (i64 3155760000), <2 x i64> splat (i64 3155673600)
   %i.aq = add <2 x i64> %i.ao, %vec.phi           ; 2 uses
   %i.ar = add <2 x i64> %i.ap, %vec.phi38         ; 2 uses
   %index.next = add nuw i32 %index, 4             ; 2 uses
-  %vec.ind.next = add <2 x i32> %vec.ind, splat (i32 400)
+  %vec.ind.next = add nuw nsw <2 x i32> %vec.ind, splat (i32 400)
   %i.as = icmp eq i32 %index.next, %n.vec
   br i1 %i.as, label %middle.block, label %vector.body, !llvm.loop !33
 
@@ -261,7 +259,7 @@ vector.ph41:                                      ; preds = %.lr.ph55.i.preheade
   %i.bf = insertelement <2 x i64> <i64 poison, i64 0>, i64 %.1.lcssa.i, i64 0
   %broadcast.splatinsert43 = insertelement <2 x i32> poison, i32 %.136.lcssa.i, i64 0
   %broadcast.splat44 = shufflevector <2 x i32> %broadcast.splatinsert43, <2 x i32> poison, <2 x i32> zeroinitializer
-  %induction45 = add <2 x i32> %broadcast.splat44, <i32 0, i32 4>
+  %induction45 = add nuw nsw <2 x i32> %broadcast.splat44, <i32 0, i32 4>
   br label %vector.body46
 
 vector.body46:                                    ; preds = %vector.body46, %vector.ph41
@@ -269,31 +267,27 @@ vector.body46:                                    ; preds = %vector.body46, %vec
   %vec.phi48 = phi <2 x i64> [ %i.bf, %vector.ph41 ], [ %i.bi, %vector.body46 ]
   %vec.phi49 = phi <2 x i64> [ zeroinitializer, %vector.ph41 ], [ %i.bj, %vector.body46 ]
   %vec.ind50 = phi <2 x i32> [ %induction45, %vector.ph41 ], [ %vec.ind.next54, %vector.body46 ] ; 4 uses
-  %step.add51 = add <2 x i32> %vec.ind50, splat (i32 8) ; 2 uses
-  %10 = srem <2 x i32> %vec.ind50, splat (i32 100) ; 2 uses
-  %11 = srem <2 x i32> %step.add51, splat (i32 100) ; 2 uses
-  %12 = icmp eq <2 x i32> %10, zeroinitializer
-  %13 = icmp eq <2 x i32> %11, zeroinitializer
-  %14 = icmp sgt <2 x i32> %10, splat (i32 96)
-  %15 = icmp sgt <2 x i32> %11, splat (i32 96)
-  %16 = or <2 x i1> %12, %14
-  %17 = or <2 x i1> %13, %15
-  %18 = srem <2 x i32> %vec.ind50, splat (i32 400) ; 2 uses
-  %19 = srem <2 x i32> %step.add51, splat (i32 400) ; 2 uses
-  %20 = icmp ne <2 x i32> %18, zeroinitializer
-  %21 = icmp ne <2 x i32> %19, zeroinitializer
-  %22 = icmp slt <2 x i32> %18, splat (i32 397)
-  %23 = icmp slt <2 x i32> %19, splat (i32 397)
-  %.not84 = and <2 x i1> %20, %22
-  %.not87 = and <2 x i1> %21, %23
-  %i.bg = select <2 x i1> %16, <2 x i1> %.not84, <2 x i1> zeroinitializer
-  %i.bh = select <2 x i1> %17, <2 x i1> %.not87, <2 x i1> zeroinitializer
+  %step.add51 = add nuw nsw <2 x i32> %vec.ind50, splat (i32 8) ; 2 uses
+  %8 = urem <2 x i32> %vec.ind50, splat (i32 100)
+  %9 = urem <2 x i32> %step.add51, splat (i32 100)
+  %10 = add nsw <2 x i32> %8, splat (i32 -97)
+  %11 = add nsw <2 x i32> %9, splat (i32 -97)
+  %12 = icmp ult <2 x i32> %10, splat (i32 -96)
+  %13 = icmp ult <2 x i32> %11, splat (i32 -96)
+  %14 = urem <2 x i32> %vec.ind50, splat (i32 400)
+  %15 = urem <2 x i32> %step.add51, splat (i32 400)
+  %16 = add nsw <2 x i32> %14, splat (i32 -1)
+  %17 = icmp ult <2 x i32> %16, splat (i32 396)
+  %18 = add nsw <2 x i32> %15, splat (i32 -1)
+  %19 = icmp ult <2 x i32> %18, splat (i32 396)
+  %i.bg = select <2 x i1> %12, <2 x i1> %17, <2 x i1> zeroinitializer
+  %i.bh = select <2 x i1> %13, <2 x i1> %19, <2 x i1> zeroinitializer
   %predphi = select <2 x i1> %i.bg, <2 x i64> splat (i64 126144000), <2 x i64> splat (i64 126230400)
   %predphi52 = select <2 x i1> %i.bh, <2 x i64> splat (i64 126144000), <2 x i64> splat (i64 126230400)
   %i.bi = add <2 x i64> %predphi, %vec.phi48      ; 2 uses
   %i.bj = add <2 x i64> %predphi52, %vec.phi49    ; 2 uses
   %index.next53 = add nuw i32 %index47, 4         ; 2 uses
-  %vec.ind.next54 = add <2 x i32> %vec.ind50, splat (i32 16)
+  %vec.ind.next54 = add nuw nsw <2 x i32> %vec.ind50, splat (i32 16)
   %i.bk = icmp eq i32 %index.next53, %n.vec42
   br i1 %i.bk, label %middle.block55, label %vector.body46, !llvm.loop !34
 
@@ -311,13 +305,12 @@ middle.block55:                                   ; preds = %vector.body46
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader102, %.lr.ph.i
   %.150.i = phi i64 [ %i.bm, %.lr.ph.i ], [ %.150.i.ph, %.lr.ph.i.preheader102 ]
   %.13649.i = phi i32 [ %i.bn, %.lr.ph.i ], [ %.13649.i.ph, %.lr.ph.i.preheader102 ] ; 2 uses
-  %24 = srem i32 %.13649.i, 400                   ; 2 uses
-  %25 = icmp eq i32 %24, 0
-  %26 = icmp sgt i32 %24, 300
-  %or.cond.i.i = or i1 %25, %26
+  %20 = urem i32 %.13649.i, 400
+  %21 = add nsw i32 %20, -301
+  %or.cond.i.i = icmp ult i32 %21, -300
   %.0.i.i = select i1 %or.cond.i.i, i64 3155760000, i64 3155673600
   %i.bm = add nuw nsw i64 %.0.i.i, %.150.i        ; 2 uses
-  %i.bn = add i32 %.13649.i, 100                  ; 3 uses
+  %i.bn = add nuw nsw i32 %.13649.i, 100          ; 3 uses
   %i.bo = sub nsw i32 %.fr47.i, %i.bn             ; 2 uses
   %i.bp = icmp sgt i32 %i.bo, 99
   br i1 %i.bp, label %.lr.ph.i, label %.preheader48.i, !llvm.loop !35
@@ -339,7 +332,7 @@ vector.ph62:                                      ; preds = %.lr.ph61.i.preheade
   %i.bt = insertelement <2 x i64> <i64 poison, i64 0>, i64 %.2.lcssa.i, i64 0
   %broadcast.splatinsert64 = insertelement <2 x i32> poison, i32 %.237.lcssa.i, i64 0
   %broadcast.splat65 = shufflevector <2 x i32> %broadcast.splatinsert64, <2 x i32> poison, <2 x i32> zeroinitializer
-  %induction66 = add nsw <2 x i32> %broadcast.splat65, <i32 0, i32 1>
+  %induction66 = add nuw nsw <2 x i32> %broadcast.splat65, <i32 0, i32 1>
   br label %vector.body67
 
 vector.body67:                                    ; preds = %vector.body67, %vector.ph62
@@ -347,19 +340,19 @@ vector.body67:                                    ; preds = %vector.body67, %vec
   %vec.phi69 = phi <2 x i64> [ %i.bt, %vector.ph62 ], [ %i.ce, %vector.body67 ]
   %vec.phi70 = phi <2 x i64> [ zeroinitializer, %vector.ph62 ], [ %i.cf, %vector.body67 ]
   %vec.ind71 = phi <2 x i32> [ %induction66, %vector.ph62 ], [ %vec.ind.next76, %vector.body67 ] ; 5 uses
-  %step.add72 = add nsw <2 x i32> %vec.ind71, splat (i32 2) ; 3 uses
-  %27 = srem <2 x i32> %vec.ind71, splat (i32 400)
-  %28 = srem <2 x i32> %step.add72, splat (i32 400)
-  %i.bu = icmp ne <2 x i32> %27, zeroinitializer
-  %i.bv = icmp ne <2 x i32> %28, zeroinitializer
+  %step.add72 = add nuw nsw <2 x i32> %vec.ind71, splat (i32 2) ; 3 uses
+  %22 = urem <2 x i32> %vec.ind71, splat (i32 400)
+  %23 = urem <2 x i32> %step.add72, splat (i32 400)
+  %i.bu = icmp ne <2 x i32> %22, zeroinitializer
+  %i.bv = icmp ne <2 x i32> %23, zeroinitializer
   %i.bw = and <2 x i32> %vec.ind71, splat (i32 3)
   %i.bx = and <2 x i32> %step.add72, splat (i32 3)
   %i.by = icmp ne <2 x i32> %i.bw, zeroinitializer
   %i.bz = icmp ne <2 x i32> %i.bx, zeroinitializer
-  %29 = srem <2 x i32> %vec.ind71, splat (i32 100)
-  %30 = srem <2 x i32> %step.add72, splat (i32 100)
-  %i.ca = icmp eq <2 x i32> %29, zeroinitializer
-  %i.cb = icmp eq <2 x i32> %30, zeroinitializer
+  %24 = urem <2 x i32> %vec.ind71, splat (i32 100)
+  %25 = urem <2 x i32> %step.add72, splat (i32 100)
+  %i.ca = icmp eq <2 x i32> %24, zeroinitializer
+  %i.cb = icmp eq <2 x i32> %25, zeroinitializer
   %.not90 = or <2 x i1> %i.by, %i.ca
   %.not93 = or <2 x i1> %i.bz, %i.cb
   %i.cc = select <2 x i1> %i.bu, <2 x i1> %.not90, <2 x i1> zeroinitializer
@@ -369,7 +362,7 @@ vector.body67:                                    ; preds = %vector.body67, %vec
   %i.ce = add <2 x i64> %predphi73, %vec.phi69    ; 2 uses
   %i.cf = add <2 x i64> %predphi74, %vec.phi70    ; 2 uses
   %index.next75 = add nuw i32 %index68, 4         ; 2 uses
-  %vec.ind.next76 = add nsw <2 x i32> %vec.ind71, splat (i32 4)
+  %vec.ind.next76 = add nuw nsw <2 x i32> %vec.ind71, splat (i32 4)
   %i.cg = icmp eq i32 %index.next75, %n.vec63
   br i1 %i.cg, label %middle.block77, label %vector.body67, !llvm.loop !36
 
@@ -387,17 +380,15 @@ middle.block77:                                   ; preds = %vector.body67
 .lr.ph55.i:                                       ; preds = %.lr.ph55.i.preheader97, %_ZN6google8protobuf8internal12_GLOBAL__N_116SecondsPer4YearsEi.exit.i
   %.254.i = phi i64 [ %i.ci, %_ZN6google8protobuf8internal12_GLOBAL__N_116SecondsPer4YearsEi.exit.i ], [ %.254.i.ph, %.lr.ph55.i.preheader97 ]
   %.23752.i = phi i32 [ %i.cj, %_ZN6google8protobuf8internal12_GLOBAL__N_116SecondsPer4YearsEi.exit.i ], [ %.23752.i.ph, %.lr.ph55.i.preheader97 ] ; 3 uses
-  %31 = srem i32 %.23752.i, 100                   ; 2 uses
-  %32 = icmp eq i32 %31, 0
-  %33 = icmp sgt i32 %31, 96
-  %or.cond.i40.i = or i1 %32, %33
+  %26 = urem i32 %.23752.i, 100
+  %27 = add nsw i32 %26, -97
+  %or.cond.i40.i = icmp ult i32 %27, -96
   br i1 %or.cond.i40.i, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %.lr.ph55.i
-  %34 = srem i32 %.23752.i, 400                   ; 2 uses
-  %35 = icmp eq i32 %34, 0
-  %36 = icmp sgt i32 %34, 396
-  %or.cond7.i.i = or i1 %35, %36
+  %28 = urem i32 %.23752.i, 400
+  %29 = add nsw i32 %28, -397
+  %or.cond7.i.i = icmp ult i32 %29, -396
   br i1 %or.cond7.i.i, label %bb.k, label %_ZN6google8protobuf8internal12_GLOBAL__N_116SecondsPer4YearsEi.exit.i
 
 bb.k:                                             ; preds = %bb.j, %.lr.ph55.i
@@ -406,7 +397,7 @@ bb.k:                                             ; preds = %bb.j, %.lr.ph55.i
 _ZN6google8protobuf8internal12_GLOBAL__N_116SecondsPer4YearsEi.exit.i: ; preds = %bb.k, %bb.j
   %.0.i41.i = phi i64 [ 126230400, %bb.k ], [ 126144000, %bb.j ]
   %i.ci = add nuw nsw i64 %.0.i41.i, %.254.i      ; 2 uses
-  %i.cj = add i32 %.23752.i, 4                    ; 3 uses
+  %i.cj = add nuw nsw i32 %.23752.i, 4            ; 3 uses
   %i.ck = sub nsw i32 %.fr47.i, %i.cj
   %i.cl = icmp sgt i32 %i.ck, 3
   br i1 %i.cl, label %.lr.ph55.i, label %.preheader.i, !llvm.loop !37
@@ -414,15 +405,15 @@ _ZN6google8protobuf8internal12_GLOBAL__N_116SecondsPer4YearsEi.exit.i: ; preds =
 .lr.ph61.i:                                       ; preds = %.lr.ph61.i.preheader94, %_ZN6google8protobuf8internal12_GLOBAL__N_114SecondsPerYearEi.exit.i
   %.360.i = phi i64 [ %i.cr, %_ZN6google8protobuf8internal12_GLOBAL__N_114SecondsPerYearEi.exit.i ], [ %.360.i.ph, %.lr.ph61.i.preheader94 ]
   %.33858.i = phi i32 [ %i.cs, %_ZN6google8protobuf8internal12_GLOBAL__N_114SecondsPerYearEi.exit.i ], [ %.33858.i.ph, %.lr.ph61.i.preheader94 ] ; 4 uses
-  %37 = srem i32 %.33858.i, 400
-  %i.cm = icmp eq i32 %37, 0
+  %30 = urem i32 %.33858.i, 400
+  %i.cm = icmp eq i32 %30, 0
   br i1 %i.cm, label %_ZN6google8protobuf8internal12_GLOBAL__N_110IsLeapYearEi.exit.thread.i.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph61.i
   %i.cn = and i32 %.33858.i, 3
   %i.co = icmp eq i32 %i.cn, 0
-  %38 = srem i32 %.33858.i, 100
-  %i.cp = icmp ne i32 %38, 0
+  %31 = urem i32 %.33858.i, 100
+  %i.cp = icmp ne i32 %31, 0
   %or.cond.i42.i = and i1 %i.co, %i.cp
   br i1 %or.cond.i42.i, label %_ZN6google8protobuf8internal12_GLOBAL__N_110IsLeapYearEi.exit.thread.i.i, label %_ZN6google8protobuf8internal12_GLOBAL__N_114SecondsPerYearEi.exit.i
 
@@ -432,7 +423,7 @@ _ZN6google8protobuf8internal12_GLOBAL__N_110IsLeapYearEi.exit.thread.i.i: ; pred
 _ZN6google8protobuf8internal12_GLOBAL__N_114SecondsPerYearEi.exit.i: ; preds = %_ZN6google8protobuf8internal12_GLOBAL__N_110IsLeapYearEi.exit.thread.i.i, %bb.l
   %i.cq = phi i64 [ 31622400, %_ZN6google8protobuf8internal12_GLOBAL__N_110IsLeapYearEi.exit.thread.i.i ], [ 31536000, %bb.l ]
   %i.cr = add nuw nsw i64 %i.cq, %.360.i          ; 2 uses
-  %i.cs = add nsw i32 %.33858.i, 1                ; 2 uses
+  %i.cs = add nuw nsw i32 %.33858.i, 1            ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.cs, %.fr47.i
   br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph61.i, !llvm.loop !38
 
@@ -449,8 +440,8 @@ _ZN6google8protobuf8internal12_GLOBAL__N_114SecondsPerYearEi.exit.i: ; preds = %
   br i1 %i.cz, label %bb.m, label %_ZN6google8protobuf8internal12_GLOBAL__N_121SecondsSinceCommonEraERKNS1_8DateTimeE.exit
 
 bb.m:                                             ; preds = %._crit_edge.i
-  %39 = srem i32 %.338.lcssa.i, 400
-  %i.da = icmp eq i32 %39, 0
+  %32 = urem i32 %.338.lcssa.i, 400
+  %i.da = icmp eq i32 %32, 0
   br i1 %i.da, label %_ZN6google8protobuf8internal12_GLOBAL__N_110IsLeapYearEi.exit.thread.i6, label %bb.n
 
 _ZN6google8protobuf8internal12_GLOBAL__N_110IsLeapYearEi.exit.thread.i6: ; preds = %bb.m
@@ -463,8 +454,8 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.dd, label %_ZN6google8protobuf8internal12_GLOBAL__N_110IsLeapYearEi.exit.i, label %_ZN6google8protobuf8internal12_GLOBAL__N_121SecondsSinceCommonEraERKNS1_8DateTimeE.exit
 
 _ZN6google8protobuf8internal12_GLOBAL__N_110IsLeapYearEi.exit.i: ; preds = %bb.n
-  %40 = srem i32 %.338.lcssa.i, 100
-  %.not.i5 = icmp eq i32 %40, 0
+  %33 = urem i32 %.338.lcssa.i, 100
+  %.not.i5 = icmp eq i32 %33, 0
   %i.de = add nsw i64 %i.cy, 86400
   %spec.select.i = select i1 %.not.i5, i64 %i.cy, i64 %i.de
   br label %_ZN6google8protobuf8internal12_GLOBAL__N_121SecondsSinceCommonEraERKNS1_8DateTimeE.exit

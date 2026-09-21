@@ -204,7 +204,7 @@ _ZNSt3__16vectorINS0_IN3jxl5TokenENS_9allocatorIS2_EEEENS3_IS5_EEEC2Em.exit: ; p
   %i.ac = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.ae = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 10 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 8 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %8, i64 40 ; 4 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %8, i64 36 ; 4 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %8, i64 208 ; 4 uses
@@ -607,7 +607,7 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %i.je, label %bb.ak, label %bb.bd
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.jf = add i64 %.088286, 1                     ; 13 uses
+  %i.jf = add nuw i64 %.088286, 1                 ; 12 uses
   %i.jg = load ptr, ptr %i.bk, align 8, !tbaa !42
   %i.jh = load ptr, ptr %i.bi, align 8, !tbaa !43 ; 2 uses
   %i.ji = ptrtoint ptr %i.jg to i64
@@ -655,21 +655,17 @@ _ZNK3jxl12_GLOBAL__N_19HashChain7GetHashEm.exit.i112: ; preds = %bb.am, %bb.al
   %i.kn = getelementptr inbounds nuw [4 x i8], ptr %i.km, i64 %i.kl ; 2 uses
   %i.ko = load i32, ptr %i.kn, align 4, !tbaa !93 ; 2 uses
   %.not.i114 = icmp eq i32 %i.ko, -1
-  br i1 %.not.i114, label %9, label %bb.an
+  br i1 %.not.i114, label %bb.ao, label %bb.an
 
 bb.an:                                            ; preds = %_ZNK3jxl12_GLOBAL__N_19HashChain7GetHashEm.exit.i112
   %i.kp = load ptr, ptr %i.al, align 8, !tbaa !92
   %i.kq = getelementptr inbounds nuw [4 x i8], ptr %i.kp, i64 %i.ki
   store i32 %i.ko, ptr %i.kq, align 4, !tbaa !93
-  br label %9
+  br label %bb.ao
 
-9:                                                ; preds = %bb.an, %_ZNK3jxl12_GLOBAL__N_19HashChain7GetHashEm.exit.i112
+bb.ao:                                            ; preds = %bb.an, %_ZNK3jxl12_GLOBAL__N_19HashChain7GetHashEm.exit.i112
   store i32 %i.kh, ptr %i.kn, align 4, !tbaa !93
-  %.not16.i115 = icmp eq i64 %i.jf, 0
-  br i1 %.not16.i115, label %bb.ap, label %bb.ao
-
-bb.ao:                                            ; preds = %9
-  %i.kr = load ptr, ptr %i.af, align 8, !tbaa !92
+  %i.kr = load ptr, ptr %i.af, align 8, !tbaa !92 ; 3 uses
   %i.ks = getelementptr [4 x i8], ptr %i.kr, i64 %i.jf ; 2 uses
   %i.kt = load i32, ptr %i.ks, align 4, !tbaa !93
   %i.ku = getelementptr i8, ptr %i.ks, i64 -4
@@ -684,7 +680,7 @@ bb.ao:                                            ; preds = %9
   %spec.select.i.i117450 = call i64 @llvm.umin.i64(i64 %i.kx, i64 %i.jo)
   br label %.preheader.i.i127
 
-bb.ap:                                            ; preds = %bb.ao, %9
+bb.ap:                                            ; preds = %bb.ao
   %.pr448 = load i32, ptr %i.am, align 8, !tbaa !99 ; 4 uses
   %i.ky = load i64, ptr %i.an, align 8, !tbaa !98
   %i.kz = add i64 %i.ky, %i.jf                    ; 2 uses
@@ -695,11 +691,7 @@ bb.ap:                                            ; preds = %bb.ao, %9
 .preheader.i.i127:                                ; preds = %.thread449, %bb.ap
   %spec.select.i.i117452 = phi i64 [ %spec.select.i.i117450, %.thread449 ], [ %spec.select.i.i117, %bb.ap ] ; 2 uses
   %i.la = icmp ult i64 %i.jf, %spec.select.i.i117452
-  br i1 %i.la, label %.lr.ph.i.i128, label %_ZNK3jxl12_GLOBAL__N_19HashChain10CountZerosEmj.exit.i121
-
-.lr.ph.i.i128:                                    ; preds = %.preheader.i.i127
-  %10 = load ptr, ptr %i.af, align 8, !tbaa !92
-  br label %bb.at
+  br i1 %i.la, label %bb.at, label %_ZNK3jxl12_GLOBAL__N_19HashChain10CountZerosEmj.exit.i121
 
 bb.aq:                                            ; preds = %bb.ap
   %i.lb = zext i32 %.pr448 to i64
@@ -707,8 +699,7 @@ bb.aq:                                            ; preds = %bb.ap
   br i1 %.not23.i.i119, label %bb.as, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
-  %11 = load ptr, ptr %i.af, align 8, !tbaa !92
-  %i.lc = getelementptr [4 x i8], ptr %11, i64 %spec.select.i.i117
+  %i.lc = getelementptr [4 x i8], ptr %i.kr, i64 %spec.select.i.i117
   %i.ld = getelementptr i8, ptr %i.lc, i64 -4
   %i.le = load i32, ptr %i.ld, align 4, !tbaa !93
   %i.lf = icmp eq i32 %i.le, 0
@@ -720,10 +711,10 @@ bb.as:                                            ; preds = %bb.ar, %bb.aq
   %i.lh = add i32 %.pr448, -1
   br label %_ZNK3jxl12_GLOBAL__N_19HashChain10CountZerosEmj.exit.i121
 
-bb.at:                                            ; preds = %bb.au, %.lr.ph.i.i128
-  %i.li = phi i64 [ %i.jf, %.lr.ph.i.i128 ], [ %i.lo, %bb.au ]
-  %.024.i.i129 = phi i32 [ 0, %.lr.ph.i.i128 ], [ %i.lm, %bb.au ] ; 2 uses
-  %i.lj = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %i.li
+bb.at:                                            ; preds = %.preheader.i.i127, %bb.au
+  %i.li = phi i64 [ %i.lo, %bb.au ], [ %i.jf, %.preheader.i.i127 ]
+  %.024.i.i129 = phi i32 [ %i.lm, %bb.au ], [ 0, %.preheader.i.i127 ] ; 2 uses
+  %i.lj = getelementptr inbounds nuw [4 x i8], ptr %i.kr, i64 %i.li
   %i.lk = load i32, ptr %i.lj, align 4, !tbaa !93
   %i.ll = icmp eq i32 %i.lk, 0
   br i1 %i.ll, label %bb.au, label %_ZNK3jxl12_GLOBAL__N_19HashChain10CountZerosEmj.exit.i121

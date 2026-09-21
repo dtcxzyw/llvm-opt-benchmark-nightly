@@ -204,12 +204,12 @@ bb.i:                                             ; preds = %.lr.ph, %_ZN6icu_78
   %i.aw = ashr i16 %i.au, 5
   %i.ax = sext i16 %i.aw to i32
   %i.ay = load i32, ptr %i.al, align 4
-  %i.az = select i1 %i.av, i32 %i.ay, i32 %i.ax   ; 6 uses
+  %i.az = select i1 %i.av, i32 %i.ay, i32 %i.ax   ; 5 uses
   %.not112 = icmp slt i32 %.0102226, %i.az
   br i1 %.not112, label %bb.j, label %bb.br
 
 bb.j:                                             ; preds = %bb.i
-  %i.ba = add nsw i32 %.0102226, 1                ; 11 uses
+  %i.ba = add nsw i32 %.0102226, 1                ; 10 uses
   %i.bb = icmp ult i32 %.0102226, %i.az
   br i1 %i.bb, label %_ZNK6icu_7813UnicodeString6charAtEi.exit, label %_ZN6icu_7814MessagePattern7addPartE23UMessagePatternPartTypeiiiR10UErrorCode.exit135
 
@@ -226,7 +226,7 @@ _ZNK6icu_7813UnicodeString6charAtEi.exit:         ; preds = %bb.j
 
 bb.k:                                             ; preds = %_ZNK6icu_7813UnicodeString6charAtEi.exit
   %i.bj = icmp eq i32 %i.ba, %i.az
-  br i1 %i.bj, label %bb.l, label %7
+  br i1 %i.bj, label %bb.l, label %_ZNK6icu_7813UnicodeString6charAtEi.exit126
 
 bb.l:                                             ; preds = %bb.k
   %i.bk = load ptr, ptr %i.f, align 8, !tbaa !25  ; 5 uses
@@ -300,14 +300,10 @@ _ZN6icu_7814MessagePattern7addPartE23UMessagePatternPartTypeiiiR10UErrorCode.exi
   store i8 1, ptr %i.at, align 2, !tbaa !42
   br label %_ZN6icu_7814MessagePattern7addPartE23UMessagePatternPartTypeiiiR10UErrorCode.exit135
 
-7:                                                ; preds = %bb.k
-  %8 = icmp ult i32 %i.ba, %i.az
-  br i1 %8, label %_ZNK6icu_7813UnicodeString6charAtEi.exit126, label %_ZNK6icu_7813UnicodeString6charAtEi.exit126.thread
-
-_ZNK6icu_7813UnicodeString6charAtEi.exit126:      ; preds = %7
+_ZNK6icu_7813UnicodeString6charAtEi.exit126:      ; preds = %bb.k
   %i.ck = sext i32 %i.ba to i64
   %i.cl = getelementptr inbounds [2 x i8], ptr %i.be, i64 %i.ck
-  %i.cm = load i16, ptr %i.cl, align 2, !tbaa !34 ; 2 uses
+  %i.cm = load i16, ptr %i.cl, align 2, !tbaa !34 ; 4 uses
   %i.cn = icmp eq i16 %i.cm, 39
   br i1 %i.cn, label %bb.r, label %_ZNK6icu_7813UnicodeString6charAtEi.exit126.thread
 
@@ -380,23 +376,22 @@ _ZN6icu_7818MessagePatternListINS_14MessagePattern4PartELi32EE24ensureCapacityFo
   store i32 0, ptr %i.do, align 4, !tbaa !54
   br label %_ZN6icu_7814MessagePattern7addPartE23UMessagePatternPartTypeiiiR10UErrorCode.exit135
 
-_ZNK6icu_7813UnicodeString6charAtEi.exit126.thread: ; preds = %7, %_ZNK6icu_7813UnicodeString6charAtEi.exit126
-  %.0.i.i124200 = phi i16 [ %i.cm, %_ZNK6icu_7813UnicodeString6charAtEi.exit126 ], [ -1, %7 ] ; 3 uses
+_ZNK6icu_7813UnicodeString6charAtEi.exit126.thread: ; preds = %_ZNK6icu_7813UnicodeString6charAtEi.exit126
   %i.dp = load i32, ptr %i.as, align 8, !tbaa !21
   %.fr = freeze i32 %i.dp
   %i.dq = icmp eq i32 %.fr, 1
   br i1 %i.dq, label %bb.y, label %switch.early.test
 
 switch.early.test:                                ; preds = %_ZNK6icu_7813UnicodeString6charAtEi.exit126.thread
-  switch i16 %.0.i.i124200, label %bb.x [
+  switch i16 %i.cm, label %bb.x [
     i16 125, label %bb.y
     i16 123, label %bb.y
   ]
 
 bb.x:                                             ; preds = %switch.early.test
-  %i.dr = icmp eq i16 %.0.i.i124200, 124
+  %i.dr = icmp eq i16 %i.cm, 124
   %or.cond8 = and i1 %i.ar, %i.dr
-  %i.ds = icmp eq i16 %.0.i.i124200, 35
+  %i.ds = icmp eq i16 %i.cm, 35
   %or.cond13 = and i1 %or.cond15, %i.ds
   %or.cond = or i1 %or.cond8, %or.cond13
   br i1 %or.cond, label %bb.y, label %bb.ba
@@ -799,7 +794,7 @@ bb.ay:                                            ; preds = %bb.av
   br label %.thread245
 
 bb.az:                                            ; preds = %bb.ay
-  %i.iz = add nsw i32 %i.gw, 6
+  %i.iz = add nuw nsw i32 %i.gw, 6
   %i.ja = tail call noundef signext i8 @_ZN6icu_7814MessagePattern9isOrdinalEi(ptr noundef nonnull align 8 dereferenceable(127) %0, i32 noundef %i.iz)
   %.not141 = icmp eq i8 %i.ja, 0                  ; 2 uses
   %i.jb = select i1 %.not141, i16 1, i16 5

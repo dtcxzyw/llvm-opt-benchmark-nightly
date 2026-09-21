@@ -204,9 +204,8 @@ e1000_shift_out_ee_bits.exit.i.i:                 ; preds = %udelay.exit.i.i.i
   %i.co = getelementptr i8, ptr %i.cn, i64 16
   tail call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.cm, ptr elementtype(i32) %i.co) #6, !srcloc !13
   %indvars.iv.next.i33.i = add nuw nsw i64 %indvars.iv.i31.i12, 1 ; 4 uses
-  %i.cp = trunc i64 %indvars.iv.next.i33.i to i32
-  %4 = and i32 %i.cp, 65535
-  %i.cq = add nuw nsw i32 %4, %i.an
+  %i.cp = trunc nuw i64 %indvars.iv.next.i33.i to i32
+  %i.cq = add nuw nsw i32 %i.cp, %i.an
   %i.cr = shl nuw nsw i32 %i.cq, 1
   %i.cs = load i16, ptr %i.aq, align 4
   %i.ct = zext i16 %i.cs to i32
@@ -215,7 +214,7 @@ e1000_shift_out_ee_bits.exit.i.i:                 ; preds = %udelay.exit.i.i.i
   br i1 %i.cv, label %bb.o, label %e1000_standby_eeprom.exit.i.i
 
 bb.o:                                             ; preds = %e1000_shift_out_ee_bits.exit.i.i
-  %indvars.le.i.i = trunc i64 %indvars.iv.next.i33.i to i16 ; 2 uses
+  %indvars.le.i.i = trunc nuw i64 %indvars.iv.next.i33.i to i16 ; 2 uses
   %i.cw = load ptr, ptr %0, align 8
   %i.cx = getelementptr i8, ptr %i.cw, i64 16
   %i.cy = tail call i32 asm sideeffect "movl $1,$0", "=r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.cx) #6, !srcloc !12 ; 4 uses

@@ -204,12 +204,12 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i.i1 = phi i64 [ %i.h, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.g = getelementptr inbounds nuw [32 x i8], ptr %i.b, i64 %.sroa.0.0.i.i1
-  %i.h = add i64 %.sroa.0.0.i.i1, 1               ; 4 uses
+  %i.h = add nuw i64 %.sroa.0.0.i.i1, 1           ; 4 uses
   invoke fastcc void @_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueNtNtCs8ZPNfZ0ciAA_10serde_json5value5ValueEBF_(ptr noalias nofree noundef align 8 dereferenceable(32) %i.g) #23
           to label %bb.b unwind label %bb.d, !noalias !42, !inline_history !41
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i.i2, 1               ; 2 uses
+  %i.i = add nuw i64 %.sroa.0.1.i.i2, 1           ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %.body, label %.lr.ph3
 
@@ -604,12 +604,12 @@ bb.g:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.f, %bb.g
   %.sroa.0.0.i.i2 = phi i64 [ %i.o, %bb.g ], [ 0, %bb.f ] ; 2 uses
   %i.n = getelementptr inbounds nuw [32 x i8], ptr %i.i, i64 %.sroa.0.0.i.i2
-  %i.o = add i64 %.sroa.0.0.i.i2, 1               ; 4 uses
+  %i.o = add nuw i64 %.sroa.0.0.i.i2, 1           ; 4 uses
   invoke fastcc void @_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueNtNtCs8ZPNfZ0ciAA_10serde_json5value5ValueEBF_(ptr noalias nofree noundef align 8 dereferenceable(32) %i.n)
           to label %bb.g unwind label %bb.i, !noalias !85, !inline_history !81
 
 bb.h:                                             ; preds = %.lr.ph4
-  %i.p = add i64 %.sroa.0.1.i.i3, 1               ; 2 uses
+  %i.p = add nuw i64 %.sroa.0.1.i.i3, 1           ; 2 uses
   %i.q = icmp eq i64 %i.p, %i.k
   br i1 %i.q, label %.body, label %.lr.ph4
 
@@ -1012,7 +1012,7 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = alloca [24 x i8], align 8                ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.d = load i64, ptr %i.c, align 8, !noundef !6 ; 10 uses
+  %i.d = load i64, ptr %i.c, align 8, !noundef !6 ; 8 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.f = load i64, ptr %i.e, align 8, !noundef !6 ; 5 uses
   %i.g = icmp ugt i64 %i.f, %i.d
@@ -1100,7 +1100,7 @@ bb.g:                                             ; preds = %bb.b
   %i.ai = load i8, ptr %i.ah, align 1, !noundef !6
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ad, i64 3
   %i.ak = load i8, ptr %i.aj, align 1, !noundef !6
-  %i.al = add i64 %i.f, 4                         ; 6 uses
+  %i.al = add nuw i64 %i.f, 4                     ; 4 uses
   store i64 %i.al, ptr %i.e, align 8
   %i.am = zext i8 %i.ae to i64
   %i.an = getelementptr inbounds nuw [2 x i8], ptr @_RNvNtCs8ZPNfZ0ciAA_10serde_json4read4HEX1, i64 %i.am
@@ -1138,22 +1138,18 @@ bb.j:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 12, ptr %i.b, align 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !545)
-  %.not.i.i.i6 = icmp ugt i64 %i.al, %i.d
-  br i1 %.not.i.i.i6, label %6, label %2, !prof !12
-
-2:                                                ; preds = %bb.j
-  %3 = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.al
-  %4 = load atomic ptr, ptr @_RNvNvNtNtNtCs1F4dABBouLx_6memchr4arch6x86_646memchr11memrchr_raw2FN monotonic, align 8, !noalias !546, !nonnull !6, !noundef !6
-  %5 = invoke { i64, ptr } %4(i8 noundef 10, ptr noundef nonnull readonly %i.ac, ptr noundef nonnull readonly %3)
+  %2 = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.al
+  %3 = load atomic ptr, ptr @_RNvNvNtNtNtCs1F4dABBouLx_6memchr4arch6x86_646memchr11memrchr_raw2FN monotonic, align 8, !noalias !546, !nonnull !6, !noundef !6
+  %4 = invoke { i64, ptr } %3(i8 noundef 10, ptr noundef nonnull readonly %i.ac, ptr noundef nonnull readonly %2)
           to label %.noexc.i8 unwind label %bb.k, !noalias !547, !inline_history !13 ; 2 uses
 
-.noexc.i8:                                        ; preds = %2
-  %i.bi = extractvalue { i64, ptr } %5, 0
+.noexc.i8:                                        ; preds = %bb.j
+  %i.bi = extractvalue { i64, ptr } %4, 0
   %i.bj = trunc nuw i64 %i.bi to i1
   br i1 %i.bj, label %_RINvNtNtNtCs1F4dABBouLx_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memrchr0ECs8ZPNfZ0ciAA_10serde_json.exit.i.i.i11, label %_RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead17position_of_index.exit.i.i9
 
 _RINvNtNtNtCs1F4dABBouLx_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memrchr0ECs8ZPNfZ0ciAA_10serde_json.exit.i.i.i11: ; preds = %.noexc.i8
-  %i.bk = extractvalue { i64, ptr } %5, 1
+  %i.bk = extractvalue { i64, ptr } %4, 1
   %i.bl = ptrtoint ptr %i.bk to i64
   %i.bm = ptrtoint ptr %i.ac to i64
   %i.bn = sub i64 %i.bl, %i.bm                    ; 3 uses
@@ -1164,13 +1160,6 @@ _RINvNtNtNtCs1F4dABBouLx_6memchr4arch7generic6memchr21search_slice_with_rawNCNvN
   %i.bp = add nuw i64 %i.bn, 1
   br label %_RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead17position_of_index.exit.i.i9
 
-6:                                                ; preds = %bb.j
-  invoke void @_RNvNtNtCs8Chj7Szqq0n_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.al, i64 noundef %i.d, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #28
-          to label %.noexc2.i13 unwind label %bb.k, !noalias !547
-
-.noexc2.i13:                                      ; preds = %6
-  unreachable
-
 _RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead17position_of_index.exit.i.i9: ; preds = %_RINvNtNtNtCs1F4dABBouLx_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memrchr0ECs8ZPNfZ0ciAA_10serde_json.exit.i.i.i11, %.noexc.i8
   %.sroa.0.06.i.i.i10 = phi i64 [ %i.bp, %_RINvNtNtNtCs1F4dABBouLx_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memrchr0ECs8ZPNfZ0ciAA_10serde_json.exit.i.i.i11 ], [ 0, %.noexc.i8 ] ; 2 uses
   %i.bq = getelementptr i8, ptr %i.ac, i64 %.sroa.0.06.i.i.i10
@@ -1178,7 +1167,7 @@ _RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead17position_of_index.exit
   %i.bs = invoke noundef i64 %i.br(i8 noundef 10, ptr noundef nonnull %i.ac, ptr noundef %i.bq)
           to label %_RINvNtCs8ZPNfZ0ciAA_10serde_json4read5errorNtB2_9SliceReadtEB4_.exit14 unwind label %bb.k, !noalias !547, !inline_history !13
 
-bb.k:                                             ; preds = %_RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead17position_of_index.exit.i.i9, %6, %2
+bb.k:                                             ; preds = %_RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json4readNtB5_9SliceRead17position_of_index.exit.i.i9, %bb.j
   %lpad.thr_comm.i7 = landingpad { ptr, i32 }
           cleanup
   invoke fastcc void @_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueNtNtCs8ZPNfZ0ciAA_10serde_json5error9ErrorCodeEBF_(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(24) %i.b) #25
@@ -1581,12 +1570,12 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i1 = phi i64 [ %i.h, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.g = getelementptr inbounds nuw [32 x i8], ptr %i.b, i64 %.sroa.0.0.i1
-  %i.h = add i64 %.sroa.0.0.i1, 1                 ; 4 uses
+  %i.h = add nuw i64 %.sroa.0.0.i1, 1             ; 4 uses
   invoke fastcc void @_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueNtNtCs8ZPNfZ0ciAA_10serde_json5value5ValueEBF_(ptr noalias nofree noundef align 8 dereferenceable(32) %i.g)
           to label %bb.b unwind label %bb.d, !inline_history !807
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i2, 1                 ; 2 uses
+  %i.i = add nuw i64 %.sroa.0.1.i2, 1             ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %._crit_edge, label %.lr.ph3
 

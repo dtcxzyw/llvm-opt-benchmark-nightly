@@ -204,25 +204,25 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %.crit
 
 .critedge38:                                      ; preds = %._crit_edge.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %.sroa.0.0.copyload = load ptr, ptr %i.aj, align 8 ; 21 uses
+  %.sroa.0.0.copyload = load ptr, ptr %i.aj, align 8 ; 22 uses
   %.sroa.24.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 24
   %.sroa.24.0.copyload = load i64, ptr %.sroa.24.0..sroa_idx, align 8 ; 4 uses
-  %.sroa.24.sroa.0.0.extract.trunc = trunc i64 %.sroa.24.0.copyload to i32 ; 38 uses
+  %.sroa.24.sroa.0.0.extract.trunc = trunc i64 %.sroa.24.0.copyload to i32 ; 39 uses
   %.sroa.24.sroa.15.0.extract.shift = lshr i64 %.sroa.24.0.copyload, 32 ; 7 uses
-  %.sroa.24.sroa.25.0.extract.shift = lshr i64 %.sroa.24.0.copyload, 48 ; 7 uses
+  %.sroa.24.sroa.25.0.extract.shift = lshr i64 %.sroa.24.0.copyload, 48 ; 8 uses
   %.sroa.24.sroa.25.0.extract.trunc = trunc nuw i64 %.sroa.24.sroa.25.0.extract.shift to i16
   %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 32
   %.sroa.45.0.copyload = load i32, ptr %.sroa.45.0..sroa_idx, align 8 ; 26 uses
-  %i.ak = zext i32 %.sroa.45.0.copyload to i64    ; 21 uses
+  %i.ak = zext i32 %.sroa.45.0.copyload to i64    ; 20 uses
   %i.al = add nuw nsw i64 %i.ak, 4
-  %i.am = and i64 %.sroa.24.0.copyload, 4294967295 ; 12 uses
+  %i.am = and i64 %.sroa.24.0.copyload, 4294967295 ; 11 uses
   %.not.i.i = icmp samesign ugt i64 %i.al, %i.am
   br i1 %.not.i.i, label %.loopexit261, label %_ZNK8rawspeed6Buffer10getSubViewEjj.exit.i.i
 
 _ZNK8rawspeed6Buffer10getSubViewEjj.exit.i.i:     ; preds = %.critedge38
   %i.an = icmp sgt i32 %.sroa.24.sroa.0.0.extract.trunc, -1
   call void @llvm.assume(i1 %i.an)
-  %i.ao = add i32 %.sroa.45.0.copyload, 4         ; 2 uses
+  %i.ao = add nuw nsw i32 %.sroa.45.0.copyload, 4 ; 2 uses
   %i.ap = icmp samesign ule i32 %i.ao, %.sroa.24.sroa.0.0.extract.trunc
   call void @llvm.assume(i1 %i.ap)
   %i.aq = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload, i64 %i.ak ; 4 uses
@@ -255,7 +255,7 @@ _ZNK8rawspeed10ByteStream9hasPrefixESt17basic_string_viewIcSt11char_traitsIcEE.e
   br i1 %.not.i.i5.i, label %_ZNK8rawspeed10ByteStream12hasPatternAtESt17basic_string_viewIcSt11char_traitsIcEEj.exit11.i.i.invoke, label %_ZNK8rawspeed6Buffer10getSubViewEjj.exit.i.i.i
 
 _ZNK8rawspeed6Buffer10getSubViewEjj.exit.i.i.i:   ; preds = %_ZNK8rawspeed10ByteStream9hasPrefixESt17basic_string_viewIcSt11char_traitsIcEE.exit
-  %i.bb = add i32 %.sroa.45.0.copyload, 6         ; 2 uses
+  %i.bb = add nuw i32 %.sroa.45.0.copyload, 6     ; 3 uses
   %i.bc = icmp samesign ule i32 %i.bb, %.sroa.24.sroa.0.0.extract.trunc
   call void @llvm.assume(i1 %i.bc)
   %i.bd = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload, i64 %i.az ; 3 uses
@@ -269,19 +269,13 @@ _ZNK8rawspeed6Buffer10getSubViewEjj.exit.i.i.i:   ; preds = %_ZNK8rawspeed10Byte
   %.0810.i.i.i.i.i.ptr.1.i.i = getelementptr inbounds nuw i8, ptr %i.bd, i64 1
   %i.bf = load i8, ptr %.0810.i.i.i.i.i.ptr.1.i.i, align 1, !tbaa !4608
   %i.bg = icmp eq i8 %i.bf, 73
-  br i1 %i.bg, label %_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i, label %_ZNK8rawspeed10ByteStream12hasPatternAtESt17basic_string_viewIcSt11char_traitsIcEEj.exit11.i.i.invoke
+  br i1 %i.bg, label %_ZN8rawspeed10ByteStream10skipPrefixESt17basic_string_viewIcSt11char_traitsIcEE.exit212.thread, label %_ZNK8rawspeed10ByteStream12hasPatternAtESt17basic_string_viewIcSt11char_traitsIcEEj.exit11.i.i.invoke
 
 .lr.ph.i.i.i.i.i6.1.i.i:                          ; preds = %_ZNK8rawspeed6Buffer10getSubViewEjj.exit.i.i.i
   %.0810.i.i.i.i.i8.ptr.1.i.i = getelementptr inbounds nuw i8, ptr %i.bd, i64 1
   %i.bh = load i8, ptr %.0810.i.i.i.i.i8.ptr.1.i.i, align 1, !tbaa !4608
   %i.bi = icmp eq i8 %i.bh, 77
-  br i1 %i.bi, label %_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i, label %_ZNK8rawspeed10ByteStream12hasPatternAtESt17basic_string_viewIcSt11char_traitsIcEEj.exit11.i.i.invoke
-
-_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i: ; preds = %.lr.ph.i.i.i.i.i6.1.i.i, %.lr.ph.i.i.i.i.i.1.i.i
-  %.0.i.i58 = phi i64 [ 57005, %.lr.ph.i.i.i.i.i.1.i.i ], [ 48879, %.lr.ph.i.i.i.i.i6.1.i.i ]
-  %6 = add nuw nsw i64 %i.ak, 6
-  %.not.i.i6.i = icmp samesign ugt i64 %6, %i.am
-  br i1 %.not.i.i6.i, label %.invoke392, label %_ZN8rawspeed10ByteStream10skipPrefixESt17basic_string_viewIcSt11char_traitsIcEE.exit212.thread
+  br i1 %i.bi, label %_ZN8rawspeed10ByteStream10skipPrefixESt17basic_string_viewIcSt11char_traitsIcEE.exit212.thread, label %_ZNK8rawspeed10ByteStream12hasPatternAtESt17basic_string_viewIcSt11char_traitsIcEEj.exit11.i.i.invoke
 
 bb.m:                                             ; preds = %bb.g, %.noexc.i17.i, %.noexc4.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i16.i
   %i.bj = landingpad { ptr, i32 }
@@ -684,7 +678,7 @@ _ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i286: ; preds = %.lr.ph
   %.not.i.i6.i287 = icmp samesign ugt i64 %i.gv, %.pre-phi.i
   br i1 %.not.i.i6.i287, label %.invoke392, label %"_ZZN8rawspeed7TiffIFD14parseMakerNoteEPNS_11NORangesSetINS_6BufferEEEPKNS_9TiffEntryEENK3$_0clEbjjPKc.exit295"
 
-.invoke392:                                       ; preds = %_ZNK8rawspeed10ByteStream9hasPrefixESt17basic_string_viewIcSt11char_traitsIcEE.exit112, %_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i129, %bb.q, %bb.r, %_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i, %_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i286
+.invoke392:                                       ; preds = %_ZNK8rawspeed10ByteStream9hasPrefixESt17basic_string_viewIcSt11char_traitsIcEE.exit112, %_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i129, %bb.q, %bb.r, %_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i286
   invoke void (ptr, ...) @_ZN8rawspeed14ThrowExceptionINS_11IOExceptionEEEvPKcz(ptr noundef nonnull @.str.26, ptr noundef nonnull @__PRETTY_FUNCTION__._ZNK8rawspeed10ByteStream5checkEj) #18
           to label %.cont393 unwind label %bb.n
 
@@ -936,7 +930,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 _ZNK8rawspeed6Buffer10getSubViewEjj.exit.i.i.i202: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread364
   %i.km = icmp sgt i32 %.sroa.24.sroa.0.0.extract.trunc, -1
   call void @llvm.assume(i1 %i.km)
-  %i.kn = add i32 %.sroa.45.0.copyload, 2         ; 3 uses
+  %i.kn = add nuw i32 %.sroa.45.0.copyload, 2     ; 3 uses
   %i.ko = icmp samesign ule i32 %i.kn, %.sroa.24.sroa.0.0.extract.trunc
   call void @llvm.assume(i1 %i.ko)
   %i.kp = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload, i64 %i.ak ; 3 uses
@@ -962,12 +956,12 @@ _ZNK8rawspeed6Buffer10getSubViewEjj.exit.i.i.i202: ; preds = %_ZSteqIcSt11char_t
   %spec.select367 = select i1 %i.ku, i32 %i.kn, i32 %.sroa.45.0.copyload
   br label %_ZN8rawspeed10ByteStream10skipPrefixESt17basic_string_viewIcSt11char_traitsIcEE.exit212.thread
 
-_ZN8rawspeed10ByteStream10skipPrefixESt17basic_string_viewIcSt11char_traitsIcEE.exit212.thread: ; preds = %_ZNK8rawspeed10ByteStream9hasPrefixESt17basic_string_viewIcSt11char_traitsIcEE.exit98, %.lr.ph.i.i.i.i.i.i.i206.1, %.lr.ph.i.i.i.i.i.i.i.1, %_ZNK8rawspeed6Buffer10getSubViewEjj.exit.i.i.i202, %bb.q, %_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i129, %.lr.ph.i.i.i.i.i6.1.i.i80, %.lr.ph.i.i.i.i.i.1.i.i86, %_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i, %"_ZZN8rawspeed7TiffIFD14parseMakerNoteEPNS_11NORangesSetINS_6BufferEEEPKNS_9TiffEntryEENK3$_0clEbjjPKc.exit295", %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread364, %"_ZZN8rawspeed7TiffIFD14parseMakerNoteEPNS_11NORangesSetINS_6BufferEEEPKNS_9TiffEntryEENK3$_0clEbjjPKc.exit191"
-  %.sroa.24.sroa.25.0 = phi i64 [ %i.gy, %"_ZZN8rawspeed7TiffIFD14parseMakerNoteEPNS_11NORangesSetINS_6BufferEEEPKNS_9TiffEntryEENK3$_0clEbjjPKc.exit295" ], [ %.sroa.24.sroa.25.0.extract.shift, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread364 ], [ 0, %bb.q ], [ %.sroa.24.sroa.25.0.extract.shift, %.lr.ph.i.i.i.i.i.i.i.1 ], [ %.sroa.24.sroa.25.0.extract.shift, %.lr.ph.i.i.i.i.i.i.i206.1 ], [ %.sroa.24.sroa.25.0.extract.shift, %_ZNK8rawspeed6Buffer10getSubViewEjj.exit.i.i.i202 ], [ %.sroa.24.sroa.25.0.extract.shift, %"_ZZN8rawspeed7TiffIFD14parseMakerNoteEPNS_11NORangesSetINS_6BufferEEEPKNS_9TiffEntryEENK3$_0clEbjjPKc.exit191" ], [ 0, %_ZNK8rawspeed10ByteStream9hasPrefixESt17basic_string_viewIcSt11char_traitsIcEE.exit98 ], [ 0, %_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i129 ], [ 0, %.lr.ph.i.i.i.i.i6.1.i.i80 ], [ %.sroa.24.sroa.25.0.extract.shift, %_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i ], [ 0, %.lr.ph.i.i.i.i.i.1.i.i86 ]
-  %.sroa.24.sroa.15.0 = phi i64 [ %.sroa.24.sroa.15.2, %"_ZZN8rawspeed7TiffIFD14parseMakerNoteEPNS_11NORangesSetINS_6BufferEEEPKNS_9TiffEntryEENK3$_0clEbjjPKc.exit295" ], [ %.sroa.24.sroa.15.0.extract.shift, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread364 ], [ %.sroa.24.sroa.15.0.extract.shift, %bb.q ], [ %spec.select, %.lr.ph.i.i.i.i.i.i.i.1 ], [ %spec.select366, %.lr.ph.i.i.i.i.i.i.i206.1 ], [ %.sroa.24.sroa.15.0.extract.shift, %_ZNK8rawspeed6Buffer10getSubViewEjj.exit.i.i.i202 ], [ %.sroa.24.sroa.15.0.extract.shift, %"_ZZN8rawspeed7TiffIFD14parseMakerNoteEPNS_11NORangesSetINS_6BufferEEEPKNS_9TiffEntryEENK3$_0clEbjjPKc.exit191" ], [ 57005, %_ZNK8rawspeed10ByteStream9hasPrefixESt17basic_string_viewIcSt11char_traitsIcEE.exit98 ], [ %.0.i.i130, %_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i129 ], [ 48879, %.lr.ph.i.i.i.i.i6.1.i.i80 ], [ %.0.i.i58, %_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i ], [ 57005, %.lr.ph.i.i.i.i.i.1.i.i86 ]
-  %.sroa.24.sroa.0.0 = phi i32 [ %.sroa.24.sroa.0.1359, %"_ZZN8rawspeed7TiffIFD14parseMakerNoteEPNS_11NORangesSetINS_6BufferEEEPKNS_9TiffEntryEENK3$_0clEbjjPKc.exit295" ], [ %.sroa.24.sroa.0.0.extract.trunc, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread364 ], [ %i.fh, %bb.q ], [ %.sroa.24.sroa.0.0.extract.trunc, %.lr.ph.i.i.i.i.i.i.i.1 ], [ %.sroa.24.sroa.0.0.extract.trunc, %.lr.ph.i.i.i.i.i.i.i206.1 ], [ %.sroa.24.sroa.0.0.extract.trunc, %_ZNK8rawspeed6Buffer10getSubViewEjj.exit.i.i.i202 ], [ %.sroa.24.sroa.0.0.extract.trunc, %"_ZZN8rawspeed7TiffIFD14parseMakerNoteEPNS_11NORangesSetINS_6BufferEEEPKNS_9TiffEntryEENK3$_0clEbjjPKc.exit191" ], [ %i.dr, %_ZNK8rawspeed10ByteStream9hasPrefixESt17basic_string_viewIcSt11char_traitsIcEE.exit98 ], [ %i.eo, %_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i129 ], [ %i.ch, %.lr.ph.i.i.i.i.i6.1.i.i80 ], [ %.sroa.24.sroa.0.0.extract.trunc, %_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i ], [ %i.ch, %.lr.ph.i.i.i.i.i.1.i.i86 ] ; 3 uses
-  %.sroa.45.0 = phi i32 [ %i.gw, %"_ZZN8rawspeed7TiffIFD14parseMakerNoteEPNS_11NORangesSetINS_6BufferEEEPKNS_9TiffEntryEENK3$_0clEbjjPKc.exit295" ], [ %.sroa.45.0.copyload, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread364 ], [ 12, %bb.q ], [ %spec.select365.a, %.lr.ph.i.i.i.i.i.i.i.1 ], [ %spec.select367, %.lr.ph.i.i.i.i.i.i.i206.1 ], [ %.sroa.45.0.copyload, %_ZNK8rawspeed6Buffer10getSubViewEjj.exit.i.i.i202 ], [ %i.il, %"_ZZN8rawspeed7TiffIFD14parseMakerNoteEPNS_11NORangesSetINS_6BufferEEEPKNS_9TiffEntryEENK3$_0clEbjjPKc.exit191" ], [ 12, %_ZNK8rawspeed10ByteStream9hasPrefixESt17basic_string_viewIcSt11char_traitsIcEE.exit98 ], [ 8, %_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i129 ], [ 10, %.lr.ph.i.i.i.i.i6.1.i.i80 ], [ %i.bb, %_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i ], [ 10, %.lr.ph.i.i.i.i.i.1.i.i86 ] ; 2 uses
-  %.sroa.0.0 = phi ptr [ %.sroa.0.1363, %"_ZZN8rawspeed7TiffIFD14parseMakerNoteEPNS_11NORangesSetINS_6BufferEEEPKNS_9TiffEntryEENK3$_0clEbjjPKc.exit295" ], [ %.sroa.0.0.copyload, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread364 ], [ %i.dw, %bb.q ], [ %.sroa.0.0.copyload, %.lr.ph.i.i.i.i.i.i.i.1 ], [ %.sroa.0.0.copyload, %.lr.ph.i.i.i.i.i.i.i206.1 ], [ %.sroa.0.0.copyload, %_ZNK8rawspeed6Buffer10getSubViewEjj.exit.i.i.i202 ], [ %.sroa.0.0.copyload, %"_ZZN8rawspeed7TiffIFD14parseMakerNoteEPNS_11NORangesSetINS_6BufferEEEPKNS_9TiffEntryEENK3$_0clEbjjPKc.exit191" ], [ %i.cs, %_ZNK8rawspeed10ByteStream9hasPrefixESt17basic_string_viewIcSt11char_traitsIcEE.exit98 ], [ %i.ep, %_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i129 ], [ %i.bu, %.lr.ph.i.i.i.i.i6.1.i.i80 ], [ %.sroa.0.0.copyload, %_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i ], [ %i.bu, %.lr.ph.i.i.i.i.i.1.i.i86 ] ; 2 uses
+_ZN8rawspeed10ByteStream10skipPrefixESt17basic_string_viewIcSt11char_traitsIcEE.exit212.thread: ; preds = %_ZNK8rawspeed10ByteStream9hasPrefixESt17basic_string_viewIcSt11char_traitsIcEE.exit98, %.lr.ph.i.i.i.i.i.i.i206.1, %.lr.ph.i.i.i.i.i.i.i.1, %_ZNK8rawspeed6Buffer10getSubViewEjj.exit.i.i.i202, %bb.q, %_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i129, %.lr.ph.i.i.i.i.i6.1.i.i80, %.lr.ph.i.i.i.i.i.1.i.i86, %.lr.ph.i.i.i.i.i.1.i.i, %.lr.ph.i.i.i.i.i6.1.i.i, %"_ZZN8rawspeed7TiffIFD14parseMakerNoteEPNS_11NORangesSetINS_6BufferEEEPKNS_9TiffEntryEENK3$_0clEbjjPKc.exit295", %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread364, %"_ZZN8rawspeed7TiffIFD14parseMakerNoteEPNS_11NORangesSetINS_6BufferEEEPKNS_9TiffEntryEENK3$_0clEbjjPKc.exit191"
+  %.sroa.24.sroa.25.0 = phi i64 [ %i.gy, %"_ZZN8rawspeed7TiffIFD14parseMakerNoteEPNS_11NORangesSetINS_6BufferEEEPKNS_9TiffEntryEENK3$_0clEbjjPKc.exit295" ], [ %.sroa.24.sroa.25.0.extract.shift, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread364 ], [ 0, %bb.q ], [ %.sroa.24.sroa.25.0.extract.shift, %.lr.ph.i.i.i.i.i.i.i.1 ], [ %.sroa.24.sroa.25.0.extract.shift, %.lr.ph.i.i.i.i.i.i.i206.1 ], [ %.sroa.24.sroa.25.0.extract.shift, %_ZNK8rawspeed6Buffer10getSubViewEjj.exit.i.i.i202 ], [ %.sroa.24.sroa.25.0.extract.shift, %"_ZZN8rawspeed7TiffIFD14parseMakerNoteEPNS_11NORangesSetINS_6BufferEEEPKNS_9TiffEntryEENK3$_0clEbjjPKc.exit191" ], [ 0, %_ZNK8rawspeed10ByteStream9hasPrefixESt17basic_string_viewIcSt11char_traitsIcEE.exit98 ], [ 0, %_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i129 ], [ 0, %.lr.ph.i.i.i.i.i6.1.i.i80 ], [ %.sroa.24.sroa.25.0.extract.shift, %.lr.ph.i.i.i.i.i.1.i.i ], [ %.sroa.24.sroa.25.0.extract.shift, %.lr.ph.i.i.i.i.i6.1.i.i ], [ 0, %.lr.ph.i.i.i.i.i.1.i.i86 ]
+  %.sroa.24.sroa.15.0 = phi i64 [ %.sroa.24.sroa.15.2, %"_ZZN8rawspeed7TiffIFD14parseMakerNoteEPNS_11NORangesSetINS_6BufferEEEPKNS_9TiffEntryEENK3$_0clEbjjPKc.exit295" ], [ %.sroa.24.sroa.15.0.extract.shift, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread364 ], [ %.sroa.24.sroa.15.0.extract.shift, %bb.q ], [ %spec.select, %.lr.ph.i.i.i.i.i.i.i.1 ], [ %spec.select366, %.lr.ph.i.i.i.i.i.i.i206.1 ], [ %.sroa.24.sroa.15.0.extract.shift, %_ZNK8rawspeed6Buffer10getSubViewEjj.exit.i.i.i202 ], [ %.sroa.24.sroa.15.0.extract.shift, %"_ZZN8rawspeed7TiffIFD14parseMakerNoteEPNS_11NORangesSetINS_6BufferEEEPKNS_9TiffEntryEENK3$_0clEbjjPKc.exit191" ], [ 57005, %_ZNK8rawspeed10ByteStream9hasPrefixESt17basic_string_viewIcSt11char_traitsIcEE.exit98 ], [ %.0.i.i130, %_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i129 ], [ 48879, %.lr.ph.i.i.i.i.i6.1.i.i80 ], [ 57005, %.lr.ph.i.i.i.i.i.1.i.i ], [ 48879, %.lr.ph.i.i.i.i.i6.1.i.i ], [ 57005, %.lr.ph.i.i.i.i.i.1.i.i86 ]
+  %.sroa.24.sroa.0.0 = phi i32 [ %.sroa.24.sroa.0.1359, %"_ZZN8rawspeed7TiffIFD14parseMakerNoteEPNS_11NORangesSetINS_6BufferEEEPKNS_9TiffEntryEENK3$_0clEbjjPKc.exit295" ], [ %.sroa.24.sroa.0.0.extract.trunc, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread364 ], [ %i.fh, %bb.q ], [ %.sroa.24.sroa.0.0.extract.trunc, %.lr.ph.i.i.i.i.i.i.i.1 ], [ %.sroa.24.sroa.0.0.extract.trunc, %.lr.ph.i.i.i.i.i.i.i206.1 ], [ %.sroa.24.sroa.0.0.extract.trunc, %_ZNK8rawspeed6Buffer10getSubViewEjj.exit.i.i.i202 ], [ %.sroa.24.sroa.0.0.extract.trunc, %"_ZZN8rawspeed7TiffIFD14parseMakerNoteEPNS_11NORangesSetINS_6BufferEEEPKNS_9TiffEntryEENK3$_0clEbjjPKc.exit191" ], [ %i.dr, %_ZNK8rawspeed10ByteStream9hasPrefixESt17basic_string_viewIcSt11char_traitsIcEE.exit98 ], [ %i.eo, %_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i129 ], [ %i.ch, %.lr.ph.i.i.i.i.i6.1.i.i80 ], [ %.sroa.24.sroa.0.0.extract.trunc, %.lr.ph.i.i.i.i.i.1.i.i ], [ %.sroa.24.sroa.0.0.extract.trunc, %.lr.ph.i.i.i.i.i6.1.i.i ], [ %i.ch, %.lr.ph.i.i.i.i.i.1.i.i86 ] ; 3 uses
+  %.sroa.45.0 = phi i32 [ %i.gw, %"_ZZN8rawspeed7TiffIFD14parseMakerNoteEPNS_11NORangesSetINS_6BufferEEEPKNS_9TiffEntryEENK3$_0clEbjjPKc.exit295" ], [ %.sroa.45.0.copyload, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread364 ], [ 12, %bb.q ], [ %spec.select365.a, %.lr.ph.i.i.i.i.i.i.i.1 ], [ %spec.select367, %.lr.ph.i.i.i.i.i.i.i206.1 ], [ %.sroa.45.0.copyload, %_ZNK8rawspeed6Buffer10getSubViewEjj.exit.i.i.i202 ], [ %i.il, %"_ZZN8rawspeed7TiffIFD14parseMakerNoteEPNS_11NORangesSetINS_6BufferEEEPKNS_9TiffEntryEENK3$_0clEbjjPKc.exit191" ], [ 12, %_ZNK8rawspeed10ByteStream9hasPrefixESt17basic_string_viewIcSt11char_traitsIcEE.exit98 ], [ 8, %_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i129 ], [ 10, %.lr.ph.i.i.i.i.i6.1.i.i80 ], [ %i.bb, %.lr.ph.i.i.i.i.i.1.i.i ], [ %i.bb, %.lr.ph.i.i.i.i.i6.1.i.i ], [ 10, %.lr.ph.i.i.i.i.i.1.i.i86 ] ; 2 uses
+  %.sroa.0.0 = phi ptr [ %.sroa.0.1363, %"_ZZN8rawspeed7TiffIFD14parseMakerNoteEPNS_11NORangesSetINS_6BufferEEEPKNS_9TiffEntryEENK3$_0clEbjjPKc.exit295" ], [ %.sroa.0.0.copyload, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread364 ], [ %i.dw, %bb.q ], [ %.sroa.0.0.copyload, %.lr.ph.i.i.i.i.i.i.i.1 ], [ %.sroa.0.0.copyload, %.lr.ph.i.i.i.i.i.i.i206.1 ], [ %.sroa.0.0.copyload, %_ZNK8rawspeed6Buffer10getSubViewEjj.exit.i.i.i202 ], [ %.sroa.0.0.copyload, %"_ZZN8rawspeed7TiffIFD14parseMakerNoteEPNS_11NORangesSetINS_6BufferEEEPKNS_9TiffEntryEENK3$_0clEbjjPKc.exit191" ], [ %i.cs, %_ZNK8rawspeed10ByteStream9hasPrefixESt17basic_string_viewIcSt11char_traitsIcEE.exit98 ], [ %i.ep, %_ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc.exit.i129 ], [ %i.bu, %.lr.ph.i.i.i.i.i6.1.i.i80 ], [ %.sroa.0.0.copyload, %.lr.ph.i.i.i.i.i.1.i.i ], [ %.sroa.0.0.copyload, %.lr.ph.i.i.i.i.i6.1.i.i ], [ %i.bu, %.lr.ph.i.i.i.i.i.1.i.i86 ] ; 2 uses
   %i.kv = icmp uge i32 %.sroa.24.sroa.0.0, %.sroa.45.0
   call void @llvm.assume(i1 %i.kv)
   %i.kw = icmp sgt i32 %.sroa.24.sroa.0.0, -1

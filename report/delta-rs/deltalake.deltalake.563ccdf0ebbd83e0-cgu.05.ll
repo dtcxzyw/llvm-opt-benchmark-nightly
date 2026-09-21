@@ -205,13 +205,13 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCslrv8JwANqSj_15crossbeam_util
 .lr.ph:                                           ; preds = %bb.a, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCslrv8JwANqSj_15crossbeam_utils12cache_padded11CachePaddedINtNtCslfDARg5dRCJ_8lock_api6rwlock6RwLockNtNtCs3JXekYNd0JR_7dashmap4lock9RawRwLockINtNtNtCsbZMnTeWjWd9_9hashbrown3raw5inner8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB2r_4util11SharedValueINtNtB3V_3vec3VecbEEEEEEECs7p2uQeJxui2_9deltalake.exit.i.i
   %.sroa.0.0.i.i1 = phi i64 [ %i.c, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCslrv8JwANqSj_15crossbeam_utils12cache_padded11CachePaddedINtNtCslfDARg5dRCJ_8lock_api6rwlock6RwLockNtNtCs3JXekYNd0JR_7dashmap4lock9RawRwLockINtNtNtCsbZMnTeWjWd9_9hashbrown3raw5inner8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB2r_4util11SharedValueINtNtB3V_3vec3VecbEEEEEEECs7p2uQeJxui2_9deltalake.exit.i.i ], [ 0, %bb.a ] ; 2 uses
   %i.b = getelementptr inbounds nuw [128 x i8], ptr %.0.val, i64 %.sroa.0.0.i.i1
-  %i.c = add i64 %.sroa.0.0.i.i1, 1               ; 4 uses
+  %i.c = add nuw i64 %.sroa.0.0.i.i1, 1           ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   invoke void @_RNvXsf_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtB11_3vec3VecbEEEENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.d)
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCslrv8JwANqSj_15crossbeam_utils12cache_padded11CachePaddedINtNtCslfDARg5dRCJ_8lock_api6rwlock6RwLockNtNtCs3JXekYNd0JR_7dashmap4lock9RawRwLockINtNtNtCsbZMnTeWjWd9_9hashbrown3raw5inner8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB2r_4util11SharedValueINtNtB3V_3vec3VecbEEEEEEECs7p2uQeJxui2_9deltalake.exit.i.i unwind label %bb.b
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCslrv8JwANqSj_15crossbeam_utils12cache_padded11CachePaddedINtNtCslfDARg5dRCJ_8lock_api6rwlock6RwLockNtNtCs3JXekYNd0JR_7dashmap4lock9RawRwLockINtNtNtCsbZMnTeWjWd9_9hashbrown3raw5inner8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB2r_4util11SharedValueINtNtB3V_3vec3VecbEEEEEEECs7p2uQeJxui2_9deltalake.exit7.i.i: ; preds = %.lr.ph3
-  %i.e = add i64 %.sroa.0.1.i.i2, 1               ; 2 uses
+  %i.e = add nuw i64 %.sroa.0.1.i.i2, 1           ; 2 uses
   %i.f = icmp eq i64 %i.e, %.8.val
   br i1 %i.f, label %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i.i, label %.lr.ph3
 
@@ -614,7 +614,7 @@ _RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCsbvkFyIu7lgC_4core3an
   br i1 %i.be, label %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i4.i.i.i.i.i.i, label %.lr.ph.i
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot4SlotNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBN_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit7.i.i.i.i.i.i.i: ; preds = %.lr.ph58
-  %i.bf = add i64 %.sroa.0.1.i.i.i.i.i.i.i57, 1   ; 2 uses
+  %i.bf = add nuw i64 %.sroa.0.1.i.i.i.i.i.i.i57, 1 ; 2 uses
   %i.bg = icmp eq i64 %i.bf, %.val9.i
   br i1 %i.bg, label %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i.i, label %.lr.ph58
 
@@ -653,10 +653,10 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCsdNqyU9N9qTX_12sharded_slab4p
 .lr.ph:                                           ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCsdNqyU9N9qTX_12sharded_slab4page6SharedNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBL_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit
   %.sroa.0.1.i11 = phi i64 [ %i.bq, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCsdNqyU9N9qTX_12sharded_slab4page6SharedNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBL_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit ], [ %i.c, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i.i ] ; 2 uses
   %i.bp = getelementptr inbounds nuw [40 x i8], ptr %.0.val, i64 %.sroa.0.1.i11 ; 2 uses
-  %i.bq = add i64 %.sroa.0.1.i11, 1               ; 2 uses
+  %i.bq = add nuw i64 %.sroa.0.1.i11, 1           ; 2 uses
   %.val.i = load ptr, ptr %i.bp, align 8, !alias.scope !3045, !align !15, !noundef !11 ; 5 uses
   %i.br = getelementptr i8, ptr %i.bp, i64 8
-  %.val7.i = load i64, ptr %i.br, align 8, !alias.scope !3045 ; 7 uses
+  %.val7.i = load i64, ptr %i.br, align 8, !alias.scope !3045 ; 6 uses
   %i.bs = icmp eq ptr %.val.i, null
   %cond = icmp eq i64 %.val7.i, 0
   %or.cond = select i1 %i.bs, i1 true, i1 %cond
@@ -664,18 +664,18 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCsdNqyU9N9qTX_12sharded_slab4p
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot4SlotNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBN_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit.i.i.i.i.i.i: ; preds = %.lr.ph60
   %i.bt = icmp eq i64 %i.bv, %.val7.i
-  br i1 %i.bt, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeSINtNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot4SlotNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBO_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit.i.i.i.i.i, label %.lr.ph60
+  br i1 %i.bt, label %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i4.i.i.i.i.i, label %.lr.ph60
 
 .lr.ph60:                                         ; preds = %.lr.ph, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot4SlotNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBN_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit.i.i.i.i.i.i
   %.sroa.0.0.i.i.i.i.i.i59 = phi i64 [ %i.bv, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot4SlotNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBN_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit.i.i.i.i.i.i ], [ 0, %.lr.ph ] ; 2 uses
   %i.bu = getelementptr inbounds nuw [96 x i8], ptr %.val.i, i64 %.sroa.0.0.i.i.i.i.i.i59
-  %i.bv = add i64 %.sroa.0.0.i.i.i.i.i.i59, 1     ; 4 uses
+  %i.bv = add nuw i64 %.sroa.0.0.i.i.i.i.i.i59, 1 ; 4 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bu, i64 48
   invoke void @_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCsbvkFyIu7lgC_4core3any6TypeIdINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtBR_3AnyNtNtBT_6marker4SyncNtB28_4SendEL_EEENtNtNtBT_3ops4drop4Drop4dropCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull readonly align 8 dereferenceable(32) %i.bw)
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot4SlotNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBN_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit.i.i.i.i.i.i unwind label %bb.j, !noalias !3045
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot4SlotNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBN_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit7.i.i.i.i.i.i: ; preds = %.lr.ph63
-  %i.bx = add i64 %.sroa.0.1.i.i.i.i.i.i61, 1     ; 2 uses
+  %i.bx = add nuw i64 %.sroa.0.1.i.i.i.i.i.i61, 1 ; 2 uses
   %i.by = icmp eq i64 %i.bx, %.val7.i
   br i1 %i.by, label %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i, label %.lr.ph63
 
@@ -704,16 +704,12 @@ _RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9All
   tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #39, !noalias !3045
   unreachable
 
-_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeSINtNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot4SlotNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBO_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit.i.i.i.i.i: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot4SlotNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBN_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit.i.i.i.i.i.i
-  %0 = icmp eq i64 %.val7.i, 0
-  br i1 %0, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCsdNqyU9N9qTX_12sharded_slab4page6SharedNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBL_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit, label %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i4.i.i.i.i.i
-
-_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i4.i.i.i.i.i: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeSINtNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot4SlotNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBO_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit.i.i.i.i.i
+_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i4.i.i.i.i.i: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot4SlotNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBN_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit.i.i.i.i.i.i
   %i.cf = mul nuw nsw i64 %.val7.i, 96
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i, i64 noundef %i.cf, i64 noundef 8) #33, !noalias !3045
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCsdNqyU9N9qTX_12sharded_slab4page6SharedNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBL_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit
 
-_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCsdNqyU9N9qTX_12sharded_slab4page6SharedNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBL_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit: ; preds = %.lr.ph, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeSINtNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot4SlotNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBO_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit.i.i.i.i.i, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i4.i.i.i.i.i
+_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCsdNqyU9N9qTX_12sharded_slab4page6SharedNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBL_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit: ; preds = %.lr.ph, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i4.i.i.i.i.i
   %i.cg = icmp eq i64 %i.bq, %.8.val
   br i1 %i.cg, label %._crit_edge, label %.lr.ph
 
@@ -1116,13 +1112,13 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCslrv8JwANqSj_15crossbeam_util
 .lr.ph:                                           ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs8CRAYtH5WmW_12futures_util6stream10try_stream8and_then7AndThenINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemINtNtB4_6result6ResultTNtCseo6ZV82fEK1_3url3UrlINtNtB4_6option6OptionINtNtB2c_3vec3VecbEEIB4j_yEENtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorENtNtB4_6marker4SendEL_EEINtNtNtBP_6future5ready5ReadyIB3y_TNtNtB2c_6string6StringB4E_EB56_EENCNCNvNtNtNtNtB5a_16delta_datafusion14table_provider4next4scan23replay_deletion_vectors00EECs7p2uQeJxui2_9deltalake.exit, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCslrv8JwANqSj_15crossbeam_utils12cache_padded11CachePaddedINtNtCslfDARg5dRCJ_8lock_api6rwlock6RwLockNtNtCs3JXekYNd0JR_7dashmap4lock9RawRwLockINtNtNtCsbZMnTeWjWd9_9hashbrown3raw5inner8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB2r_4util11SharedValueINtNtB3V_3vec3VecbEEEEEEECs7p2uQeJxui2_9deltalake.exit.i.i.i
   %.sroa.0.0.i.i.i6 = phi i64 [ %i.w, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCslrv8JwANqSj_15crossbeam_utils12cache_padded11CachePaddedINtNtCslfDARg5dRCJ_8lock_api6rwlock6RwLockNtNtCs3JXekYNd0JR_7dashmap4lock9RawRwLockINtNtNtCsbZMnTeWjWd9_9hashbrown3raw5inner8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB2r_4util11SharedValueINtNtB3V_3vec3VecbEEEEEEECs7p2uQeJxui2_9deltalake.exit.i.i.i ], [ 0, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs8CRAYtH5WmW_12futures_util6stream10try_stream8and_then7AndThenINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemINtNtB4_6result6ResultTNtCseo6ZV82fEK1_3url3UrlINtNtB4_6option6OptionINtNtB2c_3vec3VecbEEIB4j_yEENtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorENtNtB4_6marker4SendEL_EEINtNtNtBP_6future5ready5ReadyIB3y_TNtNtB2c_6string6StringB4E_EB56_EENCNCNvNtNtNtNtB5a_16delta_datafusion14table_provider4next4scan23replay_deletion_vectors00EECs7p2uQeJxui2_9deltalake.exit ] ; 2 uses
   %i.v = getelementptr inbounds nuw [128 x i8], ptr %.val, i64 %.sroa.0.0.i.i.i6
-  %i.w = add i64 %.sroa.0.0.i.i.i6, 1             ; 4 uses
+  %i.w = add nuw i64 %.sroa.0.0.i.i.i6, 1         ; 4 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   invoke void @_RNvXsf_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtB11_3vec3VecbEEEENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.x)
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCslrv8JwANqSj_15crossbeam_utils12cache_padded11CachePaddedINtNtCslfDARg5dRCJ_8lock_api6rwlock6RwLockNtNtCs3JXekYNd0JR_7dashmap4lock9RawRwLockINtNtNtCsbZMnTeWjWd9_9hashbrown3raw5inner8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB2r_4util11SharedValueINtNtB3V_3vec3VecbEEEEEEECs7p2uQeJxui2_9deltalake.exit.i.i.i unwind label %bb.g
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCslrv8JwANqSj_15crossbeam_utils12cache_padded11CachePaddedINtNtCslfDARg5dRCJ_8lock_api6rwlock6RwLockNtNtCs3JXekYNd0JR_7dashmap4lock9RawRwLockINtNtNtCsbZMnTeWjWd9_9hashbrown3raw5inner8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB2r_4util11SharedValueINtNtB3V_3vec3VecbEEEEEEECs7p2uQeJxui2_9deltalake.exit7.i.i.i: ; preds = %.lr.ph8
-  %i.y = add i64 %.sroa.0.1.i.i.i7, 1             ; 2 uses
+  %i.y = add nuw i64 %.sroa.0.1.i.i.i7, 1         ; 2 uses
   %i.z = icmp eq i64 %i.y, %.val1
   br i1 %i.z, label %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i.i.i, label %.lr.ph8
 
@@ -1525,7 +1521,7 @@ _RNvXs3_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   br label %_RNvXs3_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCs7p2uQeJxui2_9deltalake.exit.i.us
 
 bb.b:                                             ; preds = %_RNvXs3_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCs7p2uQeJxui2_9deltalake.exit.i.us
-  %i.p = add i64 %.sroa.623.0.i.us19, 1           ; 2 uses
+  %i.p = add nuw i64 %.sroa.623.0.i.us19, 1       ; 2 uses
   %exitcond.not.i.us = icmp eq i64 %i.p, %umax.i.us
   br i1 %exitcond.not.i.us, label %_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern14small_slice_eq.exit.thread6, label %_RNvXs3_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCs7p2uQeJxui2_9deltalake.exit.i.us
 
@@ -1928,7 +1924,7 @@ bb.g:                                             ; preds = %bb.f
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ae) ]
   %.val.i = load ptr, ptr %0, align 8, !noalias !11039, !align !15, !noundef !11 ; 5 uses
   %i.ag = getelementptr i8, ptr %0, i64 8         ; 3 uses
-  %.val1.i = load i64, ptr %i.ag, align 8, !noalias !11039 ; 7 uses
+  %.val1.i = load i64, ptr %i.ag, align 8, !noalias !11039 ; 6 uses
   %i.ah = icmp eq ptr %.val.i, null
   %cond = icmp eq i64 %.val1.i, 0
   %or.cond = select i1 %i.ah, i1 true, i1 %cond
@@ -1936,18 +1932,18 @@ bb.g:                                             ; preds = %bb.f
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot4SlotNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBN_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit.i.i.i.i: ; preds = %.lr.ph
   %i.ai = icmp eq i64 %i.ak, %.val1.i
-  br i1 %i.ai, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeSINtNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot4SlotNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBO_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit.i.i.i, label %.lr.ph
+  br i1 %i.ai, label %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i4.i.i.i, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.noexc, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot4SlotNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBN_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit.i.i.i.i
   %.sroa.0.0.i.i.i.i24 = phi i64 [ %i.ak, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot4SlotNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBN_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit.i.i.i.i ], [ 0, %.noexc ] ; 2 uses
   %i.aj = getelementptr inbounds nuw [96 x i8], ptr %.val.i, i64 %.sroa.0.0.i.i.i.i24
-  %i.ak = add i64 %.sroa.0.0.i.i.i.i24, 1         ; 4 uses
+  %i.ak = add nuw i64 %.sroa.0.0.i.i.i.i24, 1     ; 4 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.aj, i64 48
   invoke void @_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCsbvkFyIu7lgC_4core3any6TypeIdINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtBR_3AnyNtNtBT_6marker4SyncNtB28_4SendEL_EEENtNtNtBT_3ops4drop4Drop4dropCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull readonly align 8 dereferenceable(32) %i.al)
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot4SlotNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBN_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit.i.i.i.i unwind label %bb.h, !noalias !11039
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot4SlotNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBN_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit7.i.i.i.i: ; preds = %.lr.ph26
-  %i.am = add i64 %.sroa.0.1.i.i.i.i25, 1         ; 2 uses
+  %i.am = add nuw i64 %.sroa.0.1.i.i.i.i25, 1     ; 2 uses
   %i.an = icmp eq i64 %i.am, %.val1.i
   br i1 %i.an, label %.body.thread19, label %.lr.ph26
 
@@ -1977,16 +1973,12 @@ bb.i:                                             ; preds = %.lr.ph26
   store i64 %i.af, ptr %i.ag, align 8, !noalias !11039
   br label %bb.k
 
-_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeSINtNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot4SlotNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBO_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit.i.i.i: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot4SlotNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBN_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit.i.i.i.i
-  %1 = icmp eq i64 %.val1.i, 0
-  br i1 %1, label %bb.j, label %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i4.i.i.i
-
-_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i4.i.i.i: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeSINtNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot4SlotNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBO_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit.i.i.i
+_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i4.i.i.i: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot4SlotNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBN_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit.i.i.i.i
   %i.au = mul nuw nsw i64 %.val1.i, 96
   call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i, i64 noundef %i.au, i64 noundef 8) #33, !noalias !11039
   br label %bb.j
 
-bb.j:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i4.i.i.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeSINtNtNtCsdNqyU9N9qTX_12sharded_slab4page4slot4SlotNtNtNtCsbG4i8A5DnWX_18tracing_subscriber8registry7sharded9DataInnerNtNtBO_3cfg13DefaultConfigEECs7p2uQeJxui2_9deltalake.exit.i.i.i, %.noexc
+bb.j:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i4.i.i.i, %.noexc
   store ptr %i.ae, ptr %0, align 8, !noalias !11039
   store i64 %i.af, ptr %i.ag, align 8, !noalias !11039
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)

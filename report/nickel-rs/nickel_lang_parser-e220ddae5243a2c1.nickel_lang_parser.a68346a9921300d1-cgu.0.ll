@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %"_ZN91_$LT$core..sl
   ]
 
 .thread175:                                       ; preds = %bb.n, %bb.au, %bb.l
-  %i.bx = phi i64 [ 0, %bb.l ], [ %i.fg, %bb.au ], [ %i.an, %bb.n ] ; 18 uses
+  %i.bx = phi i64 [ 0, %bb.l ], [ %i.fg, %bb.au ], [ %i.an, %bb.n ] ; 17 uses
   %.sroa.7.1.lcssa = phi i64 [ %.sroa.7.0264, %bb.l ], [ %.sroa.7.3, %bb.au ], [ %.sroa.7.1247, %bb.n ]
   %.sroa.014.1.lcssa = phi i1 [ %.sroa.014.0265, %bb.l ], [ %.sroa.014.3, %bb.au ], [ %.sroa.014.1249, %bb.n ]
   %.sroa.08.1.lcssa = phi i8 [ %.sroa.08.0266, %bb.l ], [ %.sroa.08.3, %bb.au ], [ %.sroa.08.1251, %bb.n ]
@@ -286,12 +286,11 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.cu, label %.thread186, label %.lr.ph.i
 
 bb.u:                                             ; preds = %.backedge.i79
-  %i.cv = add i64 %i.co, 1                        ; 2 uses
-  %2 = icmp eq i64 %i.cv, 0
-  br i1 %2, label %bb.w, label %.thread186
+  %i.cv = add nuw i64 %i.co, 1
+  br label %.thread186
 
-.thread186:                                       ; preds = %bb.t, %bb.u
-  %i.cw = phi i64 [ %i.cv, %bb.u ], [ 1, %bb.t ]  ; 5 uses
+.thread186:                                       ; preds = %bb.u, %bb.t
+  %i.cw = phi i64 [ %i.cv, %bb.u ], [ 1, %bb.t ]  ; 7 uses
   %.not.i = icmp ult i64 %i.cw, %i.bx
   br i1 %.not.i, label %bb.v, label %.split.i
 
@@ -318,15 +317,14 @@ bb.v:                                             ; preds = %.thread186
   %i.dd = icmp eq ptr %i.dc, %i.ct
   br i1 %i.dd, label %bb.u, label %.lr.ph.i
 
-bb.w:                                             ; preds = %bb.v, %.split.i, %bb.u
-  %3 = phi i64 [ %i.cw, %bb.v ], [ %i.bx, %.split.i ], [ 0, %bb.u ] ; 3 uses
-  %i.de = sub nuw i64 %i.bx, %3                   ; 7 uses
-  %i.df = getelementptr inbounds nuw i8, ptr %i.bz, i64 %3
+bb.w:                                             ; preds = %bb.v, %.split.i
+  %i.de = sub nuw i64 %i.bx, %i.cw                ; 7 uses
+  %i.df = getelementptr inbounds nuw i8, ptr %i.bz, i64 %i.cw
   %i.dg = icmp slt i64 %i.de, 0
   br i1 %i.dg, label %bb.y, label %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i, !prof !39
 
 _ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i: ; preds = %bb.w
-  %i.dh = icmp eq i64 %i.bx, %3
+  %i.dh = icmp eq i64 %i.bx, %i.cw
   br i1 %i.dh, label %bb.aa, label %bb.x
 
 bb.x:                                             ; preds = %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i
@@ -729,7 +727,7 @@ bb.a:
   br i1 %i.i, label %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17hcdcd083aa74ec3aeE.exit.i.i.i", label %.lr.ph.i.i.i.i.i
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.j = add i64 %.sroa.0.1.i.i.i.i.i9, 1         ; 2 uses
+  %i.j = add nuw i64 %.sroa.0.1.i.i.i.i.i9, 1     ; 2 uses
   %i.k = icmp eq i64 %i.j, %.val1.i.i.i
   br i1 %i.k, label %.body.i.i.i, label %.lr.ph
 
@@ -1132,12 +1130,12 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i.i7 = phi i64 [ %i.f, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [64 x i8], ptr %.val, i64 %.sroa.0.0.i.i7
-  %i.f = add i64 %.sroa.0.0.i.i7, 1               ; 4 uses
+  %i.f = add nuw i64 %.sroa.0.0.i.i7, 1           ; 4 uses
   invoke fastcc void @"_ZN4core3ptr194drop_in_place$LT$regex_automata..util..pool..inner..CacheLine$LT$std..sync..poison..mutex..Mutex$LT$alloc..vec..Vec$LT$alloc..boxed..Box$LT$regex_automata..meta..regex..Cache$GT$$GT$$GT$$GT$$GT$17h0bd26101962b8281E"(ptr noalias noundef readonly align 64 dereferenceable(64) %i.e)
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph9
-  %i.g = add i64 %.sroa.0.1.i.i8, 1               ; 2 uses
+  %i.g = add nuw i64 %.sroa.0.1.i.i8, 1           ; 2 uses
   %i.h = icmp eq i64 %i.g, %.val1
   br i1 %i.h, label %.body, label %.lr.ph9
 
@@ -1540,7 +1538,7 @@ bb.a:
   br i1 %i.i, label %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h1f7f24f6245757bfE.exit", label %.lr.ph.i.i
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.j = add i64 %.sroa.0.1.i.i19, 1              ; 2 uses
+  %i.j = add nuw i64 %.sroa.0.1.i.i19, 1          ; 2 uses
   %i.k = icmp eq i64 %i.j, %.val1
   br i1 %i.k, label %.body, label %.lr.ph
 
@@ -1943,12 +1941,12 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i.i7 = phi i64 [ %i.f, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [24 x i8], ptr %.val, i64 %.sroa.0.0.i.i7
-  %i.f = add i64 %.sroa.0.0.i.i7, 1               ; 4 uses
+  %i.f = add nuw i64 %.sroa.0.0.i.i7, 1           ; 4 uses
   invoke fastcc void @"_ZN4core3ptr58drop_in_place$LT$alloc..vec..Vec$LT$pretty..BoxDoc$GT$$GT$17he85ce3dc543a50d9E"(ptr noalias noundef readonly align 8 dereferenceable(24) %i.e)
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph9
-  %i.g = add i64 %.sroa.0.1.i.i8, 1               ; 2 uses
+  %i.g = add nuw i64 %.sroa.0.1.i.i8, 1           ; 2 uses
   %i.h = icmp eq i64 %i.g, %.val1
   br i1 %i.h, label %.body, label %.lr.ph9
 
@@ -2351,7 +2349,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph12.i.i:                                     ; preds = %bb.c, %"_ZN4core3ptr68drop_in_place$LT$regex_automata..util..determinize..state..State$GT$17h4d7f83a07d60863eE.exit8.i.i"
   %.sroa.0.110.i.i = phi i64 [ %i.m, %"_ZN4core3ptr68drop_in_place$LT$regex_automata..util..determinize..state..State$GT$17h4d7f83a07d60863eE.exit8.i.i" ], [ %i.e, %bb.c ] ; 2 uses
   %i.l = getelementptr inbounds nuw [16 x i8], ptr %.val, i64 %.sroa.0.110.i.i ; 2 uses
-  %i.m = add i64 %.sroa.0.110.i.i, 1              ; 2 uses
+  %i.m = add nuw i64 %.sroa.0.110.i.i, 1          ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !600232)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !600233)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !600234)
@@ -2754,7 +2752,7 @@ bb.i:                                             ; preds = %.lr.ph.i51.us
   br i1 %exitcond.not.i56.us55.not, label %.lr.ph, label %.preheader149.us.preheader
 
 bb.j:                                             ; preds = %bb.k
-  %i.ab = add i64 %.sroa.02.0.i55.us56, 1         ; 2 uses
+  %i.ab = add nuw i64 %.sroa.02.0.i55.us56, 1     ; 2 uses
   %exitcond.not.i56.us = icmp eq i64 %i.ab, %umax50.i54.us
   br i1 %exitcond.not.i56.us, label %.preheader149.us.preheader, label %.lr.ph
 
@@ -2840,7 +2838,7 @@ bb.q:                                             ; preds = %bb.g
   br i1 %exitcond.not.i.us60.not, label %.lr.ph62, label %.preheader.us.preheader
 
 .preheader:                                       ; preds = %bb.r
-  %i.bg = add i64 %.sroa.02.0.i.us61, 1           ; 2 uses
+  %i.bg = add nuw i64 %.sroa.02.0.i.us61, 1       ; 2 uses
   %exitcond.not.i.us = icmp eq i64 %i.bg, %umax50.i.us
   br i1 %exitcond.not.i.us, label %.preheader.us.preheader, label %.lr.ph62
 
@@ -3243,12 +3241,12 @@ bb.cq:                                            ; preds = %.lr.ph64
 .lr.ph64:                                         ; preds = %"_ZN4core3ptr61drop_in_place$LT$typed_arena..Arena$LT$pretty..BoxDoc$GT$$GT$17h32ba0ab03e162bb3E.exit", %bb.cq
   %.sroa.0.0.i.i.i63 = phi i64 [ %i.kg, %bb.cq ], [ 0, %"_ZN4core3ptr61drop_in_place$LT$typed_arena..Arena$LT$pretty..BoxDoc$GT$$GT$17h32ba0ab03e162bb3E.exit" ] ; 2 uses
   %i.kf = getelementptr inbounds nuw [24 x i8], ptr %.val.i50, i64 %.sroa.0.0.i.i.i63
-  %i.kg = add i64 %.sroa.0.0.i.i.i63, 1           ; 4 uses
+  %i.kg = add nuw i64 %.sroa.0.0.i.i.i63, 1       ; 4 uses
   invoke fastcc void @"_ZN4core3ptr58drop_in_place$LT$alloc..vec..Vec$LT$pretty..BoxDoc$GT$$GT$17he85ce3dc543a50d9E"(ptr noalias noundef readonly align 8 dereferenceable(24) %i.kf)
           to label %bb.cq unwind label %bb.cs, !noalias !602368
 
 bb.cr:                                            ; preds = %.lr.ph66
-  %i.kh = add i64 %.sroa.0.1.i.i.i65, 1           ; 2 uses
+  %i.kh = add nuw i64 %.sroa.0.1.i.i.i65, 1       ; 2 uses
   %i.ki = icmp eq i64 %i.kh, %.val1.i
   br i1 %i.ki, label %.body.i, label %.lr.ph66
 
@@ -3326,12 +3324,12 @@ bb.cw:                                            ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %"_ZN4core3ptr61drop_in_place$LT$typed_arena..Arena$LT$pretty..BoxDoc$GT$$GT$17h32ba0ab03e162bb3E.exit49", %bb.cw
   %.sroa.0.0.i.i.i5460 = phi i64 [ %i.ky, %bb.cw ], [ 0, %"_ZN4core3ptr61drop_in_place$LT$typed_arena..Arena$LT$pretty..BoxDoc$GT$$GT$17h32ba0ab03e162bb3E.exit49" ] ; 2 uses
   %i.kx = getelementptr inbounds nuw [24 x i8], ptr %.val.i52, i64 %.sroa.0.0.i.i.i5460
-  %i.ky = add i64 %.sroa.0.0.i.i.i5460, 1         ; 4 uses
+  %i.ky = add nuw i64 %.sroa.0.0.i.i.i5460, 1     ; 4 uses
   invoke fastcc void @"_ZN4core3ptr58drop_in_place$LT$alloc..vec..Vec$LT$pretty..BoxDoc$GT$$GT$17he85ce3dc543a50d9E"(ptr noalias noundef readonly align 8 dereferenceable(24) %i.kx)
           to label %bb.cw unwind label %bb.cy, !noalias !602371
 
 bb.cx:                                            ; preds = %.lr.ph62
-  %i.kz = add i64 %.sroa.0.1.i.i.i5561, 1         ; 2 uses
+  %i.kz = add nuw i64 %.sroa.0.1.i.i.i5561, 1     ; 2 uses
   %i.la = icmp eq i64 %i.kz, %.val1.i53
   br i1 %i.la, label %.body.i56, label %.lr.ph62
 
@@ -3708,7 +3706,7 @@ bb.a:
   br i1 %i.z, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph56
-  %i.aa = add nuw i64 %.sroa.0.155, 1             ; 2 uses
+  %i.aa = add i64 %.sroa.0.155, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %i.aa, %i.b
   br i1 %exitcond.not, label %.critedge.thread, label %.lr.ph56
 
@@ -3894,7 +3892,7 @@ tailrecurse:                                      ; preds = %bb.s, %bb.a
   br i1 %i.l, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %.lr.ph108
-  %i.m = add nuw i64 %.sroa.0.1107, 1             ; 2 uses
+  %i.m = add i64 %.sroa.0.1107, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %i.m, %i.b
   br i1 %exitcond.not, label %.critedge.thread, label %.lr.ph108
 
@@ -4065,7 +4063,7 @@ bb.u:                                             ; preds = %bb.s
   br i1 %.not.i, label %bb.v, label %.loopexit
 
 bb.v:                                             ; preds = %.lr.ph116
-  %i.bm = add nuw i64 %.sroa.0.1.i115, 1          ; 2 uses
+  %i.bm = add i64 %.sroa.0.1.i115, 1              ; 2 uses
   %exitcond139.not = icmp eq i64 %i.bm, %i.b
   br i1 %exitcond139.not, label %.loopexit.thread, label %.lr.ph116
 
@@ -4468,7 +4466,7 @@ bb.a:
   br i1 %i.z, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph49
-  %i.aa = add nuw i64 %.sroa.0.148, 1             ; 2 uses
+  %i.aa = add i64 %.sroa.0.148, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %i.aa, %i.b
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph49
 
@@ -4871,7 +4869,7 @@ bb.a:
   br i1 %i.x, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph49
-  %i.y = add nuw i64 %.sroa.0.148, 1              ; 2 uses
+  %i.y = add i64 %.sroa.0.148, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.y, %i.c
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph49
 
@@ -5027,7 +5025,7 @@ bb.a:
   br i1 %i.r, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph54
-  %i.s = add nuw i64 %.sroa.0.153, 1              ; 2 uses
+  %i.s = add i64 %.sroa.0.153, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.s, %i.c
   br i1 %exitcond.not, label %.critedge.thread, label %.lr.ph54
 
@@ -5285,7 +5283,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.ao, label %.loopexit, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph47
-  %i.ap = add nuw i64 %.sroa.0.146, 1             ; 2 uses
+  %i.ap = add i64 %.sroa.0.146, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %i.ap, %i.c
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph47
 
@@ -5490,7 +5488,7 @@ bb.d:                                             ; preds = %bb.b, %.split.i370.
   br i1 %.not, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph56
-  %i.ab = add nuw i64 %.sroa.0.155, 1             ; 2 uses
+  %i.ab = add i64 %.sroa.0.155, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %i.ab, %i.c
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph56
 
@@ -5686,7 +5684,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.af, label %.loopexit, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph47
-  %i.ag = add nuw i64 %.sroa.0.146, 1             ; 2 uses
+  %i.ag = add i64 %.sroa.0.146, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %i.ag, %i.c
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph47
 
@@ -5869,7 +5867,7 @@ bb.c:                                             ; preds = %bb.b, %.split3.i.i
   br i1 %i.aj, label %.loopexit, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph49
-  %i.ak = add nuw i64 %.sroa.0.148, 1             ; 2 uses
+  %i.ak = add i64 %.sroa.0.148, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %i.ak, %i.b
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph49
 
@@ -6272,7 +6270,7 @@ bb.ae:                                            ; preds = %bb.aa
   br i1 %.not.i31, label %bb.af, label %.loopexit83
 
 bb.af:                                            ; preds = %.lr.ph101
-  %i.cx = add nuw i64 %.sroa.0.1.i28100, 1        ; 2 uses
+  %i.cx = add i64 %.sroa.0.1.i28100, 1            ; 2 uses
   %exitcond.not = icmp eq i64 %i.cx, %i.b
   br i1 %exitcond.not, label %.critedge.i30, label %.lr.ph101
 
@@ -6675,7 +6673,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.y, label %bb.f, label %.critedge.i
 
 bb.f:                                             ; preds = %.lr.ph35
-  %i.z = add nuw i64 %.sroa.0.1.i34, 1            ; 2 uses
+  %i.z = add i64 %.sroa.0.1.i34, 1                ; 2 uses
   %exitcond.not = icmp eq i64 %i.z, %i.c
   br i1 %exitcond.not, label %.critedge.i.thread, label %.lr.ph35
 
@@ -7078,7 +7076,7 @@ bb.a:
   br i1 %i.l, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %.lr.ph70
-  %i.m = add nuw i64 %.sroa.0.169, 1              ; 2 uses
+  %i.m = add i64 %.sroa.0.169, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.m, %i.b
   br i1 %exitcond.not, label %.critedge.thread, label %.lr.ph70
 
@@ -7481,7 +7479,7 @@ bb.h:                                             ; preds = %bb.c
   br i1 %i.ah, label %bb.i, label %.critedge.i
 
 bb.i:                                             ; preds = %.lr.ph163
-  %i.ai = add i64 %.sroa.0.1.i162, 1              ; 2 uses
+  %i.ai = add nuw i64 %.sroa.0.1.i162, 1          ; 2 uses
   %exitcond.not = icmp eq i64 %i.ai, %i.c
   br i1 %exitcond.not, label %.critedge.i.thread, label %.lr.ph163
 

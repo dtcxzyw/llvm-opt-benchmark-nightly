@@ -205,11 +205,10 @@ bb.ex:                                            ; preds = %bb.ew
 
 .lr.ph3118:                                       ; preds = %.preheader.preheader.i, %.preheader.i
   %indvars.iv.i3117 = phi i64 [ %indvars.iv.next.i, %.preheader.i ], [ 0, %.preheader.preheader.i ]
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i3117, 1 ; 3 uses
-  %150 = and i64 %indvars.iv.next.i, 4294967295   ; 2 uses
-  %i.aqe = getelementptr inbounds nuw [8 x i8], ptr %i.apy, i64 %150
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i3117, 1 ; 4 uses
+  %i.aqe = getelementptr inbounds nuw [8 x i8], ptr %i.apy, i64 %indvars.iv.next.i
   %i.aqf = load ptr, ptr %i.aqe, align 8, !tbaa !947
-  %i.aqg = getelementptr inbounds nuw [8 x i8], ptr %i.aqb, i64 %150
+  %i.aqg = getelementptr inbounds nuw [8 x i8], ptr %i.aqb, i64 %indvars.iv.next.i
   %i.aqh = load ptr, ptr %i.aqg, align 8, !tbaa !947
   %.not32.i = icmp eq ptr %i.aqf, %i.aqh
   br i1 %.not32.i, label %.preheader.i, label %"._ZZN5clang7CodeGen15CodeGenFunction8EmitCallERKNS0_14CGFunctionInfoERKNS0_8CGCalleeENS0_15ReturnValueSlotERKNS0_11CallArgListEPPN4llvm8CallBaseEbNS_14SourceLocationEbENK3$_0clEPNSC_12FunctionTypeEPNSC_5ValueE.exit.thread.loopexit_crit_edge", !llvm.loop !2279

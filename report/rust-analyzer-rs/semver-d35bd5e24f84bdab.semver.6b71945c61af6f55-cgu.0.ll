@@ -202,17 +202,14 @@ bb.f:                                             ; preds = %.outer._crit_edge
   %or.cond3 = or i1 %.sroa.015.0.ph.lcssa, %or.cond
   br i1 %or.cond3, label %bb.g, label %bb.h
 
-.split213.us.loopexit:                            ; preds = %.outer.outer, %.outer._crit_edge
-  %.sroa.0.0.ph.ph.lcssa.ph = phi i64 [ %.sroa.0.0.ph.ph427, %.outer._crit_edge ], [ %i.ak, %.outer.outer ]
-  %.lcssa359.ph = phi ptr [ %.lcssa, %.outer._crit_edge ], [ %i.al, %.outer.outer ]
-  %.lcssa73358.ph = phi i1 [ %.lcssa73, %.outer._crit_edge ], [ true, %.outer.outer ]
-  %i.w = icmp eq i64 %.sroa.0.0.ph.ph.lcssa.ph, 0
+.split213.us.loopexit:                            ; preds = %.outer._crit_edge
+  %i.w = icmp eq i64 %.sroa.0.0.ph.ph427, 0
   br label %.split213.us
 
 .split213.us:                                     ; preds = %.split213.us.loopexit, %.outer.outer.preheader
   %.sroa.0.0.ph.ph.lcssa = phi i1 [ true, %.outer.outer.preheader ], [ %i.w, %.split213.us.loopexit ]
-  %.lcssa359 = phi ptr [ %.fr, %.outer.outer.preheader ], [ %.lcssa359.ph, %.split213.us.loopexit ]
-  %.lcssa73358 = phi i1 [ true, %.outer.outer.preheader ], [ %.lcssa73358.ph, %.split213.us.loopexit ]
+  %.lcssa359 = phi ptr [ %.fr, %.outer.outer.preheader ], [ %.lcssa, %.split213.us.loopexit ]
+  %.lcssa73358 = phi i1 [ true, %.outer.outer.preheader ], [ %.lcssa73, %.split213.us.loopexit ]
   br i1 %.sroa.0.0.ph.ph.lcssa, label %bb.m, label %bb.l
 
 bb.g:                                             ; preds = %_RNvXs2_NtNtCshzWfHUSfYae_4core3str6traitseINtNtNtB9_3ops5index5IndexINtNtBJ_5range9RangeFromjEE5indexCs9dV2ZPf2jOH_6semver.exit, %bb.f
@@ -292,12 +289,12 @@ _RNvMNtCshzWfHUSfYae_4core3stre8split_atCs9dV2ZPf2jOH_6semver.exit: ; preds = %_
   br label %bb.j
 
 .outer.outer:                                     ; preds = %_RNvXsf_NtCshzWfHUSfYae_4core6optionINtB5_6OptionRhENtNtB7_3cmp9PartialEq2eqCs9dV2ZPf2jOH_6semver.exit
-  %i.ak = add i64 %.lcssa78, 1                    ; 4 uses
+  %i.ak = add nuw i64 %.lcssa78, 1                ; 3 uses
   %.not = icmp ult i64 %i.ak, %2
-  %i.al = getelementptr inbounds nuw i8, ptr %.fr, i64 %i.ak ; 2 uses
-  br i1 %.not, label %.lr.ph.preheader, label %.split213.us.loopexit
+  %i.al = getelementptr inbounds nuw i8, ptr %.fr, i64 %i.ak
+  br i1 %.not, label %.lr.ph.preheader, label %bb.l
 
-bb.l:                                             ; preds = %_RNvYINtNtCshzWfHUSfYae_4core6option6OptionRhENtNtB7_3cmp9PartialEq2neCs9dV2ZPf2jOH_6semver.exit, %.split213.us
+bb.l:                                             ; preds = %.outer.outer, %_RNvYINtNtCshzWfHUSfYae_4core6option6OptionRhENtNtB7_3cmp9PartialEq2neCs9dV2ZPf2jOH_6semver.exit, %.split213.us
   %.sroa.241.0.insert.ext = zext nneg i8 %3 to i64
   %.sroa.241.0.insert.shift = shl nuw nsw i64 %.sroa.241.0.insert.ext, 8
   %.sroa.040.0.insert.insert = or disjoint i64 %.sroa.241.0.insert.shift, 7
@@ -700,7 +697,7 @@ bb.q:                                             ; preds = %bb.o
   br label %_RNvMsa_NtCshzWfHUSfYae_4core3fmtNtB5_9Formatter5alignCs9dV2ZPf2jOH_6semver.exit.thread18.i
 
 bb.r:                                             ; preds = %.lr.ph
-  %i.bq = add i64 %.sroa.0.0.i10, 1               ; 2 uses
+  %i.bq = add nuw i64 %.sroa.0.0.i10, 1           ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.bq, %.sroa.03.0.i
   br i1 %exitcond.not.i, label %._crit_edge, label %.lr.ph
 
@@ -720,7 +717,7 @@ bb.r:                                             ; preds = %.lr.ph
 .lr.ph13:                                         ; preds = %.lr.ph13, %.preheader.i.preheader
   %.sroa.010.0.i12 = phi i64 [ %i.bu, %.lr.ph13 ], [ 0, %.preheader.i.preheader ]
   %i.bt = tail call zeroext i1 @_RNvXsb_NtCshzWfHUSfYae_4core3fmtNtB5_9FormatterNtB5_5Write10write_char(ptr align 8 %1, i32 %i.bm) ; 2 uses
-  %i.bu = add i64 %.sroa.010.0.i12, 1             ; 2 uses
+  %i.bu = add nuw i64 %.sroa.010.0.i12, 1         ; 2 uses
   %exitcond30.not.not.i.not = icmp eq i64 %i.bu, %.sroa.4.0.i
   %or.cond = select i1 %i.bt, i1 true, i1 %exitcond30.not.not.i.not
   br i1 %or.cond, label %_RINvNtCs9dV2ZPf2jOH_6semver7display3padNCNvXB2_NtB4_7VersionNtNtCshzWfHUSfYae_4core3fmt7Display3fmt0NCBD_s_0EB4_.exit, label %.lr.ph13

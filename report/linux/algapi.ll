@@ -204,11 +204,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.g, label %crypto_register_template.exit, label %bb.b, !llvm.loop !3
 
 crypto_register_template.exit:                    ; preds = %bb.c
-  %2 = trunc nuw nsw i64 %indvars.iv to i32
   tail call void @up_write(ptr noundef nonnull @crypto_alg_sem) #19
-  %.119 = add i32 %2, -1
-  %3 = icmp sgt i32 %.119, -1
-  br i1 %3, label %.lr.ph21.preheader, label %.loopexit
+  %.not = icmp eq i64 %indvars.iv, 0
+  br i1 %.not, label %.loopexit, label %.lr.ph21.preheader
 
 .lr.ph21.preheader:                               ; preds = %crypto_register_template.exit
   %i.h = zext i32 %indvars.iv25 to i64

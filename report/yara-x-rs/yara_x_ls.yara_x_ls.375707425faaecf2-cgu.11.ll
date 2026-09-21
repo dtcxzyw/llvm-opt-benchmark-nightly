@@ -205,7 +205,7 @@ bb.aq:                                            ; preds = %bb.an
   br label %bb.ar
 
 bb.ar:                                            ; preds = %.preheader560, %bb.bi
-  %.sroa.8.0 = phi i64 [ %i.el, %bb.bi ], [ %.sroa.3.0.i, %.preheader560 ] ; 14 uses
+  %.sroa.8.0 = phi i64 [ %i.el, %bb.bi ], [ %.sroa.3.0.i, %.preheader560 ] ; 13 uses
   %.sroa.016.0 = phi ptr [ %i.ek, %bb.bi ], [ %.sroa.0.0.i, %.preheader560 ] ; 13 uses
   %.sroa.010.0 = phi i32 [ 0, %bb.bi ], [ %i.bw, %.preheader560 ] ; 8 uses
   %.sroa.04.0 = phi i32 [ %i.em, %bb.bi ], [ %i.bv, %.preheader560 ] ; 11 uses
@@ -388,19 +388,11 @@ _RNvMNtNtCs4KzxGwe94yc_9yara_x_ls8features15semantic_tokensNtB2_18SemanticTokens
           to label %bb.bg unwind label %.loopexit.split-lp.loopexit
 
 _RNvMNtNtCs4KzxGwe94yc_9yara_x_ls8features15semantic_tokensNtB2_18SemanticTokensIter11is_in_range.exit.thread: ; preds = %bb.be, %bb.bd, %bb.bb, %_RNvMNtNtCs4KzxGwe94yc_9yara_x_ls8features15semantic_tokensNtB2_18SemanticTokensIter11is_in_range.exit, %bb.bh
-  %i.ef = add i64 %i.cv, 1                        ; 7 uses
-  %2 = icmp eq i64 %i.ef, 0
-  br i1 %2, label %bb.bi, label %3
-
-3:                                                ; preds = %_RNvMNtNtCs4KzxGwe94yc_9yara_x_ls8features15semantic_tokensNtB2_18SemanticTokensIter11is_in_range.exit.thread
+  %i.ef = add nuw i64 %i.cv, 1                    ; 5 uses
   %.not.i79 = icmp ult i64 %i.ef, %.sroa.8.0
-  br i1 %.not.i79, label %bb.bf, label %.split.i80
+  br i1 %.not.i79, label %bb.bf, label %bb.bi
 
-.split.i80:                                       ; preds = %3
-  %4 = icmp eq i64 %i.ef, %.sroa.8.0
-  br i1 %4, label %bb.bi, label %.thread164
-
-bb.bf:                                            ; preds = %3
+bb.bf:                                            ; preds = %_RNvMNtNtCs4KzxGwe94yc_9yara_x_ls8features15semantic_tokensNtB2_18SemanticTokensIter11is_in_range.exit.thread
   %i.eg = getelementptr inbounds nuw i8, ptr %.sroa.016.0, i64 %i.ef
   %i.eh = load i8, ptr %i.eg, align 1, !alias.scope !1614, !noundef !4
   %i.ei = icmp sgt i8 %i.eh, -65
@@ -420,13 +412,13 @@ bb.bh:                                            ; preds = %bb.bg
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   br label %_RNvMNtNtCs4KzxGwe94yc_9yara_x_ls8features15semantic_tokensNtB2_18SemanticTokensIter11is_in_range.exit.thread
 
-bb.bi:                                            ; preds = %bb.bf, %.split.i80, %_RNvMNtNtCs4KzxGwe94yc_9yara_x_ls8features15semantic_tokensNtB2_18SemanticTokensIter11is_in_range.exit.thread
+bb.bi:                                            ; preds = %_RNvMNtNtCs4KzxGwe94yc_9yara_x_ls8features15semantic_tokensNtB2_18SemanticTokensIter11is_in_range.exit.thread, %bb.bf
   %i.ek = getelementptr inbounds nuw i8, ptr %.sroa.016.0, i64 %i.ef
   %i.el = sub nuw i64 %.sroa.8.0, %i.ef
   %i.em = add i32 %.sroa.04.0, 1
   br label %bb.ar
 
-.thread164:                                       ; preds = %.split.i80, %bb.bf
+.thread164:                                       ; preds = %bb.bf
   invoke void @_RNvNtCskKLDkoKarTP_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.016.0, i64 noundef %.sroa.8.0, i64 noundef %i.ef, i64 noundef %.sroa.8.0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @169) #33
           to label %bb.ba unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
