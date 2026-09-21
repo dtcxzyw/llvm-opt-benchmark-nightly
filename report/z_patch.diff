@@ -1,0 +1,596 @@
+diff --git a/llvm/include/llvm/Analysis/ScalarEvolution.h b/llvm/include/llvm/Analysis/ScalarEvolution.h
+index 7fddd4ca4119f..175e60e192aa4 100644
+--- a/llvm/include/llvm/Analysis/ScalarEvolution.h
++++ b/llvm/include/llvm/Analysis/ScalarEvolution.h
+@@ -116,6 +116,13 @@ enum class SCEVNoWrapFlags {
+   LLVM_MARK_AS_BITMASK_ENUM(/*LargestValue=*/NoWrapMask)
+ };
+ 
++enum class SCEVExactFlags {
++  FlagAnyExact = 0,
++  FlagExact = (1 << 0),
++  ExactMask = (1 << 1) - 1,
++  LLVM_MARK_AS_BITMASK_ENUM(/*LargestValue=*/ExactMask)
++};
++
+ class SCEV;
+ 
+ template <typename SCEVPtrT = const SCEV *>
+@@ -294,11 +301,13 @@ class SCEV : public FoldingSetNode {
+ 
+ public:
+   using NoWrapFlags = SCEVNoWrapFlags;
++  using ExactFlags = SCEVExactFlags;
+   static constexpr auto FlagAnyWrap = SCEVNoWrapFlags::FlagAnyWrap;
+   static constexpr auto FlagNW = SCEVNoWrapFlags::FlagNW;
+   static constexpr auto FlagNUW = SCEVNoWrapFlags::FlagNUW;
+   static constexpr auto FlagNSW = SCEVNoWrapFlags::FlagNSW;
+   static constexpr auto NoWrapMask = SCEVNoWrapFlags::NoWrapMask;
++  static constexpr auto FlagExact = SCEVExactFlags::FlagExact;
+ 
+   explicit SCEV(const FoldingSetNodeIDRef ID, SCEVTypes SCEVTy,
+                 unsigned short ExpressionSize, Type *Ty)
+@@ -788,7 +797,8 @@ class ScalarEvolution {
+     SmallVector<SCEVUse, 3> Ops = {Op0, Op1, Op2};
+     return getMulExpr(Ops, Flags, Depth);
+   }
+-  LLVM_ABI const SCEV *getUDivExpr(SCEVUse LHS, SCEVUse RHS);
++  LLVM_ABI const SCEV *getUDivExpr(SCEVUse LHS, SCEVUse RHS,
++                                   bool IsExact = false);
+   LLVM_ABI const SCEV *getUDivExactExpr(SCEVUse LHS, SCEVUse RHS);
+   LLVM_ABI const SCEV *getURemExpr(SCEVUse LHS, SCEVUse RHS);
+   LLVM_ABI SCEVUse getAddRecExpr(SCEVUse Start, SCEVUse Step, const Loop *L,
+@@ -2547,8 +2557,10 @@ class ScalarEvolution {
+   const SCEV *getOrCreateAddRecExpr(ArrayRef<SCEVUse> Ops, const Loop *L,
+                                     SCEV::NoWrapFlags Flags);
+ 
+-  // Get UDiv expression already created or create a new one.
+-  const SCEV *getOrCreateUDivExpr(SCEVUse LHS, SCEVUse RHS);
++  /// Get UDiv expression already created or create a new one. Create an exact
++  /// one if \p IsExact.
++  const SCEV *getOrCreateUDivExpr(SCEVUse LHS, SCEVUse RHS,
++                                  bool IsExact = false);
+ 
+   /// Return x if \p Val is f(x) where f is a 1-1 function.
+   const SCEV *stripInjectiveFunctions(const SCEV *Val) const;
+diff --git a/llvm/include/llvm/Analysis/ScalarEvolutionExpressions.h b/llvm/include/llvm/Analysis/ScalarEvolutionExpressions.h
+index ace050bd2c2c1..ff62898df77c0 100644
+--- a/llvm/include/llvm/Analysis/ScalarEvolutionExpressions.h
++++ b/llvm/include/llvm/Analysis/ScalarEvolutionExpressions.h
+@@ -317,6 +317,16 @@ class SCEVUDivExpr : public SCEV {
+ 
+   ArrayRef<SCEVUse> operands() const { return Operands; }
+ 
++  ExactFlags getExactFlags() const {
++    return static_cast<ExactFlags>(SubclassData);
++  }
++
++  bool isExact() const { return getExactFlags() == SCEV::FlagExact; }
++
++  void setIsExact() {
++    SubclassData = static_cast<unsigned short>(SCEV::FlagExact);
++  }
++
+   /// Methods for support type inquiry through isa, cast, and dyn_cast:
+   static bool classof(const SCEV *S) { return S->getSCEVType() == scUDivExpr; }
+ };
+diff --git a/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h b/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h
+index c98c0cb52fa9c..5581cb2b7eac4 100644
+--- a/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h
++++ b/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h
+@@ -26,6 +26,7 @@
+ #include "llvm/Support/CommandLine.h"
+ #include "llvm/Support/Compiler.h"
+ #include "llvm/Support/InstructionCost.h"
++#include <variant>
+ 
+ namespace llvm {
+ LLVM_ABI extern cl::opt<unsigned> SCEVCheapExpansionBudget;
+@@ -470,7 +471,8 @@ class SCEVExpander : public SCEVUseVisitor<SCEVExpander, Value *> {
+   /// avoid inserting an obviously redundant operation, and hoisting to an
+   /// outer loop when the opportunity is there and it is safe.
+   Value *InsertBinop(Instruction::BinaryOps Opcode, Value *LHS, Value *RHS,
+-                     SCEV::NoWrapFlags Flags, bool IsSafeToHoist);
++                     std::variant<SCEV::NoWrapFlags, SCEV::ExactFlags> Flags,
++                     bool IsSafeToHoist);
+ 
+   /// We want to cast \p V. What would be the best place for such a cast?
+   BasicBlock::iterator GetOptimalInsertionPointForCastOf(Value *V) const;
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 50e0170b55089..b0ae0607dd97b 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -391,6 +391,8 @@ void SCEV::print(raw_ostream &OS) const {
+   case scUDivExpr: {
+     const SCEVUDivExpr *UDiv = cast<SCEVUDivExpr>(this);
+     OS << "(" << UDiv->getLHS() << " /u " << UDiv->getRHS() << ")";
++    if (UDiv->isExact())
++      OS << "<exact>";
+     return;
+   }
+   case scUnknown:
+@@ -3057,7 +3059,8 @@ const SCEV *ScalarEvolution::getOrCreateMulExpr(ArrayRef<SCEVUse> Ops,
+   return S;
+ }
+ 
+-const SCEV *ScalarEvolution::getOrCreateUDivExpr(SCEVUse LHS, SCEVUse RHS) {
++const SCEV *ScalarEvolution::getOrCreateUDivExpr(SCEVUse LHS, SCEVUse RHS,
++                                                 bool IsExact) {
+   FoldingSetNodeID ID;
+   ID.AddInteger(scUDivExpr);
+   ID.AddPointer(LHS.getOpaqueValue());
+@@ -3070,6 +3073,8 @@ const SCEV *ScalarEvolution::getOrCreateUDivExpr(SCEVUse LHS, SCEVUse RHS) {
+     S->computeAndSetCanonical(*this);
+     registerUser(S, {LHS, RHS});
+   }
++  if (IsExact)
++    cast<SCEVUDivExpr>(S)->setIsExact();
+   return S;
+ }
+ 
+@@ -3472,7 +3477,8 @@ const SCEV *ScalarEvolution::getURemExpr(SCEVUse LHS, SCEVUse RHS) {
+ 
+ /// Get a canonical unsigned division expression, or something simpler if
+ /// possible.
+-const SCEV *ScalarEvolution::getUDivExpr(SCEVUse LHS, SCEVUse RHS) {
++const SCEV *ScalarEvolution::getUDivExpr(SCEVUse LHS, SCEVUse RHS,
++                                         bool IsExact) {
+   assert(!LHS->getType()->isPointerTy() &&
+          "SCEVUDivExpr operand can't be pointer!");
+   assert(LHS->getType() == RHS->getType() &&
+@@ -3666,16 +3672,11 @@ const SCEV *ScalarEvolution::getUDivExpr(SCEVUse LHS, SCEVUse RHS) {
+       match(RHS, m_scev_c_NUWMul(m_SCEV(NewRHS), m_SCEVVScale())))
+     return getUDivExpr(NewLHS, NewRHS);
+ 
+-  return getOrCreateUDivExpr(LHS, RHS);
++  return getOrCreateUDivExpr(LHS, RHS, IsExact);
+ }
+ 
+-/// Get a canonical unsigned division expression, or something simpler if
+-/// possible. There is no representation for an exact udiv in SCEV IR, but we
+-/// can attempt to optimize it prior to construction.
+ const SCEV *ScalarEvolution::getUDivExactExpr(SCEVUse LHS, SCEVUse RHS) {
+-  // Currently there is no exact specific logic.
+-
+-  return getUDivExpr(LHS, RHS);
++  return getUDivExpr(LHS, RHS, /*IsExact=*/true);
+ }
+ 
+ /// Get an add recurrence expression for the specified loop.  Simplify the
+@@ -5201,6 +5202,7 @@ struct BinaryOp {
+   Value *RHS;
+   bool IsNSW = false;
+   bool IsNUW = false;
++  bool IsExact = false;
+ 
+   /// Op is set if this BinaryOp corresponds to a concrete LLVM instruction or
+   /// constant expression.
+@@ -5213,6 +5215,8 @@ struct BinaryOp {
+       IsNSW = OBO->hasNoSignedWrap();
+       IsNUW = OBO->hasNoUnsignedWrap();
+     }
++    if (auto *PEO = dyn_cast<PossiblyExactOperator>(Op))
++      IsExact = PEO->isExact();
+   }
+ 
+   explicit BinaryOp(unsigned Opcode, Value *LHS, Value *RHS, bool IsNSW = false,
+@@ -7942,7 +7946,7 @@ const SCEV *ScalarEvolution::createSCEV(Value *V) {
+     case Instruction::UDiv:
+       LHS = getSCEV(BO->LHS);
+       RHS = getSCEV(BO->RHS);
+-      return getUDivExpr(LHS, RHS);
++      return getUDivExpr(LHS, RHS, BO->IsExact);
+     case Instruction::URem:
+       LHS = getSCEV(BO->LHS);
+       RHS = getSCEV(BO->RHS);
+diff --git a/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp b/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
+index f01a674609325..44427acf6996a 100644
+--- a/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
++++ b/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
+@@ -28,6 +28,7 @@
+ #include "llvm/Support/raw_ostream.h"
+ #include "llvm/Transforms/Utils/Local.h"
+ #include "llvm/Transforms/Utils/LoopUtils.h"
++#include <variant>
+ 
+ #if LLVM_ENABLE_ABI_BREAKING_CHECKS
+ #define SCEV_DEBUG_WITH_TYPE(TYPE, X) DEBUG_WITH_TYPE(TYPE, X)
+@@ -276,9 +277,10 @@ Value *SCEVExpander::InsertNoopCastOfTo(Value *V, Type *Ty) {
+ /// InsertBinop - Insert the specified binary operator, doing a small amount
+ /// of work to avoid inserting an obviously redundant operation, and hoisting
+ /// to an outer loop when the opportunity is there and it is safe.
+-Value *SCEVExpander::InsertBinop(Instruction::BinaryOps Opcode,
+-                                 Value *LHS, Value *RHS,
+-                                 SCEV::NoWrapFlags Flags, bool IsSafeToHoist) {
++Value *SCEVExpander::InsertBinop(
++    Instruction::BinaryOps Opcode, Value *LHS, Value *RHS,
++    std::variant<SCEV::NoWrapFlags, SCEV::ExactFlags> Flags,
++    bool IsSafeToHoist) {
+   // Fold a binop with constant operands.
+   if (Constant *CLHS = dyn_cast<Constant>(LHS))
+     if (Constant *CRHS = dyn_cast<Constant>(RHS))
+@@ -296,14 +298,16 @@ Value *SCEVExpander::InsertBinop(Instruction::BinaryOps Opcode,
+       auto canGenerateIncompatiblePoison = [&Flags](Instruction *I) {
+         // Ensure that no-wrap flags match.
+         if (isa<OverflowingBinaryOperator>(I)) {
+-          if (I->hasNoSignedWrap() != any(Flags & SCEV::FlagNSW))
++          if (I->hasNoSignedWrap() !=
++              any(std::get<SCEV::NoWrapFlags>(Flags) & SCEV::FlagNSW))
+             return true;
+-          if (I->hasNoUnsignedWrap() != any(Flags & SCEV::FlagNUW))
++          if (I->hasNoUnsignedWrap() !=
++              any(std::get<SCEV::NoWrapFlags>(Flags) & SCEV::FlagNUW))
+             return true;
+         }
+-        // Conservatively, do not use any instruction which has any of exact
+-        // flags installed.
+-        if (isa<PossiblyExactOperator>(I) && I->isExact())
++        if (isa<PossiblyExactOperator>(I) &&
++            I->isExact() !=
++                any(std::get<SCEV::ExactFlags>(Flags) & SCEV::FlagExact))
+           return true;
+         return false;
+       };
+@@ -332,8 +336,13 @@ Value *SCEVExpander::InsertBinop(Instruction::BinaryOps Opcode,
+ 
+   // If we haven't found this binop, insert it.
+   Builder.SetCurrentDebugLocation(Loc);
+-  bool IsNUW = any(Flags & SCEV::FlagNUW);
+-  bool IsNSW = any(Flags & SCEV::FlagNSW);
++  bool IsNUW = false, IsNSW = false, IsExact = false;
++  if (std::holds_alternative<SCEV::NoWrapFlags>(Flags)) {
++    IsNUW = any(std::get<SCEV::NoWrapFlags>(Flags) & SCEV::FlagNUW);
++    IsNSW = any(std::get<SCEV::NoWrapFlags>(Flags) & SCEV::FlagNSW);
++  } else {
++    IsExact = any(std::get<SCEV::ExactFlags>(Flags) & SCEV::FlagExact);
++  }
+   // Don't use folder when expanding post-inc rewrites in LSRMode to preserve
+   // the rewrites.
+   if (LSRMode && !PostIncLoops.empty() &&
+@@ -345,8 +354,12 @@ Value *SCEVExpander::InsertBinop(Instruction::BinaryOps Opcode,
+       BO->setHasNoUnsignedWrap();
+     if (IsNSW)
+       BO->setHasNoSignedWrap();
++    if (IsExact)
++      BO->setIsExact();
+     return Builder.Insert(BO);
+   }
++  if (IsExact)
++    return Builder.CreateExactBinOp(Opcode, LHS, RHS, IsExact);
+   return Builder.CreateNoWrapBinOp(Opcode, LHS, RHS, IsNUW, IsNSW);
+ }
+ 
+@@ -741,7 +754,7 @@ Value *SCEVExpander::visitUDivExpr(SCEVUseT<const SCEVUDivExpr *> S) {
+       RHS = Builder.CreateIntrinsic(RHS->getType(), Intrinsic::umax,
+                                     {RHS, ConstantInt::get(RHS->getType(), 1)});
+   }
+-  return InsertBinop(Instruction::UDiv, LHS, RHS, SCEV::FlagAnyWrap,
++  return InsertBinop(Instruction::UDiv, LHS, RHS, S->getExactFlags(),
+                      /*IsSafeToHoist*/ SE.isKnownNonZero(S->getRHS()));
+ }
+ 
+diff --git a/llvm/test/Analysis/LoopAccessAnalysis/runtime-check-known-true.ll b/llvm/test/Analysis/LoopAccessAnalysis/runtime-check-known-true.ll
+index 6ff9f124fa066..caaa9245093e2 100644
+--- a/llvm/test/Analysis/LoopAccessAnalysis/runtime-check-known-true.ll
++++ b/llvm/test/Analysis/LoopAccessAnalysis/runtime-check-known-true.ll
+@@ -15,10 +15,10 @@ define void @test_runtime_check_known_false_after_construction(ptr %start.1, ptr
+ ; CHECK-NEXT:          %ptr.iv.2 = phi ptr [ %ptr.iv.2.next, %loop ], [ %start.2.diff, %entry ]
+ ; CHECK-NEXT:      Grouped accesses:
+ ; CHECK-NEXT:        Group GRP0:
+-; CHECK-NEXT:          (Low: ((-8 * ((2305843009213693951 * (8 + (-1 * (ptrtoaddr ptr %start.1 to i64)) + (ptrtoaddr ptr %end to i64))) /u 8)) + %start.1) High: (8 + %start.1))
++; CHECK-NEXT:          (Low: ((-8 * ((2305843009213693951 * (8 + (-1 * (ptrtoaddr ptr %start.1 to i64)) + (ptrtoaddr ptr %end to i64))) /u 8)<exact>) + %start.1) High: (8 + %start.1))
+ ; CHECK-NEXT:            Member: {%start.1,+,-8}<%loop>
+ ; CHECK-NEXT:        Group GRP1:
+-; CHECK-NEXT:          (Low: (-8 + (-8 * ((2305843009213693951 * (8 + (-1 * (ptrtoaddr ptr %start.1 to i64)) + (ptrtoaddr ptr %end to i64))) /u 8)) + (-1 * (ptrtoaddr ptr %start.2 to i64)) + (ptrtoaddr ptr %start.1 to i64) + %start.2) High: ((-1 * (ptrtoaddr ptr %start.2 to i64)) + (ptrtoaddr ptr %start.1 to i64) + %start.2))
++; CHECK-NEXT:          (Low: (-8 + (-8 * ((2305843009213693951 * (8 + (-1 * (ptrtoaddr ptr %start.1 to i64)) + (ptrtoaddr ptr %end to i64))) /u 8)<exact>) + (-1 * (ptrtoaddr ptr %start.2 to i64)) + (ptrtoaddr ptr %start.1 to i64) + %start.2) High: ((-1 * (ptrtoaddr ptr %start.2 to i64)) + (ptrtoaddr ptr %start.1 to i64) + %start.2))
+ ; CHECK-NEXT:            Member: {(-8 + (-1 * (ptrtoaddr ptr %start.2 to i64)) + (ptrtoaddr ptr %start.1 to i64) + %start.2),+,-8}<%loop>
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:      Non vectorizable stores to invariant address were not found in loop.
+diff --git a/llvm/test/Analysis/ScalarEvolution/flags-from-poison.ll b/llvm/test/Analysis/ScalarEvolution/flags-from-poison.ll
+index 506e1f7998ba0..51e3af27ac2e3 100644
+--- a/llvm/test/Analysis/ScalarEvolution/flags-from-poison.ll
++++ b/llvm/test/Analysis/ScalarEvolution/flags-from-poison.ll
+@@ -1746,7 +1746,7 @@ define noundef i32 @udiv-basic(i32 %a, i32 %b) {
+ ; CHECK-LABEL: 'udiv-basic'
+ ; CHECK-NEXT:  Classifying expressions for: @udiv-basic
+ ; CHECK-NEXT:    %res = udiv exact i32 %a, %b
+-; CHECK-NEXT:    --> (%a /u %b) U: full-set S: full-set
++; CHECK-NEXT:    --> (%a /u %b)<exact> U: full-set S: full-set
+ ; CHECK-NEXT:  Determining loop execution counts for: @udiv-basic
+ ;
+   %res = udiv exact i32 %a, %b
+diff --git a/llvm/test/Analysis/ScalarEvolution/ne-overflow.ll b/llvm/test/Analysis/ScalarEvolution/ne-overflow.ll
+index bb97005e8faf4..703c2e56554d6 100644
+--- a/llvm/test/Analysis/ScalarEvolution/ne-overflow.ll
++++ b/llvm/test/Analysis/ScalarEvolution/ne-overflow.ll
+@@ -58,13 +58,13 @@ define void @test_well_defined_infinite_st(i32 %N) mustprogress {
+ ; CHECK-NEXT:  Loop %for.body: Unpredictable backedge-taken count.
+ ; CHECK-NEXT:  Loop %for.body: Unpredictable constant max backedge-taken count.
+ ; CHECK-NEXT:  Loop %for.body: Unpredictable symbolic max backedge-taken count.
+-; CHECK-NEXT:  Loop %for.body: Predicated backedge-taken count is ((-2 + %N) /u 2)
++; CHECK-NEXT:  Loop %for.body: Predicated backedge-taken count is ((-2 + %N) /u 2)<exact>
+ ; CHECK-NEXT:   Predicates:
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (trunc i32 %N to i1) to i32) == 0
+ ; CHECK-NEXT:  Loop %for.body: Predicated constant max backedge-taken count is i32 2147483647
+ ; CHECK-NEXT:   Predicates:
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (trunc i32 %N to i1) to i32) == 0
+-; CHECK-NEXT:  Loop %for.body: Predicated symbolic max backedge-taken count is ((-2 + %N) /u 2)
++; CHECK-NEXT:  Loop %for.body: Predicated symbolic max backedge-taken count is ((-2 + %N) /u 2)<exact>
+ ; CHECK-NEXT:   Predicates:
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (trunc i32 %N to i1) to i32) == 0
+ ;
+@@ -88,13 +88,13 @@ define void @test_well_defined_infinite_ld(i32 %N) mustprogress {
+ ; CHECK-NEXT:  Loop %for.body: Unpredictable backedge-taken count.
+ ; CHECK-NEXT:  Loop %for.body: Unpredictable constant max backedge-taken count.
+ ; CHECK-NEXT:  Loop %for.body: Unpredictable symbolic max backedge-taken count.
+-; CHECK-NEXT:  Loop %for.body: Predicated backedge-taken count is ((-2 + %N) /u 2)
++; CHECK-NEXT:  Loop %for.body: Predicated backedge-taken count is ((-2 + %N) /u 2)<exact>
+ ; CHECK-NEXT:   Predicates:
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (trunc i32 %N to i1) to i32) == 0
+ ; CHECK-NEXT:  Loop %for.body: Predicated constant max backedge-taken count is i32 2147483647
+ ; CHECK-NEXT:   Predicates:
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (trunc i32 %N to i1) to i32) == 0
+-; CHECK-NEXT:  Loop %for.body: Predicated symbolic max backedge-taken count is ((-2 + %N) /u 2)
++; CHECK-NEXT:  Loop %for.body: Predicated symbolic max backedge-taken count is ((-2 + %N) /u 2)<exact>
+ ; CHECK-NEXT:   Predicates:
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (trunc i32 %N to i1) to i32) == 0
+ ;
+@@ -118,13 +118,13 @@ define void @test_no_mustprogress(i32 %N) {
+ ; CHECK-NEXT:  Loop %for.body: Unpredictable backedge-taken count.
+ ; CHECK-NEXT:  Loop %for.body: Unpredictable constant max backedge-taken count.
+ ; CHECK-NEXT:  Loop %for.body: Unpredictable symbolic max backedge-taken count.
+-; CHECK-NEXT:  Loop %for.body: Predicated backedge-taken count is ((-2 + %N) /u 2)
++; CHECK-NEXT:  Loop %for.body: Predicated backedge-taken count is ((-2 + %N) /u 2)<exact>
+ ; CHECK-NEXT:   Predicates:
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (trunc i32 %N to i1) to i32) == 0
+ ; CHECK-NEXT:  Loop %for.body: Predicated constant max backedge-taken count is i32 2147483647
+ ; CHECK-NEXT:   Predicates:
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (trunc i32 %N to i1) to i32) == 0
+-; CHECK-NEXT:  Loop %for.body: Predicated symbolic max backedge-taken count is ((-2 + %N) /u 2)
++; CHECK-NEXT:  Loop %for.body: Predicated symbolic max backedge-taken count is ((-2 + %N) /u 2)<exact>
+ ; CHECK-NEXT:   Predicates:
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (trunc i32 %N to i1) to i32) == 0
+ ;
+@@ -214,13 +214,13 @@ define void @test_abnormal_exit(i32 %N) mustprogress {
+ ; CHECK-NEXT:  Loop %for.body: Unpredictable backedge-taken count.
+ ; CHECK-NEXT:  Loop %for.body: Unpredictable constant max backedge-taken count.
+ ; CHECK-NEXT:  Loop %for.body: Unpredictable symbolic max backedge-taken count.
+-; CHECK-NEXT:  Loop %for.body: Predicated backedge-taken count is ((-2 + %N) /u 2)
++; CHECK-NEXT:  Loop %for.body: Predicated backedge-taken count is ((-2 + %N) /u 2)<exact>
+ ; CHECK-NEXT:   Predicates:
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (trunc i32 %N to i1) to i32) == 0
+ ; CHECK-NEXT:  Loop %for.body: Predicated constant max backedge-taken count is i32 2147483647
+ ; CHECK-NEXT:   Predicates:
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (trunc i32 %N to i1) to i32) == 0
+-; CHECK-NEXT:  Loop %for.body: Predicated symbolic max backedge-taken count is ((-2 + %N) /u 2)
++; CHECK-NEXT:  Loop %for.body: Predicated symbolic max backedge-taken count is ((-2 + %N) /u 2)<exact>
+ ; CHECK-NEXT:   Predicates:
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (trunc i32 %N to i1) to i32) == 0
+ ;
+@@ -245,7 +245,7 @@ define void @test_other_exit(i32 %N) mustprogress {
+ ; CHECK-NEXT:  Loop %for.body: <multiple exits> Unpredictable backedge-taken count.
+ ; CHECK-NEXT:    exit count for for.body: i32 9
+ ; CHECK-NEXT:    exit count for for.latch: ***COULDNOTCOMPUTE***
+-; CHECK-NEXT:    predicated exit count for for.latch: ((-2 + %N) /u 2)
++; CHECK-NEXT:    predicated exit count for for.latch: ((-2 + %N) /u 2)<exact>
+ ; CHECK-NEXT:     Predicates:
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (trunc i32 %N to i1) to i32) == 0
+ ; CHECK-EMPTY:
+@@ -253,14 +253,14 @@ define void @test_other_exit(i32 %N) mustprogress {
+ ; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is i32 9
+ ; CHECK-NEXT:    symbolic max exit count for for.body: i32 9
+ ; CHECK-NEXT:    symbolic max exit count for for.latch: ***COULDNOTCOMPUTE***
+-; CHECK-NEXT:    predicated symbolic max exit count for for.latch: ((-2 + %N) /u 2)
++; CHECK-NEXT:    predicated symbolic max exit count for for.latch: ((-2 + %N) /u 2)<exact>
+ ; CHECK-NEXT:     Predicates:
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (trunc i32 %N to i1) to i32) == 0
+ ; CHECK-EMPTY:
+-; CHECK-NEXT:  Loop %for.body: Predicated backedge-taken count is (9 umin ((-2 + %N) /u 2))
++; CHECK-NEXT:  Loop %for.body: Predicated backedge-taken count is (9 umin ((-2 + %N) /u 2)<exact>)
+ ; CHECK-NEXT:   Predicates:
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (trunc i32 %N to i1) to i32) == 0
+-; CHECK-NEXT:  Loop %for.body: Predicated symbolic max backedge-taken count is (9 umin ((-2 + %N) /u 2))
++; CHECK-NEXT:  Loop %for.body: Predicated symbolic max backedge-taken count is (9 umin ((-2 + %N) /u 2)<exact>)
+ ; CHECK-NEXT:   Predicates:
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (trunc i32 %N to i1) to i32) == 0
+ ;
+@@ -317,7 +317,7 @@ define void @test_sext(i64 %N) mustprogress {
+ ; CHECK-NEXT:  Loop %for.body: Unpredictable backedge-taken count.
+ ; CHECK-NEXT:  Loop %for.body: Unpredictable constant max backedge-taken count.
+ ; CHECK-NEXT:  Loop %for.body: Unpredictable symbolic max backedge-taken count.
+-; CHECK-NEXT:  Loop %for.body: Predicated backedge-taken count is (%N /u 2)
++; CHECK-NEXT:  Loop %for.body: Predicated backedge-taken count is (%N /u 2)<exact>
+ ; CHECK-NEXT:   Predicates:
+ ; CHECK-NEXT:      {0,+,2}<%for.body> Added Flags: <nssw>
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (trunc i64 %N to i1) to i64) == 0
+@@ -325,7 +325,7 @@ define void @test_sext(i64 %N) mustprogress {
+ ; CHECK-NEXT:   Predicates:
+ ; CHECK-NEXT:      {0,+,2}<%for.body> Added Flags: <nssw>
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (trunc i64 %N to i1) to i64) == 0
+-; CHECK-NEXT:  Loop %for.body: Predicated symbolic max backedge-taken count is (%N /u 2)
++; CHECK-NEXT:  Loop %for.body: Predicated symbolic max backedge-taken count is (%N /u 2)<exact>
+ ; CHECK-NEXT:   Predicates:
+ ; CHECK-NEXT:      {0,+,2}<%for.body> Added Flags: <nssw>
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (trunc i64 %N to i1) to i64) == 0
+@@ -350,7 +350,7 @@ define void @test_zext_of_sext(i64 %N) mustprogress {
+ ; CHECK-NEXT:  Loop %for.body: Unpredictable backedge-taken count.
+ ; CHECK-NEXT:  Loop %for.body: Unpredictable constant max backedge-taken count.
+ ; CHECK-NEXT:  Loop %for.body: Unpredictable symbolic max backedge-taken count.
+-; CHECK-NEXT:  Loop %for.body: Predicated backedge-taken count is (%N /u 2)
++; CHECK-NEXT:  Loop %for.body: Predicated backedge-taken count is (%N /u 2)<exact>
+ ; CHECK-NEXT:   Predicates:
+ ; CHECK-NEXT:      {0,+,2}<%for.body> Added Flags: <nssw>
+ ; CHECK-NEXT:      {0,+,2}<%for.body> Added Flags: <nusw>
+@@ -360,7 +360,7 @@ define void @test_zext_of_sext(i64 %N) mustprogress {
+ ; CHECK-NEXT:      {0,+,2}<%for.body> Added Flags: <nssw>
+ ; CHECK-NEXT:      {0,+,2}<%for.body> Added Flags: <nusw>
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (trunc i64 %N to i1) to i64) == 0
+-; CHECK-NEXT:  Loop %for.body: Predicated symbolic max backedge-taken count is (%N /u 2)
++; CHECK-NEXT:  Loop %for.body: Predicated symbolic max backedge-taken count is (%N /u 2)<exact>
+ ; CHECK-NEXT:   Predicates:
+ ; CHECK-NEXT:      {0,+,2}<%for.body> Added Flags: <nssw>
+ ; CHECK-NEXT:      {0,+,2}<%for.body> Added Flags: <nusw>
+@@ -387,7 +387,7 @@ define void @test_zext_offset(i64 %N) mustprogress {
+ ; CHECK-NEXT:  Loop %for.body: Unpredictable backedge-taken count.
+ ; CHECK-NEXT:  Loop %for.body: Unpredictable constant max backedge-taken count.
+ ; CHECK-NEXT:  Loop %for.body: Unpredictable symbolic max backedge-taken count.
+-; CHECK-NEXT:  Loop %for.body: Predicated backedge-taken count is ((-21 + %N) /u 2)
++; CHECK-NEXT:  Loop %for.body: Predicated backedge-taken count is ((-21 + %N) /u 2)<exact>
+ ; CHECK-NEXT:   Predicates:
+ ; CHECK-NEXT:      {0,+,2}<%for.body> Added Flags: <nusw>
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (true + (trunc i64 %N to i1)) to i64) == 0
+@@ -395,7 +395,7 @@ define void @test_zext_offset(i64 %N) mustprogress {
+ ; CHECK-NEXT:   Predicates:
+ ; CHECK-NEXT:      {0,+,2}<%for.body> Added Flags: <nusw>
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (true + (trunc i64 %N to i1)) to i64) == 0
+-; CHECK-NEXT:  Loop %for.body: Predicated symbolic max backedge-taken count is ((-21 + %N) /u 2)
++; CHECK-NEXT:  Loop %for.body: Predicated symbolic max backedge-taken count is ((-21 + %N) /u 2)<exact>
+ ; CHECK-NEXT:   Predicates:
+ ; CHECK-NEXT:      {0,+,2}<%for.body> Added Flags: <nusw>
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (true + (trunc i64 %N to i1)) to i64) == 0
+@@ -421,7 +421,7 @@ define void @test_sext_offset(i64 %N) mustprogress {
+ ; CHECK-NEXT:  Loop %for.body: Unpredictable backedge-taken count.
+ ; CHECK-NEXT:  Loop %for.body: Unpredictable constant max backedge-taken count.
+ ; CHECK-NEXT:  Loop %for.body: Unpredictable symbolic max backedge-taken count.
+-; CHECK-NEXT:  Loop %for.body: Predicated backedge-taken count is ((-21 + %N) /u 2)
++; CHECK-NEXT:  Loop %for.body: Predicated backedge-taken count is ((-21 + %N) /u 2)<exact>
+ ; CHECK-NEXT:   Predicates:
+ ; CHECK-NEXT:      {0,+,2}<%for.body> Added Flags: <nssw>
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (true + (trunc i64 %N to i1)) to i64) == 0
+@@ -429,7 +429,7 @@ define void @test_sext_offset(i64 %N) mustprogress {
+ ; CHECK-NEXT:   Predicates:
+ ; CHECK-NEXT:      {0,+,2}<%for.body> Added Flags: <nssw>
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (true + (trunc i64 %N to i1)) to i64) == 0
+-; CHECK-NEXT:  Loop %for.body: Predicated symbolic max backedge-taken count is ((-21 + %N) /u 2)
++; CHECK-NEXT:  Loop %for.body: Predicated symbolic max backedge-taken count is ((-21 + %N) /u 2)<exact>
+ ; CHECK-NEXT:   Predicates:
+ ; CHECK-NEXT:      {0,+,2}<%for.body> Added Flags: <nssw>
+ ; CHECK-NEXT:      Equal predicate: (zext i1 (true + (trunc i64 %N to i1)) to i64) == 0
+diff --git a/llvm/test/Transforms/LoopUnroll/runtime-udiv-exact.ll b/llvm/test/Transforms/LoopUnroll/runtime-udiv-exact.ll
+new file mode 100644
+index 0000000000000..07a22f3b2cfff
+--- /dev/null
++++ b/llvm/test/Transforms/LoopUnroll/runtime-udiv-exact.ll
+@@ -0,0 +1,122 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals none --version 6
++; RUN: opt -passes=loop-unroll -unroll-runtime -unroll-count=2 -S %s | FileCheck %s
++
++; The trip count is (%n /u 24)<exact>. The udiv computing it is inside the
++; loop, so SCEV expander must emit a fresh one in the preheader: it should carry
++; the exact flag.
++define void @expand_exact_udiv(i64 %n, ptr %p) {
++; CHECK-LABEL: define void @expand_exact_udiv(
++; CHECK-SAME: i64 [[N:%.*]], ptr [[P:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[TMP0:%.*]] = udiv exact i64 [[N]], 24
++; CHECK-NEXT:    [[TMP1:%.*]] = add nsw i64 [[TMP0]], -1
++; CHECK-NEXT:    [[XTRAITER:%.*]] = and i64 [[TMP0]], 1
++; CHECK-NEXT:    [[TMP2:%.*]] = icmp ult i64 [[TMP1]], 1
++; CHECK-NEXT:    br i1 [[TMP2]], label %[[LOOP_EPIL_PREHEADER:.*]], label %[[ENTRY_NEW:.*]]
++; CHECK:       [[ENTRY_NEW]]:
++; CHECK-NEXT:    [[UNROLL_ITER:%.*]] = sub i64 [[TMP0]], [[XTRAITER]]
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[ENTRY_NEW]] ], [ [[IV_NEXT_1:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[NITER:%.*]] = phi i64 [ 0, %[[ENTRY_NEW]] ], [ [[NITER_NEXT_1:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[IV_NEXT:%.*]] = add nuw nsw i64 [[IV]], 1
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr i64, ptr [[P]], i64 [[IV]]
++; CHECK-NEXT:    store i64 [[IV]], ptr [[GEP]], align 4
++; CHECK-NEXT:    [[IV_NEXT_1]] = add nuw nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[GEP_1:%.*]] = getelementptr i64, ptr [[P]], i64 [[IV_NEXT]]
++; CHECK-NEXT:    store i64 [[IV_NEXT]], ptr [[GEP_1]], align 4
++; CHECK-NEXT:    [[NITER_NEXT_1]] = add i64 [[NITER]], 2
++; CHECK-NEXT:    [[NITER_NCMP_1:%.*]] = icmp ne i64 [[NITER_NEXT_1]], [[UNROLL_ITER]]
++; CHECK-NEXT:    br i1 [[NITER_NCMP_1]], label %[[LOOP]], label %[[EXIT_UNR_LCSSA:.*]], !llvm.loop [[LOOP0:![0-9]+]]
++; CHECK:       [[EXIT_UNR_LCSSA]]:
++; CHECK-NEXT:    [[IV_UNR:%.*]] = phi i64 [ [[IV_NEXT_1]], %[[LOOP]] ]
++; CHECK-NEXT:    [[LCMP_MOD:%.*]] = icmp ne i64 [[XTRAITER]], 0
++; CHECK-NEXT:    br i1 [[LCMP_MOD]], label %[[LOOP_EPIL_PREHEADER]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_EPIL_PREHEADER]]:
++; CHECK-NEXT:    [[IV_EPIL_INIT:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV_UNR]], %[[EXIT_UNR_LCSSA]] ]
++; CHECK-NEXT:    [[LCMP_MOD1:%.*]] = icmp ne i64 [[XTRAITER]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[LCMP_MOD1]])
++; CHECK-NEXT:    br label %[[LOOP_EPIL:.*]]
++; CHECK:       [[LOOP_EPIL]]:
++; CHECK-NEXT:    [[GEP_EPIL:%.*]] = getelementptr i64, ptr [[P]], i64 [[IV_EPIL_INIT]]
++; CHECK-NEXT:    store i64 [[IV_EPIL_INIT]], ptr [[GEP_EPIL]], align 4
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  %iv.next = add nuw nsw i64 %iv, 1
++  %gep = getelementptr i64, ptr %p, i64 %iv
++  store i64 %iv, ptr %gep
++  %q = udiv exact i64 %n, 24
++  %ec = icmp ne i64 %iv.next, %q
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; Same, but an identical exact udiv already exists in the preheader. SCEV
++; expander should reuse it instead of emitting a duplicate.
++define void @reuse_exact_udiv(i64 %n, ptr %p, ptr %q.out) {
++; CHECK-LABEL: define void @reuse_exact_udiv(
++; CHECK-SAME: i64 [[N:%.*]], ptr [[P:%.*]], ptr [[Q_OUT:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[Q_PH:%.*]] = udiv exact i64 [[N]], 24
++; CHECK-NEXT:    store i64 [[Q_PH]], ptr [[Q_OUT]], align 4
++; CHECK-NEXT:    [[TMP0:%.*]] = add nsw i64 [[Q_PH]], -1
++; CHECK-NEXT:    [[XTRAITER:%.*]] = and i64 [[Q_PH]], 1
++; CHECK-NEXT:    [[TMP1:%.*]] = icmp ult i64 [[TMP0]], 1
++; CHECK-NEXT:    br i1 [[TMP1]], label %[[LOOP_EPIL_PREHEADER:.*]], label %[[ENTRY_NEW:.*]]
++; CHECK:       [[ENTRY_NEW]]:
++; CHECK-NEXT:    [[UNROLL_ITER:%.*]] = sub i64 [[Q_PH]], [[XTRAITER]]
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[ENTRY_NEW]] ], [ [[IV_NEXT_1:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[NITER:%.*]] = phi i64 [ 0, %[[ENTRY_NEW]] ], [ [[NITER_NEXT_1:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[IV_NEXT:%.*]] = add nuw nsw i64 [[IV]], 1
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr i64, ptr [[P]], i64 [[IV]]
++; CHECK-NEXT:    store i64 [[IV]], ptr [[GEP]], align 4
++; CHECK-NEXT:    [[IV_NEXT_1]] = add nuw nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[GEP_1:%.*]] = getelementptr i64, ptr [[P]], i64 [[IV_NEXT]]
++; CHECK-NEXT:    store i64 [[IV_NEXT]], ptr [[GEP_1]], align 4
++; CHECK-NEXT:    [[NITER_NEXT_1]] = add i64 [[NITER]], 2
++; CHECK-NEXT:    [[NITER_NCMP_1:%.*]] = icmp ne i64 [[NITER_NEXT_1]], [[UNROLL_ITER]]
++; CHECK-NEXT:    br i1 [[NITER_NCMP_1]], label %[[LOOP]], label %[[EXIT_UNR_LCSSA:.*]], !llvm.loop [[LOOP2:![0-9]+]]
++; CHECK:       [[EXIT_UNR_LCSSA]]:
++; CHECK-NEXT:    [[IV_UNR:%.*]] = phi i64 [ [[IV_NEXT_1]], %[[LOOP]] ]
++; CHECK-NEXT:    [[LCMP_MOD:%.*]] = icmp ne i64 [[XTRAITER]], 0
++; CHECK-NEXT:    br i1 [[LCMP_MOD]], label %[[LOOP_EPIL_PREHEADER]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_EPIL_PREHEADER]]:
++; CHECK-NEXT:    [[IV_EPIL_INIT:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV_UNR]], %[[EXIT_UNR_LCSSA]] ]
++; CHECK-NEXT:    [[LCMP_MOD1:%.*]] = icmp ne i64 [[XTRAITER]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[LCMP_MOD1]])
++; CHECK-NEXT:    br label %[[LOOP_EPIL:.*]]
++; CHECK:       [[LOOP_EPIL]]:
++; CHECK-NEXT:    [[GEP_EPIL:%.*]] = getelementptr i64, ptr [[P]], i64 [[IV_EPIL_INIT]]
++; CHECK-NEXT:    store i64 [[IV_EPIL_INIT]], ptr [[GEP_EPIL]], align 4
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %q.ph = udiv exact i64 %n, 24
++  store i64 %q.ph, ptr %q.out
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  %iv.next = add nuw nsw i64 %iv, 1
++  %gep = getelementptr i64, ptr %p, i64 %iv
++  store i64 %iv, ptr %gep
++  %q = udiv exact i64 %n, 24
++  %ec = icmp ne i64 %iv.next, %q
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
