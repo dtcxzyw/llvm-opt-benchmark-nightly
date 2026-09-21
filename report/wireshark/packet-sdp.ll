@@ -204,7 +204,7 @@ bb.a:
   %i.d = alloca ptr, align 8                      ; 4 uses
   %i.e = getelementptr i8, ptr %0, i64 2056       ; 2 uses
   %i.f = load ptr, ptr %i.e, align 8
-  %i.g = tail call i32 @wmem_array_get_count(ptr noundef %i.f) ; 3 uses
+  %i.g = tail call i32 @wmem_array_get_count(ptr noundef %i.f) ; 4 uses
   %i.h = load ptr, ptr %i.e, align 8
   %i.i = tail call ptr @wmem_array_get_raw(ptr noundef %i.h) ; 5 uses
   %i.j = icmp ult i32 %1, %i.g
@@ -212,7 +212,7 @@ bb.a:
 
 .lr.ph83.preheader:                               ; preds = %bb.a
   %i.k = zext i32 %1 to i64                       ; 4 uses
-  %i.l = zext i32 %i.g to i64                     ; 4 uses
+  %i.l = zext i32 %i.g to i64                     ; 3 uses
   %indvars.iv.next98125 = add nuw nsw i64 %i.k, 1 ; 2 uses
   %i.m = icmp samesign ult i64 %indvars.iv.next98125, %i.l
   br i1 %i.m, label %.lr.ph, label %.lr.ph90
@@ -311,7 +311,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 
 .loopexit:                                        ; preds = %bb.h, %bb.d, %bb.c
   %indvars.iv.next101 = add nuw nsw i64 %indvars.iv100, 1 ; 2 uses
-  %exitcond103.not = icmp eq i64 %indvars.iv.next101, %i.l
+  %lftr.wideiv = trunc i64 %indvars.iv.next101 to i32
+  %exitcond103.not = icmp eq i32 %i.g, %lftr.wideiv
   br i1 %exitcond103.not, label %.lr.ph90, label %bb.c, !llvm.loop !17
 
 .lr.ph90:                                         ; preds = %.lr.ph83, %.loopexit, %.lr.ph83.preheader

@@ -202,18 +202,14 @@ bb.e:                                             ; preds = %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
   %.0.in.i23 = phi i32 [ %.0.i, %bb.e ], [ -1, %.lr.ph.preheader ] ; 2 uses
-  %.0.i = add nsw i32 %.0.in.i23, 1               ; 3 uses
+  %.0.i = add nsw i32 %.0.in.i23, 1               ; 2 uses
   %i.g = tail call ptr @OPENSSL_sk_value(ptr noundef nonnull %i.c, i32 noundef %.0.i) #5
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !14
   %i.i = tail call i32 @OBJ_cmp(ptr noundef %i.h, ptr noundef %i.d) #5
   %i.j = icmp eq i32 %i.i, 0
-  br i1 %i.j, label %X509at_get_attr_by_OBJ.exit, label %bb.e, !llvm.loop !0
+  br i1 %i.j, label %bb.f, label %bb.e, !llvm.loop !0
 
-X509at_get_attr_by_OBJ.exit:                      ; preds = %.lr.ph
-  %.not13 = icmp eq i32 %.0.i, -1
-  br i1 %.not13, label %X509at_get_attr_by_OBJ.exit.thread, label %bb.f
-
-bb.f:                                             ; preds = %X509at_get_attr_by_OBJ.exit
+bb.f:                                             ; preds = %.lr.ph
   tail call void @ERR_new() #5
   tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 126, ptr noundef nonnull @__func__.X509at_add1_attr) #5
   %i.k = load ptr, ptr %1, align 8, !tbaa !14
@@ -222,7 +218,7 @@ bb.f:                                             ; preds = %X509at_get_attr_by_
   tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 11, i32 noundef 140, ptr noundef nonnull @.str.1, ptr noundef %i.m) #5
   br label %bb.g
 
-X509at_get_attr_by_OBJ.exit.thread:               ; preds = %bb.e, %bb.d, %X509at_get_attr_by_OBJ.exit, %bb.c
+X509at_get_attr_by_OBJ.exit.thread:               ; preds = %bb.e, %bb.d, %bb.c
   %i.n = tail call ptr @ossl_x509at_add1_attr(ptr noundef nonnull %0, ptr noundef %1)
   br label %bb.g
 
@@ -362,18 +358,14 @@ bb.e:                                             ; preds = %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
   %.0.in.i27 = phi i32 [ %.0.i, %bb.e ], [ -1, %.lr.ph.preheader ] ; 2 uses
-  %.0.i = add nsw i32 %.0.in.i27, 1               ; 3 uses
+  %.0.i = add nsw i32 %.0.in.i27, 1               ; 2 uses
   %i.f = tail call ptr @OPENSSL_sk_value(ptr noundef nonnull %i.c, i32 noundef %.0.i) #5
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !14
   %i.h = tail call i32 @OBJ_cmp(ptr noundef %i.g, ptr noundef %1) #5
   %i.i = icmp eq i32 %i.h, 0
-  br i1 %i.i, label %X509at_get_attr_by_OBJ.exit, label %bb.e, !llvm.loop !0
+  br i1 %i.i, label %bb.f, label %bb.e, !llvm.loop !0
 
-X509at_get_attr_by_OBJ.exit:                      ; preds = %.lr.ph
-  %.not15 = icmp eq i32 %.0.i, -1
-  br i1 %.not15, label %X509at_get_attr_by_OBJ.exit.thread, label %bb.f
-
-bb.f:                                             ; preds = %X509at_get_attr_by_OBJ.exit
+bb.f:                                             ; preds = %.lr.ph
   tail call void @ERR_new() #5
   tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 163, ptr noundef nonnull @__func__.X509at_add1_attr_by_OBJ) #5
   %i.j = tail call i32 @OBJ_obj2nid(ptr noundef %1) #5
@@ -381,7 +373,7 @@ bb.f:                                             ; preds = %X509at_get_attr_by_
   tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 11, i32 noundef 140, ptr noundef nonnull @.str.1, ptr noundef %i.k) #5
   br label %ossl_x509at_add1_attr_by_OBJ.exit
 
-X509at_get_attr_by_OBJ.exit.thread:               ; preds = %bb.e, %bb.d, %X509at_get_attr_by_OBJ.exit, %bb.c
+X509at_get_attr_by_OBJ.exit.thread:               ; preds = %bb.e, %bb.d, %bb.c
   %i.l = tail call ptr @X509_ATTRIBUTE_create_by_OBJ(ptr noundef null, ptr noundef %1, i32 noundef %2, ptr noundef %3, i32 noundef %4) ; 3 uses
   %i.m = icmp eq ptr %i.l, null
   br i1 %i.m, label %ossl_x509at_add1_attr_by_OBJ.exit, label %bb.g
@@ -493,25 +485,21 @@ bb.f:                                             ; preds = %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.f
   %.0.in.i.i25 = phi i32 [ %.0.i.i, %bb.f ], [ -1, %.lr.ph.preheader ] ; 2 uses
-  %.0.i.i = add nsw i32 %.0.in.i.i25, 1           ; 3 uses
+  %.0.i.i = add nsw i32 %.0.in.i.i25, 1           ; 2 uses
   %i.g = tail call ptr @OPENSSL_sk_value(ptr noundef nonnull %i.b, i32 noundef %.0.i.i) #5
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !14
   %i.i = tail call i32 @OBJ_cmp(ptr noundef %i.h, ptr noundef nonnull %i.c) #5
   %i.j = icmp eq i32 %i.i, 0
-  br i1 %i.j, label %X509at_get_attr_by_NID.exit, label %bb.f, !llvm.loop !0
+  br i1 %i.j, label %X509at_get_attr_by_NID.exit.thread15, label %bb.f, !llvm.loop !0
 
-X509at_get_attr_by_NID.exit:                      ; preds = %.lr.ph
-  %.not12 = icmp eq i32 %.0.i.i, -1
-  br i1 %.not12, label %X509at_get_attr_by_NID.exit.thread, label %X509at_get_attr_by_NID.exit.thread15
-
-X509at_get_attr_by_NID.exit.thread15:             ; preds = %bb.d, %X509at_get_attr_by_NID.exit
+X509at_get_attr_by_NID.exit.thread15:             ; preds = %.lr.ph, %bb.d
   tail call void @ERR_new() #5
   tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 198, ptr noundef nonnull @__func__.X509at_add1_attr_by_NID) #5
   %i.k = tail call ptr @OBJ_nid2sn(i32 noundef %1) #5
   tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 11, i32 noundef 140, ptr noundef nonnull @.str.1, ptr noundef %i.k) #5
   br label %bb.g
 
-X509at_get_attr_by_NID.exit.thread:               ; preds = %bb.f, %bb.e, %X509at_get_attr_by_NID.exit, %bb.c
+X509at_get_attr_by_NID.exit.thread:               ; preds = %bb.f, %bb.e, %bb.c
   %i.l = tail call ptr @ossl_x509at_add1_attr_by_NID(ptr noundef nonnull %0, i32 noundef %1, i32 noundef %2, ptr noundef %3, i32 noundef %4)
   br label %bb.g
 

@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.m
   br i1 %i.br, label %bb.q, label %bb.r
 
 .preheader.i:                                     ; preds = %.lr.ph444
-  %i.bs = add i16 %.sroa.055.0.i442, 1            ; 2 uses
+  %i.bs = add nuw i16 %.sroa.055.0.i442, 1        ; 2 uses
   %exitcond127.not.i = icmp eq i16 %i.bs, %umax126.i
   br i1 %exitcond127.not.i, label %.outer.i, label %.lr.ph444
 
@@ -249,13 +249,12 @@ bb.v:                                             ; preds = %bb.n
 
 bb.w:                                             ; preds = %bb.v, %bb.u
   %.sroa.030.0.i = phi i16 [ %i.ba, %bb.u ], [ 1, %bb.v ] ; 2 uses
-  %umax.i = call i16 @llvm.umax.i16(i16 %.sroa.030.0.i, i16 1)
   %exitcond.not.i437 = icmp ult i16 %.sroa.030.0.i, 2
   br i1 %exitcond.not.i437, label %._crit_edge, label %.lr.ph440
 
 bb.x:                                             ; preds = %.lr.ph440
-  %i.cc = add i16 %.sroa.057.0.i438, 1            ; 2 uses
-  %exitcond.not.i = icmp eq i16 %i.cc, %umax.i
+  %i.cc = add nuw i16 %.sroa.057.0.i438, 1        ; 2 uses
+  %exitcond.not.i = icmp eq i16 %.sroa.030.0.i, %i.cc
   br i1 %exitcond.not.i, label %._crit_edge, label %.lr.ph440
 
 .lr.ph440:                                        ; preds = %bb.w, %bb.x

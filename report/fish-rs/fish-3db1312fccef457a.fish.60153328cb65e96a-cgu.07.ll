@@ -205,7 +205,7 @@ bb.y:                                             ; preds = %.noexc91
   br i1 %.not.i.us.peel.i, label %._crit_edge122.thread.i, label %.lr.ph121.split.us.i
 
 .lr.ph121.split.us.i:                             ; preds = %bb.y, %bb.z
-  %.sroa.0.0101119.us.i = phi i32 [ %6, %bb.z ], [ 1, %bb.y ] ; 2 uses
+  %.sroa.0.0101119.us.i = phi i32 [ %4, %bb.z ], [ 1, %bb.y ] ; 3 uses
   %i.ec = invoke noundef nonnull align 4 ptr @_RNvXs_NtNtCs1HV6ixfL8cZ_11fish_printf6fmt_fp7decimalNtB4_7DecimalINtNtNtCs3oUPovFnLWP_4core3ops5index5IndexlE5index(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %1, i32 noundef %.sroa.0.0101119.us.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @29)
           to label %.noexc92 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit
 
@@ -222,13 +222,10 @@ bb.y:                                             ; preds = %.noexc91
   br i1 %i.ed, label %.split.us.i, label %bb.z
 
 bb.z:                                             ; preds = %.noexc93
-  %4 = call noundef { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %.sroa.0.0101119.us.i, i32 1) ; 2 uses
-  %5 = extractvalue { i32, i1 } %4, 1
-  %6 = extractvalue { i32, i1 } %4, 0             ; 2 uses
+  %4 = add nuw i32 %.sroa.0.0101119.us.i, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !194
-  %.not.i.us.i = icmp sgt i32 %6, %.lcssa113154164.i
-  %or.cond108.us.i = or i1 %5, %.not.i.us.i
-  br i1 %or.cond108.us.i, label %._crit_edge122.thread.i, label %.lr.ph121.split.us.i, !llvm.loop !65
+  %exitcond139.not.i = icmp eq i32 %.sroa.0.0101119.us.i, %.lcssa113154164.i
+  br i1 %exitcond139.not.i, label %._crit_edge122.thread.i, label %.lr.ph121.split.us.i, !llvm.loop !65
 
 .lr.ph117.i:                                      ; preds = %.preheader.i, %.noexc94
   invoke void @_RNvMNtNtCs1HV6ixfL8cZ_11fish_printf6fmt_fp7decimalNtB2_7Decimal9push_back(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %1, i32 noundef 0)
@@ -242,7 +239,7 @@ bb.z:                                             ; preds = %.noexc93
   br i1 %.not.i, label %._crit_edge.i, label %.lr.ph117.i
 
 .lr.ph121.split.i:                                ; preds = %bb.x, %bb.av
-  %.sroa.0.0101119.i = phi i32 [ %9, %bb.av ], [ 1, %bb.x ] ; 2 uses
+  %.sroa.0.0101119.i = phi i32 [ %5, %bb.av ], [ 1, %bb.x ] ; 3 uses
   %i.eh = invoke noundef nonnull align 4 ptr @_RNvXs_NtNtCs1HV6ixfL8cZ_11fish_printf6fmt_fp7decimalNtB4_7DecimalINtNtNtCs3oUPovFnLWP_4core3ops5index5IndexlE5index(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %1, i32 noundef %.sroa.0.0101119.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @28)
           to label %.noexc95 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit
 
@@ -638,13 +635,10 @@ bb.au:                                            ; preds = %bb.ae
   br label %select.unfold
 
 bb.av:                                            ; preds = %.noexc96
-  %7 = call noundef { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %.sroa.0.0101119.i, i32 1) ; 2 uses
-  %8 = extractvalue { i32, i1 } %7, 1
-  %9 = extractvalue { i32, i1 } %7, 0             ; 2 uses
+  %5 = add nuw i32 %.sroa.0.0101119.i, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !194
-  %.not.i.i = icmp sgt i32 %9, %.lcssa113154163.i
-  %or.cond108.i = or i1 %8, %.not.i.i
-  br i1 %or.cond108.i, label %._crit_edge122.thread170.i, label %.lr.ph121.split.i, !llvm.loop !108
+  %exitcond.not.i = icmp eq i32 %.sroa.0.0101119.i, %.lcssa113154163.i
+  br i1 %exitcond.not.i, label %._crit_edge122.thread170.i, label %.lr.ph121.split.i, !llvm.loop !108
 
 .split.us.i:                                      ; preds = %.noexc93, %.noexc91
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !194
@@ -1047,7 +1041,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueSNtNtNtCs8frGy5WneL6_4fish5input5input9C
           to label %bb.c unwind label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph15
-  %i.aa = add i64 %.sroa.0.1.i.i14, 1             ; 2 uses
+  %i.aa = add nuw nsw i64 %.sroa.0.1.i.i14, 1     ; 2 uses
   %i.ab = icmp eq i64 %i.aa, %i.s
   br i1 %i.ab, label %common.resume.i, label %.lr.ph15
 
@@ -1085,7 +1079,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueSNtNtNtCs8frGy5WneL6_4fish5input5input9C
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueSNtNtNtCs8frGy5WneL6_4fish5input5input9CharEventEBI_.exit.i unwind label %bb.h
 
 bb.g:                                             ; preds = %.lr.ph19
-  %i.aj = add i64 %.sroa.0.1.i7.i18, 1            ; 2 uses
+  %i.aj = add nuw nsw i64 %.sroa.0.1.i7.i18, 1    ; 2 uses
   %i.ak = icmp eq i64 %i.aj, %i.u
   br i1 %i.ak, label %common.resume.i, label %.lr.ph19
 
@@ -1488,7 +1482,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i2, 1                 ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i2, 1         ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %._crit_edge, label %.lr.ph3
 
@@ -1891,6 +1885,7 @@ bb.a:
   br i1 %i.f, label %bb.b, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultxNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs8frGy5WneL6_4fish.exit.preheader
 
 _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultxNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs8frGy5WneL6_4fish.exit.preheader: ; preds = %bb.a
+  %invariant.op = add nuw i64 %4, 1
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 5 uses
   %i.h = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %2 ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 16
@@ -1898,7 +1893,6 @@ _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultxNtNtNtB4_3num5error15TryFromIntEr
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %.sroa.419.0..sroa_idx.i91 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %invariant.op = add nuw i64 %4, 1
   %invariant.op342 = add nuw i64 %4, 1
   br label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultxNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs8frGy5WneL6_4fish.exit
 
@@ -2301,18 +2295,22 @@ bb.cc:                                            ; preds = %bb.ca
   %.sroa.057.1 = phi i64 [ %., %bb.cb ], [ %.87, %bb.cc ] ; 4 uses
   %.sroa.053.1 = phi i64 [ %..i101, %bb.cb ], [ %.sroa.053.0, %bb.cc ]
   %.sroa.040.1 = phi i64 [ %..i, %bb.cb ], [ %.sroa.040.0, %bb.cc ] ; 2 uses
-  %i.fv = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.sroa.040.1, i64 %.sroa.057.1)
-  %5 = mul i64 %.sroa.053.1, %.sroa.057.1
+  %i.fv = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.sroa.040.1, i64 %.sroa.057.1) ; 2 uses
+  %5 = extractvalue { i64, i1 } %i.fv, 1
+  br i1 %5, label %._crit_edge224, label %.lr.ph223.split.preheader
+
+.lr.ph223.split.preheader:                        ; preds = %.lr.ph223.split.preheader.a
+  %6 = mul i64 %.sroa.053.1, %.sroa.057.1
   br label %.lr.ph223.split
 
-.lr.ph223.split:                                  ; preds = %.lr.ph223.split.preheader.a, %bb.cf
-  %.pn = phi { i64, i1 } [ %i.gg, %bb.cf ], [ %i.fv, %.lr.ph223.split.preheader.a ]
-  %.sroa.040.2221 = phi i64 [ %i.gf, %bb.cf ], [ %.sroa.040.1, %.lr.ph223.split.preheader.a ] ; 2 uses
+.lr.ph223.split:                                  ; preds = %.lr.ph223.split.preheader, %bb.cf
+  %.pn = phi { i64, i1 } [ %i.gg, %bb.cf ], [ %i.fv, %.lr.ph223.split.preheader ]
+  %.sroa.040.2221 = phi i64 [ %i.gf, %bb.cf ], [ %.sroa.040.1, %.lr.ph223.split.preheader ] ; 2 uses
   %i.fw = extractvalue { i64, i1 } %.pn, 0
-  %.not = icmp sgt i64 %i.fw, %5
+  %.not = icmp sgt i64 %i.fw, %6
   br i1 %.not, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultxNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs8frGy5WneL6_4fish.exit.backedge, label %bb.cd
 
-._crit_edge224:                                   ; preds = %bb.cf
+._crit_edge224:                                   ; preds = %.lr.ph223.split.preheader.a, %bb.cf
   tail call void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_mul_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1704) #31
   unreachable
 
@@ -2715,7 +2713,7 @@ bb.e:                                             ; preds = %.lr.ph
           to label %bb.e unwind label %bb.g
 
 bb.f:                                             ; preds = %.lr.ph22
-  %i.ac = add i64 %.sroa.0.1.i21, 1               ; 2 uses
+  %i.ac = add nuw nsw i64 %.sroa.0.1.i21, 1       ; 2 uses
   %i.ad = icmp eq i64 %i.ac, %i.t
   br i1 %i.ad, label %.body, label %.lr.ph22
 
@@ -2754,7 +2752,7 @@ bb.i:                                             ; preds = %.lr.ph24
           to label %bb.i unwind label %bb.k
 
 bb.j:                                             ; preds = %.lr.ph26
-  %i.am = add i64 %.sroa.0.1.i325, 1              ; 2 uses
+  %i.am = add nuw nsw i64 %.sroa.0.1.i325, 1      ; 2 uses
   %i.an = icmp eq i64 %i.am, %i.v
   br i1 %i.an, label %.body, label %.lr.ph26
 

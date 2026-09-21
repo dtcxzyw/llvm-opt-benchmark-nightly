@@ -205,7 +205,7 @@ pidff_find_usage.exit.loopexit.i180.i.i:          ; preds = %bb.dd, %bb.dc
 pidff_find_usage.exit.i182.i.i:                   ; preds = %pidff_find_usage.exit.loopexit.i180.i.i, %.preheader.i173.i.i
   %i.qb = phi i32 [ 0, %.preheader.i173.i.i ], [ %i.qa, %pidff_find_usage.exit.loopexit.i180.i.i ] ; 2 uses
   store i32 %i.qb, ptr %i.pq, align 8
-  %.not17.i183.i.i = icmp ne i32 %i.qb, 0
+  %.not17.i183.i.not.i = icmp eq i32 %i.qb, 0
   %i.qc = load i32, ptr %i.pr, align 8            ; 2 uses
   %.not.i.i176.1.i.i = icmp eq i32 %i.qc, 0
   br i1 %.not.i.i176.1.i.i, label %pidff_find_special_keys.exit188.thread.sink.split.i.i, label %.lr.ph.i.i177.1.i.i
@@ -220,7 +220,7 @@ bb.de:                                            ; preds = %bb.df, %.lr.ph.i.i1
   %i.qf = getelementptr [28 x i8], ptr %i.qd, i64 %i.qe
   %i.qg = load i32, ptr %i.qf, align 4
   %i.qh = icmp eq i32 %i.qg, 983163
-  %i.qi = add i32 %.0811.i.i178.1.i.i, 1          ; 4 uses
+  %i.qi = add nuw i32 %.0811.i.i178.1.i.i, 1      ; 3 uses
   br i1 %i.qh, label %pidff_find_usage.exit.i182.1.i.i, label %bb.df
 
 bb.df:                                            ; preds = %bb.de
@@ -230,9 +230,7 @@ bb.df:                                            ; preds = %bb.de
 pidff_find_usage.exit.i182.1.i.i:                 ; preds = %bb.de
   %i.qj = getelementptr i8, ptr %i.h, i64 1644
   store i32 %i.qi, ptr %i.qj, align 4
-  %.not17.i183.1.i.i = icmp ne i32 %i.qi, 0
-  %.not68.i.i = and i1 %.not17.i183.i.i, %.not17.i183.1.i.i
-  br i1 %.not68.i.i, label %bb.dg, label %pidff_find_special_keys.exit188.thread.i.i
+  br i1 %.not17.i183.i.not.i, label %pidff_find_special_keys.exit188.thread.i.i, label %bb.dg
 
 pidff_find_special_keys.exit188.thread.sink.split.i.i: ; preds = %bb.df, %pidff_find_usage.exit.i182.i.i
   %i.qk = getelementptr i8, ptr %i.h, i64 1644

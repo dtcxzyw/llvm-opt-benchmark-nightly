@@ -204,7 +204,7 @@ find_ext_var.exit.thread:                         ; preds = %bb.c, %bb.b
 
 find_ext_var.exit:                                ; preds = %.lr.ph.i.i
   %i.s = trunc nuw nsw i64 %indvars.iv.i.i to i32
-  %i.t = shl nuw i64 %indvars.iv.i.i, 1
+  %i.t = shl nuw nsw i64 %indvars.iv.i.i, 1
   %i.u = and i64 %i.t, 4294967294
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %i.u
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 16

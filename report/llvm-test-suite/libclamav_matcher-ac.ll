@@ -54,20 +54,19 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.g = load ptr, ptr %1, align 8, !tbaa !26     ; 2 uses
-  %2 = trunc nuw i16 %i.f to i8
+  %wide.trip.count = zext nneg i16 %i.f to i64
   %i.h = load i16, ptr %i.g, align 2, !tbaa !27
   %.not258 = icmp ult i16 %i.h, 256
   br i1 %.not258, label %.lr.ph260, label %._crit_edge
 
 .lr.ph260:                                        ; preds = %.lr.ph, %bb.b
-  %.0114176259 = phi i8 [ %3, %bb.b ], [ 0, %.lr.ph ]
-  %3 = add nuw i8 %.0114176259, 1                 ; 4 uses
-  %4 = icmp ult i8 %3, %2
-  br i1 %4, label %bb.b, label %.._crit_edge_crit_edge, !llvm.loop !77
+  %indvars.iv258 = phi i64 [ %indvars.iv.next, %bb.b ], [ 0, %.lr.ph ]
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv258, 1 ; 4 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %.._crit_edge_crit_edge, label %bb.b, !llvm.loop !77
 
 bb.b:                                             ; preds = %.lr.ph260
-  %5 = zext i8 %3 to i64
-  %i.i = getelementptr inbounds nuw [2 x i8], ptr %i.g, i64 %5
+  %i.i = getelementptr inbounds nuw [2 x i8], ptr %i.g, i64 %indvars.iv.next
   %i.j = load i16, ptr %i.i, align 2, !tbaa !27
   %.not = icmp ult i16 %i.j, 256
   br i1 %.not, label %.lr.ph260, label %.._crit_edge_crit_edge261, !llvm.loop !77
@@ -76,11 +75,11 @@ bb.b:                                             ; preds = %.lr.ph260
   br label %._crit_edge, !llvm.loop !77
 
 .._crit_edge_crit_edge261:                        ; preds = %bb.b
-  %6 = zext i8 %3 to i16
+  %2 = trunc nuw i64 %indvars.iv.next to i16
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.._crit_edge_crit_edge261, %.._crit_edge_crit_edge, %.lr.ph
-  %.0 = phi i16 [ %6, %.._crit_edge_crit_edge261 ], [ %i.f, %.._crit_edge_crit_edge ], [ 0, %.lr.ph ] ; 4 uses
+  %.0 = phi i16 [ %2, %.._crit_edge_crit_edge261 ], [ %i.f, %.._crit_edge_crit_edge ], [ 0, %.lr.ph ] ; 4 uses
   %i.k = zext nneg i16 %.0 to i32
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.m = load i8, ptr %i.l, align 4, !tbaa !29

@@ -105,7 +105,7 @@ bb.b:                                             ; preds = %bb.a, %test_to_from
   br i1 %exitcond.not.i.i, label %iov_random.exit.i, label %.lr.ph.i.i, !llvm.loop !0
 
 iov_random.exit.i:                                ; preds = %.lr.ph.i.i, %bb.b
-  %i.j = tail call i64 @iov_size(ptr noundef %i.d, i32 noundef %i.a) #15 ; 25 uses
+  %i.j = tail call i64 @iov_size(ptr noundef %i.d, i32 noundef %i.a) #15 ; 24 uses
   %i.k = add i64 %i.j, 8                          ; 2 uses
   %i.l = tail call noalias ptr @g_malloc(i64 noundef %i.k) #16 ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 4 ; 7 uses
@@ -205,8 +205,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %i.ah, label %.lr.ph.i, label %.preheader.i, !llvm.loop !19
 
 bb.c:                                             ; preds = %._crit_edge.i, %.preheader.i
-  %i.ai = phi i64 [ 0, %.preheader.i ], [ %2, %._crit_edge.i ] ; 14 uses
-  %.1230.i = phi i32 [ 0, %.preheader.i ], [ %1, %._crit_edge.i ] ; 5 uses
+  %i.ai = phi i64 [ 0, %.preheader.i ], [ %indvars.iv.next234.i, %._crit_edge.i ] ; 18 uses
   %i.aj = tail call i64 @iov_memset(ptr noundef %i.d, i32 noundef %i.a, i64 noundef 0, i32 noundef 255, i64 noundef %i.j) #15
   %i.ak = and i64 %i.aj, 4294967295
   %.not143.i = icmp eq i64 %i.ak, %i.j
@@ -283,7 +282,7 @@ bb.l:                                             ; preds = %iov_to_buf.exit179.
 
 .thread.i:                                        ; preds = %bb.l, %iov_to_buf.exit179.thread.i
   %i.bb = load i8, ptr %i.ap, align 1
-  %i.bc = trunc i32 %.1230.i to i8
+  %i.bc = trunc i64 %i.ai to i8
   %.not155.i = icmp eq i8 %i.bb, %i.bc
   br i1 %.not155.i, label %bb.n, label %bb.m, !prof !15
 
@@ -292,12 +291,11 @@ bb.m:                                             ; preds = %.thread.i
   unreachable
 
 bb.n:                                             ; preds = %.thread.i, %bb.l
-  %0 = zext i32 %.1230.i to i64
-  %.not156227.i = icmp samesign ult i64 %i.j, %0
-  br i1 %.not156227.i, label %._crit_edge.i, label %.lr.ph229.i
+  %0 = trunc nuw i64 %i.ai to i32                 ; 2 uses
+  br label %.lr.ph229.i
 
-.lr.ph229.i:                                      ; preds = %bb.n, %test_iov_bytes.exit.i
-  %.0121228.i = phi i32 [ %i.bz, %test_iov_bytes.exit.i ], [ %.1230.i, %bb.n ] ; 2 uses
+.lr.ph229.i:                                      ; preds = %test_iov_bytes.exit.i, %bb.n
+  %.0121228.i = phi i32 [ %i.bz, %test_iov_bytes.exit.i ], [ %0, %bb.n ] ; 2 uses
   %i.bd = tail call i64 @iov_memset(ptr noundef %i.d, i32 noundef %i.a, i64 noundef 0, i32 noundef 255, i64 noundef %i.j) #15
   %i.be = and i64 %i.bd, 4294967295
   %.not158.i = icmp eq i64 %i.be, %i.j
@@ -308,7 +306,7 @@ bb.o:                                             ; preds = %.lr.ph229.i
   unreachable
 
 iov_from_buf.exit185.i:                           ; preds = %.lr.ph229.i
-  %i.bf = sub i32 %.0121228.i, %.1230.i           ; 3 uses
+  %i.bf = sub i32 %.0121228.i, %0                 ; 3 uses
   %i.bg = zext i32 %i.bf to i64                   ; 4 uses
   %i.bh = tail call i64 @iov_from_buf_full(ptr noundef %i.d, i32 noundef %i.a, i64 noundef range(i64 0, 4294967296) %i.ai, ptr noundef nonnull %i.al, i64 noundef range(i64 -4294967295, 4294967296) %i.bg) #15
   %i.bi = trunc i64 %i.bh to i32
@@ -405,11 +403,10 @@ test_iov_bytes.exit.i:                            ; preds = %._crit_edge.i.i, %b
   %.not156.i = icmp ult i64 %i.j, %i.ca
   br i1 %.not156.i, label %._crit_edge.i, label %.lr.ph229.i, !llvm.loop !20
 
-._crit_edge.i:                                    ; preds = %test_iov_bytes.exit.i, %bb.n
-  %1 = add i32 %.1230.i, 1                        ; 2 uses
-  %2 = zext i32 %1 to i64                         ; 2 uses
-  %.not.i = icmp samesign ult i64 %i.j, %2
-  br i1 %.not.i, label %bb.aa, label %bb.c, !llvm.loop !21
+._crit_edge.i:                                    ; preds = %test_iov_bytes.exit.i
+  %indvars.iv.next234.i = add i64 %i.ai, 1
+  %exitcond.not = icmp eq i64 %i.ai, %i.j
+  br i1 %exitcond.not, label %bb.aa, label %bb.c, !llvm.loop !21
 
 bb.aa:                                            ; preds = %._crit_edge.i
   %i.cb = load i32, ptr %i.l, align 1
@@ -501,7 +498,7 @@ bb.a:
   br i1 %exitcond.not.i, label %iov_random.exit, label %.lr.ph.i, !llvm.loop !0
 
 iov_random.exit:                                  ; preds = %.lr.ph.i, %bb.a
-  %i.l = tail call i64 @iov_size(ptr noundef %i.f, i32 noundef %i.c) #15 ; 21 uses
+  %i.l = tail call i64 @iov_size(ptr noundef %i.f, i32 noundef %i.c) #15 ; 19 uses
   %i.m = tail call noalias ptr @g_malloc(i64 noundef %i.l) #16 ; 6 uses
   %.not156 = icmp eq i64 %i.l, 0
   br i1 %.not156, label %._crit_edge, label %iter.check
@@ -630,19 +627,18 @@ bb.c:                                             ; preds = %.preheader144.prehe
   %i.bc = call i32 @setsockopt(i32 noundef %i.bb, i32 noundef 1, i32 noundef 7, ptr noundef nonnull %i.b, i32 noundef 4) #15 ; 0 uses
   br label %.preheader142
 
-.preheader142:                                    ; preds = %bb.c, %._crit_edge154
-  %.1155 = phi i32 [ 0, %bb.c ], [ %2, %._crit_edge154 ] ; 4 uses
-  %1 = zext i32 %.1155 to i64
-  %.not103152 = icmp samesign ult i64 %i.l, %1
-  br i1 %.not103152, label %._crit_edge154, label %.preheader
+.preheader142:                                    ; preds = %._crit_edge154, %bb.c
+  %indvars.iv166 = phi i64 [ 0, %bb.c ], [ %indvars.iv.next167, %._crit_edge154 ] ; 3 uses
+  %1 = trunc nuw i64 %indvars.iv166 to i32        ; 2 uses
+  br label %.preheader
 
 .preheader:                                       ; preds = %.preheader142, %.critedge
-  %.081153 = phi i32 [ %i.bd, %.critedge ], [ %.1155, %.preheader142 ] ; 2 uses
+  %.081153 = phi i32 [ %i.bd, %.critedge ], [ %1, %.preheader142 ] ; 2 uses
   %i.bd = add i32 %.081153, 1                     ; 3 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.preheader, %bb.k
-  %.083 = phi i32 [ %i.bq, %bb.k ], [ %.1155, %.preheader ] ; 3 uses
+  %.083 = phi i32 [ %i.bq, %bb.k ], [ %1, %.preheader ] ; 3 uses
   %i.be = sub i32 %i.bd, %.083
   %i.bf = call i32 @g_test_rand_int_range(i32 noundef 0, i32 noundef %i.be) #15
   %i.bg = load i32, ptr %i.ao, align 4
@@ -695,11 +691,10 @@ bb.k:                                             ; preds = %bb.j
   %.not103 = icmp ult i64 %i.l, %i.bv
   br i1 %.not103, label %._crit_edge154, label %.preheader, !llvm.loop !27
 
-._crit_edge154:                                   ; preds = %.critedge, %.preheader142
-  %2 = add i32 %.1155, 1                          ; 2 uses
-  %3 = zext i32 %2 to i64
-  %.not102 = icmp samesign ult i64 %i.l, %3
-  br i1 %.not102, label %bb.l, label %.preheader142, !llvm.loop !28
+._crit_edge154:                                   ; preds = %.critedge
+  %indvars.iv.next167 = add nuw i64 %indvars.iv166, 1
+  %.not102.not = icmp ugt i64 %i.l, %indvars.iv166
+  br i1 %.not102.not, label %.preheader142, label %bb.l, !llvm.loop !28
 
 bb.l:                                             ; preds = %._crit_edge154
   call fastcc void @iov_free(ptr noundef %i.f, i32 noundef %i.c)
@@ -731,21 +726,19 @@ bb.m:                                             ; preds = %.preheader144.prehe
   %i.cn = call i32 @usleep(i32 noundef 500000) #15 ; 0 uses
   br label %.preheader143
 
-.preheader143:                                    ; preds = %bb.m, %._crit_edge150
-  %i.co = phi i64 [ 0, %bb.m ], [ %6, %._crit_edge150 ] ; 2 uses
-  %.2151 = phi i32 [ 0, %bb.m ], [ %5, %._crit_edge150 ] ; 5 uses
-  %4 = zext i32 %.2151 to i64
-  %.not97147 = icmp ult i64 %i.l, %4
-  br i1 %.not97147, label %._crit_edge150, label %.lr.ph149
+.preheader143:                                    ; preds = %._crit_edge150, %bb.m
+  %i.co = phi i64 [ 0, %bb.m ], [ %indvars.iv.next163, %._crit_edge150 ] ; 5 uses
+  %2 = trunc nuw i64 %i.co to i32                 ; 3 uses
+  br label %.lr.ph149
 
 .lr.ph149:                                        ; preds = %.preheader143, %test_iov_bytes.exit
-  %.182148 = phi i32 [ %i.cq, %test_iov_bytes.exit ], [ %.2151, %.preheader143 ] ; 3 uses
+  %.182148 = phi i32 [ %i.cq, %test_iov_bytes.exit ], [ %2, %.preheader143 ] ; 3 uses
   %i.cp = call i64 @iov_memset(ptr noundef %i.f, i32 noundef %i.c, i64 noundef 0, i32 noundef 255, i64 noundef %i.l) #15 ; 0 uses
   %i.cq = add i32 %.182148, 1                     ; 3 uses
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.w, %.lr.ph149
-  %.184 = phi i32 [ %.2151, %.lr.ph149 ], [ %.285, %bb.w ] ; 5 uses
+  %.184 = phi i32 [ %2, %.lr.ph149 ], [ %.285, %bb.w ] ; 5 uses
   %i.cr = sub i32 %i.cq, %.184
   %i.cs = call i32 @g_test_rand_int_range(i32 noundef 0, i32 noundef %i.cr) #15 ; 2 uses
   %i.ct = load i32, ptr %i.a, align 8
@@ -804,7 +797,7 @@ bb.x:                                             ; preds = %bb.s, %bb.w
   br i1 %.not.i, label %test_iov_bytes.exit, label %.lr.ph40.i
 
 .lr.ph40.i:                                       ; preds = %bb.x
-  %i.dh = sub i32 %.182148, %.2151
+  %i.dh = sub i32 %.182148, %2
   %i.di = zext i32 %i.dh to i64
   %i.dj = add nuw nsw i64 %i.co, %i.di
   br label %bb.y
@@ -867,11 +860,10 @@ test_iov_bytes.exit:                              ; preds = %._crit_edge.i, %bb.
   %.not97 = icmp ult i64 %i.l, %i.dv
   br i1 %.not97, label %._crit_edge150, label %.lr.ph149, !llvm.loop !30
 
-._crit_edge150:                                   ; preds = %test_iov_bytes.exit, %.preheader143
-  %5 = add i32 %.2151, 1                          ; 2 uses
-  %6 = zext i32 %5 to i64                         ; 2 uses
-  %.not = icmp samesign ult i64 %i.l, %6
-  br i1 %.not, label %bb.ae, label %.preheader143, !llvm.loop !31
+._crit_edge150:                                   ; preds = %test_iov_bytes.exit
+  %indvars.iv.next163 = add nuw i64 %i.co, 1
+  %.not.not = icmp ugt i64 %i.l, %i.co
+  br i1 %.not.not, label %.preheader143, label %bb.ae, !llvm.loop !31
 
 bb.ae:                                            ; preds = %._crit_edge150
   br i1 %.not.i, label %iov_free.exit, label %.lr.ph.i117

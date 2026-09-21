@@ -205,7 +205,7 @@ bb.av:                                            ; preds = %bb.au
   %i.no = load ptr, ptr %.phi.trans.insert.i.i.i, align 8, !tbaa !70
   %i.np = getelementptr inbounds nuw i8, ptr %i.no, i64 %.05.i.i.i.i.epil
   store i8 0, ptr %i.np, align 1, !tbaa !11
-  %i.nq = add nuw i64 %.05.i.i.i.i.epil, 1
+  %i.nq = add nuw nsw i64 %.05.i.i.i.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %i.nc
   br i1 %epil.iter.cmp.not, label %_ZN11flatbuffers21FlatBufferBuilderImplILb0EE5AlignEm.exit.i.i, label %.lr.ph.i.i.i.i.epil, !llvm.loop !144
@@ -608,7 +608,7 @@ bb.bx:                                            ; preds = %bb.bw
   %i.wj = load ptr, ptr %.phi.trans.insert.i.i.i.i.i320, align 8, !tbaa !70
   %i.wk = getelementptr inbounds nuw i8, ptr %i.wj, i64 %.05.i.i.i.i324.epil
   store i8 0, ptr %i.wk, align 1, !tbaa !11
-  %i.wl = add nuw i64 %.05.i.i.i.i324.epil, 1
+  %i.wl = add nuw nsw i64 %.05.i.i.i.i324.epil, 1
   %epil.iter789.next = add i64 %epil.iter789, 1   ; 2 uses
   %epil.iter789.cmp.not = icmp eq i64 %epil.iter789.next, %i.vx
   br i1 %epil.iter789.cmp.not, label %_ZN11flatbuffers21FlatBufferBuilderImplILb0EE5AlignEm.exit.loopexit.i.i, label %.lr.ph.i.i.i.i323.epil, !llvm.loop !149
@@ -1011,7 +1011,7 @@ bb.e:                                             ; preds = %bb.d
   %i.aa = load ptr, ptr %.phi.trans.insert.i.i.i.i, align 8, !tbaa !70
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 %.05.i.i.i.epil
   store i8 0, ptr %i.ab, align 1, !tbaa !11
-  %i.ac = add nuw i64 %.05.i.i.i.epil, 1
+  %i.ac = add nuw nsw i64 %.05.i.i.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %i.m
   br i1 %epil.iter.cmp.not, label %.loopexit.loopexit, label %.lr.ph.i.i.i.epil, !llvm.loop !164
@@ -1414,7 +1414,7 @@ bb.d:                                             ; preds = %bb.c
   %i.u = load ptr, ptr %.phi.trans.insert.i.i.i.i, align 8, !tbaa !70
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %.05.i.i.i.epil
   store i8 0, ptr %i.v, align 1, !tbaa !11
-  %i.w = add nuw i64 %.05.i.i.i.epil, 1
+  %i.w = add nuw nsw i64 %.05.i.i.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %i.h
   br i1 %epil.iter.cmp.not, label %_ZN11flatbuffers21FlatBufferBuilderImplILb0EE5AlignEm.exit.i, label %.lr.ph.i.i.i.epil, !llvm.loop !167
@@ -1817,7 +1817,7 @@ bb.e:                                             ; preds = %bb.d
   %i.v = load ptr, ptr %.phi.trans.insert.i.i.i.i, align 8, !tbaa !70
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 %.05.i.i.i.epil
   store i8 0, ptr %i.w, align 1, !tbaa !11
-  %i.x = add nuw i64 %.05.i.i.i.epil, 1
+  %i.x = add nuw nsw i64 %.05.i.i.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %i.h
   br i1 %epil.iter.cmp.not, label %_ZN11flatbuffers21FlatBufferBuilderImplILb0EE8PreAlignIjEEvm.exit, label %.lr.ph.i.i.i.epil, !llvm.loop !236
@@ -1928,7 +1928,7 @@ bb.k:                                             ; preds = %bb.j
   %i.bo = load ptr, ptr %.phi.trans.insert.i.i, align 8, !tbaa !70
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 %.05.i.i.i11.epil
   store i8 0, ptr %i.bp, align 1, !tbaa !11
-  %i.bq = add nuw i64 %.05.i.i.i11.epil, 1
+  %i.bq = add nuw nsw i64 %.05.i.i.i11.epil, 1
   %epil.iter23.next = add i64 %epil.iter23, 1     ; 2 uses
   %epil.iter23.cmp.not = icmp eq i64 %epil.iter23.next, %i.bc
   br i1 %epil.iter23.cmp.not, label %_ZN11flatbuffers21FlatBufferBuilderImplILb0EE5AlignEm.exit.i, label %.lr.ph.i.i.i10.epil, !llvm.loop !237
@@ -2195,7 +2195,7 @@ bb.d:                                             ; preds = %bb.c
   %i.v = load ptr, ptr %.phi.trans.insert.i.i.i.i.i, align 8, !tbaa !70
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 %.05.i.i.i.i.epil
   store i8 0, ptr %i.w, align 1, !tbaa !11
-  %i.x = add nuw i64 %.05.i.i.i.i.epil, 1
+  %i.x = add nuw nsw i64 %.05.i.i.i.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %i.i
   br i1 %epil.iter.cmp.not, label %_ZN11flatbuffers21FlatBufferBuilderImplILb0EE5AlignEm.exit.i.i, label %.lr.ph.i.i.i.i.epil, !llvm.loop !239
@@ -2293,7 +2293,7 @@ bb.d:                                             ; preds = %bb.c
   %i.u = load ptr, ptr %.phi.trans.insert.i.i.i.i, align 8, !tbaa !70
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %.05.i.i.i.epil
   store i8 0, ptr %i.v, align 1, !tbaa !11
-  %i.w = add nuw i64 %.05.i.i.i.epil, 1
+  %i.w = add nuw nsw i64 %.05.i.i.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %i.h
   br i1 %epil.iter.cmp.not, label %_ZN11flatbuffers21FlatBufferBuilderImplILb0EE7ReferToEj.exit, label %.lr.ph.i.i.i.epil, !llvm.loop !241
@@ -2349,7 +2349,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ao = load ptr, ptr %.phi.trans.insert.i.i.i.i, align 8, !tbaa !70
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 %.05.i.i.i7.epil
   store i8 0, ptr %i.ap, align 1, !tbaa !11
-  %i.aq = add nuw i64 %.05.i.i.i7.epil, 1
+  %i.aq = add nuw nsw i64 %.05.i.i.i7.epil, 1
   %epil.iter17.next = add i64 %epil.iter17, 1     ; 2 uses
   %epil.iter17.cmp.not = icmp eq i64 %epil.iter17.next, %i.ab
   br i1 %epil.iter17.cmp.not, label %_ZN11flatbuffers21FlatBufferBuilderImplILb0EE5AlignEm.exit.i, label %.lr.ph.i.i.i6.epil, !llvm.loop !242
@@ -2446,7 +2446,7 @@ bb.d:                                             ; preds = %bb.c
   %i.v = load ptr, ptr %.phi.trans.insert.i.i.i.i.i, align 8, !tbaa !70
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 %.05.i.i.i.i.epil
   store i8 0, ptr %i.w, align 1, !tbaa !11
-  %i.x = add nuw i64 %.05.i.i.i.i.epil, 1
+  %i.x = add nuw nsw i64 %.05.i.i.i.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %i.i
   br i1 %epil.iter.cmp.not, label %_ZN11flatbuffers21FlatBufferBuilderImplILb0EE5AlignEm.exit.i.i, label %.lr.ph.i.i.i.i.epil, !llvm.loop !243
@@ -2544,7 +2544,7 @@ bb.d:                                             ; preds = %bb.c
   %i.u = load ptr, ptr %.phi.trans.insert.i.i.i.i, align 8, !tbaa !70
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %.05.i.i.i.epil
   store i8 0, ptr %i.v, align 1, !tbaa !11
-  %i.w = add nuw i64 %.05.i.i.i.epil, 1
+  %i.w = add nuw nsw i64 %.05.i.i.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %i.h
   br i1 %epil.iter.cmp.not, label %_ZN11flatbuffers21FlatBufferBuilderImplILb0EE7ReferToEj.exit, label %.lr.ph.i.i.i.epil, !llvm.loop !245
@@ -2600,7 +2600,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ao = load ptr, ptr %.phi.trans.insert.i.i.i.i, align 8, !tbaa !70
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 %.05.i.i.i7.epil
   store i8 0, ptr %i.ap, align 1, !tbaa !11
-  %i.aq = add nuw i64 %.05.i.i.i7.epil, 1
+  %i.aq = add nuw nsw i64 %.05.i.i.i7.epil, 1
   %epil.iter17.next = add i64 %epil.iter17, 1     ; 2 uses
   %epil.iter17.cmp.not = icmp eq i64 %epil.iter17.next, %i.ab
   br i1 %epil.iter17.cmp.not, label %_ZN11flatbuffers21FlatBufferBuilderImplILb0EE5AlignEm.exit.i, label %.lr.ph.i.i.i6.epil, !llvm.loop !246
@@ -2698,7 +2698,7 @@ bb.e:                                             ; preds = %bb.d
   %i.y = load ptr, ptr %.phi.trans.insert.i.i.i.i, align 8, !tbaa !70
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %.05.i.i.i.epil
   store i8 0, ptr %i.z, align 1, !tbaa !11
-  %i.aa = add nuw i64 %.05.i.i.i.epil, 1
+  %i.aa = add nuw nsw i64 %.05.i.i.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %i.l
   br i1 %epil.iter.cmp.not, label %_ZN11flatbuffers21FlatBufferBuilderImplILb0EE5AlignEm.exit.i, label %.lr.ph.i.i.i.epil, !llvm.loop !247

@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %ext4_orphan_file_bl
   br label %.lr.ph113
 
 .lr.ph113:                                        ; preds = %.lr.ph113.preheader, %brelse.exit
-  %indvars.iv128 = phi i64 [ %i.db, %.lr.ph113.preheader ], [ %indvars.iv.next129, %brelse.exit ] ; 3 uses
+  %indvars.iv128 = phi i64 [ %i.db, %.lr.ph113.preheader ], [ %indvars.iv.next129, %brelse.exit ] ; 2 uses
   %i.dc = load ptr, ptr %i.ak, align 8
   %i.dd = getelementptr [16 x i8], ptr %i.dc, i64 %indvars.iv128
   %i.de = getelementptr i8, ptr %i.dd, i64 8
@@ -218,9 +218,10 @@ bb.o:                                             ; preds = %.lr.ph113
   br label %brelse.exit
 
 brelse.exit:                                      ; preds = %.lr.ph113, %bb.o
-  %indvars.iv.next129 = add nsw i64 %indvars.iv128, -1
-  %1 = icmp sgt i64 %indvars.iv128, 0
-  br i1 %1, label %.lr.ph113, label %._crit_edge114, !llvm.loop !48
+  %indvars.iv.next129 = add nsw i64 %indvars.iv128, -1 ; 2 uses
+  %1 = and i64 %indvars.iv.next129, 2147483648
+  %2 = icmp eq i64 %1, 0
+  br i1 %2, label %.lr.ph113, label %._crit_edge114, !llvm.loop !48
 
 ._crit_edge114:                                   ; preds = %brelse.exit, %.loopexit
   %i.dg = load ptr, ptr %i.ak, align 8

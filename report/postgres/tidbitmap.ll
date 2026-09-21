@@ -204,7 +204,6 @@ bb.a:
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 64 ; 3 uses
   %.promoted80 = load i32, ptr %i.q, align 8
   %i.r = sext i32 %.promoted to i64
-  %wide.trip.count = sext i32 %i.o to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %tbm_advance_schunkbit.exit.thread
@@ -247,15 +246,15 @@ tbm_advance_schunkbit.exit:                       ; preds = %.lr.ph98
   br label %.loopexit
 
 tbm_advance_schunkbit.exit.thread:                ; preds = %bb.c, %bb.b, %tbm_advance_schunkbit.exit
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 3 uses
-  %i.aj = trunc nsw i64 %indvars.iv.next to i32   ; 3 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
+  %i.aj = trunc i64 %indvars.iv.next to i32       ; 3 uses
   store i32 %i.aj, ptr %i.m, align 4
   store i32 0, ptr %i.q, align 8
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit, label %bb.b
+  %exitcond.not = icmp eq i32 %i.o, %i.aj
+  br i1 %exitcond.not, label %bb.f, label %bb.b
 
-.loopexit:                                        ; preds = %tbm_advance_schunkbit.exit.thread, %bb.a, %.thread
-  %2 = phi i32 [ %i.s, %.thread ], [ %.promoted, %bb.a ], [ %i.aj, %tbm_advance_schunkbit.exit.thread ] ; 2 uses
+.loopexit:                                        ; preds = %bb.a, %.thread
+  %2 = phi i32 [ %i.s, %.thread ], [ %.promoted, %bb.a ] ; 2 uses
   %i.ak = icmp slt i32 %2, %i.o
   br i1 %i.ak, label %bb.d, label %bb.f
 
@@ -300,7 +299,7 @@ bb.e:                                             ; preds = %bb.d
   tail call void @LWLockRelease(ptr noundef nonnull %i.k) #12
   br label %bb.h
 
-bb.f:                                             ; preds = %.loopexit
+bb.f:                                             ; preds = %tbm_advance_schunkbit.exit.thread, %.loopexit
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   %.pre = load i32, ptr %.phi.trans.insert, align 8 ; 2 uses
   %.phi.trans.insert83 = getelementptr inbounds nuw i8, ptr %i.a, i64 8

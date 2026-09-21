@@ -204,12 +204,12 @@ bb.b:                                             ; preds = %.lr.ph, %.thread161
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 4
   %i.x = load i32, ptr %i.w, align 4, !tbaa !150
   %i.y = getelementptr inbounds nuw i8, ptr %i.v, i64 312
-  %i.z = load i32, ptr %i.y, align 8, !tbaa !85   ; 6 uses
+  %i.z = load i32, ptr %i.y, align 8, !tbaa !85   ; 8 uses
   %.not135 = icmp eq i32 %i.z, 0
   br i1 %.not135, label %.thread161, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.aa = add i32 %i.z, 1                         ; 7 uses
+  %i.aa = add i32 %i.z, 1                         ; 6 uses
   %i.ab = icmp ugt i32 %i.aa, %.0123185
   br i1 %i.ab, label %bb.d, label %bb.f
 
@@ -343,15 +343,15 @@ cid_get_offset.exit.us.preheader:                 ; preds = %bb.h
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.j
-  %1 = add i32 %.1118180, 1                       ; 2 uses
-  %.not141 = icmp ugt i32 %1, %i.z
-  br i1 %.not141, label %bb.k, label %bb.j, !llvm.loop !272
+  %indvars.iv.next203 = add nuw nsw i64 %indvars.iv202, 1 ; 2 uses
+  %lftr.wideiv = trunc i64 %indvars.iv.next203 to i32
+  %exitcond206.not = icmp eq i32 %i.aa, %lftr.wideiv
+  br i1 %exitcond206.not, label %bb.k, label %bb.j, !llvm.loop !272
 
 bb.j:                                             ; preds = %.split179.us, %bb.i
   %i.by = phi i64 [ %.pre, %.split179.us ], [ %i.ca, %bb.i ]
-  %.1118180 = phi i32 [ 1, %.split179.us ], [ %1, %bb.i ] ; 2 uses
-  %2 = zext i32 %.1118180 to i64
-  %i.bz = getelementptr inbounds nuw [8 x i8], ptr %.2121, i64 %2
+  %indvars.iv202 = phi i64 [ 1, %.split179.us ], [ %indvars.iv.next203, %bb.i ] ; 2 uses
+  %i.bz = getelementptr inbounds nuw [8 x i8], ptr %.2121, i64 %indvars.iv202
   %i.ca = load i64, ptr %i.bz, align 8, !tbaa !73 ; 2 uses
   %i.cb = icmp ugt i64 %i.by, %i.ca
   br i1 %i.cb, label %.thread154.sink.split, label %bb.i
@@ -403,24 +403,21 @@ bb.o:                                             ; preds = %bb.n
 
 .preheader168:                                    ; preds = %bb.o
   %i.cy = load ptr, ptr %i.cm, align 8, !tbaa !98 ; 6 uses
-  %umax205 = call i32 @llvm.umax.i32(i32 %i.aa, i32 2)
-  %wide.trip.count206 = zext i32 %umax205 to i64
   %.pre220 = load i64, ptr %.2121, align 8, !tbaa !73 ; 2 uses
   %.pre221 = load ptr, ptr %i.cy, align 8, !tbaa !74 ; 2 uses
-  %3 = add nsw i64 %wide.trip.count206, -1        ; 2 uses
-  %xtraiter245 = and i64 %3, 3                    ; 3 uses
-  %i.cz = icmp ult i32 %i.aa, 5
+  %xtraiter248 = and i32 %i.z, 3                  ; 3 uses
+  %i.cz = icmp ult i32 %i.z, 4
   br i1 %i.cz, label %.epil.preheader, label %.preheader168.new
 
 .preheader168.new:                                ; preds = %.preheader168
-  %unroll_iter251 = and i64 %3, -4
+  %unroll_iter254 = and i32 %i.z, -4
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.p, %.preheader168.new
   %i.da = phi ptr [ %.pre221, %.preheader168.new ], [ %i.du, %bb.p ]
   %i.db = phi i64 [ %.pre220, %.preheader168.new ], [ %i.ds, %bb.p ]
   %indvars.iv202.a = phi i64 [ 1, %.preheader168.new ], [ %indvars.iv.next203.3, %bb.p ] ; 6 uses
-  %niter252 = phi i64 [ 0, %.preheader168.new ], [ %niter252.next.3, %bb.p ]
+  %niter255 = phi i32 [ 0, %.preheader168.new ], [ %niter255.next.3, %bb.p ]
   %i.dc = getelementptr inbounds nuw [8 x i8], ptr %.2121, i64 %indvars.iv202.a
   %i.dd = load i64, ptr %i.dc, align 8, !tbaa !73 ; 2 uses
   %i.de = sub i64 %i.dd, %i.db
@@ -449,19 +446,19 @@ bb.p:                                             ; preds = %bb.p, %.preheader16
   %i.dv = getelementptr inbounds nuw [8 x i8], ptr %i.cy, i64 %indvars.iv.next203.2
   store ptr %i.du, ptr %i.dv, align 8, !tbaa !74
   %indvars.iv.next203.3 = add nuw nsw i64 %indvars.iv202.a, 4 ; 2 uses
-  %niter252.next.3 = add nuw i64 %niter252, 4     ; 2 uses
-  %niter252.ncmp.3 = icmp eq i64 %niter252.next.3, %unroll_iter251
+  %niter255.next.3 = add i32 %niter255, 4         ; 2 uses
+  %niter252.ncmp.3 = icmp eq i32 %niter255.next.3, %unroll_iter254
   br i1 %niter252.ncmp.3, label %.unr-lcssa, label %bb.p, !llvm.loop !273
 
 .unr-lcssa:                                       ; preds = %bb.p
-  %lcmp.mod249.not = icmp eq i64 %xtraiter245, 0
+  %lcmp.mod249.not = icmp eq i32 %xtraiter248, 0
   br i1 %lcmp.mod249.not, label %.epilog-lcssa, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %.unr-lcssa, %.preheader168
   %.epil.init = phi ptr [ %.pre221, %.preheader168 ], [ %i.du, %.unr-lcssa ]
   %.epil.init248 = phi i64 [ %.pre220, %.preheader168 ], [ %i.ds, %.unr-lcssa ]
   %indvars.iv202.epil.init = phi i64 [ 1, %.preheader168 ], [ %indvars.iv.next203.3, %.unr-lcssa ]
-  %lcmp.mod250 = icmp ne i64 %xtraiter245, 0
+  %lcmp.mod250 = icmp ne i32 %xtraiter248, 0
   call void @llvm.assume(i1 %lcmp.mod250)
   br label %bb.q
 
@@ -469,7 +466,7 @@ bb.q:                                             ; preds = %bb.q, %.epil.prehea
   %i.dw = phi ptr [ %.epil.init, %.epil.preheader ], [ %i.eb, %bb.q ]
   %i.dx = phi i64 [ %.epil.init248, %.epil.preheader ], [ %i.dz, %bb.q ]
   %indvars.iv202.epil = phi i64 [ %indvars.iv202.epil.init, %.epil.preheader ], [ %indvars.iv.next203.epil, %bb.q ] ; 3 uses
-  %epil.iter246 = phi i64 [ 0, %.epil.preheader ], [ %epil.iter246.next, %bb.q ]
+  %epil.iter249 = phi i32 [ 0, %.epil.preheader ], [ %epil.iter249.next, %bb.q ]
   %i.dy = getelementptr inbounds nuw [8 x i8], ptr %.2121, i64 %indvars.iv202.epil
   %i.dz = load i64, ptr %i.dy, align 8, !tbaa !73 ; 2 uses
   %i.ea = sub i64 %i.dz, %i.dx
@@ -477,8 +474,8 @@ bb.q:                                             ; preds = %bb.q, %.epil.prehea
   %i.ec = getelementptr inbounds nuw [8 x i8], ptr %i.cy, i64 %indvars.iv202.epil
   store ptr %i.eb, ptr %i.ec, align 8, !tbaa !74
   %indvars.iv.next203.epil = add nuw nsw i64 %indvars.iv202.epil, 1
-  %epil.iter246.next = add i64 %epil.iter246, 1   ; 2 uses
-  %epil.iter246.cmp.not = icmp eq i64 %epil.iter246.next, %xtraiter245
+  %epil.iter249.next = add i32 %epil.iter249, 1   ; 2 uses
+  %epil.iter246.cmp.not = icmp eq i32 %epil.iter249.next, %xtraiter248
   br i1 %epil.iter246.cmp.not, label %.epilog-lcssa, label %bb.q, !llvm.loop !274
 
 .epilog-lcssa:                                    ; preds = %bb.q, %.unr-lcssa

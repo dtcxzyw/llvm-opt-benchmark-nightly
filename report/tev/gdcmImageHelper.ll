@@ -205,14 +205,12 @@ bb.fo:                                            ; preds = %bb.fn, %bb.fl, %bb.
   br i1 %i.ql, label %.loopexit.i, label %.lr.ph352.i
 
 bb.fp:                                            ; preds = %.lr.ph352.i
-  %34 = add i32 %.0351.i, 1                       ; 2 uses
-  %35 = zext i32 %34 to i64                       ; 2 uses
-  %.not172.i = icmp ugt i64 %.0138.i, %35
-  br i1 %.not172.i, label %.lr.ph352.i, label %.loopexit.i, !llvm.loop !334
+  %indvars.iv.next.i = add nuw i64 %i.qm, 1       ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next.i, %.0138.i
+  br i1 %exitcond.not, label %.loopexit.i, label %.lr.ph352.i, !llvm.loop !334
 
 .lr.ph352.i:                                      ; preds = %._crit_edge.thread.i, %bb.fp
-  %i.qm = phi i64 [ %35, %bb.fp ], [ 1, %._crit_edge.thread.i ]
-  %.0351.i = phi i32 [ %34, %bb.fp ], [ 1, %._crit_edge.thread.i ]
+  %i.qm = phi i64 [ %indvars.iv.next.i, %bb.fp ], [ 1, %._crit_edge.thread.i ] ; 2 uses
   %.185350.i = phi double [ %i.qo, %bb.fp ], [ %.084.pre.i, %._crit_edge.thread.i ]
   %i.qn = getelementptr inbounds nuw [8 x i8], ptr %i.py, i64 %i.qm
   %i.qo = load double, ptr %i.qn, align 8, !tbaa !48 ; 2 uses

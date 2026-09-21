@@ -204,7 +204,7 @@ _ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block35fuji_decode_interpolation_od
   %i.zs = load i16, ptr %i.zr, align 2, !tbaa !92
   %i.zt = zext i16 %i.zs to i32                   ; 2 uses
   %i.zu = add nsw i32 %i.zg, -1                   ; 2 uses
-  %i.zv = add nsw i32 %i.zh, 2                    ; 2 uses
+  %i.zv = add nuw nsw i32 %i.zh, 2                ; 2 uses
   %i.zw = icmp samesign ult i32 %i.zv, %i.pu
   call void @llvm.assume(i1 %i.zw)
   %i.zx = icmp samesign ult i32 %i.zu, %i.pw
@@ -222,7 +222,7 @@ _ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block35fuji_decode_interpolation_od
   %i.aah = getelementptr inbounds nuw [2 x i8], ptr %i.aac, i64 %i.zq
   %i.aai = load i16, ptr %i.aah, align 2, !tbaa !92 ; 3 uses
   %i.aaj = zext i16 %i.aai to i32                 ; 2 uses
-  %i.aak = add nsw i32 %i.zh, 3                   ; 2 uses
+  %i.aak = add nuw nsw i32 %i.zh, 3               ; 2 uses
   %i.aal = icmp samesign ult i32 %i.aak, %i.pu
   call void @llvm.assume(i1 %i.aal)
   %i.aam = zext nneg i32 %i.aak to i64            ; 2 uses
@@ -625,7 +625,7 @@ _ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block35fuji_decode_interpolation_od
   %i.bcs = load i16, ptr %i.bcr, align 2, !tbaa !92
   %i.bct = zext i16 %i.bcs to i32                 ; 2 uses
   %i.bcu = add nsw i32 %i.bcg, -1                 ; 2 uses
-  %i.bcv = add nsw i32 %i.bch, 2                  ; 2 uses
+  %i.bcv = add nuw nsw i32 %i.bch, 2              ; 2 uses
   %i.bcw = icmp samesign ult i32 %i.bcv, %i.aur
   call void @llvm.assume(i1 %i.bcw)
   %i.bcx = icmp samesign ult i32 %i.bcu, %i.aut
@@ -643,7 +643,7 @@ _ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block35fuji_decode_interpolation_od
   %i.bdh = getelementptr inbounds nuw [2 x i8], ptr %i.bdc, i64 %i.bcq
   %i.bdi = load i16, ptr %i.bdh, align 2, !tbaa !92 ; 3 uses
   %i.bdj = zext i16 %i.bdi to i32                 ; 2 uses
-  %i.bdk = add nsw i32 %i.bch, 3                  ; 2 uses
+  %i.bdk = add nuw nsw i32 %i.bch, 3              ; 2 uses
   %i.bdl = icmp samesign ult i32 %i.bdk, %i.aur
   call void @llvm.assume(i1 %i.bdl)
   %i.bdm = zext nneg i32 %i.bdk to i64            ; 2 uses
@@ -1046,13 +1046,23 @@ _ZNK8rawspeed12_GLOBAL__N_19FujiStrip7numMCUsENS_8iPoint2DE.exit.i.i.i.i.i: ; pr
   %i.bxi = icmp sge i32 %.sroa.462.0.copyload.i.i.i.i.i, %.sroa.563.0.copyload.i.i.i.i.i
   call void @llvm.assume(i1 %i.bxi)
   %i.bxj = zext nneg i32 %.sroa.563.0.copyload.i.i.i.i.i to i64 ; 4 uses
-  %i.bxk = zext nneg i32 %.sroa.664.0.copyload.i.i.i.i.i to i64 ; 4 uses
+  %i.bxk = zext nneg i32 %.sroa.664.0.copyload.i.i.i.i.i to i64 ; 3 uses
   %i.bxl = zext nneg i32 %.sroa.462.0.copyload.i.i.i.i.i to i64 ; 6 uses
   %i.bxm = mul nuw nsw i64 %indvars.iv.i20.i.i, 6 ; 7 uses
-  %12 = zext i32 %i.bxg to i64
-  %13 = icmp samesign ult i64 %i.bxm, %i.bxk
-  %i.bxn = mul nuw nsw i64 %i.bxm, %i.bxl
-  %i.bxo = getelementptr inbounds nuw [2 x i8], ptr %.sroa.060.0.copyload.i.i.i.i.i, i64 %i.bxn ; 6 uses
+  %12 = mul nuw nsw i64 %i.bxm, %i.bxl
+  %13 = add nuw nsw i64 %i.bxm, 5                 ; 2 uses
+  %14 = mul nuw nsw i64 %13, %i.bxl
+  %15 = add nuw nsw i64 %i.bxm, 4
+  %16 = mul nuw nsw i64 %15, %i.bxl
+  %17 = add nuw nsw i64 %i.bxm, 3
+  %18 = mul nuw nsw i64 %17, %i.bxl
+  %19 = add nuw nsw i64 %i.bxm, 2                 ; 2 uses
+  %20 = mul nuw nsw i64 %19, %i.bxl
+  %21 = or disjoint i64 %i.bxm, 1
+  %i.bxn = mul nuw nsw i64 %21, %i.bxl
+  %22 = zext i32 %i.bxg to i64
+  %23 = icmp samesign ult i64 %i.bxm, %i.bxk
+  %i.bxo = getelementptr inbounds nuw [2 x i8], ptr %.sroa.060.0.copyload.i.i.i.i.i, i64 %12 ; 6 uses
   %i.bxp = load i32, ptr %i.ek, align 4, !tbaa !253 ; 7 uses
   %i.bxq = load i32, ptr %i.ej, align 8, !tbaa !252 ; 13 uses
   %i.bxr = icmp sge i32 %i.bxq, %i.bxp
@@ -1061,23 +1071,19 @@ _ZNK8rawspeed12_GLOBAL__N_19FujiStrip7numMCUsENS_8iPoint2DE.exit.i.i.i.i.i: ; pr
   %.sroa.0.0.copyload.i.i33.i.i.i.i.i = load ptr, ptr %i.ec, align 8, !tbaa !229, !noalias !271 ; 12 uses
   %i.bxt = zext nneg i32 %i.bxs to i64
   %i.bxu = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i33.i.i.i.i.i, i64 %i.bxt ; 4 uses
-  call void @llvm.assume(i1 %13)
+  call void @llvm.assume(i1 %23)
   %i.bxv = shl nuw nsw i32 %i.bxq, 1
   %i.bxw = zext nneg i32 %i.bxv to i64
   %i.bxx = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i33.i.i.i.i.i, i64 %i.bxw ; 2 uses
   %i.bxy = mul nuw nsw i32 %i.bxq, 15
   %i.bxz = zext nneg i32 %i.bxy to i64
   %i.bya = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i33.i.i.i.i.i, i64 %i.bxz ; 2 uses
-  %14 = or disjoint i64 %i.bxm, 1
-  %15 = mul nuw nsw i64 %14, %i.bxl
-  %i.byb = getelementptr inbounds nuw [2 x i8], ptr %.sroa.060.0.copyload.i.i.i.i.i, i64 %15 ; 6 uses
+  %i.byb = getelementptr inbounds nuw [2 x i8], ptr %.sroa.060.0.copyload.i.i.i.i.i, i64 %i.bxn ; 6 uses
   %i.byc = shl nuw nsw i32 %i.bxq, 3
   %i.byd = zext nneg i32 %i.byc to i64
   %i.bye = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i33.i.i.i.i.i, i64 %i.byd ; 4 uses
-  %16 = add nuw nsw i64 %i.bxm, 2                 ; 2 uses
-  %i.byf = icmp samesign ult i64 %16, %i.bxk
-  %17 = mul nuw nsw i64 %16, %i.bxl
-  %i.byg = getelementptr inbounds nuw [2 x i8], ptr %.sroa.060.0.copyload.i.i.i.i.i, i64 %17 ; 6 uses
+  %i.byf = icmp samesign ult i64 %19, %i.bxk
+  %i.byg = getelementptr inbounds nuw [2 x i8], ptr %.sroa.060.0.copyload.i.i.i.i.i, i64 %20 ; 6 uses
   %i.byh = shl nuw nsw i32 %i.bxq, 4
   %i.byi = zext nneg i32 %i.byh to i64
   %i.byj = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i33.i.i.i.i.i, i64 %i.byi ; 3 uses
@@ -1088,30 +1094,22 @@ _ZNK8rawspeed12_GLOBAL__N_19FujiStrip7numMCUsENS_8iPoint2DE.exit.i.i.i.i.i: ; pr
   %i.byn = mul nuw nsw i32 %i.bxq, 9
   %i.byo = zext nneg i32 %i.byn to i64
   %i.byp = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i33.i.i.i.i.i, i64 %i.byo ; 2 uses
-  %18 = add nuw nsw i64 %i.bxm, 3
-  %19 = mul nuw nsw i64 %18, %i.bxl
-  %i.byq = getelementptr inbounds nuw [2 x i8], ptr %.sroa.060.0.copyload.i.i.i.i.i, i64 %19 ; 6 uses
+  %i.byq = getelementptr inbounds nuw [2 x i8], ptr %.sroa.060.0.copyload.i.i.i.i.i, i64 %18 ; 6 uses
   %i.byr = mul nuw nsw i32 %i.bxq, 10
   %i.bys = zext nneg i32 %i.byr to i64
   %i.byt = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i33.i.i.i.i.i, i64 %i.bys ; 4 uses
-  %20 = add nuw nsw i64 %i.bxm, 4                 ; 2 uses
-  %21 = icmp samesign ult i64 %20, %i.bxk
-  %22 = mul nuw nsw i64 %20, %i.bxl
-  %i.byu = getelementptr inbounds nuw [2 x i8], ptr %.sroa.060.0.copyload.i.i.i.i.i, i64 %22 ; 6 uses
+  %i.byu = getelementptr inbounds nuw [2 x i8], ptr %.sroa.060.0.copyload.i.i.i.i.i, i64 %16 ; 6 uses
   %i.byv = mul nuw nsw i32 %i.bxq, 11
   %i.byw = zext nneg i32 %i.byv to i64
   %i.byx = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i33.i.i.i.i.i, i64 %i.byw ; 4 uses
-  call void @llvm.assume(i1 %21)
   %i.byy = shl nuw nsw i32 %i.bxq, 2
   %i.byz = zext nneg i32 %i.byy to i64
   %i.bza = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i33.i.i.i.i.i, i64 %i.byz ; 3 uses
   %i.bzb = mul nuw nsw i32 %i.bxq, 17
   %i.bzc = zext nneg i32 %i.bzb to i64
   %i.bzd = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i33.i.i.i.i.i, i64 %i.bzc ; 3 uses
-  %23 = add nuw nsw i64 %i.bxm, 5                 ; 2 uses
-  %i.bze = icmp samesign ult i64 %23, %i.bxk
-  %24 = mul nuw nsw i64 %23, %i.bxl
-  %i.bzf = getelementptr inbounds nuw [2 x i8], ptr %.sroa.060.0.copyload.i.i.i.i.i, i64 %24 ; 6 uses
+  %i.bze = icmp samesign ult i64 %13, %i.bxk
+  %i.bzf = getelementptr inbounds nuw [2 x i8], ptr %.sroa.060.0.copyload.i.i.i.i.i, i64 %14 ; 6 uses
   call void @llvm.assume(i1 %i.bze)
   %i.bzg = mul nuw nsw i32 %i.bxq, 12
   %i.bzh = zext nneg i32 %i.bzg to i64
@@ -1334,7 +1332,7 @@ bb.ek:                                            ; preds = %bb.ek, %.preheader6
   %i.cfo = getelementptr inbounds nuw [2 x i8], ptr %i.bzf, i64 %i.cca
   store i16 %i.cfn, ptr %i.cfo, align 2, !tbaa !92
   %indvars.iv.next.i.i.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i.i.i, 1 ; 2 uses
-  %.not.i.i142.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i.i.i, %12
+  %.not.i.i142.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i.i.i, %22
   br i1 %.not.i.i142.i.i.i, label %_ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block19copy_line_to_xtransERKNS0_9FujiStripEi.exit.i.i.i, label %bb.ek, !llvm.loop !191
 
 bb.el:                                            ; preds = %bb.eh

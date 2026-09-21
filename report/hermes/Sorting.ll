@@ -112,9 +112,8 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not40.i, label %_ZN6hermes2vm12_GLOBAL__N_113insertionSortEPNS0_9SortModelERSt6vectorIjSaIjEEjj.exit.thread, label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge.thread, %.critedge.i
-  %.02441.i = phi i32 [ %.024.i, %.critedge.i ], [ %.02439.i, %._crit_edge.thread ] ; 3 uses
-  %.not2736.i = icmp eq i32 %.02441.i, %1
-  br i1 %.not2736.i, label %.critedge.i, label %.lr.ph.i
+  %.02441.i = phi i32 [ %.024.i, %.critedge.i ], [ %.02439.i, %._crit_edge.thread ] ; 2 uses
+  br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader.i, %bb.e
   %.02337.i = phi i32 [ %i.r, %bb.e ], [ %.02441.i, %.preheader.i ] ; 5 uses
@@ -164,8 +163,8 @@ bb.e:                                             ; preds = %bb.d
   %.not27.i = icmp eq i32 %i.r, %1
   br i1 %.not27.i, label %.critedge.i, label %.lr.ph.i, !llvm.loop !2
 
-.critedge.i:                                      ; preds = %.split, %bb.e, %_ZN6hermes2vm12_GLOBAL__N_15_lessEPNS0_9SortModelERKSt6vectorIjSaIjEEjj.exit.i, %.preheader.i
-  %.024.i = add i32 %.02441.i, 1                  ; 2 uses
+.critedge.i:                                      ; preds = %_ZN6hermes2vm12_GLOBAL__N_15_lessEPNS0_9SortModelERKSt6vectorIjSaIjEEjj.exit.i, %bb.e, %.split
+  %.024.i = add nuw i32 %.02441.i, 1              ; 2 uses
   %.not.i = icmp eq i32 %.024.i, %2
   br i1 %.not.i, label %_ZN6hermes2vm12_GLOBAL__N_113insertionSortEPNS0_9SortModelERSt6vectorIjSaIjEEjj.exit.thread, label %.preheader.i, !llvm.loop !3
 

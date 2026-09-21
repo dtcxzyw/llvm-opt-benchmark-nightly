@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph9
-  %i.g = add i64 %.sroa.0.1.i.i8, 1               ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i8, 1       ; 2 uses
   %i.h = icmp eq i64 %i.g, %.val1
   br i1 %i.h, label %.body, label %.lr.ph9
 
@@ -345,7 +345,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph9
-  %i.g = add i64 %.sroa.0.1.i.i8, 1               ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i8, 1       ; 2 uses
   %i.h = icmp eq i64 %i.g, %.val1
   br i1 %i.h, label %.body, label %.lr.ph9
 
@@ -504,7 +504,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph9
-  %i.g = add i64 %.sroa.0.1.i.i8, 1               ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i8, 1       ; 2 uses
   %i.h = icmp eq i64 %i.g, %.val1
   br i1 %i.h, label %.body, label %.lr.ph9
 
@@ -575,7 +575,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCskXtk6F4WjxZ_4just19dependency_argu
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCskXtk6F4WjxZ_4just19dependency_argument18DependencyArgumentECs6SXwsBSuFuw_4just.exit.i.i unwind label %bb.b
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCskXtk6F4WjxZ_4just19dependency_argument18DependencyArgumentECs6SXwsBSuFuw_4just.exit7.i.i: ; preds = %.lr.ph9
-  %i.g = add i64 %.sroa.0.1.i.i8, 1               ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i8, 1       ; 2 uses
   %i.h = icmp eq i64 %i.g, %.val1
   br i1 %i.h, label %.body, label %.lr.ph9
 
@@ -646,7 +646,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph9
-  %i.g = add i64 %.sroa.0.1.i.i8, 1               ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i8, 1       ; 2 uses
   %i.h = icmp eq i64 %i.g, %.val1
   br i1 %i.h, label %.body, label %.lr.ph9
 
@@ -717,7 +717,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph9
-  %i.g = add i64 %.sroa.0.1.i.i8, 1               ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i8, 1       ; 2 uses
   %i.h = icmp eq i64 %i.g, %.val1
   br i1 %i.h, label %.body, label %.lr.ph9
 
@@ -806,7 +806,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph12.i.i:                                     ; preds = %bb.c, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs2FJGJNE9lTN_12clap_builder4util9any_value8AnyValueECs6SXwsBSuFuw_4just.exit8.i.i
   %.sroa.0.110.i.i = phi i64 [ %i.m, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs2FJGJNE9lTN_12clap_builder4util9any_value8AnyValueECs6SXwsBSuFuw_4just.exit8.i.i ], [ %i.e, %bb.c ] ; 2 uses
   %i.l = getelementptr inbounds nuw [32 x i8], ptr %.val, i64 %.sroa.0.110.i.i ; 2 uses
-  %i.m = add i64 %.sroa.0.110.i.i, 1              ; 2 uses
+  %i.m = add nuw nsw i64 %.sroa.0.110.i.i, 1      ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !231)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !232)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !233)
@@ -1082,7 +1082,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph12.i.i:                                     ; preds = %bb.c, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCsk7w47U2izUG_14regex_automata4util11determinize5state5StateECs6SXwsBSuFuw_4just.exit8.i.i
   %.sroa.0.110.i.i = phi i64 [ %i.m, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCsk7w47U2izUG_14regex_automata4util11determinize5state5StateECs6SXwsBSuFuw_4just.exit8.i.i ], [ %i.e, %bb.c ] ; 2 uses
   %i.l = getelementptr inbounds nuw [16 x i8], ptr %.val, i64 %.sroa.0.110.i.i ; 2 uses
-  %i.m = add i64 %.sroa.0.110.i.i, 1              ; 2 uses
+  %i.m = add nuw nsw i64 %.sroa.0.110.i.i, 1      ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !275)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !276)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !277)
@@ -1485,7 +1485,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxNtNtN
   br i1 %i.i, label %_RNvXsp_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecINtNtB7_5boxed3BoxNtNtNtCsk7w47U2izUG_14regex_automata4meta5regex5CacheEENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCs6SXwsBSuFuw_4just.exit.i.i.i, label %.lr.ph.i.i.i.i.i
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.j = add i64 %.sroa.0.1.i.i.i.i.i9, 1         ; 2 uses
+  %i.j = add nuw nsw i64 %.sroa.0.1.i.i.i.i.i9, 1 ; 2 uses
   %i.k = icmp eq i64 %i.j, %.val1.i.i.i
   br i1 %i.k, label %.body.i.i.i, label %.lr.ph
 
@@ -1888,7 +1888,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d, !noalias !697
 
 bb.c:                                             ; preds = %.lr.ph9
-  %i.g = add i64 %.sroa.0.1.i.i.i8, 1             ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i.i8, 1     ; 2 uses
   %i.h = icmp eq i64 %i.g, %.val1.i
   br i1 %i.h, label %.body.i, label %.lr.ph9
 
@@ -2291,7 +2291,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph13.i.i.i:                                   ; preds = %bb.c, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCskXtk6F4WjxZ_4just8fragment8FragmentECs6SXwsBSuFuw_4just.exit9.i.i.i
   %.sroa.0.111.i.i.i = phi i64 [ %i.k, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCskXtk6F4WjxZ_4just8fragment8FragmentECs6SXwsBSuFuw_4just.exit9.i.i.i ], [ %i.e, %bb.c ] ; 2 uses
   %i.j = getelementptr inbounds nuw [128 x i8], ptr %.val.i, i64 %.sroa.0.111.i.i.i ; 2 uses
-  %i.k = add i64 %.sroa.0.111.i.i.i, 1            ; 2 uses
+  %i.k = add nuw nsw i64 %.sroa.0.111.i.i.i, 1    ; 2 uses
   %i.l = load i64, ptr %i.j, align 8, !range !26, !alias.scope !1379, !noalias !1376, !noundef !13
   %.not.i7.i.i.i = icmp eq i64 %i.l, -1
   br i1 %.not.i7.i.i.i, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCskXtk6F4WjxZ_4just8fragment8FragmentECs6SXwsBSuFuw_4just.exit9.i.i.i, label %bb.d
@@ -2694,7 +2694,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d, !noalias !1835
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.g = add i64 %.sroa.0.1.i.i.i2, 1             ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i.i2, 1     ; 2 uses
   %i.h = icmp eq i64 %i.g, %.val1.i
   br i1 %i.h, label %.body.i, label %.lr.ph3
 
@@ -3097,7 +3097,7 @@ bb.q:                                             ; preds = %.lr.ph
           to label %bb.q unwind label %bb.s, !noalias !2167
 
 bb.r:                                             ; preds = %.lr.ph194
-  %i.bd = add i64 %.sroa.0.1.i.i.i.i193, 1        ; 2 uses
+  %i.bd = add nuw nsw i64 %.sroa.0.1.i.i.i.i193, 1 ; 2 uses
   %i.be = icmp eq i64 %i.bd, %.val1.i.i178
   br i1 %i.be, label %.body.i.i, label %.lr.ph194
 
@@ -3500,7 +3500,7 @@ bb.c:                                             ; preds = %.lr.ph
           to label %bb.c unwind label %bb.e, !noalias !2389
 
 bb.d:                                             ; preds = %.lr.ph9
-  %i.k = add i64 %.sroa.0.1.i.i.i8, 1             ; 2 uses
+  %i.k = add nuw nsw i64 %.sroa.0.1.i.i.i8, 1     ; 2 uses
   %i.l = icmp eq i64 %i.k, %.val1.i3
   br i1 %i.l, label %.body.i, label %.lr.ph9
 

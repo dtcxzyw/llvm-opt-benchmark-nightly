@@ -205,7 +205,7 @@ _ZN6Gluco23vecINS_3LitEE5clearEb.exit.i:          ; preds = %bb.g
 
 bb.h:                                             ; preds = %_ZN6Gluco23vecINS_3LitEE5clearEb.exit.i
   %i.au = getelementptr inbounds nuw i8, ptr %6, i64 772 ; 2 uses
-  %i.av = load i32, ptr %i.au, align 4, !tbaa !26 ; 5 uses
+  %i.av = load i32, ptr %i.au, align 4, !tbaa !26 ; 4 uses
   %.not.i.i.i = icmp slt i32 %i.av, 0
   br i1 %.not.i.i.i, label %bb.i, label %.lr.ph.preheader.i.i
 
@@ -215,32 +215,27 @@ bb.i:                                             ; preds = %bb.h
   %i.ay = ashr i32 %i.av, 1
   %i.az = and i32 %i.ay, -2
   %i.ba = add nsw i32 %i.az, 2
-  %i.bb = call noundef i32 @llvm.smax.i32(i32 %i.ba, i32 %i.ax) ; 2 uses
-  %7 = sub nsw i32 2147483647, %i.av
-  %8 = icmp samesign ugt i32 %i.bb, %7
-  br i1 %8, label %bb.k, label %9
-
-9:                                                ; preds = %bb.i
-  %10 = add nuw nsw i32 %i.bb, %i.av              ; 2 uses
-  store i32 %10, ptr %i.au, align 4, !tbaa !26
-  %11 = zext nneg i32 %10 to i64
-  %12 = shl nuw nsw i64 %11, 2
-  %malloc = call ptr @malloc(i64 %12)             ; 2 uses
+  %i.bb = call noundef i32 @llvm.smax.i32(i32 %i.ba, i32 %i.ax)
+  %7 = add nuw nsw i32 %i.bb, %i.av               ; 2 uses
+  store i32 %7, ptr %i.au, align 4, !tbaa !26
+  %8 = zext nneg i32 %7 to i64
+  %9 = shl nuw nsw i64 %8, 2
+  %malloc = call ptr @malloc(i64 %9)              ; 2 uses
   store ptr %malloc, ptr %i.as, align 8, !tbaa !23
-  %13 = icmp eq ptr %malloc, null
-  br i1 %13, label %bb.j, label %.lr.ph.preheader.i.i
+  %10 = icmp eq ptr %malloc, null
+  br i1 %10, label %bb.j, label %.lr.ph.preheader.i.i
 
-bb.j:                                             ; preds = %9
+bb.j:                                             ; preds = %bb.i
   %i.bc = tail call ptr @__errno_location() #31
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !16
   %i.be = icmp eq i32 %i.bd, 12
   br i1 %i.be, label %bb.k, label %.lr.ph.preheader.i.i
 
-bb.k:                                             ; preds = %bb.j, %bb.i
+bb.k:                                             ; preds = %bb.j
   call fastcc void @_ZN6Gluco2L19fatal_out_of_memoryEv()
   unreachable
 
-.lr.ph.preheader.i.i:                             ; preds = %bb.h, %9, %bb.j
+.lr.ph.preheader.i.i:                             ; preds = %bb.h, %bb.i, %bb.j
   %i.bf = sext i32 %.pre.i to i64                 ; 3 uses
   %i.bg = sub nsw i64 0, %i.bf
   %xtraiter = and i64 %i.bg, 3                    ; 2 uses
@@ -643,7 +638,7 @@ bb.b:                                             ; preds = %bb.a, %bb.l
 .lr.ph.i:                                         ; preds = %bb.b, %.lr.ph.i
   %.04.i = phi i32 [ %i.u, %.lr.ph.i ], [ %i.r, %bb.b ]
   %i.t = tail call noundef i32 @_ZN6Gluco210SimpSolver6newVarEbb(ptr noundef nonnull align 8 dereferenceable(1684) %i.o, i1 noundef zeroext true, i1 noundef zeroext true) #29 ; 0 uses
-  %i.u = add i32 %.04.i, 1                        ; 2 uses
+  %i.u = add nsw i32 %.04.i, 1                    ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.u, %i.p
   br i1 %exitcond.not.i, label %bmcg2_sat_solver_set_nvars.exit, label %.lr.ph.i, !llvm.loop !2
 
@@ -1046,7 +1041,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 .lr.ph.i:                                         ; preds = %bb.c, %.lr.ph.i
   %.04.i = phi i32 [ %i.s, %.lr.ph.i ], [ %i.p, %bb.c ]
   %i.r = tail call noundef i32 @_ZN6Gluco210SimpSolver6newVarEbb(ptr noundef nonnull align 8 dereferenceable(1684) %i.m, i1 noundef zeroext true, i1 noundef zeroext true) #29 ; 0 uses
-  %i.s = add i32 %.04.i, 1                        ; 2 uses
+  %i.s = add nsw i32 %.04.i, 1                    ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.s, %.val54
   br i1 %exitcond.not.i, label %bmcg2_sat_solver_set_nvars.exit.loopexit, label %.lr.ph.i, !llvm.loop !2
 
@@ -1069,7 +1064,7 @@ bb.d:                                             ; preds = %bmcg2_sat_solver_se
 .lr.ph.i70:                                       ; preds = %bb.d, %.lr.ph.i70
   %.04.i71 = phi i32 [ %i.y, %.lr.ph.i70 ], [ %i.v, %bb.d ]
   %i.x = tail call noundef i32 @_ZN6Gluco210SimpSolver6newVarEbb(ptr noundef nonnull align 8 dereferenceable(1684) %i.t, i1 noundef zeroext true, i1 noundef zeroext true) #29 ; 0 uses
-  %i.y = add i32 %.04.i71, 1                      ; 2 uses
+  %i.y = add nsw i32 %.04.i71, 1                  ; 2 uses
   %exitcond.not.i72 = icmp eq i32 %i.y, %.val82.pre86
   br i1 %exitcond.not.i72, label %bmcg2_sat_solver_set_nvars.exit73.loopexit, label %.lr.ph.i70, !llvm.loop !2
 
@@ -1472,7 +1467,7 @@ _ZN6Gluco23vecINS_3LitEE5clearEb.exit.i:          ; preds = %bb.g
 
 bb.h:                                             ; preds = %_ZN6Gluco23vecINS_3LitEE5clearEb.exit.i
   %i.ay = getelementptr inbounds nuw i8, ptr %6, i64 772 ; 2 uses
-  %i.az = load i32, ptr %i.ay, align 4, !tbaa !26 ; 5 uses
+  %i.az = load i32, ptr %i.ay, align 4, !tbaa !26 ; 4 uses
   %.not.i.i.i = icmp slt i32 %i.az, 0
   br i1 %.not.i.i.i, label %bb.i, label %.lr.ph.preheader.i.i
 
@@ -1482,32 +1477,27 @@ bb.i:                                             ; preds = %bb.h
   %i.bc = ashr i32 %i.az, 1
   %i.bd = and i32 %i.bc, -2
   %i.be = add nsw i32 %i.bd, 2
-  %i.bf = call noundef i32 @llvm.smax.i32(i32 %i.be, i32 %i.bb) ; 2 uses
-  %7 = sub nsw i32 2147483647, %i.az
-  %8 = icmp samesign ugt i32 %i.bf, %7
-  br i1 %8, label %bb.k, label %9
-
-9:                                                ; preds = %bb.i
-  %10 = add nuw nsw i32 %i.bf, %i.az              ; 2 uses
-  store i32 %10, ptr %i.ay, align 4, !tbaa !26
-  %11 = zext nneg i32 %10 to i64
-  %12 = shl nuw nsw i64 %11, 2
-  %malloc = call ptr @malloc(i64 %12)             ; 2 uses
+  %i.bf = call noundef i32 @llvm.smax.i32(i32 %i.be, i32 %i.bb)
+  %7 = add nuw nsw i32 %i.bf, %i.az               ; 2 uses
+  store i32 %7, ptr %i.ay, align 4, !tbaa !26
+  %8 = zext nneg i32 %7 to i64
+  %9 = shl nuw nsw i64 %8, 2
+  %malloc = call ptr @malloc(i64 %9)              ; 2 uses
   store ptr %malloc, ptr %i.aw, align 8, !tbaa !23
-  %13 = icmp eq ptr %malloc, null
-  br i1 %13, label %bb.j, label %.lr.ph.preheader.i.i
+  %10 = icmp eq ptr %malloc, null
+  br i1 %10, label %bb.j, label %.lr.ph.preheader.i.i
 
-bb.j:                                             ; preds = %9
+bb.j:                                             ; preds = %bb.i
   %i.bg = tail call ptr @__errno_location() #31
   %i.bh = load i32, ptr %i.bg, align 4, !tbaa !16
   %i.bi = icmp eq i32 %i.bh, 12
   br i1 %i.bi, label %bb.k, label %.lr.ph.preheader.i.i
 
-bb.k:                                             ; preds = %bb.j, %bb.i
+bb.k:                                             ; preds = %bb.j
   call fastcc void @_ZN6Gluco2L19fatal_out_of_memoryEv()
   unreachable
 
-.lr.ph.preheader.i.i:                             ; preds = %bb.h, %9, %bb.j
+.lr.ph.preheader.i.i:                             ; preds = %bb.h, %bb.i, %bb.j
   %i.bj = sext i32 %.pre.i to i64                 ; 3 uses
   %i.bk = sub nsw i64 0, %i.bj
   %xtraiter = and i64 %i.bk, 3                    ; 2 uses

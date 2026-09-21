@@ -204,7 +204,7 @@ bb.a:
   %i.f = tail call ptr @get_system_memory() #7    ; 21 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 304 ; 2 uses
   %i.h = load i32, ptr %i.g, align 8              ; 3 uses
-  %i.i = tail call i32 @llvm.umin.i32(i32 %i.h, i32 4) ; 9 uses
+  %i.i = tail call i32 @llvm.umin.i32(i32 %i.h, i32 4) ; 8 uses
   %i.j = add i32 %i.h, -4                         ; 2 uses
   %i.k = tail call i32 @llvm.smax.i32(i32 %i.j, i32 0)
   %i.l = tail call i32 @llvm.umin.i32(i32 %i.k, i32 2) ; 5 uses
@@ -359,19 +359,17 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 .lr.ph512:                                        ; preds = %bb.l
   %i.bt = getelementptr inbounds nuw i8, ptr %i.e, i64 480
   %i.bu = getelementptr inbounds nuw i8, ptr %i.e, i64 7447000
-  %i.bv = zext nneg i32 %i.i to i64
-  %2 = trunc nuw nsw i32 %i.i to i8
+  %i.bv = zext nneg i32 %i.i to i64               ; 2 uses
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.q
-  %3 = add nuw nsw i8 %.3510, 1                   ; 2 uses
-  %4 = icmp samesign ult i8 %3, %2
-  br i1 %4, label %bb.n, label %._crit_edge513, !llvm.loop !9
+  %indvars.iv.next555 = add nuw nsw i64 %indvars.iv554, 1 ; 2 uses
+  %exitcond558.not = icmp eq i64 %indvars.iv.next555, %i.bv
+  br i1 %exitcond558.not, label %._crit_edge513, label %bb.n, !llvm.loop !9
 
 bb.n:                                             ; preds = %.lr.ph512, %bb.m
-  %.3510 = phi i8 [ 0, %.lr.ph512 ], [ %3, %bb.m ] ; 2 uses
-  %5 = zext nneg i8 %.3510 to i64
-  %i.bw = getelementptr inbounds nuw [96928 x i8], ptr %i.bt, i64 %5 ; 8 uses
+  %indvars.iv554 = phi i64 [ 0, %.lr.ph512 ], [ %indvars.iv.next555, %bb.m ] ; 2 uses
+  %i.bw = getelementptr inbounds nuw [96928 x i8], ptr %i.bt, i64 %indvars.iv554 ; 8 uses
   %i.bx = tail call ptr @object_get_canonical_path_component(ptr noundef nonnull %i.bw) #7
   %i.by = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.bx, ptr noundef nonnull dereferenceable(1) %spec.select) #9
   %.not483 = icmp eq i32 %i.by, 0

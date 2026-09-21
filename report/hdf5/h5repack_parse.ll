@@ -203,7 +203,7 @@ bb.q:                                             ; preds = %bb.m
 
 bb.r:                                             ; preds = %bb.o
   store i32 2, ptr %i.bd, align 4, !tbaa !42
-  %i.df = add i32 %.0119.lcssa184, 7              ; 2 uses
+  %i.df = add i32 %.0119.lcssa184, 7
   %i.dg = zext i32 %i.df to i64                   ; 3 uses
   %i.dh = icmp ult i64 %i.d, %i.dg
   br i1 %i.dh, label %bb.s, label %.preheader
@@ -226,16 +226,15 @@ bb.s:                                             ; preds = %bb.r
   unreachable
 
 bb.t:                                             ; preds = %.lr.ph160, %bb.ag
-  %i.dn = phi i64 [ %i.dg, %.lr.ph160 ], [ %5, %bb.ag ] ; 2 uses
-  %.0159 = phi i32 [ 0, %.lr.ph160 ], [ %.1, %bb.ag ] ; 8 uses
-  %.2158.a = phi i32 [ 0, %.lr.ph160 ], [ %.3, %bb.ag ] ; 2 uses
-  %.1130157 = phi i32 [ %i.df, %.lr.ph160 ], [ %4, %bb.ag ]
+  %i.dn = phi i64 [ %i.dg, %.lr.ph160 ], [ %indvars.iv.next172, %bb.ag ] ; 3 uses
+  %.2158.a = phi i32 [ 0, %.lr.ph160 ], [ %.1, %bb.ag ] ; 8 uses
+  %.1130157 = phi i32 [ 0, %.lr.ph160 ], [ %.3, %bb.ag ] ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %0, i64 %i.dn
   %i.dp = load i8, ptr %i.do, align 1, !tbaa !10  ; 4 uses
-  %i.dq = sext i32 %.2158.a to i64
+  %i.dq = sext i32 %.1130157 to i64
   %i.dr = getelementptr inbounds i8, ptr %i.b, i64 %i.dq ; 2 uses
   store i8 %i.dp, ptr %i.dr, align 1, !tbaa !10
-  %i.ds = add nsw i32 %.2158.a, 1                 ; 3 uses
+  %i.ds = add nsw i32 %.1130157, 1                ; 3 uses
   %i.dt = load ptr, ptr %i.dj, align 8, !tbaa !20
   %i.du = sext i8 %i.dp to i64
   %i.dv = getelementptr inbounds [2 x i8], ptr %i.dt, i64 %i.du
@@ -271,7 +270,7 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.w
   store i8 0, ptr %i.dr, align 1, !tbaa !10
   %i.eb = call i64 @__isoc23_strtoull(ptr noundef nonnull %i.b, ptr noundef null, i32 noundef 0) #14 ; 2 uses
-  %i.ec = sext i32 %.0159 to i64
+  %i.ec = sext i32 %.2158.a to i64
   %i.ed = getelementptr inbounds [8 x i8], ptr %i.dl, i64 %i.ec
   store i64 %i.eb, ptr %i.ed, align 8, !tbaa !43
   %i.ee = icmp eq i64 %i.eb, 0
@@ -284,7 +283,7 @@ bb.y:                                             ; preds = %bb.x
   unreachable
 
 bb.z:                                             ; preds = %bb.x
-  %i.ef = add nsw i32 %.0159, 1
+  %i.ef = add nsw i32 %.2158.a, 1
   br label %bb.ag
 
 bb.aa:                                            ; preds = %bb.w
@@ -311,7 +310,7 @@ bb.ac:                                            ; preds = %bb.ab
 
 bb.ad:                                            ; preds = %bb.ab
   %i.er = call i64 @__isoc23_strtoull(ptr noundef nonnull %i.b, ptr noundef null, i32 noundef 0) #14 ; 2 uses
-  %i.es = sext i32 %.0159 to i64
+  %i.es = sext i32 %.2158.a to i64
   %i.et = getelementptr inbounds [8 x i8], ptr %i.dl, i64 %i.es
   store i64 %i.er, ptr %i.et, align 8, !tbaa !43
   %i.eu = icmp eq i64 %i.er, 0
@@ -324,16 +323,15 @@ bb.ae:                                            ; preds = %bb.ad
   unreachable
 
 bb.af:                                            ; preds = %bb.ad
-  %i.ev = add nsw i32 %.0159, 1
+  %i.ev = add nsw i32 %.2158.a, 1
   store i32 %i.ev, ptr %i.dm, align 8, !tbaa !44
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.v, %bb.aa, %bb.af, %bb.ac, %bb.z
   %.3 = phi i32 [ 0, %bb.z ], [ 0, %bb.ac ], [ 0, %bb.af ], [ %i.ds, %bb.aa ], [ %i.ds, %bb.v ]
-  %.1 = phi i32 [ %i.ef, %bb.z ], [ %.0159, %bb.ac ], [ %.0159, %bb.af ], [ %.0159, %bb.aa ], [ %.0159, %bb.v ]
-  %4 = add i32 %.1130157, 1                       ; 2 uses
-  %5 = zext i32 %4 to i64                         ; 2 uses
-  %i.ew = icmp ugt i64 %i.d, %5
+  %.1 = phi i32 [ %i.ef, %bb.z ], [ %.2158.a, %bb.ac ], [ %.2158.a, %bb.af ], [ %.2158.a, %bb.aa ], [ %.2158.a, %bb.v ]
+  %indvars.iv.next172 = add nuw i64 %i.dn, 1      ; 2 uses
+  %i.ew = icmp ugt i64 %i.d, %indvars.iv.next172
   br i1 %i.ew, label %bb.t, label %.loopexit, !llvm.loop !37
 
 .loopexit:                                        ; preds = %bb.ag, %bb.p, %bb.q, %.preheader, %bb.c

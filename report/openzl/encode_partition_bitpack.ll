@@ -205,11 +205,11 @@ bb.ao:                                            ; preds = %bb.an
   br label %.lr.ph132.i.i.i
 
 .lr.ph123.i.i.i:                                  ; preds = %._crit_edge124.i.i.i, %.lr.ph123.i.preheader.i.i
-  %indvars.iv142.i.i.i = phi i64 [ %indvars.iv.next143.i.i.i, %._crit_edge124.i.i.i ], [ 1, %.lr.ph123.i.preheader.i.i ] ; 8 uses
+  %indvars.iv142.i.i.i = phi i64 [ %indvars.iv.next143.i.i.i, %._crit_edge124.i.i.i ], [ 1, %.lr.ph123.i.preheader.i.i ] ; 9 uses
   %umin36.i.i = tail call i64 @llvm.umin.i64(i64 %indvars.iv142.i.i.i, i64 %.pre-phi.i)
   %umin37.i.i = tail call i64 @llvm.umin.i64(i64 %umin36.i.i, i64 %i.abd)
   %umax38.i.i = tail call i64 @llvm.umax.i64(i64 %umin37.i.i, i64 1) ; 2 uses
-  %i.abg = trunc nuw i64 %indvars.iv142.i.i.i to i32 ; 4 uses
+  %i.abg = trunc nuw i64 %indvars.iv142.i.i.i to i32 ; 3 uses
   %i.abh = icmp eq i64 %indvars.iv142.i.i.i, %.pre-phi.i
   %.fr.i.i.i = freeze i1 %i.abh
   %i.abi = getelementptr inbounds nuw [8 x i8], ptr %.sroa.7.0.i, i64 %indvars.iv142.i.i.i ; 2 uses
@@ -217,13 +217,13 @@ bb.ao:                                            ; preds = %bb.an
   br i1 %.fr.i.i.i, label %.lr.ph.us.i.i.i, label %.lr.ph.i.i.i
 
 .lr.ph.us.i.i.i:                                  ; preds = %.lr.ph123.i.i.i, %._crit_edge119.split.us.us.i.i.i
-  %indvars.iv139.i.i.i = phi i64 [ %indvars.iv.next140.i.i.i, %._crit_edge119.split.us.us.i.i.i ], [ 1, %.lr.ph123.i.i.i ] ; 4 uses
-  %7 = add nsw i64 %indvars.iv139.i.i.i, -1       ; 2 uses
-  %8 = sub nuw nsw i64 %indvars.iv142.i.i.i, %7
-  %i.abk = trunc nuw i64 %7 to i32
-  %9 = mul i32 %i.if, %i.abk
-  %10 = trunc nuw i64 %indvars.iv139.i.i.i to i32
-  %i.abl = mul i32 %i.if, %10
+  %indvars.iv139.i.i.i = phi i64 [ %indvars.iv.next140.i.i.i, %._crit_edge119.split.us.us.i.i.i ], [ %indvars.iv142.i.i.i, %.lr.ph123.i.i.i ] ; 2 uses
+  %indvars.iv143.i.i.i = phi i64 [ %indvars.iv.next144.i.i.i, %._crit_edge119.split.us.us.i.i.i ], [ 1, %.lr.ph123.i.i.i ] ; 3 uses
+  %umax36.i.i = tail call i64 @llvm.umax.i64(i64 %indvars.iv139.i.i.i, i64 1)
+  %i.abk = trunc i64 %indvars.iv143.i.i.i to i32  ; 2 uses
+  %7 = add i32 %i.abk, -1
+  %8 = mul i32 %7, %i.if
+  %i.abl = mul i32 %i.if, %i.abk
   %i.abm = add i32 %i.abl, %i.abg
   %i.abn = zext i32 %i.abm to i64                 ; 2 uses
   %i.abo = getelementptr inbounds nuw [8 x i8], ptr %i.aaz, i64 %i.abn ; 2 uses
@@ -231,30 +231,28 @@ bb.ao:                                            ; preds = %bb.an
   br label %bb.ap
 
 bb.ap:                                            ; preds = %PB_dpBucketCost.exit.thread.us.us.i.i.i, %.lr.ph.us.i.i.i
-  %.096118.us.us.i.i.i = phi i32 [ 1, %.lr.ph.us.i.i.i ], [ %15, %PB_dpBucketCost.exit.thread.us.us.i.i.i ] ; 3 uses
-  %11 = sub nuw i32 %i.abg, %.096118.us.us.i.i.i  ; 3 uses
+  %indvars.iv140.i.i.i = phi i64 [ %indvars.iv.next141.i.i.i, %PB_dpBucketCost.exit.thread.us.us.i.i.i ], [ 1, %.lr.ph.us.i.i.i ] ; 3 uses
+  %9 = sub nuw nsw i64 %indvars.iv142.i.i.i, %indvars.iv140.i.i.i ; 3 uses
   %i.abq = load i64, ptr %i.abi, align 8, !tbaa !59, !noalias !57
-  %12 = zext i32 %11 to i64                       ; 2 uses
-  %i.abr = getelementptr inbounds nuw [8 x i8], ptr %.sroa.7.0.i, i64 %12
+  %i.abr = getelementptr inbounds nuw [8 x i8], ptr %.sroa.7.0.i, i64 %9
   %i.abs = load i64, ptr %i.abr, align 8, !tbaa !59, !noalias !57
   %i.abt = sub i64 %i.abq, %i.abs                 ; 3 uses
   %i.abu = icmp ugt i64 %i.abt, %.sroa.1867.0.i
   br i1 %i.abu, label %._crit_edge119.split.us.us.i.i.i, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
-  %i.abv = add i32 %11, %9
+  %10 = trunc nuw i64 %9 to i32                   ; 2 uses
+  %i.abv = add i32 %8, %10
   %i.abw = zext i32 %i.abv to i64
   %i.abx = getelementptr inbounds nuw [8 x i8], ptr %i.aaz, i64 %i.abw
   %i.aby = load i64, ptr %i.abx, align 8, !tbaa !59, !noalias !57 ; 2 uses
-  %13 = icmp ne i64 %i.aby, -1
-  %14 = icmp ne i32 %.096118.us.us.i.i.i, 0
-  %or.cond135.i.i.i = and i1 %14, %13
-  br i1 %or.cond135.i.i.i, label %PB_dpBucketCost.exit.us.us.i.i.i, label %PB_dpBucketCost.exit.thread.us.us.i.i.i
+  %.not137.i.i.i = icmp eq i64 %i.aby, -1
+  br i1 %.not137.i.i.i, label %PB_dpBucketCost.exit.thread.us.us.i.i.i, label %PB_dpBucketCost.exit.us.us.i.i.i
 
 PB_dpBucketCost.exit.us.us.i.i.i:                 ; preds = %bb.aq
   %i.abz = load i64, ptr %i.abo, align 8, !tbaa !59, !noalias !57
   %i.aca = load i32, ptr %i.abj, align 4, !tbaa !65, !noalias !57
-  %i.acb = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0.i, i64 %12
+  %i.acb = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0.i, i64 %9
   %i.acc = load i32, ptr %i.acb, align 4, !tbaa !65, !noalias !57
   %i.acd = sub i32 %i.aca, %i.acc
   %i.ace = zext i32 %i.acd to i64
@@ -273,18 +271,18 @@ PB_dpBucketCost.exit.us.us.i.i.i:                 ; preds = %bb.aq
 
 bb.ar:                                            ; preds = %PB_dpBucketCost.exit.us.us.i.i.i
   store i64 %i.acn, ptr %i.abo, align 8, !tbaa !59, !noalias !57
-  store i32 %11, ptr %i.abp, align 4, !tbaa !65, !noalias !57
+  store i32 %10, ptr %i.abp, align 4, !tbaa !65, !noalias !57
   br label %PB_dpBucketCost.exit.thread.us.us.i.i.i
 
 PB_dpBucketCost.exit.thread.us.us.i.i.i:          ; preds = %bb.ar, %PB_dpBucketCost.exit.us.us.i.i.i, %bb.aq
-  %15 = add i32 %.096118.us.us.i.i.i, 1           ; 2 uses
-  %16 = zext i32 %15 to i64
-  %.not114.us.us.i.i.i = icmp samesign ult i64 %8, %16
-  br i1 %.not114.us.us.i.i.i, label %._crit_edge119.split.us.us.i.i.i, label %bb.ap, !llvm.loop !33
+  %indvars.iv.next141.i.i.i = add nuw i64 %indvars.iv140.i.i.i, 1
+  %exitcond37.not.i.i = icmp eq i64 %indvars.iv140.i.i.i, %umax36.i.i
+  br i1 %exitcond37.not.i.i, label %._crit_edge119.split.us.us.i.i.i, label %bb.ap, !llvm.loop !33
 
 ._crit_edge119.split.us.us.i.i.i:                 ; preds = %PB_dpBucketCost.exit.thread.us.us.i.i.i, %bb.ap
-  %indvars.iv.next140.i.i.i = add nuw nsw i64 %indvars.iv139.i.i.i, 1
-  %exitcond39.not.i.i = icmp eq i64 %indvars.iv139.i.i.i, %umax38.i.i
+  %indvars.iv.next144.i.i.i = add nuw nsw i64 %indvars.iv143.i.i.i, 1
+  %indvars.iv.next140.i.i.i = add nsw i64 %indvars.iv139.i.i.i, -1
+  %exitcond39.not.i.i = icmp eq i64 %indvars.iv143.i.i.i, %umax38.i.i
   br i1 %exitcond39.not.i.i, label %._crit_edge124.i.i.i, label %.lr.ph.us.i.i.i, !llvm.loop !34
 
 ._crit_edge124.i.i.i:                             ; preds = %._crit_edge.split.i.i.i, %._crit_edge119.split.us.us.i.i.i

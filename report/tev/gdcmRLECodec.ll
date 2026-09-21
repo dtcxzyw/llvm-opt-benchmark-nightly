@@ -204,8 +204,7 @@ bb.ao:                                            ; preds = %bb.ap
   br i1 %or.cond, label %bb.at, label %bb.aq
 
 bb.ap:                                            ; preds = %bb.an, %bb.ap
-  %i.dx = phi i64 [ 0, %bb.an ], [ %7, %bb.ap ]
-  %.082 = phi i32 [ 0, %bb.an ], [ %6, %bb.ap ]
+  %i.dx = phi i64 [ 0, %bb.an ], [ %indvars.iv.next, %bb.ap ] ; 2 uses
   %.04681 = phi i1 [ false, %bb.an ], [ %spec.select, %bb.ap ]
   %.04780 = phi i64 [ 0, %bb.an ], [ %i.eb, %bb.ap ] ; 2 uses
   %i.dy = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK4gdcm19SequenceOfFragments11GetFragmentEm(ptr noundef nonnull align 8 dereferenceable(72) %i.dn, i64 noundef %i.dx)
@@ -214,9 +213,8 @@ bb.ap:                                            ; preds = %bb.an, %bb.ap
   %.not68 = icmp ne i64 %i.ea, %i.dv
   %spec.select = select i1 %.not68, i1 true, i1 %.04681 ; 3 uses
   %i.eb = add i64 %.04780, %i.dv                  ; 2 uses
-  %6 = add i32 %.082, 1                           ; 2 uses
-  %7 = zext i32 %6 to i64                         ; 2 uses
-  %i.ec = icmp samesign ugt i64 %i.dq, %7
+  %indvars.iv.next = add nuw nsw i64 %i.dx, 1     ; 2 uses
+  %i.ec = icmp samesign ugt i64 %i.dq, %indvars.iv.next
   br i1 %i.ec, label %bb.ap, label %bb.ao, !llvm.loop !264
 
 bb.aq:                                            ; preds = %bb.ao
@@ -619,8 +617,8 @@ _ZNSt3__16vectorIcNS_9allocatorIcEEE6resizeEm.exit: ; preds = %._ZNSt3__16vector
   br i1 %.not114182, label %._crit_edge187, label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge
-  %.0186 = phi i32 [ %i.eg, %._crit_edge ], [ %6, %.preheader.lr.ph ] ; 2 uses
-  %i.dm = sub i32 %.0186, %6                      ; 2 uses
+  %.0186 = phi i32 [ %i.eg, %._crit_edge ], [ %6, %.preheader.lr.ph ] ; 3 uses
+  %i.dm = sub nuw i32 %.0186, %6                  ; 2 uses
   %i.dn = mul i32 %i.dm, %i.dc
   %invariant.op = sub i32 %i.dn, %4
   br label %bb.bk
@@ -672,9 +670,9 @@ bb.bq:                                            ; preds = %bb.bm, %bb.bl, %bb.
   br label %bb.bs
 
 ._crit_edge:                                      ; preds = %bb.bn
-  %i.eg = add i32 %.0186, 1                       ; 2 uses
-  %.not113 = icmp ugt i32 %i.eg, %7
-  br i1 %.not113, label %._crit_edge187.loopexit189, label %.preheader, !llvm.loop !274
+  %i.eg = add i32 %.0186, 1
+  %exitcond190.not = icmp eq i32 %.0186, %7
+  br i1 %exitcond190.not, label %._crit_edge187.loopexit189, label %.preheader, !llvm.loop !274
 
 ._crit_edge187.loopexit189:                       ; preds = %._crit_edge
   %.pre191 = load ptr, ptr %14, align 8, !tbaa !40

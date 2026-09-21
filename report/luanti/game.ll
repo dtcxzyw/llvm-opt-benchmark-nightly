@@ -204,12 +204,12 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !532  ; 2 uses
   %i.e = tail call noundef zeroext i16 @_ZN6Player13getWieldIndexEv(ptr noundef nonnull align 8 dereferenceable(416) %i.d)
   store i16 %i.e, ptr %1, align 2, !tbaa !629
-  %i.f = tail call noundef zeroext i16 @_ZN6Player21getMaxHotbarItemcountEv(ptr noundef nonnull align 8 dereferenceable(416) %i.d) ; 2 uses
+  %i.f = tail call noundef zeroext i16 @_ZN6Player21getMaxHotbarItemcountEv(ptr noundef nonnull align 8 dereferenceable(416) %i.d) ; 3 uses
   %i.g = icmp eq i16 %i.f, 0
   br i1 %i.g, label %bb.l, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.h = add i16 %i.f, -1                         ; 4 uses
+  %i.h = add i16 %i.f, -1                         ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !305  ; 2 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !47
@@ -267,9 +267,8 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %.preheader, %bb.h
-  %.041 = phi i16 [ %3, %bb.h ], [ 0, %.preheader ] ; 3 uses
-  %2 = zext i16 %.041 to i32
-  %i.am = add nuw nsw i32 %2, 49
+  %indvars.iv = phi i32 [ %indvars.iv.next, %bb.h ], [ 0, %.preheader ] ; 3 uses
+  %i.am = add nuw nsw i32 %indvars.iv, 49
   %i.an = load ptr, ptr %i.i, align 8, !tbaa !305 ; 2 uses
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !47
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 32
@@ -278,13 +277,15 @@ bb.f:                                             ; preds = %.preheader, %bb.h
   br i1 %i.ar, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  store i16 %.041, ptr %1, align 2, !tbaa !629
+  %2 = trunc nuw i32 %indvars.iv to i16
+  store i16 %2, ptr %1, align 2, !tbaa !629
   br label %.loopexit
 
 bb.h:                                             ; preds = %bb.f
-  %3 = add i16 %.041, 1                           ; 2 uses
-  %.not36 = icmp ugt i16 %3, %i.h
-  br i1 %.not36, label %.loopexit, label %bb.f, !llvm.loop !1378
+  %indvars.iv.next = add nuw nsw i32 %indvars.iv, 1 ; 2 uses
+  %lftr.wideiv = trunc i32 %indvars.iv.next to i16
+  %exitcond.not = icmp eq i16 %i.f, %lftr.wideiv
+  br i1 %exitcond.not, label %.loopexit, label %bb.f, !llvm.loop !1378
 
 .loopexit:                                        ; preds = %bb.h, %bb.g
   %i.as = load ptr, ptr @g_touchcontrols, align 8, !tbaa !663 ; 2 uses

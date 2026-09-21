@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.n, %.lr.ph.i
 
 same_symbol.exit:                                 ; preds = %bb.n, %.preheader.i, %bb.j
   store i32 0, ptr %i.aj, align 8
-  %i.bl = add i32 %i.an, 1
+  %i.bl = add nsw i32 %i.an, 1
   %i.bm = tail call ptr @Configlist_addbasis(ptr noundef %i.ao, i32 noundef %i.bl)
   %i.bn = getelementptr i8, ptr %i.bm, i64 32     ; 2 uses
   %i.bo = load ptr, ptr @plink_freelist, align 8  ; 2 uses
@@ -608,7 +608,7 @@ bb.ag:                                            ; preds = %bb.af
   br i1 %i.ek, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.el = add i32 %i.dz, 1
+  %i.el = add nuw i32 %i.dz, 1
   %i.em = sub i32 %i.el, %i.ds
   %i.en = call ptr @append_str(ptr noundef nonnull @.str.145, i32 noundef -1, i32 noundef %i.em, i32 noundef 0) ; 0 uses
   br label %bb.al
@@ -632,7 +632,7 @@ bb.ak:                                            ; preds = %bb.ai, %bb.aj
   %.pn = phi ptr [ %i.ew, %bb.aj ], [ %i.eq, %bb.ai ]
   %.0163.in = getelementptr i8, ptr %.pn, i64 80
   %.0163 = load i32, ptr %.0163.in, align 8
-  %i.ex = add i32 %i.dz, 1
+  %i.ex = add nuw i32 %i.dz, 1
   %i.ey = sub i32 %i.ex, %i.ds
   %i.ez = call ptr @append_str(ptr noundef nonnull @.str.142, i32 noundef 0, i32 noundef %i.ey, i32 noundef %.0163) ; 0 uses
   br label %bb.al
@@ -756,7 +756,7 @@ bb.au:                                            ; preds = %bb.at, %append_str.
 bb.av:                                            ; preds = %.lr.ph290, %bb.bj
   %indvars.iv305 = phi i64 [ 0, %.lr.ph290 ], [ %indvars.iv.next306, %bb.bj ] ; 11 uses
   %i.gj = phi i32 [ %i.ga, %.lr.ph290 ], [ %i.ij, %bb.bj ]
-  %i.gk = load ptr, ptr %i.gc, align 8
+  %i.gk = load ptr, ptr %i.gc, align 8            ; 3 uses
   %i.gl = getelementptr [8 x i8], ptr %i.gk, i64 %indvars.iv305
   %i.gm = load ptr, ptr %i.gl, align 8            ; 3 uses
   %.not201 = icmp eq ptr %i.gm, null
@@ -787,10 +787,11 @@ bb.az:                                            ; preds = %bb.ay
   %i.gw = load i32, ptr %i.gg, align 8
   %i.gx = add i32 %i.gw, 1
   store i32 %i.gx, ptr %i.gg, align 8
+  %.pre311 = load ptr, ptr %i.gc, align 8
   br label %.lr.ph285
 
-.lr.ph285:                                        ; preds = %bb.ax, %bb.ay, %bb.az
-  %2 = load ptr, ptr %i.gc, align 8               ; 2 uses
+.lr.ph285:                                        ; preds = %bb.az, %bb.ay, %bb.ax
+  %2 = phi ptr [ %.pre311, %bb.az ], [ %i.gk, %bb.ay ], [ %i.gk, %bb.ax ] ; 2 uses
   %i.gy = getelementptr [8 x i8], ptr %2, i64 %indvars.iv305
   br label %bb.ba
 

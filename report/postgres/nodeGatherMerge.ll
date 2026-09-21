@@ -202,13 +202,18 @@ bb.r:                                             ; preds = %bb.r, %.lr.ph.i.i
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 202
   %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 264
   %.not4655.i.i = icmp slt i32 %i.br, 1
-  br i1 %.not51.i.i, label %gather_merge_init.exit.i, label %.lr.ph54.i.i
+  br i1 %.not51.i.i, label %gather_merge_init.exit.i, label %.lr.ph54.preheader.i.i
+
+.lr.ph54.preheader.i.i:                           ; preds = %._crit_edge.i.i
+  %1 = add nuw nsw i32 %i.br, 1
+  %wide.trip.count64.i.i = zext nneg i32 %1 to i64
+  br label %.lr.ph54.i.i
 
 .lr.ph54.i.i.loopexit:                            ; preds = %bb.ak, %bb.aj
   br label %.lr.ph54.i.i
 
-.lr.ph54.i.i:                                     ; preds = %._crit_edge.i.i, %.lr.ph54.i.i.loopexit
-  %.042.i.i = phi i1 [ false, %.lr.ph54.i.i.loopexit ], [ true, %._crit_edge.i.i ]
+.lr.ph54.i.i:                                     ; preds = %.lr.ph54.i.i.loopexit, %.lr.ph54.preheader.i.i
+  %.042.i.i = phi i1 [ true, %.lr.ph54.preheader.i.i ], [ false, %.lr.ph54.i.i.loopexit ]
   br label %bb.s
 
 ..preheader_crit_edge.i.i:                        ; preds = %load_tuple_array.exit.i.i
@@ -341,19 +346,16 @@ load_tuple_array.exit.i.i:                        ; preds = %bb.ah, %gm_readnext
   br i1 %.not.i.i, label %..preheader_crit_edge.i.i, label %bb.s, !llvm.loop !15
 
 bb.ai:                                            ; preds = %bb.al, %.lr.ph57.i.i
-  %.256.i.i = phi i32 [ 1, %.lr.ph57.i.i ], [ %4, %bb.al ] ; 3 uses
-  %1 = add i32 %.256.i.i, -1
-  %2 = sext i32 %1 to i64
-  %i.el = getelementptr inbounds [24 x i8], ptr %i.cr, i64 %2
-  %i.em = getelementptr inbounds nuw i8, ptr %i.el, i64 16
+  %indvars.iv61.i.i = phi i64 [ 1, %.lr.ph57.i.i ], [ %indvars.iv.next62.i.i, %bb.al ] ; 3 uses
+  %i.el = getelementptr [24 x i8], ptr %i.cr, i64 %indvars.iv61.i.i
+  %i.em = getelementptr i8, ptr %i.el, i64 -8
   %i.en = load i8, ptr %i.em, align 8, !range !7, !noundef !8
   %i.eo = trunc nuw i8 %i.en to i1
   br i1 %i.eo, label %bb.al, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
   %i.ep = load ptr, ptr %i.bs, align 8
-  %3 = sext i32 %.256.i.i to i64
-  %i.eq = getelementptr inbounds [8 x i8], ptr %i.ep, i64 %3
+  %i.eq = getelementptr inbounds nuw [8 x i8], ptr %i.ep, i64 %indvars.iv61.i.i
   %i.er = load ptr, ptr %i.eq, align 8            ; 2 uses
   %i.es = icmp eq ptr %i.er, null
   br i1 %i.es, label %.lr.ph54.i.i.loopexit, label %bb.ak
@@ -366,9 +368,9 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %.not47.i.i, label %bb.al, label %.lr.ph54.i.i.loopexit
 
 bb.al:                                            ; preds = %bb.ak, %bb.ai
-  %4 = add i32 %.256.i.i, 1                       ; 2 uses
-  %.not46.i.i = icmp sgt i32 %4, %i.br
-  br i1 %.not46.i.i, label %gather_merge_init.exit.i, label %bb.ai, !llvm.loop !16
+  %indvars.iv.next62.i.i = add nuw nsw i64 %indvars.iv61.i.i, 1 ; 2 uses
+  %exitcond65.not.i.i = icmp eq i64 %indvars.iv.next62.i.i, %wide.trip.count64.i.i
+  br i1 %exitcond65.not.i.i, label %gather_merge_init.exit.i, label %bb.ai, !llvm.loop !16
 
 gather_merge_init.exit.i:                         ; preds = %..preheader_crit_edge.i.i, %bb.al, %._crit_edge.i.i
   %i.ew = load ptr, ptr %i.cm, align 8

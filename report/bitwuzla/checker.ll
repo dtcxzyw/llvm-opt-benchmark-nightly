@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %.lr.ph48.us, %bb.c
   %i.be = icmp ne i8 %i.bd, 0                     ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.bf = icmp ne i64 %indvars.iv.next, %i.am
-  %1 = and i1 %i.be, %i.bf
+  %1 = select i1 %i.be, i1 %i.bf, i1 false
   br i1 %1, label %bb.c, label %._crit_edge49.us, !llvm.loop !252
 
 bb.d:                                             ; preds = %._crit_edge49.us, %bb.b, %.lr.ph53.split.us

@@ -205,8 +205,8 @@ _ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes10BasicBlockENS2_17RegisterAllocato
   %i.wo = lshr i32 %i.wn, 6                       ; 7 uses
   %i.wp = load i32, ptr %i.ix, align 8, !tbaa !46 ; 4 uses
   %i.wq = add i32 %i.wp, 63
-  %i.wr = lshr i32 %i.wq, 6                       ; 2 uses
-  %.sroa.speculated.i68 = tail call i32 @llvm.umin.i32(i32 %i.wr, i32 %i.wo) ; 3 uses
+  %i.wr = lshr i32 %i.wq, 6                       ; 3 uses
+  %.sroa.speculated.i68 = tail call i32 @llvm.umin.i32(i32 %i.wr, i32 %i.wo) ; 2 uses
   %.not20.i = icmp eq i32 %.sroa.speculated.i68, 0
   br i1 %.not20.i, label %.preheader.i, label %.lr.ph.i69
 
@@ -222,6 +222,8 @@ _ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes10BasicBlockENS2_17RegisterAllocato
 
 .lr.ph24.i:                                       ; preds = %.preheader.i
   %i.wv = load ptr, ptr %i.wk, align 8, !tbaa !43
+  %umin.i = zext nneg i32 %i.wr to i64
+  %3 = zext nneg i32 %i.wo to i64
   br label %bb.ax
 
 bb.au:                                            ; preds = %bb.av, %.lr.ph.i69
@@ -241,14 +243,13 @@ bb.av:                                            ; preds = %bb.au
   br i1 %.not.i73, label %.preheader.i, label %bb.au, !llvm.loop !325
 
 bb.aw:                                            ; preds = %bb.ax
-  %3 = add i32 %.123.i, 1                         ; 2 uses
-  %.not11.i = icmp eq i32 %3, %i.wo
+  %indvars.iv.next31.i = add nuw nsw i64 %indvars.iv30.i, 1 ; 2 uses
+  %.not11.i = icmp eq i64 %indvars.iv.next31.i, %3
   br i1 %.not11.i, label %_ZNK4llvh9BitVector4testERKS0_.exit, label %bb.ax, !llvm.loop !326
 
 bb.ax:                                            ; preds = %bb.aw, %.lr.ph24.i
-  %.123.i = phi i32 [ %.sroa.speculated.i68, %.lr.ph24.i ], [ %3, %bb.aw ] ; 2 uses
-  %4 = zext i32 %.123.i to i64
-  %i.xc = getelementptr inbounds nuw [8 x i8], ptr %i.wv, i64 %4
+  %indvars.iv30.i = phi i64 [ %umin.i, %.lr.ph24.i ], [ %indvars.iv.next31.i, %bb.aw ] ; 2 uses
+  %i.xc = getelementptr inbounds nuw [8 x i8], ptr %i.wv, i64 %indvars.iv30.i
   %i.xd = load i64, ptr %i.xc, align 8, !tbaa !39
   %.not12.not.i = icmp eq i64 %i.xd, 0
   br i1 %.not12.not.i, label %bb.aw, label %_ZNK4llvh9BitVector4testERKS0_.exit

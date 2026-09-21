@@ -202,7 +202,7 @@ bb.a:
   %i.k = alloca [8 x i8], align 8                 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   %i.l = trunc nuw i64 %3 to i1                   ; 2 uses
-  %i.m = add i64 %4, 2                            ; 10 uses
+  %i.m = add i64 %4, 2                            ; 9 uses
   %spec.select.i = select i1 %i.l, i64 %i.m, i64 1
   store i64 %spec.select.i, ptr %i.k, align 8
   %i.n = load i64, ptr %5, align 8, !range !4, !noundef !5 ; 2 uses
@@ -243,7 +243,7 @@ bb.d:                                             ; preds = %bb.c
   %i.s = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.t = load ptr, ptr %i.s, align 8, !nonnull !5, !noundef !5 ; 8 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  %i.v = load i64, ptr %i.u, align 8, !noundef !5 ; 19 uses
+  %i.v = load i64, ptr %i.u, align 8, !noundef !5 ; 18 uses
   %i.w = icmp sgt i64 %i.v, -1
   tail call void @llvm.assume(i1 %i.w)
   %i.x = sub nuw nsw i64 %i.v, %i.r               ; 6 uses
@@ -346,10 +346,8 @@ bb.p:                                             ; preds = %.lr.ph178
   br i1 %i.ba, label %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit.thread.invoke, label %bb.q, !prof !13
 
 bb.q:                                             ; preds = %._crit_edge179
-  %8 = icmp eq i64 %i.m, %i.v
   %i.bb = icmp eq i64 %i.m, 0
-  %or.cond156 = or i1 %i.bb, %8
-  br i1 %or.cond156, label %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit97.thread, label %bb.r
+  br i1 %i.bb, label %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit97.thread, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %i.bc = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.m

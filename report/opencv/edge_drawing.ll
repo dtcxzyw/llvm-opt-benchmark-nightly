@@ -205,29 +205,18 @@ bb.d:                                             ; preds = %.split.loop.exit106
   %i.bo = sext i32 %.041.lcssa to i64
   %.idx = shl nsw i64 %i.bo, 3                    ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
-  %gepdiff = sub nsw i64 %.idx, %.idx59           ; 5 uses
-  %3 = icmp ugt i64 %gepdiff, 9223372036854775800
-  br i1 %3, label %4, label %_ZNSt6vectorIN2cv6Point_IiEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i
-
-4:                                                ; preds = %bb.d
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.24) #44
-          to label %.noexc.i unwind label %.loopexit.split-lp
-
-.noexc.i:                                         ; preds = %4
-  unreachable
-
-_ZNSt6vectorIN2cv6Point_IiEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i: ; preds = %bb.d
+  %gepdiff = sub nsw i64 %.idx, %.idx59           ; 4 uses
   %.not.i.i.i = icmp eq i64 %.idx, %.idx59
   br i1 %.not.i.i.i, label %_ZNSt12_Vector_baseIN2cv6Point_IiEESaIS2_EE11_M_allocateEm.exit.thread.i.i, label %.lr.ph.i.i.i.i.preheader.i.i
 
-_ZNSt12_Vector_baseIN2cv6Point_IiEESaIS2_EE11_M_allocateEm.exit.thread.i.i: ; preds = %_ZNSt6vectorIN2cv6Point_IiEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i
+_ZNSt12_Vector_baseIN2cv6Point_IiEESaIS2_EE11_M_allocateEm.exit.thread.i.i: ; preds = %bb.d
   %i.bp = getelementptr inbounds nuw i8, ptr null, i64 %gepdiff
   store ptr %i.bp, ptr %i.g, align 8, !tbaa !150
   br label %bb.f
 
-.lr.ph.i.i.i.i.preheader.i.i:                     ; preds = %_ZNSt6vectorIN2cv6Point_IiEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i
+.lr.ph.i.i.i.i.preheader.i.i:                     ; preds = %bb.d
   %i.bq = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %gepdiff) #41
-          to label %.noexc5.i unwind label %.loopexit ; 4 uses
+          to label %.noexc5.i unwind label %bb.e  ; 4 uses
 
 .noexc5.i:                                        ; preds = %.lr.ph.i.i.i.i.preheader.i.i
   store ptr %i.bq, ptr %2, align 8, !tbaa !149
@@ -236,18 +225,9 @@ _ZNSt12_Vector_baseIN2cv6Point_IiEESaIS2_EE11_M_allocateEm.exit.thread.i.i: ; pr
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.bq, ptr align 4 %i.bn, i64 %gepdiff, i1 false)
   br label %bb.f
 
-.loopexit:                                        ; preds = %.lr.ph.i.i.i.i.preheader.i.i
+bb.e:                                             ; preds = %.lr.ph.i.i.i.i.preheader.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.e
-
-.loopexit.split-lp:                               ; preds = %4
-  %lpad.loopexit.split-lp = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.e
-
-bb.e:                                             ; preds = %.loopexit.split-lp, %.loopexit
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ] ; 2 uses
+          cleanup                                 ; 2 uses
   %i.bs = load ptr, ptr %2, align 8, !tbaa !149   ; 2 uses
   %.not.i.i6.i = icmp eq ptr %i.bs, null
   br i1 %.not.i.i6.i, label %.body, label %.body.sink.split
@@ -359,7 +339,7 @@ bb.k:                                             ; preds = %.loopexit.split-lp6
 
 .body.sink.split:                                 ; preds = %bb.k, %bb.e
   %.sink112 = phi ptr [ %i.bs, %bb.e ], [ %i.cr, %bb.k ] ; 2 uses
-  %.pn.ph = phi { ptr, i32 } [ %lpad.phi, %bb.e ], [ %lpad.phi65, %bb.k ]
+  %.pn.ph = phi { ptr, i32 } [ %lpad.loopexit, %bb.e ], [ %lpad.phi65, %bb.k ]
   %i.cs = load ptr, ptr %i.g, align 8, !tbaa !150
   %i.ct = ptrtoint ptr %i.cs to i64
   %i.cu = ptrtoint ptr %.sink112 to i64
@@ -368,7 +348,7 @@ bb.k:                                             ; preds = %.loopexit.split-lp6
   br label %.body
 
 .body:                                            ; preds = %.body.sink.split, %bb.k, %bb.e
-  %.pn = phi { ptr, i32 } [ %lpad.phi, %bb.e ], [ %lpad.phi65, %bb.k ], [ %.pn.ph, %.body.sink.split ]
+  %.pn = phi { ptr, i32 } [ %lpad.loopexit, %bb.e ], [ %lpad.phi65, %bb.k ], [ %.pn.ph, %.body.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #42
   br label %bb.q
 

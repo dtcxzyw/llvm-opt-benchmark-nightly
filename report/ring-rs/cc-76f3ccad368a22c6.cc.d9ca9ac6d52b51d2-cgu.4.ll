@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.l = add i64 %.sroa.0.1.i.i2, 1               ; 2 uses
+  %i.l = add nuw nsw i64 %.sroa.0.1.i.i2, 1       ; 2 uses
   %i.m = icmp eq i64 %i.l, %i.g
   br i1 %i.m, label %._crit_edge, label %.lr.ph3
 
@@ -217,7 +217,7 @@ bb.d:                                             ; preds = %.lr.ph
 .lr.ph3:                                          ; preds = %bb.d, %bb.c
   %.sroa.0.1.i.i2 = phi i64 [ %i.l, %bb.c ], [ %i.k, %bb.d ] ; 2 uses
   %i.p = getelementptr inbounds nuw [24 x i8], ptr %i.a, i64 %.sroa.0.1.i.i2
-  invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECs3U9i7nQCKwt_15find_msvc_tools(ptr align 8 %i.p) #30
+  invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECs3U9i7nQCKwt_15find_msvc_tools(ptr nonnull align 8 %i.p) #30
           to label %bb.c unwind label %bb.e
 
 ._crit_edge:                                      ; preds = %bb.c, %bb.d
@@ -620,7 +620,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.l = add i64 %.sroa.0.1.i2, 1                 ; 2 uses
+  %i.l = add nuw nsw i64 %.sroa.0.1.i2, 1         ; 2 uses
   %i.m = icmp eq i64 %i.l, %i.g
   br i1 %i.m, label %._crit_edge, label %.lr.ph3
 
@@ -633,7 +633,7 @@ bb.d:                                             ; preds = %.lr.ph
 .lr.ph3:                                          ; preds = %bb.d, %bb.c
   %.sroa.0.1.i2 = phi i64 [ %i.l, %bb.c ], [ %i.k, %bb.d ] ; 2 uses
   %i.p = getelementptr inbounds nuw [24 x i8], ptr %i.a, i64 %.sroa.0.1.i2
-  invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECs3U9i7nQCKwt_15find_msvc_tools(ptr align 8 %i.p) #30
+  invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECs3U9i7nQCKwt_15find_msvc_tools(ptr nonnull align 8 %i.p) #30
           to label %bb.c unwind label %bb.e
 
 ._crit_edge:                                      ; preds = %bb.c, %bb.d

@@ -135,12 +135,10 @@ bb.d:                                             ; preds = %bb.b
   %i.s = add nsw i8 %.1.i.i, -1
   %i.t = add i8 %i.s, %i.r                        ; 4 uses
   %i.u = sext i8 %i.t to i64
-  %i.v = sub nsw i64 156, %i.u                    ; 4 uses
+  %i.v = sub nsw i64 156, %i.u                    ; 3 uses
   %i.w = sext i8 %i.t to i32                      ; 2 uses
   %i.x = icmp sgt i8 %i.t, 6
-  %2 = icmp samesign ult i64 %i.v, 253
-  %or.cond.i = select i1 %i.x, i1 %2, i1 false
-  br i1 %or.cond.i, label %bb.e, label %bb.f
+  br i1 %i.x, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.y = shl nuw nsw i64 %i.v, 23

@@ -204,10 +204,9 @@ bb.db:                                            ; preds = %bb.da
 
 bb.dc:                                            ; preds = %bb.db
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
-  %11 = shl i64 %.024.idx.in45.i, 32
-  %sext.i = add i64 %11, -8589934592
-  %12 = ashr exact i64 %sext.i, 32
-  %i.ju = getelementptr i8, ptr %1, i64 %12       ; 2 uses
+  %sext.i = add nuw nsw i64 %.024.idx.in45.i, 4294967294
+  %11 = and i64 %sext.i, 4294967295
+  %i.ju = getelementptr i8, ptr %1, i64 %11       ; 2 uses
   %i.jv = getelementptr i8, ptr %i.ju, i64 -1
   %i.jw = load i8, ptr %i.jv, align 1, !tbaa !44
   %i.jx = zext i8 %i.jw to i64

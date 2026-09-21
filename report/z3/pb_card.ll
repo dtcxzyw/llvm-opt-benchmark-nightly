@@ -204,6 +204,7 @@ bb.x:                                             ; preds = %bb.w
   %i.cr = load ptr, ptr %i.cq, align 8
   tail call void %i.cr(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(8) %1)
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %2 = add i32 %i.w, 1
   br label %bb.z
 
 bb.y:                                             ; preds = %bb.ab
@@ -212,9 +213,8 @@ bb.y:                                             ; preds = %bb.ab
   br label %.loopexit
 
 bb.z:                                             ; preds = %bb.x, %bb.ab
-  %.0109149 = phi i32 [ 0, %bb.x ], [ %3, %bb.ab ] ; 2 uses
-  %2 = zext i32 %.0109149 to i64
-  %i.cu = getelementptr inbounds nuw [4 x i8], ptr %i.cs, i64 %2 ; 2 uses
+  %indvars.iv165 = phi i64 [ 0, %bb.x ], [ %indvars.iv.next166, %bb.ab ] ; 2 uses
+  %i.cu = getelementptr inbounds nuw [4 x i8], ptr %i.cs, i64 %indvars.iv165 ; 2 uses
   %.sroa.01.0.copyload = load i32, ptr %i.cu, align 4, !tbaa !12
   %i.cv = tail call noundef zeroext i1 @_ZNK2pb10constraint10is_watchedERKNS_16solver_interfaceEN3sat7literalE(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, i32 %.sroa.01.0.copyload)
   br i1 %i.cv, label %bb.ab, label %bb.aa
@@ -225,9 +225,10 @@ bb.aa:                                            ; preds = %bb.z
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.z, %bb.aa
-  %3 = add i32 %.0109149, 1                       ; 2 uses
-  %.not = icmp ugt i32 %3, %i.w
-  br i1 %.not, label %bb.y, label %bb.z, !llvm.loop !70
+  %indvars.iv.next166 = add nuw nsw i64 %indvars.iv165, 1 ; 2 uses
+  %lftr.wideiv = trunc i64 %indvars.iv.next166 to i32
+  %exitcond168.not = icmp eq i32 %2, %lftr.wideiv
+  br i1 %exitcond168.not, label %bb.y, label %bb.z, !llvm.loop !70
 
 .loopexit:                                        ; preds = %bb.v, %.lr.ph161, %.preheader, %bb.h, %bb.w, %bb.y, %._crit_edge156
   %.0 = phi i1 [ true, %bb.y ], [ false, %._crit_edge156 ], [ true, %bb.w ], [ false, %bb.h ], [ false, %.preheader ], [ false, %.lr.ph161 ], [ false, %bb.v ]

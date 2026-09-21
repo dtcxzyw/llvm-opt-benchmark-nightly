@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %_RNCINvNvNtNtNtNtCs
   br i1 %exitcond.not.i, label %._crit_edge37, label %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4find5checkjNCNvNtCs4PheDXcg4wa_10polars_row6decode15decode_validity0E0B1j_.exit.i, !dbg !4336
 
 _RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4find5checkjNCNvNtCs4PheDXcg4wa_10polars_row6decode15decode_validity0E0B1j_.exit.i: ; preds = %bb.a, %bb.b
-  %i.f = phi i64 [ %i.g, %bb.b ], [ 0, %bb.a ]    ; 6 uses
-  %i.g = add i64 %i.f, 1, !dbg !4337              ; 5 uses
+  %i.f = phi i64 [ %i.g, %bb.b ], [ 0, %bb.a ]    ; 7 uses
+  %i.g = add nuw i64 %i.f, 1, !dbg !4337          ; 4 uses
   %i.h = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %i.f, !dbg !4338 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8, !dbg !4338 ; 2 uses
   %i.j = load i64, ptr %i.i, align 8, !dbg !4338, !noalias !4312, !noundef !902
@@ -244,7 +244,7 @@ bb.d:                                             ; preds = %bb.n, %._crit_edge3
 bb.e:                                             ; preds = %bb.c
   %i.t = load i64, ptr %i.q, align 8, !dbg !4350, !noundef !902 ; 2 uses
   %i.u = and i64 %i.t, 63, !dbg !4350             ; 2 uses
-  %i.v = add i64 %i.u, %i.f, !dbg !4351
+  %i.v = add nuw i64 %i.u, %i.f, !dbg !4351
   %i.w = icmp ult i64 %i.v, 64, !dbg !4351
   br i1 %i.w, label %bb.g, label %bb.f, !dbg !4351, !prof !1022
 
@@ -257,8 +257,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.h, !dbg !4352
 
 bb.g:                                             ; preds = %bb.e
-  %4 = and i64 %i.f, 63, !dbg !4354
-  %notmask = shl nsw i64 -1, %4, !dbg !4354
+  %notmask = shl nsw i64 -1, %i.f, !dbg !4354
   %i.x = xor i64 %notmask, -1, !dbg !4354
   %i.y = shl i64 %i.x, %i.u, !dbg !4355
   %i.z = load i64, ptr %i.p, align 8, !dbg !4356, !noundef !902
@@ -311,8 +310,8 @@ bb.k:                                             ; preds = %bb.j
 
 _RNvMNtNtCs8774dFTUdNv_12polars_arrow6bitmap7builderNtB2_13BitmapBuilder14push_unchecked.exit: ; preds = %bb.k, %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !4378
-  %5 = icmp ugt i64 %i.g, %2, !dbg !4379
-  br i1 %5, label %bb.m, label %bb.l, !dbg !4379, !prof !976
+  %.not = icmp samesign ult i64 %i.f, %2, !dbg !4379
+  br i1 %.not, label %bb.l, label %bb.m, !dbg !4379, !prof !1022
 
 bb.l:                                             ; preds = %_RNvMNtNtCs8774dFTUdNv_12polars_arrow6bitmap7builderNtB2_13BitmapBuilder14push_unchecked.exit
   %i.ar = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %i.g, !dbg !4380

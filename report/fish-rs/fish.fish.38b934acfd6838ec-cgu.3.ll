@@ -202,7 +202,7 @@ bb.y:                                             ; preds = %.noexc91
   br i1 %.not.i.us.peel.i, label %._crit_edge122.thread.i, label %.lr.ph121.split.us.i
 
 .lr.ph121.split.us.i:                             ; preds = %bb.y, %bb.z
-  %.sroa.0.0101119.us.i = phi i32 [ %6, %bb.z ], [ 1, %bb.y ] ; 2 uses
+  %.sroa.0.0101119.us.i = phi i32 [ %4, %bb.z ], [ 1, %bb.y ] ; 3 uses
   %i.ec = invoke noundef nonnull align 4 ptr @_RNvXs_NtNtCs1HV6ixfL8cZ_11fish_printf6fmt_fp7decimalNtB4_7DecimalINtNtNtCs3oUPovFnLWP_4core3ops5index5IndexlE5index(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %1, i32 noundef %.sroa.0.0101119.us.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @27)
           to label %.noexc92 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit
 
@@ -219,13 +219,10 @@ bb.y:                                             ; preds = %.noexc91
   br i1 %i.ed, label %.split.us.i, label %bb.z
 
 bb.z:                                             ; preds = %.noexc93
-  %4 = call noundef { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %.sroa.0.0101119.us.i, i32 1) ; 2 uses
-  %5 = extractvalue { i32, i1 } %4, 1
-  %6 = extractvalue { i32, i1 } %4, 0             ; 2 uses
+  %4 = add nuw i32 %.sroa.0.0101119.us.i, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !163
-  %.not.i.us.i = icmp sgt i32 %6, %.lcssa113154164.i
-  %or.cond108.us.i = or i1 %5, %.not.i.us.i
-  br i1 %or.cond108.us.i, label %._crit_edge122.thread.i, label %.lr.ph121.split.us.i, !llvm.loop !31
+  %exitcond139.not.i = icmp eq i32 %.sroa.0.0101119.us.i, %.lcssa113154164.i
+  br i1 %exitcond139.not.i, label %._crit_edge122.thread.i, label %.lr.ph121.split.us.i, !llvm.loop !31
 
 .lr.ph117.i:                                      ; preds = %.preheader.i, %.noexc94
   invoke void @_RNvMNtNtCs1HV6ixfL8cZ_11fish_printf6fmt_fp7decimalNtB2_7Decimal9push_back(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %1, i32 noundef 0)
@@ -239,7 +236,7 @@ bb.z:                                             ; preds = %.noexc93
   br i1 %.not.i, label %._crit_edge.i, label %.lr.ph117.i
 
 .lr.ph121.split.i:                                ; preds = %bb.x, %bb.av
-  %.sroa.0.0101119.i = phi i32 [ %9, %bb.av ], [ 1, %bb.x ] ; 2 uses
+  %.sroa.0.0101119.i = phi i32 [ %5, %bb.av ], [ 1, %bb.x ] ; 3 uses
   %i.eh = invoke noundef nonnull align 4 ptr @_RNvXs_NtNtCs1HV6ixfL8cZ_11fish_printf6fmt_fp7decimalNtB4_7DecimalINtNtNtCs3oUPovFnLWP_4core3ops5index5IndexlE5index(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %1, i32 noundef %.sroa.0.0101119.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @26)
           to label %.noexc95 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit
 
@@ -635,13 +632,10 @@ bb.au:                                            ; preds = %bb.ae
   br label %select.unfold
 
 bb.av:                                            ; preds = %.noexc96
-  %7 = call noundef { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %.sroa.0.0101119.i, i32 1) ; 2 uses
-  %8 = extractvalue { i32, i1 } %7, 1
-  %9 = extractvalue { i32, i1 } %7, 0             ; 2 uses
+  %5 = add nuw i32 %.sroa.0.0101119.i, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !163
-  %.not.i.i = icmp sgt i32 %9, %.lcssa113154163.i
-  %or.cond108.i = or i1 %8, %.not.i.i
-  br i1 %or.cond108.i, label %._crit_edge122.thread170.i, label %.lr.ph121.split.i, !llvm.loop !74
+  %exitcond.not.i = icmp eq i32 %.sroa.0.0101119.i, %.lcssa113154163.i
+  br i1 %exitcond.not.i, label %._crit_edge122.thread170.i, label %.lr.ph121.split.i, !llvm.loop !74
 
 .split.us.i:                                      ; preds = %.noexc93, %.noexc91
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !163

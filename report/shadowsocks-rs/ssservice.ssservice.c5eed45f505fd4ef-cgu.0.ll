@@ -205,7 +205,7 @@ bb.ac:                                            ; preds = %bb.aa
   br i1 %exitcond.not.i.i.i.i.i.i.i14, label %_RINvXs2_NtNtNtCs7ewmRfXve8r_4http6header3map16into_header_nameReNtB6_6Sealed10try_insertNtNtBa_5value11HeaderValueECsgZAIVb0XKpv_9ssservice.exit, label %.lr.ph
 
 .preheader.i.i.i.i.i.i:                           ; preds = %.lr.ph
-  %i.dx = add nuw i64 %i.dy, 1                    ; 2 uses
+  %i.dx = add nuw nsw i64 %i.dy, 1                ; 2 uses
   %exitcond.not.i.i.i.i.i.i.i = icmp eq i64 %i.dx, %i.ah
   br i1 %exitcond.not.i.i.i.i.i.i.i, label %_RINvXs2_NtNtNtCs7ewmRfXve8r_4http6header3map16into_header_nameReNtB6_6Sealed10try_insertNtNtBa_5value11HeaderValueECsgZAIVb0XKpv_9ssservice.exit, label %.lr.ph
 
@@ -608,7 +608,6 @@ bb.ad:                                            ; preds = %bb.x
   %i.fq = call i16 @llvm.bswap.i16(i16 %.sroa.7.sroa.0.0.copyload.i)
   %i.fr = call i16 @llvm.bswap.i16(i16 %.sroa.7.sroa.7.0.copyload.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !3839
-  %.sroa.812.0.insert.ext.i.i = zext i8 %.sroa.7.sroa.10.0.copyload.i to i64 ; 2 uses
   %.sroa.711.0.insert.ext.i.i = zext i8 %.sroa.7.sroa.9.0.copyload.i to i64 ; 2 uses
   %.sroa.03.0.ptr7.i.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 4 ; 4 uses
   store i16 %i.fq, ptr %.sroa.03.0.ptr7.i.i.i, align 4, !alias.scope !3840, !noalias !3839
@@ -625,10 +624,11 @@ bb.ad:                                            ; preds = %bb.x
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ft, ptr nonnull readonly align 2 %.sroa.94.i, i64 range(i64 0, 256) %.sroa.711.0.insert.ext.i.i, i1 false), !alias.scope !3841, !noalias !3842
   %i.fu = zext i8 %.sroa.7.sroa.9.0.copyload.i to i32 ; 2 uses
   %i.fv = add nuw nsw i32 %i.fu, 8                ; 2 uses
-  %i.fw = zext nneg i32 %i.fv to i64
-  %i.fx = getelementptr inbounds nuw i8, ptr %.sroa.03.0.ptr7.i.i.i, i64 %i.fw
+  %5 = zext nneg i32 %i.fv to i64
+  %i.fw = zext i8 %.sroa.7.sroa.10.0.copyload.i to i64 ; 2 uses
+  %i.fx = getelementptr inbounds nuw i8, ptr %.sroa.03.0.ptr7.i.i.i, i64 %5
   %.sroa.94.i.255.i.255.i.255..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.94.i, i64 255
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.fx, ptr nonnull readonly align 1 %.sroa.94.i.255.i.255.i.255..sroa_idx, i64 range(i64 0, 256) %.sroa.812.0.insert.ext.i.i, i1 false), !alias.scope !3843, !noalias !3842
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.fx, ptr nonnull readonly align 1 %.sroa.94.i.255.i.255.i.255..sroa_idx, i64 range(i64 0, 256) %i.fw, i1 false), !alias.scope !3843, !noalias !3842
   %i.fy = zext i8 %.sroa.7.sroa.10.0.copyload.i to i32 ; 2 uses
   %i.fz = add nuw nsw i32 %i.fv, %i.fy            ; 2 uses
   %i.ga = zext nneg i32 %i.fz to i64
@@ -640,7 +640,7 @@ bb.ad:                                            ; preds = %bb.x
   %i.gd = zext nneg i32 %i.gc to i64
   %i.ge = getelementptr inbounds nuw i8, ptr %.sroa.03.0.ptr7.i.i.i, i64 %i.gd
   %.sroa.94.i.765.i.765.i.765..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.94.i, i64 765
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ge, ptr nonnull readonly align 1 %.sroa.94.i.765.i.765.i.765..sroa_idx, i64 range(i64 0, 256) %.sroa.812.0.insert.ext.i.i, i1 false), !alias.scope !3846, !noalias !3842
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ge, ptr nonnull readonly align 1 %.sroa.94.i.765.i.765.i.765..sroa_idx, i64 range(i64 0, 256) %i.fw, i1 false), !alias.scope !3846, !noalias !3842
   %i.gf = add nuw nsw i32 %i.gc, %i.fy
   store i32 %i.gf, ptr %i.h, align 4, !alias.scope !3847, !noalias !3848
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.t, ptr noundef nonnull align 4 dereferenceable(1032) %i.h, i64 1032, i1 false), !noalias !3849
@@ -1043,7 +1043,7 @@ bb.j:                                             ; preds = %bb.h
   br i1 %exitcond.not.i.i.i.i.i.i25, label %.loopexit, label %.lr.ph
 
 .preheader.i.i.i.i.i:                             ; preds = %.lr.ph
-  %i.bc = add nuw i64 %i.bd, 1                    ; 2 uses
+  %i.bc = add nuw nsw i64 %i.bd, 1                ; 2 uses
   %exitcond.not.i.i.i.i.i.i = icmp eq i64 %i.bc, %i.aa
   br i1 %exitcond.not.i.i.i.i.i.i, label %.loopexit, label %.lr.ph
 
@@ -1446,7 +1446,7 @@ bb.du:                                            ; preds = %.lr.ph.i67.us.prehe
   %i.uz = and i32 %i.uy, 15
   %i.va = add i32 %.lcssa7.i66.us.i.i.i.i, 4      ; 3 uses
   store i32 %i.va, ptr %.sroa.30.0..sroa_idx.i.i.i.i, align 8, !alias.scope !45172, !noalias !45173
-  %i.vb = add i32 %.sroa.013.0177.us.i.i.i.i, 1   ; 2 uses
+  %i.vb = add nsw i32 %.sroa.013.0177.us.i.i.i.i, 1 ; 2 uses
   %i.vc = shl i32 %.sroa.013.0177.us.i.i.i.i, 2
   %i.vd = and i32 %i.vc, 28
   %i.ve = shl nuw i32 %i.uz, %i.vd
@@ -1616,7 +1616,7 @@ bb.ed:                                            ; preds = %.lr.ph.i77.us.prehe
   %i.xo = and i32 %i.xn, 255
   %i.xp = add i32 %.lcssa7.i76.us.i.i.i.i, 8      ; 3 uses
   store i32 %i.xp, ptr %.sroa.30.0..sroa_idx.i.i.i.i, align 8, !alias.scope !45192, !noalias !45193
-  %i.xq = add i32 %.sroa.018.0153.us.i.i.i.i, 1   ; 2 uses
+  %i.xq = add nsw i32 %.sroa.018.0153.us.i.i.i.i, 1 ; 2 uses
   %i.xr = shl i32 %.sroa.018.0153.us.i.i.i.i, 3
   %i.xs = and i32 %i.xr, 24
   %i.xt = shl nuw i32 %i.xo, %i.xs
@@ -1730,7 +1730,7 @@ bb.ee:                                            ; preds = %.lr.ph.i67.preheade
   %i.zr = and i32 %i.zq, 15                       ; 2 uses
   %i.zs = add i32 %.lcssa7.i66.i.i.i.i, 4         ; 3 uses
   store i32 %i.zs, ptr %.sroa.30.0..sroa_idx.i.i.i.i, align 8, !alias.scope !45172, !noalias !45173
-  %i.zt = add i32 %.sroa.013.0177.i.i.i.i, 1      ; 2 uses
+  %i.zt = add nsw i32 %.sroa.013.0177.i.i.i.i, 1  ; 2 uses
   %i.zu = icmp eq i32 %i.zt, %i.ug                ; 2 uses
   %i.zv = icmp eq i32 %i.zr, 0
   %or.cond4.i.i.i.i = select i1 %i.zu, i1 %i.zv, i1 false
@@ -1876,7 +1876,7 @@ bb.el:                                            ; preds = %.lr.ph.i77.preheade
   %i.acb = and i32 %i.aca, 255                    ; 2 uses
   %i.acc = add i32 %.lcssa7.i76.i.i.i.i, 8        ; 3 uses
   store i32 %i.acc, ptr %.sroa.30.0..sroa_idx.i.i.i.i, align 8, !alias.scope !45192, !noalias !45193
-  %i.acd = add i32 %.sroa.018.0153.i.i.i.i, 1     ; 2 uses
+  %i.acd = add nsw i32 %.sroa.018.0153.i.i.i.i, 1 ; 2 uses
   %i.ace = icmp eq i32 %i.acd, %i.wv              ; 2 uses
   %i.acf = icmp eq i32 %i.acb, 0
   %or.cond12.i.i.i.i = select i1 %i.ace, i1 %i.acf, i1 false

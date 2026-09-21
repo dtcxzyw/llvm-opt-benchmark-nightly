@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ac = add i32 %i.ab, 1                        ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #26
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %9, i8 0, i64 24, i1 false)
-  %i.ad = sext i32 %i.ac to i64                   ; 7 uses
+  %i.ad = sext i32 %i.ac to i64                   ; 6 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %9, i64 8
   %.not70 = icmp eq i32 %i.ac, 0
   br i1 %.not70, label %_ZNSt6vectorIS_IN2cv6Point_IiEESaIS2_EESaIS4_EE6resizeEm.exit, label %bb.l
@@ -223,25 +223,20 @@ bb.m:                                             ; preds = %bb.l
   unreachable
 
 _ZNKSt6vectorIS_IN2cv6Point_IiEESaIS2_EESaIS4_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.l
-  %11 = call i64 @llvm.umin.i64(i64 %i.ad, i64 384307168202282325) ; 2 uses
-  %i.ah = mul nuw nsw i64 %11, 24
+  %i.ah = mul nuw nsw i64 %i.ad, 24               ; 2 uses
   %i.ai = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ah) #28
-          to label %.noexc60 unwind label %bb.v   ; 5 uses
+          to label %.noexc60 unwind label %bb.v   ; 4 uses
 
 .noexc60:                                         ; preds = %_ZNKSt6vectorIS_IN2cv6Point_IiEESaIS2_EESaIS4_EE12_M_check_lenEmPKc.exit.i
-  %12 = mul nuw nsw i64 %i.ad, 24
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ai, i8 0, i64 %12, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ai, i8 0, i64 %i.ah, i1 false)
   store ptr %i.ai, ptr %9, align 8, !tbaa !133
-  %i.aj = getelementptr inbounds nuw [24 x i8], ptr %i.ai, i64 %i.ad ; 2 uses
+  %i.aj = getelementptr inbounds nuw [24 x i8], ptr %i.ai, i64 %i.ad ; 3 uses
   store ptr %i.aj, ptr %i.ae, align 8, !tbaa !134
-  %13 = getelementptr inbounds nuw [24 x i8], ptr %i.ai, i64 %11 ; 2 uses
-  store ptr %13, ptr %i.af, align 8, !tbaa !135
-  %14 = ptrtoint ptr %13 to i64
+  store ptr %i.aj, ptr %i.af, align 8, !tbaa !135
   br label %_ZNSt6vectorIS_IN2cv6Point_IiEESaIS2_EESaIS4_EE6resizeEm.exit
 
 _ZNSt6vectorIS_IN2cv6Point_IiEESaIS2_EESaIS4_EE6resizeEm.exit: ; preds = %bb.k, %.noexc60
-  %15 = phi i64 [ 0, %bb.k ], [ %14, %.noexc60 ]
-  %i.ak = phi ptr [ null, %bb.k ], [ %i.aj, %.noexc60 ] ; 2 uses
+  %i.ak = phi ptr [ null, %bb.k ], [ %i.aj, %.noexc60 ] ; 3 uses
   %.pr.i = phi ptr [ null, %bb.k ], [ %i.ai, %.noexc60 ] ; 7 uses
   %i.al = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
   %i.am = load i32, ptr %i.al, align 8, !tbaa !116 ; 2 uses
@@ -490,8 +485,9 @@ _ZSt8_DestroyIPSt6vectorIN2cv6Point_IiEESaIS3_EES5_EvT_S7_RSaIT0_E.exit.i: ; pre
   br i1 %.not.i.i1.i, label %_ZNSt6vectorIS_IN2cv6Point_IiEESaIS2_EESaIS4_EED2Ev.exit, label %bb.ac
 
 bb.ac:                                            ; preds = %_ZSt8_DestroyIPSt6vectorIN2cv6Point_IiEESaIS3_EES5_EvT_S7_RSaIT0_E.exit.i
+  %11 = ptrtoint ptr %i.ak to i64
   %i.dn = ptrtoint ptr %.pr.i to i64
-  %i.do = sub i64 %15, %i.dn
+  %i.do = sub i64 %11, %i.dn
   call void @_ZdlPvm(ptr noundef nonnull %.pr.i, i64 noundef %i.do) #27
   br label %_ZNSt6vectorIS_IN2cv6Point_IiEESaIS2_EESaIS4_EED2Ev.exit
 
@@ -894,7 +890,7 @@ bb.d:                                             ; preds = %bb.c
   store i32 %i.bt, ptr %i.c, align 4, !tbaa !52
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #26
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %8, i8 0, i64 24, i1 false)
-  %i.bu = sext i32 %i.bt to i64                   ; 5 uses
+  %i.bu = sext i32 %i.bt to i64                   ; 4 uses
   %cond = icmp eq i32 %i.bt, 0
   br i1 %cond, label %_ZNSt6vectorIS_IN2cv6Point_IiEESaIS2_EESaIS4_EE6resizeEm.exit, label %bb.e
 
@@ -910,19 +906,16 @@ bb.f:                                             ; preds = %bb.e
   unreachable
 
 _ZNKSt6vectorIN2cv5Rect_IiEESaIS2_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.e
-  %14 = call i64 @llvm.umin.i64(i64 %i.bu, i64 576460752303423487) ; 2 uses
-  %i.bw = shl nuw nsw i64 %14, 4
+  %i.bw = shl nuw nsw i64 %i.bu, 4                ; 2 uses
   %i.bx = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bw) #28
-          to label %.noexc167 unwind label %.loopexit297 ; 5 uses
+          to label %.noexc167 unwind label %.loopexit297 ; 4 uses
 
 .noexc167:                                        ; preds = %_ZNKSt6vectorIN2cv5Rect_IiEESaIS2_EE12_M_check_lenEmPKc.exit.i
-  %15 = shl nuw nsw i64 %i.bu, 4
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bx, i8 0, i64 %15, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bx, i8 0, i64 %i.bw, i1 false)
   store ptr %i.bx, ptr %8, align 8, !tbaa !137
-  %i.by = getelementptr inbounds nuw [16 x i8], ptr %i.bx, i64 %i.bu
+  %i.by = getelementptr inbounds nuw [16 x i8], ptr %i.bx, i64 %i.bu ; 2 uses
   store ptr %i.by, ptr %i.r, align 8, !tbaa !136
-  %16 = getelementptr inbounds nuw [16 x i8], ptr %i.bx, i64 %14
-  store ptr %16, ptr %i.s, align 8, !tbaa !169
+  store ptr %i.by, ptr %i.s, align 8, !tbaa !169
   %i.bz = mul nuw nsw i64 %i.bu, 24               ; 2 uses
   %i.ca = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bz) #28
           to label %.noexc100 unwind label %_ZSt8_DestroyIPSt6vectorIN2cv6Point_IiEESaIS3_EES5_EvT_S7_RSaIT0_E.exit.i138.thread.loopexit ; 3 uses

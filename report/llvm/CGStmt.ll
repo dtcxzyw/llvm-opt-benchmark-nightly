@@ -205,12 +205,10 @@ bb.bw:                                            ; preds = %.lr.ph, %bb.bx
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.bx ] ; 3 uses
   %i.sh = getelementptr inbounds nuw [168 x i8], ptr %i.sf, i64 %indvars.iv
   %i.si = getelementptr inbounds nuw i8, ptr %i.sh, i64 4
-  %i.sj = load i32, ptr %i.si, align 4, !tbaa !1344 ; 2 uses
-  %17 = icmp ne i32 %i.sj, -1
+  %i.sj = load i32, ptr %i.si, align 4, !tbaa !1344
   %i.sk = zext i32 %i.sj to i64
   %i.sl = icmp eq i64 %indvars.iv363, %i.sk
-  %or.cond333 = and i1 %17, %i.sl
-  br i1 %or.cond333, label %._crit_edge.loopexit.split.loop.exit, label %bb.bx
+  br i1 %i.sl, label %._crit_edge.loopexit.split.loop.exit, label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses

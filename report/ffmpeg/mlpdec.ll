@@ -205,13 +205,10 @@ bb.c:                                             ; preds = %bb.b
   %i.r = getelementptr inbounds nuw i8, ptr %i.e, i64 4 ; 3 uses
   %i.s = shl nuw nsw i32 %i.o, 3
   %i.t = add nsw i32 %i.s, -32                    ; 2 uses
-  %or.cond.i = icmp ult i32 %i.t, 2147483135      ; 2 uses
-  %.014.i = select i1 %or.cond.i, ptr %i.r, ptr null
-  %.013.i = select i1 %or.cond.i, i32 %i.t, i32 0 ; 2 uses
-  store ptr %.014.i, ptr %6, align 8, !tbaa !40
+  store ptr %i.r, ptr %6, align 8, !tbaa !40
   %i.u = getelementptr inbounds nuw i8, ptr %6, i64 12 ; 2 uses
-  store i32 %.013.i, ptr %i.u, align 4, !tbaa !93
-  %i.v = or disjoint i32 %.013.i, 8               ; 2 uses
+  store i32 %i.t, ptr %i.u, align 4, !tbaa !93
+  %i.v = or disjoint i32 %i.t, 8                  ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 30 uses
   store i32 %i.v, ptr %i.w, align 8, !tbaa !41
   %i.x = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 87 uses

@@ -202,7 +202,7 @@ bb.a:
   br i1 %i.f, label %.lr.ph161, label %.preheader
 
 .lr.ph161:                                        ; preds = %.preheader146
-  %i.g = getelementptr i8, ptr %0, i64 8          ; 4 uses
+  %i.g = getelementptr i8, ptr %0, i64 8          ; 3 uses
   br label %bb.j
 
 bb.b:                                             ; preds = %.lr.ph, %bb.i
@@ -297,9 +297,9 @@ bb.j:                                             ; preds = %.lr.ph161, %.loopex
 
 bb.k:                                             ; preds = %.lr.ph159, %.thread136
   %.pre181184 = phi i32 [ %.pre181182, %.lr.ph159 ], [ %.pre181185, %.thread136 ] ; 2 uses
-  %.0116157 = phi i32 [ %i.aq, %.lr.ph159 ], [ %i.cl, %.thread136 ] ; 6 uses
+  %.0116157 = phi i32 [ %i.aq, %.lr.ph159 ], [ %i.cl, %.thread136 ] ; 5 uses
   %i.ar = sext i32 %.0116157 to i64
-  %i.as = getelementptr [24 x i8], ptr %i.g, i64 %i.ar ; 7 uses
+  %i.as = getelementptr [24 x i8], ptr %i.g, i64 %i.ar ; 8 uses
   %i.at = load i64, ptr %i.ao, align 8            ; 2 uses
   %i.au = load i64, ptr %i.as, align 8            ; 3 uses
   %i.av = icmp ugt i64 %i.at, %i.au
@@ -384,13 +384,11 @@ bb.s:                                             ; preds = %bb.q, %bb.r, %.lr.p
   %i.cf = load i32, ptr %0, align 8
   %i.cg = add i32 %i.cf, -1                       ; 2 uses
   store i32 %i.cg, ptr %0, align 8
-  %1 = add i32 %.0116157, 1
-  %2 = sext i32 %1 to i64
-  %3 = getelementptr [24 x i8], ptr %i.g, i64 %2
+  %1 = getelementptr i8, ptr %i.as, i64 24
   %i.ch = sub i32 %i.cg, %.0116157
   %i.ci = sext i32 %i.ch to i64
   %i.cj = mul nsw i64 %i.ci, 24
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.as, ptr align 8 %3, i64 %i.cj, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.as, ptr align 8 %1, i64 %i.cj, i1 false)
   %.pre180 = load i32, ptr %0, align 8
   br label %.thread136
 

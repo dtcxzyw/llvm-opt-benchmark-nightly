@@ -204,13 +204,16 @@ bb.ak:                                            ; preds = %vhost_net_start_one
 .loopexit112:                                     ; preds = %vhost_net_start_one.exit, %vhost_net_set_vring_enable.exit, %vhost_net_start_one.exit.thread
   %.075 = phi i32 [ %.034.i.ph, %vhost_net_start_one.exit.thread ], [ %.0.i98, %vhost_net_start_one.exit ], [ %i.cn, %vhost_net_set_vring_enable.exit ] ; 2 uses
   %.not177 = icmp eq i32 %.174129, 0
-  br i1 %.not177, label %._crit_edge134, label %.lr.ph133.a
+  br i1 %.not177, label %._crit_edge134, label %.lr.ph133
 
-.lr.ph133.a:                                      ; preds = %.loopexit112, %get_vhost_net.exit103
-  %.in = phi i32 [ %5, %get_vhost_net.exit103 ], [ %.174129, %.loopexit112 ] ; 3 uses
-  %5 = add nsw i32 %.in, -1                       ; 2 uses
-  %.not178 = icmp sgt i32 %.in, %2
-  br i1 %.not178, label %bb.al, label %bb.am
+.lr.ph133:                                        ; preds = %.loopexit112
+  %5 = add nsw i32 %.174129, -1
+  br label %.lr.ph133.a
+
+.lr.ph133.a:                                      ; preds = %.lr.ph133, %get_vhost_net.exit103
+  %.in = phi i32 [ %5, %.lr.ph133 ], [ %7, %get_vhost_net.exit103 ] ; 3 uses
+  %6 = icmp slt i32 %.in, %2
+  br i1 %6, label %bb.am, label %bb.al
 
 bb.al:                                            ; preds = %.lr.ph133.a
   %i.fd = load i16, ptr %i.bu, align 4
@@ -218,7 +221,7 @@ bb.al:                                            ; preds = %.lr.ph133.a
   br label %bb.am
 
 bb.am:                                            ; preds = %.lr.ph133.a, %bb.al
-  %i.ff = phi i32 [ %i.fe, %bb.al ], [ %5, %.lr.ph133.a ]
+  %i.ff = phi i32 [ %i.fe, %bb.al ], [ %.in, %.lr.ph133.a ]
   %i.fg = call ptr @qemu_get_peer(ptr noundef %1, i32 noundef %i.ff) #11 ; 3 uses
   %.not.i100 = icmp eq ptr %i.fg, null
   br i1 %.not.i100, label %get_vhost_net.exit103, label %bb.an
@@ -237,7 +240,8 @@ bb.ao:                                            ; preds = %bb.an
 get_vhost_net.exit103:                            ; preds = %bb.am, %bb.an, %bb.ao
   %.0.i102 = phi ptr [ %i.fk, %bb.ao ], [ null, %bb.am ], [ null, %bb.an ]
   call fastcc void @vhost_net_stop_one(ptr noundef %.0.i102, ptr noundef %0)
-  %i.fl = icmp sgt i32 %.in, 1
+  %7 = add i32 %.in, -1                           ; 2 uses
+  %i.fl = icmp sgt i32 %7, -1
   br i1 %i.fl, label %.lr.ph133.a, label %._crit_edge134, !llvm.loop !23
 
 ._crit_edge134:                                   ; preds = %get_vhost_net.exit103, %.loopexit112

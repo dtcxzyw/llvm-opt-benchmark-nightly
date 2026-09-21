@@ -204,20 +204,19 @@ _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIP
   %i.fx = add i8 %i.fw, %i.fm
   %i.fy = getelementptr inbounds nuw i8, ptr %i.c, i64 2
   store i8 %i.fx, ptr %i.fy, align 1
-  %4 = zext i8 %.043.lcssa to i32
-  %5 = add nsw i32 %4, -1
   %.not95 = icmp eq i8 %.043.lcssa, 1
   br i1 %.not95, label %.loopexit, label %.lr.ph94.preheader
 
 .lr.ph94.preheader:                               ; preds = %.preheader
+  %4 = zext i8 %.043.lcssa to i64
   %.pre103 = load ptr, ptr %i.p, align 8
+  %5 = add nsw i64 %4, -2
   br label %.lr.ph94
 
 .lr.ph94:                                         ; preds = %.lr.ph94.preheader, %_ZNSt6vectorIhSaIhEE9push_backERKh.exit67
-  %i.fz = phi ptr [ %i.gx, %_ZNSt6vectorIhSaIhEE9push_backERKh.exit67 ], [ %.pre103, %.lr.ph94.preheader ] ; 3 uses
-  %.093 = phi i8 [ %7, %_ZNSt6vectorIhSaIhEE9push_backERKh.exit67 ], [ 0, %.lr.ph94.preheader ] ; 2 uses
-  %6 = zext i8 %.093 to i64
-  %i.ga = getelementptr inbounds nuw i8, ptr %i.c, i64 %6 ; 2 uses
+  %i.fz = phi ptr [ %.pre103, %.lr.ph94.preheader ], [ %i.gx, %_ZNSt6vectorIhSaIhEE9push_backERKh.exit67 ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph94.preheader ], [ %indvars.iv.next, %_ZNSt6vectorIhSaIhEE9push_backERKh.exit67 ] ; 3 uses
+  %i.ga = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv ; 2 uses
   %i.gb = load ptr, ptr %i.v, align 8
   %.not.i58 = icmp eq ptr %i.fz, %i.gb
   br i1 %.not.i58, label %bb.aa, label %bb.z
@@ -288,10 +287,9 @@ _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIP
 
 _ZNSt6vectorIhSaIhEE9push_backERKh.exit67:        ; preds = %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i64, %bb.z
   %i.gx = phi ptr [ %i.gs, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i64 ], [ %i.ge, %bb.z ]
-  %7 = add nuw i8 %.093, 1                        ; 2 uses
-  %8 = zext i8 %7 to i32
-  %9 = icmp samesign ugt i32 %5, %8
-  br i1 %9, label %.lr.ph94, label %.loopexit, !llvm.loop !65
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %exitcond.not = icmp eq i64 %indvars.iv, %5
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph94, !llvm.loop !65
 
 .loopexit71:                                      ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i59
   %lpad.loopexit = landingpad { ptr, i32 }

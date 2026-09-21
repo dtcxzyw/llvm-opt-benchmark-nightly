@@ -205,11 +205,13 @@ bb.b:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.n = load ptr, ptr %5, align 8, !tbaa !208
   %i.o = getelementptr inbounds nuw i8, ptr %7, i64 48 ; 3 uses
+  %10 = zext nneg i32 %i.l to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.k
-  %.03844 = phi i32 [ %i.l, %.lr.ph ], [ %10, %bb.k ] ; 3 uses
-  %i.p = add i32 %.03844, %i.e                    ; 4 uses
+  %indvars.iv = phi i64 [ %10, %.lr.ph ], [ %indvars.iv.next, %bb.k ] ; 2 uses
+  %11 = trunc nsw i64 %indvars.iv to i32          ; 2 uses
+  %i.p = add i32 %i.e, %11                        ; 4 uses
   %.sroa.01.0.copyload.i = load ptr, ptr %4, align 8 ; 2 uses
   %.sroa.0.0.copyload.i = load ptr, ptr %i.m, align 8
   %i.q = icmp eq ptr %.sroa.01.0.copyload.i, %.sroa.0.0.copyload.i
@@ -297,9 +299,9 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %10 = add i32 %.03844, 1
-  %exitcond.not = icmp eq i32 %.03844, %i.k
-  br i1 %exitcond.not, label %._crit_edge, label %bb.c
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %.not42.not = icmp ugt i32 %i.k, %11
+  br i1 %.not42.not, label %bb.c, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.k, %bb.b
   call void @__kmpc_for_static_fini(ptr nonnull @1, i32 %i.i)
@@ -364,11 +366,13 @@ bb.b:                                             ; preds = %bb.a
   %i.n = load ptr, ptr %5, align 8, !tbaa !208
   %i.o = getelementptr inbounds nuw i8, ptr %7, i64 48 ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %9, i64 48 ; 3 uses
+  %10 = zext nneg i32 %i.l to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.k
-  %.04955 = phi i32 [ %i.l, %.lr.ph ], [ %10, %bb.k ] ; 3 uses
-  %i.q = add i32 %.04955, %i.e                    ; 4 uses
+  %indvars.iv = phi i64 [ %10, %.lr.ph ], [ %indvars.iv.next, %bb.k ] ; 2 uses
+  %11 = trunc nsw i64 %indvars.iv to i32          ; 2 uses
+  %i.q = add i32 %i.e, %11                        ; 4 uses
   %.sroa.01.0.copyload.i = load ptr, ptr %4, align 8 ; 2 uses
   %.sroa.0.0.copyload.i = load ptr, ptr %i.m, align 8
   %i.r = icmp eq ptr %.sroa.01.0.copyload.i, %.sroa.0.0.copyload.i
@@ -499,9 +503,9 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %10 = add i32 %.04955, 1
-  %exitcond.not = icmp eq i32 %.04955, %i.k
-  br i1 %exitcond.not, label %._crit_edge, label %bb.c
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %.not53.not = icmp ugt i32 %i.k, %11
+  br i1 %.not53.not, label %bb.c, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.k, %bb.b
   call void @__kmpc_for_static_fini(ptr nonnull @1, i32 %i.i)

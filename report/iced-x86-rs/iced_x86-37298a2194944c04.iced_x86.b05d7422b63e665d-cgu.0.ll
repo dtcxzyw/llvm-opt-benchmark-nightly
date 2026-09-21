@@ -205,7 +205,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTNtNtNtCsf8MNnN4IDbl_8iced_x869block_enc
   br i1 %i.t, label %_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecTNtNtNtCsf8MNnN4IDbl_8iced_x869block_enc5instr9InstrBaseINtNtB7_5boxed3BoxDNtBI_5InstrEL_EEENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropBM_.exit, label %.lr.ph.i.i
 
 bb.e:                                             ; preds = %.lr.ph
-  %i.u = add i64 %.sroa.0.1.i.i22, 1              ; 2 uses
+  %i.u = add nuw nsw i64 %.sroa.0.1.i.i22, 1      ; 2 uses
   %i.v = icmp eq i64 %i.u, %.val1
   br i1 %i.v, label %.body, label %.lr.ph
 
@@ -608,7 +608,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNt
   ret void
 
 bb.e:                                             ; preds = %.lr.ph25
-  %i.r = add i64 %.sroa.0.124, 1                  ; 2 uses
+  %i.r = add nuw nsw i64 %.sroa.0.124, 1          ; 2 uses
   %i.s = icmp eq i64 %i.r, %1
   br i1 %i.s, label %._crit_edge26, label %.lr.ph25
 
@@ -692,7 +692,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNt
   ret void
 
 bb.e:                                             ; preds = %.lr.ph25
-  %i.r = add i64 %.sroa.0.124, 1                  ; 2 uses
+  %i.r = add nuw nsw i64 %.sroa.0.124, 1          ; 2 uses
   %i.s = icmp eq i64 %i.r, %1
   br i1 %i.s, label %._crit_edge26, label %.lr.ph25
 
@@ -776,7 +776,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNt
   ret void
 
 bb.e:                                             ; preds = %.lr.ph25
-  %i.r = add i64 %.sroa.0.124, 1                  ; 2 uses
+  %i.r = add nuw nsw i64 %.sroa.0.124, 1          ; 2 uses
   %i.s = icmp eq i64 %i.r, %1
   br i1 %i.s, label %._crit_edge26, label %.lr.ph25
 
@@ -860,7 +860,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNt
   ret void
 
 bb.e:                                             ; preds = %.lr.ph25
-  %i.r = add i64 %.sroa.0.124, 1                  ; 2 uses
+  %i.r = add nuw nsw i64 %.sroa.0.124, 1          ; 2 uses
   %i.s = icmp eq i64 %i.r, %1
   br i1 %i.s, label %._crit_edge26, label %.lr.ph25
 
@@ -1263,7 +1263,7 @@ bb.f:                                             ; preds = %bb.e
   %i.u = load i32, ptr %i.t, align 8, !noundef !21
   %i.v = or i32 %i.u, 8192
   store i32 %i.v, ptr %i.t, align 8
-  %i.w = add i8 %i.p, 8
+  %i.w = add nuw i8 %i.p, 8
   %i.x = add i8 %i.p, 15
   tail call fastcc void @_RNvMNtCsf8MNnN4IDbl_8iced_x867encoderNtB2_7Encoder19add_mod_rm_register(ptr noalias nofree noundef align 8 dereferenceable(152) %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, i32 noundef %3, i8 noundef %i.w, i8 noundef %i.x)
   br label %bb.g

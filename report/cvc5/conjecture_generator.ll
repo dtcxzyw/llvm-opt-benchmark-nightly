@@ -205,8 +205,7 @@ bb.db:                                            ; preds = %bb.da, %bb.cz
   br label %bb.em
 
 .lr.ph561:                                        ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit225, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit239
-  %i.mu = phi i64 [ %19, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit239 ], [ 0, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit225 ] ; 2 uses
-  %.058560 = phi i32 [ %18, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit239 ], [ 0, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit225 ]
+  %i.mu = phi i64 [ %indvars.iv.next751, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit239 ], [ 0, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit225 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #21
   %i.mv = load ptr, ptr %6, align 8, !tbaa !624
   %i.mw = getelementptr inbounds nuw [8 x i8], ptr %i.mv, i64 %i.mu
@@ -345,9 +344,8 @@ bb.dq:                                            ; preds = %bb.dp
 
 _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit239: ; preds = %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE9push_backERKS3_.exit237, %bb.do, %bb.dp
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #21
-  %18 = add i32 %.058560, 1                       ; 2 uses
-  %19 = zext i32 %18 to i64                       ; 2 uses
-  %i.ox = icmp ugt i64 %i.iw, %19
+  %indvars.iv.next751 = add nuw i64 %i.mu, 1      ; 2 uses
+  %i.ox = icmp ugt i64 %i.iw, %indvars.iv.next751
   br i1 %i.ox, label %.lr.ph561, label %._crit_edge, !llvm.loop !1155
 
 bb.dr:                                            ; preds = %bb.de

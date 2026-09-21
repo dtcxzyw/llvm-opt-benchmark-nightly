@@ -205,7 +205,7 @@ bb.bb:                                            ; preds = %bb.ba
   br i1 %.not62.i.i.i.i, label %_ZN3gsl7details18dyn_array_iteratorIcEppEv.exit10.i.i.i.i, label %"_ZSt11find_if_notIN3gsl7details18dyn_array_iteratorIcEEZN30dyn_array_tests_copy_ctor_Test8TestBodyEvE3$_0ET_S6_S6_T0_.exit.i"
 
 _ZN3gsl7details18dyn_array_iteratorIcEppEv.exit10.i.i.i.i: ; preds = %"_ZN9__gnu_cxx5__ops12_Iter_negateIZN30dyn_array_tests_copy_ctor_Test8TestBodyEvE3$_0EclIN3gsl7details18dyn_array_iteratorIcEEEEbT_.exit9.i.i.i.i"
-  %i.dp = add nuw i64 %i.cz, 4
+  %i.dp = add nuw nsw i64 %i.cz, 4
   %i.dq = add nsw i64 %.063.i.i.i.i, -1
   %i.dr = icmp sgt i64 %.063.i.i.i.i, 1
   br i1 %i.dr, label %.lr.ph.split.i.i.i.i, label %_ZNK3gsl7details18dyn_array_iteratorIcEmiERKS2_.exit.i.i.i, !llvm.loop !51
@@ -608,13 +608,13 @@ vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = sub i64 %i.s, %i.x                     ; 3 uses
   %i.y = getelementptr i8, ptr %i.k, i64 %n.vec
   %i.z = add i64 %.sroa.2.0.copyload, %n.vec
-  %i.aa = getelementptr i8, ptr %.fr.i, i64 %.sroa.2.0.copyload
+  %i.aa = getelementptr inbounds nuw i8, ptr %.fr.i, i64 %.sroa.2.0.copyload
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %i.k, i64 %index ; 2 uses
-  %i.ab = getelementptr i8, ptr %i.aa, i64 %index ; 2 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 %index ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
   %wide.load = load <16 x i8>, ptr %i.ab, align 1
   %wide.load38 = load <16 x i8>, ptr %i.ac, align 1
@@ -646,7 +646,7 @@ _ZN3gsl7details18dyn_array_iteratorIKcEppEv.exit.us.us.i.prol: ; preds = %.lr.ph
   %i.aj = getelementptr inbounds nuw i8, ptr %.fr.i, i64 %i.ai
   %i.ak = load i8, ptr %i.aj, align 1
   store i8 %i.ak, ptr %.08.us.us2127.i.prol, align 1
-  %i.al = add i64 %i.ai, 1                        ; 2 uses
+  %i.al = add nuw nsw i64 %i.ai, 1                ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %.08.us.us2127.i.prol, i64 1 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -668,7 +668,7 @@ _ZN3gsl7details18dyn_array_iteratorIKcEppEv.exit.us.us.i: ; preds = %.lr.ph28.i
   %i.ap = getelementptr inbounds nuw i8, ptr %.fr.i, i64 %i.ao
   %i.aq = load i8, ptr %i.ap, align 1
   store i8 %i.aq, ptr %.08.us.us2127.i, align 1
-  %i.ar = add i64 %i.ao, 1                        ; 2 uses
+  %i.ar = add nuw nsw i64 %i.ao, 1                ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %i.ar, %umax.i
   br i1 %exitcond.not.i.1, label %.split17.us.i, label %_ZN3gsl7details18dyn_array_iteratorIKcEppEv.exit.us.us.i.1, !prof !9
 
@@ -677,7 +677,7 @@ _ZN3gsl7details18dyn_array_iteratorIKcEppEv.exit.us.us.i.1: ; preds = %_ZN3gsl7d
   %i.at = getelementptr inbounds nuw i8, ptr %.fr.i, i64 %i.ar
   %i.au = load i8, ptr %i.at, align 1
   store i8 %i.au, ptr %i.as, align 1
-  %i.av = add i64 %i.ao, 2                        ; 2 uses
+  %i.av = add nuw nsw i64 %i.ao, 2                ; 2 uses
   %exitcond.not.i.2 = icmp eq i64 %i.av, %umax.i
   br i1 %exitcond.not.i.2, label %.split17.us.i, label %_ZN3gsl7details18dyn_array_iteratorIKcEppEv.exit.us.us.i.2, !prof !9
 
@@ -686,7 +686,7 @@ _ZN3gsl7details18dyn_array_iteratorIKcEppEv.exit.us.us.i.2: ; preds = %_ZN3gsl7d
   %i.ax = getelementptr inbounds nuw i8, ptr %.fr.i, i64 %i.av
   %i.ay = load i8, ptr %i.ax, align 1
   store i8 %i.ay, ptr %i.aw, align 1
-  %i.az = add i64 %i.ao, 3                        ; 2 uses
+  %i.az = add nuw nsw i64 %i.ao, 3                ; 2 uses
   %exitcond.not.i.3 = icmp eq i64 %i.az, %umax.i
   br i1 %exitcond.not.i.3, label %.split17.us.i, label %_ZN3gsl7details18dyn_array_iteratorIKcEppEv.exit.us.us.i.3, !prof !9
 
@@ -695,7 +695,7 @@ _ZN3gsl7details18dyn_array_iteratorIKcEppEv.exit.us.us.i.3: ; preds = %_ZN3gsl7d
   %i.bb = getelementptr inbounds nuw i8, ptr %.fr.i, i64 %i.az
   %i.bc = load i8, ptr %i.bb, align 1
   store i8 %i.bc, ptr %i.ba, align 1
-  %i.bd = add i64 %i.ao, 4                        ; 2 uses
+  %i.bd = add nuw nsw i64 %i.ao, 4                ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %.08.us.us2127.i, i64 4
   %.not.us.us22.i.3 = icmp eq i64 %i.bd, %.sroa.220.0.copyload
   br i1 %.not.us.us22.i.3, label %_ZN3gsl7details14dyn_array_baseIcSaIcEE4copyINS0_18dyn_array_iteratorIKcEEEEvT_S8_Pc.exit, label %.lr.ph28.i, !llvm.loop !270

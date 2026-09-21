@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   %i.cs = getelementptr inbounds nuw [2632 x i8], ptr %i.bb, i64 %.06.i
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 21048
   store i8 0, ptr %i.ct, align 8, !tbaa !872
-  %i.cu = add nuw i64 %.06.i, 8                   ; 2 uses
+  %i.cu = add nuw nsw i64 %.06.i, 8               ; 2 uses
   %niter9.next.7 = add i64 %niter9, 8             ; 2 uses
   %niter9.ncmp.7 = icmp eq i64 %niter9.next.7, %unroll_iter8
   br i1 %niter9.ncmp.7, label %_ZN3ylt6detail10moodycamel15ConcurrentQueueIN7easylog8record_tENS1_28ConcurrentQueueDefaultTraitsEE27populate_initial_block_listEm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !3853
@@ -226,7 +226,7 @@ _ZN3ylt6detail10moodycamel15ConcurrentQueueIN7easylog8record_tENS1_28ConcurrentQ
   %i.cv = getelementptr inbounds nuw [2632 x i8], ptr %i.bb, i64 %.06.i.epil
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 2624
   store i8 0, ptr %i.cw, align 8, !tbaa !872
-  %i.cx = add nuw i64 %.06.i.epil, 1
+  %i.cx = add nuw nsw i64 %.06.i.epil, 1
   %epil.iter5.next = add i64 %epil.iter5, 1       ; 2 uses
   %epil.iter5.cmp.not = icmp eq i64 %epil.iter5.next, %xtraiter4
   br i1 %epil.iter5.cmp.not, label %_ZN3ylt6detail10moodycamel15ConcurrentQueueIN7easylog8record_tENS1_28ConcurrentQueueDefaultTraitsEE27populate_initial_block_listEm.exit, label %.lr.ph.i.epil, !llvm.loop !3854
@@ -629,7 +629,7 @@ bb.fs:                                            ; preds = %_ZNSt10shared_ptrIN
   %i.ux = getelementptr inbounds nuw i8, ptr %i.uw, i64 8
   %i.uy = load i64, ptr %i.ux, align 8, !tbaa !231
   %i.uz = trunc i64 %i.uy to i32
-  %i.va = add i32 %.0, 1
+  %i.va = add nsw i32 %.0, 1
   %i.vb = add i32 %i.va, %i.uz                    ; 2 uses
   %i.vc = icmp eq i32 %i.vb, %i.l
   br i1 %i.vc, label %bb.ft, label %_ZNSt14_Function_baseD2Ev.exit343

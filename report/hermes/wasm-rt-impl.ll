@@ -202,7 +202,7 @@ declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #13
 define hidden i32 @wasm_rt_grow_funcref_table(ptr nofree noundef captures(none) %0, i32 noundef %1, ptr nofree noundef readonly byval(%struct.wasm_rt_funcref_t) align 8 captures(none) %2) local_unnamed_addr #14 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !17   ; 4 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !17   ; 3 uses
   %i.c = zext i32 %i.b to i64                     ; 2 uses
   %i.d = zext i32 %1 to i64
   %i.e = add nuw nsw i64 %i.c, %i.d               ; 5 uses
@@ -231,14 +231,12 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not29, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.d, %.lr.ph
-  %i.o = phi i64 [ %4, %.lr.ph ], [ %i.c, %bb.d ]
-  %.026 = phi i32 [ %3, %.lr.ph ], [ %i.b, %bb.d ]
+  %i.o = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %i.c, %bb.d ] ; 2 uses
   %i.p = load ptr, ptr %0, align 8, !tbaa !19
   %i.q = getelementptr inbounds nuw [24 x i8], ptr %i.p, i64 %i.o
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.q, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false), !tbaa.struct !34
-  %3 = add i32 %.026, 1                           ; 2 uses
-  %4 = zext i32 %3 to i64                         ; 2 uses
-  %i.r = icmp samesign ugt i64 %i.e, %4
+  %indvars.iv.next = add nuw nsw i64 %i.o, 1      ; 2 uses
+  %i.r = icmp samesign ugt i64 %i.e, %indvars.iv.next
   br i1 %i.r, label %.lr.ph, label %.loopexit, !llvm.loop !32
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.d, %bb.c, %bb.b, %bb.a
@@ -277,7 +275,7 @@ bb.a:
 define hidden i32 @wasm_rt_grow_externref_table(ptr nofree noundef captures(none) %0, i32 noundef %1, ptr noundef %2) local_unnamed_addr #14 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !24   ; 4 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !24   ; 3 uses
   %i.c = zext i32 %i.b to i64                     ; 2 uses
   %i.d = zext i32 %1 to i64
   %i.e = add nuw nsw i64 %i.c, %i.d               ; 5 uses
@@ -306,14 +304,12 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not30, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.d, %.lr.ph
-  %i.o = phi i64 [ %4, %.lr.ph ], [ %i.c, %bb.d ]
-  %.027 = phi i32 [ %3, %.lr.ph ], [ %i.b, %bb.d ]
+  %i.o = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %i.c, %bb.d ] ; 2 uses
   %i.p = load ptr, ptr %0, align 8, !tbaa !26
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.o
   store ptr %2, ptr %i.q, align 8, !tbaa !20
-  %3 = add i32 %.027, 1                           ; 2 uses
-  %4 = zext i32 %3 to i64                         ; 2 uses
-  %i.r = icmp samesign ugt i64 %i.e, %4
+  %indvars.iv.next = add nuw nsw i64 %i.o, 1      ; 2 uses
+  %i.r = icmp samesign ugt i64 %i.e, %indvars.iv.next
   br i1 %i.r, label %.lr.ph, label %.loopexit, !llvm.loop !35
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.d, %bb.c, %bb.b, %bb.a

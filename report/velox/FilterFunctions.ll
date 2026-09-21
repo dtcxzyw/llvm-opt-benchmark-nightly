@@ -205,15 +205,20 @@ _ZNK8facebook5velox17SelectivityVector13isAllSelectedEv.exit.i: ; preds = %_ZN8f
 bb.aw:                                            ; preds = %_ZNK8facebook5velox17SelectivityVector13isAllSelectedEv.exit.i
   %i.jf = load i32, ptr %i.ev, align 8, !tbaa !192 ; 2 uses
   %i.jg = icmp slt i32 %i.je, %i.jf
-  br i1 %i.jg, label %.lr.ph.i77, label %_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_9functions18FilterFunctionBase7doApplyINS0_11ArrayVectorEEEiRKS1_RKSt10shared_ptrIT_ERKS9_INS0_10BaseVectorEERKSt6vectorISF_SaISF_EERNS0_4exec7EvalCtxERN5boost13intrusive_ptrINS0_6BufferEEESU_SU_EUliE_EEvSA_.exit
+  br i1 %i.jg, label %.lr.ph.i77.preheader, label %_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_9functions18FilterFunctionBase7doApplyINS0_11ArrayVectorEEEiRKS1_RKSt10shared_ptrIT_ERKS9_INS0_10BaseVectorEERKSt6vectorISF_SaISF_EERNS0_4exec7EvalCtxERN5boost13intrusive_ptrINS0_6BufferEEESU_SU_EUliE_EEvSA_.exit
 
-.lr.ph.i77:                                       ; preds = %bb.aw, %.noexc79
-  %.04.i = phi i32 [ %23, %.noexc79 ], [ %i.je, %bb.aw ] ; 3 uses
+.lr.ph.i77.preheader:                             ; preds = %bb.aw
+  %22 = sext i32 %i.je to i64
+  br label %.lr.ph.i77
+
+.lr.ph.i77:                                       ; preds = %.lr.ph.i77.preheader, %.noexc79
+  %indvars.iv = phi i64 [ %22, %.lr.ph.i77.preheader ], [ %indvars.iv.next, %.noexc79 ] ; 6 uses
   %i.jh = load ptr, ptr %1, align 8, !tbaa !157   ; 2 uses
   %i.ji = load ptr, ptr %i.jh, align 8, !tbaa !37
   %i.jj = getelementptr inbounds nuw i8, ptr %i.ji, i64 32
   %i.jk = load ptr, ptr %i.jj, align 8
-  %i.jl = invoke noundef zeroext i1 %i.jk(ptr noundef nonnull align 8 dereferenceable(94) %i.jh, i32 noundef %.04.i)
+  %23 = trunc nsw i64 %indvars.iv to i32
+  %i.jl = invoke noundef zeroext i1 %i.jk(ptr noundef nonnull align 8 dereferenceable(94) %i.jh, i32 noundef %23)
           to label %.noexc108 unwind label %.loopexit.split-lp.loopexit, !inline_history !266
 
 .noexc108:                                        ; preds = %.lr.ph.i77
@@ -221,15 +226,14 @@ bb.aw:                                            ; preds = %_ZNK8facebook5velox
 
 bb.ax:                                            ; preds = %.noexc108
   %i.jm = load ptr, ptr %i.b, align 8, !tbaa !235
-  %22 = sext i32 %.04.i to i64                    ; 4 uses
-  %i.jn = getelementptr inbounds [4 x i8], ptr %i.jm, i64 %22
+  %i.jn = getelementptr inbounds [4 x i8], ptr %i.jm, i64 %indvars.iv
   %i.jo = load i32, ptr %i.jn, align 4, !tbaa !58 ; 2 uses
   %i.jp = load ptr, ptr %i.a, align 8, !tbaa !235
-  %i.jq = getelementptr inbounds [4 x i8], ptr %i.jp, i64 %22
+  %i.jq = getelementptr inbounds [4 x i8], ptr %i.jp, i64 %indvars.iv
   %i.jr = load i32, ptr %i.jq, align 4, !tbaa !58
   %i.js = load i32, ptr %i.f, align 4, !tbaa !58
   %i.jt = load ptr, ptr %i.d, align 8, !tbaa !235
-  %i.ju = getelementptr inbounds [4 x i8], ptr %i.jt, i64 %22
+  %i.ju = getelementptr inbounds [4 x i8], ptr %i.jt, i64 %indvars.iv
   store i32 %i.js, ptr %i.ju, align 4, !tbaa !58
   %i.jv = icmp sgt i32 %i.jo, 0
   br i1 %i.jv, label %.lr.ph.i103, label %.noexc79
@@ -565,7 +569,7 @@ _ZNK8facebook5velox13DecodedVector7valueAtIbEET_i.exit.i: ; preds = %bb.br, %bb.
 
 bb.bs:                                            ; preds = %_ZNK8facebook5velox13DecodedVector7valueAtIbEET_i.exit.i
   %i.os = load ptr, ptr %i.c, align 8, !tbaa !235
-  %i.ot = getelementptr inbounds [4 x i8], ptr %i.os, i64 %22 ; 2 uses
+  %i.ot = getelementptr inbounds [4 x i8], ptr %i.os, i64 %indvars.iv ; 2 uses
   %i.ou = load i32, ptr %i.ot, align 4, !tbaa !58
   %i.ov = add nsw i32 %i.ou, 1
   store i32 %i.ov, ptr %i.ot, align 4, !tbaa !58
@@ -587,8 +591,9 @@ bb.bt:                                            ; preds = %bb.bs, %_ZNK8facebo
   br i1 %exitcond.not.i106, label %.noexc79, label %bb.ay, !llvm.loop !14
 
 .noexc79:                                         ; preds = %bb.bt, %bb.ax, %.noexc108
-  %23 = add i32 %.04.i, 1                         ; 2 uses
-  %exitcond.not.i = icmp eq i32 %23, %i.jf
+  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
+  %24 = trunc nsw i64 %indvars.iv.next to i32
+  %exitcond.not.i = icmp eq i32 %i.jf, %24
   br i1 %exitcond.not.i, label %_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_9functions18FilterFunctionBase7doApplyINS0_11ArrayVectorEEEiRKS1_RKSt10shared_ptrIT_ERKS9_INS0_10BaseVectorEERKSt6vectorISF_SaISF_EERNS0_4exec7EvalCtxERN5boost13intrusive_ptrINS0_6BufferEEESU_SU_EUliE_EEvSA_.exit, label %.lr.ph.i77, !llvm.loop !515
 
 bb.bu:                                            ; preds = %_ZNK8facebook5velox17SelectivityVector13isAllSelectedEv.exit.i
@@ -991,7 +996,7 @@ bb.l:                                             ; preds = %_ZNK8facebook5velox
           to label %.noexc unwind label %.loopexit
 
 .noexc:                                           ; preds = %.lr.ph.i
-  %i.bj = add i32 %.04.i, 1                       ; 2 uses
+  %i.bj = add nsw i32 %.04.i, 1                   ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.bj, %i.bf
   br i1 %exitcond.not.i, label %.loopexit22, label %.lr.ph.i, !llvm.loop !667
 
@@ -1394,7 +1399,7 @@ bb.fm:                                            ; preds = %_ZNK8facebook5velox
           to label %.noexc190.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.i
 
 .noexc190.i:                                      ; preds = %.lr.ph.i184.i
-  %i.ahc = add i32 %.06.i.i, 1                    ; 2 uses
+  %i.ahc = add nsw i32 %.06.i.i, 1                ; 2 uses
   %exitcond.not.i.i = icmp eq i32 %i.ahc, %i.aha
   br i1 %exitcond.not.i.i, label %.loopexit49.i, label %.lr.ph.i184.i, !llvm.loop !840
 
@@ -1797,15 +1802,20 @@ _ZNK8facebook5velox17SelectivityVector13isAllSelectedEv.exit.i: ; preds = %_ZN8f
 bb.aw:                                            ; preds = %_ZNK8facebook5velox17SelectivityVector13isAllSelectedEv.exit.i
   %i.jf = load i32, ptr %i.ev, align 8, !tbaa !192 ; 2 uses
   %i.jg = icmp slt i32 %i.je, %i.jf
-  br i1 %i.jg, label %.lr.ph.i77, label %_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_9functions18FilterFunctionBase7doApplyINS0_9MapVectorEEEiRKS1_RKSt10shared_ptrIT_ERKS9_INS0_10BaseVectorEERKSt6vectorISF_SaISF_EERNS0_4exec7EvalCtxERN5boost13intrusive_ptrINS0_6BufferEEESU_SU_EUliE_EEvSA_.exit
+  br i1 %i.jg, label %.lr.ph.i77.preheader, label %_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_9functions18FilterFunctionBase7doApplyINS0_9MapVectorEEEiRKS1_RKSt10shared_ptrIT_ERKS9_INS0_10BaseVectorEERKSt6vectorISF_SaISF_EERNS0_4exec7EvalCtxERN5boost13intrusive_ptrINS0_6BufferEEESU_SU_EUliE_EEvSA_.exit
 
-.lr.ph.i77:                                       ; preds = %bb.aw, %.noexc79
-  %.04.i = phi i32 [ %23, %.noexc79 ], [ %i.je, %bb.aw ] ; 3 uses
+.lr.ph.i77.preheader:                             ; preds = %bb.aw
+  %22 = sext i32 %i.je to i64
+  br label %.lr.ph.i77
+
+.lr.ph.i77:                                       ; preds = %.lr.ph.i77.preheader, %.noexc79
+  %indvars.iv = phi i64 [ %22, %.lr.ph.i77.preheader ], [ %indvars.iv.next, %.noexc79 ] ; 6 uses
   %i.jh = load ptr, ptr %1, align 8, !tbaa !382   ; 2 uses
   %i.ji = load ptr, ptr %i.jh, align 8, !tbaa !37
   %i.jj = getelementptr inbounds nuw i8, ptr %i.ji, i64 32
   %i.jk = load ptr, ptr %i.jj, align 8
-  %i.jl = invoke noundef zeroext i1 %i.jk(ptr noundef nonnull align 8 dereferenceable(94) %i.jh, i32 noundef %.04.i)
+  %23 = trunc nsw i64 %indvars.iv to i32
+  %i.jl = invoke noundef zeroext i1 %i.jk(ptr noundef nonnull align 8 dereferenceable(94) %i.jh, i32 noundef %23)
           to label %.noexc108 unwind label %.loopexit.split-lp.loopexit, !inline_history !391
 
 .noexc108:                                        ; preds = %.lr.ph.i77
@@ -1813,15 +1823,14 @@ bb.aw:                                            ; preds = %_ZNK8facebook5velox
 
 bb.ax:                                            ; preds = %.noexc108
   %i.jm = load ptr, ptr %i.b, align 8, !tbaa !235
-  %22 = sext i32 %.04.i to i64                    ; 4 uses
-  %i.jn = getelementptr inbounds [4 x i8], ptr %i.jm, i64 %22
+  %i.jn = getelementptr inbounds [4 x i8], ptr %i.jm, i64 %indvars.iv
   %i.jo = load i32, ptr %i.jn, align 4, !tbaa !58 ; 2 uses
   %i.jp = load ptr, ptr %i.a, align 8, !tbaa !235
-  %i.jq = getelementptr inbounds [4 x i8], ptr %i.jp, i64 %22
+  %i.jq = getelementptr inbounds [4 x i8], ptr %i.jp, i64 %indvars.iv
   %i.jr = load i32, ptr %i.jq, align 4, !tbaa !58
   %i.js = load i32, ptr %i.f, align 4, !tbaa !58
   %i.jt = load ptr, ptr %i.d, align 8, !tbaa !235
-  %i.ju = getelementptr inbounds [4 x i8], ptr %i.jt, i64 %22
+  %i.ju = getelementptr inbounds [4 x i8], ptr %i.jt, i64 %indvars.iv
   store i32 %i.js, ptr %i.ju, align 4, !tbaa !58
   %i.jv = icmp sgt i32 %i.jo, 0
   br i1 %i.jv, label %.lr.ph.i103, label %.noexc79
@@ -2157,7 +2166,7 @@ _ZNK8facebook5velox13DecodedVector7valueAtIbEET_i.exit.i: ; preds = %bb.br, %bb.
 
 bb.bs:                                            ; preds = %_ZNK8facebook5velox13DecodedVector7valueAtIbEET_i.exit.i
   %i.os = load ptr, ptr %i.c, align 8, !tbaa !235
-  %i.ot = getelementptr inbounds [4 x i8], ptr %i.os, i64 %22 ; 2 uses
+  %i.ot = getelementptr inbounds [4 x i8], ptr %i.os, i64 %indvars.iv ; 2 uses
   %i.ou = load i32, ptr %i.ot, align 4, !tbaa !58
   %i.ov = add nsw i32 %i.ou, 1
   store i32 %i.ov, ptr %i.ot, align 4, !tbaa !58
@@ -2179,8 +2188,9 @@ bb.bt:                                            ; preds = %bb.bs, %_ZNK8facebo
   br i1 %exitcond.not.i106, label %.noexc79, label %bb.ay, !llvm.loop !27
 
 .noexc79:                                         ; preds = %bb.bt, %bb.ax, %.noexc108
-  %23 = add i32 %.04.i, 1                         ; 2 uses
-  %exitcond.not.i = icmp eq i32 %23, %i.jf
+  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
+  %24 = trunc nsw i64 %indvars.iv.next to i32
+  %exitcond.not.i = icmp eq i32 %i.jf, %24
   br i1 %exitcond.not.i, label %_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_9functions18FilterFunctionBase7doApplyINS0_9MapVectorEEEiRKS1_RKSt10shared_ptrIT_ERKS9_INS0_10BaseVectorEERKSt6vectorISF_SaISF_EERNS0_4exec7EvalCtxERN5boost13intrusive_ptrINS0_6BufferEEESU_SU_EUliE_EEvSA_.exit, label %.lr.ph.i77, !llvm.loop !1012
 
 bb.bu:                                            ; preds = %_ZNK8facebook5velox17SelectivityVector13isAllSelectedEv.exit.i
@@ -2583,7 +2593,7 @@ bb.l:                                             ; preds = %_ZNK8facebook5velox
           to label %.noexc unwind label %.loopexit
 
 .noexc:                                           ; preds = %.lr.ph.i
-  %i.bj = add i32 %.04.i, 1                       ; 2 uses
+  %i.bj = add nsw i32 %.04.i, 1                   ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.bj, %i.bf
   br i1 %exitcond.not.i, label %.loopexit22, label %.lr.ph.i, !llvm.loop !1028
 

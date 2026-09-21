@@ -202,28 +202,24 @@ bb.f:                                             ; preds = %.lr.ph61
 
 .lr.ph61:                                         ; preds = %.lr.ph61.preheader, %bb.f
   %.0.in.i59 = phi i32 [ %.0.i26, %bb.f ], [ -1, %.lr.ph61.preheader ] ; 2 uses
-  %.0.i26 = add nsw i32 %.0.in.i59, 1             ; 4 uses
+  %.0.i26 = add nsw i32 %.0.in.i59, 1             ; 3 uses
   %i.n = tail call ptr @OPENSSL_sk_value(ptr noundef nonnull %i.j, i32 noundef %.0.i26) #7
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !16
   %i.p = tail call i32 @OBJ_cmp(ptr noundef %i.o, ptr noundef %.0.i) #7
   %i.q = icmp eq i32 %i.p, 0
-  br i1 %i.q, label %X509v3_get_ext_by_OBJ.exit, label %bb.f, !llvm.loop !0
+  br i1 %i.q, label %.preheader, label %bb.f, !llvm.loop !0
 
-X509v3_get_ext_by_OBJ.exit:                       ; preds = %.lr.ph61
-  %.not = icmp eq i32 %.0.i26, -1
-  br i1 %.not, label %X509v3_get_ext_by_OBJ.exit.thread, label %.preheader
-
-.preheader:                                       ; preds = %X509v3_get_ext_by_OBJ.exit, %X509v3_get_ext_by_OBJ.exit30
-  %.0 = phi i32 [ %.0.i28, %X509v3_get_ext_by_OBJ.exit30 ], [ %.0.i26, %X509v3_get_ext_by_OBJ.exit ]
+.preheader:                                       ; preds = %.lr.ph61
   %i.r = load ptr, ptr %0, align 8, !tbaa !19
-  %i.s = tail call ptr @OPENSSL_sk_delete(ptr noundef %i.r, i32 noundef %.0) #7
+  %i.s = tail call ptr @OPENSSL_sk_delete(ptr noundef %i.r, i32 noundef %.0.i26) #7
   tail call void @X509_EXTENSION_free(ptr noundef %i.s) #7
-  %i.t = load ptr, ptr %0, align 8, !tbaa !19     ; 3 uses
+  %i.t = load ptr, ptr %0, align 8, !tbaa !19     ; 2 uses
   %i.u = icmp eq ptr %i.t, null
   br i1 %i.u, label %X509v3_get_ext_by_OBJ.exit.thread, label %bb.g
 
-bb.g:                                             ; preds = %.preheader
-  %i.v = tail call i32 @OPENSSL_sk_num(ptr noundef nonnull %i.t) #7 ; 2 uses
+bb.g:                                             ; preds = %.preheader, %X509v3_get_ext_by_OBJ.exit30
+  %2 = phi ptr [ %5, %X509v3_get_ext_by_OBJ.exit30 ], [ %i.t, %.preheader ] ; 2 uses
+  %i.v = tail call i32 @OPENSSL_sk_num(ptr noundef nonnull %2) #7 ; 2 uses
   %smax45 = tail call i32 @llvm.smax.i32(i32 %i.v, i32 0)
   %exitcond46.not62 = icmp slt i32 %i.v, 1
   br i1 %exitcond46.not62, label %X509v3_get_ext_by_OBJ.exit.thread, label %.lr.ph65.preheader
@@ -238,18 +234,22 @@ bb.h:                                             ; preds = %.lr.ph65
 
 .lr.ph65:                                         ; preds = %.lr.ph65.preheader, %bb.h
   %.0.in.i2763 = phi i32 [ %.0.i28, %bb.h ], [ -1, %.lr.ph65.preheader ] ; 2 uses
-  %.0.i28 = add nsw i32 %.0.in.i2763, 1           ; 4 uses
-  %i.x = tail call ptr @OPENSSL_sk_value(ptr noundef nonnull %i.t, i32 noundef %.0.i28) #7
+  %.0.i28 = add nsw i32 %.0.in.i2763, 1           ; 3 uses
+  %i.x = tail call ptr @OPENSSL_sk_value(ptr noundef nonnull %2, i32 noundef %.0.i28) #7
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !16
   %i.z = tail call i32 @OBJ_cmp(ptr noundef %i.y, ptr noundef %.0.i) #7
   %i.aa = icmp eq i32 %i.z, 0
   br i1 %i.aa, label %X509v3_get_ext_by_OBJ.exit30, label %bb.h, !llvm.loop !0
 
 X509v3_get_ext_by_OBJ.exit30:                     ; preds = %.lr.ph65
-  %.not24 = icmp eq i32 %.0.i28, -1
-  br i1 %.not24, label %X509v3_get_ext_by_OBJ.exit.thread, label %.preheader, !llvm.loop !24
+  %3 = load ptr, ptr %0, align 8, !tbaa !19
+  %4 = tail call ptr @OPENSSL_sk_delete(ptr noundef %3, i32 noundef %.0.i28) #7
+  tail call void @X509_EXTENSION_free(ptr noundef %4) #7
+  %5 = load ptr, ptr %0, align 8, !tbaa !19       ; 2 uses
+  %.not24 = icmp eq ptr %5, null
+  br i1 %.not24, label %X509v3_get_ext_by_OBJ.exit.thread, label %bb.g
 
-X509v3_get_ext_by_OBJ.exit.thread:                ; preds = %bb.f, %.preheader, %X509v3_get_ext_by_OBJ.exit30, %bb.g, %bb.h, %bb.e, %X509_EXTENSION_get_object.exit, %X509v3_get_ext_by_OBJ.exit
+X509v3_get_ext_by_OBJ.exit.thread:                ; preds = %bb.f, %X509v3_get_ext_by_OBJ.exit30, %bb.g, %bb.h, %bb.e, %.preheader, %X509_EXTENSION_get_object.exit
   %i.ab = tail call ptr @X509v3_add_ext(ptr noundef nonnull %0, ptr noundef %i.g, i32 noundef -1)
   %.not25.not = icmp eq ptr %i.ab, null
   br i1 %.not25.not, label %.loopexit, label %bb.c
@@ -312,7 +312,7 @@ bb.a:
   br i1 %i.a, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = load ptr, ptr %0, align 8, !tbaa !26     ; 2 uses
+  %i.b = load ptr, ptr %0, align 8, !tbaa !25     ; 2 uses
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %bb.c, label %bb.e
 
@@ -357,19 +357,19 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.a, label %bb.l, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.p = load ptr, ptr %0, align 8, !tbaa !26
+  %i.p = load ptr, ptr %0, align 8, !tbaa !25
   %i.q = icmp eq ptr %i.p, null
   br i1 %i.q, label %bb.i, label %bb.l
 
 bb.i:                                             ; preds = %bb.h
-  store ptr %.0, ptr %0, align 8, !tbaa !26
+  store ptr %.0, ptr %0, align 8, !tbaa !25
   br label %bb.l
 
 X509_EXTENSION_set_object.exit.thread:            ; preds = %bb.e, %bb.f, %X509_EXTENSION_set_object.exit
   br i1 %i.a, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %X509_EXTENSION_set_object.exit.thread
-  %i.r = load ptr, ptr %0, align 8, !tbaa !26
+  %i.r = load ptr, ptr %0, align 8, !tbaa !25
   %.not24 = icmp eq ptr %.0, %i.r
   br i1 %.not24, label %bb.l, label %bb.k
 
@@ -503,7 +503,6 @@ attributes #7 = { nounwind }
 !21 = !{!14, !6, i64 0}
 !22 = distinct !{!22, !9}
 !23 = distinct !{!23, !9}
-!24 = distinct !{!24, !9}
-!25 = !{!"p1 _ZTS17X509_extension_st", !10, i64 0}
-!26 = !{!25, !25, i64 0}
+!24 = !{!"p1 _ZTS17X509_extension_st", !10, i64 0}
+!25 = !{!24, !24, i64 0}
 end_hunk_0

@@ -205,12 +205,12 @@ bb.a:
   br i1 %i.c, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = tail call noundef i32 @_ZNK5clang12FunctionDecl12getNumParamsEv(ptr noundef nonnull align 8 dereferenceable(168) %2) #26 ; 4 uses
+  %i.d = tail call noundef i32 @_ZNK5clang12FunctionDecl12getNumParamsEv(ptr noundef nonnull align 8 dereferenceable(168) %2) #26 ; 3 uses
   %i.e = icmp eq i32 %i.d, 0
   br i1 %i.e, label %.critedge, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = zext i32 %i.d to i64                     ; 2 uses
+  %i.f = zext i32 %i.d to i64                     ; 3 uses
   %i.g = shl nuw nsw i64 %i.f, 3                  ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 232
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !790, !nonnull !107, !align !791 ; 2 uses
@@ -266,8 +266,7 @@ bb.i:                                             ; preds = %bb.h
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i.i.i, i64 %indvars.iv
   store ptr %i.ab, ptr %i.ac, align 8, !tbaa !3135
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next to i32
-  %.not.not = icmp eq i32 %i.d, %indvars
+  %.not.not = icmp eq i64 %indvars.iv.next, %i.f
   br i1 %.not.not, label %.critedge28, label %bb.h, !llvm.loop !3133
 
 .critedge28:                                      ; preds = %bb.i, %bb.g
