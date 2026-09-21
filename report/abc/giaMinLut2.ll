@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 405
 inline.NumDeleted: 71
 loop-unroll.NumCompletelyUnrolled: 6
-loop-unroll.NumRuntimeUnrolled: 31
-loop-unroll.NumUnrolled: 42
+loop-unroll.NumRuntimeUnrolled: 30
+loop-unroll.NumUnrolled: 41
 begin_hunk_0_@Gia_ManFindBestPosition:bb.a
   %.not122 = icmp eq i32 %.05372.us.us83, 0
   br i1 %.not122, label %._crit_edge.thread, label %.lr.ph.split.us.split.split.us, !llvm.loop !102
@@ -205,8 +205,8 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define i32 @Gia_ManPermuteTreeOne(ptr nofree noundef captures(address) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, ptr nofree noundef writeonly captures(address_is_null) %5, i32 noundef %6, i32 noundef %7) local_unnamed_addr #9 {
 bb.a:
-  %i.a = alloca [16 x i32], align 16              ; 12 uses
-  %i.b = alloca [16 x i32], align 16              ; 18 uses
+  %i.a = alloca [16 x i32], align 16              ; 8 uses
+  %i.b = alloca [16 x i32], align 16              ; 14 uses
   %i.c = alloca i32, align 4                      ; 5 uses
   %i.d = mul i32 %3, %2                           ; 4 uses
   %i.e = mul i32 %i.d, %1
@@ -383,20 +383,14 @@ bb.b:                                             ; preds = %.lr.ph104.us, %bb.b
   %i.cf = zext nneg i32 %1 to i64                 ; 2 uses
   %i.cg = getelementptr [4 x i8], ptr %i.a, i64 %i.cf
   %i.ch = getelementptr i8, ptr %i.cg, i64 -4     ; 2 uses
-  %i.ci = add i32 %1, -2                          ; 3 uses
+  %i.ci = add i32 %1, -2                          ; 2 uses
   %i.cj = shl nuw nsw i64 %wide.trip.count24.i, 3
-  %i.ck = sext i32 %i.ci to i64                   ; 7 uses
+  %i.ck = sext i32 %i.ci to i64                   ; 2 uses
   %smax = tail call i32 @llvm.smax.i32(i32 %i.cd, i32 1)
   %i.cl = shl nsw i64 %i.ck, 2
   %i.cm = add nsw i64 %i.cl, 4                    ; 2 uses
   %scevgep = getelementptr i8, ptr %i.b, i64 %i.cm
   %scevgep147 = getelementptr i8, ptr %i.a, i64 %i.cm
-  %8 = add nsw i64 %i.ck, 1                       ; 2 uses
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %8
-  %10 = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.ck ; 2 uses
-  %11 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %8
-  %12 = getelementptr inbounds [4 x i8], ptr %i.b, i64 %i.ck ; 2 uses
-  %indvars.iv.next136.prol = add nsw i64 %i.ck, -1
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %.lr.ph115
@@ -412,7 +406,7 @@ bb.c:                                             ; preds = %bb.d, %.lr.ph115
 .split:                                           ; preds = %bb.c, %.split90
   %.sink146 = phi i32 [ %6, %.split90 ], [ 0, %bb.c ]
   %i.cp = and i32 %.086113, 1
-  %i.cq = call i32 @Gia_ManFindBestPosition(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, ptr noundef %i.h, i32 noundef %i.cp, ptr noundef nonnull %i.c, i32 noundef %.sink146) ; 4 uses
+  %i.cq = call i32 @Gia_ManFindBestPosition(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, ptr noundef %i.h, i32 noundef %i.cp, ptr noundef nonnull %i.c, i32 noundef %.sink146) ; 3 uses
   br i1 %i.ce, label %.lr.ph18.i.preheader, label %Abc_TtCopy.exit
 
 .lr.ph18.i.preheader:                             ; preds = %.split
@@ -430,57 +424,29 @@ Abc_TtCopy.exit:                                  ; preds = %.lr.ph18.i.preheade
   br i1 %.not97108, label %._crit_edge111, label %.lr.ph110.preheader
 
 .lr.ph110.preheader:                              ; preds = %Abc_TtCopy.exit
-  %i.cw = sext i32 %i.cq to i64                   ; 2 uses
-  %load_initial = load i32, ptr %scevgep, align 4 ; 3 uses
-  %load_initial148 = load i32, ptr %scevgep147, align 4 ; 3 uses
-  %13 = add nsw i64 %i.ck, %i.cw
-  %14 = and i64 %13, 1
-  %lcmp.mod.not.not = icmp eq i64 %14, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph110.prol, label %.lr.ph110.prol.loopexit
+  %i.cw = sext i32 %i.cq to i64
+  %load_initial = load i32, ptr %scevgep, align 4
+  %load_initial148 = load i32, ptr %scevgep147, align 4
+  br label %.lr.ph110
 
-.lr.ph110.prol:                                   ; preds = %.lr.ph110.preheader
-  %15 = load i32, ptr %10, align 4, !tbaa !17
-  store i32 %15, ptr %9, align 4, !tbaa !17
-  store i32 %load_initial148, ptr %10, align 4, !tbaa !17
-  %16 = load i32, ptr %12, align 4, !tbaa !17
-  store i32 %16, ptr %11, align 4, !tbaa !17
-  store i32 %load_initial, ptr %12, align 4, !tbaa !17
-  br label %.lr.ph110.prol.loopexit
-
-.lr.ph110.prol.loopexit:                          ; preds = %.lr.ph110.prol, %.lr.ph110.preheader
-  %indvars.iv135.unr = phi i64 [ %i.ck, %.lr.ph110.preheader ], [ %indvars.iv.next136.prol, %.lr.ph110.prol ]
-  %17 = icmp eq i32 %i.ci, %i.cq
-  br i1 %17, label %._crit_edge111, label %.lr.ph110
-
-.lr.ph110:                                        ; preds = %.lr.ph110.prol.loopexit, %.lr.ph110
-  %indvars.iv135 = phi i64 [ %indvars.iv.next136.1, %.lr.ph110 ], [ %indvars.iv135.unr, %.lr.ph110.prol.loopexit ] ; 7 uses
-  %18 = add nsw i64 %indvars.iv135, 1             ; 2 uses
-  %19 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %18
-  %20 = getelementptr inbounds [4 x i8], ptr %i.a, i64 %indvars.iv135 ; 2 uses
-  %21 = load i32, ptr %20, align 4, !tbaa !17
-  store i32 %21, ptr %19, align 4, !tbaa !17
-  store i32 %load_initial148, ptr %20, align 4, !tbaa !17
-  %22 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %18
-  %23 = getelementptr inbounds [4 x i8], ptr %i.b, i64 %indvars.iv135 ; 2 uses
-  %24 = load i32, ptr %23, align 4, !tbaa !17
-  store i32 %24, ptr %22, align 4, !tbaa !17
-  store i32 %load_initial, ptr %23, align 4, !tbaa !17
-  %indvars.iv.next136.a = add nsw i64 %indvars.iv135, -1 ; 3 uses
-  %i.cx = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv135
-  %i.cy = getelementptr inbounds [4 x i8], ptr %i.a, i64 %indvars.iv.next136.a ; 2 uses
+.lr.ph110:                                        ; preds = %.lr.ph110.preheader, %.lr.ph110
+  %indvars.iv135 = phi i64 [ %i.ck, %.lr.ph110.preheader ], [ %indvars.iv.next136.1, %.lr.ph110 ] ; 5 uses
+  %indvars.iv.next136.a = add nsw i64 %indvars.iv135, 1 ; 2 uses
+  %i.cx = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.next136.a
+  %i.cy = getelementptr inbounds [4 x i8], ptr %i.a, i64 %indvars.iv135 ; 2 uses
   %i.cz = load i32, ptr %i.cy, align 4, !tbaa !17
   store i32 %i.cz, ptr %i.cx, align 4, !tbaa !17
   store i32 %load_initial148, ptr %i.cy, align 4, !tbaa !17
-  %i.da = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv135
-  %i.db = getelementptr inbounds [4 x i8], ptr %i.b, i64 %indvars.iv.next136.a ; 2 uses
+  %i.da = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.next136.a
+  %i.db = getelementptr inbounds [4 x i8], ptr %i.b, i64 %indvars.iv135 ; 2 uses
   %i.dc = load i32, ptr %i.db, align 4, !tbaa !17
   store i32 %i.dc, ptr %i.da, align 4, !tbaa !17
   store i32 %load_initial, ptr %i.db, align 4, !tbaa !17
-  %indvars.iv.next136.1 = add nsw i64 %indvars.iv135, -2
-  %.not97.not.1 = icmp sgt i64 %indvars.iv.next136.a, %i.cw
+  %indvars.iv.next136.1 = add nsw i64 %indvars.iv135, -1
+  %.not97.not.1 = icmp sgt i64 %indvars.iv135, %i.cw
   br i1 %.not97.not.1, label %.lr.ph110, label %._crit_edge111, !llvm.loop !113
 
-._crit_edge111:                                   ; preds = %.lr.ph110.prol.loopexit, %.lr.ph110, %Abc_TtCopy.exit
+._crit_edge111:                                   ; preds = %.lr.ph110, %Abc_TtCopy.exit
   br i1 %.not96, label %bb.d, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %._crit_edge111, %.lr.ph.i
