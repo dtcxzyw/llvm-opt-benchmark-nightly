@@ -205,34 +205,33 @@ vector.ph832:                                     ; preds = %.lr.ph.i428.prehead
 
 vector.body834:                                   ; preds = %vector.body834, %vector.ph832
   %index835 = phi i64 [ 0, %vector.ph832 ], [ %index.next838, %vector.body834 ] ; 2 uses
-  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph832 ], [ %9, %vector.body834 ]
-  %vec.phi836 = phi <4 x i32> [ zeroinitializer, %vector.ph832 ], [ %10, %vector.body834 ]
+  %vec.phi = phi <4 x i8> [ zeroinitializer, %vector.ph832 ], [ %7, %vector.body834 ]
+  %vec.phi836 = phi <4 x i8> [ zeroinitializer, %vector.ph832 ], [ %8, %vector.body834 ]
   %next.gep = getelementptr i8, ptr %i.fr, i64 %index835 ; 2 uses
   %i.ami = getelementptr i8, ptr %next.gep, i64 4
   %wide.load = load <4 x i8>, ptr %next.gep, align 1, !tbaa !9
   %wide.load837 = load <4 x i8>, ptr %i.ami, align 1, !tbaa !9
-  %7 = zext <4 x i8> %wide.load to <4 x i32>
-  %8 = zext <4 x i8> %wide.load837 to <4 x i32>
-  %9 = call <4 x i32> @llvm.umax.v4i32(<4 x i32> %7, <4 x i32> %vec.phi) ; 2 uses
-  %10 = call <4 x i32> @llvm.umax.v4i32(<4 x i32> %8, <4 x i32> %vec.phi836) ; 2 uses
+  %7 = call <4 x i8> @llvm.umax.v4i8(<4 x i8> %wide.load, <4 x i8> %vec.phi) ; 2 uses
+  %8 = call <4 x i8> @llvm.umax.v4i8(<4 x i8> %wide.load837, <4 x i8> %vec.phi836) ; 2 uses
   %index.next838 = add nuw i64 %index835, 8       ; 2 uses
   %i.amj = icmp eq i64 %index.next838, %n.vec833
   br i1 %i.amj, label %middle.block839, label %vector.body834, !llvm.loop !155
 
 middle.block839:                                  ; preds = %vector.body834
-  %rdx.minmax = call <4 x i32> @llvm.umax.v4i32(<4 x i32> %9, <4 x i32> %10)
-  %11 = call i32 @llvm.vector.reduce.umax.v4i32(<4 x i32> %rdx.minmax) ; 2 uses
+  %rdx.minmax = call <4 x i8> @llvm.umax.v4i8(<4 x i8> %7, <4 x i8> %8)
+  %9 = call i8 @llvm.vector.reduce.umax.v4i8(<4 x i8> %rdx.minmax)
+  %10 = zext i8 %9 to i32                         ; 2 uses
   %cmp.n840 = icmp eq i64 %n.vec833, %i.amf
   br i1 %cmp.n840, label %._crit_edge.i430, label %.lr.ph.i428.preheader885
 
 .lr.ph.i428.preheader885:                         ; preds = %.lr.ph.i428.preheader, %middle.block839
   %.ph = phi ptr [ %i.fr, %.lr.ph.i428.preheader ], [ %i.amg, %middle.block839 ]
   %.03039.i.ph = phi i32 [ 0, %.lr.ph.i428.preheader ], [ %i.amh, %middle.block839 ]
-  %.03138.i.ph = phi i32 [ 0, %.lr.ph.i428.preheader ], [ %11, %middle.block839 ]
+  %.03138.i.ph = phi i32 [ 0, %.lr.ph.i428.preheader ], [ %10, %middle.block839 ]
   br label %.lr.ph.i428
 
 ._crit_edge.i430:                                 ; preds = %.lr.ph.i428, %middle.block839
-  %.lcssa = phi i32 [ %11, %middle.block839 ], [ %i.amp, %.lr.ph.i428 ] ; 4 uses
+  %.lcssa = phi i32 [ %10, %middle.block839 ], [ %i.amp, %.lr.ph.i428 ] ; 4 uses
   %i.amk = icmp eq i32 %.lcssa, 0
   br i1 %i.amk, label %._crit_edge.thread.i, label %bb.iu
 
@@ -635,10 +634,10 @@ declare i64 @llvm.smin.i64(i64, i64) #9
 declare i32 @llvm.smin.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i32> @llvm.umax.v4i32(<4 x i32>, <4 x i32>) #9
+declare <4 x i8> @llvm.umax.v4i8(<4 x i8>, <4 x i8>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.umax.v4i32(<4 x i32>) #9
+declare i8 @llvm.vector.reduce.umax.v4i8(<4 x i8>) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #11

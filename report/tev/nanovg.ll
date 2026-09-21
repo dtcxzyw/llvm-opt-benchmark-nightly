@@ -205,8 +205,8 @@ vector.ph:                                        ; preds = %.lr.ph82
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 9 uses
-  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %5, %vector.body ]
-  %vec.phi115 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %6, %vector.body ]
+  %vec.phi = phi <4 x i16> [ zeroinitializer, %vector.ph ], [ %3, %vector.body ]
+  %vec.phi115 = phi <4 x i16> [ zeroinitializer, %vector.ph ], [ %4, %vector.body ]
   %i.ew = getelementptr inbounds nuw [6 x i8], ptr %i.es, i64 %index
   %i.ex = getelementptr inbounds nuw [6 x i8], ptr %i.es, i64 %index
   %i.ey = getelementptr inbounds nuw [6 x i8], ptr %i.es, i64 %index
@@ -239,22 +239,21 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.fz = insertelement <4 x i16> %i.fy, i16 %i.fv, i64 1
   %i.ga = insertelement <4 x i16> %i.fz, i16 %i.fw, i64 2
   %i.gb = insertelement <4 x i16> %i.ga, i16 %i.fx, i64 3
-  %3 = sext <4 x i16> %i.ft to <4 x i32>
-  %4 = sext <4 x i16> %i.gb to <4 x i32>
-  %5 = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %vec.phi, <4 x i32> %3) ; 2 uses
-  %6 = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %vec.phi115, <4 x i32> %4) ; 2 uses
+  %3 = tail call <4 x i16> @llvm.smax.v4i16(<4 x i16> %vec.phi, <4 x i16> %i.ft) ; 2 uses
+  %4 = tail call <4 x i16> @llvm.smax.v4i16(<4 x i16> %vec.phi115, <4 x i16> %i.gb) ; 2 uses
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.gc = icmp eq i64 %index.next, %n.vec
   br i1 %i.gc, label %middle.block, label %vector.body, !llvm.loop !439
 
 middle.block:                                     ; preds = %vector.body
-  %rdx.minmax = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %5, <4 x i32> %6)
-  %7 = tail call i32 @llvm.vector.reduce.smax.v4i32(<4 x i32> %rdx.minmax)
+  %rdx.minmax = tail call <4 x i16> @llvm.smax.v4i16(<4 x i16> %3, <4 x i16> %4)
+  %5 = tail call i16 @llvm.vector.reduce.smax.v4i16(<4 x i16> %rdx.minmax)
+  %6 = sext i16 %5 to i32
   br label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph82, %middle.block
   %indvars.iv92.ph = phi i64 [ 0, %.lr.ph82 ], [ %n.vec, %middle.block ]
-  %.081.ph = phi i32 [ 0, %.lr.ph82 ], [ %7, %middle.block ]
+  %.081.ph = phi i32 [ 0, %.lr.ph82 ], [ %6, %middle.block ]
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
@@ -657,10 +656,10 @@ declare <2 x i32> @llvm.smin.v2i32(<2 x i32>, <2 x i32>) #8
 declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #8
+declare <4 x i16> @llvm.smax.v4i16(<4 x i16>, <4 x i16>) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.smax.v4i32(<4 x i32>) #8
+declare i16 @llvm.vector.reduce.smax.v4i16(<4 x i16>) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #8

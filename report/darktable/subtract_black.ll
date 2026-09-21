@@ -202,30 +202,26 @@ bb.m:                                             ; preds = %bb.h, %bb.g, %bb.c
   %i.rk = load i16, ptr %i.rj, align 2, !tbaa !97
   %i.rl = zext i16 %i.rk to i32
   %i.rm = shl nuw nsw i32 %i.ri, 2
-  %i.rn = mul i32 %i.rm, %i.rl                    ; 4 uses
+  %i.rn = mul i32 %i.rm, %i.rl                    ; 3 uses
   %.not104 = icmp eq i32 %i.rn, 0
   br i1 %.not104, label %._crit_edge, label %iter.check320
 
 iter.check320:                                    ; preds = %bb.m
-  %wide.trip.count121 = zext i32 %i.rn to i64     ; 6 uses
-  %min.iters.check298 = icmp ult i32 %i.rn, 8
-  br i1 %min.iters.check298, label %.lr.ph.preheader, label %vector.main.loop.iter.check299
+  %wide.trip.count121 = zext i32 %i.rn to i64     ; 5 uses
+  %min.iters.check298 = icmp ult i32 %i.rn, 32
+  br i1 %min.iters.check298, label %vec.epilog.ph324, label %vector.ph301
 
-vector.main.loop.iter.check299:                   ; preds = %iter.check320
-  %min.iters.check300 = icmp ult i32 %i.rn, 32
-  br i1 %min.iters.check300, label %vec.epilog.ph324, label %vector.ph301
-
-vector.ph301:                                     ; preds = %vector.main.loop.iter.check299
-  %i.ro = and i64 %wide.trip.count121, 24
+vector.ph301:                                     ; preds = %iter.check320
+  %i.ro = and i64 %wide.trip.count121, 28
   %n.vec302 = and i64 %wide.trip.count121, 4294967264 ; 4 uses
   br label %vector.body303
 
 vector.body303:                                   ; preds = %vector.body303, %vector.ph301
   %index304 = phi i64 [ 0, %vector.ph301 ], [ %index.next312, %vector.body303 ] ; 2 uses
-  %vec.phi305 = phi <8 x i32> [ zeroinitializer, %vector.ph301 ], [ %5, %vector.body303 ]
-  %vec.phi306 = phi <8 x i32> [ zeroinitializer, %vector.ph301 ], [ %6, %vector.body303 ]
-  %vec.phi307 = phi <8 x i32> [ zeroinitializer, %vector.ph301 ], [ %7, %vector.body303 ]
-  %vec.phi308 = phi <8 x i32> [ zeroinitializer, %vector.ph301 ], [ %8, %vector.body303 ]
+  %vec.phi305 = phi <8 x i16> [ zeroinitializer, %vector.ph301 ], [ %1, %vector.body303 ]
+  %vec.phi306 = phi <8 x i16> [ zeroinitializer, %vector.ph301 ], [ %2, %vector.body303 ]
+  %vec.phi307 = phi <8 x i16> [ zeroinitializer, %vector.ph301 ], [ %3, %vector.body303 ]
+  %vec.phi308 = phi <8 x i16> [ zeroinitializer, %vector.ph301 ], [ %4, %vector.body303 ]
   %i.rp = getelementptr inbounds nuw [2 x i8], ptr %i.rf, i64 %index304 ; 4 uses
   %i.rq = getelementptr inbounds nuw i8, ptr %i.rp, i64 16
   %i.rr = getelementptr inbounds nuw i8, ptr %i.rp, i64 32
@@ -234,62 +230,52 @@ vector.body303:                                   ; preds = %vector.body303, %ve
   %wide.load309 = load <8 x i16>, ptr %i.rq, align 2, !tbaa !102
   %wide.load310 = load <8 x i16>, ptr %i.rr, align 2, !tbaa !102
   %wide.load311 = load <8 x i16>, ptr %i.rs, align 2, !tbaa !102
-  %1 = zext <8 x i16> %wide.load to <8 x i32>
-  %2 = zext <8 x i16> %wide.load309 to <8 x i32>
-  %3 = zext <8 x i16> %wide.load310 to <8 x i32>
-  %4 = zext <8 x i16> %wide.load311 to <8 x i32>
-  %5 = tail call <8 x i32> @llvm.umax.v8i32(<8 x i32> %vec.phi305, <8 x i32> %1) ; 2 uses
-  %6 = tail call <8 x i32> @llvm.umax.v8i32(<8 x i32> %vec.phi306, <8 x i32> %2) ; 2 uses
-  %7 = tail call <8 x i32> @llvm.umax.v8i32(<8 x i32> %vec.phi307, <8 x i32> %3) ; 2 uses
-  %8 = tail call <8 x i32> @llvm.umax.v8i32(<8 x i32> %vec.phi308, <8 x i32> %4) ; 2 uses
+  %1 = tail call <8 x i16> @llvm.umax.v8i16(<8 x i16> %vec.phi305, <8 x i16> %wide.load) ; 2 uses
+  %2 = tail call <8 x i16> @llvm.umax.v8i16(<8 x i16> %vec.phi306, <8 x i16> %wide.load309) ; 2 uses
+  %3 = tail call <8 x i16> @llvm.umax.v8i16(<8 x i16> %vec.phi307, <8 x i16> %wide.load310) ; 2 uses
+  %4 = tail call <8 x i16> @llvm.umax.v8i16(<8 x i16> %vec.phi308, <8 x i16> %wide.load311) ; 2 uses
   %index.next312 = add nuw i64 %index304, 32      ; 2 uses
   %i.rt = icmp eq i64 %index.next312, %n.vec302
   br i1 %i.rt, label %middle.block313, label %vector.body303, !llvm.loop !21
 
 middle.block313:                                  ; preds = %vector.body303
-  %rdx.minmax314 = tail call <8 x i32> @llvm.umax.v8i32(<8 x i32> %5, <8 x i32> %6)
-  %rdx.minmax315 = tail call <8 x i32> @llvm.umax.v8i32(<8 x i32> %rdx.minmax314, <8 x i32> %7)
-  %rdx.minmax316 = tail call <8 x i32> @llvm.umax.v8i32(<8 x i32> %rdx.minmax315, <8 x i32> %8)
-  %9 = tail call i32 @llvm.vector.reduce.umax.v8i32(<8 x i32> %rdx.minmax316) ; 3 uses
+  %rdx.minmax314 = tail call <8 x i16> @llvm.umax.v8i16(<8 x i16> %1, <8 x i16> %2)
+  %rdx.minmax315 = tail call <8 x i16> @llvm.umax.v8i16(<8 x i16> %rdx.minmax314, <8 x i16> %3)
+  %rdx.minmax316 = tail call <8 x i16> @llvm.umax.v8i16(<8 x i16> %rdx.minmax315, <8 x i16> %4)
+  %5 = tail call i16 @llvm.vector.reduce.umax.v8i16(<8 x i16> %rdx.minmax316) ; 2 uses
+  %6 = zext i16 %5 to i32                         ; 2 uses
   %cmp.n317 = icmp eq i64 %n.vec302, %wide.trip.count121
   br i1 %cmp.n317, label %._crit_edge, label %vec.epilog.iter.check322
 
 vec.epilog.iter.check322:                         ; preds = %middle.block313
   %min.epilog.iters.check323 = icmp eq i64 %i.ro, 0
-  br i1 %min.epilog.iters.check323, label %.lr.ph.preheader, label %vec.epilog.ph324, !prof !108
+  br i1 %min.epilog.iters.check323, label %.lr.ph, label %vec.epilog.ph324, !prof !112
 
-vec.epilog.ph324:                                 ; preds = %vector.main.loop.iter.check299, %vec.epilog.iter.check322
-  %vec.epilog.resume.val318 = phi i64 [ %n.vec302, %vec.epilog.iter.check322 ], [ 0, %vector.main.loop.iter.check299 ]
-  %bc.merge.rdx319 = phi i32 [ %9, %vec.epilog.iter.check322 ], [ 0, %vector.main.loop.iter.check299 ]
-  %n.vec325 = and i64 %wide.trip.count121, 4294967288 ; 3 uses
-  %broadcast.splatinsert326 = insertelement <8 x i32> poison, i32 %bc.merge.rdx319, i64 0
-  %broadcast.splat327 = shufflevector <8 x i32> %broadcast.splatinsert326, <8 x i32> poison, <8 x i32> zeroinitializer
+vec.epilog.ph324:                                 ; preds = %iter.check320, %vec.epilog.iter.check322
+  %vec.epilog.resume.val318 = phi i64 [ %n.vec302, %vec.epilog.iter.check322 ], [ 0, %iter.check320 ]
+  %bc.merge.rdx319 = phi i16 [ %5, %vec.epilog.iter.check322 ], [ 0, %iter.check320 ]
+  %broadcast.splatinsert326 = insertelement <4 x i16> poison, i16 %bc.merge.rdx319, i64 0
+  %broadcast.splat327 = shufflevector <4 x i16> %broadcast.splatinsert326, <4 x i16> poison, <4 x i32> zeroinitializer
   br label %vec.epilog.vector.body328
 
 vec.epilog.vector.body328:                        ; preds = %vec.epilog.vector.body328, %vec.epilog.ph324
   %index329 = phi i64 [ %vec.epilog.resume.val318, %vec.epilog.ph324 ], [ %index.next332, %vec.epilog.vector.body328 ] ; 2 uses
-  %vec.phi330 = phi <8 x i32> [ %broadcast.splat327, %vec.epilog.ph324 ], [ %11, %vec.epilog.vector.body328 ]
+  %vec.phi330 = phi <4 x i16> [ %broadcast.splat327, %vec.epilog.ph324 ], [ %7, %vec.epilog.vector.body328 ]
   %i.ru = getelementptr inbounds nuw [2 x i8], ptr %i.rf, i64 %index329
-  %wide.load331 = load <8 x i16>, ptr %i.ru, align 2, !tbaa !102
-  %10 = zext <8 x i16> %wide.load331 to <8 x i32>
-  %11 = tail call <8 x i32> @llvm.umax.v8i32(<8 x i32> %vec.phi330, <8 x i32> %10) ; 2 uses
-  %index.next332 = add nuw i64 %index329, 8       ; 2 uses
-  %i.rv = icmp eq i64 %index.next332, %n.vec325
-  br i1 %i.rv, label %vec.epilog.middle.block333, label %vec.epilog.vector.body328, !llvm.loop !22
+  %wide.load331 = load <4 x i16>, ptr %i.ru, align 2, !tbaa !102
+  %7 = tail call <4 x i16> @llvm.umax.v4i16(<4 x i16> %vec.phi330, <4 x i16> %wide.load331) ; 2 uses
+  %index.next332 = add nuw i64 %index329, 4       ; 2 uses
+  %i.rv = icmp eq i64 %index.next332, %wide.trip.count121
+  br i1 %i.rv, label %.lr.ph.preheader, label %vec.epilog.vector.body328, !llvm.loop !22
 
-vec.epilog.middle.block333:                       ; preds = %vec.epilog.vector.body328
-  %12 = tail call i32 @llvm.vector.reduce.umax.v8i32(<8 x i32> %11) ; 2 uses
-  %cmp.n334 = icmp eq i64 %n.vec325, %wide.trip.count121
-  br i1 %cmp.n334, label %._crit_edge, label %.lr.ph.preheader
+.lr.ph.preheader:                                 ; preds = %vec.epilog.vector.body328
+  %8 = tail call i16 @llvm.vector.reduce.umax.v4i16(<4 x i16> %7)
+  %9 = zext i16 %8 to i32
+  br label %._crit_edge
 
-.lr.ph.preheader:                                 ; preds = %iter.check320, %vec.epilog.iter.check322, %vec.epilog.middle.block333
-  %indvars.iv118.ph = phi i64 [ 0, %iter.check320 ], [ %n.vec302, %vec.epilog.iter.check322 ], [ %n.vec325, %vec.epilog.middle.block333 ]
-  %.0100.ph = phi i32 [ 0, %iter.check320 ], [ %9, %vec.epilog.iter.check322 ], [ %12, %vec.epilog.middle.block333 ]
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %indvars.iv118 = phi i64 [ %indvars.iv.next119, %.lr.ph ], [ %indvars.iv118.ph, %.lr.ph.preheader ] ; 2 uses
-  %.0100 = phi i32 [ %spec.select83, %.lr.ph ], [ %.0100.ph, %.lr.ph.preheader ]
+.lr.ph:                                           ; preds = %vec.epilog.iter.check322, %.lr.ph
+  %indvars.iv118 = phi i64 [ %indvars.iv.next119, %.lr.ph ], [ %n.vec302, %vec.epilog.iter.check322 ] ; 2 uses
+  %.0100 = phi i32 [ %spec.select83, %.lr.ph ], [ %6, %vec.epilog.iter.check322 ]
   %i.rw = getelementptr inbounds nuw [2 x i8], ptr %i.rf, i64 %indvars.iv118
   %i.rx = load i16, ptr %i.rw, align 2, !tbaa !102
   %i.ry = zext i16 %i.rx to i32
@@ -298,8 +284,8 @@ vec.epilog.middle.block333:                       ; preds = %vec.epilog.vector.b
   %exitcond122.not = icmp eq i64 %indvars.iv.next119, %wide.trip.count121
   br i1 %exitcond122.not, label %._crit_edge, label %.lr.ph, !llvm.loop !23
 
-._crit_edge:                                      ; preds = %.lr.ph, %middle.block313, %vec.epilog.middle.block333, %bb.m
-  %.0.lcssa = phi i32 [ 0, %bb.m ], [ %12, %vec.epilog.middle.block333 ], [ %9, %middle.block313 ], [ %spec.select83, %.lr.ph ]
+._crit_edge:                                      ; preds = %.lr.ph, %middle.block313, %.lr.ph.preheader, %bb.m
+  %.0.lcssa = phi i32 [ 0, %bb.m ], [ %9, %.lr.ph.preheader ], [ %6, %middle.block313 ], [ %spec.select83, %.lr.ph ]
   %i.rz = getelementptr inbounds nuw i8, ptr %0, i64 153092
   store i32 %.0.lcssa, ptr %i.rz, align 4, !tbaa !109
   br label %bb.w
@@ -398,10 +384,16 @@ declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #4
 declare i32 @llvm.vector.reduce.smax.v2i32(<2 x i32>) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <8 x i32> @llvm.umax.v8i32(<8 x i32>, <8 x i32>) #4
+declare <8 x i16> @llvm.umax.v8i16(<8 x i16>, <8 x i16>) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.umax.v8i32(<8 x i32>) #4
+declare i16 @llvm.vector.reduce.umax.v8i16(<8 x i16>) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i16> @llvm.umax.v4i16(<4 x i16>, <4 x i16>) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.vector.reduce.umax.v4i16(<4 x i16>) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.smax.v4i32(<4 x i32>) #4
@@ -542,4 +534,5 @@ attributes #6 = { nounwind }
 !109 = !{!85, !8, i64 153092}
 !110 = !{!85, !8, i64 153088}
 !111 = !{!85, !8, i64 153096}
+!112 = !{!"branch_weights", i32 4, i32 28}
 end_hunk_0
