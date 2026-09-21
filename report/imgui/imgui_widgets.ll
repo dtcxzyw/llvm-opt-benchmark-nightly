@@ -205,7 +205,7 @@ bb.a:
   %i.h = icmp ne i16 %i.g, 0
   %or.cond.us.1 = select i1 %i.e, i1 %i.h, i1 false
   %i.i = select i1 %or.cond.us.1, i16 %i.c, i16 0
-  %spec.select.1 = add i16 %i.d, %i.i             ; 3 uses
+  %spec.select.1 = add i16 %i.i, %i.d             ; 3 uses
   %i.j = or i16 %i.d, %i.g                        ; 3 uses
   %i.k = icmp ne i16 %i.j, 0                      ; 2 uses
   br i1 %1, label %.split26.us.loopexit, label %.split.preheader
@@ -217,7 +217,7 @@ bb.a:
   %i.o = icmp ne i16 %i.n, 0
   %or.cond.2 = select i1 %i.k, i1 %i.o, i1 false
   %i.p = select i1 %or.cond.2, i16 %i.c, i16 0
-  %spec.select27.2 = add i16 %i.l, %i.p
+  %spec.select27.2 = add i16 %i.p, %i.l
   %i.q = or i16 %i.j, %i.n
   %i.r = icmp ne i16 %i.q, 0
   %i.s = add i16 %spec.select27.2, %i.n
@@ -226,7 +226,7 @@ bb.a:
   %i.v = icmp ne i16 %i.u, 0
   %or.cond.3 = select i1 %i.r, i1 %i.v, i1 false
   %i.w = select i1 %or.cond.3, i16 %i.c, i16 0
-  %spec.select27.3 = add i16 %i.s, %i.w
+  %spec.select27.3 = add i16 %i.w, %i.s
   %i.x = add i16 %spec.select27.3, %i.u
   br label %.split26.us
 
@@ -241,7 +241,7 @@ bb.a:
   %i.ae = icmp ne i16 %i.ad, 0
   %or.cond.us.2 = select i1 %i.k, i1 %i.ae, i1 false
   %i.af = select i1 %or.cond.us.2, i16 %i.c, i16 0
-  %spec.select.2 = add i16 %i.ab, %i.af           ; 2 uses
+  %spec.select.2 = add i16 %i.af, %i.ab           ; 2 uses
   %i.ag = or i16 %i.j, %i.ad
   %i.ah = icmp ne i16 %i.ag, 0
   store i16 %spec.select.2, ptr %i.z, align 2, !tbaa !544
@@ -251,7 +251,7 @@ bb.a:
   %i.al = icmp ne i16 %i.ak, 0
   %or.cond.us.3 = select i1 %i.ah, i1 %i.al, i1 false
   %i.am = select i1 %or.cond.us.3, i16 %i.c, i16 0
-  %spec.select.3 = add i16 %i.ai, %i.am           ; 2 uses
+  %spec.select.3 = add i16 %i.am, %i.ai           ; 2 uses
   store i16 %spec.select.3, ptr %i.aa, align 4, !tbaa !545
   %i.an = add i16 %spec.select.3, %i.ak
   br label %.split26.us

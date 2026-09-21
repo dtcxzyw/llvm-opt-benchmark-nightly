@@ -202,6 +202,7 @@ _ZN10StringList12SavePositionEv.exit.split:       ; preds = %_ZN10StringList12Sa
 
 _ZN10StringList12SavePositionEv.exit.split.split.us: ; preds = %_ZN10StringList12SavePositionEv.exit.split
   %i.q = load i64, ptr %i.l, align 8, !tbaa !17
+  %3 = load ptr, ptr %0, align 8
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.e, %_ZN10StringList12SavePositionEv.exit.split.split.us
@@ -210,7 +211,6 @@ bb.d:                                             ; preds = %bb.e, %_ZN10StringL
   br i1 %.not.i.us12, label %bb.e, label %_ZN10StringList9GetStringEPPw.exit
 
 bb.e:                                             ; preds = %bb.d
-  %3 = load ptr, ptr %0, align 8, !tbaa !15
   %i.s = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.r ; 2 uses
   %i.t = tail call i64 @wcslen(ptr noundef nonnull %i.s) #16
   %i.u = add nuw i64 %i.r, 1

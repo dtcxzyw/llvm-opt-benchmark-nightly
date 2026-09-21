@@ -205,8 +205,8 @@ bb.a:
   br i1 %.not54, label %.preheader56.lr.ph, label %.lr.ph
 
 .preheader56:                                     ; preds = %.preheader56.lr.ph, %bb.c
-  %i.y = phi i64 [ 0, %.preheader56.lr.ph ], [ %i.an, %bb.c ]
-  %.062 = phi i64 [ 0, %.preheader56.lr.ph ], [ %i.ao, %bb.c ] ; 4 uses
+  %i.y = phi i64 [ %i.ao, %bb.c ], [ 0, %.preheader56.lr.ph ] ; 4 uses
+  %.062 = phi i64 [ %i.an, %bb.c ], [ 0, %.preheader56.lr.ph ]
   br i1 %i.m, label %.epil.preheader, label %.preheader56.new
 
 bb.b:                                             ; preds = %bb.c
@@ -235,7 +235,7 @@ bb.b:                                             ; preds = %bb.c
   %i.ag = ptrtoint ptr %i.ae to i64
   %i.ah = sub i64 %i.af, %i.ag
   %i.ai = ashr exact i64 %i.ah, 3
-  %i.aj = icmp eq i64 %.03361.epil.init, %.062
+  %i.aj = icmp eq i64 %.03361.epil.init, %i.y
   %i.ak = select i1 %i.aj, i64 -5, i64 -4
   %i.al = add nsw i64 %i.ak, %i.ai
   %i.am = mul i64 %i.al, %.03460.epil.init
@@ -243,8 +243,8 @@ bb.b:                                             ; preds = %bb.c
 
 bb.c:                                             ; preds = %.unr-lcssa, %.epil.preheader
   %.lcssa94 = phi i64 [ %i.bn, %.unr-lcssa ], [ %i.am, %.epil.preheader ]
-  %i.an = add nsw i64 %i.y, %.lcssa94             ; 2 uses
-  %i.ao = add nuw nsw i64 %.062, 1                ; 2 uses
+  %i.an = add nsw i64 %.062, %.lcssa94            ; 2 uses
+  %i.ao = add nuw nsw i64 %i.y, 1                 ; 2 uses
   %exitcond75.not = icmp eq i64 %i.ao, %i.k
   br i1 %exitcond75.not, label %bb.b, label %.preheader56, !llvm.loop !227
 
@@ -260,7 +260,7 @@ bb.c:                                             ; preds = %.unr-lcssa, %.epil.
   %i.au = ptrtoint ptr %i.as to i64
   %i.av = sub i64 %i.at, %i.au
   %i.aw = ashr exact i64 %i.av, 3
-  %i.ax = icmp eq i64 %.03361, %.062
+  %i.ax = icmp eq i64 %.03361, %i.y
   %i.ay = select i1 %i.ax, i64 -5, i64 -4
   %i.az = add nsw i64 %i.ay, %i.aw
   %i.ba = mul i64 %i.az, %.03460
@@ -273,7 +273,7 @@ bb.c:                                             ; preds = %.unr-lcssa, %.epil.
   %i.bh = ptrtoint ptr %i.bf to i64
   %i.bi = sub i64 %i.bg, %i.bh
   %i.bj = ashr exact i64 %i.bi, 3
-  %i.bk = icmp eq i64 %i.bb, %.062
+  %i.bk = icmp eq i64 %i.bb, %i.y
   %i.bl = select i1 %i.bk, i64 -5, i64 -4
   %i.bm = add nsw i64 %i.bl, %i.bj
   %i.bn = mul i64 %i.bm, %i.ba                    ; 3 uses

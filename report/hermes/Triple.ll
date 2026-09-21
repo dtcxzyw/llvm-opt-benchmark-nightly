@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.o
   %i.bp = icmp eq i32 %i.bm, %i.bo
   br i1 %i.bp, label %_ZNK4llvh6TripleeqERKS0_.exit.sink.split, label %_ZNK4llvh6TripleeqERKS0_.exit
 
-_ZNK4llvh6TripleeqERKS0_.exit.sink.split:         ; preds = %bb.l, %bb.g, %bb.p, %bb.j
+_ZNK4llvh6TripleeqERKS0_.exit.sink.split:         ; preds = %bb.p, %bb.l, %bb.j, %bb.g
   %.sink = phi i64 [ 44, %bb.l ], [ 52, %bb.j ], [ 44, %bb.g ], [ 52, %bb.p ] ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 %.sink
   %i.br = load i32, ptr %i.bq, align 4, !tbaa !40
@@ -215,7 +215,7 @@ _ZNK4llvh6TripleeqERKS0_.exit.sink.split:         ; preds = %bb.l, %bb.g, %bb.p,
   br label %_ZNK4llvh6TripleeqERKS0_.exit
 
 _ZNK4llvh6TripleeqERKS0_.exit:                    ; preds = %_ZNK4llvh6TripleeqERKS0_.exit.sink.split, %bb.p, %bb.o, %bb.n, %bb.m, %bb.k, %bb.l, %bb.h, %bb.i, %bb.j, %bb.g
-  %.0 = phi i1 [ false, %bb.k ], [ false, %bb.n ], [ false, %bb.m ], [ %i.bu, %_ZNK4llvh6TripleeqERKS0_.exit.sink.split ], [ false, %bb.g ], [ false, %bb.j ], [ false, %bb.i ], [ false, %bb.o ], [ false, %bb.h ], [ false, %bb.p ], [ false, %bb.l ]
+  %.0 = phi i1 [ false, %bb.l ], [ false, %bb.k ], [ false, %bb.p ], [ false, %bb.o ], [ false, %bb.g ], [ false, %bb.j ], [ false, %bb.i ], [ false, %bb.m ], [ false, %bb.h ], [ false, %bb.n ], [ %i.bu, %_ZNK4llvh6TripleeqERKS0_.exit.sink.split ]
   ret i1 %.0
 }
 
