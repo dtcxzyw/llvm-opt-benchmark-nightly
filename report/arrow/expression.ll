@@ -205,17 +205,12 @@ bb.a:
   %8 = alloca %class.anon.365, align 1            ; 3 uses
   %9 = alloca %"struct.arrow::Datum", align 16    ; 8 uses
   %10 = alloca %"class.std::shared_ptr.697", align 8 ; 6 uses
-  %.sroa.0162.i = alloca ptr, align 8             ; 6 uses
   %11 = alloca %"class.std::shared_ptr.16", align 8 ; 6 uses
-  %.sroa.0160.i = alloca ptr, align 8             ; 6 uses
   %12 = alloca %"class.std::shared_ptr.16", align 8 ; 6 uses
   %13 = alloca %"class.std::shared_ptr.16", align 8 ; 6 uses
-  %.sroa.0158.i = alloca ptr, align 8             ; 6 uses
   %14 = alloca %"class.std::shared_ptr.16", align 8 ; 6 uses
   %15 = alloca %"class.std::shared_ptr.16", align 8 ; 6 uses
   %16 = alloca %"class.std::shared_ptr.16", align 8 ; 6 uses
-  %.sroa.0156.i = alloca ptr, align 8             ; 6 uses
-  %.sroa.0154.i = alloca ptr, align 8             ; 6 uses
   %17 = alloca %"class.std::vector.235", align 8  ; 21 uses
   %18 = alloca %"class.arrow::Result", align 8    ; 12 uses
   %19 = alloca %"class.arrow::Result.624", align 8 ; 11 uses
@@ -364,12 +359,12 @@ bb.q:                                             ; preds = %bb.o
   %i.ao = sub i64 %i.am, %i.an
   %i.ap = ashr exact i64 %i.ao, 4                 ; 3 uses
   %i.aq = icmp ugt i64 %i.ap, 384307168202282325
-  %.sink402.i.sroa.gep145.i = getelementptr inbounds nuw i8, ptr %16, i64 8 ; 2 uses
-  %.sink402.i.sroa.gep146.i = getelementptr inbounds nuw i8, ptr %15, i64 8 ; 2 uses
-  %.sink402.i.sroa.gep147.i = getelementptr inbounds nuw i8, ptr %14, i64 8 ; 2 uses
-  %.sink402.i.sroa.gep149.i = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 2 uses
-  %.sink402.i.sroa.gep150.i = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 2 uses
-  %.sink402.i.sroa.gep152.i = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
+  %.sink402.i.sroa.gep145.i = getelementptr inbounds nuw i8, ptr %16, i64 8
+  %.sink402.i.sroa.gep146.i = getelementptr inbounds nuw i8, ptr %15, i64 8
+  %.sink402.i.sroa.gep147.i = getelementptr inbounds nuw i8, ptr %14, i64 8
+  %.sink402.i.sroa.gep149.i = getelementptr inbounds nuw i8, ptr %13, i64 8
+  %.sink402.i.sroa.gep150.i = getelementptr inbounds nuw i8, ptr %12, i64 8
+  %.sink402.i.sroa.gep152.i = getelementptr inbounds nuw i8, ptr %11, i64 8
   br i1 %i.aq, label %.noexc.i, label %_ZNSt6vectorIN5arrow10TypeHolderESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i.i
 
 .noexc.i:                                         ; preds = %bb.q
@@ -429,17 +424,12 @@ bb.t:                                             ; preds = %_ZSt6get_ifIN5arrow
   br i1 %i.bf, label %bb.u, label %_ZN5arrow10TypeHolderD2Ev.exit.i
 
 bb.u:                                             ; preds = %bb.t
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0162.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %11), !noalias !1478
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0160.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %12), !noalias !1478
   call void @llvm.lifetime.start.p0(ptr nonnull %13), !noalias !1478
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0158.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %14), !noalias !1478
   call void @llvm.lifetime.start.p0(ptr nonnull %15), !noalias !1478
   call void @llvm.lifetime.start.p0(ptr nonnull %16), !noalias !1478
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0156.i)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0154.i)
   %i.bg = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZNK5arrow5Datum4typeEv(ptr noundef nonnull align 8 dereferenceable(24) %i.ba)
           to label %.noexc23.i unwind label %.loopexit.i, !noalias !1478
 
@@ -842,8 +832,7 @@ bb.ey:                                            ; preds = %bb.ew
           to label %bb.ez unwind label %.loopexit190.i, !noalias !1478 ; 2 uses
 
 bb.ez:                                            ; preds = %bb.ey
-  %i.nh = load ptr, ptr %i.ng, align 8, !tbaa !166, !noalias !1478 ; 4 uses
-  store ptr %i.nh, ptr %.sroa.0162.i, align 8, !tbaa !166, !noalias !1479
+  %i.nh = load ptr, ptr %i.ng, align 8, !tbaa !166, !noalias !1478 ; 3 uses
   %i.ni = getelementptr inbounds nuw i8, ptr %i.ng, i64 8
   %i.nj = load ptr, ptr %i.ni, align 8, !tbaa !130, !noalias !1478 ; 4 uses
   %.not.i.i.i244.i.i = icmp eq ptr %i.nj, null
@@ -878,7 +867,7 @@ bb.fe:                                            ; preds = %bb.fd
 bb.ff:                                            ; preds = %bb.fe
   %i.ns = load ptr, ptr %11, align 8, !tbaa !166, !noalias !1479
   %i.nt = load ptr, ptr %.sink402.i.sroa.gep152.i, align 8, !tbaa !130, !noalias !1479
-  store ptr null, ptr %.sink402.i.sroa.gep152.i, align 8, !tbaa !130, !noalias !1479
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %11, i8 0, i64 16, i1 false), !noalias !1478
   br label %_ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i
 
 bb.fg:                                            ; preds = %bb.fd
@@ -886,8 +875,7 @@ bb.fg:                                            ; preds = %bb.fd
           to label %bb.fh unwind label %.loopexit190.i, !noalias !1478 ; 2 uses
 
 bb.fh:                                            ; preds = %bb.fg
-  %i.nv = load ptr, ptr %i.nu, align 8, !tbaa !166, !noalias !1478 ; 4 uses
-  store ptr %i.nv, ptr %.sroa.0160.i, align 8, !tbaa !166, !noalias !1479
+  %i.nv = load ptr, ptr %i.nu, align 8, !tbaa !166, !noalias !1478 ; 3 uses
   %i.nw = getelementptr inbounds nuw i8, ptr %i.nu, i64 8
   %i.nx = load ptr, ptr %i.nw, align 8, !tbaa !130, !noalias !1478 ; 4 uses
   %.not.i.i.i247.i.i = icmp eq ptr %i.nx, null
@@ -922,7 +910,7 @@ bb.fm:                                            ; preds = %bb.fl
 bb.fn:                                            ; preds = %bb.fm
   %i.og = load ptr, ptr %12, align 8, !tbaa !166, !noalias !1479
   %i.oh = load ptr, ptr %.sink402.i.sroa.gep150.i, align 8, !tbaa !130, !noalias !1479
-  store ptr null, ptr %.sink402.i.sroa.gep150.i, align 8, !tbaa !130, !noalias !1479
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %12, i8 0, i64 16, i1 false), !noalias !1478
   br label %_ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i
 
 bb.fo:                                            ; preds = %bb.fl
@@ -938,7 +926,7 @@ bb.fp:                                            ; preds = %bb.fo
 bb.fq:                                            ; preds = %bb.fp
   %i.ol = load ptr, ptr %13, align 8, !tbaa !166, !noalias !1479
   %i.om = load ptr, ptr %.sink402.i.sroa.gep149.i, align 8, !tbaa !130, !noalias !1479
-  store ptr null, ptr %.sink402.i.sroa.gep149.i, align 8, !tbaa !130, !noalias !1479
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %13, i8 0, i64 16, i1 false), !noalias !1478
   br label %_ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i
 
 bb.fr:                                            ; preds = %bb.fo
@@ -946,8 +934,7 @@ bb.fr:                                            ; preds = %bb.fo
           to label %bb.fs unwind label %.loopexit190.i, !noalias !1478 ; 2 uses
 
 bb.fs:                                            ; preds = %bb.fr
-  %i.oo = load ptr, ptr %i.on, align 8, !tbaa !166, !noalias !1478 ; 4 uses
-  store ptr %i.oo, ptr %.sroa.0158.i, align 8, !tbaa !166, !noalias !1479
+  %i.oo = load ptr, ptr %i.on, align 8, !tbaa !166, !noalias !1478 ; 3 uses
   %i.op = getelementptr inbounds nuw i8, ptr %i.on, i64 8
   %i.oq = load ptr, ptr %i.op, align 8, !tbaa !130, !noalias !1478 ; 4 uses
   %.not.i.i.i250.i.i = icmp eq ptr %i.oq, null
@@ -982,7 +969,7 @@ bb.fx:                                            ; preds = %bb.fw
 bb.fy:                                            ; preds = %bb.fx
   %i.oz = load ptr, ptr %14, align 8, !tbaa !166, !noalias !1479
   %i.pa = load ptr, ptr %.sink402.i.sroa.gep147.i, align 8, !tbaa !130, !noalias !1479
-  store ptr null, ptr %.sink402.i.sroa.gep147.i, align 8, !tbaa !130, !noalias !1479
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %14, i8 0, i64 16, i1 false), !noalias !1478
   br label %_ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i
 
 bb.fz:                                            ; preds = %bb.fw
@@ -998,7 +985,7 @@ bb.ga:                                            ; preds = %bb.fz
 bb.gb:                                            ; preds = %bb.ga
   %i.pe = load ptr, ptr %15, align 8, !tbaa !166, !noalias !1479
   %i.pf = load ptr, ptr %.sink402.i.sroa.gep146.i, align 8, !tbaa !130, !noalias !1479
-  store ptr null, ptr %.sink402.i.sroa.gep146.i, align 8, !tbaa !130, !noalias !1479
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %15, i8 0, i64 16, i1 false), !noalias !1478
   br label %_ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i
 
 bb.gc:                                            ; preds = %bb.fz
@@ -1014,7 +1001,7 @@ bb.gd:                                            ; preds = %bb.gc
 bb.ge:                                            ; preds = %bb.gd
   %i.pj = load ptr, ptr %16, align 8, !tbaa !166, !noalias !1479
   %i.pk = load ptr, ptr %.sink402.i.sroa.gep145.i, align 8, !tbaa !130, !noalias !1479
-  store ptr null, ptr %.sink402.i.sroa.gep145.i, align 8, !tbaa !130, !noalias !1479
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %16, i8 0, i64 16, i1 false), !noalias !1478
   br label %_ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i
 
 bb.gf:                                            ; preds = %bb.gc
@@ -1022,8 +1009,7 @@ bb.gf:                                            ; preds = %bb.gc
           to label %bb.gg unwind label %.loopexit190.i, !noalias !1478 ; 2 uses
 
 bb.gg:                                            ; preds = %bb.gf
-  %i.pm = load ptr, ptr %i.pl, align 8, !tbaa !166, !noalias !1478 ; 4 uses
-  store ptr %i.pm, ptr %.sroa.0156.i, align 8, !tbaa !166, !noalias !1479
+  %i.pm = load ptr, ptr %i.pl, align 8, !tbaa !166, !noalias !1478 ; 3 uses
   %i.pn = getelementptr inbounds nuw i8, ptr %i.pl, i64 8
   %i.po = load ptr, ptr %i.pn, align 8, !tbaa !130, !noalias !1478 ; 4 uses
   %.not.i.i.i253.i.i = icmp eq ptr %i.po, null
@@ -1050,8 +1036,7 @@ bb.gk:                                            ; preds = %bb.ew
           to label %bb.gl unwind label %.loopexit190.i, !noalias !1478 ; 2 uses
 
 bb.gl:                                            ; preds = %bb.gk
-  %i.pv = load ptr, ptr %i.pu, align 8, !tbaa !166, !noalias !1478 ; 4 uses
-  store ptr %i.pv, ptr %.sroa.0154.i, align 8, !tbaa !166, !noalias !1479
+  %i.pv = load ptr, ptr %i.pu, align 8, !tbaa !166, !noalias !1478 ; 3 uses
   %i.pw = getelementptr inbounds nuw i8, ptr %i.pu, i64 8
   %i.px = load ptr, ptr %i.pw, align 8, !tbaa !130, !noalias !1478 ; 4 uses
   %.not.i.i.i256.i.i = icmp eq ptr %i.px, null
@@ -1076,8 +1061,6 @@ bb.go:                                            ; preds = %bb.gm
 _ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i: ; preds = %bb.go, %bb.gn, %bb.gl, %bb.gj, %bb.gi, %bb.gg, %bb.ge, %bb.gb, %bb.fy, %bb.fv, %bb.fu, %bb.fs, %bb.fq, %bb.fn, %bb.fk, %bb.fj, %bb.fh, %bb.ff, %bb.fc, %bb.fb, %bb.ez
   %.sroa.43.0.i = phi ptr [ %i.pm, %bb.gg ], [ %i.oo, %bb.fs ], [ %i.ns, %bb.ff ], [ %i.nh, %bb.ez ], [ %i.og, %bb.fn ], [ %i.ol, %bb.fq ], [ %i.nv, %bb.fh ], [ %i.oz, %bb.fy ], [ %i.pe, %bb.gb ], [ %i.pj, %bb.ge ], [ %i.nh, %bb.fc ], [ %i.nh, %bb.fb ], [ %i.nv, %bb.fk ], [ %i.nv, %bb.fj ], [ %i.oo, %bb.fv ], [ %i.oo, %bb.fu ], [ %i.pm, %bb.gj ], [ %i.pm, %bb.gi ], [ %i.pv, %bb.go ], [ %i.pv, %bb.gn ], [ %i.pv, %bb.gl ]
   %.sroa.84.0.i = phi ptr [ null, %bb.gg ], [ null, %bb.fs ], [ %i.nt, %bb.ff ], [ null, %bb.ez ], [ %i.oh, %bb.fn ], [ %i.om, %bb.fq ], [ null, %bb.fh ], [ %i.pa, %bb.fy ], [ %i.pf, %bb.gb ], [ %i.pk, %bb.ge ], [ %i.nj, %bb.fc ], [ %i.nj, %bb.fb ], [ %i.nx, %bb.fk ], [ %i.nx, %bb.fj ], [ %i.oq, %bb.fv ], [ %i.oq, %bb.fu ], [ %i.po, %bb.gj ], [ %i.po, %bb.gi ], [ %i.px, %bb.go ], [ %i.px, %bb.gn ], [ null, %bb.gl ]
-  %.sink402.i.i = phi ptr [ %.sroa.0156.i, %bb.gg ], [ %.sroa.0158.i, %bb.fs ], [ %11, %bb.ff ], [ %.sroa.0162.i, %bb.ez ], [ %12, %bb.fn ], [ %13, %bb.fq ], [ %.sroa.0160.i, %bb.fh ], [ %14, %bb.fy ], [ %15, %bb.gb ], [ %16, %bb.ge ], [ %.sroa.0162.i, %bb.fc ], [ %.sroa.0162.i, %bb.fb ], [ %.sroa.0160.i, %bb.fk ], [ %.sroa.0160.i, %bb.fj ], [ %.sroa.0158.i, %bb.fv ], [ %.sroa.0158.i, %bb.fu ], [ %.sroa.0156.i, %bb.gj ], [ %.sroa.0156.i, %bb.gi ], [ %.sroa.0154.i, %bb.go ], [ %.sroa.0154.i, %bb.gn ], [ %.sroa.0154.i, %bb.gl ]
-  store ptr null, ptr %.sink402.i.i, align 8, !tbaa !166, !noalias !1479
   %i.qd = load ptr, ptr %i.ax, align 8, !tbaa !130, !noalias !1479 ; 8 uses
   %.not.i.i259.i.i = icmp eq ptr %i.qd, null
   br i1 %.not.i.i259.i.i, label %_ZNSt12__shared_ptrIN5arrow13TimestampTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i.i, label %bb.gp
@@ -1160,17 +1143,12 @@ bb.gy:                                            ; preds = %bb.gw
 bb.gz:                                            ; preds = %bb.gy, %bb.gx, %.noexc61.i, %_ZNSt12__shared_ptrIN5arrow13TimestampTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i.i, %bb.eq, %bb.ep, %.noexc59.i, %bb.em, %bb.el, %.noexc58.i, %bb.eh, %bb.eg, %.noexc56.i, %bb.ed, %bb.ec, %.noexc55.i, %bb.dy, %bb.dx, %.noexc53.i, %bb.du, %bb.dt, %.noexc52.i, %bb.dp, %bb.do, %.noexc51.i, %bb.dk, %bb.dj, %.noexc49.i, %bb.dg, %bb.df, %.noexc48.i, %bb.db, %bb.da, %.noexc47.i, %bb.cw, %bb.cv, %.noexc46.i, %bb.cr, %bb.cq, %.noexc44.i, %bb.cn, %bb.cm, %.noexc43.i, %bb.ci, %bb.ch, %.noexc42.i, %bb.cd, %bb.cc, %.noexc41.i, %bb.bx, %bb.bw, %.noexc39.i, %bb.bt, %bb.bs, %.noexc38.i, %bb.bo, %bb.bn, %.noexc37.i, %bb.bj, %bb.bi, %.noexc35.i, %bb.bf, %bb.be, %.noexc34.i, %bb.ba, %bb.az, %.noexc33.i, %bb.au, %bb.at, %.noexc31.i, %bb.aq, %bb.ap, %.noexc30.i, %bb.al, %bb.ak, %.noexc28.i, %bb.ah, %bb.ag, %.noexc27.i, %bb.ac, %bb.ab, %.noexc25.i, %bb.y, %bb.x, %.noexc24.i
   %.sroa.43.1.i = phi ptr [ %i.mh, %.noexc59.i ], [ %.sroa.43.0.i, %_ZNSt12__shared_ptrIN5arrow13TimestampTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i.i ], [ %i.bl, %.noexc24.i ], [ %i.ck, %bb.ah ], [ %i.bu, %.noexc25.i ], [ %i.dg, %.noexc30.i ], [ %i.ct, %.noexc28.i ], [ %i.el, %bb.bf ], [ %i.ec, %bb.ba ], [ %i.dp, %.noexc31.i ], [ %i.fq, %bb.bt ], [ %i.fh, %.noexc37.i ], [ %i.eu, %.noexc35.i ], [ %i.he, %bb.cn ], [ %i.gv, %bb.ci ], [ %i.gm, %bb.cd ], [ %i.fz, %bb.bx ], [ %i.is, %bb.dg ], [ %i.ij, %bb.db ], [ %i.ia, %.noexc46.i ], [ %i.hn, %.noexc44.i ], [ %i.jb, %bb.dk ], [ %i.jq, %.noexc51.i ], [ %i.kc, %.noexc52.i ], [ %i.la, %.noexc55.i ], [ %i.kl, %bb.dy ], [ %i.ly, %.noexc58.i ], [ %i.lj, %.noexc56.i ], [ %i.bl, %bb.y ], [ %i.bl, %bb.x ], [ %i.bu, %bb.ac ], [ %i.bu, %bb.ab ], [ %i.ck, %.noexc27.i ], [ %i.ck, %bb.ag ], [ %i.ct, %bb.al ], [ %i.ct, %bb.ak ], [ %i.dg, %bb.aq ], [ %i.dg, %bb.ap ], [ %i.dp, %bb.au ], [ %i.dp, %bb.at ], [ %i.ec, %.noexc33.i ], [ %i.ec, %bb.az ], [ %i.el, %.noexc34.i ], [ %i.el, %bb.be ], [ %i.eu, %bb.bj ], [ %i.eu, %bb.bi ], [ %i.fh, %bb.bo ], [ %i.fh, %bb.bn ], [ %i.fq, %.noexc38.i ], [ %i.fq, %bb.bs ], [ %i.fz, %.noexc39.i ], [ %i.fz, %bb.bw ], [ %i.gm, %.noexc41.i ], [ %i.gm, %bb.cc ], [ %i.gv, %.noexc42.i ], [ %i.gv, %bb.ch ], [ %i.he, %.noexc43.i ], [ %i.he, %bb.cm ], [ %i.hn, %bb.cr ], [ %i.hn, %bb.cq ], [ %i.ia, %bb.cw ], [ %i.ia, %bb.cv ], [ %i.ij, %.noexc47.i ], [ %i.ij, %bb.da ], [ %i.is, %.noexc48.i ], [ %i.is, %bb.df ], [ %i.jb, %.noexc49.i ], [ %i.jb, %bb.dj ], [ %i.jq, %bb.dp ], [ %i.jq, %bb.do ], [ %i.kc, %bb.du ], [ %i.kc, %bb.dt ], [ %i.kl, %.noexc53.i ], [ %i.kl, %bb.dx ], [ %i.la, %bb.ed ], [ %i.la, %bb.ec ], [ %i.lj, %bb.eh ], [ %i.lj, %bb.eg ], [ %i.ly, %bb.em ], [ %i.ly, %bb.el ], [ %i.mh, %bb.eq ], [ %i.mh, %bb.ep ], [ %i.qu, %bb.gy ], [ %i.qu, %bb.gx ], [ %i.qu, %.noexc61.i ] ; 2 uses
   %.sroa.84.1.i = phi ptr [ null, %.noexc59.i ], [ %.sroa.84.0.i, %_ZNSt12__shared_ptrIN5arrow13TimestampTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i.i ], [ null, %.noexc24.i ], [ %i.cm, %bb.ah ], [ null, %.noexc25.i ], [ null, %.noexc30.i ], [ null, %.noexc28.i ], [ %i.en, %bb.bf ], [ %i.ee, %bb.ba ], [ null, %.noexc31.i ], [ %i.fs, %bb.bt ], [ null, %.noexc37.i ], [ null, %.noexc35.i ], [ %i.hg, %bb.cn ], [ %i.gx, %bb.ci ], [ %i.go, %bb.cd ], [ %i.gb, %bb.bx ], [ %i.iu, %bb.dg ], [ %i.il, %bb.db ], [ null, %.noexc46.i ], [ null, %.noexc44.i ], [ %i.jd, %bb.dk ], [ null, %.noexc51.i ], [ null, %.noexc52.i ], [ null, %.noexc55.i ], [ %i.kn, %bb.dy ], [ null, %.noexc58.i ], [ null, %.noexc56.i ], [ %i.bn, %bb.y ], [ %i.bn, %bb.x ], [ %i.bw, %bb.ac ], [ %i.bw, %bb.ab ], [ null, %.noexc27.i ], [ %i.cm, %bb.ag ], [ %i.cv, %bb.al ], [ %i.cv, %bb.ak ], [ %i.di, %bb.aq ], [ %i.di, %bb.ap ], [ %i.dr, %bb.au ], [ %i.dr, %bb.at ], [ null, %.noexc33.i ], [ %i.ee, %bb.az ], [ null, %.noexc34.i ], [ %i.en, %bb.be ], [ %i.ew, %bb.bj ], [ %i.ew, %bb.bi ], [ %i.fj, %bb.bo ], [ %i.fj, %bb.bn ], [ null, %.noexc38.i ], [ %i.fs, %bb.bs ], [ null, %.noexc39.i ], [ %i.gb, %bb.bw ], [ null, %.noexc41.i ], [ %i.go, %bb.cc ], [ null, %.noexc42.i ], [ %i.gx, %bb.ch ], [ null, %.noexc43.i ], [ %i.hg, %bb.cm ], [ %i.hp, %bb.cr ], [ %i.hp, %bb.cq ], [ %i.ic, %bb.cw ], [ %i.ic, %bb.cv ], [ null, %.noexc47.i ], [ %i.il, %bb.da ], [ null, %.noexc48.i ], [ %i.iu, %bb.df ], [ null, %.noexc49.i ], [ %i.jd, %bb.dj ], [ %i.js, %bb.dp ], [ %i.js, %bb.do ], [ %i.ke, %bb.du ], [ %i.ke, %bb.dt ], [ null, %.noexc53.i ], [ %i.kn, %bb.dx ], [ %i.lc, %bb.ed ], [ %i.lc, %bb.ec ], [ %i.ll, %bb.eh ], [ %i.ll, %bb.eg ], [ %i.ma, %bb.em ], [ %i.ma, %bb.el ], [ %i.mj, %bb.eq ], [ %i.mj, %bb.ep ], [ %i.qw, %bb.gy ], [ %i.qw, %bb.gx ], [ null, %.noexc61.i ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0162.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %11), !noalias !1478
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0160.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %12), !noalias !1478
   call void @llvm.lifetime.end.p0(ptr nonnull %13), !noalias !1478
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0158.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %14), !noalias !1478
   call void @llvm.lifetime.end.p0(ptr nonnull %15), !noalias !1478
   call void @llvm.lifetime.end.p0(ptr nonnull %16), !noalias !1478
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0156.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0154.i)
   %i.rc = load ptr, ptr %20, align 8, !tbaa !326, !alias.scope !1478
   %i.rd = getelementptr inbounds nuw [24 x i8], ptr %i.rc, i64 %.0195.i ; 3 uses
   store ptr %.sroa.43.1.i, ptr %i.rd, align 8, !tbaa !251, !noalias !1478

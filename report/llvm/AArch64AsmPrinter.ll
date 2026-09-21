@@ -205,8 +205,6 @@ bb.a:
   %2 = alloca %"class.llvm::MCInstBuilder", align 8 ; 17 uses
   %3 = alloca %"class.llvm::MCInstBuilder", align 8 ; 17 uses
   %4 = alloca %"class.llvm::MCInstBuilder", align 8 ; 16 uses
-  %.sroa.0 = alloca i32, align 4                  ; 5 uses
-  %.sroa.8 = alloca i32, align 4                  ; 5 uses
   %5 = alloca %"class.llvm::MCInstBuilder", align 8 ; 14 uses
   %6 = alloca %"class.llvm::MCInstBuilder", align 8 ; 16 uses
   %7 = alloca %"class.llvm::MCInstBuilder", align 8 ; 10 uses
@@ -215,17 +213,13 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !571
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.d = load i32, ptr %i.c, align 4, !tbaa !54   ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8)
-  store i32 224, ptr %.sroa.0, align 4
-  store i32 225, ptr %.sroa.8, align 4
   %i.e = icmp eq i32 %i.d, 14
   br i1 %i.e, label %bb.b, label %.preheader
 
 .preheader:                                       ; preds = %bb.a
   %i.f = tail call fastcc i32 @_ZN4llvmL15getWRegFromXRegENS_10MCRegisterE(i32 %i.d)
-  switch i32 %i.f, label %_ZN4llvm13MCInstBuilder6addImmEl.exit [
-    i32 224, label %bb.d
+  switch i32 %i.f, label %bb.d [
+    i32 224, label %_ZN4llvm13MCInstBuilder6addImmEl.exit
     i32 225, label %.fold.split
   ]
 
@@ -278,17 +272,14 @@ _ZN12_GLOBAL__N_117AArch64AsmPrinter11emitMovXRegEN4llvm8RegisterES2_.exit: ; pr
   br label %bb.f
 
 .fold.split:                                      ; preds = %.preheader
-  br label %bb.d
-
-bb.d:                                             ; preds = %.preheader, %.fold.split
-  %.023.ptr103.lcssa = phi ptr [ %.sroa.0, %.preheader ], [ %.sroa.8, %.fold.split ]
-  store i32 217, ptr %.023.ptr103.lcssa, align 4, !tbaa !66
-  %.sroa.0.0..sroa.0.0..sroa.0.0.106.pre = load i32, ptr %.sroa.0, align 4, !tbaa !66
-  %9 = zext i32 %.sroa.0.0..sroa.0.0..sroa.0.0.106.pre to i64
   br label %_ZN4llvm13MCInstBuilder6addImmEl.exit
 
-_ZN4llvm13MCInstBuilder6addImmEl.exit:            ; preds = %.preheader, %bb.d
-  %.sroa.0.0..sroa.0.0.106 = phi i64 [ %9, %bb.d ], [ 224, %.preheader ] ; 2 uses
+bb.d:                                             ; preds = %.preheader
+  br label %_ZN4llvm13MCInstBuilder6addImmEl.exit
+
+_ZN4llvm13MCInstBuilder6addImmEl.exit:            ; preds = %.preheader, %bb.d, %.fold.split
+  %.sroa.0.1 = phi i64 [ 224, %.fold.split ], [ 217, %.preheader ], [ 224, %bb.d ] ; 2 uses
+  %.sroa.8.1 = phi i32 [ 217, %.fold.split ], [ 225, %.preheader ], [ 225, %bb.d ]
   %i.s = tail call noundef ptr @_ZNK4llvm12MachineInstr5getMFEv(ptr noundef nonnull align 8 dereferenceable(80) %1) #25
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !360, !nonnull !32, !align !46
   %i.u = tail call noundef i64 @_ZNK4llvm8Function29getFnAttributeAsParsedIntegerENS_9StringRefEm(ptr noundef nonnull align 8 dereferenceable(140) %i.t, ptr nonnull @.str.55, i64 25, i64 noundef 0) #25
@@ -305,7 +296,7 @@ _ZN4llvm13MCInstBuilder6addImmEl.exit:            ; preds = %.preheader, %bb.d
   store i32 5313, ptr %5, align 8, !tbaa !408
   store i8 1, ptr %i.y, align 8
   %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 40
-  store i64 %.sroa.0.0..sroa.0.0.106, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8
+  store i64 %.sroa.0.1, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8
   %.sroa.3.8.insert.ext.i.i29 = zext i32 %i.d to i64
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 48
   store i8 1, ptr %i.ab, align 8
@@ -334,12 +325,11 @@ bb.e:                                             ; preds = %_ZN4llvm13MCInstBui
 
 _ZN4llvm13MCInstBuilderD2Ev.exit:                 ; preds = %_ZN4llvm13MCInstBuilder6addImmEl.exit, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
-  %.sroa.8.0..sroa.8.0..sroa.8.4.108.pre = load i32, ptr %.sroa.8, align 4, !tbaa !66
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZN4llvm13MCInstBuilderD2Ev.exit, %_ZN12_GLOBAL__N_117AArch64AsmPrinter11emitMovXRegEN4llvm8RegisterES2_.exit
-  %.sroa.0.0..sroa.0.0.105 = phi i64 [ 224, %_ZN12_GLOBAL__N_117AArch64AsmPrinter11emitMovXRegEN4llvm8RegisterES2_.exit ], [ %.sroa.0.0..sroa.0.0.106, %_ZN4llvm13MCInstBuilderD2Ev.exit ]
-  %.sroa.8.0..sroa.8.4. = phi i32 [ 225, %_ZN12_GLOBAL__N_117AArch64AsmPrinter11emitMovXRegEN4llvm8RegisterES2_.exit ], [ %.sroa.8.0..sroa.8.0..sroa.8.4.108.pre, %_ZN4llvm13MCInstBuilderD2Ev.exit ] ; 5 uses
+  %.sroa.0.0..sroa.0.0.105 = phi i64 [ 224, %_ZN12_GLOBAL__N_117AArch64AsmPrinter11emitMovXRegEN4llvm8RegisterES2_.exit ], [ %.sroa.0.1, %_ZN4llvm13MCInstBuilderD2Ev.exit ]
+  %.sroa.8.0..sroa.8.4. = phi i32 [ 225, %_ZN12_GLOBAL__N_117AArch64AsmPrinter11emitMovXRegEN4llvm8RegisterES2_.exit ], [ %.sroa.8.1, %_ZN4llvm13MCInstBuilderD2Ev.exit ] ; 3 uses
   %.sroa.096.0 = phi i32 [ %i.g, %_ZN12_GLOBAL__N_117AArch64AsmPrinter11emitMovXRegEN4llvm8RegisterES2_.exit ], [ %i.d, %_ZN4llvm13MCInstBuilderD2Ev.exit ] ; 2 uses
   %i.ah = load ptr, ptr %i.a, align 8, !tbaa !571
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 48
@@ -358,18 +348,15 @@ _ZNK4llvm15MCRegisterClass8containsENS_10MCRegisterE.exit.thread.i: ; preds = %b
   br label %_ZN4llvm13MCInstBuilder6addImmEl.exit13.i
 
 _ZNK4llvm15MCRegisterClass8containsENS_10MCRegisterE.exit.i: ; preds = %bb.f
-  %10 = and i32 %.sroa.8.0..sroa.8.4., 7
   %i.aq = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm29AArch64MCRegisterClassStorageE, i64 3588), align 4, !tbaa !412
   %i.ar = zext i32 %i.aq to i64
   %i.as = getelementptr inbounds nuw i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm29AArch64MCRegisterClassStorageE, i64 3584), i64 %i.ar
   %i.at = zext nneg i32 %i.al to i64
   %i.au = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.at
   %i.av = load i8, ptr %i.au, align 1, !tbaa !54
-  %11 = zext i8 %i.av to i32
-  %12 = shl nuw nsw i32 1, %10
-  %13 = and i32 %12, %11
-  %.fr.i = freeze i32 %13
-  %.not.i = icmp eq i32 %.fr.i, 0
+  %.fr136 = freeze i8 %i.av
+  %9 = and i8 %.fr136, 2
+  %.not.i = icmp eq i8 %9, 0
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !70
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
@@ -387,7 +374,7 @@ _ZN4llvm13MCInstBuilder6addImmEl.exit13.i:        ; preds = %_ZNK4llvm15MCRegist
   %i.bd = getelementptr inbounds nuw i8, ptr %3, i64 28
   store i32 6, ptr %i.bd, align 4, !tbaa !64
   store i32 %i.az, ptr %3, align 8, !tbaa !408
-  %.sroa.3.8.insert.ext.i.i.i35 = zext i32 %.sroa.8.0..sroa.8.4. to i64 ; 5 uses
+  %.sroa.3.8.insert.ext.i.i.i35 = zext nneg i32 %.sroa.8.0..sroa.8.4. to i64 ; 5 uses
   store i8 1, ptr %i.bb, align 8
   %.sroa.4.0..sroa_idx.i.i.i.i36 = getelementptr inbounds nuw i8, ptr %3, i64 40
   store i64 %.sroa.3.8.insert.ext.i.i.i35, ptr %.sroa.4.0..sroa_idx.i.i.i.i36, align 8
@@ -434,18 +421,15 @@ _ZNK4llvm15MCRegisterClass8containsENS_10MCRegisterE.exit.thread.i42: ; preds = 
   br label %_ZN4llvm13MCInstBuilder6addImmEl.exit13.i43
 
 _ZNK4llvm15MCRegisterClass8containsENS_10MCRegisterE.exit.i54: ; preds = %_ZN12_GLOBAL__N_117AArch64AsmPrinter8emitMOVKEN4llvm8RegisterEmj.exit
-  %14 = and i32 %.sroa.8.0..sroa.8.4., 7
   %i.bp = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm29AArch64MCRegisterClassStorageE, i64 3588), align 4, !tbaa !412
   %i.bq = zext i32 %i.bp to i64
   %i.br = getelementptr inbounds nuw i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm29AArch64MCRegisterClassStorageE, i64 3584), i64 %i.bq
   %i.bs = zext nneg i32 %i.al to i64
   %i.bt = getelementptr inbounds nuw i8, ptr %i.br, i64 %i.bs
   %i.bu = load i8, ptr %i.bt, align 1, !tbaa !54
-  %15 = zext i8 %i.bu to i32
-  %16 = shl nuw nsw i32 1, %14
-  %17 = and i32 %16, %15
-  %.fr.i55 = freeze i32 %17
-  %.not.i56 = icmp eq i32 %.fr.i55, 0
+  %.fr137 = freeze i8 %i.bu
+  %10 = and i8 %.fr137, 2
+  %.not.i56 = icmp eq i8 %10, 0
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.bw = load ptr, ptr %i.bv, align 8, !tbaa !70
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
@@ -609,7 +593,7 @@ bb.n:                                             ; preds = %_ZN4llvm13MCInstBui
 
 _ZN4llvm13MCInstBuilder6addImmEl.exit82:          ; preds = %_ZN4llvm13MCInstBuilderD2Ev.exit79, %bb.n, %bb.m
   %.0 = phi i32 [ %i.dq, %bb.m ], [ 30, %bb.n ], [ 29, %_ZN4llvm13MCInstBuilderD2Ev.exit79 ]
-  %i.dr = shl i32 %.sroa.8.0..sroa.8.4., 5
+  %i.dr = shl nuw nsw i32 %.sroa.8.0..sroa.8.4., 5
   %i.ds = and i32 %i.dr, 992
   %i.dt = or disjoint i32 %.0, %i.ds
   %i.du = xor i32 %i.dt, 33280
@@ -648,8 +632,6 @@ _ZN4llvm13MCInstBuilderD2Ev.exit83:               ; preds = %_ZN4llvm13MCInstBui
   %i.ei = getelementptr inbounds nuw i8, ptr %i.eh, i64 200
   %i.ej = load ptr, ptr %i.ei, align 8
   call void %i.ej(ptr noundef nonnull align 8 dereferenceable(304) %i.eg, ptr noundef %i.cv, ptr null) #25
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
   ret void
 }
 

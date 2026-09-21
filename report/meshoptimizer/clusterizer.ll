@@ -43,18 +43,6 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress uwtable
 define dso_local i64 @meshopt_buildMeshletsFlex(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef captures(none) %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, i64 noundef %4, ptr nofree noundef readonly captures(none) %5, i64 noundef %6, i64 noundef %7, i64 noundef %8, i64 noundef %9, i64 noundef %10, float noundef %11, float noundef %12) local_unnamed_addr #2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.044.i = alloca i32, align 16             ; 6 uses
-  %.sroa.645.i = alloca i32, align 4              ; 6 uses
-  %.sroa.946.i = alloca i32, align 8              ; 6 uses
-  %.sroa.1247.i = alloca i32, align 4             ; 6 uses
-  %.sroa.034.i = alloca i32, align 16             ; 6 uses
-  %.sroa.635.i = alloca i32, align 4              ; 6 uses
-  %.sroa.9.i = alloca i32, align 8                ; 6 uses
-  %.sroa.12.i = alloca i32, align 4               ; 6 uses
-  %.sroa.0.i = alloca float, align 16             ; 6 uses
-  %.sroa.6.i = alloca float, align 4              ; 6 uses
-  %.sroa.10.i = alloca float, align 8             ; 6 uses
-  %.sroa.14.i = alloca float, align 4             ; 6 uses
   %13 = alloca %class.meshopt_Allocator, align 8  ; 27 uses
   %i.a = alloca [256 x i32], align 16             ; 11 uses
   %i.b = alloca [3 x float], align 8              ; 5 uses
@@ -457,33 +445,9 @@ _ZN7meshoptL18pruneSeedTrianglesEPjmPKh.exit:     ; preds = %.lr.ph.i291.epil.pr
   %i.aai = icmp ult i64 %i.aah, 257
   %i.aaj = select i1 %i.aai, i64 %.0.lcssa.i294, i64 252 ; 2 uses
   %i.aak = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.aaj ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.044.i)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.645.i)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.946.i)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.1247.i)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.034.i)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.635.i)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9.i)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.12.i)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.10.i)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.14.i)
-  store i32 -1, ptr %.sroa.044.i, align 16, !tbaa !21
-  store i32 -1, ptr %.sroa.645.i, align 4, !tbaa !21
-  store i32 -1, ptr %.sroa.946.i, align 8, !tbaa !21
-  store i32 -1, ptr %.sroa.1247.i, align 4, !tbaa !21
-  store i32 -1, ptr %.sroa.034.i, align 16, !tbaa !21
-  store i32 -1, ptr %.sroa.635.i, align 4, !tbaa !21
-  store i32 -1, ptr %.sroa.9.i, align 8, !tbaa !21
-  store i32 -1, ptr %.sroa.12.i, align 4, !tbaa !21
-  store float f0x7F7FFFFF, ptr %.sroa.0.i, align 16, !tbaa !27
-  store float f0x7F7FFFFF, ptr %.sroa.6.i, align 4, !tbaa !27
-  store float f0x7F7FFFFF, ptr %.sroa.10.i, align 8, !tbaa !27
-  store float f0x7F7FFFFF, ptr %.sroa.14.i, align 4, !tbaa !27
   %i.aal = zext i32 %.sroa.18.0 to i64
   %.not13.i = icmp eq i32 %.sroa.18.0, 0
-  br i1 %.not13.i, label %.preheader.thread.i, label %.lr.ph10.i
+  br i1 %.not13.i, label %_ZN7meshoptL19appendSeedTrianglesEPjRK15meshopt_MeshletPKjS5_RKNS_18TriangleAdjacency2EPKNS_4ConeES5_fff.exit, label %.lr.ph10.i
 
 .lr.ph10.i:                                       ; preds = %_ZN7meshoptL18pruneSeedTrianglesEPjmPKh.exit
   %i.aam = zext i32 %.sroa.0336.0 to i64
@@ -491,11 +455,22 @@ _ZN7meshoptL18pruneSeedTrianglesEPjmPKh.exit:     ; preds = %.lr.ph.i291.epil.pr
   br label %bb.ap
 
 .preheader.i302:                                  ; preds = %.loopexit.i
-  %.sroa.044.i.0..sroa.044.i.0..sroa.044.i.0..sroa.044.0..sroa.044.0..pre.i = load i32, ptr %.sroa.044.i, align 16, !tbaa !21 ; 2 uses
-  %.not.i303 = icmp eq i32 %.sroa.044.i.0..sroa.044.i.0..sroa.044.i.0..sroa.044.0..sroa.044.0..pre.i, -1
+  %.not.i303 = icmp eq i32 %.sroa.044.3.i, -1
   br i1 %.not.i303, label %.preheader.thread.i, label %bb.az
 
 bb.ap:                                            ; preds = %.loopexit.i, %.lr.ph10.i
+  %.sroa.0.i.0 = phi float [ f0x7F7FFFFF, %.lr.ph10.i ], [ %.sroa.0.i.2, %.loopexit.i ] ; 10 uses
+  %.sroa.6.i.0 = phi float [ f0x7F7FFFFF, %.lr.ph10.i ], [ %.sroa.6.i.2, %.loopexit.i ] ; 10 uses
+  %.sroa.10.i.0 = phi float [ f0x7F7FFFFF, %.lr.ph10.i ], [ %.sroa.10.i.2, %.loopexit.i ] ; 10 uses
+  %.sroa.14.i.0 = phi float [ f0x7F7FFFFF, %.lr.ph10.i ], [ %.sroa.14.i.2, %.loopexit.i ] ; 10 uses
+  %.sroa.034.i.0 = phi i32 [ -1, %.lr.ph10.i ], [ %.sroa.034.i.2, %.loopexit.i ] ; 12 uses
+  %.sroa.635.i.0 = phi i32 [ -1, %.lr.ph10.i ], [ %.sroa.635.i.2, %.loopexit.i ] ; 12 uses
+  %.sroa.9.i.0 = phi i32 [ -1, %.lr.ph10.i ], [ %.sroa.9.i.2, %.loopexit.i ] ; 12 uses
+  %.sroa.12.i.0 = phi i32 [ -1, %.lr.ph10.i ], [ %.sroa.12.i.2, %.loopexit.i ] ; 12 uses
+  %.sroa.044.1.i = phi i32 [ -1, %.lr.ph10.i ], [ %.sroa.044.3.i, %.loopexit.i ] ; 9 uses
+  %.sroa.645.1.i = phi i32 [ -1, %.lr.ph10.i ], [ %.sroa.645.3.i, %.loopexit.i ] ; 9 uses
+  %.sroa.946.1.i = phi i32 [ -1, %.lr.ph10.i ], [ %.sroa.946.3.i, %.loopexit.i ] ; 9 uses
+  %.sroa.1247.1.i = phi i32 [ -1, %.lr.ph10.i ], [ %.sroa.1247.3.i, %.loopexit.i ] ; 9 uses
   %.0809.i = phi i64 [ 0, %.lr.ph10.i ], [ %i.acx, %.loopexit.i ] ; 2 uses
   %gep.i296 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep.i295, i64 %.0809.i
   %i.aan = load i32, ptr %gep.i296, align 4, !tbaa !21
@@ -544,8 +519,8 @@ bb.ap:                                            ; preds = %.loopexit.i, %.lr.p
   %i.abu = load i32, ptr %i.abt, align 4, !tbaa !21
   %i.abv = add i32 %i.abr, %i.abu                 ; 2 uses
   %i.abw = icmp ult i32 %i.abv, %.0765.i
-  %spec.select.i = select i1 %i.abw, i32 %i.aay, i32 %.0784.i ; 4 uses
-  %spec.select85.i = tail call i32 @llvm.umin.i32(i32 %i.abv, i32 %.0765.i) ; 10 uses
+  %spec.select.i = select i1 %i.abw, i32 %i.aay, i32 %.0784.i ; 11 uses
+  %spec.select85.i = tail call i32 @llvm.umin.i32(i32 %i.abv, i32 %.0765.i) ; 13 uses
   %i.abx = add nuw nsw i64 %.0756.i, 1            ; 2 uses
   %exitcond.not.i298 = icmp eq i64 %i.abx, %i.aav
   br i1 %exitcond.not.i298, label %._crit_edge.i299, label %.lr.ph.i297, !llvm.loop !63
@@ -564,122 +539,105 @@ bb.aq:                                            ; preds = %._crit_edge.i299
   %i.aci = fmul float %i.ace, %i.ace
   %i.acj = tail call float @llvm.fmuladd.f32(float %i.acb, float %i.acb, float %i.aci)
   %i.ack = tail call float @llvm.fmuladd.f32(float %i.ach, float %i.ach, float %i.acj)
-  %sqrt.i300 = tail call float @llvm.sqrt.f32(float %i.ack) ; 5 uses
-  %.sroa.034.i.0..sroa.034.i.0..sroa.034.i.0..sroa.034.0..sroa.034.0..i = load i32, ptr %.sroa.034.i, align 16, !tbaa !21 ; 2 uses
-  %i.acl = icmp ult i32 %spec.select85.i, %.sroa.034.i.0..sroa.034.i.0..sroa.034.i.0..sroa.034.0..sroa.034.0..i
-  br i1 %i.acl, label %bb.as, label %bb.ar
+  %sqrt.i300 = tail call float @llvm.sqrt.f32(float %i.ack) ; 12 uses
+  %i.acl = icmp ult i32 %spec.select85.i, %.sroa.034.i.0
+  br i1 %i.acl, label %.loopexit.i, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
-  %i.acm = icmp ne i32 %spec.select85.i, %.sroa.034.i.0..sroa.034.i.0..sroa.034.i.0..sroa.034.0..sroa.034.0..i
-  %.sroa.0.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..i = load float, ptr %.sroa.0.i, align 16
-  %i.acn = fcmp ugt float %sqrt.i300, %.sroa.0.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..i
+  %i.acm = icmp ne i32 %spec.select85.i, %.sroa.034.i.0
+  %i.acn = fcmp ugt float %sqrt.i300, %.sroa.0.i.0
   %or.cond.i301 = select i1 %i.acm, i1 true, i1 %i.acn
-  br i1 %or.cond.i301, label %bb.at, label %bb.as
+  br i1 %or.cond.i301, label %bb.at, label %.loopexit.i
 
-bb.as:                                            ; preds = %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.ar, %bb.aq
-  %.0748.lcssa.sroa.phi.i = phi ptr [ %.sroa.0.i, %bb.ar ], [ %.sroa.0.i, %bb.aq ], [ %.sroa.6.i, %bb.at ], [ %.sroa.6.i, %bb.au ], [ %.sroa.10.i, %bb.av ], [ %.sroa.10.i, %bb.aw ], [ %.sroa.14.i, %bb.ax ], [ %.sroa.14.i, %bb.ay ]
-  %.0748.lcssa.sroa.phi26.i = phi ptr [ %.sroa.034.i, %bb.ar ], [ %.sroa.034.i, %bb.aq ], [ %.sroa.635.i, %bb.at ], [ %.sroa.635.i, %bb.au ], [ %.sroa.9.i, %bb.av ], [ %.sroa.9.i, %bb.aw ], [ %.sroa.12.i, %bb.ax ], [ %.sroa.12.i, %bb.ay ]
-  %.0748.lcssa.sroa.phi36.i = phi ptr [ %.sroa.044.i, %bb.ar ], [ %.sroa.044.i, %bb.aq ], [ %.sroa.645.i, %bb.at ], [ %.sroa.645.i, %bb.au ], [ %.sroa.946.i, %bb.av ], [ %.sroa.946.i, %bb.aw ], [ %.sroa.1247.i, %bb.ax ], [ %.sroa.1247.i, %bb.ay ]
-  store i32 %spec.select.i, ptr %.0748.lcssa.sroa.phi36.i, align 4, !tbaa !21
-  store i32 %spec.select85.i, ptr %.0748.lcssa.sroa.phi26.i, align 4, !tbaa !21
-  store float %sqrt.i300, ptr %.0748.lcssa.sroa.phi.i, align 4, !tbaa !27
+bb.as:                                            ; preds = %bb.ay
   br label %.loopexit.i
 
 bb.at:                                            ; preds = %bb.ar
-  %.sroa.635.i.0..sroa.635.i.0..sroa.635.i.0..sroa.635.0..sroa.635.4..i = load i32, ptr %.sroa.635.i, align 4, !tbaa !21 ; 2 uses
-  %i.aco = icmp ult i32 %spec.select85.i, %.sroa.635.i.0..sroa.635.i.0..sroa.635.i.0..sroa.635.0..sroa.635.4..i
-  br i1 %i.aco, label %bb.as, label %bb.au
+  %i.aco = icmp ult i32 %spec.select85.i, %.sroa.635.i.0
+  br i1 %i.aco, label %.loopexit.i, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  %i.acp = icmp ne i32 %spec.select85.i, %.sroa.635.i.0..sroa.635.i.0..sroa.635.i.0..sroa.635.0..sroa.635.4..i
-  %.sroa.6.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.4..i = load float, ptr %.sroa.6.i, align 4
-  %i.acq = fcmp ugt float %sqrt.i300, %.sroa.6.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.4..i
+  %i.acp = icmp ne i32 %spec.select85.i, %.sroa.635.i.0
+  %i.acq = fcmp ugt float %sqrt.i300, %.sroa.6.i.0
   %or.cond53.i = select i1 %i.acp, i1 true, i1 %i.acq
-  br i1 %or.cond53.i, label %bb.av, label %bb.as
+  br i1 %or.cond53.i, label %bb.av, label %.loopexit.i
 
 bb.av:                                            ; preds = %bb.au
-  %.sroa.9.i.0..sroa.9.i.0..sroa.9.i.0..sroa.9.0..sroa.9.8..i = load i32, ptr %.sroa.9.i, align 8, !tbaa !21 ; 2 uses
-  %i.acr = icmp ult i32 %spec.select85.i, %.sroa.9.i.0..sroa.9.i.0..sroa.9.i.0..sroa.9.0..sroa.9.8..i
-  br i1 %i.acr, label %bb.as, label %bb.aw
+  %i.acr = icmp ult i32 %spec.select85.i, %.sroa.9.i.0
+  br i1 %i.acr, label %.loopexit.i, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  %i.acs = icmp ne i32 %spec.select85.i, %.sroa.9.i.0..sroa.9.i.0..sroa.9.i.0..sroa.9.0..sroa.9.8..i
-  %.sroa.10.i.0..sroa.10.i.0..sroa.10.i.0..sroa.10.0..sroa.10.8..i = load float, ptr %.sroa.10.i, align 8
-  %i.act = fcmp ugt float %sqrt.i300, %.sroa.10.i.0..sroa.10.i.0..sroa.10.i.0..sroa.10.0..sroa.10.8..i
+  %i.acs = icmp ne i32 %spec.select85.i, %.sroa.9.i.0
+  %i.act = fcmp ugt float %sqrt.i300, %.sroa.10.i.0
   %or.cond54.i = select i1 %i.acs, i1 true, i1 %i.act
-  br i1 %or.cond54.i, label %bb.ax, label %bb.as
+  br i1 %or.cond54.i, label %bb.ax, label %.loopexit.i
 
 bb.ax:                                            ; preds = %bb.aw
-  %.sroa.12.i.0..sroa.12.i.0..sroa.12.i.0..sroa.12.0..sroa.12.12..i = load i32, ptr %.sroa.12.i, align 4, !tbaa !21 ; 2 uses
-  %i.acu = icmp ult i32 %spec.select85.i, %.sroa.12.i.0..sroa.12.i.0..sroa.12.i.0..sroa.12.0..sroa.12.12..i
-  br i1 %i.acu, label %bb.as, label %bb.ay
+  %i.acu = icmp ult i32 %spec.select85.i, %.sroa.12.i.0
+  br i1 %i.acu, label %.loopexit.i, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
-  %i.acv = icmp ne i32 %spec.select85.i, %.sroa.12.i.0..sroa.12.i.0..sroa.12.i.0..sroa.12.0..sroa.12.12..i
-  %.sroa.14.i.0..sroa.14.i.0..sroa.14.i.0..sroa.14.0..sroa.14.12..i = load float, ptr %.sroa.14.i, align 4
-  %i.acw = fcmp ugt float %sqrt.i300, %.sroa.14.i.0..sroa.14.i.0..sroa.14.i.0..sroa.14.0..sroa.14.12..i
+  %i.acv = icmp ne i32 %spec.select85.i, %.sroa.12.i.0
+  %i.acw = fcmp ugt float %sqrt.i300, %.sroa.14.i.0
   %or.cond55.i = select i1 %i.acv, i1 true, i1 %i.acw
   br i1 %or.cond55.i, label %.loopexit.i, label %bb.as
 
-.loopexit.i:                                      ; preds = %bb.ay, %bb.as, %._crit_edge.i299, %bb.ap
+.loopexit.i:                                      ; preds = %bb.ar, %bb.av, %bb.ax, %bb.aw, %bb.at, %bb.au, %bb.aq, %bb.ay, %bb.as, %._crit_edge.i299, %bb.ap
+  %.sroa.0.i.2 = phi float [ %.sroa.0.i.0, %bb.ap ], [ %.sroa.0.i.0, %._crit_edge.i299 ], [ %.sroa.0.i.0, %bb.ay ], [ %.sroa.0.i.0, %bb.au ], [ %.sroa.0.i.0, %bb.aw ], [ %sqrt.i300, %bb.ar ], [ %.sroa.0.i.0, %bb.av ], [ %sqrt.i300, %bb.aq ], [ %.sroa.0.i.0, %bb.ax ], [ %.sroa.0.i.0, %bb.at ], [ %.sroa.0.i.0, %bb.as ]
+  %.sroa.6.i.2 = phi float [ %.sroa.6.i.0, %bb.ap ], [ %.sroa.6.i.0, %._crit_edge.i299 ], [ %.sroa.6.i.0, %bb.ay ], [ %sqrt.i300, %bb.au ], [ %.sroa.6.i.0, %bb.aw ], [ %.sroa.6.i.0, %bb.ar ], [ %.sroa.6.i.0, %bb.av ], [ %.sroa.6.i.0, %bb.aq ], [ %.sroa.6.i.0, %bb.ax ], [ %sqrt.i300, %bb.at ], [ %.sroa.6.i.0, %bb.as ]
+  %.sroa.10.i.2 = phi float [ %.sroa.10.i.0, %bb.ap ], [ %.sroa.10.i.0, %._crit_edge.i299 ], [ %.sroa.10.i.0, %bb.ay ], [ %.sroa.10.i.0, %bb.au ], [ %sqrt.i300, %bb.aw ], [ %.sroa.10.i.0, %bb.ar ], [ %sqrt.i300, %bb.av ], [ %.sroa.10.i.0, %bb.aq ], [ %.sroa.10.i.0, %bb.ax ], [ %.sroa.10.i.0, %bb.at ], [ %.sroa.10.i.0, %bb.as ]
+  %.sroa.14.i.2 = phi float [ %.sroa.14.i.0, %bb.ap ], [ %.sroa.14.i.0, %._crit_edge.i299 ], [ %.sroa.14.i.0, %bb.ay ], [ %.sroa.14.i.0, %bb.au ], [ %.sroa.14.i.0, %bb.aw ], [ %.sroa.14.i.0, %bb.ar ], [ %.sroa.14.i.0, %bb.av ], [ %.sroa.14.i.0, %bb.aq ], [ %sqrt.i300, %bb.ax ], [ %.sroa.14.i.0, %bb.at ], [ %sqrt.i300, %bb.as ]
+  %.sroa.034.i.2 = phi i32 [ %.sroa.034.i.0, %bb.ap ], [ %.sroa.034.i.0, %._crit_edge.i299 ], [ %.sroa.034.i.0, %bb.ay ], [ %.sroa.034.i.0, %bb.au ], [ %.sroa.034.i.0, %bb.aw ], [ %.sroa.034.i.0, %bb.ar ], [ %.sroa.034.i.0, %bb.av ], [ %spec.select85.i, %bb.aq ], [ %.sroa.034.i.0, %bb.ax ], [ %.sroa.034.i.0, %bb.at ], [ %.sroa.034.i.0, %bb.as ]
+  %.sroa.635.i.2 = phi i32 [ %.sroa.635.i.0, %bb.ap ], [ %.sroa.635.i.0, %._crit_edge.i299 ], [ %.sroa.635.i.0, %bb.ay ], [ %.sroa.635.i.0, %bb.au ], [ %.sroa.635.i.0, %bb.aw ], [ %.sroa.635.i.0, %bb.ar ], [ %.sroa.635.i.0, %bb.av ], [ %.sroa.635.i.0, %bb.aq ], [ %.sroa.635.i.0, %bb.ax ], [ %spec.select85.i, %bb.at ], [ %.sroa.635.i.0, %bb.as ]
+  %.sroa.9.i.2 = phi i32 [ %.sroa.9.i.0, %bb.ap ], [ %.sroa.9.i.0, %._crit_edge.i299 ], [ %.sroa.9.i.0, %bb.ay ], [ %.sroa.9.i.0, %bb.au ], [ %.sroa.9.i.0, %bb.aw ], [ %.sroa.9.i.0, %bb.ar ], [ %spec.select85.i, %bb.av ], [ %.sroa.9.i.0, %bb.aq ], [ %.sroa.9.i.0, %bb.ax ], [ %.sroa.9.i.0, %bb.at ], [ %.sroa.9.i.0, %bb.as ]
+  %.sroa.12.i.2 = phi i32 [ %.sroa.12.i.0, %bb.ap ], [ %.sroa.12.i.0, %._crit_edge.i299 ], [ %.sroa.12.i.0, %bb.ay ], [ %.sroa.12.i.0, %bb.au ], [ %.sroa.12.i.0, %bb.aw ], [ %.sroa.12.i.0, %bb.ar ], [ %.sroa.12.i.0, %bb.av ], [ %.sroa.12.i.0, %bb.aq ], [ %spec.select85.i, %bb.ax ], [ %.sroa.12.i.0, %bb.at ], [ %.sroa.12.i.0, %bb.as ]
+  %.sroa.044.3.i = phi i32 [ %.sroa.044.1.i, %bb.ap ], [ %.sroa.044.1.i, %._crit_edge.i299 ], [ %.sroa.044.1.i, %bb.ay ], [ %.sroa.044.1.i, %bb.au ], [ %.sroa.044.1.i, %bb.aw ], [ %spec.select.i, %bb.ar ], [ %.sroa.044.1.i, %bb.av ], [ %spec.select.i, %bb.aq ], [ %.sroa.044.1.i, %bb.ax ], [ %.sroa.044.1.i, %bb.at ], [ %.sroa.044.1.i, %bb.as ] ; 3 uses
+  %.sroa.645.3.i = phi i32 [ %.sroa.645.1.i, %bb.ap ], [ %.sroa.645.1.i, %._crit_edge.i299 ], [ %.sroa.645.1.i, %bb.ay ], [ %spec.select.i, %bb.au ], [ %.sroa.645.1.i, %bb.aw ], [ %.sroa.645.1.i, %bb.ar ], [ %.sroa.645.1.i, %bb.av ], [ %.sroa.645.1.i, %bb.aq ], [ %.sroa.645.1.i, %bb.ax ], [ %spec.select.i, %bb.at ], [ %.sroa.645.1.i, %bb.as ] ; 3 uses
+  %.sroa.946.3.i = phi i32 [ %.sroa.946.1.i, %bb.ap ], [ %.sroa.946.1.i, %._crit_edge.i299 ], [ %.sroa.946.1.i, %bb.ay ], [ %.sroa.946.1.i, %bb.au ], [ %spec.select.i, %bb.aw ], [ %.sroa.946.1.i, %bb.ar ], [ %spec.select.i, %bb.av ], [ %.sroa.946.1.i, %bb.aq ], [ %.sroa.946.1.i, %bb.ax ], [ %.sroa.946.1.i, %bb.at ], [ %.sroa.946.1.i, %bb.as ] ; 3 uses
+  %.sroa.1247.3.i = phi i32 [ %.sroa.1247.1.i, %bb.ap ], [ %.sroa.1247.1.i, %._crit_edge.i299 ], [ %.sroa.1247.1.i, %bb.ay ], [ %.sroa.1247.1.i, %bb.au ], [ %.sroa.1247.1.i, %bb.aw ], [ %.sroa.1247.1.i, %bb.ar ], [ %.sroa.1247.1.i, %bb.av ], [ %.sroa.1247.1.i, %bb.aq ], [ %spec.select.i, %bb.ax ], [ %.sroa.1247.1.i, %bb.at ], [ %spec.select.i, %bb.as ] ; 3 uses
   %i.acx = add nuw nsw i64 %.0809.i, 1            ; 2 uses
   %exitcond17.not.i = icmp eq i64 %i.acx, %i.aal
   br i1 %exitcond17.not.i, label %.preheader.i302, label %bb.ap, !llvm.loop !64
 
 bb.az:                                            ; preds = %.preheader.i302
-  store i32 %.sroa.044.i.0..sroa.044.i.0..sroa.044.i.0..sroa.044.0..sroa.044.0..pre.i, ptr %i.aak, align 4, !tbaa !21
+  store i32 %.sroa.044.3.i, ptr %i.aak, align 4, !tbaa !21
   br label %.preheader.thread.i
 
-.preheader.thread.i:                              ; preds = %bb.az, %.preheader.i302, %_ZN7meshoptL18pruneSeedTrianglesEPjmPKh.exit
-  %.1.i304 = phi i64 [ 1, %bb.az ], [ 0, %.preheader.i302 ], [ 0, %_ZN7meshoptL18pruneSeedTrianglesEPjmPKh.exit ] ; 3 uses
-  %.sroa.645.i.0..sroa.645.i.0..sroa.645.i.0..sroa.645.0..sroa.645.4..i = load i32, ptr %.sroa.645.i, align 4, !tbaa !21 ; 2 uses
-  %.not.1.i = icmp eq i32 %.sroa.645.i.0..sroa.645.i.0..sroa.645.i.0..sroa.645.0..sroa.645.4..i, -1
+.preheader.thread.i:                              ; preds = %bb.az, %.preheader.i302
+  %.1.i304 = phi i64 [ 1, %bb.az ], [ 0, %.preheader.i302 ] ; 3 uses
+  %.not.1.i = icmp eq i32 %.sroa.645.3.i, -1
   br i1 %.not.1.i, label %bb.bb, label %bb.ba
 
 bb.ba:                                            ; preds = %.preheader.thread.i
   %i.acy = add nuw nsw i64 %.1.i304, 1
   %i.acz = getelementptr inbounds nuw [4 x i8], ptr %i.aak, i64 %.1.i304
-  store i32 %.sroa.645.i.0..sroa.645.i.0..sroa.645.i.0..sroa.645.0..sroa.645.4..i, ptr %i.acz, align 4, !tbaa !21
+  store i32 %.sroa.645.3.i, ptr %i.acz, align 4, !tbaa !21
   br label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba, %.preheader.thread.i
   %.1.1.i = phi i64 [ %i.acy, %bb.ba ], [ %.1.i304, %.preheader.thread.i ] ; 3 uses
-  %.sroa.946.i.0..sroa.946.i.0..sroa.946.i.0..sroa.946.0..sroa.946.8..i = load i32, ptr %.sroa.946.i, align 8, !tbaa !21 ; 2 uses
-  %.not.2.i = icmp eq i32 %.sroa.946.i.0..sroa.946.i.0..sroa.946.i.0..sroa.946.0..sroa.946.8..i, -1
+  %.not.2.i = icmp eq i32 %.sroa.946.3.i, -1
   br i1 %.not.2.i, label %bb.bd, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
   %i.ada = add nuw nsw i64 %.1.1.i, 1
   %i.adb = getelementptr inbounds nuw [4 x i8], ptr %i.aak, i64 %.1.1.i
-  store i32 %.sroa.946.i.0..sroa.946.i.0..sroa.946.i.0..sroa.946.0..sroa.946.8..i, ptr %i.adb, align 4, !tbaa !21
+  store i32 %.sroa.946.3.i, ptr %i.adb, align 4, !tbaa !21
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc, %bb.bb
   %.1.2.i = phi i64 [ %i.ada, %bb.bc ], [ %.1.1.i, %bb.bb ] ; 3 uses
-  %.sroa.1247.i.0..sroa.1247.i.0..sroa.1247.i.0..sroa.1247.0..sroa.1247.12..i = load i32, ptr %.sroa.1247.i, align 4, !tbaa !21 ; 2 uses
-  %.not.3.i = icmp eq i32 %.sroa.1247.i.0..sroa.1247.i.0..sroa.1247.i.0..sroa.1247.0..sroa.1247.12..i, -1
+  %.not.3.i = icmp eq i32 %.sroa.1247.3.i, -1
   br i1 %.not.3.i, label %_ZN7meshoptL19appendSeedTrianglesEPjRK15meshopt_MeshletPKjS5_RKNS_18TriangleAdjacency2EPKNS_4ConeES5_fff.exit, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
   %i.adc = add nuw nsw i64 %.1.2.i, 1
   %i.add = getelementptr inbounds nuw [4 x i8], ptr %i.aak, i64 %.1.2.i
-  store i32 %.sroa.1247.i.0..sroa.1247.i.0..sroa.1247.i.0..sroa.1247.0..sroa.1247.12..i, ptr %i.add, align 4, !tbaa !21
+  store i32 %.sroa.1247.3.i, ptr %i.add, align 4, !tbaa !21
   br label %_ZN7meshoptL19appendSeedTrianglesEPjRK15meshopt_MeshletPKjS5_RKNS_18TriangleAdjacency2EPKNS_4ConeES5_fff.exit
 
-_ZN7meshoptL19appendSeedTrianglesEPjRK15meshopt_MeshletPKjS5_RKNS_18TriangleAdjacency2EPKNS_4ConeES5_fff.exit: ; preds = %bb.bd, %bb.be
-  %.1.3.i = phi i64 [ %i.adc, %bb.be ], [ %.1.2.i, %bb.bd ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.14.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.034.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.635.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.12.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.044.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.645.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.946.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.1247.i)
+_ZN7meshoptL19appendSeedTrianglesEPjRK15meshopt_MeshletPKjS5_RKNS_18TriangleAdjacency2EPKNS_4ConeES5_fff.exit: ; preds = %_ZN7meshoptL18pruneSeedTrianglesEPjmPKh.exit, %bb.bd, %bb.be
+  %.1.3.i = phi i64 [ %i.adc, %bb.be ], [ %.1.2.i, %bb.bd ], [ 0, %_ZN7meshoptL18pruneSeedTrianglesEPjmPKh.exit ]
   %i.ade = add i64 %.1.3.i, %i.aaj                ; 4 uses
   %.not.i305 = icmp eq i64 %i.ade, 0
   br i1 %.not.i305, label %_ZN7meshoptL18selectSeedTriangleEPKjmS1_PKNS_4ConeES1_fff.exit.thread, label %.lr.ph.i306
