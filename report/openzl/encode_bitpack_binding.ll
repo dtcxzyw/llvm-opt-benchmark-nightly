@@ -109,29 +109,28 @@ vector.ph108:                                     ; preds = %.lr.ph.i.i.preheade
 
 vector.body110:                                   ; preds = %vector.body110, %vector.ph108
   %index111 = phi i64 [ 0, %vector.ph108 ], [ %index.next116, %vector.body110 ] ; 2 uses
-  %vec.phi112 = phi <4 x i32> [ zeroinitializer, %vector.ph108 ], [ %7, %vector.body110 ]
-  %vec.phi113 = phi <4 x i32> [ zeroinitializer, %vector.ph108 ], [ %8, %vector.body110 ]
+  %vec.phi112 = phi <4 x i8> [ zeroinitializer, %vector.ph108 ], [ %5, %vector.body110 ]
+  %vec.phi113 = phi <4 x i8> [ zeroinitializer, %vector.ph108 ], [ %6, %vector.body110 ]
   %i.z = getelementptr inbounds nuw i8, ptr %i.t, i64 %index111 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 4
   %wide.load114 = load <4 x i8>, ptr %i.z, align 1, !tbaa !29
   %wide.load115 = load <4 x i8>, ptr %i.aa, align 1, !tbaa !29
-  %5 = zext <4 x i8> %wide.load114 to <4 x i32>
-  %6 = zext <4 x i8> %wide.load115 to <4 x i32>
-  %7 = call <4 x i32> @llvm.umax.v4i32(<4 x i32> %vec.phi112, <4 x i32> %5) ; 2 uses
-  %8 = call <4 x i32> @llvm.umax.v4i32(<4 x i32> %vec.phi113, <4 x i32> %6) ; 2 uses
+  %5 = call <4 x i8> @llvm.umax.v4i8(<4 x i8> %vec.phi112, <4 x i8> %wide.load114) ; 2 uses
+  %6 = call <4 x i8> @llvm.umax.v4i8(<4 x i8> %vec.phi113, <4 x i8> %wide.load115) ; 2 uses
   %index.next116 = add nuw i64 %index111, 8       ; 2 uses
   %i.ab = icmp eq i64 %index.next116, %n.vec109
   br i1 %i.ab, label %middle.block117, label %vector.body110, !llvm.loop !11
 
 middle.block117:                                  ; preds = %vector.body110
-  %rdx.minmax118 = call <4 x i32> @llvm.umax.v4i32(<4 x i32> %7, <4 x i32> %8)
-  %9 = call i32 @llvm.vector.reduce.umax.v4i32(<4 x i32> %rdx.minmax118) ; 2 uses
+  %rdx.minmax118 = call <4 x i8> @llvm.umax.v4i8(<4 x i8> %5, <4 x i8> %6)
+  %7 = call i8 @llvm.vector.reduce.umax.v4i8(<4 x i8> %rdx.minmax118)
+  %8 = zext i8 %7 to i32                          ; 2 uses
   %cmp.n119 = icmp eq i64 %i.u, %n.vec109
   br i1 %cmp.n119, label %computeMaxValue8.exit.loopexit.i, label %.lr.ph.i.i.preheader122
 
 .lr.ph.i.i.preheader122:                          ; preds = %.lr.ph.i.i.preheader, %middle.block117
   %.012.i.i.ph = phi i64 [ 0, %.lr.ph.i.i.preheader ], [ %n.vec109, %middle.block117 ]
-  %.0911.i.i.ph = phi i32 [ 0, %.lr.ph.i.i.preheader ], [ %9, %middle.block117 ]
+  %.0911.i.i.ph = phi i32 [ 0, %.lr.ph.i.i.preheader ], [ %8, %middle.block117 ]
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader122, %.lr.ph.i.i
@@ -146,7 +145,7 @@ middle.block117:                                  ; preds = %vector.body110
   br i1 %exitcond.not.i.i, label %computeMaxValue8.exit.loopexit.i, label %.lr.ph.i.i, !llvm.loop !12
 
 computeMaxValue8.exit.loopexit.i:                 ; preds = %.lr.ph.i.i, %middle.block117
-  %.09..i.i.lcssa = phi i32 [ %9, %middle.block117 ], [ %.09..i.i, %.lr.ph.i.i ]
+  %.09..i.i.lcssa = phi i32 [ %8, %middle.block117 ], [ %.09..i.i, %.lr.ph.i.i ]
   %i.ag = zext nneg i32 %.09..i.i.lcssa to i64
   br label %computeMaxValue64.exit.i
 
@@ -164,29 +163,28 @@ vector.ph92:                                      ; preds = %.lr.ph.i16.i.prehea
 
 vector.body94:                                    ; preds = %vector.body94, %vector.ph92
   %index95 = phi i64 [ 0, %vector.ph92 ], [ %index.next100, %vector.body94 ] ; 2 uses
-  %vec.phi96 = phi <4 x i32> [ zeroinitializer, %vector.ph92 ], [ %12, %vector.body94 ]
-  %vec.phi97 = phi <4 x i32> [ zeroinitializer, %vector.ph92 ], [ %13, %vector.body94 ]
+  %vec.phi96 = phi <4 x i16> [ zeroinitializer, %vector.ph92 ], [ %9, %vector.body94 ]
+  %vec.phi97 = phi <4 x i16> [ zeroinitializer, %vector.ph92 ], [ %10, %vector.body94 ]
   %i.ah = getelementptr inbounds nuw [2 x i8], ptr %i.t, i64 %index95 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
   %wide.load98 = load <4 x i16>, ptr %i.ah, align 2, !tbaa !34
   %wide.load99 = load <4 x i16>, ptr %i.ai, align 2, !tbaa !34
-  %10 = zext <4 x i16> %wide.load98 to <4 x i32>
-  %11 = zext <4 x i16> %wide.load99 to <4 x i32>
-  %12 = call <4 x i32> @llvm.umax.v4i32(<4 x i32> %vec.phi96, <4 x i32> %10) ; 2 uses
-  %13 = call <4 x i32> @llvm.umax.v4i32(<4 x i32> %vec.phi97, <4 x i32> %11) ; 2 uses
+  %9 = call <4 x i16> @llvm.umax.v4i16(<4 x i16> %vec.phi96, <4 x i16> %wide.load98) ; 2 uses
+  %10 = call <4 x i16> @llvm.umax.v4i16(<4 x i16> %vec.phi97, <4 x i16> %wide.load99) ; 2 uses
   %index.next100 = add nuw i64 %index95, 8        ; 2 uses
   %i.aj = icmp eq i64 %index.next100, %n.vec93
   br i1 %i.aj, label %middle.block101, label %vector.body94, !llvm.loop !13
 
 middle.block101:                                  ; preds = %vector.body94
-  %rdx.minmax102 = call <4 x i32> @llvm.umax.v4i32(<4 x i32> %12, <4 x i32> %13)
-  %14 = call i32 @llvm.vector.reduce.umax.v4i32(<4 x i32> %rdx.minmax102) ; 2 uses
+  %rdx.minmax102 = call <4 x i16> @llvm.umax.v4i16(<4 x i16> %9, <4 x i16> %10)
+  %11 = call i16 @llvm.vector.reduce.umax.v4i16(<4 x i16> %rdx.minmax102)
+  %12 = zext i16 %11 to i32                       ; 2 uses
   %cmp.n103 = icmp eq i64 %i.u, %n.vec93
   br i1 %cmp.n103, label %computeMaxValue16.exit.loopexit.i, label %.lr.ph.i16.i.preheader125
 
 .lr.ph.i16.i.preheader125:                        ; preds = %.lr.ph.i16.i.preheader, %middle.block101
   %.012.i17.i.ph = phi i64 [ 0, %.lr.ph.i16.i.preheader ], [ %n.vec93, %middle.block101 ]
-  %.0911.i18.i.ph = phi i32 [ 0, %.lr.ph.i16.i.preheader ], [ %14, %middle.block101 ]
+  %.0911.i18.i.ph = phi i32 [ 0, %.lr.ph.i16.i.preheader ], [ %12, %middle.block101 ]
   br label %.lr.ph.i16.i
 
 .lr.ph.i16.i:                                     ; preds = %.lr.ph.i16.i.preheader125, %.lr.ph.i16.i
@@ -201,7 +199,7 @@ middle.block101:                                  ; preds = %vector.body94
   br i1 %exitcond.not.i20.i, label %computeMaxValue16.exit.loopexit.i, label %.lr.ph.i16.i, !llvm.loop !14
 
 computeMaxValue16.exit.loopexit.i:                ; preds = %.lr.ph.i16.i, %middle.block101
-  %.09..i19.i.lcssa = phi i32 [ %14, %middle.block101 ], [ %.09..i19.i, %.lr.ph.i16.i ]
+  %.09..i19.i.lcssa = phi i32 [ %12, %middle.block101 ], [ %.09..i19.i, %.lr.ph.i16.i ]
   %i.ao = zext nneg i32 %.09..i19.i.lcssa to i64
   br label %computeMaxValue64.exit.i
 
@@ -463,6 +461,18 @@ declare <4 x i32> @llvm.umax.v4i32(<4 x i32>, <4 x i32>) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.umax.v4i32(<4 x i32>) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i16> @llvm.umax.v4i16(<4 x i16>, <4 x i16>) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.vector.reduce.umax.v4i16(<4 x i16>) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i8> @llvm.umax.v4i8(<4 x i8>, <4 x i8>) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.vector.reduce.umax.v4i8(<4 x i8>) #6
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
