@@ -1,0 +1,104 @@
+diff --git a/llvm/include/llvm/Analysis/ScalarEvolution.h b/llvm/include/llvm/Analysis/ScalarEvolution.h
+index 7fddd4ca4119f..964d89d7636d2 100644
+--- a/llvm/include/llvm/Analysis/ScalarEvolution.h
++++ b/llvm/include/llvm/Analysis/ScalarEvolution.h
+@@ -547,11 +547,6 @@ class LLVM_ABI SCEVWrapPredicate final : public SCEVPredicate {
+     return (SCEVWrapPredicate::IncrementWrapFlags)(Flags | OnFlags);
+   }
+ 
+-  /// Returns the set of SCEVWrapPredicate no wrap flags implied by a
+-  /// SCEVAddRecExpr.
+-  [[nodiscard]] static SCEVWrapPredicate::IncrementWrapFlags
+-  getImpliedFlags(const SCEVAddRecExpr *AR, ScalarEvolution &SE);
+-
+ private:
+   const SCEVAddRecExpr *AR;
+   IncrementWrapFlags Flags;
+@@ -2707,10 +2702,6 @@ class PredicatedScalarEvolution {
+   getAsAddRec(Value *V,
+               SmallVectorImpl<const SCEVPredicate *> *WrapPredsAdded = nullptr);
+ 
+-  /// Returns true if we've statically proved that V doesn't wrap.
+-  LLVM_ABI bool hasNoOverflow(Value *V,
+-                              SCEVWrapPredicate::IncrementWrapFlags Flags);
+-
+   /// Returns the ScalarEvolution analysis used.
+   ScalarEvolution *getSE() const { return &SE; }
+ 
+diff --git a/llvm/lib/Analysis/LoopAccessAnalysis.cpp b/llvm/lib/Analysis/LoopAccessAnalysis.cpp
+index 437d25b3d56ed..8b0e17f71ef66 100644
+--- a/llvm/lib/Analysis/LoopAccessAnalysis.cpp
++++ b/llvm/lib/Analysis/LoopAccessAnalysis.cpp
+@@ -1108,9 +1108,6 @@ isNoWrap(PredicatedScalarEvolution &PSE, const SCEVAddRecExpr *AR, Value *Ptr,
+   if (any(AR->getNoWrapFlags(SCEV::NoWrapMask)))
+     return true;
+ 
+-  if (Ptr && PSE.hasNoOverflow(Ptr, SCEVWrapPredicate::IncrementNUSW))
+-    return true;
+-
+   // An nusw getelementptr that is an AddRec cannot wrap. If it would wrap,
+   // the distance between the previously accessed location and the wrapped
+   // location will be larger than half the pointer index type space. In that
+@@ -1146,9 +1143,8 @@ isNoWrap(PredicatedScalarEvolution &PSE, const SCEVAddRecExpr *AR, Value *Ptr,
+ 
+   if (Ptr && Predicates) {
+     ScalarEvolution &SE = *PSE.getSE();
+-    SCEVWrapPredicate::IncrementWrapFlags Flags = SCEVWrapPredicate::clearFlags(
+-        SCEVWrapPredicate::IncrementNUSW,
+-        SCEVWrapPredicate::getImpliedFlags(AR, SE));
++    SCEVWrapPredicate::IncrementWrapFlags Flags =
++        SCEVWrapPredicate::IncrementNUSW;
+     Predicates->push_back(SE.getWrapPredicate(AR, Flags));
+     LLVM_DEBUG(dbgs() << "LAA: Pointer may wrap:\n"
+                       << "LAA:   Pointer: " << *Ptr << "\n"
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 50e0170b55089..e293e73906fab 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -15532,27 +15532,6 @@ void SCEVWrapPredicate::print(raw_ostream &OS, unsigned Depth) const {
+   OS << "\n";
+ }
+ 
+-SCEVWrapPredicate::IncrementWrapFlags
+-SCEVWrapPredicate::getImpliedFlags(const SCEVAddRecExpr *AR,
+-                                   ScalarEvolution &SE) {
+-  IncrementWrapFlags ImpliedFlags = IncrementAnyWrap;
+-  SCEV::NoWrapFlags StaticFlags = AR->getNoWrapFlags();
+-
+-  // We can safely transfer the NSW flag as NSSW.
+-  if (ScalarEvolution::setFlags(StaticFlags, SCEV::FlagNSW) == StaticFlags)
+-    ImpliedFlags = IncrementNSSW;
+-
+-  if (ScalarEvolution::setFlags(StaticFlags, SCEV::FlagNUW) == StaticFlags) {
+-    // If the increment is positive, the SCEV NUW flag will also imply the
+-    // WrapPredicate NUSW flag.
+-    if (const auto *Step = dyn_cast<SCEVConstant>(AR->getStepRecurrence(SE)))
+-      if (Step->getValue()->getValue().isNonNegative())
+-        ImpliedFlags = setFlags(ImpliedFlags, IncrementNUSW);
+-  }
+-
+-  return ImpliedFlags;
+-}
+-
+ /// Union predicates don't get cached so create a dummy set ID for it.
+ SCEVUnionPredicate::SCEVUnionPredicate(ArrayRef<const SCEVPredicate *> Preds,
+                                        ScalarEvolution &SE)
+@@ -15727,18 +15706,6 @@ void PredicatedScalarEvolution::updateGeneration() {
+   }
+ }
+ 
+-bool PredicatedScalarEvolution::hasNoOverflow(
+-    Value *V, SCEVWrapPredicate::IncrementWrapFlags Flags) {
+-  const auto *AR = dyn_cast<SCEVAddRecExpr>(getSCEV(V));
+-  if (!AR)
+-    return false;
+-
+-  Flags = SCEVWrapPredicate::clearFlags(
+-      Flags, SCEVWrapPredicate::getImpliedFlags(AR, SE));
+-
+-  return Flags == SCEVWrapPredicate::IncrementAnyWrap;
+-}
+-
+ const SCEVAddRecExpr *PredicatedScalarEvolution::getAsAddRec(
+     Value *V, SmallVectorImpl<const SCEVPredicate *> *ExtraPreds) {
+   const SCEV *Expr = this->getSCEV(V);
