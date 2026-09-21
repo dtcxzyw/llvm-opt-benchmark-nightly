@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.us.us
   br label %bb.c
 
 .split89.us.thread:                               ; preds = %.preheader, %.split89.us
-  %.us-phi91110 = phi i64 [ %i.bc, %.split89.us ], [ 3, %.preheader ]
+  %.us-phi91110 = phi i64 [ 3, %.preheader ], [ %i.bc, %.split89.us ]
   %i.bd = load float, ptr %i.a, align 4, !tbaa !22
   %i.be = load float, ptr %1, align 4, !tbaa !22  ; 2 uses
   %i.bf = fneg float %i.be

@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 26
 inline.NumDeleted: 17
 loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 5
 begin_hunk_0
 @.str.1141 = private unnamed_addr constant [14 x i8] c"ACI Fabric ID\00", align 1
 @cisco_subtypes = internal constant [20 x { i32, [4 x i8], ptr }] [{ i32, [4 x i8], ptr } { i32 1, [4 x i8] zeroinitializer, ptr @.str.1123 }, { i32, [4 x i8], ptr } { i32 201, [4 x i8] zeroinitializer, ptr @.str.1124 }, { i32, [4 x i8], ptr } { i32 202, [4 x i8] zeroinitializer, ptr @.str.1125 }, { i32, [4 x i8], ptr } { i32 203, [4 x i8] zeroinitializer, ptr @.str.1126 }, { i32, [4 x i8], ptr } { i32 204, [4 x i8] zeroinitializer, ptr @.str.1127 }, { i32, [4 x i8], ptr } { i32 205, [4 x i8] zeroinitializer, ptr @.str.1128 }, { i32, [4 x i8], ptr } { i32 206, [4 x i8] zeroinitializer, ptr @.str.1129 }, { i32, [4 x i8], ptr } { i32 207, [4 x i8] zeroinitializer, ptr @.str.1130 }, { i32, [4 x i8], ptr } { i32 208, [4 x i8] zeroinitializer, ptr @.str.1131 }, { i32, [4 x i8], ptr } { i32 209, [4 x i8] zeroinitializer, ptr @.str.1132 }, { i32, [4 x i8], ptr } { i32 210, [4 x i8] zeroinitializer, ptr @.str.1133 }, { i32, [4 x i8], ptr } { i32 211, [4 x i8] zeroinitializer, ptr @.str.1134 }, { i32, [4 x i8], ptr } { i32 212, [4 x i8] zeroinitializer, ptr @.str.1135 }, { i32, [4 x i8], ptr } { i32 214, [4 x i8] zeroinitializer, ptr @.str.1136 }, { i32, [4 x i8], ptr } { i32 215, [4 x i8] zeroinitializer, ptr @.str.1137 }, { i32, [4 x i8], ptr } { i32 216, [4 x i8] zeroinitializer, ptr @.str.1138 }, { i32, [4 x i8], ptr } { i32 217, [4 x i8] zeroinitializer, ptr @.str.1139 }, { i32, [4 x i8], ptr } { i32 218, [4 x i8] zeroinitializer, ptr @.str.1140 }, { i32, [4 x i8], ptr } { i32 219, [4 x i8] zeroinitializer, ptr @.str.1141 }, { i32, [4 x i8], ptr } zeroinitializer], align 16
@@ -205,7 +205,7 @@ bb.a:
   %.11621.prol = phi double [ %i.e, %.lr.ph23.prol ], [ 1.000000e+00, %.lr.ph23.preheader ]
   %prol.iter = phi i32 [ %prol.iter.next, %.lr.ph23.prol ], [ 0, %.lr.ph23.preheader ]
   %i.e = fmul double %.11621.prol, 5.000000e-01   ; 3 uses
-  %i.f = add nsw i32 %.122.prol, 1                ; 2 uses
+  %i.f = add nuw nsw i32 %.122.prol, 1            ; 2 uses
   %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %.lr.ph23.prol.loopexit, label %.lr.ph23.prol, !llvm.loop !10
@@ -250,7 +250,7 @@ bb.a:
   br label %._crit_edge
 
 .lr.ph23:                                         ; preds = %.lr.ph23.prol.loopexit, %.lr.ph23
-  %.122 = phi i32 [ %i.u, %.lr.ph23 ], [ %.122.unr, %.lr.ph23.prol.loopexit ]
+  %.122 = phi i32 [ %i.u, %.lr.ph23 ], [ %.122.unr, %.lr.ph23.prol.loopexit ] ; 2 uses
   %.11621 = phi double [ %i.t, %.lr.ph23 ], [ %.11621.unr, %.lr.ph23.prol.loopexit ]
   %i.m = fmul double %.11621, 5.000000e-01
   %i.n = fmul double %i.m, 5.000000e-01
@@ -260,8 +260,8 @@ bb.a:
   %i.r = fmul double %i.q, 5.000000e-01
   %i.s = fmul double %i.r, 5.000000e-01
   %i.t = fmul double %i.s, 5.000000e-01           ; 2 uses
-  %i.u = add nsw i32 %.122, 8                     ; 2 uses
-  %exitcond.not.7 = icmp eq i32 %i.u, 0
+  %i.u = add nuw nsw i32 %.122, 8
+  %exitcond.not.7 = icmp eq i32 %.122, -8
   br i1 %exitcond.not.7, label %._crit_edge, label %.lr.ph23, !llvm.loop !11
 
 ._crit_edge:                                      ; preds = %.lr.ph23.prol.loopexit, %.lr.ph23, %.lr.ph, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %.lr.ph.5, %.lr.ph.6, %.lr.ph.7, %.preheader
@@ -329,56 +329,80 @@ bb.a:
 ; Function Attrs: nofree null_pointer_is_valid sspstrong uwtable
 define internal void @altitude_resolution(ptr noundef %0, i8 noundef zeroext %1) #2 {
 bb.a:
-  %i.a = and i8 %1, 63                            ; 4 uses
-  %i.b = zext nneg i8 %i.a to i32                 ; 2 uses
-  %i.c = sub nsw i32 21, %i.b                     ; 3 uses
+  %i.a = and i8 %1, 63                            ; 7 uses
+  %i.b = zext nneg i8 %i.a to i32                 ; 3 uses
+  %i.c = sub nsw i32 21, %i.b                     ; 5 uses
   %i.d = icmp samesign ult i8 %i.a, 21
-  br i1 %i.d, label %.lr.ph, label %.preheader.a
+  br i1 %i.d, label %.lr.ph.preheader, label %.preheader
 
-.preheader.loopexit:                              ; preds = %.lr.ph
-  %smin = tail call i32 @llvm.smin.i32(i32 %i.c, i32 1)
-  %i.e = add nsw i32 %smin, -1
-  br label %.preheader.a
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %xtraiter36 = and i32 %i.c, 7                   ; 2 uses
+  %lcmp.mod37.not = icmp eq i32 %xtraiter36, 0
+  br i1 %lcmp.mod37.not, label %.preheader.a, label %.preheader.loopexit
 
-.preheader.a:                                     ; preds = %.preheader.loopexit, %bb.a
-  %.015.lcssa = phi double [ 1.000000e+00, %bb.a ], [ %i.h, %.preheader.loopexit ] ; 3 uses
-  %.014.lcssa = phi i32 [ %i.c, %bb.a ], [ %i.e, %.preheader.loopexit ] ; 5 uses
-  %2 = icmp slt i32 %.014.lcssa, 0
-  br i1 %2, label %.lr.ph23.preheader, label %._crit_edge
+.preheader.loopexit:                              ; preds = %.lr.ph.preheader, %.preheader.loopexit
+  %.01419.prol = phi i32 [ %3, %.preheader.loopexit ], [ %i.c, %.lr.ph.preheader ]
+  %.01518.prol = phi double [ %2, %.preheader.loopexit ], [ 1.000000e+00, %.lr.ph.preheader ]
+  %prol.iter38 = phi i32 [ %i.e, %.preheader.loopexit ], [ 0, %.lr.ph.preheader ]
+  %2 = fmul double %.01518.prol, 2.000000e+00     ; 3 uses
+  %3 = add nsw i32 %.01419.prol, -1               ; 2 uses
+  %i.e = add i32 %prol.iter38, 1                  ; 2 uses
+  %prol.iter38.cmp.not = icmp eq i32 %i.e, %xtraiter36
+  br i1 %prol.iter38.cmp.not, label %.preheader.a, label %.preheader.loopexit, !llvm.loop !12
 
-.lr.ph23.preheader:                               ; preds = %.preheader.a
-  %3 = sub i32 0, %.014.lcssa
-  %xtraiter = and i32 %3, 7                       ; 2 uses
+.preheader.a:                                     ; preds = %.preheader.loopexit, %.lr.ph.preheader
+  %.01419.unr = phi i32 [ %i.c, %.lr.ph.preheader ], [ %3, %.preheader.loopexit ]
+  %.01518.unr = phi double [ 1.000000e+00, %.lr.ph.preheader ], [ %2, %.preheader.loopexit ]
+  %.015.lcssa = phi double [ poison, %.lr.ph.preheader ], [ %2, %.preheader.loopexit ]
+  %4 = add nsw i8 %i.a, -14
+  %5 = icmp ult i8 %4, 7
+  br i1 %5, label %._crit_edge, label %.lr.ph
+
+.preheader:                                       ; preds = %bb.a
+  %.not = icmp eq i8 %i.a, 21
+  br i1 %.not, label %._crit_edge, label %.lr.ph23.preheader
+
+.lr.ph23.preheader:                               ; preds = %.preheader
+  %6 = add nuw nsw i32 %i.b, 3
+  %xtraiter = and i32 %6, 7                       ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph23.prol.loopexit, label %.lr.ph23.prol
 
 .lr.ph23.prol:                                    ; preds = %.lr.ph23.preheader, %.lr.ph23.prol
-  %.122.prol = phi i32 [ %i.g, %.lr.ph23.prol ], [ %.014.lcssa, %.lr.ph23.preheader ]
-  %.11621.prol = phi double [ %i.f, %.lr.ph23.prol ], [ %.015.lcssa, %.lr.ph23.preheader ]
+  %.122.prol = phi i32 [ %i.g, %.lr.ph23.prol ], [ %i.c, %.lr.ph23.preheader ]
+  %.11621.prol = phi double [ %i.f, %.lr.ph23.prol ], [ 1.000000e+00, %.lr.ph23.preheader ]
   %prol.iter = phi i32 [ %prol.iter.next, %.lr.ph23.prol ], [ 0, %.lr.ph23.preheader ]
   %i.f = fmul double %.11621.prol, 5.000000e-01   ; 3 uses
-  %i.g = add nsw i32 %.122.prol, 1                ; 2 uses
+  %i.g = add nuw nsw i32 %.122.prol, 1            ; 2 uses
   %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph23.prol.loopexit, label %.lr.ph23.prol, !llvm.loop !12
+  br i1 %prol.iter.cmp.not, label %.lr.ph23.prol.loopexit, label %.lr.ph23.prol, !llvm.loop !13
 
 .lr.ph23.prol.loopexit:                           ; preds = %.lr.ph23.prol, %.lr.ph23.preheader
   %.lcssa.unr = phi double [ poison, %.lr.ph23.preheader ], [ %i.f, %.lr.ph23.prol ]
-  %.122.unr = phi i32 [ %.014.lcssa, %.lr.ph23.preheader ], [ %i.g, %.lr.ph23.prol ]
-  %.11621.unr = phi double [ %.015.lcssa, %.lr.ph23.preheader ], [ %i.f, %.lr.ph23.prol ]
-  %4 = icmp ugt i32 %.014.lcssa, -8
-  br i1 %4, label %._crit_edge, label %.lr.ph23
+  %.122.unr = phi i32 [ %i.c, %.lr.ph23.preheader ], [ %i.g, %.lr.ph23.prol ]
+  %.11621.unr = phi double [ 1.000000e+00, %.lr.ph23.preheader ], [ %i.f, %.lr.ph23.prol ]
+  %7 = add nsw i8 %i.a, -22
+  %8 = icmp ult i8 %7, 7
+  br i1 %8, label %._crit_edge, label %.lr.ph23
 
-.lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %.01419 = phi i32 [ %i.i, %.lr.ph ], [ %i.c, %bb.a ] ; 2 uses
-  %.01518 = phi double [ %i.h, %.lr.ph ], [ 1.000000e+00, %bb.a ]
-  %i.h = fmul double %.01518, 2.000000e+00        ; 2 uses
-  %i.i = add nsw i32 %.01419, -1
-  %i.j = icmp sgt i32 %.01419, 1
-  br i1 %i.j, label %.lr.ph, label %.preheader.loopexit, !llvm.loop !13
+.lr.ph:                                           ; preds = %.preheader.a, %.lr.ph
+  %.01419 = phi i32 [ %i.i, %.lr.ph ], [ %.01419.unr, %.preheader.a ] ; 2 uses
+  %.01518 = phi double [ %i.h, %.lr.ph ], [ %.01518.unr, %.preheader.a ]
+  %9 = fmul double %.01518, 2.000000e+00
+  %10 = fmul double %9, 2.000000e+00
+  %11 = fmul double %10, 2.000000e+00
+  %12 = fmul double %11, 2.000000e+00
+  %13 = fmul double %12, 2.000000e+00
+  %14 = fmul double %13, 2.000000e+00
+  %15 = fmul double %14, 2.000000e+00
+  %i.h = fmul double %15, 2.000000e+00            ; 2 uses
+  %i.i = add nsw i32 %.01419, -8
+  %i.j = icmp sgt i32 %.01419, 8
+  br i1 %i.j, label %.lr.ph, label %._crit_edge, !llvm.loop !14
 
 .lr.ph23:                                         ; preds = %.lr.ph23.prol.loopexit, %.lr.ph23
-  %.122 = phi i32 [ %i.s, %.lr.ph23 ], [ %.122.unr, %.lr.ph23.prol.loopexit ]
+  %.122 = phi i32 [ %i.s, %.lr.ph23 ], [ %.122.unr, %.lr.ph23.prol.loopexit ] ; 2 uses
   %.11621 = phi double [ %i.r, %.lr.ph23 ], [ %.11621.unr, %.lr.ph23.prol.loopexit ]
   %i.k = fmul double %.11621, 5.000000e-01
   %i.l = fmul double %i.k, 5.000000e-01
@@ -388,12 +412,12 @@ bb.a:
   %i.p = fmul double %i.o, 5.000000e-01
   %i.q = fmul double %i.p, 5.000000e-01
   %i.r = fmul double %i.q, 5.000000e-01           ; 2 uses
-  %i.s = add nsw i32 %.122, 8                     ; 2 uses
-  %exitcond.not.7 = icmp eq i32 %i.s, 0
-  br i1 %exitcond.not.7, label %._crit_edge, label %.lr.ph23, !llvm.loop !14
+  %i.s = add nuw nsw i32 %.122, 8
+  %exitcond.not.7 = icmp eq i32 %.122, -8
+  br i1 %exitcond.not.7, label %._crit_edge, label %.lr.ph23, !llvm.loop !15
 
-._crit_edge:                                      ; preds = %.lr.ph23.prol.loopexit, %.lr.ph23, %.preheader.a
-  %.116.lcssa = phi double [ %.015.lcssa, %.preheader.a ], [ %.lcssa.unr, %.lr.ph23.prol.loopexit ], [ %i.r, %.lr.ph23 ]
+._crit_edge:                                      ; preds = %.lr.ph23.prol.loopexit, %.lr.ph23, %.preheader.a, %.lr.ph, %.preheader
+  %.116.lcssa = phi double [ 1.000000e+00, %.preheader ], [ %i.h, %.lr.ph ], [ %.015.lcssa, %.preheader.a ], [ %.lcssa.unr, %.lr.ph23.prol.loopexit ], [ %i.r, %.lr.ph23 ]
   %i.t = icmp samesign ugt i8 %i.a, 30
   %i.u = icmp samesign ult i8 %i.a, 2
   %spec.select = select i1 %i.u, ptr @.str.1032, ptr @.str.1030
@@ -510,7 +534,7 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.da
   %i.ak = add i32 %.0, %.0115147                  ; 3 uses
   %i.al = icmp ult i32 %i.ak, %i.ai
-  br i1 %i.al, label %.lr.ph, label %.loopexit, !llvm.loop !15
+  br i1 %i.al, label %.lr.ph, label %.loopexit, !llvm.loop !16
 
 .lr.ph:                                           ; preds = %bb.g, %bb.h
   %.0115147 = phi i32 [ %i.ak, %bb.h ], [ %i.ah, %bb.g ] ; 8 uses
@@ -913,7 +937,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l,
 .loopexit:                                        ; preds = %bb.n, %bb.o
   %i.eg = add i32 %.12035, 6                      ; 2 uses
   %.not = icmp eq i8 %i.dh, 0
-  br i1 %.not, label %.loopexit1, label %.lr.ph, !llvm.loop !16
+  br i1 %.not, label %.loopexit1, label %.lr.ph, !llvm.loop !17
 
 bb.p:                                             ; preds = %bb.d
   %i.eh = load i32, ptr @hf_dcbx_feature_flag_llink_type, align 4
@@ -925,7 +949,7 @@ bb.p:                                             ; preds = %bb.d
   %.2 = phi i32 [ %i.ah, %bb.c ], [ %i.ar, %bb.d ], [ %i.ck, %bb.e ], [ %i.de, %bb.f ], [ %i.ej, %bb.p ], [ %i.ar, %bb.g ], [ %i.eg, %.loopexit ] ; 2 uses
   %i.ek = tail call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef %.2)
   %.not15 = icmp eq i32 %i.ek, 0
-  br i1 %.not15, label %._crit_edge, label %.lr.ph8, !llvm.loop !17
+  br i1 %.not15, label %._crit_edge, label %.lr.ph8, !llvm.loop !18
 
 ._crit_edge:                                      ; preds = %.loopexit1, %bb.a
   ret void
@@ -1210,7 +1234,7 @@ bb.m:                                             ; preds = %bb.a
   %i.hl = add i32 %.01, 3                         ; 2 uses
   %i.hm = tail call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef %i.hl)
   %i.hn = icmp ugt i32 %i.hm, 2
-  br i1 %i.hn, label %.lr.ph, label %.loopexit, !llvm.loop !18
+  br i1 %i.hn, label %.lr.ph, label %.loopexit, !llvm.loop !19
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.m, %bb.f, %bb.g, %bb.d, %bb.e, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.c, %bb.b, %bb.a
   ret void
@@ -1613,7 +1637,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %.1274 = phi i32 [ %i.dg, %bb.ad ], [ %i.da, %bb.ac ]
   %.1 = phi i32 [ %i.dh, %bb.ad ], [ %i.db, %bb.ac ] ; 2 uses
   %.not305 = icmp eq i32 %.1, 0
-  br i1 %.not305, label %.loopexit, label %.lr.ph, !llvm.loop !19
+  br i1 %.not305, label %.loopexit, label %.lr.ph, !llvm.loop !20
 
 bb.af:                                            ; preds = %bb.n
   %.not304 = icmp eq i16 %i.bb, 0
@@ -2016,7 +2040,7 @@ bb.k:                                             ; preds = %.lr.ph, %bb.k
   %i.bk = add i32 %.0228239, 41
   %i.bl = add i32 %.0240, -41                     ; 2 uses
   %.not = icmp eq i32 %i.bl, 0
-  br i1 %.not, label %.thread, label %bb.k, !llvm.loop !20
+  br i1 %.not, label %.thread, label %bb.k, !llvm.loop !21
 
 bb.l:                                             ; preds = %bb.b
   %i.bm = load i32, ptr @hf_cisco_aci_nodeip, align 4
@@ -2419,7 +2443,7 @@ bb.c:                                             ; preds = %bb.a
   %i.aa = add i32 %.02, 5
   %i.ab = add nuw i32 %.0481, 1                   ; 2 uses
   %exitcond.not = icmp eq i32 %i.ab, %umax
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !21
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !22
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.c, %bb.b, %bb.a
   ret void
@@ -2458,7 +2482,7 @@ bb.b:                                             ; preds = %bb.a
   %i.p = add i32 %i.o, -1
   store i32 %i.p, ptr %i.a, align 4
   %.not = icmp eq i32 %i.o, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !22
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !23
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.b
   %.0.lcssa = phi i32 [ 3, %bb.b ], [ %i.n, %.lr.ph ] ; 2 uses
@@ -2589,9 +2613,6 @@ declare i32 @tvb_captured_length_remaining(ptr noundef, i32 noundef) local_unnam
 declare ptr @strchr(ptr, i32) local_unnamed_addr #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.umax.i16(i16, i16) #7
 
 attributes #0 = { null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -2622,7 +2643,7 @@ attributes #10 = { allocsize(1) }
 !10 = distinct !{!10, !6}
 !11 = distinct !{!11, !7}
 !12 = distinct !{!12, !6}
-!13 = distinct !{!13, !7}
+!13 = distinct !{!13, !6}
 !14 = distinct !{!14, !7}
 !15 = distinct !{!15, !7}
 !16 = distinct !{!16, !7}
@@ -2632,4 +2653,5 @@ attributes #10 = { allocsize(1) }
 !20 = distinct !{!20, !7}
 !21 = distinct !{!21, !7}
 !22 = distinct !{!22, !7}
+!23 = distinct !{!23, !7}
 end_hunk_4

@@ -205,7 +205,7 @@ bb.a:
   %i.a = ptrtoaddr ptr %1 to i64
   %i.b = ptrtoaddr ptr %2 to i64
   %i.c = load i32, ptr %3, align 8                ; 3 uses
-  %spec.store.select = tail call i32 @llvm.smin.i32(i32 %i.c, i32 16) ; 13 uses
+  %spec.store.select = tail call i32 @llvm.smin.i32(i32 %i.c, i32 16) ; 14 uses
   %.not21 = icmp sgt i32 %i.c, 15
   br i1 %.not21, label %.split26.sink.split, label %.split
 
@@ -303,16 +303,15 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br label %.preheader20
 
 .preheader20.us27.preheader:                      ; preds = %.split
-  %4 = tail call i32 @llvm.umin.i32(i32 %spec.store.select, i32 15)
-  %umin = zext nneg i32 %4 to i64                 ; 2 uses
-  %5 = sub nuw nsw i64 16, %umin                  ; 2 uses
-  %6 = xor i64 %umin, 15
-  %xtraiter = and i64 %5, 3                       ; 3 uses
-  %i.ap = icmp samesign ult i64 %6, 3
+  %narrow = sub nuw nsw i32 16, %spec.store.select
+  %umin = zext nneg i32 %narrow to i64            ; 2 uses
+  %xtraiter = and i64 %umin, 3                    ; 3 uses
+  %4 = add nsw i32 %spec.store.select, -13
+  %i.ap = icmp ult i32 %4, 3
   br i1 %i.ap, label %.preheader20.us27.epil.preheader, label %.preheader20.us27.preheader.new
 
 .preheader20.us27.preheader.new:                  ; preds = %.preheader20.us27.preheader
-  %unroll_iter = and i64 %5, 28
+  %unroll_iter = and i64 %umin, 28
   br label %.preheader20.us27
 
 .preheader20.us27:                                ; preds = %.preheader20.us27, %.preheader20.us27.preheader.new
@@ -715,7 +714,7 @@ bb.a:
   %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.b = ptrtoaddr ptr %2 to i64                  ; 2 uses
   %i.c = load i32, ptr %3, align 8                ; 4 uses
-  %spec.store.select = tail call i32 @llvm.smin.i32(i32 %i.c, i32 16) ; 22 uses
+  %spec.store.select = tail call i32 @llvm.smin.i32(i32 %i.c, i32 16) ; 23 uses
   %.not21 = icmp sgt i32 %i.c, 15
   br i1 %.not21, label %.preheader20.us.preheader, label %.split
 
@@ -822,16 +821,15 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck, %i
 
 .preheader20.us28.preheader:                      ; preds = %.split
   %i.at = zext nneg i32 %spec.store.select to i64 ; 2 uses
-  %4 = tail call i32 @llvm.umin.i32(i32 %spec.store.select, i32 15)
-  %umin.a = zext nneg i32 %4 to i64               ; 2 uses
-  %i.au = sub nuw nsw i64 16, %umin.a             ; 5 uses
-  %5 = xor i64 %umin.a, 15
+  %umin.a = zext nneg i32 %spec.store.select to i64 ; 2 uses
+  %i.au = sub nsw i64 16, %i.at                   ; 2 uses
   %xtraiter = and i64 %i.au, 3                    ; 3 uses
-  %i.av = icmp samesign ult i64 %5, 3
+  %4 = add nsw i32 %spec.store.select, -13
+  %i.av = icmp ult i32 %4, 3
   br i1 %i.av, label %.epil.preheader, label %.preheader20.us28.preheader.new
 
 .preheader20.us28.preheader.new:                  ; preds = %.preheader20.us28.preheader
-  %unroll_iter = and i64 %i.au, 28
+  %unroll_iter = and i64 %i.au, -4
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %.preheader20.us28.preheader.new
@@ -899,13 +897,15 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
   br i1 %epil.iter.cmp.not, label %..preheader_crit_edge.us.preheader, label %bb.c, !llvm.loop !80
 
 ..preheader_crit_edge.us.preheader:               ; preds = %bb.c, %..preheader_crit_edge.us.preheader.unr-lcssa
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %1, i8 0, i64 %i.at, i1 false)
-  %xtraiter99 = and i64 %i.au, 1
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %1, i8 0, i64 %umin.a, i1 false)
+  %umin = tail call i64 @llvm.umin.i64(i64 %i.at, i64 15)
+  %5 = sub nuw nsw i64 16, %umin                  ; 3 uses
+  %xtraiter99 = and i64 %5, 1
   %i.ca = icmp eq i32 %i.c, 15
   br i1 %i.ca, label %.epil.preheader98, label %..preheader_crit_edge.us.preheader.new
 
 ..preheader_crit_edge.us.preheader.new:           ; preds = %..preheader_crit_edge.us.preheader
-  %unroll_iter103 = and i64 %i.au, 30
+  %unroll_iter103 = and i64 %5, 30
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %..preheader_crit_edge.us.preheader.new
@@ -938,7 +938,7 @@ bb.d:                                             ; preds = %bb.d, %..preheader_
 
 .epil.preheader98:                                ; preds = %..preheader_crit_edge.us.preheader.1.unr-lcssa, %..preheader_crit_edge.us.preheader
   %indvars.iv39.1.epil.init = phi i64 [ 15, %..preheader_crit_edge.us.preheader ], [ %indvars.iv.next40.1.1, %..preheader_crit_edge.us.preheader.1.unr-lcssa ]
-  %lcmp.mod102 = trunc i64 %i.au to i1
+  %lcmp.mod102 = trunc i64 %5 to i1
   tail call void @llvm.assume(i1 %lcmp.mod102)
   %i.cp = add nuw nsw i64 %indvars.iv39.1.epil.init, 16 ; 2 uses
   %i.cq = trunc nsw i64 %i.cp to i32
@@ -952,7 +952,7 @@ bb.d:                                             ; preds = %bb.d, %..preheader_
 
 ..preheader_crit_edge.us.preheader.1:             ; preds = %..preheader_crit_edge.us.preheader.1.unr-lcssa, %.epil.preheader98
   %scevgep.1 = getelementptr i8, ptr %1, i64 16
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep.1, i8 0, i64 %i.at, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep.1, i8 0, i64 %umin.a, i1 false)
   br label %.split27.us.split
 
 ..preheader_crit_edge:                            ; preds = %..preheader_crit_edge.preheader, %..preheader_crit_edge

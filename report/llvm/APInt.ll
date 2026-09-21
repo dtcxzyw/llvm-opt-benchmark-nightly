@@ -204,7 +204,7 @@ bb.a:
   %i.c = and i32 %i.b, 63                         ; 3 uses
   %.not = icmp eq i32 %i.c, 0                     ; 2 uses
   %i.d = sub nuw nsw i32 64, %i.c
-  %.016 = select i1 %.not, i32 64, i32 %i.c       ; 2 uses
+  %.016 = select i1 %.not, i32 64, i32 %i.c       ; 3 uses
   %narrow = select i1 %.not, i32 0, i32 %i.d
   %.015 = zext nneg i32 %narrow to i64
   %i.e = zext i32 %i.b to i64
@@ -224,13 +224,16 @@ bb.a:
   br i1 %or.cond, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.r = trunc nuw nsw i64 %i.g to i32
-  %i.s = add nsw i32 %i.r, -2
+  %i.r = trunc nuw nsw i64 %i.g to i32            ; 2 uses
+  %1 = add nsw i32 %i.r, -2
+  %2 = shl i32 %i.r, 6
+  %3 = add i32 %2, %.016
+  %i.s = add i32 %3, -64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
   %.023 = phi i32 [ %i.x, %bb.b ], [ %.016, %.lr.ph.preheader ] ; 2 uses
-  %.01422 = phi i32 [ %i.y, %bb.b ], [ %i.s, %.lr.ph.preheader ] ; 3 uses
+  %.01422 = phi i32 [ %i.y, %bb.b ], [ %1, %.lr.ph.preheader ] ; 3 uses
   %i.t = zext nneg i32 %.01422 to i64
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %i.t
   %i.v = load i64, ptr %i.u, align 8, !tbaa !26   ; 2 uses
@@ -238,7 +241,7 @@ bb.a:
   br i1 %i.w, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.x = add i32 %.023, 64                        ; 2 uses
+  %i.x = add i32 %.023, 64
   %i.y = add nsw i32 %.01422, -1
   %i.z = icmp sgt i32 %.01422, 0
   br i1 %i.z, label %.lr.ph, label %.loopexit, !llvm.loop !11
@@ -251,7 +254,7 @@ bb.c:                                             ; preds = %.lr.ph
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.b, %bb.c, %bb.a
-  %.1 = phi i32 [ %i.ad, %bb.c ], [ %i.o, %bb.a ], [ %i.x, %bb.b ]
+  %.1 = phi i32 [ %i.ad, %bb.c ], [ %i.o, %bb.a ], [ %i.s, %bb.b ]
   ret i32 %.1
 }
 
@@ -654,7 +657,7 @@ bb.l:                                             ; preds = %bb.j
   %i.av = and i32 %i.b, 63                        ; 3 uses
   %.not.i.i8 = icmp eq i32 %i.av, 0               ; 2 uses
   %i.aw = sub nuw nsw i32 64, %i.av
-  %.016.i.i = select i1 %.not.i.i8, i32 64, i32 %i.av ; 2 uses
+  %.016.i.i = select i1 %.not.i.i8, i32 64, i32 %i.av ; 3 uses
   %narrow.i.i = select i1 %.not.i.i8, i32 0, i32 %i.aw
   %.015.i.i = zext nneg i32 %narrow.i.i to i64
   %i.ax = zext i32 %i.b to i64
@@ -679,13 +682,16 @@ _ZNK4llvm5APInt11countl_zeroEv.exit.thread14:     ; preds = %bb.l
   br label %bb.o
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.l
-  %i.bj = trunc nuw nsw i64 %i.az to i32
-  %i.bk = add nsw i32 %i.bj, -2
+  %i.bj = trunc nuw nsw i64 %i.az to i32          ; 2 uses
+  %4 = add nsw i32 %i.bj, -2
+  %5 = shl i32 %i.bj, 6
+  %6 = add nsw i32 %.016.i.i, -64
+  %i.bk = add i32 %6, %5
   br label %.lr.ph.i.i10
 
 .lr.ph.i.i10:                                     ; preds = %bb.m, %.lr.ph.preheader.i.i
   %.023.i.i = phi i32 [ %i.bp, %bb.m ], [ %.016.i.i, %.lr.ph.preheader.i.i ] ; 2 uses
-  %.01422.i.i = phi i32 [ %i.bq, %bb.m ], [ %i.bk, %.lr.ph.preheader.i.i ] ; 3 uses
+  %.01422.i.i = phi i32 [ %i.bq, %bb.m ], [ %4, %.lr.ph.preheader.i.i ] ; 3 uses
   %i.bl = zext nneg i32 %.01422.i.i to i64
   %i.bm = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %i.bl
   %i.bn = load i64, ptr %i.bm, align 8, !tbaa !26 ; 2 uses
@@ -693,7 +699,7 @@ _ZNK4llvm5APInt11countl_zeroEv.exit.thread14:     ; preds = %bb.l
   br i1 %i.bo, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %.lr.ph.i.i10
-  %i.bp = add i32 %.023.i.i, 64                   ; 2 uses
+  %i.bp = add i32 %.023.i.i, 64
   %i.bq = add nsw i32 %.01422.i.i, -1
   %i.br = icmp sgt i32 %.01422.i.i, 0
   br i1 %i.br, label %.lr.ph.i.i10, label %_ZNK4llvm5APInt11countl_zeroEv.exit, !llvm.loop !11
@@ -715,7 +721,7 @@ _ZNK4llvm5APInt11countl_zeroEv.exit.thread:       ; preds = %bb.k, %bb.g
   br label %_ZN4llvm5APInt15clearUnusedBitsEv.exit.i.i.i
 
 _ZNK4llvm5APInt11countl_zeroEv.exit:              ; preds = %bb.m, %bb.n, %_ZNK4llvm5APInt25countLeadingZerosSlowCaseEv.exit.i
-  %.pn = phi i32 [ %i.ao, %_ZNK4llvm5APInt25countLeadingZerosSlowCaseEv.exit.i ], [ %i.bv, %bb.n ], [ %i.bp, %bb.m ]
+  %.pn = phi i32 [ %i.ao, %_ZNK4llvm5APInt25countLeadingZerosSlowCaseEv.exit.i ], [ %i.bv, %bb.n ], [ %i.bk, %bb.m ]
   %storemerge.in = icmp uge i32 %2, %.pn
   %storemerge = zext i1 %storemerge.in to i8
   store i8 %storemerge, ptr %3, align 1, !tbaa !44
@@ -1118,7 +1124,7 @@ bb.e:                                             ; preds = %bb.b
   %i.v = and i32 %i.b, 63                         ; 3 uses
   %.not.i.i = icmp eq i32 %i.v, 0                 ; 2 uses
   %i.w = sub nuw nsw i32 64, %i.v
-  %.016.i.i = select i1 %.not.i.i, i32 64, i32 %i.v ; 2 uses
+  %.016.i.i = select i1 %.not.i.i, i32 64, i32 %i.v ; 3 uses
   %narrow.i.i = select i1 %.not.i.i, i32 0, i32 %i.w
   %.015.i.i = zext nneg i32 %narrow.i.i to i64
   %i.x = zext i32 %i.b to i64
@@ -1135,13 +1141,16 @@ bb.e:                                             ; preds = %bb.b
   br i1 %i.ah, label %.lr.ph.preheader.i.i, label %_ZNK4llvm5APInt10countl_oneEv.exit
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.e
-  %i.ai = trunc nuw nsw i64 %i.z to i32
-  %i.aj = add nsw i32 %i.ai, -2
+  %i.ai = trunc nuw nsw i64 %i.z to i32           ; 2 uses
+  %1 = add nsw i32 %i.ai, -2
+  %2 = shl i32 %i.ai, 6
+  %3 = add nsw i32 %.016.i.i, -64
+  %i.aj = add i32 %3, %2
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.f, %.lr.ph.preheader.i.i
   %.023.i.i = phi i32 [ %i.ao, %bb.f ], [ %.016.i.i, %.lr.ph.preheader.i.i ] ; 2 uses
-  %.01422.i.i = phi i32 [ %i.ap, %bb.f ], [ %i.aj, %.lr.ph.preheader.i.i ] ; 3 uses
+  %.01422.i.i = phi i32 [ %i.ap, %bb.f ], [ %1, %.lr.ph.preheader.i.i ] ; 3 uses
   %i.ak = zext nneg i32 %.01422.i.i to i64
   %i.al = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %i.ak
   %i.am = load i64, ptr %i.al, align 8, !tbaa !26 ; 2 uses
@@ -1149,7 +1158,7 @@ bb.e:                                             ; preds = %bb.b
   br i1 %i.an, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %.lr.ph.i.i
-  %i.ao = add i32 %.023.i.i, 64                   ; 2 uses
+  %i.ao = add i32 %.023.i.i, 64
   %i.ap = add nsw i32 %.01422.i.i, -1
   %i.aq = icmp sgt i32 %.01422.i.i, 0
   br i1 %i.aq, label %.lr.ph.i.i, label %_ZNK4llvm5APInt10countl_oneEv.exit, !llvm.loop !11
@@ -1209,7 +1218,7 @@ _ZNK4llvm5APInt25countLeadingZerosSlowCaseEv.exit.i: ; preds = %bb.k, %.thread.i
   br label %_ZNK4llvm5APInt10countl_oneEv.exit
 
 _ZNK4llvm5APInt10countl_oneEv.exit:               ; preds = %bb.f, %_ZNK4llvm5APInt25countLeadingZerosSlowCaseEv.exit.i, %bb.i, %bb.g, %bb.e, %bb.d, %bb.c
-  %i.bn = phi i32 [ %i.bm, %_ZNK4llvm5APInt25countLeadingZerosSlowCaseEv.exit.i ], [ 0, %bb.c ], [ %i.u, %bb.d ], [ %i.au, %bb.g ], [ %i.ag, %bb.e ], [ %i.ax, %bb.i ], [ %i.ao, %bb.f ]
+  %i.bn = phi i32 [ %i.bm, %_ZNK4llvm5APInt25countLeadingZerosSlowCaseEv.exit.i ], [ 0, %bb.c ], [ %i.u, %bb.d ], [ %i.au, %bb.g ], [ %i.ag, %bb.e ], [ %i.ax, %bb.i ], [ %i.aj, %bb.f ]
   ret i32 %i.bn
 }
 

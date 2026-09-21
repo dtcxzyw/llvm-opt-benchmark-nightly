@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 12
 inline.NumDeleted: 8
 loop-unroll.NumCompletelyUnrolled: 8
-loop-unroll.NumRuntimeUnrolled: 8
-loop-unroll.NumUnrolled: 16
+loop-unroll.NumRuntimeUnrolled: 7
+loop-unroll.NumUnrolled: 15
 begin_hunk_0_@extract_lines:bb.a
   %i.s = getelementptr inbounds nuw i8, ptr %i.c, i64 40
   %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 40
@@ -205,17 +205,9 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not5522.i.i, label %find_black_and_white.exit.i, label %.lr.ph26.i.i
 
 .lr.ph26.i.i:                                     ; preds = %.preheader.i.i
-  %i.cx = load ptr, ptr %i.av, align 8, !tbaa !53 ; 3 uses
-  %i.cy = zext i32 %.047.i.i to i64               ; 4 uses
-  %i.cz = sext i32 %i.cm to i64                   ; 2 uses
-  %4 = add nuw nsw i64 %i.cy, 1
-  %5 = sub nsw i64 %4, %i.cz                      ; 3 uses
-  %xtraiter50 = and i64 %5, 1
-  %6 = icmp eq i64 %i.cy, %i.cz
-  br i1 %6, label %.epil.preheader49, label %.lr.ph26.i.i.new
-
-.lr.ph26.i.i.new:                                 ; preds = %.lr.ph26.i.i
-  %unroll_iter54 = and i64 %5, -2
+  %i.cx = load ptr, ptr %i.av, align 8, !tbaa !53
+  %i.cy = zext nneg i32 %.047.i.i to i64
+  %i.cz = sext i32 %i.cm to i64
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.h, %.lr.ph20.i.i.new
@@ -245,54 +237,24 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph20.i.i
   %niter48.ncmp.1 = icmp eq i64 %niter48.next.1, %unroll_iter47
   br i1 %niter48.ncmp.1, label %.preheader.i.i.loopexit.unr-lcssa, label %bb.h, !llvm.loop !70
 
-bb.i:                                             ; preds = %bb.i, %.lr.ph26.i.i.new
-  %indvars.iv35.i.i = phi i64 [ %i.cy, %.lr.ph26.i.i.new ], [ %indvars.iv.next36.i.i.1, %bb.i ] ; 4 uses
-  %.224.i.i = phi i64 [ 0, %.lr.ph26.i.i.new ], [ %spec.select582.i.i.1, %bb.i ]
-  %.04323.i.i = phi i32 [ 0, %.lr.ph26.i.i.new ], [ %spec.select57.i.i.1, %bb.i ]
-  %niter55 = phi i64 [ 0, %.lr.ph26.i.i.new ], [ %niter55.next.1, %bb.i ]
-  %7 = getelementptr inbounds [8 x i8], ptr %i.cx, i64 %indvars.iv35.i.i
-  %8 = load i64, ptr %7, align 8, !tbaa !86       ; 2 uses
-  %sext3.i.i = shl i64 %.224.i.i, 32
-  %9 = ashr exact i64 %sext3.i.i, 32              ; 2 uses
-  %10 = icmp ugt i64 %8, %9
-  %11 = trunc nsw i64 %indvars.iv35.i.i to i32
-  %spec.select57.i.i = select i1 %10, i32 %11, i32 %.04323.i.i
-  %spec.select582.i.i = tail call i64 @llvm.umax.i64(i64 %8, i64 %9)
-  %indvars.iv.next36.i.i = add nsw i64 %indvars.iv35.i.i, -1 ; 2 uses
-  %i.dk = getelementptr inbounds [8 x i8], ptr %i.cx, i64 %indvars.iv.next36.i.i
+bb.i:                                             ; preds = %bb.i, %.lr.ph26.i.i
+  %indvars.iv35.i.i = phi i64 [ %i.cy, %.lr.ph26.i.i ], [ %niter55.next.1, %bb.i ] ; 4 uses
+  %.224.i.i = phi i64 [ 0, %.lr.ph26.i.i ], [ %spec.select582.i.i.1, %bb.i ]
+  %.04323.i.i = phi i32 [ 0, %.lr.ph26.i.i ], [ %spec.select57.i.i.1, %bb.i ]
+  %i.dk = getelementptr inbounds [8 x i8], ptr %i.cx, i64 %indvars.iv35.i.i
   %i.dl = load i64, ptr %i.dk, align 8, !tbaa !86 ; 2 uses
-  %sext3.i.i.1 = shl i64 %spec.select582.i.i, 32
+  %sext3.i.i.1 = shl i64 %.224.i.i, 32
   %i.dm = ashr exact i64 %sext3.i.i.1, 32         ; 2 uses
   %i.dn = icmp ugt i64 %i.dl, %i.dm
-  %i.do = trunc nsw i64 %indvars.iv.next36.i.i to i32
-  %spec.select57.i.i.1 = select i1 %i.dn, i32 %i.do, i32 %spec.select57.i.i ; 3 uses
-  %spec.select582.i.i.1 = tail call i64 @llvm.umax.i64(i64 %i.dl, i64 %i.dm) ; 2 uses
-  %indvars.iv.next36.i.i.1 = add nsw i64 %indvars.iv35.i.i, -2 ; 2 uses
-  %niter55.next.1 = add i64 %niter55, 2           ; 2 uses
-  %niter55.ncmp.1.not = icmp eq i64 %niter55.next.1, %unroll_iter54
-  br i1 %niter55.ncmp.1.not, label %find_black_and_white.exit.i.loopexit.unr-lcssa, label %bb.i, !llvm.loop !71
+  %i.do = trunc nsw i64 %indvars.iv35.i.i to i32
+  %spec.select57.i.i.1 = select i1 %i.dn, i32 %i.do, i32 %.04323.i.i ; 2 uses
+  %spec.select582.i.i.1 = tail call i64 @llvm.umax.i64(i64 %i.dl, i64 %i.dm)
+  %niter55.next.1 = add nsw i64 %indvars.iv35.i.i, -1
+  %.not55.not.i.i = icmp sgt i64 %indvars.iv35.i.i, %i.cz
+  br i1 %.not55.not.i.i, label %bb.i, label %find_black_and_white.exit.i, !llvm.loop !71
 
-find_black_and_white.exit.i.loopexit.unr-lcssa:   ; preds = %bb.i
-  %lcmp.mod51.not = icmp eq i64 %xtraiter50, 0
-  br i1 %lcmp.mod51.not, label %find_black_and_white.exit.i, label %.epil.preheader49
-
-.epil.preheader49:                                ; preds = %find_black_and_white.exit.i.loopexit.unr-lcssa, %.lr.ph26.i.i
-  %indvars.iv35.i.i.epil.init = phi i64 [ %i.cy, %.lr.ph26.i.i ], [ %indvars.iv.next36.i.i.1, %find_black_and_white.exit.i.loopexit.unr-lcssa ] ; 2 uses
-  %.224.i.i.epil.init = phi i64 [ 0, %.lr.ph26.i.i ], [ %spec.select582.i.i.1, %find_black_and_white.exit.i.loopexit.unr-lcssa ]
-  %.04323.i.i.epil.init = phi i32 [ 0, %.lr.ph26.i.i ], [ %spec.select57.i.i.1, %find_black_and_white.exit.i.loopexit.unr-lcssa ]
-  %lcmp.mod53 = trunc i64 %5 to i1
-  tail call void @llvm.assume(i1 %lcmp.mod53)
-  %12 = getelementptr inbounds [8 x i8], ptr %i.cx, i64 %indvars.iv35.i.i.epil.init
-  %13 = load i64, ptr %12, align 8, !tbaa !86
-  %sext3.i.i.epil = shl i64 %.224.i.i.epil.init, 32
-  %14 = ashr exact i64 %sext3.i.i.epil, 32
-  %15 = icmp ugt i64 %13, %14
-  %16 = trunc nsw i64 %indvars.iv35.i.i.epil.init to i32
-  %spec.select57.i.i.epil = select i1 %15, i32 %16, i32 %.04323.i.i.epil.init
-  br label %find_black_and_white.exit.i
-
-find_black_and_white.exit.i:                      ; preds = %.epil.preheader49, %find_black_and_white.exit.i.loopexit.unr-lcssa, %.preheader.i.i
-  %.043.lcssa.i.i = phi i32 [ 0, %.preheader.i.i ], [ %spec.select57.i.i.1, %find_black_and_white.exit.i.loopexit.unr-lcssa ], [ %spec.select57.i.i.epil, %.epil.preheader49 ] ; 3 uses
+find_black_and_white.exit.i:                      ; preds = %bb.i, %.preheader.i.i
+  %.043.lcssa.i.i = phi i32 [ 0, %.preheader.i.i ], [ %spec.select57.i.i.1, %bb.i ] ; 3 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.x, i64 12
   store i32 %.045.lcssa.i.i, ptr %i.dp, align 4, !tbaa !87
   %i.dq = getelementptr inbounds nuw i8, ptr %i.x, i64 8
