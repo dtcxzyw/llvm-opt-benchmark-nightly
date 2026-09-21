@@ -50,6 +50,10 @@ ARTIFACT_DIR = os.path.join(ROOT_DIR, "work", "artifacts")
 ARTIFACT_SIZE_LIMIT_BYTES = 100 * 1024 * 1024
 RUN_OPT_TIME_BUDGET_SECONDS = 100 * 60
 REPRODUCE_OPT_ERROR_TIMEOUT_SECONDS = 2 * 60
+OPT_LOG_REPRODUCE_PREFIX = "Reproduce first opt error with backtrace:"
+MAX_OPT_LOG_PREVIEW_LINES = 25
+MAX_OPT_REPRODUCE_PREVIEW_HEAD_LINES = 10
+MAX_OPT_REPRODUCE_PREVIEW_TAIL_LINES = 400
 HF_URL = "hf://buckets/llvm-opt-benchmark/llvm-opt-benchmark"
 JOB_ID = os.environ.get("GITHUB_RUN_ID", "local")
 RUN_ARTIFACTS_URL = (
@@ -1320,7 +1324,7 @@ def reproduce_opt_error_with_backtrace(
 
     log_f.write(
         "\n"
-        f"Reproduce first opt error with backtrace: {proj}/{file}: {error_message}\n"
+        f"{OPT_LOG_REPRODUCE_PREFIX} {proj}/{file}: {error_message}\n"
         f"Command: {' '.join(shlex.quote(arg) for arg in cmd)}\n"
     )
     try:
@@ -1604,6 +1608,18 @@ def copy_report_ir(ir_path: str):
     shutil.copy(ir_path, output_path)
 
 
+def _opt_log_reproduce_preview(lines: List[str]) -> List[str]:
+    if len(lines) <= (
+        MAX_OPT_REPRODUCE_PREVIEW_HEAD_LINES + MAX_OPT_REPRODUCE_PREVIEW_TAIL_LINES
+    ):
+        return lines
+    return (
+        lines[:MAX_OPT_REPRODUCE_PREVIEW_HEAD_LINES]
+        + ["reproduction output truncated"]
+        + lines[-MAX_OPT_REPRODUCE_PREVIEW_TAIL_LINES:]
+    )
+
+
 def get_opt_log_preview() -> str:
     if not os.path.exists(OPT_LOG_FILE):
         return ""
@@ -1612,9 +1628,26 @@ def get_opt_log_preview() -> str:
     non_empty_lines = [line for line in lines if line.strip()]
     if not non_empty_lines:
         return ""
-    preview_lines = non_empty_lines[:25]
-    if len(non_empty_lines) > 25:
+
+    reproduce_start = next(
+        (
+            idx
+            for idx, line in enumerate(non_empty_lines)
+            if line.startswith(OPT_LOG_REPRODUCE_PREFIX)
+        ),
+        None,
+    )
+    error_lines = (
+        non_empty_lines if reproduce_start is None else non_empty_lines[:reproduce_start]
+    )
+    preview_lines = error_lines[:MAX_OPT_LOG_PREVIEW_LINES]
+    if len(error_lines) > MAX_OPT_LOG_PREVIEW_LINES:
         preview_lines.append("truncated")
+    if reproduce_start is not None:
+        preview_lines.extend(
+            _opt_log_reproduce_preview(non_empty_lines[reproduce_start:])
+        )
+
     preview = "\n".join(preview_lines)
     return f"## Errors\n```\n{preview}\n```\n"
 
