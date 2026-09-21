@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.ct, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %.preheader.30
-  %i.cu = load ptr, ptr %0, align 8, !tbaa !180
+  %i.cu = load ptr, ptr %0, align 8
   br label %bb.e
 
 bb.d:                                             ; preds = %.preheader.30, %.preheader.29, %.preheader.28, %.preheader.27, %.preheader.26, %.preheader.25, %.preheader.24, %.preheader.23, %.preheader.22, %.preheader.21, %.preheader.20, %.preheader.19, %.preheader.18, %.preheader.17, %.preheader.16, %.preheader.15, %.preheader.14, %.preheader.13, %.preheader.12, %.preheader.11, %.preheader.10, %.preheader.9, %.preheader.8, %.preheader.7, %.preheader.6, %.preheader.5, %.preheader.4, %.preheader.3, %.preheader.2, %.preheader.1, %.preheader.preheader
@@ -219,7 +219,7 @@ bb.d:                                             ; preds = %.preheader.30, %.pr
   %i.db = getelementptr inbounds nuw i8, ptr %i.cw, i64 %i.da
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
+bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
   %.1 = phi ptr [ %i.h, %bb.b ], [ %i.cu, %bb.c ], [ %i.db, %bb.d ]
   ret ptr %.1
 }

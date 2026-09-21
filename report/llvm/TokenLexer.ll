@@ -204,15 +204,13 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i, %bb.h
   %i.ar = load i32, ptr %i.a, align 4, !tbaa !23  ; 2 uses
   %i.as = load i32, ptr %i.c, align 8, !tbaa !33  ; 2 uses
-  %i.at = icmp eq i32 %i.ar, %i.as
-  br i1 %i.at, label %_ZL28isWideStringLiteralFromMacroRKN5clang5TokenES2_.exit.thread, label %2
+  %2 = icmp eq i32 %i.ar, %i.as
+  %3 = load ptr, ptr %0, align 8
+  %i.at = icmp eq ptr %3, null
+  %or.cond69 = select i1 %2, i1 true, i1 %i.at
+  br i1 %or.cond69, label %_ZL28isWideStringLiteralFromMacroRKN5clang5TokenES2_.exit.thread, label %bb.k
 
-2:                                                ; preds = %bb.j
-  %3 = load ptr, ptr %0, align 8, !tbaa !22
-  %.not46 = icmp eq ptr %3, null
-  br i1 %.not46, label %_ZL28isWideStringLiteralFromMacroRKN5clang5TokenES2_.exit.thread, label %bb.k
-
-bb.k:                                             ; preds = %2
+bb.k:                                             ; preds = %bb.j
   %i.au = load ptr, ptr %i.ag, align 8, !tbaa !17 ; 2 uses
   %i.av = zext i32 %i.ar to i64
   %i.aw = getelementptr inbounds nuw [24 x i8], ptr %i.au, i64 %i.av ; 2 uses
@@ -265,8 +263,8 @@ bb.o:                                             ; preds = %_ZNK5clang14Identif
   %i.bv = tail call noundef zeroext i1 @_ZN5clang10TokenLexer11pasteTokensERNS_5TokenEN4llvm8ArrayRefIS1_EERj(ptr noundef nonnull align 8 dereferenceable(65) %0, ptr noundef nonnull align 8 dereferenceable(20) %1, ptr nonnull %i.au, i64 %i.bu, ptr noundef nonnull align 4 dereferenceable(4) %i.a)
   br i1 %i.bv, label %.thread66, label %_ZL28isWideStringLiteralFromMacroRKN5clang5TokenES2_.exit.thread
 
-_ZL28isWideStringLiteralFromMacroRKN5clang5TokenES2_.exit.thread: ; preds = %bb.m, %_ZNK5clang14IdentifierInfo5isStrILm2EEEbRAT__Kc.exit.i, %bb.n, %bb.o, %bb.l, %2, %bb.j
-  %.043 = phi i1 [ false, %bb.j ], [ false, %2 ], [ false, %bb.m ], [ false, %bb.l ], [ true, %bb.o ], [ false, %bb.n ], [ false, %_ZNK5clang14IdentifierInfo5isStrILm2EEEbRAT__Kc.exit.i ]
+_ZL28isWideStringLiteralFromMacroRKN5clang5TokenES2_.exit.thread: ; preds = %bb.m, %_ZNK5clang14IdentifierInfo5isStrILm2EEEbRAT__Kc.exit.i, %bb.n, %bb.o, %bb.l, %bb.j
+  %.043 = phi i1 [ false, %bb.j ], [ false, %bb.m ], [ false, %_ZNK5clang14IdentifierInfo5isStrILm2EEEbRAT__Kc.exit.i ], [ false, %bb.l ], [ true, %bb.o ], [ false, %bb.n ]
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.bx = load i32, ptr %i.bw, align 8, !tbaa !370 ; 2 uses
   %.not71 = icmp eq i32 %i.bx, 0

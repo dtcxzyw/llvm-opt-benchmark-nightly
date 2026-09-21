@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 72
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !1389 ; 2 uses
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !1389 ; 4 uses
   %i.f = icmp slt i32 %i.e, 3
   br i1 %i.f, label %bb.f, label %bb.c
 
@@ -243,17 +243,22 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.
   br label %common.resume
 
 bb.f:                                             ; preds = %bb.b
-  %or.cond.not = icmp eq i32 %i.e, 2
-  br i1 %or.cond.not, label %_ZNK2cv8MatShapeclEv.exit, label %.critedge
+  %7 = icmp sgt i32 %i.e, 0
+  br i1 %7, label %_ZNK2cv8MatShapeclEv.exit, label %.critedge
 
 _ZNK2cv8MatShapeclEv.exit:                        ; preds = %bb.f
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 84
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 88
-  %i.n = load i32, ptr %7, align 8, !tbaa !744
-  %i.o = load i32, ptr %i.m, align 4, !tbaa !744
-  %i.p = icmp eq i32 %i.n, 3
-  %8 = icmp eq i32 %i.o, 3
-  %i.q = select i1 %i.p, i1 %8, i1 false
+  %8 = icmp eq i32 %i.e, 2
+  %9 = zext i1 %8 to i64
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %9
+  %i.n = load i32, ptr %10, align 4, !tbaa !744
+  %11 = icmp eq i32 %i.n, 3
+  %12 = icmp eq i32 %i.e, 2
+  %13 = getelementptr inbounds nuw i8, ptr %1, i64 84
+  %i.o = load i32, ptr %13, align 4
+  %i.p = icmp eq i32 %i.o, 3
+  %14 = and i1 %12, %11
+  %i.q = select i1 %14, i1 %i.p, i1 false
   br i1 %i.q, label %bb.k, label %.critedge
 
 .critedge:                                        ; preds = %bb.f, %bb.a, %_ZNK2cv8MatShapeclEv.exit

@@ -205,7 +205,7 @@ _ZNSt11unique_lockISt5mutexEC2ERS0_.exit:         ; preds = %bb.i
 .noexc21:                                         ; preds = %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit
   %i.z = getelementptr inbounds nuw i8, ptr %7, i64 8
   store ptr null, ptr %i.y, align 8, !tbaa !177
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 8 ; 3 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 8 ; 2 uses
   store i64 %3, ptr %i.aa, align 8, !tbaa !182
   %i.ab = getelementptr inbounds nuw i8, ptr %i.y, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %i.y, i64 56
@@ -217,7 +217,8 @@ _ZNSt11unique_lockISt5mutexEC2ERS0_.exit:         ; preds = %bb.i
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 104
   %i.af = load i64, ptr %i.ae, align 8, !tbaa !185
   %.not.not.i.i.i.i.i = icmp eq i64 %i.af, 0
-  br i1 %.not.not.i.i.i.i.i, label %bb.j, label %.thread22.i.i.i.i.i
+  %.pre38.i.i.i.i.i = load i64, ptr %i.aa, align 8 ; 2 uses
+  br i1 %.not.not.i.i.i.i.i, label %bb.j, label %.loopexit.i.i.i.i
 
 bb.j:                                             ; preds = %.noexc21
   %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 96
@@ -227,23 +228,17 @@ bb.k:                                             ; preds = %bb.l, %bb.j
   %.sroa.0.0.in.i.i.i.i.i = phi ptr [ %i.ag, %bb.j ], [ %.sroa.0.0.i.i.i.i.i, %bb.l ]
   %.sroa.0.0.i.i.i.i.i = load ptr, ptr %.sroa.0.0.in.i.i.i.i.i, align 8, !tbaa !177 ; 4 uses
   %.not27.i.i.i.i.i = icmp eq ptr %.sroa.0.0.i.i.i.i.i, null
-  br i1 %.not27.i.i.i.i.i, label %.thread22.i.i.i.i.i, label %bb.l
+  br i1 %.not27.i.i.i.i.i, label %.loopexit.i.i.i.i, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i, i64 8
-  %11 = load i64, ptr %i.aa, align 8, !tbaa !78   ; 2 uses
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !78
-  %i.aj = icmp eq i64 %11, %i.ai
+  %i.aj = icmp eq i64 %.pre38.i.i.i.i.i, %i.ai
   br i1 %i.aj, label %.loopexit.i.i.i.i, label %bb.k, !llvm.loop !3
 
-.thread22.i.i.i.i.i:                              ; preds = %bb.k, %.noexc21
-  %12 = load i64, ptr %i.aa, align 8, !tbaa !78
-  br label %.loopexit.i.i.i.i
-
-.loopexit.i.i.i.i:                                ; preds = %bb.l, %.thread22.i.i.i.i.i
-  %.sroa.019.3.i.i.i.i.i = phi ptr [ null, %.thread22.i.i.i.i.i ], [ %.sroa.0.0.i.i.i.i.i, %bb.l ]
-  %.sroa.4.3.i.i.i.i.i = phi i64 [ %12, %.thread22.i.i.i.i.i ], [ %11, %bb.l ]
-  %i.ak = invoke ptr @_ZNSt10_HashtableImSt4pairIKmN8WasmEdge7Runtime8Instance14MemoryInstance6WaiterEESaIS7_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb0ELb0ELb0EEEE20_M_insert_multi_nodeEPNS9_10_Hash_nodeIS7_Lb0EEEmSN_(ptr noundef nonnull align 8 dereferenceable(56) %i.v, ptr noundef %.sroa.019.3.i.i.i.i.i, i64 noundef %.sroa.4.3.i.i.i.i.i, ptr noundef nonnull %i.y)
+.loopexit.i.i.i.i:                                ; preds = %bb.l, %bb.k, %.noexc21
+  %.sroa.019.3.i.i.i.i.i = phi ptr [ null, %.noexc21 ], [ %.sroa.0.0.i.i.i.i.i, %bb.l ], [ null, %bb.k ]
+  %i.ak = invoke ptr @_ZNSt10_HashtableImSt4pairIKmN8WasmEdge7Runtime8Instance14MemoryInstance6WaiterEESaIS7_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb0ELb0ELb0EEEE20_M_insert_multi_nodeEPNS9_10_Hash_nodeIS7_Lb0EEEmSN_(ptr noundef nonnull align 8 dereferenceable(56) %i.v, ptr noundef %.sroa.019.3.i.i.i.i.i, i64 noundef %.pre38.i.i.i.i.i, ptr noundef nonnull %i.y)
           to label %_ZNSt11unique_lockISt5mutexED2Ev.exit unwind label %bb.m ; 2 uses
 
 bb.m:                                             ; preds = %.loopexit.i.i.i.i
@@ -568,7 +563,7 @@ _ZNSt11unique_lockISt5mutexEC2ERS0_.exit:         ; preds = %bb.i
 .noexc21:                                         ; preds = %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit
   %i.z = getelementptr inbounds nuw i8, ptr %7, i64 8
   store ptr null, ptr %i.y, align 8, !tbaa !177
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 8 ; 3 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 8 ; 2 uses
   store i64 %3, ptr %i.aa, align 8, !tbaa !182
   %i.ab = getelementptr inbounds nuw i8, ptr %i.y, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %i.y, i64 56
@@ -580,7 +575,8 @@ _ZNSt11unique_lockISt5mutexEC2ERS0_.exit:         ; preds = %bb.i
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 104
   %i.af = load i64, ptr %i.ae, align 8, !tbaa !185
   %.not.not.i.i.i.i.i = icmp eq i64 %i.af, 0
-  br i1 %.not.not.i.i.i.i.i, label %bb.j, label %.thread22.i.i.i.i.i
+  %.pre38.i.i.i.i.i = load i64, ptr %i.aa, align 8 ; 2 uses
+  br i1 %.not.not.i.i.i.i.i, label %bb.j, label %.loopexit.i.i.i.i
 
 bb.j:                                             ; preds = %.noexc21
   %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 96
@@ -590,23 +586,17 @@ bb.k:                                             ; preds = %bb.l, %bb.j
   %.sroa.0.0.in.i.i.i.i.i = phi ptr [ %i.ag, %bb.j ], [ %.sroa.0.0.i.i.i.i.i, %bb.l ]
   %.sroa.0.0.i.i.i.i.i = load ptr, ptr %.sroa.0.0.in.i.i.i.i.i, align 8, !tbaa !177 ; 4 uses
   %.not27.i.i.i.i.i = icmp eq ptr %.sroa.0.0.i.i.i.i.i, null
-  br i1 %.not27.i.i.i.i.i, label %.thread22.i.i.i.i.i, label %bb.l
+  br i1 %.not27.i.i.i.i.i, label %.loopexit.i.i.i.i, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i, i64 8
-  %11 = load i64, ptr %i.aa, align 8, !tbaa !78   ; 2 uses
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !78
-  %i.aj = icmp eq i64 %11, %i.ai
+  %i.aj = icmp eq i64 %.pre38.i.i.i.i.i, %i.ai
   br i1 %i.aj, label %.loopexit.i.i.i.i, label %bb.k, !llvm.loop !3
 
-.thread22.i.i.i.i.i:                              ; preds = %bb.k, %.noexc21
-  %12 = load i64, ptr %i.aa, align 8, !tbaa !78
-  br label %.loopexit.i.i.i.i
-
-.loopexit.i.i.i.i:                                ; preds = %bb.l, %.thread22.i.i.i.i.i
-  %.sroa.019.3.i.i.i.i.i = phi ptr [ null, %.thread22.i.i.i.i.i ], [ %.sroa.0.0.i.i.i.i.i, %bb.l ]
-  %.sroa.4.3.i.i.i.i.i = phi i64 [ %12, %.thread22.i.i.i.i.i ], [ %11, %bb.l ]
-  %i.ak = invoke ptr @_ZNSt10_HashtableImSt4pairIKmN8WasmEdge7Runtime8Instance14MemoryInstance6WaiterEESaIS7_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb0ELb0ELb0EEEE20_M_insert_multi_nodeEPNS9_10_Hash_nodeIS7_Lb0EEEmSN_(ptr noundef nonnull align 8 dereferenceable(56) %i.v, ptr noundef %.sroa.019.3.i.i.i.i.i, i64 noundef %.sroa.4.3.i.i.i.i.i, ptr noundef nonnull %i.y)
+.loopexit.i.i.i.i:                                ; preds = %bb.l, %bb.k, %.noexc21
+  %.sroa.019.3.i.i.i.i.i = phi ptr [ null, %.noexc21 ], [ %.sroa.0.0.i.i.i.i.i, %bb.l ], [ null, %bb.k ]
+  %i.ak = invoke ptr @_ZNSt10_HashtableImSt4pairIKmN8WasmEdge7Runtime8Instance14MemoryInstance6WaiterEESaIS7_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb0ELb0ELb0EEEE20_M_insert_multi_nodeEPNS9_10_Hash_nodeIS7_Lb0EEEmSN_(ptr noundef nonnull align 8 dereferenceable(56) %i.v, ptr noundef %.sroa.019.3.i.i.i.i.i, i64 noundef %.pre38.i.i.i.i.i, ptr noundef nonnull %i.y)
           to label %_ZNSt11unique_lockISt5mutexED2Ev.exit unwind label %bb.m ; 2 uses
 
 bb.m:                                             ; preds = %.loopexit.i.i.i.i

@@ -205,8 +205,13 @@ bb.a:
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %.0.lcssa = phi i8 [ %i.f, %bb.a ], [ %spec.select, %.lr.ph ]
-  %i.k = trunc nuw i8 %.0.lcssa to i1
-  br i1 %i.k, label %4, label %bb.b
+  %4 = trunc nuw i8 %.0.lcssa to i1
+  %.not36 = xor i1 %4, true
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 1464 ; 2 uses
+  %6 = load i8, ptr %5, align 8, !range !297
+  %i.k = trunc nuw i8 %6 to i1                    ; 2 uses
+  %or.cond = select i1 %.not36, i1 true, i1 %i.k
+  br i1 %or.cond, label %bb.b, label %_ZN3jxl12FrameDecoder14AllocateOutputEv.exit
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %.041 = phi i8 [ %spec.select, %.lr.ph ], [ %i.f, %bb.a ]
@@ -219,25 +224,14 @@ bb.a:
   %.not37 = icmp eq ptr %i.n, %i.j
   br i1 %.not37, label %._crit_edge, label %.lr.ph
 
-4:                                                ; preds = %._crit_edge
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 1464
-  %6 = load i8, ptr %5, align 8, !tbaa !234, !range !297, !noundef !298
-  %7 = trunc nuw i8 %6 to i1
-  br i1 %7, label %bb.b, label %_ZN3jxl12FrameDecoder14AllocateOutputEv.exit
-
-bb.b:                                             ; preds = %4, %._crit_edge
+bb.b:                                             ; preds = %._crit_edge
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.p = load i32, ptr %i.o, align 8, !tbaa !317
-  %8 = icmp eq i32 %i.p, 3
-  br i1 %8, label %9, label %bb.c
+  %7 = icmp ne i32 %i.p, 3
+  %brmerge = select i1 %7, i1 true, i1 %i.k
+  br i1 %brmerge, label %bb.c, label %_ZN3jxl12FrameDecoder14AllocateOutputEv.exit
 
-9:                                                ; preds = %bb.b
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 1464
-  %11 = load i8, ptr %10, align 8, !tbaa !234, !range !297, !noundef !298
-  %12 = trunc nuw i8 %11 to i1
-  br i1 %12, label %bb.c, label %_ZN3jxl12FrameDecoder14AllocateOutputEv.exit
-
-bb.c:                                             ; preds = %9, %bb.b
+bb.c:                                             ; preds = %bb.b
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 768 ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !296
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 8
@@ -432,14 +426,13 @@ bb.k:                                             ; preds = %.lr.ph43, %bb.j
   %i.dc = load ptr, ptr %0, align 8, !tbaa !98
   %i.dd = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.de = load ptr, ptr %i.dd, align 8, !tbaa !99
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 1464
-  %i.df = load i8, ptr %13, align 8, !tbaa !234, !range !297, !noundef !298
+  %i.df = load i8, ptr %5, align 8, !tbaa !234, !range !297, !noundef !298
   %i.dg = trunc nuw i8 %i.df to i1
   %i.dh = call i32 @_ZN3jxl19ModularFrameDecoder16FinalizeDecodingERKNS_11FrameHeaderEPNS_18PassesDecoderStateEPNS_10ThreadPoolEb(ptr noundef nonnull align 8 dereferenceable(592) %i.db, ptr noundef nonnull align 8 dereferenceable(576) %i.a, ptr noundef %i.dc, ptr noundef %i.de, i1 noundef zeroext %i.dg) #21
   br label %_ZN3jxl12FrameDecoder14AllocateOutputEv.exit
 
-_ZN3jxl12FrameDecoder14AllocateOutputEv.exit:     ; preds = %"_ZN3jxl9RunOnPoolIZNS_12FrameDecoder5FlushEvE3$_0ZNS1_5FlushEvE3$_1EENS_6StatusEPNS_10ThreadPoolEjjRKT_RKT0_PKc.exit", %.critedge, %bb.e, %bb.c, %9, %4
-  %.sroa.025.0 = phi i32 [ 0, %9 ], [ %i.dh, %.critedge ], [ %i.ag, %bb.e ], [ 1, %4 ], [ 0, %bb.c ], [ 1, %"_ZN3jxl9RunOnPoolIZNS_12FrameDecoder5FlushEvE3$_0ZNS1_5FlushEvE3$_1EENS_6StatusEPNS_10ThreadPoolEjjRKT_RKT0_PKc.exit" ]
+_ZN3jxl12FrameDecoder14AllocateOutputEv.exit:     ; preds = %"_ZN3jxl9RunOnPoolIZNS_12FrameDecoder5FlushEvE3$_0ZNS1_5FlushEvE3$_1EENS_6StatusEPNS_10ThreadPoolEjjRKT_RKT0_PKc.exit", %bb.b, %.critedge, %._crit_edge, %bb.e, %bb.c
+  %.sroa.025.0 = phi i32 [ 0, %bb.b ], [ %i.dh, %.critedge ], [ %i.ag, %bb.e ], [ 1, %._crit_edge ], [ 0, %bb.c ], [ 1, %"_ZN3jxl9RunOnPoolIZNS_12FrameDecoder5FlushEvE3$_0ZNS1_5FlushEvE3$_1EENS_6StatusEPNS_10ThreadPoolEjjRKT_RKT0_PKc.exit" ]
   ret i32 %.sroa.025.0
 }
 

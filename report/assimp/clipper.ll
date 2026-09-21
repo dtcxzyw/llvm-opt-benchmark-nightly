@@ -205,11 +205,11 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 56
-  %i.b = load i32, ptr %i.a, align 8              ; 7 uses
+  %i.b = load i32, ptr %i.a, align 8              ; 6 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %.critedge2
-  %.078118 = phi ptr [ %.078116, %.lr.ph ], [ %.078, %.critedge2 ] ; 12 uses
+  %.078118 = phi ptr [ %.078116, %.lr.ph ], [ %.078, %.critedge2 ] ; 11 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.078118, i64 56
   %i.d = load i32, ptr %i.c, align 8
   %.not88 = icmp eq i32 %i.d, %i.b
@@ -217,9 +217,9 @@ bb.b:                                             ; preds = %.lr.ph, %.critedge2
 
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %.078118, i64 64
-  %i.f = load i32, ptr %i.e, align 8              ; 5 uses
+  %i.f = load i32, ptr %i.e, align 8              ; 4 uses
   %i.g = icmp eq i32 %i.f, 0
-  br i1 %i.g, label %.critedge2, label %.critedge
+  br i1 %i.g, label %.critedge2, label %bb.f
 
 .critedge2:                                       ; preds = %bb.b, %bb.c
   %.078.in = getelementptr inbounds nuw i8, ptr %.078118, i64 112
@@ -256,17 +256,15 @@ bb.e:                                             ; preds = %.critedge96, %bb.d
   %i.v = getelementptr inbounds i8, ptr %0, i64 %i.u
   br label %bb.p
 
-.critedge:                                        ; preds = %bb.c
+bb.f:                                             ; preds = %bb.c
   %2 = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %3 = load i32, ptr %2, align 8                  ; 7 uses
-  %4 = icmp eq i32 %3, 0
-  br i1 %4, label %bb.f, label %.thread
-
-bb.f:                                             ; preds = %.critedge
+  %3 = load i32, ptr %2, align 8                  ; 9 uses
+  %4 = icmp ne i32 %3, 0
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.x = load i32, ptr %i.w, align 8
   %.not89 = icmp eq i32 %i.x, 1
-  br i1 %.not89, label %bb.h, label %bb.g
+  %or.cond = select i1 %4, i1 true, i1 %.not89
+  br i1 %or.cond, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 68
@@ -283,25 +281,21 @@ bb.h:                                             ; preds = %bb.f
   %.0.in.in.i = getelementptr inbounds nuw i8, ptr %0, i64 %.0.in.in.v.i
   %.0.in.i = load i32, ptr %.0.in.in.i, align 4
   %.0.i = icmp eq i32 %.0.in.i, 0
-  br i1 %.0.i, label %.preheader110, label %6
+  br i1 %.0.i, label %.preheader110, label %.thread106
 
 .preheader110:                                    ; preds = %bb.h
-  %.0.in119 = getelementptr inbounds nuw i8, ptr %.078118, i64 112
-  %.0120 = load ptr, ptr %.0.in119, align 8       ; 2 uses
-  %.not90121 = icmp eq ptr %.0120, null
-  br i1 %.not90121, label %._crit_edge, label %.lr.ph124
+  %.not90121 = icmp eq i32 %3, 0
+  br i1 %.not90121, label %.thread, label %._crit_edge
 
-.thread:                                          ; preds = %.critedge
-  %5 = icmp eq i32 %i.b, 0
-  %.0.in.in.v.i101 = select i1 %5, i64 128, i64 124
-  %.0.in.in.i102 = getelementptr inbounds nuw i8, ptr %0, i64 %.0.in.in.v.i101
-  %.0.in.i103 = load i32, ptr %.0.in.in.i102, align 4
-  %.0.i104 = icmp eq i32 %.0.in.i103, 0
-  br i1 %.0.i104, label %._crit_edge, label %.thread106
+.thread:                                          ; preds = %.preheader110
+  %.0.in.in.i102 = getelementptr inbounds nuw i8, ptr %.078118, i64 112
+  %.0113 = load ptr, ptr %.0.in.in.i102, align 8  ; 2 uses
+  %.0.i104 = icmp eq ptr %.0113, null
+  br i1 %.0.i104, label %._crit_edge, label %.lr.ph124
 
-.lr.ph124:                                        ; preds = %.preheader110, %bb.j
-  %.0123 = phi ptr [ %.0, %bb.j ], [ %.0120, %.preheader110 ] ; 3 uses
-  %.077122 = phi i8 [ %.1, %bb.j ], [ 1, %.preheader110 ] ; 2 uses
+.lr.ph124:                                        ; preds = %.thread, %bb.j
+  %.0123 = phi ptr [ %.0, %bb.j ], [ %.0113, %.thread ] ; 3 uses
+  %.077122 = phi i8 [ %.1, %bb.j ], [ 1, %.thread ] ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.0123, i64 56
   %i.ae = load i32, ptr %i.ad, align 8
   %i.af = icmp eq i32 %i.ae, %i.b
@@ -327,8 +321,8 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph124
   %i.ak = zext nneg i8 %i.aj to i32
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %.thread, %.preheader110, %._crit_edge.loopexit
-  %.sink147 = phi i32 [ %i.ak, %._crit_edge.loopexit ], [ 0, %.preheader110 ], [ %3, %.thread ]
+._crit_edge:                                      ; preds = %.preheader110, %.thread, %._crit_edge.loopexit
+  %.sink147 = phi i32 [ %i.ak, %._crit_edge.loopexit ], [ 0, %.thread ], [ %3, %.preheader110 ]
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 68
   store i32 %.sink147, ptr %i.al, align 4
   %i.am = getelementptr inbounds nuw i8, ptr %.078118, i64 72
@@ -337,23 +331,15 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph124
   store i32 %i.an, ptr %i.ao, align 8
   br label %bb.p
 
-6:                                                ; preds = %bb.h
-  %7 = getelementptr inbounds nuw i8, ptr %.078118, i64 68
-  %8 = load i32, ptr %7, align 4                  ; 4 uses
-  %9 = mul nsw i32 %8, %i.f
-  %10 = icmp slt i32 %9, 0
-  br i1 %10, label %bb.k, label %bb.n
-
-.thread106:                                       ; preds = %.thread
+.thread106:                                       ; preds = %bb.h
   %i.ap = getelementptr inbounds nuw i8, ptr %.078118, i64 68
-  %i.aq = load i32, ptr %i.ap, align 4            ; 3 uses
+  %i.aq = load i32, ptr %i.ap, align 4            ; 6 uses
   %i.ar = mul nsw i32 %i.aq, %i.f
   %i.as = icmp slt i32 %i.ar, 0
-  br i1 %i.as, label %bb.k, label %.thread107
+  br i1 %i.as, label %bb.k, label %5
 
-bb.k:                                             ; preds = %.thread106, %6
-  %11 = phi i32 [ %i.aq, %.thread106 ], [ %8, %6 ] ; 2 uses
-  %i.at = add i32 %11, -2
+bb.k:                                             ; preds = %.thread106
+  %i.at = add i32 %i.aq, -2
   %i.au = icmp ult i32 %i.at, -3
   br i1 %i.au, label %bb.l, label %bb.m
 
@@ -361,20 +347,24 @@ bb.l:                                             ; preds = %bb.k
   %i.av = mul nsw i32 %3, %i.f
   %i.aw = icmp slt i32 %i.av, 0
   %i.ax = select i1 %i.aw, i32 0, i32 %3
-  %spec.select151 = add nsw i32 %11, %i.ax
+  %spec.select151 = add nsw i32 %i.aq, %i.ax
   br label %bb.o
 
 bb.m:                                             ; preds = %bb.k
   %spec.select = tail call i32 @llvm.umax.i32(i32 %3, i32 1)
   br label %bb.o
 
-bb.n:                                             ; preds = %6
-  %.inv = icmp sgt i32 %8, -1
+5:                                                ; preds = %.thread106
+  %6 = icmp eq i32 %3, 0
+  br i1 %6, label %bb.n, label %.thread107
+
+bb.n:                                             ; preds = %5
+  %.inv = icmp sgt i32 %i.aq, -1
   %.v = select i1 %.inv, i32 1, i32 -1
-  %i.ay = add nsw i32 %.v, %8
+  %i.ay = add nsw i32 %.v, %i.aq
   br label %bb.o
 
-.thread107:                                       ; preds = %.thread106
+.thread107:                                       ; preds = %5
   %i.az = mul nsw i32 %3, %i.f
   %i.ba = icmp slt i32 %i.az, 0
   %i.bb = select i1 %i.ba, i32 0, i32 %3
@@ -777,7 +767,7 @@ bb.bx:                                            ; preds = %bb.bn
   store i32 %i.fd, ptr %i.fe, align 4
   br label %_ZN10ClipperLib7Clipper15AddLocalMaxPolyEPNS_5TEdgeES2_RKNS_8IntPointE.exit
 
-_ZN10ClipperLib7Clipper15AddLocalMaxPolyEPNS_5TEdgeES2_RKNS_8IntPointE.exit: ; preds = %bb.e, %.thread224, %bb.j, %bb.l, %bb.at, %bb.as, %bb.aq, %bb.au, %bb.az, %bb.ba, %bb.bc, %bb.bb, %bb.ax, %bb.aw, %bb.bx, %bb.bu, %bb.bv, %bb.br, %bb.bs, %bb.bp, %bb.bq, %bb.bw, %bb.bo, %bb.bm, %.thread212, %bb.p, %bb.r, %bb.q, %bb.m, %bb.n, %bb.f, %bb.g, %bb.h, %bb.i, %bb.c
+_ZN10ClipperLib7Clipper15AddLocalMaxPolyEPNS_5TEdgeES2_RKNS_8IntPointE.exit: ; preds = %bb.j, %bb.l, %bb.e, %.thread224, %bb.at, %bb.as, %bb.aq, %bb.au, %bb.az, %bb.ba, %bb.bc, %bb.bb, %bb.ax, %bb.aw, %bb.bx, %bb.bu, %bb.bv, %bb.br, %bb.bs, %bb.bp, %bb.bq, %bb.bw, %bb.bo, %bb.bm, %.thread212, %bb.p, %bb.r, %bb.q, %bb.m, %bb.n, %bb.f, %bb.g, %bb.h, %bb.i, %bb.c
   ret void
 }
 

@@ -202,10 +202,9 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.r, label %.lr.ph781.preheader, label %.preheader757
 
 .lr.ph781.preheader:                              ; preds = %.preheader758
-  %i.s = load ptr, ptr %3, align 8                ; 2 uses
+  %i.s = load ptr, ptr %3, align 8                ; 4 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 4
-  %6 = load ptr, ptr %3, align 8                  ; 2 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %6, i64 4
+  %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 4
   %i.v = load ptr, ptr %3, align 8
   br label %.lr.ph781
 
@@ -222,9 +221,9 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.y, label %.lr.ph788, label %.preheader
 
 .lr.ph781:                                        ; preds = %.lr.ph781.preheader, %_ZL14activation_sseDv4_fiRKN4ncnn3MatE.exit140
-  %.0780 = phi ptr [ %i.mp, %_ZL14activation_sseDv4_fiRKN4ncnn3MatE.exit140 ], [ %0, %.lr.ph781.preheader ] ; 3 uses
-  %.0118779 = phi ptr [ %i.mq, %_ZL14activation_sseDv4_fiRKN4ncnn3MatE.exit140 ], [ %1, %.lr.ph781.preheader ] ; 2 uses
-  %.0127778 = phi i32 [ %i.mr, %_ZL14activation_sseDv4_fiRKN4ncnn3MatE.exit140 ], [ 0, %.lr.ph781.preheader ]
+  %.0780 = phi ptr [ %0, %.lr.ph781.preheader ], [ %i.mp, %_ZL14activation_sseDv4_fiRKN4ncnn3MatE.exit140 ] ; 3 uses
+  %.0118779 = phi ptr [ %1, %.lr.ph781.preheader ], [ %i.mq, %_ZL14activation_sseDv4_fiRKN4ncnn3MatE.exit140 ] ; 2 uses
+  %.0127778 = phi i32 [ 0, %.lr.ph781.preheader ], [ %i.mr, %_ZL14activation_sseDv4_fiRKN4ncnn3MatE.exit140 ]
   %i.z = load <4 x i32>, ptr %.0780, align 1, !tbaa !62
   %i.aa = sitofp fast <4 x i32> %i.z to <4 x float>
   %i.ab = getelementptr inbounds nuw i8, ptr %.0780, i64 16
@@ -261,7 +260,7 @@ _ZL14activation_sseDv4_fiRKN4ncnn3MatE.exit142.thread690: ; preds = %.lr.ph781
   br label %_ZL14activation_sseDv4_fiRKN4ncnn3MatE.exit140
 
 _ZL14activation_sseDv4_fiRKN4ncnn3MatE.exit142.thread693: ; preds = %.lr.ph781
-  %i.at = load float, ptr %6, align 4, !tbaa !61
+  %i.at = load float, ptr %i.s, align 4, !tbaa !61
   %i.au = insertelement <4 x float> poison, float %i.at, i64 0
   %i.av = shufflevector <4 x float> %i.au, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.aw = load float, ptr %i.u, align 4, !tbaa !61

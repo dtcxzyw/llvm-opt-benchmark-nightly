@@ -206,7 +206,7 @@ define internal void @_ZN3gmx6Update4Impl13update_coordsERK10t_inputreclibNS_8Ar
 bb.a:
   %19 = alloca %"class.gmx::ThreeFry2x64", align 8 ; 10 uses
   %20 = alloca %"class.gmx::ThreeFry2x64", align 8 ; 10 uses
-  %21 = alloca %"class.gmx::BasicMatrix3x3", align 8 ; 8 uses
+  %21 = alloca %"class.gmx::BasicMatrix3x3", align 8 ; 17 uses
   %22 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %23 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %24 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -267,14 +267,14 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.4.0..sroa_idx.i.i.i.i.i.i137 = getelementptr inbounds nuw i8, ptr %19, i64 40 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %19, i64 48 ; 7 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %7, i64 212 ; 2 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %21, i64 48 ; 4 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %21, i64 48 ; 3 uses
   %.sroa.4.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %20, i64 8 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %20, i64 16 ; 3 uses
   %.sroa.74.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %20, i64 24 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %20, i64 32 ; 4 uses
   %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %20, i64 40 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %20, i64 48 ; 4 uses
-  %.sroa.gep45.i = getelementptr inbounds nuw i8, ptr %13, i64 48 ; 3 uses
+  %.sroa.gep45.i = getelementptr inbounds nuw i8, ptr %13, i64 48 ; 4 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %5, i64 80 ; 3 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %5, i64 104 ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %7, i64 196
@@ -677,16 +677,15 @@ _Z11do_per_stepll.exit.i126:                      ; preds = %bb.bj
   %i.aqu = fmul float %i.apv, %i.aqt
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(36) %21, i8 0, i64 36, i1 false), !noalias !920
   %spec.select251 = select i1 %i.aqs, float %i.aqu, float 0.000000e+00
-  %31 = select i1 %i.aqs, ptr %.sroa.gep45.i, ptr %i.af
   br label %bb.bk
 
 bb.bk:                                            ; preds = %_Z11do_per_stepll.exit.i126, %_Z11do_per_stepll.exit.i126.thread
-  %cond.fr.i250 = phi ptr [ %i.af, %_Z11do_per_stepll.exit.i126.thread ], [ %31, %_Z11do_per_stepll.exit.i126 ] ; 2 uses
+  %cond.fr.i250 = phi i1 [ false, %_Z11do_per_stepll.exit.i126.thread ], [ %i.aqs, %_Z11do_per_stepll.exit.i126 ] ; 10 uses
   %i.aqv = phi float [ 0.000000e+00, %_Z11do_per_stepll.exit.i126.thread ], [ %spec.select251, %_Z11do_per_stepll.exit.i126 ] ; 6 uses
   br i1 %i.aqk, label %bb.bl, label %bb.bx
 
 bb.bl:                                            ; preds = %bb.bk
-  %.val37.i.a = load ptr, ptr %cond.fr.i250, align 8, !noalias !920 ; 9 uses
+  %.val37.i.a = load ptr, ptr %.sroa.gep45.i, align 8, !noalias !920 ; 9 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !921)
   call void @llvm.experimental.noalias.scope.decl(metadata !922)
   call void @llvm.experimental.noalias.scope.decl(metadata !923)
@@ -696,24 +695,33 @@ bb.bl:                                            ; preds = %bb.bk
   br i1 %i.aqw, label %.lr.ph.i.i129, label %.loopexit
 
 .lr.ph.i.i129:                                    ; preds = %bb.bl
+  %.val37.i = select i1 %cond.fr.i250, ptr %.val37.i.a, ptr %21
   %i.aqx = icmp eq ptr %i.aqa, %i.aqb
   %i.aqy = icmp eq ptr %i.aqe, %i.aqf
-  %i.aqz = load float, ptr %.val37.i.a, align 4, !tbaa !179, !noalias !926
-  %i.ara = getelementptr i8, ptr %.val37.i.a, i64 4
+  %i.aqz = load float, ptr %.val37.i, align 4, !tbaa !179, !noalias !926
+  %.val37.i.sroa.sel.v.sroa.sel.v = select i1 %cond.fr.i250, ptr %.val37.i.a, ptr %21
+  %i.ara = getelementptr i8, ptr %.val37.i.sroa.sel.v.sroa.sel.v, i64 4
   %i.arb = load float, ptr %i.ara, align 4, !tbaa !179, !noalias !926
-  %i.arc = getelementptr i8, ptr %.val37.i.a, i64 8
+  %.val37.i.sroa.sel301.v.sroa.sel.v = select i1 %cond.fr.i250, ptr %.val37.i.a, ptr %21
+  %i.arc = getelementptr i8, ptr %.val37.i.sroa.sel301.v.sroa.sel.v, i64 8
   %i.ard = load float, ptr %i.arc, align 4, !tbaa !179, !noalias !926
-  %i.are = getelementptr i8, ptr %.val37.i.a, i64 12
+  %.val37.i.sroa.sel304.v.sroa.sel.v = select i1 %cond.fr.i250, ptr %.val37.i.a, ptr %21
+  %i.are = getelementptr i8, ptr %.val37.i.sroa.sel304.v.sroa.sel.v, i64 12
   %i.arf = load float, ptr %i.are, align 4, !tbaa !179, !noalias !926
-  %i.arg = getelementptr i8, ptr %.val37.i.a, i64 16
+  %.val37.i.sroa.sel307.v.sroa.sel.v = select i1 %cond.fr.i250, ptr %.val37.i.a, ptr %21
+  %i.arg = getelementptr i8, ptr %.val37.i.sroa.sel307.v.sroa.sel.v, i64 16
   %i.arh = load float, ptr %i.arg, align 4, !tbaa !179, !noalias !926
-  %i.ari = getelementptr i8, ptr %.val37.i.a, i64 20
+  %.val37.i.sroa.sel310.v.sroa.sel.v = select i1 %cond.fr.i250, ptr %.val37.i.a, ptr %21
+  %i.ari = getelementptr i8, ptr %.val37.i.sroa.sel310.v.sroa.sel.v, i64 20
   %i.arj = load float, ptr %i.ari, align 4, !tbaa !179, !noalias !926
-  %i.ark = getelementptr i8, ptr %.val37.i.a, i64 24
+  %.val37.i.sroa.sel313.v.sroa.sel.v = select i1 %cond.fr.i250, ptr %.val37.i.a, ptr %21
+  %i.ark = getelementptr i8, ptr %.val37.i.sroa.sel313.v.sroa.sel.v, i64 24
   %i.arl = load float, ptr %i.ark, align 4, !tbaa !179, !noalias !926
-  %i.arm = getelementptr i8, ptr %.val37.i.a, i64 28
+  %.val37.i.sroa.sel316.v.sroa.sel.v = select i1 %cond.fr.i250, ptr %.val37.i.a, ptr %21
+  %i.arm = getelementptr i8, ptr %.val37.i.sroa.sel316.v.sroa.sel.v, i64 28
   %i.arn = load float, ptr %i.arm, align 4, !tbaa !179, !noalias !926
-  %i.aro = getelementptr i8, ptr %.val37.i.a, i64 32
+  %.val37.i.sroa.sel319.v.sroa.sel.v = select i1 %cond.fr.i250, ptr %.val37.i.a, ptr %21
+  %i.aro = getelementptr i8, ptr %.val37.i.sroa.sel319.v.sroa.sel.v, i64 32
   %i.arp = load float, ptr %i.aro, align 4, !tbaa !179, !noalias !926
   %i.arq = sext i32 %i.cf to i64
   %wide.trip.count.i.i = sext i32 %spec.select.i to i64
@@ -900,6 +908,7 @@ bb.bz:                                            ; preds = %bb.by, %bb.bx
   %i.auv = icmp eq ptr %i.aqa, %i.aqb
   %i.auw = icmp eq ptr %i.aqe, %i.aqf
   %i.aux = icmp eq ptr %i.aqc, %i.aqd
+  %.sroa.sel47.i = select i1 %cond.fr.i250, ptr %.sroa.gep45.i, ptr %i.af
   %i.auy = fpext float %i.apv to double           ; 3 uses
   %i.auz = sext i32 %i.cf to i64
   br label %bb.ca
@@ -1037,7 +1046,7 @@ bb.ch:                                            ; preds = %bb.cg
 bb.ci:                                            ; preds = %bb.ch, %bb.cg
   %i.ayv = phi i64 [ %i.ayu, %bb.ch ], [ 0, %bb.cg ] ; 6 uses
   %i.ayw = getelementptr inbounds [12 x i8], ptr %i.cr, i64 %indvars.iv17.i.i ; 6 uses
-  %i.ayx = load ptr, ptr %cond.fr.i250, align 8, !tbaa !251, !noalias !944 ; 9 uses
+  %i.ayx = load ptr, ptr %.sroa.sel47.i, align 8, !tbaa !251, !noalias !944 ; 9 uses
   %i.ayy = load float, ptr %i.ayx, align 4, !tbaa !179, !noalias !944
   %i.ayz = load float, ptr %i.ayw, align 4, !tbaa !179, !alias.scope !945, !noalias !946 ; 4 uses
   %i.aza = call float @llvm.fmuladd.f32(float %i.ayy, float %i.ayz, float 0.000000e+00)

@@ -106,7 +106,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false), !tbaa.struct !25
   %.pre = load i64, ptr %i.b, align 8, !tbaa !12
-  %i.h = icmp eq i64 %.pre, 0
+  %.pre.fr = freeze i64 %.pre
+  %i.h = icmp eq i64 %.pre.fr, 0
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i8 1, ptr %i.i, align 8, !tbaa !15
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -120,7 +121,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.thread
-  %i.n = phi ptr [ null, %.thread ], [ %spec.select, %bb.b ]
+  %i.n = phi ptr [ %spec.select, %bb.b ], [ null, %.thread ]
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 48
   store ptr %i.n, ptr %i.o, align 8, !tbaa !26
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 56

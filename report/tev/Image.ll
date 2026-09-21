@@ -205,9 +205,17 @@ _ZNSt3__116__constrain_hashB8ne180100Emm.exit:    ; preds = %bb.c, %bb.d, %bb.e
 
 .lr.ph:                                           ; preds = %.preheader
   %i.l = add i64 %i.b, -1
-  %i.m = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 2 uses
+  %3 = load i8, ptr %2, align 8                   ; 2 uses
+  %4 = trunc i8 %3 to i1                          ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %5 = load i64, ptr %i.m, align 8
+  %6 = lshr i8 %3, 1
+  %7 = zext nneg i8 %6 to i64
+  %8 = select i1 %4, i64 %5, i64 %7               ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %9 = load ptr, ptr %i.n, align 8
+  %i.o = getelementptr inbounds nuw i8, ptr %2, i64 1
+  %10 = select i1 %4, ptr %9, ptr %i.o            ; 4 uses
   br i1 %.not.i, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %.critedge2.us
@@ -227,32 +235,24 @@ bb.f:                                             ; preds = %.lr.ph.split.us
   %i.v = load i8, ptr %i.u, align 8               ; 2 uses
   %i.w = trunc i8 %i.v to i1                      ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %.02751.us, i64 24
-  %3 = load i64, ptr %i.x, align 8                ; 2 uses
-  %4 = lshr i8 %i.v, 1                            ; 2 uses
-  %5 = zext nneg i8 %4 to i64                     ; 2 uses
-  %6 = select i1 %i.w, i64 %3, i64 %5
-  %7 = load i8, ptr %2, align 8                   ; 2 uses
-  %8 = trunc i8 %7 to i1                          ; 2 uses
-  %i.y = load i64, ptr %i.m, align 8
-  %i.z = lshr i8 %7, 1
-  %i.aa = zext nneg i8 %i.z to i64
-  %i.ab = select i1 %8, i64 %i.y, i64 %i.aa
-  %.not.i.i.i.us = icmp eq i64 %6, %i.ab
+  %i.y = load i64, ptr %i.x, align 8              ; 2 uses
+  %i.z = lshr i8 %i.v, 1                          ; 2 uses
+  %i.aa = zext nneg i8 %i.z to i64                ; 2 uses
+  %i.ab = select i1 %i.w, i64 %i.y, i64 %i.aa
+  %.not.i.i.i.us = icmp eq i64 %i.ab, %8
   br i1 %.not.i.i.i.us, label %bb.g, label %.critedge2.us
 
 bb.g:                                             ; preds = %bb.f
-  %9 = load ptr, ptr %i.n, align 8
-  %10 = select i1 %8, ptr %9, ptr %i.o            ; 2 uses
   br i1 %i.w, label %_ZNKSt3__121__unordered_map_equalINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS_17__hash_value_typeIS6_N3tev12ImageTextureEEENS_8equal_toIS6_EENS_4hashIS6_EELb1EEclB8ne180100ERKSA_SH_.exit.us, label %.preheader.i.i.i.us
 
 .preheader.i.i.i.us:                              ; preds = %bb.g
-  %.not1922.i.i.i.us = icmp eq i8 %4, 0
+  %.not1922.i.i.i.us = icmp eq i8 %i.z, 0
   br i1 %.not1922.i.i.i.us, label %.critedge, label %.lr.ph.i.i.i.us
 
 .lr.ph.i.i.i.us:                                  ; preds = %.preheader.i.i.i.us, %bb.h
   %.01525.pn.i.i.i.us = phi ptr [ %.01525.i.i.i.us, %bb.h ], [ %i.u, %.preheader.i.i.i.us ]
   %.024.i.i.i.us = phi ptr [ %i.af, %bb.h ], [ %10, %.preheader.i.i.i.us ] ; 2 uses
-  %.01623.i.i.i.us = phi i64 [ %i.ae, %bb.h ], [ %5, %.preheader.i.i.i.us ]
+  %.01623.i.i.i.us = phi i64 [ %i.ae, %bb.h ], [ %i.aa, %.preheader.i.i.i.us ]
   %.01525.i.i.i.us = getelementptr inbounds nuw i8, ptr %.01525.pn.i.i.i.us, i64 1 ; 2 uses
   %i.ac = load i8, ptr %.01525.i.i.i.us, align 1, !tbaa !126
   %i.ad = load i8, ptr %.024.i.i.i.us, align 1, !tbaa !126
@@ -268,7 +268,7 @@ bb.h:                                             ; preds = %.lr.ph.i.i.i.us
 _ZNKSt3__121__unordered_map_equalINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS_17__hash_value_typeIS6_N3tev12ImageTextureEEENS_8equal_toIS6_EENS_4hashIS6_EELb1EEclB8ne180100ERKSA_SH_.exit.us: ; preds = %bb.g
   %i.ag = getelementptr inbounds nuw i8, ptr %.02751.us, i64 32
   %i.ah = load ptr, ptr %i.ag, align 8
-  %bcmp.i.i.i.us = tail call i32 @bcmp(ptr %i.ah, ptr %10, i64 %3)
+  %bcmp.i.i.i.us = tail call i32 @bcmp(ptr %i.ah, ptr %10, i64 %i.y)
   %i.ai = icmp eq i32 %bcmp.i.i.i.us, 0
   br i1 %i.ai, label %.critedge, label %.critedge2.us
 
@@ -302,32 +302,24 @@ bb.k:                                             ; preds = %.lr.ph.split
   %i.ar = load i8, ptr %i.aq, align 8             ; 2 uses
   %i.as = trunc i8 %i.ar to i1                    ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %.02751, i64 24
-  %11 = load i64, ptr %i.at, align 8              ; 2 uses
-  %12 = lshr i8 %i.ar, 1                          ; 2 uses
-  %13 = zext nneg i8 %12 to i64                   ; 2 uses
-  %14 = select i1 %i.as, i64 %11, i64 %13
-  %15 = load i8, ptr %2, align 8                  ; 2 uses
-  %16 = trunc i8 %15 to i1                        ; 2 uses
-  %i.au = load i64, ptr %i.m, align 8
-  %i.av = lshr i8 %15, 1
-  %i.aw = zext nneg i8 %i.av to i64
-  %i.ax = select i1 %16, i64 %i.au, i64 %i.aw
-  %.not.i.i.i = icmp eq i64 %14, %i.ax
+  %i.au = load i64, ptr %i.at, align 8            ; 2 uses
+  %i.av = lshr i8 %i.ar, 1                        ; 2 uses
+  %i.aw = zext nneg i8 %i.av to i64               ; 2 uses
+  %i.ax = select i1 %i.as, i64 %i.au, i64 %i.aw
+  %.not.i.i.i = icmp eq i64 %i.ax, %8
   br i1 %.not.i.i.i, label %bb.l, label %.critedge2
 
 bb.l:                                             ; preds = %bb.k
-  %17 = load ptr, ptr %i.n, align 8
-  %18 = select i1 %16, ptr %17, ptr %i.o          ; 2 uses
   br i1 %i.as, label %_ZNKSt3__121__unordered_map_equalINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS_17__hash_value_typeIS6_N3tev12ImageTextureEEENS_8equal_toIS6_EENS_4hashIS6_EELb1EEclB8ne180100ERKSA_SH_.exit, label %.preheader.i.i.i
 
 .preheader.i.i.i:                                 ; preds = %bb.l
-  %.not1922.i.i.i = icmp eq i8 %12, 0
+  %.not1922.i.i.i = icmp eq i8 %i.av, 0
   br i1 %.not1922.i.i.i, label %.critedge, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.preheader.i.i.i, %bb.m
   %.01525.pn.i.i.i = phi ptr [ %.01525.i.i.i, %bb.m ], [ %i.aq, %.preheader.i.i.i ]
-  %.024.i.i.i = phi ptr [ %i.bb, %bb.m ], [ %18, %.preheader.i.i.i ] ; 2 uses
-  %.01623.i.i.i = phi i64 [ %i.ba, %bb.m ], [ %13, %.preheader.i.i.i ]
+  %.024.i.i.i = phi ptr [ %i.bb, %bb.m ], [ %10, %.preheader.i.i.i ] ; 2 uses
+  %.01623.i.i.i = phi i64 [ %i.ba, %bb.m ], [ %i.aw, %.preheader.i.i.i ]
   %.01525.i.i.i = getelementptr inbounds nuw i8, ptr %.01525.pn.i.i.i, i64 1 ; 2 uses
   %i.ay = load i8, ptr %.01525.i.i.i, align 1, !tbaa !126
   %i.az = load i8, ptr %.024.i.i.i, align 1, !tbaa !126
@@ -343,7 +335,7 @@ bb.m:                                             ; preds = %.lr.ph.i.i.i
 _ZNKSt3__121__unordered_map_equalINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS_17__hash_value_typeIS6_N3tev12ImageTextureEEENS_8equal_toIS6_EENS_4hashIS6_EELb1EEclB8ne180100ERKSA_SH_.exit: ; preds = %bb.l
   %i.bc = getelementptr inbounds nuw i8, ptr %.02751, i64 32
   %i.bd = load ptr, ptr %i.bc, align 8
-  %bcmp.i.i.i = tail call i32 @bcmp(ptr %i.bd, ptr %18, i64 %11)
+  %bcmp.i.i.i = tail call i32 @bcmp(ptr %i.bd, ptr %10, i64 %i.au)
   %i.be = icmp eq i32 %bcmp.i.i.i, 0
   br i1 %i.be, label %.critedge, label %.critedge2
 

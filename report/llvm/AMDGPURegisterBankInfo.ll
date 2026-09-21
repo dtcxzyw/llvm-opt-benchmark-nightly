@@ -205,28 +205,26 @@ bb.d:                                             ; preds = %bb.c
 _ZNK4llvm8TypeSizecvmEv.exit:                     ; preds = %bb.c
   %i.d = icmp ne i64 %3, 1
   %brmerge = or i1 %i.d, %i.b
-  br i1 %brmerge, label %5, label %bb.e
+  br i1 %brmerge, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %_ZNK4llvm8TypeSizecvmEv.exit
   %.val = load i32, ptr %2, align 8, !tbaa !58
   %switch = icmp ult i32 %.val, 4
   br i1 %switch, label %bb.g, label %.thread
 
-5:                                                ; preds = %_ZNK4llvm8TypeSizecvmEv.exit
-  %6 = icmp eq i32 %i.a, 0
-  br i1 %6, label %bb.f, label %.thread
-
-bb.f:                                             ; preds = %5
-  %i.e = load i32, ptr %2, align 8, !tbaa !58
+bb.f:                                             ; preds = %_ZNK4llvm8TypeSizecvmEv.exit
+  %5 = icmp eq i32 %i.a, 0
+  %i.e = load i32, ptr %2, align 8
   %i.f = icmp eq i32 %i.e, 0
-  br i1 %i.f, label %bb.g, label %.thread
+  %or.cond = select i1 %5, i1 %i.f, i1 false
+  br i1 %or.cond, label %bb.g, label %.thread
 
-.thread:                                          ; preds = %bb.e, %bb.f, %5
+.thread:                                          ; preds = %bb.e, %bb.f
   %i.g = icmp ne ptr %1, %2
   %i.h = zext i1 %i.g to i32
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.e, %bb.b, %bb.b, %bb.b, %bb.f, %.thread
+bb.g:                                             ; preds = %bb.e, %bb.f, %bb.b, %bb.b, %bb.b, %.thread
   %.0 = phi i32 [ 4, %bb.f ], [ -1, %bb.b ], [ %i.h, %.thread ], [ -1, %bb.b ], [ -1, %bb.b ], [ -1, %bb.e ]
   ret i32 %.0
 }

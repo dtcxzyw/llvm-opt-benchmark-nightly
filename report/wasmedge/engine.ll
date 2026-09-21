@@ -205,13 +205,13 @@ bb.g:                                             ; preds = %bb.f, %_ZNSt6vector
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZNK8WasmEdge8Executor8Executor8runMinOpIfEENSt9enable_ifIX12IsWasmFloatVIT_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEERKSN_(ptr dead_on_unwind noalias writable sret(%"class.cxx20::expected") align 4 %0, ptr noundef nonnull align 8 dereferenceable(328) %1, ptr noundef nonnull align 16 dereferenceable(16) %2, ptr noundef nonnull align 16 dereferenceable(16) %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = load float, ptr %2, align 16             ; 4 uses
+  %i.a = load float, ptr %2, align 16             ; 5 uses
   %i.b = fcmp uno float %i.a, 0.000000e+00
   %i.c = bitcast float %i.a to i32                ; 2 uses
   br i1 %i.b, label %.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = load float, ptr %3, align 16, !tbaa !135 ; 5 uses
+  %i.d = load float, ptr %3, align 16, !tbaa !135 ; 6 uses
   %i.e = fcmp uno float %i.d, 0.000000e+00
   br i1 %i.e, label %bb.c, label %bb.d
 
@@ -243,8 +243,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e, %bb.d
   %i.m = fcmp olt float %i.d, %i.a
-  %..i = select i1 %i.m, ptr %3, ptr %2
-  %4 = load float, ptr %..i, align 16, !tbaa !135
+  %4 = select i1 %i.m, float %i.d, float %i.a
   store float %4, ptr %2, align 16, !tbaa !135
   br label %bb.h
 
@@ -256,13 +255,13 @@ bb.h:                                             ; preds = %bb.f, %bb.g, %.thre
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZNK8WasmEdge8Executor8Executor8runMaxOpIfEENSt9enable_ifIX12IsWasmFloatVIT_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEERKSN_(ptr dead_on_unwind noalias writable sret(%"class.cxx20::expected") align 4 %0, ptr noundef nonnull align 8 dereferenceable(328) %1, ptr noundef nonnull align 16 dereferenceable(16) %2, ptr noundef nonnull align 16 dereferenceable(16) %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = load float, ptr %2, align 16             ; 4 uses
+  %i.a = load float, ptr %2, align 16             ; 5 uses
   %i.b = fcmp uno float %i.a, 0.000000e+00
   %i.c = bitcast float %i.a to i32                ; 2 uses
   br i1 %i.b, label %.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = load float, ptr %3, align 16, !tbaa !135 ; 5 uses
+  %i.d = load float, ptr %3, align 16, !tbaa !135 ; 6 uses
   %i.e = fcmp uno float %i.d, 0.000000e+00
   br i1 %i.e, label %bb.c, label %bb.d
 
@@ -294,8 +293,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e, %bb.d
   %i.m = fcmp olt float %i.a, %i.d
-  %..i = select i1 %i.m, ptr %3, ptr %2
-  %4 = load float, ptr %..i, align 16, !tbaa !135
+  %4 = select i1 %i.m, float %i.d, float %i.a
   store float %4, ptr %2, align 16, !tbaa !135
   br label %bb.h
 
@@ -307,13 +305,13 @@ bb.h:                                             ; preds = %bb.f, %bb.g, %.thre
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZNK8WasmEdge8Executor8Executor8runMinOpIdEENSt9enable_ifIX12IsWasmFloatVIT_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEERKSN_(ptr dead_on_unwind noalias writable sret(%"class.cxx20::expected") align 4 %0, ptr noundef nonnull align 8 dereferenceable(328) %1, ptr noundef nonnull align 16 dereferenceable(16) %2, ptr noundef nonnull align 16 dereferenceable(16) %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = load double, ptr %2, align 16            ; 4 uses
+  %i.a = load double, ptr %2, align 16            ; 5 uses
   %i.b = fcmp uno double %i.a, 0.000000e+00
   %i.c = bitcast double %i.a to i64               ; 2 uses
   br i1 %i.b, label %.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = load double, ptr %3, align 16, !tbaa !137 ; 5 uses
+  %i.d = load double, ptr %3, align 16, !tbaa !137 ; 6 uses
   %i.e = fcmp uno double %i.d, 0.000000e+00
   br i1 %i.e, label %bb.c, label %bb.d
 
@@ -345,8 +343,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e, %bb.d
   %i.m = fcmp olt double %i.d, %i.a
-  %..i = select i1 %i.m, ptr %3, ptr %2
-  %4 = load double, ptr %..i, align 16, !tbaa !137
+  %4 = select i1 %i.m, double %i.d, double %i.a
   store double %4, ptr %2, align 16, !tbaa !137
   br label %bb.h
 
@@ -358,13 +355,13 @@ bb.h:                                             ; preds = %bb.f, %bb.g, %.thre
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZNK8WasmEdge8Executor8Executor8runMaxOpIdEENSt9enable_ifIX12IsWasmFloatVIT_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEERKSN_(ptr dead_on_unwind noalias writable sret(%"class.cxx20::expected") align 4 %0, ptr noundef nonnull align 8 dereferenceable(328) %1, ptr noundef nonnull align 16 dereferenceable(16) %2, ptr noundef nonnull align 16 dereferenceable(16) %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = load double, ptr %2, align 16            ; 4 uses
+  %i.a = load double, ptr %2, align 16            ; 5 uses
   %i.b = fcmp uno double %i.a, 0.000000e+00
   %i.c = bitcast double %i.a to i64               ; 2 uses
   br i1 %i.b, label %.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = load double, ptr %3, align 16, !tbaa !137 ; 5 uses
+  %i.d = load double, ptr %3, align 16, !tbaa !137 ; 6 uses
   %i.e = fcmp uno double %i.d, 0.000000e+00
   br i1 %i.e, label %bb.c, label %bb.d
 
@@ -396,8 +393,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e, %bb.d
   %i.m = fcmp olt double %i.a, %i.d
-  %..i = select i1 %i.m, ptr %3, ptr %2
-  %4 = load double, ptr %..i, align 16, !tbaa !137
+  %4 = select i1 %i.m, double %i.d, double %i.a
   store double %4, ptr %2, align 16, !tbaa !137
   br label %bb.h
 
@@ -800,7 +796,7 @@ _ZNSt11unique_lockISt5mutexEC2ERS0_.exit:         ; preds = %bb.i
 .noexc21:                                         ; preds = %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit
   %i.z = getelementptr inbounds nuw i8, ptr %7, i64 8
   store ptr null, ptr %i.y, align 8, !tbaa !139
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 8 ; 3 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 8 ; 2 uses
   store i64 %3, ptr %i.aa, align 8, !tbaa !232
   %i.ab = getelementptr inbounds nuw i8, ptr %i.y, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %i.y, i64 56
@@ -812,7 +808,8 @@ _ZNSt11unique_lockISt5mutexEC2ERS0_.exit:         ; preds = %bb.i
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 104
   %i.af = load i64, ptr %i.ae, align 8, !tbaa !235
   %.not.not.i.i.i.i.i = icmp eq i64 %i.af, 0
-  br i1 %.not.not.i.i.i.i.i, label %bb.j, label %.thread22.i.i.i.i.i
+  %.pre38.i.i.i.i.i = load i64, ptr %i.aa, align 8 ; 2 uses
+  br i1 %.not.not.i.i.i.i.i, label %bb.j, label %.loopexit.i.i.i.i
 
 bb.j:                                             ; preds = %.noexc21
   %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 96
@@ -822,23 +819,17 @@ bb.k:                                             ; preds = %bb.l, %bb.j
   %.sroa.0.0.in.i.i.i.i.i = phi ptr [ %i.ag, %bb.j ], [ %.sroa.0.0.i.i.i.i.i, %bb.l ]
   %.sroa.0.0.i.i.i.i.i = load ptr, ptr %.sroa.0.0.in.i.i.i.i.i, align 8, !tbaa !139 ; 4 uses
   %.not27.i.i.i.i.i = icmp eq ptr %.sroa.0.0.i.i.i.i.i, null
-  br i1 %.not27.i.i.i.i.i, label %.thread22.i.i.i.i.i, label %bb.l
+  br i1 %.not27.i.i.i.i.i, label %.loopexit.i.i.i.i, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i, i64 8
-  %11 = load i64, ptr %i.aa, align 8, !tbaa !94   ; 2 uses
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !94
-  %i.aj = icmp eq i64 %11, %i.ai
+  %i.aj = icmp eq i64 %.pre38.i.i.i.i.i, %i.ai
   br i1 %i.aj, label %.loopexit.i.i.i.i, label %bb.k, !llvm.loop !8
 
-.thread22.i.i.i.i.i:                              ; preds = %bb.k, %.noexc21
-  %12 = load i64, ptr %i.aa, align 8, !tbaa !94
-  br label %.loopexit.i.i.i.i
-
-.loopexit.i.i.i.i:                                ; preds = %bb.l, %.thread22.i.i.i.i.i
-  %.sroa.019.3.i.i.i.i.i = phi ptr [ null, %.thread22.i.i.i.i.i ], [ %.sroa.0.0.i.i.i.i.i, %bb.l ]
-  %.sroa.4.3.i.i.i.i.i = phi i64 [ %12, %.thread22.i.i.i.i.i ], [ %11, %bb.l ]
-  %i.ak = invoke ptr @_ZNSt10_HashtableImSt4pairIKmN8WasmEdge7Runtime8Instance14MemoryInstance6WaiterEESaIS7_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb0ELb0ELb0EEEE20_M_insert_multi_nodeEPNS9_10_Hash_nodeIS7_Lb0EEEmSN_(ptr noundef nonnull align 8 dereferenceable(56) %i.v, ptr noundef %.sroa.019.3.i.i.i.i.i, i64 noundef %.sroa.4.3.i.i.i.i.i, ptr noundef nonnull %i.y)
+.loopexit.i.i.i.i:                                ; preds = %bb.l, %bb.k, %.noexc21
+  %.sroa.019.3.i.i.i.i.i = phi ptr [ null, %.noexc21 ], [ %.sroa.0.0.i.i.i.i.i, %bb.l ], [ null, %bb.k ]
+  %i.ak = invoke ptr @_ZNSt10_HashtableImSt4pairIKmN8WasmEdge7Runtime8Instance14MemoryInstance6WaiterEESaIS7_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb0ELb0ELb0EEEE20_M_insert_multi_nodeEPNS9_10_Hash_nodeIS7_Lb0EEEmSN_(ptr noundef nonnull align 8 dereferenceable(56) %i.v, ptr noundef %.sroa.019.3.i.i.i.i.i, i64 noundef %.pre38.i.i.i.i.i, ptr noundef nonnull %i.y)
           to label %_ZNSt11unique_lockISt5mutexED2Ev.exit unwind label %bb.m ; 2 uses
 
 bb.m:                                             ; preds = %.loopexit.i.i.i.i
@@ -1241,7 +1232,7 @@ _ZNSt11unique_lockISt5mutexEC2ERS0_.exit:         ; preds = %bb.i
 .noexc21:                                         ; preds = %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit
   %i.z = getelementptr inbounds nuw i8, ptr %7, i64 8
   store ptr null, ptr %i.y, align 8, !tbaa !139
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 8 ; 3 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 8 ; 2 uses
   store i64 %3, ptr %i.aa, align 8, !tbaa !232
   %i.ab = getelementptr inbounds nuw i8, ptr %i.y, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %i.y, i64 56
@@ -1253,7 +1244,8 @@ _ZNSt11unique_lockISt5mutexEC2ERS0_.exit:         ; preds = %bb.i
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 104
   %i.af = load i64, ptr %i.ae, align 8, !tbaa !235
   %.not.not.i.i.i.i.i = icmp eq i64 %i.af, 0
-  br i1 %.not.not.i.i.i.i.i, label %bb.j, label %.thread22.i.i.i.i.i
+  %.pre38.i.i.i.i.i = load i64, ptr %i.aa, align 8 ; 2 uses
+  br i1 %.not.not.i.i.i.i.i, label %bb.j, label %.loopexit.i.i.i.i
 
 bb.j:                                             ; preds = %.noexc21
   %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 96
@@ -1263,23 +1255,17 @@ bb.k:                                             ; preds = %bb.l, %bb.j
   %.sroa.0.0.in.i.i.i.i.i = phi ptr [ %i.ag, %bb.j ], [ %.sroa.0.0.i.i.i.i.i, %bb.l ]
   %.sroa.0.0.i.i.i.i.i = load ptr, ptr %.sroa.0.0.in.i.i.i.i.i, align 8, !tbaa !139 ; 4 uses
   %.not27.i.i.i.i.i = icmp eq ptr %.sroa.0.0.i.i.i.i.i, null
-  br i1 %.not27.i.i.i.i.i, label %.thread22.i.i.i.i.i, label %bb.l
+  br i1 %.not27.i.i.i.i.i, label %.loopexit.i.i.i.i, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i, i64 8
-  %11 = load i64, ptr %i.aa, align 8, !tbaa !94   ; 2 uses
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !94
-  %i.aj = icmp eq i64 %11, %i.ai
+  %i.aj = icmp eq i64 %.pre38.i.i.i.i.i, %i.ai
   br i1 %i.aj, label %.loopexit.i.i.i.i, label %bb.k, !llvm.loop !8
 
-.thread22.i.i.i.i.i:                              ; preds = %bb.k, %.noexc21
-  %12 = load i64, ptr %i.aa, align 8, !tbaa !94
-  br label %.loopexit.i.i.i.i
-
-.loopexit.i.i.i.i:                                ; preds = %bb.l, %.thread22.i.i.i.i.i
-  %.sroa.019.3.i.i.i.i.i = phi ptr [ null, %.thread22.i.i.i.i.i ], [ %.sroa.0.0.i.i.i.i.i, %bb.l ]
-  %.sroa.4.3.i.i.i.i.i = phi i64 [ %12, %.thread22.i.i.i.i.i ], [ %11, %bb.l ]
-  %i.ak = invoke ptr @_ZNSt10_HashtableImSt4pairIKmN8WasmEdge7Runtime8Instance14MemoryInstance6WaiterEESaIS7_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb0ELb0ELb0EEEE20_M_insert_multi_nodeEPNS9_10_Hash_nodeIS7_Lb0EEEmSN_(ptr noundef nonnull align 8 dereferenceable(56) %i.v, ptr noundef %.sroa.019.3.i.i.i.i.i, i64 noundef %.sroa.4.3.i.i.i.i.i, ptr noundef nonnull %i.y)
+.loopexit.i.i.i.i:                                ; preds = %bb.l, %bb.k, %.noexc21
+  %.sroa.019.3.i.i.i.i.i = phi ptr [ null, %.noexc21 ], [ %.sroa.0.0.i.i.i.i.i, %bb.l ], [ null, %bb.k ]
+  %i.ak = invoke ptr @_ZNSt10_HashtableImSt4pairIKmN8WasmEdge7Runtime8Instance14MemoryInstance6WaiterEESaIS7_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb0ELb0ELb0EEEE20_M_insert_multi_nodeEPNS9_10_Hash_nodeIS7_Lb0EEEmSN_(ptr noundef nonnull align 8 dereferenceable(56) %i.v, ptr noundef %.sroa.019.3.i.i.i.i.i, i64 noundef %.pre38.i.i.i.i.i, ptr noundef nonnull %i.y)
           to label %_ZNSt11unique_lockISt5mutexED2Ev.exit unwind label %bb.m ; 2 uses
 
 bb.m:                                             ; preds = %.loopexit.i.i.i.i

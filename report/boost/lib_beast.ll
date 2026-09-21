@@ -205,16 +205,20 @@ bb.i:                                             ; preds = %bb.g
 
 _ZN5boost5beast4zlib6detail14deflate_stream10get_configEm.exit37: ; preds = %bb.g, %bb.h, %bb.i
   %.sroa.40545.0 = phi i64 [ ptrtoint (ptr @_ZN5boost5beast4zlib6detail14deflate_stream12deflate_slowERNS1_8z_paramsENS1_5FlushE to i64), %bb.i ], [ ptrtoint (ptr @_ZN5boost5beast4zlib6detail14deflate_stream14deflate_storedERNS1_8z_paramsENS1_5FlushE to i64), %bb.g ], [ ptrtoint (ptr @_ZN5boost5beast4zlib6detail14deflate_stream12deflate_fastERNS1_8z_paramsENS1_5FlushE to i64), %bb.h ]
-  %.not744 = icmp eq i64 %.sroa.39.0, %.sroa.40545.0
-  br i1 %.not744, label %.critedge3, label %bb.j
+  %6 = icmp eq i64 %.sroa.39.0, %.sroa.40545.0
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %8 = load i64, ptr %7, align 8
+  %.not744 = icmp eq i64 %8, 0
+  %or.cond745 = select i1 %6, i1 true, i1 %.not744
+  br i1 %or.cond745, label %.critedge3, label %bb.k
 
-bb.j:                                             ; preds = %_ZN5boost5beast4zlib6detail14deflate_stream10get_configEm.exit37, %_ZN5boost5beast4zlib6detail14deflate_stream10get_configEm.exit
+bb.j:                                             ; preds = %_ZN5boost5beast4zlib6detail14deflate_stream10get_configEm.exit
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.o = load i64, ptr %i.n, align 8, !tbaa !323
   %.not33 = icmp eq i64 %i.o, 0
   br i1 %.not33, label %.critedge3, label %bb.k
 
-bb.k:                                             ; preds = %bb.j
+bb.k:                                             ; preds = %_ZN5boost5beast4zlib6detail14deflate_stream10get_configEm.exit37, %bb.j
   store i8 1, ptr %5, align 4, !tbaa !324
   %i.p = getelementptr inbounds nuw i8, ptr %5, i64 4
   store i32 1, ptr %i.p, align 4, !tbaa !58
@@ -617,7 +621,7 @@ bb.c:                                             ; preds = %.preheader.3
   br i1 %.not13, label %.preheader.1, label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader, %.preheader.1, %.preheader.2, %.preheader.3, %bb.c, %bb.a, %bb.b
-  %.010 = phi i32 [ 0, %bb.a ], [ 1, %bb.b ], [ 0, %bb.c ], [ 1, %.preheader ], [ 1, %.preheader.1 ], [ 1, %.preheader.3 ], [ 1, %.preheader.2 ]
+  %.010 = phi i32 [ 1, %bb.b ], [ 0, %bb.a ], [ 0, %bb.c ], [ 1, %.preheader ], [ 1, %.preheader.1 ], [ 1, %.preheader.3 ], [ 1, %.preheader.2 ]
   ret i32 %.010
 }
 

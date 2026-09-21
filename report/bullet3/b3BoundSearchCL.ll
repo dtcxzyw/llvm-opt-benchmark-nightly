@@ -204,8 +204,8 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !92   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %8 = zext nneg i32 %2 to i64                    ; 2 uses
-  %9 = load ptr, ptr %i.c, align 8                ; 2 uses
+  %8 = load ptr, ptr %i.c, align 8                ; 2 uses
+  %9 = zext nneg i32 %2 to i64                    ; 2 uses
   %.not = icmp eq i32 %2, 1
   br i1 %.not, label %.loopexit.loopexit216.peel.begin, label %.lr.ph150.split
 
@@ -219,15 +219,15 @@ bb.a:
 
 bb.b:                                             ; preds = %.preheader
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !92   ; 7 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 4 uses
+  %i.g = load ptr, ptr %i.f, align 8              ; 4 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %10 = load ptr, ptr %i.h, align 8               ; 4 uses
   %wide.trip.count175 = zext nneg i32 %2 to i64
   %.sroa.speculate.load.116.peel = load i32, ptr %i.g, align 4, !tbaa !35 ; 2 uses
   %.not78.peel = icmp eq i32 %.sroa.speculate.load.116.peel, -1
   br i1 %.not78.peel, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %10 = load ptr, ptr %i.h, align 8, !tbaa !40
   %i.i = sext i32 %.sroa.speculate.load.116.peel to i64
   %i.j = getelementptr inbounds [4 x i8], ptr %10, i64 %i.i
   store i32 0, ptr %i.j, align 4, !tbaa !32
@@ -248,38 +248,34 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br label %.peel.next178
 
 .peel.next178:                                    ; preds = %bb.g, %.peel.next178.preheader.new
-  %indvars.iv172 = phi i64 [ 1, %.peel.next178.preheader.new ], [ %indvars.iv.next173.1, %bb.g ] ; 5 uses
+  %indvars.iv172 = phi i64 [ 1, %.peel.next178.preheader.new ], [ %indvars.iv.next173.1, %bb.g ] ; 4 uses
   %niter231 = phi i64 [ 0, %.peel.next178.preheader.new ], [ %niter231.next.1, %bb.g ]
-  %i.m = getelementptr [8 x i8], ptr %i.g, i64 %indvars.iv172
+  %i.m = getelementptr [8 x i8], ptr %i.g, i64 %indvars.iv172 ; 2 uses
   %i.n = getelementptr i8, ptr %i.m, i64 -8
-  %.sroa.speculate.load.184.a = load i32, ptr %i.n, align 4, !tbaa !35
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv172
-  %.sroa.speculate.load.116 = load i32, ptr %11, align 4, !tbaa !35 ; 2 uses
-  %.not78 = icmp eq i32 %.sroa.speculate.load.184.a, %.sroa.speculate.load.116
+  %.sroa.speculate.load.184.a = load i32, ptr %i.m, align 4, !tbaa !35 ; 2 uses
+  %.sroa.speculate.load.116 = load i32, ptr %i.n, align 4, !tbaa !35
+  %.not78 = icmp eq i32 %.sroa.speculate.load.116, %.sroa.speculate.load.184.a
   br i1 %.not78, label %.peel.next178.1, label %bb.e
 
 bb.e:                                             ; preds = %.peel.next178
-  %12 = load ptr, ptr %i.h, align 8, !tbaa !40
-  %i.o = sext i32 %.sroa.speculate.load.116 to i64
-  %i.p = getelementptr inbounds [4 x i8], ptr %12, i64 %i.o
+  %i.o = sext i32 %.sroa.speculate.load.184.a to i64
+  %i.p = getelementptr inbounds [4 x i8], ptr %10, i64 %i.o
   %i.q = trunc nuw nsw i64 %indvars.iv172 to i32
   store i32 %i.q, ptr %i.p, align 4, !tbaa !32
   br label %.peel.next178.1
 
 .peel.next178.1:                                  ; preds = %bb.e, %.peel.next178
-  %indvars.iv.next173 = add nuw nsw i64 %indvars.iv172, 1 ; 3 uses
-  %i.r = getelementptr [8 x i8], ptr %i.g, i64 %indvars.iv.next173
+  %indvars.iv.next173 = add nuw nsw i64 %indvars.iv172, 1 ; 2 uses
+  %i.r = getelementptr [8 x i8], ptr %i.g, i64 %indvars.iv.next173 ; 2 uses
   %i.s = getelementptr i8, ptr %i.r, i64 -8
-  %.sroa.speculate.load.184.1.a = load i32, ptr %i.s, align 4, !tbaa !35
-  %13 = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv.next173
-  %.sroa.speculate.load.116.1 = load i32, ptr %13, align 4, !tbaa !35 ; 2 uses
-  %.not78.1 = icmp eq i32 %.sroa.speculate.load.184.1.a, %.sroa.speculate.load.116.1
+  %.sroa.speculate.load.184.1.a = load i32, ptr %i.r, align 4, !tbaa !35 ; 2 uses
+  %.sroa.speculate.load.116.1 = load i32, ptr %i.s, align 4, !tbaa !35
+  %.not78.1 = icmp eq i32 %.sroa.speculate.load.116.1, %.sroa.speculate.load.184.1.a
   br i1 %.not78.1, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %.peel.next178.1
-  %14 = load ptr, ptr %i.h, align 8, !tbaa !40
-  %i.t = sext i32 %.sroa.speculate.load.116.1 to i64
-  %i.u = getelementptr inbounds [4 x i8], ptr %14, i64 %i.t
+  %i.t = sext i32 %.sroa.speculate.load.184.1.a to i64
+  %i.u = getelementptr inbounds [4 x i8], ptr %10, i64 %i.t
   %i.v = trunc nuw nsw i64 %indvars.iv.next173 to i32
   store i32 %i.v, ptr %i.u, align 4, !tbaa !32
   br label %bb.g
@@ -294,7 +290,7 @@ bb.h:                                             ; preds = %.lr.ph150.split, %b
   %indvars.iv167 = phi i64 [ 1, %.lr.ph150.split ], [ %indvars.iv.next168, %bb.l ] ; 4 uses
   %i.w = getelementptr [8 x i8], ptr %i.b, i64 %indvars.iv167 ; 2 uses
   %i.x = getelementptr i8, ptr %i.w, i64 -8
-  %i.y = icmp eq i64 %indvars.iv167, %8
+  %i.y = icmp eq i64 %indvars.iv167, %9
   br i1 %i.y, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -309,7 +305,7 @@ bb.j:                                             ; preds = %bb.h, %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.aa = sext i32 %i.z to i64
-  %i.ab = getelementptr inbounds [4 x i8], ptr %9, i64 %i.aa
+  %i.ab = getelementptr inbounds [4 x i8], ptr %8, i64 %i.aa
   %i.ac = trunc nuw nsw i64 %indvars.iv167 to i32
   store i32 %i.ac, ptr %i.ab, align 4, !tbaa !32
   br label %bb.l
@@ -712,21 +708,19 @@ bb.al:                                            ; preds = %bb.u, %bb.t
   br i1 %lcmp.mod228.not, label %.loopexit, label %.peel.next178.epil.preheader
 
 .peel.next178.epil.preheader:                     ; preds = %.loopexit.loopexit.unr-lcssa, %.peel.next178.preheader
-  %indvars.iv172.epil.init = phi i64 [ 1, %.peel.next178.preheader ], [ %indvars.iv.next173.1, %.loopexit.loopexit.unr-lcssa ] ; 3 uses
+  %indvars.iv172.epil.init = phi i64 [ 1, %.peel.next178.preheader ], [ %indvars.iv.next173.1, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
   %lcmp.mod229 = trunc i64 %i.k to i1
   tail call void @llvm.assume(i1 %lcmp.mod229)
-  %i.fb = getelementptr [8 x i8], ptr %i.g, i64 %indvars.iv172.epil.init
+  %i.fb = getelementptr [8 x i8], ptr %i.g, i64 %indvars.iv172.epil.init ; 2 uses
   %i.fc = getelementptr i8, ptr %i.fb, i64 -8
-  %.sroa.speculate.load.184.epil = load i32, ptr %i.fc, align 4, !tbaa !35
-  %15 = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv172.epil.init
-  %.sroa.speculate.load.116.epil = load i32, ptr %15, align 4, !tbaa !35 ; 2 uses
-  %.not78.epil = icmp eq i32 %.sroa.speculate.load.184.epil, %.sroa.speculate.load.116.epil
+  %.sroa.speculate.load.184.epil = load i32, ptr %i.fb, align 4, !tbaa !35 ; 2 uses
+  %.sroa.speculate.load.116.epil = load i32, ptr %i.fc, align 4, !tbaa !35
+  %.not78.epil = icmp eq i32 %.sroa.speculate.load.116.epil, %.sroa.speculate.load.184.epil
   br i1 %.not78.epil, label %.loopexit, label %bb.am
 
 bb.am:                                            ; preds = %.peel.next178.epil.preheader
-  %16 = load ptr, ptr %i.h, align 8, !tbaa !40
-  %i.fd = sext i32 %.sroa.speculate.load.116.epil to i64
-  %i.fe = getelementptr inbounds [4 x i8], ptr %16, i64 %i.fd
+  %i.fd = sext i32 %.sroa.speculate.load.184.epil to i64
+  %i.fe = getelementptr inbounds [4 x i8], ptr %10, i64 %i.fd
   %i.ff = trunc nuw nsw i64 %indvars.iv172.epil.init to i32
   store i32 %i.ff, ptr %i.fe, align 4, !tbaa !32
   br label %.loopexit
@@ -735,7 +729,7 @@ bb.am:                                            ; preds = %.peel.next178.epil.
   %i.fg = phi i64 [ 1, %.lr.ph150 ], [ %indvars.iv.next168, %bb.l ] ; 3 uses
   %i.fh = getelementptr [8 x i8], ptr %i.b, i64 %i.fg ; 2 uses
   %i.fi = getelementptr i8, ptr %i.fh, i64 -8
-  %i.fj = icmp eq i64 %i.fg, %8
+  %i.fj = icmp eq i64 %i.fg, %9
   br i1 %i.fj, label %bb.ao, label %bb.an
 
 bb.an:                                            ; preds = %.loopexit.loopexit216.peel.begin
@@ -750,7 +744,7 @@ bb.ao:                                            ; preds = %bb.an, %.loopexit.l
 
 bb.ap:                                            ; preds = %bb.ao
   %i.fl = sext i32 %i.fk to i64
-  %i.fm = getelementptr inbounds [4 x i8], ptr %9, i64 %i.fl
+  %i.fm = getelementptr inbounds [4 x i8], ptr %8, i64 %i.fl
   %i.fn = trunc nuw nsw i64 %i.fg to i32
   store i32 %i.fn, ptr %i.fm, align 4, !tbaa !32
   br label %.loopexit

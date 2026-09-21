@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.ai = sext i32 %i.ah to i64
-  %i.aj = load ptr, ptr %2, align 8, !tbaa !17, !noalias !180 ; 3 uses
+  %i.aj = load ptr, ptr %2, align 8, !tbaa !17, !noalias !178 ; 3 uses
   %i.ak = getelementptr inbounds [8 x i8], ptr %i.aj, i64 %i.ai ; 2 uses
   %i.al = load double, ptr %i.aj, align 8, !tbaa !10
   %i.am = load double, ptr %i.ak, align 8, !tbaa !10
@@ -221,7 +221,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.ap = sext i32 %i.ao to i64
-  %i.aq = load ptr, ptr %2, align 8, !tbaa !17, !noalias !180 ; 2 uses
+  %i.aq = load ptr, ptr %2, align 8, !tbaa !17, !noalias !178 ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 8 ; 2 uses
   %i.as = getelementptr inbounds [8 x i8], ptr %i.aq, i64 %i.ap ; 2 uses
   %i.at = load double, ptr %i.ar, align 8, !tbaa !10
@@ -238,7 +238,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %i.ax = sext i32 %i.aw to i64
-  %i.ay = load ptr, ptr %2, align 8, !tbaa !17, !noalias !180 ; 2 uses
+  %i.ay = load ptr, ptr %2, align 8, !tbaa !17, !noalias !178 ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 16 ; 2 uses
   %i.ba = getelementptr inbounds [8 x i8], ptr %i.ay, i64 %i.ax ; 2 uses
   %i.bb = load double, ptr %i.az, align 8, !tbaa !10
@@ -249,7 +249,7 @@ bb.f:                                             ; preds = %bb.e
 
 _ZN5Eigen5BlockINS_6MatrixIdLi6ELi1ELi0ELi6ELi1EEELi3ELi1ELb0EEaSINS_7ProductINS_14TranspositionsILi3ELi3EiEENS5_INS_9TransposeINS1_IdLi3ELi3ELi0ELi3ELi3EEEEENS1_IdLi3ELi1ELi0ELi3ELi1EEELi0EEELi2EEEEERS3_RKNS_9DenseBaseIT_EE.exit: ; preds = %bb.e, %bb.f
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.be = load ptr, ptr %2, align 8, !tbaa !17, !noalias !181 ; 5 uses
+  %i.be = load ptr, ptr %2, align 8, !tbaa !17, !noalias !179 ; 5 uses
   %i.bf = load double, ptr %i.bd, align 8, !tbaa !10
   %i.bg = load double, ptr %i.be, align 8, !tbaa !10 ; 3 uses
   %i.bh = fmul double %i.bf, %i.bg
@@ -300,13 +300,13 @@ _ZN5Eigen5BlockINS_6MatrixIdLi6ELi1ELi0ELi6ELi1EEELi3ELi1ELb0EEaSINS_7ProductINS
   %i.cp = extractelement <2 x double> %foldExtExtBinop50, i64 0
   %i.cq = fsub double %spec.select, %i.cp
   store double %i.cq, ptr %i.be, align 8, !tbaa !10
+  %.sroa.4.8.copyload = load ptr, ptr %2, align 8 ; 7 uses
   br i1 %.not.2.i.i.i.i.i.i.i.i.i.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %_ZN5Eigen5BlockINS_6MatrixIdLi6ELi1ELi0ELi6ELi1EEELi3ELi1ELb0EEaSINS_7ProductINS_14TranspositionsILi3ELi3EiEENS5_INS_9TransposeINS1_IdLi3ELi3ELi0ELi3ELi3EEEEENS1_IdLi3ELi1ELi0ELi3ELi1EEELi0EEELi2EEEEERS3_RKNS_9DenseBaseIT_EE.exit
   %i.cr = sext i32 %i.aw to i64
-  %3 = load ptr, ptr %2, align 8, !tbaa !17, !noalias !182 ; 2 uses
-  %i.cs = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  %i.ct = getelementptr inbounds [8 x i8], ptr %3, i64 %i.cr ; 2 uses
+  %i.cs = getelementptr inbounds nuw i8, ptr %.sroa.4.8.copyload, i64 16 ; 2 uses
+  %i.ct = getelementptr inbounds [8 x i8], ptr %.sroa.4.8.copyload, i64 %i.cr ; 2 uses
   %i.cu = load double, ptr %i.cs, align 8, !tbaa !10
   %i.cv = load double, ptr %i.ct, align 8, !tbaa !10
   store double %i.cv, ptr %i.cs, align 8, !tbaa !10
@@ -318,9 +318,8 @@ bb.h:                                             ; preds = %bb.g, %_ZN5Eigen5Bl
 
 bb.i:                                             ; preds = %bb.h
   %i.cw = sext i32 %i.ao to i64
-  %4 = load ptr, ptr %2, align 8, !tbaa !17, !noalias !182 ; 2 uses
-  %i.cx = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %i.cy = getelementptr inbounds [8 x i8], ptr %4, i64 %i.cw ; 2 uses
+  %i.cx = getelementptr inbounds nuw i8, ptr %.sroa.4.8.copyload, i64 8 ; 2 uses
+  %i.cy = getelementptr inbounds [8 x i8], ptr %.sroa.4.8.copyload, i64 %i.cw ; 2 uses
   %i.cz = load double, ptr %i.cx, align 8, !tbaa !10
   %i.da = load double, ptr %i.cy, align 8, !tbaa !10
   store double %i.da, ptr %i.cx, align 8, !tbaa !10
@@ -332,11 +331,10 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 
 bb.k:                                             ; preds = %bb.j
   %i.db = sext i32 %i.ah to i64
-  %5 = load ptr, ptr %2, align 8, !tbaa !17, !noalias !182 ; 3 uses
-  %i.dc = getelementptr inbounds [8 x i8], ptr %5, i64 %i.db ; 2 uses
-  %i.dd = load double, ptr %5, align 8, !tbaa !10
+  %i.dc = getelementptr inbounds [8 x i8], ptr %.sroa.4.8.copyload, i64 %i.db ; 2 uses
+  %i.dd = load double, ptr %.sroa.4.8.copyload, align 8, !tbaa !10
   %i.de = load double, ptr %i.dc, align 8, !tbaa !10
-  store double %i.de, ptr %5, align 8, !tbaa !10
+  store double %i.de, ptr %.sroa.4.8.copyload, align 8, !tbaa !10
   store double %i.dd, ptr %i.dc, align 8, !tbaa !10
   br label %_ZN5Eigen5BlockINS_6MatrixIdLi6ELi1ELi0ELi6ELi1EEELi3ELi1ELb0EEaSINS_7ProductINS_9TransposeINS_18TranspositionsBaseINS_14TranspositionsILi3ELi3EiEEEEEES3_Li2EEEEERS3_RKNS_9DenseBaseIT_EE.exit
 
@@ -550,9 +548,6 @@ attributes #7 = { nounwind }
 !175 = distinct !{!175, !174, !"_ZN5Eigen9DenseBaseINS_5BlockINS_6MatrixIdLi6ELi1ELi0ELi6ELi1EEELi3ELi1ELb0EEEE3rowEl: argument 0"}
 !176 = distinct !{!176, !"_ZN5Eigen9DenseBaseINS_5BlockINS_6MatrixIdLi6ELi1ELi0ELi6ELi1EEELi3ELi1ELb0EEEE7segmentILi1EEENS5_22FixedSegmentReturnTypeIXT_EE4TypeEll"}
 !177 = distinct !{!177, !176, !"_ZN5Eigen9DenseBaseINS_5BlockINS_6MatrixIdLi6ELi1ELi0ELi6ELi1EEELi3ELi1ELb0EEEE7segmentILi1EEENS5_22FixedSegmentReturnTypeIXT_EE4TypeEll: argument 0"}
-!178 = distinct !{!178, !"_ZN5Eigen9DenseBaseINS_5BlockINS_6MatrixIdLi6ELi1ELi0ELi6ELi1EEELi3ELi1ELb0EEEE3rowEl"}
-!179 = distinct !{!179, !178, !"_ZN5Eigen9DenseBaseINS_5BlockINS_6MatrixIdLi6ELi1ELi0ELi6ELi1EEELi3ELi1ELb0EEEE3rowEl: argument 0"}
-!180 = !{!175}
-!181 = !{!177}
-!182 = !{!179}
+!178 = !{!175}
+!179 = !{!177}
 end_hunk_0

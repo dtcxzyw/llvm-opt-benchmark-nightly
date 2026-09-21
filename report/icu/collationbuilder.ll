@@ -202,11 +202,11 @@ bb.d:                                             ; preds = %bb.c
   %i.x = load i32, ptr %i.w, align 8              ; 3 uses
   %i.y = icmp slt i32 %i.s, %i.x
   %or.cond.i81.i150 = select i1 %i.v, i1 %i.y, i1 false
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 608
+  %5 = load ptr, ptr %4, align 8                  ; 2 uses
   br i1 %or.cond.i81.i150, label %bb.e, label %_ZNK6icu_789UVector6410elementAtiEi.exit.i151
 
 bb.e:                                             ; preds = %bb.d
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 608
-  %5 = load ptr, ptr %4, align 8, !tbaa !77
   %i.z = zext nneg i32 %i.s to i64
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.z
   %i.ab = load i64, ptr %i.aa, align 8, !tbaa !82
@@ -215,23 +215,19 @@ bb.e:                                             ; preds = %bb.d
   %i.ae = and i32 %i.ad, 1048575
   br label %_ZNK6icu_789UVector6410elementAtiEi.exit.i151
 
-_ZNK6icu_789UVector6410elementAtiEi.exit.i151:    ; preds = %bb.e, %bb.d
+_ZNK6icu_789UVector6410elementAtiEi.exit.i151:    ; preds = %bb.d, %bb.e
   %i.af = phi i32 [ %i.ae, %bb.e ], [ 0, %bb.d ]  ; 4 uses
-  %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 608 ; 3 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 608
   %.not76.i155354 = icmp ne i32 %i.af, 0
   %i.ah = icmp slt i32 %i.af, %i.x
   %or.cond235355 = select i1 %.not76.i155354, i1 %i.ah, i1 false
-  br i1 %or.cond235355, label %_ZNK6icu_789UVector6410elementAtiEi.exit83.i156.preheader, label %.thread87.i163
+  br i1 %or.cond235355, label %_ZNK6icu_789UVector6410elementAtiEi.exit83.i156, label %.thread87.i163
 
-_ZNK6icu_789UVector6410elementAtiEi.exit83.i156.preheader: ; preds = %_ZNK6icu_789UVector6410elementAtiEi.exit.i151
-  %6 = load ptr, ptr %i.ag, align 8, !tbaa !77
-  br label %_ZNK6icu_789UVector6410elementAtiEi.exit83.i156
-
-_ZNK6icu_789UVector6410elementAtiEi.exit83.i156:  ; preds = %_ZNK6icu_789UVector6410elementAtiEi.exit83.i156.preheader, %select.unfold.i159
-  %i.ai = phi i32 [ %i.as, %select.unfold.i159 ], [ %i.af, %_ZNK6icu_789UVector6410elementAtiEi.exit83.i156.preheader ] ; 6 uses
-  %.267.i152356 = phi i32 [ %i.ai, %select.unfold.i159 ], [ %i.s, %_ZNK6icu_789UVector6410elementAtiEi.exit83.i156.preheader ] ; 2 uses
+_ZNK6icu_789UVector6410elementAtiEi.exit83.i156:  ; preds = %_ZNK6icu_789UVector6410elementAtiEi.exit.i151, %select.unfold.i159
+  %i.ai = phi i32 [ %i.as, %select.unfold.i159 ], [ %i.af, %_ZNK6icu_789UVector6410elementAtiEi.exit.i151 ] ; 6 uses
+  %.267.i152356 = phi i32 [ %i.ai, %select.unfold.i159 ], [ %i.s, %_ZNK6icu_789UVector6410elementAtiEi.exit.i151 ] ; 2 uses
   %i.aj = zext nneg i32 %i.ai to i64
-  %i.ak = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.aj
+  %i.ak = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.aj
   %i.al = load i64, ptr %i.ak, align 8, !tbaa !82 ; 4 uses
   %i.am = trunc i64 %i.al to i32
   %i.an = and i32 %i.am, 3                        ; 2 uses
@@ -278,12 +274,12 @@ bb.i:                                             ; preds = %_ZN6icu_7816Collati
   %i.ay = load i32, ptr %i.w, align 8             ; 3 uses
   %i.az = icmp slt i32 %.8.i149.ph, %i.ay
   %or.cond.i81.i = select i1 %i.ax, i1 %i.az, i1 false
+  %.pre272 = load ptr, ptr %i.ag, align 8         ; 2 uses
   br i1 %or.cond.i81.i, label %bb.j, label %_ZNK6icu_789UVector6410elementAtiEi.exit.i
 
 bb.j:                                             ; preds = %bb.i
-  %7 = load ptr, ptr %i.ag, align 8, !tbaa !77
   %i.ba = zext nneg i32 %.8.i149.ph to i64
-  %i.bb = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.ba
+  %i.bb = getelementptr inbounds nuw [8 x i8], ptr %.pre272, i64 %i.ba
   %i.bc = load i64, ptr %i.bb, align 8, !tbaa !82
   %i.bd = trunc i64 %i.bc to i32
   %i.be = lshr i32 %i.bd, 8
@@ -295,17 +291,13 @@ _ZNK6icu_789UVector6410elementAtiEi.exit.i:       ; preds = %bb.j, %bb.i
   %.not76.i362 = icmp ne i32 %i.bg, 0
   %i.bh = icmp slt i32 %i.bg, %i.ay
   %or.cond236363 = select i1 %.not76.i362, i1 %i.bh, i1 false
-  br i1 %or.cond236363, label %_ZNK6icu_789UVector6410elementAtiEi.exit83.i.preheader, label %.thread87.i
+  br i1 %or.cond236363, label %_ZNK6icu_789UVector6410elementAtiEi.exit83.i, label %.thread87.i
 
-_ZNK6icu_789UVector6410elementAtiEi.exit83.i.preheader: ; preds = %_ZNK6icu_789UVector6410elementAtiEi.exit.i
-  %8 = load ptr, ptr %i.ag, align 8, !tbaa !77
-  br label %_ZNK6icu_789UVector6410elementAtiEi.exit83.i
-
-_ZNK6icu_789UVector6410elementAtiEi.exit83.i:     ; preds = %_ZNK6icu_789UVector6410elementAtiEi.exit83.i.preheader, %select.unfold.i
-  %i.bi = phi i32 [ %i.bs, %select.unfold.i ], [ %i.bg, %_ZNK6icu_789UVector6410elementAtiEi.exit83.i.preheader ] ; 6 uses
-  %.267.i364 = phi i32 [ %i.bi, %select.unfold.i ], [ %.8.i149.ph, %_ZNK6icu_789UVector6410elementAtiEi.exit83.i.preheader ] ; 2 uses
+_ZNK6icu_789UVector6410elementAtiEi.exit83.i:     ; preds = %_ZNK6icu_789UVector6410elementAtiEi.exit.i, %select.unfold.i
+  %i.bi = phi i32 [ %i.bs, %select.unfold.i ], [ %i.bg, %_ZNK6icu_789UVector6410elementAtiEi.exit.i ] ; 6 uses
+  %.267.i364 = phi i32 [ %i.bi, %select.unfold.i ], [ %.8.i149.ph, %_ZNK6icu_789UVector6410elementAtiEi.exit.i ] ; 2 uses
   %i.bj = zext nneg i32 %i.bi to i64
-  %i.bk = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %i.bj
+  %i.bk = getelementptr inbounds nuw [8 x i8], ptr %.pre272, i64 %i.bj
   %i.bl = load i64, ptr %i.bk, align 8, !tbaa !82 ; 4 uses
   %i.bm = trunc i64 %i.bl to i32
   %i.bn = and i32 %i.bm, 3                        ; 2 uses
@@ -433,36 +425,31 @@ bb.s:                                             ; preds = %bb.r
   %i.ea = load i32, ptr %i.dz, align 8            ; 3 uses
   %i.eb = icmp slt i32 %i.dv, %i.ea
   %or.cond.i81.i172 = select i1 %i.dy, i1 %i.eb, i1 false
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 608
+  %7 = load ptr, ptr %6, align 8                  ; 2 uses
   br i1 %or.cond.i81.i172, label %bb.t, label %_ZNK6icu_789UVector6410elementAtiEi.exit.i173
 
 bb.t:                                             ; preds = %bb.s
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 608
-  %10 = load ptr, ptr %9, align 8, !tbaa !77
   %i.ec = zext nneg i32 %i.dv to i64
-  %i.ed = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %i.ec
+  %i.ed = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.ec
   %i.ee = load i64, ptr %i.ed, align 8, !tbaa !82
   %i.ef = trunc i64 %i.ee to i32
   %i.eg = lshr i32 %i.ef, 8
   %i.eh = and i32 %i.eg, 1048575
   br label %_ZNK6icu_789UVector6410elementAtiEi.exit.i173
 
-_ZNK6icu_789UVector6410elementAtiEi.exit.i173:    ; preds = %bb.t, %bb.s
+_ZNK6icu_789UVector6410elementAtiEi.exit.i173:    ; preds = %bb.s, %bb.t
   %i.ei = phi i32 [ %i.eh, %bb.t ], [ 0, %bb.s ]  ; 4 uses
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 608
   %.not76.i177347 = icmp ne i32 %i.ei, 0
   %i.ej = icmp slt i32 %i.ei, %i.ea
   %or.cond241348 = select i1 %.not76.i177347, i1 %i.ej, i1 false
-  br i1 %or.cond241348, label %_ZNK6icu_789UVector6410elementAtiEi.exit83.i178.preheader, label %.thread87.i185
+  br i1 %or.cond241348, label %_ZNK6icu_789UVector6410elementAtiEi.exit83.i178, label %.thread87.i185
 
-_ZNK6icu_789UVector6410elementAtiEi.exit83.i178.preheader: ; preds = %_ZNK6icu_789UVector6410elementAtiEi.exit.i173
-  %12 = load ptr, ptr %11, align 8, !tbaa !77
-  br label %_ZNK6icu_789UVector6410elementAtiEi.exit83.i178
-
-_ZNK6icu_789UVector6410elementAtiEi.exit83.i178:  ; preds = %_ZNK6icu_789UVector6410elementAtiEi.exit83.i178.preheader, %select.unfold.i181
-  %i.ek = phi i32 [ %i.eu, %select.unfold.i181 ], [ %i.ei, %_ZNK6icu_789UVector6410elementAtiEi.exit83.i178.preheader ] ; 6 uses
-  %.267.i174349.a = phi i32 [ %i.ek, %select.unfold.i181 ], [ %i.dv, %_ZNK6icu_789UVector6410elementAtiEi.exit83.i178.preheader ] ; 2 uses
+_ZNK6icu_789UVector6410elementAtiEi.exit83.i178:  ; preds = %_ZNK6icu_789UVector6410elementAtiEi.exit.i173, %select.unfold.i181
+  %i.ek = phi i32 [ %i.eu, %select.unfold.i181 ], [ %i.ei, %_ZNK6icu_789UVector6410elementAtiEi.exit.i173 ] ; 6 uses
+  %.267.i174349.a = phi i32 [ %i.ek, %select.unfold.i181 ], [ %i.dv, %_ZNK6icu_789UVector6410elementAtiEi.exit.i173 ] ; 2 uses
   %i.el = zext nneg i32 %i.ek to i64
-  %i.em = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %i.el
+  %i.em = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.el
   %i.en = load i64, ptr %i.em, align 8, !tbaa !82 ; 4 uses
   %i.eo = trunc i64 %i.en to i32
   %i.ep = and i32 %i.eo, 3                        ; 2 uses
@@ -865,6 +852,7 @@ bb.l:                                             ; preds = %_ZNK6icu_789UVector
 
 bb.m:                                             ; preds = %bb.l, %_ZNK6icu_789UVector6410elementAtiEi.exit
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 608
+  %5 = load ptr, ptr %i.bs, align 8
   br label %bb.n
 
 bb.n:                                             ; preds = %select.unfold, %bb.m
@@ -882,7 +870,6 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.bw, label %bb.p, label %_ZNK6icu_789UVector6410elementAtiEi.exit83
 
 bb.p:                                             ; preds = %bb.o
-  %5 = load ptr, ptr %i.bs, align 8, !tbaa !77
   %i.bx = zext nneg i32 %i.bv to i64
   %i.by = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.bx
   %i.bz = load i64, ptr %i.by, align 8, !tbaa !82

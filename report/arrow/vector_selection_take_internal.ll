@@ -205,18 +205,19 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   %.promoted = phi i64 [ %i.i, %bb.b ], [ %i.p, %bb.c ]
   %.125 = phi i64 [ %i.e, %bb.b ], [ 64, %bb.c ]
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %.promoted38 = load ptr, ptr %0, align 8
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.f, %bb.d
+  %1 = phi ptr [ %.promoted38, %bb.d ], [ %i.u, %bb.f ] ; 4 uses
   %i.s = phi i64 [ %.promoted, %bb.d ], [ %i.y, %bb.f ] ; 7 uses
   %.226 = phi i64 [ %.125, %bb.d ], [ %i.x, %bb.f ] ; 3 uses
   %i.t = icmp sgt i64 %i.s, 63
   br i1 %i.t, label %bb.f, label %bb.g, !prof !111
 
 bb.f:                                             ; preds = %bb.e
-  %1 = load ptr, ptr %0, align 8, !tbaa !247      ; 2 uses
   %.0.copyload.i = load i64, ptr %1, align 1      ; 3 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.u = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   store ptr %i.u, ptr %0, align 8, !tbaa !247
   store i64 %.0.copyload.i, ptr %i.b, align 8, !tbaa !245
   %i.v = xor i64 %.0.copyload.i, -1
@@ -245,9 +246,8 @@ bb.h:                                             ; preds = %bb.g
   store i64 0, ptr %i.a, align 8, !tbaa !124
   %i.af = add nuw nsw i64 %i.s, 7
   %i.ag = lshr i64 %i.af, 3                       ; 2 uses
-  %2 = load ptr, ptr %0, align 8, !tbaa !247      ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.a, ptr align 1 %2, i64 %i.ag, i1 false)
-  %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 %i.ag
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.a, ptr align 1 %1, i64 %i.ag, i1 false)
+  %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 %i.ag
   store ptr %i.ah, ptr %0, align 8, !tbaa !247
   %.0..0..0..0..0..0..i = load i64, ptr %i.a, align 8, !tbaa !124
   %notmask.i.i = shl nsw i64 -1, %i.s

@@ -205,8 +205,8 @@ define linkonce_odr dso_local noundef nonnull align 8 dereferenceable(8) ptr @_Z
 bb.a:
   %3 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 40 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !38   ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !38   ; 3 uses
   %i.c = icmp eq i64 %i.b, 0
   br i1 %i.c, label %bb.b, label %bb.c
 
@@ -244,17 +244,19 @@ bb.d:                                             ; preds = %bb.c
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 8 ; 2 uses
   %i.u = load i64, ptr %i.t, align 8, !tbaa !100
   store i64 %.078120, ptr %i.t, align 8, !tbaa !100
+  %.pre = load i64, ptr %i.a, align 8
   br label %.thread
 
 .thread:                                          ; preds = %bb.c, %.thread117, %bb.d
+  %5 = phi i64 [ %.pre, %.thread117 ], [ %i.b, %bb.d ], [ %i.b, %bb.c ]
   %.not116 = phi i1 [ false, %.thread117 ], [ true, %bb.d ], [ true, %bb.c ]
   %.077 = phi i64 [ %i.u, %.thread117 ], [ 0, %bb.d ], [ 0, %bb.c ]
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 232
   %i.w = load i32, ptr %i.v, align 8, !tbaa !101
   %i.x = and i32 %i.w, 1
   %.not81 = icmp eq i32 %i.x, 0
-  %i.y = icmp sgt i64 %i.b, 0
-  %or.cond = and i1 %.not81, %i.y
+  %i.y = icmp sgt i64 %5, 0
+  %or.cond = select i1 %.not81, i1 %i.y, i1 false
   br i1 %or.cond, label %.preheader.lr.ph, label %.loopexit
 
 .preheader.lr.ph:                                 ; preds = %.thread

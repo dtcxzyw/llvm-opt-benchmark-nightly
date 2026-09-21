@@ -205,33 +205,32 @@ bb.c:                                             ; preds = %.preheader.i.i.i.i
   %i.h = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i, i64 4
   %i.i = load i32, ptr %i.h, align 4, !tbaa !28
   %i.j = add i32 %i.i, 1
-  br label %_ZNK4goal4sizeEv.exit.i
+  br label %_ZNK4goal4sizeEv.exit.i._ZNK4goal14is_decided_satEv.exit.thread_crit_edge
 
 bb.d:                                             ; preds = %.preheader.i.i.i.i
   %i.k = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i, i64 4
   %i.l = load i32, ptr %i.k, align 4, !tbaa !28
   %i.m = add i32 %i.l, -1
-  br label %_ZNK4goal4sizeEv.exit.i
+  br label %_ZNK4goal4sizeEv.exit.i._ZNK4goal14is_decided_satEv.exit.thread_crit_edge
 
 bb.e:                                             ; preds = %.preheader.i.i.i.i
   %i.n = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i, i64 4
   %i.o = load i32, ptr %i.n, align 4, !tbaa !28
-  br label %_ZNK4goal4sizeEv.exit.i
+  br label %_ZNK4goal4sizeEv.exit.i._ZNK4goal14is_decided_satEv.exit.thread_crit_edge
 
 default.unreachable:                              ; preds = %.preheader.i.i.i.i
   unreachable
 
-_ZNK4goal4sizeEv.exit.i:                          ; preds = %bb.e, %bb.d, %bb.c
+_ZNK4goal4sizeEv.exit.i._ZNK4goal14is_decided_satEv.exit.thread_crit_edge: ; preds = %bb.e, %bb.d, %bb.c
   %.07.i.i.i.i = phi i32 [ %i.o, %bb.e ], [ %i.j, %bb.c ], [ %i.m, %bb.d ]
   %1 = icmp eq i32 %.07.i.i.i.i, 0
-  br i1 %1, label %_ZNK4goal14is_decided_satEv.exit, label %_ZNK4goal4sizeEv.exit.i._ZNK4goal14is_decided_satEv.exit.thread_crit_edge
-
-_ZNK4goal4sizeEv.exit.i._ZNK4goal14is_decided_satEv.exit.thread_crit_edge: ; preds = %_ZNK4goal4sizeEv.exit.i
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 120
-  %.pre = load i32, ptr %.phi.trans.insert, align 8
-  br label %_ZNK4goal14is_decided_satEv.exit.thread
+  %.pre = load i32, ptr %.phi.trans.insert, align 8 ; 2 uses
+  %spec.select.i.i = icmp sgt i32 %.pre, -1
+  %or.cond = select i1 %1, i1 %spec.select.i.i, i1 false
+  br i1 %or.cond, label %bb.f, label %_ZNK4goal14is_decided_satEv.exit.thread
 
-_ZNK4goal14is_decided_satEv.exit:                 ; preds = %bb.a, %_ZNK4goal4sizeEv.exit.i
+_ZNK4goal14is_decided_satEv.exit:                 ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.q = load i32, ptr %i.p, align 8              ; 2 uses
   %spec.select.i.i.a = icmp sgt i32 %i.q, -1
@@ -243,8 +242,8 @@ _ZNK4goal14is_decided_satEv.exit.thread:          ; preds = %_ZNK4goal4sizeEv.ex
   %i.t = icmp eq i32 %i.s, 536870912
   br label %bb.f
 
-bb.f:                                             ; preds = %_ZNK4goal14is_decided_satEv.exit.thread, %_ZNK4goal14is_decided_satEv.exit
-  %2 = phi i1 [ true, %_ZNK4goal14is_decided_satEv.exit ], [ %i.t, %_ZNK4goal14is_decided_satEv.exit.thread ]
+bb.f:                                             ; preds = %_ZNK4goal4sizeEv.exit.i._ZNK4goal14is_decided_satEv.exit.thread_crit_edge, %_ZNK4goal14is_decided_satEv.exit.thread, %_ZNK4goal14is_decided_satEv.exit
+  %2 = phi i1 [ true, %_ZNK4goal14is_decided_satEv.exit ], [ %i.t, %_ZNK4goal14is_decided_satEv.exit.thread ], [ true, %_ZNK4goal4sizeEv.exit.i._ZNK4goal14is_decided_satEv.exit.thread_crit_edge ]
   ret i1 %2
 }
 

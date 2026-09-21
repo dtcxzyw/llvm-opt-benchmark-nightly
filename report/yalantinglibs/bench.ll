@@ -205,24 +205,22 @@ bb.x:                                             ; preds = %.lr.ph
   %i.dj = load ptr, ptr %i.g, align 8, !tbaa !326 ; 2 uses
   %i.dk = load ptr, ptr %i.k, align 8, !tbaa !326
   %i.dl = icmp eq ptr %i.dj, %i.dk
-  br i1 %i.dl, label %bb.y, label %3
+  br i1 %i.dl, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x
   %i.dm = load i32, ptr %i.j, align 8, !tbaa !713
   %i.dn = and i32 %i.dm, 32
   %.not.i25 = icmp eq i32 %i.dn, 0
-  br i1 %.not.i25, label %3, label %common.ret
+  br i1 %.not.i25, label %bb.z, label %common.ret
 
-3:                                                ; preds = %bb.y, %bb.x
-  %4 = icmp eq i8 %1, 1
-  br i1 %4, label %bb.aa, label %bb.z
-
-bb.z:                                             ; preds = %3
-  %i.do = load ptr, ptr %i.h, align 8, !tbaa !326
+bb.z:                                             ; preds = %bb.y, %bb.x
+  %3 = icmp eq i8 %1, 1
+  %i.do = load ptr, ptr %i.h, align 8
   %i.dp = icmp eq ptr %i.dj, %i.do
-  br i1 %i.dp, label %bb.aa, label %common.ret
+  %or.cond.i = select i1 %3, i1 true, i1 %i.dp
+  br i1 %or.cond.i, label %bb.aa, label %common.ret
 
-bb.aa:                                            ; preds = %bb.z, %3
+bb.aa:                                            ; preds = %bb.z
   %i.dq = load i8, ptr %i.m, align 4, !tbaa !750, !range !346, !noundef !347
   %i.dr = trunc nuw i8 %i.dq to i1
   br i1 %i.dr, label %common.ret, label %bb.ab
@@ -625,28 +623,28 @@ bb.g:                                             ; preds = %.lr.ph.i14
   br i1 %i.be, label %.peel.next, label %_ZN4asio6detail17consuming_buffersINS_12const_bufferESt5arrayIS2_Lm3EEPKS2_E7consumeEm.exit.thread
 
 .peel.next:                                       ; preds = %bb.g, %bb.h
-  %i.bf = phi i64 [ %i.bk, %bb.h ], [ %i.bb, %bb.g ] ; 2 uses
-  %.018.i = phi i64 [ %i.bj, %bb.h ], [ %i.ba, %bb.g ] ; 3 uses
-  %.012.idx17.i = phi i64 [ %.012.add.i, %bb.h ], [ %.012.add.i.peel, %bb.g ] ; 2 uses
-  %.012.ptr.i = getelementptr i8, ptr %0, i64 %.012.idx17.i
+  %i.bf = phi i64 [ %i.bj, %bb.h ], [ %i.ba, %bb.g ] ; 3 uses
+  %.018.i = phi i64 [ %.012.add.i, %bb.h ], [ %.012.add.i.peel, %bb.g ] ; 2 uses
+  %.012.idx17.i = phi i64 [ %i.bk, %bb.h ], [ %i.bb, %bb.g ] ; 2 uses
+  %.012.ptr.i = getelementptr i8, ptr %0, i64 %.018.i
   %.sroa.4.0..sroa_idx.i15 = getelementptr i8, ptr %.012.ptr.i, i64 16
   %.sroa.4.0.copyload.i16 = load i64, ptr %.sroa.4.0..sroa_idx.i15, align 8, !tbaa !340 ; 2 uses
-  %i.bg = icmp ult i64 %.018.i, %.sroa.4.0.copyload.i16
+  %i.bg = icmp ult i64 %i.bf, %.sroa.4.0.copyload.i16
   br i1 %i.bg, label %.thread.i, label %bb.h
 
 .thread.i:                                        ; preds = %.peel.next, %.lr.ph.i14
-  %i.bh = phi i64 [ %i.at, %.lr.ph.i14 ], [ %i.bf, %.peel.next ]
+  %i.bh = phi i64 [ %i.at, %.lr.ph.i14 ], [ %.012.idx17.i, %.peel.next ]
   %.lcssa = phi i64 [ %.promoted.i, %.lr.ph.i14 ], [ 0, %.peel.next ]
-  %.018.i.lcssa = phi i64 [ %3, %.lr.ph.i14 ], [ %.018.i, %.peel.next ]
+  %.018.i.lcssa = phi i64 [ %3, %.lr.ph.i14 ], [ %i.bf, %.peel.next ]
   %i.bi = add i64 %.018.i.lcssa, %.lcssa
   store i64 %i.bi, ptr %i.ax, align 8, !tbaa !3528
   br label %_ZN4asio6detail17consuming_buffersINS_12const_bufferESt5arrayIS2_Lm3EEPKS2_E7consumeEm.exit
 
 bb.h:                                             ; preds = %.peel.next
-  %i.bj = sub nuw i64 %.018.i, %.sroa.4.0.copyload.i16 ; 2 uses
-  %i.bk = add i64 %i.bf, 1                        ; 3 uses
+  %i.bj = sub nuw i64 %i.bf, %.sroa.4.0.copyload.i16 ; 2 uses
+  %i.bk = add i64 %.012.idx17.i, 1                ; 3 uses
   store i64 %i.bk, ptr %i.as, align 8, !tbaa !3526
-  %.012.add.i = add nsw i64 %.012.idx17.i, 16     ; 2 uses
+  %.012.add.i = add nsw i64 %.018.i, 16           ; 2 uses
   store i64 0, ptr %i.ax, align 8, !tbaa !3528
   %i.bl = icmp ne i64 %.012.add.i, 48
   %i.bm = icmp ne i64 %i.bj, 0
@@ -1049,28 +1047,28 @@ bb.g:                                             ; preds = %.lr.ph.i14
   br i1 %i.bd, label %.peel.next, label %_ZN4asio6detail17consuming_buffersINS_12const_bufferESt5arrayIS2_Lm3EEPKS2_E7consumeEm.exit.thread
 
 .peel.next:                                       ; preds = %bb.g, %bb.h
-  %i.be = phi i64 [ %i.bj, %bb.h ], [ %i.ba, %bb.g ] ; 2 uses
-  %.018.i = phi i64 [ %i.bi, %bb.h ], [ %i.az, %bb.g ] ; 3 uses
-  %.012.idx17.i = phi i64 [ %.012.add.i, %bb.h ], [ %.012.add.i.peel, %bb.g ] ; 2 uses
-  %.012.ptr.i = getelementptr i8, ptr %0, i64 %.012.idx17.i
+  %i.be = phi i64 [ %i.bi, %bb.h ], [ %i.az, %bb.g ] ; 3 uses
+  %.018.i = phi i64 [ %.012.add.i, %bb.h ], [ %.012.add.i.peel, %bb.g ] ; 2 uses
+  %.012.idx17.i = phi i64 [ %i.bj, %bb.h ], [ %i.ba, %bb.g ] ; 2 uses
+  %.012.ptr.i = getelementptr i8, ptr %0, i64 %.018.i
   %.sroa.4.0..sroa_idx.i15 = getelementptr i8, ptr %.012.ptr.i, i64 16
   %.sroa.4.0.copyload.i16 = load i64, ptr %.sroa.4.0..sroa_idx.i15, align 8, !tbaa !340 ; 2 uses
-  %i.bf = icmp ult i64 %.018.i, %.sroa.4.0.copyload.i16
+  %i.bf = icmp ult i64 %i.be, %.sroa.4.0.copyload.i16
   br i1 %i.bf, label %.thread.i, label %bb.h
 
 .thread.i:                                        ; preds = %.peel.next, %.lr.ph.i14
-  %i.bg = phi i64 [ %i.as, %.lr.ph.i14 ], [ %i.be, %.peel.next ]
+  %i.bg = phi i64 [ %i.as, %.lr.ph.i14 ], [ %.012.idx17.i, %.peel.next ]
   %.lcssa = phi i64 [ %.promoted.i, %.lr.ph.i14 ], [ 0, %.peel.next ]
-  %.018.i.lcssa = phi i64 [ %3, %.lr.ph.i14 ], [ %.018.i, %.peel.next ]
+  %.018.i.lcssa = phi i64 [ %3, %.lr.ph.i14 ], [ %i.be, %.peel.next ]
   %i.bh = add i64 %.018.i.lcssa, %.lcssa
   store i64 %i.bh, ptr %i.aw, align 8, !tbaa !3528
   br label %_ZN4asio6detail17consuming_buffersINS_12const_bufferESt5arrayIS2_Lm3EEPKS2_E7consumeEm.exit
 
 bb.h:                                             ; preds = %.peel.next
-  %i.bi = sub nuw i64 %.018.i, %.sroa.4.0.copyload.i16 ; 2 uses
-  %i.bj = add i64 %i.be, 1                        ; 3 uses
+  %i.bi = sub nuw i64 %i.be, %.sroa.4.0.copyload.i16 ; 2 uses
+  %i.bj = add i64 %.012.idx17.i, 1                ; 3 uses
   store i64 %i.bj, ptr %i.ar, align 8, !tbaa !3526
-  %.012.add.i = add nsw i64 %.012.idx17.i, 16     ; 2 uses
+  %.012.add.i = add nsw i64 %.018.i, 16           ; 2 uses
   store i64 0, ptr %i.aw, align 8, !tbaa !3528
   %i.bk = icmp ne i64 %.012.add.i, 48
   %i.bl = icmp ne i64 %i.bi, 0
@@ -1473,28 +1471,28 @@ bb.g:                                             ; preds = %.lr.ph.i14
   br i1 %i.as, label %.peel.next, label %_ZN4asio6detail17consuming_buffersINS_12const_bufferESt5arrayIS2_Lm3EEPKS2_E7consumeEm.exit.thread
 
 .peel.next:                                       ; preds = %bb.g, %bb.h
-  %i.at = phi i64 [ %i.ay, %bb.h ], [ %i.ap, %bb.g ] ; 2 uses
-  %.018.i = phi i64 [ %i.ax, %bb.h ], [ %i.ao, %bb.g ] ; 3 uses
-  %.012.idx17.i = phi i64 [ %.012.add.i, %bb.h ], [ %.012.add.i.peel, %bb.g ] ; 2 uses
-  %.012.ptr.i = getelementptr i8, ptr %0, i64 %.012.idx17.i
+  %i.at = phi i64 [ %i.ax, %bb.h ], [ %i.ao, %bb.g ] ; 3 uses
+  %.018.i = phi i64 [ %.012.add.i, %bb.h ], [ %.012.add.i.peel, %bb.g ] ; 2 uses
+  %.012.idx17.i = phi i64 [ %i.ay, %bb.h ], [ %i.ap, %bb.g ] ; 2 uses
+  %.012.ptr.i = getelementptr i8, ptr %0, i64 %.018.i
   %.sroa.4.0..sroa_idx.i15 = getelementptr i8, ptr %.012.ptr.i, i64 16
   %.sroa.4.0.copyload.i16 = load i64, ptr %.sroa.4.0..sroa_idx.i15, align 8, !tbaa !340 ; 2 uses
-  %i.au = icmp ult i64 %.018.i, %.sroa.4.0.copyload.i16
+  %i.au = icmp ult i64 %i.at, %.sroa.4.0.copyload.i16
   br i1 %i.au, label %.thread.i, label %bb.h
 
 .thread.i:                                        ; preds = %.peel.next, %.lr.ph.i14
-  %i.av = phi i64 [ %i.ah, %.lr.ph.i14 ], [ %i.at, %.peel.next ]
+  %i.av = phi i64 [ %i.ah, %.lr.ph.i14 ], [ %.012.idx17.i, %.peel.next ]
   %.lcssa = phi i64 [ %.promoted.i, %.lr.ph.i14 ], [ 0, %.peel.next ]
-  %.018.i.lcssa = phi i64 [ %3, %.lr.ph.i14 ], [ %.018.i, %.peel.next ]
+  %.018.i.lcssa = phi i64 [ %3, %.lr.ph.i14 ], [ %i.at, %.peel.next ]
   %i.aw = add i64 %.018.i.lcssa, %.lcssa
   store i64 %i.aw, ptr %i.al, align 8, !tbaa !3528
   br label %_ZN4asio6detail17consuming_buffersINS_12const_bufferESt5arrayIS2_Lm3EEPKS2_E7consumeEm.exit
 
 bb.h:                                             ; preds = %.peel.next
-  %i.ax = sub nuw i64 %.018.i, %.sroa.4.0.copyload.i16 ; 2 uses
-  %i.ay = add i64 %i.at, 1                        ; 3 uses
+  %i.ax = sub nuw i64 %i.at, %.sroa.4.0.copyload.i16 ; 2 uses
+  %i.ay = add i64 %.012.idx17.i, 1                ; 3 uses
   store i64 %i.ay, ptr %i.ag, align 8, !tbaa !3526
-  %.012.add.i = add nsw i64 %.012.idx17.i, 16     ; 2 uses
+  %.012.add.i = add nsw i64 %.018.i, 16           ; 2 uses
   store i64 0, ptr %i.al, align 8, !tbaa !3528
   %i.az = icmp ne i64 %.012.add.i, 48
   %i.ba = icmp ne i64 %i.ax, 0
@@ -1897,28 +1895,28 @@ bb.g:                                             ; preds = %.lr.ph.i14
   br i1 %i.as, label %.peel.next, label %_ZN4asio6detail17consuming_buffersINS_12const_bufferESt5arrayIS2_Lm3EEPKS2_E7consumeEm.exit.thread
 
 .peel.next:                                       ; preds = %bb.g, %bb.h
-  %i.at = phi i64 [ %i.ay, %bb.h ], [ %i.ap, %bb.g ] ; 2 uses
-  %.018.i = phi i64 [ %i.ax, %bb.h ], [ %i.ao, %bb.g ] ; 3 uses
-  %.012.idx17.i = phi i64 [ %.012.add.i, %bb.h ], [ %.012.add.i.peel, %bb.g ] ; 2 uses
-  %.012.ptr.i = getelementptr i8, ptr %0, i64 %.012.idx17.i
+  %i.at = phi i64 [ %i.ax, %bb.h ], [ %i.ao, %bb.g ] ; 3 uses
+  %.018.i = phi i64 [ %.012.add.i, %bb.h ], [ %.012.add.i.peel, %bb.g ] ; 2 uses
+  %.012.idx17.i = phi i64 [ %i.ay, %bb.h ], [ %i.ap, %bb.g ] ; 2 uses
+  %.012.ptr.i = getelementptr i8, ptr %0, i64 %.018.i
   %.sroa.4.0..sroa_idx.i15 = getelementptr i8, ptr %.012.ptr.i, i64 16
   %.sroa.4.0.copyload.i16 = load i64, ptr %.sroa.4.0..sroa_idx.i15, align 8, !tbaa !340 ; 2 uses
-  %i.au = icmp ult i64 %.018.i, %.sroa.4.0.copyload.i16
+  %i.au = icmp ult i64 %i.at, %.sroa.4.0.copyload.i16
   br i1 %i.au, label %.thread.i, label %bb.h
 
 .thread.i:                                        ; preds = %.peel.next, %.lr.ph.i14
-  %i.av = phi i64 [ %i.ah, %.lr.ph.i14 ], [ %i.at, %.peel.next ]
+  %i.av = phi i64 [ %i.ah, %.lr.ph.i14 ], [ %.012.idx17.i, %.peel.next ]
   %.lcssa = phi i64 [ %.promoted.i, %.lr.ph.i14 ], [ 0, %.peel.next ]
-  %.018.i.lcssa = phi i64 [ %3, %.lr.ph.i14 ], [ %.018.i, %.peel.next ]
+  %.018.i.lcssa = phi i64 [ %3, %.lr.ph.i14 ], [ %i.at, %.peel.next ]
   %i.aw = add i64 %.018.i.lcssa, %.lcssa
   store i64 %i.aw, ptr %i.al, align 8, !tbaa !3528
   br label %_ZN4asio6detail17consuming_buffersINS_12const_bufferESt5arrayIS2_Lm3EEPKS2_E7consumeEm.exit
 
 bb.h:                                             ; preds = %.peel.next
-  %i.ax = sub nuw i64 %.018.i, %.sroa.4.0.copyload.i16 ; 2 uses
-  %i.ay = add i64 %i.at, 1                        ; 3 uses
+  %i.ax = sub nuw i64 %i.at, %.sroa.4.0.copyload.i16 ; 2 uses
+  %i.ay = add i64 %.012.idx17.i, 1                ; 3 uses
   store i64 %i.ay, ptr %i.ag, align 8, !tbaa !3526
-  %.012.add.i = add nsw i64 %.012.idx17.i, 16     ; 2 uses
+  %.012.add.i = add nsw i64 %.018.i, 16           ; 2 uses
   store i64 0, ptr %i.al, align 8, !tbaa !3528
   %i.az = icmp ne i64 %.012.add.i, 48
   %i.ba = icmp ne i64 %i.ax, 0

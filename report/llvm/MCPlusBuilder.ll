@@ -204,9 +204,10 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit: ; preds = %bb.b
   %i.p = trunc nuw nsw i64 %indvars.iv to i32     ; 2 uses
-  %.not.i.not = icmp ne i32 %i.c, %i.p
-  %i.q = add nuw i32 %i.p, 1                      ; 2 uses
-  %i.r = icmp ult i32 %i.q, %i.c
+  %.not.i.not = icmp ne i32 %i.c, %i.p            ; 2 uses
+  %i.q = add nuw i32 %i.p, 1
+  %spec.select.i = select i1 %.not.i.not, i32 %i.q, i32 undef ; 2 uses
+  %i.r = icmp ult i32 %spec.select.i, %i.c
   %or.cond = select i1 %.not.i.not, i1 %i.r, i1 false
   br i1 %or.cond, label %.lr.ph, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.thread
 
@@ -216,7 +217,7 @@ _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit: ; p
   %i.u = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 3 uses
-  %i.x = zext i32 %i.q to i64
+  %i.x = zext i32 %spec.select.i to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.m

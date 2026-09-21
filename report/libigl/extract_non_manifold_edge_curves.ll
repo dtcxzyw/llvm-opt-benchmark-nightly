@@ -202,33 +202,28 @@ bb.h:                                             ; preds = %.lr.ph, %_ZNSt10_Ha
   %.023 = phi ptr [ %1, %.lr.ph ], [ %i.af, %_ZNSt10_HashtableImSt4pairIKmmESaIS2_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENS4_18_Mod_range_hashingENS4_20_Default_ranged_hashENS4_20_Prime_rehash_policyENS4_17_Hashtable_traitsILb0ELb0ELb0EEEE9_M_insertIRKS2_NS4_10_AllocNodeISaINS4_10_Hash_nodeIS2_Lb0EEEEEEEENS4_14_Node_iteratorIS2_Lb0ELb0EEEOT_RKT0_St17integral_constantIbLb0EE.exit ] ; 2 uses
   %i.x = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #18 ; 4 uses
   store ptr null, ptr %i.x, align 8, !tbaa !65
-  %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 8 ; 3 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 8 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.y, ptr noundef nonnull align 8 dereferenceable(16) %.023, i64 16, i1 false)
   %i.z = load i64, ptr %i.k, align 8, !tbaa !74
   %.not.not.i.i.i = icmp eq i64 %i.z, 0
-  br i1 %.not.not.i.i.i, label %.preheader, label %.thread22.i.i.i
+  %.pre38.i.i.i = load i64, ptr %i.y, align 8     ; 2 uses
+  br i1 %.not.not.i.i.i, label %.preheader, label %.loopexit.i.i
 
 .preheader:                                       ; preds = %bb.h, %bb.i
   %.sroa.0.0.in.i.i.i = phi ptr [ %.sroa.0.0.i.i.i, %bb.i ], [ %i.w, %bb.h ]
   %.sroa.0.0.i.i.i = load ptr, ptr %.sroa.0.0.in.i.i.i, align 8, !tbaa !65 ; 4 uses
   %.not27.i.i.i = icmp eq ptr %.sroa.0.0.i.i.i, null
-  br i1 %.not27.i.i.i, label %.thread22.i.i.i, label %bb.i
+  br i1 %.not27.i.i.i, label %.loopexit.i.i, label %bb.i
 
 bb.i:                                             ; preds = %.preheader
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i, i64 8
-  %4 = load i64, ptr %i.y, align 8, !tbaa !22     ; 2 uses
   %i.ab = load i64, ptr %i.aa, align 8, !tbaa !22
-  %i.ac = icmp eq i64 %4, %i.ab
+  %i.ac = icmp eq i64 %.pre38.i.i.i, %i.ab
   br i1 %i.ac, label %.loopexit.i.i, label %.preheader, !llvm.loop !110
 
-.thread22.i.i.i:                                  ; preds = %.preheader, %bb.h
-  %5 = load i64, ptr %i.y, align 8, !tbaa !22
-  br label %.loopexit.i.i
-
-.loopexit.i.i:                                    ; preds = %bb.i, %.thread22.i.i.i
-  %.sroa.019.3.i.i.i = phi ptr [ null, %.thread22.i.i.i ], [ %.sroa.0.0.i.i.i, %bb.i ]
-  %.sroa.4.3.i.i.i = phi i64 [ %5, %.thread22.i.i.i ], [ %4, %bb.i ]
-  %i.ad = invoke ptr @_ZNSt10_HashtableImSt4pairIKmmESaIS2_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENS4_18_Mod_range_hashingENS4_20_Default_ranged_hashENS4_20_Prime_rehash_policyENS4_17_Hashtable_traitsILb0ELb0ELb0EEEE20_M_insert_multi_nodeEPNS4_10_Hash_nodeIS2_Lb0EEEmSI_(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr noundef %.sroa.019.3.i.i.i, i64 noundef %.sroa.4.3.i.i.i, ptr noundef nonnull %i.x)
+.loopexit.i.i:                                    ; preds = %bb.i, %.preheader, %bb.h
+  %.sroa.019.3.i.i.i = phi ptr [ null, %bb.h ], [ %.sroa.0.0.i.i.i, %bb.i ], [ null, %.preheader ]
+  %i.ad = invoke ptr @_ZNSt10_HashtableImSt4pairIKmmESaIS2_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENS4_18_Mod_range_hashingENS4_20_Default_ranged_hashENS4_20_Prime_rehash_policyENS4_17_Hashtable_traitsILb0ELb0ELb0EEEE20_M_insert_multi_nodeEPNS4_10_Hash_nodeIS2_Lb0EEEmSI_(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr noundef %.sroa.019.3.i.i.i, i64 noundef %.pre38.i.i.i, ptr noundef nonnull %i.x)
           to label %_ZNSt10_HashtableImSt4pairIKmmESaIS2_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENS4_18_Mod_range_hashingENS4_20_Default_ranged_hashENS4_20_Prime_rehash_policyENS4_17_Hashtable_traitsILb0ELb0ELb0EEEE9_M_insertIRKS2_NS4_10_AllocNodeISaINS4_10_Hash_nodeIS2_Lb0EEEEEEEENS4_14_Node_iteratorIS2_Lb0ELb0EEEOT_RKT0_St17integral_constantIbLb0EE.exit unwind label %_ZNSt10_HashtableImSt4pairIKmmESaIS2_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENS4_18_Mod_range_hashingENS4_20_Default_ranged_hashENS4_20_Prime_rehash_policyENS4_17_Hashtable_traitsILb0ELb0ELb0EEEE12_Scoped_nodeD2Ev.exit11.i.i ; 0 uses
 
 _ZNSt10_HashtableImSt4pairIKmmESaIS2_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENS4_18_Mod_range_hashingENS4_20_Default_ranged_hashENS4_20_Prime_rehash_policyENS4_17_Hashtable_traitsILb0ELb0ELb0EEEE12_Scoped_nodeD2Ev.exit11.i.i: ; preds = %.loopexit.i.i

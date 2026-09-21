@@ -205,7 +205,8 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 .lr.ph:                                           ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 808
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !183  ; 5 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 768 ; 5 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 768
+  %1 = load ptr, ptr %i.k, align 8                ; 5 uses
   %wide.trip.count = zext nneg i32 %i.g to i64    ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
   %i.l = icmp ult i32 %i.g, 4
@@ -213,10 +214,6 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 
 .lr.ph.new:                                       ; preds = %.lr.ph
   %unroll_iter = and i64 %wide.trip.count, 2147483644
-  %1 = load ptr, ptr %i.k, align 8
-  %2 = load ptr, ptr %i.k, align 8
-  %3 = load ptr, ptr %i.k, align 8
-  %4 = load ptr, ptr %i.k, align 8
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.l, %.lr.ph.new
@@ -244,7 +241,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   br i1 %i.u, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.v = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv.next
+  %i.v = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.next
   %i.w = load float, ptr %i.v, align 4, !tbaa !127 ; 2 uses
   %i.x = fcmp olt float %.1, %i.w
   %.sroa.speculated.1 = select i1 %i.x, float %i.w, float %.1
@@ -259,7 +256,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br i1 %i.aa, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ab = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv.next.1
+  %i.ab = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.next.1
   %i.ac = load float, ptr %i.ab, align 4, !tbaa !127 ; 2 uses
   %i.ad = fcmp olt float %.1.1, %i.ac
   %.sroa.speculated.2 = select i1 %i.ad, float %i.ac, float %.1.1
@@ -274,7 +271,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %i.ag, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.ah = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv.next.2
+  %i.ah = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.next.2
   %i.ai = load float, ptr %i.ah, align 4, !tbaa !127 ; 2 uses
   %i.aj = fcmp olt float %.1.2, %i.ai
   %.sroa.speculated.3 = select i1 %i.aj, float %i.ai, float %.1.2
@@ -296,7 +293,6 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %.01920.epil.init = phi float [ 0.000000e+00, %.lr.ph ], [ %.1.3, %.loopexit.loopexit.unr-lcssa ]
   %lcmp.mod24 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod24)
-  %5 = load ptr, ptr %i.k, align 8
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.o, %.epil.preheader
@@ -309,7 +305,7 @@ bb.m:                                             ; preds = %bb.o, %.epil.prehea
   br i1 %i.am, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.an = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %indvars.iv.epil
+  %i.an = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.epil
   %i.ao = load float, ptr %i.an, align 4, !tbaa !127 ; 2 uses
   %i.ap = fcmp olt float %.01920.epil, %i.ao
   %.sroa.speculated.epil = select i1 %i.ap, float %i.ao, float %.01920.epil

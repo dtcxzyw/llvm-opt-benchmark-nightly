@@ -205,7 +205,7 @@ bb.x:                                             ; preds = %_ZNSt6vectorIN7xgbo
   %.not.i121 = icmp slt i32 %i.hn, %i.hj
   br i1 %.not.i121, label %bb.y, label %_ZNSt6vectorIN7xgboost4tree14CPUExpandEntryESaIS2_EE12emplace_backIJRKS2_EEERS2_DpOT_.exit
 
-bb.y:                                             ; preds = %bb.x, %_ZNSt6vectorIN7xgboost4tree14CPUExpandEntryESaIS2_EE9push_backERKS2_.exit
+bb.y:                                             ; preds = %_ZNSt6vectorIN7xgboost4tree14CPUExpandEntryESaIS2_EE9push_backERKS2_.exit, %bb.x
   %i.ho = load i32, ptr %i.cs, align 8, !tbaa !1020 ; 2 uses
   %i.hp = icmp slt i32 %i.ho, 1
   %i.hq = load i32, ptr %i.ct, align 8
@@ -299,7 +299,7 @@ bb.ae:                                            ; preds = %_ZN7xgboost4tree6Dr
           cleanup
   br label %bb.ec
 
-_ZNSt6vectorIN7xgboost4tree14CPUExpandEntryESaIS2_EE12emplace_backIJRKS2_EEERS2_DpOT_.exit: ; preds = %bb.ae, %bb.y, %bb.x, %_ZN7xgboost4tree14CPUExpandEntryC2ERKS1_.exit.i125
+_ZNSt6vectorIN7xgboost4tree14CPUExpandEntryESaIS2_EE12emplace_backIJRKS2_EEERS2_DpOT_.exit: ; preds = %bb.ae, %bb.x, %_ZN7xgboost4tree14CPUExpandEntryC2ERKS1_.exit.i125, %bb.y
   %i.ix = getelementptr inbounds nuw i8, ptr %.sroa.0300.0454, i64 88 ; 2 uses
   %.not306.a = icmp eq ptr %i.ix, %i.fp
   br i1 %.not306.a, label %._crit_edge.i.i, label %bb.p

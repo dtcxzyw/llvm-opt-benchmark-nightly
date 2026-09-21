@@ -205,10 +205,10 @@ bb.a:
     i8 1, label %bb.c
     i8 2, label %bb.d
     i8 3, label %bb.k
-    i8 4, label %6
-    i8 5, label %6
-    i8 6, label %6
-    i8 7, label %6
+    i8 4, label %bb.r
+    i8 5, label %bb.r
+    i8 6, label %bb.r
+    i8 7, label %bb.r
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -317,20 +317,18 @@ bb.p:                                             ; preds = %bb.m, %bb.m
 bb.q:                                             ; preds = %bb.m
   unreachable
 
-6:                                                ; preds = %bb.a, %bb.a, %bb.a, %bb.a
-  %7 = load i8, ptr %1, align 8
-  %8 = icmp eq i8 %7, 1
-  br i1 %8, label %bb.s, label %bb.r
-
-bb.r:                                             ; preds = %6
+bb.r:                                             ; preds = %bb.a, %bb.a, %bb.a, %bb.a
+  %6 = load i8, ptr %1, align 8
+  %7 = icmp eq i8 %6, 1
   %i.k = load i8, ptr %2, align 8
   %i.l = icmp eq i8 %i.k, 1
-  br i1 %i.l, label %bb.s, label %_ZN2v88internal8compiler10turboshaft8WordTypeILm32EE3SetERKSt16initializer_listIjEPNS0_4ZoneE.exit
+  %or.cond = select i1 %7, i1 true, i1 %i.l
+  br i1 %or.cond, label %bb.s, label %_ZN2v88internal8compiler10turboshaft8WordTypeILm32EE3SetERKSt16initializer_listIjEPNS0_4ZoneE.exit
 
-bb.s:                                             ; preds = %bb.r, %6
+bb.s:                                             ; preds = %bb.r
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i8 1, ptr %0, align 8, !alias.scope !167
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(23) %9, i8 0, i64 23, i1 false), !alias.scope !167
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(23) %8, i8 0, i64 23, i1 false), !alias.scope !167
   br label %_ZN2v88internal8compiler10turboshaft5Typer21TypeFloat32ComparisonERKNS2_4TypeES6_NS2_12ComparisonOp4KindEPNS0_4ZoneE.exit
 
 _ZN2v88internal8compiler10turboshaft8WordTypeILm32EE3SetERKSt16initializer_listIjEPNS0_4ZoneE.exit: ; preds = %bb.r

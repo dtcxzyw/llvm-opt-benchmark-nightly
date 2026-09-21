@@ -205,53 +205,47 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.w, %bb.v
   %i.fs = getelementptr inbounds nuw i8, ptr %0, i64 3504 ; 2 uses
-  %i.ft = load ptr, ptr %i.fs, align 8, !tbaa !150
+  %2 = load ptr, ptr %i.fs, align 8, !tbaa !150
+  %.not.1.i = icmp ne ptr %2, null
+  %3 = getelementptr inbounds nuw i8, ptr %i.fo, i64 40
+  %i.ft = load ptr, ptr %3, align 8
   %.not.1.i.a = icmp eq ptr %i.ft, null
-  br i1 %.not.1.i.a, label %bb.z, label %_ZNK5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE13STextureCacheixEi.exit.1.i
+  %or.cond12.i = select i1 %.not.1.i, i1 %.not.1.i.a, i1 false
+  br i1 %or.cond12.i, label %bb.y, label %bb.z
 
-_ZNK5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE13STextureCacheixEi.exit.1.i: ; preds = %bb.x
-  %2 = getelementptr inbounds nuw i8, ptr %i.fo, i64 40
-  %3 = load ptr, ptr %2, align 8, !tbaa !173
-  %.not7.1.i = icmp eq ptr %3, null
-  br i1 %.not7.1.i, label %bb.y, label %bb.z
-
-bb.y:                                             ; preds = %_ZNK5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE13STextureCacheixEi.exit.1.i
+bb.y:                                             ; preds = %bb.x
   store ptr null, ptr %i.fs, align 8, !tbaa !150
   br label %bb.z
 
-bb.z:                                             ; preds = %bb.y, %_ZNK5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE13STextureCacheixEi.exit.1.i, %bb.x
+bb.z:                                             ; preds = %bb.y, %bb.x
   %i.fu = getelementptr inbounds nuw i8, ptr %0, i64 3528 ; 2 uses
-  %i.fv = load ptr, ptr %i.fu, align 8, !tbaa !150
+  %4 = load ptr, ptr %i.fu, align 8, !tbaa !150
+  %.not.2.i = icmp ne ptr %4, null
+  %5 = getelementptr inbounds nuw i8, ptr %i.fo, i64 48
+  %i.fv = load ptr, ptr %5, align 8
   %.not.2.i.a = icmp eq ptr %i.fv, null
-  br i1 %.not.2.i.a, label %bb.ab, label %_ZNK5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE13STextureCacheixEi.exit.2.i
+  %or.cond14.i = select i1 %.not.2.i, i1 %.not.2.i.a, i1 false
+  br i1 %or.cond14.i, label %bb.aa, label %bb.ab
 
-_ZNK5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE13STextureCacheixEi.exit.2.i: ; preds = %bb.z
-  %4 = getelementptr inbounds nuw i8, ptr %i.fo, i64 48
-  %5 = load ptr, ptr %4, align 8, !tbaa !173
-  %.not7.2.i = icmp eq ptr %5, null
-  br i1 %.not7.2.i, label %bb.aa, label %bb.ab
-
-bb.aa:                                            ; preds = %_ZNK5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE13STextureCacheixEi.exit.2.i
+bb.aa:                                            ; preds = %bb.z
   store ptr null, ptr %i.fu, align 8, !tbaa !150
   br label %bb.ab
 
-bb.ab:                                            ; preds = %bb.aa, %_ZNK5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE13STextureCacheixEi.exit.2.i, %bb.z
+bb.ab:                                            ; preds = %bb.aa, %bb.z
   %i.fw = getelementptr inbounds nuw i8, ptr %0, i64 3552 ; 2 uses
-  %i.fx = load ptr, ptr %i.fw, align 8, !tbaa !150
+  %6 = load ptr, ptr %i.fw, align 8, !tbaa !150
+  %.not.3.i = icmp ne ptr %6, null
+  %7 = getelementptr inbounds nuw i8, ptr %i.fo, i64 56
+  %i.fx = load ptr, ptr %7, align 8
   %.not.3.i.a = icmp eq ptr %i.fx, null
-  br i1 %.not.3.i.a, label %_ZN5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE20correctCacheMaterialERNS_9SMaterialE.exit, label %_ZNK5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE13STextureCacheixEi.exit.3.i
+  %or.cond16.i = select i1 %.not.3.i, i1 %.not.3.i.a, i1 false
+  br i1 %or.cond16.i, label %bb.ac, label %_ZN5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE20correctCacheMaterialERNS_9SMaterialE.exit
 
-_ZNK5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE13STextureCacheixEi.exit.3.i: ; preds = %bb.ab
-  %6 = getelementptr inbounds nuw i8, ptr %i.fo, i64 56
-  %7 = load ptr, ptr %6, align 8, !tbaa !173
-  %.not7.3.i = icmp eq ptr %7, null
-  br i1 %.not7.3.i, label %bb.ac, label %_ZN5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE20correctCacheMaterialERNS_9SMaterialE.exit
-
-bb.ac:                                            ; preds = %_ZNK5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE13STextureCacheixEi.exit.3.i
+bb.ac:                                            ; preds = %bb.ab
   store ptr null, ptr %i.fw, align 8, !tbaa !150
   br label %_ZN5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE20correctCacheMaterialERNS_9SMaterialE.exit
 
-_ZN5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE20correctCacheMaterialERNS_9SMaterialE.exit: ; preds = %bb.ab, %_ZNK5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE13STextureCacheixEi.exit.3.i, %bb.ac
+_ZN5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE20correctCacheMaterialERNS_9SMaterialE.exit: ; preds = %bb.ab, %bb.ac
   store i8 0, ptr %i.dn, align 4, !tbaa !141
   br label %bb.ad
 
@@ -654,8 +648,8 @@ bb.a:
   %switch.selectcmp24 = icmp eq i32 %4, 0
   %switch.select25 = select i1 %switch.selectcmp24, i32 5123, i32 %switch.select ; 6 uses
   switch i32 %3, label %bb.v [
-    i32 0, label %5
-    i32 7, label %5
+    i32 0, label %bb.b
+    i32 7, label %bb.b
     i32 1, label %bb.p
     i32 2, label %bb.q
     i32 3, label %bb.r
@@ -664,21 +658,19 @@ bb.a:
     i32 6, label %bb.u
   ]
 
-5:                                                ; preds = %bb.a, %bb.a
-  %6 = icmp eq i32 %3, 7                          ; 2 uses
-  br i1 %6, label %bb.b, label %bb.d
-
-bb.b:                                             ; preds = %5
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1106
-  %i.c = load i8, ptr %i.b, align 2, !tbaa !169, !range !154, !noundef !155
+bb.b:                                             ; preds = %bb.a, %bb.a
+  %5 = icmp eq i32 %3, 7                          ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1106 ; 3 uses
+  %i.c = load i8, ptr %i.b, align 2, !range !154
   %i.d = trunc nuw i8 %i.c to i1
-  br i1 %i.d, label %bb.c, label %bb.d
+  %or.cond = select i1 %5, i1 %i.d, i1 false
+  br i1 %or.cond, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   tail call void @glEnable(i32 noundef 34913)
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.b, %5
+bb.d:                                             ; preds = %bb.c, %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 3460
   %i.f = load float, ptr %i.e, align 4, !tbaa !443 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 972
@@ -718,11 +710,10 @@ bb.f:                                             ; preds = %_ZN5video23COpenGLE
 
 _ZN5video23COpenGLExtensionHandler20extGlPointParameterfEif.exit28: ; preds = %_ZN5video23COpenGLExtensionHandler21extGlPointParameterfvEiPKf.exit, %_ZN5video23COpenGLExtensionHandler20extGlPointParameterfEif.exit, %bb.f
   call void @glPointSize(float noundef %i.n)
-  br i1 %6, label %bb.g, label %.critedge
+  br i1 %5, label %bb.g, label %.critedge
 
 bb.g:                                             ; preds = %_ZN5video23COpenGLExtensionHandler20extGlPointParameterfEif.exit28
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 1106 ; 2 uses
-  %i.s = load i8, ptr %7, align 2, !tbaa !169, !range !154, !noundef !155
+  %i.s = load i8, ptr %i.b, align 2, !tbaa !169, !range !154, !noundef !155
   %i.t = trunc nuw i8 %i.s to i1
   br i1 %i.t, label %bb.h, label %bb.k
 
@@ -763,7 +754,7 @@ _ZN5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1
 
 bb.k:                                             ; preds = %bb.g, %_ZN5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE16setActiveTextureEj.exit
   call void @glDrawArrays(i32 noundef 0, i32 noundef 0, i32 noundef %2)
-  %i.ae = load i8, ptr %7, align 2, !tbaa !169, !range !154, !noundef !155
+  %i.ae = load i8, ptr %i.b, align 2, !tbaa !169, !range !154, !noundef !155
   %i.af = trunc nuw i8 %i.ae to i1
   br i1 %i.af, label %bb.l, label %bb.o
 
@@ -1166,53 +1157,47 @@ bb.ac:                                            ; preds = %bb.ab
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 3504 ; 2 uses
-  %i.ef = load ptr, ptr %i.ee, align 8, !tbaa !150
+  %6 = load ptr, ptr %i.ee, align 8, !tbaa !150
+  %.not.1.i = icmp ne ptr %6, null
+  %7 = getelementptr inbounds nuw i8, ptr %i.ea, i64 40
+  %i.ef = load ptr, ptr %7, align 8
   %.not.1.i.a = icmp eq ptr %i.ef, null
-  br i1 %.not.1.i.a, label %bb.af, label %_ZNK5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE13STextureCacheixEi.exit.1.i
+  %or.cond12.i = select i1 %.not.1.i, i1 %.not.1.i.a, i1 false
+  br i1 %or.cond12.i, label %bb.ae, label %bb.af
 
-_ZNK5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE13STextureCacheixEi.exit.1.i: ; preds = %bb.ad
-  %6 = getelementptr inbounds nuw i8, ptr %i.ea, i64 40
-  %7 = load ptr, ptr %6, align 8, !tbaa !173
-  %.not7.1.i = icmp eq ptr %7, null
-  br i1 %.not7.1.i, label %bb.ae, label %bb.af
-
-bb.ae:                                            ; preds = %_ZNK5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE13STextureCacheixEi.exit.1.i
+bb.ae:                                            ; preds = %bb.ad
   store ptr null, ptr %i.ee, align 8, !tbaa !150
   br label %bb.af
 
-bb.af:                                            ; preds = %bb.ae, %_ZNK5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE13STextureCacheixEi.exit.1.i, %bb.ad
+bb.af:                                            ; preds = %bb.ae, %bb.ad
   %i.eg = getelementptr inbounds nuw i8, ptr %0, i64 3528 ; 2 uses
-  %i.eh = load ptr, ptr %i.eg, align 8, !tbaa !150
+  %8 = load ptr, ptr %i.eg, align 8, !tbaa !150
+  %.not.2.i = icmp ne ptr %8, null
+  %9 = getelementptr inbounds nuw i8, ptr %i.ea, i64 48
+  %i.eh = load ptr, ptr %9, align 8
   %.not.2.i.a = icmp eq ptr %i.eh, null
-  br i1 %.not.2.i.a, label %bb.ah, label %_ZNK5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE13STextureCacheixEi.exit.2.i
+  %or.cond14.i = select i1 %.not.2.i, i1 %.not.2.i.a, i1 false
+  br i1 %or.cond14.i, label %bb.ag, label %bb.ah
 
-_ZNK5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE13STextureCacheixEi.exit.2.i: ; preds = %bb.af
-  %8 = getelementptr inbounds nuw i8, ptr %i.ea, i64 48
-  %9 = load ptr, ptr %8, align 8, !tbaa !173
-  %.not7.2.i = icmp eq ptr %9, null
-  br i1 %.not7.2.i, label %bb.ag, label %bb.ah
-
-bb.ag:                                            ; preds = %_ZNK5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE13STextureCacheixEi.exit.2.i
+bb.ag:                                            ; preds = %bb.af
   store ptr null, ptr %i.eg, align 8, !tbaa !150
   br label %bb.ah
 
-bb.ah:                                            ; preds = %bb.ag, %_ZNK5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE13STextureCacheixEi.exit.2.i, %bb.af
+bb.ah:                                            ; preds = %bb.ag, %bb.af
   %i.ei = getelementptr inbounds nuw i8, ptr %0, i64 3552 ; 2 uses
-  %i.ej = load ptr, ptr %i.ei, align 8, !tbaa !150
+  %10 = load ptr, ptr %i.ei, align 8, !tbaa !150
+  %.not.3.i = icmp ne ptr %10, null
+  %11 = getelementptr inbounds nuw i8, ptr %i.ea, i64 56
+  %i.ej = load ptr, ptr %11, align 8
   %.not.3.i.a = icmp eq ptr %i.ej, null
-  br i1 %.not.3.i.a, label %_ZN5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE20correctCacheMaterialERNS_9SMaterialE.exit, label %_ZNK5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE13STextureCacheixEi.exit.3.i
+  %or.cond16.i = select i1 %.not.3.i, i1 %.not.3.i.a, i1 false
+  br i1 %or.cond16.i, label %bb.ai, label %_ZN5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE20correctCacheMaterialERNS_9SMaterialE.exit
 
-_ZNK5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE13STextureCacheixEi.exit.3.i: ; preds = %bb.ah
-  %10 = getelementptr inbounds nuw i8, ptr %i.ea, i64 56
-  %11 = load ptr, ptr %10, align 8, !tbaa !173
-  %.not7.3.i = icmp eq ptr %11, null
-  br i1 %.not7.3.i, label %bb.ai, label %_ZN5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE20correctCacheMaterialERNS_9SMaterialE.exit
-
-bb.ai:                                            ; preds = %_ZNK5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE13STextureCacheixEi.exit.3.i
+bb.ai:                                            ; preds = %bb.ah
   store ptr null, ptr %i.ei, align 8, !tbaa !150
   br label %_ZN5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE20correctCacheMaterialERNS_9SMaterialE.exit
 
-_ZN5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE20correctCacheMaterialERNS_9SMaterialE.exit: ; preds = %bb.ah, %_ZNK5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE13STextureCacheixEi.exit.3.i, %bb.ai
+_ZN5video23COpenGLCoreCacheHandlerINS_13COpenGLDriverENS_18COpenGLCoreTextureIS1_EEE20correctCacheMaterialERNS_9SMaterialE.exit: ; preds = %bb.ah, %bb.ai
   %i.ek = and i1 %2, %3                           ; 2 uses
   %or.cond = or i1 %1, %i.ek
   %i.el = getelementptr inbounds nuw i8, ptr %i.ea, i64 120 ; 3 uses
@@ -1615,7 +1600,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d
-  %i.bq = phi i32 [ %i.bp, %bb.d ], [ %i.bk, %bb.c ]
+  %i.bq = phi i32 [ %i.bk, %bb.c ], [ %i.bp, %bb.d ]
   %i.br = getelementptr inbounds nuw i8, ptr %.sroa.076.090, i64 8 ; 2 uses
   %.not79 = icmp eq ptr %i.br, %i.g
   br i1 %.not79, label %.preheader88, label %bb.c

@@ -205,10 +205,11 @@ _ZNK2cv8MatShapeclEv.exit:                        ; preds = %bb.a
   %or.cond.not = icmp eq i32 %i.b, 2
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 196
   %i.k = load i32, ptr %i.j, align 4
-  %12 = icmp eq i32 %i.k, 0
-  %13 = icmp slt i32 %i.b, 0
-  %14 = select i1 %or.cond.not, i1 %12, i1 %13
-  br i1 %14, label %.loopexit170, label %bb.e
+  %12 = icmp sgt i32 %i.b, -1
+  %13 = zext i1 %12 to i32
+  %14 = select i1 %or.cond.not, i32 %i.k, i32 %13
+  %15 = icmp eq i32 %14, 0
+  br i1 %15, label %.loopexit170, label %bb.e
 
 bb.e:                                             ; preds = %_ZNK2cv8MatShapeclEv.exit
   %i.l = load ptr, ptr %1, align 8, !tbaa !158    ; 2 uses
@@ -611,6 +612,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.f
 .preheader:                                       ; preds = %bb.c
   %i.o = trunc nuw nsw i64 %indvars.iv to i32
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %3 = load ptr, ptr %i.p, align 8
   br label %bb.d
 
 bb.d:                                             ; preds = %.preheader, %bb.e
@@ -624,7 +626,6 @@ bb.d:                                             ; preds = %.preheader, %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %indvars.iv.next44 = add nsw i64 %indvars.iv43, -1 ; 2 uses
-  %3 = load ptr, ptr %i.p, align 8, !tbaa !506
   %i.u = getelementptr inbounds [4 x i8], ptr %3, i64 %indvars.iv.next44
   %i.v = load i32, ptr %i.u, align 4, !tbaa !124
   %i.w = icmp eq i32 %i.v, %2

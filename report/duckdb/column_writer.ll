@@ -205,7 +205,8 @@ bb.a:
 
 .preheader40.lr.ph:                               ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %2 = load i64, ptr %i.g, align 8                ; 2 uses
   br label %.preheader40
 
 .preheader40:                                     ; preds = %.preheader40.lr.ph, %bb.b
@@ -228,7 +229,6 @@ bb.c:                                             ; preds = %bb.g, %.preheader40
 
 bb.d:                                             ; preds = %bb.c
   %i.n = load i64, ptr %i.k, align 8, !tbaa !301
-  %2 = load i64, ptr %i.g, align 8, !tbaa !605
   %i.o = sub i64 %i.n, %2
   br label %bb.e
 
@@ -244,8 +244,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.u = load i64, ptr %i.r, align 8, !tbaa !301
-  %3 = load i64, ptr %i.g, align 8, !tbaa !605
-  %i.v = sub i64 %i.u, %3
+  %i.v = sub i64 %i.u, %2
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e

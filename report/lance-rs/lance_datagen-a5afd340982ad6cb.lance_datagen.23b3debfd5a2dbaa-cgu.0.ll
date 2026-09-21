@@ -205,9 +205,9 @@ vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.preh
   %i.aj = icmp eq i64 %i.ai, 0
   %i.ak = select i1 %i.aj, i64 4, i64 %i.ai
   %n.vec = sub nsw i64 %i.ah, %i.ak               ; 3 uses
-  %4 = sub i64 %.promoted59.i.i.i.i, %n.vec
-  %5 = shl i64 %n.vec, 3
-  %6 = getelementptr i8, ptr %i.o, i64 %5
+  %4 = shl i64 %n.vec, 3
+  %5 = getelementptr i8, ptr %i.o, i64 %4
+  %6 = sub i64 %.promoted59.i.i.i.i, %n.vec
   %i.al = insertelement <2 x i64> <i64 poison, i64 0>, i64 %.sroa.01.0.i.i.i.i.i.i, i64 0
   br label %vector.body
 
@@ -232,9 +232,9 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph.i.i.i.i.preheader215
 
 .lr.ph.i.i.i.i.preheader215:                      ; preds = %.lr.ph.i.i.i.i.preheader, %middle.block
-  %.ph216.a = phi i64 [ %.promoted59.i.i.i.i, %.lr.ph.i.i.i.i.preheader ], [ %4, %middle.block ] ; 2 uses
-  %.sroa.01.0.i.i2755.i.i.i.i.ph = phi i64 [ %.sroa.01.0.i.i.i.i.i.i, %.lr.ph.i.i.i.i.preheader ], [ %i.ar, %middle.block ]
-  %.ph217 = phi ptr [ %i.o, %.lr.ph.i.i.i.i.preheader ], [ %6, %middle.block ]
+  %.ph216.a = phi i64 [ %.sroa.01.0.i.i.i.i.i.i, %.lr.ph.i.i.i.i.preheader ], [ %i.ar, %middle.block ]
+  %.ph216 = phi ptr [ %i.o, %.lr.ph.i.i.i.i.preheader ], [ %5, %middle.block ]
+  %.ph217 = phi i64 [ %.promoted59.i.i.i.i, %.lr.ph.i.i.i.i.preheader ], [ %6, %middle.block ] ; 2 uses
   br label %.lr.ph.i.i.i.i
 
 bb.e:                                             ; preds = %.lr.ph.i.i.i.i
@@ -244,7 +244,7 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i.i
   br i1 %i.at, label %_RINvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters6copiedINtB5_6CopiedINtNtNtBb_5slice4iter4IterjEENtNtNtB9_6traits8iterator8Iterator8try_foldjQNCINvNvXs_NtB7_4takeINtB2o_4TakepEB1v_8try_fold5checkjjINtNtNtBb_3ops9try_trait17NeverShortCircuitjENCINvMB3a_B37_10wrap_mut_2jjNCINvXsK_NtB1z_5accumjNtB4r_3Sum3sumIB2z_INtNtB7_4skip4SkipINtNtB7_5cycle5CycleBP_EEEE0E0E0INtNtB3c_12control_flow11ControlFlowB37_jEECs342JT7D9NXi_13lance_datagen.exit34.i.i.i.i.preheader, label %.lr.ph.i.i.i.i, !llvm.loop !10617
 
 _RINvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters6copiedINtB5_6CopiedINtNtNtBb_5slice4iter4IterjEENtNtNtB9_6traits8iterator8Iterator8try_foldjQNCINvNvXs_NtB7_4takeINtB2o_4TakepEB1v_8try_fold5checkjjINtNtNtBb_3ops9try_trait17NeverShortCircuitjENCINvMB3a_B37_10wrap_mut_2jjNCINvXsK_NtB1z_5accumjNtB4r_3Sum3sumIB2z_INtNtB7_4skip4SkipINtNtB7_5cycle5CycleBP_EEEE0E0E0INtNtB3c_12control_flow11ControlFlowB37_jEECs342JT7D9NXi_13lance_datagen.exit34.i.i.i.i.preheader: ; preds = %bb.e
-  %i.au = add i64 %.ph216.a, -2
+  %i.au = add i64 %.ph217, -2
   %xtraiter = and i64 %i.bd, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %_RINvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters6copiedINtB5_6CopiedINtNtNtBb_5slice4iter4IterjEENtNtNtB9_6traits8iterator8Iterator8try_foldjQNCINvNvXs_NtB7_4takeINtB2o_4TakepEB1v_8try_fold5checkjjINtNtNtBb_3ops9try_trait17NeverShortCircuitjENCINvMB3a_B37_10wrap_mut_2jjNCINvXsK_NtB1z_5accumjNtB4r_3Sum3sumIB2z_INtNtB7_4skip4SkipINtNtB7_5cycle5CycleBP_EEEE0E0E0INtNtB3c_12control_flow11ControlFlowB37_jEECs342JT7D9NXi_13lance_datagen.exit34.i.i.i.i.outer.prol.loopexit, label %_RINvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters6copiedINtB5_6CopiedINtNtNtBb_5slice4iter4IterjEENtNtNtB9_6traits8iterator8Iterator8try_foldjQNCINvNvXs_NtB7_4takeINtB2o_4TakepEB1v_8try_fold5checkjjINtNtNtBb_3ops9try_trait17NeverShortCircuitjENCINvMB3a_B37_10wrap_mut_2jjNCINvXsK_NtB1z_5accumjNtB4r_3Sum3sumIB2z_INtNtB7_4skip4SkipINtNtB7_5cycle5CycleBP_EEEE0E0E0INtNtB3c_12control_flow11ControlFlowB37_jEECs342JT7D9NXi_13lance_datagen.exit34.i.i.i.i.peel.prol
@@ -259,7 +259,7 @@ _RINvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters6copiedINtB5_6CopiedINtNtNtBb_5sl
 _RINvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters6copiedINtB5_6CopiedINtNtNtBb_5slice4iter4IterjEENtNtNtB9_6traits8iterator8Iterator8try_foldjQNCINvNvXs_NtB7_4takeINtB2o_4TakepEB1v_8try_fold5checkjjINtNtNtBb_3ops9try_trait17NeverShortCircuitjENCINvMB3a_B37_10wrap_mut_2jjNCINvXsK_NtB1z_5accumjNtB4r_3Sum3sumIB2z_INtNtB7_4skip4SkipINtNtB7_5cycle5CycleBP_EEEE0E0E0INtNtB3c_12control_flow11ControlFlowB37_jEECs342JT7D9NXi_13lance_datagen.exit34.i.i.i.i.outer.prol.loopexit.unr-lcssa: ; preds = %_RINvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters6copiedINtB5_6CopiedINtNtNtBb_5slice4iter4IterjEENtNtNtB9_6traits8iterator8Iterator8try_foldjQNCINvNvXs_NtB7_4takeINtB2o_4TakepEB1v_8try_fold5checkjjINtNtNtBb_3ops9try_trait17NeverShortCircuitjENCINvMB3a_B37_10wrap_mut_2jjNCINvXsK_NtB1z_5accumjNtB4r_3Sum3sumIB2z_INtNtB7_4skip4SkipINtNtB7_5cycle5CycleBP_EEEE0E0E0INtNtB3c_12control_flow11ControlFlowB37_jEECs342JT7D9NXi_13lance_datagen.exit34.i.i.i.i.peel.prol
   %i.aw = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %.val10.i.i31.i.i.i.i.prol = load i64, ptr %i.o, align 8, !noalias !10701, !noundef !10
-  %i.ax = add i64 %i.bc, -2
+  %i.ax = add i64 %8, -2
   %i.ay = add i64 %.val10.i.i31.i.i.i.i.prol, %i.be ; 2 uses
   br label %_RINvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters6copiedINtB5_6CopiedINtNtNtBb_5slice4iter4IterjEENtNtNtB9_6traits8iterator8Iterator8try_foldjQNCINvNvXs_NtB7_4takeINtB2o_4TakepEB1v_8try_fold5checkjjINtNtNtBb_3ops9try_trait17NeverShortCircuitjENCINvMB3a_B37_10wrap_mut_2jjNCINvXsK_NtB1z_5accumjNtB4r_3Sum3sumIB2z_INtNtB7_4skip4SkipINtNtB7_5cycle5CycleBP_EEEE0E0E0INtNtB3c_12control_flow11ControlFlowB37_jEECs342JT7D9NXi_13lance_datagen.exit34.i.i.i.i.outer.prol.loopexit
 
@@ -278,12 +278,12 @@ _RINvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters6copiedINtB5_6CopiedINtNtNtBb_5sl
 
 .lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i.preheader215, %bb.e
   %indvar232 = phi i64 [ 0, %.lr.ph.i.i.i.i.preheader215 ], [ %indvar.next233, %bb.e ] ; 2 uses
-  %i.bc = phi i64 [ %.ph216.a, %.lr.ph.i.i.i.i.preheader215 ], [ %i.bd, %bb.e ] ; 2 uses
-  %.sroa.01.0.i.i2755.i.i.i.i = phi i64 [ %.sroa.01.0.i.i2755.i.i.i.i.ph, %.lr.ph.i.i.i.i.preheader215 ], [ %i.be, %bb.e ]
-  %7 = phi ptr [ %.ph217, %.lr.ph.i.i.i.i.preheader215 ], [ %i.as, %bb.e ] ; 2 uses
+  %i.bc = phi i64 [ %.ph216.a, %.lr.ph.i.i.i.i.preheader215 ], [ %i.be, %bb.e ]
+  %7 = phi ptr [ %.ph216, %.lr.ph.i.i.i.i.preheader215 ], [ %i.as, %bb.e ] ; 2 uses
+  %8 = phi i64 [ %.ph217, %.lr.ph.i.i.i.i.preheader215 ], [ %i.bd, %bb.e ] ; 2 uses
   %.val11.i.i.i.i.i.i = load i64, ptr %7, align 8, !noalias !10700, !noundef !10
-  %i.bd = add i64 %i.bc, -1                       ; 4 uses
-  %i.be = add i64 %.val11.i.i.i.i.i.i, %.sroa.01.0.i.i2755.i.i.i.i ; 4 uses
+  %i.bd = add i64 %8, -1                          ; 4 uses
+  %i.be = add i64 %.val11.i.i.i.i.i.i, %i.bc      ; 4 uses
   %i.bf = icmp eq i64 %i.bd, 0
   br i1 %i.bf, label %_RINvXs7_NtNtNtCscI6d9CVNmLh_4core4iter8adapters4takeINtB6_4TakeINtNtB8_4skip4SkipINtNtB8_5cycle5CycleINtNtB8_6copied6CopiedINtNtNtBc_5slice4iter4IterjEEEEENtB6_8SpecTake9spec_foldjNCINvXsK_NtNtBa_6traits5accumjNtB31_3Sum3sumBO_E0ECs342JT7D9NXi_13lance_datagen.exit, label %bb.e
 

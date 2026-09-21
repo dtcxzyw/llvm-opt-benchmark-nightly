@@ -202,16 +202,14 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !227
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 1168
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !227
-  %1 = icmp eq ptr %i.k, %i.m
-  br i1 %1, label %2, label %bb.aa
+  %1 = icmp ne ptr %i.k, %i.m
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 30
+  %3 = load i8, ptr %2, align 2, !range !174
+  %4 = trunc nuw i8 %3 to i1
+  %or.cond = select i1 %1, i1 true, i1 %4
+  br i1 %or.cond, label %bb.aa, label %bb.e
 
-2:                                                ; preds = %bb.d
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 30
-  %4 = load i8, ptr %3, align 2, !tbaa !228, !range !174, !noundef !175
-  %5 = trunc nuw i8 %4 to i1
-  br i1 %5, label %bb.aa, label %bb.e
-
-bb.e:                                             ; preds = %2
+bb.e:                                             ; preds = %bb.d
   %i.n = tail call noundef zeroext i1 @_ZN7CaDiCaL8Internal9propagateEv(ptr noundef nonnull align 8 dereferenceable(7296) %0) #3
   br i1 %i.n, label %bb.g, label %bb.f
 
@@ -221,11 +219,11 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 27 ; 2 uses
-  store i8 1, ptr %i.o, align 1, !tbaa !229
+  store i8 1, ptr %i.o, align 1, !tbaa !228
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 5104 ; 2 uses
-  %i.q = load i64, ptr %i.p, align 8, !tbaa !230
+  %i.q = load i64, ptr %i.p, align 8, !tbaa !229
   %i.r = add nsw i64 %i.q, 1
-  store i64 %i.r, ptr %i.p, align 8, !tbaa !230
+  store i64 %i.r, ptr %i.p, align 8, !tbaa !229
   %i.s = tail call noundef i32 @_ZN7CaDiCaL8Internal27trivially_false_satisfiableEv(ptr noundef nonnull align 8 dereferenceable(7296) %0) ; 2 uses
   %.not20 = icmp eq i32 %i.s, 0
   br i1 %.not20, label %bb.h, label %bb.i
@@ -296,9 +294,9 @@ bb.u:                                             ; preds = %bb.t, %bb.s
 
 bb.v:                                             ; preds = %bb.u
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 5112 ; 2 uses
-  %i.ac = load i64, ptr %i.ab, align 8, !tbaa !231
+  %i.ac = load i64, ptr %i.ab, align 8, !tbaa !230
   %i.ad = add nsw i64 %i.ac, 1
-  store i64 %i.ad, ptr %i.ab, align 8, !tbaa !231
+  store i64 %i.ad, ptr %i.ab, align 8, !tbaa !230
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u
@@ -317,11 +315,11 @@ bb.y:                                             ; preds = %bb.x
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.x, %bb.y, %bb.w
-  store i8 0, ptr %i.o, align 1, !tbaa !229
+  store i8 0, ptr %i.o, align 1, !tbaa !228
   br label %bb.aa
 
-bb.aa:                                            ; preds = %bb.d, %2, %bb.c, %bb.a, %bb.z, %bb.f
-  %.0 = phi i32 [ 0, %bb.c ], [ %spec.store.select, %bb.z ], [ 20, %bb.f ], [ 0, %bb.a ], [ 0, %2 ], [ 0, %bb.d ]
+bb.aa:                                            ; preds = %bb.d, %bb.c, %bb.a, %bb.z, %bb.f
+  %.0 = phi i32 [ 0, %bb.c ], [ %spec.store.select, %bb.z ], [ 20, %bb.f ], [ 0, %bb.a ], [ 0, %bb.d ]
   ret i32 %.0
 }
 
@@ -569,8 +567,7 @@ attributes #3 = { nounwind }
 !225 = !{!169, !6, i64 4076}
 !226 = !{!169, !6, i64 4080}
 !227 = !{!35, !35, i64 0}
-!228 = !{!169, !9, i64 30}
-!229 = !{!169, !9, i64 27}
-!230 = !{!169, !10, i64 5104}
-!231 = !{!169, !10, i64 5112}
+!228 = !{!169, !9, i64 27}
+!229 = !{!169, !10, i64 5104}
+!230 = !{!169, !10, i64 5112}
 end_hunk_0

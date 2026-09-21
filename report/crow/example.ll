@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.l = load i8, ptr %i.k, align 1, !tbaa !1103  ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 289
   store i8 %i.l, ptr %i.m, align 1, !tbaa !2582
-  %i.n = icmp eq i8 %i.i, 1                       ; 3 uses
-  %i.o = icmp eq i8 %i.l, 0                       ; 2 uses
+  %i.n = icmp eq i8 %i.i, 1                       ; 2 uses
+  %i.o = icmp eq i8 %i.l, 0
   %or.cond.i = select i1 %i.n, i1 %i.o, i1 false
   br i1 %or.cond.i, label %.thread2.i, label %bb.d
 
@@ -217,42 +217,28 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.s = lshr i8 %i.r, 1
   %i.t = and i8 %i.s, 1
   store i8 %i.t, ptr %i.q, align 2, !tbaa !2583
-  br label %2
+  %1 = and i32 %i.p, 2
+  %.not.i = icmp eq i32 %1, 0
+  br label %_ZN4crow10HTTPParserINS_10ConnectionINS_17UnixSocketAdaptorENS_4CrowIJ17ExampleMiddlewareEEEJS4_EEEE25set_connection_parametersEv.exit
 
 bb.d:                                             ; preds = %bb.c
-  %i.u = icmp eq i8 %i.l, 1                       ; 2 uses
-  %i.v = select i1 %i.n, i1 %i.u, i1 false
+  %i.u = icmp eq i8 %i.l, 1
+  %i.v = select i1 %i.n, i1 %i.u, i1 false        ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 290
   %i.x = zext i1 %i.v to i8
   store i8 %i.x, ptr %i.w, align 2, !tbaa !2583
-  br i1 %i.n, label %1, label %_ZN4crow10HTTPParserINS_10ConnectionINS_17UnixSocketAdaptorENS_4CrowIJ17ExampleMiddlewareEEEJS4_EEEE25set_connection_parametersEv.exit
+  br i1 %i.v, label %bb.e, label %_ZN4crow10HTTPParserINS_10ConnectionINS_17UnixSocketAdaptorENS_4CrowIJ17ExampleMiddlewareEEEJS4_EEEE25set_connection_parametersEv.exit
 
-1:                                                ; preds = %bb.d
-  br i1 %i.o, label %._crit_edge.i, label %5
-
-._crit_edge.i:                                    ; preds = %1
-  %.pre.i = load i32, ptr %0, align 8
-  br label %2
-
-2:                                                ; preds = %._crit_edge.i, %.thread2.i
-  %3 = phi i32 [ %.pre.i, %._crit_edge.i ], [ %i.p, %.thread2.i ]
-  %4 = and i32 %3, 2
-  %.not.i = icmp eq i32 %4, 0
-  br label %_ZN4crow10HTTPParserINS_10ConnectionINS_17UnixSocketAdaptorENS_4CrowIJ17ExampleMiddlewareEEEJS4_EEEE25set_connection_parametersEv.exit
-
-5:                                                ; preds = %1
-  br i1 %i.u, label %bb.e, label %_ZN4crow10HTTPParserINS_10ConnectionINS_17UnixSocketAdaptorENS_4CrowIJ17ExampleMiddlewareEEEJS4_EEEE25set_connection_parametersEv.exit
-
-bb.e:                                             ; preds = %5
+bb.e:                                             ; preds = %bb.d
   %i.y = load i32, ptr %0, align 8
   %i.z = and i32 %i.y, 4
   %i.aa = icmp ne i32 %i.z, 0
   br label %_ZN4crow10HTTPParserINS_10ConnectionINS_17UnixSocketAdaptorENS_4CrowIJ17ExampleMiddlewareEEEJS4_EEEE25set_connection_parametersEv.exit
 
-_ZN4crow10HTTPParserINS_10ConnectionINS_17UnixSocketAdaptorENS_4CrowIJ17ExampleMiddlewareEEEJS4_EEEE25set_connection_parametersEv.exit: ; preds = %bb.d, %2, %5, %bb.e
-  %6 = phi i1 [ %.not.i, %2 ], [ %i.aa, %bb.e ], [ false, %5 ], [ false, %bb.d ]
+_ZN4crow10HTTPParserINS_10ConnectionINS_17UnixSocketAdaptorENS_4CrowIJ17ExampleMiddlewareEEEJS4_EEEE25set_connection_parametersEv.exit: ; preds = %.thread2.i, %bb.d, %bb.e
+  %2 = phi i1 [ %.not.i, %.thread2.i ], [ %i.aa, %bb.e ], [ false, %bb.d ]
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 291
-  %i.ac = zext i1 %6 to i8
+  %i.ac = zext i1 %2 to i8
   store i8 %i.ac, ptr %i.ab, align 1, !tbaa !2584
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 26
   %i.ae = load i16, ptr %i.ad, align 2
@@ -655,8 +641,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.l = load i8, ptr %i.k, align 1, !tbaa !1103  ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 289
   store i8 %i.l, ptr %i.m, align 1, !tbaa !2929
-  %i.n = icmp eq i8 %i.i, 1                       ; 3 uses
-  %i.o = icmp eq i8 %i.l, 0                       ; 2 uses
+  %i.n = icmp eq i8 %i.i, 1                       ; 2 uses
+  %i.o = icmp eq i8 %i.l, 0
   %or.cond.i = select i1 %i.n, i1 %i.o, i1 false
   br i1 %or.cond.i, label %.thread2.i, label %bb.d
 
@@ -667,42 +653,28 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.s = lshr i8 %i.r, 1
   %i.t = and i8 %i.s, 1
   store i8 %i.t, ptr %i.q, align 2, !tbaa !2930
-  br label %2
+  %1 = and i32 %i.p, 2
+  %.not.i = icmp eq i32 %1, 0
+  br label %_ZN4crow10HTTPParserINS_10ConnectionINS_13SocketAdaptorENS_4CrowIJ17ExampleMiddlewareEEEJS4_EEEE25set_connection_parametersEv.exit
 
 bb.d:                                             ; preds = %bb.c
-  %i.u = icmp eq i8 %i.l, 1                       ; 2 uses
-  %i.v = select i1 %i.n, i1 %i.u, i1 false
+  %i.u = icmp eq i8 %i.l, 1
+  %i.v = select i1 %i.n, i1 %i.u, i1 false        ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 290
   %i.x = zext i1 %i.v to i8
   store i8 %i.x, ptr %i.w, align 2, !tbaa !2930
-  br i1 %i.n, label %1, label %_ZN4crow10HTTPParserINS_10ConnectionINS_13SocketAdaptorENS_4CrowIJ17ExampleMiddlewareEEEJS4_EEEE25set_connection_parametersEv.exit
+  br i1 %i.v, label %bb.e, label %_ZN4crow10HTTPParserINS_10ConnectionINS_13SocketAdaptorENS_4CrowIJ17ExampleMiddlewareEEEJS4_EEEE25set_connection_parametersEv.exit
 
-1:                                                ; preds = %bb.d
-  br i1 %i.o, label %._crit_edge.i, label %5
-
-._crit_edge.i:                                    ; preds = %1
-  %.pre.i = load i32, ptr %0, align 8
-  br label %2
-
-2:                                                ; preds = %._crit_edge.i, %.thread2.i
-  %3 = phi i32 [ %.pre.i, %._crit_edge.i ], [ %i.p, %.thread2.i ]
-  %4 = and i32 %3, 2
-  %.not.i = icmp eq i32 %4, 0
-  br label %_ZN4crow10HTTPParserINS_10ConnectionINS_13SocketAdaptorENS_4CrowIJ17ExampleMiddlewareEEEJS4_EEEE25set_connection_parametersEv.exit
-
-5:                                                ; preds = %1
-  br i1 %i.u, label %bb.e, label %_ZN4crow10HTTPParserINS_10ConnectionINS_13SocketAdaptorENS_4CrowIJ17ExampleMiddlewareEEEJS4_EEEE25set_connection_parametersEv.exit
-
-bb.e:                                             ; preds = %5
+bb.e:                                             ; preds = %bb.d
   %i.y = load i32, ptr %0, align 8
   %i.z = and i32 %i.y, 4
   %i.aa = icmp ne i32 %i.z, 0
   br label %_ZN4crow10HTTPParserINS_10ConnectionINS_13SocketAdaptorENS_4CrowIJ17ExampleMiddlewareEEEJS4_EEEE25set_connection_parametersEv.exit
 
-_ZN4crow10HTTPParserINS_10ConnectionINS_13SocketAdaptorENS_4CrowIJ17ExampleMiddlewareEEEJS4_EEEE25set_connection_parametersEv.exit: ; preds = %bb.d, %2, %5, %bb.e
-  %6 = phi i1 [ %.not.i, %2 ], [ %i.aa, %bb.e ], [ false, %5 ], [ false, %bb.d ]
+_ZN4crow10HTTPParserINS_10ConnectionINS_13SocketAdaptorENS_4CrowIJ17ExampleMiddlewareEEEJS4_EEEE25set_connection_parametersEv.exit: ; preds = %.thread2.i, %bb.d, %bb.e
+  %2 = phi i1 [ %.not.i, %.thread2.i ], [ %i.aa, %bb.e ], [ false, %bb.d ]
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 291
-  %i.ac = zext i1 %6 to i8
+  %i.ac = zext i1 %2 to i8
   store i8 %i.ac, ptr %i.ab, align 1, !tbaa !2931
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 26
   %i.ae = load i16, ptr %i.ad, align 2

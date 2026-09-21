@@ -205,30 +205,26 @@ middle.block:                                     ; preds = %vector.body
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   %i.u = load i64, ptr %i.t, align 8, !noundef !34 ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  %i.w = load i64, ptr %i.v, align 8, !noundef !34 ; 3 uses
-  %3 = icmp eq i64 %i.u, %i.w
-  br i1 %3, label %4, label %bb.b
-
-4:                                                ; preds = %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h701b432e5e0c6a14E.exit"
+  %3 = load i64, ptr %i.v, align 8, !noundef !34  ; 3 uses
+  %4 = icmp ne i64 %i.u, %3
   %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %6 = load i64, ptr %5, align 8, !noundef !34
-  %.not = icmp ult i64 %.sroa.04.0.i, %6
-  br i1 %.not, label %bb.b, label %bb.e
+  %i.w = load i64, ptr %5, align 8                ; 2 uses
+  %.not = icmp ult i64 %.sroa.04.0.i, %i.w
+  %or.cond = select i1 %4, i1 true, i1 %.not
+  br i1 %or.cond, label %bb.b, label %bb.e
 
-bb.b:                                             ; preds = %4, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h701b432e5e0c6a14E.exit"
+bb.b:                                             ; preds = %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h701b432e5e0c6a14E.exit"
   tail call void @llvm.experimental.noalias.scope.decl(metadata !64644)
-  %.not.i = icmp ult i64 %i.u, %i.w
+  %.not.i = icmp ult i64 %i.u, %3
   %.pre.i = load ptr, ptr %0, align 8, !alias.scope !64644, !noalias !64645 ; 3 uses
   br i1 %.not.i, label %_ZN3std2io8buffered9bufreader6buffer6Buffer8fill_buf17hd04e504fb497eb1aE.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 40
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !64646
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %8 = load i64, ptr %7, align 8, !alias.scope !64644, !noalias !64645, !noundef !34
   store ptr %.pre.i, ptr %i.a, align 8, !noalias !64646
   %i.y = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i64 %8, ptr %i.y, align 8, !noalias !64646
+  store i64 %i.w, ptr %i.y, align 8, !noalias !64646
   %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 3 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -253,13 +249,13 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZN3std2io8buffered9bufreader6buffer6Buffer8fill_buf17hd04e504fb497eb1aE.exit
 
 _ZN3std2io8buffered9bufreader6buffer6Buffer8fill_buf17hd04e504fb497eb1aE.exit: ; preds = %bb.b, %bb.d
-  %i.ah = phi i64 [ %i.w, %bb.b ], [ %i.af, %bb.d ]
+  %i.ah = phi i64 [ %3, %bb.b ], [ %i.af, %bb.d ]
   %i.ai = phi i64 [ %i.u, %bb.b ], [ 0, %bb.d ]   ; 2 uses
   %i.aj = sub nuw i64 %i.ah, %i.ai                ; 2 uses
   %i.ak = icmp eq ptr %.pre.i, null
   br i1 %i.ak, label %bb.f, label %bb.g
 
-bb.e:                                             ; preds = %4
+bb.e:                                             ; preds = %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h701b432e5e0c6a14E.exit"
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 40
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.t, i8 0, i64 16, i1 false)
   %i.am = tail call { i64, ptr } @"_ZN47_$LT$std..fs..File$u20$as$u20$std..io..Read$GT$13read_vectored17hd7b27e38f88c33a7E"(ptr noalias noundef nonnull align 4 dereferenceable(4) %i.al, ptr noalias noundef nonnull align 8 %1, i64 noundef %2)

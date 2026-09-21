@@ -127,16 +127,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.j, label %._crit_edge.i.i, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.critedge
+  %2 = load ptr, ptr %1, align 8                  ; 2 uses
   %i.k = add i64 %i.c, -1
   %umin = tail call i64 @llvm.umin.i64(i64 %.020.lcssa, i64 %i.k)
   %i.l = add i64 %umin, 1                         ; 2 uses
   %.033 = add i64 %i.c, -1                        ; 2 uses
   %i.m = icmp ugt i64 %.033, %.020.lcssa
-  br i1 %i.m, label %.lr.ph36.preheader, label %.critedge2
-
-.lr.ph36.preheader:                               ; preds = %.preheader.preheader
-  %2 = load ptr, ptr %1, align 8, !tbaa !16
-  br label %.lr.ph36
+  br i1 %i.m, label %.lr.ph36, label %.critedge2
 
 ._crit_edge.i.i:                                  ; preds = %bb.c, %.critedge
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -151,9 +148,9 @@ bb.c:                                             ; preds = %bb.b
   %i.p = icmp ugt i64 %.0, %.020.lcssa
   br i1 %i.p, label %.lr.ph36, label %.critedge2, !llvm.loop !67
 
-.lr.ph36:                                         ; preds = %.lr.ph36.preheader, %.preheader
-  %.035 = phi i64 [ %.0, %.preheader ], [ %.033, %.lr.ph36.preheader ] ; 3 uses
-  %.0.in34 = phi i64 [ %.035, %.preheader ], [ %i.c, %.lr.ph36.preheader ]
+.lr.ph36:                                         ; preds = %.preheader.preheader, %.preheader
+  %.035 = phi i64 [ %.0, %.preheader ], [ %.033, %.preheader.preheader ] ; 3 uses
+  %.0.in34 = phi i64 [ %.035, %.preheader ], [ %i.c, %.preheader.preheader ]
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 %.035
   %i.r = load i8, ptr %i.q, align 1, !tbaa !17
   %i.s = zext i8 %i.r to i32
@@ -178,8 +175,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ;
   %i.v = sub i64 %.0.in.lcssa, %.020.lcssa
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.w, ptr %0, align 8, !tbaa !19, !alias.scope !70
-  %3 = load ptr, ptr %1, align 8, !tbaa !16, !noalias !70
-  %i.x = getelementptr inbounds nuw i8, ptr %3, i64 %.020.lcssa ; 2 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %2, i64 %.020.lcssa ; 2 uses
   %i.y = sub nuw i64 %i.c, %.020.lcssa
   %spec.select.i.i.i = tail call noundef i64 @llvm.umin.i64(i64 %i.v, i64 %i.y) ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25, !noalias !70

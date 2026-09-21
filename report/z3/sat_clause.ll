@@ -204,17 +204,17 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i32, ptr %i.a, align 8, !tbaa !44   ; 2 uses
   %.not.i = icmp eq i32 %i.b, -2
+  %2 = load ptr, ptr %0, align 8                  ; 2 uses
   br i1 %.not.i, label %_ZNK3sat14clause_wrapper4sizeEv.exit, label %.lr.ph.split
 
 _ZNK3sat14clause_wrapper4sizeEv.exit:             ; preds = %bb.a
-  %2 = load ptr, ptr %0, align 8, !tbaa !45
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.d = load i32, ptr %i.c, align 4, !tbaa !11   ; 3 uses
   %.not10.not = icmp eq i32 %i.d, 0
   br i1 %.not10.not, label %.critedge, label %.lr.ph.split.us
 
 .lr.ph.split.us:                                  ; preds = %_ZNK3sat14clause_wrapper4sizeEv.exit
-  %i.e = load ptr, ptr %0, align 8, !tbaa !45
+  %i.e = load ptr, ptr %0, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 20 ; 2 uses
   %.sroa.0.0.copyload.i.us17 = load i32, ptr %i.f, align 4, !tbaa !19
   %i.g = icmp eq i32 %.sroa.0.0.copyload.i.us17, %1
@@ -241,8 +241,9 @@ _ZNK3sat14clause_wrapperixEj.exit.us:             ; preds = %_ZNK3sat14clause_wr
   br i1 %exitcond23.not.not, label %.lr.ph18..critedge.loopexit_crit_edge, label %_ZNK3sat14clause_wrapperixEj.exit.us, !llvm.loop !88
 
 .lr.ph.split:                                     ; preds = %bb.a
-  %3 = load i32, ptr %0, align 8
-  %i.j = icmp eq i32 %3, %1
+  %3 = ptrtoint ptr %2 to i64
+  %4 = trunc i64 %3 to i32
+  %i.j = icmp eq i32 %1, %4
   %i.k = icmp eq i32 %i.b, %1
   %spec.select = or i1 %i.j, %i.k
   br label %.critedge
@@ -264,17 +265,17 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i32, ptr %i.a, align 8, !tbaa !44   ; 2 uses
   %.not.i = icmp eq i32 %i.b, -2
+  %2 = load ptr, ptr %0, align 8                  ; 2 uses
   br i1 %.not.i, label %_ZNK3sat14clause_wrapper4sizeEv.exit, label %.lr.ph.split
 
 _ZNK3sat14clause_wrapper4sizeEv.exit:             ; preds = %bb.a
-  %2 = load ptr, ptr %0, align 8, !tbaa !45
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.d = load i32, ptr %i.c, align 4, !tbaa !11   ; 3 uses
   %.not10.not = icmp eq i32 %i.d, 0
   br i1 %.not10.not, label %.critedge, label %.lr.ph.split.us
 
 .lr.ph.split.us:                                  ; preds = %_ZNK3sat14clause_wrapper4sizeEv.exit
-  %i.e = load ptr, ptr %0, align 8, !tbaa !45
+  %i.e = load ptr, ptr %0, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 20 ; 2 uses
   %.sroa.0.0.copyload.i.us17 = load i32, ptr %i.f, align 4, !tbaa !19
   %i.g = lshr i32 %.sroa.0.0.copyload.i.us17, 1
@@ -303,8 +304,9 @@ _ZNK3sat14clause_wrapperixEj.exit.us:             ; preds = %_ZNK3sat14clause_wr
   br i1 %exitcond23.not.not, label %.lr.ph18..critedge.loopexit_crit_edge, label %_ZNK3sat14clause_wrapperixEj.exit.us, !llvm.loop !89
 
 .lr.ph.split:                                     ; preds = %bb.a
-  %3 = load i32, ptr %0, align 8
-  %i.l = lshr i32 %3, 1
+  %3 = ptrtoint ptr %2 to i64
+  %4 = trunc i64 %3 to i32
+  %i.l = lshr i32 %4, 1
   %i.m = icmp eq i32 %i.l, %1
   br i1 %i.m, label %.critedge, label %_ZNK3sat14clause_wrapperixEj.exit
 

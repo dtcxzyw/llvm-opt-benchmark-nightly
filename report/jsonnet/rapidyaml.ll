@@ -205,6 +205,7 @@ _ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit.i: ; preds = %.loopexit25.us.i.
 .lr.ph.i:                                         ; preds = %.preheader.i
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %4 = load i64, ptr %i.o, align 8
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.f, %.lr.ph.i
@@ -216,7 +217,6 @@ bb.b:                                             ; preds = %bb.f, %.lr.ph.i
 
 bb.c:                                             ; preds = %bb.b
   %i.t = load i64, ptr %i.n, align 8, !tbaa !270, !alias.scope !885 ; 3 uses
-  %4 = load i64, ptr %i.o, align 8, !tbaa !233, !alias.scope !885
   %i.u = icmp ult i64 %i.t, %4
   br i1 %i.u, label %bb.d, label %_ZN2c43yml34FilterProcessorInplaceEndExtending4copyEv.exit.i
 
@@ -619,6 +619,7 @@ _ZNK2c415basic_substringIcE5trimrENS0_IKcEE.exit.i: ; preds = %.loopexit25.us.i.
 .lr.ph.i:                                         ; preds = %.preheader.i
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %4 = load i64, ptr %i.o, align 8
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.f, %.lr.ph.i
@@ -630,7 +631,6 @@ bb.b:                                             ; preds = %bb.f, %.lr.ph.i
 
 bb.c:                                             ; preds = %bb.b
   %i.t = load i64, ptr %i.n, align 8, !tbaa !270, !alias.scope !901 ; 3 uses
-  %4 = load i64, ptr %i.o, align 8, !tbaa !233, !alias.scope !901
   %i.u = icmp ult i64 %i.t, %4
   br i1 %i.u, label %bb.d, label %_ZN2c43yml34FilterProcessorInplaceEndExtending4copyEv.exit.i
 
@@ -1033,7 +1033,9 @@ bb.d:                                             ; preds = %._crit_edge44, %_ZN
   %i.r = load ptr, ptr %1, align 8, !tbaa !99     ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 5 uses
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
+  %5 = load i64, ptr %i.t, align 8                ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %6 = load ptr, ptr %i.u, align 8                ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 8
   br label %bb.e
 
@@ -1058,12 +1060,10 @@ bb.e:                                             ; preds = %.lr.ph, %.critedge
 
 bb.f:                                             ; preds = %bb.e
   %i.ab = load i64, ptr %i.s, align 8, !tbaa !266 ; 3 uses
-  %5 = load i64, ptr %i.t, align 8, !tbaa !272    ; 2 uses
   %i.ac = icmp ult i64 %i.ab, %5
   br i1 %i.ac, label %bb.g, label %_ZN2c43yml21FilterProcessorSrcDst4copyEv.exit30
 
 bb.g:                                             ; preds = %bb.f
-  %6 = load ptr, ptr %i.u, align 8, !tbaa !267
   %i.ad = getelementptr inbounds nuw i8, ptr %6, i64 %i.ab
   store i8 10, ptr %i.ad, align 1, !tbaa !87
   br label %_ZN2c43yml21FilterProcessorSrcDst4copyEv.exit30
@@ -1141,8 +1141,7 @@ bb.k:                                             ; preds = %_ZNK2c415basic_subs
   br i1 %.not.i, label %_ZN2c43yml21FilterProcessorSrcDst4copyEm.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %7 = load ptr, ptr %i.u, align 8, !tbaa !267
-  %i.at = getelementptr inbounds nuw i8, ptr %7, i64 %i.ae
+  %i.at = getelementptr inbounds nuw i8, ptr %6, i64 %i.ae
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.at, ptr nonnull align 1 %i.an, i64 %.0710.i, i1 false)
   br label %_ZN2c43yml21FilterProcessorSrcDst4copyEm.exit
 
@@ -1162,8 +1161,7 @@ bb.n:                                             ; preds = %bb.e
   br i1 %i.ay, label %bb.o, label %_ZN2c43yml21FilterProcessorSrcDst4copyEv.exit
 
 bb.o:                                             ; preds = %bb.n
-  %8 = load ptr, ptr %i.u, align 8, !tbaa !267
-  %i.az = getelementptr inbounds nuw i8, ptr %8, i64 %i.aw
+  %i.az = getelementptr inbounds nuw i8, ptr %6, i64 %i.aw
   store i8 %i.aa, ptr %i.az, align 1, !tbaa !87
   br label %_ZN2c43yml21FilterProcessorSrcDst4copyEv.exit
 
@@ -1566,7 +1564,8 @@ bb.f:                                             ; preds = %._crit_edge48, %_ZN
 .lr.ph:                                           ; preds = %bb.f
   %i.m = load ptr, ptr %1, align 8, !tbaa !139    ; 6 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 5 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %5 = load i64, ptr %i.o, align 8                ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 8
   br label %bb.g
 
@@ -1586,7 +1585,6 @@ bb.g:                                             ; preds = %.lr.ph, %.critedge
 
 bb.h:                                             ; preds = %bb.g
   %i.v = load i64, ptr %i.n, align 8, !tbaa !270  ; 3 uses
-  %5 = load i64, ptr %i.o, align 8, !tbaa !233    ; 2 uses
   %i.w = icmp ult i64 %i.v, %5
   br i1 %i.w, label %bb.i, label %_ZN2c43yml34FilterProcessorInplaceEndExtending4copyEv.exit
 
@@ -1693,8 +1691,7 @@ bb.q:                                             ; preds = %bb.g
 
 bb.r:                                             ; preds = %bb.g
   %i.aq = load i64, ptr %i.n, align 8, !tbaa !270 ; 3 uses
-  %6 = load i64, ptr %i.o, align 8, !tbaa !233
-  %i.ar = icmp ult i64 %i.aq, %6
+  %i.ar = icmp ult i64 %i.aq, %5
   br i1 %i.ar, label %bb.s, label %_ZN2c43yml34FilterProcessorInplaceEndExtending4copyEv.exit36
 
 bb.s:                                             ; preds = %bb.r

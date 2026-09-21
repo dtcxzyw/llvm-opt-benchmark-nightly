@@ -205,7 +205,7 @@ bb.bg:                                            ; preds = %.body
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc noundef zeroext i1 @_RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules19timeout_error_alias8is_alias(ptr noundef nonnull align 8 %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(472) %1, i8 noundef %2, i8 noundef %3) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [144 x i8], align 8               ; 20 uses
+  %i.a = alloca [144 x i8], align 8               ; 19 uses
   %i.b = alloca [144 x i8], align 8               ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB4_13SemanticModel22resolve_qualified_name(ptr noalias noundef nonnull sret([144 x i8]) align 8 captures(none) dereferenceable(144) %i.b, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(472) %1, ptr noundef nonnull align 8 %0)
@@ -232,11 +232,11 @@ bb.d:                                             ; preds = %.thread.i, %bb.c
   %i.g = load i64, ptr %i.a, align 8, !range !26, !alias.scope !7064, !noundef !20 ; 9 uses
   %i.h = trunc nuw i64 %i.g to i1                 ; 7 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  %i.j = load ptr, ptr %i.i, align 8, !nonnull !20 ; 6 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %i.l = load i64, ptr %i.k, align 8
+  %i.j = load ptr, ptr %i.i, align 8, !alias.scope !7064, !nonnull !20 ; 6 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 2 uses
+  %i.l = load i64, ptr %i.k, align 8, !alias.scope !7064
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.n = load i32, ptr %i.m, align 8
+  %i.n = load i32, ptr %i.m, align 8, !alias.scope !7064
   %i.o = zext i32 %i.n to i64
   %.sroa.9.0.i = select i1 %i.h, i64 %i.l, i64 %i.o
   %.sroa.01.0.i = select i1 %i.h, ptr %i.j, ptr %i.i ; 2 uses
@@ -330,7 +330,7 @@ bb.m:                                             ; preds = %bb.l
   %i.bb = icmp eq i32 %i.ba, 0
   br label %.thread5.i
 
-.thread5.i:                                       ; preds = %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.d, %bb.m, %bb.l, %bb.k, %bb.j, %bb.f
+.thread5.i:                                       ; preds = %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.m, %bb.l, %bb.k, %bb.j, %bb.f, %bb.d
   %i.bc = phi i64 [ %i.r, %bb.l ], [ %i.r, %bb.f ], [ %i.r, %bb.j ], [ %i.r, %bb.k ], [ %i.r, %bb.m ], [ %i.g, %bb.v ], [ %i.g, %bb.d ], [ %i.g, %bb.r ], [ %i.g, %bb.u ], [ %i.g, %bb.w ], [ %i.g, %bb.x ], [ %i.g, %bb.t ], [ %i.g, %bb.s ]
   %.sroa.0.1.i = phi i1 [ false, %bb.l ], [ false, %bb.f ], [ false, %bb.j ], [ false, %bb.k ], [ %i.bb, %bb.m ], [ false, %bb.v ], [ false, %bb.d ], [ false, %bb.r ], [ false, %bb.u ], [ %i.cr, %bb.w ], [ %i.db, %bb.x ], [ false, %bb.t ], [ false, %bb.s ]
   %i.bd = icmp eq i64 %i.bc, 0
@@ -363,8 +363,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecReEECsEh
 
 bb.r:                                             ; preds = %bb.d
   %.sroa.gep20 = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %.sroa.gep21 = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %.sroa.01.0.i.sroa.sel22 = select i1 %i.h, ptr %.sroa.gep20, ptr %.sroa.gep21
+  %.sroa.01.0.i.sroa.sel22 = select i1 %i.h, ptr %.sroa.gep20, ptr %i.k
   %i.bh = load i64, ptr %.sroa.01.0.i.sroa.sel22, align 8, !noundef !20
   switch i64 %i.bh, label %.thread5.i [
     i64 6, label %bb.s

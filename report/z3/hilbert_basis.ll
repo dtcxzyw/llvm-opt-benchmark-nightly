@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.p
   br label %_ZN13checked_int64ILb1EEmLERKS0_.exit
 
 _ZN13checked_int64ILb1EEmLERKS0_.exit:            ; preds = %bb.r, %bb.q, %bb.i, %bb.k
-  %.sroa.074.0 = phi i64 [ %i.ct, %bb.k ], [ %spec.select, %bb.q ], [ %spec.select82, %bb.r ], [ %i.cp, %bb.i ] ; 3 uses
+  %.sroa.074.0 = phi i64 [ %i.ct, %bb.k ], [ %spec.select82, %bb.r ], [ %i.cp, %bb.i ], [ %spec.select, %bb.q ] ; 3 uses
   %i.dg = add i64 %.sroa.074.0, %.sroa.07.011.i   ; 4 uses
   %i.dh = icmp sgt i64 %.sroa.07.011.i, 0
   br i1 %i.dh, label %bb.s, label %bb.u
@@ -608,7 +608,7 @@ bb.q:                                             ; preds = %bb.o
   br label %_ZN13checked_int64ILb1EEmLERKS0_.exit
 
 _ZN13checked_int64ILb1EEmLERKS0_.exit:            ; preds = %bb.q, %bb.p, %bb.h, %bb.j
-  %.sroa.0129.0 = phi i64 [ %i.gj, %bb.j ], [ %spec.select134, %bb.p ], [ %spec.select135, %bb.q ], [ %i.gf, %bb.h ] ; 3 uses
+  %.sroa.0129.0 = phi i64 [ %i.gj, %bb.j ], [ %spec.select135, %bb.q ], [ %i.gf, %bb.h ], [ %spec.select134, %bb.p ] ; 3 uses
   %i.gw = add i64 %.sroa.0129.0, %.sroa.07.011.i  ; 4 uses
   %i.gx = icmp sgt i64 %.sroa.07.011.i, 0
   br i1 %i.gx, label %bb.r, label %bb.t
@@ -1011,7 +1011,7 @@ bb.y:                                             ; preds = %bb.w
   br label %.noexc
 
 .noexc:                                           ; preds = %bb.y, %bb.x, %bb.t, %bb.r
-  %.sroa.0201.0 = phi i64 [ %i.hb, %bb.t ], [ %spec.select, %bb.x ], [ %spec.select207, %bb.y ], [ %i.gx, %bb.r ] ; 3 uses
+  %.sroa.0201.0 = phi i64 [ %i.hb, %bb.t ], [ %spec.select207, %bb.y ], [ %i.gx, %bb.r ], [ %spec.select, %bb.x ] ; 3 uses
   %i.hn = add i64 %.sroa.0201.0, %.sroa.07.011.i  ; 4 uses
   %i.ho = icmp sgt i64 %.sroa.07.011.i, 0
   br i1 %i.ho, label %bb.z, label %bb.aa
@@ -1414,7 +1414,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.h
   %i.p = icmp slt i64 %.fr, 0
   store i64 %mul.val, ptr %0, align 8, !tbaa !136
-  br i1 %i.p, label %bb.k, label %2
+  br i1 %i.p, label %bb.k, label %bb.m
 
 bb.k:                                             ; preds = %bb.j
   %i.q = load i64, ptr %1, align 8, !tbaa !136
@@ -1425,14 +1425,12 @@ bb.l:                                             ; preds = %bb.k
   %i.s = sub nsw i64 0, %mul.val
   br label %.thread36.sink.split
 
-2:                                                ; preds = %bb.j
-  %.not = icmp eq i64 %.fr, 0
-  br i1 %.not, label %.thread36, label %bb.m
-
-bb.m:                                             ; preds = %2
-  %i.t = load i64, ptr %1, align 8, !tbaa !136
+bb.m:                                             ; preds = %bb.j
+  %.not = icmp ne i64 %.fr, 0
+  %i.t = load i64, ptr %1, align 8
   %i.u = icmp slt i64 %i.t, 0
-  br i1 %i.u, label %bb.n, label %.thread36
+  %or.cond38 = select i1 %.not, i1 %i.u, i1 false
+  br i1 %or.cond38, label %bb.n, label %.thread36
 
 bb.n:                                             ; preds = %bb.m
   %i.v = sub nsw i64 0, %mul.val
@@ -1443,7 +1441,7 @@ bb.n:                                             ; preds = %bb.m
   store i64 %.sink, ptr %0, align 8, !tbaa !136
   br label %.thread36
 
-.thread36:                                        ; preds = %.thread36.sink.split, %bb.k, %bb.m, %2
+.thread36:                                        ; preds = %.thread36.sink.split, %bb.k, %bb.m
   ret ptr %0
 }
 

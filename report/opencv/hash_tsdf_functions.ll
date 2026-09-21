@@ -205,7 +205,7 @@ bb.ax:                                            ; preds = %bb.aw
   store i32 %i.io, ptr %i.ip, align 4, !tbaa !98
   %i.iq = load i32, ptr %i.fn, align 8, !tbaa !99 ; 3 uses
   %i.ir = icmp slt i32 %i.iq, 3
-  br i1 %i.ir, label %56, label %bb.ay
+  br i1 %i.ir, label %bb.bb, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #21
@@ -239,22 +239,13 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #21
   br label %.body148
 
-56:                                               ; preds = %bb.ax
-  %or.cond.not = icmp eq i32 %i.iq, 2
-  br i1 %or.cond.not, label %57, label %.thread.i
-
-57:                                               ; preds = %56
-  %58 = load i32, ptr %i.fo, align 4, !tbaa !29
-  br label %bb.bb
-
-.thread.i:                                        ; preds = %56
-  %59 = icmp sgt i32 %i.iq, -1
-  %60 = zext i1 %59 to i32
-  br label %bb.bb
-
-bb.bb:                                            ; preds = %.thread.i, %57
-  %61 = phi i32 [ %58, %57 ], [ %60, %.thread.i ]
-  %.not = icmp slt i32 %i.io, %61
+bb.bb:                                            ; preds = %bb.ax
+  %56 = icmp eq i32 %i.iq, 2
+  %57 = load i32, ptr %i.fo, align 4
+  %58 = icmp sgt i32 %i.iq, -1
+  %59 = zext i1 %58 to i32
+  %60 = select i1 %56, i32 %57, i32 %59
+  %.not = icmp slt i32 %i.io, %60
   br i1 %.not, label %bb.bg, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb

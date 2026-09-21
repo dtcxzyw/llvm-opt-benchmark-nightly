@@ -204,21 +204,19 @@ bb.bg:                                            ; preds = %_ZNSt7__cxx1112basi
 define noundef range(i32 0, 4) i32 @_ZN6google8protobuf2io9Tokenizer22TryConsumeCommentStartEv(ptr noundef nonnull align 8 dereferenceable(192) %0) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 184
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !35
-  switch i32 %i.b, label %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit3 [
-    i32 0, label %bb.b
-    i32 1, label %bb.d
-  ]
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !35   ; 2 uses
+  %1 = icmp eq i32 %i.b, 0
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
+  %3 = load i8, ptr %2, align 8                   ; 2 uses
+  br i1 %1, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
-  %2 = load i8, ptr %1, align 8, !tbaa !44
-  %i.c = icmp eq i8 %2, 47
+  %i.c = icmp eq i8 %3, 47
   br i1 %i.c, label %bb.c, label %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit3
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_ZN6google8protobuf2io9Tokenizer8NextCharEv(ptr noundef nonnull align 8 dereferenceable(192) %0)
-  %i.d = load i8, ptr %1, align 8, !tbaa !44
+  %i.d = load i8, ptr %2, align 8, !tbaa !44
   switch i8 %i.d, label %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit2 [
     i8 47, label %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit1.thread
     i8 42, label %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit2.thread
@@ -250,17 +248,17 @@ _ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit2: ; preds = %bb.c
   br label %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit3
 
 bb.d:                                             ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %4 = load i8, ptr %3, align 8, !tbaa !44
-  %5 = icmp eq i8 %4, 35
-  br i1 %5, label %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit3.thread, label %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit3
+  %4 = icmp eq i32 %i.b, 1
+  %5 = icmp eq i8 %3, 35
+  %or.cond = select i1 %4, i1 %5, i1 false
+  br i1 %or.cond, label %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit3.thread, label %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit3
 
 _ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit3.thread: ; preds = %bb.d
   tail call void @_ZN6google8protobuf2io9Tokenizer8NextCharEv(ptr noundef nonnull align 8 dereferenceable(192) %0)
   br label %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit3
 
-_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit3: ; preds = %bb.a, %bb.b, %bb.d, %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit3.thread, %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit2.thread, %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit1.thread, %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit2
-  %.0 = phi i32 [ 0, %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit3.thread ], [ 0, %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit1.thread ], [ 2, %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit2 ], [ 1, %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit2.thread ], [ 3, %bb.d ], [ 3, %bb.a ], [ 3, %bb.b ]
+_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit3: ; preds = %bb.b, %bb.d, %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit3.thread, %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit2.thread, %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit1.thread, %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit2
+  %.0 = phi i32 [ 0, %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit3.thread ], [ 0, %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit1.thread ], [ 2, %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit2 ], [ 1, %_ZN6google8protobuf2io9Tokenizer10TryConsumeEc.exit2.thread ], [ 3, %bb.d ], [ 3, %bb.b ]
   ret i32 %.0
 }
 

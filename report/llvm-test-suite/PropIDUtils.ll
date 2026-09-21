@@ -91,21 +91,19 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %i.g = load i32, ptr %i.f, align 4, !tbaa !38
+  %5 = load i32, ptr %i.f, align 4, !tbaa !38
+  %6 = icmp eq i32 %5, 0
+  %i.g = load i32, ptr %i.e, align 8
   %i.h = icmp eq i32 %i.g, 0
-  br i1 %i.h, label %5, label %bb.d
+  %or.cond73 = select i1 %6, i1 %i.h, i1 false
+  br i1 %or.cond73, label %bb.e, label %bb.d
 
-5:                                                ; preds = %bb.c
-  %6 = load i32, ptr %i.e, align 8, !tbaa !38
-  %7 = icmp eq i32 %6, 0
-  br i1 %7, label %bb.e, label %bb.d
-
-bb.d:                                             ; preds = %5, %bb.c
+bb.d:                                             ; preds = %bb.c
   %i.i = call i32 @FileTimeToLocalFileTime(ptr noundef nonnull %i.e, ptr noundef nonnull %4)
   %.not71 = icmp eq i32 %i.i, 0
   br i1 %.not71, label %bb.e, label %bb.f
 
-bb.e:                                             ; preds = %bb.d, %5
+bb.e:                                             ; preds = %bb.c, %bb.d
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)

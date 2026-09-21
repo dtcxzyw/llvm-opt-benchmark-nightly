@@ -205,15 +205,12 @@ bb.f:                                             ; preds = %bb.b, %bb.d
   br i1 %i.x, label %.preheader.preheader, label %bb.e
 
 .preheader.preheader:                             ; preds = %bb.f
+  %3 = load ptr, ptr %i.j, align 8, !nonnull !14
   %storemerge28 = add i64 %2, 1                   ; 4 uses
   store i64 %storemerge28, ptr %i.f, align 8
   %i.y = sub i64 %storemerge28, %i.d              ; 3 uses
   %i.z = icmp ult i64 %i.y, %i.l
-  br i1 %i.z, label %"_ZN4core6option15Option$LT$T$GT$6map_or17he661077c5bbb494fE.exit.preheader", label %"_ZN4core6option15Option$LT$T$GT$6map_or17he661077c5bbb494fE.exit.thread"
-
-"_ZN4core6option15Option$LT$T$GT$6map_or17he661077c5bbb494fE.exit.preheader": ; preds = %.preheader.preheader
-  %3 = load ptr, ptr %i.j, align 8, !nonnull !14, !noundef !14
-  br label %"_ZN4core6option15Option$LT$T$GT$6map_or17he661077c5bbb494fE.exit"
+  br i1 %i.z, label %"_ZN4core6option15Option$LT$T$GT$6map_or17he661077c5bbb494fE.exit", label %"_ZN4core6option15Option$LT$T$GT$6map_or17he661077c5bbb494fE.exit.thread"
 
 .preheader:                                       ; preds = %"_ZN4core6option15Option$LT$T$GT$6map_or17he661077c5bbb494fE.exit"
   %storemerge = add i64 %storemerge29, 1          ; 4 uses
@@ -222,9 +219,9 @@ bb.f:                                             ; preds = %bb.b, %bb.d
   %i.ab = icmp ult i64 %i.aa, %i.l
   br i1 %i.ab, label %"_ZN4core6option15Option$LT$T$GT$6map_or17he661077c5bbb494fE.exit", label %"_ZN4core6option15Option$LT$T$GT$6map_or17he661077c5bbb494fE.exit.thread"
 
-"_ZN4core6option15Option$LT$T$GT$6map_or17he661077c5bbb494fE.exit": ; preds = %"_ZN4core6option15Option$LT$T$GT$6map_or17he661077c5bbb494fE.exit.preheader", %.preheader
-  %i.ac = phi i64 [ %i.aa, %.preheader ], [ %i.y, %"_ZN4core6option15Option$LT$T$GT$6map_or17he661077c5bbb494fE.exit.preheader" ] ; 2 uses
-  %storemerge29 = phi i64 [ %storemerge, %.preheader ], [ %storemerge28, %"_ZN4core6option15Option$LT$T$GT$6map_or17he661077c5bbb494fE.exit.preheader" ] ; 2 uses
+"_ZN4core6option15Option$LT$T$GT$6map_or17he661077c5bbb494fE.exit": ; preds = %.preheader.preheader, %.preheader
+  %i.ac = phi i64 [ %i.aa, %.preheader ], [ %i.y, %.preheader.preheader ] ; 2 uses
+  %storemerge29 = phi i64 [ %storemerge, %.preheader ], [ %storemerge28, %.preheader.preheader ] ; 2 uses
   %i.ad = getelementptr inbounds nuw [32 x i8], ptr %3, i64 %i.ac ; 2 uses
   %i.ae = getelementptr i8, ptr %i.ad, i64 8
   %.val.i = load ptr, ptr %i.ae, align 8, !alias.scope !11378, !nonnull !14, !noundef !14
@@ -430,15 +427,12 @@ bb.f:                                             ; preds = %bb.b, %bb.d
   br i1 %i.x, label %.preheader.preheader, label %bb.e
 
 .preheader.preheader:                             ; preds = %bb.f
+  %3 = load ptr, ptr %i.j, align 8, !nonnull !14
   %storemerge28 = add i64 %2, 1                   ; 4 uses
   store i64 %storemerge28, ptr %i.f, align 8
   %i.y = sub i64 %storemerge28, %i.d              ; 3 uses
   %i.z = icmp ult i64 %i.y, %i.l
-  br i1 %i.z, label %"_ZN4core6option15Option$LT$T$GT$6map_or17h0ce9b25b02195166E.exit.preheader", label %"_ZN4core6option15Option$LT$T$GT$6map_or17h0ce9b25b02195166E.exit.thread"
-
-"_ZN4core6option15Option$LT$T$GT$6map_or17h0ce9b25b02195166E.exit.preheader": ; preds = %.preheader.preheader
-  %3 = load ptr, ptr %i.j, align 8, !nonnull !14, !noundef !14
-  br label %"_ZN4core6option15Option$LT$T$GT$6map_or17h0ce9b25b02195166E.exit"
+  br i1 %i.z, label %"_ZN4core6option15Option$LT$T$GT$6map_or17h0ce9b25b02195166E.exit", label %"_ZN4core6option15Option$LT$T$GT$6map_or17h0ce9b25b02195166E.exit.thread"
 
 .preheader:                                       ; preds = %"_ZN4core6option15Option$LT$T$GT$6map_or17h0ce9b25b02195166E.exit"
   %storemerge = add i64 %storemerge29, 1          ; 4 uses
@@ -447,9 +441,9 @@ bb.f:                                             ; preds = %bb.b, %bb.d
   %i.ab = icmp ult i64 %i.aa, %i.l
   br i1 %i.ab, label %"_ZN4core6option15Option$LT$T$GT$6map_or17h0ce9b25b02195166E.exit", label %"_ZN4core6option15Option$LT$T$GT$6map_or17h0ce9b25b02195166E.exit.thread"
 
-"_ZN4core6option15Option$LT$T$GT$6map_or17h0ce9b25b02195166E.exit": ; preds = %"_ZN4core6option15Option$LT$T$GT$6map_or17h0ce9b25b02195166E.exit.preheader", %.preheader
-  %i.ac = phi i64 [ %i.aa, %.preheader ], [ %i.y, %"_ZN4core6option15Option$LT$T$GT$6map_or17h0ce9b25b02195166E.exit.preheader" ] ; 2 uses
-  %storemerge29 = phi i64 [ %storemerge, %.preheader ], [ %storemerge28, %"_ZN4core6option15Option$LT$T$GT$6map_or17h0ce9b25b02195166E.exit.preheader" ] ; 2 uses
+"_ZN4core6option15Option$LT$T$GT$6map_or17h0ce9b25b02195166E.exit": ; preds = %.preheader.preheader, %.preheader
+  %i.ac = phi i64 [ %i.aa, %.preheader ], [ %i.y, %.preheader.preheader ] ; 2 uses
+  %storemerge29 = phi i64 [ %storemerge, %.preheader ], [ %storemerge28, %.preheader.preheader ] ; 2 uses
   %i.ad = getelementptr inbounds nuw [32 x i8], ptr %3, i64 %i.ac ; 2 uses
   %i.ae = getelementptr i8, ptr %i.ad, i64 8
   %.val.i = load ptr, ptr %i.ae, align 8, !alias.scope !11395, !nonnull !14, !noundef !14
@@ -650,15 +644,12 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   br i1 %i.w, label %.preheader.preheader, label %bb.g
 
 .preheader.preheader:                             ; preds = %bb.d
+  %2 = load ptr, ptr %i.j, align 8, !nonnull !14
   %storemerge24 = add i64 %1, 1                   ; 4 uses
   store i64 %storemerge24, ptr %i.f, align 8
   %i.x = sub i64 %storemerge24, %i.d              ; 3 uses
   %i.y = icmp ult i64 %i.x, %i.l
-  br i1 %i.y, label %"_ZN4core6option15Option$LT$T$GT$6map_or17hf6b32417444b48baE.exit.preheader", label %"_ZN4core6option15Option$LT$T$GT$6map_or17hf6b32417444b48baE.exit.thread"
-
-"_ZN4core6option15Option$LT$T$GT$6map_or17hf6b32417444b48baE.exit.preheader": ; preds = %.preheader.preheader
-  %2 = load ptr, ptr %i.j, align 8, !nonnull !14, !noundef !14
-  br label %"_ZN4core6option15Option$LT$T$GT$6map_or17hf6b32417444b48baE.exit"
+  br i1 %i.y, label %"_ZN4core6option15Option$LT$T$GT$6map_or17hf6b32417444b48baE.exit", label %"_ZN4core6option15Option$LT$T$GT$6map_or17hf6b32417444b48baE.exit.thread"
 
 .preheader:                                       ; preds = %"_ZN4core6option15Option$LT$T$GT$6map_or17hf6b32417444b48baE.exit"
   %storemerge = add i64 %storemerge25, 1          ; 4 uses
@@ -667,9 +658,9 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   %i.aa = icmp ult i64 %i.z, %i.l
   br i1 %i.aa, label %"_ZN4core6option15Option$LT$T$GT$6map_or17hf6b32417444b48baE.exit", label %"_ZN4core6option15Option$LT$T$GT$6map_or17hf6b32417444b48baE.exit.thread"
 
-"_ZN4core6option15Option$LT$T$GT$6map_or17hf6b32417444b48baE.exit": ; preds = %"_ZN4core6option15Option$LT$T$GT$6map_or17hf6b32417444b48baE.exit.preheader", %.preheader
-  %i.ab = phi i64 [ %i.z, %.preheader ], [ %i.x, %"_ZN4core6option15Option$LT$T$GT$6map_or17hf6b32417444b48baE.exit.preheader" ] ; 2 uses
-  %storemerge25 = phi i64 [ %storemerge, %.preheader ], [ %storemerge24, %"_ZN4core6option15Option$LT$T$GT$6map_or17hf6b32417444b48baE.exit.preheader" ] ; 2 uses
+"_ZN4core6option15Option$LT$T$GT$6map_or17hf6b32417444b48baE.exit": ; preds = %.preheader.preheader, %.preheader
+  %i.ab = phi i64 [ %i.z, %.preheader ], [ %i.x, %.preheader.preheader ] ; 2 uses
+  %storemerge25 = phi i64 [ %storemerge, %.preheader ], [ %storemerge24, %.preheader.preheader ] ; 2 uses
   %i.ac = getelementptr inbounds nuw [32 x i8], ptr %2, i64 %i.ab ; 2 uses
   %i.ad = getelementptr i8, ptr %i.ac, i64 8
   %.val.i = load ptr, ptr %i.ad, align 8, !alias.scope !11409, !nonnull !14, !noundef !14
@@ -761,15 +752,12 @@ bb.f:                                             ; preds = %bb.b, %bb.d
   br i1 %i.x, label %.preheader.preheader, label %bb.e
 
 .preheader.preheader:                             ; preds = %bb.f
+  %3 = load ptr, ptr %i.j, align 8, !nonnull !14
   %storemerge28 = add i64 %2, 1                   ; 4 uses
   store i64 %storemerge28, ptr %i.f, align 8
   %i.y = sub i64 %storemerge28, %i.d              ; 3 uses
   %i.z = icmp ult i64 %i.y, %i.l
-  br i1 %i.z, label %"_ZN4core6option15Option$LT$T$GT$6map_or17h53492a57da51e173E.exit.preheader", label %"_ZN4core6option15Option$LT$T$GT$6map_or17h53492a57da51e173E.exit.thread"
-
-"_ZN4core6option15Option$LT$T$GT$6map_or17h53492a57da51e173E.exit.preheader": ; preds = %.preheader.preheader
-  %3 = load ptr, ptr %i.j, align 8, !nonnull !14, !noundef !14
-  br label %"_ZN4core6option15Option$LT$T$GT$6map_or17h53492a57da51e173E.exit"
+  br i1 %i.z, label %"_ZN4core6option15Option$LT$T$GT$6map_or17h53492a57da51e173E.exit", label %"_ZN4core6option15Option$LT$T$GT$6map_or17h53492a57da51e173E.exit.thread"
 
 .preheader:                                       ; preds = %"_ZN4core6option15Option$LT$T$GT$6map_or17h53492a57da51e173E.exit"
   %storemerge = add i64 %storemerge29, 1          ; 4 uses
@@ -778,9 +766,9 @@ bb.f:                                             ; preds = %bb.b, %bb.d
   %i.ab = icmp ult i64 %i.aa, %i.l
   br i1 %i.ab, label %"_ZN4core6option15Option$LT$T$GT$6map_or17h53492a57da51e173E.exit", label %"_ZN4core6option15Option$LT$T$GT$6map_or17h53492a57da51e173E.exit.thread"
 
-"_ZN4core6option15Option$LT$T$GT$6map_or17h53492a57da51e173E.exit": ; preds = %"_ZN4core6option15Option$LT$T$GT$6map_or17h53492a57da51e173E.exit.preheader", %.preheader
-  %i.ac = phi i64 [ %i.aa, %.preheader ], [ %i.y, %"_ZN4core6option15Option$LT$T$GT$6map_or17h53492a57da51e173E.exit.preheader" ] ; 2 uses
-  %storemerge29 = phi i64 [ %storemerge, %.preheader ], [ %storemerge28, %"_ZN4core6option15Option$LT$T$GT$6map_or17h53492a57da51e173E.exit.preheader" ] ; 2 uses
+"_ZN4core6option15Option$LT$T$GT$6map_or17h53492a57da51e173E.exit": ; preds = %.preheader.preheader, %.preheader
+  %i.ac = phi i64 [ %i.aa, %.preheader ], [ %i.y, %.preheader.preheader ] ; 2 uses
+  %storemerge29 = phi i64 [ %storemerge, %.preheader ], [ %storemerge28, %.preheader.preheader ] ; 2 uses
   %i.ad = getelementptr inbounds nuw [32 x i8], ptr %3, i64 %i.ac ; 2 uses
   %i.ae = getelementptr i8, ptr %i.ad, i64 8
   %.val.i = load ptr, ptr %i.ae, align 8, !alias.scope !11418, !nonnull !14, !noundef !14

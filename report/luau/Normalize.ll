@@ -204,18 +204,16 @@ bb.c:                                             ; preds = %_ZNK4Luau14Normaliz
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !151  ; 2 uses
   %.not.i.i.i4 = icmp eq ptr %i.j, null
-  br i1 %.not.i.i.i4, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread, label %_ZNK4Luau14NormalizedType11hasBooleansEv.exit
+  br i1 %.not.i.i.i4, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread, label %bb.d
 
-_ZNK4Luau14NormalizedType11hasBooleansEv.exit:    ; preds = %bb.c
+bb.d:                                             ; preds = %bb.c
   %1 = load i32, ptr %i.j, align 8, !tbaa !163
-  %.not62 = icmp eq i32 %1, 17
-  br i1 %.not62, label %bb.d, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread
-
-bb.d:                                             ; preds = %_ZNK4Luau14NormalizedType11hasBooleansEv.exit
+  %2 = icmp ne i32 %1, 17
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !122
-  %.not63 = icmp eq i64 %i.l, 0
-  br i1 %.not63, label %bb.e, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread
+  %i.l = load i64, ptr %i.k, align 8
+  %3 = icmp ne i64 %i.l, 0
+  %or.cond = select i1 %2, i1 true, i1 %3
+  br i1 %or.cond, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 176
@@ -332,18 +330,16 @@ bb.q:                                             ; preds = %_ZNK4Luau14Normaliz
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !151 ; 2 uses
   %.not.i.i.i21 = icmp eq ptr %i.ay, null
-  br i1 %.not.i.i.i21, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread, label %_ZNK4Luau14NormalizedType11hasBooleansEv.exit23
+  br i1 %.not.i.i.i21, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread, label %bb.r
 
-_ZNK4Luau14NormalizedType11hasBooleansEv.exit23:  ; preds = %bb.q
-  %2 = load i32, ptr %i.ay, align 8, !tbaa !163
-  %.not53 = icmp eq i32 %2, 17
-  br i1 %.not53, label %bb.r, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread
-
-bb.r:                                             ; preds = %_ZNK4Luau14NormalizedType11hasBooleansEv.exit23
+bb.r:                                             ; preds = %bb.q
+  %4 = load i32, ptr %i.ay, align 8, !tbaa !163
+  %5 = icmp ne i32 %4, 17
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.ba = load i64, ptr %i.az, align 8, !tbaa !122
-  %.not54 = icmp eq i64 %i.ba, 0
-  br i1 %.not54, label %bb.s, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread
+  %i.ba = load i64, ptr %i.az, align 8
+  %6 = icmp ne i64 %i.ba, 0
+  %or.cond56 = select i1 %5, i1 true, i1 %6
+  br i1 %or.cond56, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 176
@@ -421,8 +417,8 @@ bb.z:                                             ; preds = %_ZNK4Luau14Normaliz
   %.not59 = icmp eq i64 %i.cb, 0
   br label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread
 
-_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread:  ; preds = %bb.o, %bb.n, %bb.m, %bb.y, %bb.w, %bb.v, %bb.t, %bb.s, %bb.q, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit17.thread, %bb.k, %bb.i, %bb.h, %bb.f, %bb.e, %bb.c, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit.thread, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit17, %_ZNK4Luau14NormalizedType7hasTopsEv.exit20, %_ZNK4Luau14NormalizedType11hasBooleansEv.exit23, %bb.r, %_ZNK4Luau14NormalizedType9hasErrorsEv.exit26, %_ZNK4Luau14NormalizedType7hasNilsEv.exit29, %bb.u, %_ZNK4Luau14NormalizedType10hasThreadsEv.exit33, %_ZNK4Luau14NormalizedType10hasBuffersEv.exit36, %bb.x, %_ZNK4Luau14NormalizedType12hasFunctionsEv.exit37, %bb.z, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit, %_ZNK4Luau14NormalizedType7hasTopsEv.exit, %_ZNK4Luau14NormalizedType11hasBooleansEv.exit, %bb.d, %_ZNK4Luau14NormalizedType9hasErrorsEv.exit, %_ZNK4Luau14NormalizedType7hasNilsEv.exit, %bb.g, %_ZNK4Luau14NormalizedType10hasThreadsEv.exit, %_ZNK4Luau14NormalizedType10hasBuffersEv.exit, %bb.j, %_ZNK4Luau14NormalizedType12hasFunctionsEv.exit, %bb.l
-  %.0 = phi i1 [ false, %bb.y ], [ false, %bb.l ], [ false, %_ZNK4Luau14NormalizedType12hasFunctionsEv.exit ], [ false, %bb.j ], [ false, %_ZNK4Luau14NormalizedType10hasBuffersEv.exit ], [ false, %_ZNK4Luau14NormalizedType10hasThreadsEv.exit ], [ false, %bb.g ], [ false, %_ZNK4Luau14NormalizedType7hasNilsEv.exit ], [ false, %_ZNK4Luau14NormalizedType9hasErrorsEv.exit ], [ false, %bb.d ], [ false, %_ZNK4Luau14NormalizedType11hasBooleansEv.exit ], [ false, %_ZNK4Luau14NormalizedType7hasTopsEv.exit ], [ false, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit ], [ false, %_ZNK4Luau14NormalizedType12hasFunctionsEv.exit37 ], [ false, %bb.x ], [ false, %_ZNK4Luau14NormalizedType10hasBuffersEv.exit36 ], [ false, %_ZNK4Luau14NormalizedType10hasThreadsEv.exit33 ], [ false, %bb.u ], [ false, %_ZNK4Luau14NormalizedType7hasNilsEv.exit29 ], [ false, %_ZNK4Luau14NormalizedType9hasErrorsEv.exit26 ], [ false, %bb.r ], [ false, %_ZNK4Luau14NormalizedType11hasBooleansEv.exit23 ], [ false, %_ZNK4Luau14NormalizedType7hasTopsEv.exit20 ], [ false, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit17 ], [ %.not59, %bb.z ], [ false, %bb.w ], [ false, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit.thread ], [ false, %bb.c ], [ false, %bb.e ], [ false, %bb.f ], [ false, %bb.h ], [ false, %bb.i ], [ false, %bb.k ], [ false, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit17.thread ], [ false, %bb.q ], [ false, %bb.s ], [ false, %bb.t ], [ false, %bb.v ], [ true, %bb.m ], [ %i.as, %bb.o ], [ false, %bb.n ]
+_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread:  ; preds = %bb.o, %bb.n, %bb.m, %bb.y, %bb.w, %bb.v, %bb.t, %bb.s, %bb.q, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit17.thread, %bb.k, %bb.i, %bb.h, %bb.f, %bb.e, %bb.c, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit.thread, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit17, %_ZNK4Luau14NormalizedType7hasTopsEv.exit20, %bb.r, %_ZNK4Luau14NormalizedType9hasErrorsEv.exit26, %_ZNK4Luau14NormalizedType7hasNilsEv.exit29, %bb.u, %_ZNK4Luau14NormalizedType10hasThreadsEv.exit33, %_ZNK4Luau14NormalizedType10hasBuffersEv.exit36, %bb.x, %_ZNK4Luau14NormalizedType12hasFunctionsEv.exit37, %bb.z, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit, %_ZNK4Luau14NormalizedType7hasTopsEv.exit, %bb.d, %_ZNK4Luau14NormalizedType9hasErrorsEv.exit, %_ZNK4Luau14NormalizedType7hasNilsEv.exit, %bb.g, %_ZNK4Luau14NormalizedType10hasThreadsEv.exit, %_ZNK4Luau14NormalizedType10hasBuffersEv.exit, %bb.j, %_ZNK4Luau14NormalizedType12hasFunctionsEv.exit, %bb.l
+  %.0 = phi i1 [ false, %bb.t ], [ false, %bb.l ], [ false, %_ZNK4Luau14NormalizedType12hasFunctionsEv.exit ], [ false, %bb.j ], [ false, %_ZNK4Luau14NormalizedType10hasBuffersEv.exit ], [ false, %_ZNK4Luau14NormalizedType10hasThreadsEv.exit ], [ false, %bb.g ], [ false, %_ZNK4Luau14NormalizedType7hasNilsEv.exit ], [ false, %_ZNK4Luau14NormalizedType9hasErrorsEv.exit ], [ false, %bb.y ], [ false, %bb.d ], [ false, %_ZNK4Luau14NormalizedType7hasTopsEv.exit ], [ false, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit ], [ false, %_ZNK4Luau14NormalizedType12hasFunctionsEv.exit37 ], [ false, %bb.x ], [ false, %_ZNK4Luau14NormalizedType10hasBuffersEv.exit36 ], [ false, %_ZNK4Luau14NormalizedType10hasThreadsEv.exit33 ], [ false, %bb.u ], [ false, %_ZNK4Luau14NormalizedType7hasNilsEv.exit29 ], [ false, %_ZNK4Luau14NormalizedType9hasErrorsEv.exit26 ], [ false, %bb.v ], [ false, %bb.r ], [ false, %_ZNK4Luau14NormalizedType7hasTopsEv.exit20 ], [ false, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit17 ], [ %.not59, %bb.z ], [ false, %bb.w ], [ false, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit.thread ], [ false, %bb.c ], [ false, %bb.e ], [ false, %bb.f ], [ false, %bb.h ], [ false, %bb.i ], [ false, %bb.k ], [ false, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit17.thread ], [ false, %bb.q ], [ false, %bb.s ], [ true, %bb.m ], [ %i.as, %bb.o ], [ false, %bb.n ]
   ret i1 %.0
 }
 
@@ -825,18 +821,16 @@ _ZNK4Luau14NormalizedType11hasBooleansEv.exit.thread: ; preds = %bb.b, %_ZNK4Lua
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !150  ; 2 uses
   %.not.i.i.i2 = icmp eq ptr %i.g, null
-  br i1 %.not.i.i.i2, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit
+  br i1 %.not.i.i.i2, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread, label %bb.c
 
-_ZNK4Luau14NormalizedType7hasTopsEv.exit:         ; preds = %_ZNK4Luau14NormalizedType11hasBooleansEv.exit.thread
+bb.c:                                             ; preds = %_ZNK4Luau14NormalizedType11hasBooleansEv.exit.thread
   %1 = load i32, ptr %i.g, align 8, !tbaa !163
-  %.not61 = icmp eq i32 %1, 17
-  br i1 %.not61, label %bb.c, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread
-
-bb.c:                                             ; preds = %_ZNK4Luau14NormalizedType7hasTopsEv.exit
+  %2 = icmp ne i32 %1, 17
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.i = load i64, ptr %i.h, align 8, !tbaa !122
-  %.not62 = icmp eq i64 %i.i, 0
-  br i1 %.not62, label %bb.d, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread
+  %i.i = load i64, ptr %i.h, align 8
+  %3 = icmp ne i64 %i.i, 0
+  %or.cond = select i1 %2, i1 true, i1 %3
+  br i1 %or.cond, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 176
@@ -953,18 +947,16 @@ _ZNK4Luau14NormalizedType11hasBooleansEv.exit17.thread: ; preds = %bb.p, %_ZNK4L
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !150 ; 2 uses
   %.not.i.i.i18 = icmp eq ptr %i.av, null
-  br i1 %.not.i.i.i18, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit20
+  br i1 %.not.i.i.i18, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread, label %bb.q
 
-_ZNK4Luau14NormalizedType7hasTopsEv.exit20:       ; preds = %_ZNK4Luau14NormalizedType11hasBooleansEv.exit17.thread
-  %2 = load i32, ptr %i.av, align 8, !tbaa !163
-  %.not52 = icmp eq i32 %2, 17
-  br i1 %.not52, label %bb.q, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread
-
-bb.q:                                             ; preds = %_ZNK4Luau14NormalizedType7hasTopsEv.exit20
+bb.q:                                             ; preds = %_ZNK4Luau14NormalizedType11hasBooleansEv.exit17.thread
+  %4 = load i32, ptr %i.av, align 8, !tbaa !163
+  %5 = icmp ne i32 %4, 17
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.ax = load i64, ptr %i.aw, align 8, !tbaa !122
-  %.not53 = icmp eq i64 %i.ax, 0
-  br i1 %.not53, label %bb.r, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread
+  %i.ax = load i64, ptr %i.aw, align 8
+  %6 = icmp ne i64 %i.ax, 0
+  %or.cond56 = select i1 %5, i1 true, i1 %6
+  br i1 %or.cond56, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 176
@@ -1053,8 +1045,8 @@ bb.z:                                             ; preds = %_ZNK4Luau14Normaliz
   %.not59 = icmp eq i64 %i.cb, 0
   br label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread
 
-_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread:  ; preds = %bb.o, %bb.n, %bb.m, %bb.y, %bb.w, %bb.v, %bb.t, %bb.s, %bb.r, %_ZNK4Luau14NormalizedType11hasBooleansEv.exit17.thread, %bb.k, %bb.i, %bb.h, %bb.f, %bb.e, %bb.d, %_ZNK4Luau14NormalizedType11hasBooleansEv.exit.thread, %_ZNK4Luau14NormalizedType11hasBooleansEv.exit17, %_ZNK4Luau14NormalizedType7hasTopsEv.exit20, %bb.q, %_ZNK4Luau14NormalizedType9hasErrorsEv.exit23, %_ZNK4Luau14NormalizedType7hasNilsEv.exit26, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit29, %bb.u, %_ZNK4Luau14NormalizedType10hasThreadsEv.exit33, %_ZNK4Luau14NormalizedType10hasBuffersEv.exit36, %bb.x, %_ZNK4Luau14NormalizedType12hasFunctionsEv.exit37, %bb.z, %_ZNK4Luau14NormalizedType11hasBooleansEv.exit, %_ZNK4Luau14NormalizedType7hasTopsEv.exit, %bb.c, %_ZNK4Luau14NormalizedType9hasErrorsEv.exit, %_ZNK4Luau14NormalizedType7hasNilsEv.exit, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit, %bb.g, %_ZNK4Luau14NormalizedType10hasThreadsEv.exit, %_ZNK4Luau14NormalizedType10hasBuffersEv.exit, %bb.j, %_ZNK4Luau14NormalizedType12hasFunctionsEv.exit, %bb.l
-  %.0 = phi i1 [ false, %bb.y ], [ false, %bb.l ], [ false, %_ZNK4Luau14NormalizedType12hasFunctionsEv.exit ], [ false, %bb.j ], [ false, %_ZNK4Luau14NormalizedType10hasBuffersEv.exit ], [ false, %_ZNK4Luau14NormalizedType10hasThreadsEv.exit ], [ false, %bb.g ], [ false, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit ], [ false, %_ZNK4Luau14NormalizedType7hasNilsEv.exit ], [ false, %_ZNK4Luau14NormalizedType9hasErrorsEv.exit ], [ false, %bb.c ], [ false, %_ZNK4Luau14NormalizedType7hasTopsEv.exit ], [ false, %_ZNK4Luau14NormalizedType11hasBooleansEv.exit ], [ false, %_ZNK4Luau14NormalizedType12hasFunctionsEv.exit37 ], [ false, %bb.x ], [ false, %_ZNK4Luau14NormalizedType10hasBuffersEv.exit36 ], [ false, %_ZNK4Luau14NormalizedType10hasThreadsEv.exit33 ], [ false, %bb.u ], [ false, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit29 ], [ false, %_ZNK4Luau14NormalizedType7hasNilsEv.exit26 ], [ false, %_ZNK4Luau14NormalizedType9hasErrorsEv.exit23 ], [ false, %bb.q ], [ false, %_ZNK4Luau14NormalizedType7hasTopsEv.exit20 ], [ false, %_ZNK4Luau14NormalizedType11hasBooleansEv.exit17 ], [ %.not59, %bb.z ], [ false, %bb.w ], [ false, %_ZNK4Luau14NormalizedType11hasBooleansEv.exit.thread ], [ false, %bb.d ], [ false, %bb.e ], [ false, %bb.f ], [ false, %bb.h ], [ false, %bb.i ], [ false, %bb.k ], [ false, %_ZNK4Luau14NormalizedType11hasBooleansEv.exit17.thread ], [ false, %bb.r ], [ false, %bb.s ], [ false, %bb.t ], [ false, %bb.v ], [ true, %bb.m ], [ %i.as, %bb.o ], [ false, %bb.n ]
+_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread:  ; preds = %bb.o, %bb.n, %bb.m, %bb.y, %bb.w, %bb.v, %bb.t, %bb.s, %bb.r, %_ZNK4Luau14NormalizedType11hasBooleansEv.exit17.thread, %bb.k, %bb.i, %bb.h, %bb.f, %bb.e, %bb.d, %_ZNK4Luau14NormalizedType11hasBooleansEv.exit.thread, %_ZNK4Luau14NormalizedType11hasBooleansEv.exit17, %bb.q, %_ZNK4Luau14NormalizedType9hasErrorsEv.exit23, %_ZNK4Luau14NormalizedType7hasNilsEv.exit26, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit29, %bb.u, %_ZNK4Luau14NormalizedType10hasThreadsEv.exit33, %_ZNK4Luau14NormalizedType10hasBuffersEv.exit36, %bb.x, %_ZNK4Luau14NormalizedType12hasFunctionsEv.exit37, %bb.z, %_ZNK4Luau14NormalizedType11hasBooleansEv.exit, %bb.c, %_ZNK4Luau14NormalizedType9hasErrorsEv.exit, %_ZNK4Luau14NormalizedType7hasNilsEv.exit, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit, %bb.g, %_ZNK4Luau14NormalizedType10hasThreadsEv.exit, %_ZNK4Luau14NormalizedType10hasBuffersEv.exit, %bb.j, %_ZNK4Luau14NormalizedType12hasFunctionsEv.exit, %bb.l
+  %.0 = phi i1 [ false, %bb.t ], [ false, %bb.l ], [ false, %_ZNK4Luau14NormalizedType12hasFunctionsEv.exit ], [ false, %bb.j ], [ false, %_ZNK4Luau14NormalizedType10hasBuffersEv.exit ], [ false, %_ZNK4Luau14NormalizedType10hasThreadsEv.exit ], [ false, %bb.g ], [ false, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit ], [ false, %_ZNK4Luau14NormalizedType7hasNilsEv.exit ], [ false, %_ZNK4Luau14NormalizedType9hasErrorsEv.exit ], [ false, %bb.y ], [ false, %bb.c ], [ false, %_ZNK4Luau14NormalizedType11hasBooleansEv.exit ], [ false, %_ZNK4Luau14NormalizedType12hasFunctionsEv.exit37 ], [ false, %bb.x ], [ false, %_ZNK4Luau14NormalizedType10hasBuffersEv.exit36 ], [ false, %_ZNK4Luau14NormalizedType10hasThreadsEv.exit33 ], [ false, %bb.u ], [ false, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit29 ], [ false, %_ZNK4Luau14NormalizedType7hasNilsEv.exit26 ], [ false, %_ZNK4Luau14NormalizedType9hasErrorsEv.exit23 ], [ false, %bb.v ], [ false, %bb.q ], [ false, %_ZNK4Luau14NormalizedType11hasBooleansEv.exit17 ], [ %.not59, %bb.z ], [ false, %bb.w ], [ false, %_ZNK4Luau14NormalizedType11hasBooleansEv.exit.thread ], [ false, %bb.d ], [ false, %bb.e ], [ false, %bb.f ], [ false, %bb.h ], [ false, %bb.i ], [ false, %bb.k ], [ false, %_ZNK4Luau14NormalizedType11hasBooleansEv.exit17.thread ], [ false, %bb.r ], [ false, %bb.s ], [ true, %bb.m ], [ %i.as, %bb.o ], [ false, %bb.n ]
   ret i1 %.0
 }
 
@@ -1457,18 +1449,16 @@ bb.c:                                             ; preds = %_ZNK4Luau14Normaliz
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !151  ; 2 uses
   %.not.i.i.i4 = icmp eq ptr %i.j, null
-  br i1 %.not.i.i.i4, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread, label %_ZNK4Luau14NormalizedType11hasBooleansEv.exit
+  br i1 %.not.i.i.i4, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread, label %bb.d
 
-_ZNK4Luau14NormalizedType11hasBooleansEv.exit:    ; preds = %bb.c
+bb.d:                                             ; preds = %bb.c
   %1 = load i32, ptr %i.j, align 8, !tbaa !163
-  %.not49 = icmp eq i32 %1, 17
-  br i1 %.not49, label %bb.d, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread
-
-bb.d:                                             ; preds = %_ZNK4Luau14NormalizedType11hasBooleansEv.exit
+  %2 = icmp ne i32 %1, 17
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !122
-  %.not50 = icmp eq i64 %i.l, 0
-  br i1 %.not50, label %bb.e, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread
+  %i.l = load i64, ptr %i.k, align 8
+  %3 = icmp ne i64 %i.l, 0
+  %or.cond = select i1 %2, i1 true, i1 %3
+  br i1 %or.cond, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 192
@@ -1563,18 +1553,16 @@ bb.p:                                             ; preds = %_ZNK4Luau14Normaliz
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !151 ; 2 uses
   %.not.i.i.i16 = icmp eq ptr %i.as, null
-  br i1 %.not.i.i.i16, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread, label %_ZNK4Luau14NormalizedType11hasBooleansEv.exit18
+  br i1 %.not.i.i.i16, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread, label %bb.q
 
-_ZNK4Luau14NormalizedType11hasBooleansEv.exit18:  ; preds = %bb.p
-  %2 = load i32, ptr %i.as, align 8, !tbaa !163
-  %.not42 = icmp eq i32 %2, 17
-  br i1 %.not42, label %bb.q, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread
-
-bb.q:                                             ; preds = %_ZNK4Luau14NormalizedType11hasBooleansEv.exit18
+bb.q:                                             ; preds = %bb.p
+  %4 = load i32, ptr %i.as, align 8, !tbaa !163
+  %5 = icmp ne i32 %4, 17
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.au = load i64, ptr %i.at, align 8, !tbaa !122
-  %.not43 = icmp eq i64 %i.au, 0
-  br i1 %.not43, label %bb.r, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread
+  %i.au = load i64, ptr %i.at, align 8
+  %6 = icmp ne i64 %i.au, 0
+  %or.cond45 = select i1 %5, i1 true, i1 %6
+  br i1 %or.cond45, label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 192
@@ -1641,8 +1629,8 @@ bb.x:                                             ; preds = %_ZNK4Luau14Normaliz
   %.not47 = icmp eq i64 %i.bs, 0
   br label %_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread
 
-_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread:  ; preds = %bb.n, %bb.m, %bb.l, %bb.w, %bb.u, %bb.t, %bb.r, %bb.p, %bb.o, %bb.j, %bb.h, %bb.g, %bb.e, %bb.c, %bb.b, %_ZNK4Luau14NormalizedType7hasTopsEv.exit15, %_ZNK4Luau14NormalizedType11hasBooleansEv.exit18, %bb.q, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit21, %bb.s, %_ZNK4Luau14NormalizedType10hasThreadsEv.exit25, %_ZNK4Luau14NormalizedType10hasBuffersEv.exit28, %bb.v, %_ZNK4Luau14NormalizedType12hasFunctionsEv.exit29, %bb.x, %_ZNK4Luau14NormalizedType7hasTopsEv.exit, %_ZNK4Luau14NormalizedType11hasBooleansEv.exit, %bb.d, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit, %bb.f, %_ZNK4Luau14NormalizedType10hasThreadsEv.exit, %_ZNK4Luau14NormalizedType10hasBuffersEv.exit, %bb.i, %_ZNK4Luau14NormalizedType12hasFunctionsEv.exit, %bb.k, %_ZNK4Luau14NormalizedType7hasNilsEv.exit
-  %.0 = phi i1 [ false, %_ZNK4Luau14NormalizedType7hasNilsEv.exit ], [ false, %bb.w ], [ false, %bb.k ], [ false, %_ZNK4Luau14NormalizedType12hasFunctionsEv.exit ], [ false, %bb.i ], [ false, %_ZNK4Luau14NormalizedType10hasBuffersEv.exit ], [ false, %_ZNK4Luau14NormalizedType10hasThreadsEv.exit ], [ false, %bb.f ], [ false, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit ], [ false, %bb.d ], [ false, %_ZNK4Luau14NormalizedType11hasBooleansEv.exit ], [ false, %_ZNK4Luau14NormalizedType7hasTopsEv.exit ], [ false, %_ZNK4Luau14NormalizedType12hasFunctionsEv.exit29 ], [ false, %bb.v ], [ false, %_ZNK4Luau14NormalizedType10hasBuffersEv.exit28 ], [ false, %_ZNK4Luau14NormalizedType10hasThreadsEv.exit25 ], [ false, %bb.s ], [ false, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit21 ], [ false, %bb.q ], [ false, %_ZNK4Luau14NormalizedType11hasBooleansEv.exit18 ], [ false, %_ZNK4Luau14NormalizedType7hasTopsEv.exit15 ], [ %.not47, %bb.x ], [ false, %bb.u ], [ false, %bb.b ], [ false, %bb.c ], [ false, %bb.e ], [ false, %bb.g ], [ false, %bb.h ], [ false, %bb.j ], [ false, %bb.o ], [ false, %bb.p ], [ false, %bb.r ], [ false, %bb.t ], [ true, %bb.l ], [ %i.ap, %bb.n ], [ false, %bb.m ]
+_ZNK4Luau14NormalizedType7hasTopsEv.exit.thread:  ; preds = %bb.n, %bb.m, %bb.l, %bb.w, %bb.u, %bb.t, %bb.r, %bb.p, %bb.o, %bb.j, %bb.h, %bb.g, %bb.e, %bb.c, %bb.b, %_ZNK4Luau14NormalizedType7hasTopsEv.exit15, %bb.q, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit21, %bb.s, %_ZNK4Luau14NormalizedType10hasThreadsEv.exit25, %_ZNK4Luau14NormalizedType10hasBuffersEv.exit28, %bb.v, %_ZNK4Luau14NormalizedType12hasFunctionsEv.exit29, %bb.x, %_ZNK4Luau14NormalizedType7hasTopsEv.exit, %bb.d, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit, %bb.f, %_ZNK4Luau14NormalizedType10hasThreadsEv.exit, %_ZNK4Luau14NormalizedType10hasBuffersEv.exit, %bb.i, %_ZNK4Luau14NormalizedType12hasFunctionsEv.exit, %bb.k, %_ZNK4Luau14NormalizedType7hasNilsEv.exit
+  %.0 = phi i1 [ false, %_ZNK4Luau14NormalizedType7hasNilsEv.exit ], [ false, %bb.r ], [ false, %bb.k ], [ false, %_ZNK4Luau14NormalizedType12hasFunctionsEv.exit ], [ false, %bb.i ], [ false, %_ZNK4Luau14NormalizedType10hasBuffersEv.exit ], [ false, %_ZNK4Luau14NormalizedType10hasThreadsEv.exit ], [ false, %bb.f ], [ false, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit ], [ false, %bb.w ], [ false, %bb.d ], [ false, %_ZNK4Luau14NormalizedType7hasTopsEv.exit ], [ false, %_ZNK4Luau14NormalizedType12hasFunctionsEv.exit29 ], [ false, %bb.v ], [ false, %_ZNK4Luau14NormalizedType10hasBuffersEv.exit28 ], [ false, %_ZNK4Luau14NormalizedType10hasThreadsEv.exit25 ], [ false, %bb.s ], [ false, %_ZNK4Luau14NormalizedType10hasNumbersEv.exit21 ], [ false, %bb.t ], [ false, %bb.q ], [ false, %_ZNK4Luau14NormalizedType7hasTopsEv.exit15 ], [ %.not47, %bb.x ], [ false, %bb.u ], [ false, %bb.b ], [ false, %bb.c ], [ false, %bb.e ], [ false, %bb.g ], [ false, %bb.h ], [ false, %bb.j ], [ false, %bb.o ], [ false, %bb.p ], [ true, %bb.l ], [ %i.ap, %bb.n ], [ false, %bb.m ]
   ret i1 %.0
 }
 

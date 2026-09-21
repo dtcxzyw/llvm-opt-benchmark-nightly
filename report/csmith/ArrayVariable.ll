@@ -204,27 +204,25 @@ bb.a:
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local noundef zeroext i1 @_ZNK13ArrayVariable16is_visible_localEPK5Block(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(288) %0, ptr nofree noundef readonly captures(address) %1) unnamed_addr #8 align 2 {
-  %.not7.not = icmp eq ptr %1, null
-  br i1 %.not7.not, label %._crit_edge, label %.lr.ph.a
-
-.lr.ph.a:                                         ; preds = %2
+.lr.ph.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 208
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !52
-  br label %3
+  %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
+  %.not10 = icmp ne ptr %1, null                  ; 2 uses
+  %2 = icmp ne ptr %1, %i.b
+  %or.cond.not11 = select i1 %.not10, i1 %2, i1 false
+  br i1 %or.cond.not11, label %bb.a, label %._crit_edge
 
-3:                                                ; preds = %.lr.ph.a, %bb.a
-  %.08 = phi ptr [ %1, %.lr.ph.a ], [ %i.d, %bb.a ] ; 2 uses
-  %4 = icmp eq ptr %.08, %i.b                     ; 3 uses
-  br i1 %4, label %._crit_edge, label %bb.a
+bb.a:                                             ; preds = %.lr.ph.a, %bb.a
+  %.012 = phi ptr [ %i.d, %bb.a ], [ %1, %.lr.ph.a ]
+  %i.c = getelementptr inbounds nuw i8, ptr %.012, i64 24
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !173  ; 3 uses
+  %.not = icmp ne ptr %i.d, null                  ; 2 uses
+  %3 = icmp ne ptr %i.d, %i.b
+  %or.cond.not = select i1 %.not, i1 %3, i1 false
+  br i1 %or.cond.not, label %bb.a, label %._crit_edge, !llvm.loop !169
 
-bb.a:                                             ; preds = %3
-  %i.c = getelementptr inbounds nuw i8, ptr %.08, i64 24
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !173  ; 2 uses
-  %.not.not = icmp eq ptr %i.d, null
-  br i1 %.not.not, label %._crit_edge, label %3, !llvm.loop !169
-
-._crit_edge:                                      ; preds = %3, %bb.a, %2
-  %.not.lcssa = phi i1 [ false, %2 ], [ %4, %bb.a ], [ %4, %3 ]
+._crit_edge:                                      ; preds = %bb.a, %.lr.ph.a
+  %.not.lcssa = phi i1 [ %.not10, %.lr.ph.a ], [ %.not, %bb.a ]
   ret i1 %.not.lcssa
 }
 

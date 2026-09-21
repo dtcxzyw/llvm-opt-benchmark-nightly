@@ -205,28 +205,24 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 40
   %i.d = load i32, ptr %i.c, align 8, !tbaa !426
   %i.e = icmp eq i32 %i.d, 1
-  br i1 %i.e, label %13, label %9
+  %9 = getelementptr inbounds nuw i8, ptr %3, i64 73
+  %10 = load i8, ptr %9, align 1, !range !119
+  %11 = trunc nuw i8 %10 to i1
+  %12 = xor i1 %11, true
+  %13 = select i1 %i.e, i1 true, i1 %12           ; 2 uses
+  %14 = load i8, ptr %5, align 8, !tbaa !521
+  %15 = tail call noundef zeroext i1 @_ZN7rocksdb21BlockCacheTraceHelper26IsGetOrMultiGetOnDataBlockENS_9TraceTypeENS_17TableReaderCallerE(i8 noundef signext 10, i8 noundef signext %14)
+  br i1 %15, label %bb.d, label %bb.g
 
-9:                                                ; preds = %bb.c
-  %10 = getelementptr inbounds nuw i8, ptr %3, i64 73
-  %11 = load i8, ptr %10, align 1, !tbaa !505, !range !119, !noundef !120
-  %12 = xor i8 %11, 1
-  br label %13
-
-13:                                               ; preds = %9, %bb.c
-  %14 = phi i8 [ 1, %bb.c ], [ %12, %9 ]          ; 2 uses
-  %15 = load i8, ptr %5, align 8, !tbaa !521
-  %16 = tail call noundef zeroext i1 @_ZN7rocksdb21BlockCacheTraceHelper26IsGetOrMultiGetOnDataBlockENS_9TraceTypeENS_17TableReaderCallerE(i8 noundef signext 10, i8 noundef signext %15)
-  br i1 %16, label %bb.d, label %bb.g
-
-bb.d:                                             ; preds = %13
+bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #38
   call void @_ZNK7rocksdb5Slice8ToStringB5cxx11Eb(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %6, ptr noundef nonnull align 8 dereferenceable(16) %1, i1 noundef zeroext false)
   %i.f = zext i1 %2 to i8
+  %16 = zext i1 %13 to i8
   %i.g = getelementptr inbounds nuw i8, ptr %5, i64 1
   store i8 %i.f, ptr %i.g, align 1, !tbaa !522
   %i.h = getelementptr inbounds nuw i8, ptr %5, i64 2
-  store i8 %14, ptr %i.h, align 2, !tbaa !523
+  store i8 %16, ptr %i.h, align 2, !tbaa !523
   %i.i = getelementptr inbounds nuw i8, ptr %5, i64 3
   store i8 10, ptr %i.i, align 1, !tbaa !513
   %i.j = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -271,7 +267,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit41: ; preds = %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #38
   br label %bb.k
 
-bb.g:                                             ; preds = %13
+bb.g:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #38
   %i.x = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 6 uses
   store ptr %i.x, ptr %7, align 8, !tbaa !360
@@ -279,10 +275,11 @@ bb.g:                                             ; preds = %13
   store i64 0, ptr %i.y, align 8, !tbaa !361
   store i8 0, ptr %i.x, align 8, !tbaa !96
   %i.z = zext i1 %2 to i8
+  %17 = zext i1 %13 to i8
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 1
   store i8 %i.z, ptr %i.aa, align 1, !tbaa !522
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 2
-  store i8 %14, ptr %i.ab, align 2, !tbaa !523
+  store i8 %17, ptr %i.ab, align 2, !tbaa !523
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 3
   store i8 10, ptr %i.ac, align 1, !tbaa !513
   %i.ad = getelementptr inbounds nuw i8, ptr %5, i64 8

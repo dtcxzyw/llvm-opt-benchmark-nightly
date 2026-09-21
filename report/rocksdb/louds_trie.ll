@@ -205,21 +205,18 @@ bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i
   %.034.shrunk.i = phi i32 [ 0, %bb.k ], [ %i.ae, %bb.j ], [ %i.ae, %bb.i ]
   %.033.i = phi i64 [ %i.ap, %bb.k ], [ %i.am, %bb.j ], [ %i.aj, %bb.i ] ; 2 uses
   %.034.i = zext i32 %.034.shrunk.i to i64        ; 3 uses
-  %i.aq = getelementptr inbounds nuw i8, ptr %i.c, i64 520 ; 2 uses
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.c, i64 520
+  %2 = load ptr, ptr %i.aq, align 8               ; 2 uses
   %umax.i = tail call i64 @llvm.umax.i64(i64 %.033.i, i64 %.034.i) ; 3 uses
   %exitcond.not.i33.not = icmp ugt i64 %.033.i, %.034.i
-  br i1 %exitcond.not.i33.not, label %.lr.ph.preheader, label %.critedge.i
-
-.lr.ph.preheader:                                 ; preds = %bb.l
-  %2 = load ptr, ptr %i.aq, align 8, !tbaa !69
-  br label %.lr.ph
+  br i1 %exitcond.not.i33.not, label %.lr.ph, label %.critedge.i
 
 bb.m:                                             ; preds = %.lr.ph
   %exitcond.not.i = icmp eq i64 %i.ar, %umax.i
   br i1 %exitcond.not.i, label %.critedge.i, label %.lr.ph, !llvm.loop !3
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.m
-  %.135.i34 = phi i64 [ %i.ar, %bb.m ], [ %.034.i, %.lr.ph.preheader ] ; 2 uses
+.lr.ph:                                           ; preds = %bb.l, %bb.m
+  %.135.i34 = phi i64 [ %i.ar, %bb.m ], [ %.034.i, %bb.l ] ; 2 uses
   %i.ar = add i64 %.135.i34, 1                    ; 3 uses
   %i.as = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.ar
   %i.at = load i32, ptr %i.as, align 4, !tbaa !70
@@ -241,8 +238,7 @@ bb.m:                                             ; preds = %.lr.ph
   br i1 %.not4553.i, label %.lr.ph.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %.critedge.i
-  %3 = load ptr, ptr %i.aq, align 8, !tbaa !69
-  %i.az = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.135.lcssa.i
+  %i.az = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %.135.lcssa.i
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !70
   %i.bb = zext i32 %i.ba to i64
   %i.bc = sub i64 %1, %i.bb
@@ -645,8 +641,8 @@ bb.cf:                                            ; preds = %bb.ce, %bb.cd, %bb.
   %.034.shrunk.i = phi i32 [ 0, %bb.ce ], [ %i.mb, %bb.cd ], [ %i.mb, %bb.cc ]
   %.033.i = phi i64 [ %i.mk, %bb.ce ], [ %i.mi, %bb.cd ], [ %i.mg, %bb.cc ] ; 2 uses
   %.034.i = zext i32 %.034.shrunk.i to i64        ; 3 uses
-  %umax.i = call i64 @llvm.umax.i64(i64 %.033.i, i64 %.034.i) ; 3 uses
   %14 = load ptr, ptr %i.kw, align 8              ; 2 uses
+  %umax.i = call i64 @llvm.umax.i64(i64 %.033.i, i64 %.034.i) ; 3 uses
   %exitcond.not.i1984.not = icmp ugt i64 %.033.i, %.034.i
   br i1 %exitcond.not.i1984.not, label %.lr.ph1987, label %.critedge.i
 
@@ -885,8 +881,8 @@ bb.cx:                                            ; preds = %bb.cw, %bb.cv, %bb.
   %.034.shrunk.i541 = phi i32 [ 0, %bb.cw ], [ %i.or, %bb.cv ], [ %i.or, %bb.cu ]
   %.033.i542 = phi i64 [ %i.pa, %bb.cw ], [ %i.oy, %bb.cv ], [ %i.ow, %bb.cu ] ; 2 uses
   %.034.i543 = zext i32 %.034.shrunk.i541 to i64  ; 3 uses
-  %umax.i544 = call i64 @llvm.umax.i64(i64 %.033.i542, i64 %.034.i543) ; 3 uses
   %15 = load ptr, ptr %i.kw, align 8              ; 2 uses
+  %umax.i544 = call i64 @llvm.umax.i64(i64 %.033.i542, i64 %.034.i543) ; 3 uses
   %exitcond.not.i5461990.not = icmp ugt i64 %.033.i542, %.034.i543
   br i1 %exitcond.not.i5461990.not, label %.lr.ph1993, label %.critedge.i548
 

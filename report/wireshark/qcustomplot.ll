@@ -204,6 +204,8 @@ bb.c:                                             ; preds = %bb.b
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.s = and i64 %i.d, 4294967295
+  %4 = load ptr, ptr %i.q, align 8                ; 2 uses
+  %5 = load double, ptr %i.r, align 8
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.e, %._crit_edge
@@ -215,11 +217,9 @@ bb.d:                                             ; preds = %bb.e, %._crit_edge
 
 bb.e:                                             ; preds = %bb.d
   %i.v = and i64 %indvars.iv.next, 2147483647
-  %4 = load ptr, ptr %i.q, align 8                ; 2 uses
   %i.w = getelementptr [8 x i8], ptr %4, i64 %i.v
-  %5 = load double, ptr %i.w, align 8
-  %i.x = load double, ptr %i.r, align 8
-  %i.y = fcmp ugt double %5, %i.x
+  %i.x = load double, ptr %i.w, align 8
+  %i.y = fcmp ugt double %i.x, %5
   br i1 %i.y, label %bb.d, label %bb.f, !llvm.loop !443
 
 bb.f:                                             ; preds = %bb.e

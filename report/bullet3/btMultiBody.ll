@@ -205,42 +205,36 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !89   ; 3 uses
   %.not.i = icmp eq ptr %i.d, null                ; 2 uses
-  br i1 %.not.i, label %_ZNK11btMultiBody15isBaseKinematicEv.exit.thread, label %_ZNK11btMultiBody15isBaseKinematicEv.exit
+  br i1 %.not.i, label %bb.b, label %_ZNK11btMultiBody15isBaseKinematicEv.exit
 
 _ZNK11btMultiBody15isBaseKinematicEv.exit:        ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 224
   %i.f = load i32, ptr %i.e, align 8, !tbaa !97
   %i.g = and i32 %i.f, 2
   %.not164 = icmp eq i32 %i.g, 0
-  br i1 %.not164, label %_ZNK11btMultiBody15isBaseKinematicEv.exit.thread, label %_ZNK11btMultiBody15isBaseKinematicEv.exit106.thread177
+  br i1 %.not164, label %bb.b, label %_ZNK11btMultiBody15isBaseKinematicEv.exit106.thread177
 
-_ZNK11btMultiBody15isBaseKinematicEv.exit.thread: ; preds = %bb.a, %_ZNK11btMultiBody15isBaseKinematicEv.exit
+bb.b:                                             ; preds = %bb.a, %_ZNK11btMultiBody15isBaseKinematicEv.exit
   %.not = icmp eq ptr %2, null
   %4 = getelementptr inbounds nuw i8, ptr %2, i64 16
   %5 = getelementptr inbounds nuw i8, ptr %0, i64 24
   %6 = select i1 %.not, ptr %5, ptr %4            ; 4 uses
   %.not95 = icmp eq ptr %3, null
-  br i1 %.not95, label %7, label %bb.b
-
-7:                                                ; preds = %_ZNK11btMultiBody15isBaseKinematicEv.exit.thread
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 288
-  %9 = load ptr, ptr %8, align 8, !tbaa !50
-  br label %bb.b
-
-bb.b:                                             ; preds = %_ZNK11btMultiBody15isBaseKinematicEv.exit.thread, %7
-  %.pn = phi ptr [ %9, %7 ], [ %3, %_ZNK11btMultiBody15isBaseKinematicEv.exit.thread ] ; 3 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %.pn, i64 12
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 288
+  %8 = load ptr, ptr %7, align 8
+  %.v = select i1 %.not95, ptr %8, ptr %3         ; 3 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %.v, i64 12
   %i.i = load float, ptr %i.h, align 4, !tbaa !20
   %i.j = load float, ptr %6, align 4, !tbaa !20
   %i.k = tail call float @llvm.fmuladd.f32(float %1, float %i.i, float %i.j)
   store float %i.k, ptr %6, align 4, !tbaa !20
-  %i.l = getelementptr inbounds nuw i8, ptr %.pn, i64 16
+  %i.l = getelementptr inbounds nuw i8, ptr %.v, i64 16
   %i.m = load float, ptr %i.l, align 4, !tbaa !20
   %i.n = getelementptr inbounds nuw i8, ptr %6, i64 4 ; 2 uses
   %i.o = load float, ptr %i.n, align 4, !tbaa !20
   %i.p = tail call float @llvm.fmuladd.f32(float %1, float %i.m, float %i.o)
   store float %i.p, ptr %i.n, align 4, !tbaa !20
-  %i.q = getelementptr inbounds nuw i8, ptr %.pn, i64 20
+  %i.q = getelementptr inbounds nuw i8, ptr %.v, i64 20
   %i.r = load float, ptr %i.q, align 4, !tbaa !20
   %i.s = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   %i.t = load float, ptr %i.s, align 4, !tbaa !20

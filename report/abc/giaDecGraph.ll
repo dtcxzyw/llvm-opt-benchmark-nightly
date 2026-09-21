@@ -205,7 +205,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !135  ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 5 uses
   %.not10.i.i.i = icmp eq ptr %i.b, null
-  br i1 %.not10.i.i.i, label %_ZNSt3setIiSt4lessIiESaIiEE4findERKi.exit.thread.a, label %.lr.ph.i.i.i
+  br i1 %.not10.i.i.i, label %_ZNSt3setIiSt4lessIiESaIiEE4findERKi.exit.thread.thread.a, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.a, %.lr.ph.i.i.i
   %.012.i.i.i = phi ptr [ %.1.i.i.i, %.lr.ph.i.i.i ], [ %i.b, %bb.a ] ; 3 uses
@@ -222,33 +222,31 @@ bb.a:
 
 _ZNSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE14_M_lower_boundEPSt13_Rb_tree_nodeIiEPSt18_Rb_tree_node_baseRKi.exit.i.i: ; preds = %.lr.ph.i.i.i
   %i.g = icmp eq ptr %.19.i.i.i, %i.c
-  br i1 %i.g, label %_ZNSt3setIiSt4lessIiESaIiEE4findERKi.exit.thread.thread.a, label %_ZNSt3setIiSt4lessIiESaIiEE4findERKi.exit
+  br i1 %i.g, label %.thread, label %_ZNSt3setIiSt4lessIiESaIiEE4findERKi.exit.thread.a
 
-_ZNSt3setIiSt4lessIiESaIiEE4findERKi.exit:        ; preds = %_ZNSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE14_M_lower_boundEPSt13_Rb_tree_nodeIiEPSt18_Rb_tree_node_baseRKi.exit.i.i
+_ZNSt3setIiSt4lessIiESaIiEE4findERKi.exit.thread.a: ; preds = %_ZNSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE14_M_lower_boundEPSt13_Rb_tree_nodeIiEPSt18_Rb_tree_node_baseRKi.exit.i.i
   %4 = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 32
   %5 = load i32, ptr %4, align 4, !tbaa !46
-  %6 = icmp slt i32 %1, %5
-  br i1 %6, label %.thread, label %.critedge
-
-_ZNSt3setIiSt4lessIiESaIiEE4findERKi.exit.thread.a: ; preds = %bb.a
+  %6 = icmp sge i32 %1, %5
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.i = load i32, ptr %i.h, align 8, !tbaa !125
+  %i.i = load i32, ptr %i.h, align 8
   %i.j = icmp eq i32 %1, %i.i
-  br i1 %i.j, label %.critedge, label %._crit_edge.thread.i.i.i
+  %or.cond = select i1 %6, i1 true, i1 %i.j
+  br i1 %or.cond, label %.critedge, label %.lr.ph.i.i.i10.preheader
 
-_ZNSt3setIiSt4lessIiESaIiEE4findERKi.exit.thread.thread.a: ; preds = %_ZNSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE14_M_lower_boundEPSt13_Rb_tree_nodeIiEPSt18_Rb_tree_node_baseRKi.exit.i.i
+_ZNSt3setIiSt4lessIiESaIiEE4findERKi.exit.thread.thread.a: ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.l = load i32, ptr %i.k, align 8, !tbaa !125
   %i.m = icmp eq i32 %1, %i.l
-  br i1 %i.m, label %.critedge, label %.lr.ph.i.i.i10.preheader
+  br i1 %i.m, label %.critedge, label %._crit_edge.thread.i.i.i
 
-.thread:                                          ; preds = %_ZNSt3setIiSt4lessIiESaIiEE4findERKi.exit
+.thread:                                          ; preds = %_ZNSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE14_M_lower_boundEPSt13_Rb_tree_nodeIiEPSt18_Rb_tree_node_baseRKi.exit.i.i
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.o = load i32, ptr %i.n, align 8, !tbaa !125
   %i.p = icmp eq i32 %1, %i.o
   br i1 %i.p, label %.critedge, label %.lr.ph.i.i.i10.preheader
 
-.lr.ph.i.i.i10.preheader:                         ; preds = %_ZNSt3setIiSt4lessIiESaIiEE4findERKi.exit.thread.thread.a, %.thread
+.lr.ph.i.i.i10.preheader:                         ; preds = %_ZNSt3setIiSt4lessIiESaIiEE4findERKi.exit.thread.a, %.thread
   br label %.lr.ph.i.i.i10
 
 .lr.ph.i.i.i10:                                   ; preds = %.lr.ph.i.i.i10.preheader, %.lr.ph.i.i.i10
@@ -265,8 +263,8 @@ _ZNSt3setIiSt4lessIiESaIiEE4findERKi.exit.thread.thread.a: ; preds = %_ZNSt8_Rb_
 ._crit_edge.i.i.i:                                ; preds = %.lr.ph.i.i.i10
   br i1 %i.s, label %._crit_edge.thread.i.i.i, label %bb.c
 
-._crit_edge.thread.i.i.i:                         ; preds = %_ZNSt3setIiSt4lessIiESaIiEE4findERKi.exit.thread.a, %._crit_edge.i.i.i
-  %.019.lcssa29.i.i.i = phi ptr [ %.02024.i.i.i, %._crit_edge.i.i.i ], [ %i.c, %_ZNSt3setIiSt4lessIiESaIiEE4findERKi.exit.thread.a ] ; 4 uses
+._crit_edge.thread.i.i.i:                         ; preds = %_ZNSt3setIiSt4lessIiESaIiEE4findERKi.exit.thread.thread.a, %._crit_edge.i.i.i
+  %.019.lcssa29.i.i.i = phi ptr [ %.02024.i.i.i, %._crit_edge.i.i.i ], [ %i.c, %_ZNSt3setIiSt4lessIiESaIiEE4findERKi.exit.thread.thread.a ] ; 4 uses
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !104
   %i.v = icmp eq ptr %.019.lcssa29.i.i.i, %i.u
@@ -401,7 +399,7 @@ _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIP
   store ptr %i.bs, ptr %i.ax, align 8, !tbaa !75
   br label %.critedge
 
-.critedge:                                        ; preds = %_ZNSt3setIiSt4lessIiESaIiEE4findERKi.exit.thread.thread.a, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i, %bb.i, %.thread, %_ZNSt3setIiSt4lessIiESaIiEE4findERKi.exit, %_ZNSt3setIiSt4lessIiESaIiEE4findERKi.exit.thread.a
+.critedge:                                        ; preds = %.thread, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i, %bb.i, %_ZNSt3setIiSt4lessIiESaIiEE4findERKi.exit.thread.a, %_ZNSt3setIiSt4lessIiESaIiEE4findERKi.exit.thread.thread.a
   ret void
 }
 

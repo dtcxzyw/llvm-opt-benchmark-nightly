@@ -204,32 +204,26 @@ bb.t:                                             ; preds = %_ZNSt6vectorIN2cv5R
   br i1 %i.bi, label %bb.u, label %.thread.i36
 
 bb.u:                                             ; preds = %bb.t
-  %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 84 ; 2 uses
+  %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 84
   %i.bk = icmp eq i32 %i.ba, 2
   %i.bl = zext i1 %i.bk to i64
   %i.bm = getelementptr inbounds nuw [4 x i8], ptr %i.bj, i64 %i.bl
-  %i.bn = load i32, ptr %i.bm, align 4, !tbaa !20 ; 2 uses
-  %.not.i32 = icmp eq i32 %i.ba, 1
-  br i1 %.not.i32, label %.thread59, label %13
+  %i.bn = load i32, ptr %i.bm, align 4, !tbaa !20
+  br label %_ZNK2cv8MatShapeclEv.exit42
 
 .thread.i36:                                      ; preds = %bb.t
   %i.bo = icmp eq i32 %i.ba, 0
   %.sroa.0.0.insert.ext.i = zext i1 %i.bo to i32
-  br label %.thread59
-
-13:                                               ; preds = %bb.u
-  %14 = load i32, ptr %i.bj, align 4, !tbaa !20
   br label %_ZNK2cv8MatShapeclEv.exit42
 
-.thread59:                                        ; preds = %bb.u, %.thread.i36
-  %.sroa.01.0.extract.trunc51 = phi i32 [ %.sroa.0.0.insert.ext.i, %.thread.i36 ], [ %i.bn, %bb.u ]
-  %15 = icmp sgt i32 %i.ba, -1
-  %16 = zext i1 %15 to i32
-  br label %_ZNK2cv8MatShapeclEv.exit42
-
-_ZNK2cv8MatShapeclEv.exit42:                      ; preds = %13, %.thread59
-  %.sroa.01.0.extract.trunc50 = phi i32 [ %i.bn, %13 ], [ %.sroa.01.0.extract.trunc51, %.thread59 ]
-  %17 = phi i32 [ %14, %13 ], [ %16, %.thread59 ]
+_ZNK2cv8MatShapeclEv.exit42:                      ; preds = %.thread.i36, %bb.u
+  %.sroa.01.0.extract.trunc50 = phi i32 [ %i.bn, %bb.u ], [ %.sroa.0.0.insert.ext.i, %.thread.i36 ]
+  %13 = icmp eq i32 %i.ba, 2
+  %14 = getelementptr inbounds nuw i8, ptr %1, i64 84
+  %15 = load i32, ptr %14, align 4
+  %16 = icmp sgt i32 %i.ba, -1
+  %17 = zext i1 %16 to i32
+  %18 = select i1 %13, i32 %15, i32 %17
   %i.bp = load ptr, ptr %3, align 8, !tbaa !47    ; 4 uses
   store i32 0, ptr %i.bp, align 4, !tbaa !20
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bp, i64 4
@@ -237,7 +231,7 @@ _ZNK2cv8MatShapeclEv.exit42:                      ; preds = %13, %.thread59
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
   store i32 %.sroa.01.0.extract.trunc50, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !20
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bp, i64 12
-  store i32 %17, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !20
+  store i32 %18, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !20
   br label %bb.v
 
 bb.v:                                             ; preds = %_ZNK2cv8MatShapeclEv.exit42, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit30

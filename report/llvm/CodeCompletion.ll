@@ -202,17 +202,15 @@ _ZN5clang12Preprocessor23getCodeCompletionFilterEv.exit: ; preds = %bb.a, %bb.b
   %.sroa.0.0.i = phi ptr [ %i.j, %bb.b ], [ null, %bb.a ]
   %.sroa.4.0.i = phi i64 [ %i.l, %bb.b ], [ 0, %bb.a ] ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %.sroa.0.0.copyload.i.a = load i64, ptr %i.m, align 8, !tbaa !1380
-  %i.n = icmp ult i64 %.sroa.0.0.copyload.i.a, 16
-  br i1 %i.n, label %3, label %.critedge
-
-3:                                                ; preds = %_ZN5clang12Preprocessor23getCodeCompletionFilterEv.exit
+  %.sroa.0.0.copyload.i = load i64, ptr %i.m, align 8, !tbaa !1380
+  %3 = icmp ult i64 %.sroa.0.0.copyload.i, 16
   %4 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.sroa.0.0.copyload.i4 = load i64, ptr %4, align 8, !tbaa !1380
-  %5 = icmp ult i64 %.sroa.0.0.copyload.i4, 16
-  br i1 %5, label %bb.c, label %.critedge
+  %.sroa.0.0.copyload.i.a = load i64, ptr %4, align 8
+  %i.n = icmp ult i64 %.sroa.0.0.copyload.i.a, 16
+  %or.cond = select i1 %3, i1 %i.n, i1 false
+  br i1 %or.cond, label %bb.c, label %.critedge
 
-bb.c:                                             ; preds = %3
+bb.c:                                             ; preds = %_ZN5clang12Preprocessor23getCodeCompletionFilterEv.exit
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !1380 ; 6 uses
   %.not.i6 = icmp eq ptr %i.p, null               ; 2 uses
@@ -341,7 +339,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #21
   br label %.critedge
 
-.critedge:                                        ; preds = %_ZN4llvm9StringRefC2EPKc.exit, %_ZN5clang12Preprocessor23getCodeCompletionFilterEv.exit, %_ZNK4llvm9StringRef11starts_withES0_.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %3
+.critedge:                                        ; preds = %_ZN4llvm9StringRefC2EPKc.exit, %_ZN5clang12Preprocessor23getCodeCompletionFilterEv.exit, %_ZNK4llvm9StringRef11starts_withES0_.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   ret void
 }
 
