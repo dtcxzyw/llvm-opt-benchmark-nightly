@@ -1,0 +1,241 @@
+diff --git a/llvm/include/llvm/Analysis/ScalarEvolution.h b/llvm/include/llvm/Analysis/ScalarEvolution.h
+index 7fddd4ca4119f..175e60e192aa4 100644
+--- a/llvm/include/llvm/Analysis/ScalarEvolution.h
++++ b/llvm/include/llvm/Analysis/ScalarEvolution.h
+@@ -116,6 +116,13 @@ enum class SCEVNoWrapFlags {
+   LLVM_MARK_AS_BITMASK_ENUM(/*LargestValue=*/NoWrapMask)
+ };
+ 
++enum class SCEVExactFlags {
++  FlagAnyExact = 0,
++  FlagExact = (1 << 0),
++  ExactMask = (1 << 1) - 1,
++  LLVM_MARK_AS_BITMASK_ENUM(/*LargestValue=*/ExactMask)
++};
++
+ class SCEV;
+ 
+ template <typename SCEVPtrT = const SCEV *>
+@@ -294,11 +301,13 @@ class SCEV : public FoldingSetNode {
+ 
+ public:
+   using NoWrapFlags = SCEVNoWrapFlags;
++  using ExactFlags = SCEVExactFlags;
+   static constexpr auto FlagAnyWrap = SCEVNoWrapFlags::FlagAnyWrap;
+   static constexpr auto FlagNW = SCEVNoWrapFlags::FlagNW;
+   static constexpr auto FlagNUW = SCEVNoWrapFlags::FlagNUW;
+   static constexpr auto FlagNSW = SCEVNoWrapFlags::FlagNSW;
+   static constexpr auto NoWrapMask = SCEVNoWrapFlags::NoWrapMask;
++  static constexpr auto FlagExact = SCEVExactFlags::FlagExact;
+ 
+   explicit SCEV(const FoldingSetNodeIDRef ID, SCEVTypes SCEVTy,
+                 unsigned short ExpressionSize, Type *Ty)
+@@ -788,7 +797,8 @@ class ScalarEvolution {
+     SmallVector<SCEVUse, 3> Ops = {Op0, Op1, Op2};
+     return getMulExpr(Ops, Flags, Depth);
+   }
+-  LLVM_ABI const SCEV *getUDivExpr(SCEVUse LHS, SCEVUse RHS);
++  LLVM_ABI const SCEV *getUDivExpr(SCEVUse LHS, SCEVUse RHS,
++                                   bool IsExact = false);
+   LLVM_ABI const SCEV *getUDivExactExpr(SCEVUse LHS, SCEVUse RHS);
+   LLVM_ABI const SCEV *getURemExpr(SCEVUse LHS, SCEVUse RHS);
+   LLVM_ABI SCEVUse getAddRecExpr(SCEVUse Start, SCEVUse Step, const Loop *L,
+@@ -2547,8 +2557,10 @@ class ScalarEvolution {
+   const SCEV *getOrCreateAddRecExpr(ArrayRef<SCEVUse> Ops, const Loop *L,
+                                     SCEV::NoWrapFlags Flags);
+ 
+-  // Get UDiv expression already created or create a new one.
+-  const SCEV *getOrCreateUDivExpr(SCEVUse LHS, SCEVUse RHS);
++  /// Get UDiv expression already created or create a new one. Create an exact
++  /// one if \p IsExact.
++  const SCEV *getOrCreateUDivExpr(SCEVUse LHS, SCEVUse RHS,
++                                  bool IsExact = false);
+ 
+   /// Return x if \p Val is f(x) where f is a 1-1 function.
+   const SCEV *stripInjectiveFunctions(const SCEV *Val) const;
+diff --git a/llvm/include/llvm/Analysis/ScalarEvolutionExpressions.h b/llvm/include/llvm/Analysis/ScalarEvolutionExpressions.h
+index ace050bd2c2c1..dc852f4506cf0 100644
+--- a/llvm/include/llvm/Analysis/ScalarEvolutionExpressions.h
++++ b/llvm/include/llvm/Analysis/ScalarEvolutionExpressions.h
+@@ -317,6 +317,18 @@ class SCEVUDivExpr : public SCEV {
+ 
+   ArrayRef<SCEVUse> operands() const { return Operands; }
+ 
++  ExactFlags getExactFlags() const {
++    return static_cast<ExactFlags>(SubclassData);
++  }
++
++  bool isExact() const {
++    return getExactFlags() == SCEV::FlagExact;
++  }
++
++  void setIsExact() {
++    SubclassData = static_cast<unsigned short>(SCEV::FlagExact);
++  }
++
+   /// Methods for support type inquiry through isa, cast, and dyn_cast:
+   static bool classof(const SCEV *S) { return S->getSCEVType() == scUDivExpr; }
+ };
+diff --git a/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h b/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h
+index c98c0cb52fa9c..e1597d36bcef5 100644
+--- a/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h
++++ b/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h
+@@ -470,7 +470,8 @@ class SCEVExpander : public SCEVUseVisitor<SCEVExpander, Value *> {
+   /// avoid inserting an obviously redundant operation, and hoisting to an
+   /// outer loop when the opportunity is there and it is safe.
+   Value *InsertBinop(Instruction::BinaryOps Opcode, Value *LHS, Value *RHS,
+-                     SCEV::NoWrapFlags Flags, bool IsSafeToHoist);
++                     std::variant<SCEV::NoWrapFlags, SCEV::ExactFlags> Flags,
++                     bool IsSafeToHoist);
+ 
+   /// We want to cast \p V. What would be the best place for such a cast?
+   BasicBlock::iterator GetOptimalInsertionPointForCastOf(Value *V) const;
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 50e0170b55089..73215dd18a550 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -3057,7 +3057,8 @@ const SCEV *ScalarEvolution::getOrCreateMulExpr(ArrayRef<SCEVUse> Ops,
+   return S;
+ }
+ 
+-const SCEV *ScalarEvolution::getOrCreateUDivExpr(SCEVUse LHS, SCEVUse RHS) {
++const SCEV *ScalarEvolution::getOrCreateUDivExpr(SCEVUse LHS, SCEVUse RHS,
++                                                 bool IsExact) {
+   FoldingSetNodeID ID;
+   ID.AddInteger(scUDivExpr);
+   ID.AddPointer(LHS.getOpaqueValue());
+@@ -3070,6 +3071,8 @@ const SCEV *ScalarEvolution::getOrCreateUDivExpr(SCEVUse LHS, SCEVUse RHS) {
+     S->computeAndSetCanonical(*this);
+     registerUser(S, {LHS, RHS});
+   }
++  if (IsExact)
++    cast<SCEVUDivExpr>(S)->setIsExact();
+   return S;
+ }
+ 
+@@ -3472,7 +3475,7 @@ const SCEV *ScalarEvolution::getURemExpr(SCEVUse LHS, SCEVUse RHS) {
+ 
+ /// Get a canonical unsigned division expression, or something simpler if
+ /// possible.
+-const SCEV *ScalarEvolution::getUDivExpr(SCEVUse LHS, SCEVUse RHS) {
++const SCEV *ScalarEvolution::getUDivExpr(SCEVUse LHS, SCEVUse RHS, bool IsExact) {
+   assert(!LHS->getType()->isPointerTy() &&
+          "SCEVUDivExpr operand can't be pointer!");
+   assert(LHS->getType() == RHS->getType() &&
+@@ -3666,16 +3669,11 @@ const SCEV *ScalarEvolution::getUDivExpr(SCEVUse LHS, SCEVUse RHS) {
+       match(RHS, m_scev_c_NUWMul(m_SCEV(NewRHS), m_SCEVVScale())))
+     return getUDivExpr(NewLHS, NewRHS);
+ 
+-  return getOrCreateUDivExpr(LHS, RHS);
++  return getOrCreateUDivExpr(LHS, RHS, IsExact);
+ }
+ 
+-/// Get a canonical unsigned division expression, or something simpler if
+-/// possible. There is no representation for an exact udiv in SCEV IR, but we
+-/// can attempt to optimize it prior to construction.
+ const SCEV *ScalarEvolution::getUDivExactExpr(SCEVUse LHS, SCEVUse RHS) {
+-  // Currently there is no exact specific logic.
+-
+-  return getUDivExpr(LHS, RHS);
++  return getUDivExpr(LHS, RHS, /*IsExact=*/true);
+ }
+ 
+ /// Get an add recurrence expression for the specified loop.  Simplify the
+@@ -5201,6 +5199,7 @@ struct BinaryOp {
+   Value *RHS;
+   bool IsNSW = false;
+   bool IsNUW = false;
++  bool IsExact = false;
+ 
+   /// Op is set if this BinaryOp corresponds to a concrete LLVM instruction or
+   /// constant expression.
+@@ -5213,6 +5212,8 @@ struct BinaryOp {
+       IsNSW = OBO->hasNoSignedWrap();
+       IsNUW = OBO->hasNoUnsignedWrap();
+     }
++    if (auto *PEO = dyn_cast<PossiblyExactOperator>(Op))
++      IsExact = PEO->isExact();
+   }
+ 
+   explicit BinaryOp(unsigned Opcode, Value *LHS, Value *RHS, bool IsNSW = false,
+@@ -7942,7 +7943,7 @@ const SCEV *ScalarEvolution::createSCEV(Value *V) {
+     case Instruction::UDiv:
+       LHS = getSCEV(BO->LHS);
+       RHS = getSCEV(BO->RHS);
+-      return getUDivExpr(LHS, RHS);
++      return getUDivExpr(LHS, RHS, BO->IsExact);
+     case Instruction::URem:
+       LHS = getSCEV(BO->LHS);
+       RHS = getSCEV(BO->RHS);
+diff --git a/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp b/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
+index f01a674609325..50b933da80f40 100644
+--- a/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
++++ b/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
+@@ -276,9 +276,10 @@ Value *SCEVExpander::InsertNoopCastOfTo(Value *V, Type *Ty) {
+ /// InsertBinop - Insert the specified binary operator, doing a small amount
+ /// of work to avoid inserting an obviously redundant operation, and hoisting
+ /// to an outer loop when the opportunity is there and it is safe.
+-Value *SCEVExpander::InsertBinop(Instruction::BinaryOps Opcode,
+-                                 Value *LHS, Value *RHS,
+-                                 SCEV::NoWrapFlags Flags, bool IsSafeToHoist) {
++Value *SCEVExpander::InsertBinop(
++    Instruction::BinaryOps Opcode, Value *LHS, Value *RHS,
++    std::variant<SCEV::NoWrapFlags, SCEV::ExactFlags> Flags,
++    bool IsSafeToHoist) {
+   // Fold a binop with constant operands.
+   if (Constant *CLHS = dyn_cast<Constant>(LHS))
+     if (Constant *CRHS = dyn_cast<Constant>(RHS))
+@@ -296,14 +297,14 @@ Value *SCEVExpander::InsertBinop(Instruction::BinaryOps Opcode,
+       auto canGenerateIncompatiblePoison = [&Flags](Instruction *I) {
+         // Ensure that no-wrap flags match.
+         if (isa<OverflowingBinaryOperator>(I)) {
+-          if (I->hasNoSignedWrap() != any(Flags & SCEV::FlagNSW))
++          if (I->hasNoSignedWrap() != any(std::get<SCEV::NoWrapFlags>(Flags) & SCEV::FlagNSW))
+             return true;
+-          if (I->hasNoUnsignedWrap() != any(Flags & SCEV::FlagNUW))
++          if (I->hasNoUnsignedWrap() != any(std::get<SCEV::NoWrapFlags>(Flags) & SCEV::FlagNUW))
+             return true;
+         }
+-        // Conservatively, do not use any instruction which has any of exact
+-        // flags installed.
+-        if (isa<PossiblyExactOperator>(I) && I->isExact())
++        if (isa<PossiblyExactOperator>(I) &&
++            I->isExact() !=
++                any(std::get<SCEV::ExactFlags>(Flags) & SCEV::FlagExact))
+           return true;
+         return false;
+       };
+@@ -332,8 +333,13 @@ Value *SCEVExpander::InsertBinop(Instruction::BinaryOps Opcode,
+ 
+   // If we haven't found this binop, insert it.
+   Builder.SetCurrentDebugLocation(Loc);
+-  bool IsNUW = any(Flags & SCEV::FlagNUW);
+-  bool IsNSW = any(Flags & SCEV::FlagNSW);
++  bool IsNUW = false, IsNSW = false, IsExact = false;
++  if (std::holds_alternative<SCEV::NoWrapFlags>(Flags)) {
++    IsNUW = any(std::get<SCEV::NoWrapFlags>(Flags) & SCEV::FlagNUW);
++    IsNSW = any(std::get<SCEV::NoWrapFlags>(Flags) & SCEV::FlagNSW);
++  } else {
++    IsExact = any(std::get<SCEV::ExactFlags>(Flags) & SCEV::FlagExact);
++  }
+   // Don't use folder when expanding post-inc rewrites in LSRMode to preserve
+   // the rewrites.
+   if (LSRMode && !PostIncLoops.empty() &&
+@@ -345,6 +351,8 @@ Value *SCEVExpander::InsertBinop(Instruction::BinaryOps Opcode,
+       BO->setHasNoUnsignedWrap();
+     if (IsNSW)
+       BO->setHasNoSignedWrap();
++    if (IsExact)
++      BO->setIsExact();
+     return Builder.Insert(BO);
+   }
+   return Builder.CreateNoWrapBinOp(Opcode, LHS, RHS, IsNUW, IsNSW);
+@@ -741,7 +749,7 @@ Value *SCEVExpander::visitUDivExpr(SCEVUseT<const SCEVUDivExpr *> S) {
+       RHS = Builder.CreateIntrinsic(RHS->getType(), Intrinsic::umax,
+                                     {RHS, ConstantInt::get(RHS->getType(), 1)});
+   }
+-  return InsertBinop(Instruction::UDiv, LHS, RHS, SCEV::FlagAnyWrap,
++  return InsertBinop(Instruction::UDiv, LHS, RHS, S->getExactFlags(),
+                      /*IsSafeToHoist*/ SE.isKnownNonZero(S->getRHS()));
+ }
+ 
