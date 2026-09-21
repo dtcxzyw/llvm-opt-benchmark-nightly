@@ -1,0 +1,366 @@
+diff --git a/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp b/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp
+index 716c73a7c63b3..e2c2dbdbd2257 100644
+--- a/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp
++++ b/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp
+@@ -6472,6 +6472,7 @@ void LoopVectorizationPlanner::buildVPlans(VPlan &VPlan1, ElementCount MinVF,
+     RUN_VPLAN_PASS(VPlanTransforms::sinkPredicatedStores, *Plan, PSE, OrigLoop);
+     RUN_VPLAN_PASS(VPlanTransforms::truncateToMinimalBitwidths, *Plan,
+                    Config.getMinimalBitwidths());
++    RUN_VPLAN_PASS(VPlanTransforms::narrowMinMaxReductions, *Plan);
+     RUN_VPLAN_PASS(VPlanTransforms::optimize, *Plan);
+     // TODO: try to put addExplicitVectorLength close to addActiveLaneMask
+     if (CM->foldTailWithEVL()) {
+@@ -7461,6 +7462,18 @@ static SmallVector<Instruction *> preparePlanForEpilogueVectorLoop(
+             InstsToMove.push_back(I);
+         }
+       } else {
++        // If the reduction has been narrowed to a smaller type (see
++        // VPlanTransforms::narrowMinMaxReductions), the resume value from the
++        // main vector loop is still in the original, wider type. Truncate it
++        // to match the narrowed reduction phi.
++        if (Type *RdxTy = ReductionPhi->getScalarType();
++            ResumeV->getType() != RdxTy) {
++          auto *ResumeI = cast<Instruction>(ResumeV);
++          IRBuilder<> Builder(ResumeI->getParent(),
++                              ResumeI->getParent()->getFirstNonPHIIt());
++          ResumeV = Builder.CreateTrunc(ResumeV, RdxTy);
++          InstsToMove.push_back(cast<Instruction>(ResumeV));
++        }
+         VPValue *StartVal = Plan.getOrAddLiveIn(ResumeV);
+         auto *PhiR = dyn_cast<VPReductionPHIRecipe>(&R);
+         if (auto *VPI = dyn_cast<VPInstruction>(PhiR->getStartValue())) {
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp b/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp
+index 3515a791292da..8ad0c38714472 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp
++++ b/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp
+@@ -2621,6 +2621,167 @@ void VPlanTransforms::truncateToMinimalBitwidths(
+   }
+ }
+ 
++/// Try to narrow the min/max reduction \p PhiR to a smaller integer type. The
++/// value of a min/max reduction is always one of its inputs (the start value or
++/// one of the values reduced in the loop), so if all of those provably fit into
++/// a narrower type, the whole reduction can be performed in that type. Returns
++/// true if \p PhiR was narrowed.
++static bool narrowMinMaxReduction(VPlan &Plan, VPReductionPHIRecipe *PhiR) {
++  RecurKind Kind = PhiR->getRecurrenceKind();
++  bool IsSigned;
++  switch (Kind) {
++  case RecurKind::UMin:
++  case RecurKind::UMax:
++    IsSigned = false;
++    break;
++  case RecurKind::SMin:
++  case RecurKind::SMax:
++    IsSigned = true;
++    break;
++  default:
++    return false;
++  }
++
++  // Only handle plain out-of-loop reductions; in-loop, ordered, partial and
++  // multi-use reductions (argmin/argmax) need extra care.
++  if (PhiR->isInLoop() || PhiR->isPartialReduction() ||
++      PhiR->hasUsesOutsideReductionChain())
++    return false;
++
++  Type *OldTy = PhiR->getScalarType();
++  if (!OldTy->isIntegerTy())
++    return false;
++
++  // The start value must be a constant, so we know how many bits it needs.
++  const APInt *StartC;
++  if (!match(PhiR->getStartValue(), m_APInt(StartC)))
++    return false;
++  unsigned MinBW =
++      IsSigned ? StartC->getSignificantBits() : StartC->getActiveBits();
++
++  // Collect the min/max recipes forming the reduction chain, together with the
++  // values fed into it. Recipes in the chain must not have users outside the
++  // chain, except for the final one feeding the reduction result.
++  Intrinsic::ID MinMaxID = getMinMaxReductionIntrinsicOp(Kind);
++  VPValue *BackedgeVal = PhiR->getBackedgeValue();
++  SmallPtrSet<VPRecipeBase *, 4> Chain;
++  SmallVector<VPValue *> Inputs;
++  SmallPtrSet<VPValue *, 8> Visited;
++  SmallVector<VPValue *> Worklist = {BackedgeVal};
++  bool FoundPhi = false;
++  while (!Worklist.empty()) {
++    VPValue *Cur = Worklist.pop_back_val();
++    if (Cur == PhiR) {
++      FoundPhi = true;
++      continue;
++    }
++    if (!Visited.insert(Cur).second)
++      continue;
++    auto *MinMaxR =
++        dyn_cast_or_null<VPWidenIntrinsicRecipe>(Cur->getDefiningRecipe());
++    if (MinMaxR && MinMaxR->getVectorIntrinsicID() == MinMaxID &&
++        (Cur == BackedgeVal || Cur->hasOneUse())) {
++      Chain.insert(MinMaxR);
++      append_range(Worklist, MinMaxR->operands());
++      continue;
++    }
++    Inputs.push_back(Cur);
++  }
++  // The phi itself must only be used by the chain.
++  if (!FoundPhi || Chain.empty() || any_of(PhiR->users(), [&Chain](VPUser *U) {
++        return !Chain.contains(dyn_cast<VPRecipeBase>(U));
++      }))
++    return false;
++
++  // Determine how many bits the values reduced in the loop need. Only handle
++  // extends and constants for now; both narrow back without extra cost.
++  auto ExtOpc = IsSigned ? Instruction::SExt : Instruction::ZExt;
++  for (VPValue *In : Inputs) {
++    const APInt *C;
++    if (match(In, m_APInt(C))) {
++      MinBW = std::max<unsigned>(MinBW, IsSigned ? C->getSignificantBits()
++                                                 : C->getActiveBits());
++      continue;
++    }
++    auto *Ext = dyn_cast_or_null<VPWidenCastRecipe>(In->getDefiningRecipe());
++    if (!Ext || Ext->getOpcode() != ExtOpc)
++      return false;
++    MinBW = std::max<unsigned>(
++        MinBW, Ext->getOperand(0)->getScalarType()->getScalarSizeInBits());
++  }
++
++  unsigned NewBW = std::max<unsigned>(8, bit_ceil(MinBW));
++  if (NewBW >= OldTy->getScalarSizeInBits())
++    return false;
++  auto *NewTy = IntegerType::get(Plan.getContext(), NewBW);
++
++  VPInstruction *RdxResult = vputils::findComputeReductionResult(PhiR);
++  if (!RdxResult)
++    return false;
++
++  // Build the narrowed reduction, starting with the phi. Its backedge value is
++  // filled in once the narrowed chain has been created.
++  VPValue *NewStart = Plan.getConstantInt(StartC->trunc(NewBW));
++  auto *NewPhiR = PhiR->cloneWithOperands(NewStart, NewStart);
++  NewPhiR->insertBefore(PhiR);
++
++  DenseMap<VPValue *, VPValue *> Narrowed;
++  Narrowed[PhiR] = NewPhiR;
++  std::function<VPValue *(VPValue *)> Narrow = [&](VPValue *V) -> VPValue * {
++    VPValue *&Res = Narrowed[V];
++    if (Res)
++      return Res;
++    auto *Def = V->getDefiningRecipe();
++    if (Chain.contains(Def)) {
++      auto *MinMaxR = cast<VPWidenIntrinsicRecipe>(Def);
++      SmallVector<VPValue *> NewOps;
++      for (VPValue *Op : MinMaxR->operands())
++        NewOps.push_back(Narrow(Op));
++      auto *NewMinMaxR = new VPWidenIntrinsicRecipe(
++          MinMaxID, NewOps, NewTy, *MinMaxR, *MinMaxR, MinMaxR->getDebugLoc());
++      NewMinMaxR->insertBefore(MinMaxR);
++      Res = NewMinMaxR;
++    } else if (const APInt *C; match(V, m_APInt(C))) {
++      Res = Plan.getConstantInt(C->trunc(NewBW));
++    } else {
++      // Truncate the extended input back; the trunc/ext pair is folded away by
++      // recipe simplification. Insert right after the extend, so the truncate
++      // dominates all uses in the chain.
++      Res = VPBuilder::getToInsertAfter(Def).createWidenCast(Instruction::Trunc,
++                                                             V, NewTy);
++    }
++    return Res;
++  };
++  VPValue *NewBackedgeVal = Narrow(BackedgeVal);
++  NewPhiR->setOperand(1, NewBackedgeVal);
++
++  // Finally compute the reduction result in the narrow type and extend it back
++  // to the original type for users outside the vector loop.
++  auto *NewRdxResult = RdxResult->cloneWithOperands({NewBackedgeVal});
++  NewRdxResult->insertBefore(RdxResult);
++  VPValue *Res = VPBuilder(RdxResult).createScalarCast(
++      ExtOpc, NewRdxResult, OldTy, RdxResult->getDebugLoc());
++  RdxResult->replaceAllUsesWith(Res);
++  RdxResult->eraseFromParent();
++  // The original phi and chain are now dead; they are removed by
++  // removeDeadRecipes.
++  return true;
++}
++
++void VPlanTransforms::narrowMinMaxReductions(VPlan &Plan) {
++  if (Plan.hasScalarVFOnly())
++    return;
++  VPRegionBlock *LoopRegion = Plan.getVectorLoopRegion();
++  if (!LoopRegion)
++    return;
++  SmallVector<VPRecipeBase *> Phis(
++      make_pointer_range(LoopRegion->getEntryBasicBlock()->phis()));
++  for (VPRecipeBase *R : Phis) {
++    if (auto *PhiR = dyn_cast<VPReductionPHIRecipe>(R))
++      narrowMinMaxReduction(Plan, PhiR);
++  }
++}
++
+ bool VPlanTransforms::removeBranchOnConst(VPlan &Plan, bool OnlyLatches) {
+   std::optional<VPDominatorTree> VPDT;
+   if (OnlyLatches)
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanTransforms.h b/llvm/lib/Transforms/Vectorize/VPlanTransforms.h
+index 6e5a2184270a5..62523c1566a59 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanTransforms.h
++++ b/llvm/lib/Transforms/Vectorize/VPlanTransforms.h
+@@ -316,6 +316,12 @@ struct VPlanTransforms {
+   truncateToMinimalBitwidths(VPlan &Plan,
+                              const MapVector<Instruction *, uint64_t> &MinBWs);
+ 
++  /// Narrow integer min/max reductions to the smallest type their values
++  /// provably fit into. For example, a umin/umax reduction over values
++  /// zero-extended from i8 with an i8 start value is performed on i8 lanes,
++  /// which avoids the extends and allows a larger VF.
++  static void narrowMinMaxReductions(VPlan &Plan);
++
+   /// Check \p Plan's live-ins and replace them with constants, if they can be
+   /// simplified via SCEV.
+   static void simplifyLiveInsWithSCEV(VPlan &Plan,
+diff --git a/llvm/test/Transforms/LoopVectorize/VPlan/vplan-print-before-after-all.ll b/llvm/test/Transforms/LoopVectorize/VPlan/vplan-print-before-after-all.ll
+index fe71cee7c3492..9ff4ed0cb7b67 100644
+--- a/llvm/test/Transforms/LoopVectorize/VPlan/vplan-print-before-after-all.ll
++++ b/llvm/test/Transforms/LoopVectorize/VPlan/vplan-print-before-after-all.ll
+@@ -47,6 +47,7 @@
+ ; CHECK: VPlan for loop in 'foo' [[BEFORE_OR_AFTER]] VPlanTransforms::hoistPredicatedLoads
+ ; CHECK: VPlan for loop in 'foo' [[BEFORE_OR_AFTER]] VPlanTransforms::sinkPredicatedStores
+ ; CHECK: VPlan for loop in 'foo' [[BEFORE_OR_AFTER]] VPlanTransforms::truncateToMinimalBitwidths
++; CHECK: VPlan for loop in 'foo' [[BEFORE_OR_AFTER]] VPlanTransforms::narrowMinMaxReductions
+ ; CHECK-BEFORE: VPlan for loop in 'foo' [[BEFORE_OR_AFTER]] VPlanTransforms::optimize
+ ; CHECK: VPlan for loop in 'foo' [[BEFORE_OR_AFTER]] removeRedundantInductionCasts
+ ; CHECK: VPlan for loop in 'foo' [[BEFORE_OR_AFTER]] reassociateHeaderMask
+diff --git a/llvm/test/Transforms/LoopVectorize/narrow-minmax-reduction.ll b/llvm/test/Transforms/LoopVectorize/narrow-minmax-reduction.ll
+new file mode 100644
+index 0000000000000..f283bf0c083d8
+--- /dev/null
++++ b/llvm/test/Transforms/LoopVectorize/narrow-minmax-reduction.ll
+@@ -0,0 +1,128 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -p loop-vectorize -force-vector-width=16 -force-vector-interleave=1 -S %s | FileCheck %s
++
++target datalayout = "e-m:o-i64:64-i128:128-n32:64-S128"
++
++; umin/umax reductions over zero-extended i8 values with i8 start values should
++; be performed on i8 lanes.
++define void @umin_umax_i8(ptr %p, i64 %n, ptr %out) {
++; CHECK-LABEL: define void @umin_umax_i8(
++; CHECK:       vector.body:
++; CHECK:         [[VEC_PHI:%.*]] = phi <16 x i8> [ splat (i8 -1), %vector.ph ], [ [[TMP2:%.*]], %vector.body ]
++; CHECK:         [[VEC_PHI1:%.*]] = phi <16 x i8> [ zeroinitializer, %vector.ph ], [ [[TMP3:%.*]], %vector.body ]
++; CHECK:         [[WIDE_LOAD:%.*]] = load <16 x i8>, ptr {{.*}}, align 1
++; CHECK:         [[TMP2]] = call <16 x i8> @llvm.umin.v16i8(<16 x i8> [[VEC_PHI]], <16 x i8> [[WIDE_LOAD]])
++; CHECK:         [[TMP3]] = call <16 x i8> @llvm.umax.v16i8(<16 x i8> [[VEC_PHI1]], <16 x i8> [[WIDE_LOAD]])
++; CHECK:       middle.block:
++; CHECK:         [[TMP5:%.*]] = call i8 @llvm.vector.reduce.umin.v16i8(<16 x i8> [[TMP2]])
++; CHECK:         zext i8 [[TMP5]] to i32
++; CHECK:         [[TMP7:%.*]] = call i8 @llvm.vector.reduce.umax.v16i8(<16 x i8> [[TMP3]])
++; CHECK:         zext i8 [[TMP7]] to i32
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  %lo = phi i32 [ 255, %entry ], [ %lo.next, %loop ]
++  %hi = phi i32 [ 0, %entry ], [ %hi.next, %loop ]
++  %gep = getelementptr inbounds i8, ptr %p, i64 %iv
++  %v = load i8, ptr %gep, align 1
++  %c = zext i8 %v to i32
++  %lo.next = call i32 @llvm.umin.i32(i32 %lo, i32 %c)
++  %hi.next = call i32 @llvm.umax.i32(i32 %hi, i32 %c)
++  %iv.next = add nuw nsw i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, %n
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  %lo.lcssa = phi i32 [ %lo.next, %loop ]
++  %hi.lcssa = phi i32 [ %hi.next, %loop ]
++  %shl = shl i32 %hi.lcssa, 16
++  %res = add i32 %shl, %lo.lcssa
++  store i32 %res, ptr %out, align 4
++  ret void
++}
++
++; The start value of the umin reduction does not fit into i8, so the reduction
++; is only narrowed to i16.
++define void @umin_start_too_wide(ptr %p, i64 %n, ptr %out) {
++; CHECK-LABEL: define void @umin_start_too_wide(
++; CHECK:         call <16 x i16> @llvm.umin.v16i16(
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  %lo = phi i32 [ 256, %entry ], [ %lo.next, %loop ]
++  %gep = getelementptr inbounds i8, ptr %p, i64 %iv
++  %v = load i8, ptr %gep, align 1
++  %c = zext i8 %v to i32
++  %lo.next = call i32 @llvm.umin.i32(i32 %lo, i32 %c)
++  %iv.next = add nuw nsw i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, %n
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  %lo.lcssa = phi i32 [ %lo.next, %loop ]
++  store i32 %lo.lcssa, ptr %out, align 4
++  ret void
++}
++
++; smin/smax reductions over sign-extended i8 values are narrowed as well.
++define void @smin_smax_i8(ptr %p, i64 %n, ptr %out) {
++; CHECK-LABEL: define void @smin_smax_i8(
++; CHECK:         call <16 x i8> @llvm.smin.v16i8(
++; CHECK:         call <16 x i8> @llvm.smax.v16i8(
++; CHECK:         [[R0:%.*]] = call i8 @llvm.vector.reduce.smin.v16i8(
++; CHECK:         sext i8 [[R0]] to i32
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  %lo = phi i32 [ 127, %entry ], [ %lo.next, %loop ]
++  %hi = phi i32 [ -128, %entry ], [ %hi.next, %loop ]
++  %gep = getelementptr inbounds i8, ptr %p, i64 %iv
++  %v = load i8, ptr %gep, align 1
++  %c = sext i8 %v to i32
++  %lo.next = call i32 @llvm.smin.i32(i32 %lo, i32 %c)
++  %hi.next = call i32 @llvm.smax.i32(i32 %hi, i32 %c)
++  %iv.next = add nuw nsw i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, %n
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  %lo.lcssa = phi i32 [ %lo.next, %loop ]
++  %hi.lcssa = phi i32 [ %hi.next, %loop ]
++  %res = add i32 %lo.lcssa, %hi.lcssa
++  store i32 %res, ptr %out, align 4
++  ret void
++}
++
++; A zext from i16 keeps the reduction at i16.
++define void @umax_i16(ptr %p, i64 %n, ptr %out) {
++; CHECK-LABEL: define void @umax_i16(
++; CHECK:         call <16 x i16> @llvm.umax.v16i16(
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  %hi = phi i32 [ 0, %entry ], [ %hi.next, %loop ]
++  %gep = getelementptr inbounds i16, ptr %p, i64 %iv
++  %v = load i16, ptr %gep, align 2
++  %c = zext i16 %v to i32
++  %hi.next = call i32 @llvm.umax.i32(i32 %hi, i32 %c)
++  %iv.next = add nuw nsw i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, %n
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  %hi.lcssa = phi i32 [ %hi.next, %loop ]
++  store i32 %hi.lcssa, ptr %out, align 4
++  ret void
++}
