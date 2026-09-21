@@ -205,8 +205,8 @@ _RNvXs4_NtCsf3Ta7LF998c_4core6optionINtB5_6OptionNtNtCsltEA4u8Pgfu_11candle_core
   %i.aho = icmp eq i64 %i.ahh, 0
   br i1 %i.aho, label %.loopexit, label %.lr.ph.i105
 
-.loopexit:                                        ; preds = %_RNvXs4_NtCsf3Ta7LF998c_4core6optionINtB5_6OptionNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorENtNtB7_5clone5Clone5cloneCs1dZk1kIfPhr_19candle_transformers.exit.i, %.lr.ph.i105, %bb.ky
-  %.sroa.5277.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.ky ], [ %i.ahe, %.lr.ph.i105 ], [ %i.ahe, %_RNvXs4_NtCsf3Ta7LF998c_4core6optionINtB5_6OptionNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorENtNtB7_5clone5Clone5cloneCs1dZk1kIfPhr_19candle_transformers.exit.i ]
+.loopexit:                                        ; preds = %.lr.ph.i105, %_RNvXs4_NtCsf3Ta7LF998c_4core6optionINtB5_6OptionNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorENtNtB7_5clone5Clone5cloneCs1dZk1kIfPhr_19candle_transformers.exit.i, %bb.ky
+  %.sroa.5277.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.ky ], [ %i.ahe, %_RNvXs4_NtCsf3Ta7LF998c_4core6optionINtB5_6OptionNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorENtNtB7_5clone5Clone5cloneCs1dZk1kIfPhr_19candle_transformers.exit.i ], [ %i.ahe, %.lr.ph.i105 ]
   store i64 %.val81, ptr %i.ed, align 8, !noalias !38376
   %.sroa.5277.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ed, i64 8 ; 6 uses
   store ptr %.sroa.5277.0, ptr %.sroa.5277.0..sroa_idx, align 8, !noalias !38376

@@ -205,8 +205,7 @@ _ZZN7openvdb5v13_04tree8NodeListINS1_12InternalNodeINS0_6points17PointDataLeafNo
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr void @_ZNK7openvdb5v13_05tools16TolerancePruneOpINS0_4tree4TreeINS3_8RootNodeINS3_12InternalNodeINS6_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEEEEELj0EEclERSE_(ptr noundef nonnull align 4 dereferenceable(4) %0, ptr noundef nonnull align 8 dereferenceable(68) %1) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.0.i = alloca i32, align 4                ; 6 uses
-  %2 = alloca %"struct.openvdb::v13_0::PointIndex", align 4 ; 8 uses
+  %2 = alloca %"struct.openvdb::v13_0::PointIndex", align 4 ; 7 uses
   %3 = alloca %"class.openvdb::v13_0::math::Coord", align 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
   store i32 0, ptr %2, align 4, !tbaa !2526
@@ -246,7 +245,6 @@ bb.c:                                             ; preds = %.lr.ph, %_ZN7openvd
   %.sroa.5.021 = phi ptr [ %.sroa.2.1.i, %.lr.ph ], [ %.sroa.5.3, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEE9ChildIterISB_St17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENSB_10NodeStructEEENSB_11ChildOnPredESA_EppEv.exit ] ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.sroa.5.021, i64 48
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !692  ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 262144 ; 2 uses
   br label %bb.h
 
@@ -254,19 +252,19 @@ bb.d:                                             ; preds = %bb.h
   %i.k = getelementptr inbounds nuw i8, ptr %.0.i.i.i41, i64 8
   %i.l = load i64, ptr %i.k, align 8, !tbaa !513
   %i.m = icmp eq i64 %i.l, 0
-  br i1 %i.m, label %bb.e, label %_ZNK7openvdb5v13_05tools16TolerancePruneOpINS0_4tree4TreeINS3_8RootNodeINS3_12InternalNodeINS6_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEEEEELj0EE10isConstantISD_EENSt9enable_ifIXntsr3std7is_sameIbNT_9ValueTypeEEE5valueEbE4typeERSJ_RSA_Rb.exit.thread, !llvm.loop !136
+  br i1 %i.m, label %bb.e, label %bb.s, !llvm.loop !136
 
 bb.e:                                             ; preds = %bb.d
   %i.n = getelementptr inbounds nuw i8, ptr %.0.i.i.i41, i64 16
   %i.o = load i64, ptr %i.n, align 8, !tbaa !513
   %i.p = icmp eq i64 %i.o, 0
-  br i1 %i.p, label %bb.f, label %_ZNK7openvdb5v13_05tools16TolerancePruneOpINS0_4tree4TreeINS3_8RootNodeINS3_12InternalNodeINS6_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEEEEELj0EE10isConstantISD_EENSt9enable_ifIXntsr3std7is_sameIbNT_9ValueTypeEEE5valueEbE4typeERSJ_RSA_Rb.exit.thread, !llvm.loop !136
+  br i1 %i.p, label %bb.f, label %bb.s, !llvm.loop !136
 
 bb.f:                                             ; preds = %bb.e
   %i.q = getelementptr inbounds nuw i8, ptr %.0.i.i.i41, i64 24
   %i.r = load i64, ptr %i.q, align 8, !tbaa !513
   %i.s = icmp eq i64 %i.r, 0
-  br i1 %i.s, label %bb.g, label %_ZNK7openvdb5v13_05tools16TolerancePruneOpINS0_4tree4TreeINS3_8RootNodeINS3_12InternalNodeINS6_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEEEEELj0EE10isConstantISD_EENSt9enable_ifIXntsr3std7is_sameIbNT_9ValueTypeEEE5valueEbE4typeERSJ_RSA_Rb.exit.thread, !llvm.loop !136
+  br i1 %i.s, label %bb.g, label %bb.s, !llvm.loop !136
 
 bb.g:                                             ; preds = %bb.f
   %i.t = getelementptr inbounds nuw i8, ptr %.0.i.i.i41, i64 32
@@ -279,7 +277,7 @@ bb.h:                                             ; preds = %bb.g, %bb.c
   %.03.i.i.i40 = phi i32 [ 512, %bb.c ], [ %i.u, %bb.g ]
   %i.v = load i64, ptr %.0.i.i.i41, align 8, !tbaa !513
   %i.w = icmp eq i64 %i.v, 0
-  br i1 %i.w, label %bb.d, label %_ZNK7openvdb5v13_05tools16TolerancePruneOpINS0_4tree4TreeINS3_8RootNodeINS3_12InternalNodeINS6_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEEEEELj0EE10isConstantISD_EENSt9enable_ifIXntsr3std7is_sameIbNT_9ValueTypeEEE5valueEbE4typeERSJ_RSA_Rb.exit.thread, !llvm.loop !136
+  br i1 %i.w, label %bb.d, label %bb.s, !llvm.loop !136
 
 bb.i:                                             ; preds = %bb.g
   %i.x = getelementptr inbounds nuw i8, ptr %i.i, i64 266240 ; 5 uses
@@ -287,28 +285,28 @@ bb.i:                                             ; preds = %bb.g
   %i.z = icmp eq i64 %i.y, -1
   %.off = add i64 %i.y, -1
   %switch = icmp ult i64 %.off, -2
-  br i1 %switch, label %_ZNK7openvdb5v13_05tools16TolerancePruneOpINS0_4tree4TreeINS3_8RootNodeINS3_12InternalNodeINS6_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEEEEELj0EE10isConstantISD_EENSt9enable_ifIXntsr3std7is_sameIbNT_9ValueTypeEEE5valueEbE4typeERSJ_RSA_Rb.exit.thread, label %.preheader.i.i.i
+  br i1 %switch, label %bb.s, label %.preheader.i.i.i
 
 .preheader.i.i.i:                                 ; preds = %bb.i, %bb.k
   %.0.idx12.i.i.i = phi i64 [ %.0.add.i.i.i.3, %bb.k ], [ 8, %bb.i ] ; 6 uses
   %.0.ptr.i.i.i = getelementptr inbounds nuw i8, ptr %i.x, i64 %.0.idx12.i.i.i
   %i.aa = load i64, ptr %.0.ptr.i.i.i, align 8, !tbaa !513
   %i.ab = icmp eq i64 %i.aa, %i.y
-  br i1 %i.ab, label %.preheader.i.i.i.1, label %_ZNK7openvdb5v13_05tools16TolerancePruneOpINS0_4tree4TreeINS3_8RootNodeINS3_12InternalNodeINS6_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEEEEELj0EE10isConstantISD_EENSt9enable_ifIXntsr3std7is_sameIbNT_9ValueTypeEEE5valueEbE4typeERSJ_RSA_Rb.exit.thread
+  br i1 %i.ab, label %.preheader.i.i.i.1, label %bb.s
 
 .preheader.i.i.i.1:                               ; preds = %.preheader.i.i.i
   %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 %.0.idx12.i.i.i
   %.0.ptr.i.i.i.1 = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   %i.ad = load i64, ptr %.0.ptr.i.i.i.1, align 8, !tbaa !513
   %i.ae = icmp eq i64 %i.ad, %i.y
-  br i1 %i.ae, label %.preheader.i.i.i.2, label %_ZNK7openvdb5v13_05tools16TolerancePruneOpINS0_4tree4TreeINS3_8RootNodeINS3_12InternalNodeINS6_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEEEEELj0EE10isConstantISD_EENSt9enable_ifIXntsr3std7is_sameIbNT_9ValueTypeEEE5valueEbE4typeERSJ_RSA_Rb.exit.thread
+  br i1 %i.ae, label %.preheader.i.i.i.2, label %bb.s
 
 .preheader.i.i.i.2:                               ; preds = %.preheader.i.i.i.1
   %i.af = getelementptr inbounds nuw i8, ptr %i.x, i64 %.0.idx12.i.i.i
   %.0.ptr.i.i.i.2 = getelementptr inbounds nuw i8, ptr %i.af, i64 16
   %i.ag = load i64, ptr %.0.ptr.i.i.i.2, align 8, !tbaa !513
   %i.ah = icmp eq i64 %i.ag, %i.y
-  br i1 %i.ah, label %bb.j, label %_ZNK7openvdb5v13_05tools16TolerancePruneOpINS0_4tree4TreeINS3_8RootNodeINS3_12InternalNodeINS6_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEEEEELj0EE10isConstantISD_EENSt9enable_ifIXntsr3std7is_sameIbNT_9ValueTypeEEE5valueEbE4typeERSJ_RSA_Rb.exit.thread
+  br i1 %i.ah, label %bb.j, label %bb.s
 
 bb.j:                                             ; preds = %.preheader.i.i.i.2
   %i.ai = icmp samesign ult i64 %.0.idx12.i.i.i, 4072
@@ -319,24 +317,23 @@ bb.j:                                             ; preds = %.preheader.i.i.i.2
   %.0.ptr.i.i.i.3 = getelementptr inbounds nuw i8, ptr %i.aj, i64 24
   %i.ak = load i64, ptr %.0.ptr.i.i.i.3, align 8, !tbaa !513
   %i.al = icmp eq i64 %i.ak, %i.y
-  br i1 %i.al, label %bb.k, label %_ZNK7openvdb5v13_05tools16TolerancePruneOpINS0_4tree4TreeINS3_8RootNodeINS3_12InternalNodeINS6_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEEEEELj0EE10isConstantISD_EENSt9enable_ifIXntsr3std7is_sameIbNT_9ValueTypeEEE5valueEbE4typeERSJ_RSA_Rb.exit.thread
+  br i1 %i.al, label %bb.k, label %bb.s
 
 bb.k:                                             ; preds = %.preheader.i.i.i.3
   %.0.add.i.i.i.3 = add nuw nsw i64 %.0.idx12.i.i.i, 32
   br label %.preheader.i.i.i
 
 bb.l:                                             ; preds = %bb.j
-  %i.am = load i32, ptr %i.i, align 8, !tbaa !464 ; 4 uses
-  store i32 %i.am, ptr %.sroa.0.i, align 4, !tbaa !464
+  %i.am = load i32, ptr %i.i, align 8, !tbaa !464 ; 3 uses
   store i32 %i.am, ptr %2, align 4, !tbaa !464
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.q, %bb.l
-  %i.an = phi i32 [ %i.am, %bb.l ], [ %4, %bb.q ] ; 3 uses
-  %.sroa.0.0..sroa.0.0..sroa.0.0..i = phi i32 [ %i.am, %bb.l ], [ %.sroa.0.0..sroa.0.0..sroa.0.0.14.i, %bb.q ] ; 3 uses
+  %i.an = phi i32 [ %i.am, %bb.l ], [ %4, %bb.q ] ; 4 uses
+  %.sroa.0.0..sroa.0.0..sroa.0.0..i = phi i32 [ %i.am, %bb.l ], [ %.sroa.0.1.i, %bb.q ] ; 4 uses
   %indvars.iv.i.i = phi i64 [ 1, %bb.l ], [ %indvars.iv.next.i.i, %bb.q ] ; 2 uses
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.i.i
-  %i.ap = load i32, ptr %i.ao, align 4, !tbaa !2526 ; 5 uses
+  %i.ap = load i32, ptr %i.ao, align 4, !tbaa !2526 ; 7 uses
   %i.aq = icmp ult i32 %i.ap, %i.an
   br i1 %i.aq, label %bb.n, label %bb.o
 
@@ -344,7 +341,7 @@ bb.n:                                             ; preds = %bb.m
   %i.ar = sub i32 %.sroa.0.0..sroa.0.0..sroa.0.0..i, %i.ap
   %i.as = load i32, ptr %0, align 4, !tbaa !2526
   %i.at = icmp ugt i32 %i.ar, %i.as
-  br i1 %i.at, label %_ZNK7openvdb5v13_05tools16TolerancePruneOpINS0_4tree4TreeINS3_8RootNodeINS3_12InternalNodeINS6_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEEEEELj0EE10isConstantISD_EENSt9enable_ifIXntsr3std7is_sameIbNT_9ValueTypeEEE5valueEbE4typeERSJ_RSA_Rb.exit.thread, label %.sink.split.i.i.a
+  br i1 %i.at, label %bb.s, label %.sink.split.i.i.a
 
 bb.o:                                             ; preds = %bb.m
   %i.au = icmp ugt i32 %i.ap, %.sroa.0.0..sroa.0.0..sroa.0.0..i
@@ -354,32 +351,24 @@ bb.p:                                             ; preds = %bb.o
   %i.av = sub nuw i32 %i.ap, %i.an
   %i.aw = load i32, ptr %0, align 4, !tbaa !2526
   %i.ax = icmp ugt i32 %i.av, %i.aw
-  br i1 %i.ax, label %_ZNK7openvdb5v13_05tools16TolerancePruneOpINS0_4tree4TreeINS3_8RootNodeINS3_12InternalNodeINS6_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEEEEELj0EE10isConstantISD_EENSt9enable_ifIXntsr3std7is_sameIbNT_9ValueTypeEEE5valueEbE4typeERSJ_RSA_Rb.exit.thread, label %.sink.split.i.i.a
+  br i1 %i.ax, label %bb.s, label %bb.q
 
-.sink.split.i.i.a:                                ; preds = %bb.p, %bb.n
-  %.sink.i.i = phi ptr [ %2, %bb.n ], [ %.sroa.0.i, %bb.p ]
-  store i32 %i.ap, ptr %.sink.i.i, align 4, !tbaa !464
-  %.sroa.0.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..sroa.0.0..pre.i = load i32, ptr %.sroa.0.i, align 4, !tbaa !2526
-  %.pre = load i32, ptr %2, align 4, !tbaa !2526
+.sink.split.i.i.a:                                ; preds = %bb.n
+  store i32 %i.ap, ptr %2, align 4, !tbaa !464
   br label %bb.q
 
-bb.q:                                             ; preds = %.sink.split.i.i.a, %bb.o
-  %4 = phi i32 [ %.pre, %.sink.split.i.i.a ], [ %i.an, %bb.o ]
-  %.sroa.0.0..sroa.0.0..sroa.0.0.14.i = phi i32 [ %.sroa.0.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..sroa.0.0..pre.i, %.sink.split.i.i.a ], [ %.sroa.0.0..sroa.0.0..sroa.0.0..i, %bb.o ]
+bb.q:                                             ; preds = %.sink.split.i.i.a, %bb.p, %bb.o
+  %4 = phi i32 [ %i.an, %bb.o ], [ %i.ap, %.sink.split.i.i.a ], [ %i.an, %bb.p ]
+  %.sroa.0.1.i = phi i32 [ %.sroa.0.0..sroa.0.0..sroa.0.0..i, %bb.o ], [ %.sroa.0.0..sroa.0.0..sroa.0.0..i, %.sink.split.i.i.a ], [ %i.ap, %bb.p ]
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %exitcond.i.i = icmp eq i64 %indvars.iv.next.i.i, 32768
   br i1 %exitcond.i.i, label %bb.r, label %bb.m, !llvm.loop !6864
-
-_ZNK7openvdb5v13_05tools16TolerancePruneOpINS0_4tree4TreeINS3_8RootNodeINS3_12InternalNodeINS6_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEEEEELj0EE10isConstantISD_EENSt9enable_ifIXntsr3std7is_sameIbNT_9ValueTypeEEE5valueEbE4typeERSJ_RSA_Rb.exit.thread: ; preds = %bb.h, %bb.d, %bb.e, %bb.f, %.preheader.i.i.i, %.preheader.i.i.i.1, %.preheader.i.i.i.2, %.preheader.i.i.i.3, %bb.p, %bb.n, %bb.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
-  br label %bb.s
 
 bb.r:                                             ; preds = %bb.q
   %i.ay = getelementptr inbounds nuw i8, ptr %i.i, i64 131064 ; 2 uses
   call void @_ZSt13__introselectIPN7openvdb5v13_04tree9NodeUnionINS1_10PointIndexIjLj1EEENS2_12InternalNodeINS1_6points17PointDataLeafNodeIS5_Lj3EEELj4EEEvEElN9__gnu_cxx5__ops15_Iter_comp_iterIZNKS1_5tools16TolerancePruneOpINS2_4TreeINS2_8RootNodeINS6_ISA_Lj5EEEEEEELj0EE6medianISK_EENT_9ValueTypeERSP_EUlRKSB_ST_E_EEEvSP_SP_SP_T0_T1_(ptr noundef nonnull align 8 dereferenceable(270352) %i.i, ptr noundef nonnull %i.ay, ptr noundef nonnull %i.j, i64 noundef 30)
   %.sroa.0.0.copyload.i.i = load i32, ptr %i.ay, align 8, !tbaa !464
   store i32 %.sroa.0.0.copyload.i.i, ptr %2, align 4, !tbaa !464
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
   %i.az = getelementptr inbounds nuw i8, ptr %.sroa.5.021, i64 32
   %.sroa.01.0.copyload.i = load i64, ptr %i.az, align 8
@@ -391,7 +380,7 @@ bb.r:                                             ; preds = %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #21
   br label %bb.s
 
-bb.s:                                             ; preds = %bb.r, %_ZNK7openvdb5v13_05tools16TolerancePruneOpINS0_4tree4TreeINS3_8RootNodeINS3_12InternalNodeINS6_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEEEEELj0EE10isConstantISD_EENSt9enable_ifIXntsr3std7is_sameIbNT_9ValueTypeEEE5valueEbE4typeERSJ_RSA_Rb.exit.thread
+bb.s:                                             ; preds = %bb.h, %bb.d, %bb.e, %bb.f, %.preheader.i.i.i, %.preheader.i.i.i.1, %.preheader.i.i.i.2, %.preheader.i.i.i.3, %bb.p, %bb.n, %bb.r, %bb.i
   %i.ba = call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef %.sroa.5.021) #32 ; 3 uses
   %.not2.i.i.i7 = icmp eq ptr %i.ba, %i.c
   br i1 %.not2.i.i.i7, label %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEE9ChildIterISB_St17_Rb_tree_iteratorISt4pairIKNS0_4math5CoordENSB_10NodeStructEEENSB_11ChildOnPredESA_EppEv.exit, label %.lr.ph.i.i.i8
@@ -794,11 +783,8 @@ _ZN3tbb6detail2d19start_forIN7openvdb5v13_04tree8NodeListINS5_12InternalNodeINS7
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr void @_ZNK7openvdb5v13_05tools16TolerancePruneOpINS0_4tree4TreeINS3_8RootNodeINS3_12InternalNodeINS6_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEEEEELj0EEclISD_EEvRT_(ptr noundef nonnull align 4 dereferenceable(4) %0, ptr noundef nonnull align 8 dereferenceable(270352) %1) local_unnamed_addr #3 comdat align 2 {
 bb.a:
-  %.sroa.0.i = alloca i32, align 4                ; 6 uses
-  %.sroa.0 = alloca i32, align 4                  ; 6 uses
   %i.a = alloca i8, align 1                       ; 4 uses
   %2 = alloca %"struct.openvdb::v13_0::tree::InternalNode<openvdb::v13_0::tree::InternalNode<openvdb::v13_0::points::PointDataLeafNode<openvdb::v13_0::PointIndex<unsigned int, 1>, 3>, 4>, 5>::ChildIter", align 8 ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6900)
@@ -870,7 +856,6 @@ _ZN7openvdb5v13_04tree12InternalNodeINS2_INS0_6points17PointDataLeafNodeINS0_10P
 ._crit_edge:                                      ; preds = %bb.f, %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EE7addTileEjRKS6_b.exit, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEEppEv.exit, %.lr.ph.i.i.i.i.preheader, %.lr.ph.i.i.i.i, %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EE12beginChildOnEv.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   ret void
 
 bb.g:                                             ; preds = %.lr.ph, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEEppEv.exit
@@ -879,28 +864,25 @@ bb.g:                                             ; preds = %.lr.ph, %_ZN7openvd
   %i.w = zext i32 %i.u to i64
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %i.w
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !485  ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 32768 ; 2 uses
   %i.aa = call noundef zeroext i1 @_ZNK7openvdb5v13_04util8NodeMaskILj4EE5isOffEv(ptr noundef nonnull align 8 dereferenceable(512) %i.z)
-  br i1 %i.aa, label %bb.h, label %_ZNK7openvdb5v13_05tools16TolerancePruneOpINS0_4tree4TreeINS3_8RootNodeINS3_12InternalNodeINS6_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEEEEELj0EE10isConstantISC_EENSt9enable_ifIXntsr3std7is_sameIbNT_9ValueTypeEEE5valueEbE4typeERSJ_RSA_Rb.exit.thread
+  br i1 %i.aa, label %bb.h, label %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EE7addTileEjRKS6_b.exit
 
 bb.h:                                             ; preds = %bb.g
   %i.ab = getelementptr inbounds nuw i8, ptr %i.y, i64 33280
   %i.ac = call noundef zeroext i1 @_ZNK7openvdb5v13_04util8NodeMaskILj4EE10isConstantERb(ptr noundef nonnull align 8 dereferenceable(512) %i.ab, ptr noundef nonnull align 1 dereferenceable(1) %i.a)
-  br i1 %i.ac, label %bb.i, label %_ZNK7openvdb5v13_05tools16TolerancePruneOpINS0_4tree4TreeINS3_8RootNodeINS3_12InternalNodeINS6_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEEEEELj0EE10isConstantISC_EENSt9enable_ifIXntsr3std7is_sameIbNT_9ValueTypeEEE5valueEbE4typeERSJ_RSA_Rb.exit.thread
+  br i1 %i.ac, label %bb.i, label %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EE7addTileEjRKS6_b.exit
 
 bb.i:                                             ; preds = %bb.h
-  %i.ad = load i32, ptr %i.y, align 4, !tbaa !464 ; 4 uses
-  store i32 %i.ad, ptr %.sroa.0.i, align 4, !tbaa !464
-  store i32 %i.ad, ptr %.sroa.0, align 4, !tbaa !464
+  %i.ad = load i32, ptr %i.y, align 4, !tbaa !464 ; 2 uses
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.n, %bb.i
-  %.sroa.0.0..sroa.0.0..sroa.0.0. = phi i32 [ %i.ad, %bb.i ], [ %.sroa.0.0..sroa.0.0..sroa.0.0.14, %bb.n ] ; 3 uses
-  %.sroa.0.0..sroa.0.0..sroa.0.0..i = phi i32 [ %i.ad, %bb.i ], [ %.sroa.0.0..sroa.0.0..sroa.0.0.10.i, %bb.n ] ; 3 uses
+  %.sroa.0.0..sroa.0.0..sroa.0.0. = phi i32 [ %i.ad, %bb.i ], [ %3, %bb.n ] ; 4 uses
+  %.sroa.0.0..sroa.0.0..sroa.0.0..i = phi i32 [ %i.ad, %bb.i ], [ %.sroa.0.1.i, %bb.n ] ; 4 uses
   %indvars.iv.i.i = phi i64 [ 1, %bb.i ], [ %indvars.iv.next.i.i, %bb.n ] ; 2 uses
   %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %indvars.iv.i.i
-  %i.af = load i32, ptr %i.ae, align 4, !tbaa !2526 ; 5 uses
+  %i.af = load i32, ptr %i.ae, align 4, !tbaa !2526 ; 6 uses
   %i.ag = icmp ult i32 %i.af, %.sroa.0.0..sroa.0.0..sroa.0.0.
   br i1 %i.ag, label %bb.k, label %bb.l
 
@@ -908,7 +890,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ah = sub i32 %.sroa.0.0..sroa.0.0..sroa.0.0..i, %i.af
   %i.ai = load i32, ptr %0, align 4, !tbaa !2526
   %i.aj = icmp ugt i32 %i.ah, %i.ai
-  br i1 %i.aj, label %_ZNK7openvdb5v13_05tools16TolerancePruneOpINS0_4tree4TreeINS3_8RootNodeINS3_12InternalNodeINS6_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEEEEELj0EE10isConstantISC_EENSt9enable_ifIXntsr3std7is_sameIbNT_9ValueTypeEEE5valueEbE4typeERSJ_RSA_Rb.exit.thread, label %.sink.split.i.i
+  br i1 %i.aj, label %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EE7addTileEjRKS6_b.exit, label %bb.n
 
 bb.l:                                             ; preds = %bb.j
   %i.ak = icmp ugt i32 %i.af, %.sroa.0.0..sroa.0.0..sroa.0.0..i
@@ -918,32 +900,19 @@ bb.m:                                             ; preds = %bb.l
   %i.al = sub nuw i32 %i.af, %.sroa.0.0..sroa.0.0..sroa.0.0.
   %i.am = load i32, ptr %0, align 4, !tbaa !2526
   %i.an = icmp ugt i32 %i.al, %i.am
-  br i1 %i.an, label %_ZNK7openvdb5v13_05tools16TolerancePruneOpINS0_4tree4TreeINS3_8RootNodeINS3_12InternalNodeINS6_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEEEEELj0EE10isConstantISC_EENSt9enable_ifIXntsr3std7is_sameIbNT_9ValueTypeEEE5valueEbE4typeERSJ_RSA_Rb.exit.thread, label %.sink.split.i.i
+  br i1 %i.an, label %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EE7addTileEjRKS6_b.exit, label %bb.n
 
-.sink.split.i.i:                                  ; preds = %bb.m, %bb.k
-  %.sink.i.i = phi ptr [ %.sroa.0, %bb.k ], [ %.sroa.0.i, %bb.m ]
-  store i32 %i.af, ptr %.sink.i.i, align 4, !tbaa !464
-  %.sroa.0.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..sroa.0.0..pre.i = load i32, ptr %.sroa.0.i, align 4, !tbaa !2526
-  %.sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0..pre = load i32, ptr %.sroa.0, align 4, !tbaa !2526
-  br label %bb.n
-
-bb.n:                                             ; preds = %.sink.split.i.i, %bb.l
-  %.sroa.0.0..sroa.0.0..sroa.0.0.14 = phi i32 [ %.sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0..pre, %.sink.split.i.i ], [ %.sroa.0.0..sroa.0.0..sroa.0.0., %bb.l ]
-  %.sroa.0.0..sroa.0.0..sroa.0.0.10.i = phi i32 [ %.sroa.0.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..sroa.0.0..pre.i, %.sink.split.i.i ], [ %.sroa.0.0..sroa.0.0..sroa.0.0..i, %bb.l ]
+bb.n:                                             ; preds = %bb.k, %bb.m, %bb.l
+  %3 = phi i32 [ %.sroa.0.0..sroa.0.0..sroa.0.0., %bb.l ], [ %.sroa.0.0..sroa.0.0..sroa.0.0., %bb.m ], [ %i.af, %bb.k ]
+  %.sroa.0.1.i = phi i32 [ %.sroa.0.0..sroa.0.0..sroa.0.0..i, %bb.l ], [ %i.af, %bb.m ], [ %.sroa.0.0..sroa.0.0..sroa.0.0..i, %bb.k ]
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %exitcond.i.i = icmp eq i64 %indvars.iv.next.i.i, 4096
   br i1 %exitcond.i.i, label %bb.o, label %bb.j, !llvm.loop !6898
 
-_ZNK7openvdb5v13_05tools16TolerancePruneOpINS0_4tree4TreeINS3_8RootNodeINS3_12InternalNodeINS6_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEEEEELj0EE10isConstantISC_EENSt9enable_ifIXntsr3std7is_sameIbNT_9ValueTypeEEE5valueEbE4typeERSJ_RSA_Rb.exit.thread: ; preds = %bb.m, %bb.k, %bb.g, %bb.h
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
-  br label %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EE7addTileEjRKS6_b.exit
-
 bb.o:                                             ; preds = %bb.n
   %i.ao = getelementptr inbounds nuw i8, ptr %i.y, i64 16376 ; 2 uses
   call void @_ZSt13__introselectIPN7openvdb5v13_04tree9NodeUnionINS1_10PointIndexIjLj1EEENS1_6points17PointDataLeafNodeIS5_Lj3EEEvEElN9__gnu_cxx5__ops15_Iter_comp_iterIZNKS1_5tools16TolerancePruneOpINS2_4TreeINS2_8RootNodeINS2_12InternalNodeINSI_IS8_Lj4EEELj5EEEEEEELj0EE6medianISJ_EENT_9ValueTypeERSP_EUlRKS9_ST_E_EEEvSP_SP_SP_T0_T1_(ptr noundef nonnull align 8 dereferenceable(33808) %i.y, ptr noundef nonnull %i.ao, ptr noundef nonnull %i.z, i64 noundef 24)
-  %.sroa.0.0.copyload.i.i = load i32, ptr %i.ao, align 4, !tbaa !464 ; 3 uses
-  store i32 %.sroa.0.0.copyload.i.i, ptr %.sroa.0, align 4, !tbaa !464
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
+  %.sroa.0.0.copyload.i.i = load i32, ptr %i.ao, align 4, !tbaa !464 ; 2 uses
   %i.ap = load i32, ptr %i.s, align 8, !tbaa !1630 ; 3 uses
   %i.aq = load i8, ptr %i.a, align 1, !tbaa !514, !range !512, !noundef !528
   %i.ar = trunc nuw i8 %i.aq to i1
@@ -996,7 +965,7 @@ bb.r:                                             ; preds = %_ZN7openvdb5v13_04t
   store i64 %i.bm, ptr %i.bk, align 8, !tbaa !513
   br label %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EE7addTileEjRKS6_b.exit
 
-_ZN7openvdb5v13_04tree12InternalNodeINS2_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EE7addTileEjRKS6_b.exit: ; preds = %bb.r, %bb.q, %_ZNK7openvdb5v13_05tools16TolerancePruneOpINS0_4tree4TreeINS3_8RootNodeINS3_12InternalNodeINS6_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEEEEELj0EE10isConstantISC_EENSt9enable_ifIXntsr3std7is_sameIbNT_9ValueTypeEEE5valueEbE4typeERSJ_RSA_Rb.exit.thread
+_ZN7openvdb5v13_04tree12InternalNodeINS2_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EE7addTileEjRKS6_b.exit: ; preds = %bb.k, %bb.m, %bb.h, %bb.g, %bb.r, %bb.q
   %i.bn = load ptr, ptr %.sroa.41.0..sroa_idx.i, align 8, !tbaa !1629 ; 2 uses
   %i.bo = load i32, ptr %i.s, align 8, !tbaa !1630
   %i.bp = add i32 %i.bo, 1                        ; 4 uses

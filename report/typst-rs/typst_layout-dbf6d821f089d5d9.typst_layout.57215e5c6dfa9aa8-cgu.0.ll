@@ -205,8 +205,8 @@ bb.e:                                             ; preds = %bb.c
   %i.ah = icmp eq i64 %i.f, 0
   br i1 %i.ah, label %_RINvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inNtNtNtCs7tN9tvpkfrg_12typst_layout6inline7shaping11ShapedGlyphNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBQ_.exit, label %.lr.ph.i
 
-_RINvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inNtNtNtCs7tN9tvpkfrg_12typst_layout6inline7shaping11ShapedGlyphNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBQ_.exit: ; preds = %.lr.ph.i, %bb.e, %bb.a
-  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.c, %bb.e ], [ %i.c, %.lr.ph.i ]
+_RINvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inNtNtNtCs7tN9tvpkfrg_12typst_layout6inline7shaping11ShapedGlyphNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBQ_.exit: ; preds = %bb.e, %.lr.ph.i, %bb.a
+  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.c, %.lr.ph.i ], [ %i.c, %bb.e ]
   store i64 %2, ptr %0, align 8, !noalias !50133
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.5.0, ptr %.sroa.5.0..sroa_idx, align 8, !noalias !50133

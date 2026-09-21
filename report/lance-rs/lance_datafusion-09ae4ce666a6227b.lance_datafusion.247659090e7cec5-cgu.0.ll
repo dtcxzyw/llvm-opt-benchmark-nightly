@@ -205,8 +205,8 @@ _RNvXsx_NtCs1Jc0oVeks7E_15datafusion_expr21higher_order_functionINtB5_13ValueOrL
   %i.dy = icmp eq i64 %i.dq, 0
   br i1 %i.dy, label %_RINvXNvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inINtNtCs1Jc0oVeks7E_15datafusion_expr21higher_order_function13ValueOrLambdaINtNtB8_4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema5field5FieldEuENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsc85D0lJ81Z_16lance_datafusion.exit, label %.lr.ph.i
 
-_RINvXNvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inINtNtCs1Jc0oVeks7E_15datafusion_expr21higher_order_function13ValueOrLambdaINtNtB8_4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema5field5FieldEuENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsc85D0lJ81Z_16lance_datafusion.exit: ; preds = %.lr.ph.i, %_RNvXsx_NtCs1Jc0oVeks7E_15datafusion_expr21higher_order_functionINtB5_13ValueOrLambdaINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema5field5FieldEuENtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCsc85D0lJ81Z_16lance_datafusion.exit.i, %bb.m
-  %.sroa.5484.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.m ], [ %i.dn, %_RNvXsx_NtCs1Jc0oVeks7E_15datafusion_expr21higher_order_functionINtB5_13ValueOrLambdaINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema5field5FieldEuENtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCsc85D0lJ81Z_16lance_datafusion.exit.i ], [ %i.dn, %.lr.ph.i ]
+_RINvXNvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inINtNtCs1Jc0oVeks7E_15datafusion_expr21higher_order_function13ValueOrLambdaINtNtB8_4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema5field5FieldEuENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsc85D0lJ81Z_16lance_datafusion.exit: ; preds = %_RNvXsx_NtCs1Jc0oVeks7E_15datafusion_expr21higher_order_functionINtB5_13ValueOrLambdaINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema5field5FieldEuENtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCsc85D0lJ81Z_16lance_datafusion.exit.i, %.lr.ph.i, %bb.m
+  %.sroa.5484.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.m ], [ %i.dn, %.lr.ph.i ], [ %i.dn, %_RNvXsx_NtCs1Jc0oVeks7E_15datafusion_expr21higher_order_functionINtB5_13ValueOrLambdaINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema5field5FieldEuENtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCsc85D0lJ81Z_16lance_datafusion.exit.i ]
   %i.dz = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %2, ptr %i.dz, align 8
   %.sroa.4487.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -609,8 +609,8 @@ _RNvXsx_NtCs1Jc0oVeks7E_15datafusion_expr21higher_order_functionINtB5_13ValueOrL
   %i.iy = icmp eq i64 %i.iq, 0
   br i1 %i.iy, label %_RINvXNvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inINtNtCs1Jc0oVeks7E_15datafusion_expr21higher_order_function13ValueOrLambdaINtNtB8_4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema5field5FieldEuENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsc85D0lJ81Z_16lance_datafusion.exit318, label %.lr.ph.i311
 
-_RINvXNvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inINtNtCs1Jc0oVeks7E_15datafusion_expr21higher_order_function13ValueOrLambdaINtNtB8_4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema5field5FieldEuENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsc85D0lJ81Z_16lance_datafusion.exit318: ; preds = %.lr.ph.i311, %_RNvXsx_NtCs1Jc0oVeks7E_15datafusion_expr21higher_order_functionINtB5_13ValueOrLambdaINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema5field5FieldEuENtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCsc85D0lJ81Z_16lance_datafusion.exit.i316, %bb.bx
-  %.sroa.5490.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.bx ], [ %i.in, %_RNvXsx_NtCs1Jc0oVeks7E_15datafusion_expr21higher_order_functionINtB5_13ValueOrLambdaINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema5field5FieldEuENtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCsc85D0lJ81Z_16lance_datafusion.exit.i316 ], [ %i.in, %.lr.ph.i311 ]
+_RINvXNvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inINtNtCs1Jc0oVeks7E_15datafusion_expr21higher_order_function13ValueOrLambdaINtNtB8_4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema5field5FieldEuENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsc85D0lJ81Z_16lance_datafusion.exit318: ; preds = %_RNvXsx_NtCs1Jc0oVeks7E_15datafusion_expr21higher_order_functionINtB5_13ValueOrLambdaINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema5field5FieldEuENtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCsc85D0lJ81Z_16lance_datafusion.exit.i316, %.lr.ph.i311, %bb.bx
+  %.sroa.5490.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.bx ], [ %i.in, %.lr.ph.i311 ], [ %i.in, %_RNvXsx_NtCs1Jc0oVeks7E_15datafusion_expr21higher_order_functionINtB5_13ValueOrLambdaINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema5field5FieldEuENtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCsc85D0lJ81Z_16lance_datafusion.exit.i316 ]
   %i.iz = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %2, ptr %i.iz, align 8
   %.sroa.4493.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1013,8 +1013,8 @@ bb.k:                                             ; preds = %bb.f
           cleanup
   br label %bb.j
 
-.loopexit:                                        ; preds = %bb.i, %.lr.ph.i, %bb.d
-  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.d ], [ %i.w, %.lr.ph.i ], [ %i.w, %bb.i ]
+.loopexit:                                        ; preds = %.lr.ph.i, %bb.i, %bb.d
+  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.d ], [ %i.w, %bb.i ], [ %i.w, %.lr.ph.i ]
   store i64 %i.t, ptr %i.f, align 8, !noalias !99286
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   store ptr %.sroa.5.0, ptr %.sroa.5.0..sroa_idx, align 8, !noalias !99286

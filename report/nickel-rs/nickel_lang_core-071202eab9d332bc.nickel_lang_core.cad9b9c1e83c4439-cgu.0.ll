@@ -206,7 +206,7 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i.i.i.us
   %i.br = icmp ugt i64 %i.bq, %i.bo
   br i1 %i.br, label %bb.h, label %.invoke119.invoke
 
-"_ZN106_$LT$core..iter..adapters..chain..Chain$LT$A$C$B$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h78f59dfa62744912E.exit.i": ; preds = %bb.g, %_ZN16nickel_lang_core8position8PosTable3get17he9d0e7b4065e9368E.exit.thread, %bb.f
+"_ZN106_$LT$core..iter..adapters..chain..Chain$LT$A$C$B$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h78f59dfa62744912E.exit.i": ; preds = %bb.g, %bb.f, %_ZN16nickel_lang_core8position8PosTable3get17he9d0e7b4065e9368E.exit.thread
   br i1 %.sroa.0.0, label %.thread115, label %bb.q
 
 .thread115:                                       ; preds = %"_ZN106_$LT$core..iter..adapters..chain..Chain$LT$A$C$B$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h78f59dfa62744912E.exit.i"
@@ -216,8 +216,8 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i.i.i.us
 
 bb.h:                                             ; preds = %.split.us.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %.split.us.i.i.i14.i.i.i.i.i.i.i.i.i
   %i.bs = phi i64 [ %i.bq, %.split.us.i.i.i14.i.i.i.i.i.i.i.i.i ], [ %i.bl, %.split.us.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
-  %.sroa.10.1 = phi i1 [ false, %.split.us.i.i.i14.i.i.i.i.i.i.i.i.i ], [ true, %.split.us.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ]
   %.sroa.22.0 = phi ptr [ %i.be, %.split.us.i.i.i14.i.i.i.i.i.i.i.i.i ], [ %i.aw, %.split.us.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
+  %.sroa.5.0.copyload31.i = phi i1 [ false, %.split.us.i.i.i14.i.i.i.i.i.i.i.i.i ], [ true, %.split.us.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ]
   %.sink100.i.i.i.sink.i.i.i.i.i.i = phi i64 [ %i.bo, %.split.us.i.i.i14.i.i.i.i.i.i.i.i.i ], [ %i.bj, %.split.us.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ]
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.bu = load ptr, ptr %i.bt, align 8, !noalias !58476, !nonnull !145, !noundef !145 ; 2 uses
@@ -229,7 +229,7 @@ bb.h:                                             ; preds = %.split.us.i.i.i.i.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !58478)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !58479)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !58480)
-  br i1 %.sroa.10.1, label %_ZN4core4iter6traits8iterator8Iterator4fold17h2da1db45b5eed7f8E.exit.i.i, label %bb.i
+  br i1 %.sroa.5.0.copyload31.i, label %_ZN4core4iter6traits8iterator8Iterator4fold17h2da1db45b5eed7f8E.exit.i.i, label %bb.i
 
 _ZN4core4iter6traits8iterator8Iterator4fold17h2da1db45b5eed7f8E.exit.i.i: ; preds = %bb.h
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, ptr noundef nonnull align 4 dereferenceable(12) %i.bv, i64 12, i1 false)

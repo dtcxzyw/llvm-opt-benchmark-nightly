@@ -206,8 +206,8 @@ bb.i:                                             ; preds = %.lr.ph.i.i.i
   tail call void @_RNvCskdKJRKLKjqM_7___rustc14___rust_dealloc(ptr noundef nonnull %i.d, i64 noundef %i.a, i64 noundef range(i64 1, -9223372036854775807) 8) #67, !noalias !77581
   resume { ptr, i32 } %i.s
 
-"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17h7b485fa8b83d1279E.exit": ; preds = %.lr.ph.i, %bb.g, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h646ae71b84e0cae6E.exit.thread.i"
-  %.sroa.6.0 = phi ptr [ inttoptr (i64 8 to ptr), %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h646ae71b84e0cae6E.exit.thread.i" ], [ %i.d, %bb.g ], [ %i.d, %.lr.ph.i ]
+"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17h7b485fa8b83d1279E.exit": ; preds = %bb.g, %.lr.ph.i, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h646ae71b84e0cae6E.exit.thread.i"
+  %.sroa.6.0 = phi ptr [ inttoptr (i64 8 to ptr), %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h646ae71b84e0cae6E.exit.thread.i" ], [ %i.d, %.lr.ph.i ], [ %i.d, %bb.g ]
   store i64 %.16.val, ptr %0, align 8, !noalias !77571
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.6.0, ptr %.sroa.6.0..sroa_idx, align 8, !noalias !77571

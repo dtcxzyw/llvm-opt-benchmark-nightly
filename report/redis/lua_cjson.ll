@@ -204,14 +204,6 @@ declare ptr @strbuf_new(i64 noundef) local_unnamed_addr #1
 define internal fastcc void @json_next_token(ptr nofree noundef nonnull captures(none) %0, ptr nofree noundef nonnull writeonly captures(none) initializes((0, 4)) %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
-  %.sroa.0.i31.i.i = alloca i32, align 16         ; 4 uses
-  %.sroa.5.i32.i.i = alloca i32, align 4          ; 4 uses
-  %.sroa.8.i33.i.i = alloca i32, align 8          ; 4 uses
-  %.sroa.11.i34.i.i = alloca i32, align 4         ; 4 uses
-  %.sroa.0.i.i.i = alloca i32, align 16           ; 4 uses
-  %.sroa.5.i.i.i = alloca i32, align 4            ; 4 uses
-  %.sroa.8.i.i.i = alloca i32, align 8            ; 4 uses
-  %.sroa.11.i.i.i = alloca i32, align 4           ; 4 uses
   %.sroa.0.i.i.sroa.0 = alloca <4 x i8>, align 4  ; 11 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !20   ; 5 uses
@@ -325,10 +317,6 @@ bb.i:                                             ; preds = %.backedge.i
 bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.sroa.0)
   %i.am = getelementptr inbounds nuw i8, ptr %.val35.i, i64 2
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5.i.i.i)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8.i.i.i)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.11.i.i.i)
   %i.an = load i8, ptr %i.am, align 1, !tbaa !15  ; 3 uses
   %i.ao = add i8 %i.an, -48
   %or.cond.i.i.i.i = icmp ult i8 %i.ao, 10
@@ -338,16 +326,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ap = or i8 %i.an, 32                         ; 2 uses
   %i.aq = add i8 %i.ap, -97
   %or.cond5.i.i.i.i = icmp ult i8 %i.aq, 6
-  br i1 %or.cond5.i.i.i.i, label %bb.l, label %decode_hex4.exit.thread.i.i
-
-decode_hex4.exit.thread.i.i:                      ; preds = %bb.q, %bb.o, %bb.m, %bb.k
-  %.lcssa.sroa.phi.i.i.i = phi ptr [ %.sroa.0.i.i.i, %bb.k ], [ %.sroa.5.i.i.i, %bb.m ], [ %.sroa.8.i.i.i, %bb.o ], [ %.sroa.11.i.i.i, %bb.q ]
-  store i32 -1, ptr %.lcssa.sroa.phi.i.i.i, align 4, !tbaa !7
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5.i.i.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i.i.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.11.i.i.i)
-  br label %.loopexit.i
+  br i1 %or.cond5.i.i.i.i, label %bb.l, label %.loopexit.i
 
 bb.l:                                             ; preds = %bb.k, %bb.j
   %.sink15.i.i.i = phi i8 [ %i.an, %bb.j ], [ %i.ap, %bb.k ]
@@ -364,7 +343,7 @@ bb.m:                                             ; preds = %bb.l
   %i.aw = or i8 %i.au, 32                         ; 2 uses
   %i.ax = add i8 %i.aw, -97
   %or.cond5.i.1.i.i.i = icmp ult i8 %i.ax, 6
-  br i1 %or.cond5.i.1.i.i.i, label %bb.n, label %decode_hex4.exit.thread.i.i
+  br i1 %or.cond5.i.1.i.i.i, label %bb.n, label %.loopexit.i
 
 bb.n:                                             ; preds = %bb.m, %bb.l
   %.sink17.i.i.i = phi i8 [ %i.aw, %bb.m ], [ %i.au, %bb.l ]
@@ -381,7 +360,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bd = or i8 %i.bb, 32                         ; 2 uses
   %i.be = add i8 %i.bd, -97
   %or.cond5.i.2.i.i.i = icmp ult i8 %i.be, 6
-  br i1 %or.cond5.i.2.i.i.i, label %bb.p, label %decode_hex4.exit.thread.i.i
+  br i1 %or.cond5.i.2.i.i.i, label %bb.p, label %.loopexit.i
 
 bb.p:                                             ; preds = %bb.o, %bb.n
   %.sink19.i.i.i = phi i8 [ %i.bd, %bb.o ], [ %i.bb, %bb.n ]
@@ -398,7 +377,7 @@ bb.q:                                             ; preds = %bb.p
   %i.bk = or i8 %i.bi, 32                         ; 2 uses
   %i.bl = add i8 %i.bk, -97
   %or.cond5.i.3.i.i.i = icmp ult i8 %i.bl, 6
-  br i1 %or.cond5.i.3.i.i.i, label %decode_hex4.exit.i.i, label %decode_hex4.exit.thread.i.i
+  br i1 %or.cond5.i.3.i.i.i, label %decode_hex4.exit.i.i, label %.loopexit.i
 
 decode_hex4.exit.i.i:                             ; preds = %bb.q, %bb.p
   %.sink21.i.i.i = phi i8 [ %i.bk, %bb.q ], [ %i.bi, %bb.p ]
@@ -411,10 +390,6 @@ decode_hex4.exit.i.i:                             ; preds = %bb.q, %bb.p
   %i.br = add nuw nsw i32 %i.bq, %i.bp
   %i.bs = add nuw nsw i32 %i.br, %i.bm
   %i.bt = add nsw i32 %i.bs, %.sink20.i.i.i       ; 14 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5.i.i.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i.i.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.11.i.i.i)
   %i.bu = icmp slt i32 %i.bt, 0
   br i1 %i.bu, label %.loopexit.i, label %bb.r
 
@@ -442,10 +417,6 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.u
   %i.cc = getelementptr inbounds nuw i8, ptr %.val35.i, i64 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i31.i.i)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5.i32.i.i)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8.i33.i.i)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.11.i34.i.i)
   %i.cd = load i8, ptr %i.cc, align 1, !tbaa !15  ; 3 uses
   %i.ce = add i8 %i.cd, -48
   %or.cond.i.i35.i.i = icmp ult i8 %i.ce, 10
@@ -455,16 +426,7 @@ bb.w:                                             ; preds = %bb.v
   %i.cf = or i8 %i.cd, 32                         ; 2 uses
   %i.cg = add i8 %i.cf, -97
   %or.cond5.i.i36.i.i = icmp ult i8 %i.cg, 6
-  br i1 %or.cond5.i.i36.i.i, label %bb.x, label %decode_hex4.exit54.thread.i.i
-
-decode_hex4.exit54.thread.i.i:                    ; preds = %bb.ac, %bb.aa, %bb.y, %bb.w
-  %.lcssa.sroa.phi.i38.i.i = phi ptr [ %.sroa.0.i31.i.i, %bb.w ], [ %.sroa.5.i32.i.i, %bb.y ], [ %.sroa.8.i33.i.i, %bb.aa ], [ %.sroa.11.i34.i.i, %bb.ac ]
-  store i32 -1, ptr %.lcssa.sroa.phi.i38.i.i, align 4, !tbaa !7
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i31.i.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5.i32.i.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i33.i.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.11.i34.i.i)
-  br label %.loopexit.i
+  br i1 %or.cond5.i.i36.i.i, label %bb.x, label %.loopexit.i
 
 bb.x:                                             ; preds = %bb.w, %bb.v
   %.sink15.i40.i.i = phi i8 [ %i.cd, %bb.v ], [ %i.cf, %bb.w ]
@@ -481,7 +443,7 @@ bb.y:                                             ; preds = %bb.x
   %i.cm = or i8 %i.ck, 32                         ; 2 uses
   %i.cn = add i8 %i.cm, -97
   %or.cond5.i.1.i43.i.i = icmp ult i8 %i.cn, 6
-  br i1 %or.cond5.i.1.i43.i.i, label %bb.z, label %decode_hex4.exit54.thread.i.i
+  br i1 %or.cond5.i.1.i43.i.i, label %bb.z, label %.loopexit.i
 
 bb.z:                                             ; preds = %bb.y, %bb.x
   %.sink17.i44.i.i = phi i8 [ %i.cm, %bb.y ], [ %i.ck, %bb.x ]
@@ -498,7 +460,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.ct = or i8 %i.cr, 32                         ; 2 uses
   %i.cu = add i8 %i.ct, -97
   %or.cond5.i.2.i47.i.i = icmp ult i8 %i.cu, 6
-  br i1 %or.cond5.i.2.i47.i.i, label %bb.ab, label %decode_hex4.exit54.thread.i.i
+  br i1 %or.cond5.i.2.i47.i.i, label %bb.ab, label %.loopexit.i
 
 bb.ab:                                            ; preds = %bb.aa, %bb.z
   %.sink19.i48.i.i = phi i8 [ %i.ct, %bb.aa ], [ %i.cr, %bb.z ]
@@ -515,7 +477,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.da = or i8 %i.cy, 32                         ; 2 uses
   %i.db = add i8 %i.da, -97
   %or.cond5.i.3.i51.i.i = icmp ult i8 %i.db, 6
-  br i1 %or.cond5.i.3.i51.i.i, label %decode_hex4.exit54.i.i, label %decode_hex4.exit54.thread.i.i
+  br i1 %or.cond5.i.3.i51.i.i, label %decode_hex4.exit54.i.i, label %.loopexit.i
 
 decode_hex4.exit54.i.i:                           ; preds = %bb.ac, %bb.ab
   %.sink21.i52.i.i = phi i8 [ %i.da, %bb.ac ], [ %i.cy, %bb.ab ]
@@ -528,10 +490,6 @@ decode_hex4.exit54.i.i:                           ; preds = %bb.ac, %bb.ab
   %i.dh = add nuw nsw i32 %i.dg, %i.df
   %i.di = add nuw nsw i32 %i.dh, %i.dc
   %i.dj = add nsw i32 %i.di, %.sink20.i53.i.i     ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i31.i.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5.i32.i.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i33.i.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.11.i34.i.i)
   %i.dk = and i32 %i.dj, -2147419136
   %or.cond.i.i = icmp eq i32 %i.dk, 56320
   br i1 %or.cond.i.i, label %.thread78.i.i, label %.loopexit.i
@@ -625,7 +583,7 @@ json_append_unicode_escape.exit.i:                ; preds = %bb.aj, %bb.ai, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.sroa.0)
   br label %.backedge.i.backedge
 
-.loopexit.i:                                      ; preds = %decode_hex4.exit54.i.i, %bb.u, %bb.t, %bb.s, %decode_hex4.exit.i.i, %decode_hex4.exit54.thread.i.i, %decode_hex4.exit.thread.i.i
+.loopexit.i:                                      ; preds = %decode_hex4.exit54.i.i, %bb.ac, %bb.aa, %bb.y, %bb.w, %bb.u, %bb.t, %bb.s, %decode_hex4.exit.i.i, %bb.q, %bb.o, %bb.m, %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.sroa.0)
   %.val34.i = load ptr, ptr %0, align 8, !tbaa !21
   store i32 12, ptr %1, align 8, !tbaa !27

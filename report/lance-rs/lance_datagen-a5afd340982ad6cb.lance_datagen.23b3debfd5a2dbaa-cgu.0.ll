@@ -205,8 +205,8 @@ bb.az:                                            ; preds = %bb.av
           cleanup
   br label %bb.bi
 
-.loopexit:                                        ; preds = %bb.ay, %.lr.ph.i, %bb.at
-  %.sroa.547.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.at ], [ %i.gc, %.lr.ph.i ], [ %i.gc, %bb.ay ]
+.loopexit:                                        ; preds = %.lr.ph.i, %bb.ay, %bb.at
+  %.sroa.547.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.at ], [ %i.gc, %bb.ay ], [ %i.gc, %.lr.ph.i ]
   store i64 %i.fz, ptr %i.e, align 8, !noalias !9082
   %.sroa.547.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store ptr %.sroa.547.0, ptr %.sroa.547.0..sroa_idx, align 8, !noalias !9082
@@ -609,8 +609,8 @@ bb.av:                                            ; preds = %bb.ar
           cleanup
   br label %bb.bd
 
-.loopexit:                                        ; preds = %bb.au, %.lr.ph.i, %bb.ap
-  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.ap ], [ %i.fz, %.lr.ph.i ], [ %i.fz, %bb.au ]
+.loopexit:                                        ; preds = %.lr.ph.i, %bb.au, %bb.ap
+  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.ap ], [ %i.fz, %bb.au ], [ %i.fz, %.lr.ph.i ]
   store i64 %i.fw, ptr %i.c, align 8, !noalias !10301
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr %.sroa.5.0, ptr %.sroa.5.0..sroa_idx, align 8, !noalias !10301

@@ -204,10 +204,9 @@ bb.a:
   %i.k = alloca i32, align 4                      ; 7 uses
   %i.l = alloca i32, align 4                      ; 5 uses
   %i.m = alloca [8 x i16], align 16               ; 5 uses
-  %4 = alloca i32, align 4                        ; 8 uses
   %i.n = alloca i16, align 2                      ; 14 uses
   %i.o = alloca i32, align 4                      ; 9 uses
-  %5 = alloca %struct._address, align 8           ; 15 uses
+  %4 = alloca %struct._address, align 8           ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #11
@@ -222,21 +221,19 @@ bb.a:
   store i32 0, ptr %i.k, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  store i32 0, ptr %4, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
   %i.p = getelementptr i8, ptr %1, i64 208        ; 4 uses
   %i.q = getelementptr i8, ptr %1, i64 212        ; 2 uses
   %i.r = getelementptr i8, ptr %1, i64 216        ; 3 uses
   %i.s = load ptr, ptr %i.r, align 8
-  %i.t = getelementptr inbounds nuw i8, ptr %5, i64 4 ; 4 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 2 uses
   %i.u = load <2 x i32>, ptr %i.p, align 8
-  store <2 x i32> %i.u, ptr %5, align 8
-  %i.v = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 7 uses
+  store <2 x i32> %i.u, ptr %4, align 8
+  %i.v = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 6 uses
   store ptr %i.s, ptr %i.v, align 8
-  %i.w = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 5 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
   store ptr null, ptr %i.w, align 8
   %i.x = getelementptr i8, ptr %1, i64 296
   %i.y = load i32, ptr %i.x, align 8
@@ -639,7 +636,7 @@ bb.av:                                            ; preds = %bb.au
   %i.if = load i16, ptr %i.n, align 2
   %i.ig = zext i16 %i.if to i32
   %i.ih = call ptr @proto_tree_add_uint(ptr noundef %i.by, i32 noundef %i.hz, ptr noundef %0, i32 noundef %i.id, i32 noundef %i.ie, i32 noundef %i.ig) ; 0 uses
-  store i32 2, ptr %5, align 8
+  store i32 2, ptr %4, align 8
   store i32 4, ptr %i.t, align 4
   store ptr %i.i, ptr %i.v, align 8
   store ptr null, ptr %i.w, align 8
@@ -669,7 +666,7 @@ addresses_equal.exit:                             ; preds = %bb.ax, %bb.aw, %bb.
 addresses_equal.exit.thread:                      ; preds = %bb.ax, %addresses_equal.exit
   %i.iu = getelementptr i8, ptr %1, i64 232
   %i.iv = load i16, ptr %i.n, align 2
-  call fastcc void @create_and_link_data_conversation(ptr noundef %1, ptr noundef %i.iu, i16 noundef zeroext 20, ptr noundef nonnull %5, i16 noundef zeroext %i.iv, ptr noundef nonnull @.str.176)
+  call fastcc void @create_and_link_data_conversation(ptr noundef %1, ptr noundef %i.iu, i16 noundef zeroext 20, ptr noundef nonnull %4, i16 noundef zeroext %i.iv, ptr noundef nonnull @.str.176)
   br label %bb.ay
 
 bb.ay:                                            ; preds = %bb.au, %addresses_equal.exit.thread, %bb.at
@@ -697,7 +694,7 @@ bb.ba:                                            ; preds = %bb.az
   %i.jj = load i16, ptr %i.n, align 2
   %i.jk = zext i16 %i.jj to i32
   %i.jl = call ptr @proto_tree_add_uint(ptr noundef %i.by, i32 noundef %i.jf, ptr noundef %0, i32 noundef %i.jh, i32 noundef %i.ji, i32 noundef %i.jk) ; 0 uses
-  store i32 2, ptr %5, align 8
+  store i32 2, ptr %4, align 8
   store i32 4, ptr %i.t, align 4
   store ptr %i.g, ptr %i.v, align 8
   store ptr null, ptr %i.w, align 8
@@ -729,7 +726,7 @@ addresses_equal.exit316.thread:                   ; preds = %bb.bc, %addresses_e
   %i.jz = getelementptr i8, ptr %1, i64 232
   %i.ka = load i32, ptr %i.z, align 4
   %i.kb = trunc i32 %i.ka to i16
-  call fastcc void @create_and_link_data_conversation(ptr noundef %1, ptr noundef nonnull %5, i16 noundef zeroext %i.jy, ptr noundef %i.jz, i16 noundef zeroext %i.kb, ptr noundef nonnull @.str.185)
+  call fastcc void @create_and_link_data_conversation(ptr noundef %1, ptr noundef nonnull %4, i16 noundef zeroext %i.jy, ptr noundef %i.jz, i16 noundef zeroext %i.kb, ptr noundef nonnull @.str.185)
   br label %bb.bd
 
 bb.bd:                                            ; preds = %addresses_equal.exit316.thread, %bb.az, %bb.ay
@@ -829,6 +826,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.lj, label %.lr.ph101.i, label %parse_eprt_request.exit.thread372
 
 .lr.ph101.i:                                      ; preds = %.preheader.i, %bb.bn
+  %.0 = phi i32 [ %.1362, %bb.bn ], [ 0, %.preheader.i ] ; 4 uses
   %indvars.iv112.i = phi i64 [ %indvars.iv.next113.i, %bb.bn ], [ 1, %.preheader.i ] ; 3 uses
   %.066100.i = phi i1 [ %.4.i, %bb.bn ], [ true, %.preheader.i ] ; 4 uses
   %.06999.i = phi i32 [ %.170.i, %bb.bn ], [ 0, %.preheader.i ] ; 3 uses
@@ -840,13 +838,13 @@ middle.block:                                     ; preds = %vector.body
 
 bb.bg:                                            ; preds = %.lr.ph101.i
   %i.lm = xor i32 %.06999.i, -1
-  %i.ln = trunc nuw nsw i64 %indvars.iv112.i to i32 ; 4 uses
-  %i.lo = add i32 %i.lm, %i.ln                    ; 5 uses
+  %i.ln = trunc nuw nsw i64 %indvars.iv112.i to i32 ; 6 uses
+  %i.lo = add i32 %i.lm, %i.ln                    ; 7 uses
   %i.lp = icmp slt i32 %i.lo, 1
   br i1 %i.lp, label %parse_eprt_request.exit.thread, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg
-  %i.lq = add i32 %.27597.i, 1                    ; 3 uses
+  %i.lq = add i32 %.27597.i, 1                    ; 2 uses
   %i.lr = sext i32 %.06999.i to i64
   %i.ls = getelementptr i8, ptr %i.kh, i64 %i.lr
   %i.lt = getelementptr i8, ptr %i.ls, i64 1      ; 3 uses
@@ -875,11 +873,11 @@ bb.bj:                                            ; preds = %bb.bh
 
 bb.bk:                                            ; preds = %bb.bj
   %i.mc = call zeroext i1 @str_to_ip(ptr noundef %i.ma, ptr noundef nonnull %i.l)
-  br label %.sink.split.i.a
+  br label %bb.bn
 
 bb.bl:                                            ; preds = %bb.bj
   %i.md = call zeroext i1 @str_to_ip6(ptr noundef %i.ma, ptr noundef nonnull %i.m)
-  br label %.sink.split.i.a
+  br label %bb.bn
 
 bb.bm:                                            ; preds = %bb.bh
   %i.me = load ptr, ptr %i.aw, align 8
@@ -888,16 +886,15 @@ bb.bm:                                            ; preds = %bb.bh
   %i.mh = call zeroext i1 @ws_strtou16(ptr noundef %i.mg, ptr noundef null, ptr noundef nonnull %i.n)
   br i1 %i.mh, label %.sink.split.i.a, label %parse_eprt_request.exit.thread
 
-.sink.split.i.a:                                  ; preds = %bb.bm, %bb.bl, %bb.bk
-  %.sink.i = phi ptr [ %4, %bb.bk ], [ %4, %bb.bl ], [ %i.o, %bb.bm ]
-  %.4.ph.i = phi i1 [ %i.mc, %bb.bk ], [ %i.md, %bb.bl ], [ %.066100.i, %bb.bm ]
-  store i32 %i.lo, ptr %.sink.i, align 4
+.sink.split.i.a:                                  ; preds = %bb.bm
+  store i32 %i.lo, ptr %i.o, align 4
   br label %bb.bn
 
-bb.bn:                                            ; preds = %.sink.split.i.a, %bb.bi, %bb.bh, %.lr.ph101.i
-  %.376.i = phi i32 [ %.27597.i, %.lr.ph101.i ], [ %i.lq, %bb.bh ], [ 2, %bb.bi ], [ %i.lq, %.sink.split.i.a ]
-  %.170.i = phi i32 [ %.06999.i, %.lr.ph101.i ], [ %i.ln, %bb.bh ], [ %i.ln, %bb.bi ], [ %i.ln, %.sink.split.i.a ]
-  %.4.i = phi i1 [ %.066100.i, %.lr.ph101.i ], [ %.066100.i, %bb.bh ], [ %.066100.i, %bb.bi ], [ %.4.ph.i, %.sink.split.i.a ] ; 2 uses
+bb.bn:                                            ; preds = %bb.bk, %bb.bl, %.sink.split.i.a, %bb.bi, %bb.bh, %.lr.ph101.i
+  %.1362 = phi i32 [ %.0, %bb.bh ], [ %.0, %bb.bi ], [ %.0, %.lr.ph101.i ], [ %i.lo, %bb.bk ], [ %i.lo, %bb.bl ], [ %.0, %.sink.split.i.a ] ; 2 uses
+  %.376.i = phi i32 [ %i.lq, %bb.bh ], [ 2, %bb.bi ], [ %.27597.i, %.lr.ph101.i ], [ 3, %bb.bk ], [ 3, %bb.bl ], [ 4, %.sink.split.i.a ]
+  %.170.i = phi i32 [ %i.ln, %bb.bh ], [ %i.ln, %bb.bi ], [ %.06999.i, %.lr.ph101.i ], [ %i.ln, %bb.bk ], [ %i.ln, %bb.bl ], [ %i.ln, %.sink.split.i.a ]
+  %.4.i = phi i1 [ %.066100.i, %bb.bh ], [ %.066100.i, %bb.bi ], [ %.066100.i, %.lr.ph101.i ], [ %i.mc, %bb.bk ], [ %i.md, %bb.bl ], [ %.066100.i, %.sink.split.i.a ] ; 2 uses
   %indvars.iv.next113.i = add nuw nsw i64 %indvars.iv112.i, 1 ; 2 uses
   %exitcond115.not.i = icmp eq i64 %indvars.iv.next113.i, %wide.trip.count.i
   br i1 %exitcond115.not.i, label %parse_eprt_request.exit, label %.lr.ph101.i, !llvm.loop !9
@@ -906,54 +903,48 @@ parse_eprt_request.exit:                          ; preds = %bb.bn
   br i1 %.4.i, label %parse_eprt_request.exit.thread372, label %parse_eprt_request.exit.thread
 
 parse_eprt_request.exit.thread372:                ; preds = %.preheader.i, %parse_eprt_request.exit
-  %i.mi = load i32, ptr %i.f, align 4             ; 3 uses
+  %.3379 = phi i32 [ %.1362, %parse_eprt_request.exit ], [ 0, %.preheader.i ] ; 3 uses
+  %i.mi = load i32, ptr %i.f, align 4             ; 2 uses
   %i.mj = add i32 %i.mi, 2
   %i.mk = load i32, ptr @hf_ftp_eprt_af, align 4
   %i.ml = load i32, ptr %i.k, align 4
   %i.mm = call ptr @proto_tree_add_uint(ptr noundef %i.by, i32 noundef %i.mk, ptr noundef %0, i32 noundef %i.mj, i32 noundef 1, i32 noundef %i.ml) ; 0 uses
-  %i.mn = add i32 %i.mi, 4                        ; 2 uses
+  %i.mn = add i32 %i.mi, 4                        ; 3 uses
   %i.mo = load i32, ptr %i.k, align 4
-  switch i32 %i.mo, label %parse_eprt_request.exit.thread372._crit_edge [
-    i32 1, label %bb.bo
-    i32 2, label %bb.bp
+  switch i32 %i.mo, label %bb.bq [
+    i32 1, label %parse_eprt_request.exit.thread372._crit_edge
+    i32 2, label %bb.bo
   ]
 
 parse_eprt_request.exit.thread372._crit_edge:     ; preds = %parse_eprt_request.exit.thread372
-  %.0..0..0.359.pre = load i32, ptr %4, align 4
-  br label %bb.bq
+  %5 = load i32, ptr @hf_ftp_eprt_ip, align 4
+  %.0..0..0.359.pre = load i32, ptr %i.l, align 4
+  %6 = call ptr @proto_tree_add_ipv4(ptr noundef %i.by, i32 noundef %5, ptr noundef %0, i32 noundef %i.mn, i32 noundef %.3379, i32 noundef %.0..0..0.359.pre) ; 0 uses
+  br label %bb.bp
 
 bb.bo:                                            ; preds = %parse_eprt_request.exit.thread372
-  %6 = load i32, ptr @hf_ftp_eprt_ip, align 4
-  %.0..0..0. = load i32, ptr %4, align 4          ; 2 uses
-  %i.mp = load i32, ptr %i.l, align 4
-  %i.mq = call ptr @proto_tree_add_ipv4(ptr noundef %i.by, i32 noundef %6, ptr noundef %0, i32 noundef %i.mn, i32 noundef %.0..0..0., i32 noundef %i.mp) ; 0 uses
-  store i32 2, ptr %5, align 8
-  store i32 4, ptr %i.t, align 4
-  store ptr %i.l, ptr %i.v, align 8
+  %i.mp = load i32, ptr @hf_ftp_eprt_ipv6, align 4
+  %i.mq = call ptr @proto_tree_add_ipv6(ptr noundef %i.by, i32 noundef %i.mp, ptr noundef %0, i32 noundef %i.mn, i32 noundef %.3379, ptr noundef nonnull %i.m) ; 0 uses
+  br label %bb.bp
+
+bb.bp:                                            ; preds = %parse_eprt_request.exit.thread372._crit_edge, %bb.bo
+  %.sink444 = phi ptr [ %i.m, %bb.bo ], [ %i.l, %parse_eprt_request.exit.thread372._crit_edge ]
+  %7 = phi <2 x i32> [ <i32 3, i32 16>, %bb.bo ], [ <i32 2, i32 4>, %parse_eprt_request.exit.thread372._crit_edge ]
+  store <2 x i32> %7, ptr %4, align 8
+  store ptr %.sink444, ptr %i.v, align 8
   store ptr null, ptr %i.w, align 8
   br label %bb.bq
 
-bb.bp:                                            ; preds = %parse_eprt_request.exit.thread372
-  %7 = load i32, ptr @hf_ftp_eprt_ipv6, align 4
-  %.0..0..0.358 = load i32, ptr %4, align 4       ; 2 uses
-  %8 = call ptr @proto_tree_add_ipv6(ptr noundef %i.by, i32 noundef %7, ptr noundef %0, i32 noundef %i.mn, i32 noundef %.0..0..0.358, ptr noundef nonnull %i.m) ; 0 uses
-  store i32 3, ptr %5, align 8
-  store i32 16, ptr %i.t, align 4
-  store ptr %i.m, ptr %i.v, align 8
-  store ptr null, ptr %i.w, align 8
-  br label %bb.bq
-
-bb.bq:                                            ; preds = %parse_eprt_request.exit.thread372._crit_edge, %bb.bp, %bb.bo
-  %.0..0.359 = phi i32 [ %.0..0..0.359.pre, %parse_eprt_request.exit.thread372._crit_edge ], [ %.0..0..0.358, %bb.bp ], [ %.0..0..0., %bb.bo ]
-  %i.mr = add i32 %i.mi, 5
-  %i.ms = add i32 %i.mr, %.0..0.359
+bb.bq:                                            ; preds = %bb.bp, %parse_eprt_request.exit.thread372
+  %i.mr = add nuw i32 %.3379, 1
+  %i.ms = add i32 %i.mr, %i.mn
   %i.mt = load i32, ptr @hf_ftp_eprt_port, align 4
   %i.mu = load i32, ptr %i.o, align 4
   %i.mv = load i16, ptr %i.n, align 2
   %i.mw = zext i16 %i.mv to i32
   %i.mx = call ptr @proto_tree_add_uint(ptr noundef %i.by, i32 noundef %i.mt, ptr noundef %0, i32 noundef %i.ms, i32 noundef %i.mu, i32 noundef %i.mw) ; 0 uses
   %i.my = load i16, ptr %i.n, align 2
-  call fastcc void @create_and_link_data_conversation(ptr noundef %1, ptr noundef %i.p, i16 noundef zeroext %i.my, ptr noundef nonnull %5, i16 noundef zeroext 0, ptr noundef nonnull @.str.177)
+  call fastcc void @create_and_link_data_conversation(ptr noundef %1, ptr noundef %i.p, i16 noundef zeroext %i.my, ptr noundef nonnull %4, i16 noundef zeroext 0, ptr noundef nonnull @.str.177)
   br label %bb.br
 
 parse_eprt_request.exit.thread:                   ; preds = %bb.bm, %bb.bg, %bb.bj, %bb.bi, %bb.bf, %._crit_edge.i, %isvalid_rfc2428_delimiter.exit.i, %bb.be, %parse_eprt_request.exit
@@ -1073,7 +1064,7 @@ bb.bx:                                            ; preds = %.thread6.i
   %i.oj = trunc i64 %i.oi to i32                  ; 2 uses
   store i32 %i.oj, ptr %i.o, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
-  %i.ok = load i32, ptr %5, align 8
+  %i.ok = load i32, ptr %4, align 8
   switch i32 %i.ok, label %proto_item_set_generated.exit327 [
     i32 2, label %bb.by
     i32 3, label %bb.ca
@@ -1122,7 +1113,7 @@ proto_item_set_generated.exit327:                 ; preds = %proto_item_set_gene
   %i.pd = call ptr @proto_tree_add_uint(ptr noundef %i.by, i32 noundef %i.oz, ptr noundef %0, i32 noundef %i.pa, i32 noundef %i.oj, i32 noundef %i.pc) ; 0 uses
   %i.pe = load i16, ptr %i.n, align 2
   %i.pf = getelementptr i8, ptr %1, i64 232
-  call fastcc void @create_and_link_data_conversation(ptr noundef %1, ptr noundef nonnull %5, i16 noundef zeroext %i.pe, ptr noundef %i.pf, i16 noundef zeroext 0, ptr noundef nonnull @.str.186)
+  call fastcc void @create_and_link_data_conversation(ptr noundef %1, ptr noundef nonnull %4, i16 noundef zeroext %i.pe, ptr noundef %i.pf, i16 noundef zeroext 0, ptr noundef nonnull @.str.186)
   br label %bb.cc
 
 parse_extended_pasv_response.exit.thread:         ; preds = %bb.bt, %.preheader.i318, %.thread.1.i, %.thread.i, %isvalid_rfc2428_delimiter.exit.thread.i, %parse_extended_pasv_response.exit.thread376
@@ -1425,10 +1416,9 @@ bb.dd:                                            ; preds = %bb.dc
 
 proto_item_set_generated.exit357:                 ; preds = %bb.dd, %bb.dc, %proto_item_set_generated.exit354, %bb.ch, %proto_item_set_generated.exit351, %proto_item_set_generated.exit330
   %i.uq = call i32 @tvb_captured_length(ptr noundef %0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #11

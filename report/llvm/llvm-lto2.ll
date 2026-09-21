@@ -202,7 +202,6 @@ bb.a:
   %i.e = alloca i64, align 8                      ; 6 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.f = alloca i64, align 8                      ; 6 uses
-  %.sroa.0305.i = alloca ptr, align 8             ; 8 uses
   %7 = alloca %"class.llvm::ErrorOr", align 8     ; 9 uses
   %8 = alloca %"class.llvm::Twine", align 8       ; 7 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
@@ -348,8 +347,8 @@ _ZN4llvmeqENS_9StringRefES0_.exit.thread:         ; preds = %_ZN4llvmeqENS_9Stri
   %i.bj = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 2 uses
   br label %bb.f
 
-bb.f:                                             ; preds = %_ZNSt10unique_ptrIN4llvm12MemoryBufferESt14default_deleteIS1_EED2Ev.exit.i, %.lr.ph335.i
-  %.0333.i = phi ptr [ %.0331.i, %.lr.ph335.i ], [ %.0.i10, %_ZNSt10unique_ptrIN4llvm12MemoryBufferESt14default_deleteIS1_EED2Ev.exit.i ] ; 2 uses
+bb.f:                                             ; preds = %_ZNKSt14default_deleteIN4llvm12MemoryBufferEEclEPS1_.exit.i.i, %.lr.ph335.i
+  %.0333.i = phi ptr [ %.0331.i, %.lr.ph335.i ], [ %.0.i10, %_ZNKSt14default_deleteIN4llvm12MemoryBufferEEclEPS1_.exit.i.i ] ; 2 uses
   %i.bk = load ptr, ptr %.0333.i, align 8, !tbaa !59 ; 9 uses
   %.not.i.i = icmp eq ptr %i.bk, null
   br i1 %.not.i.i, label %bb.h, label %bb.g
@@ -360,7 +359,6 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.sroa.0.0.i.i = phi i64 [ %i.bl, %bb.g ], [ 0, %bb.f ] ; 11 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0305.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #26
   store i8 5, ptr %i.ao, align 8, !tbaa !62
   store i8 1, ptr %i.ap, align 1, !tbaa !63
@@ -405,7 +403,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IN4llvm9StringRefEvEERKT_
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #26
   %.val.i = load ptr, ptr %9, align 8             ; 2 uses
   %.val73.i = load i64, ptr %i.as, align 8        ; 4 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !304)
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   %i.bu = load i8, ptr %i.at, align 8, !noalias !304
   %i.bv = trunc i8 %i.bu to i1
@@ -414,7 +411,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IN4llvm9StringRefEvEERKT_
 bb.l:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IN4llvm9StringRefEvEERKT_RKS3_.exit.i
   %i.bw = load i64, ptr %7, align 8, !tbaa !68, !noalias !304
   %i.bx = inttoptr i64 %i.bw to ptr
-  store ptr %i.bx, ptr %.sroa.0305.i, align 8, !tbaa !68, !alias.scope !304
+  store ptr null, ptr %7, align 8, !tbaa !68
   br label %_ZL5checkISt10unique_ptrIN4llvm12MemoryBufferESt14default_deleteIS2_EEET_NS1_7ErrorOrIS6_EENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i
 
 _ZNK4llvm7ErrorOrISt10unique_ptrINS_12MemoryBufferESt14default_deleteIS2_EEE8getErrorEv.exit.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IN4llvm9StringRefEvEERKT_RKS3_.exit.i
@@ -468,8 +465,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br label %_ZL5checkISt10unique_ptrIN4llvm12MemoryBufferESt14default_deleteIS2_EEET_NS1_7ErrorOrIS6_EENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i
 
 _ZL5checkISt10unique_ptrIN4llvm12MemoryBufferESt14default_deleteIS2_EEET_NS1_7ErrorOrIS6_EENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i, %bb.l
-  %.sink.i.i = phi ptr [ %7, %bb.l ], [ %.sroa.0305.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i ], [ %.sroa.0305.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i ]
-  store ptr null, ptr %.sink.i.i, align 8, !tbaa !68
+  %.sink.i.i = phi ptr [ %i.bx, %bb.l ], [ null, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i ] ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
   %i.ck = load ptr, ptr %9, align 8, !tbaa !43    ; 2 uses
   %i.cl = icmp eq ptr %i.ck, %i.ar
@@ -500,8 +496,7 @@ _ZNKSt14default_deleteIN4llvm12MemoryBufferEEclEPS1_.exit.i.i.i: ; preds = %bb.p
 
 bb.q:                                             ; preds = %_ZNKSt14default_deleteIN4llvm12MemoryBufferEEclEPS1_.exit.i.i.i, %bb.p, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #26
-  %.sroa.0305.i.0..sroa.0305.i.0..sroa.0305.i.0..sroa.0305.0..sroa.0305.0..sroa.0305.0..i = load ptr, ptr %.sroa.0305.i, align 8, !tbaa !68
-  call void @_ZN4llvm15MemoryBufferRefC1ERKNS_12MemoryBufferE(ptr noundef nonnull align 8 dereferenceable(32) %11, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0305.i.0..sroa.0305.i.0..sroa.0305.i.0..sroa.0305.0..sroa.0305.0..sroa.0305.0..i) #26
+  call void @_ZN4llvm15MemoryBufferRefC1ERKNS_12MemoryBufferE(ptr noundef nonnull align 8 dereferenceable(32) %11, ptr noundef nonnull align 8 dereferenceable(24) %.sink.i.i) #26
   call void @_ZN4llvm22getBitcodeFileContentsENS_15MemoryBufferRefE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::Expected.167") align 8 %10, ptr noundef nonnull byval(%"class.llvm::MemoryBufferRef") align 8 %11) #26
   store ptr %i.aw, ptr %12, align 8, !tbaa !64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #26
@@ -634,11 +629,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br label %_ZL5checkIN4llvm19BitcodeFileContentsEET_NS0_8ExpectedIS2_EENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i
 
 _ZL5checkIN4llvm19BitcodeFileContentsEET_NS0_8ExpectedIS2_EENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i: ; preds = %_ZL5checkN4llvm5ErrorENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i84.i, %bb.u
+  %.sroa.0301.0.i = phi ptr [ %i.dd, %bb.u ], [ null, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i84.i ], [ null, %_ZL5checkN4llvm5ErrorENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i.i ] ; 3 uses
   %.sroa.6.0.i = phi i64 [ %i.dg, %bb.u ], [ 0, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i84.i ], [ 0, %_ZL5checkN4llvm5ErrorENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i.i ]
   %.sroa.8.0.i = phi ptr [ %.sroa.8.24.copyload.i, %bb.u ], [ null, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i84.i ], [ null, %_ZL5checkN4llvm5ErrorENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i.i ] ; 4 uses
   %.sroa.10.0.i = phi i1 [ %i.df, %bb.u ], [ false, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i84.i ], [ false, %_ZL5checkN4llvm5ErrorENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i.i ]
   %.sroa.11.0.i = phi ptr [ %.sroa.11.24.copyload.i, %bb.u ], [ null, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i84.i ], [ null, %_ZL5checkN4llvm5ErrorENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i.i ]
-  %.sroa.0301.0.i = phi ptr [ %i.dd, %bb.u ], [ null, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i84.i ], [ null, %_ZL5checkN4llvm5ErrorENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i.i ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   %i.ea = load ptr, ptr %12, align 8, !tbaa !43   ; 2 uses
   %i.eb = icmp eq ptr %i.ea, %i.aw
@@ -813,8 +808,7 @@ bb.ap:                                            ; preds = %_ZN4llvm11raw_ostre
 
 bb.aq:                                            ; preds = %bb.ap, %bb.ao, %_ZN4llvm11raw_ostreamlsEc.exit.i, %_ZN4llvm8ExpectedINS_19BitcodeFileContentsEED2Ev.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #26
-  %.sroa.0305.i.0..sroa.0305.i.0..sroa.0305.i.0..sroa.0305.0..sroa.0305.0..sroa.0305.0.306.i = load ptr, ptr %.sroa.0305.i, align 8, !tbaa !68
-  call void @_ZNK4llvm12MemoryBuffer15getMemBufferRefEv(ptr dead_on_unwind nonnull writable sret(%"class.llvm::MemoryBufferRef") align 8 %15, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0305.i.0..sroa.0305.i.0..sroa.0305.i.0..sroa.0305.0..sroa.0305.0..sroa.0305.0.306.i) #26
+  call void @_ZNK4llvm12MemoryBuffer15getMemBufferRefEv(ptr dead_on_unwind nonnull writable sret(%"class.llvm::MemoryBufferRef") align 8 %15, ptr noundef nonnull align 8 dereferenceable(24) %.sink.i.i) #26
   call void @_ZN4llvm3lto9InputFile6createENS_15MemoryBufferRefE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::Expected.183") align 8 %14, ptr noundef nonnull byval(%"class.llvm::MemoryBufferRef") align 8 %15) #26
   store ptr %i.bd, ptr %16, align 8, !tbaa !64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #26
@@ -1217,28 +1211,19 @@ _ZNKSt14default_deleteIN4llvm3lto9InputFileEEclEPS2_.exit.i.i: ; preds = %_ZN4ll
 _ZNSt10unique_ptrIN4llvm3lto9InputFileESt14default_deleteIS2_EED2Ev.exit.i: ; preds = %_ZNKSt14default_deleteIN4llvm3lto9InputFileEEclEPS2_.exit.i.i, %_ZN4llvm6TripleD2Ev.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #26
   %.not.i.i.i.i.i = icmp eq ptr %.sroa.0301.0.i, null
-  br i1 %.not.i.i.i.i.i, label %_ZN4llvm19BitcodeFileContentsD2Ev.exit.i, label %bb.cl
+  br i1 %.not.i.i.i.i.i, label %_ZNKSt14default_deleteIN4llvm12MemoryBufferEEclEPS1_.exit.i.i, label %bb.cl
 
 bb.cl:                                            ; preds = %_ZNSt10unique_ptrIN4llvm3lto9InputFileESt14default_deleteIS2_EED2Ev.exit.i
   %i.ol = ptrtoint ptr %.sroa.0301.0.i to i64
   %i.om = sub i64 %.sroa.6.0.i, %i.ol
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.0301.0.i, i64 noundef %i.om) #27
-  br label %_ZN4llvm19BitcodeFileContentsD2Ev.exit.i
+  br label %_ZNKSt14default_deleteIN4llvm12MemoryBufferEEclEPS1_.exit.i.i
 
-_ZN4llvm19BitcodeFileContentsD2Ev.exit.i:         ; preds = %bb.cl, %_ZNSt10unique_ptrIN4llvm3lto9InputFileESt14default_deleteIS2_EED2Ev.exit.i
-  %.sroa.0305.i.0..sroa.0305.i.0..sroa.0305.i.0..sroa.0305.0..sroa.0305.0..sroa.0305.0.307.i = load ptr, ptr %.sroa.0305.i, align 8, !tbaa !68 ; 3 uses
-  %.not.i184.i = icmp eq ptr %.sroa.0305.i.0..sroa.0305.i.0..sroa.0305.i.0..sroa.0305.0..sroa.0305.0..sroa.0305.0.307.i, null
-  br i1 %.not.i184.i, label %_ZNSt10unique_ptrIN4llvm12MemoryBufferESt14default_deleteIS1_EED2Ev.exit.i, label %_ZNKSt14default_deleteIN4llvm12MemoryBufferEEclEPS1_.exit.i.i
-
-_ZNKSt14default_deleteIN4llvm12MemoryBufferEEclEPS1_.exit.i.i: ; preds = %_ZN4llvm19BitcodeFileContentsD2Ev.exit.i
-  %i.on = load ptr, ptr %.sroa.0305.i.0..sroa.0305.i.0..sroa.0305.i.0..sroa.0305.0..sroa.0305.0..sroa.0305.0.307.i, align 8, !tbaa !20
+_ZNKSt14default_deleteIN4llvm12MemoryBufferEEclEPS1_.exit.i.i: ; preds = %bb.cl, %_ZNSt10unique_ptrIN4llvm3lto9InputFileESt14default_deleteIS2_EED2Ev.exit.i
+  %i.on = load ptr, ptr %.sink.i.i, align 8, !tbaa !20
   %i.oo = getelementptr inbounds nuw i8, ptr %i.on, i64 8
   %i.op = load ptr, ptr %i.oo, align 8
-  call void %i.op(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0305.i.0..sroa.0305.i.0..sroa.0305.i.0..sroa.0305.0..sroa.0305.0..sroa.0305.0.307.i) #26, !inline_history !301
-  br label %_ZNSt10unique_ptrIN4llvm12MemoryBufferESt14default_deleteIS1_EED2Ev.exit.i
-
-_ZNSt10unique_ptrIN4llvm12MemoryBufferESt14default_deleteIS1_EED2Ev.exit.i: ; preds = %_ZNKSt14default_deleteIN4llvm12MemoryBufferEEclEPS1_.exit.i.i, %_ZN4llvm19BitcodeFileContentsD2Ev.exit.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0305.i)
+  call void %i.op(ptr noundef nonnull align 8 dereferenceable(24) %.sink.i.i) #26, !inline_history !301
   %.0.i10 = getelementptr inbounds nuw i8, ptr %.0333.i, i64 8 ; 2 uses
   %.not.i11 = icmp eq ptr %.0.i10, %i.an
   br i1 %.not.i11, label %_ZL10dumpSymtabiPPc.exit, label %bb.f
@@ -1641,7 +1626,7 @@ _ZN4llvm11raw_ostreamlsEPKc.exit289.i:            ; preds = %bb.fm, %bb.fl, %_ZN
   %.not71.i = icmp eq ptr %i.abd, %i.ny
   br i1 %.not71.i, label %._crit_edge329.i, label %.lr.ph328.i
 
-_ZL10dumpSymtabiPPc.exit:                         ; preds = %_ZNSt10unique_ptrIN4llvm12MemoryBufferESt14default_deleteIS1_EED2Ev.exit.i, %_ZN4llvmeqENS_9StringRefES0_.exit.thread
+_ZL10dumpSymtabiPPc.exit:                         ; preds = %_ZNKSt14default_deleteIN4llvm12MemoryBufferEEclEPS1_.exit.i.i, %_ZN4llvmeqENS_9StringRefES0_.exit.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
   call void @llvm.lifetime.end.p0(ptr nonnull %9)
   call void @llvm.lifetime.end.p0(ptr nonnull %10)
@@ -1908,7 +1893,6 @@ bb.a:
   %63 = alloca %"class.std::function", align 8    ; 5 uses
   %64 = alloca %"struct.std::atomic", align 1     ; 9 uses
   %65 = alloca %"class.std::__cxx11::basic_string", align 8 ; 16 uses
-  %.sroa.0549 = alloca ptr, align 8               ; 11 uses
   %66 = alloca %"class.llvm::ErrorOr", align 8    ; 7 uses
   %67 = alloca %"class.llvm::Twine", align 8      ; 6 uses
   %68 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
@@ -2311,7 +2295,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit: ; preds = %.
   %i.abm = getelementptr inbounds nuw i8, ptr %i.abl, i64 %i.abk
   store i8 0, ptr %i.abm, align 1, !tbaa !44
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #26
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0549)
   call void @llvm.lifetime.start.p0(ptr nonnull %67) #26
   store i8 4, ptr %i.zy, align 8, !tbaa !62
   store i8 1, ptr %i.zz, align 1, !tbaa !63
@@ -2357,7 +2340,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit242: ; preds =
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #26
   %.val = load ptr, ptr %68, align 8              ; 2 uses
   %.val90 = load i64, ptr %i.aab, align 8         ; 4 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !446)
   call void @llvm.lifetime.start.p0(ptr nonnull %14)
   %i.abx = load i8, ptr %i.aac, align 8, !noalias !446
   %i.aby = trunc i8 %i.abx to i1
@@ -2366,7 +2348,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit242: ; preds =
 bb.dl:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit242
   %i.abz = load i64, ptr %66, align 8, !tbaa !68, !noalias !446
   %i.aca = inttoptr i64 %i.abz to ptr
-  store ptr %i.aca, ptr %.sroa.0549, align 8, !tbaa !68, !alias.scope !446
+  store ptr null, ptr %66, align 8, !tbaa !68
   br label %_ZL5checkISt10unique_ptrIN4llvm12MemoryBufferESt14default_deleteIS2_EEET_NS1_7ErrorOrIS6_EENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
 
 _ZNK4llvm7ErrorOrISt10unique_ptrINS_12MemoryBufferESt14default_deleteIS2_EEE8getErrorEv.exit.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit242
@@ -2420,8 +2402,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br label %_ZL5checkISt10unique_ptrIN4llvm12MemoryBufferESt14default_deleteIS2_EEET_NS1_7ErrorOrIS6_EENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
 
 _ZL5checkISt10unique_ptrIN4llvm12MemoryBufferESt14default_deleteIS2_EEET_NS1_7ErrorOrIS6_EENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i, %bb.dl, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i244
-  %.sink.i = phi ptr [ %66, %bb.dl ], [ %.sroa.0549, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i244 ], [ %.sroa.0549, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i ]
-  store ptr null, ptr %.sink.i, align 8, !tbaa !68
+  %.sink.i = phi ptr [ %i.aca, %bb.dl ], [ null, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i244 ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i ] ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %14)
   %i.acn = load ptr, ptr %68, align 8, !tbaa !43  ; 2 uses
   %i.aco = icmp eq ptr %i.acn, %i.aaa
@@ -2453,8 +2434,7 @@ _ZNKSt14default_deleteIN4llvm12MemoryBufferEEclEPS1_.exit.i.i: ; preds = %bb.dp
 _ZN4llvm7ErrorOrISt10unique_ptrINS_12MemoryBufferESt14default_deleteIS2_EEED2Ev.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit248, %bb.dp, %_ZNKSt14default_deleteIN4llvm12MemoryBufferEEclEPS1_.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %67) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %69) #26
-  %.sroa.0549.0..sroa.0549.0..sroa.0549.0..sroa.0549.0. = load ptr, ptr %.sroa.0549, align 8, !tbaa !68
-  call void @_ZNK4llvm12MemoryBuffer15getMemBufferRefEv(ptr dead_on_unwind nonnull writable sret(%"class.llvm::MemoryBufferRef") align 8 %71, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0549.0..sroa.0549.0..sroa.0549.0..sroa.0549.0.) #26
+  call void @_ZNK4llvm12MemoryBuffer15getMemBufferRefEv(ptr dead_on_unwind nonnull writable sret(%"class.llvm::MemoryBufferRef") align 8 %71, ptr noundef nonnull align 8 dereferenceable(24) %.sink.i) #26
   call void @_ZN4llvm3lto9InputFile6createENS_15MemoryBufferRefE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::Expected.183") align 8 %70, ptr noundef nonnull byval(%"class.llvm::MemoryBufferRef") align 8 %71) #26
   store ptr %i.aaf, ptr %72, align 8, !tbaa !64
   %i.acx = load ptr, ptr %65, align 8, !tbaa !43  ; 2 uses
@@ -2857,10 +2837,8 @@ bb.fo:                                            ; preds = %._crit_edge
   br i1 %.not.i.i340, label %bb.fq, label %bb.fp
 
 bb.fp:                                            ; preds = %bb.fo
-  %.sroa.0549.0..sroa.0549.0..sroa.0549.0..sroa.0549.0.551 = load ptr, ptr %.sroa.0549, align 8, !tbaa !68
-  %i.anb = ptrtoint ptr %.sroa.0549.0..sroa.0549.0..sroa.0549.0..sroa.0549.0.551 to i64
+  %i.anb = ptrtoint ptr %.sink.i to i64
   store i64 %i.anb, ptr %.sroa.7614.0795, align 8, !tbaa !68
-  store ptr null, ptr %.sroa.0549, align 8, !tbaa !68
   br label %_ZNSt6vectorISt10unique_ptrIN4llvm12MemoryBufferESt14default_deleteIS2_EESaIS5_EE9push_backEOS5_.exit
 
 bb.fq:                                            ; preds = %bb.fo
@@ -2886,10 +2864,8 @@ _ZNKSt6vectorISt10unique_ptrIN4llvm12MemoryBufferESt14default_deleteIS2_EESaIS5_
   %i.anl = shl nuw nsw i64 %i.ank, 3
   %i.anm = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.anl) #30 ; 10 uses
   %i.ann = getelementptr inbounds nuw i8, ptr %i.anm, i64 %i.ane
-  %.sroa.0549.0..sroa.0549.0..sroa.0549.0..sroa.0549.0.552 = load ptr, ptr %.sroa.0549, align 8, !tbaa !68
-  %i.ano = ptrtoint ptr %.sroa.0549.0..sroa.0549.0..sroa.0549.0..sroa.0549.0.552 to i64
+  %i.ano = ptrtoint ptr %.sink.i to i64
   store i64 %i.ano, ptr %i.ann, align 8, !tbaa !68
-  store ptr null, ptr %.sroa.0549, align 8, !tbaa !68
   %.not10.i.i.i.i512 = icmp eq ptr %.sroa.0612.0797, %.sroa.7614.0795
   br i1 %.not10.i.i.i.i512, label %_ZNSt6vectorISt10unique_ptrIN4llvm12MemoryBufferESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, label %.lr.ph.i.i.i.i513.preheader
 
@@ -3087,6 +3063,7 @@ _ZNKSt14default_deleteIN4llvm3lto9InputFileEEclEPS2_.exit.i: ; preds = %_ZN4llvm
 _ZNSt10unique_ptrIN4llvm3lto9InputFileESt14default_deleteIS2_EED2Ev.exit: ; preds = %_ZNKSt14default_deleteIN4llvm3lto9InputFileEEclEPS2_.exit.i, %_ZN4llvm5ErrorD2Ev.exit349, %._crit_edge
   %.sroa.12617.1 = phi ptr [ %.sroa.12617.0794, %._crit_edge ], [ %.sroa.12617.3, %_ZN4llvm5ErrorD2Ev.exit349 ], [ %.sroa.12617.3, %_ZNKSt14default_deleteIN4llvm3lto9InputFileEEclEPS2_.exit.i ] ; 2 uses
   %.sroa.7614.1 = phi ptr [ %.sroa.7614.0795, %._crit_edge ], [ %.sroa.7614.3, %_ZN4llvm5ErrorD2Ev.exit349 ], [ %.sroa.7614.3, %_ZNKSt14default_deleteIN4llvm3lto9InputFileEEclEPS2_.exit.i ] ; 2 uses
+  %.sroa.0549.0 = phi ptr [ %.sink.i, %._crit_edge ], [ null, %_ZN4llvm5ErrorD2Ev.exit349 ], [ null, %_ZNKSt14default_deleteIN4llvm3lto9InputFileEEclEPS2_.exit.i ] ; 3 uses
   %.sroa.0612.1 = phi ptr [ %.sroa.0612.0797, %._crit_edge ], [ %.sroa.0612.3, %_ZN4llvm5ErrorD2Ev.exit349 ], [ %.sroa.0612.3, %_ZNKSt14default_deleteIN4llvm3lto9InputFileEEclEPS2_.exit.i ] ; 2 uses
   %.not.i.i.i351 = icmp eq ptr %.sroa.0539.0.lcssa, null
   br i1 %.not.i.i.i351, label %_ZNSt6vectorIN4llvm3lto16SymbolResolutionESaIS2_EED2Ev.exit, label %bb.fz
@@ -3109,19 +3086,17 @@ _ZNKSt14default_deleteIN4llvm3lto9InputFileEEclEPS2_.exit.i353: ; preds = %_ZNSt
 
 _ZNSt10unique_ptrIN4llvm3lto9InputFileESt14default_deleteIS2_EED2Ev.exit354: ; preds = %_ZNSt6vectorIN4llvm3lto16SymbolResolutionESaIS2_EED2Ev.exit, %_ZNKSt14default_deleteIN4llvm3lto9InputFileEEclEPS2_.exit.i353
   call void @llvm.lifetime.end.p0(ptr nonnull %69) #26
-  %.sroa.0549.0..sroa.0549.0..sroa.0549.0..sroa.0549.0.550 = load ptr, ptr %.sroa.0549, align 8, !tbaa !68 ; 3 uses
-  %.not.i355 = icmp eq ptr %.sroa.0549.0..sroa.0549.0..sroa.0549.0..sroa.0549.0.550, null
+  %.not.i355 = icmp eq ptr %.sroa.0549.0, null
   br i1 %.not.i355, label %_ZNSt10unique_ptrIN4llvm12MemoryBufferESt14default_deleteIS1_EED2Ev.exit, label %_ZNKSt14default_deleteIN4llvm12MemoryBufferEEclEPS1_.exit.i
 
 _ZNKSt14default_deleteIN4llvm12MemoryBufferEEclEPS1_.exit.i: ; preds = %_ZNSt10unique_ptrIN4llvm3lto9InputFileESt14default_deleteIS2_EED2Ev.exit354
-  %i.apo = load ptr, ptr %.sroa.0549.0..sroa.0549.0..sroa.0549.0..sroa.0549.0.550, align 8, !tbaa !20
+  %i.apo = load ptr, ptr %.sroa.0549.0, align 8, !tbaa !20
   %i.app = getelementptr inbounds nuw i8, ptr %i.apo, i64 8
   %i.apq = load ptr, ptr %i.app, align 8
-  call void %i.apq(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0549.0..sroa.0549.0..sroa.0549.0..sroa.0549.0.550) #26, !inline_history !389
+  call void %i.apq(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0549.0) #26, !inline_history !389
   br label %_ZNSt10unique_ptrIN4llvm12MemoryBufferESt14default_deleteIS1_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4llvm12MemoryBufferESt14default_deleteIS1_EED2Ev.exit: ; preds = %_ZNSt10unique_ptrIN4llvm3lto9InputFileESt14default_deleteIS2_EED2Ev.exit354, %_ZNKSt14default_deleteIN4llvm12MemoryBufferEEclEPS1_.exit.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0549)
   %i.apr = load ptr, ptr %65, align 8, !tbaa !43  ; 2 uses
   %i.aps = icmp eq ptr %i.apr, %i.zw
   br i1 %i.aps, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit358, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i356

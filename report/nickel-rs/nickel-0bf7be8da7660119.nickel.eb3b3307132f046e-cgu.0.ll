@@ -205,7 +205,7 @@ _ZN4core3ops8function6FnOnce9call_once17h580a6c2a3e566179E.exit.i.us.i.i.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !noalias !12561
   br label %bb.o
 
-"_ZN4core3ptr121drop_in_place$LT$core..option..Option$LT$core..option..Option$LT$nickel..customize..interface..ValueInterface$GT$$GT$$GT$17h330e6a3ce30932a5E.exit3.i.i": ; preds = %.split17.us.loopexit.i.i.i.i.i.i, %.noexc49, %bb.j
+"_ZN4core3ptr121drop_in_place$LT$core..option..Option$LT$core..option..Option$LT$nickel..customize..interface..ValueInterface$GT$$GT$$GT$17h330e6a3ce30932a5E.exit3.i.i": ; preds = %bb.j, %.noexc49, %.split17.us.loopexit.i.i.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !12579
   store i64 3, ptr %i.ak, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !noalias !12561
@@ -218,7 +218,7 @@ bb.n:                                             ; preds = %"_ZN3std3sys12threa
           cleanup
   br label %bb.as
 
-bb.o:                                             ; preds = %.noexc35, %"_ZN4core3ptr121drop_in_place$LT$core..option..Option$LT$core..option..Option$LT$nickel..customize..interface..ValueInterface$GT$$GT$$GT$17h330e6a3ce30932a5E.exit3.i.i"
+bb.o:                                             ; preds = %"_ZN4core3ptr121drop_in_place$LT$core..option..Option$LT$core..option..Option$LT$nickel..customize..interface..ValueInterface$GT$$GT$$GT$17h330e6a3ce30932a5E.exit3.i.i", %.noexc35
   %.sroa.797.sroa.0.1 = phi ptr [ %.sroa.6156.0.copyload, %.noexc35 ], [ %i.aj, %"_ZN4core3ptr121drop_in_place$LT$core..option..Option$LT$core..option..Option$LT$nickel..customize..interface..ValueInterface$GT$$GT$$GT$17h330e6a3ce30932a5E.exit3.i.i" ] ; 4 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.9108, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.797.sroa.6, i64 40, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.797.sroa.6)
