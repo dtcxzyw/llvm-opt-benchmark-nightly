@@ -202,10 +202,6 @@ bb.a:
   %i.fo = alloca [32 x i8], align 8               ; 2 uses
   %i.fp = alloca [24 x i8], align 8               ; 6 uses
   %i.fq = alloca [200 x i8], align 8              ; 9 uses
-  %.sroa.0 = alloca i8, align 1                   ; 3 uses
-  %.sroa.055 = alloca i8, align 1                 ; 3 uses
-  %.sroa.056 = alloca i8, align 1                 ; 3 uses
-  %.sroa.057 = alloca i8, align 1                 ; 3 uses
   %i.fr = alloca [24 x i8], align 8               ; 15 uses
   %i.fs = alloca [24 x i8], align 8               ; 9 uses
   %i.ft = alloca [24 x i8], align 8               ; 7 uses
@@ -270,10 +266,6 @@ bb.f:                                             ; preds = %bb.a
   store i64 0, ptr %i.gl, align 8, !alias.scope !107
   %i.gm = getelementptr inbounds nuw i8, ptr %i.fr, i64 16
   store i8 -1, ptr %i.gm, align 8
-  store i8 0, ptr %.sroa.057, align 1
-  store i8 0, ptr %.sroa.056, align 1
-  store i8 0, ptr %.sroa.055, align 1
-  store i8 0, ptr %.sroa.0, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.fb)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.fc)
   invoke void @_RNvXs7_NtCs4NRVxsYgnAr_4core6optionINtB5_6OptionNtNtCs23nXHpKt6Eo_12divan_macros12attr_options12GenericTypesENtNtB7_7default7Default7defaultBO_(ptr nonnull sret([24 x i8]) align 8 %i.fc)
@@ -432,6 +424,10 @@ bb.o:                                             ; preds = %.noexc.i.i
   br label %bb.p
 
 bb.p:                                             ; preds = %.noexc23.i.i, %bb.o
+  %.sroa.060.0 = phi i1 [ false, %bb.o ], [ %.sroa.060.3, %.noexc23.i.i ] ; 36 uses
+  %.sroa.059.0 = phi i1 [ false, %bb.o ], [ %.sroa.059.3, %.noexc23.i.i ] ; 36 uses
+  %.sroa.058.0 = phi i1 [ false, %bb.o ], [ %.sroa.058.3, %.noexc23.i.i ] ; 36 uses
+  %.sroa.0.061 = phi i1 [ false, %bb.o ], [ %.sroa.0.3, %.noexc23.i.i ] ; 36 uses
   invoke void @_RINvMs9_NtCslNEiUQgeYIG_3syn5parseNtB6_11ParseBuffer4callNtNtB8_4path4PathEB8_(ptr nonnull sret([48 x i8]) align 8 %i.eo, ptr nonnull align 8 %i.ey, ptr nonnull @_RNvNtCslNEiUQgeYIG_3syn4meta15parse_meta_path)
           to label %.noexc13.i.i unwind label %.loopexit.i.i, !noalias !111
 
@@ -723,9 +719,7 @@ bb.ax:                                            ; preds = %bb.aw
           to label %bb.az unwind label %.loopexit.i.i.i.i, !noalias !117
 
 bb.ay:                                            ; preds = %bb.aw
-  %.sroa.057.0..sroa.057.0..sroa.057.0..sroa.057.0. = load i8, ptr %.sroa.057, align 1, !noalias !117
-  %3 = trunc nuw i8 %.sroa.057.0..sroa.057.0..sroa.057.0..sroa.057.0. to i1
-  br i1 %3, label %.invoke75.i.i.i.i.i, label %bb.ce
+  br i1 %.sroa.060.0, label %.invoke75.i.i.i.i.i, label %bb.ce
 
 bb.az:                                            ; preds = %bb.ax
   br i1 %i.kr, label %bb.bb, label %bb.ba
@@ -737,9 +731,7 @@ bb.ba:                                            ; preds = %bb.az
           to label %bb.bc unwind label %.loopexit.i.i.i.i, !noalias !117
 
 bb.bb:                                            ; preds = %bb.az
-  %.sroa.056.0..sroa.056.0..sroa.056.0..sroa.056.0. = load i8, ptr %.sroa.056, align 1, !noalias !117
-  %4 = trunc nuw i8 %.sroa.056.0..sroa.056.0..sroa.056.0..sroa.056.0. to i1
-  br i1 %4, label %.invoke75.i.i.i.i.i, label %bb.ce
+  br i1 %.sroa.059.0, label %.invoke75.i.i.i.i.i, label %bb.ce
 
 bb.bc:                                            ; preds = %bb.ba
   br i1 %i.ku, label %bb.be, label %bb.bd
@@ -751,9 +743,7 @@ bb.bd:                                            ; preds = %bb.bc
           to label %bb.bf unwind label %.loopexit.i.i.i.i, !noalias !117
 
 bb.be:                                            ; preds = %bb.bc
-  %.sroa.055.0..sroa.055.0..sroa.055.0..sroa.055.0. = load i8, ptr %.sroa.055, align 1, !noalias !117
-  %5 = trunc nuw i8 %.sroa.055.0..sroa.055.0..sroa.055.0..sroa.055.0. to i1
-  br i1 %5, label %.invoke75.i.i.i.i.i, label %bb.ce
+  br i1 %.sroa.058.0, label %.invoke75.i.i.i.i.i, label %bb.ce
 
 bb.bf:                                            ; preds = %bb.bd
   br i1 %i.kx, label %bb.bh, label %bb.bg
@@ -763,9 +753,7 @@ bb.bg:                                            ; preds = %bb.bf
           to label %bb.bi unwind label %.loopexit.i.i.i.i, !noalias !117
 
 bb.bh:                                            ; preds = %bb.bf
-  %.sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0. = load i8, ptr %.sroa.0, align 1, !noalias !117
-  %6 = trunc nuw i8 %.sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0. to i1
-  br i1 %6, label %.invoke75.i.i.i.i.i, label %bb.ce
+  br i1 %.sroa.0.061, label %.invoke75.i.i.i.i.i, label %bb.ce
 
 bb.bi:                                            ; preds = %bb.bg
   %i.ky = load i64, ptr %i.bk, align 8, !noalias !117
@@ -860,10 +848,18 @@ bb.ca:                                            ; preds = %bb.bz
           to label %bb.cb unwind label %bb.by, !noalias !117
 
 bb.cb:                                            ; preds = %bb.ie, %bb.hr, %bb.gz, %bb.fz, %bb.ff, %bb.el, %bb.du, %bb.dd, %bb.ca
+  %.sroa.060.1 = phi i1 [ %.sroa.060.0, %bb.ie ], [ %.sroa.060.0, %bb.hr ], [ %.sroa.060.0, %bb.gz ], [ %.sroa.060.0, %bb.fz ], [ %.sroa.060.0, %bb.ff ], [ %.sroa.060.0, %bb.el ], [ %.sroa.060.0, %bb.du ], [ %.sroa.060.4, %bb.dd ], [ %.sroa.060.0, %bb.ca ]
+  %.sroa.059.1 = phi i1 [ %.sroa.059.0, %bb.ie ], [ %.sroa.059.0, %bb.hr ], [ %.sroa.059.0, %bb.gz ], [ %.sroa.059.0, %bb.fz ], [ %.sroa.059.0, %bb.ff ], [ %.sroa.059.0, %bb.el ], [ %.sroa.059.0, %bb.du ], [ %.sroa.059.4, %bb.dd ], [ %.sroa.059.0, %bb.ca ]
+  %.sroa.058.1 = phi i1 [ %.sroa.058.0, %bb.ie ], [ %.sroa.058.0, %bb.hr ], [ %.sroa.058.0, %bb.gz ], [ %.sroa.058.0, %bb.fz ], [ %.sroa.058.0, %bb.ff ], [ %.sroa.058.0, %bb.el ], [ %.sroa.058.0, %bb.du ], [ %.sroa.058.4, %bb.dd ], [ %.sroa.058.0, %bb.ca ]
+  %.sroa.0.162 = phi i1 [ %.sroa.0.061, %bb.ie ], [ %.sroa.0.061, %bb.hr ], [ %.sroa.0.061, %bb.gz ], [ %.sroa.0.061, %bb.fz ], [ %.sroa.0.061, %bb.ff ], [ %.sroa.0.061, %bb.el ], [ %.sroa.0.061, %bb.du ], [ %.sroa.0.4, %bb.dd ], [ %.sroa.0.061, %bb.ca ]
   store i64 -1, ptr %i.em, align 8, !alias.scope !116, !noalias !115
   br label %.invoke78.i.i.i.i.i
 
 .invoke78.i.i.i.i.i:                              ; preds = %.invoke.i.i.i.i.i, %_RNCNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB6_11AttrOptions5parse00B8_.exit61.i.i.i.i.i, %_RNCNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB6_11AttrOptions5parse00B8_.exit.i.i.i.i.i, %bb.he, %_RNCNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB6_11AttrOptions5parse00B8_.exit.i.i.i.i, %_RNCNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB6_11AttrOptions5parse0s_0B8_.exit.i.i.i.i.i, %bb.ge, %_RNCNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB6_11AttrOptions5parse0s_0B8_.exit.i.i.i.i, %bb.et, %bb.cb, %bb.bs
+  %.sroa.060.2 = phi i1 [ %.sroa.060.5, %.invoke.i.i.i.i.i ], [ %.sroa.060.1, %bb.cb ], [ %.sroa.060.0, %_RNCNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB6_11AttrOptions5parse00B8_.exit61.i.i.i.i.i ], [ %.sroa.060.0, %_RNCNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB6_11AttrOptions5parse00B8_.exit.i.i.i.i.i ], [ %.sroa.060.0, %_RNCNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB6_11AttrOptions5parse0s_0B8_.exit.i.i.i.i.i ], [ %.sroa.060.0, %bb.he ], [ %.sroa.060.0, %_RNCNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB6_11AttrOptions5parse00B8_.exit.i.i.i.i ], [ %.sroa.060.0, %_RNCNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB6_11AttrOptions5parse0s_0B8_.exit.i.i.i.i ], [ %.sroa.060.0, %bb.ge ], [ %.sroa.060.0, %bb.et ], [ %.sroa.060.0, %bb.bs ]
+  %.sroa.059.2 = phi i1 [ %.sroa.059.5, %.invoke.i.i.i.i.i ], [ %.sroa.059.1, %bb.cb ], [ %.sroa.059.0, %_RNCNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB6_11AttrOptions5parse00B8_.exit61.i.i.i.i.i ], [ %.sroa.059.0, %_RNCNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB6_11AttrOptions5parse00B8_.exit.i.i.i.i.i ], [ %.sroa.059.0, %_RNCNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB6_11AttrOptions5parse0s_0B8_.exit.i.i.i.i.i ], [ %.sroa.059.0, %bb.he ], [ %.sroa.059.0, %_RNCNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB6_11AttrOptions5parse00B8_.exit.i.i.i.i ], [ %.sroa.059.0, %_RNCNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB6_11AttrOptions5parse0s_0B8_.exit.i.i.i.i ], [ %.sroa.059.0, %bb.ge ], [ %.sroa.059.0, %bb.et ], [ %.sroa.059.0, %bb.bs ]
+  %.sroa.058.2 = phi i1 [ %.sroa.058.5, %.invoke.i.i.i.i.i ], [ %.sroa.058.1, %bb.cb ], [ %.sroa.058.0, %_RNCNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB6_11AttrOptions5parse00B8_.exit61.i.i.i.i.i ], [ %.sroa.058.0, %_RNCNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB6_11AttrOptions5parse00B8_.exit.i.i.i.i.i ], [ %.sroa.058.0, %_RNCNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB6_11AttrOptions5parse0s_0B8_.exit.i.i.i.i.i ], [ %.sroa.058.0, %bb.he ], [ %.sroa.058.0, %_RNCNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB6_11AttrOptions5parse00B8_.exit.i.i.i.i ], [ %.sroa.058.0, %_RNCNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB6_11AttrOptions5parse0s_0B8_.exit.i.i.i.i ], [ %.sroa.058.0, %bb.ge ], [ %.sroa.058.0, %bb.et ], [ %.sroa.058.0, %bb.bs ]
+  %.sroa.0.2 = phi i1 [ %.sroa.0.5, %.invoke.i.i.i.i.i ], [ %.sroa.0.162, %bb.cb ], [ %.sroa.0.061, %_RNCNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB6_11AttrOptions5parse00B8_.exit61.i.i.i.i.i ], [ %.sroa.0.061, %_RNCNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB6_11AttrOptions5parse00B8_.exit.i.i.i.i.i ], [ %.sroa.0.061, %_RNCNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB6_11AttrOptions5parse0s_0B8_.exit.i.i.i.i.i ], [ %.sroa.0.061, %bb.he ], [ %.sroa.0.061, %_RNCNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB6_11AttrOptions5parse00B8_.exit.i.i.i.i ], [ %.sroa.0.061, %_RNCNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB6_11AttrOptions5parse0s_0B8_.exit.i.i.i.i ], [ %.sroa.0.061, %bb.ge ], [ %.sroa.0.061, %bb.et ], [ %.sroa.0.061, %bb.bs ]
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECsghEUimwObfx_11proc_macro2(ptr nonnull align 8 %i.ec)
           to label %_RNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB4_11AttrOptions5parse0B6_.exit.i.i.i.i unwind label %bb.t, !noalias !115
 
@@ -922,11 +918,13 @@ bb.cm:                                            ; preds = %bb.cl
 bb.cn:                                            ; preds = %bb.cm
   unreachable
 
-bb.co:                                            ; preds = %bb.cl, %bb.cj, %bb.ch, %bb.cf
-  %.sink.i.i.sroa.phi.sroa.speculated.i.i.i = phi ptr [ %.sroa.055, %bb.cj ], [ %.sroa.056, %bb.ch ], [ %.sroa.057, %bb.cf ], [ %.sroa.0, %bb.cl ]
-  %.sroa.5.0.i.i.i.i.i = phi i64 [ 11, %bb.cj ], [ 10, %bb.ch ], [ 10, %bb.cf ], [ 10, %bb.cl ]
-  %.sroa.03.0.i.i.i.i.i = phi ptr [ @44, %bb.cj ], [ @45, %bb.ch ], [ @46, %bb.cf ], [ @43, %bb.cl ]
-  store i8 1, ptr %.sink.i.i.sroa.phi.sroa.speculated.i.i.i, align 1, !noalias !117
+bb.co:                                            ; preds = %bb.cl, %bb.cf, %bb.ch, %bb.cj
+  %.sroa.060.4 = phi i1 [ %.sroa.060.0, %bb.ch ], [ %.sroa.060.0, %bb.cj ], [ true, %bb.cf ], [ %.sroa.060.0, %bb.cl ] ; 3 uses
+  %.sroa.059.4 = phi i1 [ true, %bb.ch ], [ %.sroa.059.0, %bb.cj ], [ %.sroa.059.0, %bb.cf ], [ %.sroa.059.0, %bb.cl ] ; 3 uses
+  %.sroa.058.4 = phi i1 [ %.sroa.058.0, %bb.ch ], [ true, %bb.cj ], [ %.sroa.058.0, %bb.cf ], [ %.sroa.058.0, %bb.cl ] ; 3 uses
+  %.sroa.0.4 = phi i1 [ %.sroa.0.061, %bb.ch ], [ %.sroa.0.061, %bb.cj ], [ %.sroa.0.061, %bb.cf ], [ true, %bb.cl ] ; 3 uses
+  %.sroa.5.0.i.i.i.i.i = phi i64 [ 10, %bb.ch ], [ 11, %bb.cj ], [ 10, %bb.cf ], [ 10, %bb.cl ]
+  %.sroa.03.0.i.i.i.i.i = phi ptr [ @45, %bb.ch ], [ @44, %bb.cj ], [ @46, %bb.cf ], [ @43, %bb.cl ]
   invoke void @_RNvMNtCslNEiUQgeYIG_3syn4metaNtB2_15ParseNestedMeta5value(ptr nonnull sret([24 x i8]) align 8 %i.br, ptr nonnull align 8 %i.el)
           to label %bb.cp unwind label %.loopexit.i.i.i.i, !noalias !117
 
@@ -1329,6 +1327,10 @@ bb.ib:                                            ; preds = %bb.ia
   br label %.invoke.i.i.i.i.i
 
 .invoke.i.i.i.i.i:                                ; preds = %bb.ib, %bb.hx, %bb.ho, %bb.hk, %bb.gw, %bb.gs, %bb.fw, %bb.fs, %bb.fc, %bb.ey, %bb.ed, %bb.dz, %bb.dm, %bb.di, %bb.cv, %bb.cr
+  %.sroa.060.5 = phi i1 [ %.sroa.060.0, %bb.ib ], [ %.sroa.060.0, %bb.hx ], [ %.sroa.060.0, %bb.ho ], [ %.sroa.060.0, %bb.hk ], [ %.sroa.060.0, %bb.gw ], [ %.sroa.060.0, %bb.gs ], [ %.sroa.060.0, %bb.fw ], [ %.sroa.060.0, %bb.fs ], [ %.sroa.060.0, %bb.fc ], [ %.sroa.060.0, %bb.ey ], [ %.sroa.060.0, %bb.ed ], [ %.sroa.060.0, %bb.dz ], [ %.sroa.060.0, %bb.dm ], [ %.sroa.060.0, %bb.di ], [ %.sroa.060.4, %bb.cv ], [ %.sroa.060.4, %bb.cr ]
+  %.sroa.059.5 = phi i1 [ %.sroa.059.0, %bb.ib ], [ %.sroa.059.0, %bb.hx ], [ %.sroa.059.0, %bb.ho ], [ %.sroa.059.0, %bb.hk ], [ %.sroa.059.0, %bb.gw ], [ %.sroa.059.0, %bb.gs ], [ %.sroa.059.0, %bb.fw ], [ %.sroa.059.0, %bb.fs ], [ %.sroa.059.0, %bb.fc ], [ %.sroa.059.0, %bb.ey ], [ %.sroa.059.0, %bb.ed ], [ %.sroa.059.0, %bb.dz ], [ %.sroa.059.0, %bb.dm ], [ %.sroa.059.0, %bb.di ], [ %.sroa.059.4, %bb.cv ], [ %.sroa.059.4, %bb.cr ]
+  %.sroa.058.5 = phi i1 [ %.sroa.058.0, %bb.ib ], [ %.sroa.058.0, %bb.hx ], [ %.sroa.058.0, %bb.ho ], [ %.sroa.058.0, %bb.hk ], [ %.sroa.058.0, %bb.gw ], [ %.sroa.058.0, %bb.gs ], [ %.sroa.058.0, %bb.fw ], [ %.sroa.058.0, %bb.fs ], [ %.sroa.058.0, %bb.fc ], [ %.sroa.058.0, %bb.ey ], [ %.sroa.058.0, %bb.ed ], [ %.sroa.058.0, %bb.dz ], [ %.sroa.058.0, %bb.dm ], [ %.sroa.058.0, %bb.di ], [ %.sroa.058.4, %bb.cv ], [ %.sroa.058.4, %bb.cr ]
+  %.sroa.0.5 = phi i1 [ %.sroa.0.061, %bb.ib ], [ %.sroa.0.061, %bb.hx ], [ %.sroa.0.061, %bb.ho ], [ %.sroa.0.061, %bb.hk ], [ %.sroa.0.061, %bb.gw ], [ %.sroa.0.061, %bb.gs ], [ %.sroa.0.061, %bb.fw ], [ %.sroa.0.061, %bb.fs ], [ %.sroa.0.061, %bb.fc ], [ %.sroa.0.061, %bb.ey ], [ %.sroa.0.061, %bb.ed ], [ %.sroa.0.061, %bb.dz ], [ %.sroa.0.061, %bb.dm ], [ %.sroa.0.061, %bb.di ], [ %.sroa.0.4, %bb.cv ], [ %.sroa.0.4, %bb.cr ]
   %i.rt = phi ptr [ %i.an, %bb.ib ], [ %i.am, %bb.hx ], [ %i.ap, %bb.ho ], [ %i.ao, %bb.hk ], [ %i.ar, %bb.gw ], [ %i.aq, %bb.gs ], [ %i.at, %bb.fw ], [ %i.as, %bb.fs ], [ %i.av, %bb.fc ], [ %i.au, %bb.ey ], [ %i.ax, %bb.ed ], [ %i.aw, %bb.dz ], [ %i.az, %bb.dm ], [ %i.ay, %bb.di ], [ %i.bb, %bb.cv ], [ %i.ba, %bb.cr ]
   %i.ru = phi ptr [ @59, %bb.ib ], [ @59, %bb.hx ], [ @58, %bb.ho ], [ @58, %bb.hk ], [ @56, %bb.gw ], [ @56, %bb.gs ], [ @54, %bb.fw ], [ @54, %bb.fs ], [ @53, %bb.fc ], [ @53, %bb.ey ], [ @51, %bb.ed ], [ @51, %bb.dz ], [ @49, %bb.dm ], [ @49, %bb.di ], [ @48, %bb.cv ], [ @48, %bb.cr ]
   invoke void @_RNvXsq_NtCs4NRVxsYgnAr_4core6resultINtB5_6ResultuNtNtCslNEiUQgeYIG_3syn5error5ErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_NtNtB7_7convert10InfallibleBL_EE13from_residualBP_(ptr nonnull sret([24 x i8]) align 8 %i.em, ptr nonnull align 8 %i.rt, ptr nonnull align 8 %i.ru)
@@ -1395,6 +1397,10 @@ bb.ih:                                            ; preds = %.noexc66.i.i.i.i.i
   br label %_RNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB4_11AttrOptions5parse0B6_.exit.i.i.i.i
 
 _RNCNvMNtCs23nXHpKt6Eo_12divan_macros12attr_optionsNtB4_11AttrOptions5parse0B6_.exit.i.i.i.i: ; preds = %bb.ih, %.invoke78.i.i.i.i.i
+  %.sroa.060.3 = phi i1 [ %.sroa.060.0, %bb.ih ], [ %.sroa.060.2, %.invoke78.i.i.i.i.i ]
+  %.sroa.059.3 = phi i1 [ %.sroa.059.0, %bb.ih ], [ %.sroa.059.2, %.invoke78.i.i.i.i.i ]
+  %.sroa.058.3 = phi i1 [ %.sroa.058.0, %bb.ih ], [ %.sroa.058.2, %.invoke78.i.i.i.i.i ]
+  %.sroa.0.3 = phi i1 [ %.sroa.0.061, %bb.ih ], [ %.sroa.0.2, %.invoke78.i.i.i.i.i ]
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCslNEiUQgeYIG_3syn4meta15ParseNestedMetaECs23nXHpKt6Eo_12divan_macros(ptr nonnull align 8 %i.el)
           to label %.noexc16.i.i unwind label %.loopexit.i.i, !noalias !111
 
