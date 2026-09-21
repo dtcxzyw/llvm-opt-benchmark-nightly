@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %.lr.ph540, %bb.cc
   %i.fh = sdiv exact i64 %i.fg, 12
   %i.fi = add nsw i64 %i.fc, %i.fh                ; 2 uses
   %i.fj = sub i64 %i.en, %i.fi                    ; 4 uses
-  %.sroa.0249.0.copyload = load i32, ptr %i.el, align 4, !tbaa !73 ; 4 uses
+  %.sroa.0249.0.copyload = load i32, ptr %i.el, align 4, !tbaa !73 ; 3 uses
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.el, i64 4
   %.sroa.15.0.copyload = load i32, ptr %.sroa.15.0..sroa_idx, align 4, !tbaa !73 ; 4 uses
   %.sroa.19.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.el, i64 8
@@ -242,21 +242,20 @@ _ZNSt5queueIN6marisa8grimoire4trie5RangeESt5dequeIS3_SaIS3_EEE3popEv.exit: ; pre
   br label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph490, %bb.l
-  %i.fu = phi i64 [ %i.fr, %.lr.ph490 ], [ %8, %bb.l ] ; 2 uses
-  %.sroa.0249.0489 = phi i32 [ %.sroa.0249.0.copyload, %.lr.ph490 ], [ %7, %bb.l ] ; 2 uses
+  %i.fu = phi i64 [ %i.fr, %.lr.ph490 ], [ %indvars.iv.next, %bb.l ] ; 4 uses
   %i.fv = load ptr, ptr %i.h, align 8, !tbaa !60
   %i.fw = getelementptr inbounds nuw [24 x i8], ptr %i.fv, i64 %i.fu ; 2 uses
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fw, i64 8
   %i.fy = load i32, ptr %i.fx, align 8, !tbaa !69
   %i.fz = icmp eq i32 %i.fy, %.sroa.19.0.copyload
-  br i1 %i.fz, label %bb.l, label %.critedge
+  br i1 %i.fz, label %bb.l, label %.critedge.loopexit
 
 bb.l:                                             ; preds = %bb.k
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fw, i64 12
   store i32 %i.ft, ptr %i.ga, align 4, !tbaa !55
-  %7 = add i32 %.sroa.0249.0489, 1                ; 3 uses
-  %8 = zext i32 %7 to i64
-  %exitcond626.not = icmp eq i32 %7, %.sroa.15.0.copyload
+  %indvars.iv.next = add nuw nsw i64 %i.fu, 1     ; 2 uses
+  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
+  %exitcond626.not = icmp eq i32 %.sroa.15.0.copyload, %lftr.wideiv
   br i1 %exitcond626.not, label %.critedge.thread, label %bb.k, !llvm.loop !302
 
 .thread317:                                       ; preds = %bb.g
@@ -277,9 +276,13 @@ bb.n:                                             ; preds = %.critedge.thread
           cleanup
   br label %.body
 
-.critedge:                                        ; preds = %bb.k, %_ZNSt5queueIN6marisa8grimoire4trie5RangeESt5dequeIS3_SaIS3_EEE3popEv.exit
-  %.sroa.0249.0.lcssa = phi i32 [ %.sroa.0249.0.copyload, %_ZNSt5queueIN6marisa8grimoire4trie5RangeESt5dequeIS3_SaIS3_EEE3popEv.exit ], [ %.sroa.0249.0489, %bb.k ] ; 3 uses
-  %.lcssa326 = phi i64 [ %i.fr, %_ZNSt5queueIN6marisa8grimoire4trie5RangeESt5dequeIS3_SaIS3_EEE3popEv.exit ], [ %i.fu, %bb.k ] ; 3 uses
+.critedge.loopexit:                               ; preds = %bb.k
+  %7 = trunc nuw i64 %i.fu to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %.critedge.loopexit, %_ZNSt5queueIN6marisa8grimoire4trie5RangeESt5dequeIS3_SaIS3_EEE3popEv.exit
+  %.sroa.0249.0.lcssa = phi i32 [ %.sroa.0249.0.copyload, %_ZNSt5queueIN6marisa8grimoire4trie5RangeESt5dequeIS3_SaIS3_EEE3popEv.exit ], [ %7, %.critedge.loopexit ] ; 3 uses
+  %.lcssa326 = phi i64 [ %i.fr, %_ZNSt5queueIN6marisa8grimoire4trie5RangeESt5dequeIS3_SaIS3_EEE3popEv.exit ], [ %i.fu, %.critedge.loopexit ] ; 3 uses
   %i.ge = zext i32 %.sroa.15.0.copyload to i64    ; 3 uses
   %i.gf = icmp eq i32 %.sroa.0249.0.lcssa, %.sroa.15.0.copyload
   br i1 %i.gf, label %.critedge.thread, label %bb.o
@@ -301,8 +304,8 @@ _ZN6marisa8grimoire6vector6VectorINS0_4trie13WeightedRangeEE5clearEv.exit: ; pre
   %i.gh = getelementptr inbounds nuw [24 x i8], ptr %i.gg, i64 %.lcssa326
   %i.gi = getelementptr inbounds nuw i8, ptr %i.gh, i64 12
   %i.gj = load float, ptr %i.gi, align 4, !tbaa !55 ; 2 uses
-  %.081496 = add nuw nsw i64 %.lcssa326, 1        ; 2 uses
-  %i.gk = icmp samesign ult i64 %.081496, %i.ge
+  %.081496 = add nsw i64 %.lcssa326, 1            ; 2 uses
+  %i.gk = icmp ult i64 %.081496, %i.ge
   br i1 %i.gk, label %.lr.ph505, label %_ZN6marisa8grimoire6vector6VectorINS0_4trie13WeightedRangeEE5clearEv.exit.._crit_edge506_crit_edge
 
 _ZN6marisa8grimoire6vector6VectorINS0_4trie13WeightedRangeEE5clearEv.exit.._crit_edge506_crit_edge: ; preds = %_ZN6marisa8grimoire6vector6VectorINS0_4trie13WeightedRangeEE5clearEv.exit
@@ -705,7 +708,7 @@ bb.ax:                                            ; preds = %._crit_edge209
   br label %bb.az
 
 bb.ay:                                            ; preds = %bb.ba
-  %i.ei = add i64 %.01927.i.i, 1                  ; 2 uses
+  %i.ei = add nuw nsw i64 %.01927.i.i, 1          ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.ei, %i.eb
   br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %bb.az, !llvm.loop !315
 
@@ -1108,7 +1111,7 @@ bb.h:                                             ; preds = %.lr.ph537, %bb.cb
   %i.fh = sdiv exact i64 %i.fg, 12
   %i.fi = add nsw i64 %i.fc, %i.fh                ; 2 uses
   %i.fj = sub i64 %i.en, %i.fi                    ; 2 uses
-  %.sroa.0249.0.copyload = load i32, ptr %i.el, align 4, !tbaa !73 ; 4 uses
+  %.sroa.0249.0.copyload = load i32, ptr %i.el, align 4, !tbaa !73 ; 3 uses
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.el, i64 4
   %.sroa.15.0.copyload = load i32, ptr %.sroa.15.0..sroa_idx, align 4, !tbaa !73 ; 4 uses
   %.sroa.19.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.el, i64 8
@@ -1145,21 +1148,20 @@ _ZNSt5queueIN6marisa8grimoire4trie5RangeESt5dequeIS3_SaIS3_EEE3popEv.exit: ; pre
   br label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph488, %bb.l
-  %i.fu = phi i64 [ %i.fr, %.lr.ph488 ], [ %8, %bb.l ] ; 2 uses
-  %.sroa.0249.0487 = phi i32 [ %.sroa.0249.0.copyload, %.lr.ph488 ], [ %7, %bb.l ] ; 2 uses
+  %i.fu = phi i64 [ %i.fr, %.lr.ph488 ], [ %indvars.iv.next, %bb.l ] ; 4 uses
   %i.fv = load ptr, ptr %i.h, align 8, !tbaa !160
   %i.fw = getelementptr inbounds nuw [24 x i8], ptr %i.fv, i64 %i.fu ; 2 uses
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fw, i64 8
   %i.fy = load i32, ptr %i.fx, align 8, !tbaa !164
   %i.fz = icmp eq i32 %i.fy, %.sroa.19.0.copyload
-  br i1 %i.fz, label %bb.l, label %.critedge
+  br i1 %i.fz, label %bb.l, label %.critedge.loopexit
 
 bb.l:                                             ; preds = %bb.k
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fw, i64 12
   store i32 %i.ft, ptr %i.ga, align 4, !tbaa !55
-  %7 = add i32 %.sroa.0249.0487, 1                ; 3 uses
-  %8 = zext i32 %7 to i64
-  %exitcond623.not = icmp eq i32 %7, %.sroa.15.0.copyload
+  %indvars.iv.next = add nuw nsw i64 %i.fu, 1     ; 2 uses
+  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
+  %exitcond623.not = icmp eq i32 %.sroa.15.0.copyload, %lftr.wideiv
   br i1 %exitcond623.not, label %.critedge.thread, label %bb.k, !llvm.loop !346
 
 .thread317:                                       ; preds = %bb.g
@@ -1175,9 +1177,13 @@ bb.m:                                             ; preds = %.critedge.thread
           cleanup
   br label %.body
 
-.critedge:                                        ; preds = %bb.k, %_ZNSt5queueIN6marisa8grimoire4trie5RangeESt5dequeIS3_SaIS3_EEE3popEv.exit
-  %.sroa.0249.0.lcssa = phi i32 [ %.sroa.0249.0.copyload, %_ZNSt5queueIN6marisa8grimoire4trie5RangeESt5dequeIS3_SaIS3_EEE3popEv.exit ], [ %.sroa.0249.0487, %bb.k ] ; 3 uses
-  %.lcssa326 = phi i64 [ %i.fr, %_ZNSt5queueIN6marisa8grimoire4trie5RangeESt5dequeIS3_SaIS3_EEE3popEv.exit ], [ %i.fu, %bb.k ] ; 3 uses
+.critedge.loopexit:                               ; preds = %bb.k
+  %7 = trunc nuw i64 %i.fu to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %.critedge.loopexit, %_ZNSt5queueIN6marisa8grimoire4trie5RangeESt5dequeIS3_SaIS3_EEE3popEv.exit
+  %.sroa.0249.0.lcssa = phi i32 [ %.sroa.0249.0.copyload, %_ZNSt5queueIN6marisa8grimoire4trie5RangeESt5dequeIS3_SaIS3_EEE3popEv.exit ], [ %7, %.critedge.loopexit ] ; 3 uses
+  %.lcssa326 = phi i64 [ %i.fr, %_ZNSt5queueIN6marisa8grimoire4trie5RangeESt5dequeIS3_SaIS3_EEE3popEv.exit ], [ %i.fu, %.critedge.loopexit ] ; 3 uses
   %i.gd = zext i32 %.sroa.15.0.copyload to i64    ; 3 uses
   %i.ge = icmp eq i32 %.sroa.0249.0.lcssa, %.sroa.15.0.copyload
   br i1 %i.ge, label %.critedge.thread, label %bb.n
@@ -1199,8 +1205,8 @@ _ZN6marisa8grimoire6vector6VectorINS0_4trie13WeightedRangeEE5clearEv.exit: ; pre
   %i.gg = getelementptr inbounds nuw [24 x i8], ptr %i.gf, i64 %.lcssa326
   %i.gh = getelementptr inbounds nuw i8, ptr %i.gg, i64 12
   %i.gi = load float, ptr %i.gh, align 4, !tbaa !55 ; 2 uses
-  %.081494 = add nuw nsw i64 %.lcssa326, 1        ; 2 uses
-  %i.gj = icmp samesign ult i64 %.081494, %i.gd
+  %.081494 = add nsw i64 %.lcssa326, 1            ; 2 uses
+  %i.gj = icmp ult i64 %.081494, %i.gd
   br i1 %i.gj, label %.lr.ph503, label %_ZN6marisa8grimoire6vector6VectorINS0_4trie13WeightedRangeEE5clearEv.exit.._crit_edge504_crit_edge
 
 _ZN6marisa8grimoire6vector6VectorINS0_4trie13WeightedRangeEE5clearEv.exit.._crit_edge504_crit_edge: ; preds = %_ZN6marisa8grimoire6vector6VectorINS0_4trie13WeightedRangeEE5clearEv.exit
@@ -1603,7 +1609,7 @@ bb.ax:                                            ; preds = %._crit_edge209
   br label %bb.az
 
 bb.ay:                                            ; preds = %bb.ba
-  %i.er = add i64 %.01927.i.i, 1                  ; 2 uses
+  %i.er = add nuw nsw i64 %.01927.i.i, 1          ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.er, %i.ek
   br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %bb.az, !llvm.loop !359
 
@@ -1929,7 +1935,7 @@ _ZN6marisa8grimoire6vector6VectorINS0_4trie5CacheEE7reserveEm.exit.i: ; preds = 
   store i32 0, ptr %i.ab, align 4, !tbaa !135
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   store float f0x00800000, ptr %i.ac, align 4, !tbaa !55
-  %i.ad = add nuw i64 %i.v, 1
+  %i.ad = add nuw nsw i64 %i.v, 1
   br label %.prol.loopexit
 
 .prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph.i
@@ -1954,7 +1960,7 @@ _ZN6marisa8grimoire6vector6VectorINS0_4trie5CacheEE7reserveEm.exit.i: ; preds = 
   store i32 0, ptr %i.am, align 4, !tbaa !135
   %i.an = getelementptr inbounds nuw i8, ptr %i.ak, i64 20
   store float f0x00800000, ptr %i.an, align 4, !tbaa !55
-  %i.ao = add nuw i64 %.07.i, 2                   ; 2 uses
+  %i.ao = add nuw nsw i64 %.07.i, 2               ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %i.ao, %i.d
   br i1 %exitcond.not.i.1, label %_ZN6marisa8grimoire6vector6VectorINS0_4trie5CacheEE6resizeEm.exit, label %.lr.ph.i.new, !llvm.loop !7
 

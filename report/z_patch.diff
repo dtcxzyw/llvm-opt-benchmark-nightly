@@ -1,0 +1,704 @@
+diff --git a/llvm/include/llvm/Analysis/ConstraintSystem.h b/llvm/include/llvm/Analysis/ConstraintSystem.h
+index 11f40de9968c5..9b02f5bc005a6 100644
+--- a/llvm/include/llvm/Analysis/ConstraintSystem.h
++++ b/llvm/include/llvm/Analysis/ConstraintSystem.h
+@@ -51,12 +51,6 @@ class ConstraintSystem {
+     return R.empty() || (R.size() == 1 && R.front().Id == 0);
+   }
+ 
+-  /// Returns the constant part of \p R, which is 0 if \p R does not have an
+-  /// entry for it.
+-  static int64_t getConstant(ArrayRef<Entry> R) {
+-    return hasConstantEntry(R) ? R.front().Coefficient : 0;
+-  }
+-
+   /// Number of variables in the system, not counting the constant part. The
+   /// variables use the indices 1 to NumVariables.
+   size_t NumVariables = 0;
+@@ -172,6 +166,15 @@ class ConstraintSystem {
+   /// Returns the number of rows in the constraint system.
+   unsigned size() const { return Constraints.size(); }
+ 
++  /// Returns the rows currently in the system.
++  ArrayRef<RowTy> getConstraints() const { return Constraints; }
++
++  /// Returns the constant part of \p R, which is 0 if \p R does not have an
++  /// entry for it.
++  static int64_t getConstant(ArrayRef<Entry> R) {
++    return hasConstantEntry(R) ? R.front().Coefficient : 0;
++  }
++
+   /// Print the constraints in the system.
+   LLVM_ABI void dump() const;
+ };
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index daf8167224628..d2fef26222812 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -499,6 +499,79 @@ static bool canUseSExt(ConstantInt *CI) {
+   return Val.sgt(MinSignedConstraintValue) && Val.slt(MaxConstraintValue);
+ }
+ 
++/// Returns the value mapped to \p Idx in \p Value2Index. The systems keep no
++/// reverse index; this is only used for the rare witness candidate below.
++static Value *getValueForIndex(const DenseMap<Value *, unsigned> &Value2Index,
++                               unsigned Idx) {
++  for (const auto &[V, I] : Value2Index)
++    if (I == Idx)
++      return V;
++  llvm_unreachable("index must be mapped");
++}
++
++/// The constraint systems treat their variables as unbounded integers, but
++/// every variable is an IR value of a fixed-width type and hence satisfies
++/// `MinVal <= W <= MaxVal` for that type's limits. That fact is never stated in
++/// a system - it only holds facts derived from the program, and for the widest
++/// integer type the limits are not even representable (see canUseSExt).
++///
++/// It is what no-wrap reasoning needs, though: proving `add nsw Op, 1` requires
++/// `Op s<= SMAX - 1`, and from `Op s< W` the solver only derives `Op s<= W - 1`
++/// and stops, having no upper bound for W. Knowing `W s<= SMAX` closes the
++/// chain.
++///
++/// Returns true if the system for \p Signed contains such a chain: a witness W
++/// with `Op + Slack <= W` (\p Upper), which gives `Op <= MaxVal - Slack`, or
++/// with `W + Slack <= Op` (!\p Upper), which gives `Op >= MinVal + Slack`. W
++/// must be no wider than \p Op, so that its own type's limits are within
++/// \p Op's.
++///
++/// Only rows stating the relation directly are considered. Searching for a
++/// witness with the solver would cost a query per value in the system, on a
++/// path that runs for every operand of every constraint built (decompose).
++static bool hasLimitWitness(const ConstraintInfo &Info, Value *Op,
++                            const APInt &Slack, bool Signed, bool Upper) {
++  // Slack is the distance of the required bound from the type's limit and thus
++  // the offset the witness relation has to provide.
++  if (Slack.isZero() || Slack.getActiveBits() > 63)
++    return false;
++  int64_t RequiredOffset = -static_cast<int64_t>(Slack.getZExtValue());
++
++  const DenseMap<Value *, unsigned> &Value2Index = Info.getValue2Index(Signed);
++  auto OpEntry = Value2Index.find(Op);
++  if (OpEntry == Value2Index.end())
++    return false;
++  unsigned OpIdx = OpEntry->second;
++  int64_t OpCoefficient = Upper ? 1 : -1;
++  unsigned OpBitWidth = Op->getType()->getScalarSizeInBits();
++
++  for (ArrayRef<Entry> Row : Info.getCS(Signed).getConstraints()) {
++    if (ConstraintSystem::getConstant(Row) > RequiredOffset)
++      continue;
++    // Match `OpCoefficient * Op - OpCoefficient * W <= -Slack`. The constant
++    // entry is present, as it is at most -Slack, and comes first; the two
++    // variables follow in index order.
++    ArrayRef<Entry> Vars = Row.drop_front();
++    if (Vars.size() != 2)
++      continue;
++    unsigned WitnessIdx;
++    if (Vars[0].Id == OpIdx && Vars[0].Coefficient == OpCoefficient &&
++        Vars[1].Coefficient == -OpCoefficient)
++      WitnessIdx = Vars[1].Id;
++    else if (Vars[1].Id == OpIdx && Vars[1].Coefficient == OpCoefficient &&
++             Vars[0].Coefficient == -OpCoefficient)
++      WitnessIdx = Vars[0].Id;
++    else
++      continue;
++
++    Type *WitnessTy = getValueForIndex(Value2Index, WitnessIdx)->getType();
++    if (WitnessTy->isIntegerTy() &&
++        WitnessTy->getIntegerBitWidth() <= OpBitWidth)
++      return true;
++  }
++  return false;
++}
++
+ /// Returns true if \p Info implies that \p Op is in \p R, interpreting \p R as
+ /// a signed range if \p Signed is set and as an unsigned range otherwise.
+ static bool doesHoldInRange(const ConstraintInfo &Info, Value *Op,
+@@ -516,6 +589,10 @@ static bool doesHoldInRange(const ConstraintInfo &Info, Value *Op,
+                         : APInt::getMinValue(BitWidth);
+   APInt MaxVal = Signed ? APInt::getSignedMaxValue(BitWidth)
+                         : APInt::getMaxValue(BitWidth);
++  // The distance of the required bounds from the type's limits, before any
++  // clamping below; this is what a witness has to bridge.
++  APInt LowerSlack = Min - MinVal;
++  APInt UpperSlack = MaxVal - Max;
+   // Replace bound too large to be decomposed by the largest usable one.
+   if (!Signed && Max.uge(MaxConstraintValue))
+     Max = APInt(BitWidth, MaxConstraintValue - 1);
+@@ -523,11 +600,13 @@ static bool doesHoldInRange(const ConstraintInfo &Info, Value *Op,
+   Type *Ty = Op->getType();
+   if (Min != MinVal &&
+       !Info.doesHold(Signed ? CmpInst::ICMP_SGE : CmpInst::ICMP_UGE, Op,
+-                     ConstantInt::get(Ty, Min)))
++                     ConstantInt::get(Ty, Min)) &&
++      !hasLimitWitness(Info, Op, LowerSlack, Signed, /*Upper=*/false))
+     return false;
+   if (Max != MaxVal &&
+       !Info.doesHold(Signed ? CmpInst::ICMP_SLE : CmpInst::ICMP_ULE, Op,
+-                     ConstantInt::get(Ty, Max)))
++                     ConstantInt::get(Ty, Max)) &&
++      !hasLimitWitness(Info, Op, UpperSlack, Signed, /*Upper=*/true))
+     return false;
+   return true;
+ }
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll
+index 31ae62c564dd6..e035664e295fe 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll
+@@ -257,7 +257,7 @@ define i1 @latch_counted_signed_header_check_removable(ptr %p, i64 %n) {
+ ; CHECK:       [[LOOP_LATCH]]:
+ ; CHECK-NEXT:    [[GEP:%.*]] = getelementptr i8, ptr [[P]], i64 [[IV]]
+ ; CHECK-NEXT:    store i8 0, ptr [[GEP]], align 1
+-; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 1
+ ; CHECK-NEXT:    [[DONE:%.*]] = icmp ne i64 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[DONE]], label %[[LOOP_HEADER]], label %[[EXIT_0]]
+ ; CHECK:       [[EXIT_0]]:
+@@ -303,7 +303,7 @@ define i1 @latch_counted_signed_header_check_missing_precond(ptr %p, i64 %n) {
+ ; CHECK:       [[LOOP_LATCH]]:
+ ; CHECK-NEXT:    [[GEP:%.*]] = getelementptr i8, ptr [[P]], i64 [[IV]]
+ ; CHECK-NEXT:    store i8 0, ptr [[GEP]], align 1
+-; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 1
+ ; CHECK-NEXT:    [[DONE:%.*]] = icmp ne i64 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[DONE]], label %[[LOOP_HEADER]], label %[[EXIT_0:.*]]
+ ; CHECK:       [[EXIT_0]]:
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-symbolic-start-postinc.ll b/llvm/test/Transforms/ConstraintElimination/induction-symbolic-start-postinc.ll
+index 0f6bce64a7339..a8fb53260f5f1 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-symbolic-start-postinc.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-symbolic-start-postinc.ll
+@@ -21,7 +21,7 @@ define void @postinc_symbolic_start_unsigned(i32 %start, i32 %n, i1 %c) {
+ ; CHECK-NEXT:    call void @use(i1 [[C_2]])
+ ; CHECK-NEXT:    br i1 [[C]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i32 [[IV]], 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i32 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT]], label %[[LOOP_HEADER]]
+ ; CHECK:       [[EXIT]]:
+@@ -71,7 +71,7 @@ define void @postinc_symbolic_start_signed(i32 %start, i32 %n, i1 %c) {
+ ; CHECK-NEXT:    call void @use(i1 [[C_2]])
+ ; CHECK-NEXT:    br i1 [[C]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nsw i32 [[IV]], 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i32 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT]], label %[[LOOP_HEADER]]
+ ; CHECK:       [[EXIT]]:
+@@ -254,7 +254,7 @@ define void @phi_compare_symbolic_start_non_strict_precondition(i32 %start, i32
+ ; CHECK-NEXT:    [[C_0:%.*]] = icmp sge i32 [[IV]], [[START]]
+ ; CHECK-NEXT:    call void @use(i1 [[C_0]])
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i32 [[IV]], 1
+ ; CHECK-NEXT:    br i1 [[C]], label %[[EXIT]], label %[[LOOP_HEADER]]
+ ; CHECK:       [[EXIT]]:
+ ; CHECK-NEXT:    ret void
+@@ -553,7 +553,7 @@ define void @postinc_symbolic_start_header_is_latch(i32 %start, i32 %n) {
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ [[START]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i32 [[IV]], 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i32 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT:.*]], label %[[LOOP]]
+ ; CHECK:       [[EXIT]]:
+@@ -632,7 +632,7 @@ define void @postinc_symbolic_start_header_is_latch_exit_block(i32 %start, i32 %
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ [[START]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i32 [[IV]], 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i32 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT:.*]], label %[[LOOP]]
+ ; CHECK:       [[EXIT]]:
+diff --git a/llvm/test/Transforms/ConstraintElimination/minmax.ll b/llvm/test/Transforms/ConstraintElimination/minmax.ll
+index ffcc7a8bcf7e6..937cc47049035 100644
+--- a/llvm/test/Transforms/ConstraintElimination/minmax.ll
++++ b/llvm/test/Transforms/ConstraintElimination/minmax.ll
+@@ -584,7 +584,7 @@ define i32 @simplify_ult_smax_val_fail2(i32 %a, i32 %b) {
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i32 [[A]], [[B]]
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[THEN:%.*]], label [[ELSE:%.*]]
+ ; CHECK:       then:
+-; CHECK-NEXT:    [[ADD:%.*]] = add nsw i32 [[A]], 1
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw nsw i32 [[A]], 1
+ ; CHECK-NEXT:    [[MAX:%.*]] = call i32 @llvm.smax.i32(i32 [[B]], i32 [[ADD]])
+ ; CHECK-NEXT:    ret i32 [[MAX]]
+ ; CHECK:       else:
+diff --git a/llvm/test/Transforms/ConstraintElimination/mixed-signed-unsigned-predicates.ll b/llvm/test/Transforms/ConstraintElimination/mixed-signed-unsigned-predicates.ll
+index 757a949fbc2d7..54fefff7e01c6 100644
+--- a/llvm/test/Transforms/ConstraintElimination/mixed-signed-unsigned-predicates.ll
++++ b/llvm/test/Transforms/ConstraintElimination/mixed-signed-unsigned-predicates.ll
+@@ -139,29 +139,24 @@ define i1 @test_add_nsw(i8 %start, i8 %low, i8 %high) {
+ ; CHECK-NEXT:    ret i1 [[RES_15]]
+ ; CHECK:       if.else:
+ ; CHECK-NEXT:    [[F_0:%.*]] = icmp ugt i8 [[START]], [[HIGH]]
+-; CHECK-NEXT:    [[START_1:%.*]] = add nuw i8 [[START]], 1
++; CHECK-NEXT:    [[START_1:%.*]] = add nuw nsw i8 [[START]], 1
+ ; CHECK-NEXT:    [[F_1:%.*]] = icmp uge i8 [[START_1]], [[HIGH]]
+ ; CHECK-NEXT:    [[RES_0:%.*]] = xor i1 [[F_0]], [[F_1]]
+ ; CHECK-NEXT:    [[RES_1:%.*]] = xor i1 [[RES_0]], false
+-; CHECK-NEXT:    [[SC_2:%.*]] = icmp sge i8 [[START_1]], [[HIGH]]
+-; CHECK-NEXT:    [[RES_2:%.*]] = xor i1 [[RES_1]], [[SC_2]]
+-; CHECK-NEXT:    [[START_2:%.*]] = add nuw i8 [[START]], 2
++; CHECK-NEXT:    [[RES_2:%.*]] = xor i1 [[RES_1]], false
++; CHECK-NEXT:    [[START_2:%.*]] = add nuw nsw i8 [[START]], 2
+ ; CHECK-NEXT:    [[F_2:%.*]] = icmp uge i8 [[START_2]], [[HIGH]]
+ ; CHECK-NEXT:    [[RES_3:%.*]] = xor i1 [[RES_2]], [[F_2]]
+-; CHECK-NEXT:    [[SC_3:%.*]] = icmp sge i8 [[START_2]], [[HIGH]]
+-; CHECK-NEXT:    [[RES_4:%.*]] = xor i1 [[RES_3]], [[SC_3]]
+-; CHECK-NEXT:    [[SC_4:%.*]] = icmp sle i8 [[START_2]], [[START_1]]
+-; CHECK-NEXT:    [[RES_5:%.*]] = xor i1 [[RES_4]], [[SC_4]]
+-; CHECK-NEXT:    [[START_3:%.*]] = add nuw i8 [[START]], 3
++; CHECK-NEXT:    [[RES_4:%.*]] = xor i1 [[RES_3]], false
++; CHECK-NEXT:    [[RES_5:%.*]] = xor i1 [[RES_4]], false
++; CHECK-NEXT:    [[START_3:%.*]] = add nuw nsw i8 [[START]], 3
+ ; CHECK-NEXT:    [[F_3:%.*]] = icmp uge i8 [[START_3]], [[HIGH]]
+ ; CHECK-NEXT:    [[RES_6:%.*]] = xor i1 [[RES_5]], [[F_3]]
+-; CHECK-NEXT:    [[SC_5:%.*]] = icmp sge i8 [[START_3]], [[START_1]]
+-; CHECK-NEXT:    [[RES_7:%.*]] = xor i1 [[RES_6]], [[SC_5]]
+-; CHECK-NEXT:    [[START_4:%.*]] = add nuw i8 [[START]], 4
++; CHECK-NEXT:    [[RES_7:%.*]] = xor i1 [[RES_6]], true
++; CHECK-NEXT:    [[START_4:%.*]] = add nuw nsw i8 [[START]], 4
+ ; CHECK-NEXT:    [[UC_2:%.*]] = icmp uge i8 [[START_4]], [[HIGH]]
+ ; CHECK-NEXT:    [[RES_8:%.*]] = xor i1 [[RES_7]], [[UC_2]]
+-; CHECK-NEXT:    [[SC_6:%.*]] = icmp sge i8 [[START_4]], [[START_1]]
+-; CHECK-NEXT:    [[RES_9:%.*]] = xor i1 [[RES_8]], [[SC_6]]
++; CHECK-NEXT:    [[RES_9:%.*]] = xor i1 [[RES_8]], true
+ ; CHECK-NEXT:    [[SC_7:%.*]] = icmp sge i8 [[START_4]], [[HIGH]]
+ ; CHECK-NEXT:    [[RES_10:%.*]] = xor i1 [[RES_9]], [[SC_7]]
+ ; CHECK-NEXT:    ret i1 [[RES_10]]
+diff --git a/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-decrement.ll b/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-decrement.ll
+index 2f6a8a3433e1f..d43a146519d96 100644
+--- a/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-decrement.ll
++++ b/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-decrement.ll
+@@ -391,7 +391,7 @@ define void @add_rec_decreasing_no_wrap_flags_signed_precond(i8 %start, i8 %b) {
+ ; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    [[U:%.*]] = icmp ule i8 [[K_0]], [[START]]
+ ; CHECK-NEXT:    call void @use(i1 [[U]])
+-; CHECK-NEXT:    [[K_DEC]] = add i8 [[K_0]], -1
++; CHECK-NEXT:    [[K_DEC]] = add nsw i8 [[K_0]], -1
+ ; CHECK-NEXT:    br label [[LOOP_HEADER]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+@@ -431,7 +431,7 @@ define void @add_rec_decreasing_sub_step_signed_precond(i8 %start, i8 %b) {
+ ; CHECK-NEXT:    br i1 [[CMP2_NOT]], label [[EXIT]], label [[LOOP_LATCH]]
+ ; CHECK:       loop.latch:
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[K_DEC]] = sub i8 [[K_0]], 1
++; CHECK-NEXT:    [[K_DEC]] = sub nsw i8 [[K_0]], 1
+ ; CHECK-NEXT:    br label [[LOOP_HEADER]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+diff --git a/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-nested-loops.ll b/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-nested-loops.ll
+index 11fb48ff007f5..7508524861845 100644
+--- a/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-nested-loops.ll
++++ b/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-nested-loops.ll
+@@ -18,10 +18,10 @@ define void @start_value_of_inner_add_rec_is_add_rec_condition_can_be_simplified
+ ; CHECK-NEXT:    br i1 [[CMP2_NOT]], label [[OUTER_LATCH]], label [[INNER_LATCH]]
+ ; CHECK:       inner.latch:
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[K_INC]] = add i32 [[K_0]], 1
++; CHECK-NEXT:    [[K_INC]] = add nuw i32 [[K_0]], 1
+ ; CHECK-NEXT:    br label [[INNER_HEADER]]
+ ; CHECK:       outer.latch:
+-; CHECK-NEXT:    [[I_INC]] = add i32 [[I_0]], 1
++; CHECK-NEXT:    [[I_INC]] = add nuw i32 [[I_0]], 1
+ ; CHECK-NEXT:    br label [[OUTER_HEADER]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+@@ -69,10 +69,10 @@ define void @start_value_of_inner_add_rec_is_add_rec_condition_cannot_be_simplif
+ ; CHECK:       inner.latch:
+ ; CHECK-NEXT:    [[CMP_NOT_I:%.*]] = icmp ult i32 [[K_0]], 3
+ ; CHECK-NEXT:    call void @use(i1 [[CMP_NOT_I]])
+-; CHECK-NEXT:    [[K_INC]] = add i32 [[K_0]], 1
++; CHECK-NEXT:    [[K_INC]] = add nuw i32 [[K_0]], 1
+ ; CHECK-NEXT:    br label [[INNER_HEADER]]
+ ; CHECK:       outer.latch:
+-; CHECK-NEXT:    [[I_INC]] = add i32 [[I_0]], 1
++; CHECK-NEXT:    [[I_INC]] = add nuw i32 [[I_0]], 1
+ ; CHECK-NEXT:    br label [[OUTER_HEADER]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+@@ -121,7 +121,7 @@ define void @inner_add_rec_decreasing(i32 noundef %len) {
+ ; CHECK-NEXT:    [[K_DEC]] = add i32 [[K_0]], -1
+ ; CHECK-NEXT:    br label [[INNER_HEADER]]
+ ; CHECK:       outer.latch:
+-; CHECK-NEXT:    [[I_INC]] = add i32 [[I_0]], 1
++; CHECK-NEXT:    [[I_INC]] = add nuw i32 [[I_0]], 1
+ ; CHECK-NEXT:    br label [[OUTER_HEADER]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+diff --git a/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-signed.ll b/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-signed.ll
+index ff27d0f8007db..94507e08f3fa4 100644
+--- a/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-signed.ll
++++ b/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-signed.ll
+@@ -11,7 +11,7 @@ define void @signed_iv_step_1(i64 %end) {
+ ; CHECK-NEXT:    br i1 [[PRECOND]], label [[LOOP:%.*]], label [[EXIT:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[IV_NEXT:%.*]], [[LOOP_LATCH:%.*]] ], [ -10, [[ENTRY:%.*]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 1
+ ; CHECK-NEXT:    [[CMP_I_NOT:%.*]] = icmp eq i64 [[IV]], [[END]]
+ ; CHECK-NEXT:    br i1 [[CMP_I_NOT]], label [[EXIT]], label [[LOOP_LATCH]]
+ ; CHECK:       loop.latch:
+@@ -218,7 +218,7 @@ define void @signed_iv_step_minus1(i64 %end) {
+ ; CHECK-NEXT:    br i1 [[PRECOND]], label [[LOOP:%.*]], label [[EXIT:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[IV_NEXT:%.*]], [[LOOP_LATCH:%.*]] ], [ 10, [[ENTRY:%.*]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], -1
++; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], -1
+ ; CHECK-NEXT:    [[CMP_I_NOT:%.*]] = icmp eq i64 [[IV]], [[END]]
+ ; CHECK-NEXT:    br i1 [[CMP_I_NOT]], label [[EXIT]], label [[LOOP_LATCH]]
+ ; CHECK:       loop.latch:
+diff --git a/llvm/test/Transforms/ConstraintElimination/no-wrap-type-limit-witness.ll b/llvm/test/Transforms/ConstraintElimination/no-wrap-type-limit-witness.ll
+new file mode 100644
+index 0000000000000..23824bb5bb0ed
+--- /dev/null
++++ b/llvm/test/Transforms/ConstraintElimination/no-wrap-type-limit-witness.ll
+@@ -0,0 +1,305 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=constraint-elimination -S %s | FileCheck %s
++
++; Every value in a constraint system is in the range of its type, but the
++; systems do not contain those bounds. A bound `Op + Slack <= W` on some other
++; value W of the system therefore proves `Op <= SMAX - Slack` (and the mirrored
++; form proves `Op >= SMIN + Slack`) even though the solver cannot derive it.
++
++declare { i64, i1 } @llvm.sadd.with.overflow.i64(i64, i64)
++declare { i8, i1 } @llvm.uadd.with.overflow.i8(i8, i8)
++declare void @llvm.assume(i1)
++declare void @use(i8)
++
++; A s< W (W a variable, hence W s<= SMAX) proves A + 1 does not overflow.
++define i1 @sadd_one_witness_slt(i64 %a, i64 %w) {
++; CHECK-LABEL: define i1 @sadd_one_witness_slt(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    ret i1 false
++;
++  %pre = icmp slt i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %s = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %a, i64 1)
++  %o = extractvalue { i64, i1 } %s, 1
++  ret i1 %o
++}
++
++; A s> W (W a variable, hence W s>= SMIN) proves A + (-1) does not overflow.
++define i1 @sadd_negone_witness_sgt(i64 %a, i64 %w) {
++; CHECK-LABEL: define i1 @sadd_negone_witness_sgt(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp sgt i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    ret i1 false
++;
++  %pre = icmp sgt i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %s = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %a, i64 -1)
++  %o = extractvalue { i64, i1 } %s, 1
++  ret i1 %o
++}
++
++; A non-strict bound A s<= W does not prove A + 1 is in range (A and W could
++; both be SMAX), so the overflow check must be kept.
++define i1 @neg_sadd_one_witness_sle(i64 %a, i64 %w) {
++; CHECK-LABEL: define i1 @neg_sadd_one_witness_sle(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp sle i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[S:%.*]] = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 [[A]], i64 1)
++; CHECK-NEXT:    [[O:%.*]] = extractvalue { i64, i1 } [[S]], 1
++; CHECK-NEXT:    ret i1 [[O]]
++;
++  %pre = icmp sle i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %s = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %a, i64 1)
++  %o = extractvalue { i64, i1 } %s, 1
++  ret i1 %o
++}
++
++; A s< W only gives A s<= SMAX - 1, which does not cover an addend of 2.
++define i1 @neg_sadd_two_witness_slt(i64 %a, i64 %w) {
++; CHECK-LABEL: define i1 @neg_sadd_two_witness_slt(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[S:%.*]] = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 [[A]], i64 2)
++; CHECK-NEXT:    [[O:%.*]] = extractvalue { i64, i1 } [[S]], 1
++; CHECK-NEXT:    ret i1 [[O]]
++;
++  %pre = icmp slt i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %s = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %a, i64 2)
++  %o = extractvalue { i64, i1 } %s, 1
++  ret i1 %o
++}
++
++; The same reasoning strengthens the flags of a plain add.
++define i64 @add_one_nsw_witness_slt(i64 %a, i64 %w) {
++; CHECK-LABEL: define i64 @add_one_nsw_witness_slt(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[ADD:%.*]] = add nsw i64 [[A]], 1
++; CHECK-NEXT:    ret i64 [[ADD]]
++;
++  %pre = icmp slt i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %add = add i64 %a, 1
++  ret i64 %add
++}
++
++; Narrower types are affected in the same way: the limit itself is
++; representable, but the system still does not know that W is at most SMAX.
++define i32 @add_one_nsw_witness_slt_i32(i32 %a, i32 %w) {
++; CHECK-LABEL: define i32 @add_one_nsw_witness_slt_i32(
++; CHECK-SAME: i32 [[A:%.*]], i32 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i32 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[ADD:%.*]] = add nsw i32 [[A]], 1
++; CHECK-NEXT:    ret i32 [[ADD]]
++;
++  %pre = icmp slt i32 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %add = add i32 %a, 1
++  ret i32 %add
++}
++
++; A s> W proves A s>= SMIN + 1, so A - 1 does not wrap.
++define i64 @sub_one_nsw_witness_sgt(i64 %a, i64 %w) {
++; CHECK-LABEL: define i64 @sub_one_nsw_witness_sgt(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp sgt i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[SUB:%.*]] = sub nsw i64 [[A]], 1
++; CHECK-NEXT:    ret i64 [[SUB]]
++;
++  %pre = icmp sgt i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %sub = sub i64 %a, 1
++  ret i64 %sub
++}
++
++; The unsigned system has the same gap: A u< W proves A u<= UMAX - 1.
++define i64 @add_one_nuw_witness_ult(i64 %a, i64 %w) {
++; CHECK-LABEL: define i64 @add_one_nuw_witness_ult(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp ult i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw i64 [[A]], 1
++; CHECK-NEXT:    ret i64 [[ADD]]
++;
++  %pre = icmp ult i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %add = add i64 %a, 1
++  ret i64 %add
++}
++
++; A witness bound with a larger gap discharges a larger addend: A + 4 s< W
++; gives A s<= SMAX - 5.
++define void @add_witness_slack_5(i8 %a, i8 %w) {
++; CHECK-LABEL: define void @add_witness_slack_5(
++; CHECK-SAME: i8 [[A:%.*]], i8 [[W:%.*]]) {
++; CHECK-NEXT:    [[OFF:%.*]] = add nsw i8 [[A]], 4
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i8 [[OFF]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[ADD:%.*]] = add nsw i8 [[A]], 5
++; CHECK-NEXT:    call void @use(i8 [[ADD]])
++; CHECK-NEXT:    ret void
++;
++  %off = add nsw i8 %a, 4
++  %pre = icmp slt i8 %off, %w
++  call void @llvm.assume(i1 %pre)
++  %add = add i8 %a, 5
++  call void @use(i8 %add)
++  ret void
++}
++
++; ... but not an addend beyond that gap.
++define void @neg_add_witness_slack_6(i8 %a, i8 %w) {
++; CHECK-LABEL: define void @neg_add_witness_slack_6(
++; CHECK-SAME: i8 [[A:%.*]], i8 [[W:%.*]]) {
++; CHECK-NEXT:    [[OFF:%.*]] = add nsw i8 [[A]], 4
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i8 [[OFF]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[ADD:%.*]] = add i8 [[A]], 6
++; CHECK-NEXT:    call void @use(i8 [[ADD]])
++; CHECK-NEXT:    ret void
++;
++  %off = add nsw i8 %a, 4
++  %pre = icmp slt i8 %off, %w
++  call void @llvm.assume(i1 %pre)
++  %add = add i8 %a, 6
++  call void @use(i8 %add)
++  ret void
++}
++
++; A uadd.with.overflow with a larger addend, discharged by an unsigned witness.
++define i1 @uadd_witness_slack_3(i8 %a, i8 %w) {
++; CHECK-LABEL: define i1 @uadd_witness_slack_3(
++; CHECK-SAME: i8 [[A:%.*]], i8 [[W:%.*]]) {
++; CHECK-NEXT:    [[OFF:%.*]] = add nuw i8 [[A]], 2
++; CHECK-NEXT:    [[PRE:%.*]] = icmp ult i8 [[OFF]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    ret i1 false
++;
++  %off = add nuw i8 %a, 2
++  %pre = icmp ult i8 %off, %w
++  call void @llvm.assume(i1 %pre)
++  %s = call { i8, i1 } @llvm.uadd.with.overflow.i8(i8 %a, i8 3)
++  %o = extractvalue { i8, i1 } %s, 1
++  ret i1 %o
++}
++
++; The motivating shape: a checked increment of an induction variable that is
++; strictly below a *variable* loop bound.
++define void @loop_checked_increment(i64 %n, ptr %p) {
++; CHECK-LABEL: define void @loop_checked_increment(
++; CHECK-SAME: i64 [[N:%.*]], ptr [[P:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[TMP0:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i64 [[IV]], [[N]]
++; CHECK-NEXT:    br i1 [[CMP]], label %[[LOOP_LATCH]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    store i8 0, ptr [[P]], align 1
++; CHECK-NEXT:    [[TMP0]] = add nsw i64 [[IV]], 1
++; CHECK-NEXT:    br i1 false, label %[[TRAP:.*]], label %[[LOOP_HEADER]]
++; CHECK:       [[TRAP]]:
++; CHECK-NEXT:    unreachable
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop.header
++
++loop.header:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop.latch ]
++  %cmp = icmp slt i64 %iv, %n
++  br i1 %cmp, label %loop.latch, label %exit
++
++loop.latch:
++  store i8 0, ptr %p
++  %ovf = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %iv, i64 1)
++  %iv.next = extractvalue { i64, i1 } %ovf, 0
++  %o = extractvalue { i64, i1 } %ovf, 1
++  br i1 %o, label %trap, label %loop.header
++
++trap:
++  unreachable
++
++exit:
++  ret void
++}
++
++; The same loop with a plain increment gets nsw.
++define void @loop_increment_nsw(i64 %n, ptr %p) {
++; CHECK-LABEL: define void @loop_increment_nsw(
++; CHECK-SAME: i64 [[N:%.*]], ptr [[P:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i64 [[IV]], [[N]]
++; CHECK-NEXT:    br i1 [[CMP]], label %[[LOOP_LATCH]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    store i8 0, ptr [[P]], align 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 1
++; CHECK-NEXT:    br label %[[LOOP_HEADER]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop.header
++
++loop.header:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop.latch ]
++  %cmp = icmp slt i64 %iv, %n
++  br i1 %cmp, label %loop.latch, label %exit
++
++loop.latch:
++  store i8 0, ptr %p
++  %iv.next = add i64 %iv, 1
++  br label %loop.header
++
++exit:
++  ret void
++}
++
++; A witness wider than A does not bound A by A's own limit: the fact is
++; A s< W over i64, and W may be SMAX32 + 1 while A is SMAX32.
++define i32 @neg_witness_wider_than_op(i32 %a, i64 %w) {
++; CHECK-LABEL: define i32 @neg_witness_wider_than_op(
++; CHECK-SAME: i32 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[SA:%.*]] = sext i32 [[A]] to i64
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i64 [[SA]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[ADD:%.*]] = add i32 [[A]], 1
++; CHECK-NEXT:    ret i32 [[ADD]]
++;
++  %sa = sext i32 %a to i64
++  %pre = icmp slt i64 %sa, %w
++  call void @llvm.assume(i1 %pre)
++  %add = add i32 %a, 1
++  ret i32 %add
++}
++
++; The same fact narrowed to A's type does prove the bound.
++define i64 @witness_narrower_than_op(i64 %a, i32 %w) {
++; CHECK-LABEL: define i64 @witness_narrower_than_op(
++; CHECK-SAME: i64 [[A:%.*]], i32 [[W:%.*]]) {
++; CHECK-NEXT:    [[SW:%.*]] = sext i32 [[W]] to i64
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i64 [[A]], [[SW]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[ADD:%.*]] = add nsw i64 [[A]], 1
++; CHECK-NEXT:    ret i64 [[ADD]]
++;
++  %sw = sext i32 %w to i64
++  %pre = icmp slt i64 %a, %sw
++  call void @llvm.assume(i1 %pre)
++  %add = add i64 %a, 1
++  ret i64 %add
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/transfer-signed-facts-to-unsigned-is-known-non-negative.ll b/llvm/test/Transforms/ConstraintElimination/transfer-signed-facts-to-unsigned-is-known-non-negative.ll
+index d415845ee5a5d..a267766658c70 100644
+--- a/llvm/test/Transforms/ConstraintElimination/transfer-signed-facts-to-unsigned-is-known-non-negative.ll
++++ b/llvm/test/Transforms/ConstraintElimination/transfer-signed-facts-to-unsigned-is-known-non-negative.ll
+@@ -161,7 +161,7 @@ define void @iv_may_signed_wrap_variable_trip_count(i8 %N) {
+ ; CHECK-NEXT:    call void @use(i1 false)
+ ; CHECK-NEXT:    [[C_0:%.*]] = icmp ugt i8 [[IV]], 2
+ ; CHECK-NEXT:    call void @use(i1 [[C_0]])
+-; CHECK-NEXT:    [[IV_NEXT]] = add nuw i8 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i8 [[IV]], 1
+ ; CHECK-NEXT:    br label [[LOOP_HEADER]]
+ ; CHECK:       exit.1:
+ ; CHECK-NEXT:    ret void
+diff --git a/llvm/test/Transforms/PhaseOrdering/loop-access-checks.ll b/llvm/test/Transforms/PhaseOrdering/loop-access-checks.ll
+index 7bba70a97b1bb..0b95d2d89e2ef 100644
+--- a/llvm/test/Transforms/PhaseOrdering/loop-access-checks.ll
++++ b/llvm/test/Transforms/PhaseOrdering/loop-access-checks.ll
+@@ -358,7 +358,7 @@ define void @monkey(ptr noundef %arr, i32 noundef %len) {
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i32 [[INC]], [[LEN]]
+ ; CHECK-NEXT:    br i1 [[CMP]], label %[[FOR_BODY4_PREHEADER]], label %[[FOR_COND_CLEANUP]]
+ ; CHECK:       [[FOR_BODY4]]:
+-; CHECK-NEXT:    [[K_07:%.*]] = phi i32 [ [[DEC:%.*]], %[[FOR_BODY4]] ], [ [[I_09]], %[[FOR_BODY4_PREHEADER]] ]
++; CHECK-NEXT:    [[K_07:%.*]] = phi i32 [ [[I_09]], %[[FOR_BODY4_PREHEADER]] ], [ [[DEC:%.*]], %[[FOR_BODY4]] ]
+ ; CHECK-NEXT:    [[IDX_EXT_I:%.*]] = zext i32 [[K_07]] to i64
+ ; CHECK-NEXT:    [[ADD_PTR_I:%.*]] = getelementptr inbounds nuw [4 x i8], ptr [[ARR]], i64 [[IDX_EXT_I]]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = load i32, ptr [[ADD_PTR_I]], align 4
+diff --git a/llvm/test/Transforms/PhaseOrdering/loop-rotation-vs-common-code-hoisting.ll b/llvm/test/Transforms/PhaseOrdering/loop-rotation-vs-common-code-hoisting.ll
+index 5ff57eae3a773..9333be4e6c4c7 100644
+--- a/llvm/test/Transforms/PhaseOrdering/loop-rotation-vs-common-code-hoisting.ll
++++ b/llvm/test/Transforms/PhaseOrdering/loop-rotation-vs-common-code-hoisting.ll
+@@ -59,7 +59,7 @@ define void @_Z4loopi(i32 %width) {
+ ; HOIST-NEXT:    br label [[RETURN]]
+ ; HOIST:       for.body:
+ ; HOIST-NEXT:    tail call void @f1()
+-; HOIST-NEXT:    [[INC]] = add nuw i32 [[I_0]], 1
++; HOIST-NEXT:    [[INC]] = add nuw nsw i32 [[I_0]], 1
+ ; HOIST-NEXT:    br label [[FOR_COND]]
+ ; HOIST:       return:
+ ; HOIST-NEXT:    ret void

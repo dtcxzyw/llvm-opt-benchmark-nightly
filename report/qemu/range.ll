@@ -202,7 +202,7 @@ bb.t:                                             ; preds = %bb.l, %append_new_r
   %i.bb = getelementptr i8, ptr %i.ba, i64 8
   %.val59 = load i64, ptr %i.bb, align 8          ; 4 uses
   %.not.i.i.i99 = icmp ule i64 %.val58, %.val59
-  %i.bc = add i64 %.val59, 1                      ; 3 uses
+  %i.bc = add i64 %.val59, 1                      ; 2 uses
   %i.bd = icmp eq i64 %.val58, %i.bc
   %or.cond.i.i.i100 = or i1 %.not.i.i.i99, %i.bd
   br i1 %or.cond.i.i.i100, label %range_is_empty.exit.i101, label %bb.u
@@ -228,19 +228,11 @@ range_upb.exit106:                                ; preds = %range_upb.exit102
   store i64 %i.bc, ptr %i.bg, align 8
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 8
   store i64 %3, ptr %i.bh, align 8
-  %.not.i.i.i.i107.not = icmp ugt i64 %i.bc, %3
-  br i1 %.not.i.i.i.i107.not, label %4, label %append_new_range.exit110
-
-4:                                                ; preds = %range_upb.exit106
-  tail call void @__assert_fail(ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.5, i32 noundef 43, ptr noundef nonnull @__PRETTY_FUNCTION__.range_invariant) #6
-  unreachable
-
-append_new_range.exit110:                         ; preds = %range_upb.exit106
-  %5 = tail call ptr @g_list_append(ptr noundef %.148.lcssa, ptr noundef nonnull %i.bg) #7
+  %4 = tail call ptr @g_list_append(ptr noundef %.148.lcssa, ptr noundef nonnull %i.bg) #7
   br label %.loopexit
 
-.loopexit:                                        ; preds = %range_lob.exit86, %range_upb.exit102, %append_new_range.exit110, %append_new_range.exit
-  %.3 = phi ptr [ %i.o, %append_new_range.exit ], [ %5, %append_new_range.exit110 ], [ %.148.lcssa, %range_upb.exit102 ], [ %.148137, %range_lob.exit86 ]
+.loopexit:                                        ; preds = %range_lob.exit86, %range_upb.exit102, %range_upb.exit106, %append_new_range.exit
+  %.3 = phi ptr [ %i.o, %append_new_range.exit ], [ %4, %range_upb.exit106 ], [ %.148.lcssa, %range_upb.exit102 ], [ %.148137, %range_lob.exit86 ]
   store ptr %.3, ptr %1, align 8
   ret void
 }

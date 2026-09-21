@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph12.i.i:                                     ; preds = %bb.c, %"_ZN4core3ptr76drop_in_place$LT$core..result..Result$LT$u8$C$procfs_core..ProcError$GT$$GT$17he53f46b5cdfd5401E.exit8.i.i"
   %.sroa.0.110.i.i = phi i64 [ %i.l, %"_ZN4core3ptr76drop_in_place$LT$core..result..Result$LT$u8$C$procfs_core..ProcError$GT$$GT$17he53f46b5cdfd5401E.exit8.i.i" ], [ %i.e, %bb.c ] ; 2 uses
   %i.k = getelementptr inbounds nuw [48 x i8], ptr %.val, i64 %.sroa.0.110.i.i ; 2 uses
-  %i.l = add i64 %.sroa.0.110.i.i, 1              ; 2 uses
+  %i.l = add nuw i64 %.sroa.0.110.i.i, 1          ; 2 uses
   %i.m = load i64, ptr %i.k, align 8, !range !9, !alias.scope !5186, !noundef !4
   %i.n = icmp eq i64 %i.m, -9223372036854775803
   br i1 %i.n, label %"_ZN4core3ptr76drop_in_place$LT$core..result..Result$LT$u8$C$procfs_core..ProcError$GT$$GT$17he53f46b5cdfd5401E.exit8.i.i", label %bb.d
@@ -608,7 +608,7 @@ bb.j:                                             ; preds = %bb.i
   %i.js = getelementptr inbounds nuw i8, ptr %i.jb, i64 16
   %i.jt = load i64, ptr %i.js, align 8
   %i.ju = call fastcc { ptr, i64 } @"_ZN4core3str21_$LT$impl$u20$str$GT$12trim_matches17h921eef8f3a0a02baE"(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.jr, i64 noundef %i.jt) ; 2 uses
-  %i.jv = extractvalue { ptr, i64 } %i.ju, 0      ; 17 uses
+  %i.jv = extractvalue { ptr, i64 } %i.ju, 0      ; 16 uses
   %i.jw = extractvalue { ptr, i64 } %i.ju, 1      ; 15 uses
   br label %.backedge.i
 
@@ -676,7 +676,7 @@ _ZN4core5slice6memchr6memchr17h42eb1bd28cc17905E.exit.thread24.i.i: ; preds = %.
   %i.kj = add i64 %i.jx, 1
   %i.kk = add i64 %i.kj, %.sroa.4.0.i27.i.i       ; 2 uses
   %.not21.i.i = icmp ugt i64 %i.kk, %i.jw         ; 2 uses
-  %i.kl = add i64 %.sroa.4.0.i27.i.i, %i.jx       ; 6 uses
+  %i.kl = add i64 %.sroa.4.0.i27.i.i, %i.jx       ; 7 uses
   %or.cond.i.not.i = icmp ult i64 %i.kl, %i.jw
   br i1 %or.cond.i.not.i, label %bb.n, label %bb.m
 
@@ -777,16 +777,12 @@ bb.v:                                             ; preds = %bb.u
   br i1 %i.la, label %bb.w, label %.thread1499.invoke
 
 bb.w:                                             ; preds = %bb.v, %.split.i, %bb.t
-  %i.lb = add i64 %i.kl, 1                        ; 8 uses
-  %.not.i1007 = icmp ugt i64 %i.lb, %i.ks
-  br i1 %.not.i1007, label %.thread1499.invoke, label %2
+  %i.lb = add nuw i64 %i.kl, 1                    ; 5 uses
+  %.not.i1007.not = icmp ult i64 %i.kl, %i.ks
+  br i1 %.not.i1007.not, label %bb.x, label %.thread1499.invoke
 
-2:                                                ; preds = %bb.w
-  %3 = icmp eq i64 %i.lb, 0
-  br i1 %3, label %bb.z, label %bb.x
-
-bb.x:                                             ; preds = %2
-  %i.lc = getelementptr inbounds nuw i8, ptr %i.jv, i64 %i.lb
+bb.x:                                             ; preds = %bb.w
+  %i.lc = getelementptr inbounds nuw i8, ptr %i.jv, i64 %i.lb ; 2 uses
   %i.ld = load i8, ptr %i.lc, align 1, !alias.scope !24225, !noundef !4
   %i.le = icmp sgt i8 %i.ld, -65
   br i1 %i.le, label %bb.z, label %.thread1499.invoke
@@ -794,9 +790,8 @@ bb.x:                                             ; preds = %2
 bb.y:                                             ; preds = %.thread1507
   unreachable
 
-bb.z:                                             ; preds = %2, %bb.x
+bb.z:                                             ; preds = %bb.x
   %i.lf = sub nuw i64 %i.ks, %i.lb                ; 8 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.jv, i64 %i.lb
   %i.lg = icmp slt i64 %i.lf, 0
   br i1 %i.lg, label %bb.aa, label %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i, !prof !6
 
@@ -830,7 +825,7 @@ bb.aa:                                            ; preds = %"_ZN63_$LT$alloc..a
 
 bb.ab:                                            ; preds = %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$8allocate17h2c5e185936086779E.exit.i.i.i", %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i
   %.sroa.10.0.i.i = phi ptr [ inttoptr (i64 1 to ptr), %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i ], [ %i.li, %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$8allocate17h2c5e185936086779E.exit.i.i.i" ] ; 4 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sroa.10.0.i.i, ptr nonnull readonly align 1 %4, i64 %i.lf, i1 false), !noalias !24227
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sroa.10.0.i.i, ptr nonnull readonly align 1 %i.lc, i64 %i.lf, i1 false), !noalias !24227
   %i.ln = add i64 %i.ks, 2                        ; 7 uses
   %i.lo = icmp eq i64 %i.ln, 0
   br i1 %i.lo, label %bb.ag, label %bb.ac

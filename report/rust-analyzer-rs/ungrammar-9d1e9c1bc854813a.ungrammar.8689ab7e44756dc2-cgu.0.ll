@@ -204,7 +204,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_RNvMNtCsby8LzHty7VS_9ungrammar5lexerNtB2_8Location7advance.exit
-  %.sroa.0.0213 = phi ptr [ %1, %.lr.ph ], [ %.sroa.0.1, %_RNvMNtCsby8LzHty7VS_9ungrammar5lexerNtB2_8Location7advance.exit ] ; 13 uses
+  %.sroa.0.0213 = phi ptr [ %1, %.lr.ph ], [ %.sroa.0.1, %_RNvMNtCsby8LzHty7VS_9ungrammar5lexerNtB2_8Location7advance.exit ] ; 12 uses
   %.sroa.8.0212 = phi i64 [ %2, %.lr.ph ], [ %.sroa.8.1, %_RNvMNtCsby8LzHty7VS_9ungrammar5lexerNtB2_8Location7advance.exit ] ; 9 uses
   %.sroa.040.0208 = phi i64 [ 0, %.lr.ph ], [ %.sroa.040.1, %_RNvMNtCsby8LzHty7VS_9ungrammar5lexerNtB2_8Location7advance.exit ] ; 4 uses
   %.sroa.843.0204 = phi i64 [ 0, %.lr.ph ], [ %.sroa.843.1, %_RNvMNtCsby8LzHty7VS_9ungrammar5lexerNtB2_8Location7advance.exit ] ; 3 uses
@@ -340,11 +340,11 @@ bb.j:                                             ; preds = %bb.i
   %i.az = getelementptr inbounds nuw i8, ptr %i.y, i64 %.sink.i.i13.i
   br label %_RNvNtCsby8LzHty7VS_9ungrammar5lexer12skip_comment.exit
 
-.invoke:                                          ; preds = %.split.i.i25, %bb.bw, %bb.j
-  %3 = phi ptr [ %i.y, %bb.j ], [ %.sroa.0.0213, %bb.bw ], [ %.sroa.0.0213, %.split.i.i25 ]
-  %4 = phi i64 [ %i.z, %bb.j ], [ %i.jw, %bb.bw ], [ %i.jw, %.split.i.i25 ] ; 2 uses
-  %5 = phi i64 [ %i.au, %bb.j ], [ %i.mj, %bb.bw ], [ %i.mj, %.split.i.i25 ]
-  %6 = phi ptr [ @3, %bb.j ], [ @1, %bb.bw ], [ @1, %.split.i.i25 ]
+.invoke:                                          ; preds = %bb.bw, %bb.j
+  %3 = phi ptr [ %i.y, %bb.j ], [ %.sroa.0.0213, %bb.bw ]
+  %4 = phi i64 [ %i.z, %bb.j ], [ %i.jw, %bb.bw ] ; 2 uses
+  %5 = phi i64 [ %i.au, %bb.j ], [ %i.mj, %bb.bw ]
+  %6 = phi ptr [ @3, %bb.j ], [ @1, %bb.bw ]
   invoke void @_RNvNtCshzWfHUSfYae_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %3, i64 noundef %4, i64 noundef %5, i64 noundef %4, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %6) #22
           to label %.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -747,7 +747,7 @@ bb.bf:                                            ; preds = %_RNvXs2J_NtNtCshzWf
 bb.bg:                                            ; preds = %_RNvNtCsby8LzHty7VS_9ungrammar5lexer12skip_comment.exit, %bb.bp
   %.sroa.8.1 = phi i64 [ %i.kg, %bb.bp ], [ %.sroa.8.2, %_RNvNtCsby8LzHty7VS_9ungrammar5lexer12skip_comment.exit ] ; 4 uses
   %.sroa.0.1 = phi ptr [ %.sroa.0.0.i, %bb.bp ], [ %.sroa.0.2, %_RNvNtCsby8LzHty7VS_9ungrammar5lexer12skip_comment.exit ]
-  %i.jw = sub i64 %.sroa.8.0212, %.sroa.8.1       ; 17 uses
+  %i.jw = sub i64 %.sroa.8.0212, %.sroa.8.1       ; 14 uses
   %i.jx = icmp eq i64 %i.jw, 0
   br i1 %i.jx, label %.thread58.preheader, label %bb.bh
 
@@ -939,19 +939,11 @@ bb.bv:                                            ; preds = %_RNvXs2J_NtNtCshzWf
 
 _RNvXs1_NtNtNtCshzWfHUSfYae_4core4iter8adapters6filterINtB5_6FilterNtNtNtBb_3str4iter5CharsNCNvMNtCsby8LzHty7VS_9ungrammar5lexerNtB1v_8Location7advance0ENtNtNtB9_6traits8iterator8Iterator5countB1x_.exit.i: ; preds = %bb.bv
   %i.mi = add i64 %i.mh, %.sroa.040.0208          ; 2 uses
-  %i.mj = add i64 %i.kt, 1                        ; 7 uses
-  %7 = icmp eq i64 %i.mj, 0
-  br i1 %7, label %bb.ca, label %8
-
-8:                                                ; preds = %_RNvXs1_NtNtNtCshzWfHUSfYae_4core4iter8adapters6filterINtB5_6FilterNtNtNtBb_3str4iter5CharsNCNvMNtCsby8LzHty7VS_9ungrammar5lexerNtB1v_8Location7advance0ENtNtNtB9_6traits8iterator8Iterator5countB1x_.exit.i
+  %i.mj = add nuw i64 %i.kt, 1                    ; 5 uses
   %.not.i.i24 = icmp ult i64 %i.mj, %i.jw
-  br i1 %.not.i.i24, label %bb.bw, label %.split.i.i25
+  br i1 %.not.i.i24, label %bb.bw, label %bb.ca
 
-.split.i.i25:                                     ; preds = %8
-  %9 = icmp eq i64 %i.mj, %i.jw
-  br i1 %9, label %bb.ca, label %.invoke
-
-bb.bw:                                            ; preds = %8
+bb.bw:                                            ; preds = %_RNvXs1_NtNtNtCshzWfHUSfYae_4core4iter8adapters6filterINtB5_6FilterNtNtNtBb_3str4iter5CharsNCNvMNtCsby8LzHty7VS_9ungrammar5lexerNtB1v_8Location7advance0ENtNtNtB9_6traits8iterator8Iterator5countB1x_.exit.i
   %i.mk = getelementptr inbounds nuw i8, ptr %.sroa.0.0213, i64 %i.mj
   %i.ml = load i8, ptr %i.mk, align 1, !alias.scope !224, !noalias !221, !noundef !4
   %i.mm = icmp sgt i8 %i.ml, -65
@@ -974,10 +966,9 @@ _RNvXNtNtCshzWfHUSfYae_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator
   %i.mq = add i64 %.sroa.0.0.i5.i, %.sroa.843.0204
   br label %_RNvMNtCsby8LzHty7VS_9ungrammar5lexerNtB2_8Location7advance.exit
 
-bb.ca:                                            ; preds = %bb.bw, %.split.i.i25, %_RNvXs1_NtNtNtCshzWfHUSfYae_4core4iter8adapters6filterINtB5_6FilterNtNtNtBb_3str4iter5CharsNCNvMNtCsby8LzHty7VS_9ungrammar5lexerNtB1v_8Location7advance0ENtNtNtB9_6traits8iterator8Iterator5countB1x_.exit.i
-  %10 = phi i64 [ %i.mj, %bb.bw ], [ %i.jw, %.split.i.i25 ], [ 0, %_RNvXs1_NtNtNtCshzWfHUSfYae_4core4iter8adapters6filterINtB5_6FilterNtNtNtBb_3str4iter5CharsNCNvMNtCsby8LzHty7VS_9ungrammar5lexerNtB1v_8Location7advance0ENtNtNtB9_6traits8iterator8Iterator5countB1x_.exit.i ] ; 2 uses
-  %i.mr = getelementptr inbounds nuw i8, ptr %.sroa.0.0213, i64 %10 ; 2 uses
-  %gepdiff.i = sub nuw nsw i64 %i.jw, %10         ; 3 uses
+bb.ca:                                            ; preds = %bb.bw, %_RNvXs1_NtNtNtCshzWfHUSfYae_4core4iter8adapters6filterINtB5_6FilterNtNtNtBb_3str4iter5CharsNCNvMNtCsby8LzHty7VS_9ungrammar5lexerNtB1v_8Location7advance0ENtNtNtB9_6traits8iterator8Iterator5countB1x_.exit.i
+  %i.mr = getelementptr inbounds nuw i8, ptr %.sroa.0.0213, i64 %i.mj ; 2 uses
+  %gepdiff.i = sub nuw nsw i64 %i.jw, %i.mj       ; 3 uses
   %i.ms = icmp ult i64 %gepdiff.i, 32
   br i1 %i.ms, label %bb.cc, label %bb.cb
 

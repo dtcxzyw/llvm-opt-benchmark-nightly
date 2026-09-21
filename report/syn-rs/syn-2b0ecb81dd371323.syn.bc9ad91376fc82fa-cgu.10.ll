@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph.preheader:                                 ; preds = %bb.d
   %i.k = add i64 %2, -1                           ; 11 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 11 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 10 uses
   br label %.lr.ph
 
 bb.e:                                             ; preds = %.thread, %bb.b
@@ -216,7 +216,7 @@ bb.f:                                             ; preds = %bb.d
   unreachable
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.g
-  %.sroa.021.091 = phi i64 [ %i.o, %bb.g ], [ 0, %.lr.ph.preheader ] ; 6 uses
+  %.sroa.021.091 = phi i64 [ %i.o, %bb.g ], [ 0, %.lr.ph.preheader ] ; 7 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 %.sroa.021.091
   %i.n = load i8, ptr %i.m, align 1, !noundef !4
   switch i8 %i.n, label %.thread74 [
@@ -307,16 +307,12 @@ bb.o:                                             ; preds = %.lr.ph94
   br i1 %i.ap, label %bb.o, label %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit61.thread80
 
 ._crit_edge:                                      ; preds = %bb.o, %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit61.thread
-  %i.aq = add i64 %.sroa.021.091, 1               ; 6 uses
-  %3 = icmp ugt i64 %i.aq, %i.t
-  br i1 %3, label %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread84, label %4
+  %i.aq = add nuw i64 %.sroa.021.091, 1           ; 3 uses
+  %.not96 = icmp ult i64 %.sroa.021.091, %i.t
+  br i1 %.not96, label %bb.p, label %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread84
 
-4:                                                ; preds = %._crit_edge
-  %5 = icmp eq i64 %i.aq, 0
-  br i1 %5, label %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread, label %bb.p
-
-bb.p:                                             ; preds = %4
-  %i.ar = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.aq
+bb.p:                                             ; preds = %._crit_edge
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.aq ; 2 uses
   %i.as = load i8, ptr %i.ar, align 1, !alias.scope !235, !noundef !4
   %i.at = icmp sgt i8 %i.as, -65
   br i1 %i.at, label %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread, label %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread84
@@ -325,9 +321,8 @@ _RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread84: ; preds = %bb
   store ptr null, ptr %0, align 8
   br label %bb.af
 
-_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread: ; preds = %bb.p, %4
+_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread: ; preds = %bb.p
   %i.au = sub nuw i64 %i.t, %i.aq                 ; 4 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.aq
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgbWeKYPjk8w_3syn(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.c, i64 noundef %i.au, i1 noundef zeroext false, i64 noundef 1, i64 noundef 1)
   %i.av = load i64, ptr %i.c, align 8, !range !6, !noundef !4
@@ -370,7 +365,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.bk, label %.split.i65, label %bb.x
 
 bb.u:                                             ; preds = %bb.r
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bb, ptr nonnull align 1 %6, i64 %i.au, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bb, ptr nonnull align 1 %i.ar, i64 %i.au, i1 false)
   store i64 %i.au, ptr %i.be, align 8
   br label %bb.s
 

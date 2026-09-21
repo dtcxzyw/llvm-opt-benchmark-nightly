@@ -205,11 +205,12 @@ bb.bf:                                            ; preds = %_ZN4llvh11ms_demang
 _ZN4llvh11ms_demangle14ArenaAllocator5allocI8NodeListJEEEPT_DpOT0_.exit125: ; preds = %bb.be, %bb.bf
   %.sink.i124 = phi ptr [ %i.mo, %bb.bf ], [ %i.mm, %bb.be ] ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sink.i124, i8 0, i64 16, i1 false)
+  %invariant.op = add i64 %.sroa.0.4.i138, -1
   %i.mt = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   br label %bb.bg
 
 bb.bg:                                            ; preds = %_ZN4llvh11ms_demangle14ArenaAllocator5allocI8NodeListJEEEPT_DpOT0_.exit125, %bb.br
-  %.032.i253 = phi i64 [ 0, %_ZN4llvh11ms_demangle14ArenaAllocator5allocI8NodeListJEEEPT_DpOT0_.exit125 ], [ %3, %bb.br ]
+  %.032.i253 = phi i64 [ 0, %_ZN4llvh11ms_demangle14ArenaAllocator5allocI8NodeListJEEEPT_DpOT0_.exit125 ], [ %3, %bb.br ] ; 2 uses
   %.033.i252 = phi ptr [ %.sink.i124, %_ZN4llvh11ms_demangle14ArenaAllocator5allocI8NodeListJEEEPT_DpOT0_.exit125 ], [ %.235.i.ph, %bb.br ] ; 3 uses
   %i.mu = load ptr, ptr %1, align 8, !tbaa !40    ; 5 uses
   %i.mv = load ptr, ptr %.sroa.210.0..sroa_idx, align 8, !tbaa !41 ; 3 uses
@@ -336,8 +337,7 @@ _ZN4llvh11ms_demangle14ArenaAllocator5allocINS0_18IntegerLiteralNodeEJRmRbEEEPT_
   %i.os = getelementptr inbounds nuw i8, ptr %.sink20.i, i64 24
   store i8 0, ptr %i.os, align 8, !tbaa !103
   store ptr %.sink20.i, ptr %.033.i252, align 8, !tbaa !106
-  %3 = add nuw i64 %.032.i253, 1                  ; 3 uses
-  %i.ot = icmp ult i64 %3, %.sroa.0.4.i138
+  %i.ot = icmp ult i64 %.032.i253, %invariant.op
   br i1 %i.ot, label %bb.bo, label %bb.br
 
 bb.bo:                                            ; preds = %_ZN4llvh11ms_demangle14ArenaAllocator5allocINS0_18IntegerLiteralNodeEJRmRbEEEPT_DpOT0_.exit
@@ -378,6 +378,7 @@ _ZN4llvh11ms_demangle14ArenaAllocator5allocI8NodeListJEEEPT_DpOT0_.exit: ; preds
 
 bb.br:                                            ; preds = %_ZN4llvh11ms_demangle14ArenaAllocator5allocI8NodeListJEEEPT_DpOT0_.exit, %_ZN4llvh11ms_demangle14ArenaAllocator5allocINS0_18IntegerLiteralNodeEJRmRbEEEPT_DpOT0_.exit
   %.235.i.ph = phi ptr [ %.033.i252, %_ZN4llvh11ms_demangle14ArenaAllocator5allocINS0_18IntegerLiteralNodeEJRmRbEEEPT_DpOT0_.exit ], [ %.sink.i, %_ZN4llvh11ms_demangle14ArenaAllocator5allocI8NodeListJEEEPT_DpOT0_.exit ]
+  %3 = add nuw i64 %.032.i253, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %3, %.sroa.0.4.i138
   br i1 %exitcond.not, label %.critedge.i, label %bb.bg, !llvm.loop !149
 

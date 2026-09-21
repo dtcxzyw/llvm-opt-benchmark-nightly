@@ -202,7 +202,7 @@ _ZNK4llvm9StringMapIbNS_15MallocAllocatorEE6lookupENS_9StringRefE.exit.thread: ;
 
 _ZNK4llvm9StringMapIbNS_15MallocAllocatorEE6lookupENS_9StringRefE.exit: ; preds = %bb.h, %_ZNK4llvm9StringMapIbNS_15MallocAllocatorEE4findENS_9StringRefE.exit.i, %bb.i, %bb.f
   %.134 = phi i8 [ %.03393, %bb.f ], [ 0, %bb.h ], [ %i.x, %bb.i ], [ 0, %_ZNK4llvm9StringMapIbNS_15MallocAllocatorEE4findENS_9StringRefE.exit.i ] ; 2 uses
-  %i.z = add nuw i64 %.04290, 1                   ; 2 uses
+  %i.z = add nuw i64 %.04290, 1                   ; 3 uses
   %i.aa = icmp eq i8 %i.b, 124
   br i1 %i.aa, label %bb.k, label %bb.j
 
@@ -217,9 +217,8 @@ bb.j:                                             ; preds = %_ZNK4llvm9StringMap
 bb.k:                                             ; preds = %_ZNK4llvm9StringMapIbNS_15MallocAllocatorEE6lookupENS_9StringRefE.exit
   store i8 %.134, ptr %0, align 8, !tbaa !144
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.speculated4.i = call i64 @llvm.umin.i64(i64 %3, i64 %i.z) ; 2 uses
-  %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 %.sroa.speculated4.i
-  %i.ae = sub nuw i64 %3, %.sroa.speculated4.i
+  %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 %i.z
+  %i.ae = sub nuw i64 %3, %i.z
   store ptr %i.ad, ptr %i.ac, align 8
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.ae, ptr %i.af, align 8

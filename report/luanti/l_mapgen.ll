@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %.lr.ph
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %.lr.ph
-  %i.bd = add i64 %.032, 1                        ; 2 uses
+  %i.bd = add nuw i64 %.032, 1                    ; 2 uses
   %.not24 = icmp eq i64 %i.bd, %i.x
   br i1 %.not24, label %.loopexit, label %.lr.ph, !llvm.loop !308
 
@@ -298,7 +298,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = tail call i48 @_Z11check_v3s16P9lua_Statei(ptr noundef %0, i32 noundef -1) ; 3 uses
   %.sroa.0.0.extract.trunc = trunc i48 %i.g to i16 ; 2 uses
   %.sroa.6.0.extract.shift = lshr i48 %i.g, 16
-  %.sroa.6.0.extract.trunc = trunc i48 %.sroa.6.0.extract.shift to i16 ; 7 uses
+  %.sroa.6.0.extract.trunc = trunc i48 %.sroa.6.0.extract.shift to i16 ; 5 uses
   %.sroa.10.0.extract.shift = lshr i48 %i.g, 32
   %.sroa.10.0.extract.trunc = trunc nuw i48 %.sroa.10.0.extract.shift to i16 ; 2 uses
   tail call void @lua_settop(ptr noundef %0, i32 noundef -2)
@@ -311,7 +311,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @lua_getfield(ptr noundef %0, i32 noundef %1, ptr noundef nonnull @.str.26)
   tail call void @luaL_checktype(ptr noundef %0, i32 noundef -1, i32 noundef 5)
   %i.i = sext i16 %.sroa.0.0.extract.trunc to i32
-  %i.j = sext i16 %.sroa.6.0.extract.trunc to i32 ; 4 uses
+  %i.j = sext i16 %.sroa.6.0.extract.trunc to i32 ; 3 uses
   %i.k = mul nsw i32 %i.j, %i.i
   %i.l = sext i16 %.sroa.10.0.extract.trunc to i32
   %i.m = mul nsw i32 %i.k, %i.l                   ; 3 uses
@@ -714,17 +714,18 @@ bb.ba:                                            ; preds = %bb.az
   br i1 %.not59168, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.ba
-  %xtraiter = and i32 %i.j, 3
+  %8 = zext i32 %i.j to i64                       ; 2 uses
+  %xtraiter = and i64 %8, 3                       ; 3 uses
   %i.ex = icmp ult i16 %.sroa.6.0.extract.trunc, 4
   br i1 %i.ex, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i32 %i.j, -4
+  %unroll_iter = and i64 %8, 4294967292
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next.3, %.lr.ph ] ; 5 uses
-  %niter = phi i32 [ 0, %.lr.ph.preheader.new ], [ %niter.next.3, %.lr.ph ]
+  %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.3, %.lr.ph ]
   %i.ey = load ptr, ptr %i.ew, align 8, !tbaa !120
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ey, i64 %indvars.iv
   store i8 127, ptr %i.ez, align 1, !tbaa !30
@@ -741,31 +742,29 @@ bb.ba:                                            ; preds = %bb.az
   %i.fi = getelementptr inbounds nuw i8, ptr %i.fh, i64 3
   store i8 127, ptr %i.fi, align 1, !tbaa !30
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i32 %niter, 4               ; 2 uses
-  %niter.ncmp.3 = icmp eq i32 %niter.next.3, %unroll_iter
+  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !311
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
-  %8 = and i16 %.sroa.6.0.extract.trunc, 3
-  %lcmp.mod.not = icmp eq i16 %8, 0
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.3, %._crit_edge.loopexit.unr-lcssa ]
-  %9 = and i16 %.sroa.6.0.extract.trunc, 3
-  %lcmp.mod217 = icmp ne i16 %9, 0
+  %lcmp.mod217 = icmp ne i64 %xtraiter, 0
   call void @llvm.assume(i1 %lcmp.mod217)
   br label %.lr.ph.epil
 
 .lr.ph.epil:                                      ; preds = %.lr.ph.epil, %.lr.ph.epil.preheader
-  %indvars.iv.epil = phi i64 [ %indvars.iv.next.epil, %.lr.ph.epil ], [ %indvars.iv.epil.init, %.lr.ph.epil.preheader ] ; 2 uses
-  %epil.iter = phi i32 [ %epil.iter.next, %.lr.ph.epil ], [ 0, %.lr.ph.epil.preheader ]
+  %indvars.iv.epil = phi i64 [ %indvars.iv.epil.init, %.lr.ph.epil.preheader ], [ %indvars.iv.next.epil, %.lr.ph.epil ] ; 2 uses
+  %epil.iter = phi i64 [ 0, %.lr.ph.epil.preheader ], [ %epil.iter.next, %.lr.ph.epil ]
   %i.fj = load ptr, ptr %i.ew, align 8, !tbaa !120
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fj, i64 %indvars.iv.epil
   store i8 127, ptr %i.fk, align 1, !tbaa !30
   %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv.epil, 1
-  %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
-  %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
+  %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
+  %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !312
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.epil, %bb.ba
@@ -1168,7 +1167,7 @@ bb.m:                                             ; preds = %bb.l
   %i.al = load i16, ptr %i.ak, align 2, !tbaa !54
   %i.am = sext i16 %i.al to i64
   call void @lua_pushinteger(ptr noundef %0, i64 noundef %i.am)
-  %i.an = add i64 %.0104170, 1                    ; 3 uses
+  %i.an = add nuw i64 %.0104170, 1                ; 3 uses
   %i.ao = trunc i64 %i.an to i32
   call void @lua_rawseti(ptr noundef %0, i32 noundef -2, i32 noundef %i.ao)
   %.not135 = icmp eq i64 %i.an, %i.ac
@@ -1194,7 +1193,7 @@ bb.o:                                             ; preds = %bb.n
   %i.av = load i16, ptr %i.au, align 2, !tbaa !54
   %i.aw = zext i16 %i.av to i64
   call void @lua_pushinteger(ptr noundef %0, i64 noundef %i.aw)
-  %i.ax = add i64 %.0103166, 1                    ; 3 uses
+  %i.ax = add nuw i64 %.0103166, 1                ; 3 uses
   %i.ay = trunc i64 %i.ax to i32
   call void @lua_rawseti(ptr noundef %0, i32 noundef -2, i32 noundef %i.ay)
   %.not133 = icmp eq i64 %i.ax, %i.ac
@@ -1231,7 +1230,7 @@ bb.s:                                             ; preds = %.lr.ph164, %bb.s
   %i.bj = load float, ptr %i.bi, align 4, !tbaa !123
   %i.bk = fpext nsz float %i.bj to double
   call void @lua_pushnumber(ptr noundef %0, double noundef %i.bk)
-  %i.bl = add i64 %.0102162, 1                    ; 3 uses
+  %i.bl = add nuw i64 %.0102162, 1                ; 3 uses
   %i.bm = trunc i64 %i.bl to i32
   call void @lua_rawseti(ptr noundef %0, i32 noundef -2, i32 noundef %i.bm)
   %.not131 = icmp eq i64 %i.bl, %i.ac
@@ -1268,7 +1267,7 @@ bb.w:                                             ; preds = %.lr.ph160, %bb.w
   %i.bx = load float, ptr %i.bw, align 4, !tbaa !123
   %i.by = fpext nsz float %i.bx to double
   call void @lua_pushnumber(ptr noundef %0, double noundef %i.by)
-  %i.bz = add i64 %.0101158, 1                    ; 3 uses
+  %i.bz = add nuw i64 %.0101158, 1                ; 3 uses
   %i.ca = trunc i64 %i.bz to i32
   call void @lua_rawseti(ptr noundef %0, i32 noundef -2, i32 noundef %i.ca)
   %.not128 = icmp eq i64 %i.bz, %i.ac

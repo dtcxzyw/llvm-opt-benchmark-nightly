@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.c, %.lr.ph.i
   ]
 
 bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b, %bb.b
-  %i.o = add i64 %i.l, 1                          ; 3 uses
+  %i.o = add nuw i64 %i.l, 1                      ; 3 uses
   store i64 %i.o, ptr %i.f, align 8, !alias.scope !121, !noalias !118
   %exitcond.not.i = icmp eq i64 %i.o, %i.h
   br i1 %exitcond.not.i, label %.loopexit22, label %bb.b
@@ -259,7 +259,7 @@ bb.h:                                             ; preds = %bb.f
   ], !prof !125
 
 bb.i:                                             ; preds = %.lr.ph.i7, %.lr.ph.i7, %.lr.ph.i7, %.lr.ph.i7
-  %i.ac = add i64 %i.z, 1                         ; 3 uses
+  %i.ac = add nuw i64 %i.z, 1                     ; 3 uses
   store i64 %i.ac, ptr %i.f, align 8, !alias.scope !126, !noalias !127
   %exitcond.not.i8 = icmp eq i64 %i.ac, %i.h
   br i1 %exitcond.not.i8, label %.loopexit, label %.lr.ph.i7
@@ -339,7 +339,7 @@ bb.b:                                             ; preds = %bb.c, %.lr.ph.i
   ]
 
 bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b, %bb.b
-  %i.q = add i64 %i.n, 1                          ; 3 uses
+  %i.q = add nuw i64 %i.n, 1                      ; 3 uses
   store i64 %i.q, ptr %i.h, align 8, !alias.scope !152, !noalias !149
   %exitcond.not.i = icmp eq i64 %i.q, %i.j
   br i1 %exitcond.not.i, label %.loopexit22, label %bb.b
@@ -394,7 +394,7 @@ bb.h:                                             ; preds = %bb.f
   ], !prof !12
 
 bb.i:                                             ; preds = %.lr.ph.i7, %.lr.ph.i7, %.lr.ph.i7, %.lr.ph.i7
-  %i.ae = add i64 %i.ab, 1                        ; 3 uses
+  %i.ae = add nuw i64 %i.ab, 1                    ; 3 uses
   store i64 %i.ae, ptr %i.h, align 8, !alias.scope !156, !noalias !157
   %exitcond.not.i8 = icmp eq i64 %i.ae, %i.j
   br i1 %exitcond.not.i8, label %.loopexit, label %.lr.ph.i7
@@ -506,7 +506,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !191)
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.f = load i64, ptr %i.e, align 8, !alias.scope !192, !noalias !193, !noundef !5 ; 4 uses
+  %i.f = load i64, ptr %i.e, align 8, !alias.scope !192, !noalias !193, !noundef !5 ; 5 uses
   %.promoted.i.i.i = load i64, ptr %i.d, align 8, !alias.scope !194, !noalias !195 ; 2 uses
   %i.g = icmp ult i64 %.promoted.i.i.i, %i.f
   br i1 %i.g, label %.lr.ph.i.i.i, label %_RNvMs3_NtCsdLkRf3gRIi6_10serde_json2deINtB5_12DeserializerNtNtB7_4read9SliceReadE16parse_whitespaceCsjWl3uGiVprL_18influxdb3_commands.exit.thread.i.i
@@ -530,7 +530,7 @@ bb.b:                                             ; preds = %bb.c, %.lr.ph.i.i.i
   ]
 
 bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b, %bb.b
-  %i.m = add i64 %i.j, 1                          ; 3 uses
+  %i.m = add nuw i64 %i.j, 1                      ; 3 uses
   store i64 %i.m, ptr %i.d, align 8, !alias.scope !198, !noalias !195
   %exitcond.not.i.i.i = icmp eq i64 %i.m, %i.f
   br i1 %exitcond.not.i.i.i, label %_RNvMs3_NtCsdLkRf3gRIi6_10serde_json2deINtB5_12DeserializerNtNtB7_4read9SliceReadE16parse_whitespaceCsjWl3uGiVprL_18influxdb3_commands.exit.thread.i.i, label %bb.b
@@ -560,10 +560,9 @@ _RINvXsd_NtNtCs5CfTnloWo2c_10serde_core2de5implsINtB6_13OptionVisitorNtNtCscdodA
   br label %_RINvXse_NtNtCs5CfTnloWo2c_10serde_core2de5implsINtNtCs4NRVxsYgnAr_4core6option6OptionNtNtCscdodAO9FK5_5alloc6string6StringENtB8_11Deserialize11deserializeQINtNtCsdLkRf3gRIi6_10serde_json2de12DeserializerNtNtB2y_4read9SliceReadEECsjWl3uGiVprL_18influxdb3_commands.exit
 
 bb.f:                                             ; preds = %bb.b
-  %i.s = add i64 %i.j, 1                          ; 4 uses
+  %i.s = add nuw i64 %i.j, 1                      ; 3 uses
   store i64 %i.s, ptr %i.d, align 8, !alias.scope !203, !noalias !204
   tail call void @llvm.experimental.noalias.scope.decl(metadata !205)
-  %umax.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.s, i64 %i.f) ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !206)
   %exitcond.not.i9.not.i.i = icmp ult i64 %i.s, %i.f
   br i1 %exitcond.not.i9.not.i.i, label %bb.g, label %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4next.exit.i.i.i
@@ -571,33 +570,33 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f
   %i.t = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.s
   %i.u = load i8, ptr %i.t, align 1, !noalias !207, !noundef !5
-  %i.v = add i64 %i.j, 2                          ; 3 uses
+  %i.v = add nuw i64 %i.j, 2                      ; 3 uses
   store i64 %i.v, ptr %i.d, align 8, !alias.scope !208, !noalias !209
   %.not.i.i.i = icmp eq i8 %i.u, 117
   br i1 %.not.i.i.i, label %bb.h, label %bb.l, !prof !13
 
 bb.h:                                             ; preds = %bb.g
   tail call void @llvm.experimental.noalias.scope.decl(metadata !210)
-  %exitcond.not.i9.1.i.i = icmp eq i64 %i.v, %umax.i.i.i
+  %exitcond.not.i9.1.i.i = icmp eq i64 %i.v, %i.f
   br i1 %exitcond.not.i9.1.i.i, label %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4next.exit.i.i.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.w = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.v
   %i.x = load i8, ptr %i.w, align 1, !noalias !211, !noundef !5
-  %i.y = add i64 %i.j, 3                          ; 3 uses
+  %i.y = add nuw i64 %i.j, 3                      ; 3 uses
   store i64 %i.y, ptr %i.d, align 8, !alias.scope !212, !noalias !209
   %.not.i.1.i.i = icmp eq i8 %i.x, 108
   br i1 %.not.i.1.i.i, label %bb.j, label %bb.l, !prof !13
 
 bb.j:                                             ; preds = %bb.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !213)
-  %exitcond.not.i9.2.i.i = icmp eq i64 %i.y, %umax.i.i.i
+  %exitcond.not.i9.2.i.i = icmp eq i64 %i.y, %i.f
   br i1 %exitcond.not.i9.2.i.i, label %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4next.exit.i.i.i, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.z = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.y
   %i.aa = load i8, ptr %i.z, align 1, !noalias !214, !noundef !5
-  %i.ab = add i64 %i.j, 4
+  %i.ab = add nuw i64 %i.j, 4
   store i64 %i.ab, ptr %i.d, align 8, !alias.scope !215, !noalias !209
   %.not.i.2.i.i = icmp eq i8 %i.aa, 108
   br i1 %.not.i.2.i.i, label %_RNvMs3_NtCsdLkRf3gRIi6_10serde_json2deINtB5_12DeserializerNtNtB7_4read9SliceReadE11parse_identCsjWl3uGiVprL_18influxdb3_commands.exit.i.i, label %bb.l, !prof !13
@@ -682,7 +681,7 @@ bb.b:                                             ; preds = %bb.c, %.lr.ph.i
   ], !prof !14
 
 bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b, %bb.b
-  %i.ab = add i64 %i.y, 1                         ; 3 uses
+  %i.ab = add nuw i64 %i.y, 1                     ; 3 uses
   store i64 %i.ab, ptr %i.s, align 8, !alias.scope !308, !noalias !305
   %exitcond.not.i = icmp eq i64 %i.ab, %i.u
   br i1 %exitcond.not.i, label %.loopexit49, label %bb.b
@@ -832,7 +831,7 @@ bb.n:                                             ; preds = %bb.o, %.lr.ph.i.i.i
   ], !prof !14
 
 bb.o:                                             ; preds = %bb.n, %bb.n, %bb.n, %bb.n
-  %i.bp = add i64 %i.bm, 1                        ; 3 uses
+  %i.bp = add nuw i64 %i.bm, 1                    ; 3 uses
   store i64 %i.bp, ptr %i.bg, align 8, !alias.scope !328, !noalias !325
   %exitcond.not.i.i.i.i.i.i = icmp eq i64 %i.bp, %i.bi
   br i1 %exitcond.not.i.i.i.i.i.i, label %.loopexit.i.i.i.i.i, label %bb.n
@@ -858,7 +857,7 @@ bb.p:                                             ; preds = %bb.n
   br label %_RINvXs9_NtCsdLkRf3gRIi6_10serde_json2deINtB6_9MapAccessNtNtB8_4read9SliceReadENtNtCs5CfTnloWo2c_10serde_core2de9MapAccess15next_value_seedINtNtCs4NRVxsYgnAr_4core6marker11PhantomDataINtNtCscdodAO9FK5_5alloc3vec3VecNtNtB2Z_6string6StringEEECsjWl3uGiVprL_18influxdb3_commands.exit.thread.i.i.i
 
 bb.q:                                             ; preds = %bb.n
-  %i.bs = add i64 %i.bm, 1
+  %i.bs = add nuw i64 %i.bm, 1
   store i64 %i.bs, ptr %i.bg, align 8, !alias.scope !331, !noalias !332
   invoke void @_RINvXsh_NtNtCs5CfTnloWo2c_10serde_core2de5implsINtNtCscdodAO9FK5_5alloc3vec3VecNtNtBO_6string6StringENtB8_11Deserialize11deserializeQINtNtCsdLkRf3gRIi6_10serde_json2de12DeserializerNtNtB2c_4read9SliceReadEECsjWl3uGiVprL_18influxdb3_commands(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.h, ptr noalias noundef nonnull align 8 dereferenceable(64) %i.bc)
           to label %_RINvXs9_NtCsdLkRf3gRIi6_10serde_json2deINtB6_9MapAccessNtNtB8_4read9SliceReadENtNtCs5CfTnloWo2c_10serde_core2de9MapAccess15next_value_seedINtNtCs4NRVxsYgnAr_4core6marker11PhantomDataINtNtCscdodAO9FK5_5alloc3vec3VecNtNtB2Z_6string6StringEEECsjWl3uGiVprL_18influxdb3_commands.exit.i.i.i unwind label %.loopexit38.i, !noalias !330
@@ -1261,7 +1260,7 @@ bb.b:                                             ; preds = %bb.c, %.lr.ph.i
   ], !prof !14
 
 bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b, %bb.b
-  %i.o = add i64 %i.l, 1                          ; 3 uses
+  %i.o = add nuw i64 %i.l, 1                      ; 3 uses
   store i64 %i.o, ptr %i.f, align 8, !alias.scope !392, !noalias !389
   %exitcond.not.i = icmp eq i64 %i.o, %i.h
   br i1 %exitcond.not.i, label %.loopexit, label %bb.b
@@ -1467,7 +1466,7 @@ bb.b:                                             ; preds = %bb.c, %.lr.ph.i.i
   ]
 
 bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b, %bb.b
-  %i.n = add i64 %i.k, 1                          ; 3 uses
+  %i.n = add nuw i64 %i.k, 1                      ; 3 uses
   store i64 %i.n, ptr %i.e, align 8, !alias.scope !419, !noalias !416
   %exitcond.not.i.i = icmp eq i64 %i.n, %i.g
   br i1 %exitcond.not.i.i, label %.loopexit.i, label %bb.b
@@ -1488,7 +1487,7 @@ _RNvMs3_NtCsdLkRf3gRIi6_10serde_json2deINtB5_12DeserializerNtNtB7_4read9SliceRea
   br label %_RINvXs5_NtCsdLkRf3gRIi6_10serde_json2deQINtB6_12DeserializerNtNtB8_4read9SliceReadENtNtCs5CfTnloWo2c_10serde_core2de12Deserializer15deserialize_strNtNtB1l_5impls13StringVisitorECsjWl3uGiVprL_18influxdb3_commands.exit
 
 bb.d:                                             ; preds = %_RNvMs3_NtCsdLkRf3gRIi6_10serde_json2deINtB5_12DeserializerNtNtB7_4read9SliceReadE16parse_whitespaceCsjWl3uGiVprL_18influxdb3_commands.exit.i
-  %i.r = add i64 %i.k, 1
+  %i.r = add nuw i64 %i.k, 1
   store i64 %i.r, ptr %i.e, align 8, !alias.scope !421, !noalias !410
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 16
   store i64 0, ptr %i.s, align 8, !alias.scope !411, !noalias !410
@@ -1626,7 +1625,7 @@ bb.b:                                             ; preds = %bb.c, %.lr.ph.i
   ]
 
 bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b, %bb.b
-  %i.bc = add i64 %i.az, 1                        ; 3 uses
+  %i.bc = add nuw i64 %i.az, 1                    ; 3 uses
   store i64 %i.bc, ptr %i.at, align 8, !alias.scope !574, !noalias !571
   %exitcond.not.i = icmp eq i64 %i.bc, %i.av
   br i1 %exitcond.not.i, label %.loopexit101, label %bb.b
@@ -2029,7 +2028,7 @@ bb.bx:                                            ; preds = %bb.by, %.lr.ph.i.i.
   ], !prof !14
 
 bb.by:                                            ; preds = %bb.bx, %bb.bx, %bb.bx, %bb.bx
-  %i.hq = add i64 %i.hn, 1                        ; 3 uses
+  %i.hq = add nuw i64 %i.hn, 1                    ; 3 uses
   store i64 %i.hq, ptr %i.fj, align 8, !alias.scope !633, !noalias !630
   %exitcond.not.i.i.i.i.i = icmp eq i64 %i.hq, %i.hk
   br i1 %exitcond.not.i.i.i.i.i, label %.loopexit.i.i.i.i, label %bb.bx
@@ -2055,7 +2054,7 @@ bb.bz:                                            ; preds = %bb.bx
   br label %.loopexit301.i
 
 bb.ca:                                            ; preds = %bb.bx
-  %i.ht = add i64 %i.hn, 1
+  %i.ht = add nuw i64 %i.hn, 1
   store i64 %i.ht, ptr %i.fj, align 8, !alias.scope !635, !noalias !636
   invoke fastcc void @_RINvXs3_NtCs5CfTnloWo2c_10serde_core2deINtNtCs4NRVxsYgnAr_4core6marker11PhantomDataINtNtBG_6option6OptionNtNtCscdodAO9FK5_5alloc6string6StringEENtB6_15DeserializeSeed11deserializeQINtNtCsdLkRf3gRIi6_10serde_json2de12DeserializerNtNtB2X_4read9SliceReadEECsjWl3uGiVprL_18influxdb3_commands(ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.u, ptr noalias noundef align 8 dereferenceable(64) %i.fh)
           to label %_RINvYINtNtCsdLkRf3gRIi6_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs5CfTnloWo2c_10serde_core2de9MapAccess10next_valueINtNtCs4NRVxsYgnAr_4core6option6OptionNtNtCscdodAO9FK5_5alloc6string6StringEECsjWl3uGiVprL_18influxdb3_commands.exit.i unwind label %.loopexit.i41, !noalias !614
@@ -2144,7 +2143,7 @@ bb.ch:                                            ; preds = %bb.ci, %.lr.ph.i.i.
   ], !prof !14
 
 bb.ci:                                            ; preds = %bb.ch, %bb.ch, %bb.ch, %bb.ch
-  %i.ih = add i64 %i.ie, 1                        ; 3 uses
+  %i.ih = add nuw i64 %i.ie, 1                    ; 3 uses
   store i64 %i.ih, ptr %i.fj, align 8, !alias.scope !646, !noalias !643
   %exitcond.not.i.i.i.i207.i = icmp eq i64 %i.ih, %i.ib
   br i1 %exitcond.not.i.i.i.i207.i, label %.loopexit.i.i.i204.i, label %bb.ch
@@ -2170,7 +2169,7 @@ bb.cj:                                            ; preds = %bb.ch
   br label %.loopexit299.i
 
 bb.ck:                                            ; preds = %bb.ch
-  %i.ik = add i64 %i.ie, 1
+  %i.ik = add nuw i64 %i.ie, 1
   store i64 %i.ik, ptr %i.fj, align 8, !alias.scope !648, !noalias !649
   invoke void @_RINvXsh_NtNtCs5CfTnloWo2c_10serde_core2de5implsINtNtCscdodAO9FK5_5alloc3vec3VecNtNtBO_6string6StringENtB8_11Deserialize11deserializeQINtNtCsdLkRf3gRIi6_10serde_json2de12DeserializerNtNtB2c_4read9SliceReadEECsjWl3uGiVprL_18influxdb3_commands(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.t, ptr noalias noundef nonnull align 8 dereferenceable(64) %i.fh)
           to label %_RINvYINtNtCsdLkRf3gRIi6_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs5CfTnloWo2c_10serde_core2de9MapAccess10next_valueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtB26_6string6StringEECsjWl3uGiVprL_18influxdb3_commands.exit.i unwind label %.loopexit.i41, !noalias !614
@@ -2260,7 +2259,7 @@ bb.cr:                                            ; preds = %bb.cs, %.lr.ph.i.i.
   ], !prof !14
 
 bb.cs:                                            ; preds = %bb.cr, %bb.cr, %bb.cr, %bb.cr
-  %i.iz = add i64 %i.iw, 1                        ; 3 uses
+  %i.iz = add nuw i64 %i.iw, 1                    ; 3 uses
   store i64 %i.iz, ptr %i.fj, align 8, !alias.scope !659, !noalias !656
   %exitcond.not.i.i.i.i218.i = icmp eq i64 %i.iz, %i.it
   br i1 %exitcond.not.i.i.i.i218.i, label %.loopexit.i.i.i215.i, label %bb.cr
@@ -2286,7 +2285,7 @@ bb.ct:                                            ; preds = %bb.cr
   br label %.loopexit297.i
 
 bb.cu:                                            ; preds = %bb.cr
-  %i.jc = add i64 %i.iw, 1
+  %i.jc = add nuw i64 %i.iw, 1
   store i64 %i.jc, ptr %i.fj, align 8, !alias.scope !661, !noalias !662
   invoke void @_RINvXs_NtNtNtCsc96bKABWO34_9hashbrown20external_trait_impls5serde3mapINtNtBb_3map7HashMapNtNtCscdodAO9FK5_5alloc6string6StringINtNtB1t_3vec3VecB1p_EENtNtCs5CfTnloWo2c_10serde_core2de11Deserialize11deserializeQINtNtCsdLkRf3gRIi6_10serde_json2de12DeserializerNtNtB3q_4read9SliceReadEECsjWl3uGiVprL_18influxdb3_commands(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.s, ptr noalias noundef nonnull align 8 dereferenceable(64) %i.fh)
           to label %_RINvYINtNtCsdLkRf3gRIi6_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs5CfTnloWo2c_10serde_core2de9MapAccess10next_valueINtNtCsc96bKABWO34_9hashbrown3map7HashMapNtNtCscdodAO9FK5_5alloc6string6StringINtNtB2K_3vec3VecB2G_EEECsjWl3uGiVprL_18influxdb3_commands.exit.i unwind label %.loopexit.i41, !noalias !614
@@ -2362,7 +2361,7 @@ bb.cz:                                            ; preds = %bb.da, %.lr.ph.i.i.
   ], !prof !14
 
 bb.da:                                            ; preds = %bb.cz, %bb.cz, %bb.cz, %bb.cz
-  %i.jr = add i64 %i.jo, 1                        ; 3 uses
+  %i.jr = add nuw i64 %i.jo, 1                    ; 3 uses
   store i64 %i.jr, ptr %i.fj, align 8, !alias.scope !672, !noalias !669
   %exitcond.not.i.i.i.i227.i = icmp eq i64 %i.jr, %i.jl
   br i1 %exitcond.not.i.i.i.i227.i, label %.loopexit.i.i.i224.i, label %bb.cz
@@ -2388,7 +2387,7 @@ bb.db:                                            ; preds = %bb.cz
   br label %.loopexit295.i
 
 bb.dc:                                            ; preds = %bb.cz
-  %i.ju = add i64 %i.jo, 1
+  %i.ju = add nuw i64 %i.jo, 1
   store i64 %i.ju, ptr %i.fj, align 8, !alias.scope !674, !noalias !675
   invoke void @_RINvXsh_NtNtCs5CfTnloWo2c_10serde_core2de5implsINtNtCscdodAO9FK5_5alloc3vec3VecNtNtBO_6string6StringENtB8_11Deserialize11deserializeQINtNtCsdLkRf3gRIi6_10serde_json2de12DeserializerNtNtB2c_4read9SliceReadEECsjWl3uGiVprL_18influxdb3_commands(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.r, ptr noalias noundef nonnull align 8 dereferenceable(64) %i.fh)
           to label %_RINvYINtNtCsdLkRf3gRIi6_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs5CfTnloWo2c_10serde_core2de9MapAccess10next_valueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtB26_6string6StringEECsjWl3uGiVprL_18influxdb3_commands.exit231.i unwind label %.loopexit.i41, !noalias !614
@@ -2791,7 +2790,7 @@ bb.b:                                             ; preds = %bb.c, %.lr.ph.i
   ]
 
 bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b, %bb.b
-  %i.au = add i64 %i.ar, 1                        ; 3 uses
+  %i.au = add nuw i64 %i.ar, 1                    ; 3 uses
   store i64 %i.au, ptr %i.al, align 8, !alias.scope !806, !noalias !803
   %exitcond.not.i = icmp eq i64 %i.au, %i.an
   br i1 %exitcond.not.i, label %.loopexit98, label %bb.b
@@ -3194,7 +3193,7 @@ bb.bp:                                            ; preds = %bb.bq, %.lr.ph.i.i.
   ], !prof !14
 
 bb.bq:                                            ; preds = %bb.bp, %bb.bp, %bb.bp, %bb.bp
-  %i.hj = add i64 %i.hg, 1                        ; 3 uses
+  %i.hj = add nuw i64 %i.hg, 1                    ; 3 uses
   store i64 %i.hj, ptr %i.ej, align 8, !alias.scope !857, !noalias !854
   %exitcond.not.i.i.i.i.i = icmp eq i64 %i.hj, %i.hd
   br i1 %exitcond.not.i.i.i.i.i, label %.loopexit.i.i.i.i, label %bb.bp
@@ -3220,7 +3219,7 @@ bb.br:                                            ; preds = %bb.bp
   br label %.loopexit235.i
 
 bb.bs:                                            ; preds = %bb.bp
-  %i.hm = add i64 %i.hg, 1
+  %i.hm = add nuw i64 %i.hg, 1
   store i64 %i.hm, ptr %i.ej, align 8, !alias.scope !859, !noalias !860
   invoke void @_RINvXsh_NtNtCs5CfTnloWo2c_10serde_core2de5implsINtNtCscdodAO9FK5_5alloc3vec3VecNtNtBO_6string6StringENtB8_11Deserialize11deserializeQINtNtCsdLkRf3gRIi6_10serde_json2de12DeserializerNtNtB2c_4read9SliceReadEECsjWl3uGiVprL_18influxdb3_commands(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.q, ptr noalias noundef nonnull align 8 dereferenceable(64) %i.eh)
           to label %_RINvYINtNtCsdLkRf3gRIi6_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs5CfTnloWo2c_10serde_core2de9MapAccess10next_valueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtB26_6string6StringEECsjWl3uGiVprL_18influxdb3_commands.exit.i unwind label %.loopexit.i41, !noalias !838
@@ -3310,7 +3309,7 @@ bb.bz:                                            ; preds = %bb.ca, %.lr.ph.i.i.
   ], !prof !14
 
 bb.ca:                                            ; preds = %bb.bz, %bb.bz, %bb.bz, %bb.bz
-  %i.ib = add i64 %i.hy, 1                        ; 3 uses
+  %i.ib = add nuw i64 %i.hy, 1                    ; 3 uses
   store i64 %i.ib, ptr %i.ej, align 8, !alias.scope !870, !noalias !867
   %exitcond.not.i.i.i.i165.i = icmp eq i64 %i.ib, %i.hv
   br i1 %exitcond.not.i.i.i.i165.i, label %.loopexit.i.i.i162.i, label %bb.bz
@@ -3336,7 +3335,7 @@ bb.cb:                                            ; preds = %bb.bz
   br label %.loopexit233.i
 
 bb.cc:                                            ; preds = %bb.bz
-  %i.ie = add i64 %i.hy, 1
+  %i.ie = add nuw i64 %i.hy, 1
   store i64 %i.ie, ptr %i.ej, align 8, !alias.scope !872, !noalias !873
   invoke void @_RINvXs_NtNtNtCsc96bKABWO34_9hashbrown20external_trait_impls5serde3mapINtNtBb_3map7HashMapNtNtCscdodAO9FK5_5alloc6string6StringINtNtB1t_3vec3VecB1p_EENtNtCs5CfTnloWo2c_10serde_core2de11Deserialize11deserializeQINtNtCsdLkRf3gRIi6_10serde_json2de12DeserializerNtNtB3q_4read9SliceReadEECsjWl3uGiVprL_18influxdb3_commands(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.p, ptr noalias noundef nonnull align 8 dereferenceable(64) %i.eh)
           to label %_RINvYINtNtCsdLkRf3gRIi6_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs5CfTnloWo2c_10serde_core2de9MapAccess10next_valueINtNtCsc96bKABWO34_9hashbrown3map7HashMapNtNtCscdodAO9FK5_5alloc6string6StringINtNtB2K_3vec3VecB2G_EEECsjWl3uGiVprL_18influxdb3_commands.exit.i unwind label %.loopexit.i41, !noalias !838
@@ -3413,7 +3412,7 @@ bb.ch:                                            ; preds = %bb.ci, %.lr.ph.i.i.
   ], !prof !14
 
 bb.ci:                                            ; preds = %bb.ch, %bb.ch, %bb.ch, %bb.ch
-  %i.iu = add i64 %i.ir, 1                        ; 3 uses
+  %i.iu = add nuw i64 %i.ir, 1                    ; 3 uses
   store i64 %i.iu, ptr %i.ej, align 8, !alias.scope !883, !noalias !880
   %exitcond.not.i.i.i.i174.i = icmp eq i64 %i.iu, %i.io
   br i1 %exitcond.not.i.i.i.i174.i, label %.loopexit.i.i.i171.i, label %bb.ch
@@ -3439,7 +3438,7 @@ bb.cj:                                            ; preds = %bb.ch
   br label %.loopexit231.i
 
 bb.ck:                                            ; preds = %bb.ch
-  %i.ix = add i64 %i.ir, 1
+  %i.ix = add nuw i64 %i.ir, 1
   store i64 %i.ix, ptr %i.ej, align 8, !alias.scope !885, !noalias !886
   invoke void @_RINvXsh_NtNtCs5CfTnloWo2c_10serde_core2de5implsINtNtCscdodAO9FK5_5alloc3vec3VecNtNtBO_6string6StringENtB8_11Deserialize11deserializeQINtNtCsdLkRf3gRIi6_10serde_json2de12DeserializerNtNtB2c_4read9SliceReadEECsjWl3uGiVprL_18influxdb3_commands(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.o, ptr noalias noundef nonnull align 8 dereferenceable(64) %i.eh)
           to label %_RINvYINtNtCsdLkRf3gRIi6_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs5CfTnloWo2c_10serde_core2de9MapAccess10next_valueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtB26_6string6StringEECsjWl3uGiVprL_18influxdb3_commands.exit178.i unwind label %.loopexit.i41, !noalias !838
@@ -3842,7 +3841,7 @@ bb.b:                                             ; preds = %bb.c, %.lr.ph.i.i.i
   ], !prof !14
 
 bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b, %bb.b
-  %i.z = add i64 %i.w, 1                          ; 3 uses
+  %i.z = add nuw i64 %i.w, 1                      ; 3 uses
   store i64 %i.z, ptr %i.q, align 8, !alias.scope !998, !noalias !995
   %exitcond.not.i.i.i = icmp eq i64 %i.z, %i.s
   br i1 %exitcond.not.i.i.i, label %.loopexit.i.i, label %bb.b
@@ -3862,7 +3861,7 @@ bb.d:                                             ; preds = %bb.b
   br label %_RINvXs9_NtCsdLkRf3gRIi6_10serde_json2deINtB6_9MapAccessNtNtB8_4read9SliceReadENtNtCs5CfTnloWo2c_10serde_core2de9MapAccess15next_value_seedINtNtCs4NRVxsYgnAr_4core6marker11PhantomDataNtNtB1g_11ignored_any10IgnoredAnyEECsjWl3uGiVprL_18influxdb3_commands.exit
 
 bb.e:                                             ; preds = %bb.b
-  %i.ac = add i64 %i.w, 1                         ; 3 uses
+  %i.ac = add nuw i64 %i.w, 1                     ; 3 uses
   store i64 %i.ac, ptr %i.q, align 8, !alias.scope !999
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1000)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1001)
@@ -3905,7 +3904,7 @@ bb.f:                                             ; preds = %bb.g, %.lr.ph.i.i.i
   ]
 
 bb.g:                                             ; preds = %bb.f, %bb.f, %bb.f, %bb.f
-  %i.al = add i64 %i.ai, 1                        ; 3 uses
+  %i.al = add nuw i64 %i.ai, 1                    ; 3 uses
   store i64 %i.al, ptr %i.q, align 8, !alias.scope !1007, !noalias !1008
   %exitcond.not.i.i.i.i.i.i = icmp eq i64 %i.al, %i.ah
   br i1 %exitcond.not.i.i.i.i.i.i, label %.loopexit130.i.i.i.i.i, label %bb.f
@@ -4193,7 +4192,7 @@ bb.ak:                                            ; preds = %bb.al, %.lr.ph.i75.
   ]
 
 bb.al:                                            ; preds = %bb.ak, %bb.ak, %bb.ak, %bb.ak
-  %i.cx = add i64 %i.cu, 1                        ; 3 uses
+  %i.cx = add nuw i64 %i.cu, 1                    ; 3 uses
   store i64 %i.cx, ptr %i.q, align 8, !alias.scope !1064, !noalias !1060
   %exitcond.not.i76.i.i.i.i.i = icmp eq i64 %i.cx, %i.cj
   br i1 %exitcond.not.i76.i.i.i.i.i, label %.loopexit123.i.i.i.i.i, label %bb.ak
@@ -4288,7 +4287,7 @@ bb.aw:                                            ; preds = %.critedge.i.i.i.i.i
   ], !prof !14
 
 bb.ax:                                            ; preds = %.lr.ph.i82.i.i.i.i.i, %.lr.ph.i82.i.i.i.i.i, %.lr.ph.i82.i.i.i.i.i, %.lr.ph.i82.i.i.i.i.i
-  %i.dr = add i64 %i.do, 1                        ; 3 uses
+  %i.dr = add nuw i64 %i.do, 1                    ; 3 uses
   store i64 %i.dr, ptr %i.q, align 8, !alias.scope !1069, !noalias !1070
   %exitcond.not.i83.i.i.i.i.i = icmp eq i64 %i.dr, %i.cj
   br i1 %exitcond.not.i83.i.i.i.i.i, label %.loopexit125.i.i.i.i.i, label %.lr.ph.i82.i.i.i.i.i
@@ -4301,7 +4300,7 @@ bb.ax:                                            ; preds = %.lr.ph.i82.i.i.i.i.
   br label %_RINvXs9_NtCsdLkRf3gRIi6_10serde_json2deINtB6_9MapAccessNtNtB8_4read9SliceReadENtNtCs5CfTnloWo2c_10serde_core2de9MapAccess15next_value_seedINtNtCs4NRVxsYgnAr_4core6marker11PhantomDataNtNtB1g_11ignored_any10IgnoredAnyEECsjWl3uGiVprL_18influxdb3_commands.exit
 
 bb.ay:                                            ; preds = %.lr.ph.i82.i.i.i.i.i
-  %i.dt = add i64 %i.do, 1
+  %i.dt = add nuw i64 %i.do, 1
   store i64 %i.dt, ptr %i.q, align 8, !alias.scope !1071
   %i.du = tail call noundef align 8 ptr @_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read10ignore_str(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.u) ; 2 uses
   %.not50.i.i.i.i.i = icmp eq ptr %i.du, null
@@ -4339,7 +4338,7 @@ bb.bb:                                            ; preds = %bb.bc, %.lr.ph.i89.
   ], !prof !14
 
 bb.bc:                                            ; preds = %bb.bb, %bb.bb, %bb.bb, %bb.bb
-  %i.ec = add i64 %i.dz, 1                        ; 3 uses
+  %i.ec = add nuw i64 %i.dz, 1                    ; 3 uses
   store i64 %i.ec, ptr %i.q, align 8, !alias.scope !1079, !noalias !1076
   %exitcond.not.i90.i.i.i.i.i = icmp eq i64 %i.ec, %i.dw
   br i1 %exitcond.not.i90.i.i.i.i.i, label %.loopexit124.i.i.i.i.i, label %bb.bb
@@ -4352,7 +4351,7 @@ bb.bc:                                            ; preds = %bb.bb, %bb.bb, %bb.
   br label %_RINvXs9_NtCsdLkRf3gRIi6_10serde_json2deINtB6_9MapAccessNtNtB8_4read9SliceReadENtNtCs5CfTnloWo2c_10serde_core2de9MapAccess15next_value_seedINtNtCs4NRVxsYgnAr_4core6marker11PhantomDataNtNtB1g_11ignored_any10IgnoredAnyEECsjWl3uGiVprL_18influxdb3_commands.exit
 
 bb.bd:                                            ; preds = %bb.bb
-  %i.ee = add i64 %i.dz, 1                        ; 2 uses
+  %i.ee = add nuw i64 %i.dz, 1                    ; 2 uses
   store i64 %i.ee, ptr %i.q, align 8, !alias.scope !1080
   br label %bb.bf
 
@@ -4755,7 +4754,7 @@ bb.m:                                             ; preds = %bb.d
   br i1 %or.cond1.i, label %bb.o, label %bb.n, !prof !19
 
 bb.n:                                             ; preds = %bb.m, %bb.d
-  %i.be = add i64 %i.v, 1                         ; 3 uses
+  %i.be = add nuw i64 %i.v, 1                     ; 3 uses
   store i64 %i.be, ptr %i.g, align 8, !alias.scope !1207, !noalias !1198
   %i.bf = mul nuw i64 %.sroa.0.061.i, 10
   %i.bg = add i64 %i.bf, %i.ab                    ; 2 uses
@@ -5158,7 +5157,7 @@ _RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit26.i
   br i1 %i.bm, label %bb.i, label %_RNvMs3_NtCsdLkRf3gRIi6_10serde_json2deINtB5_12DeserializerNtNtB7_4read9SliceReadE14ignore_decimalCsjWl3uGiVprL_18influxdb3_commands.exit
 
 bb.i:                                             ; preds = %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit26.i.i
-  %i.bn = add i64 %i.bi, 1                        ; 3 uses
+  %i.bn = add nuw i64 %i.bi, 1                    ; 3 uses
   store i64 %i.bn, ptr %i.f, align 8, !alias.scope !1301
   %exitcond.not.i.i = icmp eq i64 %i.bn, %i.i
   br i1 %exitcond.not.i.i, label %_RNvMs3_NtCsdLkRf3gRIi6_10serde_json2deINtB5_12DeserializerNtNtB7_4read9SliceReadE14ignore_decimalCsjWl3uGiVprL_18influxdb3_commands.exit, label %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit26.i.i
@@ -5218,7 +5217,7 @@ _RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit26.i
   br i1 %i.cg, label %bb.l, label %_RNvMs3_NtCsdLkRf3gRIi6_10serde_json2deINtB5_12DeserializerNtNtB7_4read9SliceReadE14ignore_decimalCsjWl3uGiVprL_18influxdb3_commands.exit
 
 bb.l:                                             ; preds = %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit26.i
-  %i.ch = add i64 %i.cc, 1                        ; 3 uses
+  %i.ch = add nuw i64 %i.cc, 1                    ; 3 uses
   store i64 %i.ch, ptr %i.f, align 8, !alias.scope !1311
   %exitcond.not.i = icmp eq i64 %i.ch, %i.i
   br i1 %exitcond.not.i, label %_RNvMs3_NtCsdLkRf3gRIi6_10serde_json2deINtB5_12DeserializerNtNtB7_4read9SliceReadE14ignore_decimalCsjWl3uGiVprL_18influxdb3_commands.exit, label %_RNvXs5_NtCsdLkRf3gRIi6_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit26.i
@@ -5621,7 +5620,7 @@ bb.b:                                             ; preds = %bb.c, %.lr.ph.i
   ], !prof !12
 
 bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b, %bb.b
-  %i.m = add i64 %i.j, 1                          ; 3 uses
+  %i.m = add nuw i64 %i.j, 1                      ; 3 uses
   store i64 %i.m, ptr %i.d, align 8, !alias.scope !1446, !noalias !1443
   %exitcond.not.i = icmp eq i64 %i.m, %i.f
   br i1 %exitcond.not.i, label %.loopexit, label %bb.b
@@ -5692,7 +5691,7 @@ bb.b:                                             ; preds = %bb.c, %.lr.ph.i
   ], !prof !12
 
 bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b, %bb.b
-  %i.n = add i64 %i.k, 1                          ; 3 uses
+  %i.n = add nuw i64 %i.k, 1                      ; 3 uses
   store i64 %i.n, ptr %i.e, align 8, !alias.scope !1474, !noalias !1471
   %exitcond.not.i = icmp eq i64 %i.n, %i.g
   br i1 %exitcond.not.i, label %.loopexit, label %bb.b
@@ -5736,7 +5735,7 @@ bb.f:                                             ; preds = %bb.b
   ]
 
 bb.g:                                             ; preds = %.lr.ph.i12, %.lr.ph.i12, %.lr.ph.i12, %.lr.ph.i12
-  %i.w = add i64 %i.t, 1                          ; 3 uses
+  %i.w = add nuw i64 %i.t, 1                      ; 3 uses
   store i64 %i.w, ptr %i.e, align 8, !alias.scope !1479, !noalias !1480
   %exitcond.not.i13 = icmp eq i64 %i.w, %i.g
   br i1 %exitcond.not.i13, label %_RNvMs3_NtCsdLkRf3gRIi6_10serde_json2deINtB5_12DeserializerNtNtB7_4read9SliceReadE16parse_whitespaceCsjWl3uGiVprL_18influxdb3_commands.exit16.thread, label %.lr.ph.i12

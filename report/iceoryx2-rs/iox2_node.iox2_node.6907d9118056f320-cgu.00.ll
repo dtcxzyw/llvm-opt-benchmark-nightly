@@ -202,7 +202,7 @@ bb.n:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i.not.i22, label %_RNvMs0_NtCs8FOSrxU71ur_3ron3serINtB5_10SerializerQNtNtCsbqH9stoieM8_5alloc6string6StringE6indentCs914H3uZQmS2_9iox2_node.exit.thread, label %.lr.ph
 
 bb.o:                                             ; preds = %.lr.ph
-  %i.ab = add i64 %.sroa.02.0.i.i23, 1            ; 2 uses
+  %i.ab = add nuw i64 %.sroa.02.0.i.i23, 1        ; 2 uses
   %exitcond.not.not.i.not.i = icmp eq i64 %i.ab, %.val.i19
   br i1 %exitcond.not.not.i.not.i, label %_RNvMs0_NtCs8FOSrxU71ur_3ron3serINtB5_10SerializerQNtNtCsbqH9stoieM8_5alloc6string6StringE6indentCs914H3uZQmS2_9iox2_node.exit.thread, label %.lr.ph
 
@@ -451,7 +451,7 @@ bb.x:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i248, label %.loopexit, label %.lr.ph250
 
 bb.y:                                             ; preds = %.lr.ph250
-  %i.ba = add i64 %.sroa.02.0.i86249, 1           ; 2 uses
+  %i.ba = add nuw i64 %.sroa.02.0.i86249, 1       ; 2 uses
   %exitcond.not.not.i = icmp eq i64 %i.ba, %.val81
   br i1 %exitcond.not.not.i, label %.loopexit, label %.lr.ph250
 
@@ -599,7 +599,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond.not.not.i95251, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit97, label %.lr.ph253
 
 bb.ai:                                            ; preds = %.lr.ph253
-  %i.cs = add i64 %.sroa.02.0.i94252, 1           ; 2 uses
+  %i.cs = add nuw i64 %.sroa.02.0.i94252, 1       ; 2 uses
   %exitcond.not.not.i95 = icmp eq i64 %i.cs, %.val80
   br i1 %exitcond.not.not.i95, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit97, label %.lr.ph253
 
@@ -826,7 +826,7 @@ bb.be:                                            ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i.not.i.i.i.i.i.i.i.i254, label %_RNvMs0_NtCs8FOSrxU71ur_3ron3serINtB5_10SerializerQNtNtCsbqH9stoieM8_5alloc6string6StringE6indentCs914H3uZQmS2_9iox2_node.exit.thread.i.i.i.i.i.i.i, label %.lr.ph256
 
 bb.bf:                                            ; preds = %.lr.ph256
-  %i.ex = add i64 %.sroa.02.0.i.i.i.i.i.i.i.i.i255, 1 ; 2 uses
+  %i.ex = add nuw i64 %.sroa.02.0.i.i.i.i.i.i.i.i.i255, 1 ; 2 uses
   %exitcond.not.not.i.not.i.i.i.i.i.i.i.i = icmp eq i64 %i.ex, %.val.i28.i.i.i.i.i.i.i
   br i1 %exitcond.not.not.i.not.i.i.i.i.i.i.i.i, label %_RNvMs0_NtCs8FOSrxU71ur_3ron3serINtB5_10SerializerQNtNtCsbqH9stoieM8_5alloc6string6StringE6indentCs914H3uZQmS2_9iox2_node.exit.thread.i.i.i.i.i.i.i, label %.lr.ph256
 
@@ -1017,7 +1017,6 @@ bb.bv:                                            ; preds = %_RINvMNtCs8Chj7Szqq
   %i.hd = getelementptr inbounds nuw i8, ptr %.sroa.3.0.copyload47.i.i, i64 192
   %.sroa.04.0.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.3.0.copyload47.i.i, i64 48
   %.sroa.3.0.in.i.i11.i.i = getelementptr inbounds nuw i8, ptr %.sroa.3.0.copyload47.i.i, i64 56
-  %umax.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.gx, i64 1)
   %exitcond.not.i.i.i.i257 = icmp ult i64 %i.gx, 2
   br i1 %exitcond.not.i.i.i.i257, label %.loopexit.loopexit.i.i.i.i, label %.lr.ph259
 
@@ -1033,8 +1032,8 @@ bb.bv:                                            ; preds = %_RINvMNtCs8Chj7Szqq
   br label %_RNvMs0_NtCs8FOSrxU71ur_3ron3serINtB5_10SerializerQNtNtCsbqH9stoieM8_5alloc6string6StringE10end_indentCs914H3uZQmS2_9iox2_node.exit.thread.i.i.i
 
 bb.bw:                                            ; preds = %.lr.ph259
-  %i.hg = add i64 %.sroa.05.0.i.i.i.i258, 1       ; 2 uses
-  %exitcond.not.i.i.i.i = icmp eq i64 %i.hg, %umax.i.i.i.i
+  %i.hg = add nuw i64 %.sroa.05.0.i.i.i.i258, 1   ; 2 uses
+  %exitcond.not.i.i.i.i = icmp eq i64 %i.gx, %i.hg
   br i1 %exitcond.not.i.i.i.i, label %.loopexit.loopexit.i.i.i.i, label %.lr.ph259
 
 .lr.ph259:                                        ; preds = %.preheader.i.i.i.i, %bb.bw
@@ -1405,7 +1404,7 @@ bb.x:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i195, label %.loopexit135, label %.lr.ph197
 
 bb.y:                                             ; preds = %.lr.ph197
-  %i.ay = add i64 %.sroa.02.0.i84196, 1           ; 2 uses
+  %i.ay = add nuw i64 %.sroa.02.0.i84196, 1       ; 2 uses
   %exitcond.not.not.i = icmp eq i64 %i.ay, %.val79
   br i1 %exitcond.not.not.i, label %.loopexit135, label %.lr.ph197
 
@@ -1553,7 +1552,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond.not.not.i93198, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph200
 
 bb.ai:                                            ; preds = %.lr.ph200
-  %i.cq = add i64 %.sroa.02.0.i92199, 1           ; 2 uses
+  %i.cq = add nuw i64 %.sroa.02.0.i92199, 1       ; 2 uses
   %exitcond.not.not.i93 = icmp eq i64 %i.cq, %.val
   br i1 %exitcond.not.not.i93, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph200
 
@@ -1732,7 +1731,7 @@ bb.bf:                                            ; preds = %bb.ar
   br i1 %exitcond.not.i.i201, label %._crit_edge205, label %.lr.ph204
 
 bb.bg:                                            ; preds = %.lr.ph204
-  %i.ei = add i64 %.sroa.05.0.i.i202, 1           ; 2 uses
+  %i.ei = add nuw i64 %.sroa.05.0.i.i202, 1       ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.ei, %i.eh
   br i1 %exitcond.not.i.i, label %._crit_edge205, label %.lr.ph204
 
@@ -1750,7 +1749,7 @@ bb.bg:                                            ; preds = %.lr.ph204
   br i1 %i.ek, label %.loopexit, label %bb.bg
 
 .preheader.i.i:                                   ; preds = %.lr.ph208
-  %i.el = add i64 %.sroa.07.0.i.i207, 1           ; 2 uses
+  %i.el = add nuw i64 %.sroa.07.0.i.i207, 1       ; 2 uses
   %exitcond9.not.i.i = icmp eq i64 %i.el, %i.eh
   br i1 %exitcond9.not.i.i, label %_RINvXs3_NtNtCsePUspIjoSTD_10serde_core3ser5implsINtNtCs8Chj7Szqq0n_4core6option6OptionNtNtCsbqH9stoieM8_5alloc6string6StringENtB8_9Serialize9serializeQINtNtCs8FOSrxU71ur_3ron3ser10SerializerQB1m_EECs914H3uZQmS2_9iox2_node.exit, label %.lr.ph208
 
@@ -2071,7 +2070,7 @@ bb.x:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i193, label %.loopexit133, label %.lr.ph195
 
 bb.y:                                             ; preds = %.lr.ph195
-  %i.ay = add i64 %.sroa.02.0.i84194, 1           ; 2 uses
+  %i.ay = add nuw i64 %.sroa.02.0.i84194, 1       ; 2 uses
   %exitcond.not.not.i = icmp eq i64 %i.ay, %.val79
   br i1 %exitcond.not.not.i, label %.loopexit133, label %.lr.ph195
 
@@ -2219,7 +2218,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond.not.not.i93196, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph198
 
 bb.ai:                                            ; preds = %.lr.ph198
-  %i.cq = add i64 %.sroa.02.0.i92197, 1           ; 2 uses
+  %i.cq = add nuw i64 %.sroa.02.0.i92197, 1       ; 2 uses
   %exitcond.not.not.i93 = icmp eq i64 %i.cq, %.val
   br i1 %exitcond.not.not.i93, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph198
 
@@ -2394,7 +2393,7 @@ bb.bf:                                            ; preds = %bb.ar
   br i1 %exitcond.not.i.i199, label %._crit_edge203, label %.lr.ph202
 
 bb.bg:                                            ; preds = %.lr.ph202
-  %i.eh = add i64 %.sroa.05.0.i.i200, 1           ; 2 uses
+  %i.eh = add nuw i64 %.sroa.05.0.i.i200, 1       ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.eh, %i.eg
   br i1 %exitcond.not.i.i, label %._crit_edge203, label %.lr.ph202
 
@@ -2412,7 +2411,7 @@ bb.bg:                                            ; preds = %.lr.ph202
   br i1 %i.ej, label %.loopexit, label %bb.bg
 
 .preheader.i.i:                                   ; preds = %.lr.ph206
-  %i.ek = add i64 %.sroa.07.0.i.i205, 1           ; 2 uses
+  %i.ek = add nuw i64 %.sroa.07.0.i.i205, 1       ; 2 uses
   %exitcond9.not.i.i = icmp eq i64 %i.ek, %i.eg
   br i1 %exitcond9.not.i.i, label %_RINvXs3_NtNtCsePUspIjoSTD_10serde_core3ser5implsINtNtCs8Chj7Szqq0n_4core6option6OptionNtNtBP_4time8DurationENtB8_9Serialize9serializeQINtNtCs8FOSrxU71ur_3ron3ser10SerializerQNtNtCsbqH9stoieM8_5alloc6string6StringEECs914H3uZQmS2_9iox2_node.exit, label %.lr.ph206
 
@@ -2735,7 +2734,7 @@ bb.x:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i191, label %.loopexit132, label %.lr.ph193
 
 bb.y:                                             ; preds = %.lr.ph193
-  %i.bb = add i64 %.sroa.02.0.i86192, 1           ; 2 uses
+  %i.bb = add nuw i64 %.sroa.02.0.i86192, 1       ; 2 uses
   %exitcond.not.not.i = icmp eq i64 %i.bb, %.val79
   br i1 %exitcond.not.not.i, label %.loopexit132, label %.lr.ph193
 
@@ -2883,7 +2882,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond.not.not.i95194, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit97, label %.lr.ph196
 
 bb.ai:                                            ; preds = %.lr.ph196
-  %i.ct = add i64 %.sroa.02.0.i94195, 1           ; 2 uses
+  %i.ct = add nuw i64 %.sroa.02.0.i94195, 1       ; 2 uses
   %exitcond.not.not.i95 = icmp eq i64 %i.ct, %.val
   br i1 %exitcond.not.not.i95, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit97, label %.lr.ph196
 
@@ -3086,7 +3085,7 @@ bb.bh:                                            ; preds = %bb.ar
   br i1 %exitcond.not.i.i197, label %._crit_edge201, label %.lr.ph200
 
 bb.bi:                                            ; preds = %.lr.ph200
-  %i.ep = add i64 %.sroa.05.0.i.i198, 1           ; 2 uses
+  %i.ep = add nuw i64 %.sroa.05.0.i.i198, 1       ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.ep, %i.eo
   br i1 %exitcond.not.i.i, label %._crit_edge201, label %.lr.ph200
 
@@ -3104,7 +3103,7 @@ bb.bi:                                            ; preds = %.lr.ph200
   br i1 %i.er, label %.loopexit, label %bb.bi
 
 .preheader.i.i:                                   ; preds = %.lr.ph204
-  %i.es = add i64 %.sroa.07.0.i.i203, 1           ; 2 uses
+  %i.es = add nuw i64 %.sroa.07.0.i.i203, 1       ; 2 uses
   %exitcond9.not.i.i = icmp eq i64 %i.es, %i.eo
   br i1 %exitcond9.not.i.i, label %_RINvXs3_NtNtCsePUspIjoSTD_10serde_core3ser5implsINtNtCs8Chj7Szqq0n_4core6option6OptionjENtB8_9Serialize9serializeQINtNtCs8FOSrxU71ur_3ron3ser10SerializerQNtNtCsbqH9stoieM8_5alloc6string6StringEECs914H3uZQmS2_9iox2_node.exit, label %.lr.ph204
 
@@ -3422,7 +3421,7 @@ bb.x:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i167, label %.loopexit, label %.lr.ph169
 
 bb.y:                                             ; preds = %.lr.ph169
-  %i.ay = add i64 %.sroa.02.0.i84168, 1           ; 2 uses
+  %i.ay = add nuw i64 %.sroa.02.0.i84168, 1       ; 2 uses
   %exitcond.not.not.i = icmp eq i64 %i.ay, %.val79
   br i1 %exitcond.not.not.i, label %.loopexit, label %.lr.ph169
 
@@ -3570,7 +3569,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond.not.not.i93170, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
 bb.ai:                                            ; preds = %.lr.ph172
-  %i.cq = add i64 %.sroa.02.0.i92171, 1           ; 2 uses
+  %i.cq = add nuw i64 %.sroa.02.0.i92171, 1       ; 2 uses
   %exitcond.not.not.i93 = icmp eq i64 %i.cq, %.val
   br i1 %exitcond.not.not.i93, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
@@ -3946,7 +3945,7 @@ bb.x:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i167, label %.loopexit, label %.lr.ph169
 
 bb.y:                                             ; preds = %.lr.ph169
-  %i.ay = add i64 %.sroa.02.0.i84168, 1           ; 2 uses
+  %i.ay = add nuw i64 %.sroa.02.0.i84168, 1       ; 2 uses
   %exitcond.not.not.i = icmp eq i64 %i.ay, %.val79
   br i1 %exitcond.not.not.i, label %.loopexit, label %.lr.ph169
 
@@ -4094,7 +4093,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond.not.not.i93170, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
 bb.ai:                                            ; preds = %.lr.ph172
-  %i.cq = add i64 %.sroa.02.0.i92171, 1           ; 2 uses
+  %i.cq = add nuw i64 %.sroa.02.0.i92171, 1       ; 2 uses
   %exitcond.not.not.i93 = icmp eq i64 %i.cq, %.val
   br i1 %exitcond.not.not.i93, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
@@ -4470,7 +4469,7 @@ bb.x:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i167, label %.loopexit, label %.lr.ph169
 
 bb.y:                                             ; preds = %.lr.ph169
-  %i.ay = add i64 %.sroa.02.0.i84168, 1           ; 2 uses
+  %i.ay = add nuw i64 %.sroa.02.0.i84168, 1       ; 2 uses
   %exitcond.not.not.i = icmp eq i64 %i.ay, %.val79
   br i1 %exitcond.not.not.i, label %.loopexit, label %.lr.ph169
 
@@ -4618,7 +4617,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond.not.not.i93170, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
 bb.ai:                                            ; preds = %.lr.ph172
-  %i.cq = add i64 %.sroa.02.0.i92171, 1           ; 2 uses
+  %i.cq = add nuw i64 %.sroa.02.0.i92171, 1       ; 2 uses
   %exitcond.not.not.i93 = icmp eq i64 %i.cq, %.val
   br i1 %exitcond.not.not.i93, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
@@ -4994,7 +4993,7 @@ bb.x:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i167, label %.loopexit, label %.lr.ph169
 
 bb.y:                                             ; preds = %.lr.ph169
-  %i.ay = add i64 %.sroa.02.0.i84168, 1           ; 2 uses
+  %i.ay = add nuw i64 %.sroa.02.0.i84168, 1       ; 2 uses
   %exitcond.not.not.i = icmp eq i64 %i.ay, %.val79
   br i1 %exitcond.not.not.i, label %.loopexit, label %.lr.ph169
 
@@ -5142,7 +5141,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond.not.not.i93170, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
 bb.ai:                                            ; preds = %.lr.ph172
-  %i.cq = add i64 %.sroa.02.0.i92171, 1           ; 2 uses
+  %i.cq = add nuw i64 %.sroa.02.0.i92171, 1       ; 2 uses
   %exitcond.not.not.i93 = icmp eq i64 %i.cq, %.val
   br i1 %exitcond.not.not.i93, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
@@ -5518,7 +5517,7 @@ bb.x:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i167, label %.loopexit, label %.lr.ph169
 
 bb.y:                                             ; preds = %.lr.ph169
-  %i.ay = add i64 %.sroa.02.0.i84168, 1           ; 2 uses
+  %i.ay = add nuw i64 %.sroa.02.0.i84168, 1       ; 2 uses
   %exitcond.not.not.i = icmp eq i64 %i.ay, %.val79
   br i1 %exitcond.not.not.i, label %.loopexit, label %.lr.ph169
 
@@ -5666,7 +5665,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond.not.not.i93170, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
 bb.ai:                                            ; preds = %.lr.ph172
-  %i.cq = add i64 %.sroa.02.0.i92171, 1           ; 2 uses
+  %i.cq = add nuw i64 %.sroa.02.0.i92171, 1       ; 2 uses
   %exitcond.not.not.i93 = icmp eq i64 %i.cq, %.val
   br i1 %exitcond.not.not.i93, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
@@ -6042,7 +6041,7 @@ bb.x:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i167, label %.loopexit, label %.lr.ph169
 
 bb.y:                                             ; preds = %.lr.ph169
-  %i.ay = add i64 %.sroa.02.0.i84168, 1           ; 2 uses
+  %i.ay = add nuw i64 %.sroa.02.0.i84168, 1       ; 2 uses
   %exitcond.not.not.i = icmp eq i64 %i.ay, %.val79
   br i1 %exitcond.not.not.i, label %.loopexit, label %.lr.ph169
 
@@ -6190,7 +6189,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond.not.not.i93170, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
 bb.ai:                                            ; preds = %.lr.ph172
-  %i.cq = add i64 %.sroa.02.0.i92171, 1           ; 2 uses
+  %i.cq = add nuw i64 %.sroa.02.0.i92171, 1       ; 2 uses
   %exitcond.not.not.i93 = icmp eq i64 %i.cq, %.val
   br i1 %exitcond.not.not.i93, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
@@ -6566,7 +6565,7 @@ bb.x:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i167, label %.loopexit, label %.lr.ph169
 
 bb.y:                                             ; preds = %.lr.ph169
-  %i.ay = add i64 %.sroa.02.0.i84168, 1           ; 2 uses
+  %i.ay = add nuw i64 %.sroa.02.0.i84168, 1       ; 2 uses
   %exitcond.not.not.i = icmp eq i64 %i.ay, %.val79
   br i1 %exitcond.not.not.i, label %.loopexit, label %.lr.ph169
 
@@ -6714,7 +6713,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond.not.not.i93170, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
 bb.ai:                                            ; preds = %.lr.ph172
-  %i.cq = add i64 %.sroa.02.0.i92171, 1           ; 2 uses
+  %i.cq = add nuw i64 %.sroa.02.0.i92171, 1       ; 2 uses
   %exitcond.not.not.i93 = icmp eq i64 %i.cq, %.val
   br i1 %exitcond.not.not.i93, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
@@ -7090,7 +7089,7 @@ bb.x:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i167, label %.loopexit, label %.lr.ph169
 
 bb.y:                                             ; preds = %.lr.ph169
-  %i.ay = add i64 %.sroa.02.0.i84168, 1           ; 2 uses
+  %i.ay = add nuw i64 %.sroa.02.0.i84168, 1       ; 2 uses
   %exitcond.not.not.i = icmp eq i64 %i.ay, %.val79
   br i1 %exitcond.not.not.i, label %.loopexit, label %.lr.ph169
 
@@ -7238,7 +7237,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond.not.not.i93170, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
 bb.ai:                                            ; preds = %.lr.ph172
-  %i.cq = add i64 %.sroa.02.0.i92171, 1           ; 2 uses
+  %i.cq = add nuw i64 %.sroa.02.0.i92171, 1       ; 2 uses
   %exitcond.not.not.i93 = icmp eq i64 %i.cq, %.val
   br i1 %exitcond.not.not.i93, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
@@ -7614,7 +7613,7 @@ bb.x:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i167, label %.loopexit, label %.lr.ph169
 
 bb.y:                                             ; preds = %.lr.ph169
-  %i.ay = add i64 %.sroa.02.0.i84168, 1           ; 2 uses
+  %i.ay = add nuw i64 %.sroa.02.0.i84168, 1       ; 2 uses
   %exitcond.not.not.i = icmp eq i64 %i.ay, %.val79
   br i1 %exitcond.not.not.i, label %.loopexit, label %.lr.ph169
 
@@ -7762,7 +7761,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond.not.not.i93170, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
 bb.ai:                                            ; preds = %.lr.ph172
-  %i.cq = add i64 %.sroa.02.0.i92171, 1           ; 2 uses
+  %i.cq = add nuw i64 %.sroa.02.0.i92171, 1       ; 2 uses
   %exitcond.not.not.i93 = icmp eq i64 %i.cq, %.val
   br i1 %exitcond.not.not.i93, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
@@ -8138,7 +8137,7 @@ bb.x:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i167, label %.loopexit, label %.lr.ph169
 
 bb.y:                                             ; preds = %.lr.ph169
-  %i.ay = add i64 %.sroa.02.0.i84168, 1           ; 2 uses
+  %i.ay = add nuw i64 %.sroa.02.0.i84168, 1       ; 2 uses
   %exitcond.not.not.i = icmp eq i64 %i.ay, %.val79
   br i1 %exitcond.not.not.i, label %.loopexit, label %.lr.ph169
 
@@ -8286,7 +8285,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond.not.not.i93170, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
 bb.ai:                                            ; preds = %.lr.ph172
-  %i.cq = add i64 %.sroa.02.0.i92171, 1           ; 2 uses
+  %i.cq = add nuw i64 %.sroa.02.0.i92171, 1       ; 2 uses
   %exitcond.not.not.i93 = icmp eq i64 %i.cq, %.val
   br i1 %exitcond.not.not.i93, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
@@ -8662,7 +8661,7 @@ bb.x:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i167, label %.loopexit, label %.lr.ph169
 
 bb.y:                                             ; preds = %.lr.ph169
-  %i.ay = add i64 %.sroa.02.0.i84168, 1           ; 2 uses
+  %i.ay = add nuw i64 %.sroa.02.0.i84168, 1       ; 2 uses
   %exitcond.not.not.i = icmp eq i64 %i.ay, %.val79
   br i1 %exitcond.not.not.i, label %.loopexit, label %.lr.ph169
 
@@ -8810,7 +8809,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond.not.not.i93170, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
 bb.ai:                                            ; preds = %.lr.ph172
-  %i.cq = add i64 %.sroa.02.0.i92171, 1           ; 2 uses
+  %i.cq = add nuw i64 %.sroa.02.0.i92171, 1       ; 2 uses
   %exitcond.not.not.i93 = icmp eq i64 %i.cq, %.val
   br i1 %exitcond.not.not.i93, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
@@ -9186,7 +9185,7 @@ bb.x:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i167, label %.loopexit, label %.lr.ph169
 
 bb.y:                                             ; preds = %.lr.ph169
-  %i.ay = add i64 %.sroa.02.0.i84168, 1           ; 2 uses
+  %i.ay = add nuw i64 %.sroa.02.0.i84168, 1       ; 2 uses
   %exitcond.not.not.i = icmp eq i64 %i.ay, %.val79
   br i1 %exitcond.not.not.i, label %.loopexit, label %.lr.ph169
 
@@ -9334,7 +9333,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond.not.not.i93170, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
 bb.ai:                                            ; preds = %.lr.ph172
-  %i.cq = add i64 %.sroa.02.0.i92171, 1           ; 2 uses
+  %i.cq = add nuw i64 %.sroa.02.0.i92171, 1       ; 2 uses
   %exitcond.not.not.i93 = icmp eq i64 %i.cq, %.val
   br i1 %exitcond.not.not.i93, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
@@ -9710,7 +9709,7 @@ bb.x:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i167, label %.loopexit, label %.lr.ph169
 
 bb.y:                                             ; preds = %.lr.ph169
-  %i.ay = add i64 %.sroa.02.0.i84168, 1           ; 2 uses
+  %i.ay = add nuw i64 %.sroa.02.0.i84168, 1       ; 2 uses
   %exitcond.not.not.i = icmp eq i64 %i.ay, %.val79
   br i1 %exitcond.not.not.i, label %.loopexit, label %.lr.ph169
 
@@ -9858,7 +9857,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond.not.not.i93170, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
 bb.ai:                                            ; preds = %.lr.ph172
-  %i.cq = add i64 %.sroa.02.0.i92171, 1           ; 2 uses
+  %i.cq = add nuw i64 %.sroa.02.0.i92171, 1       ; 2 uses
   %exitcond.not.not.i93 = icmp eq i64 %i.cq, %.val
   br i1 %exitcond.not.not.i93, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
@@ -10234,7 +10233,7 @@ bb.x:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i167, label %.loopexit, label %.lr.ph169
 
 bb.y:                                             ; preds = %.lr.ph169
-  %i.ay = add i64 %.sroa.02.0.i84168, 1           ; 2 uses
+  %i.ay = add nuw i64 %.sroa.02.0.i84168, 1       ; 2 uses
   %exitcond.not.not.i = icmp eq i64 %i.ay, %.val79
   br i1 %exitcond.not.not.i, label %.loopexit, label %.lr.ph169
 
@@ -10382,7 +10381,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond.not.not.i93170, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
 bb.ai:                                            ; preds = %.lr.ph172
-  %i.cq = add i64 %.sroa.02.0.i92171, 1           ; 2 uses
+  %i.cq = add nuw i64 %.sroa.02.0.i92171, 1       ; 2 uses
   %exitcond.not.not.i93 = icmp eq i64 %i.cq, %.val
   br i1 %exitcond.not.not.i93, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
@@ -10758,7 +10757,7 @@ bb.x:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i167, label %.loopexit, label %.lr.ph169
 
 bb.y:                                             ; preds = %.lr.ph169
-  %i.ay = add i64 %.sroa.02.0.i84168, 1           ; 2 uses
+  %i.ay = add nuw i64 %.sroa.02.0.i84168, 1       ; 2 uses
   %exitcond.not.not.i = icmp eq i64 %i.ay, %.val79
   br i1 %exitcond.not.not.i, label %.loopexit, label %.lr.ph169
 
@@ -10906,7 +10905,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond.not.not.i93170, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
 bb.ai:                                            ; preds = %.lr.ph172
-  %i.cq = add i64 %.sroa.02.0.i92171, 1           ; 2 uses
+  %i.cq = add nuw i64 %.sroa.02.0.i92171, 1       ; 2 uses
   %exitcond.not.not.i93 = icmp eq i64 %i.cq, %.val
   br i1 %exitcond.not.not.i93, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit95, label %.lr.ph172
 
@@ -11281,7 +11280,7 @@ bb.x:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i179, label %.loopexit, label %.lr.ph181
 
 bb.y:                                             ; preds = %.lr.ph181
-  %i.ax = add i64 %.sroa.02.0.i85180, 1           ; 2 uses
+  %i.ax = add nuw i64 %.sroa.02.0.i85180, 1       ; 2 uses
   %exitcond.not.not.i = icmp eq i64 %i.ax, %.val79
   br i1 %exitcond.not.not.i, label %.loopexit, label %.lr.ph181
 
@@ -11429,7 +11428,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond.not.not.i94182, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit96, label %.lr.ph184
 
 bb.ai:                                            ; preds = %.lr.ph184
-  %i.cp = add i64 %.sroa.02.0.i93183, 1           ; 2 uses
+  %i.cp = add nuw i64 %.sroa.02.0.i93183, 1       ; 2 uses
   %exitcond.not.not.i94 = icmp eq i64 %i.cp, %.val
   br i1 %exitcond.not.not.i94, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit96, label %.lr.ph184
 
@@ -11807,7 +11806,7 @@ bb.x:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i182, label %.loopexit, label %.lr.ph184
 
 bb.y:                                             ; preds = %.lr.ph184
-  %i.bb = add i64 %.sroa.02.0.i85183, 1           ; 2 uses
+  %i.bb = add nuw i64 %.sroa.02.0.i85183, 1       ; 2 uses
   %exitcond.not.not.i = icmp eq i64 %i.bb, %.val79
   br i1 %exitcond.not.not.i, label %.loopexit, label %.lr.ph184
 
@@ -11955,7 +11954,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond.not.not.i94185, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit96, label %.lr.ph187
 
 bb.ai:                                            ; preds = %.lr.ph187
-  %i.ct = add i64 %.sroa.02.0.i93186, 1           ; 2 uses
+  %i.ct = add nuw i64 %.sroa.02.0.i93186, 1       ; 2 uses
   %exitcond.not.not.i94 = icmp eq i64 %i.ct, %.val
   br i1 %exitcond.not.not.i94, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit96, label %.lr.ph187
 
@@ -12358,7 +12357,7 @@ bb.x:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i182, label %.loopexit, label %.lr.ph184
 
 bb.y:                                             ; preds = %.lr.ph184
-  %i.bb = add i64 %.sroa.02.0.i85183, 1           ; 2 uses
+  %i.bb = add nuw i64 %.sroa.02.0.i85183, 1       ; 2 uses
   %exitcond.not.not.i = icmp eq i64 %i.bb, %.val79
   br i1 %exitcond.not.not.i, label %.loopexit, label %.lr.ph184
 
@@ -12506,7 +12505,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond.not.not.i94185, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit96, label %.lr.ph187
 
 bb.ai:                                            ; preds = %.lr.ph187
-  %i.ct = add i64 %.sroa.02.0.i93186, 1           ; 2 uses
+  %i.ct = add nuw i64 %.sroa.02.0.i93186, 1       ; 2 uses
   %exitcond.not.not.i94 = icmp eq i64 %i.ct, %.val
   br i1 %exitcond.not.not.i94, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit96, label %.lr.ph187
 
@@ -12909,7 +12908,7 @@ bb.x:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i182, label %.loopexit, label %.lr.ph184
 
 bb.y:                                             ; preds = %.lr.ph184
-  %i.bb = add i64 %.sroa.02.0.i85183, 1           ; 2 uses
+  %i.bb = add nuw i64 %.sroa.02.0.i85183, 1       ; 2 uses
   %exitcond.not.not.i = icmp eq i64 %i.bb, %.val79
   br i1 %exitcond.not.not.i, label %.loopexit, label %.lr.ph184
 
@@ -13057,7 +13056,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond.not.not.i94185, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit96, label %.lr.ph187
 
 bb.ai:                                            ; preds = %.lr.ph187
-  %i.ct = add i64 %.sroa.02.0.i93186, 1           ; 2 uses
+  %i.ct = add nuw i64 %.sroa.02.0.i93186, 1       ; 2 uses
   %exitcond.not.not.i94 = icmp eq i64 %i.ct, %.val
   br i1 %exitcond.not.not.i94, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit96, label %.lr.ph187
 
@@ -13460,7 +13459,7 @@ bb.x:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br i1 %exitcond.not.not.i182, label %.loopexit, label %.lr.ph184
 
 bb.y:                                             ; preds = %.lr.ph184
-  %i.bb = add i64 %.sroa.02.0.i85183, 1           ; 2 uses
+  %i.bb = add nuw i64 %.sroa.02.0.i85183, 1       ; 2 uses
   %exitcond.not.not.i = icmp eq i64 %i.bb, %.val79
   br i1 %exitcond.not.not.i, label %.loopexit, label %.lr.ph184
 
@@ -13608,7 +13607,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond.not.not.i94185, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit96, label %.lr.ph187
 
 bb.ai:                                            ; preds = %.lr.ph187
-  %i.ct = add i64 %.sroa.02.0.i93186, 1           ; 2 uses
+  %i.ct = add nuw i64 %.sroa.02.0.i93186, 1       ; 2 uses
   %exitcond.not.not.i94 = icmp eq i64 %i.ct, %.val
   br i1 %exitcond.not.not.i94, label %_RINvNtCs8FOSrxU71ur_3ron3ser6indentQNtNtCsbqH9stoieM8_5alloc6string6StringECs914H3uZQmS2_9iox2_node.exit96, label %.lr.ph187
 
@@ -14011,7 +14010,6 @@ bb.g:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   %i.ae = getelementptr inbounds nuw i8, ptr %i.e, i64 192
   %.sroa.04.0.in.i = getelementptr inbounds nuw i8, ptr %i.e, i64 48
   %.sroa.3.0.in.i = getelementptr inbounds nuw i8, ptr %i.e, i64 56
-  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.y, i64 1)
   %exitcond.not.i20 = icmp ult i64 %i.y, 2
   br i1 %exitcond.not.i20, label %.loopexit.loopexit.i, label %.lr.ph
 
@@ -14027,8 +14025,8 @@ bb.g:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br label %_RNvMs0_NtCs8FOSrxU71ur_3ron3serINtB5_10SerializerQNtNtCsbqH9stoieM8_5alloc6string6StringE10end_indentCs914H3uZQmS2_9iox2_node.exit.thread
 
 bb.h:                                             ; preds = %.lr.ph
-  %i.ah = add i64 %.sroa.05.0.i21, 1              ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.ah, %umax.i
+  %i.ah = add nuw i64 %.sroa.05.0.i21, 1          ; 2 uses
+  %exitcond.not.i = icmp eq i64 %i.y, %i.ah
   br i1 %exitcond.not.i, label %.loopexit.loopexit.i, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader.i, %bb.h
@@ -14137,7 +14135,6 @@ bb.g:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   %i.ae = getelementptr inbounds nuw i8, ptr %i.e, i64 192
   %.sroa.04.0.in.i = getelementptr inbounds nuw i8, ptr %i.e, i64 48
   %.sroa.3.0.in.i = getelementptr inbounds nuw i8, ptr %i.e, i64 56
-  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.y, i64 1)
   %exitcond.not.i20 = icmp ult i64 %i.y, 2
   br i1 %exitcond.not.i20, label %.loopexit.loopexit.i, label %.lr.ph
 
@@ -14153,8 +14150,8 @@ bb.g:                                             ; preds = %_RINvMNtCs8Chj7Szqq
   br label %_RNvMs0_NtCs8FOSrxU71ur_3ron3serINtB5_10SerializerQNtNtCsbqH9stoieM8_5alloc6string6StringE10end_indentCs914H3uZQmS2_9iox2_node.exit.thread
 
 bb.h:                                             ; preds = %.lr.ph
-  %i.ah = add i64 %.sroa.05.0.i21, 1              ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.ah, %umax.i
+  %i.ah = add nuw i64 %.sroa.05.0.i21, 1          ; 2 uses
+  %exitcond.not.i = icmp eq i64 %i.y, %i.ah
   br i1 %exitcond.not.i, label %.loopexit.loopexit.i, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader.i, %bb.h

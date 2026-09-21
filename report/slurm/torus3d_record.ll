@@ -202,8 +202,8 @@ bb.j:                                             ; preds = %bb.i
 .thread167.i.i:                                   ; preds = %..critedge.loopexit_crit_edge.us.i.i, %bb.i, %bb.j, %.thread.i.i
   %.0119184.i.i.in = phi i64 [ %indvars.iv88.i, %bb.i ], [ %.pre110.i, %.thread.i.i ], [ %indvars.iv88.i, %bb.j ], [ %indvars.iv.next89.i, %..critedge.loopexit_crit_edge.us.i.i ]
   %.0119184.i.i.in.fr = freeze i64 %.0119184.i.i.in ; 2 uses
-  %.0119184.i.i = trunc i64 %.0119184.i.i.in.fr to i16
-  %i.cu = and i64 %.0119184.i.i.in.fr, 65535      ; 6 uses
+  %.0119184.i.i = trunc i64 %.0119184.i.i.in.fr to i16 ; 3 uses
+  %i.cu = and i64 %.0119184.i.i.in.fr, 65535      ; 4 uses
   %i.cv = icmp samesign ult i64 %indvars.iv97.i, %i.cu
   br i1 %i.cv, label %.thread167.split.us.i.i, label %.thread167.split.i.i
 
@@ -283,8 +283,8 @@ bb.m:                                             ; preds = %bb.l
   br label %.split.us.i.i
 
 .split.us.i.i:                                    ; preds = %.split.us.i.i.loopexit, %.split.us.i.i.loopexit29, %.thread167.split.i.i, %.thread167.split.us.split.us.i.i, %.thread167.split.us.split.preheader.i.i
-  %.us-phi210.i.i = phi i16 [ %spec.select.i.i, %.thread167.split.us.split.us.i.i ], [ %umax243.i.i, %.thread167.split.i.i ], [ %i.aq, %.thread167.split.us.split.preheader.i.i ], [ %i.dq, %.split.us.i.i.loopexit29 ], [ %i.dr, %.split.us.i.i.loopexit ] ; 2 uses
-  %i.ds = zext i16 %.us-phi210.i.i to i64         ; 3 uses
+  %.us-phi210.i.i = phi i16 [ %spec.select.i.i, %.thread167.split.us.split.us.i.i ], [ %umax243.i.i, %.thread167.split.i.i ], [ %i.aq, %.thread167.split.us.split.preheader.i.i ], [ %i.dq, %.split.us.i.i.loopexit29 ], [ %i.dr, %.split.us.i.i.loopexit ] ; 4 uses
+  %i.ds = zext i16 %.us-phi210.i.i to i64
   %i.dt = icmp samesign ult i64 %indvars.iv102.i, %i.ds ; 2 uses
   br i1 %i.dt, label %.preheader176.lr.ph.i.i, label %._crit_edge219.split.i.i
 
@@ -309,12 +309,14 @@ bb.m:                                             ; preds = %bb.l
 
 ._crit_edge217.i.i:                               ; preds = %._crit_edge.i.i
   %indvars.iv.next264.i.i = add nuw nsw i64 %indvars.iv263.i.i, 1 ; 2 uses
-  %exitcond267.not.i.i = icmp eq i64 %indvars.iv.next264.i.i, %i.ds
+  %lftr.wideiv46 = trunc i64 %indvars.iv.next264.i.i to i16
+  %exitcond267.not.i.i = icmp eq i16 %.us-phi210.i.i, %lftr.wideiv46
   br i1 %exitcond267.not.i.i, label %._crit_edge219.split.i.i, label %.preheader176.i.i, !llvm.loop !41
 
 ._crit_edge.i.i:                                  ; preds = %bb.n
   %indvars.iv.next259.i.i = add nuw nsw i64 %indvars.iv258.i.i, 1 ; 2 uses
-  %exitcond262.not.i.i = icmp eq i64 %indvars.iv.next259.i.i, %i.cu
+  %lftr.wideiv44 = trunc i64 %indvars.iv.next259.i.i to i16
+  %exitcond262.not.i.i = icmp eq i16 %lftr.wideiv44, %.0119184.i.i
   br i1 %exitcond262.not.i.i, label %._crit_edge217.i.i, label %.preheader175.i.i, !llvm.loop !42
 
 bb.n:                                             ; preds = %bb.n, %.preheader175.i.i
@@ -381,12 +383,14 @@ bb.p:                                             ; preds = %bb.o, %._crit_edge2
 
 ._crit_edge224.i.i:                               ; preds = %._crit_edge222.i.i
   %indvars.iv.next280.i.i = add nuw nsw i64 %indvars.iv279.i.i, 1 ; 2 uses
-  %exitcond283.not.i.i = icmp eq i64 %indvars.iv.next280.i.i, %i.ds
+  %lftr.wideiv52 = trunc i64 %indvars.iv.next280.i.i to i16
+  %exitcond283.not.i.i = icmp eq i16 %.us-phi210.i.i, %lftr.wideiv52
   br i1 %exitcond283.not.i.i, label %_build_region.exit.i, label %.preheader174.i.i, !llvm.loop !44
 
 ._crit_edge222.i.i:                               ; preds = %bb.q
   %indvars.iv.next275.i.i = add nuw nsw i64 %indvars.iv274.i.i, 1 ; 2 uses
-  %exitcond278.not.i.i = icmp eq i64 %indvars.iv.next275.i.i, %i.cu
+  %lftr.wideiv50 = trunc i64 %indvars.iv.next275.i.i to i16
+  %exitcond278.not.i.i = icmp eq i16 %lftr.wideiv50, %.0119184.i.i
   br i1 %exitcond278.not.i.i, label %._crit_edge224.i.i, label %.preheader.i.i, !llvm.loop !45
 
 bb.q:                                             ; preds = %bb.q, %.preheader.i.i

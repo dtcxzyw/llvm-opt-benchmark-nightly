@@ -205,12 +205,12 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.x = phi ptr [ %i.w, %bb.d ], [ %i.t, %bb.c ] ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 304 ; 4 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 2
-  %i.aa = load i16, ptr %i.z, align 2, !tbaa !95  ; 3 uses
+  %i.aa = load i16, ptr %i.z, align 2, !tbaa !95  ; 2 uses
   %i.ab = icmp ugt i16 %i.aa, 1
   br i1 %i.ab, label %.lr.ph.preheader.i.i.i, label %HashSigAlgoCoverage.exit.i.thread.i
 
 .lr.ph.preheader.i.i.i:                           ; preds = %bb.e
-  %i.ac = zext i16 %i.aa to i64                   ; 2 uses
+  %i.ac = zext i16 %i.aa to i64                   ; 3 uses
   %i.ad = add nsw i64 %i.ac, -2                   ; 2 uses
   %i.ae = lshr i64 %i.ad, 1                       ; 2 uses
   %i.af = add nuw i64 %i.ae, 1                    ; 2 uses
@@ -334,13 +334,13 @@ bb.j:                                             ; preds = %HashSigAlgoCoverage
   br label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.j, %HashSigAlgoCoverage.exit.i.thread.i
-  %storemerge.in.sroa.speculated.i.i = phi i16 [ %i.aa, %bb.j ], [ 26, %HashSigAlgoCoverage.exit.i.thread.i ]
+  %storemerge.in.sroa.speculated.i.i = phi i64 [ %i.ac, %bb.j ], [ 26, %HashSigAlgoCoverage.exit.i.thread.i ]
   br label %.lr.ph.i
 
 bb.k:                                             ; preds = %.lr.ph.i
-  %5 = add i16 %.08.i, 2                          ; 2 uses
-  %6 = or disjoint i16 %5, 1
-  %i.be = icmp ult i16 %6, %storemerge.in.sroa.speculated.i.i
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
+  %5 = or disjoint i64 %indvars.iv.next.i, 1
+  %i.be = icmp samesign ult i64 %5, %storemerge.in.sroa.speculated.i.i
   br i1 %i.be, label %.lr.ph.i, label %InServerCertReqHashSigAlgo.exit.thread, !llvm.loop !401
 
 InServerCertReqHashSigAlgo.exit.thread:           ; preds = %bb.k
@@ -348,9 +348,8 @@ InServerCertReqHashSigAlgo.exit.thread:           ; preds = %bb.k
   br label %.thread147
 
 .lr.ph.i:                                         ; preds = %bb.k, %.lr.ph.preheader.i
-  %.08.i = phi i16 [ %5, %bb.k ], [ 0, %.lr.ph.preheader.i ] ; 2 uses
-  %7 = zext i16 %.08.i to i64
-  %i.bf = getelementptr inbounds nuw i8, ptr %i.b, i64 %7
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.k ] ; 2 uses
+  %i.bf = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv.i
   %i.bg = load i16, ptr %i.bf, align 1
   %i.bh = load i16, ptr %i.r, align 1
   %i.bi = icmp ne i16 %i.bg, %i.bh
@@ -753,6 +752,7 @@ MinHashAlgo.exit:                                 ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 1040
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 604
+  %4 = zext i32 %2 to i64
   %i.s = icmp ult i16 %i.b, 768
   %i.t = icmp eq i16 %i.c, 3
   %i.u = icmp ugt i16 %i.b, 1023
@@ -763,10 +763,9 @@ bb.c:                                             ; preds = %.lr.ph, %SupportedH
   %i.v = phi i8 [ %i.g, %.lr.ph ], [ %i.bn, %SupportedHashSigAlgo.exit.thread ] ; 13 uses
   %i.w = phi i8 [ %.0.i, %.lr.ph ], [ %i.bo, %SupportedHashSigAlgo.exit.thread ] ; 13 uses
   %i.x = phi i8 [ %.sink, %.lr.ph ], [ %i.bp, %SupportedHashSigAlgo.exit.thread ] ; 14 uses
-  %.04389 = phi i32 [ -501, %.lr.ph ], [ %.2.ph, %SupportedHashSigAlgo.exit.thread ] ; 12 uses
-  %.04488 = phi i32 [ 0, %.lr.ph ], [ %5, %SupportedHashSigAlgo.exit.thread ] ; 2 uses
-  %4 = zext i32 %.04488 to i64
-  %i.y = getelementptr inbounds nuw i8, ptr %1, i64 %4 ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %SupportedHashSigAlgo.exit.thread ] ; 2 uses
+  %.04488 = phi i32 [ -501, %.lr.ph ], [ %.2.ph, %SupportedHashSigAlgo.exit.thread ] ; 12 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv ; 3 uses
   %i.z = load i8, ptr %i.y, align 1, !tbaa !52    ; 2 uses
   %cond.i = icmp eq i8 %i.z, 8
   %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 1
@@ -880,7 +879,7 @@ bb.l:                                             ; preds = %SupportedHashSigAlg
   br i1 %switch, label %bb.m, label %SupportedHashSigAlgo.exit.thread
 
 bb.m:                                             ; preds = %bb.l
-  %i.bg = icmp eq i32 %.04389, 0
+  %i.bg = icmp eq i32 %.04488, 0
   %i.bh = icmp ugt i8 %.069, %i.w
   %or.cond = select i1 %i.bg, i1 %i.bh, i1 false
   br i1 %or.cond, label %SupportedHashSigAlgo.exit.thread, label %bb.n
@@ -921,10 +920,10 @@ SupportedHashSigAlgo.exit.thread:                 ; preds = %bb.j, %bb.k, %bb.m,
   %i.bn = phi i8 [ %i.v, %.preheader.i ], [ %i.g, %bb.p ], [ %i.bm, %IsAtLeastTLSv1_2.exit.thread ], [ %i.v, %bb.m ], [ %i.v, %bb.l ], [ %i.v, %MatchSigAlgo.exit ], [ %i.v, %switch.lookup ], [ %i.v, %DecodeSigAlg.exit ], [ %i.v, %.thread.i ], [ %i.v, %bb.k ], [ %i.v, %bb.i ], [ %i.v, %.split ], [ %i.v, %bb.j ]
   %i.bo = phi i8 [ %i.w, %.preheader.i ], [ %i.w, %bb.p ], [ %.069, %IsAtLeastTLSv1_2.exit.thread ], [ %i.w, %bb.m ], [ %i.w, %bb.l ], [ %i.w, %MatchSigAlgo.exit ], [ %i.w, %switch.lookup ], [ %i.w, %DecodeSigAlg.exit ], [ %i.w, %.thread.i ], [ %i.w, %bb.k ], [ %i.w, %bb.i ], [ %i.w, %.split ], [ %i.w, %bb.j ]
   %i.bp = phi i8 [ %i.x, %.preheader.i ], [ %i.x, %bb.p ], [ %.068, %IsAtLeastTLSv1_2.exit.thread ], [ %i.x, %bb.m ], [ %i.x, %bb.l ], [ %i.x, %MatchSigAlgo.exit ], [ %i.x, %switch.lookup ], [ %i.x, %DecodeSigAlg.exit ], [ %i.x, %.thread.i ], [ %i.x, %bb.k ], [ %i.x, %bb.i ], [ %i.x, %.split ], [ %i.x, %bb.j ]
-  %.2.ph = phi i32 [ %.04389, %.preheader.i ], [ %.04389, %bb.p ], [ 0, %IsAtLeastTLSv1_2.exit.thread ], [ 0, %bb.m ], [ %.04389, %bb.l ], [ %.04389, %MatchSigAlgo.exit ], [ %.04389, %switch.lookup ], [ %.04389, %DecodeSigAlg.exit ], [ %.04389, %.thread.i ], [ %.04389, %bb.k ], [ %.04389, %bb.i ], [ %.04389, %.split ], [ %.04389, %bb.j ] ; 2 uses
-  %5 = add i32 %.04488, 2                         ; 2 uses
-  %6 = or disjoint i32 %5, 1
-  %i.bq = icmp ult i32 %6, %2
+  %.2.ph = phi i32 [ %.04488, %.preheader.i ], [ %.04488, %bb.p ], [ 0, %IsAtLeastTLSv1_2.exit.thread ], [ 0, %bb.m ], [ %.04488, %bb.l ], [ %.04488, %MatchSigAlgo.exit ], [ %.04488, %switch.lookup ], [ %.04488, %DecodeSigAlg.exit ], [ %.04488, %.thread.i ], [ %.04488, %bb.k ], [ %.04488, %bb.i ], [ %.04488, %.split ], [ %.04488, %bb.j ] ; 2 uses
+  %indvars.iv.next = add nuw i64 %indvars.iv, 2   ; 2 uses
+  %5 = or disjoint i64 %indvars.iv.next, 1
+  %i.bq = icmp ult i64 %5, %4
   br i1 %i.bq, label %bb.c, label %.loopexit, !llvm.loop !484
 
 .loopexit.fold.split:                             ; preds = %MinHashAlgo.exit

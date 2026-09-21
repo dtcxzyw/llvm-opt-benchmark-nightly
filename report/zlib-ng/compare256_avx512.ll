@@ -202,7 +202,7 @@ bb.aa:                                            ; preds = %bb.z
   br label %compare256_avx512_static.exit
 
 compare256_avx512_static.exit:                    ; preds = %bb.s, %bb.u, %bb.w, %bb.y, %bb.z, %bb.aa
-  %.0.i = phi i32 [ %i.dm, %bb.s ], [ %i.dv, %bb.u ], [ %i.ee, %bb.w ], [ %i.en, %bb.y ], [ %i.ew, %bb.aa ], [ 256, %bb.z ] ; 7 uses
+  %.0.i = phi i32 [ %i.dm, %bb.s ], [ %i.dv, %bb.u ], [ %i.ee, %bb.w ], [ %i.en, %bb.y ], [ %i.ew, %bb.aa ], [ 256, %bb.z ] ; 6 uses
   %i.ex = add nuw nsw i32 %.0.i, 2                ; 10 uses
   %i.ey = icmp ugt i32 %i.ex, %.0188409
   br i1 %i.ey, label %bb.ab, label %bb.an
@@ -220,14 +220,12 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %.not261, label %bb.ad, label %.thread323
 
 bb.ad:                                            ; preds = %bb.ac
-  %2 = add nuw nsw i32 %.0.i, 1
   %i.fc = zext nneg i32 %i.ex to i64
   %i.fd = icmp samesign ugt i32 %.0.i, 1          ; 2 uses
-  %3 = add nsw i32 %.0.i, -1                      ; 2 uses
   %i.fe = icmp samesign ugt i32 %.0.i, 5
-  %4 = add nsw i32 %.0.i, -5
-  %spec.select268 = select i1 %i.fe, i32 %4, i32 %3
-  %.1187 = select i1 %i.fd, i32 %spec.select268, i32 %2
+  %spec.select268.v = select i1 %i.fe, i32 -5, i32 -1
+  %spec.select268 = select i1 %i.fd, i32 %spec.select268.v, i32 1
+  %.1187 = add nsw i32 %.0.i, %spec.select268
   %i.ff = zext i32 %.1187 to i64                  ; 3 uses
   %i.fg = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.ff
   %.val = load i64, ptr %i.fg, align 1, !tbaa !8  ; 3 uses
@@ -250,7 +248,7 @@ bb.af:                                            ; preds = %bb.ae, %bb.ai
   %.0399 = phi i32 [ 0, %bb.ae ], [ %i.fv, %bb.ai ] ; 4 uses
   %.0177398 = phi i16 [ %i.fk, %bb.ae ], [ %.1, %bb.ai ] ; 2 uses
   %.4397 = phi i16 [ 0, %bb.ae ], [ %.5, %bb.ai ]
-  %i.fm = add i32 %.0399, %i.fl
+  %i.fm = add nuw i32 %.0399, %i.fl
   %i.fn = and i32 %i.fm, %i.d
   %i.fo = zext i32 %i.fn to i64
   %i.fp = getelementptr inbounds nuw [2 x i8], ptr %i.j, i64 %i.fo
@@ -260,7 +258,7 @@ bb.af:                                            ; preds = %bb.ae, %bb.ai
 
 bb.ag:                                            ; preds = %bb.af
   %i.fs = zext i16 %i.fq to i32
-  %i.ft = add i32 %.0399, %i.bv
+  %i.ft = add nuw i32 %.0399, %i.bv
   %.not264 = icmp ult i32 %i.ft, %i.fs
   br i1 %.not264, label %bb.ah, label %.thread.thread349
 
@@ -271,9 +269,9 @@ bb.ah:                                            ; preds = %bb.ag
 bb.ai:                                            ; preds = %bb.af, %bb.ah
   %.5 = phi i16 [ %i.fu, %bb.ah ], [ %.4397, %bb.af ] ; 2 uses
   %.1 = phi i16 [ %i.fq, %bb.ah ], [ %.0177398, %bb.af ] ; 3 uses
-  %i.fv = add i32 %.0399, 1                       ; 2 uses
-  %.not262 = icmp ugt i32 %i.fv, %3
-  br i1 %.not262, label %bb.aj, label %bb.af, !llvm.loop !37
+  %i.fv = add nuw i32 %.0399, 1                   ; 2 uses
+  %exitcond.not = icmp eq i32 %i.fv, %.0.i
+  br i1 %exitcond.not, label %bb.aj, label %bb.af, !llvm.loop !37
 
 bb.aj:                                            ; preds = %bb.ai
   %i.fw = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.fc ; 3 uses

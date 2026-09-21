@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.b, %bb.m
   %.sroa.0.2113 = phi i64 [ %i.v, %.preheader175 ], [ %i.g, %.preheader175.preheader ] ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.0.2113
   %i.u = load i8, ptr %i.t, align 1, !alias.scope !99, !noalias !100, !noundef !6 ; 2 uses
-  %i.v = add i64 %.sroa.0.2113, 1                 ; 3 uses
+  %i.v = add nuw i64 %.sroa.0.2113, 1             ; 3 uses
   %i.w = zext i8 %i.u to i64
   %i.x = add i64 %.sroa.0.0.i114, %i.w            ; 2 uses
   %i.y = icmp eq i8 %i.u, -1
@@ -304,7 +304,7 @@ _RNvNtNtCs6f1wo00zwKs_8lz4_flex5block15decompress_safe17read_match_offset.exit: 
   %.sroa.0.6117 = phi i64 [ %i.as, %.preheader ], [ %i.ai, %.preheader.preheader ] ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.0.6117
   %i.ar = load i8, ptr %i.aq, align 1, !alias.scope !103, !noalias !104, !noundef !6 ; 2 uses
-  %i.as = add i64 %.sroa.0.6117, 1                ; 3 uses
+  %i.as = add nuw i64 %.sroa.0.6117, 1            ; 3 uses
   %i.at = zext i8 %i.ar to i64
   %i.au = add i64 %.sroa.0.0.i172118, %i.at       ; 2 uses
   %i.av = icmp eq i8 %i.ar, -1
@@ -403,7 +403,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.bo = add i64 %.val163, %index                ; 2 uses
+  %i.bo = add nuw i64 %.val163, %index            ; 2 uses
   %i.bp = sub nuw i64 %i.bo, %i.an
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.bp ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 16
@@ -433,7 +433,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index123 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next125, %vec.epilog.vector.body ] ; 2 uses
-  %i.bw = add i64 %.val163, %index123             ; 2 uses
+  %i.bw = add nuw i64 %.val163, %index123         ; 2 uses
   %i.bx = sub nuw i64 %i.bw, %i.an
   %i.by = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.bx
   %wide.load124 = load <8 x i8>, ptr %i.by, align 1, !noalias !112
@@ -461,7 +461,7 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
 vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph.prol
   %.sroa.01.010.i.i.prol = phi i64 [ %i.cg, %vec.epilog.scalar.ph.prol ], [ %.sroa.01.010.i.i.ph, %vec.epilog.scalar.ph.preheader ] ; 3 uses
   %prol.iter = phi i64 [ %prol.iter.next, %vec.epilog.scalar.ph.prol ], [ 0, %vec.epilog.scalar.ph.preheader ]
-  %i.cg = add i64 %.sroa.01.010.i.i.prol, 1       ; 2 uses
+  %i.cg = add nuw i64 %.sroa.01.010.i.i.prol, 1   ; 2 uses
   %i.ch = sub nuw i64 %.sroa.01.010.i.i.prol, %i.an
   %i.ci = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.ch
   %i.cj = load i8, ptr %i.ci, align 1, !noalias !112, !noundef !6
@@ -478,25 +478,25 @@ vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.p
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph
   %.sroa.01.010.i.i = phi i64 [ %i.db, %vec.epilog.scalar.ph ], [ %.sroa.01.010.i.i.unr, %vec.epilog.scalar.ph.prol.loopexit ] ; 6 uses
-  %i.cm = add i64 %.sroa.01.010.i.i, 1            ; 2 uses
+  %i.cm = add nuw i64 %.sroa.01.010.i.i, 1        ; 2 uses
   %i.cn = sub nuw i64 %.sroa.01.010.i.i, %i.an
   %i.co = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.cn
   %i.cp = load i8, ptr %i.co, align 1, !noalias !112, !noundef !6
   %i.cq = getelementptr inbounds nuw i8, ptr %i.bl, i64 %.sroa.01.010.i.i
   store i8 %i.cp, ptr %i.cq, align 1, !noalias !112
-  %i.cr = add i64 %.sroa.01.010.i.i, 2            ; 2 uses
+  %i.cr = add nuw i64 %.sroa.01.010.i.i, 2        ; 2 uses
   %i.cs = sub nuw i64 %i.cm, %i.an
   %i.ct = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.cs
   %i.cu = load i8, ptr %i.ct, align 1, !noalias !112, !noundef !6
   %i.cv = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.cm
   store i8 %i.cu, ptr %i.cv, align 1, !noalias !112
-  %i.cw = add i64 %.sroa.01.010.i.i, 3            ; 2 uses
+  %i.cw = add nuw i64 %.sroa.01.010.i.i, 3        ; 2 uses
   %i.cx = sub nuw i64 %i.cr, %i.an
   %i.cy = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.cx
   %i.cz = load i8, ptr %i.cy, align 1, !noalias !112, !noundef !6
   %i.da = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.cr
   store i8 %i.cz, ptr %i.da, align 1, !noalias !112
-  %i.db = add i64 %.sroa.01.010.i.i, 4            ; 2 uses
+  %i.db = add nuw i64 %.sroa.01.010.i.i, 4        ; 2 uses
   %i.dc = sub nuw i64 %i.cw, %i.an
   %i.dd = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.dc
   %i.de = load i8, ptr %i.dd, align 1, !noalias !112, !noundef !6
@@ -685,7 +685,7 @@ vector.ph131:                                     ; preds = %.lr.ph.i
 
 vector.body133:                                   ; preds = %vector.body133, %vector.ph131
   %index134 = phi i64 [ 0, %vector.ph131 ], [ %index.next136, %vector.body133 ] ; 2 uses
-  %i.fs = add i64 %i.er, %index134                ; 2 uses
+  %i.fs = add nuw i64 %i.er, %index134            ; 2 uses
   %i.ft = sub nuw i64 %i.fs, %i.eu
   %i.fu = getelementptr inbounds nuw i8, ptr %i.en, i64 %i.ft
   %wide.load135 = load <16 x i8>, ptr %i.fu, align 1, !noalias !128
@@ -701,7 +701,7 @@ scalar.ph.preheader:                              ; preds = %vector.body133, %.l
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %bb.at
   %.sroa.01.010.i = phi i64 [ %i.fx, %bb.at ], [ %.sroa.01.010.i.ph, %scalar.ph.preheader ] ; 4 uses
-  %i.fx = add i64 %.sroa.01.010.i, 1              ; 2 uses
+  %i.fx = add nuw i64 %.sroa.01.010.i, 1          ; 2 uses
   %i.fy = sub nuw i64 %.sroa.01.010.i, %i.eu      ; 3 uses
   %i.fz = icmp ult i64 %i.fy, %.val156
   br i1 %i.fz, label %bb.ar, label %bb.as
@@ -820,7 +820,7 @@ bb.f:                                             ; preds = %bb.b, %bb.n
   %.sroa.0.5831 = phi i64 [ %i.v, %.preheader476 ], [ %i.g, %.preheader476.preheader ] ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.0.5831
   %i.u = load i8, ptr %i.t, align 1, !alias.scope !186, !noalias !187, !noundef !6 ; 2 uses
-  %i.v = add i64 %.sroa.0.5831, 1                 ; 3 uses
+  %i.v = add nuw i64 %.sroa.0.5831, 1             ; 3 uses
   %i.w = zext i8 %i.u to i64
   %i.x = add i64 %.sroa.0.0.i832, %i.w            ; 2 uses
   %i.y = icmp eq i8 %i.u, -1
@@ -921,7 +921,7 @@ _RNvNtNtCs6f1wo00zwKs_8lz4_flex5block15decompress_safe17read_match_offset.exit: 
   %.sroa.0.8835 = phi i64 [ %i.as, %.preheader ], [ %i.ai, %.preheader.preheader ] ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.0.8835
   %i.ar = load i8, ptr %i.aq, align 1, !alias.scope !190, !noalias !191, !noundef !6 ; 2 uses
-  %i.as = add i64 %.sroa.0.8835, 1                ; 3 uses
+  %i.as = add nuw i64 %.sroa.0.8835, 1            ; 3 uses
   %i.at = zext i8 %i.ar to i64
   %i.au = add i64 %.sroa.0.0.i230836, %i.at       ; 2 uses
   %i.av = icmp eq i8 %i.ar, -1
@@ -1054,7 +1054,7 @@ vector.ph:                                        ; preds = %.lr.ph.i.i
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.ch = add i64 %.val.i236, %index              ; 2 uses
+  %i.ch = add nuw i64 %.val.i236, %index          ; 2 uses
   %i.ci = sub nuw i64 %i.ch, %i.an
   %i.cj = getelementptr inbounds nuw i8, ptr %i.bt, i64 %i.ci
   %wide.load = load <16 x i8>, ptr %i.cj, align 1, !noalias !200
@@ -1070,7 +1070,7 @@ scalar.ph.preheader:                              ; preds = %vector.body, %.lr.p
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %bb.ah
   %.sroa.01.010.i.i = phi i64 [ %i.cm, %bb.ah ], [ %.sroa.01.010.i.i.ph, %scalar.ph.preheader ] ; 4 uses
-  %i.cm = add i64 %.sroa.01.010.i.i, 1            ; 2 uses
+  %i.cm = add nuw i64 %.sroa.01.010.i.i, 1        ; 2 uses
   %i.cn = sub nuw i64 %.sroa.01.010.i.i, %i.an    ; 3 uses
   %i.co = icmp ult i64 %i.cn, %i.bs
   br i1 %i.co, label %bb.af, label %bb.ag
@@ -1329,7 +1329,7 @@ vector.ph842:                                     ; preds = %.lr.ph.i
 
 vector.body844:                                   ; preds = %vector.body844, %vector.ph842
   %index845 = phi i64 [ 0, %vector.ph842 ], [ %index.next847, %vector.body844 ] ; 2 uses
-  %i.fn = add i64 %.val217, %index845             ; 2 uses
+  %i.fn = add nuw i64 %.val217, %index845         ; 2 uses
   %i.fo = sub nuw i64 %i.fn, %i.ek
   %i.fp = getelementptr inbounds nuw i8, ptr %i.ez, i64 %i.fo
   %wide.load846 = load <16 x i8>, ptr %i.fp, align 1, !noalias !217
@@ -1345,7 +1345,7 @@ scalar.ph840.preheader:                           ; preds = %vector.body844, %.l
 
 scalar.ph840:                                     ; preds = %scalar.ph840.preheader, %bb.bi
   %.sroa.01.010.i = phi i64 [ %i.fs, %bb.bi ], [ %.sroa.01.010.i.ph, %scalar.ph840.preheader ] ; 4 uses
-  %i.fs = add i64 %.sroa.01.010.i, 1              ; 2 uses
+  %i.fs = add nuw i64 %.sroa.01.010.i, 1          ; 2 uses
   %i.ft = sub nuw i64 %.sroa.01.010.i, %i.ek      ; 3 uses
   %i.fu = icmp ult i64 %i.ft, %i.ey
   br i1 %i.fu, label %bb.bg, label %bb.bh
@@ -1474,13 +1474,11 @@ bb.i:                                             ; preds = %bb.g, %_RNvYNtNtNtC
   %.promoted = phi i64 [ %i.y, %.backedge ], [ %i.u, %.lr.ph.preheader ] ; 8 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !263)
   call void @llvm.experimental.noalias.scope.decl(metadata !264)
-  %8 = add i64 %.promoted, 8                      ; 2 uses
-  %9 = icmp ugt i64 %.promoted, -9
-  %.not.i.i42 = icmp ugt i64 %8, %1
-  %or.cond.i.i = or i1 %9, %.not.i.i42
-  br i1 %or.cond.i.i, label %bb.j, label %_RNvYNtNtNtCs6f1wo00zwKs_8lz4_flex5block9hashtable11HashTable4KNtB4_9HashTable11get_hash_atCs31YAwBA1AlL_19xet_core_structures.exit44, !prof !9
+  %.not.i.i42 = icmp ugt i64 %.promoted, -9
+  br i1 %.not.i.i42, label %bb.j, label %_RNvYNtNtNtCs6f1wo00zwKs_8lz4_flex5block9hashtable11HashTable4KNtB4_9HashTable11get_hash_atCs31YAwBA1AlL_19xet_core_structures.exit44, !prof !9
 
 bb.j:                                             ; preds = %.lr.ph
+  %8 = add nuw nsw i64 %.promoted, 8
   call void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 noundef %.promoted, i64 noundef %8, i64 noundef range(i64 0, -9223372036854775808) %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @60) #19, !noalias !265
   unreachable
 
@@ -1880,13 +1878,11 @@ bb.n:                                             ; preds = %bb.l, %_RNvYNtNtNtC
   %.promoted = phi i64 [ %i.ad, %.backedge ], [ %i.z, %.lr.ph.preheader ] ; 9 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !328)
   call void @llvm.experimental.noalias.scope.decl(metadata !329)
-  %8 = add i64 %.promoted, 8                      ; 2 uses
-  %9 = icmp ugt i64 %.promoted, -9
-  %.not.i.i50 = icmp ugt i64 %8, %1
-  %or.cond.i.i = or i1 %9, %.not.i.i50
-  br i1 %or.cond.i.i, label %bb.o, label %_RNvYNtNtNtCs6f1wo00zwKs_8lz4_flex5block9hashtable11HashTable4KNtB4_9HashTable11get_hash_atCs31YAwBA1AlL_19xet_core_structures.exit52, !prof !9
+  %.not.i.i50 = icmp ugt i64 %.promoted, -9
+  br i1 %.not.i.i50, label %bb.o, label %_RNvYNtNtNtCs6f1wo00zwKs_8lz4_flex5block9hashtable11HashTable4KNtB4_9HashTable11get_hash_atCs31YAwBA1AlL_19xet_core_structures.exit52, !prof !9
 
 bb.o:                                             ; preds = %.lr.ph
+  %8 = add nuw nsw i64 %.promoted, 8
   call void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 noundef %.promoted, i64 noundef %8, i64 noundef range(i64 0, -9223372036854775808) %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @60) #19, !noalias !330
   unreachable
 

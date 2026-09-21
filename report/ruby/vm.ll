@@ -205,6 +205,7 @@ bb.k:                                             ; preds = %bb.j
 
 .lr.ph170.i:                                      ; preds = %bb.k
   %i.bp = getelementptr inbounds nuw i8, ptr %6, i64 792
+  %7 = zext nneg i32 %.0130.i to i64
   %wide.trip.count195.i = zext i32 %indvars.iv193.i to i64
   br label %bb.l
 
@@ -227,6 +228,7 @@ bb.k:                                             ; preds = %bb.j
 
 .lr.ph179.i:                                      ; preds = %.preheader.i
   %i.bz = getelementptr inbounds nuw i8, ptr %6, i64 576 ; 2 uses
+  %8 = zext nneg i32 %.0130.i to i64
   %wide.trip.count206.i = zext i32 %indvars.iv193.i to i64
   br label %bb.aa
 
@@ -241,9 +243,7 @@ bb.l:                                             ; preds = %._crit_edge.i, %.lr
   %i.cd = getelementptr i8, ptr %i.cc, i64 240
   %i.ce = load i32, ptr %i.cd, align 8, !tbaa !211 ; 3 uses
   %i.cf = load ptr, ptr %i.bp, align 8, !tbaa !889
-  %7 = trunc nuw nsw i64 %indvars.iv190.i to i32
-  %8 = sub i32 %.0130.i, %7
-  %9 = sext i32 %8 to i64
+  %9 = sub nsw i64 %7, %indvars.iv190.i
   %i.cg = getelementptr [24 x i8], ptr %i.cf, i64 %9 ; 3 uses
   %i.ch = sext i32 %i.ce to i64
   %i.ci = call zeroext i1 @pm_options_scope_init(ptr noundef %i.cg, i64 noundef %i.ch) #23 ; 0 uses
@@ -414,10 +414,8 @@ bb.aa:                                            ; preds = %._crit_edge175.i, %
   br i1 %i.em, label %.lr.ph174.i, label %._crit_edge175.i
 
 .lr.ph174.i:                                      ; preds = %bb.aa
-  %10 = trunc nuw nsw i64 %indvars.iv202.i to i32
-  %11 = sub i32 %.0130.i, %10
-  %12 = sext i32 %11 to i64
-  %i.en = getelementptr [24 x i8], ptr %i.eb, i64 %12
+  %10 = sub nsw i64 %8, %indvars.iv202.i
+  %i.en = getelementptr [24 x i8], ptr %i.eb, i64 %10
   %i.eo = getelementptr i8, ptr %i.en, i64 8
   %wide.trip.count200.i = zext nneg i32 %i.ej to i64
   br label %bb.ab

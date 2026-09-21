@@ -205,7 +205,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6duckdb11LogicalTypeEED2Ev.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #29
-  %i.bv = add nuw i64 %.01254, 1                  ; 2 uses
+  %i.bv = add i64 %.01254, 1                      ; 2 uses
   %exitcond.not = icmp eq i64 %i.bv, %2
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !1150
 
@@ -608,11 +608,10 @@ bb.j:                                             ; preds = %bb.i, %bb.b
   %i.dv = mul i64 %i.du, %.060175.i
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dt, i64 %i.dv ; 6 uses
   %i.dx = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN6duckdb6vectorINS_11FrameBoundsELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.bl, i64 noundef 0)
-  %i.dy = load i64, ptr %i.dx, align 8, !tbaa !710 ; 13 uses
+  %i.dy = load i64, ptr %i.dx, align 8, !tbaa !710 ; 21 uses
   %i.dz = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN6duckdb6vectorINS_11FrameBoundsELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.bl, i64 noundef 0)
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dz, i64 8
   %i.eb = load i64, ptr %i.ea, align 8, !tbaa !711 ; 10 uses
-  %31 = add i64 %i.dy, 1                          ; 9 uses
   %.not.i.i.i = icmp ult i64 %i.dy, %i.eb
   br i1 %.not.i.i.i, label %bb.k, label %"_ZZN6duckdb34WindowDistinctAggregatorLocalState8EvaluateERNS_16ExecutionContextERKNS_35WindowDistinctAggregatorGlobalStateERKNS_9DataChunkERNS_6VectorEmmENK3$_0clEm.exit.i"
 
@@ -670,12 +669,12 @@ _ZSt9__advanceIPKmlEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i.i: ; pred
   %i.fc = lshr i64 %.017.i.i.i.i.i, 1             ; 3 uses
   %i.fd = getelementptr inbounds nuw [8 x i8], ptr %.01116.i.i.i.i.i, i64 %i.fc ; 2 uses
   %i.fe = load i64, ptr %i.fd, align 8, !tbaa !278
-  %32 = icmp ult i64 %i.fe, %31                   ; 2 uses
+  %.not.i.i = icmp ugt i64 %i.fe, %i.dy           ; 2 uses
   %i.ff = getelementptr inbounds nuw i8, ptr %i.fd, i64 8
   %i.fg = xor i64 %i.fc, -1
   %i.fh = add nsw i64 %.017.i.i.i.i.i, %i.fg
-  %.112.i.i.i.i.i = select i1 %32, ptr %i.ff, ptr %.01116.i.i.i.i.i ; 2 uses
-  %.1.i.i.i.i.i = select i1 %32, i64 %i.fh, i64 %i.fc ; 2 uses
+  %.112.i.i.i.i.i = select i1 %.not.i.i, ptr %.01116.i.i.i.i.i, ptr %i.ff ; 2 uses
+  %.1.i.i.i.i.i = select i1 %.not.i.i, i64 %i.fc, i64 %i.fh ; 2 uses
   %i.fi = icmp sgt i64 %.1.i.i.i.i.i, 0
   br i1 %i.fi, label %_ZSt9__advanceIPKmlEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i.i, label %_ZSt11lower_boundIPKmmET_S2_S2_RKT0_.exit.i.i.i, !llvm.loop !43
 
@@ -882,12 +881,12 @@ _ZSt9__advanceIPKmlEvRT_T0_St26random_access_iterator_tag.exit.i.i158.i.i.i: ; p
   %i.ho = lshr i64 %.017.i.i159.i.i.i, 1          ; 3 uses
   %i.hp = getelementptr inbounds nuw [8 x i8], ptr %.01116.i.i160.i.i.i, i64 %i.ho ; 2 uses
   %i.hq = load i64, ptr %i.hp, align 8, !tbaa !278
-  %33 = icmp ult i64 %i.hq, %31                   ; 2 uses
+  %.not90.i.i = icmp ugt i64 %i.hq, %i.dy         ; 2 uses
   %i.hr = getelementptr inbounds nuw i8, ptr %i.hp, i64 8
   %i.hs = xor i64 %i.ho, -1
   %i.ht = add nsw i64 %.017.i.i159.i.i.i, %i.hs
-  %.112.i.i163.i.i.i = select i1 %33, ptr %i.hr, ptr %.01116.i.i160.i.i.i ; 2 uses
-  %.1.i.i164.i.i.i = select i1 %33, i64 %i.ht, i64 %i.ho ; 2 uses
+  %.112.i.i163.i.i.i = select i1 %.not90.i.i, ptr %.01116.i.i160.i.i.i, ptr %i.hr ; 2 uses
+  %.1.i.i164.i.i.i = select i1 %.not90.i.i, i64 %i.ho, i64 %i.ht ; 2 uses
   %i.hu = icmp sgt i64 %.1.i.i164.i.i.i, 0
   br i1 %i.hu, label %_ZSt9__advanceIPKmlEvRT_T0_St26random_access_iterator_tag.exit.i.i158.i.i.i, label %_ZSt11lower_boundIPKmmSt4lessImEET_S4_S4_RKT0_T1_.exit.i.i.i, !llvm.loop !44
 
@@ -1107,12 +1106,12 @@ _ZSt9__advanceIPKmlEvRT_T0_St26random_access_iterator_tag.exit.i.i168.i.i.i: ; p
   %i.kf = lshr i64 %.017.i.i169.i.i.i, 1          ; 3 uses
   %i.kg = getelementptr inbounds nuw [8 x i8], ptr %.01116.i.i170.i.i.i, i64 %i.kf ; 2 uses
   %i.kh = load i64, ptr %i.kg, align 8, !tbaa !278
-  %34 = icmp ult i64 %i.kh, %31                   ; 2 uses
+  %.not91.i.i = icmp ugt i64 %i.kh, %i.dy         ; 2 uses
   %i.ki = getelementptr inbounds nuw i8, ptr %i.kg, i64 8
   %i.kj = xor i64 %i.kf, -1
   %i.kk = add nsw i64 %.017.i.i169.i.i.i, %i.kj
-  %.112.i.i173.i.i.i = select i1 %34, ptr %i.ki, ptr %.01116.i.i170.i.i.i ; 2 uses
-  %.1.i.i174.i.i.i = select i1 %34, i64 %i.kk, i64 %i.kf ; 2 uses
+  %.112.i.i173.i.i.i = select i1 %.not91.i.i, ptr %.01116.i.i170.i.i.i, ptr %i.ki ; 2 uses
+  %.1.i.i174.i.i.i = select i1 %.not91.i.i, i64 %i.kf, i64 %i.kk ; 2 uses
   %i.kl = icmp sgt i64 %.1.i.i174.i.i.i, 0
   br i1 %i.kl, label %_ZSt9__advanceIPKmlEvRT_T0_St26random_access_iterator_tag.exit.i.i168.i.i.i, label %_ZSt11lower_boundIPKmmSt4lessImEET_S4_S4_RKT0_T1_.exit175.i.i.i, !llvm.loop !44
 
@@ -1293,12 +1292,12 @@ _ZSt9__advanceIPKmlEvRT_T0_St26random_access_iterator_tag.exit.i.i194.i.i.i: ; p
   %i.mh = lshr i64 %.017.i.i195.i.i.i, 1          ; 3 uses
   %i.mi = getelementptr inbounds nuw [8 x i8], ptr %.01116.i.i196.i.i.i, i64 %i.mh ; 2 uses
   %i.mj = load i64, ptr %i.mi, align 8, !tbaa !278
-  %35 = icmp ult i64 %i.mj, %31                   ; 2 uses
+  %.not92.i.i = icmp ugt i64 %i.mj, %i.dy         ; 2 uses
   %i.mk = getelementptr inbounds nuw i8, ptr %i.mi, i64 8
   %i.ml = xor i64 %i.mh, -1
   %i.mm = add nsw i64 %.017.i.i195.i.i.i, %i.ml
-  %.112.i.i199.i.i.i = select i1 %35, ptr %i.mk, ptr %.01116.i.i196.i.i.i ; 2 uses
-  %.1.i.i200.i.i.i = select i1 %35, i64 %i.mm, i64 %i.mh ; 2 uses
+  %.112.i.i199.i.i.i = select i1 %.not92.i.i, ptr %.01116.i.i196.i.i.i, ptr %i.mk ; 2 uses
+  %.1.i.i200.i.i.i = select i1 %.not92.i.i, i64 %i.mh, i64 %i.mm ; 2 uses
   %i.mn = icmp sgt i64 %.1.i.i200.i.i.i, 0
   br i1 %i.mn, label %_ZSt9__advanceIPKmlEvRT_T0_St26random_access_iterator_tag.exit.i.i194.i.i.i, label %_ZSt11lower_boundIPKmmSt4lessImEET_S4_S4_RKT0_T1_.exit201.i.i.i, !llvm.loop !44
 
@@ -1518,12 +1517,12 @@ _ZSt9__advanceIPKmlEvRT_T0_St26random_access_iterator_tag.exit.i.i209.i.i.i: ; p
   %i.oy = lshr i64 %.017.i.i210.i.i.i, 1          ; 3 uses
   %i.oz = getelementptr inbounds nuw [8 x i8], ptr %.01116.i.i211.i.i.i, i64 %i.oy ; 2 uses
   %i.pa = load i64, ptr %i.oz, align 8, !tbaa !278
-  %36 = icmp ult i64 %i.pa, %31                   ; 2 uses
+  %.not93.i.i = icmp ugt i64 %i.pa, %i.dy         ; 2 uses
   %i.pb = getelementptr inbounds nuw i8, ptr %i.oz, i64 8
   %i.pc = xor i64 %i.oy, -1
   %i.pd = add nsw i64 %.017.i.i210.i.i.i, %i.pc
-  %.112.i.i214.i.i.i = select i1 %36, ptr %i.pb, ptr %.01116.i.i211.i.i.i ; 2 uses
-  %.1.i.i215.i.i.i = select i1 %36, i64 %i.pd, i64 %i.oy ; 2 uses
+  %.112.i.i214.i.i.i = select i1 %.not93.i.i, ptr %.01116.i.i211.i.i.i, ptr %i.pb ; 2 uses
+  %.1.i.i215.i.i.i = select i1 %.not93.i.i, i64 %i.oy, i64 %i.pd ; 2 uses
   %i.pe = icmp sgt i64 %.1.i.i215.i.i.i, 0
   br i1 %i.pe, label %_ZSt9__advanceIPKmlEvRT_T0_St26random_access_iterator_tag.exit.i.i209.i.i.i, label %_ZSt11lower_boundIPKmmSt4lessImEET_S4_S4_RKT0_T1_.exit216.i.i.i, !llvm.loop !44
 
@@ -1604,12 +1603,12 @@ _ZSt9__advanceIPKmlEvRT_T0_St26random_access_iterator_tag.exit.i.i219.i.i.i: ; p
   %i.qa = lshr i64 %.017.i.i220.i.i.i, 1          ; 3 uses
   %i.qb = getelementptr inbounds nuw [8 x i8], ptr %.01116.i.i221.i.i.i, i64 %i.qa ; 2 uses
   %i.qc = load i64, ptr %i.qb, align 8, !tbaa !278
-  %37 = icmp ult i64 %i.qc, %31                   ; 2 uses
+  %.not94.i.i = icmp ugt i64 %i.qc, %i.dy         ; 2 uses
   %i.qd = getelementptr inbounds nuw i8, ptr %i.qb, i64 8
   %i.qe = xor i64 %i.qa, -1
   %i.qf = add nsw i64 %.017.i.i220.i.i.i, %i.qe
-  %.112.i.i224.i.i.i = select i1 %37, ptr %i.qd, ptr %.01116.i.i221.i.i.i ; 2 uses
-  %.1.i.i225.i.i.i = select i1 %37, i64 %i.qf, i64 %i.qa ; 2 uses
+  %.112.i.i224.i.i.i = select i1 %.not94.i.i, ptr %.01116.i.i221.i.i.i, ptr %i.qd ; 2 uses
+  %.1.i.i225.i.i.i = select i1 %.not94.i.i, i64 %i.qa, i64 %i.qf ; 2 uses
   %i.qg = icmp sgt i64 %.1.i.i225.i.i.i, 0
   br i1 %i.qg, label %_ZSt9__advanceIPKmlEvRT_T0_St26random_access_iterator_tag.exit.i.i219.i.i.i, label %_ZSt11lower_boundIPKmmSt4lessImEET_S4_S4_RKT0_T1_.exit226.i.i.i, !llvm.loop !44
 
@@ -1880,12 +1879,12 @@ _ZSt9__advanceIPKmlEvRT_T0_St26random_access_iterator_tag.exit.i.i234.i.i.i: ; p
   %i.sv = lshr i64 %.017.i.i235.i.i.i, 1          ; 3 uses
   %i.sw = getelementptr inbounds nuw [8 x i8], ptr %.01116.i.i236.i.i.i, i64 %i.sv ; 2 uses
   %i.sx = load i64, ptr %i.sw, align 8, !tbaa !278
-  %38 = icmp ult i64 %i.sx, %31                   ; 2 uses
+  %.not95.i.i = icmp ugt i64 %i.sx, %i.dy         ; 2 uses
   %i.sy = getelementptr inbounds nuw i8, ptr %i.sw, i64 8
   %i.sz = xor i64 %i.sv, -1
   %i.ta = add nsw i64 %.017.i.i235.i.i.i, %i.sz
-  %.112.i.i239.i.i.i = select i1 %38, ptr %i.sy, ptr %.01116.i.i236.i.i.i ; 2 uses
-  %.1.i.i240.i.i.i = select i1 %38, i64 %i.ta, i64 %i.sv ; 2 uses
+  %.112.i.i239.i.i.i = select i1 %.not95.i.i, ptr %.01116.i.i236.i.i.i, ptr %i.sy ; 2 uses
+  %.1.i.i240.i.i.i = select i1 %.not95.i.i, i64 %i.sv, i64 %i.ta ; 2 uses
   %i.tb = icmp sgt i64 %.1.i.i240.i.i.i, 0
   br i1 %i.tb, label %_ZSt9__advanceIPKmlEvRT_T0_St26random_access_iterator_tag.exit.i.i234.i.i.i, label %_ZSt11lower_boundIPKmmSt4lessImEET_S4_S4_RKT0_T1_.exit241.i.i.i, !llvm.loop !44
 
@@ -2160,8 +2159,8 @@ _ZN6duckdb34WindowDistinctAggregatorLocalState11FlushStatesEv.exit.i245.i.i.i: ;
   %.0120548.i.i.i = phi i64 [ %i.wp, %"_ZZZN6duckdb34WindowDistinctAggregatorLocalState8EvaluateERNS_16ExecutionContextERKNS_35WindowDistinctAggregatorGlobalStateERKNS_9DataChunkERNS_6VectorEmmENK3$_0clEmENKUlmmmE_clEmmm.exit251.i.i.i" ], [ %i.dy, %.thread432.i.i.i ] ; 3 uses
   %i.vr = getelementptr inbounds nuw [8 x i8], ptr %i.vp, i64 %.0120548.i.i.i
   %i.vs = load i64, ptr %i.vr, align 8, !tbaa !278
-  %39 = icmp ult i64 %i.vs, %31
-  br i1 %39, label %bb.ca, label %"_ZZZN6duckdb34WindowDistinctAggregatorLocalState8EvaluateERNS_16ExecutionContextERKNS_35WindowDistinctAggregatorGlobalStateERKNS_9DataChunkERNS_6VectorEmmENK3$_0clEmENKUlmmmE_clEmmm.exit251.i.i.i"
+  %.not96.i.i = icmp ugt i64 %i.vs, %i.dy
+  br i1 %.not96.i.i, label %"_ZZZN6duckdb34WindowDistinctAggregatorLocalState8EvaluateERNS_16ExecutionContextERKNS_35WindowDistinctAggregatorGlobalStateERKNS_9DataChunkERNS_6VectorEmmENK3$_0clEmENKUlmmmE_clEmmm.exit251.i.i.i", label %bb.ca
 
 bb.ca:                                            ; preds = %.lr.ph549.i.i.i
   %i.vt = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK6duckdb6vectorImLb1ESaImEEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.cp, i64 noundef 0)
@@ -2219,8 +2218,8 @@ _ZN6duckdb34WindowDistinctAggregatorLocalState11FlushStatesEv.exit.i250.i.i.i: ;
   %.sroa.12.7551.i.i.i = phi i64 [ %i.yd, %"_ZZZN6duckdb34WindowDistinctAggregatorLocalState8EvaluateERNS_16ExecutionContextERKNS_35WindowDistinctAggregatorGlobalStateERKNS_9DataChunkERNS_6VectorEmmENK3$_0clEmENKUlmmmE_clEmmm.exit256.i.i.i" ], [ %.sroa.12.6668.i.i.i, %.preheader.i.i.i ] ; 3 uses
   %i.wq = getelementptr inbounds nuw [8 x i8], ptr %i.vq, i64 %.sroa.12.7551.i.i.i
   %i.wr = load i64, ptr %i.wq, align 8, !tbaa !278
-  %40 = icmp ult i64 %i.wr, %31
-  br i1 %40, label %bb.cd, label %"_ZZZN6duckdb34WindowDistinctAggregatorLocalState8EvaluateERNS_16ExecutionContextERKNS_35WindowDistinctAggregatorGlobalStateERKNS_9DataChunkERNS_6VectorEmmENK3$_0clEmENKUlmmmE_clEmmm.exit256.i.i.i"
+  %.not97.i.i = icmp ugt i64 %i.wr, %i.dy
+  br i1 %.not97.i.i, label %"_ZZZN6duckdb34WindowDistinctAggregatorLocalState8EvaluateERNS_16ExecutionContextERKNS_35WindowDistinctAggregatorGlobalStateERKNS_9DataChunkERNS_6VectorEmmENK3$_0clEmENKUlmmmE_clEmmm.exit256.i.i.i", label %bb.cd
 
 bb.cd:                                            ; preds = %.lr.ph552.i.i.i
   %i.ws = load ptr, ptr %i.cq, align 8, !tbaa !368 ; 2 uses
@@ -2623,7 +2622,7 @@ bb.t:                                             ; preds = %.lr.ph405, %bb.t
   br i1 %.not313, label %._crit_edge406, label %bb.t
 
 bb.u:                                             ; preds = %._crit_edge406
-  %i.ku = add nuw i64 %.8298408, 1                ; 2 uses
+  %i.ku = add i64 %.8298408, 1                    ; 2 uses
   %exitcond452.not = icmp eq i64 %i.ku, %i.kg
   br i1 %exitcond452.not, label %.loopexit, label %.lr.ph405, !llvm.loop !1329
 
@@ -3026,7 +3025,7 @@ bb.t:                                             ; preds = %.lr.ph405, %bb.t
   br i1 %.not313, label %._crit_edge406, label %bb.t
 
 bb.u:                                             ; preds = %._crit_edge406
-  %i.kj = add nuw i64 %.8298408, 1                ; 2 uses
+  %i.kj = add i64 %.8298408, 1                    ; 2 uses
   %exitcond452.not = icmp eq i64 %i.kj, %i.jw
   br i1 %exitcond452.not, label %.loopexit, label %.lr.ph405, !llvm.loop !1342
 
@@ -3429,7 +3428,7 @@ _ZN6duckdb15NumericCastImplImlLb0EE7ConvertEl.exit255.i.i: ; preds = %_ZSt11lowe
   %i.jr = sub i64 %i.jf, %.sroa.12.2434.i.i681
   %i.js = add i64 %i.jr, %.11.i679                ; 2 uses
   %i.jt = add i64 %.sroa.12.2434.i.i681, %i.dw    ; 3 uses
-  %i.ju = add i64 %.sroa.13.1435.i.i680, 1        ; 4 uses
+  %i.ju = add nuw i64 %.sroa.13.1435.i.i680, 1    ; 4 uses
   %i.jv = sub i64 %2, %i.jt
   %.not137.i.i = icmp ult i64 %i.jv, %i.dw
   br i1 %.not137.i.i, label %._crit_edge438.i.i, label %bb.t, !llvm.loop !1414
@@ -3832,7 +3831,7 @@ _ZN6duckdb15NumericCastImplImlLb0EE7ConvertEl.exit255.i.i161: ; preds = %_ZSt11l
   %i.zc = sub i64 %i.yq, %.sroa.12.2434.i.i150685
   %i.zd = add i64 %i.zc, %.11.i148683             ; 2 uses
   %i.ze = add i64 %.sroa.12.2434.i.i150685, %i.tb ; 3 uses
-  %i.zf = add i64 %.sroa.13.1435.i.i149684, 1     ; 4 uses
+  %i.zf = add nuw i64 %.sroa.13.1435.i.i149684, 1 ; 4 uses
   %i.zg = sub i64 %2, %i.ze
   %.not137.i.i162 = icmp ult i64 %i.zg, %i.tb
   br i1 %.not137.i.i162, label %._crit_edge438.i.i163, label %bb.bq, !llvm.loop !1425
@@ -4235,7 +4234,7 @@ _ZN6duckdb15NumericCastImplImlLb0EE7ConvertEl.exit255.i.i: ; preds = %_ZSt11lowe
   %i.js = sub i64 %i.jg, %.sroa.12.2434.i.i682
   %i.jt = add i64 %i.js, %.11.i680                ; 2 uses
   %i.ju = add i64 %.sroa.12.2434.i.i682, %i.dx    ; 3 uses
-  %i.jv = add i64 %.sroa.13.1435.i.i681, 1        ; 4 uses
+  %i.jv = add nuw i64 %.sroa.13.1435.i.i681, 1    ; 4 uses
   %i.jw = sub i64 %2, %i.ju
   %.not137.i.i = icmp ult i64 %i.jw, %i.dx
   br i1 %.not137.i.i, label %._crit_edge438.i.i, label %bb.t, !llvm.loop !1449
@@ -4638,7 +4637,7 @@ _ZN6duckdb15NumericCastImplImlLb0EE7ConvertEl.exit255.i.i161: ; preds = %_ZSt11l
   %i.ze = sub i64 %i.ys, %.sroa.12.2434.i.i150686
   %i.zf = add i64 %i.ze, %.11.i148684             ; 2 uses
   %i.zg = add i64 %.sroa.12.2434.i.i150686, %i.td ; 3 uses
-  %i.zh = add i64 %.sroa.13.1435.i.i149685, 1     ; 4 uses
+  %i.zh = add nuw i64 %.sroa.13.1435.i.i149685, 1 ; 4 uses
   %i.zi = sub i64 %2, %i.zg
   %.not137.i.i162 = icmp ult i64 %i.zi, %i.td
   br i1 %.not137.i.i162, label %._crit_edge438.i.i163, label %bb.bq, !llvm.loop !1460
@@ -5041,7 +5040,7 @@ bb.bn:                                            ; preds = %bb.bl
   br label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bm, %bb.bn, %_ZN6duckdb12WindowCursor8CopyCellEmmRNS_6VectorEm.exit191
-  %i.mc = add i64 %.0154284, 1
+  %i.mc = add nuw i64 %.0154284, 1
   %i.md = add i64 %.1285, 1
   br label %.loopexit
 

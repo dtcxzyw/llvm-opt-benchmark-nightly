@@ -204,8 +204,7 @@ _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN4llvm7jitlink21MachOLinkGr
   %i.ko = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0246.2, i64 %indvars.iv504
   %i.kp = load ptr, ptr %i.ko, align 8, !tbaa !133 ; 6 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv504, 1 ; 3 uses
-  %21 = and i64 %indvars.iv.next, 4294967295
-  %i.kq = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0246.2, i64 %21
+  %i.kq = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0246.2, i64 %indvars.iv.next
   %i.kr = load ptr, ptr %i.kq, align 8, !tbaa !133 ; 8 uses
   %i.ks = getelementptr inbounds nuw i8, ptr %i.kr, i64 40
   %i.kt = getelementptr inbounds nuw i8, ptr %i.kp, i64 40

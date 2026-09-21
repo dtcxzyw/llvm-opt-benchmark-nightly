@@ -205,7 +205,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast12ElseifClaus
 .lr.ph67:                                         ; preds = %bb.a, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast12ElseifClauseEBF_.exit
   %.sroa.0.0.i66 = phi i64 [ %i.f, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast12ElseifClauseEBF_.exit ], [ 0, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [224 x i8], ptr %i.a, i64 %.sroa.0.0.i66 ; 6 uses
-  %i.f = add i64 %.sroa.0.0.i66, 1                ; 4 uses
+  %i.f = add nuw i64 %.sroa.0.0.i66, 1            ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast14JobConjunctionEBF_(ptr noalias nofree noundef nonnull align 8 dereferenceable(160) %i.g)
           to label %bb.c unwind label %bb.b, !inline_history !63
@@ -234,12 +234,12 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_
 .lr.ph:                                           ; preds = %bb.c, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit.i.i
   %.sroa.0.0.i.i65 = phi i64 [ %i.p, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit.i.i ], [ 0, %bb.c ] ; 2 uses
   %i.o = getelementptr inbounds nuw [160 x i8], ptr %i.k, i64 %.sroa.0.0.i.i65
-  %i.p = add i64 %.sroa.0.0.i.i65, 1              ; 4 uses
+  %i.p = add nuw i64 %.sroa.0.0.i.i65, 1          ; 4 uses
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast14JobConjunctionEBF_(ptr noalias nofree noundef nonnull align 8 dereferenceable(160) %i.o)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit.i.i unwind label %bb.d, !noalias !75, !inline_history !68
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit7.i.i: ; preds = %.lr.ph69
-  %i.q = add i64 %.sroa.0.1.i.i68, 1              ; 2 uses
+  %i.q = add nuw i64 %.sroa.0.1.i.i68, 1          ; 2 uses
   %i.r = icmp eq i64 %i.q, %i.m
   br i1 %i.r, label %.body.i, label %.lr.ph69
 
@@ -289,7 +289,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8IfClauseEBF_
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast12ElseifClauseEBF_.exit unwind label %bb.h, !inline_history !71
 
 bb.g:                                             ; preds = %.lr.ph71
-  %i.ab = add i64 %.sroa.0.1.i70, 1               ; 2 uses
+  %i.ab = add nuw i64 %.sroa.0.1.i70, 1           ; 2 uses
   %i.ac = icmp eq i64 %i.ab, %i.c
   br i1 %i.ac, label %.body, label %.lr.ph71
 
@@ -345,7 +345,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast15JobContinua
 .lr.ph:                                           ; preds = %bb.a, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast15JobContinuationEBF_.exit
   %.sroa.0.0.i5 = phi i64 [ %i.f, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast15JobContinuationEBF_.exit ], [ 0, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [96 x i8], ptr %i.a, i64 %.sroa.0.0.i5 ; 3 uses
-  %i.f = add i64 %.sroa.0.0.i5, 1                 ; 4 uses
+  %i.f = add nuw i64 %.sroa.0.0.i5, 1             ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !82)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !83)
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 72
@@ -366,7 +366,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast22VariableAss
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast15JobContinuationEBF_.exit unwind label %bb.d, !inline_history !80
 
 bb.c:                                             ; preds = %.lr.ph7
-  %i.l = add i64 %.sroa.0.1.i6, 1                 ; 2 uses
+  %i.l = add nuw i64 %.sroa.0.1.i6, 1             ; 2 uses
   %i.m = icmp eq i64 %i.l, %i.c
   br i1 %i.m, label %.body, label %.lr.ph7
 
@@ -418,7 +418,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast26JobConjunct
 .lr.ph:                                           ; preds = %bb.a, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast26JobConjunctionContinuationEBF_.exit
   %.sroa.0.0.i19 = phi i64 [ %i.f, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast26JobConjunctionContinuationEBF_.exit ], [ 0, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [144 x i8], ptr %i.a, i64 %.sroa.0.0.i19 ; 5 uses
-  %i.f = add i64 %.sroa.0.0.i19, 1                ; 4 uses
+  %i.f = add nuw i64 %.sroa.0.0.i19, 1            ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90)
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 104
   %.val1.i = load i64, ptr %i.g, align 8, !alias.scope !90, !noundef !12 ; 2 uses
@@ -456,7 +456,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast11JobPipeline
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast26JobConjunctionContinuationEBF_.exit unwind label %bb.f, !inline_history !88
 
 bb.e:                                             ; preds = %.lr.ph21
-  %i.p = add i64 %.sroa.0.1.i20, 1                ; 2 uses
+  %i.p = add nuw i64 %.sroa.0.1.i20, 1            ; 2 uses
   %i.q = icmp eq i64 %i.p, %i.c
   br i1 %i.q, label %.body, label %.lr.ph21
 
@@ -512,12 +512,12 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_
 .lr.ph:                                           ; preds = %bb.a, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit5
   %.sroa.0.0.i6 = phi i64 [ %i.f, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit5 ], [ 0, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [160 x i8], ptr %i.a, i64 %.sroa.0.0.i6
-  %i.f = add i64 %.sroa.0.0.i6, 1                 ; 4 uses
+  %i.f = add nuw i64 %.sroa.0.0.i6, 1             ; 4 uses
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast14JobConjunctionEBF_(ptr noalias nofree noundef nonnull align 8 dereferenceable(160) %i.e)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit5 unwind label %bb.b, !inline_history !91
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit: ; preds = %.lr.ph8
-  %i.g = add i64 %.sroa.0.1.i7, 1                 ; 2 uses
+  %i.g = add nuw i64 %.sroa.0.1.i7, 1             ; 2 uses
   %i.h = icmp eq i64 %i.g, %i.c
   br i1 %i.h, label %.body, label %.lr.ph8
 
@@ -920,12 +920,12 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_
 .lr.ph:                                           ; preds = %bb.c, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit5.i
   %.sroa.0.0.i.i1 = phi i64 [ %i.j, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit5.i ], [ 0, %bb.c ] ; 2 uses
   %i.i = getelementptr inbounds nuw [160 x i8], ptr %i.e, i64 %.sroa.0.0.i.i1
-  %i.j = add i64 %.sroa.0.0.i.i1, 1               ; 4 uses
+  %i.j = add nuw i64 %.sroa.0.0.i.i1, 1           ; 4 uses
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast14JobConjunctionEBF_(ptr noalias nofree noundef nonnull align 8 dereferenceable(160) %i.i) #51
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit5.i unwind label %bb.d, !noalias !109, !inline_history !106
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit.i: ; preds = %.lr.ph3
-  %i.k = add i64 %.sroa.0.1.i.i2, 1               ; 2 uses
+  %i.k = add nuw i64 %.sroa.0.1.i.i2, 1           ; 2 uses
   %i.l = icmp eq i64 %i.k, %i.g
   br i1 %i.l, label %.body.i, label %.lr.ph3
 
@@ -988,12 +988,12 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_
 .lr.ph:                                           ; preds = %bb.a, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit.i
   %.sroa.0.0.i2 = phi i64 [ %i.f, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit.i ], [ 0, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [160 x i8], ptr %i.a, i64 %.sroa.0.0.i2
-  %i.f = add i64 %.sroa.0.0.i2, 1                 ; 4 uses
+  %i.f = add nuw i64 %.sroa.0.0.i2, 1             ; 4 uses
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast14JobConjunctionEBF_(ptr noalias nofree noundef nonnull align 8 dereferenceable(160) %i.e)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit.i unwind label %bb.b, !noalias !115, !inline_history !113
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit7.i: ; preds = %.lr.ph4
-  %i.g = add i64 %.sroa.0.1.i3, 1                 ; 2 uses
+  %i.g = add nuw i64 %.sroa.0.1.i3, 1             ; 2 uses
   %i.h = icmp eq i64 %i.g, %i.c
   br i1 %i.h, label %.body, label %.lr.ph4
 
@@ -1078,12 +1078,12 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_
 .lr.ph:                                           ; preds = %bb.c, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit.i
   %.sroa.0.0.i4 = phi i64 [ %i.j, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit.i ], [ 0, %bb.c ] ; 2 uses
   %i.i = getelementptr inbounds nuw [160 x i8], ptr %i.e, i64 %.sroa.0.0.i4
-  %i.j = add i64 %.sroa.0.0.i4, 1                 ; 4 uses
+  %i.j = add nuw i64 %.sroa.0.0.i4, 1             ; 4 uses
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast14JobConjunctionEBF_(ptr noalias nofree noundef nonnull align 8 dereferenceable(160) %i.i)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit.i unwind label %bb.d, !noalias !125, !inline_history !121
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit7.i: ; preds = %.lr.ph6
-  %i.k = add i64 %.sroa.0.1.i5, 1                 ; 2 uses
+  %i.k = add nuw i64 %.sroa.0.1.i5, 1             ; 2 uses
   %i.l = icmp eq i64 %i.k, %i.g
   br i1 %i.l, label %.body2, label %.lr.ph6
 
@@ -1201,7 +1201,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast15JobContinua
 .lr.ph:                                           ; preds = %bb.d, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast15JobContinuationEBF_.exit.i
   %.sroa.0.0.i8 = phi i64 [ %i.n, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast15JobContinuationEBF_.exit.i ], [ 0, %bb.d ] ; 2 uses
   %i.m = getelementptr inbounds nuw [96 x i8], ptr %i.i, i64 %.sroa.0.0.i8 ; 3 uses
-  %i.n = add i64 %.sroa.0.0.i8, 1                 ; 4 uses
+  %i.n = add nuw i64 %.sroa.0.0.i8, 1             ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !143), !noalias !142
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 72
   %.val1.i.i4 = load i64, ptr %i.o, align 8, !alias.scope !144, !noalias !142, !noundef !12 ; 2 uses
@@ -1221,7 +1221,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast22VariableAss
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast15JobContinuationEBF_.exit.i unwind label %bb.g, !noalias !142, !inline_history !2
 
 bb.f:                                             ; preds = %.lr.ph10
-  %i.t = add i64 %.sroa.0.1.i9, 1                 ; 2 uses
+  %i.t = add nuw i64 %.sroa.0.1.i9, 1             ; 2 uses
   %i.u = icmp eq i64 %i.t, %i.k
   br i1 %i.u, label %.body6, label %.lr.ph10
 
@@ -1319,7 +1319,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast15JobContinua
 .lr.ph:                                           ; preds = %bb.a, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast15JobContinuationEBF_.exit.i
   %.sroa.0.0.i4 = phi i64 [ %i.f, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast15JobContinuationEBF_.exit.i ], [ 0, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [96 x i8], ptr %i.a, i64 %.sroa.0.0.i4 ; 3 uses
-  %i.f = add i64 %.sroa.0.0.i4, 1                 ; 4 uses
+  %i.f = add nuw i64 %.sroa.0.0.i4, 1             ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !157)
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 72
   %.val1.i2 = load i64, ptr %i.g, align 8, !alias.scope !157, !noalias !156, !noundef !12 ; 2 uses
@@ -1339,7 +1339,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast22VariableAss
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast15JobContinuationEBF_.exit.i unwind label %.body.i, !noalias !156, !inline_history !154
 
 bb.c:                                             ; preds = %.lr.ph6
-  %i.l = add i64 %.sroa.0.1.i5, 1                 ; 2 uses
+  %i.l = add nuw i64 %.sroa.0.1.i5, 1             ; 2 uses
   %i.m = icmp eq i64 %i.l, %i.c
   br i1 %i.m, label %.body, label %.lr.ph6
 
@@ -1485,7 +1485,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast15JobContinua
 .lr.ph:                                           ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast11JobPipelineEBF_.exit, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast15JobContinuationEBF_.exit.i
   %.sroa.0.0.i4 = phi i64 [ %i.o, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast15JobContinuationEBF_.exit.i ], [ 0, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast11JobPipelineEBF_.exit ] ; 2 uses
   %i.n = getelementptr inbounds nuw [96 x i8], ptr %i.j, i64 %.sroa.0.0.i4 ; 3 uses
-  %i.o = add i64 %.sroa.0.0.i4, 1                 ; 4 uses
+  %i.o = add nuw i64 %.sroa.0.0.i4, 1             ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !176), !noalias !175
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 72
   %.val1.i.i2 = load i64, ptr %i.p, align 8, !alias.scope !177, !noalias !175, !noundef !12 ; 2 uses
@@ -1505,7 +1505,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast22VariableAss
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast15JobContinuationEBF_.exit.i unwind label %bb.g, !noalias !175, !inline_history !2
 
 bb.f:                                             ; preds = %.lr.ph6
-  %i.u = add i64 %.sroa.0.1.i5, 1                 ; 2 uses
+  %i.u = add nuw i64 %.sroa.0.1.i5, 1             ; 2 uses
   %i.v = icmp eq i64 %i.u, %i.l
   br i1 %i.v, label %.body, label %.lr.ph6
 
@@ -1558,7 +1558,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast26JobConjunct
 .lr.ph:                                           ; preds = %bb.a, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast26JobConjunctionContinuationEBF_.exit.i
   %.sroa.0.0.i16 = phi i64 [ %i.f, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast26JobConjunctionContinuationEBF_.exit.i ], [ 0, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [144 x i8], ptr %i.a, i64 %.sroa.0.0.i16 ; 5 uses
-  %i.f = add i64 %.sroa.0.0.i16, 1                ; 4 uses
+  %i.f = add nuw i64 %.sroa.0.0.i16, 1            ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !190)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !191), !noalias !189
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 104
@@ -1597,7 +1597,7 @@ bb.e:                                             ; preds = %bb.c
   unreachable
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast26JobConjunctionContinuationEBF_.exit7.i: ; preds = %.lr.ph18
-  %i.p = add i64 %.sroa.0.1.i17, 1                ; 2 uses
+  %i.p = add nuw i64 %.sroa.0.1.i17, 1            ; 2 uses
   %i.q = icmp eq i64 %i.p, %i.c
   br i1 %i.q, label %.body, label %.lr.ph18
 
@@ -1779,7 +1779,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast14JobConjunct
 .lr.ph:                                           ; preds = %bb.a, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast14JobConjunctionEBF_.exit.i
   %.sroa.0.0.i24 = phi i64 [ %i.f, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast14JobConjunctionEBF_.exit.i ], [ 0, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [160 x i8], ptr %i.a, i64 %.sroa.0.0.i24 ; 7 uses
-  %i.f = add i64 %.sroa.0.0.i24, 1                ; 4 uses
+  %i.f = add nuw i64 %.sroa.0.0.i24, 1            ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !205)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !206), !noalias !204
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 104
@@ -1840,7 +1840,7 @@ bb.g:                                             ; preds = %.body2
   unreachable
 
 bb.h:                                             ; preds = %.lr.ph26
-  %i.t = add i64 %.sroa.0.1.i25, 1                ; 2 uses
+  %i.t = add nuw i64 %.sroa.0.1.i25, 1            ; 2 uses
   %i.u = icmp eq i64 %i.t, %i.c
   br i1 %i.u, label %.body, label %.lr.ph26
 
@@ -2038,7 +2038,7 @@ _RNvXs8_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxSNtNtCs8frGy5WneL6_4fish3ast14JobC
   br i1 %i.ac, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueSNtNtCs8frGy5WneL6_4fish3ast8CaseItemEBG_.exit.i, label %.lr.ph
 
 bb.g:                                             ; preds = %.lr.ph168
-  %i.ad = add i64 %.sroa.0.1.i.i167, 1            ; 2 uses
+  %i.ad = add nuw i64 %.sroa.0.1.i.i167, 1        ; 2 uses
   %i.ae = icmp eq i64 %i.ad, %i.k
   br i1 %i.ae, label %.body61, label %.lr.ph168
 
@@ -2230,12 +2230,12 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_
 .lr.ph164:                                        ; preds = %bb.t, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit5.i
   %.sroa.0.0.i.i163 = phi i64 [ %i.cd, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit5.i ], [ 0, %bb.t ] ; 2 uses
   %i.cc = getelementptr inbounds nuw [160 x i8], ptr %i.by, i64 %.sroa.0.0.i.i163
-  %i.cd = add i64 %.sroa.0.0.i.i163, 1            ; 4 uses
+  %i.cd = add nuw i64 %.sroa.0.0.i.i163, 1        ; 4 uses
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast14JobConjunctionEBF_(ptr noalias nofree noundef nonnull align 8 dereferenceable(160) %i.cc)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit5.i unwind label %bb.u, !noalias !363, !inline_history !276
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit.i: ; preds = %.lr.ph166
-  %i.ce = add i64 %.sroa.0.1.i.i108165, 1         ; 2 uses
+  %i.ce = add nuw i64 %.sroa.0.1.i.i108165, 1     ; 2 uses
   %i.cf = icmp eq i64 %i.ce, %i.ca
   br i1 %i.cf, label %.body.i109, label %.lr.ph166
 
@@ -2477,12 +2477,12 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_
 .lr.ph160:                                        ; preds = %bb.aj, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit.i.i
   %.sroa.0.0.i.i110159 = phi i64 [ %i.eq, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit.i.i ], [ 0, %bb.aj ] ; 2 uses
   %i.ep = getelementptr inbounds nuw [160 x i8], ptr %i.el, i64 %.sroa.0.0.i.i110159
-  %i.eq = add i64 %.sroa.0.0.i.i110159, 1         ; 4 uses
+  %i.eq = add nuw i64 %.sroa.0.0.i.i110159, 1     ; 4 uses
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast14JobConjunctionEBF_(ptr noalias nofree noundef nonnull align 8 dereferenceable(160) %i.ep)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit.i.i unwind label %bb.ak, !noalias !388, !inline_history !310
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast8AndorJobEBF_.exit7.i.i: ; preds = %.lr.ph162
-  %i.er = add i64 %.sroa.0.1.i.i111161, 1         ; 2 uses
+  %i.er = add nuw i64 %.sroa.0.1.i.i111161, 1     ; 2 uses
   %i.es = icmp eq i64 %i.er, %i.en
   br i1 %i.es, label %.body.i112, label %.lr.ph162
 
@@ -2885,7 +2885,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast15JobContinua
 .lr.ph165:                                        ; preds = %bb.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast15JobContinuationEBF_.exit.i
   %.sroa.0.0.i.i163 = phi i64 [ %i.ai, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast15JobContinuationEBF_.exit.i ], [ 0, %bb.i ] ; 2 uses
   %i.ah = getelementptr inbounds nuw [96 x i8], ptr %i.ad, i64 %.sroa.0.0.i.i163 ; 3 uses
-  %i.ai = add i64 %.sroa.0.0.i.i163, 1            ; 4 uses
+  %i.ai = add nuw i64 %.sroa.0.0.i.i163, 1        ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !514), !noalias !508
   tail call void @llvm.experimental.noalias.scope.decl(metadata !515), !noalias !508
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 72
@@ -2920,7 +2920,7 @@ bb.k:                                             ; preds = %_RINvNtCs3oUPovFnLW
 .lr.ph168:                                        ; preds = %bb.k, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast15JobContinuationEBF_.exit
   %.sroa.0.1.i.i166 = phi i64 [ %i.au, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast15JobContinuationEBF_.exit ], [ %i.ai, %bb.k ] ; 2 uses
   %i.at = getelementptr inbounds nuw [96 x i8], ptr %i.ad, i64 %.sroa.0.1.i.i166 ; 3 uses
-  %i.au = add i64 %.sroa.0.1.i.i166, 1            ; 2 uses
+  %i.au = add nuw i64 %.sroa.0.1.i.i166, 1        ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !519)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !520), !noalias !517
   %i.av = getelementptr inbounds nuw i8, ptr %i.at, i64 72
@@ -2984,7 +2984,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast26JobConjunct
 .lr.ph170:                                        ; preds = %.body.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast26JobConjunctionContinuationEBF_.exit7.i
   %.sroa.0.1.i169 = phi i64 [ %i.bj, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast26JobConjunctionContinuationEBF_.exit7.i ], [ %i.u, %.body.i ] ; 2 uses
   %i.bi = getelementptr inbounds nuw [144 x i8], ptr %i.p, i64 %.sroa.0.1.i169 ; 5 uses
-  %i.bj = add i64 %.sroa.0.1.i169, 1              ; 2 uses
+  %i.bj = add nuw i64 %.sroa.0.1.i169, 1          ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !523)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !524), !noalias !508
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bi, i64 104
@@ -3055,7 +3055,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish3ast14JobConjunct
   ret void
 
 bb.v:                                             ; preds = %.lr.ph172
-  %i.by = add i64 %.sroa.0.1171, 1                ; 2 uses
+  %i.by = add nuw nsw i64 %.sroa.0.1171, 1        ; 2 uses
   %i.bz = icmp eq i64 %i.by, %1
   br i1 %i.bz, label %._crit_edge173, label %.lr.ph172
 
@@ -3458,7 +3458,7 @@ _RNvXs3_NtNtNtCs3oUPovFnLWP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   br label %_RNvXs3_NtNtNtCs3oUPovFnLWP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCs8frGy5WneL6_4fish.exit.i.us
 
 bb.b:                                             ; preds = %_RNvXs3_NtNtNtCs3oUPovFnLWP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCs8frGy5WneL6_4fish.exit.i.us
-  %i.p = add i64 %.sroa.619.0.i.us18, 1           ; 2 uses
+  %i.p = add nuw i64 %.sroa.619.0.i.us18, 1       ; 2 uses
   %exitcond.not.i.us = icmp eq i64 %i.p, %umax.i.us
   br i1 %exitcond.not.i.us, label %_RNvNtNtCs3oUPovFnLWP_4core3str7pattern14small_slice_eq.exit.thread5, label %_RNvXs3_NtNtNtCs3oUPovFnLWP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCs8frGy5WneL6_4fish.exit.i.us
 
@@ -3861,7 +3861,7 @@ bb.c:                                             ; preds = %bb.b
 
 .preheader.i:                                     ; preds = %.lr.ph
   %i.d = extractvalue { i64, i1 } %i.g, 0         ; 2 uses
-  %i.e = add i64 %i.f, 1                          ; 2 uses
+  %i.e = add nuw i64 %i.f, 1                      ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.e, %i.c
   br i1 %exitcond.not.i, label %.preheader.i._crit_edge, label %.lr.ph
 
@@ -4069,7 +4069,7 @@ bb.n:                                             ; preds = %bb.m
 
 .preheader.i.i:                                   ; preds = %.lr.ph
   %i.z = extractvalue { i64, i1 } %i.ac, 0        ; 2 uses
-  %i.aa = add i64 %i.ab, 1                        ; 2 uses
+  %i.aa = add nuw i64 %i.ab, 1                    ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.aa, %i.y
   br i1 %exitcond.not.i.i, label %.preheader.i.i._crit_edge, label %.lr.ph
 
@@ -4472,8 +4472,8 @@ _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResulthNtNtNtB4_3num5error15TryFromIntEr
   %i.am = trunc nuw i32 %i.al to i8
   %i.an = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.aj
   store i8 %i.am, ptr %i.an, align 1, !alias.scope !2340, !noalias !2341
-  %i.ao = add nuw i64 %.sroa.01.028.i, 2          ; 2 uses
-  %.not.i = icmp ult i64 %i.ao, %2
+  %i.ao = add nuw nsw i64 %.sroa.01.028.i, 2      ; 2 uses
+  %.not.i = icmp samesign ult i64 %i.ao, %2
   br i1 %.not.i, label %.lr.ph.i, label %.loopexit
 
 bb.h:                                             ; preds = %bb.a
@@ -4876,20 +4876,11 @@ _RNvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_widest
   br i1 %i.g, label %bb.c, label %.critedge.preheader.split
 
 bb.c:                                             ; preds = %_RNvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_widestring4WExt7char_atCs8frGy5WneL6_4fish.exit52
-  %i.h = add nuw nsw i64 %.sroa.0.0107, 1         ; 6 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !2422)
+  %i.h = add nuw nsw i64 %.sroa.0.0107, 1         ; 4 uses
   %i.i = icmp eq i64 %i.h, %1                     ; 2 uses
-  br i1 %i.i, label %_RNvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_widestring4WExt7char_atCs8frGy5WneL6_4fish.exit54.thread, label %4
+  br i1 %i.i, label %_RNvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_widestring4WExt7char_atCs8frGy5WneL6_4fish.exit54.thread, label %_RNvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_widestring4WExt7char_atCs8frGy5WneL6_4fish.exit54
 
-4:                                                ; preds = %bb.c
-  %5 = icmp ult i64 %i.h, %1
-  br i1 %5, label %_RNvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_widestring4WExt7char_atCs8frGy5WneL6_4fish.exit54, label %6
-
-6:                                                ; preds = %4
-  tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %i.h, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @882) #54, !noalias !2422
-  unreachable
-
-_RNvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_widestring4WExt7char_atCs8frGy5WneL6_4fish.exit54: ; preds = %4
+_RNvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_widestring4WExt7char_atCs8frGy5WneL6_4fish.exit54: ; preds = %bb.c
   %i.j = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.h
   %i.k = load i32, ptr %i.j, align 4, !range !33, !alias.scope !2422, !noundef !12 ; 2 uses
   %i.l = icmp eq i32 %i.k, 36
@@ -5292,6 +5283,14 @@ bb.d:                                             ; preds = %.lr.ph, %bb.x
 .noexc:                                           ; preds = %.split.i.i
   unreachable
 
+7:                                                ; preds = %bb.d
+  %8 = icmp ult i32 %i.y, 1114112
+  call void @llvm.assume(i1 %8)
+  %9 = add nuw nsw i64 %.sroa.7.056, 1            ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
+  %exitcond.not = icmp eq i64 %.sroa.7.056, %4
+  br i1 %exitcond.not, label %bb.q, label %bb.p
+
 .loopexit:                                        ; preds = %bb.r, %bb.s, %bb.u, %bb.v
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
@@ -5306,14 +5305,6 @@ bb.e:                                             ; preds = %.loopexit.split-lp,
   %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs8frGy5WneL6_4fish8terminal9OutputterEBF_(ptr noalias nofree noundef align 8 dereferenceable(56) %i.g) #48
           to label %.body unwind label %bb.y
-
-7:                                                ; preds = %bb.d
-  %8 = icmp ult i32 %i.y, 1114112
-  call void @llvm.assume(i1 %8)
-  %9 = add nuw nsw i64 %.sroa.7.056, 1            ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
-  %exitcond.not = icmp eq i64 %.sroa.7.056, %4
-  br i1 %exitcond.not, label %bb.q, label %bb.p
 
 ._crit_edge:                                      ; preds = %bb.x, %bb.c
   invoke void @_RNvMs_NtCs8frGy5WneL6_4fish8terminalNtB4_9Outputter13set_text_face(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.g, ptr noalias nofree noundef nonnull align 1 captures(address) dereferenceable(18) %i.d)

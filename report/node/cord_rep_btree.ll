@@ -205,7 +205,7 @@ _ZNK4absl13cord_internal12CordRepBtree7IndexOfEm.exit105: ; preds = %.lr.ph.i97,
   %i.ba = phi i64 [ %i.bf, %.lr.ph.i109 ], [ %i.ax, %._crit_edge ]
   %.012.i110 = phi i64 [ %i.bb, %.lr.ph.i109 ], [ %.sroa.044.0.lcssa, %._crit_edge ] ; 4 uses
   %.0911.i = phi i64 [ %i.bc, %.lr.ph.i109 ], [ %.lcssa155, %._crit_edge ]
-  %i.bb = add i64 %.012.i110, 1                   ; 5 uses
+  %i.bb = add i64 %.012.i110, 1                   ; 4 uses
   %i.bc = sub nuw i64 %.0911.i, %i.ba             ; 6 uses
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %i.bb
   %i.be = load ptr, ptr %i.bd, align 8            ; 8 uses
@@ -401,26 +401,18 @@ _ZN4absl13cord_internal12_GLOBAL__N_113MakeSubstringEPNS0_7CordRepEmm.exit123: ;
   store i8 0, ptr %i.dx, align 1
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dr, i64 16 ; 3 uses
   store ptr %.sroa.0135.1, ptr %i.dy, align 8
-  %i.dz = add i64 %.sroa.044.0.lcssa, 1           ; 3 uses
-  %.not.i124 = icmp ugt i64 %i.dz, %i.bb
-  br i1 %.not.i124, label %3, label %4
-
-3:                                                ; preds = %_ZN4absl13cord_internal12_GLOBAL__N_113MakeSubstringEPNS0_7CordRepEmm.exit123
-  tail call void @__assert_fail(ptr noundef nonnull @.str.87, ptr noundef nonnull @.str.58, i32 noundef 631, ptr noundef nonnull @__PRETTY_FUNCTION__._ZNK4absl13cord_internal12CordRepBtree5EdgesEmm) #14
-  unreachable
-
-4:                                                ; preds = %_ZN4absl13cord_internal12_GLOBAL__N_113MakeSubstringEPNS0_7CordRepEmm.exit123
-  %5 = getelementptr inbounds nuw i8, ptr %.081.lcssa, i64 14
-  %6 = load i8, ptr %5, align 1
-  %7 = zext i8 %6 to i64
-  %.not8.i = icmp ult i64 %i.dz, %7
+  %i.dz = add nuw i64 %.sroa.044.0.lcssa, 1       ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.081.lcssa, i64 14
+  %4 = load i8, ptr %3, align 1
+  %5 = zext i8 %4 to i64
+  %.not8.i = icmp ult i64 %i.dz, %5
   br i1 %.not8.i, label %bb.u, label %bb.v
 
-bb.u:                                             ; preds = %4
+bb.u:                                             ; preds = %_ZN4absl13cord_internal12_GLOBAL__N_113MakeSubstringEPNS0_7CordRepEmm.exit123
   tail call void @__assert_fail(ptr noundef nonnull @.str.81, ptr noundef nonnull @.str.58, i32 noundef 632, ptr noundef nonnull @__PRETTY_FUNCTION__._ZNK4absl13cord_internal12CordRepBtree5EdgesEmm) #14
   unreachable
 
-bb.v:                                             ; preds = %4
+bb.v:                                             ; preds = %_ZN4absl13cord_internal12_GLOBAL__N_113MakeSubstringEPNS0_7CordRepEmm.exit123
   %i.ea = getelementptr inbounds nuw i8, ptr %.081.lcssa, i64 15
   %i.eb = load i8, ptr %i.ea, align 1
   %i.ec = zext i8 %i.eb to i64
