@@ -204,44 +204,39 @@ bb.k:                                             ; preds = %bb.a
   %i.ap = add i64 %i.ao, %2                       ; 6 uses
   store i64 %i.ap, ptr %i.an, align 8, !tbaa !366
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %i.ar = load i64, ptr %i.aq, align 8, !tbaa !54 ; 3 uses
+  %i.ar = load i64, ptr %i.aq, align 8, !tbaa !54 ; 2 uses
   %i.as = and i64 %i.ar, 1
-  %.not.i.i10 = icmp eq i64 %i.as, 0              ; 2 uses
-  br i1 %.not.i.i10, label %_ZNK5boost6system10error_codecvbEv.exit, label %bb.l
+  %.not.i.i10 = icmp eq i64 %i.as, 0
+  br i1 %.not.i.i10, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.at = icmp eq i64 %i.ar, 1
-  br i1 %i.at, label %7, label %_ZN5boost4asio6detail25base_from_completion_condINS1_14transfer_all_tEE20check_for_completionERKNS_6system10error_codeEm.exit16
+  br i1 %i.at, label %.thread20, label %_ZN5boost4asio6detail25base_from_completion_condINS1_14transfer_all_tEE20check_for_completionERKNS_6system10error_codeEm.exit16
 
-7:                                                ; preds = %bb.l
+bb.m:                                             ; preds = %bb.k
+  %7 = icmp ne i64 %2, 0
+  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.av = load i64, ptr %i.au, align 8
+  %.not26 = icmp ult i64 %i.ap, %i.av
+  %or.cond.not29 = select i1 %7, i1 %.not26, i1 false
+  br i1 %or.cond.not29, label %select.unfold, label %_ZN5boost4asio6detail25base_from_completion_condINS1_14transfer_all_tEE20check_for_completionERKNS_6system10error_codeEm.exit16
+
+.thread20:                                        ; preds = %bb.l
   %8 = load i32, ptr %1, align 8, !tbaa !157
   %9 = icmp ne i32 %8, 0
-  br label %_ZNK5boost6system10error_codecvbEv.exit
-
-_ZNK5boost6system10error_codecvbEv.exit:          ; preds = %bb.k, %7
-  %.0.i.i = phi i1 [ %9, %7 ], [ false, %bb.k ]
   %10 = icmp ne i64 %2, 0
-  %or.cond.not = or i1 %10, %.0.i.i
-  br i1 %or.cond.not, label %bb.m, label %_ZN5boost4asio6detail25base_from_completion_condINS1_14transfer_all_tEE20check_for_completionERKNS_6system10error_codeEm.exit16
-
-bb.m:                                             ; preds = %_ZNK5boost6system10error_codecvbEv.exit
-  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.av = load i64, ptr %i.au, align 8, !tbaa !372
-  %.not26 = icmp ult i64 %i.ap, %i.av
-  br i1 %.not26, label %11, label %_ZN5boost4asio6detail25base_from_completion_condINS1_14transfer_all_tEE20check_for_completionERKNS_6system10error_codeEm.exit16
-
-11:                                               ; preds = %bb.m
-  br i1 %.not.i.i10, label %select.unfold, label %.thread20
-
-.thread20:                                        ; preds = %11
-  %12 = icmp eq i64 %i.ar, 1
+  %or.cond.not36 = or i1 %10, %9
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %12 = load i64, ptr %11, align 8
+  %13 = icmp ult i64 %i.ap, %12
+  %or.cond.not2937 = select i1 %or.cond.not36, i1 %13, i1 false
   %i.aw = load i32, ptr %1, align 8
   %.fr.i.i12 = freeze i32 %i.aw
   %.not.i.i13 = icmp eq i32 %.fr.i.i12, 0
-  %or.cond.i.i14 = and i1 %12, %.not.i.i13
+  %or.cond.i.i14 = and i1 %or.cond.not2937, %.not.i.i13
   br i1 %or.cond.i.i14, label %select.unfold, label %_ZN5boost4asio6detail25base_from_completion_condINS1_14transfer_all_tEE20check_for_completionERKNS_6system10error_codeEm.exit16
 
-select.unfold:                                    ; preds = %.thread20, %11
+select.unfold:                                    ; preds = %.thread20, %bb.m
   %i.ax = load ptr, ptr %0, align 8, !tbaa !363   ; 2 uses
   %.not.i.i17 = icmp eq ptr %i.ax, null
   br i1 %.not.i.i17, label %_ZN5boost4asio6detail25base_from_completion_condINS1_14transfer_all_tEE20check_for_completionERKNS_6system10error_codeEm.exit, label %_ZNK5boost4asio6detail28base_from_cancellation_stateIZNS_5beast15async_base_test20async_write_messagesINS3_4test12basic_streamINS0_15any_io_executorEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEZNS4_12testJavadocsEvE7handlerEENS0_12async_resultINSt5decayIT1_E4typeEJFvNS_6system10error_codeEEEE11return_typeERT_RKT0_mOSJ_E2opvE9cancelledEv.exit
@@ -277,10 +272,10 @@ bb.o:                                             ; preds = %_ZN5boost6system10e
   %.pre = load i64, ptr %i.an, align 8, !tbaa !366
   br label %_ZN5boost4asio6detail25base_from_completion_condINS1_14transfer_all_tEE20check_for_completionERKNS_6system10error_codeEm.exit16
 
-_ZN5boost4asio6detail25base_from_completion_condINS1_14transfer_all_tEE20check_for_completionERKNS_6system10error_codeEm.exit16: ; preds = %bb.l, %.thread20, %bb.m, %_ZNK5boost6system10error_codecvbEv.exit, %bb.o
-  %13 = phi i64 [ %i.ap, %bb.l ], [ %i.ap, %.thread20 ], [ %i.ap, %bb.m ], [ %i.ap, %_ZNK5boost6system10error_codecvbEv.exit ], [ %.pre, %bb.o ]
+_ZN5boost4asio6detail25base_from_completion_condINS1_14transfer_all_tEE20check_for_completionERKNS_6system10error_codeEm.exit16: ; preds = %.thread20, %bb.l, %bb.m, %bb.o
+  %14 = phi i64 [ %i.ap, %bb.l ], [ %i.ap, %.thread20 ], [ %i.ap, %bb.m ], [ %.pre, %bb.o ]
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 48
-  tail call void @_ZZN5boost5beast15async_base_test20async_write_messagesINS0_4test12basic_streamINS_4asio15any_io_executorEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEZNS1_12testJavadocsEvE7handlerEENS5_12async_resultINSt5decayIT1_E4typeEJFvNS_6system10error_codeEEEE11return_typeERT_RKT0_mOSH_EN2opclESL_m(ptr noundef nonnull align 8 dereferenceable(184) %i.bh, ptr noundef nonnull byval(%"class.boost::system::error_code") align 8 %1, i64 noundef %13)
+  tail call void @_ZZN5boost5beast15async_base_test20async_write_messagesINS0_4test12basic_streamINS_4asio15any_io_executorEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEZNS1_12testJavadocsEvE7handlerEENS5_12async_resultINSt5decayIT1_E4typeEJFvNS_6system10error_codeEEEE11return_typeERT_RKT0_mOSH_EN2opclESL_m(ptr noundef nonnull align 8 dereferenceable(184) %i.bh, ptr noundef nonnull byval(%"class.boost::system::error_code") align 8 %1, i64 noundef %14)
   br label %bb.p
 
 bb.p:                                             ; preds = %_ZN5boost4asio6detail25base_from_completion_condINS1_14transfer_all_tEE20check_for_completionERKNS_6system10error_codeEm.exit16, %_ZN5boost5beast4test12basic_streamINS_4asio15any_io_executorEE16async_write_someINS3_12const_bufferENS3_6detail8write_opIS5_S7_PKS7_NS8_14transfer_all_tEZNS0_15async_base_test20async_write_messagesIS5_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEZNSD_12testJavadocsEvE7handlerEENS3_12async_resultINSt5decayIT1_E4typeEJFvNS_6system10error_codeEEEE11return_typeERT_RKT0_mOSO_E2opEEEEDaRKSW_OSY_.exit

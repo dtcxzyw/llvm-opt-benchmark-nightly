@@ -204,11 +204,11 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN6vectorIcLb0EjE5resetEv.exit:                  ; preds = %bb.a, %bb.b
   %i.d = icmp ult i32 %1, %2
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1392
+  %4 = load ptr, ptr %3, align 8                  ; 2 uses
   br i1 %i.d, label %.lr.ph, label %.critedge
 
 .lr.ph:                                           ; preds = %_ZN6vectorIcLb0EjE5resetEv.exit
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1392
-  %4 = load ptr, ptr %3, align 8, !tbaa !25
   %i.e = zext i32 %1 to i64
   br label %bb.c
 
@@ -233,7 +233,7 @@ bb.d:                                             ; preds = %bb.c
 
 .critedge:                                        ; preds = %bb.d, %.critedge.loopexit.split.loop.exit41, %_ZN6vectorIcLb0EjE5resetEv.exit
   %.016.lcssa = phi i32 [ %1, %_ZN6vectorIcLb0EjE5resetEv.exit ], [ %i.j, %.critedge.loopexit.split.loop.exit41 ], [ %2, %bb.d ] ; 4 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 1392 ; 2 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 1392
   %i.l = zext i32 %.016.lcssa to i64              ; 2 uses
   %umin = tail call i32 @llvm.umin.i32(i32 %.016.lcssa, i32 %2) ; 2 uses
   %i.m = icmp ugt i32 %2, %.016.lcssa
@@ -241,7 +241,6 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph48:                                         ; preds = %.critedge
   %i.n = zext i32 %2 to i64
-  %5 = load ptr, ptr %i.k, align 8, !tbaa !25
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.f
@@ -251,7 +250,7 @@ bb.e:                                             ; preds = %bb.f
 bb.f:                                             ; preds = %.lr.ph48, %bb.e
   %indvars.iv2747 = phi i64 [ %i.n, %.lr.ph48 ], [ %i.p, %bb.e ] ; 2 uses
   %i.p = add nsw i64 %indvars.iv2747, -1          ; 3 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %5, i64 %i.p
+  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 %i.p
   %i.r = load i8, ptr %i.q, align 1, !tbaa !27
   %i.s = sext i8 %i.r to i32
   %i.t = tail call i32 @isspace(i32 noundef %i.s) #23

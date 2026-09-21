@@ -205,26 +205,24 @@ bb.s:                                             ; preds = %bb.n, %bb.l, %bb.c
   store i32 1, ptr %i.aw, align 8, !tbaa !69418
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 3 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 208
-  %i.az = load ptr, ptr %i.ax, align 8, !tbaa !9326 ; 4 uses
+  %i.az = load ptr, ptr %i.ax, align 8, !tbaa !9326 ; 3 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 216 ; 3 uses
-  %i.bb = icmp eq ptr %i.az, %i.ba
-  br i1 %i.bb, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6assignEmc.exit23, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.thread.i11
+  %1 = icmp ne ptr %i.az, %i.ba
+  %2 = load i64, ptr %i.ba, align 8
+  %i.bb = icmp eq i64 %2, 0
+  %or.cond36 = select i1 %1, i1 %i.bb, i1 false
+  br i1 %or.cond36, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i3.i14, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6assignEmc.exit23
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.thread.i11: ; preds = %bb.s
-  %1 = load i64, ptr %i.ba, align 8, !tbaa !9325
-  %.not.i8.i12 = icmp eq i64 %1, 0
-  br i1 %.not.i8.i12, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i3.i14, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6assignEmc.exit23
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i3.i14: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.thread.i11
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i3.i14: ; preds = %bb.s
   %i.bc = tail call noalias noundef nonnull dereferenceable(2) ptr @_Znwm(i64 noundef 2) #59 ; 2 uses
   tail call void @_ZdlPvm(ptr noundef %i.az, i64 noundef 1) #60
   store ptr %i.bc, ptr %i.ax, align 8, !tbaa !9326
   store i64 1, ptr %i.ba, align 8, !tbaa !9325
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6assignEmc.exit23
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6assignEmc.exit23: ; preds = %bb.s, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.thread.i11, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i3.i14
-  %2 = phi ptr [ %i.bc, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i3.i14 ], [ %i.az, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.thread.i11 ], [ %i.az, %bb.s ]
-  store i8 %i.g, ptr %2, align 1, !tbaa !9325
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6assignEmc.exit23: ; preds = %bb.s, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i3.i14
+  %3 = phi ptr [ %i.bc, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i3.i14 ], [ %i.az, %bb.s ]
+  store i8 %i.g, ptr %3, align 1, !tbaa !9325
   store i64 1, ptr %i.ay, align 8, !tbaa !9324
   %i.bd = load ptr, ptr %i.ax, align 8, !tbaa !9326
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 1
@@ -627,24 +625,22 @@ bb.x:                                             ; preds = %.lr.ph
   %i.dj = load ptr, ptr %i.g, align 8, !tbaa !9357 ; 2 uses
   %i.dk = load ptr, ptr %i.k, align 8, !tbaa !9357
   %i.dl = icmp eq ptr %i.dj, %i.dk
-  br i1 %i.dl, label %bb.y, label %3
+  br i1 %i.dl, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x
   %i.dm = load i32, ptr %i.j, align 8, !tbaa !69612
   %i.dn = and i32 %i.dm, 32
   %.not.i25 = icmp eq i32 %i.dn, 0
-  br i1 %.not.i25, label %3, label %common.ret
+  br i1 %.not.i25, label %bb.z, label %common.ret
 
-3:                                                ; preds = %bb.y, %bb.x
-  %4 = icmp eq i8 %1, 1
-  br i1 %4, label %bb.aa, label %bb.z
-
-bb.z:                                             ; preds = %3
-  %i.do = load ptr, ptr %i.h, align 8, !tbaa !9357
+bb.z:                                             ; preds = %bb.y, %bb.x
+  %3 = icmp eq i8 %1, 1
+  %i.do = load ptr, ptr %i.h, align 8
   %i.dp = icmp eq ptr %i.dj, %i.do
-  br i1 %i.dp, label %bb.aa, label %common.ret
+  %or.cond.i = select i1 %3, i1 true, i1 %i.dp
+  br i1 %or.cond.i, label %bb.aa, label %common.ret
 
-bb.aa:                                            ; preds = %bb.z, %3
+bb.aa:                                            ; preds = %bb.z
   %i.dq = load i8, ptr %i.m, align 4, !tbaa !69631, !range !16138, !noundef !4070
   %i.dr = trunc nuw i8 %i.dq to i1
   br i1 %i.dr, label %common.ret, label %bb.ab

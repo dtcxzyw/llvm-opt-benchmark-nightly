@@ -202,20 +202,18 @@ bb.c:                                             ; preds = %bb.b, %_ZNSt3mapIjN
   %.sroa.010.0 = phi ptr [ %i.k, %bb.b ], [ %.08.lcssa.i.i.i, %_ZNSt3mapIjN4llvm6MCInstESt4lessIjESaISt4pairIKjS1_EEE11lower_boundERS5_.exit ] ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 880 ; 2 uses
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !496  ; 2 uses
-  %i.q = icmp eq ptr %.sroa.010.0, %i.p
-  br i1 %i.q, label %3, label %.critedge
-
-3:                                                ; preds = %bb.c
+  %3 = icmp ne ptr %.sroa.010.0, %i.p
   %4 = getelementptr inbounds nuw i8, ptr %2, i64 72
-  %5 = load i8, ptr %4, align 8, !tbaa !534
-  %.not = icmp eq i8 %5, 1
-  br i1 %.not, label %.critedge, label %bb.d
+  %5 = load i8, ptr %4, align 8
+  %i.q = icmp eq i8 %5, 1
+  %or.cond = select i1 %3, i1 true, i1 %i.q
+  br i1 %or.cond, label %.critedge, label %bb.d
 
-bb.d:                                             ; preds = %3
+bb.d:                                             ; preds = %bb.c
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 1104
   br label %bb.f
 
-.critedge:                                        ; preds = %bb.c, %3
+.critedge:                                        ; preds = %bb.c
   %i.s = tail call noundef ptr @_ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base(ptr noundef %.sroa.010.0) #26 ; 3 uses
   %i.t = trunc i64 %.0 to i32                     ; 2 uses
   %.not2021 = icmp eq ptr %i.s, %i.p

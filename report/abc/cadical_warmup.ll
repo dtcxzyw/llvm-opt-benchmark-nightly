@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.a
   %i.u = icmp eq i64 %i.k, %i.c
-  br i1 %i.u, label %bb.g, label %1
+  br i1 %i.u, label %bb.g, label %bb.r
 
 bb.g:                                             ; preds = %bb.f
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 1160 ; 3 uses
@@ -214,7 +214,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ab = sub i64 %i.z, %i.aa                     ; 4 uses
   %i.ac = ashr exact i64 %i.ab, 2
   %.not = icmp eq ptr %i.x, %i.y
-  br i1 %.not, label %1, label %.lr.ph
+  br i1 %.not, label %bb.r, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.g
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 472
@@ -298,29 +298,23 @@ bb.q:                                             ; preds = %._crit_edge
   store i8 1, ptr %i.ar, align 8, !tbaa !212
   br label %bb.u
 
-1:                                                ; preds = %bb.g, %bb.f
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %3 = load i8, ptr %2, align 4, !tbaa !213, !range !214, !noundef !215
-  %4 = trunc nuw i8 %3 to i1
-  br i1 %4, label %bb.r, label %5
-
-5:                                                ; preds = %1
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 4412
-  %7 = load i32, ptr %6, align 4, !tbaa !216
-  %8 = icmp eq i32 %7, 2
-  br label %bb.r
-
-bb.r:                                             ; preds = %5, %1
-  %9 = phi i1 [ true, %1 ], [ %8, %5 ]
+bb.r:                                             ; preds = %bb.g, %bb.f
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 28
+  %2 = load i8, ptr %1, align 4, !tbaa !213, !range !214, !noundef !215
+  %3 = trunc nuw i8 %2 to i1
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 4412
+  %5 = load i32, ptr %4, align 4
+  %6 = icmp eq i32 %5, 2
+  %7 = select i1 %3, i1 true, i1 %6
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 5240 ; 2 uses
-  %i.at = load i64, ptr %i.as, align 8, !tbaa !217
+  %i.at = load i64, ptr %i.as, align 8, !tbaa !216
   %i.au = add nsw i64 %i.at, 1
-  store i64 %i.au, ptr %i.as, align 8, !tbaa !217
+  store i64 %i.au, ptr %i.as, align 8, !tbaa !216
   %i.av = tail call noundef i32 @_ZN7CaDiCaL8Internal22next_decision_variableEv(ptr noundef nonnull align 8 dereferenceable(7296) %0) #14 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 760
   %i.ax = tail call noundef i32 @llvm.abs.i32(i32 %i.av, i1 true)
   %i.ay = zext nneg i32 %i.ax to i64
-  %i.az = load ptr, ptr %i.aw, align 8, !tbaa !218
+  %i.az = load ptr, ptr %i.aw, align 8, !tbaa !217
   %i.ba = getelementptr inbounds nuw [6 x i8], ptr %i.az, i64 %i.ay
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 5
   %i.bc = load i8, ptr %i.bb, align 1
@@ -330,13 +324,13 @@ bb.r:                                             ; preds = %5, %1
 
 bb.s:                                             ; preds = %bb.r
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 5248 ; 2 uses
-  %i.bf = load i64, ptr %i.be, align 8, !tbaa !219
+  %i.bf = load i64, ptr %i.be, align 8, !tbaa !218
   %i.bg = add nsw i64 %i.bf, 1
-  store i64 %i.bg, ptr %i.be, align 8, !tbaa !219
+  store i64 %i.bg, ptr %i.be, align 8, !tbaa !218
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r
-  %i.bh = tail call noundef i32 @_ZN7CaDiCaL8Internal12decide_phaseEib(ptr noundef nonnull align 8 dereferenceable(7296) %0, i32 noundef %i.av, i1 noundef zeroext %9) #14 ; 2 uses
+  %i.bh = tail call noundef i32 @_ZN7CaDiCaL8Internal12decide_phaseEib(ptr noundef nonnull align 8 dereferenceable(7296) %0, i32 noundef %i.av, i1 noundef zeroext %7) #14 ; 2 uses
   tail call void @_ZN7CaDiCaL8Internal15new_trail_levelEi(ptr noundef nonnull align 8 dereferenceable(7296) %0, i32 noundef %i.bh) #14
   %i.bi = load ptr, ptr @_ZN7CaDiCaL8Internal15decision_reasonE, align 8, !tbaa !176
   tail call void @_ZN7CaDiCaL8Internal13warmup_assignEiPNS_6ClauseE(ptr noundef nonnull align 8 dereferenceable(7296) %0, i32 noundef %i.bh, ptr noundef %i.bi)
@@ -344,7 +338,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r
 
 bb.u:                                             ; preds = %bb.b, %bb.q
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 1185
-  store i8 0, ptr %i.bj, align 1, !tbaa !220
+  store i8 0, ptr %i.bj, align 1, !tbaa !219
   br label %.thread76
 
 .thread76:                                        ; preds = %bb.p, %bb.o, %bb.d, %bb.e, %bb.t, %bb.u
@@ -368,15 +362,15 @@ declare noundef i32 @_ZN7CaDiCaL8Internal12decide_phaseEib(ptr noundef nonnull a
 define noundef range(i32 0, 21) i32 @_ZN7CaDiCaL8Internal6warmupEv(ptr noundef nonnull align 8 dereferenceable(7296) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4580
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !223
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !222
   %.not = icmp eq i32 %i.b, 0
   br i1 %.not, label %bb.j, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 5272 ; 2 uses
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !224
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !223
   %i.e = add nsw i64 %i.d, 1
-  store i64 %i.e, ptr %i.c, align 8, !tbaa !224
+  store i64 %i.e, ptr %i.c, align 8, !tbaa !223
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1136
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 1144
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !170
@@ -386,9 +380,9 @@ bb.b:                                             ; preds = %bb.a
   %i.l = sub i64 %i.j, %i.k
   %i.m = ashr exact i64 %i.l, 2
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 1160
-  %i.o = load ptr, ptr %i.n, align 8, !tbaa !225
+  %i.o = load ptr, ptr %i.n, align 8, !tbaa !224
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 1168
-  %i.q = load ptr, ptr %i.p, align 8, !tbaa !225
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !224
   %i.r = icmp ne ptr %i.o, %i.q
   %i.s = zext i1 %i.r to i64
   %i.t = add nsw i64 %i.m, %i.s
@@ -405,7 +399,7 @@ bb.c:                                             ; preds = %bb.b, %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.aa = load i64, ptr %i.v, align 8, !tbaa !187
-  %i.ab = load i32, ptr %i.w, align 8, !tbaa !226
+  %i.ab = load i32, ptr %i.w, align 8, !tbaa !225
   %i.ac = sext i32 %i.ab to i64
   %i.ad = icmp ult i64 %i.aa, %i.ac
   br i1 %i.ad, label %bb.e, label %.lr.ph
@@ -414,7 +408,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ae = tail call noundef i32 @_ZN7CaDiCaL8Internal13warmup_decideEv(ptr noundef nonnull align 8 dereferenceable(7296) %0) ; 2 uses
   tail call void @_ZN7CaDiCaL8Internal32warmup_propagate_beyond_conflictEv(ptr noundef nonnull align 8 dereferenceable(7296) %0)
   %.not10 = icmp eq i32 %i.ae, 0
-  br i1 %.not10, label %bb.c, label %.critedge, !llvm.loop !221
+  br i1 %.not10, label %bb.c, label %.critedge, !llvm.loop !220
 
 .critedge:                                        ; preds = %bb.e
   %.pre = load i32, ptr %i.u, align 4, !tbaa !182
@@ -427,12 +421,12 @@ bb.e:                                             ; preds = %bb.d
   %i.ai = icmp eq i32 %i.x, 0
   %i.aj = zext i1 %i.ai to i8                     ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 34 ; 4 uses
-  store i8 1, ptr %i.ak, align 2, !tbaa !227
+  store i8 1, ptr %i.ak, align 2, !tbaa !226
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %bb.g
   %i.al = load i64, ptr %i.v, align 8, !tbaa !187
-  %i.am = load i32, ptr %i.w, align 8, !tbaa !226
+  %i.am = load i32, ptr %i.w, align 8, !tbaa !225
   %i.an = sext i32 %i.am to i64
   %i.ao = icmp ult i64 %i.al, %i.an
   br i1 %i.ao, label %bb.g, label %bb.h
@@ -441,10 +435,10 @@ bb.g:                                             ; preds = %bb.f
   %i.ap = tail call noundef i32 @_ZN7CaDiCaL8Internal13warmup_decideEv(ptr noundef nonnull align 8 dereferenceable(7296) %0) ; 2 uses
   tail call void @_ZN7CaDiCaL8Internal32warmup_propagate_beyond_conflictEv(ptr noundef nonnull align 8 dereferenceable(7296) %0)
   %.not11 = icmp eq i32 %i.ap, 0
-  br i1 %.not11, label %bb.f, label %.critedge12, !llvm.loop !222
+  br i1 %.not11, label %bb.f, label %.critedge12, !llvm.loop !221
 
 bb.h:                                             ; preds = %bb.f
-  store i8 %i.aj, ptr %i.ak, align 2, !tbaa !227
+  store i8 %i.aj, ptr %i.ak, align 2, !tbaa !226
   tail call void @_ZN7CaDiCaL8Internal33backtrack_without_updating_phasesEi(ptr noundef nonnull align 8 dereferenceable(7296) %0, i32 noundef 0) #14
   br label %bb.i
 
@@ -452,13 +446,13 @@ bb.h:                                             ; preds = %bb.f
   %i.aq = phi ptr [ %i.ah, %.critedge ], [ %i.ak, %bb.g ] ; 2 uses
   %i.ar = phi i8 [ %i.ag, %.critedge ], [ %i.aj, %bb.g ]
   %.1.lcssa = phi i32 [ %i.ae, %.critedge ], [ %i.ap, %bb.g ]
-  store i8 %i.ar, ptr %i.aq, align 2, !tbaa !227
+  store i8 %i.ar, ptr %i.aq, align 2, !tbaa !226
   br label %bb.i
 
 bb.i:                                             ; preds = %.critedge12, %bb.h
   %i.as = phi ptr [ %i.aq, %.critedge12 ], [ %i.ak, %bb.h ]
   %.114 = phi i32 [ %.1.lcssa, %.critedge12 ], [ 0, %bb.h ]
-  store i8 0, ptr %i.as, align 2, !tbaa !227
+  store i8 0, ptr %i.as, align 2, !tbaa !226
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.a, %bb.i
@@ -737,16 +731,15 @@ attributes #14 = { nounwind }
 !213 = !{!169, !9, i64 28}
 !214 = !{i8 0, i8 2}
 !215 = !{}
-!216 = !{!169, !6, i64 4412}
-!217 = !{!169, !10, i64 5240}
-!218 = !{!65, !64, i64 0}
-!219 = !{!169, !10, i64 5248}
-!220 = !{!169, !9, i64 1185}
+!216 = !{!169, !10, i64 5240}
+!217 = !{!65, !64, i64 0}
+!218 = !{!169, !10, i64 5248}
+!219 = !{!169, !9, i64 1185}
+!220 = distinct !{!220, !180}
 !221 = distinct !{!221, !180}
-!222 = distinct !{!222, !180}
-!223 = !{!169, !6, i64 4580}
-!224 = !{!169, !10, i64 5272}
-!225 = !{!35, !35, i64 0}
-!226 = !{!169, !6, i64 96}
-!227 = !{!169, !9, i64 34}
+!222 = !{!169, !6, i64 4580}
+!223 = !{!169, !10, i64 5272}
+!224 = !{!35, !35, i64 0}
+!225 = !{!169, !6, i64 96}
+!226 = !{!169, !9, i64 34}
 end_hunk_0

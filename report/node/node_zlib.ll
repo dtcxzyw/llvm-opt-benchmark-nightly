@@ -204,23 +204,21 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 316
   %i.b = load i32, ptr %i.a, align 4, !noalias !226 ; 6 uses
   switch i32 %i.b, label %bb.d [
-    i32 0, label %2
-    i32 -5, label %2
+    i32 0, label %bb.b
+    i32 -5, label %bb.b
     i32 1, label %_ZNK4node12_GLOBAL__N_111ZlibContext12GetErrorInfoEv.exit
     i32 2, label %bb.c
   ]
 
-2:                                                ; preds = %bb.a, %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 408
-  %4 = load i32, ptr %3, align 8, !noalias !226
-  %.not.i = icmp eq i32 %4, 0
-  br i1 %.not.i, label %_ZNK4node12_GLOBAL__N_111ZlibContext12GetErrorInfoEv.exit, label %bb.b
-
-bb.b:                                             ; preds = %2
+bb.b:                                             ; preds = %bb.a, %bb.a
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 408
+  %3 = load i32, ptr %2, align 8, !noalias !226
+  %.not.i = icmp ne i32 %3, 0
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 320
   %i.d = load i32, ptr %i.c, align 8, !noalias !226
   %i.e = icmp eq i32 %i.d, 4
-  br i1 %i.e, label %switch.lookup, label %_ZNK4node12_GLOBAL__N_111ZlibContext12GetErrorInfoEv.exit
+  %or.cond.i = select i1 %.not.i, i1 %i.e, i1 false
+  br i1 %or.cond.i, label %switch.lookup, label %_ZNK4node12_GLOBAL__N_111ZlibContext12GetErrorInfoEv.exit
 
 switch.lookup:                                    ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 424
@@ -293,8 +291,8 @@ bb.e:                                             ; preds = %switch.lookup, %_ZN
   call fastcc void @_ZN4node12_GLOBAL__N_117CompressionStreamINS0_11ZlibContextEE9EmitErrorERKNS0_16CompressionErrorE(ptr noundef nonnull align 8 dereferenceable(488) %0, ptr noundef nonnull align 8 dereferenceable(20) %1)
   br label %_ZNK4node12_GLOBAL__N_111ZlibContext12GetErrorInfoEv.exit
 
-_ZNK4node12_GLOBAL__N_111ZlibContext12GetErrorInfoEv.exit: ; preds = %bb.b, %2, %bb.a, %bb.e
-  %.val5 = phi i1 [ false, %bb.e ], [ true, %bb.a ], [ true, %2 ], [ true, %bb.b ]
+_ZNK4node12_GLOBAL__N_111ZlibContext12GetErrorInfoEv.exit: ; preds = %bb.b, %bb.a, %bb.e
+  %.val5 = phi i1 [ false, %bb.e ], [ true, %bb.a ], [ true, %bb.b ]
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #31
   ret i1 %.val5
 }

@@ -205,24 +205,22 @@ bb.g:                                             ; preds = %bb.f
   %i.ap = tail call double @llvm.fabs.f64(double %i.v)
   %or.cond.i.i.i = fcmp ugt double %i.ap, f0x7FEFFFFFFFFFFFFF
   %or.cond.i.i = or i1 %or.cond.i.i.i, %.not15.i.i
-  br i1 %or.cond.i.i, label %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i, label %13
+  br i1 %or.cond.i.i, label %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i, label %bb.i
 
 bb.h:                                             ; preds = %bb.f
   %.old.i.i = tail call double @llvm.fabs.f64(double %i.v)
   %or.cond.i.old.i.i = fcmp ugt double %.old.i.i, f0x7FEFFFFFFFFFFFFF
-  br i1 %or.cond.i.old.i.i, label %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i, label %13
+  br i1 %or.cond.i.old.i.i, label %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i, label %bb.i
 
-13:                                               ; preds = %bb.h, %bb.g
-  %14 = getelementptr inbounds nuw i8, ptr %i.ab, i64 64
-  %15 = load double, ptr %14, align 8, !tbaa !303
-  %16 = fcmp ult double %i.v, %15
-  br i1 %16, label %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i, label %bb.i
-
-bb.i:                                             ; preds = %13
+bb.i:                                             ; preds = %bb.h, %bb.g
+  %13 = getelementptr inbounds nuw i8, ptr %i.ab, i64 64
+  %14 = load double, ptr %13, align 8, !tbaa !303
+  %15 = fcmp ult double %i.v, %14
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ab, i64 72
-  %i.ar = load double, ptr %i.aq, align 8, !tbaa !313
+  %i.ar = load double, ptr %i.aq, align 8
   %i.as = fcmp ugt double %i.v, %i.ar
-  br i1 %i.as, label %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i, label %bb.j
+  %or.cond15.i.i = select i1 %15, i1 true, i1 %i.as
+  br i1 %or.cond15.i.i, label %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.at = getelementptr inbounds nuw i8, ptr %i.ab, i64 40 ; 2 uses
@@ -237,7 +235,7 @@ bb.j:                                             ; preds = %bb.i
   store double %i.az, ptr %i.aw, align 8, !tbaa !480
   br label %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i
 
-_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i:      ; preds = %bb.j, %bb.i, %13, %bb.h, %bb.g
+_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i:      ; preds = %bb.j, %bb.i, %bb.h, %bb.g
   %i.ba = getelementptr inbounds nuw i8, ptr %i.af, i64 4
   %i.bb = load i32, ptr %i.ba, align 4, !tbaa !300
   %i.bc = and i32 %i.bb, 4096
@@ -255,24 +253,22 @@ bb.k:                                             ; preds = %_ZN10ImPlotAxis13Ex
   %i.bj = tail call double @llvm.fabs.f64(double %i.w)
   %or.cond.i.i14.i = fcmp ugt double %i.bj, f0x7FEFFFFFFFFFFFFF
   %or.cond.i15.i = or i1 %or.cond.i.i14.i, %.not15.i13.i
-  br i1 %or.cond.i15.i, label %_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit, label %17
+  br i1 %or.cond.i15.i, label %_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit, label %bb.m
 
 bb.l:                                             ; preds = %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i
   %.old.i17.i = tail call double @llvm.fabs.f64(double %i.w)
   %or.cond.i.old.i18.i = fcmp ugt double %.old.i17.i, f0x7FEFFFFFFFFFFFFF
-  br i1 %or.cond.i.old.i18.i, label %_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit, label %17
+  br i1 %or.cond.i.old.i18.i, label %_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit, label %bb.m
 
-17:                                               ; preds = %bb.l, %bb.k
-  %18 = getelementptr inbounds nuw i8, ptr %i.af, i64 64
-  %19 = load double, ptr %18, align 8, !tbaa !303
-  %20 = fcmp ult double %i.w, %19
-  br i1 %20, label %_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit, label %bb.m
-
-bb.m:                                             ; preds = %17
+bb.m:                                             ; preds = %bb.l, %bb.k
+  %16 = getelementptr inbounds nuw i8, ptr %i.af, i64 64
+  %17 = load double, ptr %16, align 8, !tbaa !303
+  %18 = fcmp ult double %i.w, %17
   %i.bk = getelementptr inbounds nuw i8, ptr %i.af, i64 72
-  %i.bl = load double, ptr %i.bk, align 8, !tbaa !313
+  %i.bl = load double, ptr %i.bk, align 8
   %i.bm = fcmp ugt double %i.w, %i.bl
-  br i1 %i.bm, label %_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit, label %bb.n
+  %or.cond15.i16.i = select i1 %18, i1 true, i1 %i.bm
+  br i1 %or.cond15.i16.i, label %_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.bn = getelementptr inbounds nuw i8, ptr %i.af, i64 40 ; 2 uses
@@ -287,7 +283,7 @@ bb.n:                                             ; preds = %bb.m
   store double %i.bt, ptr %i.bq, align 8, !tbaa !480
   br label %_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit
 
-_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit:        ; preds = %bb.n, %bb.m, %17, %bb.l, %bb.k, %bb.e, %_ZN6ImPlotL9SetupLockEv.exit
+_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit:        ; preds = %bb.n, %bb.m, %bb.l, %bb.k, %bb.e, %_ZN6ImPlotL9SetupLockEv.exit
   %i.bu = and i32 %5, 4
   %.not66 = icmp eq i32 %i.bu, 0
   %i.bv = and i32 %5, 1
@@ -690,24 +686,22 @@ bb.g:                                             ; preds = %bb.f
   %i.as = tail call double @llvm.fabs.f64(double %i.y)
   %or.cond.i.i.i = fcmp ugt double %i.as, f0x7FEFFFFFFFFFFFFF
   %or.cond.i.i = or i1 %or.cond.i.i.i, %.not15.i.i
-  br i1 %or.cond.i.i, label %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i, label %16
+  br i1 %or.cond.i.i, label %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i, label %bb.i
 
 bb.h:                                             ; preds = %bb.f
   %.old.i.i = tail call double @llvm.fabs.f64(double %i.y)
   %or.cond.i.old.i.i = fcmp ugt double %.old.i.i, f0x7FEFFFFFFFFFFFFF
-  br i1 %or.cond.i.old.i.i, label %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i, label %16
+  br i1 %or.cond.i.old.i.i, label %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i, label %bb.i
 
-16:                                               ; preds = %bb.h, %bb.g
-  %17 = getelementptr inbounds nuw i8, ptr %i.ae, i64 64
-  %18 = load double, ptr %17, align 8, !tbaa !303
-  %19 = fcmp ult double %i.y, %18
-  br i1 %19, label %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i, label %bb.i
-
-bb.i:                                             ; preds = %16
+bb.i:                                             ; preds = %bb.h, %bb.g
+  %16 = getelementptr inbounds nuw i8, ptr %i.ae, i64 64
+  %17 = load double, ptr %16, align 8, !tbaa !303
+  %18 = fcmp ult double %i.y, %17
   %i.at = getelementptr inbounds nuw i8, ptr %i.ae, i64 72
-  %i.au = load double, ptr %i.at, align 8, !tbaa !313
+  %i.au = load double, ptr %i.at, align 8
   %i.av = fcmp ugt double %i.y, %i.au
-  br i1 %i.av, label %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i, label %bb.j
+  %or.cond15.i.i = select i1 %18, i1 true, i1 %i.av
+  br i1 %or.cond15.i.i, label %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.aw = getelementptr inbounds nuw i8, ptr %i.ae, i64 40 ; 2 uses
@@ -722,7 +716,7 @@ bb.j:                                             ; preds = %bb.i
   store double %i.bc, ptr %i.az, align 8, !tbaa !480
   br label %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i
 
-_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i:      ; preds = %bb.j, %bb.i, %16, %bb.h, %bb.g
+_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i:      ; preds = %bb.j, %bb.i, %bb.h, %bb.g
   %i.bd = getelementptr inbounds nuw i8, ptr %i.ai, i64 4
   %i.be = load i32, ptr %i.bd, align 4, !tbaa !300
   %i.bf = and i32 %i.be, 4096
@@ -740,24 +734,22 @@ bb.k:                                             ; preds = %_ZN10ImPlotAxis13Ex
   %i.bm = tail call double @llvm.fabs.f64(double %i.z)
   %or.cond.i.i14.i = fcmp ugt double %i.bm, f0x7FEFFFFFFFFFFFFF
   %or.cond.i15.i = or i1 %or.cond.i.i14.i, %.not15.i13.i
-  br i1 %or.cond.i15.i, label %_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit, label %20
+  br i1 %or.cond.i15.i, label %_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit, label %bb.m
 
 bb.l:                                             ; preds = %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i
   %.old.i17.i = tail call double @llvm.fabs.f64(double %i.z)
   %or.cond.i.old.i18.i = fcmp ugt double %.old.i17.i, f0x7FEFFFFFFFFFFFFF
-  br i1 %or.cond.i.old.i18.i, label %_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit, label %20
+  br i1 %or.cond.i.old.i18.i, label %_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit, label %bb.m
 
-20:                                               ; preds = %bb.l, %bb.k
-  %21 = getelementptr inbounds nuw i8, ptr %i.ai, i64 64
-  %22 = load double, ptr %21, align 8, !tbaa !303
-  %23 = fcmp ult double %i.z, %22
-  br i1 %23, label %_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit, label %bb.m
-
-bb.m:                                             ; preds = %20
+bb.m:                                             ; preds = %bb.l, %bb.k
+  %19 = getelementptr inbounds nuw i8, ptr %i.ai, i64 64
+  %20 = load double, ptr %19, align 8, !tbaa !303
+  %21 = fcmp ult double %i.z, %20
   %i.bn = getelementptr inbounds nuw i8, ptr %i.ai, i64 72
-  %i.bo = load double, ptr %i.bn, align 8, !tbaa !313
+  %i.bo = load double, ptr %i.bn, align 8
   %i.bp = fcmp ugt double %i.z, %i.bo
-  br i1 %i.bp, label %_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit, label %bb.n
+  %or.cond15.i16.i = select i1 %21, i1 true, i1 %i.bp
+  br i1 %or.cond15.i16.i, label %_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.bq = getelementptr inbounds nuw i8, ptr %i.ai, i64 40 ; 2 uses
@@ -772,7 +764,7 @@ bb.n:                                             ; preds = %bb.m
   store double %i.bw, ptr %i.bt, align 8, !tbaa !480
   br label %_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit
 
-_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit:        ; preds = %bb.k, %bb.l, %20, %bb.m, %bb.n
+_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit:        ; preds = %bb.k, %bb.l, %bb.m, %bb.n
   %i.bx = load double, ptr %3, align 8, !tbaa !266 ; 10 uses
   %i.by = load double, ptr %4, align 8, !tbaa !266 ; 10 uses
   br i1 %.not12.i.i, label %bb.p, label %bb.o
@@ -788,24 +780,22 @@ bb.o:                                             ; preds = %_ZN6ImPlotL8FitPoin
   %i.cf = tail call double @llvm.fabs.f64(double %i.bx)
   %or.cond.i.i.i254 = fcmp ugt double %i.cf, f0x7FEFFFFFFFFFFFFF
   %or.cond.i.i255 = or i1 %or.cond.i.i.i254, %.not15.i.i253
-  br i1 %or.cond.i.i255, label %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i257, label %24
+  br i1 %or.cond.i.i255, label %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i257, label %bb.q
 
 bb.p:                                             ; preds = %_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit
   %.old.i.i265 = tail call double @llvm.fabs.f64(double %i.bx)
   %or.cond.i.old.i.i266 = fcmp ugt double %.old.i.i265, f0x7FEFFFFFFFFFFFFF
-  br i1 %or.cond.i.old.i.i266, label %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i257, label %24
+  br i1 %or.cond.i.old.i.i266, label %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i257, label %bb.q
 
-24:                                               ; preds = %bb.p, %bb.o
-  %25 = getelementptr inbounds nuw i8, ptr %i.ae, i64 64
-  %26 = load double, ptr %25, align 8, !tbaa !303
-  %27 = fcmp ult double %i.bx, %26
-  br i1 %27, label %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i257, label %bb.q
-
-bb.q:                                             ; preds = %24
+bb.q:                                             ; preds = %bb.p, %bb.o
+  %22 = getelementptr inbounds nuw i8, ptr %i.ae, i64 64
+  %23 = load double, ptr %22, align 8, !tbaa !303
+  %24 = fcmp ult double %i.bx, %23
   %i.cg = getelementptr inbounds nuw i8, ptr %i.ae, i64 72
-  %i.ch = load double, ptr %i.cg, align 8, !tbaa !313
+  %i.ch = load double, ptr %i.cg, align 8
   %i.ci = fcmp ugt double %i.bx, %i.ch
-  br i1 %i.ci, label %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i257, label %bb.r
+  %or.cond15.i.i256 = select i1 %24, i1 true, i1 %i.ci
+  br i1 %or.cond15.i.i256, label %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i257, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ae, i64 40 ; 2 uses
@@ -820,7 +810,7 @@ bb.r:                                             ; preds = %bb.q
   store double %i.cp, ptr %i.cm, align 8, !tbaa !480
   br label %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i257
 
-_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i257:   ; preds = %bb.r, %bb.q, %24, %bb.p, %bb.o
+_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i257:   ; preds = %bb.r, %bb.q, %bb.p, %bb.o
   br i1 %.not12.i12.i, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i257
@@ -834,24 +824,22 @@ bb.s:                                             ; preds = %_ZN10ImPlotAxis13Ex
   %i.cw = tail call double @llvm.fabs.f64(double %i.by)
   %or.cond.i.i14.i260 = fcmp ugt double %i.cw, f0x7FEFFFFFFFFFFFFF
   %or.cond.i15.i261 = or i1 %or.cond.i.i14.i260, %.not15.i13.i259
-  br i1 %or.cond.i15.i261, label %_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit267, label %28
+  br i1 %or.cond.i15.i261, label %_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit267, label %bb.u
 
 bb.t:                                             ; preds = %_ZN10ImPlotAxis13ExtendFitWithERS_dd.exit.i257
   %.old.i17.i263 = tail call double @llvm.fabs.f64(double %i.by)
   %or.cond.i.old.i18.i264 = fcmp ugt double %.old.i17.i263, f0x7FEFFFFFFFFFFFFF
-  br i1 %or.cond.i.old.i18.i264, label %_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit267, label %28
+  br i1 %or.cond.i.old.i18.i264, label %_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit267, label %bb.u
 
-28:                                               ; preds = %bb.t, %bb.s
-  %29 = getelementptr inbounds nuw i8, ptr %i.ai, i64 64
-  %30 = load double, ptr %29, align 8, !tbaa !303
-  %31 = fcmp ult double %i.by, %30
-  br i1 %31, label %_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit267, label %bb.u
-
-bb.u:                                             ; preds = %28
+bb.u:                                             ; preds = %bb.t, %bb.s
+  %25 = getelementptr inbounds nuw i8, ptr %i.ai, i64 64
+  %26 = load double, ptr %25, align 8, !tbaa !303
+  %27 = fcmp ult double %i.by, %26
   %i.cx = getelementptr inbounds nuw i8, ptr %i.ai, i64 72
-  %i.cy = load double, ptr %i.cx, align 8, !tbaa !313
+  %i.cy = load double, ptr %i.cx, align 8
   %i.cz = fcmp ugt double %i.by, %i.cy
-  br i1 %i.cz, label %_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit267, label %bb.v
+  %or.cond15.i16.i263 = select i1 %27, i1 true, i1 %i.cz
+  br i1 %or.cond15.i16.i263, label %_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit267, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   %i.da = getelementptr inbounds nuw i8, ptr %i.ai, i64 40 ; 2 uses
@@ -866,7 +854,7 @@ bb.v:                                             ; preds = %bb.u
   store double %i.dg, ptr %i.dd, align 8, !tbaa !480
   br label %_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit267
 
-_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit267:     ; preds = %bb.v, %bb.u, %28, %bb.t, %bb.s, %bb.e, %_ZN6ImPlotL9SetupLockEv.exit
+_ZN6ImPlotL8FitPointERK11ImPlotPoint.exit267:     ; preds = %bb.v, %bb.u, %bb.t, %bb.s, %bb.e, %_ZN6ImPlotL9SetupLockEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #32
   store ptr %1, ptr %i.a, align 16, !tbaa !379
   %i.dh = getelementptr inbounds nuw i8, ptr %i.a, i64 8

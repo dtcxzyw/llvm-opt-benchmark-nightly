@@ -204,13 +204,10 @@ bb.d:                                             ; preds = %bb.c
   %i.i = icmp eq i32 %i.g, 24
   %i.j = icmp eq i32 %2, 1
   %or.cond = and i1 %i.j, %i.i
-  br i1 %or.cond, label %bb.r, label %4
+  br i1 %or.cond, label %bb.r, label %bb.e
 
-4:                                                ; preds = %bb.d
-  %5 = icmp eq ptr %i.f, null
-  br i1 %5, label %6, label %bb.e
-
-bb.e:                                             ; preds = %4
+bb.e:                                             ; preds = %bb.d
+  %4 = icmp eq ptr %i.f, null
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.l = load i8, ptr %i.k, align 8
   %i.m = trunc i8 %i.l to i1
@@ -221,17 +218,14 @@ bb.e:                                             ; preds = %4
   %i.r = ptrtoint ptr %i.f to i64
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = sub i64 %i.r, %i.s
-  br label %6
-
-6:                                                ; preds = %4, %bb.e
-  %7 = phi i64 [ %i.t, %bb.e ], [ 0, %4 ]         ; 2 uses
+  %5 = select i1 %4, i64 0, i64 %i.t              ; 2 uses
   switch i32 %2, label %bb.r [
     i32 0, label %bb.j
     i32 1, label %bb.f
     i32 2, label %bb.i
   ]
 
-bb.f:                                             ; preds = %6
+bb.f:                                             ; preds = %bb.e
   %i.u = and i32 %3, 8
   %.not = icmp eq i32 %i.u, 0
   br i1 %.not, label %bb.h, label %bb.g
@@ -254,14 +248,14 @@ bb.h:                                             ; preds = %bb.f
   %i.ag = sub i64 %i.ae, %i.af
   br label %bb.j
 
-bb.i:                                             ; preds = %6
+bb.i:                                             ; preds = %bb.e
   br label %bb.j
 
-bb.j:                                             ; preds = %6, %bb.g, %bb.h, %bb.i
-  %.0 = phi i64 [ %7, %bb.i ], [ %i.ab, %bb.g ], [ %i.ag, %bb.h ], [ 0, %6 ]
+bb.j:                                             ; preds = %bb.e, %bb.g, %bb.h, %bb.i
+  %.0 = phi i64 [ %5, %bb.i ], [ %i.ab, %bb.g ], [ %i.ag, %bb.h ], [ 0, %bb.e ]
   %i.ah = add nsw i64 %.0, %1                     ; 7 uses
   %i.ai = icmp slt i64 %i.ah, 0
-  %i.aj = icmp slt i64 %7, %i.ah
+  %i.aj = icmp slt i64 %5, %i.ah
   %or.cond28 = or i1 %i.ai, %i.aj
   br i1 %or.cond28, label %bb.r, label %bb.k
 
@@ -313,8 +307,8 @@ bb.q:                                             ; preds = %bb.p
   store ptr %i.ax, ptr %i.c, align 8, !tbaa !96
   br label %bb.r
 
-bb.r:                                             ; preds = %bb.n, %bb.p, %bb.q, %bb.m, %bb.j, %6, %bb.d, %bb.c
-  %.sroa.8.0 = phi i64 [ -1, %bb.j ], [ -1, %bb.c ], [ -1, %bb.d ], [ -1, %6 ], [ -1, %bb.n ], [ -1, %bb.m ], [ %i.ah, %bb.q ], [ %i.ah, %bb.p ]
+bb.r:                                             ; preds = %bb.n, %bb.p, %bb.q, %bb.m, %bb.j, %bb.e, %bb.d, %bb.c
+  %.sroa.8.0 = phi i64 [ -1, %bb.j ], [ -1, %bb.c ], [ -1, %bb.d ], [ -1, %bb.e ], [ -1, %bb.n ], [ -1, %bb.m ], [ %i.ah, %bb.q ], [ %i.ah, %bb.p ]
   %.fca.1.insert = insertvalue { i64, i64 } { i64 0, i64 poison }, i64 %.sroa.8.0, 1
   ret { i64, i64 } %.fca.1.insert
 }

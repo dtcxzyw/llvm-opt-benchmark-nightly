@@ -202,7 +202,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = load i8, ptr %i.d, align 1, !noundef !6  ; 2 uses
-  switch i8 %i.e, label %4 [
+  switch i8 %i.e, label %bb.e [
     i8 46, label %bb.c
     i8 41, label %bb.c
   ]
@@ -211,36 +211,34 @@ bb.c:                                             ; preds = %bb.b, %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 653
   %i.g = load i8, ptr %i.f, align 1, !range !11, !noundef !6
   %i.h = trunc nuw i8 %i.g to i1
-  br i1 %i.h, label %bb.e, label %bb.d
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 360
+  %3 = load i64, ptr %2, align 8
+  %4 = icmp ugt i64 %3, 1
+  %or.cond6.not = select i1 %i.h, i1 %4, i1 false
+  br i1 %or.cond6.not, label %.thread, label %bb.d
 
-bb.d:                                             ; preds = %bb.e, %bb.c
+bb.d:                                             ; preds = %bb.c
   tail call void @_RNvMNtCs2KzzoC5ewhj_8markdown9tokenizerNtB2_9Tokenizer4exit(ptr noalias noundef nonnull align 8 dereferenceable(664) %1, i8 noundef 110)
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i16 254, ptr %i.i, align 8
   br label %bb.f
 
-bb.e:                                             ; preds = %bb.c
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 360
-  %3 = load i64, ptr %2, align 8, !noundef !6
-  %i.j = icmp ult i64 %3, 2
-  br i1 %i.j, label %bb.d, label %.thread
+bb.e:                                             ; preds = %bb.b
+  %5 = add i8 %i.e, -48
+  %i.j = icmp ult i8 %5, 10
+  br i1 %i.j, label %bb.g, label %.thread
 
 bb.f:                                             ; preds = %.thread, %bb.h, %bb.d
   %.sink = phi i64 [ -9223372036854775805, %.thread ], [ -9223372036854775808, %bb.h ], [ -9223372036854775807, %bb.d ]
   store i64 %.sink, ptr %0, align 8
   ret void
 
-4:                                                ; preds = %bb.b
-  %5 = add i8 %i.e, -48
-  %or.cond = icmp ult i8 %5, 10
-  br i1 %or.cond, label %bb.g, label %.thread
-
-.thread:                                          ; preds = %bb.e, %bb.a, %bb.g, %4
+.thread:                                          ; preds = %bb.c, %bb.a, %bb.g, %bb.e
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 360
   store i64 0, ptr %i.k, align 8
   br label %bb.f
 
-bb.g:                                             ; preds = %4
+bb.g:                                             ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 360 ; 2 uses
   %i.m = load i64, ptr %i.l, align 8, !noundef !6
   %i.n = add i64 %i.m, 1                          ; 2 uses

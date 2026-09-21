@@ -205,27 +205,21 @@ bb.a:
   %17 = alloca %"class.OpenImageIO::v3_1::simd::vfloat4", align 16 ; 12 uses
   store <4 x float> zeroinitializer, ptr %12, align 16, !tbaa !83
   %.not = icmp eq ptr %13, null                   ; 2 uses
-  br i1 %.not, label %18, label %bb.b
+  br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   store <4 x float> zeroinitializer, ptr %13, align 16, !tbaa !83
   store <4 x float> zeroinitializer, ptr %14, align 16, !tbaa !83
-  br label %18
-
-18:                                               ; preds = %bb.b, %bb.a
-  %19 = getelementptr inbounds nuw i8, ptr %3, i64 64 ; 2 uses
-  %20 = load float, ptr %19, align 8, !tbaa !262  ; 4 uses
-  %21 = fcmp ult float %20, 0.000000e+00
-  br i1 %21, label %bb.c, label %22
-
-22:                                               ; preds = %18
-  %23 = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %24 = load i32, ptr %23, align 8, !tbaa !138
-  %25 = trunc i32 %24 to i1
   br label %bb.c
 
-bb.c:                                             ; preds = %22, %18
-  %26 = phi i1 [ false, %18 ], [ %25, %22 ]
+bb.c:                                             ; preds = %bb.b, %bb.a
+  %18 = getelementptr inbounds nuw i8, ptr %3, i64 64 ; 2 uses
+  %19 = load float, ptr %18, align 8, !tbaa !262  ; 4 uses
+  %20 = fcmp oge float %19, 0.000000e+00
+  %21 = getelementptr inbounds nuw i8, ptr %0, i64 168
+  %22 = load i32, ptr %21, align 8
+  %23 = trunc i32 %22 to i1
+  %24 = select i1 %20, i1 %23, i1 false
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 36
   %i.e = load <2 x float>, ptr %i.d, align 4, !tbaa !75 ; 2 uses
   %i.f = insertelement <2 x float> poison, float %10, i64 0
@@ -368,12 +362,12 @@ bb.k:                                             ; preds = %bb.j
   br label %_ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt_v2EbffRfPiPf.exit
 
 bb.l:                                             ; preds = %bb.j
-  br i1 %26, label %bb.m, label %_ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt_v2EbffRfPiPf.exit
+  br i1 %24, label %bb.m, label %_ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt_v2EbffRfPiPf.exit
 
 bb.m:                                             ; preds = %bb.l
-  %i.cg = fcmp ult float %20, %.1.i78.i           ; 2 uses
-  %i.ch = fdiv float %20, %.1.i78.i
-  %i.ci = fsub float %20, %.1.i78.i
+  %i.cg = fcmp ult float %19, %.1.i78.i           ; 2 uses
+  %i.ch = fdiv float %19, %.1.i78.i
+  %i.ci = fsub float %19, %.1.i78.i
   %i.cj = fsub float 1.000000e+00, %.1.i78.i
   %i.ck = fdiv float %i.ci, %i.cj
   %.sroa.11.1 = select i1 %i.cg, i32 %i.bx, i32 %i.by ; 2 uses
@@ -382,7 +376,7 @@ bb.m:                                             ; preds = %bb.l
   %.0.i.i = select i1 %.inv91.i, float %.sink109.i, float 0.000000e+00 ; 2 uses
   %i.cl = fcmp ogt float %.0.i.i, 1.000000e+00
   %.1.i.i = select i1 %i.cl, float 1.000000e+00, float %.0.i.i
-  store float %.1.i.i, ptr %19, align 8, !tbaa !262
+  store float %.1.i.i, ptr %18, align 8, !tbaa !262
   br label %_ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt_v2EbffRfPiPf.exit
 
 _ZN11OpenImageIO4v3_117compute_miplevelsERNS0_14ImageCacheFileERNS0_13TextureOpt_v2EbffRfPiPf.exit: ; preds = %bb.i, %bb.j, %.loopexit.i.thread, %bb.k, %bb.l, %bb.m

@@ -204,15 +204,13 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 64
   %.sroa.0.0.copyload.i.i.i = load i16, ptr %i.f, align 8, !tbaa !173
   %i.g = and i16 %.sroa.0.0.copyload.i.i.i, -2
-  %spec.select.i.i.a = icmp eq i16 %i.g, 472
-  br i1 %spec.select.i.i.a, label %3, label %bb.e
+  %spec.select.i.i = icmp eq i16 %i.g, 472
+  %3 = load ptr, ptr %1, align 8
+  %spec.select.i.i.a = icmp eq ptr %0, %3
+  %or.cond = select i1 %spec.select.i.i, i1 %spec.select.i.i.a, i1 false
+  br i1 %or.cond, label %_ZNSt10unique_ptrIA_P7AstNodeSt14default_deleteIS2_EED2Ev.exit, label %bb.e
 
-3:                                                ; preds = %bb.d
-  %4 = load ptr, ptr %1, align 8, !tbaa !291
-  %5 = icmp eq ptr %0, %4
-  br i1 %5, label %_ZNSt10unique_ptrIA_P7AstNodeSt14default_deleteIS2_EED2Ev.exit, label %bb.e
-
-bb.e:                                             ; preds = %3, %bb.d
+bb.e:                                             ; preds = %bb.d
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !319  ; 2 uses
   %.not.i = icmp eq ptr %i.i, null
@@ -413,8 +411,8 @@ _ZNKSt14default_deleteIA_P7AstNodeEclIS1_EENSt9enable_ifIXsr14is_convertibleIPA_
   call void @_ZdaPv(ptr noundef nonnull %.sroa.070.1) #24
   br label %_ZNSt10unique_ptrIA_P7AstNodeSt14default_deleteIS2_EED2Ev.exit
 
-_ZNSt10unique_ptrIA_P7AstNodeSt14default_deleteIS2_EED2Ev.exit: ; preds = %_ZZN7AstNode13predicateImplI12AstNodeBlockLb0EZN15LinkJumpVisitor19handleDisableOnForkEP10AstDisableRKSt6vectorIP8AstBeginSaIS7_EEEUlPKS1_E_EEbPNSt11conditionalIXsr3std8is_constIT_EE5valueEKS_S_E4typeERKT1_bENKUlPS_E_clESO_.exit, %3, %_ZZN7AstNode13predicateImplI12AstNodeBlockLb0EZN15LinkJumpVisitor19handleDisableOnForkEP10AstDisableRKSt6vectorIP8AstBeginSaIS7_EEEUlPKS1_E_EEbPNSt11conditionalIXsr3std8is_constIT_EE5valueEKS_S_E4typeERKT1_bENKUlPS_E_clESO_.exit57.thread, %_ZNKSt14default_deleteIA_P7AstNodeEclIS1_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS2_EE5valueEvE4typeEPS6_.exit.i
-  %.294 = phi i1 [ %.lcssa, %_ZNKSt14default_deleteIA_P7AstNodeEclIS1_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS2_EE5valueEvE4typeEPS6_.exit.i ], [ %.lcssa, %_ZZN7AstNode13predicateImplI12AstNodeBlockLb0EZN15LinkJumpVisitor19handleDisableOnForkEP10AstDisableRKSt6vectorIP8AstBeginSaIS7_EEEUlPKS1_E_EEbPNSt11conditionalIXsr3std8is_constIT_EE5valueEKS_S_E4typeERKT1_bENKUlPS_E_clESO_.exit57.thread ], [ true, %3 ], [ false, %_ZZN7AstNode13predicateImplI12AstNodeBlockLb0EZN15LinkJumpVisitor19handleDisableOnForkEP10AstDisableRKSt6vectorIP8AstBeginSaIS7_EEEUlPKS1_E_EEbPNSt11conditionalIXsr3std8is_constIT_EE5valueEKS_S_E4typeERKT1_bENKUlPS_E_clESO_.exit ]
+_ZNSt10unique_ptrIA_P7AstNodeSt14default_deleteIS2_EED2Ev.exit: ; preds = %_ZZN7AstNode13predicateImplI12AstNodeBlockLb0EZN15LinkJumpVisitor19handleDisableOnForkEP10AstDisableRKSt6vectorIP8AstBeginSaIS7_EEEUlPKS1_E_EEbPNSt11conditionalIXsr3std8is_constIT_EE5valueEKS_S_E4typeERKT1_bENKUlPS_E_clESO_.exit, %bb.d, %_ZZN7AstNode13predicateImplI12AstNodeBlockLb0EZN15LinkJumpVisitor19handleDisableOnForkEP10AstDisableRKSt6vectorIP8AstBeginSaIS7_EEEUlPKS1_E_EEbPNSt11conditionalIXsr3std8is_constIT_EE5valueEKS_S_E4typeERKT1_bENKUlPS_E_clESO_.exit57.thread, %_ZNKSt14default_deleteIA_P7AstNodeEclIS1_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS2_EE5valueEvE4typeEPS6_.exit.i
+  %.294 = phi i1 [ %.lcssa, %_ZNKSt14default_deleteIA_P7AstNodeEclIS1_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS2_EE5valueEvE4typeEPS6_.exit.i ], [ %.lcssa, %_ZZN7AstNode13predicateImplI12AstNodeBlockLb0EZN15LinkJumpVisitor19handleDisableOnForkEP10AstDisableRKSt6vectorIP8AstBeginSaIS7_EEEUlPKS1_E_EEbPNSt11conditionalIXsr3std8is_constIT_EE5valueEKS_S_E4typeERKT1_bENKUlPS_E_clESO_.exit57.thread ], [ true, %bb.d ], [ false, %_ZZN7AstNode13predicateImplI12AstNodeBlockLb0EZN15LinkJumpVisitor19handleDisableOnForkEP10AstDisableRKSt6vectorIP8AstBeginSaIS7_EEEUlPKS1_E_EEbPNSt11conditionalIXsr3std8is_constIT_EE5valueEKS_S_E4typeERKT1_bENKUlPS_E_clESO_.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
   ret i1 %.294
 

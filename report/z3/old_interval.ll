@@ -205,19 +205,17 @@ _ZNK11ext_numeral6is_negEv.exit.i:                ; preds = %_ZNK12old_interval5
   %i.eq = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.er = load i32, ptr %i.eq, align 8, !tbaa !18 ; 2 uses
   %i.es = icmp slt i32 %i.er, 0
-  br i1 %i.es, label %_ZNK12old_interval5is_N1Ev.exit.thread, label %7
+  br i1 %i.es, label %_ZNK12old_interval5is_N1Ev.exit.thread, label %_ZNK12old_interval5is_N1Ev.exit
 
-7:                                                ; preds = %_ZNK11ext_numeral6is_negEv.exit.i
-  %8 = icmp eq i32 %i.er, 0
-  br i1 %8, label %_ZNK12old_interval5is_N1Ev.exit, label %_ZNK12old_interval5is_N1Ev.exit.thread66
-
-_ZNK12old_interval5is_N1Ev.exit:                  ; preds = %7
+_ZNK12old_interval5is_N1Ev.exit:                  ; preds = %_ZNK11ext_numeral6is_negEv.exit.i
+  %7 = icmp eq i32 %i.er, 0
   %i.et = getelementptr inbounds nuw i8, ptr %0, i64 89
-  %i.eu = load i8, ptr %i.et, align 1, !tbaa !35, !range !38, !noundef !39
+  %i.eu = load i8, ptr %i.et, align 1, !range !38
   %i.ev = trunc nuw i8 %i.eu to i1
-  br i1 %i.ev, label %_ZNK12old_interval5is_N1Ev.exit.thread, label %_ZNK12old_interval5is_N1Ev.exit.thread66
+  %or.cond71 = select i1 %7, i1 %i.ev, i1 false
+  br i1 %or.cond71, label %_ZNK12old_interval5is_N1Ev.exit.thread, label %_ZNK12old_interval5is_N1Ev.exit.thread66
 
-_ZNK12old_interval5is_N1Ev.exit.thread:           ; preds = %_ZNK12old_interval5is_P1Ev.exit.thread64, %_ZNK11ext_numeral6is_negEv.exit.i, %_ZNK12old_interval5is_N1Ev.exit
+_ZNK12old_interval5is_N1Ev.exit.thread:           ; preds = %_ZNK12old_interval5is_N1Ev.exit, %_ZNK12old_interval5is_P1Ev.exit.thread64, %_ZNK11ext_numeral6is_negEv.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
   store i32 %i.b, ptr %4, align 8, !tbaa !15
   %i.ew = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 6 uses
@@ -584,7 +582,7 @@ bb.be:                                            ; preds = %bb.bd, %bb.aj
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
   br label %bb.bg
 
-_ZNK12old_interval5is_N1Ev.exit.thread66:         ; preds = %_ZNK12old_interval5is_P1Ev.exit.thread64, %7, %_ZNK12old_interval5is_N1Ev.exit
+_ZNK12old_interval5is_N1Ev.exit.thread66:         ; preds = %_ZNK12old_interval5is_P1Ev.exit.thread64, %_ZNK12old_interval5is_N1Ev.exit
   tail call void @_Z26notify_assertion_violationPKciS0_(ptr noundef nonnull @.str, i32 noundef 562, ptr noundef nonnull @.str.1)
   tail call void @_Z18invoke_exit_actionj(i32 noundef 114)
   br label %bb.bf

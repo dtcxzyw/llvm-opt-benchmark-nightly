@@ -202,7 +202,7 @@ bb.a:
   %i.f = lshr i32 %i.e, 29
   %i.g = and i32 %i.f, 3
   switch i32 %i.g, label %default.unreachable [
-    i32 0, label %2
+    i32 0, label %bb.e
     i32 1, label %bb.c
     i32 2, label %bb.d
     i32 3, label %bb.b
@@ -216,32 +216,25 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.h, label %bb.aa, label %_RNvXNtNtCsavRPklju9Q7_4bstr5impls4bstrNtNtB6_4bstr4BStrNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmt.exit
 
 bb.c:                                             ; preds = %bb.a
-  br label %2
+  br label %bb.e
 
 bb.d:                                             ; preds = %bb.a
-  br label %2
+  br label %bb.e
 
-2:                                                ; preds = %bb.d, %bb.c, %bb.a
+bb.e:                                             ; preds = %bb.d, %bb.c, %bb.a
   %.sroa.01.0.i = phi i64 [ 2, %bb.d ], [ 1, %bb.c ], [ 0, %bb.a ]
-  %3 = and i32 %i.e, 134217728
-  %4 = icmp eq i32 %3, 0
-  br i1 %4, label %5, label %bb.e
-
-bb.e:                                             ; preds = %2
+  %2 = and i32 %i.e, 134217728
+  %3 = icmp eq i32 %2, 0
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 20
-  %i.j = load i16, ptr %i.i, align 4, !alias.scope !395, !noalias !394, !noundef !4
+  %i.j = load i16, ptr %i.i, align 4, !alias.scope !395, !noalias !394
   %i.k = zext i16 %i.j to i64
-  br label %5
-
-5:                                                ; preds = %bb.e, %2
-  %.sroa.02.0.i = phi i64 [ %i.k, %bb.e ], [ 0, %2 ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !396)
   br label %bb.f
 
-bb.f:                                             ; preds = %_RINvNtCsavRPklju9Q7_4bstr4utf86decodeRShECsbppsKr37CYt_19ty_completion_bench.exit.thread.thread.i.i, %5
-  %.sroa.013.0.i.i = phi i64 [ 0, %5 ], [ %i.at, %_RINvNtCsavRPklju9Q7_4bstr4utf86decodeRShECsbppsKr37CYt_19ty_completion_bench.exit.thread.thread.i.i ] ; 4 uses
-  %.sroa.10.0.i.i = phi i64 [ %i.c, %5 ], [ %i.au, %_RINvNtCsavRPklju9Q7_4bstr4utf86decodeRShECsbppsKr37CYt_19ty_completion_bench.exit.thread.thread.i.i ] ; 9 uses
-  %.sroa.0.0.i.i = phi ptr [ %i.a, %5 ], [ %i.av, %_RINvNtCsavRPklju9Q7_4bstr4utf86decodeRShECsbppsKr37CYt_19ty_completion_bench.exit.thread.thread.i.i ] ; 7 uses
+bb.f:                                             ; preds = %_RINvNtCsavRPklju9Q7_4bstr4utf86decodeRShECsbppsKr37CYt_19ty_completion_bench.exit.thread.thread.i.i, %bb.e
+  %.sroa.013.0.i.i = phi i64 [ 0, %bb.e ], [ %i.at, %_RINvNtCsavRPklju9Q7_4bstr4utf86decodeRShECsbppsKr37CYt_19ty_completion_bench.exit.thread.thread.i.i ] ; 4 uses
+  %.sroa.10.0.i.i = phi i64 [ %i.c, %bb.e ], [ %i.au, %_RINvNtCsavRPklju9Q7_4bstr4utf86decodeRShECsbppsKr37CYt_19ty_completion_bench.exit.thread.thread.i.i ] ; 9 uses
+  %.sroa.0.0.i.i = phi ptr [ %i.a, %bb.e ], [ %i.av, %_RINvNtCsavRPklju9Q7_4bstr4utf86decodeRShECsbppsKr37CYt_19ty_completion_bench.exit.thread.thread.i.i ] ; 7 uses
   %i.l = icmp ugt i64 %.sroa.10.0.i.i, 1
   br i1 %i.l, label %bb.n, label %bb.g
 
@@ -368,7 +361,8 @@ bb.s:                                             ; preds = %_RINvNtCsavRPklju9Q
   unreachable
 
 _RNvXs_NtCsavRPklju9Q7_4bstr4utf8NtB4_5CharsNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator5count.exit.i: ; preds = %bb.g
-  %i.aw = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.02.0.i, i64 %.sroa.013.1.i.i) ; 4 uses
+  %i.aw = tail call i64 @llvm.usub.sat.i64(i64 %i.k, i64 %.sroa.013.1.i.i)
+  %4 = select i1 %3, i64 0, i64 %i.aw             ; 4 uses
   switch i64 %.sroa.01.0.i, label %default.unreachable [
     i64 0, label %bb.t
     i64 1, label %bb.u
@@ -380,18 +374,18 @@ bb.t:                                             ; preds = %_RNvXs_NtCsavRPklju
   br i1 %i.ax, label %bb.aa, label %bb.w
 
 bb.u:                                             ; preds = %_RNvXs_NtCsavRPklju9Q7_4bstr4utf8NtB4_5CharsNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator5count.exit.i
-  %i.ay = tail call noundef zeroext i1 @_RNvNvXNtNtCsavRPklju9Q7_4bstr5impls4bstrNtNtB8_4bstr4BStrNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmt10write_pads(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %i.aw)
+  %i.ay = tail call noundef zeroext i1 @_RNvNvXNtNtCsavRPklju9Q7_4bstr5impls4bstrNtNtB8_4bstr4BStrNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmt10write_pads(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %4)
   br i1 %i.ay, label %bb.aa, label %bb.x
 
 bb.v:                                             ; preds = %_RNvXs_NtCsavRPklju9Q7_4bstr4utf8NtB4_5CharsNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator5count.exit.i
-  %i.az = lshr i64 %i.aw, 1                       ; 2 uses
-  %i.ba = and i64 %i.aw, 1
+  %i.az = lshr i64 %4, 1                          ; 2 uses
+  %i.ba = and i64 %4, 1
   %.sroa.04.0.i = add nuw nsw i64 %i.az, %i.ba
   %i.bb = tail call noundef zeroext i1 @_RNvNvXNtNtCsavRPklju9Q7_4bstr5impls4bstrNtNtB8_4bstr4BStrNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmt10write_pads(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %i.az)
   br i1 %i.bb, label %bb.aa, label %bb.y
 
 bb.w:                                             ; preds = %bb.t
-  %i.bc = tail call noundef zeroext i1 @_RNvNvXNtNtCsavRPklju9Q7_4bstr5impls4bstrNtNtB8_4bstr4BStrNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmt10write_pads(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %i.aw)
+  %i.bc = tail call noundef zeroext i1 @_RNvNvXNtNtCsavRPklju9Q7_4bstr5impls4bstrNtNtB8_4bstr4BStrNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmt10write_pads(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %4)
   br i1 %i.bc, label %bb.aa, label %_RNvXNtNtCsavRPklju9Q7_4bstr5impls4bstrNtNtB6_4bstr4BStrNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmt.exit
 
 bb.x:                                             ; preds = %bb.u

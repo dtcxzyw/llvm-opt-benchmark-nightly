@@ -205,24 +205,20 @@ _ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit: ; preds = %bb.b, %bb.c
   %.0.copyload.i = load i64, ptr %i.p, align 1
   %i.q = and i64 %.0.copyload.i, 2048
   %.not = icmp eq i64 %i.q, 0
-  br i1 %.not, label %bb.d, label %12
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 62
+  %13 = load i8, ptr %12, align 2, !range !94
+  %14 = trunc nuw i8 %13 to i1
+  %or.cond38 = select i1 %.not, i1 true, i1 %14
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %16 = load ptr, ptr %15, align 8, !tbaa !91     ; 5 uses
+  br i1 %or.cond38, label %bb.d, label %bb.e
 
-12:                                               ; preds = %_ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 62
-  %14 = load i8, ptr %13, align 2, !tbaa !58, !range !94, !noundef !38
-  %15 = trunc nuw i8 %14 to i1
-  br i1 %15, label %bb.d, label %bb.e
-
-bb.d:                                             ; preds = %12, %_ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit
-  %16 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %17 = load ptr, ptr %16, align 8, !tbaa !91
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %2, ptr align 1 %17, i64 %3, i1 false)
+bb.d:                                             ; preds = %_ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %2, ptr align 1 %16, i64 %3, i1 false)
   br label %bb.s
 
-bb.e:                                             ; preds = %12
-  %18 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %19 = load ptr, ptr %18, align 8, !tbaa !91     ; 4 uses
-  %.not.i = icmp eq ptr %19, null
+bb.e:                                             ; preds = %_ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit
+  %.not.i = icmp eq ptr %16, null
   br i1 %.not.i, label %_ZNK4mold12InputSectionINS_6X86_64EE12get_contentsEv.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -241,7 +237,7 @@ bb.h:                                             ; preds = %bb.f
   %i.x = getelementptr inbounds nuw [64 x i8], ptr %i.w, i64 %i.v
   br label %_ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit3.i
 
-_ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit3.i: ; preds = %bb.h, %bb.g
+_ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit3.i: ; preds = %bb.g, %bb.h
   %.pn.i = phi ptr [ %i.t, %bb.g ], [ %i.x, %bb.h ]
   %.0.copyload.i7.in.i = getelementptr inbounds nuw i8, ptr %.pn.i, i64 32
   %.0.copyload.i7.i = load i64, ptr %.0.copyload.i7.in.i, align 1 ; 2 uses
@@ -258,8 +254,8 @@ _ZNK4mold12InputSectionINS_6X86_64EE12get_contentsEv.exit.thread: ; preds = %bb.
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit: ; preds = %_ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit3.i
   %i.ab = add i64 %.0.copyload.i7.i, -24          ; 2 uses
-  %i.ac = getelementptr inbounds nuw i8, ptr %19, i64 24 ; 2 uses
-  %.0.copyload.i27 = load i32, ptr %19, align 1
+  %i.ac = getelementptr inbounds nuw i8, ptr %16, i64 24 ; 2 uses
+  %.0.copyload.i27 = load i32, ptr %16, align 1
   switch i32 %.0.copyload.i27, label %bb.r [
     i32 1, label %bb.i
     i32 2, label %bb.m
@@ -390,7 +386,7 @@ bb.r:                                             ; preds = %_ZNKSt17basic_strin
   %i.bw = and i32 %i.bv, -75
   %i.bx = or disjoint i32 %i.bw, 8
   store i32 %i.bx, ptr %i.bu, align 8, !tbaa !107
-  %i.by = call noundef nonnull align 8 dereferenceable(408) ptr @_ZN4mold5FatalINS_6X86_64EElsIRNS_7IntegerIjLb1ELi4EEEEERS2_OT_(ptr noundef nonnull align 8 dereferenceable(408) %i.bo, ptr noundef nonnull align 1 dereferenceable(4) %19) ; 0 uses
+  %i.by = call noundef nonnull align 8 dereferenceable(408) ptr @_ZN4mold5FatalINS_6X86_64EElsIRNS_7IntegerIjLb1ELi4EEEEERS2_OT_(ptr noundef nonnull align 8 dereferenceable(408) %i.bo, ptr noundef nonnull align 1 dereferenceable(4) %16) ; 0 uses
   call void @_ZN4mold5FatalINS_6X86_64EED1Ev(ptr noundef nonnull align 8 dead_on_return(408) dereferenceable(408) %11) #26
   unreachable
 
@@ -432,26 +428,24 @@ bb.d:                                             ; preds = %bb.b
 _ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit3: ; preds = %bb.c, %bb.d
   %.pn = phi ptr [ %i.l, %bb.c ], [ %i.p, %bb.d ] ; 2 uses
   %.0.copyload.i7.in = getelementptr inbounds nuw i8, ptr %.pn, i64 32
-  %.0.copyload.i7 = load i64, ptr %.0.copyload.i7.in, align 1 ; 2 uses
+  %.0.copyload.i7 = load i64, ptr %.0.copyload.i7.in, align 1
   %i.q = getelementptr inbounds nuw i8, ptr %.pn, i64 8
   %.0.copyload.i4 = load i64, ptr %i.q, align 1
   %i.r = and i64 %.0.copyload.i4, 2048
-  %.not1 = icmp eq i64 %i.r, 0
-  br i1 %.not1, label %bb.f, label %1
+  %.not1 = icmp ne i64 %i.r, 0
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 62
+  %2 = load i8, ptr %1, align 2, !range !94
+  %3 = trunc nuw i8 %2 to i1
+  %or.cond = select i1 %.not1, i1 %3, i1 false
+  br i1 %or.cond, label %bb.e, label %bb.f
 
-1:                                                ; preds = %_ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit3
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 62
-  %3 = load i8, ptr %2, align 2, !tbaa !58, !range !94, !noundef !38
-  %4 = trunc nuw i8 %3 to i1
-  br i1 %4, label %bb.e, label %bb.f
-
-bb.e:                                             ; preds = %1
+bb.e:                                             ; preds = %_ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit3
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.t = load i64, ptr %i.s, align 8, !tbaa !92
   br label %bb.f
 
-bb.f:                                             ; preds = %_ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit3, %1, %bb.e, %bb.a
-  %.sroa.0.0 = phi i64 [ 0, %bb.a ], [ %i.t, %bb.e ], [ %.0.copyload.i7, %1 ], [ %.0.copyload.i7, %_ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit3 ]
+bb.f:                                             ; preds = %_ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit3, %bb.e, %bb.a
+  %.sroa.0.0 = phi i64 [ 0, %bb.a ], [ %i.t, %bb.e ], [ %.0.copyload.i7, %_ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit3 ]
   %.fca.0.insert = insertvalue { i64, ptr } poison, i64 %.sroa.0.0, 0
   %.fca.1.insert = insertvalue { i64, ptr } %.fca.0.insert, ptr %i.b, 1
   ret { i64, ptr } %.fca.1.insert
@@ -854,31 +848,22 @@ bb.d:                                             ; preds = %bb.b
 
 _ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit3.i: ; preds = %bb.d, %bb.c
   %.pn.i = phi ptr [ %i.p, %bb.c ], [ %i.t, %bb.d ] ; 2 uses
-  %.0.copyload.i7.in.i.a = getelementptr inbounds nuw i8, ptr %.pn.i, i64 32
-  %.0.copyload.i7.i = load i64, ptr %.0.copyload.i7.in.i.a, align 1 ; 2 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %.pn.i, i64 8
-  %.0.copyload.i4.i = load i64, ptr %i.u, align 1
-  %5 = and i64 %.0.copyload.i4.i, 2048
-  %.not1.i = icmp eq i64 %5, 0
-  br i1 %.not1.i, label %_ZNK4mold12InputSectionINS_6X86_64EE12get_contentsEv.exit, label %6
+  %.0.copyload.i7.in.i = getelementptr inbounds nuw i8, ptr %.pn.i, i64 32
+  %.0.copyload.i7.in.i.a = getelementptr inbounds nuw i8, ptr %.pn.i, i64 8
+  %.0.copyload.i7.i = load i64, ptr %.0.copyload.i7.in.i.a, align 1
+  %5 = and i64 %.0.copyload.i7.i, 2048
+  %.not1.i = icmp ne i64 %5, 0
+  %6 = getelementptr inbounds nuw i8, ptr %i.d, i64 62
+  %7 = load i8, ptr %6, align 2, !range !94
+  %8 = trunc nuw i8 %7 to i1
+  %or.cond.i = select i1 %.not1.i, i1 %8, i1 false
+  %i.u = getelementptr inbounds nuw i8, ptr %i.d, i64 24
+  %spec.select = select i1 %or.cond.i, ptr %i.u, ptr %.0.copyload.i7.in.i
+  %.sroa.0.0.i = load i64, ptr %spec.select, align 1 ; 10 uses
+  %9 = icmp ugt i64 %.sroa.0.0.i, 4294967295
+  br i1 %9, label %bb.e, label %_ZNK4mold12InputSectionINS_6X86_64EE12get_contentsEv.exit.thread
 
-6:                                                ; preds = %_ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit3.i
-  %7 = getelementptr inbounds nuw i8, ptr %i.d, i64 62
-  %8 = load i8, ptr %7, align 2, !tbaa !58, !range !94, !noundef !38
-  %9 = trunc nuw i8 %8 to i1
-  br i1 %9, label %10, label %_ZNK4mold12InputSectionINS_6X86_64EE12get_contentsEv.exit
-
-10:                                               ; preds = %6
-  %11 = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  %12 = load i64, ptr %11, align 8, !tbaa !92
-  br label %_ZNK4mold12InputSectionINS_6X86_64EE12get_contentsEv.exit
-
-_ZNK4mold12InputSectionINS_6X86_64EE12get_contentsEv.exit: ; preds = %_ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit3.i, %6, %10
-  %.sroa.0.0.i = phi i64 [ %.0.copyload.i7.i, %_ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit3.i ], [ %12, %10 ], [ %.0.copyload.i7.i, %6 ] ; 10 uses
-  %13 = icmp ugt i64 %.sroa.0.0.i, 4294967295
-  br i1 %13, label %bb.e, label %_ZNK4mold12InputSectionINS_6X86_64EE12get_contentsEv.exit.thread
-
-bb.e:                                             ; preds = %_ZNK4mold12InputSectionINS_6X86_64EE12get_contentsEv.exit
+bb.e:                                             ; preds = %_ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit3.i
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
   call void @_ZN4mold5FatalINS_6X86_64EEC1ERNS_7ContextIS1_EE(ptr noundef nonnull align 8 dereferenceable(408) %2, ptr noundef nonnull align 8 dereferenceable(14448) %1) #15
   %i.v = load ptr, ptr %i.c, align 8, !tbaa !457
@@ -887,7 +872,7 @@ bb.e:                                             ; preds = %_ZNK4mold12InputSec
   call void @_ZN4mold5FatalINS_6X86_64EED1Ev(ptr noundef nonnull align 8 dead_on_return(408) dereferenceable(408) %2) #26
   unreachable
 
-_ZNK4mold12InputSectionINS_6X86_64EE12get_contentsEv.exit.thread: ; preds = %_ZNK4mold12InputSectionINS_6X86_64EE12get_contentsEv.exit
+_ZNK4mold12InputSectionINS_6X86_64EE12get_contentsEv.exit.thread: ; preds = %_ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit3.i
   %i.y = load ptr, ptr %0, align 8, !tbaa !458, !nonnull !38, !align !39 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 80
   %.0.copyload.i = load i64, ptr %i.z, align 8
@@ -1290,26 +1275,24 @@ bb.d:                                             ; preds = %bb.b
 _ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit3.i: ; preds = %bb.d, %bb.c
   %.pn.i = phi ptr [ %i.s, %bb.c ], [ %i.w, %bb.d ] ; 2 uses
   %.0.copyload.i7.in.i = getelementptr inbounds nuw i8, ptr %.pn.i, i64 32
-  %.0.copyload.i7.i = load i64, ptr %.0.copyload.i7.in.i, align 1 ; 2 uses
+  %.0.copyload.i7.i = load i64, ptr %.0.copyload.i7.in.i, align 1
   %i.x = getelementptr inbounds nuw i8, ptr %.pn.i, i64 8
   %.0.copyload.i4.i = load i64, ptr %i.x, align 1
   %i.y = and i64 %.0.copyload.i4.i, 2048
-  %.not1.i = icmp eq i64 %i.y, 0
-  br i1 %.not1.i, label %_ZNK4mold12InputSectionINS_6X86_64EE12get_contentsEv.exit, label %2
+  %.not1.i = icmp ne i64 %i.y, 0
+  %2 = getelementptr inbounds nuw i8, ptr %i.g, i64 62
+  %3 = load i8, ptr %2, align 2, !range !94
+  %4 = trunc nuw i8 %3 to i1
+  %or.cond.i = select i1 %.not1.i, i1 %4, i1 false
+  br i1 %or.cond.i, label %bb.e, label %_ZNK4mold12InputSectionINS_6X86_64EE12get_contentsEv.exit
 
-2:                                                ; preds = %_ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit3.i
-  %3 = getelementptr inbounds nuw i8, ptr %i.g, i64 62
-  %4 = load i8, ptr %3, align 2, !tbaa !58, !range !94, !noundef !38
-  %5 = trunc nuw i8 %4 to i1
-  br i1 %5, label %bb.e, label %_ZNK4mold12InputSectionINS_6X86_64EE12get_contentsEv.exit
-
-bb.e:                                             ; preds = %2
+bb.e:                                             ; preds = %_ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit3.i
   %i.z = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   %i.aa = load i64, ptr %i.z, align 8, !tbaa !92
   br label %_ZNK4mold12InputSectionINS_6X86_64EE12get_contentsEv.exit
 
-_ZNK4mold12InputSectionINS_6X86_64EE12get_contentsEv.exit: ; preds = %bb.a, %_ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit3.i, %2, %bb.e
-  %.sroa.0.0.i = phi i64 [ 0, %bb.a ], [ %i.aa, %bb.e ], [ %.0.copyload.i7.i, %2 ], [ %.0.copyload.i7.i, %_ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit3.i ] ; 5 uses
+_ZNK4mold12InputSectionINS_6X86_64EE12get_contentsEv.exit: ; preds = %bb.a, %_ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit3.i, %bb.e
+  %.sroa.0.0.i = phi i64 [ 0, %bb.a ], [ %i.aa, %bb.e ], [ %.0.copyload.i7.i, %_ZNK4mold12InputSectionINS_6X86_64EE4shdrEv.exit3.i ] ; 5 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !459
   %i.ad = ptrtoint ptr %i.ac to i64

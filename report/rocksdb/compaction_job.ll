@@ -205,7 +205,7 @@ _ZN7rocksdb7IterKey14SetInternalKeyERKNS_5SliceEmNS_9ValueTypeEPS2_.exit: ; pred
   store i64 %i.ca, ptr %i.cm, align 8, !tbaa !707
   %i.cn = getelementptr inbounds nuw i8, ptr %3, i64 215 ; 2 uses
   store i8 0, ptr %i.cn, align 1, !tbaa !709
-  br i1 %.not6096121, label %.thread122, label %5
+  br i1 %.not6096121, label %.thread122, label %bb.v
 
 .thread122:                                       ; preds = %_ZN7rocksdb7IterKey14SetInternalKeyERKNS_5SliceEmNS_9ValueTypeEPS2_.exit
   %i.co = getelementptr inbounds nuw i8, ptr %3, i64 560
@@ -214,26 +214,20 @@ _ZN7rocksdb7IterKey14SetInternalKeyERKNS_5SliceEmNS_9ValueTypeEPS2_.exit: ; pred
   store i64 %i.ca, ptr %.sroa.46.0..sroa_idx123, align 8, !tbaa !421
   br label %bb.w
 
-5:                                                ; preds = %_ZN7rocksdb7IterKey14SetInternalKeyERKNS_5SliceEmNS_9ValueTypeEPS2_.exit
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 128
-  %7 = getelementptr inbounds nuw i8, ptr %3, i64 136
-  %8 = load i64, ptr %7, align 8, !tbaa !490      ; 2 uses
-  %9 = sub i64 %i.bz, %8
-  %10 = getelementptr inbounds nuw i8, ptr %i.ck, i64 %9
-  %11 = load ptr, ptr %6, align 8, !tbaa !489
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %10, ptr align 1 %11, i64 %8, i1 false)
-  %12 = load ptr, ptr %i.cl, align 8, !tbaa !706
-  %13 = load ptr, ptr %i.bw, align 8, !tbaa !705  ; 2 uses
-  %14 = icmp eq ptr %12, %13
-  br i1 %14, label %bb.v, label %15
-
-15:                                               ; preds = %5
-  %16 = getelementptr inbounds nuw i8, ptr %3, i64 256
-  %17 = load ptr, ptr %16, align 8, !tbaa !710
-  br label %bb.v
-
-bb.v:                                             ; preds = %15, %5
-  %.sink.i = phi ptr [ %17, %15 ], [ %13, %5 ]
+bb.v:                                             ; preds = %_ZN7rocksdb7IterKey14SetInternalKeyERKNS_5SliceEmNS_9ValueTypeEPS2_.exit
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 128
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 136
+  %7 = load i64, ptr %6, align 8, !tbaa !490      ; 2 uses
+  %8 = sub i64 %i.bz, %7
+  %9 = getelementptr inbounds nuw i8, ptr %i.ck, i64 %8
+  %10 = load ptr, ptr %5, align 8, !tbaa !489
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %9, ptr align 1 %10, i64 %7, i1 false)
+  %11 = load ptr, ptr %i.cl, align 8, !tbaa !706
+  %12 = load ptr, ptr %i.bw, align 8, !tbaa !705  ; 2 uses
+  %13 = icmp eq ptr %11, %12
+  %14 = getelementptr inbounds nuw i8, ptr %3, i64 256
+  %15 = load ptr, ptr %14, align 8
+  %.sink.i = select i1 %13, ptr %12, ptr %15
   %i.cp = load i64, ptr %i.cm, align 8, !tbaa !707
   %i.cq = getelementptr i8, ptr %.sink.i, i64 %i.cp
   %i.cr = getelementptr i8, ptr %i.cq, i64 -8
@@ -299,7 +293,7 @@ _ZN7rocksdb7IterKey14SetInternalKeyERKNS_5SliceEmNS_9ValueTypeEPS2_.exit72: ; pr
   store i64 %i.dg, ptr %i.ds, align 8, !tbaa !707
   %i.dt = getelementptr inbounds nuw i8, ptr %3, i64 423 ; 2 uses
   store i8 0, ptr %i.dt, align 1, !tbaa !709
-  br i1 %.not6096120, label %.thread126, label %18
+  br i1 %.not6096120, label %.thread126, label %bb.aa
 
 .thread126:                                       ; preds = %_ZN7rocksdb7IterKey14SetInternalKeyERKNS_5SliceEmNS_9ValueTypeEPS2_.exit72
   %i.du = getelementptr inbounds nuw i8, ptr %3, i64 576
@@ -308,26 +302,20 @@ _ZN7rocksdb7IterKey14SetInternalKeyERKNS_5SliceEmNS_9ValueTypeEPS2_.exit72: ; pr
   store i64 %i.dg, ptr %.sroa.42.0..sroa_idx127, align 8, !tbaa !421
   br label %bb.ab
 
-18:                                               ; preds = %_ZN7rocksdb7IterKey14SetInternalKeyERKNS_5SliceEmNS_9ValueTypeEPS2_.exit72
-  %19 = getelementptr inbounds nuw i8, ptr %3, i64 128
-  %20 = getelementptr inbounds nuw i8, ptr %3, i64 136
-  %21 = load i64, ptr %20, align 8, !tbaa !490    ; 2 uses
-  %22 = sub i64 %i.df, %21
-  %23 = getelementptr inbounds nuw i8, ptr %i.dq, i64 %22
-  %24 = load ptr, ptr %19, align 8, !tbaa !489
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %23, ptr align 1 %24, i64 %21, i1 false)
-  %25 = load ptr, ptr %i.dr, align 8, !tbaa !706
-  %26 = load ptr, ptr %i.dc, align 8, !tbaa !705  ; 2 uses
-  %27 = icmp eq ptr %25, %26
-  br i1 %27, label %bb.aa, label %28
-
-28:                                               ; preds = %18
-  %29 = getelementptr inbounds nuw i8, ptr %3, i64 464
-  %30 = load ptr, ptr %29, align 8, !tbaa !710
-  br label %bb.aa
-
-bb.aa:                                            ; preds = %28, %18
-  %.sink.i74 = phi ptr [ %30, %28 ], [ %26, %18 ]
+bb.aa:                                            ; preds = %_ZN7rocksdb7IterKey14SetInternalKeyERKNS_5SliceEmNS_9ValueTypeEPS2_.exit72
+  %16 = getelementptr inbounds nuw i8, ptr %3, i64 128
+  %17 = getelementptr inbounds nuw i8, ptr %3, i64 136
+  %18 = load i64, ptr %17, align 8, !tbaa !490    ; 2 uses
+  %19 = sub i64 %i.df, %18
+  %20 = getelementptr inbounds nuw i8, ptr %i.dq, i64 %19
+  %21 = load ptr, ptr %16, align 8, !tbaa !489
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %20, ptr align 1 %21, i64 %18, i1 false)
+  %22 = load ptr, ptr %i.dr, align 8, !tbaa !706
+  %23 = load ptr, ptr %i.dc, align 8, !tbaa !705  ; 2 uses
+  %24 = icmp eq ptr %22, %23
+  %25 = getelementptr inbounds nuw i8, ptr %3, i64 464
+  %26 = load ptr, ptr %25, align 8
+  %.sink.i74 = select i1 %24, ptr %23, ptr %26
   %i.dv = load i64, ptr %i.ds, align 8, !tbaa !707
   %i.dw = getelementptr i8, ptr %.sink.i74, i64 %i.dv
   %i.dx = getelementptr i8, ptr %i.dw, i64 -8

@@ -204,36 +204,34 @@ bb.cj:                                            ; preds = %.noexc70
   call void @llvm.lifetime.start.p0(ptr nonnull %16)
   %i.ol = load i64, ptr %i.bt, align 8, !tbaa !77 ; 2 uses
   %.not.i86.i = icmp eq i64 %i.ol, 0
-  br i1 %.not.i86.i, label %26, label %bb.ck
+  br i1 %.not.i86.i, label %_ZNK4bssl17ParsedCertificate18policy_constraintsEv.exit.i.i.a, label %bb.ck
 
 bb.ck:                                            ; preds = %.noexc83
   %i.om = add i64 %i.ol, -1
   store i64 %i.om, ptr %i.bt, align 8, !tbaa !77
-  br label %26
+  br label %_ZNK4bssl17ParsedCertificate18policy_constraintsEv.exit.i.i.a
 
-26:                                               ; preds = %bb.ck, %.noexc83
-  %27 = getelementptr inbounds nuw i8, ptr %i.dq, i64 592
-  %28 = load i8, ptr %27, align 8, !tbaa !219, !range !68, !noundef !69
-  %29 = trunc nuw i8 %28 to i1
-  br i1 %29, label %_ZNK4bssl17ParsedCertificate18policy_constraintsEv.exit.i.i.a, label %.critedge.i87.i
-
-_ZNK4bssl17ParsedCertificate18policy_constraintsEv.exit.i.i.a: ; preds = %26
-  %i.on = getelementptr inbounds nuw i8, ptr %i.dq, i64 594
-  %i.oo = load i8, ptr %i.on, align 2, !tbaa !220, !range !68, !noundef !69
+_ZNK4bssl17ParsedCertificate18policy_constraintsEv.exit.i.i.a: ; preds = %bb.ck, %.noexc83
+  %i.on = getelementptr inbounds nuw i8, ptr %i.dq, i64 592
+  %i.oo = load i8, ptr %i.on, align 8, !tbaa !219, !range !68, !noundef !69
   %i.op = trunc nuw i8 %i.oo to i1
   br i1 %i.op, label %_ZNK4bssl17ParsedCertificate18policy_constraintsEv.exit15.i.i, label %.critedge.i87.i
 
 _ZNK4bssl17ParsedCertificate18policy_constraintsEv.exit15.i.i: ; preds = %_ZNK4bssl17ParsedCertificate18policy_constraintsEv.exit.i.i.a
   %i.oq = getelementptr inbounds nuw i8, ptr %i.dq, i64 593
+  %26 = getelementptr inbounds nuw i8, ptr %i.dq, i64 594
+  %27 = load i8, ptr %26, align 2, !tbaa !220, !range !68, !noundef !69
+  %28 = trunc nuw i8 %27 to i1
   %i.or = load i8, ptr %i.oq, align 1
   %i.os = icmp eq i8 %i.or, 0
-  br i1 %i.os, label %bb.cl, label %.critedge.i87.i
+  %or.cond.i95.i = select i1 %28, i1 %i.os, i1 false
+  br i1 %or.cond.i95.i, label %bb.cl, label %.critedge.i87.i
 
 bb.cl:                                            ; preds = %_ZNK4bssl17ParsedCertificate18policy_constraintsEv.exit15.i.i
   store i64 0, ptr %i.bt, align 8, !tbaa !77
   br label %.critedge.i87.i
 
-.critedge.i87.i:                                  ; preds = %bb.cl, %_ZNK4bssl17ParsedCertificate18policy_constraintsEv.exit15.i.i, %_ZNK4bssl17ParsedCertificate18policy_constraintsEv.exit.i.i.a, %26
+.critedge.i87.i:                                  ; preds = %bb.cl, %_ZNK4bssl17ParsedCertificate18policy_constraintsEv.exit15.i.i, %_ZNK4bssl17ParsedCertificate18policy_constraintsEv.exit.i.i.a
   invoke fastcc void @_ZN4bssl12_GLOBAL__N_136VerifyNoUnconsumedCriticalExtensionsERKNS_17ParsedCertificateEPNS_10CertErrorsEbNS_10KeyPurposeE(ptr noundef nonnull readonly align 8 dereferenceable(784) %i.dq, ptr noundef %i.dr, i1 noundef zeroext %i.ok, i32 noundef %4)
           to label %.noexc84 unwind label %.loopexit.split-lp.loopexit
 

@@ -205,29 +205,27 @@ _Z11do_per_stepll.exit.thread:                    ; preds = %bb.a, %bb.b, %_Z11d
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 12
   %i.m = load i32, ptr %i.l, align 4, !tbaa !62   ; 2 uses
   %.not.i136 = icmp eq i32 %i.m, 0
-  br i1 %.not.i136, label %_Z11do_per_stepll.exit138.thread, label %_Z11do_per_stepll.exit138
+  br i1 %.not.i136, label %bb.d, label %_Z11do_per_stepll.exit138
 
 _Z11do_per_stepll.exit138:                        ; preds = %_Z11do_per_stepll.exit.thread
   %i.n = sext i32 %i.m to i64
   %i.o = srem i64 %7, %i.n
   %i.p = icmp eq i64 %i.o, 0
-  br i1 %i.p, label %bb.c, label %_Z11do_per_stepll.exit138.thread
+  br i1 %i.p, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %_Z11do_per_stepll.exit138
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 101
   %i.r = load i8, ptr %i.q, align 1, !tbaa !63, !range !64, !noundef !65
   %i.s = trunc nuw i8 %i.r to i1
-  br label %_Z11do_per_stepll.exit138.thread
+  br label %bb.d
 
-_Z11do_per_stepll.exit138.thread:                 ; preds = %_Z11do_per_stepll.exit.thread, %bb.c, %_Z11do_per_stepll.exit138
+bb.d:                                             ; preds = %_Z11do_per_stepll.exit.thread, %bb.c, %_Z11do_per_stepll.exit138
   %10 = phi i1 [ false, %_Z11do_per_stepll.exit138 ], [ %i.s, %bb.c ], [ false, %_Z11do_per_stepll.exit.thread ] ; 4 uses
-  br i1 %i.k, label %bb.d, label %bb.f
-
-bb.d:                                             ; preds = %_Z11do_per_stepll.exit138.thread
-  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.u = load i32, ptr %i.t, align 4, !tbaa !103
+  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 4 uses
+  %i.u = load i32, ptr %i.t, align 4
   %i.v = icmp eq i32 %i.u, 0
-  br i1 %i.v, label %bb.e, label %bb.f
+  %or.cond = select i1 %i.k, i1 %i.v, i1 false
+  br i1 %or.cond, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -236,7 +234,7 @@ bb.e:                                             ; preds = %bb.d
   %i.z = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.x, ptr noundef nonnull @.str.5, double noundef %i.y) #28 ; 0 uses
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.d, %_Z11do_per_stepll.exit138.thread
+bb.f:                                             ; preds = %bb.e, %bb.d
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 104 ; 2 uses
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !41 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 112 ; 2 uses
@@ -616,7 +614,6 @@ bb.q:                                             ; preds = %bb.p, %._crit_edge
   br i1 %.not223241, label %._crit_edge246, label %.lr.ph245
 
 .lr.ph245:                                        ; preds = %bb.q
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
   %i.jq = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.jr = fpext float %6 to double                ; 2 uses
   %i.js = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -648,7 +645,7 @@ bb.r:                                             ; preds = %.lr.ph245, %_ZL8do_
   br i1 %i.k, label %bb.s, label %bb.u
 
 bb.s:                                             ; preds = %bb.r
-  %i.ke = load i32, ptr %11, align 4, !tbaa !103
+  %i.ke = load i32, ptr %i.t, align 4, !tbaa !103
   %i.kf = icmp eq i32 %i.ke, 0
   br i1 %i.kf, label %bb.t, label %.critedge135
 
@@ -1051,7 +1048,7 @@ bb.bg:                                            ; preds = %.loopexit, %.loopex
   %i.cct = load ptr, ptr %i.cch, align 8, !tbaa !141
   %i.ccu = load i32, ptr %i.ccl, align 8, !tbaa !121
   call void @_Z11translate_xPA3_fiPKf(ptr noundef %i.cct, i32 noundef %i.ccu, ptr noundef nonnull %i.b)
-  %i.ccv = load i32, ptr %11, align 4, !tbaa !103
+  %i.ccv = load i32, ptr %i.t, align 4, !tbaa !103
   %i.ccw = icmp eq i32 %i.ccv, 0
   call fastcc void @_ZL11do_flexiblebP10gmx_enfrotP13gmx_enfrotgrpN3gmx8ArrayRefIKNS3_11BasicVectorIfEEEEPA3_Kfdbb(i1 noundef zeroext %i.ccw, ptr noundef %2, ptr noundef %.sroa.0197.0242, ptr %4, ptr noundef %3, double noundef %i.jr, i1 noundef zeroext %i.k, i1 noundef zeroext %10)
   br label %_ZL8do_fixedP13gmx_enfrotgrpbb.exit
@@ -1061,7 +1058,7 @@ bb.bh:                                            ; preds = %.loopexit, %.loopex
   store <2 x float> zeroinitializer, ptr %i.ccx, align 8, !tbaa !61
   %i.ccy = getelementptr inbounds nuw i8, ptr %.sroa.0197.0242, i64 104
   store float 0.000000e+00, ptr %i.ccy, align 8, !tbaa !61
-  %i.ccz = load i32, ptr %11, align 4, !tbaa !103
+  %i.ccz = load i32, ptr %i.t, align 4, !tbaa !103
   %i.cda = icmp eq i32 %i.ccz, 0
   call fastcc void @_ZL11do_flexiblebP10gmx_enfrotP13gmx_enfrotgrpN3gmx8ArrayRefIKNS3_11BasicVectorIfEEEEPA3_Kfdbb(i1 noundef zeroext %i.cda, ptr noundef %2, ptr noundef %.sroa.0197.0242, ptr %4, ptr noundef %3, double noundef %i.jr, i1 noundef zeroext %i.k, i1 noundef zeroext %10)
   br label %_ZL8do_fixedP13gmx_enfrotgrpbb.exit

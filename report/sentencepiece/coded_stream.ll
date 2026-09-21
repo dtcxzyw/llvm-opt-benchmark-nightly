@@ -204,15 +204,13 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.r = load i32, ptr %i.q, align 8, !tbaa !38   ; 2 uses
   %.not17 = icmp slt i32 %i.p, %i.r
-  br i1 %.not17, label %bb.v, label %3
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %4 = load i32, ptr %3, align 8
+  %.not18 = icmp eq i32 %i.r, %4
+  %or.cond = select i1 %.not17, i1 true, i1 %.not18
+  br i1 %or.cond, label %bb.v, label %bb.e
 
-3:                                                ; preds = %bb.d
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %5 = load i32, ptr %4, align 8, !tbaa !29
-  %.not18 = icmp eq i32 %i.r, %5
-  br i1 %.not18, label %bb.v, label %bb.e
-
-bb.e:                                             ; preds = %3
+bb.e:                                             ; preds = %bb.d
   tail call void @_ZN6google8protobuf2io16CodedInputStream25PrintTotalBytesLimitErrorEv(ptr noundef nonnull align 8 dereferenceable(80) %0)
   br label %bb.v
 
@@ -345,8 +343,8 @@ bb.u:                                             ; preds = %_ZN6google8protobuf
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   br label %bb.v
 
-bb.v:                                             ; preds = %bb.d, %3, %bb.e, %bb.u
-  %.1 = phi i1 [ %i.x, %bb.u ], [ false, %bb.e ], [ false, %3 ], [ false, %bb.d ]
+bb.v:                                             ; preds = %bb.d, %bb.e, %bb.u
+  %.1 = phi i1 [ %i.x, %bb.u ], [ false, %bb.e ], [ false, %bb.d ]
   ret i1 %.1
 }
 

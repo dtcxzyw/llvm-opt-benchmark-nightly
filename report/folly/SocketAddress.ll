@@ -204,29 +204,17 @@ _ZNK5folly13SocketAddress9getFamilyEv.exit35:     ; preds = %_ZNK5folly13SocketA
   %.0.i34 = phi i16 [ %i.p, %_ZSt3getIN5folly13SocketAddress6IPAddrEJS2_NS1_16ExternalUnixAddrENS1_9VsockAddrEEERKT_RKSt7variantIJDpT0_EE.exit.i33 ], [ 1, %_ZNK5folly13SocketAddress9getFamilyEv.exit ]
   %.not = icmp eq i16 %.0.i, %.0.i34
   %i.q = icmp eq i8 %i.b, 1                       ; 2 uses
-  br i1 %.not, label %bb.d, label %2
+  br i1 %.not, label %bb.d, label %_ZSt3getIN5folly13SocketAddress6IPAddrEJS2_NS1_16ExternalUnixAddrENS1_9VsockAddrEEERKT_RKSt7variantIJDpT0_EE.exit.i41
 
-2:                                                ; preds = %_ZNK5folly13SocketAddress9getFamilyEv.exit35
-  br i1 %i.q, label %_ZNK5folly13SocketAddress9getFamilyEv.exit39, label %_ZSt3getIN5folly13SocketAddress6IPAddrEJS2_NS1_16ExternalUnixAddrENS1_9VsockAddrEEERKT_RKSt7variantIJDpT0_EE.exit.i37, !prof !983
-
-_ZSt3getIN5folly13SocketAddress6IPAddrEJS2_NS1_16ExternalUnixAddrENS1_9VsockAddrEEERKT_RKSt7variantIJDpT0_EE.exit.i37: ; preds = %2
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 20
-  %4 = load i16, ptr %3, align 4, !tbaa !37
-  br label %_ZNK5folly13SocketAddress9getFamilyEv.exit39
-
-_ZNK5folly13SocketAddress9getFamilyEv.exit39:     ; preds = %2, %_ZSt3getIN5folly13SocketAddress6IPAddrEJS2_NS1_16ExternalUnixAddrENS1_9VsockAddrEEERKT_RKSt7variantIJDpT0_EE.exit.i37
-  %.0.i38 = phi i16 [ %4, %_ZSt3getIN5folly13SocketAddress6IPAddrEJS2_NS1_16ExternalUnixAddrENS1_9VsockAddrEEERKT_RKSt7variantIJDpT0_EE.exit.i37 ], [ 1, %2 ]
-  %5 = icmp eq i8 %i.j, 1
-  br i1 %5, label %_ZNK5folly13SocketAddress9getFamilyEv.exit43, label %_ZSt3getIN5folly13SocketAddress6IPAddrEJS2_NS1_16ExternalUnixAddrENS1_9VsockAddrEEERKT_RKSt7variantIJDpT0_EE.exit.i41, !prof !983
-
-_ZSt3getIN5folly13SocketAddress6IPAddrEJS2_NS1_16ExternalUnixAddrENS1_9VsockAddrEEERKT_RKSt7variantIJDpT0_EE.exit.i41: ; preds = %_ZNK5folly13SocketAddress9getFamilyEv.exit39
+_ZSt3getIN5folly13SocketAddress6IPAddrEJS2_NS1_16ExternalUnixAddrENS1_9VsockAddrEEERKT_RKSt7variantIJDpT0_EE.exit.i41: ; preds = %_ZNK5folly13SocketAddress9getFamilyEv.exit35
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 20
+  %3 = load i16, ptr %2, align 4
+  %.0.i38 = select i1 %i.q, i16 1, i16 %3, !prof !983
+  %4 = icmp eq i8 %i.j, 1
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 20
-  %i.s = load i16, ptr %i.r, align 4, !tbaa !37
-  br label %_ZNK5folly13SocketAddress9getFamilyEv.exit43
-
-_ZNK5folly13SocketAddress9getFamilyEv.exit43:     ; preds = %_ZNK5folly13SocketAddress9getFamilyEv.exit39, %_ZSt3getIN5folly13SocketAddress6IPAddrEJS2_NS1_16ExternalUnixAddrENS1_9VsockAddrEEERKT_RKSt7variantIJDpT0_EE.exit.i41
-  %.0.i42 = phi i16 [ %i.s, %_ZSt3getIN5folly13SocketAddress6IPAddrEJS2_NS1_16ExternalUnixAddrENS1_9VsockAddrEEERKT_RKSt7variantIJDpT0_EE.exit.i41 ], [ 1, %_ZNK5folly13SocketAddress9getFamilyEv.exit39 ]
-  %6 = icmp ult i16 %.0.i38, %.0.i42
+  %i.s = load i16, ptr %i.r, align 4
+  %.0.i42 = select i1 %4, i16 1, i16 %i.s, !prof !983
+  %5 = icmp ult i16 %.0.i38, %.0.i42
   br label %bb.p
 
 bb.d:                                             ; preds = %_ZNK5folly13SocketAddress9getFamilyEv.exit35
@@ -328,8 +316,8 @@ bb.o:                                             ; preds = %bb.m
   tail call void @__cxa_free_exception(ptr nonnull %i.aw) #27
   resume { ptr, i32 } %i.ax
 
-bb.p:                                             ; preds = %bb.k, %bb.l, %_ZSt3getIN5folly13SocketAddress16ExternalUnixAddrEJNS1_6IPAddrES2_NS1_9VsockAddrEEERKT_RKSt7variantIJDpT0_EE.exit, %_ZSt3getIN5folly13SocketAddress16ExternalUnixAddrEJNS1_6IPAddrES2_NS1_9VsockAddrEEERKT_RKSt7variantIJDpT0_EE.exit45, %bb.i, %bb.h, %_ZNK5folly13SocketAddress9getFamilyEv.exit43
-  %.3 = phi i1 [ %6, %_ZNK5folly13SocketAddress9getFamilyEv.exit43 ], [ true, %_ZSt3getIN5folly13SocketAddress16ExternalUnixAddrEJNS1_6IPAddrES2_NS1_9VsockAddrEEERKT_RKSt7variantIJDpT0_EE.exit45 ], [ false, %_ZSt3getIN5folly13SocketAddress16ExternalUnixAddrEJNS1_6IPAddrES2_NS1_9VsockAddrEEERKT_RKSt7variantIJDpT0_EE.exit ], [ %i.ak, %bb.i ], [ %i.ad, %bb.h ], [ %i.at, %bb.k ], [ %i.av, %bb.l ]
+bb.p:                                             ; preds = %bb.k, %bb.l, %_ZSt3getIN5folly13SocketAddress16ExternalUnixAddrEJNS1_6IPAddrES2_NS1_9VsockAddrEEERKT_RKSt7variantIJDpT0_EE.exit, %_ZSt3getIN5folly13SocketAddress16ExternalUnixAddrEJNS1_6IPAddrES2_NS1_9VsockAddrEEERKT_RKSt7variantIJDpT0_EE.exit45, %bb.i, %bb.h, %_ZSt3getIN5folly13SocketAddress6IPAddrEJS2_NS1_16ExternalUnixAddrENS1_9VsockAddrEEERKT_RKSt7variantIJDpT0_EE.exit.i41
+  %.3 = phi i1 [ %5, %_ZSt3getIN5folly13SocketAddress6IPAddrEJS2_NS1_16ExternalUnixAddrENS1_9VsockAddrEEERKT_RKSt7variantIJDpT0_EE.exit.i41 ], [ true, %_ZSt3getIN5folly13SocketAddress16ExternalUnixAddrEJNS1_6IPAddrES2_NS1_9VsockAddrEEERKT_RKSt7variantIJDpT0_EE.exit45 ], [ false, %_ZSt3getIN5folly13SocketAddress16ExternalUnixAddrEJNS1_6IPAddrES2_NS1_9VsockAddrEEERKT_RKSt7variantIJDpT0_EE.exit ], [ %i.ak, %bb.i ], [ %i.ad, %bb.h ], [ %i.at, %bb.k ], [ %i.av, %bb.l ]
   ret i1 %.3
 }
 
