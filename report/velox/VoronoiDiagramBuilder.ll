@@ -202,19 +202,16 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %scevgep = getelementptr i8, ptr %0, i64 24
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.f, %.lr.ph.i
   %indvar.i = phi i64 [ 0, %.lr.ph.i ], [ %indvar.next.i, %bb.f ] ; 2 uses
   %.sroa.07.023.i.idx = phi i64 [ 24, %.lr.ph.i ], [ %.sroa.07.023.i.add, %bb.f ] ; 2 uses
-  %.pn22.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.07.023.i.ptr, %bb.f ] ; 3 uses
-  %.sroa.07.023.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.07.023.i.idx ; 5 uses
-  %2 = add nuw i64 %indvar.i, 1                   ; 2 uses
-  %.neg.i = mul nsw i64 %2, -24
-  %i.f = add nsw i64 %.neg.i, 24                  ; 2 uses
-  %scevgep.i = getelementptr i8, ptr %.sroa.07.023.i.ptr, i64 %i.f
-  %scevgep24.i = getelementptr i8, ptr %.pn22.i, i64 %i.f
-  %3 = mul nuw nsw i64 %2, 24
+  %.pn22.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.07.023.i.ptr, %bb.f ] ; 2 uses
+  %.sroa.07.023.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.07.023.i.idx ; 4 uses
+  %.neg.i = mul nuw nsw i64 %indvar.i, 24
+  %i.f = add nuw nsw i64 %.neg.i, 24
   %i.g = load double, ptr %.sroa.07.023.i.ptr, align 8, !tbaa !58 ; 5 uses
   %i.h = load double, ptr %0, align 8, !tbaa !58  ; 2 uses
   %i.i = fcmp olt double %i.g, %i.h
@@ -233,7 +230,7 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos11triangul
 
 .loopexit.i:                                      ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.i, %bb.b
   %.sroa.0.i.sroa.0.0.copyload = load <3 x double>, ptr %.sroa.07.023.i.ptr, align 8
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i, ptr noundef nonnull align 8 dereferenceable(1) %scevgep24.i, i64 %3, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.f, i1 false)
   store <3 x double> %.sroa.0.i.sroa.0.0.copyload, ptr %0, align 8
   br label %bb.f
 
@@ -334,20 +331,20 @@ bb.i:                                             ; preds = %bb.a
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.n, %.lr.ph.i21
-  %indvar.i22 = phi i64 [ 0, %.lr.ph.i21 ], [ %indvar.next.i43, %bb.n ] ; 3 uses
+  %indvar.i22 = phi i64 [ 0, %.lr.ph.i21 ], [ %indvar.next.i43, %bb.n ] ; 2 uses
   %.sroa.07.023.i23 = phi ptr [ %.sroa.07.020.i19, %.lr.ph.i21 ], [ %.sroa.07.0.i41, %bb.n ] ; 7 uses
   %.pn22.i24 = phi ptr [ %0, %.lr.ph.i21 ], [ %.sroa.07.023.i23, %bb.n ] ; 3 uses
   %i.af = mul nuw i64 %indvar.i22, 24
-  %i.ag = add i64 %i.af, 24
-  %i.ah = udiv i64 %i.ag, 24                      ; 2 uses
-  %4 = icmp samesign ugt i64 %indvar.i22, 768614336404564649 ; 2 uses
-  %5 = select i1 %4, i64 0, i64 24
-  %.neg.i26 = mul i64 %i.ah, -24
-  %6 = add i64 %.neg.i26, %5                      ; 2 uses
-  %scevgep.i27 = getelementptr i8, ptr %.sroa.07.023.i23, i64 %6
-  %scevgep24.i28 = getelementptr i8, ptr %.pn22.i24, i64 %6
-  %7 = zext i1 %4 to i64
-  %i.ai = add nuw nsw i64 %i.ah, %7
+  %i.ag = add i64 %i.af, 24                       ; 3 uses
+  %i.ah = udiv exact i64 %i.ag, 24
+  %2 = icmp ne i64 %i.ag, 0                       ; 2 uses
+  %umin.neg.i25 = sext i1 %2 to i64
+  %3 = select i1 %2, i64 24, i64 0
+  %4 = sub i64 %3, %i.ag                          ; 2 uses
+  %scevgep.i27 = getelementptr i8, ptr %.sroa.07.023.i23, i64 %4
+  %scevgep24.i28 = getelementptr i8, ptr %.pn22.i24, i64 %4
+  %5 = add nuw nsw i64 %i.ah, 1
+  %i.ai = add nsw i64 %5, %umin.neg.i25
   %i.aj = mul nuw i64 %i.ai, 24
   %i.ak = load double, ptr %.sroa.07.023.i23, align 8, !tbaa !58 ; 5 uses
   %i.al = load double, ptr %0, align 8, !tbaa !58 ; 2 uses
