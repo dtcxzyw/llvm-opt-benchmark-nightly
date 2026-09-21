@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/postgres/original/tar?download=true
 inline.NumInlined: 12
 loop-unroll.NumCompletelyUnrolled: 13
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 18
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 19
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -70,7 +70,7 @@ bb.b:                                             ; preds = %bb.a
   store i8 %i.y, ptr %i.ab, align 1
   %i.ac = lshr i64 %.023, 6
   %.not.1 = icmp eq i32 %i.z, 0
-  br i1 %.not.1, label %.loopexit, label %.lr.ph24, !llvm.loop !6
+  br i1 %.not.1, label %.loopexit, label %.lr.ph24, !llvm.loop !7
 
 bb.c:                                             ; preds = %bb.a
   store i8 -128, ptr %0, align 1
@@ -78,21 +78,59 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.ad, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %bb.c
-  %i.ae = zext nneg i32 %1 to i64
-  br label %.lr.ph
+  %i.ae = zext nneg i32 %1 to i64                 ; 3 uses
+  %3 = add nuw nsw i64 %i.ae, 3
+  %xtraiter = and i64 %3, 3                       ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %indvars.iv = phi i64 [ %i.ae, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
-  %.120 = phi i64 [ %2, %.lr.ph.preheader ], [ %i.ah, %.lr.ph ] ; 2 uses
-  %i.af = trunc i64 %.120 to i8
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+.lr.ph.prol:                                      ; preds = %.lr.ph.preheader, %.lr.ph.prol
+  %indvars.iv.prol = phi i64 [ %indvars.iv.next.prol, %.lr.ph.prol ], [ %i.ae, %.lr.ph.preheader ]
+  %.120.prol = phi i64 [ %6, %.lr.ph.prol ], [ %2, %.lr.ph.preheader ] ; 2 uses
+  %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.prol ], [ 0, %.lr.ph.preheader ]
+  %4 = trunc i64 %.120.prol to i8
+  %indvars.iv.next.prol = add nsw i64 %indvars.iv.prol, -1 ; 3 uses
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv.next.prol
+  store i8 %4, ptr %5, align 1
+  %6 = lshr i64 %.120.prol, 8                     ; 2 uses
+  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
+  br i1 %prol.iter.cmp.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol, !llvm.loop !8
+
+.lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
+  %indvars.iv.unr = phi i64 [ %i.ae, %.lr.ph.preheader ], [ %indvars.iv.next.prol, %.lr.ph.prol ]
+  %.120.unr = phi i64 [ %2, %.lr.ph.preheader ], [ %6, %.lr.ph.prol ]
+  %7 = add nsw i32 %1, -2
+  %8 = icmp ult i32 %7, 3
+  br i1 %8, label %.loopexit, label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.unr, %.lr.ph.prol.loopexit ] ; 5 uses
+  %.120 = phi i64 [ %i.ah, %.lr.ph ], [ %.120.unr, %.lr.ph.prol.loopexit ] ; 5 uses
+  %9 = trunc i64 %.120 to i8
+  %10 = getelementptr i8, ptr %0, i64 %indvars.iv
+  %11 = getelementptr i8, ptr %10, i64 -1
+  store i8 %9, ptr %11, align 1
+  %12 = lshr i64 %.120, 8
+  %13 = trunc i64 %12 to i8
+  %14 = getelementptr i8, ptr %0, i64 %indvars.iv
+  %15 = getelementptr i8, ptr %14, i64 -2
+  store i8 %13, ptr %15, align 1
+  %16 = lshr i64 %.120, 16
+  %17 = trunc i64 %16 to i8
+  %18 = getelementptr i8, ptr %0, i64 %indvars.iv
+  %19 = getelementptr i8, ptr %18, i64 -3
+  store i8 %17, ptr %19, align 1
+  %20 = lshr i64 %.120, 24
+  %i.af = trunc i64 %20 to i8
+  %indvars.iv.next = add nsw i64 %indvars.iv, -4  ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv.next
   store i8 %i.af, ptr %i.ag, align 1
-  %i.ah = lshr i64 %.120, 8
-  %3 = icmp samesign ugt i64 %indvars.iv, 2
-  br i1 %3, label %.lr.ph, label %.loopexit, !llvm.loop !7
+  %i.ah = lshr i64 %.120, 32
+  %21 = icmp sgt i64 %indvars.iv, 5
+  br i1 %21, label %.lr.ph, label %.loopexit, !llvm.loop !9
 
-.loopexit:                                        ; preds = %.lr.ph, %.lr.ph24.prol.loopexit, %.lr.ph24, %bb.c, %bb.b
+.loopexit:                                        ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %.lr.ph24.prol.loopexit, %.lr.ph24, %bb.c, %bb.b
   ret void
 }
 
@@ -148,7 +186,7 @@ bb.a:
   %i.y = or disjoint i64 %i.u, %i.x               ; 3 uses
   %niter.next.3 = add i32 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i32 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %.critedge.loopexit.unr-lcssa, label %.lr.ph29, !llvm.loop !8
+  br i1 %niter.ncmp.3, label %.critedge.loopexit.unr-lcssa, label %.lr.ph29, !llvm.loop !10
 
 .lr.ph:                                           ; preds = %.preheader19, %bb.b
   %.in = phi i32 [ %i.ab, %bb.b ], [ %1, %.preheader19 ]
@@ -167,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph
   %i.ae = or disjoint i64 %i.ac, %i.ad            ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.11522, i64 1
   %.not = icmp eq i32 %i.ab, 0
-  br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !9
+  br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !11
 
 .critedge.loopexit.unr-lcssa:                     ; preds = %.lr.ph29
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
@@ -191,7 +229,7 @@ bb.b:                                             ; preds = %.lr.ph
   %i.ak = or disjoint i64 %i.ag, %i.aj            ; 2 uses
   %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %.critedge, label %.lr.ph29.epil, !llvm.loop !10
+  br i1 %epil.iter.cmp.not, label %.critedge, label %.lr.ph29.epil, !llvm.loop !12
 
 .critedge:                                        ; preds = %.lr.ph, %bb.b, %.critedge.loopexit.unr-lcssa, %.lr.ph29.epil, %.preheader19, %.preheader
   %.2 = phi i64 [ %i.ak, %.lr.ph29.epil ], [ 0, %.preheader ], [ 0, %.preheader19 ], [ %i.y, %.critedge.loopexit.unr-lcssa ], [ %.123, %.lr.ph ], [ %i.ae, %bb.b ]
@@ -594,10 +632,11 @@ attributes #10 = { nounwind }
 !3 = !{i32 7, !"uwtable", i32 2}
 !4 = !{!"Ubuntu clang version 24.0.0 (++20260804081852+44c6aed9bd9b-1~exp1~20260804202019.1766)"}
 !5 = !{!"llvm.loop.mustprogress"}
-!6 = distinct !{!6, !5}
+!6 = !{!"llvm.loop.unroll.disable"}
 !7 = distinct !{!7, !5}
-!8 = distinct !{!8, !5}
+!8 = distinct !{!8, !6}
 !9 = distinct !{!9, !5}
-!10 = distinct !{!10, !11}
-!11 = !{!"llvm.loop.unroll.disable"}
+!10 = distinct !{!10, !5}
+!11 = distinct !{!11, !5}
+!12 = distinct !{!12, !6}
 end_hunk_1
