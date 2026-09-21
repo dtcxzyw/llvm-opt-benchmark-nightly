@@ -202,12 +202,12 @@ bb.a:
   %5 = alloca %"class.ncnn::Option", align 8      ; 5 uses
   %6 = alloca %"class.ncnn::Option", align 8      ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 44
-  %7 = load <2 x i32>, ptr %i.a, align 4, !tbaa !43
-  %8 = freeze <2 x i32> %7                        ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 216
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 208
-  %i.b = load <2 x i32>, ptr %9, align 8, !tbaa !43
-  %i.c = load <2 x i32>, ptr %10, align 8, !tbaa !43
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 216
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 208
+  %9 = load <2 x i32>, ptr %i.a, align 4, !tbaa !43
+  %10 = freeze <2 x i32> %9                       ; 2 uses
+  %i.b = load <2 x i32>, ptr %7, align 8, !tbaa !43
+  %i.c = load <2 x i32>, ptr %8, align 8, !tbaa !43
   %i.d = add nsw <2 x i32> %i.c, splat (i32 -1)
   %i.e = mul nsw <2 x i32> %i.d, %i.b             ; 2 uses
   %i.f = icmp eq ptr %2, %1
@@ -338,16 +338,15 @@ bb.l:                                             ; preds = %bb.k
   br i1 %or.cond54, label %bb.m, label %bb.o
 
 bb.m:                                             ; preds = %bb.l
-  %i.bj = add nsw <2 x i32> %8, splat (i32 -1)
+  %i.bj = add nsw <2 x i32> %10, splat (i32 -1)
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 224
   %i.bl = load <2 x i32>, ptr %i.bk, align 8, !tbaa !43
   %i.bm = srem <2 x i32> %i.bj, %i.bl
-  %i.bn = sub <2 x i32> %i.e, %i.bm               ; 4 uses
-  %11 = extractelement <2 x i32> %i.bn, i64 0
-  %12 = icmp sgt i32 %11, 0
-  %13 = extractelement <2 x i32> %i.bn, i64 1
-  %14 = icmp sgt i32 %13, 0
-  %or.cond = select i1 %12, i1 true, i1 %14
+  %i.bn = sub <2 x i32> %i.e, %i.bm               ; 3 uses
+  %11 = icmp sgt <2 x i32> %i.bn, zeroinitializer ; 2 uses
+  %12 = extractelement <2 x i1> %11, i64 0
+  %13 = extractelement <2 x i1> %11, i64 1
+  %or.cond = select i1 %12, i1 true, i1 %13
   br i1 %or.cond, label %bb.n, label %bb.r
 
 bb.n:                                             ; preds = %bb.m
@@ -381,7 +380,7 @@ bb.o:                                             ; preds = %bb.l
 
 bb.p:                                             ; preds = %bb.o
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 224
-  %i.ce = add <2 x i32> %8, splat (i32 -1)
+  %i.ce = add <2 x i32> %10, splat (i32 -1)
   %i.cf = load <2 x i32>, ptr %i.cd, align 8, !tbaa !43
   %i.cg = srem <2 x i32> %i.ce, %i.cf
   %i.ch = sub <2 x i32> %i.e, %i.cg               ; 3 uses

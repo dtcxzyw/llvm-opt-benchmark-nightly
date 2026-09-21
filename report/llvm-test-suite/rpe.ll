@@ -204,25 +204,20 @@ begin_hunk_0_@Gsm_RPE_Encoding:bb.a
   %i.lw = shufflevector <4 x i16> %i.lv, <4 x i16> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.lx = shufflevector <8 x i16> %i.lw, <8 x i16> %i.lj, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 12, i32 13, i32 14, i32 15>
   %i.ly = tail call i16 @llvm.vector.reduce.smax.v8i16(<8 x i16> %i.lx)
-  %i.lz = tail call i16 @llvm.smax.i16(i16 %i.ly, i16 %i.lt) ; 7 uses
+  %i.lz = tail call i16 @llvm.smax.i16(i16 %i.ly, i16 %i.lt) ; 4 uses
   %.1.12.i = tail call i16 @llvm.smax.i16(i16 %i.lz, i16 0)
-  %5 = icmp sgt i16 %i.lz, 511
-  %6 = zext i1 %5 to i16
-  %7 = icmp sgt i16 %i.lz, 1023
-  %8 = zext i1 %7 to i16
-  %spec.select.1.i = add nuw nsw i16 %6, %8
-  %i.ma = icmp sgt i16 %i.lz, 2047
+  %5 = insertelement <4 x i16> poison, i16 %i.lz, i64 0
+  %6 = shufflevector <4 x i16> %5, <4 x i16> poison, <4 x i32> zeroinitializer
+  %7 = icmp sgt <4 x i16> %6, <i16 511, i16 1023, i16 2047, i16 4095>
+  %i.ma = icmp sgt i16 %i.lz, 8191
   %i.mb = zext i1 %i.ma to i16
-  %spec.select.2.i = add nuw nsw i16 %spec.select.1.i, %i.mb
-  %i.mc = icmp sgt i16 %i.lz, 4095
+  %i.mc = icmp sgt i16 %i.lz, 16383
   %i.md = zext i1 %i.mc to i16
-  %spec.select.3.i = add nuw nsw i16 %spec.select.2.i, %i.md
-  %9 = icmp sgt i16 %i.lz, 8191
-  %i.me = zext i1 %9 to i16
-  %spec.select.4.i = add nuw nsw i16 %spec.select.3.i, %i.me
-  %10 = icmp sgt i16 %i.lz, 16383
-  %11 = zext i1 %10 to i16
-  %spec.select.5.i = add nuw nsw i16 %spec.select.4.i, %11 ; 2 uses
+  %8 = bitcast <4 x i1> %7 to i4
+  %9 = tail call range(i4 0, 5) i4 @llvm.ctpop.i4(i4 %8)
+  %i.me = zext nneg i4 %9 to i16
+  %spec.select.4.i = add nuw nsw i16 %i.me, %i.mb
+  %spec.select.5.i = add nuw nsw i16 %spec.select.4.i, %i.md ; 2 uses
   %i.mf = zext nneg i16 %.1.12.i to i32
   %i.mg = add nuw nsw i16 %spec.select.5.i, 5
   %i.mh = zext nneg i16 %i.mg to i32
@@ -624,6 +619,9 @@ declare <4 x i16> @llvm.smax.v4i16(<4 x i16>, <4 x i16>) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.vector.reduce.smax.v8i16(<8 x i16>) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i4 @llvm.ctpop.i4(i4) #3
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

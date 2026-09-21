@@ -15,8 +15,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %bb.a
-  %.095 = phi i32 [ %i.a, %bb.a ], [ %8, %bb.d ]  ; 4 uses
-  %.093 = phi i32 [ %i.b, %bb.a ], [ %6, %bb.d ]  ; 4 uses
+  %.095 = phi i32 [ %i.a, %bb.a ], [ %9, %bb.d ]  ; 4 uses
+  %.093 = phi i32 [ %i.b, %bb.a ], [ %10, %bb.d ] ; 4 uses
   %.091 = phi i64 [ %3, %bb.a ], [ %i.aq, %bb.d ] ; 7 uses
   %.087 = phi ptr [ %2, %bb.a ], [ %.390.lcssa, %bb.d ] ; 3 uses
   %.085 = phi ptr [ %1, %bb.a ], [ %.3.lcssa, %bb.d ] ; 3 uses
@@ -113,8 +113,8 @@ adler32_copy_len_16.exit:                         ; preds = %.lr.ph.i.prol.loope
   %.186145 = phi ptr [ %.3.lcssa, %._crit_edge135 ], [ %.085, %bb.b ] ; 2 uses
   %.188144 = phi ptr [ %.390.lcssa, %._crit_edge135 ], [ %.087, %bb.b ] ; 2 uses
   %.192143 = phi i64 [ %i.aq, %._crit_edge135 ], [ %.091, %bb.b ] ; 3 uses
-  %.194142 = phi i32 [ %6, %._crit_edge135 ], [ %.093, %bb.b ]
-  %.196141 = phi i32 [ %8, %._crit_edge135 ], [ %.095, %bb.b ]
+  %.194142 = phi i32 [ %10, %._crit_edge135 ], [ %.093, %bb.b ]
+  %.196141 = phi i32 [ %9, %._crit_edge135 ], [ %.095, %bb.b ]
   %i.ao = tail call i64 @llvm.umin.i64(i64 %.192143, i64 5552)
   %i.ap = and i64 %i.ao, 8176                     ; 3 uses
   %i.aq = sub i64 %.192143, %i.ap                 ; 4 uses
@@ -255,13 +255,15 @@ adler32_copy_len_16.exit:                         ; preds = %.lr.ph.i.prol.loope
   %.199.in.lcssa = phi <4 x i32> [ %i.bv, %._crit_edge ], [ %.lcssa233, %._crit_edge135.loopexit ]
   %.390.lcssa = phi ptr [ %i.az, %._crit_edge ], [ %.lcssa236, %._crit_edge135.loopexit ] ; 2 uses
   %.3.lcssa = phi ptr [ %i.bg, %._crit_edge ], [ %.lcssa232, %._crit_edge135.loopexit ] ; 2 uses
-  %i.dj = add <4 x i32> %.199.in.lcssa, %.lcssa110
-  %4 = shufflevector <4 x i32> %.1101.in.lcssa, <4 x i32> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
-  %i.dk = add <4 x i32> %.1101.in.lcssa, %4
-  %5 = extractelement <4 x i32> %i.dk, i64 0
-  %6 = urem i32 %5, 65521                         ; 3 uses
-  %7 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.dj)
-  %8 = urem i32 %7, 65521                         ; 3 uses
+  %i.dj = add <4 x i32> %.199.in.lcssa, %.lcssa110 ; 2 uses
+  %4 = shufflevector <4 x i32> %i.dj, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 2, i32 3>
+  %i.dk = add <4 x i32> %i.dj, %4                 ; 2 uses
+  %5 = shufflevector <4 x i32> %.1101.in.lcssa, <4 x i32> %i.dk, <2 x i32> <i32 0, i32 5>
+  %6 = shufflevector <4 x i32> %.1101.in.lcssa, <4 x i32> %i.dk, <2 x i32> <i32 2, i32 4>
+  %7 = add <2 x i32> %5, %6
+  %8 = urem <2 x i32> %7, splat (i32 65521)       ; 2 uses
+  %9 = extractelement <2 x i32> %8, i64 1         ; 3 uses
+  %10 = extractelement <2 x i32> %8, i64 0        ; 3 uses
   %i.dl = icmp ugt i64 %i.aq, 15
   br i1 %i.dl, label %.preheader, label %bb.d, !llvm.loop !12
 
@@ -270,8 +272,8 @@ bb.d:                                             ; preds = %._crit_edge135
   br i1 %.not, label %bb.e, label %bb.b
 
 bb.e:                                             ; preds = %bb.d
-  %i.dm = shl nuw i32 %8, 16
-  %i.dn = or disjoint i32 %6, %i.dm
+  %i.dm = shl nuw i32 %9, 16
+  %i.dn = or disjoint i32 %10, %i.dm
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %adler32_copy_len_16.exit
@@ -290,9 +292,6 @@ declare <4 x i32> @llvm.x86.sse2.pmadd.wd(<8 x i16>, <8 x i16>) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #2
 
 attributes #0 = { nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="128" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(none) }

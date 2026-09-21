@@ -205,11 +205,10 @@ bb.ah:                                            ; preds = %._crit_edge337
   %i.qr = add nuw nsw i64 %i.qq, 1
   %i.qs = extractelement <2 x i64> %i.qn, i64 1   ; 4 uses
   tail call void @dt_iop_image_fill(ptr noundef %3, float noundef 0.000000e+00, i64 noundef range(i64 -2147483648, 2147483648) %i.qo, i64 noundef range(i64 -2147483648, 2147483648) %i.qs, i64 noundef 4) #26
-  %6 = icmp ne <2 x i32> %i.qh, zeroinitializer   ; 2 uses
-  %7 = extractelement <2 x i1> %6, i64 0
-  %8 = extractelement <2 x i1> %6, i64 1
-  %or.cond.i = and i1 %7, %8
-  br i1 %or.cond.i, label %.preheader32.i.preheader, label %.loopexit457
+  %6 = icmp eq <2 x i32> %i.qh, zeroinitializer
+  %7 = bitcast <2 x i1> %6 to i2
+  %8 = icmp eq i2 %7, 0
+  br i1 %8, label %.preheader32.i.preheader, label %.loopexit457
 
 .preheader32.i.preheader:                         ; preds = %bb.ah
   %i.qt = tail call <2 x i64> @llvm.umax.v2i64(<2 x i64> %i.qn, <2 x i64> splat (i64 2))
@@ -612,11 +611,10 @@ bb.aj:                                            ; preds = %._crit_edge360
   %i.abq = lshr i64 %i.abp, 1                     ; 2 uses
   %i.abr = add nuw nsw i64 %i.abq, 1
   tail call void @dt_iop_image_fill(ptr noundef %3, float noundef 0.000000e+00, i64 noundef range(i64 -2147483648, 2147483648) %i.zp, i64 noundef range(i64 -2147483648, 2147483648) %i.zr, i64 noundef 4) #26
-  %9 = icmp ne <2 x i32> %i.zn, zeroinitializer   ; 2 uses
-  %10 = extractelement <2 x i1> %9, i64 0
-  %11 = extractelement <2 x i1> %9, i64 1
-  %or.cond.i294 = and i1 %10, %11
-  br i1 %or.cond.i294, label %.preheader32.i295.preheader, label %gauss_expand.exit304
+  %9 = icmp eq <2 x i32> %i.zn, zeroinitializer
+  %10 = bitcast <2 x i1> %9 to i2
+  %11 = icmp eq i2 %10, 0
+  br i1 %11, label %.preheader32.i295.preheader, label %gauss_expand.exit304
 
 .preheader32.i295.preheader:                      ; preds = %bb.aj
   %i.abs = shl nsw i64 %i.zp, 5

@@ -202,12 +202,8 @@ bb.c:                                             ; preds = %bb.b
   %i.q = insertelement <2 x double> poison, double %1, i64 0
   %i.r = shufflevector <2 x double> %i.q, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.s = fdiv <2 x double> %i.r, <double 1.000000e+03, double 6.000000e+04> ; 2 uses
-  %9 = extractelement <2 x double> %i.s, i64 0    ; 2 uses
-  %10 = fptoui double %9 to i32
-  %11 = urem i32 %10, 60                          ; 4 uses
-  %12 = extractelement <2 x double> %i.s, i64 1
-  %13 = fptoui double %12 to i32
-  %14 = urem i32 %13, 60                          ; 6 uses
+  %9 = fptoui <2 x double> %i.s to <2 x i32>
+  %10 = urem <2 x i32> %9, splat (i32 60)         ; 2 uses
   %i.t = fdiv <2 x double> %i.r, <double 3.600000e+06, double 8.640000e+07> ; 2 uses
   %i.u = extractelement <2 x double> %i.t, i64 0
   %i.v = fptoui double %i.u to i32
@@ -263,17 +259,18 @@ _ZNSolsEj.exit94:                                 ; preds = %bb.g
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit95: ; preds = %_ZNSolsEj.exit94, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
   %.1 = phi i32 [ %.0, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit ], [ %spec.store.select, %_ZNSolsEj.exit94 ] ; 3 uses
-  %.not82 = icmp eq i32 %14, 0
+  %11 = extractelement <2 x i32> %10, i64 1       ; 6 uses
+  %.not82 = icmp eq i32 %11, 0
   br i1 %.not82, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit95
-  %i.ap = zext nneg i32 %14 to i64
+  %i.ap = zext nneg i32 %11 to i64
   %i.aq = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertImEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %7, i64 noundef %i.ap)
           to label %_ZNSolsEj.exit96 unwind label %bb.f
 
 _ZNSolsEj.exit96:                                 ; preds = %bb.h
   %i.ar = icmp eq i32 %6, 0
-  %.not83 = icmp eq i32 %14, 1
+  %.not83 = icmp eq i32 %11, 1
   %i.as = select i1 %.not83, ptr @.str.20, ptr @.str.19
   %i.at = select i1 %i.ar, ptr @.str.18, ptr %i.as ; 2 uses
   %i.au = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.at) #9
@@ -287,7 +284,8 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit97: ; preds = %_ZNSo
 
 bb.i:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit97, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit95
   %.2 = phi i32 [ %spec.store.select1, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit97 ], [ %.1, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit95 ]
-  %.not85 = icmp eq i32 %11, 0
+  %12 = extractelement <2 x i32> %10, i64 0       ; 4 uses
+  %.not85 = icmp eq i32 %12, 0
   br i1 %.not85, label %bb.p, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
@@ -295,12 +293,12 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not87, label %bb.n, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.aw = zext nneg i32 %11 to i64
+  %i.aw = zext nneg i32 %12 to i64
   %i.ax = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertImEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %7, i64 noundef %i.aw)
           to label %_ZNSolsEj.exit98 unwind label %bb.f
 
 _ZNSolsEj.exit98:                                 ; preds = %bb.k
-  %.not88 = icmp eq i32 %11, 1                    ; 2 uses
+  %.not88 = icmp eq i32 %12, 1                    ; 2 uses
   %i.ay = select i1 %.not88, ptr @.str.22, ptr @.str.21
   %i.az = select i1 %.not88, i64 12, i64 13
   %i.ba = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.ax, ptr noundef nonnull %i.ay, i64 noundef %i.az)
@@ -317,9 +315,9 @@ bb.l:                                             ; preds = %_ZNSolsEj.exit98
   %i.bh = mul i32 %i.y, 24
   %i.bi = add i32 %i.w, %i.bh
   %i.bj = mul i32 %i.bi, 60
-  %i.bk = add i32 %i.bj, %14
+  %i.bk = add i32 %i.bj, %11
   %i.bl = mul i32 %i.bk, 60
-  %i.bm = add i32 %i.bl, %11
+  %i.bm = add i32 %i.bl, %12
   %i.bn = uitofp i32 %i.bm to double
   %i.bo = fneg double %i.bn
   %i.bp = call double @llvm.fmuladd.f64(double %i.bo, double 1.000000e+03, double %1)
@@ -354,10 +352,11 @@ bb.n:                                             ; preds = %bb.j
   %i.cb = mul i32 %i.y, 24
   %i.cc = add i32 %i.w, %i.cb
   %i.cd = mul i32 %i.cc, 60
-  %i.ce = add i32 %i.cd, %14
+  %i.ce = add i32 %i.cd, %11
   %i.cf = mul i32 %i.ce, 60
   %i.cg = uitofp i32 %i.cf to double
-  %i.ch = fsub double %9, %i.cg
+  %13 = extractelement <2 x double> %i.s, i64 0
+  %i.ch = fsub double %13, %i.cg
   %i.ci = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %7, double noundef %i.ch)
           to label %_ZNSolsEd.exit103 unwind label %bb.o
 
@@ -374,7 +373,7 @@ bb.p:                                             ; preds = %bb.i
   %i.cl = mul i32 %i.y, 24
   %i.cm = add i32 %i.w, %i.cl
   %i.cn = mul i32 %i.cm, 60
-  %i.co = add i32 %i.cn, %14
+  %i.co = add i32 %i.cn, %11
   %i.cp = mul i32 %i.co, 60
   %i.cq = uitofp i32 %i.cp to double
   %i.cr = fneg double %i.cq

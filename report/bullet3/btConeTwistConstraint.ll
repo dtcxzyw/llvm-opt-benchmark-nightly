@@ -204,13 +204,11 @@ bb.m:                                             ; preds = %bb.h, %_Z15shortest
   %i.aex = insertelement <2 x float> poison, float %i.abw, i64 0
   %i.aey = shufflevector <2 x float> %i.aex, <2 x float> poison, <2 x i32> zeroinitializer
   %i.aez = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.adb, <2 x float> %i.aey, <2 x float> %i.aew)
-  %11 = call float @llvm.fmuladd.f32(float %i.aem, float %i.abw, float %i.aeo)
   %i.afa = insertelement <2 x float> poison, float %i.acv, i64 0
   %i.afb = insertelement <2 x float> %i.afa, float %i.acs, i64 1 ; 2 uses
   %i.afc = shufflevector <2 x float> %i.aep, <2 x float> poison, <2 x i32> zeroinitializer
   %i.afd = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.afb, <2 x float> %i.afc, <2 x float> %i.aez) ; 3 uses
   %i.afe = extractelement <2 x float> %i.aep, i64 0
-  %12 = call noundef float @llvm.fmuladd.f32(float %i.abp, float %i.afe, float %11) ; 2 uses
   %i.aff = insertelement <2 x float> poison, float %i.acc, i64 0
   %i.afg = shufflevector <2 x float> %i.aff, <2 x float> poison, <2 x i32> zeroinitializer
   %i.afh = fmul <2 x float> %i.acy, %i.afg
@@ -223,17 +221,18 @@ bb.m:                                             ; preds = %bb.h, %_Z15shortest
   %i.afo = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.afb, <2 x float> %i.afn, <2 x float> %i.afl) ; 3 uses
   %i.afp = call noundef float @llvm.fmuladd.f32(float %i.abp, float %i.aeq, float %i.afm) ; 2 uses
   %i.afq = fmul float %i.afp, %i.aei
-  %13 = shufflevector <2 x float> %i.aet, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %i.afr = insertelement <2 x float> %13, float %12, i64 0
+  %11 = call float @llvm.fmuladd.f32(float %i.aem, float %i.abw, float %i.aeo)
+  %12 = call noundef float @llvm.fmuladd.f32(float %i.abp, float %i.afe, float %11) ; 2 uses
+  %i.afr = insertelement <2 x float> %i.aet, float %12, i64 1
   %i.afs = shufflevector <2 x float> %i.aee, <2 x float> poison, <2 x i32> zeroinitializer
   %i.aft = fmul <2 x float> %i.afr, %i.afs
   %i.afu = shufflevector <2 x float> %i.aeh, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.afv = shufflevector <2 x float> %i.afd, <2 x float> %i.adi, <2 x i32> <i32 1, i32 3>
+  %i.afv = shufflevector <2 x float> %i.adi, <2 x float> %i.afd, <2 x i32> <i32 1, i32 3>
   %i.afw = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.afu, <2 x float> %i.afv, <2 x float> %i.aft)
   %i.afx = extractelement <2 x float> %i.afo, i64 1
   %i.afy = call float @llvm.fmuladd.f32(float %i.aej, float %i.afx, float %i.afq)
   %i.afz = shufflevector <2 x float> %i.aee, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.aga = shufflevector <2 x float> %i.afd, <2 x float> %i.adi, <2 x i32> <i32 0, i32 2>
+  %i.aga = shufflevector <2 x float> %i.adi, <2 x float> %i.afd, <2 x i32> <i32 0, i32 2>
   %i.agb = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.afz, <2 x float> %i.aga, <2 x float> %i.afw) ; 6 uses
   %i.agc = extractelement <2 x float> %i.afo, i64 0
   %i.agd = call noundef float @llvm.fmuladd.f32(float %i.aek, float %i.agc, float %i.afy) ; 7 uses
@@ -249,7 +248,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.agh, label %bb.o, label %bb.q
 
 bb.o:                                             ; preds = %bb.n
-  %i.agk = extractelement <2 x float> %i.agb, i64 0
+  %i.agk = extractelement <2 x float> %i.agb, i64 1
   %i.agl = call noundef float @llvm.fabs.f32(float %i.agk)
   %i.agm = fcmp olt float %i.agl, f0x34000000
   %or.cond536 = and i1 %i.agm, %i.agj
@@ -275,11 +274,11 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.ae
 
 bb.q:                                             ; preds = %bb.n
-  %i.agy = extractelement <2 x float> %i.agb, i64 1 ; 5 uses
+  %i.agy = extractelement <2 x float> %i.agb, i64 0 ; 5 uses
   %i.agz = call noundef float @llvm.fabs.f32(float %i.agy)
   %i.aha = fcmp olt float %i.agz, f0x34000000
   %or.cond538 = and i1 %i.aha, %i.agj
-  %i.ahb = extractelement <2 x float> %i.agb, i64 0 ; 2 uses
+  %i.ahb = extractelement <2 x float> %i.agb, i64 1 ; 2 uses
   br i1 %or.cond538, label %bb.ac, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
@@ -322,7 +321,7 @@ bb.x:                                             ; preds = %bb.w
   br i1 %i.vs, label %bb.ac, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %i.ahr = call noundef float @atan2f(float noundef %i.ahp, float noundef %i.ahq) #21 ; 2 uses
+  %i.ahr = call noundef float @atan2f(float noundef %i.ahq, float noundef %i.ahp) #21 ; 2 uses
   %i.ahs = fcmp ogt float %i.ahr, %i.vp
   br i1 %i.ahs, label %bb.z, label %bb.aa
 
@@ -344,8 +343,8 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.w, %bb.q, %bb.z, %bb.ab, %bb.aa, %bb.t, %bb.v, %bb.u, %bb.x, %bb.r
   %.148 = phi float [ %i.agd, %bb.q ], [ %i.agd, %bb.x ], [ %i.agd, %bb.r ], [ %i.agd, %bb.w ], [ %i.agd, %bb.u ], [ %i.ahg, %bb.t ], [ %i.ahl, %bb.v ], [ 0.000000e+00, %bb.aa ], [ 0.000000e+00, %bb.ab ], [ 0.000000e+00, %bb.z ] ; 2 uses
-  %.146 = phi float [ %i.ahb, %bb.q ], [ %i.ahp, %bb.x ], [ %i.ahb, %bb.r ], [ %i.ahp, %bb.w ], [ 0.000000e+00, %bb.u ], [ 0.000000e+00, %bb.t ], [ 0.000000e+00, %bb.v ], [ %i.ahp, %bb.aa ], [ %i.ahz, %bb.ab ], [ %i.ahu, %bb.z ] ; 2 uses
-  %.2 = phi float [ %i.agy, %bb.q ], [ %i.ahq, %bb.x ], [ %i.agy, %bb.r ], [ %i.ahq, %bb.w ], [ %i.agy, %bb.u ], [ %i.ahf, %bb.t ], [ %i.ahj, %bb.v ], [ %i.ahq, %bb.aa ], [ %i.ahx, %bb.ab ], [ %i.aht, %bb.z ] ; 2 uses
+  %.146 = phi float [ %i.ahb, %bb.q ], [ %i.ahq, %bb.x ], [ %i.ahb, %bb.r ], [ %i.ahq, %bb.w ], [ 0.000000e+00, %bb.u ], [ 0.000000e+00, %bb.t ], [ 0.000000e+00, %bb.v ], [ %i.ahq, %bb.aa ], [ %i.ahz, %bb.ab ], [ %i.ahu, %bb.z ] ; 2 uses
+  %.2 = phi float [ %i.agy, %bb.q ], [ %i.ahp, %bb.x ], [ %i.agy, %bb.r ], [ %i.ahp, %bb.w ], [ %i.agy, %bb.u ], [ %i.ahf, %bb.t ], [ %i.ahj, %bb.v ], [ %i.ahp, %bb.aa ], [ %i.ahx, %bb.ab ], [ %i.aht, %bb.z ] ; 2 uses
   %i.aia = insertelement <2 x float> poison, float %.146, i64 0
   %i.aib = shufflevector <2 x float> %i.aia, <2 x float> poison, <2 x i32> zeroinitializer
   %i.aic = fmul <2 x float> %i.afd, %i.aib

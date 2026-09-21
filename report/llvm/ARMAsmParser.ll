@@ -205,26 +205,18 @@ bb.abm:                                           ; preds = %.loopexit.i394
 bb.abn:                                           ; preds = %bb.abm
   %i.gau = getelementptr inbounds nuw i8, ptr %.val.i396, i64 16
   %i.gav = load i64, ptr %i.gau, align 8, !tbaa !403
-  %i.gaw = trunc i64 %i.gav to i32                ; 5 uses
+  %i.gaw = trunc i64 %i.gav to i32                ; 2 uses
   %i.gax = icmp eq i32 %i.gaw, 0
   br i1 %i.gax, label %_ZL20validateOperandClassRN4llvm18MCParsedAsmOperandEN12_GLOBAL__N_114MatchClassKindERKNS_15MCSubtargetInfoE.exit.thread, label %_ZNK12_GLOBAL__N_110ARMOperand14isNEONi32splatEv.exit
 
 _ZNK12_GLOBAL__N_110ARMOperand14isNEONi32splatEv.exit: ; preds = %bb.abn
-  %16 = and i32 %i.gaw, 255
-  %.not.i.i5.i = icmp ne i32 %16, 0
-  %17 = zext i1 %.not.i.i5.i to i32
-  %18 = and i32 %i.gaw, 65280
-  %.not.i.1.i.i399 = icmp ne i32 %18, 0
-  %19 = zext i1 %.not.i.1.i.i399 to i32
-  %20 = and i32 %i.gaw, 16711680
-  %.not.i.2.i.i400 = icmp ne i32 %20, 0
-  %21 = zext i1 %.not.i.2.i.i400 to i32
-  %.not.i.3.i.i401 = icmp ugt i32 %i.gaw, 16777215
-  %22 = zext i1 %.not.i.3.i.i401 to i32
-  %spec.select.i.1.i.i402 = add nuw nsw i32 %19, %22
-  %spec.select.i.2.i.i403 = add nuw nsw i32 %spec.select.i.1.i.i402, %17
-  %spec.select.i.3.i.i404 = add nuw nsw i32 %spec.select.i.2.i.i403, %21
-  %i.gay = icmp eq i32 %spec.select.i.3.i.i404, 1
+  %16 = insertelement <4 x i32> poison, i32 %i.gaw, i64 0
+  %17 = shufflevector <4 x i32> %16, <4 x i32> poison, <4 x i32> zeroinitializer
+  %18 = and <4 x i32> %17, <i32 65280, i32 -1, i32 255, i32 16711680>
+  %19 = icmp ugt <4 x i32> %18, <i32 0, i32 16777215, i32 0, i32 0>
+  %20 = bitcast <4 x i1> %19 to i4
+  %21 = call range(i4 0, 5) i4 @llvm.ctpop.i4(i4 %20)
+  %i.gay = icmp eq i4 %21, 1
   br i1 %i.gay, label %_ZL20validateOperandClassRN4llvm18MCParsedAsmOperandEN12_GLOBAL__N_114MatchClassKindERKNS_15MCSubtargetInfoE.exit.thread, label %_ZNK12_GLOBAL__N_110ARMOperand14isAM2OffsetImmEv.exit.thread.i
 
 bb.abo:                                           ; preds = %bb.bl
@@ -626,6 +618,9 @@ declare <6 x i64> @llvm.ctpop.v6i64(<6 x i64>) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v6i64(<6 x i64>) #21
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i4 @llvm.ctpop.i4(i4) #21
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

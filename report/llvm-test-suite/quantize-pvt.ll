@@ -204,26 +204,15 @@ scalar.ph226:                                     ; preds = %scalar.ph226.prehea
   %.sroa.15.0 = phi i32 [ %.sroa.15.2, %bb.d ], [ %.sroa.15.1, %bb.g ], [ %.sroa.15.1, %middle.block237 ], [ %.sroa.15.2, %.preheader.3.epil.preheader ], [ %.sroa.15.2, %.loopexit.loopexit.unr-lcssa ], [ %.sroa.15.1, %scalar.ph226 ] ; 2 uses
   %.sroa.21.0 = phi i32 [ 0, %bb.d ], [ 0, %bb.g ], [ %i.ey, %middle.block237 ], [ %spec.store.select.2.3.epil, %.preheader.3.epil.preheader ], [ %spec.store.select.2.3.1, %.loopexit.loopexit.unr-lcssa ], [ %spec.store.select97.3, %scalar.ph226 ] ; 2 uses
   %.092 = phi i64 [ 1, %bb.d ], [ 0, %bb.g ], [ 0, %middle.block237 ], [ 1, %.preheader.3.epil.preheader ], [ 1, %.loopexit.loopexit.unr-lcssa ], [ 0, %scalar.ph226 ]
-  %i.fj = getelementptr inbounds nuw [16 x i8], ptr @max_range_sfac_tab, i64 %. ; 4 uses
-  %2 = load i32, ptr %i.fj, align 16, !tbaa !7
-  %3 = icmp sgt i32 %.sroa.0.2, %2
-  %4 = zext i1 %3 to i32
-  %5 = getelementptr inbounds nuw i8, ptr %i.fj, i64 4
-  %6 = load i32, ptr %5, align 4, !tbaa !7
-  %7 = icmp sgt i32 %.sroa.9.0, %6
-  %8 = zext i1 %7 to i32
-  %spec.select.1 = add nuw nsw i32 %4, %8
-  %9 = getelementptr inbounds nuw i8, ptr %i.fj, i64 8
-  %10 = load i32, ptr %9, align 8, !tbaa !7
-  %11 = icmp sgt i32 %.sroa.15.0, %10
-  %12 = zext i1 %11 to i32
-  %spec.select.2 = add nuw nsw i32 %spec.select.1, %12
-  %13 = getelementptr inbounds nuw i8, ptr %i.fj, i64 12
-  %14 = load i32, ptr %13, align 4, !tbaa !7
-  %15 = icmp sgt i32 %.sroa.21.0, %14
-  %16 = zext i1 %15 to i32
-  %spec.select.3 = add nuw nsw i32 %spec.select.2, %16 ; 2 uses
-  %.not96 = icmp eq i32 %spec.select.3, 0
+  %i.fj = getelementptr inbounds nuw [16 x i8], ptr @max_range_sfac_tab, i64 %.
+  %2 = load <4 x i32>, ptr %i.fj, align 16, !tbaa !7
+  %3 = insertelement <4 x i32> poison, i32 %.sroa.0.2, i64 0
+  %4 = insertelement <4 x i32> %3, i32 %.sroa.9.0, i64 1
+  %5 = insertelement <4 x i32> %4, i32 %.sroa.15.0, i64 2
+  %6 = insertelement <4 x i32> %5, i32 %.sroa.21.0, i64 3
+  %7 = icmp sgt <4 x i32> %6, %2
+  %8 = bitcast <4 x i1> %7 to i4                  ; 2 uses
+  %.not96 = icmp eq i4 %8, 0
   br i1 %.not96, label %bb.h, label %.critedge
 
 bb.h:                                             ; preds = %.loopexit
@@ -295,7 +284,9 @@ bb.j:                                             ; preds = %bb.h
   br label %.critedge
 
 .critedge:                                        ; preds = %.critedge.loopexit, %.loopexit
-  ret i32 %spec.select.3
+  %9 = tail call range(i4 0, 5) i4 @llvm.ctpop.i4(i4 %8)
+  %10 = zext nneg i4 %9 to i32
+  ret i32 %10
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
@@ -696,6 +687,9 @@ declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.smax.v4i32(<4 x i32>) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i4 @llvm.ctpop.i4(i4) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #5

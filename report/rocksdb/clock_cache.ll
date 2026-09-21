@@ -205,31 +205,29 @@ bb.a:
   %i.k = load atomic i64, ptr %i.j monotonic, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 128
   %i.m = load atomic i64, ptr %i.l monotonic, align 8 ; 3 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 240
+  %3 = load i64, ptr %2, align 16, !tbaa !81
+  %4 = insertelement <2 x i64> poison, i64 %i.i, i64 0
+  %5 = insertelement <2 x i64> %4, i64 %i.m, i64 1
+  %6 = uitofp <2 x i64> %5 to <2 x double>
+  %7 = insertelement <2 x i64> poison, i64 %i.k, i64 0
+  %8 = insertelement <2 x i64> %7, i64 %3, i64 1
+  %9 = uitofp <2 x i64> %8 to <2 x double>
+  %10 = fdiv <2 x double> %6, %9                  ; 3 uses
   %i.n = icmp eq i64 %i.f, %i.h
   %i.o = icmp eq i64 %i.m, 0
   %or.cond.i.i.i.i = or i1 %i.n, %i.o
-  br i1 %or.cond.i.i.i.i, label %"_ZSt10__invoke_rIvRZNK7rocksdb11clock_cache20FixedHyperClockCache14ReportProblemsERKSt10shared_ptrINS0_6LoggerEEE3$_0JPKNS1_15ClockCacheShardINS1_20FixedHyperClockTableEEEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESG_E4typeEOSH_DpOSI_.exit", label %2
+  %11 = fcmp uge <2 x double> %10, <double 8.000000e-01, double f0x3FEE666666666666>
+  %12 = bitcast <2 x i1> %11 to i2
+  %13 = icmp eq i2 %12, 0
+  %or.cond = select i1 %or.cond.i.i.i.i, i1 true, i1 %13
+  br i1 %or.cond, label %"_ZSt10__invoke_rIvRZNK7rocksdb11clock_cache20FixedHyperClockCache14ReportProblemsERKSt10shared_ptrINS0_6LoggerEEE3$_0JPKNS1_15ClockCacheShardINS1_20FixedHyperClockTableEEEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESG_E4typeEOSH_DpOSI_.exit", label %bb.b
 
-2:                                                ; preds = %bb.a
-  %3 = insertelement <2 x i64> poison, i64 %i.i, i64 0
-  %4 = insertelement <2 x i64> %3, i64 %i.m, i64 1
-  %5 = uitofp <2 x i64> %4 to <2 x double>
-  %6 = insertelement <2 x i64> poison, i64 %i.k, i64 0
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 240
-  %8 = load i64, ptr %7, align 16, !tbaa !81
-  %9 = insertelement <2 x i64> %6, i64 %8, i64 1
-  %10 = uitofp <2 x i64> %9 to <2 x double>
-  %11 = fdiv <2 x double> %5, %10                 ; 2 uses
-  %12 = extractelement <2 x double> %11, i64 0    ; 2 uses
-  %13 = fcmp olt double %12, 8.000000e-01
-  %14 = extractelement <2 x double> %11, i64 1    ; 2 uses
-  %15 = fcmp olt double %14, f0x3FEE666666666666
-  %or.cond3.i.i.i.i = and i1 %13, %15
-  br i1 %or.cond3.i.i.i.i, label %"_ZSt10__invoke_rIvRZNK7rocksdb11clock_cache20FixedHyperClockCache14ReportProblemsERKSt10shared_ptrINS0_6LoggerEEE3$_0JPKNS1_15ClockCacheShardINS1_20FixedHyperClockTableEEEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESG_E4typeEOSH_DpOSI_.exit", label %bb.b
-
-bb.b:                                             ; preds = %2
-  %16 = fdiv double %14, %12
-  %i.p = fmul double %16, 8.400000e-01            ; 2 uses
+bb.b:                                             ; preds = %bb.a
+  %shift = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fdiv <2 x double> %shift, %10
+  %14 = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %i.p = fmul double %14, 8.400000e-01            ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 3 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !452  ; 4 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 3 uses
@@ -301,7 +299,7 @@ _ZNSt6vectorIdSaIdEE9push_backERKd.exit.i.i.i.i:  ; preds = %_ZNSt6vectorIdSaIdE
   store i64 %.sroa.speculated.i.i.i.i, ptr %i.d, align 8, !tbaa !41
   br label %"_ZSt10__invoke_rIvRZNK7rocksdb11clock_cache20FixedHyperClockCache14ReportProblemsERKSt10shared_ptrINS0_6LoggerEEE3$_0JPKNS1_15ClockCacheShardINS1_20FixedHyperClockTableEEEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESG_E4typeEOSH_DpOSI_.exit"
 
-"_ZSt10__invoke_rIvRZNK7rocksdb11clock_cache20FixedHyperClockCache14ReportProblemsERKSt10shared_ptrINS0_6LoggerEEE3$_0JPKNS1_15ClockCacheShardINS1_20FixedHyperClockTableEEEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESG_E4typeEOSH_DpOSI_.exit": ; preds = %bb.a, %2, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit.i.i.i.i
+"_ZSt10__invoke_rIvRZNK7rocksdb11clock_cache20FixedHyperClockCache14ReportProblemsERKSt10shared_ptrINS0_6LoggerEEE3$_0JPKNS1_15ClockCacheShardINS1_20FixedHyperClockTableEEEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESG_E4typeEOSH_DpOSI_.exit": ; preds = %bb.a, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit.i.i.i.i
   ret void
 }
 

@@ -205,24 +205,21 @@ bb.d:                                             ; preds = %.lr.ph.i
   br i1 %.not.i104, label %_RNvNtNtCsileJQcQObtj_7hir_def7nameres15path_resolution34adjust_to_nearest_non_block_module.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c, %bb.d
-  %.sroa.0.032.i = phi ptr [ %i.ce, %bb.d ], [ %1, %bb.c ] ; 2 uses
+  %.sroa.0.032.i = phi ptr [ %i.ce, %bb.d ], [ %1, %bb.c ]
   %i.cd = getelementptr inbounds nuw i8, ptr %.sroa.0.032.i, i64 208
-  %11 = load i32, ptr %i.cd, align 8, !range !34, !noalias !6452, !noundef !31 ; 4 uses
-  %12 = getelementptr inbounds nuw i8, ptr %.sroa.0.032.i, i64 212
-  %13 = load i32, ptr %12, align 4, !noalias !6452, !noundef !31 ; 4 uses
-  %i.ce = tail call noundef nonnull align 8 ptr @_RNvMsn_CsileJQcQObtj_7hir_defNtB5_10ModuleIdLt7def_map(i32 noundef %11, i32 noundef %13, ptr noundef nonnull %3, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(240) %4), !noalias !6451 ; 6 uses
-  %14 = getelementptr i8, ptr %i.ce, i64 88
-  %.val.i = load i32, ptr %14, align 8, !range !34, !noalias !6451, !noundef !31
-  %i.cf = getelementptr i8, ptr %i.ce, i64 92
-  %.val7.i = load i32, ptr %i.cf, align 4, !noalias !6451, !noundef !31
-  %15 = icmp eq i32 %.val7.i, %13
-  %i.cg = icmp eq i32 %.val.i, %11
-  %.sroa.0.0.i18.i = and i1 %i.cg, %15
-  br i1 %.sroa.0.0.i18.i, label %bb.d, label %_RNvNtNtCsileJQcQObtj_7hir_def7nameres15path_resolution34adjust_to_nearest_non_block_module.exit
+  %11 = load <2 x i32>, ptr %i.cd, align 8, !noalias !6452 ; 3 uses
+  %12 = extractelement <2 x i32> %11, i64 0       ; 3 uses
+  %13 = extractelement <2 x i32> %11, i64 1       ; 3 uses
+  %i.ce = tail call noundef nonnull align 8 ptr @_RNvMsn_CsileJQcQObtj_7hir_defNtB5_10ModuleIdLt7def_map(i32 noundef %12, i32 noundef %13, ptr noundef nonnull %3, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(240) %4), !noalias !6451 ; 5 uses
+  %i.cf = getelementptr i8, ptr %i.ce, i64 88
+  %14 = load i64, ptr %i.cf, align 8, !noalias !6451
+  %.scalar310 = bitcast <2 x i32> %11 to i64
+  %i.cg = icmp eq i64 %14, %.scalar310
+  br i1 %i.cg, label %bb.d, label %_RNvNtNtCsileJQcQObtj_7hir_def7nameres15path_resolution34adjust_to_nearest_non_block_module.exit
 
 _RNvNtNtCsileJQcQObtj_7hir_def7nameres15path_resolution34adjust_to_nearest_non_block_module.exit: ; preds = %bb.d, %.lr.ph.i, %bb.c
   %.lcssa44.sink.i = phi ptr [ %1, %bb.c ], [ %i.ce, %.lr.ph.i ], [ %i.ce, %bb.d ] ; 2 uses
-  %.lcssa48.sink.i = phi i32 [ %6, %bb.c ], [ %11, %.lr.ph.i ], [ %11, %bb.d ] ; 2 uses
+  %.lcssa48.sink.i = phi i32 [ %6, %bb.c ], [ %12, %.lr.ph.i ], [ %12, %bb.d ] ; 2 uses
   %.lcssa46.sink.i = phi i32 [ %7, %bb.c ], [ %13, %.lr.ph.i ], [ %13, %bb.d ] ; 2 uses
   %.not263 = icmp eq i8 %i.bu, 0
   br i1 %.not263, label %._crit_edge, label %.lr.ph

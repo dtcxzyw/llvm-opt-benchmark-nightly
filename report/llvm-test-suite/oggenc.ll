@@ -205,11 +205,10 @@ vector.memcheck375:                               ; preds = %vector.scevcheck365
   %i.qv = or <2 x i1> %i.qr, %i.qs
   %i.qw = or <2 x i1> %i.qt, %i.qu
   %i.qx = or <2 x i1> %i.lu, %i.qv
-  %i.qy = or <2 x i1> %i.qw, %i.qx                ; 2 uses
-  %shift = shufflevector <2 x i1> %i.qy, <2 x i1> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = or <2 x i1> %shift, %i.qy
-  %op.rdx905 = extractelement <2 x i1> %foldExtExtBinop, i64 0
-  %op.rdx906 = or i1 %op.rdx905, %op.rdx904
+  %i.qy = or <2 x i1> %i.qw, %i.qx
+  %7 = bitcast <2 x i1> %i.qy to i2
+  %8 = icmp ne i2 %7, 0
+  %op.rdx906 = or i1 %8, %op.rdx904
   br i1 %op.rdx906, label %scalar.ph747.preheader, label %vector.ph749
 
 vector.ph749:                                     ; preds = %vector.memcheck375

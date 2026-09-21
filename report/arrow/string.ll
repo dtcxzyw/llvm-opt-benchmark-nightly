@@ -205,35 +205,28 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define void @_ZN5arrow13ParseHexValueEPKcPh(ptr dead_on_unwind noalias writable sret(%"class.arrow::Status") align 8 %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = load i8, ptr %1, align 1, !tbaa !16        ; 3 uses
-  %4 = add i8 %3, -48                             ; 2 uses
-  %or.cond.i = icmp ult i8 %4, 10
-  %5 = add i8 %3, -65
-  %or.cond5.i = icmp ult i8 %5, 6
-  %6 = add nsw i8 %3, -55
-  %spec.select.i = select i1 %or.cond5.i, i8 %6, i8 -1
-  %.0.i = select i1 %or.cond.i, i8 %4, i8 %spec.select.i ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 1
-  %8 = load i8, ptr %7, align 1, !tbaa !16        ; 3 uses
-  %9 = add i8 %8, -48                             ; 2 uses
-  %or.cond.i9 = icmp ult i8 %9, 10
-  %10 = add i8 %8, -65
-  %or.cond5.i10 = icmp ult i8 %10, 6
-  %11 = add nsw i8 %8, -55
-  %spec.select.i11 = select i1 %or.cond5.i10, i8 %11, i8 -1
-  %.0.i12 = select i1 %or.cond.i9, i8 %9, i8 %spec.select.i11 ; 2 uses
-  %12 = icmp eq i8 %.0.i, -1
-  %i.a = icmp eq i8 %.0.i12, -1
-  %or.cond = or i1 %12, %i.a
-  br i1 %or.cond, label %bb.b, label %bb.c
+  %3 = load <2 x i8>, ptr %1, align 1, !tbaa !16  ; 3 uses
+  %4 = add <2 x i8> %3, splat (i8 -48)            ; 2 uses
+  %5 = icmp ult <2 x i8> %4, splat (i8 10)
+  %6 = add <2 x i8> %3, splat (i8 -65)
+  %7 = icmp ult <2 x i8> %6, splat (i8 6)
+  %8 = add nsw <2 x i8> %3, splat (i8 -55)
+  %9 = select <2 x i1> %7, <2 x i8> %8, <2 x i8> splat (i8 -1)
+  %10 = select <2 x i1> %5, <2 x i8> %4, <2 x i8> %9 ; 3 uses
+  %11 = icmp eq <2 x i8> %10, splat (i8 -1)
+  %12 = bitcast <2 x i1> %11 to i2
+  %i.a = icmp eq i2 %12, 0
+  br i1 %i.a, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZN5arrow6Status8FromArgsIJRA26_KcEEES0_NS_10StatusCodeEDpOT_(ptr dead_on_unwind writable sret(%"class.arrow::Status") align 8 %0, i8 noundef signext 4, ptr noundef nonnull align 1 dereferenceable(26) @.str.6)
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.b = shl i8 %.0.i, 4
-  %i.c = or i8 %i.b, %.0.i12
+  %13 = extractelement <2 x i8> %10, i64 0
+  %i.b = shl i8 %13, 4
+  %14 = extractelement <2 x i8> %10, i64 1
+  %i.c = or i8 %i.b, %14
   store i8 %i.c, ptr %2, align 1, !tbaa !16
   store ptr null, ptr %0, align 8, !tbaa !22, !alias.scope !59
   br label %bb.d
@@ -263,33 +256,26 @@ bb.b:                                             ; preds = %bb.a
   %.017 = phi i64 [ %i.j, %_ZN5arrow6StatusD2Ev.exit14 ], [ 0, %.preheader ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
   %i.c = shl nuw i64 %.017, 1
-  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 %i.c ; 2 uses
-  %5 = load i8, ptr %i.d, align 1, !tbaa !16, !noalias !65 ; 3 uses
-  %6 = add i8 %5, -48                             ; 2 uses
-  %or.cond.i.i = icmp ult i8 %6, 10
-  %7 = add i8 %5, -65
-  %or.cond5.i.i = icmp ult i8 %7, 6
-  %8 = add nsw i8 %5, -55
-  %spec.select.i.i = select i1 %or.cond5.i.i, i8 %8, i8 -1
-  %.0.i.i = select i1 %or.cond.i.i, i8 %6, i8 %spec.select.i.i ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.d, i64 1
-  %10 = load i8, ptr %9, align 1, !tbaa !16, !noalias !65 ; 3 uses
-  %11 = add i8 %10, -48                           ; 2 uses
-  %or.cond.i9.i = icmp ult i8 %11, 10
-  %12 = add i8 %10, -65
-  %or.cond5.i10.i = icmp ult i8 %12, 6
-  %13 = add nsw i8 %10, -55
-  %spec.select.i11.i = select i1 %or.cond5.i10.i, i8 %13, i8 -1
-  %.0.i12.i = select i1 %or.cond.i9.i, i8 %11, i8 %spec.select.i11.i ; 2 uses
-  %14 = icmp eq i8 %.0.i.i, -1
-  %i.e = icmp eq i8 %.0.i12.i, -1
-  %or.cond.i = or i1 %14, %i.e
-  br i1 %or.cond.i, label %_ZN5arrow6StatusD2Ev.exit, label %_ZN5arrow6StatusD2Ev.exit.thread
+  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 %i.c
+  %5 = load <2 x i8>, ptr %i.d, align 1, !tbaa !16, !noalias !65 ; 3 uses
+  %6 = add <2 x i8> %5, splat (i8 -48)            ; 2 uses
+  %7 = icmp ult <2 x i8> %6, splat (i8 10)
+  %8 = add <2 x i8> %5, splat (i8 -65)
+  %9 = icmp ult <2 x i8> %8, splat (i8 6)
+  %10 = add nsw <2 x i8> %5, splat (i8 -55)
+  %11 = select <2 x i1> %9, <2 x i8> %10, <2 x i8> splat (i8 -1)
+  %12 = select <2 x i1> %7, <2 x i8> %6, <2 x i8> %11 ; 3 uses
+  %13 = icmp eq <2 x i8> %12, splat (i8 -1)
+  %14 = bitcast <2 x i1> %13 to i2
+  %i.e = icmp eq i2 %14, 0
+  br i1 %i.e, label %_ZN5arrow6StatusD2Ev.exit.thread, label %_ZN5arrow6StatusD2Ev.exit
 
 _ZN5arrow6StatusD2Ev.exit.thread:                 ; preds = %.lr.ph
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 %.017
-  %i.g = shl i8 %.0.i.i, 4
-  %i.h = or i8 %i.g, %.0.i12.i
+  %15 = extractelement <2 x i8> %12, i64 0
+  %i.g = shl i8 %15, 4
+  %16 = extractelement <2 x i8> %12, i64 1
+  %i.h = or i8 %i.g, %16
   store i8 %i.h, ptr %i.f, align 1, !tbaa !16, !noalias !65
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
   br label %_ZN5arrow6StatusD2Ev.exit14

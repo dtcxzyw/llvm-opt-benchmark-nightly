@@ -126,13 +126,13 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.a, %bb.a, %bb.a, %bb.a
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 268
-  %i.ak = load i8, ptr %i.aj, align 4, !tbaa !74  ; 4 uses
+  %i.ak = load i8, ptr %i.aj, align 4, !tbaa !74  ; 3 uses
   %i.al = icmp eq i8 %i.ak, 83
   br i1 %i.al, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 274
-  %i.an = load i8, ptr %i.am, align 2, !tbaa !74  ; 4 uses
+  %i.an = load i8, ptr %i.am, align 2, !tbaa !74  ; 3 uses
   %i.ao = icmp eq i8 %i.an, 83
   br i1 %i.ao, label %bb.o, label %bb.p
 
@@ -144,14 +144,13 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br label %bb.w
 
 bb.p:                                             ; preds = %bb.n
-  %2 = icmp eq i8 %i.ak, 84
-  %3 = icmp eq i8 %i.an, 84
-  %or.cond40 = or i1 %2, %3
-  %4 = icmp eq i8 %i.ak, 67
-  %or.cond41 = or i1 %4, %or.cond40
-  %i.ar = icmp eq i8 %i.an, 67
-  %or.cond42 = or i1 %i.ar, %or.cond41
-  br i1 %or.cond42, label %bb.q, label %bb.r
+  %2 = insertelement <4 x i8> poison, i8 %i.ak, i64 0
+  %3 = insertelement <4 x i8> %2, i8 %i.an, i64 1
+  %4 = shufflevector <4 x i8> %3, <4 x i8> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %5 = icmp eq <4 x i8> %4, <i8 84, i8 84, i8 67, i8 67>
+  %6 = bitcast <4 x i1> %5 to i4
+  %i.ar = icmp eq i4 %6, 0
+  br i1 %i.ar, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 1352

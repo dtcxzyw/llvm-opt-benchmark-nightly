@@ -205,7 +205,7 @@ _ZN2v88internal6maglev18MaglevGraphBuilder31UpdateSourceAndBytecodePositionEi.ex
   %sext = shl i64 %i.az, 32
   %i.bv = ashr exact i64 %sext, 32                ; 6 uses
   %i.bw = getelementptr inbounds [8 x i8], ptr %i.bu, i64 %i.bv
-  %i.bx = load ptr, ptr %i.bw, align 8            ; 6 uses
+  %i.bx = load ptr, ptr %i.bw, align 8            ; 5 uses
   %.not = icmp eq ptr %i.bx, null
   br i1 %.not, label %bb.ac, label %bb.e, !prof !52
 
@@ -382,16 +382,12 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.y
 
 bb.w:                                             ; preds = %.critedge54
-  %7 = getelementptr inbounds nuw i8, ptr %i.bx, i64 8
-  %8 = load i32, ptr %7, align 8
   %i.ff = getelementptr inbounds nuw i8, ptr %i.bx, i64 4
-  %9 = load i32, ptr %i.ff, align 4
   %i.fg = and i32 %i.eq, 5
   %i.fh = icmp eq i32 %i.fg, 1
-  %10 = icmp eq i32 %9, 1
-  %i.fi = icmp eq i32 %8, 0
-  %11 = and i1 %i.fi, %10
-  %spec.select.i56 = select i1 %i.fh, i1 %11, i1 false
+  %7 = load i64, ptr %i.ff, align 4
+  %i.fi = icmp eq i64 %7, 1
+  %spec.select.i56 = select i1 %i.fh, i1 %i.fi, i1 false
   br i1 %spec.select.i56, label %.thread, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
@@ -794,19 +790,15 @@ bb.b:                                             ; preds = %bb.a
   store i32 %i.i, ptr %i.g, align 4
   %i.j = load ptr, ptr %i.a, align 8              ; 3 uses
   %i.k = getelementptr inbounds [8 x i8], ptr %i.j, i64 %i.c
-  %i.l = load ptr, ptr %i.k, align 8              ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.l, i64 12
-  %3 = load i32, ptr %2, align 4
-  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  %i.n = load i32, ptr %i.m, align 8
+  %i.l = load ptr, ptr %i.k, align 8              ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 12
+  %i.n = load i32, ptr %i.m, align 4
   %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 4
-  %4 = load i32, ptr %i.o, align 4
-  %i.p = and i32 %3, 7
+  %i.p = and i32 %i.n, 7
   %i.q = icmp eq i32 %i.p, 1
-  %5 = icmp eq i32 %4, 1
-  %i.r = icmp eq i32 %i.n, 0
-  %6 = and i1 %i.r, %5
-  %spec.select.i = select i1 %i.q, i1 %6, i1 false
+  %2 = load i64, ptr %i.o, align 4
+  %i.r = icmp eq i64 %2, 1
+  %spec.select.i = select i1 %i.q, i1 %i.r, i1 false
   br i1 %spec.select.i, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
@@ -887,7 +879,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = sext i32 %1 to i64                       ; 2 uses
   %i.d = getelementptr inbounds [8 x i8], ptr %i.b, i64 %i.c
-  %i.e = load ptr, ptr %i.d, align 8              ; 6 uses
+  %i.e = load ptr, ptr %i.d, align 8              ; 5 uses
   %.not = icmp eq ptr %i.e, null
   br i1 %.not, label %bb.b, label %bb.c, !prof !53
 
@@ -910,17 +902,13 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.q = getelementptr inbounds nuw i8, ptr %i.e, i64 12
-  %2 = load i32, ptr %i.q, align 4
-  %3 = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %i.r = load i32, ptr %3, align 8
+  %i.r = load i32, ptr %i.q, align 4
   %i.s = getelementptr inbounds nuw i8, ptr %i.e, i64 4
-  %4 = load i32, ptr %i.s, align 4
-  %i.t = and i32 %2, 7
+  %i.t = and i32 %i.r, 7
   %i.u = icmp eq i32 %i.t, 1
-  %5 = icmp eq i32 %4, 1
-  %i.v = icmp eq i32 %i.r, 0
-  %6 = and i1 %i.v, %5
-  %spec.select.i = select i1 %i.u, i1 %6, i1 false
+  %2 = load i64, ptr %i.s, align 4
+  %i.v = icmp eq i64 %2, 1
+  %spec.select.i = select i1 %i.u, i1 %i.v, i1 false
   br i1 %spec.select.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d

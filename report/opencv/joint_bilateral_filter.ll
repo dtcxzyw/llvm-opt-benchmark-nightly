@@ -204,19 +204,16 @@ bb.br:                                            ; preds = %bb.bq, %bb.bp
 
 bb.bs:                                            ; preds = %bb.bo, %bb.bl
   %i.dv = load i32, ptr %14, align 8, !tbaa !16   ; 2 uses
-  %24 = lshr i32 %i.dv, 5
-  %25 = and i32 %24, 127
-  %26 = add nuw nsw i32 %25, 1
   %i.dw = load i32, ptr %13, align 8, !tbaa !16
-  %27 = lshr i32 %i.dw, 5
-  %28 = and i32 %27, 127
-  %29 = add nuw nsw i32 %28, 1
-  %30 = and i32 %29, 253
-  %or.cond = icmp eq i32 %30, 1
-  %31 = and i32 %26, 253
-  %or.cond3 = icmp eq i32 %31, 1
-  %or.cond75 = and i1 %or.cond3, %or.cond
-  br i1 %or.cond75, label %bb.bt, label %bb.bx
+  %24 = insertelement <2 x i32> poison, i32 %i.dv, i64 0
+  %25 = insertelement <2 x i32> %24, i32 %i.dw, i64 1
+  %26 = lshr <2 x i32> %25, splat (i32 5)
+  %27 = and <2 x i32> %26, splat (i32 127)
+  %28 = add nuw nsw <2 x i32> %27, splat (i32 1)
+  %29 = and <2 x i32> %28, splat (i32 253)
+  %.scalar = bitcast <2 x i32> %29 to i64
+  %30 = icmp eq i64 %.scalar, 4294967297
+  br i1 %30, label %bb.bt, label %bb.bx
 
 bb.bt:                                            ; preds = %bb.bs
   %i.dx = and i32 %i.dv, 31

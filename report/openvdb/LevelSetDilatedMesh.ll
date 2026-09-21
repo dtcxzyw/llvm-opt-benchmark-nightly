@@ -205,26 +205,20 @@ bb.p:                                             ; preds = %._crit_edge94
   br label %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIfLj3EEELj4EEELj5EEEE13setBackgroundERKfb.exit
 
 bb.q:                                             ; preds = %.lr.ph93, %bb.ac
-  %.sroa.055.091 = phi ptr [ %.pre, %.lr.ph93 ], [ %i.dd, %bb.ac ] ; 5 uses
-  %.sroa.063.090 = phi ptr [ %i.bb, %.lr.ph93 ], [ %i.de, %bb.ac ] ; 5 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.063.090, i64 32
-  %6 = getelementptr inbounds nuw i8, ptr %.sroa.055.091, i64 32 ; 2 uses
-  %7 = load i32, ptr %5, align 4, !tbaa !741
-  %8 = load i32, ptr %6, align 4, !tbaa !741
-  %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.063.090, i64 36
-  %9 = load i32, ptr %i.bh, align 4, !tbaa !741
-  %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.055.091, i64 36
-  %10 = load i32, ptr %i.bi, align 4, !tbaa !741
+  %.sroa.055.091 = phi ptr [ %.pre, %.lr.ph93 ], [ %i.dd, %bb.ac ] ; 4 uses
+  %.sroa.063.090 = phi ptr [ %i.bb, %.lr.ph93 ], [ %i.de, %bb.ac ] ; 4 uses
+  %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.063.090, i64 32
+  %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.055.091, i64 32 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.063.090, i64 40 ; 3 uses
   %i.bk = load i32, ptr %i.bj, align 4, !tbaa !741
   %i.bl = getelementptr inbounds nuw i8, ptr %.sroa.055.091, i64 40 ; 2 uses
   %i.bm = load i32, ptr %i.bl, align 4, !tbaa !741
   %i.bn = sub nsw i32 %i.bk, %i.bm
-  %.not = icmp ne i32 %7, %8
-  %.not22 = icmp ne i32 %9, %10
-  %or.cond77.not81 = or i1 %.not, %.not22
+  %5 = load i64, ptr %i.bh, align 4, !tbaa !741
+  %6 = load i64, ptr %i.bi, align 4, !tbaa !741
+  %7 = icmp ne i64 %5, %6
   %i.bo = icmp eq i32 %i.bn, 4096
-  %or.cond78 = select i1 %or.cond77.not81, i1 true, i1 %i.bo
+  %or.cond78 = select i1 %7, i1 true, i1 %i.bo
   br i1 %or.cond78, label %bb.ac, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
@@ -313,7 +307,7 @@ bb.y:                                             ; preds = %bb.x, %bb.u
 
 bb.z:                                             ; preds = %_ZNK7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeIfLj3EEELj4EEELj5EE13getFirstValueEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
-  %i.cx = load i64, ptr %6, align 8
+  %i.cx = load i64, ptr %i.bi, align 8
   %i.cy = load i32, ptr %i.bl, align 8, !tbaa !741
   store i64 %i.cx, ptr %4, align 8
   %storemerge84 = add i32 %i.cy, 4096             ; 2 uses
@@ -716,26 +710,20 @@ bb.p:                                             ; preds = %._crit_edge94
   br label %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEE13setBackgroundERKdb.exit
 
 bb.q:                                             ; preds = %.lr.ph93, %bb.ac
-  %.sroa.055.091 = phi ptr [ %.pre, %.lr.ph93 ], [ %i.dd, %bb.ac ] ; 5 uses
-  %.sroa.063.090 = phi ptr [ %i.bb, %.lr.ph93 ], [ %i.de, %bb.ac ] ; 5 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.063.090, i64 32
-  %6 = getelementptr inbounds nuw i8, ptr %.sroa.055.091, i64 32 ; 2 uses
-  %7 = load i32, ptr %5, align 4, !tbaa !741
-  %8 = load i32, ptr %6, align 4, !tbaa !741
-  %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.063.090, i64 36
-  %9 = load i32, ptr %i.bh, align 4, !tbaa !741
-  %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.055.091, i64 36
-  %10 = load i32, ptr %i.bi, align 4, !tbaa !741
+  %.sroa.055.091 = phi ptr [ %.pre, %.lr.ph93 ], [ %i.dd, %bb.ac ] ; 4 uses
+  %.sroa.063.090 = phi ptr [ %i.bb, %.lr.ph93 ], [ %i.de, %bb.ac ] ; 4 uses
+  %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.063.090, i64 32
+  %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.055.091, i64 32 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.063.090, i64 40 ; 3 uses
   %i.bk = load i32, ptr %i.bj, align 4, !tbaa !741
   %i.bl = getelementptr inbounds nuw i8, ptr %.sroa.055.091, i64 40 ; 2 uses
   %i.bm = load i32, ptr %i.bl, align 4, !tbaa !741
   %i.bn = sub nsw i32 %i.bk, %i.bm
-  %.not = icmp ne i32 %7, %8
-  %.not22 = icmp ne i32 %9, %10
-  %or.cond77.not81 = or i1 %.not, %.not22
+  %5 = load i64, ptr %i.bh, align 4, !tbaa !741
+  %6 = load i64, ptr %i.bi, align 4, !tbaa !741
+  %7 = icmp ne i64 %5, %6
   %i.bo = icmp eq i32 %i.bn, 4096
-  %or.cond78 = select i1 %or.cond77.not81, i1 true, i1 %i.bo
+  %or.cond78 = select i1 %7, i1 true, i1 %i.bo
   br i1 %or.cond78, label %bb.ac, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
@@ -824,7 +812,7 @@ bb.y:                                             ; preds = %bb.x, %bb.u
 
 bb.z:                                             ; preds = %_ZNK7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeIdLj3EEELj4EEELj5EE13getFirstValueEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
-  %i.cx = load i64, ptr %6, align 8
+  %i.cx = load i64, ptr %i.bi, align 8
   %i.cy = load i32, ptr %i.bl, align 8, !tbaa !741
   store i64 %i.cx, ptr %4, align 8
   %storemerge84 = add i32 %i.cy, 4096             ; 2 uses
@@ -1227,26 +1215,20 @@ bb.p:                                             ; preds = %._crit_edge94
   br label %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIfLj3EEELj4EEELj5EEEE13setBackgroundERKfb.exit
 
 bb.q:                                             ; preds = %.lr.ph93, %bb.ac
-  %.sroa.055.091 = phi ptr [ %.pre, %.lr.ph93 ], [ %i.dd, %bb.ac ] ; 5 uses
-  %.sroa.063.090 = phi ptr [ %i.bb, %.lr.ph93 ], [ %i.de, %bb.ac ] ; 5 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.063.090, i64 32
-  %6 = getelementptr inbounds nuw i8, ptr %.sroa.055.091, i64 32 ; 2 uses
-  %7 = load i32, ptr %5, align 4, !tbaa !741
-  %8 = load i32, ptr %6, align 4, !tbaa !741
-  %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.063.090, i64 36
-  %9 = load i32, ptr %i.bh, align 4, !tbaa !741
-  %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.055.091, i64 36
-  %10 = load i32, ptr %i.bi, align 4, !tbaa !741
+  %.sroa.055.091 = phi ptr [ %.pre, %.lr.ph93 ], [ %i.dd, %bb.ac ] ; 4 uses
+  %.sroa.063.090 = phi ptr [ %i.bb, %.lr.ph93 ], [ %i.de, %bb.ac ] ; 4 uses
+  %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.063.090, i64 32
+  %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.055.091, i64 32 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.063.090, i64 40 ; 3 uses
   %i.bk = load i32, ptr %i.bj, align 4, !tbaa !741
   %i.bl = getelementptr inbounds nuw i8, ptr %.sroa.055.091, i64 40 ; 2 uses
   %i.bm = load i32, ptr %i.bl, align 4, !tbaa !741
   %i.bn = sub nsw i32 %i.bk, %i.bm
-  %.not = icmp ne i32 %7, %8
-  %.not22 = icmp ne i32 %9, %10
-  %or.cond77.not81 = or i1 %.not, %.not22
+  %5 = load i64, ptr %i.bh, align 4, !tbaa !741
+  %6 = load i64, ptr %i.bi, align 4, !tbaa !741
+  %7 = icmp ne i64 %5, %6
   %i.bo = icmp eq i32 %i.bn, 4096
-  %or.cond78 = select i1 %or.cond77.not81, i1 true, i1 %i.bo
+  %or.cond78 = select i1 %7, i1 true, i1 %i.bo
   br i1 %or.cond78, label %bb.ac, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
@@ -1335,7 +1317,7 @@ bb.y:                                             ; preds = %bb.x, %bb.u
 
 bb.z:                                             ; preds = %_ZNK7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeIfLj3EEELj4EEELj5EE13getFirstValueEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
-  %i.cx = load i64, ptr %6, align 8
+  %i.cx = load i64, ptr %i.bi, align 8
   %i.cy = load i32, ptr %i.bl, align 8, !tbaa !741
   store i64 %i.cx, ptr %4, align 8
   %storemerge84 = add i32 %i.cy, 4096             ; 2 uses
@@ -1738,26 +1720,20 @@ bb.p:                                             ; preds = %._crit_edge94
   br label %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEE13setBackgroundERKdb.exit
 
 bb.q:                                             ; preds = %.lr.ph93, %bb.ac
-  %.sroa.055.091 = phi ptr [ %.pre, %.lr.ph93 ], [ %i.dd, %bb.ac ] ; 5 uses
-  %.sroa.063.090 = phi ptr [ %i.bb, %.lr.ph93 ], [ %i.de, %bb.ac ] ; 5 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.063.090, i64 32
-  %6 = getelementptr inbounds nuw i8, ptr %.sroa.055.091, i64 32 ; 2 uses
-  %7 = load i32, ptr %5, align 4, !tbaa !741
-  %8 = load i32, ptr %6, align 4, !tbaa !741
-  %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.063.090, i64 36
-  %9 = load i32, ptr %i.bh, align 4, !tbaa !741
-  %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.055.091, i64 36
-  %10 = load i32, ptr %i.bi, align 4, !tbaa !741
+  %.sroa.055.091 = phi ptr [ %.pre, %.lr.ph93 ], [ %i.dd, %bb.ac ] ; 4 uses
+  %.sroa.063.090 = phi ptr [ %i.bb, %.lr.ph93 ], [ %i.de, %bb.ac ] ; 4 uses
+  %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.063.090, i64 32
+  %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.055.091, i64 32 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.063.090, i64 40 ; 3 uses
   %i.bk = load i32, ptr %i.bj, align 4, !tbaa !741
   %i.bl = getelementptr inbounds nuw i8, ptr %.sroa.055.091, i64 40 ; 2 uses
   %i.bm = load i32, ptr %i.bl, align 4, !tbaa !741
   %i.bn = sub nsw i32 %i.bk, %i.bm
-  %.not = icmp ne i32 %7, %8
-  %.not22 = icmp ne i32 %9, %10
-  %or.cond77.not81 = or i1 %.not, %.not22
+  %5 = load i64, ptr %i.bh, align 4, !tbaa !741
+  %6 = load i64, ptr %i.bi, align 4, !tbaa !741
+  %7 = icmp ne i64 %5, %6
   %i.bo = icmp eq i32 %i.bn, 4096
-  %or.cond78 = select i1 %or.cond77.not81, i1 true, i1 %i.bo
+  %or.cond78 = select i1 %7, i1 true, i1 %i.bo
   br i1 %or.cond78, label %bb.ac, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
@@ -1846,7 +1822,7 @@ bb.y:                                             ; preds = %bb.x, %bb.u
 
 bb.z:                                             ; preds = %_ZNK7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeIdLj3EEELj4EEELj5EE13getFirstValueEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
-  %i.cx = load i64, ptr %6, align 8
+  %i.cx = load i64, ptr %i.bi, align 8
   %i.cy = load i32, ptr %i.bl, align 8, !tbaa !741
   store i64 %i.cx, ptr %4, align 8
   %storemerge84 = add i32 %i.cy, 4096             ; 2 uses

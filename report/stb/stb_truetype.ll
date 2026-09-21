@@ -204,23 +204,23 @@ bb.k:                                             ; preds = %bb.f
   %i.bd = getelementptr inbounds nuw i8, ptr %i.o, i64 4
   %i.be = load <2 x i16>, ptr %i.bd, align 2, !tbaa !70 ; 3 uses
   %i.bf = load <2 x i16>, ptr %i.o, align 2, !tbaa !70 ; 3 uses
-  %i.bg = extractelement <2 x i16> %i.bf, i64 1   ; 6 uses
-  %i.bh = extractelement <2 x i16> %i.be, i64 0
-  %i.bi = extractelement <2 x i16> %i.bf, i64 0   ; 2 uses
-  %i.bj = tail call i16 @llvm.smin.i16(i16 %i.bh, i16 %i.bi)
-  %i.bk = extractelement <2 x i16> %i.ba, i64 0   ; 2 uses
-  %. = tail call i16 @llvm.smin.i16(i16 %i.bj, i16 %i.bk)
-  %i.bl = extractelement <2 x i16> %i.be, i64 1   ; 2 uses
-  %i.bm = tail call i16 @llvm.smin.i16(i16 %i.bl, i16 %i.bg)
+  %i.bg = extractelement <2 x i16> %i.be, i64 0
+  %i.bh = extractelement <2 x i16> %i.bf, i64 0   ; 2 uses
+  %4 = tail call i16 @llvm.smin.i16(i16 %i.bg, i16 %i.bh)
+  %i.bi = extractelement <2 x i16> %i.ba, i64 0   ; 2 uses
+  %i.bj = tail call i16 @llvm.smin.i16(i16 %4, i16 %i.bi)
+  %i.bk = extractelement <2 x i16> %i.be, i64 1   ; 2 uses
+  %i.bl = extractelement <2 x i16> %i.bf, i64 1   ; 6 uses
+  %i.bm = tail call i16 @llvm.smin.i16(i16 %i.bk, i16 %i.bl)
   %i.bn = tail call i16 @llvm.smin.i16(i16 %i.bb, i16 %i.bm)
-  %i.bo = tail call i16 @llvm.smax.i16(i16 %i.bl, i16 %i.bg)
+  %i.bo = tail call i16 @llvm.smax.i16(i16 %i.bk, i16 %i.bl)
   %i.bp = tail call i16 @llvm.smax.i16(i16 %i.bb, i16 %i.bo)
   %i.bq = sitofp i16 %i.bn to float
   %i.br = fcmp ogt float %.0150, %i.bq
   %i.bs = sitofp i16 %i.bp to float
   %i.bt = fcmp olt float %.0150, %i.bs
   %or.cond162 = and i1 %i.br, %i.bt
-  %i.bu = sitofp i16 %. to float
+  %i.bu = sitofp i16 %i.bj to float
   %i.bv = fcmp ogt float %0, %i.bu
   %or.cond164 = select i1 %or.cond162, i1 %i.bv, i1 false
   br i1 %or.cond164, label %bb.l, label %.thread
@@ -230,41 +230,33 @@ bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #29
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #29
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #29
-  %i.bw = sitofp <2 x i16> %i.ba to <2 x float>   ; 3 uses
+  %i.bw = sitofp <2 x i16> %i.ba to <2 x float>   ; 4 uses
   store <2 x float> %i.bw, ptr %i.c, align 8, !tbaa !80
   %i.bx = sitofp <2 x i16> %i.be to <2 x float>   ; 3 uses
   store <2 x float> %i.bx, ptr %i.d, align 8, !tbaa !80
-  %i.by = sitofp <2 x i16> %i.bf to <2 x float>   ; 3 uses
+  %i.by = sitofp <2 x i16> %i.bf to <2 x float>   ; 2 uses
   store <2 x float> %i.by, ptr %i.e, align 8, !tbaa !80
-  %4 = extractelement <2 x float> %i.bw, i64 0    ; 2 uses
-  %5 = extractelement <2 x float> %i.bx, i64 0    ; 2 uses
-  %6 = fcmp une float %4, %5
-  %7 = extractelement <2 x float> %i.bw, i64 1    ; 2 uses
-  %8 = extractelement <2 x float> %i.bx, i64 1    ; 2 uses
-  %9 = fcmp une float %7, %8
-  %or.cond169 = or i1 %6, %9
-  br i1 %or.cond169, label %equal.exit.thread, label %bb.m
+  %5 = fcmp une <2 x float> %i.bw, %i.bx
+  %6 = bitcast <2 x i1> %5 to i2
+  %.not = icmp eq i2 %6, 0
+  %7 = fcmp une <2 x float> %i.bx, %i.by
+  %8 = bitcast <2 x i1> %7 to i2
+  %.not177 = icmp eq i2 %8, 0
+  %or.cond179 = select i1 %.not, i1 true, i1 %.not177
+  br i1 %or.cond179, label %bb.m, label %equal.exit165.thread
 
-equal.exit.thread:                                ; preds = %bb.l
-  %10 = extractelement <2 x float> %i.by, i64 0
-  %11 = fcmp une float %5, %10
-  %12 = extractelement <2 x float> %i.by, i64 1
-  %13 = fcmp une float %8, %12
-  %or.cond170 = or i1 %11, %13
-  br i1 %or.cond170, label %equal.exit165.thread, label %bb.m
-
-bb.m:                                             ; preds = %equal.exit.thread, %bb.l
-  %i.bz = sext i16 %i.bk to i32                   ; 2 uses
-  %i.ca = sext i16 %i.bi to i32                   ; 2 uses
-  %i.cb = sext i16 %i.bg to i32
-  %i.cc = icmp slt i16 %i.bb, %i.bg
-  %i.cd = tail call i16 @llvm.smin.i16(i16 %i.bb, i16 %i.bg)
+bb.m:                                             ; preds = %bb.l
+  %i.bz = sext i16 %i.bi to i32                   ; 2 uses
+  %i.ca = sext i16 %i.bh to i32                   ; 2 uses
+  %i.cb = sext i16 %i.bl to i32
+  %i.cc = icmp slt i16 %i.bb, %i.bl
+  %i.cd = tail call i16 @llvm.smin.i16(i16 %i.bb, i16 %i.bl)
   %i.ce = sitofp i16 %i.cd to float
   %i.cf = fcmp ogt float %.0150, %i.ce
   br i1 %i.cf, label %bb.n, label %bb.q
 
 bb.n:                                             ; preds = %bb.m
-  %i.cg = tail call i16 @llvm.smax.i16(i16 %i.bb, i16 %i.bg)
+  %i.cg = tail call i16 @llvm.smax.i16(i16 %i.bb, i16 %i.bl)
   %i.ch = sitofp i16 %i.cg to float
   %i.ci = fcmp olt float %.0150, %i.ch
   br i1 %i.ci, label %bb.o, label %bb.q
@@ -276,20 +268,22 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.cl, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  %i.cm = fsub float %.0150, %7
+  %9 = extractelement <2 x float> %i.bw, i64 1
+  %i.cm = fsub float %.0150, %9
   %i.cn = sub nsw i32 %i.cb, %i.bc
   %i.co = sitofp i32 %i.cn to float
   %i.cp = fdiv float %i.cm, %i.co
   %i.cq = sub nsw i32 %i.ca, %i.bz
   %i.cr = sitofp i32 %i.cq to float
-  %i.cs = tail call float @llvm.fmuladd.f32(float %i.cp, float %i.cr, float %4)
+  %10 = extractelement <2 x float> %i.bw, i64 0
+  %i.cs = tail call float @llvm.fmuladd.f32(float %i.cp, float %i.cr, float %10)
   %i.ct = fcmp olt float %i.cs, %0
   %i.cu = select i1 %i.cc, i32 1, i32 -1
   %i.cv = select i1 %i.ct, i32 %i.cu, i32 0
   %.4 = add nsw i32 %i.cv, %.0172
   br label %bb.q
 
-equal.exit165.thread:                             ; preds = %equal.exit.thread
+equal.exit165.thread:                             ; preds = %bb.l
   %i.cw = call i32 @stbtt__ray_intersect_bezier(ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f) ; 2 uses
   %i.cx = icmp ne i32 %i.cw, 0
   %i.cy = icmp samesign ugt i32 %i.cw, 1

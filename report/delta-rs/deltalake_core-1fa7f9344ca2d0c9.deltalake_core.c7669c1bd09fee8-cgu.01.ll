@@ -204,18 +204,16 @@ bb.a:
   ]
 
 _RNvMNtNtCsbvkFyIu7lgC_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit37: ; preds = %bb.a
-  %i.a = load i8, ptr %0, align 1, !alias.scope !32142, !noalias !32143, !noundef !24 ; 4 uses
-  %2 = add i8 %i.a, -65
-  %3 = icmp ult i8 %2, 26
-  %4 = select i1 %3, i8 32, i8 0
-  %.sroa.012.0.i = or i8 %4, %i.a
-  %5 = icmp eq i8 %.sroa.012.0.i, 49
-  %6 = add i8 %i.a, -65
-  %7 = icmp ult i8 %6, 26
-  %8 = select i1 %7, i8 32, i8 0
-  %.sroa.012.0.i45 = or i8 %8, %i.a
-  %9 = icmp eq i8 %.sroa.012.0.i45, 121
-  %10 = or i1 %5, %9
+  %i.a = load i8, ptr %0, align 1, !alias.scope !32142, !noalias !32143, !noundef !24
+  %2 = insertelement <2 x i8> poison, i8 %i.a, i64 0
+  %3 = shufflevector <2 x i8> %2, <2 x i8> poison, <2 x i32> zeroinitializer ; 2 uses
+  %4 = add <2 x i8> %3, splat (i8 -65)
+  %5 = icmp ult <2 x i8> %4, splat (i8 26)
+  %6 = select <2 x i1> %5, <2 x i8> splat (i8 32), <2 x i8> zeroinitializer
+  %7 = or <2 x i8> %6, %3
+  %8 = icmp eq <2 x i8> %7, <i8 49, i8 121>
+  %9 = bitcast <2 x i1> %8 to i2
+  %10 = icmp ne i2 %9, 0
   br label %_RNvMNtNtCsbvkFyIu7lgC_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit37.thread59
 
 bb.b:                                             ; preds = %bb.a

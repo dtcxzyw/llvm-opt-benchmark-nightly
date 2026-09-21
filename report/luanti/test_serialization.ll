@@ -202,7 +202,7 @@ bb.a:
   %i.c = alloca [12 x i8], align 8                ; 6 uses
   %i.d = alloca [12 x i8], align 4                ; 7 uses
   %i.e = alloca [8 x i8], align 8                 ; 6 uses
-  %i.f = alloca [6 x i8], align 2                 ; 7 uses
+  %i.f = alloca [6 x i8], align 4                 ; 6 uses
   %i.g = alloca [4 x i8], align 4                 ; 6 uses
   %i.h = alloca [4 x i8], align 4                 ; 5 uses
   %i.i = alloca [4 x i8], align 4                 ; 5 uses
@@ -605,7 +605,7 @@ bb.da:                                            ; preds = %_ZNKSt7__cxx1112bas
 
 bb.db:                                            ; preds = %bb.cu
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #27
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %i.f, i8 0, i64 6, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(6) %i.f, i8 0, i64 6, i1 false)
   %i.kj = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi4readEPcl(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull %i.f, i64 noundef 6)
           to label %.noexc250 unwind label %bb.dg ; 0 uses
 
@@ -628,17 +628,13 @@ bb.dc:                                            ; preds = %.noexc250
   unreachable
 
 bb.dd:                                            ; preds = %.noexc250
-  %.0.copyload.i.i.i.i248 = load i16, ptr %i.f, align 2
-  %i.kr = getelementptr inbounds nuw i8, ptr %i.f, i64 2
-  %.0.copyload.i.i3.i.i = load i16, ptr %i.kr, align 2
-  %51 = getelementptr inbounds nuw i8, ptr %i.f, i64 4
-  %.0.copyload.i.i5.i.i = load i16, ptr %51, align 2
+  %i.kr = getelementptr inbounds nuw i8, ptr %i.f, i64 4
+  %.0.copyload.i.i3.i.i = load i16, ptr %i.kr, align 4
+  %51 = load i32, ptr %i.f, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #27
-  %52 = icmp eq i16 %.0.copyload.i.i.i.i248, 28432
-  %i.ks = icmp eq i16 %.0.copyload.i.i3.i.i, 23554
-  %or.cond = and i1 %52, %i.ks
-  %i.kt = icmp eq i16 %.0.copyload.i.i5.i.i, -7425
-  %or.cond417 = select i1 %or.cond, i1 %i.kt, i1 false
+  %i.ks = icmp eq i32 %51, 1543663376
+  %i.kt = icmp eq i16 %.0.copyload.i.i3.i.i, -7425
+  %or.cond417 = select i1 %i.ks, i1 %i.kt, i1 false
   br i1 %or.cond417, label %bb.dj, label %_ZNK4core8vector3dIsEeqERKS1_.exit.thread
 
 _ZNK4core8vector3dIsEeqERKS1_.exit.thread:        ; preds = %bb.dd

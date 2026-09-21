@@ -205,14 +205,10 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define dso_local noundef zeroext i1 @_ZNK4llvm3ubi7Context14isDefaultFPEnvEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(3170) %0) local_unnamed_addr #5 align 2 {
 bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 3169
-  %2 = load i8, ptr %1, align 1, !tbaa !140
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 3168
-  %3 = load i8, ptr %i.a, align 8, !tbaa !139
-  %4 = icmp eq i8 %2, 0
-  %i.b = icmp eq i8 %3, 1
-  %5 = and i1 %4, %i.b
-  ret i1 %5
+  %1 = load i16, ptr %i.a, align 8, !tbaa !165
+  %i.b = icmp eq i16 %1, 1
+  ret i1 %i.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable

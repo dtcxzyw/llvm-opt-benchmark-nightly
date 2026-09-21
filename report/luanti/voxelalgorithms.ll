@@ -204,19 +204,16 @@ _ZNK9VoxelArea14hasEmptyExtentEv.exit:            ; preds = %bb.a
 
 bb.b:                                             ; preds = %_ZNK9VoxelArea14hasEmptyExtentEv.exit
   %.sroa.077.0.copyload = load i48, ptr %i.d, align 8 ; 4 uses
-  %.sroa.0.0.extract.trunc.i.i = trunc i48 %.sroa.077.0.copyload to i16 ; 2 uses
   %.sroa.2.0.extract.shift.i.i = lshr i48 %.sroa.077.0.copyload, 16
-  %.sroa.2.0.extract.trunc.i.i = trunc i48 %.sroa.2.0.extract.shift.i.i to i16 ; 2 uses
-  %7 = sext i16 %.sroa.0.0.extract.trunc.i.i to i32 ; 2 uses
-  %8 = add nsw i32 %7, -15
-  %9 = icmp slt i16 %.sroa.0.0.extract.trunc.i.i, 0
-  %10 = select i1 %9, i32 %8, i32 %7
-  %11 = sdiv i32 %10, 16                          ; 3 uses
-  %12 = sext i16 %.sroa.2.0.extract.trunc.i.i to i32 ; 2 uses
-  %13 = add nsw i32 %12, -15
-  %14 = icmp slt i16 %.sroa.2.0.extract.trunc.i.i, 0
-  %15 = select i1 %14, i32 %13, i32 %12
-  %16 = sdiv i32 %15, 16                          ; 3 uses
+  %.sroa.2.0.extract.trunc.i.i = trunc i48 %.sroa.077.0.copyload to i16
+  %7 = insertelement <2 x i16> poison, i16 %.sroa.2.0.extract.trunc.i.i, i64 0
+  %8 = trunc i48 %.sroa.2.0.extract.shift.i.i to i16
+  %9 = insertelement <2 x i16> %7, i16 %8, i64 1  ; 2 uses
+  %10 = sext <2 x i16> %9 to <2 x i32>            ; 2 uses
+  %11 = add nsw <2 x i32> %10, splat (i32 -15)
+  %12 = icmp slt <2 x i16> %9, zeroinitializer
+  %13 = select <2 x i1> %12, <2 x i32> %11, <2 x i32> %10
+  %14 = sdiv <2 x i32> %13, splat (i32 16)        ; 2 uses
   %i.k = ashr i48 %.sroa.077.0.copyload, 32
   %i.l = trunc nsw i48 %i.k to i32                ; 2 uses
   %i.m = add nsw i32 %i.l, -15
@@ -226,14 +223,16 @@ bb.b:                                             ; preds = %_ZNK9VoxelArea14has
   %.mask.i.i = and i32 %i.p, 65535
   %.sroa.3.0.insert.ext.i.i = zext nneg i32 %.mask.i.i to i48
   %.sroa.3.0.insert.shift.i.i = shl nuw i48 %.sroa.3.0.insert.ext.i.i, 32
-  %i.q = shl nsw i32 %16, 16
+  %15 = extractelement <2 x i32> %14, i64 1       ; 3 uses
+  %i.q = shl nsw i32 %15, 16
   %.sroa.2.0.insert.shift.i.i = zext i32 %i.q to i48
-  %.mask5.i.i = and i32 %11, 65535
+  %16 = extractelement <2 x i32> %14, i64 0       ; 3 uses
+  %.mask5.i.i = and i32 %16, 65535
   %.sroa.0.0.insert.ext.i.i = zext nneg i32 %.mask5.i.i to i48
   %i.r = or disjoint i48 %.sroa.3.0.insert.shift.i.i, %.sroa.0.0.insert.ext.i.i
   %.sroa.0.0.insert.insert.i.i = or disjoint i48 %i.r, %.sroa.2.0.insert.shift.i.i
-  %.sroa.078.0.extract.trunc = trunc nsw i32 %11 to i16 ; 2 uses
-  %.sroa.780.0.extract.trunc = trunc nsw i32 %16 to i16 ; 2 uses
+  %.sroa.078.0.extract.trunc = trunc nsw i32 %16 to i16 ; 2 uses
+  %.sroa.780.0.extract.trunc = trunc nsw i32 %15 to i16 ; 2 uses
   %.sroa.982.0.extract.trunc = trunc nsw i32 %i.p to i16 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 14 ; 2 uses
   %.sroa.070.0.copyload = load i48, ptr %i.s, align 2 ; 4 uses
@@ -565,7 +564,7 @@ _ZN7voxalgo10LightQueueC2Em.exit229:              ; preds = %_ZNSt6vectorIN7voxa
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #5
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(30) %6, i8 0, i64 30, i1 false)
-  %.not376 = icmp sgt i32 %11, %i.x
+  %.not376 = icmp sgt i32 %16, %i.x
   br i1 %.not376, label %._crit_edge406.split, label %.preheader348.lr.ph
 
 .preheader348.lr.ph:                              ; preds = %_ZN7voxalgo10LightQueueC2Em.exit229
@@ -599,7 +598,7 @@ _ZN7voxalgo10LightQueueC2Em.exit229:              ; preds = %_ZNSt6vectorIN7voxa
 
 .preheader339.lr.ph:                              ; preds = %._crit_edge375, %.preheader348.lr.ph
   %i.eu = phi ptr [ null, %.preheader348.lr.ph ], [ %i.ph, %._crit_edge375 ] ; 2 uses
-  %.not128401 = icmp sgt i32 %16, %i.ac
+  %.not128401 = icmp sgt i32 %15, %i.ac
   %.not130396 = icmp sgt i32 %i.p, %i.ai
   %i.ev = getelementptr inbounds nuw i8, ptr %i.c, i64 312 ; 2 uses
   %i.ew = getelementptr inbounds nuw i8, ptr %1, i64 10

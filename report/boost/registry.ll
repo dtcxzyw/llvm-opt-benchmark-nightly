@@ -205,23 +205,22 @@ _ZN5boost9unordered6detail20grouped_bucket_arrayINS1_6bucketINS1_4nodeINS_9typei
   %i.dr = load float, ptr %i.dq, align 8, !tbaa !20
   %i.ds = uitofp i64 %i.dm to float
   %i.dt = uitofp i64 %i.dl to float
-  %i.du = insertelement <2 x float> poison, float %i.ds, i64 0
-  %i.dv = insertelement <2 x float> %i.du, float %i.dt, i64 1
+  %i.du = insertelement <2 x float> poison, float %i.dt, i64 0
+  %i.dv = insertelement <2 x float> %i.du, float %i.ds, i64 1
   %i.dw = insertelement <2 x float> poison, float %i.dr, i64 0
   %i.dx = shufflevector <2 x float> %i.dw, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.dy = fdiv <2 x float> %i.dv, %i.dx           ; 2 uses
-  %4 = extractelement <2 x float> %i.dy, i64 0
-  %5 = tail call noundef float @llvm.ceil.f32(float %4) ; 2 uses
-  %6 = fcmp ult float %5, f0x5F800000
+  %i.dy = fdiv <2 x float> %i.dv, %i.dx
+  %4 = tail call <2 x float> @llvm.ceil.v2f32(<2 x float> %i.dy) ; 3 uses
+  %5 = extractelement <2 x float> %4, i64 1
   %i.dz = fptoui float %5 to i64
-  %i.ea = extractelement <2 x float> %i.dy, i64 1
-  %7 = tail call noundef float @llvm.ceil.f32(float %i.ea) ; 2 uses
-  %8 = fcmp ult float %7, f0x5F800000
-  %9 = fptoui float %7 to i64
-  %10 = tail call i64 @llvm.umax.i64(i64 %i.dz, i64 %9)
-  %11 = tail call i64 @llvm.umax.i64(i64 %10, i64 1)
-  %12 = and i1 %8, %6
-  %i.eb = select i1 %12, i64 %11, i64 -1
+  %i.ea = extractelement <2 x float> %4, i64 0
+  %6 = fptoui float %i.ea to i64
+  %7 = tail call i64 @llvm.umax.i64(i64 %i.dz, i64 %6)
+  %8 = tail call i64 @llvm.umax.i64(i64 %7, i64 1)
+  %9 = fcmp oge <2 x float> %4, splat (float f0x5F800000)
+  %10 = bitcast <2 x i1> %9 to i2
+  %11 = icmp eq i2 %10, 0
+  %i.eb = select i1 %11, i64 %8, i64 -1
   %i.ec = tail call noundef i64 @_ZN5boost9unordered6detail15prime_fmod_sizeIvE10size_indexEm(i64 noundef %i.eb)
   %i.ed = getelementptr inbounds nuw [8 x i8], ptr @_ZN5boost9unordered6detail15prime_fmod_sizeIvE5sizesE, i64 %i.ec
   %i.ee = load i64, ptr %i.ed, align 8, !tbaa !75 ; 2 uses
@@ -428,9 +427,6 @@ declare void @_ZSt17__throw_bad_allocv() local_unnamed_addr #10
 
 ; Function Attrs: nobuiltin allocsize(0)
 declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #14
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.ceil.f32(float) #15
 
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr hidden void @_ZN5boost9unordered6detail5tableINS1_3setISaINS_9typeindex15ctti_type_indexEES5_NS_4hashIS5_EESt8equal_toIS5_EEEE11rehash_implEm(ptr noundef nonnull align 8 dereferenceable(64) %0, i64 noundef %1) local_unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
@@ -834,7 +830,7 @@ bb.z:                                             ; preds = %._crit_edge63
 }
 
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
-define linkonce_odr hidden noundef i64 @_ZN5boost9unordered6detail15prime_fmod_sizeIvE10size_indexEm(i64 noundef %0) local_unnamed_addr #16 comdat align 2 {
+define linkonce_odr hidden noundef i64 @_ZN5boost9unordered6detail15prime_fmod_sizeIvE10size_indexEm(i64 noundef %0) local_unnamed_addr #15 comdat align 2 {
 bb.a:
   %.not = icmp ugt i64 %0, 13
   br i1 %.not, label %bb.b, label %bb.al
@@ -1237,19 +1233,22 @@ _ZN5boost9unordered6detail5tableINS1_3setISaINS_9typeindex15ctti_type_indexEES5_
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #15
+declare i32 @llvm.smin.i32(i32, i32) #16
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #15
+declare i64 @llvm.umax.i64(i64, i64) #16
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.xor.v2i64(<2 x i64>) #15
+declare i64 @llvm.vector.reduce.xor.v2i64(<2 x i64>) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.ceil.v2f32(<2 x float>) #16
 
 attributes #0 = { mustprogress norecurse uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -1266,8 +1265,8 @@ attributes #11 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trappin
 attributes #12 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #13 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #14 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #15 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #16 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #15 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #16 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #17 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #18 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #19 = { nounwind }

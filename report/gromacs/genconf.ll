@@ -205,12 +205,11 @@ bb.i:                                             ; preds = %bb.h
   %i.eg = fptosi <3 x float> %i.ef to <3 x i32>   ; 5 uses
   %i.eh = extractelement <3 x i32> %i.eg, i64 2   ; 5 uses
   %i.ei = shufflevector <3 x i32> %i.eg, <3 x i32> poison, <2 x i32> <i32 0, i32 1>
-  %i.ej = icmp slt <2 x i32> %i.ei, splat (i32 1) ; 2 uses
-  %14 = extractelement <2 x i1> %i.ej, i64 0
-  %15 = extractelement <2 x i1> %i.ej, i64 1
-  %or.cond = or i1 %14, %15
+  %i.ej = icmp slt <2 x i32> %i.ei, splat (i32 1)
+  %14 = bitcast <2 x i1> %i.ej to i2
+  %15 = icmp ne i2 %14, 0
   %i.ek = icmp slt i32 %i.eh, 1
-  %or.cond3 = or i1 %or.cond, %i.ek
+  %or.cond3 = or i1 %15, %i.ek
   br i1 %or.cond3, label %bb.j, label %bb.q
 
 bb.j:                                             ; preds = %bb.i

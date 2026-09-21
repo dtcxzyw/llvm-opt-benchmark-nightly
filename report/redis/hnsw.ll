@@ -205,16 +205,15 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 3 uses
-  %.034 = phi i32 [ 0, %.lr.ph.preheader ], [ %op.rdx, %.lr.ph ]
+  %slprdx.acc = phi <4 x i32> [ zeroinitializer, %.lr.ph.preheader ], [ %slprdx.acc70, %.lr.ph ]
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv
   %i.f = load <4 x i64>, ptr %i.e, align 1, !tbaa !43
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
   %i.h = load <4 x i64>, ptr %i.g, align 1, !tbaa !43
   %i.i = xor <4 x i64> %i.h, %i.f
   %i.j = tail call range(i64 0, 65) <4 x i64> @llvm.ctpop.v4i64(<4 x i64> %i.i)
-  %3 = tail call i64 @llvm.vector.reduce.add.v4i64(<4 x i64> %i.j)
-  %4 = trunc nuw nsw i64 %3 to i32
-  %op.rdx = add i32 %.034, %4                     ; 2 uses
+  %3 = trunc nuw nsw <4 x i64> %i.j to <4 x i32>
+  %slprdx.acc70 = add <4 x i32> %slprdx.acc, %3   ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 4 ; 3 uses
   %i.k = or disjoint i64 %indvars.iv.next, 3
   %i.l = icmp samesign ult i64 %i.k, %i.d
@@ -222,16 +221,17 @@ bb.a:
 
 .loopexit.loopexit:                               ; preds = %.lr.ph
   %i.m = trunc nuw nsw i64 %indvars.iv.next to i32
+  %4 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %slprdx.acc70)
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %bb.a
-  %.127.a = phi i32 [ 0, %bb.a ], [ %i.m, %.loopexit.loopexit ] ; 2 uses
-  %.1 = phi i32 [ 0, %bb.a ], [ %op.rdx, %.loopexit.loopexit ] ; 4 uses
-  %i.n = icmp samesign ult i32 %.127.a, %i.b
+  %.127.a = phi i32 [ 0, %bb.a ], [ %4, %.loopexit.loopexit ] ; 4 uses
+  %.1 = phi i32 [ 0, %bb.a ], [ %i.m, %.loopexit.loopexit ] ; 2 uses
+  %i.n = icmp samesign ult i32 %.1, %i.b
   br i1 %i.n, label %iter.check, label %._crit_edge
 
 iter.check:                                       ; preds = %.loopexit
-  %i.o = zext nneg i32 %.127.a to i64             ; 6 uses
+  %i.o = zext nneg i32 %.1 to i64                 ; 6 uses
   %wide.trip.count = zext nneg i32 %i.b to i64    ; 2 uses
   %i.p = sub nsw i64 %wide.trip.count, %i.o       ; 7 uses
   %min.iters.check = icmp ult i64 %i.p, 4
@@ -245,7 +245,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.q = and i64 %i.p, 12
   %n.vec = and i64 %i.p, -16                      ; 4 uses
   %i.r = add nsw i64 %n.vec, %i.o
-  %i.s = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.1, i64 0
+  %i.s = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.127.a, i64 0
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -305,7 +305,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %bc.merge.rdx = phi i32 [ %i.at, %vec.epilog.iter.check ], [ %.1, %vector.main.loop.iter.check ]
+  %bc.merge.rdx = phi i32 [ %i.at, %vec.epilog.iter.check ], [ %.127.a, %vector.main.loop.iter.check ]
   %n.vec61 = and i64 %i.p, -4                     ; 3 uses
   %i.au = add nsw i64 %n.vec61, %i.o
   %i.av = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %bc.merge.rdx, i64 0
@@ -334,7 +334,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph38.preheader:                               ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv43.ph = phi i64 [ %i.o, %iter.check ], [ %i.r, %vec.epilog.iter.check ], [ %i.au, %vec.epilog.middle.block ]
-  %.237.ph = phi i32 [ %.1, %iter.check ], [ %i.at, %vec.epilog.iter.check ], [ %i.be, %vec.epilog.middle.block ]
+  %.237.ph = phi i32 [ %.127.a, %iter.check ], [ %i.at, %vec.epilog.iter.check ], [ %i.be, %vec.epilog.middle.block ]
   br label %.lr.ph38
 
 .lr.ph38:                                         ; preds = %.lr.ph38.preheader, %.lr.ph38
@@ -353,7 +353,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph38, !llvm.loop !111
 
 ._crit_edge:                                      ; preds = %.lr.ph38, %middle.block, %vec.epilog.middle.block, %.loopexit
-  %.2.lcssa = phi i32 [ %.1, %.loopexit ], [ %i.be, %vec.epilog.middle.block ], [ %i.at, %middle.block ], [ %i.bm, %.lr.ph38 ]
+  %.2.lcssa = phi i32 [ %.127.a, %.loopexit ], [ %i.be, %vec.epilog.middle.block ], [ %i.at, %middle.block ], [ %i.bm, %.lr.ph38 ]
   %i.bn = uitofp i32 %.2.lcssa to float
   %i.bo = fmul nnan float %i.bn, 2.000000e+00
   %i.bp = uitofp i32 %2 to float
@@ -754,9 +754,6 @@ declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i64> @llvm.ctpop.v4i64(<4 x i64>) #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.add.v4i64(<4 x i64>) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.round.v4f32(<4 x float>) #8

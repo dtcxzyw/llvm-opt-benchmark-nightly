@@ -9,14 +9,12 @@ target triple = "x86_64-pc-linux-gnu"
 define dso_local noundef zeroext i1 @_ZNK3ozz9animation8IKAimJob8ValidateEv(ptr nofree noundef nonnull readonly align 16 captures(none) dereferenceable(112) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %1 = load ptr, ptr %i.a, align 8, !tbaa !15
-  %2 = icmp ne ptr %1, null
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %4 = load ptr, ptr %3, align 16, !tbaa !16
-  %5 = icmp ne ptr %4, null
-  %6 = and i1 %2, %5
+  %1 = load <2 x ptr>, ptr %i.a, align 8, !tbaa !11
+  %2 = icmp eq <2 x ptr> %1, splat (ptr null)
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, 0
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.c = load <4 x float>, ptr %i.b, align 16, !tbaa !17 ; 2 uses
+  %i.c = load <4 x float>, ptr %i.b, align 16, !tbaa !10 ; 2 uses
   %i.d = tail call <4 x float> @llvm.x86.sse41.dpps(<4 x float> %i.c, <4 x float> %i.c, i8 127)
   %i.e = shufflevector <4 x float> %i.d, <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, <4 x i32> <i32 0, i32 5, i32 6, i32 7> ; 2 uses
   %i.f = tail call noundef <4 x float> @llvm.x86.sse.cmp.ss(<4 x float> %i.e, <4 x float> <float 1.002000e+00, float poison, float poison, float poison>, i8 1)
@@ -26,7 +24,7 @@ bb.a:
   %i.j = and <4 x i32> %i.i, %i.h
   %i.k = extractelement <4 x i32> %i.j, i64 0
   %i.l = icmp slt i32 %i.k, 0
-  %i.m = and i1 %6, %i.l
+  %i.m = and i1 %4, %i.l
   ret i1 %i.m
 }
 
@@ -34,14 +32,14 @@ bb.a:
 define dso_local noundef zeroext i1 @_ZNK3ozz9animation8IKAimJob3RunEv(ptr nofree noundef nonnull readonly align 16 captures(none) dereferenceable(112) %0) local_unnamed_addr #1 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !15   ; 5 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !19   ; 5 uses
   %i.c = icmp ne ptr %i.b, null
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %i.e = load ptr, ptr %i.d, align 16, !tbaa !16  ; 4 uses
+  %i.e = load ptr, ptr %i.d, align 16, !tbaa !20  ; 4 uses
   %i.f = icmp ne ptr %i.e, null
   %i.g = and i1 %i.c, %i.f
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.i = load <4 x float>, ptr %i.h, align 16, !tbaa !17 ; 4 uses
+  %i.i = load <4 x float>, ptr %i.h, align 16, !tbaa !10 ; 4 uses
   %i.j = tail call <4 x float> @llvm.x86.sse41.dpps(<4 x float> %i.i, <4 x float> %i.i, i8 127)
   %i.k = shufflevector <4 x float> %i.j, <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, <4 x i32> <i32 0, i32 5, i32 6, i32 7> ; 2 uses
   %i.l = tail call noundef <4 x float> @llvm.x86.sse.cmp.ss(<4 x float> %i.k, <4 x float> <float 1.002000e+00, float poison, float poison, float poison>, i8 1)
@@ -55,14 +53,14 @@ bb.a:
   br i1 %i.s, label %bb.b, label %bb.u
 
 bb.b:                                             ; preds = %bb.a
-  %i.t = load <4 x float>, ptr %i.b, align 16, !tbaa !17, !noalias !20 ; 2 uses
+  %i.t = load <4 x float>, ptr %i.b, align 16, !tbaa !10, !noalias !21 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %i.v = load <4 x float>, ptr %i.u, align 16, !tbaa !17, !noalias !20 ; 2 uses
+  %i.v = load <4 x float>, ptr %i.u, align 16, !tbaa !10, !noalias !21 ; 2 uses
   %i.w = shufflevector <4 x float> %i.t, <4 x float> %i.v, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  %i.y = load <4 x float>, ptr %i.x, align 16, !tbaa !17, !noalias !20 ; 2 uses
+  %i.y = load <4 x float>, ptr %i.x, align 16, !tbaa !10, !noalias !21 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.b, i64 48
-  %i.aa = load <4 x float>, ptr %i.z, align 16, !tbaa !17, !noalias !20 ; 2 uses
+  %i.aa = load <4 x float>, ptr %i.z, align 16, !tbaa !10, !noalias !21 ; 2 uses
   %i.ab = shufflevector <4 x float> %i.y, <4 x float> %i.aa, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 3 uses
   %i.ac = shufflevector <4 x float> %i.t, <4 x float> %i.v, <4 x i32> <i32 2, i32 3, i32 6, i32 7> ; 4 uses
   %i.ad = shufflevector <4 x float> %i.y, <4 x float> %i.aa, <4 x i32> <i32 2, i32 3, i32 6, i32 7> ; 4 uses
@@ -159,7 +157,7 @@ bb.b:                                             ; preds = %bb.a
   %i.dk = fmul <4 x float> %i.cu, %i.di           ; 2 uses
   %i.dl = fmul <4 x float> %i.cl, %i.di           ; 2 uses
   %i.dm = fmul <4 x float> %i.cw, %i.di
-  %i.dn = load <3 x float>, ptr %0, align 16, !tbaa !17 ; 3 uses
+  %i.dn = load <3 x float>, ptr %0, align 16, !tbaa !10 ; 3 uses
   %i.do = shufflevector <3 x float> %i.dn, <3 x float> poison, <4 x i32> zeroinitializer
   %i.dp = fmul <4 x float> %i.do, %i.dj
   %i.dq = shufflevector <3 x float> %i.dn, <3 x float> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
@@ -171,7 +169,7 @@ bb.b:                                             ; preds = %bb.a
   %i.dw = fadd <4 x float> %i.dv, %i.ds           ; 10 uses
   %i.dx = tail call noundef <4 x float> @llvm.x86.sse41.dpps(<4 x float> %i.dw, <4 x float> %i.dw, i8 127) ; 7 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.dz = load <4 x float>, ptr %i.dy, align 16, !tbaa !17 ; 4 uses
+  %i.dz = load <4 x float>, ptr %i.dy, align 16, !tbaa !10 ; 4 uses
   %i.ea = tail call noundef <4 x float> @llvm.x86.sse41.dpps(<4 x float> %i.i, <4 x float> %i.dz, i8 127) ; 3 uses
   %i.eb = tail call noundef <4 x float> @llvm.x86.sse41.dpps(<4 x float> %i.dz, <4 x float> %i.dz, i8 127)
   %i.ec = fneg <4 x float> %i.ea
@@ -193,14 +191,14 @@ bb.c:                                             ; preds = %bb.b
 _ZN3ozz9animation12_GLOBAL__N_123ComputeOffsettedForwardEDv4_fS2_S2_PS2_.exit: ; preds = %bb.b, %bb.c
   %.0 = phi <4 x float> [ undef, %bb.b ], [ %i.em, %bb.c ] ; 9 uses
   %i.en = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %i.eo = load ptr, ptr %i.en, align 8, !tbaa !21 ; 2 uses
+  %i.eo = load ptr, ptr %i.en, align 8, !tbaa !22 ; 2 uses
   %.not = icmp eq ptr %i.eo, null
   br i1 %.not, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %_ZN3ozz9animation12_GLOBAL__N_123ComputeOffsettedForwardEDv4_fS2_S2_PS2_.exit
   %.0.i = xor i1 %i.ef, true
   %i.ep = zext i1 %.0.i to i8
-  store i8 %i.ep, ptr %i.eo, align 1, !tbaa !23
+  store i8 %i.ep, ptr %i.eo, align 1, !tbaa !24
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %_ZN3ozz9animation12_GLOBAL__N_123ComputeOffsettedForwardEDv4_fS2_S2_PS2_.exit
@@ -210,7 +208,7 @@ bb.e:                                             ; preds = %bb.d, %_ZN3ozz9anim
   br i1 %or.cond, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %i.e, align 16, !tbaa !17
+  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %i.e, align 16, !tbaa !10
   br label %bb.u
 
 bb.g:                                             ; preds = %bb.e
@@ -274,7 +272,7 @@ bb.m:                                             ; preds = %bb.j, %bb.k, %bb.l
 _ZN3ozz4math14SimdQuaternion11FromVectorsEDv4_fS2_.exit: ; preds = %bb.g, %bb.m
   %.sroa.0.0.i = phi <4 x float> [ %i.fz, %bb.m ], [ <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, %bb.g ] ; 5 uses
   %i.ga = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.gb = load <4 x float>, ptr %i.ga, align 16, !tbaa !17 ; 4 uses
+  %i.gb = load <4 x float>, ptr %i.ga, align 16, !tbaa !10 ; 4 uses
   %i.gc = shufflevector <4 x float> %.sroa.0.0.i, <4 x float> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3>
   %i.gd = shufflevector <4 x float> %.sroa.0.0.i, <4 x float> poison, <4 x i32> <i32 1, i32 2, i32 0, i32 3> ; 5 uses
   %i.ge = shufflevector <4 x float> %i.gb, <4 x float> poison, <4 x i32> <i32 2, i32 0, i32 1, i32 3>
@@ -292,7 +290,7 @@ _ZN3ozz4math14SimdQuaternion11FromVectorsEDv4_fS2_.exit: ; preds = %bb.g, %bb.m
   %i.gq = fadd <4 x float> %i.gb, %i.gp
   %i.gr = fadd <4 x float> %i.gp, %i.gq           ; 2 uses
   %i.gs = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.gt = load <3 x float>, ptr %i.gs, align 16, !tbaa !17 ; 3 uses
+  %i.gt = load <3 x float>, ptr %i.gs, align 16, !tbaa !10 ; 3 uses
   %i.gu = shufflevector <3 x float> %i.gt, <3 x float> poison, <4 x i32> zeroinitializer
   %i.gv = fmul <4 x float> %i.dj, %i.gu
   %i.gw = shufflevector <3 x float> %i.gt, <3 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
@@ -374,7 +372,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %storemerge = phi <4 x float> [ <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, %bb.o ], [ %i.iz, %bb.n ] ; 5 uses
   %.044 = phi <4 x float> [ %i.ji, %bb.o ], [ %i.id, %bb.n ]
   %i.jj = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.jk = load float, ptr %i.jj, align 16, !tbaa !24 ; 2 uses
+  %i.jk = load float, ptr %i.jj, align 16, !tbaa !25 ; 2 uses
   %i.jl = fcmp une float %i.jk, 0.000000e+00
   br i1 %i.jl, label %bb.q, label %bb.r
 
@@ -427,7 +425,7 @@ bb.r:                                             ; preds = %bb.p, %bb.q
   %.sroa.052.0.in = xor <4 x i32> %.sroa.052.0.in.in, <i32 0, i32 0, i32 0, i32 -2147483648> ; 2 uses
   %.sroa.052.0 = bitcast <4 x i32> %.sroa.052.0.in to <4 x float> ; 2 uses
   %i.la = getelementptr inbounds nuw i8, ptr %0, i64 84
-  %i.lb = load float, ptr %i.la, align 4, !tbaa !25 ; 2 uses
+  %i.lb = load float, ptr %i.la, align 4, !tbaa !26 ; 2 uses
   %i.lc = fcmp olt float %i.lb, 1.000000e+00
   br i1 %i.lc, label %bb.s, label %bb.t
 
@@ -442,7 +440,7 @@ bb.s:                                             ; preds = %bb.r
   %i.lk = tail call noundef <4 x float> @llvm.x86.sse.rsqrt.ss(<4 x float> %i.lj)
   %i.ll = shufflevector <4 x float> %i.lk, <4 x float> poison, <4 x i32> zeroinitializer
   %i.lm = fmul <4 x float> %i.li, %i.ll
-  store <4 x float> %i.lm, ptr %i.e, align 16, !tbaa !17
+  store <4 x float> %i.lm, ptr %i.e, align 16, !tbaa !10
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.r
@@ -450,7 +448,7 @@ bb.t:                                             ; preds = %bb.r
   %i.lo = shufflevector <4 x i1> %i.ln, <4 x i1> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3>
   %i.lp = select <4 x i1> %i.lo, <4 x i32> splat (i32 -2147483648), <4 x i32> zeroinitializer
   %i.lq = xor <4 x i32> %i.lp, %.sroa.052.0.in
-  store <4 x i32> %i.lq, ptr %i.e, align 16, !tbaa !17
+  store <4 x i32> %i.lq, ptr %i.e, align 16, !tbaa !10
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.f, %bb.t, %bb.s, %bb.a
@@ -516,21 +514,22 @@ attributes #5 = { nounwind }
 !6 = !{!"int", !5, i64 0}
 !7 = !{!"__libc_errno", !6, i64 0}
 !8 = !{!7, !6, i64 0}
-!9 = !{!"float", !5, i64 0}
-!10 = !{!"any pointer", !5, i64 0}
-!11 = !{!"p1 _ZTSN3ozz4math8Float4x4E", !10, i64 0}
-!12 = !{!"p1 _ZTSN3ozz4math14SimdQuaternionE", !10, i64 0}
-!13 = !{!"p1 bool", !10, i64 0}
-!14 = !{!"_ZTSN3ozz9animation8IKAimJobE", !5, i64 0, !5, i64 16, !5, i64 32, !5, i64 48, !5, i64 64, !9, i64 80, !9, i64 84, !11, i64 88, !12, i64 96, !13, i64 104}
-!15 = !{!14, !11, i64 88}
-!16 = !{!14, !12, i64 96}
-!17 = !{!5, !5, i64 0}
-!18 = distinct !{!18, !"_ZN3ozz4math6InvertERKNS0_8Float4x4EPDv2_x"}
-!19 = distinct !{!19, !18, !"_ZN3ozz4math6InvertERKNS0_8Float4x4EPDv2_x: argument 0"}
-!20 = !{!19}
-!21 = !{!14, !13, i64 104}
-!22 = !{!"bool", !5, i64 0}
-!23 = !{!22, !22, i64 0}
-!24 = !{!14, !9, i64 80}
-!25 = !{!14, !9, i64 84}
+!9 = !{!"any pointer", !5, i64 0}
+!10 = !{!5, !5, i64 0}
+!11 = !{!9, !9, i64 0}
+!12 = distinct !{!12, !"_ZN3ozz4math6InvertERKNS0_8Float4x4EPDv2_x"}
+!13 = distinct !{!13, !12, !"_ZN3ozz4math6InvertERKNS0_8Float4x4EPDv2_x: argument 0"}
+!14 = !{!"float", !5, i64 0}
+!15 = !{!"p1 _ZTSN3ozz4math8Float4x4E", !9, i64 0}
+!16 = !{!"p1 _ZTSN3ozz4math14SimdQuaternionE", !9, i64 0}
+!17 = !{!"p1 bool", !9, i64 0}
+!18 = !{!"_ZTSN3ozz9animation8IKAimJobE", !5, i64 0, !5, i64 16, !5, i64 32, !5, i64 48, !5, i64 64, !14, i64 80, !14, i64 84, !15, i64 88, !16, i64 96, !17, i64 104}
+!19 = !{!18, !15, i64 88}
+!20 = !{!18, !16, i64 96}
+!21 = !{!13}
+!22 = !{!18, !17, i64 104}
+!23 = !{!"bool", !5, i64 0}
+!24 = !{!23, !23, i64 0}
+!25 = !{!18, !14, i64 80}
+!26 = !{!18, !14, i64 84}
 end_hunk_0

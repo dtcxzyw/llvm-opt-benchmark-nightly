@@ -205,12 +205,11 @@ bb.a:
   %i.ae = tail call <2 x float> @llvm.sqrt.v2f32(<2 x float> %i.ad) ; 3 uses
   %i.af = insertelement <2 x float> poison, float %1, i64 0
   %i.ag = shufflevector <2 x float> %i.af, <2 x float> poison, <2 x i32> zeroinitializer
-  %7 = fcmp olt <2 x float> %i.ae, %i.ag          ; 2 uses
-  %8 = extractelement <2 x i1> %7, i64 0
-  %9 = extractelement <2 x i1> %7, i64 1
-  %or.cond = and i1 %8, %9
+  %7 = fcmp uge <2 x float> %i.ae, %i.ag
+  %8 = bitcast <2 x i1> %7 to i2
+  %9 = icmp eq i2 %8, 0
   %i.ah = fcmp olt float %sqrt.i.i.i111, %1
-  %or.cond101 = and i1 %i.ah, %or.cond
+  %or.cond101 = and i1 %i.ah, %9
   br i1 %or.cond101, label %bb.b, label %bb.r
 
 bb.b:                                             ; preds = %bb.a
