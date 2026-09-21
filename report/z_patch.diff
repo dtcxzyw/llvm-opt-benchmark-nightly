@@ -1,0 +1,13 @@
+diff --git a/llvm/lib/Analysis/ConstraintSystem.cpp b/llvm/lib/Analysis/ConstraintSystem.cpp
+index 56cb646093f834..37fda7fdf761a8 100644
+--- a/llvm/lib/Analysis/ConstraintSystem.cpp
++++ b/llvm/lib/Analysis/ConstraintSystem.cpp
+@@ -145,7 +145,7 @@ bool ConstraintSystem::eliminateUsingFM() {
+         continue;
+       Constraints.push_back(std::move(NR));
+       // Give up if the new system gets too big.
+-      if (Constraints.size() > 500)
++      if (Constraints.size() > 700)
+         return false;
+     }
+   }
