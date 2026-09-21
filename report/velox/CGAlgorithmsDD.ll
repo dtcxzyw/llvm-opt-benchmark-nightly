@@ -67,12 +67,13 @@ bb.a:
   %19 = alloca %"class.geos::math::DD", align 8   ; 5 uses
   %20 = alloca %"class.geos::math::DD", align 8   ; 5 uses
   %21 = alloca %"class.geos::math::DD", align 8   ; 5 uses
-  %22 = tail call double @llvm.fabs.f64(double %4)
-  %23 = fcmp one double %22, +inf
-  %24 = tail call double @llvm.fabs.f64(double %5)
-  %25 = fcmp one double %24, +inf
-  %or.cond = and i1 %23, %25
-  br i1 %or.cond, label %bb.g, label %bb.b
+  %22 = insertelement <2 x double> poison, double %4, i64 0
+  %23 = insertelement <2 x double> %22, double %5, i64 1
+  %24 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %23)
+  %25 = fcmp ueq <2 x double> %24, splat (double +inf)
+  %26 = bitcast <2 x i1> %25 to i2
+  %27 = icmp eq i2 %26, 0
+  br i1 %27, label %bb.g, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.a = tail call ptr @__cxa_allocate_exception(i64 16) #14 ; 3 uses
@@ -473,6 +474,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x double> @llvm.fabs.v4f64(<4 x double>) #11

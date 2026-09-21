@@ -205,13 +205,16 @@ bb.a:
   br i1 %.not, label %bb.b, label %.preheader185, !llvm.loop !358
 
 bb.b:                                             ; preds = %.preheader185
-  %3 = urem i32 %i.l, 65521
-  %4 = urem i32 %i.m, 65521
+  %3 = insertelement <2 x i32> poison, i32 %i.l, i64 0
+  %4 = insertelement <2 x i32> %3, i32 %i.m, i64 1
+  %5 = urem <2 x i32> %4, splat (i32 65521)       ; 2 uses
+  %6 = extractelement <2 x i32> %5, i64 0
+  %7 = extractelement <2 x i32> %5, i64 1
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.1182 = phi i32 [ %3, %bb.b ], [ %i.b, %bb.a ] ; 2 uses
-  %.1179 = phi i32 [ %4, %bb.b ], [ %i.c, %bb.a ] ; 2 uses
+  %.1182 = phi i32 [ %6, %bb.b ], [ %i.b, %bb.a ] ; 2 uses
+  %.1179 = phi i32 [ %7, %bb.b ], [ %i.c, %bb.a ] ; 2 uses
   %.1134 = phi i64 [ %i.n, %bb.b ], [ %2, %bb.a ] ; 2 uses
   %.1 = phi ptr [ %i.i, %bb.b ], [ %1, %bb.a ]
   %.not165203 = icmp eq i64 %.1134, 0
@@ -220,8 +223,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 .lr.ph:                                           ; preds = %bb.c, %bb.k
   %.2207 = phi ptr [ %.7, %bb.k ], [ %.1, %bb.c ] ; 2 uses
   %.2135206 = phi i64 [ %i.u, %bb.k ], [ %.1134, %bb.c ] ; 3 uses
-  %.2180205 = phi i32 [ %10, %bb.k ], [ %.1179, %bb.c ]
-  %.2183204 = phi i32 [ %9, %bb.k ], [ %.1182, %bb.c ] ; 2 uses
+  %.2180205 = phi i32 [ %26, %bb.k ], [ %.1179, %bb.c ]
+  %.2183204 = phi i32 [ %25, %bb.k ], [ %.1182, %bb.c ] ; 2 uses
   %i.q = tail call i64 @llvm.umin.i64(i64 %.2135206, i64 5504) ; 4 uses
   %i.r = trunc nuw nsw i64 %i.q to i32
   %i.s = mul nuw nsw i32 %.2183204, %i.r
@@ -359,21 +362,34 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.g
-  %i.df = phi <8 x i32> [ %i.dc, %bb.j ], [ %i.cj, %bb.g ]
-  %i.dg = phi <8 x i32> [ %i.dd, %bb.j ], [ %i.ck, %bb.g ]
+  %i.df = phi <8 x i32> [ %i.dc, %bb.j ], [ %i.cj, %bb.g ] ; 2 uses
+  %i.dg = phi <8 x i32> [ %i.dd, %bb.j ], [ %i.ck, %bb.g ] ; 2 uses
   %.7 = phi ptr [ %i.de, %bb.j ], [ %.5, %bb.g ]
-  %5 = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %i.df)
-  %6 = add i32 %5, %.2183204
-  %7 = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %i.dg)
-  %8 = add i32 %i.t, %7
-  %9 = urem i32 %6, 65521                         ; 2 uses
-  %10 = urem i32 %8, 65521                        ; 2 uses
+  %8 = shufflevector <8 x i32> %i.df, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %9 = shufflevector <8 x i32> %i.df, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
+  %10 = add <4 x i32> %8, %9                      ; 2 uses
+  %11 = shufflevector <8 x i32> %i.dg, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %12 = shufflevector <8 x i32> %i.dg, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
+  %13 = add <4 x i32> %11, %12                    ; 2 uses
+  %14 = shufflevector <4 x i32> %10, <4 x i32> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 0>
+  %15 = add <4 x i32> %14, %10                    ; 2 uses
+  %16 = shufflevector <4 x i32> %13, <4 x i32> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 0>
+  %17 = add <4 x i32> %16, %13                    ; 2 uses
+  %18 = shufflevector <4 x i32> %15, <4 x i32> %17, <2 x i32> <i32 2, i32 6>
+  %19 = shufflevector <4 x i32> %15, <4 x i32> %17, <2 x i32> <i32 0, i32 4>
+  %20 = add <2 x i32> %18, %19
+  %21 = insertelement <2 x i32> poison, i32 %.2183204, i64 0
+  %22 = insertelement <2 x i32> %21, i32 %i.t, i64 1
+  %23 = add <2 x i32> %20, %22
+  %24 = urem <2 x i32> %23, splat (i32 65521)     ; 2 uses
   %.not165 = icmp eq i64 %i.u, 0
+  %25 = extractelement <2 x i32> %24, i64 0       ; 2 uses
+  %26 = extractelement <2 x i32> %24, i64 1       ; 2 uses
   br i1 %.not165, label %._crit_edge, label %.lr.ph, !llvm.loop !360
 
 ._crit_edge:                                      ; preds = %bb.k, %bb.c
-  %.2183.lcssa = phi i32 [ %.1182, %bb.c ], [ %9, %bb.k ]
-  %.2180.lcssa = phi i32 [ %.1179, %bb.c ], [ %10, %bb.k ]
+  %.2183.lcssa = phi i32 [ %.1182, %bb.c ], [ %25, %bb.k ]
+  %.2180.lcssa = phi i32 [ %.1179, %bb.c ], [ %26, %bb.k ]
   %i.dh = shl nuw i32 %.2180.lcssa, 16
   %i.di = or i32 %i.dh, %.2183.lcssa
   ret i32 %i.di
@@ -408,13 +424,16 @@ bb.a:
   br i1 %.not, label %bb.b, label %.preheader134, !llvm.loop !361
 
 bb.b:                                             ; preds = %.preheader134
-  %3 = urem i32 %i.k, 65521
-  %4 = urem i32 %i.l, 65521
+  %3 = insertelement <2 x i32> poison, i32 %i.k, i64 0
+  %4 = insertelement <2 x i32> %3, i32 %i.l, i64 1
+  %5 = urem <2 x i32> %4, splat (i32 65521)       ; 2 uses
+  %6 = extractelement <2 x i32> %5, i64 0
+  %7 = extractelement <2 x i32> %5, i64 1
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.1128 = phi i32 [ %3, %bb.b ], [ %i.a, %bb.a ] ; 2 uses
-  %.1122 = phi i32 [ %4, %bb.b ], [ %i.b, %bb.a ] ; 2 uses
+  %.1128 = phi i32 [ %6, %bb.b ], [ %i.a, %bb.a ] ; 2 uses
+  %.1122 = phi i32 [ %7, %bb.b ], [ %i.b, %bb.a ] ; 2 uses
   %.186 = phi i64 [ %i.m, %bb.b ], [ %2, %bb.a ]  ; 2 uses
   %.1 = phi ptr [ %i.h, %bb.b ], [ %1, %bb.a ]
   %.not104161 = icmp eq i64 %.186, 0
@@ -423,8 +442,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 .lr.ph167:                                        ; preds = %bb.c, %._crit_edge
   %.2165 = phi ptr [ %.7.lcssa, %._crit_edge ], [ %.1, %bb.c ] ; 2 uses
   %.287164 = phi i64 [ %i.q, %._crit_edge ], [ %.186, %bb.c ] ; 3 uses
-  %.2123163 = phi i32 [ %6, %._crit_edge ], [ %.1122, %bb.c ] ; 2 uses
-  %.2129162 = phi i32 [ %5, %._crit_edge ], [ %.1128, %bb.c ] ; 3 uses
+  %.2123163 = phi i32 [ %11, %._crit_edge ], [ %.1122, %bb.c ] ; 2 uses
+  %.2129162 = phi i32 [ %12, %._crit_edge ], [ %.1128, %bb.c ] ; 3 uses
   %i.p = tail call i64 @llvm.umin.i64(i64 %.287164, i64 5504) ; 4 uses
   %i.q = sub nuw i64 %.287164, %i.p               ; 2 uses
   %i.r = icmp ugt i64 %.287164, 63
@@ -607,14 +626,17 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %.6133.lcssa = phi i32 [ %.5132, %bb.g ], [ %.lcssa262, %._crit_edge.loopexit ]
   %.5126.lcssa = phi i32 [ %.4125, %bb.g ], [ %.lcssa261, %._crit_edge.loopexit ]
   %.7.lcssa = phi ptr [ %.6, %bb.g ], [ %scevgep, %._crit_edge.loopexit ]
-  %5 = urem i32 %.6133.lcssa, 65521               ; 2 uses
-  %6 = urem i32 %.5126.lcssa, 65521               ; 2 uses
+  %8 = insertelement <2 x i32> poison, i32 %.5126.lcssa, i64 0
+  %9 = insertelement <2 x i32> %8, i32 %.6133.lcssa, i64 1
+  %10 = urem <2 x i32> %9, splat (i32 65521)      ; 2 uses
   %.not104 = icmp eq i64 %i.q, 0
+  %11 = extractelement <2 x i32> %10, i64 0       ; 2 uses
+  %12 = extractelement <2 x i32> %10, i64 1       ; 2 uses
   br i1 %.not104, label %._crit_edge168, label %.lr.ph167, !llvm.loop !366
 
 ._crit_edge168:                                   ; preds = %._crit_edge, %bb.c
-  %.2129.lcssa = phi i32 [ %.1128, %bb.c ], [ %5, %._crit_edge ]
-  %.2123.lcssa = phi i32 [ %.1122, %bb.c ], [ %6, %._crit_edge ]
+  %.2129.lcssa = phi i32 [ %.1128, %bb.c ], [ %12, %._crit_edge ]
+  %.2123.lcssa = phi i32 [ %.1122, %bb.c ], [ %11, %._crit_edge ]
   %i.dx = shl nuw i32 %.2123.lcssa, 16
   %i.dy = or i32 %i.dx, %.2129.lcssa
   ret i32 %i.dy

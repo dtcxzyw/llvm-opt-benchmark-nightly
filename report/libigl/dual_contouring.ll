@@ -206,22 +206,24 @@ bb.ac:                                            ; preds = %.preheader, %bb.bp
   store i32 %i.iz, ptr %i.hs, align 4, !tbaa !99
   %i.ja = load i32, ptr %3, align 4, !tbaa !99
   store i32 %i.ja, ptr %i.ht, align 4, !tbaa !99
-  %i.jb = load i32, ptr %4, align 4, !tbaa !99    ; 3 uses
+  %i.jb = load i32, ptr %4, align 4, !tbaa !99    ; 2 uses
   %i.jc = sext i32 %i.jb to i64
   %i.jd = getelementptr inbounds [4 x i8], ptr %13, i64 %i.jc ; 2 uses
   %i.je = load i32, ptr %i.jd, align 4, !tbaa !99
   %i.jf = add nsw i32 %i.je, -1
   store i32 %i.jf, ptr %i.jd, align 4, !tbaa !99
-  %14 = add nsw i32 %i.jb, 1
-  %15 = srem i32 %14, 3
-  %i.jg = sext i32 %15 to i64
+  %14 = insertelement <2 x i32> poison, i32 %i.jb, i64 0
+  %15 = shufflevector <2 x i32> %14, <2 x i32> poison, <2 x i32> zeroinitializer
+  %16 = add nsw <2 x i32> %15, <i32 1, i32 2>
+  %17 = srem <2 x i32> %16, splat (i32 3)         ; 2 uses
+  %18 = extractelement <2 x i32> %17, i64 0
+  %i.jg = sext i32 %18 to i64
   %i.jh = getelementptr inbounds [4 x i8], ptr %13, i64 %i.jg ; 2 uses
   %i.ji = load i32, ptr %i.jh, align 4, !tbaa !99
   %i.jj = add nsw i32 %i.ji, %.048592
   store i32 %i.jj, ptr %i.jh, align 4, !tbaa !99
-  %16 = add nsw i32 %i.jb, 2
-  %17 = srem i32 %16, 3
-  %i.jk = sext i32 %17 to i64
+  %19 = extractelement <2 x i32> %17, i64 1
+  %i.jk = sext i32 %19 to i64
   %i.jl = getelementptr inbounds [4 x i8], ptr %13, i64 %i.jk ; 2 uses
   %i.jm = load i32, ptr %i.jl, align 4, !tbaa !99
   %i.jn = add nsw i32 %i.jm, %.0590
@@ -624,22 +626,24 @@ bb.ac:                                            ; preds = %.preheader, %bb.bp
   store i32 %i.jk, ptr %i.id, align 4, !tbaa !99
   %i.jl = load i32, ptr %3, align 4, !tbaa !99
   store i32 %i.jl, ptr %i.ie, align 4, !tbaa !99
-  %i.jm = load i32, ptr %4, align 4, !tbaa !99    ; 3 uses
+  %i.jm = load i32, ptr %4, align 4, !tbaa !99    ; 2 uses
   %i.jn = sext i32 %i.jm to i64
   %i.jo = getelementptr inbounds [4 x i8], ptr %13, i64 %i.jn ; 2 uses
   %i.jp = load i32, ptr %i.jo, align 4, !tbaa !99
   %i.jq = add nsw i32 %i.jp, -1
   store i32 %i.jq, ptr %i.jo, align 4, !tbaa !99
-  %14 = add nsw i32 %i.jm, 1
-  %15 = srem i32 %14, 3
-  %i.jr = sext i32 %15 to i64
+  %14 = insertelement <2 x i32> poison, i32 %i.jm, i64 0
+  %15 = shufflevector <2 x i32> %14, <2 x i32> poison, <2 x i32> zeroinitializer
+  %16 = add nsw <2 x i32> %15, <i32 1, i32 2>
+  %17 = srem <2 x i32> %16, splat (i32 3)         ; 2 uses
+  %18 = extractelement <2 x i32> %17, i64 0
+  %i.jr = sext i32 %18 to i64
   %i.js = getelementptr inbounds [4 x i8], ptr %13, i64 %i.jr ; 2 uses
   %i.jt = load i32, ptr %i.js, align 4, !tbaa !99
   %i.ju = add nsw i32 %i.jt, %.048593
   store i32 %i.ju, ptr %i.js, align 4, !tbaa !99
-  %16 = add nsw i32 %i.jm, 2
-  %17 = srem i32 %16, 3
-  %i.jv = sext i32 %17 to i64
+  %19 = extractelement <2 x i32> %17, i64 1
+  %i.jv = sext i32 %19 to i64
   %i.jw = getelementptr inbounds [4 x i8], ptr %13, i64 %i.jv ; 2 uses
   %i.jx = load i32, ptr %i.jw, align 4, !tbaa !99
   %i.jy = add nsw i32 %i.jx, %.0591

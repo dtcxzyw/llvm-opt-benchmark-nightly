@@ -205,7 +205,7 @@ bb.a:
 
 .preheader16:                                     ; preds = %.preheader16.lr.ph, %.preheader16
   %indvars.iv = phi i64 [ %i.bp, %.preheader16.lr.ph ], [ %indvars.iv.next, %.preheader16 ] ; 2 uses
-  %.01221 = phi i32 [ 0, %.preheader16.lr.ph ], [ %op.rdx, %.preheader16 ]
+  %slprdx.acc = phi <4 x i32> [ zeroinitializer, %.preheader16.lr.ph ], [ %slprdx.acc56, %.preheader16 ]
   %i.bq = getelementptr inbounds nuw [32 x i8], ptr %i.bi, i64 %indvars.iv
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 16
   %i.bs = load i32, ptr %i.br, align 4, !tbaa !362
@@ -252,8 +252,7 @@ bb.a:
   %i.df = load i32, ptr %i.de, align 4, !tbaa !101
   %i.dg = add nsw i32 %i.df, 1
   store i32 %i.dg, ptr %i.de, align 4, !tbaa !101
-  %3 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.cr)
-  %op.rdx = add i32 %3, %.01221                   ; 2 uses
+  %slprdx.acc56 = add <4 x i32> %slprdx.acc, %i.cr ; 2 uses
   %i.dh = extractelement <4 x i32> %i.cr, i64 3
   %i.di = zext nneg i32 %i.dh to i64
   %i.dj = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.di ; 2 uses
@@ -262,10 +261,14 @@ bb.a:
   store i32 %i.dl, ptr %i.dj, align 4, !tbaa !101
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.preheader16, !llvm.loop !671
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.preheader16, !llvm.loop !671
 
-._crit_edge:                                      ; preds = %.preheader16, %.lr.ph
-  %.012.lcssa = phi i32 [ 0, %.lr.ph ], [ %op.rdx, %.preheader16 ] ; 4 uses
+._crit_edge.loopexit:                             ; preds = %.preheader16
+  %3 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %slprdx.acc56)
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.lr.ph
+  %.012.lcssa = phi i32 [ 0, %.lr.ph ], [ %3, %._crit_edge.loopexit ] ; 4 uses
   %i.dm = mul nsw i32 %.012.lcssa, %.012.lcssa
   %i.dn = uitofp nneg i32 %i.dm to double
   %i.do = sitofp i32 %.012.lcssa to double

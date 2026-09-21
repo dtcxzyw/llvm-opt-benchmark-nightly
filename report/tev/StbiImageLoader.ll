@@ -205,13 +205,14 @@ bb.bi:                                            ; preds = %.preheader30, %bb.b
   %i.lv = insertelement <2 x i16> %i.lu, i16 %i.ln, i64 1
   %i.lw = and <2 x i16> %i.lv, splat (i16 31)
   %i.lx = mul nuw nsw <2 x i16> %i.lw, splat (i16 255)
-  %i.ly = udiv <2 x i16> %i.lx, splat (i16 31)
-  %5 = trunc <2 x i16> %i.ly to <2 x i8>          ; 2 uses
-  %i.lz = extractelement <2 x i8> %5, i64 0
+  %i.ly = udiv <2 x i16> %i.lx, splat (i16 31)    ; 2 uses
+  %5 = bitcast <2 x i16> %i.ly to <4 x i8>
+  %i.lz = extractelement <4 x i8> %5, i64 0
   store i8 %i.lz, ptr %i.lt, align 1, !tbaa !84
-  %6 = getelementptr inbounds nuw i8, ptr %.017736, i64 2
-  %i.ma = extractelement <2 x i8> %5, i64 1
-  store i8 %i.ma, ptr %6, align 1, !tbaa !84
+  %6 = bitcast <2 x i16> %i.ly to <4 x i8>
+  %i.ma = extractelement <4 x i8> %6, i64 2
+  %7 = getelementptr inbounds nuw i8, ptr %.017736, i64 2
+  store i8 %i.ma, ptr %7, align 1, !tbaa !84
   %i.mb = getelementptr inbounds nuw i8, ptr %.017736, i64 %i.ll
   %i.mc = add nuw nsw i32 %.118835, 1             ; 2 uses
   %exitcond71.not = icmp eq i32 %i.mc, %i.cv
@@ -434,11 +435,12 @@ bb.cd:                                            ; preds = %bb.cc
   %i.pe = insertelement <2 x i16> %i.pd, i16 %i.ox, i64 1
   %i.pf = and <2 x i16> %i.pe, splat (i16 31)
   %i.pg = mul nuw nsw <2 x i16> %i.pf, splat (i16 255)
-  %i.ph = udiv <2 x i16> %i.pg, splat (i16 31)
-  %7 = trunc <2 x i16> %i.ph to <2 x i8>          ; 2 uses
-  %i.pi = extractelement <2 x i8> %7, i64 0
+  %i.ph = udiv <2 x i16> %i.pg, splat (i16 31)    ; 2 uses
+  %8 = bitcast <2 x i16> %i.ph to <4 x i8>
+  %i.pi = extractelement <4 x i8> %8, i64 0
   store i8 %i.pi, ptr %i.mn, align 1, !tbaa !84
-  %i.pj = extractelement <2 x i8> %7, i64 1
+  %9 = bitcast <2 x i16> %i.ph to <4 x i8>
+  %i.pj = extractelement <4 x i8> %9, i64 2
   store i8 %i.pj, ptr %i.mo, align 2, !tbaa !84
   br label %.loopexit27
 

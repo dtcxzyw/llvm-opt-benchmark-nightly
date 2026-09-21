@@ -205,13 +205,13 @@ bb.a:
   %i.q = icmp sgt i32 %i.e, 0
   %i.r = sub i32 0, %i.e                          ; 2 uses
   %.not82 = icmp slt i32 %i.e, 1
-  %i.s = zext i32 %i.e to i64                     ; 9 uses
+  %i.s = zext i32 %i.e to i64                     ; 13 uses
   %i.t = shl nuw nsw i64 %i.s, 3
   br i1 %.not82, label %.split90.us.split, label %.split.preheader
 
 .split.preheader:                                 ; preds = %bb.a
   %i.u = add nuw i32 %i.e, 1
-  %i.v = zext nneg i32 %i.e to i64                ; 5 uses
+  %i.v = zext nneg i32 %i.e to i64
   %i.w = sext i32 %i.i to i64                     ; 2 uses
   %wide.trip.count = zext i32 %i.u to i64         ; 3 uses
   %i.x = add nsw i64 %wide.trip.count, -2         ; 2 uses
@@ -237,17 +237,19 @@ bb.a:
   %i.ah = getelementptr i8, ptr %3, i64 %i.ae
   %i.ai = getelementptr i8, ptr %i.ah, i64 696
   %i.aj = getelementptr i8, ptr %i.a, i64 %i.ae
-  %xtraiter = and i64 %i.v, 1
+  %4 = insertelement <2 x ptr> poison, ptr %i.p, i64 1
+  %5 = insertelement <2 x ptr> poison, ptr %scevgep158, i64 1
+  %xtraiter = and i64 %i.s, 1
   %i.ak = icmp eq i32 %i.e, 1
-  %unroll_iter = and i64 %i.v, 2147483646
+  %unroll_iter = and i64 %i.s, 2147483646
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod182 = trunc i32 %i.e to i1
   %min.iters.check167 = icmp ult i32 %i.e, 4
   %n.vec169 = and i64 %i.s, 2147483644            ; 3 uses
   %cmp.n180 = icmp eq i64 %n.vec169, %i.s
-  %xtraiter183 = and i64 %i.v, 1
+  %xtraiter183 = and i64 %i.s, 1
   %lcmp.mod184.not = icmp eq i64 %xtraiter183, 0
-  %i.al = add nsw i64 %i.v, -1
+  %i.al = add nsw i64 %i.s, -1
   %i.am = zext nneg i32 %i.e to i64               ; 3 uses
   %min.iters.check = icmp ult i32 %i.e, 8
   %i.an = trunc i64 %i.x to i32                   ; 5 uses
@@ -281,13 +283,17 @@ bb.a:
   %i.bf = add i32 %i.bb, %i.av
   %i.bg = add i32 %i.bb, %i.at
   %i.bh = add i32 %i.bd, %i.at
-  %bound0159 = icmp ult ptr %scevgep154, %scevgep157
-  %bound1160 = icmp ult ptr %scevgep156, %scevgep155
-  %found.conflict161 = and i1 %bound0159, %bound1160
-  %bound0162 = icmp ult ptr %scevgep154, %scevgep158
-  %bound1163 = icmp ult ptr %i.p, %scevgep155
-  %found.conflict164 = and i1 %bound0162, %bound1163
-  %conflict.rdx165 = or i1 %found.conflict161, %found.conflict164
+  %6 = insertelement <2 x ptr> %4, ptr %scevgep154, i64 0
+  %7 = insertelement <2 x ptr> poison, ptr %scevgep157, i64 0
+  %8 = insertelement <2 x ptr> %7, ptr %scevgep155, i64 1
+  %9 = insertelement <2 x ptr> poison, ptr %scevgep156, i64 0
+  %10 = insertelement <2 x ptr> %9, ptr %scevgep154, i64 1
+  %11 = insertelement <2 x ptr> %5, ptr %scevgep155, i64 0
+  %12 = icmp ult <2 x ptr> %6, %8
+  %13 = icmp ult <2 x ptr> %10, %11
+  %14 = and <2 x i1> %13, %12
+  %15 = bitcast <2 x i1> %14 to i2
+  %.not = icmp eq i2 %15, 0
   br label %bb.b
 
 bb.b:                                             ; preds = %.split, %._crit_edge
@@ -385,7 +391,8 @@ bb.b:                                             ; preds = %.split, %._crit_edg
 
 ._crit_edge41.split.i:                            ; preds = %._crit_edge.i
   %i.cx = tail call double @llvm.fmuladd.f64(double %i.cc, double %i.ay, double 1.000000e+00) ; 4 uses
-  %brmerge = select i1 %min.iters.check167, i1 true, i1 %conflict.rdx165
+  %.not.not = xor i1 %.not, true
+  %brmerge = select i1 %min.iters.check167, i1 true, i1 %.not.not
   br i1 %brmerge, label %.lr.ph44.i.preheader, label %vector.ph168
 
 vector.ph168:                                     ; preds = %._crit_edge41.split.i
@@ -758,10 +765,13 @@ bb.b:                                             ; preds = %bb.a
   %i.be = mul nuw nsw i64 %i.ay, 56
   %i.bf = getelementptr i8, ptr %6, i64 %i.be
   %scevgep245 = getelementptr i8, ptr %i.bf, i64 144
+  %7 = insertelement <2 x ptr> poison, ptr %i.ad, i64 0
+  %8 = insertelement <2 x ptr> %7, ptr %i.ar, i64 1
+  %9 = insertelement <2 x ptr> poison, ptr %scevgep, i64 1
+  %10 = insertelement <2 x ptr> poison, ptr %i.ad, i64 1
+  %11 = insertelement <2 x ptr> poison, ptr %scevgep, i64 0
+  %12 = insertelement <2 x ptr> %11, ptr %scevgep245, i64 1
   %min.iters.check254 = icmp ult i32 %i.aw, 5
-  %bound0249 = icmp ult ptr %i.ad, %scevgep245
-  %bound1250 = icmp ult ptr %i.ar, %scevgep
-  %found.conflict251 = and i1 %bound0249, %bound1250
   %i.bg = and i64 %i.ay, 3                        ; 2 uses
   %i.bh = icmp eq i64 %i.bg, 0
   %i.bi = select i1 %i.bh, i64 4, i64 %i.bg
@@ -817,10 +827,13 @@ bb.b:                                             ; preds = %bb.a
   %scevgep218 = getelementptr i8, ptr %scevgep217, i64 %i.cg
   %scevgep244 = getelementptr i8, ptr %scevgep243, i64 %i.cg
   %i.ch = insertelement <2 x double> %i.bs, double %i.by, i64 0
-  %bound0246 = icmp ult ptr %i.ad, %scevgep244
-  %bound1247 = icmp ult ptr %i.cb, %scevgep
-  %found.conflict248 = and i1 %bound0246, %bound1247
-  %conflict.rdx252 = or i1 %found.conflict248, %found.conflict251
+  %13 = insertelement <2 x ptr> %9, ptr %scevgep244, i64 0
+  %14 = insertelement <2 x ptr> %10, ptr %i.cb, i64 0
+  %15 = icmp ult <2 x ptr> %8, %13
+  %16 = icmp ult <2 x ptr> %14, %12
+  %17 = and <2 x i1> %16, %15
+  %18 = bitcast <2 x i1> %17 to i2
+  %.not = icmp eq i2 %18, 0
   %bound0 = icmp ult ptr %i.ad, %scevgep218
   %bound1 = icmp ult ptr %i.cb, %scevgep
   %found.conflict = and i1 %bound0, %bound1
@@ -850,7 +863,8 @@ bb.b:                                             ; preds = %bb.a
   %indvars.iv48.i.i.us.us.us = phi i64 [ 0, %.preheader.preheader.i.i.us.us.us ], [ %indvars.iv.next49.i.i.us.us.us, %._crit_edge.i.i.us.us.us ] ; 3 uses
   %i.ct = getelementptr inbounds nuw [8 x i8], ptr %i.cb, i64 %indvars.iv48.i.i.us.us.us ; 4 uses
   %invariant.gep.i.i.us.us.us = getelementptr inbounds nuw [8 x i8], ptr %i.ar, i64 %indvars.iv48.i.i.us.us.us ; 7 uses
-  %brmerge276 = select i1 %min.iters.check254, i1 true, i1 %conflict.rdx252
+  %.not.not = xor i1 %.not, true
+  %brmerge276 = select i1 %min.iters.check254, i1 true, i1 %.not.not
   br i1 %brmerge276, label %scalar.ph253.preheader, label %vector.ph255
 
 vector.ph255:                                     ; preds = %.preheader.i.i.us.us.us

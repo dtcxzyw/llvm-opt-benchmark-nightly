@@ -204,12 +204,13 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 56
   %i.h = load i32, ptr %i.g, align 8, !tbaa !35   ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 68
-  %4 = load <2 x i32>, ptr %i.i, align 4, !tbaa !35
-  %5 = sdiv <2 x i32> %4, splat (i32 2)           ; 2 uses
-  %6 = extractelement <2 x i32> %5, i64 0
-  %7 = sext i32 %6 to i64
-  %8 = extractelement <2 x i32> %5, i64 1
-  %i.j = sext i32 %8 to i64
+  %4 = load i32, ptr %i.i, align 4, !tbaa !35
+  %5 = sdiv i32 %4, 2
+  %6 = sext i32 %5 to i64
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 72
+  %8 = load i32, ptr %7, align 8, !tbaa !35
+  %9 = sdiv i32 %8, 2
+  %i.j = sext i32 %9 to i64
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !48
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -281,7 +282,7 @@ bb.a:
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.unr-lcssa, %.epil.preheader
-  %i.aw = getelementptr inbounds [2 x i8], ptr %.07278, i64 %7
+  %i.aw = getelementptr inbounds [2 x i8], ptr %.07278, i64 %6
   %i.ax = getelementptr inbounds [2 x i8], ptr %.07179, i64 %i.j
   %i.ay = add nuw nsw i32 %.06680, 1              ; 2 uses
   %exitcond97.not = icmp eq i32 %i.ay, %i.h

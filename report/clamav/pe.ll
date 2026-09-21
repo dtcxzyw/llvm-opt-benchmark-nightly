@@ -205,12 +205,12 @@ bb.wx:                                            ; preds = %bb.ww
   br i1 %.not2751, label %.critedge190, label %bb.wy
 
 bb.wy:                                            ; preds = %.thread3123
-  %i.ccb = load i16, ptr %i.bf, align 8, !tbaa !30 ; 3 uses
+  %i.ccb = load i16, ptr %i.bf, align 8, !tbaa !30 ; 4 uses
   %i.ccc = icmp ugt i16 %i.ccb, 1
   br i1 %i.ccc, label %bb.wz, label %.critedge190
 
 bb.wz:                                            ; preds = %bb.wy
-  %i.ccd = zext i16 %i.ccb to i64                 ; 2 uses
+  %i.ccd = zext i16 %i.ccb to i64
   %i.cce = getelementptr inbounds nuw i8, ptr %2, i64 72
   %i.ccf = load i32, ptr %i.cce, align 8, !tbaa !95
   %i.ccg = load ptr, ptr %2, align 8, !tbaa !29   ; 7 uses
@@ -251,7 +251,8 @@ bb.xb:                                            ; preds = %bb.xa
   %i.cdg = getelementptr i8, ptr %i.cch, i64 -28
   %i.cdh = load i32, ptr %i.cdg, align 4, !tbaa !15
   %spec.select29013298 = call i32 @llvm.umin.i32(i32 %i.cdf, i32 %i.cdh) ; 2 uses
-  %i.cdi = add nsw i64 %i.ccd, -1                 ; 3 uses
+  %3 = zext i16 %i.ccb to i64
+  %i.cdi = add nsw i64 %3, -1                     ; 3 uses
   %xtraiter = and i64 %i.cdi, 1
   %i.cdj = icmp eq i16 %i.ccb, 2
   br i1 %i.cdj, label %.lr.ph3302.epil.preheader, label %.lr.ph3302.preheader.new

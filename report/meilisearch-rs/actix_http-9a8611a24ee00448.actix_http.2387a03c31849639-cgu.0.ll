@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %_ZN10actix_http6hea
   %i.aw = getelementptr inbounds nuw i8, ptr %i.e, i64 59
   %i.ax = load i8, ptr %i.aw, align 1, !range !23, !noundef !21 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.e, i64 56
-  %i.az = load i16, ptr %i.ay, align 8, !range !40, !noundef !21 ; 3 uses
+  %i.az = load i16, ptr %i.ay, align 8, !range !40, !noundef !21 ; 2 uses
   %i.ba = icmp samesign ult i8 %i.ax, 3
   br i1 %i.ba, label %switch.lookup, label %_ZN10actix_http7helpers17write_status_line17h3a28769db8f12ee3E.exit
 
@@ -217,24 +217,29 @@ switch.lookup:                                    ; preds = %bb.h
   br label %_ZN10actix_http7helpers17write_status_line17h3a28769db8f12ee3E.exit
 
 _ZN10actix_http7helpers17write_status_line17h3a28769db8f12ee3E.exit: ; preds = %bb.h, %switch.lookup
-  %2 = udiv i16 %i.az, 100
-  %3 = trunc i16 %2 to i8
-  %4 = udiv i16 %i.az, 10
-  %5 = urem i16 %4, 10
-  %6 = trunc nuw nsw i16 %5 to i8
-  %7 = urem i16 %i.az, 10
-  %8 = trunc nuw nsw i16 %7 to i8
-  %i.bc = add i8 %3, 48
+  %2 = insertelement <2 x i16> poison, i16 %i.az, i64 0
+  %3 = shufflevector <2 x i16> %2, <2 x i16> poison, <2 x i32> zeroinitializer
+  %4 = udiv <2 x i16> %3, <i16 100, i16 10>       ; 2 uses
+  %5 = bitcast <2 x i16> %4 to <4 x i8>
+  %6 = extractelement <4 x i8> %5, i64 0
+  %7 = shufflevector <2 x i16> %4, <2 x i16> poison, <2 x i32> <i32 1, i32 poison>
+  %8 = insertelement <2 x i16> %7, i16 %i.az, i64 1
+  %9 = urem <2 x i16> %8, splat (i16 10)          ; 2 uses
+  %10 = bitcast <2 x i16> %9 to <4 x i8>
+  %11 = extractelement <4 x i8> %10, i64 0
+  %12 = bitcast <2 x i16> %9 to <4 x i8>
+  %13 = extractelement <4 x i8> %12, i64 2
+  %i.bc = add i8 %6, 48
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !3265
   store i8 %i.bc, ptr %i.d, align 1, !noalias !3265
   call void @"_ZN74_$LT$bytes..bytes_mut..BytesMut$u20$as$u20$bytes..buf..buf_mut..BufMut$GT$9put_slice17he91f65def23323d7E"(ptr noalias noundef nonnull align 8 dereferenceable(32) %1, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.d, i64 noundef 1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !3265
-  %i.bd = or disjoint i8 %6, 48
+  %i.bd = or disjoint i8 %11, 48
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !3266
   store i8 %i.bd, ptr %i.c, align 1, !noalias !3266
   call void @"_ZN74_$LT$bytes..bytes_mut..BytesMut$u20$as$u20$bytes..buf..buf_mut..BufMut$GT$9put_slice17he91f65def23323d7E"(ptr noalias noundef nonnull align 8 dereferenceable(32) %1, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.c, i64 noundef 1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !3266
-  %i.be = or disjoint i8 %8, 48
+  %i.be = or disjoint i8 %13, 48
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !3267
   store i8 %i.be, ptr %i.b, align 1, !noalias !3267
   call void @"_ZN74_$LT$bytes..bytes_mut..BytesMut$u20$as$u20$bytes..buf..buf_mut..BufMut$GT$9put_slice17he91f65def23323d7E"(ptr noalias noundef nonnull align 8 dereferenceable(32) %1, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.b, i64 noundef 1)
@@ -637,14 +642,15 @@ vector.body2269:                                  ; preds = %.noexc156.i, %vecto
   %vec.phi2271 = phi <4 x float> [ %i.ect, %vector.body2269 ], [ splat (float 1.700000e+38), %.noexc156.i ] ; 2 uses
   %i.ecq = getelementptr inbounds nuw [4 x i8], ptr %i.ebh, i64 %index2270 ; 2 uses
   %i.ecr = getelementptr inbounds nuw i8, ptr %i.ecq, i64 16
-  %wide.load2272 = load <4 x float>, ptr %i.ecq, align 8, !alias.scope !11342, !noalias !11346 ; 2 uses
-  %wide.load2273 = load <4 x float>, ptr %i.ecr, align 8, !alias.scope !11342, !noalias !11346 ; 2 uses
-  %i.ecs = call <4 x float> @llvm.minnum.v4f32(<4 x float> %vec.phi, <4 x float> %wide.load2272) ; 2 uses
-  %i.ect = call <4 x float> @llvm.minnum.v4f32(<4 x float> %vec.phi2271, <4 x float> %wide.load2273) ; 2 uses
+  %wide.load2272 = load <4 x float>, ptr %i.ecq, align 8, !alias.scope !11342, !noalias !11346
+  %wide.load2273 = load <4 x float>, ptr %i.ecr, align 8, !alias.scope !11342, !noalias !11346
+  %14 = freeze <4 x float> %wide.load2272         ; 2 uses
+  %15 = freeze <4 x float> %wide.load2273         ; 2 uses
+  %i.ecs = call <4 x float> @llvm.minnum.v4f32(<4 x float> %vec.phi, <4 x float> %14) ; 2 uses
+  %i.ect = call <4 x float> @llvm.minnum.v4f32(<4 x float> %vec.phi2271, <4 x float> %15) ; 2 uses
   %index.next2274 = add nuw i64 %index2270, 8     ; 2 uses
-  %i.ecu = fcmp uno <4 x float> %wide.load2272, %wide.load2273
-  %14 = freeze <4 x i1> %i.ecu
-  %i.ecv = bitcast <4 x i1> %14 to i4
+  %i.ecu = fcmp uno <4 x float> %14, %15
+  %i.ecv = bitcast <4 x i1> %i.ecu to i4
   %i.ecw = icmp ne i4 %i.ecv, 0                   ; 4 uses
   %i.ecx = icmp eq i64 %index.next2274, 704
   %i.ecy = or i1 %i.ecw, %i.ecx

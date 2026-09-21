@@ -205,11 +205,12 @@ bb.ah:                                            ; preds = %parse_aux_data.exit
 bb.ai:                                            ; preds = %bb.ah
   %i.pg = load i32, ptr %i.as, align 16, !tbaa !40 ; 3 uses
   %i.ph = sdiv i32 %i.pg, 4
-  %i.pi = load i32, ptr %i.i, align 4, !tbaa !142 ; 2 uses
-  %4 = sdiv i32 %i.pi, 32
-  %..i = call i32 @llvm.smin.i32(i32 %i.ph, i32 %4) ; 6 uses
-  %.val.i = load i32, ptr %i.l, align 16, !tbaa !32
-  %5 = sdiv i32 %.val.i, 32                       ; 6 uses
+  %4 = load <2 x i32>, ptr %i.l, align 16, !tbaa !34
+  %i.pi = load i32, ptr %i.i, align 4, !tbaa !142
+  %5 = sdiv <2 x i32> %4, splat (i32 32)          ; 2 uses
+  %6 = extractelement <2 x i32> %5, i64 0         ; 6 uses
+  %7 = extractelement <2 x i32> %5, i64 1
+  %..i = call i32 @llvm.smin.i32(i32 %i.ph, i32 %7) ; 6 uses
   %i.pj = load i32, ptr %i.br, align 4, !tbaa !143
   switch i32 %i.pj, label %parse_optional_info.exit [
     i32 0, label %bb.aj
@@ -218,13 +219,13 @@ bb.ai:                                            ; preds = %bb.ah
   ]
 
 .preheader121.i:                                  ; preds = %bb.ai
-  %.not106132.not.i = icmp sgt i32 %..i, %5
+  %.not106132.not.i = icmp sgt i32 %..i, %6
   br i1 %.not106132.not.i, label %.lr.ph135.i, label %.loopexit122.i
 
 .lr.ph135.i:                                      ; preds = %.preheader121.i
   %i.pk = load ptr, ptr %i.e, align 8, !tbaa !144
   %smin145.i = sext i32 %..i to i64
-  %i.pl = sext i32 %5 to i64
+  %i.pl = sext i32 %6 to i64
   br label %bb.ao
 
 bb.aj:                                            ; preds = %bb.ai
@@ -234,13 +235,13 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %.not109.i, label %.preheader.i36, label %parse_optional_info.exit
 
 .preheader.i36:                                   ; preds = %bb.aj
-  %.not110136.not.i = icmp sgt i32 %..i, %5
+  %.not110136.not.i = icmp sgt i32 %..i, %6
   br i1 %.not110136.not.i, label %.lr.ph139.i, label %.loopexit.i
 
 .lr.ph139.i:                                      ; preds = %.preheader.i36
   %i.po = load ptr, ptr %i.e, align 8, !tbaa !144
   %smin148.i = sext i32 %..i to i64
-  %i.pp = sext i32 %5 to i64
+  %i.pp = sext i32 %6 to i64
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.am, %.lr.ph139.i
@@ -347,7 +348,7 @@ bb.as:                                            ; preds = %bb.ai
   br i1 %.not100.i, label %.preheader123.i, label %parse_optional_info.exit
 
 .preheader123.i:                                  ; preds = %bb.as
-  %.not101129.not.i = icmp sgt i32 %..i, %5
+  %.not101129.not.i = icmp sgt i32 %..i, %6
   br i1 %.not101129.not.i, label %.lr.ph.i, label %.loopexit124.ithread-pre-split
 
 .lr.ph.i:                                         ; preds = %.preheader123.i
@@ -356,7 +357,7 @@ bb.as:                                            ; preds = %bb.ai
   %i.rh = getelementptr inbounds nuw i8, ptr %i.js, i64 77920
   %smin.i = sext i32 %..i to i64
   %i.ri = sext i32 %i.rg to i64
-  %i.rj = sext i32 %5 to i64
+  %i.rj = sext i32 %6 to i64
   br label %bb.at
 
 bb.at:                                            ; preds = %bb.ax, %.lr.ph.i

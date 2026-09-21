@@ -192,26 +192,29 @@ bb.a:
 
 .lr.ph93.i:                                       ; preds = %._crit_edge81.i, %.lr.ph93.i
   %.192.i = phi i32 [ %i.ay, %.lr.ph93.i ], [ %.050.lcssa.i, %._crit_edge81.i ]
-  %.sroa.14.191.i = phi i32 [ %2, %.lr.ph93.i ], [ %.sroa.14.0.lcssa.i, %._crit_edge81.i ] ; 2 uses
+  %.sroa.14.191.i = phi i32 [ %6, %.lr.ph93.i ], [ %.sroa.14.0.lcssa.i, %._crit_edge81.i ] ; 2 uses
   %.15290.i = phi i8 [ %i.ax, %.lr.ph93.i ], [ %.051.lcssa.i, %._crit_edge81.i ]
   %.15789.i = phi i1 [ %i.av, %.lr.ph93.i ], [ %.056.in.lcssa.i, %._crit_edge81.i ]
-  %.sroa.2.188.i = phi i32 [ %3, %.lr.ph93.i ], [ %.sroa.2.0.lcssa.i, %._crit_edge81.i ]
+  %.sroa.2.188.i = phi i32 [ %5, %.lr.ph93.i ], [ %.sroa.2.0.lcssa.i, %._crit_edge81.i ]
   %i.au = icmp eq i8 %.15290.i, 0
   %i.av = select i1 %i.au, i1 %.15789.i, i1 false ; 2 uses
   %i.aw = urem i32 %.sroa.14.191.i, 10
   %i.ax = trunc nuw nsw i32 %i.aw to i8           ; 2 uses
-  %2 = udiv i32 %.sroa.14.191.i, 10               ; 2 uses
-  %3 = udiv i32 %.sroa.2.188.i, 10                ; 3 uses
+  %2 = insertelement <2 x i32> poison, i32 %.sroa.2.188.i, i64 0
+  %3 = insertelement <2 x i32> %2, i32 %.sroa.14.191.i, i64 1
+  %4 = udiv <2 x i32> %3, splat (i32 10)          ; 2 uses
   %i.ay = add nuw nsw i32 %.192.i, 1              ; 2 uses
-  %i.az = urem i32 %3, 10
+  %5 = extractelement <2 x i32> %4, i64 0         ; 3 uses
+  %i.az = urem i32 %5, 10
   %i.ba = icmp eq i32 %i.az, 0
+  %6 = extractelement <2 x i32> %4, i64 1         ; 2 uses
   br i1 %i.ba, label %.lr.ph93.i, label %.loopexit.i, !llvm.loop !16
 
 .loopexit.i:                                      ; preds = %.lr.ph93.i, %._crit_edge81.i
-  %.sroa.2.2.i = phi i32 [ %.sroa.2.0.lcssa.i, %._crit_edge81.i ], [ %3, %.lr.ph93.i ]
+  %.sroa.2.2.i = phi i32 [ %.sroa.2.0.lcssa.i, %._crit_edge81.i ], [ %5, %.lr.ph93.i ]
   %.258.in.i = phi i1 [ %.056.in.lcssa.i, %._crit_edge81.i ], [ %i.av, %.lr.ph93.i ]
   %.253.i = phi i8 [ %.051.lcssa.i, %._crit_edge81.i ], [ %i.ax, %.lr.ph93.i ] ; 2 uses
-  %.sroa.14.2.i = phi i32 [ %.sroa.14.0.lcssa.i, %._crit_edge81.i ], [ %2, %.lr.ph93.i ] ; 3 uses
+  %.sroa.14.2.i = phi i32 [ %.sroa.14.0.lcssa.i, %._crit_edge81.i ], [ %6, %.lr.ph93.i ] ; 3 uses
   %.2.i = phi i32 [ %.050.lcssa.i, %._crit_edge81.i ], [ %i.ay, %.lr.ph93.i ]
   %i.bb = icmp ne i8 %.253.i, 5
   %not..i = xor i1 %.258.in.i, true

@@ -205,15 +205,16 @@ _ZNK4pbrt6Tuple3INS_7Normal3EfEneENS1_IfEE.exit.thread: ; preds = %bb.e, %_ZNK4p
   %i.fl = fmul <2 x float> %i.fk, splat (float 5.000000e-01)
   %i.fm = fadd float %.sroa.0.sroa.5.0.copyload.i223, %.sroa.0.sroa.6.0.copyload.i225
   %i.fn = fmul float %i.fm, 5.000000e-01
-  %i.fo = call <2 x float> @_ZN4pbrt29InvertSphericalTriangleSampleERKN4pstd5arrayINS_6Point3IfEELi3EEES3_NS_7Vector3IfEE(ptr noundef nonnull align 4 dereferenceable(36) %6, <2 x float> %i.fl, float %i.fn, <2 x float> %2, float %3) ; 4 uses
+  %i.fo = call <2 x float> @_ZN4pbrt29InvertSphericalTriangleSampleERKN4pstd5arrayINS_6Point3IfEELi3EEES3_NS_7Vector3IfEE(ptr noundef nonnull align 4 dereferenceable(36) %6, <2 x float> %i.fl, float %i.fn, <2 x float> %2, float %3) ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #37
-  %7 = fcmp olt <2 x float> %i.fo, zeroinitializer
-  %8 = fcmp ogt <2 x float> %i.fo, splat (float 1.000000e+00)
-  %9 = or <2 x i1> %7, %8                         ; 2 uses
-  %10 = extractelement <2 x i1> %9, i64 0
-  %11 = extractelement <2 x i1> %9, i64 1
-  %or.cond8.i = select i1 %10, i1 true, i1 %11
-  br i1 %or.cond8.i, label %_ZN4pbrt11BilinearPDFENS_6Point2IfEEN4pstd4spanIKfEE.exit, label %bb.f
+  %7 = shufflevector <2 x float> %i.fo, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
+  %8 = fcmp ogt <4 x float> %7, <float 1.000000e+00, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>
+  %9 = fcmp olt <4 x float> %7, <float 1.000000e+00, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>
+  %10 = shufflevector <4 x i1> %8, <4 x i1> %9, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %11 = freeze <4 x i1> %10
+  %12 = bitcast <4 x i1> %11 to i4
+  %.not = icmp eq i4 %12, 0
+  br i1 %.not, label %bb.f, label %_ZN4pbrt11BilinearPDFENS_6Point2IfEEN4pstd4spanIKfEE.exit
 
 bb.f:                                             ; preds = %_ZNK4pbrt6Tuple3INS_7Normal3EfEneENS1_IfEE.exit.thread
   %.sroa.020.4.vec.extract.i = extractelement <2 x float> %i.fo, i64 1 ; 3 uses

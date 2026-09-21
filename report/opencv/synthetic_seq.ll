@@ -204,22 +204,23 @@ bb.ac:                                            ; preds = %.cont.cont.i, %.pre
   %i.dk = mul nsw i32 %i.dj, 3
   %i.dl = sext i32 %i.dk to i64
   %i.dm = getelementptr inbounds i8, ptr %i.di, i64 %i.dl ; 7 uses
-  %i.dn = icmp ult <2 x i32> %i.de, %i.am         ; 2 uses
+  %i.dn = icmp ult <2 x i32> %i.de, %i.am         ; 3 uses
   %i.do = icmp sgt i32 %i.dj, -2
   %i.dp = icmp slt i32 %i.dj, %i.ch
   %i.dq = and i1 %i.do, %i.dp                     ; 2 uses
   %i.dr = icmp sgt i32 %i.df, -2
   %i.ds = icmp slt i32 %i.df, %i.ci
   %i.dt = and i1 %i.dr, %i.ds                     ; 2 uses
-  %21 = extractelement <2 x i1> %i.dn, i64 0      ; 2 uses
-  %i.du = extractelement <2 x i1> %i.dn, i64 1    ; 2 uses
-  %or.cond.i = and i1 %i.du, %21                  ; 3 uses
-  %or.cond3.i = and i1 %21, %i.dq                 ; 3 uses
-  %22 = getelementptr inbounds nuw i8, ptr %i.dm, i64 3 ; 2 uses
-  %or.cond5.i = and i1 %i.du, %i.dt               ; 3 uses
+  %21 = bitcast <2 x i1> %i.dn to i2
+  %22 = icmp eq i2 %21, -1                        ; 3 uses
+  %i.du = extractelement <2 x i1> %i.dn, i64 0
+  %or.cond.i = and i1 %i.du, %i.dq                ; 3 uses
+  %23 = getelementptr inbounds nuw i8, ptr %i.dm, i64 3 ; 2 uses
+  %24 = extractelement <2 x i1> %i.dn, i64 1
+  %or.cond5.i = and i1 %24, %i.dt                 ; 3 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %i.dm, i64 %i.br ; 3 uses
   %or.cond7.i = and i1 %i.dq, %i.dt               ; 3 uses
-  %i.dw = getelementptr inbounds nuw i8, ptr %22, i64 %i.br ; 3 uses
+  %i.dw = getelementptr inbounds nuw i8, ptr %23, i64 %i.br ; 3 uses
   %i.dx = extractelement <2 x double> %i.da, i64 1
   %i.dy = call double @fmod(double noundef %i.dx, double noundef 1.000000e+00) #16 ; 3 uses
   %i.dz = extractelement <2 x double> %i.da, i64 0
@@ -232,7 +233,7 @@ bb.ac:                                            ; preds = %.cont.cont.i, %.pre
   %.026.i.i = select i1 %i.ed, double %i.ee, double %i.ea ; 4 uses
   %i.ef = fsub double 1.000000e+00, %.0.i.i       ; 6 uses
   %i.eg = fsub double 1.000000e+00, %.026.i.i     ; 3 uses
-  br i1 %or.cond.i, label %.then168.i, label %.cont167.i
+  br i1 %22, label %.then168.i, label %.cont167.i
 
 .then168.i:                                       ; preds = %bb.ac
   %.then.val169.i = load i8, ptr %i.dm, align 1, !tbaa !38
@@ -241,10 +242,10 @@ bb.ac:                                            ; preds = %.cont.cont.i, %.pre
 
 .cont167.i:                                       ; preds = %.then168.i, %bb.ac
   %i.ei = phi double [ %i.eh, %.then168.i ], [ 0.000000e+00, %bb.ac ]
-  br i1 %or.cond3.i, label %.then164.i, label %.cont163.i
+  br i1 %or.cond.i, label %.then164.i, label %.cont163.i
 
 .then164.i:                                       ; preds = %.cont167.i
-  %.then.val165.i = load i8, ptr %22, align 1, !tbaa !38
+  %.then.val165.i = load i8, ptr %23, align 1, !tbaa !38
   %i.ej = uitofp i8 %.then.val165.i to double
   br label %.cont163.i
 
@@ -276,7 +277,7 @@ bb.ac:                                            ; preds = %.cont.cont.i, %.pre
   %i.eu = call double @llvm.fmuladd.f64(double %i.eg, double %i.em, double %i.et)
   %i.ev = fptoui double %i.eu to i8
   store i8 %i.ev, ptr %.085107.i, align 1, !tbaa !38
-  br i1 %or.cond.i, label %.then142.i, label %.cont141.i
+  br i1 %22, label %.then142.i, label %.cont141.i
 
 .then142.i:                                       ; preds = %.cont155.i
   %.sroa.gep127.i = getelementptr inbounds nuw i8, ptr %i.dm, i64 1
@@ -286,7 +287,7 @@ bb.ac:                                            ; preds = %.cont.cont.i, %.pre
 
 .cont141.i:                                       ; preds = %.then142.i, %.cont155.i
   %i.ex = phi double [ %i.ew, %.then142.i ], [ 0.000000e+00, %.cont155.i ]
-  br i1 %or.cond3.i, label %.cont141.then152.i, label %.cont141.cont151.i
+  br i1 %or.cond.i, label %.cont141.then152.i, label %.cont141.cont151.i
 
 .cont141.then152.i:                               ; preds = %.cont141.i
   %.sroa.gep114.i = getelementptr inbounds nuw i8, ptr %i.dm, i64 4
@@ -325,7 +326,7 @@ bb.ac:                                            ; preds = %.cont.cont.i, %.pre
   %i.fk = fptoui double %i.fj to i8
   %i.fl = getelementptr inbounds nuw i8, ptr %.085107.i, i64 1
   store i8 %i.fk, ptr %i.fl, align 1, !tbaa !38
-  br i1 %or.cond.i, label %.then.i, label %.cont.i
+  br i1 %22, label %.then.i, label %.cont.i
 
 .then.i:                                          ; preds = %.cont141.cont.i
   %.sroa.gep129.i = getelementptr inbounds nuw i8, ptr %i.dm, i64 2
@@ -335,7 +336,7 @@ bb.ac:                                            ; preds = %.cont.cont.i, %.pre
 
 .cont.i:                                          ; preds = %.then.i, %.cont141.cont.i
   %i.fn = phi double [ %i.fm, %.then.i ], [ 0.000000e+00, %.cont141.cont.i ]
-  br i1 %or.cond3.i, label %.cont.then138.i, label %.cont.cont137.i
+  br i1 %or.cond.i, label %.cont.then138.i, label %.cont.cont137.i
 
 .cont.then138.i:                                  ; preds = %.cont.i
   %.sroa.gep.i = getelementptr inbounds nuw i8, ptr %i.dm, i64 5

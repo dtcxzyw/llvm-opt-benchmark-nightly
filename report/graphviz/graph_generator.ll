@@ -202,13 +202,14 @@ bb.a:
   %.not133 = icmp eq i32 %1, 0
   %.not = icmp eq i32 %3, 0                       ; 2 uses
   %i.a = shl i32 %1, 1                            ; 2 uses
-  %5 = udiv i32 %i.a, 6                           ; 2 uses
-  %i.b = shl i32 %1, 2                            ; 2 uses
-  %6 = udiv i32 %i.b, 6                           ; 2 uses
-  %7 = shl i32 %0, 1
-  %8 = udiv i32 %7, 6
-  %9 = shl i32 %0, 2
-  %10 = udiv i32 %9, 6
+  %5 = shl i32 %1, 2                              ; 2 uses
+  %6 = shl i32 %0, 1
+  %i.b = shl i32 %0, 2
+  %7 = insertelement <4 x i32> poison, i32 %i.a, i64 0
+  %8 = insertelement <4 x i32> %7, i32 %6, i64 1
+  %9 = insertelement <4 x i32> %8, i32 %5, i64 2
+  %10 = insertelement <4 x i32> %9, i32 %i.b, i64 3
+  %11 = udiv <4 x i32> %10, splat (i32 6)         ; 4 uses
   %i.c = add i32 %0, -1
   %i.d = mul i32 %i.c, %1
   %i.e = add i32 %i.d, 1                          ; 4 uses
@@ -218,10 +219,14 @@ bb.a:
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %.not163 = icmp ne i32 %1, 1
   %i.g = icmp ugt i32 %i.a, 5
-  %.not118.peel = icmp ult i32 %i.b, 6
+  %.not118.peel = icmp ult i32 %5, 6
   %i.h = or i1 %i.g, %.not118.peel
   %or.cond129.not136.peel = or i1 %i.h, %.not
   %exitcond.peel.not = icmp eq i32 %1, 1
+  %12 = extractelement <4 x i32> %11, i64 1
+  %13 = extractelement <4 x i32> %11, i64 3
+  %14 = extractelement <4 x i32> %11, i64 0       ; 2 uses
+  %15 = extractelement <4 x i32> %11, i64 2       ; 2 uses
   %.not169 = icmp eq i32 %1, 2
   %i.i = add i32 %1, -2
   br label %.preheader
@@ -229,8 +234,8 @@ bb.a:
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
   %.0108126 = phi i32 [ %i.l, %._crit_edge ], [ 0, %.preheader.preheader ] ; 5 uses
   %i.j = mul i32 %.0108126, %1                    ; 4 uses
-  %.not119 = icmp ule i32 %.0108126, %8           ; 2 uses
-  %i.k = icmp ugt i32 %.0108126, %10              ; 2 uses
+  %.not119 = icmp ule i32 %.0108126, %12          ; 2 uses
+  %i.k = icmp ugt i32 %.0108126, %13              ; 2 uses
   %i.l = add nuw i32 %.0108126, 1                 ; 5 uses
   %i.m = icmp ult i32 %i.l, %0                    ; 3 uses
   %i.n = mul i32 %i.l, %1
@@ -310,8 +315,8 @@ bb.l:                                             ; preds = %.sink.split, %bb.j,
   br i1 %i.ab, label %bb.m, label %bb.o
 
 bb.m:                                             ; preds = %._crit_edge.loopexit.peel.begin
-  %i.ac = icmp ult i32 %i.x, %5
-  %.not118.peel167 = icmp uge i32 %i.x, %6
+  %i.ac = icmp ult i32 %i.x, %14
+  %.not118.peel167 = icmp uge i32 %i.x, %15
   %i.ad = or i1 %i.ac, %.not118.peel167
   %brmerge130.reass.peel = or i1 %i.ad, %invariant.op164
   br i1 %brmerge130.reass.peel, label %bb.n, label %bb.o
@@ -394,8 +399,8 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.ar, label %bb.ab, label %bb.ad
 
 bb.ab:                                            ; preds = %.peel.next.split
-  %i.as = icmp ult i32 %.0125, %5
-  %.not118 = icmp uge i32 %.0125, %6
+  %i.as = icmp ult i32 %.0125, %14
+  %.not118 = icmp uge i32 %.0125, %15
   %i.at = or i1 %i.as, %.not118
   %brmerge130.reass = or i1 %i.at, %invariant.op164
   br i1 %brmerge130.reass, label %bb.ac, label %bb.ad

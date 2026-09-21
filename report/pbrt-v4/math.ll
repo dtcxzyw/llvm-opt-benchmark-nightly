@@ -204,13 +204,14 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 ; Function Attrs: mustprogress uwtable
 define dso_local { <2 x float>, float } @_ZN4pbrt23EqualAreaSquareToSphereENS_6Point2IfEE(<2 x float> %0) local_unnamed_addr #8 {
 bb.a:
-  %1 = fcmp oge <2 x float> %0, zeroinitializer
-  %2 = fcmp ole <2 x float> %0, splat (float 1.000000e+00)
-  %3 = and <2 x i1> %1, %2                        ; 2 uses
-  %4 = extractelement <2 x i1> %3, i64 0
-  %5 = extractelement <2 x i1> %3, i64 1
-  %or.cond8 = select i1 %4, i1 %5, i1 false
-  br i1 %or.cond8, label %bb.c, label %bb.b
+  %1 = shufflevector <2 x float> %0, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
+  %2 = fcmp ole <4 x float> %1, <float 1.000000e+00, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>
+  %3 = fcmp oge <4 x float> %1, <float 1.000000e+00, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>
+  %4 = shufflevector <4 x i1> %2, <4 x i1> %3, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %5 = freeze <4 x i1> %4
+  %6 = bitcast <4 x i1> %5 to i4
+  %7 = icmp eq i4 %6, -1
+  br i1 %7, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZN4pbrt8LogFatalIJRA45_KcEEEvNS_8LogLevelEPS1_iS5_DpOT_(i32 noundef 2, ptr noundef nonnull @.str.10, i32 noundef 293, ptr noundef nonnull @.str.16, ptr noundef nonnull align 1 dereferenceable(45) @.str.17) #24

@@ -205,7 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39: ; preds = %bb.
 define linkonce_odr dso_local noundef ptr @_ZN7easylog12get_time_strINSt6chrono10time_pointINS1_3_V212system_clockENS1_8durationIlSt5ratioILl1ELl1000000000EEEEEEEEPcRKT_(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #7 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
-  %1 = alloca %struct.tm, align 8                 ; 10 uses
+  %1 = alloca %struct.tm, align 8                 ; 11 uses
   %.sroa.0.0.copyload.i = load i64, ptr %0, align 8, !tbaa !340 ; 2 uses
   %i.b = sdiv i64 %.sroa.0.0.copyload.i, 1000000000 ; 3 uses
   %.neg.i = mul nsw i64 %i.b, -1000000000
@@ -305,48 +305,53 @@ bb.c:                                             ; preds = %bb.a
   %i.bs = load i8, ptr %i.br, align 1, !tbaa !285
   %i.bt = getelementptr inbounds nuw i8, ptr %i.aw, i64 22
   store i8 %i.bs, ptr %i.bt, align 2, !tbaa !285
-  %i.bu = sdiv i32 %i.av, 10000
-  %2 = srem i32 %i.bu, 10
-  %i.bv = sext i32 %2 to i64
+  %2 = sdiv i32 %i.av, 10000
+  %3 = getelementptr inbounds nuw i8, ptr %i.aw, i64 21
+  %i.bu = sdiv i32 %i.av, 100000
+  %.lhs.trunc.i11 = trunc nsw i32 %i.bu to i16
+  %4 = srem i16 %.lhs.trunc.i11, 10
+  %i.bv = sext i16 %4 to i64
   %i.bw = getelementptr inbounds i8, ptr @_ZN7easylogL6digitsE, i64 %i.bv
   %i.bx = load i8, ptr %i.bw, align 1, !tbaa !285
-  %i.by = getelementptr inbounds nuw i8, ptr %i.aw, i64 21
-  store i8 %i.bx, ptr %i.by, align 1, !tbaa !285
-  %3 = sdiv i32 %i.av, 100000
-  %.lhs.trunc.i11 = trunc nsw i32 %3 to i16
-  %4 = srem i16 %.lhs.trunc.i11, 10
-  %5 = sext i16 %4 to i64
-  %i.bz = getelementptr inbounds i8, ptr @_ZN7easylogL6digitsE, i64 %5
-  %6 = load i8, ptr %i.bz, align 1, !tbaa !285
-  %i.ca = getelementptr inbounds nuw i8, ptr %i.aw, i64 20
-  store i8 %6, ptr %i.ca, align 4, !tbaa !285
-  %7 = getelementptr inbounds nuw i8, ptr %i.aw, i64 19
-  store i8 46, ptr %7, align 1, !tbaa !285
-  %8 = load i32, ptr %1, align 8, !tbaa !8050     ; 2 uses
-  %9 = srem i32 %8, 10
-  %10 = sext i32 %9 to i64
-  %11 = getelementptr inbounds i8, ptr @_ZN7easylogL6digitsE, i64 %10
-  %12 = load i8, ptr %11, align 1, !tbaa !285
-  %i.cb = getelementptr inbounds nuw i8, ptr %i.aw, i64 18
-  store i8 %12, ptr %i.cb, align 2, !tbaa !285
-  %13 = sdiv i32 %8, 10
-  %14 = srem i32 %13, 10
-  %i.cc = sext i32 %14 to i64
+  %i.by = getelementptr inbounds nuw i8, ptr %i.aw, i64 20
+  store i8 %i.bx, ptr %i.by, align 4, !tbaa !285
+  %5 = getelementptr inbounds nuw i8, ptr %i.aw, i64 19
+  store i8 46, ptr %5, align 1, !tbaa !285
+  %6 = getelementptr inbounds nuw i8, ptr %i.aw, i64 18
+  %7 = getelementptr inbounds nuw i8, ptr %i.aw, i64 17
+  %i.bz = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
+  store i8 58, ptr %i.bz, align 16, !tbaa !285
+  %i.ca = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %8 = load <2 x i32>, ptr %1, align 8, !tbaa !286
+  %9 = load i32, ptr %i.ca, align 4, !tbaa !8050
+  %10 = load i32, ptr %1, align 8, !tbaa !8051
+  %11 = sdiv i32 %10, 10
+  %12 = shufflevector <2 x i32> %8, <2 x i32> poison, <4 x i32> <i32 poison, i32 0, i32 poison, i32 1>
+  %13 = insertelement <4 x i32> %12, i32 %2, i64 0
+  %14 = insertelement <4 x i32> %13, i32 %11, i64 2
+  %15 = srem <4 x i32> %14, splat (i32 10)        ; 4 uses
+  %16 = extractelement <4 x i32> %15, i64 0
+  %17 = sext i32 %16 to i64
+  %i.cb = getelementptr inbounds i8, ptr @_ZN7easylogL6digitsE, i64 %17
+  %18 = load i8, ptr %i.cb, align 1, !tbaa !285
+  store i8 %18, ptr %3, align 1, !tbaa !285
+  %19 = extractelement <4 x i32> %15, i64 1
+  %i.cc = sext i32 %19 to i64
   %i.cd = getelementptr inbounds i8, ptr @_ZN7easylogL6digitsE, i64 %i.cc
   %i.ce = load i8, ptr %i.cd, align 1, !tbaa !285
-  %15 = getelementptr inbounds nuw i8, ptr %i.aw, i64 17
-  store i8 %i.ce, ptr %15, align 1, !tbaa !285
-  %16 = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
-  store i8 58, ptr %16, align 16, !tbaa !285
-  %17 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %18 = load i32, ptr %17, align 4, !tbaa !8051   ; 2 uses
-  %19 = srem i32 %18, 10
-  %i.cf = sext i32 %19 to i64
+  store i8 %i.ce, ptr %6, align 2, !tbaa !285
+  %20 = extractelement <4 x i32> %15, i64 2
+  %21 = sext i32 %20 to i64
+  %22 = getelementptr inbounds i8, ptr @_ZN7easylogL6digitsE, i64 %21
+  %23 = load i8, ptr %22, align 1, !tbaa !285
+  store i8 %23, ptr %7, align 1, !tbaa !285
+  %24 = extractelement <4 x i32> %15, i64 3
+  %i.cf = sext i32 %24 to i64
   %i.cg = getelementptr inbounds i8, ptr @_ZN7easylogL6digitsE, i64 %i.cf
   %i.ch = load i8, ptr %i.cg, align 1, !tbaa !285
   %i.ci = getelementptr inbounds nuw i8, ptr %i.aw, i64 15
   store i8 %i.ch, ptr %i.ci, align 1, !tbaa !285
-  %i.cj = sdiv i32 %18, 10
+  %i.cj = sdiv i32 %9, 10
   %i.ck = srem i32 %i.cj, 10
   %i.cl = sext i32 %i.ck to i64
   %i.cm = getelementptr inbounds i8, ptr @_ZN7easylogL6digitsE, i64 %i.cl
@@ -749,8 +754,8 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i32
 !8047 = distinct !{!8047, !8046, !"_ZN7easylog14localtime_safeEl: argument 0"}
 !8048 = !{!8047}
 !8049 = !{!"_ZTS2tm", !262, i64 0, !262, i64 4, !262, i64 8, !262, i64 12, !262, i64 16, !262, i64 20, !262, i64 24, !262, i64 28, !262, i64 32, !293, i64 40, !290, i64 48}
-!8050 = !{!8049, !262, i64 0}
-!8051 = !{!8049, !262, i64 4}
+!8050 = !{!8049, !262, i64 4}
+!8051 = !{!8049, !262, i64 0}
 !8052 = !{!8049, !262, i64 8}
 !8053 = !{!8049, !262, i64 12}
 !8054 = !{!8049, !262, i64 16}

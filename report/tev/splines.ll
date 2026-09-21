@@ -205,12 +205,13 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN3jxl6N_
 
 bb.c:                                             ; preds = %bb.b
   %i.gm = fdiv float 1.000000e+00, %i.gl          ; 3 uses
-  %5 = tail call float @llvm.fabs.f32(float %i.gm)
-  %6 = fcmp one float %5, +inf
-  %7 = tail call float @llvm.fabs.f32(float %i.z)
-  %8 = fcmp one float %7, +inf
-  %or.cond54.i = and i1 %8, %6
-  br i1 %or.cond54.i, label %.preheader.preheader.i, label %_ZN3jxl6N_AVX212_GLOBAL__N_115ComputeSegmentsERKNS_6Spline5PointEfPKffRNSt3__16vectorINS_13SplineSegmentENS8_9allocatorISA_EEEERNS9_INS8_4pairImmEENSB_ISG_EEEE.exit
+  %5 = insertelement <2 x float> poison, float %i.z, i64 0
+  %6 = insertelement <2 x float> %5, float %i.gm, i64 1
+  %7 = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %6)
+  %8 = fcmp ueq <2 x float> %7, splat (float +inf)
+  %9 = bitcast <2 x i1> %8 to i2
+  %10 = icmp eq i2 %9, 0
+  br i1 %10, label %.preheader.preheader.i, label %_ZN3jxl6N_AVX212_GLOBAL__N_115ComputeSegmentsERKNS_6Spline5PointEfPKffRNSt3__16vectorINS_13SplineSegmentENS8_9allocatorISA_EEEERNS9_INS8_4pairImmEENSB_ISG_EEEE.exit
 
 .preheader.preheader.i:                           ; preds = %bb.c
   %i.gn = fmul float %i.z, %i.ef

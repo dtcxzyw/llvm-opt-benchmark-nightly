@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = inttoptr i64 %i.g to ptr                 ; 4 uses
   %i.i = tail call ptr @palloc(i64 noundef 32) #13 ; 5 uses
   %i.j = load double, ptr %i.h, align 8           ; 2 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 4 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
   %i.l = load double, ptr %i.k, align 8           ; 2 uses
   %i.m = fadd double %i.j, %i.l                   ; 3 uses
   %i.n = tail call double @llvm.fabs.f64(double %i.m)
@@ -250,50 +250,48 @@ float8_mi.exit:                                   ; preds = %float8_pl.exit, %bb
   %i.ae = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   store double %.0.i.i26, ptr %i.ae, align 8
   %i.af = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
-  %1 = load double, ptr %i.af, align 8            ; 2 uses
-  %2 = load double, ptr %i.k, align 8             ; 2 uses
-  %3 = fadd double %1, %2                         ; 3 uses
-  %i.ag = tail call double @llvm.fabs.f64(double %3)
+  %1 = load <2 x double>, ptr %i.af, align 8      ; 2 uses
+  %2 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %1) ; 3 uses
+  %i.ag = tail call double @llvm.fabs.f64(double %2)
   %i.ah = fcmp oeq double %i.ag, +inf
   br i1 %i.ah, label %bb.g, label %float8_pl.exit30, !prof !5
 
 bb.g:                                             ; preds = %float8_mi.exit
-  %4 = tail call double @llvm.fabs.f64(double %1)
-  %5 = fcmp oeq double %4, +inf
-  %6 = tail call double @llvm.fabs.f64(double %2)
-  %7 = fcmp oeq double %6, +inf
-  %or.cond.i.i29 = or i1 %5, %7
-  br i1 %or.cond.i.i29, label %float8_pl.exit30, label %bb.h
+  %3 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %1)
+  %4 = fcmp oeq <2 x double> %3, splat (double +inf)
+  %5 = bitcast <2 x i1> %4 to i2
+  %.not = icmp eq i2 %5, 0
+  br i1 %.not, label %bb.h, label %float8_pl.exit30
 
 bb.h:                                             ; preds = %bb.g
   %i.ai = tail call double @float_overflow_error_ext(ptr noundef null) #13
   br label %float8_pl.exit30
 
 float8_pl.exit30:                                 ; preds = %float8_mi.exit, %bb.g, %bb.h
-  %.0.i.i28 = phi double [ %i.ai, %bb.h ], [ %3, %bb.g ], [ %3, %float8_mi.exit ]
+  %.0.i.i28 = phi double [ %i.ai, %bb.h ], [ %2, %bb.g ], [ %2, %float8_mi.exit ]
   %i.aj = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   store double %.0.i.i28, ptr %i.aj, align 8
-  %8 = load double, ptr %i.af, align 8            ; 2 uses
-  %9 = load double, ptr %i.k, align 8             ; 2 uses
-  %10 = fsub double %8, %9                        ; 3 uses
-  %i.ak = tail call double @llvm.fabs.f64(double %10)
+  %6 = load <2 x double>, ptr %i.af, align 8      ; 3 uses
+  %shift = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fsub <2 x double> %6, %shift
+  %7 = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 3 uses
+  %i.ak = tail call double @llvm.fabs.f64(double %7)
   %i.al = fcmp oeq double %i.ak, +inf
   br i1 %i.al, label %bb.i, label %float8_mi.exit33, !prof !5
 
 bb.i:                                             ; preds = %float8_pl.exit30
-  %11 = tail call double @llvm.fabs.f64(double %8)
-  %12 = fcmp oeq double %11, +inf
-  %13 = tail call double @llvm.fabs.f64(double %9)
-  %14 = fcmp oeq double %13, +inf
-  %or.cond.i.i32 = or i1 %12, %14
-  br i1 %or.cond.i.i32, label %float8_mi.exit33, label %bb.j
+  %8 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %6)
+  %9 = fcmp oeq <2 x double> %8, splat (double +inf)
+  %10 = bitcast <2 x i1> %9 to i2
+  %.not35 = icmp eq i2 %10, 0
+  br i1 %.not35, label %bb.j, label %float8_mi.exit33
 
 bb.j:                                             ; preds = %bb.i
   %i.am = tail call double @float_overflow_error_ext(ptr noundef null) #13
   br label %float8_mi.exit33
 
 float8_mi.exit33:                                 ; preds = %float8_pl.exit30, %bb.i, %bb.j
-  %.0.i.i31 = phi double [ %i.am, %bb.j ], [ %10, %bb.i ], [ %10, %float8_pl.exit30 ]
+  %.0.i.i31 = phi double [ %i.am, %bb.j ], [ %7, %bb.i ], [ %7, %float8_pl.exit30 ]
   %i.an = getelementptr inbounds nuw i8, ptr %i.i, i64 24
   store double %.0.i.i31, ptr %i.an, align 8
   %i.ao = tail call ptr @palloc(i64 noundef 32) #13 ; 6 uses
@@ -694,6 +692,12 @@ declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly 
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.umax.i16(i16, i16) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.or.v2i64(<2 x i64>) #5

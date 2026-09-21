@@ -147,14 +147,17 @@ bb.p:                                             ; preds = %bb.o, %.sink.split
   %i.bc = load i32, ptr %2, align 4, !tbaa !20    ; 7 uses
   %i.bd = add nsw i32 %i.bc, -1
   %i.be = mul nsw i32 %i.bd, %i.bc
-  %17 = sdiv i32 %i.be, 2                         ; 2 uses
   store double 0.000000e+00, ptr %i.j, align 16, !tbaa !22
-  %spec.select = tail call i32 @llvm.smin.i32(i32 %i.bc, i32 8) ; 16 uses
-  %18 = sdiv i32 %i.bc, %spec.select              ; 2 uses
-  %i.bf = mul nsw i32 %18, %spec.select
+  %spec.select = tail call i32 @llvm.smin.i32(i32 %i.bc, i32 8) ; 15 uses
+  %17 = insertelement <2 x i32> <i32 2147483647, i32 poison>, i32 %i.bc, i64 1 ; 2 uses
+  %18 = tail call <2 x i32> @llvm.smin.v2i32(<2 x i32> %17, <2 x i32> <i32 2, i32 8>)
+  %19 = insertelement <2 x i32> %17, i32 %i.be, i64 0
+  %20 = sdiv <2 x i32> %19, %18                   ; 2 uses
+  %21 = extractelement <2 x i32> %20, i64 1       ; 2 uses
+  %i.bf = mul nsw i32 %21, %spec.select
   %.not1354 = icmp ne i32 %i.bf, %i.bc
   %i.bg = zext i1 %.not1354 to i32
-  %.0 = add i32 %18, %i.bg                        ; 6 uses
+  %.0 = add i32 %21, %i.bg                        ; 6 uses
   %i.bh = mul nsw i32 %spec.select, %spec.select
   %i.bi = tail call i32 @llvm.smin.i32(i32 %i.bc, i32 5) ; 2 uses
   %i.bj = load i32, ptr %13, align 4, !tbaa !20   ; 4 uses
@@ -168,6 +171,7 @@ bb.p:                                             ; preds = %bb.o, %.sink.split
   %i.bm = sext i32 %i.n to i64                    ; 30 uses
   %i.bn = sext i32 %i.q to i64                    ; 15 uses
   %.not13561522 = icmp slt i32 %.0, 1
+  %22 = extractelement <2 x i32> %20, i64 0       ; 2 uses
   %i.bo = extractelement <2 x double> %i.az, i64 1
   %i.bp = insertelement <2 x double> poison, double %i.av, i64 0
   %i.bq = shufflevector <2 x double> %i.bp, <2 x double> poison, <2 x i32> zeroinitializer
@@ -570,12 +574,12 @@ bb.ee:                                            ; preds = %bb.ed
   %i.afh = fmul double %.01273.lcssa, %i.afd
   %i.afi = fmul double %.01256.lcssa, %i.afh
   %i.afj = fcmp uge double %i.afi, %i.afe
-  %.not1358 = icmp slt i32 %.01240.lcssa, %17
+  %.not1358 = icmp slt i32 %.01240.lcssa, %22
   %or.cond1406 = select i1 %i.afj, i1 %.not1358, i1 false
   br i1 %or.cond1406, label %bb.eg, label %.loopexit1420
 
 bb.ef:                                            ; preds = %bb.ed, %bb.ec
-  %.not1358.old = icmp slt i32 %.01240.lcssa, %17
+  %.not1358.old = icmp slt i32 %.01240.lcssa, %22
   br i1 %.not1358.old, label %bb.eg, label %.loopexit1420
 
 bb.eg:                                            ; preds = %bb.ee, %bb.ef
@@ -771,6 +775,9 @@ declare double @llvm.sqrt.f64(double) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x i32> @llvm.smin.v2i32(<2 x i32>, <2 x i32>) #4
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

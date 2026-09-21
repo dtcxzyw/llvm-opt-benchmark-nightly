@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %_ZN6icu_789UVector324pushEiR10UErrorCode.exit
-  %.0153297 = phi i32 [ 0, %.lr.ph ], [ %.3156, %_ZN6icu_789UVector324pushEiR10UErrorCode.exit ] ; 8 uses
+  %.0153297 = phi i32 [ 0, %.lr.ph ], [ %.3156, %_ZN6icu_789UVector324pushEiR10UErrorCode.exit ] ; 7 uses
   %i.t = call i64 @utext_getNativeIndex_78(ptr noundef %1)
   %i.u = trunc i64 %i.t to i32                    ; 5 uses
   %i.v = icmp sgt i32 %3, %i.u
@@ -303,9 +303,12 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not170, label %_ZN6icu_7812PossibleWord6backUpEP5UText.exit215.preheader, label %_ZN6icu_7812PossibleWord6backUpEP5UText.exit215.thread
 
 _ZN6icu_7812PossibleWord6backUpEP5UText.exit215.preheader: ; preds = %bb.g
-  %8 = add i32 %.0153297, 1
-  %9 = urem i32 %8, 3
-  %i.bv = zext nneg i32 %9 to i64
+  %8 = insertelement <2 x i32> poison, i32 %.0153297, i64 0
+  %9 = shufflevector <2 x i32> %8, <2 x i32> poison, <2 x i32> zeroinitializer
+  %10 = add <2 x i32> %9, <i32 1, i32 2>
+  %11 = urem <2 x i32> %10, splat (i32 3)         ; 2 uses
+  %12 = extractelement <2 x i32> %11, i64 0
+  %i.bv = zext nneg i32 %12 to i64
   %i.bw = getelementptr inbounds nuw [180 x i8], ptr %7, i64 %i.bv ; 10 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 8 ; 3 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.bw, i64 20 ; 2 uses
@@ -313,9 +316,8 @@ _ZN6icu_7812PossibleWord6backUpEP5UText.exit215.preheader: ; preds = %bb.g
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bw, i64 4
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bw, i64 16 ; 4 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bw, i64 12 ; 2 uses
-  %10 = add i32 %.0153297, 2
-  %11 = urem i32 %10, 3
-  %i.cd = zext nneg i32 %11 to i64
+  %13 = extractelement <2 x i32> %11, i64 1
+  %i.cd = zext nneg i32 %13 to i64
   %i.ce = getelementptr inbounds nuw [180 x i8], ptr %7, i64 %i.cd ; 10 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 8 ; 2 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.ce, i64 20
@@ -718,7 +720,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN6icu_789UVector324pushEiR10UErrorCode.exit
-  %.0112227 = phi i32 [ 0, %.lr.ph ], [ %.3115, %_ZN6icu_789UVector324pushEiR10UErrorCode.exit ] ; 8 uses
+  %.0112227 = phi i32 [ 0, %.lr.ph ], [ %.3115, %_ZN6icu_789UVector324pushEiR10UErrorCode.exit ] ; 7 uses
   %i.s = call i64 @utext_getNativeIndex_78(ptr noundef %1)
   %i.t = trunc i64 %i.s to i32                    ; 4 uses
   %i.u = icmp sgt i32 %3, %i.t
@@ -816,9 +818,12 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not125, label %_ZN6icu_7812PossibleWord6backUpEP5UText.exit167.preheader, label %_ZN6icu_7812PossibleWord6backUpEP5UText.exit167.thread
 
 _ZN6icu_7812PossibleWord6backUpEP5UText.exit167.preheader: ; preds = %bb.f
-  %8 = add i32 %.0112227, 1
-  %9 = urem i32 %8, 3
-  %i.bt = zext nneg i32 %9 to i64
+  %8 = insertelement <2 x i32> poison, i32 %.0112227, i64 0
+  %9 = shufflevector <2 x i32> %8, <2 x i32> poison, <2 x i32> zeroinitializer
+  %10 = add <2 x i32> %9, <i32 1, i32 2>
+  %11 = urem <2 x i32> %10, splat (i32 3)         ; 2 uses
+  %12 = extractelement <2 x i32> %11, i64 0
+  %i.bt = zext nneg i32 %12 to i64
   %i.bu = getelementptr inbounds nuw [180 x i8], ptr %7, i64 %i.bt ; 10 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8 ; 3 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bu, i64 20 ; 2 uses
@@ -826,9 +831,8 @@ _ZN6icu_7812PossibleWord6backUpEP5UText.exit167.preheader: ; preds = %bb.f
   %i.by = getelementptr inbounds nuw i8, ptr %i.bu, i64 4
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bu, i64 16 ; 4 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bu, i64 12 ; 2 uses
-  %10 = add i32 %.0112227, 2
-  %11 = urem i32 %10, 3
-  %i.cb = zext nneg i32 %11 to i64
+  %13 = extractelement <2 x i32> %11, i64 1
+  %i.cb = zext nneg i32 %13 to i64
   %i.cc = getelementptr inbounds nuw [180 x i8], ptr %7, i64 %i.cb ; 10 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 8 ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cc, i64 20
@@ -1231,7 +1235,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN6icu_789UVector324pushEiR10UErrorCode.exit
-  %.0112227 = phi i32 [ 0, %.lr.ph ], [ %.3115, %_ZN6icu_789UVector324pushEiR10UErrorCode.exit ] ; 8 uses
+  %.0112227 = phi i32 [ 0, %.lr.ph ], [ %.3115, %_ZN6icu_789UVector324pushEiR10UErrorCode.exit ] ; 7 uses
   %i.s = call i64 @utext_getNativeIndex_78(ptr noundef %1)
   %i.t = trunc i64 %i.s to i32                    ; 4 uses
   %i.u = icmp sgt i32 %3, %i.t
@@ -1329,9 +1333,12 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not125, label %_ZN6icu_7812PossibleWord6backUpEP5UText.exit167.preheader, label %_ZN6icu_7812PossibleWord6backUpEP5UText.exit167.thread
 
 _ZN6icu_7812PossibleWord6backUpEP5UText.exit167.preheader: ; preds = %bb.f
-  %8 = add i32 %.0112227, 1
-  %9 = urem i32 %8, 3
-  %i.bt = zext nneg i32 %9 to i64
+  %8 = insertelement <2 x i32> poison, i32 %.0112227, i64 0
+  %9 = shufflevector <2 x i32> %8, <2 x i32> poison, <2 x i32> zeroinitializer
+  %10 = add <2 x i32> %9, <i32 1, i32 2>
+  %11 = urem <2 x i32> %10, splat (i32 3)         ; 2 uses
+  %12 = extractelement <2 x i32> %11, i64 0
+  %i.bt = zext nneg i32 %12 to i64
   %i.bu = getelementptr inbounds nuw [180 x i8], ptr %7, i64 %i.bt ; 10 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8 ; 3 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bu, i64 20 ; 2 uses
@@ -1339,9 +1346,8 @@ _ZN6icu_7812PossibleWord6backUpEP5UText.exit167.preheader: ; preds = %bb.f
   %i.by = getelementptr inbounds nuw i8, ptr %i.bu, i64 4
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bu, i64 16 ; 4 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bu, i64 12 ; 2 uses
-  %10 = add i32 %.0112227, 2
-  %11 = urem i32 %10, 3
-  %i.cb = zext nneg i32 %11 to i64
+  %13 = extractelement <2 x i32> %11, i64 1
+  %i.cb = zext nneg i32 %13 to i64
   %i.cc = getelementptr inbounds nuw [180 x i8], ptr %7, i64 %i.cb ; 10 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 8 ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cc, i64 20
@@ -1744,7 +1750,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN6icu_789UVector324pushEiR10UErrorCode.exit
-  %.0112227 = phi i32 [ 0, %.lr.ph ], [ %.3115, %_ZN6icu_789UVector324pushEiR10UErrorCode.exit ] ; 8 uses
+  %.0112227 = phi i32 [ 0, %.lr.ph ], [ %.3115, %_ZN6icu_789UVector324pushEiR10UErrorCode.exit ] ; 7 uses
   %i.r = call i64 @utext_getNativeIndex_78(ptr noundef %1)
   %i.s = trunc i64 %i.r to i32                    ; 4 uses
   %i.t = icmp sgt i32 %3, %i.s
@@ -1843,9 +1849,12 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not125, label %_ZN6icu_7812PossibleWord6backUpEP5UText.exit167.preheader, label %_ZN6icu_7812PossibleWord6backUpEP5UText.exit167.thread
 
 _ZN6icu_7812PossibleWord6backUpEP5UText.exit167.preheader: ; preds = %bb.f
-  %8 = add i32 %.0112227, 1
-  %9 = urem i32 %8, 3
-  %i.bt = zext nneg i32 %9 to i64
+  %8 = insertelement <2 x i32> poison, i32 %.0112227, i64 0
+  %9 = shufflevector <2 x i32> %8, <2 x i32> poison, <2 x i32> zeroinitializer
+  %10 = add <2 x i32> %9, <i32 1, i32 2>
+  %11 = urem <2 x i32> %10, splat (i32 3)         ; 2 uses
+  %12 = extractelement <2 x i32> %11, i64 0
+  %i.bt = zext nneg i32 %12 to i64
   %i.bu = getelementptr inbounds nuw [180 x i8], ptr %7, i64 %i.bt ; 10 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8 ; 3 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bu, i64 20 ; 2 uses
@@ -1853,9 +1862,8 @@ _ZN6icu_7812PossibleWord6backUpEP5UText.exit167.preheader: ; preds = %bb.f
   %i.by = getelementptr inbounds nuw i8, ptr %i.bu, i64 4
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bu, i64 16 ; 4 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bu, i64 12 ; 2 uses
-  %10 = add i32 %.0112227, 2
-  %11 = urem i32 %10, 3
-  %i.cb = zext nneg i32 %11 to i64
+  %13 = extractelement <2 x i32> %11, i64 1
+  %i.cb = zext nneg i32 %13 to i64
   %i.cc = getelementptr inbounds nuw [180 x i8], ptr %7, i64 %i.cb ; 10 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 8 ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cc, i64 20

@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %bb.aq, %bb.ai, %bb.
   %i.fs = load ptr, ptr %i.cu, align 8
   %i.ft = getelementptr inbounds nuw [24 x i8], ptr %i.fs, i64 %i.fo
   %i.fu = fmul float %.sroa.13.0.copyload, %.sroa.13.0.copyload
-  %i.fv = load <2 x float>, ptr %i.fr, align 8    ; 2 uses
+  %i.fv = load <2 x float>, ptr %i.fr, align 8    ; 3 uses
   %.sroa.6.0.copyload = load float, ptr %.sroa.6.0..sroa_idx, align 4 ; 2 uses
   store double %i.fq, ptr %i.ft, align 8
   %i.fw = load ptr, ptr %i.cu, align 8
@@ -222,7 +222,7 @@ bb.w:                                             ; preds = %bb.aq, %bb.ai, %bb.
   %i.gb = insertelement <2 x float> poison, float %.sroa.15.0.copyload, i64 0
   %i.gc = insertelement <2 x float> %i.gb, float %.sroa.11.0.copyload, i64 1 ; 2 uses
   %i.gd = fmul <2 x float> %i.gc, %i.gc
-  %i.ge = shufflevector <2 x float> %i.fv, <2 x float> poison, <2 x i32> <i32 poison, i32 0> ; 2 uses
+  %i.ge = shufflevector <2 x float> %i.fv, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.gf = insertelement <2 x float> %i.ge, float %.sroa.8.0.copyload, i64 0 ; 2 uses
   %i.gg = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.gf, <2 x float> %i.gf, <2 x float> %i.gd)
   %i.gh = insertelement <2 x float> poison, float %.sroa.22.0.copyload, i64 0
@@ -235,17 +235,18 @@ bb.w:                                             ; preds = %bb.aq, %bb.ai, %bb.
   %i.gn = load ptr, ptr %i.bq, align 8
   %i.go = getelementptr inbounds nuw [24 x i8], ptr %i.gn, i64 %i.fo ; 3 uses
   %i.gp = getelementptr inbounds nuw i8, ptr %i.go, i64 8
-  %i.gq = extractelement <2 x float> %i.gk, i64 1
+  %i.gq = extractelement <2 x float> %i.gk, i64 1 ; 2 uses
   store float %i.gq, ptr %i.gp, align 8
   %.sroa.7231.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.go, i64 12
   store float %sqrt.i158, ptr %.sroa.7231.0..sroa_idx, align 4
   %.sroa.10.0..sroa_idx232 = getelementptr inbounds nuw i8, ptr %i.go, i64 16
   %i.gr = extractelement <2 x float> %i.gk, i64 0
   store float %i.gr, ptr %.sroa.10.0..sroa_idx232, align 8
-  %3 = insertelement <2 x float> poison, float %.sroa.8.0.copyload, i64 0
-  %i.gs = insertelement <2 x float> %3, float %.sroa.11.0.copyload, i64 1
-  %4 = fdiv <2 x float> %i.gs, %i.gk              ; 6 uses
-  %5 = fdiv float %.sroa.13.0.copyload, %sqrt.i158 ; 6 uses
+  %3 = extractelement <2 x float> %i.fv, i64 0
+  %4 = fdiv float %3, %i.gq                       ; 5 uses
+  %i.gs = insertelement <2 x float> poison, float %.sroa.8.0.copyload, i64 0
+  %5 = insertelement <2 x float> %i.gs, float %.sroa.11.0.copyload, i64 1
+  %6 = fdiv <2 x float> %5, %i.gk                 ; 6 uses
   %i.gt = insertelement <4 x float> <float 2.000000e+00, float poison, float poison, float poison>, float %.sroa.15.0.copyload, i64 1
   %i.gu = insertelement <4 x float> %i.gt, float %.sroa.18.0.copyload, i64 2
   %i.gv = shufflevector <2 x float> %i.fv, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
@@ -255,15 +256,18 @@ bb.w:                                             ; preds = %bb.aq, %bb.ai, %bb.
   %i.gz = insertelement <4 x float> %i.gy, float %sqrt.i158, i64 3
   %i.ha = fdiv <4 x float> %i.gw, %i.gz           ; 8 uses
   %i.hb = fdiv float %.sroa.20.0.copyload, %sqrt.i158 ; 4 uses
-  %i.hc = insertelement <2 x float> %i.ge, float %.sroa.22.0.copyload, i64 0
-  %i.hd = fdiv <2 x float> %i.hc, %i.gk           ; 2 uses
-  %i.he = extractelement <2 x float> %i.hd, i64 1 ; 6 uses
-  %i.hf = extractelement <2 x float> %i.hd, i64 0 ; 6 uses
+  %7 = insertelement <2 x float> poison, float %.sroa.13.0.copyload, i64 0
+  %8 = insertelement <2 x float> %7, float %.sroa.22.0.copyload, i64 1
+  %9 = shufflevector <2 x float> %i.gk, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
+  %i.hc = insertelement <2 x float> %9, float %sqrt.i158, i64 0
+  %i.hd = fdiv <2 x float> %8, %i.hc              ; 3 uses
+  %i.he = extractelement <2 x float> %i.hd, i64 1 ; 5 uses
+  %i.hf = extractelement <2 x float> %i.hd, i64 0 ; 5 uses
   %i.hg = load ptr, ptr %i.bo, align 8
   %i.hh = getelementptr inbounds nuw [32 x i8], ptr %i.hg, i64 %i.fo
   store double %i.fq, ptr %i.hh, align 8
-  %i.hi = fadd float %i.he, %5
-  %i.hj = fadd float %i.hi, %i.hf                 ; 2 uses
+  %i.hi = fadd float %4, %i.hf
+  %i.hj = fadd float %i.hi, %i.he                 ; 2 uses
   %i.hk = fcmp ogt float %i.hj, 0.000000e+00
   br i1 %i.hk, label %bb.x, label %bb.y
 
@@ -272,7 +276,7 @@ bb.x:                                             ; preds = %.lr.ph
   %i.hm = tail call noundef float @sqrtf(float noundef %i.hl) #18
   %i.hn = insertelement <4 x float> poison, float %i.hm, i64 0
   %i.ho = insertelement <4 x float> %i.hn, float %i.hb, i64 1
-  %i.hp = shufflevector <2 x float> %4, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %i.hp = shufflevector <2 x float> %6, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.hq = shufflevector <4 x float> %i.ho, <4 x float> %i.hp, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 2 uses
   %i.hr = fmul <4 x float> %i.hq, %i.ha           ; 2 uses
   %i.hs = fsub <4 x float> %i.hq, %i.ha
@@ -284,15 +288,17 @@ bb.x:                                             ; preds = %.lr.ph
   br label %_ZN13aiQuaterniontIfEC2ERK12aiMatrix3x3tIfE.exit
 
 bb.y:                                             ; preds = %.lr.ph
-  %6 = fcmp ogt float %i.he, %5
-  %7 = fcmp ogt float %i.he, %i.hf
-  %or.cond.i = and i1 %6, %7
-  br i1 %or.cond.i, label %bb.z, label %bb.aa
+  %10 = insertelement <2 x float> poison, float %4, i64 0
+  %11 = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> zeroinitializer
+  %12 = fcmp ule <2 x float> %11, %i.hd
+  %13 = bitcast <2 x i1> %12 to i2
+  %14 = icmp eq i2 %13, 0
+  br i1 %14, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %bb.y
-  %i.hy = fadd float %i.he, 1.000000e+00
-  %i.hz = fsub float %i.hy, %5
-  %i.ia = fsub float %i.hz, %i.hf
+  %i.hy = fadd float %4, 1.000000e+00
+  %i.hz = fsub float %i.hy, %i.hf
+  %i.ia = fsub float %i.hz, %i.he
   %i.ib = tail call noundef float @sqrtf(float noundef %i.ia) #18
   %i.ic = fmul float %i.ib, 2.000000e+00
   %i.id = extractelement <4 x float> %i.ha, i64 1
@@ -300,7 +306,7 @@ bb.z:                                             ; preds = %bb.y
   %i.if = insertelement <4 x float> poison, float %i.ie, i64 0
   %i.ig = insertelement <4 x float> %i.if, float %i.ic, i64 1 ; 2 uses
   %i.ih = shufflevector <4 x float> %i.ha, <4 x float> poison, <4 x i32> <i32 3, i32 2, i32 poison, i32 poison>
-  %i.ii = shufflevector <2 x float> %4, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 poison, i32 poison>
+  %i.ii = shufflevector <2 x float> %6, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 poison, i32 poison>
   %i.ij = fadd <4 x float> %i.ih, %i.ii
   %i.ik = shufflevector <4 x float> %i.ig, <4 x float> %i.ij, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 2 uses
   %i.il = shufflevector <4 x float> %i.ig, <4 x float> <float poison, float 2.500000e-01, float poison, float poison>, <4 x i32> <i32 1, i32 5, i32 1, i32 1> ; 2 uses
@@ -310,19 +316,19 @@ bb.z:                                             ; preds = %bb.y
   br label %_ZN13aiQuaterniontIfEC2ERK12aiMatrix3x3tIfE.exit
 
 bb.aa:                                            ; preds = %bb.y
-  %i.ip = fcmp ogt float %5, %i.hf
+  %i.ip = fcmp ogt float %i.hf, %i.he
   br i1 %i.ip, label %bb.ab, label %bb.ac
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.iq = fadd float %5, 1.000000e+00
-  %i.ir = fsub float %i.iq, %i.he
-  %i.is = fsub float %i.ir, %i.hf
+  %i.iq = fadd float %i.hf, 1.000000e+00
+  %i.ir = fsub float %i.iq, %4
+  %i.is = fsub float %i.ir, %i.he
   %i.it = tail call noundef float @sqrtf(float noundef %i.is) #18
   %i.iu = fmul float %i.it, 2.000000e+00
-  %i.iv = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %i.iv = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.iw = insertelement <2 x float> %i.iv, float %i.hb, i64 1
   %i.ix = extractelement <4 x float> %i.ha, i64 2
-  %i.iy = extractelement <2 x float> %4, i64 0
+  %i.iy = extractelement <2 x float> %6, i64 0
   %i.iz = fsub float %i.iy, %i.ix
   %i.ja = insertelement <4 x float> <float poison, float poison, float 2.500000e-01, float poison>, float %i.iz, i64 0
   %i.jb = shufflevector <2 x float> %i.iw, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 1, i32 poison>
@@ -337,15 +343,15 @@ bb.ab:                                            ; preds = %bb.aa
   br label %_ZN13aiQuaterniontIfEC2ERK12aiMatrix3x3tIfE.exit
 
 bb.ac:                                            ; preds = %bb.aa
-  %i.jk = fadd float %i.hf, 1.000000e+00
-  %i.jl = fsub float %i.jk, %i.he
-  %i.jm = fsub float %i.jl, %5
+  %i.jk = fadd float %i.he, 1.000000e+00
+  %i.jl = fsub float %i.jk, %4
+  %i.jm = fsub float %i.jl, %i.hf
   %i.jn = tail call noundef float @sqrtf(float noundef %i.jm) #18
   %i.jo = fmul float %i.jn, 2.000000e+00
-  %i.jp = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
+  %i.jp = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.jq = insertelement <2 x float> %i.jp, float %i.hb, i64 0
   %i.jr = extractelement <4 x float> %i.ha, i64 3
-  %i.js = extractelement <2 x float> %4, i64 1
+  %i.js = extractelement <2 x float> %6, i64 1
   %i.jt = fsub float %i.js, %i.jr
   %i.ju = insertelement <4 x float> <float poison, float poison, float poison, float 2.500000e-01>, float %i.jt, i64 0
   %i.jv = shufflevector <2 x float> %i.jq, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 poison, i32 poison>

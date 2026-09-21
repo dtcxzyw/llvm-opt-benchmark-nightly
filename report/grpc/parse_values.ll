@@ -205,16 +205,19 @@ bb.e:                                             ; preds = %bb.c, %bb.c, %bb.c,
   br i1 %i.q, label %bb.k, label %bb.j
 
 bb.f:                                             ; preds = %bb.c
-  %i.r = load i16, ptr %0, align 2, !tbaa !28     ; 3 uses
+  %i.r = load i16, ptr %0, align 2, !tbaa !28     ; 2 uses
   %i.s = and i16 %i.r, 3
   %i.t = icmp eq i16 %i.s, 0
   br i1 %i.t, label %bb.g, label %bb.i
 
 bb.g:                                             ; preds = %bb.f
-  %1 = urem i16 %i.r, 100
-  %.not = icmp ne i16 %1, 0
-  %2 = urem i16 %i.r, 400
-  %i.u = icmp eq i16 %2, 0
+  %1 = insertelement <2 x i16> poison, i16 %i.r, i64 0
+  %2 = shufflevector <2 x i16> %1, <2 x i16> poison, <2 x i32> zeroinitializer
+  %3 = urem <2 x i16> %2, <i16 100, i16 400>      ; 2 uses
+  %4 = extractelement <2 x i16> %3, i64 0
+  %.not = icmp ne i16 %4, 0
+  %5 = extractelement <2 x i16> %3, i64 1
+  %i.u = icmp eq i16 %5, 0
   %or.cond17 = or i1 %.not, %i.u
   br i1 %or.cond17, label %bb.h, label %bb.i
 

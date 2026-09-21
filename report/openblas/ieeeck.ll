@@ -45,7 +45,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.r, label %bb.h, label %bb.k
 
 bb.h:                                             ; preds = %bb.g
-  %i.s = fmul float %i.o, %i.o                    ; 6 uses
+  %i.s = fmul float %i.o, %i.o                    ; 4 uses
   %i.t = fcmp ugt float %i.s, %i.a
   br i1 %i.t, label %bb.i, label %bb.k
 
@@ -56,19 +56,21 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.w = fadd float %i.s, %i.q
-  %3 = fdiv float %i.s, %i.s
+  %3 = insertelement <2 x float> poison, float %i.s, i64 0
+  %4 = shufflevector <2 x float> %3, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %5 = insertelement <2 x float> %4, float %i.q, i64 0
+  %6 = fdiv <2 x float> %4, %5
   %i.x = fmul float %i.b, %i.s
   %i.y = fmul float %i.i, %i.q
-  %4 = fcmp uno float %i.w, 0.000000e+00
-  %5 = fdiv float %i.s, %i.q
-  %6 = fcmp uno float %5, 0.000000e+00
-  %or.cond.not93 = and i1 %4, %6
-  %i.z = fcmp uno float %3, 0.000000e+00
-  %or.cond84.not90 = and i1 %i.z, %or.cond.not93
-  %7 = fcmp uno float %i.x, 0.000000e+00
-  %or.cond85.not88 = and i1 %7, %or.cond84.not90
-  %8 = fcmp uno float %i.y, 0.000000e+00
-  %or.cond86.not = and i1 %8, %or.cond85.not88
+  %7 = insertelement <4 x float> poison, float %i.w, i64 0
+  %8 = shufflevector <2 x float> %6, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %9 = shufflevector <4 x float> %7, <4 x float> %8, <4 x i32> <i32 0, i32 4, i32 5, i32 poison>
+  %10 = insertelement <4 x float> %9, float %i.x, i64 3
+  %i.z = fcmp uno float %i.y, 0.000000e+00
+  %11 = fcmp ord <4 x float> %10, zeroinitializer
+  %12 = bitcast <4 x i1> %11 to i4
+  %13 = icmp eq i4 %12, 0
+  %or.cond86.not = and i1 %13, %i.z
   %spec.select = zext i1 %or.cond86.not to i32
   br label %bb.k
 

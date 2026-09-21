@@ -205,11 +205,10 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.cb, label %bb.ai, label %bb.ab
 
 bb.ab:                                            ; preds = %.lr.ph
-  %i.cc = fcmp une <2 x float> %i.by, %i.bs       ; 2 uses
-  %4 = extractelement <2 x i1> %i.cc, i64 0       ; 2 uses
-  %5 = extractelement <2 x i1> %i.cc, i64 1       ; 2 uses
-  %or.cond680 = and i1 %5, %4
-  br i1 %or.cond680, label %bb.ac, label %bb.ad
+  %i.cc = fcmp une <2 x float> %i.by, %i.bs       ; 3 uses
+  %4 = bitcast <2 x i1> %i.cc to i2
+  %5 = icmp eq i2 %4, -1
+  br i1 %5, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %bb.ab
   %i.cd = fpext <2 x float> %i.by to <2 x double> ; 2 uses
@@ -219,7 +218,8 @@ bb.ac:                                            ; preds = %bb.ab
   br label %bb.ai
 
 bb.ad:                                            ; preds = %bb.ab
-  br i1 %5, label %bb.ae, label %bb.af
+  %6 = extractelement <2 x i1> %i.cc, i64 1
+  br i1 %6, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
   %i.ch = fpext float %i.ca to double
@@ -227,7 +227,8 @@ bb.ae:                                            ; preds = %bb.ad
   br label %bb.ai
 
 bb.af:                                            ; preds = %bb.ad
-  br i1 %4, label %bb.ag, label %bb.ah
+  %7 = extractelement <2 x i1> %i.cc, i64 0
+  br i1 %7, label %bb.ag, label %bb.ah
 
 bb.ag:                                            ; preds = %bb.af
   %i.cj = fpext float %i.bz to double

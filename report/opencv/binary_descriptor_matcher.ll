@@ -204,15 +204,20 @@ middle.block:                                     ; preds = %vector.body
   %bin.rdx = add <4 x i32> %i.nh, %i.ng
   %i.nj = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
   %cmp.n = icmp eq i64 %i.eq, %n.vec
+  %slprdx.init = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %i.nj, i64 0
   br i1 %cmp.n, label %.preheader.loopexit.i, label %.lr.ph.i116.preheader
 
 .lr.ph.i116.preheader:                            ; preds = %.lr.ph.preheader.i115, %middle.block
   %indvars.iv.i117.ph = phi i64 [ 0, %.lr.ph.preheader.i115 ], [ %i.er, %middle.block ]
-  %.032.i.ph = phi i32 [ 0, %.lr.ph.preheader.i115 ], [ %i.nj, %middle.block ]
+  %slprdx.acc.ph = phi <4 x i32> [ zeroinitializer, %.lr.ph.preheader.i115 ], [ %slprdx.init, %middle.block ]
   br label %.lr.ph.i116
 
-.preheader.loopexit.i:                            ; preds = %.lr.ph.i116, %middle.block
-  %.lcssa = phi i32 [ %i.nj, %middle.block ], [ %op.rdx, %.lr.ph.i116 ]
+.preheader.loopexit.i.loopexit:                   ; preds = %.lr.ph.i116
+  %6 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %slprdx.acc231)
+  br label %.preheader.loopexit.i
+
+.preheader.loopexit.i:                            ; preds = %.preheader.loopexit.i.loopexit, %middle.block
+  %.lcssa = phi i32 [ %i.nj, %middle.block ], [ %6, %.preheader.loopexit.i.loopexit ]
   %i.nk = and i32 %i.en, -16
   %i.nl = add nuw nsw i32 %i.nk, 16
   br label %.preheader.i119
@@ -253,18 +258,17 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.i116:                                      ; preds = %.lr.ph.i116.preheader, %.lr.ph.i116
   %indvars.iv.i117 = phi i64 [ %indvars.iv.next.i118, %.lr.ph.i116 ], [ %indvars.iv.i117.ph, %.lr.ph.i116.preheader ] ; 3 uses
-  %.032.i = phi i32 [ %op.rdx, %.lr.ph.i116 ], [ %.032.i.ph, %.lr.ph.i116.preheader ]
+  %slprdx.acc = phi <4 x i32> [ %slprdx.acc231, %.lr.ph.i116 ], [ %slprdx.acc.ph, %.lr.ph.i116.preheader ]
   %i.nz = getelementptr inbounds nuw i8, ptr %i.em, i64 %indvars.iv.i117
   %i.oa = getelementptr inbounds nuw i8, ptr %3, i64 %indvars.iv.i117
   %i.ob = load <4 x i32>, ptr %i.nz, align 4, !tbaa !46
   %i.oc = load <4 x i32>, ptr %i.oa, align 4, !tbaa !46
   %i.od = xor <4 x i32> %i.oc, %i.ob
   %i.oe = tail call range(i32 0, 33) <4 x i32> @llvm.ctpop.v4i32(<4 x i32> %i.od)
-  %6 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.oe)
-  %op.rdx = add i32 %6, %.032.i                   ; 2 uses
+  %slprdx.acc231 = add <4 x i32> %slprdx.acc, %i.oe ; 2 uses
   %indvars.iv.next.i118 = add nuw nsw i64 %indvars.iv.i117, 16 ; 2 uses
   %.not.i = icmp samesign ugt i64 %indvars.iv.next.i118, %i.eo
-  br i1 %.not.i, label %.preheader.loopexit.i, label %.lr.ph.i116, !llvm.loop !239
+  br i1 %.not.i, label %.preheader.loopexit.i.loopexit, label %.lr.ph.i116, !llvm.loop !239
 
 .lr.ph36.i:                                       ; preds = %.lr.ph36.i.prol.loopexit, %.lr.ph36.i
   %indvars.iv41.i = phi i64 [ %indvars.iv.next42.i.1, %.lr.ph36.i ], [ %indvars.iv41.i.unr, %.lr.ph36.i.prol.loopexit ] ; 4 uses

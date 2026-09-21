@@ -205,12 +205,13 @@ bb.tu:                                            ; preds = %bb.tt
   store float %i.brs, ptr %i.bru, align 4, !tbaa !149
   %i.brv = getelementptr inbounds nuw i8, ptr %i.brt, i64 40
   %i.brw = load float, ptr %i.brv, align 4, !tbaa !149
-  %94 = call float @llvm.fabs.f32(float %i.brw)
-  %or.cond1583 = fcmp olt float %94, 1.000000e+00
-  %95 = call float @llvm.fabs.f32(float %i.brs)
-  %or.cond1584 = fcmp olt float %95, 1.000000e+00
-  %or.cond2404 = and i1 %or.cond1583, %or.cond1584
-  br i1 %or.cond2404, label %bb.tw, label %bb.tv
+  %94 = insertelement <2 x float> poison, float %i.brw, i64 0
+  %95 = insertelement <2 x float> %94, float %i.brs, i64 1
+  %96 = call <2 x float> @llvm.fabs.v2f32(<2 x float> %95)
+  %97 = fcmp uge <2 x float> %96, splat (float 1.000000e+00)
+  %98 = bitcast <2 x i1> %97 to i2
+  %99 = icmp eq i2 %98, 0
+  br i1 %99, label %bb.tw, label %bb.tv
 
 bb.tv:                                            ; preds = %bb.tu
   invoke void @_ZN14WarningHandler8addErrorESt17basic_string_viewIcSt11char_traitsIcEE(ptr noundef nonnull align 8 dereferenceable(64) %6, i64 45, ptr nonnull @.str.517)
@@ -612,6 +613,9 @@ declare <4 x double> @llvm.fmuladd.v4f64(<4 x double>, <4 x double>, <4 x double
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare <4 x float> @llvm.masked.load.v4f32.p0(ptr captures(none), <4 x i1>, <4 x float>) #26
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(read)
 declare <4 x ptr> @llvm.masked.gather.v4p0.v4p0(<4 x ptr>, <4 x i1>, <4 x ptr>) #27

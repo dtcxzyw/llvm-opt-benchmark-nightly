@@ -204,8 +204,8 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a, %adler32_do16_loop.exit31
   %.069 = phi i32 [ %i.w, %adler32_do16_loop.exit31 ], [ %2, %bb.a ]
   %.02268 = phi ptr [ %i.x, %adler32_do16_loop.exit31 ], [ %1, %bb.a ] ; 2 uses
-  %storemerge67 = phi i32 [ %4, %adler32_do16_loop.exit31 ], [ %i.b, %bb.a ]
-  %.04666 = phi i32 [ %3, %adler32_do16_loop.exit31 ], [ %i.a, %bb.a ]
+  %storemerge67 = phi i32 [ %7, %adler32_do16_loop.exit31 ], [ %i.b, %bb.a ]
+  %.04666 = phi i32 [ %6, %adler32_do16_loop.exit31 ], [ %i.a, %bb.a ]
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %.lr.ph
@@ -243,14 +243,17 @@ adler32_do16_loop.exit31:                         ; preds = %bb.b
   %i.z = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.m)
   %i.aa = add i32 %i.y, %storemerge67
   %i.ab = add i32 %i.aa, %i.z
-  %3 = urem i32 %i.v, 65521                       ; 2 uses
-  %4 = urem i32 %i.ab, 65521                      ; 2 uses
+  %3 = insertelement <2 x i32> poison, i32 %i.v, i64 0
+  %4 = insertelement <2 x i32> %3, i32 %i.ab, i64 1
+  %5 = urem <2 x i32> %4, splat (i32 65521)       ; 2 uses
   %i.ac = icmp ugt i32 %i.w, 5551
+  %6 = extractelement <2 x i32> %5, i64 0         ; 2 uses
+  %7 = extractelement <2 x i32> %5, i64 1         ; 2 uses
   br i1 %i.ac, label %.lr.ph, label %._crit_edge, !llvm.loop !3
 
 ._crit_edge:                                      ; preds = %adler32_do16_loop.exit31, %bb.a
-  %.046.lcssa = phi i32 [ %i.a, %bb.a ], [ %3, %adler32_do16_loop.exit31 ] ; 3 uses
-  %storemerge.lcssa = phi i32 [ %i.b, %bb.a ], [ %4, %adler32_do16_loop.exit31 ] ; 3 uses
+  %.046.lcssa = phi i32 [ %i.a, %bb.a ], [ %6, %adler32_do16_loop.exit31 ] ; 3 uses
+  %storemerge.lcssa = phi i32 [ %i.b, %bb.a ], [ %7, %adler32_do16_loop.exit31 ] ; 3 uses
   %.022.lcssa = phi ptr [ %1, %bb.a ], [ %i.x, %adler32_do16_loop.exit31 ] ; 3 uses
   %.0.lcssa = phi i32 [ %2, %bb.a ], [ %i.w, %adler32_do16_loop.exit31 ] ; 5 uses
   %.not = icmp eq i32 %.0.lcssa, 0
@@ -419,8 +422,8 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.i:                                         ; preds = %bb.b, %adler32_do16_loop.exit31.i
   %.069.i = phi i32 [ %i.ad, %adler32_do16_loop.exit31.i ], [ %i.i, %bb.b ]
   %.02268.i = phi ptr [ %i.ae, %adler32_do16_loop.exit31.i ], [ %i.b, %bb.b ] ; 2 uses
-  %storemerge67.i = phi i32 [ %2, %adler32_do16_loop.exit31.i ], [ 0, %bb.b ]
-  %.04666.i = phi i32 [ %1, %adler32_do16_loop.exit31.i ], [ 1, %bb.b ]
+  %storemerge67.i = phi i32 [ %5, %adler32_do16_loop.exit31.i ], [ 0, %bb.b ]
+  %.04666.i = phi i32 [ %4, %adler32_do16_loop.exit31.i ], [ 1, %bb.b ]
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %.lr.ph.i
@@ -458,14 +461,17 @@ adler32_do16_loop.exit31.i:                       ; preds = %bb.c
   %i.ag = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.t)
   %i.ah = add i32 %i.af, %storemerge67.i
   %i.ai = add i32 %i.ah, %i.ag
-  %1 = urem i32 %i.ac, 65521                      ; 2 uses
-  %2 = urem i32 %i.ai, 65521                      ; 2 uses
+  %1 = insertelement <2 x i32> poison, i32 %i.ac, i64 0
+  %2 = insertelement <2 x i32> %1, i32 %i.ai, i64 1
+  %3 = urem <2 x i32> %2, splat (i32 65521)       ; 2 uses
   %i.aj = icmp ugt i32 %i.ad, 5551
+  %4 = extractelement <2 x i32> %3, i64 0         ; 2 uses
+  %5 = extractelement <2 x i32> %3, i64 1         ; 2 uses
   br i1 %i.aj, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !3
 
 ._crit_edge.i:                                    ; preds = %adler32_do16_loop.exit31.i, %bb.b
-  %.046.lcssa.i = phi i32 [ 1, %bb.b ], [ %1, %adler32_do16_loop.exit31.i ] ; 3 uses
-  %storemerge.lcssa.i = phi i32 [ 0, %bb.b ], [ %2, %adler32_do16_loop.exit31.i ] ; 3 uses
+  %.046.lcssa.i = phi i32 [ 1, %bb.b ], [ %4, %adler32_do16_loop.exit31.i ] ; 3 uses
+  %storemerge.lcssa.i = phi i32 [ 0, %bb.b ], [ %5, %adler32_do16_loop.exit31.i ] ; 3 uses
   %.022.lcssa.i = phi ptr [ %i.b, %bb.b ], [ %i.ae, %adler32_do16_loop.exit31.i ] ; 3 uses
   %.0.lcssa.i = phi i32 [ %i.i, %bb.b ], [ %i.ad, %adler32_do16_loop.exit31.i ] ; 5 uses
   %.not.i = icmp eq i32 %.0.lcssa.i, 0
@@ -633,8 +639,8 @@ bb.h:                                             ; preds = %zend_adler32.exit55
 .lr.ph.i81:                                       ; preds = %bb.h, %adler32_do16_loop.exit31.i92
   %.069.i82 = phi i32 [ %i.eo, %adler32_do16_loop.exit31.i92 ], [ %i.dt, %bb.h ]
   %.02268.i83 = phi ptr [ %i.ep, %adler32_do16_loop.exit31.i92 ], [ %i.ds, %bb.h ] ; 2 uses
-  %storemerge67.i84 = phi i32 [ %4, %adler32_do16_loop.exit31.i92 ], [ %i.dq, %bb.h ]
-  %.04666.i85 = phi i32 [ %3, %adler32_do16_loop.exit31.i92 ], [ %i.dr, %bb.h ]
+  %storemerge67.i84 = phi i32 [ %10, %adler32_do16_loop.exit31.i92 ], [ %i.dq, %bb.h ]
+  %.04666.i85 = phi i32 [ %9, %adler32_do16_loop.exit31.i92 ], [ %i.dr, %bb.h ]
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.i, %.lr.ph.i81
@@ -672,14 +678,17 @@ adler32_do16_loop.exit31.i92:                     ; preds = %bb.i
   %i.er = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.ee)
   %i.es = add i32 %i.eq, %storemerge67.i84
   %i.et = add i32 %i.es, %i.er
-  %3 = urem i32 %i.en, 65521                      ; 2 uses
-  %4 = urem i32 %i.et, 65521                      ; 2 uses
+  %6 = insertelement <2 x i32> poison, i32 %i.en, i64 0
+  %7 = insertelement <2 x i32> %6, i32 %i.et, i64 1
+  %8 = urem <2 x i32> %7, splat (i32 65521)       ; 2 uses
   %i.eu = icmp ugt i32 %i.eo, 5551
+  %9 = extractelement <2 x i32> %8, i64 0         ; 2 uses
+  %10 = extractelement <2 x i32> %8, i64 1        ; 2 uses
   br i1 %i.eu, label %.lr.ph.i81, label %._crit_edge.i56, !llvm.loop !3
 
 ._crit_edge.i56:                                  ; preds = %adler32_do16_loop.exit31.i92, %bb.h
-  %.046.lcssa.i57 = phi i32 [ %i.dr, %bb.h ], [ %3, %adler32_do16_loop.exit31.i92 ] ; 3 uses
-  %storemerge.lcssa.i58 = phi i32 [ %i.dq, %bb.h ], [ %4, %adler32_do16_loop.exit31.i92 ] ; 3 uses
+  %.046.lcssa.i57 = phi i32 [ %i.dr, %bb.h ], [ %9, %adler32_do16_loop.exit31.i92 ] ; 3 uses
+  %storemerge.lcssa.i58 = phi i32 [ %i.dq, %bb.h ], [ %10, %adler32_do16_loop.exit31.i92 ] ; 3 uses
   %.022.lcssa.i59 = phi ptr [ %i.ds, %bb.h ], [ %i.ep, %adler32_do16_loop.exit31.i92 ] ; 3 uses
   %.0.lcssa.i60 = phi i32 [ %i.dt, %bb.h ], [ %i.eo, %adler32_do16_loop.exit31.i92 ] ; 5 uses
   %.not.i61 = icmp eq i32 %.0.lcssa.i60, 0

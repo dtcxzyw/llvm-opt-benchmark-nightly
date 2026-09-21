@@ -204,12 +204,11 @@ bb.ag:                                            ; preds = %hsl2rgb.exit.i, %.l
   %i.lc = fadd reassoc nsz arcp contract afn float %i.lb, %i.kl
   %i.ld = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %i.lc, float 0.000000e+00)
   %i.le = tail call reassoc nsz arcp contract afn noundef float @llvm.minnum.f32(float %i.ld, float 1.000000e+00) ; 2 uses
-  %i.lf = fcmp reassoc nsz arcp contract afn une <2 x float> %i.kw, zeroinitializer ; 2 uses
-  %6 = extractelement <2 x i1> %i.lf, i64 0       ; 2 uses
-  %7 = extractelement <2 x i1> %i.lf, i64 1       ; 2 uses
-  %or.cond.i40 = or i1 %6, %7
+  %i.lf = fcmp reassoc nsz arcp contract afn une <2 x float> %i.kw, zeroinitializer ; 3 uses
+  %6 = bitcast <2 x i1> %i.lf to i2
+  %7 = icmp ne i2 %6, 0
   %i.lg = fcmp reassoc nsz arcp contract afn une float %i.le, 0.000000e+00 ; 2 uses
-  %or.cond61.i = or i1 %i.lg, %or.cond.i40
+  %or.cond61.i = or i1 %i.lg, %7
   br i1 %or.cond61.i, label %bb.ah, label %hsl2rgb.exit.i
 
 bb.ah:                                            ; preds = %bb.ag
@@ -294,10 +293,12 @@ bb.as:                                            ; preds = %bb.aq
 rgb2hsl.exit.i41:                                 ; preds = %bb.as, %bb.ar, %bb.ah
   %.1.i.i42 = phi nsz float [ %i.ms, %bb.ar ], [ 0.000000e+00, %bb.ah ], [ %spec.select.i.i52, %bb.as ]
   %.0.i.i43 = phi nsz float [ %i.mc, %bb.ar ], [ 0.000000e+00, %bb.ah ], [ %i.mc, %bb.as ]
+  %8 = extractelement <2 x i1> %i.lf, i64 0
   %i.mv = extractelement <2 x float> %i.kw, i64 0
-  %spec.select.i = select reassoc nsz arcp contract afn i1 %6, float %i.mv, float %.1.i.i42
+  %spec.select.i = select reassoc nsz arcp contract afn i1 %8, float %i.mv, float %.1.i.i42
+  %9 = extractelement <2 x i1> %i.lf, i64 1
   %i.mw = extractelement <2 x float> %i.kw, i64 1
-  %i.mx = select reassoc nsz arcp contract afn i1 %7, float %i.mw, float %.0.i.i43 ; 4 uses
+  %i.mx = select reassoc nsz arcp contract afn i1 %9, float %i.mw, float %.0.i.i43 ; 4 uses
   %i.my = select reassoc nsz arcp contract afn i1 %i.lg, float %i.le, float %i.lt ; 7 uses
   %i.mz = fcmp reassoc nsz arcp contract afn oeq float %i.mx, 0.000000e+00
   br i1 %i.mz, label %hsl2rgb.exit.i, label %bb.at

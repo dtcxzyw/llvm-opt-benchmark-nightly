@@ -204,12 +204,10 @@ bb.hz:                                            ; preds = %bb.hy
   br label %bb.in
 
 bb.ia:                                            ; preds = %bb.hy
-  %i.zt = load i32, ptr %i.qt, align 8, !tbaa !18
-  %11 = add nsw i32 %i.zt, 1                      ; 2 uses
-  %12 = sdiv i32 %11, 2
-  %13 = load i32, ptr %i.un, align 4, !tbaa !19   ; 2 uses
-  %14 = add nsw i32 %13, 1
-  %15 = sdiv i32 %14, 2                           ; 2 uses
+  %i.zt = load i32, ptr %i.un, align 4, !tbaa !19
+  %11 = load <2 x i32>, ptr %i.qt, align 8, !tbaa !12
+  %12 = add nsw <2 x i32> %11, splat (i32 1)      ; 2 uses
+  %13 = sdiv <2 x i32> %12, splat (i32 2)         ; 2 uses
   %i.zu = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.zv = load ptr, ptr %i.zu, align 8, !tbaa !78
   %i.zw = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -227,7 +225,9 @@ bb.ia:                                            ; preds = %bb.hy
   br i1 %i.aae, label %DumpPicture.exit.thread, label %bb.ib
 
 bb.ib:                                            ; preds = %bb.ia
-  %i.aaf = and i32 %11, -2
+  %14 = extractelement <2 x i32> %12, i64 0
+  %i.aaf = and i32 %14, -2
+  %15 = extractelement <2 x i32> %13, i64 1       ; 2 uses
   %i.aag = add i32 %.pre.i, %15
   %i.aah = add i32 %i.aag, %spec.select.i
   %i.aai = call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %i.aad, ptr noundef nonnull @.str.197, i32 noundef %i.aaf, i32 noundef %i.aah) #11 ; 0 uses
@@ -240,11 +240,12 @@ bb.ib:                                            ; preds = %bb.ia
   br label %bb.ic
 
 .preheader65.i:                                   ; preds = %bb.if, %bb.ib
-  %i.aam = icmp sgt i32 %13, 0
+  %i.aam = icmp sgt i32 %i.zt, 0
   br i1 %i.aam, label %.lr.ph73.i, label %.preheader.i
 
 .lr.ph73.i:                                       ; preds = %.preheader65.i
-  %i.aan = sext i32 %12 to i64                    ; 2 uses
+  %16 = extractelement <2 x i32> %13, i64 0
+  %i.aan = sext i32 %16 to i64                    ; 2 uses
   %i.aao = getelementptr inbounds nuw i8, ptr %2, i64 44
   %smax.i = call i32 @llvm.smax.i32(i32 %15, i32 1)
   br label %bb.ig

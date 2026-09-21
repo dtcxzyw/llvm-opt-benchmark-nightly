@@ -48,7 +48,7 @@ bb.d:                                             ; preds = %bb.c
 __ocml_scalb_f16.exit:                            ; preds = %bb.c, %bb.d
   %.0.i = phi half [ %i.l, %bb.c ], [ %i.y, %bb.d ]
   %i.z = extractelement <2 x half> %0, i64 1      ; 4 uses
-  %i.aa = extractelement <2 x half> %1, i64 1     ; 4 uses
+  %i.aa = extractelement <2 x half> %1, i64 1     ; 3 uses
   %i.ab = tail call nsz half @llvm.maxnum.f16(half %i.aa, half -6.400000e+01)
   %i.ac = tail call nsz half @llvm.minnum.f16(half %i.ab, half 6.400000e+01) ; 2 uses
   %i.ad = tail call half @llvm.floor.f16(half %i.ac) ; 2 uses
@@ -74,10 +74,11 @@ bb.g:                                             ; preds = %bb.f
   %i.ao = and i1 %i.am, %i.an
   %i.ap = or i1 %i.al, %i.ao
   %i.aq = tail call half @llvm.fabs.f16(half %i.z)
-  %2 = fcmp oeq half %i.aq, +inf
-  %3 = fcmp oeq half %i.aa, -inf
-  %4 = and i1 %2, %3
-  %i.ar = or i1 %4, %i.ap
+  %2 = insertelement <2 x half> %1, half %i.aq, i64 0
+  %3 = fcmp une <2 x half> %2, <half +inf, half -inf>
+  %4 = bitcast <2 x i1> %3 to i2
+  %5 = icmp eq i2 %4, 0
+  %i.ar = or i1 %5, %i.ap
   %i.as = select i1 %i.ar, half +qnan, half %i.ak
   br label %__ocml_scalb_f16.exit6
 

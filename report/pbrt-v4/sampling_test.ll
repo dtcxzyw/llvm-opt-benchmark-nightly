@@ -205,11 +205,10 @@ bb.f:                                             ; preds = %bb.f, %.preheader.u
   %i.ha = sitofp <2 x i32> %i.gz to <2 x float>
   %i.hb = fmul <2 x float> %i.gv, %i.ha           ; 3 uses
   %i.hc = fptosi <2 x float> %i.hb to <2 x i32>   ; 7 uses
-  %i.hd = icmp eq <2 x i32> %i.hc, zeroinitializer ; 2 uses
-  %8 = extractelement <2 x i1> %i.hd, i64 0       ; 2 uses
-  %9 = extractelement <2 x i1> %i.hd, i64 1       ; 2 uses
-  %or.cond.i.i = or i1 %8, %9
-  br i1 %or.cond.i.i, label %_ZNK4pbrt15SummedAreaTable9LookupIntEii.exit.i, label %bb.g
+  %i.hd = icmp eq <2 x i32> %i.hc, zeroinitializer ; 3 uses
+  %8 = bitcast <2 x i1> %i.hd to i2
+  %.not = icmp eq i2 %8, 0
+  br i1 %.not, label %bb.g, label %_ZNK4pbrt15SummedAreaTable9LookupIntEii.exit.i
 
 bb.g:                                             ; preds = %._crit_edge121
   %i.he = extractelement <2 x i32> %i.hc, i64 0
@@ -239,6 +238,7 @@ _ZNK4pbrt15SummedAreaTable9LookupIntEii.exit.i:   ; preds = %bb.g, %._crit_edge1
   %i.hx = extractelement <2 x i32> %i.hc, i64 0   ; 2 uses
   %i.hy = add nsw i32 %i.hx, 1                    ; 3 uses
   %i.hz = icmp eq i32 %i.hy, 0                    ; 2 uses
+  %9 = extractelement <2 x i1> %i.hd, i64 1
   %or.cond.i28.i = or i1 %i.hz, %9
   br i1 %or.cond.i28.i, label %_ZNK4pbrt15SummedAreaTable9LookupIntEii.exit31.i, label %bb.h
 
@@ -268,7 +268,8 @@ _ZNK4pbrt15SummedAreaTable9LookupIntEii.exit31.i: ; preds = %bb.h, %_ZNK4pbrt15S
   %.0.i30.i = phi float [ %i.ir, %bb.h ], [ 0.000000e+00, %_ZNK4pbrt15SummedAreaTable9LookupIntEii.exit.i ]
   %i.is = extractelement <2 x i32> %i.hc, i64 1   ; 3 uses
   %i.it = icmp eq i32 %i.is, -1                   ; 2 uses
-  %or.cond.i32.i = or i1 %8, %i.it
+  %10 = extractelement <2 x i1> %i.hd, i64 0
+  %or.cond.i32.i = or i1 %10, %i.it
   br i1 %or.cond.i32.i, label %_ZNK4pbrt15SummedAreaTable9LookupIntEii.exit35.i, label %bb.i
 
 bb.i:                                             ; preds = %_ZNK4pbrt15SummedAreaTable9LookupIntEii.exit31.i

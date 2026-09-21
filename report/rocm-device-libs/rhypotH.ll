@@ -9,8 +9,8 @@ target triple = "amdgpu-amd-amdhsa"
 ; Function Attrs: convergent mustprogress nofree norecurse nounwind willreturn denormal_fpenv(dynamic) memory(none) uwtable
 define hidden <2 x half> @__ocml_rhypot_2f16(<2 x half> noundef %0, <2 x half> noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = extractelement <2 x half> %0, i64 0      ; 2 uses
-  %i.b = extractelement <2 x half> %1, i64 0      ; 2 uses
+  %i.a = extractelement <2 x half> %0, i64 0
+  %i.b = extractelement <2 x half> %1, i64 0
   %i.c = fpext half %i.a to float                 ; 2 uses
   %i.d = fpext half %i.b to float                 ; 2 uses
   %i.e = fmul float %i.d, %i.d
@@ -22,18 +22,18 @@ bb.a:
   br i1 %i.j, label %__ocml_rhypot_f16.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = tail call half @llvm.fabs.f16(half %i.a)
-  %3 = fcmp oeq half %2, +inf
-  %4 = tail call half @llvm.fabs.f16(half %i.b)
-  %5 = fcmp oeq half %4, +inf
-  %6 = or i1 %3, %5
-  %i.k = select i1 %6, half 0.000000e+00, half %i.h
+  %2 = shufflevector <2 x half> %0, <2 x half> %1, <2 x i32> <i32 0, i32 2>
+  %3 = tail call <2 x half> @llvm.fabs.v2f16(<2 x half> %2)
+  %4 = fcmp oeq <2 x half> %3, splat (half +inf)
+  %5 = bitcast <2 x i1> %4 to i2
+  %.not = icmp eq i2 %5, 0
+  %i.k = select i1 %.not, half %i.h, half 0.000000e+00
   br label %__ocml_rhypot_f16.exit
 
 __ocml_rhypot_f16.exit:                           ; preds = %bb.a, %bb.b
   %.0.i = phi half [ %i.h, %bb.a ], [ %i.k, %bb.b ]
-  %i.l = extractelement <2 x half> %0, i64 1      ; 2 uses
-  %i.m = extractelement <2 x half> %1, i64 1      ; 2 uses
+  %i.l = extractelement <2 x half> %0, i64 1
+  %i.m = extractelement <2 x half> %1, i64 1
   %i.n = fpext half %i.l to float                 ; 2 uses
   %i.o = fpext half %i.m to float                 ; 2 uses
   %i.p = fmul float %i.o, %i.o
@@ -43,12 +43,12 @@ __ocml_rhypot_f16.exit:                           ; preds = %bb.a, %bb.b
   br i1 %i.j, label %__ocml_rhypot_f16.exit6, label %bb.c
 
 bb.c:                                             ; preds = %__ocml_rhypot_f16.exit
-  %7 = tail call half @llvm.fabs.f16(half %i.l)
-  %8 = fcmp oeq half %7, +inf
-  %9 = tail call half @llvm.fabs.f16(half %i.m)
-  %10 = fcmp oeq half %9, +inf
-  %11 = or i1 %8, %10
-  %i.t = select i1 %11, half 0.000000e+00, half %i.s
+  %6 = shufflevector <2 x half> %0, <2 x half> %1, <2 x i32> <i32 1, i32 3>
+  %7 = tail call <2 x half> @llvm.fabs.v2f16(<2 x half> %6)
+  %8 = fcmp oeq <2 x half> %7, splat (half +inf)
+  %9 = bitcast <2 x i1> %8 to i2
+  %.not7 = icmp eq i2 %9, 0
+  %i.t = select i1 %.not7, half %i.s, half 0.000000e+00
   br label %__ocml_rhypot_f16.exit6
 
 __ocml_rhypot_f16.exit6:                          ; preds = %__ocml_rhypot_f16.exit, %bb.c
@@ -72,12 +72,13 @@ bb.a:
   br i1 %i.h, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = tail call half @llvm.fabs.f16(half %0)
-  %3 = fcmp oeq half %2, +inf
-  %4 = tail call half @llvm.fabs.f16(half %1)
-  %5 = fcmp oeq half %4, +inf
-  %6 = or i1 %3, %5
-  %i.i = select i1 %6, half 0.000000e+00, half %i.f
+  %2 = insertelement <2 x half> poison, half %0, i64 0
+  %3 = insertelement <2 x half> %2, half %1, i64 1
+  %4 = tail call <2 x half> @llvm.fabs.v2f16(<2 x half> %3)
+  %5 = fcmp oeq <2 x half> %4, splat (half +inf)
+  %6 = bitcast <2 x i1> %5 to i2
+  %.not = icmp eq i2 %6, 0
+  %i.i = select i1 %.not, half %i.f, half 0.000000e+00
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -92,7 +93,7 @@ declare float @__ocml_fmuladd_f32(float noundef, float noundef, float noundef) l
 declare float @llvm.amdgcn.rsq.f32(float) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare half @llvm.fabs.f16(half) #2
+declare <2 x half> @llvm.fabs.v2f16(<2 x half>) #2
 
 attributes #0 = { convergent mustprogress nofree norecurse nounwind willreturn denormal_fpenv(dynamic) memory(none) uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" }
 attributes #1 = { convergent mustprogress nofree nounwind willreturn denormal_fpenv(dynamic) memory(none) "no-trapping-math"="true" "stack-protector-buffer-size"="8" }

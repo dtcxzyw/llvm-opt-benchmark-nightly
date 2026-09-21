@@ -110,7 +110,7 @@ declare i32 @OPENSSL_tm_to_posix(ptr noundef, ptr noundef) local_unnamed_addr #2
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define noundef zeroext i1 @_ZN4bssl3der21EncodeGeneralizedTimeERKNS0_15GeneralizedTimeEPh(ptr nofree noundef nonnull readonly align 2 captures(none) dereferenceable(8) %0, ptr nofree noundef writeonly captures(none) %1) local_unnamed_addr #3 {
 bb.a:
-  %i.a = load i16, ptr %0, align 2, !tbaa !18     ; 5 uses
+  %i.a = load i16, ptr %0, align 2, !tbaa !18     ; 4 uses
   %i.b = icmp ult i16 %i.a, 10000
   br i1 %i.b, label %bb.b, label %_ZN4bssl3der12_GLOBAL__N_114WriteFourDigitEtPh.exit
 
@@ -126,15 +126,18 @@ bb.b:                                             ; preds = %bb.a
   %i.j = or disjoint i8 %i.i, 48
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 2
   store i8 %i.j, ptr %i.k, align 1, !tbaa !29
-  %2 = udiv i16 %i.a, 100
-  %.lhs.trunc.i = trunc nuw nsw i16 %2 to i8
+  %2 = insertelement <2 x i16> poison, i16 %i.a, i64 0
+  %3 = shufflevector <2 x i16> %2, <2 x i16> poison, <2 x i32> zeroinitializer
+  %4 = udiv <2 x i16> %3, <i16 100, i16 1000>     ; 2 uses
+  %5 = bitcast <2 x i16> %4 to <4 x i8>
+  %.lhs.trunc.i = extractelement <4 x i8> %5, i64 0
   %i.l = urem i8 %.lhs.trunc.i, 10
   %i.m = or disjoint i8 %i.l, 48
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 1
   store i8 %i.m, ptr %i.n, align 1, !tbaa !29
-  %3 = udiv i16 %i.a, 1000
-  %4 = trunc nuw nsw i16 %3 to i8
-  %i.o = add nuw nsw i8 %4, 48
+  %6 = bitcast <2 x i16> %4 to <4 x i8>
+  %7 = extractelement <4 x i8> %6, i64 2
+  %i.o = add nuw nsw i8 %7, 48
   store i8 %i.o, ptr %1, align 1, !tbaa !29
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 2
   %i.q = load i8, ptr %i.p, align 2, !tbaa !20    ; 3 uses

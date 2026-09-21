@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.b, %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph585, %bb.bt
-  %.sroa.0518.0583 = phi ptr [ %.sroa.0518.0579, %.lr.ph585 ], [ %.sroa.0518.0, %bb.bt ] ; 21 uses
+  %.sroa.0518.0583 = phi ptr [ %.sroa.0518.0579, %.lr.ph585 ], [ %.sroa.0518.0, %bb.bt ] ; 20 uses
   %.2582 = phi i32 [ %.1, %.lr.ph585 ], [ %.4, %bb.bt ] ; 5 uses
   %.0237581 = phi i32 [ 0, %.lr.ph585 ], [ %.1238, %bb.bt ] ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.sroa.0518.0583, i64 16 ; 2 uses
@@ -338,43 +338,42 @@ _ZN8aiString3SetERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit: ; 
 
 bb.s:                                             ; preds = %_ZN8aiString3SetERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
   %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.0518.0583, i64 24 ; 2 uses
-  %i.bj = load float, ptr %i.bi, align 8
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.0518.0583, i64 32 ; 2 uses
+  %i.bj = load float, ptr %4, align 8
   %i.bk = fmul float %i.bj, 1.000000e+02
   %i.bl = fptosi float %i.bk to i32
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.0518.0583, i64 28
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.0518.0583, i64 32
-  %6 = srem i32 %i.bl, 360                        ; 7 uses
-  %i.bm = load <2 x float>, ptr %4, align 4
+  %i.bm = load <2 x float>, ptr %i.bi, align 8
   %i.bn = fmul <2 x float> %i.bm, splat (float 1.000000e+02)
   %i.bo = fptosi <2 x float> %i.bn to <2 x i32>
-  %i.bp = srem <2 x i32> %i.bo, splat (i32 360)   ; 2 uses
-  %i.bq = extractelement <2 x i32> %i.bp, i64 1   ; 9 uses
-  %i.br = extractelement <2 x i32> %i.bp, i64 0   ; 9 uses
-  %i.bs = mul nsw i32 %i.br, %6
+  %i.bp = srem <2 x i32> %i.bo, splat (i32 360)   ; 3 uses
+  %5 = srem i32 %i.bl, 360                        ; 9 uses
+  %i.bq = extractelement <2 x i32> %i.bp, i64 0   ; 6 uses
+  %i.br = extractelement <2 x i32> %i.bp, i64 1   ; 8 uses
+  %i.bs = mul nsw i32 %i.br, %i.bq
   %.not262 = icmp eq i32 %i.bs, 0
-  %i.bt = mul nsw i32 %i.bq, %i.br
+  %i.bt = mul nsw i32 %5, %i.br
   %.not263 = icmp eq i32 %i.bt, 0
   %or.cond = select i1 %.not262, i1 true, i1 %.not263
   br i1 %or.cond, label %_Z20FindSuitableMultipleRi.exit276, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %i.bu = icmp slt i32 %6, 3
+  %i.bu = icmp slt i32 %i.bq, 3
   br i1 %i.bu, label %_Z20FindSuitableMultipleRi.exit, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.bv = icmp samesign ult i32 %6, 10
+  %i.bv = icmp samesign ult i32 %i.bq, 10
   br i1 %i.bv, label %_Z20FindSuitableMultipleRi.exit, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.bw = icmp samesign ult i32 %6, 20
+  %i.bw = icmp samesign ult i32 %i.bq, 20
   br i1 %i.bw, label %_Z20FindSuitableMultipleRi.exit, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %spec.select = tail call i32 @llvm.umax.i32(i32 %6, i32 30)
+  %spec.select = tail call i32 @llvm.umax.i32(i32 %i.bq, i32 30)
   br label %_Z20FindSuitableMultipleRi.exit
 
 _Z20FindSuitableMultipleRi.exit:                  ; preds = %bb.w, %bb.t, %bb.u, %bb.v
-  %.sroa.0478.1 = phi i32 [ %spec.select, %bb.w ], [ 3, %bb.t ], [ 20, %bb.v ], [ 10, %bb.u ] ; 4 uses
+  %.sroa.0478.1 = phi i32 [ %spec.select, %bb.w ], [ 3, %bb.t ], [ 20, %bb.v ], [ 10, %bb.u ]
   %i.bx = icmp slt i32 %i.br, 3
   br i1 %i.bx, label %_Z20FindSuitableMultipleRi.exit273, label %bb.x
 
@@ -391,34 +390,36 @@ bb.z:                                             ; preds = %bb.y
   br label %_Z20FindSuitableMultipleRi.exit273
 
 _Z20FindSuitableMultipleRi.exit273:               ; preds = %bb.z, %_Z20FindSuitableMultipleRi.exit, %bb.x, %bb.y
-  %.sroa.10483.1 = phi i32 [ %spec.select549, %bb.z ], [ 3, %_Z20FindSuitableMultipleRi.exit ], [ 20, %bb.y ], [ 10, %bb.x ] ; 4 uses
-  %i.ca = icmp slt i32 %i.bq, 3
+  %.sroa.10483.1 = phi i32 [ %spec.select549, %bb.z ], [ 3, %_Z20FindSuitableMultipleRi.exit ], [ 20, %bb.y ], [ 10, %bb.x ]
+  %i.ca = icmp slt i32 %5, 3
+  %6 = insertelement <2 x i32> poison, i32 %.sroa.0478.1, i64 0
+  %7 = insertelement <2 x i32> %6, i32 %.sroa.10483.1, i64 1 ; 4 uses
   br i1 %i.ca, label %_Z20FindSuitableMultipleRi.exit276.thread, label %bb.aa
 
 bb.aa:                                            ; preds = %_Z20FindSuitableMultipleRi.exit273
-  %i.cb = icmp samesign ult i32 %i.bq, 10
+  %i.cb = icmp samesign ult i32 %5, 10
   br i1 %i.cb, label %_Z20FindSuitableMultipleRi.exit276.thread, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.cc = icmp samesign ult i32 %i.bq, 20
+  %i.cc = icmp samesign ult i32 %5, 20
   br i1 %i.cc, label %_Z20FindSuitableMultipleRi.exit276.thread, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %spec.select550 = tail call i32 @llvm.umax.i32(i32 %i.bq, i32 30)
+  %spec.select550 = tail call i32 @llvm.umax.i32(i32 %5, i32 30)
   br label %_Z20FindSuitableMultipleRi.exit276.thread
 
 _Z20FindSuitableMultipleRi.exit276:               ; preds = %bb.s
-  %.not264 = icmp eq i32 %6, 0
+  %.not264 = icmp eq i32 %i.bq, 0
   br i1 %.not264, label %.thread, label %_Z20FindSuitableMultipleRi.exit276.thread
 
 _Z20FindSuitableMultipleRi.exit276.thread:        ; preds = %bb.ac, %bb.ab, %bb.aa, %_Z20FindSuitableMultipleRi.exit273, %_Z20FindSuitableMultipleRi.exit276
-  %.sroa.18.0541 = phi i32 [ %i.bq, %_Z20FindSuitableMultipleRi.exit276 ], [ %spec.select550, %bb.ac ], [ 10, %bb.aa ], [ 20, %bb.ab ], [ 3, %_Z20FindSuitableMultipleRi.exit273 ] ; 3 uses
-  %.sroa.10483.0538 = phi i32 [ %i.br, %_Z20FindSuitableMultipleRi.exit276 ], [ %.sroa.10483.1, %bb.ac ], [ %.sroa.10483.1, %bb.aa ], [ %.sroa.10483.1, %bb.ab ], [ %.sroa.10483.1, %_Z20FindSuitableMultipleRi.exit273 ] ; 4 uses
-  %.sroa.0478.0536 = phi i32 [ %6, %_Z20FindSuitableMultipleRi.exit276 ], [ %.sroa.0478.1, %bb.ac ], [ %.sroa.0478.1, %bb.aa ], [ %.sroa.0478.1, %bb.ab ], [ %.sroa.0478.1, %_Z20FindSuitableMultipleRi.exit273 ] ; 3 uses
+  %.sroa.18.0541 = phi i32 [ %5, %_Z20FindSuitableMultipleRi.exit276 ], [ %spec.select550, %bb.ac ], [ 10, %bb.aa ], [ 20, %bb.ab ], [ 3, %_Z20FindSuitableMultipleRi.exit273 ] ; 3 uses
+  %8 = phi <2 x i32> [ %i.bp, %_Z20FindSuitableMultipleRi.exit276 ], [ %7, %bb.ac ], [ %7, %bb.aa ], [ %7, %bb.ab ], [ %7, %_Z20FindSuitableMultipleRi.exit273 ] ; 2 uses
+  %9 = extractelement <2 x i32> %8, i64 0         ; 3 uses
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.ad, %_Z20FindSuitableMultipleRi.exit276.thread
-  %.013.i.i = phi i32 [ %i.cd, %bb.ad ], [ %.sroa.0478.0536, %_Z20FindSuitableMultipleRi.exit276.thread ]
+  %.013.i.i = phi i32 [ %i.cd, %bb.ad ], [ %9, %_Z20FindSuitableMultipleRi.exit276.thread ]
   %.0912.i.i = phi i32 [ %i.cf, %bb.ad ], [ 360, %_Z20FindSuitableMultipleRi.exit276.thread ] ; 3 uses
   %i.cd = srem i32 %.013.i.i, %.0912.i.i          ; 4 uses
   %i.ce = icmp eq i32 %i.cd, 0
@@ -432,9 +433,10 @@ bb.ad:                                            ; preds = %.lr.ph.i.i
 bb.ae:                                            ; preds = %bb.ad, %.lr.ph.i.i
   %.010.i11.i = phi i32 [ %.0912.i.i, %.lr.ph.i.i ], [ %i.cd, %bb.ad ]
   %i.ch = sdiv i32 360, %.010.i11.i
-  %i.ci = mul nsw i32 %i.ch, %.sroa.0478.0536     ; 3 uses
-  %i.cj = sitofp i32 %.sroa.0478.0536 to float    ; 3 uses
-  %.not265 = icmp eq i32 %.sroa.10483.0538, 0
+  %i.ci = mul nsw i32 %i.ch, %9                   ; 3 uses
+  %i.cj = sitofp i32 %9 to float                  ; 3 uses
+  %10 = extractelement <2 x i32> %8, i64 1        ; 4 uses
+  %.not265 = icmp eq i32 %10, 0
   br i1 %.not265, label %bb.ah, label %bb.af
 
 .thread:                                          ; preds = %_Z20FindSuitableMultipleRi.exit276
@@ -447,8 +449,8 @@ bb.af:                                            ; preds = %bb.ae
 
 .lr.ph.i.i277.preheader:                          ; preds = %.thread, %bb.af
   %.not264545642669 = phi i1 [ false, %bb.af ], [ true, %.thread ] ; 2 uses
-  %.sroa.18.0542644667 = phi i32 [ %.sroa.18.0541, %bb.af ], [ %i.bq, %.thread ] ; 2 uses
-  %.sroa.10483.0539646665 = phi i32 [ %.sroa.10483.0538, %bb.af ], [ %i.br, %.thread ] ; 3 uses
+  %.sroa.18.0542644667 = phi i32 [ %.sroa.18.0541, %bb.af ], [ %5, %.thread ] ; 2 uses
+  %.sroa.10483.0539646665 = phi i32 [ %10, %bb.af ], [ %i.br, %.thread ] ; 3 uses
   %.sroa.0478.0537647663 = phi float [ %i.cj, %bb.af ], [ 0.000000e+00, %.thread ] ; 2 uses
   %.0240649661 = phi i32 [ %i.ci, %bb.af ], [ 360, %.thread ] ; 3 uses
   br label %.lr.ph.i.i277
@@ -468,10 +470,10 @@ bb.ag:                                            ; preds = %.lr.ph.i.i277
 _ZN6Assimp4Math3lcmIiEET_S2_S2_.exit285:          ; preds = %.lr.ph.i.i277, %bb.ag, %bb.af
   %.not264545642670 = phi i1 [ false, %bb.af ], [ %.not264545642669, %bb.ag ], [ %.not264545642669, %.lr.ph.i.i277 ]
   %.sroa.18.0542644668 = phi i32 [ %.sroa.18.0541, %bb.af ], [ %.sroa.18.0542644667, %bb.ag ], [ %.sroa.18.0542644667, %.lr.ph.i.i277 ]
-  %.sroa.10483.0539646666 = phi i32 [ %.sroa.10483.0538, %bb.af ], [ %.sroa.10483.0539646665, %bb.ag ], [ %.sroa.10483.0539646665, %.lr.ph.i.i277 ] ; 2 uses
+  %.sroa.10483.0539646666 = phi i32 [ %10, %bb.af ], [ %.sroa.10483.0539646665, %bb.ag ], [ %.sroa.10483.0539646665, %.lr.ph.i.i277 ] ; 2 uses
   %.sroa.0478.0537647664 = phi float [ %i.cj, %bb.af ], [ %.sroa.0478.0537647663, %bb.ag ], [ %.sroa.0478.0537647663, %.lr.ph.i.i277 ]
   %.0240649662 = phi i32 [ 0, %bb.af ], [ %.0240649661, %bb.ag ], [ %.0240649661, %.lr.ph.i.i277 ]
-  %.010.i11.i283 = phi i32 [ %.sroa.10483.0538, %bb.af ], [ %.0912.i.i279, %.lr.ph.i.i277 ], [ %i.cl, %bb.ag ]
+  %.010.i11.i283 = phi i32 [ %10, %bb.af ], [ %.0912.i.i279, %.lr.ph.i.i277 ], [ %i.cl, %bb.ag ]
   %i.cp = sdiv i32 %.0240649662, %.010.i11.i283
   %i.cq = mul nsw i32 %i.cp, %.sroa.10483.0539646666
   %i.cr = sitofp i32 %.sroa.10483.0539646666 to float
@@ -488,7 +490,7 @@ bb.ah:                                            ; preds = %_ZN6Assimp4Math3lcm
   br i1 %.not266, label %bb.ak, label %bb.ai
 
 .thread671:                                       ; preds = %.thread
-  %.not266678 = icmp eq i32 %i.bq, 0
+  %.not266678 = icmp eq i32 %5, 0
   br i1 %.not266678, label %.loopexit553, label %.lr.ph.i.i286.preheader
 
 bb.ai:                                            ; preds = %bb.ah
@@ -498,7 +500,7 @@ bb.ai:                                            ; preds = %bb.ah
 .lr.ph.i.i286.preheader:                          ; preds = %.thread671, %bb.ai
   %.not265651679711 = phi i1 [ %.not265651, %bb.ai ], [ true, %.thread671 ] ; 2 uses
   %.sroa.0478.0537648681709 = phi float [ %.sroa.0478.0537648, %bb.ai ], [ 0.000000e+00, %.thread671 ] ; 2 uses
-  %.sroa.18.0542645683707 = phi i32 [ %.sroa.18.0542645, %bb.ai ], [ %i.bq, %.thread671 ] ; 3 uses
+  %.sroa.18.0542645683707 = phi i32 [ %.sroa.18.0542645, %bb.ai ], [ %5, %.thread671 ] ; 3 uses
   %.not264545643684705 = phi i1 [ %.not264545643, %bb.ai ], [ true, %.thread671 ] ; 2 uses
   %.sroa.10483.0540686703 = phi float [ %.sroa.10483.0540, %bb.ai ], [ 0.000000e+00, %.thread671 ] ; 2 uses
   %.1241688701 = phi i32 [ %.1241, %bb.ai ], [ 360, %.thread671 ] ; 3 uses
@@ -716,7 +718,7 @@ bb.aq:                                            ; preds = %bb.ap
   store double %i.gp, ptr %i.fd, align 8
   %i.gq = load <2 x float>, ptr %i.bi, align 8
   %i.gr = fadd <2 x float> %i.fb, %i.gq
-  %i.gs = load float, ptr %5, align 8
+  %i.gs = load float, ptr %4, align 8
   %i.gt = fadd float %.sroa.10.0574, %i.gs
   %indvars.iv.next605 = add nuw nsw i64 %indvars.iv604, 1 ; 2 uses
   %i.gu = load i32, ptr %i.dl, align 8

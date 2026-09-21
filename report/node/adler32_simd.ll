@@ -17,8 +17,8 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %bb.c
   %.0139 = phi ptr [ %scevgep159, %bb.c ], [ %1, %bb.a ] ; 2 uses
-  %.0112138 = phi i32 [ %4, %bb.c ], [ %i.a, %bb.a ] ; 2 uses
-  %.0116137 = phi i32 [ %5, %bb.c ], [ %i.b, %bb.a ]
+  %.0112138 = phi i32 [ %12, %bb.c ], [ %i.a, %bb.a ] ; 2 uses
+  %.0116137 = phi i32 [ %13, %bb.c ], [ %i.b, %bb.a ]
   %.0125136 = phi i64 [ %i.aa, %bb.c ], [ %i.c, %bb.a ] ; 2 uses
   %spec.select131 = tail call i64 @llvm.umin.i64(i64 %.0125136, i64 173) ; 3 uses
   %spec.select = trunc nuw nsw i64 %spec.select131 to i32 ; 2 uses
@@ -59,18 +59,26 @@ bb.c:                                             ; preds = %bb.b
   %i.ab = shl nuw nsw i64 %spec.select131, 5
   %scevgep159 = getelementptr i8, ptr %.0139, i64 %i.ab ; 2 uses
   %i.ac = shl <4 x i32> %i.l, splat (i32 5)
-  %i.ad = add <4 x i32> %i.x, %i.ac
+  %i.ad = add <4 x i32> %i.x, %i.ac               ; 4 uses
   %i.ae = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.u)
   %i.af = add i32 %i.ae, %.0112138
-  %3 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.ad)
-  %4 = urem i32 %i.af, 65521                      ; 2 uses
-  %5 = urem i32 %3, 65521                         ; 2 uses
+  %3 = shufflevector <4 x i32> %i.ad, <4 x i32> poison, <2 x i32> <i32 poison, i32 3>
+  %4 = shufflevector <4 x i32> %i.ad, <4 x i32> poison, <2 x i32> <i32 poison, i32 2>
+  %5 = add <2 x i32> %3, %4
+  %6 = shufflevector <4 x i32> %i.ad, <4 x i32> poison, <2 x i32> <i32 poison, i32 1>
+  %7 = shufflevector <4 x i32> %i.ad, <4 x i32> poison, <2 x i32> <i32 poison, i32 0>
+  %8 = add <2 x i32> %6, %7
+  %9 = add <2 x i32> %5, %8
+  %10 = insertelement <2 x i32> %9, i32 %i.af, i64 0
+  %11 = urem <2 x i32> %10, splat (i32 65521)     ; 2 uses
   %.not = icmp eq i64 %i.aa, 0
+  %12 = extractelement <2 x i32> %11, i64 0       ; 2 uses
+  %13 = extractelement <2 x i32> %11, i64 1       ; 2 uses
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !11
 
 ._crit_edge:                                      ; preds = %bb.c, %bb.a
-  %.0116.lcssa = phi i32 [ %i.b, %bb.a ], [ %5, %bb.c ] ; 3 uses
-  %.0112.lcssa = phi i32 [ %i.a, %bb.a ], [ %4, %bb.c ] ; 3 uses
+  %.0116.lcssa = phi i32 [ %i.b, %bb.a ], [ %13, %bb.c ] ; 3 uses
+  %.0112.lcssa = phi i32 [ %i.a, %bb.a ], [ %12, %bb.c ] ; 3 uses
   %.0.lcssa = phi ptr [ %1, %bb.a ], [ %scevgep159, %bb.c ] ; 18 uses
   %.not127 = icmp eq i64 %i.d, 0
   br i1 %.not127, label %bb.f, label %bb.d

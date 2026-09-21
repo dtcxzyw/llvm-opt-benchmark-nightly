@@ -139,14 +139,15 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define i24 @lv_color_hsv_to_rgb(i16 noundef zeroext %0, i8 noundef zeroext %1, i8 noundef zeroext %2) local_unnamed_addr #1 {
 bb.a:
-  %3 = zext i8 %1 to i16
-  %4 = mul nuw nsw i16 %3, 51
-  %5 = udiv i16 %4, 20
-  %6 = zext i8 %2 to i16
-  %7 = mul nuw nsw i16 %6, 51
-  %8 = udiv i16 %7, 20                            ; 3 uses
+  %3 = insertelement <2 x i8> poison, i8 %1, i64 0
+  %4 = insertelement <2 x i8> %3, i8 %2, i64 1
+  %5 = zext <2 x i8> %4 to <2 x i16>
+  %6 = mul nuw nsw <2 x i16> %5, splat (i16 51)
+  %7 = udiv <2 x i16> %6, splat (i16 20)          ; 2 uses
+  %8 = extractelement <2 x i16> %7, i64 1         ; 3 uses
   %i.a = trunc i16 %8 to i8                       ; 6 uses
-  %i.b = and i16 %5, 255                          ; 3 uses
+  %9 = extractelement <2 x i16> %7, i64 0
+  %i.b = and i16 %9, 255                          ; 3 uses
   %i.c = icmp eq i16 %i.b, 0
   br i1 %i.c, label %bb.b, label %bb.c
 

@@ -205,10 +205,11 @@ bb.o:                                             ; preds = %bb.m
 
 bb.p:                                             ; preds = %bb.o, %bb.n
   %i.md = phi <2 x i32> [ %i.ma, %bb.n ], [ %i.mc, %bb.o ] ; 4 uses
-  %i.me = icmp sle <2 x i32> %i.md, %i.dh         ; 2 uses
-  %39 = extractelement <2 x i1> %i.me, i64 0      ; 2 uses
-  %i.mf = extractelement <2 x i1> %i.me, i64 1    ; 2 uses
-  %40 = and i1 %39, %i.mf
+  %i.me = icmp sle <2 x i32> %i.md, %i.dh         ; 3 uses
+  %39 = bitcast <2 x i1> %i.me to i2
+  %40 = icmp eq i2 %39, -1
+  %i.mf = extractelement <2 x i1> %i.me, i64 0
+  %41 = extractelement <2 x i1> %i.me, i64 1
   br i1 %40, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
@@ -227,8 +228,8 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p
-  %.0355.in = phi i1 [ %i.ml, %bb.q ], [ %39, %bb.p ]
-  %.0354.in = phi i1 [ %i.mr, %bb.q ], [ %i.mf, %bb.p ]
+  %.0355.in = phi i1 [ %i.ml, %bb.q ], [ %i.mf, %bb.p ]
+  %.0354.in = phi i1 [ %i.mr, %bb.q ], [ %41, %bb.p ]
   %i.ms = and i1 %.0355.in, %.0354.in
   %i.mt = and i1 %.0346.in2045, %i.ms
   br i1 %i.mt, label %bb.s, label %_ZN11OpenImageIO4v3_14simdrmERKNS1_5vint4Ei.exit956

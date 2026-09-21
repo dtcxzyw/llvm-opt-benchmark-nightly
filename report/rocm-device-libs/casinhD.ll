@@ -12,38 +12,40 @@ define hidden <2 x double> @__ocml_casinh_f64(<2 x double> noundef %0) local_unn
 bb.a:
   %i.a = extractelement <2 x double> %0, i64 1    ; 3 uses
   %i.b = extractelement <2 x double> %0, i64 0    ; 2 uses
-  %i.c = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %0) ; 6 uses
-  %1 = extractelement <2 x double> %i.c, i64 0    ; 15 uses
-  %2 = fcmp oge double %1, f0x4350000000000000
-  %3 = extractelement <2 x double> %i.c, i64 1    ; 14 uses
-  %4 = fcmp oge double %3, f0x4350000000000000
-  %5 = or i1 %2, %4
-  br i1 %5, label %.critedge, label %bb.b
+  %i.c = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %0) ; 13 uses
+  %1 = fcmp oge <2 x double> %i.c, splat (double f0x4350000000000000)
+  %2 = bitcast <2 x i1> %1 to i2
+  %.not = icmp eq i2 %2, 0
+  br i1 %.not, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %bb.a
-  %6 = fcmp oge double %3, 1.000000e+00
-  %7 = fcmp oge double %1, f0x3CA0000000000000
-  %or.cond = or i1 %6, %7
-  br i1 %or.cond, label %bb.d, label %bb.c
+  %3 = fcmp oge <2 x double> %i.c, <double f0x3CA0000000000000, double 1.000000e+00>
+  %4 = bitcast <2 x i1> %3 to i2
+  %.not99 = icmp eq i2 %4, 0
+  br i1 %.not99, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = fsub double 1.000000e+00, %3
+  %5 = extractelement <2 x double> %i.c, i64 1    ; 3 uses
+  %i.d = fsub double 1.000000e+00, %5
   %i.e = fmul double %i.d, f0x3E50000000000000
-  %i.f = fcmp ogt double %1, %i.e
+  %6 = extractelement <2 x double> %i.c, i64 0    ; 2 uses
+  %i.f = fcmp ogt double %6, %i.e
   br i1 %i.f, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.g = fadd double %1, %3                       ; 5 uses
-  %i.h = fsub double %i.g, %1                     ; 2 uses
+  %7 = extractelement <2 x double> %i.c, i64 0    ; 8 uses
+  %8 = extractelement <2 x double> %i.c, i64 1    ; 6 uses
+  %i.g = fadd double %7, %8                       ; 5 uses
+  %i.h = fsub double %i.g, %7                     ; 2 uses
   %i.i = fsub double %i.h, %i.g
-  %i.j = fadd double %1, %i.i
-  %i.k = fsub double %3, %i.h
+  %i.j = fadd double %7, %i.i
+  %i.k = fsub double %8, %i.h
   %i.l = fadd double %i.k, %i.j
-  %i.m = fsub double %1, %3                       ; 5 uses
-  %i.n = fsub double %i.m, %1                     ; 2 uses
+  %i.m = fsub double %7, %8                       ; 5 uses
+  %i.n = fsub double %i.m, %7                     ; 2 uses
   %i.o = fsub double %i.n, %i.m
-  %i.p = fadd double %1, %i.o
-  %i.q = fadd double %3, %i.n
+  %i.p = fadd double %7, %i.o
+  %i.q = fadd double %8, %i.n
   %i.r = fsub double %i.p, %i.q
   %i.s = fmul double %i.g, %i.m                   ; 3 uses
   %i.t = fneg double %i.s
@@ -65,9 +67,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.aj = fsub double %i.ag, %i.ai
   %i.ak = insertelement <2 x double> poison, double %i.aj, i64 0
   %i.al = insertelement <2 x double> %i.ak, double %i.ah, i64 1
-  %i.am = fmul double %3, %1                      ; 2 uses
+  %i.am = fmul double %8, %7                      ; 2 uses
   %i.an = fneg double %i.am
-  %i.ao = tail call double @llvm.fma.f64(double %3, double %1, double %i.an)
+  %i.ao = tail call double @llvm.fma.f64(double %8, double %7, double %i.an)
   %i.ap = insertelement <2 x double> poison, double %i.ao, i64 0
   %i.aq = insertelement <2 x double> %i.ap, double %i.am, i64 1
   %i.ar = fmul <2 x double> %i.aq, splat (double 2.000000e+00)
@@ -124,12 +126,14 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br label %bb.e
 
 .critedge:                                        ; preds = %bb.a
-  %i.cm = tail call nsz double @llvm.maxnum.f64(double %1, double %3)
+  %9 = extractelement <2 x double> %i.c, i64 0    ; 2 uses
+  %10 = extractelement <2 x double> %i.c, i64 1   ; 2 uses
+  %i.cm = tail call nsz double @llvm.maxnum.f64(double %9, double %10)
   %i.cn = tail call { double, i32 } @llvm.frexp.f64.i32(double %i.cm)
   %i.co = extractvalue { double, i32 } %i.cn, 1   ; 2 uses
   %i.cp = sub nsw i32 0, %i.co                    ; 2 uses
-  %i.cq = tail call double @llvm.ldexp.f64.i32(double %1, i32 %i.cp) ; 4 uses
-  %i.cr = tail call double @llvm.ldexp.f64.i32(double %3, i32 %i.cp) ; 4 uses
+  %i.cq = tail call double @llvm.ldexp.f64.i32(double %9, i32 %i.cp) ; 4 uses
+  %i.cr = tail call double @llvm.ldexp.f64.i32(double %10, i32 %i.cp) ; 4 uses
   %i.cs = fmul double %i.cq, %i.cq                ; 4 uses
   %i.ct = fneg double %i.cs
   %i.cu = tail call double @llvm.fma.f64(double %i.cq, double %i.cq, double %i.ct) ; 3 uses
@@ -171,10 +175,10 @@ bb.e:                                             ; preds = %.critedge, %bb.d
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.c
-  %i.dy = fneg double %3
-  %i.dz = tail call double @llvm.fma.f64(double %i.dy, double %3, double 1.000000e+00)
+  %i.dy = fneg double %5
+  %i.dz = tail call double @llvm.fma.f64(double %i.dy, double %5, double 1.000000e+00)
   %i.ea = tail call double @llvm.sqrt.f64(double %i.dz) ; 2 uses
-  %i.eb = fdiv double %1, %i.ea
+  %i.eb = fdiv double %6, %i.ea
   %i.ec = insertelement <2 x double> %i.c, double %i.ea, i64 0
   br label %bb.g
 
@@ -192,10 +196,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 bb.h:                                             ; preds = %bb.g
   %i.ek = tail call double @llvm.copysign.f64(double +inf, double %i.b)
-  %8 = fcmp oeq double %1, +inf
-  %9 = fcmp oeq double %3, +inf
-  %10 = or i1 %8, %9
-  %i.el = select i1 %10, double %i.ek, double %i.ed
+  %11 = fcmp oeq <2 x double> %i.c, splat (double +inf)
+  %12 = bitcast <2 x i1> %11 to i2
+  %.not100 = icmp eq i2 %12, 0
+  %i.el = select i1 %.not100, double %i.ed, double %i.ek
   %i.em = fcmp oeq double %i.a, 0.000000e+00
   %i.en = select i1 %i.em, double %i.a, double %i.eh
   br label %bb.i

@@ -205,22 +205,23 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond35.i, label %bb.e, label %bb.k
 
 bb.e:                                             ; preds = %bb.d
-  %i.af = fcmp contract oeq <2 x float> %i.r, splat (float 1.000000e+00) ; 2 uses
-  %5 = extractelement <2 x i1> %i.af, i64 0       ; 2 uses
-  %6 = extractelement <2 x i1> %i.af, i64 1       ; 3 uses
-  %or.cond5.i = and i1 %5, %6
-  br i1 %or.cond5.i, label %_ZN8ultrahdrL23getOutputSamplingFormatEP22jpeg_decompress_struct.exit.thread, label %bb.f
+  %i.af = fcmp contract oeq <2 x float> %i.r, splat (float 1.000000e+00) ; 3 uses
+  %5 = bitcast <2 x i1> %i.af to i2
+  %6 = icmp eq i2 %5, -1
+  br i1 %6, label %_ZN8ultrahdrL23getOutputSamplingFormatEP22jpeg_decompress_struct.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.ag = extractelement <2 x float> %i.r, i64 1
   %i.ah = fcmp contract oeq float %i.ag, 5.000000e-01 ; 3 uses
-  %or.cond27.i = and i1 %5, %i.ah
+  %7 = extractelement <2 x i1> %i.af, i64 0
+  %or.cond27.i = and i1 %7, %i.ah
   br i1 %or.cond27.i, label %_ZN8ultrahdrL23getOutputSamplingFormatEP22jpeg_decompress_struct.exit.thread, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.ai = extractelement <2 x float> %i.r, i64 0  ; 2 uses
   %i.aj = fcmp contract oeq float %i.ai, 5.000000e-01 ; 2 uses
-  %or.cond8.i = and i1 %i.aj, %6
+  %8 = extractelement <2 x i1> %i.af, i64 1       ; 2 uses
+  %or.cond8.i = and i1 %i.aj, %8
   br i1 %or.cond8.i, label %_ZN8ultrahdrL23getOutputSamplingFormatEP22jpeg_decompress_struct.exit.thread, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
@@ -229,7 +230,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.ak = fcmp contract oeq float %i.ai, 2.500000e-01 ; 2 uses
-  %or.cond11.i = and i1 %i.ak, %6
+  %or.cond11.i = and i1 %i.ak, %8
   br i1 %or.cond11.i, label %_ZN8ultrahdrL23getOutputSamplingFormatEP22jpeg_decompress_struct.exit.thread, label %bb.j
 
 bb.j:                                             ; preds = %bb.i

@@ -202,18 +202,23 @@ bb.bf:                                            ; preds = %bb.be
 
 bb.bg:                                            ; preds = %bb.be
   %i.agn = sub nsw i32 255, %.1599                ; 4 uses
-  %i.ago = mul i32 %i.agn, %.1596
-  %26 = udiv i32 %i.ago, 255
-  %27 = add nuw nsw i32 %.3575, %26
-  %i.agp = mul i32 %i.agn, %.1593
-  %28 = udiv i32 %i.agp, 255
-  %i.agq = add nuw nsw i32 %.3607, %28
-  %29 = mul i32 %i.agn, %.1590
-  %30 = udiv i32 %29, 255
-  %31 = add nuw nsw i32 %.3603, %30
-  %32 = mul i32 %i.agn, %.0587
-  %33 = udiv i32 %32, 255
-  %i.agr = add nuw nsw i32 %33, %.1599
+  %i.ago = mul i32 %i.agn, %.0587
+  %26 = mul i32 %i.agn, %.1590
+  %27 = mul i32 %i.agn, %.1593
+  %i.agp = mul i32 %i.agn, %.1596
+  %28 = insertelement <4 x i32> poison, i32 %i.agp, i64 0
+  %29 = insertelement <4 x i32> %28, i32 %27, i64 1
+  %30 = insertelement <4 x i32> %29, i32 %26, i64 2
+  %31 = insertelement <4 x i32> %30, i32 %i.ago, i64 3
+  %32 = udiv <4 x i32> %31, splat (i32 255)       ; 4 uses
+  %33 = extractelement <4 x i32> %32, i64 0
+  %i.agq = add nuw nsw i32 %.3575, %33
+  %34 = extractelement <4 x i32> %32, i64 1
+  %35 = add nuw nsw i32 %.3607, %34
+  %36 = extractelement <4 x i32> %32, i64 2
+  %37 = add nuw nsw i32 %.3603, %36
+  %38 = extractelement <4 x i32> %32, i64 3
+  %i.agr = add nuw nsw i32 %38, %.1599
   br label %bb.bk
 
 bb.bh:                                            ; preds = %bb.be
@@ -251,9 +256,9 @@ bb.bj:                                            ; preds = %bb.be
   br label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be
-  %.2597 = phi i32 [ %.1596, %bb.be ], [ %.3575, %bb.bf ], [ %27, %bb.bg ], [ %spec.store.select, %bb.bh ], [ %i.agw, %bb.bi ], [ %spec.store.select2, %bb.bj ] ; 10 uses
-  %.2594 = phi i32 [ %.1593, %bb.be ], [ %.3607, %bb.bf ], [ %i.agq, %bb.bg ], [ %spec.store.select6, %bb.bh ], [ %i.agy, %bb.bi ], [ %spec.store.select7, %bb.bj ] ; 10 uses
-  %.2591 = phi i32 [ %.1590, %bb.be ], [ %.3603, %bb.bf ], [ %31, %bb.bg ], [ %spec.store.select1, %bb.bh ], [ %i.aha, %bb.bi ], [ %spec.store.select3, %bb.bj ] ; 10 uses
+  %.2597 = phi i32 [ %.1596, %bb.be ], [ %.3575, %bb.bf ], [ %i.agq, %bb.bg ], [ %spec.store.select, %bb.bh ], [ %i.agw, %bb.bi ], [ %spec.store.select2, %bb.bj ] ; 10 uses
+  %.2594 = phi i32 [ %.1593, %bb.be ], [ %.3607, %bb.bf ], [ %35, %bb.bg ], [ %spec.store.select6, %bb.bh ], [ %i.agy, %bb.bi ], [ %spec.store.select7, %bb.bj ] ; 10 uses
+  %.2591 = phi i32 [ %.1590, %bb.be ], [ %.3603, %bb.bf ], [ %37, %bb.bg ], [ %spec.store.select1, %bb.bh ], [ %i.aha, %bb.bi ], [ %spec.store.select3, %bb.bj ] ; 10 uses
   %.1588 = phi i32 [ %.0587, %bb.be ], [ %.1599, %bb.bf ], [ %i.agr, %bb.bg ], [ %.0587, %bb.bh ], [ %.0587, %bb.bi ], [ %.0587, %bb.bj ] ; 4 uses
   br i1 %i.cb, label %bb.bl, label %bb.bq
 

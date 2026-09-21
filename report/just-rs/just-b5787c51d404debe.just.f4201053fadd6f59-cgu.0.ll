@@ -205,9 +205,6 @@ bb.a:
   %i.be = urem i32 %i.bd, 1000000                 ; 2 uses
   %.sroa.4114.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %i.bf = udiv i32 %.sroa.21.0.copyload.i, 1000000
-  %.lhs.trunc13.i = trunc nuw nsw i32 %i.bf to i16
-  %2 = urem i16 %.lhs.trunc13.i, 1000
-  %.zext14.i = zext nneg i16 %2 to i32            ; 2 uses
   %.sroa.4110.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   %.sroa.476.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.bg = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 89 uses
@@ -242,15 +239,6 @@ bb.a:
   %i.bw = and i32 %i.bv, 511
   %i.bx = and i32 %i.ay, 7
   %i.by = add nuw nsw i32 %i.bw, %i.bx
-  %.lhs.trunc9.i = trunc nuw nsw i32 %i.by to i16
-  %3 = urem i16 %.lhs.trunc9.i, 7                 ; 2 uses
-  %4 = icmp samesign ult i16 %3, 6
-  %narrow58.i = add nuw nsw i16 %3, 1
-  %narrow59.i = select i1 %4, i16 %narrow58.i, i16 0
-  %5 = zext nneg i16 %narrow59.i to i64           ; 2 uses
-  %6 = getelementptr inbounds nuw [16 x i8], ptr @79, i64 %5 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %8 = getelementptr inbounds nuw [16 x i8], ptr @71, i64 %5 ; 2 uses
   %i.bz = lshr i32 %i.ay, 3                       ; 3 uses
   %i.ca = and i32 %i.bz, 1023                     ; 6 uses
   %i.cb = zext nneg i32 %i.ca to i64              ; 5 uses
@@ -260,16 +248,9 @@ bb.a:
   %or.cond5.i = select i1 %i.ce, i1 %i.bb, i1 false ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.cg = load i32, ptr %i.cf, align 8            ; 7 uses
-  %i.ch = ashr i32 %i.ay, 13                      ; 3 uses
+  %i.ch = ashr i32 %i.ay, 13                      ; 4 uses
   %or.cond.i26 = icmp ult i32 %i.ch, 10000        ; 2 uses
   %.sroa.43.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  %.lhs.trunc.i29 = trunc nuw nsw i32 %i.ch to i16 ; 2 uses
-  %9 = udiv i16 %.lhs.trunc.i29, 100
-  %10 = trunc nuw nsw i16 %9 to i8                ; 2 uses
-  %11 = udiv i8 %10, 10
-  %12 = or disjoint i8 %11, 48                    ; 2 uses
-  %13 = urem i8 %10, 10
-  %14 = or disjoint i8 %13, 48                    ; 2 uses
   %i.ci = trunc i32 %i.bz to i8
   %i.cj = urem i32 %.sroa.10.0.copyload.i, 60     ; 2 uses
   %i.ck = udiv i32 %.sroa.10.0.copyload.i, 60
@@ -306,12 +287,6 @@ bb.a:
   %.sroa.425.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.dm = udiv i32 %storemerge.i, 1000000
   %.sroa.421.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %15 = urem i16 %.lhs.trunc.i29, 100
-  %16 = trunc nuw nsw i16 %15 to i8               ; 2 uses
-  %17 = udiv i8 %16, 10
-  %18 = or disjoint i8 %17, 48
-  %19 = urem i8 %16, 10
-  %20 = or disjoint i8 %19, 48
   %i.dn = udiv i32 %.sroa.21.0.copyload.i, 1000000000
   %i.do = add nuw nsw i32 %i.dn, %i.cj
   %i.dp = trunc nuw nsw i32 %i.do to i8           ; 2 uses
@@ -389,19 +364,50 @@ bb.a:
   %.sroa.434.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.at, i64 8
   %i.fn = and i32 %i.ea, 7
   %i.fo = add nuw nsw i32 %i.en, %i.fn
-  %.lhs.trunc6.i = trunc nuw nsw i32 %i.fo to i16
-  %21 = urem i16 %.lhs.trunc6.i, 7                ; 5 uses
-  %switch.idx.cast.i = trunc nuw nsw i16 %21 to i8
+  %2 = trunc nuw nsw i32 %i.bf to i16
+  %3 = insertelement <4 x i16> poison, i16 %2, i64 0
+  %4 = trunc nuw nsw i32 %i.by to i16
+  %5 = insertelement <4 x i16> %3, i16 %4, i64 1
+  %6 = trunc i32 %i.ch to i16
+  %7 = insertelement <4 x i16> %5, i16 %6, i64 2
+  %8 = trunc nuw nsw i32 %i.fo to i16
+  %9 = insertelement <4 x i16> %7, i16 %8, i64 3
+  %.lhs.trunc6.i = trunc nuw nsw i32 %i.ch to i16
+  %10 = urem <4 x i16> %9, <i16 1000, i16 7, i16 100, i16 7> ; 4 uses
+  %11 = extractelement <4 x i16> %10, i64 0
+  %.zext14.i = zext nneg i16 %11 to i32           ; 2 uses
+  %12 = extractelement <4 x i16> %10, i64 1       ; 2 uses
+  %13 = icmp samesign ult i16 %12, 6
+  %narrow58.i = add nuw nsw i16 %12, 1
+  %narrow59.i = select i1 %13, i16 %narrow58.i, i16 0
+  %14 = zext nneg i16 %narrow59.i to i64          ; 2 uses
+  %15 = getelementptr inbounds nuw [16 x i8], ptr @79, i64 %14 ; 2 uses
+  %16 = getelementptr inbounds nuw i8, ptr %15, i64 8
+  %17 = getelementptr inbounds nuw [16 x i8], ptr @71, i64 %14 ; 2 uses
+  %18 = udiv i16 %.lhs.trunc6.i, 100
+  %19 = trunc nuw nsw i16 %18 to i8               ; 2 uses
+  %20 = udiv i8 %19, 10
+  %21 = or disjoint i8 %20, 48                    ; 2 uses
+  %22 = urem i8 %19, 10
+  %23 = or disjoint i8 %22, 48                    ; 2 uses
+  %24 = bitcast <4 x i16> %10 to <8 x i8>
+  %25 = extractelement <8 x i8> %24, i64 4        ; 2 uses
+  %26 = udiv i8 %25, 10
+  %27 = or disjoint i8 %26, 48
+  %28 = urem i8 %25, 10
+  %29 = or disjoint i8 %28, 48
+  %30 = extractelement <4 x i16> %10, i64 3       ; 5 uses
+  %switch.idx.cast.i = trunc nuw nsw i16 %30 to i8
   %switch.offset.i = add nuw nsw i8 %switch.idx.cast.i, 49
   %i.fp = trunc i32 %i.ea to i8
   %i.fq = and i8 %i.fp, 15                        ; 4 uses
   %i.fr = trunc nuw nsw i32 %i.en to i16
   %i.fs = add nuw nsw i16 %i.fr, 6
-  %.lhs.trunc1.i106.i = sub nuw nsw i16 %i.fs, %21
+  %.lhs.trunc1.i106.i = sub nuw nsw i16 %i.fs, %30
   %i.ft = udiv i16 %.lhs.trunc1.i106.i, 7
   %i.fu = trunc nuw nsw i16 %i.ft to i8
-  %spec.select.i101.i = zext nneg i16 %21 to i32  ; 2 uses
-  %i.fv = icmp samesign ult i16 %21, 6
+  %spec.select.i101.i = zext nneg i16 %30 to i32  ; 2 uses
+  %i.fv = icmp samesign ult i16 %30, 6
   %i.fw = add nuw nsw i32 %spec.select.i101.i, 7
   %.pn.i.i = select i1 %i.fv, i32 %i.fw, i32 %spec.select.i101.i
   %.sroa.0.0.neg.i.i = add nuw nsw i32 %i.en, 6
@@ -441,7 +447,7 @@ bb.a:
   %i.gx = add nsw i64 %i.eq, %i.gw
   %i.gy = insertelement <2 x ptr> poison, ptr %.146.i, i64 0
   %i.gz = insertelement <2 x ptr> %i.gy, ptr %i.bq, i64 1
-  %i.ha = shl nuw nsw i16 %21, 3
+  %i.ha = shl nuw nsw i16 %30, 3
   %switch.shiftamt = zext nneg i16 %i.ha to i56
   %switch.downshift = lshr i56 13570401019048497, %switch.shiftamt
   %switch.masked = trunc i56 %switch.downshift to i8
@@ -844,7 +850,7 @@ bb.bw:                                            ; preds = %bb.bt
   unreachable
 
 bb.bx:                                            ; preds = %bb.bc
-  %i.ls = load ptr, ptr %8, align 8, !noalias !1216, !nonnull !28, !noundef !28
+  %i.ls = load ptr, ptr %17, align 8, !noalias !1216, !nonnull !28, !noundef !28
   call void @llvm.experimental.noalias.scope.decl(metadata !1231)
   call void @llvm.experimental.noalias.scope.decl(metadata !1232)
   call void @llvm.experimental.noalias.scope.decl(metadata !1233)
@@ -871,8 +877,8 @@ _RNvXsZ_NtCs4wP2HXfJTCR_5alloc6stringNtB5_6StringNtNtCsj6eKBz9Db1c_4core3fmt5Wri
   br label %.critedge
 
 bb.by:                                            ; preds = %bb.bd
-  %i.mc = load ptr, ptr %6, align 8, !noalias !1216, !nonnull !28, !noundef !28
-  %i.md = load i64, ptr %7, align 8, !noalias !1216, !noundef !28 ; 4 uses
+  %i.mc = load ptr, ptr %15, align 8, !noalias !1216, !nonnull !28, !noundef !28
+  %i.md = load i64, ptr %16, align 8, !noalias !1216, !noundef !28 ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1238)
   call void @llvm.experimental.noalias.scope.decl(metadata !1239)
   call void @llvm.experimental.noalias.scope.decl(metadata !1240)
@@ -1275,7 +1281,7 @@ bb.dk:                                            ; preds = %bb.df
   br i1 %or.cond.i26, label %bb.dl, label %_RINvMNtNtCs2uF6e5yHHeh_6chrono6format10formattingINtB3_13DelayedFormatINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterNtB5_4ItemEE14format_numericNtNtCs4wP2HXfJTCR_5alloc6string6StringECskXtk6F4WjxZ_4just.exit.thread
 
 bb.dl:                                            ; preds = %bb.dk
-  %i.tp = load ptr, ptr %8, align 8, !noalias !1323, !nonnull !28, !noundef !28
+  %i.tp = load ptr, ptr %17, align 8, !noalias !1323, !nonnull !28, !noundef !28
   call void @llvm.experimental.noalias.scope.decl(metadata !1324), !noalias !1277
   call void @llvm.experimental.noalias.scope.decl(metadata !1325), !noalias !1277
   call void @llvm.experimental.noalias.scope.decl(metadata !1326), !noalias !1277
@@ -1508,7 +1514,7 @@ _RNvXsZ_NtCs4wP2HXfJTCR_5alloc6stringNtB5_6StringNtNtCsj6eKBz9Db1c_4core3fmt5Wri
   %i.ws = phi i64 [ %.pre.i26.i, %bb.dx ], [ %i.wq, %_RNvXsZ_NtCs4wP2HXfJTCR_5alloc6stringNtB5_6StringNtNtCsj6eKBz9Db1c_4core3fmt5Write10write_char.exit23.i ] ; 3 uses
   %i.wt = load ptr, ptr %i.bh, align 8, !alias.scope !1377, !noalias !1342, !nonnull !28, !noundef !28 ; 2 uses
   %i.wu = getelementptr inbounds nuw i8, ptr %i.wt, i64 %i.wp
-  store i8 %12, ptr %i.wu, align 1, !noalias !1378
+  store i8 %21, ptr %i.wu, align 1, !noalias !1378
   %i.wv = add nuw i64 %i.wj, 5                    ; 3 uses
   store i64 %i.wv, ptr %i.bg, align 8, !alias.scope !1377, !noalias !1342
   call void @llvm.experimental.noalias.scope.decl(metadata !1379), !noalias !1277
@@ -1530,7 +1536,7 @@ bb.ea:                                            ; preds = %bb.dy, %_RNvXsZ_NtC
   %i.wx = phi i64 [ %.pre70.i, %bb.dy ], [ %i.ws, %_RNvXsZ_NtCs4wP2HXfJTCR_5alloc6stringNtB5_6StringNtNtCsj6eKBz9Db1c_4core3fmt5Write10write_char.exit.i24.i ] ; 3 uses
   %i.wy = phi ptr [ %.pre4.i25.i, %bb.dy ], [ %i.wt, %_RNvXsZ_NtCs4wP2HXfJTCR_5alloc6stringNtB5_6StringNtNtCsj6eKBz9Db1c_4core3fmt5Write10write_char.exit.i24.i ] ; 2 uses
   %i.wz = getelementptr inbounds nuw i8, ptr %i.wy, i64 %i.wv
-  store i8 %14, ptr %i.wz, align 1, !noalias !1383
+  store i8 %23, ptr %i.wz, align 1, !noalias !1383
   %i.xa = add nuw nsw i64 %i.wj, 6                ; 3 uses
   store i64 %i.xa, ptr %i.bg, align 8, !alias.scope !1381, !noalias !1342
   call void @llvm.experimental.noalias.scope.decl(metadata !1384), !noalias !1277
@@ -1549,7 +1555,7 @@ _RNvXsZ_NtCs4wP2HXfJTCR_5alloc6stringNtB5_6StringNtNtCsj6eKBz9Db1c_4core3fmt5Wri
   %i.xc = phi ptr [ %.pre71.i, %bb.eb ], [ %i.wy, %bb.ea ] ; 2 uses
   %i.xd = phi i64 [ %.pre.i31.i, %bb.eb ], [ %i.wx, %bb.ea ] ; 2 uses
   %i.xe = getelementptr inbounds nuw i8, ptr %i.xc, i64 %i.xa
-  store i8 %18, ptr %i.xe, align 1, !noalias !1389
+  store i8 %27, ptr %i.xe, align 1, !noalias !1389
   %i.xf = add nuw i64 %i.wj, 7                    ; 3 uses
   store i64 %i.xf, ptr %i.bg, align 8, !alias.scope !1388, !noalias !1342
   call void @llvm.experimental.noalias.scope.decl(metadata !1390), !noalias !1277
@@ -1565,7 +1571,7 @@ bb.ec:                                            ; preds = %_RNvXsZ_NtCs4wP2HXf
 bb.ed:                                            ; preds = %bb.ec, %_RNvXsZ_NtCs4wP2HXfJTCR_5alloc6stringNtB5_6StringNtNtCsj6eKBz9Db1c_4core3fmt5Write10write_char.exit.i28.i
   %i.xh = phi ptr [ %.pre4.i30.i, %bb.ec ], [ %i.xc, %_RNvXsZ_NtCs4wP2HXfJTCR_5alloc6stringNtB5_6StringNtNtCsj6eKBz9Db1c_4core3fmt5Write10write_char.exit.i28.i ]
   %i.xi = getelementptr inbounds nuw i8, ptr %i.xh, i64 %i.xf
-  store i8 %20, ptr %i.xi, align 1, !noalias !1393
+  store i8 %29, ptr %i.xi, align 1, !noalias !1393
   %i.xj = add nuw nsw i64 %i.wj, 8                ; 4 uses
   store i64 %i.xj, ptr %i.bg, align 8, !alias.scope !1392, !noalias !1342
   call void @llvm.experimental.noalias.scope.decl(metadata !1394), !noalias !1277
@@ -1769,7 +1775,7 @@ _RNvXsZ_NtCs4wP2HXfJTCR_5alloc6stringNtB5_6StringNtNtCsj6eKBz9Db1c_4core3fmt5Wri
   %i.zl = phi i64 [ %.pre.i.i30, %bb.es ], [ %i.zj, %bb.er ] ; 2 uses
   %i.zm = load ptr, ptr %i.bh, align 8, !alias.scope !1448, !noalias !1444, !nonnull !28, !noundef !28 ; 2 uses
   %i.zn = getelementptr inbounds nuw i8, ptr %i.zm, i64 %i.zh
-  store i8 %12, ptr %i.zn, align 1, !noalias !1451
+  store i8 %21, ptr %i.zn, align 1, !noalias !1451
   %i.zo = add nuw nsw i64 %i.zh, 1                ; 3 uses
   store i64 %i.zo, ptr %i.bg, align 8, !alias.scope !1448, !noalias !1444
   call void @llvm.experimental.noalias.scope.decl(metadata !1452), !noalias !1277
@@ -1811,7 +1817,7 @@ _RNvXsZ_NtCs4wP2HXfJTCR_5alloc6stringNtB5_6StringNtNtCsj6eKBz9Db1c_4core3fmt5Wri
 bb.ex:                                            ; preds = %bb.et, %_RNvXsZ_NtCs4wP2HXfJTCR_5alloc6stringNtB5_6StringNtNtCsj6eKBz9Db1c_4core3fmt5Write10write_char.exit.i.i
   %i.zx = phi ptr [ %.pre4.i.i, %bb.et ], [ %i.zm, %_RNvXsZ_NtCs4wP2HXfJTCR_5alloc6stringNtB5_6StringNtNtCsj6eKBz9Db1c_4core3fmt5Write10write_char.exit.i.i ]
   %i.zy = getelementptr inbounds nuw i8, ptr %i.zx, i64 %i.zo
-  store i8 %14, ptr %i.zy, align 1, !noalias !1460
+  store i8 %23, ptr %i.zy, align 1, !noalias !1460
   %i.zz = add nuw i64 %i.zh, 2                    ; 5 uses
   store i64 %i.zz, ptr %i.bg, align 8, !alias.scope !1454, !noalias !1444
   %i.aaa = load i32, ptr %i.i, align 4, !noalias !1443, !noundef !28
