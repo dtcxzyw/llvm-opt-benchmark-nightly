@@ -205,8 +205,8 @@ bb.aj:                                            ; preds = %bb.ac
           cleanup
   br label %bb.ag
 
-.loopexit54:                                      ; preds = %bb.af, %.lr.ph.i, %bb.aa
-  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.aa ], [ %i.bl, %.lr.ph.i ], [ %i.bl, %bb.af ]
+.loopexit54:                                      ; preds = %.lr.ph.i, %bb.af, %bb.aa
+  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.aa ], [ %i.bl, %bb.af ], [ %i.bl, %.lr.ph.i ]
   store i64 %i.bi, ptr %i.g, align 8, !noalias !5518
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   store ptr %.sroa.5.0, ptr %.sroa.5.0..sroa_idx, align 8, !noalias !5518
@@ -609,8 +609,8 @@ bb.af:                                            ; preds = %.loopexit
           cleanup
   br label %.thread140
 
-.loopexit:                                        ; preds = %bb.ae, %.lr.ph.i, %bb.z
-  %.sroa.564.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.z ], [ %i.cv, %.lr.ph.i ], [ %i.cv, %bb.ae ]
+.loopexit:                                        ; preds = %.lr.ph.i, %bb.ae, %bb.z
+  %.sroa.564.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.z ], [ %i.cv, %bb.ae ], [ %i.cv, %.lr.ph.i ]
   store i64 %i.cs, ptr %i.m, align 8, !noalias !8497
   %.sroa.564.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   store ptr %.sroa.564.0, ptr %.sroa.564.0..sroa_idx, align 8, !noalias !8497
@@ -1013,7 +1013,7 @@ bb.i:                                             ; preds = %bb.h
   invoke void @_RNvMsn_NtCs40k4W9msRzi_5alloc4syncINtB5_3ArcNtNtCs8SUNSmrkv52_12arrow_schema6schema6SchemaE9drop_slowCs4ytUTZt2Gw9_11arrow_array(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.m)
           to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema6schema6SchemaEECsc2V0exE7CWf_11lance_arrow.exit unwind label %bb.an
 
-.loopexit86.loopexit:                             ; preds = %.lr.ph.i, %_RNvXsu_NtCs40k4W9msRzi_5alloc4syncINtB5_3ArcNtNtCs8SUNSmrkv52_12arrow_schema5field5FieldENtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCsc2V0exE7CWf_11lance_arrow.exit.i
+.loopexit86.loopexit:                             ; preds = %_RNvXsu_NtCs40k4W9msRzi_5alloc4syncINtB5_3ArcNtNtCs8SUNSmrkv52_12arrow_schema5field5FieldENtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCsc2V0exE7CWf_11lance_arrow.exit.i, %.lr.ph.i
   %.pre = load ptr, ptr %i.m, align 8, !alias.scope !9621
   br label %.loopexit86
 
@@ -1287,8 +1287,8 @@ bb.ah:                                            ; preds = %.loopexit
           cleanup
   br label %.body33
 
-.loopexit:                                        ; preds = %bb.ag, %.lr.ph.i49, %bb.ab
-  %.sroa.563.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.ab ], [ %i.ci, %.lr.ph.i49 ], [ %i.ci, %bb.ag ]
+.loopexit:                                        ; preds = %.lr.ph.i49, %bb.ag, %bb.ab
+  %.sroa.563.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.ab ], [ %i.ci, %bb.ag ], [ %i.ci, %.lr.ph.i49 ]
   store i64 %i.cf, ptr %i.d, align 8, !noalias !9634
   %.sroa.563.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr %.sroa.563.0, ptr %.sroa.563.0..sroa_idx, align 8, !noalias !9634
@@ -1526,8 +1526,8 @@ bb.p:                                             ; preds = %bb.n
   %i.au = icmp eq i64 %i.al, 0
   br i1 %i.au, label %.loopexit, label %.lr.ph.i
 
-.loopexit:                                        ; preds = %bb.p, %.lr.ph.i, %bb.k
-  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.k ], [ %i.ai, %.lr.ph.i ], [ %i.ai, %bb.p ]
+.loopexit:                                        ; preds = %.lr.ph.i, %bb.p, %bb.k
+  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.k ], [ %i.ai, %bb.p ], [ %i.ai, %.lr.ph.i ]
   store i64 %i.af, ptr %i.d, align 8, !noalias !9667
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr %.sroa.5.0, ptr %.sroa.5.0..sroa_idx, align 8, !noalias !9667
@@ -1843,8 +1843,8 @@ bb.t:                                             ; preds = %bb.r
   %i.bb = icmp eq i64 %i.as, 0
   br i1 %i.bb, label %.loopexit, label %.lr.ph.i
 
-.loopexit:                                        ; preds = %.lr.ph.i, %bb.t, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema6schema6SchemaEECsc2V0exE7CWf_11lance_arrow.exit20
-  %.sroa.528.0 = phi ptr [ inttoptr (i64 8 to ptr), %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema6schema6SchemaEECsc2V0exE7CWf_11lance_arrow.exit20 ], [ %i.ap, %bb.t ], [ %i.ap, %.lr.ph.i ]
+.loopexit:                                        ; preds = %bb.t, %.lr.ph.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema6schema6SchemaEECsc2V0exE7CWf_11lance_arrow.exit20
+  %.sroa.528.0 = phi ptr [ inttoptr (i64 8 to ptr), %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema6schema6SchemaEECsc2V0exE7CWf_11lance_arrow.exit20 ], [ %i.ap, %.lr.ph.i ], [ %i.ap, %bb.t ]
   store i64 %i.am, ptr %i.d, align 8, !noalias !9720
   %.sroa.528.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
   store ptr %.sroa.528.0, ptr %.sroa.528.0..sroa_idx, align 8, !noalias !9720
@@ -2247,8 +2247,8 @@ bb.t:                                             ; preds = %bb.r
   %i.bb = icmp eq i64 %i.as, 0
   br i1 %i.bb, label %.loopexit, label %.lr.ph.i
 
-.loopexit:                                        ; preds = %bb.t, %.lr.ph.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema6schema6SchemaEECsc2V0exE7CWf_11lance_arrow.exit20
-  %.sroa.528.0 = phi ptr [ inttoptr (i64 8 to ptr), %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema6schema6SchemaEECsc2V0exE7CWf_11lance_arrow.exit20 ], [ %i.ap, %.lr.ph.i ], [ %i.ap, %bb.t ]
+.loopexit:                                        ; preds = %.lr.ph.i, %bb.t, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema6schema6SchemaEECsc2V0exE7CWf_11lance_arrow.exit20
+  %.sroa.528.0 = phi ptr [ inttoptr (i64 8 to ptr), %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema6schema6SchemaEECsc2V0exE7CWf_11lance_arrow.exit20 ], [ %i.ap, %bb.t ], [ %i.ap, %.lr.ph.i ]
   store i64 %i.am, ptr %i.d, align 8, !noalias !9785
   %.sroa.528.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
   store ptr %.sroa.528.0, ptr %.sroa.528.0..sroa_idx, align 8, !noalias !9785
@@ -2478,8 +2478,8 @@ bb.g:                                             ; preds = %_RINvNtCscI6d9CVNmL
           cleanup
   br label %bb.aa
 
-.loopexit72:                                      ; preds = %bb.f, %.lr.ph.i, %bb.a
-  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.q, %.lr.ph.i ], [ %i.q, %bb.f ] ; 2 uses
+.loopexit72:                                      ; preds = %.lr.ph.i, %bb.f, %bb.a
+  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.q, %bb.f ], [ %i.q, %.lr.ph.i ] ; 2 uses
   store i64 %i.n, ptr %i.f, align 8, !noalias !9841
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   store ptr %.sroa.5.0, ptr %.sroa.5.0..sroa_idx, align 8, !noalias !9841
@@ -2882,8 +2882,8 @@ _RNvXsu_NtCs40k4W9msRzi_5alloc4syncINtB5_3ArcNtNtCs8SUNSmrkv52_12arrow_schema5fi
   %i.aa = icmp eq i64 %i.t, 0
   br i1 %i.aa, label %.loopexit, label %.lr.ph.i
 
-.loopexit:                                        ; preds = %_RNvXsu_NtCs40k4W9msRzi_5alloc4syncINtB5_3ArcNtNtCs8SUNSmrkv52_12arrow_schema5field5FieldENtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCsc2V0exE7CWf_11lance_arrow.exit.i, %.lr.ph.i, %bb.c
-  %.sroa.519.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.c ], [ %i.q, %.lr.ph.i ], [ %i.q, %_RNvXsu_NtCs40k4W9msRzi_5alloc4syncINtB5_3ArcNtNtCs8SUNSmrkv52_12arrow_schema5field5FieldENtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCsc2V0exE7CWf_11lance_arrow.exit.i ]
+.loopexit:                                        ; preds = %.lr.ph.i, %_RNvXsu_NtCs40k4W9msRzi_5alloc4syncINtB5_3ArcNtNtCs8SUNSmrkv52_12arrow_schema5field5FieldENtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCsc2V0exE7CWf_11lance_arrow.exit.i, %bb.c
+  %.sroa.519.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.c ], [ %i.q, %_RNvXsu_NtCs40k4W9msRzi_5alloc4syncINtB5_3ArcNtNtCs8SUNSmrkv52_12arrow_schema5field5FieldENtNtCscI6d9CVNmLh_4core5clone5Clone5cloneCsc2V0exE7CWf_11lance_arrow.exit.i ], [ %i.q, %.lr.ph.i ]
   store i64 %i.m, ptr %i.g, align 8, !noalias !9949
   %.sroa.519.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   store ptr %.sroa.519.0, ptr %.sroa.519.0..sroa_idx, align 8, !noalias !9949
@@ -3286,8 +3286,8 @@ bb.af:                                            ; preds = %bb.ad
   %i.cv = icmp eq i64 %i.cm, 0
   br i1 %i.cv, label %.loopexit135, label %.lr.ph.i
 
-.loopexit135:                                     ; preds = %bb.af, %.lr.ph.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema6schema6SchemaEECsc2V0exE7CWf_11lance_arrow.exit53
-  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema6schema6SchemaEECsc2V0exE7CWf_11lance_arrow.exit53 ], [ %i.cj, %.lr.ph.i ], [ %i.cj, %bb.af ] ; 2 uses
+.loopexit135:                                     ; preds = %.lr.ph.i, %bb.af, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema6schema6SchemaEECsc2V0exE7CWf_11lance_arrow.exit53
+  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema6schema6SchemaEECsc2V0exE7CWf_11lance_arrow.exit53 ], [ %i.cj, %bb.af ], [ %i.cj, %.lr.ph.i ] ; 2 uses
   store i64 %i.cg, ptr %i.k, align 8, !noalias !10087
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   store ptr %.sroa.5.0, ptr %.sroa.5.0..sroa_idx, align 8, !noalias !10087

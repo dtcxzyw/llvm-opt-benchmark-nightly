@@ -205,7 +205,7 @@ bb.cg:                                            ; preds = %bb.cd
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p), !dbg !43426
   br label %.thread65, !dbg !43430
 
-.thread73:                                        ; preds = %.thread69, %bb.av
+.thread73:                                        ; preds = %bb.av, %.thread69
   store i64 0, ptr %i.n, align 8, !dbg !43431
   %.sroa.552.0..sroa_idx77 = getelementptr inbounds nuw i8, ptr %i.n, i64 8, !dbg !43431
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.552.0..sroa_idx77, align 8, !dbg !43431
@@ -214,7 +214,7 @@ bb.cg:                                            ; preds = %bb.cd
   invoke void @_RNvNtCscgRAwXFJnXP_4core9panicking18panic_bounds_check(i64 noundef 0, i64 noundef 0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @96) #37
           to label %bb.s unwind label %bb.cn, !dbg !43432
 
-bb.ch:                                            ; preds = %bb.bx, %.lr.ph.i
+bb.ch:                                            ; preds = %.lr.ph.i, %bb.bx
   store i64 %5, ptr %i.n, align 8, !dbg !43431
   %.sroa.552.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 8, !dbg !43431
   store ptr %i.df, ptr %.sroa.552.0..sroa_idx, align 8, !dbg !43431

@@ -202,12 +202,12 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %_ZN4llvm8codeview24BinaryAnnotationIteratorppEv.exit
   %.sroa.0113.4..sroa.0113.4..sroa.0113.4.117 = phi i8 [ 0, %.lr.ph ], [ %.sroa.0113.4..sroa.0113.4..sroa.0113.4.117226, %_ZN4llvm8codeview24BinaryAnnotationIteratorppEv.exit ] ; 4 uses
   %.sroa.0133.4..sroa.0133.4..sroa.0133.4.141 = phi i8 [ 0, %.lr.ph ], [ %.sroa.0133.4..sroa.0133.4..sroa.0133.4.141224, %_ZN4llvm8codeview24BinaryAnnotationIteratorppEv.exit ] ; 6 uses
-  %.sroa.0109.0 = phi i32 [ undef, %.lr.ph ], [ %.sroa.0109.3, %_ZN4llvm8codeview24BinaryAnnotationIteratorppEv.exit ] ; 11 uses
-  %.sroa.0.0 = phi i32 [ undef, %.lr.ph ], [ %.sroa.0.1.a, %_ZN4llvm8codeview24BinaryAnnotationIteratorppEv.exit ] ; 11 uses
-  %.0185 = phi i32 [ 0, %.lr.ph ], [ %.1, %_ZN4llvm8codeview24BinaryAnnotationIteratorppEv.exit ] ; 11 uses
-  %.sroa.7.0184 = phi i1 [ false, %.lr.ph ], [ %.sroa.7.5.ph, %_ZN4llvm8codeview24BinaryAnnotationIteratorppEv.exit ] ; 11 uses
-  %.sroa.0106.0183 = phi i32 [ undef, %.lr.ph ], [ %.sroa.0106.1, %_ZN4llvm8codeview24BinaryAnnotationIteratorppEv.exit ] ; 12 uses
-  %.sroa.5.0182 = phi i1 [ false, %.lr.ph ], [ %.sroa.5.3.ph, %_ZN4llvm8codeview24BinaryAnnotationIteratorppEv.exit ] ; 12 uses
+  %.sroa.0109.0 = phi i32 [ 0, %.lr.ph ], [ %.1, %_ZN4llvm8codeview24BinaryAnnotationIteratorppEv.exit ] ; 11 uses
+  %.sroa.7.0189 = phi i1 [ false, %.lr.ph ], [ %.sroa.7.5.ph, %_ZN4llvm8codeview24BinaryAnnotationIteratorppEv.exit ] ; 11 uses
+  %.sroa.0.0 = phi i32 [ undef, %.lr.ph ], [ %.sroa.0106.1, %_ZN4llvm8codeview24BinaryAnnotationIteratorppEv.exit ] ; 11 uses
+  %.0185 = phi i32 [ undef, %.lr.ph ], [ %.sroa.0108.1, %_ZN4llvm8codeview24BinaryAnnotationIteratorppEv.exit ] ; 12 uses
+  %.sroa.7.0184 = phi i1 [ false, %.lr.ph ], [ %.sroa.5.3.ph, %_ZN4llvm8codeview24BinaryAnnotationIteratorppEv.exit ] ; 12 uses
+  %.sroa.0106.0183 = phi i32 [ undef, %.lr.ph ], [ %.sroa.0111.5.ph, %_ZN4llvm8codeview24BinaryAnnotationIteratorppEv.exit ] ; 11 uses
   %.sroa.8.0180 = phi i8 [ 0, %.lr.ph ], [ %.sroa.8.5.ph, %_ZN4llvm8codeview24BinaryAnnotationIteratorppEv.exit ] ; 11 uses
   %i.o = call noundef zeroext i1 @_ZN4llvm8codeview24BinaryAnnotationIterator22ParseCurrentAnnotationEv(ptr noundef nonnull align 8 dereferenceable(88) %4) ; 0 uses
   %i.p = load i32, ptr %i.k, align 8, !tbaa !174
@@ -224,7 +224,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN4llvm8c
 
 bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b
   %i.q = load i32, ptr %i.l, align 4, !tbaa !175  ; 2 uses
-  %i.r = add i32 %i.q, %.0185                     ; 3 uses
+  %i.r = add i32 %i.q, %.sroa.0109.0              ; 3 uses
   %i.s = trunc nuw i8 %.sroa.0133.4..sroa.0133.4..sroa.0133.4.141 to i1
   br i1 %i.s, label %bb.d, label %.sink.split.i
 
@@ -260,7 +260,7 @@ bb.h:                                             ; preds = %bb.g
   br label %.sink.split.i24
 
 .sink.split.i24:                                  ; preds = %bb.f, %bb.h
-  %.sink8.i25 = phi i32 [ %i.y, %bb.h ], [ %.0185, %bb.f ]
+  %.sink8.i25 = phi i32 [ %i.y, %bb.h ], [ %.sroa.0109.0, %bb.f ]
   %.sink.i26 = phi ptr [ %.sroa.0113, %bb.h ], [ %.sroa.0133, %bb.f ]
   %.sroa.0.0.insert.ext.i27 = zext i32 %.sink8.i25 to i64
   %.sroa.0.0.insert.insert.i28 = or disjoint i64 %.sroa.0.0.insert.ext.i27, 4294967296
@@ -269,7 +269,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.b
   %i.z = load i32, ptr %i.n, align 8, !tbaa !176  ; 2 uses
-  %i.aa = add i32 %i.z, %.0185                    ; 4 uses
+  %i.aa = add i32 %i.z, %.sroa.0109.0             ; 4 uses
   %i.ab = trunc nuw i8 %.sroa.0133.4..sroa.0133.4..sroa.0133.4.141 to i1
   br i1 %i.ab, label %bb.j, label %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit35"
 
@@ -324,14 +324,14 @@ bb.m:                                             ; preds = %bb.l
   %i.an = trunc nuw i8 %.sroa.0133.4..sroa.0133.4..sroa.0133.4.141 to i1
   %i.ao = trunc nuw i8 %.sroa.8.0180 to i1
   %i.ap = select i1 %i.an, i1 %i.ao, i1 false
-  br i1 %i.ap, label %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit", label %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit.else"
+  br i1 %i.ap, label %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit.else", label %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit"
 
 "_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit.else": ; preds = %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit"
   br label %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit"
 
 bb.n:                                             ; preds = %bb.b
   %i.aq = load i32, ptr %i.l, align 4, !tbaa !175 ; 2 uses
-  %i.ar = add i32 %i.aq, %.0185                   ; 3 uses
+  %i.ar = add i32 %i.aq, %.sroa.0109.0            ; 3 uses
   %i.as = trunc nuw i8 %.sroa.0133.4..sroa.0133.4..sroa.0133.4.141 to i1
   br i1 %i.as, label %bb.o, label %.sink.split.i43
 
@@ -362,7 +362,7 @@ bb.p:                                             ; preds = %bb.o
   store i32 %i.ay, ptr %2, align 4, !tbaa !89
   %i.az = trunc nuw i8 %.sroa.8.0180 to i1
   %i.ba = select i1 %.sroa.0133.4..sroa.0133.4..sroa.0133.4.153, i1 %i.az, i1 false
-  br i1 %i.ba, label %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit", label %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48.else"
+  br i1 %i.ba, label %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48.else", label %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit"
 
 "_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48.else": ; preds = %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48"
   br label %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit"
@@ -376,14 +376,14 @@ bb.r:                                             ; preds = %bb.q
   store i32 %i.bb, ptr %3, align 4, !tbaa !89
   br label %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit"
 
-"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit": ; preds = %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48.else", %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48", %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit.else", %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit", %bb.q, %bb.r, %.sink.split.i36, %bb.l, %.sink.split.i24, %bb.g, %.sink.split.i, %bb.d, %bb.b
-  %.sroa.0109.1 = phi i32 [ %.sroa.0109.0, %bb.b ], [ %.sroa.0109.0, %bb.d ], [ %.sroa.0109.0, %.sink.split.i ], [ %.sroa.0109.0, %bb.g ], [ %.sroa.0109.0, %.sink.split.i24 ], [ %.sroa.0109.0, %bb.l ], [ %.sroa.0109.0, %.sink.split.i36 ], [ %.sroa.0109.0, %bb.r ], [ %.sroa.0109.0, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit" ], [ %.sroa.0109.0, %bb.q ], [ %i.am, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit.else" ], [ %i.ay, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48.else" ], [ %.sroa.0109.0, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48" ] ; 4 uses
-  %.sroa.0.1.a = phi i32 [ %.sroa.0.0, %bb.b ], [ %.sroa.0.0, %bb.d ], [ %.sroa.0.0, %.sink.split.i ], [ %.sroa.0.0, %bb.g ], [ %.sroa.0.0, %.sink.split.i24 ], [ %.sroa.0.0, %bb.l ], [ %.sroa.0.0, %.sink.split.i36 ], [ %.sroa.0.0, %bb.r ], [ %i.am, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit" ], [ %.sroa.0.0, %bb.q ], [ %.sroa.0.0, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit.else" ], [ %.sroa.0.0, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48.else" ], [ %i.ay, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48" ] ; 2 uses
-  %.sroa.8.1 = phi i8 [ %.sroa.8.0180, %bb.b ], [ %.sroa.8.0180, %bb.d ], [ %.sroa.8.0180, %.sink.split.i ], [ %.sroa.8.0180, %bb.g ], [ %.sroa.8.0180, %.sink.split.i24 ], [ %.sroa.8.0180, %bb.l ], [ %.sroa.8.0180, %.sink.split.i36 ], [ %.sroa.8.0180, %bb.r ], [ 1, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit" ], [ %.sroa.8.0180, %bb.q ], [ 1, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit.else" ], [ 1, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48.else" ], [ 1, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48" ] ; 2 uses
-  %.sroa.5.1 = phi i1 [ %.sroa.5.0182, %bb.b ], [ %.sroa.5.0182, %bb.d ], [ %.sroa.5.0182, %.sink.split.i ], [ %.sroa.5.0182, %bb.g ], [ %.sroa.5.0182, %.sink.split.i24 ], [ %.sroa.5.0182, %bb.l ], [ %.sroa.5.0182, %.sink.split.i36 ], [ %.sroa.5.0182, %bb.r ], [ %.sroa.5.0182, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit" ], [ true, %bb.q ], [ %.sroa.5.0182, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit.else" ], [ %.sroa.5.0182, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48.else" ], [ %.sroa.5.0182, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48" ] ; 3 uses
-  %.sroa.0106.1 = phi i32 [ %.sroa.0106.0183, %bb.b ], [ %.sroa.0106.0183, %bb.d ], [ %.sroa.0106.0183, %.sink.split.i ], [ %.sroa.0106.0183, %bb.g ], [ %.sroa.0106.0183, %.sink.split.i24 ], [ %.sroa.0106.0183, %bb.l ], [ %.sroa.0106.0183, %.sink.split.i36 ], [ %.sroa.0106.0183, %bb.r ], [ %.sroa.0106.0183, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit" ], [ %i.bb, %bb.q ], [ %.sroa.0106.0183, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit.else" ], [ %.sroa.0106.0183, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48.else" ], [ %.sroa.0106.0183, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48" ] ; 3 uses
-  %.sroa.7.1 = phi i1 [ %.sroa.7.0184, %bb.b ], [ %.sroa.7.0184, %bb.d ], [ %.sroa.7.0184, %.sink.split.i ], [ %.sroa.7.0184, %bb.g ], [ %.sroa.7.0184, %.sink.split.i24 ], [ %.sroa.7.0184, %bb.l ], [ %.sroa.7.0184, %.sink.split.i36 ], [ %.sroa.7.0184, %bb.r ], [ true, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit" ], [ %.sroa.7.0184, %bb.q ], [ %.sroa.7.0184, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit.else" ], [ %.sroa.7.0184, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48.else" ], [ true, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48" ] ; 3 uses
-  %.1 = phi i32 [ %.0185, %bb.b ], [ %i.r, %bb.d ], [ %i.r, %.sink.split.i ], [ %.0185, %bb.g ], [ %.0185, %.sink.split.i24 ], [ %i.aa, %bb.l ], [ %i.aa, %.sink.split.i36 ], [ %.0185, %bb.r ], [ %.0185, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit" ], [ %.0185, %bb.q ], [ %.0185, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit.else" ], [ %i.ar, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48.else" ], [ %i.ar, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48" ]
+"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit": ; preds = %bb.q, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48.else", %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48", %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit.else", %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit", %bb.r, %.sink.split.i36, %bb.l, %.sink.split.i24, %bb.g, %.sink.split.i, %bb.d, %bb.b
+  %.sroa.8.1 = phi i8 [ %.sroa.8.0180, %bb.b ], [ 1, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48" ], [ %.sroa.8.0180, %.sink.split.i ], [ %.sroa.8.0180, %.sink.split.i24 ], [ %.sroa.8.0180, %.sink.split.i36 ], [ 1, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit" ], [ %.sroa.8.0180, %bb.d ], [ %.sroa.8.0180, %bb.g ], [ %.sroa.8.0180, %bb.l ], [ 1, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48.else" ], [ 1, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit.else" ], [ %.sroa.8.0180, %bb.r ], [ %.sroa.8.0180, %bb.q ] ; 2 uses
+  %.sroa.0.1.a = phi i32 [ %.sroa.0106.0183, %bb.b ], [ %i.ay, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48" ], [ %.sroa.0106.0183, %.sink.split.i ], [ %.sroa.0106.0183, %.sink.split.i24 ], [ %.sroa.0106.0183, %.sink.split.i36 ], [ %i.am, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit" ], [ %.sroa.0106.0183, %bb.d ], [ %.sroa.0106.0183, %bb.g ], [ %.sroa.0106.0183, %bb.l ], [ %.sroa.0106.0183, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48.else" ], [ %.sroa.0106.0183, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit.else" ], [ %.sroa.0106.0183, %bb.r ], [ %.sroa.0106.0183, %bb.q ] ; 4 uses
+  %.sroa.5.1 = phi i1 [ %.sroa.7.0184, %bb.b ], [ %.sroa.7.0184, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48" ], [ %.sroa.7.0184, %.sink.split.i ], [ %.sroa.7.0184, %.sink.split.i24 ], [ %.sroa.7.0184, %.sink.split.i36 ], [ %.sroa.7.0184, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit" ], [ %.sroa.7.0184, %bb.d ], [ %.sroa.7.0184, %bb.g ], [ %.sroa.7.0184, %bb.l ], [ %.sroa.7.0184, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48.else" ], [ %.sroa.7.0184, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit.else" ], [ %.sroa.7.0184, %bb.r ], [ true, %bb.q ] ; 3 uses
+  %.sroa.0108.1 = phi i32 [ %.0185, %bb.b ], [ %.0185, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48" ], [ %.0185, %.sink.split.i ], [ %.0185, %.sink.split.i24 ], [ %.0185, %.sink.split.i36 ], [ %.0185, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit" ], [ %.0185, %bb.d ], [ %.0185, %bb.g ], [ %.0185, %bb.l ], [ %.0185, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48.else" ], [ %.0185, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit.else" ], [ %.0185, %bb.r ], [ %i.bb, %bb.q ] ; 3 uses
+  %.sroa.0106.1 = phi i32 [ %.sroa.0.0, %bb.b ], [ %.sroa.0.0, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48" ], [ %.sroa.0.0, %.sink.split.i ], [ %.sroa.0.0, %.sink.split.i24 ], [ %.sroa.0.0, %.sink.split.i36 ], [ %.sroa.0.0, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit" ], [ %.sroa.0.0, %bb.d ], [ %.sroa.0.0, %bb.g ], [ %.sroa.0.0, %bb.l ], [ %i.ay, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48.else" ], [ %i.am, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit.else" ], [ %.sroa.0.0, %bb.r ], [ %.sroa.0.0, %bb.q ] ; 2 uses
+  %.sroa.7.1 = phi i1 [ %.sroa.7.0189, %bb.b ], [ %.sroa.7.0189, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48" ], [ %.sroa.7.0189, %.sink.split.i ], [ %.sroa.7.0189, %.sink.split.i24 ], [ %.sroa.7.0189, %.sink.split.i36 ], [ %.sroa.7.0189, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit" ], [ %.sroa.7.0189, %bb.d ], [ %.sroa.7.0189, %bb.g ], [ %.sroa.7.0189, %bb.l ], [ true, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48.else" ], [ true, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit.else" ], [ %.sroa.7.0189, %bb.r ], [ %.sroa.7.0189, %bb.q ] ; 3 uses
+  %.1 = phi i32 [ %.sroa.0109.0, %bb.b ], [ %i.ar, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48" ], [ %i.r, %.sink.split.i ], [ %.sroa.0109.0, %.sink.split.i24 ], [ %i.aa, %.sink.split.i36 ], [ %.sroa.0109.0, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit" ], [ %i.r, %bb.d ], [ %.sroa.0109.0, %bb.g ], [ %i.aa, %bb.l ], [ %i.ar, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit48.else" ], [ %.sroa.0109.0, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_1clEi.exit.else" ], [ %.sroa.0109.0, %bb.r ], [ %.sroa.0109.0, %bb.q ]
   %.sroa.0133.4..sroa.0133.4..sroa.0133.4..sroa.0133.4. = load i8, ptr %.sroa.0133.4..sroa_idx240, align 4, !tbaa !168 ; 2 uses
   %i.bd = trunc nuw i8 %.sroa.0133.4..sroa.0133.4..sroa.0133.4..sroa.0133.4. to i1
   %.sroa.0113.4..sroa.0113.4..sroa.0113.4..sroa.0113.4. = load i8, ptr %.sroa.0113.4..sroa_idx236, align 4 ; 2 uses
@@ -407,30 +407,30 @@ bb.u:                                             ; preds = %bb.t
   br i1 %.sroa.5.1, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
-  store i32 %.sroa.0106.1, ptr %3, align 4, !tbaa !89
+  store i32 %.sroa.0108.1, ptr %3, align 4, !tbaa !89
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u
-  %spec.select = select i1 %.sroa.7.1, i32 %.sroa.0.1.a, i32 %.sroa.0109.1
+  %spec.select = select i1 %.sroa.7.1, i32 %.sroa.0106.1, i32 %.sroa.0.1.a
   %.sroa.0113.0..sroa.0113.0..sroa.0113.0..sroa.0113.0.114 = load i64, ptr %.sroa.0113, align 8 ; 2 uses
   store i64 %.sroa.0113.0..sroa.0113.0..sroa.0113.0..sroa.0113.0.114, ptr %.sroa.0133, align 8
-  %.sroa.0106.0.insert.ext = zext i32 %.sroa.0106.1 to i64
+  %.sroa.0106.0.insert.ext = zext i32 %.sroa.0108.1 to i64
   store i64 %.sroa.0106.0.insert.ext, ptr %.sroa.0113, align 8
   %i.bh = lshr i64 %.sroa.0113.0..sroa.0113.0..sroa.0113.0..sroa.0113.0.114, 32
   %i.bi = trunc i64 %i.bh to i8
   br label %bb.x
 
 "_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_3clEv.exit": ; preds = %bb.t
-  store i32 %.sroa.0109.1, ptr %2, align 4, !tbaa !89
+  store i32 %.sroa.0.1.a, ptr %2, align 4, !tbaa !89
   br label %_ZNK4llvm20iterator_facade_baseINS_8codeview24BinaryAnnotationIteratorESt20forward_iterator_tagNS1_17DecodedAnnotationElPS4_RS4_EneERKS2_.exit
 
 bb.x:                                             ; preds = %bb.w, %bb.s, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit"
-  %.sroa.0113.4..sroa.0113.4..sroa.0113.4.117226 = phi i8 [ 0, %bb.w ], [ 1, %bb.s ], [ %.sroa.0113.4..sroa.0113.4..sroa.0113.4..sroa.0113.4., %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit" ]
-  %.sroa.0133.4..sroa.0133.4..sroa.0133.4.141224 = phi i8 [ %i.bi, %bb.w ], [ 1, %bb.s ], [ %.sroa.0133.4..sroa.0133.4..sroa.0133.4..sroa.0133.4., %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit" ]
-  %.sroa.0109.3 = phi i32 [ %spec.select, %bb.w ], [ %.sroa.0109.1, %bb.s ], [ %.sroa.0109.1, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit" ]
-  %.sroa.8.5.ph = phi i8 [ 1, %bb.w ], [ 0, %bb.s ], [ %.sroa.8.1, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit" ]
-  %.sroa.5.3.ph = phi i1 [ false, %bb.w ], [ %.sroa.5.1, %bb.s ], [ %.sroa.5.1, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit" ]
-  %.sroa.7.5.ph = phi i1 [ false, %bb.w ], [ %.sroa.7.1, %bb.s ], [ %.sroa.7.1, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit" ]
+  %.sroa.0113.4..sroa.0113.4..sroa.0113.4.117226 = phi i8 [ %.sroa.0113.4..sroa.0113.4..sroa.0113.4..sroa.0113.4., %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit" ], [ 0, %bb.w ], [ 1, %bb.s ]
+  %.sroa.0133.4..sroa.0133.4..sroa.0133.4.141224 = phi i8 [ %.sroa.0133.4..sroa.0133.4..sroa.0133.4..sroa.0133.4., %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit" ], [ %i.bi, %bb.w ], [ 1, %bb.s ]
+  %.sroa.8.5.ph = phi i8 [ %.sroa.8.1, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit" ], [ 1, %bb.w ], [ 0, %bb.s ]
+  %.sroa.0111.5.ph = phi i32 [ %.sroa.0.1.a, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit" ], [ %spec.select, %bb.w ], [ %.sroa.0.1.a, %bb.s ]
+  %.sroa.5.3.ph = phi i1 [ %.sroa.5.1, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit" ], [ false, %bb.w ], [ %.sroa.5.1, %bb.s ]
+  %.sroa.7.5.ph = phi i1 [ %.sroa.7.1, %"_ZZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_ENK3$_0clEj.exit" ], [ false, %bb.w ], [ %.sroa.7.1, %bb.s ]
   %i.bj = call noundef zeroext i1 @_ZN4llvm8codeview24BinaryAnnotationIterator22ParseCurrentAnnotationEv(ptr noundef nonnull align 8 dereferenceable(88) %4)
   br i1 %i.bj, label %_ZN4llvm8codeview24BinaryAnnotationIteratorppEv.exit, label %_ZNK4llvm20iterator_facade_baseINS_8codeview24BinaryAnnotationIteratorESt20forward_iterator_tagNS1_17DecodedAnnotationElPS4_RS4_EneERKS2_.exit
 

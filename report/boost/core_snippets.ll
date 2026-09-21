@@ -204,7 +204,7 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
   %i.c = load ptr, ptr %0, align 8, !tbaa !476, !nonnull !64, !align !65 ; 9 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 48
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !460, !noalias !1490 ; 11 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !460, !noalias !1490 ; 10 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 56 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 80
   %i.h = load i8, ptr %i.g, align 8, !tbaa !462, !noalias !1490 ; 2 uses
@@ -362,46 +362,45 @@ bb.l:                                             ; preds = %bb.a
   store i8 %i.h, ptr %i.bj, align 8, !tbaa !462
   br label %bb.m
 
-bb.m:                                             ; preds = %_ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_cat_viewIJNS2_6detail11buffers_refINS4_IJNS0_12const_bufferES7_S7_NS2_4http12basic_fieldsISaIcEE6writer11field_rangeENS8_10chunk_crlfEEEEEENS2_18basic_multi_bufferISA_E8subrangeILb0EEEEEEEEEEDTcldtfp_5beginEERKT_NS0_10constraintIXntsr14is_convertibleIPSP_PKNS0_14mutable_bufferEEE5valueEiE4typeENSR_IXntsr14is_convertibleISS_PKS7_EE5valueEiE4typeENSR_IXntsr14is_convertibleISO_ST_EE5valueEiE4typeENSR_IXntsr14is_convertibleISO_S7_EE5valueEiE4typeE.exit.thread57, %.sink.split.i.i.i.i.i.i
-  %i.bm = phi ptr [ %i.bj, %.sink.split.i.i.i.i.i.i ], [ %i.k, %_ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_cat_viewIJNS2_6detail11buffers_refINS4_IJNS0_12const_bufferES7_S7_NS2_4http12basic_fieldsISaIcEE6writer11field_rangeENS8_10chunk_crlfEEEEEENS2_18basic_multi_bufferISA_E8subrangeILb0EEEEEEEEEEDTcldtfp_5beginEERKT_NS0_10constraintIXntsr14is_convertibleIPSP_PKNS0_14mutable_bufferEEE5valueEiE4typeENSR_IXntsr14is_convertibleISS_PKS7_EE5valueEiE4typeENSR_IXntsr14is_convertibleISO_ST_EE5valueEiE4typeENSR_IXntsr14is_convertibleISO_S7_EE5valueEiE4typeE.exit.thread57 ] ; 2 uses
-  %i.bn = phi ptr [ %i.bk, %.sink.split.i.i.i.i.i.i ], [ %i.j, %_ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_cat_viewIJNS2_6detail11buffers_refINS4_IJNS0_12const_bufferES7_S7_NS2_4http12basic_fieldsISaIcEE6writer11field_rangeENS8_10chunk_crlfEEEEEENS2_18basic_multi_bufferISA_E8subrangeILb0EEEEEEEEEEDTcldtfp_5beginEERKT_NS0_10constraintIXntsr14is_convertibleIPSP_PKNS0_14mutable_bufferEEE5valueEiE4typeENSR_IXntsr14is_convertibleISS_PKS7_EE5valueEiE4typeENSR_IXntsr14is_convertibleISO_ST_EE5valueEiE4typeENSR_IXntsr14is_convertibleISO_S7_EE5valueEiE4typeE.exit.thread57 ] ; 3 uses
-  %i.bo = phi ptr [ %i.bl, %.sink.split.i.i.i.i.i.i ], [ %i.i, %_ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_cat_viewIJNS2_6detail11buffers_refINS4_IJNS0_12const_bufferES7_S7_NS2_4http12basic_fieldsISaIcEE6writer11field_rangeENS8_10chunk_crlfEEEEEENS2_18basic_multi_bufferISA_E8subrangeILb0EEEEEEEEEEDTcldtfp_5beginEERKT_NS0_10constraintIXntsr14is_convertibleIPSP_PKNS0_14mutable_bufferEEE5valueEiE4typeENSR_IXntsr14is_convertibleISS_PKS7_EE5valueEiE4typeENSR_IXntsr14is_convertibleISO_ST_EE5valueEiE4typeENSR_IXntsr14is_convertibleISO_S7_EE5valueEiE4typeE.exit.thread57 ] ; 2 uses
-  %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
+bb.m:                                             ; preds = %.sink.split.i.i.i.i.i.i, %_ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_cat_viewIJNS2_6detail11buffers_refINS4_IJNS0_12const_bufferES7_S7_NS2_4http12basic_fieldsISaIcEE6writer11field_rangeENS8_10chunk_crlfEEEEEENS2_18basic_multi_bufferISA_E8subrangeILb0EEEEEEEEEEDTcldtfp_5beginEERKT_NS0_10constraintIXntsr14is_convertibleIPSP_PKNS0_14mutable_bufferEEE5valueEiE4typeENSR_IXntsr14is_convertibleISS_PKS7_EE5valueEiE4typeENSR_IXntsr14is_convertibleISO_ST_EE5valueEiE4typeENSR_IXntsr14is_convertibleISO_S7_EE5valueEiE4typeE.exit.thread57
+  %i.bm = phi ptr [ %i.k, %_ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_cat_viewIJNS2_6detail11buffers_refINS4_IJNS0_12const_bufferES7_S7_NS2_4http12basic_fieldsISaIcEE6writer11field_rangeENS8_10chunk_crlfEEEEEENS2_18basic_multi_bufferISA_E8subrangeILb0EEEEEEEEEEDTcldtfp_5beginEERKT_NS0_10constraintIXntsr14is_convertibleIPSP_PKNS0_14mutable_bufferEEE5valueEiE4typeENSR_IXntsr14is_convertibleISS_PKS7_EE5valueEiE4typeENSR_IXntsr14is_convertibleISO_ST_EE5valueEiE4typeENSR_IXntsr14is_convertibleISO_S7_EE5valueEiE4typeE.exit.thread57 ], [ %i.bj, %.sink.split.i.i.i.i.i.i ] ; 2 uses
+  %i.bn = phi ptr [ %i.j, %_ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_cat_viewIJNS2_6detail11buffers_refINS4_IJNS0_12const_bufferES7_S7_NS2_4http12basic_fieldsISaIcEE6writer11field_rangeENS8_10chunk_crlfEEEEEENS2_18basic_multi_bufferISA_E8subrangeILb0EEEEEEEEEEDTcldtfp_5beginEERKT_NS0_10constraintIXntsr14is_convertibleIPSP_PKNS0_14mutable_bufferEEE5valueEiE4typeENSR_IXntsr14is_convertibleISS_PKS7_EE5valueEiE4typeENSR_IXntsr14is_convertibleISO_ST_EE5valueEiE4typeENSR_IXntsr14is_convertibleISO_S7_EE5valueEiE4typeE.exit.thread57 ], [ %i.bk, %.sink.split.i.i.i.i.i.i ] ; 3 uses
+  %i.bo = phi ptr [ %i.i, %_ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_cat_viewIJNS2_6detail11buffers_refINS4_IJNS0_12const_bufferES7_S7_NS2_4http12basic_fieldsISaIcEE6writer11field_rangeENS8_10chunk_crlfEEEEEENS2_18basic_multi_bufferISA_E8subrangeILb0EEEEEEEEEEDTcldtfp_5beginEERKT_NS0_10constraintIXntsr14is_convertibleIPSP_PKNS0_14mutable_bufferEEE5valueEiE4typeENSR_IXntsr14is_convertibleISS_PKS7_EE5valueEiE4typeENSR_IXntsr14is_convertibleISO_ST_EE5valueEiE4typeENSR_IXntsr14is_convertibleISO_S7_EE5valueEiE4typeE.exit.thread57 ], [ %i.bl, %.sink.split.i.i.i.i.i.i ] ; 6 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 40 ; 2 uses
   store ptr %i.c, ptr %i.bp, align 8, !tbaa !477
   %i.bq = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %i.br = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 7 uses
-  %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 7 uses
+  %i.bt = getelementptr inbounds nuw i8, ptr %i.bo, i64 16 ; 7 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
-  %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %i.bv = getelementptr inbounds nuw i8, ptr %i.bo, i64 24
   %i.bw = getelementptr inbounds nuw i8, ptr %3, i64 40
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.ab, %bb.m
-  %.pre46 = phi ptr [ %i.e, %bb.m ], [ %.pre46.pre, %bb.ab ] ; 2 uses
   %i.bx = phi ptr [ %i.c, %bb.m ], [ %.pre, %bb.ab ] ; 2 uses
   %.011 = phi i64 [ %1, %bb.m ], [ %i.cq, %bb.ab ] ; 4 uses
   %i.by = icmp eq ptr %i.bx, %i.c
-  br i1 %i.by, label %bb.o, label %._crit_edge
+  br i1 %i.by, label %._crit_edge, label %bb.p
 
 ._crit_edge:                                      ; preds = %bb.n
-  %.pre47 = load i8, ptr %i.bm, align 8, !tbaa !462, !noalias !1491
-  br label %bb.p
+  %4 = load ptr, ptr %i.bo, align 8, !tbaa !460
+  %5 = icmp eq ptr %4, %i.c
+  br i1 %5, label %bb.o, label %bb.p
 
-bb.o:                                             ; preds = %bb.n
-  %4 = icmp eq ptr %.pre46, %i.c
-  %.pre48 = load i8, ptr %i.bm, align 8, !tbaa !462 ; 2 uses
+bb.o:                                             ; preds = %._crit_edge
+  %.pre48 = load i8, ptr %i.bm, align 8, !tbaa !462
   %.not.i.i.i.i = icmp eq i8 %.pre48, 3
-  %or.cond = select i1 %4, i1 %.not.i.i.i.i, i1 false
-  br i1 %or.cond, label %.loopexit, label %bb.p
+  br i1 %.not.i.i.i.i, label %.loopexit, label %bb.p
 
-bb.p:                                             ; preds = %._crit_edge, %bb.o
-  %5 = phi i8 [ %.pre47, %._crit_edge ], [ %.pre48, %bb.o ] ; 3 uses
+bb.p:                                             ; preds = %bb.n, %._crit_edge, %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #32
   call void @llvm.experimental.noalias.scope.decl(metadata !1491)
-  store ptr %.pre46, ptr %3, align 8, !tbaa !460, !alias.scope !1491
+  %6 = load ptr, ptr %i.bo, align 8, !tbaa !460, !noalias !1491
+  store ptr %6, ptr %3, align 8, !tbaa !460, !alias.scope !1491
   store i8 0, ptr %i.br, align 8, !tbaa !462, !alias.scope !1491
-  switch i8 %5, label %bb.q [
+  %7 = load i8, ptr %i.bm, align 8, !tbaa !462, !noalias !1491 ; 3 uses
+  switch i8 %7, label %bb.q [
     i8 0, label %_ZN5boost5beast14buffers_suffixINS0_16buffers_cat_viewIJNS0_6detail11buffers_refINS2_IJNS_4asio12const_bufferES6_S6_NS0_4http12basic_fieldsISaIcEE6writer11field_rangeENS7_10chunk_crlfEEEEEENS0_18basic_multi_bufferIS9_E8subrangeILb0EEEEEEE14const_iteratorC2ERKSM_.exit.i
     i8 1, label %bb.r
     i8 2, label %bb.z
@@ -476,12 +475,12 @@ bb.aa:                                            ; preds = %bb.p
   br label %.sink.split.i.i.i.i.i.i.i
 
 .sink.split.i.i.i.i.i.i.i:                        ; preds = %bb.aa, %bb.z, %.sink.split.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.r
-  store i8 %5, ptr %i.br, align 8, !tbaa !462, !alias.scope !1491
+  store i8 %7, ptr %i.br, align 8, !tbaa !462, !alias.scope !1491
   br label %_ZN5boost5beast14buffers_suffixINS0_16buffers_cat_viewIJNS0_6detail11buffers_refINS2_IJNS_4asio12const_bufferES6_S6_NS0_4http12basic_fieldsISaIcEE6writer11field_rangeENS7_10chunk_crlfEEEEEENS0_18basic_multi_bufferIS9_E8subrangeILb0EEEEEEE14const_iteratorC2ERKSM_.exit.i
 
 _ZN5boost5beast14buffers_suffixINS0_16buffers_cat_viewIJNS0_6detail11buffers_refINS2_IJNS_4asio12const_bufferES6_S6_NS0_4http12basic_fieldsISaIcEE6writer11field_rangeENS7_10chunk_crlfEEEEEENS0_18basic_multi_bufferIS9_E8subrangeILb0EEEEEEE14const_iteratorC2ERKSM_.exit.i: ; preds = %.sink.split.i.i.i.i.i.i.i, %bb.p
   store ptr %i.bx, ptr %i.bw, align 8, !tbaa !477, !alias.scope !1491
-  %i.ck = zext nneg i8 %5 to i64
+  %i.ck = zext nneg i8 %7 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #32, !noalias !1491
   store ptr %i.bo, ptr %2, align 8, !tbaa !478, !noalias !1491
   call void @_ZN5boost4mp116detail19mp_with_index_impl_ILm4EE4callILm0ENS_5beast16buffers_cat_viewIJNS5_6detail11buffers_refINS6_IJNS_4asio12const_bufferESA_SA_NS5_4http12basic_fieldsISaIcEE6writer11field_rangeENSB_10chunk_crlfEEEEEENS5_18basic_multi_bufferISD_E8subrangeILb0EEEEE14const_iterator9incrementEEEDTclclsr3stdE7declvalIT0_EEclL_ZSt7declvalISt17integral_constantImLm0EEEDTcl9__declvalIT_ELi0EEEvEEEEmOSR_(i64 noundef %i.ck, ptr noundef nonnull align 8 dereferenceable(8) %2)
@@ -506,7 +505,6 @@ bb.ab:                                            ; preds = %_ZN5boost5beast14bu
   %i.cs = add i64 %i.cr, %i.cm
   store i64 %i.cs, ptr %i.a, align 8, !tbaa !475
   %.pre = load ptr, ptr %i.bp, align 8, !tbaa !477
-  %.pre46.pre = load ptr, ptr %i.bo, align 8, !tbaa !460
   br label %bb.n
 
 .loopexit:                                        ; preds = %bb.o, %.thread37
@@ -909,7 +907,7 @@ _ZN5boost4asio21buffer_sequence_beginINS_5beast6detail11buffers_refINS2_19buffer
   store ptr %i.i, ptr %3, align 8, !alias.scope !1887
   %.sroa.4.0..sroa_idx24.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 %i.k, ptr %.sroa.4.0..sroa_idx24.i, align 8, !alias.scope !1887
-  %i.r = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.r = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   store ptr %i.n, ptr %i.r, align 8, !tbaa !485, !alias.scope !1887
   %i.s = getelementptr inbounds nuw i8, ptr %3, i64 48
   store i8 0, ptr %i.s, align 8, !tbaa !486, !alias.scope !1887
@@ -937,7 +935,7 @@ bb.d:                                             ; preds = %bb.b
   store ptr %i.i, ptr %3, align 8, !alias.scope !1887
   %.sroa.4.0..sroa_idx1658.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 %i.k, ptr %.sroa.4.0..sroa_idx1658.i, align 8, !alias.scope !1887
-  %i.x = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.x = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   store ptr %i.n, ptr %i.x, align 8, !tbaa !485, !alias.scope !1887
   %i.y = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
@@ -955,7 +953,7 @@ bb.f:                                             ; preds = %bb.d
   store ptr %i.i, ptr %3, align 8, !alias.scope !1887
   %.sroa.4.0..sroa_idx1662.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 %i.k, ptr %.sroa.4.0..sroa_idx1662.i, align 8, !alias.scope !1887
-  %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   store ptr %i.n, ptr %i.ac, align 8, !tbaa !485, !alias.scope !1887
   %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
@@ -970,7 +968,7 @@ bb.g:                                             ; preds = %bb.d
   store ptr %i.i, ptr %3, align 8, !alias.scope !1887
   %.sroa.4.0..sroa_idx1669.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 %i.k, ptr %.sroa.4.0..sroa_idx1669.i, align 8, !alias.scope !1887
-  %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   store ptr %i.n, ptr %i.ah, align 8, !tbaa !485, !alias.scope !1887
   %i.ai = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
@@ -985,7 +983,7 @@ bb.h:                                             ; preds = %bb.d
   store ptr %i.i, ptr %3, align 8, !alias.scope !1887
   %.sroa.4.0..sroa_idx1675.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 %i.k, ptr %.sroa.4.0..sroa_idx1675.i, align 8, !alias.scope !1887
-  %i.am = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.am = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   store ptr %i.n, ptr %i.am, align 8, !tbaa !485, !alias.scope !1887
   %i.an = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ao = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
@@ -1000,7 +998,7 @@ bb.i:                                             ; preds = %bb.d
   store ptr %i.i, ptr %3, align 8, !alias.scope !1887
   %.sroa.4.0..sroa_idx1681.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 %i.k, ptr %.sroa.4.0..sroa_idx1681.i, align 8, !alias.scope !1887
-  %i.ar = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.ar = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   store ptr %i.n, ptr %i.ar, align 8, !tbaa !485, !alias.scope !1887
   %i.as = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.at = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
@@ -1015,7 +1013,7 @@ bb.j:                                             ; preds = %bb.d
   store ptr %i.i, ptr %3, align 8, !alias.scope !1887
   %.sroa.4.0..sroa_idx1687.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 %i.k, ptr %.sroa.4.0..sroa_idx1687.i, align 8, !alias.scope !1887
-  %i.aw = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.aw = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   store ptr %i.n, ptr %i.aw, align 8, !tbaa !485, !alias.scope !1887
   %i.ax = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ay = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
@@ -1030,7 +1028,7 @@ bb.k:                                             ; preds = %bb.d
   store ptr %i.i, ptr %3, align 8, !alias.scope !1887
   %.sroa.4.0..sroa_idx16.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 %i.k, ptr %.sroa.4.0..sroa_idx16.i, align 8, !alias.scope !1887
-  %i.bb = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.bb = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   store ptr %i.n, ptr %i.bb, align 8, !tbaa !485, !alias.scope !1887
   %i.bc = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.bd = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
@@ -1042,6 +1040,7 @@ bb.k:                                             ; preds = %bb.d
 
 .sink.split.i.i.i.i.i.i.i.i.i.i.i.i:              ; preds = %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f
   %i.bf = phi ptr [ %i.bd, %bb.k ], [ %i.ay, %bb.j ], [ %i.at, %bb.i ], [ %i.ao, %bb.h ], [ %i.aj, %bb.g ], [ %i.ae, %bb.f ]
+  %5 = phi ptr [ %i.bb, %bb.k ], [ %i.aw, %bb.j ], [ %i.ar, %bb.i ], [ %i.am, %bb.h ], [ %i.ah, %bb.g ], [ %i.ac, %bb.f ]
   %i.bg = getelementptr inbounds nuw i8, ptr %3, i64 40
   store i8 %i.w, ptr %i.bg, align 8, !tbaa !455, !alias.scope !1887
   br label %.sink.split.i.i.i.i.i.i
@@ -1051,7 +1050,7 @@ bb.l:                                             ; preds = %bb.b
   store ptr %i.i, ptr %3, align 8, !alias.scope !1887
   %.sroa.4.0..sroa_idx29.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 %i.k, ptr %.sroa.4.0..sroa_idx29.i, align 8, !alias.scope !1887
-  %i.bi = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.bi = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   store ptr %i.n, ptr %i.bi, align 8, !tbaa !485, !alias.scope !1887
   %i.bj = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.bk = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
@@ -1064,7 +1063,7 @@ bb.m:                                             ; preds = %bb.b
   store ptr %i.i, ptr %3, align 8, !alias.scope !1887
   %.sroa.4.0..sroa_idx35.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 %i.k, ptr %.sroa.4.0..sroa_idx35.i, align 8, !alias.scope !1887
-  %i.bm = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.bm = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   store ptr %i.n, ptr %i.bm, align 8, !tbaa !485, !alias.scope !1887
   %i.bn = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.bo = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
@@ -1077,7 +1076,7 @@ bb.n:                                             ; preds = %bb.b
   store ptr %i.i, ptr %3, align 8, !alias.scope !1887
   %.sroa.4.0..sroa_idx41.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 %i.k, ptr %.sroa.4.0..sroa_idx41.i, align 8, !alias.scope !1887
-  %i.bq = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.bq = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   store ptr %i.n, ptr %i.bq, align 8, !tbaa !485, !alias.scope !1887
   %i.br = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.bs = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
@@ -1089,7 +1088,7 @@ bb.o:                                             ; preds = %bb.b
   store ptr %i.i, ptr %3, align 8, !alias.scope !1887
   %.sroa.4.0..sroa_idx47.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 %i.k, ptr %.sroa.4.0..sroa_idx47.i, align 8, !alias.scope !1887
-  %i.bt = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.bt = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   store ptr %i.n, ptr %i.bt, align 8, !tbaa !485, !alias.scope !1887
   %i.bu = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.bv = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
@@ -1103,7 +1102,7 @@ bb.p:                                             ; preds = %bb.b
   store ptr %i.i, ptr %3, align 8, !alias.scope !1887
   %.sroa.4.0..sroa_idx54.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 %i.k, ptr %.sroa.4.0..sroa_idx54.i, align 8, !alias.scope !1887
-  %i.by = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.by = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   store ptr %i.n, ptr %i.by, align 8, !tbaa !485, !alias.scope !1887
   %i.bz = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ca = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
@@ -1116,7 +1115,7 @@ bb.q:                                             ; preds = %bb.b
   store ptr %i.i, ptr %3, align 8, !alias.scope !1887
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 %i.k, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !1887
-  %i.cc = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.cc = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   store ptr %i.n, ptr %i.cc, align 8, !tbaa !485, !alias.scope !1887
   %i.cd = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ce = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
@@ -1126,11 +1125,13 @@ bb.q:                                             ; preds = %bb.b
 
 .sink.split.i.i.i.i.i.i:                          ; preds = %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %.sink.split.i.i.i.i.i.i.i.i.i.i.i.i, %.thread.i
   %i.cf = phi ptr [ %i.ce, %bb.q ], [ %i.ca, %bb.p ], [ %i.bv, %bb.o ], [ %i.bs, %bb.n ], [ %i.bo, %bb.m ], [ %i.bk, %bb.l ], [ %i.bf, %.sink.split.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.z, %.thread.i ]
+  %6 = phi ptr [ %i.cc, %bb.q ], [ %i.by, %bb.p ], [ %i.bt, %bb.o ], [ %i.bq, %bb.n ], [ %i.bm, %bb.m ], [ %i.bi, %bb.l ], [ %5, %.sink.split.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.x, %.thread.i ]
   store i8 %i.q, ptr %i.cf, align 8, !tbaa !486, !alias.scope !1887
   br label %_ZNK5boost5beast6detail21buffers_range_adaptorIRKNS1_11buffers_refINS0_19buffers_prefix_viewIRKNS0_14buffers_suffixINS0_16buffers_cat_viewIJNS3_INS6_IJNS_4asio12const_bufferES8_S8_NS0_4http12basic_fieldsISaIcEE6writer11field_rangeENS9_10chunk_crlfEEEEEENS9_6detail10chunk_sizeES8_SF_NS0_18basic_multi_bufferISB_E8subrangeILb0EEESF_EEEEEEEEEE5beginEv.exit
 
 _ZNK5boost5beast6detail21buffers_range_adaptorIRKNS1_11buffers_refINS0_19buffers_prefix_viewIRKNS0_14buffers_suffixINS0_16buffers_cat_viewIJNS3_INS6_IJNS_4asio12const_bufferES8_S8_NS0_4http12basic_fieldsISaIcEE6writer11field_rangeENS9_10chunk_crlfEEEEEENS9_6detail10chunk_sizeES8_SF_NS0_18basic_multi_bufferISB_E8subrangeILb0EEESF_EEEEEEEEEE5beginEv.exit: ; preds = %_ZN5boost4asio21buffer_sequence_beginINS_5beast6detail11buffers_refINS2_19buffers_prefix_viewIRKNS2_14buffers_suffixINS2_16buffers_cat_viewIJNS4_INS7_IJNS0_12const_bufferES8_S8_NS2_4http12basic_fieldsISaIcEE6writer11field_rangeENS9_10chunk_crlfEEEEEENS9_6detail10chunk_sizeES8_SF_NS2_18basic_multi_bufferISB_E8subrangeILb0EEESF_EEEEEEEEEEEDTcldtfp_5beginEERKT_NS0_10constraintIXntsr14is_convertibleIPSW_PKNS0_14mutable_bufferEEE5valueEiE4typeENSY_IXntsr14is_convertibleISZ_PKS8_EE5valueEiE4typeENSY_IXntsr14is_convertibleISV_S10_EE5valueEiE4typeENSY_IXntsr14is_convertibleISV_S8_EE5valueEiE4typeE.exit.thread20.i, %.sink.split.i.i.i.i.i.i
-  %i.cg = getelementptr inbounds nuw i8, ptr %3, i64 56 ; 2 uses
+  %7 = phi ptr [ %i.r, %_ZN5boost4asio21buffer_sequence_beginINS_5beast6detail11buffers_refINS2_19buffers_prefix_viewIRKNS2_14buffers_suffixINS2_16buffers_cat_viewIJNS4_INS7_IJNS0_12const_bufferES8_S8_NS2_4http12basic_fieldsISaIcEE6writer11field_rangeENS9_10chunk_crlfEEEEEENS9_6detail10chunk_sizeES8_SF_NS2_18basic_multi_bufferISB_E8subrangeILb0EEESF_EEEEEEEEEEEDTcldtfp_5beginEERKT_NS0_10constraintIXntsr14is_convertibleIPSW_PKNS0_14mutable_bufferEEE5valueEiE4typeENSY_IXntsr14is_convertibleISZ_PKS8_EE5valueEiE4typeENSY_IXntsr14is_convertibleISV_S10_EE5valueEiE4typeENSY_IXntsr14is_convertibleISV_S8_EE5valueEiE4typeE.exit.thread20.i ], [ %6, %.sink.split.i.i.i.i.i.i ]
+  %i.cg = getelementptr inbounds nuw i8, ptr %7, i64 40
   store ptr %i.l, ptr %i.cg, align 8, !tbaa !562, !alias.scope !1887
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #32
   %i.ch = getelementptr inbounds nuw i8, ptr %i.i, i64 16
@@ -1412,6 +1413,7 @@ _ZNK5boost5beast6detail21buffers_range_adaptorIRKNS1_11buffers_refINS0_19buffers
   %i.gk = phi ptr [ %i.cp, %_ZN5boost4asio19buffer_sequence_endINS_5beast6detail11buffers_refINS2_19buffers_prefix_viewIRKNS2_14buffers_suffixINS2_16buffers_cat_viewIJNS4_INS7_IJNS0_12const_bufferES8_S8_NS2_4http12basic_fieldsISaIcEE6writer11field_rangeENS9_10chunk_crlfEEEEEENS9_6detail10chunk_sizeES8_SF_NS2_18basic_multi_bufferISB_E8subrangeILb0EEESF_EEEEEEEEEEEDTcldtfp_3endEERKT_NS0_10constraintIXntsr14is_convertibleIPSW_PKNS0_14mutable_bufferEEE5valueEiE4typeENSY_IXntsr14is_convertibleISZ_PKS8_EE5valueEiE4typeENSY_IXntsr14is_convertibleISV_S10_EE5valueEiE4typeENSY_IXntsr14is_convertibleISV_S8_EE5valueEiE4typeE.exit.thread26.i ], [ %i.gi, %.sink.split.i.i.i.i.i1.i ]
   %i.gl = getelementptr inbounds nuw i8, ptr %i.gj, i64 40
   store ptr %i.gk, ptr %i.gl, align 8, !tbaa !562, !alias.scope !1889
+  %8 = getelementptr inbounds nuw i8, ptr %3, i64 56
   %i.gm = getelementptr inbounds nuw i8, ptr %4, i64 56
   %i.gn = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.go = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
@@ -1434,7 +1436,7 @@ _ZN5boost5beast6detail21buffers_range_adaptorIRKNS1_11buffers_refINS0_19buffers_
   br i1 %i.ha, label %bb.ag, label %.thread
 
 bb.ag:                                            ; preds = %_ZN5boost5beast6detail21buffers_range_adaptorIRKNS1_11buffers_refINS0_19buffers_prefix_viewIRKNS0_14buffers_suffixINS0_16buffers_cat_viewIJNS3_INS6_IJNS_4asio12const_bufferES8_S8_NS0_4http12basic_fieldsISaIcEE6writer11field_rangeENS9_10chunk_crlfEEEEEENS9_6detail10chunk_sizeES8_SF_NS0_18basic_multi_bufferISB_E8subrangeILb0EEESF_EEEEEEEEEE14const_iteratorppEv.exit
-  %i.hb = load ptr, ptr %i.cg, align 8, !tbaa !562
+  %i.hb = load ptr, ptr %8, align 8, !tbaa !562
   %i.hc = load ptr, ptr %i.gm, align 8, !tbaa !562
   %i.hd = icmp eq ptr %i.hb, %i.hc
   br i1 %i.hd, label %bb.ah, label %.thread
@@ -1575,7 +1577,7 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
   %i.c = load ptr, ptr %0, align 8, !tbaa !585, !nonnull !64, !align !65 ; 9 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 96
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !485, !noalias !1895 ; 15 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !485, !noalias !1895 ; 14 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 104 ; 7 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 128
   %i.h = load i8, ptr %i.g, align 8, !tbaa !486, !noalias !1895 ; 2 uses
@@ -1780,42 +1782,41 @@ bb.p:                                             ; preds = %bb.a
 bb.q:                                             ; preds = %_ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_cat_viewIJNS2_6detail11buffers_refINS4_IJNS0_12const_bufferES7_S7_NS2_4http12basic_fieldsISaIcEE6writer11field_rangeENS8_10chunk_crlfEEEEEENS8_6detail10chunk_sizeES7_SE_NS2_18basic_multi_bufferISA_E8subrangeILb0EEESE_EEEEEEEDTcldtfp_5beginEERKT_NS0_10constraintIXntsr14is_convertibleIPSR_PKNS0_14mutable_bufferEEE5valueEiE4typeENST_IXntsr14is_convertibleISU_PKS7_EE5valueEiE4typeENST_IXntsr14is_convertibleISQ_SV_EE5valueEiE4typeENST_IXntsr14is_convertibleISQ_S7_EE5valueEiE4typeE.exit.thread65, %.sink.split.i.i.i.i
   %i.cc = phi ptr [ %i.k, %_ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_cat_viewIJNS2_6detail11buffers_refINS4_IJNS0_12const_bufferES7_S7_NS2_4http12basic_fieldsISaIcEE6writer11field_rangeENS8_10chunk_crlfEEEEEENS8_6detail10chunk_sizeES7_SE_NS2_18basic_multi_bufferISA_E8subrangeILb0EEESE_EEEEEEEDTcldtfp_5beginEERKT_NS0_10constraintIXntsr14is_convertibleIPSR_PKNS0_14mutable_bufferEEE5valueEiE4typeENST_IXntsr14is_convertibleISU_PKS7_EE5valueEiE4typeENST_IXntsr14is_convertibleISQ_SV_EE5valueEiE4typeENST_IXntsr14is_convertibleISQ_S7_EE5valueEiE4typeE.exit.thread65 ], [ %i.bz, %.sink.split.i.i.i.i ] ; 2 uses
   %i.cd = phi ptr [ %i.j, %_ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_cat_viewIJNS2_6detail11buffers_refINS4_IJNS0_12const_bufferES7_S7_NS2_4http12basic_fieldsISaIcEE6writer11field_rangeENS8_10chunk_crlfEEEEEENS8_6detail10chunk_sizeES7_SE_NS2_18basic_multi_bufferISA_E8subrangeILb0EEESE_EEEEEEEDTcldtfp_5beginEERKT_NS0_10constraintIXntsr14is_convertibleIPSR_PKNS0_14mutable_bufferEEE5valueEiE4typeENST_IXntsr14is_convertibleISU_PKS7_EE5valueEiE4typeENST_IXntsr14is_convertibleISQ_SV_EE5valueEiE4typeENST_IXntsr14is_convertibleISQ_S7_EE5valueEiE4typeE.exit.thread65 ], [ %i.ca, %.sink.split.i.i.i.i ] ; 7 uses
-  %i.ce = phi ptr [ %i.i, %_ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_cat_viewIJNS2_6detail11buffers_refINS4_IJNS0_12const_bufferES7_S7_NS2_4http12basic_fieldsISaIcEE6writer11field_rangeENS8_10chunk_crlfEEEEEENS8_6detail10chunk_sizeES7_SE_NS2_18basic_multi_bufferISA_E8subrangeILb0EEESE_EEEEEEEDTcldtfp_5beginEERKT_NS0_10constraintIXntsr14is_convertibleIPSR_PKNS0_14mutable_bufferEEE5valueEiE4typeENST_IXntsr14is_convertibleISU_PKS7_EE5valueEiE4typeENST_IXntsr14is_convertibleISQ_SV_EE5valueEiE4typeENST_IXntsr14is_convertibleISQ_S7_EE5valueEiE4typeE.exit.thread65 ], [ %i.cb, %.sink.split.i.i.i.i ] ; 2 uses
-  %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
+  %i.ce = phi ptr [ %i.i, %_ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_cat_viewIJNS2_6detail11buffers_refINS4_IJNS0_12const_bufferES7_S7_NS2_4http12basic_fieldsISaIcEE6writer11field_rangeENS8_10chunk_crlfEEEEEENS8_6detail10chunk_sizeES7_SE_NS2_18basic_multi_bufferISA_E8subrangeILb0EEESE_EEEEEEEDTcldtfp_5beginEERKT_NS0_10constraintIXntsr14is_convertibleIPSR_PKNS0_14mutable_bufferEEE5valueEiE4typeENST_IXntsr14is_convertibleISU_PKS7_EE5valueEiE4typeENST_IXntsr14is_convertibleISQ_SV_EE5valueEiE4typeENST_IXntsr14is_convertibleISQ_S7_EE5valueEiE4typeE.exit.thread65 ], [ %i.cb, %.sink.split.i.i.i.i ] ; 6 uses
+  %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 40 ; 2 uses
   store ptr %i.c, ptr %i.cf, align 8, !tbaa !562
   %i.cg = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 7 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 7 uses
-  %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 7 uses
+  %i.cj = getelementptr inbounds nuw i8, ptr %i.ce, i64 16 ; 7 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
-  %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %i.cl = getelementptr inbounds nuw i8, ptr %i.ce, i64 24
   %i.cm = getelementptr inbounds nuw i8, ptr %3, i64 40
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.aj, %bb.q
-  %.pre54 = phi ptr [ %i.e, %bb.q ], [ %.pre54.pre, %bb.aj ] ; 2 uses
   %i.cn = phi ptr [ %i.c, %bb.q ], [ %.pre, %bb.aj ] ; 2 uses
   %.011 = phi i64 [ %1, %bb.q ], [ %i.dk, %bb.aj ] ; 4 uses
   %i.co = icmp eq ptr %i.cn, %i.c
-  br i1 %i.co, label %bb.s, label %._crit_edge
+  br i1 %i.co, label %._crit_edge, label %bb.t
 
 ._crit_edge:                                      ; preds = %bb.r
-  %.pre55 = load i8, ptr %i.cc, align 8, !tbaa !486
-  br label %bb.t
+  %4 = load ptr, ptr %i.ce, align 8, !tbaa !485
+  %5 = icmp eq ptr %4, %i.c
+  br i1 %5, label %bb.s, label %bb.t
 
-bb.s:                                             ; preds = %bb.r
-  %4 = icmp eq ptr %.pre54, %i.c
-  %.pre56 = load i8, ptr %i.cc, align 8, !tbaa !486 ; 2 uses
+bb.s:                                             ; preds = %._crit_edge
+  %.pre56 = load i8, ptr %i.cc, align 8, !tbaa !486
   %.not.i.i.i.i = icmp eq i8 %.pre56, 7
-  %or.cond = select i1 %4, i1 %.not.i.i.i.i, i1 false
-  br i1 %or.cond, label %.loopexit, label %bb.t
+  br i1 %.not.i.i.i.i, label %.loopexit, label %bb.t
 
-bb.t:                                             ; preds = %._crit_edge, %bb.s
-  %5 = phi i8 [ %.pre55, %._crit_edge ], [ %.pre56, %bb.s ] ; 3 uses
+bb.t:                                             ; preds = %bb.r, %._crit_edge, %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #32
-  store ptr %.pre54, ptr %3, align 8, !tbaa !485
+  %6 = load ptr, ptr %i.ce, align 8, !tbaa !485
+  store ptr %6, ptr %3, align 8, !tbaa !485
   store i8 0, ptr %i.ch, align 8, !tbaa !486
-  switch i8 %5, label %bb.u [
+  %7 = load i8, ptr %i.cc, align 8, !tbaa !486    ; 3 uses
+  switch i8 %7, label %bb.u [
     i8 0, label %.noexc
     i8 1, label %bb.v
     i8 2, label %bb.ad
@@ -1914,12 +1915,12 @@ bb.ai:                                            ; preds = %bb.t
   br label %.sink.split.i.i.i.i.i
 
 .sink.split.i.i.i.i.i:                            ; preds = %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %.sink.split.i.i.i.i.i.i.i.i.i.i.i23, %bb.v
-  store i8 %5, ptr %i.ch, align 8, !tbaa !486
+  store i8 %7, ptr %i.ch, align 8, !tbaa !486
   br label %.noexc
 
 .noexc:                                           ; preds = %.sink.split.i.i.i.i.i, %bb.t
   store ptr %i.cn, ptr %i.cm, align 8, !tbaa !562
-  %i.de = zext nneg i8 %5 to i64
+  %i.de = zext nneg i8 %7 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #32, !noalias !1896
   store ptr %i.ce, ptr %2, align 8, !tbaa !488, !noalias !1896
   call void @_ZN5boost4mp116detail19mp_with_index_impl_ILm8EE4callILm0ENS_5beast16buffers_cat_viewIJNS5_6detail11buffers_refINS6_IJNS_4asio12const_bufferESA_SA_NS5_4http12basic_fieldsISaIcEE6writer11field_rangeENSB_10chunk_crlfEEEEEENSB_6detail10chunk_sizeESA_SH_NS5_18basic_multi_bufferISD_E8subrangeILb0EEESH_EE14const_iterator9incrementEEEDTclclsr3stdE7declvalIT0_EEclL_ZSt7declvalISt17integral_constantImLm0EEEDTcl9__declvalIT_ELi0EEEvEEEEmOST_(i64 noundef %i.de, ptr noundef nonnull align 8 dereferenceable(8) %2)
@@ -1944,7 +1945,6 @@ bb.aj:                                            ; preds = %.noexc
   %i.dm = add i64 %i.dl, %i.dg
   store i64 %i.dm, ptr %i.a, align 8, !tbaa !584
   %.pre = load ptr, ptr %i.cf, align 8, !tbaa !562
-  %.pre54.pre = load ptr, ptr %i.ce, align 8, !tbaa !485
   br label %bb.r
 
 .loopexit:                                        ; preds = %bb.s, %.thread45

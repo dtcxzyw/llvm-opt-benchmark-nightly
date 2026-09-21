@@ -205,8 +205,8 @@ bb.h:                                             ; preds = %bb.f
   %i.ai = icmp eq i64 %i.z, 0
   br i1 %i.ai, label %.loopexit, label %.lr.ph.i
 
-.loopexit:                                        ; preds = %bb.h, %.lr.ph.i, %bb.c
-  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.c ], [ %i.w, %.lr.ph.i ], [ %i.w, %bb.h ] ; 3 uses
+.loopexit:                                        ; preds = %.lr.ph.i, %bb.h, %bb.c
+  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.c ], [ %i.w, %bb.h ], [ %i.w, %.lr.ph.i ] ; 3 uses
   store i64 %2, ptr %i.o, align 8, !noalias !53851
   %.sroa.5.0..sroa_idx28 = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   store ptr %.sroa.5.0, ptr %.sroa.5.0..sroa_idx28, align 8, !noalias !53851
@@ -609,8 +609,8 @@ bb.bs:                                            ; preds = %bb.bo
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %i.gj, i64 noundef 184, i64 noundef 8) #63
   br label %bb.bt
 
-_RINvXNvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inINtNtB8_4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_ENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsjjpCCFGI3ul_14lance_encoding.exit: ; preds = %bb.br, %.lr.ph.i, %_RNvNtCs40k4W9msRzi_5alloc5boxed14box_new_uninit.exit
-  %.sroa.5151.0 = phi ptr [ inttoptr (i64 8 to ptr), %_RNvNtCs40k4W9msRzi_5alloc5boxed14box_new_uninit.exit ], [ %i.gu, %.lr.ph.i ], [ %i.gu, %bb.br ]
+_RINvXNvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inINtNtB8_4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_ENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsjjpCCFGI3ul_14lance_encoding.exit: ; preds = %.lr.ph.i, %bb.br, %_RNvNtCs40k4W9msRzi_5alloc5boxed14box_new_uninit.exit
+  %.sroa.5151.0 = phi ptr [ inttoptr (i64 8 to ptr), %_RNvNtCs40k4W9msRzi_5alloc5boxed14box_new_uninit.exit ], [ %i.gu, %bb.br ], [ %i.gu, %.lr.ph.i ]
   %.sroa.019.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gj, i64 104
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.019.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %i.gf, i64 40, i1 false)
   store i64 -2, ptr %i.gj, align 8
@@ -1013,8 +1013,8 @@ bb.u:                                             ; preds = %bb.r, %_RNvXsu_NtCs
   %i.br = icmp eq i64 %i.f, 0
   br i1 %i.br, label %_RINvXNvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inNtNtCsjjpCCFGI3ul_14lance_encoding6repdef9RawRepDefNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBO_.exit, label %.lr.ph.i
 
-_RINvXNvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inNtNtCsjjpCCFGI3ul_14lance_encoding6repdef9RawRepDefNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBO_.exit: ; preds = %.lr.ph.i, %bb.u, %bb.a
-  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.c, %bb.u ], [ %i.c, %.lr.ph.i ]
+_RINvXNvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inNtNtCsjjpCCFGI3ul_14lance_encoding6repdef9RawRepDefNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBO_.exit: ; preds = %bb.u, %.lr.ph.i, %bb.a
+  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.c, %.lr.ph.i ], [ %i.c, %bb.u ]
   store i64 %.16.val, ptr %0, align 8, !noalias !87504
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.5.0, ptr %.sroa.5.0..sroa_idx, align 8, !noalias !87504
