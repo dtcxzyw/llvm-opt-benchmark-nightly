@@ -205,49 +205,43 @@ scalar.ph138:                                     ; preds = %scalar.ph138, %scal
 
 _ZNK8DecGraph10TruthTable6nWordsEv.exit43:        ; preds = %_ZNK8DecGraph10TruthTable6nWordsEv.exit
   %i.bl = lshr exact i64 %i.aw, 3
-  %4 = trunc i64 %i.bl to i32                     ; 4 uses
-  %.not95102 = icmp ult i32 %4, 2
-  br i1 %.not95102, label %_ZNK8DecGraph10TruthTable6nWordsEv.exit.thread, label %.lr.ph104.preheader
+  %4 = and i64 %i.bl, 4294967295                  ; 2 uses
+  %5 = add nsw i64 %4, -1                         ; 3 uses
+  %.not95102 = icmp ult i64 %5, 4
+  br i1 %.not95102, label %.lr.ph104.preheader180, label %vector.ph153
 
-.lr.ph104.preheader:                              ; preds = %_ZNK8DecGraph10TruthTable6nWordsEv.exit43
-  %5 = add i32 %4, -1                             ; 2 uses
-  %min.iters.check152 = icmp ult i32 %4, 5
-  br i1 %min.iters.check152, label %.lr.ph104.preheader180, label %vector.ph153
-
-vector.ph153:                                     ; preds = %.lr.ph104.preheader
-  %n.vec154 = and i32 %5, -4                      ; 3 uses
-  %6 = or disjoint i32 %n.vec154, 1
+vector.ph153:                                     ; preds = %_ZNK8DecGraph10TruthTable6nWordsEv.exit43
+  %n.vec158 = and i64 %5, -4                      ; 3 uses
+  %6 = or disjoint i64 %n.vec158, 1
   %broadcast.splatinsert155 = insertelement <2 x i64> poison, i64 %.lcssa, i64 0
   %broadcast.splat156 = shufflevector <2 x i64> %broadcast.splatinsert155, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body157
 
 vector.body157:                                   ; preds = %vector.body157, %vector.ph153
-  %index158 = phi i32 [ 0, %vector.ph153 ], [ %index.next159, %vector.body157 ] ; 2 uses
-  %7 = or disjoint i32 %index158, 1
-  %8 = zext i32 %7 to i64
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %.0.i38, i64 %8 ; 2 uses
-  %i.bm = getelementptr inbounds nuw i8, ptr %9, i64 16
-  store <2 x i64> %broadcast.splat156, ptr %9, align 8, !tbaa !50
+  %index162 = phi i64 [ 0, %vector.ph153 ], [ %index.next163, %vector.body157 ] ; 2 uses
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %.0.i38, i64 %index162 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.bm = getelementptr inbounds nuw i8, ptr %7, i64 24
+  store <2 x i64> %broadcast.splat156, ptr %8, align 8, !tbaa !50
   store <2 x i64> %broadcast.splat156, ptr %i.bm, align 8, !tbaa !50
-  %index.next159 = add nuw i32 %index158, 4       ; 2 uses
-  %i.bn = icmp eq i32 %index.next159, %n.vec154
+  %index.next163 = add nuw i64 %index162, 4       ; 2 uses
+  %i.bn = icmp eq i64 %index.next163, %n.vec158
   br i1 %i.bn, label %middle.block160, label %vector.body157, !llvm.loop !243
 
 middle.block160:                                  ; preds = %vector.body157
-  %cmp.n161 = icmp eq i32 %5, %n.vec154
+  %cmp.n161 = icmp eq i64 %5, %n.vec158
   br i1 %cmp.n161, label %_ZNK8DecGraph10TruthTable6nWordsEv.exit.thread, label %.lr.ph104.preheader180
 
-.lr.ph104.preheader180:                           ; preds = %.lr.ph104.preheader, %middle.block160
-  %.sroa.077.0103.ph = phi i32 [ 1, %.lr.ph104.preheader ], [ %6, %middle.block160 ]
+.lr.ph104.preheader180:                           ; preds = %_ZNK8DecGraph10TruthTable6nWordsEv.exit43, %middle.block160
+  %indvars.iv111.ph = phi i64 [ 1, %_ZNK8DecGraph10TruthTable6nWordsEv.exit43 ], [ %6, %middle.block160 ]
   br label %.lr.ph104
 
 .lr.ph104:                                        ; preds = %.lr.ph104.preheader180, %.lr.ph104
-  %.sroa.077.0103 = phi i32 [ %11, %.lr.ph104 ], [ %.sroa.077.0103.ph, %.lr.ph104.preheader180 ] ; 2 uses
-  %10 = zext i32 %.sroa.077.0103 to i64
-  %i.bo = getelementptr inbounds nuw [8 x i8], ptr %.0.i38, i64 %10
+  %indvars.iv111 = phi i64 [ %indvars.iv.next112, %.lr.ph104 ], [ %indvars.iv111.ph, %.lr.ph104.preheader180 ] ; 2 uses
+  %i.bo = getelementptr inbounds nuw [8 x i8], ptr %.0.i38, i64 %indvars.iv111
   store i64 %.lcssa, ptr %i.bo, align 8, !tbaa !50
-  %11 = add i32 %.sroa.077.0103, 1                ; 2 uses
-  %.not95 = icmp eq i32 %11, %4
+  %indvars.iv.next112 = add nuw nsw i64 %indvars.iv111, 1 ; 2 uses
+  %.not95 = icmp eq i64 %indvars.iv.next112, %4
   br i1 %.not95, label %_ZNK8DecGraph10TruthTable6nWordsEv.exit.thread, label %.lr.ph104, !llvm.loop !244
 
 bb.f:                                             ; preds = %_ZNK8DecGraph10TruthTable4dataEv.exit39
@@ -361,7 +355,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %.not92.3 = icmp eq i64 %indvars.iv.next.3, %i.bz
   br i1 %.not92.3, label %._crit_edge, label %scalar.ph, !llvm.loop !247
 
-_ZNK8DecGraph10TruthTable6nWordsEv.exit.thread:   ; preds = %._crit_edge, %.lr.ph104, %middle.block160, %bb.f, %_ZNK8DecGraph10TruthTable6nWordsEv.exit47, %_ZNK8DecGraph10TruthTable6nWordsEv.exit43, %.loopexit, %_ZNK8DecGraph10TruthTable6nWordsEv.exit
+_ZNK8DecGraph10TruthTable6nWordsEv.exit.thread:   ; preds = %._crit_edge, %.lr.ph104, %middle.block160, %bb.f, %_ZNK8DecGraph10TruthTable6nWordsEv.exit47, %.loopexit, %_ZNK8DecGraph10TruthTable6nWordsEv.exit
   %i.dc = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.dd = load ptr, ptr %i.dc, align 8, !tbaa !66 ; 2 uses
   %i.de = load ptr, ptr %2, align 8, !tbaa !67    ; 2 uses

@@ -204,10 +204,8 @@ bb.i:                                             ; preds = %_ZSt6fill_nIPlmlET_
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #5
   store ptr null, ptr %18, align 8, !tbaa !396
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bj) #5
-  %19 = icmp ugt i64 %3, 4611686018427387903
-  %i.dk = shl nuw i64 %3, 2
-  %20 = select i1 %19, i64 -1, i64 %i.dk
-  %i.dl = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %20) #26
+  %i.dk = shl nuw nsw i64 %3, 2
+  %i.dl = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.dk) #26
           to label %_ZNSt10unique_ptrIA_fSt14default_deleteIS0_EE5resetIPfvEEvT_.exit.i unwind label %_ZNSt10unique_ptrIA_fSt14default_deleteIS0_EED2Ev.exit.thread.i ; 4 uses
 
 _ZNSt10unique_ptrIA_fSt14default_deleteIS0_EED2Ev.exit.thread.i: ; preds = %bb.i

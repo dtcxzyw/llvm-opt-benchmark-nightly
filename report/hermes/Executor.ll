@@ -204,8 +204,6 @@ bb.a:
   %i.n = sub i64 %i.l, %i.m
   %i.o = lshr exact i64 %i.n, 1
   %i.p = and i64 %i.o, 4294967295                 ; 2 uses
-  %5 = add nuw nsw i64 %i.p, 1
-  %6 = select i1 %2, i64 1, i64 %5
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 4 uses
   %i.r = load i64, ptr %i.q, align 8, !tbaa !171
   %i.s = add i64 %i.r, 1                          ; 2 uses
@@ -608,7 +606,7 @@ bb.gq:                                            ; preds = %.backedge, %bb.b
   %i.aib = load i8, ptr %i.ap, align 4
   %i.aic = and i8 %i.aib, 8
   %.not.i590 = icmp eq i8 %i.aic, 0
-  %.pre.i591 = add i64 %.0358981, 1               ; 6 uses
+  %.pre.i591 = add nuw nsw i64 %.0358981, 1       ; 6 uses
   br i1 %.not.i590, label %_ZNK6hermes5regex7ContextINS0_16UTF16RegexTraitsEE18advanceStringIndexEPKDsmm.exit, label %bb.gr, !prof !72
 
 bb.gr:                                            ; preds = %.critedge409.thread892
@@ -629,13 +627,14 @@ bb.gt:                                            ; preds = %bb.gs
   br i1 %i.aij, label %bb.gu, label %_ZNK6hermes5regex7ContextINS0_16UTF16RegexTraitsEE18advanceStringIndexEPKDsmm.exit, !prof !99
 
 bb.gu:                                            ; preds = %bb.gt
-  %i.aik = add i64 %.0358981, 2
+  %i.aik = add nuw nsw i64 %.0358981, 2
   br label %_ZNK6hermes5regex7ContextINS0_16UTF16RegexTraitsEE18advanceStringIndexEPKDsmm.exit
 
 _ZNK6hermes5regex7ContextINS0_16UTF16RegexTraitsEE18advanceStringIndexEPKDsmm.exit: ; preds = %.critedge409.thread892, %bb.gr, %bb.gs, %bb.gt, %bb.gu
   %.1.i592 = phi i64 [ %.pre.i591, %bb.gs ], [ %i.aik, %bb.gu ], [ %.pre.i591, %bb.gt ], [ %.pre.i591, %bb.gr ], [ %.pre.i591, %.critedge409.thread892 ] ; 2 uses
-  %i.ail = icmp ult i64 %.1.i592, %6
-  br i1 %i.ail, label %bb.b, label %_ZN4llvh6detail10scope_exitIZN6hermes5regex7ContextINS3_16UTF16RegexTraitsEE5matchEPNS3_5StateIS5_EEbEUlvE_ED2Ev.exit, !llvm.loop !169
+  %i.ail = icmp ult i64 %i.p, %.1.i592
+  %.not984 = select i1 %2, i1 true, i1 %i.ail
+  br i1 %.not984, label %_ZN4llvh6detail10scope_exitIZN6hermes5regex7ContextINS3_16UTF16RegexTraitsEE5matchEPNS3_5StateIS5_EEbEUlvE_ED2Ev.exit, label %bb.b, !llvm.loop !169
 
 _ZN4llvh6detail10scope_exitIZN6hermes5regex7ContextINS3_16UTF16RegexTraitsEE5matchEPNS3_5StateIS5_EEbEUlvE_ED2Ev.exit: ; preds = %_ZNK6hermes5regex7ContextINS0_16UTF16RegexTraitsEE18advanceStringIndexEPKDsmm.exit, %bb.gl, %_ZN4llvh23SmallVectorTemplateBaseIN6hermes5regex7ContextINS2_16UTF16RegexTraitsEE13BacktrackInsnELb1EE9push_backERKS6_.exit.i587, %_ZN4llvh23SmallVectorTemplateBaseIN6hermes5regex7ContextINS2_16UTF16RegexTraitsEE13BacktrackInsnELb1EE9push_backERKS6_.exit.i575, %bb.ge, %bb.gb, %_ZN4llvh23SmallVectorTemplateBaseIN6hermes5regex7ContextINS2_16UTF16RegexTraitsEE13BacktrackInsnELb1EE9push_backERKS6_.exit.i570, %bb.dr, %_ZN4llvh23SmallVectorTemplateBaseIN6hermes5regex7ContextINS2_16UTF16RegexTraitsEE13BacktrackInsnELb1EE9push_backERKS6_.exit.i504, %_ZN4llvh23SmallVectorTemplateBaseIN6hermes5regex7ContextINS2_16UTF16RegexTraitsEE13BacktrackInsnELb1EE9push_backERKS6_.exit.i, %bb.co, %bb.go, %bb.gf, %bb.fs, %bb.fv, %bb.fp, %bb.fi, %bb.dm, %bb.de, %_ZN6hermes5regex7ContextINS0_16UTF16RegexTraitsEE18matchesNCharICase8EPKNS0_20MatchNCharICase8InsnERNS0_5StateIS2_EE.exit, %_ZN6hermes5regex13matchesNChar8INS0_16UTF16RegexTraitsEEEbPKNS0_15MatchNChar8InsnERNS0_5StateIT_EE.exit, %.critedge402, %bb.at, %_ZN6hermes5regex5StateINS0_16UTF16RegexTraitsEED2Ev.exit, %bb.gm, %bb.cr, %bb.bi, %bb.bb, %bb.al, %bb.ag, %_ZN6hermes5regex16isLineTerminatorIjEEbT_.exit.thread, %_ZNK6hermes5regex7ContextINS0_16UTF16RegexTraitsEE11matchWidth1ILNS0_12Width1OpcodeE5EEEbPKNS0_4InsnEDs.exit, %bb.p, %bb.l, %_ZN6hermes5regex18matchesRightAnchorINS0_16UTF16RegexTraitsEEEbRNS0_7ContextIT_EERNS0_5StateIS4_EE.exit.thread, %_ZN6hermes5regex17matchesLeftAnchorINS0_16UTF16RegexTraitsEEEbRNS0_7ContextIT_EERNS0_5StateIS4_EE.exit, %bb.gq, %bb.cw, %.critedge414, %bb.a
   %.sroa.0716.52 = phi i8 [ %.sroa.0627.0.extract.trunc, %.critedge414 ], [ 1, %bb.a ], [ 1, %bb.gl ], [ 1, %_ZN4llvh23SmallVectorTemplateBaseIN6hermes5regex7ContextINS2_16UTF16RegexTraitsEE13BacktrackInsnELb1EE9push_backERKS6_.exit.i587 ], [ 1, %bb.ge ], [ 1, %_ZN4llvh23SmallVectorTemplateBaseIN6hermes5regex7ContextINS2_16UTF16RegexTraitsEE13BacktrackInsnELb1EE9push_backERKS6_.exit.i570 ], [ 1, %_ZN4llvh23SmallVectorTemplateBaseIN6hermes5regex7ContextINS2_16UTF16RegexTraitsEE13BacktrackInsnELb1EE9push_backERKS6_.exit.i504 ], [ 1, %bb.co ], [ %.sroa.0594.0.extract.trunc, %bb.gm ], [ %.sroa.0716.32, %_ZN6hermes5regex5StateINS0_16UTF16RegexTraitsEED2Ev.exit ], [ %.sroa.0684.0.extract.trunc, %bb.at ], [ %.sroa.0675.0.extract.trunc, %.critedge402 ], [ %.sroa.0672.0.extract.trunc, %_ZN6hermes5regex13matchesNChar8INS0_16UTF16RegexTraitsEEEbPKNS0_15MatchNChar8InsnERNS0_5StateIT_EE.exit ], [ %.sroa.0669.0.extract.trunc, %_ZN6hermes5regex7ContextINS0_16UTF16RegexTraitsEE18matchesNCharICase8EPKNS0_20MatchNCharICase8InsnERNS0_5StateIS2_EE.exit ], [ %.sroa.0655.0.extract.trunc, %bb.de ], [ %.sroa.0652.0.extract.trunc, %bb.dm ], [ %.sroa.0615.0.extract.trunc, %bb.fi ], [ %.sroa.0612.0.extract.trunc, %bb.fp ], [ 1, %bb.gb ], [ %i.aeq, %bb.fv ], [ %.sroa.0609.0.extract.trunc, %bb.fs ], [ %i.agk, %bb.gf ], [ %.sroa.0.0.extract.trunc, %bb.go ], [ %.sroa.0658.0.extract.trunc, %bb.cw ], [ %i.aia, %bb.gq ], [ %.sroa.0708.0.extract.trunc, %_ZN6hermes5regex17matchesLeftAnchorINS0_16UTF16RegexTraitsEEEbRNS0_7ContextIT_EERNS0_5StateIS4_EE.exit ], [ %.sroa.0705.0.extract.trunc, %_ZN6hermes5regex18matchesRightAnchorINS0_16UTF16RegexTraitsEEEbRNS0_7ContextIT_EERNS0_5StateIS4_EE.exit.thread ], [ %.sroa.0702.0.extract.trunc, %bb.l ], [ %.sroa.0699.0.extract.trunc, %bb.p ], [ %.sroa.0696.0.extract.trunc, %_ZNK6hermes5regex7ContextINS0_16UTF16RegexTraitsEE11matchWidth1ILNS0_12Width1OpcodeE5EEEbPKNS0_4InsnEDs.exit ], [ %.sroa.0693.0.extract.trunc, %_ZN6hermes5regex16isLineTerminatorIjEEbT_.exit.thread ], [ %.sroa.0690.0.extract.trunc, %bb.ag ], [ %.sroa.0687.0.extract.trunc, %bb.al ], [ %.sroa.0681.0.extract.trunc, %bb.bb ], [ %.sroa.0678.0.extract.trunc, %bb.bi ], [ 1, %_ZN4llvh23SmallVectorTemplateBaseIN6hermes5regex7ContextINS2_16UTF16RegexTraitsEE13BacktrackInsnELb1EE9push_backERKS6_.exit.i ], [ 1, %_ZN4llvh23SmallVectorTemplateBaseIN6hermes5regex7ContextINS2_16UTF16RegexTraitsEE13BacktrackInsnELb1EE9push_backERKS6_.exit.i575 ], [ %.sroa.0661.0.extract.trunc, %bb.cr ], [ 1, %bb.dr ], [ 0, %_ZNK6hermes5regex7ContextINS0_16UTF16RegexTraitsEE18advanceStringIndexEPKDsmm.exit ]
@@ -1038,6 +1037,10 @@ bb.a:
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !66   ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !186
+  %5 = ptrtoint ptr %i.k to i64
+  %6 = ptrtoint ptr %i.i to i64
+  %7 = sub i64 %5, %6
+  %8 = and i64 %7, 4294967295
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
   %i.m = load i64, ptr %i.l, align 8, !tbaa !187
   %i.n = add i64 %i.m, 1                          ; 2 uses
@@ -1048,10 +1051,6 @@ bb.a:
   br i1 %i.q, label %_ZN4llvh6detail10scope_exitIZN6hermes5regex7ContextINS3_16ASCIIRegexTraitsEE5matchEPNS3_5StateIS5_EEbEUlvE_ED2Ev.exit, label %.preheader
 
 .preheader:                                       ; preds = %bb.a
-  %5 = ptrtoint ptr %i.k to i64
-  %6 = ptrtoint ptr %i.i to i64
-  %7 = sub i64 %5, %6
-  %8 = and i64 %7, 4294967295
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 52 ; 12 uses
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 192 ; 4 uses
@@ -1073,7 +1072,6 @@ bb.a:
   %i.aj = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 6 uses
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %9 = select i1 %2, i64 0, i64 %8
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader, %.critedge404.thread808
@@ -1476,8 +1474,9 @@ bb.fd:                                            ; preds = %.backedge, %bb.b
 .critedge404.thread808:                           ; preds = %.410.si.unfold.true.jt11, %bb.eg, %bb.dw, %bb.fc, %bb.bl, %bb.ed, %bb.cq, %bb.ci, %bb.bg, %bb.ba, %bb.an, %bb.cd, %bb.aw, %bb.as, %bb.ai, %bb.ad, %bb.y, %bb.t, %bb.o, %bb.k, %bb.g, %bb.e, %bb.by
   %.sroa.0633.49805.ph = phi i8 [ %.sroa.0633.50, %bb.cd ], [ %.sroa.0633.50, %bb.by ], [ %.sroa.0633.50, %bb.e ], [ %.sroa.0633.50, %bb.g ], [ %.sroa.0633.50, %bb.k ], [ %.sroa.0633.50, %bb.o ], [ %.sroa.0633.50, %bb.t ], [ %.sroa.0633.50, %bb.y ], [ %.sroa.0633.50, %bb.ad ], [ %.sroa.0633.50, %bb.ai ], [ %.sroa.0633.50, %bb.as ], [ %.sroa.0633.50, %bb.aw ], [ %.sroa.0633.50, %.410.si.unfold.true.jt11 ], [ %.sroa.0633.50, %bb.eg ], [ %.sroa.0633.33, %bb.dw ], [ %.sroa.0633.50, %bb.fc ], [ %.sroa.0633.50, %bb.bl ], [ %.sroa.0633.50, %bb.ed ], [ %.sroa.0633.50, %bb.cq ], [ %.sroa.0633.50, %bb.ci ], [ %.sroa.0633.50, %bb.bg ], [ %.sroa.0633.50, %bb.ba ], [ %.sroa.0633.50, %bb.an ]
   %i.abx = add nuw nsw i64 %.03581008, 1
-  %exitcond1021.not = icmp eq i64 %.03581008, %9
-  br i1 %exitcond1021.not, label %_ZN4llvh6detail10scope_exitIZN6hermes5regex7ContextINS3_16ASCIIRegexTraitsEE5matchEPNS3_5StateIS5_EEbEUlvE_ED2Ev.exit, label %bb.b, !llvm.loop !185
+  %9 = icmp samesign ule i64 %8, %.03581008
+  %.not1011 = select i1 %2, i1 true, i1 %9
+  br i1 %.not1011, label %_ZN4llvh6detail10scope_exitIZN6hermes5regex7ContextINS3_16ASCIIRegexTraitsEE5matchEPNS3_5StateIS5_EEbEUlvE_ED2Ev.exit, label %bb.b, !llvm.loop !185
 
 _ZN4llvh6detail10scope_exitIZN6hermes5regex7ContextINS3_16ASCIIRegexTraitsEE5matchEPNS3_5StateIS5_EEbEUlvE_ED2Ev.exit.loopexit.split.loop.exit: ; preds = %bb.fd
   %i.aby = getelementptr inbounds nuw i8, ptr %i.i, i64 %.03581008

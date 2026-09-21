@@ -204,29 +204,18 @@ bb.aj:                                            ; preds = %bb.ae
   br i1 %i.ot, label %bb.ak, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit
 
 bb.ak:                                            ; preds = %bb.aj
-  %56 = getelementptr inbounds nuw i8, ptr %i.ni, i64 96
   %.idx = shl nuw nsw i64 %i.nq, 5                ; 2 uses
-  %57 = getelementptr inbounds nuw i8, ptr %i.ni, i64 %.idx
-  %gepdiff = add nsw i64 %.idx, -96               ; 4 uses
-  %58 = icmp ugt i64 %gepdiff, 9223372036854775776
-  br i1 %58, label %59, label %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i
-
-59:                                               ; preds = %bb.ak
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.28) #27
-          to label %.noexc.i436 unwind label %.thread
-
-.noexc.i436:                                      ; preds = %59
-  unreachable
-
-_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i: ; preds = %bb.ak
-  %60 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %gepdiff) #28
+  %gepdiff = add nsw i64 %.idx, -96               ; 3 uses
+  %56 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %gepdiff) #28
           to label %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit.i.i unwind label %.thread ; 4 uses
 
-_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit.i.i: ; preds = %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i
-  %i.ou = invoke noundef ptr @_ZSt16__do_uninit_copyIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEEPS7_ET0_T_SG_SF_(ptr nonnull %56, ptr nonnull %57, ptr noundef nonnull %60)
+_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit.i.i: ; preds = %bb.ak
+  %57 = getelementptr inbounds nuw i8, ptr %i.ni, i64 %.idx
+  %58 = getelementptr inbounds nuw i8, ptr %i.ni, i64 96
+  %i.ou = invoke noundef ptr @_ZSt16__do_uninit_copyIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEEPS7_ET0_T_SG_SF_(ptr nonnull %58, ptr nonnull %57, ptr noundef nonnull %56)
           to label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EEC2IN9__gnu_cxx17__normal_iteratorIPKS5_S7_EEvEET_SE_RKS6_.exit unwind label %bb.al
 
-.thread:                                          ; preds = %59, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i
+.thread:                                          ; preds = %bb.ak
   %lpad.thr_comm = landingpad { ptr, i32 }
           cleanup
   br label %.body437
@@ -234,17 +223,17 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
 bb.al:                                            ; preds = %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit.i.i
   %lpad.thr_comm.split-lp = landingpad { ptr, i32 }
           cleanup
-  call void @_ZdlPvm(ptr noundef nonnull %60, i64 noundef %gepdiff) #26
+  call void @_ZdlPvm(ptr noundef nonnull %56, i64 noundef %gepdiff) #26
   br label %.body437
 
 _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EEC2IN9__gnu_cxx17__normal_iteratorIPKS5_S7_EEvEET_SE_RKS6_.exit: ; preds = %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit.i.i
-  %i.ov = getelementptr inbounds nuw i8, ptr %60, i64 %gepdiff
+  %i.ov = getelementptr inbounds nuw i8, ptr %56, i64 %gepdiff
   %i.ow = load ptr, ptr %23, align 8, !tbaa !17   ; 5 uses
   %i.ox = getelementptr inbounds nuw i8, ptr %23, i64 8 ; 2 uses
   %i.oy = load ptr, ptr %i.ox, align 8, !tbaa !16 ; 2 uses
   %i.oz = getelementptr inbounds nuw i8, ptr %23, i64 16 ; 2 uses
   %i.pa = load ptr, ptr %i.oz, align 8, !tbaa !45
-  store ptr %60, ptr %23, align 8, !tbaa !17
+  store ptr %56, ptr %23, align 8, !tbaa !17
   store ptr %i.ou, ptr %i.ox, align 8, !tbaa !16
   store ptr %i.ov, ptr %i.oz, align 8, !tbaa !45
   %.not4.i.i.i.i.i = icmp eq ptr %i.ow, %i.oy

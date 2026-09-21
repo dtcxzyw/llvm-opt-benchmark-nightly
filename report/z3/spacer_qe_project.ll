@@ -205,7 +205,7 @@ _ZN11ast_manager7inc_refEP3ast.exit.i87:          ; preds = %bb.ac
   store i32 %i.dv, ptr %i.dt, align 4, !tbaa !27
   br label %.lr.ph120
 
-.lr.ph120:                                        ; preds = %bb.ac, %_ZN11ast_manager7inc_refEP3ast.exit.i87
+.lr.ph120:                                        ; preds = %_ZN11ast_manager7inc_refEP3ast.exit.i87, %bb.ac
   %i.dw = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %indvars.iv133
   %i.dx = load i32, ptr %i.dw, align 4, !tbaa !53 ; 2 uses
   br label %bb.ad
@@ -608,11 +608,7 @@ _ZNK6vectorI10ref_vectorI4expr11ast_managerELb1EjE4sizeEv.exit152.lr.ph: ; preds
   %i.de = icmp eq ptr %i.dd, null
   %i.df = getelementptr inbounds i8, ptr %i.dd, i64 -4
   %i.dg = icmp ult i32 %.0.i, %i.dc
-  br i1 %i.dg, label %.lr.ph316.preheader, label %.critedge
-
-.lr.ph316.preheader:                              ; preds = %_ZNK6vectorI10ref_vectorI4expr11ast_managerELb1EjE4sizeEv.exit152.lr.ph
-  %wide.trip.count340 = zext i32 %i.dc to i64
-  br label %.lr.ph316
+  br i1 %i.dg, label %.lr.ph316, label %.critedge
 
 .loopexit305:                                     ; preds = %bb.n
   %lpad.loopexit = landingpad { ptr, i32 }
@@ -943,8 +939,8 @@ bb.ap:                                            ; preds = %bb.an, %bb.af, %bb.
           cleanup
   br label %.body
 
-.lr.ph316:                                        ; preds = %.lr.ph316.preheader, %_ZNK6vectorI10ref_vectorI4expr11ast_managerELb1EjE4sizeEv.exit152
-  %indvars.iv337 = phi i64 [ %i.bj, %.lr.ph316.preheader ], [ %indvars.iv.next338, %_ZNK6vectorI10ref_vectorI4expr11ast_managerELb1EjE4sizeEv.exit152 ] ; 4 uses
+.lr.ph316:                                        ; preds = %_ZNK6vectorI10ref_vectorI4expr11ast_managerELb1EjE4sizeEv.exit152.lr.ph, %_ZNK6vectorI10ref_vectorI4expr11ast_managerELb1EjE4sizeEv.exit152
+  %indvars.iv337 = phi i64 [ %indvars.iv.next338, %_ZNK6vectorI10ref_vectorI4expr11ast_managerELb1EjE4sizeEv.exit152 ], [ %i.bj, %_ZNK6vectorI10ref_vectorI4expr11ast_managerELb1EjE4sizeEv.exit152.lr.ph ] ; 4 uses
   %i.hg = getelementptr inbounds nuw [16 x i8], ptr %i.cz, i64 %indvars.iv337 ; 2 uses
   br i1 %i.de, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.thread.i, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.i
 
@@ -1070,7 +1066,8 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax
 
 _ZNK6vectorI10ref_vectorI4expr11ast_managerELb1EjE4sizeEv.exit152: ; preds = %.lr.ph484, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit12.thread.i, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit12.i
   %indvars.iv.next338 = add nuw nsw i64 %indvars.iv337, 1 ; 2 uses
-  %exitcond341.not = icmp eq i64 %indvars.iv.next338, %wide.trip.count340
+  %lftr.wideiv = trunc i64 %indvars.iv.next338 to i32
+  %exitcond341.not = icmp eq i32 %i.dc, %lftr.wideiv
   br i1 %exitcond341.not, label %.critedge, label %.lr.ph316
 
 .critedge:                                        ; preds = %_ZNK6vectorI10ref_vectorI4expr11ast_managerELb1EjE4sizeEv.exit152, %_ZNK6vectorI10ref_vectorI4expr11ast_managerELb1EjE4sizeEv.exit152.lr.ph, %.preheader304

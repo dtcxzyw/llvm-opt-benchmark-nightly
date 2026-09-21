@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %.lr.ph61, %._crit_e
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN11ImFontBaked9FindGlyphEt.exit49
   %i.be = phi i16 [ %i.ba, %.lr.ph.preheader ], [ %i.bn, %_ZN11ImFontBaked9FindGlyphEt.exit49 ]
-  %indvars.iv = phi i64 [ %i.bb, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZN11ImFontBaked9FindGlyphEt.exit49 ] ; 6 uses
+  %indvars.iv = phi i64 [ %i.bb, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZN11ImFontBaked9FindGlyphEt.exit49 ] ; 5 uses
   %i.bf = trunc nuw i64 %indvars.iv to i16
   %i.bg = load i32, ptr %i.ar, align 8, !tbaa !260
   %i.bh = zext i32 %i.bg to i64
@@ -228,10 +228,8 @@ _ZN11ImFontBaked9FindGlyphEt.exit49:              ; preds = %bb.j, %bb.i
   %i.bn = phi i16 [ %.pre, %bb.j ], [ %i.be, %bb.i ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.bo = zext i16 %i.bn to i64
-  %1 = icmp samesign ult i64 %indvars.iv, %i.bo
-  %i.bp = icmp samesign ult i64 %indvars.iv, 65535
-  %2 = select i1 %1, i1 %i.bp, i1 false
-  br i1 %2, label %.lr.ph, label %._crit_edge, !llvm.loop !713
+  %i.bp = icmp samesign ult i64 %indvars.iv, %i.bo
+  br i1 %i.bp, label %.lr.ph, label %._crit_edge, !llvm.loop !713
 
 ._crit_edge58:                                    ; preds = %._crit_edge, %bb.h
   %i.bq = getelementptr inbounds nuw i8, ptr %.03560, i64 8 ; 2 uses
@@ -634,8 +632,8 @@ bb.b:                                             ; preds = %.lr.ph14, %._crit_e
   %i.aj = or i32 %i.ai, %i.ae
   store i32 %i.aj, ptr %i.ah, align 4, !tbaa !259
   %i.ak = add nuw nsw i32 %.010, 2
-  %2 = icmp samesign ult i32 %i.ac, %i.g
-  br i1 %2, label %.lr.ph, label %._crit_edge, !llvm.loop !811
+  %exitcond.not.1 = icmp eq i32 %i.ac, %i.g
+  br i1 %exitcond.not.1, label %._crit_edge, label %.lr.ph, !llvm.loop !811
 
 ._crit_edge15:                                    ; preds = %._crit_edge, %bb.a
   ret void
@@ -1038,7 +1036,7 @@ bb.c:                                             ; preds = %_ZL15stbtt__buf_get
 
 _ZL15stbtt__buf_get8P10stbtt__buf.exit.i.i:       ; preds = %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.i.lr.ph, %bb.c
   %indvars.iv.i.i54 = phi i64 [ %i.n, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.i.i.lr.ph ], [ %indvars.iv.next.i.i, %bb.c ] ; 2 uses
-  %indvars.iv.next.i.i = add i64 %indvars.iv.i.i54, 1 ; 3 uses
+  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i54, 1 ; 3 uses
   %indvars.i = trunc i64 %indvars.iv.next.i.i to i32 ; 2 uses
   store i32 %indvars.i, ptr %i.d, align 8, !tbaa !503
   %i.o = getelementptr inbounds i8, ptr %i.f, i64 %indvars.iv.i.i54

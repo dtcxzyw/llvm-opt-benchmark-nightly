@@ -205,22 +205,19 @@ bb.f:                                             ; preds = %usb_desc_get_string
   br i1 %i.w, label %.lr.ph, label %.critedge
 
 .lr.ph:                                           ; preds = %bb.f, %.lr.ph
-  %.02740 = phi i8 [ %4, %.lr.ph ], [ 0, %bb.f ]  ; 2 uses
-  %.02839 = phi i8 [ %8, %.lr.ph ], [ 2, %bb.f ]  ; 3 uses
-  %4 = add i8 %.02740, 1
-  %5 = zext i8 %.02740 to i64
-  %i.x = getelementptr inbounds nuw i8, ptr %.0, i64 %5
+  %indvars.iv42 = phi i64 [ %indvars.iv.next43, %.lr.ph ], [ 2, %bb.f ] ; 3 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %bb.f ] ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %i.x = getelementptr inbounds nuw i8, ptr %.0, i64 %indvars.iv
   %i.y = load i8, ptr %i.x, align 1
-  %6 = or disjoint i8 %.02839, 1
-  %7 = zext i8 %.02839 to i64
-  %i.z = getelementptr inbounds nuw i8, ptr %2, i64 %7
+  %i.z = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv42
   store i8 %i.y, ptr %i.z, align 1
-  %8 = add nuw i8 %.02839, 2                      ; 2 uses
-  %9 = zext i8 %6 to i64
-  %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 %9
+  %indvars.iv.next43 = add nuw nsw i64 %indvars.iv42, 2 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv42
+  %i.aa = getelementptr inbounds nuw i8, ptr %4, i64 1
   store i8 0, ptr %i.aa, align 1
-  %10 = zext i8 %8 to i32                         ; 2 uses
-  %i.ab = or disjoint i32 %10, 1                  ; 2 uses
+  %5 = trunc nuw i64 %indvars.iv.next43 to i32    ; 2 uses
+  %i.ab = or disjoint i32 %5, 1                   ; 2 uses
   %i.ac = icmp samesign ult i32 %i.ab, %i.v
   %i.ad = zext nneg i32 %i.ab to i64
   %i.ae = icmp ugt i64 %3, %i.ad
@@ -228,7 +225,7 @@ bb.f:                                             ; preds = %usb_desc_get_string
   br i1 %or.cond, label %.lr.ph, label %.critedge, !llvm.loop !16
 
 .critedge:                                        ; preds = %.lr.ph, %bb.f, %usb_desc_get_string.exit.thread, %bb.a, %bb.c
-  %.029 = phi i32 [ 0, %usb_desc_get_string.exit.thread ], [ 4, %bb.c ], [ -1, %bb.a ], [ 2, %bb.f ], [ %10, %.lr.ph ]
+  %.029 = phi i32 [ 0, %usb_desc_get_string.exit.thread ], [ 4, %bb.c ], [ -1, %bb.a ], [ 2, %bb.f ], [ %5, %.lr.ph ]
   ret i32 %.029
 }
 
@@ -241,7 +238,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.b = load i32, ptr %i.a, align 8
   %i.c = tail call ptr @usb_device_get_usb_desc(ptr noundef %0) #11 ; 10 uses
-  %i.d = tail call noalias dereferenceable_or_null(8192) ptr @g_malloc(i64 noundef 8192) #13 ; 73 uses
+  %i.d = tail call noalias dereferenceable_or_null(8192) ptr @g_malloc(i64 noundef 8192) #13 ; 68 uses
   %i.e = lshr i32 %2, 8                           ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 208
   %i.g = load i32, ptr %i.f, align 8
@@ -644,17 +641,16 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
 .lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader, %.lr.ph.i.prol
-  %indvars.iv109.prol = phi i64 [ %indvars.iv.next110.prol, %.lr.ph.i.prol ], [ %indvars.iv109.ph, %.lr.ph.i.preheader ] ; 3 uses
+  %indvars.iv109.prol = phi i64 [ %indvars.iv.next110.prol, %.lr.ph.i.prol ], [ %indvars.iv109.ph, %.lr.ph.i.preheader ] ; 2 uses
   %indvars.iv.prol = phi i64 [ %indvars.iv.next.prol, %.lr.ph.i.prol ], [ %indvars.iv.ph, %.lr.ph.i.preheader ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.prol ], [ 0, %.lr.ph.i.preheader ]
   %indvars.iv.next.prol = add nuw nsw i64 %indvars.iv.prol, 1 ; 2 uses
   %i.fr = getelementptr inbounds nuw i8, ptr %.0.i, i64 %indvars.iv.prol
   %i.fs = load i8, ptr %i.fr, align 1
-  %i.ft = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv109.prol
+  %i.ft = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv109.prol ; 2 uses
   store i8 %i.fs, ptr %i.ft, align 1
   %indvars.iv.next110.prol = add nuw nsw i64 %indvars.iv109.prol, 2 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv109.prol
-  %i.fu = getelementptr inbounds nuw i8, ptr %5, i64 1
+  %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 1
   store i8 0, ptr %i.fu, align 1
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -667,43 +663,39 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %i.fv, label %usb_desc_string.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i
-  %indvars.iv109 = phi i64 [ %indvars.iv.next110.3, %.lr.ph.i ], [ %indvars.iv109.unr, %.lr.ph.i.prol.loopexit ] ; 6 uses
+  %indvars.iv109 = phi i64 [ %indvars.iv.next43.i.3, %.lr.ph.i ], [ %indvars.iv109.unr, %.lr.ph.i.prol.loopexit ] ; 5 uses
   %indvars.iv = phi i64 [ %indvars.iv.next.3, %.lr.ph.i ], [ %indvars.iv.unr, %.lr.ph.i.prol.loopexit ] ; 5 uses
   %i.fw = getelementptr inbounds nuw i8, ptr %.0.i, i64 %indvars.iv
   %i.fx = load i8, ptr %i.fw, align 1
-  %i.fy = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv109
+  %i.fy = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv109 ; 2 uses
   store i8 %i.fx, ptr %i.fy, align 1
-  %indvars.iv.next110 = add nuw nsw i64 %indvars.iv109, 2 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv109
-  %i.fz = getelementptr inbounds nuw i8, ptr %6, i64 1
+  %i.fz = getelementptr inbounds nuw i8, ptr %i.fy, i64 1
   store i8 0, ptr %i.fz, align 1
   %i.ga = getelementptr inbounds nuw i8, ptr %.0.i, i64 %indvars.iv
   %i.gb = getelementptr inbounds nuw i8, ptr %i.ga, i64 1
   %i.gc = load i8, ptr %i.gb, align 1
-  %i.gd = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv.next110
-  store i8 %i.gc, ptr %i.gd, align 1
-  %indvars.iv.next110.1 = add nuw nsw i64 %indvars.iv109, 4 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv.next110
-  %i.ge = getelementptr inbounds nuw i8, ptr %7, i64 1
+  %i.gd = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv109 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.gd, i64 2
+  store i8 %i.gc, ptr %5, align 1
+  %i.ge = getelementptr inbounds nuw i8, ptr %i.gd, i64 3
   store i8 0, ptr %i.ge, align 1
   %i.gf = getelementptr inbounds nuw i8, ptr %.0.i, i64 %indvars.iv
   %i.gg = getelementptr inbounds nuw i8, ptr %i.gf, i64 2
   %i.gh = load i8, ptr %i.gg, align 1
-  %i.gi = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv.next110.1
-  store i8 %i.gh, ptr %i.gi, align 1
-  %indvars.iv.next110.2 = add nuw nsw i64 %indvars.iv109, 6 ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv.next110.1
-  %i.gj = getelementptr inbounds nuw i8, ptr %8, i64 1
+  %i.gi = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv109 ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.gi, i64 4
+  store i8 %i.gh, ptr %6, align 1
+  %i.gj = getelementptr inbounds nuw i8, ptr %i.gi, i64 5
   store i8 0, ptr %i.gj, align 1
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %i.gk = getelementptr inbounds nuw i8, ptr %.0.i, i64 %indvars.iv
   %i.gl = getelementptr inbounds nuw i8, ptr %i.gk, i64 3
   %i.gm = load i8, ptr %i.gl, align 1
-  %i.gn = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv.next110.2
-  store i8 %i.gm, ptr %i.gn, align 1
-  %indvars.iv.next110.3 = add nuw nsw i64 %indvars.iv109, 8
-  %9 = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv.next110.2
-  %i.go = getelementptr inbounds nuw i8, ptr %9, i64 1
+  %i.gn = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv109 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.gn, i64 6
+  store i8 %i.gm, ptr %7, align 1
+  %indvars.iv.next43.i.3 = add nuw nsw i64 %indvars.iv109, 8
+  %i.go = getelementptr inbounds nuw i8, ptr %i.gn, i64 7
   store i8 0, ptr %i.go, align 1
   %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %wide.trip.count
   br i1 %exitcond.not.3, label %usb_desc_string.exit, label %.lr.ph.i, !llvm.loop !22

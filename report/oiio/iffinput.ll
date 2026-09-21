@@ -205,12 +205,12 @@ bb.k:                                             ; preds = %bb.j
   %i.cv = load i16, ptr %i.c, align 2, !tbaa !63  ; 2 uses
   %i.cw = zext i16 %i.cv to i32
   %i.cx = sub nsw i32 %i.cu, %i.cw
-  %i.cy = add nsw i32 %i.cx, 1                    ; 8 uses
+  %i.cy = add nuw nsw i32 %i.cx, 1                ; 7 uses
   %i.cz = zext i16 %i.cs to i32                   ; 2 uses
   %i.da = load i16, ptr %i.e, align 2, !tbaa !63  ; 2 uses
   %i.db = zext i16 %i.da to i32
   %i.dc = sub nsw i32 %i.cz, %i.db
-  %i.dd = add nsw i32 %i.dc, 1                    ; 2 uses
+  %i.dd = add nuw nsw i32 %i.dc, 1
   %i.de = add i32 %.0.i, -8                       ; 2 uses
   %i.df = icmp ugt i16 %i.cv, %i.ct
   %i.dg = icmp ugt i16 %i.da, %i.cs
@@ -229,11 +229,7 @@ bb.l:                                             ; preds = %.lr.ph.i.i527.prehe
 bb.m:                                             ; preds = %bb.l
   %i.di = load i32, ptr %i.bm, align 8, !tbaa !135
   %i.dj = icmp sgt i32 %i.di, %i.cz
-  %7 = icmp ne i32 %i.cy, 0
-  %or.cond = select i1 %i.dj, i1 %7, i1 false
-  %8 = icmp ne i32 %i.dd, 0
-  %or.cond43 = select i1 %or.cond, i1 %8, i1 false
-  br i1 %or.cond43, label %bb.o, label %bb.n
+  br i1 %i.dj, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l, %.lr.ph.i.i527.preheader
   call void @_ZNK11OpenImageIO4v3_110ImageInput8errorfmtIJEEEvPKcDpRKT_(ptr noundef nonnull align 8 dereferenceable(184) %0, ptr noundef nonnull @.str.41)
@@ -636,12 +632,12 @@ bb.dn:                                            ; preds = %bb.dm
   %i.yc = load i16, ptr %i.s, align 2, !tbaa !63  ; 2 uses
   %i.yd = zext i16 %i.yc to i32
   %i.ye = sub nsw i32 %i.yb, %i.yd
-  %i.yf = add nsw i32 %i.ye, 1                    ; 3 uses
+  %i.yf = add nuw nsw i32 %i.ye, 1                ; 2 uses
   %i.yg = zext i16 %i.xz to i32                   ; 2 uses
   %i.yh = load i16, ptr %i.u, align 2, !tbaa !63  ; 2 uses
   %i.yi = zext i16 %i.yh to i32
   %i.yj = sub nsw i32 %i.yg, %i.yi
-  %i.yk = add nsw i32 %i.yj, 1                    ; 2 uses
+  %i.yk = add nuw nsw i32 %i.yj, 1
   %i.yl = add i32 %.0.i, -8
   %i.ym = icmp ugt i16 %i.yc, %i.ya
   %i.yn = icmp ugt i16 %i.yh, %i.xz
@@ -656,11 +652,7 @@ bb.do:                                            ; preds = %.lr.ph.i.i637.prehe
 bb.dp:                                            ; preds = %bb.do
   %i.yp = load i32, ptr %i.bm, align 8, !tbaa !135
   %i.yq = icmp sgt i32 %i.yp, %i.yg
-  %9 = icmp ne i32 %i.yf, 0
-  %or.cond45 = select i1 %i.yq, i1 %9, i1 false
-  %10 = icmp ne i32 %i.yk, 0
-  %or.cond47 = select i1 %or.cond45, i1 %10, i1 false
-  br i1 %or.cond47, label %bb.dq, label %.thread853
+  br i1 %i.yq, label %bb.dq, label %.thread853
 
 bb.dq:                                            ; preds = %bb.dp
   %i.yr = mul i32 %i.yk, %i.yf                    ; 3 uses

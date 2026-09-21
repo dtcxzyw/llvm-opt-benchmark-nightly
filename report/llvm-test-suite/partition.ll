@@ -205,7 +205,7 @@ _ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i293: ; preds = %.noexc300
 
 _ZNSt6vectorIiSaIiEE6resizeEm.exit212:            ; preds = %.noexc300, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i293
   %i.se = getelementptr inbounds nuw [4 x i8], ptr %i.rz, i64 %.pr388 ; 6 uses
-  %.pre = load i64, ptr %i.b, align 8, !tbaa !44  ; 12 uses
+  %.pre = load i64, ptr %i.b, align 8, !tbaa !44  ; 11 uses
   %.not543 = icmp eq i64 %.pre, 0
   br i1 %.not543, label %._crit_edge496, label %.lr.ph
 
@@ -275,40 +275,32 @@ scalar.ph814.preheader:                           ; preds = %vector.scevcheck, %
   %i.td = fdiv nnan <2 x double> splat (double 1.600000e+01), %i.tc ; 4 uses
   %i.te = getelementptr inbounds nuw i8, ptr %0, i64 1328
   %i.tf = load ptr, ptr %i.te, align 8, !tbaa !143 ; 3 uses
-  %6 = ptrtoaddr ptr %i.tf to i64                 ; 2 uses
   %i.tg = getelementptr inbounds nuw i8, ptr %0, i64 1336
   %i.th = load ptr, ptr %i.tg, align 8, !tbaa !144 ; 3 uses
-  %7 = ptrtoaddr ptr %i.th to i64                 ; 2 uses
-  %min.iters.check841 = icmp ult i64 %.pre, 12
-  br i1 %min.iters.check841, label %scalar.ph840.preheader, label %vector.scevcheck832
+  %min.iters.check841 = icmp ult i64 %.pre, 8
+  br i1 %min.iters.check841, label %scalar.ph840.preheader, label %vector.memcheck
 
-vector.scevcheck832:                              ; preds = %.lr.ph495
-  %8 = add i64 %.pre, -1                          ; 2 uses
-  %9 = and i64 %8, 4294967295
-  %10 = icmp eq i64 %9, 4294967295
-  %11 = icmp ugt i64 %8, 4294967295
-  %12 = or i1 %10, %11
-  br i1 %12, label %scalar.ph840.preheader, label %vector.memcheck
-
-vector.memcheck:                                  ; preds = %vector.scevcheck832
+vector.memcheck:                                  ; preds = %.lr.ph495
+  %6 = ptrtoaddr ptr %i.th to i64                 ; 2 uses
+  %7 = ptrtoaddr ptr %i.tf to i64                 ; 2 uses
   %i.ti = sub i64 %i.rs, %i.sa
   %diff.check = icmp ugt i64 %i.ti, -16
-  %i.tj = sub i64 %6, %i.rs
+  %i.tj = sub i64 %7, %i.rs
   %diff.check833 = icmp ugt i64 %i.tj, -16
   %conflict.rdx = or i1 %diff.check, %diff.check833
-  %i.tk = sub i64 %i.rs, %7
+  %i.tk = sub i64 %i.rs, %6
   %diff.check834 = icmp ugt i64 %i.tk, -16
   %conflict.rdx835 = or i1 %conflict.rdx, %diff.check834
-  %i.tl = sub i64 %6, %i.sa
+  %i.tl = sub i64 %7, %i.sa
   %diff.check836 = icmp ugt i64 %i.tl, -16
   %conflict.rdx837 = or i1 %conflict.rdx835, %diff.check836
-  %i.tm = sub i64 %7, %i.sa
+  %i.tm = sub i64 %6, %i.sa
   %diff.check838 = icmp ugt i64 %i.tm, -16
   %conflict.rdx839 = or i1 %conflict.rdx837, %diff.check838
   br i1 %conflict.rdx839, label %scalar.ph840.preheader, label %vector.ph842
 
 vector.ph842:                                     ; preds = %vector.memcheck
-  %n.vec843 = and i64 %.pre, 8589934588           ; 3 uses
+  %n.vec843 = and i64 %.pre, -4                   ; 3 uses
   %broadcast.splat845 = shufflevector <2 x double> %i.td, <2 x double> poison, <4 x i32> zeroinitializer
   %broadcast.splat847 = shufflevector <2 x double> %i.td, <2 x double> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
   br label %vector.body848
@@ -337,8 +329,8 @@ middle.block853:                                  ; preds = %vector.body848
   %cmp.n854 = icmp eq i64 %.pre, %n.vec843
   br i1 %cmp.n854, label %._crit_edge496.loopexit, label %scalar.ph840.preheader
 
-scalar.ph840.preheader:                           ; preds = %vector.memcheck, %vector.scevcheck832, %.lr.ph495, %middle.block853
-  %indvars.iv549.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck832 ], [ 0, %.lr.ph495 ], [ %n.vec843, %middle.block853 ]
+scalar.ph840.preheader:                           ; preds = %vector.memcheck, %.lr.ph495, %middle.block853
+  %indvars.iv549.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph495 ], [ %n.vec843, %middle.block853 ]
   %i.ty = extractelement <2 x double> %i.td, i64 0
   %i.tz = extractelement <2 x double> %i.td, i64 1
   br label %scalar.ph840
@@ -391,10 +383,9 @@ scalar.ph840:                                     ; preds = %scalar.ph840.prehea
   %i.va = fptosi double %i.uz to i32
   %i.vb = getelementptr inbounds nuw [4 x i8], ptr %i.rz, i64 %indvars.iv549
   store i32 %i.va, ptr %i.vb, align 4, !tbaa !8
-  %indvars.iv.next550 = add i64 %indvars.iv549, 1 ; 2 uses
-  %13 = and i64 %indvars.iv.next550, 4294967295
-  %14 = icmp samesign ugt i64 %.pre, %13
-  br i1 %14, label %scalar.ph840, label %._crit_edge496.loopexit, !llvm.loop !116
+  %indvars.iv.next550 = add nuw i64 %indvars.iv549, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next550, %.pre
+  br i1 %exitcond.not, label %._crit_edge496.loopexit, label %scalar.ph840, !llvm.loop !116
 
 bb.at:                                            ; preds = %._crit_edge496
   %i.vc = load i64, ptr %i.b, align 8, !tbaa !44  ; 5 uses

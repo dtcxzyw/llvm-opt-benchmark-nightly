@@ -204,7 +204,7 @@ ext4_blks_to_allocate.exit:                       ; preds = %.preheader.i, %.cri
 
 bb.ar:                                            ; preds = %bb.bg, %.lr.ph97.i
   %.095.i = phi i32 [ 1, %.lr.ph97.i ], [ %.2.i, %bb.bg ] ; 2 uses
-  %.06994.i = phi i32 [ 0, %.lr.ph97.i ], [ %i.kr, %bb.bg ] ; 11 uses
+  %.06994.i = phi i32 [ 0, %.lr.ph97.i ], [ %i.kr, %bb.bg ] ; 10 uses
   %i.hi = icmp eq i32 %.06994.i, %i.gp            ; 2 uses
   br i1 %i.hi, label %bb.as, label %bb.at
 
@@ -219,14 +219,12 @@ bb.at:                                            ; preds = %bb.ar
   %i.hm = load i32, ptr %i.hf, align 8
   %i.hn = and i32 %i.hm, 1024
   %i.ho = call i64 @ext4_new_meta_blocks(ptr noundef %0, ptr noundef %i.hk, i64 noundef %i.hl, i32 noundef %i.hn, ptr noundef null, ptr noundef nonnull %i.b) #10 ; 2 uses
-  %i.hp = sext i32 %.06994.i to i64
+  %i.hp = sext i32 %.06994.i to i64               ; 2 uses
   %i.hq = getelementptr [8 x i8], ptr %i.a, i64 %i.hp
   store i64 %i.ho, ptr %i.hq, align 8
   store i64 %i.ho, ptr %i.gh, align 8
-  %6 = add i32 %.06994.i, 1
-  %7 = sext i32 %6 to i64
-  %i.hr = getelementptr [24 x i8], ptr %i.bt, i64 %7
-  %i.hs = getelementptr i8, ptr %i.hr, i64 16
+  %i.hr = getelementptr [24 x i8], ptr %i.bt, i64 %i.hp
+  %i.hs = getelementptr i8, ptr %i.hr, i64 40
   store ptr null, ptr %i.hs, align 8
   br label %bb.au
 

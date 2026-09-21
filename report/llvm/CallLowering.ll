@@ -204,8 +204,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %bb.f
   %i.d = phi i32 [ %i.af, %bb.f ], [ %i.b, %bb.a ] ; 2 uses
-  %i.e = phi i64 [ %i.ag, %bb.f ], [ 0, %bb.a ]   ; 2 uses
-  %.01933 = phi i32 [ %5, %bb.f ], [ 0, %bb.a ]
+  %i.e = phi i64 [ %indvars.iv.next, %bb.f ], [ 0, %bb.a ] ; 3 uses
   %i.f = load ptr, ptr %3, align 8, !tbaa !84
   %i.g = getelementptr inbounds nuw [32 x i8], ptr %i.f, i64 %i.e ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8
@@ -261,9 +260,9 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %._crit_edge, %.lr.ph, %_ZNK4llvm11CCValAssign9getLocRegEv.exit
   %i.af = phi i32 [ %.pre, %._crit_edge ], [ %i.d, %.lr.ph ], [ %i.d, %_ZNK4llvm11CCValAssign9getLocRegEv.exit ] ; 2 uses
-  %5 = add nuw i32 %.01933, 1                     ; 3 uses
-  %i.ag = zext i32 %5 to i64
-  %.not42 = icmp ugt i32 %i.af, %5
+  %indvars.iv.next = add nuw nsw i64 %i.e, 1      ; 2 uses
+  %i.ag = zext i32 %i.af to i64
+  %.not42 = icmp samesign ult i64 %indvars.iv.next, %i.ag
   br i1 %.not42, label %.lr.ph, label %.thread, !llvm.loop !459
 
 .thread:                                          ; preds = %bb.f, %bb.b, %bb.c, %bb.d, %bb.e, %bb.a

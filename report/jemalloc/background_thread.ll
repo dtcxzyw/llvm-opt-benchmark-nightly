@@ -202,8 +202,7 @@ check_background_thread_creation.exit.thread:     ; preds = %bb.b, %check_backgr
   br label %.outer.split, !llvm.loop !73
 
 .lr.ph52:                                         ; preds = %.preheader, %bb.u
-  %i.cy = phi i64 [ %2, %bb.u ], [ 1, %.preheader ] ; 2 uses
-  %.151 = phi i32 [ %1, %bb.u ], [ 1, %.preheader ]
+  %i.cy = phi i64 [ %indvars.iv.next59, %bb.u ], [ 1, %.preheader ] ; 3 uses
   %i.cz = load ptr, ptr @je_background_thread_info, align 8, !tbaa !24
   %i.da = getelementptr inbounds nuw [208 x i8], ptr %i.cz, i64 %i.cy ; 9 uses
   %i.db = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.cy
@@ -212,7 +211,7 @@ check_background_thread_creation.exit.thread:     ; preds = %bb.b, %check_backgr
   br i1 %i.dd, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %.lr.ph52
-  %i.de = tail call fastcc zeroext i1 @background_threads_disable_single(ptr noundef %0, ptr noundef %i.da) ; 0 uses
+  %i.de = tail call fastcc zeroext i1 @background_threads_disable_single(ptr noundef %0, ptr noundef nonnull %i.da) ; 0 uses
   br label %bb.u
 
 bb.o:                                             ; preds = %.lr.ph52
@@ -269,9 +268,8 @@ bb.t:                                             ; preds = %bb.s, %malloc_mutex
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.n
-  %1 = add i32 %.151, 1                           ; 2 uses
-  %2 = zext i32 %1 to i64                         ; 2 uses
-  %i.dx = icmp ugt i64 %.fr53, %2
+  %indvars.iv.next59 = add nuw i64 %i.cy, 1       ; 2 uses
+  %i.dx = icmp ugt i64 %.fr53, %indvars.iv.next59
   br i1 %i.dx, label %.lr.ph52, label %._crit_edge.loopexit, !llvm.loop !74
 
 ._crit_edge.loopexit:                             ; preds = %bb.u

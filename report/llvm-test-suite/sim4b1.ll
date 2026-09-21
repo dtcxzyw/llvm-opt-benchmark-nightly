@@ -205,7 +205,7 @@ bb.dd:                                            ; preds = %.lr.ph.i408
   br i1 %i.adq, label %bb.de, label %.critedge.thread.i409
 
 bb.de:                                            ; preds = %.critedge.i425
-  %i.adr = add i32 %i.abm, 1
+  %i.adr = add nuw i32 %i.abm, 1
   %i.ads = add i32 %i.adr, %i.abx
   %i.adt = add i32 %i.abf, 1
   %i.adu = add i32 %i.abd, -1
@@ -245,12 +245,12 @@ add_col_elt.exit508.i:                            ; preds = %bb.df, %bb.de
   %.0442530.i = phi i32 [ %i.adm, %.critedge.i425 ], [ %.0442532.i, %.lr.ph.i408 ]
   %i.aej = add i32 %..i, %i.abv                   ; 3 uses
   %i.aek = add i32 %i.aej, 1
-  %i.ael = zext i32 %i.aek to i64                 ; 2 uses
+  %i.ael = zext i32 %i.aek to i64
   %i.aem = shl nuw nsw i64 %i.ael, 2              ; 4 uses
   %i.aen = call ptr @xmalloc(i64 noundef %i.aem) #18 ; 15 uses
   %i.aeo = call ptr @xmalloc(i64 noundef %i.aem) #18 ; 13 uses
   %i.aep = sub i32 %i.abd, %i.abf                 ; 18 uses
-  %i.aeq = zext i32 %i.aej to i64                 ; 4 uses
+  %i.aeq = zext i32 %i.aej to i64                 ; 5 uses
   %i.aer = add nuw nsw i64 %i.aeq, 1              ; 2 uses
   %min.iters.check1046 = icmp ult i32 %i.aej, 7
   %i.aes = ptrtoaddr ptr %i.aeo to i64
@@ -363,7 +363,7 @@ bb.dg:                                            ; preds = %.lr.ph536.i
   br i1 %i.afx, label %.critedge3.i.thread, label %.critedge3.thread.i
 
 .critedge3.i.thread:                              ; preds = %bb.dg, %.critedge3.i
-  %i.afy = add i32 %i.abm, 1
+  %i.afy = add nuw i32 %i.abm, 1
   %i.afz = add i32 %i.abf, 1
   %i.aga = add i32 %i.abm, %i.abh
   %i.agb = add i32 %i.abd, -1
@@ -404,10 +404,10 @@ add_col_elt.exit512.i:                            ; preds = %bb.dh, %.critedge3.
 .critedge3.thread.i:                              ; preds = %.critedge3.i
   %i.agq = call ptr @xmalloc(i64 noundef %i.aem) #18 ; 8 uses
   %i.agr = call ptr @xmalloc(i64 noundef %i.aem) #18 ; 6 uses
-  %umax.i413 = call i64 @llvm.umax.i64(i64 %i.ael, i64 1)
-  %11 = shl nuw nsw i64 %umax.i413, 2             ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.agq, i8 -1, i64 %11, i1 false), !tbaa !10
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.agr, i8 -1, i64 %11, i1 false), !tbaa !10
+  %11 = shl nuw nsw i64 %i.aeq, 2
+  %12 = add nuw nsw i64 %11, 4                    ; 2 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.agq, i8 -1, i64 %12, i1 false), !tbaa !10
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.agr, i8 -1, i64 %12, i1 false), !tbaa !10
   %i.ags = getelementptr inbounds [4 x i8], ptr %i.agq, i64 %i.afn ; 3 uses
   store i32 %i.afw, ptr %i.ags, align 4, !tbaa !10
   %i.agt = zext i32 %i.afq to i64
@@ -810,7 +810,7 @@ bb.em:                                            ; preds = %._crit_edge600.i
 bb.en:                                            ; preds = %bb.em
   %i.ann = getelementptr inbounds [4 x i8], ptr %i.agx, i64 %i.ani
   %i.ano = load i32, ptr %i.ann, align 4, !tbaa !10
-  %i.anp = add i32 %i.abm, 1
+  %i.anp = add nuw i32 %i.abm, 1
   %i.anq = add i32 %i.abf, 1
   %i.anr = sub i32 %i.abm, %..i
   %.0427.i = add i32 %i.anr, %.714.i
@@ -853,7 +853,7 @@ bb.ep:                                            ; preds = %add_col_elt.exit516
   br i1 %i.aoi, label %bb.eq, label %bb.es
 
 bb.eq:                                            ; preds = %bb.ep
-  %i.aoj = add i32 %i.abm, 1
+  %i.aoj = add nuw i32 %i.abm, 1
   %.0.i = add i32 %i.aoj, %.neg606.i
   %i.aok = add i32 %.0.i, %i.anm
   %i.aol = add i32 %i.aok, %.714.i
@@ -1256,7 +1256,7 @@ bb.c:                                             ; preds = %.lr.ph.i
   %i.ap = zext i8 %i.ao to i64
   %i.aq = getelementptr inbounds nuw [4 x i8], ptr @encoding, i64 %i.ap
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !10 ; 2 uses
-  %i.as = add i32 %.370.i, 1                      ; 5 uses
+  %i.as = add nuw i32 %.370.i, 1                  ; 5 uses
   %i.at = icmp ult i32 %i.ar, 4
   br i1 %i.at, label %bb.d, label %.critedge.i.backedge
 
@@ -1657,9 +1657,6 @@ declare i32 @llvm.smin.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #16
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #5

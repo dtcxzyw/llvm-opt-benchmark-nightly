@@ -205,18 +205,16 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.speculated50 = zext i8 %i.e to i32       ; 2 uses
   %.sroa.speculated = zext i8 %i.g to i32         ; 2 uses
   %i.i = add nuw nsw i32 %.sroa.speculated, %.sroa.speculated50 ; 4 uses
-  %i.j = sub nuw nsw i32 %.sroa.speculated50, %.sroa.speculated ; 4 uses
+  %i.j = sub nsw i32 %.sroa.speculated50, %.sroa.speculated ; 4 uses
   %i.k = lshr i32 %i.i, 1
   %i.l = trunc nuw i32 %i.k to i8
   store i8 %i.l, ptr %5, align 1, !tbaa !42
+  %6 = mul nsw i32 %i.j, 255
   %.not.not = icmp samesign ult i32 %i.i, 256
   %i.m = sub nuw nsw i32 512, %i.i
   %i.n = select i1 %.not.not, i32 %i.i, i32 %i.m
-  %6 = trunc nuw nsw i32 %i.j to i16
-  %.lhs.trunc = mul nuw i16 %6, 255
-  %.rhs.trunc = trunc nuw nsw i32 %i.n to i16
-  %7 = udiv i16 %.lhs.trunc, %.rhs.trunc
-  %i.o = trunc i16 %7 to i8
+  %7 = sdiv i32 %6, %i.n
+  %i.o = trunc i32 %7 to i8
   store i8 %i.o, ptr %4, align 1, !tbaa !42
   %.not = icmp ult i8 %0, %i.d
   br i1 %.not, label %bb.e, label %bb.d
@@ -273,11 +271,11 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   store i8 0, ptr %3, align 1, !tbaa !42
-  %.pre = sub nuw nsw i32 %.sroa.speculated29, %.sroa.speculated
+  %.pre = sub nsw i32 %.sroa.speculated29, %.sroa.speculated
   br label %_Z8RGBtoHSLhhhPhS_S_.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.i = sub nuw nsw i32 %.sroa.speculated29, %.sroa.speculated ; 4 uses
+  %i.i = sub nsw i32 %.sroa.speculated29, %.sroa.speculated ; 4 uses
   %.not.i = icmp ult i8 %0, %i.d
   br i1 %.not.i, label %bb.e, label %bb.d
 
@@ -314,9 +312,10 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.d
 
 _Z8RGBtoHSLhhhPhS_S_.exit:                        ; preds = %bb.b, %bb.h
   %.pre-phi = phi i32 [ %.pre, %bb.b ], [ %i.i, %bb.h ] ; 2 uses
-  %i.y = trunc nuw i32 %.pre-phi to i8
+  %i.y = trunc i32 %.pre-phi to i8
   store i8 %i.y, ptr %4, align 1, !tbaa !42
-  %i.z = icmp eq i32 %.pre-phi, 255
+  %6 = and i32 %.pre-phi, 255
+  %i.z = icmp eq i32 %6, 255
   br i1 %i.z, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %_Z8RGBtoHSLhhhPhS_S_.exit
@@ -470,7 +469,7 @@ bb.d:                                             ; preds = %bb.c
   %i.t = tail call i8 @llvm.umin.i8(i8 %i.s, i8 %.0103) ; 2 uses
   %.sroa.speculated.i = zext i8 %i.t to i32
   %i.u = icmp eq i8 %i.t, %i.r
-  %.pre.i = sub nuw nsw i32 %.sroa.speculated29.i, %.sroa.speculated.i ; 4 uses
+  %.pre.i = sub nsw i32 %.sroa.speculated29.i, %.sroa.speculated.i ; 4 uses
   br i1 %i.u, label %_Z8RGBtoHSLhhhPhS_S_.exit.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -518,6 +517,7 @@ _Z8RGBtoHSLhhhPhS_S_.exit.i:                      ; preds = %bb.d, %bb.j
   %i.am = lshr i32 %i.al, 1                       ; 2 uses
   %i.an = xor i32 %i.am, 255
   %spec.select108 = select i1 %7, i32 %i.an, i32 %i.am ; 2 uses
+  %8 = and i32 %.pre.i, 255
   %i.ao = and i32 %4, 3
   %i.ap = shl i32 %5, 2
   %i.aq = and i32 %i.ap, 12
@@ -529,7 +529,7 @@ _Z8RGBtoHSLhhhPhS_S_.exit.i:                      ; preds = %bb.d, %bb.j
   %i.aw = add nsw i32 %i.av, -128                 ; 3 uses
   %i.ax = mul nsw i32 %i.aw, 127
   %i.ay = sdiv i32 %i.ax, 128
-  %i.az = add nsw i32 %i.ay, %.pre.i
+  %i.az = add nsw i32 %i.ay, %8
   %i.ba = icmp sgt i32 %i.az, 127
   br i1 %i.ba, label %bb.k, label %bb.v
 
@@ -649,16 +649,14 @@ bb.ae:                                            ; preds = %bb.ad
   %.sroa.speculated50.i = zext i8 %i.r to i32     ; 2 uses
   %.sroa.speculated.i40 = zext i8 %i.cn to i32    ; 2 uses
   %i.cq = add nuw nsw i32 %.sroa.speculated.i40, %.sroa.speculated50.i ; 4 uses
-  %i.cr = sub nuw nsw i32 %.sroa.speculated50.i, %.sroa.speculated.i40 ; 4 uses
+  %i.cr = sub nsw i32 %.sroa.speculated50.i, %.sroa.speculated.i40 ; 4 uses
   %i.cs = lshr i32 %i.cq, 1
   %i.ct = trunc nuw i32 %i.cs to i8
+  %9 = mul nsw i32 %i.cr, 255
   %.not.not.i = icmp samesign ult i32 %i.cq, 256
   %i.cu = sub nuw nsw i32 512, %i.cq
   %i.cv = select i1 %.not.not.i, i32 %i.cq, i32 %i.cu
-  %8 = trunc nuw nsw i32 %i.cr to i16
-  %.lhs.trunc.i41 = mul nuw i16 %8, 255
-  %.rhs.trunc.i42 = trunc nuw nsw i32 %i.cv to i16
-  %9 = udiv i16 %.lhs.trunc.i41, %.rhs.trunc.i42
+  %10 = sdiv i32 %9, %i.cv
   %.not.i = icmp ult i8 %.0103, %i.q
   br i1 %.not.i, label %bb.ag, label %bb.af
 
@@ -690,8 +688,8 @@ _Z8RGBtoHSLhhhPhS_S_.exit:                        ; preds = %bb.af, %bb.ah, %bb.
   %i.di = phi i32 [ %i.cy, %bb.af ], [ %i.dd, %bb.ah ], [ %i.dh, %bb.ai ]
   %i.dj = sdiv i32 %i.di, 6
   %i.dk = and i32 %i.dj, 255                      ; 11 uses
-  %10 = and i16 %9, 192
-  %i.dl = icmp eq i16 %10, 0
+  %11 = and i32 %10, 192
+  %i.dl = icmp eq i32 %11, 0
   %i.dm = sext i1 %7 to i8
   %spec.select109 = xor i8 %i.ct, %i.dm           ; 3 uses
   %i.dn = add nsw i32 %i.dk, -244
@@ -1094,7 +1092,7 @@ bb.a:
   store ptr %i.f, ptr %i.i, align 8, !tbaa !94
   %i.j = getelementptr inbounds nuw i8, ptr %4, i64 40
   store i64 0, ptr %i.j, align 8, !tbaa !95
-  %i.k = trunc i64 %1 to i32                      ; 34 uses
+  %i.k = trunc i64 %1 to i32                      ; 30 uses
   br label %_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i
 
 _ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i: ; preds = %_ZNSt6vectorImSaImEED2Ev.exit, %bb.a
@@ -1497,12 +1495,10 @@ _Z14readExifUint32PKhmmb.exit367.thread600:       ; preds = %bb.ch
   %i.nc = load i32, ptr %i.mw, align 1
   %i.nd = call i32 @llvm.bswap.i32(i32 %i.nc)
   %i.ne = uitofp i32 %i.nd to double              ; 2 uses
-  %i.nf = add i32 %spec.select593, 4              ; 3 uses
-  %5 = icmp ugt i32 %i.nf, %i.k
+  %i.nf = add nuw i32 %spec.select593, 4          ; 2 uses
   %i.ng = sub nuw i32 %i.k, %i.nf
   %i.nh = icmp ult i32 %i.ng, 4
-  %6 = select i1 %5, i1 true, i1 %i.nh
-  br i1 %6, label %_Z14readExifUint32PKhmmb.exit369, label %.thread602
+  br i1 %i.nh, label %_Z14readExifUint32PKhmmb.exit369, label %.thread602
 
 .thread602:                                       ; preds = %_Z14readExifUint32PKhmmb.exit367.thread600
   %i.ni = zext i32 %i.nf to i64
@@ -1512,12 +1508,10 @@ _Z14readExifUint32PKhmmb.exit367.thread600:       ; preds = %bb.ch
 _Z14readExifUint32PKhmmb.exit367.thread:          ; preds = %bb.ch
   %i.nk = load i32, ptr %i.mw, align 1
   %i.nl = uitofp i32 %i.nk to double              ; 2 uses
-  %i.nm = add i32 %spec.select593, 4              ; 3 uses
-  %7 = icmp ugt i32 %i.nm, %i.k
+  %i.nm = add nuw i32 %spec.select593, 4          ; 2 uses
   %i.nn = sub nuw i32 %i.k, %i.nm
   %i.no = icmp ult i32 %i.nn, 4
-  %8 = select i1 %7, i1 true, i1 %i.no
-  br i1 %8, label %_Z14readExifUint32PKhmmb.exit369, label %.thread599
+  br i1 %i.no, label %_Z14readExifUint32PKhmmb.exit369, label %.thread599
 
 .thread599:                                       ; preds = %_Z14readExifUint32PKhmmb.exit367.thread
   %i.np = zext i32 %i.nm to i64
@@ -1569,7 +1563,7 @@ bb.cn:                                            ; preds = %bb.cm
   br i1 %i.ok, label %bb.co, label %.thread606
 
 bb.co:                                            ; preds = %bb.cn
-  %i.ol = add i32 %spec.select593, 1
+  %i.ol = add nuw i32 %spec.select593, 1
   %i.om = zext i32 %i.ol to i64
   %i.on = getelementptr inbounds nuw i8, ptr %0, i64 %i.om
   %i.oo = load i8, ptr %i.on, align 1, !tbaa !42
@@ -1577,7 +1571,7 @@ bb.co:                                            ; preds = %bb.cn
   br i1 %i.op, label %bb.cp, label %.thread606
 
 bb.cp:                                            ; preds = %bb.co
-  %i.oq = add i32 %spec.select593, 2
+  %i.oq = add nuw i32 %spec.select593, 2
   %i.or = zext i32 %i.oq to i64
   %i.os = getelementptr inbounds nuw i8, ptr %0, i64 %i.or
   %i.ot = load i8, ptr %i.os, align 1, !tbaa !42
@@ -1585,7 +1579,7 @@ bb.cp:                                            ; preds = %bb.co
   br i1 %i.ou, label %bb.cq, label %.thread606
 
 bb.cq:                                            ; preds = %bb.cp
-  %i.ov = add i32 %spec.select593, 3
+  %i.ov = add nuw i32 %spec.select593, 3
   %i.ow = zext i32 %i.ov to i64
   %i.ox = getelementptr inbounds nuw i8, ptr %0, i64 %i.ow
   %i.oy = load i8, ptr %i.ox, align 1, !tbaa !42
@@ -1593,7 +1587,7 @@ bb.cq:                                            ; preds = %bb.cp
   br i1 %i.oz, label %bb.cr, label %.thread606
 
 bb.cr:                                            ; preds = %bb.cq
-  %i.pa = add i32 %spec.select593, 4
+  %i.pa = add nuw i32 %spec.select593, 4
   %i.pb = zext i32 %i.pa to i64
   %i.pc = getelementptr inbounds nuw i8, ptr %0, i64 %i.pb
   %i.pd = load i8, ptr %i.pc, align 1, !tbaa !42
@@ -1829,12 +1823,10 @@ _Z14readExifUint32PKhmmb.exit386.thread609:       ; preds = %bb.dt
   %i.so = load i32, ptr %i.si, align 1
   %i.sp = call i32 @llvm.bswap.i32(i32 %i.so)
   %i.sq = sitofp i32 %i.sp to double              ; 2 uses
-  %i.sr = add i32 %spec.select593, 4              ; 3 uses
-  %9 = icmp ugt i32 %i.sr, %i.k
+  %i.sr = add nuw i32 %spec.select593, 4          ; 2 uses
   %i.ss = sub nuw i32 %i.k, %i.sr
   %i.st = icmp ult i32 %i.ss, 4
-  %10 = select i1 %9, i1 true, i1 %i.st
-  br i1 %10, label %_Z14readExifUint32PKhmmb.exit388, label %.thread611
+  br i1 %i.st, label %_Z14readExifUint32PKhmmb.exit388, label %.thread611
 
 .thread611:                                       ; preds = %_Z14readExifUint32PKhmmb.exit386.thread609
   %i.su = zext i32 %i.sr to i64
@@ -1844,12 +1836,10 @@ _Z14readExifUint32PKhmmb.exit386.thread609:       ; preds = %bb.dt
 _Z14readExifUint32PKhmmb.exit386.thread:          ; preds = %bb.dt
   %i.sw = load i32, ptr %i.si, align 1
   %i.sx = sitofp i32 %i.sw to double              ; 2 uses
-  %i.sy = add i32 %spec.select593, 4              ; 3 uses
-  %11 = icmp ugt i32 %i.sy, %i.k
+  %i.sy = add nuw i32 %spec.select593, 4          ; 2 uses
   %i.sz = sub nuw i32 %i.k, %i.sy
   %i.ta = icmp ult i32 %i.sz, 4
-  %12 = select i1 %11, i1 true, i1 %i.ta
-  br i1 %12, label %_Z14readExifUint32PKhmmb.exit388, label %.thread608
+  br i1 %i.ta, label %_Z14readExifUint32PKhmmb.exit388, label %.thread608
 
 .thread608:                                       ; preds = %_Z14readExifUint32PKhmmb.exit386.thread
   %i.tb = zext i32 %i.sy to i64

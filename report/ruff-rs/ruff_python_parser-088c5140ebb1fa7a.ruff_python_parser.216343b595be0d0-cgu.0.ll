@@ -205,7 +205,7 @@ _RNvMs_NtCsb6FLkjZuKG_18ruff_python_parser6parserNtB4_6Parser3eat.exit264.i.thre
 
 bb.fs:                                            ; preds = %_RNvMs_NtCsb6FLkjZuKG_18ruff_python_parser6parserNtB4_6Parser3eat.exit264.i, %_RINvMs_NtCsb6FLkjZuKG_18ruff_python_parser6parserNtB5_6Parser9add_errorNtNtCs2MoD74u7shA_14ruff_text_size5range9TextRangeEB7_.exit268.i
   %.val150.i = load i32, ptr %i.cc, align 4, !alias.scope !626, !noalias !627, !noundef !15 ; 3 uses
-  %.sroa.0.0.i266.i = call i32 @llvm.umin.i32(i32 %.val150.i, i32 %.val140.i) ; 11 uses
+  %.sroa.0.0.i266.i = call i32 @llvm.umin.i32(i32 %.val150.i, i32 %.val140.i) ; 10 uses
   %i.pt = load i8, ptr %i.dc, align 4, !alias.scope !626, !noalias !627, !noundef !15 ; 2 uses
   %i.pu = icmp eq i8 %i.pt, 3
   %i.pv = icmp ugt i8 %i.pt, 2
@@ -267,8 +267,8 @@ bb.ga:                                            ; preds = %bb.fw
   %.not.i271.i = icmp ugt i32 %.sroa.0.0.i266.i, %i.qe
   br i1 %.not.i271.i, label %.invoke2165, label %bb.gb, !prof !14
 
-.invoke2165:                                      ; preds = %4, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCsb6FLkjZuKG_18ruff_python_parser.exit131.i, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCsb6FLkjZuKG_18ruff_python_parser.exit.i.peel, %bb.ga, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCsb6FLkjZuKG_18ruff_python_parser.exit.i
-  %3 = phi ptr [ @85, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCsb6FLkjZuKG_18ruff_python_parser.exit.i ], [ @85, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCsb6FLkjZuKG_18ruff_python_parser.exit131.i ], [ @85, %4 ], [ @85, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCsb6FLkjZuKG_18ruff_python_parser.exit.i.peel ], [ @27, %bb.ga ]
+.invoke2165:                                      ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCsb6FLkjZuKG_18ruff_python_parser.exit131.i, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCsb6FLkjZuKG_18ruff_python_parser.exit.i.peel, %bb.ga, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCsb6FLkjZuKG_18ruff_python_parser.exit.i
+  %3 = phi ptr [ @85, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCsb6FLkjZuKG_18ruff_python_parser.exit.i ], [ @85, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCsb6FLkjZuKG_18ruff_python_parser.exit131.i ], [ @85, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCsb6FLkjZuKG_18ruff_python_parser.exit.i.peel ], [ @27, %bb.ga ]
   invoke void @_RNvNtCs4NRVxsYgnAr_4core9panicking5panic(ptr noalias noundef nonnull readonly captures(address, read_provenance) @25, i64 noundef 38, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %3) #41
           to label %.cont2166 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !627, !inline_history !321
 
@@ -671,19 +671,15 @@ bb.ig:                                            ; preds = %bb.if, %.split7.i30
 _RNCNvNtCsiVHPhtDv1FH_6memchr6memchr7memchr20Csb6FLkjZuKG_18ruff_python_parser.exit.i: ; preds = %bb.ig
   %i.zu = extractvalue { i64, ptr } %i.zt, 0
   %i.zv = trunc nuw i64 %i.zu to i1
-  br i1 %i.zv, label %4, label %_RINvNtNtNtCsiVHPhtDv1FH_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memchr20ECsb6FLkjZuKG_18ruff_python_parser.exit.i
+  br i1 %i.zv, label %_RNvMsi_NtCsb6FLkjZuKG_18ruff_python_parser5errorNtB5_26UnsupportedSyntaxErrorKind14is_unsupported.exit.i313.i, label %_RINvNtNtNtCsiVHPhtDv1FH_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memchr20ECsb6FLkjZuKG_18ruff_python_parser.exit.i
 
-4:                                                ; preds = %_RNCNvNtCsiVHPhtDv1FH_6memchr6memchr7memchr20Csb6FLkjZuKG_18ruff_python_parser.exit.i
-  %5 = extractvalue { i64, ptr } %i.zt, 1
-  %6 = ptrtoint ptr %5 to i64
-  %7 = ptrtoint ptr %i.zq to i64
-  %8 = sub i64 %6, %7
-  %.not.i.i = icmp samesign ult i64 %8, %i.sv
+_RNvMsi_NtCsb6FLkjZuKG_18ruff_python_parser5errorNtB5_26UnsupportedSyntaxErrorKind14is_unsupported.exit.i313.i: ; preds = %_RNCNvNtCsiVHPhtDv1FH_6memchr6memchr7memchr20Csb6FLkjZuKG_18ruff_python_parser.exit.i
+  %4 = extractvalue { i64, ptr } %i.zt, 1
+  %5 = ptrtoint ptr %4 to i64
+  %6 = ptrtoint ptr %i.zq to i64
+  %7 = sub i64 %5, %6
+  %.not.i.i = icmp samesign ult i64 %7, %i.sv
   call void @llvm.assume(i1 %.not.i.i), !noalias !623
-  %.not115.i = icmp eq i32 %.sroa.0.0.i266.i, -1
-  br i1 %.not115.i, label %.invoke2165, label %_RNvMsi_NtCsb6FLkjZuKG_18ruff_python_parser5errorNtB5_26UnsupportedSyntaxErrorKind14is_unsupported.exit.i313.i, !prof !14
-
-_RNvMsi_NtCsb6FLkjZuKG_18ruff_python_parser5errorNtB5_26UnsupportedSyntaxErrorKind14is_unsupported.exit.i313.i: ; preds = %4
   %i.zw = add nuw i32 %.sroa.0.0.i266.i, 1
   call void @llvm.experimental.noalias.scope.decl(metadata !754), !noalias !623
   %i.zx = load i8, ptr %i.dc, align 4, !alias.scope !755, !noalias !756, !noundef !15 ; 3 uses
@@ -1086,7 +1082,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph9
-  %i.g = add i64 %.sroa.0.1.i.i8, 1               ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i8, 1       ; 2 uses
   %i.h = icmp eq i64 %i.g, %.val5
   br i1 %i.h, label %.body, label %.lr.ph9
 
@@ -1186,7 +1182,7 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph15.i.i:                                     ; preds = %bb.d, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast5nodes10IdentifierECsb6FLkjZuKG_18ruff_python_parser.exit11.i.i
   %.sroa.0.113.i.i = phi i64 [ %i.p, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast5nodes10IdentifierECsb6FLkjZuKG_18ruff_python_parser.exit11.i.i ], [ %i.e, %bb.d ] ; 2 uses
   %i.o = getelementptr inbounds nuw [32 x i8], ptr %.val, i64 %.sroa.0.113.i.i ; 2 uses
-  %i.p = add i64 %.sroa.0.113.i.i, 1              ; 2 uses
+  %i.p = add nuw nsw i64 %.sroa.0.113.i.i, 1      ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1042)
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 8 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1043)
@@ -1589,7 +1585,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 bb.e:                                             ; preds = %.lr.ph19
-  %i.n = add i64 %.sroa.0.1.i18, 1                ; 2 uses
+  %i.n = add nuw nsw i64 %.sroa.0.1.i18, 1        ; 2 uses
   %i.o = icmp eq i64 %i.n, %i.d
   br i1 %i.o, label %.body, label %.lr.ph19
 
@@ -1703,7 +1699,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph9
-  %i.g = add i64 %.sroa.0.1.i.i8, 1               ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i8, 1       ; 2 uses
   %i.h = icmp eq i64 %i.g, %.val1
   br i1 %i.h, label %.body, label %.lr.ph9
 
@@ -1774,7 +1770,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph9
-  %i.g = add i64 %.sroa.0.1.i.i8, 1               ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i8, 1       ; 2 uses
   %i.h = icmp eq i64 %i.g, %.val1
   br i1 %i.h, label %.body, label %.lr.ph9
 
@@ -1955,7 +1951,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph9
-  %i.g = add i64 %.sroa.0.1.i.i8, 1               ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i8, 1       ; 2 uses
   %i.h = icmp eq i64 %i.g, %.val1
   br i1 %i.h, label %.body, label %.lr.ph9
 
@@ -2026,7 +2022,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d, !inline_history !1134
 
 bb.c:                                             ; preds = %.lr.ph7
-  %i.i = add i64 %.sroa.0.1.i6, 1                 ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i6, 1         ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %.body, label %.lr.ph7
 
@@ -2097,7 +2093,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph9
-  %i.g = add i64 %.sroa.0.1.i.i8, 1               ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i8, 1       ; 2 uses
   %i.h = icmp eq i64 %i.g, %.val1
   br i1 %i.h, label %.body, label %.lr.ph9
 
@@ -2500,7 +2496,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d, !inline_history !1
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i.i2, 1               ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i.i2, 1       ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.d
   br i1 %i.j, label %._crit_edge, label %.lr.ph3
 
@@ -2553,7 +2549,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d, !noalias !1183, !inline_history !1
 
 bb.c:                                             ; preds = %.lr.ph4
-  %i.j = add i64 %.sroa.0.1.i.i3, 1               ; 2 uses
+  %i.j = add nuw nsw i64 %.sroa.0.1.i.i3, 1       ; 2 uses
   %i.k = icmp eq i64 %i.j, %i.e
   br i1 %i.k, label %.body.i, label %.lr.ph4
 
@@ -2956,7 +2952,7 @@ bb.g:                                             ; preds = %.lr.ph, %bb.f
           to label %bb.f unwind label %bb.i, !noalias !1198, !inline_history !1
 
 bb.h:                                             ; preds = %.lr.ph9
-  %i.af = add i64 %.sroa.0.1.i.i8, 1              ; 2 uses
+  %i.af = add nuw nsw i64 %.sroa.0.1.i.i8, 1      ; 2 uses
   %i.ag = icmp eq i64 %i.af, %i.g
   br i1 %i.ag, label %.body.i, label %.lr.ph9
 
@@ -3083,7 +3079,7 @@ bb.g:                                             ; preds = %.lr.ph, %bb.f
           to label %bb.f unwind label %bb.i, !noalias !1201
 
 bb.h:                                             ; preds = %.lr.ph9
-  %i.af = add i64 %.sroa.0.1.i.i8, 1              ; 2 uses
+  %i.af = add nuw nsw i64 %.sroa.0.1.i.i8, 1      ; 2 uses
   %i.ag = icmp eq i64 %i.af, %i.g
   br i1 %i.ag, label %.body.i, label %.lr.ph9
 
@@ -3255,7 +3251,7 @@ bb.c:                                             ; preds = %.lr.ph
           to label %bb.c unwind label %bb.e, !noalias !1229
 
 bb.d:                                             ; preds = %.lr.ph5
-  %i.p = add i64 %.sroa.0.1.i.i4, 1               ; 2 uses
+  %i.p = add nuw nsw i64 %.sroa.0.1.i.i4, 1       ; 2 uses
   %i.q = icmp eq i64 %i.p, %i.f
   br i1 %i.q, label %.body.i, label %.lr.ph5
 
@@ -3335,7 +3331,7 @@ bb.c:                                             ; preds = %.lr.ph
           to label %bb.c unwind label %bb.e, !noalias !1233, !inline_history !2
 
 bb.d:                                             ; preds = %.lr.ph5
-  %i.p = add i64 %.sroa.0.1.i.i4, 1               ; 2 uses
+  %i.p = add nuw nsw i64 %.sroa.0.1.i.i4, 1       ; 2 uses
   %i.q = icmp eq i64 %i.p, %i.f
   br i1 %i.q, label %.body.i, label %.lr.ph5
 
@@ -3565,7 +3561,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable
 
 bb.g:                                             ; preds = %.lr.ph17
-  %i.x = add i64 %.sroa.0.1.i.i.i16, 1            ; 2 uses
+  %i.x = add nuw nsw i64 %.sroa.0.1.i.i.i16, 1    ; 2 uses
   %i.y = icmp eq i64 %i.x, %i.f
   br i1 %i.y, label %.body.i.i, label %.lr.ph17
 
@@ -3968,7 +3964,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast5node
   ret void
 
 bb.n:                                             ; preds = %.lr.ph65
-  %i.ac = add i64 %.sroa.0.164, 1                 ; 2 uses
+  %i.ac = add nuw nsw i64 %.sroa.0.164, 1         ; 2 uses
   %i.ad = icmp eq i64 %i.ac, %1
   br i1 %i.ad, label %._crit_edge66, label %.lr.ph65
 
@@ -4047,7 +4043,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast5node
   ret void
 
 bb.g:                                             ; preds = %.lr.ph28
-  %i.o = add i64 %.sroa.0.127, 1                  ; 2 uses
+  %i.o = add nuw nsw i64 %.sroa.0.127, 1          ; 2 uses
   %i.p = icmp eq i64 %i.o, %1
   br i1 %i.p, label %._crit_edge29, label %.lr.ph28
 
@@ -4133,7 +4129,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast5node
   ret void
 
 bb.g:                                             ; preds = %.lr.ph36
-  %i.m = add i64 %.sroa.0.135, 1                  ; 2 uses
+  %i.m = add nuw nsw i64 %.sroa.0.135, 1          ; 2 uses
   %i.n = icmp eq i64 %i.m, %1
   br i1 %i.n, label %._crit_edge37, label %.lr.ph36
 
@@ -4243,7 +4239,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast5node
   ret void
 
 bb.i:                                             ; preds = %.lr.ph29
-  %i.t = add i64 %.sroa.0.128, 1                  ; 2 uses
+  %i.t = add nuw nsw i64 %.sroa.0.128, 1          ; 2 uses
   %i.u = icmp eq i64 %i.t, %1
   br i1 %i.u, label %._crit_edge30, label %.lr.ph29
 
@@ -4337,7 +4333,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast5node
   ret void
 
 bb.g:                                             ; preds = %.lr.ph22
-  %i.n = add i64 %.sroa.0.121, 1                  ; 2 uses
+  %i.n = add nuw nsw i64 %.sroa.0.121, 1          ; 2 uses
   %i.o = icmp eq i64 %i.n, %1
   br i1 %i.o, label %._crit_edge, label %.lr.ph22
 
@@ -4422,7 +4418,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast5node
   ret void
 
 bb.g:                                             ; preds = %.lr.ph36
-  %i.l = add i64 %.sroa.0.135, 1                  ; 2 uses
+  %i.l = add nuw nsw i64 %.sroa.0.135, 1          ; 2 uses
   %i.m = icmp eq i64 %i.l, %1
   br i1 %i.m, label %._crit_edge37, label %.lr.ph36
 
@@ -4562,7 +4558,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9gene
   ret void
 
 bb.l:                                             ; preds = %.lr.ph94
-  %i.ae = add i64 %.sroa.0.193, 1                 ; 2 uses
+  %i.ae = add nuw nsw i64 %.sroa.0.193, 1         ; 2 uses
   %i.af = icmp eq i64 %i.ae, %1
   br i1 %i.af, label %._crit_edge95, label %.lr.ph94
 
@@ -4642,7 +4638,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsb6FLkjZuKG_18ruff_python_parser6
   ret void
 
 bb.g:                                             ; preds = %.lr.ph36
-  %i.l = add i64 %.sroa.0.135, 1                  ; 2 uses
+  %i.l = add nuw nsw i64 %.sroa.0.135, 1          ; 2 uses
   %i.m = icmp eq i64 %i.l, %1
   br i1 %i.m, label %._crit_edge37, label %.lr.ph36
 
@@ -5045,7 +5041,7 @@ bb.d:                                             ; preds = %.lr.ph
           to label %bb.d unwind label %bb.f, !inline_history !1
 
 bb.e:                                             ; preds = %.lr.ph10
-  %i.m = add i64 %.sroa.0.1.i9, 1                 ; 2 uses
+  %i.m = add nuw nsw i64 %.sroa.0.1.i9, 1         ; 2 uses
   %i.n = icmp eq i64 %i.m, %i.g
   br i1 %i.n, label %.loopexit, label %.lr.ph10
 
@@ -5118,7 +5114,7 @@ bb.d:                                             ; preds = %.lr.ph
           to label %bb.d unwind label %bb.f, !inline_history !2
 
 bb.e:                                             ; preds = %.lr.ph10
-  %i.m = add i64 %.sroa.0.1.i9, 1                 ; 2 uses
+  %i.m = add nuw nsw i64 %.sroa.0.1.i9, 1         ; 2 uses
   %i.n = icmp eq i64 %i.m, %i.g
   br i1 %i.n, label %.loopexit, label %.lr.ph10
 
@@ -5521,7 +5517,7 @@ bb.cg:                                            ; preds = %.lr.ph
           to label %bb.cg unwind label %bb.ci, !noalias !12675
 
 bb.ch:                                            ; preds = %.lr.ph258
-  %i.ll = add i64 %.sroa.0.1.i.i.i.i.i.i257, 1    ; 2 uses
+  %i.ll = add nuw nsw i64 %.sroa.0.1.i.i.i.i.i.i257, 1 ; 2 uses
   %i.lm = icmp eq i64 %i.ll, %.val1.i.i.i.i
   br i1 %i.lm, label %.body.i4.i.i.i, label %.lr.ph258
 
@@ -5924,7 +5920,7 @@ bb.co:                                            ; preds = %.lr.ph378
           to label %bb.co unwind label %bb.cq, !noalias !15208
 
 bb.cp:                                            ; preds = %.lr.ph380
-  %i.mi = add i64 %.sroa.0.1.i.i.i87379, 1        ; 2 uses
+  %i.mi = add nuw nsw i64 %.sroa.0.1.i.i.i87379, 1 ; 2 uses
   %i.mj = icmp eq i64 %i.mi, %.val1.i85
   br i1 %i.mj, label %.body.i88, label %.lr.ph380
 
@@ -6327,7 +6323,7 @@ bb.fi:                                            ; preds = %.lr.ph362
           to label %bb.fi unwind label %bb.fk, !noalias !15311
 
 bb.fj:                                            ; preds = %.lr.ph364
-  %i.vj = add i64 %.sroa.0.1.i.i.i65363, 1        ; 2 uses
+  %i.vj = add nuw nsw i64 %.sroa.0.1.i.i.i65363, 1 ; 2 uses
   %i.vk = icmp eq i64 %i.vj, %.val1.i63
   br i1 %i.vk, label %.body.i66, label %.lr.ph364
 
@@ -6730,7 +6726,7 @@ bb.hb:                                            ; preds = %.lr.ph370
           to label %bb.hb unwind label %bb.hd, !noalias !15366
 
 bb.hc:                                            ; preds = %.lr.ph372
-  %i.aap = add i64 %.sroa.0.1.i.i.i371, 1         ; 2 uses
+  %i.aap = add nuw nsw i64 %.sroa.0.1.i.i.i371, 1 ; 2 uses
   %i.aaq = icmp eq i64 %i.aap, %.val1.i
   br i1 %i.aaq, label %.body.i, label %.lr.ph372
 
@@ -7133,7 +7129,7 @@ bb.h:                                             ; preds = %.lr.ph763
           to label %bb.h unwind label %bb.j, !noalias !16224, !inline_history !2
 
 bb.i:                                             ; preds = %.lr.ph766
-  %i.cx = add i64 %.sroa.0.1.i.i764, 1            ; 2 uses
+  %i.cx = add nuw nsw i64 %.sroa.0.1.i.i764, 1    ; 2 uses
   %i.cy = icmp eq i64 %i.cx, %i.cs
   br i1 %i.cy, label %.body258, label %.lr.ph766
 

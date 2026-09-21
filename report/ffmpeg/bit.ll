@@ -31,24 +31,22 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !43   ; 2 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !43
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.e
-  %i.f = phi i32 [ 0, %.lr.ph ], [ %i.p, %bb.e ]  ; 2 uses
+  %i.f = phi i32 [ 0, %.lr.ph ], [ %i.p, %bb.e ]
   %.028 = phi i32 [ 0, %.lr.ph ], [ %.1, %bb.e ]  ; 2 uses
   %.02427 = phi i32 [ 0, %.lr.ph ], [ %i.o, %bb.e ]
   %i.g = sext i32 %i.f to i64
-  %i.h = getelementptr inbounds i8, ptr %i.e, i64 %i.g
+  %i.h = getelementptr i8, ptr %i.e, i64 %i.g     ; 2 uses
   %i.i = load i16, ptr %i.h, align 1, !tbaa !11
   %.not = icmp eq i16 %i.i, 27425
   br i1 %.not, label %bb.c, label %.loopexit
 
 bb.c:                                             ; preds = %bb.b
   %i.j = add nsw i32 %.02427, 2
-  %1 = add i32 %i.f, 2
-  %2 = sext i32 %1 to i64
-  %i.k = getelementptr inbounds i8, ptr %i.e, i64 %2
+  %i.k = getelementptr i8, ptr %i.h, i64 2
   %i.l = load i16, ptr %i.k, align 1, !tbaa !11   ; 2 uses
   %i.m = zext nneg i16 %i.l to i32
   switch i16 %i.l, label %.loopexit [

@@ -205,7 +205,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast5node
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9DecoratorEBF_.exit.i unwind label %bb.b
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9DecoratorEBF_.exit7.i: ; preds = %.lr.ph4
-  %i.g = add i64 %.sroa.0.1.i3, 1                 ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i3, 1         ; 2 uses
   %i.h = icmp eq i64 %i.g, %i.b
   br i1 %i.h, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9DecoratorEBF_.exit7.i._crit_edge, label %.lr.ph4
 
@@ -286,7 +286,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d, !inline_history !0
 
 bb.c:                                             ; preds = %.lr.ph4
-  %i.g = add i64 %.sroa.0.1.i3, 1                 ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i3, 1         ; 2 uses
   %i.h = icmp eq i64 %i.g, %i.b
   br i1 %i.h, label %._crit_edge, label %.lr.ph4
 
@@ -689,7 +689,7 @@ bb.d:                                             ; preds = %.lr.ph
           to label %bb.d unwind label %bb.f, !noalias !1525
 
 bb.e:                                             ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i.i.i.i.i2, 1         ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i.i.i.i.i2, 1 ; 2 uses
   %i.j = icmp eq i64 %i.i, %.val1.i.i.i
   br i1 %i.j, label %.body.i.i.i, label %.lr.ph3
 
@@ -1092,7 +1092,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 bb.e:                                             ; preds = %.lr.ph19
-  %i.n = add i64 %.sroa.0.1.i18, 1                ; 2 uses
+  %i.n = add nuw nsw i64 %.sroa.0.1.i18, 1        ; 2 uses
   %i.o = icmp eq i64 %i.n, %i.d
   br i1 %i.o, label %.body, label %.lr.ph19
 
@@ -1195,7 +1195,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast10com
   br i1 %i.n, label %_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCskLngH8kgpZI_15ruff_python_ast10comparable18ComparableWithItemENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropBI_.exit, label %.lr.ph.i.i
 
 bb.g:                                             ; preds = %.lr.ph
-  %i.o = add i64 %.sroa.0.1.i.i27, 1              ; 2 uses
+  %i.o = add nuw nsw i64 %.sroa.0.1.i.i27, 1      ; 2 uses
   %i.p = icmp eq i64 %i.o, %.val1
   br i1 %i.p, label %.body, label %.lr.ph
 
@@ -1270,7 +1270,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast10com
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast10comparable19ComparableDecoratorEBF_.exit.i.i unwind label %bb.b
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast10comparable19ComparableDecoratorEBF_.exit7.i.i: ; preds = %.lr.ph9
-  %i.g = add i64 %.sroa.0.1.i.i8, 1               ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i8, 1       ; 2 uses
   %i.h = icmp eq i64 %i.g, %.val1
   br i1 %i.h, label %.body, label %.lr.ph9
 
@@ -1459,7 +1459,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph9
-  %i.g = add i64 %.sroa.0.1.i.i8, 1               ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i8, 1       ; 2 uses
   %i.h = icmp eq i64 %i.g, %.val1
   br i1 %i.h, label %.body, label %.lr.ph9
 
@@ -1862,7 +1862,7 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph15.i.i:                                     ; preds = %bb.d, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast5nodes10IdentifierEBF_.exit11.i.i
   %.sroa.0.113.i.i = phi i64 [ %i.p, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast5nodes10IdentifierEBF_.exit11.i.i ], [ %i.e, %bb.d ] ; 2 uses
   %i.o = getelementptr inbounds nuw [32 x i8], ptr %.val, i64 %.sroa.0.113.i.i ; 2 uses
-  %i.p = add i64 %.sroa.0.113.i.i, 1              ; 2 uses
+  %i.p = add nuw nsw i64 %.sroa.0.113.i.i, 1      ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1739)
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 8 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1740)
@@ -2265,7 +2265,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast5node
   br i1 %i.u, label %_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCskLngH8kgpZI_15ruff_python_ast5nodes5AliasENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropBI_.exit, label %.lr.ph.i.i
 
 bb.i:                                             ; preds = %.lr.ph
-  %i.v = add i64 %.sroa.0.1.i.i28, 1              ; 2 uses
+  %i.v = add nuw nsw i64 %.sroa.0.1.i.i28, 1      ; 2 uses
   %i.w = icmp eq i64 %i.v, %.val1
   br i1 %i.w, label %.body, label %.lr.ph
 
@@ -2433,7 +2433,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 bb.e:                                             ; preds = %.lr.ph19
-  %i.n = add i64 %.sroa.0.1.i18, 1                ; 2 uses
+  %i.n = add nuw nsw i64 %.sroa.0.1.i18, 1        ; 2 uses
   %i.o = icmp eq i64 %i.n, %i.d
   br i1 %i.o, label %.body, label %.lr.ph19
 
@@ -2542,7 +2542,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast5node
   br i1 %i.m, label %_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCskLngH8kgpZI_15ruff_python_ast5nodes8WithItemENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropBI_.exit, label %.lr.ph.i.i
 
 bb.g:                                             ; preds = %.lr.ph
-  %i.n = add i64 %.sroa.0.1.i.i36, 1              ; 2 uses
+  %i.n = add nuw nsw i64 %.sroa.0.1.i.i36, 1      ; 2 uses
   %i.o = icmp eq i64 %i.n, %.val1
   br i1 %i.o, label %.body, label %.lr.ph
 
@@ -2945,7 +2945,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast10com
   br i1 %i.i, label %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator10deallocate.exit.i4, label %.lr.ph.i
 
 bb.e:                                             ; preds = %.lr.ph
-  %i.j = add i64 %.sroa.0.1.i5, 1                 ; 2 uses
+  %i.j = add nuw nsw i64 %.sroa.0.1.i5, 1         ; 2 uses
   %i.k = icmp eq i64 %i.j, %.8.val
   br i1 %i.k, label %._crit_edge, label %.lr.ph
 
@@ -3348,7 +3348,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast10com
   ret void
 
 bb.p:                                             ; preds = %.lr.ph104
-  %i.am = add i64 %.sroa.0.1103, 1                ; 2 uses
+  %i.am = add nuw nsw i64 %.sroa.0.1103, 1        ; 2 uses
   %i.an = icmp eq i64 %i.am, %1
   br i1 %i.an, label %._crit_edge105, label %.lr.ph104
 
@@ -3427,7 +3427,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast10com
   ret void
 
 bb.h:                                             ; preds = %.lr.ph44
-  %i.k = add i64 %.sroa.0.143, 1                  ; 2 uses
+  %i.k = add nuw nsw i64 %.sroa.0.143, 1          ; 2 uses
   %i.l = icmp eq i64 %i.k, %1
   br i1 %i.l, label %._crit_edge, label %.lr.ph44
 
@@ -3570,7 +3570,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast5node
   ret void
 
 bb.n:                                             ; preds = %.lr.ph65
-  %i.ac = add i64 %.sroa.0.164, 1                 ; 2 uses
+  %i.ac = add nuw nsw i64 %.sroa.0.164, 1         ; 2 uses
   %i.ad = icmp eq i64 %i.ac, %1
   br i1 %i.ad, label %._crit_edge66, label %.lr.ph65
 
@@ -3639,7 +3639,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast5node
   ret void
 
 bb.e:                                             ; preds = %.lr.ph21
-  %i.k = add i64 %.sroa.0.120, 1                  ; 2 uses
+  %i.k = add nuw nsw i64 %.sroa.0.120, 1          ; 2 uses
   %i.l = icmp eq i64 %i.k, %1
   br i1 %i.l, label %._crit_edge, label %.lr.ph21
 
@@ -3745,7 +3745,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast5node
   ret void
 
 bb.i:                                             ; preds = %.lr.ph52
-  %i.r = add i64 %.sroa.0.151, 1                  ; 2 uses
+  %i.r = add nuw nsw i64 %.sroa.0.151, 1          ; 2 uses
   %i.s = icmp eq i64 %i.r, %1
   br i1 %i.s, label %._crit_edge53, label %.lr.ph52
 
@@ -3796,7 +3796,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9gene
   ret void
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9generated13ExceptHandlerEBF_.exit7: ; preds = %.lr.ph10
-  %i.e = add i64 %.sroa.0.19, 1                   ; 2 uses
+  %i.e = add nuw nsw i64 %.sroa.0.19, 1           ; 2 uses
   %i.f = icmp eq i64 %i.e, %1
   br i1 %i.f, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9generated13ExceptHandlerEBF_.exit7._crit_edge, label %.lr.ph10
 
@@ -3937,7 +3937,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9gene
   ret void
 
 bb.l:                                             ; preds = %.lr.ph59
-  %i.ae = add i64 %.sroa.0.158, 1                 ; 2 uses
+  %i.ae = add nuw nsw i64 %.sroa.0.158, 1         ; 2 uses
   %i.af = icmp eq i64 %i.ae, %1
   br i1 %i.af, label %._crit_edge60, label %.lr.ph59
 
@@ -4340,7 +4340,7 @@ bb.e:                                             ; preds = %bb.d
   %i.n = zext nneg i32 %i.l to i64
   %i.o = add i64 %i.h, %i.n                       ; 3 uses
   %i.p = icmp ult i64 %i.o, %i.h
-  br i1 %i.p, label %.loopexit25, label %.preheader60.split.us.i, !prof !47
+  br i1 %i.p, label %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i, label %.preheader60.split.us.i, !prof !47
 
 .preheader.i:                                     ; preds = %bb.c
   %.not5373.i = icmp eq i64 %.sroa.15.0.i, 0
@@ -4368,7 +4368,7 @@ bb.f:                                             ; preds = %.lr.ph.split.us.i
 .split.us.i:                                      ; preds = %.preheader60.split.us.i.preheader
   %i.z = add i8 %i.j, -48
   %i.aa = icmp ult i8 %i.z, 10
-  br i1 %i.aa, label %.loopexit25, label %.loopexit
+  br i1 %i.aa, label %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i, label %.loopexit
 
 _RNvMsD_NtCs4NRVxsYgnAr_4core3numy16from_ascii_radix.exit: ; preds = %.preheader60.split.us.i, %bb.f, %.preheader.i
   %.sroa.1113.0 = phi i64 [ %i.y, %bb.f ], [ 0, %.preheader.i ], [ %i.o, %.preheader60.split.us.i ]
@@ -4389,13 +4389,9 @@ bb.g:                                             ; preds = %.loopexit, %bb.i, %
   store i8 %.sroa.4.0.ph.ph, ptr %i.ac, align 1
   br label %bb.g
 
-.loopexit25:                                      ; preds = %bb.e, %.split.us.i
-  %3 = icmp eq i64 %2, 0
-  br i1 %3, label %bb.i, label %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i
-
-_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i: ; preds = %.loopexit25
+_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i: ; preds = %bb.e, %.split.us.i
   tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #62, !noalias !9715
-  %i.ad = tail call noundef ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %2, i64 noundef range(i64 1, -9223372036854775807) 1) #62, !noalias !9715 ; 2 uses
+  %i.ad = tail call noundef ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %2, i64 noundef range(i64 1, -9223372036854775807) 1) #62, !noalias !9715 ; 3 uses
   %i.ae = icmp eq ptr %i.ad, null
   br i1 %i.ae, label %bb.h, label %bb.i
 
@@ -4403,11 +4399,10 @@ bb.h:                                             ; preds = %_RNvXs_NtCscdodAO9F
   tail call void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef 1, i64 noundef %2) #61
   unreachable
 
-bb.i:                                             ; preds = %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i, %.loopexit25
-  %.sroa.01.0.i = phi ptr [ inttoptr (i64 1 to ptr), %.loopexit25 ], [ %i.ad, %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sroa.01.0.i, ptr nonnull readonly align 1 %1, i64 %2, i1 false)
+bb.i:                                             ; preds = %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ad, ptr nonnull readonly align 1 %1, i64 %2, i1 false)
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.sroa.01.0.i, ptr %i.af, align 8
+  store ptr %i.ad, ptr %i.af, align 8
   %.sroa.46.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %2, ptr %.sroa.46.0..sroa_idx, align 8
   br label %bb.g

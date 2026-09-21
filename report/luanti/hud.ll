@@ -205,11 +205,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit128: ; preds = %.c
   br label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit128, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %i.cc = phi i32 [ %i.bx, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit128 ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 2 uses
-  %i.cd = add nuw nsw i32 %i.cc, 1                ; 3 uses
+  %i.cc = phi i32 [ %i.bx, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit128 ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 3 uses
+  %i.cd = add nuw nsw i32 %i.cc, 1                ; 2 uses
   %i.ce = mul nuw nsw i32 %i.cd, 160
   %i.cf = sub nsw i32 0, %i.cc                    ; 4 uses
-  %i.cg = trunc nsw i32 %i.cf to i16              ; 2 uses
+  %i.cg = trunc nsw i32 %i.cf to i16
   %i.ch = uitofp nneg i32 %i.ce to float          ; 2 uses
   %i.ci = sitofp nsz i32 %i.cf to float
   %i.cj = fmul nnan nsz float %i.ci, 1.600000e+01
@@ -237,9 +237,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit128: ; preds = %.c
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge
-  %i.cx = phi i32 [ %i.cf, %.preheader.lr.ph ], [ %10, %._crit_edge ] ; 2 uses
-  %storemerge298 = phi i16 [ %i.cg, %.preheader.lr.ph ], [ %9, %._crit_edge ] ; 2 uses
-  %i.cy = sitofp nsz i16 %storemerge298 to float
+  %i.cx = phi i32 [ %i.cf, %.preheader.lr.ph ], [ %indvars.iv.next, %._crit_edge ] ; 5 uses
+  %9 = trunc nsw i32 %i.cx to i16
+  %i.cy = sitofp nsz i16 %9 to float
   %i.cz = fmul nnan nsz float %i.cy, 1.600000e+01
   %i.da = fmul nnan nsz float %i.cz, 1.000000e+01 ; 2 uses
   %i.db = fadd nsz float %i.bl, %i.da             ; 2 uses
@@ -303,9 +303,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit134: ; preds = %bb
   br label %bb.n
 
 ._crit_edge:                                      ; preds = %"_ZZN3Hud15drawBlockBoundsEvENK3$_0clEss.exit178"
-  %9 = add i16 %storemerge298, 1                  ; 2 uses
-  %10 = sext i16 %9 to i32                        ; 2 uses
-  %.not = icmp slt i32 %i.cd, %10
+  %indvars.iv.next = add nsw i32 %i.cx, 1
+  %.not = icmp slt i32 %i.cc, %i.cx
   br i1 %.not, label %.loopexit, label %.preheader, !llvm.loop !544
 
 bb.g:                                             ; preds = %.preheader, %"_ZZN3Hud15drawBlockBoundsEvENK3$_0clEss.exit178"

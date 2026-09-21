@@ -203,22 +203,20 @@ begin_hunk_0
 @261 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 1522, i32 20 } }
 @262 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 1522, i32 20 }, ptr @1, i8 2, i8 0 }
 @263 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 1528, i32 20 } }
-@264 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 1533, i32 8 }, ptr @1 }
-@265 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 1544, i32 23 } }
-@266 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 1549, i32 23 } }
-@267 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 1558, i32 17 } }
-@268 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 1558, i32 17 }, ptr @1, i8 2, i8 0 }
-@269 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 1559, i32 20 } }
-@270 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 1559, i32 20 }, ptr @1, i8 2, i8 0 }
-@271 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 1565, i32 20 } }
-@272 = private unnamed_addr global { { ptr, i32, i32 }, ptr } { { ptr, i32, i32 } { ptr @.src, i32 1570, i32 8 }, ptr @1 }
-@273 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 1581, i32 23 } }
-@274 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 1586, i32 23 } }
-@275 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 1595, i32 17 } }
-@276 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 1595, i32 17 }, ptr @1, i8 2, i8 0 }
-@277 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 1596, i32 20 } }
-@278 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 1596, i32 20 }, ptr @1, i8 2, i8 0 }
-@279 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 1602, i32 20 } }
+@264 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 1544, i32 23 } }
+@265 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 1549, i32 23 } }
+@266 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 1558, i32 17 } }
+@267 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 1558, i32 17 }, ptr @1, i8 2, i8 0 }
+@268 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 1559, i32 20 } }
+@269 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 1559, i32 20 }, ptr @1, i8 2, i8 0 }
+@270 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 1565, i32 20 } }
+@271 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 1581, i32 23 } }
+@272 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 1586, i32 23 } }
+@273 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 1595, i32 17 } }
+@274 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 1595, i32 17 }, ptr @1, i8 2, i8 0 }
+@275 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 1596, i32 20 } }
+@276 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 1596, i32 20 }, ptr @1, i8 2, i8 0 }
+@277 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 1602, i32 20 } }
 
 ; Function Attrs: nounwind uwtable
 define void @b3DynamicTree_Create(ptr dead_on_unwind noalias nofree writable writeonly sret(%struct.b3DynamicTree) align 8 captures(address_is_null) %0, i32 noundef %1) local_unnamed_addr #0 !func_sanitize !50 {
@@ -621,7 +619,7 @@ bb.j:                                             ; preds = %bb.i
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.j, %.critedge.split.loop.exit943
-  %.1179.lcssa = phi i32 [ %i.au, %.critedge.split.loop.exit943 ], [ %smax, %bb.j ] ; 7 uses
+  %.1179.lcssa = phi i32 [ %i.au, %.critedge.split.loop.exit943 ], [ %smax, %bb.j ] ; 6 uses
   %i.av = sext i32 %.1179.lcssa to i64            ; 5 uses
   %i.aw = icmp sgt i32 %.0517, %.1179.lcssa
   br i1 %i.aw, label %.lr.ph1070, label %.critedge211
@@ -725,18 +723,11 @@ bb.w:                                             ; preds = %bb.u
   %.sroa.01207.0.copyload = load <3 x float>, ptr %i.cn, align 4
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.cn, ptr noundef nonnull align 4 dereferenceable(12) %i.bf, i64 12, i1 false), !tbaa.struct !48
   store <3 x float> %.sroa.01207.0.copyload, ptr %i.bf, align 4
-  %3 = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %.1179.lcssa, i32 1), !nosanitize !9 ; 2 uses
-  %4 = extractvalue { i32, i1 } %3, 0, !nosanitize !9
-  %5 = extractvalue { i32, i1 } %3, 1, !nosanitize !9
-  br i1 %5, label %6, label %.critedge211, !prof !10, !nosanitize !9
-
-6:                                                ; preds = %bb.w
-  %7 = zext nneg i32 %.1179.lcssa to i64, !nosanitize !9
-  tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @264, i64 %7, i64 1) #11, !nosanitize !9
-  unreachable, !nosanitize !9
+  %3 = add nsw i32 %.1179.lcssa, 1
+  br label %.critedge211
 
 .critedge211:                                     ; preds = %bb.k, %.critedge, %bb.w
-  %.2180 = phi i32 [ %4, %bb.w ], [ %.1179.lcssa, %.critedge ], [ %.1179.lcssa, %bb.k ] ; 3 uses
+  %.2180 = phi i32 [ %3, %bb.w ], [ %.1179.lcssa, %.critedge ], [ %.1179.lcssa, %bb.k ] ; 3 uses
   %.2.in = phi i64 [ %indvars.iv.next730, %bb.w ], [ %i.ah, %.critedge ], [ %indvars.iv.next730, %bb.k ]
   %.2 = trunc i64 %.2.in to i32                   ; 2 uses
   %i.co = icmp slt i32 %.2180, %.2
@@ -769,7 +760,7 @@ bb.y:                                             ; preds = %.preheader250, %bb.
   br i1 %i.db, label %bb.aa, label %bb.z, !prof !20, !nosanitize !9
 
 bb.z:                                             ; preds = %bb.y
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @265, i64 %i.d, i64 %i.cw) #11, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @264, i64 %i.d, i64 %i.cw) #11, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.aa:                                            ; preds = %bb.y
@@ -789,7 +780,7 @@ bb.ab:                                            ; preds = %bb.aa
   br label %.critedge4
 
 .critedge4:                                       ; preds = %bb.ab, %.critedge4.split.loop.exit945
-  %.4182.lcssa = phi i32 [ %i.dh, %.critedge4.split.loop.exit945 ], [ %smax734, %bb.ab ] ; 7 uses
+  %.4182.lcssa = phi i32 [ %i.dh, %.critedge4.split.loop.exit945 ], [ %smax734, %bb.ab ] ; 6 uses
   %i.di = sext i32 %.4182.lcssa to i64            ; 5 uses
   %i.dj = icmp sgt i32 %.3521, %.4182.lcssa
   br i1 %i.dj, label %.lr.ph1072, label %.critedge212
@@ -811,7 +802,7 @@ bb.ac:                                            ; preds = %bb.ae
   br i1 %i.dr, label %bb.ae, label %bb.ad, !prof !20, !nosanitize !9
 
 bb.ad:                                            ; preds = %.lr.ph1072
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @266, i64 %i.d, i64 %i.dm) #11, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @265, i64 %i.d, i64 %i.dm) #11, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.ae:                                            ; preds = %.lr.ph1072
@@ -834,7 +825,7 @@ bb.ae:                                            ; preds = %.lr.ph1072
   br i1 %i.ee, label %bb.ag, label %bb.af, !prof !20, !nosanitize !9
 
 bb.af:                                            ; preds = %.critedge6
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @267, i64 %i.cq, i64 %i.dy) #11, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @266, i64 %i.cq, i64 %i.dy) #11, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.ag:                                            ; preds = %.critedge6
@@ -845,7 +836,7 @@ bb.ag:                                            ; preds = %.critedge6
   br i1 %i.ei, label %bb.ai, label %bb.ah, !prof !20, !nosanitize !9
 
 bb.ah:                                            ; preds = %bb.ag
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @268, i64 %i.ef) #11, !nosanitize !9
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @267, i64 %i.ef) #11, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.ai:                                            ; preds = %bb.ag
@@ -860,7 +851,7 @@ bb.ai:                                            ; preds = %bb.ag
   br i1 %i.eq, label %bb.ak, label %bb.aj, !prof !20, !nosanitize !9
 
 bb.aj:                                            ; preds = %bb.ai
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @269, i64 %i.cq, i64 %i.em) #11, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @268, i64 %i.cq, i64 %i.em) #11, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.ak:                                            ; preds = %bb.ai
@@ -870,7 +861,7 @@ bb.ak:                                            ; preds = %bb.ai
   br i1 %i.et, label %bb.am, label %bb.al, !prof !20, !nosanitize !9
 
 bb.al:                                            ; preds = %bb.ak
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @270, i64 %i.er) #11, !nosanitize !9
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @269, i64 %i.er) #11, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.am:                                            ; preds = %bb.ak
@@ -886,7 +877,7 @@ bb.am:                                            ; preds = %bb.ak
   br i1 %i.fa, label %bb.ao, label %bb.an, !prof !20, !nosanitize !9
 
 bb.an:                                            ; preds = %bb.am
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @271, i64 %i.d, i64 %i.ew) #11, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @270, i64 %i.d, i64 %i.ew) #11, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.ao:                                            ; preds = %bb.am
@@ -894,18 +885,11 @@ bb.ao:                                            ; preds = %bb.am
   %.sroa.01205.0.copyload = load <3 x float>, ptr %i.fb, align 4
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.fb, ptr noundef nonnull align 4 dereferenceable(12) %i.ds, i64 12, i1 false), !tbaa.struct !48
   store <3 x float> %.sroa.01205.0.copyload, ptr %i.ds, align 4
-  %8 = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %.4182.lcssa, i32 1), !nosanitize !9 ; 2 uses
-  %9 = extractvalue { i32, i1 } %8, 0, !nosanitize !9
-  %10 = extractvalue { i32, i1 } %8, 1, !nosanitize !9
-  br i1 %10, label %11, label %.critedge212, !prof !10, !nosanitize !9
-
-11:                                               ; preds = %bb.ao
-  %12 = zext nneg i32 %.4182.lcssa to i64, !nosanitize !9
-  tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @272, i64 %12, i64 1) #11, !nosanitize !9
-  unreachable, !nosanitize !9
+  %4 = add nsw i32 %.4182.lcssa, 1
+  br label %.critedge212
 
 .critedge212:                                     ; preds = %bb.ac, %.critedge4, %bb.ao
-  %.5183 = phi i32 [ %9, %bb.ao ], [ %.4182.lcssa, %.critedge4 ], [ %.4182.lcssa, %bb.ac ] ; 3 uses
+  %.5183 = phi i32 [ %4, %bb.ao ], [ %.4182.lcssa, %.critedge4 ], [ %.4182.lcssa, %bb.ac ] ; 3 uses
   %.5.in = phi i64 [ %indvars.iv.next737, %bb.ao ], [ %i.ct, %.critedge4 ], [ %indvars.iv.next737, %bb.ac ]
   %.5 = trunc i64 %.5.in to i32                   ; 2 uses
   %i.fc = icmp slt i32 %.5183, %.5
@@ -932,7 +916,7 @@ bb.ap:                                            ; preds = %.preheader, %bb.as
   br i1 %i.fm, label %bb.ar, label %bb.aq, !prof !20, !nosanitize !9
 
 bb.aq:                                            ; preds = %bb.ap
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @273, i64 %i.d, i64 %i.fh) #11, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @271, i64 %i.d, i64 %i.fh) #11, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.ar:                                            ; preds = %bb.ap
@@ -974,7 +958,7 @@ bb.at:                                            ; preds = %bb.av
   br i1 %i.gc, label %bb.av, label %bb.au, !prof !20, !nosanitize !9
 
 bb.au:                                            ; preds = %.lr.ph1075
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @274, i64 %i.d, i64 %i.fx) #11, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @272, i64 %i.d, i64 %i.fx) #11, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.av:                                            ; preds = %.lr.ph1075
@@ -997,7 +981,7 @@ bb.av:                                            ; preds = %.lr.ph1075
   br i1 %i.gp, label %bb.ax, label %bb.aw, !prof !20, !nosanitize !9
 
 bb.aw:                                            ; preds = %.critedge10
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @275, i64 %i.cq, i64 %i.gj) #11, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @273, i64 %i.cq, i64 %i.gj) #11, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.ax:                                            ; preds = %.critedge10
@@ -1008,7 +992,7 @@ bb.ax:                                            ; preds = %.critedge10
   br i1 %i.gt, label %bb.az, label %bb.ay, !prof !20, !nosanitize !9
 
 bb.ay:                                            ; preds = %bb.ax
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @276, i64 %i.gq) #11, !nosanitize !9
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @274, i64 %i.gq) #11, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.az:                                            ; preds = %bb.ax
@@ -1023,7 +1007,7 @@ bb.az:                                            ; preds = %bb.ax
   br i1 %i.hb, label %bb.bb, label %bb.ba, !prof !20, !nosanitize !9
 
 bb.ba:                                            ; preds = %bb.az
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @277, i64 %i.cq, i64 %i.gx) #11, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @275, i64 %i.cq, i64 %i.gx) #11, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.bb:                                            ; preds = %bb.az
@@ -1033,7 +1017,7 @@ bb.bb:                                            ; preds = %bb.az
   br i1 %i.he, label %bb.bd, label %bb.bc, !prof !20, !nosanitize !9
 
 bb.bc:                                            ; preds = %bb.bb
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @278, i64 %i.hc) #11, !nosanitize !9
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @276, i64 %i.hc) #11, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.bd:                                            ; preds = %bb.bb
@@ -1049,7 +1033,7 @@ bb.bd:                                            ; preds = %bb.bb
   br i1 %i.hl, label %bb.bf, label %bb.be, !prof !20, !nosanitize !9
 
 bb.be:                                            ; preds = %bb.bd
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @279, i64 %i.d, i64 %i.hh) #11, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @277, i64 %i.d, i64 %i.hh) #11, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.bf:                                            ; preds = %bb.bd

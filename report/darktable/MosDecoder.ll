@@ -127,8 +127,6 @@ $_ZZN8rawspeed14ThrowExceptionINS_19RawDecoderExceptionEEEvPKczE3buf = comdat an
 @_ZTIN8rawspeed11IOExceptionE = external constant ptr
 @_ZTVN8rawspeed11IOExceptionE = external constant { [6 x ptr] }, align 8
 @_ZTVN8rawspeed17RawspeedExceptionE = external constant { [6 x ptr] }, align 8
-@.str.27 = private unnamed_addr constant [48 x i8] c"%s, line 65: Out of bounds access in ByteStream\00", align 1
-@__PRETTY_FUNCTION__._ZNK8rawspeed10ByteStream5checkEj = private unnamed_addr constant [55 x i8] c"size_type rawspeed::ByteStream::check(size_type) const\00", align 1
 @.str.30 = private unnamed_addr constant [65 x i8] c"%s, line 160: Failed to parse TIFF endianness information in %s.\00", align 1
 @__PRETTY_FUNCTION__._ZN8rawspeed16getTiffByteOrderENS_10ByteStreamEjPKc = private unnamed_addr constant [74 x i8] c"Endianness rawspeed::getTiffByteOrder(ByteStream, uint32_t, const char *)\00", align 1
 @_ZZN8rawspeed14ThrowExceptionINS_19TiffParserExceptionEEEvPKczE3buf = linkonce_odr hidden thread_local global %"struct.std::array.95" zeroinitializer, comdat, align 1
@@ -531,7 +529,7 @@ bb.b:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %.sroa.047.0.copyload = load ptr, ptr %i.l, align 8 ; 2 uses
   %.sroa.750.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 24
-  %.sroa.750.0.copyload = load i32, ptr %.sroa.750.0..sroa_idx, align 8 ; 7 uses
+  %.sroa.750.0.copyload = load i32, ptr %.sroa.750.0..sroa_idx, align 8 ; 6 uses
   %.sroa.1558.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 32
   %.sroa.1558.0.copyload = load i32, ptr %.sroa.1558.0..sroa_idx, align 8 ; 3 uses
   %i.m = icmp sgt i32 %.sroa.750.0.copyload, -1
@@ -549,9 +547,8 @@ bb.b:                                             ; preds = %_ZNSt7__cxx1112basi
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN8rawspeed10ByteStream9skipBytesEj.exit41
   %indvars.iv = phi i64 [ %i.q, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZN8rawspeed10ByteStream9skipBytesEj.exit41 ] ; 4 uses
-  %indvars89 = trunc i64 %indvars.iv to i32       ; 2 uses
-  %6 = add i32 %indvars89, 16
-  %i.s = icmp samesign ule i32 %6, %.sroa.750.0.copyload
+  %6 = add nuw nsw i64 %indvars.iv, 16
+  %i.s = icmp samesign ule i64 %6, %i.r
   call void @llvm.assume(i1 %i.s)
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.047.0.copyload, i64 %indvars.iv ; 16 uses
   %i.u = load i8, ptr %i.t, align 1, !tbaa !20
@@ -646,21 +643,16 @@ bb.b:                                             ; preds = %_ZNSt7__cxx1112basi
   %.0810.i.i.i.i.i.i.i.ptr.15 = getelementptr inbounds nuw i8, ptr %i.t, i64 15
   %i.ay = load i8, ptr %.0810.i.i.i.i.i.i.i.ptr.15, align 1, !tbaa !20
   %i.az = icmp eq i8 %i.ay, 115
-  br i1 %i.az, label %7, label %_ZN8rawspeed10ByteStream9skipBytesEj.exit41
+  br i1 %i.az, label %_ZN8rawspeed10ByteStream9skipBytesEj.exit, label %_ZN8rawspeed10ByteStream9skipBytesEj.exit41
 
-7:                                                ; preds = %.lr.ph.i.i.i.i.i.i.i.15
-  %narrow = add i32 %indvars89, 44                ; 3 uses
-  %.not.i.i = icmp ugt i32 %narrow, %.sroa.750.0.copyload
-  br i1 %.not.i.i, label %8, label %_ZN8rawspeed10ByteStream9skipBytesEj.exit
-
-8:                                                ; preds = %7
-  call void (ptr, ...) @_ZN8rawspeed14ThrowExceptionINS_11IOExceptionEEEvPKcz(ptr noundef nonnull @.str.27, ptr noundef nonnull @__PRETTY_FUNCTION__._ZNK8rawspeed10ByteStream5checkEj) #20
-  unreachable
-
-_ZN8rawspeed10ByteStream9skipBytesEj.exit:        ; preds = %7
-  %i.ba = sub nuw nsw i32 %.sroa.750.0.copyload, %narrow
+_ZN8rawspeed10ByteStream9skipBytesEj.exit:        ; preds = %.lr.ph.i.i.i.i.i.i.i.15
+  %7 = trunc nuw i64 %indvars.iv to i32
+  %8 = add nuw nsw i32 %7, 44                     ; 3 uses
+  %9 = icmp uge i32 %.sroa.750.0.copyload, %8
+  call void @llvm.assume(i1 %9)
+  %i.ba = sub nuw nsw i32 %.sroa.750.0.copyload, %8
   %i.bb = zext nneg i32 %i.ba to i64              ; 4 uses
-  %i.bc = zext nneg i32 %narrow to i64
+  %i.bc = zext nneg i32 %8 to i64
   %i.bd = getelementptr inbounds nuw i8, ptr %.sroa.047.0.copyload, i64 %i.bc ; 8 uses
   %i.be = call noundef ptr @memchr(ptr noundef nonnull %i.bd, i32 noundef 0, i64 noundef %i.bb) #30
   %.not = icmp eq ptr %i.be, null
@@ -1014,8 +1006,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39: ; preds = %bb.
 
 _ZN8rawspeed10ByteStream9skipBytesEj.exit41:      ; preds = %.lr.ph.i.i.i.i.i.i.i.15, %.lr.ph.i.i.i.i.i.i.i.14, %.lr.ph.i.i.i.i.i.i.i.13, %.lr.ph.i.i.i.i.i.i.i.12, %.lr.ph.i.i.i.i.i.i.i.11, %.lr.ph.i.i.i.i.i.i.i.10, %.lr.ph.i.i.i.i.i.i.i.9, %.lr.ph.i.i.i.i.i.i.i.8, %.lr.ph.i.i.i.i.i.i.i.7, %.lr.ph.i.i.i.i.i.i.i.6, %.lr.ph.i.i.i.i.i.i.i.5, %.lr.ph.i.i.i.i.i.i.i.4, %.lr.ph.i.i.i.i.i.i.i.3, %.lr.ph.i.i.i.i.i.i.i.2, %.lr.ph.i.i.i.i.i.i.i.1, %.lr.ph
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %9 = icmp samesign ult i64 %indvars.iv, %i.r
-  call void @llvm.assume(i1 %9)
   %i.fm = sub nuw nsw i64 %i.r, %indvars.iv.next
   %i.fn = icmp samesign ugt i64 %i.fm, 52
   br i1 %i.fn, label %.lr.ph, label %.loopexit, !llvm.loop !92

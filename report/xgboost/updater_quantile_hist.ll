@@ -205,8 +205,7 @@ bb.am:                                            ; preds = %._crit_edge
   br label %_ZNSt6vectorIPKN7xgboost4tree21BoundedHistCollectionESaIS4_EED2Ev.exit144
 
 .lr.ph200:                                        ; preds = %_ZN7xgboost4tree16MultiExpandEntryD2Ev.exit, %_ZNSt6vectorIPKN7xgboost4tree21BoundedHistCollectionESaIS4_EE9push_backEOS4_.exit
-  %i.gs = phi i64 [ %25, %_ZNSt6vectorIPKN7xgboost4tree21BoundedHistCollectionESaIS4_EE9push_backEOS4_.exit ], [ 0, %_ZN7xgboost4tree16MultiExpandEntryD2Ev.exit ]
-  %.046198 = phi i32 [ %24, %_ZNSt6vectorIPKN7xgboost4tree21BoundedHistCollectionESaIS4_EE9push_backEOS4_.exit ], [ 0, %_ZN7xgboost4tree16MultiExpandEntryD2Ev.exit ]
+  %i.gs = phi i64 [ %indvars.iv.next214, %_ZNSt6vectorIPKN7xgboost4tree21BoundedHistCollectionESaIS4_EE9push_backEOS4_.exit ], [ 0, %_ZN7xgboost4tree16MultiExpandEntryD2Ev.exit ] ; 2 uses
   %.sroa.13.0197 = phi ptr [ %.sroa.13.2, %_ZNSt6vectorIPKN7xgboost4tree21BoundedHistCollectionESaIS4_EE9push_backEOS4_.exit ], [ null, %_ZN7xgboost4tree16MultiExpandEntryD2Ev.exit ] ; 5 uses
   %.sroa.9.0196 = phi ptr [ %.sroa.9.1, %_ZNSt6vectorIPKN7xgboost4tree21BoundedHistCollectionESaIS4_EE9push_backEOS4_.exit ], [ null, %_ZN7xgboost4tree16MultiExpandEntryD2Ev.exit ] ; 3 uses
   %.sroa.0153.0195 = phi ptr [ %.sroa.0153.2, %_ZNSt6vectorIPKN7xgboost4tree21BoundedHistCollectionESaIS4_EE9push_backEOS4_.exit ], [ null, %_ZN7xgboost4tree16MultiExpandEntryD2Ev.exit ] ; 7 uses
@@ -275,9 +274,8 @@ _ZNSt6vectorIPKN7xgboost4tree21BoundedHistCollectionESaIS4_EE9push_backEOS4_.exi
   %.pn180 = phi ptr [ %i.hi, %_ZNSt6vectorIPKN7xgboost4tree21BoundedHistCollectionESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i ], [ %.sroa.9.0196, %bb.an ]
   %.sroa.13.2 = phi ptr [ %i.hk, %_ZNSt6vectorIPKN7xgboost4tree21BoundedHistCollectionESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i ], [ %.sroa.13.0197, %bb.an ] ; 2 uses
   %.sroa.9.1 = getelementptr inbounds nuw i8, ptr %.pn180, i64 8 ; 2 uses
-  %24 = add i32 %.046198, 1                       ; 2 uses
-  %25 = zext i32 %24 to i64                       ; 2 uses
-  %i.hl = icmp ugt i64 %i.l, %25
+  %indvars.iv.next214 = add nuw i64 %i.gs, 1      ; 2 uses
+  %i.hl = icmp ugt i64 %i.l, %indvars.iv.next214
   br i1 %i.hl, label %.lr.ph200, label %._crit_edge201.loopexit, !llvm.loop !1530
 
 .loopexit:                                        ; preds = %_ZNKSt6vectorIPKN7xgboost4tree21BoundedHistCollectionESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -680,8 +678,7 @@ bb.ac:                                            ; preds = %.lr.ph, %bb.ak
           to label %bb.af unwind label %bb.ag
 
 _ZNK7xgboost6common4SpanINS1_IKNS_6detail20GradientPairInternalIdEELm18446744073709551615EEELm18446744073709551615EEixEm.exit96: ; preds = %bb.ac, %bb.ae
-  %i.fu = phi i64 [ %18, %bb.ae ], [ 0, %bb.ac ]  ; 5 uses
-  %storemerge62182 = phi i32 [ %17, %bb.ae ], [ 0, %bb.ac ]
+  %i.fu = phi i64 [ %indvars.iv.next205, %bb.ae ], [ 0, %bb.ac ] ; 6 uses
   %i.fv = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %i.fu ; 2 uses
   %i.fw = load i64, ptr %i.fv, align 8, !tbaa !533
   %i.fx = icmp ugt i64 %i.fw, %indvars.iv204.a
@@ -714,9 +711,8 @@ bb.ae:                                            ; preds = %_ZNK7xgboost6common
   %i.gq = load <2 x double>, ptr %i.gk, align 8, !tbaa !632
   %i.gr = fsub <2 x double> %i.gp, %i.gq
   store <2 x double> %i.gr, ptr %i.go, align 8, !tbaa !632
-  %17 = add i32 %storemerge62182, 1               ; 2 uses
-  %18 = zext i32 %17 to i64                       ; 2 uses
-  %i.gs = icmp ugt i64 %3, %18
+  %indvars.iv.next205 = add nuw i64 %i.fu, 1      ; 2 uses
+  %i.gs = icmp ugt i64 %3, %indvars.iv.next205
   br i1 %i.gs, label %_ZNK7xgboost6common4SpanINS1_IKNS_6detail20GradientPairInternalIdEELm18446744073709551615EEELm18446744073709551615EEixEm.exit96, label %._crit_edge, !llvm.loop !2083
 
 bb.af:                                            ; preds = %._crit_edge
@@ -746,8 +742,7 @@ bb.ag:                                            ; preds = %bb.af, %._crit_edge
   br label %bb.ax
 
 _ZNK7xgboost6common4SpanINS1_IKNS_6detail20GradientPairInternalIdEELm18446744073709551615EEELm18446744073709551615EEixEm.exit100: ; preds = %_ZNK7xgboost6common4SpanINS1_IKNS_6detail20GradientPairInternalIdEELm18446744073709551615EEELm18446744073709551615EEixEm.exit100.lr.ph, %bb.ai
-  %i.hd = phi i64 [ 0, %_ZNK7xgboost6common4SpanINS1_IKNS_6detail20GradientPairInternalIdEELm18446744073709551615EEELm18446744073709551615EEixEm.exit100.lr.ph ], [ %20, %bb.ai ] ; 5 uses
-  %storemerge63183 = phi i32 [ 0, %_ZNK7xgboost6common4SpanINS1_IKNS_6detail20GradientPairInternalIdEELm18446744073709551615EEELm18446744073709551615EEixEm.exit100.lr.ph ], [ %19, %bb.ai ]
+  %i.hd = phi i64 [ 0, %_ZNK7xgboost6common4SpanINS1_IKNS_6detail20GradientPairInternalIdEELm18446744073709551615EEELm18446744073709551615EEixEm.exit100.lr.ph ], [ %indvars.iv.next208, %bb.ai ] ; 6 uses
   %i.he = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %i.hd ; 2 uses
   %i.hf = load i64, ptr %i.he, align 8, !tbaa !533
   %i.hg = icmp ugt i64 %i.hf, %indvars.iv204.a
@@ -775,9 +770,8 @@ bb.ai:                                            ; preds = %_ZNK7xgboost6common
   %i.hu = load <2 x double>, ptr %i.hr, align 8, !tbaa !632
   %i.hv = fsub <2 x double> %i.hu, %i.hp
   store <2 x double> %i.hv, ptr %i.ht, align 8, !tbaa !632
-  %19 = add i32 %storemerge63183, 1               ; 2 uses
-  %20 = zext i32 %19 to i64                       ; 2 uses
-  %i.hw = icmp ugt i64 %3, %20
+  %indvars.iv.next208 = add nuw i64 %i.hd, 1      ; 2 uses
+  %i.hw = icmp ugt i64 %3, %indvars.iv.next208
   br i1 %i.hw, label %_ZNK7xgboost6common4SpanINS1_IKNS_6detail20GradientPairInternalIdEELm18446744073709551615EEELm18446744073709551615EEixEm.exit100, label %._crit_edge184, !llvm.loop !2084
 
 bb.aj:                                            ; preds = %._crit_edge184

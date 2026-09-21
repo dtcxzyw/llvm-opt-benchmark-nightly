@@ -205,34 +205,28 @@ bb.ck:                                            ; preds = %bb.ci
 
 bb.cl:                                            ; preds = %bb.ch
   %.not540 = icmp eq i32 %i.wi, 0
-  br i1 %.not540, label %.preheader, label %.preheader965.preheader
+  br i1 %.not540, label %.preheader, label %.preheader965
 
-.preheader965.preheader:                          ; preds = %bb.cl
-  %22 = trunc nuw i32 %i.pf to i16
-  br label %.preheader965
-
-.preheader965:                                    ; preds = %.preheader965.preheader, %bb.cm
-  %.04771274 = phi i16 [ %24, %bb.cm ], [ 0, %.preheader965.preheader ] ; 4 uses
-  %23 = zext i16 %.04771274 to i64                ; 2 uses
-  %i.xj = getelementptr inbounds nuw i8, ptr %i.wg, i64 %23
+.preheader965:                                    ; preds = %bb.cl, %bb.cm
+  %indvars.iv1501 = phi i64 [ %indvars.iv.next1502, %bb.cm ], [ 0, %bb.cl ] ; 4 uses
+  %i.xj = getelementptr inbounds nuw i8, ptr %i.wg, i64 %indvars.iv1501
   %i.xk = load i8, ptr %i.xj, align 1, !tbaa !62
-  %i.xl = getelementptr inbounds nuw i8, ptr %i.pb, i64 %23
+  %i.xl = getelementptr inbounds nuw i8, ptr %i.pb, i64 %indvars.iv1501
   %i.xm = load i8, ptr %i.xl, align 1, !tbaa !62
   %i.xn = icmp eq i8 %i.xk, %i.xm
   br i1 %i.xn, label %bb.cm, label %.critedge6
 
 bb.cm:                                            ; preds = %.preheader965
-  %24 = add nuw i16 %.04771274, 1                 ; 3 uses
-  %25 = icmp ult i16 %24, %22
-  br i1 %25, label %.preheader965, label %.lr.ph1277.preheader, !llvm.loop !184
+  %indvars.iv.next1502 = add nuw i64 %indvars.iv1501, 1 ; 3 uses
+  %22 = trunc nuw i64 %indvars.iv.next1502 to i32
+  %23 = icmp ugt i32 %i.pf, %22
+  br i1 %23, label %.preheader965, label %.critedge6, !llvm.loop !184
 
-.critedge6:                                       ; preds = %.preheader965
-  %.not1290 = icmp eq i16 %.04771274, 0
-  br i1 %.not1290, label %._crit_edge1278, label %.lr.ph1277.preheader
-
-.lr.ph1277.preheader:                             ; preds = %bb.cm, %.critedge6
-  %.0477.lcssa1583 = phi i16 [ %.04771274, %.critedge6 ], [ %24, %bb.cm ]
-  br label %.lr.ph1277
+.critedge6:                                       ; preds = %bb.cm, %.preheader965
+  %.0477.lcssa.in = phi i64 [ %indvars.iv.next1502, %bb.cm ], [ %indvars.iv1501, %.preheader965 ]
+  %.0477.lcssa = trunc i64 %.0477.lcssa.in to i16 ; 2 uses
+  %.not1290 = icmp eq i16 %.0477.lcssa, 0
+  br i1 %.not1290, label %._crit_edge1278, label %.lr.ph1277
 
 ._crit_edge1278.loopexit:                         ; preds = %_ZNK7rocksdb10trie_index9Bitvector5Rank1Em.exit658
   %.phi.trans.insert1505 = getelementptr inbounds nuw i8, ptr %i.yt, i64 736
@@ -264,10 +258,10 @@ bb.cm:                                            ; preds = %.preheader965
   %i.yc = call noundef zeroext i1 @_ZN7rocksdb10trie_index17LoudsTrieIterator7AdvanceEv(ptr noundef nonnull align 8 dereferenceable(281) %0)
   br label %.thread920
 
-.lr.ph1277:                                       ; preds = %.lr.ph1277.preheader, %_ZNK7rocksdb10trie_index9Bitvector5Rank1Em.exit658
-  %i.yd = phi ptr [ %i.yt, %_ZNK7rocksdb10trie_index9Bitvector5Rank1Em.exit658 ], [ %i.lc, %.lr.ph1277.preheader ]
-  %.04751276 = phi i16 [ %i.aag, %_ZNK7rocksdb10trie_index9Bitvector5Rank1Em.exit658 ], [ 0, %.lr.ph1277.preheader ]
-  %.04761275 = phi i64 [ %i.aaf, %_ZNK7rocksdb10trie_index9Bitvector5Rank1Em.exit658 ], [ %i.mu, %.lr.ph1277.preheader ]
+.lr.ph1277:                                       ; preds = %.critedge6, %_ZNK7rocksdb10trie_index9Bitvector5Rank1Em.exit658
+  %i.yd = phi ptr [ %i.yt, %_ZNK7rocksdb10trie_index9Bitvector5Rank1Em.exit658 ], [ %i.lc, %.critedge6 ]
+  %.04751276 = phi i16 [ %i.aag, %_ZNK7rocksdb10trie_index9Bitvector5Rank1Em.exit658 ], [ 0, %.critedge6 ]
+  %.04761275 = phi i64 [ %i.aaf, %_ZNK7rocksdb10trie_index9Bitvector5Rank1Em.exit658 ], [ %i.mu, %.critedge6 ]
   %i.ye = getelementptr inbounds nuw i8, ptr %i.yd, i64 736
   %i.yf = load ptr, ptr %i.ye, align 8, !tbaa !80
   %i.yg = getelementptr inbounds nuw [4 x i8], ptr %i.yf, i64 %.04761275
@@ -365,7 +359,7 @@ _ZNK7rocksdb10trie_index9Bitvector5Rank1Em.exit658: ; preds = %bb.cq, %bb.cr
   %.3.i654 = phi i64 [ %i.aae, %bb.cr ], [ %.2.i651, %bb.cq ]
   %i.aaf = add nsw i64 %.3.i654, -1               ; 2 uses
   %i.aag = add nuw i16 %.04751276, 1              ; 2 uses
-  %exitcond1497.not = icmp eq i16 %i.aag, %.0477.lcssa1583
+  %exitcond1497.not = icmp eq i16 %i.aag, %.0477.lcssa
   br i1 %exitcond1497.not, label %._crit_edge1278.loopexit, label %.lr.ph1277, !llvm.loop !185
 
 bb.cs:                                            ; preds = %bb.cz
@@ -768,34 +762,28 @@ bb.fv:                                            ; preds = %bb.ft
 
 bb.fw:                                            ; preds = %bb.fs
   %.not537 = icmp eq i32 %i.axb, 0
-  br i1 %.not537, label %.preheader967, label %.preheader968.preheader
+  br i1 %.not537, label %.preheader967, label %.preheader968
 
-.preheader968.preheader:                          ; preds = %bb.fw
-  %26 = trunc nuw i32 %i.apo to i16
-  br label %.preheader968
-
-.preheader968:                                    ; preds = %.preheader968.preheader, %bb.fx
-  %.03881256 = phi i16 [ %28, %bb.fx ], [ 0, %.preheader968.preheader ] ; 4 uses
-  %27 = zext i16 %.03881256 to i64                ; 2 uses
-  %i.ayc = getelementptr inbounds nuw i8, ptr %i.awz, i64 %27
+.preheader968:                                    ; preds = %bb.fw, %bb.fx
+  %indvars.iv1486 = phi i64 [ %indvars.iv.next1487, %bb.fx ], [ 0, %bb.fw ] ; 4 uses
+  %i.ayc = getelementptr inbounds nuw i8, ptr %i.awz, i64 %indvars.iv1486
   %i.ayd = load i8, ptr %i.ayc, align 1, !tbaa !62
-  %i.aye = getelementptr inbounds nuw i8, ptr %i.apk, i64 %27
+  %i.aye = getelementptr inbounds nuw i8, ptr %i.apk, i64 %indvars.iv1486
   %i.ayf = load i8, ptr %i.aye, align 1, !tbaa !62
   %i.ayg = icmp eq i8 %i.ayd, %i.ayf
   br i1 %i.ayg, label %bb.fx, label %.critedge10
 
 bb.fx:                                            ; preds = %.preheader968
-  %28 = add nuw i16 %.03881256, 1                 ; 3 uses
-  %29 = icmp ult i16 %28, %26
-  br i1 %29, label %.preheader968, label %.lr.ph1259.preheader, !llvm.loop !190
+  %indvars.iv.next1487 = add nuw i64 %indvars.iv1486, 1 ; 3 uses
+  %24 = trunc nuw i64 %indvars.iv.next1487 to i32
+  %25 = icmp ugt i32 %i.apo, %24
+  br i1 %25, label %.preheader968, label %.critedge10, !llvm.loop !190
 
-.critedge10:                                      ; preds = %.preheader968
-  %.not1286 = icmp eq i16 %.03881256, 0
-  br i1 %.not1286, label %._crit_edge1260, label %.lr.ph1259.preheader
-
-.lr.ph1259.preheader:                             ; preds = %bb.fx, %.critedge10
-  %.0388.lcssa1589 = phi i16 [ %.03881256, %.critedge10 ], [ %28, %bb.fx ]
-  br label %.lr.ph1259
+.critedge10:                                      ; preds = %bb.fx, %.preheader968
+  %.0388.lcssa.in = phi i64 [ %indvars.iv.next1487, %bb.fx ], [ %indvars.iv1486, %.preheader968 ]
+  %.0388.lcssa = trunc i64 %.0388.lcssa.in to i16 ; 2 uses
+  %.not1286 = icmp eq i16 %.0388.lcssa, 0
+  br i1 %.not1286, label %._crit_edge1260, label %.lr.ph1259
 
 ._crit_edge1260.loopexit:                         ; preds = %_ZNK7rocksdb10trie_index9Bitvector5Rank1Em.exit783
   %.phi.trans.insert1500 = getelementptr inbounds nuw i8, ptr %i.azm, i64 736
@@ -827,10 +815,10 @@ bb.fx:                                            ; preds = %.preheader968
   %i.ayv = call noundef zeroext i1 @_ZN7rocksdb10trie_index17LoudsTrieIterator7AdvanceEv(ptr noundef nonnull align 8 dereferenceable(281) %0)
   br label %.thread920
 
-.lr.ph1259:                                       ; preds = %.lr.ph1259.preheader, %_ZNK7rocksdb10trie_index9Bitvector5Rank1Em.exit783
-  %i.ayw = phi ptr [ %i.azm, %_ZNK7rocksdb10trie_index9Bitvector5Rank1Em.exit783 ], [ %i.ake, %.lr.ph1259.preheader ]
-  %.03861258 = phi i16 [ %i.baz, %_ZNK7rocksdb10trie_index9Bitvector5Rank1Em.exit783 ], [ 0, %.lr.ph1259.preheader ]
-  %.03871257 = phi i64 [ %i.bay, %_ZNK7rocksdb10trie_index9Bitvector5Rank1Em.exit783 ], [ %i.amy, %.lr.ph1259.preheader ]
+.lr.ph1259:                                       ; preds = %.critedge10, %_ZNK7rocksdb10trie_index9Bitvector5Rank1Em.exit783
+  %i.ayw = phi ptr [ %i.azm, %_ZNK7rocksdb10trie_index9Bitvector5Rank1Em.exit783 ], [ %i.ake, %.critedge10 ]
+  %.03861258 = phi i16 [ %i.baz, %_ZNK7rocksdb10trie_index9Bitvector5Rank1Em.exit783 ], [ 0, %.critedge10 ]
+  %.03871257 = phi i64 [ %i.bay, %_ZNK7rocksdb10trie_index9Bitvector5Rank1Em.exit783 ], [ %i.amy, %.critedge10 ]
   %i.ayx = getelementptr inbounds nuw i8, ptr %i.ayw, i64 736
   %i.ayy = load ptr, ptr %i.ayx, align 8, !tbaa !80
   %i.ayz = getelementptr inbounds nuw [4 x i8], ptr %i.ayy, i64 %.03871257
@@ -928,7 +916,7 @@ _ZNK7rocksdb10trie_index9Bitvector5Rank1Em.exit783: ; preds = %bb.gb, %bb.gc
   %.3.i779 = phi i64 [ %i.bax, %bb.gc ], [ %.2.i776, %bb.gb ]
   %i.bay = add nsw i64 %.3.i779, -1               ; 2 uses
   %i.baz = add nuw i16 %.03861258, 1              ; 2 uses
-  %exitcond1486.not = icmp eq i16 %i.baz, %.0388.lcssa1589
+  %exitcond1486.not = icmp eq i16 %i.baz, %.0388.lcssa
   br i1 %exitcond1486.not, label %._crit_edge1260.loopexit, label %.lr.ph1259, !llvm.loop !191
 
 bb.gd:                                            ; preds = %bb.gk

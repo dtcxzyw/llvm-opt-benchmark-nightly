@@ -205,18 +205,17 @@ bb.c:                                             ; preds = %.lr.ph81, %._crit_e
 .lr.ph77:                                         ; preds = %bb.c
   %i.cc = load i32, ptr %i.aw, align 8, !tbaa !283
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bz, i64 77144
-  %2 = zext i32 %i.cb to i64
-  %i.ce = zext i32 %.06079 to i64                 ; 2 uses
-  %i.cf = tail call i32 @llvm.umax.i32(i32 %.06079, i32 %i.cc)
+  %i.ce = zext i32 %.06079 to i64
+  %i.cf = tail call i32 @llvm.usub.sat.i32(i32 %i.cc, i32 %.06079)
   %umax = zext i32 %i.cf to i64
-  %3 = sub nsw i64 %umax, %i.ce
+  %wide.trip.count96 = zext i32 %i.cb to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph77, %bb.h
   %indvars.iv89 = phi i64 [ %i.ce, %.lr.ph77 ], [ %indvars.iv.next90, %bb.h ] ; 2 uses
   %indvars.iv87 = phi i64 [ 0, %.lr.ph77 ], [ %indvars.iv.next88, %bb.h ] ; 3 uses
   %indvars.iv.next90 = add nuw nsw i64 %indvars.iv89, 1 ; 2 uses
-  %exitcond94.not = icmp eq i64 %indvars.iv87, %3
+  %exitcond94.not = icmp eq i64 %indvars.iv87, %umax
   br i1 %exitcond94.not, label %bb.e, label %av_video_enc_params_block.exit
 
 bb.e:                                             ; preds = %bb.d
@@ -283,11 +282,11 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f, %bb.g, %av_video_enc_params_block.exit
   %indvars.iv.next88 = add nuw nsw i64 %indvars.iv87, 1 ; 2 uses
-  %exitcond95.not = icmp eq i64 %indvars.iv.next88, %2
+  %exitcond95.not = icmp eq i64 %indvars.iv.next88, %wide.trip.count96
   br i1 %exitcond95.not, label %._crit_edge.loopexit, label %bb.d, !llvm.loop !279
 
 ._crit_edge.loopexit:                             ; preds = %bb.h
-  %indvars92.le = trunc i64 %indvars.iv.next90 to i32
+  %indvars92.le = trunc nuw i64 %indvars.iv.next90 to i32
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.c
@@ -690,7 +689,7 @@ declare i32 @llvm.bswap.i32(i32) #11
 declare i32 @llvm.umin.i32(i32, i32) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #11
+declare i32 @llvm.usub.sat.i32(i32, i32) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #12

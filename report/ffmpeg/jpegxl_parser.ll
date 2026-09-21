@@ -205,24 +205,20 @@ bb.fs:                                            ; preds = %entropy_decoder_ini
 
 .preheader.i.i:                                   ; preds = %bb.fs
   %.not304616.not.i.i = icmp eq i64 %.0.i453.i.i, 0
-  br i1 %.not304616.not.i.i, label %._crit_edge.i.i, label %.lr.ph619.preheader.i.i
-
-.lr.ph619.preheader.i.i:                          ; preds = %.preheader.i.i
-  %8 = trunc nuw i64 %.0.i453.i.i to i32
-  br label %.lr.ph619.i.i
+  br i1 %.not304616.not.i.i, label %._crit_edge.i.i, label %.lr.ph619.i.i
 
 bb.ft:                                            ; preds = %bb.fs
   call fastcc void @entropy_decoder_close(ptr noundef %6)
   br label %.thread593.i.i
 
 bb.fu:                                            ; preds = %bb.fv
-  %9 = add nuw i32 %.0226618.i.i, 1               ; 2 uses
-  %exitcond.not.i = icmp eq i32 %9, %8
+  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i.i, %.0.i453.i.i
   br i1 %exitcond.not.i, label %._crit_edge.i.i, label %.lr.ph619.i.i, !llvm.loop !56
 
-.lr.ph619.i.i:                                    ; preds = %bb.fu, %.lr.ph619.preheader.i.i
-  %.0226618.i.i = phi i32 [ %9, %bb.fu ], [ 0, %.lr.ph619.preheader.i.i ]
-  %.0227617.i.i = phi i64 [ %.0.i461.i.i, %bb.fu ], [ 0, %.lr.ph619.preheader.i.i ] ; 3 uses
+.lr.ph619.i.i:                                    ; preds = %.preheader.i.i, %bb.fu
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.fu ], [ 0, %.preheader.i.i ]
+  %.0227617.i.i = phi i64 [ %.0.i461.i.i, %bb.fu ], [ 0, %.preheader.i.i ] ; 3 uses
   %i.aqo = trunc nuw i64 %.0227617.i.i to i32     ; 2 uses
   %.not.i.i454.i.i = icmp samesign ult i64 %.0227617.i.i, 65536 ; 2 uses
   %i.aqp = lshr i32 %i.aqo, 16

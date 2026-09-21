@@ -204,14 +204,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 100
   %i.c = load i32, ptr %i.b, align 4, !tbaa !128  ; 2 uses
-  %i.d = load i32, ptr %i.a, align 4, !tbaa !55   ; 3 uses
-  %i.e = trunc i64 %2 to i32                      ; 3 uses
-  %4 = sub nsw i32 %i.c, %i.e
-  %5 = icmp sgt i32 %i.d, %4
-  %i.f = sub nsw i32 2147483647, %i.e
+  %i.d = load i32, ptr %i.a, align 4, !tbaa !55   ; 2 uses
+  %i.e = trunc i64 %2 to i32                      ; 2 uses
+  %i.f = sub nsw i32 %i.c, %i.e
   %i.g = icmp sgt i32 %i.d, %i.f
-  %or.cond.i = select i1 %5, i1 true, i1 %i.g
-  br i1 %or.cond.i, label %adjust_recv_window_size.exit, label %bb.d
+  br i1 %i.g, label %adjust_recv_window_size.exit, label %bb.d
 
 adjust_recv_window_size.exit:                     ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 2740 ; 3 uses
@@ -322,14 +319,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 2640 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 2652
   %i.c = load i32, ptr %i.b, align 4, !tbaa !54   ; 2 uses
-  %i.d = load i32, ptr %i.a, align 4, !tbaa !55   ; 3 uses
-  %i.e = trunc i64 %1 to i32                      ; 3 uses
-  %2 = sub nsw i32 %i.c, %i.e
-  %3 = icmp sgt i32 %i.d, %2
-  %i.f = sub nsw i32 2147483647, %i.e
+  %i.d = load i32, ptr %i.a, align 4, !tbaa !55   ; 2 uses
+  %i.e = trunc i64 %1 to i32                      ; 2 uses
+  %i.f = sub nsw i32 %i.c, %i.e
   %i.g = icmp sgt i32 %i.d, %i.f
-  %or.cond.i = select i1 %3, i1 true, i1 %i.g
-  br i1 %or.cond.i, label %adjust_recv_window_size.exit, label %bb.d
+  br i1 %i.g, label %adjust_recv_window_size.exit, label %bb.d
 
 adjust_recv_window_size.exit:                     ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 2740 ; 3 uses

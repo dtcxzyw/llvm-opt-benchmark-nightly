@@ -204,8 +204,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %_ZN4llvm12CallLowering7ArgInfoD2Ev.exit167
-  %i.bi = phi i64 [ 0, %.lr.ph ], [ %34, %_ZN4llvm12CallLowering7ArgInfoD2Ev.exit167 ] ; 5 uses
-  %.0131235 = phi i32 [ 0, %.lr.ph ], [ %33, %_ZN4llvm12CallLowering7ArgInfoD2Ev.exit167 ]
+  %i.bi = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN4llvm12CallLowering7ArgInfoD2Ev.exit167 ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #18
   %i.bj = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.bi
   %i.bk = load i32, ptr %i.bj, align 4, !tbaa !104
@@ -608,10 +607,10 @@ bb.ak:                                            ; preds = %_ZN4llvm11SmallVect
 _ZN4llvm12CallLowering7ArgInfoD2Ev.exit167:       ; preds = %_ZN4llvm11SmallVectorINS_8RegisterELj4EED2Ev.exit.i166, %bb.ak
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #18
-  %33 = add nuw i32 %.0131235, 1                  ; 3 uses
+  %indvars.iv.next = add nuw nsw i64 %i.bi, 1     ; 2 uses
+  %33 = load i32, ptr %i.ae, align 8, !tbaa !236
   %34 = zext i32 %33 to i64
-  %35 = load i32, ptr %i.ae, align 8, !tbaa !236
-  %.not139.not = icmp ugt i32 %35, %33
+  %.not139.not = icmp samesign ult i64 %indvars.iv.next, %34
   br i1 %.not139.not, label %bb.e, label %.critedge148, !llvm.loop !600
 
 .critedge148:                                     ; preds = %_ZN4llvm12CallLowering7ArgInfoD2Ev.exit167, %bb.d

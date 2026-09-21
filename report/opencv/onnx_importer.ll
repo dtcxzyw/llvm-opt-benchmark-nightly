@@ -205,9 +205,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i298: ; preds = %
 bb.cv:                                            ; preds = %bb.cr
   %i.pc = load ptr, ptr %i.u, align 8, !tbaa !53, !noalias !1375
   %i.pd = getelementptr inbounds nuw i8, ptr %i.pc, i64 8
-  %sext = shl nuw i64 %.050653, 32
-  %63 = ashr exact i64 %sext, 29
-  %i.pe = getelementptr inbounds i8, ptr %i.pd, i64 %63
+  %sext = shl nuw nsw i64 %.050653, 3
+  %i.pe = getelementptr inbounds nuw i8, ptr %i.pd, i64 %sext
   %i.pf = load ptr, ptr %i.pe, align 8, !tbaa !54, !noalias !1375
   invoke void @_ZN2cv3dnn14dnn5_v2026060512ONNXImporter7getBlobERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.cv::Mat") align 8 %47, ptr noundef nonnull align 8 dereferenceable(720) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.pf)
           to label %_ZN2cv3dnn14dnn5_v2026060512ONNXImporter7getBlobERKN11opencv_onnx9NodeProtoEi.exit304 unwind label %.loopexit516

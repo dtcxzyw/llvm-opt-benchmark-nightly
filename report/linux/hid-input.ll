@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %._crit_edge.i, %.lr
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.g, %.lr.ph.i
-  %.02630.i = phi i32 [ 0, %.lr.ph.i ], [ %i.w, %bb.g ] ; 4 uses
+  %.02630.i = phi i32 [ 0, %.lr.ph.i ], [ %i.w, %bb.g ] ; 3 uses
   %i.n = sext i32 %.02630.i to i64
   %i.o = getelementptr [28 x i8], ptr %i.m, i64 %i.n ; 2 uses
   %i.p = getelementptr i8, ptr %i.o, i64 16
@@ -218,7 +218,7 @@ bb.f:                                             ; preds = %bb.e
   %i.t = load i16, ptr %i.s, align 2
   %i.u = zext i16 %i.t to i32
   %i.v = icmp eq i32 %2, %i.u
-  br i1 %i.v, label %hidinput_find_field.exit, label %bb.g
+  br i1 %i.v, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.w = add nuw i32 %.02630.i, 1                 ; 2 uses
@@ -230,16 +230,12 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %exitcond.not = icmp eq i32 %i.x, %i.e
   br i1 %exitcond.not, label %.loopexit27.i, label %bb.d, !llvm.loop !67
 
-hidinput_find_field.exit:                         ; preds = %bb.f
-  %4 = icmp eq i32 %.02630.i, -1
-  br i1 %4, label %hidinput_find_field.exit.thread, label %bb.h
-
-hidinput_find_field.exit.thread:                  ; preds = %.loopexit27.i, %bb.c, %hidinput_find_field.exit
+hidinput_find_field.exit.thread:                  ; preds = %.loopexit27.i, %bb.c
   %i.y = getelementptr i8, ptr %0, i64 536
   tail call void (ptr, ptr, ...) @_dev_warn(ptr noundef %i.y, ptr noundef nonnull @.str.15) #16
   br label %bb.i
 
-bb.h:                                             ; preds = %hidinput_find_field.exit
+bb.h:                                             ; preds = %bb.f
   %i.z = tail call i32 @hid_set_field(ptr noundef %i.i, i32 noundef %.02630.i, i32 noundef %3) #12 ; 0 uses
   %i.aa = getelementptr i8, ptr %.val, i64 6296
   %i.ab = load ptr, ptr @system_percpu_wq, align 8

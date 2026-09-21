@@ -205,13 +205,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %_ZN6embree8vector_tINS_10BufferViewINS_6Vec3fxEEENS_6Device9allocatorIS3_Lm8EEEE18internal_grow_sizeEm.exit, label %.lr.ph.a
 
 .lr.ph.a:                                         ; preds = %bb.b, %.lr.ph.a
-  %.0.i334 = phi i64 [ %2, %.lr.ph.a ], [ %i.d, %bb.b ]
-  %2 = shl nuw nsw i64 %.0.i334, 1                ; 3 uses
-  %3 = icmp samesign ult i64 %2, %i.b
-  br i1 %3, label %.lr.ph.a, label %_ZN6embree8vector_tINS_10BufferViewINS_6Vec3fxEEENS_6Device9allocatorIS3_Lm8EEEE18internal_grow_sizeEm.exit, !llvm.loop !18
+  %.0.i334 = phi i64 [ %3, %.lr.ph.a ], [ %i.d, %bb.b ] ; 3 uses
+  %2 = icmp ult i64 %.0.i334, %i.b
+  %3 = shl nuw i64 %.0.i334, 1
+  br i1 %2, label %.lr.ph.a, label %_ZN6embree8vector_tINS_10BufferViewINS_6Vec3fxEEENS_6Device9allocatorIS3_Lm8EEEE18internal_grow_sizeEm.exit, !llvm.loop !18
 
 _ZN6embree8vector_tINS_10BufferViewINS_6Vec3fxEEENS_6Device9allocatorIS3_Lm8EEEE18internal_grow_sizeEm.exit: ; preds = %.lr.ph.a, %bb.a, %bb.b
-  %.07.i = phi i64 [ %i.b, %bb.b ], [ %i.d, %bb.a ], [ %2, %.lr.ph.a ] ; 3 uses
+  %.07.i = phi i64 [ %i.b, %bb.b ], [ %i.d, %bb.a ], [ %.0.i334, %.lr.ph.a ] ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 320 ; 7 uses
   %i.g = load i64, ptr %i.f, align 16             ; 3 uses
   %i.h = icmp ugt i64 %i.g, %i.b
@@ -458,14 +458,13 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.db, label %_ZN6embree8vector_tINS_10BufferViewINS_6Vec3faEEENS_6Device9allocatorIS3_Lm8EEEE18internal_grow_sizeEm.exit, label %.lr.ph47
 
 .lr.ph47:                                         ; preds = %bb.k, %.lr.ph47
-  %.0.i1146 = phi i64 [ %.sroa.speculated23, %.lr.ph47 ], [ %i.da, %bb.k ]
-  %4 = shl i64 %.0.i1146, 1
-  %.sroa.speculated23 = tail call i64 @llvm.umax.i64(i64 %4, i64 1) ; 3 uses
-  %5 = icmp ult i64 %.sroa.speculated23, %i.b
-  br i1 %5, label %.lr.ph47, label %_ZN6embree8vector_tINS_10BufferViewINS_6Vec3faEEENS_6Device9allocatorIS3_Lm8EEEE18internal_grow_sizeEm.exit, !llvm.loop !23
+  %.0.i1146 = phi i64 [ %5, %.lr.ph47 ], [ %i.da, %bb.k ] ; 3 uses
+  %4 = icmp ult i64 %.0.i1146, %i.b
+  %5 = shl nuw i64 %.0.i1146, 1
+  br i1 %4, label %.lr.ph47, label %_ZN6embree8vector_tINS_10BufferViewINS_6Vec3faEEENS_6Device9allocatorIS3_Lm8EEEE18internal_grow_sizeEm.exit, !llvm.loop !23
 
 _ZN6embree8vector_tINS_10BufferViewINS_6Vec3faEEENS_6Device9allocatorIS3_Lm8EEEE18internal_grow_sizeEm.exit: ; preds = %.lr.ph47, %bb.j, %bb.k
-  %.07.i10 = phi i64 [ %i.b, %bb.k ], [ %i.da, %bb.j ], [ %.sroa.speculated23, %.lr.ph47 ] ; 3 uses
+  %.07.i10 = phi i64 [ %i.b, %bb.k ], [ %i.da, %bb.j ], [ %.0.i1146, %.lr.ph47 ] ; 3 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 7 uses
   %i.dd = load i64, ptr %i.dc, align 16           ; 3 uses
   %i.de = icmp ugt i64 %i.dd, %i.b
@@ -715,13 +714,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %_ZN6embree8vector_tINS_10BufferViewIcEENS_6Device9allocatorIS2_Lm8EEEE18internal_grow_sizeEm.exit, label %.lr.ph.a
 
 .lr.ph.a:                                         ; preds = %bb.b, %.lr.ph.a
-  %.0.i110 = phi i64 [ %2, %.lr.ph.a ], [ %i.d, %bb.b ]
-  %2 = shl nuw nsw i64 %.0.i110, 1                ; 3 uses
-  %3 = icmp samesign ult i64 %2, %i.b
-  br i1 %3, label %.lr.ph.a, label %_ZN6embree8vector_tINS_10BufferViewIcEENS_6Device9allocatorIS2_Lm8EEEE18internal_grow_sizeEm.exit, !llvm.loop !30
+  %.0.i110 = phi i64 [ %3, %.lr.ph.a ], [ %i.d, %bb.b ] ; 3 uses
+  %2 = icmp ult i64 %.0.i110, %i.b
+  %3 = shl nuw i64 %.0.i110, 1
+  br i1 %2, label %.lr.ph.a, label %_ZN6embree8vector_tINS_10BufferViewIcEENS_6Device9allocatorIS2_Lm8EEEE18internal_grow_sizeEm.exit, !llvm.loop !30
 
 _ZN6embree8vector_tINS_10BufferViewIcEENS_6Device9allocatorIS2_Lm8EEEE18internal_grow_sizeEm.exit: ; preds = %.lr.ph.a, %bb.a, %bb.b
-  %.07.i = phi i64 [ %i.b, %bb.b ], [ %i.d, %bb.a ], [ %2, %.lr.ph.a ] ; 3 uses
+  %.07.i = phi i64 [ %i.b, %bb.b ], [ %i.d, %bb.a ], [ %.0.i110, %.lr.ph.a ] ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 384 ; 7 uses
   %i.g = load i64, ptr %i.f, align 16             ; 3 uses
   %i.h = icmp ugt i64 %i.g, %i.b

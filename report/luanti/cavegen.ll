@@ -202,12 +202,12 @@ bb.a:
   %.sroa.7.0.extract.trunc = trunc nuw i48 %.sroa.7.0.extract.shift to i16 ; 3 uses
   %.sroa.0.0.extract.trunc = trunc i48 %3 to i16  ; 2 uses
   %.sroa.2.0.extract.shift = lshr i48 %3, 16
-  %.sroa.2.0.extract.trunc = trunc i48 %.sroa.2.0.extract.shift to i16 ; 8 uses
+  %.sroa.2.0.extract.trunc = trunc i48 %.sroa.2.0.extract.shift to i16 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !110
   %i.c = sitofp nsz i16 %.sroa.035.0.extract.trunc to float
-  %i.d = sext i16 %.sroa.4.0.extract.trunc to i32 ; 3 uses
-  %i.e = add nsw i32 %i.d, -1                     ; 4 uses
+  %i.d = sext i16 %.sroa.4.0.extract.trunc to i32 ; 4 uses
+  %i.e = add nsw i32 %i.d, -1                     ; 3 uses
   %i.f = sitofp nsz i32 %i.e to float
   %i.g = sitofp nsz i16 %.sroa.7.0.extract.trunc to float
   %i.h = tail call noundef ptr @_ZN5Noise10noiseMap3DEfffPf(ptr noundef nonnull align 8 dereferenceable(88) %i.b, float noundef %i.c, float noundef %i.f, float noundef %i.g, ptr noundef null) ; 0 uses
@@ -219,7 +219,7 @@ bb.a:
   %i.n = shl nsw i64 %i.l, 2
   %i.o = select i1 %i.m, i64 -1, i64 %i.n
   %i.p = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.o) #19 ; 4 uses
-  %i.q = sext i16 %.sroa.2.0.extract.trunc to i32 ; 2 uses
+  %i.q = sext i16 %.sroa.2.0.extract.trunc to i32 ; 3 uses
   %.not65 = icmp sgt i32 %i.e, %i.q               ; 2 uses
   br i1 %.not65, label %._crit_edge, label %.lr.ph
 
@@ -393,7 +393,7 @@ bb.b:                                             ; preds = %.lr.ph75, %bb.h
   %.pre107 = phi i32 [ %.pre108, %.lr.ph75 ], [ %.pre106, %bb.h ] ; 3 uses
   %i.da = phi i32 [ %i.by, %.lr.ph75 ], [ %i.eo, %bb.h ] ; 3 uses
   %i.db = phi i16 [ %i.bz, %.lr.ph75 ], [ %i.ep, %bb.h ] ; 3 uses
-  %.073 = phi i16 [ %.sroa.2.0.extract.trunc, %.lr.ph75 ], [ %4, %bb.h ]
+  %indvars.iv = phi i32 [ %i.q, %.lr.ph75 ], [ %indvars.iv.next, %bb.h ] ; 2 uses
   %.04272 = phi i32 [ %i.cy, %.lr.ph75 ], [ %i.er, %bb.h ] ; 2 uses
   %.271 = phi i1 [ %.14778, %.lr.ph75 ], [ %.3, %bb.h ]
   %.15070 = phi i8 [ 0, %.lr.ph75 ], [ %i.et, %bb.h ] ; 2 uses
@@ -465,13 +465,12 @@ bb.h:                                             ; preds = %bb.c, %_ZNK14NodeDe
   %i.eo = phi i32 [ %.pre105, %bb.g ], [ %i.da, %_ZNK14NodeDefManager3getEt.exit ], [ %i.da, %bb.c ], [ %i.da, %bb.b ] ; 3 uses
   %i.ep = phi i16 [ %.pre104, %bb.g ], [ %i.db, %_ZNK14NodeDefManager3getEt.exit ], [ %i.db, %bb.c ], [ %i.db, %bb.b ] ; 3 uses
   %.3 = phi i1 [ true, %bb.g ], [ true, %_ZNK14NodeDefManager3getEt.exit ], [ true, %bb.c ], [ %.271, %bb.b ] ; 4 uses
-  %4 = add i16 %.073, -1                          ; 2 uses
+  %indvars.iv.next = add nsw i32 %indvars.iv, -1
   %i.eq = zext i16 %i.ep to i32
   %i.er = sub i32 %.04272, %i.eq
   %i.es = sub i32 %.06269, %i.eo
   %i.et = add i8 %.15070, 1
-  %5 = sext i16 %4 to i32
-  %.not59 = icmp sgt i32 %i.e, %5
+  %.not59 = icmp slt i32 %indvars.iv, %i.d
   br i1 %.not59, label %._crit_edge76, label %bb.b, !llvm.loop !212
 
 ._crit_edge90:                                    ; preds = %._crit_edge82.split, %.preheader.lr.ph, %._crit_edge

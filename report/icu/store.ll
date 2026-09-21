@@ -202,13 +202,13 @@ bb.j:                                             ; preds = %bb.i
   %i.ay = add nsw i32 %i.ak, 1
   %i.az = sext i32 %i.ay to i64
   %i.ba = tail call noalias ptr @uprv_calloc_78(i64 noundef %i.az, i64 noundef 2) #15 ; 3 uses
+  %wide.trip.count = zext nneg i32 %2 to i64
   br label %.lr.ph83
 
 .lr.ph83:                                         ; preds = %.lr.ph83.preheader, %bb.m
-  %.06381 = phi i16 [ %i.bo, %bb.m ], [ 0, %.lr.ph83.preheader ] ; 4 uses
-  %.16580 = phi i16 [ %6, %bb.m ], [ 0, %.lr.ph83.preheader ] ; 2 uses
-  %5 = sext i16 %.16580 to i64
-  %i.bb = getelementptr inbounds [4 x i8], ptr %1, i64 %5
+  %indvars.iv = phi i64 [ 0, %.lr.ph83.preheader ], [ %indvars.iv.next, %bb.m ] ; 2 uses
+  %.16580 = phi i16 [ 0, %.lr.ph83.preheader ], [ %i.bo, %bb.m ] ; 4 uses
+  %i.bb = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !9  ; 4 uses
   %i.bd = icmp ult i32 %i.bc, 65536
   br i1 %i.bd, label %bb.k, label %bb.l
@@ -221,8 +221,8 @@ bb.l:                                             ; preds = %.lr.ph83
   %i.bf = lshr i32 %i.bc, 10
   %i.bg = trunc i32 %i.bf to i16
   %i.bh = add i16 %i.bg, -10304
-  %i.bi = add i16 %.06381, 1
-  %i.bj = sext i16 %.06381 to i64
+  %i.bi = add i16 %.16580, 1
+  %i.bj = sext i16 %.16580 to i64
   %i.bk = getelementptr inbounds [2 x i8], ptr %i.ba, i64 %i.bj
   store i16 %i.bh, ptr %i.bk, align 2, !tbaa !19
   %i.bl = trunc i32 %i.bc to i16
@@ -232,16 +232,15 @@ bb.l:                                             ; preds = %.lr.ph83
 
 bb.m:                                             ; preds = %bb.k, %bb.l
   %.sink94 = phi i16 [ 1, %bb.k ], [ 2, %bb.l ]
-  %.06381.sink = phi i16 [ %.06381, %bb.k ], [ %i.bi, %bb.l ]
+  %.06381.sink = phi i16 [ %.16580, %bb.k ], [ %i.bi, %bb.l ]
   %.sink = phi i16 [ %i.be, %bb.k ], [ %i.bn, %bb.l ]
-  %i.bo = add i16 %.06381, %.sink94
+  %i.bo = add i16 %.16580, %.sink94
   %i.bp = sext i16 %.06381.sink to i64
   %i.bq = getelementptr inbounds [2 x i8], ptr %i.ba, i64 %i.bp
   store i16 %.sink, ptr %i.bq, align 2, !tbaa !19
-  %6 = add i16 %.16580, 1                         ; 2 uses
-  %7 = sext i16 %6 to i32
-  %8 = icmp sgt i32 %2, %7
-  br i1 %8, label %.lr.ph83, label %._crit_edge84, !llvm.loop !28
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %._crit_edge84, label %.lr.ph83, !llvm.loop !28
 
 ._crit_edge84:                                    ; preds = %bb.m
   %i.br = tail call noalias dereferenceable_or_null(16) ptr @uprv_malloc_78(i64 noundef 16) #19 ; 4 uses
