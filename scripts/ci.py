@@ -7,6 +7,7 @@ import csv
 import heapq
 import os
 import argparse
+import shlex
 import shutil
 import resource
 import subprocess
@@ -48,6 +49,7 @@ OPT_LOG_FILE = os.path.join(REPORT_DIR, "opt_log")
 ARTIFACT_DIR = os.path.join(ROOT_DIR, "work", "artifacts")
 ARTIFACT_SIZE_LIMIT_BYTES = 100 * 1024 * 1024
 RUN_OPT_TIME_BUDGET_SECONDS = 100 * 60
+REPRODUCE_OPT_ERROR_TIMEOUT_SECONDS = 2 * 60
 HF_URL = "hf://buckets/llvm-opt-benchmark/llvm-opt-benchmark"
 JOB_ID = os.environ.get("GITHUB_RUN_ID", "local")
 RUN_ARTIFACTS_URL = (
@@ -1097,6 +1099,49 @@ def _disable_core_dumps():
     resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
 
 
+def _build_opt_command(
+    config: TestConfig, input_path: str, optimized_path: str, worker_idx: int
+) -> List[str]:
+    if config.passes:
+        cmd = [OPT_BINARY, f"--passes={config.passes}", input_path]
+    else:
+        cmd = [OPT_BINARY, "-O3", input_path]
+    if config.comptime:
+        cmd = (
+            [
+                "taskset",
+                "-c",
+                str(worker_idx),
+                "perf",
+                "stat",
+                "-e",
+                "instructions:u",
+                "--no-big-num",
+            ]
+            + cmd
+            + ["--disable-verify", "--disable-output"]
+        )
+    else:
+        cmd += ["--stats", "--stats-json"]
+        if config.stats:
+            cmd.append("--disable-output")
+        else:
+            cmd += ["-o", optimized_path]
+    return cmd
+
+
+def _build_opt_env(disable_crash_report: bool = True) -> dict:
+    env_opt = os.environ.copy()
+    # drop tokens
+    token_keys = [x for x in env_opt if "TOKEN" in x.upper()]
+    for key in token_keys:
+        env_opt.pop(key, None)
+    if disable_crash_report:
+        env_opt["LLVM_DISABLE_CRASH_REPORT"] = "1"
+        env_opt["LLVM_DISABLE_SYMBOLIZATION"] = "1"
+    return env_opt
+
+
 def run_opt_file(
     config: TestConfig,
     proj: str,
@@ -1114,38 +1159,8 @@ def run_opt_file(
         if opt_timeout <= 0:
             return "timeout"
 
-        if config.passes:
-            cmd = [OPT_BINARY, f"--passes={config.passes}", input_path]
-        else:
-            cmd = [OPT_BINARY, "-O3", input_path]
-        if config.comptime:
-            cmd = (
-                [
-                    "taskset",
-                    "-c",
-                    str(worker_idx),
-                    "perf",
-                    "stat",
-                    "-e",
-                    "instructions:u",
-                    "--no-big-num",
-                ]
-                + cmd
-                + ["--disable-verify", "--disable-output"]
-            )
-        else:
-            cmd += ["--stats", "--stats-json"]
-            if config.stats:
-                cmd.append("--disable-output")
-            else:
-                cmd += ["-o", optimized_path]
-        env_opt = os.environ.copy()
-        # drop tokens
-        token_keys = [x for x in env_opt if "TOKEN" in x.upper()]
-        for key in token_keys:
-            env_opt.pop(key, None)
-        env_opt["LLVM_DISABLE_CRASH_REPORT"] = "1"
-        env_opt["LLVM_DISABLE_SYMBOLIZATION"] = "1"
+        cmd = _build_opt_command(config, input_path, optimized_path, worker_idx)
+        env_opt = _build_opt_env()
         ret = subprocess.run(
             cmd,
             stdin=subprocess.DEVNULL,
@@ -1285,6 +1300,53 @@ def make_dataset_download_link(proj: str, file: str) -> str:
     )
 
 
+def reproduce_opt_error_with_backtrace(
+    config: TestConfig,
+    task_idx: int,
+    proj: str,
+    file: str,
+    error_message: str,
+    worker_count: int,
+    log_f,
+):
+    input_path = os.path.join(DATA_DIR, proj, "original", file)
+    optimized_path = os.path.join(OPT_OUT_DIR, proj + "-s-" + file)
+    cmd = _build_opt_command(
+        config, input_path, optimized_path, worker_idx=task_idx % worker_count
+    )
+    # Leave LLVM_DISABLE_CRASH_REPORT/LLVM_DISABLE_SYMBOLIZATION unset so that
+    # the reproduction prints the backtrace.
+    env_opt = _build_opt_env(disable_crash_report=False)
+
+    log_f.write(
+        "\n"
+        f"Reproduce first opt error with backtrace: {proj}/{file}: {error_message}\n"
+        f"Command: {' '.join(shlex.quote(arg) for arg in cmd)}\n"
+    )
+    try:
+        ret = subprocess.run(
+            cmd,
+            stdin=subprocess.DEVNULL,
+            capture_output=True,
+            timeout=REPRODUCE_OPT_ERROR_TIMEOUT_SECONDS,
+            env=env_opt,
+            preexec_fn=_disable_core_dumps,
+        )
+    except subprocess.TimeoutExpired:
+        log_f.write("Reproduction timed out.\n")
+        return
+    except Exception as e:
+        log_f.write(f"Reproduction failed: {e}\n")
+        return
+
+    stdout = ret.stdout.decode(errors="replace")
+    stderr = ret.stderr.decode(errors="replace")
+    log_f.write(f"Exit code: {ret.returncode}\n")
+    if stdout:
+        log_f.write(f"Stdout:\n{stdout}\n")
+    log_f.write(f"Stderr:\n{stderr}\n")
+
+
 def run_opt(
     config: TestConfig,
     enable_ir_diff: bool = True,
@@ -1390,12 +1452,15 @@ def run_opt(
             pool.close()
         pool.join()
 
+    first_error: Optional[Tuple[int, str, str, str]] = None
     with open(OPT_LOG_FILE, "w") as log_f:
-        for item in task_results:
+        for idx, item in enumerate(task_results):
             if item is None:
                 continue
             proj, file, ret = item
             if isinstance(ret, str):
+                if ret != "timeout" and first_error is None:
+                    first_error = (idx, proj, file, ret)
                 log_f.write(
                     f"{proj}/{file}: {ret}\n"
                     f"Download link: {make_dataset_download_link(proj, file)}\n"
@@ -1426,6 +1491,18 @@ def run_opt(
                 "time budget exhausted: "
                 f"{unfinished_count}/{len(tasks)} tasks unfinished "
                 f"({unfinished_ratio:.2%})\n"
+            )
+
+        if first_error is not None:
+            task_idx, proj, file, error_message = first_error
+            reproduce_opt_error_with_backtrace(
+                config,
+                task_idx,
+                proj,
+                file,
+                error_message,
+                worker_count,
+                log_f,
             )
 
     return comptime_results, stats_results, rendered_files, per_file_stats_results
