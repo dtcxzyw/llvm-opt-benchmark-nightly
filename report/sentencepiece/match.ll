@@ -165,7 +165,7 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i8:    ; preds = %bb.d, %bb.e
 bb.e:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i8
   %i.v = add nuw i64 %.0111420.i.i, 1             ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.v, %0
-  br i1 %exitcond.not.i.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.loopexit, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i8
+  br i1 %exitcond.not.i.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.loopexit, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i8, !llvm.loop !12
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.loopexit: ; preds = %bb.e, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i8
   %.2.i.i.ph = phi i64 [ -1, %bb.e ], [ %.0111420.i.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i8 ]
@@ -221,13 +221,13 @@ define dso_local { i64, ptr } @_ZN4absl12lts_2026052623FindLongestCommonPrefixES
 bb.a:
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %2, i64 %0) ; 7 uses
   %i.a = icmp ult i64 %.sroa.speculated, 8
-  br i1 %i.a, label %.preheader, label %.preheader82, !prof !13
+  br i1 %i.a, label %.preheader, label %.preheader82, !prof !14
 
 .preheader:                                       ; preds = %bb.a, %bb.b
   %.048 = phi i64 [ %i.b, %bb.b ], [ 0, %bb.a ]   ; 8 uses
   %i.b = add i64 %.048, 2                         ; 2 uses
   %.not57 = icmp ugt i64 %i.b, %.sroa.speculated
-  br i1 %.not57, label %bb.c, label %bb.b, !prof !13
+  br i1 %.not57, label %bb.c, label %bb.b, !prof !14
 
 bb.b:                                             ; preds = %.preheader
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 %.048
@@ -235,7 +235,7 @@ bb.b:                                             ; preds = %.preheader
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 %.048
   %.0.copyload.i.i61 = load i16, ptr %i.d, align 1 ; 2 uses
   %.not59 = icmp eq i16 %.0.copyload.i.i, %.0.copyload.i.i61
-  br i1 %.not59, label %.preheader, label %.thread, !prof !14
+  br i1 %.not59, label %.preheader, label %.thread, !prof !15
 
 .thread:                                          ; preds = %bb.b
   %i.e = xor i16 %.0.copyload.i.i61, %.0.copyload.i.i
@@ -247,7 +247,7 @@ bb.b:                                             ; preds = %.preheader
 
 bb.c:                                             ; preds = %.preheader
   %.not58 = icmp eq i64 %.048, %.sroa.speculated
-  br i1 %.not58, label %bb.i, label %bb.d, !prof !13
+  br i1 %.not58, label %bb.i, label %bb.d, !prof !14
 
 bb.d:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 %.048
@@ -266,7 +266,7 @@ bb.d:                                             ; preds = %bb.c
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 %.4
   %.0.copyload.i.i63 = load i64, ptr %i.p, align 1 ; 2 uses
   %.not = icmp eq i64 %.0.copyload.i.i62, %.0.copyload.i.i63
-  br i1 %.not, label %bb.f, label %bb.e, !prof !14
+  br i1 %.not, label %bb.f, label %bb.e, !prof !15
 
 bb.e:                                             ; preds = %.preheader82
   %i.q = xor i64 %.0.copyload.i.i63, %.0.copyload.i.i62
@@ -279,7 +279,7 @@ bb.f:                                             ; preds = %.preheader82
   %i.u = add i64 %.4, 8
   %i.v = add i64 %.4, 16
   %i.w = icmp ult i64 %i.v, %.sroa.speculated
-  br i1 %i.w, label %.preheader82, label %bb.g, !prof !14, !llvm.loop !12
+  br i1 %i.w, label %.preheader82, label %bb.g, !prof !15, !llvm.loop !13
 
 bb.g:                                             ; preds = %bb.f
   %i.x = add i64 %.sroa.speculated, -8            ; 3 uses
@@ -288,7 +288,7 @@ bb.g:                                             ; preds = %bb.f
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 %i.x
   %.0.copyload.i.i65 = load i64, ptr %i.z, align 1 ; 2 uses
   %.not56 = icmp eq i64 %.0.copyload.i.i64, %.0.copyload.i.i65
-  br i1 %.not56, label %bb.i, label %bb.h, !prof !13
+  br i1 %.not56, label %bb.i, label %bb.h, !prof !14
 
 bb.h:                                             ; preds = %bb.g
   %i.aa = xor i64 %.0.copyload.i.i65, %.0.copyload.i.i64
@@ -332,7 +332,7 @@ bb.c:                                             ; preds = %bb.b, %bb.d
 bb.d:                                             ; preds = %bb.c
   %i.h = add nuw i64 %.025, 1                     ; 2 uses
   %exitcond.not = icmp eq i64 %i.h, %.sroa.speculated
-  br i1 %exitcond.not, label %.critedge, label %bb.c, !llvm.loop !15
+  br i1 %exitcond.not, label %.critedge, label %bb.c, !llvm.loop !16
 
 .critedge:                                        ; preds = %bb.c, %bb.d, %bb.a
   %.sroa.321.0 = phi ptr [ null, %bb.a ], [ %scevgep, %bb.d ], [ %.pn24, %bb.c ]
@@ -383,7 +383,8 @@ attributes #10 = { nounwind }
 !10 = !{!5, !5, i64 0}
 !11 = distinct !{!11, !9}
 !12 = distinct !{!12, !9}
-!13 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!14 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!15 = distinct !{!15, !9}
+!13 = distinct !{!13, !9}
+!14 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!15 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!16 = distinct !{!16, !9}
 end_hunk_0

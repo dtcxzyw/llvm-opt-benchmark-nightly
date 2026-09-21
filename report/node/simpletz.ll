@@ -202,30 +202,32 @@ bb.c:                                             ; preds = %bb.b
   %i.h = zext i1 %i.g to i8
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 104
   store i8 %i.h, ptr %i.i, align 8
-  br i1 %i.g, label %bb.d, label %bb.f
+  br i1 %i.g, label %bb.d, label %2
 
 bb.d:                                             ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 116 ; 2 uses
   %i.k = load i32, ptr %i.j, align 4
   %i.l = icmp eq i32 %i.k, 0
-  br i1 %i.l, label %bb.e, label %bb.f
+  br i1 %i.l, label %bb.e, label %2
 
 bb.e:                                             ; preds = %bb.d
   store i32 3600000, ptr %i.j, align 4
-  br label %bb.f
+  br label %2
 
-bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %3 = load i8, ptr %2, align 8                   ; 2 uses
-  %or.cond.i = icmp ugt i8 %3, 11
+2:                                                ; preds = %bb.e, %bb.d, %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 72
+  %4 = load i8, ptr %3, align 8                   ; 2 uses
+  %or.cond.i = icmp ugt i8 %4, 11
+  br i1 %or.cond.i, label %_ZN6icu_7814SimpleTimeZone13decodeEndRuleER10UErrorCode.exit.sink.split, label %bb.f
+
+bb.f:                                             ; preds = %2
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 76
   %i.n = load i32, ptr %i.m, align 4
   %or.cond15.i = icmp ugt i32 %i.n, 86400000
-  %or.cond26 = select i1 %or.cond.i, i1 true, i1 %or.cond15.i
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.p = load i32, ptr %i.o, align 8
   %or.cond16.i = icmp ugt i32 %i.p, 2
-  %or.cond28.a = select i1 %or.cond26, i1 true, i1 %or.cond16.i
+  %or.cond28.a = select i1 %or.cond15.i, i1 true, i1 %or.cond16.i
   br i1 %or.cond28.a, label %_ZN6icu_7814SimpleTimeZone13decodeEndRuleER10UErrorCode.exit.sink.split, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -277,7 +279,7 @@ bb.k:                                             ; preds = %thread-pre-split.i,
   br i1 %i.af, label %_ZN6icu_7814SimpleTimeZone13decodeEndRuleER10UErrorCode.exit.sink.split, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.ag = zext nneg i8 %3 to i64
+  %i.ag = zext nneg i8 %4 to i64
   %i.ah = getelementptr inbounds nuw i8, ptr @_ZN6icu_7814SimpleTimeZone17STATICMONTHLENGTHE, i64 %i.ag
   %i.ai = load i8, ptr %i.ah, align 1
   %i.aj = icmp sgt i8 %i.ae, %i.ai
@@ -393,7 +395,7 @@ bb.u:                                             ; preds = %bb.t
   %i.bx = icmp sgt i8 %i.bs, %i.bw
   br i1 %i.bx, label %_ZN6icu_7814SimpleTimeZone13decodeEndRuleER10UErrorCode.exit.sink.split, label %_ZN6icu_7814SimpleTimeZone13decodeEndRuleER10UErrorCode.exit
 
-_ZN6icu_7814SimpleTimeZone13decodeEndRuleER10UErrorCode.exit.sink.split: ; preds = %.thread.i4, %thread-pre-split.i8, %bb.t, %bb.u, %thread-pre-split.i8.thread, %bb.k, %bb.l, %thread-pre-split.i, %thread-pre-split.i.thread, %bb.f
+_ZN6icu_7814SimpleTimeZone13decodeEndRuleER10UErrorCode.exit.sink.split: ; preds = %.thread.i4, %thread-pre-split.i8, %bb.t, %bb.u, %thread-pre-split.i8.thread, %bb.k, %bb.l, %thread-pre-split.i, %thread-pre-split.i.thread, %bb.f, %2
   store i32 1, ptr %1, align 4
   br label %_ZN6icu_7814SimpleTimeZone13decodeEndRuleER10UErrorCode.exit
 

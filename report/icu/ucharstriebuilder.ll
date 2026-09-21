@@ -202,7 +202,7 @@ bb.a:
   %i.g = load i32, ptr %i.d, align 4, !tbaa !13   ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.i = load i16, ptr %i.h, align 8, !tbaa !11
-  %.fr26 = freeze i16 %i.i                        ; 3 uses
+  %.fr26 = freeze i16 %i.i                        ; 4 uses
   %i.j = icmp slt i16 %.fr26, 0
   %i.k = lshr i16 %.fr26, 5
   %i.l = zext nneg i16 %i.k to i32
@@ -210,14 +210,20 @@ bb.a:
   %i.n = load i32, ptr %i.m, align 4
   %i.o = select i1 %i.j, i32 %i.n, i32 %i.l       ; 5 uses
   %i.p = icmp ult i32 %i.g, %i.o
-  %4 = and i16 %.fr26, 2                          ; 2 uses
-  br i1 %i.p, label %bb.b, label %_ZNK6icu_7817UCharsTrieElement15getStringLengthERKNS_13UnicodeStringE.exit
+  br i1 %i.p, label %bb.b, label %._ZNK6icu_7817UCharsTrieElement15getStringLengthERKNS_13UnicodeStringE.exit_crit_edge
+
+._ZNK6icu_7817UCharsTrieElement15getStringLengthERKNS_13UnicodeStringE.exit_crit_edge: ; preds = %bb.a
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %.pre = load ptr, ptr %.phi.trans.insert, align 8
+  %.pre24 = and i16 %.fr26, 2
+  br label %_ZNK6icu_7817UCharsTrieElement15getStringLengthERKNS_13UnicodeStringE.exit
 
 bb.b:                                             ; preds = %bb.a
+  %4 = and i16 %.fr26, 2                          ; 2 uses
   %.not.i.i.i.i = icmp eq i16 %4, 0
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 26
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.s = load ptr, ptr %i.r, align 8
+  %i.s = load ptr, ptr %i.r, align 8              ; 2 uses
   %i.t = select i1 %.not.i.i.i.i, ptr %i.s, ptr %i.q
   %i.u = sext i32 %i.g to i64
   %i.v = getelementptr inbounds [2 x i8], ptr %i.t, i64 %i.u
@@ -225,11 +231,13 @@ bb.b:                                             ; preds = %bb.a
   %i.x = zext i16 %i.w to i32
   br label %_ZNK6icu_7817UCharsTrieElement15getStringLengthERKNS_13UnicodeStringE.exit
 
-_ZNK6icu_7817UCharsTrieElement15getStringLengthERKNS_13UnicodeStringE.exit: ; preds = %bb.a, %bb.b
-  %.0.i.i.i = phi i32 [ %i.x, %bb.b ], [ 65535, %bb.a ] ; 2 uses
-  %.not.i.i.i.i12 = icmp eq i16 %4, 0
+_ZNK6icu_7817UCharsTrieElement15getStringLengthERKNS_13UnicodeStringE.exit: ; preds = %._ZNK6icu_7817UCharsTrieElement15getStringLengthERKNS_13UnicodeStringE.exit_crit_edge, %bb.b
+  %.pre-phi = phi i16 [ %.pre24, %._ZNK6icu_7817UCharsTrieElement15getStringLengthERKNS_13UnicodeStringE.exit_crit_edge ], [ %4, %bb.b ]
+  %5 = phi ptr [ %.pre, %._ZNK6icu_7817UCharsTrieElement15getStringLengthERKNS_13UnicodeStringE.exit_crit_edge ], [ %i.s, %bb.b ] ; 2 uses
+  %.0.i.i.i = phi i32 [ 65535, %._ZNK6icu_7817UCharsTrieElement15getStringLengthERKNS_13UnicodeStringE.exit_crit_edge ], [ %i.x, %bb.b ] ; 2 uses
+  %.not.i.i.i.i12 = icmp eq i16 %.pre-phi, 0      ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 26 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
+  %6 = select i1 %.not.i.i.i.i12, ptr %5, ptr %i.y ; 2 uses
   %i.z = sext i32 %3 to i64                       ; 3 uses
   %i.aa = zext nneg i32 %.0.i.i.i to i64          ; 3 uses
   %i.ab = add i32 %3, 1
@@ -249,9 +257,7 @@ _ZNK6icu_7817UCharsTrieElement15getStringLengthERKNS_13UnicodeStringE.exit.split
   br i1 %i.ac, label %.lr.ph71.preheader, label %.critedge
 
 .lr.ph71.preheader:                               ; preds = %_ZNK6icu_7817UCharsTrieElement15getStringLengthERKNS_13UnicodeStringE.exit.split.us.split.us.preheader
-  %6 = load ptr, ptr %5, align 8
   %i.ae = load i32, ptr %i.f, align 4, !tbaa !13
-  %7 = load ptr, ptr %5, align 8
   br label %.lr.ph71
 
 _ZNK6icu_7817UCharsTrieElement15getStringLengthERKNS_13UnicodeStringE.exit.split.us.split.us: ; preds = %_ZNK6icu_7817UCharsTrieElement6charAtEiRKNS_13UnicodeStringE.exit15.us.us
@@ -282,7 +288,7 @@ _ZNK6icu_7817UCharsTrieElement6charAtEiRKNS_13UnicodeStringE.exit.us.us: ; preds
 
 bb.d:                                             ; preds = %_ZNK6icu_7817UCharsTrieElement6charAtEiRKNS_13UnicodeStringE.exit.us.us
   %i.ap = sext i32 %i.an to i64
-  %i.aq = getelementptr inbounds [2 x i8], ptr %7, i64 %i.ap
+  %i.aq = getelementptr inbounds [2 x i8], ptr %5, i64 %i.ap
   %i.ar = load i16, ptr %i.aq, align 2, !tbaa !15
   br label %_ZNK6icu_7817UCharsTrieElement6charAtEiRKNS_13UnicodeStringE.exit15.us.us
 
@@ -307,7 +313,7 @@ _ZNK6icu_7817UCharsTrieElement15getStringLengthERKNS_13UnicodeStringE.exit.split
 
 bb.e:                                             ; preds = %.lr.ph
   %i.ay = sext i32 %i.aw to i64
-  %i.az = getelementptr inbounds [2 x i8], ptr %i.y, i64 %i.ay
+  %i.az = getelementptr inbounds [2 x i8], ptr %6, i64 %i.ay
   %i.ba = load i16, ptr %i.az, align 2, !tbaa !15
   br label %_ZNK6icu_7817UCharsTrieElement6charAtEiRKNS_13UnicodeStringE.exit
 

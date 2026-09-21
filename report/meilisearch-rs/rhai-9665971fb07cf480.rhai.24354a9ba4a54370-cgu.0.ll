@@ -205,11 +205,11 @@ _ZN4core4iter6traits8iterator8Iterator8for_each17h2f21aa429000ab84E.exit.loopexi
 "_ZN4core6option15Option$LT$T$GT$6map_or17h070d900e9c2d5a07E.exit": ; preds = %bb.a, %"_ZN4rhai4func4call38_$LT$impl$u20$rhai..engine..Engine$GT$10resolve_fn28_$u7b$$u7b$closure$u7d$$u7d$17h3dfb262f50d19b9bE.exit.i"
   %.sroa.03.0.i = phi i64 [ %i.ax, %"_ZN4rhai4func4call38_$LT$impl$u20$rhai..engine..Engine$GT$10resolve_fn28_$u7b$$u7b$closure$u7d$$u7d$17h3dfb262f50d19b9bE.exit.i" ], [ %5, %bb.a ] ; 8 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !30174)
-  %i.ay = getelementptr inbounds nuw i8, ptr %2, i64 192 ; 4 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %2, i64 192 ; 3 uses
   %i.az = load i64, ptr %i.ay, align 8, !alias.scope !30175, !noalias !30176, !noundef !55 ; 3 uses
   %i.ba = icmp ugt i64 %i.az, 3                   ; 3 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
-  %i.bc = load i64, ptr %i.bb, align 8, !alias.scope !30175, !noalias !30176
+  %i.bc = load i64, ptr %i.bb, align 8, !alias.scope !30175, !noalias !30176 ; 2 uses
   %.sink10.i.i = select i1 %i.ba, i64 %i.bc, i64 %i.az
   %i.bd = icmp eq i64 %.sink10.i.i, 0
   br i1 %i.bd, label %"_ZN8smallvec17SmallVec$LT$A$GT$4push17h5515eec8e12180dbE.exit.i", label %bb.i
@@ -228,13 +228,14 @@ _ZN4core4iter6traits8iterator8Iterator8for_each17h2f21aa429000ab84E.exit.loopexi
   store i64 %i.bg, ptr %.sink9.i.i.i, align 8, !alias.scope !30178, !noalias !30179
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %.pre.i = load i64, ptr %i.ay, align 8, !alias.scope !30180, !noalias !30181
+  %.val.i.pre = load i64, ptr %i.bb, align 8, !alias.scope !30174
   br label %bb.i
 
 bb.i:                                             ; preds = %"_ZN8smallvec17SmallVec$LT$A$GT$4push17h5515eec8e12180dbE.exit.i", %"_ZN4core6option15Option$LT$T$GT$6map_or17h070d900e9c2d5a07E.exit"
-  %i.bh = phi i64 [ %i.az, %"_ZN4core6option15Option$LT$T$GT$6map_or17h070d900e9c2d5a07E.exit" ], [ %.pre.i, %"_ZN8smallvec17SmallVec$LT$A$GT$4push17h5515eec8e12180dbE.exit.i" ]
-  %9 = icmp ugt i64 %i.bh, 3                      ; 2 uses
-  %.sink9.i.i = select i1 %9, ptr %i.bb, ptr %i.ay
-  %10 = load i64, ptr %.sink9.i.i, align 8, !alias.scope !30174, !noundef !55 ; 2 uses
+  %i.bh = phi i64 [ %i.bc, %"_ZN4core6option15Option$LT$T$GT$6map_or17h070d900e9c2d5a07E.exit" ], [ %.val.i.pre, %"_ZN8smallvec17SmallVec$LT$A$GT$4push17h5515eec8e12180dbE.exit.i" ]
+  %.val4.i = phi i64 [ %i.az, %"_ZN4core6option15Option$LT$T$GT$6map_or17h070d900e9c2d5a07E.exit" ], [ %.pre.i, %"_ZN8smallvec17SmallVec$LT$A$GT$4push17h5515eec8e12180dbE.exit.i" ] ; 2 uses
+  %9 = icmp ugt i64 %.val4.i, 3                   ; 2 uses
+  %10 = select i1 %9, i64 %i.bh, i64 %.val4.i     ; 2 uses
   %.not.i = icmp eq i64 %10, 0
   br i1 %.not.i, label %bb.j, label %_ZN4rhai4eval5cache6Caches23fn_resolution_cache_mut17h7bff02018a0d8525E.exit, !prof !66
 
@@ -637,11 +638,11 @@ bb.a:
   %i.b = alloca [32 x i8], align 8                ; 7 uses
   %i.c = alloca [32 x i8], align 8                ; 7 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !32694)
-  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 192 ; 4 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 192 ; 3 uses
   %i.e = load i64, ptr %i.d, align 8, !alias.scope !32695, !noalias !32696, !noundef !55 ; 3 uses
   %i.f = icmp ugt i64 %i.e, 3                     ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
-  %i.h = load i64, ptr %i.g, align 8, !alias.scope !32695, !noalias !32696
+  %i.h = load i64, ptr %i.g, align 8, !alias.scope !32695, !noalias !32696 ; 2 uses
   %.sink10.i.i = select i1 %i.f, i64 %i.h, i64 %i.e
   %i.i = icmp eq i64 %.sink10.i.i, 0
   br i1 %i.i, label %"_ZN8smallvec17SmallVec$LT$A$GT$4push17h5515eec8e12180dbE.exit.i", label %bb.b
@@ -658,13 +659,14 @@ bb.a:
   store i64 1, ptr %.sink9.i.i.i, align 8, !alias.scope !32698, !noalias !32699
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %.pre.i = load i64, ptr %i.d, align 8, !alias.scope !32700, !noalias !32701
+  %.val.i.pre = load i64, ptr %i.g, align 8, !alias.scope !32694
   br label %bb.b
 
 bb.b:                                             ; preds = %"_ZN8smallvec17SmallVec$LT$A$GT$4push17h5515eec8e12180dbE.exit.i", %bb.a
-  %i.k = phi i64 [ %i.e, %bb.a ], [ %.pre.i, %"_ZN8smallvec17SmallVec$LT$A$GT$4push17h5515eec8e12180dbE.exit.i" ]
-  %4 = icmp ugt i64 %i.k, 3                       ; 2 uses
-  %.sink9.i.i = select i1 %4, ptr %i.g, ptr %i.d
-  %5 = load i64, ptr %.sink9.i.i, align 8, !alias.scope !32694, !noundef !55 ; 2 uses
+  %i.k = phi i64 [ %i.h, %bb.a ], [ %.val.i.pre, %"_ZN8smallvec17SmallVec$LT$A$GT$4push17h5515eec8e12180dbE.exit.i" ]
+  %.val4.i = phi i64 [ %i.e, %bb.a ], [ %.pre.i, %"_ZN8smallvec17SmallVec$LT$A$GT$4push17h5515eec8e12180dbE.exit.i" ] ; 2 uses
+  %4 = icmp ugt i64 %.val4.i, 3                   ; 2 uses
+  %5 = select i1 %4, i64 %i.k, i64 %.val4.i       ; 2 uses
   %.not.i = icmp eq i64 %5, 0
   br i1 %.not.i, label %bb.c, label %_ZN4rhai4eval5cache6Caches23fn_resolution_cache_mut17h7bff02018a0d8525E.exit, !prof !66
 
@@ -1067,7 +1069,7 @@ bb.f:                                             ; preds = %_ZN4rhai4eval6targe
   %.sroa.0.0.i11.i = tail call noundef i64 @llvm.umin.i64(i64 %4, i64 %spec.select.i.i)
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 %4 ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.n = load ptr, ptr %i.m, align 8, !nonnull !55
+  %i.n = load ptr, ptr %i.m, align 8, !alias.scope !43581, !noalias !43582, !nonnull !55
   br label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %"_ZN4core4iter8adapters6filter15filter_try_fold28_$u7b$$u7b$closure$u7d$$u7d$17h0efcb087bc114c65E.exit.backedge.i.i.i.i.i", %bb.f
@@ -1226,7 +1228,7 @@ _ZN4rhai4eval6target15calc_offset_len17h407217cb2a84fe50E.exit.i: ; preds = %bb.
   %.sroa.0.0.i11.i = tail call noundef i64 @llvm.umin.i64(i64 %4, i64 %spec.select.i.i)
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 %4 ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.i = load ptr, ptr %i.h, align 8, !nonnull !55
+  %i.i = load ptr, ptr %i.h, align 8, !alias.scope !43625, !noalias !43626, !nonnull !55
   br label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %"_ZN4core4iter8adapters6filter15filter_try_fold28_$u7b$$u7b$closure$u7d$$u7d$17h0efcb087bc114c65E.exit.backedge.i.i.i.i.i", %_ZN4rhai4eval6target15calc_offset_len17h407217cb2a84fe50E.exit.i
@@ -1397,7 +1399,7 @@ _ZN4rhai4eval6target15calc_offset_len17h407217cb2a84fe50E.exit.i: ; preds = %bb.
   %.sroa.0.0.i11.i = tail call noundef i64 @llvm.umin.i64(i64 %3, i64 %spec.select.i.i)
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 %3 ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.p = load ptr, ptr %i.o, align 8, !nonnull !55
+  %i.p = load ptr, ptr %i.o, align 8, !alias.scope !43669, !noalias !43670, !nonnull !55
   br label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %"_ZN4core4iter8adapters6filter15filter_try_fold28_$u7b$$u7b$closure$u7d$$u7d$17h0efcb087bc114c65E.exit.backedge.i.i.i.i.i", %_ZN4rhai4eval6target15calc_offset_len17h407217cb2a84fe50E.exit.i

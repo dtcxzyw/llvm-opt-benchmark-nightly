@@ -205,6 +205,7 @@ bb.g:                                             ; preds = %bb.d
   %i.ca = load i64, ptr %3, align 4
   store i64 %i.ca, ptr %8, align 16
   %i.cb = load i64, ptr %1, align 8
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.cb, i64 2) ; 2 uses
   br label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.g, %bb.h
@@ -298,13 +299,13 @@ bb.h:                                             ; preds = %._crit_edge
   store i64 %i.dj, ptr %i.db, align 8
   store i64 %.sroa.0.4.insert.insert, ptr %i.di, align 8
   store i64 %.sroa.5.12.insert.insert, ptr %i.dh, align 8
-  %i.dk = add nuw i64 %.038, 1                    ; 3 uses
-  %11 = icmp ult i64 %i.dk, %i.cb
+  %i.dk = add nuw i64 %.038, 1                    ; 2 uses
+  %exitcond96.not = icmp eq i64 %i.dk, %umax
   %indvar.next = add i64 %indvar, 1
-  br i1 %11, label %.lr.ph.preheader, label %.lr.ph89, !llvm.loop !313
+  br i1 %exitcond96.not, label %.lr.ph89, label %.lr.ph.preheader, !llvm.loop !313
 
 .lr.ph89:                                         ; preds = %bb.h, %._crit_edge
-  %.13979 = phi i64 [ %i.dk, %bb.h ], [ %.038, %._crit_edge ] ; 6 uses
+  %.13979 = phi i64 [ %umax, %bb.h ], [ %.038, %._crit_edge ] ; 6 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.dm = load ptr, ptr %i.dl, align 8, !nonnull !50, !align !54 ; 2 uses
   %.val53 = load ptr, ptr %i.dm, align 8
