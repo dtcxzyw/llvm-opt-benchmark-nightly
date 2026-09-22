@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %sext.i = shl nuw nsw i32 32768, %i.l
-  %i.r = lshr exact i32 %sext.i, 16               ; 3 uses
+  %i.r = lshr i32 %sext.i, 16                     ; 3 uses
   %i.s = add nuw nsw i32 %i.k, 1                  ; 2 uses
   %wide.trip.count.i = zext nneg i32 %i.s to i64  ; 3 uses
   %xtraiter = and i64 %wide.trip.count.i, 1
@@ -505,7 +505,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %sext = shl nuw nsw i32 32768, %3
-  %i.g = lshr exact i32 %sext, 16                 ; 3 uses
+  %i.g = lshr i32 %sext, 16                       ; 3 uses
   %i.h = add nuw nsw i32 %2, 1                    ; 2 uses
   %wide.trip.count = zext nneg i32 %i.h to i64    ; 3 uses
   %xtraiter = and i64 %wide.trip.count, 1
@@ -908,7 +908,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %sext.i.i.i = shl nuw nsw i32 32768, %i.al
-  %i.at = lshr exact i32 %sext.i.i.i, 16          ; 3 uses
+  %i.at = lshr i32 %sext.i.i.i, 16                ; 3 uses
   %i.au = add nuw nsw i32 %i.ao, 1                ; 2 uses
   %wide.trip.count.i.i.i = zext nneg i32 %i.au to i64 ; 3 uses
   %xtraiter = and i64 %wide.trip.count.i.i.i, 1
@@ -1311,7 +1311,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.y
   %sext.i18 = shl nuw nsw i32 32768, %i.cm
-  %i.ct = lshr exact i32 %sext.i18, 16            ; 3 uses
+  %i.ct = lshr i32 %sext.i18, 16                  ; 3 uses
   %i.cu = add nuw nsw i32 %i.co, 1                ; 2 uses
   %wide.trip.count.i19 = zext nneg i32 %i.cu to i64 ; 3 uses
   %xtraiter = and i64 %wide.trip.count.i19, 1

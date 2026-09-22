@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.m = zext nneg i32 %i.l to i64
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %i.b, i8 0, i64 %i.m, i1 false)
   %sext = shl nuw nsw i32 32768, %3
-  %i.n = lshr exact i32 %sext, 16                 ; 3 uses
+  %i.n = lshr i32 %sext, 16                       ; 3 uses
   %i.o = add nuw nsw i32 %2, 1                    ; 2 uses
   %wide.trip.count = zext nneg i32 %i.o to i64    ; 3 uses
   %xtraiter = and i64 %wide.trip.count, 1

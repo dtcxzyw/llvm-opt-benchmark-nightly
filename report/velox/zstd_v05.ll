@@ -67,7 +67,7 @@ bb.c:                                             ; preds = %bb.b
   %i.l = zext nneg i32 %i.k to i64                ; 4 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %i.b, i8 0, i64 %i.l, i1 false)
   %sext = shl nuw nsw i32 32768, %3
-  %i.m = lshr exact i32 %sext, 16                 ; 3 uses
+  %i.m = lshr i32 %sext, 16                       ; 3 uses
   %xtraiter = and i64 %i.l, 1
   %i.n = icmp eq i32 %2, 0
   br i1 %i.n, label %.epil.preheader, label %.new
@@ -470,7 +470,7 @@ bb.f:                                             ; preds = %bb.e
   %i.u = zext nneg i32 %i.t to i64                ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.k, i8 0, i64 %i.u, i1 false)
   %sext.i = shl nuw nsw i32 32768, %i.j
-  %i.v = lshr exact i32 %sext.i, 16               ; 3 uses
+  %i.v = lshr i32 %sext.i, 16                     ; 3 uses
   %xtraiter = and i64 %i.u, 1
   %i.w = icmp eq i32 %i.i, 0
   br i1 %i.w, label %.epil.preheader, label %.new
@@ -873,7 +873,7 @@ bb.h:                                             ; preds = %bb.g
   %i.ap = zext nneg i32 %i.ao to i64              ; 4 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ag, i8 0, i64 %i.ap, i1 false)
   %sext.i.i.i = shl nuw nsw i32 32768, %i.ac
-  %i.aq = lshr exact i32 %sext.i.i.i, 16          ; 3 uses
+  %i.aq = lshr i32 %sext.i.i.i, 16                ; 3 uses
   %xtraiter = and i64 %i.ap, 1
   %i.ar = icmp eq i32 %i.af, 0
   br i1 %i.ar, label %.epil.preheader, label %.new
