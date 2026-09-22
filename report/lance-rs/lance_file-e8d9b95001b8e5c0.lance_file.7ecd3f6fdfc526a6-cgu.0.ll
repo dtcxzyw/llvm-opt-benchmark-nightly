@@ -205,8 +205,8 @@ bb.a:
   %i.a = alloca [56 x i8], align 8                ; 10 uses
   %i.b = alloca [32 x i8], align 16               ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  %i.c = lshr i64 %.16.val, 3                     ; 2 uses
-  %i.d = add nsw i64 %i.c, -1
+  %i.c = lshr i64 %.16.val, 3
+  %i.d = add nsw i64 %i.c, -1                     ; 2 uses
   call void @_RNvMNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer7mutableNtB2_13MutableBuffer8new_null(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.b, i64 noundef %i.d)
   %i.e = icmp ult i64 %.16.val, 16
   br i1 %i.e, label %_RINvYINtNtNtCscI6d9CVNmLh_4core5slice4iter7WindowsxENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBU_8adapters9enumerateINtB1J_9EnumeratepEBO_4fold9enumerateRSxuNCINvNvBO_8for_each4callTjB2K_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB3s_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypexEE11count_nullsxE0E0E0EB3A_.exit.thread, label %.lr.ph.split.i
@@ -218,18 +218,16 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypexEE11count_nullsxE0E0E0B2S_.exit.i, %.lr.ph.split.i
-  %.sroa.0.0 = phi i64 [ 0, %.lr.ph.split.i ], [ %.sroa.0.1, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypexEE11count_nullsxE0E0E0B2S_.exit.i ] ; 2 uses
-  %.val.i.i.i.i.a = phi i64 [ %.val.i.i.i.pre.i, %.lr.ph.split.i ], [ %.val7.i.i.i.i, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypexEE11count_nullsxE0E0E0B2S_.exit.i ]
-  %i.h = phi i64 [ 0, %.lr.ph.split.i ], [ %i.ag, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypexEE11count_nullsxE0E0E0B2S_.exit.i ] ; 4 uses
-  %i.i = phi i64 [ %i.c, %.lr.ph.split.i ], [ %1, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypexEE11count_nullsxE0E0E0B2S_.exit.i ]
+  %.val.i.i.i.i.a = phi i64 [ 0, %.lr.ph.split.i ], [ %.sroa.0.1, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypexEE11count_nullsxE0E0E0B2S_.exit.i ] ; 2 uses
+  %i.h = phi i64 [ %.val.i.i.i.pre.i, %.lr.ph.split.i ], [ %.val7.i.i.i.i, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypexEE11count_nullsxE0E0E0B2S_.exit.i ]
+  %i.i = phi i64 [ 0, %.lr.ph.split.i ], [ %i.ag, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypexEE11count_nullsxE0E0E0B2S_.exit.i ] ; 4 uses
   %i.j = phi ptr [ %.8.val, %.lr.ph.split.i ], [ %i.k, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypexEE11count_nullsxE0E0E0B2S_.exit.i ]
-  %1 = add i64 %i.i, -1                           ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !988)
   %.val7.i.i.i.i = load i64, ptr %i.k, align 8, !alias.scope !988, !noalias !989, !noundef !62 ; 2 uses
-  %i.l = icmp eq i64 %.val.i.i.i.i.a, %.val7.i.i.i.i
+  %i.l = icmp eq i64 %i.h, %.val7.i.i.i.i
   %i.m = load i64, ptr %i.f, align 8, !noalias !990, !noundef !62 ; 2 uses
-  %i.n = lshr i64 %i.h, 3                         ; 4 uses
+  %i.n = lshr i64 %i.i, 3                         ; 4 uses
   %i.o = icmp ult i64 %i.n, %i.m                  ; 2 uses
   br i1 %i.l, label %bb.d, label %bb.c
 
@@ -240,7 +238,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.o, label %bb.f, label %.invoke
 
 bb.e:                                             ; preds = %bb.c
-  %i.p = trunc i64 %i.h to i8
+  %i.p = trunc i64 %i.i to i8
   %i.q = and i8 %i.p, 7
   %i.r = shl nuw i8 1, %i.q
   %i.s = load ptr, ptr %i.g, align 16, !noalias !990, !nonnull !62, !noundef !62
@@ -259,7 +257,7 @@ bb.e:                                             ; preds = %bb.c
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  %i.x = trunc i64 %i.h to i8
+  %i.x = trunc i64 %i.i to i8
   %i.y = and i8 %i.x, 7
   %i.z = shl nuw i8 1, %i.y
   %i.aa = xor i8 %i.z, -1
@@ -268,14 +266,14 @@ bb.f:                                             ; preds = %bb.d
   %i.ad = load i8, ptr %i.ac, align 1, !noalias !990, !noundef !62
   %i.ae = and i8 %i.ad, %i.aa
   store i8 %i.ae, ptr %i.ac, align 1, !noalias !990
-  %i.af = add i64 %.sroa.0.0, 1
+  %i.af = add i64 %.val.i.i.i.i.a, 1
   br label %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypexEE11count_nullsxE0E0E0B2S_.exit.i
 
 _RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypexEE11count_nullsxE0E0E0B2S_.exit.i: ; preds = %bb.f, %bb.e
-  %.sroa.0.1 = phi i64 [ %i.af, %bb.f ], [ %.sroa.0.0, %bb.e ] ; 3 uses
-  %i.ag = add nuw i64 %i.h, 1
-  %2 = icmp ult i64 %1, 2
-  br i1 %2, label %_RINvYINtNtNtCscI6d9CVNmLh_4core5slice4iter7WindowsxENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBU_8adapters9enumerateINtB1J_9EnumeratepEBO_4fold9enumerateRSxuNCINvNvBO_8for_each4callTjB2K_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB3s_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypexEE11count_nullsxE0E0E0EB3A_.exit, label %bb.b
+  %.sroa.0.1 = phi i64 [ %i.af, %bb.f ], [ %.val.i.i.i.i.a, %bb.e ] ; 3 uses
+  %i.ag = add nuw i64 %i.i, 1                     ; 2 uses
+  %exitcond = icmp eq i64 %i.ag, %i.d
+  br i1 %exitcond, label %_RINvYINtNtNtCscI6d9CVNmLh_4core5slice4iter7WindowsxENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBU_8adapters9enumerateINtB1J_9EnumeratepEBO_4fold9enumerateRSxuNCINvNvBO_8for_each4callTjB2K_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB3s_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypexEE11count_nullsxE0E0E0EB3A_.exit, label %bb.b
 
 _RINvYINtNtNtCscI6d9CVNmLh_4core5slice4iter7WindowsxENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBU_8adapters9enumerateINtB1J_9EnumeratepEBO_4fold9enumerateRSxuNCINvNvBO_8for_each4callTjB2K_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB3s_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypexEE11count_nullsxE0E0E0EB3A_.exit: ; preds = %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypexEE11count_nullsxE0E0E0B2S_.exit.i
   %.not = icmp eq i64 %.sroa.0.1, 0
@@ -365,8 +363,8 @@ bb.a:
   %i.a = alloca [56 x i8], align 8                ; 10 uses
   %i.b = alloca [32 x i8], align 16               ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  %i.c = lshr i64 %.16.val, 3                     ; 2 uses
-  %i.d = add nsw i64 %i.c, -1
+  %i.c = lshr i64 %.16.val, 3
+  %i.d = add nsw i64 %i.c, -1                     ; 2 uses
   call void @_RNvMNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer7mutableNtB2_13MutableBuffer8new_null(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.b, i64 noundef %i.d)
   %i.e = icmp ult i64 %.16.val, 16
   br i1 %i.e, label %_RINvYINtNtNtCscI6d9CVNmLh_4core5slice4iter7WindowsxENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBU_8adapters9enumerateINtB1J_9EnumeratepEBO_4fold9enumerateRSxuNCINvNvBO_8for_each4callTjB2K_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB3s_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypexEE11count_nullsxE0E0E0EB3A_.exit.thread, label %.lr.ph.split.i
@@ -378,18 +376,16 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypexEE11count_nullsxE0E0E0B2S_.exit.i, %.lr.ph.split.i
-  %.sroa.0.0 = phi i64 [ 0, %.lr.ph.split.i ], [ %.sroa.0.1, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypexEE11count_nullsxE0E0E0B2S_.exit.i ] ; 2 uses
-  %.val.i.i.i.i.a = phi i64 [ %.val.i.i.i.pre.i, %.lr.ph.split.i ], [ %.val7.i.i.i.i, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypexEE11count_nullsxE0E0E0B2S_.exit.i ]
-  %i.h = phi i64 [ 0, %.lr.ph.split.i ], [ %i.ag, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypexEE11count_nullsxE0E0E0B2S_.exit.i ] ; 4 uses
-  %i.i = phi i64 [ %i.c, %.lr.ph.split.i ], [ %1, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypexEE11count_nullsxE0E0E0B2S_.exit.i ]
+  %.val.i.i.i.i.a = phi i64 [ 0, %.lr.ph.split.i ], [ %.sroa.0.1, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypexEE11count_nullsxE0E0E0B2S_.exit.i ] ; 2 uses
+  %i.h = phi i64 [ %.val.i.i.i.pre.i, %.lr.ph.split.i ], [ %.val7.i.i.i.i, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypexEE11count_nullsxE0E0E0B2S_.exit.i ]
+  %i.i = phi i64 [ 0, %.lr.ph.split.i ], [ %i.ag, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypexEE11count_nullsxE0E0E0B2S_.exit.i ] ; 4 uses
   %i.j = phi ptr [ %.8.val, %.lr.ph.split.i ], [ %i.k, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypexEE11count_nullsxE0E0E0B2S_.exit.i ]
-  %1 = add i64 %i.i, -1                           ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1004)
   %.val7.i.i.i.i = load i64, ptr %i.k, align 8, !alias.scope !1004, !noalias !1005, !noundef !62 ; 2 uses
-  %i.l = icmp eq i64 %.val.i.i.i.i.a, %.val7.i.i.i.i
+  %i.l = icmp eq i64 %i.h, %.val7.i.i.i.i
   %i.m = load i64, ptr %i.f, align 8, !noalias !1006, !noundef !62 ; 2 uses
-  %i.n = lshr i64 %i.h, 3                         ; 4 uses
+  %i.n = lshr i64 %i.i, 3                         ; 4 uses
   %i.o = icmp ult i64 %i.n, %i.m                  ; 2 uses
   br i1 %i.l, label %bb.d, label %bb.c
 
@@ -400,7 +396,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.o, label %bb.f, label %.invoke
 
 bb.e:                                             ; preds = %bb.c
-  %i.p = trunc i64 %i.h to i8
+  %i.p = trunc i64 %i.i to i8
   %i.q = and i8 %i.p, 7
   %i.r = shl nuw i8 1, %i.q
   %i.s = load ptr, ptr %i.g, align 16, !noalias !1006, !nonnull !62, !noundef !62
@@ -419,7 +415,7 @@ bb.e:                                             ; preds = %bb.c
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  %i.x = trunc i64 %i.h to i8
+  %i.x = trunc i64 %i.i to i8
   %i.y = and i8 %i.x, 7
   %i.z = shl nuw i8 1, %i.y
   %i.aa = xor i8 %i.z, -1
@@ -428,14 +424,14 @@ bb.f:                                             ; preds = %bb.d
   %i.ad = load i8, ptr %i.ac, align 1, !noalias !1006, !noundef !62
   %i.ae = and i8 %i.ad, %i.aa
   store i8 %i.ae, ptr %i.ac, align 1, !noalias !1006
-  %i.af = add i64 %.sroa.0.0, 1
+  %i.af = add i64 %.val.i.i.i.i.a, 1
   br label %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypexEE11count_nullsxE0E0E0B2S_.exit.i
 
 _RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypexEE11count_nullsxE0E0E0B2S_.exit.i: ; preds = %bb.f, %bb.e
-  %.sroa.0.1 = phi i64 [ %i.af, %bb.f ], [ %.sroa.0.0, %bb.e ] ; 3 uses
-  %i.ag = add nuw i64 %i.h, 1
-  %2 = icmp ult i64 %1, 2
-  br i1 %2, label %_RINvYINtNtNtCscI6d9CVNmLh_4core5slice4iter7WindowsxENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBU_8adapters9enumerateINtB1J_9EnumeratepEBO_4fold9enumerateRSxuNCINvNvBO_8for_each4callTjB2K_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB3s_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypexEE11count_nullsxE0E0E0EB3A_.exit, label %bb.b
+  %.sroa.0.1 = phi i64 [ %i.af, %bb.f ], [ %.val.i.i.i.i.a, %bb.e ] ; 3 uses
+  %i.ag = add nuw i64 %i.i, 1                     ; 2 uses
+  %exitcond = icmp eq i64 %i.ag, %i.d
+  br i1 %exitcond, label %_RINvYINtNtNtCscI6d9CVNmLh_4core5slice4iter7WindowsxENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBU_8adapters9enumerateINtB1J_9EnumeratepEBO_4fold9enumerateRSxuNCINvNvBO_8for_each4callTjB2K_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB3s_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypexEE11count_nullsxE0E0E0EB3A_.exit, label %bb.b
 
 _RINvYINtNtNtCscI6d9CVNmLh_4core5slice4iter7WindowsxENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBU_8adapters9enumerateINtB1J_9EnumeratepEBO_4fold9enumerateRSxuNCINvNvBO_8for_each4callTjB2K_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB3s_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypexEE11count_nullsxE0E0E0EB3A_.exit: ; preds = %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypexEE11count_nullsxE0E0E0B2S_.exit.i
   %.not = icmp eq i64 %.sroa.0.1, 0
@@ -838,8 +834,8 @@ bb.kc:                                            ; preds = %bb.kb
   %i.aic = getelementptr inbounds nuw i8, ptr %i.bg, i64 16
   %.val75.i = load i64, ptr %i.aic, align 8, !noalias !23271, !noundef !62 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !23454
-  %i.aid = lshr i64 %.val75.i, 2                  ; 2 uses
-  %i.aie = add nsw i64 %i.aid, -1
+  %i.aid = lshr i64 %.val75.i, 2
+  %i.aie = add nsw i64 %i.aid, -1                 ; 2 uses
   invoke void @_RNvMNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer7mutableNtB2_13MutableBuffer8new_null(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.f, i64 noundef %i.aie)
           to label %.noexc143.i unwind label %bb.kp, !noalias !23275
 
@@ -856,16 +852,14 @@ bb.kc:                                            ; preds = %bb.kb
 bb.kd:                                            ; preds = %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSluNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullslE0E0E0B2S_.exit.i.i.i, %.lr.ph.split.i.i.i
   %.sroa.0.0.i.i = phi i64 [ 0, %.lr.ph.split.i.i.i ], [ %.sroa.0.1.i.i, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSluNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullslE0E0E0B2S_.exit.i.i.i ] ; 2 uses
   %.val.i.i.i.i.i134.i = phi i32 [ %.val.i.i.i.pre.i.i.i, %.lr.ph.split.i.i.i ], [ %.val7.i.i.i.i.i135.i, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSluNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullslE0E0E0B2S_.exit.i.i.i ]
-  %3 = phi i64 [ 0, %.lr.ph.split.i.i.i ], [ %i.ajg, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSluNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullslE0E0E0B2S_.exit.i.i.i ] ; 4 uses
-  %i.aii = phi i64 [ %i.aid, %.lr.ph.split.i.i.i ], [ %4, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSluNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullslE0E0E0B2S_.exit.i.i.i ]
+  %i.aii = phi i64 [ 0, %.lr.ph.split.i.i.i ], [ %i.ajg, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSluNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullslE0E0E0B2S_.exit.i.i.i ] ; 4 uses
   %i.aij = phi ptr [ %.val74.i, %.lr.ph.split.i.i.i ], [ %i.aik, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSluNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullslE0E0E0B2S_.exit.i.i.i ]
-  %4 = add i64 %i.aii, -1                         ; 2 uses
   %i.aik = getelementptr inbounds nuw i8, ptr %i.aij, i64 4 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !23455)
   %.val7.i.i.i.i.i135.i = load i32, ptr %i.aik, align 4, !alias.scope !23455, !noalias !23456, !noundef !62 ; 2 uses
   %i.ail = icmp eq i32 %.val.i.i.i.i.i134.i, %.val7.i.i.i.i.i135.i
   %i.aim = load i64, ptr %i.aig, align 8, !noalias !23457, !noundef !62 ; 2 uses
-  %i.ain = lshr i64 %3, 3                         ; 4 uses
+  %i.ain = lshr i64 %i.aii, 3                     ; 4 uses
   %i.aio = icmp ult i64 %i.ain, %i.aim            ; 2 uses
   br i1 %i.ail, label %bb.kf, label %bb.ke
 
@@ -876,7 +870,7 @@ bb.kf:                                            ; preds = %bb.kd
   br i1 %i.aio, label %bb.kh, label %.invoke.i136.i
 
 bb.kg:                                            ; preds = %bb.ke
-  %i.aip = trunc i64 %3 to i8
+  %i.aip = trunc i64 %i.aii to i8
   %i.aiq = and i8 %i.aip, 7
   %i.air = shl nuw i8 1, %i.aiq
   %i.ais = load ptr, ptr %i.aih, align 16, !noalias !23457, !nonnull !62, !noundef !62
@@ -895,7 +889,7 @@ bb.kg:                                            ; preds = %bb.ke
   unreachable
 
 bb.kh:                                            ; preds = %bb.kf
-  %i.aix = trunc i64 %3 to i8
+  %i.aix = trunc i64 %i.aii to i8
   %i.aiy = and i8 %i.aix, 7
   %i.aiz = shl nuw i8 1, %i.aiy
   %i.aja = xor i8 %i.aiz, -1
@@ -909,9 +903,9 @@ bb.kh:                                            ; preds = %bb.kf
 
 _RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSluNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullslE0E0E0B2S_.exit.i.i.i: ; preds = %bb.kh, %bb.kg
   %.sroa.0.1.i.i = phi i64 [ %i.ajf, %bb.kh ], [ %.sroa.0.0.i.i, %bb.kg ] ; 3 uses
-  %i.ajg = add nuw i64 %3, 1
-  %5 = icmp ult i64 %4, 2
-  br i1 %5, label %_RINvYINtNtNtCscI6d9CVNmLh_4core5slice4iter7WindowslENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBU_8adapters9enumerateINtB1J_9EnumeratepEBO_4fold9enumerateRSluNCINvNvBO_8for_each4callTjB2K_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB3s_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullslE0E0E0EB3A_.exit.i.i, label %bb.kd
+  %i.ajg = add nuw nsw i64 %i.aii, 1              ; 2 uses
+  %exitcond.i.i = icmp eq i64 %i.ajg, %i.aie
+  br i1 %exitcond.i.i, label %_RINvYINtNtNtCscI6d9CVNmLh_4core5slice4iter7WindowslENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBU_8adapters9enumerateINtB1J_9EnumeratepEBO_4fold9enumerateRSluNCINvNvBO_8for_each4callTjB2K_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB3s_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullslE0E0E0EB3A_.exit.i.i, label %bb.kd
 
 _RINvYINtNtNtCscI6d9CVNmLh_4core5slice4iter7WindowslENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBU_8adapters9enumerateINtB1J_9EnumeratepEBO_4fold9enumerateRSluNCINvNvBO_8for_each4callTjB2K_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB3s_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullslE0E0E0EB3A_.exit.i.i: ; preds = %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSluNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullslE0E0E0B2S_.exit.i.i.i
   %.not.i139.i = icmp eq i64 %.sroa.0.1.i.i, 0
@@ -1314,8 +1308,8 @@ bb.kc:                                            ; preds = %bb.kb
   %i.aic = getelementptr inbounds nuw i8, ptr %i.bg, i64 16
   %.val75.i = load i64, ptr %i.aic, align 8, !noalias !24424, !noundef !62 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !24607
-  %i.aid = lshr i64 %.val75.i, 2                  ; 2 uses
-  %i.aie = add nsw i64 %i.aid, -1
+  %i.aid = lshr i64 %.val75.i, 2
+  %i.aie = add nsw i64 %i.aid, -1                 ; 2 uses
   invoke void @_RNvMNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer7mutableNtB2_13MutableBuffer8new_null(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.f, i64 noundef %i.aie)
           to label %.noexc143.i unwind label %bb.kp, !noalias !24428
 
@@ -1332,16 +1326,14 @@ bb.kc:                                            ; preds = %bb.kb
 bb.kd:                                            ; preds = %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSluNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullslE0E0E0B2S_.exit.i.i.i, %.lr.ph.split.i.i.i
   %.sroa.0.0.i.i = phi i64 [ 0, %.lr.ph.split.i.i.i ], [ %.sroa.0.1.i.i, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSluNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullslE0E0E0B2S_.exit.i.i.i ] ; 2 uses
   %.val.i.i.i.i.i134.i = phi i32 [ %.val.i.i.i.pre.i.i.i, %.lr.ph.split.i.i.i ], [ %.val7.i.i.i.i.i135.i, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSluNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullslE0E0E0B2S_.exit.i.i.i ]
-  %3 = phi i64 [ 0, %.lr.ph.split.i.i.i ], [ %i.ajg, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSluNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullslE0E0E0B2S_.exit.i.i.i ] ; 4 uses
-  %i.aii = phi i64 [ %i.aid, %.lr.ph.split.i.i.i ], [ %4, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSluNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullslE0E0E0B2S_.exit.i.i.i ]
+  %i.aii = phi i64 [ 0, %.lr.ph.split.i.i.i ], [ %i.ajg, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSluNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullslE0E0E0B2S_.exit.i.i.i ] ; 4 uses
   %i.aij = phi ptr [ %.val74.i, %.lr.ph.split.i.i.i ], [ %i.aik, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSluNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullslE0E0E0B2S_.exit.i.i.i ]
-  %4 = add i64 %i.aii, -1                         ; 2 uses
   %i.aik = getelementptr inbounds nuw i8, ptr %i.aij, i64 4 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !24608)
   %.val7.i.i.i.i.i135.i = load i32, ptr %i.aik, align 4, !alias.scope !24608, !noalias !24609, !noundef !62 ; 2 uses
   %i.ail = icmp eq i32 %.val.i.i.i.i.i134.i, %.val7.i.i.i.i.i135.i
   %i.aim = load i64, ptr %i.aig, align 8, !noalias !24610, !noundef !62 ; 2 uses
-  %i.ain = lshr i64 %3, 3                         ; 4 uses
+  %i.ain = lshr i64 %i.aii, 3                     ; 4 uses
   %i.aio = icmp ult i64 %i.ain, %i.aim            ; 2 uses
   br i1 %i.ail, label %bb.kf, label %bb.ke
 
@@ -1352,7 +1344,7 @@ bb.kf:                                            ; preds = %bb.kd
   br i1 %i.aio, label %bb.kh, label %.invoke.i136.i
 
 bb.kg:                                            ; preds = %bb.ke
-  %i.aip = trunc i64 %3 to i8
+  %i.aip = trunc i64 %i.aii to i8
   %i.aiq = and i8 %i.aip, 7
   %i.air = shl nuw i8 1, %i.aiq
   %i.ais = load ptr, ptr %i.aih, align 16, !noalias !24610, !nonnull !62, !noundef !62
@@ -1371,7 +1363,7 @@ bb.kg:                                            ; preds = %bb.ke
   unreachable
 
 bb.kh:                                            ; preds = %bb.kf
-  %i.aix = trunc i64 %3 to i8
+  %i.aix = trunc i64 %i.aii to i8
   %i.aiy = and i8 %i.aix, 7
   %i.aiz = shl nuw i8 1, %i.aiy
   %i.aja = xor i8 %i.aiz, -1
@@ -1385,9 +1377,9 @@ bb.kh:                                            ; preds = %bb.kf
 
 _RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSluNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullslE0E0E0B2S_.exit.i.i.i: ; preds = %bb.kh, %bb.kg
   %.sroa.0.1.i.i = phi i64 [ %i.ajf, %bb.kh ], [ %.sroa.0.0.i.i, %bb.kg ] ; 3 uses
-  %i.ajg = add nuw i64 %3, 1
-  %5 = icmp ult i64 %4, 2
-  br i1 %5, label %_RINvYINtNtNtCscI6d9CVNmLh_4core5slice4iter7WindowslENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBU_8adapters9enumerateINtB1J_9EnumeratepEBO_4fold9enumerateRSluNCINvNvBO_8for_each4callTjB2K_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB3s_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullslE0E0E0EB3A_.exit.i.i, label %bb.kd
+  %i.ajg = add nuw nsw i64 %i.aii, 1              ; 2 uses
+  %exitcond.i.i = icmp eq i64 %i.ajg, %i.aie
+  br i1 %exitcond.i.i, label %_RINvYINtNtNtCscI6d9CVNmLh_4core5slice4iter7WindowslENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBU_8adapters9enumerateINtB1J_9EnumeratepEBO_4fold9enumerateRSluNCINvNvBO_8for_each4callTjB2K_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB3s_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullslE0E0E0EB3A_.exit.i.i, label %bb.kd
 
 _RINvYINtNtNtCscI6d9CVNmLh_4core5slice4iter7WindowslENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBU_8adapters9enumerateINtB1J_9EnumeratepEBO_4fold9enumerateRSluNCINvNvBO_8for_each4callTjB2K_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB3s_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullslE0E0E0EB3A_.exit.i.i: ; preds = %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSluNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullslE0E0E0B2S_.exit.i.i.i
   %.not.i139.i = icmp eq i64 %.sroa.0.1.i.i, 0
@@ -1790,8 +1782,8 @@ bb.bh:                                            ; preds = %bb.bf
   %i.en = getelementptr i8, ptr %1, i64 192
   %.val72 = load i64, ptr %i.en, align 8, !noundef !62 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !26636
-  %i.eo = lshr i64 %.val72, 3                     ; 2 uses
-  %i.ep = add nsw i64 %i.eo, -1
+  %i.eo = lshr i64 %.val72, 3
+  %i.ep = add nsw i64 %i.eo, -1                   ; 2 uses
   invoke void @_RNvMNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer7mutableNtB2_13MutableBuffer8new_null(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.d, i64 noundef %i.ep)
           to label %.noexc97 unwind label %bb.bu
 
@@ -1806,18 +1798,16 @@ bb.bh:                                            ; preds = %bb.bf
   br label %bb.bi
 
 bb.bi:                                            ; preds = %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullsxE0E0E0B2S_.exit.i.i, %.lr.ph.split.i.i
-  %.sroa.0.0.i = phi i64 [ 0, %.lr.ph.split.i.i ], [ %.sroa.0.1.i, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullsxE0E0E0B2S_.exit.i.i ] ; 2 uses
-  %.val.i.i.i.i.i.a = phi i64 [ %.val.i.i.i.pre.i.i, %.lr.ph.split.i.i ], [ %.val7.i.i.i.i.i, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullsxE0E0E0B2S_.exit.i.i ]
-  %i.et = phi i64 [ 0, %.lr.ph.split.i.i ], [ %i.fs, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullsxE0E0E0B2S_.exit.i.i ] ; 4 uses
-  %i.eu = phi i64 [ %i.eo, %.lr.ph.split.i.i ], [ %3, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullsxE0E0E0B2S_.exit.i.i ]
+  %.val.i.i.i.i.i.a = phi i64 [ 0, %.lr.ph.split.i.i ], [ %.sroa.0.1.i, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullsxE0E0E0B2S_.exit.i.i ] ; 2 uses
+  %i.et = phi i64 [ %.val.i.i.i.pre.i.i, %.lr.ph.split.i.i ], [ %.val7.i.i.i.i.i, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullsxE0E0E0B2S_.exit.i.i ]
+  %i.eu = phi i64 [ 0, %.lr.ph.split.i.i ], [ %i.fs, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullsxE0E0E0B2S_.exit.i.i ] ; 4 uses
   %i.ev = phi ptr [ %.val71, %.lr.ph.split.i.i ], [ %i.ew, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullsxE0E0E0B2S_.exit.i.i ]
-  %3 = add i64 %i.eu, -1                          ; 2 uses
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 8 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !26637)
   %.val7.i.i.i.i.i = load i64, ptr %i.ew, align 8, !alias.scope !26637, !noalias !26638, !noundef !62 ; 2 uses
-  %i.ex = icmp eq i64 %.val.i.i.i.i.i.a, %.val7.i.i.i.i.i
+  %i.ex = icmp eq i64 %i.et, %.val7.i.i.i.i.i
   %i.ey = load i64, ptr %i.er, align 8, !noalias !26639, !noundef !62 ; 2 uses
-  %i.ez = lshr i64 %i.et, 3                       ; 4 uses
+  %i.ez = lshr i64 %i.eu, 3                       ; 4 uses
   %i.fa = icmp ult i64 %i.ez, %i.ey               ; 2 uses
   br i1 %i.ex, label %bb.bk, label %bb.bj
 
@@ -1828,7 +1818,7 @@ bb.bk:                                            ; preds = %bb.bi
   br i1 %i.fa, label %bb.bm, label %.invoke.i
 
 bb.bl:                                            ; preds = %bb.bj
-  %i.fb = trunc i64 %i.et to i8
+  %i.fb = trunc i64 %i.eu to i8
   %i.fc = and i8 %i.fb, 7
   %i.fd = shl nuw i8 1, %i.fc
   %i.fe = load ptr, ptr %i.es, align 16, !noalias !26639, !nonnull !62, !noundef !62
@@ -1847,7 +1837,7 @@ bb.bl:                                            ; preds = %bb.bj
   unreachable
 
 bb.bm:                                            ; preds = %bb.bk
-  %i.fj = trunc i64 %i.et to i8
+  %i.fj = trunc i64 %i.eu to i8
   %i.fk = and i8 %i.fj, 7
   %i.fl = shl nuw i8 1, %i.fk
   %i.fm = xor i8 %i.fl, -1
@@ -1856,14 +1846,14 @@ bb.bm:                                            ; preds = %bb.bk
   %i.fp = load i8, ptr %i.fo, align 1, !noalias !26639, !noundef !62
   %i.fq = and i8 %i.fp, %i.fm
   store i8 %i.fq, ptr %i.fo, align 1, !noalias !26639
-  %i.fr = add i64 %.sroa.0.0.i, 1
+  %i.fr = add i64 %.val.i.i.i.i.i.a, 1
   br label %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullsxE0E0E0B2S_.exit.i.i
 
 _RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullsxE0E0E0B2S_.exit.i.i: ; preds = %bb.bm, %bb.bl
-  %.sroa.0.1.i = phi i64 [ %i.fr, %bb.bm ], [ %.sroa.0.0.i, %bb.bl ] ; 3 uses
-  %i.fs = add nuw i64 %i.et, 1
-  %4 = icmp ult i64 %3, 2
-  br i1 %4, label %_RINvYINtNtNtCscI6d9CVNmLh_4core5slice4iter7WindowsxENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBU_8adapters9enumerateINtB1J_9EnumeratepEBO_4fold9enumerateRSxuNCINvNvBO_8for_each4callTjB2K_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB3s_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullsxE0E0E0EB3A_.exit.i, label %bb.bi
+  %.sroa.0.1.i = phi i64 [ %i.fr, %bb.bm ], [ %.val.i.i.i.i.i.a, %bb.bl ] ; 3 uses
+  %i.fs = add nuw nsw i64 %i.eu, 1                ; 2 uses
+  %exitcond.i = icmp eq i64 %i.fs, %i.ep
+  br i1 %exitcond.i, label %_RINvYINtNtNtCscI6d9CVNmLh_4core5slice4iter7WindowsxENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBU_8adapters9enumerateINtB1J_9EnumeratepEBO_4fold9enumerateRSxuNCINvNvBO_8for_each4callTjB2K_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB3s_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullsxE0E0E0EB3A_.exit.i, label %bb.bi
 
 _RINvYINtNtNtCscI6d9CVNmLh_4core5slice4iter7WindowsxENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBU_8adapters9enumerateINtB1J_9EnumeratepEBO_4fold9enumerateRSxuNCINvNvBO_8for_each4callTjB2K_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB3s_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullsxE0E0E0EB3A_.exit.i: ; preds = %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypelEE11count_nullsxE0E0E0B2S_.exit.i.i
   %.not.i95 = icmp eq i64 %.sroa.0.1.i, 0
@@ -2266,8 +2256,8 @@ bb.bh:                                            ; preds = %bb.bf
   %i.en = getelementptr i8, ptr %1, i64 192
   %.val72 = load i64, ptr %i.en, align 8, !noundef !62 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !26840
-  %i.eo = lshr i64 %.val72, 3                     ; 2 uses
-  %i.ep = add nsw i64 %i.eo, -1
+  %i.eo = lshr i64 %.val72, 3
+  %i.ep = add nsw i64 %i.eo, -1                   ; 2 uses
   invoke void @_RNvMNtNtCs4YAKbnGhBJc_12arrow_buffer6buffer7mutableNtB2_13MutableBuffer8new_null(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.d, i64 noundef %i.ep)
           to label %.noexc97 unwind label %bb.bu
 
@@ -2282,18 +2272,16 @@ bb.bh:                                            ; preds = %bb.bf
   br label %bb.bi
 
 bb.bi:                                            ; preds = %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullsxE0E0E0B2S_.exit.i.i, %.lr.ph.split.i.i
-  %.sroa.0.0.i = phi i64 [ 0, %.lr.ph.split.i.i ], [ %.sroa.0.1.i, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullsxE0E0E0B2S_.exit.i.i ] ; 2 uses
-  %.val.i.i.i.i.i.a = phi i64 [ %.val.i.i.i.pre.i.i, %.lr.ph.split.i.i ], [ %.val7.i.i.i.i.i, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullsxE0E0E0B2S_.exit.i.i ]
-  %i.et = phi i64 [ 0, %.lr.ph.split.i.i ], [ %i.fs, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullsxE0E0E0B2S_.exit.i.i ] ; 4 uses
-  %i.eu = phi i64 [ %i.eo, %.lr.ph.split.i.i ], [ %3, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullsxE0E0E0B2S_.exit.i.i ]
+  %.val.i.i.i.i.i.a = phi i64 [ 0, %.lr.ph.split.i.i ], [ %.sroa.0.1.i, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullsxE0E0E0B2S_.exit.i.i ] ; 2 uses
+  %i.et = phi i64 [ %.val.i.i.i.pre.i.i, %.lr.ph.split.i.i ], [ %.val7.i.i.i.i.i, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullsxE0E0E0B2S_.exit.i.i ]
+  %i.eu = phi i64 [ 0, %.lr.ph.split.i.i ], [ %i.fs, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullsxE0E0E0B2S_.exit.i.i ] ; 4 uses
   %i.ev = phi ptr [ %.val71, %.lr.ph.split.i.i ], [ %i.ew, %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullsxE0E0E0B2S_.exit.i.i ]
-  %3 = add i64 %i.eu, -1                          ; 2 uses
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 8 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !26841)
   %.val7.i.i.i.i.i = load i64, ptr %i.ew, align 8, !alias.scope !26841, !noalias !26842, !noundef !62 ; 2 uses
-  %i.ex = icmp eq i64 %.val.i.i.i.i.i.a, %.val7.i.i.i.i.i
+  %i.ex = icmp eq i64 %i.et, %.val7.i.i.i.i.i
   %i.ey = load i64, ptr %i.er, align 8, !noalias !26843, !noundef !62 ; 2 uses
-  %i.ez = lshr i64 %i.et, 3                       ; 4 uses
+  %i.ez = lshr i64 %i.eu, 3                       ; 4 uses
   %i.fa = icmp ult i64 %i.ez, %i.ey               ; 2 uses
   br i1 %i.ex, label %bb.bk, label %bb.bj
 
@@ -2304,7 +2292,7 @@ bb.bk:                                            ; preds = %bb.bi
   br i1 %i.fa, label %bb.bm, label %.invoke.i
 
 bb.bl:                                            ; preds = %bb.bj
-  %i.fb = trunc i64 %i.et to i8
+  %i.fb = trunc i64 %i.eu to i8
   %i.fc = and i8 %i.fb, 7
   %i.fd = shl nuw i8 1, %i.fc
   %i.fe = load ptr, ptr %i.es, align 16, !noalias !26843, !nonnull !62, !noundef !62
@@ -2323,7 +2311,7 @@ bb.bl:                                            ; preds = %bb.bj
   unreachable
 
 bb.bm:                                            ; preds = %bb.bk
-  %i.fj = trunc i64 %i.et to i8
+  %i.fj = trunc i64 %i.eu to i8
   %i.fk = and i8 %i.fj, 7
   %i.fl = shl nuw i8 1, %i.fk
   %i.fm = xor i8 %i.fl, -1
@@ -2332,14 +2320,14 @@ bb.bm:                                            ; preds = %bb.bk
   %i.fp = load i8, ptr %i.fo, align 1, !noalias !26843, !noundef !62
   %i.fq = and i8 %i.fp, %i.fm
   store i8 %i.fq, ptr %i.fo, align 1, !noalias !26843
-  %i.fr = add i64 %.sroa.0.0.i, 1
+  %i.fr = add i64 %.val.i.i.i.i.i.a, 1
   br label %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullsxE0E0E0B2S_.exit.i.i
 
 _RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullsxE0E0E0B2S_.exit.i.i: ; preds = %bb.bm, %bb.bl
-  %.sroa.0.1.i = phi i64 [ %i.fr, %bb.bm ], [ %.sroa.0.0.i, %bb.bl ] ; 3 uses
-  %i.fs = add nuw i64 %i.et, 1
-  %4 = icmp ult i64 %3, 2
-  br i1 %4, label %_RINvYINtNtNtCscI6d9CVNmLh_4core5slice4iter7WindowsxENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBU_8adapters9enumerateINtB1J_9EnumeratepEBO_4fold9enumerateRSxuNCINvNvBO_8for_each4callTjB2K_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB3s_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullsxE0E0E0EB3A_.exit.i, label %bb.bi
+  %.sroa.0.1.i = phi i64 [ %i.fr, %bb.bm ], [ %.val.i.i.i.i.i.a, %bb.bl ] ; 3 uses
+  %i.fs = add nuw nsw i64 %i.eu, 1                ; 2 uses
+  %exitcond.i = icmp eq i64 %i.fs, %i.ep
+  br i1 %exitcond.i, label %_RINvYINtNtNtCscI6d9CVNmLh_4core5slice4iter7WindowsxENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBU_8adapters9enumerateINtB1J_9EnumeratepEBO_4fold9enumerateRSxuNCINvNvBO_8for_each4callTjB2K_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB3s_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullsxE0E0E0EB3A_.exit.i, label %bb.bi
 
 _RINvYINtNtNtCscI6d9CVNmLh_4core5slice4iter7WindowsxENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBU_8adapters9enumerateINtB1J_9EnumeratepEBO_4fold9enumerateRSxuNCINvNvBO_8for_each4callTjB2K_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB3s_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullsxE0E0E0EB3A_.exit.i: ; preds = %_RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypelEE11count_nullsxE0E0E0B2S_.exit.i.i
   %.not.i95 = icmp eq i64 %.sroa.0.1.i, 0

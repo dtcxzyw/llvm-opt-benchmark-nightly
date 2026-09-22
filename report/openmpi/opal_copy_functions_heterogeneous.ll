@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 51
 inline.NumDeleted: 6
 loop-unroll.NumCompletelyUnrolled: 56
-loop-unroll.NumRuntimeUnrolled: 41
-loop-unroll.NumUnrolled: 97
+loop-unroll.NumRuntimeUnrolled: 43
+loop-unroll.NumUnrolled: 99
 begin_hunk_0_@copy_float16_heterogeneous:datatype_check.exit
   %i.lk = phi i64 [ %i.ko, %ldbl_to_f128.exit ], [ %i.kq, %alignment_of_long_double.exit.split.us.i96 ], [ %i.kq, %alignment_of_long_double.exit.split.i92 ]
   %.2 = phi ptr [ %.1, %ldbl_to_f128.exit ], [ %.066, %alignment_of_long_double.exit.split.us.i96 ], [ %.066, %alignment_of_long_double.exit.split.i92 ]
@@ -205,7 +205,7 @@ datatype_check.exit:
   %i.i = icmp eq i64 %4, 8
   %or.cond = and i1 %i.i, %i.h                    ; 2 uses
   %i.j = shl i64 %spec.select, 1
-  %.030 = select i1 %or.cond, i64 %i.j, i64 2     ; 3 uses
+  %.030 = select i1 %or.cond, i64 %i.j, i64 2     ; 4 uses
   %.029 = select i1 %or.cond, i64 1, i64 %spec.select ; 9 uses
   %i.k = xor i32 %.028, %.0
   %i.l = and i32 %i.k, 8
@@ -261,7 +261,12 @@ opal_dt_swap_bytes.exit.us:                       ; preds = %opal_dt_swap_bytes.
 
 datatype_check.exit.split:                        ; preds = %datatype_check.exit
   %.not40 = icmp eq i64 %.030, 0
-  br i1 %.not40, label %.preheader.us.preheader, label %.preheader
+  br i1 %.not40, label %.preheader.us.preheader, label %.preheader.preheader
+
+.preheader.preheader:                             ; preds = %datatype_check.exit.split
+  %9 = add i64 %.030, -1
+  %10 = icmp eq i64 %.030, 2
+  br label %.preheader
 
 .preheader.us.preheader:                          ; preds = %datatype_check.exit.split
   %xtraiter = and i64 %.029, 1
@@ -335,51 +340,83 @@ datatype_check.exit.split:                        ; preds = %datatype_check.exit
   %.not35.us45.1 = icmp eq i64 %i.bn, 0
   br i1 %.not35.us45.1, label %.split.us, label %.preheader.us, !llvm.loop !66
 
-.preheader:                                       ; preds = %datatype_check.exit.split, %opal_dt_swap_bytes.exit.loopexit
-  %.032 = phi ptr [ %i.cm, %opal_dt_swap_bytes.exit.loopexit ], [ %5, %datatype_check.exit.split ] ; 6 uses
-  %.031 = phi ptr [ %i.cn, %opal_dt_swap_bytes.exit.loopexit ], [ %2, %datatype_check.exit.split ] ; 6 uses
-  %.1 = phi i64 [ %i.co, %opal_dt_swap_bytes.exit.loopexit ], [ %.029, %datatype_check.exit.split ]
-  %i.bo = load i8, ptr %.031, align 1, !tbaa !27
-  %i.bp = getelementptr inbounds nuw i8, ptr %.032, i64 3
+.preheader:                                       ; preds = %.preheader.preheader, %opal_dt_swap_bytes.exit.loopexit
+  %.032 = phi ptr [ %i.cm, %opal_dt_swap_bytes.exit.loopexit ], [ %5, %.preheader.preheader ] ; 9 uses
+  %.031 = phi ptr [ %i.cn, %opal_dt_swap_bytes.exit.loopexit ], [ %2, %.preheader.preheader ] ; 9 uses
+  %.1 = phi i64 [ %i.co, %opal_dt_swap_bytes.exit.loopexit ], [ %.029, %.preheader.preheader ]
+  %11 = load i8, ptr %.031, align 1, !tbaa !27
+  %12 = getelementptr inbounds nuw i8, ptr %.032, i64 3
+  store i8 %11, ptr %12, align 1, !tbaa !27
+  %13 = getelementptr inbounds nuw i8, ptr %.031, i64 1
+  %14 = load i8, ptr %13, align 1, !tbaa !27
+  %15 = getelementptr inbounds nuw i8, ptr %.032, i64 2
+  store i8 %14, ptr %15, align 1, !tbaa !27
+  %16 = getelementptr inbounds nuw i8, ptr %.031, i64 2
+  %17 = load i8, ptr %16, align 1, !tbaa !27
+  %18 = getelementptr inbounds nuw i8, ptr %.032, i64 1
+  store i8 %17, ptr %18, align 1, !tbaa !27
+  %19 = getelementptr inbounds nuw i8, ptr %.031, i64 3
+  %20 = load i8, ptr %19, align 1, !tbaa !27
+  store i8 %20, ptr %.032, align 1, !tbaa !27
+  %21 = getelementptr inbounds nuw i8, ptr %.032, i64 4 ; 2 uses
+  %22 = getelementptr inbounds nuw i8, ptr %.031, i64 4 ; 2 uses
+  %i.bo = load i8, ptr %22, align 1, !tbaa !27
+  %i.bp = getelementptr inbounds nuw i8, ptr %.032, i64 7
   store i8 %i.bo, ptr %i.bp, align 1, !tbaa !27
-  %i.bq = getelementptr inbounds nuw i8, ptr %.031, i64 1
+  %i.bq = getelementptr inbounds nuw i8, ptr %.031, i64 5
   %i.br = load i8, ptr %i.bq, align 1, !tbaa !27
-  %i.bs = getelementptr inbounds nuw i8, ptr %.032, i64 2
+  %i.bs = getelementptr inbounds nuw i8, ptr %.032, i64 6
   store i8 %i.br, ptr %i.bs, align 1, !tbaa !27
-  %i.bt = getelementptr inbounds nuw i8, ptr %.031, i64 2
+  %i.bt = getelementptr inbounds nuw i8, ptr %.031, i64 6
   %i.bu = load i8, ptr %i.bt, align 1, !tbaa !27
-  %i.bv = getelementptr inbounds nuw i8, ptr %.032, i64 1
+  %i.bv = getelementptr inbounds nuw i8, ptr %.032, i64 5
   store i8 %i.bu, ptr %i.bv, align 1, !tbaa !27
-  %i.bw = getelementptr inbounds nuw i8, ptr %.031, i64 3
+  %i.bw = getelementptr inbounds nuw i8, ptr %.031, i64 7
   %i.bx = load i8, ptr %i.bw, align 1, !tbaa !27
-  store i8 %i.bx, ptr %.032, align 1, !tbaa !27
-  br label %.lr.ph.i
+  store i8 %i.bx, ptr %21, align 1, !tbaa !27
+  br i1 %10, label %opal_dt_swap_bytes.exit.loopexit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader, %.lr.ph.i
-  %.036.i = phi ptr [ %i.bz, %.lr.ph.i ], [ %.031, %.preheader ] ; 4 uses
-  %.02535.i = phi ptr [ %i.by, %.lr.ph.i ], [ %.032, %.preheader ] ; 4 uses
-  %.02934.i = phi i64 [ %i.ck, %.lr.ph.i ], [ %.030, %.preheader ]
-  %i.by = getelementptr inbounds nuw i8, ptr %.02535.i, i64 4 ; 2 uses
-  %i.bz = getelementptr inbounds nuw i8, ptr %.036.i, i64 4 ; 2 uses
+  %.036.i = phi ptr [ %i.bz, %.lr.ph.i ], [ %22, %.preheader ] ; 8 uses
+  %.02535.i = phi ptr [ %i.by, %.lr.ph.i ], [ %21, %.preheader ] ; 8 uses
+  %.02934.i = phi i64 [ %i.ck, %.lr.ph.i ], [ %9, %.preheader ]
+  %23 = getelementptr inbounds nuw i8, ptr %.02535.i, i64 4
+  %24 = getelementptr inbounds nuw i8, ptr %.036.i, i64 4
+  %25 = load i8, ptr %24, align 1, !tbaa !27
+  %26 = getelementptr inbounds nuw i8, ptr %.02535.i, i64 7
+  store i8 %25, ptr %26, align 1, !tbaa !27
+  %27 = getelementptr inbounds nuw i8, ptr %.036.i, i64 5
+  %28 = load i8, ptr %27, align 1, !tbaa !27
+  %29 = getelementptr inbounds nuw i8, ptr %.02535.i, i64 6
+  store i8 %28, ptr %29, align 1, !tbaa !27
+  %30 = getelementptr inbounds nuw i8, ptr %.036.i, i64 6
+  %31 = load i8, ptr %30, align 1, !tbaa !27
+  %32 = getelementptr inbounds nuw i8, ptr %.02535.i, i64 5
+  store i8 %31, ptr %32, align 1, !tbaa !27
+  %33 = getelementptr inbounds nuw i8, ptr %.036.i, i64 7
+  %34 = load i8, ptr %33, align 1, !tbaa !27
+  store i8 %34, ptr %23, align 1, !tbaa !27
+  %i.by = getelementptr inbounds nuw i8, ptr %.02535.i, i64 8 ; 2 uses
+  %i.bz = getelementptr inbounds nuw i8, ptr %.036.i, i64 8 ; 2 uses
   %i.ca = load i8, ptr %i.bz, align 1, !tbaa !27
-  %i.cb = getelementptr inbounds nuw i8, ptr %.02535.i, i64 7
+  %i.cb = getelementptr inbounds nuw i8, ptr %.02535.i, i64 11
   store i8 %i.ca, ptr %i.cb, align 1, !tbaa !27
-  %i.cc = getelementptr inbounds nuw i8, ptr %.036.i, i64 5
+  %i.cc = getelementptr inbounds nuw i8, ptr %.036.i, i64 9
   %i.cd = load i8, ptr %i.cc, align 1, !tbaa !27
-  %i.ce = getelementptr inbounds nuw i8, ptr %.02535.i, i64 6
+  %i.ce = getelementptr inbounds nuw i8, ptr %.02535.i, i64 10
   store i8 %i.cd, ptr %i.ce, align 1, !tbaa !27
-  %i.cf = getelementptr inbounds nuw i8, ptr %.036.i, i64 6
+  %i.cf = getelementptr inbounds nuw i8, ptr %.036.i, i64 10
   %i.cg = load i8, ptr %i.cf, align 1, !tbaa !27
-  %i.ch = getelementptr inbounds nuw i8, ptr %.02535.i, i64 5
+  %i.ch = getelementptr inbounds nuw i8, ptr %.02535.i, i64 9
   store i8 %i.cg, ptr %i.ch, align 1, !tbaa !27
-  %i.ci = getelementptr inbounds nuw i8, ptr %.036.i, i64 7
+  %i.ci = getelementptr inbounds nuw i8, ptr %.036.i, i64 11
   %i.cj = load i8, ptr %i.ci, align 1, !tbaa !27
   store i8 %i.cj, ptr %i.by, align 1, !tbaa !27
-  %i.ck = add i64 %.02934.i, -1                   ; 2 uses
+  %i.ck = add i64 %.02934.i, -2                   ; 2 uses
   %i.cl = icmp ugt i64 %i.ck, 1
   br i1 %i.cl, label %.lr.ph.i, label %opal_dt_swap_bytes.exit.loopexit, !llvm.loop !0
 
-opal_dt_swap_bytes.exit.loopexit:                 ; preds = %.lr.ph.i
+opal_dt_swap_bytes.exit.loopexit:                 ; preds = %.lr.ph.i, %.preheader
   %i.cm = getelementptr inbounds i8, ptr %.032, i64 %7
   %i.cn = getelementptr inbounds i8, ptr %.031, i64 %4
   %i.co = add i64 %.1, -1                         ; 2 uses
@@ -413,7 +450,7 @@ datatype_check.exit:
   %i.i = icmp eq i64 %4, 8
   %or.cond = and i1 %i.i, %i.h                    ; 2 uses
   %i.j = shl i64 %spec.select, 1
-  %.030 = select i1 %or.cond, i64 %i.j, i64 2     ; 3 uses
+  %.030 = select i1 %or.cond, i64 %i.j, i64 2     ; 4 uses
   %.029 = select i1 %or.cond, i64 1, i64 %spec.select ; 9 uses
   %i.k = xor i32 %.028, %.0
   %i.l = and i32 %i.k, 8
@@ -469,7 +506,12 @@ opal_dt_swap_bytes.exit.us:                       ; preds = %opal_dt_swap_bytes.
 
 datatype_check.exit.split:                        ; preds = %datatype_check.exit
   %.not40 = icmp eq i64 %.030, 0
-  br i1 %.not40, label %.preheader.us.preheader, label %.preheader
+  br i1 %.not40, label %.preheader.us.preheader, label %.preheader.preheader
+
+.preheader.preheader:                             ; preds = %datatype_check.exit.split
+  %9 = add i64 %.030, -1
+  %10 = icmp eq i64 %.030, 2
+  br label %.preheader
 
 .preheader.us.preheader:                          ; preds = %datatype_check.exit.split
   %xtraiter = and i64 %.029, 1
@@ -543,51 +585,83 @@ datatype_check.exit.split:                        ; preds = %datatype_check.exit
   %.not35.us45.1 = icmp eq i64 %i.bn, 0
   br i1 %.not35.us45.1, label %.split.us, label %.preheader.us, !llvm.loop !68
 
-.preheader:                                       ; preds = %datatype_check.exit.split, %opal_dt_swap_bytes.exit.loopexit
-  %.032 = phi ptr [ %i.cm, %opal_dt_swap_bytes.exit.loopexit ], [ %5, %datatype_check.exit.split ] ; 6 uses
-  %.031 = phi ptr [ %i.cn, %opal_dt_swap_bytes.exit.loopexit ], [ %2, %datatype_check.exit.split ] ; 6 uses
-  %.1 = phi i64 [ %i.co, %opal_dt_swap_bytes.exit.loopexit ], [ %.029, %datatype_check.exit.split ]
-  %i.bo = load i8, ptr %.031, align 1, !tbaa !27
-  %i.bp = getelementptr inbounds nuw i8, ptr %.032, i64 3
+.preheader:                                       ; preds = %.preheader.preheader, %opal_dt_swap_bytes.exit.loopexit
+  %.032 = phi ptr [ %i.cm, %opal_dt_swap_bytes.exit.loopexit ], [ %5, %.preheader.preheader ] ; 9 uses
+  %.031 = phi ptr [ %i.cn, %opal_dt_swap_bytes.exit.loopexit ], [ %2, %.preheader.preheader ] ; 9 uses
+  %.1 = phi i64 [ %i.co, %opal_dt_swap_bytes.exit.loopexit ], [ %.029, %.preheader.preheader ]
+  %11 = load i8, ptr %.031, align 1, !tbaa !27
+  %12 = getelementptr inbounds nuw i8, ptr %.032, i64 3
+  store i8 %11, ptr %12, align 1, !tbaa !27
+  %13 = getelementptr inbounds nuw i8, ptr %.031, i64 1
+  %14 = load i8, ptr %13, align 1, !tbaa !27
+  %15 = getelementptr inbounds nuw i8, ptr %.032, i64 2
+  store i8 %14, ptr %15, align 1, !tbaa !27
+  %16 = getelementptr inbounds nuw i8, ptr %.031, i64 2
+  %17 = load i8, ptr %16, align 1, !tbaa !27
+  %18 = getelementptr inbounds nuw i8, ptr %.032, i64 1
+  store i8 %17, ptr %18, align 1, !tbaa !27
+  %19 = getelementptr inbounds nuw i8, ptr %.031, i64 3
+  %20 = load i8, ptr %19, align 1, !tbaa !27
+  store i8 %20, ptr %.032, align 1, !tbaa !27
+  %21 = getelementptr inbounds nuw i8, ptr %.032, i64 4 ; 2 uses
+  %22 = getelementptr inbounds nuw i8, ptr %.031, i64 4 ; 2 uses
+  %i.bo = load i8, ptr %22, align 1, !tbaa !27
+  %i.bp = getelementptr inbounds nuw i8, ptr %.032, i64 7
   store i8 %i.bo, ptr %i.bp, align 1, !tbaa !27
-  %i.bq = getelementptr inbounds nuw i8, ptr %.031, i64 1
+  %i.bq = getelementptr inbounds nuw i8, ptr %.031, i64 5
   %i.br = load i8, ptr %i.bq, align 1, !tbaa !27
-  %i.bs = getelementptr inbounds nuw i8, ptr %.032, i64 2
+  %i.bs = getelementptr inbounds nuw i8, ptr %.032, i64 6
   store i8 %i.br, ptr %i.bs, align 1, !tbaa !27
-  %i.bt = getelementptr inbounds nuw i8, ptr %.031, i64 2
+  %i.bt = getelementptr inbounds nuw i8, ptr %.031, i64 6
   %i.bu = load i8, ptr %i.bt, align 1, !tbaa !27
-  %i.bv = getelementptr inbounds nuw i8, ptr %.032, i64 1
+  %i.bv = getelementptr inbounds nuw i8, ptr %.032, i64 5
   store i8 %i.bu, ptr %i.bv, align 1, !tbaa !27
-  %i.bw = getelementptr inbounds nuw i8, ptr %.031, i64 3
+  %i.bw = getelementptr inbounds nuw i8, ptr %.031, i64 7
   %i.bx = load i8, ptr %i.bw, align 1, !tbaa !27
-  store i8 %i.bx, ptr %.032, align 1, !tbaa !27
-  br label %.lr.ph.i
+  store i8 %i.bx, ptr %21, align 1, !tbaa !27
+  br i1 %10, label %opal_dt_swap_bytes.exit.loopexit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader, %.lr.ph.i
-  %.036.i = phi ptr [ %i.bz, %.lr.ph.i ], [ %.031, %.preheader ] ; 4 uses
-  %.02535.i = phi ptr [ %i.by, %.lr.ph.i ], [ %.032, %.preheader ] ; 4 uses
-  %.02934.i = phi i64 [ %i.ck, %.lr.ph.i ], [ %.030, %.preheader ]
-  %i.by = getelementptr inbounds nuw i8, ptr %.02535.i, i64 4 ; 2 uses
-  %i.bz = getelementptr inbounds nuw i8, ptr %.036.i, i64 4 ; 2 uses
+  %.036.i = phi ptr [ %i.bz, %.lr.ph.i ], [ %22, %.preheader ] ; 8 uses
+  %.02535.i = phi ptr [ %i.by, %.lr.ph.i ], [ %21, %.preheader ] ; 8 uses
+  %.02934.i = phi i64 [ %i.ck, %.lr.ph.i ], [ %9, %.preheader ]
+  %23 = getelementptr inbounds nuw i8, ptr %.02535.i, i64 4
+  %24 = getelementptr inbounds nuw i8, ptr %.036.i, i64 4
+  %25 = load i8, ptr %24, align 1, !tbaa !27
+  %26 = getelementptr inbounds nuw i8, ptr %.02535.i, i64 7
+  store i8 %25, ptr %26, align 1, !tbaa !27
+  %27 = getelementptr inbounds nuw i8, ptr %.036.i, i64 5
+  %28 = load i8, ptr %27, align 1, !tbaa !27
+  %29 = getelementptr inbounds nuw i8, ptr %.02535.i, i64 6
+  store i8 %28, ptr %29, align 1, !tbaa !27
+  %30 = getelementptr inbounds nuw i8, ptr %.036.i, i64 6
+  %31 = load i8, ptr %30, align 1, !tbaa !27
+  %32 = getelementptr inbounds nuw i8, ptr %.02535.i, i64 5
+  store i8 %31, ptr %32, align 1, !tbaa !27
+  %33 = getelementptr inbounds nuw i8, ptr %.036.i, i64 7
+  %34 = load i8, ptr %33, align 1, !tbaa !27
+  store i8 %34, ptr %23, align 1, !tbaa !27
+  %i.by = getelementptr inbounds nuw i8, ptr %.02535.i, i64 8 ; 2 uses
+  %i.bz = getelementptr inbounds nuw i8, ptr %.036.i, i64 8 ; 2 uses
   %i.ca = load i8, ptr %i.bz, align 1, !tbaa !27
-  %i.cb = getelementptr inbounds nuw i8, ptr %.02535.i, i64 7
+  %i.cb = getelementptr inbounds nuw i8, ptr %.02535.i, i64 11
   store i8 %i.ca, ptr %i.cb, align 1, !tbaa !27
-  %i.cc = getelementptr inbounds nuw i8, ptr %.036.i, i64 5
+  %i.cc = getelementptr inbounds nuw i8, ptr %.036.i, i64 9
   %i.cd = load i8, ptr %i.cc, align 1, !tbaa !27
-  %i.ce = getelementptr inbounds nuw i8, ptr %.02535.i, i64 6
+  %i.ce = getelementptr inbounds nuw i8, ptr %.02535.i, i64 10
   store i8 %i.cd, ptr %i.ce, align 1, !tbaa !27
-  %i.cf = getelementptr inbounds nuw i8, ptr %.036.i, i64 6
+  %i.cf = getelementptr inbounds nuw i8, ptr %.036.i, i64 10
   %i.cg = load i8, ptr %i.cf, align 1, !tbaa !27
-  %i.ch = getelementptr inbounds nuw i8, ptr %.02535.i, i64 5
+  %i.ch = getelementptr inbounds nuw i8, ptr %.02535.i, i64 9
   store i8 %i.cg, ptr %i.ch, align 1, !tbaa !27
-  %i.ci = getelementptr inbounds nuw i8, ptr %.036.i, i64 7
+  %i.ci = getelementptr inbounds nuw i8, ptr %.036.i, i64 11
   %i.cj = load i8, ptr %i.ci, align 1, !tbaa !27
   store i8 %i.cj, ptr %i.by, align 1, !tbaa !27
-  %i.ck = add i64 %.02934.i, -1                   ; 2 uses
+  %i.ck = add i64 %.02934.i, -2                   ; 2 uses
   %i.cl = icmp ugt i64 %i.ck, 1
   br i1 %i.cl, label %.lr.ph.i, label %opal_dt_swap_bytes.exit.loopexit, !llvm.loop !0
 
-opal_dt_swap_bytes.exit.loopexit:                 ; preds = %.lr.ph.i
+opal_dt_swap_bytes.exit.loopexit:                 ; preds = %.lr.ph.i, %.preheader
   %i.cm = getelementptr inbounds i8, ptr %.032, i64 %7
   %i.cn = getelementptr inbounds i8, ptr %.031, i64 %4
   %i.co = add i64 %.1, -1                         ; 2 uses

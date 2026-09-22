@@ -156,7 +156,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %.094 = phi i32 [ %.176, %bb.o ], [ 0, %bb.n ]  ; 5 uses
   %i.ao = load ptr, ptr %i.a, align 8, !tbaa !18  ; 6 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 8 ; 2 uses
-  %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !20 ; 3 uses
+  %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !20 ; 4 uses
   %i.ar = load i32, ptr %i.ao, align 8, !tbaa !38 ; 5 uses
   %i.as = sext i32 %i.ar to i64
   %i.at = getelementptr inbounds [12 x i8], ptr %i.aq, i64 %i.as
@@ -182,7 +182,7 @@ bb.r:                                             ; preds = %bb.z, %.lr.ph.i
   %indvars.iv.i = phi i64 [ %i.ay, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.z ] ; 2 uses
   %.037.i = phi ptr [ %1, %.lr.ph.i ], [ %i.az, %bb.z ] ; 6 uses
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses
-  %i.az = getelementptr inbounds nuw [12 x i8], ptr %i.aq, i64 %indvars.iv.next.i ; 4 uses
+  %i.az = getelementptr inbounds nuw [12 x i8], ptr %i.aq, i64 %indvars.iv.next.i ; 3 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 4 ; 2 uses
   %i.bb = load i32, ptr %i.ba, align 4, !tbaa !39
   %.not30.i = icmp eq i32 %i.bb, 0
@@ -260,7 +260,7 @@ bb.z:                                             ; preds = %transform_n.exit34.
   br i1 %i.ca, label %bb.r, label %dwim.exit, !llvm.loop !28
 
 dwim.exit:                                        ; preds = %bb.z, %bb.q
-  %.0164 = phi ptr [ %1, %bb.q ], [ %i.az, %bb.z ]
+  %.0164 = phi ptr [ %1, %bb.q ], [ %i.aq, %bb.z ]
   store ptr %i.ao, ptr %i.o, align 8, !tbaa !41
   %i.cb = call fastcc ptr @parsetensor(ptr noundef nonnull %i.aw, ptr noundef %i.a, ptr noundef null)
   %i.cc = load ptr, ptr %i.a, align 8, !tbaa !18  ; 4 uses
@@ -369,7 +369,7 @@ bb.aj:                                            ; preds = %bb.p, %bb.p
 
 .lr.ph.i116:                                      ; preds = %bb.aj
   %i.dp = getelementptr inbounds nuw i8, ptr %i.dm, i64 8
-  %i.dq = load ptr, ptr %i.dp, align 8, !tbaa !20
+  %i.dq = load ptr, ptr %i.dp, align 8, !tbaa !20 ; 2 uses
   %i.dr = zext nneg i32 %i.dn to i64
   br label %bb.ak
 
@@ -377,7 +377,7 @@ bb.ak:                                            ; preds = %bb.as, %.lr.ph.i116
   %indvars.iv.i117 = phi i64 [ %i.dr, %.lr.ph.i116 ], [ %indvars.iv.next.i119, %bb.as ] ; 2 uses
   %.037.i118 = phi ptr [ %1, %.lr.ph.i116 ], [ %i.ds, %bb.as ] ; 6 uses
   %indvars.iv.next.i119 = add nsw i64 %indvars.iv.i117, -1 ; 2 uses
-  %i.ds = getelementptr inbounds nuw [12 x i8], ptr %i.dq, i64 %indvars.iv.next.i119 ; 4 uses
+  %i.ds = getelementptr inbounds nuw [12 x i8], ptr %i.dq, i64 %indvars.iv.next.i119 ; 3 uses
   %i.dt = getelementptr inbounds nuw i8, ptr %i.ds, i64 4 ; 2 uses
   %i.du = load i32, ptr %i.dt, align 4, !tbaa !39
   %.not30.i120 = icmp eq i32 %i.du, 0
@@ -452,7 +452,7 @@ bb.as:                                            ; preds = %transform_n.exit34.
   br i1 %i.et, label %bb.ak, label %dwim.exit128, !llvm.loop !28
 
 dwim.exit128:                                     ; preds = %bb.as, %bb.aj
-  %.1165 = phi ptr [ %1, %bb.aj ], [ %i.ds, %bb.as ]
+  %.1165 = phi ptr [ %1, %bb.aj ], [ %i.dq, %bb.as ]
   store ptr %i.dm, ptr %i.n, align 8, !tbaa !42
   %i.eu = load i32, ptr %i.ao, align 8, !tbaa !38 ; 2 uses
   %i.ev = add i32 %i.eu, -2147483647
