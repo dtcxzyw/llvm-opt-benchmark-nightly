@@ -202,11 +202,12 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 .lr.ph130:                                        ; preds = %._crit_edge.thread
   %i.w = getelementptr inbounds nuw i8, ptr %5, i64 4
-  %min.iters.check184 = icmp ult i64 %1, 12
-  br i1 %min.iters.check184, label %scalar.ph183.preheader, label %vector.scevcheck170
+  %7 = tail call i64 @llvm.smax.i64(i64 %1, i64 1) ; 2 uses
+  %min.iters.check185 = icmp slt i64 %1, 12
+  br i1 %min.iters.check185, label %scalar.ph183.preheader, label %vector.scevcheck170
 
 vector.scevcheck170:                              ; preds = %.lr.ph130
-  %i.x = add i64 %1, -1                           ; 2 uses
+  %i.x = add nsw i64 %1, -1                       ; 2 uses
   %i.y = and i64 %i.x, 4294967295
   %i.z = icmp eq i64 %i.y, 4294967295
   %i.aa = icmp ugt i64 %i.x, 4294967295
@@ -230,7 +231,7 @@ vector.memcheck171:                               ; preds = %vector.scevcheck170
   br i1 %conflict.rdx182, label %scalar.ph183.preheader, label %vector.ph185
 
 vector.ph185:                                     ; preds = %vector.memcheck171
-  %n.vec186 = and i64 %1, 8589934590              ; 3 uses
+  %n.vec186 = and i64 %7, 8589934590              ; 3 uses
   %broadcast.splatinsert187 = insertelement <2 x i32> poison, i32 %3, i64 0
   %broadcast.splatinsert189 = insertelement <2 x i32> poison, i32 %4, i64 0
   %i.ae = shufflevector <2 x i32> %broadcast.splatinsert187, <2 x i32> %broadcast.splatinsert189, <4 x i32> <i32 0, i32 2, i32 0, i32 2>
@@ -254,7 +255,7 @@ vector.body191:                                   ; preds = %vector.body191, %ve
   br i1 %i.al, label %middle.block202, label %vector.body191, !llvm.loop !25
 
 middle.block202:                                  ; preds = %vector.body191
-  %cmp.n203 = icmp eq i64 %1, %n.vec186
+  %cmp.n203 = icmp eq i64 %7, %n.vec186
   br i1 %cmp.n203, label %.loopexit, label %scalar.ph183.preheader
 
 scalar.ph183.preheader:                           ; preds = %vector.memcheck171, %vector.scevcheck170, %.lr.ph130, %middle.block202
@@ -316,14 +317,15 @@ bb.b:                                             ; preds = %._crit_edge.thread,
 .lr.ph127:                                        ; preds = %bb.b
   %or.cond5 = and i1 %i.b, %i.c
   %i.by = getelementptr i8, ptr %5, i64 4         ; 9 uses
+  %8 = tail call i64 @llvm.smax.i64(i64 %1, i64 1) ; 6 uses
   br i1 %or.cond5, label %.lr.ph127.split.us.preheader, label %.lr.ph127.split
 
 .lr.ph127.split.us.preheader:                     ; preds = %.lr.ph127
-  %min.iters.check299 = icmp ult i64 %1, 8
-  br i1 %min.iters.check299, label %.lr.ph127.split.us.preheader320, label %vector.scevcheck285
+  %min.iters.check306 = icmp slt i64 %1, 12
+  br i1 %min.iters.check306, label %.lr.ph127.split.us.preheader320, label %vector.scevcheck285
 
 vector.scevcheck285:                              ; preds = %.lr.ph127.split.us.preheader
-  %i.bz = add i64 %1, -1                          ; 2 uses
+  %i.bz = add nsw i64 %1, -1                      ; 2 uses
   %i.ca = and i64 %i.bz, 4294967295
   %i.cb = icmp eq i64 %i.ca, 4294967295
   %i.cc = icmp ugt i64 %i.bz, 4294967295
@@ -347,7 +349,7 @@ vector.memcheck286:                               ; preds = %vector.scevcheck285
   br i1 %conflict.rdx297, label %.lr.ph127.split.us.preheader320, label %vector.ph300
 
 vector.ph300:                                     ; preds = %vector.memcheck286
-  %n.vec301 = and i64 %1, 8589934588              ; 3 uses
+  %n.vec301 = and i64 %8, 8589934588              ; 3 uses
   %broadcast.splatinsert302 = insertelement <4 x i32> poison, i32 %i.bx, i64 0
   %broadcast.splat303 = shufflevector <4 x i32> %broadcast.splatinsert302, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert304 = insertelement <4 x i32> poison, i32 %i.bw, i64 0
@@ -380,7 +382,7 @@ vector.body306:                                   ; preds = %vector.body306, %ve
   br i1 %i.cs, label %middle.block317, label %vector.body306, !llvm.loop !30
 
 middle.block317:                                  ; preds = %vector.body306
-  %cmp.n318 = icmp eq i64 %1, %n.vec301
+  %cmp.n318 = icmp eq i64 %8, %n.vec301
   br i1 %cmp.n318, label %.loopexit, label %.lr.ph127.split.us.preheader320
 
 .lr.ph127.split.us.preheader320:                  ; preds = %vector.memcheck286, %vector.scevcheck285, %.lr.ph127.split.us.preheader, %middle.block317
@@ -414,11 +416,11 @@ middle.block317:                                  ; preds = %vector.body306
   br i1 %6, label %.lr.ph127.split.split.us.preheader, label %.lr.ph127.split.split.preheader
 
 .lr.ph127.split.split.preheader:                  ; preds = %.lr.ph127.split
-  %min.iters.check219 = icmp ult i64 %1, 12
-  br i1 %min.iters.check219, label %.lr.ph127.split.split.preheader323, label %vector.scevcheck205
+  %min.iters.check222 = icmp slt i64 %1, 12
+  br i1 %min.iters.check222, label %.lr.ph127.split.split.preheader323, label %vector.scevcheck205
 
 vector.scevcheck205:                              ; preds = %.lr.ph127.split.split.preheader
-  %i.dk = add i64 %1, -1                          ; 2 uses
+  %i.dk = add nsw i64 %1, -1                      ; 2 uses
   %i.dl = and i64 %i.dk, 4294967295
   %i.dm = icmp eq i64 %i.dl, 4294967295
   %i.dn = icmp ugt i64 %i.dk, 4294967295
@@ -442,7 +444,7 @@ vector.memcheck206:                               ; preds = %vector.scevcheck205
   br i1 %conflict.rdx217, label %.lr.ph127.split.split.preheader323, label %vector.ph220
 
 vector.ph220:                                     ; preds = %vector.memcheck206
-  %n.vec221 = and i64 %1, 8589934588              ; 3 uses
+  %n.vec221 = and i64 %8, 8589934588              ; 3 uses
   %broadcast.splatinsert222 = insertelement <4 x i32> poison, i32 %i.bx, i64 0
   %broadcast.splat223 = shufflevector <4 x i32> %broadcast.splatinsert222, <4 x i32> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert224 = insertelement <4 x i32> poison, i32 %i.bw, i64 0
@@ -482,7 +484,7 @@ vector.body232:                                   ; preds = %vector.body232, %ve
   br i1 %i.ee, label %middle.block243, label %vector.body232, !llvm.loop !35
 
 middle.block243:                                  ; preds = %vector.body232
-  %cmp.n244 = icmp eq i64 %1, %n.vec221
+  %cmp.n244 = icmp eq i64 %8, %n.vec221
   br i1 %cmp.n244, label %.loopexit, label %.lr.ph127.split.split.preheader323
 
 .lr.ph127.split.split.preheader323:               ; preds = %vector.memcheck206, %vector.scevcheck205, %.lr.ph127.split.split.preheader, %middle.block243
@@ -490,11 +492,11 @@ middle.block243:                                  ; preds = %vector.body232
   br label %.lr.ph127.split.split
 
 .lr.ph127.split.split.us.preheader:               ; preds = %.lr.ph127.split
-  %min.iters.check260 = icmp ult i64 %1, 16
-  br i1 %min.iters.check260, label %.lr.ph127.split.split.us.preheader321, label %vector.scevcheck246
+  %min.iters.check265 = icmp slt i64 %1, 20
+  br i1 %min.iters.check265, label %.lr.ph127.split.split.us.preheader321, label %vector.scevcheck246
 
 vector.scevcheck246:                              ; preds = %.lr.ph127.split.split.us.preheader
-  %i.ef = add i64 %1, -1                          ; 2 uses
+  %i.ef = add nsw i64 %1, -1                      ; 2 uses
   %i.eg = and i64 %i.ef, 4294967295
   %i.eh = icmp eq i64 %i.eg, 4294967295
   %i.ei = icmp ugt i64 %i.ef, 4294967295
@@ -518,7 +520,7 @@ vector.memcheck247:                               ; preds = %vector.scevcheck246
   br i1 %conflict.rdx258, label %.lr.ph127.split.split.us.preheader321, label %vector.ph261
 
 vector.ph261:                                     ; preds = %vector.memcheck247
-  %n.vec262 = and i64 %1, 8589934588              ; 3 uses
+  %n.vec262 = and i64 %8, 8589934588              ; 3 uses
   %broadcast.splatinsert263 = insertelement <4 x i32> poison, i32 %3, i64 0
   %broadcast.splat264 = shufflevector <4 x i32> %broadcast.splatinsert263, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert265 = insertelement <4 x i32> poison, i32 %4, i64 0
@@ -559,7 +561,7 @@ vector.body271:                                   ; preds = %vector.body271, %ve
   br i1 %i.eu, label %middle.block282, label %vector.body271, !llvm.loop !39
 
 middle.block282:                                  ; preds = %vector.body271
-  %cmp.n283 = icmp eq i64 %1, %n.vec262
+  %cmp.n283 = icmp eq i64 %8, %n.vec262
   br i1 %cmp.n283, label %.loopexit, label %.lr.ph127.split.split.us.preheader321
 
 .lr.ph127.split.split.us.preheader321:            ; preds = %vector.memcheck247, %vector.scevcheck246, %.lr.ph127.split.split.us.preheader, %middle.block282
@@ -727,6 +729,9 @@ declare <2 x i32> @llvm.smin.v2i32(<2 x i32>, <2 x i32>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #7
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

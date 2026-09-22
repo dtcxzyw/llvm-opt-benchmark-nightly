@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/SimplifyDepthwiseConv?download=true
 inline.NumInlined: 1646
 inline.NumDeleted: 1077
-loop-unroll.NumCompletelyUnrolled: 4
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_ZL28matchAndReplaceDepthwiseConvPN4mlir9OperationENS_5ValueES2_S2_S2_S2_NS_9AttributeES3_RNS_15PatternRewriterE:bb.a
   br label %_ZN4llvm11SmallVectorIlLj6EED2Ev.exit63
 
@@ -204,7 +204,7 @@ define internal fastcc void @_ZL16getIndicesVectorii(ptr dead_on_unwind noalias 
 bb.a:
   %3 = alloca %"class.llvm::SmallVector.257", align 8 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
-  %i.a = zext nneg i32 %1 to i64                  ; 4 uses
+  %i.a = zext nneg i32 %1 to i64                  ; 6 uses
   %i.b = zext nneg i32 %2 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   store ptr %i.c, ptr %3, align 8, !tbaa !13, !alias.scope !228
@@ -212,7 +212,7 @@ bb.a:
   store i32 0, ptr %i.d, align 8, !tbaa !48, !alias.scope !228
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 12
   store i32 2, ptr %i.e, align 4, !tbaa !14, !alias.scope !228
-  %i.f = sub nsw i64 %i.b, %i.a                   ; 9 uses
+  %i.f = sub nsw i64 %i.b, %i.a                   ; 8 uses
   %i.g = icmp ugt i64 %i.f, 2
   br i1 %i.g, label %bb.b, label %_ZN4llvm15SmallVectorImplIlE7reserveEm.exit.i.i.i
 
@@ -230,48 +230,39 @@ _ZN4llvm15SmallVectorImplIlE7reserveEm.exit.i.i.i: ; preds = %bb.b, %bb.a
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader.i.i.i:           ; preds = %_ZN4llvm15SmallVectorImplIlE7reserveEm.exit.i.i.i
   %i.j = load ptr, ptr %3, align 8, !tbaa !13, !alias.scope !228
-  %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %.pre-phi.i.i.i ; 4 uses
-  %min.iters.check = icmp ult i64 %i.f, 4
-  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i, label %vector.body
+  %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %.pre-phi.i.i.i ; 5 uses
+  store i64 %i.a, ptr %i.k, align 8, !tbaa !47
+  %.not = icmp eq i64 %i.f, 1
+  br i1 %.not, label %_ZN4llvm9to_vectorILj2ENS_10iota_rangeIlEEEENS_11SmallVectorINSt12remove_constINSt16remove_referenceIDTdecl9adl_beginclsr3stdE7declvalIRT0_EEEEE4typeEE4typeEXT_EEEOS6_.exit, label %vector.body
 
 vector.body:                                      ; preds = %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i.i
-  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.a, i64 0
-  %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %induction = add nuw nsw <2 x i64> %broadcast.splat, <i64 0, i64 1>
-  %n.vec = and i64 %i.f, 9223372036854775804      ; 3 uses
-  %4 = or disjoint i64 %n.vec, %i.a
-  %5 = shl i64 %n.vec, 3
-  %6 = getelementptr i8, ptr %i.k, i64 %5
-  %7 = and i64 %i.f, 3
-  %step.add = add nuw nsw <2 x i64> %broadcast.splat, <i64 2, i64 3>
-  %i.l = getelementptr i8, ptr %i.k, i64 16
-  store <2 x i64> %induction, ptr %i.k, align 8, !tbaa !47
-  store <2 x i64> %step.add, ptr %i.l, align 8, !tbaa !47
-  %cmp.n = icmp eq i64 %i.f, %n.vec
-  br i1 %cmp.n, label %_ZN4llvm9to_vectorILj2ENS_10iota_rangeIlEEEENS_11SmallVectorINSt12remove_constINSt16remove_referenceIDTdecl9adl_beginclsr3stdE7declvalIRT0_EEEEE4typeEE4typeEXT_EEEOS6_.exit, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i
+  %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  %4 = add nuw nsw i64 %i.a, 1
+  store i64 %4, ptr %i.l, align 8, !tbaa !47
+  %5 = icmp sgt i64 %i.f, 2
+  br i1 %5, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i, label %_ZN4llvm9to_vectorILj2ENS_10iota_rangeIlEEEENS_11SmallVectorINSt12remove_constINSt16remove_referenceIDTdecl9adl_beginclsr3stdE7declvalIRT0_EEEEE4typeEE4typeEXT_EEEOS6_.exit
 
-.lr.ph.i.i.i.i.i.i.i.i.i.i.i:                     ; preds = %vector.body, %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i.i
-  %.010.i.i.i.i.i.i.i.i.i.i.i.ph = phi i64 [ %i.f, %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i.i ], [ %7, %vector.body ] ; 2 uses
-  %.049.i.i.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %i.k, %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i.i ], [ %6, %vector.body ] ; 3 uses
-  %.sroa.05.08.i.i.i.i.i.i.i.i.i.i.i.ph = phi i64 [ %i.a, %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i.i ], [ %4, %vector.body ] ; 3 uses
-  store i64 %.sroa.05.08.i.i.i.i.i.i.i.i.i.i.i.ph, ptr %.049.i.i.i.i.i.i.i.i.i.i.i.ph, align 8, !tbaa !47
-  %8 = icmp samesign ugt i64 %.010.i.i.i.i.i.i.i.i.i.i.i.ph, 1
-  br i1 %8, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.1, label %_ZN4llvm9to_vectorILj2ENS_10iota_rangeIlEEEENS_11SmallVectorINSt12remove_constINSt16remove_referenceIDTdecl9adl_beginclsr3stdE7declvalIRT0_EEEEE4typeEE4typeEXT_EEEOS6_.exit
+.lr.ph.i.i.i.i.i.i.i.i.i.i.i:                     ; preds = %vector.body
+  %6 = getelementptr inbounds nuw i8, ptr %i.k, i64 16
+  %7 = add nuw nsw i64 %i.a, 2
+  store i64 %7, ptr %6, align 8, !tbaa !47
+  %.not3 = icmp eq i64 %i.f, 3
+  br i1 %.not3, label %_ZN4llvm9to_vectorILj2ENS_10iota_rangeIlEEEENS_11SmallVectorINSt12remove_constINSt16remove_referenceIDTdecl9adl_beginclsr3stdE7declvalIRT0_EEEEE4typeEE4typeEXT_EEEOS6_.exit, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.1
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.i.1:                   ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i
-  %i.m = getelementptr inbounds nuw i8, ptr %.049.i.i.i.i.i.i.i.i.i.i.i.ph, i64 8
-  %i.n = add i64 %.sroa.05.08.i.i.i.i.i.i.i.i.i.i.i.ph, 1
+  %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 24
+  %i.n = add nuw nsw i64 %i.a, 3
   store i64 %i.n, ptr %i.m, align 8, !tbaa !47
-  %9 = icmp eq i64 %.010.i.i.i.i.i.i.i.i.i.i.i.ph, 3
-  br i1 %9, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.2, label %_ZN4llvm9to_vectorILj2ENS_10iota_rangeIlEEEENS_11SmallVectorINSt12remove_constINSt16remove_referenceIDTdecl9adl_beginclsr3stdE7declvalIRT0_EEEEE4typeEE4typeEXT_EEEOS6_.exit
+  %8 = icmp sgt i64 %i.f, 4
+  br i1 %8, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.2, label %_ZN4llvm9to_vectorILj2ENS_10iota_rangeIlEEEENS_11SmallVectorINSt12remove_constINSt16remove_referenceIDTdecl9adl_beginclsr3stdE7declvalIRT0_EEEEE4typeEE4typeEXT_EEEOS6_.exit
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.i.2:                   ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.1
-  %i.o = getelementptr inbounds nuw i8, ptr %.049.i.i.i.i.i.i.i.i.i.i.i.ph, i64 16
-  %10 = add i64 %.sroa.05.08.i.i.i.i.i.i.i.i.i.i.i.ph, 2
-  store i64 %10, ptr %i.o, align 8, !tbaa !47
+  %i.o = getelementptr inbounds nuw i8, ptr %i.k, i64 32
+  %9 = or disjoint i64 %i.a, 4
+  store i64 %9, ptr %i.o, align 8, !tbaa !47
   br label %_ZN4llvm9to_vectorILj2ENS_10iota_rangeIlEEEENS_11SmallVectorINSt12remove_constINSt16remove_referenceIDTdecl9adl_beginclsr3stdE7declvalIRT0_EEEEE4typeEE4typeEXT_EEEOS6_.exit
 
-_ZN4llvm9to_vectorILj2ENS_10iota_rangeIlEEEENS_11SmallVectorINSt12remove_constINSt16remove_referenceIDTdecl9adl_beginclsr3stdE7declvalIRT0_EEEEE4typeEE4typeEXT_EEEOS6_.exit: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.1, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.2, %vector.body, %_ZN4llvm15SmallVectorImplIlE7reserveEm.exit.i.i.i
+_ZN4llvm9to_vectorILj2ENS_10iota_rangeIlEEEENS_11SmallVectorINSt12remove_constINSt16remove_referenceIDTdecl9adl_beginclsr3stdE7declvalIRT0_EEEEE4typeEE4typeEXT_EEEOS6_.exit: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i.i, %vector.body, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.1, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.2, %_ZN4llvm15SmallVectorImplIlE7reserveEm.exit.i.i.i
   %i.p = trunc nsw i64 %i.f to i32
   %i.q = add i32 %i.h, %i.p                       ; 2 uses
   store i32 %i.q, ptr %i.d, align 8, !tbaa !48, !alias.scope !228

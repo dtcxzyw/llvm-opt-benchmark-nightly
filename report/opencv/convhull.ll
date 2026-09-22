@@ -205,37 +205,36 @@ middle.block708:                                  ; preds = %vector.body701
   br label %._crit_edge504
 
 ._crit_edge504:                                   ; preds = %._crit_edge504.loopexit, %.preheader469
-  %.3284.lcssa = phi i32 [ %.2283.lcssa, %.preheader469 ], [ %i.ld, %._crit_edge504.loopexit ] ; 20 uses
+  %.3284.lcssa = phi i32 [ %.2283.lcssa, %.preheader469 ], [ %i.ld, %._crit_edge504.loopexit ] ; 19 uses
   %i.le = icmp eq i32 %.3284.lcssa, 0             ; 2 uses
   %or.cond522.not = select i1 %i.ai, i1 true, i1 %i.le
   br i1 %or.cond522.not, label %.loopexit468, label %.lr.ph507.preheader
 
 .lr.ph507.preheader:                              ; preds = %._crit_edge504
   %i.lf = zext nneg i32 %i.o to i64               ; 2 uses
+  %17 = zext i32 %.3284.lcssa to i64              ; 2 uses
+  %18 = zext nneg i32 %.3284.lcssa to i64
   br label %.lr.ph507
 
 .lr.ph507:                                        ; preds = %.lr.ph507.preheader, %.loopexit
-  %.7506 = phi i32 [ %19, %.loopexit ], [ 0, %.lr.ph507.preheader ] ; 4 uses
-  %i.lg = icmp eq i32 %.7506, 0
-  %17 = select i1 %i.lg, i32 %.3284.lcssa, i32 %.7506
-  %18 = zext nneg i32 %17 to i64
-  %i.lh = getelementptr [4 x i8], ptr %i.bg, i64 %18
+  %indvars.iv577 = phi i64 [ 0, %.lr.ph507.preheader ], [ %indvars.iv.next578, %.loopexit ] ; 4 uses
+  %i.lg = icmp eq i64 %indvars.iv577, 0
+  %19 = select i1 %i.lg, i64 %18, i64 %indvars.iv577
+  %i.lh = getelementptr [4 x i8], ptr %i.bg, i64 %19
   %i.li = getelementptr i8, ptr %i.lh, i64 -4
   %i.lj = load i32, ptr %i.li, align 4, !tbaa !41
   %i.lk = sext i32 %i.lj to i64
   %i.ll = getelementptr inbounds [8 x i8], ptr %i.bj, i64 %i.lk
   %i.lm = load ptr, ptr %i.ll, align 8, !tbaa !31 ; 4 uses
-  %19 = add nuw i32 %.7506, 1                     ; 4 uses
-  %i.ln = icmp eq i32 %19, %.3284.lcssa
-  %20 = select i1 %i.ln, i32 0, i32 %19
-  %21 = sext i32 %20 to i64
-  %i.lo = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %21
+  %indvars.iv.next578 = add nuw nsw i64 %indvars.iv577, 1 ; 4 uses
+  %i.ln = icmp eq i64 %indvars.iv.next578, %17
+  %20 = select i1 %i.ln, i64 0, i64 %indvars.iv.next578
+  %i.lo = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %20
   %i.lp = load i32, ptr %i.lo, align 4, !tbaa !41
   %i.lq = sext i32 %i.lp to i64
   %i.lr = getelementptr inbounds [8 x i8], ptr %i.bj, i64 %i.lq
   %i.ls = load ptr, ptr %i.lr, align 8, !tbaa !31 ; 4 uses
-  %22 = sext i32 %.7506 to i64
-  %i.lt = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %22 ; 2 uses
+  %i.lt = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %indvars.iv577 ; 2 uses
   %i.lu = load i32, ptr %i.lt, align 4, !tbaa !41
   %i.lv = sext i32 %i.lu to i64                   ; 2 uses
   %i.lw = getelementptr inbounds [8 x i8], ptr %i.bj, i64 %i.lv
@@ -294,7 +293,7 @@ bb.br:                                            ; preds = %bb.bq, %bb.bp
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.lr.ph639, %bb.bo, %.preheader466, %bb.br, %.lr.ph507, %bb.bn
-  %exitcond577.not = icmp eq i32 %19, %.3284.lcssa
+  %exitcond577.not = icmp eq i64 %indvars.iv.next578, %17
   br i1 %exitcond577.not, label %.loopexit468, label %.lr.ph507, !llvm.loop !76
 
 .loopexit468:                                     ; preds = %.loopexit, %._crit_edge504

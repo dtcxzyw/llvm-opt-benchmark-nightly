@@ -205,7 +205,7 @@ vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.p
   %i.ck = load i8, ptr %i.cj, align 1, !tbaa !10
   %i.cl = xor i8 %i.ck, %i.ci
   store i8 %i.cl, ptr %i.cj, align 1, !tbaa !10
-  %indvars.iv.next116.prol = add nuw i64 %indvars.iv115.prol, 1 ; 2 uses
+  %indvars.iv.next116.prol = add nuw nsw i64 %indvars.iv115.prol, 1 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol, !llvm.loop !37
@@ -224,28 +224,28 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.cr = load i8, ptr %i.cq, align 1, !tbaa !10
   %i.cs = xor i8 %i.cr, %i.cp
   store i8 %i.cs, ptr %i.cq, align 1, !tbaa !10
-  %indvars.iv.next116 = add nuw i64 %indvars.iv115, 1 ; 2 uses
+  %indvars.iv.next116 = add nuw nsw i64 %indvars.iv115, 1 ; 2 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %.086.lcssa, i64 %indvars.iv.next116
   %i.cu = load i8, ptr %i.ct, align 1, !tbaa !10
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cb, i64 %indvars.iv.next116 ; 2 uses
   %i.cw = load i8, ptr %i.cv, align 1, !tbaa !10
   %i.cx = xor i8 %i.cw, %i.cu
   store i8 %i.cx, ptr %i.cv, align 1, !tbaa !10
-  %indvars.iv.next116.1 = add nuw i64 %indvars.iv115, 2 ; 2 uses
+  %indvars.iv.next116.1 = add nuw nsw i64 %indvars.iv115, 2 ; 2 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %.086.lcssa, i64 %indvars.iv.next116.1
   %i.cz = load i8, ptr %i.cy, align 1, !tbaa !10
   %i.da = getelementptr inbounds nuw i8, ptr %i.cb, i64 %indvars.iv.next116.1 ; 2 uses
   %i.db = load i8, ptr %i.da, align 1, !tbaa !10
   %i.dc = xor i8 %i.db, %i.cz
   store i8 %i.dc, ptr %i.da, align 1, !tbaa !10
-  %indvars.iv.next116.2 = add nuw i64 %indvars.iv115, 3 ; 2 uses
+  %indvars.iv.next116.2 = add nuw nsw i64 %indvars.iv115, 3 ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %.086.lcssa, i64 %indvars.iv.next116.2
   %i.de = load i8, ptr %i.dd, align 1, !tbaa !10
   %i.df = getelementptr inbounds nuw i8, ptr %i.cb, i64 %indvars.iv.next116.2 ; 2 uses
   %i.dg = load i8, ptr %i.df, align 1, !tbaa !10
   %i.dh = xor i8 %i.dg, %i.de
   store i8 %i.dh, ptr %i.df, align 1, !tbaa !10
-  %indvars.iv.next116.3 = add nuw i64 %indvars.iv115, 4 ; 2 uses
+  %indvars.iv.next116.3 = add nuw nsw i64 %indvars.iv115, 4 ; 2 uses
   %exitcond118.not.3 = icmp eq i64 %indvars.iv.next116.3, %.084.lcssa
   br i1 %exitcond118.not.3, label %iter.check164, label %vec.epilog.scalar.ph, !llvm.loop !38
 
@@ -300,7 +300,7 @@ vec.epilog.scalar.ph165.prol:                     ; preds = %vec.epilog.scalar.p
   %i.dt = xor i8 %i.ds, %i.dq
   %i.du = getelementptr inbounds nuw i8, ptr %.085.lcssa, i64 %indvars.iv119.prol
   store i8 %i.dt, ptr %i.du, align 1, !tbaa !10
-  %indvars.iv.next120.prol = add nuw i64 %indvars.iv119.prol, 1 ; 2 uses
+  %indvars.iv.next120.prol = add nuw nsw i64 %indvars.iv119.prol, 1 ; 2 uses
   %prol.iter183.next = add i64 %prol.iter183, 1   ; 2 uses
   %prol.iter183.cmp.not = icmp eq i64 %prol.iter183.next, %xtraiter181
   br i1 %prol.iter183.cmp.not, label %vec.epilog.scalar.ph165.prol.loopexit, label %vec.epilog.scalar.ph165.prol, !llvm.loop !40
@@ -320,7 +320,7 @@ vec.epilog.scalar.ph165:                          ; preds = %vec.epilog.scalar.p
   %i.eb = xor i8 %i.ea, %i.dy
   %i.ec = getelementptr inbounds nuw i8, ptr %.085.lcssa, i64 %indvars.iv119
   store i8 %i.eb, ptr %i.ec, align 1, !tbaa !10
-  %indvars.iv.next120 = add nuw i64 %indvars.iv119, 1 ; 3 uses
+  %indvars.iv.next120 = add nuw nsw i64 %indvars.iv119, 1 ; 3 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv.next120
   %i.ee = load i8, ptr %i.ed, align 1, !tbaa !10
   %i.ef = getelementptr inbounds nuw i8, ptr %.086.lcssa, i64 %indvars.iv.next120
@@ -328,7 +328,7 @@ vec.epilog.scalar.ph165:                          ; preds = %vec.epilog.scalar.p
   %i.eh = xor i8 %i.eg, %i.ee
   %i.ei = getelementptr inbounds nuw i8, ptr %.085.lcssa, i64 %indvars.iv.next120
   store i8 %i.eh, ptr %i.ei, align 1, !tbaa !10
-  %indvars.iv.next120.1 = add nuw i64 %indvars.iv119, 2 ; 3 uses
+  %indvars.iv.next120.1 = add nuw nsw i64 %indvars.iv119, 2 ; 3 uses
   %i.ej = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv.next120.1
   %i.ek = load i8, ptr %i.ej, align 1, !tbaa !10
   %i.el = getelementptr inbounds nuw i8, ptr %.086.lcssa, i64 %indvars.iv.next120.1
@@ -336,7 +336,7 @@ vec.epilog.scalar.ph165:                          ; preds = %vec.epilog.scalar.p
   %i.en = xor i8 %i.em, %i.ek
   %i.eo = getelementptr inbounds nuw i8, ptr %.085.lcssa, i64 %indvars.iv.next120.1
   store i8 %i.en, ptr %i.eo, align 1, !tbaa !10
-  %indvars.iv.next120.2 = add nuw i64 %indvars.iv119, 3 ; 3 uses
+  %indvars.iv.next120.2 = add nuw nsw i64 %indvars.iv119, 3 ; 3 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv.next120.2
   %i.eq = load i8, ptr %i.ep, align 1, !tbaa !10
   %i.er = getelementptr inbounds nuw i8, ptr %.086.lcssa, i64 %indvars.iv.next120.2
@@ -344,7 +344,7 @@ vec.epilog.scalar.ph165:                          ; preds = %vec.epilog.scalar.p
   %i.et = xor i8 %i.es, %i.eq
   %i.eu = getelementptr inbounds nuw i8, ptr %.085.lcssa, i64 %indvars.iv.next120.2
   store i8 %i.et, ptr %i.eu, align 1, !tbaa !10
-  %indvars.iv.next120.3 = add nuw i64 %indvars.iv119, 4 ; 2 uses
+  %indvars.iv.next120.3 = add nuw nsw i64 %indvars.iv119, 4 ; 2 uses
   %exitcond122.not.3 = icmp eq i64 %indvars.iv.next120.3, %.084.lcssa
   br i1 %exitcond122.not.3, label %._crit_edge109, label %vec.epilog.scalar.ph165, !llvm.loop !41
 
@@ -633,7 +633,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.co = load i8, ptr %i.cn, align 1, !tbaa !10
   %i.cp = xor i8 %i.co, %i.cl
   store i8 %i.cp, ptr %i.cn, align 1, !tbaa !10
-  %indvars.iv.next102 = add nuw i64 %indvars.iv101, 1 ; 4 uses
+  %indvars.iv.next102 = add nuw nsw i64 %indvars.iv101, 1 ; 4 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv.next102
   %i.cr = load i8, ptr %i.cq, align 1, !tbaa !10
   %i.cs = getelementptr inbounds nuw i8, ptr %.075.lcssa, i64 %indvars.iv.next102
@@ -645,7 +645,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.cx = load i8, ptr %i.cw, align 1, !tbaa !10
   %i.cy = xor i8 %i.cx, %i.cu
   store i8 %i.cy, ptr %i.cw, align 1, !tbaa !10
-  %indvars.iv.next102.1 = add nuw i64 %indvars.iv101, 2 ; 2 uses
+  %indvars.iv.next102.1 = add nuw nsw i64 %indvars.iv101, 2 ; 2 uses
   %exitcond104.not.1 = icmp eq i64 %indvars.iv.next102.1, %.073.lcssa
   br i1 %exitcond104.not.1, label %.loopexit, label %vec.epilog.scalar.ph, !llvm.loop !52
 

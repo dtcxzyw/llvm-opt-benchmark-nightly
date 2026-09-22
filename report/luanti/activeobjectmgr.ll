@@ -205,7 +205,7 @@ _ZSt4copyIPKtPtET0_T_S4_S3_.exit:                 ; preds = %bb.c, %bb.d, %bb.b
   %i.by = phi ptr [ %i.x, %bb.d ], [ %i.be, %bb.c ], [ %i.x, %bb.b ] ; 5 uses
   %i.bz = load i64, ptr %1, align 8, !tbaa !132   ; 2 uses
   %i.ca = xor i64 %i.h, -1
-  %i.cb = add i64 %i.bz, %i.ca                    ; 35 uses
+  %i.cb = add i64 %i.bz, %i.ca                    ; 26 uses
   %i.cc = mul i64 %i.cb, 3
   %i.cd = mul i64 %i.cb, 6
   %.inv.i.i = icmp sgt i64 %i.cc, -1
@@ -289,11 +289,12 @@ vec.epilog.middle.block245:                       ; preds = %vec.epilog.vector.b
 
 iter.check263:                                    ; preds = %.split.i64, %vec.epilog.middle.block245, %middle.block228
   %i.ct = getelementptr inbounds nuw [2 x i8], ptr %i.cf, i64 %i.cb ; 3 uses
-  %min.iters.check249 = icmp ult i64 %i.cb, 4
-  br i1 %min.iters.check249, label %vec.epilog.scalar.ph264.preheader, label %vector.scevcheck248
+  %smax249 = tail call i64 @llvm.smax.i64(i64 %i.cb, i64 1) ; 11 uses
+  %min.iters.check250 = icmp slt i64 %i.cb, 4
+  br i1 %min.iters.check250, label %vec.epilog.scalar.ph264.preheader, label %vector.scevcheck248
 
 vector.scevcheck248:                              ; preds = %iter.check263
-  %i.cu = add i64 %i.cb, -1                       ; 2 uses
+  %i.cu = add nsw i64 %i.cb, -1                   ; 2 uses
   %i.cv = and i64 %i.cu, 65535
   %i.cw = icmp eq i64 %i.cv, 65535
   %i.cx = icmp ugt i64 %i.cu, 65535
@@ -301,12 +302,12 @@ vector.scevcheck248:                              ; preds = %iter.check263
   br i1 %i.cy, label %vec.epilog.scalar.ph264.preheader, label %vector.main.loop.iter.check250
 
 vector.main.loop.iter.check250:                   ; preds = %vector.scevcheck248
-  %min.iters.check251 = icmp ult i64 %i.cb, 16
-  br i1 %min.iters.check251, label %vec.epilog.ph267, label %vector.ph252
+  %min.iters.check252 = icmp slt i64 %i.cb, 16
+  br i1 %min.iters.check252, label %vec.epilog.ph267, label %vector.ph252
 
 vector.ph252:                                     ; preds = %vector.main.loop.iter.check250
-  %i.cz = and i64 %i.cb, 12
-  %n.vec253 = and i64 %i.cb, 131056               ; 4 uses
+  %i.cz = and i64 %smax249, 12
+  %n.vec253 = and i64 %smax249, 131056            ; 4 uses
   br label %vector.body254
 
 vector.body254:                                   ; preds = %vector.body254, %vector.ph252
@@ -323,7 +324,7 @@ vector.body254:                                   ; preds = %vector.body254, %ve
   br i1 %i.dc, label %middle.block260, label %vector.body254, !llvm.loop !326
 
 middle.block260:                                  ; preds = %vector.body254
-  %cmp.n261 = icmp eq i64 %i.cb, %n.vec253
+  %cmp.n261 = icmp eq i64 %smax249, %n.vec253
   br i1 %cmp.n261, label %iter.check295, label %vec.epilog.iter.check265
 
 vec.epilog.iter.check265:                         ; preds = %middle.block260
@@ -332,7 +333,7 @@ vec.epilog.iter.check265:                         ; preds = %middle.block260
 
 vec.epilog.ph267:                                 ; preds = %vector.main.loop.iter.check250, %vec.epilog.iter.check265
   %vec.epilog.resume.val262 = phi i64 [ %n.vec253, %vec.epilog.iter.check265 ], [ 0, %vector.main.loop.iter.check250 ] ; 2 uses
-  %n.vec268 = and i64 %i.cb, 131068               ; 3 uses
+  %n.vec268 = and i64 %smax249, 131068            ; 3 uses
   %i.dd = trunc i64 %vec.epilog.resume.val262 to i16
   %broadcast.splatinsert269 = insertelement <4 x i16> poison, i16 %i.dd, i64 0
   %broadcast.splat270 = shufflevector <4 x i16> %broadcast.splatinsert269, <4 x i16> poison, <4 x i32> zeroinitializer
@@ -350,7 +351,7 @@ vec.epilog.vector.body272:                        ; preds = %vec.epilog.vector.b
   br i1 %i.df, label %vec.epilog.middle.block277, label %vec.epilog.vector.body272, !llvm.loop !327
 
 vec.epilog.middle.block277:                       ; preds = %vec.epilog.vector.body272
-  %cmp.n278 = icmp eq i64 %i.cb, %n.vec268
+  %cmp.n278 = icmp eq i64 %smax249, %n.vec268
   br i1 %cmp.n278, label %iter.check295, label %vec.epilog.scalar.ph264.preheader
 
 vec.epilog.scalar.ph264.preheader:                ; preds = %vector.scevcheck248, %iter.check263, %vec.epilog.iter.check265, %vec.epilog.middle.block277
@@ -370,24 +371,24 @@ vec.epilog.scalar.ph264:                          ; preds = %vec.epilog.scalar.p
 iter.check295:                                    ; preds = %vec.epilog.scalar.ph264, %vec.epilog.middle.block277, %middle.block260
   %.idx.i71 = shl nuw nsw i64 %i.cb, 2
   %i.dk = getelementptr inbounds nuw i8, ptr %i.cf, i64 %.idx.i71 ; 3 uses
-  %min.iters.check281 = icmp ult i64 %i.cb, 4
-  br i1 %min.iters.check281, label %vec.epilog.scalar.ph296.preheader, label %vector.scevcheck280
+  %min.iters.check282 = icmp slt i64 %i.cb, 4
+  br i1 %min.iters.check282, label %vec.epilog.scalar.ph296.preheader, label %vector.scevcheck280
 
 vector.scevcheck280:                              ; preds = %iter.check295
-  %4 = add i64 %i.cb, -1                          ; 2 uses
+  %4 = sub nsw i64 0, %smax249
   %i.dl = and i64 %4, 65535
-  %i.dm = icmp eq i64 %i.dl, 65535
-  %5 = icmp ugt i64 %4, 65535
+  %i.dm = icmp eq i64 %i.dl, 0
+  %5 = icmp sgt i64 %i.cb, 65536
   %i.dn = or i1 %i.dm, %5
   br i1 %i.dn, label %vec.epilog.scalar.ph296.preheader, label %vector.main.loop.iter.check282
 
 vector.main.loop.iter.check282:                   ; preds = %vector.scevcheck280
-  %min.iters.check283 = icmp ult i64 %i.cb, 16
-  br i1 %min.iters.check283, label %vec.epilog.ph299, label %vector.ph284
+  %min.iters.check284 = icmp slt i64 %i.cb, 16
+  br i1 %min.iters.check284, label %vec.epilog.ph299, label %vector.ph284
 
 vector.ph284:                                     ; preds = %vector.main.loop.iter.check282
-  %i.do = and i64 %i.cb, 12
-  %n.vec285 = and i64 %i.cb, 131056               ; 4 uses
+  %i.do = and i64 %smax249, 12
+  %n.vec285 = and i64 %smax249, 9223372036854775792 ; 4 uses
   br label %vector.body286
 
 vector.body286:                                   ; preds = %vector.body286, %vector.ph284
@@ -404,7 +405,7 @@ vector.body286:                                   ; preds = %vector.body286, %ve
   br i1 %i.dr, label %middle.block292, label %vector.body286, !llvm.loop !329
 
 middle.block292:                                  ; preds = %vector.body286
-  %cmp.n293 = icmp eq i64 %i.cb, %n.vec285
+  %cmp.n293 = icmp eq i64 %smax249, %n.vec285
   br i1 %cmp.n293, label %_ZN8k_d_tree13SortedIndicesILh3EEC2Em.exit74, label %vec.epilog.iter.check297
 
 vec.epilog.iter.check297:                         ; preds = %middle.block292
@@ -413,7 +414,7 @@ vec.epilog.iter.check297:                         ; preds = %middle.block292
 
 vec.epilog.ph299:                                 ; preds = %vector.main.loop.iter.check282, %vec.epilog.iter.check297
   %vec.epilog.resume.val294 = phi i64 [ %n.vec285, %vec.epilog.iter.check297 ], [ 0, %vector.main.loop.iter.check282 ] ; 2 uses
-  %n.vec300 = and i64 %i.cb, 131068               ; 3 uses
+  %n.vec300 = and i64 %smax249, 9223372036854775804 ; 3 uses
   %i.ds = trunc i64 %vec.epilog.resume.val294 to i16
   %broadcast.splatinsert301 = insertelement <4 x i16> poison, i16 %i.ds, i64 0
   %broadcast.splat302 = shufflevector <4 x i16> %broadcast.splatinsert301, <4 x i16> poison, <4 x i32> zeroinitializer
@@ -431,7 +432,7 @@ vec.epilog.vector.body304:                        ; preds = %vec.epilog.vector.b
   br i1 %i.du, label %vec.epilog.middle.block309, label %vec.epilog.vector.body304, !llvm.loop !330
 
 vec.epilog.middle.block309:                       ; preds = %vec.epilog.vector.body304
-  %cmp.n310 = icmp eq i64 %i.cb, %n.vec300
+  %cmp.n310 = icmp eq i64 %smax249, %n.vec300
   br i1 %cmp.n310, label %_ZN8k_d_tree13SortedIndicesILh3EEC2Em.exit74, label %vec.epilog.scalar.ph296.preheader
 
 vec.epilog.scalar.ph296.preheader:                ; preds = %vector.scevcheck280, %iter.check295, %vec.epilog.iter.check297, %vec.epilog.middle.block309
@@ -834,11 +835,12 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 iter.check62:                                     ; preds = %.split.i12, %vec.epilog.middle.block, %middle.block
   %i.at = getelementptr inbounds nuw [2 x i8], ptr %i.ag, i64 %.pre ; 3 uses
-  %min.iters.check48 = icmp ult i64 %1, 4
-  br i1 %min.iters.check48, label %vec.epilog.scalar.ph63.preheader, label %vector.scevcheck47
+  %smax48 = tail call i64 @llvm.smax.i64(i64 %1, i64 1) ; 11 uses
+  %min.iters.check49 = icmp slt i64 %1, 4
+  br i1 %min.iters.check49, label %vec.epilog.scalar.ph63.preheader, label %vector.scevcheck47
 
 vector.scevcheck47:                               ; preds = %iter.check62
-  %i.au = add i64 %1, -1                          ; 2 uses
+  %i.au = add nsw i64 %1, -1                      ; 2 uses
   %i.av = and i64 %i.au, 65535
   %i.aw = icmp eq i64 %i.av, 65535
   %i.ax = icmp ugt i64 %i.au, 65535
@@ -846,12 +848,12 @@ vector.scevcheck47:                               ; preds = %iter.check62
   br i1 %i.ay, label %vec.epilog.scalar.ph63.preheader, label %vector.main.loop.iter.check49
 
 vector.main.loop.iter.check49:                    ; preds = %vector.scevcheck47
-  %min.iters.check50 = icmp ult i64 %1, 16
-  br i1 %min.iters.check50, label %vec.epilog.ph66, label %vector.ph51
+  %min.iters.check51 = icmp slt i64 %1, 16
+  br i1 %min.iters.check51, label %vec.epilog.ph66, label %vector.ph51
 
 vector.ph51:                                      ; preds = %vector.main.loop.iter.check49
-  %i.az = and i64 %1, 12
-  %n.vec52 = and i64 %1, 131056                   ; 4 uses
+  %i.az = and i64 %smax48, 12
+  %n.vec52 = and i64 %smax48, 131056              ; 4 uses
   br label %vector.body53
 
 vector.body53:                                    ; preds = %vector.body53, %vector.ph51
@@ -868,7 +870,7 @@ vector.body53:                                    ; preds = %vector.body53, %vec
   br i1 %i.bc, label %middle.block59, label %vector.body53, !llvm.loop !351
 
 middle.block59:                                   ; preds = %vector.body53
-  %cmp.n60 = icmp eq i64 %1, %n.vec52
+  %cmp.n60 = icmp eq i64 %smax48, %n.vec52
   br i1 %cmp.n60, label %iter.check94, label %vec.epilog.iter.check64
 
 vec.epilog.iter.check64:                          ; preds = %middle.block59
@@ -877,7 +879,7 @@ vec.epilog.iter.check64:                          ; preds = %middle.block59
 
 vec.epilog.ph66:                                  ; preds = %vector.main.loop.iter.check49, %vec.epilog.iter.check64
   %vec.epilog.resume.val61 = phi i64 [ %n.vec52, %vec.epilog.iter.check64 ], [ 0, %vector.main.loop.iter.check49 ] ; 2 uses
-  %n.vec67 = and i64 %1, 131068                   ; 3 uses
+  %n.vec67 = and i64 %smax48, 131068              ; 3 uses
   %i.bd = trunc i64 %vec.epilog.resume.val61 to i16
   %broadcast.splatinsert68 = insertelement <4 x i16> poison, i16 %i.bd, i64 0
   %broadcast.splat69 = shufflevector <4 x i16> %broadcast.splatinsert68, <4 x i16> poison, <4 x i32> zeroinitializer
@@ -895,7 +897,7 @@ vec.epilog.vector.body71:                         ; preds = %vec.epilog.vector.b
   br i1 %i.bf, label %vec.epilog.middle.block76, label %vec.epilog.vector.body71, !llvm.loop !352
 
 vec.epilog.middle.block76:                        ; preds = %vec.epilog.vector.body71
-  %cmp.n77 = icmp eq i64 %1, %n.vec67
+  %cmp.n77 = icmp eq i64 %smax48, %n.vec67
   br i1 %cmp.n77, label %iter.check94, label %vec.epilog.scalar.ph63.preheader
 
 vec.epilog.scalar.ph63.preheader:                 ; preds = %vector.scevcheck47, %iter.check62, %vec.epilog.iter.check64, %vec.epilog.middle.block76
@@ -915,24 +917,24 @@ vec.epilog.scalar.ph63:                           ; preds = %vec.epilog.scalar.p
 iter.check94:                                     ; preds = %vec.epilog.scalar.ph63, %vec.epilog.middle.block76, %middle.block59
   %.idx.i13 = shl i64 %.pre, 2
   %i.bk = getelementptr inbounds nuw i8, ptr %i.ag, i64 %.idx.i13 ; 3 uses
-  %min.iters.check80 = icmp ult i64 %1, 4
-  br i1 %min.iters.check80, label %vec.epilog.scalar.ph95.preheader, label %vector.scevcheck79
+  %min.iters.check81 = icmp slt i64 %1, 4
+  br i1 %min.iters.check81, label %vec.epilog.scalar.ph95.preheader, label %vector.scevcheck79
 
 vector.scevcheck79:                               ; preds = %iter.check94
-  %3 = add i64 %1, -1                             ; 2 uses
+  %3 = sub nsw i64 0, %smax48
   %i.bl = and i64 %3, 65535
-  %i.bm = icmp eq i64 %i.bl, 65535
-  %4 = icmp ugt i64 %3, 65535
+  %i.bm = icmp eq i64 %i.bl, 0
+  %4 = icmp sgt i64 %1, 65536
   %i.bn = or i1 %i.bm, %4
   br i1 %i.bn, label %vec.epilog.scalar.ph95.preheader, label %vector.main.loop.iter.check81
 
 vector.main.loop.iter.check81:                    ; preds = %vector.scevcheck79
-  %min.iters.check82 = icmp ult i64 %1, 16
-  br i1 %min.iters.check82, label %vec.epilog.ph98, label %vector.ph83
+  %min.iters.check83 = icmp slt i64 %1, 16
+  br i1 %min.iters.check83, label %vec.epilog.ph98, label %vector.ph83
 
 vector.ph83:                                      ; preds = %vector.main.loop.iter.check81
-  %i.bo = and i64 %1, 12
-  %n.vec84 = and i64 %1, 131056                   ; 4 uses
+  %i.bo = and i64 %smax48, 12
+  %n.vec84 = and i64 %smax48, 9223372036854775792 ; 4 uses
   br label %vector.body85
 
 vector.body85:                                    ; preds = %vector.body85, %vector.ph83
@@ -949,7 +951,7 @@ vector.body85:                                    ; preds = %vector.body85, %vec
   br i1 %i.br, label %middle.block91, label %vector.body85, !llvm.loop !354
 
 middle.block91:                                   ; preds = %vector.body85
-  %cmp.n92 = icmp eq i64 %1, %n.vec84
+  %cmp.n92 = icmp eq i64 %smax48, %n.vec84
   br i1 %cmp.n92, label %_ZN8k_d_tree13SortedIndicesILh3EEC2Em.exit, label %vec.epilog.iter.check96
 
 vec.epilog.iter.check96:                          ; preds = %middle.block91
@@ -958,7 +960,7 @@ vec.epilog.iter.check96:                          ; preds = %middle.block91
 
 vec.epilog.ph98:                                  ; preds = %vector.main.loop.iter.check81, %vec.epilog.iter.check96
   %vec.epilog.resume.val93 = phi i64 [ %n.vec84, %vec.epilog.iter.check96 ], [ 0, %vector.main.loop.iter.check81 ] ; 2 uses
-  %n.vec99 = and i64 %1, 131068                   ; 3 uses
+  %n.vec99 = and i64 %smax48, 9223372036854775804 ; 3 uses
   %i.bs = trunc i64 %vec.epilog.resume.val93 to i16
   %broadcast.splatinsert100 = insertelement <4 x i16> poison, i16 %i.bs, i64 0
   %broadcast.splat101 = shufflevector <4 x i16> %broadcast.splatinsert100, <4 x i16> poison, <4 x i32> zeroinitializer
@@ -976,7 +978,7 @@ vec.epilog.vector.body103:                        ; preds = %vec.epilog.vector.b
   br i1 %i.bu, label %vec.epilog.middle.block108, label %vec.epilog.vector.body103, !llvm.loop !355
 
 vec.epilog.middle.block108:                       ; preds = %vec.epilog.vector.body103
-  %cmp.n109 = icmp eq i64 %1, %n.vec99
+  %cmp.n109 = icmp eq i64 %smax48, %n.vec99
   br i1 %cmp.n109, label %_ZN8k_d_tree13SortedIndicesILh3EEC2Em.exit, label %vec.epilog.scalar.ph95.preheader
 
 vec.epilog.scalar.ph95.preheader:                 ; preds = %vector.scevcheck79, %iter.check94, %vec.epilog.iter.check96, %vec.epilog.middle.block108
@@ -1378,6 +1380,9 @@ declare i64 @llvm.umax.i64(i64, i64) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #21
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #21
 
 attributes #0 = { nounwind uwtable "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { noinline noreturn nounwind uwtable "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

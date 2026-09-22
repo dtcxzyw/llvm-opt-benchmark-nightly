@@ -205,7 +205,7 @@ _RNvYNvYNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtNtCs4N
   br i1 %i.ck, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i, label %bb.p
 
 bb.p:                                             ; preds = %.split58, %.split57, %.split56, %.split55, %_RNvYNvYNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1b_3ops8function5FnMutTRB5_B2i_EE8call_mutBb_.exit44
-  %i.cl = add nuw i64 %.sroa.01.0.i.i83, 1        ; 2 uses
+  %i.cl = add nuw nsw i64 %.sroa.01.0.i.i83, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.cl, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i, label %.lr.ph
 
@@ -288,14 +288,14 @@ _RNvYNvYNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtNtCs4N
   br i1 %i.dx, label %bb.s, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i
 
 bb.s:                                             ; preds = %.split62, %.split61, %.split60, %.split59, %_RNvYNvYNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1b_3ops8function5FnMutTRB5_B2i_EE8call_mutBb_.exit
-  %i.dy = add nuw i64 %.sroa.01.1.i.i89, 1        ; 2 uses
+  %i.dy = add nuw nsw i64 %.sroa.01.1.i.i89, 1    ; 2 uses
   %exitcond114.not = icmp eq i64 %i.dy, %i.n
   br i1 %exitcond114.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i, label %.lr.ph90
 
 _RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i: ; preds = %bb.p, %_RNvYNvYNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1b_3ops8function5FnMutTRB5_B2i_EE8call_mutBb_.exit44, %.split55, %.split56, %.split57, %.split58, %bb.s, %_RNvYNvYNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1b_3ops8function5FnMutTRB5_B2i_EE8call_mutBb_.exit, %.split59, %.split60, %.split61, %.split62, %.preheader72, %.preheader
   %.sroa.3.0.i.i = phi i1 [ true, %.preheader ], [ true, %bb.s ], [ false, %.preheader72 ], [ true, %.split62 ], [ true, %.split61 ], [ true, %.split60 ], [ true, %.split59 ], [ true, %_RNvYNvYNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1b_3ops8function5FnMutTRB5_B2i_EE8call_mutBb_.exit ], [ false, %.split58 ], [ false, %.split57 ], [ false, %.split56 ], [ false, %.split55 ], [ false, %_RNvYNvYNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1b_3ops8function5FnMutTRB5_B2i_EE8call_mutBb_.exit44 ], [ false, %bb.p ]
   %.sroa.0.0.i.i = phi i64 [ 2, %.preheader ], [ %i.n, %bb.s ], [ 2, %.preheader72 ], [ %.sroa.01.1.i.i89, %_RNvYNvYNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1b_3ops8function5FnMutTRB5_B2i_EE8call_mutBb_.exit ], [ %.sroa.01.1.i.i89, %.split59 ], [ %.sroa.01.1.i.i89, %.split60 ], [ %.sroa.01.1.i.i89, %.split61 ], [ %.sroa.01.1.i.i89, %.split62 ], [ %i.n, %bb.p ], [ %.sroa.01.0.i.i83, %_RNvYNvYNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1b_3ops8function5FnMutTRB5_B2i_EE8call_mutBb_.exit44 ], [ %.sroa.01.0.i.i83, %.split55 ], [ %.sroa.01.0.i.i83, %.split56 ], [ %.sroa.01.0.i.i83, %.split57 ], [ %.sroa.01.0.i.i83, %.split58 ] ; 7 uses
-  %i.dz = icmp ule i64 %.sroa.0.0.i.i, %i.n
+  %i.dz = icmp samesign ule i64 %.sroa.0.0.i.i, %i.n
   tail call void @llvm.assume(i1 %i.dz)
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
   br i1 %.not5.i, label %bb.i, label %bb.t
@@ -698,7 +698,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ai, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache14distinct_cache5cache5ValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.aj = add nuw i64 %.sroa.01.0.i.i57, 1        ; 2 uses
+  %i.aj = add nuw nsw i64 %.sroa.01.0.i.i57, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.aj, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache14distinct_cache5cache5ValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i, label %.lr.ph
 
@@ -722,7 +722,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.as, label %bb.m, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache14distinct_cache5cache5ValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph61
-  %i.at = add nuw i64 %.sroa.01.1.i.i60, 1        ; 2 uses
+  %i.at = add nuw nsw i64 %.sroa.01.1.i.i60, 1    ; 2 uses
   %exitcond81.not = icmp eq i64 %i.at, %i.n
   br i1 %exitcond81.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCsidB8gjke19X_15influxdb3_cache14distinct_cache5cache5ValueNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i, label %.lr.ph61
 

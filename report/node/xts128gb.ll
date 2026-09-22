@@ -183,7 +183,7 @@ vec.epilog.middle.block212:                       ; preds = %vec.epilog.vector.b
   %i.bg = getelementptr inbounds nuw i8, ptr %.093.lcssa, i64 %indvars.iv125
   store i8 %i.bf, ptr %i.bg, align 1, !tbaa !27
   store i8 %i.bd, ptr %i.be, align 1, !tbaa !27
-  %indvars.iv.next126 = add nuw i64 %indvars.iv125, 1 ; 3 uses
+  %indvars.iv.next126 = add nuw nsw i64 %indvars.iv125, 1 ; 3 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.092.lcssa, i64 %indvars.iv.next126
   %i.bi = load i8, ptr %i.bh, align 1, !tbaa !27
   %i.bj = getelementptr inbounds nuw i8, ptr %7, i64 %indvars.iv.next126 ; 2 uses
@@ -191,7 +191,7 @@ vec.epilog.middle.block212:                       ; preds = %vec.epilog.vector.b
   %i.bl = getelementptr inbounds nuw i8, ptr %.093.lcssa, i64 %indvars.iv.next126
   store i8 %i.bk, ptr %i.bl, align 1, !tbaa !27
   store i8 %i.bi, ptr %i.bj, align 1, !tbaa !27
-  %indvars.iv.next126.1 = add nuw i64 %indvars.iv125, 2 ; 2 uses
+  %indvars.iv.next126.1 = add nuw nsw i64 %indvars.iv125, 2 ; 2 uses
   %exitcond128.not.1 = icmp eq i64 %indvars.iv.next126.1, %.1.lcssa
   br i1 %exitcond128.not.1, label %._crit_edge116.loopexit, label %.lr.ph115, !llvm.loop !16
 
@@ -346,7 +346,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.dx = getelementptr inbounds nuw i8, ptr %.093.lcssa, i64 %i.dr
   store i8 %i.dw, ptr %i.dx, align 1, !tbaa !27
   store i8 %i.dt, ptr %i.dv, align 1, !tbaa !27
-  %indvars.iv.next.1 = add nuw i64 %indvars.iv, 2 ; 2 uses
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1, %.1.lcssa
   br i1 %exitcond.not.1, label %._crit_edge.loopexit, label %.lr.ph113, !llvm.loop !22
 

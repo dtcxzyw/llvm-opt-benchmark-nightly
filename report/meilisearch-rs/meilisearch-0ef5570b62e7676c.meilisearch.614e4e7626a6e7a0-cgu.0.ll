@@ -205,7 +205,7 @@ bb.nr:                                            ; preds = %_ZN4core5alloc6layo
 .lr.ph899:                                        ; preds = %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i441, %bb.vg
   %.sroa.01.0898 = phi i64 [ %.sroa.01.1, %bb.vg ], [ 0, %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i441 ] ; 6 uses
   %.sroa.011.0897 = phi i64 [ %i.cgo, %bb.vg ], [ 0, %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i441 ] ; 3 uses
-  %i.cgo = add nuw i64 %.sroa.011.0897, 1         ; 2 uses
+  %i.cgo = add nuw nsw i64 %.sroa.011.0897, 1     ; 2 uses
   %exitcond1660.not = icmp eq i64 %.sroa.011.0897, %1
   br i1 %exitcond1660.not, label %.invoke2837, label %bb.ve
 

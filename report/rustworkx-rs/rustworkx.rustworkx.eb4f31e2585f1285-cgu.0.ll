@@ -205,7 +205,7 @@ bb.lt:                                            ; preds = %.lr.ph4365, %bb.lu
   %.sroa.078.2.off04361 = phi i64 [ %.sroa.078.7.off0, %.lr.ph4365 ], [ %.sroa.078.6.off0, %bb.lu ] ; 6 uses
   %.sroa.13.24360 = phi i128 [ %.sroa.13.7, %.lr.ph4365 ], [ %.sroa.13.6, %bb.lu ] ; 6 uses
   %.sroa.0163.04359 = phi i64 [ 0, %.lr.ph4365 ], [ %i.bhh, %bb.lu ] ; 8 uses
-  %i.bhh = add nuw i64 %.sroa.0163.04359, 1       ; 2 uses
+  %i.bhh = add nuw nsw i64 %.sroa.0163.04359, 1   ; 2 uses
   %i.bhi = getelementptr inbounds nuw [16 x i8], ptr %i.gd, i64 %.sroa.0163.04359
   %i.bhj = load i64, ptr %i.bhi, align 8, !range !68, !noundef !67
   %.not344 = icmp eq i64 %i.bhj, 0
@@ -608,7 +608,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.r, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runNtNtCskcxRuJ53GpR_9rustworkx10dot_parser4RuleNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph
-  %i.s = add nuw i64 %.sroa.01.0.i.i50, 1         ; 2 uses
+  %i.s = add nuw nsw i64 %.sroa.01.0.i.i50, 1     ; 2 uses
   %exitcond.not = icmp eq i64 %i.s, %i.l
   br i1 %exitcond.not, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runNtNtCskcxRuJ53GpR_9rustworkx10dot_parser4RuleNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i, label %.lr.ph
 
@@ -621,7 +621,7 @@ bb.k:                                             ; preds = %.lr.ph
   br i1 %i.u, label %bb.l, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runNtNtCskcxRuJ53GpR_9rustworkx10dot_parser4RuleNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i
 
 bb.l:                                             ; preds = %.lr.ph54
-  %i.v = add nuw i64 %.sroa.01.1.i.i53, 1         ; 2 uses
+  %i.v = add nuw nsw i64 %.sroa.01.1.i.i53, 1     ; 2 uses
   %exitcond73.not = icmp eq i64 %i.v, %i.l
   br i1 %exitcond73.not, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runNtNtCskcxRuJ53GpR_9rustworkx10dot_parser4RuleNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i, label %.lr.ph54
 
@@ -1024,7 +1024,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.u, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs1_0E0ECskcxRuJ53GpR_9rustworkx.exit.i, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph
-  %i.v = add nuw i64 %.sroa.01.0.i.i132, 1        ; 2 uses
+  %i.v = add nuw nsw i64 %.sroa.01.0.i.i132, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.v, %i.l
   br i1 %exitcond.not, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs1_0E0ECskcxRuJ53GpR_9rustworkx.exit.i, label %.lr.ph
 
@@ -1040,7 +1040,7 @@ bb.k:                                             ; preds = %.lr.ph
   br i1 %i.y, label %bb.l, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs1_0E0ECskcxRuJ53GpR_9rustworkx.exit.i
 
 bb.l:                                             ; preds = %.lr.ph136
-  %i.z = add nuw i64 %.sroa.01.1.i.i135, 1        ; 2 uses
+  %i.z = add nuw nsw i64 %.sroa.01.1.i.i135, 1    ; 2 uses
   %exitcond228.not = icmp eq i64 %i.z, %i.l
   br i1 %exitcond228.not, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs1_0E0ECskcxRuJ53GpR_9rustworkx.exit.i, label %.lr.ph136
 
@@ -1443,7 +1443,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.u, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs_0E0ECskcxRuJ53GpR_9rustworkx.exit.i, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph
-  %i.v = add nuw i64 %.sroa.01.0.i.i132, 1        ; 2 uses
+  %i.v = add nuw nsw i64 %.sroa.01.0.i.i132, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.v, %i.l
   br i1 %exitcond.not, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs_0E0ECskcxRuJ53GpR_9rustworkx.exit.i, label %.lr.ph
 
@@ -1459,7 +1459,7 @@ bb.k:                                             ; preds = %.lr.ph
   br i1 %i.y, label %bb.l, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs_0E0ECskcxRuJ53GpR_9rustworkx.exit.i
 
 bb.l:                                             ; preds = %.lr.ph136
-  %i.z = add nuw i64 %.sroa.01.1.i.i135, 1        ; 2 uses
+  %i.z = add nuw nsw i64 %.sroa.01.1.i.i135, 1    ; 2 uses
   %exitcond228.not = icmp eq i64 %i.z, %i.l
   br i1 %exitcond228.not, label %_RINvNtNtNtCslwFuT2d6ECx_4core5slice4sort6shared17find_existing_runTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB13_ENCINvMNtCs87CvPiUlf0m_5alloc5sliceSB12_11sort_by_keyjNCINvNtNtCsbNMRYq9Xj9a_14rustworkx_core6planar9lr_planar25lr_visit_ordered_dfs_treeRINtNtB15_12stable_graph11StableGraphINtNtCsi0YPOvDEjiZ_4pyo38instance2PyNtNtNtB4N_5types3any5PyAnyEB4I_NtB17_10UndirectedENCINvB2R_9is_planarB47_Es_0NtB2R_9NonPlanarEs_0E0ECskcxRuJ53GpR_9rustworkx.exit.i, label %.lr.ph136
 

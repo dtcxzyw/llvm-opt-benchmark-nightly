@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.sroa.0.0.i.i88, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon4EdgeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsaTqK2fWTXJW_11qlog_dancer.exit.i, label %bb.l, !dbg !24522
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.x = add nuw i64 %.sroa.01.0.i.i101, 1, !dbg !24523 ; 2 uses
+  %i.x = add nuw nsw i64 %.sroa.01.0.i.i101, 1, !dbg !24523 ; 2 uses
     #dbg_value(i64 %i.x, !24294, !DIExpression(), !23984)
   %exitcond.not = icmp eq i64 %i.x, %i.m, !dbg !24515
   br i1 %exitcond.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon4EdgeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsaTqK2fWTXJW_11qlog_dancer.exit.i, label %.lr.ph, !dbg !24515
@@ -234,7 +234,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %.sroa.0.0.i.i86, label %bb.m, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon4EdgeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsaTqK2fWTXJW_11qlog_dancer.exit.i, !dbg !24529
 
 bb.m:                                             ; preds = %.lr.ph105
-  %i.ad = add nuw i64 %.sroa.01.1.i.i104, 1, !dbg !24530 ; 2 uses
+  %i.ad = add nuw nsw i64 %.sroa.01.1.i.i104, 1, !dbg !24530 ; 2 uses
     #dbg_value(i64 %i.ad, !24294, !DIExpression(), !23984)
   %exitcond121.not = icmp eq i64 %i.ad, %i.m, !dbg !24516
   br i1 %exitcond121.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon4EdgeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsaTqK2fWTXJW_11qlog_dancer.exit.i, label %.lr.ph105, !dbg !24516
@@ -637,7 +637,7 @@ _RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTTllEBz_E11sort_by_keylNCINvNtNtCshnIEpH9fI
   br i1 %i.av, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTTllEB13_ENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtB2c_5style12BackendColorEs0_0E0ECsaTqK2fWTXJW_11qlog_dancer.exit.i, label %bb.n, !dbg !25439
 
 bb.n:                                             ; preds = %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTTllEBz_E11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtB14_5style12BackendColorEs0_0E0CsaTqK2fWTXJW_11qlog_dancer.exit88.us
-  %i.aw = add nuw i64 %.sroa.01.0.i.i103.us, 1, !dbg !25456 ; 2 uses
+  %i.aw = add nuw nsw i64 %.sroa.01.0.i.i103.us, 1, !dbg !25456 ; 2 uses
     #dbg_value(i64 %i.aw, !25154, !DIExpression(), !24691)
   %exitcond129.not = icmp eq i64 %i.aw, %i.m, !dbg !25436
   br i1 %exitcond129.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTTllEB13_ENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtB2c_5style12BackendColorEs0_0E0ECsaTqK2fWTXJW_11qlog_dancer.exit.i, label %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTTllEBz_E11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtB14_5style12BackendColorEs0_0E0CsaTqK2fWTXJW_11qlog_dancer.exit88.us, !dbg !25436
@@ -727,7 +727,7 @@ _RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTTllEBz_E11sort_by_keylNCINvNtNtCshnIEpH9fI
   br i1 %i.bh, label %bb.o, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTTllEB13_ENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtB2c_5style12BackendColorEs0_0E0ECsaTqK2fWTXJW_11qlog_dancer.exit.i, !dbg !25460
 
 bb.o:                                             ; preds = %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTTllEBz_E11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtB14_5style12BackendColorEs0_0E0CsaTqK2fWTXJW_11qlog_dancer.exit.us
-  %i.bi = add nuw i64 %.sroa.01.1.i.i106.us, 1, !dbg !25477 ; 2 uses
+  %i.bi = add nuw nsw i64 %.sroa.01.1.i.i106.us, 1, !dbg !25477 ; 2 uses
     #dbg_value(i64 %i.bi, !25154, !DIExpression(), !24691)
   %exitcond133.not = icmp eq i64 %i.bi, %i.m, !dbg !25457
   br i1 %exitcond133.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTTllEB13_ENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtB2c_5style12BackendColorEs0_0E0ECsaTqK2fWTXJW_11qlog_dancer.exit.i, label %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTTllEBz_E11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtB14_5style12BackendColorEs0_0E0CsaTqK2fWTXJW_11qlog_dancer.exit.us, !dbg !25457
@@ -798,7 +798,7 @@ _RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTTllEBz_E11sort_by_keylNCINvNtNtCshnIEpH9fI
   br i1 %i.bu, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTTllEB13_ENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtB2c_5style12BackendColorEs0_0E0ECsaTqK2fWTXJW_11qlog_dancer.exit.i, label %bb.p, !dbg !25439
 
 bb.p:                                             ; preds = %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTTllEBz_E11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtB14_5style12BackendColorEs0_0E0CsaTqK2fWTXJW_11qlog_dancer.exit88
-  %i.bv = add nuw i64 %.sroa.01.0.i.i103, 1, !dbg !25456 ; 2 uses
+  %i.bv = add nuw nsw i64 %.sroa.01.0.i.i103, 1, !dbg !25456 ; 2 uses
     #dbg_value(i64 %i.bv, !25154, !DIExpression(), !24691)
   %exitcond.not = icmp eq i64 %i.bv, %i.m, !dbg !25436
   br i1 %exitcond.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTTllEB13_ENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtB2c_5style12BackendColorEs0_0E0ECsaTqK2fWTXJW_11qlog_dancer.exit.i, label %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTTllEBz_E11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtB14_5style12BackendColorEs0_0E0CsaTqK2fWTXJW_11qlog_dancer.exit88, !dbg !25436
@@ -869,7 +869,7 @@ _RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTTllEBz_E11sort_by_keylNCINvNtNtCshnIEpH9fI
   br i1 %i.ch, label %bb.q, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTTllEB13_ENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtB2c_5style12BackendColorEs0_0E0ECsaTqK2fWTXJW_11qlog_dancer.exit.i, !dbg !25460
 
 bb.q:                                             ; preds = %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTTllEBz_E11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtB14_5style12BackendColorEs0_0E0CsaTqK2fWTXJW_11qlog_dancer.exit
-  %i.ci = add nuw i64 %.sroa.01.1.i.i106, 1, !dbg !25477 ; 2 uses
+  %i.ci = add nuw nsw i64 %.sroa.01.1.i.i106, 1, !dbg !25477 ; 2 uses
     #dbg_value(i64 %i.ci, !25154, !DIExpression(), !24691)
   %exitcond131.not = icmp eq i64 %i.ci, %i.m, !dbg !25457
   br i1 %exitcond131.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTTllEB13_ENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtB2c_5style12BackendColorEs0_0E0ECsaTqK2fWTXJW_11qlog_dancer.exit.i, label %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTTllEBz_E11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtB14_5style12BackendColorEs0_0E0CsaTqK2fWTXJW_11qlog_dancer.exit, !dbg !25457
@@ -1272,7 +1272,7 @@ _RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTTllEBz_E11sort_by_keylNCINvNtNtCshnIEpH9fI
   br i1 %i.av, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTTllEB13_ENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtNtCs4bweDUTR8gt_8plotters5style5shape10ShapeStyleEs0_0E0ECsaTqK2fWTXJW_11qlog_dancer.exit.i, label %bb.n, !dbg !26402
 
 bb.n:                                             ; preds = %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTTllEBz_E11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtNtCs4bweDUTR8gt_8plotters5style5shape10ShapeStyleEs0_0E0CsaTqK2fWTXJW_11qlog_dancer.exit88.us
-  %i.aw = add nuw i64 %.sroa.01.0.i.i103.us, 1, !dbg !26419 ; 2 uses
+  %i.aw = add nuw nsw i64 %.sroa.01.0.i.i103.us, 1, !dbg !26419 ; 2 uses
     #dbg_value(i64 %i.aw, !26117, !DIExpression(), !25654)
   %exitcond129.not = icmp eq i64 %i.aw, %i.m, !dbg !26399
   br i1 %exitcond129.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTTllEB13_ENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtNtCs4bweDUTR8gt_8plotters5style5shape10ShapeStyleEs0_0E0ECsaTqK2fWTXJW_11qlog_dancer.exit.i, label %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTTllEBz_E11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtNtCs4bweDUTR8gt_8plotters5style5shape10ShapeStyleEs0_0E0CsaTqK2fWTXJW_11qlog_dancer.exit88.us, !dbg !26399
@@ -1362,7 +1362,7 @@ _RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTTllEBz_E11sort_by_keylNCINvNtNtCshnIEpH9fI
   br i1 %i.bh, label %bb.o, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTTllEB13_ENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtNtCs4bweDUTR8gt_8plotters5style5shape10ShapeStyleEs0_0E0ECsaTqK2fWTXJW_11qlog_dancer.exit.i, !dbg !26423
 
 bb.o:                                             ; preds = %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTTllEBz_E11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtNtCs4bweDUTR8gt_8plotters5style5shape10ShapeStyleEs0_0E0CsaTqK2fWTXJW_11qlog_dancer.exit.us
-  %i.bi = add nuw i64 %.sroa.01.1.i.i106.us, 1, !dbg !26440 ; 2 uses
+  %i.bi = add nuw nsw i64 %.sroa.01.1.i.i106.us, 1, !dbg !26440 ; 2 uses
     #dbg_value(i64 %i.bi, !26117, !DIExpression(), !25654)
   %exitcond133.not = icmp eq i64 %i.bi, %i.m, !dbg !26420
   br i1 %exitcond133.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTTllEB13_ENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtNtCs4bweDUTR8gt_8plotters5style5shape10ShapeStyleEs0_0E0ECsaTqK2fWTXJW_11qlog_dancer.exit.i, label %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTTllEBz_E11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtNtCs4bweDUTR8gt_8plotters5style5shape10ShapeStyleEs0_0E0CsaTqK2fWTXJW_11qlog_dancer.exit.us, !dbg !26420
@@ -1433,7 +1433,7 @@ _RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTTllEBz_E11sort_by_keylNCINvNtNtCshnIEpH9fI
   br i1 %i.bu, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTTllEB13_ENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtNtCs4bweDUTR8gt_8plotters5style5shape10ShapeStyleEs0_0E0ECsaTqK2fWTXJW_11qlog_dancer.exit.i, label %bb.p, !dbg !26402
 
 bb.p:                                             ; preds = %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTTllEBz_E11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtNtCs4bweDUTR8gt_8plotters5style5shape10ShapeStyleEs0_0E0CsaTqK2fWTXJW_11qlog_dancer.exit88
-  %i.bv = add nuw i64 %.sroa.01.0.i.i103, 1, !dbg !26419 ; 2 uses
+  %i.bv = add nuw nsw i64 %.sroa.01.0.i.i103, 1, !dbg !26419 ; 2 uses
     #dbg_value(i64 %i.bv, !26117, !DIExpression(), !25654)
   %exitcond.not = icmp eq i64 %i.bv, %i.m, !dbg !26399
   br i1 %exitcond.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTTllEB13_ENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtNtCs4bweDUTR8gt_8plotters5style5shape10ShapeStyleEs0_0E0ECsaTqK2fWTXJW_11qlog_dancer.exit.i, label %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTTllEBz_E11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtNtCs4bweDUTR8gt_8plotters5style5shape10ShapeStyleEs0_0E0CsaTqK2fWTXJW_11qlog_dancer.exit88, !dbg !26399
@@ -1504,7 +1504,7 @@ _RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTTllEBz_E11sort_by_keylNCINvNtNtCshnIEpH9fI
   br i1 %i.ch, label %bb.q, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTTllEB13_ENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtNtCs4bweDUTR8gt_8plotters5style5shape10ShapeStyleEs0_0E0ECsaTqK2fWTXJW_11qlog_dancer.exit.i, !dbg !26423
 
 bb.q:                                             ; preds = %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTTllEBz_E11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtNtCs4bweDUTR8gt_8plotters5style5shape10ShapeStyleEs0_0E0CsaTqK2fWTXJW_11qlog_dancer.exit
-  %i.ci = add nuw i64 %.sroa.01.1.i.i106, 1, !dbg !26440 ; 2 uses
+  %i.ci = add nuw nsw i64 %.sroa.01.1.i.i106, 1, !dbg !26440 ; 2 uses
     #dbg_value(i64 %i.ci, !26117, !DIExpression(), !25654)
   %exitcond131.not = icmp eq i64 %i.ci, %i.m, !dbg !26420
   br i1 %exitcond131.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTTllEB13_ENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtNtCs4bweDUTR8gt_8plotters5style5shape10ShapeStyleEs0_0E0ECsaTqK2fWTXJW_11qlog_dancer.exit.i, label %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSTTllEBz_E11sort_by_keylNCINvNtNtCshnIEpH9fIfn_16plotters_backend10rasterizer7polygon12fill_polygonNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtNtCs4bweDUTR8gt_8plotters5style5shape10ShapeStyleEs0_0E0CsaTqK2fWTXJW_11qlog_dancer.exit, !dbg !26420

@@ -205,24 +205,22 @@ bb.n:                                             ; preds = %bb.n, %.lr.ph.i.i.i
   %i.cu = zext nneg i32 %i.ct to i64
   %i.cv = sub nsw i64 0, %i.cu
   %i.cw = getelementptr inbounds [32 x i8], ptr %i.ba, i64 %i.cv
-  %3 = and i64 %.0.allc.03.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 4294967295
-  %i.cx = getelementptr inbounds nuw [32 x i8], ptr %i.cw, i64 %3
+  %i.cx = getelementptr inbounds nuw [32 x i8], ptr %i.cw, i64 %.0.allc.03.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !535
   store ptr %i.cy, ptr %.044.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !472
-  %4 = add i64 %.0.allc.03.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 1
   %i.cz = getelementptr inbounds nuw i8, ptr %.044.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 8
   %i.da = load i32, ptr %i.bg, align 4
   %i.db = and i32 %i.da, 268435455
   %i.dc = zext nneg i32 %i.db to i64
   %i.dd = sub nsw i64 0, %i.dc
   %i.de = getelementptr inbounds [32 x i8], ptr %i.ba, i64 %i.dd
-  %5 = and i64 %4, 4294967295
-  %6 = getelementptr inbounds nuw [32 x i8], ptr %i.de, i64 %5
-  %i.df = load ptr, ptr %6, align 8, !tbaa !535
+  %3 = getelementptr inbounds nuw [32 x i8], ptr %i.de, i64 %.0.allc.03.i.i.i.i.i.i.i.i.i.i.i.i.i.i
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 32
+  %i.df = load ptr, ptr %4, align 8, !tbaa !535
   store ptr %i.df, ptr %i.cz, align 8, !tbaa !472
-  %i.dg = add i64 %.0.allc.03.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 2 ; 2 uses
+  %i.dg = add nuw nsw i64 %.0.allc.03.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 2 ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %.044.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 16 ; 2 uses
-  %niter229.next.1 = add i64 %niter229, 2         ; 2 uses
+  %niter229.next.1 = add nuw i64 %niter229, 2     ; 2 uses
   %niter229.ncmp.1.not = icmp eq i64 %niter229.next.1, %unroll_iter228
   br i1 %niter229.ncmp.1.not, label %"_ZN4llvm15SmallVectorImplIPNS_8ConstantEE6appendINS_15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZN12_GLOBAL__N_124ConstantAggregateBuilder5splitEmN5clang9CharUnitsEE3$_0S2_EEvEEvT_SF_.exit.i.i.i.i.i.unr-lcssa", label %bb.n, !llvm.loop !924
 
@@ -240,8 +238,7 @@ bb.n:                                             ; preds = %bb.n, %.lr.ph.i.i.i
   %i.dk = zext nneg i32 %i.dj to i64
   %i.dl = sub nsw i64 0, %i.dk
   %i.dm = getelementptr inbounds [32 x i8], ptr %i.ba, i64 %i.dl
-  %7 = and i64 %.0.allc.03.i.i.i.i.i.i.i.i.i.i.i.i.i.i.epil.init, 4294967295
-  %i.dn = getelementptr inbounds nuw [32 x i8], ptr %i.dm, i64 %7
+  %i.dn = getelementptr inbounds nuw [32 x i8], ptr %i.dm, i64 %.0.allc.03.i.i.i.i.i.i.i.i.i.i.i.i.i.i.epil.init
   %i.do = load ptr, ptr %i.dn, align 8, !tbaa !535
   store ptr %i.do, ptr %.044.i.i.i.i.i.i.i.i.i.i.i.i.i.i.epil.init, align 8, !tbaa !472
   br label %"_ZN4llvm15SmallVectorImplIPNS_8ConstantEE6appendINS_15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZN12_GLOBAL__N_124ConstantAggregateBuilder5splitEmN5clang9CharUnitsEE3$_0S2_EEvEEvT_SF_.exit.i.i.i.i.i"
@@ -357,24 +354,22 @@ bb.w:                                             ; preds = %bb.v
   %i.ex = zext nneg i32 %i.ew to i64
   %i.ey = sub nsw i64 0, %i.ex
   %i.ez = getelementptr inbounds [32 x i8], ptr %i.ba, i64 %i.ey
-  %8 = and i64 %.0.allc.03.i.i.i.i.i.i.i.i.i.i, 4294967295
-  %i.fa = getelementptr inbounds nuw [32 x i8], ptr %i.ez, i64 %8
+  %i.fa = getelementptr inbounds nuw [32 x i8], ptr %i.ez, i64 %.0.allc.03.i.i.i.i.i.i.i.i.i.i
   %i.fb = load ptr, ptr %i.fa, align 8, !tbaa !535
   store ptr %i.fb, ptr %.044.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !472
-  %9 = add i64 %.0.allc.03.i.i.i.i.i.i.i.i.i.i, 1
   %i.fc = getelementptr inbounds nuw i8, ptr %.044.i.i.i.i.i.i.i.i.i.i, i64 8
   %i.fd = load i32, ptr %i.bg, align 4
   %i.fe = and i32 %i.fd, 268435455
   %i.ff = zext nneg i32 %i.fe to i64
   %i.fg = sub nsw i64 0, %i.ff
   %i.fh = getelementptr inbounds [32 x i8], ptr %i.ba, i64 %i.fg
-  %10 = and i64 %9, 4294967295
-  %11 = getelementptr inbounds nuw [32 x i8], ptr %i.fh, i64 %10
-  %i.fi = load ptr, ptr %11, align 8, !tbaa !535
+  %5 = getelementptr inbounds nuw [32 x i8], ptr %i.fh, i64 %.0.allc.03.i.i.i.i.i.i.i.i.i.i
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 32
+  %i.fi = load ptr, ptr %6, align 8, !tbaa !535
   store ptr %i.fi, ptr %i.fc, align 8, !tbaa !472
-  %i.fj = add i64 %.0.allc.03.i.i.i.i.i.i.i.i.i.i, 2 ; 2 uses
+  %i.fj = add nuw nsw i64 %.0.allc.03.i.i.i.i.i.i.i.i.i.i, 2 ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %.044.i.i.i.i.i.i.i.i.i.i, i64 16 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1.not = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1.not, label %"_ZN12_GLOBAL__N_17replaceIN4llvm11SmallVectorIPNS1_8ConstantELj32EEENS1_14iterator_rangeINS1_15mapped_iteratorINS1_6detail15SafeIntIteratorIjLb0EEEZNS_24ConstantAggregateBuilder5splitEmN5clang9CharUnitsEE3$_0S4_EEEEEEvRT_mmT0_.exit.i.loopexit209.unr-lcssa", label %.lr.ph.i.i.i.i.i.i.i.i.i.i, !llvm.loop !924
 
@@ -548,8 +543,7 @@ bb.z:                                             ; preds = %.lr.ph.i.i.i.1.i
   %i.iq = zext nneg i32 %i.ip to i64
   %i.ir = sub nsw i64 0, %i.iq
   %i.is = getelementptr inbounds [32 x i8], ptr %i.ba, i64 %i.ir
-  %12 = and i64 %.0.allc.03.i.i.i.i.i.i.i.i.i.i.epil.init, 4294967295
-  %i.it = getelementptr inbounds nuw [32 x i8], ptr %i.is, i64 %12
+  %i.it = getelementptr inbounds nuw [32 x i8], ptr %i.is, i64 %.0.allc.03.i.i.i.i.i.i.i.i.i.i.epil.init
   %i.iu = load ptr, ptr %i.it, align 8, !tbaa !535
   store ptr %i.iu, ptr %.044.i.i.i.i.i.i.i.i.i.i.epil.init, align 8, !tbaa !472
   br label %"_ZN12_GLOBAL__N_17replaceIN4llvm11SmallVectorIPNS1_8ConstantELj32EEENS1_14iterator_rangeINS1_15mapped_iteratorINS1_6detail15SafeIntIteratorIjLb0EEEZNS_24ConstantAggregateBuilder5splitEmN5clang9CharUnitsEE3$_0S4_EEEEEEvRT_mmT0_.exit.i"
@@ -885,20 +879,18 @@ vector.ph183:                                     ; preds = %.lr.ph.i.i.i.i.i40.
 vector.body189:                                   ; preds = %vector.body189, %vector.ph183
   %index190 = phi i64 [ 0, %vector.ph183 ], [ %index.next194, %vector.body189 ] ; 2 uses
   %vec.ind191 = phi <2 x i64> [ <i64 1, i64 2>, %vector.ph183 ], [ %vec.ind.next195, %vector.body189 ] ; 3 uses
-  %step.add192 = add <2 x i64> %vec.ind191, splat (i64 2)
+  %step.add192 = add nuw nsw <2 x i64> %vec.ind191, splat (i64 2)
   %i.nz = shl i64 %index190, 3
   %next.gep193 = getelementptr i8, ptr %i.lt, i64 %i.nz ; 2 uses
-  %13 = and <2 x i64> %vec.ind191, splat (i64 4294967295)
-  %14 = and <2 x i64> %step.add192, splat (i64 4294967295)
-  %i.oa = mul nsw <2 x i64> %13, %broadcast.splat186
-  %i.ob = mul nsw <2 x i64> %14, %broadcast.splat186
+  %i.oa = mul nsw <2 x i64> %vec.ind191, %broadcast.splat186
+  %i.ob = mul nsw <2 x i64> %step.add192, %broadcast.splat186
   %i.oc = add nsw <2 x i64> %i.oa, %broadcast.splat188
   %i.od = add nsw <2 x i64> %i.ob, %broadcast.splat188
   %i.oe = getelementptr i8, ptr %next.gep193, i64 16
   store <2 x i64> %i.oc, ptr %next.gep193, align 8, !tbaa !432
   store <2 x i64> %i.od, ptr %i.oe, align 8, !tbaa !432
   %index.next194 = add nuw i64 %index190, 4       ; 2 uses
-  %vec.ind.next195 = add <2 x i64> %vec.ind191, splat (i64 4)
+  %vec.ind.next195 = add nuw nsw <2 x i64> %vec.ind191, splat (i64 4)
   %i.of = icmp eq i64 %index.next194, %n.vec184
   br i1 %i.of, label %middle.block196, label %vector.body189, !llvm.loop !929
 
@@ -916,11 +908,10 @@ middle.block196:                                  ; preds = %vector.body189
   %.02.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.ok, %.lr.ph.i.i.i.i.i40.i.i.i.i.i ], [ %.02.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i40.i.i.i.i.i.preheader ] ; 2 uses
   %.041.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.ol, %.lr.ph.i.i.i.i.i40.i.i.i.i.i ], [ %.041.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i40.i.i.i.i.i.preheader ] ; 2 uses
   %i.og = phi i64 [ %i.oj, %.lr.ph.i.i.i.i.i40.i.i.i.i.i ], [ %.ph205, %.lr.ph.i.i.i.i.i40.i.i.i.i.i.preheader ] ; 2 uses
-  %15 = and i64 %i.og, 4294967295
-  %i.oh = mul nsw i64 %15, %.fca.0.extract.i.i6
+  %i.oh = mul nsw i64 %i.og, %.fca.0.extract.i.i6
   %i.oi = add nsw i64 %i.oh, %i.bd
   store i64 %i.oi, ptr %.02.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !432
-  %i.oj = add i64 %i.og, 1
+  %i.oj = add nuw nsw i64 %i.og, 1
   %i.ok = getelementptr inbounds nuw i8, ptr %.02.i.i.i.i.i.i.i.i.i.i, i64 8
   %i.ol = add nsw i64 %.041.i.i.i.i.i.i.i.i.i.i, -1
   %i.om = icmp samesign ugt i64 %.041.i.i.i.i.i.i.i.i.i.i, 1

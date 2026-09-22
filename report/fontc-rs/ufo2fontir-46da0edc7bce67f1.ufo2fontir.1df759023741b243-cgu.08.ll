@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.w, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTNtNtCs3v5ql5U6hxj_6fontir2ir9KernGroupINtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3set8BTreeSetNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameEENCINvMNtB1O_5sliceSB12_7sort_byNCINvXs1o_NtB1K_3mapINtB45_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB4L_8adapters10filter_map9FilterMapIB5E_INtB45_4IterNtNtCshMXdXt2UU3C_5norad4name4NameINtNtB1O_3vec3VecB6A_EENCNvNtCs2zvA5OmMqFb_10ufo2fontir6source22kern_groups_from_norad0ENCB7x_s_0EE0E0EB7B_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.x = add nuw i64 %.sroa.01.0.i.i74, 1         ; 2 uses
+  %i.x = add nuw nsw i64 %.sroa.01.0.i.i74, 1     ; 2 uses
   %exitcond.not = icmp eq i64 %i.x, %i.o
   br i1 %exitcond.not, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTNtNtCs3v5ql5U6hxj_6fontir2ir9KernGroupINtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3set8BTreeSetNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameEENCINvMNtB1O_5sliceSB12_7sort_byNCINvXs1o_NtB1K_3mapINtB45_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB4L_8adapters10filter_map9FilterMapIB5E_INtB45_4IterNtNtCshMXdXt2UU3C_5norad4name4NameINtNtB1O_3vec3VecB6A_EENCNvNtCs2zvA5OmMqFb_10ufo2fontir6source22kern_groups_from_norad0ENCB7x_s_0EE0E0EB7B_.exit.i, label %.lr.ph
 
@@ -218,7 +218,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.ab, label %bb.m, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTNtNtCs3v5ql5U6hxj_6fontir2ir9KernGroupINtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3set8BTreeSetNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameEENCINvMNtB1O_5sliceSB12_7sort_byNCINvXs1o_NtB1K_3mapINtB45_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB4L_8adapters10filter_map9FilterMapIB5E_INtB45_4IterNtNtCshMXdXt2UU3C_5norad4name4NameINtNtB1O_3vec3VecB6A_EENCNvNtCs2zvA5OmMqFb_10ufo2fontir6source22kern_groups_from_norad0ENCB7x_s_0EE0E0EB7B_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph78
-  %i.ac = add nuw i64 %.sroa.01.1.i.i77, 1        ; 2 uses
+  %i.ac = add nuw nsw i64 %.sroa.01.1.i.i77, 1    ; 2 uses
   %exitcond98.not = icmp eq i64 %i.ac, %i.o
   br i1 %exitcond98.not, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTNtNtCs3v5ql5U6hxj_6fontir2ir9KernGroupINtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3set8BTreeSetNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameEENCINvMNtB1O_5sliceSB12_7sort_byNCINvXs1o_NtB1K_3mapINtB45_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB4L_8adapters10filter_map9FilterMapIB5E_INtB45_4IterNtNtCshMXdXt2UU3C_5norad4name4NameINtNtB1O_3vec3VecB6A_EENCNvNtCs2zvA5OmMqFb_10ufo2fontir6source22kern_groups_from_norad0ENCB7x_s_0EE0E0EB7B_.exit.i, label %.lr.ph78
 
@@ -621,7 +621,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.am, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTNtNtCsbZq13ASDQ8l_10font_types3tag3TagINtNtCsgdm2QMcbaeA_10fontdrasil6coords5CoordNtB1I_11DesignSpaceEENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_11sort_by_keyB13_NCNvXs7_B1I_INtB1I_8LocationB2n_EINtNtB8_7convert4FromINtNtB2Q_3vec3VecB12_EE4from0E0ECs2zvA5OmMqFb_10ufo2fontir.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.an = add nuw i64 %.sroa.01.0.i.i50, 1        ; 2 uses
+  %i.an = add nuw nsw i64 %.sroa.01.0.i.i50, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.an, %i.y
   br i1 %exitcond.not, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTNtNtCsbZq13ASDQ8l_10font_types3tag3TagINtNtCsgdm2QMcbaeA_10fontdrasil6coords5CoordNtB1I_11DesignSpaceEENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_11sort_by_keyB13_NCNvXs7_B1I_INtB1I_8LocationB2n_EINtNtB8_7convert4FromINtNtB2Q_3vec3VecB12_EE4from0E0ECs2zvA5OmMqFb_10ufo2fontir.exit.i, label %.lr.ph
 
@@ -644,7 +644,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.at, label %bb.m, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTNtNtCsbZq13ASDQ8l_10font_types3tag3TagINtNtCsgdm2QMcbaeA_10fontdrasil6coords5CoordNtB1I_11DesignSpaceEENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_11sort_by_keyB13_NCNvXs7_B1I_INtB1I_8LocationB2n_EINtNtB8_7convert4FromINtNtB2Q_3vec3VecB12_EE4from0E0ECs2zvA5OmMqFb_10ufo2fontir.exit.i
 
 bb.m:                                             ; preds = %.lr.ph54
-  %i.au = add nuw i64 %.sroa.01.1.i.i53, 1        ; 2 uses
+  %i.au = add nuw nsw i64 %.sroa.01.1.i.i53, 1    ; 2 uses
   %exitcond74.not = icmp eq i64 %i.au, %i.y
   br i1 %exitcond74.not, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTNtNtCsbZq13ASDQ8l_10font_types3tag3TagINtNtCsgdm2QMcbaeA_10fontdrasil6coords5CoordNtB1I_11DesignSpaceEENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_11sort_by_keyB13_NCNvXs7_B1I_INtB1I_8LocationB2n_EINtNtB8_7convert4FromINtNtB2Q_3vec3VecB12_EE4from0E0ECs2zvA5OmMqFb_10ufo2fontir.exit.i, label %.lr.ph54
 
@@ -1047,7 +1047,7 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSTNtNtCsgdm2QMcbaeA_10fontdrasil5types9Glyph
   br i1 %i.cn, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtCs5Xr050g3D4S_3std4path7PathBufENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB2v_11collections5btree3mapINtB3i_8BTreeMapB13_B1N_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB4l_8adapters3map3MapINtB3i_8IntoIterNtNtB2v_6string6StringB1N_ENCNvNtCs2zvA5OmMqFb_10ufo2fontir6source10glif_filess_0EE0E0EB6s_.exit.i, label %bb.ab
 
 bb.ab:                                            ; preds = %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSTNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtCs5Xr050g3D4S_3std4path7PathBufE7sort_byNCINvXs1o_NtNtNtB7_11collections5btree3mapINtB2b_8BTreeMapBz_B1j_EINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12FromIteratorBy_E9from_iterINtNtNtB3c_8adapters3map3MapINtB2b_8IntoIterNtNtB7_6string6StringB1j_ENCNvNtCs2zvA5OmMqFb_10ufo2fontir6source10glif_filess_0EE0E0B5x_.exit42
-  %i.co = add nuw i64 %.sroa.01.0.i.i70, 1        ; 2 uses
+  %i.co = add nuw nsw i64 %.sroa.01.0.i.i70, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.co, %i.o
   br i1 %exitcond.not, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtCs5Xr050g3D4S_3std4path7PathBufENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB2v_11collections5btree3mapINtB3i_8BTreeMapB13_B1N_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB4l_8adapters3map3MapINtB3i_8IntoIterNtNtB2v_6string6StringB1N_ENCNvNtCs2zvA5OmMqFb_10ufo2fontir6source10glif_filess_0EE0E0EB6s_.exit.i, label %.lr.ph
 
@@ -1145,7 +1145,7 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSTNtNtCsgdm2QMcbaeA_10fontdrasil5types9Glyph
   br i1 %i.eb, label %bb.ak, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtCs5Xr050g3D4S_3std4path7PathBufENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB2v_11collections5btree3mapINtB3i_8BTreeMapB13_B1N_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB4l_8adapters3map3MapINtB3i_8IntoIterNtNtB2v_6string6StringB1N_ENCNvNtCs2zvA5OmMqFb_10ufo2fontir6source10glif_filess_0EE0E0EB6s_.exit.i
 
 bb.ak:                                            ; preds = %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSTNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtCs5Xr050g3D4S_3std4path7PathBufE7sort_byNCINvXs1o_NtNtNtB7_11collections5btree3mapINtB2b_8BTreeMapBz_B1j_EINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12FromIteratorBy_E9from_iterINtNtNtB3c_8adapters3map3MapINtB2b_8IntoIterNtNtB7_6string6StringB1j_ENCNvNtCs2zvA5OmMqFb_10ufo2fontir6source10glif_filess_0EE0E0B5x_.exit
-  %i.ec = add nuw i64 %.sroa.01.1.i.i72, 1        ; 2 uses
+  %i.ec = add nuw nsw i64 %.sroa.01.1.i.i72, 1    ; 2 uses
   %exitcond93.not = icmp eq i64 %i.ec, %i.o
   br i1 %exitcond93.not, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtCs5Xr050g3D4S_3std4path7PathBufENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB2v_11collections5btree3mapINtB3i_8BTreeMapB13_B1N_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB4l_8adapters3map3MapINtB3i_8IntoIterNtNtB2v_6string6StringB1N_ENCNvNtCs2zvA5OmMqFb_10ufo2fontir6source10glif_filess_0EE0E0EB6s_.exit.i, label %.lr.ph73
 
@@ -1548,7 +1548,7 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSTNtNtCsgdm2QMcbaeA_10fontdrasil5types9Glyph
   br i1 %i.cn, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB2T_11collections5btree3mapINtB3G_8BTreeMapB13_B1N_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB4J_8adapters10filter_map9FilterMapNtNtCsaGmGRvprAGn_5plist10dictionary4IterNCNvNtCs2zvA5OmMqFb_10ufo2fontir6source16glyph_categories0EE0E0EB72_.exit.i, label %bb.ab
 
 bb.ab:                                            ; preds = %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSTNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefE7sort_byNCINvXs1o_NtNtNtB7_11collections5btree3mapINtB2z_8BTreeMapBz_B1j_EINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12FromIteratorBy_E9from_iterINtNtNtB3A_8adapters10filter_map9FilterMapNtNtCsaGmGRvprAGn_5plist10dictionary4IterNCNvNtCs2zvA5OmMqFb_10ufo2fontir6source16glyph_categories0EE0E0B68_.exit42
-  %i.co = add nuw i64 %.sroa.01.0.i.i70, 1        ; 2 uses
+  %i.co = add nuw nsw i64 %.sroa.01.0.i.i70, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.co, %i.o
   br i1 %exitcond.not, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB2T_11collections5btree3mapINtB3G_8BTreeMapB13_B1N_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB4J_8adapters10filter_map9FilterMapNtNtCsaGmGRvprAGn_5plist10dictionary4IterNCNvNtCs2zvA5OmMqFb_10ufo2fontir6source16glyph_categories0EE0E0EB72_.exit.i, label %.lr.ph
 
@@ -1646,7 +1646,7 @@ _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSTNtNtCsgdm2QMcbaeA_10fontdrasil5types9Glyph
   br i1 %i.eb, label %bb.ak, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB2T_11collections5btree3mapINtB3G_8BTreeMapB13_B1N_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB4J_8adapters10filter_map9FilterMapNtNtCsaGmGRvprAGn_5plist10dictionary4IterNCNvNtCs2zvA5OmMqFb_10ufo2fontir6source16glyph_categories0EE0E0EB72_.exit.i
 
 bb.ak:                                            ; preds = %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSTNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefE7sort_byNCINvXs1o_NtNtNtB7_11collections5btree3mapINtB2z_8BTreeMapBz_B1j_EINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect12FromIteratorBy_E9from_iterINtNtNtB3A_8adapters10filter_map9FilterMapNtNtCsaGmGRvprAGn_5plist10dictionary4IterNCNvNtCs2zvA5OmMqFb_10ufo2fontir6source16glyph_categories0EE0E0B68_.exit
-  %i.ec = add nuw i64 %.sroa.01.1.i.i72, 1        ; 2 uses
+  %i.ec = add nuw nsw i64 %.sroa.01.1.i.i72, 1    ; 2 uses
   %exitcond93.not = icmp eq i64 %i.ec, %i.o
   br i1 %exitcond93.not, label %_RINvNtNtNtCsf3Ta7LF998c_4core5slice4sort6shared17find_existing_runTNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB2T_11collections5btree3mapINtB3G_8BTreeMapB13_B1N_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB4J_8adapters10filter_map9FilterMapNtNtCsaGmGRvprAGn_5plist10dictionary4IterNCNvNtCs2zvA5OmMqFb_10ufo2fontir6source16glyph_categories0EE0E0EB72_.exit.i, label %.lr.ph73
 

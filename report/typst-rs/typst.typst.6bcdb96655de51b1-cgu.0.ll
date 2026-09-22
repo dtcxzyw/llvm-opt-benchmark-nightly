@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.u, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtNtNtCsdaEETE4DqmE_13typst_library4text4font10variations8FontAxisNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_11sort_by_keyjNCNvNtCs9fPPV5zPXBl_5typst5fonts13write_variants_0E0EB35_.exit.i, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph
-  %i.v = add nuw i64 %.sroa.01.0.i.i62, 1         ; 2 uses
+  %i.v = add nuw nsw i64 %.sroa.01.0.i.i62, 1     ; 2 uses
   %exitcond.not = icmp eq i64 %i.v, %i.k
   br i1 %exitcond.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtNtNtCsdaEETE4DqmE_13typst_library4text4font10variations8FontAxisNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_11sort_by_keyjNCNvNtCs9fPPV5zPXBl_5typst5fonts13write_variants_0E0EB35_.exit.i, label %.lr.ph
 
@@ -220,7 +220,7 @@ bb.k:                                             ; preds = %.lr.ph
   br i1 %i.z, label %bb.l, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtNtNtCsdaEETE4DqmE_13typst_library4text4font10variations8FontAxisNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_11sort_by_keyjNCNvNtCs9fPPV5zPXBl_5typst5fonts13write_variants_0E0EB35_.exit.i
 
 bb.l:                                             ; preds = %.lr.ph66
-  %i.aa = add nuw i64 %.sroa.01.1.i.i65, 1        ; 2 uses
+  %i.aa = add nuw nsw i64 %.sroa.01.1.i.i65, 1    ; 2 uses
   %exitcond91.not = icmp eq i64 %i.aa, %i.k
   br i1 %exitcond91.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtNtNtCsdaEETE4DqmE_13typst_library4text4font10variations8FontAxisNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_11sort_by_keyjNCNvNtCs9fPPV5zPXBl_5typst5fonts13write_variants_0E0EB35_.exit.i, label %.lr.ph66
 

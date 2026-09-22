@@ -205,7 +205,7 @@ BN_GENCB_call.exit94:                             ; preds = %bb.bm
   br i1 %.not65, label %probable_prime.exit.thread115, label %BN_GENCB_call.exit94.thread
 
 BN_GENCB_call.exit94.thread:                      ; preds = %bb.bl, %bb.bn, %BN_GENCB_call.exit94
-  %i.is = add nuw i32 %.051131, 1                 ; 2 uses
+  %i.is = add nuw nsw i32 %.051131, 1             ; 2 uses
   %exitcond.not = icmp eq i32 %i.is, %.0.i98101
   br i1 %exitcond.not, label %probable_prime.exit.thread115, label %.preheader, !llvm.loop !1486
 
@@ -608,7 +608,7 @@ bb.cl:                                            ; preds = %.lr.ph.peel.next
   br i1 %.not252, label %bb.cm, label %.loopexit466
 
 bb.cm:                                            ; preds = %bb.cl
-  %i.ld = add nuw i32 %.1441, 1                   ; 2 uses
+  %i.ld = add nuw nsw i32 %.1441, 1               ; 2 uses
   %exitcond464.not = icmp eq i32 %i.ld, %.1210
   br i1 %exitcond464.not, label %.preheader._crit_edge, label %.lr.ph.peel.next, !llvm.loop !1573
 
@@ -1011,7 +1011,7 @@ vec.epilog.middle.block164:                       ; preds = %vec.epilog.vector.b
   %i.aw = getelementptr inbounds nuw i8, ptr %.053.lcssa, i64 %indvars.iv82
   store i8 %i.av, ptr %i.aw, align 1, !tbaa !76
   store i8 %i.at, ptr %i.au, align 1, !tbaa !76
-  %indvars.iv.next83 = add nuw i64 %indvars.iv82, 1 ; 3 uses
+  %indvars.iv.next83 = add nuw nsw i64 %indvars.iv82, 1 ; 3 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %.052.lcssa, i64 %indvars.iv.next83
   %i.ay = load i8, ptr %i.ax, align 1, !tbaa !76
   %i.az = getelementptr inbounds nuw i8, ptr %7, i64 %indvars.iv.next83 ; 2 uses
@@ -1019,7 +1019,7 @@ vec.epilog.middle.block164:                       ; preds = %vec.epilog.vector.b
   %i.bb = getelementptr inbounds nuw i8, ptr %.053.lcssa, i64 %indvars.iv.next83
   store i8 %i.ba, ptr %i.bb, align 1, !tbaa !76
   store i8 %i.ay, ptr %i.az, align 1, !tbaa !76
-  %indvars.iv.next83.1 = add nuw i64 %indvars.iv82, 2 ; 2 uses
+  %indvars.iv.next83.1 = add nuw nsw i64 %indvars.iv82, 2 ; 2 uses
   %exitcond85.not.1 = icmp eq i64 %indvars.iv.next83.1, %.1.lcssa
   br i1 %exitcond85.not.1, label %._crit_edge75.loopexit, label %.lr.ph74, !llvm.loop !2288
 
@@ -1168,7 +1168,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.dj = getelementptr inbounds nuw i8, ptr %.053.lcssa, i64 %i.dd
   store i8 %i.di, ptr %i.dj, align 1, !tbaa !76
   store i8 %i.df, ptr %i.dh, align 1, !tbaa !76
-  %indvars.iv.next.1 = add nuw i64 %indvars.iv, 2 ; 2 uses
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1, %.1.lcssa
   br i1 %exitcond.not.1, label %._crit_edge.loopexit, label %.lr.ph72, !llvm.loop !2294
 

@@ -205,7 +205,6 @@ If_CutTruthW.exit:                                ; preds = %.lr.ph.i.i.prol.loo
   %i.cy = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 5 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 8 uses
   %i.da = getelementptr i8, ptr %3, i64 8
-  %scevgep176 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph94, %bb.z
@@ -398,20 +397,15 @@ bb.v:                                             ; preds = %.split
   %i.fh = phi i32 [ %i.fg, %bb.v ], [ 1, %.split ], [ 1, %.thread ], [ 1, %._crit_edge ]
   %i.fi = phi ptr [ %i.ex, %bb.v ], [ %i.ex, %.split ], [ %i.de, %.thread ], [ %i.ex, %._crit_edge ] ; 4 uses
   %.158.lcssa138141150 = phi i64 [ %indvars.iv.next, %bb.v ], [ %indvars.iv.next, %.split ], [ %i.df, %.thread ], [ %indvars.iv.next, %._crit_edge ]
-  %i.fj = phi i32 [ %i.fd, %bb.v ], [ %i.fd, %.split ], [ 1, %.thread ], [ 1, %._crit_edge ] ; 6 uses
+  %i.fj = phi i32 [ %i.fd, %bb.v ], [ %i.fd, %.split ], [ 1, %.thread ], [ 1, %._crit_edge ] ; 5 uses
   %wide.trip.count = zext nneg i32 %i.fh to i64   ; 2 uses
-  %8 = call i32 @llvm.usub.sat.i32(i32 %i.fj, i32 1) ; 2 uses
   %i.fk = shl nuw nsw i64 %wide.trip.count, 3
   %scevgep = getelementptr i8, ptr %i.fi, i64 %i.fk
-  %9 = call i32 @llvm.usub.sat.i32(i32 %i.fj, i32 1)
-  %i.fl = zext nneg i32 %9 to i64
-  %scevgep177.a = getelementptr i8, ptr %scevgep176, i64 %i.fl
-  %min.iters.check180 = icmp samesign ult i32 %i.fj, 6
-  %10 = and i32 %8, 255
-  %11 = icmp eq i32 %10, 255
-  %12 = icmp samesign ugt i32 %8, 255
-  %13 = or i1 %11, %12
-  %i.fm = and i32 %i.fj, 2147483644
+  %i.fl = zext nneg i32 %i.fj to i64
+  %scevgep177.a = getelementptr i8, ptr %i.a, i64 %i.fl
+  %8 = add nsw i32 %i.fj, -256
+  %or.cond195 = icmp ult i32 %8, -250
+  %i.fm = and i32 %i.fj, 252
   %n.vec182 = zext nneg i32 %i.fm to i64          ; 2 uses
   br label %.lr.ph84
 
@@ -420,10 +414,9 @@ bb.v:                                             ; preds = %.split
   %.281 = phi i64 [ %.158.lcssa138141150, %.lr.ph84.preheader ], [ %indvars.iv.next108.lcssa, %.loopexit ] ; 5 uses
   %i.fn = getelementptr inbounds nuw [8 x i8], ptr %i.fi, i64 %indvars.iv110 ; 3 uses
   store i64 0, ptr %i.fn, align 8, !tbaa !110
-  %brmerge = select i1 %min.iters.check180, i1 true, i1 %13
-  br i1 %brmerge, label %scalar.ph179.preheader, label %vector.memcheck174
+  br i1 %or.cond195, label %scalar.ph179.preheader, label %vector.memcheck174
 
-scalar.ph179.preheader:                           ; preds = %.lr.ph84, %vector.memcheck174
+scalar.ph179.preheader:                           ; preds = %vector.memcheck174, %.lr.ph84
   br label %scalar.ph179
 
 vector.memcheck174:                               ; preds = %.lr.ph84
@@ -826,9 +819,6 @@ declare void @llvm.assume(i1 noundef) #27
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #24
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.or.v2i64(<2 x i64>) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -839,6 +829,9 @@ declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #24
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #24
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

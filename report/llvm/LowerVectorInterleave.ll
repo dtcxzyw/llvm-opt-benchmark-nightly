@@ -1,7 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/LowerVectorInterleave?download=true
 inline.NumInlined: 1063
 inline.NumDeleted: 675
-loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZNK12_GLOBAL__N_120UnrollDeinterleaveOp15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS1_15PatternRewriterE:bb.a
   %i.bx = icmp eq ptr %i.bw, %i.ac
   br i1 %i.bx, label %_ZN4llvm11SmallVectorIlLj6EED2Ev.exit, label %bb.j
@@ -203,21 +202,21 @@ _ZNK4mlir10VectorType10isScalableEv.exit.thread:  ; preds = %._crit_edge._crit_e
   %i.ak = call { ptr, i64 } @_ZNK4mlir10VectorType8getShapeEv(ptr noundef nonnull align 8 dereferenceable(8) %3) #13 ; 2 uses
   %i.al = extractvalue { ptr, i64 } %i.ak, 0
   %i.am = extractvalue { ptr, i64 } %i.ak, 1
-  %i.an = call noundef i64 @_ZN4mlir10ShapedType14getNumElementsEN4llvm8ArrayRefIlEE(ptr %i.al, i64 %i.am) #13 ; 3 uses
-  %i.ao = shl nsw i64 %i.an, 1                    ; 4 uses
+  %i.an = call noundef i64 @_ZN4mlir10ShapedType14getNumElementsEN4llvm8ArrayRefIlEE(ptr %i.al, i64 %i.am) #13 ; 4 uses
+  %i.ao = shl nsw i64 %i.an, 1                    ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
   %i.ap = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
-  store ptr %i.ap, ptr %4, align 8, !tbaa !80, !alias.scope !191
+  store ptr %i.ap, ptr %4, align 8, !tbaa !80, !alias.scope !192
   %i.aq = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
-  store i32 0, ptr %i.aq, align 8, !tbaa !64, !alias.scope !191
+  store i32 0, ptr %i.aq, align 8, !tbaa !64, !alias.scope !192
   %i.ar = getelementptr inbounds nuw i8, ptr %4, i64 12
-  store i32 6, ptr %i.ar, align 4, !tbaa !65, !alias.scope !191
+  store i32 6, ptr %i.ar, align 4, !tbaa !65, !alias.scope !192
   %i.as = icmp ugt i64 %i.ao, 6
   br i1 %i.as, label %bb.k, label %_ZN4llvm15SmallVectorImplIlE7reserveEm.exit.i.i.i.i
 
 bb.k:                                             ; preds = %_ZNK4mlir10VectorType10isScalableEv.exit.thread
   call void @_ZN4llvm15SmallVectorBaseIjE8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(64) %4, ptr noundef nonnull %i.ap, i64 noundef %i.ao, i64 noundef 8) #13
-  %.pre.i.i.i.i = load i32, ptr %i.aq, align 8, !tbaa !64, !alias.scope !191 ; 2 uses
+  %.pre.i.i.i.i = load i32, ptr %i.aq, align 8, !tbaa !64, !alias.scope !192 ; 2 uses
   %.pre24.i.i.i.i = zext i32 %.pre.i.i.i.i to i64
   %.pre27.pre = load ptr, ptr %4, align 8, !tbaa !80
   br label %_ZN4llvm15SmallVectorImplIlE7reserveEm.exit.i.i.i.i
@@ -227,31 +226,72 @@ _ZN4llvm15SmallVectorImplIlE7reserveEm.exit.i.i.i.i: ; preds = %bb.k, %_ZNK4mlir
   %.pre-phi.i.i.i.i = phi i64 [ 0, %_ZNK4mlir10VectorType10isScalableEv.exit.thread ], [ %.pre24.i.i.i.i, %bb.k ]
   %i.at = phi i32 [ 0, %_ZNK4mlir10VectorType10isScalableEv.exit.thread ], [ %.pre.i.i.i.i, %bb.k ]
   %i.au = icmp sgt i64 %i.an, 0
-  br i1 %i.au, label %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i.i.i.a, label %_ZN4llvm13map_to_vectorIRNS_10iota_rangeIlEEZNK12_GLOBAL__N_119InterleaveToShuffle15matchAndRewriteEN4mlir6vector12InterleaveOpERNS6_15PatternRewriterEEUllE_EEDaOT_OT0_.exit
+  br i1 %i.au, label %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i.i.i, label %_ZN4llvm13map_to_vectorIRNS_10iota_rangeIlEEZNK12_GLOBAL__N_119InterleaveToShuffle15matchAndRewriteEN4mlir6vector12InterleaveOpERNS6_15PatternRewriterEEUllE_EEDaOT_OT0_.exit
 
-.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i.i.i.a:       ; preds = %_ZN4llvm15SmallVectorImplIlE7reserveEm.exit.i.i.i.i
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %.pre-phi.i.i.i.i
+.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i.i.i:         ; preds = %_ZN4llvm15SmallVectorImplIlE7reserveEm.exit.i.i.i.i
+  %5 = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %.pre-phi.i.i.i.i ; 3 uses
+  %min.iters.check = icmp ult i64 %i.ao, 4
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i.i.i.a, label %vector.ph
+
+vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i.i.i
+  %n.vec = and i64 %i.ao, 9223372036854775804     ; 4 uses
+  %6 = shl i64 %n.vec, 3
+  %7 = getelementptr i8, ptr %5, i64 %6
+  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.an, i64 0
+  %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  br label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 5 uses
+  %step.add = add nuw <2 x i64> %vec.ind, splat (i64 2)
+  %8 = shl i64 %index, 3
+  %next.gep = getelementptr i8, ptr %5, i64 %8    ; 2 uses
+  %9 = and <2 x i64> %vec.ind, splat (i64 1)
+  %10 = and <2 x i64> %vec.ind, splat (i64 1)
+  %11 = icmp eq <2 x i64> %9, zeroinitializer
+  %12 = icmp eq <2 x i64> %10, zeroinitializer
+  %13 = select <2 x i1> %11, <2 x i64> zeroinitializer, <2 x i64> %broadcast.splat
+  %14 = select <2 x i1> %12, <2 x i64> zeroinitializer, <2 x i64> %broadcast.splat
+  %15 = lshr <2 x i64> %vec.ind, splat (i64 1)
+  %16 = lshr <2 x i64> %step.add, splat (i64 1)
+  %17 = add nuw nsw <2 x i64> %13, %15
+  %18 = add nuw nsw <2 x i64> %14, %16
+  %19 = getelementptr i8, ptr %next.gep, i64 16
+  store <2 x i64> %17, ptr %next.gep, align 8, !tbaa !62
+  store <2 x i64> %18, ptr %19, align 8, !tbaa !62
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %vec.ind.next = add nuw <2 x i64> %vec.ind, splat (i64 4)
+  %20 = icmp eq i64 %index.next, %n.vec
+  br i1 %20, label %middle.block, label %vector.body, !llvm.loop !189
+
+middle.block:                                     ; preds = %vector.body
+  %cmp.n = icmp eq i64 %i.ao, %n.vec
+  br i1 %cmp.n, label %_ZN4llvm13map_to_vectorIRNS_10iota_rangeIlEEZNK12_GLOBAL__N_119InterleaveToShuffle15matchAndRewriteEN4mlir6vector12InterleaveOpERNS6_15PatternRewriterEEUllE_EEDaOT_OT0_.exit, label %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i.i.i.a
+
+.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i.i.i.a:       ; preds = %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i.i.i, %middle.block
+  %.044.i.i.i.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %5, %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i.i.i ], [ %7, %middle.block ]
+  %.0.allc.03.i.i.i.i.i.i.i.i.i.i.i.i.ph = phi i64 [ 0, %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i.i.i ], [ %n.vec, %middle.block ]
   br label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i
 
-.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i:                   ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i.i.i.a
-  %.044.i.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %5, %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i.i.i.a ], [ %i.ax, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
-  %.0.allc.03.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i.i.i.a ], [ %i.aw, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
-  %6 = ashr exact i64 %.0.allc.03.i.i.i.i.i.i.i.i.i.i.i.i, 1
-  store i64 %6, ptr %.044.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !62
-  %7 = or disjoint i64 %.0.allc.03.i.i.i.i.i.i.i.i.i.i.i.i, 1
-  %8 = getelementptr inbounds nuw i8, ptr %.044.i.i.i.i.i.i.i.i.i.i.i.i, i64 8
-  %9 = sdiv i64 %7, 2
-  %i.av = add nsw i64 %i.an, %9
-  store i64 %i.av, ptr %8, align 8, !tbaa !62
-  %i.aw = add nuw i64 %.0.allc.03.i.i.i.i.i.i.i.i.i.i.i.i, 2 ; 2 uses
-  %i.ax = getelementptr inbounds nuw i8, ptr %.044.i.i.i.i.i.i.i.i.i.i.i.i, i64 16
+.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i:                   ; preds = %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i.i.i.a, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i
+  %.044.i.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.ax, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i ], [ %.044.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i.i.i.a ] ; 2 uses
+  %.0.allc.03.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.aw, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i ], [ %.0.allc.03.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i.i.i.a ] ; 3 uses
+  %21 = and i64 %.0.allc.03.i.i.i.i.i.i.i.i.i.i.i.i, 1
+  %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %21, 0
+  %spec.select.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 0, i64 %i.an
+  %.udiv32 = lshr i64 %.0.allc.03.i.i.i.i.i.i.i.i.i.i.i.i, 1
+  %i.av = add nuw nsw i64 %spec.select.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %.udiv32
+  store i64 %i.av, ptr %.044.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !62
+  %i.aw = add nuw nsw i64 %.0.allc.03.i.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
+  %i.ax = getelementptr inbounds nuw i8, ptr %.044.i.i.i.i.i.i.i.i.i.i.i.i, i64 8
   %exitcond.not.1 = icmp eq i64 %i.aw, %i.ao
-  br i1 %exitcond.not.1, label %_ZN4llvm13map_to_vectorIRNS_10iota_rangeIlEEZNK12_GLOBAL__N_119InterleaveToShuffle15matchAndRewriteEN4mlir6vector12InterleaveOpERNS6_15PatternRewriterEEUllE_EEDaOT_OT0_.exit, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !189
+  br i1 %exitcond.not.1, label %_ZN4llvm13map_to_vectorIRNS_10iota_rangeIlEEZNK12_GLOBAL__N_119InterleaveToShuffle15matchAndRewriteEN4mlir6vector12InterleaveOpERNS6_15PatternRewriterEEUllE_EEDaOT_OT0_.exit, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !190
 
-_ZN4llvm13map_to_vectorIRNS_10iota_rangeIlEEZNK12_GLOBAL__N_119InterleaveToShuffle15matchAndRewriteEN4mlir6vector12InterleaveOpERNS6_15PatternRewriterEEUllE_EEDaOT_OT0_.exit: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i, %_ZN4llvm15SmallVectorImplIlE7reserveEm.exit.i.i.i.i
+_ZN4llvm13map_to_vectorIRNS_10iota_rangeIlEEZNK12_GLOBAL__N_119InterleaveToShuffle15matchAndRewriteEN4mlir6vector12InterleaveOpERNS6_15PatternRewriterEEUllE_EEDaOT_OT0_.exit: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i, %middle.block, %_ZN4llvm15SmallVectorImplIlE7reserveEm.exit.i.i.i.i
   %i.ay = trunc i64 %i.ao to i32
   %i.az = add i32 %i.at, %i.ay                    ; 2 uses
-  store i32 %i.az, ptr %i.aq, align 8, !tbaa !64, !alias.scope !191
+  store i32 %i.az, ptr %i.aq, align 8, !tbaa !64, !alias.scope !192
   %i.ba = load ptr, ptr %i.a, align 8, !tbaa !96  ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 24
   %.sroa.0.0.copyload.i.i.i.i = load ptr, ptr %i.bb, align 8, !tbaa !98
@@ -265,7 +305,7 @@ _ZN4llvm13map_to_vectorIRNS_10iota_rangeIlEEZNK12_GLOBAL__N_119InterleaveToShuff
   %i.bh = load ptr, ptr %2, align 8, !tbaa !38
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
   %i.bj = load ptr, ptr %i.bi, align 8
-  call void %i.bj(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr noundef nonnull %1, ptr noundef %i.bg) #13, !inline_history !190
+  call void %i.bj(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr noundef nonnull %1, ptr noundef %i.bg) #13, !inline_history !191
   %i.bk = load ptr, ptr %4, align 8, !tbaa !80    ; 2 uses
   %i.bl = icmp eq ptr %i.bk, %i.ap
   br i1 %i.bl, label %_ZN4llvm11SmallVectorIlLj6EED2Ev.exit, label %bb.l
@@ -478,17 +518,17 @@ _ZNK4mlir10VectorType10isScalableEv.exit.thread:  ; preds = %._crit_edge._crit_e
   %i.an = sdiv i64 %i.am, 2                       ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
   %i.ao = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
-  store ptr %i.ao, ptr %4, align 8, !tbaa !80, !alias.scope !204
+  store ptr %i.ao, ptr %4, align 8, !tbaa !80, !alias.scope !205
   %i.ap = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
-  store i32 0, ptr %i.ap, align 8, !tbaa !64, !alias.scope !204
+  store i32 0, ptr %i.ap, align 8, !tbaa !64, !alias.scope !205
   %i.aq = getelementptr inbounds nuw i8, ptr %4, i64 12
-  store i32 6, ptr %i.aq, align 4, !tbaa !65, !alias.scope !204
+  store i32 6, ptr %i.aq, align 4, !tbaa !65, !alias.scope !205
   %i.ar = icmp ugt i64 %i.an, 6
   br i1 %i.ar, label %bb.k, label %_ZN4llvm15SmallVectorImplIlE7reserveEm.exit.i.i.i.i
 
 bb.k:                                             ; preds = %_ZNK4mlir10VectorType10isScalableEv.exit.thread
   call void @_ZN4llvm15SmallVectorBaseIjE8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(64) %4, ptr noundef nonnull %i.ao, i64 noundef %i.an, i64 noundef 8) #13
-  %.pre.i.i.i.i = load i32, ptr %i.ap, align 8, !tbaa !64, !alias.scope !204 ; 2 uses
+  %.pre.i.i.i.i = load i32, ptr %i.ap, align 8, !tbaa !64, !alias.scope !205 ; 2 uses
   %.pre27.i.i.i.i = zext i32 %.pre.i.i.i.i to i64
   %.val14.pre57.pre = load ptr, ptr %4, align 8, !tbaa !80
   br label %_ZN4llvm15SmallVectorImplIlE7reserveEm.exit.i.i.i.i
@@ -517,7 +557,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
   %i.ax = shl i64 %index, 3
   %next.gep = getelementptr i8, ptr %i.au, i64 %i.ax ; 2 uses
-  %i.ay = shl nsw <2 x i64> %vec.ind, splat (i64 1)
+  %i.ay = shl nuw nsw <2 x i64> %vec.ind, splat (i64 1)
   %step.add = shl <2 x i64> %vec.ind, splat (i64 1)
   %i.az = add <2 x i64> %step.add, splat (i64 4)
   %i.ba = getelementptr i8, ptr %next.gep, i64 16
@@ -526,7 +566,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %vec.ind.next = add nuw <2 x i64> %vec.ind, splat (i64 4)
   %i.bb = icmp eq i64 %index.next, %n.vec
-  br i1 %i.bb, label %middle.block, label %vector.body, !llvm.loop !196
+  br i1 %i.bb, label %middle.block, label %vector.body, !llvm.loop !197
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.an, %n.vec
@@ -540,34 +580,34 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph.i.i.i.i.i.i.i.i.i.i.i.i:                   ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i
   %.0411.i.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.be, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i ], [ %.0411.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.preheader ] ; 2 uses
   %.sroa.07.010.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.bd, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i ], [ %.sroa.07.010.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.preheader ] ; 2 uses
-  %i.bc = shl nsw i64 %.sroa.07.010.i.i.i.i.i.i.i.i.i.i.i.i, 1
+  %i.bc = shl nuw nsw i64 %.sroa.07.010.i.i.i.i.i.i.i.i.i.i.i.i, 1
   store i64 %i.bc, ptr %.0411.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !62
-  %i.bd = add nuw i64 %.sroa.07.010.i.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
+  %i.bd = add nuw nsw i64 %.sroa.07.010.i.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %.0411.i.i.i.i.i.i.i.i.i.i.i.i, i64 8
   %exitcond.not = icmp eq i64 %i.bd, %i.an
-  br i1 %exitcond.not, label %_ZN4llvm13map_to_vectorIRNS_10iota_rangeIlEEZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS6_15PatternRewriterEEUllE_EEDaOT_OT0_.exit, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !197
+  br i1 %exitcond.not, label %_ZN4llvm13map_to_vectorIRNS_10iota_rangeIlEEZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS6_15PatternRewriterEEUllE_EEDaOT_OT0_.exit, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !198
 
 _ZN4llvm13map_to_vectorIRNS_10iota_rangeIlEEZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS6_15PatternRewriterEEUllE_EEDaOT_OT0_.exit: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i, %middle.block, %_ZN4llvm15SmallVectorImplIlE7reserveEm.exit.i.i.i.i
   %i.bf = trunc i64 %i.an to i32
   %i.bg = add i32 %i.as, %i.bf                    ; 6 uses
-  store i32 %i.bg, ptr %i.ap, align 8, !tbaa !64, !alias.scope !204
+  store i32 %i.bg, ptr %i.ap, align 8, !tbaa !64, !alias.scope !205
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #13
-  call void @llvm.experimental.noalias.scope.decl(metadata !205)
+  call void @llvm.experimental.noalias.scope.decl(metadata !206)
   %i.bh = zext i32 %i.bg to i64                   ; 5 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 4 uses
-  store ptr %i.bi, ptr %5, align 8, !tbaa !80, !alias.scope !206
+  store ptr %i.bi, ptr %5, align 8, !tbaa !80, !alias.scope !207
   %i.bj = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
-  store i32 0, ptr %i.bj, align 8, !tbaa !64, !alias.scope !206
+  store i32 0, ptr %i.bj, align 8, !tbaa !64, !alias.scope !207
   %i.bk = getelementptr inbounds nuw i8, ptr %5, i64 12
-  store i32 6, ptr %i.bk, align 4, !tbaa !65, !alias.scope !206
+  store i32 6, ptr %i.bk, align 4, !tbaa !65, !alias.scope !207
   %i.bl = icmp ugt i32 %i.bg, 6
   br i1 %i.bl, label %_ZN4llvm15SmallVectorImplIlE7reserveEm.exit.i.i.i.thread.i, label %_ZN4llvm15SmallVectorImplIlE7reserveEm.exit.i.i.i.i16
 
 _ZN4llvm15SmallVectorImplIlE7reserveEm.exit.i.i.i.thread.i: ; preds = %_ZN4llvm13map_to_vectorIRNS_10iota_rangeIlEEZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS6_15PatternRewriterEEUllE_EEDaOT_OT0_.exit
   call void @_ZN4llvm15SmallVectorBaseIjE8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(64) %5, ptr noundef nonnull %i.bi, i64 noundef %i.bh, i64 noundef 8) #13
-  %.pre.i.i.i.i20 = load i32, ptr %i.bj, align 8, !tbaa !64, !alias.scope !206 ; 2 uses
+  %.pre.i.i.i.i20 = load i32, ptr %i.bj, align 8, !tbaa !64, !alias.scope !207 ; 2 uses
   %.pre23.i.i.i.i = zext i32 %.pre.i.i.i.i20 to i64
-  %.pre = load ptr, ptr %5, align 8, !tbaa !80, !alias.scope !206
+  %.pre = load ptr, ptr %5, align 8, !tbaa !80, !alias.scope !207
   br label %.lr.ph.i.i.i.i.i.i.i.i.preheader.i.i.i.i18
 
 _ZN4llvm15SmallVectorImplIlE7reserveEm.exit.i.i.i.i16: ; preds = %_ZN4llvm13map_to_vectorIRNS_10iota_rangeIlEEZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS6_15PatternRewriterEEUllE_EEDaOT_OT0_.exit
@@ -608,8 +648,8 @@ vector.body84:                                    ; preds = %vector.body84, %vec
   %next.gep86 = getelementptr i8, ptr %i.bo, i64 %i.ca ; 2 uses
   %next.gep87 = getelementptr i8, ptr %.val14.pre, i64 %i.ca ; 2 uses
   %i.cb = getelementptr i8, ptr %next.gep87, i64 16
-  %wide.load = load <2 x i64>, ptr %next.gep87, align 8, !tbaa !62, !noalias !205
-  %wide.load88 = load <2 x i64>, ptr %i.cb, align 8, !tbaa !62, !noalias !205
+  %wide.load = load <2 x i64>, ptr %next.gep87, align 8, !tbaa !62, !noalias !206
+  %wide.load88 = load <2 x i64>, ptr %i.cb, align 8, !tbaa !62, !noalias !206
   %i.cc = add nsw <2 x i64> %wide.load, splat (i64 1)
   %i.cd = add nsw <2 x i64> %wide.load88, splat (i64 1)
   %i.ce = getelementptr i8, ptr %next.gep86, i64 16
@@ -617,7 +657,7 @@ vector.body84:                                    ; preds = %vector.body84, %vec
   store <2 x i64> %i.cd, ptr %i.ce, align 8, !tbaa !62
   %index.next89 = add nuw i64 %index85, 4         ; 2 uses
   %i.cf = icmp eq i64 %index.next89, %n.vec83
-  br i1 %i.cf, label %middle.block90, label %vector.body84, !llvm.loop !202
+  br i1 %i.cf, label %middle.block90, label %vector.body84, !llvm.loop !203
 
 middle.block90:                                   ; preds = %vector.body84
   %cmp.n91 = icmp eq i64 %i.br, %n.vec83
@@ -633,14 +673,14 @@ middle.block90:                                   ; preds = %vector.body84
   %.010.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.cj, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i19 ], [ %.010.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i19.preheader ] ; 2 uses
   %.049.i.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.ci, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i19 ], [ %.049.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i19.preheader ] ; 2 uses
   %.sroa.07.08.i.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.ch, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i19 ], [ %.sroa.07.08.i.i.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i19.preheader ] ; 2 uses
-  %.val6.val.i.i.i.i.i.i.i.i.i.i.i.i = load i64, ptr %.sroa.07.08.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !62, !noalias !205
+  %.val6.val.i.i.i.i.i.i.i.i.i.i.i.i = load i64, ptr %.sroa.07.08.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !62, !noalias !206
   %i.cg = add nsw i64 %.val6.val.i.i.i.i.i.i.i.i.i.i.i.i, 1
   store i64 %i.cg, ptr %.049.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !62
   %i.ch = getelementptr inbounds nuw i8, ptr %.sroa.07.08.i.i.i.i.i.i.i.i.i.i.i.i, i64 8
   %i.ci = getelementptr inbounds nuw i8, ptr %.049.i.i.i.i.i.i.i.i.i.i.i.i, i64 8
   %i.cj = add nsw i64 %.010.i.i.i.i.i.i.i.i.i.i.i.i, -1
   %i.ck = icmp samesign ugt i64 %.010.i.i.i.i.i.i.i.i.i.i.i.i, 1
-  br i1 %i.ck, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i19, label %_ZN4llvm13map_to_vectorIRNS_11SmallVectorIlLj6EEEZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS6_15PatternRewriterEEUllE0_EEDaOT_OT0_.exit.loopexit, !llvm.loop !203
+  br i1 %i.ck, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i19, label %_ZN4llvm13map_to_vectorIRNS_11SmallVectorIlLj6EEEZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS6_15PatternRewriterEEUllE0_EEDaOT_OT0_.exit.loopexit, !llvm.loop !204
 
 _ZN4llvm13map_to_vectorIRNS_11SmallVectorIlLj6EEEZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS6_15PatternRewriterEEUllE0_EEDaOT_OT0_.exit.loopexit: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i19, %middle.block90
   %.pre59 = load ptr, ptr %4, align 8, !tbaa !80
@@ -653,7 +693,7 @@ _ZN4llvm13map_to_vectorIRNS_11SmallVectorIlLj6EEEZNK12_GLOBAL__N_121Deinterleave
   %i.cn = phi ptr [ %.val14.pre, %_ZN4llvm15SmallVectorImplIlE7reserveEm.exit.i.i.i.i16 ], [ %.pre59, %_ZN4llvm13map_to_vectorIRNS_11SmallVectorIlLj6EEEZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS6_15PatternRewriterEEUllE0_EEDaOT_OT0_.exit.loopexit ]
   %i.co = phi i32 [ 0, %_ZN4llvm15SmallVectorImplIlE7reserveEm.exit.i.i.i.i16 ], [ %i.bn, %_ZN4llvm13map_to_vectorIRNS_11SmallVectorIlLj6EEEZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS6_15PatternRewriterEEUllE0_EEDaOT_OT0_.exit.loopexit ]
   %i.cp = add i32 %i.co, %i.bg
-  store i32 %i.cp, ptr %i.bj, align 8, !tbaa !64, !alias.scope !206
+  store i32 %i.cp, ptr %i.bj, align 8, !tbaa !64, !alias.scope !207
   %i.cq = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %.sroa.0.0.copyload.i.i = load ptr, ptr %i.cr, align 8
@@ -933,22 +973,23 @@ attributes #15 = { builtin nounwind }
 !186 = distinct !{!186, !185, !"_ZN4llvm13map_to_vectorIRNS_10iota_rangeIlEEZNK12_GLOBAL__N_119InterleaveToShuffle15matchAndRewriteEN4mlir6vector12InterleaveOpERNS6_15PatternRewriterEEUllE_EEDaOT_OT0_: argument 0"}
 !187 = distinct !{!187, !"_ZN4llvm9to_vectorINS_14iterator_rangeINS_15mapped_iteratorINS_6detail15SafeIntIteratorIlLb0EEEZNK12_GLOBAL__N_119InterleaveToShuffle15matchAndRewriteEN4mlir6vector12InterleaveOpERNS8_15PatternRewriterEEUllE_lEEEEEENS_11SmallVectorINSt12remove_constINSt16remove_referenceIDTdecl9adl_beginclsr3stdE7declvalIRT_EEEEE4typeEE4typeEXsr42CalculateSmallVectorDefaultInlinedElementsISP_EE5valueEEEOSJ_"}
 !188 = distinct !{!188, !187, !"_ZN4llvm9to_vectorINS_14iterator_rangeINS_15mapped_iteratorINS_6detail15SafeIntIteratorIlLb0EEEZNK12_GLOBAL__N_119InterleaveToShuffle15matchAndRewriteEN4mlir6vector12InterleaveOpERNS8_15PatternRewriterEEUllE_lEEEEEENS_11SmallVectorINSt12remove_constINSt16remove_referenceIDTdecl9adl_beginclsr3stdE7declvalIRT_EEEEE4typeEE4typeEXsr42CalculateSmallVectorDefaultInlinedElementsISP_EE5valueEEEOSJ_: argument 0"}
-!189 = distinct !{!189, !73}
-!190 = distinct !{null}
-!191 = !{!188, !186}
-!192 = distinct !{!192, !"_ZN4llvm13map_to_vectorIRNS_10iota_rangeIlEEZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS6_15PatternRewriterEEUllE_EEDaOT_OT0_"}
-!193 = distinct !{!193, !192, !"_ZN4llvm13map_to_vectorIRNS_10iota_rangeIlEEZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS6_15PatternRewriterEEUllE_EEDaOT_OT0_: argument 0"}
-!194 = distinct !{!194, !"_ZN4llvm9to_vectorINS_14iterator_rangeINS_15mapped_iteratorINS_6detail15SafeIntIteratorIlLb0EEEZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS8_15PatternRewriterEEUllE_lEEEEEENS_11SmallVectorINSt12remove_constINSt16remove_referenceIDTdecl9adl_beginclsr3stdE7declvalIRT_EEEEE4typeEE4typeEXsr42CalculateSmallVectorDefaultInlinedElementsISP_EE5valueEEEOSJ_"}
-!195 = distinct !{!195, !194, !"_ZN4llvm9to_vectorINS_14iterator_rangeINS_15mapped_iteratorINS_6detail15SafeIntIteratorIlLb0EEEZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS8_15PatternRewriterEEUllE_lEEEEEENS_11SmallVectorINSt12remove_constINSt16remove_referenceIDTdecl9adl_beginclsr3stdE7declvalIRT_EEEEE4typeEE4typeEXsr42CalculateSmallVectorDefaultInlinedElementsISP_EE5valueEEEOSJ_: argument 0"}
-!196 = distinct !{!196, !73, !74, !75}
-!197 = distinct !{!197, !73, !75, !74}
-!198 = distinct !{!198, !"_ZN4llvm13map_to_vectorIRNS_11SmallVectorIlLj6EEEZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS6_15PatternRewriterEEUllE0_EEDaOT_OT0_"}
-!199 = distinct !{!199, !198, !"_ZN4llvm13map_to_vectorIRNS_11SmallVectorIlLj6EEEZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS6_15PatternRewriterEEUllE0_EEDaOT_OT0_: argument 0"}
-!200 = distinct !{!200, !"_ZN4llvm9to_vectorINS_14iterator_rangeINS_15mapped_iteratorIPlZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS6_15PatternRewriterEEUllE0_lEEEEEENS_11SmallVectorINSt12remove_constINSt16remove_referenceIDTdecl9adl_beginclsr3stdE7declvalIRT_EEEEE4typeEE4typeEXsr42CalculateSmallVectorDefaultInlinedElementsISN_EE5valueEEEOSH_"}
-!201 = distinct !{!201, !200, !"_ZN4llvm9to_vectorINS_14iterator_rangeINS_15mapped_iteratorIPlZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS6_15PatternRewriterEEUllE0_lEEEEEENS_11SmallVectorINSt12remove_constINSt16remove_referenceIDTdecl9adl_beginclsr3stdE7declvalIRT_EEEEE4typeEE4typeEXsr42CalculateSmallVectorDefaultInlinedElementsISN_EE5valueEEEOSH_: argument 0"}
-!202 = distinct !{!202, !73, !74, !75}
-!203 = distinct !{!203, !73, !74}
-!204 = !{!195, !193}
-!205 = !{!199}
-!206 = !{!201, !199}
+!189 = distinct !{!189, !73, !74, !75}
+!190 = distinct !{!190, !73, !75, !74}
+!191 = distinct !{null}
+!192 = !{!188, !186}
+!193 = distinct !{!193, !"_ZN4llvm13map_to_vectorIRNS_10iota_rangeIlEEZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS6_15PatternRewriterEEUllE_EEDaOT_OT0_"}
+!194 = distinct !{!194, !193, !"_ZN4llvm13map_to_vectorIRNS_10iota_rangeIlEEZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS6_15PatternRewriterEEUllE_EEDaOT_OT0_: argument 0"}
+!195 = distinct !{!195, !"_ZN4llvm9to_vectorINS_14iterator_rangeINS_15mapped_iteratorINS_6detail15SafeIntIteratorIlLb0EEEZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS8_15PatternRewriterEEUllE_lEEEEEENS_11SmallVectorINSt12remove_constINSt16remove_referenceIDTdecl9adl_beginclsr3stdE7declvalIRT_EEEEE4typeEE4typeEXsr42CalculateSmallVectorDefaultInlinedElementsISP_EE5valueEEEOSJ_"}
+!196 = distinct !{!196, !195, !"_ZN4llvm9to_vectorINS_14iterator_rangeINS_15mapped_iteratorINS_6detail15SafeIntIteratorIlLb0EEEZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS8_15PatternRewriterEEUllE_lEEEEEENS_11SmallVectorINSt12remove_constINSt16remove_referenceIDTdecl9adl_beginclsr3stdE7declvalIRT_EEEEE4typeEE4typeEXsr42CalculateSmallVectorDefaultInlinedElementsISP_EE5valueEEEOSJ_: argument 0"}
+!197 = distinct !{!197, !73, !74, !75}
+!198 = distinct !{!198, !73, !75, !74}
+!199 = distinct !{!199, !"_ZN4llvm13map_to_vectorIRNS_11SmallVectorIlLj6EEEZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS6_15PatternRewriterEEUllE0_EEDaOT_OT0_"}
+!200 = distinct !{!200, !199, !"_ZN4llvm13map_to_vectorIRNS_11SmallVectorIlLj6EEEZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS6_15PatternRewriterEEUllE0_EEDaOT_OT0_: argument 0"}
+!201 = distinct !{!201, !"_ZN4llvm9to_vectorINS_14iterator_rangeINS_15mapped_iteratorIPlZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS6_15PatternRewriterEEUllE0_lEEEEEENS_11SmallVectorINSt12remove_constINSt16remove_referenceIDTdecl9adl_beginclsr3stdE7declvalIRT_EEEEE4typeEE4typeEXsr42CalculateSmallVectorDefaultInlinedElementsISN_EE5valueEEEOSH_"}
+!202 = distinct !{!202, !201, !"_ZN4llvm9to_vectorINS_14iterator_rangeINS_15mapped_iteratorIPlZNK12_GLOBAL__N_121DeinterleaveToShuffle15matchAndRewriteEN4mlir6vector14DeinterleaveOpERNS6_15PatternRewriterEEUllE0_lEEEEEENS_11SmallVectorINSt12remove_constINSt16remove_referenceIDTdecl9adl_beginclsr3stdE7declvalIRT_EEEEE4typeEE4typeEXsr42CalculateSmallVectorDefaultInlinedElementsISN_EE5valueEEEOSH_: argument 0"}
+!203 = distinct !{!203, !73, !74, !75}
+!204 = distinct !{!204, !73, !74}
+!205 = !{!196, !194}
+!206 = !{!200}
+!207 = !{!202, !200}
 end_hunk_0

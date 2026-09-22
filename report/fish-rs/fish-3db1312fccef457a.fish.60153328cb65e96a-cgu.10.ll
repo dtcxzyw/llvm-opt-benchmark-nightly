@@ -205,7 +205,7 @@ _RNCINvMNtCs1xwejQucwHj_5alloc5sliceSINtNtB7_4sync3ArcNtNtCs8frGy5WneL6_4fish5ev
   br i1 %.sroa.0.0.i.i.i38, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtCs8frGy5WneL6_4fish5event12EventHandlerENCINvMNtB17_5sliceSB12_7sort_byNCNvB1C_5print0E0EB1E_.exit.i, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSINtNtB7_4sync3ArcNtNtCs8frGy5WneL6_4fish5event12EventHandlerE7sort_byNCNvBR_5print0E0BT_.exit62.thread
 
 _RNCINvMNtCs1xwejQucwHj_5alloc5sliceSINtNtB7_4sync3ArcNtNtCs8frGy5WneL6_4fish5event12EventHandlerE7sort_byNCNvBR_5print0E0BT_.exit62.thread: ; preds = %bb.v, %bb.aa, %._crit_edge.i18.i.i.i47, %._crit_edge.i.i.i.i60, %.split101, %.loopexit.i15.i.i.i45, %.split100, %.loopexit.i.i.i.i58, %.split99, %.split98, %.split97, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSINtNtB7_4sync3ArcNtNtCs8frGy5WneL6_4fish5event12EventHandlerE7sort_byNCNvBR_5print0E0BT_.exit62
-  %i.ej = add nuw i64 %.sroa.01.0.i.i150, 1       ; 2 uses
+  %i.ej = add nuw nsw i64 %.sroa.01.0.i.i150, 1   ; 2 uses
   %exitcond.not = icmp eq i64 %i.ej, %umax
   br i1 %exitcond.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtCs8frGy5WneL6_4fish5event12EventHandlerENCINvMNtB17_5sliceSB12_7sort_byNCNvB1C_5print0E0EB1E_.exit.i, label %.lr.ph
 
@@ -376,7 +376,7 @@ _RNCINvMNtCs1xwejQucwHj_5alloc5sliceSINtNtB7_4sync3ArcNtNtCs8frGy5WneL6_4fish5ev
   br i1 %.sroa.0.0.i.i.i, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSINtNtB7_4sync3ArcNtNtCs8frGy5WneL6_4fish5event12EventHandlerE7sort_byNCNvBR_5print0E0BT_.exit.thread103, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtCs8frGy5WneL6_4fish5event12EventHandlerENCINvMNtB17_5sliceSB12_7sort_byNCNvB1C_5print0E0EB1E_.exit.i
 
 _RNCINvMNtCs1xwejQucwHj_5alloc5sliceSINtNtB7_4sync3ArcNtNtCs8frGy5WneL6_4fish5event12EventHandlerE7sort_byNCNvBR_5print0E0BT_.exit.thread103: ; preds = %bb.al, %._crit_edge.i18.i.i.i, %._crit_edge.i.i.i.i, %.split109, %.loopexit.i15.i.i.i, %.split108, %.loopexit.i.i.i.i, %.split107, %.split106, %.split105, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSINtNtB7_4sync3ArcNtNtCs8frGy5WneL6_4fish5event12EventHandlerE7sort_byNCNvBR_5print0E0BT_.exit
-  %i.gu = add nuw i64 %.sroa.01.1.i.i163, 1       ; 2 uses
+  %i.gu = add nuw nsw i64 %.sroa.01.1.i.i163, 1   ; 2 uses
   %exitcond216.not = icmp eq i64 %i.gu, %umax215
   br i1 %exitcond216.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtCs8frGy5WneL6_4fish5event12EventHandlerENCINvMNtB17_5sliceSB12_7sort_byNCNvB1C_5print0E0EB1E_.exit.i, label %.lr.ph164
 
@@ -779,7 +779,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ah, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runINtNtCs1xwejQucwHj_5alloc6borrow3CowNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrENCINvMNtB17_5sliceSB12_7sort_byNCNvNtNtCs8frGy5WneL6_4fish8builtins4path9path_sorts1_0E0EB30_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.ai = add nuw i64 %.sroa.01.0.i.i72, 1        ; 2 uses
+  %i.ai = add nuw nsw i64 %.sroa.01.0.i.i72, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.ai, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runINtNtCs1xwejQucwHj_5alloc6borrow3CowNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrENCINvMNtB17_5sliceSB12_7sort_byNCNvNtNtCs8frGy5WneL6_4fish8builtins4path9path_sorts1_0E0EB30_.exit.i, label %.lr.ph
 
@@ -806,7 +806,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.as, label %bb.m, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runINtNtCs1xwejQucwHj_5alloc6borrow3CowNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrENCINvMNtB17_5sliceSB12_7sort_byNCNvNtNtCs8frGy5WneL6_4fish8builtins4path9path_sorts1_0E0EB30_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph76
-  %i.at = add nuw i64 %.sroa.01.1.i.i75, 1        ; 2 uses
+  %i.at = add nuw nsw i64 %.sroa.01.1.i.i75, 1    ; 2 uses
   %exitcond102.not = icmp eq i64 %i.at, %i.n
   br i1 %exitcond102.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runINtNtCs1xwejQucwHj_5alloc6borrow3CowNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrENCINvMNtB17_5sliceSB12_7sort_byNCNvNtNtCs8frGy5WneL6_4fish8builtins4path9path_sorts1_0E0EB30_.exit.i, label %.lr.ph76
 
@@ -1209,7 +1209,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.av, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runINtNtCs1xwejQucwHj_5alloc6borrow3CowNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrENCINvMNtB17_5sliceSB12_7sort_byNCNvNtNtCs8frGy5WneL6_4fish8builtins4path9path_sorts_0E0EB30_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.aw = add nuw i64 %.sroa.01.0.i.i74, 1        ; 2 uses
+  %i.aw = add nuw nsw i64 %.sroa.01.0.i.i74, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.aw, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runINtNtCs1xwejQucwHj_5alloc6borrow3CowNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrENCINvMNtB17_5sliceSB12_7sort_byNCNvNtNtCs8frGy5WneL6_4fish8builtins4path9path_sorts_0E0EB30_.exit.i, label %.lr.ph
 
@@ -1242,7 +1242,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.bl, label %bb.m, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runINtNtCs1xwejQucwHj_5alloc6borrow3CowNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrENCINvMNtB17_5sliceSB12_7sort_byNCNvNtNtCs8frGy5WneL6_4fish8builtins4path9path_sorts_0E0EB30_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph78
-  %i.bm = add nuw i64 %.sroa.01.1.i.i77, 1        ; 2 uses
+  %i.bm = add nuw nsw i64 %.sroa.01.1.i.i77, 1    ; 2 uses
   %exitcond104.not = icmp eq i64 %i.bm, %i.n
   br i1 %exitcond104.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runINtNtCs1xwejQucwHj_5alloc6borrow3CowNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrENCINvMNtB17_5sliceSB12_7sort_byNCNvNtNtCs8frGy5WneL6_4fish8builtins4path9path_sorts_0E0EB30_.exit.i, label %.lr.ph78
 
@@ -1645,7 +1645,7 @@ _RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completio
   br i1 %i.ca, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtCs8frGy5WneL6_4fish8complete10CompletionNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNCNvB14_19sort_and_prioritizes_0E0EB16_.exit.i, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit45.thread
 
 _RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit45.thread: ; preds = %bb.o, %bb.p, %bb.q, %.split56, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit45
-  %i.cb = add nuw i64 %.sroa.01.0.i.i97, 1        ; 2 uses
+  %i.cb = add nuw nsw i64 %.sroa.01.0.i.i97, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.cb, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtCs8frGy5WneL6_4fish8complete10CompletionNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNCNvB14_19sort_and_prioritizes_0E0EB16_.exit.i, label %.lr.ph
 
@@ -1715,14 +1715,14 @@ _RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completio
   br i1 %i.di, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit.thread58, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtCs8frGy5WneL6_4fish8complete10CompletionNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNCNvB14_19sort_and_prioritizes_0E0EB16_.exit.i
 
 _RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit.thread58: ; preds = %bb.r, %.split60, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit
-  %i.dj = add nuw i64 %.sroa.01.1.i.i101, 1       ; 2 uses
+  %i.dj = add nuw nsw i64 %.sroa.01.1.i.i101, 1   ; 2 uses
   %exitcond141.not = icmp eq i64 %i.dj, %i.n
   br i1 %exitcond141.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtCs8frGy5WneL6_4fish8complete10CompletionNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNCNvB14_19sort_and_prioritizes_0E0EB16_.exit.i, label %.lr.ph102
 
 _RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtCs8frGy5WneL6_4fish8complete10CompletionNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNCNvB14_19sort_and_prioritizes_0E0EB16_.exit.i: ; preds = %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit45.thread, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit45, %.split56, %bb.o, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit.thread58, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit, %.split60, %bb.t, %bb.s, %bb.r, %.split52.preheader, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit49.preheader
   %.sroa.3.0.i.i = phi i1 [ true, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit49.preheader ], [ false, %.split52.preheader ], [ true, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit.thread58 ], [ true, %bb.r ], [ true, %bb.s ], [ true, %bb.t ], [ true, %.split60 ], [ true, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit ], [ false, %bb.o ], [ false, %.split56 ], [ false, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit45 ], [ false, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit45.thread ]
   %.sroa.0.0.i.i = phi i64 [ 2, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit49.preheader ], [ 2, %.split52.preheader ], [ %i.n, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit.thread58 ], [ %.sroa.01.1.i.i101, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit ], [ %.sroa.01.1.i.i101, %.split60 ], [ %.sroa.01.1.i.i101, %bb.t ], [ %.sroa.01.1.i.i101, %bb.s ], [ %.sroa.01.1.i.i101, %bb.r ], [ %.sroa.01.0.i.i97, %.split56 ], [ %.sroa.01.0.i.i97, %bb.o ], [ %i.n, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit45.thread ], [ %.sroa.01.0.i.i97, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit45 ] ; 7 uses
-  %i.dk = icmp ule i64 %.sroa.0.0.i.i, %i.n
+  %i.dk = icmp samesign ule i64 %.sroa.0.0.i.i, %i.n
   tail call void @llvm.assume(i1 %i.dk)
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
   br i1 %.not5.i, label %bb.i, label %bb.u
@@ -2125,7 +2125,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.aa, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtCs8frGy5WneL6_4fish8complete10CompletionNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNCNvMs0_NtB16_6expandNtB2D_8Expander15stage_wildcardss_0E0EB16_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.ab = add nuw i64 %.sroa.01.0.i.i63, 1        ; 2 uses
+  %i.ab = add nuw nsw i64 %.sroa.01.0.i.i63, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.ab, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtCs8frGy5WneL6_4fish8complete10CompletionNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNCNvMs0_NtB16_6expandNtB2D_8Expander15stage_wildcardss_0E0EB16_.exit.i, label %.lr.ph
 
@@ -2143,7 +2143,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.ag, label %bb.m, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtCs8frGy5WneL6_4fish8complete10CompletionNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNCNvMs0_NtB16_6expandNtB2D_8Expander15stage_wildcardss_0E0EB16_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph67
-  %i.ah = add nuw i64 %.sroa.01.1.i.i66, 1        ; 2 uses
+  %i.ah = add nuw nsw i64 %.sroa.01.1.i.i66, 1    ; 2 uses
   %exitcond93.not = icmp eq i64 %i.ah, %i.n
   br i1 %exitcond93.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtCs8frGy5WneL6_4fish8complete10CompletionNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNCNvMs0_NtB16_6expandNtB2D_8Expander15stage_wildcardss_0E0EB16_.exit.i, label %.lr.ph67
 
@@ -2546,7 +2546,7 @@ _RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completio
   br i1 %i.bb, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtCs8frGy5WneL6_4fish8complete10CompletionNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNvB14_27natural_compare_completionsE0EB16_.exit.i, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNvBA_27natural_compare_completionsE0BC_.exit43.thread
 
 _RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNvBA_27natural_compare_completionsE0BC_.exit43.thread: ; preds = %bb.o, %.lr.ph, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNvBA_27natural_compare_completionsE0BC_.exit43
-  %i.bc = add nuw i64 %.sroa.01.0.i.i80, 1        ; 2 uses
+  %i.bc = add nuw nsw i64 %.sroa.01.0.i.i80, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.bc, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtCs8frGy5WneL6_4fish8complete10CompletionNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNvB14_27natural_compare_completionsE0EB16_.exit.i, label %.lr.ph
 
@@ -2595,14 +2595,14 @@ _RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completio
   br i1 %i.bx, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNvBA_27natural_compare_completionsE0BC_.exit.thread55, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtCs8frGy5WneL6_4fish8complete10CompletionNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNvB14_27natural_compare_completionsE0EB16_.exit.i
 
 _RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNvBA_27natural_compare_completionsE0BC_.exit.thread55: ; preds = %bb.p, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNvBA_27natural_compare_completionsE0BC_.exit
-  %i.by = add nuw i64 %.sroa.01.1.i.i84, 1        ; 2 uses
+  %i.by = add nuw nsw i64 %.sroa.01.1.i.i84, 1    ; 2 uses
   %exitcond114.not = icmp eq i64 %i.by, %i.n
   br i1 %exitcond114.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtCs8frGy5WneL6_4fish8complete10CompletionNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNvB14_27natural_compare_completionsE0EB16_.exit.i, label %.lr.ph85
 
 _RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtCs8frGy5WneL6_4fish8complete10CompletionNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNvB14_27natural_compare_completionsE0EB16_.exit.i: ; preds = %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNvBA_27natural_compare_completionsE0BC_.exit43.thread, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNvBA_27natural_compare_completionsE0BC_.exit43, %bb.n, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNvBA_27natural_compare_completionsE0BC_.exit.thread55, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNvBA_27natural_compare_completionsE0BC_.exit, %.lr.ph85, %bb.q, %.preheader, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNvBA_27natural_compare_completionsE0BC_.exit48.preheader
   %.sroa.3.0.i.i = phi i1 [ true, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNvBA_27natural_compare_completionsE0BC_.exit48.preheader ], [ true, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNvBA_27natural_compare_completionsE0BC_.exit.thread55 ], [ false, %.preheader ], [ true, %bb.q ], [ true, %.lr.ph85 ], [ true, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNvBA_27natural_compare_completionsE0BC_.exit ], [ false, %bb.n ], [ false, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNvBA_27natural_compare_completionsE0BC_.exit43 ], [ false, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNvBA_27natural_compare_completionsE0BC_.exit43.thread ]
   %.sroa.0.0.i.i = phi i64 [ 2, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNvBA_27natural_compare_completionsE0BC_.exit48.preheader ], [ %i.n, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNvBA_27natural_compare_completionsE0BC_.exit.thread55 ], [ 2, %.preheader ], [ %.sroa.01.1.i.i84, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNvBA_27natural_compare_completionsE0BC_.exit ], [ %.sroa.01.1.i.i84, %.lr.ph85 ], [ %.sroa.01.1.i.i84, %bb.q ], [ %.sroa.01.0.i.i80, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNvBA_27natural_compare_completionsE0BC_.exit43 ], [ %.sroa.01.0.i.i80, %bb.n ], [ %i.n, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNvBA_27natural_compare_completionsE0BC_.exit43.thread ] ; 7 uses
-  %i.bz = icmp ule i64 %.sroa.0.0.i.i, %i.n
+  %i.bz = icmp samesign ule i64 %.sroa.0.0.i.i, %i.n
   tail call void @llvm.assume(i1 %i.bz)
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
   br i1 %.not5.i, label %bb.i, label %bb.r
@@ -3005,7 +3005,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.aa, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNCNvNtNtCs8frGy5WneL6_4fish8builtins6status6statuss1_0E0EB2M_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.ab = add nuw i64 %.sroa.01.0.i.i63, 1        ; 2 uses
+  %i.ab = add nuw nsw i64 %.sroa.01.0.i.i63, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.ab, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNCNvNtNtCs8frGy5WneL6_4fish8builtins6status6statuss1_0E0EB2M_.exit.i, label %.lr.ph
 
@@ -3023,7 +3023,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.ag, label %bb.m, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNCNvNtNtCs8frGy5WneL6_4fish8builtins6status6statuss1_0E0EB2M_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph67
-  %i.ah = add nuw i64 %.sroa.01.1.i.i66, 1        ; 2 uses
+  %i.ah = add nuw nsw i64 %.sroa.01.1.i.i66, 1    ; 2 uses
   %exitcond93.not = icmp eq i64 %i.ah, %i.n
   br i1 %exitcond93.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNCNvNtNtCs8frGy5WneL6_4fish8builtins6status6statuss1_0E0EB2M_.exit.i, label %.lr.ph67
 
@@ -3420,7 +3420,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.aa, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringNvYB12_NtNtB8_3cmp10PartialOrd2ltECs8frGy5WneL6_4fish.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.ab = add nuw i64 %.sroa.01.0.i.i63, 1        ; 2 uses
+  %i.ab = add nuw nsw i64 %.sroa.01.0.i.i63, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.ab, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringNvYB12_NtNtB8_3cmp10PartialOrd2ltECs8frGy5WneL6_4fish.exit.i, label %.lr.ph
 
@@ -3438,7 +3438,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.ag, label %bb.m, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringNvYB12_NtNtB8_3cmp10PartialOrd2ltECs8frGy5WneL6_4fish.exit.i
 
 bb.m:                                             ; preds = %.lr.ph67
-  %i.ah = add nuw i64 %.sroa.01.1.i.i66, 1        ; 2 uses
+  %i.ah = add nuw nsw i64 %.sroa.01.1.i.i66, 1    ; 2 uses
   %exitcond93.not = icmp eq i64 %i.ah, %i.n
   br i1 %exitcond93.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringNvYB12_NtNtB8_3cmp10PartialOrd2ltECs8frGy5WneL6_4fish.exit.i, label %.lr.ph67
 
@@ -3838,7 +3838,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ae, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtNtCs8frGy5WneL6_4fish7history7history11HistoryItemNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_11sort_by_keyNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNvMs2_B14_B12_20last_added_timestampE0EB18_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.af = add nuw i64 %.sroa.01.0.i.i52, 1        ; 2 uses
+  %i.af = add nuw nsw i64 %.sroa.01.0.i.i52, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.af, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtNtCs8frGy5WneL6_4fish7history7history11HistoryItemNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_11sort_by_keyNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNvMs2_B14_B12_20last_added_timestampE0EB18_.exit.i, label %.lr.ph
 
@@ -3858,7 +3858,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.am, label %bb.m, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtNtCs8frGy5WneL6_4fish7history7history11HistoryItemNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_11sort_by_keyNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNvMs2_B14_B12_20last_added_timestampE0EB18_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph56
-  %i.an = add nuw i64 %.sroa.01.1.i.i55, 1        ; 2 uses
+  %i.an = add nuw nsw i64 %.sroa.01.1.i.i55, 1    ; 2 uses
   %exitcond76.not = icmp eq i64 %i.an, %i.n
   br i1 %exitcond76.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtNtCs8frGy5WneL6_4fish7history7history11HistoryItemNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_11sort_by_keyNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNvMs2_B14_B12_20last_added_timestampE0EB18_.exit.i, label %.lr.ph56
 
@@ -4229,7 +4229,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ac, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runTRNtNtCs8frGy5WneL6_4fish8complete20CompletionEntryIndexRNtB16_15CompletionEntryENCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_11sort_by_keyjNCNvB16_14complete_print0E0EB18_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.ad = add nuw i64 %.sroa.01.0.i.i51, 1        ; 2 uses
+  %i.ad = add nuw nsw i64 %.sroa.01.0.i.i51, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.ad, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runTRNtNtCs8frGy5WneL6_4fish8complete20CompletionEntryIndexRNtB16_15CompletionEntryENCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_11sort_by_keyjNCNvB16_14complete_print0E0EB18_.exit.i, label %.lr.ph
 
@@ -4245,7 +4245,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.aj, label %bb.m, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runTRNtNtCs8frGy5WneL6_4fish8complete20CompletionEntryIndexRNtB16_15CompletionEntryENCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_11sort_by_keyjNCNvB16_14complete_print0E0EB18_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph55
-  %i.ak = add nuw i64 %.sroa.01.1.i.i54, 1        ; 2 uses
+  %i.ak = add nuw nsw i64 %.sroa.01.1.i.i54, 1    ; 2 uses
   %exitcond75.not = icmp eq i64 %i.ak, %i.n
   br i1 %exitcond75.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runTRNtNtCs8frGy5WneL6_4fish8complete20CompletionEntryIndexRNtB16_15CompletionEntryENCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_11sort_by_keyjNCNvB16_14complete_print0E0EB18_.exit.i, label %.lr.ph55
 
@@ -4648,7 +4648,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ad, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runTRNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringRNtNtNtCs8frGy5WneL6_4fish3env3var6EnvVarENCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_11sort_by_keyB13_NCNvMNtB22_20env_universal_commonNtB3A_12EnvUniversal19serialize_with_vars0E0EB22_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.ae = add nuw i64 %.sroa.01.0.i.i71, 1        ; 2 uses
+  %i.ae = add nuw nsw i64 %.sroa.01.0.i.i71, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.ae, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runTRNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringRNtNtNtCs8frGy5WneL6_4fish3env3var6EnvVarENCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_11sort_by_keyB13_NCNvMNtB22_20env_universal_commonNtB3A_12EnvUniversal19serialize_with_vars0E0EB22_.exit.i, label %.lr.ph
 
@@ -4670,7 +4670,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.al, label %bb.m, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runTRNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringRNtNtNtCs8frGy5WneL6_4fish3env3var6EnvVarENCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_11sort_by_keyB13_NCNvMNtB22_20env_universal_commonNtB3A_12EnvUniversal19serialize_with_vars0E0EB22_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph75
-  %i.am = add nuw i64 %.sroa.01.1.i.i74, 1        ; 2 uses
+  %i.am = add nuw nsw i64 %.sroa.01.1.i.i74, 1    ; 2 uses
   %exitcond101.not = icmp eq i64 %i.am, %i.n
   br i1 %exitcond101.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runTRNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringRNtNtNtCs8frGy5WneL6_4fish3env3var6EnvVarENCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_11sort_by_keyB13_NCNvMNtB22_20env_universal_commonNtB3A_12EnvUniversal19serialize_with_vars0E0EB22_.exit.i, label %.lr.ph75
 
@@ -5073,7 +5073,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.t, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runiNCINvMNtCs1xwejQucwHj_5alloc5sliceSi11sort_by_keyINtNtB8_3cmp7ReverseiENCNvNtNtCs8frGy5WneL6_4fish8builtins3set17erased_at_indexes0E0EB2k_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.u = add nuw i64 %.sroa.01.0.i.i51, 1         ; 2 uses
+  %i.u = add nuw nsw i64 %.sroa.01.0.i.i51, 1     ; 2 uses
   %exitcond.not = icmp eq i64 %i.u, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runiNCINvMNtCs1xwejQucwHj_5alloc5sliceSi11sort_by_keyINtNtB8_3cmp7ReverseiENCNvNtNtCs8frGy5WneL6_4fish8builtins3set17erased_at_indexes0E0EB2k_.exit.i, label %.lr.ph
 
@@ -5086,7 +5086,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.w, label %bb.m, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runiNCINvMNtCs1xwejQucwHj_5alloc5sliceSi11sort_by_keyINtNtB8_3cmp7ReverseiENCNvNtNtCs8frGy5WneL6_4fish8builtins3set17erased_at_indexes0E0EB2k_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph55
-  %i.x = add nuw i64 %.sroa.01.1.i.i54, 1         ; 2 uses
+  %i.x = add nuw nsw i64 %.sroa.01.1.i.i54, 1     ; 2 uses
   %exitcond75.not = icmp eq i64 %i.x, %i.n
   br i1 %exitcond75.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runiNCINvMNtCs1xwejQucwHj_5alloc5sliceSi11sort_by_keyINtNtB8_3cmp7ReverseiENCNvNtNtCs8frGy5WneL6_4fish8builtins3set17erased_at_indexes0E0EB2k_.exit.i, label %.lr.ph55
 

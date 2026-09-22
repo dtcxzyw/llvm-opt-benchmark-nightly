@@ -205,22 +205,23 @@ iter.check201:                                    ; preds = %bb.d
   %i.bg = trunc i32 %.us-phi to i16               ; 8 uses
   %i.bh = add i32 %.us-phi, 1
   %i.bi = and i32 %i.bh, 65535                    ; 2 uses
-  %umax189 = tail call i32 @llvm.umax.i32(i32 %.fr147, i32 %i.bi)
-  %i.bj = add i32 %umax189, 1
+  %umax189 = tail call i32 @llvm.smax.i32(i32 %.fr147, i32 %i.bi)
+  %i.bj = add nuw i32 %umax189, 1
   %i.bk = sub i32 %i.bj, %i.bi                    ; 7 uses
   %min.iters.check190 = icmp ult i32 %i.bk, 4
   br i1 %min.iters.check190, label %.lr.ph.preheader, label %vector.scevcheck188
 
 vector.scevcheck188:                              ; preds = %iter.check201
   %i.bl = add i32 %.us-phi, 1
-  %i.bm = and i32 %i.bl, 65535
-  %i.bn = tail call i32 @llvm.usub.sat.i32(i32 %.fr147, i32 %i.bm) ; 2 uses
-  %i.bo = trunc i32 %i.bn to i16                  ; 2 uses
+  %i.bm = and i32 %i.bl, 65535                    ; 2 uses
+  %i.bn = tail call i32 @llvm.smax.i32(i32 %.fr147, i32 %i.bm)
+  %4 = sub nsw i32 %i.bn, %i.bm                   ; 2 uses
+  %i.bo = trunc i32 %4 to i16                     ; 2 uses
   %i.bp = sub i16 -2, %i.bg
   %i.bq = icmp ult i16 %i.bp, %i.bo
   %i.br = xor i16 %i.bg, -1
   %i.bs = icmp ult i16 %i.br, %i.bo
-  %i.bt = icmp ugt i32 %i.bn, 65535
+  %i.bt = icmp ugt i32 %4, 65535
   %i.bu = or i1 %i.bs, %i.bt
   %i.bv = or i1 %i.bq, %i.bu
   br i1 %i.bv, label %.lr.ph.preheader, label %vector.main.loop.iter.check191
@@ -622,6 +623,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #10
