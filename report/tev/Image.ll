@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %_ZNK3fmt3v127contex
   %.sroa.083.0..sroa.083.0..sroa.083.0.95 = phi i32 [ %i.u, %_ZNK3fmt3v127context3argEi.exit.thread111 ], [ %i.ae, %_ZNK3fmt3v127context3argEi.exit ] ; 7 uses
   %.sroa.083.0..sroa.083.0..sroa.083.0.92 = phi i64 [ %i.q, %_ZNK3fmt3v127context3argEi.exit.thread111 ], [ %i.aa, %_ZNK3fmt3v127context3argEi.exit ] ; 13 uses
   %.sroa.083.0..sroa.083.0..sroa.083.0.84 = phi i128 [ %.sroa.083.0.copyload98, %_ZNK3fmt3v127context3argEi.exit.thread111 ], [ %.sroa.083.0.copyload, %_ZNK3fmt3v127context3argEi.exit ] ; 6 uses
-  %.sroa.083.0..sroa.083.0..sroa.083.0.97 = phi i8 [ %i.v, %_ZNK3fmt3v127context3argEi.exit.thread111 ], [ %i.af, %_ZNK3fmt3v127context3argEi.exit ] ; 3 uses
+  %.sroa.083.0..sroa.083.0..sroa.083.0.97 = phi i8 [ %i.v, %_ZNK3fmt3v127context3argEi.exit.thread111 ], [ %i.af, %_ZNK3fmt3v127context3argEi.exit ] ; 4 uses
   %.sroa.083.0..sroa.083.0..sroa.083.0.85.in = phi i80 [ %i.t, %_ZNK3fmt3v127context3argEi.exit.thread111 ], [ %i.ad, %_ZNK3fmt3v127context3argEi.exit ]
   %.sroa.083.8..sroa.083.8..sroa.083.8.101 = phi i64 [ %i.s, %_ZNK3fmt3v127context3argEi.exit.thread111 ], [ %i.ac, %_ZNK3fmt3v127context3argEi.exit ] ; 2 uses
   %.sroa.23.0113 = phi i32 [ %i.l, %_ZNK3fmt3v127context3argEi.exit.thread111 ], [ %.sroa.23.0.copyload, %_ZNK3fmt3v127context3argEi.exit ] ; 3 uses
@@ -540,11 +540,10 @@ bb.ah:                                            ; preds = %bb.ag
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
   %i.eh = and i32 %i.ee, 16384
   %.not.i58 = icmp eq i32 %i.eh, 0
-  %.pre148 = and i8 %.sroa.083.0..sroa.083.0..sroa.083.0.97, 1 ; 2 uses
   br i1 %.not.i58, label %._crit_edge147, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.ei = zext nneg i8 %.pre148 to i32
+  %i.ei = zext nneg i8 %.sroa.083.0..sroa.083.0..sroa.083.0.97 to i32
   store i32 %i.ei, ptr %7, align 16, !tbaa !126
   %i.ej = getelementptr inbounds nuw i8, ptr %7, i64 16
   store i32 1, ptr %i.ej, align 16, !tbaa !821
@@ -555,7 +554,7 @@ bb.ai:                                            ; preds = %bb.ah
   %.pre.i = load i32, ptr %16, align 8, !tbaa !802
   br label %._crit_edge147
 
-._crit_edge147:                                   ; preds = %bb.ah, %._crit_edge.i
+._crit_edge147:                                   ; preds = %._crit_edge.i, %bb.ah
   %i.el = phi i32 [ %.pre.i, %._crit_edge.i ], [ %i.ee, %bb.ah ]
   %i.em = lshr i32 %i.el, 10
   %i.en = and i32 %i.em, 3
@@ -564,7 +563,7 @@ bb.ai:                                            ; preds = %bb.ah
   %i.eq = load i32, ptr %i.ep, align 4, !tbaa !286
   %i.er = zext i32 %i.eq to i64
   %i.es = shl nuw i64 %i.er, 32
-  %.sroa.0.0.insert.ext.i.i = zext nneg i8 %.pre148 to i64
+  %.sroa.0.0.insert.ext.i.i = zext nneg i8 %.sroa.083.0..sroa.083.0..sroa.083.0.97 to i64
   %.sroa.0.0.insert.insert.i.i = or disjoint i64 %i.es, %.sroa.0.0.insert.ext.i.i
   %i.et = call ptr @_ZN3fmt3v126detail18write_int_noinlineIcNS0_14basic_appenderIcEEjEET0_S5_NS1_13write_int_argIT1_EERKNS0_12format_specsE(ptr %.sroa.0.0.copyload.i48, i64 %.sroa.0.0.insert.insert.i.i, ptr noundef nonnull align 4 dereferenceable(16) %16) ; 0 uses
   br label %_ZN3fmt3v126detail5writeIciTnNSt3__19enable_ifIXaaaasr11is_integralIT0_EE5valuentsr3std7is_sameIS5_bEE5valuentsr3std7is_sameIS5_T_EE5valueEiE4typeELi0EEENS0_14basic_appenderIS6_EESA_S5_RKNS0_12format_specsENS0_10locale_refE.exit.i

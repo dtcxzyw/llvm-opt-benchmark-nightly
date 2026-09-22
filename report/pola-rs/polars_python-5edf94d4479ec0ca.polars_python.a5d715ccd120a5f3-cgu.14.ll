@@ -205,8 +205,7 @@ _RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   unreachable, !dbg !7032
 
 .loopexit133:                                     ; preds = %bb.d
-  %.mask = and i8 %.promoted26.i, 1, !dbg !7021
-  %spec.select189 = zext nneg i8 %.mask to i64, !dbg !7021
+  %spec.select189 = zext nneg i8 %.promoted26.i to i64, !dbg !7021
   br label %_RNvXsv_NtNtCscgRAwXFJnXP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, !dbg !7021
 
 bb.q:                                             ; preds = %bb.k

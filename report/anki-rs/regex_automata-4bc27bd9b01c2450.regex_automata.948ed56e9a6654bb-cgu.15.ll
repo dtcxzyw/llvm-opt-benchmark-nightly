@@ -204,8 +204,7 @@ bb.a:
 define hidden zeroext i1 @_ZN14regex_automata4util6search9MatchKind25continue_past_first_match17h986dda88199d7caeE(ptr nofree readonly align 1 captures(none) %0) unnamed_addr #7 {
 bb.a:
   %.val = load i8, ptr %0, align 1
-  %1 = and i8 %.val, 1
-  %i.a = icmp eq i8 %1, 0
+  %i.a = icmp eq i8 %.val, 0
   ret i1 %i.a
 }
 
@@ -608,9 +607,8 @@ define zeroext i1 @_ZN4core3cmp9PartialEq2ne17h868220df1bc9e393E(ptr nofree read
 bb.a:
   %.val = load i8, ptr %0, align 1
   %.val1 = load i8, ptr %1, align 1
-  %2 = xor i8 %.val1, %.val
-  %3 = trunc i8 %2 to i1
-  ret i1 %3
+  %2 = icmp ne i8 %.val, %.val1
+  ret i1 %2
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable

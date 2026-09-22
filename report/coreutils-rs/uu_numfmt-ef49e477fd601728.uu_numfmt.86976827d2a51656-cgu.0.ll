@@ -204,8 +204,7 @@ bb.gn:                                            ; preds = %bb.gm
   br label %_RINvNtNtCs6JMX4GRUq9U_4core3str11validations15next_code_pointINtNtNtB6_5slice4iter4IterhEECsbyqtxyC5WYI_9uu_numfmt.exit37.i.i
 
 bb.go:                                            ; preds = %bb.gm
-  %5 = and i8 %i.em, 1
-  %narrow27.i.i = add nuw nsw i8 %5, 1
+  %narrow27.i.i = add nuw nsw i8 %i.em, 1
   %i.ago = zext nneg i8 %narrow27.i.i to i64
   br label %_RINvNtNtCs6JMX4GRUq9U_4core3str11validations15next_code_pointINtNtNtB6_5slice4iter4IterhEECsbyqtxyC5WYI_9uu_numfmt.exit37.i.i
 
@@ -608,8 +607,7 @@ _RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit141.i: ; pre
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !2475
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !2475
   %spec.select.i = select i1 %i.jb, ptr @127, ptr inttoptr (i64 1 to ptr)
-  %.mask.i = and i8 %.sroa.65.0.copyload, 1
-  %spec.select436.i = zext nneg i8 %.mask.i to i64
+  %spec.select436.i = zext nneg i8 %.sroa.65.0.copyload to i64
   store ptr %spec.select.i, ptr %i.l, align 8, !noalias !2475, !captures !23
   %i.bbb = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   store i64 %spec.select436.i, ptr %i.bbb, align 8, !noalias !2475

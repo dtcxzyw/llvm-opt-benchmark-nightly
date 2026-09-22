@@ -204,9 +204,8 @@ bb.a:
   %i.r = zext nneg i32 %narrow to i64
   %i.s = getelementptr i8, ptr @indent_buffer, i64 %i.r ; 17 uses
   %i.t = shl nuw nsw i32 %i.p, 1
-  %8 = and i32 %i.t, 510
-  %narrow499 = sub nuw nsw i32 512, %8
-  %9 = zext nneg i32 %narrow499 to i64
+  %8 = zext nneg i32 %i.t to i64
+  %9 = sub nuw nsw i64 512, %8
   %i.u = getelementptr i8, ptr @indent_buffer, i64 %9 ; 6 uses
   %i.v = getelementptr i8, ptr %7, i64 40
   %i.w = getelementptr i8, ptr %7, i64 48

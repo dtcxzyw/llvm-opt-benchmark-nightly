@@ -205,10 +205,9 @@ switch.lookup834:                                 ; preds = %bb.by
   store ptr %i.ja, ptr %50, align 8, !tbaa !29, !alias.scope !419
   %i.jb = getelementptr inbounds nuw i8, ptr %50, i64 8
   %i.jc = getelementptr inbounds nuw i8, ptr %50, i64 17
-  %i.jd = trunc i64 %.085577 to i40
-  %switch.cast = shl i40 %i.jd, 3
-  %switch.shiftamt835 = and i40 %switch.cast, 34359738360
-  %switch.downshift836 = lshr i40 504398248052, %switch.shiftamt835
+  %i.jd = trunc nuw nsw i64 %.085577 to i40
+  %switch.cast = shl nuw nsw i40 %i.jd, 3
+  %switch.downshift836 = lshr i40 504398248052, %switch.cast
   %switch.masked837 = trunc i40 %switch.downshift836 to i8
   store i8 %switch.masked837, ptr %i.ja, align 8, !tbaa !34, !alias.scope !419
   store i64 1, ptr %i.jb, align 8, !tbaa !35, !alias.scope !419

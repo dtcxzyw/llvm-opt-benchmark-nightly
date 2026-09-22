@@ -202,8 +202,8 @@ define ptr @_RINvMs0_NtNtNtNtCsaL1QbXo9JQH_3std3sys12thread_local6native4lazyINt
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8
-  %trunc = trunc i8 %i.b to i1
-  br i1 %trunc, label %bb.f, label %bb.b
+  %2 = icmp eq i8 %i.b, 0
+  br i1 %2, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
   %.not = icmp eq ptr %1, null
@@ -606,8 +606,7 @@ bb.c:                                             ; preds = %.thread, %bb.b
 define zeroext i1 @_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultbbE5is_okCsiHivYpkJ4Hu_2cc(ptr nofree readonly captures(none) %0) unnamed_addr #8 {
 bb.a:
   %i.a = load i8, ptr %0, align 1
-  %1 = and i8 %i.a, 1
-  %i.b = icmp eq i8 %1, 0
+  %i.b = icmp eq i8 %i.a, 0
   ret i1 %i.b
 }
 

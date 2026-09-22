@@ -205,7 +205,7 @@ _ZN11hb_vector_tIjLb0EE6resizeEi.exit:            ; preds = %bb.h, %bb.f, %_ZN11
 
 .lr.ph:                                           ; preds = %.lr.ph363.split, %._crit_edge
   %indvars.iv = phi i64 [ 0, %.lr.ph363.split ], [ %indvars.iv.next, %._crit_edge ] ; 3 uses
-  %.0120362 = phi i1 [ false, %.lr.ph363.split ], [ %.3, %._crit_edge ] ; 2 uses
+  %.0120360 = phi i8 [ 0, %.lr.ph363.split ], [ %.3, %._crit_edge ] ; 2 uses
   %.not27.i = icmp samesign ult i64 %indvars.iv, %i.bp
   %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %i.aw, i64 %indvars.iv
   br i1 %.not27.i, label %.lr.ph.split, label %._crit_edge, !prof !470
@@ -232,25 +232,21 @@ _ZNK2OT7VarData19get_item_delta_fastEjjPKNS_7NumTypeILb1EhLj1EEEj.exit.thread: ;
   br i1 %.not146, label %._crit_edge, label %.lr.ph.split
 
 ._crit_edge:                                      ; preds = %_ZNK2OT7VarData19get_item_delta_fastEjjPKNS_7NumTypeILb1EhLj1EEEj.exit, %_ZNK2OT7VarData19get_item_delta_fastEjjPKNS_7NumTypeILb1EhLj1EEEj.exit.thread, %.lr.ph
-  %.3 = phi i1 [ %.0120362, %.lr.ph ], [ %.0120362, %_ZNK2OT7VarData19get_item_delta_fastEjjPKNS_7NumTypeILb1EhLj1EEEj.exit.thread ], [ true, %_ZNK2OT7VarData19get_item_delta_fastEjjPKNS_7NumTypeILb1EhLj1EEEj.exit ] ; 2 uses
+  %.3 = phi i8 [ %.0120360, %.lr.ph ], [ %.0120360, %_ZNK2OT7VarData19get_item_delta_fastEjjPKNS_7NumTypeILb1EhLj1EEEj.exit.thread ], [ 1, %_ZNK2OT7VarData19get_item_delta_fastEjjPKNS_7NumTypeILb1EhLj1EEEj.exit ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !1606
+  br i1 %exitcond.not, label %.thread, label %.lr.ph, !llvm.loop !1606
 
-.loopexit:                                        ; preds = %._crit_edge
-  br i1 %.3, label %.thread, label %6
-
-6:                                                ; preds = %.loopexit
-  br label %.thread
-
-.thread:                                          ; preds = %6, %.loopexit, %_ZN11hb_vector_tIjLb0EE6resizeEi.exit, %.lr.ph363
-  %7 = phi i32 [ -128, %.lr.ph363 ], [ -128, %6 ], [ -128, %_ZN11hb_vector_tIjLb0EE6resizeEi.exit ], [ -65536, %.loopexit ]
-  %.4470474 = phi i1 [ false, %.lr.ph363 ], [ false, %6 ], [ false, %_ZN11hb_vector_tIjLb0EE6resizeEi.exit ], [ true, %.loopexit ] ; 2 uses
-  %8 = phi i32 [ 127, %.lr.ph363 ], [ 127, %6 ], [ 127, %_ZN11hb_vector_tIjLb0EE6resizeEi.exit ], [ 65535, %.loopexit ]
+.thread:                                          ; preds = %._crit_edge, %.lr.ph363, %_ZN11hb_vector_tIjLb0EE6resizeEi.exit
+  %.4 = phi i8 [ 0, %_ZN11hb_vector_tIjLb0EE6resizeEi.exit ], [ 0, %.lr.ph363 ], [ %.3, %._crit_edge ] ; 2 uses
+  %6 = trunc nuw i8 %.4 to i1                     ; 3 uses
+  %7 = select i1 %6, i32 -65536, i32 -128
+  %8 = select i1 %6, i32 65535, i32 127
   br i1 %.not.i207.not, label %._crit_edge379, label %.lr.ph372
 
 .lr.ph372:                                        ; preds = %.thread
-  %9 = xor i1 %i.bg, %.4470474
+  %9 = zext i1 %i.bg to i8
+  %10 = icmp eq i8 %.4, %9
   %i.bx = load i32, ptr @_hb_NullPool, align 16   ; 3 uses
   %.not143.a = icmp eq ptr %5, null
   %i.by = getelementptr inbounds nuw i8, ptr %2, i64 6
@@ -275,8 +271,8 @@ _ZNK2OT7VarData19get_item_delta_fastEjjPKNS_7NumTypeILb1EhLj1EEEj.exit.thread: ;
 bb.i:                                             ; preds = %.lr.ph372, %.thread339
   %indvars.iv408 = phi i64 [ 0, %.lr.ph372 ], [ %indvars.iv.next409, %.thread339 ] ; 13 uses
   %.0127368 = phi i32 [ 0, %.lr.ph372 ], [ %.4131, %.thread339 ] ; 5 uses
-  %10 = icmp samesign ult i64 %indvars.iv408, %i.cf
-  %.not142 = or i1 %9, %10
+  %11 = icmp samesign uge i64 %indvars.iv408, %i.cf
+  %12 = and i1 %10, %11
   %.not.i151 = icmp samesign ult i64 %indvars.iv408, %i.ce ; 3 uses
   br i1 %.not.i151, label %bb.k, label %bb.j, !prof !219
 
@@ -515,9 +511,9 @@ _ZN11hb_vector_tIZN2OT7VarData9serializeEP22hb_serialize_context_tPKS1_RK14hb_in
   %.0.i167 = phi ptr [ @_hb_CrapPool, %bb.ag ], [ %i.ed, %bb.af ]
   store i32 1, ptr %.0.i167, align 4, !tbaa !1613
   %i.ft = getelementptr inbounds nuw i8, ptr %.0118365, i64 4 ; 2 uses
-  %.not144 = icmp ne ptr %i.ft, %i.ec
-  %or.cond391.not = select i1 %.not142, i1 %.not144, i1 false
-  br i1 %or.cond391.not, label %.backedge.backedge, label %.thread339
+  %.not142 = icmp eq ptr %i.ft, %i.ec
+  %or.cond391.not = select i1 %12, i1 true, i1 %.not142
+  br i1 %or.cond391.not, label %.thread339, label %.backedge.backedge
 
 bb.ah:                                            ; preds = %bb.ae
   %.old = getelementptr inbounds nuw i8, ptr %.0118365, i64 4 ; 2 uses
@@ -591,7 +587,7 @@ bb.al:                                            ; preds = %_ZN11hb_vector_tIZN
 ._crit_edge379:                                   ; preds = %bb.al, %.thread
   %.0127.lcssa478 = phi i32 [ 0, %.thread ], [ %.4131, %bb.al ]
   %.0112.lcssa = phi i32 [ 0, %.thread ], [ %.1, %bb.al ] ; 6 uses
-  %i.ge = select i1 %.4470474, i32 32768, i32 0
+  %i.ge = select i1 %6, i32 32768, i32 0
   %i.gf = or i32 %.0127.lcssa478, %i.ge
   %i.gg = trunc i32 %i.gf to i16
   %i.gh = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 3 uses

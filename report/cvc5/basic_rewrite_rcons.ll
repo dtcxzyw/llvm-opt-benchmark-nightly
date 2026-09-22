@@ -205,11 +205,10 @@ bb.acz:                                           ; preds = %bb.acx, %bb.acv, %_
 
 bb.ada:                                           ; preds = %bb.acz
   %i.cch = icmp ne i32 %i.cbc, 1
-  %i.cci = xor i1 %i.bxu, %i.cch                  ; 2 uses
-  %i.ccj = zext i1 %i.cci to i8
-  %295 = trunc i8 %.04483145 to i1
-  %296 = xor i1 %i.cci, %295
-  %or.cond = select i1 %.04563144, i1 %296, i1 false
+  %i.cci = xor i1 %i.bxu, %i.cch
+  %i.ccj = zext i1 %i.cci to i8                   ; 2 uses
+  %.not = icmp ne i8 %.04483145, %i.ccj
+  %or.cond = select i1 %.04563144, i1 %.not, i1 false
   br i1 %or.cond, label %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit1502, label %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit1394
 
 _ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit1394: ; preds = %bb.ada

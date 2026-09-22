@@ -205,12 +205,11 @@ _ZN4absl12lts_2025051214has_single_bitItEENSt9enable_ifIXsr3std11is_unsignedIT_E
 
 _ZN4absl12lts_202505128bit_ceilItEENSt9enable_ifIXsr3std11is_unsignedIT_EE5valueES3_E4typeES3_.exit: ; preds = %bb.b, %_ZN4absl12lts_2025051214has_single_bitItEENSt9enable_ifIXsr3std11is_unsignedIT_EE5valueEbE4typeES3_.exit.thread.i
   %.in.i = phi i32 [ %i.g, %bb.b ], [ %i.j, %_ZN4absl12lts_2025051214has_single_bitItEENSt9enable_ifIXsr3std11is_unsignedIT_EE5valueEbE4typeES3_.exit.thread.i ] ; 2 uses
-  %2 = icmp eq ptr %1, null
-  %.mask = shl i32 %.in.i, 5
-  %3 = and i32 %.mask, 2097120
-  %4 = zext nneg i32 %3 to i64                    ; 2 uses
+  %2 = zext nneg i32 %.in.i to i64
+  %3 = icmp eq ptr %1, null
+  %4 = shl nuw nsw i64 %2, 5                      ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  br i1 %2, label %bb.c, label %bb.d, !prof !47
+  br i1 %3, label %bb.c, label %bb.d, !prof !47
 
 bb.c:                                             ; preds = %_ZN4absl12lts_202505128bit_ceilItEENSt9enable_ifIXsr3std11is_unsignedIT_EE5valueES3_E4typeES3_.exit
   %i.l = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %4) #37 ; 2 uses

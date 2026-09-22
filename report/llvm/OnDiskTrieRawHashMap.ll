@@ -204,8 +204,7 @@ _ZNK4llvm9StringRef12getAsIntegerIhEEbjRT_.exit:  ; preds = %_ZNK4llvm9StringRef
   %.not.i = icmp ugt i64 %i.f, 255
   %i.g = select i1 %i.e, i1 true, i1 %.not.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
-  %3 = and i64 %i.f, 255
-  %i.h = select i1 %i.g, i64 0, i64 %3
+  %i.h = select i1 %i.g, i64 0, i64 %i.f
   %i.i = getelementptr inbounds nuw i8, ptr @_ZZN4llvm8hexdigitEjbE3LUT, i64 %i.h
   %i.j = load i8, ptr %i.i, align 1, !tbaa !33
   %i.k = or i8 %i.j, 32                           ; 2 uses

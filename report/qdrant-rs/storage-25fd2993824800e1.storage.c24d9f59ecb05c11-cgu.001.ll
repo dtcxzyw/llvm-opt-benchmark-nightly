@@ -204,17 +204,15 @@ _RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionNtNtNtCsPYQCUnoTxQ_10collection10
   %.not3.i.i.i = phi i1 [ %i.boo, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRNtNtNtCsPYQCUnoTxQ_10collection10operations5types17SparseIndexParamsE8and_thenNtBL_8DatatypeNCNCNvMNtNtBP_10collection16state_managementNtB2m_10Collection24apply_vector_name_schema0s0_0ECsgGgPqgSfnMH_7storage.exit.i ], [ true, %bb.act ]
   %.sroa.02.0.i103.i = phi i8 [ %switch.masked537, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRNtNtNtCsPYQCUnoTxQ_10collection10operations5types17SparseIndexParamsE8and_thenNtBL_8DatatypeNCNCNvMNtNtBP_10collection16state_managementNtB2m_10Collection24apply_vector_name_schema0s0_0ECsgGgPqgSfnMH_7storage.exit.i ], [ -1, %bb.act ]
   %.not.i.i.i175 = icmp eq i8 %i.bok, 2
-  %3 = icmp eq i8 %i.bnq, 2                       ; 2 uses
   br i1 %.not.i.i.i175, label %bb.acv, label %bb.acu
 
 bb.acu:                                           ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionNtNtNtCsPYQCUnoTxQ_10collection10operations5types8DatatypeE3mapNtNtCs607s0NAIaWN_7segment5types21VectorStorageDatatypeNvYB1J_INtNtB5_7convert4FromBI_E4fromECsgGgPqgSfnMH_7storage.exit106.i
-  %4 = xor i8 %i.bok, %i.bnq
-  %5 = trunc i8 %4 to i1
-  %or.cond.not.i.i.i = or i1 %3, %5
-  br i1 %or.cond.not.i.i.i, label %.thread.i176, label %bb.acw
+  %3 = icmp eq i8 %i.bok, %i.bnq
+  br i1 %3, label %bb.acw, label %.thread.i176
 
 bb.acv:                                           ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionNtNtNtCsPYQCUnoTxQ_10collection10operations5types8DatatypeE3mapNtNtCs607s0NAIaWN_7segment5types21VectorStorageDatatypeNvYB1J_INtNtB5_7convert4FromBI_E4fromECsgGgPqgSfnMH_7storage.exit106.i
-  br i1 %3, label %bb.acw, label %.thread.i176
+  %4 = icmp eq i8 %i.bnq, 2
+  br i1 %4, label %bb.acw, label %.thread.i176
 
 bb.acw:                                           ; preds = %bb.acv, %bb.acu
   br i1 %.not3.i.i.i, label %bb.acx, label %.split444.i

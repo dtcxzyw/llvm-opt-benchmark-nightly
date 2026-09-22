@@ -205,9 +205,8 @@ bb.y:                                             ; preds = %bb.x
   %.sroa.05.sroa.0.0.copyload.i = load i64, ptr %i.h, align 8, !alias.scope !2536, !noalias !2535
   %.sroa.05.sroa.4.0.copyload.i = load ptr, ptr %.sroa.7.0..sroa_idx2, align 8, !alias.scope !2536, !noalias !2535
   %.sroa.05.sroa.5.0.copyload.i = load i64, ptr %.sroa.7.sroa.9.0..sroa.7.0..sroa_idx2.sroa_idx, align 8, !alias.scope !2536, !noalias !2535
-  %.sroa.46.0.copyload.i = load i8, ptr %.sroa.7.sroa.10.0..sroa.7.0..sroa_idx2.sroa_idx, align 8, !alias.scope !2536, !noalias !2535
-  %4 = and i8 %.sroa.46.0.copyload.i, 1           ; 2 uses
-  %..i = zext nneg i8 %4 to i64
+  %.sroa.46.0.copyload.i = load i8, ptr %.sroa.7.sroa.10.0..sroa.7.0..sroa_idx2.sroa_idx, align 8, !alias.scope !2536, !noalias !2535 ; 2 uses
+  %..i = zext nneg i8 %.sroa.46.0.copyload.i to i64
   %i.y = getelementptr inbounds nuw i8, ptr %i.h, i64 32 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(152) %i.b, ptr noundef nonnull align 8 dereferenceable(152) %i.y, i64 152, i1 false), !noalias !2535
   %i.z = getelementptr inbounds nuw i8, ptr %i.b, i64 152
@@ -227,7 +226,7 @@ bb.y:                                             ; preds = %bb.x
   %.sroa.10165.8.copyload = load i64, ptr %.sroa.10165.8..sroa_idx, align 8, !alias.scope !2537
   %.sroa.11.8..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 64
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %.sroa.11, ptr noundef nonnull align 8 dereferenceable(120) %.sroa.11.8..sroa_idx, i64 120, i1 false), !alias.scope !2537
-  %i.aa = icmp eq i8 %4, 0
+  %i.aa = icmp eq i8 %.sroa.46.0.copyload.i, 0
   br i1 %i.aa, label %bb.z, label %bb.ac
 
 bb.z:                                             ; preds = %bb.y
@@ -630,9 +629,8 @@ bb.y:                                             ; preds = %bb.x
   %.sroa.05.sroa.0.0.copyload.i = load i64, ptr %i.h, align 8, !alias.scope !2560, !noalias !2559
   %.sroa.05.sroa.4.0.copyload.i = load ptr, ptr %.sroa.7.0..sroa_idx2, align 8, !alias.scope !2560, !noalias !2559
   %.sroa.05.sroa.5.0.copyload.i = load i64, ptr %.sroa.7.sroa.9.0..sroa.7.0..sroa_idx2.sroa_idx, align 8, !alias.scope !2560, !noalias !2559
-  %.sroa.46.0.copyload.i = load i8, ptr %.sroa.7.sroa.10.0..sroa.7.0..sroa_idx2.sroa_idx, align 8, !alias.scope !2560, !noalias !2559
-  %4 = and i8 %.sroa.46.0.copyload.i, 1           ; 2 uses
-  %..i = zext nneg i8 %4 to i64
+  %.sroa.46.0.copyload.i = load i8, ptr %.sroa.7.sroa.10.0..sroa.7.0..sroa_idx2.sroa_idx, align 8, !alias.scope !2560, !noalias !2559 ; 2 uses
+  %..i = zext nneg i8 %.sroa.46.0.copyload.i to i64
   %i.y = getelementptr inbounds nuw i8, ptr %i.h, i64 32 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.b, ptr noundef nonnull align 8 dereferenceable(120) %i.y, i64 120, i1 false), !noalias !2559
   %i.z = getelementptr inbounds nuw i8, ptr %i.b, i64 120
@@ -651,7 +649,7 @@ bb.y:                                             ; preds = %bb.x
   %.sroa.10165.8.copyload = load i64, ptr %.sroa.10165.8..sroa_idx, align 8, !alias.scope !2561
   %.sroa.11.8..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 64
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %.sroa.11, ptr noundef nonnull align 8 dereferenceable(88) %.sroa.11.8..sroa_idx, i64 88, i1 false), !alias.scope !2561
-  %i.aa = icmp eq i8 %4, 0
+  %i.aa = icmp eq i8 %.sroa.46.0.copyload.i, 0
   br i1 %i.aa, label %bb.z, label %bb.ac
 
 bb.z:                                             ; preds = %bb.y

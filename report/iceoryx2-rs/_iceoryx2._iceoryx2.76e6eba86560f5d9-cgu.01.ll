@@ -202,8 +202,7 @@ bb.d:                                             ; preds = %_RNvXNtNtCs7gufeB8T
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   %.sroa.2.0.insert.ext.i = zext i8 %i.w to i16
   %.sroa.2.0.insert.shift.i = shl nuw i16 %.sroa.2.0.insert.ext.i, 8
-  %1 = and i8 %i.v, 1
-  %.sroa.0.0.insert.ext.i = zext nneg i8 %1 to i16
+  %.sroa.0.0.insert.ext.i = zext nneg i8 %i.v to i16
   %.sroa.0.0.insert.insert.i = or disjoint i16 %.sroa.2.0.insert.shift.i, %.sroa.0.0.insert.ext.i
   br label %bb.l
 
@@ -406,8 +405,7 @@ bb.d:                                             ; preds = %_RNvXNtNtCs7gufeB8T
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   %.sroa.2.0.insert.ext.i = zext i8 %i.w to i16
   %.sroa.2.0.insert.shift.i = shl nuw i16 %.sroa.2.0.insert.ext.i, 8
-  %1 = and i8 %i.v, 1
-  %.sroa.0.0.insert.ext.i = zext nneg i8 %1 to i16
+  %.sroa.0.0.insert.ext.i = zext nneg i8 %i.v to i16
   %.sroa.0.0.insert.insert.i = or disjoint i16 %.sroa.2.0.insert.shift.i, %.sroa.0.0.insert.ext.i
   br label %bb.l
 

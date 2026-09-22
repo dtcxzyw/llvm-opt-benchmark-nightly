@@ -202,7 +202,7 @@ bb.av:                                            ; preds = %.lr.ph695, %.loopex
 
 .lr.ph684:                                        ; preds = %bb.av, %bb.ca
   %.0459683 = phi ptr [ %i.lu, %bb.ca ], [ %i.fw, %bb.av ] ; 2 uses
-  %.1475682 = phi i8 [ %.4, %bb.ca ], [ %.0474694, %bb.av ] ; 5 uses
+  %.1475682 = phi i8 [ %.4, %bb.ca ], [ %.0474694, %bb.av ] ; 4 uses
   %.1485681 = phi i16 [ %.2486, %bb.ca ], [ %.0484693, %bb.av ] ; 3 uses
   %.1497680 = phi i32 [ %.5501, %bb.ca ], [ %.0496692, %bb.av ] ; 8 uses
   %i.fx = call ptr @wmem_list_frame_data(ptr noundef nonnull %.0459683) ; 25 uses
@@ -275,7 +275,6 @@ bb.bb:                                            ; preds = %bb.ba
   br label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb, %bb.ba
-  %.2476 = phi i8 [ 1, %bb.bb ], [ %.1475682, %bb.ba ]
   %i.hh = load i32, ptr @hf_pn_io_ps_f_dest_adr, align 4
   %i.hi = getelementptr i8, ptr %i.fx, i64 32
   %i.hj = load i16, ptr %i.hi, align 8
@@ -421,7 +420,7 @@ bb.bq:                                            ; preds = %bb.bo
 
 bb.br:                                            ; preds = %bb.bp, %bb.bq, %dissect_pn_io_ps_SB.exit
   %.3499 = phi i32 [ %i.jm, %dissect_pn_io_ps_SB.exit ], [ %i.ju, %bb.bp ], [ %i.jv, %bb.bq ] ; 4 uses
-  %.3477 = phi i8 [ %.2476, %dissect_pn_io_ps_SB.exit ], [ %.1475682, %bb.bp ], [ %.1475682, %bb.bq ]
+  %.3477 = phi i8 [ 1, %dissect_pn_io_ps_SB.exit ], [ %.1475682, %bb.bp ], [ %.1475682, %bb.bq ]
   %i.jw = getelementptr i8, ptr %i.fx, i64 89     ; 2 uses
   %i.jx = load i8, ptr %i.jw, align 1, !range !16, !noundef !17
   %i.jy = icmp eq i8 %i.jx, 0
@@ -724,7 +723,7 @@ bb.cv:                                            ; preds = %.lr.ph722, %.loopex
 
 .lr.ph709:                                        ; preds = %bb.cv, %bb.eb
   %.2707 = phi ptr [ %i.um, %bb.eb ], [ %i.oq, %bb.cv ] ; 2 uses
-  %.7706 = phi i8 [ %.10, %bb.eb ], [ %.6721, %bb.cv ] ; 6 uses
+  %.7706 = phi i8 [ %.10, %bb.eb ], [ %.6721, %bb.cv ] ; 5 uses
   %.6490705 = phi i16 [ %.7491, %bb.eb ], [ %.5489720, %bb.cv ] ; 4 uses
   %.9505704 = phi i32 [ %.13, %bb.eb ], [ %.8504719, %bb.cv ] ; 9 uses
   %i.or = call ptr @wmem_list_frame_data(ptr noundef nonnull %.2707) ; 26 uses
@@ -801,7 +800,6 @@ bb.dc:                                            ; preds = %bb.db
   br label %bb.dd
 
 bb.dd:                                            ; preds = %bb.dc, %bb.db
-  %.8 = phi i8 [ 1, %bb.dc ], [ %.7706, %bb.db ]
   %i.qb = load i32, ptr @hf_pn_io_ps_f_dest_adr, align 4
   %i.qc = getelementptr i8, ptr %i.or, i64 32
   %i.qd = load i16, ptr %i.qc, align 8
@@ -947,7 +945,7 @@ bb.dr:                                            ; preds = %bb.dp
 
 bb.ds:                                            ; preds = %bb.dq, %bb.dr, %dissect_pn_io_ps_CB.exit
   %.11507 = phi i32 [ %i.se, %dissect_pn_io_ps_CB.exit ], [ %i.sm, %bb.dq ], [ %i.sn, %bb.dr ] ; 4 uses
-  %.9 = phi i8 [ %.8, %dissect_pn_io_ps_CB.exit ], [ %.7706, %bb.dq ], [ %.7706, %bb.dr ]
+  %.9 = phi i8 [ 1, %dissect_pn_io_ps_CB.exit ], [ %.7706, %bb.dq ], [ %.7706, %bb.dr ]
   %i.so = getelementptr i8, ptr %i.or, i64 89     ; 2 uses
   %i.sp = load i8, ptr %i.so, align 1, !range !16, !noundef !17
   %i.sq = icmp eq i8 %i.sp, 0

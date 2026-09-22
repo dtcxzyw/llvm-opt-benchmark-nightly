@@ -204,9 +204,8 @@ bb.am:                                            ; preds = %bb.az, %.lr.ph.i
   br i1 %or.cond160.i, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %bb.am
-  %i.go = trunc i64 %indvars.iv.i to i32
-  %8 = and i32 %i.go, 65535
-  call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.118, i32 noundef %i.gm, i32 noundef %8) #11
+  %i.go = trunc nuw i64 %indvars.iv.i to i32
+  call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.118, i32 noundef %i.gm, i32 noundef %i.go) #11
   br label %hfsplus_check_attribute.exit.thread30
 
 bb.ao:                                            ; preds = %bb.am
@@ -216,9 +215,8 @@ bb.ao:                                            ; preds = %bb.am
   br i1 %.not146.i, label %bb.aq, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.gr = trunc i64 %indvars.iv.i to i32
-  %9 = and i32 %i.gr, 65535
-  call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.119, i32 noundef %i.gm, i32 noundef %9) #11
+  %i.gr = trunc nuw i64 %indvars.iv.i to i32
+  call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.119, i32 noundef %i.gm, i32 noundef %i.gr) #11
   br label %hfsplus_check_attribute.exit.thread30
 
 bb.aq:                                            ; preds = %bb.ao
@@ -237,9 +235,8 @@ bb.aq:                                            ; preds = %bb.ao
   br i1 %.not151.i, label %bb.as, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
-  %i.gx = trunc i64 %indvars.iv.i to i32
-  %10 = and i32 %i.gx, 65535
-  call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.120, i32 noundef %i.gm, i32 noundef %10) #11
+  %i.gx = trunc nuw i64 %indvars.iv.i to i32
+  call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.120, i32 noundef %i.gm, i32 noundef %i.gx) #11
   br label %hfsplus_check_attribute.exit.thread30
 
 bb.as:                                            ; preds = %bb.aq
@@ -642,29 +639,18 @@ bb.h:                                             ; preds = %bb.f
   %i.au = and i32 %i.aq, 268435456
   %i.av = and i32 %i.au, %i.as
   %or.cond97.not.not = icmp eq i32 %i.av, 0
-  br i1 %or.cond97.not.not, label %7, label %bb.i
+  br i1 %or.cond97.not.not, label %.thread13, label %bb.i
 
 bb.i:                                             ; preds = %bb.aj, %bb.af, %bb.ab, %bb.x, %bb.t, %bb.p, %bb.l, %bb.h
   %.07428.lcssa36.wide = phi i32 [ 0, %bb.h ], [ 1, %bb.l ], [ 2, %bb.p ], [ 3, %bb.t ], [ 4, %bb.x ], [ 5, %bb.ab ], [ 6, %bb.af ], [ 7, %bb.aj ]
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.103, i32 noundef %.07428.lcssa36.wide) #11
   br label %.thread
 
-7:                                                ; preds = %bb.h
-  %8 = icmp ult i32 %.07531, %i.as
-  br i1 %8, label %.thread13, label %bb.j
+.thread13:                                        ; preds = %bb.h
+  %.not95.a = icmp ult i32 %.07531, %i.as
+  br i1 %.not95.a, label %7, label %bb.j
 
-.thread13:                                        ; preds = %bb.ak, %bb.ag, %bb.ac, %bb.y, %bb.u, %bb.q, %bb.m, %7
-  %.06929.lcssa40 = phi i32 [ %.07531, %7 ], [ %i.ax, %bb.m ], [ %i.bg, %bb.q ], [ %i.bp, %bb.u ], [ %i.by, %bb.y ], [ %i.ch, %bb.ac ], [ %i.cq, %bb.ag ], [ %i.cz, %bb.ak ]
-  %.07428.lcssa37.wide = phi i32 [ 0, %7 ], [ 1, %bb.m ], [ 2, %bb.q ], [ 3, %bb.u ], [ 4, %bb.y ], [ 5, %bb.ac ], [ 6, %bb.ag ], [ 7, %bb.ak ]
-  %.lcssa34 = phi ptr [ %i.w, %7 ], [ %i.ab, %bb.m ], [ %i.ad, %bb.q ], [ %i.af, %bb.u ], [ %i.ah, %bb.y ], [ %i.aj, %bb.ac ], [ %i.al, %bb.ag ], [ %i.an, %bb.ak ]
-  tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.104, i32 noundef %.07428.lcssa37.wide) #11
-  %9 = load i32, ptr %.lcssa34, align 1, !tbaa !37
-  %10 = add i32 %9, %.06929.lcssa40               ; 2 uses
-  %11 = load i32, ptr %i.x, align 1, !tbaa !34
-  %.not95.a = icmp ult i32 %10, %11
-  br i1 %.not95.a, label %bb.an, label %bb.am
-
-bb.j:                                             ; preds = %7
+bb.j:                                             ; preds = %.thread13
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.105, i32 noundef 0) #11
   %i.aw = load i32, ptr %i.aa, align 1, !tbaa !38
   %i.ax = sub i32 %.07531, %i.aw                  ; 3 uses
@@ -685,7 +671,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.be = icmp ult i32 %i.ax, %i.ba
-  br i1 %i.be, label %.thread13, label %bb.n
+  br i1 %i.be, label %7, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.105, i32 noundef 1) #11
@@ -708,7 +694,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   %i.bn = icmp ult i32 %i.bg, %i.bj
-  br i1 %i.bn, label %.thread13, label %bb.r
+  br i1 %i.bn, label %7, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.105, i32 noundef 2) #11
@@ -731,7 +717,7 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.t
   %i.bw = icmp ult i32 %i.bp, %i.bs
-  br i1 %i.bw, label %.thread13, label %bb.v
+  br i1 %i.bw, label %7, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.105, i32 noundef 3) #11
@@ -754,7 +740,7 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x
   %i.cf = icmp ult i32 %i.by, %i.cb
-  br i1 %i.cf, label %.thread13, label %bb.z
+  br i1 %i.cf, label %7, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.105, i32 noundef 4) #11
@@ -777,7 +763,7 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.ab
   %i.co = icmp ult i32 %i.ch, %i.ck
-  br i1 %i.co, label %.thread13, label %bb.ad
+  br i1 %i.co, label %7, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.105, i32 noundef 5) #11
@@ -800,7 +786,7 @@ bb.af:                                            ; preds = %bb.ae
 
 bb.ag:                                            ; preds = %bb.af
   %i.cx = icmp ult i32 %i.cq, %i.ct
-  br i1 %i.cx, label %.thread13, label %bb.ah
+  br i1 %i.cx, label %7, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.105, i32 noundef 6) #11
@@ -823,7 +809,7 @@ bb.aj:                                            ; preds = %bb.ai
 
 bb.ak:                                            ; preds = %bb.aj
   %i.dg = icmp ult i32 %i.cz, %i.dc
-  br i1 %i.dg, label %.thread13, label %bb.al
+  br i1 %i.dg, label %7, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.105, i32 noundef 7) #11
@@ -831,13 +817,24 @@ bb.al:                                            ; preds = %bb.ak
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.107) #11
   br label %.thread
 
-bb.am:                                            ; preds = %.thread13
+7:                                                ; preds = %bb.ak, %bb.ag, %bb.ac, %bb.y, %bb.u, %bb.q, %bb.m, %.thread13
+  %.06928.lcssa39 = phi i32 [ %.07531, %.thread13 ], [ %i.ax, %bb.m ], [ %i.bg, %bb.q ], [ %i.bp, %bb.u ], [ %i.by, %bb.y ], [ %i.ch, %bb.ac ], [ %i.cq, %bb.ag ], [ %i.cz, %bb.ak ]
+  %.07427.lcssa36.wide = phi i32 [ 0, %.thread13 ], [ 1, %bb.m ], [ 2, %bb.q ], [ 3, %bb.u ], [ 4, %bb.y ], [ 5, %bb.ac ], [ 6, %bb.ag ], [ 7, %bb.ak ]
+  %.lcssa33 = phi ptr [ %i.w, %.thread13 ], [ %i.ab, %bb.m ], [ %i.ad, %bb.q ], [ %i.af, %bb.u ], [ %i.ah, %bb.y ], [ %i.aj, %bb.ac ], [ %i.al, %bb.ag ], [ %i.an, %bb.ak ]
+  tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.104, i32 noundef %.07427.lcssa36.wide) #11
+  %8 = load i32, ptr %.lcssa33, align 1, !tbaa !37
+  %9 = add i32 %8, %.06928.lcssa39                ; 2 uses
+  %10 = load i32, ptr %i.x, align 1, !tbaa !34
+  %.not95 = icmp ult i32 %9, %10
+  br i1 %.not95, label %bb.an, label %bb.am
+
+bb.am:                                            ; preds = %7
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.108) #11
   br label %.thread
 
-bb.an:                                            ; preds = %.thread13
+bb.an:                                            ; preds = %7
   %i.dh = load i32, ptr %i.h, align 1, !tbaa !33  ; 2 uses
-  %i.di = mul i32 %i.dh, %10
+  %i.di = mul i32 %i.dh, %9
   %i.dj = zext i32 %i.di to i64
   %i.dk = icmp eq i32 %.07531, %i.l               ; 2 uses
   %i.dl = icmp ne i32 %.07531, %i.q

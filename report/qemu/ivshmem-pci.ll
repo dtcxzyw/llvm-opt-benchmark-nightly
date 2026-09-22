@@ -202,7 +202,6 @@ bb.n:                                             ; preds = %.lr.ph.i, %bb.n
 
 resize_peers.exit:                                ; preds = %bb.n, %bb.m
   %i.ak = icmp sgt i32 %2, -1
-  %5 = trunc nuw i64 %1 to i32                    ; 2 uses
   br i1 %i.ak, label %bb.o, label %bb.af
 
 bb.o:                                             ; preds = %resize_peers.exit
@@ -236,10 +235,10 @@ bb.r:                                             ; preds = %bb.q
   br label %process_msg_connect.exit
 
 bb.s:                                             ; preds = %bb.q
-  %6 = and i32 %5, 65535                          ; 2 uses
+  %5 = trunc nuw i64 %1 to i32                    ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 2848
   %i.ba = load i32, ptr %i.az, align 16
-  %i.bb = icmp eq i32 %i.ba, %6
+  %i.bb = icmp eq i32 %i.ba, %5
   br i1 %i.bb, label %bb.t, label %bb.ad
 
 bb.t:                                             ; preds = %bb.s
@@ -337,7 +336,7 @@ bb.ad:                                            ; preds = %setup_interrupt.exi
 
 bb.ae:                                            ; preds = %bb.ad
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 2864
-  %i.cl = shl nuw i32 %6, 16
+  %i.cl = shl nuw i32 %5, 16
   %i.cm = or i32 %i.ao, %i.cl
   %i.cn = sext i32 %i.cm to i64
   %i.co = load ptr, ptr %i.al, align 16
@@ -349,23 +348,23 @@ bb.ae:                                            ; preds = %bb.ad
   br label %process_msg_connect.exit
 
 bb.af:                                            ; preds = %resize_peers.exit
-  %7 = and i32 %5, 65535                          ; 4 uses
+  %6 = trunc nuw i64 %1 to i32                    ; 4 uses
   %i.ct = load i32, ptr %i.s, align 8
-  %.not.i24 = icmp sgt i32 %i.ct, %7
+  %.not.i24 = icmp sgt i32 %i.ct, %6
   br i1 %.not.i24, label %bb.ag, label %bb.ah
 
 bb.ag:                                            ; preds = %bb.af
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 2848
   %i.cv = load i32, ptr %i.cu, align 16
-  %i.cw = icmp eq i32 %i.cv, %7
+  %i.cw = icmp eq i32 %i.cv, %6
   br i1 %i.cw, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af
-  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %3, ptr noundef nonnull @.str.8, i32 noundef 522, ptr noundef nonnull @__func__.process_msg_disconnect, ptr noundef nonnull @.str.31, i32 noundef %7) #11
+  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %3, ptr noundef nonnull @.str.8, i32 noundef 522, ptr noundef nonnull @__func__.process_msg_disconnect, ptr noundef nonnull @.str.31, i32 noundef %6) #11
   br label %process_msg_connect.exit
 
 bb.ai:                                            ; preds = %bb.ag
-  tail call fastcc void @close_peer_eventfds(ptr noundef nonnull %0, i32 noundef %7)
+  tail call fastcc void @close_peer_eventfds(ptr noundef nonnull %0, i32 noundef %6)
   br label %process_msg_connect.exit
 
 process_msg_connect.exit:                         ; preds = %bb.ai, %bb.ah, %bb.ae, %bb.ad, %bb.r, %bb.p, %bb.b, %bb.c, %process_msg_shmem.exit

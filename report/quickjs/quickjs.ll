@@ -205,11 +205,13 @@ bb.bv:                                            ; preds = %.preheader.i
   br i1 %i.qx, label %string_skip_until.exit.i, label %js_date_parse_otherstring.exit.thread
 
 bb.bw:                                            ; preds = %string_get_tzabbr.exit.i
-  %narrow.i = add nuw nsw i8 %.096.ph.i, %.098.ph.i
-  %narrow115.i = add nuw nsw i8 %narrow.i, %.094.ph.i
-  %i.qy = zext nneg i8 %narrow115.i to i32
-  %i.qz = sub nsw i32 0, %i.qy
-  %.not116.i = icmp eq i32 %.092.ph.i, %i.qz
+  %5 = zext nneg i8 %.098.ph.i to i32
+  %6 = zext nneg i8 %.096.ph.i to i32
+  %7 = add nuw nsw i32 %6, %5
+  %i.qy = zext nneg i8 %.094.ph.i to i32
+  %8 = add nuw nsw i32 %7, %i.qy
+  %i.qz = sub i32 0, %.092.ph.i
+  %.not116.i = icmp eq i32 %8, %i.qz
   br i1 %.not116.i, label %bb.bx, label %js_date_parse_otherstring.exit.thread
 
 bb.bx:                                            ; preds = %bb.bw
@@ -612,29 +614,26 @@ bb.bc:                                            ; preds = %find_private_class_
   %i.il = lshr i8 %i.ik, 4                        ; 2 uses
   %i.im = zext nneg i8 %i.il to i32               ; 2 uses
   %i.in = lshr i8 %i.ik, 3
-  switch i8 %i.il, label %4 [
+  %4 = and i8 %i.in, 1
+  switch i8 %i.il, label %bb.bd [
     i8 9, label %emit_u8.exit577.thread625
     i8 6, label %emit_u8.exit577.thread625
     i8 5, label %emit_u8.exit577.thread625
   ]
 
-4:                                                ; preds = %bb.bc
-  %5 = select i1 %.not483, i32 7, i32 8
-  %6 = icmp eq i32 %5, %i.im
-  br i1 %6, label %emit_u8.exit577.thread625, label %bb.bd
-
-bb.bd:                                            ; preds = %4
-  %i.io = select i1 %.not483, i32 8, i32 7
+bb.bd:                                            ; preds = %bb.bc
+  %i.io = select i1 %.not483, i32 7, i32 8
   %i.ip = icmp eq i32 %i.io, %i.im
-  br i1 %i.ip, label %bb.be, label %bb.bf
+  br i1 %i.ip, label %emit_u8.exit577.thread625, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
-  %7 = xor i8 %i.in, %.2415598600
-  %8 = and i8 %7, 1
-  %.not481.a = icmp eq i8 %8, 0
-  br i1 %.not481.a, label %bb.bf, label %emit_u8.exit577.thread625
+  %5 = select i1 %.not483, i32 8, i32 7
+  %6 = icmp ne i32 %5, %i.im
+  %.not481.a = icmp eq i8 %.2415598600, %4
+  %or.cond = or i1 %6, %.not481.a
+  br i1 %or.cond, label %bb.bf, label %emit_u8.exit577.thread625
 
-bb.bf:                                            ; preds = %bb.be, %bb.bd
+bb.bf:                                            ; preds = %bb.be
   %i.iq = and i8 %i.ik, 15
   %i.ir = or disjoint i8 %i.iq, -112
   store i8 %i.ir, ptr %i.ij, align 4
@@ -843,7 +842,7 @@ emit_u8.exit577.thread614:                        ; preds = %bb.bh, %bb.bo
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #49
   br label %.thread591
 
-emit_u8.exit577.thread625:                        ; preds = %bb.be, %bb.bc, %bb.bc, %bb.bc, %4
+emit_u8.exit577.thread625:                        ; preds = %bb.bc, %bb.bc, %bb.bc, %bb.be, %bb.bd
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #49
   br label %.loopexit
 
@@ -918,12 +917,12 @@ bb.ck:                                            ; preds = %bb.cj, %bb.ci
   br i1 %i.mn, label %bb.cl, label %bb.cp
 
 bb.cl:                                            ; preds = %bb.ck
-  %narrow = add nuw nsw i8 %.2415598600, 125
-  %9 = zext nneg i8 %narrow to i32
+  %7 = zext nneg i8 %.2415598600 to i32
+  %8 = add nuw nsw i32 %7, 125
   %.sroa.gep659.val = load i32, ptr %i.fm, align 16
   %.val698 = load i32, ptr %i.fi, align 8
   %i.mo = select i1 %i.hj, i32 %.sroa.gep659.val, i32 %.val698
-  %i.mp = call fastcc i32 @js_atom_concat_num(ptr noundef %i.g, i32 noundef %9, i32 noundef %i.mo) ; 5 uses
+  %i.mp = call fastcc i32 @js_atom_concat_num(ptr noundef %i.g, i32 noundef %8, i32 noundef %i.mo) ; 5 uses
   %i.mq = icmp eq i32 %i.mp, 0
   br i1 %i.mq, label %.thread591, label %bb.cm
 

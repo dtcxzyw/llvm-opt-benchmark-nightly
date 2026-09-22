@@ -202,7 +202,7 @@ bb.ae:                                            ; preds = %bb.ac
   br label %.loopexit
 
 bb.af:                                            ; preds = %.lr.ph544, %bb.ap
-  %.0543 = phi i8 [ 0, %.lr.ph544 ], [ %.2, %bb.ap ] ; 3 uses
+  %.0543 = phi i8 [ 0, %.lr.ph544 ], [ %.2, %bb.ap ] ; 2 uses
   %.0429542 = phi i32 [ 0, %.lr.ph544 ], [ %.2431, %bb.ap ] ; 9 uses
   %i.dw = tail call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef %.0429542) ; 6 uses
   %i.dx = icmp ult i32 %i.dw, 4
@@ -267,14 +267,13 @@ bb.an:                                            ; preds = %bb.al
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an, %bb.am
-  %.1 = phi i8 [ 1, %bb.am ], [ %.0543, %bb.an ]
   %i.ew = add i32 %i.en, %i.eb
   br label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao, %bb.ai
   %.1433 = phi i32 [ 4, %bb.ai ], [ %i.eg, %bb.ao ]
   %.2431 = phi i32 [ %i.ef, %bb.ai ], [ %i.ew, %bb.ao ] ; 2 uses
-  %.2 = phi i8 [ %.0543, %bb.ai ], [ %.1, %bb.ao ]
+  %.2 = phi i8 [ %.0543, %bb.ai ], [ 1, %bb.ao ]
   %i.ex = tail call i32 @tvb_reported_length(ptr noundef %0)
   %i.ey = icmp ult i32 %.2431, %i.ex
   br i1 %i.ey, label %bb.af, label %.loopexit, !llvm.loop !11

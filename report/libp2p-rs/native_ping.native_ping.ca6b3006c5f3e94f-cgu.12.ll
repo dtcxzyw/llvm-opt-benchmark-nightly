@@ -204,9 +204,8 @@ bb.o:                                             ; preds = %bb.m, %bb.p
   %.sroa.521.sroa.0.0.copyload = load i32, ptr %.sroa.521.0..sroa_idx, align 8
   %.sroa.618.0 = select i1 %i.at, ptr %.sroa.420.0.copyload, ptr %.sroa.521.sroa.4.0.copyload
   %.sroa.517.0 = select i1 %i.at, i32 undef, i32 %.sroa.521.sroa.0.0.copyload
-  %i.au = trunc i64 %.sroa.019.0.copyload to i32
-  %.sroa.016.0 = and i32 %i.au, 1
-  store i32 %.sroa.016.0, ptr %0, align 8
+  %i.au = trunc nuw i64 %.sroa.019.0.copyload to i32
+  store i32 %i.au, ptr %0, align 8
   %.sroa.517.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %.sroa.517.0, ptr %.sroa.517.0..sroa_idx, align 4
   %.sroa.618.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8

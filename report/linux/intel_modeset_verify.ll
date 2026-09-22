@@ -202,12 +202,12 @@ bb.p:                                             ; preds = %__drm_to_dev.exit11
   br i1 %.2.i, label %bb.q, label %.critedge167.i
 
 bb.q:                                             ; preds = %._crit_edge.i
-  %i.bj = load ptr, ptr %i.u, align 8             ; 3 uses
+  %i.bj = load ptr, ptr %i.u, align 8             ; 2 uses
+  %1 = icmp ne ptr %i.bj, null                    ; 2 uses
   %i.bk = zext nneg i8 %.1.i to i32               ; 2 uses
-  %1 = trunc nuw i8 %.1.i to i1
-  %i.bl = icmp eq ptr %i.bj, null
-  %.not94.i = xor i1 %i.bl, %1
-  br i1 %.not94.i, label %bb.y, label %bb.r, !prof !13
+  %2 = zext i1 %1 to i8
+  %i.bl = icmp eq i8 %.1.i, %2
+  br i1 %i.bl, label %bb.y, label %bb.r, !prof !13
 
 bb.r:                                             ; preds = %bb.q
   %i.bm = load i8, ptr %i.j, align 1, !range !10, !noundef !11
@@ -279,8 +279,7 @@ bb.x:                                             ; preds = %.critedge100.i
 
 __drm_to_dev.exit135.i:                           ; preds = %bb.x, %.critedge100.i
   %i.ck = phi ptr [ %i.cj, %bb.x ], [ null, %.critedge100.i ]
-  %2 = icmp ne ptr %i.bj, null
-  %i.cl = zext i1 %2 to i32
+  %i.cl = zext i1 %1 to i32
   call void (ptr, ptr, ...) @_dev_err(ptr noundef %i.ck, ptr noundef nonnull @.str.34, i32 noundef %i.cl, i32 noundef %i.bk) #8
   br label %thread-pre-split.i
 

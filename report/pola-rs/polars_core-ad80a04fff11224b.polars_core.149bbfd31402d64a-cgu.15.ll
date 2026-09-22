@@ -205,8 +205,7 @@ bb.i:                                             ; preds = %bb.g
   %i.aj = extractvalue { i64, i64 } %i.af, 1, !dbg !356188
   %i.ak = trunc i64 %i.aj to i32, !dbg !356188
   %.sroa.6.1.i = select i1 %i.ai, i32 %i.ak, i32 undef, !dbg !356188
-  %i.al = trunc i64 %i.ah to i32, !dbg !356188
-  %.sroa.02.1.i = and i32 %i.al, 1, !dbg !356188
+  %i.al = trunc nuw i64 %i.ah to i32, !dbg !356188
   call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCs1LHh8CLbVkQ_11polars_core13chunked_array12ChunkedArrayNtNtBL_9datatypes10BinaryTypeEEBL_(ptr noalias noundef align 8 dereferenceable(56) %i.a), !dbg !356186
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !356186
   br label %_RNCNvMNtNtNtNtCs1LHh8CLbVkQ_11polars_core5frame8group_by12aggregations6stringINtNtBc_13chunked_array12ChunkedArrayNtNtBc_9datatypes10BinaryTypeE11agg_arg_maxs_0Bc_.exit, !dbg !356186
@@ -222,7 +221,7 @@ bb.k:                                             ; preds = %bb.h
 
 _RNCNvMNtNtNtNtCs1LHh8CLbVkQ_11polars_core5frame8group_by12aggregations6stringINtNtBc_13chunked_array12ChunkedArrayNtNtBc_9datatypes10BinaryTypeE11agg_arg_maxs_0Bc_.exit: ; preds = %bb.a, %bb.e, %_RNvYINtNtNtCs8774dFTUdNv_12polars_arrow5array7binview22BinaryViewArrayGenericShENtB7_5Array17is_null_uncheckedCs1LHh8CLbVkQ_11polars_core.exit.i, %bb.i
   %.sroa.6.0.i = phi i32 [ %.sroa.6.1.i, %bb.i ], [ undef, %bb.a ], [ 0, %bb.e ], [ 0, %_RNvYINtNtNtCs8774dFTUdNv_12polars_arrow5array7binview22BinaryViewArrayGenericShENtB7_5Array17is_null_uncheckedCs1LHh8CLbVkQ_11polars_core.exit.i ], !dbg !356190
-  %.sroa.02.0.i = phi i32 [ %.sroa.02.1.i, %bb.i ], [ %.sroa.4.0.extract.trunc.i, %bb.a ], [ 1, %bb.e ], [ %spec.select.i, %_RNvYINtNtNtCs8774dFTUdNv_12polars_arrow5array7binview22BinaryViewArrayGenericShENtB7_5Array17is_null_uncheckedCs1LHh8CLbVkQ_11polars_core.exit.i ], !dbg !356190
+  %.sroa.02.0.i = phi i32 [ %i.al, %bb.i ], [ %.sroa.4.0.extract.trunc.i, %bb.a ], [ 1, %bb.e ], [ %spec.select.i, %_RNvYINtNtNtCs8774dFTUdNv_12polars_arrow5array7binview22BinaryViewArrayGenericShENtB7_5Array17is_null_uncheckedCs1LHh8CLbVkQ_11polars_core.exit.i ], !dbg !356190
   %i.an = insertvalue { i32, i32 } poison, i32 %.sroa.02.0.i, 0, !dbg !356191
   %i.ao = insertvalue { i32, i32 } %i.an, i32 %.sroa.6.0.i, 1, !dbg !356191
   ret { i32, i32 } %i.ao, !dbg !356192
@@ -562,8 +561,7 @@ bb.i:                                             ; preds = %bb.g
   %i.aj = extractvalue { i64, i64 } %i.af, 1, !dbg !356580
   %i.ak = trunc i64 %i.aj to i32, !dbg !356580
   %.sroa.6.1.i = select i1 %i.ai, i32 %i.ak, i32 undef, !dbg !356580
-  %i.al = trunc i64 %i.ah to i32, !dbg !356580
-  %.sroa.02.1.i = and i32 %i.al, 1, !dbg !356580
+  %i.al = trunc nuw i64 %i.ah to i32, !dbg !356580
   call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCs1LHh8CLbVkQ_11polars_core13chunked_array12ChunkedArrayNtNtBL_9datatypes10BinaryTypeEEBL_(ptr noalias noundef align 8 dereferenceable(56) %i.a), !dbg !356578
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !356578
   br label %_RNCNvMNtNtNtNtCs1LHh8CLbVkQ_11polars_core5frame8group_by12aggregations6stringINtNtBc_13chunked_array12ChunkedArrayNtNtBc_9datatypes10BinaryTypeE11agg_arg_mins_0Bc_.exit, !dbg !356578
@@ -579,7 +577,7 @@ bb.k:                                             ; preds = %bb.h
 
 _RNCNvMNtNtNtNtCs1LHh8CLbVkQ_11polars_core5frame8group_by12aggregations6stringINtNtBc_13chunked_array12ChunkedArrayNtNtBc_9datatypes10BinaryTypeE11agg_arg_mins_0Bc_.exit: ; preds = %bb.a, %bb.e, %_RNvYINtNtNtCs8774dFTUdNv_12polars_arrow5array7binview22BinaryViewArrayGenericShENtB7_5Array17is_null_uncheckedCs1LHh8CLbVkQ_11polars_core.exit.i, %bb.i
   %.sroa.6.0.i = phi i32 [ %.sroa.6.1.i, %bb.i ], [ undef, %bb.a ], [ 0, %bb.e ], [ 0, %_RNvYINtNtNtCs8774dFTUdNv_12polars_arrow5array7binview22BinaryViewArrayGenericShENtB7_5Array17is_null_uncheckedCs1LHh8CLbVkQ_11polars_core.exit.i ], !dbg !356582
-  %.sroa.02.0.i = phi i32 [ %.sroa.02.1.i, %bb.i ], [ %.sroa.4.0.extract.trunc.i, %bb.a ], [ 1, %bb.e ], [ %spec.select.i, %_RNvYINtNtNtCs8774dFTUdNv_12polars_arrow5array7binview22BinaryViewArrayGenericShENtB7_5Array17is_null_uncheckedCs1LHh8CLbVkQ_11polars_core.exit.i ], !dbg !356582
+  %.sroa.02.0.i = phi i32 [ %i.al, %bb.i ], [ %.sroa.4.0.extract.trunc.i, %bb.a ], [ 1, %bb.e ], [ %spec.select.i, %_RNvYINtNtNtCs8774dFTUdNv_12polars_arrow5array7binview22BinaryViewArrayGenericShENtB7_5Array17is_null_uncheckedCs1LHh8CLbVkQ_11polars_core.exit.i ], !dbg !356582
   %i.an = insertvalue { i32, i32 } poison, i32 %.sroa.02.0.i, 0, !dbg !356583
   %i.ao = insertvalue { i32, i32 } %i.an, i32 %.sroa.6.0.i, 1, !dbg !356583
   ret { i32, i32 } %i.ao, !dbg !356584
@@ -982,8 +980,7 @@ bb.e:                                             ; preds = %bb.b
   %i.j = extractvalue { i64, i64 } %i.d, 1, !dbg !357656
   %i.k = trunc i64 %i.j to i32, !dbg !357656
   %.sroa.6.1.i = select i1 %i.i, i32 %i.k, i32 undef, !dbg !357656
-  %i.l = trunc i64 %i.h to i32, !dbg !357656
-  %.sroa.02.1.i = and i32 %i.l, 1, !dbg !357656
+  %i.l = trunc nuw i64 %i.h to i32, !dbg !357656
   call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCs1LHh8CLbVkQ_11polars_core13chunked_array12ChunkedArrayNtNtBL_9datatypes11BooleanTypeEEBL_(ptr noalias noundef align 8 dereferenceable(56) %i.a), !dbg !357655
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !357655
   br label %_RNCNvMs_NtNtNtNtCs1LHh8CLbVkQ_11polars_core5frame8group_by12aggregations7booleanINtNtBe_13chunked_array12ChunkedArrayNtNtBe_9datatypes11BooleanTypeE11agg_arg_maxs_0Be_.exit, !dbg !357655
@@ -999,7 +996,7 @@ bb.g:                                             ; preds = %bb.d
 
 _RNCNvMs_NtNtNtNtCs1LHh8CLbVkQ_11polars_core5frame8group_by12aggregations7booleanINtNtBe_13chunked_array12ChunkedArrayNtNtBe_9datatypes11BooleanTypeE11agg_arg_maxs_0Be_.exit: ; preds = %bb.a, %bb.c, %bb.e
   %.sroa.6.0.i = phi i32 [ %.sroa.6.1.i, %bb.e ], [ undef, %bb.a ], [ 0, %bb.c ], !dbg !357658
-  %.sroa.02.0.i = phi i32 [ %.sroa.02.1.i, %bb.e ], [ %.sroa.4.0.extract.trunc.i, %bb.a ], [ %.9.i, %bb.c ], !dbg !357658
+  %.sroa.02.0.i = phi i32 [ %i.l, %bb.e ], [ %.sroa.4.0.extract.trunc.i, %bb.a ], [ %.9.i, %bb.c ], !dbg !357658
   %i.n = insertvalue { i32, i32 } poison, i32 %.sroa.02.0.i, 0, !dbg !357659
   %i.o = insertvalue { i32, i32 } %i.n, i32 %.sroa.6.0.i, 1, !dbg !357659
   ret { i32, i32 } %i.o, !dbg !357660
@@ -1253,8 +1250,7 @@ bb.e:                                             ; preds = %bb.b
   %i.j = extractvalue { i64, i64 } %i.d, 1, !dbg !357893
   %i.k = trunc i64 %i.j to i32, !dbg !357893
   %.sroa.6.1.i = select i1 %i.i, i32 %i.k, i32 undef, !dbg !357893
-  %i.l = trunc i64 %i.h to i32, !dbg !357893
-  %.sroa.02.1.i = and i32 %i.l, 1, !dbg !357893
+  %i.l = trunc nuw i64 %i.h to i32, !dbg !357893
   call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCs1LHh8CLbVkQ_11polars_core13chunked_array12ChunkedArrayNtNtBL_9datatypes11BooleanTypeEEBL_(ptr noalias noundef align 8 dereferenceable(56) %i.a), !dbg !357892
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !357892
   br label %_RNCNvMs_NtNtNtNtCs1LHh8CLbVkQ_11polars_core5frame8group_by12aggregations7booleanINtNtBe_13chunked_array12ChunkedArrayNtNtBe_9datatypes11BooleanTypeE11agg_arg_mins_0Be_.exit, !dbg !357892
@@ -1270,7 +1266,7 @@ bb.g:                                             ; preds = %bb.d
 
 _RNCNvMs_NtNtNtNtCs1LHh8CLbVkQ_11polars_core5frame8group_by12aggregations7booleanINtNtBe_13chunked_array12ChunkedArrayNtNtBe_9datatypes11BooleanTypeE11agg_arg_mins_0Be_.exit: ; preds = %bb.a, %bb.c, %bb.e
   %.sroa.6.0.i = phi i32 [ %.sroa.6.1.i, %bb.e ], [ undef, %bb.a ], [ 0, %bb.c ], !dbg !357895
-  %.sroa.02.0.i = phi i32 [ %.sroa.02.1.i, %bb.e ], [ %.sroa.4.0.extract.trunc.i, %bb.a ], [ %.9.i, %bb.c ], !dbg !357895
+  %.sroa.02.0.i = phi i32 [ %i.l, %bb.e ], [ %.sroa.4.0.extract.trunc.i, %bb.a ], [ %.9.i, %bb.c ], !dbg !357895
   %i.n = insertvalue { i32, i32 } poison, i32 %.sroa.02.0.i, 0, !dbg !357896
   %i.o = insertvalue { i32, i32 } %i.n, i32 %.sroa.6.0.i, 1, !dbg !357896
   ret { i32, i32 } %i.o, !dbg !357897

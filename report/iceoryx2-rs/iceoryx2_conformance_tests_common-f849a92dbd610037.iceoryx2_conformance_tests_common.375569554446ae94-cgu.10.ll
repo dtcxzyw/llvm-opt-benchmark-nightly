@@ -205,8 +205,7 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   %.sroa.4.0.insert.ext.i = zext i8 %i.ac to i16
   %.sroa.4.0.insert.shift.i = shl nuw i16 %.sroa.4.0.insert.ext.i, 8
-  %6 = and i8 %i.z, 1
-  %.sroa.01.0.insert.ext.i = zext nneg i8 %6 to i16
+  %.sroa.01.0.insert.ext.i = zext nneg i8 %i.z to i16
   %.sroa.01.0.insert.insert.i = or disjoint i16 %.sroa.4.0.insert.shift.i, %.sroa.01.0.insert.ext.i
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i16 %.sroa.01.0.insert.insert.i, ptr %i.ad, align 1
@@ -407,8 +406,7 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   %.sroa.4.0.insert.ext.i = zext i8 %i.ad to i16
   %.sroa.4.0.insert.shift.i = shl nuw i16 %.sroa.4.0.insert.ext.i, 8
-  %6 = and i8 %i.aa, 1
-  %.sroa.01.0.insert.ext.i = zext nneg i8 %6 to i16
+  %.sroa.01.0.insert.ext.i = zext nneg i8 %i.aa to i16
   %.sroa.01.0.insert.insert.i = or disjoint i16 %.sroa.4.0.insert.shift.i, %.sroa.01.0.insert.ext.i
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i16 %.sroa.01.0.insert.insert.i, ptr %i.ae, align 1
@@ -607,8 +605,7 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   %.sroa.4.0.insert.ext.i = zext i8 %i.ac to i16
   %.sroa.4.0.insert.shift.i = shl nuw i16 %.sroa.4.0.insert.ext.i, 8
-  %6 = and i8 %i.z, 1
-  %.sroa.01.0.insert.ext.i = zext nneg i8 %6 to i16
+  %.sroa.01.0.insert.ext.i = zext nneg i8 %i.z to i16
   %.sroa.01.0.insert.insert.i = or disjoint i16 %.sroa.4.0.insert.shift.i, %.sroa.01.0.insert.ext.i
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i16 %.sroa.01.0.insert.insert.i, ptr %i.ad, align 1
@@ -809,8 +806,7 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   %.sroa.4.0.insert.ext.i = zext i8 %i.ad to i16
   %.sroa.4.0.insert.shift.i = shl nuw i16 %.sroa.4.0.insert.ext.i, 8
-  %6 = and i8 %i.aa, 1
-  %.sroa.01.0.insert.ext.i = zext nneg i8 %6 to i16
+  %.sroa.01.0.insert.ext.i = zext nneg i8 %i.aa to i16
   %.sroa.01.0.insert.insert.i = or disjoint i16 %.sroa.4.0.insert.shift.i, %.sroa.01.0.insert.ext.i
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i16 %.sroa.01.0.insert.insert.i, ptr %i.ae, align 1

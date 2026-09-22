@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
     i8 4, label %bb.g
   ]
 
-_RNvXs1i_NtCs6KYBFtxZ0jn_12notify_types5eventNtB6_9EventKindNtNtCs6JMX4GRUq9U_4core3cmp9PartialEq2eq.exit: ; preds = %bb.gc, %bb.l, %bb.g, %bb.e, %_RNvMNtNtCsgZlHlzpN0xi_7uu_tail6follow5filesNtB2_12FileHandling12reset_reader.exit479, %bb.ge, %bb.m, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecNtNtCs2vKOLqTMYjT_3std4path7PathBufE8push_mutCsgZlHlzpN0xi_7uu_tail.exit439, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs2vKOLqTMYjT_3std2fs8MetadataNtNtNtB4_2io5error5ErrorEECsgZlHlzpN0xi_7uu_tail.exit436, %bb.ga, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs2vKOLqTMYjT_3std2fs8MetadataNtNtNtB4_2io5error5ErrorEECsgZlHlzpN0xi_7uu_tail.exit, %bb.k, %bb.j, %bb.i, %bb.f, %bb.c
+_RNvXs1i_NtCs6KYBFtxZ0jn_12notify_types5eventNtB6_9EventKindNtNtCs6JMX4GRUq9U_4core3cmp9PartialEq2eq.exit: ; preds = %bb.gc, %bb.l, %bb.m, %bb.g, %bb.e, %_RNvMNtNtCsgZlHlzpN0xi_7uu_tail6follow5filesNtB2_12FileHandling12reset_reader.exit479, %bb.ge, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecNtNtCs2vKOLqTMYjT_3std4path7PathBufE8push_mutCsgZlHlzpN0xi_7uu_tail.exit439, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs2vKOLqTMYjT_3std2fs8MetadataNtNtNtB4_2io5error5ErrorEECsgZlHlzpN0xi_7uu_tail.exit436, %bb.ga, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs2vKOLqTMYjT_3std2fs8MetadataNtNtNtB4_2io5error5ErrorEECsgZlHlzpN0xi_7uu_tail.exit, %bb.k, %bb.j, %bb.i, %bb.f, %bb.c
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.fn, i64 24, i1 false)
   call void @llvm.experimental.noalias.scope.decl(metadata !5679)
   %.val.i = load i64, ptr %i.fm, align 8, !range !11, !alias.scope !5679, !noundef !10 ; 2 uses
@@ -290,12 +290,9 @@ bb.l:                                             ; preds = %bb.g, %bb.k
 
 bb.m:                                             ; preds = %bb.k
   %i.gz = getelementptr inbounds nuw i8, ptr %1, i64 142
-  %i.ha = load i8, ptr %i.gz, align 2, !range !16, !noundef !10 ; 2 uses
-  %.not238 = icmp ne i8 %i.ha, 2
-  %3 = and i8 %i.ha, 1
-  %i.hb = icmp eq i8 %3, 0
-  %or.cond269 = and i1 %.not238, %i.hb
-  br i1 %or.cond269, label %bb.fr, label %_RNvXs1i_NtCs6KYBFtxZ0jn_12notify_types5eventNtB6_9EventKindNtNtCs6JMX4GRUq9U_4core3cmp9PartialEq2eq.exit
+  %i.ha = load i8, ptr %i.gz, align 2, !range !16, !noundef !10
+  %i.hb = icmp eq i8 %i.ha, 0
+  br i1 %i.hb, label %bb.fr, label %_RNvXs1i_NtCs6KYBFtxZ0jn_12notify_types5eventNtB6_9EventKindNtNtCs6JMX4GRUq9U_4core3cmp9PartialEq2eq.exit
 
 bb.n:                                             ; preds = %bb.h
   %.sroa.15.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %i.s, i64 16
@@ -698,12 +695,9 @@ bb.dn:                                            ; preds = %.lr.ph150.i
   br i1 %.not105.i, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit, label %.lr.ph150.i
 
 bb.do:                                            ; preds = %bb.cp
-  %i.tu = load i8, ptr %i.hc, align 2, !range !16, !noundef !10 ; 2 uses
-  %.not253 = icmp ne i8 %i.tu, 2
-  %4 = and i8 %i.tu, 1
-  %i.tv = icmp eq i8 %4, 0
-  %or.cond267 = and i1 %.not253, %i.tv
-  br i1 %or.cond267, label %bb.dq, label %bb.dp
+  %i.tu = load i8, ptr %i.hc, align 2, !range !16, !noundef !10
+  %i.tv = icmp eq i8 %i.tu, 0
+  br i1 %i.tv, label %bb.dq, label %bb.dp
 
 bb.dp:                                            ; preds = %bb.do
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bp)

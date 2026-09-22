@@ -205,9 +205,8 @@ bb.xp:                                            ; preds = %bb.xo
 
 bb.xq:                                            ; preds = %bb.xo
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ki)
-  %13 = and i8 %i.bwi, 1
-  %i.bwj = icmp eq i8 %13, 0
-  br i1 %i.bwj, label %bb.xr, label %bb.zn
+  %i.bwj = icmp eq i8 %i.bwi, 1
+  br i1 %i.bwj, label %bb.zn, label %bb.xr
 
 bb.xr:                                            ; preds = %bb.xq
   call void @llvm.lifetime.start.p0(ptr nonnull %i.kh)

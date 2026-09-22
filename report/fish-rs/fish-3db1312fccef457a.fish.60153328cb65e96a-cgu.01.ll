@@ -204,7 +204,7 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionjE6map_orjNCNvNtNtCs8frGy5WneL6_4
   %i.bk = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store i64 %i.bd, ptr %i.bk, align 8, !noalias !1407
   %i.bl = invoke noundef i8 @_RINvCskeBJdk8gjxq_17fish_wcstringutil9is_prefixNtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32INtNtNtNtCs3oUPovFnLWP_4core4iter8adapters4skip4SkipBJ_EECs8frGy5WneL6_4fish(ptr noundef nonnull %i.bf, ptr noundef nonnull %i.bi, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.d)
-          to label %.thread59 unwind label %.loopexit.split-lp.loopexit.split-lp ; 2 uses
+          to label %.thread59 unwind label %.loopexit.split-lp.loopexit.split-lp
 
 _RINvYINtNvCsiolMeYWJ97s_13fish_fallback14lowercase_impl13ToLowerBufferNtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32NtNtCs3oUPovFnLWP_4core4char11ToLowercaseENtNtNtNtB24_4iter6traits8iterator8Iterator4foldjNCNvYB3_B2G_5count0ECs8frGy5WneL6_4fish.exit.thread.i: ; preds = %.noexc17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !1407
@@ -232,19 +232,13 @@ _RINvYINtNvCsiolMeYWJ97s_13fish_fallback14lowercase_impl13ToLowerBufferNtNtNtCsl
 bb.l:                                             ; preds = %.noexc24
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !1407
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !1407
-  %.not43.i = icmp ne i8 %i.bs, 2
-  %4 = and i8 %i.bs, 1
-  %.not44.i = icmp eq i8 %4, 0
-  %or.cond46.i = and i1 %.not43.i, %.not44.i
-  br i1 %or.cond46.i, label %bb.n, label %.thread58
+  %.not44.i = icmp eq i8 %i.bs, 0
+  br i1 %.not44.i, label %bb.n, label %.thread58
 
 .thread59:                                        ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionjE6map_orjNCNvNtNtCs8frGy5WneL6_4fish6reader6reader32try_apply_edit_to_autosuggestion0EB10_.exit.thread.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !1407
-  %.not43.i62 = icmp ne i8 %i.bl, 2
-  %5 = and i8 %i.bl, 1
-  %.not44.i63 = icmp eq i8 %5, 0
-  %or.cond46.i64 = and i1 %.not43.i62, %.not44.i63
-  br i1 %or.cond46.i64, label %.thread67, label %.thread58
+  %.not44.i63 = icmp eq i8 %i.bl, 0
+  br i1 %.not44.i63, label %.thread67, label %.thread58
 
 bb.m:                                             ; preds = %_RINvYINtNvCsiolMeYWJ97s_13fish_fallback14lowercase_impl13ToLowerBufferNtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32NtNtCs3oUPovFnLWP_4core4char11ToLowercaseENtNtNtNtB24_4iter6traits8iterator8Iterator4foldjNCNvYB3_B2G_5count0ECs8frGy5WneL6_4fish.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !1409
@@ -266,7 +260,7 @@ _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultiNtNtNtB4_3num5error15TryFromIntEr
   %i.br = getelementptr inbounds nuw i8, ptr %i.e, i64 56
   store i64 %i.aw, ptr %i.br, align 8, !noalias !1407
   %i.bs = invoke noundef i8 @_RINvCskeBJdk8gjxq_17fish_wcstringutil9is_prefixINtNvCsiolMeYWJ97s_13fish_fallback14lowercase_impl13ToLowerBufferNtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32NtNtCs3oUPovFnLWP_4core4char11ToLowercaseEINtNtNtNtB2K_4iter8adapters4skip4SkipBJ_EECs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(56) %i.f, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(64) %i.e)
-          to label %bb.l unwind label %.loopexit.split-lp.loopexit.split-lp ; 2 uses
+          to label %bb.l unwind label %.loopexit.split-lp.loopexit.split-lp
 
 bb.n:                                             ; preds = %bb.l
   %i.bt = sub nuw i64 %.val49.i, %.sroa.018.0.i   ; 2 uses
@@ -669,13 +663,10 @@ bb.d:                                             ; preds = %_RNvNtNtCs8frGy5Wne
   %i.j = load i64, ptr %i.i, align 8, !noundef !14
   store i64 %i.j, ptr %i.c, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 2296 ; 3 uses
-  %i.l = load i8, ptr %i.k, align 8, !range !13, !noundef !14 ; 2 uses
+  %i.l = load i8, ptr %i.k, align 8, !range !13, !noundef !14
   store i8 2, ptr %i.k, align 8
-  %.not = icmp ne i8 %i.l, 2
-  %1 = and i8 %i.l, 1
-  %i.m = icmp eq i8 %1, 0
-  %or.cond = and i1 %.not, %i.m
-  br i1 %or.cond, label %bb.e, label %_RNvMs6_NtNtCs8frGy5WneL6_4fish6reader6readerNtB5_10ReaderData4undo.exit
+  %i.m = icmp eq i8 %i.l, 0
+  br i1 %i.m, label %bb.e, label %_RNvMs6_NtNtCs8frGy5WneL6_4fish6reader6readerNtB5_10ReaderData4undo.exit
 
 bb.e:                                             ; preds = %bb.d
   %i.n = tail call noundef zeroext i1 @_RNvMs0_NtCs8frGy5WneL6_4fish13editable_lineNtB5_12EditableLine4undo(ptr noalias nofree noundef nonnull align 8 dereferenceable(136) %0), !inline_history !42

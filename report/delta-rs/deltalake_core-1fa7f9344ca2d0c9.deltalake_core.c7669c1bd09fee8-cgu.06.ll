@@ -204,7 +204,7 @@ bb.az:                                            ; preds = %bb.ax
   br label %_RNvXsqf_NtCs4lawaffTVVK_9sqlparser3astNtB6_16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit.i
 
 _RNvXsqf_NtCs4lawaffTVVK_9sqlparser3astNtB6_16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit.i: ; preds = %_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast19CopyLegacyCsvOptionNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit.i.i.i, %bb.az, %bb.ay, %bb.aw, %bb.av, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ao, %bb.an, %bb.al, %bb.ak, %bb.ah, %bb.ag, %_RNvXsqJ_NtCs4lawaffTVVK_9sqlparser3astNtB6_17UnloadPartitionByNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit.i.i, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.v, %bb.u, %bb.t, %bb.s, %._crit_edge55, %.lr.ph59
-  %.sroa.0.0.i.i = phi i8 [ %i.g, %.lr.ph59 ], [ %i.hh, %bb.al ], [ %i.ea, %bb.y ], [ %..i.i, %bb.ak ], [ %i.gm, %bb.ag ], [ %.99.i.i, %bb.aw ], [ %i.hu, %bb.ao ], [ %.100.i.i, %bb.ay ], [ %.95.i.i, %bb.an ], [ %i.hz, %bb.aq ], [ %i.ca, %bb.s ], [ %i.cf, %bb.t ], [ %i.cs, %bb.u ], [ %i.df, %bb.v ], [ %i.u, %._crit_edge55 ], [ %i.ef, %bb.z ], [ %i.ek, %bb.aa ], [ %i.dn, %bb.x ], [ %i.ia, %bb.as ], [ %.97.i.i, %bb.ar ], [ %i.gp, %bb.ah ], [ %i.en, %bb.ab ], [ %i.fb, %bb.ac ], [ %.sroa.0.0.i106.i.i, %_RNvXsqJ_NtCs4lawaffTVVK_9sqlparser3astNtB6_17UnloadPartitionByNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit.i.i ], [ %i.is, %bb.az ], [ %.98.i.i, %bb.at ], [ %i.if, %bb.av ], [ %.sroa.0.0.i.i.i.i.i, %_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast19CopyLegacyCsvOptionNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit.i.i.i ]
+  %.sroa.0.0.i.i = phi i8 [ %i.g, %.lr.ph59 ], [ %i.hh, %bb.al ], [ %i.gp, %bb.ah ], [ %..i.i, %bb.ak ], [ %i.gm, %bb.ag ], [ %i.ia, %bb.as ], [ %i.hu, %bb.ao ], [ %.100.i.i, %bb.ay ], [ %.95.i.i, %bb.an ], [ %i.u, %._crit_edge55 ], [ %i.ca, %bb.s ], [ %i.cf, %bb.t ], [ %i.cs, %bb.u ], [ %i.df, %bb.v ], [ %i.dn, %bb.x ], [ %i.ef, %bb.z ], [ %i.ek, %bb.aa ], [ %i.ea, %bb.y ], [ %.99.i.i, %bb.aw ], [ %.97.i.i, %bb.ar ], [ %.sroa.0.0.i106.i.i, %_RNvXsqJ_NtCs4lawaffTVVK_9sqlparser3astNtB6_17UnloadPartitionByNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit.i.i ], [ %i.en, %bb.ab ], [ %i.fb, %bb.ac ], [ %i.if, %bb.av ], [ %i.is, %bb.az ], [ %.98.i.i, %bb.at ], [ %i.hz, %bb.aq ], [ %.sroa.0.0.i.i.i.i.i, %_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast19CopyLegacyCsvOptionNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit.i.i.i ]
   %.sroa.0.0.i.fr.i = freeze i8 %.sroa.0.0.i.i    ; 2 uses
   %i.it = icmp eq i8 %.sroa.0.0.i.fr.i, 0
   br i1 %i.it, label %_RNvXsqf_NtCs4lawaffTVVK_9sqlparser3astNtB6_16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit.thread5.i, label %_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit
@@ -217,8 +217,8 @@ _RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast16Cop
   %.not14 = icmp eq i8 %i.iu, 3
   br i1 %.not14, label %bb.b, label %_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit.thread
 
-_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit.thread: ; preds = %bb.aq, %bb.av, %bb.as, %bb.ax, %bb.am, %bb.aj, %_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit, %._crit_edge60
-  %.sroa.0.0 = phi i8 [ %i.a, %._crit_edge60 ], [ 1, %bb.aq ], [ 1, %bb.av ], [ 1, %bb.as ], [ 1, %bb.ax ], [ 1, %bb.am ], [ 1, %bb.aj ], [ %i.iu, %_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit ]
+_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit.thread: ; preds = %bb.aq, %bb.av, %bb.as, %bb.am, %bb.ax, %bb.aj, %_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit, %._crit_edge60
+  %.sroa.0.0 = phi i8 [ %i.a, %._crit_edge60 ], [ 1, %bb.aq ], [ 1, %bb.av ], [ 1, %bb.as ], [ 1, %bb.am ], [ 1, %bb.ax ], [ 1, %bb.aj ], [ %i.iu, %_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit ]
   ret i8 %.sroa.0.0
 }
 
@@ -621,11 +621,13 @@ bb.b:                                             ; preds = %.lr.ph
 bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.h = load i64, ptr %i.g, align 8, !range !93, !alias.scope !37915, !noalias !37916, !noundef !92
-  %.not36.i.i = icmp eq i64 %i.h, -9223372036854775808
+  %.not36.i.i = icmp eq i64 %i.h, -9223372036854775808 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.j = load i64, ptr %i.i, align 8, !range !93, !alias.scope !37916, !noalias !37915, !noundef !92
   %i.k = icmp eq i64 %i.j, -9223372036854775808   ; 2 uses
-  br i1 %.not36.i.i, label %9, label %8
+  %brmerge.i.i = or i1 %.not36.i.i, %i.k
+  %.mux.i.i = and i1 %.not36.i.i, %i.k
+  br i1 %brmerge.i.i, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit, label %bb.t
 
 bb.d:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 24
@@ -638,11 +640,13 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.b
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.r = load i64, ptr %i.q, align 8, !range !93, !alias.scope !37915, !noalias !37916, !noundef !92
-  %.not33.i.i = icmp eq i64 %i.r, -9223372036854775808
+  %.not33.i.i = icmp eq i64 %i.r, -9223372036854775808 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.t = load i64, ptr %i.s, align 8, !range !93, !alias.scope !37916, !noalias !37915, !noundef !92
   %i.u = icmp eq i64 %i.t, -9223372036854775808   ; 2 uses
-  br i1 %.not33.i.i, label %13, label %12
+  %brmerge54.i.i = or i1 %.not33.i.i, %i.u
+  %.mux55.i.i = and i1 %.not33.i.i, %i.u
+  br i1 %brmerge54.i.i, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit, label %bb.af
 
 bb.f:                                             ; preds = %bb.b
   %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 4
@@ -650,8 +654,7 @@ bb.f:                                             ; preds = %bb.b
   %i.x = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.y = load i32, ptr %i.x, align 4, !range !151, !alias.scope !37916, !noalias !37915, !noundef !92
   %i.z = icmp eq i32 %i.w, %i.y
-  %3 = zext i1 %i.z to i8
-  br label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit
+  br i1 %i.z, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread
 
 bb.g:                                             ; preds = %bb.b
   %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 1
@@ -659,8 +662,7 @@ bb.g:                                             ; preds = %bb.b
   %i.ac = getelementptr inbounds nuw i8, ptr %i.c, i64 1
   %i.ad = load i8, ptr %i.ac, align 1, !range !150, !alias.scope !37916, !noalias !37915, !noundef !92
   %i.ae = icmp eq i8 %i.ab, %i.ad
-  %4 = zext i1 %i.ae to i8
-  br label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit
+  br i1 %i.ae, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread
 
 bb.h:                                             ; preds = %bb.b
   %i.af = getelementptr inbounds nuw i8, ptr %i.b, i64 24
@@ -694,8 +696,7 @@ bb.k:                                             ; preds = %bb.b
   %i.ay = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.az = load i64, ptr %i.ay, align 8, !alias.scope !37916, !noalias !37915, !noundef !92
   %i.ba = icmp eq i64 %i.ax, %i.az
-  %5 = zext i1 %i.ba to i8
-  br label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit
+  br i1 %i.ba, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread
 
 bb.l:                                             ; preds = %bb.b
   %i.bb = getelementptr inbounds nuw i8, ptr %i.b, i64 1
@@ -703,8 +704,7 @@ bb.l:                                             ; preds = %bb.b
   %i.bd = getelementptr inbounds nuw i8, ptr %i.c, i64 1
   %i.be = load i8, ptr %i.bd, align 1, !range !150, !alias.scope !37916, !noalias !37915, !noundef !92
   %i.bf = icmp eq i8 %i.bc, %i.be
-  %6 = zext i1 %i.bf to i8
-  br label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit
+  br i1 %i.bf, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread
 
 bb.m:                                             ; preds = %bb.b
   %i.bg = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -726,8 +726,7 @@ bb.o:                                             ; preds = %bb.b
   %.not25.i.i = icmp eq i8 %i.bp, 2
   %i.bq = getelementptr inbounds nuw i8, ptr %i.c, i64 1
   %i.br = load i8, ptr %i.bq, align 1, !range !155, !alias.scope !37916, !noalias !37915, !noundef !92 ; 2 uses
-  %7 = icmp eq i8 %i.br, 2                        ; 2 uses
-  br i1 %.not25.i.i, label %bb.aq, label %25
+  br i1 %.not25.i.i, label %bb.ar, label %bb.aq
 
 bb.p:                                             ; preds = %bb.b
   %i.bs = getelementptr inbounds nuw i8, ptr %i.b, i64 32
@@ -754,20 +753,15 @@ bb.r:                                             ; preds = %bb.b
 bb.s:                                             ; preds = %bb.b
   %i.cf = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.cg = load i64, ptr %i.cf, align 8, !range !93, !alias.scope !37915, !noalias !37916, !noundef !92
-  %.not.i.i = icmp eq i64 %i.cg, -9223372036854775808
+  %.not.i.i = icmp eq i64 %i.cg, -9223372036854775808 ; 2 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.ci = load i64, ptr %i.ch, align 8, !range !93, !alias.scope !37916, !noalias !37915, !noundef !92
   %i.cj = icmp eq i64 %i.ci, -9223372036854775808 ; 2 uses
-  br i1 %.not.i.i, label %bb.az, label %35
+  %brmerge56.i.i = or i1 %.not.i.i, %i.cj
+  %.mux57.i.i = and i1 %.not.i.i, %i.cj
+  br i1 %brmerge56.i.i, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit, label %bb.ba
 
-8:                                                ; preds = %bb.c
-  br i1 %i.k, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread, label %bb.t
-
-9:                                                ; preds = %bb.c
-  %10 = zext i1 %i.k to i8
-  br label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit
-
-bb.t:                                             ; preds = %8
+bb.t:                                             ; preds = %bb.c
   %i.ck = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.cl = load i64, ptr %i.ck, align 8, !alias.scope !37915, !noalias !37916, !noundef !92 ; 2 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %i.c, i64 24
@@ -782,8 +776,7 @@ bb.u:                                             ; preds = %bb.t
   %i.cs = load ptr, ptr %i.cr, align 8, !alias.scope !37915, !noalias !37916, !nonnull !92, !noundef !92
   %bcmp38.i.i = tail call i32 @bcmp(ptr nonnull %i.cs, ptr nonnull %i.cq, i64 %i.cl), !noalias !37917
   %i.ct = icmp eq i32 %bcmp38.i.i, 0
-  %11 = zext i1 %i.ct to i8
-  br label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit
+  br i1 %i.ct, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread
 
 bb.v:                                             ; preds = %bb.d
   %i.cu = getelementptr inbounds nuw i8, ptr %i.c, i64 16
@@ -945,14 +938,7 @@ _RNvYNtNtCs4lawaffTVVK_9sqlparser3ast19CopyLegacyCsvOptionNtNtCsbvkFyIu7lgC_4cor
   %exitcond.not.i6 = icmp eq i64 %i.fq, %i.m
   br i1 %exitcond.not.i6, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9, label %.lr.ph.i5
 
-12:                                               ; preds = %bb.e
-  br i1 %i.u, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread, label %bb.af
-
-13:                                               ; preds = %bb.e
-  %14 = zext i1 %i.u to i8
-  br label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit
-
-bb.af:                                            ; preds = %12
+bb.af:                                            ; preds = %bb.e
   %i.fr = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.fs = load i64, ptr %i.fr, align 8, !alias.scope !37915, !noalias !37916, !noundef !92 ; 2 uses
   %i.ft = getelementptr inbounds nuw i8, ptr %i.c, i64 24
@@ -967,8 +953,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.fz = load ptr, ptr %i.fy, align 8, !alias.scope !37915, !noalias !37916, !nonnull !92, !noundef !92
   %bcmp35.i.i = tail call i32 @bcmp(ptr nonnull %i.fz, ptr nonnull %i.fx, i64 %i.fs), !noalias !37917
   %i.ga = icmp eq i32 %bcmp35.i.i, 0
-  %15 = zext i1 %i.ga to i8
-  br label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit
+  br i1 %i.ga, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread
 
 bb.ah:                                            ; preds = %bb.h
   %i.gb = getelementptr inbounds nuw i8, ptr %i.c, i64 16
@@ -977,8 +962,7 @@ bb.ah:                                            ; preds = %bb.h
   %i.ge = load ptr, ptr %i.gd, align 8, !alias.scope !37915, !noalias !37916, !nonnull !92, !noundef !92
   %bcmp32.i.i = tail call i32 @bcmp(ptr nonnull %i.ge, ptr nonnull %i.gc, i64 %i.ag), !noalias !37917
   %i.gf = icmp eq i32 %bcmp32.i.i, 0
-  %16 = zext i1 %i.gf to i8
-  br label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit
+  br i1 %i.gf, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread
 
 bb.ai:                                            ; preds = %bb.i
   %i.gg = getelementptr inbounds nuw i8, ptr %i.c, i64 16
@@ -987,8 +971,7 @@ bb.ai:                                            ; preds = %bb.i
   %i.gj = load ptr, ptr %i.gi, align 8, !alias.scope !37915, !noalias !37916, !nonnull !92, !noundef !92
   %bcmp31.i.i = tail call i32 @bcmp(ptr nonnull %i.gj, ptr nonnull %i.gh, i64 %i.al), !noalias !37917
   %i.gk = icmp eq i32 %bcmp31.i.i, 0
-  %17 = zext i1 %i.gk to i8
-  br label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit
+  br i1 %i.gk, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread
 
 bb.aj:                                            ; preds = %bb.j
   %or.cond.i.i = and i1 %i.ar, %i.au
@@ -1009,8 +992,7 @@ bb.al:                                            ; preds = %bb.ak
   %i.gt = load ptr, ptr %i.gs, align 8, !alias.scope !37915, !noalias !37916, !nonnull !92, !noundef !92
   %bcmp30.i.i = tail call i32 @bcmp(ptr nonnull %i.gt, ptr nonnull %i.gr, i64 %i.gm), !noalias !37917
   %i.gu = icmp eq i32 %bcmp30.i.i, 0
-  %18 = zext i1 %i.gu to i8
-  br label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit
+  br i1 %i.gu, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread
 
 bb.am:                                            ; preds = %bb.m
   %i.gv = getelementptr inbounds nuw i8, ptr %i.b, i64 56
@@ -1018,20 +1000,15 @@ bb.am:                                            ; preds = %bb.m
   %.not28.i.i = icmp eq i8 %i.gw, 2
   %i.gx = getelementptr inbounds nuw i8, ptr %i.c, i64 56
   %i.gy = load i8, ptr %i.gx, align 8, !range !155, !alias.scope !37916, !noalias !37915, !noundef !92 ; 2 uses
-  %19 = icmp eq i8 %i.gy, 2                       ; 2 uses
-  br i1 %.not28.i.i, label %bb.an, label %20
-
-20:                                               ; preds = %bb.am
-  br i1 %19, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread, label %bb.ao
+  br i1 %.not28.i.i, label %bb.ao, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
-  %21 = zext i1 %19 to i8
-  br label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit
+  %3 = icmp eq i8 %i.gw, %i.gy
+  br i1 %3, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread
 
-bb.ao:                                            ; preds = %20
-  %22 = xor i8 %i.gw, %i.gy
-  %23 = xor i8 %22, 1
-  br label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit
+bb.ao:                                            ; preds = %bb.am
+  %4 = icmp eq i8 %i.gy, 2
+  br i1 %4, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread
 
 bb.ap:                                            ; preds = %bb.n
   %i.gz = getelementptr inbounds nuw i8, ptr %i.c, i64 16
@@ -1040,20 +1017,15 @@ bb.ap:                                            ; preds = %bb.n
   %i.hc = load ptr, ptr %i.hb, align 8, !alias.scope !37915, !noalias !37916, !nonnull !92, !noundef !92
   %bcmp27.i.i = tail call i32 @bcmp(ptr nonnull %i.hc, ptr nonnull %i.ha, i64 %i.bk), !noalias !37917
   %i.hd = icmp eq i32 %bcmp27.i.i, 0
-  %24 = zext i1 %i.hd to i8
-  br label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit
-
-25:                                               ; preds = %bb.o
-  br i1 %7, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread, label %bb.ar
+  br i1 %i.hd, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread
 
 bb.aq:                                            ; preds = %bb.o
-  %26 = zext i1 %7 to i8
-  br label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit
+  %5 = icmp eq i8 %i.bp, %i.br
+  br i1 %5, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread
 
-bb.ar:                                            ; preds = %25
-  %i.he = icmp eq i8 %i.bp, %i.br
-  %27 = zext i1 %i.he to i8
-  br label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit
+bb.ar:                                            ; preds = %bb.o
+  %i.he = icmp eq i8 %i.br, 2
+  br i1 %i.he, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread
 
 bb.as:                                            ; preds = %bb.p
   %i.hf = getelementptr inbounds nuw i8, ptr %i.b, i64 24
@@ -1115,8 +1087,7 @@ bb.aw:                                            ; preds = %bb.q
   %i.ij = load ptr, ptr %i.ii, align 8, !alias.scope !37915, !noalias !37916, !nonnull !92, !noundef !92
   %bcmp24.i.i = tail call i32 @bcmp(ptr nonnull %i.ij, ptr nonnull %i.ih, i64 %i.by), !noalias !37917
   %i.ik = icmp eq i32 %bcmp24.i.i, 0
-  %28 = zext i1 %i.ik to i8
-  br label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit
+  br i1 %i.ik, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread
 
 bb.ax:                                            ; preds = %bb.r
   %i.il = getelementptr inbounds nuw i8, ptr %i.b, i64 56
@@ -1124,29 +1095,17 @@ bb.ax:                                            ; preds = %bb.r
   %.not22.i.i = icmp eq i8 %i.im, 2
   %i.in = getelementptr inbounds nuw i8, ptr %i.c, i64 56
   %i.io = load i8, ptr %i.in, align 8, !range !155, !alias.scope !37916, !noalias !37915, !noundef !92 ; 2 uses
-  %29 = icmp eq i8 %i.io, 2                       ; 2 uses
-  br i1 %.not22.i.i, label %31, label %30
+  br i1 %.not22.i.i, label %bb.az, label %bb.ay
 
-30:                                               ; preds = %bb.ax
-  br i1 %29, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread, label %bb.ay
+bb.ay:                                            ; preds = %bb.ax
+  %6 = icmp eq i8 %i.im, %i.io
+  br i1 %6, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread
 
-31:                                               ; preds = %bb.ax
-  %32 = zext i1 %29 to i8
-  br label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit
+bb.az:                                            ; preds = %bb.ax
+  %7 = icmp eq i8 %i.io, 2
+  br i1 %7, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread
 
-bb.ay:                                            ; preds = %30
-  %33 = xor i8 %i.im, %i.io
-  %34 = xor i8 %33, 1
-  br label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit
-
-35:                                               ; preds = %bb.s
-  br i1 %i.cj, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread, label %bb.ba
-
-bb.az:                                            ; preds = %bb.s
-  %36 = zext i1 %i.cj to i8
-  br label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit
-
-bb.ba:                                            ; preds = %35
+bb.ba:                                            ; preds = %bb.s
   %i.ip = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.iq = load i64, ptr %i.ip, align 8, !alias.scope !37915, !noalias !37916, !noundef !92 ; 2 uses
   %i.ir = getelementptr inbounds nuw i8, ptr %i.c, i64 24
@@ -1161,19 +1120,17 @@ bb.bb:                                            ; preds = %bb.ba
   %i.ix = load ptr, ptr %i.iw, align 8, !alias.scope !37915, !noalias !37916, !nonnull !92, !noundef !92
   %bcmp.i.i = tail call i32 @bcmp(ptr nonnull %i.ix, ptr nonnull %i.iv, i64 %i.iq), !noalias !37917
   %i.iy = icmp eq i32 %bcmp.i.i, 0
-  %37 = zext i1 %i.iy to i8
-  br label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit
+  br i1 %i.iy, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread
 
-_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit: ; preds = %bb.f, %bb.g, %bb.k, %bb.l, %9, %bb.u, %13, %bb.ag, %bb.ah, %bb.ai, %bb.al, %bb.an, %bb.ao, %bb.ap, %bb.aq, %bb.ar, %bb.aw, %31, %bb.ay, %bb.az, %bb.bb
-  %.sroa.0.0.i.i = phi i8 [ %21, %bb.an ], [ %11, %bb.u ], [ %28, %bb.aw ], [ %23, %bb.ao ], [ %10, %9 ], [ %6, %bb.l ], [ %24, %bb.ap ], [ %15, %bb.ag ], [ %36, %bb.az ], [ %27, %bb.ar ], [ %14, %13 ], [ %3, %bb.f ], [ %4, %bb.g ], [ %16, %bb.ah ], [ %34, %bb.ay ], [ %17, %bb.ai ], [ %26, %bb.aq ], [ %18, %bb.al ], [ %32, %31 ], [ %5, %bb.k ], [ %37, %bb.bb ]
-  %38 = trunc nuw i8 %.sroa.0.0.i.i to i1
-  br i1 %38, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread
+_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit: ; preds = %bb.c, %bb.e, %bb.s
+  %.sroa.0.0.shrunk.i.i = phi i1 [ %.mux55.i.i, %bb.e ], [ %.mux.i.i, %bb.c ], [ %.mux57.i.i, %bb.s ]
+  br i1 %.sroa.0.0.shrunk.i.i, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread
 
-_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread: ; preds = %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit, %.lr.ph, %8, %bb.t, %12, %bb.d, %bb.af, %bb.h, %bb.j, %bb.i, %bb.m, %bb.ak, %20, %bb.n, %bb.p, %25, %bb.as, %bb.r, %bb.q, %35, %30, %bb.ba, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast5IdentNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.i, %bb.av, %.lr.ph.i, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast19CopyLegacyCsvOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.i, %bb.x, %.split.i, %bb.ab, %.lr.ph.i5, %bb.ae, %.lr.ph.i4.i.i.i, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast5IdentNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.i8.i.i.i, %bb.aa, %.lr.ph.i.i.i.i, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast5IdentNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.i.i.i.i, %bb.a
-  %.lcssa = phi i1 [ true, %bb.a ], [ false, %bb.aa ], [ false, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast19CopyLegacyCsvOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.i ], [ false, %bb.ae ], [ false, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast5IdentNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.i ], [ false, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast5IdentNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.i.i.i.i ], [ false, %.lr.ph.i.i.i.i ], [ false, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast5IdentNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.i8.i.i.i ], [ false, %.lr.ph.i4.i.i.i ], [ false, %.lr.ph.i5 ], [ false, %bb.ab ], [ false, %.split.i ], [ false, %bb.x ], [ false, %.lr.ph.i ], [ false, %bb.av ], [ false, %bb.ba ], [ false, %30 ], [ false, %35 ], [ false, %bb.q ], [ false, %bb.r ], [ false, %bb.as ], [ false, %25 ], [ false, %bb.p ], [ false, %bb.n ], [ false, %20 ], [ false, %bb.ak ], [ false, %bb.m ], [ false, %12 ], [ true, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9 ], [ false, %8 ], [ false, %bb.af ], [ false, %.lr.ph ], [ false, %bb.i ], [ false, %bb.t ], [ false, %bb.j ], [ false, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit ], [ false, %bb.d ], [ false, %bb.h ]
-  ret i1 %.lcssa
+_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread: ; preds = %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit, %.lr.ph, %bb.q, %bb.t, %bb.d, %bb.af, %bb.h, %bb.j, %bb.i, %bb.ba, %bb.m, %bb.ak, %bb.n, %bb.p, %bb.as, %bb.r, %bb.ap, %bb.u, %bb.ao, %bb.aq, %bb.al, %bb.aw, %bb.ai, %bb.ar, %bb.ah, %bb.g, %bb.f, %bb.k, %bb.l, %bb.bb, %bb.ag, %bb.an, %bb.az, %bb.ay, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast5IdentNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.i, %bb.av, %.lr.ph.i, %bb.x, %.split.i, %bb.ab, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast19CopyLegacyCsvOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.i, %.lr.ph.i5, %bb.ae, %.lr.ph.i4.i.i.i, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast5IdentNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.i8.i.i.i, %bb.aa, %.lr.ph.i.i.i.i, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast5IdentNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.i.i.i.i, %bb.a
+  %8 = phi i1 [ true, %bb.a ], [ false, %bb.aa ], [ false, %bb.x ], [ false, %bb.ae ], [ false, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast5IdentNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.i ], [ false, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast5IdentNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.i.i.i.i ], [ false, %.lr.ph.i.i.i.i ], [ false, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast5IdentNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.i8.i.i.i ], [ false, %.lr.ph.i4.i.i.i ], [ false, %.lr.ph.i5 ], [ false, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast19CopyLegacyCsvOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.i ], [ false, %bb.ab ], [ false, %.split.i ], [ false, %.lr.ph.i ], [ false, %bb.av ], [ false, %bb.ai ], [ false, %bb.aw ], [ false, %bb.al ], [ false, %bb.aq ], [ false, %bb.ao ], [ false, %bb.u ], [ false, %bb.ap ], [ false, %bb.af ], [ false, %bb.j ], [ false, %bb.ak ], [ false, %bb.p ], [ false, %bb.as ], [ false, %bb.r ], [ false, %bb.n ], [ false, %bb.i ], [ false, %bb.ba ], [ false, %bb.m ], [ false, %bb.h ], [ true, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9 ], [ false, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit ], [ false, %.lr.ph ], [ false, %bb.q ], [ false, %bb.t ], [ false, %bb.d ], [ false, %bb.ay ], [ false, %bb.an ], [ false, %bb.bb ], [ false, %bb.f ], [ false, %bb.ah ], [ false, %bb.g ], [ false, %bb.k ], [ false, %bb.l ], [ false, %bb.ar ], [ false, %bb.ag ], [ false, %bb.az ]
+  ret i1 %8
 
-_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9: ; preds = %bb.au, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast19CopyLegacyCsvOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread7.i, %bb.at, %bb.v, %bb.aj, %bb.b, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit
+_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread9: ; preds = %bb.au, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast19CopyLegacyCsvOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread7.i, %bb.ay, %bb.az, %bb.an, %bb.ag, %bb.bb, %bb.l, %bb.k, %bb.f, %bb.g, %bb.ah, %bb.ar, %bb.ai, %bb.aw, %bb.al, %bb.aq, %bb.ao, %bb.u, %bb.ap, %bb.aj, %bb.v, %bb.at, %bb.b, %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit
   %i.iz = add nuw i64 %.sroa.01.017, 1            ; 2 uses
   %exitcond.not = icmp eq i64 %i.iz, %2
   br i1 %exitcond.not, label %_RNvYNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs14kWLkQVSKO_14deltalake_core.exit.thread, label %.lr.ph

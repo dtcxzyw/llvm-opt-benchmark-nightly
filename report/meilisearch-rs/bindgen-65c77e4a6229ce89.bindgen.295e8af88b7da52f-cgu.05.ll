@@ -202,9 +202,7 @@ define hidden zeroext i1 @"_ZN64_$LT$bindgen..clang..ABIKind$u20$as$u20$core..cm
 bb.a:
   %i.a = load i8, ptr %0, align 1
   %i.b = load i8, ptr %1, align 1
-  %2 = xor i8 %i.b, %i.a
-  %3 = and i8 %2, 1
-  %i.c = icmp eq i8 %3, 0
+  %i.c = icmp eq i8 %i.a, %i.b
   ret i1 %i.c
 }
 

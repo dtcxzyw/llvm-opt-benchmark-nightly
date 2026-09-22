@@ -205,8 +205,6 @@ bb.aj:                                            ; preds = %bb.ai
 bb.ak:                                            ; preds = %bb.aj, %bb.ai
   %i.ko = phi i8 [ %.pre902, %bb.aj ], [ %i.ki, %bb.ai ]
   %i.kp = phi i64 [ %.pre901, %bb.aj ], [ %i.kh, %bb.ai ] ; 2 uses
-  %11 = trunc i64 %i.kp to i32
-  %12 = and i32 %11, 31
   %i.kq = zext i1 %i.kl to i64                    ; 2 uses
   %i.kr = getelementptr inbounds nuw [4 x i8], ptr @vlc_decode_u_suffix.drop_bits, i64 %i.kq
   %i.ks = load i32, ptr %i.kr, align 4, !tbaa !12 ; 2 uses
@@ -217,6 +215,8 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
   store i64 %i.kv, ptr %i.eo, align 8, !tbaa !16
   %i.kw = sub i8 %i.ko, %i.kt                     ; 2 uses
   store i8 %i.kw, ptr %i.ep, align 8, !tbaa !23
+  %11 = trunc i64 %i.kp to i32
+  %12 = and i32 %11, 31
   %i.kx = getelementptr inbounds nuw [4 x i8], ptr @vlc_decode_u_suffix.mask, i64 %i.kq
   %i.ky = load i32, ptr %i.kx, align 4, !tbaa !12
   %i.kz = and i32 %12, %i.ky
@@ -245,8 +245,6 @@ bb.am:                                            ; preds = %bb.al
 bb.an:                                            ; preds = %bb.am, %bb.al
   %i.lg = phi i8 [ %.pre904, %bb.am ], [ %i.lc, %bb.al ]
   %i.lh = phi i64 [ %.pre903, %bb.am ], [ %i.lb, %bb.al ] ; 2 uses
-  %13 = trunc i64 %i.lh to i32
-  %14 = and i32 %13, 31
   %i.li = zext i1 %i.ld to i64                    ; 2 uses
   %i.lj = getelementptr inbounds nuw [4 x i8], ptr @vlc_decode_u_suffix.drop_bits, i64 %i.li
   %i.lk = load i32, ptr %i.lj, align 4, !tbaa !12 ; 2 uses
@@ -257,6 +255,8 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   store i64 %i.ln, ptr %i.eo, align 8, !tbaa !16
   %i.lo = sub i8 %i.lg, %i.ll                     ; 2 uses
   store i8 %i.lo, ptr %i.ep, align 8, !tbaa !23
+  %13 = trunc i64 %i.lh to i32
+  %14 = and i32 %13, 31
   %i.lp = getelementptr inbounds nuw [4 x i8], ptr @vlc_decode_u_suffix.mask, i64 %i.li
   %i.lq = load i32, ptr %i.lp, align 4, !tbaa !12
   %i.lr = and i32 %14, %i.lq
@@ -289,7 +289,6 @@ jpeg2000_bitbuf_get_bits_lsb.exit205:             ; preds = %vlc_decode_u_suffix
   store i64 %i.md, ptr %i.eo, align 8, !tbaa !16
   %i.me = sub i8 %i.ly, %i.lw                     ; 3 uses
   store i8 %i.me, ptr %i.ep, align 8, !tbaa !23
-  %15 = trunc nuw nsw i64 %i.mc to i32
   %i.mf = icmp samesign ugt i8 %.0.i178, 27
   %i.mg = select i1 %i.mf, i8 4, i8 0             ; 3 uses
   %i.mh = icmp ult i8 %i.me, %i.mg
@@ -312,17 +311,18 @@ jpeg2000_bitbuf_get_bits_lsb.exit207:             ; preds = %jpeg2000_bitbuf_get
   store i64 %i.mn, ptr %i.eo, align 8, !tbaa !16
   %i.mo = sub i8 %i.mi, %i.mg
   store i8 %i.mo, ptr %i.ep, align 8, !tbaa !23
-  %16 = trunc nuw nsw i64 %i.mm to i32
   %i.mp = zext i8 %i.jz to i32
   %i.mq = add nuw nsw i32 %i.mp, 2
   %i.mr = zext nneg i8 %.0.i180 to i32
   %i.ms = add nuw nsw i32 %i.mq, %i.mr
+  %15 = trunc nuw nsw i64 %i.mc to i32
   %i.mt = shl nuw nsw i32 %15, 2
   %i.mu = add nuw nsw i32 %i.ms, %i.mt
   %i.mv = zext i8 %i.kk to i32
   %i.mw = add nuw nsw i32 %i.mv, 2
   %i.mx = zext nneg i8 %.0.i178 to i32
   %i.my = add nuw nsw i32 %i.mw, %i.mx
+  %16 = trunc nuw nsw i64 %i.mm to i32
   %i.mz = shl nuw nsw i32 %16, 2
   %i.na = add nuw nsw i32 %i.my, %i.mz
   br label %jpeg2000_bitbuf_get_bits_lsb.exit203.cont
@@ -385,8 +385,6 @@ bb.av:                                            ; preds = %bb.au
 vlc_decode_u_suffix.exit:                         ; preds = %bb.au, %bb.av
   %i.nx = phi i8 [ %i.nr, %bb.au ], [ %.pre919, %bb.av ]
   %i.ny = phi i64 [ %i.nq, %bb.au ], [ %.pre918, %bb.av ] ; 2 uses
-  %17 = trunc i64 %i.ny to i32
-  %18 = and i32 %17, 31
   %i.nz = zext i1 %i.nv to i64                    ; 2 uses
   %i.oa = getelementptr inbounds nuw [4 x i8], ptr @vlc_decode_u_suffix.drop_bits, i64 %i.nz
   %i.ob = load i32, ptr %i.oa, align 4, !tbaa !12 ; 2 uses
@@ -397,6 +395,8 @@ vlc_decode_u_suffix.exit:                         ; preds = %bb.au, %bb.av
   store i64 %i.oe, ptr %i.eo, align 8, !tbaa !16
   %i.of = sub i8 %i.nx, %i.oc                     ; 3 uses
   store i8 %i.of, ptr %i.ep, align 8, !tbaa !23
+  %17 = trunc i64 %i.ny to i32
+  %18 = and i32 %17, 31
   %i.og = getelementptr inbounds nuw [4 x i8], ptr @vlc_decode_u_suffix.mask, i64 %i.nz
   %i.oh = load i32, ptr %i.og, align 4, !tbaa !12
   %i.oi = and i32 %18, %i.oh                      ; 2 uses
@@ -467,8 +467,6 @@ bb.ba:                                            ; preds = %bb.az
 jpeg2000_bitbuf_get_bits_lsb.exit209:             ; preds = %bb.az, %bb.ba
   %i.pj = phi i8 [ %.pre913, %bb.ba ], [ %i.pd, %bb.az ]
   %i.pk = phi i64 [ %.pre912, %bb.ba ], [ %i.pc, %bb.az ] ; 2 uses
-  %19 = trunc i64 %i.pk to i32
-  %20 = and i32 %19, 31
   %i.pl = zext i1 %i.pg to i64                    ; 2 uses
   %i.pm = getelementptr inbounds nuw [4 x i8], ptr @vlc_decode_u_suffix.drop_bits, i64 %i.pl
   %i.pn = load i32, ptr %i.pm, align 4, !tbaa !12 ; 2 uses
@@ -479,6 +477,8 @@ jpeg2000_bitbuf_get_bits_lsb.exit209:             ; preds = %bb.az, %bb.ba
   store i64 %i.pq, ptr %i.eo, align 8, !tbaa !16
   %i.pr = sub i8 %i.pj, %i.po                     ; 4 uses
   store i8 %i.pr, ptr %i.ep, align 8, !tbaa !23
+  %19 = trunc i64 %i.pk to i32
+  %20 = and i32 %19, 31
   %i.ps = getelementptr inbounds nuw [4 x i8], ptr @vlc_decode_u_suffix.mask, i64 %i.pl
   %i.pt = load i32, ptr %i.ps, align 4, !tbaa !12
   %i.pu = and i32 %20, %i.pt
@@ -571,8 +571,6 @@ bb.bi:                                            ; preds = %bb.bh
 vlc_decode_u_suffix.exit183.cont:                 ; preds = %bb.bh, %bb.bi
   %i.rd = phi i8 [ %.pre895, %bb.bi ], [ %i.qx, %bb.bh ]
   %i.re = phi i64 [ %.pre894, %bb.bi ], [ %i.qw, %bb.bh ] ; 2 uses
-  %21 = trunc i64 %i.re to i32
-  %22 = and i32 %21, 31
   %i.rf = zext i1 %i.ra to i64                    ; 2 uses
   %i.rg = getelementptr inbounds nuw [4 x i8], ptr @vlc_decode_u_suffix.drop_bits, i64 %i.rf
   %i.rh = load i32, ptr %i.rg, align 4, !tbaa !12 ; 2 uses
@@ -583,6 +581,8 @@ vlc_decode_u_suffix.exit183.cont:                 ; preds = %bb.bh, %bb.bi
   store i64 %i.rk, ptr %i.eo, align 8, !tbaa !16
   %i.rl = sub i8 %i.rd, %i.ri                     ; 4 uses
   store i8 %i.rl, ptr %i.ep, align 8, !tbaa !23
+  %21 = trunc i64 %i.re to i32
+  %22 = and i32 %21, 31
   %i.rm = getelementptr inbounds nuw [4 x i8], ptr @vlc_decode_u_suffix.mask, i64 %i.rf
   %i.rn = load i32, ptr %i.rm, align 4, !tbaa !12
   %i.ro = and i32 %22, %i.rn
@@ -985,8 +985,6 @@ bb.cu:                                            ; preds = %bb.ct
 vlc_decode_u_suffix.exit185:                      ; preds = %bb.ct, %bb.cu
   %i.akc = phi i8 [ %i.ajw, %bb.ct ], [ %.pre924, %bb.cu ]
   %i.akd = phi i64 [ %i.ajv, %bb.ct ], [ %.pre923, %bb.cu ] ; 2 uses
-  %23 = trunc i64 %i.akd to i32
-  %24 = and i32 %23, 31
   %i.ake = zext i1 %i.ajz to i64                  ; 2 uses
   %i.akf = getelementptr inbounds nuw [4 x i8], ptr @vlc_decode_u_suffix.drop_bits, i64 %i.ake
   %i.akg = load i32, ptr %i.akf, align 4, !tbaa !12 ; 2 uses
@@ -997,6 +995,8 @@ vlc_decode_u_suffix.exit185:                      ; preds = %bb.ct, %bb.cu
   store i64 %i.akj, ptr %i.ajp, align 8, !tbaa !16
   %i.akk = sub i8 %i.akc, %i.akh                  ; 4 uses
   store i8 %i.akk, ptr %i.ajl, align 8, !tbaa !23
+  %23 = trunc i64 %i.akd to i32
+  %24 = and i32 %23, 31
   %i.akl = getelementptr inbounds nuw [4 x i8], ptr @vlc_decode_u_suffix.mask, i64 %i.ake
   %i.akm = load i32, ptr %i.akl, align 4, !tbaa !12
   %i.akn = and i32 %24, %i.akm
@@ -1399,8 +1399,6 @@ bb.ea:                                            ; preds = %bb.dz
 bb.eb:                                            ; preds = %bb.ea, %bb.dz
   %i.bae = phi i8 [ %.pre937, %bb.ea ], [ %i.azy, %bb.dz ]
   %i.baf = phi i64 [ %.pre936, %bb.ea ], [ %i.azx, %bb.dz ] ; 2 uses
-  %25 = trunc i64 %i.baf to i32
-  %26 = and i32 %25, 31
   %i.bag = zext i1 %i.bab to i64                  ; 2 uses
   %i.bah = getelementptr inbounds nuw [4 x i8], ptr @vlc_decode_u_suffix.drop_bits, i64 %i.bag
   %i.bai = load i32, ptr %i.bah, align 4, !tbaa !12 ; 2 uses
@@ -1411,6 +1409,8 @@ bb.eb:                                            ; preds = %bb.ea, %bb.dz
   store i64 %i.bal, ptr %i.atq, align 8, !tbaa !16
   %i.bam = sub i8 %i.bae, %i.baj                  ; 2 uses
   store i8 %i.bam, ptr %i.atp, align 8, !tbaa !23
+  %25 = trunc i64 %i.baf to i32
+  %26 = and i32 %25, 31
   %i.ban = getelementptr inbounds nuw [4 x i8], ptr @vlc_decode_u_suffix.mask, i64 %i.bag
   %i.bao = load i32, ptr %i.ban, align 4, !tbaa !12
   %i.bap = and i32 %26, %i.bao
@@ -1439,8 +1439,6 @@ bb.ed:                                            ; preds = %bb.ec
 bb.ee:                                            ; preds = %bb.ed, %bb.ec
   %i.baw = phi i8 [ %.pre939, %bb.ed ], [ %i.bas, %bb.ec ]
   %i.bax = phi i64 [ %.pre938, %bb.ed ], [ %i.bar, %bb.ec ] ; 2 uses
-  %27 = trunc i64 %i.bax to i32
-  %28 = and i32 %27, 31
   %i.bay = zext i1 %i.bat to i64                  ; 2 uses
   %i.baz = getelementptr inbounds nuw [4 x i8], ptr @vlc_decode_u_suffix.drop_bits, i64 %i.bay
   %i.bba = load i32, ptr %i.baz, align 4, !tbaa !12 ; 2 uses
@@ -1451,6 +1449,8 @@ bb.ee:                                            ; preds = %bb.ed, %bb.ec
   store i64 %i.bbd, ptr %i.atq, align 8, !tbaa !16
   %i.bbe = sub i8 %i.baw, %i.bbb                  ; 2 uses
   store i8 %i.bbe, ptr %i.atp, align 8, !tbaa !23
+  %27 = trunc i64 %i.bax to i32
+  %28 = and i32 %27, 31
   %i.bbf = getelementptr inbounds nuw [4 x i8], ptr @vlc_decode_u_suffix.mask, i64 %i.bay
   %i.bbg = load i32, ptr %i.bbf, align 4, !tbaa !12
   %i.bbh = and i32 %28, %i.bbg
@@ -1483,7 +1483,6 @@ jpeg2000_bitbuf_get_bits_lsb.exit197:             ; preds = %vlc_decode_u_suffix
   store i64 %i.bbt, ptr %i.atq, align 8, !tbaa !16
   %i.bbu = sub i8 %i.bbo, %i.bbm                  ; 3 uses
   store i8 %i.bbu, ptr %i.atp, align 8, !tbaa !23
-  %29 = trunc nuw nsw i64 %i.bbs to i32
   %i.bbv = icmp samesign ugt i8 %.0.i186, 27
   %i.bbw = select i1 %i.bbv, i8 4, i8 0           ; 3 uses
   %i.bbx = icmp ult i8 %i.bbu, %i.bbw
@@ -1506,15 +1505,16 @@ jpeg2000_bitbuf_get_bits_lsb.exit199:             ; preds = %jpeg2000_bitbuf_get
   store i64 %i.bcd, ptr %i.atq, align 8, !tbaa !16
   %i.bce = sub i8 %i.bby, %i.bbw
   store i8 %i.bce, ptr %i.atp, align 8, !tbaa !23
-  %30 = trunc nuw nsw i64 %i.bcc to i32
   %i.bcf = zext i8 %i.azp to i32
   %i.bcg = zext nneg i8 %.0.i188 to i32
   %i.bch = add nuw nsw i32 %i.bcg, %i.bcf
+  %29 = trunc nuw nsw i64 %i.bbs to i32
   %i.bci = shl nuw nsw i32 %29, 2
   %i.bcj = add nuw nsw i32 %i.bch, %i.bci
   %i.bck = zext i8 %i.baa to i32
   %i.bcl = zext nneg i8 %.0.i186 to i32
   %i.bcm = add nuw nsw i32 %i.bcl, %i.bck
+  %30 = trunc nuw nsw i64 %i.bcc to i32
   %i.bcn = shl nuw nsw i32 %30, 2
   %i.bco = add nuw nsw i32 %i.bcm, %i.bcn
   br label %jpeg2000_bitbuf_get_bits_lsb.exit195.cont
@@ -1564,8 +1564,6 @@ bb.el:                                            ; preds = %bb.ek
 vlc_decode_u_suffix.exit191.cont:                 ; preds = %bb.ek, %bb.el
   %i.bde = phi i8 [ %.pre930, %bb.el ], [ %i.bcy, %bb.ek ]
   %i.bdf = phi i64 [ %.pre929, %bb.el ], [ %i.bcx, %bb.ek ] ; 2 uses
-  %31 = trunc i64 %i.bdf to i32
-  %32 = and i32 %31, 31
   %i.bdg = zext i1 %i.bdb to i64                  ; 2 uses
   %i.bdh = getelementptr inbounds nuw [4 x i8], ptr @vlc_decode_u_suffix.drop_bits, i64 %i.bdg
   %i.bdi = load i32, ptr %i.bdh, align 4, !tbaa !12 ; 2 uses
@@ -1576,6 +1574,8 @@ vlc_decode_u_suffix.exit191.cont:                 ; preds = %bb.ek, %bb.el
   store i64 %i.bdl, ptr %i.atq, align 8, !tbaa !16
   %i.bdm = sub i8 %i.bde, %i.bdj                  ; 4 uses
   store i8 %i.bdm, ptr %i.atp, align 8, !tbaa !23
+  %31 = trunc i64 %i.bdf to i32
+  %32 = and i32 %31, 31
   %i.bdn = getelementptr inbounds nuw [4 x i8], ptr @vlc_decode_u_suffix.mask, i64 %i.bdg
   %i.bdo = load i32, ptr %i.bdn, align 4, !tbaa !12
   %i.bdp = and i32 %32, %i.bdo
@@ -1978,8 +1978,6 @@ bb.gc:                                            ; preds = %bb.gb
 vlc_decode_u_suffix.exit193:                      ; preds = %bb.gb, %bb.gc
   %i.caa = phi i8 [ %i.bzu, %bb.gb ], [ %.pre946, %bb.gc ]
   %i.cab = phi i64 [ %i.bzt, %bb.gb ], [ %.pre945, %bb.gc ] ; 2 uses
-  %33 = trunc i64 %i.cab to i32
-  %34 = and i32 %33, 31
   %i.cac = zext i1 %i.bzx to i64                  ; 2 uses
   %i.cad = getelementptr inbounds nuw [4 x i8], ptr @vlc_decode_u_suffix.drop_bits, i64 %i.cac
   %i.cae = load i32, ptr %i.cad, align 4, !tbaa !12 ; 2 uses
@@ -1990,6 +1988,8 @@ vlc_decode_u_suffix.exit193:                      ; preds = %bb.gb, %bb.gc
   store i64 %i.cah, ptr %i.atq, align 8, !tbaa !16
   %i.cai = sub i8 %i.caa, %i.caf                  ; 4 uses
   store i8 %i.cai, ptr %i.atp, align 8, !tbaa !23
+  %33 = trunc i64 %i.cab to i32
+  %34 = and i32 %33, 31
   %i.caj = getelementptr inbounds nuw [4 x i8], ptr @vlc_decode_u_suffix.mask, i64 %i.cac
   %i.cak = load i32, ptr %i.caj, align 4, !tbaa !12
   %i.cal = and i32 %34, %i.cak
@@ -2392,10 +2392,9 @@ jpeg2000_peek_bit.exit86.i.us.3.3:                ; preds = %bb.cc, %bb.cb, %bb.
   br i1 %exitcond98.not, label %._crit_edge.us, label %bb.b, !llvm.loop !61
 
 bb.cd:                                            ; preds = %._crit_edge.us
-  %9 = trunc nuw nsw i64 %indvars.iv.next96 to i32
   %i.zv = trunc nuw nsw i64 %indvars.iv99 to i32
-  %10 = and i32 %9, 65532
-  call fastcc void @jpeg2000_process_stripes_block(ptr noundef %8, i32 noundef %i.zv, i32 noundef %10, i32 noundef %i.m, i32 noundef 4, i32 noundef %2, i32 noundef %i.g, ptr noundef %6, ptr noundef nonnull %7, ptr noundef %3, i32 noundef %4, i8 noundef zeroext %i.d)
+  %9 = trunc nuw nsw i64 %indvars.iv.next96 to i32
+  call fastcc void @jpeg2000_process_stripes_block(ptr noundef %8, i32 noundef %i.zv, i32 noundef %9, i32 noundef %i.m, i32 noundef 4, i32 noundef %2, i32 noundef %i.g, ptr noundef %6, ptr noundef nonnull %7, ptr noundef %3, i32 noundef %4, i8 noundef zeroext %i.d)
   %.promoted32.us.pre = load i32, ptr %8, align 8
   br label %bb.ce
 

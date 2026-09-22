@@ -205,17 +205,12 @@ bb.ar:                                            ; preds = %bb.aq
   %i.fz = load i16, ptr %i.at, align 1            ; 2 uses
   %i.ga = and i16 %i.fz, 512
   %.not.i.i84 = icmp eq i16 %i.ga, 0
-  br i1 %.not.i.i84, label %._crit_edge199, label %bb.as
-
-._crit_edge199:                                   ; preds = %bb.ar
-  %.pre200 = and i8 %.sroa.0130.0..sroa.0130.0..sroa.0130.0.144, 1
-  br label %bb.at
+  br i1 %.not.i.i84, label %bb.at, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
   %i.gb = getelementptr inbounds nuw i8, ptr %13, i64 16
   store i32 1, ptr %i.gb, align 16, !tbaa !111, !alias.scope !682
-  %.mask = and i8 %.sroa.0130.0..sroa.0130.0..sroa.0130.0.144, 1 ; 2 uses
-  %.sroa.01.0.insert.ext.i.i.i.i = zext nneg i8 %.mask to i128
+  %.sroa.01.0.insert.ext.i.i.i.i = zext nneg i8 %.sroa.0130.0..sroa.0130.0..sroa.0130.0.144 to i128
   store i128 %.sroa.01.0.insert.ext.i.i.i.i, ptr %13, align 16, !tbaa !82, !alias.scope !682
   %i.gc = call noundef zeroext i1 @_ZN3fmt3v116detail9write_locENS0_14basic_appenderIcEENS0_9loc_valueERKNS0_12format_specsENS1_10locale_refE(ptr %.sroa.0.0.copyload.i71, ptr noundef nonnull byval(%"class.fmt::v11::loc_value") align 16 %13, ptr noundef nonnull align 4 dereferenceable(16) %26, ptr null)
   br i1 %i.gc, label %_ZN3fmt3v116detail5writeIciTnNSt9enable_ifIXaaaasr11is_integralIT0_EE5valuentsr3std7is_sameIS4_bEE5valuentsr3std7is_sameIS4_T_EE5valueEiE4typeELi0EEENS0_14basic_appenderIS5_EES9_S4_RKNS0_12format_specsENS1_10locale_refE.exit.i, label %._crit_edge.i
@@ -224,9 +219,8 @@ bb.as:                                            ; preds = %bb.ar
   %.pre.i = load i16, ptr %i.at, align 1
   br label %bb.at
 
-bb.at:                                            ; preds = %._crit_edge199, %._crit_edge.i
-  %.mask173.pre-phi = phi i8 [ %.pre200, %._crit_edge199 ], [ %.mask, %._crit_edge.i ]
-  %i.gd = phi i16 [ %i.fz, %._crit_edge199 ], [ %.pre.i, %._crit_edge.i ]
+bb.at:                                            ; preds = %._crit_edge.i, %bb.ar
+  %i.gd = phi i16 [ %.pre.i, %._crit_edge.i ], [ %i.fz, %bb.ar ]
   %i.ge = lshr i16 %i.gd, 4
   %i.gf = and i16 %i.ge, 7
   %i.gg = zext nneg i16 %i.gf to i64
@@ -234,7 +228,7 @@ bb.at:                                            ; preds = %._crit_edge199, %._
   %i.gi = load i32, ptr %i.gh, align 4, !tbaa !112
   %i.gj = zext i32 %i.gi to i64
   %i.gk = shl nuw i64 %i.gj, 32
-  %.sroa.0.0.insert.ext.i.i = zext nneg i8 %.mask173.pre-phi to i64
+  %.sroa.0.0.insert.ext.i.i = zext nneg i8 %.sroa.0130.0..sroa.0130.0..sroa.0130.0.144 to i64
   %.sroa.0.0.insert.insert.i.i = or disjoint i64 %i.gk, %.sroa.0.0.insert.ext.i.i
   %i.gl = call ptr @_ZN3fmt3v116detail18write_int_noinlineIcNS0_14basic_appenderIcEEjEET0_S5_NS1_13write_int_argIT1_EERKNS0_12format_specsENS1_10locale_refE(ptr %.sroa.0.0.copyload.i71, i64 %.sroa.0.0.insert.insert.i.i, ptr noundef nonnull align 4 dereferenceable(16) %26, ptr null) ; 0 uses
   br label %_ZN3fmt3v116detail5writeIciTnNSt9enable_ifIXaaaasr11is_integralIT0_EE5valuentsr3std7is_sameIS4_bEE5valuentsr3std7is_sameIS4_T_EE5valueEiE4typeELi0EEENS0_14basic_appenderIS5_EES9_S4_RKNS0_12format_specsENS1_10locale_refE.exit.i

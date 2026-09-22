@@ -206,15 +206,15 @@ bb.ah:                                            ; preds = %bb.ag
 bb.ai:                                            ; preds = %bb.ag, %bb.ah, %bb.af
   %.sroa.07.0 = phi i16 [ %i.cj, %bb.af ], [ %i.cs, %bb.ah ], [ %i.bz, %bb.ag ]
   %.sroa.02.0 = phi i32 [ %i.ck, %bb.af ], [ %i.cm, %bb.ah ], [ %i.bw, %bb.ag ]
-  %.sroa.3.0.insert.ext.i = zext nneg i16 %.sroa.042.0 to i64
-  %.sroa.2.0.insert.ext.i = zext nneg i16 %.sroa.040.0 to i64
   %i.ct = load i32, ptr %1, align 4, !noundef !57 ; 2 uses
   %i.cu = icmp ult i32 %i.ct, 1000000000
   tail call void @llvm.assume(i1 %i.cu)
   %.sroa.4.0.insert.ext.i = zext nneg i8 %.sroa.044.0 to i64
   %.sroa.4.0.insert.shift.i = shl nuw nsw i64 %.sroa.4.0.insert.ext.i, 48
+  %.sroa.3.0.insert.ext.i = zext nneg i16 %.sroa.042.0 to i64
   %.sroa.3.0.insert.shift.i = shl nuw nsw i64 %.sroa.3.0.insert.ext.i, 40
   %.sroa.3.0.insert.insert.i = or disjoint i64 %.sroa.4.0.insert.shift.i, %.sroa.3.0.insert.shift.i
+  %.sroa.2.0.insert.ext.i = zext nneg i16 %.sroa.040.0 to i64
   %.sroa.2.0.insert.shift.i = shl nuw nsw i64 %.sroa.2.0.insert.ext.i, 32
   %.sroa.2.0.insert.insert.i = or disjoint i64 %.sroa.3.0.insert.insert.i, %.sroa.2.0.insert.shift.i
   %.sroa.0.0.insert.ext.i = zext nneg i32 %i.ct to i64
@@ -617,9 +617,8 @@ bb.ws:                                            ; preds = %bb.wr
 
 bb.wt:                                            ; preds = %bb.wr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.kf)
-  %13 = and i8 %i.brs, 1
-  %i.brt = icmp eq i8 %13, 0
-  br i1 %i.brt, label %bb.wu, label %bb.yq
+  %i.brt = icmp eq i8 %i.brs, 1
+  br i1 %i.brt, label %bb.yq, label %bb.wu
 
 bb.wu:                                            ; preds = %bb.wt
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ke)
@@ -1022,9 +1021,8 @@ bb.ws:                                            ; preds = %bb.wr
 
 bb.wt:                                            ; preds = %bb.wr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.kf)
-  %13 = and i8 %i.brt, 1
-  %i.bru = icmp eq i8 %13, 0
-  br i1 %i.bru, label %bb.wu, label %bb.yq
+  %i.bru = icmp eq i8 %i.brt, 1
+  br i1 %i.bru, label %bb.yq, label %bb.wu
 
 bb.wu:                                            ; preds = %bb.wt
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ke)
@@ -1427,9 +1425,8 @@ bb.ws:                                            ; preds = %bb.wr
 
 bb.wt:                                            ; preds = %bb.wr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.kf)
-  %13 = and i8 %i.brs, 1
-  %i.brt = icmp eq i8 %13, 0
-  br i1 %i.brt, label %bb.wu, label %bb.yq
+  %i.brt = icmp eq i8 %i.brs, 1
+  br i1 %i.brt, label %bb.yq, label %bb.wu
 
 bb.wu:                                            ; preds = %bb.wt
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ke)
@@ -1832,8 +1829,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.sroa.8)
-  %4 = and i8 %.sroa.010.0.copyload, 1
-  %. = zext nneg i8 %4 to i64
+  %. = zext nneg i8 %.sroa.010.0.copyload to i64
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %., ptr %i.d, align 8
   br label %bb.d

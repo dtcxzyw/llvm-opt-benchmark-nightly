@@ -205,8 +205,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 _ZN3euf6egraph10push_mergeEPNS_5enodeES2_b.exit:  ; preds = %bb.n, %bb.o
   %i.bz = phi i32 [ %.pre2.i.i28, %bb.o ], [ %i.bv, %bb.n ]
   %i.ca = phi ptr [ %.pre.i.i26, %bb.o ], [ %i.bs, %bb.n ]
-  %5 = and i8 %.fca.1.extract, 1
-  %i.cb = zext nneg i8 %5 to i32
+  %i.cb = zext nneg i8 %.fca.1.extract to i32
   %i.cc = zext i32 %i.bz to i64
   %i.cd = getelementptr inbounds nuw [48 x i8], ptr %i.ca, i64 %i.cc ; 6 uses
   store ptr %i.b, ptr %i.cd, align 8, !tbaa !66
@@ -609,8 +608,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %.fca.1.extract = extractvalue { ptr, i8 } %i.h, 1
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %3 = and i8 %.fca.1.extract, 1
-  %i.l = zext nneg i8 %3 to i32
+  %i.l = zext nneg i8 %.fca.1.extract to i32
   %i.m = load ptr, ptr %i.k, align 8, !tbaa !145  ; 4 uses
   %i.n = icmp eq ptr %i.m, null
   br i1 %i.n, label %bb.f, label %bb.e
@@ -1013,8 +1011,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %.fca.1.extract = extractvalue { ptr, i8 } %i.s, 1
-  %3 = and i8 %.fca.1.extract, 1
-  %i.u = zext nneg i8 %3 to i32
+  %i.u = zext nneg i8 %.fca.1.extract to i32
   %i.v = load ptr, ptr %i.k, align 8, !tbaa !145  ; 4 uses
   %i.w = icmp eq ptr %i.v, null
   br i1 %i.w, label %bb.g, label %bb.f

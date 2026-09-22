@@ -205,11 +205,8 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.b
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.au = load i8, ptr %i.at, align 8, !range !10, !noundef !5 ; 2 uses
-  %.not26 = icmp ne i8 %i.au, 2
-  %6 = and i8 %i.au, 1
-  %i.av = icmp eq i8 %6, 0
-  %.sroa.0.0 = and i1 %.not26, %i.av              ; 3 uses
+  %i.au = load i8, ptr %i.at, align 8, !range !10, !noundef !5
+  %i.av = icmp eq i8 %i.au, 0                     ; 3 uses
   %.val = load ptr, ptr %1, align 8, !nonnull !5, !noundef !5 ; 8 uses
   %.val67 = load i32, ptr %3, align 8, !range !11, !noundef !5
   switch i32 %.val67, label %default.unreachable [
@@ -315,7 +312,7 @@ bb.l:                                             ; preds = %.lr.ph1734, %bb.jh
 
 bb.m:                                             ; preds = %bb.l
   %.not31 = icmp eq i64 %i.cu, 0
-  %brmerge1 = or i1 %.sroa.0.0, %.not31
+  %brmerge1 = or i1 %i.av, %.not31
   %brmerge1.not = xor i1 %brmerge1, true
   %i.cx = icmp ugt i64 %.sroa.09.01733, %i.ah
   %or.cond34 = and i1 %i.bq, %i.cx
@@ -345,7 +342,7 @@ bb.o:                                             ; preds = %bb.n
 ._crit_edge3345:                                  ; preds = %bb.l, %bb.p, %bb.n
   %.sroa.09.1 = phi i64 [ %i.dl, %bb.p ], [ %.sroa.09.01733, %bb.n ], [ %.sroa.09.01733, %bb.l ] ; 29 uses
   %.not32 = icmp eq i64 %i.cu, 0
-  %brmerge = or i1 %.sroa.0.0, %.not32
+  %brmerge = or i1 %i.av, %.not32
   %brmerge.not = xor i1 %brmerge, true
   %i.dk = icmp ne i64 %.sroa.09.1, %i.ah
   %or.cond37.not = and i1 %i.bq, %i.dk
@@ -748,7 +745,7 @@ bb.gm:                                            ; preds = %_ZN14regex_automata
 "_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$15copy_from_slice17hca03e678e97ceecbE.exit189": ; preds = %_ZN14regex_automata3nfa8thompson6pikevm9SlotTable9for_state17h90ee8bdde197d973E.exit187
   %i.aca = getelementptr inbounds nuw [8 x i8], ptr %i.abz, i64 %i.em
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %4, ptr nonnull readonly align 8 %i.aca, i64 %i.cn, i1 false), !alias.scope !486, !noalias !487
-  br i1 %.sroa.0.0, label %.outer, label %_ZN14regex_automata3nfa8thompson6pikevm6PikeVM5nexts17hdcd50bf442ddf02cE.exit.thread
+  br i1 %i.av, label %.outer, label %_ZN14regex_automata3nfa8thompson6pikevm6PikeVM5nexts17hdcd50bf442ddf02cE.exit.thread
 
 _ZN14regex_automata3nfa8thompson6pikevm6PikeVM5nexts17hdcd50bf442ddf02cE.exit: ; preds = %.outer, %_ZN14regex_automata3nfa8thompson6pikevm6PikeVM4next17h257e8fad9cd00486E.exit.i
   br i1 %.sroa.0.0.i39.ph, label %_ZN14regex_automata3nfa8thompson6pikevm6PikeVM5nexts17hdcd50bf442ddf02cE.exit.thread, label %bb.jg
@@ -1151,11 +1148,8 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.as = load i8, ptr %i.ar, align 8, !range !10, !noundef !5 ; 2 uses
-  %.not17 = icmp ne i8 %i.as, 2
-  %4 = and i8 %i.as, 1
-  %i.at = icmp eq i8 %4, 0
-  %.sroa.0.0 = and i1 %.not17, %i.at              ; 2 uses
+  %i.as = load i8, ptr %i.ar, align 8, !range !10, !noundef !5
+  %i.at = icmp eq i8 %i.as, 0                     ; 2 uses
   %.val = load ptr, ptr %0, align 8, !nonnull !5, !noundef !5 ; 10 uses
   %.val50 = load i32, ptr %2, align 8, !range !11, !noundef !5
   switch i32 %.val50, label %default.unreachable [
@@ -1245,7 +1239,7 @@ bb.i:                                             ; preds = %.lr.ph1424, %bb.iw
   %spec.select350 = add nuw i64 %.sroa.0.02381422, %i.cq ; 2 uses
   %i.cr = icmp eq i64 %i.co, 0
   %i.cs = icmp eq i64 %i.cn, 0
-  %brmerge = or i1 %.sroa.0.0, %i.cr              ; 3 uses
+  %brmerge = or i1 %i.at, %i.cr                   ; 3 uses
   br i1 %i.cs, label %bb.j, label %._crit_edge2734
 
 ._crit_edge2734:                                  ; preds = %bb.i
@@ -1648,7 +1642,7 @@ bb.is:                                            ; preds = %bb.iv, %bb.iu, %bb.
   call void @_ZN14regex_automata4util6search10PatternSet10try_insert17h694175b078817df0E(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.x, ptr noalias noundef nonnull align 8 dereferenceable(24) %3, i32 noundef %i.aic)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !886
   %i.aih = icmp ne ptr %i.ko, %i.jy
-  %or.cond1426.not = select i1 %.sroa.0.0, i1 %i.aih, i1 false
+  %or.cond1426.not = select i1 %i.at, i1 %i.aih, i1 false
   br i1 %or.cond1426.not, label %.backedge1435, label %_ZN14regex_automata3nfa8thompson6pikevm6PikeVM17nexts_overlapping17hdcff15f63f0d3394E.exit
 
 bb.it:                                            ; preds = %bb.ir

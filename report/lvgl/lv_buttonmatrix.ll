@@ -202,13 +202,12 @@ bb.by:                                            ; preds = %bb.bu, %bb.bv, %bb.
   br i1 %i.ip, label %bb.bu, label %.critedge340, !llvm.loop !44
 
 bb.bz:                                            ; preds = %bb.bx
-  %i.iq = trunc nuw nsw i64 %indvars.iv432 to i32
-  %3 = and i32 %i.iq, 65535                       ; 2 uses
-  store i32 %3, ptr %i.dz, align 8, !tbaa !23
+  %i.iq = trunc nuw nsw i64 %indvars.iv432 to i32 ; 2 uses
+  store i32 %i.iq, ptr %i.dz, align 8, !tbaa !23
   br label %.critedge340
 
 .critedge340:                                     ; preds = %bb.by, %bb.br, %bb.bn, %bb.bg, %bb.ba, %bb.aw, %bb.bq, %bb.bf, %..critedge340_crit_edge, %bb.bt, %bb.bi, %bb.bs, %bb.bz, %bb.bh, %bb.bo, %bb.bd, %bb.ax
-  %i.ir = phi i32 [ %.pre449, %..critedge340_crit_edge ], [ %i.fz, %bb.bn ], [ %i.fq, %bb.bg ], [ %i.ev, %bb.ba ], [ %i.ei, %bb.aw ], [ %i.hk, %bb.br ], [ 65535, %bb.ax ], [ %i.ht, %bb.bt ], [ %i.fz, %bb.bi ], [ 65535, %bb.bs ], [ %3, %bb.bz ], [ 65535, %bb.bh ], [ %i.gv, %bb.bo ], [ 65535, %bb.bd ], [ 0, %bb.bf ], [ 0, %bb.bq ], [ %i.ht, %bb.by ]
+  %i.ir = phi i32 [ %.pre449, %..critedge340_crit_edge ], [ %i.fz, %bb.bn ], [ %i.fq, %bb.bg ], [ %i.ev, %bb.ba ], [ %i.ei, %bb.aw ], [ %i.hk, %bb.br ], [ 65535, %bb.ax ], [ %i.ht, %bb.bt ], [ %i.fz, %bb.bi ], [ 65535, %bb.bs ], [ %i.iq, %bb.bz ], [ 65535, %bb.bh ], [ %i.gv, %bb.bo ], [ 65535, %bb.bd ], [ 0, %bb.bf ], [ 0, %bb.bq ], [ %i.ht, %bb.by ]
   tail call fastcc void @invalidate_button_area(ptr noundef nonnull %i.f, i32 noundef %i.ir)
   br label %.critedge337
 

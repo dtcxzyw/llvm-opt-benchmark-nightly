@@ -204,9 +204,6 @@ _ZNSolsEPFRSoS_E.exit95.i:                        ; preds = %.noexc282.i
   %i.uu = load ptr, ptr %i.oo, align 8
   %i.uv = icmp ne ptr %.pre.i336, %i.uu
   %narrow.i = select i1 %i.ut, i1 %i.uv, i1 false
-  %67 = zext i1 %narrow.i to i8
-  %68 = or i8 %i.qh, %67
-  %69 = icmp ne i8 %68, 0
   %.not.i.i.i96.i = icmp eq ptr %.pre.i336, null
   br i1 %.not.i.i.i96.i, label %_ZNSt6vectorIN2cv6Point_IiEESaIS2_EED2Ev.exit.i, label %bb.ds
 
@@ -220,6 +217,8 @@ bb.ds:                                            ; preds = %_ZNSolsEPFRSoS_E.ex
 
 _ZNSt6vectorIN2cv6Point_IiEESaIS2_EED2Ev.exit.i:  ; preds = %bb.ds, %_ZNSolsEPFRSoS_E.exit95.i
   call void @llvm.lifetime.end.p0(ptr nonnull %33) #24
+  %67 = trunc nuw i8 %i.qh to i1
+  %68 = or i1 %narrow.i, %67
   br label %bb.dx
 
 bb.dt:                                            ; preds = %.noexc282.i, %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i277.i, %.noexc280.i, %bb.dr, %bb.dp, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit92.i, %bb.do, %.noexc89.i, %bb.cr, %bb.cq, %bb.cp
@@ -272,7 +271,7 @@ _ZNSolsEPFRSoS_E.exit102.i:                       ; preds = %bb.dw
           to label %bb.dx unwind label %bb.eb
 
 bb.dx:                                            ; preds = %_ZNSolsEPFRSoS_E.exit102.i, %_ZNSt6vectorIN2cv6Point_IiEESaIS2_EED2Ev.exit.i
-  %.0.i = phi i1 [ %69, %_ZNSt6vectorIN2cv6Point_IiEESaIS2_EED2Ev.exit.i ], [ true, %_ZNSolsEPFRSoS_E.exit102.i ] ; 2 uses
+  %.0.i = phi i1 [ %68, %_ZNSt6vectorIN2cv6Point_IiEESaIS2_EED2Ev.exit.i ], [ true, %_ZNSolsEPFRSoS_E.exit102.i ] ; 2 uses
   %i.vs = invoke noundef zeroext i1 @_ZNK2cv3Mat5emptyEv(ptr noundef nonnull align 8 dereferenceable(208) %32)
           to label %bb.dy unwind label %bb.ec
 

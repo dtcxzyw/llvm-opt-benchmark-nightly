@@ -205,8 +205,7 @@ bb.dv:                                            ; preds = %bb.dt
   %.sroa.683.0.copyload.i = load i32, ptr %.sroa.683.0..sroa_idx.i, align 8, !noalias !5994 ; 2 uses
   %.sroa.784.0.copyload.i = load i8, ptr %.sroa.784.0..sroa_idx.i, align 4, !noalias !5994
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !noalias !5994
-  %1 = and i8 %.sroa.784.0.copyload.i, 1
-  %i.jf = icmp eq i8 %1, 0
+  %i.jf = icmp eq i8 %.sroa.784.0.copyload.i, 0
   %spec.select.i = select i1 %i.jf, i8 -1, i8 %.sroa.035.0307.i ; 3 uses
   %i.jg = and i32 %.sroa.683.0.copyload.i, 255
   %.not120.i = icmp eq i32 %i.jg, 2
