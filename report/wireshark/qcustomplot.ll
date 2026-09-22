@@ -204,7 +204,7 @@ bb.a:
   %10 = alloca %class.QPen, align 8               ; 7 uses
   %11 = alloca %class.QPointF, align 16           ; 6 uses
   %i.a = getelementptr i8, ptr %0, i64 552        ; 5 uses
-  %i.b = getelementptr i8, ptr %0, i64 568        ; 4 uses
+  %i.b = getelementptr i8, ptr %0, i64 568        ; 3 uses
   %i.c = load double, ptr %i.b, align 8
   tail call void @_ZN19QCPPolarAxisAngular14drawBackgroundEP10QCPPainterRK7QPointFd(ptr noundef align 8 dereferenceable_or_null(1080) %0, ptr noundef %1, ptr noundef align 8 dereferenceable(16) %i.a, double noundef %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #51
@@ -234,7 +234,6 @@ _ZN10QCPPainter6setPenERK4QPen.exit:              ; preds = %.noexc, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #51
   %i.k = load double, ptr %i.b, align 8           ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #51
-  %12 = getelementptr i8, ptr %0, i64 560
   %i.l = fmul double %i.k, 2.000000e+00           ; 2 uses
   %i.m = load <2 x double>, ptr %i.a, align 8
   %i.n = insertelement <2 x double> poison, double %i.k, i64 0
@@ -306,32 +305,23 @@ bb.g:                                             ; preds = %.lr.ph, %_ZN10QCPPa
   %i.ah = phi i64 [ 0, %.lr.ph ], [ %i.bn, %_ZN10QCPPainter8drawLineERK7QPointFS2_.exit ]
   %.02598 = phi i32 [ 0, %.lr.ph ], [ %i.bm, %_ZN10QCPPainter8drawLineERK7QPointFS2_.exit ]
   %i.ai = load ptr, ptr %i.ac, align 8
-  %i.aj = getelementptr [16 x i8], ptr %i.ai, i64 %i.ah ; 2 uses
-  %13 = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
-  %14 = load double, ptr %i.aj, align 8
-  %15 = load double, ptr %13, align 8
-  %16 = load double, ptr %i.a, align 8
-  %17 = load double, ptr %12, align 8
-  %18 = load double, ptr %i.b, align 8
+  %i.aj = getelementptr [16 x i8], ptr %i.ai, i64 %i.ah
+  %12 = load <2 x double>, ptr %i.aj, align 8     ; 2 uses
+  %13 = load <3 x double>, ptr %i.a, align 8      ; 3 uses
   %i.ak = load <2 x i32>, ptr %i.ad, align 4
   %i.al = sitofp <2 x i32> %i.ak to <2 x double>  ; 2 uses
-  %19 = insertelement <2 x double> poison, double %18, i64 0
-  %20 = shufflevector <2 x double> %19, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.am = fsub <2 x double> %20, %i.al
-  %i.an = fadd <2 x double> %20, %i.al
+  %14 = shufflevector <3 x double> %13, <3 x double> poison, <2 x i32> <i32 2, i32 2> ; 2 uses
+  %i.am = fsub <2 x double> %14, %i.al
+  %i.an = fadd <2 x double> %14, %i.al
   %i.ao = shufflevector <2 x double> %i.am, <2 x double> %i.an, <2 x i32> <i32 0, i32 3> ; 2 uses
-  %21 = insertelement <2 x double> poison, double %14, i64 0
-  %i.ap = shufflevector <2 x double> %21, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.ap = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> zeroinitializer
   %i.aq = fmul <2 x double> %i.ap, %i.ao
-  %22 = insertelement <2 x double> poison, double %15, i64 0
-  %23 = shufflevector <2 x double> %22, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ar = fmul <2 x double> %i.ao, %23
-  %24 = insertelement <2 x double> poison, double %16, i64 0
-  %i.as = shufflevector <2 x double> %24, <2 x double> poison, <2 x i32> zeroinitializer
+  %15 = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.ar = fmul <2 x double> %i.ao, %15
+  %i.as = shufflevector <3 x double> %13, <3 x double> poison, <2 x i32> zeroinitializer
   %i.at = fadd <2 x double> %i.as, %i.aq          ; 4 uses
-  %25 = insertelement <2 x double> poison, double %17, i64 0
-  %26 = shufflevector <2 x double> %25, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.au = fadd <2 x double> %i.ar, %26            ; 4 uses
+  %16 = shufflevector <3 x double> %13, <3 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.au = fadd <2 x double> %i.ar, %16            ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #51
   %i.av = extractelement <2 x double> %i.at, i64 0
   store double %i.av, ptr %5, align 8

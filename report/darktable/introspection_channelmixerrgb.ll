@@ -205,7 +205,7 @@ begin_hunk_0_@_extract_patches:bb.a
   %slprdx.exit = phi <4 x float> [ poison, %._crit_edge61.thread ], [ %slprdx.acc281, %.preheader.preheader ]
   %.0244.lcssa = phi float [ 0.000000e+00, %._crit_edge61.thread ], [ %i.abd, %.preheader.preheader ]
   %i.abi = tail call reassoc nsz arcp contract afn float @llvm.vector.reduce.fadd.v4f32(float 0.000000e+00, <4 x float> %slprdx.exit)
-  %slprdx.sel = select reassoc nsz arcp contract afn i1 %.not80.not, float 0.000000e+00, float %i.abi
+  %slprdx.sel = select i1 %.not80.not, float 0.000000e+00, float %i.abi
   %i.abj = fmul reassoc nsz arcp contract afn float %.0244.lcssa, %i.abh
   %i.abk = fmul reassoc nsz arcp contract afn float %slprdx.sel, %i.abh
   %i.abl = fdiv reassoc nsz arcp contract afn float %i.abj, %i.abk ; 3 uses

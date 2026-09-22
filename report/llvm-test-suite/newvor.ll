@@ -203,10 +203,11 @@ bb.l:                                             ; preds = %bb.k
   %i.mz = load ptr, ptr %i.my, align 8, !tbaa !15 ; 2 uses
   %i.na = load <2 x double>, ptr %i.mz, align 8, !tbaa !27 ; 6 uses
   %i.nb = load <2 x double>, ptr %i.mw, align 8, !tbaa !27 ; 4 uses
-  %4 = shufflevector <2 x double> %i.na, <2 x double> %i.nb, <2 x i32> <i32 3, i32 1>
+  %4 = shufflevector <2 x double> %i.na, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %5 = shufflevector <2 x double> %i.na, <2 x double> %i.nb, <2 x i32> <i32 1, i32 3>
   %i.nc = shufflevector <2 x double> %i.ch, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.nd = fsub <2 x double> %4, %i.nc
-  %i.ne = shufflevector <2 x double> %i.nb, <2 x double> %i.na, <2 x i32> <i32 0, i32 2>
+  %i.nd = fsub <2 x double> %5, %i.nc
+  %i.ne = shufflevector <2 x double> %i.na, <2 x double> %i.nb, <2 x i32> <i32 0, i32 2>
   %i.nf = shufflevector <2 x double> %i.ch, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ng = fsub <2 x double> %i.ne, %i.nf
   %i.nh = insertelement <2 x double> poison, double %i.cm, i64 0
@@ -217,16 +218,16 @@ bb.l:                                             ; preds = %bb.k
   %i.nm = fcmp ogt <2 x double> %i.nl, zeroinitializer ; 2 uses
   %i.nn = extractelement <2 x i1> %i.nm, i64 0    ; 2 uses
   %i.no = extractelement <2 x i1> %i.nm, i64 1    ; 2 uses
-  %or.cond = select i1 %i.nn, i1 true, i1 %i.no
+  %or.cond = select i1 %i.no, i1 true, i1 %i.nn
   br i1 %or.cond, label %bb.m, label %bb.s
 
 bb.m:                                             ; preds = %.loopexit
   %i.np = load ptr, ptr %.2115, align 8, !tbaa !15 ; 2 uses
   %i.nq = load ptr, ptr %.2, align 8, !tbaa !15   ; 2 uses
-  br i1 %i.nn, label %bb.n, label %bb.p
+  br i1 %i.no, label %bb.n, label %bb.p
 
 bb.n:                                             ; preds = %bb.m
-  br i1 %i.no, label %bb.o, label %bb.q
+  br i1 %i.nn, label %bb.o, label %bb.q
 
 bb.o:                                             ; preds = %bb.n
   %i.nr = getelementptr inbounds nuw i8, ptr %i.mz, i64 16
@@ -250,8 +251,7 @@ bb.o:                                             ; preds = %bb.n
   %i.oi = extractelement <2 x double> %i.ob, i64 0
   %i.oj = fneg double %i.oi
   %i.ok = load <2 x double>, ptr %i.nv, align 8, !tbaa !27
-  %5 = shufflevector <2 x double> %i.na, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %i.ol = insertelement <2 x double> %5, double %i.ns, i64 1
+  %i.ol = insertelement <2 x double> %4, double %i.ns, i64 1
   %i.om = fsub <2 x double> %i.ok, %i.ol          ; 2 uses
   %i.on = shufflevector <2 x double> %i.om, <2 x double> %i.od, <2 x i32> <i32 0, i32 3>
   %i.oo = fmul <2 x double> %i.on, %i.og

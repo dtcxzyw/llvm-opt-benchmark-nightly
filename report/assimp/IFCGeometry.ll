@@ -204,17 +204,12 @@ bb.a:
   br i1 %i.c, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %9 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %10 = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %i.d = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %11 = load <2 x double>, ptr %9, align 8
-  %12 = load <2 x double>, ptr %4, align 8
-  %13 = load double, ptr %i.d, align 8
+  %i.d = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %9 = load <3 x double>, ptr %4, align 8         ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %14 = insertelement <2 x double> poison, double %13, i64 0
-  %15 = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.f = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> zeroinitializer
-  %16 = shufflevector <2 x double> %11, <2 x double> poison, <2 x i32> zeroinitializer
+  %10 = shufflevector <3 x double> %9, <3 x double> poison, <2 x i32> <i32 2, i32 2>
+  %i.f = shufflevector <3 x double> %9, <3 x double> poison, <2 x i32> zeroinitializer
+  %11 = shufflevector <3 x double> %9, <3 x double> poison, <2 x i32> <i32 1, i32 1>
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
@@ -228,7 +223,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 32
   %i.m = load ptr, ptr %i.l, align 8
   call void @_ZNK6Assimp3IFC8TempMesh6CenterEv(ptr dead_on_unwind nonnull writable sret(%class.aiVector3t) align 8 %5, ptr noundef nonnull align 8 dereferenceable(48) %i.m)
-  %i.n = load double, ptr %10, align 16, !noalias !359
+  %i.n = load double, ptr %i.d, align 16, !noalias !359
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #30
   %i.o = getelementptr inbounds nuw i8, ptr %i.k, i64 32
   %i.p = load ptr, ptr %i.o, align 8
@@ -238,11 +233,11 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.s = shufflevector <2 x double> %i.q, <2 x double> %i.r, <2 x i32> <i32 0, i32 2>
   %i.t = fsub <2 x double> %i.s, %i.f             ; 2 uses
   %i.u = shufflevector <2 x double> %i.q, <2 x double> %i.r, <2 x i32> <i32 1, i32 3>
-  %i.v = fsub <2 x double> %i.u, %16              ; 2 uses
+  %i.v = fsub <2 x double> %i.u, %11              ; 2 uses
   %i.w = load double, ptr %i.e, align 16, !noalias !360
   %i.x = insertelement <2 x double> poison, double %i.n, i64 0
   %i.y = insertelement <2 x double> %i.x, double %i.w, i64 1
-  %i.z = fsub <2 x double> %i.y, %15              ; 2 uses
+  %i.z = fsub <2 x double> %i.y, %10              ; 2 uses
   %i.aa = fmul <2 x double> %i.v, %i.v
   %i.ab = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.t, <2 x double> %i.t, <2 x double> %i.aa)
   %i.ac = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.z, <2 x double> %i.z, <2 x double> %i.ab) ; 2 uses
@@ -645,9 +640,7 @@ bb.a:
   br i1 %.not19, label %.loopexit17, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %7 = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %i.b = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.e = getelementptr inbounds nuw i8, ptr %5, i64 32
@@ -666,27 +659,24 @@ bb.b:                                             ; preds = %.lr.ph, %bb.ae
   %i.l = getelementptr inbounds nuw i8, ptr %.pn20, i64 120 ; 3 uses
   %i.m = load ptr, ptr %i.l, align 8
   call void @_ZNK6Assimp3IFC8TempMesh6CenterEv(ptr dead_on_unwind nonnull writable sret(%class.aiVector3t) align 8 %3, ptr noundef nonnull align 8 dereferenceable(48) %i.m)
-  %i.n = load double, ptr %7, align 16, !noalias !420
+  %i.n = load double, ptr %i.b, align 16, !noalias !420
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #30
   %i.o = load ptr, ptr %i.c, align 8
-  %8 = load <2 x double>, ptr %3, align 16, !noalias !420 ; 2 uses
-  %9 = load <2 x double>, ptr %6, align 8
-  %i.p = load <2 x double>, ptr %2, align 8
-  %10 = load double, ptr %i.b, align 8, !noalias !420
+  %i.p = load <2 x double>, ptr %3, align 16, !noalias !420 ; 2 uses
+  %6 = load <3 x double>, ptr %2, align 8, !noalias !420 ; 3 uses
   call void @_ZNK6Assimp3IFC8TempMesh6CenterEv(ptr dead_on_unwind nonnull writable sret(%class.aiVector3t) align 8 %4, ptr noundef nonnull align 8 dereferenceable(48) %i.o)
   %i.q = load <2 x double>, ptr %4, align 16, !noalias !421 ; 2 uses
-  %i.r = shufflevector <2 x double> %8, <2 x double> %i.q, <2 x i32> <i32 0, i32 2>
-  %i.s = shufflevector <2 x double> %i.p, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.r = shufflevector <2 x double> %i.p, <2 x double> %i.q, <2 x i32> <i32 0, i32 2>
+  %i.s = shufflevector <3 x double> %6, <3 x double> poison, <2 x i32> zeroinitializer
   %i.t = fsub <2 x double> %i.r, %i.s             ; 2 uses
-  %i.u = shufflevector <2 x double> %8, <2 x double> %i.q, <2 x i32> <i32 1, i32 3>
-  %11 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.v = fsub <2 x double> %i.u, %11              ; 2 uses
+  %i.u = shufflevector <2 x double> %i.p, <2 x double> %i.q, <2 x i32> <i32 1, i32 3>
+  %7 = shufflevector <3 x double> %6, <3 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.v = fsub <2 x double> %i.u, %7               ; 2 uses
   %i.w = load double, ptr %i.d, align 16, !noalias !421
-  %12 = insertelement <2 x double> poison, double %i.n, i64 0
-  %i.x = insertelement <2 x double> %12, double %i.w, i64 1
-  %i.y = insertelement <2 x double> poison, double %10, i64 0
-  %13 = shufflevector <2 x double> %i.y, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.z = fsub <2 x double> %i.x, %13              ; 2 uses
+  %i.x = insertelement <2 x double> poison, double %i.n, i64 0
+  %i.y = insertelement <2 x double> %i.x, double %i.w, i64 1
+  %8 = shufflevector <3 x double> %6, <3 x double> poison, <2 x i32> <i32 2, i32 2>
+  %i.z = fsub <2 x double> %i.y, %8               ; 2 uses
   %i.aa = fmul <2 x double> %i.v, %i.v
   %i.ab = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.t, <2 x double> %i.t, <2 x double> %i.aa)
   %i.ac = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.z, <2 x double> %i.z, <2 x double> %i.ab) ; 2 uses
@@ -1032,17 +1022,12 @@ bb.a:
   %i.o = load ptr, ptr %i.n, align 8
   store ptr %i.o, ptr %i.m, align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, i8 0, i64 24, i1 false)
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.p = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %7 = load <2 x double>, ptr %5, align 8
-  %8 = load <2 x double>, ptr %1, align 8
-  %9 = load double, ptr %i.p, align 8
+  %i.p = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %5 = load <3 x double>, ptr %1, align 8         ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %10 = insertelement <2 x double> poison, double %9, i64 0
-  %11 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.r = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
-  %12 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
+  %6 = shufflevector <3 x double> %5, <3 x double> poison, <2 x i32> <i32 2, i32 2>
+  %i.r = shufflevector <3 x double> %5, <3 x double> poison, <2 x i32> zeroinitializer
+  %7 = shufflevector <3 x double> %5, <3 x double> poison, <2 x i32> <i32 1, i32 1>
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %bb.a
@@ -1055,7 +1040,7 @@ bb.b:                                             ; preds = %bb.d, %bb.a
 
 .noexc:                                           ; preds = %bb.b
   %i.t = load <2 x double>, ptr %2, align 16, !noalias !427 ; 2 uses
-  %i.u = load double, ptr %6, align 16, !noalias !427
+  %i.u = load double, ptr %i.p, align 16, !noalias !427
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #30
   %i.v = getelementptr inbounds i8, ptr %.sroa.04.0, i64 -56
   %i.w = load ptr, ptr %i.v, align 8
@@ -1068,10 +1053,10 @@ bb.c:                                             ; preds = %.noexc
   %i.z = shufflevector <2 x double> %i.t, <2 x double> %i.y, <2 x i32> <i32 0, i32 2>
   %i.aa = fsub <2 x double> %i.z, %i.r            ; 2 uses
   %i.ab = shufflevector <2 x double> %i.t, <2 x double> %i.y, <2 x i32> <i32 1, i32 3>
-  %i.ac = fsub <2 x double> %i.ab, %12            ; 2 uses
+  %i.ac = fsub <2 x double> %i.ab, %7             ; 2 uses
   %i.ad = insertelement <2 x double> poison, double %i.u, i64 0
   %i.ae = insertelement <2 x double> %i.ad, double %i.x, i64 1
-  %i.af = fsub <2 x double> %i.ae, %11            ; 2 uses
+  %i.af = fsub <2 x double> %i.ae, %6             ; 2 uses
   %i.ag = fmul <2 x double> %i.ac, %i.ac
   %i.ah = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.aa, <2 x double> %i.aa, <2 x double> %i.ag)
   %i.ai = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.af, <2 x double> %i.af, <2 x double> %i.ah) ; 2 uses

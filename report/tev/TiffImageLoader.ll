@@ -205,24 +205,24 @@ bb.ba:                                            ; preds = %_ZN4tlog5debugIJmRK
   %i.yf = shufflevector <4 x float> %i.ye, <4 x float> %i.yc, <4 x i32> <i32 0, i32 5, i32 6, i32 3>
   %i.yg = load float, ptr %.sroa.10.0..sroa_idx.i, align 4, !tbaa !79, !noalias !1236
   %i.yh = load float, ptr %.sroa.11.0..sroa_idx.i, align 8, !tbaa !79, !noalias !1236 ; 2 uses
-  %i.yi = shufflevector <3 x float> %i.ww, <3 x float> %i.va, <2 x i32> <i32 2, i32 5>
+  %i.yi = shufflevector <3 x float> %i.va, <3 x float> %i.ww, <2 x i32> <i32 2, i32 5>
   %i.yj = shufflevector <2 x float> %i.xo, <2 x float> poison, <2 x i32> zeroinitializer
   %i.yk = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.yi, <2 x float> %i.yj, <2 x float> zeroinitializer)
-  %i.yl = shufflevector <3 x float> %i.wz, <3 x float> %i.vd, <2 x i32> <i32 2, i32 5>
+  %i.yl = shufflevector <3 x float> %i.vd, <3 x float> %i.wz, <2 x i32> <i32 2, i32 5>
   %i.ym = insertelement <2 x float> poison, float %i.yg, i64 0
   %i.yn = shufflevector <2 x float> %i.ym, <2 x float> poison, <2 x i32> zeroinitializer
   %i.yo = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.yl, <2 x float> %i.yn, <2 x float> %i.yk)
-  %i.yp = shufflevector <3 x float> %i.xc, <3 x float> %i.vg, <2 x i32> <i32 2, i32 5>
+  %i.yp = shufflevector <3 x float> %i.vg, <3 x float> %i.xc, <2 x i32> <i32 2, i32 5>
   %i.yq = insertelement <2 x float> poison, float %i.yh, i64 0
   %i.yr = shufflevector <2 x float> %i.yq, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ys = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.yp, <2 x float> %i.yr, <2 x float> %i.yo) ; 2 uses
-  %i.yt = extractelement <2 x float> %i.ys, i64 1
+  %i.yt = extractelement <2 x float> %i.ys, i64 0
   store float %i.yt, ptr %.sroa.12437.0..sroa_idx, align 8, !tbaa !80
   %i.yu = insertelement <2 x float> %i.vy, float %i.yh, i64 1
   %i.yv = shufflevector <2 x float> %i.yu, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.yw = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.yf, <4 x float> %i.yv, <4 x float> %i.yb)
   store <4 x float> %i.yw, ptr %i.wr, align 4
-  %i.yx = extractelement <2 x float> %i.ys, i64 0
+  %i.yx = extractelement <2 x float> %i.ys, i64 1
   store float %i.yx, ptr %i.wu, align 4, !tbaa !80
   br label %.loopexit519
 

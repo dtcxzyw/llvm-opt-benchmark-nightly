@@ -204,13 +204,13 @@ check_flag.exit40:                                ; preds = %bb.b
 bb.c:                                             ; preds = %bb.b
   tail call void @N_VConst(double noundef 0.000000e+00, ptr noundef %2) #9
   %i.l = shufflevector <2 x double> %i.c, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.m = fmul <2 x double> %i.l, <double -2.000000e+00, double 1.000000e+00>
+  %i.m = fmul <2 x double> %i.l, <double 1.000000e+00, double -2.000000e+00>
   %i.n = shufflevector <2 x double> %i.c, <2 x double> poison, <2 x i32> zeroinitializer
   %i.o = fdiv <2 x double> %i.m, %i.n             ; 2 uses
-  %i.p = extractelement <2 x double> %i.o, i64 1
+  %i.p = extractelement <2 x double> %i.o, i64 0
   %i.q = extractelement <2 x double> %i.c, i64 0  ; 3 uses
   %i.r = fdiv double %i.p, %i.q                   ; 7 uses
-  %i.s = extractelement <2 x double> %i.o, i64 0
+  %i.s = extractelement <2 x double> %i.o, i64 1
   %i.t = fdiv double %i.s, %i.q                   ; 4 uses
   %i.u = sdiv i64 %i.a, 2
   store double 0.000000e+00, ptr %i.h, align 8, !tbaa !16
@@ -390,13 +390,13 @@ check_flag.exit36:                                ; preds = %bb.b
 bb.c:                                             ; preds = %bb.b
   tail call void @N_VConst(double noundef 0.000000e+00, ptr noundef %1) #9
   %i.l = shufflevector <2 x double> %i.c, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.m = fmul <2 x double> %i.l, <double -2.000000e+00, double 1.000000e+00>
+  %i.m = fmul <2 x double> %i.l, <double 1.000000e+00, double -2.000000e+00>
   %i.n = shufflevector <2 x double> %i.c, <2 x double> poison, <2 x i32> zeroinitializer
   %i.o = fdiv <2 x double> %i.m, %i.n             ; 2 uses
-  %i.p = extractelement <2 x double> %i.o, i64 1
+  %i.p = extractelement <2 x double> %i.o, i64 0
   %i.q = extractelement <2 x double> %i.c, i64 0  ; 2 uses
   %i.r = fdiv double %i.p, %i.q                   ; 7 uses
-  %i.s = extractelement <2 x double> %i.o, i64 0
+  %i.s = extractelement <2 x double> %i.o, i64 1
   %i.t = fdiv double %i.s, %i.q                   ; 4 uses
   store double 0.000000e+00, ptr %i.h, align 8, !tbaa !16
   %i.u = add i64 %i.a, -1                         ; 2 uses
