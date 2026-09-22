@@ -16,9 +16,9 @@ bb.a:
   %i.f = select i1 %i.e, float %i.a, float %i.b
   %i.g = tail call { float, i32 } @llvm.frexp.f32.i32(float %i.f)
   %i.h = extractvalue { float, i32 } %i.g, 1      ; 2 uses
-  %i.i = extractelement <2 x float> %0, i64 0     ; 7 uses
+  %i.i = extractelement <2 x float> %0, i64 0     ; 6 uses
   %i.j = tail call float @llvm.fabs.f32(float %i.i) ; 3 uses
-  %i.k = extractelement <2 x float> %0, i64 1     ; 9 uses
+  %i.k = extractelement <2 x float> %0, i64 1     ; 7 uses
   %i.l = tail call float @llvm.fabs.f32(float %i.k) ; 3 uses
   %i.m = tail call nsz float @llvm.maxnum.f32(float %i.j, float %i.l)
   %i.n = tail call { float, i32 } @llvm.frexp.f32.i32(float %i.m)
@@ -29,33 +29,41 @@ bb.a:
   %i.s = tail call i32 @llvm.smin.i32(i32 %i.p, i32 %i.q)
   %. = tail call i32 @llvm.smin.i32(i32 %i.s, i32 %i.r)
   %i.t = ashr i32 %., 1                           ; 4 uses
-  %i.u = tail call float @llvm.ldexp.f32.i32(float %i.a, i32 %i.t) ; 3 uses
-  %i.v = tail call float @llvm.ldexp.f32.i32(float %i.b, i32 %i.t) ; 3 uses
-  %i.w = select i1 %i.e, float %i.u, float %i.v   ; 2 uses
-  %i.x = select i1 %i.e, float %i.v, float %i.u   ; 2 uses
+  %i.u = tail call float @llvm.ldexp.f32.i32(float %i.b, i32 %i.t) ; 3 uses
+  %i.v = tail call float @llvm.ldexp.f32.i32(float %i.a, i32 %i.t) ; 3 uses
+  %i.w = select i1 %i.e, float %i.v, float %i.u   ; 2 uses
+  %i.x = select i1 %i.e, float %i.u, float %i.v   ; 2 uses
   %i.y = fmul float %i.x, %i.x
-  %i.z = tail call float @llvm.fma.f32(float %i.w, float %i.w, float %i.y) ; 3 uses
-  %i.aa = tail call float @llvm.ldexp.f32.i32(float %i.u, i32 %i.t) ; 2 uses
-  %i.ab = tail call float @llvm.ldexp.f32.i32(float %i.v, i32 %i.t) ; 4 uses
-  %i.ac = fmul float %i.k, %i.ab                  ; 2 uses
-  %2 = fneg float %i.ac
-  %3 = tail call float @llvm.fma.f32(float %i.k, float %i.ab, float %2)
-  %4 = tail call float @llvm.fma.f32(float %i.i, float %i.aa, float %i.ac)
-  %5 = fadd float %4, %3
-  %6 = fneg float %i.i                            ; 3 uses
-  %7 = fmul float %i.ab, %6                       ; 2 uses
-  %8 = fneg float %7
-  %i.ad = tail call float @llvm.fma.f32(float %6, float %i.ab, float %8)
-  %i.ae = tail call float @llvm.fma.f32(float %i.k, float %i.aa, float %7)
-  %9 = fadd float %i.ae, %i.ad
-  %10 = fdiv float %5, %i.z, !fpmath !9           ; 3 uses
-  %11 = fdiv float %9, %i.z, !fpmath !9           ; 3 uses
+  %i.z = tail call float @llvm.fma.f32(float %i.w, float %i.w, float %i.y) ; 2 uses
+  %i.aa = tail call float @llvm.ldexp.f32.i32(float %i.u, i32 %i.t) ; 3 uses
+  %i.ab = tail call float @llvm.ldexp.f32.i32(float %i.v, i32 %i.t) ; 2 uses
+  %2 = fneg float %i.i                            ; 3 uses
+  %3 = fmul float %i.aa, %2                       ; 2 uses
+  %i.ac = fmul float %i.k, %i.aa                  ; 2 uses
+  %4 = insertelement <2 x float> poison, float %i.ac, i64 0
+  %5 = insertelement <2 x float> %4, float %3, i64 1
+  %6 = fneg <2 x float> %5
+  %7 = shufflevector <2 x float> %0, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %8 = insertelement <2 x float> %7, float %2, i64 1
+  %9 = insertelement <2 x float> poison, float %i.aa, i64 0
+  %10 = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> zeroinitializer
+  %11 = tail call <2 x float> @llvm.fma.v2f32(<2 x float> %8, <2 x float> %10, <2 x float> %6)
+  %i.ad = tail call float @llvm.fma.f32(float %i.k, float %i.ab, float %3)
+  %i.ae = tail call float @llvm.fma.f32(float %i.i, float %i.ab, float %i.ac)
+  %12 = insertelement <2 x float> poison, float %i.ae, i64 0
+  %13 = insertelement <2 x float> %12, float %i.ad, i64 1
+  %14 = fadd <2 x float> %13, %11
+  %15 = insertelement <2 x float> poison, float %i.z, i64 0
+  %16 = shufflevector <2 x float> %15, <2 x float> poison, <2 x i32> zeroinitializer
+  %17 = fdiv <2 x float> %14, %16, !fpmath !9     ; 4 uses
   %i.af = load i8, ptr addrspace(4) @__oclc_finite_only_opt, align 1, !tbaa !11, !range !12, !noundef !13
   %i.ag = trunc nuw i8 %i.af to i1
   %.not = xor i1 %i.ag, true
-  %i.ah = fcmp uno float %10, 0.000000e+00
+  %18 = extractelement <2 x float> %17, i64 0
+  %i.ah = fcmp uno float %18, 0.000000e+00
   %or.cond = select i1 %.not, i1 %i.ah, i1 false
-  %i.ai = fcmp uno float %11, 0.000000e+00
+  %19 = extractelement <2 x float> %17, i64 1
+  %i.ai = fcmp uno float %19, 0.000000e+00
   %or.cond135 = select i1 %or.cond, i1 %i.ai, i1 false
   br i1 %or.cond135, label %bb.b, label %bb.i
 
@@ -70,9 +78,10 @@ bb.c:                                             ; preds = %bb.b
   br i1 %or.cond136, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.am = tail call float @llvm.copysign.f32(float +inf, float %i.a) ; 2 uses
-  %12 = fmul float %i.i, %i.am
-  %13 = fmul float %i.k, %i.am
+  %i.am = tail call float @llvm.copysign.f32(float +inf, float %i.a)
+  %20 = insertelement <2 x float> poison, float %i.am, i64 0
+  %21 = shufflevector <2 x float> %20, <2 x float> poison, <2 x i32> zeroinitializer
+  %22 = fmul <2 x float> %0, %21
   br label %bb.i
 
 bb.e:                                             ; preds = %bb.c, %bb.b
@@ -92,11 +101,12 @@ bb.f:                                             ; preds = %bb.e
   %i.au = tail call float @llvm.copysign.f32(float %i.at, float %i.k) ; 2 uses
   %i.av = fmul nnan float %i.b, %i.au
   %i.aw = tail call float @__ocml_fmuladd_f32(float noundef %i.as, float noundef %i.a, float noundef %i.av) #3
-  %i.ax = fmul float %i.aw, +inf
-  %14 = fneg float %i.as
-  %15 = fmul nnan float %i.b, %14
-  %16 = tail call float @__ocml_fmuladd_f32(float noundef %i.au, float noundef %i.a, float noundef %15) #3
-  %17 = fmul float %16, +inf
+  %23 = fneg float %i.as
+  %i.ax = fmul nnan float %i.b, %23
+  %24 = tail call float @__ocml_fmuladd_f32(float noundef %i.au, float noundef %i.a, float noundef %i.ax) #3
+  %25 = insertelement <2 x float> poison, float %i.aw, i64 0
+  %26 = insertelement <2 x float> %25, float %24, i64 1
+  %27 = fmul <2 x float> %26, splat (float +inf)
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.e
@@ -116,18 +126,16 @@ bb.h:                                             ; preds = %bb.g
   %i.bf = tail call float @llvm.copysign.f32(float %i.be, float %i.b) ; 2 uses
   %i.bg = fmul nnan float %i.k, %i.bf
   %i.bh = tail call float @__ocml_fmuladd_f32(float noundef %i.i, float noundef %i.bd, float noundef %i.bg) #3
-  %i.bi = fmul float %i.bh, 0.000000e+00
-  %18 = fmul nnan float %i.bf, %6
-  %19 = tail call float @__ocml_fmuladd_f32(float noundef %i.k, float noundef %i.bd, float noundef %18) #3
-  %20 = fmul float %19, 0.000000e+00
+  %i.bi = fmul nnan float %i.bf, %2
+  %28 = tail call float @__ocml_fmuladd_f32(float noundef %i.k, float noundef %i.bd, float noundef %i.bi) #3
+  %29 = insertelement <2 x float> poison, float %i.bh, i64 0
+  %30 = insertelement <2 x float> %29, float %28, i64 1
+  %31 = fmul <2 x float> %30, zeroinitializer
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.g, %bb.f, %bb.h, %bb.d, %bb.a
-  %.0132 = phi float [ %10, %bb.a ], [ %i.ax, %bb.f ], [ %i.bi, %bb.h ], [ %10, %bb.g ], [ %12, %bb.d ]
-  %.0 = phi float [ %11, %bb.a ], [ %17, %bb.f ], [ %20, %bb.h ], [ %11, %bb.g ], [ %13, %bb.d ]
-  %21 = insertelement <2 x float> poison, float %.0132, i64 0
-  %22 = insertelement <2 x float> %21, float %.0, i64 1
-  ret <2 x float> %22
+  %32 = phi <2 x float> [ %17, %bb.a ], [ %27, %bb.f ], [ %31, %bb.h ], [ %17, %bb.g ], [ %22, %bb.d ]
+  ret <2 x float> %32
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -153,6 +161,9 @@ declare float @__ocml_fmuladd_f32(float noundef, float noundef, float noundef) l
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fma.v2f32(<2 x float>, <2 x float>, <2 x float>) #1
 
 attributes #0 = { convergent mustprogress nofree norecurse nounwind willreturn denormal_fpenv(dynamic) memory(none) uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" }
 attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }

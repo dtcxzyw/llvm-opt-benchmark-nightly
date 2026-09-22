@@ -202,16 +202,21 @@ declare float @llvm.fmuladd.f32(float, float, float) #6
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define dso_local noundef range(i32 -1, 2) i32 @_ZN22btVoronoiSimplexSolver19pointOutsideOfPlaneERK9btVector3S2_S2_S2_S2_(ptr nofree noundef nonnull readnone align 4 captures(none) dereferenceable(357) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %1, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %2, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %3, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %4, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %5) local_unnamed_addr #5 align 2 {
 bb.a:
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.a = load <4 x float>, ptr %1, align 4
   %i.b = shufflevector <4 x float> %i.a, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
   %i.c = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.d = load float, ptr %i.c, align 4, !tbaa !21
   %i.e = load <3 x float>, ptr %3, align 4, !tbaa !21
-  %6 = load <3 x float>, ptr %2, align 4, !tbaa !21 ; 5 uses
-  %i.f = fsub <3 x float> %i.e, %6                ; 2 uses
+  %7 = load float, ptr %2, align 4, !tbaa !21     ; 2 uses
+  %8 = load <2 x float>, ptr %6, align 4, !tbaa !21 ; 3 uses
+  %9 = insertelement <3 x float> poison, float %7, i64 0
+  %10 = shufflevector <2 x float> %8, <2 x float> poison, <3 x i32> <i32 0, i32 1, i32 poison>
+  %11 = shufflevector <3 x float> %9, <3 x float> %10, <3 x i32> <i32 0, i32 3, i32 4> ; 2 uses
+  %i.f = fsub <3 x float> %i.e, %11               ; 2 uses
   %i.g = shufflevector <3 x float> %i.f, <3 x float> poison, <3 x i32> <i32 2, i32 0, i32 1>
   %i.h = load <3 x float>, ptr %4, align 4, !tbaa !21
-  %i.i = fsub <3 x float> %i.h, %6                ; 2 uses
+  %i.i = fsub <3 x float> %i.h, %11               ; 2 uses
   %i.j = fneg <3 x float> %i.i
   %i.k = shufflevector <3 x float> %i.j, <3 x float> poison, <3 x i32> <i32 2, i32 0, i32 1>
   %i.l = fmul <3 x float> %i.f, %i.k
@@ -219,14 +224,15 @@ bb.a:
   %i.n = load <2 x float>, ptr %1, align 4, !tbaa !21 ; 2 uses
   %i.o = load <2 x float>, ptr %5, align 4, !tbaa !21 ; 2 uses
   %i.p = shufflevector <2 x float> %i.n, <2 x float> %i.o, <2 x i32> <i32 0, i32 2>
-  %i.q = shufflevector <3 x float> %6, <3 x float> poison, <2 x i32> zeroinitializer
+  %12 = insertelement <2 x float> poison, float %7, i64 0
+  %i.q = shufflevector <2 x float> %12, <2 x float> poison, <2 x i32> zeroinitializer
   %i.r = fsub <2 x float> %i.p, %i.q
   %i.s = shufflevector <2 x float> %i.n, <2 x float> %i.o, <2 x i32> <i32 1, i32 3>
-  %7 = shufflevector <3 x float> %6, <3 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.t = fsub <2 x float> %i.s, %7
+  %13 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.t = fsub <2 x float> %i.s, %13
   %i.u = insertelement <2 x float> %i.b, float %i.d, i64 1
-  %8 = shufflevector <3 x float> %6, <3 x float> poison, <2 x i32> <i32 2, i32 2>
-  %i.v = fsub <2 x float> %i.u, %8
+  %14 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %i.v = fsub <2 x float> %i.u, %14
   %i.w = shufflevector <3 x float> %i.m, <3 x float> poison, <2 x i32> zeroinitializer
   %i.x = fmul <2 x float> %i.t, %i.w
   %i.y = shufflevector <3 x float> %i.m, <3 x float> poison, <2 x i32> <i32 2, i32 2>

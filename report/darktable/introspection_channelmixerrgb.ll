@@ -205,70 +205,74 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 scalar.ph.preheader:                              ; preds = %vector.body, %vector.memcheck, %.lr.ph50
   %.025749.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph50 ], [ %n.vec, %vector.body ]
+  %6 = insertelement <2 x float> poison, float %i.gz, i64 0
+  %7 = insertelement <2 x float> %6, float %i.cb, i64 1
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %.025749 = phi i64 [ %i.jt, %scalar.ph ], [ %.025749.ph, %scalar.ph.preheader ] ; 3 uses
   %.idx289 = shl i64 %.025749, 4
   %i.jg = getelementptr inbounds nuw i8, ptr %4, i64 %.idx289 ; 3 uses
-  %i.jh = getelementptr inbounds nuw [48 x i8], ptr %.lcssa31, i64 %.025749 ; 2 uses
+  %i.jh = getelementptr inbounds nuw [48 x i8], ptr %.lcssa31, i64 %.025749 ; 3 uses
   %i.ji = getelementptr inbounds nuw i8, ptr %i.jh, i64 112
   %i.jj = getelementptr inbounds nuw i8, ptr %i.jh, i64 116
-  %i.jk = load float, ptr %i.ji, align 4, !tbaa !12
-  %6 = fmul reassoc nsz arcp contract afn float %i.jk, 8.620690e-03
-  %7 = fadd reassoc nsz arcp contract afn float %6, f0x3E0D3DCB ; 6 uses
-  %8 = fcmp reassoc nsz arcp contract afn ogt float %7, f0x3E53DCB1
-  %i.jl = fmul reassoc nsz arcp contract afn float %7, %7
-  %i.jm = fmul reassoc nsz arcp contract afn float %i.jl, %7
-  %i.jn = fmul reassoc nsz arcp contract afn float %7, f0x3E038026
-  %i.jo = fadd reassoc nsz arcp contract afn float %i.jn, f0xBC911AA6
-  %9 = select reassoc nsz arcp contract afn i1 %8, float %i.jm, float %i.jo ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.jg, i64 8 ; 2 uses
-  %11 = load float, ptr %10, align 4, !tbaa !12   ; 3 uses
-  %12 = load <2 x float>, ptr %i.jg, align 4, !tbaa !12 ; 5 uses
-  %foldExtExtBinop = fmul reassoc nsz arcp contract afn <2 x float> %12, %12
-  %foldExtExtBinop283 = fmul reassoc nsz arcp contract afn <2 x float> %12, %12
-  %13 = fmul reassoc nsz arcp contract afn float %9, %9
-  %shift = shufflevector <2 x float> %foldExtExtBinop, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop285 = fadd reassoc nsz arcp contract afn <2 x float> %shift, %foldExtExtBinop283
-  %14 = extractelement <2 x float> %foldExtExtBinop285, i64 0
-  %15 = fmul reassoc nsz arcp contract afn float %11, %11
-  %16 = load <2 x float>, ptr %i.jj, align 4, !tbaa !12
-  %17 = fmul reassoc nsz arcp contract afn <2 x float> %16, <float 2.000000e-03, float 5.000000e-03> ; 2 uses
-  %18 = insertelement <2 x float> poison, float %7, i64 0
-  %19 = shufflevector <2 x float> %18, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %20 = fadd reassoc nsz arcp contract afn <2 x float> %19, %17
-  %21 = fsub reassoc nsz arcp contract afn <2 x float> %19, %17
-  %22 = shufflevector <2 x float> %20, <2 x float> %21, <2 x i32> <i32 0, i32 3> ; 5 uses
-  %23 = fcmp reassoc nsz arcp contract afn ogt <2 x float> %22, splat (float f0x3E53DCB1)
-  %24 = fmul reassoc nsz arcp contract afn <2 x float> %22, %22
-  %25 = fmul reassoc nsz arcp contract afn <2 x float> %24, %22
-  %26 = fmul reassoc nsz arcp contract afn <2 x float> %22, splat (float f0x3E038026)
-  %27 = fadd reassoc nsz arcp contract afn <2 x float> %26, splat (float f0xBC911AA6)
-  %28 = select <2 x i1> %23, <2 x float> %25, <2 x float> %27
-  %29 = fmul reassoc nsz arcp contract afn <2 x float> %28, <float 9.642000e-01, float f0x3F532CA5> ; 2 uses
-  %i.jp = fmul reassoc nsz arcp contract afn <2 x float> %29, %29 ; 2 uses
-  %30 = extractelement <2 x float> %i.jp, i64 0
-  %31 = fadd reassoc nsz arcp contract afn float %30, %13
-  %32 = fadd reassoc nsz arcp contract afn float %14, %15
-  %33 = extractelement <2 x float> %i.jp, i64 1
-  %34 = fadd reassoc nsz arcp contract afn float %31, %33
-  %35 = tail call reassoc nsz arcp contract afn float @llvm.sqrt.f32(float %32)
-  %36 = tail call reassoc nsz arcp contract afn float @llvm.sqrt.f32(float %34)
-  %37 = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %35, float f0x37800000)
-  %38 = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %36, float f0x37800000)
-  %39 = fmul reassoc nnan nsz arcp contract afn float %37, %i.cb ; 2 uses
-  %40 = fmul reassoc nsz arcp contract afn float %i.gz, %38 ; 2 uses
-  %41 = insertelement <2 x float> poison, float %40, i64 0
-  %i.jq = shufflevector <2 x float> %41, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.jr = fmul reassoc nsz arcp contract afn <2 x float> %i.jq, %12
-  %42 = insertelement <2 x float> poison, float %39, i64 0
-  %43 = shufflevector <2 x float> %42, <2 x float> poison, <2 x i32> zeroinitializer
-  %44 = fdiv reassoc nsz arcp contract afn <2 x float> %i.jr, %43
-  store <2 x float> %44, ptr %i.jg, align 4, !tbaa !12
-  %i.js = fmul reassoc nsz arcp contract afn float %40, %11
-  %.reass.2 = fdiv reassoc nsz arcp contract afn float %i.js, %39
-  store float %.reass.2, ptr %10, align 4, !tbaa !12
+  %i.jk = load float, ptr %i.jj, align 4, !tbaa !12
+  %8 = load float, ptr %i.ji, align 4, !tbaa !12
+  %9 = getelementptr inbounds nuw i8, ptr %i.jh, i64 120
+  %10 = load float, ptr %9, align 4, !tbaa !12
+  %i.jl = fmul reassoc nsz arcp contract afn float %i.jk, 2.000000e-03
+  %i.jm = fmul reassoc nsz arcp contract afn float %8, 8.620690e-03
+  %11 = fadd reassoc nsz arcp contract afn float %i.jm, f0x3E0D3DCB ; 7 uses
+  %i.jn = fmul reassoc nsz arcp contract afn float %10, 5.000000e-03
+  %i.jo = fadd reassoc nsz arcp contract afn float %11, %i.jl ; 5 uses
+  %12 = fcmp reassoc nsz arcp contract afn ogt float %i.jo, f0x3E53DCB1
+  %13 = fmul reassoc nsz arcp contract afn float %i.jo, %i.jo
+  %14 = fmul reassoc nsz arcp contract afn float %13, %i.jo
+  %15 = fmul reassoc nsz arcp contract afn float %i.jo, f0x3E038026
+  %16 = fadd reassoc nsz arcp contract afn float %15, f0xBC911AA6
+  %17 = select reassoc nsz arcp contract afn i1 %12, float %14, float %16
+  %18 = fcmp reassoc nsz arcp contract afn ogt float %11, f0x3E53DCB1
+  %19 = fmul reassoc nsz arcp contract afn float %11, %11
+  %20 = fmul reassoc nsz arcp contract afn float %19, %11
+  %21 = fmul reassoc nsz arcp contract afn float %11, f0x3E038026
+  %22 = fadd reassoc nsz arcp contract afn float %21, f0xBC911AA6
+  %23 = select reassoc nsz arcp contract afn i1 %18, float %20, float %22
+  %24 = fsub reassoc nsz arcp contract afn float %11, %i.jn ; 5 uses
+  %25 = fcmp reassoc nsz arcp contract afn ogt float %24, f0x3E53DCB1
+  %26 = fmul reassoc nsz arcp contract afn float %24, %24
+  %27 = fmul reassoc nsz arcp contract afn float %26, %24
+  %28 = fmul reassoc nsz arcp contract afn float %24, f0x3E038026
+  %29 = fadd reassoc nsz arcp contract afn float %28, f0xBC911AA6
+  %30 = select reassoc nsz arcp contract afn i1 %25, float %27, float %29
+  %31 = fmul reassoc nsz arcp contract afn float %17, 9.642000e-01
+  %32 = fmul reassoc nsz arcp contract afn float %30, f0x3F532CA5 ; 2 uses
+  %33 = getelementptr inbounds nuw i8, ptr %i.jg, i64 8 ; 2 uses
+  %34 = load float, ptr %33, align 4, !tbaa !12   ; 3 uses
+  %35 = load <2 x float>, ptr %i.jg, align 4, !tbaa !12 ; 3 uses
+  %36 = insertelement <2 x float> %35, float %31, i64 0 ; 2 uses
+  %i.jp = fmul reassoc nsz arcp contract afn <2 x float> %36, %36
+  %37 = shufflevector <2 x float> %35, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
+  %38 = insertelement <2 x float> %37, float %23, i64 0 ; 2 uses
+  %39 = fmul reassoc nsz arcp contract afn <2 x float> %38, %38
+  %40 = fadd reassoc nsz arcp contract afn <2 x float> %i.jp, %39
+  %41 = fmul reassoc nsz arcp contract afn float %34, %34
+  %42 = fmul reassoc nsz arcp contract afn float %32, %32
+  %43 = insertelement <2 x float> poison, float %42, i64 0
+  %44 = insertelement <2 x float> %43, float %41, i64 1
+  %45 = fadd reassoc nsz arcp contract afn <2 x float> %40, %44
+  %46 = tail call reassoc nsz arcp contract afn <2 x float> @llvm.sqrt.v2f32(<2 x float> %45)
+  %47 = tail call reassoc nsz arcp contract afn <2 x float> @llvm.maxnum.v2f32(<2 x float> %46, <2 x float> splat (float f0x37800000))
+  %48 = fmul reassoc nsz arcp contract afn <2 x float> %7, %47 ; 4 uses
+  %i.jq = shufflevector <2 x float> %48, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.jr = fmul reassoc nsz arcp contract afn <2 x float> %i.jq, %35
+  %49 = shufflevector <2 x float> %48, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %50 = fdiv reassoc nsz arcp contract afn <2 x float> %i.jr, %49
+  store <2 x float> %50, ptr %i.jg, align 4, !tbaa !12
+  %51 = extractelement <2 x float> %48, i64 0
+  %i.js = fmul reassoc nsz arcp contract afn float %51, %34
+  %52 = extractelement <2 x float> %48, i64 1
+  %.reass.2 = fdiv reassoc nsz arcp contract afn float %i.js, %52
+  store float %.reass.2, ptr %33, align 4, !tbaa !12
   %i.jt = add nuw i64 %.025749, 1                 ; 2 uses
   %exitcond95.not = icmp eq i64 %i.jt, %.lcssa30
   br i1 %exitcond95.not, label %.loopexit, label %scalar.ph, !llvm.loop !434
@@ -669,6 +673,9 @@ declare float @llvm.vector.reduce.fadd.v8f32(float, <8 x float>) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.vector.reduce.fadd.v4f32(float, <4 x float>) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.sqrt.v2f32(<2 x float>) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i64> @llvm.umin.v2i64(<2 x i64>, <2 x i64>) #15

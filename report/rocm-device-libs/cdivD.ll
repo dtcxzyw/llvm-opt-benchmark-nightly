@@ -18,7 +18,7 @@ bb.a:
   %i.h = extractvalue { double, i32 } %i.g, 1     ; 2 uses
   %i.i = extractelement <2 x double> %0, i64 0    ; 7 uses
   %i.j = tail call double @llvm.fabs.f64(double %i.i) ; 3 uses
-  %i.k = extractelement <2 x double> %0, i64 1    ; 9 uses
+  %i.k = extractelement <2 x double> %0, i64 1    ; 8 uses
   %i.l = tail call double @llvm.fabs.f64(double %i.k) ; 3 uses
   %i.m = tail call nsz double @llvm.maxnum.f64(double %i.j, double %i.l)
   %i.n = tail call { double, i32 } @llvm.frexp.f64.i32(double %i.m)
@@ -29,33 +29,41 @@ bb.a:
   %i.s = tail call i32 @llvm.smin.i32(i32 %i.p, i32 %i.q)
   %. = tail call i32 @llvm.smin.i32(i32 %i.s, i32 %i.r)
   %i.t = ashr i32 %., 1                           ; 4 uses
-  %i.u = tail call double @llvm.ldexp.f64.i32(double %i.a, i32 %i.t) ; 3 uses
-  %i.v = tail call double @llvm.ldexp.f64.i32(double %i.b, i32 %i.t) ; 3 uses
-  %i.w = select i1 %i.e, double %i.u, double %i.v ; 2 uses
-  %i.x = select i1 %i.e, double %i.v, double %i.u ; 2 uses
+  %i.u = tail call double @llvm.ldexp.f64.i32(double %i.b, i32 %i.t) ; 3 uses
+  %i.v = tail call double @llvm.ldexp.f64.i32(double %i.a, i32 %i.t) ; 3 uses
+  %i.w = select i1 %i.e, double %i.v, double %i.u ; 2 uses
+  %i.x = select i1 %i.e, double %i.u, double %i.v ; 2 uses
   %i.y = fmul double %i.x, %i.x
-  %i.z = tail call double @llvm.fma.f64(double %i.w, double %i.w, double %i.y) ; 3 uses
-  %i.aa = tail call double @llvm.ldexp.f64.i32(double %i.u, i32 %i.t) ; 2 uses
-  %i.ab = tail call double @llvm.ldexp.f64.i32(double %i.v, i32 %i.t) ; 4 uses
-  %i.ac = fmul double %i.k, %i.ab                 ; 2 uses
-  %2 = fneg double %i.ac
-  %3 = tail call double @llvm.fma.f64(double %i.k, double %i.ab, double %2)
-  %4 = tail call double @llvm.fma.f64(double %i.i, double %i.aa, double %i.ac)
-  %5 = fadd double %4, %3
-  %6 = fneg double %i.i                           ; 3 uses
-  %7 = fmul double %i.ab, %6                      ; 2 uses
-  %8 = fneg double %7
-  %i.ad = tail call double @llvm.fma.f64(double %6, double %i.ab, double %8)
-  %i.ae = tail call double @llvm.fma.f64(double %i.k, double %i.aa, double %7)
-  %9 = fadd double %i.ae, %i.ad
-  %10 = fdiv double %5, %i.z                      ; 3 uses
-  %11 = fdiv double %9, %i.z                      ; 3 uses
+  %i.z = tail call double @llvm.fma.f64(double %i.w, double %i.w, double %i.y) ; 2 uses
+  %i.aa = tail call double @llvm.ldexp.f64.i32(double %i.u, i32 %i.t) ; 3 uses
+  %i.ab = tail call double @llvm.ldexp.f64.i32(double %i.v, i32 %i.t) ; 2 uses
+  %2 = fneg double %i.i                           ; 3 uses
+  %3 = fmul double %i.aa, %2                      ; 2 uses
+  %i.ac = fmul double %i.k, %i.aa                 ; 2 uses
+  %4 = insertelement <2 x double> poison, double %i.ac, i64 0
+  %5 = insertelement <2 x double> %4, double %3, i64 1
+  %6 = fneg <2 x double> %5
+  %7 = shufflevector <2 x double> %0, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %8 = insertelement <2 x double> %7, double %2, i64 1
+  %9 = insertelement <2 x double> poison, double %i.aa, i64 0
+  %10 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
+  %11 = tail call <2 x double> @llvm.fma.v2f64(<2 x double> %8, <2 x double> %10, <2 x double> %6)
+  %i.ad = tail call double @llvm.fma.f64(double %i.k, double %i.ab, double %3)
+  %i.ae = tail call double @llvm.fma.f64(double %i.i, double %i.ab, double %i.ac)
+  %12 = insertelement <2 x double> poison, double %i.ae, i64 0
+  %13 = insertelement <2 x double> %12, double %i.ad, i64 1
+  %14 = fadd <2 x double> %13, %11
+  %15 = insertelement <2 x double> poison, double %i.z, i64 0
+  %16 = shufflevector <2 x double> %15, <2 x double> poison, <2 x i32> zeroinitializer
+  %17 = fdiv <2 x double> %14, %16                ; 2 uses
   %i.af = load i8, ptr addrspace(4) @__oclc_finite_only_opt, align 1, !tbaa !10, !range !11, !noundef !12
   %i.ag = trunc nuw i8 %i.af to i1
   %.not = xor i1 %i.ag, true
-  %i.ah = fcmp uno double %10, 0.000000e+00
+  %18 = extractelement <2 x double> %17, i64 0    ; 3 uses
+  %i.ah = fcmp uno double %18, 0.000000e+00
   %or.cond = select i1 %.not, i1 %i.ah, i1 false
-  %i.ai = fcmp uno double %11, 0.000000e+00
+  %19 = extractelement <2 x double> %17, i64 1    ; 3 uses
+  %i.ai = fcmp uno double %19, 0.000000e+00
   %or.cond135 = select i1 %or.cond, i1 %i.ai, i1 false
   br i1 %or.cond135, label %bb.b, label %bb.i
 
@@ -117,14 +125,14 @@ bb.h:                                             ; preds = %bb.g
   %i.bm = fmul nnan double %i.k, %i.bl
   %i.bn = tail call double @llvm.fma.f64(double %i.i, double %i.bj, double %i.bm)
   %i.bo = fmul double %i.bn, 0.000000e+00
-  %i.bp = fmul nnan double %i.bl, %6
+  %i.bp = fmul nnan double %i.bl, %2
   %i.bq = tail call double @llvm.fma.f64(double %i.k, double %i.bj, double %i.bp)
   %i.br = fmul double %i.bq, 0.000000e+00
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.g, %bb.f, %bb.h, %bb.d, %bb.a
-  %.0132 = phi double [ %10, %bb.a ], [ %i.az, %bb.f ], [ %i.bo, %bb.h ], [ %10, %bb.g ], [ %i.an, %bb.d ]
-  %.0 = phi double [ %11, %bb.a ], [ %i.bd, %bb.f ], [ %i.br, %bb.h ], [ %11, %bb.g ], [ %i.ao, %bb.d ]
+  %.0132 = phi double [ %18, %bb.a ], [ %i.az, %bb.f ], [ %i.bo, %bb.h ], [ %18, %bb.g ], [ %i.an, %bb.d ]
+  %.0 = phi double [ %19, %bb.a ], [ %i.bd, %bb.f ], [ %i.br, %bb.h ], [ %19, %bb.g ], [ %i.ao, %bb.d ]
   %i.bs = insertelement <2 x double> poison, double %.0132, i64 0
   %i.bt = insertelement <2 x double> %i.bs, double %.0, i64 1
   ret <2 x double> %i.bt
@@ -150,6 +158,9 @@ declare double @llvm.copysign.f64(double, double) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fma.v2f64(<2 x double>, <2 x double>, <2 x double>) #1
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn denormal_fpenv(dynamic) memory(none) uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" }
 attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }

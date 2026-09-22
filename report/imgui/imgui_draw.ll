@@ -205,27 +205,30 @@ _ZN8ImVectorI6ImVec2E9push_backERKS0_.exit:       ; preds = %._ZN8ImVectorI6ImVe
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define <2 x float> @_Z17ImBezierCubicCalcRK6ImVec2S1_S1_S1_f(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(8) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(8) %1, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(8) %2, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(8) %3, float noundef %4) local_unnamed_addr #18 {
 bb.a:
-  %5 = insertelement <4 x float> <float poison, float 1.000000e+00, float poison, float poison>, float %4, i64 0 ; 3 uses
-  %i.a = shufflevector <4 x float> %5, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 0>
-  %6 = insertelement <4 x float> <float 0.000000e+00, float 0.000000e+00, float poison, float 0.000000e+00>, float %4, i64 2
-  %7 = fsub <4 x float> %i.a, %6                  ; 3 uses
-  %8 = shufflevector <4 x float> %5, <4 x float> %7, <4 x i32> <i32 0, i32 6, i32 6, i32 6>
-  %9 = fmul <4 x float> %8, <float 1.000000e+00, float 3.000000e+00, float 1.000000e+00, float 3.000000e+00>
-  %10 = shufflevector <4 x float> %5, <4 x float> %7, <4 x i32> <i32 0, i32 0, i32 6, i32 6>
-  %i.b = fmul <4 x float> %10, %9
-  %i.c = fmul <4 x float> %7, %i.b                ; 4 uses
+  %5 = insertelement <2 x float> <float poison, float 1.000000e+00>, float %4, i64 0
+  %6 = insertelement <2 x float> <float 0.000000e+00, float poison>, float %4, i64 1
+  %7 = fsub <2 x float> %5, %6                    ; 3 uses
+  %i.a = shufflevector <2 x float> %7, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 0> ; 2 uses
+  %8 = extractelement <2 x float> %7, i64 1
+  %9 = fmul float %8, 3.000000e+00
+  %10 = shufflevector <2 x float> %7, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0>
+  %11 = insertelement <4 x float> poison, float %9, i64 0
+  %12 = shufflevector <4 x float> %11, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 poison, i32 poison>
+  %13 = shufflevector <4 x float> %12, <4 x float> %i.a, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %i.b = fmul <4 x float> %10, %13
+  %i.c = fmul <4 x float> %i.a, %i.b              ; 4 uses
   %i.d = load <2 x float>, ptr %0, align 4, !tbaa !29
   %i.e = load <2 x float>, ptr %1, align 4, !tbaa !29
-  %11 = shufflevector <4 x float> %i.c, <4 x float> poison, <2 x i32> <i32 3, i32 3>
-  %i.f = fmul <2 x float> %11, %i.e
+  %14 = shufflevector <4 x float> %i.c, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.f = fmul <2 x float> %14, %i.e
   %i.g = shufflevector <4 x float> %i.c, <4 x float> poison, <2 x i32> <i32 2, i32 2>
   %i.h = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.g, <2 x float> %i.d, <2 x float> %i.f)
   %i.i = load <2 x float>, ptr %2, align 4, !tbaa !29
   %i.j = shufflevector <4 x float> %i.c, <4 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.k = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.j, <2 x float> %i.i, <2 x float> %i.h)
   %i.l = load <2 x float>, ptr %3, align 4, !tbaa !29
-  %12 = shufflevector <4 x float> %i.c, <4 x float> poison, <2 x i32> zeroinitializer
-  %i.m = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %12, <2 x float> %i.l, <2 x float> %i.k)
+  %15 = shufflevector <4 x float> %i.c, <4 x float> poison, <2 x i32> <i32 3, i32 3>
+  %i.m = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %15, <2 x float> %i.l, <2 x float> %i.k)
   ret <2 x float> %i.m
 }
 

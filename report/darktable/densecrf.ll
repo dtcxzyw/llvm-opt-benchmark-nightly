@@ -205,9 +205,9 @@ define linkonce_odr void @_ZNK20PermutohedralLatticeILi5ELi2EE5splatEPfS1_mi(ptr
   %i.ak = fmul reassoc nsz arcp contract afn float %i.aj, %i.ac
   %i.al = fmul reassoc nsz arcp contract afn float %i.ag, 2.000000e+00
   %i.am = fmul reassoc nsz arcp contract afn float %i.al, %i.ah
-  %i.an = fmul reassoc nsz arcp contract afn float %i.d, %i.h ; 3 uses
+  %i.an = fmul reassoc nsz arcp contract afn float %i.d, %i.h ; 4 uses
   %i.ao = fsub reassoc nsz arcp contract afn float %i.an, %i.n
-  %i.ap = fadd reassoc nsz arcp contract afn float %i.p, %i.ao ; 3 uses
+  %i.ap = fadd reassoc nsz arcp contract afn float %i.p, %i.ao ; 4 uses
   %i.aq = fsub reassoc nsz arcp contract afn float %i.ap, %i.v
   %i.ar = fadd reassoc nsz arcp contract afn float %i.x, %i.aq ; 3 uses
   %i.as = fsub reassoc nsz arcp contract afn float %i.ar, %i.ad
@@ -263,8 +263,8 @@ define linkonce_odr void @_ZNK20PermutohedralLatticeILi5ELi2EE5splatEPfS1_mi(ptr
   %i.cq = fptosi <4 x float> %i.cp to <4 x i32>   ; 5 uses
   %i.cr = fptosi <4 x float> %i.cj to <4 x i32>
   %i.cs = fptosi <4 x float> %i.cm to <4 x i32>
-  %i.ct = insertelement <2 x float> poison, float %i.ap, i64 0 ; 2 uses
-  %i.cu = insertelement <2 x float> %i.ct, float %i.an, i64 1 ; 5 uses
+  %i.ct = insertelement <2 x float> poison, float %i.ap, i64 0
+  %i.cu = insertelement <2 x float> %i.ct, float %i.an, i64 1 ; 4 uses
   %i.cv = fmul reassoc nsz arcp contract afn <2 x float> %i.cu, splat (float f0x3E2AAAAB) ; 2 uses
   %i.cw = tail call reassoc nsz arcp contract afn <2 x float> @llvm.ceil.v2f32(<2 x float> %i.cv)
   %i.cx = fmul reassoc nsz arcp contract afn <2 x float> %i.cw, splat (float 6.000000e+00) ; 2 uses
@@ -304,7 +304,8 @@ define linkonce_odr void @_ZNK20PermutohedralLatticeILi5ELi2EE5splatEPfS1_mi(ptr
   %i.ef = xor <4 x i1> %i.ed, <i1 false, i1 false, i1 false, i1 true>
   %i.eg = shufflevector <2 x i32> %i.de, <2 x i32> poison, <4 x i32> zeroinitializer
   %i.eh = sitofp <4 x i32> %i.eg to <4 x float>
-  %i.ei = shufflevector <2 x float> %i.ct, <2 x float> poison, <4 x i32> zeroinitializer
+  %6 = insertelement <4 x float> poison, float %i.ap, i64 0
+  %i.ei = shufflevector <4 x float> %6, <4 x float> poison, <4 x i32> zeroinitializer
   %i.ej = fsub reassoc nsz arcp contract afn <4 x float> %i.ei, %i.eh
   %i.ek = fcmp reassoc nsz arcp contract afn olt <4 x float> %i.do, %i.ej ; 5 uses
   %i.el = extractelement <4 x i1> %i.ek, i64 0    ; 2 uses
@@ -318,8 +319,9 @@ define linkonce_odr void @_ZNK20PermutohedralLatticeILi5ELi2EE5splatEPfS1_mi(ptr
   %i.et = add nuw nsw <4 x i32> %i.er, %i.es
   %i.eu = shufflevector <2 x i32> %i.de, <2 x i32> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
   %i.ev = sitofp <4 x i32> %i.eu to <4 x float>
-  %6 = shufflevector <2 x float> %i.cu, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %i.ew = fsub reassoc nsz arcp contract afn <4 x float> %6, %i.ev
+  %7 = insertelement <4 x float> poison, float %i.an, i64 0
+  %8 = shufflevector <4 x float> %7, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.ew = fsub reassoc nsz arcp contract afn <4 x float> %8, %i.ev
   %i.ex = fcmp reassoc nsz arcp contract afn olt <4 x float> %i.do, %i.ew ; 5 uses
   %i.ey = zext <4 x i1> %i.ex to <4 x i32>
   %i.ez = extractelement <4 x i1> %i.ex, i64 0    ; 2 uses

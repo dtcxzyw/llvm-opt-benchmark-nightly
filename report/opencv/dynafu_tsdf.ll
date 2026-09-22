@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.l = add nsw i32 %i.k, -2
   %i.m = sitofp i32 %i.l to float
   %i.n = fcmp oge float %.sroa.048.0.vec.extract, %i.m
-  %.sroa.048.4.vec.extract60 = extractelement <2 x float> %1, i64 1 ; 2 uses
+  %.sroa.048.4.vec.extract60 = extractelement <2 x float> %1, i64 1 ; 3 uses
   %i.o = fcmp olt float %.sroa.048.4.vec.extract60, 1.000000e+00
   %or.cond = select i1 %i.n, i1 true, i1 %i.o
   br i1 %or.cond, label %bb.f, label %bb.c
@@ -230,11 +230,14 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.aa = shufflevector <2 x float> %1, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %i.ab = insertelement <2 x float> %i.aa, float %2, i64 1 ; 2 uses
-  %3 = tail call <2 x float> @llvm.floor.v2f32(<2 x float> %i.ab)
-  %i.ac = fptosi <2 x float> %3 to <2 x i32>      ; 3 uses
+  %3 = insertelement <2 x float> %i.aa, float %2, i64 1
+  %4 = tail call float @llvm.floor.f32(float %.sroa.048.4.vec.extract60)
+  %i.ab = insertelement <2 x float> poison, float %4, i64 0
+  %5 = tail call float @llvm.floor.f32(float %2)
+  %6 = insertelement <2 x float> %i.ab, float %5, i64 1
+  %i.ac = fptosi <2 x float> %6 to <2 x i32>      ; 3 uses
   %i.ad = sitofp <2 x i32> %i.ac to <2 x float>
-  %i.ae = fsub <2 x float> %i.ab, %i.ad           ; 2 uses
+  %i.ae = fsub <2 x float> %3, %i.ad              ; 2 uses
   %i.af = shufflevector <2 x float> %i.ae, <2 x float> poison, <2 x i32> <i32 1, i32 1> ; 6 uses
   %i.ag = shufflevector <2 x float> %i.ae, <2 x float> poison, <2 x i32> zeroinitializer ; 3 uses
   %i.ah = extractelement <2 x i32> %i.ac, i64 0

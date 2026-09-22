@@ -23,7 +23,7 @@ bb.a:
   %i.a = shufflevector <2 x float> %3, <2 x float> poison, <3 x i32> <i32 0, i32 1, i32 poison>
   %i.b = insertelement <3 x float> %i.a, float %4, i64 2
   %i.c = shufflevector <2 x float> %1, <2 x float> poison, <3 x i32> <i32 0, i32 1, i32 poison>
-  %i.d = insertelement <3 x float> %i.c, float %2, i64 2 ; 2 uses
+  %i.d = insertelement <3 x float> %i.c, float %2, i64 2
   %i.e = fsub <3 x float> %i.b, %i.d              ; 4 uses
   %foldExtExtBinop = fmul <3 x float> %i.e, %i.e
   %i.f = extractelement <3 x float> %foldExtExtBinop, i64 0
@@ -194,9 +194,10 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.o
   %i.dk = insertelement <2 x float> poison, float %i.de, i64 0
-  %i.dl = insertelement <2 x float> %i.dk, float %i.dc, i64 1
-  %7 = shufflevector <3 x float> %i.d, <3 x float> poison, <2 x i32> <i32 2, i32 2>
-  %i.dm = fsub <2 x float> %i.dl, %7
+  %7 = insertelement <2 x float> %i.dk, float %i.dc, i64 1
+  %i.dl = insertelement <2 x float> poison, float %2, i64 0
+  %8 = shufflevector <2 x float> %i.dl, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.dm = fsub <2 x float> %7, %8
   %i.dn = shufflevector <3 x float> %i.ar, <3 x float> poison, <2 x i32> <i32 2, i32 2>
   %i.do = fdiv <2 x float> %i.dm, %i.dn           ; 4 uses
   %i.dp = extractelement <2 x float> %i.do, i64 0
