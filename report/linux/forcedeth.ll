@@ -205,11 +205,10 @@ bb.am:                                            ; preds = %mii_rw.exit203
   %i.ei = getelementptr i8, ptr %1, i64 8
   %i.ej = load i8, ptr %i.ei, align 8             ; 2 uses
   %i.ek = icmp eq i8 %i.ej, 0
-  %2 = select i1 %i.ek, i32 %.sink256, i32 0
   %i.el = icmp eq i8 %i.ej, 1
   %i.em = select i1 %i.el, i32 %.sink253, i32 0
-  %3 = or disjoint i32 %2, %i.em
-  %spec.select163 = or disjoint i32 %3, %.0.i202
+  %2 = select i1 %i.ek, i32 %.sink256, i32 %i.em
+  %spec.select163 = or disjoint i32 %2, %.0.i202
   br label %.thread247
 
 .thread247:                                       ; preds = %.thread247.sink.split, %mii_rw.exit203

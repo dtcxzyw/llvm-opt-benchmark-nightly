@@ -205,18 +205,18 @@ bb.d:                                             ; preds = %bb.b
   %i.ai = getelementptr inbounds nuw i8, ptr %.040, i64 100
   %i.aj = getelementptr inbounds nuw i8, ptr %.040, i64 104
   %i.ak = getelementptr inbounds nuw i8, ptr %.040, i64 108
-  %i.al = getelementptr inbounds nuw i8, ptr %.040, i64 112 ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %.040, i64 112
   %i.am = getelementptr inbounds nuw i8, ptr %.040, i64 120
   %i.an = load float, ptr %i.am, align 4          ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %.040, i64 124
   %i.ap = getelementptr inbounds nuw i8, ptr %.040, i64 132
-  %i.aq = load <2 x float>, ptr %i.ak, align 4    ; 2 uses
-  %2 = load float, ptr %i.al, align 4             ; 2 uses
+  %i.aq = load <2 x float>, ptr %i.ak, align 4    ; 3 uses
   %i.ar = load <2 x float>, ptr %i.al, align 4    ; 4 uses
   %i.as = load float, ptr %i.ap, align 4          ; 2 uses
-  %i.at = fmul <2 x float> %i.aq, splat (float 2.000000e+00) ; 6 uses
+  %i.at = fmul <2 x float> %i.aq, splat (float 2.000000e+00) ; 5 uses
   %i.au = extractelement <2 x float> %i.at, i64 1 ; 2 uses
   %i.av = fneg float %i.au                        ; 2 uses
+  %2 = extractelement <2 x float> %i.aq, i64 1    ; 2 uses
   %i.aw = tail call float @llvm.fmuladd.f32(float %i.av, float %2, float 1.000000e+00)
   %i.ax = extractelement <2 x float> %i.ar, i64 1
   %i.ay = fmul float %i.ax, 2.000000e+00          ; 2 uses
@@ -228,32 +228,31 @@ bb.d:                                             ; preds = %bb.b
   %i.be = insertelement <2 x float> %i.bd, float %i.aw, i64 1
   %i.bf = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bc, <2 x float> %i.ar, <2 x float> %i.be)
   %i.bg = fneg float %i.bb
-  %i.bh = extractelement <2 x float> %i.at, i64 0
+  %i.bh = extractelement <2 x float> %i.at, i64 0 ; 2 uses
   %i.bi = fneg float %i.ba
-  %3 = fneg <2 x float> %i.at
-  %4 = shufflevector <2 x float> <float 0.000000e+00, float poison>, <2 x float> %3, <2 x i32> <i32 0, i32 2>
-  %5 = shufflevector <2 x float> %i.aq, <2 x float> <float -0.000000e+00, float poison>, <2 x i32> <i32 2, i32 0>
-  %6 = insertelement <2 x float> <float poison, float 1.000000e+00>, float %i.bi, i64 0
-  %7 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %4, <2 x float> %5, <2 x float> %6) ; 2 uses
-  %8 = fmul float %i.bh, %i.an                    ; 2 uses
-  %i.bj = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bc, <2 x float> %i.ar, <2 x float> %7)
+  %3 = fneg float %i.bh
+  %4 = extractelement <2 x float> %i.aq, i64 0
+  %5 = tail call float @llvm.fmuladd.f32(float %3, float %4, float 1.000000e+00) ; 2 uses
+  %6 = fmul float %i.bh, %i.an                    ; 2 uses
+  %7 = insertelement <2 x float> poison, float %i.bi, i64 0
+  %8 = insertelement <2 x float> %7, float %5, i64 1
+  %i.bj = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bc, <2 x float> %i.ar, <2 x float> %8)
   %i.bk = load <2 x float>, ptr %i.ao, align 4    ; 3 uses
   %i.bl = shufflevector <2 x float> %i.bf, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   %i.bm = shufflevector <2 x float> %i.bk, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bn = fmul <2 x float> %i.bl, %i.bm
   %i.bo = shufflevector <2 x float> %i.ar, <2 x float> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
   %i.bp = insertelement <2 x float> poison, float %i.bg, i64 0
-  %i.bq = insertelement <2 x float> %i.bp, float %8, i64 1
+  %i.bq = insertelement <2 x float> %i.bp, float %6, i64 1
   %i.br = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.at, <2 x float> %i.bo, <2 x float> %i.bq)
   %i.bs = shufflevector <2 x float> %i.bk, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.bt = fmul <2 x float> %i.bj, %i.bs
   %i.bu = fmul <2 x float> %i.br, %i.bk
-  %i.bv = fneg float %8
+  %i.bv = fneg float %6
   %i.bw = insertelement <2 x float> poison, float %i.bb, i64 0
   %i.bx = insertelement <2 x float> %i.bw, float %i.bv, i64 1
   %i.by = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.at, <2 x float> %i.bo, <2 x float> %i.bx)
-  %9 = extractelement <2 x float> %7, i64 1
-  %i.bz = tail call float @llvm.fmuladd.f32(float %i.av, float %2, float %9)
+  %i.bz = tail call float @llvm.fmuladd.f32(float %i.av, float %2, float %5)
   %i.ca = insertelement <2 x float> poison, float %i.as, i64 0
   %i.cb = shufflevector <2 x float> %i.ca, <2 x float> poison, <2 x i32> zeroinitializer
   %i.cc = fmul <2 x float> %i.by, %i.cb
@@ -656,7 +655,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.adm = sub i32 %.054.i.i.i, %i.adl
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %.260.i.i.i, i64 %index ; 2 uses
   %next.gep294 = getelementptr i8, ptr %i.ada, i64 %index ; 2 uses
@@ -1059,7 +1058,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.bg = getelementptr i8, ptr %i.ay, i64 %i.bf
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <8 x i16> [ <i16 0, i16 1, i16 2, i16 3, i16 4, i16 5, i16 6, i16 7>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
   %step.add = add <8 x i16> %vec.ind, splat (i16 8)
@@ -1385,7 +1384,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %wide.trip.count43, 2147483632 ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <8 x i16> [ <i16 0, i16 1, i16 2, i16 3, i16 4, i16 5, i16 6, i16 7>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
   %step.add = add <8 x i16> %vec.ind, splat (i16 8)
@@ -1788,7 +1787,7 @@ vector.ph1239:                                    ; preds = %vector.main.loop.it
   %n.vec1240 = and i64 %wide.trip.count947, 2147483616 ; 4 uses
   br label %vector.body1241
 
-vector.body1241:                                  ; preds = %vector.body1241, %vector.ph1239
+vector.body1241:                                  ; preds = %vector.ph1239, %vector.body1241
   %index1242 = phi i64 [ 0, %vector.ph1239 ], [ %index.next1247, %vector.body1241 ] ; 4 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %.1580, i64 %index1242 ; 2 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %i.ep, i64 16
@@ -1840,7 +1839,7 @@ vec.epilog.middle.block1262:                      ; preds = %vec.epilog.vector.b
   %cmp.n1263 = icmp eq i64 %n.vec1256, %wide.trip.count947
   br i1 %cmp.n1263, label %.loopexit723, label %.lr.ph820.preheader
 
-.lr.ph820.preheader:                              ; preds = %vector.memcheck1232, %iter.check1251, %vec.epilog.iter.check1253, %vec.epilog.middle.block1262
+.lr.ph820.preheader:                              ; preds = %iter.check1251, %vector.memcheck1232, %vec.epilog.iter.check1253, %vec.epilog.middle.block1262
   %indvars.iv944.ph = phi i64 [ 0, %iter.check1251 ], [ 0, %vector.memcheck1232 ], [ %n.vec1240, %vec.epilog.iter.check1253 ], [ %n.vec1256, %vec.epilog.middle.block1262 ] ; 6 uses
   %xtraiter1668 = and i64 %wide.trip.count947, 1
   %lcmp.mod1669.not = icmp eq i64 %xtraiter1668, 0
@@ -1891,7 +1890,7 @@ vector.ph1206:                                    ; preds = %vector.main.loop.it
   %n.vec1207 = and i64 %wide.trip.count952, 2147483616 ; 4 uses
   br label %vector.body1208
 
-vector.body1208:                                  ; preds = %vector.body1208, %vector.ph1206
+vector.body1208:                                  ; preds = %vector.ph1206, %vector.body1208
   %index1209 = phi i64 [ 0, %vector.ph1206 ], [ %index.next1214, %vector.body1208 ] ; 4 uses
   %i.fs = getelementptr inbounds nuw i8, ptr %.1580, i64 %index1209 ; 2 uses
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fs, i64 16
@@ -1946,7 +1945,7 @@ vec.epilog.middle.block1229:                      ; preds = %vec.epilog.vector.b
   %cmp.n1230 = icmp eq i64 %n.vec1223, %wide.trip.count952
   br i1 %cmp.n1230, label %.loopexit723, label %.lr.ph822.preheader
 
-.lr.ph822.preheader:                              ; preds = %vector.memcheck1199, %iter.check1218, %vec.epilog.iter.check1220, %vec.epilog.middle.block1229
+.lr.ph822.preheader:                              ; preds = %iter.check1218, %vector.memcheck1199, %vec.epilog.iter.check1220, %vec.epilog.middle.block1229
   %indvars.iv949.ph = phi i64 [ 0, %iter.check1218 ], [ 0, %vector.memcheck1199 ], [ %n.vec1207, %vec.epilog.iter.check1220 ], [ %n.vec1223, %vec.epilog.middle.block1229 ] ; 6 uses
   %xtraiter1671 = and i64 %wide.trip.count952, 1
   %lcmp.mod1672.not = icmp eq i64 %xtraiter1671, 0
@@ -2012,7 +2011,7 @@ vector.ph1171:                                    ; preds = %vector.main.loop.it
   %n.vec1172 = and i64 %wide.trip.count957, 2147483632 ; 4 uses
   br label %vector.body1173
 
-vector.body1173:                                  ; preds = %vector.body1173, %vector.ph1171
+vector.body1173:                                  ; preds = %vector.ph1171, %vector.body1173
   %index1174 = phi i64 [ 0, %vector.ph1171 ], [ %index.next1179, %vector.body1173 ] ; 5 uses
   %i.hj = getelementptr inbounds nuw i8, ptr %.1580, i64 %index1174
   %wide.load1175 = load <16 x i8>, ptr %i.hj, align 1
@@ -2099,7 +2098,7 @@ vec.epilog.middle.block1196:                      ; preds = %vec.epilog.vector.b
   %cmp.n1197 = icmp eq i64 %n.vec1188, %wide.trip.count957
   br i1 %cmp.n1197, label %.loopexit723, label %.lr.ph824.preheader
 
-.lr.ph824.preheader:                              ; preds = %vector.memcheck1160, %iter.check1183, %vec.epilog.iter.check1185, %vec.epilog.middle.block1196
+.lr.ph824.preheader:                              ; preds = %iter.check1183, %vector.memcheck1160, %vec.epilog.iter.check1185, %vec.epilog.middle.block1196
   %indvars.iv954.ph = phi i64 [ 0, %iter.check1183 ], [ 0, %vector.memcheck1160 ], [ %n.vec1172, %vec.epilog.iter.check1185 ], [ %n.vec1188, %vec.epilog.middle.block1196 ]
   br label %.lr.ph824
 
@@ -2137,7 +2136,7 @@ vector.ph1131:                                    ; preds = %vector.main.loop.it
   %n.vec1132 = and i64 %wide.trip.count962, 2147483616 ; 4 uses
   br label %vector.body1133
 
-vector.body1133:                                  ; preds = %vector.body1133, %vector.ph1131
+vector.body1133:                                  ; preds = %vector.ph1131, %vector.body1133
   %index1134 = phi i64 [ 0, %vector.ph1131 ], [ %index.next1141, %vector.body1133 ] ; 5 uses
   %i.jr = getelementptr inbounds nuw i8, ptr %.1580, i64 %index1134 ; 2 uses
   %i.js = getelementptr inbounds nuw i8, ptr %i.jr, i64 16
@@ -2210,7 +2209,7 @@ vec.epilog.middle.block1157:                      ; preds = %vec.epilog.vector.b
   %cmp.n1158 = icmp eq i64 %n.vec1150, %wide.trip.count962
   br i1 %cmp.n1158, label %.loopexit723, label %.lr.ph826.preheader
 
-.lr.ph826.preheader:                              ; preds = %vector.memcheck1122, %iter.check1145, %vec.epilog.iter.check1147, %vec.epilog.middle.block1157
+.lr.ph826.preheader:                              ; preds = %iter.check1145, %vector.memcheck1122, %vec.epilog.iter.check1147, %vec.epilog.middle.block1157
   %indvars.iv959.ph = phi i64 [ 0, %iter.check1145 ], [ 0, %vector.memcheck1122 ], [ %n.vec1132, %vec.epilog.iter.check1147 ], [ %n.vec1150, %vec.epilog.middle.block1157 ] ; 7 uses
   %xtraiter1674 = and i64 %wide.trip.count962, 1
   %lcmp.mod1675.not = icmp eq i64 %xtraiter1674, 0
@@ -2271,7 +2270,7 @@ vector.ph1096:                                    ; preds = %vector.main.loop.it
   %n.vec1097 = and i64 %wide.trip.count967, 2147483616 ; 4 uses
   br label %vector.body1098
 
-vector.body1098:                                  ; preds = %vector.body1098, %vector.ph1096
+vector.body1098:                                  ; preds = %vector.ph1096, %vector.body1098
   %index1099 = phi i64 [ 0, %vector.ph1096 ], [ %index.next1104, %vector.body1098 ] ; 4 uses
   %i.lv = getelementptr inbounds nuw i8, ptr %.1580, i64 %index1099 ; 2 uses
   %i.lw = getelementptr inbounds nuw i8, ptr %i.lv, i64 16
@@ -2321,7 +2320,7 @@ vec.epilog.middle.block1119:                      ; preds = %vec.epilog.vector.b
   %cmp.n1120 = icmp eq i64 %n.vec1113, %wide.trip.count967
   br i1 %cmp.n1120, label %.loopexit723, label %.lr.ph828.preheader
 
-.lr.ph828.preheader:                              ; preds = %vector.memcheck1089, %iter.check1108, %vec.epilog.iter.check1110, %vec.epilog.middle.block1119
+.lr.ph828.preheader:                              ; preds = %iter.check1108, %vector.memcheck1089, %vec.epilog.iter.check1110, %vec.epilog.middle.block1119
   %indvars.iv964.ph = phi i64 [ 0, %iter.check1108 ], [ 0, %vector.memcheck1089 ], [ %n.vec1097, %vec.epilog.iter.check1110 ], [ %n.vec1113, %vec.epilog.middle.block1119 ] ; 3 uses
   %xtraiter1677 = and i64 %wide.trip.count967, 3  ; 2 uses
   %lcmp.mod1678.not = icmp eq i64 %xtraiter1677, 0
@@ -2375,7 +2374,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %wide.trip.count972, 2147483616 ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 4 uses
   %i.mv = getelementptr inbounds nuw i8, ptr %.1580, i64 %index ; 2 uses
   %i.mw = getelementptr inbounds nuw i8, ptr %i.mv, i64 16
@@ -2427,7 +2426,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n1088 = icmp eq i64 %n.vec1083, %wide.trip.count972
   br i1 %cmp.n1088, label %.loopexit723, label %.lr.ph830.preheader
 
-.lr.ph830.preheader:                              ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph830.preheader:                              ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv969.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec1083, %vec.epilog.middle.block ] ; 6 uses
   %xtraiter1680 = and i64 %wide.trip.count972, 1
   %lcmp.mod1681.not = icmp eq i64 %xtraiter1680, 0
@@ -2830,7 +2829,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %invariant.gep137 = getelementptr i8, ptr %i.aq, i64 %i.cc
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.cd = mul i64 %index, %i.ba
   %i.ce = add i64 %i.az, %i.cd                    ; 16 uses
@@ -2955,7 +2954,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n103 = icmp eq i64 %i.as, %n.vec100
   br i1 %cmp.n103, label %._crit_edge.loopexit, label %.lr.ph.preheader
 
-.lr.ph.preheader:                                 ; preds = %vector.memcheck, %vector.scevcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph.preheader:                                 ; preds = %iter.check, %vector.scevcheck, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv85.ph = phi i64 [ %i.az, %iter.check ], [ %i.az, %vector.scevcheck ], [ %i.az, %vector.memcheck ], [ %i.bn, %vec.epilog.iter.check ], [ %i.dp, %vec.epilog.middle.block ]
   %.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.scevcheck ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec100, %vec.epilog.middle.block ]
   %.075.ph = phi i32 [ 0, %iter.check ], [ 0, %vector.scevcheck ], [ 0, %vector.memcheck ], [ %i.bo, %vec.epilog.iter.check ], [ %i.dq, %vec.epilog.middle.block ]

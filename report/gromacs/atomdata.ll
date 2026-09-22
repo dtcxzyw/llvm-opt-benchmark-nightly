@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.aj = getelementptr i8, ptr %i.d, i64 %i.ah
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ak = shl i64 %index, 2                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.v, i64 %i.ak ; 4 uses
@@ -608,7 +608,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.ai = getelementptr i8, ptr %i.c, i64 %i.ag
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.aj = shl i64 %index, 2                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.u, i64 %i.aj ; 4 uses
@@ -796,7 +796,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.ai = getelementptr i8, ptr %i.c, i64 %i.ag
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.aj = shl i64 %index, 2                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.u, i64 %i.aj ; 4 uses
@@ -1199,7 +1199,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.es = or disjoint i64 %n.vec, 1
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 5 uses
   %i.et = or disjoint i64 %index, 1
   %i.eu = or disjoint i64 %index, 9
@@ -1602,7 +1602,7 @@ vector.ph162:                                     ; preds = %vector.main.loop.it
   %i.es = getelementptr inbounds nuw [4 x i8], ptr %i.ea, i64 %.015.lcssa.i.i
   br label %vector.body166
 
-vector.body166:                                   ; preds = %vector.body166, %vector.ph162
+vector.body166:                                   ; preds = %vector.ph162, %vector.body166
   %index167 = phi i64 [ 0, %vector.ph162 ], [ %index.next168, %vector.body166 ] ; 2 uses
   %i.et = getelementptr inbounds nuw [4 x i8], ptr %i.es, i64 %index167 ; 4 uses
   %i.eu = getelementptr inbounds nuw i8, ptr %i.et, i64 32
@@ -1804,7 +1804,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.hx = getelementptr inbounds nuw [4 x i8], ptr %i.hf, i64 %.015.lcssa.i51.i
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.hy = getelementptr inbounds nuw [4 x i8], ptr %i.hx, i64 %index ; 4 uses
   %i.hz = getelementptr inbounds nuw i8, ptr %i.hy, i64 32
@@ -2207,7 +2207,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.bk = getelementptr inbounds nuw [4 x i8], ptr %i.as, i64 %.015.lcssa.i
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.bl = getelementptr inbounds nuw [4 x i8], ptr %i.bk, i64 %index ; 4 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 32
@@ -2461,7 +2461,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.aj = getelementptr i8, ptr %i.d, i64 %i.ah
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ak = shl i64 %index, 2                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.v, i64 %i.ak ; 4 uses
@@ -2784,7 +2784,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.dy = getelementptr i8, ptr %.054.lcssa.us, i64 %i.dx ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ]
   %pointer.phi = phi ptr [ %.054.lcssa.us, %vector.ph ], [ %ptr.ind, %vector.body ] ; 2 uses
   %vector.gep = getelementptr i8, ptr %pointer.phi, <8 x i64> <i64 0, i64 16, i64 32, i64 48, i64 64, i64 80, i64 96, i64 112> ; 4 uses
@@ -3187,7 +3187,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %wide.trip.count.i, 2147483616 ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.phi = phi <8 x i32> [ zeroinitializer, %vector.ph ], [ %predphi, %vector.body ]
   %vec.phi34 = phi <8 x i32> [ zeroinitializer, %vector.ph ], [ %predphi50, %vector.body ]
@@ -3449,7 +3449,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.ai = getelementptr i8, ptr %i.c, i64 %i.ag
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.aj = shl i64 %index, 2                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.u, i64 %i.aj ; 4 uses
@@ -3703,8 +3703,6 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %.lr.ph70.split
   %i.u = sext i32 %i.s to i64
-  %8 = insertelement <2 x i32> poison, i32 %.068, i64 0
-  %9 = insertelement <2 x i32> %8, i32 %.pre78, i64 1
   br label %bb.c
 
 ._crit_edge.loopexit:                             ; preds = %_ZN3gmxL23copyXToNbatXForGridPartERKNS_4GridERKNS_5RangeIiEEPA3_KfPNS_16nbnxn_atomdata_tE.exit
@@ -3725,17 +3723,17 @@ bb.c:                                             ; preds = %.lr.ph, %_ZN3gmxL23
   %i.aa = load i32, ptr %2, align 4, !tbaa !93    ; 2 uses
   %i.ab = load i32, ptr %i.z, align 4, !tbaa !93
   %i.ac = load i32, ptr %i.y, align 4, !tbaa !93
-  %i.ad = mul nsw i32 %i.ab, %i.ac
-  %i.ae = add i32 %i.aa, -1
-  %10 = insertelement <2 x i32> poison, i32 %i.ad, i64 0
-  %11 = shufflevector <2 x i32> %10, <2 x i32> poison, <2 x i32> zeroinitializer
-  %12 = mul nsw <2 x i32> %11, %9
-  %13 = insertelement <2 x i32> poison, i32 %i.ae, i64 0
-  %14 = shufflevector <2 x i32> %13, <2 x i32> poison, <2 x i32> zeroinitializer
-  %15 = add <2 x i32> %14, %12
+  %i.ad = mul nsw i32 %i.ab, %i.ac                ; 2 uses
+  %i.ae = add i32 %i.aa, -1                       ; 2 uses
+  %8 = mul nsw i32 %i.ad, %.pre78
+  %9 = mul nsw i32 %i.ad, %.068
+  %10 = add i32 %i.ae, %8
+  %11 = add i32 %i.ae, %9
+  %12 = insertelement <2 x i32> poison, i32 %11, i64 0
+  %13 = insertelement <2 x i32> %12, i32 %10, i64 1
   %i.af = insertelement <2 x i32> poison, i32 %i.aa, i64 0
   %i.ag = shufflevector <2 x i32> %i.af, <2 x i32> poison, <2 x i32> zeroinitializer
-  %i.ah = sdiv <2 x i32> %15, %i.ag               ; 2 uses
+  %i.ah = sdiv <2 x i32> %13, %i.ag               ; 2 uses
   %i.ai = load i8, ptr %5, align 1, !tbaa !115, !range !119, !noundef !122
   %i.aj = trunc nuw i8 %i.ai to i1
   %i.ak = extractelement <2 x i32> %i.ah, i64 0   ; 8 uses

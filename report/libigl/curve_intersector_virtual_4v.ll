@@ -202,7 +202,7 @@ bb.u:                                             ; preds = %bb.t
   %.v = select <4 x i1> %i.va, <4 x float> %i.un, <4 x float> %i.up ; 5 uses
   %i.vm = fcmp une <4 x float> %.v, %i.op
   %i.vn = fcmp une <4 x float> %.v, %i.qm
-  %.not1566 = and <4 x i1> %i.vm, %i.vn           ; 5 uses
+  %.not1566 = and <4 x i1> %i.vm, %i.vn           ; 4 uses
   %i.vo = fcmp une <4 x float> %.v, %.sroa.0393.0
   %i.vp = fcmp une <4 x float> %.v, %.sroa.0390.0
   %.not1559 = and <4 x i1> %i.vo, %i.vp           ; 4 uses
@@ -260,14 +260,11 @@ bb.u:                                             ; preds = %bb.t
   %i.xi = fmul <4 x float> %i.xh, %i.vr
   %i.xj = tail call noundef <4 x float> @llvm.x86.sse.min.ps(<4 x float> %i.xi, <4 x float> splat (float 1.000000e+00))
   %i.xk = tail call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> %i.xj, <4 x float> zeroinitializer)
-  %12 = bitcast <4 x float> %i.xk to <4 x i32>
-  %13 = select <4 x i1> %.not1566, <4 x i32> zeroinitializer, <4 x i32> %12
-  %14 = select <4 x i1> %.not1566, <4 x i1> %.not1559, <4 x i1> zeroinitializer
-  %15 = select <4 x i1> %14, <4 x i32> splat (i32 1065353216), <4 x i32> zeroinitializer
-  %16 = or <4 x i32> %13, %15
+  %12 = select <4 x i1> %.not1559, <4 x float> splat (float 1.000000e+00), <4 x float> zeroinitializer
+  %13 = select <4 x i1> %.not1566, <4 x float> %12, <4 x float> %i.xk
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #10
   %i.xl = fadd <4 x float> %i.gm, %.v             ; 4 uses
-  store <4 x i32> %16, ptr %10, align 16
+  store <4 x float> %13, ptr %10, align 16
   %i.xm = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 6 uses
   store <4 x float> zeroinitializer, ptr %i.xm, align 16
   %i.xn = getelementptr inbounds nuw i8, ptr %10, i64 32 ; 6 uses
@@ -582,7 +579,7 @@ bb.aj:                                            ; preds = %_ZNK6embree4sse217I
   %i.aek = sext <4 x i1> %i.aeh to <4 x i32>
   %i.ael = fcmp une <4 x float> %i.up, %i.op
   %i.aem = fcmp une <4 x float> %i.up, %i.qm
-  %.not1584 = and <4 x i1> %i.ael, %i.aem         ; 5 uses
+  %.not1584 = and <4 x i1> %i.ael, %i.aem         ; 4 uses
   %i.aen = fcmp une <4 x float> %i.up, %.sroa.0393.0
   %i.aeo = fcmp une <4 x float> %i.up, %.sroa.0390.0
   %.not1577 = and <4 x i1> %i.aen, %i.aeo         ; 4 uses
@@ -646,12 +643,9 @@ bb.aj:                                            ; preds = %_ZNK6embree4sse217I
   %i.ago = fmul <4 x float> %i.xh, %i.aeu
   %i.agp = call noundef <4 x float> @llvm.x86.sse.min.ps(<4 x float> %i.ago, <4 x float> splat (float 1.000000e+00))
   %i.agq = call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> %i.agp, <4 x float> zeroinitializer)
-  %17 = bitcast <4 x float> %i.agq to <4 x i32>
-  %18 = select <4 x i1> %.not1584, <4 x i32> zeroinitializer, <4 x i32> %17
-  %19 = select <4 x i1> %.not1584, <4 x i1> %.not1577, <4 x i1> zeroinitializer
-  %20 = select <4 x i1> %19, <4 x i32> splat (i32 1065353216), <4 x i32> zeroinitializer
-  %21 = or <4 x i32> %18, %20
-  store <4 x i32> %21, ptr %10, align 16
+  %14 = select <4 x i1> %.not1577, <4 x float> splat (float 1.000000e+00), <4 x float> zeroinitializer
+  %15 = select <4 x i1> %.not1584, <4 x float> %14, <4 x float> %i.agq
+  store <4 x float> %15, ptr %10, align 16
   store <4 x float> zeroinitializer, ptr %i.xm, align 16
   store <4 x float> %i.vb, ptr %i.xn, align 16
   store <4 x float> %.v1579, ptr %i.xo, align 16
@@ -1054,7 +1048,7 @@ bb.u:                                             ; preds = %bb.t
   %.v = select <4 x i1> %i.va, <4 x float> %i.un, <4 x float> %i.up ; 5 uses
   %i.vl = fcmp une <4 x float> %.v, %i.op
   %i.vm = fcmp une <4 x float> %.v, %i.qm
-  %.not1486 = and <4 x i1> %i.vl, %i.vm           ; 5 uses
+  %.not1486 = and <4 x i1> %i.vl, %i.vm           ; 4 uses
   %i.vn = fcmp une <4 x float> %.v, %.sroa.0362.0
   %i.vo = fcmp une <4 x float> %.v, %.sroa.0359.0
   %.not1479 = and <4 x i1> %i.vn, %i.vo           ; 4 uses
@@ -1112,14 +1106,11 @@ bb.u:                                             ; preds = %bb.t
   %i.xh = fmul <4 x float> %i.xg, %i.vq
   %i.xi = tail call noundef <4 x float> @llvm.x86.sse.min.ps(<4 x float> %i.xh, <4 x float> splat (float 1.000000e+00))
   %i.xj = tail call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> %i.xi, <4 x float> zeroinitializer)
-  %10 = bitcast <4 x float> %i.xj to <4 x i32>
-  %11 = select <4 x i1> %.not1486, <4 x i32> zeroinitializer, <4 x i32> %10
-  %12 = select <4 x i1> %.not1486, <4 x i1> %.not1479, <4 x i1> zeroinitializer
-  %13 = select <4 x i1> %12, <4 x i32> splat (i32 1065353216), <4 x i32> zeroinitializer
-  %14 = or <4 x i32> %11, %13
+  %10 = select <4 x i1> %.not1479, <4 x float> splat (float 1.000000e+00), <4 x float> zeroinitializer
+  %11 = select <4 x i1> %.not1486, <4 x float> %10, <4 x float> %i.xj
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #10
   %i.xk = fadd <4 x float> %i.gm, %.v
-  store <4 x i32> %14, ptr %8, align 16
+  store <4 x float> %11, ptr %8, align 16
   %i.xl = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 4 uses
   store <4 x float> zeroinitializer, ptr %i.xl, align 16
   %i.xm = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 4 uses
@@ -1298,7 +1289,7 @@ _ZNK6embree4sse216Occluded1EpilogMILi4ELb1EEclINS0_24RoundLineIntersectorHitMILi
 bb.ae:                                            ; preds = %_ZNK6embree4sse216Occluded1EpilogMILi4ELb1EEclINS0_24RoundLineIntersectorHitMILi4EEEEEbRKNS_11vboolf_implILi4EEERT_.exit40.i
   %i.aas = fcmp une <4 x float> %i.up, %i.op
   %i.aat = fcmp une <4 x float> %i.up, %i.qm
-  %.not1502 = and <4 x i1> %i.aas, %i.aat         ; 5 uses
+  %.not1502 = and <4 x i1> %i.aas, %i.aat         ; 4 uses
   %i.aau = fcmp une <4 x float> %i.up, %.sroa.0362.0
   %i.aav = fcmp une <4 x float> %i.up, %.sroa.0359.0
   %.not1495 = and <4 x i1> %i.aau, %i.aav         ; 4 uses
@@ -1362,12 +1353,9 @@ bb.ae:                                            ; preds = %_ZNK6embree4sse216O
   %i.acv = fmul <4 x float> %i.xg, %i.abb
   %i.acw = call noundef <4 x float> @llvm.x86.sse.min.ps(<4 x float> %i.acv, <4 x float> splat (float 1.000000e+00))
   %i.acx = call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> %i.acw, <4 x float> zeroinitializer)
-  %15 = bitcast <4 x float> %i.acx to <4 x i32>
-  %16 = select <4 x i1> %.not1502, <4 x i32> zeroinitializer, <4 x i32> %15
-  %17 = select <4 x i1> %.not1502, <4 x i1> %.not1495, <4 x i1> zeroinitializer
-  %18 = select <4 x i1> %17, <4 x i32> splat (i32 1065353216), <4 x i32> zeroinitializer
-  %19 = or <4 x i32> %16, %18
-  store <4 x i32> %19, ptr %8, align 16
+  %12 = select <4 x i1> %.not1495, <4 x float> splat (float 1.000000e+00), <4 x float> zeroinitializer
+  %13 = select <4 x i1> %.not1502, <4 x float> %12, <4 x float> %i.acx
+  store <4 x float> %13, ptr %8, align 16
   store <4 x float> zeroinitializer, ptr %i.xl, align 16
   store <4 x float> %i.vb, ptr %i.xm, align 16
   store <4 x float> %.v1497, ptr %i.xn, align 16
@@ -1770,7 +1758,7 @@ bb.u:                                             ; preds = %bb.t
   %.v = select <4 x i1> %i.vh, <4 x float> %i.ut, <4 x float> %i.uv ; 5 uses
   %i.vt = fcmp une <4 x float> %.v, %i.ov
   %i.vu = fcmp une <4 x float> %.v, %i.qs
-  %.not1721 = and <4 x i1> %i.vt, %i.vu           ; 5 uses
+  %.not1721 = and <4 x i1> %i.vt, %i.vu           ; 4 uses
   %i.vv = fcmp une <4 x float> %.v, %.sroa.0427.0
   %i.vw = fcmp une <4 x float> %.v, %.sroa.0424.0
   %.not1714 = and <4 x i1> %i.vv, %i.vw           ; 4 uses
@@ -1828,14 +1816,11 @@ bb.u:                                             ; preds = %bb.t
   %i.xp = fmul <4 x float> %i.xo, %i.vy
   %i.xq = tail call noundef <4 x float> @llvm.x86.sse.min.ps(<4 x float> %i.xp, <4 x float> splat (float 1.000000e+00))
   %i.xr = tail call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> %i.xq, <4 x float> zeroinitializer)
-  %15 = bitcast <4 x float> %i.xr to <4 x i32>
-  %16 = select <4 x i1> %.not1721, <4 x i32> zeroinitializer, <4 x i32> %15
-  %17 = select <4 x i1> %.not1721, <4 x i1> %.not1714, <4 x i1> zeroinitializer
-  %18 = select <4 x i1> %17, <4 x i32> splat (i32 1065353216), <4 x i32> zeroinitializer
-  %19 = or <4 x i32> %16, %18
+  %15 = select <4 x i1> %.not1714, <4 x float> splat (float 1.000000e+00), <4 x float> zeroinitializer
+  %16 = select <4 x i1> %.not1721, <4 x float> %15, <4 x float> %i.xr
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #10
   %i.xs = fadd <4 x float> %i.gs, %.v             ; 4 uses
-  store <4 x i32> %19, ptr %13, align 16
+  store <4 x float> %16, ptr %13, align 16
   %i.xt = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 6 uses
   store <4 x float> zeroinitializer, ptr %i.xt, align 16
   %i.xu = getelementptr inbounds nuw i8, ptr %13, i64 32 ; 6 uses
@@ -2220,7 +2205,7 @@ bb.am:                                            ; preds = %_ZNK6embree4sse218I
   %i.agu = sext <4 x i1> %i.agr to <4 x i32>
   %i.agv = fcmp une <4 x float> %i.uv, %i.ov
   %i.agw = fcmp une <4 x float> %i.uv, %i.qs
-  %.not1739 = and <4 x i1> %i.agv, %i.agw         ; 5 uses
+  %.not1739 = and <4 x i1> %i.agv, %i.agw         ; 4 uses
   %i.agx = fcmp une <4 x float> %i.uv, %.sroa.0427.0
   %i.agy = fcmp une <4 x float> %i.uv, %.sroa.0424.0
   %.not1732 = and <4 x i1> %i.agx, %i.agy         ; 4 uses
@@ -2284,12 +2269,9 @@ bb.am:                                            ; preds = %_ZNK6embree4sse218I
   %i.aiy = fmul <4 x float> %i.xo, %i.ahe
   %i.aiz = call noundef <4 x float> @llvm.x86.sse.min.ps(<4 x float> %i.aiy, <4 x float> splat (float 1.000000e+00))
   %i.aja = call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> %i.aiz, <4 x float> zeroinitializer)
-  %20 = bitcast <4 x float> %i.aja to <4 x i32>
-  %21 = select <4 x i1> %.not1739, <4 x i32> zeroinitializer, <4 x i32> %20
-  %22 = select <4 x i1> %.not1739, <4 x i1> %.not1732, <4 x i1> zeroinitializer
-  %23 = select <4 x i1> %22, <4 x i32> splat (i32 1065353216), <4 x i32> zeroinitializer
-  %24 = or <4 x i32> %21, %23
-  store <4 x i32> %24, ptr %13, align 16
+  %17 = select <4 x i1> %.not1732, <4 x float> splat (float 1.000000e+00), <4 x float> zeroinitializer
+  %18 = select <4 x i1> %.not1739, <4 x float> %17, <4 x float> %i.aja
+  store <4 x float> %18, ptr %13, align 16
   store <4 x float> zeroinitializer, ptr %i.xt, align 16
   store <4 x float> %i.vi, ptr %i.xu, align 16
   store <4 x float> %.v1734, ptr %i.xv, align 16
@@ -2692,8 +2674,8 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   %i.uw = fadd <4 x float> %i.gs, %i.ut           ; 2 uses
   %i.ux = fcmp ole <4 x float> %i.fw, %i.uw
   %i.uy = getelementptr inbounds nuw i8, ptr %1, i64 128
-  %i.uz = getelementptr inbounds nuw [4 x i8], ptr %i.uy, i64 %2 ; 7 uses
-  %i.va = load float, ptr %i.uz, align 4, !noalias !1646
+  %i.uz = getelementptr inbounds nuw [4 x i8], ptr %i.uy, i64 %2 ; 6 uses
+  %i.va = load float, ptr %i.uz, align 4, !noalias !1646 ; 4 uses
   %i.vb = insertelement <4 x float> poison, float %i.va, i64 0
   %i.vc = shufflevector <4 x float> %i.vb, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.vd = fcmp ole <4 x float> %i.uw, %i.vc
@@ -2717,7 +2699,7 @@ bb.u:                                             ; preds = %bb.t
   %.v = select <4 x i1> %i.vh, <4 x float> %i.ut, <4 x float> %i.uv ; 5 uses
   %i.vs = fcmp une <4 x float> %.v, %i.ov
   %i.vt = fcmp une <4 x float> %.v, %i.qs
-  %.not1561 = and <4 x i1> %i.vs, %i.vt           ; 5 uses
+  %.not1561 = and <4 x i1> %i.vs, %i.vt           ; 4 uses
   %i.vu = fcmp une <4 x float> %.v, %.sroa.0375.0
   %i.vv = fcmp une <4 x float> %.v, %.sroa.0372.0
   %.not1554 = and <4 x i1> %i.vu, %i.vv           ; 4 uses
@@ -2775,14 +2757,11 @@ bb.u:                                             ; preds = %bb.t
   %i.xo = fmul <4 x float> %i.xn, %i.vx
   %i.xp = tail call noundef <4 x float> @llvm.x86.sse.min.ps(<4 x float> %i.xo, <4 x float> splat (float 1.000000e+00))
   %i.xq = tail call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> %i.xp, <4 x float> zeroinitializer)
-  %13 = bitcast <4 x float> %i.xq to <4 x i32>
-  %14 = select <4 x i1> %.not1561, <4 x i32> zeroinitializer, <4 x i32> %13
-  %15 = select <4 x i1> %.not1561, <4 x i1> %.not1554, <4 x i1> zeroinitializer
-  %16 = select <4 x i1> %15, <4 x i32> splat (i32 1065353216), <4 x i32> zeroinitializer
-  %17 = or <4 x i32> %14, %16
+  %13 = select <4 x i1> %.not1554, <4 x float> splat (float 1.000000e+00), <4 x float> zeroinitializer
+  %14 = select <4 x i1> %.not1561, <4 x float> %13, <4 x float> %i.xq
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #10
   %i.xr = fadd <4 x float> %i.gs, %.v
-  store <4 x i32> %17, ptr %11, align 16
+  store <4 x float> %14, ptr %11, align 16
   %i.xs = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 4 uses
   store <4 x float> zeroinitializer, ptr %i.xs, align 16
   %i.xt = getelementptr inbounds nuw i8, ptr %11, i64 32 ; 4 uses
@@ -2858,9 +2837,8 @@ bb.y:                                             ; preds = %bb.x
 .critedge.i33.i:                                  ; preds = %bb.y, %bb.x
   %i.zk = getelementptr inbounds nuw [4 x i8], ptr %11, i64 %i.ys
   %i.zl = getelementptr inbounds nuw [4 x i8], ptr %i.xs, i64 %i.ys
-  %18 = load float, ptr %i.zk, align 4, !noalias !1647
-  %i.zm = load float, ptr %i.zl, align 4, !noalias !1647
-  %i.zn = load float, ptr %i.uz, align 4
+  %i.zm = load float, ptr %i.zk, align 4, !noalias !1647
+  %i.zn = load float, ptr %i.zl, align 4, !noalias !1647
   %i.zo = getelementptr inbounds nuw [4 x i8], ptr %i.xt, i64 %i.ys
   %i.zp = load float, ptr %i.zo, align 4
   store float %i.zp, ptr %i.uz, align 4
@@ -2872,9 +2850,9 @@ bb.y:                                             ; preds = %bb.x
   %i.zu = load i32, ptr %i.zt, align 4
   %i.zv = insertelement <4 x i32> poison, i32 %i.zu, i64 0
   %i.zw = shufflevector <4 x i32> %i.zv, <4 x i32> poison, <4 x i32> zeroinitializer
-  %i.zx = insertelement <4 x float> poison, float %18, i64 0
+  %i.zx = insertelement <4 x float> poison, float %i.zm, i64 0
   %i.zy = shufflevector <4 x float> %i.zx, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.zz = insertelement <4 x float> poison, float %i.zm, i64 0
+  %i.zz = insertelement <4 x float> poison, float %i.zn, i64 0
   %i.aaa = shufflevector <4 x float> %i.zz, <4 x float> poison, <4 x i32> zeroinitializer
   %i.aab = getelementptr inbounds nuw [4 x i8], ptr %i.xu, i64 %i.ys
   %i.aac = load float, ptr %i.aab, align 4, !noalias !1648
@@ -2979,19 +2957,20 @@ _ZN6embree4sse224runOcclusionFilterHelperILi4EEENS_6vtypesIXT_EE5vboolEP27RTCFil
   br i1 %.not1566, label %.thread1531, label %bb.ag
 
 .thread1531:                                      ; preds = %_ZN6embree4sse224runOcclusionFilterHelperILi4EEENS_6vtypesIXT_EE5vboolEP27RTCFilterFunctionNArgumentsPKNS_8GeometryEPNS_15RayQueryContextE.exit.i45.i
-  store float %i.zn, ptr %i.uz, align 4
+  store float %i.va, ptr %i.uz, align 4
   %i.abt = call noundef i64 asm "btc $1,$0", "=r,r,0,~{flags},~{dirflag},~{fpsr},~{flags}"(i64 %i.ys, i64 %.025.i28.i) #11, !srcloc !15
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #10
   br label %bb.v
 
 bb.ag:                                            ; preds = %_ZN6embree4sse224runOcclusionFilterHelperILi4EEENS_6vtypesIXT_EE5vboolEP27RTCFilterFunctionNArgumentsPKNS_8GeometryEPNS_15RayQueryContextE.exit.i45.i
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #10
+  %.pre1595 = load float, ptr %i.uz, align 4, !noalias !1654
   br label %_ZNK6embree4sse217Occluded1KEpilogMILi4ELi4ELb1EEclINS0_24RoundLineIntersectorHitMILi4EEEEEbRKNS_11vboolf_implILi4EEERT_.exit48.i
 
 _ZNK6embree4sse217Occluded1KEpilogMILi4ELi4ELb1EEclINS0_24RoundLineIntersectorHitMILi4EEEEEbRKNS_11vboolf_implILi4EEERT_.exit48.i: ; preds = %bb.y, %bb.v, %bb.ag
-  %.3.i32.i = phi i1 [ true, %bb.ag ], [ false, %bb.v ], [ true, %bb.y ] ; 2 uses
-  %19 = load float, ptr %i.uz, align 4, !noalias !1654 ; 2 uses
-  %i.abu = insertelement <4 x float> poison, float %19, i64 0
+  %15 = phi float [ %.pre1595, %bb.ag ], [ %i.va, %bb.v ], [ %i.va, %bb.y ] ; 2 uses
+  %.3.i32.i = phi i1 [ true, %bb.ag ], [ true, %bb.y ], [ false, %bb.v ] ; 2 uses
+  %i.abu = insertelement <4 x float> poison, float %15, i64 0
   %i.abv = shufflevector <4 x float> %i.abu, <4 x float> poison, <4 x i32> zeroinitializer
   %i.abw = fcmp ole <4 x float> %i.vi, %i.abv
   %i.abx = and <4 x i1> %i.vo, %i.abw
@@ -3003,7 +2982,7 @@ _ZNK6embree4sse217Occluded1KEpilogMILi4ELi4ELb1EEclINS0_24RoundLineIntersectorHi
 bb.ah:                                            ; preds = %_ZNK6embree4sse217Occluded1KEpilogMILi4ELi4ELb1EEclINS0_24RoundLineIntersectorHitMILi4EEEEEbRKNS_11vboolf_implILi4EEERT_.exit48.i
   %i.acb = fcmp une <4 x float> %i.uv, %i.ov
   %i.acc = fcmp une <4 x float> %i.uv, %i.qs
-  %.not1578 = and <4 x i1> %i.acb, %i.acc         ; 5 uses
+  %.not1578 = and <4 x i1> %i.acb, %i.acc         ; 4 uses
   %i.acd = fcmp une <4 x float> %i.uv, %.sroa.0375.0
   %i.ace = fcmp une <4 x float> %i.uv, %.sroa.0372.0
   %.not1571 = and <4 x i1> %i.acd, %i.ace         ; 4 uses
@@ -3067,12 +3046,9 @@ bb.ah:                                            ; preds = %_ZNK6embree4sse217O
   %i.aee = fmul <4 x float> %i.xn, %i.ack
   %i.aef = call noundef <4 x float> @llvm.x86.sse.min.ps(<4 x float> %i.aee, <4 x float> splat (float 1.000000e+00))
   %i.aeg = call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> %i.aef, <4 x float> zeroinitializer)
-  %20 = bitcast <4 x float> %i.aeg to <4 x i32>
-  %21 = select <4 x i1> %.not1578, <4 x i32> zeroinitializer, <4 x i32> %20
-  %22 = select <4 x i1> %.not1578, <4 x i1> %.not1571, <4 x i1> zeroinitializer
-  %23 = select <4 x i1> %22, <4 x i32> splat (i32 1065353216), <4 x i32> zeroinitializer
-  %24 = or <4 x i32> %21, %23
-  store <4 x i32> %24, ptr %11, align 16
+  %16 = select <4 x i1> %.not1571, <4 x float> splat (float 1.000000e+00), <4 x float> zeroinitializer
+  %17 = select <4 x i1> %.not1578, <4 x float> %16, <4 x float> %i.aeg
+  store <4 x float> %17, ptr %11, align 16
   store <4 x float> zeroinitializer, ptr %i.xs, align 16
   store <4 x float> %i.vi, ptr %i.xt, align 16
   store <4 x float> %.v1573, ptr %i.xu, align 16
@@ -3257,7 +3233,7 @@ _ZN6embree4sse224runOcclusionFilterHelperILi4EEENS_6vtypesIXT_EE5vboolEP27RTCFil
   br i1 %.not1583, label %.thread1544, label %bb.at
 
 .thread1544:                                      ; preds = %_ZN6embree4sse224runOcclusionFilterHelperILi4EEENS_6vtypesIXT_EE5vboolEP27RTCFilterFunctionNArgumentsPKNS_8GeometryEPNS_15RayQueryContextE.exit.i.i
-  store float %19, ptr %i.uz, align 4
+  store float %15, ptr %i.uz, align 4
   %i.ahx = call noundef i64 asm "btc $1,$0", "=r,r,0,~{flags},~{dirflag},~{fpsr},~{flags}"(i64 %i.aew, i64 %.025.i.i) #11, !srcloc !15
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #10
   br label %bb.ai

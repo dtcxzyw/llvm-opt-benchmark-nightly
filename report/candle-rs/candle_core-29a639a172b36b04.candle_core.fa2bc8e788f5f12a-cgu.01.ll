@@ -205,7 +205,7 @@ vector.ph339:                                     ; preds = %vector.main.loop.it
   %n.vec340 = and i64 %i.bg, -16                  ; 4 uses
   br label %vector.body341
 
-vector.body341:                                   ; preds = %vector.body341, %vector.ph339
+vector.body341:                                   ; preds = %vector.ph339, %vector.body341
   %index342 = phi i64 [ 0, %vector.ph339 ], [ %index.next345, %vector.body341 ] ; 2 uses
   %i.bk = add i64 %index342, %.val.i.i            ; 2 uses
   %i.bl = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i, i64 %i.bk ; 2 uses
@@ -521,7 +521,7 @@ vector.ph309:                                     ; preds = %vector.main.loop.it
   %n.vec310 = and i64 %i.ew, -16                  ; 4 uses
   br label %vector.body311
 
-vector.body311:                                   ; preds = %vector.body311, %vector.ph309
+vector.body311:                                   ; preds = %vector.ph309, %vector.body311
   %index312 = phi i64 [ 0, %vector.ph309 ], [ %index.next315, %vector.body311 ] ; 2 uses
   %i.ez = add i64 %index312, %.val.i.i63          ; 2 uses
   %i.fa = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i67, i64 %i.ez ; 2 uses
@@ -924,7 +924,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.lv, -16                     ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ly = add i64 %index, %.val.i.i108            ; 2 uses
   %i.lz = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i112, i64 %i.ly ; 2 uses
@@ -1327,7 +1327,7 @@ vector.ph376:                                     ; preds = %vector.main.loop.it
   %n.vec377 = and i64 %i.bg, -16                  ; 4 uses
   br label %vector.body378
 
-vector.body378:                                   ; preds = %vector.body378, %vector.ph376
+vector.body378:                                   ; preds = %vector.ph376, %vector.body378
   %index379 = phi i64 [ 0, %vector.ph376 ], [ %index.next386, %vector.body378 ] ; 2 uses
   %i.bk = add i64 %index379, %.val.i.i            ; 2 uses
   %i.bl = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i, i64 %i.bk ; 2 uses
@@ -1707,7 +1707,7 @@ vector.ph340:                                     ; preds = %vector.main.loop.it
   %n.vec341 = and i64 %i.fd, -16                  ; 4 uses
   br label %vector.body342
 
-vector.body342:                                   ; preds = %vector.body342, %vector.ph340
+vector.body342:                                   ; preds = %vector.ph340, %vector.body342
   %index343 = phi i64 [ 0, %vector.ph340 ], [ %index.next350, %vector.body342 ] ; 2 uses
   %i.fg = add i64 %index343, %.val.i.i64          ; 2 uses
   %i.fh = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i68, i64 %i.fg ; 2 uses
@@ -2110,7 +2110,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.mj, -16                     ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.mm = add i64 %index, %.val.i.i119            ; 2 uses
   %i.mn = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i123, i64 %i.mm ; 2 uses
@@ -2513,7 +2513,7 @@ vector.ph339:                                     ; preds = %vector.main.loop.it
   %n.vec340 = and i64 %i.bg, -16                  ; 4 uses
   br label %vector.body341
 
-vector.body341:                                   ; preds = %vector.body341, %vector.ph339
+vector.body341:                                   ; preds = %vector.ph339, %vector.body341
   %index342 = phi i64 [ 0, %vector.ph339 ], [ %index.next345, %vector.body341 ] ; 2 uses
   %i.bk = add i64 %index342, %.val.i.i            ; 2 uses
   %i.bl = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i, i64 %i.bk ; 2 uses
@@ -2829,7 +2829,7 @@ vector.ph309:                                     ; preds = %vector.main.loop.it
   %n.vec310 = and i64 %i.ew, -16                  ; 4 uses
   br label %vector.body311
 
-vector.body311:                                   ; preds = %vector.body311, %vector.ph309
+vector.body311:                                   ; preds = %vector.ph309, %vector.body311
   %index312 = phi i64 [ 0, %vector.ph309 ], [ %index.next315, %vector.body311 ] ; 2 uses
   %i.ez = add i64 %index312, %.val.i.i63          ; 2 uses
   %i.fa = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i67, i64 %i.ez ; 2 uses
@@ -3232,7 +3232,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.lv, -16                     ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ly = add i64 %index, %.val.i.i108            ; 2 uses
   %i.lz = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i112, i64 %i.ly ; 2 uses
@@ -3635,7 +3635,7 @@ vector.ph376:                                     ; preds = %vector.main.loop.it
   %n.vec377 = and i64 %i.bg, -16                  ; 4 uses
   br label %vector.body378
 
-vector.body378:                                   ; preds = %vector.body378, %vector.ph376
+vector.body378:                                   ; preds = %vector.ph376, %vector.body378
   %index379 = phi i64 [ 0, %vector.ph376 ], [ %index.next386, %vector.body378 ] ; 2 uses
   %i.bk = add i64 %index379, %.val.i.i            ; 2 uses
   %i.bl = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i, i64 %i.bk ; 2 uses
@@ -4015,7 +4015,7 @@ vector.ph340:                                     ; preds = %vector.main.loop.it
   %n.vec341 = and i64 %i.fd, -16                  ; 4 uses
   br label %vector.body342
 
-vector.body342:                                   ; preds = %vector.body342, %vector.ph340
+vector.body342:                                   ; preds = %vector.ph340, %vector.body342
   %index343 = phi i64 [ 0, %vector.ph340 ], [ %index.next350, %vector.body342 ] ; 2 uses
   %i.fg = add i64 %index343, %.val.i.i64          ; 2 uses
   %i.fh = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i68, i64 %i.fg ; 2 uses
@@ -4418,7 +4418,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.mj, -16                     ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.mm = add i64 %index, %.val.i.i119            ; 2 uses
   %i.mn = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i123, i64 %i.mm ; 2 uses
@@ -4821,7 +4821,6 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.jn = select <8 x i1> %i.jj, <8 x i1> splat (i1 true), <8 x i1> %i.jl ; 2 uses
   %i.jo = xor <8 x i1> %i.jn, splat (i1 true)
   %i.jp = select <8 x i1> %i.jn, <8 x i1> splat (i1 true), <8 x i1> %i.jm
-  %7 = xor <8 x i1> %i.jp, splat (i1 true)
   %i.jq = icmp ule <8 x i16> %wide.load, %wide.load414
   %i.jr = select <8 x i1> %i.jo, <8 x i1> %i.jm, <8 x i1> zeroinitializer
   %i.js = or <8 x i16> %wide.load414, %i.jf
@@ -4832,9 +4831,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.jx = xor <8 x i1> %i.jw, splat (i1 true)
   %i.jy = select <8 x i1> %i.ju, <8 x i1> %i.jx, <8 x i1> zeroinitializer
   %i.jz = select <8 x i1> %i.jr, <8 x i1> %i.jt, <8 x i1> zeroinitializer
-  %i.ka = select <8 x i1> %7, <8 x i1> %i.jq, <8 x i1> zeroinitializer
-  %8 = or <8 x i1> %i.ka, %i.jz
-  %i.kb = or <8 x i1> %8, %i.jy
+  %i.ka = select <8 x i1> %i.jp, <8 x i1> %i.jz, <8 x i1> %i.jq
+  %i.kb = or <8 x i1> %i.ka, %i.jy
   %i.kc = or <8 x i1> %i.kb, %i.jj
   %predphi = select <8 x i1> %i.kc, <8 x i16> %wide.load, <8 x i16> %wide.load414
   store <8 x i16> %predphi, ptr %i.je, align 2, !noalias !7340
@@ -4977,7 +4975,7 @@ vector.ph422:                                     ; preds = %vector.main.loop.it
   %n.vec423 = and i64 %i.lk, -16                  ; 4 uses
   br label %vector.body424
 
-vector.body424:                                   ; preds = %vector.body424, %vector.ph422
+vector.body424:                                   ; preds = %vector.ph422, %vector.body424
   %index425 = phi i64 [ 0, %vector.ph422 ], [ %index.next428, %vector.body424 ] ; 2 uses
   %i.lp = add i64 %index425, %.val.i.i62          ; 2 uses
   %i.lq = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i66, i64 %i.lp ; 2 uses
@@ -5099,7 +5097,7 @@ vector.ph477:                                     ; preds = %vector.main.loop.it
   %broadcast.splat480 = shufflevector <8 x i16> %broadcast.splatinsert479, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
   br label %vector.body481
 
-vector.body481:                                   ; preds = %vector.body481, %vector.ph477
+vector.body481:                                   ; preds = %vector.ph477, %vector.body481
   %index482 = phi i64 [ 0, %vector.ph477 ], [ %index.next485, %vector.body481 ] ; 2 uses
   %i.ms = add i64 %index482, %.val.i.i62          ; 2 uses
   %i.mt = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i66, i64 %i.ms ; 2 uses
@@ -5211,7 +5209,7 @@ vector.ph443:                                     ; preds = %vector.main.loop.it
   %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer ; 6 uses
   br label %vector.body445
 
-vector.body445:                                   ; preds = %vector.body445, %vector.ph443
+vector.body445:                                   ; preds = %vector.ph443, %vector.body445
   %index446 = phi i64 [ 0, %vector.ph443 ], [ %index.next451, %vector.body445 ] ; 2 uses
   %i.oi = add i64 %index446, %.val.i.i62          ; 2 uses
   %i.oj = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i66, i64 %i.oi ; 2 uses
@@ -5614,7 +5612,7 @@ vector.ph418:                                     ; preds = %vector.main.loop.it
   %n.vec419 = and i64 %i.lo, -16                  ; 4 uses
   br label %vector.body420
 
-vector.body420:                                   ; preds = %vector.body420, %vector.ph418
+vector.body420:                                   ; preds = %vector.ph418, %vector.body420
   %index421 = phi i64 [ 0, %vector.ph418 ], [ %index.next424, %vector.body420 ] ; 2 uses
   %i.lt = add i64 %index421, %.val.i.i62          ; 2 uses
   %i.lu = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i66, i64 %i.lt ; 2 uses
@@ -5736,7 +5734,7 @@ vector.ph477:                                     ; preds = %vector.main.loop.it
   %broadcast.splat480 = shufflevector <8 x i16> %broadcast.splatinsert479, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
   br label %vector.body481
 
-vector.body481:                                   ; preds = %vector.body481, %vector.ph477
+vector.body481:                                   ; preds = %vector.ph477, %vector.body481
   %index482 = phi i64 [ 0, %vector.ph477 ], [ %index.next485, %vector.body481 ] ; 2 uses
   %i.mw = add i64 %index482, %.val.i.i62          ; 2 uses
   %i.mx = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i66, i64 %i.mw ; 2 uses
@@ -5850,7 +5848,7 @@ vector.ph439:                                     ; preds = %vector.main.loop.it
   %broadcast.splat442 = shufflevector <8 x i16> %broadcast.splatinsert441, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
   br label %vector.body443
 
-vector.body443:                                   ; preds = %vector.body443, %vector.ph439
+vector.body443:                                   ; preds = %vector.ph439, %vector.body443
   %index444 = phi i64 [ 0, %vector.ph439 ], [ %index.next449, %vector.body443 ] ; 2 uses
   %i.ok = add i64 %index444, %.val.i.i62          ; 2 uses
   %i.ol = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i66, i64 %i.ok ; 2 uses
@@ -6253,7 +6251,6 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.jn = select <8 x i1> %i.jj, <8 x i1> splat (i1 true), <8 x i1> %i.jl ; 2 uses
   %i.jo = xor <8 x i1> %i.jn, splat (i1 true)
   %i.jp = select <8 x i1> %i.jn, <8 x i1> splat (i1 true), <8 x i1> %i.jm
-  %7 = xor <8 x i1> %i.jp, splat (i1 true)
   %i.jq = icmp ule <8 x i16> %wide.load, %wide.load414
   %i.jr = select <8 x i1> %i.jo, <8 x i1> %i.jm, <8 x i1> zeroinitializer
   %i.js = or <8 x i16> %wide.load414, %i.jf
@@ -6264,9 +6261,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.jx = xor <8 x i1> %i.jw, splat (i1 true)
   %i.jy = select <8 x i1> %i.ju, <8 x i1> %i.jx, <8 x i1> zeroinitializer
   %i.jz = select <8 x i1> %i.jr, <8 x i1> %i.jt, <8 x i1> zeroinitializer
-  %i.ka = select <8 x i1> %7, <8 x i1> %i.jq, <8 x i1> zeroinitializer
-  %8 = or <8 x i1> %i.ka, %i.jz
-  %i.kb = or <8 x i1> %8, %i.jy
+  %i.ka = select <8 x i1> %i.jp, <8 x i1> %i.jz, <8 x i1> %i.jq
+  %i.kb = or <8 x i1> %i.ka, %i.jy
   %i.kc = or <8 x i1> %i.kb, %i.jj
   %predphi = select <8 x i1> %i.kc, <8 x i16> %wide.load, <8 x i16> %wide.load414
   store <8 x i16> %predphi, ptr %i.je, align 2, !noalias !7670
@@ -6409,7 +6405,7 @@ vector.ph422:                                     ; preds = %vector.main.loop.it
   %n.vec423 = and i64 %i.lk, -16                  ; 4 uses
   br label %vector.body424
 
-vector.body424:                                   ; preds = %vector.body424, %vector.ph422
+vector.body424:                                   ; preds = %vector.ph422, %vector.body424
   %index425 = phi i64 [ 0, %vector.ph422 ], [ %index.next428, %vector.body424 ] ; 2 uses
   %i.lp = add i64 %index425, %.val.i.i62          ; 2 uses
   %i.lq = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i66, i64 %i.lp ; 2 uses
@@ -6531,7 +6527,7 @@ vector.ph477:                                     ; preds = %vector.main.loop.it
   %broadcast.splat480 = shufflevector <8 x i16> %broadcast.splatinsert479, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
   br label %vector.body481
 
-vector.body481:                                   ; preds = %vector.body481, %vector.ph477
+vector.body481:                                   ; preds = %vector.ph477, %vector.body481
   %index482 = phi i64 [ 0, %vector.ph477 ], [ %index.next485, %vector.body481 ] ; 2 uses
   %i.ms = add i64 %index482, %.val.i.i62          ; 2 uses
   %i.mt = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i66, i64 %i.ms ; 2 uses
@@ -6643,7 +6639,7 @@ vector.ph443:                                     ; preds = %vector.main.loop.it
   %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer ; 6 uses
   br label %vector.body445
 
-vector.body445:                                   ; preds = %vector.body445, %vector.ph443
+vector.body445:                                   ; preds = %vector.ph443, %vector.body445
   %index446 = phi i64 [ 0, %vector.ph443 ], [ %index.next451, %vector.body445 ] ; 2 uses
   %i.oi = add i64 %index446, %.val.i.i62          ; 2 uses
   %i.oj = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i66, i64 %i.oi ; 2 uses
@@ -7046,7 +7042,7 @@ vector.ph418:                                     ; preds = %vector.main.loop.it
   %n.vec419 = and i64 %i.lo, -16                  ; 4 uses
   br label %vector.body420
 
-vector.body420:                                   ; preds = %vector.body420, %vector.ph418
+vector.body420:                                   ; preds = %vector.ph418, %vector.body420
   %index421 = phi i64 [ 0, %vector.ph418 ], [ %index.next424, %vector.body420 ] ; 2 uses
   %i.lt = add i64 %index421, %.val.i.i62          ; 2 uses
   %i.lu = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i66, i64 %i.lt ; 2 uses
@@ -7168,7 +7164,7 @@ vector.ph477:                                     ; preds = %vector.main.loop.it
   %broadcast.splat480 = shufflevector <8 x i16> %broadcast.splatinsert479, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
   br label %vector.body481
 
-vector.body481:                                   ; preds = %vector.body481, %vector.ph477
+vector.body481:                                   ; preds = %vector.ph477, %vector.body481
   %index482 = phi i64 [ 0, %vector.ph477 ], [ %index.next485, %vector.body481 ] ; 2 uses
   %i.mw = add i64 %index482, %.val.i.i62          ; 2 uses
   %i.mx = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i66, i64 %i.mw ; 2 uses
@@ -7282,7 +7278,7 @@ vector.ph439:                                     ; preds = %vector.main.loop.it
   %broadcast.splat442 = shufflevector <8 x i16> %broadcast.splatinsert441, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
   br label %vector.body443
 
-vector.body443:                                   ; preds = %vector.body443, %vector.ph439
+vector.body443:                                   ; preds = %vector.ph439, %vector.body443
   %index444 = phi i64 [ 0, %vector.ph439 ], [ %index.next449, %vector.body443 ] ; 2 uses
   %i.ok = add i64 %index444, %.val.i.i62          ; 2 uses
   %i.ol = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i66, i64 %i.ok ; 2 uses
@@ -7685,7 +7681,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.is, -32                     ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.iz = add i64 %index, %.val.i.i               ; 2 uses
   %i.ja = add i64 %i.iz, %i.it                    ; 2 uses
@@ -7739,7 +7735,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n381 = icmp eq i64 %i.is, %n.vec376
   br i1 %cmp.n381, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op3AddNtB7_9BinaryOpT6u8_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTRShB1N_QB1O_EE8call_mutB9_.exit, label %vec.epilog.scalar.ph.preheader
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.012.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec376, %vec.epilog.middle.block ] ; 4 uses
   %i.jr = sub i64 %.val6.i.i, %.val.i.i
   %i.js = xor i64 %.sroa.0.012.i.i.ph, -1
@@ -7870,7 +7866,7 @@ vector.ph389:                                     ; preds = %vector.main.loop.it
   %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
   br label %vector.body391
 
-vector.body391:                                   ; preds = %vector.body391, %vector.ph389
+vector.body391:                                   ; preds = %vector.ph389, %vector.body391
   %index392 = phi i64 [ 0, %vector.ph389 ], [ %index.next395, %vector.body391 ] ; 2 uses
   %i.ln = add i64 %index392, %.val.i.i62          ; 2 uses
   %i.lo = getelementptr inbounds nuw i8, ptr %.val.i.i.i66, i64 %i.ln ; 2 uses
@@ -8273,7 +8269,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.jt = add i64 %index, %.val.i.i63             ; 2 uses
   %i.ju = getelementptr inbounds nuw i8, ptr %.val.i.i.i67, i64 %i.jt
@@ -8676,7 +8672,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.is, -32                     ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.iz = add i64 %index, %.val.i.i               ; 2 uses
   %i.ja = add i64 %i.iz, %i.it                    ; 2 uses
@@ -8730,7 +8726,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n381 = icmp eq i64 %i.is, %n.vec376
   br i1 %cmp.n381, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op3MulNtB7_9BinaryOpT6u8_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTRShB1N_QB1O_EE8call_mutB9_.exit, label %vec.epilog.scalar.ph.preheader
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.012.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec376, %vec.epilog.middle.block ] ; 4 uses
   %i.jr = sub i64 %.val6.i.i, %.val.i.i
   %i.js = xor i64 %.sroa.0.012.i.i.ph, -1
@@ -8861,7 +8857,7 @@ vector.ph389:                                     ; preds = %vector.main.loop.it
   %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
   br label %vector.body391
 
-vector.body391:                                   ; preds = %vector.body391, %vector.ph389
+vector.body391:                                   ; preds = %vector.ph389, %vector.body391
   %index392 = phi i64 [ 0, %vector.ph389 ], [ %index.next395, %vector.body391 ] ; 2 uses
   %i.ln = add i64 %index392, %.val.i.i62          ; 2 uses
   %i.lo = getelementptr inbounds nuw i8, ptr %.val.i.i.i66, i64 %i.ln ; 2 uses
@@ -9264,7 +9260,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.is, -32                     ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.iz = add i64 %index, %.val.i.i               ; 2 uses
   %i.ja = add i64 %i.iz, %i.it                    ; 2 uses
@@ -9318,7 +9314,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n381 = icmp eq i64 %i.is, %n.vec376
   br i1 %cmp.n381, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op3SubNtB7_9BinaryOpT6u8_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTRShB1N_QB1O_EE8call_mutB9_.exit, label %vec.epilog.scalar.ph.preheader
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.012.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec376, %vec.epilog.middle.block ] ; 4 uses
   %i.jr = sub i64 %.val6.i.i, %.val.i.i
   %i.js = xor i64 %.sroa.0.012.i.i.ph, -1
@@ -9449,7 +9445,7 @@ vector.ph389:                                     ; preds = %vector.main.loop.it
   %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
   br label %vector.body391
 
-vector.body391:                                   ; preds = %vector.body391, %vector.ph389
+vector.body391:                                   ; preds = %vector.ph389, %vector.body391
   %index392 = phi i64 [ 0, %vector.ph389 ], [ %index.next395, %vector.body391 ] ; 2 uses
   %i.ln = add i64 %index392, %.val.i.i62          ; 2 uses
   %i.lo = getelementptr inbounds nuw i8, ptr %.val.i.i.i66, i64 %i.ln ; 2 uses
@@ -9852,7 +9848,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.is, -32                     ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.iz = add i64 %index, %.val.i.i               ; 2 uses
   %i.ja = add i64 %i.iz, %i.it                    ; 2 uses
@@ -9906,7 +9902,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n383 = icmp eq i64 %i.is, %n.vec378
   br i1 %cmp.n383, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MaximumNtB7_9BinaryOpT6u8_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTRShB1R_QB1S_EE8call_mutB9_.exit, label %vec.epilog.scalar.ph.preheader
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.012.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec378, %vec.epilog.middle.block ] ; 4 uses
   %i.jr = sub i64 %.val6.i.i, %.val.i.i
   %i.js = xor i64 %.sroa.0.012.i.i.ph, -1
@@ -10037,7 +10033,7 @@ vector.ph391:                                     ; preds = %vector.main.loop.it
   %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
   br label %vector.body393
 
-vector.body393:                                   ; preds = %vector.body393, %vector.ph391
+vector.body393:                                   ; preds = %vector.ph391, %vector.body393
   %index394 = phi i64 [ 0, %vector.ph391 ], [ %index.next397, %vector.body393 ] ; 2 uses
   %i.lk = add i64 %index394, %.val.i.i62          ; 2 uses
   %i.ll = getelementptr inbounds nuw i8, ptr %.val.i.i.i66, i64 %i.lk ; 2 uses
@@ -10440,7 +10436,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.is, -32                     ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.iz = add i64 %index, %.val.i.i               ; 2 uses
   %i.ja = add i64 %i.iz, %i.it                    ; 2 uses
@@ -10494,7 +10490,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n383 = icmp eq i64 %i.is, %n.vec378
   br i1 %cmp.n383, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MinimumNtB7_9BinaryOpT6u8_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTRShB1R_QB1S_EE8call_mutB9_.exit, label %vec.epilog.scalar.ph.preheader
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.012.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec378, %vec.epilog.middle.block ] ; 4 uses
   %i.jr = sub i64 %.val6.i.i, %.val.i.i
   %i.js = xor i64 %.sroa.0.012.i.i.ph, -1
@@ -10625,7 +10621,7 @@ vector.ph391:                                     ; preds = %vector.main.loop.it
   %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
   br label %vector.body393
 
-vector.body393:                                   ; preds = %vector.body393, %vector.ph391
+vector.body393:                                   ; preds = %vector.ph391, %vector.body393
   %index394 = phi i64 [ 0, %vector.ph391 ], [ %index.next397, %vector.body393 ] ; 2 uses
   %i.lk = add i64 %index394, %.val.i.i62          ; 2 uses
   %i.ll = getelementptr inbounds nuw i8, ptr %.val.i.i.i66, i64 %i.lk ; 2 uses
@@ -11028,7 +11024,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.it, -16                     ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.jb = add i64 %index, %.val.i.i               ; 2 uses
   %i.jc = add i64 %i.jb, %i.iu                    ; 2 uses
@@ -11082,7 +11078,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n381 = icmp eq i64 %i.it, %n.vec376
   br i1 %cmp.n381, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op3AddNtB7_9BinaryOpT7i16_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTRSsB1O_QB1P_EE8call_mutB9_.exit, label %vec.epilog.scalar.ph.preheader
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.012.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec376, %vec.epilog.middle.block ] ; 4 uses
   %i.jt = sub i64 %.val6.i.i, %.val.i.i
   %i.ju = xor i64 %.sroa.0.012.i.i.ph, -1
@@ -11213,7 +11209,7 @@ vector.ph389:                                     ; preds = %vector.main.loop.it
   %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
   br label %vector.body391
 
-vector.body391:                                   ; preds = %vector.body391, %vector.ph389
+vector.body391:                                   ; preds = %vector.ph389, %vector.body391
   %index392 = phi i64 [ 0, %vector.ph389 ], [ %index.next395, %vector.body391 ] ; 2 uses
   %i.lp = add i64 %index392, %.val.i.i62          ; 2 uses
   %i.lq = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i66, i64 %i.lp ; 2 uses
@@ -11616,7 +11612,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.it, -16                     ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.jb = add i64 %index, %.val.i.i               ; 2 uses
   %i.jc = add i64 %i.jb, %i.iu                    ; 2 uses
@@ -11670,7 +11666,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n381 = icmp eq i64 %i.it, %n.vec376
   br i1 %cmp.n381, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op3MulNtB7_9BinaryOpT7i16_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTRSsB1O_QB1P_EE8call_mutB9_.exit, label %vec.epilog.scalar.ph.preheader
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.012.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec376, %vec.epilog.middle.block ] ; 4 uses
   %i.jt = sub i64 %.val6.i.i, %.val.i.i
   %i.ju = xor i64 %.sroa.0.012.i.i.ph, -1
@@ -11801,7 +11797,7 @@ vector.ph389:                                     ; preds = %vector.main.loop.it
   %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
   br label %vector.body391
 
-vector.body391:                                   ; preds = %vector.body391, %vector.ph389
+vector.body391:                                   ; preds = %vector.ph389, %vector.body391
   %index392 = phi i64 [ 0, %vector.ph389 ], [ %index.next395, %vector.body391 ] ; 2 uses
   %i.lp = add i64 %index392, %.val.i.i62          ; 2 uses
   %i.lq = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i66, i64 %i.lp ; 2 uses
@@ -12204,7 +12200,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.it, -16                     ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.jb = add i64 %index, %.val.i.i               ; 2 uses
   %i.jc = add i64 %i.jb, %i.iu                    ; 2 uses
@@ -12258,7 +12254,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n381 = icmp eq i64 %i.it, %n.vec376
   br i1 %cmp.n381, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op3SubNtB7_9BinaryOpT7i16_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTRSsB1O_QB1P_EE8call_mutB9_.exit, label %vec.epilog.scalar.ph.preheader
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.012.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec376, %vec.epilog.middle.block ] ; 4 uses
   %i.jt = sub i64 %.val6.i.i, %.val.i.i
   %i.ju = xor i64 %.sroa.0.012.i.i.ph, -1
@@ -12389,7 +12385,7 @@ vector.ph389:                                     ; preds = %vector.main.loop.it
   %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
   br label %vector.body391
 
-vector.body391:                                   ; preds = %vector.body391, %vector.ph389
+vector.body391:                                   ; preds = %vector.ph389, %vector.body391
   %index392 = phi i64 [ 0, %vector.ph389 ], [ %index.next395, %vector.body391 ] ; 2 uses
   %i.lp = add i64 %index392, %.val.i.i62          ; 2 uses
   %i.lq = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i66, i64 %i.lp ; 2 uses
@@ -12792,7 +12788,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.it, -16                     ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.jb = add i64 %index, %.val.i.i               ; 2 uses
   %i.jc = add i64 %i.jb, %i.iu                    ; 2 uses
@@ -12846,7 +12842,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n383 = icmp eq i64 %i.it, %n.vec378
   br i1 %cmp.n383, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MaximumNtB7_9BinaryOpT7i16_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTRSsB1S_QB1T_EE8call_mutB9_.exit, label %vec.epilog.scalar.ph.preheader
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.012.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec378, %vec.epilog.middle.block ] ; 4 uses
   %i.jt = sub i64 %.val6.i.i, %.val.i.i
   %i.ju = xor i64 %.sroa.0.012.i.i.ph, -1
@@ -12977,7 +12973,7 @@ vector.ph391:                                     ; preds = %vector.main.loop.it
   %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
   br label %vector.body393
 
-vector.body393:                                   ; preds = %vector.body393, %vector.ph391
+vector.body393:                                   ; preds = %vector.ph391, %vector.body393
   %index394 = phi i64 [ 0, %vector.ph391 ], [ %index.next397, %vector.body393 ] ; 2 uses
   %i.lm = add i64 %index394, %.val.i.i62          ; 2 uses
   %i.ln = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i66, i64 %i.lm ; 2 uses
@@ -13380,7 +13376,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.it, -16                     ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.jb = add i64 %index, %.val.i.i               ; 2 uses
   %i.jc = add i64 %i.jb, %i.iu                    ; 2 uses
@@ -13434,7 +13430,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n383 = icmp eq i64 %i.it, %n.vec378
   br i1 %cmp.n383, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MinimumNtB7_9BinaryOpT7i16_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTRSsB1S_QB1T_EE8call_mutB9_.exit, label %vec.epilog.scalar.ph.preheader
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.012.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec378, %vec.epilog.middle.block ] ; 4 uses
   %i.jt = sub i64 %.val6.i.i, %.val.i.i
   %i.ju = xor i64 %.sroa.0.012.i.i.ph, -1
@@ -13565,7 +13561,7 @@ vector.ph391:                                     ; preds = %vector.main.loop.it
   %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
   br label %vector.body393
 
-vector.body393:                                   ; preds = %vector.body393, %vector.ph391
+vector.body393:                                   ; preds = %vector.ph391, %vector.body393
   %index394 = phi i64 [ 0, %vector.ph391 ], [ %index.next397, %vector.body393 ] ; 2 uses
   %i.lm = add i64 %index394, %.val.i.i62          ; 2 uses
   %i.ln = getelementptr inbounds nuw [2 x i8], ptr %.val.i.i.i66, i64 %i.lm ; 2 uses

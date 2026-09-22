@@ -205,7 +205,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   br i1 %cmp.n241, label %._crit_edge.split, label %vec.epilog.scalar.ph.preheader
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck172, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck172, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.0123.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck172 ], [ %n.vec220, %vec.epilog.iter.check ], [ %n.vec234, %vec.epilog.middle.block ] ; 8 uses
   br i1 %lcmp.mod291.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
@@ -608,12 +608,9 @@ bb.e:                                             ; preds = %bb.e, %.epil.prehea
   %i.df = fadd <4 x float> %i.da, splat (float -2.900000e-01)
   %i.dg = fcmp olt <4 x float> %i.da, splat (float -2.900000e-01)
   %i.dh = fadd <4 x float> %i.da, splat (float 2.900000e-01)
-  %10 = bitcast <4 x float> %i.dh to <4 x i32>
-  %11 = bitcast <4 x float> %i.df to <4 x i32>
-  %12 = select <4 x i1> %i.de, <4 x i32> zeroinitializer, <4 x i32> %11
-  %13 = select <4 x i1> %i.dg, <4 x i32> %10, <4 x i32> zeroinitializer
-  %14 = or <4 x i32> %12, %13
-  store <4 x i32> %14, ptr %i.cz, align 16, !tbaa !79
+  %10 = select <4 x i1> %i.dg, <4 x float> %i.dh, <4 x float> zeroinitializer
+  %11 = select <4 x i1> %i.de, <4 x float> %10, <4 x float> %i.df
+  store <4 x float> %11, ptr %i.cz, align 16, !tbaa !79
   store <4 x float> %i.dd, ptr %i.db, align 16, !tbaa !79
   %i.di = add nuw nsw i64 %.0117159, 4            ; 2 uses
   %i.dj = icmp samesign ult i64 %i.di, %i.b
@@ -1016,22 +1013,16 @@ bb.g:                                             ; preds = %.lr.ph.us160, %bb.g
   %i.fd = fadd <4 x float> %i.ey, splat (float -1.500000e+00)
   %i.fe = fcmp olt <4 x float> %i.ey, splat (float -1.500000e+00)
   %i.ff = fadd <4 x float> %i.ey, splat (float 1.500000e+00)
-  %10 = bitcast <4 x float> %i.ff to <4 x i32>
-  %11 = bitcast <4 x float> %i.fd to <4 x i32>
-  %12 = select <4 x i1> %i.fc, <4 x i32> zeroinitializer, <4 x i32> %11
-  %13 = select <4 x i1> %i.fe, <4 x i32> %10, <4 x i32> zeroinitializer
-  %14 = or <4 x i32> %12, %13
+  %10 = select <4 x i1> %i.fe, <4 x float> %i.ff, <4 x float> zeroinitializer
+  %11 = select <4 x i1> %i.fc, <4 x float> %10, <4 x float> %i.fd
   %i.fg = fcmp ule <4 x float> %i.fb, splat (float 4.000000e-02)
   %i.fh = fadd <4 x float> %i.fb, splat (float -4.000000e-02)
   %i.fi = fcmp olt <4 x float> %i.fb, splat (float -4.000000e-02)
   %i.fj = fadd <4 x float> %i.fb, splat (float 4.000000e-02)
-  %15 = bitcast <4 x float> %i.fj to <4 x i32>
-  %16 = bitcast <4 x float> %i.fh to <4 x i32>
-  %17 = select <4 x i1> %i.fg, <4 x i32> zeroinitializer, <4 x i32> %16
-  %18 = select <4 x i1> %i.fi, <4 x i32> %15, <4 x i32> zeroinitializer
-  %19 = or <4 x i32> %17, %18
-  store <4 x i32> %14, ptr %i.ex, align 16, !tbaa !79
-  store <4 x i32> %19, ptr %i.ez, align 16, !tbaa !79
+  %12 = select <4 x i1> %i.fi, <4 x float> %i.fj, <4 x float> zeroinitializer
+  %13 = select <4 x i1> %i.fg, <4 x float> %12, <4 x float> %i.fh
+  store <4 x float> %11, ptr %i.ex, align 16, !tbaa !79
+  store <4 x float> %13, ptr %i.ez, align 16, !tbaa !79
   %i.fk = add nuw nsw i64 %.0118162, 4            ; 2 uses
   %i.fl = icmp samesign ult i64 %i.fk, %i.b
   br i1 %i.fl, label %.lr.ph, label %._crit_edge, !llvm.loop !814
@@ -1434,7 +1425,7 @@ bb.c:                                             ; preds = %.lr.ph113, %._crit_
   %i.au = tail call <4 x float> @llvm.fabs.v4f32(<4 x float> %i.al) ; 5 uses
   %i.av = fmul <4 x float> %i.au, splat (float 4.000000e-01) ; 4 uses
   %i.aw = fneg <4 x float> %i.av
-  %i.ax = fcmp ule <4 x float> %i.an, %i.aw       ; 2 uses
+  %i.ax = fcmp ule <4 x float> %i.an, %i.aw
   %i.ay = fadd <4 x float> %i.an, %i.av
   %i.az = fneg <4 x float> %i.au
   %i.ba = fcmp olt <4 x float> %i.an, %i.az
@@ -1442,22 +1433,18 @@ bb.c:                                             ; preds = %.lr.ph113, %._crit_
   %i.bc = fsub <4 x float> %i.bb, %i.au
   %i.bd = bitcast <4 x float> %i.bc to <4 x i32>
   %i.be = bitcast <4 x float> %i.ay to <4 x i32>
-  %i.bf = select <4 x i1> %i.ax, <4 x i32> zeroinitializer, <4 x i32> %i.be
-  %5 = select <4 x i1> %i.ax, <4 x i1> %i.ba, <4 x i1> zeroinitializer
-  %i.bg = select <4 x i1> %5, <4 x i32> %i.bd, <4 x i32> zeroinitializer
-  %6 = or <4 x i32> %i.bf, %i.bg
-  %i.bh = fcmp uge <4 x float> %i.an, %i.av       ; 2 uses
+  %i.bf = select <4 x i1> %i.ba, <4 x i32> %i.bd, <4 x i32> zeroinitializer
+  %i.bg = select <4 x i1> %i.ax, <4 x i32> %i.bf, <4 x i32> %i.be
+  %i.bh = fcmp uge <4 x float> %i.an, %i.av
   %i.bi = fsub <4 x float> %i.av, %i.an
   %i.bj = fcmp olt <4 x float> %i.au, %i.an
   %i.bk = fsub <4 x float> %i.an, %i.au
   %i.bl = bitcast <4 x float> %i.bk to <4 x i32>
   %i.bm = bitcast <4 x float> %i.bi to <4 x i32>
-  %i.bn = select <4 x i1> %i.bh, <4 x i32> zeroinitializer, <4 x i32> %i.bm
-  %7 = and <4 x i1> %i.bj, %i.bh
-  %i.bo = select <4 x i1> %7, <4 x i32> %i.bl, <4 x i32> zeroinitializer
-  %8 = or <4 x i32> %i.bn, %i.bo
+  %i.bn = select <4 x i1> %i.bj, <4 x i32> %i.bl, <4 x i32> zeroinitializer
+  %i.bo = select <4 x i1> %i.bh, <4 x i32> %i.bn, <4 x i32> %i.bm
   %i.bp = fcmp uge <4 x float> %i.al, zeroinitializer
-  %i.bq = select <4 x i1> %i.bp, <4 x i32> %8, <4 x i32> %6
+  %i.bq = select <4 x i1> %i.bp, <4 x i32> %i.bo, <4 x i32> %i.bg
   %i.br = bitcast <4 x i32> %i.bq to <4 x float>  ; 2 uses
   %i.bs = fmul <4 x float> %i.br, %i.br
   %i.bt = fmul <4 x float> %i.i, %i.bs

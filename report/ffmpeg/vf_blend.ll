@@ -204,7 +204,7 @@ bb.a:
 bb.b:                                             ; preds = %.preheader, %._crit_edge66
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %._crit_edge66 ] ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.04958, i64 %indvars.iv
-  %i.j = load i8, ptr %i.i, align 1, !tbaa !47    ; 5 uses
+  %i.j = load i8, ptr %i.i, align 1, !tbaa !47    ; 4 uses
   %i.k = uitofp i8 %i.j to float
   %i.l = icmp eq i8 %i.j, -1
   br i1 %i.l, label %._crit_edge66, label %bb.c
@@ -222,13 +222,10 @@ bb.c:                                             ; preds = %bb.b
   %i.t = udiv i16 %.lhs.trunc, %.rhs.trunc
   %.zext = zext nneg i16 %i.t to i32
   %i.u = icmp ugt i8 %i.j, -128
-  %10 = select i1 %i.u, i32 %.zext, i32 0
   %i.v = mul nuw nsw i32 %i.q, %i.p
   %i.w = udiv i32 %i.v, 255
-  %11 = icmp ult i8 %i.j, -127
-  %i.x = select i1 %11, i32 %i.w, i32 0
-  %12 = add nuw nsw i32 %i.x, %10
-  %spec.select = tail call i32 @llvm.umin.i32(i32 %12, i32 255)
+  %i.x = select i1 %i.u, i32 %.zext, i32 %i.w
+  %spec.select = tail call i32 @llvm.umin.i32(i32 %i.x, i32 255)
   %i.y = sub nsw i32 %spec.select, %i.m
   %i.z = sitofp nsz i32 %i.y to float
   br label %._crit_edge66
@@ -631,7 +628,7 @@ bb.a:
 bb.b:                                             ; preds = %.preheader, %._crit_edge66
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %._crit_edge66 ] ; 4 uses
   %i.i = getelementptr inbounds nuw [2 x i8], ptr %.04958, i64 %indvars.iv
-  %i.j = load i16, ptr %i.i, align 2, !tbaa !63   ; 5 uses
+  %i.j = load i16, ptr %i.i, align 2, !tbaa !63   ; 4 uses
   %i.k = uitofp i16 %i.j to float
   %i.l = icmp eq i16 %i.j, 511
   br i1 %i.l, label %._crit_edge66, label %bb.c
@@ -646,13 +643,10 @@ bb.c:                                             ; preds = %bb.b
   %i.s = sub nsw i32 1022, %i.r
   %i.t = sdiv i32 %i.q, %i.s
   %i.u = icmp ugt i16 %i.j, 256
-  %10 = select i1 %i.u, i32 %i.t, i32 0
   %i.v = mul nuw nsw i32 %i.r, %i.p
   %i.w = udiv i32 %i.v, 511
-  %11 = icmp ult i16 %i.j, 257
-  %i.x = select i1 %11, i32 %i.w, i32 0
-  %12 = add nsw i32 %i.x, %10
-  %spec.select = tail call i32 @llvm.smin.i32(i32 %12, i32 511)
+  %i.x = select i1 %i.u, i32 %i.t, i32 %i.w
+  %spec.select = tail call i32 @llvm.smin.i32(i32 %i.x, i32 511)
   %i.y = sub nsw i32 %spec.select, %i.m
   %i.z = sitofp nsz i32 %i.y to float
   br label %._crit_edge66
@@ -1055,7 +1049,7 @@ bb.a:
 bb.b:                                             ; preds = %.preheader, %._crit_edge66
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %._crit_edge66 ] ; 4 uses
   %i.i = getelementptr inbounds nuw [2 x i8], ptr %.04958, i64 %indvars.iv
-  %i.j = load i16, ptr %i.i, align 2, !tbaa !63   ; 5 uses
+  %i.j = load i16, ptr %i.i, align 2, !tbaa !63   ; 4 uses
   %i.k = uitofp i16 %i.j to float
   %i.l = icmp eq i16 %i.j, 1023
   br i1 %i.l, label %._crit_edge66, label %bb.c
@@ -1070,13 +1064,10 @@ bb.c:                                             ; preds = %bb.b
   %i.s = sub nsw i32 2046, %i.r
   %i.t = sdiv i32 %i.q, %i.s
   %i.u = icmp ugt i16 %i.j, 512
-  %10 = select i1 %i.u, i32 %i.t, i32 0
   %i.v = mul nuw nsw i32 %i.r, %i.p
   %i.w = udiv i32 %i.v, 1023
-  %11 = icmp ult i16 %i.j, 513
-  %i.x = select i1 %11, i32 %i.w, i32 0
-  %12 = add nsw i32 %i.x, %10
-  %spec.select = tail call i32 @llvm.smin.i32(i32 %12, i32 1023)
+  %i.x = select i1 %i.u, i32 %i.t, i32 %i.w
+  %spec.select = tail call i32 @llvm.smin.i32(i32 %i.x, i32 1023)
   %i.y = sub nsw i32 %spec.select, %i.m
   %i.z = sitofp nsz i32 %i.y to float
   br label %._crit_edge66
@@ -1479,7 +1470,7 @@ bb.a:
 bb.b:                                             ; preds = %.preheader, %._crit_edge66
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %._crit_edge66 ] ; 4 uses
   %i.i = getelementptr inbounds nuw [2 x i8], ptr %.04958, i64 %indvars.iv
-  %i.j = load i16, ptr %i.i, align 2, !tbaa !63   ; 5 uses
+  %i.j = load i16, ptr %i.i, align 2, !tbaa !63   ; 4 uses
   %i.k = uitofp i16 %i.j to float
   %i.l = icmp eq i16 %i.j, 4095
   br i1 %i.l, label %._crit_edge66, label %bb.c
@@ -1494,13 +1485,10 @@ bb.c:                                             ; preds = %bb.b
   %i.s = sub nsw i32 8190, %i.r
   %i.t = sdiv i32 %i.q, %i.s
   %i.u = icmp ugt i16 %i.j, 2048
-  %10 = select i1 %i.u, i32 %i.t, i32 0
   %i.v = mul nuw nsw i32 %i.r, %i.p
   %i.w = udiv i32 %i.v, 4095
-  %11 = icmp ult i16 %i.j, 2049
-  %i.x = select i1 %11, i32 %i.w, i32 0
-  %12 = add nsw i32 %i.x, %10
-  %spec.select = tail call i32 @llvm.smin.i32(i32 %12, i32 4095)
+  %i.x = select i1 %i.u, i32 %i.t, i32 %i.w
+  %spec.select = tail call i32 @llvm.smin.i32(i32 %i.x, i32 4095)
   %i.y = sub nsw i32 %spec.select, %i.m
   %i.z = sitofp nsz i32 %i.y to float
   br label %._crit_edge66
@@ -1903,7 +1891,7 @@ bb.a:
 bb.b:                                             ; preds = %.preheader, %._crit_edge66
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %._crit_edge66 ] ; 4 uses
   %i.i = getelementptr inbounds nuw [2 x i8], ptr %.04958, i64 %indvars.iv
-  %i.j = load i16, ptr %i.i, align 2, !tbaa !63   ; 5 uses
+  %i.j = load i16, ptr %i.i, align 2, !tbaa !63   ; 4 uses
   %i.k = uitofp i16 %i.j to float
   %i.l = icmp eq i16 %i.j, 16383
   br i1 %i.l, label %._crit_edge66, label %bb.c
@@ -1918,13 +1906,10 @@ bb.c:                                             ; preds = %bb.b
   %i.s = sub nsw i32 32766, %i.r
   %i.t = sdiv i32 %i.q, %i.s
   %i.u = icmp ugt i16 %i.j, 8192
-  %10 = select i1 %i.u, i32 %i.t, i32 0
   %i.v = mul nuw nsw i32 %i.r, %i.p
   %i.w = udiv i32 %i.v, 16383
-  %11 = icmp ult i16 %i.j, 8193
-  %i.x = select i1 %11, i32 %i.w, i32 0
-  %12 = add nsw i32 %i.x, %10
-  %spec.select = tail call i32 @llvm.smin.i32(i32 %12, i32 16383)
+  %i.x = select i1 %i.u, i32 %i.t, i32 %i.w
+  %spec.select = tail call i32 @llvm.smin.i32(i32 %i.x, i32 16383)
   %i.y = sub nsw i32 %spec.select, %i.m
   %i.z = sitofp nsz i32 %i.y to float
   br label %._crit_edge66
@@ -2327,7 +2312,7 @@ bb.a:
 bb.b:                                             ; preds = %.preheader, %._crit_edge66
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %._crit_edge66 ] ; 4 uses
   %i.i = getelementptr inbounds nuw [2 x i8], ptr %.04958, i64 %indvars.iv
-  %i.j = load i16, ptr %i.i, align 2, !tbaa !63   ; 5 uses
+  %i.j = load i16, ptr %i.i, align 2, !tbaa !63   ; 4 uses
   %i.k = uitofp i16 %i.j to float
   %i.l = icmp eq i16 %i.j, -1
   br i1 %i.l, label %._crit_edge66, label %bb.c
@@ -2342,13 +2327,10 @@ bb.c:                                             ; preds = %bb.b
   %i.s = sub nuw nsw i32 131070, %i.r
   %i.t = udiv i32 %i.q, %i.s
   %i.u = icmp ugt i16 %i.j, -32768
-  %10 = select i1 %i.u, i32 %i.t, i32 0
   %i.v = mul nuw nsw i32 %i.r, %i.p
   %i.w = udiv i32 %i.v, 65535
-  %11 = icmp ult i16 %i.j, -32767
-  %i.x = select i1 %11, i32 %i.w, i32 0
-  %12 = add nuw nsw i32 %i.x, %10
-  %spec.select = tail call i32 @llvm.umin.i32(i32 %12, i32 65535)
+  %i.x = select i1 %i.u, i32 %i.t, i32 %i.w
+  %spec.select = tail call i32 @llvm.umin.i32(i32 %i.x, i32 65535)
   %i.y = sub nsw i32 %spec.select, %i.m
   %i.z = sitofp nsz i32 %i.y to float
   br label %._crit_edge66

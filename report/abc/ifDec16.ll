@@ -205,17 +205,11 @@ If_CluSupport.exit.thread:                        ; preds = %If_CluSupport.exit.
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define internal fastcc i32 @If_CluGrp2Uns(ptr nofree noundef readonly captures(none) %0) unnamed_addr #14 {
 bb.a:
-  %1 = load <4 x i8>, ptr %0, align 1, !tbaa !71
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %3 = load <4 x i8>, ptr %2, align 1, !tbaa !71
-  %4 = and <4 x i8> %1, splat (i8 15)
-  %5 = zext nneg <4 x i8> %4 to <4 x i32>
-  %6 = shl nuw nsw <4 x i32> %5, <i32 0, i32 4, i32 8, i32 12>
-  %7 = and <4 x i8> %3, splat (i8 15)
-  %8 = zext nneg <4 x i8> %7 to <4 x i32>
-  %9 = shl nuw <4 x i32> %8, <i32 16, i32 20, i32 24, i32 28>
-  %rdx.op = or disjoint <4 x i32> %6, %9
-  %i.a = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %rdx.op)
+  %1 = load <8 x i8>, ptr %0, align 1, !tbaa !71
+  %2 = and <8 x i8> %1, splat (i8 15)
+  %3 = zext nneg <8 x i8> %2 to <8 x i32>
+  %4 = shl nuw <8 x i32> %3, <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28>
+  %i.a = tail call i32 @llvm.vector.reduce.or.v8i32(<8 x i32> %4)
   ret i32 %i.a
 }
 
@@ -618,7 +612,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %wide.trip.count, 224          ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <16 x i8> [ <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7, i8 8, i8 9, i8 10, i8 11, i8 12, i8 13, i8 14, i8 15>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
   %step.add = add <16 x i8> %vec.ind, splat (i8 16)
@@ -1020,6 +1014,9 @@ declare i32 @llvm.vector.reduce.add.v2i32(<2 x i32>) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #21
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.or.v8i32(<8 x i32>) #21
 
 attributes #0 = { nofree norecurse nosync nounwind memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
