@@ -204,9 +204,7 @@ bb.l:                                             ; preds = %bb.j
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.n
   %indvars.iv = phi i64 [ %indvars.iv.i, %.lr.ph.i.preheader ], [ %indvars.iv.next, %bb.n ] ; 3 uses
   %indvars.iv33.i = phi i64 [ 0, %.lr.ph.i.preheader ], [ %indvars.iv.next34.i, %bb.n ] ; 2 uses
-  %2 = trunc nuw i64 %indvars.iv to i32
-  %3 = call i32 @llvm.umin.i32(i32 %2, i32 16)
-  %umin.i = zext nneg i32 %3 to i64
+  %umin.i = call i64 @llvm.umin.i64(i64 %indvars.iv, i64 16)
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.m, %.lr.ph.i
@@ -214,8 +212,8 @@ bb.m:                                             ; preds = %bb.m, %.lr.ph.i
   %.02127.i = phi i64 [ 0, %.lr.ph.i ], [ %i.ag, %bb.m ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   store i8 0, ptr %i.a, align 1, !tbaa !19
-  %i.y = sub nsw i64 %indvars.iv, %indvars.iv.i3
-  %i.z = getelementptr inbounds i8, ptr %.034.i, i64 %i.y
+  %i.y = sub nuw nsw i64 %indvars.iv, %indvars.iv.i3
+  %i.z = getelementptr inbounds nuw i8, ptr %.034.i, i64 %i.y
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !19
   %i.ab = sext i8 %i.aa to i32
   %i.ac = call i32 @OPENSSL_fromxdigit(ptr noundef nonnull %i.a, i32 noundef %i.ab) #4 ; 0 uses
@@ -618,7 +616,7 @@ declare i32 @BN_mul_word(ptr noundef, i64 noundef) local_unnamed_addr #2
 declare i32 @BN_add_word(ptr noundef, i64 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #3
+declare i64 @llvm.umin.i64(i64, i64) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #3
