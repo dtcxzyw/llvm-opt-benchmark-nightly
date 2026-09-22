@@ -204,9 +204,9 @@ bb.w:                                             ; preds = %bb.v
   br i1 %or.cond35, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %.sroa.3.0.extract.trunc.i344 = zext nneg i16 %.sroa.764.0.extract.shift to i64
   %4 = trunc i64 %indvars.iv400.a to i8           ; 2 uses
-  %i.jk = getelementptr inbounds nuw [64 x i8], ptr %3, i64 %.sroa.3.0.extract.trunc.i344
+  %5 = zext nneg i16 %.sroa.764.0.extract.shift to i64
+  %i.jk = getelementptr inbounds nuw [64 x i8], ptr %3, i64 %5
   %i.jl = zext nneg i16 %.sroa.060.0.extract.trunc.mask to i64
   %i.jm = getelementptr inbounds nuw [2 x i8], ptr %i.jk, i64 %i.jl ; 2 uses
   store i8 %4, ptr %i.jm, align 2, !tbaa !26
@@ -254,16 +254,16 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %or.cond47, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %.sroa.3.0.extract.trunc.i346 = zext nneg i16 %.sroa.7.0.extract.shift to i64
-  %5 = trunc i64 %indvars.iv400.a to i8           ; 2 uses
-  %i.ke = getelementptr inbounds nuw [64 x i8], ptr %3, i64 %.sroa.3.0.extract.trunc.i346
+  %6 = trunc i64 %indvars.iv400.a to i8           ; 2 uses
+  %7 = zext nneg i16 %.sroa.7.0.extract.shift to i64
+  %i.ke = getelementptr inbounds nuw [64 x i8], ptr %3, i64 %7
   %i.kf = zext nneg i16 %.sroa.054.0.extract.trunc.mask to i64
   %i.kg = getelementptr inbounds nuw [2 x i8], ptr %i.ke, i64 %i.kf ; 2 uses
-  store i8 %5, ptr %i.kg, align 2, !tbaa !26
+  store i8 %6, ptr %i.kg, align 2, !tbaa !26
   %i.kh = getelementptr inbounds nuw i8, ptr %i.kg, i64 1
   store i8 31, ptr %i.kh, align 1, !tbaa !27
   %i.ki = getelementptr inbounds nuw [2 x i8], ptr %i.gy, i64 %indvars.iv400.a ; 2 uses
-  store i8 %5, ptr %i.ki, align 2, !tbaa !26
+  store i8 %6, ptr %i.ki, align 2, !tbaa !26
   %i.kj = getelementptr inbounds nuw i8, ptr %i.ki, i64 1
   store i8 31, ptr %i.kj, align 1, !tbaa !27
   br label %.sink.split448
@@ -365,7 +365,6 @@ bb.ai:                                            ; preds = %.preheader348, %bb.
   %i.lr = trunc nuw nsw i64 %indvars.iv412 to i32 ; 2 uses
   %i.ls = call i16 @stbcc__incluster_find(ptr noundef nonnull %3, i32 noundef %i.lr, i32 noundef %i.lq) ; 2 uses
   %.sroa.5.0.extract.shift = lshr i16 %i.ls, 8    ; 2 uses
-  %.sroa.5.0.extract.trunc = zext nneg i16 %.sroa.5.0.extract.shift to i64
   %.sroa.050.0.extract.trunc.mask = and i16 %i.ls, 255 ; 2 uses
   %i.lt = zext nneg i16 %.sroa.050.0.extract.trunc.mask to i64
   %.not = icmp eq i64 %indvars.iv412, %i.lt
@@ -389,7 +388,8 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %.not319, label %bb.al, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.mf = getelementptr inbounds nuw [64 x i8], ptr %i.br, i64 %.sroa.5.0.extract.trunc
+  %8 = zext nneg i16 %.sroa.5.0.extract.shift to i64
+  %i.mf = getelementptr inbounds nuw [64 x i8], ptr %i.br, i64 %8
   %i.mg = zext nneg i16 %.sroa.050.0.extract.trunc.mask to i64
   %i.mh = getelementptr inbounds nuw [2 x i8], ptr %i.mf, i64 %i.mg
   %i.mi = load i16, ptr %i.mh, align 2, !tbaa !10
@@ -792,9 +792,9 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 define void @stbcc__switch_root(ptr nofree noundef writeonly captures(none) %0, i32 noundef %1, i32 noundef %2, i16 %3) local_unnamed_addr #5 {
 bb.a:
   %.sroa.3.0.extract.shift = lshr i16 %3, 8
-  %.sroa.3.0.extract.trunc = zext nneg i16 %.sroa.3.0.extract.shift to i64
   %4 = trunc i32 %1 to i8                         ; 2 uses
-  %i.a = getelementptr inbounds nuw [64 x i8], ptr %0, i64 %.sroa.3.0.extract.trunc
+  %5 = zext nneg i16 %.sroa.3.0.extract.shift to i64
+  %i.a = getelementptr inbounds nuw [64 x i8], ptr %0, i64 %5
   %i.b = and i16 %3, 255
   %i.c = zext nneg i16 %i.b to i64
   %i.d = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %i.c ; 2 uses

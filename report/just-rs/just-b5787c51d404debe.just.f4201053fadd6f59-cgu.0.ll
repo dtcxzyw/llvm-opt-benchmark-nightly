@@ -205,7 +205,6 @@ bb.ku:                                            ; preds = %bb.kt
   %.sroa.4.0.extract.shift.i.i.i.i.i.i.i.i = lshr i32 %.val.i.i.i.i.i.i, 8
   %.sroa.5.0.extract.shift.i.i.i.i.i.i.i.i = lshr i32 %.val.i.i.i.i.i.i, 16
   %.sroa.6.0.extract.shift.i.i.i.i.i.i.i.i = lshr i32 %.val.i.i.i.i.i.i, 24
-  %.sroa.6.0.extract.trunc.i.i.i.i.i.i.i.i = zext nneg i32 %.sroa.6.0.extract.shift.i.i.i.i.i.i.i.i to i64
   %i.bhp = and i32 %.val.i.i.i.i.i.i, 255
   %i.bhq = zext nneg i32 %i.bhp to i64
   %i.bhr = xor i64 %i.bhq, -3750763034362895579
@@ -218,7 +217,8 @@ bb.ku:                                            ; preds = %bb.kt
   %i.bhy = zext nneg i32 %i.bhx to i64
   %i.bhz = xor i64 %i.bhw, %i.bhy
   %i.bia = mul i64 %i.bhz, 1099511628211
-  %i.bib = xor i64 %i.bia, %.sroa.6.0.extract.trunc.i.i.i.i.i.i.i.i
+  %4 = zext nneg i32 %.sroa.6.0.extract.shift.i.i.i.i.i.i.i.i to i64
+  %i.bib = xor i64 %i.bia, %4
   %i.bic = mul i64 %i.bib, 1099511628211          ; 2 uses
   store i64 %i.bic, ptr %i.q, align 8, !noalias !4034
   call void @llvm.experimental.noalias.scope.decl(metadata !4055)
@@ -453,7 +453,6 @@ bb.lj:                                            ; preds = %bb.li
   %.sroa.4.0.extract.shift.i.i54.i.i.i.i.i.i = lshr i32 %.val18.i.i.i.i.i.i, 8
   %.sroa.5.0.extract.shift.i.i55.i.i.i.i.i.i = lshr i32 %.val18.i.i.i.i.i.i, 16
   %.sroa.6.0.extract.shift.i.i56.i.i.i.i.i.i = lshr i32 %.val18.i.i.i.i.i.i, 24
-  %.sroa.6.0.extract.trunc.i.i57.i.i.i.i.i.i = zext nneg i32 %.sroa.6.0.extract.shift.i.i56.i.i.i.i.i.i to i64
   %i.blx = and i32 %.val18.i.i.i.i.i.i, 255
   %i.bly = zext nneg i32 %i.blx to i64
   %i.blz = xor i64 %i.bly, -3750763034362895579
@@ -466,7 +465,8 @@ bb.lj:                                            ; preds = %bb.li
   %i.bmg = zext nneg i32 %i.bmf to i64
   %i.bmh = xor i64 %i.bme, %i.bmg
   %i.bmi = mul i64 %i.bmh, 1099511628211
-  %i.bmj = xor i64 %i.bmi, %.sroa.6.0.extract.trunc.i.i57.i.i.i.i.i.i
+  %5 = zext nneg i32 %.sroa.6.0.extract.shift.i.i56.i.i.i.i.i.i to i64
+  %i.bmj = xor i64 %i.bmi, %5
   %i.bmk = mul i64 %i.bmj, 1099511628211          ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !4086)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !4034
@@ -869,7 +869,6 @@ bb.k:                                             ; preds = %bb.j
   %.sroa.4.0.extract.shift.i.i = lshr i32 %.val34, 8
   %.sroa.5.0.extract.shift.i.i = lshr i32 %.val34, 16
   %.sroa.6.0.extract.shift.i.i = lshr i32 %.val34, 24
-  %.sroa.6.0.extract.trunc.i.i = zext nneg i32 %.sroa.6.0.extract.shift.i.i to i64
   %i.cl = and i32 %.val34, 255
   %i.cm = zext nneg i32 %i.cl to i64
   %i.cn = xor i64 %i.cm, -3750763034362895579
@@ -882,7 +881,8 @@ bb.k:                                             ; preds = %bb.j
   %i.cu = zext nneg i32 %i.ct to i64
   %i.cv = xor i64 %i.cs, %i.cu
   %i.cw = mul i64 %i.cv, 1099511628211
-  %i.cx = xor i64 %i.cw, %.sroa.6.0.extract.trunc.i.i
+  %7 = zext nneg i32 %.sroa.6.0.extract.shift.i.i to i64
+  %i.cx = xor i64 %i.cw, %7
   %i.cy = mul i64 %i.cx, 1099511628211            ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !4375)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -1144,7 +1144,6 @@ bb.aa:                                            ; preds = %bb.d
   %.sroa.4.0.extract.shift.i.i47 = lshr i32 %.val, 8
   %.sroa.5.0.extract.shift.i.i48 = lshr i32 %.val, 16
   %.sroa.6.0.extract.shift.i.i49 = lshr i32 %.val, 24
-  %.sroa.6.0.extract.trunc.i.i50 = zext nneg i32 %.sroa.6.0.extract.shift.i.i49 to i64
   %i.gt = and i32 %.val, 255
   %i.gu = zext nneg i32 %i.gt to i64
   %i.gv = xor i64 %i.gu, -3750763034362895579
@@ -1157,7 +1156,8 @@ bb.aa:                                            ; preds = %bb.d
   %i.hc = zext nneg i32 %i.hb to i64
   %i.hd = xor i64 %i.ha, %i.hc
   %i.he = mul i64 %i.hd, 1099511628211
-  %i.hf = xor i64 %i.he, %.sroa.6.0.extract.trunc.i.i50
+  %8 = zext nneg i32 %.sroa.6.0.extract.shift.i.i49 to i64
+  %i.hf = xor i64 %i.he, %8
   %i.hg = mul i64 %i.hf, 1099511628211            ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !4395)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1560,7 +1560,6 @@ bb.m:                                             ; preds = %bb.b
   %.sroa.4.0.extract.shift.i.i = lshr i32 %.val36, 8
   %.sroa.5.0.extract.shift.i.i = lshr i32 %.val36, 16
   %.sroa.6.0.extract.shift.i.i = lshr i32 %.val36, 24
-  %.sroa.6.0.extract.trunc.i.i = zext nneg i32 %.sroa.6.0.extract.shift.i.i to i64
   %i.cg = and i32 %.val36, 255
   %i.ch = zext nneg i32 %i.cg to i64
   %i.ci = xor i64 %i.ch, -3750763034362895579
@@ -1573,7 +1572,8 @@ bb.m:                                             ; preds = %bb.b
   %i.cp = zext nneg i32 %i.co to i64
   %i.cq = xor i64 %i.cn, %i.cp
   %i.cr = mul i64 %i.cq, 1099511628211
-  %i.cs = xor i64 %i.cr, %.sroa.6.0.extract.trunc.i.i
+  %4 = zext nneg i32 %.sroa.6.0.extract.shift.i.i to i64
+  %i.cs = xor i64 %i.cr, %4
   %i.ct = mul i64 %i.cs, 1099511628211            ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !20231)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -1976,7 +1976,6 @@ bb.k:                                             ; preds = %bb.j
   %.sroa.4.0.extract.shift.i.i = lshr i32 %.val15, 8
   %.sroa.5.0.extract.shift.i.i = lshr i32 %.val15, 16
   %.sroa.6.0.extract.shift.i.i = lshr i32 %.val15, 24
-  %.sroa.6.0.extract.trunc.i.i = zext nneg i32 %.sroa.6.0.extract.shift.i.i to i64
   %i.ck = and i32 %.val15, 255
   %i.cl = zext nneg i32 %i.ck to i64
   %i.cm = xor i64 %i.cl, -3750763034362895579
@@ -1989,7 +1988,8 @@ bb.k:                                             ; preds = %bb.j
   %i.ct = zext nneg i32 %i.cs to i64
   %i.cu = xor i64 %i.cr, %i.ct
   %i.cv = mul i64 %i.cu, 1099511628211
-  %i.cw = xor i64 %i.cv, %.sroa.6.0.extract.trunc.i.i
+  %8 = zext nneg i32 %.sroa.6.0.extract.shift.i.i to i64
+  %i.cw = xor i64 %i.cv, %8
   %i.cx = mul i64 %i.cw, 1099511628211            ; 2 uses
   store i64 %i.cx, ptr %i.b, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !21875)
@@ -2202,7 +2202,6 @@ bb.z:                                             ; preds = %bb.y
   %.sroa.4.0.extract.shift.i.i38 = lshr i32 %.val, 8
   %.sroa.5.0.extract.shift.i.i39 = lshr i32 %.val, 16
   %.sroa.6.0.extract.shift.i.i40 = lshr i32 %.val, 24
-  %.sroa.6.0.extract.trunc.i.i41 = zext nneg i32 %.sroa.6.0.extract.shift.i.i40 to i64
   %i.fz = and i32 %.val, 255
   %i.ga = zext nneg i32 %i.fz to i64
   %i.gb = xor i64 %i.ga, -3750763034362895579
@@ -2215,7 +2214,8 @@ bb.z:                                             ; preds = %bb.y
   %i.gi = zext nneg i32 %i.gh to i64
   %i.gj = xor i64 %i.gg, %i.gi
   %i.gk = mul i64 %i.gj, 1099511628211
-  %i.gl = xor i64 %i.gk, %.sroa.6.0.extract.trunc.i.i41
+  %9 = zext nneg i32 %.sroa.6.0.extract.shift.i.i40 to i64
+  %i.gl = xor i64 %i.gk, %9
   %i.gm = mul i64 %i.gl, 1099511628211            ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !21896)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)

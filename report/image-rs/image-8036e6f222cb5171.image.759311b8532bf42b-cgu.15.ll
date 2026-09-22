@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
   %i.bt = shl nuw i64 %i.bs, 56
   %i.bu = zext nneg i16 %i.bo to i64
   %i.bv = shl nuw nsw i64 %i.bu, 48
-  %4 = add nuw nsw i64 %i.bt, %i.bv
+  %4 = or i64 %i.bt, %i.bv
   br label %_RNvNtNtCsa5QsYiPB8Gl_5image6codecs3dxt17decode_dxt5_block.exit
 
 _RNvNtNtCsa5QsYiPB8Gl_5image6codecs3dxt17decode_dxt5_block.exit: ; preds = %.preheader9.i.i, %.preheader.i.i

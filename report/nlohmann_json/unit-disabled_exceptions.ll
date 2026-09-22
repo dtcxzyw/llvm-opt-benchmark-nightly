@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, i8 0, i64 16, i1 false)
   %i.f = load i8, ptr %1, align 1, !tbaa !136, !range !73, !noundef !74
-  %.sroa.0.0.insert.ext.i.i.i.i.i = zext nneg i8 %i.f to i64
   store i8 4, ptr %i.b, align 8, !tbaa !147
+  %.sroa.0.0.insert.ext.i.i.i.i.i = zext nneg i8 %i.f to i64
   store i64 %.sroa.0.0.insert.ext.i.i.i.i.i, ptr %i.e, align 8, !tbaa !26
   %i.g = load ptr, ptr %i.a, align 8, !tbaa !150
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 16

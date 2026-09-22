@@ -122,8 +122,7 @@ bb.k:                                             ; preds = %bb.d, %bb.f, %bb.j,
   %.sroa.9.1 = phi i16 [ 1, %bb.f ], [ %.sroa.9.0, %bb.i ], [ 1, %bb.j ], [ %.sroa.8.0, %bb.d ] ; 19 uses
   %.sroa.0109.0 = phi i16 [ 0, %bb.f ], [ %i.ar, %bb.i ], [ %i.ar, %bb.j ], [ %.sroa.0.0, %bb.d ]
   %.sroa.9.0.insert.ext = zext i16 %.sroa.9.1 to i64
-  %.sroa.0109.0.insert.ext = zext i16 %.sroa.0109.0 to i32
-  %.sroa.45.0.extract.trunc.i = zext i16 %.sroa.23131.0 to i32 ; 4 uses
+  %.sroa.45.0.extract.trunc.i = zext i16 %.sroa.0109.0 to i32
   %i.au = load i32, ptr %i.d, align 4, !tbaa !23
   %i.av = zext i16 %.sroa.9.1 to i32              ; 2 uses
   %i.aw = add nuw nsw i32 %i.av, 4
@@ -159,32 +158,33 @@ bb.p:                                             ; preds = %bb.l
 bb.q:                                             ; preds = %bb.p
   %i.be = add i16 %.sroa.9.1, -1
   %i.bf = add i16 %.sroa.18.0, 1                  ; 2 uses
-  %i.bg = zext i16 %i.bf to i32                   ; 4 uses
+  %2 = zext i16 %i.bf to i32                      ; 4 uses
+  %i.bg = zext i16 %.sroa.23131.0 to i32          ; 4 uses
   %.not59.i = icmp ult i16 %i.bf, %.sroa.23131.0
   %i.bh = zext i16 %i.be to i32                   ; 2 uses
-  %i.bi = add nuw nsw i32 %i.bg, %i.bh            ; 2 uses
-  %i.bj = icmp samesign ugt i32 %i.bi, %.sroa.45.0.extract.trunc.i ; 2 uses
+  %i.bi = add nuw nsw i32 %2, %i.bh               ; 2 uses
+  %i.bj = icmp samesign ugt i32 %i.bi, %i.bg      ; 2 uses
   br i1 %.not59.i, label %bb.u, label %bb.r, !prof !25
 
 bb.r:                                             ; preds = %bb.q
   br i1 %i.bj, label %bb.s, label %bb.t, !prof !30
 
 bb.s:                                             ; preds = %bb.r
-  tail call void @insert_string(ptr noundef nonnull %0, i32 noundef %i.bg, i32 noundef %i.bh) #3
+  tail call void @insert_string(ptr noundef nonnull %0, i32 noundef %2, i32 noundef %i.bh) #3
   br label %insert_match.exit
 
 bb.t:                                             ; preds = %bb.r
-  %i.bk = add nuw nsw i32 %.sroa.45.0.extract.trunc.i, 1
-  %i.bl = sub nsw i32 %i.bk, %i.bg
-  tail call void @insert_string(ptr noundef nonnull %0, i32 noundef %i.bg, i32 noundef %i.bl) #3
+  %i.bk = add nuw nsw i32 %i.bg, 1
+  %i.bl = sub nsw i32 %i.bk, %2
+  tail call void @insert_string(ptr noundef nonnull %0, i32 noundef %2, i32 noundef %i.bl) #3
   br label %insert_match.exit
 
 bb.u:                                             ; preds = %bb.q
   br i1 %i.bj, label %bb.v, label %insert_match.exit
 
 bb.v:                                             ; preds = %bb.u
-  %i.bm = sub nuw nsw i32 %i.bi, %.sroa.45.0.extract.trunc.i
-  tail call void @insert_string(ptr noundef nonnull %0, i32 noundef %.sroa.45.0.extract.trunc.i, i32 noundef %i.bm) #3
+  %i.bm = sub nuw nsw i32 %i.bi, %i.bg
+  tail call void @insert_string(ptr noundef nonnull %0, i32 noundef %i.bg, i32 noundef %i.bm) #3
   br label %insert_match.exit
 
 bb.w:                                             ; preds = %bb.p
@@ -457,7 +457,7 @@ emit_match.exit.thread.backedge:                  ; preds = %emit_match.exit.loo
 emit_match.exit:                                  ; preds = %.critedge
   %i.gx = zext i16 %.sroa.9.3 to i32              ; 3 uses
   %i.gy = zext i16 %.sroa.18.0 to i32
-  %i.gz = sub nsw i32 %i.gy, %.sroa.0109.0.insert.ext ; 2 uses
+  %i.gz = sub nsw i32 %i.gy, %.sroa.45.0.extract.trunc.i ; 2 uses
   %i.ha = add nsw i32 %i.gx, -3                   ; 2 uses
   %i.hb = trunc i32 %i.gz to i16
   %i.hc = load ptr, ptr %i.l, align 16, !tbaa !44

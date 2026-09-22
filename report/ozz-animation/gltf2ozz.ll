@@ -205,8 +205,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #41
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   store i64 0, ptr %3, align 8
-  %.sroa.0.0.insert.ext.i.i.i.i.i = zext i1 %0 to i64
   store i8 4, ptr %3, align 8, !tbaa !436
+  %.sroa.0.0.insert.ext.i.i.i.i.i = zext i1 %0 to i64
   store i64 %.sroa.0.0.insert.ext.i.i.i.i.i, ptr %i.a, align 8, !tbaa !75
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !576
@@ -609,8 +609,8 @@ bb.b:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 6 uses
   store i64 0, ptr %3, align 8
   %i.o = load i8, ptr %1, align 1, !tbaa !384, !range !135, !noundef !136
-  %.sroa.0.0.insert.ext.i.i.i.i.i = zext nneg i8 %i.o to i64
   store i8 4, ptr %3, align 8, !tbaa !436
+  %.sroa.0.0.insert.ext.i.i.i.i.i = zext nneg i8 %i.o to i64
   store i64 %.sroa.0.0.insert.ext.i.i.i.i.i, ptr %i.n, align 8, !tbaa !75
   br i1 %2, label %.critedge, label %bb.c
 
@@ -1013,8 +1013,8 @@ bb.f:                                             ; preds = %bb.e
   %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.u, i8 0, i64 16, i1 false)
   %i.y = load i8, ptr %1, align 1, !tbaa !384, !range !135, !noundef !136
-  %.sroa.0.0.insert.ext.i.i.i.i.i.i = zext nneg i8 %i.y to i64
   store i8 4, ptr %i.u, align 8, !tbaa !436
+  %.sroa.0.0.insert.ext.i.i.i.i.i.i = zext nneg i8 %i.y to i64
   store i64 %.sroa.0.0.insert.ext.i.i.i.i.i.i, ptr %i.x, align 8, !tbaa !75
   %i.z = load ptr, ptr %i.t, align 8, !tbaa !580
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 16
@@ -1102,8 +1102,8 @@ _ZNKSt6vectorIN8nlohmann16json_abi_v3_11_310basic_jsonISt3mapS_NSt7__cxx1112basi
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   store i64 0, ptr %i.q, align 8
   %i.s = load i8, ptr %2, align 1, !tbaa !384, !range !135, !noundef !136
-  %.sroa.0.0.insert.ext.i.i.i.i.i = zext nneg i8 %i.s to i64
   store i8 4, ptr %i.q, align 8, !tbaa !436
+  %.sroa.0.0.insert.ext.i.i.i.i.i = zext nneg i8 %i.s to i64
   store i64 %.sroa.0.0.insert.ext.i.i.i.i.i, ptr %i.r, align 8, !tbaa !75
   %.not.i4.i.i = icmp eq ptr %i.c, %1
   br i1 %.not.i4.i.i, label %_ZNSt6vectorIN8nlohmann16json_abi_v3_11_310basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE11_S_relocateEPSD_SG_SG_RSE_.exit, label %_ZSt19__relocate_object_aIN8nlohmann16json_abi_v3_11_310basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES4_IhSaIhEEvEESE_SaISE_EEvPT_PT0_RT1_.exit.i.i

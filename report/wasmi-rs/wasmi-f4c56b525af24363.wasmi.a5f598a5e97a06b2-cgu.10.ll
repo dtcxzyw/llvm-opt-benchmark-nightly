@@ -205,16 +205,16 @@ bb.a:
   %.sroa.3.0.extract.shift.i = lshr i64 %1, 32
   %.sroa.3.0.extract.trunc.i = trunc nuw i64 %.sroa.3.0.extract.shift.i to i32
   %.sroa.4.0.extract.shift.i = lshr i64 %1, 48
-  %.sroa.4.0.extract.trunc.i = trunc nuw nsw i64 %.sroa.4.0.extract.shift.i to i32
-  %i.b = and i32 %.sroa.0.0.extract.trunc.i, 65535
-  %2 = and i32 %.sroa.3.0.extract.trunc.i, 65535
-  store i32 %i.b, ptr %0, align 1, !alias.scope !74
+  %2 = and i32 %.sroa.0.0.extract.trunc.i, 65535
+  %i.b = and i32 %.sroa.3.0.extract.trunc.i, 65535
+  %3 = trunc nuw nsw i64 %.sroa.4.0.extract.shift.i to i32
+  store i32 %2, ptr %0, align 1, !alias.scope !74
   %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %i.a, ptr %.sroa.45.0..sroa_idx, align 1, !alias.scope !74
   %.sroa.56.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %2, ptr %.sroa.56.0..sroa_idx, align 1, !alias.scope !74
+  store i32 %i.b, ptr %.sroa.56.0..sroa_idx, align 1, !alias.scope !74
   %.sroa.67.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %.sroa.4.0.extract.trunc.i, ptr %.sroa.67.0..sroa_idx, align 1, !alias.scope !74
+  store i32 %3, ptr %.sroa.67.0..sroa_idx, align 1, !alias.scope !74
   ret void
 }
 
@@ -222,13 +222,13 @@ bb.a:
 define hidden noundef range(i16 -256, 768) i16 @_RINvMsm_NtCskKLDkoKarTP_4core5arrayANtNtCs5zeGauAcNNa_10wasmi_core5value7ValTypej2_7try_mapINtNtNtB8_3ops9try_trait17NeverShortCircuitINtNtB8_6option6OptionNtNtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack7control7RegKindEENCINvMB1u_B1r_10wrap_mut_1By_NvMs2_B2w_B2u_3newE0EB2G_(i16 noundef %0) unnamed_addr #2 personality ptr @rust_eh_personality {
 switch.lookup:
   %.sroa.4.0.extract.shift = lshr i16 %0, 8
-  %.sroa.4.0.extract.trunc = zext nneg i16 %.sroa.4.0.extract.shift to i64
   %i.a = and i16 %0, 255
   %i.b = zext nneg i16 %i.a to i64
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RINvMsm_NtCskKLDkoKarTP_4core5arrayANtNtCs5zeGauAcNNa_10wasmi_core5value7ValTypej2_7try_mapINtNtNtB8_3ops9try_trait17NeverShortCircuitINtNtB8_6option6OptionNtNtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack7control7RegKindEENCINvMB1u_B1r_10wrap_mut_1By_NvMs2_B2w_B2u_3newE0EB2G_, i64 %i.b
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i16
-  %switch.gep9 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._RINvMsm_NtCskKLDkoKarTP_4core5arrayANtNtCs5zeGauAcNNa_10wasmi_core5value7ValTypej2_7try_mapINtNtNtB8_3ops9try_trait17NeverShortCircuitINtNtB8_6option6OptionNtNtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack7control7RegKindEENCINvMB1u_B1r_10wrap_mut_1By_NvMs2_B2w_B2u_3newE0EB2G_.133, i64 %.sroa.4.0.extract.trunc
+  %1 = zext nneg i16 %.sroa.4.0.extract.shift to i64
+  %switch.gep9 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._RINvMsm_NtCskKLDkoKarTP_4core5arrayANtNtCs5zeGauAcNNa_10wasmi_core5value7ValTypej2_7try_mapINtNtNtB8_3ops9try_trait17NeverShortCircuitINtNtB8_6option6OptionNtNtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack7control7RegKindEENCINvMB1u_B1r_10wrap_mut_1By_NvMs2_B2w_B2u_3newE0EB2G_.133, i64 %1
   %switch.load10 = load i16, ptr %switch.gep9, align 2
   %.sroa.0.0.insert.insert.i = or disjoint i16 %switch.load10, %switch.ext
   ret i16 %.sroa.0.0.insert.insert.i

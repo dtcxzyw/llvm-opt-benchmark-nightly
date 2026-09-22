@@ -204,7 +204,6 @@ bb.j:                                             ; preds = %bb.h
   %.sroa.4654.0.extract.shift.i = lshr i64 %i.ti, 48 ; 5 uses
   %.sroa.4654.0.extract.trunc.i = trunc nuw nsw i64 %.sroa.4654.0.extract.shift.i to i32
   %.sroa.5655.0.extract.shift.i = lshr i64 %i.ti, 56 ; 3 uses
-  %.sroa.5655.0.extract.trunc.i = trunc nuw nsw i64 %.sroa.5655.0.extract.shift.i to i32 ; 5 uses
   %.sroa.6656.8.extract.trunc.i = trunc i64 %i.tj to i32 ; 3 uses
   %i.tk = lshr i32 %.sroa.6656.8.extract.trunc.i, 16
   %i.tl = lshr i32 %.sroa.6656.8.extract.trunc.i, 24 ; 7 uses
@@ -234,6 +233,7 @@ bb.j:                                             ; preds = %bb.h
   store <2 x float> %.sroa.28.0.copyload, ptr %.sroa.28.0..sroa_idx954, align 8
   store <2 x float> %.sroa.32.0.copyload, ptr %.sroa.32.0..sroa_idx959, align 8
   %i.tm = and i32 %.sroa.4654.0.extract.trunc.i, 255 ; 4 uses
+  %8 = trunc nuw nsw i64 %.sroa.5655.0.extract.shift.i to i32 ; 5 uses
   %i.tn = and i32 %.sroa.6656.8.extract.trunc.i, 255 ; 3 uses
   %i.to = and i32 %i.tk, 255                      ; 8 uses
   %i.tp = and i32 %.sroa.10660.8.extract.trunc.i, 255 ; 3 uses
@@ -244,19 +244,19 @@ bb.j:                                             ; preds = %bb.h
   ]
 
 b3UniqueCount.exit.thread1245.i:                  ; preds = %bb.j
-  %.not23.i.i = icmp eq i32 %i.tm, %.sroa.5655.0.extract.trunc.i
+  %.not23.i.i = icmp eq i32 %i.tm, %8
   %i.tq = select i1 %.not23.i.i, i32 1, i32 2
   %.not23.i736.i = icmp eq i32 %i.to, %i.tl
   %i.tr = select i1 %.not23.i736.i, i32 1, i32 2
   br label %b3UniqueCount.exit737.i
 
 bb.k:                                             ; preds = %bb.j
-  %.not.i.i = icmp eq i32 %i.tm, %.sroa.5655.0.extract.trunc.i
+  %.not.i.i = icmp eq i32 %i.tm, %8
   %i.ts = icmp eq i32 %i.tm, %i.tn                ; 2 uses
   br i1 %.not.i.i, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %.not22.i.i = icmp eq i32 %i.tn, %.sroa.5655.0.extract.trunc.i
+  %.not22.i.i = icmp eq i32 %i.tn, %8
   %or.cond.i.i = or i1 %i.ts, %.not22.i.i
   br i1 %or.cond.i.i, label %bb.n, label %b3UniqueCount.exit.thread.i
 
@@ -659,8 +659,8 @@ b3Normalize.exit687.i:                            ; preds = %bb.al, %bb.ak
   br label %b3MakeSeparationFunction.exit
 
 bb.am:                                            ; preds = %bb.aj
-  %i.aqa = icmp eq i32 %i.tm, %.sroa.5655.0.extract.trunc.i
-  %spec.select.i = select i1 %i.aqa, i32 %i.tn, i32 %.sroa.5655.0.extract.trunc.i
+  %i.aqa = icmp eq i32 %i.tm, %8
+  %spec.select.i = select i1 %i.aqa, i32 %i.tn, i32 %8
   %i.aqb = load ptr, ptr %2, align 8, !tbaa !15, !noalias !89 ; 2 uses
   %i.aqc = and i64 %.sroa.4654.0.extract.shift.i, 255
   %i.aqd = getelementptr inbounds nuw [12 x i8], ptr %i.aqb, i64 %i.aqc ; 2 uses

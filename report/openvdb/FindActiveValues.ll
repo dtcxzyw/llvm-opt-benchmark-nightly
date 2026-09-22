@@ -205,9 +205,9 @@ bb.bl:                                            ; preds = %bb.bk
   %.0712.lcssa = phi i32 [ 0, %bb.a ], [ 64, %bb.b ], [ 128, %bb.c ], [ 192, %bb.d ], [ 256, %bb.e ], [ 320, %bb.f ], [ 384, %bb.g ], [ 448, %bb.h ], [ 512, %bb.i ], [ 576, %bb.j ], [ 640, %bb.k ], [ 704, %bb.l ], [ 768, %bb.m ], [ 832, %bb.n ], [ 896, %bb.o ], [ 960, %bb.p ], [ 1024, %bb.q ], [ 1088, %bb.r ], [ 1152, %bb.s ], [ 1216, %bb.t ], [ 1280, %bb.u ], [ 1344, %bb.v ], [ 1408, %bb.w ], [ 1472, %bb.x ], [ 1536, %bb.y ], [ 1600, %bb.z ], [ 1664, %bb.aa ], [ 1728, %bb.ab ], [ 1792, %bb.ac ], [ 1856, %bb.ad ], [ 1920, %bb.ae ], [ 1984, %bb.af ], [ 2048, %bb.ag ], [ 2112, %bb.ah ], [ 2176, %bb.ai ], [ 2240, %bb.aj ], [ 2304, %bb.ak ], [ 2368, %bb.al ], [ 2432, %bb.am ], [ 2496, %bb.an ], [ 2560, %bb.ao ], [ 2624, %bb.ap ], [ 2688, %bb.aq ], [ 2752, %bb.ar ], [ 2816, %bb.as ], [ 2880, %bb.at ], [ 2944, %bb.au ], [ 3008, %bb.av ], [ 3072, %bb.aw ], [ 3136, %bb.ax ], [ 3200, %bb.ay ], [ 3264, %bb.az ], [ 3328, %bb.ba ], [ 3392, %bb.bb ], [ 3456, %bb.bc ], [ 3520, %bb.bd ], [ 3584, %bb.be ], [ 3648, %bb.bf ], [ 3712, %bb.bg ], [ 3776, %bb.bh ], [ 3840, %bb.bi ], [ 3904, %bb.bj ], [ 3968, %bb.bk ], [ 4032, %bb.bl ]
   %i.dx = load i64, ptr %.013.lcssa, align 8, !tbaa !554 ; 2 uses
   %i.dy = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.dx, i1 true)
-  %1 = trunc nuw nsw i64 %i.dy to i32
-  %2 = icmp eq i64 %i.dx, 0
-  %i.dz = select i1 %2, i32 0, i32 %1, !prof !2624
+  %1 = icmp eq i64 %i.dx, 0
+  %2 = trunc nuw nsw i64 %i.dy to i32
+  %i.dz = select i1 %1, i32 0, i32 %2, !prof !2624
   %i.ea = or disjoint i32 %i.dz, %.0712.lcssa
   br label %.critedge
 

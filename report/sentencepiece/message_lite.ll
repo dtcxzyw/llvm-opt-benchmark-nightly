@@ -202,11 +202,11 @@ _ZN6google8protobuf8internal12ParseContextC2IJPNS0_24ZeroCopyCodedInputStreamEEE
   %i.c = load i32, ptr %i.b, align 4, !tbaa !93
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 37
   %i.e = load i8, ptr %i.d, align 1, !tbaa !94, !range !49, !noundef !50
-  %5 = zext nneg i8 %i.e to i64
-  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 72
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.f, i8 0, i64 40, i1 false)
-  store i64 %5, ptr %6, align 8, !tbaa !28
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 72
+  %6 = zext nneg i8 %i.e to i64
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %5, i8 0, i64 40, i1 false)
+  store i64 %6, ptr %i.f, align 8, !tbaa !28
   %i.g = getelementptr inbounds nuw i8, ptr %4, i64 80 ; 2 uses
   store i32 0, ptr %i.g, align 8, !tbaa !33
   %i.h = getelementptr inbounds nuw i8, ptr %4, i64 84 ; 3 uses
@@ -264,7 +264,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.am, label %.noexc, label %_ZN6google8protobuf8internal18EpsCopyInputStream6BackUpEPKc.exit
 
 .noexc:                                           ; preds = %bb.d
-  %i.an = load ptr, ptr %i.f, align 8, !tbaa !36  ; 2 uses
+  %i.an = load ptr, ptr %5, align 8, !tbaa !36    ; 2 uses
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !30
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 24
   %i.aq = load ptr, ptr %i.ap, align 8

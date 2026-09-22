@@ -204,7 +204,7 @@ putc_unlocked.exit.thread.i14.i:                  ; preds = %._crit_edge.i
   br label %bb.r
 
 putc_unlocked.exit.i12.i:                         ; preds = %._crit_edge.i
-  %i.ef = trunc nuw i64 %.0.lcssa.i to i32
+  %i.ef = trunc nuw nsw i64 %.0.lcssa.i to i32
   %i.eg = tail call i32 @__overflow(ptr noundef nonnull %i.dy, i32 noundef %i.ef), !inline_history !0
   %.not.i13.i36 = icmp eq i32 %i.eg, -1
   br i1 %.not.i13.i36, label %_ZN7CaDiCaL10LratTracer13put_binary_idEl.exit, label %bb.r
@@ -533,7 +533,7 @@ putc_unlocked.exit.thread.i14.i100:               ; preds = %._crit_edge.i95
   br label %bb.ai
 
 putc_unlocked.exit.i12.i98:                       ; preds = %._crit_edge.i95
-  %i.jc = trunc nuw i64 %.0.lcssa.i96 to i32
+  %i.jc = trunc nuw nsw i64 %.0.lcssa.i96 to i32
   %i.jd = tail call i32 @__overflow(ptr noundef nonnull %i.iv, i32 noundef %i.jc), !inline_history !0
   %.not.i13.i99 = icmp eq i32 %i.jd, -1
   br i1 %.not.i13.i99, label %_ZN7CaDiCaL10LratTracer13put_binary_idEl.exit102, label %bb.ai
@@ -936,7 +936,7 @@ putc_unlocked.exit.thread.i14.i174:               ; preds = %._crit_edge.i169
   br label %_ZN7CaDiCaL10LratTracer13put_binary_idEl.exit176.sink.split
 
 putc_unlocked.exit.i12.i172:                      ; preds = %._crit_edge.i169
-  %i.pv = trunc nuw i64 %.0.lcssa.i170 to i32
+  %i.pv = trunc nuw nsw i64 %.0.lcssa.i170 to i32
   %i.pw = tail call i32 @__overflow(ptr noundef nonnull %i.po, i32 noundef %i.pv), !inline_history !0
   %.not.i13.i173 = icmp eq i32 %i.pw, -1
   br i1 %.not.i13.i173, label %_ZN7CaDiCaL10LratTracer13put_binary_idEl.exit176, label %_ZN7CaDiCaL10LratTracer13put_binary_idEl.exit176.sink.split

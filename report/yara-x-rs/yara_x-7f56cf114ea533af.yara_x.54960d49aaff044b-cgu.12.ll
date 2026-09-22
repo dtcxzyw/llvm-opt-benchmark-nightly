@@ -205,7 +205,6 @@ bb.dq:                                            ; preds = %bb.dj
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag), !noalias !18551
   %i.px = ptrtoint ptr %.sroa.19.5.copyload.i.i.i.i.i to i64 ; 3 uses
   %.sroa.19.5.extract.shift.i.i.i.i.i = lshr i64 %i.px, 40
-  %.sroa.19.5.extract.trunc.i.i.i.i.i = trunc nuw nsw i64 %.sroa.19.5.extract.shift.i.i.i.i.i to i32
   %i.py = icmp ult i64 %.sroa.9.i.sroa.0.0.copyload.i294.i.i.i, 44
   br i1 %i.py, label %bb.ei, label %bb.dr
 
@@ -386,9 +385,10 @@ bb.ei:                                            ; preds = %_RNvXs1_NtCsexYYUdY
   br label %bb.eo
 
 bb.ej:                                            ; preds = %bb.dw
+  %.sroa.57.sroa.7.28.insert.ext.i.i.i.i = trunc nuw nsw i64 %.sroa.19.5.extract.shift.i.i.i.i.i to i32
   %.sroa.57.sroa.7.31.insert.ext.i.i.i.i = zext i8 %.sroa.26.5.copyload.i.i.i.i.i to i32
   %.sroa.57.sroa.7.31.insert.shift.i.i.i.i = shl nuw i32 %.sroa.57.sroa.7.31.insert.ext.i.i.i.i, 24
-  %.sroa.57.sroa.7.31.insert.insert.i.i.i.i = or disjoint i32 %.sroa.57.sroa.7.31.insert.shift.i.i.i.i, %.sroa.19.5.extract.trunc.i.i.i.i.i
+  %.sroa.57.sroa.7.31.insert.insert.i.i.i.i = or disjoint i32 %.sroa.57.sroa.7.31.insert.shift.i.i.i.i, %.sroa.57.sroa.7.28.insert.ext.i.i.i.i
   %.not.i302.i.i.i = icmp eq i32 %.sroa.57.sroa.7.31.insert.insert.i.i.i.i, %i.nq
   br i1 %.not.i302.i.i.i, label %bb.ek, label %bb.el
 
@@ -791,13 +791,13 @@ bb.hf:                                            ; preds = %bb.gz
   %.sroa.661.sroa.3.6.extract.shift.i.i.i.i.i = lshr i64 %.sroa.11.5.copyload.i.i.i.i.i, 40
   %.sroa.661.sroa.3.6.extract.trunc.i.i.i.i.i = trunc i64 %.sroa.661.sroa.3.6.extract.shift.i.i.i.i.i to i16
   %.sroa.661.sroa.3.8.extract.shift.i.i.i.i.i = lshr i64 %.sroa.11.5.copyload.i.i.i.i.i, 56
-  %.sroa.661.sroa.3.8.extract.trunc.i.i.i.i.i = trunc nuw nsw i64 %.sroa.661.sroa.3.8.extract.shift.i.i.i.i.i to i16
   %i.xj = ptrtoint ptr %.sroa.15.5.copyload.i.i.i.i.i to i64 ; 3 uses
   %.sroa.1262.15.extract.trunc.i.i.i.i.i = trunc i64 %i.xj to i16
   %.sroa.1262.16.extract.shift.i.i.i.i.i = lshr i64 %i.xj, 8
   %.sroa.1262.16.extract.trunc.i.i.i.i.i = trunc i64 %.sroa.1262.16.extract.shift.i.i.i.i.i to i32
   %.sroa.55.sroa.12.sroa.7.0.insert.ext96.i.i.i.i.i = shl i16 %.sroa.1262.15.extract.trunc.i.i.i.i.i, 8
-  %.sroa.55.sroa.12.sroa.0.0.insert.insert95.i.i.i.i.i = or disjoint i16 %.sroa.55.sroa.12.sroa.7.0.insert.ext96.i.i.i.i.i, %.sroa.661.sroa.3.8.extract.trunc.i.i.i.i.i
+  %.sroa.55.sroa.12.sroa.0.0.insert.ext93.i.i.i.i.i = trunc nuw nsw i64 %.sroa.661.sroa.3.8.extract.shift.i.i.i.i.i to i16
+  %.sroa.55.sroa.12.sroa.0.0.insert.insert95.i.i.i.i.i = or disjoint i16 %.sroa.55.sroa.12.sroa.7.0.insert.ext96.i.i.i.i.i, %.sroa.55.sroa.12.sroa.0.0.insert.ext93.i.i.i.i.i
   %.sroa.55.sroa.14.sroa.7.0.insert.ext89.i.i.i.i.i = zext i8 %.sroa.16.sroa.0.0.copyload.i.i.i.i.i to i64
   %.sroa.55.sroa.14.sroa.0.0.insert.insert88.i.i.i.i.i = call i64 @llvm.fshl.i64(i64 %.sroa.55.sroa.14.sroa.7.0.insert.ext89.i.i.i.i.i, i64 %i.xj, i64 24)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t), !noalias !18646

@@ -204,7 +204,7 @@ putc_unlocked.exit.thread.i10.i:                  ; preds = %._crit_edge.i
   br label %bb.f
 
 putc_unlocked.exit.i8.i:                          ; preds = %._crit_edge.i
-  %i.ay = trunc nuw i64 %.0.lcssa.i to i32
+  %i.ay = trunc nuw nsw i64 %.0.lcssa.i to i32
   %i.az = tail call i32 @__overflow(ptr noundef nonnull %i.ar, i32 noundef %i.ay), !inline_history !1
   %.not.i9.i = icmp eq i32 %i.az, -1
   br i1 %.not.i9.i, label %_ZN7CaDiCaL11IdrupTracer13put_binary_idEm.exit, label %bb.f

@@ -205,7 +205,6 @@ _ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetIvEEjPKNS0_15Fiel
   br i1 %i.ar, label %bb.i, label %bb.k
 
 bb.i:                                             ; preds = %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetIvEEjPKNS0_15FieldDescriptorE.exit
-  %3 = zext nneg i32 %i.aq to i64
   %i.as = load i8, ptr %.sroa.040.047, align 8, !tbaa !272 ; 2 uses
   %i.at = add i8 %i.as, -118
   %or.cond.i26 = icmp ult i8 %i.at, -117
@@ -225,6 +224,7 @@ _ZN6google8protobufL20GetFastParseFunctionENS0_8internal15TcParseFunctionE.exit2
   %i.ba = load i8, ptr %i.az, align 2, !tbaa !274
   %i.bb = getelementptr inbounds nuw i8, ptr %.sroa.040.047, i64 19
   %i.bc = load i8, ptr %i.bb, align 1, !tbaa !275
+  %3 = zext nneg i32 %i.aq to i64
   %i.bd = shl nuw i64 %3, 48
   %i.be = zext i8 %i.bc to i64
   %i.bf = shl nuw nsw i64 %i.be, 24
@@ -627,7 +627,6 @@ _ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetIvEEjPKNS0_15Fiel
   br i1 %i.ln, label %bb.bf, label %bb.bh
 
 bb.bf:                                            ; preds = %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetIvEEjPKNS0_15FieldDescriptorE.exit.i
-  %7 = zext nneg i32 %i.lm to i64
   %i.lo = load i8, ptr %.sroa.040.047.i, align 8, !tbaa !272 ; 2 uses
   %i.lp = add i8 %i.lo, -118
   %or.cond.i26.i = icmp ult i8 %i.lp, -117
@@ -647,6 +646,7 @@ _ZN6google8protobufL20GetFastParseFunctionENS0_8internal15TcParseFunctionE.exit2
   %i.lw = load i8, ptr %i.lv, align 2, !tbaa !274
   %i.lx = getelementptr inbounds nuw i8, ptr %.sroa.040.047.i, i64 19
   %i.ly = load i8, ptr %i.lx, align 1, !tbaa !275
+  %7 = zext nneg i32 %i.lm to i64
   %i.lz = shl nuw i64 %7, 48
   %i.ma = zext i8 %i.ly to i64
   %i.mb = shl nuw nsw i64 %i.ma, 24

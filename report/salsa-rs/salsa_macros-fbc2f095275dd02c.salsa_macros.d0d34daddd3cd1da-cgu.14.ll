@@ -36,8 +36,8 @@ define internal fastcc ptr @_RINvMs0_NtNtNtNtCs2AWtUsOyxgP_3std3sys12thread_loca
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8
-  %trunc = trunc i8 %i.b to i1
-  br i1 %trunc, label %bb.f, label %bb.b
+  %2 = icmp eq i8 %i.b, 0
+  br i1 %2, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
   %.not = icmp eq ptr %1, null

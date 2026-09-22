@@ -204,17 +204,17 @@ bb.cg:                                            ; preds = %bb.cf
 _ZN6AstVar9addAttrspEP7AstNode.exit:              ; preds = %bb.cf, %bb.cg
   %i.gu = getelementptr inbounds nuw i8, ptr %0, i64 118
   %i.gv = load i8, ptr %i.gu, align 2, !tbaa !145, !range !116, !noundef !117
-  %14 = zext nneg i8 %i.gv to i64
-  %15 = getelementptr inbounds nuw i8, ptr %i.gt, i64 260 ; 9 uses
-  %i.gw = load i64, ptr %15, align 4
+  %14 = getelementptr inbounds nuw i8, ptr %i.gt, i64 260 ; 9 uses
+  %15 = zext nneg i8 %i.gv to i64
+  %i.gw = load i64, ptr %14, align 4
   %i.gx = and i64 %i.gw, -4
-  %i.gy = or disjoint i64 %i.gx, %14
+  %i.gy = or disjoint i64 %i.gx, %15
   %i.gz = getelementptr inbounds nuw i8, ptr %0, i64 117
   %i.ha = load i8, ptr %i.gz, align 1, !tbaa !144, !range !116, !noundef !117
   %i.hb = shl nuw nsw i8 %i.ha, 1
   %i.hc = zext nneg i8 %i.hb to i64
   %i.hd = or disjoint i64 %i.gy, %i.hc
-  store i64 %i.hd, ptr %15, align 4
+  store i64 %i.hd, ptr %14, align 4
   %i.he = getelementptr inbounds nuw i8, ptr %0, i64 114
   %i.hf = getelementptr inbounds nuw i8, ptr %i.gt, i64 251
   %i.hg = load i8, ptr %i.he, align 2, !tbaa !114
@@ -390,9 +390,9 @@ _ZN14V3ParseGrammar10singletonpEv.exit133:        ; preds = %_ZN14V3ParseGrammar
   br i1 %i.iq, label %bb.dh, label %_ZN6AstVar9directionERK10VDirection.exit
 
 bb.dh:                                            ; preds = %_ZN14V3ParseGrammar10singletonpEv.exit133
-  %i.ir = load i64, ptr %15, align 4
+  %i.ir = load i64, ptr %14, align 4
   %i.is = or i64 %i.ir, 4
-  store i64 %i.is, ptr %15, align 4
+  store i64 %i.is, ptr %14, align 4
   br label %_ZN6AstVar9directionERK10VDirection.exit
 
 _ZN6AstVar9directionERK10VDirection.exit:         ; preds = %bb.dh, %_ZN14V3ParseGrammar10singletonpEv.exit133, %_ZN14V3ParseGrammar10singletonpEv.exit129
@@ -747,9 +747,9 @@ _ZN7AstNode2isI17AstParseTypeDType12AstNodeDTypeEEbPKT0_.exit.thread: ; preds = 
   br i1 %i.mq, label %.thread243, label %bb.el
 
 .thread243:                                       ; preds = %_ZN7AstNode2isI17AstParseTypeDType12AstNodeDTypeEEbPKT0_.exit.thread
-  %i.mr = load i64, ptr %15, align 4
+  %i.mr = load i64, ptr %14, align 4
   %i.ms = and i64 %i.mr, -140737488355329
-  store i64 %i.ms, ptr %15, align 4
+  store i64 %i.ms, ptr %14, align 4
   br label %_ZNK8VVarType15isVPIAccessibleEv.exit
 
 bb.el:                                            ; preds = %_ZN7AstNode2isI17AstParseTypeDType12AstNodeDTypeEEbPKT0_.exit.thread
@@ -761,7 +761,7 @@ bb.el:                                            ; preds = %_ZN7AstNode2isI17As
   br i1 %or.cond202, label %bb.en, label %bb.em
 
 bb.em:                                            ; preds = %bb.el
-  %i.mw = load i64, ptr %15, align 4
+  %i.mw = load i64, ptr %14, align 4
   %i.mx = and i64 %i.mw, -140737488355329
   br label %bb.eo
 
@@ -794,7 +794,7 @@ _ZNK14V3ParseGrammar12allTracingOnEPK8FileLine.exit: ; preds = %bb.en
 _ZNK14V3ParseGrammar12allTracingOnEPK8FileLine.exit.thread: ; preds = %bb.en, %_ZNK14V3ParseGrammar12allTracingOnEPK8FileLine.exit
   %.sroa.0.0.copyload.i.pre = phi i8 [ %.sroa.0.0.copyload.i.pre.pre, %_ZNK14V3ParseGrammar12allTracingOnEPK8FileLine.exit ], [ %.sroa.0.0.copyload.i.i, %bb.en ]
   %i.nn = phi i64 [ %spec.select, %_ZNK14V3ParseGrammar12allTracingOnEPK8FileLine.exit ], [ 0, %bb.en ]
-  %i.no = load i64, ptr %15, align 4
+  %i.no = load i64, ptr %14, align 4
   %i.np = and i64 %i.no, -140737488355329
   %i.nq = or disjoint i64 %i.np, %i.nn
   br label %bb.eo
@@ -802,7 +802,7 @@ _ZNK14V3ParseGrammar12allTracingOnEPK8FileLine.exit.thread: ; preds = %bb.en, %_
 bb.eo:                                            ; preds = %bb.em, %_ZNK14V3ParseGrammar12allTracingOnEPK8FileLine.exit.thread
   %.sink = phi i64 [ %i.mx, %bb.em ], [ %i.nq, %_ZNK14V3ParseGrammar12allTracingOnEPK8FileLine.exit.thread ]
   %.sroa.0.0.copyload.i = phi i8 [ %.sroa.0.0.copyload.i.i, %bb.em ], [ %.sroa.0.0.copyload.i.pre, %_ZNK14V3ParseGrammar12allTracingOnEPK8FileLine.exit.thread ]
-  store i64 %.sink, ptr %15, align 4
+  store i64 %.sink, ptr %14, align 4
   switch i8 %.sroa.0.0.copyload.i, label %_ZNK8VVarType15isVPIAccessibleEv.exit [
     i8 5, label %bb.ep
     i8 1, label %bb.ep

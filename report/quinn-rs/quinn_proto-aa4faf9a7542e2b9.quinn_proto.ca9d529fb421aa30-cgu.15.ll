@@ -204,8 +204,8 @@ bb.aj:                                            ; preds = %bb.ae
   store i8 %.sroa.7.sroa.7.sroa.0.0.i, ptr %.sroa.23.20..sroa_idx, align 4, !dbg !17036, !alias.scope !16090, !noalias !16091
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !dbg !17037, !noalias !16198
   %i.de = trunc i64 %.sroa.7.sroa.0.0.i to i32, !dbg !16917
-  %i.df = lshr i64 %.sroa.7.sroa.0.0.i, 32, !dbg !16917 ; 2 uses
-  %i.dg = trunc i64 %i.df to i8, !dbg !16917      ; 2 uses
+  %i.df = lshr i64 %.sroa.7.sroa.0.0.i, 32, !dbg !16917 ; 3 uses
+  %i.dg = trunc i64 %i.df to i8, !dbg !16917
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECshovLROGBtMy_11quinn_proto(ptr noalias nofree noundef align 8 dereferenceable(24) %i.h)
           to label %_RNvMs1_NtCshovLROGBtMy_11quinn_proto5tokenNtB5_5Token6decode.exit unwind label %bb.c, !dbg !16917, !noalias !16090
 
@@ -419,11 +419,11 @@ bb.ay:                                            ; preds = %bb.aw
   %.sroa.6.0 = select i1 %i.dy, i128 %.sroa.036.0.copyload, i128 %.sroa.6.1.insert.ext, !dbg !17066 ; 2 uses
     #dbg_value(ptr undef, !15997, !DIExpression(), !16003)
     #dbg_value(ptr undef, !15981, !DIExpression(), !15995)
-  %.mask = and i8 %i.dg, 1, !dbg !15995
-    #dbg_value(i8 %.mask, !15986, !DIExpression(DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !16606)
+    #dbg_value(i8 %i.dg, !15986, !DIExpression(DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !16606)
     #dbg_value(i16 %i.dx, !15987, !DIExpression(DW_OP_LLVM_convert, 16, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !16607)
-  %4 = zext nneg i8 %.mask to i16, !dbg !17067
-  %i.eb = icmp eq i16 %i.dx, %4, !dbg !17067
+  %4 = trunc i64 %i.df to i16, !dbg !17067
+  %5 = and i16 %4, 255, !dbg !17067
+  %i.eb = icmp eq i16 %i.dx, %5, !dbg !17067
   br i1 %i.eb, label %bb.bg, label %bb.bh, !dbg !17067
 
 bb.az:                                            ; preds = %bb.aw
