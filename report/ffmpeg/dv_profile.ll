@@ -58,7 +58,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 451
   %i.f = load i8, ptr %i.e, align 1, !tbaa !9     ; 2 uses
   %i.g = zext i8 %i.f to i32                      ; 2 uses
-  %i.h = and i32 %i.g, 31                         ; 5 uses
+  %i.h = and i32 %i.g, 31                         ; 6 uses
   %i.i = icmp slt i8 %i.c, 0
   %i.j = icmp eq i32 %i.h, 0                      ; 3 uses
   %or.cond = select i1 %i.i, i1 %i.j, i1 false
@@ -123,9 +123,8 @@ bb.j:                                             ; preds = %bb.h
   ]
 
 .preheader.4:                                     ; preds = %bb.i
-  %switch.tableidx = add nsw i32 %i.h, -1         ; 2 uses
   %i.ad = icmp samesign ult i32 %i.h, 25
-  %switch.shifted = lshr i32 8912905, %switch.tableidx
+  %switch.shifted = lshr i32 17825810, %i.h
   %switch.lobit = trunc i32 %switch.shifted to i1
   %or.cond85 = select i1 %i.ad, i1 %switch.lobit, i1 false
   br i1 %or.cond85, label %switch.lookup, label %.preheader.9.thread
@@ -159,9 +158,10 @@ bb.m:                                             ; preds = %bb.l
   br label %.loopexit
 
 switch.lookup:                                    ; preds = %.preheader.4
-  %i.am = zext nneg i32 %switch.tableidx to i64
-  %switch.gep.a = getelementptr inbounds nuw [8 x i8], ptr @switch.table.ff_dv_frame_profile, i64 %i.am
-  %switch.load = load ptr, ptr %switch.gep.a, align 8
+  %i.am = zext nneg i32 %i.h to i64
+  %switch.gep.a = getelementptr [8 x i8], ptr @switch.table.ff_dv_frame_profile, i64 %i.am
+  %switch.gep = getelementptr i8, ptr %switch.gep.a, i64 -8
+  %switch.load = load ptr, ptr %switch.gep, align 8
   br label %.loopexit
 
 .loopexit:                                        ; preds = %switch.lookup, %bb.c, %bb.j, %.loopexit.fold.split82, %.loopexit.fold.split, %bb.h, %bb.i, %bb.l, %bb.k, %.thread, %bb.g, %bb.a, %bb.m

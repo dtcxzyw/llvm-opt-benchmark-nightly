@@ -58,10 +58,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = add nsw i32 %0, -1
-  %i.c = tail call range(i32 1, 28) i32 @llvm.ctlz.i32(i32 range(i32 16, 2147483647) %i.b, i1 true) ; 2 uses
+  %i.c = tail call range(i32 1, 28) i32 @llvm.ctlz.i32(i32 range(i32 16, 2147483647) %i.b, i1 true)
   %i.d = sub nuw nsw i32 32, %i.c                 ; 2 uses
-  %.not.i = icmp eq i32 %i.c, 1
-  br i1 %.not.i, label %bb.c, label %b3RoundUpPowerOf2.exit, !prof !9, !nosanitize !10
+  %1 = icmp samesign ult i32 %0, 1073741825
+  br i1 %1, label %b3RoundUpPowerOf2.exit, label %bb.c, !prof !9, !nosanitize !10
 
 bb.c:                                             ; preds = %bb.b
   %i.e = zext nneg i32 %i.d to i64, !nosanitize !10
@@ -78,7 +78,7 @@ bb.d:                                             ; preds = %bb.a, %b3RoundUpPow
   %i.g = shl nuw nsw i64 %.sroa.3.0, 4            ; 2 uses
   %i.h = tail call ptr @b3Alloc(i64 noundef %i.g) #8 ; 3 uses
   %.not = icmp eq ptr %i.h, null, !nosanitize !10
-  br i1 %.not, label %bb.e, label %bb.f, !prof !9, !nosanitize !10
+  br i1 %.not, label %bb.e, label %bb.f, !prof !11, !nosanitize !10
 
 bb.e:                                             ; preds = %bb.d
   tail call void @__ubsan_handle_nonnull_arg_abort(ptr nonnull @0) #7, !nosanitize !10
@@ -103,14 +103,14 @@ declare ptr @b3Alloc(i64 noundef) local_unnamed_addr #3
 declare void @__ubsan_handle_nonnull_arg_abort(ptr) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define hidden void @b3DestroySet(ptr noundef %0) local_unnamed_addr #0 !func_sanitize !11 {
+define hidden void @b3DestroySet(ptr noundef %0) local_unnamed_addr #0 !func_sanitize !12 {
 bb.a:
   %i.a = icmp ne ptr %0, null, !nosanitize !10
   %i.b = ptrtoint ptr %0 to i64, !nosanitize !10  ; 2 uses
   %i.c = and i64 %i.b, 7, !nosanitize !10
   %i.d = icmp eq i64 %i.c, 0, !nosanitize !10
   %i.e = and i1 %i.a, %i.d, !nosanitize !10
-  br i1 %i.e, label %bb.c, label %bb.b, !prof !12, !nosanitize !10
+  br i1 %i.e, label %bb.c, label %bb.b, !prof !9, !nosanitize !10
 
 bb.b:                                             ; preds = %bb.a
   tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @2, i64 %i.b) #7, !nosanitize !10
@@ -133,14 +133,14 @@ bb.c:                                             ; preds = %bb.a
 declare void @b3Free(ptr noundef, i64 noundef) local_unnamed_addr #3
 
 ; Function Attrs: nounwind uwtable
-define hidden void @b3ClearSet(ptr noundef %0) local_unnamed_addr #0 !func_sanitize !11 {
+define hidden void @b3ClearSet(ptr noundef %0) local_unnamed_addr #0 !func_sanitize !12 {
 bb.a:
   %i.a = icmp ne ptr %0, null, !nosanitize !10
   %i.b = ptrtoint ptr %0 to i64, !nosanitize !10  ; 2 uses
   %i.c = and i64 %i.b, 7, !nosanitize !10
   %i.d = icmp eq i64 %i.c, 0, !nosanitize !10
   %i.e = and i1 %i.a, %i.d, !nosanitize !10
-  br i1 %i.e, label %bb.c, label %bb.b, !prof !12, !nosanitize !10
+  br i1 %i.e, label %bb.c, label %bb.b, !prof !9, !nosanitize !10
 
 bb.b:                                             ; preds = %bb.a
   tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @3, i64 %i.b) #7, !nosanitize !10
@@ -151,7 +151,7 @@ bb.c:                                             ; preds = %bb.a
   store i32 0, ptr %i.f, align 4, !tbaa !18
   %i.g = load ptr, ptr %0, align 8, !tbaa !16     ; 2 uses
   %.not = icmp eq ptr %i.g, null, !nosanitize !10
-  br i1 %.not, label %bb.d, label %bb.e, !prof !9, !nosanitize !10
+  br i1 %.not, label %bb.d, label %bb.e, !prof !11, !nosanitize !10
 
 bb.d:                                             ; preds = %bb.c
   tail call void @__ubsan_handle_nonnull_arg_abort(ptr nonnull @4) #7, !nosanitize !10
@@ -184,7 +184,7 @@ bb.a:
   %i.m = and i64 %i.l, 7, !nosanitize !10
   %i.n = icmp eq i64 %i.m, 0, !nosanitize !10
   %i.o = and i1 %i.k, %i.n, !nosanitize !10
-  br i1 %i.o, label %bb.c, label %bb.b, !prof !12, !nosanitize !10
+  br i1 %i.o, label %bb.c, label %bb.b, !prof !9, !nosanitize !10
 
 bb.b:                                             ; preds = %bb.a
   tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @6, i64 %i.l) #7, !nosanitize !10
@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   %i.z = icmp slt i32 %i.j, 0
   %i.aa = xor i1 %i.z, %i.y
   %i.ab = and i1 %i.x, %i.aa, !nosanitize !10
-  br i1 %i.ab, label %bb.e, label %bb.d, !prof !12, !nosanitize !10
+  br i1 %i.ab, label %bb.e, label %bb.d, !prof !9, !nosanitize !10
 
 bb.d:                                             ; preds = %bb.c
   tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @7, i64 %i.t, i64 %i.u) #7, !nosanitize !10
@@ -215,7 +215,7 @@ bb.e:                                             ; preds = %bb.c
   %i.ad = and i64 %i.ac, 7, !nosanitize !10
   %i.ae = icmp eq i64 %i.ad, 0, !nosanitize !10
   %i.af = and i1 %i.v, %i.ae
-  br i1 %i.af, label %bb.g, label %bb.f, !prof !12, !nosanitize !10
+  br i1 %i.af, label %bb.g, label %bb.f, !prof !9, !nosanitize !10
 
 bb.f:                                             ; preds = %bb.e
   tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @9, i64 %i.ac) #7, !nosanitize !10
@@ -235,7 +235,7 @@ bb.a:
   %i.c = and i64 %i.b, 7, !nosanitize !10
   %i.d = icmp eq i64 %i.c, 0, !nosanitize !10
   %i.e = and i1 %i.a, %i.d, !nosanitize !10
-  br i1 %i.e, label %bb.c, label %bb.b, !prof !12, !nosanitize !10
+  br i1 %i.e, label %bb.c, label %bb.b, !prof !9, !nosanitize !10
 
 bb.b:                                             ; preds = %bb.a
   tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @30, i64 %i.b) #7, !nosanitize !10
@@ -263,7 +263,7 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %bb.c
   %i.u = getelementptr inbounds [16 x i8], ptr %.fr39, i64 %i.l ; 2 uses
-  br i1 %i.k, label %.lr.ph.split, label %.lr.ph.split.us, !prof !12
+  br i1 %i.k, label %.lr.ph.split, label %.lr.ph.split.us, !prof !9
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph
   %i.v = ptrtoint ptr %i.u to i64, !nosanitize !10
@@ -280,7 +280,7 @@ bb.c:                                             ; preds = %bb.a
   %i.x = ptrtoint ptr %i.w to i64, !nosanitize !10 ; 2 uses
   %i.y = and i64 %i.x, 7, !nosanitize !10
   %i.z = icmp eq i64 %i.y, 0, !nosanitize !10
-  br i1 %i.z, label %bb.d, label %.split, !prof !12, !nosanitize !10
+  br i1 %i.z, label %bb.d, label %.split, !prof !9, !nosanitize !10
 
 .split:                                           ; preds = %.lr.ph.split, %.lr.ph.split.us
   %.us-phi = phi i64 [ %i.v, %.lr.ph.split.us ], [ %i.x, %.lr.ph.split ]
@@ -301,7 +301,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.ad = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %.037, i32 1), !nosanitize !10 ; 2 uses
   %i.ae = extractvalue { i32, i1 } %i.ad, 1, !nosanitize !10
-  br i1 %i.ae, label %bb.g, label %bb.h, !prof !9, !nosanitize !10
+  br i1 %i.ae, label %bb.g, label %bb.h, !prof !11, !nosanitize !10
 
 bb.g:                                             ; preds = %bb.f
   %i.af = zext nneg i32 %.037 to i64, !nosanitize !10
@@ -337,7 +337,7 @@ bb.a:
   %i.c = and i64 %i.b, 7, !nosanitize !10
   %i.d = icmp eq i64 %i.c, 0, !nosanitize !10
   %i.e = and i1 %i.a, %i.d, !nosanitize !10
-  br i1 %i.e, label %bb.c, label %bb.b, !prof !12, !nosanitize !10
+  br i1 %i.e, label %bb.c, label %bb.b, !prof !9, !nosanitize !10
 
 bb.b:                                             ; preds = %bb.a
   tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @11, i64 %i.b) #7, !nosanitize !10
@@ -368,7 +368,7 @@ bb.a:
   %i.m = and i64 %i.l, 7, !nosanitize !10
   %i.n = icmp eq i64 %i.m, 0, !nosanitize !10
   %i.o = and i1 %i.k, %i.n, !nosanitize !10
-  br i1 %i.o, label %bb.c, label %bb.b, !prof !12, !nosanitize !10
+  br i1 %i.o, label %bb.c, label %bb.b, !prof !9, !nosanitize !10
 
 bb.b:                                             ; preds = %bb.a
   tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @12, i64 %i.l) #7, !nosanitize !10
@@ -389,7 +389,7 @@ bb.c:                                             ; preds = %bb.a
   %i.z = icmp slt i32 %i.j, 0
   %i.aa = xor i1 %i.z, %i.y
   %i.ab = and i1 %i.x, %i.aa, !nosanitize !10
-  br i1 %i.ab, label %bb.e, label %bb.d, !prof !12, !nosanitize !10
+  br i1 %i.ab, label %bb.e, label %bb.d, !prof !9, !nosanitize !10
 
 bb.d:                                             ; preds = %bb.c
   tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @13, i64 %i.t, i64 %i.u) #7, !nosanitize !10
@@ -400,7 +400,7 @@ bb.e:                                             ; preds = %bb.c
   %i.ad = and i64 %i.ac, 7, !nosanitize !10
   %i.ae = icmp eq i64 %i.ad, 0, !nosanitize !10
   %i.af = and i1 %i.v, %i.ae
-  br i1 %i.af, label %bb.g, label %bb.f, !prof !12, !nosanitize !10
+  br i1 %i.af, label %bb.g, label %bb.f, !prof !9, !nosanitize !10
 
 bb.f:                                             ; preds = %bb.e
   tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @14, i64 %i.ac) #7, !nosanitize !10
@@ -430,7 +430,7 @@ bb.i:                                             ; preds = %bb.h
   %i.aq = tail call ptr @b3Alloc(i64 noundef %i.ap) #8 ; 3 uses
   store ptr %i.aq, ptr %0, align 8, !tbaa !16
   %.not.i = icmp eq ptr %i.aq, null, !nosanitize !10
-  br i1 %.not.i, label %bb.j, label %bb.k, !prof !9, !nosanitize !10
+  br i1 %.not.i, label %bb.j, label %bb.k, !prof !11, !nosanitize !10
 
 bb.j:                                             ; preds = %bb.i
   tail call void @__ubsan_handle_nonnull_arg_abort(ptr nonnull @35) #7, !nosanitize !10
@@ -458,7 +458,7 @@ bb.k:                                             ; preds = %bb.i
   %i.aw = shl nuw nsw i64 %indvars.iv.i, 4
   %i.ax = add i64 %i.aw, %i.t, !nosanitize !10    ; 2 uses
   %.not43.i = icmp ult i64 %i.ax, %i.t, !nosanitize !10
-  br i1 %.not43.i, label %.split.us.i, label %bb.l, !prof !9, !nosanitize !10
+  br i1 %.not43.i, label %.split.us.i, label %bb.l, !prof !11, !nosanitize !10
 
 .split.us.i:                                      ; preds = %.lr.ph.split.i
   tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @36, i64 %i.t, i64 %i.ax) #7, !nosanitize !10
@@ -468,7 +468,7 @@ bb.l:                                             ; preds = %.lr.ph.split.i
   %i.ay = ptrtoint ptr %i.av to i64, !nosanitize !10 ; 2 uses
   %i.az = and i64 %i.ay, 7, !nosanitize !10
   %i.ba = icmp eq i64 %i.az, 0, !nosanitize !10
-  br i1 %i.ba, label %bb.m, label %.split38.i, !prof !12, !nosanitize !10
+  br i1 %i.ba, label %bb.m, label %.split38.i, !prof !9, !nosanitize !10
 
 .split38.i:                                       ; preds = %bb.l
   tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @37, i64 %i.ay) #7, !nosanitize !10
@@ -510,7 +510,7 @@ bb.a:
   %i.b = ptrtoint ptr %0 to i64, !nosanitize !10  ; 2 uses
   %i.c = and i64 %i.b, 7, !nosanitize !10
   %i.d = icmp eq i64 %i.c, 0, !nosanitize !10
-  br i1 %i.d, label %bb.c, label %bb.b, !prof !12, !nosanitize !10
+  br i1 %i.d, label %bb.c, label %bb.b, !prof !9, !nosanitize !10
 
 bb.b:                                             ; preds = %bb.a
   tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @38, i64 %i.b) #7, !nosanitize !10
@@ -530,7 +530,7 @@ bb.c:                                             ; preds = %bb.a
   %i.o = icmp slt i32 %i.a, 0
   %i.p = xor i1 %i.o, %i.n
   %i.q = and i1 %i.m, %i.p, !nosanitize !10
-  br i1 %i.q, label %bb.e, label %bb.d, !prof !12, !nosanitize !10
+  br i1 %i.q, label %bb.e, label %bb.d, !prof !9, !nosanitize !10
 
 bb.d:                                             ; preds = %bb.c
   tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @39, i64 %i.i, i64 %i.j) #7, !nosanitize !10
@@ -541,7 +541,7 @@ bb.e:                                             ; preds = %bb.c
   %i.s = and i64 %i.r, 7, !nosanitize !10
   %i.t = icmp eq i64 %i.s, 0, !nosanitize !10
   %i.u = and i1 %i.k, %i.t
-  br i1 %i.u, label %bb.g, label %bb.f, !prof !12, !nosanitize !10
+  br i1 %i.u, label %bb.g, label %bb.f, !prof !9, !nosanitize !10
 
 bb.f:                                             ; preds = %bb.e
   tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @40, i64 %i.r) #7, !nosanitize !10
@@ -576,7 +576,7 @@ bb.a:
   %i.m = and i64 %i.l, 7, !nosanitize !10
   %i.n = icmp eq i64 %i.m, 0, !nosanitize !10
   %i.o = and i1 %i.k, %i.n, !nosanitize !10
-  br i1 %i.o, label %bb.c, label %bb.b, !prof !12, !nosanitize !10
+  br i1 %i.o, label %bb.c, label %bb.b, !prof !9, !nosanitize !10
 
 bb.b:                                             ; preds = %bb.a
   tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @15, i64 %i.l) #7, !nosanitize !10
@@ -596,7 +596,7 @@ bb.c:                                             ; preds = %bb.a
   %i.z = icmp slt i32 %i.j, 0
   %i.aa = xor i1 %i.z, %i.y
   %i.ab = and i1 %i.x, %i.aa, !nosanitize !10
-  br i1 %i.ab, label %bb.e, label %bb.d, !prof !12, !nosanitize !10
+  br i1 %i.ab, label %bb.e, label %bb.d, !prof !9, !nosanitize !10
 
 bb.d:                                             ; preds = %bb.c
   tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @16, i64 %i.t, i64 %i.u) #7, !nosanitize !10
@@ -607,7 +607,7 @@ bb.e:                                             ; preds = %bb.c
   %i.ad = and i64 %i.ac, 7, !nosanitize !10
   %i.ae = icmp eq i64 %i.ad, 0, !nosanitize !10
   %i.af = and i1 %i.v, %i.ae
-  br i1 %i.af, label %bb.g, label %bb.f, !prof !12, !nosanitize !10
+  br i1 %i.af, label %bb.g, label %bb.f, !prof !9, !nosanitize !10
 
 bb.f:                                             ; preds = %bb.e
   tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @17, i64 %i.ac) #7, !nosanitize !10
@@ -654,7 +654,7 @@ bb.i:                                             ; preds = %.lr.ph, %bb.v
   %i.ba = icmp slt i32 %i.at, 0
   %i.bb = xor i1 %i.ba, %i.az
   %i.bc = and i1 %i.ay, %i.bb, !nosanitize !10
-  br i1 %i.bc, label %bb.k, label %bb.j, !prof !12, !nosanitize !10
+  br i1 %i.bc, label %bb.k, label %bb.j, !prof !9, !nosanitize !10
 
 bb.j:                                             ; preds = %bb.i
   tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @20, i64 %i.t, i64 %i.ax) #7, !nosanitize !10
@@ -664,7 +664,7 @@ bb.k:                                             ; preds = %bb.i
   %i.bd = ptrtoint ptr %i.av to i64, !nosanitize !10 ; 2 uses
   %i.be = and i64 %i.bd, 7, !nosanitize !10
   %i.bf = icmp eq i64 %i.be, 0, !nosanitize !10
-  br i1 %i.bf, label %bb.m, label %bb.l, !prof !12, !nosanitize !10
+  br i1 %i.bf, label %bb.m, label %bb.l, !prof !9, !nosanitize !10
 
 bb.l:                                             ; preds = %bb.k
   tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @21, i64 %i.bd) #7, !nosanitize !10
@@ -701,7 +701,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %i.br = icmp slt i32 %.04080, 0
   %i.bs = xor i1 %i.br, %i.bq
   %i.bt = and i1 %i.bp, %i.bs, !nosanitize !10
-  br i1 %i.bt, label %bb.s, label %bb.r, !prof !12, !nosanitize !10
+  br i1 %i.bt, label %bb.s, label %bb.r, !prof !9, !nosanitize !10
 
 bb.r:                                             ; preds = %bb.q
   tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @22, i64 %i.t, i64 %i.bo) #7, !nosanitize !10
@@ -711,7 +711,7 @@ bb.s:                                             ; preds = %bb.q
   %i.bu = ptrtoint ptr %i.bm to i64, !nosanitize !10 ; 2 uses
   %i.bv = and i64 %i.bu, 7, !nosanitize !10
   %i.bw = icmp eq i64 %i.bv, 0, !nosanitize !10
-  br i1 %i.bw, label %bb.u, label %bb.t, !prof !12, !nosanitize !10
+  br i1 %i.bw, label %bb.u, label %bb.t, !prof !9, !nosanitize !10
 
 bb.t:                                             ; preds = %bb.s
   tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @23, i64 %i.bu) #7, !nosanitize !10
@@ -750,7 +750,7 @@ bb.a:
   %i.c = and i64 %i.b, 7, !nosanitize !10
   %i.d = icmp eq i64 %i.c, 0, !nosanitize !10
   %i.e = and i1 %i.a, %i.d, !nosanitize !10
-  br i1 %i.e, label %bb.c, label %bb.b, !prof !12, !nosanitize !10
+  br i1 %i.e, label %bb.c, label %bb.b, !prof !9, !nosanitize !10
 
 bb.b:                                             ; preds = %bb.a
   tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @25, i64 %i.b) #7, !nosanitize !10
@@ -767,7 +767,7 @@ bb.c:                                             ; preds = %bb.a
   %.fr28 = freeze ptr %i.h                        ; 3 uses
   %i.i = ptrtoint ptr %.fr28 to i64, !nosanitize !10 ; 3 uses
   %.not29 = icmp eq ptr %.fr28, null, !nosanitize !10
-  br i1 %.not29, label %.split26, label %.lr.ph.split.preheader, !prof !9
+  br i1 %.not29, label %.split26, label %.lr.ph.split.preheader, !prof !11
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
   %wide.trip.count = zext i32 %i.g to i64
@@ -784,7 +784,7 @@ bb.c:                                             ; preds = %bb.a
   %i.k = shl nuw nsw i64 %indvars.iv, 3
   %i.l = add i64 %i.k, %i.i, !nosanitize !10      ; 2 uses
   %.not30 = icmp ult i64 %i.l, %i.i, !nosanitize !10
-  br i1 %.not30, label %.split.us, label %bb.d, !prof !9, !nosanitize !10
+  br i1 %.not30, label %.split.us, label %bb.d, !prof !11, !nosanitize !10
 
 .split.us:                                        ; preds = %.lr.ph.split
   tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @26, i64 %i.i, i64 %i.l) #7, !nosanitize !10
@@ -794,7 +794,7 @@ bb.d:                                             ; preds = %.lr.ph.split
   %i.m = ptrtoint ptr %i.j to i64, !nosanitize !10 ; 2 uses
   %i.n = and i64 %i.m, 7, !nosanitize !10
   %i.o = icmp eq i64 %i.n, 0, !nosanitize !10
-  br i1 %i.o, label %bb.e, label %.split26, !prof !12, !nosanitize !10
+  br i1 %i.o, label %bb.e, label %.split26, !prof !9, !nosanitize !10
 
 .split26:                                         ; preds = %bb.d, %.lr.ph
   %.us-phi27 = phi i64 [ 0, %.lr.ph ], [ %i.m, %bb.d ]
@@ -807,7 +807,7 @@ bb.e:                                             ; preds = %bb.d
   %i.r = trunc nuw nsw i64 %i.q to i32
   %i.s = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %.0722, i32 %i.r), !nosanitize !10 ; 2 uses
   %i.t = extractvalue { i32, i1 } %i.s, 1, !nosanitize !10
-  br i1 %i.t, label %bb.f, label %bb.g, !prof !9, !nosanitize !10
+  br i1 %i.t, label %bb.f, label %bb.g, !prof !11, !nosanitize !10
 
 bb.f:                                             ; preds = %bb.e
   %i.u = zext i32 %.0722 to i64, !nosanitize !10
@@ -853,10 +853,10 @@ attributes #8 = { nounwind }
 !6 = !{!"int", !5, i64 0}
 !7 = !{!"__libc_errno", !6, i64 0}
 !8 = !{!7, !6, i64 0}
-!9 = !{!"branch_weights", i32 1, i32 1048575}
+!9 = !{!"branch_weights", i32 1048575, i32 1}
 !10 = !{}
-!11 = !{i32 -1056584962, i32 -142943339}
-!12 = !{!"branch_weights", i32 1048575, i32 1}
+!11 = !{!"branch_weights", i32 1, i32 1048575}
+!12 = !{i32 -1056584962, i32 -142943339}
 !13 = !{!"any pointer", !5, i64 0}
 !14 = !{!"p1 _ZTS9b3SetItem", !13, i64 0}
 !15 = !{!"b3HashSet", !14, i64 0, !6, i64 8, !6, i64 12}
