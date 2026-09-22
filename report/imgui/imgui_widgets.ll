@@ -205,8 +205,12 @@ bb.js:                                            ; preds = %bb.gr, %bb.gx, %bb.
   %i.aig = getelementptr inbounds nuw i8, ptr %i.aid, i64 8
   %i.aih = load i32, ptr %i.aig, align 4, !tbaa !395
   %.not1644 = icmp eq i32 %i.aif, %i.aih
-  %23 = select i1 %.not1644, i8 0, i8 %.11243
-  %24 = or i8 %23, %.01240                        ; 5 uses
+  %23 = zext nneg i8 %.11243 to i32
+  %24 = select i1 %.not1644, i32 0, i32 %23
+  %25 = zext nneg i8 %.01240 to i32
+  %26 = or i32 %24, %25
+  %27 = icmp ne i32 %26, 0
+  %28 = zext i1 %27 to i8                         ; 5 uses
   %.pre1693 = load i32, ptr %i.ei, align 4, !tbaa !218
   %i.aii = icmp eq i32 %.pre1693, %i.s
   br i1 %i.aii, label %bb.jt, label %.thread1572
@@ -342,7 +346,7 @@ bb.jz:                                            ; preds = %bb.jy
   %.3125817891822 = phi i8 [ %.21257, %bb.jt ], [ %.21257, %_ZN5ImStbL20stb_textedit_replaceEP19ImGuiInputTextStatePNS_17STB_TexteditStateEPKci.exit ], [ %.21257, %bb.jz ], [ %.21257, %bb.jy ], [ %.01255, %bb.fl ] ; 5 uses
   %.1125017911821 = phi float [ %.01249, %bb.jt ], [ %.01249, %_ZN5ImStbL20stb_textedit_replaceEP19ImGuiInputTextStatePNS_17STB_TexteditStateEPKci.exit ], [ %.01249, %bb.jz ], [ %.01249, %bb.jy ], [ %i.fn, %bb.fl ] ; 5 uses
   %.2124417941820 = phi i8 [ %.11243, %bb.jt ], [ %.11243, %_ZN5ImStbL20stb_textedit_replaceEP19ImGuiInputTextStatePNS_17STB_TexteditStateEPKci.exit ], [ %.11243, %bb.jz ], [ %.11243, %bb.jy ], [ %.01242, %bb.fl ] ; 5 uses
-  %.1124117971819 = phi i8 [ %24, %bb.jt ], [ %24, %_ZN5ImStbL20stb_textedit_replaceEP19ImGuiInputTextStatePNS_17STB_TexteditStateEPKci.exit ], [ %24, %bb.jz ], [ %24, %bb.jy ], [ %i.qa, %bb.fl ] ; 5 uses
+  %.1124117971819 = phi i8 [ %28, %bb.jt ], [ %28, %_ZN5ImStbL20stb_textedit_replaceEP19ImGuiInputTextStatePNS_17STB_TexteditStateEPKci.exit ], [ %28, %bb.jz ], [ %28, %bb.jy ], [ %i.qa, %bb.fl ] ; 5 uses
   %.2123517981818 = phi i1 [ %.11234, %bb.jt ], [ %.11234, %_ZN5ImStbL20stb_textedit_replaceEP19ImGuiInputTextStatePNS_17STB_TexteditStateEPKci.exit ], [ %.11234, %bb.jz ], [ %.11234, %bb.jy ], [ false, %bb.fl ] ; 6 uses
   %.1123018001817 = phi i1 [ %.01229, %bb.jt ], [ %.01229, %_ZN5ImStbL20stb_textedit_replaceEP19ImGuiInputTextStatePNS_17STB_TexteditStateEPKci.exit ], [ %.01229, %bb.jz ], [ %.01229, %bb.jy ], [ false, %bb.fl ]
   %.01236 = phi i1 [ false, %bb.jt ], [ true, %_ZN5ImStbL20stb_textedit_replaceEP19ImGuiInputTextStatePNS_17STB_TexteditStateEPKci.exit ], [ true, %bb.jz ], [ false, %bb.jy ], [ false, %bb.fl ] ; 2 uses
@@ -596,7 +600,7 @@ bb.ky:                                            ; preds = %bb.kx
 
 .thread1572:                                      ; preds = %.thread1572.sink.split, %bb.fk, %bb.kx, %bb.ky, %bb.ku, %bb.kw, %bb.js
   %.212351799 = phi i1 [ %.2123517981818, %bb.ku ], [ %.2123517981818, %bb.kx ], [ %.2123517981818, %bb.kw ], [ %.11234, %bb.js ], [ false, %bb.fk ], [ %.2123517981818, %bb.ky ], [ %.2123517981818, %.thread1572.sink.split ]
-  %.112411796 = phi i8 [ %.1124117971819, %bb.ku ], [ %.1124117971819, %bb.kx ], [ %.1124117971819, %bb.kw ], [ %24, %bb.js ], [ %i.qa, %bb.fk ], [ %.1124117971819, %bb.ky ], [ %.1124117971819, %.thread1572.sink.split ] ; 4 uses
+  %.112411796 = phi i8 [ %.1124117971819, %bb.ku ], [ %.1124117971819, %bb.kx ], [ %.1124117971819, %bb.kw ], [ %28, %bb.js ], [ %i.qa, %bb.fk ], [ %.1124117971819, %bb.ky ], [ %.1124117971819, %.thread1572.sink.split ] ; 4 uses
   %.212441793 = phi i8 [ %.2124417941820, %bb.ku ], [ %.2124417941820, %bb.kx ], [ %.2124417941820, %bb.kw ], [ %.11243, %bb.js ], [ %.01242, %bb.fk ], [ %.2124417941820, %bb.ky ], [ %.2124417941820, %.thread1572.sink.split ] ; 4 uses
   %.112501790 = phi float [ %.1125017911821, %bb.ku ], [ %.1125017911821, %bb.kx ], [ %.1125017911821, %bb.kw ], [ %.01249, %bb.js ], [ %i.fn, %bb.fk ], [ %.1125017911821, %bb.ky ], [ %.1125017911821, %.thread1572.sink.split ] ; 7 uses
   %.312581788 = phi i8 [ %.3125817891822, %bb.ku ], [ 0, %bb.kx ], [ %.3125817891822, %bb.kw ], [ %.21257, %bb.js ], [ %.01255, %bb.fk ], [ %.3125817891822, %bb.ky ], [ %.3125817891822, %.thread1572.sink.split ]
@@ -999,10 +1003,12 @@ _ZN5ImGui7SpacingEv.exit:                         ; preds = %bb.bp, %bb.bo, %bb.
   %i.kj = call noundef zeroext i1 @_ZN5ImGui12ColorPicker4EPKcPfiPKf(ptr noundef nonnull @.str.68, ptr noundef nonnull %1, i32 noundef %i.kg, ptr noundef nonnull %i.ki)
   %i.kk = zext i1 %i.kj to i8
   %i.kl = or i8 %.3223, %i.kk
+  %11 = icmp ne i8 %i.kl, 0
+  %12 = zext i1 %11 to i8
   br label %bb.bq
 
 bb.bq:                                            ; preds = %_ZN5ImGui7SpacingEv.exit, %bb.bm
-  %.4224 = phi i8 [ %i.kl, %_ZN5ImGui7SpacingEv.exit ], [ %.3223, %bb.bm ]
+  %.4224 = phi i8 [ %12, %_ZN5ImGui7SpacingEv.exit ], [ %.3223, %bb.bm ]
   %.0211 = phi ptr [ %i.ju, %_ZN5ImGui7SpacingEv.exit ], [ null, %bb.bm ]
   call void @_ZN5ImGui8EndPopupEv()
   br label %bb.br
@@ -1405,10 +1411,12 @@ bb.cm:                                            ; preds = %bb.cl
   %i.pe = call noundef zeroext i1 @_ZN5ImGui10ColorEdit4EPKcPfi(ptr noundef nonnull @.str.80, ptr noundef nonnull %1, i32 noundef %i.pd)
   %i.pf = zext i1 %i.pe to i8
   %i.pg = or i8 %.9, %i.pf
+  %41 = icmp ne i8 %i.pg, 0
+  %42 = zext i1 %41 to i8
   br label %bb.cn
 
 bb.cn:                                            ; preds = %bb.cl, %bb.cm
-  %.10 = phi i8 [ %i.pg, %bb.cm ], [ %.9, %bb.cl ] ; 2 uses
+  %.10 = phi i8 [ %42, %bb.cm ], [ %.9, %bb.cl ]  ; 2 uses
   %i.ph = and i32 %.3, 4194304
   %.not465 = icmp ne i32 %i.ph, 0
   %i.pi = and i32 %.3, 3145728
@@ -1421,10 +1429,12 @@ bb.co:                                            ; preds = %bb.cn
   %i.pl = call noundef zeroext i1 @_ZN5ImGui10ColorEdit4EPKcPfi(ptr noundef nonnull @.str.81, ptr noundef nonnull %1, i32 noundef %i.pk)
   %i.pm = zext i1 %i.pl to i8
   %i.pn = or i8 %.10, %i.pm
+  %43 = icmp ne i8 %i.pn, 0
+  %44 = zext i1 %43 to i8
   br label %bb.cp
 
 bb.cp:                                            ; preds = %bb.co, %bb.cn
-  %.11 = phi i8 [ %i.pn, %bb.co ], [ %.10, %bb.cn ] ; 2 uses
+  %.11 = phi i8 [ %44, %bb.co ], [ %.10, %bb.cn ] ; 2 uses
   call void @_ZN5ImGui12PopItemWidthEv()
   br i1 %.1421.not, label %.thread598, label %bb.cq
 
@@ -1827,12 +1837,12 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.e
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 7828
   %i.s = load i8, ptr %i.r, align 4, !tbaa !483, !range !184, !noundef !185 ; 2 uses
-  %2 = zext nneg i8 %i.s to i32
   %i.t = load ptr, ptr @GImGui, align 8, !tbaa !29
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 5312
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !158
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 448
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !481
+  %2 = zext nneg i8 %i.s to i32
   tail call void @_ZN12ImGuiStorage6SetIntEji(ptr noundef nonnull align 8 dereferenceable(16) %i.x, i32 noundef %0, i32 noundef %2)
   br label %bb.i
 

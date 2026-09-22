@@ -205,19 +205,19 @@ bb.iy:                                            ; preds = %bb.iv, %.split
   br i1 %.not227577, label %._crit_edge584, label %.lr.ph583
 
 .lr.ph583:                                        ; preds = %bb.iy, %bb.jd
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.jd ], [ 1, %bb.iy ] ; 7 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.jd ], [ 1, %bb.iy ] ; 8 uses
   %i.amy = phi i32 [ %i.anv, %bb.jd ], [ %i.amx, %bb.iy ]
-  %.0199580 = phi i8 [ %.1200, %bb.jd ], [ %i.amk, %bb.iy ] ; 2 uses
+  %.0199580 = phi i8 [ %.1200, %bb.jd ], [ %i.amk, %bb.iy ] ; 3 uses
   %.1203579 = phi i32 [ %.2204, %bb.jd ], [ %.0202, %bb.iy ] ; 4 uses
   %.1206578 = phi i32 [ %.2207, %bb.jd ], [ 0, %bb.iy ] ; 2 uses
   %i.amz = icmp samesign ult i64 %indvars.iv599, %indvars.iv
   %or.cond237 = select i1 %i.lt, i1 true, i1 %i.amz
   %i.ana = icmp eq i64 %indvars.iv599, %indvars.iv ; 2 uses
   %i.anb = and i1 %7, %i.ana
-  %narrow495 = or i1 %or.cond237, %i.anb          ; 2 uses
-  %i.anc = zext i1 %narrow495 to i8               ; 2 uses
-  %i.and = zext i32 %i.amy to i64
-  %i.ane = icmp eq i64 %indvars.iv, %i.and        ; 2 uses
+  %narrow495 = or i1 %or.cond237, %i.anb
+  %i.anc = zext i1 %narrow495 to i8               ; 3 uses
+  %i.and = zext i32 %i.amy to i64                 ; 2 uses
+  %i.ane = icmp eq i64 %indvars.iv, %i.and
   %or.cond239 = and i1 %i.ana, %.not238
   %or.cond490 = or i1 %i.ane, %or.cond239
   br i1 %or.cond490, label %bb.ja, label %bb.iz
@@ -234,12 +234,12 @@ bb.iz:                                            ; preds = %.lr.ph583
 
 bb.ja:                                            ; preds = %.lr.ph583, %bb.iz
   %.0 = phi i32 [ %i.anl, %bb.iz ], [ -1, %.lr.ph583 ] ; 3 uses
-  %.not228.a = icmp ne i32 %.1203579, %.0
-  %or.cond240.not497 = select i1 %i.ane, i1 true, i1 %.not228.a
-  %41 = trunc nuw i8 %.0199580 to i1              ; 2 uses
-  %42 = xor i1 %narrow495, %41
-  %or.cond241.not = select i1 %or.cond240.not497, i1 true, i1 %42
-  br i1 %or.cond241.not, label %bb.jb, label %bb.jd
+  %.not228.a = icmp ne i64 %indvars.iv, %i.and
+  %.not228 = icmp eq i32 %.1203579, %.0
+  %or.cond240 = select i1 %.not228.a, i1 %.not228, i1 false
+  %.not229 = icmp eq i8 %.0199580, %i.anc
+  %or.cond241.not = select i1 %or.cond240, i1 %.not229, i1 false
+  br i1 %or.cond241.not, label %bb.jd, label %bb.jb
 
 bb.jb:                                            ; preds = %bb.ja
   %i.anm = icmp sgt i32 %.1203579, -1
@@ -247,6 +247,7 @@ bb.jb:                                            ; preds = %bb.ja
   br i1 %i.anm, label %.invoke774, label %bb.jc
 
 .invoke774:                                       ; preds = %bb.jb
+  %41 = trunc nuw i8 %.0199580 to i1
   %i.ano = zext nneg i32 %.1203579 to i64
   %i.anp = sub nsw i32 %i.ann, %.1206578
   %i.anq = sitofp i32 %i.anp to float

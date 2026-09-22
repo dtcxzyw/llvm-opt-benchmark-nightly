@@ -204,7 +204,6 @@ bb.d:                                             ; preds = %bb.c
   %i.p = lshr i128 %i.m, 64
   %i.q = trunc nuw i128 %i.p to i64
   %i.r = lshr i128 %i.m, 96
-  %2 = trunc nuw nsw i128 %i.r to i64
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.t = load ptr, ptr %i.s, align 8, !alias.scope !8135, !nonnull !3, !noundef !3
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -213,6 +212,7 @@ bb.d:                                             ; preds = %bb.c
   %i.x = icmp ult i64 %i.w, %i.v
   tail call void @llvm.assume(i1 %i.x)
   %i.y = getelementptr inbounds nuw [24 x i8], ptr %i.t, i64 %i.w
+  %2 = trunc nuw nsw i128 %i.r to i64
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 8
   %i.aa = load ptr, ptr %i.z, align 8, !noalias !8135, !noundef !3
   %i.ab = trunc i128 %i.m to i64
@@ -591,8 +591,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.j = lshr i128 %i.g, 64                       ; 2 uses
   %i.k = trunc i128 %i.j to i32
-  %i.l = lshr i128 %i.g, 96
-  %2 = trunc nuw nsw i128 %i.l to i64             ; 6 uses
+  %i.l = lshr i128 %i.g, 96                       ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.n = load i64, ptr %i.m, align 8, !noundef !3 ; 4 uses
   %i.o = icmp ult i64 %i.n, 384307168202282326
@@ -608,6 +607,7 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.n
 
 bb.f:                                             ; preds = %bb.d
+  %2 = trunc nuw nsw i128 %i.l to i64             ; 3 uses
   %i.u = trunc i128 %i.g to i64
   %i.v = and i64 %i.u, 4294967295                 ; 2 uses
   %i.w = add nuw nsw i64 %i.v, %2                 ; 2 uses
@@ -638,9 +638,10 @@ bb.j:                                             ; preds = %bb.g
   %i.ah = getelementptr inbounds nuw [24 x i8], ptr %i.ag, i64 %i.aa ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 16
   %i.aj = load i64, ptr %i.ai, align 8, !noundef !3 ; 2 uses
+  %3 = trunc nuw nsw i128 %i.l to i64             ; 3 uses
   %i.ak = trunc i128 %i.g to i64
   %i.al = and i64 %i.ak, 4294967295               ; 2 uses
-  %i.am = add nuw nsw i64 %i.al, %2               ; 2 uses
+  %i.am = add nuw nsw i64 %i.al, %3               ; 2 uses
   %.not12 = icmp ugt i64 %i.am, %i.aj
   br i1 %.not12, label %bb.l, label %bb.m, !prof !6
 
@@ -649,13 +650,13 @@ bb.k:                                             ; preds = %bb.g
   unreachable
 
 bb.l:                                             ; preds = %bb.j
-  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef %2, i64 noundef %i.am, i64 noundef %i.aj, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @46) #33
+  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef %3, i64 noundef %i.am, i64 noundef %i.aj, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @46) #33
   unreachable
 
 bb.m:                                             ; preds = %bb.j
   %i.an = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
   %i.ao = load ptr, ptr %i.an, align 8, !noundef !3
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 %2
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 %3
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.i, %bb.m, %bb.e

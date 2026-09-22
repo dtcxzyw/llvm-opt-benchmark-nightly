@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.b, %bb.a
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %bb.d
   %indvars.iv124 = phi i64 [ 0, %.lr.ph.us.preheader ], [ %indvars.iv.next125.a, %bb.d ] ; 3 uses
-  %.396.us = phi i8 [ %.2102.us, %.lr.ph.us.preheader ], [ %.4.us, %bb.d ]
+  %.396.us = phi i8 [ %.2102.us, %.lr.ph.us.preheader ], [ %.4.us, %bb.d ] ; 2 uses
   %.18695.us = phi i8 [ %.085100.us, %.lr.ph.us.preheader ], [ %.287.us, %bb.d ] ; 2 uses
   %i.bp = getelementptr inbounds nuw [48 x i8], ptr %i.ap, i64 %indvars.iv124 ; 3 uses
   %i.bq = getelementptr inbounds nuw [56 x i8], ptr %i.an, i64 %indvars.iv124 ; 2 uses
@@ -220,12 +220,14 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   store float %i.bx, ptr %i.by, align 4, !tbaa !155
   %i.bz = icmp eq i8 %.18695.us, 0
   %i.ca = fcmp olt float %i.bx, %i.r
-  %or.cond93.us = select i1 %i.bz, i1 %i.ca, i1 false
-  %3 = fcmp ogt float %i.bu, 0.000000e+00
-  %or.cond94.us = select i1 %or.cond93.us, i1 %3, i1 false
-  br i1 %or.cond94.us, label %bb.c, label %bb.d
+  %or.cond94.us = select i1 %i.bz, i1 %i.ca, i1 false
+  br i1 %or.cond94.us, label %3, label %bb.d
 
-bb.c:                                             ; preds = %.lr.ph.us
+3:                                                ; preds = %.lr.ph.us
+  %4 = fcmp ogt float %i.bu, 0.000000e+00
+  br i1 %4, label %bb.c, label %bb.d
+
+bb.c:                                             ; preds = %3
   %i.cb = load i32, ptr %i.al, align 8, !tbaa !156 ; 2 uses
   %.val.us = load ptr, ptr %i.q, align 8, !tbaa !157
   %i.cc = lshr i32 %i.cb, 6
@@ -239,9 +241,9 @@ bb.c:                                             ; preds = %.lr.ph.us
   store i64 %i.cj, ptr %i.ch, align 8, !tbaa !158
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %.lr.ph.us
-  %.287.us = phi i8 [ 1, %bb.c ], [ %.18695.us, %.lr.ph.us ] ; 2 uses
-  %.4.us = phi i8 [ 1, %bb.c ], [ %.396.us, %.lr.ph.us ] ; 2 uses
+bb.d:                                             ; preds = %bb.c, %3, %.lr.ph.us
+  %.287.us = phi i8 [ 1, %bb.c ], [ 0, %3 ], [ %.18695.us, %.lr.ph.us ] ; 2 uses
+  %.4.us = phi i8 [ 1, %bb.c ], [ %.396.us, %3 ], [ %.396.us, %.lr.ph.us ] ; 2 uses
   %indvars.iv.next125.a = add nuw nsw i64 %indvars.iv124, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next125.a, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge.split.us109, label %.lr.ph.us, !llvm.loop !206

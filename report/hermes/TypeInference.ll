@@ -202,7 +202,7 @@ bb.dc:                                            ; preds = %_ZL23inferFunctionR
 
 .lr.ph135.i.i:                                    ; preds = %bb.dc, %_ZL15inferMemoryTypePN6hermes5ValueE.exit.i.i
   %.027133.i.i = phi ptr [ %i.ti, %_ZL15inferMemoryTypePN6hermes5ValueE.exit.i.i ], [ %i.sd, %bb.dc ] ; 2 uses
-  %.2132.i.i = phi i8 [ %i.th, %_ZL15inferMemoryTypePN6hermes5ValueE.exit.i.i ], [ %.0.i31.i.i, %bb.dc ]
+  %.2132.i.i = phi i8 [ %7, %_ZL15inferMemoryTypePN6hermes5ValueE.exit.i.i ], [ %.0.i31.i.i, %bb.dc ]
   %i.si = load ptr, ptr %.027133.i.i, align 8, !tbaa !150 ; 2 uses
   %i.sj = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNK6hermes5Value8getUsersEv(ptr noundef nonnull align 8 dereferenceable(40) %i.si) #8 ; 2 uses
   %i.sk = load ptr, ptr %i.sj, align 8, !tbaa !123 ; 2 uses
@@ -288,13 +288,15 @@ bb.di:                                            ; preds = %_ZL23inferMemoryLoc
 
 _ZL15inferMemoryTypePN6hermes5ValueE.exit.i.i:    ; preds = %bb.di, %_ZL23inferMemoryLocationTypePN6hermes5ValueE.exit.i.i.i
   %i.tg = zext i1 %i.tf to i8
-  %i.th = or i8 %.2132.i.i, %i.tg                 ; 2 uses
+  %i.th = or i8 %.2132.i.i, %i.tg
+  %6 = icmp ne i8 %i.th, 0
+  %7 = zext i1 %6 to i8                           ; 2 uses
   %i.ti = getelementptr inbounds nuw i8, ptr %.027133.i.i, i64 8 ; 2 uses
   %.not.i.i = icmp eq ptr %i.ti, %i.sh
   br i1 %.not.i.i, label %.loopexit.i.i, label %.lr.ph135.i.i
 
 .loopexit.i.i:                                    ; preds = %_ZL15inferMemoryTypePN6hermes5ValueE.exit.i.i, %bb.dc, %_ZL23inferFunctionReturnTypePN6hermes8FunctionE.exit.i.i
-  %.3.i.i = phi i8 [ %.0.i31.i.i, %_ZL23inferFunctionReturnTypePN6hermes8FunctionE.exit.i.i ], [ %.0.i31.i.i, %bb.dc ], [ %i.th, %_ZL15inferMemoryTypePN6hermes5ValueE.exit.i.i ] ; 2 uses
+  %.3.i.i = phi i8 [ %.0.i31.i.i, %_ZL23inferFunctionReturnTypePN6hermes8FunctionE.exit.i.i ], [ %.0.i31.i.i, %bb.dc ], [ %7, %_ZL15inferMemoryTypePN6hermes5ValueE.exit.i.i ] ; 2 uses
   %i.tj = trunc nuw i8 %.3.i.i to i1
   %i.tk = zext i1 %.0.in.i.i to i8
   %i.tl = or i8 %.3.i.i, %i.tk

@@ -205,11 +205,12 @@ bb.bb:                                            ; preds = %bb.az
   br label %bb.bc
 
 ._crit_edge.i:                                    ; preds = %bb.bf
-  br i1 %.126.i, label %bb.bg, label %.critedge.i
+  %3 = trunc nuw i8 %.126.i to i1
+  br i1 %3, label %bb.bg, label %.critedge.i
 
 bb.bc:                                            ; preds = %bb.bf, %.lr.ph.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.bf ] ; 2 uses
-  %.02533.i = phi i1 [ false, %.lr.ph.i ], [ %.126.i, %bb.bf ] ; 3 uses
+  %.02533.i = phi i8 [ 0, %.lr.ph.i ], [ %.126.i, %bb.bf ] ; 3 uses
   %i.hc = getelementptr inbounds nuw [56 x i8], ptr %i.ha, i64 %indvars.iv.i ; 2 uses
   %i.hd = getelementptr inbounds nuw i8, ptr %i.hc, i64 48
   %i.he = load ptr, ptr %i.hd, align 8, !tbaa !168 ; 2 uses
@@ -224,13 +225,16 @@ bb.bd:                                            ; preds = %bb.bc
 bb.be:                                            ; preds = %bb.bd
   %i.hh = getelementptr inbounds nuw i8, ptr %i.he, i64 1345
   %i.hi = load i8, ptr %i.hh, align 1, !tbaa !170 ; 2 uses
-  %i.hj = icmp ne i8 %i.hi, 2
-  %3 = or i1 %.02533.i, %i.hj
+  %4 = icmp ne i8 %i.hi, 2
+  %5 = zext i1 %4 to i8
+  %6 = or i8 %.02533.i, %5
+  %i.hj = icmp ne i8 %6, 0
+  %7 = zext i1 %i.hj to i8
   %i.hk = icmp eq i8 %i.hi, 0
   br label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be, %bb.bd, %bb.bc
-  %.126.i = phi i1 [ %3, %bb.be ], [ %.02533.i, %bb.bd ], [ %.02533.i, %bb.bc ] ; 2 uses
+  %.126.i = phi i8 [ %7, %bb.be ], [ %.02533.i, %bb.bd ], [ %.02533.i, %bb.bc ] ; 2 uses
   %.1.i = phi i1 [ %i.hk, %bb.be ], [ false, %bb.bd ], [ false, %bb.bc ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %i.hl = icmp samesign uge i64 %indvars.iv.next.i, %i.hb

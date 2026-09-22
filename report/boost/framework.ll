@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %._crit_edge.i, %.lr.ph120.i
-  %.031118.i = phi i1 [ false, %.lr.ph120.i ], [ %.2.lcssa.i, %._crit_edge.i ] ; 2 uses
+  %.031118.i = phi i8 [ 0, %.lr.ph120.i ], [ %.2.lcssa.i, %._crit_edge.i ] ; 2 uses
   %.sroa.096.0117.i = phi ptr [ %i.s, %.lr.ph120.i ], [ %i.dc, %._crit_edge.i ] ; 3 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %.sroa.096.0117.i, i64 8
   %i.as = load i64, ptr %i.ar, align 8, !tbaa !43, !noalias !373 ; 2 uses
@@ -262,7 +262,7 @@ bb.g:                                             ; preds = %.noexc33
   br label %.body
 
 .lr.ph.i:                                         ; preds = %.noexc32, %.noexc39
-  %.2115.i = phi i1 [ %24, %.noexc39 ], [ %.031118.i, %.noexc32 ] ; 2 uses
+  %.2115.i = phi i8 [ %26, %.noexc39 ], [ %.031118.i, %.noexc32 ]
   %i.bb = load ptr, ptr %i.w, align 8, !tbaa !45, !noalias !374 ; 4 uses
   %i.bc = load ptr, ptr %i.x, align 8, !tbaa !46, !noalias !374 ; 9 uses
   %i.bd = load i8, ptr %i.bb, align 1, !tbaa !60  ; 2 uses
@@ -301,10 +301,12 @@ bb.k:                                             ; preds = %.noexc34
 
 bb.l:                                             ; preds = %bb.h
   %.not.i = icmp eq i8 %i.bd, 43
+  %22 = icmp ne i8 %.2115.i, 0
+  %23 = zext i1 %22 to i8                         ; 2 uses
   br i1 %.not.i, label %.thread.i, label %bb.s
 
 .thread.i:                                        ; preds = %bb.l, %.lr.ph.i
-  %22 = phi i1 [ %.2115.i, %bb.l ], [ true, %.lr.ph.i ]
+  %24 = phi i8 [ %23, %bb.l ], [ 1, %.lr.ph.i ]
   %.sroa.057.0103.i = phi ptr [ %i.be, %bb.l ], [ %i.bb, %.lr.ph.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9)
   %i.bh = load i8, ptr %.sroa.057.0103.i, align 1, !tbaa !60
@@ -488,8 +490,8 @@ _ZN5boost9unit_test9framework4implL23add_filtered_test_unitsEmNS0_13basic_cstrin
   br label %bb.z
 
 bb.z:                                             ; preds = %_ZN5boost9unit_test9framework4implL23add_filtered_test_unitsEmNS0_13basic_cstringIKcEERSt6vectorImSaImEE.exit51.i, %_ZN5boost9unit_test9framework4implL23add_filtered_test_unitsEmNS0_13basic_cstringIKcEERSt6vectorImSaImEE.exit.i
-  %23 = phi i1 [ %.2115.i, %_ZN5boost9unit_test9framework4implL23add_filtered_test_unitsEmNS0_13basic_cstringIKcEERSt6vectorImSaImEE.exit51.i ], [ %22, %_ZN5boost9unit_test9framework4implL23add_filtered_test_unitsEmNS0_13basic_cstringIKcEERSt6vectorImSaImEE.exit.i ]
-  %24 = freeze i1 %23                             ; 3 uses
+  %25 = phi i8 [ %23, %_ZN5boost9unit_test9framework4implL23add_filtered_test_unitsEmNS0_13basic_cstringIKcEERSt6vectorImSaImEE.exit51.i ], [ %24, %_ZN5boost9unit_test9framework4implL23add_filtered_test_unitsEmNS0_13basic_cstringIKcEERSt6vectorImSaImEE.exit.i ]
+  %26 = freeze i8 %25                             ; 3 uses
   %i.cv = load i8, ptr %13, align 8, !tbaa !59, !range !74, !noundef !75
   %i.cw = trunc nuw i8 %i.cv to i1
   br i1 %i.cw, label %_ZN5boost9iterators6detail20iterator_facade_baseINS_9unit_test5utils27basic_string_token_iteratorIcNS4_9ut_detail20default_char_compareIcEEEENS3_13basic_cstringIKcEENS0_21forward_traversal_tagESC_lLb0ELb0EEppEv.exit.i, label %._crit_edge.i
@@ -511,17 +513,18 @@ _ZN5boost9iterators6detail20iterator_facade_baseINS_9unit_test5utils27basic_stri
   br i1 %i.cz, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !368
 
 ._crit_edge.i:                                    ; preds = %.noexc39, %bb.z, %.noexc32
-  %.2.lcssa.i = phi i1 [ %.031118.i, %.noexc32 ], [ %24, %bb.z ], [ %24, %.noexc39 ] ; 2 uses
+  %.2.lcssa.i = phi i8 [ %.031118.i, %.noexc32 ], [ %26, %bb.z ], [ %26, %.noexc39 ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #24
   %i.dc = getelementptr inbounds nuw i8, ptr %.sroa.096.0117.i, i64 32 ; 2 uses
   %i.dd = icmp eq ptr %i.dc, %i.u
   br i1 %i.dd, label %bb.aa, label %bb.d, !llvm.loop !369
 
 bb.aa:                                            ; preds = %._crit_edge.i
+  %27 = trunc i8 %.2.lcssa.i to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %12)
   call void @llvm.lifetime.end.p0(ptr nonnull %15)
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #24
-  %spec.select = select i1 %.2.lcssa.i, i32 0, i32 3
+  %spec.select = select i1 %27, i32 0, i32 3
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa, %.thread60, %.thread

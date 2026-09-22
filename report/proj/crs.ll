@@ -204,7 +204,7 @@ _ZN5osgeo4proj3crsL35hasCodeCompatibleOfAuthorityFactoryEPKNS0_6common16Identifi
 bb.as:                                            ; preds = %.preheader476, %bb.dm
   %i.gc = phi i1 [ false, %.preheader476 ], [ true, %bb.dm ]
   %i.gd = phi i1 [ true, %.preheader476 ], [ false, %bb.dm ]
-  %.0142517 = phi i1 [ false, %.preheader476 ], [ %.2144437653, %bb.dm ] ; 2 uses
+  %.0142517 = phi i8 [ 0, %.preheader476 ], [ %.2144437653, %bb.dm ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #39
   %i.ge = load ptr, ptr %2, align 8, !tbaa !359
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #39
@@ -271,7 +271,7 @@ bb.ax:                                            ; preds = %bb.au
 
 .lr.ph516:                                        ; preds = %_ZNSt6vectorIN5osgeo4proj2io16AuthorityFactory10ObjectTypeESaIS4_EED2Ev.exit, %_ZNSt12__shared_ptrIN5osgeo4proj3crs11CompoundCRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit251
   %.sroa.0409.0515 = phi ptr [ %.sroa.0409.0, %_ZNSt12__shared_ptrIN5osgeo4proj3crs11CompoundCRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit251 ], [ %.sroa.0409.0512, %_ZNSt6vectorIN5osgeo4proj2io16AuthorityFactory10ObjectTypeESaIS4_EED2Ev.exit ] ; 3 uses
-  %.1143514 = phi i1 [ %26, %_ZNSt12__shared_ptrIN5osgeo4proj3crs11CompoundCRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit251 ], [ %.0142517, %_ZNSt6vectorIN5osgeo4proj2io16AuthorityFactory10ObjectTypeESaIS4_EED2Ev.exit ]
+  %.1143514 = phi i8 [ %29, %_ZNSt12__shared_ptrIN5osgeo4proj3crs11CompoundCRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit251 ], [ %.0142517, %_ZNSt6vectorIN5osgeo4proj2io16AuthorityFactory10ObjectTypeESaIS4_EED2Ev.exit ]
   %i.gu = getelementptr inbounds nuw i8, ptr %.sroa.0409.0515, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #39
   call void @llvm.experimental.noalias.scope.decl(metadata !1491)
@@ -353,7 +353,10 @@ bb.bf:                                            ; preds = %bb.be, %bb.bd, %_ZN
   %i.hp = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNK5osgeo4proj6common16IdentifiedObject7nameStrB5cxx11Ev(ptr noundef nonnull align 8 dereferenceable(40) %i.hn) #42
   %i.hq = load ptr, ptr %i.hp, align 8, !tbaa !150
   %i.hr = call noundef zeroext i1 @_ZN5osgeo4proj8metadata10Identifier16isEquivalentNameEPKcS4_(ptr noundef %i.ho, ptr noundef %i.hq) #39 ; 2 uses
-  %26 = or i1 %.1143514, %i.hr                    ; 3 uses
+  %26 = zext i1 %i.hr to i8
+  %27 = or i8 %.1143514, %26
+  %28 = icmp ne i8 %27, 0
+  %29 = zext i1 %28 to i8                         ; 3 uses
   %i.hs = getelementptr inbounds nuw i8, ptr %i.hn, i64 16
   %i.ht = load ptr, ptr %i.hs, align 8, !tbaa !110
   %i.hu = icmp eq ptr %i.ht, getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5osgeo4proj3crs11CompoundCRSE, i64 104)
@@ -756,7 +759,7 @@ bb.dd:                                            ; preds = %bb.cp, %bb.cl, %bb.
   br label %bb.dn
 
 .thread433:                                       ; preds = %_ZNSt12__shared_ptrIN5osgeo4proj3crs11CompoundCRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit251, %_ZNSt6vectorIN5osgeo4proj2io16AuthorityFactory10ObjectTypeESaIS4_EED2Ev.exit
-  %.1143.lcssa = phi i1 [ %.0142517, %_ZNSt6vectorIN5osgeo4proj2io16AuthorityFactory10ObjectTypeESaIS4_EED2Ev.exit ], [ %26, %_ZNSt12__shared_ptrIN5osgeo4proj3crs11CompoundCRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit251 ] ; 4 uses
+  %.1143.lcssa = phi i8 [ %.0142517, %_ZNSt6vectorIN5osgeo4proj2io16AuthorityFactory10ObjectTypeESaIS4_EED2Ev.exit ], [ %29, %_ZNSt12__shared_ptrIN5osgeo4proj3crs11CompoundCRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit251 ] ; 4 uses
   %i.oh = load ptr, ptr %4, align 8, !tbaa !354
   %i.oi = icmp eq ptr %i.oh, %4
   %i.oj = load ptr, ptr %7, align 8, !tbaa !354   ; 3 uses
@@ -778,7 +781,7 @@ bb.df:                                            ; preds = %_ZN7dropbox6oxygen2
 .lr.ph.i.i253.preheader:                          ; preds = %..si.unfold.false.jt4, %bb.de, %bb.df
   %i.ol = phi ptr [ %i.oj, %..si.unfold.false.jt4 ], [ %i.oj, %bb.de ], [ %i.ok, %bb.df ]
   %.4136654 = phi i32 [ 4, %..si.unfold.false.jt4 ], [ 0, %bb.de ], [ 1, %bb.df ]
-  %.2144437651 = phi i1 [ %.1143.lcssa, %..si.unfold.false.jt4 ], [ %.1143.lcssa, %bb.de ], [ %26, %bb.df ] ; 2 uses
+  %.2144437651 = phi i8 [ %.1143.lcssa, %..si.unfold.false.jt4 ], [ %.1143.lcssa, %bb.de ], [ %29, %bb.df ] ; 2 uses
   br label %.lr.ph.i.i253
 
 .lr.ph.i.i253:                                    ; preds = %.lr.ph.i.i253.preheader, %_ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj6common16IdentifiedObjectEEED2Ev.exit.i.i
@@ -842,12 +845,12 @@ _ZNSt7__cxx1110_List_baseIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj6common
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #39
   switch i32 %.4136654, label %.critedge190 [
     i32 0, label %bb.dm
-    i32 4, label %.critedge184
+    i32 4, label %.critedge184.loopexit
   ]
 
 _ZNSt7__cxx1110_List_baseIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj6common16IdentifiedObjectEEEESaISA_EED2Ev.exit.jt4: ; preds = %..si.unfold.false.jt4
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #39
-  br label %.critedge184
+  br label %.critedge184.loopexit
 
 _ZNSt7__cxx1110_List_baseIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj6common16IdentifiedObjectEEEESaISA_EED2Ev.exit.jt0: ; preds = %bb.de
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #39
@@ -858,16 +861,21 @@ _ZNSt7__cxx1110_List_baseIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj6common
   br label %.critedge190
 
 bb.dm:                                            ; preds = %_ZNSt7__cxx1110_List_baseIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj6common16IdentifiedObjectEEEESaISA_EED2Ev.exit.jt0, %_ZNSt7__cxx1110_List_baseIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj6common16IdentifiedObjectEEEESaISA_EED2Ev.exit
-  %.2144437653 = phi i1 [ %.1143.lcssa, %_ZNSt7__cxx1110_List_baseIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj6common16IdentifiedObjectEEEESaISA_EED2Ev.exit.jt0 ], [ %.2144437651, %_ZNSt7__cxx1110_List_baseIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj6common16IdentifiedObjectEEEESaISA_EED2Ev.exit ] ; 2 uses
-  br i1 %i.gd, label %bb.as, label %.critedge184, !llvm.loop !1483
+  %.2144437653 = phi i8 [ %.1143.lcssa, %_ZNSt7__cxx1110_List_baseIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj6common16IdentifiedObjectEEEESaISA_EED2Ev.exit.jt0 ], [ %.2144437651, %_ZNSt7__cxx1110_List_baseIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj6common16IdentifiedObjectEEEESaISA_EED2Ev.exit ] ; 2 uses
+  br i1 %i.gd, label %bb.as, label %.critedge184.loopexit, !llvm.loop !1483
 
 bb.dn:                                            ; preds = %bb.dd, %.body
   %.pn151.pn = phi { ptr, i32 } [ %.pn151, %bb.dd ], [ %.pn, %.body ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #39
   br label %.loopexit479
 
-.critedge184:                                     ; preds = %_ZN5osgeo4proj3crsL35hasCodeCompatibleOfAuthorityFactoryERKN7dropbox6oxygen2nnISt10shared_ptrINS0_8metadata10IdentifierEEEERKS5_INS0_2io16AuthorityFactoryEE.exit.thread428, %_ZNSt7__cxx1110_List_baseIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj6common16IdentifiedObjectEEEESaISA_EED2Ev.exit, %bb.dm, %_ZNSt7__cxx1110_List_baseIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj6common16IdentifiedObjectEEEESaISA_EED2Ev.exit.jt4, %_ZN5osgeo4proj3crsL35hasCodeCompatibleOfAuthorityFactoryEPKNS0_6common16IdentifiedObjectERKSt10shared_ptrINS0_2io16AuthorityFactoryEE.exit
-  %.4146 = phi i1 [ %.2144437651, %_ZNSt7__cxx1110_List_baseIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj6common16IdentifiedObjectEEEESaISA_EED2Ev.exit ], [ false, %_ZN5osgeo4proj3crsL35hasCodeCompatibleOfAuthorityFactoryEPKNS0_6common16IdentifiedObjectERKSt10shared_ptrINS0_2io16AuthorityFactoryEE.exit ], [ %.1143.lcssa, %_ZNSt7__cxx1110_List_baseIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj6common16IdentifiedObjectEEEESaISA_EED2Ev.exit.jt4 ], [ %.2144437653, %bb.dm ], [ false, %_ZN5osgeo4proj3crsL35hasCodeCompatibleOfAuthorityFactoryERKN7dropbox6oxygen2nnISt10shared_ptrINS0_8metadata10IdentifierEEEERKS5_INS0_2io16AuthorityFactoryEE.exit.thread428 ]
+.critedge184.loopexit:                            ; preds = %bb.dm, %_ZNSt7__cxx1110_List_baseIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj6common16IdentifiedObjectEEEESaISA_EED2Ev.exit, %_ZNSt7__cxx1110_List_baseIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj6common16IdentifiedObjectEEEESaISA_EED2Ev.exit.jt4
+  %.2144437652 = phi i8 [ %.1143.lcssa, %_ZNSt7__cxx1110_List_baseIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj6common16IdentifiedObjectEEEESaISA_EED2Ev.exit.jt4 ], [ %.2144437651, %_ZNSt7__cxx1110_List_baseIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj6common16IdentifiedObjectEEEESaISA_EED2Ev.exit ], [ %.2144437653, %bb.dm ]
+  %30 = trunc nuw i8 %.2144437652 to i1
+  br label %.critedge184
+
+.critedge184:                                     ; preds = %_ZN5osgeo4proj3crsL35hasCodeCompatibleOfAuthorityFactoryERKN7dropbox6oxygen2nnISt10shared_ptrINS0_8metadata10IdentifierEEEERKS5_INS0_2io16AuthorityFactoryEE.exit.thread428, %.critedge184.loopexit, %_ZN5osgeo4proj3crsL35hasCodeCompatibleOfAuthorityFactoryEPKNS0_6common16IdentifiedObjectERKSt10shared_ptrINS0_2io16AuthorityFactoryEE.exit
+  %.4146 = phi i1 [ %30, %.critedge184.loopexit ], [ false, %_ZN5osgeo4proj3crsL35hasCodeCompatibleOfAuthorityFactoryEPKNS0_6common16IdentifiedObjectERKSt10shared_ptrINS0_2io16AuthorityFactoryEE.exit ], [ false, %_ZN5osgeo4proj3crsL35hasCodeCompatibleOfAuthorityFactoryERKN7dropbox6oxygen2nnISt10shared_ptrINS0_8metadata10IdentifierEEEERKS5_INS0_2io16AuthorityFactoryEE.exit.thread428 ]
   call fastcc void @"_ZNSt7__cxx114listISt4pairIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj3crs11CompoundCRSEEEEiESaISC_EE4sortIZNKS9_8identifyERKS5_INS7_2io16AuthorityFactoryEEE3$_0EEvT_"(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr %i.d)
   %i.pe = call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK5osgeo4proj6common16IdentifiedObject11identifiersEv(ptr noundef nonnull align 8 dereferenceable(40) %1) #42 ; 2 uses
   %i.pf = load ptr, ptr %i.pe, align 8, !tbaa !160

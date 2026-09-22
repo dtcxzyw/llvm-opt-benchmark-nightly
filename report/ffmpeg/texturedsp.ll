@@ -204,9 +204,9 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.bo = load i8, ptr %i.bk, align 1, !tbaa !10  ; 3 uses
   %i.bp = zext i8 %i.bo to i16
   %i.bq = or disjoint i16 %i.bn, %i.bp
-  %i.br = and i8 %i.bo, 7
+  %i.br = and i8 %i.bo, 7                         ; 2 uses
   %i.bs = lshr i8 %i.bo, 3
-  %i.bt = and i8 %i.bs, 7                         ; 2 uses
+  %i.bt = and i8 %i.bs, 7
   %i.bu = lshr i16 %i.bq, 6
   %i.bv = trunc i16 %i.bu to i8
   %i.bw = and i8 %i.bv, 7                         ; 2 uses
@@ -248,20 +248,20 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.dg = and i8 %i.df, 7                         ; 2 uses
   %i.dh = lshr i16 %i.cl, 13                      ; 2 uses
   %.not.i = icmp eq i32 %4, 0
-  %7 = zext nneg i32 %6 to i64                    ; 12 uses
-  %i.di = zext nneg i8 %i.br to i64
-  %i.dj = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.di
-  %8 = load i32, ptr %i.dj, align 4, !tbaa !15    ; 2 uses
+  %i.di = zext nneg i8 %i.bt to i64
+  %i.dj = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.di ; 2 uses
   br i1 %.not.i, label %.preheader.us.preheader.i, label %.preheader.preheader.i
 
 .preheader.preheader.i:                           ; preds = %bb.g
   %i.dk = zext nneg i32 %5 to i64
   %invariant.gep29.i = getelementptr i8, ptr %0, i64 %i.dk ; 7 uses
-  %9 = trunc i32 %8 to i8
-  store i8 %9, ptr %invariant.gep29.i, align 1, !tbaa !10
-  %10 = zext nneg i8 %i.bt to i64
-  %11 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %10
-  %i.dl = load i32, ptr %11, align 4, !tbaa !15
+  %7 = zext nneg i32 %6 to i64                    ; 6 uses
+  %8 = zext nneg i8 %i.br to i64
+  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %8
+  %10 = load i32, ptr %9, align 4, !tbaa !15
+  %11 = trunc i32 %10 to i8
+  store i8 %11, ptr %invariant.gep29.i, align 1, !tbaa !10
+  %i.dl = load i32, ptr %i.dj, align 4, !tbaa !15
   %i.dm = trunc i32 %i.dl to i8
   %gep.1.i = getelementptr i8, ptr %invariant.gep29.i, i64 %7
   store i8 %i.dm, ptr %gep.1.i, align 1, !tbaa !10
@@ -356,19 +356,19 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br label %rgtc_block_internal.exit
 
 .preheader.us.preheader.i:                        ; preds = %bb.g
-  %i.fv = zext nneg i16 %i.dh to i64
-  %i.fw = zext nneg i16 %i.ci to i64
-  %12 = and i32 %8, 255
-  %13 = mul nuw nsw i32 %12, 65793
-  %14 = or disjoint i32 %13, -16777216
-  store i32 %14, ptr %0, align 1, !tbaa !10
-  %15 = zext nneg i8 %i.bt to i64
-  %16 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %15
-  %i.fx = load i32, ptr %16, align 4, !tbaa !15
+  %i.fv = zext nneg i32 %6 to i64                 ; 6 uses
+  %i.fw = zext nneg i8 %i.br to i64
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.fw
+  %13 = load i32, ptr %12, align 4, !tbaa !15
+  %14 = and i32 %13, 255
+  %15 = mul nuw nsw i32 %14, 65793
+  %16 = or disjoint i32 %15, -16777216
+  store i32 %16, ptr %0, align 1, !tbaa !10
+  %i.fx = load i32, ptr %i.dj, align 4, !tbaa !15
   %i.fy = and i32 %i.fx, 255
   %i.fz = mul nuw nsw i32 %i.fy, 65793
   %i.ga = or disjoint i32 %i.fz, -16777216
-  %gep28.us.us.1.i = getelementptr i8, ptr %0, i64 %7
+  %gep28.us.us.1.i = getelementptr i8, ptr %0, i64 %i.fv
   store i32 %i.ga, ptr %gep28.us.us.1.i, align 1, !tbaa !10
   %i.gb = zext nneg i8 %i.bw to i64
   %i.gc = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.gb
@@ -376,7 +376,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ge = and i32 %i.gd, 255
   %i.gf = mul nuw nsw i32 %i.ge, 65793
   %i.gg = or disjoint i32 %i.gf, -16777216
-  %i.gh = shl nuw nsw i64 %7, 1                   ; 4 uses
+  %i.gh = shl nuw nsw i64 %i.fv, 1                ; 4 uses
   %gep28.us.us.2.i = getelementptr i8, ptr %0, i64 %i.gh
   store i32 %i.gg, ptr %gep28.us.us.2.i, align 1, !tbaa !10
   %i.gi = zext nneg i8 %i.bz to i64
@@ -385,7 +385,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.gl = and i32 %i.gk, 255
   %i.gm = mul nuw nsw i32 %i.gl, 65793
   %i.gn = or disjoint i32 %i.gm, -16777216
-  %i.go = mul nuw nsw i64 %7, 3                   ; 4 uses
+  %i.go = mul nuw nsw i64 %i.fv, 3                ; 4 uses
   %gep28.us.us.3.i = getelementptr i8, ptr %0, i64 %i.go
   store i32 %i.gn, ptr %gep28.us.us.3.i, align 1, !tbaa !10
   %invariant.gep27.us.1.i = getelementptr i8, ptr %0, i64 %1 ; 4 uses
@@ -402,7 +402,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.gy = and i32 %i.gx, 255
   %i.gz = mul nuw nsw i32 %i.gy, 65793
   %i.ha = or disjoint i32 %i.gz, -16777216
-  %gep28.us.us.1.1.i = getelementptr i8, ptr %invariant.gep27.us.1.i, i64 %7
+  %gep28.us.us.1.1.i = getelementptr i8, ptr %invariant.gep27.us.1.i, i64 %i.fv
   store i32 %i.ha, ptr %gep28.us.us.1.1.i, align 1, !tbaa !10
   %i.hb = zext nneg i8 %i.ch to i64
   %i.hc = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.hb
@@ -412,7 +412,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.hg = or disjoint i32 %i.hf, -16777216
   %gep28.us.us.2.1.i = getelementptr i8, ptr %invariant.gep27.us.1.i, i64 %i.gh
   store i32 %i.hg, ptr %gep28.us.us.2.1.i, align 1, !tbaa !10
-  %i.hh = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.fw
+  %17 = zext nneg i16 %i.ci to i64
+  %i.hh = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %17
   %i.hi = load i32, ptr %i.hh, align 4, !tbaa !15
   %i.hj = and i32 %i.hi, 255
   %i.hk = mul nuw nsw i32 %i.hj, 65793
@@ -434,7 +435,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.hw = and i32 %i.hv, 255
   %i.hx = mul nuw nsw i32 %i.hw, 65793
   %i.hy = or disjoint i32 %i.hx, -16777216
-  %gep28.us.us.1.2.i = getelementptr i8, ptr %invariant.gep27.us.2.i, i64 %7
+  %gep28.us.us.1.2.i = getelementptr i8, ptr %invariant.gep27.us.2.i, i64 %i.fv
   store i32 %i.hy, ptr %gep28.us.us.1.2.i, align 1, !tbaa !10
   %i.hz = zext nneg i8 %i.cv to i64
   %i.ia = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.hz
@@ -467,7 +468,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.iv = and i32 %i.iu, 255
   %i.iw = mul nuw nsw i32 %i.iv, 65793
   %i.ix = or disjoint i32 %i.iw, -16777216
-  %gep28.us.us.1.3.i = getelementptr i8, ptr %invariant.gep27.us.3.i, i64 %7
+  %gep28.us.us.1.3.i = getelementptr i8, ptr %invariant.gep27.us.3.i, i64 %i.fv
   store i32 %i.ix, ptr %gep28.us.us.1.3.i, align 1, !tbaa !10
   %i.iy = zext nneg i8 %i.dg to i64
   %i.iz = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.iy
@@ -477,7 +478,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.jd = or disjoint i32 %i.jc, -16777216
   %gep28.us.us.2.3.i = getelementptr i8, ptr %invariant.gep27.us.3.i, i64 %i.gh
   store i32 %i.jd, ptr %gep28.us.us.2.3.i, align 1, !tbaa !10
-  %i.je = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.fv
+  %18 = zext nneg i16 %i.dh to i64
+  %i.je = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %18
   %i.jf = load i32, ptr %i.je, align 4, !tbaa !15
   %i.jg = and i32 %i.jf, 255
   %i.jh = mul nuw nsw i32 %i.jg, 65793

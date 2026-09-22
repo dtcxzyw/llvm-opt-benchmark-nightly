@@ -202,7 +202,8 @@ bb.ep:                                            ; preds = %bb.em
   br label %_ZL13focusDriveEndRN2cv12VideoCaptureEi.exit152
 
 bb.eq:                                            ; preds = %bb.em
-  %21 = xor i8 %.229, 1
+  %21 = icmp ne i8 %.229, 1
+  %22 = zext i1 %21 to i8
   br label %_ZL13focusDriveEndRN2cv12VideoCaptureEi.exit152
 
 _ZL13focusDriveEndRN2cv12VideoCaptureEi.exit152:  ; preds = %.noexc153, %.noexc151, %.invoke459, %bb.eq, %bb.ep, %bb.em
@@ -213,7 +214,7 @@ _ZL13focusDriveEndRN2cv12VideoCaptureEi.exit152:  ; preds = %.noexc153, %.noexc1
   %.sroa.45.2 = phi i32 [ %.sroa.45.1, %bb.em ], [ %.sroa.45.1, %.invoke459 ], [ %.sroa.45.1, %.noexc151 ], [ %.sroa.45.1, %bb.eq ], [ 0, %bb.ep ], [ %.sroa.45.1, %.noexc153 ]
   %.sroa.60.2 = phi double [ %.sroa.60.1, %bb.em ], [ %.sroa.60.1, %.invoke459 ], [ %.sroa.60.1, %.noexc151 ], [ %.sroa.60.1, %bb.eq ], [ 0.000000e+00, %bb.ep ], [ %.sroa.60.1, %.noexc153 ]
   %.sroa.55.2 = phi double [ %.sroa.55.1, %bb.em ], [ %.sroa.55.1, %.invoke459 ], [ %.sroa.55.1, %.noexc151 ], [ %.sroa.55.1, %bb.eq ], [ 0.000000e+00, %bb.ep ], [ %.sroa.55.1, %.noexc153 ]
-  %.330 = phi i8 [ %.229, %bb.em ], [ %.229, %.invoke459 ], [ %.229, %.noexc151 ], [ %21, %bb.eq ], [ 1, %bb.ep ], [ %.229, %.noexc153 ]
+  %.330 = phi i8 [ %.229, %bb.em ], [ %.229, %.invoke459 ], [ %.229, %.noexc151 ], [ %22, %bb.eq ], [ 1, %bb.ep ], [ %.229, %.noexc153 ]
   br label %_ZL13focusDriveEndRN2cv12VideoCaptureEi.exit, !llvm.loop !60
 
 bb.er:                                            ; preds = %bb.dr, %_ZL13focusDriveEndRN2cv12VideoCaptureEi.exit, %_ZL13focusDriveEndRN2cv12VideoCaptureEi.exit, %bb.cr

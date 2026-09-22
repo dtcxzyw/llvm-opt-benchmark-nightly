@@ -204,22 +204,25 @@ bb.o:                                             ; preds = %bb.n
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 33
   %i.ap = load i8, ptr %i.ao, align 1, !range !11
   %i.aq = trunc nuw i8 %i.ap to i1
-  %. = zext nneg i8 %.us-phi to i32               ; 2 uses
   %i.ar = or i8 %.fr163, %.us-phi
   %i.as = icmp ne i8 %i.ar, 0
   %or.cond4 = select i1 %i.as, i1 true, i1 %i.aq
   %or.cond4.not = xor i1 %or.cond4, true
   %i.at = trunc nuw i8 %.us-phi158 to i1
   %or.cond6 = and i1 %i.at, %or.cond4.not
-  br i1 %or.cond6, label %bb.p, label %bb.q
+  br i1 %or.cond6, label %bb.p, label %6
+
+6:                                                ; preds = %bb.p, %.split157.us
+  %. = zext nneg i8 %.us-phi to i32
+  br label %bb.q
 
 bb.p:                                             ; preds = %.split157.us
   %i.au = load ptr, ptr %i.z, align 8, !nonnull !8, !align !17, !noundef !8
   %i.av = call noundef zeroext i1 @_RINvMsc_NtCs8frGy5WneL6_4fish2ioNtB6_12OutputStream6appendcEB8_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.au, i32 noundef 10) ; 0 uses
-  br label %bb.q
+  br label %6
 
-bb.q:                                             ; preds = %.split157.us, %bb.p, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc6borrow3CowNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrEECs8frGy5WneL6_4fish.exit94, %bb.g, %bb.c, %bb.e
-  %.sroa.0.1 = phi i32 [ 1, %bb.e ], [ %.sroa.0.2, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc6borrow3CowNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrEECs8frGy5WneL6_4fish.exit94 ], [ 1, %bb.g ], [ 1, %bb.c ], [ %., %bb.p ], [ %., %.split157.us ]
+bb.q:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc6borrow3CowNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrEECs8frGy5WneL6_4fish.exit94, %bb.g, %bb.c, %bb.e, %6
+  %.sroa.0.1 = phi i32 [ %., %6 ], [ %.sroa.0.2, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc6borrow3CowNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrEECs8frGy5WneL6_4fish.exit94 ], [ 1, %bb.g ], [ 1, %bb.c ], [ 1, %bb.e ]
   %i.aw = insertvalue { i32, i32 } poison, i32 %.sroa.0.1, 0
   %i.ax = insertvalue { i32, i32 } %i.aw, i32 1, 1
   ret { i32, i32 } %i.ax

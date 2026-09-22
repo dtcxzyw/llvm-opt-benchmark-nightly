@@ -204,28 +204,30 @@ bb.q:                                             ; preds = %pgstat_delete_pendi
 pgstat_flush_pending_entries.exit:                ; preds = %bb.q
   %i.bh = load i8, ptr @pgstat_report_fixed, align 1, !range !9, !noundef !8
   %i.bi = trunc nuw i8 %i.bh to i1
-  br i1 %i.bi, label %.preheader.preheader, label %bb.v
-
-.preheader.preheader:                             ; preds = %pgstat_flush_pending_entries.exit.thread, %pgstat_flush_pending_entries.exit
-  %.02139.ph = phi i1 [ %.114.i, %pgstat_flush_pending_entries.exit ], [ false, %pgstat_flush_pending_entries.exit.thread ]
-  br label %.preheader
+  br i1 %i.bi, label %1, label %bb.v
 
 pgstat_flush_pending_entries.exit.thread:         ; preds = %bb.j
   %i.bj = load i8, ptr @pgstat_report_fixed, align 1, !range !9, !noundef !8
   %i.bk = trunc nuw i8 %i.bj to i1
-  br i1 %i.bk, label %.preheader.preheader, label %.thread57
+  br i1 %i.bk, label %1, label %.thread57
 
 .thread57:                                        ; preds = %pgstat_flush_pending_entries.exit.thread
   store i64 %.020, ptr @pgstat_report_stat.last_flush, align 8
   br label %bb.y
 
-.split:                                           ; preds = %pgstat_get_kind_info.exit.thread
-  store i64 %.020, ptr @pgstat_report_stat.last_flush, align 8
-  br i1 %.1, label %bb.w, label %bb.y
+1:                                                ; preds = %pgstat_flush_pending_entries.exit.thread, %pgstat_flush_pending_entries.exit
+  %.013.lcssa.i55 = phi i1 [ false, %pgstat_flush_pending_entries.exit.thread ], [ %.114.i, %pgstat_flush_pending_entries.exit ]
+  %2 = zext i1 %.013.lcssa.i55 to i8
+  br label %.preheader
 
-.preheader:                                       ; preds = %.preheader.preheader, %pgstat_get_kind_info.exit.thread
-  %indvars.iv = phi i64 [ %indvars.iv.next, %pgstat_get_kind_info.exit.thread ], [ 1, %.preheader.preheader ] ; 4 uses
-  %.02139 = phi i1 [ %.1, %pgstat_get_kind_info.exit.thread ], [ %.02139.ph, %.preheader.preheader ] ; 5 uses
+.split:                                           ; preds = %pgstat_get_kind_info.exit.thread
+  %3 = trunc nuw i8 %.1 to i1
+  store i64 %.020, ptr @pgstat_report_stat.last_flush, align 8
+  br i1 %3, label %bb.w, label %bb.y
+
+.preheader:                                       ; preds = %1, %pgstat_get_kind_info.exit.thread
+  %indvars.iv = phi i64 [ 1, %1 ], [ %indvars.iv.next, %pgstat_get_kind_info.exit.thread ] ; 4 uses
+  %.02139 = phi i8 [ %2, %1 ], [ %.1, %pgstat_get_kind_info.exit.thread ] ; 5 uses
   %i.bl = icmp samesign ult i64 %indvars.iv, 14
   br i1 %i.bl, label %pgstat_get_kind_info.exit.thread33, label %bb.r
 
@@ -258,11 +260,14 @@ bb.t:                                             ; preds = %pgstat_get_kind_inf
 
 bb.u:                                             ; preds = %bb.t
   %i.bv = tail call zeroext i1 %i.bu(i1 noundef zeroext %i.u) #16
-  %1 = or i1 %.02139, %i.bv
+  %4 = zext i1 %i.bv to i8
+  %5 = or i8 %.02139, %4
+  %6 = icmp ne i8 %5, 0
+  %7 = zext i1 %6 to i8
   br label %pgstat_get_kind_info.exit.thread
 
 pgstat_get_kind_info.exit.thread:                 ; preds = %bb.r, %bb.s, %bb.t, %pgstat_get_kind_info.exit, %bb.u
-  %.1 = phi i1 [ %1, %bb.u ], [ %.02139, %pgstat_get_kind_info.exit ], [ %.02139, %bb.t ], [ %.02139, %bb.s ], [ %.02139, %bb.r ] ; 2 uses
+  %.1 = phi i8 [ %7, %bb.u ], [ %.02139, %pgstat_get_kind_info.exit ], [ %.02139, %bb.t ], [ %.02139, %bb.s ], [ %.02139, %bb.r ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 33
   br i1 %exitcond.not, label %.split, label %.preheader, !llvm.loop !24

@@ -205,7 +205,7 @@ bb.a:                                             ; preds = %_kzalloc_noprof.exi
   store i8 1, ptr %3, align 8
   call void @drm_dp_encode_sideband_req(ptr noundef nonnull %3, ptr noundef nonnull %i.e) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #21
-  %i.g = getelementptr i8, ptr %1, i64 72         ; 2 uses
+  %i.g = getelementptr i8, ptr %1, i64 72         ; 3 uses
   store i8 1, ptr %i.g, align 8
   %i.h = getelementptr i8, ptr %0, i64 872        ; 2 uses
   tail call void @mutex_lock(ptr noundef %i.h) #23
@@ -608,15 +608,19 @@ bb.bq:                                            ; preds = %bb.r, %drm_dp_mst_r
   call void (ptr, ptr, ...) @_dev_err(ptr noundef %i.mh, ptr noundef nonnull @.str.184, ptr noundef nonnull %i.c, i32 noundef %.0.i.i96) #27
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #21
   %i.mi = or i1 %i.df, %i.dh
-  br i1 %i.mi, label %.thread122, label %.sink.split
+  br i1 %i.mi, label %.thread137, label %.sink.split
 
-.thread122:                                       ; preds = %drm_dp_get_port.exit.thread, %bb.ac, %.loopexit, %__drm_to_dev.exit89, %__drm_to_dev.exit, %bb.bq
-  %.1128 = phi i32 [ %.0.i.i96, %bb.bq ], [ %i.ac, %__drm_to_dev.exit ], [ -5, %__drm_to_dev.exit89 ], [ %.0100.i, %.loopexit ], [ -12, %bb.ac ], [ -12, %drm_dp_get_port.exit.thread ]
+.thread137:                                       ; preds = %bb.bq
   store i8 0, ptr %i.g, align 8
   br label %.sink.split
 
-.sink.split:                                      ; preds = %.thread129, %bb.bq, %.thread122
-  %.0.ph = phi i32 [ %.1128, %.thread122 ], [ %i.mg, %.thread129 ], [ 0, %bb.bq ]
+.thread122:                                       ; preds = %drm_dp_get_port.exit.thread, %bb.ac, %.loopexit, %__drm_to_dev.exit, %__drm_to_dev.exit89
+  %.1.ph = phi i32 [ %i.ac, %__drm_to_dev.exit ], [ -5, %__drm_to_dev.exit89 ], [ %.0100.i, %.loopexit ], [ -12, %bb.ac ], [ -12, %drm_dp_get_port.exit.thread ]
+  store i8 0, ptr %i.g, align 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %.thread129, %bb.bq, %.thread137, %.thread122
+  %.0.ph = phi i32 [ %.1.ph, %.thread122 ], [ %.0.i.i96, %.thread137 ], [ %i.mg, %.thread129 ], [ 0, %bb.bq ]
   call void @kfree(ptr noundef nonnull %i.e) #23
   br label %bb.br
 

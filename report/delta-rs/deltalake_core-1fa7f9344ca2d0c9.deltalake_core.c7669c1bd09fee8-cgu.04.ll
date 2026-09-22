@@ -204,7 +204,7 @@ bb.az:                                            ; preds = %bb.ax
   br label %_RNvXsqf_NtCs4lawaffTVVK_9sqlparser3astNtB6_16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit.i
 
 _RNvXsqf_NtCs4lawaffTVVK_9sqlparser3astNtB6_16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit.i: ; preds = %_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast19CopyLegacyCsvOptionNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit.i.i.i, %bb.az, %bb.ay, %bb.aw, %bb.av, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ao, %bb.an, %bb.al, %bb.ak, %bb.ah, %bb.ag, %_RNvXsqJ_NtCs4lawaffTVVK_9sqlparser3astNtB6_17UnloadPartitionByNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit.i.i, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.v, %bb.u, %bb.t, %bb.s, %._crit_edge55, %.lr.ph59
-  %.sroa.0.0.i.i = phi i8 [ %i.g, %.lr.ph59 ], [ %i.hh, %bb.al ], [ %i.ea, %bb.y ], [ %..i.i, %bb.ak ], [ %i.gm, %bb.ag ], [ %.99.i.i, %bb.aw ], [ %i.hu, %bb.ao ], [ %.100.i.i, %bb.ay ], [ %.95.i.i, %bb.an ], [ %i.hz, %bb.aq ], [ %i.ca, %bb.s ], [ %i.cf, %bb.t ], [ %i.cs, %bb.u ], [ %i.df, %bb.v ], [ %i.u, %._crit_edge55 ], [ %i.ef, %bb.z ], [ %i.ek, %bb.aa ], [ %i.dn, %bb.x ], [ %i.ia, %bb.as ], [ %.97.i.i, %bb.ar ], [ %i.gp, %bb.ah ], [ %i.en, %bb.ab ], [ %i.fb, %bb.ac ], [ %.sroa.0.0.i106.i.i, %_RNvXsqJ_NtCs4lawaffTVVK_9sqlparser3astNtB6_17UnloadPartitionByNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit.i.i ], [ %i.is, %bb.az ], [ %.98.i.i, %bb.at ], [ %i.if, %bb.av ], [ %.sroa.0.0.i.i.i.i.i, %_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast19CopyLegacyCsvOptionNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit.i.i.i ]
+  %.sroa.0.0.i.i = phi i8 [ %i.g, %.lr.ph59 ], [ %i.hh, %bb.al ], [ %i.gp, %bb.ah ], [ %..i.i, %bb.ak ], [ %i.gm, %bb.ag ], [ %i.ia, %bb.as ], [ %i.hu, %bb.ao ], [ %.100.i.i, %bb.ay ], [ %.95.i.i, %bb.an ], [ %i.u, %._crit_edge55 ], [ %i.ca, %bb.s ], [ %i.cf, %bb.t ], [ %i.cs, %bb.u ], [ %i.df, %bb.v ], [ %i.dn, %bb.x ], [ %i.ef, %bb.z ], [ %i.ek, %bb.aa ], [ %i.ea, %bb.y ], [ %.99.i.i, %bb.aw ], [ %.97.i.i, %bb.ar ], [ %.sroa.0.0.i106.i.i, %_RNvXsqJ_NtCs4lawaffTVVK_9sqlparser3astNtB6_17UnloadPartitionByNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit.i.i ], [ %i.en, %bb.ab ], [ %i.fb, %bb.ac ], [ %i.if, %bb.av ], [ %i.is, %bb.az ], [ %.98.i.i, %bb.at ], [ %i.hz, %bb.aq ], [ %.sroa.0.0.i.i.i.i.i, %_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast19CopyLegacyCsvOptionNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit.i.i.i ]
   %.sroa.0.0.i.fr.i = freeze i8 %.sroa.0.0.i.i    ; 2 uses
   %i.it = icmp eq i8 %.sroa.0.0.i.fr.i, 0
   br i1 %i.it, label %_RNvXsqf_NtCs4lawaffTVVK_9sqlparser3astNtB6_16CopyLegacyOptionNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit.thread5.i, label %_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit
@@ -217,8 +217,8 @@ _RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast16Cop
   %.not14 = icmp eq i8 %i.iu, 3
   br i1 %.not14, label %bb.b, label %_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit.thread
 
-_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit.thread: ; preds = %bb.aq, %bb.av, %bb.as, %bb.ax, %bb.am, %bb.aj, %_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit, %._crit_edge60
-  %.sroa.0.0 = phi i8 [ %i.a, %._crit_edge60 ], [ 1, %bb.aq ], [ 1, %bb.av ], [ 1, %bb.as ], [ 1, %bb.ax ], [ 1, %bb.am ], [ 1, %bb.aj ], [ %i.iu, %_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit ]
+_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit.thread: ; preds = %bb.aq, %bb.av, %bb.as, %bb.am, %bb.ax, %bb.aj, %_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit, %._crit_edge60
+  %.sroa.0.0 = phi i8 [ %i.a, %._crit_edge60 ], [ 1, %bb.aq ], [ 1, %bb.av ], [ 1, %bb.as ], [ 1, %bb.am ], [ 1, %bb.ax ], [ 1, %bb.aj ], [ %i.iu, %_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast16CopyLegacyOptionNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit ]
   ret i8 %.sroa.0.0
 }
 
@@ -621,8 +621,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.r = lshr i128 %i.o, 64                       ; 2 uses
   %i.s = trunc i128 %i.r to i32
-  %i.t = lshr i128 %i.o, 96
-  %2 = trunc nuw nsw i128 %i.t to i64             ; 6 uses
+  %i.t = lshr i128 %i.o, 96                       ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %.val, i64 40
   %i.v = load i64, ptr %i.u, align 8, !alias.scope !14254, !noundef !31 ; 4 uses
   %i.w = icmp ult i64 %i.v, 384307168202282326
@@ -638,6 +637,7 @@ bb.e:                                             ; preds = %bb.c
   br label %_RNvMs_NtNtCs1N9T06jgEdt_11arrow_array7builder26generic_bytes_view_builderINtB4_22GenericByteViewBuilderNtNtB8_5types14BinaryViewTypeE9get_valueCs14kWLkQVSKO_14deltalake_core.exit.i
 
 bb.f:                                             ; preds = %bb.d
+  %2 = trunc nuw nsw i128 %i.t to i64             ; 3 uses
   %i.ac = trunc i128 %i.o to i64
   %i.ad = and i64 %i.ac, 4294967295               ; 2 uses
   %i.ae = add nuw nsw i64 %i.ad, %2               ; 2 uses
@@ -668,9 +668,10 @@ bb.j:                                             ; preds = %bb.g
   %i.ap = getelementptr inbounds nuw [24 x i8], ptr %i.ao, i64 %i.ai ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 16
   %i.ar = load i64, ptr %i.aq, align 8, !noalias !14254, !noundef !31 ; 2 uses
+  %3 = trunc nuw nsw i128 %i.t to i64             ; 3 uses
   %i.as = trunc i128 %i.o to i64
   %i.at = and i64 %i.as, 4294967295               ; 2 uses
-  %i.au = add nuw nsw i64 %i.at, %2               ; 2 uses
+  %i.au = add nuw nsw i64 %i.at, %3               ; 2 uses
   %.not12.i.i = icmp ugt i64 %i.au, %i.ar
   br i1 %.not12.i.i, label %bb.l, label %bb.m, !prof !34
 
@@ -679,13 +680,13 @@ bb.k:                                             ; preds = %bb.g
   unreachable
 
 bb.l:                                             ; preds = %bb.j
-  tail call void @_RNvNtNtCsbvkFyIu7lgC_4core5slice5index16slice_index_fail(i64 noundef %2, i64 noundef %i.au, i64 noundef %i.ar, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @190) #61, !noalias !14254
+  tail call void @_RNvNtNtCsbvkFyIu7lgC_4core5slice5index16slice_index_fail(i64 noundef %3, i64 noundef %i.au, i64 noundef %i.ar, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @190) #61, !noalias !14254
   unreachable
 
 bb.m:                                             ; preds = %bb.j
   %i.av = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
   %i.aw = load ptr, ptr %i.av, align 8, !noalias !14254, !noundef !31
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 %2
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 %3
   br label %_RNvMs_NtNtCs1N9T06jgEdt_11arrow_array7builder26generic_bytes_view_builderINtB4_22GenericByteViewBuilderNtNtB8_5types14BinaryViewTypeE9get_valueCs14kWLkQVSKO_14deltalake_core.exit.i
 
 _RNvMs_NtNtCs1N9T06jgEdt_11arrow_array7builder26generic_bytes_view_builderINtB4_22GenericByteViewBuilderNtNtB8_5types14BinaryViewTypeE9get_valueCs14kWLkQVSKO_14deltalake_core.exit.i: ; preds = %bb.m, %bb.i, %bb.e
@@ -1088,7 +1089,6 @@ bb.f:                                             ; preds = %bb.e
   %i.ag = lshr i128 %i.ad, 64
   %i.ah = trunc nuw i128 %i.ag to i64
   %i.ai = lshr i128 %i.ad, 96
-  %2 = trunc nuw nsw i128 %i.ai to i64
   %i.aj = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.ak = load ptr, ptr %i.aj, align 8, !alias.scope !14264, !nonnull !31, !noundef !31
   %i.al = getelementptr inbounds nuw i8, ptr %i.t, i64 16
@@ -1097,6 +1097,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ao = icmp ult i64 %i.an, %i.am
   tail call void @llvm.assume(i1 %i.ao)
   %i.ap = getelementptr inbounds nuw [24 x i8], ptr %i.ak, i64 %i.an
+  %2 = trunc nuw nsw i128 %i.ai to i64
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
   %i.ar = load ptr, ptr %i.aq, align 8, !noalias !14264, !noundef !31
   %i.as = trunc i128 %i.ad to i64
@@ -1499,7 +1500,6 @@ bb.d:                                             ; preds = %bb.c
   %i.p = lshr i128 %i.m, 64
   %i.q = trunc nuw i128 %i.p to i64
   %i.r = lshr i128 %i.m, 96
-  %2 = trunc nuw nsw i128 %i.r to i64
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.t = load ptr, ptr %i.s, align 8, !alias.scope !15638, !nonnull !31, !noundef !31
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1508,6 +1508,7 @@ bb.d:                                             ; preds = %bb.c
   %i.x = icmp ult i64 %i.w, %i.v
   tail call void @llvm.assume(i1 %i.x)
   %i.y = getelementptr inbounds nuw [24 x i8], ptr %i.t, i64 %i.w
+  %2 = trunc nuw nsw i128 %i.r to i64
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 8
   %i.aa = load ptr, ptr %i.z, align 8, !noalias !15638, !noundef !31
   %i.ab = trunc i128 %i.m to i64
@@ -1575,7 +1576,6 @@ bb.d:                                             ; preds = %bb.c
   %i.p = lshr i128 %i.m, 64
   %i.q = trunc nuw i128 %i.p to i64
   %i.r = lshr i128 %i.m, 96
-  %2 = trunc nuw nsw i128 %i.r to i64
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.t = load ptr, ptr %i.s, align 8, !alias.scope !15641, !nonnull !31, !noundef !31
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1584,6 +1584,7 @@ bb.d:                                             ; preds = %bb.c
   %i.x = icmp ult i64 %i.w, %i.v
   tail call void @llvm.assume(i1 %i.x)
   %i.y = getelementptr inbounds nuw [24 x i8], ptr %i.t, i64 %i.w
+  %2 = trunc nuw nsw i128 %i.r to i64
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 8
   %i.aa = load ptr, ptr %i.z, align 8, !noalias !15641, !noundef !31
   %i.ab = trunc i128 %i.m to i64
@@ -1986,8 +1987,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.j = lshr i128 %i.g, 64                       ; 2 uses
   %i.k = trunc i128 %i.j to i32
-  %i.l = lshr i128 %i.g, 96
-  %2 = trunc nuw nsw i128 %i.l to i64             ; 6 uses
+  %i.l = lshr i128 %i.g, 96                       ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.n = load i64, ptr %i.m, align 8, !noundef !31 ; 4 uses
   %i.o = icmp ult i64 %i.n, 384307168202282326
@@ -2003,6 +2003,7 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.n
 
 bb.f:                                             ; preds = %bb.d
+  %2 = trunc nuw nsw i128 %i.l to i64             ; 3 uses
   %i.u = trunc i128 %i.g to i64
   %i.v = and i64 %i.u, 4294967295                 ; 2 uses
   %i.w = add nuw nsw i64 %i.v, %2                 ; 2 uses
@@ -2033,9 +2034,10 @@ bb.j:                                             ; preds = %bb.g
   %i.ah = getelementptr inbounds nuw [24 x i8], ptr %i.ag, i64 %i.aa ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 16
   %i.aj = load i64, ptr %i.ai, align 8, !noundef !31 ; 2 uses
+  %3 = trunc nuw nsw i128 %i.l to i64             ; 3 uses
   %i.ak = trunc i128 %i.g to i64
   %i.al = and i64 %i.ak, 4294967295               ; 2 uses
-  %i.am = add nuw nsw i64 %i.al, %2               ; 2 uses
+  %i.am = add nuw nsw i64 %i.al, %3               ; 2 uses
   %.not12 = icmp ugt i64 %i.am, %i.aj
   br i1 %.not12, label %bb.l, label %bb.m, !prof !34
 
@@ -2044,13 +2046,13 @@ bb.k:                                             ; preds = %bb.g
   unreachable
 
 bb.l:                                             ; preds = %bb.j
-  tail call void @_RNvNtNtCsbvkFyIu7lgC_4core5slice5index16slice_index_fail(i64 noundef %2, i64 noundef %i.am, i64 noundef %i.aj, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @190) #61
+  tail call void @_RNvNtNtCsbvkFyIu7lgC_4core5slice5index16slice_index_fail(i64 noundef %3, i64 noundef %i.am, i64 noundef %i.aj, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @190) #61
   unreachable
 
 bb.m:                                             ; preds = %bb.j
   %i.an = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
   %i.ao = load ptr, ptr %i.an, align 8, !noundef !31
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 %2
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 %3
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.i, %bb.m, %bb.e
@@ -2453,7 +2455,6 @@ bb.b:                                             ; preds = %bb.a
   %i.l = lshr i128 %i.i, 64
   %i.m = trunc nuw i128 %i.l to i64
   %i.n = lshr i128 %i.i, 96
-  %2 = trunc nuw nsw i128 %i.n to i64
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.p = load ptr, ptr %i.o, align 8, !alias.scope !19319, !nonnull !31, !noundef !31
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -2462,6 +2463,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = icmp ult i64 %i.s, %i.r
   tail call void @llvm.assume(i1 %i.t)
   %i.u = getelementptr inbounds nuw [24 x i8], ptr %i.p, i64 %i.s
+  %2 = trunc nuw nsw i128 %i.n to i64
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   %i.w = load ptr, ptr %i.v, align 8, !noalias !19319, !noundef !31
   %i.x = trunc i128 %i.i to i64
@@ -2506,7 +2508,6 @@ bb.b:                                             ; preds = %bb.a
   %i.l = lshr i128 %i.i, 64
   %i.m = trunc nuw i128 %i.l to i64
   %i.n = lshr i128 %i.i, 96
-  %2 = trunc nuw nsw i128 %i.n to i64
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.p = load ptr, ptr %i.o, align 8, !alias.scope !19322, !nonnull !31, !noundef !31
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -2515,6 +2516,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = icmp ult i64 %i.s, %i.r
   tail call void @llvm.assume(i1 %i.t)
   %i.u = getelementptr inbounds nuw [24 x i8], ptr %i.p, i64 %i.s
+  %2 = trunc nuw nsw i128 %i.n to i64
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   %i.w = load ptr, ptr %i.v, align 8, !noalias !19322, !noundef !31
   %i.x = trunc i128 %i.i to i64

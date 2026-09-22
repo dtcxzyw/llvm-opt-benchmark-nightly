@@ -204,7 +204,8 @@ bb.ag:                                            ; preds = %.lr.ph36, %bb.am
   br i1 %i.fd, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
-  %7 = select i1 %i.fe, i8 %.023434, i8 0
+  %7 = icmp ne i8 %.023434, 0
+  %narrow = select i1 %i.fe, i1 %7, i1 false
   br label %bb.am
 
 bb.ai:                                            ; preds = %bb.ag
@@ -229,7 +230,6 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   %i.fn = select i1 %.pre-phi, i1 true, i1 %i.fk
   %i.fo = select i1 %.pre-phi, i1 %i.fk, i1 false
   %.in247 = select i1 %i.fm, i1 %i.fn, i1 %i.fo
-  %8 = zext i1 %.in247 to i8
   %.pre = load ptr, ptr %i.m, align 8
   %.pre68 = load ptr, ptr %i.n, align 8
   %.pre70 = load i32, ptr %i.l, align 4
@@ -240,7 +240,8 @@ bb.am:                                            ; preds = %bb.ah, %bb.al
   %i.fq = phi i8 [ %i.ew, %bb.ah ], [ %i.fl, %bb.al ]
   %i.fr = phi ptr [ %i.ex, %bb.ah ], [ %.pre68, %bb.al ]
   %i.fs = phi ptr [ %i.ey, %bb.ah ], [ %.pre, %bb.al ]
-  %.1 = phi i8 [ %7, %bb.ah ], [ %8, %bb.al ]     ; 2 uses
+  %.1.in = phi i1 [ %narrow, %bb.ah ], [ %.in247, %bb.al ]
+  %.1 = zext i1 %.1.in to i8                      ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ft = sext i32 %i.fp to i64
   %i.fu = icmp slt i64 %indvars.iv.next, %i.ft

@@ -202,7 +202,7 @@ bb.bl:                                            ; preds = %.thread92, %.thread
   br i1 %i.eh, label %.thread100.thread, label %.thread110
 
 .thread100:                                       ; preds = %bb.bj, %.thread92, %.thread, %.thread121
-  %.09196105 = phi i32 [ 0, %.thread121 ], [ 0, %.thread92 ], [ 0, %.thread ], [ 1, %bb.bj ] ; 2 uses
+  %.09196105 = phi i8 [ 0, %.thread121 ], [ 0, %.thread92 ], [ 0, %.thread ], [ 1, %bb.bj ] ; 2 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %0, i64 360
   %i.ej = load ptr, ptr %i.ei, align 8
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ej, i64 16
@@ -341,7 +341,7 @@ poll_set_started.exit:                            ; preds = %bb.bw
 
 .thread202.sink.split:                            ; preds = %poll_set_started.exit, %poll_set_started.exit.thread, %.thread100.thread, %poll_set_started.exit.thread117, %.split.thread
   %.sink = phi i64 [ %.0809098, %poll_set_started.exit.thread117 ], [ %.0809098, %.split.thread ], [ 0, %.thread100.thread ], [ 0, %poll_set_started.exit.thread ], [ 0, %poll_set_started.exit ]
-  %.2120.ph = phi i32 [ 0, %poll_set_started.exit.thread117 ], [ 0, %.split.thread ], [ 0, %.thread100.thread ], [ 1, %poll_set_started.exit.thread ], [ 1, %poll_set_started.exit ]
+  %.2120.ph = phi i8 [ 0, %poll_set_started.exit.thread117 ], [ 0, %.split.thread ], [ 0, %.thread100.thread ], [ 1, %poll_set_started.exit.thread ], [ 1, %poll_set_started.exit ]
   %i.fw = getelementptr inbounds nuw i8, ptr %0, i64 360
   %i.fx = load ptr, ptr %i.fw, align 8
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fx, i64 8
@@ -350,7 +350,7 @@ poll_set_started.exit:                            ; preds = %bb.bw
   br label %.thread202
 
 .thread202:                                       ; preds = %.thread202.sink.split, %.thread100.thread
-  %.2120 = phi i32 [ 0, %.thread100.thread ], [ %.2120.ph, %.thread202.sink.split ]
+  %.2120 = phi i8 [ 0, %.thread100.thread ], [ %.2120.ph, %.thread202.sink.split ]
   %i.gb = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 2 uses
   %i.gc = load atomic i32, ptr %i.gb monotonic, align 8
   %i.gd = add i32 %i.gc, -2
@@ -358,7 +358,7 @@ poll_set_started.exit:                            ; preds = %bb.bw
   br label %bb.bx
 
 bb.bx:                                            ; preds = %.split, %.thread100, %.thread202
-  %.2119 = phi i32 [ %.09196105, %.split ], [ %.2120, %.thread202 ], [ %.09196105, %.thread100 ] ; 2 uses
+  %.2119 = phi i8 [ %.09196105, %.split ], [ %.2120, %.thread202 ], [ %.09196105, %.thread100 ] ; 2 uses
   call void @aio_notify_accept(ptr noundef nonnull %0) #9
   %i.ge = load i64, ptr %i.k, align 8
   %.not59 = icmp eq i64 %i.ge, 0
@@ -381,12 +381,14 @@ bb.bz:                                            ; preds = %bb.by, %bb.bx
 
 bb.ca:                                            ; preds = %bb.bz
   %i.gl = call zeroext i1 %i.gk(ptr noundef nonnull %0) #9
-  %3 = zext i1 %i.gl to i32
-  %4 = or i32 %.2119, %3
+  %3 = zext i1 %i.gl to i8
+  %4 = or i8 %.2119, %3
+  %5 = icmp ne i8 %4, 0
+  %6 = zext i1 %5 to i8
   br label %bb.cb
 
 bb.cb:                                            ; preds = %bb.ca, %bb.bz
-  %.3 = phi i32 [ %4, %bb.ca ], [ %.2119, %bb.bz ]
+  %.3 = phi i8 [ %6, %bb.ca ], [ %.2119, %bb.bz ]
   %i.gm = call i32 @aio_bh_poll(ptr noundef nonnull %0) #9
   %i.gn = call fastcc zeroext i1 @aio_dispatch_ready_handlers(ptr noundef nonnull %0, ptr noundef %2, i64 noundef %.053)
   call fastcc void @aio_free_deleted_handlers(ptr noundef nonnull %0)
@@ -521,7 +523,8 @@ bb.ct:                                            ; preds = %bb.cs
   br label %update_handler_poll_times.exit
 
 update_handler_poll_times.exit:                   ; preds = %bb.ct, %bb.cs, %bb.cr, %bb.cq, %bb.cp, %bb.co, %bb.cn, %bb.cm, %bb.cl, %._crit_edge.i69, %bb.cc, %bb.cb
-  %i.id = or i32 %i.gm, %.3
+  %7 = zext nneg i8 %.3 to i32
+  %i.id = or i32 %i.gm, %7
   %i.ie = icmp ne i32 %i.id, 0
   %i.if = or i1 %i.gn, %i.ie
   call void @qemu_lockcnt_dec(ptr noundef nonnull %i.j) #9

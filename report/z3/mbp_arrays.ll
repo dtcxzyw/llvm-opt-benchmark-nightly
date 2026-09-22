@@ -205,11 +205,12 @@ _ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit:
   br i1 %.not169, label %._crit_edge, label %.lr.ph
 
 ._crit_edge.loopexit:                             ; preds = %bb.ar
+  %7 = trunc nuw i8 %.130 to i1
   %i.ci = trunc nuw i8 %.1 to i1
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit
-  %.029.lcssa = phi i1 [ false, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit ], [ %.130, %._crit_edge.loopexit ]
+  %.029.lcssa = phi i1 [ false, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit ], [ %7, %._crit_edge.loopexit ]
   %.028.lcssa = phi i1 [ false, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit ], [ %i.ci, %._crit_edge.loopexit ]
   %i.cj = load ptr, ptr %5, align 8, !tbaa !55    ; 4 uses
   %i.ck = icmp eq ptr %i.cj, null
@@ -243,7 +244,7 @@ bb.n:                                             ; preds = %.loopexit149
 .lr.ph:                                           ; preds = %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit, %bb.ar
   %.0173 = phi ptr [ %i.hd, %bb.ar ], [ %i.cd, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit ] ; 2 uses
   %.028172 = phi i8 [ %.1, %bb.ar ], [ 0, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit ] ; 3 uses
-  %.029170 = phi i1 [ %.130, %bb.ar ], [ false, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit ] ; 3 uses
+  %.029170 = phi i8 [ %.130, %bb.ar ], [ 0, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit ] ; 3 uses
   %i.cp = load ptr, ptr %.0173, align 8, !tbaa !79 ; 8 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 4
   %i.cr = load i32, ptr %i.cq, align 4
@@ -521,7 +522,10 @@ bb.ak:                                            ; preds = %.noexc78, %bb.ai
   %i.gj = add i32 %i.ge, 1
   store i32 %i.gj, ptr %i.gg, align 4, !tbaa !72
   %i.gk = icmp ne ptr %i.cp, %i.ft
-  %7 = or i1 %.029170, %i.gk                      ; 3 uses
+  %8 = zext i1 %i.gk to i8
+  %9 = or i8 %.029170, %8
+  %10 = icmp ne i8 %9, 0
+  %11 = zext i1 %10 to i8                         ; 3 uses
   %i.gl = trunc nuw i8 %.028172 to i1
   br i1 %i.gl, label %bb.ar, label %bb.al
 
@@ -580,7 +584,7 @@ bb.aq:                                            ; preds = %bb.ao
   br label %.body
 
 bb.ar:                                            ; preds = %_ZN3mbp20array_select_reducer10has_storesEP4expr.exit.thread, %_ZN3mbp20array_select_reducer10has_storesEP4expr.exit, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit, %bb.ap, %bb.ak
-  %.130 = phi i1 [ %7, %bb.ak ], [ %.029170, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit ], [ %.029170, %bb.ap ], [ %7, %_ZN3mbp20array_select_reducer10has_storesEP4expr.exit ], [ %7, %_ZN3mbp20array_select_reducer10has_storesEP4expr.exit.thread ] ; 2 uses
+  %.130 = phi i8 [ %11, %bb.ak ], [ %.029170, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit ], [ %.029170, %bb.ap ], [ %11, %_ZN3mbp20array_select_reducer10has_storesEP4expr.exit ], [ %11, %_ZN3mbp20array_select_reducer10has_storesEP4expr.exit.thread ] ; 2 uses
   %.1 = phi i8 [ 1, %bb.ak ], [ %.028172, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit ], [ %.028172, %bb.ap ], [ 0, %_ZN3mbp20array_select_reducer10has_storesEP4expr.exit ], [ 1, %_ZN3mbp20array_select_reducer10has_storesEP4expr.exit.thread ] ; 2 uses
   %i.hd = getelementptr inbounds nuw i8, ptr %.0173, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.hd, %i.ch

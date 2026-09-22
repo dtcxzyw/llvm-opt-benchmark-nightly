@@ -202,8 +202,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.r = lshr i128 %i.o, 64                       ; 2 uses
   %i.s = trunc i128 %i.r to i32
-  %i.t = lshr i128 %i.o, 96
-  %2 = trunc nuw nsw i128 %i.t to i64             ; 6 uses
+  %i.t = lshr i128 %i.o, 96                       ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %.val, i64 40
   %i.v = load i64, ptr %i.u, align 8, !alias.scope !11494, !noundef !7 ; 4 uses
   %i.w = icmp ult i64 %i.v, 384307168202282326
@@ -219,6 +218,7 @@ bb.e:                                             ; preds = %bb.c
   br label %_RNvMs_NtNtCs6ePPILGZvJ2_11arrow_array7builder26generic_bytes_view_builderINtB4_22GenericByteViewBuilderNtNtB8_5types14StringViewTypeE9get_valueCs43kcu4yvms7_24influxdb3_query_executor.exit.i
 
 bb.f:                                             ; preds = %bb.d
+  %2 = trunc nuw nsw i128 %i.t to i64             ; 3 uses
   %i.ac = trunc i128 %i.o to i64
   %i.ad = and i64 %i.ac, 4294967295               ; 2 uses
   %i.ae = add nuw nsw i64 %i.ad, %2               ; 2 uses
@@ -249,9 +249,10 @@ bb.j:                                             ; preds = %bb.g
   %i.ap = getelementptr inbounds nuw [24 x i8], ptr %i.ao, i64 %i.ai ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 16
   %i.ar = load i64, ptr %i.aq, align 8, !noalias !11494, !noundef !7 ; 2 uses
+  %3 = trunc nuw nsw i128 %i.t to i64             ; 3 uses
   %i.as = trunc i128 %i.o to i64
   %i.at = and i64 %i.as, 4294967295               ; 2 uses
-  %i.au = add nuw nsw i64 %i.at, %2               ; 2 uses
+  %i.au = add nuw nsw i64 %i.at, %3               ; 2 uses
   %.not12.i.i = icmp ugt i64 %i.au, %i.ar
   br i1 %.not12.i.i, label %bb.l, label %bb.m, !prof !8
 
@@ -260,13 +261,13 @@ bb.k:                                             ; preds = %bb.g
   unreachable
 
 bb.l:                                             ; preds = %bb.j
-  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef %2, i64 noundef %i.au, i64 noundef %i.ar, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @77) #44, !noalias !11494
+  tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef %3, i64 noundef %i.au, i64 noundef %i.ar, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @77) #44, !noalias !11494
   unreachable
 
 bb.m:                                             ; preds = %bb.j
   %i.av = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
   %i.aw = load ptr, ptr %i.av, align 8, !noalias !11494, !noundef !7
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 %2
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 %3
   br label %_RNvMs_NtNtCs6ePPILGZvJ2_11arrow_array7builder26generic_bytes_view_builderINtB4_22GenericByteViewBuilderNtNtB8_5types14StringViewTypeE9get_valueCs43kcu4yvms7_24influxdb3_query_executor.exit.i
 
 _RNvMs_NtNtCs6ePPILGZvJ2_11arrow_array7builder26generic_bytes_view_builderINtB4_22GenericByteViewBuilderNtNtB8_5types14StringViewTypeE9get_valueCs43kcu4yvms7_24influxdb3_query_executor.exit.i: ; preds = %bb.m, %bb.i, %bb.e

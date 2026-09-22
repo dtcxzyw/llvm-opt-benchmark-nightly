@@ -202,15 +202,15 @@ bb.a:
   %i.a = load i8, ptr %0, align 1
   %i.b = trunc nuw i8 %i.a to i1
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %i.d = load i8, ptr %1, align 1
-  %2 = trunc i8 %i.d to i1                        ; 2 uses
+  %i.d = load i8, ptr %1, align 1                 ; 2 uses
   br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
+  %2 = trunc nuw i8 %i.d to i1
   br i1 %2, label %bb.e, label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %3 = xor i1 %2, true
+  %3 = icmp eq i8 %i.d, 0
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.e, %bb.c
@@ -228,9 +228,7 @@ define hidden zeroext i1 @_RNvXsh_NtCsaR3IayqLkK5_9jiff_core2tzNtB5_3DstNtNtCs3o
 bb.a:
   %i.a = load i8, ptr %0, align 1
   %i.b = load i8, ptr %1, align 1
-  %2 = xor i8 %i.b, %i.a
-  %3 = and i8 %2, 1
-  %i.c = icmp eq i8 %3, 0
+  %i.c = icmp eq i8 %i.a, %i.b
   ret i1 %i.c
 }
 
@@ -257,23 +255,28 @@ bb.a:
 define zeroext i1 @_RNvYINtNtCs3oUPovFnLWP_4core6option6OptionhENtNtB7_3cmp9PartialEq2neCsaR3IayqLkK5_9jiff_core(ptr %0, ptr %1) unnamed_addr #1 {
 bb.a:
   %i.a = load i8, ptr %0, align 1
-  %2 = trunc nuw i8 %i.a to i1                    ; 2 uses
-  %3 = load i8, ptr %1, align 1
-  %i.b = trunc i8 %3 to i1                        ; 2 uses
-  %4 = select i1 %2, i1 %i.b, i1 false
-  %.mux = select i1 %2, i1 true, i1 %i.b
-  br i1 %4, label %bb.b, label %_RNvXsf_NtCs3oUPovFnLWP_4core6optionINtB5_6OptionhENtNtB7_3cmp9PartialEq2eqCsaR3IayqLkK5_9jiff_core.exit
+  %i.b = trunc nuw i8 %i.a to i1
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %3 = load i8, ptr %1, align 1                   ; 2 uses
+  br i1 %i.b, label %4, label %6
 
-bb.b:                                             ; preds = %bb.a
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 1
-  %i.d = tail call zeroext i1 @_RNvXsk_NtNtCs3oUPovFnLWP_4core3cmp5implshNtB7_9PartialEq2eqCsaR3IayqLkK5_9jiff_core(ptr nonnull %5, ptr nonnull %i.c) #16
-  %6 = xor i1 %i.d, true
+4:                                                ; preds = %bb.a
+  %5 = trunc nuw i8 %3 to i1
+  br i1 %5, label %bb.b, label %_RNvXsf_NtCs3oUPovFnLWP_4core6optionINtB5_6OptionhENtNtB7_3cmp9PartialEq2eqCsaR3IayqLkK5_9jiff_core.exit
+
+6:                                                ; preds = %bb.a
+  %7 = icmp eq i8 %3, 0
   br label %_RNvXsf_NtCs3oUPovFnLWP_4core6optionINtB5_6OptionhENtNtB7_3cmp9PartialEq2eqCsaR3IayqLkK5_9jiff_core.exit
 
-_RNvXsf_NtCs3oUPovFnLWP_4core6optionINtB5_6OptionhENtNtB7_3cmp9PartialEq2eqCsaR3IayqLkK5_9jiff_core.exit: ; preds = %bb.a, %bb.b
-  %.sroa.0.0.i = phi i1 [ %6, %bb.b ], [ %.mux, %bb.a ]
-  ret i1 %.sroa.0.0.i
+bb.b:                                             ; preds = %4
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 1
+  %i.d = tail call zeroext i1 @_RNvXsk_NtNtCs3oUPovFnLWP_4core3cmp5implshNtB7_9PartialEq2eqCsaR3IayqLkK5_9jiff_core(ptr nonnull %2, ptr nonnull %i.c) #16
+  br label %_RNvXsf_NtCs3oUPovFnLWP_4core6optionINtB5_6OptionhENtNtB7_3cmp9PartialEq2eqCsaR3IayqLkK5_9jiff_core.exit
+
+_RNvXsf_NtCs3oUPovFnLWP_4core6optionINtB5_6OptionhENtNtB7_3cmp9PartialEq2eqCsaR3IayqLkK5_9jiff_core.exit: ; preds = %4, %6, %bb.b
+  %.sroa.0.0.shrunk.i = phi i1 [ %i.d, %bb.b ], [ %7, %6 ], [ false, %4 ]
+  %8 = xor i1 %.sroa.0.0.shrunk.i, true
+  ret i1 %8
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
@@ -470,9 +473,8 @@ define zeroext i1 @_RNvYNtNtCsaR3IayqLkK5_9jiff_core2tz3DstNtNtCs3oUPovFnLWP_4co
 bb.a:
   %i.a = load i8, ptr %0, align 1
   %i.b = load i8, ptr %1, align 1
-  %2 = xor i8 %i.b, %i.a
-  %3 = trunc i8 %2 to i1
-  ret i1 %3
+  %2 = icmp ne i8 %i.a, %i.b
+  ret i1 %2
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable

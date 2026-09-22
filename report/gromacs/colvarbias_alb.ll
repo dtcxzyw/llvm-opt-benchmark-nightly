@@ -204,12 +204,13 @@ bb.a:
   br label %bb.b
 
 ._crit_edge.loopexit:                             ; preds = %bb.ah
+  %5 = trunc nuw i8 %.2 to i1
   %i.bm = icmp eq ptr %i.iw, %i.ix
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
   %.not165 = phi i1 [ true, %bb.a ], [ %i.bm, %._crit_edge.loopexit ]
-  %.071.lcssa = phi i1 [ true, %bb.a ], [ %.2, %._crit_edge.loopexit ]
+  %.071.lcssa = phi i1 [ true, %bb.a ], [ %5, %._crit_edge.loopexit ]
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 536 ; 3 uses
   %i.bo = load i8, ptr %i.bn, align 8, !tbaa !61, !range !62, !noundef !63 ; 2 uses
   %i.bp = trunc nuw i8 %i.bo to i1
@@ -219,7 +220,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %bb.ah
   %i.bq = phi ptr [ %i.t, %.lr.ph ], [ %i.ix, %bb.ah ]
   %.070160 = phi i64 [ 0, %.lr.ph ], [ %i.iv, %bb.ah ] ; 20 uses
-  %.071159 = phi i1 [ true, %.lr.ph ], [ %.2, %bb.ah ] ; 3 uses
+  %.071159 = phi i8 [ 1, %.lr.ph ], [ %.2, %bb.ah ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #20
   store double -1.000000e+00, ptr %i.d, align 8, !tbaa !64
@@ -504,12 +505,12 @@ bb.t:                                             ; preds = %bb.s, %bb.r
 bb.u:                                             ; preds = %_ZN11colvarvalueD2Ev.exit117
   %i.fz = load ptr, ptr %i.u, align 8, !tbaa !65
   %i.ga = getelementptr inbounds nuw [8 x i8], ptr %i.fz, i64 %.070160 ; 2 uses
-  %i.gb = load double, ptr %i.ga, align 8, !tbaa !64 ; 4 uses
+  %i.gb = load double, ptr %i.ga, align 8, !tbaa !64 ; 3 uses
   %i.gc = load ptr, ptr %i.av, align 8, !tbaa !65
   %i.gd = getelementptr inbounds nuw [8 x i8], ptr %i.gc, i64 %.070160
   %i.ge = load double, ptr %i.gd, align 8, !tbaa !64 ; 4 uses
   %i.gf = fcmp oeq double %i.ge, 0.000000e+00
-  br i1 %i.gf, label %bb.x, label %bb.v
+  br i1 %i.gf, label %6, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   %i.gg = load ptr, ptr %i.aw, align 8, !tbaa !65
@@ -519,22 +520,27 @@ bb.v:                                             ; preds = %bb.u
   %i.gk = fmul double %i.gj, %i.gj
   %i.gl = fmul double %i.ge, %i.ge
   %i.gm = fcmp olt double %i.gk, %i.gl
-  br i1 %i.gm, label %bb.x, label %bb.w
+  br i1 %i.gm, label %6, label %bb.w
+
+6:                                                ; preds = %bb.v, %bb.u
+  %7 = icmp ne i8 %.071159, 0
+  %8 = zext i1 %7 to i8
+  br label %bb.x
 
 bb.w:                                             ; preds = %bb.v
   %i.gn = fadd double %i.gb, %i.ge                ; 2 uses
   store double %i.gn, ptr %i.ga, align 8, !tbaa !64
   br label %bb.x
 
-bb.x:                                             ; preds = %bb.u, %bb.v, %bb.w
-  %5 = phi double [ %i.gn, %bb.w ], [ %i.gb, %bb.v ], [ %i.gb, %bb.u ]
-  %.1 = phi i1 [ false, %bb.w ], [ %.071159, %bb.v ], [ %.071159, %bb.u ] ; 3 uses
+bb.x:                                             ; preds = %bb.w, %6
+  %9 = phi double [ %i.gb, %6 ], [ %i.gn, %bb.w ]
+  %.1 = phi i8 [ %8, %6 ], [ 0, %bb.w ]           ; 3 uses
   %i.go = load i8, ptr %i.ax, align 1, !tbaa !195, !range !62, !noundef !63
   %i.gp = trunc nuw i8 %i.go to i1
   br i1 %i.gp, label %bb.ah, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %i.gq = call double @llvm.fabs.f64(double %5)
+  %i.gq = call double @llvm.fabs.f64(double %9)
   %i.gr = load ptr, ptr %i.ay, align 8, !tbaa !65
   %i.gs = getelementptr inbounds nuw [8 x i8], ptr %i.gr, i64 %.070160
   %i.gt = load double, ptr %i.gs, align 8, !tbaa !64
@@ -699,7 +705,7 @@ bb.ag:                                            ; preds = %.body, %bb.ae
   br label %bb.aq
 
 bb.ah:                                            ; preds = %bb.x, %bb.y, %_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev.exit, %bb.q
-  %.2 = phi i1 [ %.071159, %bb.q ], [ %.1, %_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev.exit ], [ %.1, %bb.y ], [ %.1, %bb.x ] ; 2 uses
+  %.2 = phi i8 [ %.071159, %bb.q ], [ %.1, %_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev.exit ], [ %.1, %bb.y ], [ %.1, %bb.x ] ; 2 uses
   %i.iv = add nuw i64 %.070160, 1                 ; 2 uses
   %i.iw = load ptr, ptr %i.r, align 8, !tbaa !59  ; 2 uses
   %i.ix = load ptr, ptr %i.q, align 8, !tbaa !60  ; 3 uses

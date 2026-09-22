@@ -175,7 +175,6 @@ ZL_gcdImpl.exit.i.i:                              ; preds = %ZL_gcdImpl.exit.i.i
   %i.ai = getelementptr inbounds nuw i8, ptr %i.l, i64 %.1109.i.i
   %i.aj = sub i64 %i.f, %.1109.i.i                ; 3 uses
   %i.ak = udiv i64 255, %.0104.i.i
-  %6 = trunc nuw nsw i64 %i.ak to i32
   %i.al = trunc nuw nsw i64 %.0104.i.i to i32     ; 2 uses
   %i.am = and i32 %i.al, 255                      ; 2 uses
   %i.an = call range(i32 0, 32) i32 @llvm.cttz.i32(i32 %i.am, i1 true) ; 2 uses
@@ -222,15 +221,19 @@ bb.j:                                             ; preds = %ZL_gcdImpl.exit.i.i
 ZL_getMultiplicativeInverse8.exit.i.i.i:          ; preds = %._crit_edge.i.i.i.i, %bb.j, %ZL_gcdImpl.exit.i.i
   %.1.i.i.i.i = phi i32 [ 1, %ZL_gcdImpl.exit.i.i ], [ 1, %bb.j ], [ %i.bd, %._crit_edge.i.i.i.i ]
   %.not2326.not.i.i.i.a = icmp eq i64 %i.aj, 0
-  br i1 %.not2326.not.i.i.i.a, label %ZL_firstIndexNotDivisibleBy8.exit.i.i, label %.lr.ph.i.i.i.a
+  br i1 %.not2326.not.i.i.i.a, label %ZL_firstIndexNotDivisibleBy8.exit.i.i, label %.lr.ph.i.i.i
+
+.lr.ph.i.i.i:                                     ; preds = %ZL_getMultiplicativeInverse8.exit.i.i.i
+  %6 = trunc nuw nsw i64 %i.ak to i32
+  br label %.lr.ph.i.i.i.a
 
 bb.k:                                             ; preds = %.lr.ph.i.i.i.a
   %i.be = add nuw i64 %.02028.i.i.i.a, 1          ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %i.be, %i.aj
   br i1 %exitcond.not.i.i.i, label %ZL_firstIndexNotDivisibleBy8.exit.i.i, label %.lr.ph.i.i.i.a, !llvm.loop !23
 
-.lr.ph.i.i.i.a:                                   ; preds = %ZL_getMultiplicativeInverse8.exit.i.i.i, %bb.k
-  %.02028.i.i.i.a = phi i64 [ %i.be, %bb.k ], [ 0, %ZL_getMultiplicativeInverse8.exit.i.i.i ] ; 3 uses
+.lr.ph.i.i.i.a:                                   ; preds = %bb.k, %.lr.ph.i.i.i
+  %.02028.i.i.i.a = phi i64 [ 0, %.lr.ph.i.i.i ], [ %i.be, %bb.k ] ; 3 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.ai, i64 %.02028.i.i.i.a
   %i.bg = load i8, ptr %i.bf, align 1, !tbaa !40  ; 2 uses
   %i.bh = zext i8 %i.bg to i32
@@ -321,7 +324,6 @@ ZL_gcdImpl.exit158.i.i:                           ; preds = %ZL_gcdImpl.exit158.
   %i.cp = getelementptr inbounds nuw [2 x i8], ptr %i.l, i64 %.3111.i.i
   %i.cq = sub i64 %i.f, %.3111.i.i                ; 3 uses
   %i.cr = udiv i64 65535, %.2106.i.i
-  %7 = trunc nuw nsw i64 %i.cr to i32
   %i.cs = trunc nuw nsw i64 %.2106.i.i to i32     ; 3 uses
   %i.ct = call range(i32 0, 32) i32 @llvm.cttz.i32(i32 %i.cs, i1 true) ; 2 uses
   %i.cu = lshr exact i32 %i.cs, %i.ct             ; 4 uses
@@ -362,15 +364,19 @@ bb.p:                                             ; preds = %ZL_gcdImpl.exit158.
 ZL_getMultiplicativeInverse32.exit.i.i.i:         ; preds = %._crit_edge.i.i135.i.i, %bb.p, %ZL_gcdImpl.exit158.i.i
   %.1.i.i137.i.i = phi i32 [ 1, %ZL_gcdImpl.exit158.i.i ], [ 1, %bb.p ], [ %spec.select.i.i136.i.i, %._crit_edge.i.i135.i.i ]
   %.not2326.not.i138.i.i = icmp eq i64 %i.cq, 0
-  br i1 %.not2326.not.i138.i.i, label %ZL_firstIndexNotDivisibleBy16.exit.i.i, label %.lr.ph.i139.i.i.a
+  br i1 %.not2326.not.i138.i.i, label %ZL_firstIndexNotDivisibleBy16.exit.i.i, label %.lr.ph.i139.i.i
+
+.lr.ph.i139.i.i:                                  ; preds = %ZL_getMultiplicativeInverse32.exit.i.i.i
+  %7 = trunc nuw nsw i64 %i.cr to i32
+  br label %.lr.ph.i139.i.i.a
 
 bb.q:                                             ; preds = %.lr.ph.i139.i.i.a
   %i.dg = add nuw i64 %.02028.i140.i.i, 1         ; 2 uses
   %exitcond.not.i145.i.i = icmp eq i64 %i.dg, %i.cq
   br i1 %exitcond.not.i145.i.i, label %ZL_firstIndexNotDivisibleBy16.exit.i.i, label %.lr.ph.i139.i.i.a, !llvm.loop !27
 
-.lr.ph.i139.i.i.a:                                ; preds = %ZL_getMultiplicativeInverse32.exit.i.i.i, %bb.q
-  %.02028.i140.i.i = phi i64 [ %i.dg, %bb.q ], [ 0, %ZL_getMultiplicativeInverse32.exit.i.i.i ] ; 3 uses
+.lr.ph.i139.i.i.a:                                ; preds = %bb.q, %.lr.ph.i139.i.i
+  %.02028.i140.i.i = phi i64 [ 0, %.lr.ph.i139.i.i ], [ %i.dg, %bb.q ] ; 3 uses
   %i.dh = getelementptr inbounds nuw [2 x i8], ptr %i.cp, i64 %.02028.i140.i.i
   %i.di = load i16, ptr %i.dh, align 2, !tbaa !43 ; 2 uses
   %i.dj = zext i16 %i.di to i32
@@ -733,7 +739,6 @@ bb.ai:                                            ; preds = %bb.ah
 bb.aj:                                            ; preds = %bb.ah
   %.rhs.trunc.i = trunc nuw i64 %.057 to i8
   %i.in = udiv i8 -1, %.rhs.trunc.i
-  %8 = zext i8 %i.in to i32
   %i.io = trunc nuw nsw i64 %.057 to i32          ; 3 uses
   %i.ip = call range(i32 0, 32) i32 @llvm.cttz.i32(i32 %i.io, i1 true) ; 2 uses
   %i.iq = lshr exact i32 %i.io, %i.ip             ; 4 uses
@@ -779,15 +784,19 @@ bb.ak:                                            ; preds = %bb.aj
 ZL_getMultiplicativeInverse8.exit.i.i:            ; preds = %._crit_edge.i.i94.i, %bb.ak, %bb.aj
   %.1.i.i.i = phi i32 [ 1, %bb.aj ], [ 1, %bb.ak ], [ %i.jf, %._crit_edge.i.i94.i ]
   %.not2326.not.i.i.a = icmp eq i64 %i.f, 0
-  br i1 %.not2326.not.i.i.a, label %ZL_firstIndexNotDivisibleBy8.exit.i, label %.lr.ph.i.i.a
+  br i1 %.not2326.not.i.i.a, label %ZL_firstIndexNotDivisibleBy8.exit.i, label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %ZL_getMultiplicativeInverse8.exit.i.i
+  %8 = zext i8 %i.in to i32
+  br label %.lr.ph.i.i.a
 
 bb.al:                                            ; preds = %.lr.ph.i.i.a
   %i.jg = add nuw i64 %.02028.i.i.a, 1            ; 2 uses
   %exitcond.not.i97.i = icmp eq i64 %i.jg, %i.f
   br i1 %exitcond.not.i97.i, label %getDivisor.exit.thread, label %.lr.ph.i.i.a, !llvm.loop !23
 
-.lr.ph.i.i.a:                                     ; preds = %ZL_getMultiplicativeInverse8.exit.i.i, %bb.al
-  %.02028.i.i.a = phi i64 [ %i.jg, %bb.al ], [ 0, %ZL_getMultiplicativeInverse8.exit.i.i ] ; 3 uses
+.lr.ph.i.i.a:                                     ; preds = %bb.al, %.lr.ph.i.i
+  %.02028.i.i.a = phi i64 [ 0, %.lr.ph.i.i ], [ %i.jg, %bb.al ] ; 3 uses
   %i.jh = getelementptr inbounds nuw i8, ptr %i.l, i64 %.02028.i.i.a
   %i.ji = load i8, ptr %i.jh, align 1, !tbaa !40  ; 2 uses
   %i.jj = zext i8 %i.ji to i32
@@ -827,7 +836,6 @@ bb.ao:                                            ; preds = %bb.an
 bb.ap:                                            ; preds = %bb.an
   %.rhs.trunc190.i.a = trunc nuw i64 %.057 to i16
   %i.jx = udiv i16 -1, %.rhs.trunc190.i.a
-  %9 = zext i16 %i.jx to i32
   %i.jy = trunc nuw nsw i64 %.057 to i32          ; 3 uses
   %i.jz = call range(i32 0, 32) i32 @llvm.cttz.i32(i32 %i.jy, i1 true) ; 2 uses
   %i.ka = lshr exact i32 %i.jy, %i.jz             ; 4 uses
@@ -868,15 +876,19 @@ bb.aq:                                            ; preds = %bb.ap
 ZL_getMultiplicativeInverse32.exit.i.i:           ; preds = %._crit_edge.i.i100.i, %bb.aq, %bb.ap
   %.1.i.i102.i = phi i32 [ 1, %bb.ap ], [ 1, %bb.aq ], [ %spec.select.i.i101.i, %._crit_edge.i.i100.i ]
   %.not2326.not.i103.i = icmp eq i64 %i.f, 0
-  br i1 %.not2326.not.i103.i, label %ZL_firstIndexNotDivisibleBy16.exit.i, label %.lr.ph.i104.i.a
+  br i1 %.not2326.not.i103.i, label %ZL_firstIndexNotDivisibleBy16.exit.i, label %.lr.ph.i104.i
+
+.lr.ph.i104.i:                                    ; preds = %ZL_getMultiplicativeInverse32.exit.i.i
+  %9 = zext i16 %i.jx to i32
+  br label %.lr.ph.i104.i.a
 
 bb.ar:                                            ; preds = %.lr.ph.i104.i.a
   %i.km = add nuw i64 %.02028.i105.i, 1           ; 2 uses
   %exitcond.not.i109.i = icmp eq i64 %i.km, %i.f
   br i1 %exitcond.not.i109.i, label %getDivisor.exit.thread, label %.lr.ph.i104.i.a, !llvm.loop !27
 
-.lr.ph.i104.i.a:                                  ; preds = %ZL_getMultiplicativeInverse32.exit.i.i, %bb.ar
-  %.02028.i105.i = phi i64 [ %i.km, %bb.ar ], [ 0, %ZL_getMultiplicativeInverse32.exit.i.i ] ; 3 uses
+.lr.ph.i104.i.a:                                  ; preds = %bb.ar, %.lr.ph.i104.i
+  %.02028.i105.i = phi i64 [ 0, %.lr.ph.i104.i ], [ %i.km, %bb.ar ] ; 3 uses
   %i.kn = getelementptr inbounds nuw [2 x i8], ptr %i.l, i64 %.02028.i105.i
   %i.ko = load i16, ptr %i.kn, align 2, !tbaa !43 ; 2 uses
   %i.kp = zext i16 %i.ko to i32

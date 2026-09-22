@@ -205,8 +205,7 @@ bb.dc:                                            ; preds = %bb.cv, %bb.cu
   %i.uk = trunc nuw i8 %i.uj to i1
   %i.ul = xor i1 %i.uk, true
   %i.um = select i1 %i.ui, i1 true, i1 %i.ul
-  %i.un = lshr i64 %i.ug, 56
-  %1 = trunc nuw nsw i64 %i.un to i32             ; 2 uses
+  %i.un = lshr i64 %i.ug, 56                      ; 2 uses
   %i.uo = lshr i64 %i.ug, 48
   %i.up = trunc nuw nsw i64 %i.uo to i32          ; 2 uses
   %i.uq = lshr i64 %i.ug, 40
@@ -227,6 +226,7 @@ bb.dd:                                            ; preds = %bb.dc
   br i1 %.not.i425.i, label %.critedge.i427.i, label %bb.de
 
 bb.de:                                            ; preds = %bb.dd
+  %1 = trunc nuw nsw i64 %i.un to i32
   %i.vb = shl nuw i32 %1, 24
   %i.vc = add i32 %i.vb, -1640531527
   %i.vd = shl nuw i32 %i.up, 16
@@ -351,7 +351,8 @@ bb.dm:                                            ; preds = %.critedge.i427.i
   store i64 %i.ug, ptr %i.yi, align 8, !tbaa !139
   %i.yn = getelementptr inbounds nuw i8, ptr %i.yi, i64 8
   store ptr %i.it, ptr %i.yn, align 8, !tbaa !140
-  %i.yo = shl nuw i32 %1, 24
+  %2 = trunc nuw nsw i64 %i.un to i32
+  %i.yo = shl nuw i32 %2, 24
   %i.yp = add i32 %i.yo, -1640531527
   %i.yq = shl nuw i32 %i.up, 16
   %i.yr = and i32 %i.yq, 16711680

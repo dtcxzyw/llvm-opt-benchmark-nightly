@@ -202,6 +202,8 @@ bb.aq:                                            ; preds = %bb.ap, %bb.am
   %i.dg = getelementptr inbounds nuw i8, ptr %i.cw, i64 10
   %i.dh = load i8, ptr %i.dg, align 2, !range !10, !noundef !11
   %i.di = or i8 %i.dh, %.0268429
+  %13 = icmp ne i8 %i.di, 0
+  %14 = zext i1 %13 to i8
   %i.dj = getelementptr inbounds nuw i8, ptr %i.cw, i64 24
   %i.dk = load ptr, ptr %i.dj, align 8
   %i.dl = call ptr @bit_copy(ptr noundef %i.dk) #13
@@ -219,7 +221,9 @@ bb.ar:                                            ; preds = %bb.al
   br i1 %.not372.a, label %bb.aw, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
-  %i.ds = or i8 %i.dr, %.0268429                  ; 2 uses
+  %i.ds = or i8 %i.dr, %.0268429
+  %15 = icmp ne i8 %i.ds, 0
+  %16 = zext i1 %15 to i8                         ; 2 uses
   %i.dt = icmp eq i32 %.0274427, 1
   %i.du = load ptr, ptr %i.k, align 8             ; 2 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %i.cw, i64 24
@@ -249,7 +253,7 @@ bb.aw:                                            ; preds = %bb.ar
 bb.ax:                                            ; preds = %bb.av, %bb.aw
   %.1275 = phi i32 [ %.0274427, %bb.aw ], [ %i.dz, %bb.av ] ; 4 uses
   %.0273.in = phi ptr [ %i.eb, %bb.aw ], [ %i.k, %bb.av ]
-  %.1269 = phi i8 [ %i.dr, %bb.aw ], [ %i.ds, %bb.av ] ; 6 uses
+  %.1269 = phi i8 [ %i.dr, %bb.aw ], [ %16, %bb.av ] ; 6 uses
   %.0273 = load ptr, ptr %.0273.in, align 8       ; 2 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %i.cw, i64 12 ; 3 uses
   %i.ed = load i16, ptr %i.ec, align 4
@@ -652,6 +656,8 @@ bb.ch:                                            ; preds = %bb.cg
 
 bb.ci:                                            ; preds = %bb.ch
   %.mask356357 = or i8 %.1269, %.0285424
+  %17 = icmp ne i8 %.mask356357, 0
+  %18 = zext i1 %17 to i8
   br label %bb.cm
 
 bb.cj:                                            ; preds = %bb.cg
@@ -673,7 +679,7 @@ bb.cl:                                            ; preds = %bb.cj
   br label %bb.cm
 
 bb.cm:                                            ; preds = %bb.ck, %bb.cl, %bb.ci
-  %.1286 = phi i8 [ %.mask356357, %bb.ci ], [ %.0285424, %bb.ck ], [ %.0285424, %bb.cl ] ; 2 uses
+  %.1286 = phi i8 [ %18, %bb.ci ], [ %.0285424, %bb.ck ], [ %.0285424, %bb.cl ] ; 2 uses
   %i.kj = load ptr, ptr %i.d, align 8             ; 2 uses
   %.not358 = icmp eq ptr %i.kj, null
   %i.kk = load ptr, ptr %i.c, align 8             ; 2 uses
@@ -706,7 +712,7 @@ bb.cr:                                            ; preds = %bb.cf, %bb.cq, %bb.
   %.2279.shrunk = phi i16 [ %i.dp, %bb.aq ], [ 0, %bb.cq ], [ 0, %bb.ba ], [ 0, %bb.cf ], [ %i.ea, %bb.av ], [ 0, %bb.cp ]
   %.2276 = phi i32 [ %i.do, %bb.aq ], [ %.1275, %bb.cq ], [ %.1275, %bb.ba ], [ %.1275, %bb.cf ], [ %i.dz, %bb.av ], [ %.1275, %bb.cp ]
   %.2272 = phi i64 [ %.0270428, %bb.aq ], [ %.1271, %bb.cq ], [ %.0270428, %bb.ba ], [ %.1271, %bb.cf ], [ %.0270428, %bb.av ], [ %.1271, %bb.cp ]
-  %.2 = phi i8 [ %i.di, %bb.aq ], [ %.1269, %bb.cq ], [ %.1269, %bb.ba ], [ %.1269, %bb.cf ], [ %i.ds, %bb.av ], [ %.1269, %bb.cp ]
+  %.2 = phi i8 [ %14, %bb.aq ], [ %.1269, %bb.cq ], [ %.1269, %bb.ba ], [ %.1269, %bb.cf ], [ %16, %bb.av ], [ %.1269, %bb.cp ]
   %i.ko = call ptr @list_next(ptr noundef %i.cr) #13 ; 2 uses
   %.not347 = icmp eq ptr %i.ko, null
   br i1 %.not347, label %.thread394, label %bb.al

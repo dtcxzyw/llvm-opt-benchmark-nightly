@@ -204,13 +204,17 @@ _ZNK7datalog8rule_set3endEv.exit:                 ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   br label %bb.b
 
-._crit_edge:                                      ; preds = %_ZN7obj_refIN7datalog4ruleENS0_12rule_managerEED2Ev.exit, %bb.a, %_ZNK7datalog8rule_set3endEv.exit
-  %.020.lcssa = phi i1 [ false, %_ZNK7datalog8rule_set3endEv.exit ], [ false, %bb.a ], [ %.135, %_ZN7obj_refIN7datalog4ruleENS0_12rule_managerEED2Ev.exit ]
+._crit_edge.loopexit:                             ; preds = %_ZN7obj_refIN7datalog4ruleENS0_12rule_managerEED2Ev.exit
+  %4 = trunc nuw i8 %.135 to i1
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %bb.a, %._crit_edge.loopexit, %_ZNK7datalog8rule_set3endEv.exit
+  %.020.lcssa = phi i1 [ false, %_ZNK7datalog8rule_set3endEv.exit ], [ %4, %._crit_edge.loopexit ], [ false, %bb.a ]
   ret i1 %.020.lcssa
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN7obj_refIN7datalog4ruleENS0_12rule_managerEED2Ev.exit
   %.01927 = phi ptr [ %i.e, %.lr.ph ], [ %i.u, %_ZN7obj_refIN7datalog4ruleENS0_12rule_managerEED2Ev.exit ] ; 2 uses
-  %.02026 = phi i1 [ false, %.lr.ph ], [ %.135, %_ZN7obj_refIN7datalog4ruleENS0_12rule_managerEED2Ev.exit ]
+  %.02026 = phi i8 [ 0, %.lr.ph ], [ %.135, %_ZN7obj_refIN7datalog4ruleENS0_12rule_managerEED2Ev.exit ]
   %i.m = load ptr, ptr %.01927, align 8, !tbaa !446 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
   store ptr null, ptr %3, align 8, !tbaa !101
@@ -232,7 +236,10 @@ bb.e:                                             ; preds = %bb.d
 
 .thread:                                          ; preds = %bb.e
   %i.o = icmp ne ptr %i.m, %.pre
-  %4 = or i1 %.02026, %i.o
+  %5 = zext i1 %i.o to i8
+  %6 = or i8 %.02026, %5
+  %7 = icmp ne i8 %6, 0
+  %8 = zext i1 %7 to i8
   br label %bb.i
 
 bb.f:                                             ; preds = %bb.d, %bb.b
@@ -250,7 +257,7 @@ bb.h:                                             ; preds = %bb.c
   br i1 %.not.i.i, label %_ZN7obj_refIN7datalog4ruleENS0_12rule_managerEED2Ev.exit, label %bb.i
 
 bb.i:                                             ; preds = %.thread, %bb.h
-  %.134 = phi i1 [ %4, %.thread ], [ true, %bb.h ]
+  %.134 = phi i8 [ %8, %.thread ], [ 1, %bb.h ]
   %i.r = load ptr, ptr %i.l, align 8, !tbaa !100, !nonnull !69, !align !70
   invoke void @_ZN7datalog12rule_manager7dec_refEPNS_4ruleE(ptr noundef nonnull align 8 dereferenceable(1104) %i.r, ptr noundef nonnull %.pre)
           to label %_ZN7obj_refIN7datalog4ruleENS0_12rule_managerEED2Ev.exit unwind label %bb.j
@@ -263,11 +270,11 @@ bb.j:                                             ; preds = %bb.i
   unreachable
 
 _ZN7obj_refIN7datalog4ruleENS0_12rule_managerEED2Ev.exit: ; preds = %bb.h, %bb.i
-  %.135 = phi i1 [ true, %bb.h ], [ %.134, %bb.i ] ; 2 uses
+  %.135 = phi i8 [ 1, %bb.h ], [ %.134, %bb.i ]   ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #17
   %i.u = getelementptr inbounds nuw i8, ptr %.01927, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.u, %i.k
-  br i1 %.not, label %._crit_edge, label %bb.b
+  br i1 %.not, label %._crit_edge.loopexit, label %bb.b
 
 bb.k:                                             ; preds = %bb.g, %bb.f
   %.pn = phi { ptr, i32 } [ %i.q, %bb.g ], [ %i.p, %bb.f ]

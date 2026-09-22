@@ -179,8 +179,7 @@ bb.a:
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.a = tail call i16 @_ZN8facebook5velox24getDecimalPrecisionScaleERKNS0_4TypeE(ptr noundef nonnull align 8 dereferenceable(18) %2)
-  %.sroa.3.0.extract.shift = lshr i16 %i.a, 8     ; 3 uses
-  %.sroa.3.0.extract.trunc = zext nneg i16 %.sroa.3.0.extract.shift to i32 ; 2 uses
+  %.sroa.3.0.extract.shift = lshr i16 %i.a, 8     ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !43)
   %.not.i = icmp eq i16 %.sroa.3.0.extract.shift, 0 ; 2 uses
   %i.b = icmp eq i128 %1, 0
@@ -193,7 +192,8 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #21, !noalias !44
   store double 0.000000e+00, ptr %4, align 16, !tbaa !8, !noalias !44
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 16
-  store i32 %.sroa.3.0.extract.trunc, ptr %i.c, align 16, !tbaa !8, !noalias !44
+  %8 = zext nneg i16 %.sroa.3.0.extract.shift to i32
+  store i32 %8, ptr %i.c, align 16, !tbaa !8, !noalias !44
   call void @_ZN3fmt3v117vformatB5cxx11ENS0_17basic_string_viewIcEENS0_17basic_format_argsINS0_7contextEEE(ptr dead_on_unwind writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr nonnull @.str.3, i64 7, i64 42, ptr nonnull %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #21, !noalias !44
   br label %_ZN8facebook5velox12_GLOBAL__N_113formatDecimalB5cxx11Ehn.exit
@@ -271,10 +271,11 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.q
   store i8 0, ptr %i.y, align 1, !tbaa !8, !noalias !43
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #21, !noalias !43
+  %9 = zext nneg i16 %.sroa.3.0.extract.shift to i32
   %i.z = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   %i.aa = load i64, ptr %i.z, align 8, !tbaa !15, !noalias !43
   %i.ab = trunc i64 %i.aa to i32
-  %i.ac = sub nsw i32 %.sroa.3.0.extract.trunc, %i.ab ; 2 uses
+  %i.ac = sub nsw i32 %9, %i.ab                   ; 2 uses
   %.sroa.speculated.i = call i32 @llvm.smax.i32(i32 %i.ac, i32 0) ; 2 uses
   %i.ad = zext nneg i32 %.sroa.speculated.i to i64 ; 5 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 10 uses

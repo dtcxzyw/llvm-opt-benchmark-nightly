@@ -204,7 +204,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCshi8S0dlpned_7colored13ColoredStringE
           to label %.noexc157 unwind label %bb.ao
 
 .noexc157:                                        ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCshi8S0dlpned_7colored13ColoredStringECsl8OoimOLbh_6qdrant.exit156
-  %i.dl = load i8, ptr %i.e, align 1, !range !18, !noalias !472, !noundef !8 ; 2 uses
+  %i.dl = load i8, ptr %i.e, align 1, !range !18, !noalias !472, !noundef !8 ; 3 uses
   %i.dm = icmp eq i8 %i.dl, 2
   br i1 %i.dm, label %_RNvNtCsl8OoimOLbh_6qdrant8greeting15is_localhost_ip.exit.thread, label %bb.ay
 
@@ -217,9 +217,11 @@ bb.ay:                                            ; preds = %.noexc157
   %.sroa.5.0.copyload.i = load i128, ptr %.sroa.5.0..sroa_idx.i, align 1, !noalias !472 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !472
   %i.dn = trunc nuw i8 %i.dl to i1
-  br i1 %i.dn, label %.split, label %_RNvNtCsl8OoimOLbh_6qdrant8greeting15is_localhost_ip.exit
+  %1 = icmp eq i8 %i.dl, 0
+  br i1 %1, label %_RNvNtCsl8OoimOLbh_6qdrant8greeting15is_localhost_ip.exit, label %.split
 
 .split:                                           ; preds = %bb.ay
+  call void @llvm.assume(i1 %i.dn)
   %i.do = icmp eq i128 %.sroa.5.0.copyload.i, 0
   br i1 %i.do, label %bb.az, label %bb.ba
 

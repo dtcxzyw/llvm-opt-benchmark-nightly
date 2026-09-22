@@ -204,6 +204,8 @@ bb.aw:                                            ; preds = %bb.av
 bb.ax:                                            ; preds = %bb.aw
   %i.ft = load i8, ptr %i.b, align 1, !range !175, !noundef !176
   %i.fu = or i8 %i.ft, %.1221
+  %12 = icmp ne i8 %i.fu, 0
+  %13 = zext i1 %12 to i8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #51
   br label %.critedge
 
@@ -219,7 +221,7 @@ bb.az:                                            ; preds = %bb.aw
   br label %bb.ba
 
 .critedge:                                        ; preds = %bb.au, %bb.ax, %bb.av
-  %.2 = phi i8 [ %i.fu, %bb.ax ], [ %.1221, %bb.av ], [ %.1221, %bb.au ] ; 2 uses
+  %.2 = phi i8 [ %13, %bb.ax ], [ %.1221, %bb.av ], [ %.1221, %bb.au ] ; 2 uses
   %i.fx = getelementptr i8, ptr %.sroa.10150.0220, i64 8 ; 2 uses
   %.not195 = icmp eq ptr %i.fx, %i.ev
   br i1 %.not195, label %._crit_edge223, label %.lr.ph222, !llvm.loop !825
@@ -314,6 +316,8 @@ bb.bi:                                            ; preds = %_ZN8QVariant9fromVa
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #51
   %i.gw = load i8, ptr %i.c, align 1, !range !175, !noundef !176
   %i.gx = or i8 %i.gw, %.4
+  %14 = icmp ne i8 %i.gx, 0
+  %15 = zext i1 %14 to i8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #51
   br label %bb.bn
 
@@ -340,18 +344,18 @@ bb.bm:                                            ; preds = %bb.bl, %bb.bk
   br label %_ZN9QtPrivate17QForeachContainerI5QListIP20QCPAbstractPlottableEED2Ev.exit91
 
 bb.bn:                                            ; preds = %bb.bi, %bb.bg
-  %.5 = phi i8 [ %i.gx, %bb.bi ], [ %.4, %bb.bg ]
+  %.5 = phi i8 [ %15, %bb.bi ], [ %.4, %bb.bg ]
   %.pr = load ptr, ptr %5, align 8
   br label %bb.be, !llvm.loop !826
 
 .split:                                           ; preds = %_ZNK9QMultiMapIiSt4pairIP20QCPAbstractPlottable16QCPDataSelectionEE10constBeginEv.exit125
-  %i.hb = trunc i8 %.4 to i1
+  %i.hb = trunc nuw i8 %.4 to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #51
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #51
   br i1 %i.hb, label %bb.bs, label %.critedge67
 
 bb.bo:                                            ; preds = %_ZNK9QMultiMapIiSt4pairIP20QCPAbstractPlottable16QCPDataSelectionEE10constBeginEv.exit125.thread
-  %i.hc = trunc i8 %.4 to i1                      ; 2 uses
+  %i.hc = trunc nuw i8 %.4 to i1                  ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #51
   %i.hd = atomicrmw sub ptr %i.gc, i32 1 acq_rel, align 4
   %.not2.i.i = icmp eq i32 %i.hd, 1
@@ -754,6 +758,8 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l
   %i.bh = load i8, ptr %i.a, align 1, !range !175, !noundef !176
   %i.bi = or i8 %i.bh, %.12094
+  %4 = icmp ne i8 %i.bi, 0
+  %5 = zext i1 %4 to i8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #51
   br label %bb.p
 
@@ -769,7 +775,7 @@ bb.o:                                             ; preds = %bb.l
   br label %bb.q
 
 bb.p:                                             ; preds = %bb.m, %bb.k, %.lr.ph
-  %.221 = phi i8 [ %i.bi, %bb.m ], [ %.12094, %bb.k ], [ %.12094, %.lr.ph ] ; 2 uses
+  %.221 = phi i8 [ %5, %bb.m ], [ %.12094, %bb.k ], [ %.12094, %.lr.ph ] ; 2 uses
   %i.bl = getelementptr i8, ptr %.sroa.1065.093, i64 8 ; 2 uses
   %.not84 = icmp eq ptr %i.bl, %i.ar
   br i1 %.not84, label %._crit_edge, label %.lr.ph, !llvm.loop !845
@@ -833,6 +839,8 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.v
   %i.cb = load i8, ptr %i.b, align 1, !range !175, !noundef !176
   %i.cc = or i8 %i.cb, %.322
+  %6 = icmp ne i8 %i.cc, 0
+  %7 = zext i1 %6 to i8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #51
   br label %bb.z
 
@@ -848,7 +856,7 @@ bb.y:                                             ; preds = %bb.v
   br label %_ZN9QtPrivate17QForeachContainerI5QListIP8QCPLayerEED2Ev.exit55
 
 bb.z:                                             ; preds = %bb.w, %bb.u, %_ZN9QtPrivate17QForeachContainerI5QListIP8QCPLayerEED2Ev.exit
-  %.423 = phi i8 [ %i.cc, %bb.w ], [ %.322, %bb.u ], [ %.322, %_ZN9QtPrivate17QForeachContainerI5QListIP8QCPLayerEED2Ev.exit ]
+  %.423 = phi i8 [ %7, %bb.w ], [ %.322, %bb.u ], [ %.322, %_ZN9QtPrivate17QForeachContainerI5QListIP8QCPLayerEED2Ev.exit ]
   %i.cf = trunc nuw i8 %.423 to i1
   br i1 %i.cf, label %bb.aa, label %_ZN11QCustomPlot6replotENS_15RefreshPriorityE.exit
 

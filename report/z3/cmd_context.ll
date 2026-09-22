@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.o
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 768
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !170  ; 4 uses
   %i.r = icmp eq ptr %i.q, null
-  br i1 %i.r, label %_ZN8obj_markI4expr10bit_vector14default_t2uintIS0_EED2Ev.exit, label %_ZNK6vectorIP4exprLb0EjE3endEv.exit
+  br i1 %i.r, label %.critedge, label %_ZNK6vectorIP4exprLb0EjE3endEv.exit
 
 _ZNK6vectorIP4exprLb0EjE3endEv.exit:              ; preds = %bb.p
   %i.s = getelementptr inbounds i8, ptr %i.q, i64 -4
@@ -214,7 +214,7 @@ _ZNK6vectorIP4exprLb0EjE3endEv.exit:              ; preds = %bb.p
   %i.v = shl nuw nsw i64 %i.u, 3
   %i.w = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.v
   %.not59 = icmp eq i32 %i.t, 0
-  br i1 %.not59, label %_ZN8obj_markI4expr10bit_vector14default_t2uintIS0_EED2Ev.exit, label %.lr.ph
+  br i1 %.not59, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNK6vectorIP4exprLb0EjE3endEv.exit
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -225,7 +225,8 @@ _ZNK6vectorIP4exprLb0EjE3endEv.exit:              ; preds = %bb.p
   br label %bb.y
 
 ._crit_edge:                                      ; preds = %_Z9is_groundPK4expr.exit.thread
-  br i1 %.2, label %bb.bj, label %.critedge
+  %11 = trunc nuw i8 %.2 to i1
+  br i1 %11, label %bb.bj, label %.critedge
 
 bb.q:                                             ; preds = %bb.g, %bb.f, %bb.e
   %i.ac = landingpad { ptr, i32 }
@@ -269,7 +270,7 @@ bb.x:                                             ; preds = %bb.o
 
 bb.y:                                             ; preds = %.lr.ph, %_Z9is_groundPK4expr.exit.thread
   %.061 = phi ptr [ %i.q, %.lr.ph ], [ %i.cs, %_Z9is_groundPK4expr.exit.thread ] ; 2 uses
-  %.01660 = phi i1 [ false, %.lr.ph ], [ %.2, %_Z9is_groundPK4expr.exit.thread ] ; 7 uses
+  %.01660 = phi i8 [ 0, %.lr.ph ], [ %.2, %_Z9is_groundPK4expr.exit.thread ] ; 7 uses
   %i.ak = load ptr, ptr %.061, align 8, !tbaa !215 ; 5 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 4
   %i.am = load i32, ptr %i.al, align 4
@@ -494,11 +495,14 @@ bb.bi:                                            ; preds = %bb.bh
   %i.cp = getelementptr inbounds nuw i8, ptr %i.cn, i64 840
   %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !787
   %i.cr = icmp eq ptr %i.co, %i.cq
-  %11 = or i1 %.01660, %i.cr
+  %12 = zext i1 %i.cr to i8
+  %13 = or i8 %.01660, %12
+  %14 = icmp ne i8 %13, 0
+  %15 = zext i1 %14 to i8
   br label %_Z9is_groundPK4expr.exit.thread
 
 _Z9is_groundPK4expr.exit.thread:                  ; preds = %bb.ag, %bb.y, %.split, %_Z9is_groundPK4expr.exit, %bb.bi, %bb.ap, %bb.ae
-  %.2 = phi i1 [ %.01660, %bb.ag ], [ %.01660, %bb.ae ], [ %.01660, %bb.ap ], [ %11, %bb.bi ], [ %.01660, %_Z9is_groundPK4expr.exit ], [ %.01660, %.split ], [ %.01660, %bb.y ] ; 2 uses
+  %.2 = phi i8 [ %.01660, %bb.ag ], [ %.01660, %bb.ae ], [ %.01660, %bb.ap ], [ %15, %bb.bi ], [ %.01660, %_Z9is_groundPK4expr.exit ], [ %.01660, %.split ], [ %.01660, %bb.y ] ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %.061, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.cs, %i.w
   br i1 %.not, label %._crit_edge, label %bb.y
@@ -523,7 +527,7 @@ bb.bm:                                            ; preds = %bb.bk
           cleanup
   br label %.loopexit
 
-.critedge:                                        ; preds = %._crit_edge
+.critedge:                                        ; preds = %bb.p, %_ZNK6vectorIP4exprLb0EjE3endEv.exit, %._crit_edge
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %10, i64 16
   %.pre63 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !789 ; 2 uses
   %i.cw = icmp eq ptr %.pre63, null
@@ -540,7 +544,7 @@ bb.bo:                                            ; preds = %bb.bn
   call void @__clang_call_terminate(ptr %i.cy) #26
   unreachable
 
-_ZN8obj_markI4expr10bit_vector14default_t2uintIS0_EED2Ev.exit: ; preds = %bb.p, %_ZNK6vectorIP4exprLb0EjE3endEv.exit, %.critedge, %bb.bn
+_ZN8obj_markI4expr10bit_vector14default_t2uintIS0_EED2Ev.exit: ; preds = %.critedge, %bb.bn
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #27
   call void @_ZN13scoped_ctrl_cD1Ev(ptr noundef nonnull align 8 dead_on_return(9) dereferenceable(9) %9) #27
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #27

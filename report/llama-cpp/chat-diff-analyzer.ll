@@ -204,7 +204,7 @@ bb.et:                                            ; preds = %bb.em
   br label %bb.fm
 
 bb.eu:                                            ; preds = %.lr.ph, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit318
-  %.084431 = phi i1 [ false, %.lr.ph ], [ %.185, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit318 ] ; 3 uses
+  %.084431 = phi i8 [ 0, %.lr.ph ], [ %.185, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit318 ] ; 2 uses
   %.sroa.0388.0430 = phi ptr [ %i.abb, %.lr.ph ], [ %i.adw, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit318 ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %31) #27
   %i.acd = getelementptr inbounds nuw i8, ptr %.sroa.0388.0430, i64 8 ; 3 uses
@@ -270,7 +270,8 @@ bb.ex:                                            ; preds = %bb.ew, %bb.ev, %._c
 "_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_ZN10autoparser10autoparser24detect_user_start_markerERK20common_chat_templateE3$_2ET0_T_SH_SG_T1_.exit": ; preds = %.lr.ph.i, %bb.ex
   %i.acx = load i32, ptr %.sroa.0388.0430, align 8, !tbaa !109 ; 2 uses
   %i.acy = icmp ne i32 %i.acx, 1
-  %or.cond = select i1 %i.acy, i1 true, i1 %.084431
+  %34 = trunc nuw i8 %.084431 to i1               ; 2 uses
+  %or.cond = select i1 %i.acy, i1 true, i1 %34
   br i1 %or.cond, label %bb.fc, label %bb.ey
 
 bb.ey:                                            ; preds = %"_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_ZN10autoparser10autoparser24detect_user_start_markerERK20common_chat_templateE3$_2ET0_T_SH_SG_T1_.exit"
@@ -300,7 +301,7 @@ bb.fb:                                            ; preds = %.critedge.thread
 bb.fc:                                            ; preds = %._crit_edge443, %"_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_ZN10autoparser10autoparser24detect_user_start_markerERK20common_chat_templateE3$_2ET0_T_SH_SG_T1_.exit"
   %i.add = phi i32 [ %.pre444, %._crit_edge443 ], [ %i.acx, %"_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_ZN10autoparser10autoparser24detect_user_start_markerERK20common_chat_templateE3$_2ET0_T_SH_SG_T1_.exit" ] ; 2 uses
   %i.ade = icmp ne i32 %i.add, 0
-  %or.cond3 = select i1 %i.ade, i1 true, i1 %.084431
+  %or.cond3 = select i1 %i.ade, i1 true, i1 %34
   br i1 %or.cond3, label %.critedge.thread, label %bb.fd
 
 bb.fd:                                            ; preds = %bb.fc
@@ -349,11 +350,14 @@ bb.ff:                                            ; preds = %bb.fd
 
 _ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit: ; preds = %.critedge.thread
   %i.adr = icmp eq i32 %i.adn, 1
-  %34 = or i1 %.084431, %i.adr
+  %35 = zext i1 %i.adr to i8
+  %36 = or i8 %.084431, %35
+  %37 = icmp ne i8 %36, 0
+  %38 = zext i1 %37 to i8
   br label %bb.fg
 
 bb.fg:                                            ; preds = %.critedge, %bb.ey, %bb.ez, %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit
-  %.185 = phi i1 [ false, %bb.ey ], [ %34, %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit ], [ false, %bb.ez ], [ false, %.critedge ]
+  %.185 = phi i8 [ 0, %bb.ey ], [ %38, %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit ], [ 0, %bb.ez ], [ 0, %.critedge ]
   %i.ads = load ptr, ptr %31, align 8, !tbaa !23  ; 2 uses
   %i.adt = icmp eq ptr %i.ads, %i.abe
   br i1 %i.adt, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit318, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i316

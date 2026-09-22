@@ -204,8 +204,7 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 4
   %i.c = icmp eq i32 %i.b, 16                     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 292
-  %i.e = load i8, ptr %i.d, align 4, !range !15, !noundef !16
-  %2 = zext nneg i8 %i.e to i64                   ; 2 uses
+  %i.e = load i8, ptr %i.d, align 4, !range !15, !noundef !16 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.g = load ptr, ptr %i.f, align 8
   %i.h = getelementptr i8, ptr %i.g, i64 32
@@ -229,6 +228,7 @@ bb.c:                                             ; preds = %bb.b
   ]
 
 bb.d:                                             ; preds = %bb.c
+  %2 = zext nneg i8 %i.e to i64
   %i.o = getelementptr inbounds nuw [384 x i8], ptr @gather_load_fn32, i64 %2
   %i.p = zext i1 %i.c to i64
   %i.q = getelementptr inbounds nuw [192 x i8], ptr %i.o, i64 %i.p
@@ -247,7 +247,8 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.g
 
 bb.e:                                             ; preds = %bb.c
-  %i.ad = getelementptr inbounds nuw [768 x i8], ptr @gather_load_fn64, i64 %2
+  %3 = zext nneg i8 %i.e to i64
+  %i.ad = getelementptr inbounds nuw [768 x i8], ptr @gather_load_fn64, i64 %3
   %i.ae = zext i1 %i.c to i64
   %i.af = getelementptr inbounds nuw [384 x i8], ptr %i.ad, i64 %i.ae
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 28
@@ -430,8 +431,7 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 4
   %i.c = icmp eq i32 %i.b, 16                     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 292
-  %i.e = load i8, ptr %i.d, align 4, !range !15, !noundef !16
-  %2 = zext nneg i8 %i.e to i64                   ; 2 uses
+  %i.e = load i8, ptr %i.d, align 4, !range !15, !noundef !16 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.g = load i32, ptr %i.f, align 4
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 3 uses
@@ -467,6 +467,7 @@ bb.d:                                             ; preds = %bb.c
   ]
 
 bb.e:                                             ; preds = %bb.d
+  %2 = zext nneg i8 %i.e to i64
   %i.v = getelementptr inbounds nuw [384 x i8], ptr @gather_load_fn32, i64 %2
   %i.w = zext i1 %i.c to i64
   %i.x = getelementptr inbounds nuw [192 x i8], ptr %i.v, i64 %i.w
@@ -476,7 +477,8 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
-  %i.ab = getelementptr inbounds nuw [768 x i8], ptr @gather_load_fn64, i64 %2
+  %3 = zext nneg i8 %i.e to i64
+  %i.ab = getelementptr inbounds nuw [768 x i8], ptr @gather_load_fn64, i64 %3
   %i.ac = zext i1 %i.c to i64
   %i.ad = getelementptr inbounds nuw [384 x i8], ptr %i.ab, i64 %i.ac
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 128
@@ -554,8 +556,7 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 4
   %i.c = icmp eq i32 %i.b, 16                     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 292
-  %i.e = load i8, ptr %i.d, align 4, !range !15, !noundef !16
-  %2 = zext nneg i8 %i.e to i64                   ; 2 uses
+  %i.e = load i8, ptr %i.d, align 4, !range !15, !noundef !16 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.g = load i32, ptr %i.f, align 4              ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 3 uses
@@ -596,6 +597,7 @@ bb.f:                                             ; preds = %bb.e
   ]
 
 bb.g:                                             ; preds = %bb.f
+  %2 = zext nneg i8 %i.e to i64
   %i.u = getelementptr inbounds nuw [384 x i8], ptr @gather_load_fn32, i64 %2
   %i.v = zext i1 %i.c to i64
   %i.w = getelementptr inbounds nuw [192 x i8], ptr %i.u, i64 %i.v
@@ -610,7 +612,8 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
-  %i.af = getelementptr inbounds nuw [768 x i8], ptr @gather_load_fn64, i64 %2
+  %3 = zext nneg i8 %i.e to i64
+  %i.af = getelementptr inbounds nuw [768 x i8], ptr @gather_load_fn64, i64 %3
   %i.ag = zext i1 %i.c to i64
   %i.ah = getelementptr inbounds nuw [384 x i8], ptr %i.af, i64 %i.ag
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 28
@@ -1013,7 +1016,6 @@ bb.a:
   %i.c = icmp eq i32 %i.b, 16
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 292
   %i.e = load i8, ptr %i.d, align 4, !range !15, !noundef !16
-  %2 = zext nneg i8 %i.e to i64
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.g = load ptr, ptr %i.f, align 8
   %i.h = getelementptr i8, ptr %i.g, i64 360
@@ -1029,6 +1031,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.l, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
+  %2 = zext nneg i8 %i.e to i64
   %i.m = getelementptr inbounds nuw [16 x i8], ptr @gather_load_fn128, i64 %2
   %i.n = zext i1 %i.c to i64
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.n
@@ -1350,8 +1353,7 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 4
   %i.c = icmp eq i32 %i.b, 16                     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 292
-  %i.e = load i8, ptr %i.d, align 4, !range !15, !noundef !16
-  %2 = zext nneg i8 %i.e to i64                   ; 2 uses
+  %i.e = load i8, ptr %i.d, align 4, !range !15, !noundef !16 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.g = load i32, ptr %i.f, align 4
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 3 uses
@@ -1382,13 +1384,15 @@ bb.d:                                             ; preds = %bb.c
   ]
 
 bb.e:                                             ; preds = %bb.d
+  %2 = zext nneg i8 %i.e to i64
   %i.r = getelementptr inbounds nuw [96 x i8], ptr @scatter_store_fn32, i64 %2
   %i.s = zext i1 %i.c to i64
   %i.t = getelementptr inbounds nuw [48 x i8], ptr %i.r, i64 %i.s
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.d
-  %i.u = getelementptr inbounds nuw [192 x i8], ptr @scatter_store_fn64, i64 %2
+  %3 = zext nneg i8 %i.e to i64
+  %i.u = getelementptr inbounds nuw [192 x i8], ptr @scatter_store_fn64, i64 %3
   %i.v = zext i1 %i.c to i64
   %i.w = getelementptr inbounds nuw [96 x i8], ptr %i.u, i64 %i.v
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 64
@@ -1429,7 +1433,6 @@ bb.a:
   %i.c = icmp eq i32 %i.b, 16
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 292
   %i.e = load i8, ptr %i.d, align 4, !range !15, !noundef !16
-  %2 = zext nneg i8 %i.e to i64
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.g = load ptr, ptr %i.f, align 8
   %i.h = getelementptr i8, ptr %i.g, i64 360
@@ -1445,6 +1448,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.l, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
+  %2 = zext nneg i8 %i.e to i64
   %i.m = getelementptr inbounds nuw [16 x i8], ptr @scatter_store_fn128, i64 %2
   %i.n = zext i1 %i.c to i64
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.n
@@ -1517,8 +1521,7 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 4
   %i.c = icmp eq i32 %i.b, 16                     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 292
-  %i.e = load i8, ptr %i.d, align 4, !range !15, !noundef !16
-  %2 = zext nneg i8 %i.e to i64                   ; 2 uses
+  %i.e = load i8, ptr %i.d, align 4, !range !15, !noundef !16 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.g = load i32, ptr %i.f, align 4
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 3 uses
@@ -1559,6 +1562,7 @@ bb.f:                                             ; preds = %bb.e
   ]
 
 bb.g:                                             ; preds = %bb.f
+  %2 = zext nneg i8 %i.e to i64
   %i.u = getelementptr inbounds nuw [96 x i8], ptr @scatter_store_fn32, i64 %2
   %i.v = zext i1 %i.c to i64
   %i.w = getelementptr inbounds nuw [48 x i8], ptr %i.u, i64 %i.v
@@ -1569,7 +1573,8 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.j
 
 bb.h:                                             ; preds = %bb.f
-  %i.ab = getelementptr inbounds nuw [192 x i8], ptr @scatter_store_fn64, i64 %2
+  %3 = zext nneg i8 %i.e to i64
+  %i.ab = getelementptr inbounds nuw [192 x i8], ptr @scatter_store_fn64, i64 %3
   %i.ac = zext i1 %i.c to i64
   %i.ad = getelementptr inbounds nuw [96 x i8], ptr %i.ab, i64 %i.ac
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -1615,8 +1620,7 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 4
   %i.c = icmp eq i32 %i.b, 16                     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 292
-  %i.e = load i8, ptr %i.d, align 4, !range !15, !noundef !16
-  %2 = zext nneg i8 %i.e to i64                   ; 2 uses
+  %i.e = load i8, ptr %i.d, align 4, !range !15, !noundef !16 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.g = load i32, ptr %i.f, align 4
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 3 uses
@@ -1647,13 +1651,15 @@ bb.d:                                             ; preds = %bb.c
   ]
 
 bb.e:                                             ; preds = %bb.d
+  %2 = zext nneg i8 %i.e to i64
   %i.r = getelementptr inbounds nuw [96 x i8], ptr @scatter_store_fn32, i64 %2
   %i.s = zext i1 %i.c to i64
   %i.t = getelementptr inbounds nuw [48 x i8], ptr %i.r, i64 %i.s
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
-  %i.u = getelementptr inbounds nuw [192 x i8], ptr @scatter_store_fn64, i64 %2
+  %3 = zext nneg i8 %i.e to i64
+  %i.u = getelementptr inbounds nuw [192 x i8], ptr @scatter_store_fn64, i64 %3
   %i.v = zext i1 %i.c to i64
   %i.w = getelementptr inbounds nuw [96 x i8], ptr %i.u, i64 %i.v
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 64

@@ -202,7 +202,7 @@ bb.ge:                                            ; preds = %bb.gd
 
 ._crit_edge843:                                   ; preds = %bb.gd, %bb.ge
   %i.abd = phi i16 [ %.pre845, %bb.gd ], [ %.pre842.a, %bb.ge ] ; 2 uses
-  %i.abe = phi i1 [ false, %bb.gd ], [ %i.abc, %bb.ge ] ; 4 uses
+  %i.abe = phi i1 [ false, %bb.gd ], [ %i.abc, %bb.ge ] ; 5 uses
   %i.abf = zext i16 %.pre842.a to i32
   %i.abg = zext i16 %i.abd to i32
   %i.abh = sub nsw i32 %i.abf, %i.abg             ; 2 uses
@@ -296,21 +296,21 @@ bb.gq:                                            ; preds = %bb.go
 
 bb.gr:                                            ; preds = %bb.gn, %bb.gp
   %.0 = phi i32 [ %i.acr, %bb.gp ], [ %i.acc, %bb.gn ]
-  %.052 = phi i8 [ %i.acv, %bb.gp ], [ 0, %bb.gn ] ; 3 uses
-  %i.acx = zext i1 %i.abe to i8
+  %.052 = phi i8 [ %i.acv, %bb.gp ], [ 0, %bb.gn ] ; 2 uses
+  %i.acx = zext i1 %i.abe to i8                   ; 2 uses
   %.not121 = icmp eq i8 %.052, %i.acx
   br i1 %.not121, label %.critedge813, label %.thread747
 
 bb.gs:                                            ; preds = %bb.gl
   %i.acy = invoke noundef i32 @_ZNK11IMoveAction8allowPutERK9ItemStackP18ServerActiveObject(ptr noundef nonnull align 8 dereferenceable(188) %0, ptr noundef nonnull align 8 dereferenceable(296) %10, ptr noundef %2)
-          to label %bb.gt unwind label %bb.gg     ; 4 uses
+          to label %bb.gt unwind label %bb.gg     ; 3 uses
 
 bb.gt:                                            ; preds = %bb.gs
   %i.acz = invoke noundef i32 @_ZNK11IMoveAction9allowTakeERK9ItemStackP18ServerActiveObject(ptr noundef nonnull align 8 dereferenceable(188) %0, ptr noundef nonnull align 8 dereferenceable(296) %10, ptr noundef %2)
-          to label %bb.gu unwind label %bb.gg     ; 4 uses
+          to label %bb.gu unwind label %bb.gg     ; 3 uses
 
 bb.gu:                                            ; preds = %bb.gt
-  br i1 %i.abe, label %bb.gv, label %.critedge813
+  br i1 %i.abe, label %bb.gv, label %.thr_comm744
 
 bb.gv:                                            ; preds = %bb.gu
   %i.ada = icmp ne i32 %i.acz, -1
@@ -318,13 +318,13 @@ bb.gv:                                            ; preds = %bb.gu
   %i.adc = zext i16 %i.adb to i32                 ; 2 uses
   %.not115 = icmp slt i32 %i.acz, %i.adc
   %or.cond175 = select i1 %i.ada, i1 %.not115, i1 false
-  br i1 %or.cond175, label %.thread747, label %bb.gw
+  br i1 %or.cond175, label %.thr_comm744, label %bb.gw
 
 bb.gw:                                            ; preds = %bb.gv
   %i.add = icmp eq i32 %i.acy, -1
   %i.ade = icmp sge i32 %i.acy, %i.adc
   %i.adf = select i1 %i.add, i1 true, i1 %i.ade
-  br i1 %i.adf, label %bb.gx, label %.thread747
+  br i1 %i.adf, label %bb.gx, label %.thr_comm744
 
 bb.gx:                                            ; preds = %bb.gw
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #24
@@ -343,7 +343,24 @@ bb.gy:                                            ; preds = %bb.gx
 
 bb.gz:                                            ; preds = %bb.gy
   %i.adm = invoke noundef i32 @_ZNK11IMoveAction9allowTakeERK9ItemStackP18ServerActiveObject(ptr noundef nonnull align 8 dereferenceable(188) %0, ptr noundef nonnull align 8 dereferenceable(296) %12, ptr noundef %2)
-          to label %.thr_comm744 unwind label %bb.hc ; 2 uses
+          to label %39 unwind label %bb.hc        ; 2 uses
+
+39:                                               ; preds = %bb.gz
+  %40 = icmp eq i32 %i.adl, -1
+  %41 = getelementptr inbounds nuw i8, ptr %12, i64 32
+  %42 = load i16, ptr %41, align 8
+  %43 = zext i16 %42 to i32                       ; 2 uses
+  %.not119 = icmp sge i32 %i.adl, %43
+  %or.cond178.not = select i1 %40, i1 true, i1 %.not119
+  %44 = icmp eq i32 %i.adm, -1
+  %45 = icmp sge i32 %i.adm, %43
+  %46 = select i1 %44, i1 true, i1 %45
+  %narrow = select i1 %or.cond178.not, i1 %46, i1 false
+  %47 = zext i1 %narrow to i8
+  call void @_ZN11IMoveAction14swapDirectionsEv(ptr noundef nonnull align 8 dereferenceable(188) %0)
+  call void @_ZN9ItemStackD2Ev(ptr noundef nonnull align 8 dead_on_return(296) dereferenceable(296) %12) #24
+  call void @llvm.lifetime.end.p0(ptr nonnull %12) #24
+  br label %.thr_comm744
 
 bb.ha:                                            ; preds = %bb.gx
   %i.adn = landingpad { ptr, i32 }
@@ -370,33 +387,23 @@ bb.he:                                            ; preds = %bb.hd, %bb.ha
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #24
   br label %bb.og
 
-.thr_comm744:                                     ; preds = %bb.gz
-  %39 = icmp eq i32 %i.adl, -1
-  %40 = getelementptr inbounds nuw i8, ptr %12, i64 32
-  %41 = load i16, ptr %40, align 8
-  %42 = zext i16 %41 to i32                       ; 2 uses
-  %.not119 = icmp sge i32 %i.adl, %42
-  %or.cond178.not = select i1 %39, i1 true, i1 %.not119
-  %i.adq = icmp eq i32 %i.adm, -1
-  %43 = icmp sge i32 %i.adm, %42
-  %44 = select i1 %i.adq, i1 true, i1 %43
-  %narrow = select i1 %or.cond178.not, i1 %44, i1 false
-  call void @_ZN11IMoveAction14swapDirectionsEv(ptr noundef nonnull align 8 dereferenceable(188) %0)
-  call void @_ZN9ItemStackD2Ev(ptr noundef nonnull align 8 dead_on_return(296) dereferenceable(296) %12) #24
-  call void @llvm.lifetime.end.p0(ptr nonnull %12) #24
-  br i1 %narrow, label %.critedge813, label %.thread747
+.thr_comm744:                                     ; preds = %bb.gu, %bb.gv, %39, %bb.gw
+  %.1 = phi i8 [ %47, %39 ], [ 0, %bb.gw ], [ 0, %bb.gv ], [ 0, %bb.gu ] ; 3 uses
+  %48 = zext i1 %i.abe to i8
+  %i.adq = icmp eq i8 %.1, %48
+  br i1 %i.adq, label %.critedge813, label %.thread747
 
-.thread747:                                       ; preds = %bb.gw, %bb.gv, %bb.gr, %.thr_comm744
-  %.2.ph = phi i8 [ %.052, %bb.gr ], [ 0, %.thr_comm744 ], [ 0, %bb.gv ], [ 0, %bb.gw ]
+.thread747:                                       ; preds = %bb.gr, %.thr_comm744
+  %.2.ph = phi i8 [ %.052, %bb.gr ], [ %.1, %.thr_comm744 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bo) #24
   %i.adr = load i32, ptr %i.abi, align 8, !tbaa !78 ; 2 uses
   store i32 %i.adr, ptr %i.bo, align 4, !tbaa !240
   br label %bb.hf
 
-.critedge813:                                     ; preds = %bb.gu, %.thr_comm744, %bb.gr
-  %.0687 = phi i32 [ %i.acc, %bb.gr ], [ %i.acz, %bb.gu ], [ %i.acz, %.thr_comm744 ] ; 2 uses
-  %.1686 = phi i32 [ %.0, %bb.gr ], [ %i.acy, %bb.gu ], [ %i.acy, %.thr_comm744 ] ; 2 uses
-  %.2 = phi i8 [ %.052, %bb.gr ], [ 0, %bb.gu ], [ 1, %.thr_comm744 ] ; 2 uses
+.critedge813:                                     ; preds = %.thr_comm744, %bb.gr
+  %.0687 = phi i32 [ %i.acc, %bb.gr ], [ %i.acz, %.thr_comm744 ] ; 2 uses
+  %.1686 = phi i32 [ %.0, %bb.gr ], [ %i.acy, %.thr_comm744 ] ; 2 uses
+  %.2 = phi i8 [ %i.acx, %bb.gr ], [ %.1, %.thr_comm744 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bo) #24
   %i.ads = load i32, ptr %i.abi, align 8, !tbaa !78 ; 3 uses
   store i32 %i.ads, ptr %i.bo, align 4, !tbaa !240

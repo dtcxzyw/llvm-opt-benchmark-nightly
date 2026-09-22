@@ -204,7 +204,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN4Ptex4v2_419PtexSeparableFilter13splitAndApplyERNS0_19PtexSeparableKernelEiRKNS0_8FaceInfoE(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(80) %0, ptr noundef nonnull align 8 dereferenceable(124) %1, i32 noundef %2, ptr noundef nonnull align 4 dereferenceable(20) %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %4 = alloca %"class.Ptex::v2_4::PtexSeparableKernel", align 8 ; 53 uses
+  %4 = alloca %"class.Ptex::v2_4::PtexSeparableKernel", align 8 ; 56 uses
   %5 = alloca %"class.Ptex::v2_4::PtexSeparableKernel", align 8 ; 22 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 9 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !46   ; 6 uses
@@ -607,7 +607,6 @@ _ZN4Ptex4v2_419PtexSeparableKernel6splitRERS1_.exit: ; preds = %bb.s, %bb.t
   %.sink.i = phi i32 [ 0, %bb.s ], [ %i.ic, %bb.t ] ; 2 uses
   %storemerge.i = phi i32 [ %i.hy, %bb.s ], [ 0, %bb.t ]
   %.in = lshr i16 %.sroa.0.0.copyload.i, 8
-  %6 = zext nneg i16 %.in to i32
   store ptr %i.gt, ptr %i.gs, align 8, !tbaa !38
   store ptr %i.gv, ptr %i.gu, align 8, !tbaa !39
   store i32 %.sink.i, ptr %i.gw, align 8, !tbaa !40
@@ -622,6 +621,7 @@ bb.u:                                             ; preds = %_ZN4Ptex4v2_419Ptex
 
 bb.v:                                             ; preds = %bb.u
   %i.is = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %6 = zext nneg i16 %.in to i32
   %.neg.i103 = shl nsw i32 -1, %6
   %i.it = add i32 %.neg.i103, %i.l                ; 3 uses
   %i.iu = add i32 %i.it, %i.n                     ; 3 uses
@@ -1024,14 +1024,11 @@ bb.bg:                                            ; preds = %bb.bf
   %i.wj = icmp sgt i32 %i.wi, %i.wh
   %.sroa.0.0.copyload.i181 = load i16, ptr %1, align 8 ; 3 uses
   %i.wk = load i32, ptr %i.a, align 4, !tbaa !46  ; 2 uses
-  %i.wl = lshr i16 %.sroa.0.0.copyload.i181, 8
-  %7 = zext nneg i16 %i.wl to i32                 ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
-  %9 = getelementptr inbounds nuw i8, ptr %4, i64 12 ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
+  %i.wl = lshr i16 %.sroa.0.0.copyload.i181, 8    ; 2 uses
   br i1 %i.wj, label %bb.bh, label %bb.bi
 
 bb.bh:                                            ; preds = %bb.bg
+  %7 = zext nneg i16 %i.wl to i32
   %i.wm = shl nuw i32 1, %7
   %i.wn = add nsw i32 %i.wm, %i.wg
   %i.wo = load i32, ptr %i.c, align 4, !tbaa !43  ; 2 uses
@@ -1041,8 +1038,11 @@ bb.bh:                                            ; preds = %bb.bg
   %i.ws = load ptr, ptr %i.wr, align 8, !tbaa !39 ; 2 uses
   store i16 %.sroa.0.0.copyload.i181, ptr %4, align 8
   store i32 %i.wk, ptr %i.gr, align 4, !tbaa !46
+  %8 = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i32 %i.wn, ptr %8, align 8, !tbaa !49
+  %9 = getelementptr inbounds nuw i8, ptr %4, i64 12
   store i32 %i.wo, ptr %9, align 4, !tbaa !43
+  %10 = getelementptr inbounds nuw i8, ptr %4, i64 16
   store i32 %i.wh, ptr %10, align 8, !tbaa !48
   %i.wt = sext i32 %i.wo to i64
   %i.wu = shl nsw i64 %i.wt, 2
@@ -1065,18 +1065,22 @@ bb.bi:                                            ; preds = %bb.bg
   %i.xf = load i32, ptr %i.xe, align 8, !tbaa !40
   store i16 %.sroa.0.0.copyload.i181, ptr %4, align 8
   store i32 %i.wk, ptr %i.gr, align 4, !tbaa !46
-  store i32 %i.wg, ptr %8, align 8, !tbaa !49
-  store i32 %i.wz, ptr %9, align 4, !tbaa !43
-  store i32 %i.wi, ptr %10, align 8, !tbaa !48
+  %11 = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  store i32 %i.wg, ptr %11, align 8, !tbaa !49
+  %12 = getelementptr inbounds nuw i8, ptr %4, i64 12
+  store i32 %i.wz, ptr %12, align 4, !tbaa !43
+  %13 = getelementptr inbounds nuw i8, ptr %4, i64 16
+  store i32 %i.wi, ptr %13, align 8, !tbaa !48
   %i.xg = sext i32 %i.wz to i64
   %i.xh = shl nsw i64 %i.xg, 2
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.gt, ptr align 4 %i.xb, i64 %i.xh, i1 false)
   %i.xi = sext i32 %i.wi to i64
   %i.xj = shl nsw i64 %i.xi, 2
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.gv, ptr align 4 %i.xd, i64 %i.xj, i1 false)
-  %i.xk = shl nuw i32 1, %7
+  %14 = zext nneg i16 %i.wl to i32
+  %i.xk = shl nuw i32 1, %14
   %i.xl = add nsw i32 %i.xk, %i.wg
-  store i32 %i.xl, ptr %8, align 8, !tbaa !49
+  store i32 %i.xl, ptr %11, align 8, !tbaa !49
   br label %_ZN4Ptex4v2_419PtexSeparableKernel6splitBERS1_.exit
 
 _ZN4Ptex4v2_419PtexSeparableKernel6splitBERS1_.exit: ; preds = %bb.bh, %bb.bi
@@ -1479,7 +1483,6 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.s
   %.sroa.6.0.extract.shift = lshr i16 %i.im, 8
-  %.sroa.6.0.extract.trunc = zext nneg i16 %.sroa.6.0.extract.shift to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
   %i.in = getelementptr inbounds nuw i8, ptr %4, i64 4
   %i.io = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
@@ -1494,7 +1497,8 @@ bb.t:                                             ; preds = %bb.s
   %i.it = and i16 %i.im, 255
   %i.iu = zext nneg i16 %i.it to i32
   %i.iv = shl nuw i32 1, %i.iu                    ; 4 uses
-  %i.iw = shl nuw i32 1, %.sroa.6.0.extract.trunc ; 3 uses
+  %5 = zext nneg i16 %.sroa.6.0.extract.shift to i32
+  %i.iw = shl nuw i32 1, %5                       ; 3 uses
   %i.ix = load i8, ptr %1, align 8, !tbaa !54
   %i.iy = zext nneg i8 %i.ix to i32
   %i.iz = shl nuw i32 1, %i.iy

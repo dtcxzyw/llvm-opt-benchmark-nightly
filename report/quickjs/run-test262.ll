@@ -204,6 +204,8 @@ bb.w:                                             ; preds = %bb.v, %.lr.ph286
   %i.cf = icmp eq i32 %i.ce, 3
   %i.cg = zext i1 %i.cf to i8
   %i.ch = or i8 %.3103282, %i.cg
+  %4 = icmp ne i8 %i.ch, 0
+  %5 = zext i1 %4 to i8
   br label %bb.ag
 
 bb.x:                                             ; preds = %bb.v
@@ -216,6 +218,8 @@ bb.y:                                             ; preds = %bb.x
   %i.ck = icmp eq i32 %i.cj, 2
   %i.cl = zext i1 %i.ck to i8
   %i.cm = or i8 %.3103282, %i.cl
+  %6 = icmp ne i8 %i.cm, 0
+  %7 = zext i1 %6 to i8
   br label %bb.ag
 
 bb.z:                                             ; preds = %bb.x
@@ -265,7 +269,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ac, %bb.
   %.1114 = phi i1 [ %.0113279, %bb.w ], [ true, %bb.y ], [ %.0113279, %bb.aa ], [ %.0113279, %bb.af ], [ %.0113279, %bb.ab ], [ %.0113279, %bb.ae ], [ %.0113279, %bb.ac ] ; 2 uses
   %.1110 = phi i1 [ %.0109280, %bb.w ], [ %.0109280, %bb.y ], [ true, %bb.aa ], [ %.0109280, %bb.af ], [ %.0109280, %bb.ab ], [ %.0109280, %bb.ae ], [ %.0109280, %bb.ac ] ; 2 uses
   %.1105 = phi i8 [ %.0104281, %bb.w ], [ %.0104281, %bb.y ], [ %.0104281, %bb.aa ], [ %.0104281, %bb.af ], [ %.0104281, %bb.ab ], [ 1, %bb.ae ], [ %.0104281, %bb.ac ] ; 2 uses
-  %.4 = phi i8 [ %i.ch, %bb.w ], [ %i.cm, %bb.y ], [ %i.cs, %bb.aa ], [ %.3103282, %bb.af ], [ %.3103282, %bb.ab ], [ %i.da, %bb.ae ], [ %.3103282, %bb.ac ] ; 2 uses
+  %.4 = phi i8 [ %5, %bb.w ], [ %7, %bb.y ], [ %i.cs, %bb.aa ], [ %.3103282, %bb.af ], [ %.3103282, %bb.ab ], [ %i.da, %bb.ae ], [ %.3103282, %bb.ac ] ; 2 uses
   %.197 = phi i1 [ %.096283, %bb.w ], [ %.096283, %bb.y ], [ %.096283, %bb.aa ], [ %.096283, %bb.af ], [ false, %bb.ab ], [ %.096283, %bb.ae ], [ %.096283, %bb.ac ] ; 2 uses
   %.193 = phi i1 [ %.092284, %bb.w ], [ %.092284, %bb.y ], [ %.092284, %bb.aa ], [ %.092284, %bb.af ], [ %.092284, %bb.ab ], [ %.092284, %bb.ae ], [ true, %bb.ac ] ; 2 uses
   %.1 = phi i1 [ %.091285, %bb.w ], [ %.091285, %bb.y ], [ %.091285, %bb.aa ], [ %spec.select, %bb.af ], [ %.091285, %bb.ab ], [ %.091285, %bb.ae ], [ %.091285, %bb.ac ] ; 2 uses

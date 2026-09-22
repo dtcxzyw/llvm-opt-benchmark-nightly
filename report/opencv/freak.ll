@@ -204,16 +204,16 @@ bb.p:                                             ; preds = %_ZNSt6vectorIN2cv11
   br i1 %exitcond176.not, label %bb.o, label %.preheader121, !llvm.loop !114
 
 bb.q:                                             ; preds = %.preheader121, %_ZNSt6vectorIN2cv11xfeatures2d10FREAK_Impl15DescriptionPairESaIS3_EE9push_backERKS3_.exit
-  %.078148 = phi i32 [ 0, %.preheader121 ], [ %i.hp, %_ZNSt6vectorIN2cv11xfeatures2d10FREAK_Impl15DescriptionPairESaIS3_EE9push_backERKS3_.exit ] ; 2 uses
+  %.078148 = phi i32 [ 0, %.preheader121 ], [ %i.hp, %_ZNSt6vectorIN2cv11xfeatures2d10FREAK_Impl15DescriptionPairESaIS3_EE9push_backERKS3_.exit ] ; 3 uses
   %.sroa.14.1147 = phi ptr [ %.sroa.14.0151, %.preheader121 ], [ %.sroa.14.3, %_ZNSt6vectorIN2cv11xfeatures2d10FREAK_Impl15DescriptionPairESaIS3_EE9push_backERKS3_.exit ] ; 5 uses
   %.sroa.10.1146 = phi ptr [ %.sroa.10.0150, %.preheader121 ], [ %.sroa.10.2, %_ZNSt6vectorIN2cv11xfeatures2d10FREAK_Impl15DescriptionPairESaIS3_EE9push_backERKS3_.exit ] ; 3 uses
   %.sroa.0108.1145 = phi ptr [ %.sroa.0108.0149, %.preheader121 ], [ %.sroa.0108.3, %_ZNSt6vectorIN2cv11xfeatures2d10FREAK_Impl15DescriptionPairESaIS3_EE9push_backERKS3_.exit ] ; 7 uses
-  %3 = trunc i32 %.078148 to i16                  ; 2 uses
   %.not.i = icmp eq ptr %.sroa.10.1146, %.sroa.14.1147
   br i1 %.not.i, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %.sroa.6.0.insert.ext.a = shl i16 %3, 8
+  %.sroa.6.0.insert.ext = trunc nuw nsw i32 %.078148 to i16
+  %.sroa.6.0.insert.ext.a = shl nuw nsw i16 %.sroa.6.0.insert.ext, 8
   %.sroa.0.0.insert.insert = add nuw nsw i16 %.sroa.6.0.insert.ext.a, %.sroa.0.0.insert.ext100
   store i16 %.sroa.0.0.insert.insert, ptr %.sroa.10.1146, align 1
   br label %_ZNSt6vectorIN2cv11xfeatures2d10FREAK_Impl15DescriptionPairESaIS3_EE9push_backERKS3_.exit
@@ -247,7 +247,8 @@ _ZNKSt6vectorIN2cv11xfeatures2d10FREAK_Impl15DescriptionPairESaIS3_EE12_M_check_
 
 .noexc93:                                         ; preds = %_ZNKSt6vectorIN2cv11xfeatures2d10FREAK_Impl15DescriptionPairESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %i.hm = getelementptr inbounds i8, ptr %i.hl, i64 %i.hd ; 2 uses
-  %.sroa.6.0.insert.ext104.a = shl nuw nsw i16 %3, 8
+  %.sroa.6.0.insert.ext104 = trunc nuw nsw i32 %.078148 to i16
+  %.sroa.6.0.insert.ext104.a = shl nuw nsw i16 %.sroa.6.0.insert.ext104, 8
   %.sroa.0.0.insert.insert102 = add nuw nsw i16 %.sroa.6.0.insert.ext104.a, %.sroa.0.0.insert.ext100
   store i16 %.sroa.0.0.insert.insert102, ptr %i.hm, align 1
   %i.hn = icmp sgt i64 %i.hd, 0

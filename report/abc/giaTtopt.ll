@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %.lr.ph110, %.loopexit
   %i.cb = phi i64 [ 0, %.lr.ph110 ], [ %i.ee, %.loopexit ]
   %.049109 = phi i32 [ 0, %.lr.ph110 ], [ %i.ed, %.loopexit ]
-  %.050108 = phi i1 [ true, %.lr.ph110 ], [ %1, %.loopexit ] ; 4 uses
+  %.050108 = phi i1 [ true, %.lr.ph110 ], [ %2, %.loopexit ] ; 4 uses
   %.055107 = phi i32 [ %i.d, %.lr.ph110 ], [ %.5, %.loopexit ] ; 2 uses
   %i.cc = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %i.cb
   %i.cd = load i32, ptr %i.cc, align 4, !tbaa !80
@@ -224,13 +224,13 @@ bb.h:                                             ; preds = %.lr.ph110, %.loopex
 
 ._crit_edge96:                                    ; preds = %bb.k, %bb.h
   %.156.lcssa = phi i32 [ %.055107, %bb.h ], [ %.257, %bb.k ] ; 3 uses
-  %.048.lcssa = phi i1 [ false, %bb.h ], [ %.1, %bb.k ] ; 3 uses
+  %.048.lcssa = phi i8 [ 0, %bb.h ], [ %.1, %bb.k ] ; 3 uses
   %.not = icmp eq i32 %i.ch, 0
   br i1 %.not, label %.loopexit, label %bb.l
 
 bb.i:                                             ; preds = %.lr.ph95, %bb.k
   %.04793 = phi i32 [ %i.ch, %.lr.ph95 ], [ %i.cw, %bb.k ] ; 2 uses
-  %.04892 = phi i1 [ false, %.lr.ph95 ], [ %.1, %bb.k ]
+  %.04892 = phi i8 [ 0, %.lr.ph95 ], [ %.1, %bb.k ]
   %.15691 = phi i32 [ %.055107, %.lr.ph95 ], [ %.257, %bb.k ] ; 2 uses
   %i.cm = load ptr, ptr %0, align 8, !tbaa !50
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 80
@@ -251,7 +251,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j, %bb.i
   %.257 = phi i32 [ %i.cp, %bb.j ], [ %.15691, %bb.i ] ; 2 uses
-  %.1 = phi i1 [ true, %bb.j ], [ %.04892, %bb.i ] ; 2 uses
+  %.1 = phi i8 [ 1, %bb.j ], [ %.04892, %bb.i ]   ; 2 uses
   %i.cw = add nsw i32 %.04793, 1                  ; 2 uses
   %i.cx = load i32, ptr %i.j, align 8, !tbaa !94
   %i.cy = add nsw i32 %i.cx, -1
@@ -278,7 +278,7 @@ bb.l:                                             ; preds = %._crit_edge96
 
 bb.m:                                             ; preds = %.lr.ph104, %bb.o
   %.0102.in = phi i32 [ %i.ch, %.lr.ph104 ], [ %.0102, %bb.o ] ; 2 uses
-  %.2101 = phi i1 [ %.048.lcssa, %.lr.ph104 ], [ %.3, %bb.o ]
+  %.2101 = phi i8 [ %.048.lcssa, %.lr.ph104 ], [ %.3, %bb.o ]
   %.358100 = phi i32 [ %.156.lcssa, %.lr.ph104 ], [ %.459, %bb.o ] ; 2 uses
   %.0102 = add nsw i32 %.0102.in, -1              ; 2 uses
   %i.dk = load ptr, ptr %0, align 8, !tbaa !50
@@ -300,15 +300,16 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n, %bb.m
   %.459 = phi i32 [ %i.dn, %bb.n ], [ %.358100, %bb.m ] ; 2 uses
-  %.3 = phi i1 [ true, %bb.n ], [ %.2101, %bb.m ] ; 2 uses
+  %.3 = phi i8 [ 1, %bb.n ], [ %.2101, %bb.m ]    ; 2 uses
   %i.du = icmp samesign ugt i32 %.0102.in, 1
   br i1 %i.du, label %bb.m, label %.loopexit, !llvm.loop !263
 
 .loopexit:                                        ; preds = %bb.o, %bb.l, %._crit_edge96
   %.5 = phi i32 [ %.156.lcssa, %._crit_edge96 ], [ %.156.lcssa, %bb.l ], [ %.459, %bb.o ] ; 2 uses
-  %.4 = phi i1 [ %.048.lcssa, %._crit_edge96 ], [ %.048.lcssa, %bb.l ], [ %.3, %bb.o ]
-  %1 = xor i1 %.050108, %.4                       ; 2 uses
-  %i.dv = xor i1 %1, true
+  %.4 = phi i8 [ %.048.lcssa, %._crit_edge96 ], [ %.048.lcssa, %bb.l ], [ %.3, %bb.o ]
+  %1 = zext i1 %.050108 to i8
+  %2 = icmp ne i8 %.4, %1                         ; 2 uses
+  %i.dv = xor i1 %2, true
   %i.dw = zext i1 %i.dv to i32                    ; 2 uses
   %i.dx = load ptr, ptr %0, align 8, !tbaa !50
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dx, i64 8

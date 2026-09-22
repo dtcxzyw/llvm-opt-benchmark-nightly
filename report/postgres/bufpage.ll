@@ -204,7 +204,7 @@ bb.a:
   %i.b = icmp ult i16 %.val, 25
   %i.c = zext i16 %.val to i32
   %i.d = add nuw nsw i32 %i.c, 262120
-  %i.e = lshr i32 %i.d, 2
+  %i.e = lshr i32 %i.d, 2                         ; 2 uses
   %i.f = and i32 %i.e, 65535                      ; 2 uses
   %.not383948 = icmp eq i32 %i.f, 0
   %.not3839 = select i1 %i.b, i1 true, i1 %.not383948
@@ -212,15 +212,17 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.g = getelementptr i8, ptr %0, i64 20
+  %1 = and i32 %i.e, 65535
+  %2 = zext nneg i32 %1 to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.d
-  %.01843 = phi i32 [ %i.f, %.lr.ph ], [ %i.m, %bb.d ] ; 3 uses
-  %.01942.a = phi i32 [ 0, %.lr.ph ], [ %.237, %bb.d ] ; 3 uses
+  %indvars.iv = phi i64 [ %2, %.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 3 uses
+  %.01942.a = phi i32 [ %i.f, %.lr.ph ], [ %i.m, %bb.d ]
+  %.01942 = phi i32 [ 0, %.lr.ph ], [ %.237, %bb.d ] ; 3 uses
   %.02340 = phi i1 [ false, %.lr.ph ], [ %.22535, %bb.d ] ; 2 uses
-  %1 = zext nneg i32 %.01843 to i64
-  %i.h = getelementptr [4 x i8], ptr %i.g, i64 %1
-  %i.i = icmp eq i32 %.01843, 1
+  %i.h = getelementptr [4 x i8], ptr %i.g, i64 %indvars.iv
+  %i.i = icmp eq i64 %indvars.iv, 1
   %or.cond.not = or i1 %.02340, %i.i
   %i.j = load i32, ptr %i.h, align 4
   %i.k = and i32 %i.j, 98304
@@ -230,21 +232,22 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
 .thread:                                          ; preds = %bb.b
   %not..not27 = xor i1 %.not.not, true
   %i.l = zext i1 %.not.not to i32
-  %spec.select28 = add i32 %.01942.a, %i.l
+  %spec.select28 = add i32 %.01942, %i.l
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   br i1 %.not.not, label %._crit_edge, label %bb.d
 
 bb.d:                                             ; preds = %.thread, %bb.c
-  %.237 = phi i32 [ %spec.select28, %.thread ], [ %.01942.a, %bb.c ] ; 2 uses
+  %.237 = phi i32 [ %spec.select28, %.thread ], [ %.01942, %bb.c ] ; 2 uses
   %.22535 = phi i1 [ %not..not27, %.thread ], [ %.02340, %bb.c ]
-  %i.m = add nsw i32 %.01843, -1                  ; 2 uses
+  %i.m = add nsw i32 %.01942.a, -1                ; 2 uses
   %.not38 = icmp eq i32 %i.m, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
   br i1 %.not38, label %._crit_edge, label %bb.b, !llvm.loop !19
 
 ._crit_edge:                                      ; preds = %bb.c, %bb.d
-  %.019.lcssa = phi i32 [ %.237, %bb.d ], [ %.01942.a, %bb.c ] ; 2 uses
+  %.019.lcssa = phi i32 [ %.237, %bb.d ], [ %.01942, %bb.c ] ; 2 uses
   %.222 = phi i1 [ false, %bb.d ], [ true, %bb.c ] ; 2 uses
   %i.n = icmp sgt i32 %.019.lcssa, 0
   br i1 %i.n, label %.split, label %bb.e

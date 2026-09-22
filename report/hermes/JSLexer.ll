@@ -205,10 +205,12 @@ bb.n:                                             ; preds = %bb.k, %bb.f
 
 .critedge4:                                       ; preds = %bb.n, %.critedge4
   %i.ap = phi i1 [ %i.av, %.critedge4 ], [ %i.ao, %bb.n ]
-  %.292253 = phi i8 [ %i.ar, %.critedge4 ], [ %.191, %bb.n ]
+  %.292253 = phi i8 [ %17, %.critedge4 ], [ %.191, %bb.n ]
   %storemerge110252 = phi ptr [ %i.as, %.critedge4 ], [ %storemerge, %bb.n ]
   %i.aq = zext i1 %i.ap to i8
-  %i.ar = or i8 %.292253, %i.aq                   ; 2 uses
+  %i.ar = or i8 %.292253, %i.aq
+  %16 = icmp ne i8 %i.ar, 0
+  %17 = zext i1 %16 to i8                         ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %storemerge110252, i64 1 ; 4 uses
   store ptr %i.as, ptr %i.b, align 8, !tbaa !55
   %i.at = load i8, ptr %i.as, align 1, !tbaa !72  ; 3 uses
@@ -221,7 +223,7 @@ bb.n:                                             ; preds = %bb.k, %bb.f
 
 ._crit_edge:                                      ; preds = %.critedge4, %bb.n
   %storemerge110.lcssa = phi ptr [ %storemerge, %bb.n ], [ %i.as, %.critedge4 ]
-  %.292.lcssa = phi i8 [ %.191, %bb.n ], [ %i.ar, %.critedge4 ] ; 2 uses
+  %.292.lcssa = phi i8 [ %.191, %bb.n ], [ %17, %.critedge4 ] ; 2 uses
   %.lcssa240 = phi i8 [ %i.am, %bb.n ], [ %i.at, %.critedge4 ]
   %i.aw = and i8 %.lcssa240, -33
   %i.ax = icmp eq i8 %i.aw, 69
@@ -261,10 +263,12 @@ bb.r:                                             ; preds = %bb.p, %bb.q
 .critedge6:                                       ; preds = %bb.r, %.critedge6
   %i.bd = phi i8 [ %i.bj, %.critedge6 ], [ %i.bb, %bb.r ]
   %i.be = phi ptr [ %i.bi, %.critedge6 ], [ %.promoted256, %bb.r ]
-  %.494 = phi i8 [ %i.bh, %.critedge6 ], [ %.393, %bb.r ]
+  %.494 = phi i8 [ %19, %.critedge6 ], [ %.393, %bb.r ]
   %i.bf = icmp eq i8 %i.bd, 95
   %i.bg = zext i1 %i.bf to i8
-  %i.bh = or i8 %.494, %i.bg                      ; 2 uses
+  %i.bh = or i8 %.494, %i.bg
+  %18 = icmp ne i8 %i.bh, 0
+  %19 = zext i1 %18 to i8                         ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.be, i64 1 ; 3 uses
   store ptr %i.bi, ptr %i.b, align 8, !tbaa !55
   %i.bj = load i8, ptr %i.bi, align 1, !tbaa !72  ; 3 uses
@@ -278,7 +282,7 @@ bb.r:                                             ; preds = %bb.p, %bb.q
 .loopexit239:                                     ; preds = %.critedge6, %._crit_edge, %.split244.us, %bb.l
   %.3214 = phi i32 [ %.0211307, %.split244.us ], [ %.0211307, %bb.l ], [ %.1212, %._crit_edge ], [ %.2213, %.critedge6 ] ; 11 uses
   %.3210 = phi i8 [ 0, %.split244.us ], [ %.0207309, %bb.l ], [ %.1208, %._crit_edge ], [ %.2209, %.critedge6 ] ; 3 uses
-  %.5 = phi i8 [ %.us-phi, %.split244.us ], [ %.us-phi, %bb.l ], [ %.292.lcssa, %._crit_edge ], [ %i.bh, %.critedge6 ] ; 3 uses
+  %.5 = phi i8 [ %.us-phi, %.split244.us ], [ %.us-phi, %bb.l ], [ %.292.lcssa, %._crit_edge ], [ %19, %.critedge6 ] ; 3 uses
   %.3 = phi ptr [ %.087311, %.split244.us ], [ %.087311, %bb.l ], [ %.188, %._crit_edge ], [ %.289, %.critedge6 ] ; 18 uses
   %.0 = phi i1 [ false, %.split244.us ], [ false, %bb.l ], [ true, %._crit_edge ], [ true, %.critedge6 ] ; 3 uses
   %i.bm = tail call noundef zeroext i1 @_ZN6hermes6parser7JSLexer22consumeIdentifierStartEv(ptr noundef nonnull align 8 dereferenceable(1160) %0)
