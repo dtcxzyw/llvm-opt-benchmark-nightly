@@ -1,0 +1,359 @@
+diff --git a/llvm/include/llvm/IR/InstrTypes.h b/llvm/include/llvm/IR/InstrTypes.h
+index 5f7df6a4eb6f8..681c4b18375f4 100644
+--- a/llvm/include/llvm/IR/InstrTypes.h
++++ b/llvm/include/llvm/IR/InstrTypes.h
+@@ -2359,6 +2359,12 @@ class CallBase : public Instruction {
+     });
+   }
+ 
++  /// Return whether there exists an operand bundle of type ID
++  bool hasOperandBundle(uint32_t ID) const {
++    return any_of(operand_bundles(),
++                  [&](OperandBundleUse OBU) { return OBU.getTagID() == ID; });
++  }
++
+   /// Populate the BundleOpInfo instances and the Use& vector from \p
+   /// Bundles.  Return the op_iterator pointing to the Use& one past the last
+   /// last bundle operand use.
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+index 86dd4397f22c9..1e1201441a807 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+@@ -3848,6 +3848,8 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+       return nullptr;
+     break;
+   case Intrinsic::assume: {
++    bool ShouldMoveAssume = false;
++    bool ShouldMoveAllAssumes = true;
+     for (auto [Idx, OBU] : llvm::enumerate(II->operand_bundles())) {
+       auto RemoveBundle = [&, Idx = Idx]() -> Instruction * {
+         if (II->getNumOperandBundles() == 1)
+@@ -3859,6 +3861,7 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+       case BundleAttr::None:
+         llvm_unreachable("Unexpected Attribute");
+       case BundleAttr::Align: {
++        ShouldMoveAssume = true;
+         // Try to remove redundant alignment assumptions.
+         auto [Ptr, _, OffsetPtr, Alignment, Offset] = getAssumeAlignInfo(OBU);
+ 
+@@ -3914,6 +3917,7 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+       }
+ 
+       case BundleAttr::Dereferenceable: {
++        ShouldMoveAllAssumes = false;
+         auto [Ptr, _, Count] = getAssumeDereferenceableInfo(OBU);
+ 
+         if (!Count)
+@@ -3931,6 +3935,7 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+         return RemoveBundle();
+ 
+       case BundleAttr::NonNull: {
++        ShouldMoveAssume = true;
+         auto [Ptr] = llvm::getAssumeNonNullInfo(OBU);
+ 
+         // Drop assume if we can prove nonnull without it
+@@ -3960,6 +3965,7 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+       }
+ 
+       case BundleAttr::NoUndef: {
++        ShouldMoveAssume = true;
+         auto [Val] = getAssumeNoUndefInfo(OBU);
+ 
+         if (isGuaranteedNotToBeUndefOrPoison(Val, &AC, II, &DT))
+@@ -3976,6 +3982,7 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+       } break;
+ 
+       case BundleAttr::SeparateStorage: {
++        ShouldMoveAllAssumes = false;
+         auto [Ptr1, Ptr2] = getAssumeSeparateStorageInfo(OBU);
+         // Separate storage assumptions apply to the underlying allocations, not
+         // any particular pointer within them. When evaluating the hints for AA
+@@ -3995,18 +4002,70 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+ 
+       // TODO: Drop these assumes when they are redundant
+       case BundleAttr::DereferenceableOrNull:
++        ShouldMoveAllAssumes = false;
+         break;
+ 
+       // This cannot be simplified
+       case BundleAttr::Cold:
++        ShouldMoveAllAssumes = false;
+         break;
+       }
+     }
+ 
+-    // If the assume has operand bundles, the folds below will never work, so
+-    // don't bother trying.
+-    if (II->hasOperandBundles())
++    if (II->hasOperandBundles()) {
++      // Merge consecutive assumes to save some resources
++      if (auto *PrevAI = dyn_cast_or_null<AssumeInst>(II->getPrevNode());
++          PrevAI && PrevAI->hasOperandBundles()) {
++        SmallVector<OperandBundleDef, 4> Bundles;
++        Bundles.reserve(II->getNumOperandBundles() +
++                        PrevAI->getNumOperandBundles());
++        for (auto Bundle : PrevAI->operand_bundles())
++          Bundles.emplace_back(Bundle);
++        for (auto Bundle : II->operand_bundles())
++          Bundles.emplace_back(Bundle);
++        Builder.CreateAssumption(Bundles);
++        eraseInstFromFunction(*PrevAI);
++        return eraseInstFromFunction(*II);
++      }
++
++      if (ShouldMoveAssume && ShouldMoveAllAssumes) {
++        Instruction *NewSucc = II;
++        while (true) {
++          Instruction *Prev = NewSucc->getPrevNode();
++
++          // We've reached the start of the basic block - there is nowhere else
++          // to go.
++          if (!Prev || isa<AllocaInst, PHINode>(Prev))
++            break;
++
++          // If the previous instruction is a bundle assume, merge the two
++          // instead of stepping past.
++          if (auto *AI = dyn_cast<AssumeInst>(Prev);
++              AI && AI->hasOperandBundles())
++            break;
++
++          // If the previous instruction isn't guaranteed to transfer the assume
++          // may not hold before it.
++          if (!isGuaranteedToTransferExecutionToSuccessor(Prev))
++            break;
++
++          // We assert on the previous instruction, so we can't move past it.
++          if (any_of(II->operands(), equal_to(Prev)))
++            break;
++
++          NewSucc = Prev;
++        }
++
++        if (NewSucc != II) {
++          II->moveBefore(NewSucc->getIterator());
++          return II;
++        }
++      }
++
++      // If the assume has operand bundles, the folds below will never work, so
++      // don't bother trying.
+       break;
++    }
+ 
+     Value *IIOperand = II->getArgOperand(0);
+ 
+diff --git a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+index 4b09510933d0c..59a0a3ad96c65 100644
+--- a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+@@ -5810,7 +5810,7 @@ bool InstCombinerImpl::run() {
+           // removed.
+           auto II = dyn_cast<IntrinsicInst>(User);
+           if (II->getIntrinsicID() != Intrinsic::assume ||
+-              !II->getOperandBundle("dereferenceable"))
++              !II->hasOperandBundle(LLVMContext::OB_Dereferenceable))
+             continue;
+         }
+ 
+diff --git a/llvm/test/Transforms/InstCombine/assume-align.ll b/llvm/test/Transforms/InstCombine/assume-align.ll
+index f83dc92bed2f9..c98127c9f8b93 100644
+--- a/llvm/test/Transforms/InstCombine/assume-align.ll
++++ b/llvm/test/Transforms/InstCombine/assume-align.ll
+@@ -74,8 +74,8 @@ if.end:                                           ; preds = %if.else, %if.then
+ 
+ define void @f3(i64 %a, ptr %b) {
+ ; CHECK-LABEL: @f3(
+-; CHECK-NEXT:    [[C:%.*]] = ptrtoint ptr [[B:%.*]] to i64
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[B]], i64 4294967296) ]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[B:%.*]], i64 4294967296) ]
++; CHECK-NEXT:    [[C:%.*]] = ptrtoint ptr [[B]] to i64
+ ; CHECK-NEXT:    [[D:%.*]] = add i64 [[A:%.*]], [[C]]
+ ; CHECK-NEXT:    call void @g(i64 [[D]])
+ ; CHECK-NEXT:    ret void
+diff --git a/llvm/test/Transforms/InstCombine/assume-loop-align.ll b/llvm/test/Transforms/InstCombine/assume-loop-align.ll
+index 0c5e403ca54a9..2701775f011e8 100644
+--- a/llvm/test/Transforms/InstCombine/assume-loop-align.ll
++++ b/llvm/test/Transforms/InstCombine/assume-loop-align.ll
+@@ -10,8 +10,7 @@ target triple = "x86_64-unknown-linux-gnu"
+ define void @foo(ptr %a, ptr %b) #0 {
+ ; CHECK-LABEL: @foo(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[A:%.*]], i64 64) ]
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[B:%.*]], i64 64) ]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[A:%.*]], i64 64), "align"(ptr [[B:%.*]], i64 64) ]
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ 0, [[ENTRY:%.*]] ], [ [[INDVARS_IV_NEXT:%.*]], [[FOR_BODY]] ]
+diff --git a/llvm/test/Transforms/InstCombine/assume.ll b/llvm/test/Transforms/InstCombine/assume.ll
+index ff59947939a60..05cdcd7866b8c 100644
+--- a/llvm/test/Transforms/InstCombine/assume.ll
++++ b/llvm/test/Transforms/InstCombine/assume.ll
+@@ -13,8 +13,8 @@ declare void @use_i1(i1)
+ 
+ define i32 @align_to_bundle(ptr %a) #0 {
+ ; CHECK-LABEL: @align_to_bundle(
+-; CHECK-NEXT:    [[T0:%.*]] = load i32, ptr [[A:%.*]], align 4
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[A]], i64 32) ]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[A:%.*]], i64 32) ]
++; CHECK-NEXT:    [[T0:%.*]] = load i32, ptr [[A]], align 4
+ ; CHECK-NEXT:    ret i32 [[T0]]
+ ;
+   %t0 = load i32, ptr %a, align 4
+@@ -27,8 +27,8 @@ define i32 @align_to_bundle(ptr %a) #0 {
+ 
+ define i32 @align_to_bundle_ptrtoaddr(ptr %a) #0 {
+ ; CHECK-LABEL: @align_to_bundle_ptrtoaddr(
+-; CHECK-NEXT:    [[T0:%.*]] = load i32, ptr [[A:%.*]], align 4
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[A]], i64 32) ]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[A:%.*]], i64 32) ]
++; CHECK-NEXT:    [[T0:%.*]] = load i32, ptr [[A]], align 4
+ ; CHECK-NEXT:    ret i32 [[T0]]
+ ;
+   %t0 = load i32, ptr %a, align 4
+@@ -41,8 +41,8 @@ define i32 @align_to_bundle_ptrtoaddr(ptr %a) #0 {
+ 
+ define i32 @align_assume_trunc_cond(ptr %a) #0 {
+ ; CHECK-LABEL: @align_assume_trunc_cond(
+-; CHECK-NEXT:    [[T0:%.*]] = load i32, ptr [[A:%.*]], align 4
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[A]], i64 2) ]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[A:%.*]], i64 2) ]
++; CHECK-NEXT:    [[T0:%.*]] = load i32, ptr [[A]], align 4
+ ; CHECK-NEXT:    ret i32 [[T0]]
+ ;
+   %t0 = load i32, ptr %a, align 4
+@@ -138,8 +138,7 @@ define i1 @align_with_offset_on_gep(ptr %base) {
+ 
+ define void @align_with_constant_offset_0(ptr %ptr) {
+ ; CHECK-LABEL: @align_with_constant_offset_0(
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR:%.*]], i64 16) ]
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR]], i64 8, i64 0) ]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR:%.*]], i64 16), "align"(ptr [[PTR]], i64 8, i64 0) ]
+ ; CHECK-NEXT:    ret void
+ ;
+   call void @llvm.assume(i1 true) [ "align"(ptr %ptr, i64 16) ]
+@@ -149,8 +148,7 @@ define void @align_with_constant_offset_0(ptr %ptr) {
+ 
+ define void @align_with_constant_offset_1(ptr %ptr) {
+ ; CHECK-LABEL: @align_with_constant_offset_1(
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR:%.*]], i64 16) ]
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR]], i64 8, i64 -8) ]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR:%.*]], i64 16), "align"(ptr [[PTR]], i64 8, i64 -8) ]
+ ; CHECK-NEXT:    ret void
+ ;
+   call void @llvm.assume(i1 true) [ "align"(ptr %ptr, i64 16) ]
+@@ -161,8 +159,7 @@ define void @align_with_constant_offset_1(ptr %ptr) {
+ 
+ define void @align_with_constant_offset_4(ptr %ptr) {
+ ; CHECK-LABEL: @align_with_constant_offset_4(
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR:%.*]], i64 16) ]
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR]], i64 8, i64 0) ]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR:%.*]], i64 16), "align"(ptr [[PTR]], i64 8, i64 0) ]
+ ; CHECK-NEXT:    ret void
+ ;
+   call void @llvm.assume(i1 true) [ "align"(ptr %ptr, i64 16) ]
+@@ -173,8 +170,7 @@ define void @align_with_constant_offset_4(ptr %ptr) {
+ 
+ define void @align_with_constant_offset_8(ptr %ptr) {
+ ; CHECK-LABEL: @align_with_constant_offset_8(
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR:%.*]], i64 16) ]
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR]], i64 8, i64 8) ]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR:%.*]], i64 16), "align"(ptr [[PTR]], i64 8, i64 8) ]
+ ; CHECK-NEXT:    ret void
+ ;
+   call void @llvm.assume(i1 true) [ "align"(ptr %ptr, i64 16) ]
+@@ -184,8 +180,7 @@ define void @align_with_constant_offset_8(ptr %ptr) {
+ 
+ define void @align_with_variable_offset(ptr %ptr, i64 %offset) {
+ ; CHECK-LABEL: @align_with_variable_offset(
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR:%.*]], i64 16) ]
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR]], i64 8, i64 [[OFFSET:%.*]]) ]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR:%.*]], i64 16), "align"(ptr [[PTR]], i64 8, i64 [[OFFSET:%.*]]) ]
+ ; CHECK-NEXT:    ret void
+ ;
+   call void @llvm.assume(i1 true) [ "align"(ptr %ptr, i64 16) ]
+@@ -650,10 +645,7 @@ define void @redundant_nonnull3(ptr %ptr) {
+ 
+ define void @partially_redundant(ptr %ptr, ptr %ptr2, ptr %ptr3, ptr %ptr4, ptr %ptr5) {
+ ; CHECK-LABEL: @partially_redundant(
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[PTR2:%.*]]) ]
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[PTR:%.*]]) ]
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[PTR4:%.*]]), "nonnull"(ptr [[PTR3:%.*]]) ]
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[PTR5:%.*]]) ]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[PTR5:%.*]]), "nonnull"(ptr [[PTR4:%.*]]), "nonnull"(ptr [[PTR3:%.*]]), "nonnull"(ptr [[PTR:%.*]]), "nonnull"(ptr [[PTR2:%.*]]) ]
+ ; CHECK-NEXT:    ret void
+ ;
+   call void @llvm.assume(i1 true) [ "nonnull"(ptr %ptr), "nonnull"(ptr %ptr2) ]
+@@ -1433,6 +1425,22 @@ define i32 @assume_noundef_on_load_after_call(ptr %ptr) {
+   ret i32 %val
+ }
+ 
++define ptr @avoid_get_operand_bundle() {
++; CHECK-LABEL: @avoid_get_operand_bundle(
++; CHECK-NEXT:  bb:
++; CHECK-NEXT:    [[LOAD:%.*]] = load volatile ptr, ptr null, align 8
++; CHECK-NEXT:    [[PTRTOINT_I:%.*]] = ptrtoint ptr [[LOAD]] to i64
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "dereferenceable"(ptr null, i64 [[PTRTOINT_I]]), "dereferenceable"(ptr null, i64 [[PTRTOINT_I]]) ]
++; CHECK-NEXT:    ret ptr null
++;
++bb:
++  %load = load volatile ptr, ptr null, align 8
++  %ptrtoint.i = ptrtoint ptr %load to i64
++  call void @llvm.assume(i1 true) [ "dereferenceable"(ptr null, i64 %ptrtoint.i) ]
++  call void @llvm.assume(i1 true) [ "dereferenceable"(ptr null, i64 %ptrtoint.i) ]
++  ret ptr null
++}
++
+ declare void @use(i1)
+ declare void @block()
+ declare void @llvm.dbg.value(metadata, metadata, metadata)
+diff --git a/llvm/test/Transforms/InstCombine/assume_inevitable.ll b/llvm/test/Transforms/InstCombine/assume_inevitable.ll
+index f899be41e0584..571c91a04213d 100644
+--- a/llvm/test/Transforms/InstCombine/assume_inevitable.ll
++++ b/llvm/test/Transforms/InstCombine/assume_inevitable.ll
+@@ -7,7 +7,8 @@ define i32 @assume_inevitable(ptr %a, ptr %b, ptr %c) {
+ ; CHECK-LABEL: @assume_inevitable(
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[M:%.*]] = alloca i64, align 8
+-; CHECK-NEXT:    [[TMP0:%.*]] = load i32, ptr [[A:%.*]], align 4
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[A:%.*]], i64 32) ]
++; CHECK-NEXT:    [[TMP0:%.*]] = load i32, ptr [[A]], align 4
+ ; CHECK-NEXT:    [[LOADRES:%.*]] = load i32, ptr [[B:%.*]], align 4
+ ; CHECK-NEXT:    [[LOADRES2:%.*]] = call i32 @llvm.annotation.i32.p0(i32 [[LOADRES]], ptr nonnull @.str, ptr nonnull @.str1, i32 2)
+ ; CHECK-NEXT:    store i32 [[LOADRES2]], ptr [[A]], align 4
+@@ -16,7 +17,6 @@ define i32 @assume_inevitable(ptr %a, ptr %b, ptr %c) {
+ ; CHECK-NEXT:    [[M_A:%.*]] = call ptr @llvm.ptr.annotation.p0.p0(ptr nonnull [[M]], ptr nonnull @.str, ptr nonnull @.str1, i32 2, ptr null)
+ ; CHECK-NEXT:    [[OBJSZ:%.*]] = call i64 @llvm.objectsize.i64.p0(ptr [[C:%.*]], i1 false, i1 false, i1 false)
+ ; CHECK-NEXT:    store i64 [[OBJSZ]], ptr [[M_A]], align 4
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[A]], i64 32) ]
+ ; CHECK-NEXT:    ret i32 [[TMP0]]
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/PhaseOrdering/AArch64/infer-align-from-assumption.ll b/llvm/test/Transforms/PhaseOrdering/AArch64/infer-align-from-assumption.ll
+index b527c52dca26e..e1a547a9d9a6b 100644
+--- a/llvm/test/Transforms/PhaseOrdering/AArch64/infer-align-from-assumption.ll
++++ b/llvm/test/Transforms/PhaseOrdering/AArch64/infer-align-from-assumption.ll
+@@ -13,9 +13,9 @@ define i32 @earlycse_entry(ptr %p) {
+ ; CHECK-NEXT:    [[L_ASSUME_ALIGNED_I_I:%.*]] = load i32, ptr [[L_I]], align 4
+ ; CHECK-NEXT:    [[R_I_I:%.*]] = tail call i32 @swap(i32 [[L_ASSUME_ALIGNED_I_I]])
+ ; CHECK-NEXT:    [[L_2_I:%.*]] = load ptr, ptr [[P]], align 8
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[L_2_I]], i64 4) ]
+ ; CHECK-NEXT:    [[GEP_I:%.*]] = getelementptr i8, ptr [[L_2_I]], i64 4
+ ; CHECK-NEXT:    store ptr [[GEP_I]], ptr [[P]], align 8
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[L_2_I]], i64 4) ]
+ ; CHECK-NEXT:    [[L_ASSUME_ALIGNED_I_I2:%.*]] = load i32, ptr [[GEP_I]], align 4
+ ; CHECK-NEXT:    [[R_I_I3:%.*]] = tail call i32 @swap(i32 [[L_ASSUME_ALIGNED_I_I2]])
+ ; CHECK-NEXT:    [[L_2_I4:%.*]] = load ptr, ptr [[P]], align 8
+diff --git a/llvm/test/Transforms/PhaseOrdering/AArch64/std-find.ll b/llvm/test/Transforms/PhaseOrdering/AArch64/std-find.ll
+index 5941eb6fa8046..9c180ed1a25fc 100644
+--- a/llvm/test/Transforms/PhaseOrdering/AArch64/std-find.ll
++++ b/llvm/test/Transforms/PhaseOrdering/AArch64/std-find.ll
+@@ -244,8 +244,7 @@ define ptr @std_find_caller(ptr noundef %first, ptr noundef %last) {
+ ; CHECK-LABEL: define noundef ptr @std_find_caller(
+ ; CHECK-SAME: ptr noundef [[FIRST:%.*]], ptr noundef [[LAST:%.*]]) local_unnamed_addr #[[ATTR0]] {
+ ; CHECK-NEXT:  [[ENTRY:.*]]:
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[FIRST]], i64 2) ]
+-; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[LAST]], i64 2) ]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[FIRST]], i64 2), "align"(ptr [[LAST]], i64 2) ]
+ ; CHECK-NEXT:    [[PRE_I:%.*]] = icmp eq ptr [[FIRST]], [[LAST]]
+ ; CHECK-NEXT:    br i1 [[PRE_I]], label %[[STD_FIND_GENERIC_IMPL_EXIT:.*]], label %[[LOOP_HEADER_I_PREHEADER:.*]]
+ ; CHECK:       [[LOOP_HEADER_I_PREHEADER]]:
