@@ -205,59 +205,51 @@ imdct_step3_inner_s_loop_ld654.exit:              ; preds = %bb.t, %._crit_edge4
   %.0385475 = phi ptr [ %.0385, %.lr.ph477 ], [ %.0385471, %.lr.ph477.preheader ] ; 4 uses
   %.pn416474 = phi ptr [ %.0385475, %.lr.ph477 ], [ %i.z, %.lr.ph477.preheader ] ; 2 uses
   %.0386473 = phi ptr [ %i.za, %.lr.ph477 ], [ %i.t, %.lr.ph477.preheader ] ; 4 uses
-  %.0387472 = phi ptr [ %i.yz, %.lr.ph477 ], [ %i.xr, %.lr.ph477.preheader ] ; 5 uses
-  %4 = getelementptr inbounds i8, ptr %.pn416474, i64 -8 ; 2 uses
-  %i.xs = getelementptr inbounds nuw i8, ptr %.0387472, i64 4
+  %.0387472 = phi ptr [ %i.yz, %.lr.ph477 ], [ %i.xr, %.lr.ph477.preheader ] ; 3 uses
+  %i.xs = getelementptr inbounds i8, ptr %.pn416474, i64 -8 ; 2 uses
   %i.xt = load <2 x float>, ptr %.0386473, align 4 ; 2 uses
-  %i.xu = load <2 x float>, ptr %4, align 4       ; 2 uses
+  %i.xu = load <2 x float>, ptr %i.xs, align 4    ; 2 uses
   %i.xv = fsub <2 x float> %i.xt, %i.xu           ; 2 uses
   %i.xw = fadd <2 x float> %i.xt, %i.xu           ; 3 uses
   %i.xx = shufflevector <2 x float> %i.xv, <2 x float> %i.xw, <2 x i32> <i32 0, i32 3> ; 2 uses
-  %5 = load float, ptr %.0387472, align 4
-  %6 = load float, ptr %i.xs, align 4
+  %4 = load <2 x float>, ptr %.0387472, align 4   ; 2 uses
   %i.xy = fneg <2 x float> %i.xx
   %i.xz = shufflevector <2 x float> %i.xw, <2 x float> %i.xy, <2 x i32> <i32 1, i32 2>
-  %7 = insertelement <2 x float> poison, float %5, i64 0
-  %i.ya = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.ya = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> zeroinitializer
   %i.yb = fmul <2 x float> %i.xz, %i.ya
-  %8 = insertelement <2 x float> poison, float %6, i64 0
-  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.yc = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %9, <2 x float> %i.xx, <2 x float> %i.yb) ; 3 uses
+  %5 = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %i.yc = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %5, <2 x float> %i.xx, <2 x float> %i.yb) ; 3 uses
   %i.yd = shufflevector <2 x float> %i.xw, <2 x float> %i.xv, <2 x i32> <i32 0, i32 3> ; 3 uses
   %i.ye = fadd <2 x float> %i.yd, %i.yc
   store <2 x float> %i.ye, ptr %.0386473, align 4
   %i.yf = shufflevector <2 x float> %i.yd, <2 x float> %i.yc, <2 x i32> <i32 0, i32 3>
   %i.yg = shufflevector <2 x float> %i.yc, <2 x float> %i.yd, <2 x i32> <i32 0, i32 3>
   %i.yh = fsub <2 x float> %i.yf, %i.yg
-  store <2 x float> %i.yh, ptr %4, align 4
-  %10 = getelementptr inbounds nuw i8, ptr %.0386473, i64 8 ; 2 uses
-  %i.yi = getelementptr inbounds i8, ptr %.pn416474, i64 -12
-  %i.yj = getelementptr inbounds nuw i8, ptr %.0387472, i64 12
+  store <2 x float> %i.yh, ptr %i.xs, align 4
+  %i.yi = getelementptr inbounds nuw i8, ptr %.0386473, i64 8 ; 2 uses
+  %i.yj = getelementptr inbounds i8, ptr %.pn416474, i64 -12
   %i.yk = getelementptr inbounds nuw i8, ptr %.0387472, i64 8
-  %i.yl = load <2 x float>, ptr %10, align 4      ; 2 uses
+  %i.yl = load <2 x float>, ptr %i.yi, align 4    ; 2 uses
   %i.ym = load <2 x float>, ptr %.0385475, align 4 ; 2 uses
   %i.yn = fsub <2 x float> %i.yl, %i.ym           ; 2 uses
   %i.yo = fadd <2 x float> %i.yl, %i.ym           ; 3 uses
   %i.yp = shufflevector <2 x float> %i.yn, <2 x float> %i.yo, <2 x i32> <i32 0, i32 3> ; 2 uses
-  %11 = load float, ptr %i.yk, align 4
-  %12 = load float, ptr %i.yj, align 4
+  %6 = load <2 x float>, ptr %i.yk, align 4       ; 2 uses
   %i.yq = fneg <2 x float> %i.yp
   %i.yr = shufflevector <2 x float> %i.yo, <2 x float> %i.yq, <2 x i32> <i32 1, i32 2>
-  %13 = insertelement <2 x float> poison, float %11, i64 0
-  %i.ys = shufflevector <2 x float> %13, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.ys = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
   %i.yt = fmul <2 x float> %i.yr, %i.ys
-  %14 = insertelement <2 x float> poison, float %12, i64 0
-  %15 = shufflevector <2 x float> %14, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.yu = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %15, <2 x float> %i.yp, <2 x float> %i.yt) ; 3 uses
+  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %i.yu = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %7, <2 x float> %i.yp, <2 x float> %i.yt) ; 3 uses
   %i.yv = shufflevector <2 x float> %i.yo, <2 x float> %i.yn, <2 x i32> <i32 0, i32 3> ; 3 uses
   %i.yw = fadd <2 x float> %i.yv, %i.yu
-  store <2 x float> %i.yw, ptr %10, align 4
+  store <2 x float> %i.yw, ptr %i.yi, align 4
   %foldExtExtBinop = fsub <2 x float> %i.yv, %i.yu
   %i.yx = extractelement <2 x float> %foldExtExtBinop, i64 0
   store float %i.yx, ptr %.0385475, align 4
   %foldExtExtBinop532 = fsub <2 x float> %i.yu, %i.yv
   %i.yy = extractelement <2 x float> %foldExtExtBinop532, i64 1
-  store float %i.yy, ptr %i.yi, align 4
+  store float %i.yy, ptr %i.yj, align 4
   %i.yz = getelementptr inbounds nuw i8, ptr %.0387472, i64 16
   %i.za = getelementptr inbounds nuw i8, ptr %.0386473, i64 16 ; 2 uses
   %.0385 = getelementptr inbounds i8, ptr %.0385475, i64 -16 ; 2 uses

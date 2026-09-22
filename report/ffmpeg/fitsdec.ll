@@ -204,21 +204,20 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.q, %bb.p
   %i.bq = getelementptr inbounds nuw i8, ptr %4, i64 4072 ; 2 uses
-  %5 = load double, ptr %i.bq, align 8, !tbaa !16
+  %5 = load <2 x double>, ptr %i.bq, align 8
   %i.br = getelementptr inbounds nuw i8, ptr %4, i64 4048
   %i.bs = getelementptr inbounds nuw i8, ptr %4, i64 4088 ; 2 uses
-  %i.bt = load double, ptr %i.bs, align 8, !tbaa !17
+  %i.bt = load double, ptr %i.bs, align 8, !tbaa !16
   %i.bu = load <2 x double>, ptr %i.br, align 8, !tbaa !85 ; 2 uses
-  %6 = insertelement <2 x double> poison, double %i.bt, i64 0
-  %i.bv = insertelement <2 x double> %6, double %5, i64 1
+  %i.bv = insertelement <2 x double> %5, double %i.bt, i64 1
   %i.bw = shufflevector <2 x double> %i.bu, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.bx = fsub nsz <2 x double> %i.bv, %i.bw
   %i.by = shufflevector <2 x double> %i.bu, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bz = fdiv nsz <2 x double> %i.bx, %i.by      ; 2 uses
-  %i.ca = extractelement <2 x double> %i.bz, i64 1
-  store double %i.ca, ptr %i.bq, align 8, !tbaa !16
-  %i.cb = extractelement <2 x double> %i.bz, i64 0
-  store double %i.cb, ptr %i.bs, align 8, !tbaa !17
+  %i.ca = extractelement <2 x double> %i.bz, i64 0
+  store double %i.ca, ptr %i.bq, align 8, !tbaa !17
+  %i.cb = extractelement <2 x double> %i.bz, i64 1
+  store double %i.cb, ptr %i.bs, align 8, !tbaa !16
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %._crit_edge122.i
@@ -232,9 +231,9 @@ bb.u:                                             ; preds = %bb.t, %._crit_edge1
 
 bb.v:                                             ; preds = %bb.u
   %i.cd = getelementptr inbounds nuw i8, ptr %4, i64 4072
-  %i.ce = load double, ptr %i.cd, align 8, !tbaa !16 ; 3 uses
+  %i.ce = load double, ptr %i.cd, align 8, !tbaa !17 ; 3 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %4, i64 4088 ; 3 uses
-  %i.cg = load double, ptr %i.cf, align 8, !tbaa !17 ; 3 uses
+  %i.cg = load double, ptr %i.cf, align 8, !tbaa !16 ; 3 uses
   %i.ch = fcmp nsz ult double %i.ce, %i.cg
   br i1 %i.ch, label %.thread, label %bb.w
 
@@ -257,9 +256,9 @@ fits_read_header.exit.thread:                     ; preds = %bb.b, %bb.a, %bb.h,
 
 bb.y:                                             ; preds = %bb.w
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef %0, i32 noundef 24, ptr noundef nonnull @.str.14) #7
-  %i.cj = load double, ptr %i.cf, align 8, !tbaa !17
+  %i.cj = load double, ptr %i.cf, align 8, !tbaa !16
   %i.ck = fadd nsz double %i.cj, 1.000000e+00
-  store double %i.ck, ptr %i.cf, align 8, !tbaa !17
+  store double %i.ck, ptr %i.cf, align 8, !tbaa !16
   %.pre479 = load i32, ptr %i.ad, align 8, !tbaa !82
   %i.cl = icmp eq i32 %.pre479, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -662,9 +661,9 @@ bb.au:                                            ; preds = %bb.at, %bb.as
 
 bb.av:                                            ; preds = %bb.am
   %i.jl = getelementptr inbounds nuw i8, ptr %4, i64 4088
-  %i.jm = load double, ptr %i.jl, align 8, !tbaa !17
+  %i.jm = load double, ptr %i.jl, align 8, !tbaa !16
   %i.jn = getelementptr inbounds nuw i8, ptr %4, i64 4072 ; 2 uses
-  %i.jo = load double, ptr %i.jn, align 8, !tbaa !16 ; 24 uses
+  %i.jo = load double, ptr %i.jn, align 8, !tbaa !17 ; 24 uses
   %i.jp = fsub nsz double %i.jm, %i.jo            ; 2 uses
   %or.cond225 = call i1 @llvm.is.fpclass.f64(double %i.jp, /* (nan inf zero nsub nnorm) */ i32 639)
   %i.jq = fdiv nsz double 1.000000e+00, %i.jp
@@ -1067,7 +1066,7 @@ bb.bg:                                            ; preds = %.lr.ph367, %._crit_
 
 bb.bh:                                            ; preds = %.lr.ph362
   %i.tq = uitofp i8 %i.tm to double
-  %i.tr = load double, ptr %i.jn, align 8, !tbaa !16
+  %i.tr = load double, ptr %i.jn, align 8, !tbaa !17
   %i.ts = fsub nsz double %i.tq, %i.tr
   %i.tt = fmul nsz double %i.ts, 2.550000e+02
   %i.tu = fmul nsz double %i.jr, %i.tt
@@ -1470,9 +1469,9 @@ declare i32 @avpriv_fits_header_parse_line(ptr noundef, ptr noundef, ptr noundef
 define internal fastcc range(i32 -1094995529, 1) i32 @fill_data_min_max(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef nonnull captures(none) initializes((4072, 4080), (4088, 4096)) %1) unnamed_addr #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 4072 ; 27 uses
-  store double f0x7FEFFFFFFFFFFFFF, ptr %i.a, align 8, !tbaa !16
+  store double f0x7FEFFFFFFFFFFFFF, ptr %i.a, align 8, !tbaa !17
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 4088 ; 27 uses
-  store double f0xFFEFFFFFFFFFFFFF, ptr %i.b, align 8, !tbaa !17
+  store double f0xFFEFFFFFFFFFFFFF, ptr %i.b, align 8, !tbaa !16
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.d = load i32, ptr %i.c, align 8, !tbaa !15
   %i.e = add i32 %i.d, 64                         ; 2 uses
@@ -1534,7 +1533,7 @@ bb.a:
   br i1 %i.z, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.preheader14.us.new
-  store double %i.y, ptr %i.b, align 8, !tbaa !17
+  store double %i.y, ptr %i.b, align 8, !tbaa !16
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.preheader14.us.new
@@ -1544,7 +1543,7 @@ bb.c:                                             ; preds = %bb.b, %.preheader14
   br i1 %i.ac, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  store double %i.y, ptr %i.a, align 8, !tbaa !16
+  store double %i.y, ptr %i.a, align 8, !tbaa !17
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -1558,7 +1557,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.aj, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  store double %i.ai, ptr %i.b, align 8, !tbaa !17
+  store double %i.ai, ptr %i.b, align 8, !tbaa !16
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
@@ -1568,7 +1567,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.am, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  store double %i.ai, ptr %i.a, align 8, !tbaa !16
+  store double %i.ai, ptr %i.a, align 8, !tbaa !17
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
@@ -1596,7 +1595,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br i1 %i.at, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %.epil.preheader
-  store double %i.as, ptr %i.b, align 8, !tbaa !17
+  store double %i.as, ptr %i.b, align 8, !tbaa !16
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %.epil.preheader
@@ -1605,7 +1604,7 @@ bb.k:                                             ; preds = %bb.j, %.epil.prehea
   br i1 %i.av, label %bb.l, label %._crit_edge.split.us.us.epilog-lcssa
 
 bb.l:                                             ; preds = %bb.k
-  store double %i.as, ptr %i.a, align 8, !tbaa !16
+  store double %i.as, ptr %i.a, align 8, !tbaa !17
   br label %._crit_edge.split.us.us.epilog-lcssa
 
 ._crit_edge.split.us.us.epilog-lcssa:             ; preds = %bb.l, %bb.k
@@ -1673,7 +1672,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.bt, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %.preheader11.us.new
-  store double %i.bs, ptr %i.b, align 8, !tbaa !17
+  store double %i.bs, ptr %i.b, align 8, !tbaa !16
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %.preheader11.us.new
@@ -1683,7 +1682,7 @@ bb.n:                                             ; preds = %bb.m, %.preheader11
   br i1 %i.bw, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  store double %i.bs, ptr %i.a, align 8, !tbaa !16
+  store double %i.bs, ptr %i.a, align 8, !tbaa !17
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
@@ -1697,7 +1696,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   br i1 %i.cd, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
-  store double %i.cc, ptr %i.b, align 8, !tbaa !17
+  store double %i.cc, ptr %i.b, align 8, !tbaa !16
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p
@@ -1707,7 +1706,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   br i1 %i.cg, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
-  store double %i.cc, ptr %i.a, align 8, !tbaa !16
+  store double %i.cc, ptr %i.a, align 8, !tbaa !17
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r
@@ -1735,7 +1734,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   br i1 %i.cn, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %.epil.preheader381
-  store double %i.cm, ptr %i.b, align 8, !tbaa !17
+  store double %i.cm, ptr %i.b, align 8, !tbaa !16
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %.epil.preheader381
@@ -1744,7 +1743,7 @@ bb.v:                                             ; preds = %bb.u, %.epil.prehea
   br i1 %i.cp, label %bb.w, label %._crit_edge.split30.us.us.epilog-lcssa
 
 bb.w:                                             ; preds = %bb.v
-  store double %i.cm, ptr %i.a, align 8, !tbaa !16
+  store double %i.cm, ptr %i.a, align 8, !tbaa !17
   br label %._crit_edge.split30.us.us.epilog-lcssa
 
 ._crit_edge.split30.us.us.epilog-lcssa:           ; preds = %bb.w, %bb.v
@@ -1812,7 +1811,7 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.dn, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %.preheader8.us.new
-  store double %i.dm, ptr %i.b, align 8, !tbaa !17
+  store double %i.dm, ptr %i.b, align 8, !tbaa !16
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %.preheader8.us.new
@@ -1822,7 +1821,7 @@ bb.y:                                             ; preds = %bb.x, %.preheader8.
   br i1 %i.dq, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %bb.y
-  store double %i.dm, ptr %i.a, align 8, !tbaa !16
+  store double %i.dm, ptr %i.a, align 8, !tbaa !17
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
@@ -1836,7 +1835,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   br i1 %i.dx, label %bb.ab, label %bb.ac
 
 bb.ab:                                            ; preds = %bb.aa
-  store double %i.dw, ptr %i.b, align 8, !tbaa !17
+  store double %i.dw, ptr %i.b, align 8, !tbaa !16
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
@@ -1846,7 +1845,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
   br i1 %i.ea, label %bb.ad, label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ac
-  store double %i.dw, ptr %i.a, align 8, !tbaa !16
+  store double %i.dw, ptr %i.a, align 8, !tbaa !17
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %bb.ac
@@ -1874,7 +1873,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   br i1 %i.eh, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %.epil.preheader398
-  store double %i.eg, ptr %i.b, align 8, !tbaa !17
+  store double %i.eg, ptr %i.b, align 8, !tbaa !16
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af, %.epil.preheader398
@@ -1883,7 +1882,7 @@ bb.ag:                                            ; preds = %bb.af, %.epil.prehe
   br i1 %i.ej, label %bb.ah, label %._crit_edge.split45.us.us.epilog-lcssa
 
 bb.ah:                                            ; preds = %bb.ag
-  store double %i.eg, ptr %i.a, align 8, !tbaa !16
+  store double %i.eg, ptr %i.a, align 8, !tbaa !17
   br label %._crit_edge.split45.us.us.epilog-lcssa
 
 ._crit_edge.split45.us.us.epilog-lcssa:           ; preds = %bb.ah, %bb.ag
@@ -1950,7 +1949,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %i.fg, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %.preheader5.us.new
-  store double %i.ff, ptr %i.b, align 8, !tbaa !17
+  store double %i.ff, ptr %i.b, align 8, !tbaa !16
   br label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai, %.preheader5.us.new
@@ -1960,7 +1959,7 @@ bb.aj:                                            ; preds = %bb.ai, %.preheader5
   br i1 %i.fj, label %bb.ak, label %bb.al
 
 bb.ak:                                            ; preds = %bb.aj
-  store double %i.ff, ptr %i.a, align 8, !tbaa !16
+  store double %i.ff, ptr %i.a, align 8, !tbaa !17
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ak, %bb.aj
@@ -1973,7 +1972,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   br i1 %i.fp, label %bb.am, label %bb.an
 
 bb.am:                                            ; preds = %bb.al
-  store double %i.fo, ptr %i.b, align 8, !tbaa !17
+  store double %i.fo, ptr %i.b, align 8, !tbaa !16
   br label %bb.an
 
 bb.an:                                            ; preds = %bb.am, %bb.al
@@ -1983,7 +1982,7 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   br i1 %i.fs, label %bb.ao, label %bb.ap
 
 bb.ao:                                            ; preds = %bb.an
-  store double %i.fo, ptr %i.a, align 8, !tbaa !16
+  store double %i.fo, ptr %i.a, align 8, !tbaa !17
   br label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao, %bb.an
@@ -2010,7 +2009,7 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   br i1 %i.fy, label %bb.aq, label %bb.ar
 
 bb.aq:                                            ; preds = %.epil.preheader428
-  store double %i.fx, ptr %i.b, align 8, !tbaa !17
+  store double %i.fx, ptr %i.b, align 8, !tbaa !16
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq, %.epil.preheader428
@@ -2019,7 +2018,7 @@ bb.ar:                                            ; preds = %bb.aq, %.epil.prehe
   br i1 %i.ga, label %bb.as, label %._crit_edge.split60.us.us.epilog-lcssa
 
 bb.as:                                            ; preds = %bb.ar
-  store double %i.fx, ptr %i.a, align 8, !tbaa !16
+  store double %i.fx, ptr %i.a, align 8, !tbaa !17
   br label %._crit_edge.split60.us.us.epilog-lcssa
 
 ._crit_edge.split60.us.us.epilog-lcssa:           ; preds = %bb.as, %bb.ar
@@ -2093,7 +2092,7 @@ bb.as:                                            ; preds = %bb.ar
   br i1 %i.ha, label %bb.at, label %bb.au
 
 bb.at:                                            ; preds = %.preheader2.us.new
-  store double %i.gz, ptr %i.b, align 8, !tbaa !17
+  store double %i.gz, ptr %i.b, align 8, !tbaa !16
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.at, %.preheader2.us.new
@@ -2103,7 +2102,7 @@ bb.au:                                            ; preds = %bb.at, %.preheader2
   br i1 %i.hd, label %bb.av, label %bb.aw
 
 bb.av:                                            ; preds = %bb.au
-  store double %i.gz, ptr %i.a, align 8, !tbaa !16
+  store double %i.gz, ptr %i.a, align 8, !tbaa !17
   br label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av, %bb.au
@@ -2118,7 +2117,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
   br i1 %i.hl, label %bb.ax, label %bb.ay
 
 bb.ax:                                            ; preds = %bb.aw
-  store double %i.hk, ptr %i.b, align 8, !tbaa !17
+  store double %i.hk, ptr %i.b, align 8, !tbaa !16
   br label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax, %bb.aw
@@ -2128,7 +2127,7 @@ bb.ay:                                            ; preds = %bb.ax, %bb.aw
   br i1 %i.ho, label %bb.az, label %bb.ba
 
 bb.az:                                            ; preds = %bb.ay
-  store double %i.hk, ptr %i.a, align 8, !tbaa !16
+  store double %i.hk, ptr %i.a, align 8, !tbaa !17
   br label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az, %bb.ay
@@ -2157,7 +2156,7 @@ bb.ba:                                            ; preds = %bb.az, %bb.ay
   br i1 %i.hw, label %bb.bb, label %bb.bc
 
 bb.bb:                                            ; preds = %.epil.preheader445
-  store double %i.hv, ptr %i.b, align 8, !tbaa !17
+  store double %i.hv, ptr %i.b, align 8, !tbaa !16
   br label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb, %.epil.preheader445
@@ -2166,7 +2165,7 @@ bb.bc:                                            ; preds = %bb.bb, %.epil.prehe
   br i1 %i.hy, label %bb.bd, label %._crit_edge.split75.us.us.epilog-lcssa
 
 bb.bd:                                            ; preds = %bb.bc
-  store double %i.hv, ptr %i.a, align 8, !tbaa !16
+  store double %i.hv, ptr %i.a, align 8, !tbaa !17
   br label %._crit_edge.split75.us.us.epilog-lcssa
 
 ._crit_edge.split75.us.us.epilog-lcssa:           ; preds = %bb.bd, %bb.bc
@@ -2233,7 +2232,7 @@ bb.bd:                                            ; preds = %bb.bc
   br i1 %i.iv, label %bb.be, label %bb.bf
 
 bb.be:                                            ; preds = %.preheader.us.new
-  store i64 %i.it, ptr %i.b, align 8, !tbaa !17
+  store i64 %i.it, ptr %i.b, align 8, !tbaa !16
   br label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be, %.preheader.us.new
@@ -2242,7 +2241,7 @@ bb.bf:                                            ; preds = %bb.be, %.preheader.
   br i1 %i.ix, label %bb.bg, label %bb.bh
 
 bb.bg:                                            ; preds = %bb.bf
-  store i64 %i.it, ptr %i.a, align 8, !tbaa !16
+  store i64 %i.it, ptr %i.a, align 8, !tbaa !17
   br label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg, %bb.bf
@@ -2255,7 +2254,7 @@ bb.bh:                                            ; preds = %bb.bg, %bb.bf
   br i1 %i.jd, label %bb.bi, label %bb.bj
 
 bb.bi:                                            ; preds = %bb.bh
-  store i64 %i.jb, ptr %i.b, align 8, !tbaa !17
+  store i64 %i.jb, ptr %i.b, align 8, !tbaa !16
   br label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi, %bb.bh
@@ -2264,7 +2263,7 @@ bb.bj:                                            ; preds = %bb.bi, %bb.bh
   br i1 %i.jf, label %bb.bk, label %bb.bl
 
 bb.bk:                                            ; preds = %bb.bj
-  store i64 %i.jb, ptr %i.a, align 8, !tbaa !16
+  store i64 %i.jb, ptr %i.a, align 8, !tbaa !17
   br label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk, %bb.bj
@@ -2289,7 +2288,7 @@ bb.bl:                                            ; preds = %bb.bk, %bb.bj
   br i1 %i.jl, label %bb.bm, label %bb.bn
 
 bb.bm:                                            ; preds = %.epil.preheader462
-  store i64 %i.jj, ptr %i.b, align 8, !tbaa !17
+  store i64 %i.jj, ptr %i.b, align 8, !tbaa !16
   br label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm, %.epil.preheader462
@@ -2298,7 +2297,7 @@ bb.bn:                                            ; preds = %bb.bm, %.epil.prehe
   br i1 %i.jn, label %bb.bo, label %._crit_edge.split90.us.us.epilog-lcssa
 
 bb.bo:                                            ; preds = %bb.bn
-  store i64 %i.jj, ptr %i.a, align 8, !tbaa !16
+  store i64 %i.jj, ptr %i.a, align 8, !tbaa !17
   br label %._crit_edge.split90.us.us.epilog-lcssa
 
 ._crit_edge.split90.us.us.epilog-lcssa:           ; preds = %bb.bo, %bb.bn
@@ -2342,7 +2341,7 @@ bb.bq:                                            ; preds = %bb.bp
   br i1 %i.kb, label %bb.br, label %bb.bs
 
 bb.br:                                            ; preds = %bb.bq
-  store i64 %i.jy, ptr %i.b, align 8, !tbaa !17
+  store i64 %i.jy, ptr %i.b, align 8, !tbaa !16
   br label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br, %bb.bq
@@ -2351,7 +2350,7 @@ bb.bs:                                            ; preds = %bb.br, %bb.bq
   br i1 %i.kd, label %bb.bt, label %bb.bu
 
 bb.bt:                                            ; preds = %bb.bs
-  store i64 %i.jy, ptr %i.a, align 8, !tbaa !16
+  store i64 %i.jy, ptr %i.a, align 8, !tbaa !17
   br label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bs, %bb.bt, %bb.bp
@@ -2391,7 +2390,7 @@ bb.bw:                                            ; preds = %bb.bv
   br i1 %i.ks, label %bb.bx, label %bb.by
 
 bb.bx:                                            ; preds = %bb.bw
-  store double %i.kr, ptr %i.b, align 8, !tbaa !17
+  store double %i.kr, ptr %i.b, align 8, !tbaa !16
   br label %bb.by
 
 bb.by:                                            ; preds = %bb.bx, %bb.bw
@@ -2400,7 +2399,7 @@ bb.by:                                            ; preds = %bb.bx, %bb.bw
   br i1 %i.ku, label %bb.bz, label %bb.ca
 
 bb.bz:                                            ; preds = %bb.by
-  store double %i.kr, ptr %i.a, align 8, !tbaa !16
+  store double %i.kr, ptr %i.a, align 8, !tbaa !17
   br label %bb.ca
 
 bb.ca:                                            ; preds = %bb.by, %bb.bz, %bb.bv
@@ -2439,7 +2438,7 @@ bb.cb:                                            ; preds = %.preheader5.new
   br i1 %i.lh, label %bb.cc, label %bb.cd
 
 bb.cc:                                            ; preds = %bb.cb
-  store double %i.lg, ptr %i.b, align 8, !tbaa !17
+  store double %i.lg, ptr %i.b, align 8, !tbaa !16
   br label %bb.cd
 
 bb.cd:                                            ; preds = %bb.cc, %bb.cb
@@ -2448,7 +2447,7 @@ bb.cd:                                            ; preds = %bb.cc, %bb.cb
   br i1 %i.lj, label %bb.ce, label %bb.cf
 
 bb.ce:                                            ; preds = %bb.cd
-  store double %i.lg, ptr %i.a, align 8, !tbaa !16
+  store double %i.lg, ptr %i.a, align 8, !tbaa !17
   br label %bb.cf
 
 bb.cf:                                            ; preds = %bb.cd, %bb.ce, %.preheader5.new
@@ -2466,7 +2465,7 @@ bb.cg:                                            ; preds = %bb.cf
   br i1 %i.lq, label %bb.ch, label %bb.ci
 
 bb.ch:                                            ; preds = %bb.cg
-  store double %i.lp, ptr %i.b, align 8, !tbaa !17
+  store double %i.lp, ptr %i.b, align 8, !tbaa !16
   br label %bb.ci
 
 bb.ci:                                            ; preds = %bb.ch, %bb.cg
@@ -2475,7 +2474,7 @@ bb.ci:                                            ; preds = %bb.ch, %bb.cg
   br i1 %i.ls, label %bb.cj, label %bb.ck
 
 bb.cj:                                            ; preds = %bb.ci
-  store double %i.lp, ptr %i.a, align 8, !tbaa !16
+  store double %i.lp, ptr %i.a, align 8, !tbaa !17
   br label %bb.ck
 
 bb.ck:                                            ; preds = %bb.cj, %bb.ci, %bb.cf
@@ -2505,7 +2504,7 @@ bb.cl:                                            ; preds = %.epil.preheader415
   br i1 %i.lz, label %bb.cm, label %bb.cn
 
 bb.cm:                                            ; preds = %bb.cl
-  store double %i.ly, ptr %i.b, align 8, !tbaa !17
+  store double %i.ly, ptr %i.b, align 8, !tbaa !16
   br label %bb.cn
 
 bb.cn:                                            ; preds = %bb.cm, %bb.cl
@@ -2514,7 +2513,7 @@ bb.cn:                                            ; preds = %bb.cm, %bb.cl
   br i1 %i.mb, label %bb.co, label %._crit_edge.split60.epilog-lcssa
 
 bb.co:                                            ; preds = %bb.cn
-  store double %i.ly, ptr %i.a, align 8, !tbaa !16
+  store double %i.ly, ptr %i.a, align 8, !tbaa !17
   br label %._crit_edge.split60.epilog-lcssa
 
 ._crit_edge.split60.epilog-lcssa:                 ; preds = %bb.co, %bb.cn, %.epil.preheader415
@@ -2555,7 +2554,7 @@ bb.cq:                                            ; preds = %bb.cp
   br i1 %i.mo, label %bb.cr, label %bb.cs
 
 bb.cr:                                            ; preds = %bb.cq
-  store double %i.mn, ptr %i.b, align 8, !tbaa !17
+  store double %i.mn, ptr %i.b, align 8, !tbaa !16
   br label %bb.cs
 
 bb.cs:                                            ; preds = %bb.cr, %bb.cq
@@ -2564,7 +2563,7 @@ bb.cs:                                            ; preds = %bb.cr, %bb.cq
   br i1 %i.mq, label %bb.ct, label %bb.cu
 
 bb.ct:                                            ; preds = %bb.cs
-  store double %i.mn, ptr %i.a, align 8, !tbaa !16
+  store double %i.mn, ptr %i.a, align 8, !tbaa !17
   br label %bb.cu
 
 bb.cu:                                            ; preds = %bb.cs, %bb.ct, %bb.cp
@@ -2604,7 +2603,7 @@ bb.cw:                                            ; preds = %bb.cv
   br i1 %i.ne, label %bb.cx, label %bb.cy
 
 bb.cx:                                            ; preds = %bb.cw
-  store double %i.nd, ptr %i.b, align 8, !tbaa !17
+  store double %i.nd, ptr %i.b, align 8, !tbaa !16
   br label %bb.cy
 
 bb.cy:                                            ; preds = %bb.cx, %bb.cw
@@ -2613,7 +2612,7 @@ bb.cy:                                            ; preds = %bb.cx, %bb.cw
   br i1 %i.ng, label %bb.cz, label %bb.da
 
 bb.cz:                                            ; preds = %bb.cy
-  store double %i.nd, ptr %i.a, align 8, !tbaa !16
+  store double %i.nd, ptr %i.a, align 8, !tbaa !17
   br label %bb.da
 
 bb.da:                                            ; preds = %bb.cy, %bb.cz, %bb.cv
@@ -2652,7 +2651,7 @@ bb.dc:                                            ; preds = %bb.db
   br i1 %i.nt, label %bb.dd, label %bb.de
 
 bb.dd:                                            ; preds = %bb.dc
-  store double %i.ns, ptr %i.b, align 8, !tbaa !17
+  store double %i.ns, ptr %i.b, align 8, !tbaa !16
   br label %bb.de
 
 bb.de:                                            ; preds = %bb.dd, %bb.dc
@@ -2661,7 +2660,7 @@ bb.de:                                            ; preds = %bb.dd, %bb.dc
   br i1 %i.nv, label %bb.df, label %bb.dg
 
 bb.df:                                            ; preds = %bb.de
-  store double %i.ns, ptr %i.a, align 8, !tbaa !16
+  store double %i.ns, ptr %i.a, align 8, !tbaa !17
   br label %bb.dg
 
 bb.dg:                                            ; preds = %bb.de, %bb.df, %bb.db
@@ -2744,8 +2743,8 @@ attributes #7 = { nounwind }
 !13 = !{!6, !6, i64 0}
 !14 = !{!12, !6, i64 24}
 !15 = !{!12, !6, i64 8}
-!16 = !{!12, !11, i64 4072}
-!17 = !{!12, !11, i64 4088}
+!16 = !{!12, !11, i64 4088}
+!17 = !{!12, !11, i64 4072}
 !18 = !{!5, !5, i64 0}
 !19 = distinct !{!19, !10}
 !20 = distinct !{!20, !10}

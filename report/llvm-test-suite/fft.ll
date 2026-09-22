@@ -204,24 +204,20 @@ make_bitrev.exit:                                 ; preds = %make_bitrev.exit.lo
 
 bb.l:                                             ; preds = %bb.l, %.lr.ph121.us.us
   %indvars.iv148 = phi i64 [ %indvars.iv.next149, %bb.l ], [ %indvars.iv146, %.lr.ph121.us.us ] ; 3 uses
-  %gep173 = getelementptr inbounds nuw [16 x i8], ptr %invariant.gep172, i64 %indvars.iv148 ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %gep173, i64 8
+  %gep173 = getelementptr inbounds nuw [16 x i8], ptr %invariant.gep172, i64 %indvars.iv148 ; 2 uses
   %i.ex = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %indvars.iv148 ; 2 uses
-  %4 = load double, ptr %gep173, align 8, !tbaa !36
-  %5 = load double, ptr %3, align 8, !tbaa !37
-  %6 = insertelement <2 x double> poison, double %4, i64 0
-  %i.ey = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
+  %3 = load <2 x double>, ptr %gep173, align 8, !tbaa !35 ; 2 uses
+  %i.ey = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ez = fmul <2 x double> %i.ey, %i.ew
-  %7 = insertelement <2 x double> poison, double %5, i64 0
-  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.fa = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.eu, <2 x double> %8, <2 x double> %i.ez)
+  %4 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.fa = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.eu, <2 x double> %4, <2 x double> %i.ez)
   %i.fb = fptrunc <2 x double> %i.fa to <2 x float>
-  %i.fc = load <2 x double>, ptr %i.ex, align 8, !tbaa !38 ; 2 uses
+  %i.fc = load <2 x double>, ptr %i.ex, align 8, !tbaa !35 ; 2 uses
   %i.fd = fpext <2 x float> %i.fb to <2 x double> ; 2 uses
   %i.fe = fsub <2 x double> %i.fc, %i.fd
-  store <2 x double> %i.fe, ptr %gep173, align 8, !tbaa !38
+  store <2 x double> %i.fe, ptr %gep173, align 8, !tbaa !35
   %i.ff = fadd <2 x double> %i.fc, %i.fd
-  store <2 x double> %i.ff, ptr %i.ex, align 8, !tbaa !38
+  store <2 x double> %i.ff, ptr %i.ex, align 8, !tbaa !35
   %indvars.iv.next149 = add nuw nsw i64 %indvars.iv148, %i.el ; 2 uses
   %i.fg = trunc nuw i64 %indvars.iv.next149 to i32
   %i.fh = icmp sgt i32 %.0106, %i.fg
@@ -248,12 +244,12 @@ bb.m:                                             ; preds = %.lr.ph, %bb.o
 bb.n:                                             ; preds = %bb.m
   %i.fn = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %indvars.iv ; 2 uses
   %i.fo = getelementptr inbounds [16 x i8], ptr %1, i64 %i.fl ; 2 uses
-  %i.fp = load <2 x double>, ptr %i.fo, align 8, !tbaa !38
-  %i.fq = load <2 x double>, ptr %i.fn, align 8, !tbaa !38
+  %i.fp = load <2 x double>, ptr %i.fo, align 8, !tbaa !35
+  %i.fq = load <2 x double>, ptr %i.fn, align 8, !tbaa !35
   %i.fr = fptrunc <2 x double> %i.fq to <2 x float>
-  store <2 x double> %i.fp, ptr %i.fn, align 8, !tbaa !38
+  store <2 x double> %i.fp, ptr %i.fn, align 8, !tbaa !35
   %i.fs = fpext <2 x float> %i.fr to <2 x double>
-  store <2 x double> %i.fs, ptr %i.fo, align 8, !tbaa !38
+  store <2 x double> %i.fs, ptr %i.fo, align 8, !tbaa !35
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.m, %bb.n
@@ -302,24 +298,20 @@ bb.o:                                             ; preds = %bb.m, %bb.n
 
 bb.p:                                             ; preds = %.lr.ph121, %bb.p
   %indvars.iv136 = phi i64 [ %indvars.iv134, %.lr.ph121 ], [ %indvars.iv.next137, %bb.p ] ; 3 uses
-  %gep = getelementptr inbounds nuw [16 x i8], ptr %invariant.gep, i64 %indvars.iv136 ; 3 uses
-  %9 = getelementptr inbounds nuw i8, ptr %gep, i64 8
+  %gep = getelementptr inbounds nuw [16 x i8], ptr %invariant.gep, i64 %indvars.iv136 ; 2 uses
   %i.gl = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %indvars.iv136 ; 2 uses
-  %10 = load double, ptr %gep, align 8, !tbaa !36
-  %11 = load double, ptr %9, align 8, !tbaa !37
-  %12 = insertelement <2 x double> poison, double %10, i64 0
-  %i.gm = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> zeroinitializer
+  %5 = load <2 x double>, ptr %gep, align 8, !tbaa !35 ; 2 uses
+  %i.gm = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
   %i.gn = fmul <2 x double> %i.gm, %i.gk
-  %13 = insertelement <2 x double> poison, double %11, i64 0
-  %14 = shufflevector <2 x double> %13, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.go = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.gi, <2 x double> %14, <2 x double> %i.gn)
+  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.go = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.gi, <2 x double> %6, <2 x double> %i.gn)
   %i.gp = fptrunc <2 x double> %i.go to <2 x float>
-  %i.gq = load <2 x double>, ptr %i.gl, align 8, !tbaa !38 ; 2 uses
+  %i.gq = load <2 x double>, ptr %i.gl, align 8, !tbaa !35 ; 2 uses
   %i.gr = fpext <2 x float> %i.gp to <2 x double> ; 2 uses
   %i.gs = fsub <2 x double> %i.gq, %i.gr
-  store <2 x double> %i.gs, ptr %gep, align 8, !tbaa !38
+  store <2 x double> %i.gs, ptr %gep, align 8, !tbaa !35
   %i.gt = fadd <2 x double> %i.gq, %i.gr
-  store <2 x double> %i.gt, ptr %i.gl, align 8, !tbaa !38
+  store <2 x double> %i.gt, ptr %i.gl, align 8, !tbaa !35
   %indvars.iv.next137 = add nuw nsw i64 %indvars.iv136, %i.fy ; 2 uses
   %i.gu = trunc nuw i64 %indvars.iv.next137 to i32
   %i.gv = icmp sgt i32 %.0106, %i.gu
@@ -364,9 +356,9 @@ vector.body181:                                   ; preds = %vector.body181, %ve
 scalar.ph178:                                     ; preds = %scalar.ph178.preheader, %scalar.ph178
   %indvars.iv158 = phi i64 [ %indvars.iv.next159, %scalar.ph178 ], [ 0, %scalar.ph178.preheader ] ; 2 uses
   %i.hc = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %indvars.iv158 ; 2 uses
-  %i.hd = load <2 x double>, ptr %i.hc, align 8, !tbaa !38
+  %i.hd = load <2 x double>, ptr %i.hc, align 8, !tbaa !35
   %i.he = fdiv <2 x double> %i.hd, %i.gy
-  store <2 x double> %i.he, ptr %i.hc, align 8, !tbaa !38
+  store <2 x double> %i.he, ptr %i.hc, align 8, !tbaa !35
   %indvars.iv.next159 = add nuw nsw i64 %indvars.iv158, 1 ; 2 uses
   %exitcond162.not = icmp eq i64 %indvars.iv.next159, %wide.trip.count161
   br i1 %exitcond162.not, label %.loopexit, label %scalar.ph178, !llvm.loop !20
@@ -449,8 +441,5 @@ attributes #8 = { nounwind }
 !32 = !{!"llvm.loop.isvectorized", i32 1}
 !33 = !{!"llvm.loop.unroll.runtime.disable"}
 !34 = !{!"double", !5, i64 0}
-!35 = !{!"_Fukusosuu", !34, i64 0, !34, i64 8}
-!36 = !{!35, !34, i64 0}
-!37 = !{!35, !34, i64 8}
-!38 = !{!34, !34, i64 0}
+!35 = !{!34, !34, i64 0}
 end_hunk_0

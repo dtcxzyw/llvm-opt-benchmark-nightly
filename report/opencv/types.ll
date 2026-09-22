@@ -205,8 +205,8 @@ bb.a:
   %i.f = tail call double @cos(double noundef %i.e) #20
   %i.g = tail call double @sin(double noundef %i.e) #20
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.i = insertelement <2 x double> poison, double %i.f, i64 0
-  %i.j = insertelement <2 x double> %i.i, double %i.g, i64 1
+  %i.i = insertelement <2 x double> poison, double %i.g, i64 0
+  %i.j = insertelement <2 x double> %i.i, double %i.f, i64 1
   %i.k = fptrunc <2 x double> %i.j to <2 x float>
   %i.l = fmul <2 x float> %i.k, splat (float 5.000000e-01) ; 2 uses
   %i.m = load <2 x float>, ptr %i.h, align 4, !tbaa !35 ; 2 uses
@@ -215,16 +215,15 @@ bb.a:
   %i.p = shufflevector <2 x float> %i.l, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   %i.q = shufflevector <2 x float> %i.m, <2 x float> poison, <2 x i32> zeroinitializer
   %i.r = fmul <2 x float> %i.p, %i.q              ; 4 uses
-  %i.s = load <2 x float>, ptr %0, align 4, !tbaa !35
-  %1 = shufflevector <2 x float> %i.s, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
-  %i.t = fsub <2 x float> %1, %i.o                ; 2 uses
-  %i.u = fadd <2 x float> %1, %i.o                ; 2 uses
-  %i.v = shufflevector <2 x float> %i.u, <2 x float> %i.t, <2 x i32> <i32 0, i32 3> ; 2 uses
+  %i.s = load <2 x float>, ptr %0, align 4, !tbaa !35 ; 2 uses
+  %i.t = fsub <2 x float> %i.s, %i.o              ; 2 uses
+  %i.u = fadd <2 x float> %i.s, %i.o              ; 2 uses
+  %i.v = shufflevector <2 x float> %i.t, <2 x float> %i.u, <2 x i32> <i32 0, i32 3> ; 2 uses
   %i.w = fsub <2 x float> %i.v, %i.r              ; 4 uses
-  %i.x = shufflevector <2 x float> %i.t, <2 x float> %i.u, <2 x i32> <i32 0, i32 3> ; 2 uses
+  %i.x = shufflevector <2 x float> %i.u, <2 x float> %i.t, <2 x i32> <i32 0, i32 3> ; 2 uses
   %i.y = fsub <2 x float> %i.x, %i.r              ; 4 uses
   %i.z = fadd <2 x float> %i.r, %i.x              ; 4 uses
-  %i.aa = fadd <2 x float> %i.v, %i.r             ; 4 uses
+  %i.aa = fadd <2 x float> %i.r, %i.v             ; 4 uses
   %i.ab = fcmp olt <2 x float> %i.y, %i.w
   %i.ac = select <2 x i1> %i.ab, <2 x float> %i.y, <2 x float> %i.w ; 2 uses
   %i.ad = fcmp olt <2 x float> %i.z, %i.ac
@@ -239,13 +238,11 @@ bb.a:
   %i.am = select <2 x i1> %i.al, <2 x float> %i.aa, <2 x float> %i.ak ; 4 uses
   %i.an = fcmp olt <2 x float> %i.am, %i.ag
   %i.ao = select <2 x i1> %i.an, <2 x float> %i.am, <2 x float> %i.ag ; 2 uses
-  %2 = shufflevector <2 x float> %i.ao, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   %i.ap = fcmp olt <2 x float> %i.ag, %i.am
   %i.aq = select <2 x i1> %i.ap, <2 x float> %i.am, <2 x float> %i.ag
   %i.ar = fsub <2 x float> %i.aq, %i.ao
-  %3 = shufflevector <2 x float> %i.ar, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  %.fca.0.insert = insertvalue { <2 x float>, <2 x float> } poison, <2 x float> %2, 0
-  %.fca.1.insert = insertvalue { <2 x float>, <2 x float> } %.fca.0.insert, <2 x float> %3, 1
+  %.fca.0.insert = insertvalue { <2 x float>, <2 x float> } poison, <2 x float> %i.ao, 0
+  %.fca.1.insert = insertvalue { <2 x float>, <2 x float> } %.fca.0.insert, <2 x float> %i.ar, 1
   ret { <2 x float>, <2 x float> } %.fca.1.insert
 }
 

@@ -205,28 +205,21 @@ bb.w:                                             ; preds = %bb.v
   br label %If_Dec7SwapAdjacent.exit.i
 
 bb.x:                                             ; preds = %bb.v
-  %i.fw = getelementptr inbounds [24 x i8], ptr @PMasks, i64 %indvars.iv.next23.i ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.fw, i64 8
+  %i.fw = getelementptr inbounds [24 x i8], ptr @PMasks, i64 %indvars.iv.next23.i
   %i.fx = trunc nsw i64 %indvars.iv.next23.i to i32
   %i.fy = shl nuw i32 1, %i.fx
   %i.fz = zext i32 %i.fy to i64
-  %5 = getelementptr inbounds nuw i8, ptr %i.fw, i64 16
-  %6 = load i64, ptr %5, align 8, !tbaa !12
-  %7 = load i64, ptr %i.fw, align 8, !tbaa !12
-  %8 = load i64, ptr %4, align 8, !tbaa !12
-  %9 = insertelement <2 x i64> poison, i64 %7, i64 0
-  %i.ga = shufflevector <2 x i64> %9, <2 x i64> poison, <2 x i32> zeroinitializer
+  %4 = load <3 x i64>, ptr %i.fw, align 8, !tbaa !12 ; 3 uses
+  %i.ga = shufflevector <3 x i64> %4, <3 x i64> poison, <2 x i32> zeroinitializer
   %i.gb = and <2 x i64> %i.ga, %i.fp
-  %10 = insertelement <2 x i64> poison, i64 %8, i64 0
-  %11 = shufflevector <2 x i64> %10, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.gc = and <2 x i64> %11, %i.fp
+  %5 = shufflevector <3 x i64> %4, <3 x i64> poison, <2 x i32> <i32 1, i32 1>
+  %i.gc = and <2 x i64> %5, %i.fp
   %i.gd = insertelement <2 x i64> poison, i64 %i.fz, i64 0
   %i.ge = shufflevector <2 x i64> %i.gd, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.gf = shl <2 x i64> %i.gc, %i.ge
   %i.gg = or <2 x i64> %i.gf, %i.gb
-  %12 = insertelement <2 x i64> poison, i64 %6, i64 0
-  %13 = shufflevector <2 x i64> %12, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.gh = and <2 x i64> %13, %i.fp
+  %6 = shufflevector <3 x i64> %4, <3 x i64> poison, <2 x i32> <i32 2, i32 2>
+  %i.gh = and <2 x i64> %6, %i.fp
   %i.gi = lshr <2 x i64> %i.gh, %i.ge
   %i.gj = or <2 x i64> %i.gg, %i.gi
   br label %If_Dec7SwapAdjacent.exit.i
