@@ -204,7 +204,7 @@ bb.cq:                                            ; preds = %bb.cp
   %i.st = fdiv float 1.000000e+00, %i.sr          ; 2 uses
   %i.su = insertelement <2 x float> poison, float %i.st, i64 0
   %i.sv = shufflevector <2 x float> %i.su, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.sw = fmul <2 x float> %i.sn, %i.sv           ; 8 uses
+  %i.sw = fmul <2 x float> %i.sn, %i.sv           ; 10 uses
   %i.sx = fmul float %i.sm, %i.st                 ; 5 uses
   %i.sy = extractelement <2 x float> %i.sw, i64 1 ; 4 uses
   %i.sz = call noundef float @llvm.fabs.f32(float %i.sy)
@@ -235,9 +235,9 @@ bb.cs:                                            ; preds = %bb.cq
   br label %_Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit
 
 _Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit:   ; preds = %bb.cs, %bb.cr
-  %.sroa.13476.0 = phi float [ %i.th, %bb.cr ], [ 0.000000e+00, %bb.cs ] ; 2 uses
-  %.sroa.8473.0 = phi float [ %i.tg, %bb.cr ], [ %i.to, %bb.cs ] ; 2 uses
-  %.sroa.0470.0 = phi float [ 0.000000e+00, %bb.cr ], [ %i.tn, %bb.cs ]
+  %.sroa.13476.0 = phi float [ %i.th, %bb.cr ], [ 0.000000e+00, %bb.cs ] ; 3 uses
+  %.sroa.8473.0 = phi float [ %i.tg, %bb.cr ], [ %i.to, %bb.cs ] ; 3 uses
+  %.sroa.0470.0 = phi float [ 0.000000e+00, %bb.cr ], [ %i.tn, %bb.cs ] ; 2 uses
   %i.tp = load ptr, ptr %i.w, align 8, !tbaa !13
   %i.tq = getelementptr inbounds nuw i8, ptr %i.tp, i64 32
   %i.tr = load ptr, ptr %i.tq, align 8
@@ -270,14 +270,17 @@ _Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit:   ; preds = %bb.cs, %bb.cr
   %i.ue = fcmp ogt float %storemerge, f0x3EC90FDB
   %storemerge262 = select i1 %i.ue, float f0x3EC90FDB, float %storemerge
   %i.uf = shufflevector <2 x float> %i.sw, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %i.ug = insertelement <2 x float> %i.uf, float %.sroa.8473.0, i64 0 ; 2 uses
-  %i.uh = fmul <2 x float> %i.ug, %i.ug
+  %24 = insertelement <2 x float> %i.uf, float %.sroa.8473.0, i64 0
+  %i.ug = insertelement <2 x float> poison, float %.sroa.8473.0, i64 0
+  %25 = shufflevector <2 x float> %i.ug, <2 x float> %i.sw, <2 x i32> <i32 0, i32 2>
+  %i.uh = fmul <2 x float> %24, %25
   %i.ui = fmul float %storemerge262, 5.000000e-01 ; 2 uses
   %i.uj = insertelement <2 x float> poison, float %.sroa.0470.0, i64 0
-  %i.uk = insertelement <2 x float> %i.uj, float %i.sx, i64 1 ; 3 uses
+  %i.uk = insertelement <2 x float> %i.uj, float %i.sx, i64 1 ; 2 uses
   %i.ul = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.uk, <2 x float> %i.uk, <2 x float> %i.uh)
-  %i.um = insertelement <2 x float> %i.sw, float %.sroa.13476.0, i64 0 ; 2 uses
-  %i.un = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.um, <2 x float> %i.um, <2 x float> %i.ul) ; 2 uses
+  %26 = insertelement <2 x float> %i.sw, float %.sroa.13476.0, i64 0
+  %i.um = insertelement <2 x float> %i.sw, float %.sroa.13476.0, i64 0
+  %i.un = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %26, <2 x float> %i.um, <2 x float> %i.ul) ; 2 uses
   %i.uo = extractelement <2 x float> %i.un, i64 0
   %i.up = fcmp ogt float %i.uo, f0x34000000
   %i.uq = call <2 x float> @llvm.sqrt.v2f32(<2 x float> %i.un)
@@ -304,7 +307,8 @@ _Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit:   ; preds = %bb.cs, %bb.cr
   br i1 %i.up, label %.lr.ph535.split.preheader, label %._crit_edge536.split
 
 .lr.ph535.split.preheader:                        ; preds = %.lr.ph535
-  %i.vl = insertelement <2 x float> %i.uk, float %.sroa.8473.0, i64 1
+  %27 = insertelement <2 x float> poison, float %.sroa.0470.0, i64 0
+  %i.vl = insertelement <2 x float> %27, float %.sroa.8473.0, i64 1
   br label %.lr.ph535.split
 
 .lr.ph535.split:                                  ; preds = %.lr.ph535.split.preheader, %bb.cv

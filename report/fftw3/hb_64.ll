@@ -200,8 +200,8 @@ begin_hunk_0_@hb_64:bb.a
   %i.azf = insertelement <2 x double> poison, double %i.qa, i64 0
   %i.azg = insertelement <2 x double> %i.azf, double %i.qi, i64 1
   %i.azh = fadd <2 x double> %i.aze, %i.azg       ; 3 uses
-  %i.azi = fsub double %i.azb, %i.ayu
-  %i.azj = fadd double %i.ayv, %i.azc
+  %i.azi = fsub double %i.azb, %i.ayu             ; 2 uses
+  %i.azj = fadd double %i.ayv, %i.azc             ; 2 uses
   %i.azk = fadd <2 x double> %i.aza, %i.azh       ; 2 uses
   %i.azl = shufflevector <2 x double> %i.aza, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.azm = insertelement <2 x double> %i.azl, double %i.ayv, i64 1
@@ -211,10 +211,11 @@ begin_hunk_0_@hb_64:bb.a
   %i.azq = fadd double %i.ayu, %i.azb             ; 2 uses
   %foldExtExtBinop3094 = fsub <2 x double> %i.aza, %i.azh ; 2 uses
   %i.azr = insertelement <2 x double> poison, double %i.azi, i64 0
-  %i.azs = insertelement <2 x double> %i.azr, double %i.azj, i64 1 ; 2 uses
+  %i.azs = insertelement <2 x double> %i.azr, double %i.azj, i64 1
   %i.azt = fmul <2 x double> %i.azs, <double f0xBFED906BCF328D46, double f0x3FED906BCF328D46>
-  %7 = shufflevector <2 x double> %i.azs, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %i.azu = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %7, <2 x double> splat (double f0x3FD87DE2A6AEA963), <2 x double> %i.azt) ; 2 uses
+  %7 = insertelement <2 x double> poison, double %i.azj, i64 0
+  %8 = insertelement <2 x double> %7, double %i.azi, i64 1
+  %i.azu = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %8, <2 x double> splat (double f0x3FD87DE2A6AEA963), <2 x double> %i.azt) ; 2 uses
   %i.azv = fmul <2 x double> %i.azk, <double f0x3FED906BCF328D46, double f0xBFED906BCF328D46>
   %i.azw = shufflevector <2 x double> %i.azv, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.azx = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.azk, <2 x double> splat (double f0x3FD87DE2A6AEA963), <2 x double> %i.azw) ; 2 uses

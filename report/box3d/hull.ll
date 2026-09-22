@@ -205,7 +205,7 @@ begin_hunk_0_@b3MakeTransformedBoxHull:bb.a
   %i.ta = shufflevector <2 x float> %i.j, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.tb = shufflevector <2 x float> %.sroa.0.0.copyload.i, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.tc = getelementptr inbounds nuw i8, ptr %0, i64 512
-  %i.td = insertelement <2 x float> poison, float %i.cf, i64 0 ; 2 uses
+  %i.td = insertelement <2 x float> poison, float %i.cf, i64 0
   %i.te = shufflevector <2 x float> %i.td, <2 x float> poison, <2 x i32> zeroinitializer
   %i.tf = fmul <2 x float> %i.te, %i.el           ; 2 uses
   %i.tg = fmul <2 x float> %i.qz, %i.eu           ; 2 uses
@@ -237,7 +237,8 @@ begin_hunk_0_@b3MakeTransformedBoxHull:bb.a
   %i.ug = insertelement <2 x float> %i.uf, float %i.ud, i64 1
   %i.uh = fsub <4 x float> %i.tu, %i.tw
   %i.ui = fmul <4 x float> %i.uh, splat (float 2.000000e+00)
-  %i.uj = shufflevector <2 x float> %i.td, <2 x float> poison, <4 x i32> zeroinitializer
+  %6 = insertelement <4 x float> poison, float %i.cf, i64 0
+  %i.uj = shufflevector <4 x float> %6, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.uk = fadd <4 x float> %i.uj, %i.ui
   %i.ul = insertelement <4 x float> poison, float %.sroa.2.0.copyload.i, i64 0
   %i.um = shufflevector <4 x float> %i.ul, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -335,9 +336,7 @@ begin_hunk_0_@b3MakeTransformedBoxHull:bb.a
   %i.xj = fmul <4 x float> %i.sb, %i.xi
   %i.xk = fsub <4 x float> %i.xh, %i.xj
   %i.xl = fmul <4 x float> %i.xk, splat (float 2.000000e+00)
-  %6 = insertelement <4 x float> poison, float %i.cf, i64 0
-  %7 = shufflevector <4 x float> %6, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.xm = fsub <4 x float> %i.xl, %7
+  %i.xm = fsub <4 x float> %i.xl, %i.uj
   %i.xn = fadd <4 x float> %i.xm, %i.um           ; 5 uses
   %i.xo = extractelement <4 x float> %i.xn, i64 0
   store float %i.xo, ptr %.sroa.438.0..sroa_idx, align 8, !tbaa !23

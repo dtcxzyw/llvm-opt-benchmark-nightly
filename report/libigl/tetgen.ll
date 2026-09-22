@@ -205,11 +205,11 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 bb.h:                                             ; preds = %.lr.ph, %_ZN10tetgenmesh11linelineintEPdS0_S0_S0_S0_S0_S0_S0_.exit.thread
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN10tetgenmesh11linelineintEPdS0_S0_S0_S0_S0_S0_S0_.exit.thread ] ; 2 uses
-  %.0104200 = phi double [ 0.000000e+00, %.lr.ph ], [ %.1105, %_ZN10tetgenmesh11linelineintEPdS0_S0_S0_S0_S0_S0_S0_.exit.thread ] ; 9 uses
+  %.0104200 = phi double [ 0.000000e+00, %.lr.ph ], [ %.1105, %_ZN10tetgenmesh11linelineintEPdS0_S0_S0_S0_S0_S0_S0_.exit.thread ] ; 14 uses
   %.0106199 = phi double [ 0.000000e+00, %.lr.ph ], [ %.1107, %_ZN10tetgenmesh11linelineintEPdS0_S0_S0_S0_S0_S0_S0_.exit.thread ] ; 9 uses
   %.sroa.0.0198 = phi ptr [ null, %.lr.ph ], [ %.sroa.0.1, %_ZN10tetgenmesh11linelineintEPdS0_S0_S0_S0_S0_S0_S0_.exit.thread ] ; 8 uses
   %.sroa.10.0197 = phi i32 [ 0, %.lr.ph ], [ %.sroa.10.1, %_ZN10tetgenmesh11linelineintEPdS0_S0_S0_S0_S0_S0_S0_.exit.thread ] ; 8 uses
-  %i.cc = phi <2 x double> [ zeroinitializer, %.lr.ph ], [ %i.go, %_ZN10tetgenmesh11linelineintEPdS0_S0_S0_S0_S0_S0_S0_.exit.thread ] ; 8 uses
+  %i.cc = phi <2 x double> [ zeroinitializer, %.lr.ph ], [ %i.go, %_ZN10tetgenmesh11linelineintEPdS0_S0_S0_S0_S0_S0_S0_.exit.thread ] ; 7 uses
   %i.cd = load i32, ptr %i.bj, align 8, !tbaa !103
   %i.ce = trunc nuw nsw i64 %indvars.iv to i32    ; 2 uses
   %i.cf = lshr i32 %i.ce, %i.cd
@@ -247,7 +247,7 @@ bb.h:                                             ; preds = %.lr.ph, %_ZN10tetge
   %i.dk = getelementptr inbounds nuw i8, ptr %i.di, i64 8
   %i.dl = load <2 x double>, ptr %i.dd, align 8, !tbaa !58 ; 4 uses
   %i.dm = extractelement <2 x double> %i.dl, i64 0
-  %i.dn = fsub double %i.dj, %i.dm                ; 2 uses
+  %i.dn = fsub double %i.dj, %i.dm                ; 3 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.dd, i64 16
   %i.dp = load double, ptr %i.do, align 8, !tbaa !58 ; 2 uses
   %i.dq = load <2 x double>, ptr %i.dk, align 8, !tbaa !58
@@ -257,9 +257,10 @@ bb.h:                                             ; preds = %.lr.ph, %_ZN10tetge
   %i.du = shufflevector <2 x double> %i.bo, <2 x double> %i.dt, <2 x i32> <i32 1, i32 2> ; 2 uses
   %i.dv = shufflevector <2 x double> %i.dt, <2 x double> poison, <2 x i32> zeroinitializer
   %i.dw = fmul <2 x double> %i.du, %i.dv
-  %i.dx = insertelement <2 x double> %i.bo, double %i.dn, i64 1 ; 3 uses
-  %9 = shufflevector <2 x double> %i.dx, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.dy = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dx, <2 x double> %9, <2 x double> %i.dw)
+  %9 = insertelement <2 x double> %i.bo, double %i.dn, i64 1 ; 2 uses
+  %i.dx = insertelement <2 x double> poison, double %i.dn, i64 0
+  %10 = shufflevector <2 x double> %i.dx, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.dy = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %9, <2 x double> %10, <2 x double> %i.dw)
   %i.dz = insertelement <2 x double> %i.dt, double %i.bt, i64 0
   %i.ea = shufflevector <2 x double> %i.dt, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.eb = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dz, <2 x double> %i.ea, <2 x double> %i.dy) ; 5 uses
@@ -281,7 +282,7 @@ bb.i:                                             ; preds = %bb.h
   %i.eo = shufflevector <2 x double> %i.en, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.ep = fmul <2 x double> %i.du, %i.eo
   %i.eq = shufflevector <2 x double> %i.en, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.er = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.eq, <2 x double> %i.dx, <2 x double> %i.ep) ; 2 uses
+  %i.er = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.eq, <2 x double> %9, <2 x double> %i.ep) ; 2 uses
   %i.es = extractelement <2 x double> %i.er, i64 0
   %i.et = call noundef double @llvm.fmuladd.f64(double %i.em, double %i.bt, double %i.es)
   %i.eu = extractelement <2 x double> %i.er, i64 1
@@ -319,11 +320,13 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.fv = fcmp olt double %i.fj, %i.ca
+  %11 = insertelement <2 x double> %i.cc, double %.0104200, i64 1
   br i1 %i.fv, label %_ZN10tetgenmesh11linelineintEPdS0_S0_S0_S0_S0_S0_S0_.exit.thread, label %bb.m
 
 bb.l:                                             ; preds = %bb.j
   %i.fw = fsub double 1.000000e+00, %i.fj
   %i.fx = fcmp olt double %i.fw, %i.ca
+  %12 = insertelement <2 x double> %i.cc, double %.0104200, i64 1
   br i1 %i.fx, label %_ZN10tetgenmesh11linelineintEPdS0_S0_S0_S0_S0_S0_S0_.exit.thread, label %bb.m
 
 bb.m:                                             ; preds = %bb.k, %bb.l, %bb.i
@@ -343,17 +346,20 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.gc = fcmp olt double %i.fm, %i.ca
+  %13 = insertelement <2 x double> %i.cc, double %.0104200, i64 1
   br i1 %i.gc, label %_ZN10tetgenmesh11linelineintEPdS0_S0_S0_S0_S0_S0_S0_.exit.thread, label %bb.r
 
 bb.q:                                             ; preds = %bb.o
   %i.gd = fsub double 1.000000e+00, %i.fm
   %i.ge = fcmp olt double %i.gd, %i.ca
+  %14 = insertelement <2 x double> %i.cc, double %.0104200, i64 1
   br i1 %i.ge, label %_ZN10tetgenmesh11linelineintEPdS0_S0_S0_S0_S0_S0_S0_.exit.thread, label %bb.r
 
 bb.r:                                             ; preds = %bb.p, %bb.q, %bb.n
   %i.gf = fcmp ole double %i.fm, 0.000000e+00
   %i.gg = fcmp oge double %i.fm, 1.000000e+00
   %or.cond7 = or i1 %i.gf, %i.gg
+  %15 = insertelement <2 x double> %i.cc, double %.0104200, i64 1 ; 2 uses
   br i1 %or.cond7, label %_ZN10tetgenmesh11linelineintEPdS0_S0_S0_S0_S0_S0_S0_.exit.thread, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
@@ -383,7 +389,7 @@ _ZN10tetgenmesh11linelineintEPdS0_S0_S0_S0_S0_S0_S0_.exit.thread: ; preds = %bb.
   %.sroa.0.1 = phi ptr [ %i.cp, %bb.s ], [ %.sroa.0.0198, %bb.m ], [ %.sroa.0.0198, %bb.r ], [ %.sroa.0.0198, %bb.l ], [ %i.cp, %bb.u ], [ %.sroa.0.0198, %bb.t ], [ %.sroa.0.0198, %bb.h ], [ %.sroa.0.0198, %bb.k ], [ %.sroa.0.0198, %bb.p ], [ %.sroa.0.0198, %bb.q ] ; 6 uses
   %.1107 = phi double [ %sqrt.i, %bb.s ], [ %.0106199, %bb.m ], [ %.0106199, %bb.r ], [ %.0106199, %bb.l ], [ %sqrt.i, %bb.u ], [ %.0106199, %bb.t ], [ %.0106199, %bb.h ], [ %.0106199, %bb.k ], [ %.0106199, %bb.p ], [ %.0106199, %bb.q ]
   %.1105 = phi double [ %i.fj, %bb.s ], [ %.0104200, %bb.m ], [ %.0104200, %bb.r ], [ %.0104200, %bb.l ], [ %i.fj, %bb.u ], [ %.0104200, %bb.t ], [ %.0104200, %bb.h ], [ %.0104200, %bb.k ], [ %.0104200, %bb.p ], [ %.0104200, %bb.q ] ; 7 uses
-  %i.go = phi <2 x double> [ %i.fi, %bb.s ], [ %i.cc, %bb.m ], [ %i.cc, %bb.r ], [ %i.cc, %bb.l ], [ %i.fi, %bb.u ], [ %i.cc, %bb.t ], [ %i.cc, %bb.h ], [ %i.cc, %bb.k ], [ %i.cc, %bb.p ], [ %i.cc, %bb.q ] ; 4 uses
+  %i.go = phi <2 x double> [ %i.fi, %bb.s ], [ %i.cc, %bb.m ], [ %15, %bb.r ], [ %12, %bb.l ], [ %i.fi, %bb.u ], [ %15, %bb.t ], [ %i.cc, %bb.h ], [ %11, %bb.k ], [ %13, %bb.p ], [ %14, %bb.q ] ; 4 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.be
   br i1 %exitcond.not, label %bb.v, label %bb.h, !llvm.loop !1076
@@ -786,17 +792,17 @@ _ZN10tetgenmesh19tetrahedrontraverseEv.exit423:   ; preds = %bb.h
   %i.gd = load double, ptr %i.ft, align 8, !tbaa !58 ; 3 uses
   %i.ge = load double, ptr %i.fr, align 8, !tbaa !58 ; 3 uses
   %i.gf = load double, ptr %i.fu, align 8, !tbaa !58 ; 2 uses
-  %i.gg = load <2 x double>, ptr %i.fc, align 8, !tbaa !58 ; 6 uses
-  %i.gh = load double, ptr %i.fo, align 8, !tbaa !58
-  %i.gi = load double, ptr %i.fi, align 8, !tbaa !58
+  %i.gg = load <2 x double>, ptr %i.fc, align 8, !tbaa !58 ; 5 uses
+  %i.gh = load double, ptr %i.fo, align 8, !tbaa !58 ; 2 uses
+  %i.gi = load double, ptr %i.fi, align 8, !tbaa !58 ; 2 uses
   %i.gj = load double, ptr %i.fs, align 8, !tbaa !58 ; 2 uses
-  %i.gk = load <2 x double>, ptr %i.fe, align 8, !tbaa !58 ; 3 uses
+  %i.gk = load <2 x double>, ptr %i.fe, align 8, !tbaa !58 ; 5 uses
   %i.gl = shufflevector <2 x double> %i.gg, <2 x double> %i.gk, <2 x i32> <i32 0, i32 2>
-  %i.gm = insertelement <2 x double> poison, double %i.gi, i64 0 ; 2 uses
+  %i.gm = insertelement <2 x double> poison, double %i.gi, i64 0
   %i.gn = shufflevector <2 x double> %i.gm, <2 x double> poison, <2 x i32> zeroinitializer
   %i.go = fsub <2 x double> %i.gl, %i.gn          ; 4 uses
   %i.gp = shufflevector <2 x double> %i.gg, <2 x double> %i.gk, <2 x i32> <i32 1, i32 3>
-  %i.gq = insertelement <2 x double> poison, double %i.gh, i64 0 ; 2 uses
+  %i.gq = insertelement <2 x double> poison, double %i.gh, i64 0
   %i.gr = shufflevector <2 x double> %i.gq, <2 x double> poison, <2 x i32> zeroinitializer
   %i.gs = fsub <2 x double> %i.gp, %i.gr          ; 4 uses
   %i.gt = insertelement <2 x double> poison, double %i.gd, i64 0
@@ -804,18 +810,21 @@ _ZN10tetgenmesh19tetrahedrontraverseEv.exit423:   ; preds = %bb.h
   %i.gv = insertelement <2 x double> poison, double %i.gj, i64 0
   %i.gw = shufflevector <2 x double> %i.gv, <2 x double> poison, <2 x i32> zeroinitializer
   %i.gx = fsub <2 x double> %i.gu, %i.gw          ; 4 uses
-  %i.gy = load <2 x double>, ptr %i.fg, align 8, !tbaa !58 ; 2 uses
+  %i.gy = load <2 x double>, ptr %i.fg, align 8, !tbaa !58 ; 4 uses
   %i.gz = shufflevector <2 x double> %i.gg, <2 x double> %i.gy, <3 x i32> <i32 0, i32 2, i32 poison>
   %i.ha = shufflevector <2 x double> %i.gk, <2 x double> poison, <3 x i32> <i32 0, i32 1, i32 poison> ; 2 uses
-  %i.hb = shufflevector <3 x double> %i.gz, <3 x double> %i.ha, <4 x i32> <i32 0, i32 1, i32 3, i32 1> ; 2 uses
-  %1 = shufflevector <2 x double> %i.gg, <2 x double> %i.gm, <4 x i32> <i32 poison, i32 poison, i32 0, i32 2>
-  %2 = shufflevector <4 x double> %i.hb, <4 x double> %1, <4 x i32> <i32 1, i32 2, i32 6, i32 7>
-  %i.hc = fsub <4 x double> %i.hb, %2             ; 3 uses
+  %i.hb = shufflevector <3 x double> %i.gz, <3 x double> %i.ha, <4 x i32> <i32 0, i32 1, i32 3, i32 1>
+  %1 = shufflevector <2 x double> %i.gy, <2 x double> %i.gk, <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>
+  %2 = shufflevector <2 x double> %i.gg, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
+  %3 = shufflevector <4 x double> %1, <4 x double> %2, <4 x i32> <i32 0, i32 1, i32 4, i32 poison>
+  %4 = insertelement <4 x double> %3, double %i.gi, i64 3
+  %i.hc = fsub <4 x double> %i.hb, %4             ; 3 uses
   %i.hd = shufflevector <2 x double> %i.gg, <2 x double> %i.gy, <3 x i32> <i32 1, i32 3, i32 poison>
-  %i.he = shufflevector <3 x double> %i.hd, <3 x double> %i.ha, <4 x i32> <i32 0, i32 1, i32 4, i32 1> ; 2 uses
-  %3 = shufflevector <2 x double> %i.gg, <2 x double> %i.gq, <4 x i32> <i32 poison, i32 poison, i32 1, i32 2>
-  %4 = shufflevector <4 x double> %i.he, <4 x double> %3, <4 x i32> <i32 1, i32 2, i32 6, i32 7>
-  %i.hf = fsub <4 x double> %i.he, %4             ; 3 uses
+  %i.he = shufflevector <3 x double> %i.hd, <3 x double> %i.ha, <4 x i32> <i32 0, i32 1, i32 4, i32 1>
+  %5 = shufflevector <2 x double> %i.gy, <2 x double> %i.gk, <4 x i32> <i32 1, i32 3, i32 poison, i32 poison>
+  %6 = shufflevector <4 x double> %5, <4 x double> %2, <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
+  %7 = insertelement <4 x double> %6, double %i.gh, i64 3
+  %i.hf = fsub <4 x double> %i.he, %7             ; 3 uses
   %i.hg = insertelement <4 x double> poison, double %i.gd, i64 0
   %i.hh = insertelement <4 x double> %i.hg, double %i.gf, i64 1
   %i.hi = insertelement <4 x double> %i.hh, double %i.ge, i64 2

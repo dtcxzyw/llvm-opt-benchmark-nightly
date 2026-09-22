@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %.lr.ph, %_ZNSt6vect
   %i.bk = getelementptr inbounds nuw i8, ptr %.sroa.0213.0228, i64 44
   %i.bl = load float, ptr %i.bk, align 4, !tbaa !42
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #21
-  %i.bm = load <2 x float>, ptr %9, align 8, !tbaa !36 ; 5 uses
+  %i.bm = load <2 x float>, ptr %9, align 8, !tbaa !36 ; 4 uses
   %i.bn = load float, ptr %i.z, align 4, !tbaa !36 ; 2 uses
-  %i.bo = load <2 x float>, ptr %i.aa, align 4, !tbaa !36 ; 5 uses
+  %i.bo = load <2 x float>, ptr %i.aa, align 4, !tbaa !36 ; 4 uses
   %i.bp = load float, ptr %i.ab, align 8, !tbaa !36 ; 2 uses
   %i.bq = extractelement <2 x float> %i.bo, i64 0
   %i.br = fneg float %i.bq
@@ -246,7 +246,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZNSt6vect
   call void @_ZN2cv3MatC1ERKS0_RKNS_5Rect_IiEE(ptr noundef nonnull align 8 dereferenceable(208) %11, ptr noundef nonnull align 8 dereferenceable(208) %1, ptr noundef nonnull align 4 dereferenceable(16) %10)
   %i.cw = load <2 x i32>, ptr %i.ae, align 8, !tbaa !46
   %i.cx = sitofp <2 x i32> %i.cw to <2 x float>   ; 2 uses
-  %i.cy = shufflevector <2 x float> %i.bm, <2 x float> %i.bo, <2 x i32> <i32 0, i32 2>
+  %i.cy = shufflevector <2 x float> %i.bm, <2 x float> %i.bo, <2 x i32> <i32 0, i32 2> ; 2 uses
   %i.cz = shufflevector <2 x float> %i.cx, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.da = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cy, <2 x float> %i.cz, <2 x float> zeroinitializer)
   %i.db = insertelement <2 x float> poison, float %i.bn, i64 0
@@ -292,9 +292,8 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #21
   %i.dm = sitofp <2 x i32> %i.ch to <2 x float>   ; 2 uses
-  %27 = shufflevector <2 x float> %i.bm, <2 x float> %i.bo, <2 x i32> <i32 0, i32 2>
   %i.dn = shufflevector <2 x float> %i.dm, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.do = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %27, <2 x float> %i.dn, <2 x float> zeroinitializer)
+  %i.do = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cy, <2 x float> %i.dn, <2 x float> zeroinitializer)
   %i.dp = shufflevector <2 x float> %i.bm, <2 x float> %i.bo, <2 x i32> <i32 1, i32 3>
   %i.dq = shufflevector <2 x float> %i.dm, <2 x float> poison, <2 x i32> zeroinitializer
   %i.dr = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.dp, <2 x float> %i.dq, <2 x float> %i.do) ; 2 uses

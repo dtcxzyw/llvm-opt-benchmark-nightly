@@ -205,7 +205,7 @@ bb.ca:                                            ; preds = %_ZNKSt8functionIFbv
 
 .lr.ph602:                                        ; preds = %bb.ca, %_ZN7openvdb5v13_04tree17ValueAccessorImplINS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8setValueERKNS0_4math5CoordERKd.exit244
   %.sroa.0.0597 = phi double [ %i.bre, %_ZN7openvdb5v13_04tree17ValueAccessorImplINS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8setValueERKNS0_4math5CoordERKd.exit244 ], [ %.sroa.0387.0607, %bb.ca ] ; 5 uses
-  %i.aub = phi <2 x double> [ %i.brf, %_ZN7openvdb5v13_04tree17ValueAccessorImplINS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8setValueERKNS0_4math5CoordERKd.exit244 ], [ %i.atx, %bb.ca ] ; 6 uses
+  %i.aub = phi <2 x double> [ %i.brf, %_ZN7openvdb5v13_04tree17ValueAccessorImplINS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8setValueERKNS0_4math5CoordERKd.exit244 ], [ %i.atx, %bb.ca ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #24
   %i.auc = load i8, ptr %i.ask, align 1, !tbaa !2126, !range !488, !noundef !370
   %i.aud = trunc nuw i8 %i.auc to i1
@@ -252,18 +252,13 @@ _ZNK7openvdb5v13_04math4BBoxINS1_4Vec3IdEEE8isInsideERKS4_.exit.i170: ; preds = 
 _ZNK7openvdb5v13_04math4BBoxINS1_4Vec3IdEEE8isInsideERKS4_.exit.thread.i168: ; preds = %_ZNK7openvdb5v13_04math4BBoxINS1_4Vec3IdEEE8isInsideERKS4_.exit.i170, %bb.cf, %bb.ce, %bb.cd, %bb.cc, %bb.cb, %.lr.ph602
   %i.auy = call double @llvm.floor.f64(double %.sroa.0.0597)
   %i.auz = fptosi double %i.auy to i32            ; 2 uses
-  %10 = extractelement <2 x double> %i.aub, i64 0
-  %11 = call double @llvm.floor.f64(double %10)
-  %12 = extractelement <2 x double> %i.aub, i64 1
-  %13 = call double @llvm.floor.f64(double %12)
+  %10 = call <2 x double> @llvm.floor.v2f64(<2 x double> %i.aub)
   %i.ava = sitofp i32 %i.auz to double
   %i.avb = fsub double %.sroa.0.0597, %i.ava
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
   %.sroa.0.0.insert.ext.i235 = zext i32 %i.auz to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
-  %14 = insertelement <2 x double> poison, double %11, i64 0
-  %15 = insertelement <2 x double> %14, double %13, i64 1
-  %i.avc = fptosi <2 x double> %15 to <2 x i32>   ; 3 uses
+  %i.avc = fptosi <2 x double> %10 to <2 x i32>   ; 3 uses
   %i.avd = extractelement <2 x i32> %i.avc, i64 0
   %.sroa.2.0.insert.ext.i.i233 = zext i32 %i.avd to i64
   %.sroa.2.0.insert.shift.i.i234 = shl nuw i64 %.sroa.2.0.insert.ext.i.i233, 32

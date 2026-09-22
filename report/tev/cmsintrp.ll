@@ -205,14 +205,9 @@ bb.a:
   %i.v = select <2 x i1> %i.s, <2 x float> zeroinitializer, <2 x float> %i.u ; 3 uses
   %i.w = load <2 x i32>, ptr %i.d, align 8, !tbaa !21
   %i.x = uitofp <2 x i32> %i.w to <2 x float>
-  %i.y = fmul <2 x float> %i.v, %i.x              ; 3 uses
-  %3 = extractelement <2 x float> %i.y, i64 1
-  %4 = tail call float @llvm.floor.f32(float %3)
-  %5 = extractelement <2 x float> %i.y, i64 0
-  %6 = tail call float @llvm.floor.f32(float %5)
-  %7 = insertelement <2 x float> poison, float %6, i64 0
-  %8 = insertelement <2 x float> %7, float %4, i64 1
-  %i.z = fptosi <2 x float> %8 to <2 x i32>       ; 3 uses
+  %i.y = fmul <2 x float> %i.v, %i.x              ; 2 uses
+  %3 = tail call <2 x float> @llvm.floor.v2f32(<2 x float> %i.y)
+  %i.z = fptosi <2 x float> %3 to <2 x i32>       ; 3 uses
   %i.aa = sitofp <2 x i32> %i.z to <2 x float>
   %i.ab = fsub <2 x float> %i.y, %i.aa            ; 4 uses
   %i.ac = tail call float @llvm.floor.f32(float %i.o)
@@ -614,6 +609,9 @@ declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.floor.v2f32(<2 x float>) #5
 
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

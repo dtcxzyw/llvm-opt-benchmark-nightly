@@ -204,7 +204,7 @@ bb.a:
   %.not = icmp eq ptr %13, null
   %i.a = icmp ne ptr %14, null                    ; 2 uses
   %.not115 = icmp eq ptr %11, null
-  %i.b = insertelement <2 x double> <double 1.000000e+00, double poison>, double %1, i64 1 ; 2 uses
+  %i.b = insertelement <2 x double> <double 1.000000e+00, double poison>, double %1, i64 1
   %i.c = insertelement <2 x double> <double poison, double -1.000000e+00>, double %1, i64 0
   %i.d = fsub <2 x double> %i.b, %i.c
   %i.e = getelementptr inbounds nuw i8, ptr %16, i64 8
@@ -247,17 +247,18 @@ bb.a:
   %i.am = extractelement <2 x double> %i.ak, i64 1
   store double %i.am, ptr %i.h, align 8, !tbaa !10
   store double %i.ac, ptr %i.i, align 8, !tbaa !10
-  %i.an = insertelement <2 x double> poison, double %i.k, i64 0
-  %17 = shufflevector <2 x double> %i.b, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
+  %17 = insertelement <2 x double> poison, double %i.k, i64 0
+  %i.an = insertelement <2 x double> poison, double %1, i64 0
+  %18 = shufflevector <2 x double> %i.an, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.ao = fadd double %i.j, 2.000000e+00
   %i.ap = insertelement <2 x double> <double -1.100000e+01, double poison>, double %i.ao, i64 1
   %i.aq = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.p, <2 x double> %i.ap, <2 x double> <double -2.800000e+01, double 1.600000e+01>) ; 2 uses
-  %i.ar = shufflevector <2 x double> %i.an, <2 x double> %i.aq, <2 x i32> <i32 0, i32 2>
+  %i.ar = shufflevector <2 x double> %17, <2 x double> %i.aq, <2 x i32> <i32 0, i32 2>
   %i.as = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ar, <2 x double> %i.p, <2 x double> <double 6.400000e+01, double -1.920000e+02>)
   %i.at = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.as, <2 x double> %i.p, <2 x double> zeroinitializer)
   %i.au = fmul <2 x double> %i.at, splat (double 3.906250e-03) ; 2 uses
-  %i.av = fadd <2 x double> %i.au, %17
-  %i.aw = fsub <2 x double> %i.au, %17
+  %i.av = fadd <2 x double> %i.au, %18
+  %i.aw = fsub <2 x double> %i.au, %18
   %i.ax = shufflevector <2 x double> %i.av, <2 x double> %i.aw, <2 x i32> <i32 0, i32 3>
   %i.ay = fdiv <2 x double> %i.ax, %i.d           ; 3 uses
   %i.az = insertelement <2 x double> %i.w, double -0.000000e+00, i64 1

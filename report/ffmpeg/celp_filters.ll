@@ -202,9 +202,9 @@ bb.a:
   %i.t = insertelement <2 x float> %i.s, float %i.p, i64 1
   %i.u = fneg nsz <2 x float> %i.t                ; 2 uses
   %i.v = zext nneg i32 %4 to i64
-  %i.w = insertelement <2 x float> <float -0.000000e+00, float poison>, float %i.d, i64 1 ; 2 uses
-  %i.x = insertelement <2 x float> <float poison, float -0.000000e+00>, float %i.d, i64 0
-  %5 = shufflevector <2 x float> %i.w, <2 x float> %i.u, <2 x i32> <i32 1, i32 2>
+  %i.w = insertelement <2 x float> <float -0.000000e+00, float poison>, float %i.d, i64 1
+  %i.x = insertelement <2 x float> <float poison, float -0.000000e+00>, float %i.d, i64 0 ; 2 uses
+  %5 = shufflevector <2 x float> %i.x, <2 x float> %i.u, <2 x i32> <i32 0, i32 2>
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph184, %._crit_edge

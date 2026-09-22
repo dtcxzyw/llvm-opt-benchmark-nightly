@@ -205,14 +205,15 @@ bb.g:                                             ; preds = %.lr.ph220, %._crit_
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ci, i64 20
   store i32 %i.ct, ptr %i.cu, align 4, !tbaa !58
   %i.cv = getelementptr inbounds nuw i8, ptr %i.ci, i64 8
-  %i.cw = sub nsw i32 %i.cj, %i.ct                ; 2 uses
-  %1 = insertelement <2 x i32> poison, i32 %i.cw, i64 0 ; 2 uses
-  %2 = shufflevector <2 x i32> %1, <2 x i32> poison, <2 x i32> zeroinitializer
-  %3 = load <2 x i32>, ptr %i.ci, align 8, !tbaa !49
-  %i.cx = add nsw <2 x i32> %1, <i32 -1, i32 poison>
-  %4 = shufflevector <2 x i32> %i.cx, <2 x i32> poison, <2 x i32> zeroinitializer
-  %5 = add nsw <2 x i32> %4, %3
-  %i.cy = sdiv <2 x i32> %5, %2                   ; 3 uses
+  %i.cw = sub nsw i32 %i.cj, %i.ct                ; 3 uses
+  %1 = add nsw i32 %i.cw, -1
+  %2 = load <2 x i32>, ptr %i.ci, align 8, !tbaa !49
+  %3 = insertelement <2 x i32> poison, i32 %1, i64 0
+  %4 = shufflevector <2 x i32> %3, <2 x i32> poison, <2 x i32> zeroinitializer
+  %i.cx = add nsw <2 x i32> %4, %2
+  %5 = insertelement <2 x i32> poison, i32 %i.cw, i64 0
+  %6 = shufflevector <2 x i32> %5, <2 x i32> poison, <2 x i32> zeroinitializer
+  %i.cy = sdiv <2 x i32> %i.cx, %6                ; 3 uses
   store <2 x i32> %i.cy, ptr %i.cv, align 8, !tbaa !49
   %i.cz = extractelement <2 x i32> %i.cy, i64 0
   %i.da = extractelement <2 x i32> %i.cy, i64 1
