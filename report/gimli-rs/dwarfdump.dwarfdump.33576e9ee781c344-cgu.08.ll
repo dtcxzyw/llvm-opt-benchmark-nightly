@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator4grow.exit
 
 _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   %i.f = icmp uge i64 %i.b, %4
   tail call void @llvm.assume(i1 %i.f)
   %i.g = tail call noundef ptr @_RNvCsbkii2mvYdKU_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %4, i64 noundef range(i64 1, -9223372036854775807) %2, i64 noundef range(i64 0, -9223372036854775808) %i.b) #26
@@ -608,7 +608,7 @@ bb.a:
   %.sroa.29.0.copyload = load i8, ptr %.sroa.29.0..sroa_idx, align 8 ; 9 uses
   %.sroa.37.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 97
   %.sroa.37410.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 104
-  %.sroa.37410.0.copyload = load ptr, ptr %.sroa.37410.0..sroa_idx, align 8 ; 4 uses
+  %.sroa.37410.0.copyload = load ptr, ptr %.sroa.37410.0..sroa_idx, align 8, !nonnull !5, !noundef !5 ; 3 uses
   %.sroa.53.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 112
   %.sroa.53.0.copyload = load i64, ptr %.sroa.53.0..sroa_idx, align 8 ; 2 uses
   %.sroa.69.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 120
@@ -643,7 +643,6 @@ bb.a:
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 148
   %i.ad = load i32, ptr %i.ac, align 4, !noundef !5
   %i.ae = zext i32 %i.ad to i64                   ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.37410.0.copyload) ]
   %i.af = icmp ult i64 %.sroa.53.0.copyload, %i.j
   br i1 %i.af, label %_RNvXs0_NtNtCsi68uqYEhoRA_5gimli4read8relocateINtB5_14RelocateReaderINtNtB7_12endian_slice11EndianSliceNtNtB9_9endianity13RunTimeEndianERNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapENtNtB7_6reader6Reader5splitB2c_.exit.thread, label %_RNvXs0_NtNtCsi68uqYEhoRA_5gimli4read8relocateINtB5_14RelocateReaderINtNtB7_12endian_slice11EndianSliceNtNtB9_9endianity13RunTimeEndianERNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapENtNtB7_6reader6Reader5splitB2c_.exit
 
@@ -652,8 +651,7 @@ _RNvXs0_NtNtCsi68uqYEhoRA_5gimli4read8relocateINtB5_14RelocateReaderINtNtB7_12en
   br label %bb.t
 
 _RNvXs0_NtNtCsi68uqYEhoRA_5gimli4read8relocateINtB5_14RelocateReaderINtNtB7_12endian_slice11EndianSliceNtNtB9_9endianity13RunTimeEndianERNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapENtNtB7_6reader6Reader5splitB2c_.exit: ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.13.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.13.0.copyload) ]
   %i.ah = sub nuw i64 %.sroa.53.0.copyload, %i.j  ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.37410.0.copyload, i64 %i.j ; 3 uses
   %i.aj = ptrtoint ptr %.sroa.13.0.copyload to i64 ; 9 uses

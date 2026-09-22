@@ -204,7 +204,7 @@ bb.a:
   %i.d = lshr i64 %2, 57
   %i.e = trunc nuw nsw i64 %i.d to i8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.f, align 8, !tbaa !32 ; 3 uses
+  %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.f, align 8, !tbaa !32 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.0.0.copyload.i.i.i14 = load ptr, ptr %i.g, align 8, !tbaa !32 ; 2 uses
   %i.h = insertelement <16 x i8> poison, i8 %i.e, i64 0
@@ -254,7 +254,6 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i: ; preds = %bb.d
 
 .thread36:                                        ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i, %bb.d
   %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i, i64 %i.v
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i) ]
   br label %.loopexit
 
 bb.e:                                             ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i, %bb.c
@@ -506,7 +505,7 @@ bb.a:
   %i.d = lshr i64 %2, 57
   %i.e = trunc nuw nsw i64 %i.d to i8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.f, align 8, !tbaa !32 ; 3 uses
+  %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.f, align 8, !tbaa !32 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.0.0.copyload.i.i.i14 = load ptr, ptr %i.g, align 8, !tbaa !32 ; 2 uses
   %i.h = insertelement <16 x i8> poison, i8 %i.e, i64 0
@@ -556,7 +555,6 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i: ; preds = %bb.d
 
 .thread36:                                        ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i, %bb.d
   %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i, i64 %i.v
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i) ]
   br label %.loopexit
 
 bb.e:                                             ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i, %bb.c
@@ -596,7 +594,7 @@ bb.a:
   %i.d = lshr i64 %2, 57
   %i.e = trunc nuw nsw i64 %i.d to i8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.f, align 8, !tbaa !32 ; 3 uses
+  %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.f, align 8, !tbaa !32 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.0.0.copyload.i.i.i14 = load ptr, ptr %i.g, align 8, !tbaa !32 ; 2 uses
   %i.h = insertelement <16 x i8> poison, i8 %i.e, i64 0
@@ -646,7 +644,6 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i: ; preds = %bb.d
 
 .thread36:                                        ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i, %bb.d
   %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i, i64 %i.v
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i) ]
   br label %.loopexit
 
 bb.e:                                             ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i, %bb.c

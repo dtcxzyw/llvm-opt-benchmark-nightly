@@ -202,6 +202,7 @@ bb.a:
     #dbg_value(i64 24, !7052, !DIExpression(), !7107)
     #dbg_value(i64 8, !7066, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7117)
     #dbg_value(i64 24, !7066, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !7117)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !dbg !7736
   store i64 0, ptr %i.k, align 8, !dbg !7737
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 8, !dbg !7737 ; 3 uses
@@ -218,10 +219,7 @@ bb.a:
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.45.0..sroa_idx, align 8, !dbg !7737
   %.sroa.56.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 64, !dbg !7737 ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 72, !dbg !7737 ; 4 uses
-    #dbg_value(ptr %1, !6930, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7121)
     #dbg_value(ptr %2, !6930, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !7121)
-    #dbg_value(i64 0, !6930, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !7121)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
     #dbg_value(ptr %1, !6930, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7121)
     #dbg_value(i64 0, !6930, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !7121)
     #dbg_value(ptr undef, !7039, !DIExpression(), !6218)
@@ -624,12 +622,12 @@ bb.ab:                                            ; preds = %bb.z
 
 .noexc199:                                        ; preds = %bb.ab
   %i.de = extractvalue { ptr, i64 } %i.dd, 0, !dbg !7840 ; 2 uses
-  %3 = extractvalue { ptr, i64 } %i.dd, 1, !dbg !7840 ; 3 uses
-    #dbg_value(ptr %i.de, !7549, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6615)
-    #dbg_value(i64 %3, !7549, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !6615)
-    #dbg_value(ptr %i.de, !7575, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6618)
-    #dbg_value(i64 %3, !7575, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !6618)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.de) ], !dbg !7841
+  %3 = extractvalue { ptr, i64 } %i.dd, 1, !dbg !7840 ; 3 uses
+    #dbg_value(ptr %i.de, !7549, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6622)
+    #dbg_value(i64 %3, !7549, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !6622)
+    #dbg_value(ptr %i.de, !7588, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6623)
+    #dbg_value(i64 %3, !7588, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !6623)
   %i.df = getelementptr inbounds nuw i8, ptr %i.de, i64 16, !dbg !7842 ; 2 uses
     #dbg_value(ptr %i.df, !7590, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6626)
     #dbg_value(i64 %3, !7590, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !6626)
@@ -1032,6 +1030,7 @@ bb.a:
   br i1 %i.d, label %bb.b, label %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionNtNtNtCs9GYDdpCSJ4S_14regex_automata4util10primitives9PatternIDE6map_orINtNtNtNtB5_4iter8adapters9enumerate9EnumerateNtNtBM_8captures21GroupInfoPatternNamesENCNvMB2D_NtB2D_8Captures4iter0EBO_.exit, !dbg !10306
 
 bb.b:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 28, !dbg !10304
   %i.f = load i32, ptr %i.e, align 4, !dbg !10304
     #dbg_value(i32 %i.f, !10292, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !10209)
@@ -1042,7 +1041,6 @@ bb.b:                                             ; preds = %bb.a
     #dbg_value(i32 %i.f, !4327, !DIExpression(), !10215)
     #dbg_declare(ptr poison, !4329, !DIExpression(), !10217)
     #dbg_value(i64 0, !4349, !DIExpression(), !10221)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
     #dbg_value(ptr %.val, !4366, !DIExpression(DW_OP_plus_uconst, 64, DW_OP_stack_value), !10223)
     #dbg_value(ptr %.val, !4371, !DIExpression(DW_OP_plus_uconst, 64, DW_OP_stack_value), !10225)
     #dbg_value(ptr %.val, !4374, !DIExpression(DW_OP_plus_uconst, 64, DW_OP_stack_value), !10227)
@@ -1445,15 +1443,15 @@ begin_hunk_3_@llvm.memset.p0.i64
 !6612 = distinct !DISubprogram(name: "from_slice<u8>", linkageName: "_RNvXst_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcShEINtB5_12ArcFromSlicehE10from_sliceCs9GYDdpCSJ4S_14regex_automata", scope: !7573, file: !2724, line: 2381, type: !7570, scopeLine: 2381, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !331, templateParams: !1227, retainedNodes: !7574)
 !6613 = distinct !DILocation(line: 3969, column: 9, scope: !6609, inlinedAt: !6610)
 !6614 = distinct !DILocation(line: 0, scope: !6612, inlinedAt: !6613)
-!6615 = distinct !DILocation(line: 0, scope: !6605, inlinedAt: !6607)
-!6616 = distinct !DISubprogram(name: "into_raw<[u8]>", linkageName: "_RNvMsm_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcShE8into_rawCs9GYDdpCSJ4S_14regex_automata", scope: !6604, file: !2724, line: 1692, type: !7577, scopeLine: 1692, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !331, templateParams: !1492, declaration: !7578, retainedNodes: !7579)
-!6617 = distinct !DILocation(line: 4008, column: 32, scope: !6605, inlinedAt: !6607)
-!6618 = distinct !DILocation(line: 0, scope: !6616, inlinedAt: !6617)
-!6619 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "*mut alloc::sync::ArcInner<[u8]>", file: !998, size: 128, align: 64, elements: !7584, templateParams: !1225, identifier: "18d1110db549756cd50f5e7205fed3db")
-!6620 = distinct !DISubprogram(name: "as_ptr<alloc::sync::ArcInner<[u8]>>", linkageName: "_RNvMs1_NtNtCsj6eKBz9Db1c_4core3ptr8non_nullINtB5_7NonNullINtNtCs4wP2HXfJTCR_5alloc4sync8ArcInnerShEE6as_ptrCs9GYDdpCSJ4S_14regex_automata", scope: !6603, file: !2474, line: 411, type: !7581, scopeLine: 411, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !331, templateParams: !7556, declaration: !7585)
-!6621 = distinct !DISubprogram(name: "as_ptr<[u8], alloc::alloc::Global>", linkageName: "_RNvMsn_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcShE6as_ptrCs9GYDdpCSJ4S_14regex_automata", scope: !6604, file: !2724, line: 1835, type: !7588, scopeLine: 1835, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !331, templateParams: !1499, declaration: !7589)
-!6622 = distinct !DILocation(line: 1694, column: 9, scope: !6616, inlinedAt: !6617)
-!6623 = distinct !DILocation(line: 1836, column: 37, scope: !6621, inlinedAt: !6622)
+!6615 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "*mut alloc::sync::ArcInner<[u8]>", file: !998, size: 128, align: 64, elements: !7579, templateParams: !1225, identifier: "18d1110db549756cd50f5e7205fed3db")
+!6616 = distinct !DISubprogram(name: "as_ptr<alloc::sync::ArcInner<[u8]>>", linkageName: "_RNvMs1_NtNtCsj6eKBz9Db1c_4core3ptr8non_nullINtB5_7NonNullINtNtCs4wP2HXfJTCR_5alloc4sync8ArcInnerShEE6as_ptrCs9GYDdpCSJ4S_14regex_automata", scope: !6603, file: !2474, line: 411, type: !7576, scopeLine: 411, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !331, templateParams: !7556, declaration: !7580)
+!6617 = distinct !DISubprogram(name: "as_ptr<[u8], alloc::alloc::Global>", linkageName: "_RNvMsn_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcShE6as_ptrCs9GYDdpCSJ4S_14regex_automata", scope: !6604, file: !2724, line: 1835, type: !7583, scopeLine: 1835, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !331, templateParams: !1499, declaration: !7584)
+!6618 = distinct !DISubprogram(name: "into_raw<[u8]>", linkageName: "_RNvMsm_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcShE8into_rawCs9GYDdpCSJ4S_14regex_automata", scope: !6604, file: !2724, line: 1692, type: !7586, scopeLine: 1692, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !331, templateParams: !1492, declaration: !7587, retainedNodes: !7589)
+!6619 = distinct !DILocation(line: 4008, column: 32, scope: !6605, inlinedAt: !6607)
+!6620 = distinct !DILocation(line: 1694, column: 9, scope: !6618, inlinedAt: !6619)
+!6621 = distinct !DILocation(line: 1836, column: 37, scope: !6617, inlinedAt: !6620)
+!6622 = distinct !DILocation(line: 0, scope: !6605, inlinedAt: !6607)
+!6623 = distinct !DILocation(line: 0, scope: !6618, inlinedAt: !6619)
 !6624 = distinct !DISubprogram(name: "from_raw<str>", linkageName: "_RNvMsm_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArceE8from_rawCs9GYDdpCSJ4S_14regex_automata", scope: !73, file: !2724, line: 1669, type: !7592, scopeLine: 1669, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !331, templateParams: !1492, declaration: !7593, retainedNodes: !7594)
 !6625 = distinct !DILocation(line: 4008, column: 18, scope: !6605, inlinedAt: !6607)
 !6626 = distinct !DILocation(line: 0, scope: !6624, inlinedAt: !6625)
@@ -1856,21 +1854,21 @@ begin_hunk_4_@llvm.memset.p0.i64
 !7572 = !DILocalVariable(name: "v", arg: 1, scope: !6612, file: !2724, line: 2381, type: !202)
 !7573 = !DINamespace(name: "{impl#31}", scope: !1308)
 !7574 = !{!7572}
-!7575 = !DILocalVariable(name: "this", scope: !6616, file: !2724, line: 1692, type: !6604, align: 64)
-!7576 = !{!539, !6604}
-!7577 = !DISubroutineType(types: !7576)
-!7578 = !DISubprogram(name: "into_raw<[u8]>", linkageName: "_RNvMsm_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcShE8into_rawCs9GYDdpCSJ4S_14regex_automata", scope: !6604, file: !2724, line: 1692, type: !7577, scopeLine: 1692, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !1492)
-!7579 = !{!7575}
-!7580 = !{!6619, !6603}
-!7581 = !DISubroutineType(types: !7580)
-!7582 = !DIDerivedType(tag: DW_TAG_member, name: "data_ptr", scope: !6619, file: !998, baseType: !7563, size: 64, align: 64)
-!7583 = !DIDerivedType(tag: DW_TAG_member, name: "length", scope: !6619, file: !998, baseType: !1206, size: 64, align: 64, offset: 64)
-!7584 = !{!7582, !7583}
-!7585 = !DISubprogram(name: "as_ptr<alloc::sync::ArcInner<[u8]>>", linkageName: "_RNvMs1_NtNtCsj6eKBz9Db1c_4core3ptr8non_nullINtB5_7NonNullINtNtCs4wP2HXfJTCR_5alloc4sync8ArcInnerShEE6as_ptrCs9GYDdpCSJ4S_14regex_automata", scope: !6603, file: !2474, line: 411, type: !7581, scopeLine: 411, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !7556)
-!7586 = !DIDerivedType(tag: DW_TAG_pointer_type, name: "&alloc::sync::Arc<[u8], alloc::alloc::Global>", baseType: !6604, size: 64, align: 64, dwarfAddressSpace: 0)
-!7587 = !{!539, !7586}
-!7588 = !DISubroutineType(types: !7587)
-!7589 = !DISubprogram(name: "as_ptr<[u8], alloc::alloc::Global>", linkageName: "_RNvMsn_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcShE6as_ptrCs9GYDdpCSJ4S_14regex_automata", scope: !6604, file: !2724, line: 1835, type: !7588, scopeLine: 1835, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !1499)
+!7575 = !{!6615, !6603}
+!7576 = !DISubroutineType(types: !7575)
+!7577 = !DIDerivedType(tag: DW_TAG_member, name: "data_ptr", scope: !6615, file: !998, baseType: !7563, size: 64, align: 64)
+!7578 = !DIDerivedType(tag: DW_TAG_member, name: "length", scope: !6615, file: !998, baseType: !1206, size: 64, align: 64, offset: 64)
+!7579 = !{!7577, !7578}
+!7580 = !DISubprogram(name: "as_ptr<alloc::sync::ArcInner<[u8]>>", linkageName: "_RNvMs1_NtNtCsj6eKBz9Db1c_4core3ptr8non_nullINtB5_7NonNullINtNtCs4wP2HXfJTCR_5alloc4sync8ArcInnerShEE6as_ptrCs9GYDdpCSJ4S_14regex_automata", scope: !6603, file: !2474, line: 411, type: !7576, scopeLine: 411, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !7556)
+!7581 = !DIDerivedType(tag: DW_TAG_pointer_type, name: "&alloc::sync::Arc<[u8], alloc::alloc::Global>", baseType: !6604, size: 64, align: 64, dwarfAddressSpace: 0)
+!7582 = !{!539, !7581}
+!7583 = !DISubroutineType(types: !7582)
+!7584 = !DISubprogram(name: "as_ptr<[u8], alloc::alloc::Global>", linkageName: "_RNvMsn_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcShE6as_ptrCs9GYDdpCSJ4S_14regex_automata", scope: !6604, file: !2724, line: 1835, type: !7583, scopeLine: 1835, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !1499)
+!7585 = !{!539, !6604}
+!7586 = !DISubroutineType(types: !7585)
+!7587 = !DISubprogram(name: "into_raw<[u8]>", linkageName: "_RNvMsm_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcShE8into_rawCs9GYDdpCSJ4S_14regex_automata", scope: !6604, file: !2724, line: 1692, type: !7586, scopeLine: 1692, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !1492)
+!7588 = !DILocalVariable(name: "this", scope: !6618, file: !2724, line: 1692, type: !6604, align: 64)
+!7589 = !{!7588}
 !7590 = !DILocalVariable(name: "ptr", arg: 1, scope: !6624, file: !2724, line: 1669, type: !369)
 !7591 = !{!73, !369}
 !7592 = !DISubroutineType(types: !7591)
@@ -2119,8 +2117,8 @@ begin_hunk_4_@llvm.memset.p0.i64
 !7838 = !DILocation(line: 721, column: 9, scope: !6591, inlinedAt: !6592)
 !7839 = !DILocation(line: 2454, column: 9, scope: !6597, inlinedAt: !6598)
 !7840 = !DILocation(line: 2384, column: 18, scope: !6612, inlinedAt: !6613)
-!7841 = !DILocation(line: 417, column: 18, scope: !6620, inlinedAt: !6623)
-!7842 = !DILocation(line: 1841, column: 18, scope: !6621, inlinedAt: !6622)
+!7841 = !DILocation(line: 417, column: 18, scope: !6616, inlinedAt: !6621)
+!7842 = !DILocation(line: 1841, column: 18, scope: !6617, inlinedAt: !6620)
 !7843 = !DILocation(line: 1918, column: 26, scope: !6630, inlinedAt: !6631)
 !7844 = !DILocation(line: 955, column: 47, scope: !6638, inlinedAt: !6639)
 !7845 = !DILocation(line: 955, column: 22, scope: !6638, inlinedAt: !6639)

@@ -205,14 +205,14 @@ _ZNK5clang14IdentifierInfo13isPlaceholderEv.exit: ; preds = %bb.bt, %_ZNK5clang1
   br i1 %.not.i.i.i208, label %bb.cc, label %bb.bu
 
 bb.bu:                                            ; preds = %_ZNK5clang14IdentifierInfo13isPlaceholderEv.exit
-  %i.mt = load ptr, ptr %i.io, align 8, !tbaa !100 ; 4 uses
+  %i.mt = load ptr, ptr %i.io, align 8, !tbaa !100 ; 3 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.mt, i64 8) ]
   br i1 %i.mr, label %bb.bv, label %bb.cb
 
 bb.bv:                                            ; preds = %bb.bu
   %i.mu = zext i32 %i.ms to i64
   %i.mv = getelementptr inbounds nuw [8 x i8], ptr %i.mt, i64 %i.mu
   %i.mw = getelementptr inbounds i8, ptr %i.mv, i64 -8
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.mt, i64 8) ]
   %.0.copyload.i.i.i.i.i.i.i209 = load i64, ptr %i.mw, align 8
   %i.mx = and i64 %.0.copyload.i.i.i.i.i.i.i209, -8
   %i.my = inttoptr i64 %i.mx to ptr
@@ -247,11 +247,11 @@ _ZNK5clang11DeclContext6EqualsEPKS0_.exit:        ; preds = %_ZN5clang4Decl14get
 
 bb.by:                                            ; preds = %_ZNK5clang11DeclContext6EqualsEPKS0_.exit
   %i.nl = load ptr, ptr %i.io, align 8, !tbaa !100 ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.nl, i64 8) ]
   %i.nm = load i32, ptr %i.iq, align 8, !tbaa !101
   %i.nn = zext i32 %i.nm to i64
   %i.no = getelementptr inbounds nuw [8 x i8], ptr %i.nl, i64 %i.nn
   %i.np = getelementptr inbounds i8, ptr %i.no, i64 -8
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.nl, i64 8) ]
   %.0.copyload.i.i.i.i.i.i = load i64, ptr %i.np, align 8
   %i.nq = and i64 %.0.copyload.i.i.i.i.i.i, -8
   %i.nr = inttoptr i64 %i.nq to ptr
@@ -286,7 +286,6 @@ _ZN5clang12LookupResult5clearEv.exit214:          ; preds = %bb.bz, %bb.ca
   br label %.critedge
 
 bb.cb:                                            ; preds = %bb.bu
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.mt, i64 8) ]
   %.0.copyload.i.i.i.i.i.i.i216 = load i64, ptr %i.mt, align 8
   %i.nz = and i64 %.0.copyload.i.i.i.i.i.i.i216, -8
   %i.oa = inttoptr i64 %i.nz to ptr
@@ -689,9 +688,9 @@ _ZNK5clang12LookupResult12getFoundDeclEv.exit.i:  ; preds = %bb.l, %bb.k
   br i1 %i.by, label %_ZNK5clang12LookupResult11getAsSingleINS_17ClassTemplateDeclEEEPT_v.exit, label %bb.m
 
 bb.m:                                             ; preds = %_ZNK5clang12LookupResult12getFoundDeclEv.exit.i, %bb.j
+  call void @llvm.assume(i1 true) [ "align"(ptr %.pre, i64 8) ]
   store i8 0, ptr %i.ax, align 1, !tbaa !1352
   store i8 0, ptr %i.ay, align 4, !tbaa !1353
-  call void @llvm.assume(i1 true) [ "align"(ptr %.pre, i64 8) ]
   %.0.copyload.i.i.i.i.i.i = load i64, ptr %.pre, align 8
   %i.bz = and i64 %.0.copyload.i.i.i.i.i.i, -8
   %i.ca = inttoptr i64 %i.bz to ptr
@@ -1094,8 +1093,8 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %_ZN5clang12LookupResult6Filter5eraseEv.exit
   %.sroa.7.020 = phi ptr [ %i.d, %.lr.ph ], [ %.sroa.7.1, %_ZN5clang12LookupResult6Filter5eraseEv.exit ] ; 9 uses
   %.sroa.15.019 = phi i1 [ false, %.lr.ph ], [ %.sroa.15.1, %_ZN5clang12LookupResult6Filter5eraseEv.exit ] ; 6 uses
-  %3 = getelementptr inbounds nuw i8, ptr %.sroa.7.020, i64 8 ; 6 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %.sroa.7.020, i64 8) ]
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.7.020, i64 8 ; 6 uses
   %.0.copyload.i.i.i.i.i.i.i = load i64, ptr %.sroa.7.020, align 8
   %i.f = and i64 %.0.copyload.i.i.i.i.i.i.i, -8
   %i.g = inttoptr i64 %i.f to ptr                 ; 2 uses
@@ -1498,9 +1497,9 @@ _ZNK5clang12LookupResult12getFoundDeclEv.exit.i:  ; preds = %bb.m, %bb.l
 
 bb.n:                                             ; preds = %._crit_edge, %_ZNK5clang12LookupResult12getFoundDeclEv.exit.i
   %i.by = phi ptr [ %.pre, %._crit_edge ], [ %i.bq, %_ZNK5clang12LookupResult12getFoundDeclEv.exit.i ] ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.by, i64 8) ]
   store i8 0, ptr %i.bi, align 1, !tbaa !1352
   store i8 0, ptr %i.bj, align 4, !tbaa !1353
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.by, i64 8) ]
   %.0.copyload.i.i.i.i.i.i = load i64, ptr %i.by, align 8
   %i.bz = and i64 %.0.copyload.i.i.i.i.i.i, -8
   %i.ca = inttoptr i64 %i.bz to ptr
@@ -1903,8 +1902,8 @@ bb.i:                                             ; preds = %bb.g
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
   %i.br = getelementptr inbounds nuw i8, ptr %i.bd, i64 48
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !3382 ; 2 uses
-  %39 = getelementptr inbounds nuw i8, ptr %i.bs, i64 144
   call void @llvm.assume(i1 true) [ "align"(ptr %i.bs, i64 8) ]
+  %39 = getelementptr inbounds nuw i8, ptr %i.bs, i64 144
   %.0.copyload.i.i.i.i = load i64, ptr %39, align 8
   %i.bt = and i64 %.0.copyload.i.i.i.i, -8
   %i.bu = inttoptr i64 %i.bt to ptr
@@ -1958,8 +1957,8 @@ _ZNK5clang4Type18getAsCXXRecordDeclEv.exit:       ; preds = %bb.l, %bb.k
   %.not.not.i.i = icmp eq ptr %i.cs, null
   %spec.select = select i1 %.not.not.i.i, ptr %i.cl, ptr %i.cs
   %i.ct = load ptr, ptr %i.a, align 8, !tbaa !3367 ; 2 uses
-  %40 = getelementptr inbounds nuw i8, ptr %i.ct, i64 8
   call void @llvm.assume(i1 true) [ "align"(ptr %i.ct, i64 8) ]
+  %40 = getelementptr inbounds nuw i8, ptr %i.ct, i64 8
   %.0.copyload.i.i.i.i125 = load i64, ptr %40, align 8
   %i.cu = and i64 %.0.copyload.i.i.i.i125, -8     ; 2 uses
   %.not108 = icmp eq i64 %i.cu, 0
@@ -2362,8 +2361,8 @@ _ZN5clang12LookupResult6Filter5eraseEv.exit.us:   ; preds = %bb.f, %.critedge.us
   %i.bw = phi ptr [ %i.cn, %_ZN5clang12LookupResult6Filter5eraseEv.exit ], [ %i.ay, %.lr.ph ]
   %.sroa.12.0232 = phi i1 [ %.sroa.12.1, %_ZN5clang12LookupResult6Filter5eraseEv.exit ], [ false, %.lr.ph ] ; 2 uses
   %.sroa.6.0231 = phi ptr [ %.sroa.6.1, %_ZN5clang12LookupResult6Filter5eraseEv.exit ], [ %i.ay, %.lr.ph ] ; 7 uses
-  %21 = getelementptr inbounds nuw i8, ptr %.sroa.6.0231, i64 8 ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %.sroa.6.0231, i64 8) ]
+  %21 = getelementptr inbounds nuw i8, ptr %.sroa.6.0231, i64 8 ; 2 uses
   %.0.copyload.i.i.i.i.i.i.i = load i64, ptr %.sroa.6.0231, align 8
   %i.bx = and i64 %.0.copyload.i.i.i.i.i.i.i, -8  ; 2 uses
   %i.by = inttoptr i64 %i.bx to ptr               ; 3 uses

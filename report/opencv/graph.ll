@@ -202,8 +202,7 @@ bb.s:                                             ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZNK3ade6HandleINS_4NodeEE3getEv.exit:            ; preds = %bb.l, %_ZNK3ade6HandleINS_4EdgeEE3getEv.exit, %bb.o, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i18, %bb.s
   %i.az = phi ptr [ %i.ak, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i18 ], [ %i.ak, %bb.s ], [ %i.ak, %bb.o ], [ null, %_ZNK3ade6HandleINS_4EdgeEE3getEv.exit ], [ null, %bb.l ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.z) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.az) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.z), "nonnull"(ptr %i.az) ]
   %i.ba = getelementptr inbounds nuw i8, ptr %1, i64 160
   %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !77 ; 3 uses
   %.not = icmp eq ptr %i.bb, null
@@ -486,8 +485,7 @@ bb.s:                                             ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZNK3ade6HandleINS_4NodeEE3getEv.exit:            ; preds = %bb.l, %_ZNK3ade6HandleINS_4EdgeEE3getEv.exit, %bb.o, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i18, %bb.s
   %i.az = phi ptr [ %i.ak, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i18 ], [ %i.ak, %bb.s ], [ %i.ak, %bb.o ], [ null, %_ZNK3ade6HandleINS_4EdgeEE3getEv.exit ], [ null, %bb.l ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.z) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.az) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.z), "nonnull"(ptr %i.az) ]
   %i.ba = getelementptr inbounds nuw i8, ptr %1, i64 160
   %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !77 ; 3 uses
   %.not = icmp eq ptr %i.bb, null

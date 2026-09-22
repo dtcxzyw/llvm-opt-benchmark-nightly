@@ -205,6 +205,7 @@ _RINvNtCsj6eKBz9Db1c_4core10intrinsics25typed_swap_nonoverlappingNtNtCs37Y8JGf01
   br i1 %i.bj, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs37Y8JGf013z_9hashbrown10scopeguard10ScopeGuardNtNtBG_3raw13RawTableInnerNCINvMsa_B1u_B1s_14prepare_resizeNtNtCs4wP2HXfJTCR_5alloc5alloc6GlobalE0EECs9GYDdpCSJ4S_14regex_automata.exit, label %_RNvMs1_NtCs37Y8JGf013z_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i, !dbg !6729
 
 _RNvMs1_NtCs37Y8JGf013z_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i: ; preds = %_RINvNtCsj6eKBz9Db1c_4core10intrinsics25typed_swap_nonoverlappingNtNtCs37Y8JGf013z_9hashbrown3raw13RawTableInnerECs9GYDdpCSJ4S_14regex_automata.exit
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i) ], !noalias !6646
   %.val.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !6727, !alias.scope !6649, !noalias !6646
     #dbg_value(ptr poison, !2846, !DIExpression(), !6461)
     #dbg_value(i64 %.val.i.i, !2847, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6461)
@@ -257,7 +258,6 @@ _RNvMs1_NtCs37Y8JGf013z_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
     #dbg_value(i64 %i.bs, !2859, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !6488)
     #dbg_value(i64 %i.bq, !2860, !DIExpression(), !6488)
     #dbg_value(i64 %i.bq, !2875, !DIExpression(), !6490)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i) ], !noalias !6646
     #dbg_value(ptr %.val2.i.i, !2876, !DIExpression(), !6490)
     #dbg_value(!DIArgList(ptr %.val2.i.i, i64 0, i64 %i.bq), !2848, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_LLVM_arg, 2, DW_OP_minus, DW_OP_plus, DW_OP_stack_value), !6487)
     #dbg_value(ptr poison, !2879, !DIExpression(), !6492)
@@ -660,6 +660,7 @@ _RINvNtCsj6eKBz9Db1c_4core10intrinsics25typed_swap_nonoverlappingNtNtCs37Y8JGf01
   br i1 %i.bj, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs37Y8JGf013z_9hashbrown10scopeguard10ScopeGuardNtNtBG_3raw13RawTableInnerNCINvMsa_B1u_B1s_14prepare_resizeNtNtCs4wP2HXfJTCR_5alloc5alloc6GlobalE0EECs9GYDdpCSJ4S_14regex_automata.exit, label %_RNvMs1_NtCs37Y8JGf013z_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i, !dbg !7269
 
 _RNvMs1_NtCs37Y8JGf013z_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i: ; preds = %_RINvNtCsj6eKBz9Db1c_4core10intrinsics25typed_swap_nonoverlappingNtNtCs37Y8JGf013z_9hashbrown3raw13RawTableInnerECs9GYDdpCSJ4S_14regex_automata.exit
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i) ], !noalias !7186
   %.val.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !7267, !alias.scope !7189, !noalias !7186
     #dbg_value(ptr poison, !2846, !DIExpression(), !7001)
     #dbg_value(i64 %.val.i.i, !2847, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7001)
@@ -712,7 +713,6 @@ _RNvMs1_NtCs37Y8JGf013z_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
     #dbg_value(i64 %i.bs, !2859, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !7028)
     #dbg_value(i64 %i.bq, !2860, !DIExpression(), !7028)
     #dbg_value(i64 %i.bq, !2875, !DIExpression(), !7030)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i) ], !noalias !7186
     #dbg_value(ptr %.val2.i.i, !2876, !DIExpression(), !7030)
     #dbg_value(!DIArgList(ptr %.val2.i.i, i64 0, i64 %i.bq), !2848, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_LLVM_arg, 2, DW_OP_minus, DW_OP_plus, DW_OP_stack_value), !7027)
     #dbg_value(ptr poison, !2879, !DIExpression(), !7032)
@@ -987,6 +987,7 @@ bb.a:
   br i1 %i.d, label %_RNvXs1_NtCs37Y8JGf013z_9hashbrown10scopeguardINtB5_10ScopeGuardNtNtB7_3raw13RawTableInnerNCINvMsa_B11_BZ_14prepare_resizeNtNtCs4wP2HXfJTCR_5alloc5alloc6GlobalE0ENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCs9GYDdpCSJ4S_14regex_automata.exit, label %_RNvMs1_NtCs37Y8JGf013z_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i, !dbg !7395
 
 _RNvMs1_NtCs37Y8JGf013z_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i: ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i) ]
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !7393
   %.val.i = load i64, ptr %i.e, align 8, !dbg !7393, !alias.scope !7390
     #dbg_value(ptr poison, !2846, !DIExpression(), !7351)
@@ -1040,7 +1041,6 @@ _RNvMs1_NtCs37Y8JGf013z_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
     #dbg_value(i64 %i.n, !2859, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !7378)
     #dbg_value(i64 %i.l, !2860, !DIExpression(), !7378)
     #dbg_value(i64 %i.l, !2875, !DIExpression(), !7380)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i) ]
     #dbg_value(ptr %.val2.i, !2876, !DIExpression(), !7380)
     #dbg_value(!DIArgList(ptr %.val2.i, i64 0, i64 %i.l), !2848, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_LLVM_arg, 2, DW_OP_minus, DW_OP_plus, DW_OP_stack_value), !7377)
     #dbg_value(ptr poison, !2879, !DIExpression(), !7382)
@@ -1443,8 +1443,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
     #dbg_value(i64 %.val, !4427, !DIExpression(), !11037)
-  %4 = mul nuw i64 %.val, %3, !dbg !11193         ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val35) ]
+  %4 = mul nuw i64 %.val, %3, !dbg !11193         ; 3 uses
     #dbg_value(ptr %.val35, !11089, !DIExpression(), !11109)
     #dbg_value(i64 %2, !11090, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11109)
     #dbg_value(i64 %4, !11090, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11109)
@@ -1847,8 +1847,8 @@ bb.b:                                             ; preds = %bb.a
 
 _RNvXs1_NtCs4wP2HXfJTCR_5alloc5allocNtB5_6GlobalNtNtCsj6eKBz9Db1c_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
     #dbg_value(i64 %.0.val, !4427, !DIExpression(), !12712)
-  %4 = mul nuw i64 %3, %.0.val, !dbg !12888       ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  %4 = mul nuw i64 %3, %.0.val, !dbg !12888       ; 2 uses
     #dbg_value(ptr %.8.val, !12774, !DIExpression(), !12826)
     #dbg_value(i64 %2, !12775, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !12826)
     #dbg_value(i64 %4, !12775, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !12826)
@@ -2251,7 +2251,7 @@ bb.a:
     #dbg_value(ptr poison, !13707, !DIExpression(), !13712)
     #dbg_value(ptr poison, !13707, !DIExpression(), !13714)
     #dbg_value(i8 -1, !13715, !DIExpression(), !13720)
-  %.val52 = load ptr, ptr %0, align 8, !dbg !13969 ; 9 uses
+  %.val52 = load ptr, ptr %0, align 8, !dbg !13969, !nonnull !1539, !noundef !1539 ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !13969 ; 4 uses
   %.val53 = load i64, ptr %i.b, align 8, !dbg !13969, !noundef !1539 ; 2 uses
     #dbg_value(ptr poison, !13722, !DIExpression(), !13423)
@@ -2308,7 +2308,6 @@ _RNvMsa_NtCs37Y8JGf013z_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_pl
     #dbg_value(i64 %i.c, !13773, !DIExpression(), !13482)
     #dbg_value(i64 %i.c, !13780, !DIExpression(), !13484)
     #dbg_value(ptr %.val52, !13778, !DIExpression(), !13484)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val52) ]
   %i.d = getelementptr inbounds nuw i8, ptr %.val52, i64 16, !dbg !13972
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.d, ptr nonnull align 1 %.val52, i64 %i.c, i1 false), !dbg !13973
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !13974
@@ -2345,7 +2344,6 @@ _RNvMsa_NtCs37Y8JGf013z_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_pl
     #dbg_value(i64 %.sroa.05.0.i.i.i, !13788, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !13466)
     #dbg_value(i64 %.sroa.05.0.i.i.i, !13746, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !13475)
     #dbg_value(i64 %.sroa.05.0.i.i.i, !13736, !DIExpression(), !13480)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val52) ]
   %xtraiter = and i64 %.sroa.05.0.i.i.i, 1, !dbg !13971
   %i.h = icmp eq i64 %.sroa.05.0.i.i.i, 1, !dbg !13971
   br i1 %i.h, label %.epil.preheader, label %.lr.ph.i.new, !dbg !13971

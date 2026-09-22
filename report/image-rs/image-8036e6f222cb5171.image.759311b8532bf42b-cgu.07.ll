@@ -204,9 +204,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxDINtNtNtB4_3ops8function2FnTfEEp6OutputfEL_EECsa5QsYiPB8Gl_5image.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !6, !invariant.load !4
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCshxk5dXoXnx9_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 1, -9223372036854775808) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #16
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxDINtNtNtB4_3ops8function2FnTfEEp6OutputfEL_EECsa5QsYiPB8Gl_5image.exit
 
@@ -609,8 +609,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterat
   br i1 %i.bd, label %.lr.ph, label %.thread
 
 .lr.ph:                                           ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator3zipIB4_TiiEEECsa5QsYiPB8Gl_5image.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.465.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.465.0.copyload) ]
   %i.be = trunc nuw i64 %indvars.iv to i32
   br label %bb.e
 
@@ -928,8 +927,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterat
   br i1 %i.az, label %.lr.ph, label %.thread
 
 .lr.ph:                                           ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator3zipIB4_TiiEEECsa5QsYiPB8Gl_5image.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.483.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.483.0.copyload) ]
   %i.ba = trunc nuw i64 %indvars.iv to i32
   br label %bb.e
 
@@ -1306,8 +1304,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterat
   br i1 %i.az, label %.lr.ph, label %.thread
 
 .lr.ph:                                           ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator3zipIB4_TiiEEECsa5QsYiPB8Gl_5image.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.486.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.486.0.copyload) ]
   %i.ba = trunc nuw i64 %indvars.iv to i32
   br label %bb.e
 
@@ -1684,8 +1681,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterat
   br i1 %i.az, label %.lr.ph, label %.thread
 
 .lr.ph:                                           ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator3zipIB4_TiiEEECsa5QsYiPB8Gl_5image.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.482.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.482.0.copyload) ]
   %i.ba = trunc nuw i64 %indvars.iv to i32
   br label %bb.e
 
@@ -2050,8 +2046,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterat
   br i1 %i.az, label %.lr.ph, label %.thread
 
 .lr.ph:                                           ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator3zipIB4_TiiEEECsa5QsYiPB8Gl_5image.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.485.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.485.0.copyload) ]
   %i.ba = trunc nuw i64 %indvars.iv to i32
   br label %bb.e
 
@@ -2419,8 +2414,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterat
   br i1 %i.bc, label %.lr.ph, label %.thread
 
 .lr.ph:                                           ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator3zipIB4_TiiEEECsa5QsYiPB8Gl_5image.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.465.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.465.0.copyload) ]
   %i.bd = trunc nuw i64 %indvars.iv to i32
   br label %bb.e
 
@@ -2725,8 +2719,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterat
   br i1 %i.az, label %.lr.ph, label %.thread
 
 .lr.ph:                                           ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator3zipIB4_TiiEEECsa5QsYiPB8Gl_5image.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.482.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.482.0.copyload) ]
   %i.ba = trunc nuw i64 %indvars.iv to i32
   br label %bb.e
 
@@ -3106,8 +3099,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterat
   br i1 %i.az, label %.lr.ph, label %.thread
 
 .lr.ph:                                           ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator3zipIB4_TiiEEECsa5QsYiPB8Gl_5image.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.485.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.485.0.copyload) ]
   %i.ba = trunc nuw i64 %indvars.iv to i32
   br label %bb.e
 
@@ -3487,8 +3479,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterat
   br i1 %i.az, label %.lr.ph, label %.thread
 
 .lr.ph:                                           ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator3zipIB4_TiiEEECsa5QsYiPB8Gl_5image.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.482.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.482.0.copyload) ]
   %i.ba = trunc nuw i64 %indvars.iv to i32
   br label %bb.e
 
@@ -3860,8 +3851,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterat
   br i1 %i.az, label %.lr.ph, label %.thread
 
 .lr.ph:                                           ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator3zipIB4_TiiEEECsa5QsYiPB8Gl_5image.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.485.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.485.0.copyload) ]
   %i.ba = trunc nuw i64 %indvars.iv to i32
   br label %bb.e
 

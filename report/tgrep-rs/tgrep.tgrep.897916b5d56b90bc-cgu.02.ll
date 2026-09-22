@@ -204,9 +204,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.f, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDINtNtNtB4_3ops8function2FnuEp6OutputNtNtNtCs22empcGmRho_14regex_automata4meta5regex5CacheNtNtNtB4_5panic11unwind_safe10UnwindSafeNtNtB4_6marker4SendNtB2E_13RefUnwindSafeNtB3i_4SyncEL_EECsbNLsQi0JuJ4_5tgrep.exit.i.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.g = getelementptr inbounds nuw i8, ptr %.val2.i.i, i64 16
   %i.h = load i64, ptr %i.g, align 8, !range !164, !invariant.load !6, !noalias !163
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i, i64 noundef range(i64 1, 0) %i.e, i64 noundef range(i64 1, 536870913) %i.h) #25, !noalias !163
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDINtNtNtB4_3ops8function2FnuEp6OutputNtNtNtCs22empcGmRho_14regex_automata4meta5regex5CacheNtNtNtB4_5panic11unwind_safe10UnwindSafeNtNtB4_6marker4SendNtB2E_13RefUnwindSafeNtB3i_4SyncEL_EECsbNLsQi0JuJ4_5tgrep.exit.i.i
 
@@ -609,8 +609,8 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbN
 define internal fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsbNLsQi0JuJ4_5tgrep(ptr %.0.val) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.b = ptrtoint ptr %.0.val to i64              ; 2 uses
   %i.c = and i64 %i.b, 3
   switch i64 %i.c, label %default.unreachable [
@@ -1013,8 +1013,7 @@ _RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutjENtNtNtNtBa_4iter6traits8ite
   br i1 %i.ae, label %.lr.ph, label %.thread
 
 .lr.ph:                                           ; preds = %_RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter7IterMutjENtNtNtNtBa_4iter6traits8iterator8Iterator3zipRSiECsbNLsQi0JuJ4_5tgrep.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.49.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.49.0.copyload) ]
   %i.af = sub nuw i64 %.sroa.7.0.copyload, %.sroa.510.0.copyload
   %.neg = add i64 %.sroa.510.0.copyload, 1
   %xtraiter = and i64 %i.af, 1
@@ -1417,8 +1416,8 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not.i, label %bb.d, label %bb.j
 
 bb.d:                                             ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val63) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.z = ptrtoint ptr %.val63 to i64              ; 2 uses
   %i.aa = and i64 %i.z, 3
   switch i64 %i.aa, label %default.unreachable [
@@ -1821,8 +1820,8 @@ bb.bq:                                            ; preds = %bb.bo
   br i1 %.not.i107, label %bb.br, label %bb.bx
 
 bb.br:                                            ; preds = %bb.bq
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.bf)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val63) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.bf)
   %i.kq = ptrtoint ptr %.val63 to i64             ; 2 uses
   %i.kr = and i64 %i.kq, 3
   switch i64 %i.kr, label %default.unreachable [

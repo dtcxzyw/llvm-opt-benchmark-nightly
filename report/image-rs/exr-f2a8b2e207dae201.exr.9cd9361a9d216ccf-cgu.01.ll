@@ -202,8 +202,7 @@ _RINvCs8zlGlznUR0G_8smallvec10infallibleuECsdsTQD3x2eOp_3exr.exit: ; preds = %_R
   br i1 %i.ac, label %_RNvXs0_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter4IterNtNtNtCsdsTQD3x2eOp_3exr4meta9attribute18ChannelDescriptionENCNvNtNtB1s_11compression3piz10decompress0ENtNtNtB9_6traits8iterator8Iterator4nextB1s_.exit20, label %.lr.ph113
 
 .lr.ph113:                                        ; preds = %._crit_edge
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0.copyload27) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.11.0.copyload29) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0.copyload27), "nonnull"(ptr %.sroa.11.0.copyload29) ]
   %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.11.0.copyload29, i64 8
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   br label %bb.g
@@ -215,8 +214,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.j
   br i1 %i.af, label %_RNvXs0_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter4IterNtNtNtCsdsTQD3x2eOp_3exr4meta9attribute18ChannelDescriptionENCNvNtNtB1s_11compression3piz10decompress0ENtNtNtB9_6traits8iterator8Iterator4nextB1s_.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0.copyload27) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.11.0.copyload29) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0.copyload27), "nonnull"(ptr %.sroa.11.0.copyload29) ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !127)
   %i.ag = load i64, ptr %.sroa.10.0.copyload27, align 8, !noalias !128, !noundef !4 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.0.0109, i64 48
@@ -448,6 +446,7 @@ bb.g:                                             ; preds = %.lr.ph113, %_RNvMsc
   %i.ak = load i64, ptr %.sroa.10.0.copyload27, align 8, !noalias !175, !noundef !4
   %i.al = load i64, ptr %i.ad, align 8, !noalias !175, !noundef !4
   %i.am = tail call { i64, i64 } @_RNvMsd_NtNtCsdsTQD3x2eOp_3exr4meta9attributeNtB5_18ChannelDescription21subsampled_resolution(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(64) %.sroa.052.0111, i64 noundef %i.ak, i64 noundef %i.al), !noalias !176 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.11.0.copyload29) ]
   %i.an = getelementptr inbounds nuw i8, ptr %.sroa.052.0111, i64 57
   %i.ao = load i8, ptr %i.an, align 1, !range !7, !alias.scope !174, !noalias !176, !noundef !4
   %i.ap = icmp ne i8 %i.ao, 1                     ; 2 uses
@@ -457,7 +456,6 @@ bb.g:                                             ; preds = %.lr.ph113, %_RNvMsc
   %i.as = mul i64 %i.ar, %i.aq
   %i.at = zext i1 %i.ap to i64
   %i.au = shl i64 %i.as, %i.at
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.11.0.copyload29) ]
   %i.av = load i64, ptr %.sroa.11.0.copyload29, align 8, !noalias !175, !noundef !4 ; 3 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.sroa.052.0111, i64 48
   %i.ax = load i64, ptr %i.aw, align 8, !alias.scope !174, !noalias !176, !noundef !4
@@ -512,6 +510,7 @@ _RNvXs0_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4it
   ret void
 
 bb.j:                                             ; preds = %bb.f
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.11.0.copyload29) ]
   %i.bk = getelementptr inbounds nuw i8, ptr %.sroa.0.0109, i64 64 ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %.sroa.0.0109, i64 57
   %i.bm = load i8, ptr %i.bl, align 1, !range !7, !alias.scope !172, !noalias !181, !noundef !4
@@ -522,7 +521,6 @@ bb.j:                                             ; preds = %bb.f
   %i.bq = mul i64 %i.bp, %i.bo
   %i.br = zext i1 %i.bn to i64
   %i.bs = shl i64 %i.bq, %i.br
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.11.0.copyload29) ]
   %i.bt = load i64, ptr %.sroa.11.0.copyload29, align 8, !noalias !173, !noundef !4 ; 3 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %.sroa.0.0109, i64 48
   %i.bv = load i64, ptr %i.bu, align 8, !alias.scope !172, !noalias !181, !noundef !4
@@ -925,8 +923,8 @@ _RNvMsc_Cs8zlGlznUR0G_8smallvecINtB5_8SmallVecAhj8_E10triple_mutCsdsTQD3x2eOp_3e
   br i1 %exitcond.not, label %.split.us, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph.split
-  %2 = add i64 %.sroa.6.063, 1                    ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload24) ]
+  %2 = add i64 %.sroa.6.063, 1                    ; 2 uses
   %i.ab = shl i64 %.sroa.6.063, 2                 ; 3 uses
   %.val.i.i = load i32, ptr %.sroa.0.0.copyload24, align 4, !noalias !277
   %i.ac = icmp ult i64 %i.ab, 32

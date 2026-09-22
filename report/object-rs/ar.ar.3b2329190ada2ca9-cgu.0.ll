@@ -204,8 +204,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsG258MDvU3F_3std3env6ArgsOsECs54MM5
 define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs54MM5Fk6r0b_2ar(ptr %.0.val) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.b = ptrtoint ptr %.0.val to i64              ; 2 uses
   %i.c = and i64 %i.b, 3
   switch i64 %i.c, label %default.unreachable [
@@ -297,8 +297,8 @@ bb.a:
 define internal fastcc void @_RNCNvMNtNtCseHTIzroA4w0_6object4read7archiveNtB4_11ArchiveFile5parse0Cs54MM5Fk6r0b_2ar(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(48) initializes((0, 8)) %0, ptr nofree readonly captures(none) %.0.val, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(80) %1, ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(8) %2) unnamed_addr #3 {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 7 uses
-  %3 = load i64, ptr %2, align 8, !noundef !6
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  %3 = load i64, ptr %2, align 8, !noundef !6
   %i.b = load i64, ptr %.0.val, align 8, !noundef !6
   %i.c = icmp ult i64 %3, %i.b
   br i1 %i.c, label %bb.c, label %bb.b
@@ -611,9 +611,9 @@ bb.aa:                                            ; preds = %bb.eu, %bb.eq, %bb.
 
 bb.ab:                                            ; preds = %_RINvMs0_CsgQ7e0lqRvgo_7memmap2NtB6_11MmapOptions7get_lenRNtNtCsG258MDvU3F_3std2fs4FileECs54MM5Fk6r0b_2ar.exit.i, %.noexc111
   %.sink.i.ph = phi ptr [ %i.ca, %.noexc111 ], [ %i.bu, %_RINvMs0_CsgQ7e0lqRvgo_7memmap2NtB6_11MmapOptions7get_lenRNtNtCsG258MDvU3F_3std2fs4FileECs54MM5Fk6r0b_2ar.exit.i ] ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sink.i.ph) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !noalias !208
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sink.i.ph) ]
   store ptr %.sink.i.ph, ptr %i.z, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y)
   store ptr %i.af, ptr %i.y, align 8
@@ -1016,10 +1016,9 @@ bb.de:                                            ; preds = %.noexc122
   %.sroa.70.1263 = phi ptr [ inttoptr (i64 1 to ptr), %.thread269 ], [ %i.km, %.thread.i ], [ inttoptr (i64 1 to ptr), %bb.av ], [ inttoptr (i64 1 to ptr), %_RINvNtCseHTIzroA4w0_6object3pod16slice_from_bytesNtNtB4_7archive15AixMemberOffsetECs54MM5Fk6r0b_2ar.exit.i.i ] ; 2 uses
   %.sroa.74.1262 = phi i64 [ 0, %.thread269 ], [ %i.kl, %.thread.i ], [ 0, %bb.av ], [ 0, %_RINvNtCseHTIzroA4w0_6object3pod16slice_from_bytesNtNtB4_7archive15AixMemberOffsetECs54MM5Fk6r0b_2ar.exit.i.i ]
   %.sroa.84.1261 = phi i8 [ 0, %.thread269 ], [ %.sroa.020.0.i, %.thread.i ], [ 0, %bb.av ], [ 0, %_RINvNtCseHTIzroA4w0_6object3pod16slice_from_bytesNtNtB4_7archive15AixMemberOffsetECs54MM5Fk6r0b_2ar.exit.i.i ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.70.1263), "nonnull"(ptr %.sroa.7.0.copyload) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !211
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !211
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.70.1263) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.0.copyload) ]
   %i.kt = icmp samesign eq i64 %.sroa.11.0.copyload, 0
   br i1 %i.kt, label %bb.di, label %bb.df
 
@@ -1291,8 +1290,8 @@ bb.ed:                                            ; preds = %bb.dq, %bb.eb
 .loopexit300:                                     ; preds = %bb.ed, %.noexc141, %bb.dy, %bb.dx, %bb.dw, %.noexc140, %bb.dt, %.noexc139
   %.sroa.11186.0.ph292 = phi ptr [ @1, %.noexc141 ], [ @5, %.noexc139 ], [ @4, %bb.dt ], [ @0, %.noexc140 ], [ @2, %bb.dx ], [ @2, %bb.dy ], [ @3, %bb.dw ], [ %.sroa.11186.0.ph, %bb.ed ] ; 2 uses
   %.sroa.12.0.ph291 = phi i64 [ 46, %.noexc141 ], [ 42, %.noexc139 ], [ 37, %bb.dt ], [ 42, %.noexc140 ], [ 34, %bb.dx ], [ 34, %bb.dy ], [ 35, %bb.dw ], [ %.sroa.12.0.ph, %bb.ed ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !237
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.11186.0.ph292) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !237
   store ptr %.sroa.11186.0.ph292, ptr %i.q, align 8, !noalias !237
   %i.od = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   store i64 %.sroa.12.0.ph291, ptr %i.od, align 8, !noalias !237

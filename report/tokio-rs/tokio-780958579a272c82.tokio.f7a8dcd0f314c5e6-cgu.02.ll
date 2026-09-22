@@ -204,6 +204,7 @@ _RINvNtCs3oUPovFnLWP_4core10intrinsics25typed_swap_nonoverlappingNtNtCskt5MLIAl8
   br i1 %i.bf, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCskt5MLIAl8nl_9hashbrown10scopeguard10ScopeGuardNtNtBG_3raw13RawTableInnerNCINvMsa_B1u_B1s_14prepare_resizeNtNtCs1xwejQucwHj_5alloc5alloc6GlobalE0EECslghKHtsL3a4_5tokio.exit, label %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i
 
 _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i: ; preds = %_RINvNtCs3oUPovFnLWP_4core10intrinsics25typed_swap_nonoverlappingNtNtCskt5MLIAl8nl_9hashbrown3raw13RawTableInnerECslghKHtsL3a4_5tokio.exit
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i) ]
   %.val.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !95
   %i.bg = add i64 %.val3.i.i, 1
   %i.bh = mul nuw i64 %.val.i.i, %i.bg            ; 2 uses
@@ -222,7 +223,6 @@ _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   call void @llvm.assume(i1 %i.br)
   %i.bs = icmp ne i64 %.val1.i.i, 0
   call void @llvm.assume(i1 %i.bs)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i) ]
   %i.bt = icmp eq i64 %i.bo, 0
   br i1 %i.bt, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCskt5MLIAl8nl_9hashbrown10scopeguard10ScopeGuardNtNtBG_3raw13RawTableInnerNCINvMsa_B1u_B1s_14prepare_resizeNtNtCs1xwejQucwHj_5alloc5alloc6GlobalE0EECslghKHtsL3a4_5tokio.exit, label %bb.m
 
@@ -325,12 +325,11 @@ common.resume:                                    ; preds = %bb.r, %bb.k
 
 bb.o:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !101)
-  %.val13.i = load ptr, ptr %0, align 8, !alias.scope !101 ; 7 uses
+  %.val13.i = load ptr, ptr %0, align 8, !alias.scope !101, !nonnull !4, !noundef !4 ; 5 uses
   %.not6.i.i = icmp eq i64 %i.k, 0
   br i1 %.not6.i.i, label %_RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit.thread, label %.lr.ph.i.i
 
 _RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit.thread: ; preds = %bb.o
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val13.i) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !101
   br label %bb.z
 
@@ -340,7 +339,6 @@ _RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit
   %.not10.i.i.i.i = icmp ne i64 %i.dr, 0
   %i.ds = zext i1 %.not10.i.i.i.i to i64
   %.sroa.05.0.i.i.i.i = add nuw nsw i64 %i.dq, %i.ds ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val13.i) ]
   %xtraiter = and i64 %.sroa.05.0.i.i.i.i, 1
   %i.dt = icmp eq i64 %.sroa.05.0.i.i.i.i, 1
   br i1 %i.dt, label %.epil.preheader, label %.lr.ph.i.i.new
@@ -602,6 +600,7 @@ bb.a:
   br i1 %i.d, label %_RNvXs1_NtCskt5MLIAl8nl_9hashbrown10scopeguardINtB5_10ScopeGuardNtNtB7_3raw13RawTableInnerNCINvMsa_B11_BZ_14prepare_resizeNtNtCs1xwejQucwHj_5alloc5alloc6GlobalE0ENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCslghKHtsL3a4_5tokio.exit, label %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
 
 _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i: ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i) ]
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val.i = load i64, ptr %i.e, align 8, !alias.scope !110
   %i.f = add i64 %.val3.i, 1
@@ -621,7 +620,6 @@ _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   tail call void @llvm.assume(i1 %i.q)
   %i.r = icmp ne i64 %.val1.i, 0
   tail call void @llvm.assume(i1 %i.r)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i) ]
   %i.s = icmp eq i64 %i.n, 0
   br i1 %i.s, label %_RNvXs1_NtCskt5MLIAl8nl_9hashbrown10scopeguardINtB5_10ScopeGuardNtNtB7_3raw13RawTableInnerNCINvMsa_B11_BZ_14prepare_resizeNtNtCs1xwejQucwHj_5alloc5alloc6GlobalE0ENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCslghKHtsL3a4_5tokio.exit, label %bb.b
 
@@ -1024,8 +1022,8 @@ bb.u:                                             ; preds = %bb.s
   br label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtNtB5_4task4wake5WakerE6map_orbNCNCNvMNtNtCslghKHtsL3a4_5tokio4sync15batch_semaphoreNtB1o_9Semaphore12poll_acquire00EB1s_.exit.thread.i.i
 
 bb.v:                                             ; preds = %bb.u
-  %.val5.i.i.i = load ptr, ptr %i.be, align 8, !alias.scope !301, !noalias !300, !noundef !4
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
+  %.val5.i.i.i = load ptr, ptr %i.be, align 8, !alias.scope !301, !noalias !300, !noundef !4
   %i.bf = getelementptr inbounds nuw i8, ptr %.val, i64 8
   %i.bg = load ptr, ptr %i.bf, align 8, !noalias !302, !noundef !4 ; 2 uses
   %i.bh = icmp eq ptr %.val5.i.i.i, %i.bg
@@ -1049,8 +1047,8 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_4task4wak
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_4task4wake5WakerEECslghKHtsL3a4_5tokio.exit.i.i: ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtNtB5_4task4wake5WakerE6map_orbNCNCNvMNtNtCslghKHtsL3a4_5tokio4sync15batch_semaphoreNtB1o_9Semaphore12poll_acquire00EB1s_.exit.thread.i.i
   %i.bm = extractvalue { ptr, ptr } %i.bl, 0      ; 2 uses
-  %2 = extractvalue { ptr, ptr } %i.bl, 1
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bm) ]
+  %2 = extractvalue { ptr, ptr } %i.bl, 1
   %i.bn = load ptr, ptr %i.u, align 8, !noalias !300, !align !7, !noundef !4
   %i.bo = load ptr, ptr %i.be, align 8, !noalias !300
   store ptr %i.bm, ptr %i.u, align 8, !noalias !300

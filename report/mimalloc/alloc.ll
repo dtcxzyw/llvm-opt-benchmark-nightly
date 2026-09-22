@@ -202,8 +202,8 @@ _mi_page_usable_size.exit10:                      ; preds = %bb.j, %bb.k
 
 bb.l:                                             ; preds = %_mi_page_usable_size.exit10
   %i.ba = getelementptr inbounds nuw i8, ptr %.0.i.i1334, i64 %i.ar ; 3 uses
-  %4 = sub nuw i64 %.0.i8, %i.ar                  ; 3 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.ba, i64 8) ]
+  %4 = sub nuw i64 %.0.i8, %i.ar                  ; 3 uses
   %i.bb = load i64, ptr @_mi_cpu_stosb_max, align 8, !tbaa !37
   %.not.i.i.i = icmp ugt i64 %4, %i.bb
   br i1 %.not.i.i.i, label %bb.n, label %bb.m, !prof !32
@@ -232,8 +232,7 @@ _mi_memzero_aligned.exit:                         ; preds = %bb.n, %bb.m, %bb.o,
   br i1 %i.b, label %bb.s, label %bb.p, !prof !32
 
 bb.p:                                             ; preds = %_mi_memzero_aligned.exit
-  call void @llvm.assume(i1 true) [ "align"(ptr %.0.i.i1333, i64 8) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 8) ]
+  call void @llvm.assume(i1 true) [ "align"(ptr %.0.i.i1333, i64 8), "align"(ptr %1, i64 8) ]
   %i.bg = load i64, ptr @_mi_cpu_movsb_max, align 8, !tbaa !37
   %.not.i.i = icmp ugt i64 %i.bf, %i.bg
   br i1 %.not.i.i, label %bb.r, label %bb.q, !prof !32
@@ -611,8 +610,7 @@ bb.u:                                             ; preds = %bb.t, %_mi_page_usa
   br i1 %i.d, label %bb.y, label %bb.v, !prof !32
 
 bb.v:                                             ; preds = %bb.u
-  call void @llvm.assume(i1 true) [ "align"(ptr %.0.i.i16, i64 8) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 8) ]
+  call void @llvm.assume(i1 true) [ "align"(ptr %.0.i.i16, i64 8), "align"(ptr %0, i64 8) ]
   %i.ax = load i64, ptr @_mi_cpu_movsb_max, align 8, !tbaa !37
   %.not.i.i = icmp ugt i64 %i.av, %i.ax
   br i1 %.not.i.i, label %bb.x, label %bb.w, !prof !32

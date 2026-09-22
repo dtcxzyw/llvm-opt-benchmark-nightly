@@ -204,12 +204,11 @@ bb.ae:                                            ; preds = %bb.ad
 .noexc60.i:                                       ; preds = %bb.ae
   %i.cj = load i64, ptr %i.d, align 8, !range !4, !noalias !472, !noundef !5
   %i.ck = icmp eq i64 %i.cj, 2
-  %i.cl = load ptr, ptr %i.bw, align 8, !noalias !472 ; 5 uses
+  %i.cl = load ptr, ptr %i.bw, align 8, !noalias !472, !nonnull !5, !noundef !5 ; 3 uses
   br i1 %i.ck, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %.noexc60.i
   %.sroa.4.0.copyload.i.i.i.i.i.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !472
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cl) ]
   %i.cm = icmp eq i64 %.sroa.4.0.copyload.i.i.i.i.i.i.i, 13
   br i1 %i.cm, label %_RINvYINtNtCsiWcPrHiWZDL_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs6SYjS1KFWza_10serde_core2de9MapAccess8next_keyNtNvXNvNtNtCs1YANDSn9Kib_7git_xet4auth3ssh1__NtB25_32GitLFSAuthentationResponseHeaderNtB1a_11Deserialize11deserialize7___FieldEB29_.exit.i, label %_RINvYINtNtCsiWcPrHiWZDL_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs6SYjS1KFWza_10serde_core2de9MapAccess8next_keyNtNvXNvNtNtCs1YANDSn9Kib_7git_xet4auth3ssh1__NtB25_32GitLFSAuthentationResponseHeaderNtB1a_11Deserialize11deserialize7___FieldEB29_.exit.thread78.i
 
@@ -219,7 +218,6 @@ _RINvYINtNtCsiWcPrHiWZDL_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs6
 
 bb.ag:                                            ; preds = %.noexc60.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !472
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cl) ]
   br label %.loopexit
 
 .loopexit.i44:                                    ; preds = %bb.ao, %bb.ai, %bb.ae, %bb.ab
@@ -622,13 +620,12 @@ bb.aw:                                            ; preds = %bb.av
 .noexc114.i:                                      ; preds = %bb.aw
   %i.ek = load i64, ptr %i.h, align 8, !range !4, !noalias !640, !noundef !5 ; 2 uses
   %i.el = icmp eq i64 %i.ek, 2
-  %i.em = load ptr, ptr %i.dv, align 8, !noalias !640 ; 13 uses
+  %i.em = load ptr, ptr %i.dv, align 8, !noalias !640, !nonnull !5, !noundef !5 ; 11 uses
   br i1 %i.el, label %bb.bg, label %bb.ax
 
 bb.ax:                                            ; preds = %.noexc114.i
   %.sroa.4.0.copyload.i.i.i.i.i.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !640 ; 2 uses
   %i.en = trunc nuw i64 %i.ek to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.em) ]
   br i1 %i.en, label %bb.ay, label %bb.bc
 
 bb.ay:                                            ; preds = %bb.ax
@@ -713,7 +710,6 @@ bb.bf:                                            ; preds = %bb.bc
 
 bb.bg:                                            ; preds = %.noexc114.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !640
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.em) ]
   br label %.loopexit
 
 .body140.i:                                       ; preds = %.loopexit.loopexit.i.loopexit, %.loopexit.loopexit.i.loopexit.split-lp, %bb.da, %.body143.i, %.body127.i, %.body.i49, %.loopexit.split-lp.i, %.loopexit.loopexit.split-lp.i
@@ -1116,10 +1112,10 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvXsh_NtCsiWcPrHiWZDL_10serde_json2deINtB6_6MapKeyNtNtB8_4read7StrReadENtNtCs6SYjS1KFWza_10serde_core2de12Deserializer15deserialize_anyNtNtNtNtCseHpJhTld930_5serde7private2de7content14ContentVisitorECs1YANDSn9Kib_7git_xet.exit
 
 bb.c:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j) ]
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !744 ; 2 uses
   %i.l = trunc nuw i64 %i.g to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j) ]
   br i1 %i.l, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
@@ -1522,10 +1518,10 @@ bb.al:                                            ; preds = %bb.ac
   br label %bb.ah
 
 bb.am:                                            ; preds = %bb.ac
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cb) ]
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.n, i64 16
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !1032 ; 2 uses
   %i.cr = trunc nuw i64 %i.by to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cb) ]
   br i1 %i.cr, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %bb.am

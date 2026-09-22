@@ -202,8 +202,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %_RNvXs1_NtCs4wP2HXfJTCR_5alloc5allocNtB5_6GlobalNtNtCsj6eKBz9Db1c_4core5alloc9Allocator4grow.exit
 
 _RNvXs1_NtCs4wP2HXfJTCR_5alloc5allocNtB5_6GlobalNtNtCsj6eKBz9Db1c_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   %i.f = icmp uge i64 %i.b, %4
   tail call void @llvm.assume(i1 %i.f)
   %i.g = tail call noundef ptr @_RNvCshxk5dXoXnx9_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %4, i64 noundef range(i64 1, 9) %2, i64 noundef range(i64 0, -9223372036854775808) %i.b) #28
@@ -606,11 +606,10 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write, inaccessiblemem: write) uwtable
 define hidden void @_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E3newCs6et67aoV1xO_11proc_macro2(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([48 x i8]) align 8 captures(none) dereferenceable(48) initializes((0, 48)) %0, ptr noundef nonnull %1, ptr noundef %2, ptr noundef nonnull %3, ptr noundef %4) unnamed_addr #10 personality ptr @rust_eh_personality {
 bb.a:
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2), "nonnull"(ptr %4) ]
   %i.a = ptrtoint ptr %2 to i64
   %i.b = ptrtoint ptr %1 to i64
   %i.c = sub nuw i64 %i.a, %i.b
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
   %i.d = ptrtoint ptr %4 to i64
   %i.e = ptrtoint ptr %3 to i64
   %i.f = sub nuw i64 %i.d, %i.e
@@ -740,12 +739,12 @@ bb.h:                                             ; preds = %.body
   br label %common.resume
 
 bb.i:                                             ; preds = %_RNvXsE_Cs6et67aoV1xO_11proc_macro2NtB5_5IdentNtNtCsj6eKBz9Db1c_4core3fmt7Display3fmt.exit.i12
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.copyload) ]
   %.sroa.021.0.copyload = load i64, ptr %i.c, align 8, !noalias !297 ; 2 uses
   %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx.i7, align 8, !noalias !297, !nonnull !4, !noundef !4 ; 2 uses
   %.sroa.6.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx.i8, align 8, !noalias !297 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !292
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !292
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.copyload) ]
   %spec.store.select = call i64 @llvm.umin.i64(i64 %.sroa.8.0.copyload, i64 %.sroa.6.0.copyload)
   %i.q = call i32 @memcmp(ptr nonnull %.sroa.5.0.copyload, ptr nonnull %.sroa.4.0.copyload, i64 %spec.store.select) ; 2 uses
   %i.r = icmp eq i64 %.sroa.021.0.copyload, 0

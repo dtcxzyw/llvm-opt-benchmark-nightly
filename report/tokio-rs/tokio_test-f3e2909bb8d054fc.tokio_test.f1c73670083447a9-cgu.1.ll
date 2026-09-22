@@ -202,8 +202,8 @@ bb.i:                                             ; preds = %bb.h
 define internal fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECskKYJnXoAH79_10tokio_test(ptr %.0.val) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.b = ptrtoint ptr %.0.val to i64              ; 2 uses
   %i.c = and i64 %i.b, 3
   switch i64 %i.c, label %default.unreachable [
@@ -580,8 +580,7 @@ bb.c:                                             ; preds = %bb.c, %bb.b
 
 _RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterNtNtCskKYJnXoAH79_10tokio_test2io6ActionENtNtNtNtBb_4iter6traits8iterator8Iterator4folduQNCINvNtNtB1B_8adapters3map8map_foldRBQ_BQ_uNvYBQ_NtNtBb_5clone5Clone5cloneNCINvNvXs_NtB2o_9enumerateINtB3D_9EnumeratepEB1v_4fold9enumerateBQ_uNCINvNvB1v_8for_each4callTjBQ_ENCINvMs2_NtNtCs1xwejQucwHj_5alloc11collections9vec_dequeINtB5d_8VecDequeBQ_E10write_iterINtNtB2o_6cloned6ClonedINtNtB5d_4iter4IterBQ_EEE0E0E0E0EBU_.exit.i: ; preds = %bb.c, %bb.a
   %.sroa.9.0 = phi i64 [ %.sroa.9.0.copyload, %bb.a ], [ %i.q, %bb.c ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.54.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.65.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.54.0.copyload), "nonnull"(ptr %.sroa.65.0.copyload) ]
   %i.t = icmp eq ptr %.sroa.54.0.copyload, %.sroa.65.0.copyload
   br i1 %i.t, label %_RINvXs2_NtNtNtCs1xwejQucwHj_5alloc11collections9vec_deque4iterINtB6_4IterNtNtCskKYJnXoAH79_10tokio_test2io6ActionENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4folduNCINvNtNtB1U_8adapters3map8map_foldRB19_B19_uNvYB19_NtNtB1W_5clone5Clone5cloneNCINvNvXs_NtB2W_9enumerateINtB4f_9EnumeratepEB1O_4fold9enumerateB19_uNCINvNvB1O_8for_each4callTjB19_ENCINvMs2_B8_INtB8_8VecDequeB19_E10write_iterINtNtB2W_6cloned6ClonedBY_EE0E0E0E0EB1d_.exit, label %bb.d
 

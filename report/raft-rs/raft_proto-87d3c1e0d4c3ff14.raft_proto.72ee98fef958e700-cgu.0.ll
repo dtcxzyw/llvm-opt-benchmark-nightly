@@ -204,9 +204,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCslpwiOMB70Kp_8protobuf7reflect3acc8AccessorECs9RMo4C3Dvu6_10raft_proto.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.16.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.24.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !113, !invariant.load !7
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.16.val) ]
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.16.val, i64 noundef range(i64 1, 0) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #22
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCslpwiOMB70Kp_8protobuf7reflect3acc8AccessorECs9RMo4C3Dvu6_10raft_proto.exit
 
@@ -484,9 +484,9 @@ bb.i:                                             ; preds = %bb.h
   unreachable
 
 _RNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB7_6LazyV2NtNtB9_10descriptor19FileDescriptorProtoE3getNCNvNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb21file_descriptor_proto0E0B1I_.exit: ; preds = %_RNCNvNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb21file_descriptor_proto0B7_.exit.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(352) %i.k, ptr noundef nonnull align 8 dereferenceable(352) %i.c, i64 352, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   store ptr %i.k, ptr %.val, align 8
   ret void
 
@@ -889,9 +889,9 @@ bb.am:                                            ; preds = %bb.al
   unreachable
 
 _RNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB7_6LazyV2NtNtNtB9_7reflect7message17MessageDescriptorE3getNCNvXs0_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB1M_5EntryNtNtB9_7message7Message17descriptor_static0E0B1Q_.exit: ; preds = %_RNCNvXs0_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB7_5EntryNtNtCslpwiOMB70Kp_8protobuf7message7Message17descriptor_static0Bb_.exit.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(216) %i.ce, ptr noundef nonnull align 8 dereferenceable(216) %i.l, i64 216, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   store ptr %i.ce, ptr %.val, align 8
   ret void
 
@@ -1114,9 +1114,9 @@ bb.v:                                             ; preds = %bb.u
   unreachable
 
 _RNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB7_6LazyV2NtNtNtB9_7reflect7message17MessageDescriptorE3getNCNvXs6_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB1M_16SnapshotMetadataNtNtB9_7message7Message17descriptor_static0E0B1Q_.exit: ; preds = %_RNCNvXs6_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB7_16SnapshotMetadataNtNtCslpwiOMB70Kp_8protobuf7message7Message17descriptor_static0Bb_.exit.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(216) %i.ar, ptr noundef nonnull align 8 dereferenceable(216) %i.i, i64 216, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   store ptr %i.ar, ptr %.val, align 8
   ret void
 
@@ -1379,9 +1379,9 @@ bb.aa:                                            ; preds = %bb.z
   unreachable
 
 _RNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB7_6LazyV2NtNtNtB9_7reflect7message17MessageDescriptorE3getNCNvXsA_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB1M_10ConfChangeNtNtB9_7message7Message17descriptor_static0E0B1Q_.exit: ; preds = %_RNCNvXsA_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB7_10ConfChangeNtNtCslpwiOMB70Kp_8protobuf7message7Message17descriptor_static0Bb_.exit.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(216) %i.bc, ptr noundef nonnull align 8 dereferenceable(216) %i.j, i64 216, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   store ptr %i.bc, ptr %.val, align 8
   ret void
 
@@ -1564,9 +1564,9 @@ bb.q:                                             ; preds = %bb.p
   unreachable
 
 _RNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB7_6LazyV2NtNtNtB9_7reflect7message17MessageDescriptorE3getNCNvXsG_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB1M_16ConfChangeSingleNtNtB9_7message7Message17descriptor_static0E0B1Q_.exit: ; preds = %_RNCNvXsG_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB7_16ConfChangeSingleNtNtCslpwiOMB70Kp_8protobuf7message7Message17descriptor_static0Bb_.exit.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(216) %i.ag, ptr noundef nonnull align 8 dereferenceable(216) %i.h, i64 216, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   store ptr %i.ag, ptr %.val, align 8
   ret void
 
@@ -1789,9 +1789,9 @@ bb.v:                                             ; preds = %bb.u
   unreachable
 
 _RNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB7_6LazyV2NtNtNtB9_7reflect7message17MessageDescriptorE3getNCNvXsM_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB1M_12ConfChangeV2NtNtB9_7message7Message17descriptor_static0E0B1Q_.exit: ; preds = %_RNCNvXsM_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB7_12ConfChangeV2NtNtCslpwiOMB70Kp_8protobuf7message7Message17descriptor_static0Bb_.exit.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(216) %i.ar, ptr noundef nonnull align 8 dereferenceable(216) %i.i, i64 216, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   store ptr %i.ar, ptr %.val, align 8
   ret void
 
@@ -1974,9 +1974,9 @@ bb.q:                                             ; preds = %bb.p
   unreachable
 
 _RNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB7_6LazyV2NtNtNtB9_7reflect7message17MessageDescriptorE3getNCNvXsc_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB1M_8SnapshotNtNtB9_7message7Message17descriptor_static0E0B1Q_.exit: ; preds = %_RNCNvXsc_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB7_8SnapshotNtNtCslpwiOMB70Kp_8protobuf7message7Message17descriptor_static0Bb_.exit.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(216) %i.ag, ptr noundef nonnull align 8 dereferenceable(216) %i.h, i64 216, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   store ptr %i.ag, ptr %.val, align 8
   ret void
 
@@ -2379,9 +2379,9 @@ bb.ck:                                            ; preds = %bb.cj
   unreachable
 
 _RNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB7_6LazyV2NtNtNtB9_7reflect7message17MessageDescriptorE3getNCNvXsi_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB1M_7MessageNtNtB9_7message7Message17descriptor_static0E0B1Q_.exit: ; preds = %_RNCNvXsi_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB7_7MessageNtNtCslpwiOMB70Kp_8protobuf7message7Message17descriptor_static0Bb_.exit.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(216) %i.gk, ptr noundef nonnull align 8 dereferenceable(216) %i.v, i64 216, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   store ptr %i.gk, ptr %.val, align 8
   ret void
 
@@ -2604,9 +2604,9 @@ bb.v:                                             ; preds = %bb.u
   unreachable
 
 _RNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB7_6LazyV2NtNtNtB9_7reflect7message17MessageDescriptorE3getNCNvXso_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB1M_9HardStateNtNtB9_7message7Message17descriptor_static0E0B1Q_.exit: ; preds = %_RNCNvXso_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB7_9HardStateNtNtCslpwiOMB70Kp_8protobuf7message7Message17descriptor_static0Bb_.exit.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(216) %i.ar, ptr noundef nonnull align 8 dereferenceable(216) %i.i, i64 216, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   store ptr %i.ar, ptr %.val, align 8
   ret void
 
@@ -2917,9 +2917,9 @@ bb.ah:                                            ; preds = %bb.ag
   unreachable
 
 _RNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB7_6LazyV2NtNtNtB9_7reflect7message17MessageDescriptorE3getNCNvXsu_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB1M_9ConfStateNtNtB9_7message7Message17descriptor_static0E0B1Q_.exit: ; preds = %_RNCNvXsu_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB7_9ConfStateNtNtCslpwiOMB70Kp_8protobuf7message7Message17descriptor_static0Bb_.exit.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(216) %i.bt, ptr noundef nonnull align 8 dereferenceable(216) %i.k, i64 216, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   store ptr %i.bt, ptr %.val, align 8
   ret void
 
@@ -2980,9 +2980,9 @@ bb.f:                                             ; preds = %bb.d
   resume { ptr, i32 } %i.i
 
 _RNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB7_6LazyV2NtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb10ConfChangeE3getNvMsz_BT_BR_3newE0BX_.exit: ; preds = %bb.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.g, ptr noundef nonnull align 8 dereferenceable(72) %i.a, i64 72, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   store ptr %i.g, ptr %.val, align 8
   ret void
 
@@ -3045,9 +3045,9 @@ bb.f:                                             ; preds = %bb.d
   resume { ptr, i32 } %i.h
 
 _RNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB7_6LazyV2NtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb12ConfChangeV2E3getNvMsL_BT_BR_3newE0BX_.exit: ; preds = %bb.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.f, ptr noundef nonnull align 8 dereferenceable(88) %i.a, i64 88, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   store ptr %i.f, ptr %.val, align 8
   ret void
 
@@ -3098,9 +3098,9 @@ bb.f:                                             ; preds = %bb.d
   resume { ptr, i32 } %i.f
 
 _RNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB7_6LazyV2NtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleE3getNvMsF_BT_BR_3newE0BX_.exit: ; preds = %bb.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(25) %i.d, i8 0, i64 25, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   store ptr %i.d, ptr %.val, align 8
   ret void
 
@@ -3151,9 +3151,9 @@ bb.f:                                             ; preds = %bb.d
   resume { ptr, i32 } %i.f
 
 _RNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB7_6LazyV2NtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16SnapshotMetadataE3getNvMs5_BT_BR_3newE0BX_.exit: ; preds = %bb.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(41) %i.d, i8 0, i64 41, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   store ptr %i.d, ptr %.val, align 8
   ret void
 
@@ -3222,9 +3222,9 @@ bb.f:                                             ; preds = %bb.d
   resume { ptr, i32 } %i.k
 
 _RNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB7_6LazyV2NtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb5EntryE3getNvMs_BT_BR_3newE0BX_.exit: ; preds = %bb.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %i.i, ptr noundef nonnull align 8 dereferenceable(104) %i.a, i64 104, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   store ptr %i.i, ptr %.val, align 8
   ret void
 
@@ -3295,9 +3295,9 @@ bb.f:                                             ; preds = %bb.d
   resume { ptr, i32 } %i.l
 
 _RNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB7_6LazyV2NtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb7MessageE3getNvMsh_BT_BR_3newE0BX_.exit: ; preds = %bb.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(192) %i.j, ptr noundef nonnull align 8 dereferenceable(192) %i.a, i64 192, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   store ptr %i.j, ptr %.val, align 8
   ret void
 
@@ -3352,9 +3352,9 @@ bb.f:                                             ; preds = %bb.d
   resume { ptr, i32 } %i.f
 
 _RNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB7_6LazyV2NtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb8SnapshotE3getNvMsb_BT_BR_3newE0BX_.exit: ; preds = %bb.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.d, ptr noundef nonnull align 8 dereferenceable(64) %i.a, i64 64, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   store ptr %i.d, ptr %.val, align 8
   ret void
 
@@ -3421,9 +3421,9 @@ bb.f:                                             ; preds = %bb.d
   resume { ptr, i32 } %i.f
 
 _RNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB7_6LazyV2NtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb9ConfStateE3getNvMst_BT_BR_3newE0BX_.exit: ; preds = %bb.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.d, ptr noundef nonnull align 8 dereferenceable(120) %i.a, i64 120, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   store ptr %i.d, ptr %.val, align 8
   ret void
 
@@ -3474,8 +3474,8 @@ bb.f:                                             ; preds = %bb.d
   resume { ptr, i32 } %i.e
 
 _RNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB7_6LazyV2NtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb9HardStateE3getNvMsn_BT_BR_3newE0BX_.exit: ; preds = %bb.b
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   store ptr %_RNvCsbkii2mvYdKU_7___rustc19___rust_alloc_zeroed.i, ptr %.val, align 8
   ret void
 
@@ -3709,9 +3709,9 @@ bb.g:                                             ; preds = %bb.a
   unreachable
 
 _RNvYNCINvMs0_NtNtCsG258MDvU3F_3std4sync4onceNtBb_4Once9call_onceNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB18_6LazyV2NtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb10ConfChangeE3getNvMsz_B1V_B1T_3newE0E0INtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceB1Z_.exit: ; preds = %bb.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.g, ptr noundef nonnull align 8 dereferenceable(72) %i.a, i64 72, i1 false), !noalias !694
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !694
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   store ptr %i.g, ptr %.val.i.i, align 8, !noalias !694
   ret void
 }
@@ -3775,9 +3775,9 @@ bb.g:                                             ; preds = %bb.a
   unreachable
 
 _RNvYNCINvMs0_NtNtCsG258MDvU3F_3std4sync4onceNtBb_4Once9call_onceNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB18_6LazyV2NtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb12ConfChangeV2E3getNvMsL_B1V_B1T_3newE0E0INtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceB1Z_.exit: ; preds = %bb.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.f, ptr noundef nonnull align 8 dereferenceable(88) %i.a, i64 88, i1 false), !noalias !709
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !709
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   store ptr %i.f, ptr %.val.i.i, align 8, !noalias !709
   ret void
 }
@@ -3829,9 +3829,9 @@ bb.g:                                             ; preds = %bb.a
   unreachable
 
 _RNvYNCINvMs0_NtNtCsG258MDvU3F_3std4sync4onceNtBb_4Once9call_onceNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB18_6LazyV2NtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleE3getNvMsF_B1V_B1T_3newE0E0INtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceB1Z_.exit: ; preds = %bb.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(25) %i.d, i8 0, i64 25, i1 false), !noalias !724
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !724
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   store ptr %i.d, ptr %.val.i.i, align 8, !noalias !724
   ret void
 }
@@ -3883,9 +3883,9 @@ bb.g:                                             ; preds = %bb.a
   unreachable
 
 _RNvYNCINvMs0_NtNtCsG258MDvU3F_3std4sync4onceNtBb_4Once9call_onceNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB18_6LazyV2NtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16SnapshotMetadataE3getNvMs5_B1V_B1T_3newE0E0INtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceB1Z_.exit: ; preds = %bb.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(41) %i.d, i8 0, i64 41, i1 false), !noalias !739
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !739
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   store ptr %i.d, ptr %.val.i.i, align 8, !noalias !739
   ret void
 }
@@ -3955,9 +3955,9 @@ bb.g:                                             ; preds = %bb.a
   unreachable
 
 _RNvYNCINvMs0_NtNtCsG258MDvU3F_3std4sync4onceNtBb_4Once9call_onceNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB18_6LazyV2NtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb5EntryE3getNvMs_B1V_B1T_3newE0E0INtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceB1Z_.exit: ; preds = %bb.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %i.i, ptr noundef nonnull align 8 dereferenceable(104) %i.a, i64 104, i1 false), !noalias !754
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !754
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   store ptr %i.i, ptr %.val.i.i, align 8, !noalias !754
   ret void
 }
@@ -4029,9 +4029,9 @@ bb.g:                                             ; preds = %bb.a
   unreachable
 
 _RNvYNCINvMs0_NtNtCsG258MDvU3F_3std4sync4onceNtBb_4Once9call_onceNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB18_6LazyV2NtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb7MessageE3getNvMsh_B1V_B1T_3newE0E0INtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceB1Z_.exit: ; preds = %bb.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(192) %i.j, ptr noundef nonnull align 8 dereferenceable(192) %i.a, i64 192, i1 false), !noalias !769
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !769
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   store ptr %i.j, ptr %.val.i.i, align 8, !noalias !769
   ret void
 }
@@ -4087,9 +4087,9 @@ bb.g:                                             ; preds = %bb.a
   unreachable
 
 _RNvYNCINvMs0_NtNtCsG258MDvU3F_3std4sync4onceNtBb_4Once9call_onceNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB18_6LazyV2NtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb8SnapshotE3getNvMsb_B1V_B1T_3newE0E0INtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceB1Z_.exit: ; preds = %bb.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.d, ptr noundef nonnull align 8 dereferenceable(64) %i.a, i64 64, i1 false), !noalias !784
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !784
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   store ptr %i.d, ptr %.val.i.i, align 8, !noalias !784
   ret void
 }
@@ -4157,9 +4157,9 @@ bb.g:                                             ; preds = %bb.a
   unreachable
 
 _RNvYNCINvMs0_NtNtCsG258MDvU3F_3std4sync4onceNtBb_4Once9call_onceNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB18_6LazyV2NtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb9ConfStateE3getNvMst_B1V_B1T_3newE0E0INtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceB1Z_.exit: ; preds = %bb.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.d, ptr noundef nonnull align 8 dereferenceable(120) %i.a, i64 120, i1 false), !noalias !799
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !799
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   store ptr %i.d, ptr %.val.i.i, align 8, !noalias !799
   ret void
 }
@@ -4211,8 +4211,8 @@ bb.g:                                             ; preds = %bb.a
   unreachable
 
 _RNvYNCINvMs0_NtNtCsG258MDvU3F_3std4sync4onceNtBb_4Once9call_onceNCINvMs_NtCslpwiOMB70Kp_8protobuf7lazy_v2INtB18_6LazyV2NtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb9HardStateE3getNvMsn_B1V_B1T_3newE0E0INtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceB1Z_.exit: ; preds = %bb.b
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !814
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !814
   store ptr %_RNvCsbkii2mvYdKU_7___rustc19___rust_alloc_zeroed.i.i.i, ptr %.val.i.i, align 8, !noalias !814
   ret void
 }
@@ -4615,8 +4615,7 @@ bb.b:                                             ; preds = %bb.c, %bb.a
   %i.c = tail call { ptr, ptr } @_RNvXs9_NtCslpwiOMB70Kp_8protobuf8repeatedRINtB5_13RepeatedFieldNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterB15_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %0) ; 2 uses
   %i.d = extractvalue { ptr, ptr } %i.c, 0        ; 3 uses
   %i.e = extractvalue { ptr, ptr } %i.c, 1        ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d), "nonnull"(ptr %i.e) ]
   %i.f = icmp eq ptr %i.d, %i.e
   br i1 %i.f, label %._crit_edge, label %.lr.ph
 
@@ -4687,7 +4686,7 @@ bb.h:                                             ; preds = %bb.g, %._crit_edge
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef zeroext i1 @_RNvXsM_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB5_12ConfChangeV2NtNtCslpwiOMB70Kp_8protobuf7message7Message14is_initialized(ptr noundef nonnull align 8 captures(address, read_provenance) %0) unnamed_addr #0 {
+define noundef zeroext i1 @_RNvXsM_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB5_12ConfChangeV2NtNtCslpwiOMB70Kp_8protobuf7message7Message14is_initialized(ptr nofree noundef nonnull readonly align 8 captures(address, read_provenance) %0) unnamed_addr #0 {
 bb.a:
   %i.a = tail call { ptr, ptr } @_RNvXs9_NtCslpwiOMB70Kp_8protobuf8repeatedRINtB5_13RepeatedFieldNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterB15_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %0) ; 0 uses
   ret i1 true
@@ -4792,8 +4791,7 @@ bb.b:                                             ; preds = %bb.e, %bb.a
   %i.k = tail call { ptr, ptr } @_RNvXs9_NtCslpwiOMB70Kp_8protobuf8repeatedRINtB5_13RepeatedFieldNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterB15_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %1) ; 2 uses
   %i.l = extractvalue { ptr, ptr } %i.k, 0        ; 3 uses
   %i.m = extractvalue { ptr, ptr } %i.k, 1        ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.m) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l), "nonnull"(ptr %i.m) ]
   %i.n = icmp eq ptr %i.l, %i.m
   br i1 %i.n, label %._crit_edge, label %.lr.ph
 
@@ -5196,8 +5194,7 @@ bb.m:                                             ; preds = %bb.k, %bb.l
   %i.ac = tail call { ptr, ptr } @_RNvXs9_NtCslpwiOMB70Kp_8protobuf8repeatedRINtB5_13RepeatedFieldNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb5EntryENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterB15_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %0) ; 2 uses
   %i.ad = extractvalue { ptr, ptr } %i.ac, 0      ; 3 uses
   %i.ae = extractvalue { ptr, ptr } %i.ac, 1      ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ae) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ad) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ad), "nonnull"(ptr %i.ae) ]
   %i.af = icmp eq ptr %i.ad, %i.ae
   br i1 %i.af, label %._crit_edge, label %.lr.ph
 
@@ -5340,7 +5337,7 @@ bb.ae:                                            ; preds = %bb.ac, %bb.ad
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef zeroext i1 @_RNvXsi_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB5_7MessageNtNtCslpwiOMB70Kp_8protobuf7message7Message14is_initialized(ptr noundef nonnull align 8 captures(address, read_provenance) %0) unnamed_addr #0 {
+define noundef zeroext i1 @_RNvXsi_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB5_7MessageNtNtCslpwiOMB70Kp_8protobuf7message7Message14is_initialized(ptr nofree noundef nonnull readonly align 8 captures(address, read_provenance) %0) unnamed_addr #0 {
 bb.a:
   %i.a = tail call { ptr, ptr } @_RNvXs9_NtCslpwiOMB70Kp_8protobuf8repeatedRINtB5_13RepeatedFieldNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb5EntryENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterB15_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %0) ; 0 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -5623,8 +5620,7 @@ bb.w:                                             ; preds = %bb.s, %bb.y
   %i.at = tail call { ptr, ptr } @_RNvXs9_NtCslpwiOMB70Kp_8protobuf8repeatedRINtB5_13RepeatedFieldNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb5EntryENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterB15_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %1) ; 2 uses
   %i.au = extractvalue { ptr, ptr } %i.at, 0      ; 3 uses
   %i.av = extractvalue { ptr, ptr } %i.at, 1      ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.av) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.au) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.au), "nonnull"(ptr %i.av) ]
   %i.aw = icmp eq ptr %i.au, %i.av
   br i1 %i.aw, label %._crit_edge, label %.lr.ph
 
@@ -6027,7 +6023,7 @@ bb.l:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvYNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb12ConfChangeV2NtNtCslpwiOMB70Kp_8protobuf7message7Message17check_initializedB8_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 4)) %0, ptr noundef nonnull align 8 captures(address, read_provenance) %1) unnamed_addr #0 {
+define hidden void @_RNvYNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb12ConfChangeV2NtNtCslpwiOMB70Kp_8protobuf7message7Message17check_initializedB8_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 4)) %0, ptr nofree noundef nonnull readonly align 8 captures(address, read_provenance) %1) unnamed_addr #0 {
 bb.a:
   %i.a = tail call { ptr, ptr } @_RNvXs9_NtCslpwiOMB70Kp_8protobuf8repeatedRINtB5_13RepeatedFieldNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterB15_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %1) ; 0 uses
   store i32 -1, ptr %0, align 8
@@ -6430,7 +6426,7 @@ bb.l:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvYNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb7MessageNtNtCslpwiOMB70Kp_8protobuf7message7Message17check_initializedB8_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noundef nonnull align 8 captures(address, read_provenance) %1) unnamed_addr #0 {
+define hidden void @_RNvYNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb7MessageNtNtCslpwiOMB70Kp_8protobuf7message7Message17check_initializedB8_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull readonly align 8 captures(address, read_provenance) %1) unnamed_addr #0 {
 bb.a:
   %i.a = tail call { ptr, ptr } @_RNvXs9_NtCslpwiOMB70Kp_8protobuf8repeatedRINtB5_13RepeatedFieldNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb5EntryENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterB15_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %1) ; 0 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 40

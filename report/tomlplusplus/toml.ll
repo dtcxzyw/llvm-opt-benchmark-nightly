@@ -205,13 +205,12 @@ declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #14
 ; Function Attrs: mustprogress uwtable
 define void @_ZN4toml2v35arrayC2EPKNS0_4impl15array_init_elemES5_(ptr noundef nonnull align 8 dereferenceable(64) initializes((0, 64)) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.a, i8 0, i64 32, i1 false)
   store ptr getelementptr inbounds nuw inrange(-16, 288) (i8, ptr @_ZTVN4toml2v35arrayE, i64 16), ptr %0, align 8, !tbaa !74
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 5 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, i8 0, i64 24, i1 false)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.c = icmp ule ptr %1, %2
   tail call void @llvm.assume(i1 %i.c)
   %i.d = icmp eq ptr %1, %2
@@ -614,6 +613,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define void @_ZN4toml2v35tableC2EPKNS0_4impl15table_init_pairES5_(ptr noundef nonnull align 8 dereferenceable(89) initializes((0, 40), (48, 52), (56, 64)) %0, ptr noundef %1, ptr nofree noundef readnone captures(address) %2) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.a, i8 0, i64 32, i1 false)
   store ptr getelementptr inbounds nuw inrange(-16, 288) (i8, ptr @_ZTVN4toml2v35tableE, i64 16), ptr %0, align 8, !tbaa !74
@@ -630,8 +630,6 @@ bb.a:
   store i64 0, ptr %i.g, align 8, !tbaa !157
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 88
   store i8 0, ptr %i.h, align 8, !tbaa !144
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.i = icmp ule ptr %1, %2
   tail call void @llvm.assume(i1 %i.i)
   %i.j = icmp eq ptr %1, %2
@@ -1034,12 +1032,12 @@ define void @_ZN4toml2v34impl9formatterC2EPKNS0_4nodeEPKNS0_5tableERKNS1_19forma
 bb.a:
   %.not = icmp eq ptr %2, null
   %i.a = select i1 %.not, ptr %1, ptr %2          ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.a) ]
   store ptr %i.a, ptr %0, align 8, !tbaa !121
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %3, ptr %i.b, align 8, !tbaa !122
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, ptr noundef nonnull align 8 dereferenceable(24) %4, i64 24, i1 false), !tbaa.struct !701
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.a) ]
   %i.d = load i64, ptr %i.c, align 8, !tbaa !125
   %i.e = load i64, ptr %3, align 8, !tbaa !703
   %i.f = or i64 %i.e, %i.d

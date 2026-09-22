@@ -204,13 +204,12 @@ bb.av:                                            ; preds = %bb.au
 .noexc131.i:                                      ; preds = %bb.av
   %i.ek = load i64, ptr %i.h, align 8, !dbg !8201, !range !1469, !noalias !7970, !noundef !594 ; 2 uses
   %i.el = icmp eq i64 %i.ek, 2, !dbg !8201
-  %i.em = load ptr, ptr %i.dt, align 8, !dbg !8203, !noalias !7970 ; 8 uses
+  %i.em = load ptr, ptr %i.dt, align 8, !dbg !8203, !noalias !7970, !nonnull !594, !noundef !594 ; 6 uses
   br i1 %i.el, label %bb.bd, label %bb.aw, !dbg !8204
 
 bb.aw:                                            ; preds = %.noexc131.i
   %.sroa.4.0.copyload.i.i.i.i.i.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i, align 8, !dbg !8205, !noalias !7970
   %i.en = trunc nuw i64 %i.ek to i1, !dbg !8204
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.em) ]
     #dbg_value(i64 %.sroa.4.0.copyload.i.i.i.i.i.i.i, !7972, !DIExpression(), !7324)
     #dbg_value(i64 %.sroa.4.0.copyload.i.i.i.i.i.i.i, !7972, !DIExpression(), !7332)
   %i.eo = icmp eq i64 %.sroa.4.0.copyload.i.i.i.i.i.i.i, 4, !dbg !8206 ; 2 uses
@@ -346,7 +345,6 @@ _RINvXNvXNvCs3JBf551F2Kj_4qlogs7_1__NtB8_12VantagePointNtNtCs9xKKqPmwf7Y_10serde
 
 bb.bd:                                            ; preds = %.noexc131.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !dbg !8217, !noalias !7970
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.em) ]
   br label %.loopexit, !dbg !8218
 
 .body152.i:                                       ; preds = %.loopexit.loopexit.i.loopexit.split-lp, %.loopexit.loopexit.i.loopexit.loopexit.split-lp, %.loopexit.loopexit.i.loopexit.loopexit, %bb.co, %bb.ck, %.body.i, %.loopexit.split-lp.i, %.loopexit.loopexit.split-lp.i
@@ -749,13 +747,12 @@ bb.aw:                                            ; preds = %bb.av
 .noexc192.i:                                      ; preds = %bb.aw
   %i.ef = load i64, ptr %i.h, align 8, !dbg !9401, !range !1469, !noalias !9169, !noundef !594 ; 2 uses
   %i.eg = icmp eq i64 %i.ef, 2, !dbg !9401
-  %i.eh = load ptr, ptr %i.ds, align 8, !dbg !9403, !noalias !9169 ; 15 uses
+  %i.eh = load ptr, ptr %i.ds, align 8, !dbg !9403, !noalias !9169, !nonnull !594, !noundef !594 ; 13 uses
   br i1 %i.eg, label %bb.bg, label %bb.ax, !dbg !9404
 
 bb.ax:                                            ; preds = %.noexc192.i
   %.sroa.4.0.copyload.i.i.i.i.i.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i, align 8, !dbg !9405, !noalias !9169 ; 2 uses
   %i.ei = trunc nuw i64 %i.ef to i1, !dbg !9404
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.eh) ]
     #dbg_value(i64 %.sroa.4.0.copyload.i.i.i.i.i.i.i, !9171, !DIExpression(), !8631)
     #dbg_value(i64 %.sroa.4.0.copyload.i.i.i.i.i.i.i, !9171, !DIExpression(), !8639)
     #dbg_value(i64 %.sroa.4.0.copyload.i.i.i.i.i.i.i, !9171, !DIExpression(), !8644)
@@ -939,7 +936,6 @@ bb.bf:                                            ; preds = %bb.bc
 
 bb.bg:                                            ; preds = %.noexc192.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !dbg !9420, !noalias !9169
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.eh) ]
   br label %.loopexit, !dbg !9421
 
 bb.bh:                                            ; preds = %bb.db, %.body208.i, %.body.i56, %.loopexit.split-lp.i, %.loopexit.i49

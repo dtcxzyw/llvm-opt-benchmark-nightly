@@ -204,9 +204,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RNvXs8_NtCsgCecv3eZDcN_5alloc5boxedINtB5_3BoxDNtNtCsf3Ta7LF998c_4core5error5ErrorNtNtBM_6marker4SendNtB1j_4SyncEL_ENtNtNtBM_3ops4drop4Drop4dropCsbNLsQi0JuJ4_5tgrep.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !13, !invariant.load !6
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 1, -9223372036854775808) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #29
   br label %_RNvXs8_NtCsgCecv3eZDcN_5alloc5boxedINtB5_3BoxDNtNtCsf3Ta7LF998c_4core5error5ErrorNtNtBM_6marker4SendNtB1j_4SyncEL_ENtNtNtBM_3ops4drop4Drop4dropCsbNLsQi0JuJ4_5tgrep.exit
 
@@ -609,10 +609,10 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvXsh_NtCs6MoqnCnVQOT_10serde_json2deINtB6_6MapKeyNtNtB8_4read7StrReadENtNtCs4ZeZeX9PAiK_10serde_core2de12Deserializer18deserialize_stringNtNtB1b_5impls13StringVisitorECsbNLsQi0JuJ4_5tgrep.exit
 
 bb.c:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ]
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %.sroa.4.0.copyload.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !noalias !425 ; 8 uses
   %i.n = trunc nuw i64 %i.i to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ]
   br i1 %i.n, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c
@@ -1015,11 +1015,10 @@ bb.a:
   %i.u = alloca [16 x i8], align 8                ; 5 uses
   %i.v = alloca [8 x i8], align 8                 ; 6 uses
   %i.w = alloca [24 x i8], align 8                ; 9 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   %i.x = load ptr, ptr %.0.val, align 8, !nonnull !6, !noundef !6 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.0.val, i64 8 ; 2 uses
   %i.z = load i64, ptr %i.y, align 8, !noundef !6 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !504
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !504
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -1422,8 +1421,8 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.c
   %i.y = extractvalue { ptr, i64 } %i.t, 0        ; 2 uses
-  %1 = extractvalue { ptr, i64 } %i.t, 1          ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
+  %1 = extractvalue { ptr, i64 } %i.t, 1          ; 4 uses
   invoke void @_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VechE7reserveCsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.c, i64 noundef %1)
           to label %.noexc20 unwind label %bb.j
 
@@ -1826,13 +1825,13 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.x
 
 bb.c:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.o = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.p = load ptr, ptr %i.o, align 8, !nonnull !6, !noundef !6 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   %i.r = load i64, ptr %i.q, align 8, !noundef !6 ; 6 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   call void %.0.val(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.k, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.p, i64 noundef %i.r), !inline_history !777
   %i.s = load i8, ptr %i.k, align 8, !range !11, !noundef !6
   %i.t = trunc nuw i8 %i.s to i1

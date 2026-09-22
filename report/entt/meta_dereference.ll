@@ -204,7 +204,7 @@ _ZN4entt8meta_anyD2Ev.exit.i134:                  ; preds = %bb.bb, %bb.ba
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #26, !noalias !569
   %.pre195 = load ptr, ptr %i.ff, align 8, !tbaa !65, !noalias !572
   %.phi.trans.insert196 = getelementptr inbounds nuw i8, ptr %19, i64 56
-  %.pre197 = load ptr, ptr %.phi.trans.insert196, align 8, !tbaa !66, !noalias !572 ; 2 uses
+  %.pre197 = load ptr, ptr %.phi.trans.insert196, align 8, !tbaa !66, !noalias !572, !nonnull !106, !noundef !106
   call void @llvm.experimental.noalias.scope.decl(metadata !572)
   %i.fz = getelementptr inbounds nuw i8, ptr %18, i64 16
   %i.ga = getelementptr inbounds nuw i8, ptr %18, i64 24 ; 3 uses
@@ -219,7 +219,6 @@ _ZN4entt8meta_anyD2Ev.exit.i134:                  ; preds = %bb.bb, %bb.ba
   store ptr %.pre195, ptr %i.gd, align 8, !tbaa !65, !alias.scope !572
   %i.ge = getelementptr inbounds nuw i8, ptr %18, i64 48
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ge, i8 0, i64 16, i1 false), !alias.scope !572
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.pre197) ]
   invoke void %.pre197(i32 noundef 256, ptr noundef nonnull align 8 dereferenceable(64) %19, ptr noundef nonnull align 8 %18)
           to label %._ZN4entt8meta_anydeEv.exit137_crit_edge unwind label %bb.be
 
@@ -233,7 +232,7 @@ bb.bd:                                            ; preds = %bb.az
 ._ZN4entt8meta_anydeEv.exit137_crit_edge:         ; preds = %_ZN4entt8meta_anyD2Ev.exit.i134
   %.pre198 = load ptr, ptr %i.gd, align 8, !tbaa !65, !noalias !573
   %.phi.trans.insert199 = getelementptr inbounds nuw i8, ptr %18, i64 56
-  %.pre200 = load ptr, ptr %.phi.trans.insert199, align 8, !tbaa !66, !noalias !573 ; 2 uses
+  %.pre200 = load ptr, ptr %.phi.trans.insert199, align 8, !tbaa !66, !noalias !573, !nonnull !106, !noundef !106
   call void @llvm.experimental.noalias.scope.decl(metadata !573)
   %i.gh = getelementptr inbounds nuw i8, ptr %17, i64 16
   %i.gi = getelementptr inbounds nuw i8, ptr %17, i64 24 ; 3 uses
@@ -248,7 +247,6 @@ bb.bd:                                            ; preds = %bb.az
   store ptr %.pre198, ptr %i.gl, align 8, !tbaa !65, !alias.scope !573
   %i.gm = getelementptr inbounds nuw i8, ptr %17, i64 48 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.gm, i8 0, i64 16, i1 false), !alias.scope !573
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.pre200) ]
   invoke void %.pre200(i32 noundef 256, ptr noundef nonnull align 8 dereferenceable(64) %18, ptr noundef nonnull align 8 %17)
           to label %_ZN4entt8meta_anydeEv.exit139 unwind label %bb.bf
 

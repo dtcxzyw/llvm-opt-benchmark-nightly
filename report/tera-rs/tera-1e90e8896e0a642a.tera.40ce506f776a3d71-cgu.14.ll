@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
     #dbg_value(i8 2, !3541, !DIExpression(), !7293)
-  fence acquire, !dbg !7314
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  fence acquire, !dbg !7314
     #dbg_value(ptr %.0.val, !3788, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7295)
     #dbg_value(ptr %.0.val, !3795, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7297)
     #dbg_value(ptr %.8.val, !3788, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !7295)
@@ -280,8 +280,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
     #dbg_value(i8 2, !3541, !DIExpression(), !7334)
-  fence acquire, !dbg !7355
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  fence acquire, !dbg !7355
     #dbg_value(ptr %.0.val, !3845, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7336)
     #dbg_value(ptr %.0.val, !3852, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7338)
     #dbg_value(ptr %.8.val, !3845, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !7336)
@@ -356,8 +356,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
     #dbg_value(i8 2, !3541, !DIExpression(), !7375)
-  fence acquire, !dbg !7396
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  fence acquire, !dbg !7396
     #dbg_value(ptr %.0.val, !3907, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7377)
     #dbg_value(ptr %.0.val, !3914, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7379)
     #dbg_value(ptr %.8.val, !3907, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !7377)
@@ -760,8 +760,7 @@ bb.a:
   br i1 %exitcond.not.i.us33.not, label %_RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCs5yXxDE1DkoT_4tera.exit.i.us.preheader, label %_RNvNtNtCsf3Ta7LF998c_4core3str7pattern14small_slice_eq.exit.thread21, !dbg !9850
 
 _RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCs5yXxDE1DkoT_4tera.exit.i.us.preheader: ; preds = %.preheader.split.us
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.us) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.546.0.copyload.i.us) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.us), "nonnull"(ptr %.sroa.546.0.copyload.i.us) ]
   br label %_RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCs5yXxDE1DkoT_4tera.exit.i.us, !dbg !9851
 
 bb.b:                                             ; preds = %_RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E4nextCs5yXxDE1DkoT_4tera.exit.i.us

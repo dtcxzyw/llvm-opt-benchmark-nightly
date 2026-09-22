@@ -204,9 +204,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RNvXs8_NtCs6i54tJFfzR_5alloc5boxedINtB5_3BoxDNtNtCs76KlaVGnJsc_4http10extensions8AnyCloneNtNtCsgxBkk5gSRhY_4core6marker4SendNtB1r_4SyncEL_ENtNtNtB1t_3ops4drop4Drop4dropCskg2ocPruTU7_30opendal_http_transport_reqwest.exit, label %_RNvXs_NtCs6i54tJFfzR_5alloc5allocNtB4_6GlobalNtNtCsgxBkk5gSRhY_4core5alloc9Allocator10deallocate.exit.i
 
 _RNvXs_NtCs6i54tJFfzR_5alloc5allocNtB4_6GlobalNtNtCsgxBkk5gSRhY_4core5alloc9Allocator10deallocate.exit.i: ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !12, !invariant.load !8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) %i.f) #25
   br label %_RNvXs8_NtCs6i54tJFfzR_5alloc5boxedINtB5_3BoxDNtNtCs76KlaVGnJsc_4http10extensions8AnyCloneNtNtCsgxBkk5gSRhY_4core6marker4SendNtB1r_4SyncEL_ENtNtNtB1t_3ops4drop4Drop4dropCskg2ocPruTU7_30opendal_http_transport_reqwest.exit
 
@@ -609,8 +609,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 _RNCINvMNtNtCs9k3SxhrAWiO_3std4sync9once_lockINtB5_8OnceLockNtNtNtCs5XgW7KoffLW_12opendal_core5types14http_transport15HttpTransporterE10initializeNCINvB4_11get_or_initNCNvB4_10try_insert0E0zE0Cskg2ocPruTU7_30opendal_http_transport_reqwest.exit: ; preds = %bb.b
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.0.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d), "nonnull"(ptr %.sroa.5.sroa.0.0.copyload) ]
   store ptr %i.b, ptr %.sroa.5.sroa.0.0.copyload, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %.sroa.5.sroa.0.0.copyload, i64 8
   store ptr %i.d, ptr %i.e, align 8
@@ -652,8 +651,7 @@ bb.d:                                             ; preds = %bb.a
   unreachable
 
 _RNvYNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtBb_4Once15call_once_forceNCINvMNtBd_9once_lockINtB1e_8OnceLockNtNtNtCs5XgW7KoffLW_12opendal_core5types14http_transport15HttpTransporterE10initializeNCINvB1d_11get_or_initNCNvB1d_10try_insert0E0zE0E0INtNtNtCsgxBkk5gSRhY_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceCskg2ocPruTU7_30opendal_http_transport_reqwest.exit: ; preds = %bb.b
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.0.0.copyload.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d), "nonnull"(ptr %.sroa.5.sroa.0.0.copyload.i.i) ]
   store ptr %i.b, ptr %.sroa.5.sroa.0.0.copyload.i.i, align 8, !noalias !400
   %i.e = getelementptr inbounds nuw i8, ptr %.sroa.5.sroa.0.0.copyload.i.i, i64 8
   store ptr %i.d, ptr %i.e, align 8, !noalias !400
@@ -1056,9 +1054,9 @@ bb.f:                                             ; preds = %bb.e, %_RINvMsi_NtC
   br i1 %i.ab, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueTNtNtB4_3any6TypeIdINtNtCs6i54tJFfzR_5alloc5boxed3BoxDNtNtCs76KlaVGnJsc_4http10extensions8AnyCloneNtNtB4_6marker4SendNtB2d_4SyncEL_EEECskg2ocPruTU7_30opendal_http_transport_reqwest.exit.i.i, label %_RNvXs_NtCs6i54tJFfzR_5alloc5allocNtB4_6GlobalNtNtCsgxBkk5gSRhY_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i
 
 _RNvXs_NtCs6i54tJFfzR_5alloc5allocNtB4_6GlobalNtNtCsgxBkk5gSRhY_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i: ; preds = %bb.f
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.ac = getelementptr inbounds nuw i8, ptr %.val5.i.i, i64 16
   %i.ad = load i64, ptr %i.ac, align 8, !range !12, !invariant.load !8, !noalias !518
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   tail call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i, i64 noundef %i.aa, i64 noundef range(i64 1, -9223372036854775807) %i.ad) #25, !noalias !518
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueTNtNtB4_3any6TypeIdINtNtCs6i54tJFfzR_5alloc5boxed3BoxDNtNtCs76KlaVGnJsc_4http10extensions8AnyCloneNtNtB4_6marker4SendNtB2d_4SyncEL_EEECskg2ocPruTU7_30opendal_http_transport_reqwest.exit.i.i
 

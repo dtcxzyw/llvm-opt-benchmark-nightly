@@ -205,6 +205,7 @@ _RNCNvNtCs5PEMdK7bMAG_12typst_syntax6parser6params0B5_.exit: ; preds = %_RNvMs2_
   br i1 %i.bg, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsaL1QbXo9JQH_3std11collections4hash3set7HashSetReNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherEECs5PEMdK7bMAG_12typst_syntax.exit, label %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i.i
 
 _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i.i: ; preds = %_RNCNvNtCs5PEMdK7bMAG_12typst_syntax6parser6params0B5_.exit
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3.i) ], !noalias !378
   %i.bh = shl i64 %.val4.i, 4                     ; 2 uses
   %i.bi = add i64 %i.bh, 16                       ; 2 uses
   %i.bj = add i64 %.val4.i, 17
@@ -213,7 +214,6 @@ _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   %i.bm = icmp ult i64 %i.bk, 9223372036854775793
   call void @llvm.assume(i1 %i.bl), !noalias !378
   call void @llvm.assume(i1 %i.bm), !noalias !378
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3.i) ], !noalias !378
   %i.bn = icmp eq i64 %i.bk, 0
   br i1 %i.bn, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsaL1QbXo9JQH_3std11collections4hash3set7HashSetReNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherEECs5PEMdK7bMAG_12typst_syntax.exit, label %bb.t
 
@@ -616,6 +616,7 @@ bb.a:
   br i1 %i.a, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCskt5MLIAl8nl_9hashbrown3set7HashSetReNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherEECs5PEMdK7bMAG_12typst_syntax.exit, label %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i
 
 _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i: ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.b = shl i64 %.8.val, 4                       ; 2 uses
   %i.c = add i64 %i.b, 16                         ; 2 uses
   %i.d = add i64 %.8.val, 17
@@ -624,7 +625,6 @@ _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   %i.g = icmp ult i64 %i.e, 9223372036854775793
   tail call void @llvm.assume(i1 %i.f)
   tail call void @llvm.assume(i1 %i.g)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.h = icmp eq i64 %i.e, 0
   br i1 %i.h, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCskt5MLIAl8nl_9hashbrown3set7HashSetReNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherEECs5PEMdK7bMAG_12typst_syntax.exit, label %bb.b
 
@@ -1027,8 +1027,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i, label %._crit_edge, label %_RNCNvMs_NtCs5PEMdK7bMAG_12typst_syntax4nodeNtB6_10SyntaxNode19errors_and_warnings0B8_.exit
 
 bb.d:                                             ; preds = %bb.b
-  %2 = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i, i64 8
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
+  %2 = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !1351
   %i.w = load ptr, ptr %2, align 8, !nonnull !19, !noundef !19 ; 5 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 16
@@ -1140,8 +1140,8 @@ _RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtNtCs5PEMdK7bMAG_12typst_syntax4nod
   br label %._crit_edge
 
 bb.n:                                             ; preds = %bb.b
-  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i, i64 8 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i, i64 8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !1351
   %i.ba = load ptr, ptr %3, align 8, !nonnull !19, !noundef !19 ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1361)
@@ -1285,8 +1285,8 @@ default.unreachable:                              ; preds = %.loopexit.i
   unreachable
 
 bb.c:                                             ; preds = %bb.b
-  %2 = getelementptr inbounds nuw i8, ptr %.sroa.02.0.i, i64 8 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
+  %2 = getelementptr inbounds nuw i8, ptr %.sroa.02.0.i, i64 8 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.02.0.i, i64 23
   %i.c = load i8, ptr %i.b, align 1, !alias.scope !1378, !noundef !19 ; 2 uses
   %.not.i.i = icmp sgt i8 %i.c, -1                ; 2 uses
@@ -1304,8 +1304,8 @@ bb.c:                                             ; preds = %bb.b
   br label %.loopexit.i
 
 bb.d:                                             ; preds = %bb.b
-  %3 = getelementptr inbounds nuw i8, ptr %.sroa.02.0.i, i64 8
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.02.0.i, i64 8
   %i.i = load ptr, ptr %3, align 8, !nonnull !19, !noundef !19 ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 32 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 47
@@ -1708,9 +1708,8 @@ bb.a:
   %i.a = alloca [16 x i8], align 8                ; 7 uses
   %i.b = alloca [15 x i8], align 8                ; 6 uses
   %i.c = alloca [32 x i8], align 8                ; 9 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
   %i.d = load i64, ptr %.8.val, align 8, !noundef !19
   %.val = load ptr, ptr %1, align 8, !nonnull !19, !noundef !19 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -1853,9 +1852,8 @@ _RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtNtCs5PEMdK7bMAG_12typst_syntax4nod
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal fastcc noundef range(i64 492581209243648, 0) i64 @_RNCNvMs_NtCs5PEMdK7bMAG_12typst_syntax4nodeNtB6_10SyntaxNode17synthesize_mapped0B8_(ptr nofree readonly captures(none) %.0.val, ptr nofree readonly captures(none) %.8.val, i64 noundef %0, i64 noundef %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   %i.a = load i16, ptr %.0.val, align 2, !range !43, !noundef !19
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
   %i.b = add i64 %1, %0                           ; 7 uses
   %i.c = getelementptr i8, ptr %.8.val, i64 8
   %.val = load ptr, ptr %i.c, align 8             ; 12 uses
@@ -1869,8 +1867,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %bb.e, label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %2 = icmp eq i64 %1, 0
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
+  %2 = icmp eq i64 %1, 0
   br i1 %2, label %bb.g, label %bb.f
 
 bb.d:                                             ; preds = %bb.b
@@ -2043,8 +2041,8 @@ bb.a:
   br i1 %.not, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   %i.b = load i32, ptr %2, align 4, !noundef !19
   %i.c = getelementptr i8, ptr %.0.val, i64 8
   %.val = load ptr, ptr %i.c, align 8, !nonnull !19, !noundef !19 ; 9 uses
@@ -2214,11 +2212,11 @@ bb.a:
   %i.e = alloca [16 x i8], align 8                ; 8 uses
   %i.f = alloca [16 x i8], align 8                ; 5 uses
   %i.g = alloca [16 x i8], align 8                ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   store ptr %1, ptr %i.g, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   store i64 5, ptr %i.h, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1602)
   %i.i = getelementptr inbounds nuw i8, ptr %.0.val, i64 65 ; 2 uses
   %i.j = load i8, ptr %i.i, align 1, !range !20, !alias.scope !1602, !noundef !19
@@ -2621,10 +2619,10 @@ bb.a:
   %i.c = alloca [16 x i8], align 8                ; 7 uses
   %i.d = alloca [16 x i8], align 8                ; 5 uses
   %i.e = alloca [16 x i8], align 8                ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   store ptr %1, ptr %i.e, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store i64 5, ptr %i.f, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1630)
   %i.g = getelementptr inbounds nuw i8, ptr %.0.val, i64 65 ; 2 uses
   %i.h = load i8, ptr %i.g, align 1, !range !20, !alias.scope !1630, !noundef !19
@@ -3027,8 +3025,8 @@ _RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtNtCs5PEMdK7bMAG_12typst_syntax4nod
   %.sroa.6.0.i.lcssa = phi i64 [ %i.n, %._crit_edge.i ], [ %i.as, %bb.k ], [ %.sroa.6.0.i338, %bb.l ] ; 17 uses
   %.sroa.4.0.i.lcssa = phi i64 [ %2, %._crit_edge.i ], [ %i.aq, %bb.k ], [ %.sroa.4.0.i339, %bb.l ] ; 31 uses
   %.lcssa155 = phi i1 [ %i.af, %._crit_edge.i ], [ %i.ao, %bb.k ], [ true, %bb.l ]
-  %.sroa.0.0.copyload = load i64, ptr %3, align 8, !noalias !2032 ; 8 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.u) ]
+  %.sroa.0.0.copyload = load i64, ptr %3, align 8, !noalias !2032 ; 8 uses
   %i.bc = icmp samesign ult i64 %.sroa.6.0.i.lcssa, %.sroa.0163.0.lcssa.i
   br i1 %i.bc, label %.invoke.i, label %bb.o, !prof !23
 
@@ -3431,8 +3429,8 @@ _RINvMNtCs5PEMdK7bMAG_12typst_syntax3astNtNtB5_4node10SyntaxNode9cast_lastNtB3_5
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(read, inaccessiblemem: write, target_mem: none) uwtable
 define noundef nonnull align 8 ptr @_RNvMs1i_NtCs5PEMdK7bMAG_12typst_syntax3astNtB6_10ImportItem10bound_name(i64 noundef range(i64 0, 2) %0, ptr nofree noundef readonly captures(none) %1) unnamed_addr #18 personality ptr @rust_eh_personality {
 bb.a:
-  %2 = trunc nuw i64 %0 to i1
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  %2 = trunc nuw i64 %0 to i1
   br i1 %2, label %.preheader, label %.preheader35
 
 .preheader:                                       ; preds = %bb.a, %bb.c
@@ -3535,8 +3533,8 @@ _RNvMs1j_NtCs5PEMdK7bMAG_12typst_syntax3astNtB6_17RenamedImportItem8new_name.exi
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(read, inaccessiblemem: write, target_mem: none) uwtable
 define noundef nonnull align 8 ptr @_RNvMs1i_NtCs5PEMdK7bMAG_12typst_syntax3astNtB6_10ImportItem13original_name(i64 noundef range(i64 0, 2) %0, ptr nofree noundef readonly captures(none) %1) unnamed_addr #18 personality ptr @rust_eh_personality {
 bb.a:
-  %2 = trunc nuw i64 %0 to i1
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  %2 = trunc nuw i64 %0 to i1
   br i1 %2, label %.preheader, label %.preheader40
 
 .preheader:                                       ; preds = %bb.a, %bb.c
@@ -3686,8 +3684,8 @@ _RNvMs1j_NtCs5PEMdK7bMAG_12typst_syntax3astNtB6_17RenamedImportItem13original_na
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(read, inaccessiblemem: write, target_mem: none) uwtable
 define noundef nonnull align 8 ptr @_RNvMs1i_NtCs5PEMdK7bMAG_12typst_syntax3astNtB6_10ImportItem4path(i64 noundef range(i64 0, 2) %0, ptr nofree noundef readonly captures(ret: address, provenance) %1) unnamed_addr #18 personality ptr @rust_eh_personality {
 bb.a:
-  %2 = trunc nuw i64 %0 to i1
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  %2 = trunc nuw i64 %0 to i1
   br i1 %2, label %.preheader, label %_RNvMs1j_NtCs5PEMdK7bMAG_12typst_syntax3astNtB6_17RenamedImportItem4path.exit
 
 .preheader:                                       ; preds = %bb.a, %bb.c
@@ -4090,6 +4088,7 @@ bb.q:                                             ; preds = %bb.n, %bb.n, %bb.n,
   br label %bb.r
 
 bb.r:                                             ; preds = %.sink.split.i.i, %bb.p
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i5.i) ]
   %cond.i.i = icmp eq i8 %i.bp, 11                ; 2 uses
   %i.dp = load i64, ptr %.sroa.7.0..sroa_idx, align 8, !range !35, !alias.scope !4771, !noalias !4772 ; 2 uses
   %i.dq = trunc nuw i64 %i.dp to i1
@@ -4100,7 +4099,6 @@ bb.r:                                             ; preds = %.sink.split.i.i, %b
   %storemerge.i.i = select i1 %cond.i.i, i64 %.sroa.5.0.i.i, i64 0, !prof !4775
   store i64 %storemerge155.i.i, ptr %.sroa.7.0..sroa_idx, align 8, !alias.scope !4771, !noalias !4772
   store i64 %storemerge.i.i, ptr %i.bh, align 8, !alias.scope !4771, !noalias !4772
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i5.i) ]
   %i.dt = icmp eq ptr %.sroa.0.0.i5.i, %i.w
   br i1 %i.dt, label %bb.u, label %bb.s
 
@@ -4503,8 +4501,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator4grow.exit
 
 _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   %i.f = icmp uge i64 %i.b, %4
   tail call void @llvm.assume(i1 %i.f)
   %i.g = tail call noundef ptr @_RNvCsjHpjAFo4bi0_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %4, i64 noundef range(i64 1, 9) %2, i64 noundef range(i64 0, -9223372036854775808) %i.b) #60
@@ -4907,7 +4905,7 @@ _RNvMs_NtCs5PEMdK7bMAG_12typst_syntax4nodeNtB4_10SyntaxNode3len.exit: ; preds = 
 define internal fastcc void @_RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %1, ptr nofree readonly captures(none) %.40.val, i64 noundef range(i64 16, 129) %2, ptr noundef %3) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
-  %.val15 = load ptr, ptr %0, align 8             ; 9 uses
+  %.val15 = load ptr, ptr %0, align 8, !nonnull !19, !noundef !19 ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %.val16 = load i64, ptr %i.b, align 8, !noundef !19 ; 2 uses
   %i.c = add i64 %.val16, 1                       ; 6 uses
@@ -4915,7 +4913,6 @@ bb.a:
   br i1 %.not6.i, label %_RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit.thread19, label %.lr.ph.i
 
 _RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit.thread19: ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val15) ]
   %i.d = getelementptr inbounds nuw i8, ptr %.val15, i64 16
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.d, ptr nonnull align 1 %.val15, i64 %i.c, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -4927,7 +4924,6 @@ _RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_pl
   %.not10.i.i.i = icmp ne i64 %i.f, 0
   %i.g = zext i1 %.not10.i.i.i to i64
   %.sroa.05.0.i.i.i = add nuw nsw i64 %i.e, %i.g  ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val15) ]
   %xtraiter = and i64 %.sroa.05.0.i.i.i, 1
   %i.h = icmp eq i64 %.sroa.05.0.i.i.i, 1
   br i1 %i.h, label %.epil.preheader, label %.lr.ph.i.new
@@ -5330,6 +5326,7 @@ _RNvNtCs5PEMdK7bMAG_12typst_syntax6parser7pattern.exit: ; preds = %bb.d, %bb.e, 
   br i1 %i.u, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsaL1QbXo9JQH_3std11collections4hash3set7HashSetReNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherEECs5PEMdK7bMAG_12typst_syntax.exit, label %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i.i
 
 _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i.i: ; preds = %_RNvNtCs5PEMdK7bMAG_12typst_syntax6parser7pattern.exit
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11.pre) ]
   %i.v = shl i64 %.val12.pre, 4                   ; 2 uses
   %i.w = add i64 %i.v, 16                         ; 2 uses
   %i.x = add i64 %.val12.pre, 17
@@ -5338,7 +5335,6 @@ _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   %i.aa = icmp ult i64 %i.y, 9223372036854775793
   call void @llvm.assume(i1 %i.z)
   call void @llvm.assume(i1 %i.aa)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11.pre) ]
   %i.ab = icmp eq i64 %i.y, 0
   br i1 %i.ab, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsaL1QbXo9JQH_3std11collections4hash3set7HashSetReNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherEECs5PEMdK7bMAG_12typst_syntax.exit, label %bb.j
 
@@ -5741,6 +5737,7 @@ bb.ai:                                            ; preds = %bb.ag
   br i1 %i.dh, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsaL1QbXo9JQH_3std11collections4hash3set7HashSetReNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherEECs5PEMdK7bMAG_12typst_syntax.exit, label %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i.i
 
 _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i.i: ; preds = %bb.ai
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val8) ]
   %i.di = shl i64 %.val9, 4                       ; 2 uses
   %i.dj = add i64 %i.di, 16                       ; 2 uses
   %i.dk = add i64 %.val9, 17
@@ -5749,7 +5746,6 @@ _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   %i.dn = icmp ult i64 %i.dl, 9223372036854775793
   call void @llvm.assume(i1 %i.dm)
   call void @llvm.assume(i1 %i.dn)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val8) ]
   %i.do = icmp eq i64 %i.dl, 0
   br i1 %i.do, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsaL1QbXo9JQH_3std11collections4hash3set7HashSetReNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherEECs5PEMdK7bMAG_12typst_syntax.exit, label %bb.aj
 
@@ -6152,6 +6148,7 @@ _RNvMs4_NtCs5PEMdK7bMAG_12typst_syntax6parserNtB5_6Parser10unexpected.exit.i.bac
   br label %_RNvMs4_NtCs5PEMdK7bMAG_12typst_syntax6parserNtB5_6Parser10unexpected.exit.i
 
 _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i.i.i: ; preds = %_RNvMs4_NtCs5PEMdK7bMAG_12typst_syntax6parserNtB5_6Parser24expect_closing_delimiter.exit.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3.i) ]
   %i.de = shl i64 %.val4.i, 4                     ; 2 uses
   %i.df = add i64 %i.de, 16                       ; 2 uses
   %i.dg = add i64 %.val4.i, 17
@@ -6160,7 +6157,6 @@ _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   %i.dj = icmp ult i64 %i.dh, 9223372036854775793
   call void @llvm.assume(i1 %i.di)
   call void @llvm.assume(i1 %i.dj)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3.i) ]
   %i.dk = icmp eq i64 %i.dh, 0
   br i1 %i.dk, label %_RNCNvNtCs5PEMdK7bMAG_12typst_syntax6parser4args0B5_.exit, label %bb.ab
 
@@ -6563,6 +6559,7 @@ bb.z:                                             ; preds = %_RNvNtCs5PEMdK7bMAG
   br i1 %i.be, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsaL1QbXo9JQH_3std11collections4hash3set7HashSetReNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherEECs5PEMdK7bMAG_12typst_syntax.exit, label %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i.i
 
 _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i.i: ; preds = %bb.z
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3) ]
   %i.bf = shl i64 %.val4, 4                       ; 2 uses
   %i.bg = add i64 %i.bf, 16                       ; 2 uses
   %i.bh = add i64 %.val4, 17
@@ -6571,7 +6568,6 @@ _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   %i.bk = icmp ult i64 %i.bi, 9223372036854775793
   call void @llvm.assume(i1 %i.bj)
   call void @llvm.assume(i1 %i.bk)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3) ]
   %i.bl = icmp eq i64 %i.bi, 0
   br i1 %i.bl, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsaL1QbXo9JQH_3std11collections4hash3set7HashSetReNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherEECs5PEMdK7bMAG_12typst_syntax.exit, label %bb.aa
 
@@ -6974,6 +6970,7 @@ bb.bq:                                            ; preds = %_RNvMs4_NtCs5PEMdK7
   br i1 %i.ku, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsaL1QbXo9JQH_3std11collections4hash3set7HashSetReNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherEECs5PEMdK7bMAG_12typst_syntax.exit, label %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i.i
 
 _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i.i: ; preds = %bb.bq
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3) ]
   %i.kv = shl i64 %.val4, 4                       ; 2 uses
   %i.kw = add i64 %i.kv, 16                       ; 2 uses
   %i.kx = add i64 %.val4, 17
@@ -6982,7 +6979,6 @@ _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   %i.la = icmp ult i64 %i.ky, 9223372036854775793
   call void @llvm.assume(i1 %i.kz)
   call void @llvm.assume(i1 %i.la)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3) ]
   %i.lb = icmp eq i64 %i.ky, 0
   br i1 %i.lb, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsaL1QbXo9JQH_3std11collections4hash3set7HashSetReNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherEECs5PEMdK7bMAG_12typst_syntax.exit, label %bb.br
 
@@ -7385,7 +7381,6 @@ bb.n:                                             ; preds = %.preheader.i
 _RNvMs_NtCs5PEMdK7bMAG_12typst_syntax4nodeNtB4_10SyntaxNode8children.exit.i: ; preds = %.preheader.i, %.preheader.i, %bb.m
   %.sroa.3.0.i.i = phi ptr [ %i.at, %bb.m ], [ inttoptr (i64 8 to ptr), %.preheader.i ], [ inttoptr (i64 8 to ptr), %.preheader.i ] ; 2 uses
   %.sroa.0.0.i.i = phi ptr [ %i.aq, %bb.m ], [ inttoptr (i64 8 to ptr), %.preheader.i ], [ inttoptr (i64 8 to ptr), %.preheader.i ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.3.0.i.i) ]
   br label %bb.o
 
 bb.o:                                             ; preds = %_RNvMs_NtCs5PEMdK7bMAG_12typst_syntax4nodeNtB4_10SyntaxNode3len.exit27.i, %_RNvMs_NtCs5PEMdK7bMAG_12typst_syntax4nodeNtB4_10SyntaxNode8children.exit.i
@@ -7394,7 +7389,7 @@ bb.o:                                             ; preds = %_RNvMs_NtCs5PEMdK7b
   %.sroa.010.0.i = phi ptr [ %.sroa.0.0.i.i, %_RNvMs_NtCs5PEMdK7bMAG_12typst_syntax4nodeNtB4_10SyntaxNode8children.exit.i ], [ %i.ay, %_RNvMs_NtCs5PEMdK7bMAG_12typst_syntax4nodeNtB4_10SyntaxNode3len.exit27.i ] ; 4 uses
   %.sroa.07.0.i = phi i64 [ 0, %_RNvMs_NtCs5PEMdK7bMAG_12typst_syntax4nodeNtB4_10SyntaxNode8children.exit.i ], [ %i.bx, %_RNvMs_NtCs5PEMdK7bMAG_12typst_syntax4nodeNtB4_10SyntaxNode3len.exit27.i ] ; 3 uses
   %.sroa.0.0.i = phi i64 [ %8, %_RNvMs_NtCs5PEMdK7bMAG_12typst_syntax4nodeNtB4_10SyntaxNode8children.exit.i ], [ %i.bw, %_RNvMs_NtCs5PEMdK7bMAG_12typst_syntax4nodeNtB4_10SyntaxNode3len.exit27.i ] ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.010.0.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.010.0.i), "nonnull"(ptr %.sroa.3.0.i.i) ]
   %i.ax = icmp eq ptr %.sroa.010.0.i, %.sroa.3.0.i.i
   br i1 %i.ax, label %_RNvNtCs5PEMdK7bMAG_12typst_syntax8reparser20overlapping_children.exit, label %bb.p
 
@@ -7797,6 +7792,7 @@ bb.b:                                             ; preds = %bb.a
   ], !prof !10220
 
 bb.c:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val), "nonnull"(ptr %.val1) ]
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !10219
@@ -7807,8 +7803,6 @@ bb.c:                                             ; preds = %bb.a
   store ptr %i.l, ptr %i.m, align 8, !noalias !10219
   %.sroa.433.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store ptr @_RNvXs1g_NtCs3oUPovFnLWP_4core3fmtRNtNtCsakL8LGkl72C_4ecow6string9EcoStringNtB6_5Debug3fmtCs5PEMdK7bMAG_12typst_syntax, ptr %.sroa.433.0..sroa_idx.i, align 8, !noalias !10219
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
   %i.n = call noundef zeroext i1 @_RNvNtCs3oUPovFnLWP_4core3fmt5write(ptr noundef nonnull %.val, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.val1, ptr noundef nonnull @29, ptr noundef nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !10219
   br label %_RNCNCNvXs9_NtCs5PEMdK7bMAG_12typst_syntax4nodeNtB9_14WarningWrapperNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmts_00Bb_.exit
@@ -7876,6 +7870,7 @@ _RNvNtNtCs3oUPovFnLWP_4core3str6traits11check_range.exit.thread3.i: ; preds = %_
   unreachable
 
 _RNvNtNtCs3oUPovFnLWP_4core3str6traits11check_range.exit.thread.i: ; preds = %_RNvNtNtCs3oUPovFnLWP_4core3str6traits11check_range.exit.i, %bb.j, %bb.h
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val), "nonnull"(ptr %.val1) ]
   %i.ak = sub nuw nsw i64 %i.y, %i.x
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i46.i, i64 %i.x
   store ptr %i.al, ptr %i.c, align 8, !noalias !10219, !captures !34
@@ -7895,8 +7890,6 @@ _RNvNtNtCs3oUPovFnLWP_4core3str6traits11check_range.exit.thread.i: ; preds = %_R
   store ptr %i.ao, ptr %i.aq, align 8, !noalias !10219
   %.sroa.414.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   store ptr @_RNvXs1g_NtCs3oUPovFnLWP_4core3fmtRNtNtCsakL8LGkl72C_4ecow6string9EcoStringNtB6_5Debug3fmtCs5PEMdK7bMAG_12typst_syntax, ptr %.sroa.414.0..sroa_idx.i, align 8, !noalias !10219
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
   %i.ar = call noundef zeroext i1 @_RNvNtCs3oUPovFnLWP_4core3fmt5write(ptr noundef nonnull %.val, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.val1, ptr noundef nonnull @28, ptr noundef nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !10219
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !10219

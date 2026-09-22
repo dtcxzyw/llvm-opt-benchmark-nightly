@@ -205,13 +205,8 @@ bb.dq:                                            ; preds = %bb.dp
   %.phi.trans.insert422.phi.trans.insert = getelementptr inbounds i8, ptr %i.blf, i64 -48
   %.pre423.pre = load ptr, ptr %.phi.trans.insert422.phi.trans.insert, align 8, !tbaa !107 ; 4 uses
   %.pre = load ptr, ptr %i.uh, align 8, !tbaa !33 ; 4 uses
-  %.pre409 = load ptr, ptr %i.ui, align 8, !tbaa !33 ; 4 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %.pre, i64 64) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %.pre409, i64 64) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %.pre412.pre, i64 64) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %.pre414.pre, i64 64) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %.pre419.pre, i64 64) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %.pre421.pre, i64 64) ]
+  %.pre409 = load ptr, ptr %i.ui, align 8, !tbaa !33 ; 4 uses
   %i.blp = shl i64 %i.bli, 2
   %i.blq = mul i64 %i.blp, %i.blh                 ; 3 uses
   %scevgep = getelementptr i8, ptr %.pre410.pre, i64 %i.blq ; 3 uses
@@ -379,21 +374,21 @@ bb.dq:                                            ; preds = %bb.dp
   %i.bqo = mul i64 %i.blk, %.reass                ; 3 uses
   %i.bqp = mul i64 %.099314, %i.blh               ; 3 uses
   %i.bqq = getelementptr inbounds nuw i8, ptr %.pre, i64 %i.bqn ; 2 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.bqq, i64 64) ]
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.bqq, i64 64), "align"(ptr %.pre409, i64 64) ]
   %i.bqr = getelementptr inbounds nuw [4 x i8], ptr %i.bqq, i64 %i.blo ; 2 uses
   %i.bqs = getelementptr inbounds nuw i8, ptr %.pre409, i64 %i.bqo ; 2 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.bqs, i64 64) ]
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.bqs, i64 64), "align"(ptr %.pre412.pre, i64 64) ]
   %i.bqt = getelementptr inbounds nuw [4 x i8], ptr %i.bqs, i64 %i.blo ; 2 uses
   %i.bqu = getelementptr [4 x i8], ptr %.pre410.pre, i64 %i.bqp ; 2 uses
   %i.bqv = getelementptr inbounds nuw i8, ptr %.pre412.pre, i64 %i.bqn ; 2 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.bqv, i64 64) ]
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.bqv, i64 64), "align"(ptr %.pre414.pre, i64 64) ]
   %i.bqw = getelementptr inbounds nuw [4 x i8], ptr %i.bqv, i64 %i.blo ; 2 uses
   %i.bqx = getelementptr inbounds nuw i8, ptr %.pre414.pre, i64 %i.bqo ; 2 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.bqx, i64 64) ]
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.bqx, i64 64), "align"(ptr %.pre419.pre, i64 64) ]
   %i.bqy = getelementptr inbounds nuw [4 x i8], ptr %i.bqx, i64 %i.blo ; 2 uses
   %i.bqz = getelementptr [4 x i8], ptr %.pre416.pre, i64 %i.bqp ; 2 uses
   %i.bra = getelementptr inbounds nuw i8, ptr %.pre419.pre, i64 %i.bqn ; 2 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.bra, i64 64) ]
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.bra, i64 64), "align"(ptr %.pre421.pre, i64 64) ]
   %i.brb = getelementptr inbounds nuw [4 x i8], ptr %i.bra, i64 %i.blo ; 2 uses
   %i.brc = getelementptr inbounds nuw i8, ptr %.pre421.pre, i64 %i.bqo ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.brc, i64 64) ]

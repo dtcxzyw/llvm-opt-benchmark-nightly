@@ -205,8 +205,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slic
   br i1 %.not18.i, label %_RNvNtCsksn9slvsHfS_10image_webp18lossless_transform27apply_predictor_transform_5.exit, label %bb.aj
 
 bb.aj:                                            ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter14ChunksExactMuthEINtB13_11ChunksExacthEEB1D_EINtB5_7ZipImplBW_B1D_E4nextCsksn9slvsHfS_10image_webp.exit.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.lo) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.lr) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.lo), "nonnull"(ptr %i.lr) ]
   %.not19.i = icmp eq i64 %i.lm, 0
   br i1 %.not19.i, label %bb.al, label %bb.ak
 
@@ -609,9 +608,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_IBN_INtNtNtBb_5
   br i1 %.not22.i90, label %_RNvNtCsksn9slvsHfS_10image_webp18lossless_transform28apply_predictor_transform_10.exit, label %bb.dy
 
 bb.dy:                                            ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_IBN_INtNtNtBb_5slice4iter14ChunksExactMuthEINtB17_11ChunksExacthEEB1H_EB1H_EINtB5_7ZipImplBW_B1H_E4nextCsksn9slvsHfS_10image_webp.exit.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aas) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aav) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aay) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aas), "nonnull"(ptr %i.aav), "nonnull"(ptr %i.aay) ]
   %.not23.i91 = icmp eq i64 %i.aaq, 0
   br i1 %.not23.i91, label %bb.ea, label %bb.dz
 
@@ -1014,8 +1011,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slic
   br i1 %.not18.i124, label %_RNvNtCsksn9slvsHfS_10image_webp18lossless_transform28apply_predictor_transform_12.exit, label %bb.gy
 
 bb.gy:                                            ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter14ChunksExactMuthEINtB13_11ChunksExacthEEB1D_EINtB5_7ZipImplBW_B1D_E4nextCsksn9slvsHfS_10image_webp.exit.i123
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aio) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.air) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aio), "nonnull"(ptr %i.air) ]
   %.not19.i125 = icmp eq i64 %i.aim, 0
   br i1 %.not19.i125, label %bb.ha, label %bb.gz
 
@@ -1304,8 +1300,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slic
   br i1 %.not24.i146, label %_RNvNtCsksn9slvsHfS_10image_webp18lossless_transform28apply_predictor_transform_13.exit, label %bb.ii
 
 bb.ii:                                            ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter14ChunksExactMuthEINtB13_11ChunksExacthEEB1D_EINtB5_7ZipImplBW_B1D_E4nextCsksn9slvsHfS_10image_webp.exit.i145
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ame) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.amh) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ame), "nonnull"(ptr %i.amh) ]
   %.not25.i147 = icmp eq i64 %i.amc, 0
   br i1 %.not25.i147, label %bb.ik, label %bb.ij
 

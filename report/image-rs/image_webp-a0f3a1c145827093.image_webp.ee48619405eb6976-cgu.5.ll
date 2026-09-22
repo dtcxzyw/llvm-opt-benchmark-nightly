@@ -205,9 +205,7 @@ bb.c:                                             ; preds = %_RNCINvNtNtNtCsj6eK
   br i1 %.not16.i.i.i.i.i.i.i.i, label %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map8map_foldtAhj20_uNCINvNtCsksn9slvsHfS_10image_webp18lossless_transform42apply_color_indexing_transform_small_tableKh3_KBX_E0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBV_NCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB3Q_3VecBV_E14extend_trustedINtB4_3MapINtNtNtBa_3ops5range5RangetEB12_EE0E0E0B19_.exit.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i:                           ; preds = %bb.c
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.55.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload.i), "nonnull"(ptr %.sroa.55.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.ac = load i8, ptr %.sroa.55.0.copyload.i, align 1, !noalias !148, !noundef !4
   %i.ad = and i8 %i.ac, %i.aa                     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !147

@@ -205,8 +205,7 @@ define internal noundef zeroext i1 @_ZN4core3fmt5Write9write_fmt17h963987316eae0
 define internal fastcc noundef zeroext i1 @_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E(ptr %.0.val, ptr nofree readonly captures(address, read_provenance) %.8.val, ptr noalias noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %0) unnamed_addr #5 {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.a, ptr noundef nonnull align 8 dereferenceable(48) %0, i64 48, i1 false)
   %i.b = call noundef zeroext i1 @_ZN4core3fmt5write17h80461e1e45e4fdd2E(ptr noundef nonnull align 1 %.0.val, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.8.val, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.a)
@@ -609,9 +608,9 @@ bb.hv:                                            ; preds = %bb.hu
   br label %bb.im
 
 bb.hw:                                            ; preds = %bb.hu
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val94.i) ], !noalias !5428
   %i.ajw = getelementptr inbounds nuw i8, ptr %.val93.i, i64 103
   %i.ajx = load i8, ptr %i.ajw, align 1, !noalias !5640
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val94.i) ], !noalias !5428
   %i.ajy = call i8 @llvm.abs.i8(i8 %i.ajx, i1 false) ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !5641), !noalias !5428
   call void @llvm.experimental.noalias.scope.decl(metadata !5642), !noalias !5428
@@ -983,9 +982,9 @@ bb.je:                                            ; preds = %bb.jd
   br label %bb.kf
 
 bb.jf:                                            ; preds = %bb.jd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val98.i) ], !noalias !5428
   %i.aox = getelementptr inbounds nuw i8, ptr %.val97.i, i64 103
   %i.aoy = load i8, ptr %i.aox, align 1, !noalias !5687
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val98.i) ], !noalias !5428
   %i.aoz = call i8 @llvm.abs.i8(i8 %i.aoy, i1 false) ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !5688), !noalias !5428
   call void @llvm.experimental.noalias.scope.decl(metadata !5689), !noalias !5428
@@ -1388,11 +1387,11 @@ bb.qg:                                            ; preds = %bb.hk
   br i1 %.not.i235, label %bb.qk, label %bb.qh
 
 bb.qh:                                            ; preds = %bb.qg
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val108.i) ], !noalias !5428
   %i.bmu = getelementptr inbounds nuw i8, ptr %.val107.i, i64 48
   %i.bmv = load ptr, ptr %i.bmu, align 8, !noalias !5880, !nonnull !11, !noundef !11 ; 2 uses
   %i.bmw = getelementptr inbounds nuw i8, ptr %.val107.i, i64 56
   %i.bmx = load i64, ptr %i.bmw, align 8, !noalias !5880, !noundef !11 ; 5 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val108.i) ], !noalias !5428
   call void @llvm.experimental.noalias.scope.decl(metadata !5881), !noalias !5428
   %i.bmy = load ptr, ptr %.val108.i, align 8, !alias.scope !5881, !noalias !5882, !nonnull !11, !align !12, !noundef !11 ; 3 uses
   %i.bmz = getelementptr inbounds nuw i8, ptr %i.bmy, i64 8 ; 2 uses
@@ -1476,11 +1475,11 @@ bb.qn:                                            ; preds = %bb.hk
   br i1 %.not.i220, label %bb.qr, label %bb.qo
 
 bb.qo:                                            ; preds = %bb.qn
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val110.i) ], !noalias !5428
   %i.boj = getelementptr inbounds nuw i8, ptr %.val109.i, i64 48
   %i.bok = load ptr, ptr %i.boj, align 8, !noalias !5891, !nonnull !11, !noundef !11 ; 2 uses
   %i.bol = getelementptr inbounds nuw i8, ptr %.val109.i, i64 56
   %i.bom = load i64, ptr %i.bol, align 8, !noalias !5891, !noundef !11 ; 5 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val110.i) ], !noalias !5428
   call void @llvm.experimental.noalias.scope.decl(metadata !5892), !noalias !5428
   %i.bon = load ptr, ptr %.val110.i, align 8, !alias.scope !5892, !noalias !5893, !nonnull !11, !align !12, !noundef !11 ; 3 uses
   %i.boo = getelementptr inbounds nuw i8, ptr %i.bon, i64 8 ; 2 uses
@@ -1883,9 +1882,9 @@ bb.es:                                            ; preds = %_ZN4jiff3fmt4util23
 .thread16.thread34.i.thread.i:                    ; preds = %.thread16.thread34.i.i, %bb.cu, %bb.ck, %bb.cd, %bb.bi
   %.sroa.0.0.i.ph.i315.i = phi i8 [ %.sroa.0.0.i.ph.i.i, %.thread16.thread34.i.i ], [ 1, %bb.cu ], [ 0, %bb.cd ], [ 3, %bb.ck ], [ 0, %bb.bi ] ; 5 uses
   %.sroa.58.0.i.ph.i314.i = phi i64 [ %.sroa.58.0.i.ph.i.i, %.thread16.thread34.i.i ], [ 6, %bb.cu ], [ 10, %bb.cd ], [ 7, %bb.ck ], [ 11, %bb.bi ] ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.04.i.i) ]
   %4 = sub nuw i64 %.sroa.5.03.i.i, %.sroa.58.0.i.ph.i314.i ; 3 uses
   %5 = getelementptr inbounds nuw i8, ptr %.sroa.0.04.i.i, i64 %.sroa.58.0.i.ph.i314.i ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.04.i.i) ]
   %.not94.i = icmp eq i64 %4, 0
   br i1 %.not94.i, label %"_ZN4core6option15Option$LT$T$GT$6map_or17he538597e9ebe5e65E.exit.thread.i", label %"_ZN4core6option15Option$LT$T$GT$6map_or17he538597e9ebe5e65E.exit.i"
 
@@ -2288,8 +2287,7 @@ define internal fastcc void @"_ZN4jiff3fmt8temporal7printer15DateTimePrinter11pr
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca [4 x i8], align 4                 ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8546)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8547)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8548)
@@ -2692,8 +2690,7 @@ define internal fastcc void @"_ZN4jiff3fmt8temporal7printer15DateTimePrinter15pr
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca [4 x i8], align 4                 ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   %.val = load i64, ptr %.8.val, align 8, !noundef !11
   %i.c = getelementptr i8, ptr %.8.val, i64 8
   %.val1 = load i32, ptr %i.c, align 8, !noundef !11 ; 3 uses
@@ -3096,9 +3093,9 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.f, %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i
   %.sroa.10.0.i = phi i64 [ %i.r, %bb.f ], [ 1, %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ]
   %5 = inttoptr i64 %.sroa.10.0.i to ptr          ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %5, ptr nonnull readonly align 1 %3, i64 %4, i1 false)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.l, ptr %i.u, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16

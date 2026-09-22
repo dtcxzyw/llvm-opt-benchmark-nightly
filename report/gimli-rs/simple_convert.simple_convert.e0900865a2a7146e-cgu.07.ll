@@ -205,7 +205,7 @@ bb.a:
 
 _RNvMs1_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i: ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %.val2.i = load ptr, ptr %i.c, align 8, !alias.scope !190 ; 2 uses
+  %.val2.i = load ptr, ptr %i.c, align 8, !alias.scope !190, !nonnull !5, !noundef !5
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val1.i = load i64, ptr %i.d, align 8, !alias.scope !190 ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -227,7 +227,6 @@ _RNvMs1_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   tail call void @llvm.assume(i1 %i.q)
   %i.r = icmp ne i64 %.val1.i, 0
   tail call void @llvm.assume(i1 %i.r)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i) ]
   %i.s = sub nsw i64 0, %i.l
   %i.t = getelementptr inbounds i8, ptr %.val2.i, i64 %i.s
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %i.t, i64 noundef %i.n, i64 noundef range(i64 1, -9223372036854775807) %.val1.i) #21, !noalias !190
@@ -630,7 +629,7 @@ bb.a:
 define internal fastcc void @_RNvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %1, ptr nofree readonly captures(none) %.40.val, i64 noundef range(i64 8, 25) %2) unnamed_addr #4 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
-  %.val14 = load ptr, ptr %0, align 8             ; 9 uses
+  %.val14 = load ptr, ptr %0, align 8, !nonnull !5, !noundef !5 ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %.val15 = load i64, ptr %i.b, align 8, !noundef !5 ; 2 uses
   %i.c = add i64 %.val15, 1                       ; 6 uses
@@ -638,7 +637,6 @@ bb.a:
   br i1 %.not6.i, label %_RNvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit.thread19, label %.lr.ph.i
 
 _RNvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit.thread19: ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val14) ]
   %i.d = getelementptr inbounds nuw i8, ptr %.val14, i64 16
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.d, ptr nonnull align 1 %.val14, i64 %i.c, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -650,7 +648,6 @@ _RNvMsa_NtCsiHO4aZxHxup_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_pl
   %.not10.i.i.i = icmp ne i64 %i.f, 0
   %i.g = zext i1 %.not10.i.i.i to i64
   %.sroa.05.0.i.i.i = add nuw nsw i64 %i.e, %i.g  ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val14) ]
   %xtraiter = and i64 %.sroa.05.0.i.i.i, 1
   %i.h = icmp eq i64 %.sroa.05.0.i.i.i, 1
   br i1 %i.h, label %.epil.preheader, label %.lr.ph.i.new

@@ -204,6 +204,7 @@ _RINvNtCskKLDkoKarTP_4core10intrinsics25typed_swap_nonoverlappingNtNtCsjqcU1oJFK
   br i1 %i.bi, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsjqcU1oJFKXj_9hashbrown10scopeguard10ScopeGuardNtNtBG_3raw13RawTableInnerNCINvMsa_B1u_B1s_14prepare_resizeNtNtCsexYYUdYSQU6_5alloc5alloc6GlobalE0EECsdc6yCHiM2ZJ_4pyo3.exit, label %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i
 
 _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i: ; preds = %_RINvNtCskKLDkoKarTP_4core10intrinsics25typed_swap_nonoverlappingNtNtCsjqcU1oJFKXj_9hashbrown3raw13RawTableInnerECsdc6yCHiM2ZJ_4pyo3.exit
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i) ]
   %.val.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !88
   %i.bj = add i64 %.val3.i.i, 1
   %i.bk = mul nuw i64 %.val.i.i, %i.bj            ; 2 uses
@@ -222,7 +223,6 @@ _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   call void @llvm.assume(i1 %i.bu)
   %i.bv = icmp ne i64 %.val1.i.i, 0
   call void @llvm.assume(i1 %i.bv)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i) ]
   %i.bw = icmp eq i64 %i.br, 0
   br i1 %i.bw, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsjqcU1oJFKXj_9hashbrown10scopeguard10ScopeGuardNtNtBG_3raw13RawTableInnerNCINvMsa_B1u_B1s_14prepare_resizeNtNtCsexYYUdYSQU6_5alloc5alloc6GlobalE0EECsdc6yCHiM2ZJ_4pyo3.exit, label %bb.o
 
@@ -325,12 +325,11 @@ common.resume:                                    ; preds = %bb.t, %bb.m
 
 bb.q:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !92)
-  %.val13.i = load ptr, ptr %0, align 8, !alias.scope !92 ; 7 uses
+  %.val13.i = load ptr, ptr %0, align 8, !alias.scope !92, !nonnull !4, !noundef !4 ; 5 uses
   %.not6.i.i = icmp eq i64 %i.k, 0
   br i1 %.not6.i.i, label %_RNvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit.thread, label %.lr.ph.i.i
 
 _RNvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit.thread: ; preds = %bb.q
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val13.i) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !92
   br label %bb.ab
 
@@ -340,7 +339,6 @@ _RNvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit
   %.not10.i.i.i.i = icmp ne i64 %i.ds, 0
   %i.dt = zext i1 %.not10.i.i.i.i to i64
   %.sroa.05.0.i.i.i.i = add nuw nsw i64 %i.dr, %i.dt ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val13.i) ]
   %xtraiter = and i64 %.sroa.05.0.i.i.i.i, 1
   %i.du = icmp eq i64 %.sroa.05.0.i.i.i.i, 1
   br i1 %i.du, label %.epil.preheader, label %.lr.ph.i.i.new
@@ -583,6 +581,7 @@ bb.a:
   br i1 %i.d, label %_RNvXs1_NtCsjqcU1oJFKXj_9hashbrown10scopeguardINtB5_10ScopeGuardNtNtB7_3raw13RawTableInnerNCINvMsa_B11_BZ_14prepare_resizeNtNtCsexYYUdYSQU6_5alloc5alloc6GlobalE0ENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsdc6yCHiM2ZJ_4pyo3.exit, label %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
 
 _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i: ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i) ]
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val.i = load i64, ptr %i.e, align 8, !alias.scope !98
   %i.f = add i64 %.val3.i, 1
@@ -602,7 +601,6 @@ _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   tail call void @llvm.assume(i1 %i.q)
   %i.r = icmp ne i64 %.val1.i, 0
   tail call void @llvm.assume(i1 %i.r)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i) ]
   %i.s = icmp eq i64 %i.n, 0
   br i1 %i.s, label %_RNvXs1_NtCsjqcU1oJFKXj_9hashbrown10scopeguardINtB5_10ScopeGuardNtNtB7_3raw13RawTableInnerNCINvMsa_B11_BZ_14prepare_resizeNtNtCsexYYUdYSQU6_5alloc5alloc6GlobalE0ENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsdc6yCHiM2ZJ_4pyo3.exit, label %bb.b
 
@@ -1005,8 +1003,8 @@ bb.a:
   br i1 %or.cond.i, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %4 = mul nuw i64 %.val, %3                      ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val10) ]
+  %4 = mul nuw i64 %.val, %3                      ; 3 uses
   %i.d = icmp eq i64 %1, 0
   br i1 %i.d, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator6shrink.exit
 
@@ -1338,8 +1336,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator4grow.exit
 
 _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   %i.f = icmp uge i64 %i.b, %4
   tail call void @llvm.assume(i1 %i.f)
   %i.g = tail call noundef ptr @_RNvCsbkii2mvYdKU_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %4, i64 noundef range(i64 1, -9223372036854775807) %2, i64 noundef range(i64 0, -9223372036854775808) %i.b) #22
@@ -1742,6 +1740,7 @@ bb.a:
   br i1 %i.b, label %_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTRNtNtNtCskKLDkoKarTP_4core3ffi5c_str4CStrNtNtNtCsdc6yCHiM2ZJ_4pyo37pyclass18create_type_object16GetSetDefBuilderENtNtCsexYYUdYSQU6_5alloc5alloc6GlobalEB1Y_.exit, label %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i
 
 _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i: ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.c = mul i64 %.val1, 56
   %i.d = icmp slt i64 %.val1, 329406144173384850
   tail call void @llvm.assume(i1 %i.d)
@@ -1753,7 +1752,6 @@ _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   %i.j = icmp ult i64 %i.h, 9223372036854775793
   tail call void @llvm.assume(i1 %i.i)
   tail call void @llvm.assume(i1 %i.j)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.k = icmp eq i64 %i.h, 0
   br i1 %i.k, label %_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTRNtNtNtCskKLDkoKarTP_4core3ffi5c_str4CStrNtNtNtCsdc6yCHiM2ZJ_4pyo37pyclass18create_type_object16GetSetDefBuilderENtNtCsexYYUdYSQU6_5alloc5alloc6GlobalEB1Y_.exit, label %bb.b
 

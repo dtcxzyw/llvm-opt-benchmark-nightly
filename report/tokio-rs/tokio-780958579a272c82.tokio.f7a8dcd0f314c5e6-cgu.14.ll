@@ -202,8 +202,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECslghKHtsL3a4_5tokio.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !69
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1.i) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !69
   %i.e = ptrtoint ptr %.val1.i to i64             ; 2 uses
   %i.f = and i64 %i.e, 3
   switch i64 %i.f, label %default.unreachable [
@@ -340,8 +340,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECslghKHtsL3a4_5tokio.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !78
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1.i) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !78
   %i.e = ptrtoint ptr %.val1.i to i64             ; 2 uses
   %i.f = and i64 %i.e, 3
   switch i64 %i.f, label %default.unreachable [
@@ -478,8 +478,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECslghKHtsL3a4_5tokio.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !87
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1.i) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !87
   %i.e = ptrtoint ptr %.val1.i to i64             ; 2 uses
   %i.f = and i64 %i.e, 3
   switch i64 %i.f, label %default.unreachable [
@@ -751,8 +751,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.g, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio2fs4file9OperationEBH_.exit.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !137
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1.i.i) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !137
   %i.h = ptrtoint ptr %.val1.i.i to i64           ; 2 uses
   %i.i = and i64 %i.h, 3
   switch i64 %i.i, label %default.unreachable [
@@ -794,8 +794,8 @@ bb.g:                                             ; preds = %bb.b
   br i1 %i.p, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio2fs4file9OperationEBH_.exit.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !137
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3.i.i) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !137
   %i.q = ptrtoint ptr %.val3.i.i to i64           ; 2 uses
   %i.r = and i64 %i.q, 3
   switch i64 %i.r, label %default.unreachable [
@@ -1198,8 +1198,7 @@ bb.g:                                             ; preds = %bb.d
 
 _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtB4_3any3AnyNtNtB4_6marker4SendEL_ENtNtNtNtCslghKHtsL3a4_5tokio7runtime4task5error9JoinErrorE6expectB21_.exit: ; preds = %.thread, %bb.b
   %.sroa.8.09 = phi ptr [ %i.e, %.thread ], [ %.sroa.8.0.copyload, %bb.b ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.09) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c), "nonnull"(ptr %.sroa.8.09) ]
   %i.h = insertvalue { ptr, ptr } poison, ptr %i.c, 0
   %i.i = insertvalue { ptr, ptr } %i.h, ptr %.sroa.8.09, 1
   ret { ptr, ptr } %i.i

@@ -133,8 +133,7 @@ bb.g:                                             ; preds = %.noexc2.i, %bb.f, %
 _RINvNtNtNtCscdodAO9FK5_5alloc11collections5btree3mem7replaceINtNtB4_4node6HandleINtBZ_7NodeRefNtNtBZ_6marker5ImmutmNtNtB4_7set_val9SetValZSTNtB1w_4LeafENtB1w_4EdgeEINtNtCs4NRVxsYgnAr_4core6option6OptionTRmRB1P_EENCINvMs3_NtB4_8navigateINtB3x_9LeafRangeB1u_mB1P_E20perform_next_checkedNCNvMs1_B3x_B3L_12next_checked0B3e_E0ECsh4GC5dvIChH_27influxdb3_processing_engine.exit: ; preds = %.noexc2.i
   %i.r = extractvalue { ptr, ptr } %i.p, 1        ; 2 uses
   %i.s = extractvalue { ptr, ptr } %i.p, 0        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s), "nonnull"(ptr %i.r) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !17
@@ -537,8 +536,8 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   %i.j = tail call { ptr, i64 } @_RINvMs8_NtNtNtCscdodAO9FK5_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker5OwnedmNtNtB8_7set_val9SetValZSTNtB19_4LeafE8new_leafNtNtBc_5alloc6GlobalECsh4GC5dvIChH_27influxdb3_processing_engine() ; 2 uses
   %i.k = extractvalue { ptr, i64 } %i.j, 0        ; 3 uses
-  %3 = extractvalue { ptr, i64 } %i.j, 1          ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k) ]
+  %3 = extractvalue { ptr, i64 } %i.j, 1          ; 2 uses
   store ptr %i.k, ptr %i.h, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   store i64 %3, ptr %i.l, align 8
@@ -941,8 +940,8 @@ bb.o:                                             ; preds = %bb.n
 
 .noexc8:                                          ; preds = %bb.o
   %i.ab = extractvalue { ptr, i64 } %i.aa, 0      ; 3 uses
-  %4 = extractvalue { ptr, i64 } %i.aa, 1         ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab) ]
+  %4 = extractvalue { ptr, i64 } %i.aa, 1         ; 2 uses
   store ptr %i.ab, ptr %1, align 8, !noalias !371
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i64 %4, ptr %i.ac, align 8, !noalias !371
@@ -1345,9 +1344,9 @@ bb.f:                                             ; preds = %bb.e, %_RINvMsi_NtC
   br i1 %i.ab, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTNtNtB4_3any6TypeIdINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtCs6P5GRezSnwZ_4http10extensions8AnyCloneNtNtB4_6marker4SendNtB2d_4SyncEL_EEECsh4GC5dvIChH_27influxdb3_processing_engine.exit.i.i, label %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i
 
 _RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i: ; preds = %bb.f
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.ac = getelementptr inbounds nuw i8, ptr %.val5.i.i, i64 16
   %i.ad = load i64, ptr %i.ac, align 8, !range !2067, !invariant.load !3, !noalias !2063
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i, i64 noundef %i.aa, i64 noundef range(i64 1, -9223372036854775807) %i.ad) #21, !noalias !2063
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTNtNtB4_3any6TypeIdINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtCs6P5GRezSnwZ_4http10extensions8AnyCloneNtNtB4_6marker4SendNtB2d_4SyncEL_EEECsh4GC5dvIChH_27influxdb3_processing_engine.exit.i.i
 

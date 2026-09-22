@@ -202,7 +202,7 @@ bb.s:                                             ; preds = %bb.r
           to label %bb.t unwind label %bb.ad
 
 bb.t:                                             ; preds = %bb.s, %bb.aa, %_ZN5boost9container6vectorIhNS0_22small_vector_allocatorIhNS0_13new_allocatorIvEENS0_16small_vector_optIvLm0EhEEEENS0_10vector_optIvhEEE9push_backEOh.exit
-  %i.ai = load ptr, ptr %2, align 8, !tbaa !67, !noalias !139 ; 6 uses
+  %i.ai = load ptr, ptr %2, align 8, !tbaa !67, !noalias !139 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #23
   store i8 1, ptr %i.b, align 1, !tbaa !47
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
@@ -218,7 +218,6 @@ bb.u:                                             ; preds = %bb.t
   br i1 %.not.i.i.i65, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ai) ]
   store i8 1, ptr %i.am, align 1, !tbaa !47, !noalias !140
   %i.an = load i8, ptr %i.e, align 8, !tbaa !71, !noalias !140
   %i.ao = add i8 %i.an, 1
@@ -229,7 +228,6 @@ bb.w:                                             ; preds = %bb.u
   %i.ap = ptrtoint ptr %i.ai to i64
   %i.aq = ptrtoint ptr %i.am to i64
   %i.ar = getelementptr inbounds i8, ptr %i.am, i64 -1 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ai) ]
   %i.as = load i8, ptr %i.ar, align 1, !tbaa !47, !noalias !140
   store i8 %i.as, ptr %i.am, align 1, !tbaa !47, !noalias !140
   %i.at = load i8, ptr %i.e, align 8, !tbaa !71, !noalias !140
@@ -319,7 +317,7 @@ bb.ai:                                            ; preds = %bb.ah
           to label %bb.aj unwind label %bb.at
 
 bb.aj:                                            ; preds = %bb.ai, %bb.aq, %_ZN5boost9container6vectorIhNS0_22small_vector_allocatorIhNS0_13new_allocatorIvEENS0_16small_vector_optIvLm0EhEEEENS0_10vector_optIvhEEE6insertENS0_12vec_iteratorIPhLb1EEEOh.exit
-  %i.bk = load ptr, ptr %2, align 8, !tbaa !67, !noalias !141 ; 6 uses
+  %i.bk = load ptr, ptr %2, align 8, !tbaa !67, !noalias !141 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #23
   store i8 1, ptr %i.c, align 1, !tbaa !47
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
@@ -335,7 +333,6 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %.not.i.i.i68, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %bb.ak
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bk) ]
   store i8 1, ptr %i.bo, align 1, !tbaa !47, !noalias !142
   %i.bp = load i8, ptr %i.e, align 8, !tbaa !71, !noalias !142
   %i.bq = add i8 %i.bp, 1
@@ -346,7 +343,6 @@ bb.am:                                            ; preds = %bb.ak
   %i.br = ptrtoint ptr %i.bk to i64
   %i.bs = ptrtoint ptr %i.bo to i64
   %i.bt = getelementptr inbounds i8, ptr %i.bo, i64 -1 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bk) ]
   %i.bu = load i8, ptr %i.bt, align 1, !tbaa !47, !noalias !142
   store i8 %i.bu, ptr %i.bo, align 1, !tbaa !47, !noalias !142
   %i.bv = load i8, ptr %i.e, align 8, !tbaa !71, !noalias !142
@@ -749,7 +745,7 @@ bb.s:                                             ; preds = %bb.r
           to label %bb.t unwind label %bb.ad
 
 bb.t:                                             ; preds = %bb.s, %bb.aa, %_ZN5boost9container6vectorIhNS0_22small_vector_allocatorIhNS0_9allocatorIvLj2ELj0EEENS0_16small_vector_optIvLm0EhEEEENS0_10vector_optIvhEEE9push_backEOh.exit
-  %i.ai = load ptr, ptr %2, align 8, !tbaa !74, !noalias !161 ; 6 uses
+  %i.ai = load ptr, ptr %2, align 8, !tbaa !74, !noalias !161 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #23
   store i8 1, ptr %i.b, align 1, !tbaa !47
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
@@ -765,7 +761,6 @@ bb.u:                                             ; preds = %bb.t
   br i1 %.not.i.i.i65, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ai) ]
   store i8 1, ptr %i.am, align 1, !tbaa !47, !noalias !162
   %i.an = load i8, ptr %i.e, align 8, !tbaa !78, !noalias !162
   %i.ao = add i8 %i.an, 1
@@ -776,7 +771,6 @@ bb.w:                                             ; preds = %bb.u
   %i.ap = ptrtoint ptr %i.ai to i64
   %i.aq = ptrtoint ptr %i.am to i64
   %i.ar = getelementptr inbounds i8, ptr %i.am, i64 -1 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ai) ]
   %i.as = load i8, ptr %i.ar, align 1, !tbaa !47, !noalias !162
   store i8 %i.as, ptr %i.am, align 1, !tbaa !47, !noalias !162
   %i.at = load i8, ptr %i.e, align 8, !tbaa !78, !noalias !162
@@ -866,7 +860,7 @@ bb.ai:                                            ; preds = %bb.ah
           to label %bb.aj unwind label %bb.at
 
 bb.aj:                                            ; preds = %bb.ai, %bb.aq, %_ZN5boost9container6vectorIhNS0_22small_vector_allocatorIhNS0_9allocatorIvLj2ELj0EEENS0_16small_vector_optIvLm0EhEEEENS0_10vector_optIvhEEE6insertENS0_12vec_iteratorIPhLb1EEEOh.exit
-  %i.bk = load ptr, ptr %2, align 8, !tbaa !74, !noalias !163 ; 6 uses
+  %i.bk = load ptr, ptr %2, align 8, !tbaa !74, !noalias !163 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #23
   store i8 1, ptr %i.c, align 1, !tbaa !47
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
@@ -882,7 +876,6 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %.not.i.i.i68, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %bb.ak
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bk) ]
   store i8 1, ptr %i.bo, align 1, !tbaa !47, !noalias !164
   %i.bp = load i8, ptr %i.e, align 8, !tbaa !78, !noalias !164
   %i.bq = add i8 %i.bp, 1
@@ -893,7 +886,6 @@ bb.am:                                            ; preds = %bb.ak
   %i.br = ptrtoint ptr %i.bk to i64
   %i.bs = ptrtoint ptr %i.bo to i64
   %i.bt = getelementptr inbounds i8, ptr %i.bo, i64 -1 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bk) ]
   %i.bu = load i8, ptr %i.bt, align 1, !tbaa !47, !noalias !164
   store i8 %i.bu, ptr %i.bo, align 1, !tbaa !47, !noalias !164
   %i.bv = load i8, ptr %i.e, align 8, !tbaa !78, !noalias !164
@@ -1296,7 +1288,7 @@ bb.s:                                             ; preds = %bb.r
           to label %bb.t unwind label %bb.ad
 
 bb.t:                                             ; preds = %bb.s, %bb.aa, %_ZN5boost9container6vectorIhNS0_22small_vector_allocatorIhNS0_13new_allocatorIvEENS0_16small_vector_optIvLm0EtEEEENS0_10vector_optIvtEEE9push_backEOh.exit
-  %i.ai = load ptr, ptr %2, align 8, !tbaa !83, !noalias !183 ; 6 uses
+  %i.ai = load ptr, ptr %2, align 8, !tbaa !83, !noalias !183 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #23
   store i8 1, ptr %i.b, align 1, !tbaa !47
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
@@ -1312,7 +1304,6 @@ bb.u:                                             ; preds = %bb.t
   br i1 %.not.i.i.i65, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ai) ]
   store i8 1, ptr %i.am, align 1, !tbaa !47, !noalias !184
   %i.an = load i16, ptr %i.e, align 8, !tbaa !87, !noalias !184
   %i.ao = add i16 %i.an, 1
@@ -1323,7 +1314,6 @@ bb.w:                                             ; preds = %bb.u
   %i.ap = ptrtoint ptr %i.ai to i64
   %i.aq = ptrtoint ptr %i.am to i64
   %i.ar = getelementptr inbounds i8, ptr %i.am, i64 -1 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ai) ]
   %i.as = load i8, ptr %i.ar, align 1, !tbaa !47, !noalias !184
   store i8 %i.as, ptr %i.am, align 1, !tbaa !47, !noalias !184
   %i.at = load i16, ptr %i.e, align 8, !tbaa !87, !noalias !184
@@ -1413,7 +1403,7 @@ bb.ai:                                            ; preds = %bb.ah
           to label %bb.aj unwind label %bb.at
 
 bb.aj:                                            ; preds = %bb.ai, %bb.aq, %_ZN5boost9container6vectorIhNS0_22small_vector_allocatorIhNS0_13new_allocatorIvEENS0_16small_vector_optIvLm0EtEEEENS0_10vector_optIvtEEE6insertENS0_12vec_iteratorIPhLb1EEEOh.exit
-  %i.bk = load ptr, ptr %2, align 8, !tbaa !83, !noalias !185 ; 6 uses
+  %i.bk = load ptr, ptr %2, align 8, !tbaa !83, !noalias !185 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #23
   store i8 1, ptr %i.c, align 1, !tbaa !47
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
@@ -1429,7 +1419,6 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %.not.i.i.i68, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %bb.ak
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bk) ]
   store i8 1, ptr %i.bo, align 1, !tbaa !47, !noalias !186
   %i.bp = load i16, ptr %i.e, align 8, !tbaa !87, !noalias !186
   %i.bq = add i16 %i.bp, 1
@@ -1440,7 +1429,6 @@ bb.am:                                            ; preds = %bb.ak
   %i.br = ptrtoint ptr %i.bk to i64
   %i.bs = ptrtoint ptr %i.bo to i64
   %i.bt = getelementptr inbounds i8, ptr %i.bo, i64 -1 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bk) ]
   %i.bu = load i8, ptr %i.bt, align 1, !tbaa !47, !noalias !186
   store i8 %i.bu, ptr %i.bo, align 1, !tbaa !47, !noalias !186
   %i.bv = load i16, ptr %i.e, align 8, !tbaa !87, !noalias !186
@@ -1843,7 +1831,7 @@ bb.s:                                             ; preds = %bb.r
           to label %bb.t unwind label %bb.ad
 
 bb.t:                                             ; preds = %bb.s, %bb.aa, %_ZN5boost9container6vectorIhNS0_22small_vector_allocatorIhNS0_9allocatorIvLj2ELj0EEENS0_16small_vector_optIvLm0EtEEEENS0_10vector_optIvtEEE9push_backEOh.exit
-  %i.ai = load ptr, ptr %2, align 8, !tbaa !89, !noalias !205 ; 6 uses
+  %i.ai = load ptr, ptr %2, align 8, !tbaa !89, !noalias !205 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #23
   store i8 1, ptr %i.b, align 1, !tbaa !47
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
@@ -1859,7 +1847,6 @@ bb.u:                                             ; preds = %bb.t
   br i1 %.not.i.i.i65, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ai) ]
   store i8 1, ptr %i.am, align 1, !tbaa !47, !noalias !206
   %i.an = load i16, ptr %i.e, align 8, !tbaa !93, !noalias !206
   %i.ao = add i16 %i.an, 1
@@ -1870,7 +1857,6 @@ bb.w:                                             ; preds = %bb.u
   %i.ap = ptrtoint ptr %i.ai to i64
   %i.aq = ptrtoint ptr %i.am to i64
   %i.ar = getelementptr inbounds i8, ptr %i.am, i64 -1 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ai) ]
   %i.as = load i8, ptr %i.ar, align 1, !tbaa !47, !noalias !206
   store i8 %i.as, ptr %i.am, align 1, !tbaa !47, !noalias !206
   %i.at = load i16, ptr %i.e, align 8, !tbaa !93, !noalias !206
@@ -1960,7 +1946,7 @@ bb.ai:                                            ; preds = %bb.ah
           to label %bb.aj unwind label %bb.at
 
 bb.aj:                                            ; preds = %bb.ai, %bb.aq, %_ZN5boost9container6vectorIhNS0_22small_vector_allocatorIhNS0_9allocatorIvLj2ELj0EEENS0_16small_vector_optIvLm0EtEEEENS0_10vector_optIvtEEE6insertENS0_12vec_iteratorIPhLb1EEEOh.exit
-  %i.bk = load ptr, ptr %2, align 8, !tbaa !89, !noalias !207 ; 6 uses
+  %i.bk = load ptr, ptr %2, align 8, !tbaa !89, !noalias !207 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #23
   store i8 1, ptr %i.c, align 1, !tbaa !47
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
@@ -1976,7 +1962,6 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %.not.i.i.i68, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %bb.ak
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bk) ]
   store i8 1, ptr %i.bo, align 1, !tbaa !47, !noalias !208
   %i.bp = load i16, ptr %i.e, align 8, !tbaa !93, !noalias !208
   %i.bq = add i16 %i.bp, 1
@@ -1987,7 +1972,6 @@ bb.am:                                            ; preds = %bb.ak
   %i.br = ptrtoint ptr %i.bk to i64
   %i.bs = ptrtoint ptr %i.bo to i64
   %i.bt = getelementptr inbounds i8, ptr %i.bo, i64 -1 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bk) ]
   %i.bu = load i8, ptr %i.bt, align 1, !tbaa !47, !noalias !208
   store i8 %i.bu, ptr %i.bo, align 1, !tbaa !47, !noalias !208
   %i.bv = load i16, ptr %i.e, align 8, !tbaa !93, !noalias !208

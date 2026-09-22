@@ -204,13 +204,13 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(write, argmem: readwrite, target_mem: none) uwtable
 define hidden void @_RINvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterhENCNvMs_NtCsexYYUdYSQU6_5alloc5sliceSh18to_ascii_lowercase0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB2m_8for_each4callhNCINvMsk_NtB1y_3vecINtB3z_3VechE14extend_trustedBN_E0E0ECsbmOI1VUejFP_9html5ever(ptr noundef nonnull %0, ptr noundef %1, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %2) unnamed_addr #4 personality ptr @rust_eh_personality {
 bb.a:
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %.sroa.0.0.copyload = load ptr, ptr %2, align 8 ; 2 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8 ; 8 uses
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
   %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx, align 8 ; 6 uses
   %.sroa.7.0.copyload2 = ptrtoaddr ptr %.sroa.7.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters3map8map_foldRhhuNCNvMs_NtCsexYYUdYSQU6_5alloc5sliceSh18to_ascii_lowercase0NCINvNvBS_8for_each4callhNCINvMsk_NtB2o_3vecINtB3J_3VechE14extend_trustedINtB1I_3MapBF_B2f_EE0E0E0ECsbmOI1VUejFP_9html5ever.exit, label %iter.check
 
@@ -613,9 +613,9 @@ switch.lookup:
   %i.b = alloca [16 x i8], align 8                ; 5 uses
   %i.c = alloca [8 x i8], align 8                 ; 4 uses
   %i.d = load ptr, ptr %0, align 8, !nonnull !7, !align !8, !noundef !7 ; 2 uses
-  %.val = load ptr, ptr %1, align 8               ; 2 uses
+  %.val = load ptr, ptr %1, align 8, !nonnull !7, !noundef !7
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1 = load ptr, ptr %i.e, align 8            ; 2 uses
+  %.val1 = load ptr, ptr %i.e, align 8, !nonnull !7, !noundef !7
   tail call void @llvm.experimental.noalias.scope.decl(metadata !106)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store ptr %i.d, ptr %i.c, align 8, !noalias !106
@@ -639,8 +639,6 @@ switch.lookup:
   store ptr %i.b, ptr %i.j, align 8, !noalias !106
   %.sroa.47.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store ptr @_RNvXs1i_NtCskKLDkoKarTP_4core3fmtReNtB6_7Display3fmtCsbmOI1VUejFP_9html5ever, ptr %.sroa.47.0..sroa_idx.i, align 8, !noalias !106
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
   %i.k = call noundef zeroext i1 @_RNvNtCskKLDkoKarTP_4core3fmt5write(ptr noundef nonnull %.val, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.val1, ptr noundef nonnull @18, ptr noundef nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !106
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !106

@@ -204,18 +204,17 @@ _RNvMs1_NtNtCs3Kwrwkha1e5_13pingora_proxy11proxy_cache12range_filterNtB5_15Range
   br i1 %i.iw, label %bb.cg, label %bb.ca
 
 bb.ca:                                            ; preds = %_RNvMs1_NtNtCs3Kwrwkha1e5_13pingora_proxy11proxy_cache12range_filterNtB5_15RangeBodyFilter17filter_range_data.exit.i._crit_edge
-  %.sroa.0108.0.copyload.i = load ptr, ptr %i.z, align 8, !noalias !298 ; 4 uses
+  %.sroa.0108.0.copyload.i = load ptr, ptr %i.z, align 8, !noalias !298, !nonnull !5, !noundef !5 ; 2 uses
   %.sroa.8113.0.copyload.i = load ptr, ptr %i.db, align 8, !noalias !298 ; 2 uses
   %i.ix = ptrtoint ptr %.sroa.8113.0.copyload.i to i64 ; 2 uses
   %i.iy = and i64 %i.ix, 1
   %.not.i65.i = icmp eq i64 %i.iy, 0
-  br i1 %.not.i65.i, label %3, label %bb.cb
+  br i1 %.not.i65.i, label %_RNvMs_NtCs1eA6bChxBZF_5bytes9bytes_mutNtB4_8BytesMut6freeze.exit.i, label %bb.cb
 
 bb.cb:                                            ; preds = %bb.ca
   %.sroa.7112.0.copyload.i = load i64, ptr %i.da, align 8, !noalias !298
   %i.iz = lshr i64 %i.ix, 5                       ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !362
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0108.0.copyload.i) ]
   %i.ja = sub nsw i64 0, %i.iz
   %i.jb = getelementptr inbounds i8, ptr %.sroa.0108.0.copyload.i, i64 %i.ja
   %i.jc = add i64 %i.iz, %i.iv
@@ -257,10 +256,6 @@ bb.cc:                                            ; preds = %.noexc67.i
 .noexc.i.i:                                       ; preds = %bb.cc
   unreachable
 
-3:                                                ; preds = %bb.ca
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0108.0.copyload.i) ]
-  br label %_RNvMs_NtCs1eA6bChxBZF_5bytes9bytes_mutNtB4_8BytesMut6freeze.exit.i
-
 bb.cd:                                            ; preds = %bb.cc
   %i.jk = landingpad { ptr, i32 }
           cleanup
@@ -300,11 +295,11 @@ bb.cg:                                            ; preds = %_RNvMs1_NtNtCs3Kwrw
   invoke void @_RNvXs0_NtCs1eA6bChxBZF_5bytes9bytes_mutNtB5_8BytesMutNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.z)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1eA6bChxBZF_5bytes9bytes_mut8BytesMutECs3Kwrwkha1e5_13pingora_proxy.exit72.i unwind label %bb.t, !noalias !295
 
-_RNvMs_NtCs1eA6bChxBZF_5bytes9bytes_mutNtB4_8BytesMut6freeze.exit.i: ; preds = %bb.ce, %3
-  %.sroa.7.0.i = phi ptr [ %.sroa.8113.0.copyload.i, %3 ], [ %.sroa.7.0.copyload107.i, %bb.ce ]
-  %.sroa.6103.0.i = phi i64 [ %i.iv, %3 ], [ %i.js, %bb.ce ]
-  %.sroa.5100.0.i = phi ptr [ %.sroa.0108.0.copyload.i, %3 ], [ %i.jv, %bb.ce ]
-  %.sroa.098.0.i = phi ptr [ @_RNvNtCs1eA6bChxBZF_5bytes9bytes_mut13SHARED_VTABLE, %3 ], [ %.sroa.098.0.copyload99.i, %bb.ce ]
+_RNvMs_NtCs1eA6bChxBZF_5bytes9bytes_mutNtB4_8BytesMut6freeze.exit.i: ; preds = %bb.ce, %bb.ca
+  %.sroa.7.0.i = phi ptr [ %.sroa.7.0.copyload107.i, %bb.ce ], [ %.sroa.8113.0.copyload.i, %bb.ca ]
+  %.sroa.6103.0.i = phi i64 [ %i.js, %bb.ce ], [ %i.iv, %bb.ca ]
+  %.sroa.5100.0.i = phi ptr [ %i.jv, %bb.ce ], [ %.sroa.0108.0.copyload.i, %bb.ca ]
+  %.sroa.098.0.i = phi ptr [ %.sroa.098.0.copyload99.i, %bb.ce ], [ @_RNvNtCs1eA6bChxBZF_5bytes9bytes_mut13SHARED_VTABLE, %bb.ca ]
   store ptr %.sroa.098.0.i, ptr %0, align 8, !alias.scope !295, !noalias !309
   %.sroa.5100.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.5100.0.i, ptr %.sroa.5100.0..sroa_idx.i, align 8, !alias.scope !295, !noalias !309

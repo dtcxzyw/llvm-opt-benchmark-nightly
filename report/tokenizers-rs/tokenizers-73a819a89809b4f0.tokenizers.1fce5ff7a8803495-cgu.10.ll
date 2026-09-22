@@ -205,8 +205,7 @@ bb.ev:                                            ; preds = %bb.v, %bb.ew
 bb.ew:                                            ; preds = %_RNvMs2_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram5modelNtB5_7Unigram16encode_optimized.exit.thread, %_RNvMs2_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram5modelNtB5_7Unigram16encode_optimized.exit
   %.sroa.6.055 = phi ptr [ %i.mj, %_RNvMs2_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram5modelNtB5_7Unigram16encode_optimized.exit.thread ], [ %.sroa.6.0.copyload, %_RNvMs2_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram5modelNtB5_7Unigram16encode_optimized.exit ] ; 2 uses
   %.sroa.9.054 = phi ptr [ @120, %_RNvMs2_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram5modelNtB5_7Unigram16encode_optimized.exit.thread ], [ %.sroa.9.0.copyload, %_RNvMs2_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram5modelNtB5_7Unigram16encode_optimized.exit ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.055) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.054) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.055), "nonnull"(ptr %.sroa.9.054) ]
   br label %bb.ev
 
 bb.ex:                                            ; preds = %bb.fg, %bb.eu
@@ -609,8 +608,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.g, label %bb.c, label %_RINvXsd_NtCs5PtHgSLqj5O_10serde_json3serNtB6_15PrettyFormatterNtB6_9Formatter10end_objectQINtNtCscdodAO9FK5_5alloc3vec3VechEECs2JiOgHzbbc7_10tokenizers.exit.i
 
 bb.c:                                             ; preds = %bb.b
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i) ]
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @_RNvMs1_NtCscdodAO9FK5_5alloc3vecINtB5_3VechE17extend_from_sliceCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %.val.i, ptr noalias noundef nonnull readonly captures(address, read_provenance) @68, i64 noundef range(i64 0, -9223372036854775808) 1), !noalias !1487
   %i.h = load ptr, ptr %2, align 8, !alias.scope !1487, !nonnull !5, !noundef !5
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16

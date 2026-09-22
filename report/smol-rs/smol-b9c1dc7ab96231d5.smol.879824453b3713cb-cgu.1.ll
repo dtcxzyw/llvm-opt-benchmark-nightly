@@ -202,8 +202,8 @@ bb.a:
   %i.a = alloca [32 x i8], align 8                ; 6 uses
   %i.b = alloca [16 x i8], align 8                ; 4 uses
   %i.c = alloca [16 x i8], align 8                ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i64 2, ptr %i.c, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 1, ptr %i.b, align 8
@@ -606,16 +606,15 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsG258MDvU3F_3std4sync6poison12Tr
 
 bb.ar:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsG258MDvU3F_3std4sync6poison6rwlock15RwLockReadGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB22_4sync3ArcINtCseSXqeRWftQm_16concurrent_queue15ConcurrentQueueNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableEEEEINtB12_12TryLockErrorBX_EEECsbDLrNlwBX3H_4smol.exit.i.i.i.i.i.i, %bb.z, %bb.t
   %.sroa.0.0.i.ph.i.i.i.i.i = phi ptr [ %i.bj, %bb.t ], [ %i.bv, %bb.z ], [ %i.fh, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsG258MDvU3F_3std4sync6poison6rwlock15RwLockReadGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB22_4sync3ArcINtCseSXqeRWftQm_16concurrent_queue15ConcurrentQueueNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableEEEEINtB12_12TryLockErrorBX_EEECsbDLrNlwBX3H_4smol.exit.i.i.i.i.i.i ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val7.i.i.i) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !175
   store ptr %.sroa.0.0.i.ph.i.i.i.i.i, ptr %i.k, align 8, !noalias !175
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val7.i.i.i) ]
   invoke void @_RNvMsd_Csa9iXSdNszRG_14async_executorNtB5_6Ticker4wake(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %.val7.i.i.i)
           to label %bb.at unwind label %bb.as
 
 .thread.i.thread.i.i.i.i.i:                       ; preds = %bb.v, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsG258MDvU3F_3std4sync6poison12TryLockErrorINtNtBE_6rwlock15RwLockReadGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB20_4sync3ArcINtCseSXqeRWftQm_16concurrent_queue15ConcurrentQueueNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableEEEEEECsbDLrNlwBX3H_4smol.exit.sink.split.i25.i.i.i.i.i.i, %bb.ab
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val7.i.i.i), "nonnull"(ptr %.val72.i) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !181
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val7.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val72.i) ]
   %i.fl = invoke noundef zeroext i1 @_RNvMsd_Csa9iXSdNszRG_14async_executorNtB5_6Ticker5sleep(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %.val7.i.i.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %.val72.i)
           to label %.noexc13.i.i.i unwind label %.loopexit.i.i.i
 

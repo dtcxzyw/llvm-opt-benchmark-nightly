@@ -172,7 +172,7 @@ _RINvNtCskKLDkoKarTP_4core10intrinsics25typed_swap_nonoverlappingINtNtNtCsfjHlca
   br i1 %i.au, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsfjHlcakrArn_9hashbrown10scopeguard10ScopeGuardINtNtNtBG_3raw5inner13RawTableInnerNtNtNtB1v_5alloc5inner6GlobalENCNvMs9_B1v_B1s_14prepare_resize0EECset5b41vfmiv_13pingora_cache.exit, label %_RNvMs0_NtNtCsfjHlcakrArn_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i.i
 
 _RNvMs0_NtNtCsfjHlcakrArn_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i.i: ; preds = %_RINvNtCskKLDkoKarTP_4core10intrinsics25typed_swap_nonoverlappingINtNtNtCsfjHlcakrArn_9hashbrown3raw5inner13RawTableInnerNtNtNtB13_5alloc5inner6GlobalEECset5b41vfmiv_13pingora_cache.exit
-  %.val2.i.i = load ptr, ptr %i.b, align 8, !alias.scope !45 ; 2 uses
+  %.val2.i.i = load ptr, ptr %i.b, align 8, !alias.scope !45, !nonnull !4, !noundef !4
   %.val1.i.i = load i64, ptr %.sroa.69.i.i.sroa.5.0..sroa.69.0..sroa_idx.i.i.sroa_idx, align 8, !alias.scope !45 ; 4 uses
   %.val.i.i = load i64, ptr %.sroa.69.i.i.sroa.4.0..sroa.69.0..sroa_idx.i.i.sroa_idx, align 8, !alias.scope !45
   %i.av = add i64 %.val3.i.i, 1
@@ -189,7 +189,6 @@ _RNvMs0_NtNtCsfjHlcakrArn_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layo
   call void @llvm.assume(i1 %i.be)
   %i.bf = icmp ne i64 %.val1.i.i, 0
   call void @llvm.assume(i1 %i.bf)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i) ]
   %i.bg = sub nsw i64 0, %i.bb
   %i.bh = getelementptr inbounds i8, ptr %.val2.i.i, i64 %i.bg
   call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %i.bh, i64 noundef %i.bd, i64 noundef range(i64 1, -9223372036854775807) %.val1.i.i) #25, !noalias !45
@@ -312,12 +311,11 @@ common.resume:                                    ; preds = %bb.x, %bb.o
 
 bb.s:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !48)
-  %.val12.i = load ptr, ptr %0, align 8, !alias.scope !48 ; 7 uses
+  %.val12.i = load ptr, ptr %0, align 8, !alias.scope !48, !nonnull !4, !noundef !4 ; 5 uses
   %.not6.i.i = icmp eq i64 %i.j, 0
   br i1 %.not6.i.i, label %_RNvMs9_NtNtCsfjHlcakrArn_9hashbrown3raw5innerINtB5_13RawTableInnerNtNtNtB5_5alloc5inner6GlobalE15rehash_in_placeCset5b41vfmiv_13pingora_cache.exit.thread, label %.lr.ph.i.i5
 
 _RNvMs9_NtNtCsfjHlcakrArn_9hashbrown3raw5innerINtB5_13RawTableInnerNtNtNtB5_5alloc5inner6GlobalE15rehash_in_placeCset5b41vfmiv_13pingora_cache.exit.thread: ; preds = %bb.s
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val12.i) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !48
   br label %bb.ag
 
@@ -327,7 +325,6 @@ _RNvMs9_NtNtCsfjHlcakrArn_9hashbrown3raw5innerINtB5_13RawTableInnerNtNtNtB5_5all
   %.not10.i.i.i.i = icmp ne i64 %i.dg, 0
   %i.dh = zext i1 %.not10.i.i.i.i to i64
   %.sroa.05.0.i.i.i.i = add nuw nsw i64 %i.df, %i.dh ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val12.i) ]
   %xtraiter = and i64 %.sroa.05.0.i.i.i.i, 1
   %i.di = icmp eq i64 %.sroa.05.0.i.i.i.i, 1
   br i1 %i.di, label %.epil.preheader, label %.lr.ph.i.i5.new
@@ -730,7 +727,7 @@ bb.a:
   br i1 %i.b, label %_RNvXs1_NtCsfjHlcakrArn_9hashbrown10scopeguardINtB5_10ScopeGuardINtNtNtB7_3raw5inner13RawTableInnerNtNtNtB12_5alloc5inner6GlobalENCNvMs9_B12_BZ_14prepare_resize0ENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCset5b41vfmiv_13pingora_cache.exit, label %_RNvMs0_NtNtCsfjHlcakrArn_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i
 
 _RNvMs0_NtNtCsfjHlcakrArn_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i: ; preds = %bb.a
-  %.val2.i = load ptr, ptr %0, align 8, !alias.scope !234 ; 2 uses
+  %.val2.i = load ptr, ptr %0, align 8, !alias.scope !234, !nonnull !4, !noundef !4
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40
   %.val1.i = load i64, ptr %i.c, align 8, !alias.scope !234 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -749,7 +746,6 @@ _RNvMs0_NtNtCsfjHlcakrArn_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layo
   tail call void @llvm.assume(i1 %i.n)
   %i.o = icmp ne i64 %.val1.i, 0
   tail call void @llvm.assume(i1 %i.o)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i) ]
   %i.p = sub nsw i64 0, %i.k
   %i.q = getelementptr inbounds i8, ptr %.val2.i, i64 %i.p
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %i.q, i64 noundef %i.m, i64 noundef range(i64 1, -9223372036854775807) %.val1.i) #25, !noalias !234
@@ -815,6 +811,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %exitcond.not.i.i, label %_RNvXs1_NtCsfjHlcakrArn_9hashbrown10scopeguardINtB5_10ScopeGuardQINtNtNtB7_3raw5inner13RawTableInnerNtNtNtB13_5alloc5inner6GlobalENCNvMs9_B13_B10_15rehash_in_place0ENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCset5b41vfmiv_13pingora_cache.exit, label %bb.c
 
 _RNvXs1_NtCsfjHlcakrArn_9hashbrown10scopeguardINtB5_10ScopeGuardQINtNtNtB7_3raw5inner13RawTableInnerNtNtNtB13_5alloc5inner6GlobalENCNvMs9_B13_B10_15rehash_in_place0ENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCset5b41vfmiv_13pingora_cache.exit: ; preds = %bb.e, %bb.a, %bb.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %.val2.i, i64 8
   %i.v = load i64, ptr %i.u, align 8, !noalias !238, !noundef !4 ; 3 uses
   %i.w = icmp ult i64 %i.v, 8
@@ -822,7 +819,6 @@ _RNvXs1_NtCsfjHlcakrArn_9hashbrown10scopeguardINtB5_10ScopeGuardQINtNtNtB7_3raw5
   %i.y = lshr i64 %i.x, 3
   %i.z = mul nuw i64 %i.y, 7
   %.sroa.01.0.i.i = select i1 %i.w, i64 %i.v, i64 %i.z
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i) ]
   %i.aa = getelementptr inbounds nuw i8, ptr %.val2.i, i64 24
   %i.ab = load i64, ptr %i.aa, align 8, !noalias !238, !noundef !4
   %i.ac = getelementptr inbounds nuw i8, ptr %.val2.i, i64 16

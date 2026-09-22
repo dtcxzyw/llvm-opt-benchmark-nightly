@@ -205,13 +205,9 @@ bb.n:                                             ; preds = %_RNvMs1_NtCs7GWc7oq
 
 bb.o:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !140)
-  %.val25.i = load ptr, ptr %0, align 8, !alias.scope !140 ; 19 uses
+  %.val25.i = load ptr, ptr %0, align 8, !alias.scope !140, !nonnull !6, !noundef !6 ; 17 uses
   %.not6.i.i = icmp eq i64 %i.h, 0
-  br i1 %.not6.i.i, label %_RNvMsa_NtCs7GWc7oqutCf_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit.thread14.i, label %.lr.ph.i.i
-
-_RNvMsa_NtCs7GWc7oqutCf_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit.thread14.i: ; preds = %bb.o
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val25.i) ]
-  br label %_RNvMsa_NtCs7GWc7oqutCf_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit
+  br i1 %.not6.i.i, label %_RNvMsa_NtCs7GWc7oqutCf_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.o
   %i.di = lshr i64 %i.h, 4
@@ -219,7 +215,6 @@ _RNvMsa_NtCs7GWc7oqutCf_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_pl
   %.not10.i.i.i.i = icmp ne i64 %i.dj, 0
   %i.dk = zext i1 %.not10.i.i.i.i to i64
   %.sroa.05.0.i.i.i.i = add nuw nsw i64 %i.di, %i.dk ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val25.i) ]
   %xtraiter = and i64 %.sroa.05.0.i.i.i.i, 1
   %i.dl = icmp eq i64 %.sroa.05.0.i.i.i.i, 1
   br i1 %i.dl, label %.epil.preheader, label %.lr.ph.i.i.new
@@ -556,7 +551,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t, %.lr.p
   %exitcond.not.i = icmp eq i64 %.sroa.014.04.i, %i.f
   br i1 %exitcond.not.i, label %_RNvMsa_NtCs7GWc7oqutCf_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit, label %.lr.ph.i13
 
-_RNvMsa_NtCs7GWc7oqutCf_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit: ; preds = %bb.v, %_RNvMsa_NtCs7GWc7oqutCf_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit.thread14.i
+_RNvMsa_NtCs7GWc7oqutCf_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit: ; preds = %bb.v, %bb.o
   %i.ho = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.hp = sub nuw i64 %.sroa.03.0.i, %i.b
   store i64 %i.hp, ptr %i.ho, align 8, !alias.scope !140
@@ -959,8 +954,8 @@ bb.b:                                             ; preds = %bb.a
   %.val7.i.i.i = load i64, ptr %i.w, align 8, !alias.scope !747, !noalias !746
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !748
   call void @_RNvMs16_NtCs2vKOLqTMYjT_3std4pathNtB6_4Path10components(ptr noalias nofree noundef nonnull sret([64 x i8]) align 8 captures(none) dereferenceable(64) %i.h, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.val4.i.i.i, i64 noundef %.val5.i.i.i) #25, !noalias !748
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !748
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val6.i.i.i) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !748
   call void @_RNvMs16_NtCs2vKOLqTMYjT_3std4pathNtB6_4Path10components(ptr noalias nofree noundef nonnull sret([64 x i8]) align 8 captures(none) dereferenceable(64) %i.g, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.val6.i.i.i, i64 noundef %.val7.i.i.i) #25, !noalias !748
   tail call void @llvm.experimental.noalias.scope.decl(metadata !749)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !750)
@@ -1363,8 +1358,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator4grow.exit
 
 _RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   %i.f = icmp uge i64 %i.b, %4
   tail call void @llvm.assume(i1 %i.f)
   %i.g = tail call noundef ptr @_RNvCsjSVV5GABoor_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %4, i64 noundef range(i64 1, 9) %2, i64 noundef range(i64 0, -9223372036854775808) %i.b) #25

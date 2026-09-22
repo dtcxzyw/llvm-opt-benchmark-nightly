@@ -204,8 +204,7 @@ bb.ac:                                            ; preds = %_RINvNtCscI6d9CVNmL
 define internal fastcc noundef nonnull align 8 ptr @_RINvYINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_ENtNtBG_4cast7AsArray12as_primitiveNtNtBG_5types16Time32SecondTypeECsfUv75jb5FCv_17lance_arrow_stats(ptr %.0.val, ptr nofree readonly captures(none) %.8.val) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   %i.b = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.c = load i64, ptr %i.b, align 8, !range !8, !invariant.load !6
   %i.d = add nsw i64 %i.c, -1
@@ -240,8 +239,7 @@ bb.c:                                             ; preds = %bb.a
 define internal fastcc noundef nonnull align 8 ptr @_RINvYINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_ENtNtBG_4cast7AsArray12as_primitiveNtNtBG_5types18DurationSecondTypeECsfUv75jb5FCv_17lance_arrow_stats(ptr %.0.val, ptr nofree readonly captures(none) %.8.val) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   %i.b = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.c = load i64, ptr %i.b, align 8, !range !8, !invariant.load !6
   %i.d = add nsw i64 %i.c, -1
@@ -276,8 +274,7 @@ bb.c:                                             ; preds = %bb.a
 define internal fastcc noundef nonnull align 8 ptr @_RINvYINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_ENtNtBG_4cast7AsArray12as_primitiveNtNtBG_5types19TimestampSecondTypeECsfUv75jb5FCv_17lance_arrow_stats(ptr %.0.val, ptr nofree readonly captures(none) %.8.val) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   %i.b = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.c = load i64, ptr %i.b, align 8, !range !8, !invariant.load !6
   %i.d = add nsw i64 %i.c, -1
@@ -312,8 +309,7 @@ bb.c:                                             ; preds = %bb.a
 define internal fastcc noundef nonnull align 8 ptr @_RINvYINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_ENtNtBG_4cast7AsArray12as_primitiveNtNtBG_5types20Time64NanosecondTypeECsfUv75jb5FCv_17lance_arrow_stats(ptr %.0.val, ptr nofree readonly captures(none) %.8.val) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   %i.b = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.c = load i64, ptr %i.b, align 8, !range !8, !invariant.load !6
   %i.d = add nsw i64 %i.c, -1
@@ -348,8 +344,7 @@ bb.c:                                             ; preds = %bb.a
 define internal fastcc noundef nonnull align 8 ptr @_RINvYINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_ENtNtBG_4cast7AsArray12as_primitiveNtNtBG_5types21Time32MillisecondTypeECsfUv75jb5FCv_17lance_arrow_stats(ptr %.0.val, ptr nofree readonly captures(none) %.8.val) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   %i.b = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.c = load i64, ptr %i.b, align 8, !range !8, !invariant.load !6
   %i.d = add nsw i64 %i.c, -1
@@ -384,8 +379,7 @@ bb.c:                                             ; preds = %bb.a
 define internal fastcc noundef nonnull align 8 ptr @_RINvYINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_ENtNtBG_4cast7AsArray12as_primitiveNtNtBG_5types21Time64MicrosecondTypeECsfUv75jb5FCv_17lance_arrow_stats(ptr %.0.val, ptr nofree readonly captures(none) %.8.val) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   %i.b = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.c = load i64, ptr %i.b, align 8, !range !8, !invariant.load !6
   %i.d = add nsw i64 %i.c, -1
@@ -420,8 +414,7 @@ bb.c:                                             ; preds = %bb.a
 define internal fastcc noundef nonnull align 8 ptr @_RINvYINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_ENtNtBG_4cast7AsArray12as_primitiveNtNtBG_5types22DurationNanosecondTypeECsfUv75jb5FCv_17lance_arrow_stats(ptr %.0.val, ptr nofree readonly captures(none) %.8.val) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   %i.b = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.c = load i64, ptr %i.b, align 8, !range !8, !invariant.load !6
   %i.d = add nsw i64 %i.c, -1
@@ -456,8 +449,7 @@ bb.c:                                             ; preds = %bb.a
 define internal fastcc noundef nonnull align 8 ptr @_RINvYINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_ENtNtBG_4cast7AsArray12as_primitiveNtNtBG_5types23DurationMicrosecondTypeECsfUv75jb5FCv_17lance_arrow_stats(ptr %.0.val, ptr nofree readonly captures(none) %.8.val) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   %i.b = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.c = load i64, ptr %i.b, align 8, !range !8, !invariant.load !6
   %i.d = add nsw i64 %i.c, -1
@@ -492,8 +484,7 @@ bb.c:                                             ; preds = %bb.a
 define internal fastcc noundef nonnull align 8 ptr @_RINvYINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_ENtNtBG_4cast7AsArray12as_primitiveNtNtBG_5types23DurationMillisecondTypeECsfUv75jb5FCv_17lance_arrow_stats(ptr %.0.val, ptr nofree readonly captures(none) %.8.val) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   %i.b = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.c = load i64, ptr %i.b, align 8, !range !8, !invariant.load !6
   %i.d = add nsw i64 %i.c, -1
@@ -528,8 +519,7 @@ bb.c:                                             ; preds = %bb.a
 define internal fastcc noundef nonnull align 8 ptr @_RINvYINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_ENtNtBG_4cast7AsArray12as_primitiveNtNtBG_5types23TimestampNanosecondTypeECsfUv75jb5FCv_17lance_arrow_stats(ptr %.0.val, ptr nofree readonly captures(none) %.8.val) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   %i.b = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.c = load i64, ptr %i.b, align 8, !range !8, !invariant.load !6
   %i.d = add nsw i64 %i.c, -1
@@ -564,8 +554,7 @@ bb.c:                                             ; preds = %bb.a
 define internal fastcc noundef nonnull align 8 ptr @_RINvYINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_ENtNtBG_4cast7AsArray12as_primitiveNtNtBG_5types24TimestampMicrosecondTypeECsfUv75jb5FCv_17lance_arrow_stats(ptr %.0.val, ptr nofree readonly captures(none) %.8.val) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   %i.b = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.c = load i64, ptr %i.b, align 8, !range !8, !invariant.load !6
   %i.d = add nsw i64 %i.c, -1
@@ -600,8 +589,7 @@ bb.c:                                             ; preds = %bb.a
 define internal fastcc noundef nonnull align 8 ptr @_RINvYINtNtCs40k4W9msRzi_5alloc4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_ENtNtBG_4cast7AsArray12as_primitiveNtNtBG_5types24TimestampMillisecondTypeECsfUv75jb5FCv_17lance_arrow_stats(ptr %.0.val, ptr nofree readonly captures(none) %.8.val) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   %i.b = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.c = load i64, ptr %i.b, align 8, !range !8, !invariant.load !6
   %i.d = add nsw i64 %i.c, -1
@@ -1004,8 +992,8 @@ common.resume:                                    ; preds = %bb.bi, %bb.av, %bb.
 
 bb.o:                                             ; preds = %_RNvXs0_NtNtNtCscI6d9CVNmLh_4core4iter8adapters3mapINtB5_3MapINtNtB7_6filter6FilterINtNtNtBb_3ops5range5RangejENCNvMCsfUv75jb5FCv_17lance_arrow_statsNtB1P_21StatisticsAccumulator6update0ENCB1M_s_0ENtNtNtB9_6traits8iterator8Iterator4nextB1P_.exit.i
   %i.cj = extractvalue { ptr, ptr } %i.ch, 1      ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !966
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cj) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !966
   store ptr %i.ci, ptr %i.g, align 8, !noalias !966
   store ptr %i.cj, ptr %i.be, align 8, !noalias !966
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !966
@@ -1151,8 +1139,8 @@ _RNvXs0_NtNtNtCscI6d9CVNmLh_4core4iter8adapters3mapINtB5_3MapINtNtB7_6filter6Fil
 
 bb.ac:                                            ; preds = %_RNvXs0_NtNtNtCscI6d9CVNmLh_4core4iter8adapters3mapINtB5_3MapINtNtB7_6filter6FilterINtNtNtBb_3ops5range5RangejENCNvMCsfUv75jb5FCv_17lance_arrow_statsNtB1P_21StatisticsAccumulator6updates2_0ENCB1M_s3_0ENtNtNtB9_6traits8iterator8Iterator4nextB1P_.exit.i
   %i.dw = extractvalue { ptr, ptr } %i.du, 1      ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !987
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.dw) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !987
   store ptr %i.dv, ptr %i.e, align 8, !noalias !987
   store ptr %i.dw, ptr %i.dd, align 8, !noalias !987
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !987
@@ -1349,8 +1337,8 @@ _RNvXs0_NtNtNtCscI6d9CVNmLh_4core4iter8adapters3mapINtB5_3MapINtNtB7_6filter6Fil
 
 bb.au:                                            ; preds = %_RNvXs0_NtNtNtCscI6d9CVNmLh_4core4iter8adapters3mapINtB5_3MapINtNtB7_6filter6FilterINtNtNtBb_3ops5range5RangejENCNvMCsfUv75jb5FCv_17lance_arrow_statsNtB1P_21StatisticsAccumulator6updates0_0ENCB1M_s1_0ENtNtNtB9_6traits8iterator8Iterator4nextB1P_.exit.i
   %i.gl = extractvalue { ptr, ptr } %i.gj, 1      ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !1010
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.gl) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !1010
   store ptr %i.gk, ptr %i.b, align 8, !noalias !1010
   store ptr %i.gl, ptr %i.fi, align 8, !noalias !1010
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1010
@@ -1753,8 +1741,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %.not.i.i.i.i.i, label %bb.s, label %_RNvXsg_NtCs8SUNSmrkv52_12arrow_schema6fieldsNtB5_6FieldsNtNtCscI6d9CVNmLh_4core3cmp9PartialEq2eq.exit
 
 bb.s:                                             ; preds = %.lr.ph.i.i.i.i29
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val5.i.i.i.i31) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val7.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val5.i.i.i.i31), "nonnull"(ptr %.val7.i.i.i.i) ]
   %i.cm = icmp eq ptr %.val5.i.i.i.i31, %.val7.i.i.i.i
   br i1 %i.cm, label %_RNvXs8_NtCscI6d9CVNmLh_4core5tupleTaINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema5field5FieldEENtNtB7_3cmp9PartialEq2neCsfUv75jb5FCv_17lance_arrow_stats.exit.thread9.i.i.i.i, label %_RNvXs8_NtCscI6d9CVNmLh_4core5tupleTaINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCs8SUNSmrkv52_12arrow_schema5field5FieldEENtNtB7_3cmp9PartialEq2neCsfUv75jb5FCv_17lance_arrow_stats.exit.i.i.i.i
 
