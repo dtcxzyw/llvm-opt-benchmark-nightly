@@ -204,7 +204,7 @@ iter.check:                                       ; preds = %bb.i
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 32 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue135, %iter.check
+vector.body:                                      ; preds = %iter.check, %pred.store.continue135
   %index = phi i64 [ 0, %iter.check ], [ %index.next, %pred.store.continue135 ] ; 33 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 %index ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 16

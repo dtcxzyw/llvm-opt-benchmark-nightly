@@ -202,7 +202,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.bb = getelementptr i8, ptr %i.ax, i64 %n.vec
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue229, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue229
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue229 ] ; 33 uses
   %next.gep = getelementptr i8, ptr %i.ax, i64 %index ; 3 uses
   %i.bc = getelementptr i8, ptr %i.ax, i64 %index

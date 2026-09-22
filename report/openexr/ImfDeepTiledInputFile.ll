@@ -204,7 +204,7 @@ vector.ph91:                                      ; preds = %vector.main.loop.it
   %broadcast.splat94 = shufflevector <8 x i16> %broadcast.splatinsert93, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
   br label %vector.body95
 
-vector.body95:                                    ; preds = %vector.body95, %vector.ph91
+vector.body95:                                    ; preds = %vector.ph91, %vector.body95
   %index96 = phi i64 [ 0, %vector.ph91 ], [ %index.next97, %vector.body95 ] ; 2 uses
   %i.ks = getelementptr inbounds nuw [2 x i8], ptr %i.in, i64 %index96 ; 2 uses
   %i.kt = getelementptr inbounds nuw i8, ptr %i.ks, i64 16

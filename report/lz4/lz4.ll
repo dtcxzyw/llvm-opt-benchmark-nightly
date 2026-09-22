@@ -204,7 +204,7 @@ vector.ph491:                                     ; preds = %vector.main.loop.it
   %i.js = getelementptr i8, ptr %.16.i, i64 %n.vec492
   br label %vector.body493
 
-vector.body493:                                   ; preds = %vector.body493, %vector.ph491
+vector.body493:                                   ; preds = %vector.ph491, %vector.body493
   %index494 = phi i64 [ 0, %vector.ph491 ], [ %index.next498, %vector.body493 ] ; 3 uses
   %next.gep495 = getelementptr i8, ptr %.4372.i, i64 %index494 ; 2 uses
   %next.gep496 = getelementptr i8, ptr %.16.i, i64 %index494 ; 2 uses
@@ -247,7 +247,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n509 = icmp eq i64 %i.jn, %n.vec503
   br i1 %cmp.n509, label %.preheader133, label %.lr.ph218.preheader
 
-.lr.ph218.preheader:                              ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph218.preheader:                              ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.5373.i217.ph = phi ptr [ %.4372.i, %iter.check ], [ %.4372.i, %vector.memcheck ], [ %i.jr, %vec.epilog.iter.check ], [ %i.jw, %vec.epilog.middle.block ]
   %.17.i216.ph = phi ptr [ %.16.i, %iter.check ], [ %.16.i, %vector.memcheck ], [ %i.js, %vec.epilog.iter.check ], [ %i.jx, %vec.epilog.middle.block ]
   br label %.lr.ph218
@@ -650,7 +650,7 @@ vector.ph496:                                     ; preds = %vector.main.loop.it
   %i.ip = getelementptr i8, ptr %.11391.i, i64 %n.vec497
   br label %vector.body498
 
-vector.body498:                                   ; preds = %vector.body498, %vector.ph496
+vector.body498:                                   ; preds = %vector.ph496, %vector.body498
   %index499 = phi i64 [ 0, %vector.ph496 ], [ %index.next503, %vector.body498 ] ; 3 uses
   %next.gep500 = getelementptr i8, ptr %.1369.i, i64 %index499 ; 2 uses
   %next.gep501 = getelementptr i8, ptr %.11391.i, i64 %index499 ; 2 uses
@@ -919,7 +919,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.am, -32                     ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.aq, i64 %index ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 16
@@ -1322,7 +1322,7 @@ vector.ph481:                                     ; preds = %vector.main.loop.it
   %i.ja = getelementptr i8, ptr %.16.i, i64 %n.vec482
   br label %vector.body483
 
-vector.body483:                                   ; preds = %vector.body483, %vector.ph481
+vector.body483:                                   ; preds = %vector.ph481, %vector.body483
   %index484 = phi i64 [ 0, %vector.ph481 ], [ %index.next488, %vector.body483 ] ; 3 uses
   %next.gep485 = getelementptr i8, ptr %.4372.i, i64 %index484 ; 2 uses
   %next.gep486 = getelementptr i8, ptr %.16.i, i64 %index484 ; 2 uses
@@ -1365,7 +1365,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n499 = icmp eq i64 %i.iu, %n.vec493
   br i1 %cmp.n499, label %.preheader146, label %.lr.ph235.preheader
 
-.lr.ph235.preheader:                              ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph235.preheader:                              ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.5373.i234.ph = phi ptr [ %.4372.i, %iter.check ], [ %.4372.i, %vector.memcheck ], [ %i.iz, %vec.epilog.iter.check ], [ %i.je, %vec.epilog.middle.block ]
   %.17.i233.ph = phi ptr [ %.16.i, %iter.check ], [ %.16.i, %vector.memcheck ], [ %i.ja, %vec.epilog.iter.check ], [ %i.jf, %vec.epilog.middle.block ]
   br label %.lr.ph235
@@ -1539,7 +1539,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.an, -32                     ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.ar, i64 %index ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 16
@@ -1942,7 +1942,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.ds = getelementptr i8, ptr %i.dh, i64 %n.vec ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %1, i64 %index ; 2 uses
   %next.gep522 = getelementptr i8, ptr %i.dh, i64 %index ; 2 uses
@@ -2345,7 +2345,7 @@ vector.ph592:                                     ; preds = %vector.main.loop.it
   %i.kf = getelementptr i8, ptr %i.jr, i64 %n.vec593 ; 2 uses
   br label %vector.body594
 
-vector.body594:                                   ; preds = %vector.body594, %vector.ph592
+vector.body594:                                   ; preds = %vector.ph592, %vector.body594
   %index595 = phi i64 [ 0, %vector.ph592 ], [ %index.next600, %vector.body594 ] ; 3 uses
   %next.gep596 = getelementptr i8, ptr %1, i64 %index595 ; 2 uses
   %next.gep597 = getelementptr i8, ptr %i.jr, i64 %index595 ; 2 uses
@@ -2515,7 +2515,7 @@ vector.ph555:                                     ; preds = %vector.main.loop.it
   %i.mn = getelementptr i8, ptr %.16.i, i64 %n.vec556
   br label %vector.body557
 
-vector.body557:                                   ; preds = %vector.body557, %vector.ph555
+vector.body557:                                   ; preds = %vector.ph555, %vector.body557
   %index558 = phi i64 [ 0, %vector.ph555 ], [ %index.next563, %vector.body557 ] ; 3 uses
   %next.gep559 = getelementptr i8, ptr %.4372.i, i64 %index558 ; 2 uses
   %next.gep560 = getelementptr i8, ptr %.16.i, i64 %index558 ; 2 uses
@@ -2558,7 +2558,7 @@ vec.epilog.middle.block581:                       ; preds = %vec.epilog.vector.b
   %cmp.n582 = icmp eq i64 %i.mi, %n.vec574
   br i1 %cmp.n582, label %.preheader137, label %.lr.ph229.preheader
 
-.lr.ph229.preheader:                              ; preds = %vector.memcheck546, %iter.check569, %vec.epilog.iter.check571, %vec.epilog.middle.block581
+.lr.ph229.preheader:                              ; preds = %iter.check569, %vector.memcheck546, %vec.epilog.iter.check571, %vec.epilog.middle.block581
   %.5373.i228.ph = phi ptr [ %.4372.i, %iter.check569 ], [ %.4372.i, %vector.memcheck546 ], [ %i.mm, %vec.epilog.iter.check571 ], [ %i.mr, %vec.epilog.middle.block581 ]
   %.17.i227.ph = phi ptr [ %.16.i, %iter.check569 ], [ %.16.i, %vector.memcheck546 ], [ %i.mn, %vec.epilog.iter.check571 ], [ %i.ms, %vec.epilog.middle.block581 ]
   br label %.lr.ph229
@@ -2922,7 +2922,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.dv = getelementptr i8, ptr %i.dj, i64 %n.vec ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %1, i64 %index ; 2 uses
   %next.gep524 = getelementptr i8, ptr %i.dj, i64 %index ; 2 uses
@@ -3325,7 +3325,7 @@ vector.ph594:                                     ; preds = %vector.main.loop.it
   %i.kw = getelementptr i8, ptr %i.kh, i64 %n.vec595 ; 2 uses
   br label %vector.body596
 
-vector.body596:                                   ; preds = %vector.body596, %vector.ph594
+vector.body596:                                   ; preds = %vector.ph594, %vector.body596
   %index597 = phi i64 [ 0, %vector.ph594 ], [ %index.next602, %vector.body596 ] ; 3 uses
   %next.gep598 = getelementptr i8, ptr %1, i64 %index597 ; 2 uses
   %next.gep599 = getelementptr i8, ptr %i.kh, i64 %index597 ; 2 uses
@@ -3428,7 +3428,7 @@ vector.ph556:                                     ; preds = %vector.main.loop.it
   %i.lw = getelementptr i8, ptr %.11391.i, i64 %n.vec557
   br label %vector.body558
 
-vector.body558:                                   ; preds = %vector.body558, %vector.ph556
+vector.body558:                                   ; preds = %vector.ph556, %vector.body558
   %index559 = phi i64 [ 0, %vector.ph556 ], [ %index.next564, %vector.body558 ] ; 3 uses
   %next.gep560 = getelementptr i8, ptr %.1369.i, i64 %index559 ; 2 uses
   %next.gep561 = getelementptr i8, ptr %.11391.i, i64 %index559 ; 2 uses
@@ -3831,7 +3831,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.ep = getelementptr i8, ptr %i.ed, i64 %n.vec ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %i.s, i64 %index ; 2 uses
   %next.gep594 = getelementptr i8, ptr %i.ed, i64 %index ; 2 uses
@@ -4234,7 +4234,7 @@ vector.ph664:                                     ; preds = %vector.main.loop.it
   %i.lf = getelementptr i8, ptr %i.kp, i64 %n.vec665 ; 2 uses
   br label %vector.body666
 
-vector.body666:                                   ; preds = %vector.body666, %vector.ph664
+vector.body666:                                   ; preds = %vector.ph664, %vector.body666
   %index667 = phi i64 [ 0, %vector.ph664 ], [ %index.next672, %vector.body666 ] ; 3 uses
   %next.gep668 = getelementptr i8, ptr %i.s, i64 %index667 ; 2 uses
   %next.gep669 = getelementptr i8, ptr %i.kp, i64 %index667 ; 2 uses
@@ -4404,7 +4404,7 @@ vector.ph627:                                     ; preds = %vector.main.loop.it
   %i.nn = getelementptr i8, ptr %.16.i.i, i64 %n.vec628
   br label %vector.body629
 
-vector.body629:                                   ; preds = %vector.body629, %vector.ph627
+vector.body629:                                   ; preds = %vector.ph627, %vector.body629
   %index630 = phi i64 [ 0, %vector.ph627 ], [ %index.next635, %vector.body629 ] ; 3 uses
   %next.gep631 = getelementptr i8, ptr %.4372.i.i, i64 %index630 ; 2 uses
   %next.gep632 = getelementptr i8, ptr %.16.i.i, i64 %index630 ; 2 uses
@@ -4447,7 +4447,7 @@ vec.epilog.middle.block653:                       ; preds = %vec.epilog.vector.b
   %cmp.n654 = icmp eq i64 %i.ni, %n.vec646
   br i1 %cmp.n654, label %.preheader199, label %.lr.ph291.preheader
 
-.lr.ph291.preheader:                              ; preds = %vector.memcheck618, %iter.check641, %vec.epilog.iter.check643, %vec.epilog.middle.block653
+.lr.ph291.preheader:                              ; preds = %iter.check641, %vector.memcheck618, %vec.epilog.iter.check643, %vec.epilog.middle.block653
   %.5373.i.i290.ph = phi ptr [ %.4372.i.i, %iter.check641 ], [ %.4372.i.i, %vector.memcheck618 ], [ %i.nm, %vec.epilog.iter.check643 ], [ %i.nr, %vec.epilog.middle.block653 ]
   %.17.i.i289.ph = phi ptr [ %.16.i.i, %iter.check641 ], [ %.16.i.i, %vector.memcheck618 ], [ %i.nn, %vec.epilog.iter.check643 ], [ %i.ns, %vec.epilog.middle.block653 ]
   br label %.lr.ph291
@@ -4850,7 +4850,7 @@ vector.ph492:                                     ; preds = %vector.main.loop.it
   %i.ju = getelementptr i8, ptr %.16.i, i64 %n.vec493
   br label %vector.body494
 
-vector.body494:                                   ; preds = %vector.body494, %vector.ph492
+vector.body494:                                   ; preds = %vector.ph492, %vector.body494
   %index495 = phi i64 [ 0, %vector.ph492 ], [ %index.next499, %vector.body494 ] ; 3 uses
   %next.gep496 = getelementptr i8, ptr %.4372.i, i64 %index495 ; 2 uses
   %next.gep497 = getelementptr i8, ptr %.16.i, i64 %index495 ; 2 uses
@@ -4893,7 +4893,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n510 = icmp eq i64 %i.jp, %n.vec504
   br i1 %cmp.n510, label %.preheader134, label %.lr.ph219.preheader
 
-.lr.ph219.preheader:                              ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph219.preheader:                              ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.5373.i218.ph = phi ptr [ %.4372.i, %iter.check ], [ %.4372.i, %vector.memcheck ], [ %i.jt, %vec.epilog.iter.check ], [ %i.jy, %vec.epilog.middle.block ]
   %.17.i217.ph = phi ptr [ %.16.i, %iter.check ], [ %.16.i, %vector.memcheck ], [ %i.ju, %vec.epilog.iter.check ], [ %i.jz, %vec.epilog.middle.block ]
   br label %.lr.ph219
@@ -5068,7 +5068,7 @@ vector.ph255:                                     ; preds = %vector.main.loop.it
   %n.vec256 = and i64 %i.ap, -32                  ; 4 uses
   br label %vector.body257
 
-vector.body257:                                   ; preds = %vector.body257, %vector.ph255
+vector.body257:                                   ; preds = %vector.ph255, %vector.body257
   %index258 = phi i64 [ 0, %vector.ph255 ], [ %index.next261, %vector.body257 ] ; 3 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.at, i64 %index258 ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
@@ -5334,7 +5334,7 @@ vector.ph227:                                     ; preds = %vector.main.loop.it
   %n.vec228 = and i64 %.2.i, -32                  ; 4 uses
   br label %vector.body229
 
-vector.body229:                                   ; preds = %vector.body229, %vector.ph227
+vector.body229:                                   ; preds = %vector.ph227, %vector.body229
   %index230 = phi i64 [ 0, %vector.ph227 ], [ %index.next233, %vector.body229 ] ; 3 uses
   %i.es = getelementptr inbounds nuw i8, ptr %.079.i, i64 %index230 ; 2 uses
   %i.et = getelementptr inbounds nuw i8, ptr %i.es, i64 16
@@ -5595,7 +5595,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %.2.i.i, -32                   ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.ik = getelementptr inbounds nuw i8, ptr %.079.i.i, i64 %index ; 2 uses
   %i.il = getelementptr inbounds nuw i8, ptr %i.ik, i64 16
@@ -5998,7 +5998,7 @@ vector.ph776:                                     ; preds = %vector.main.loop.it
   %i.hz = getelementptr i8, ptr %.11391.i.ptr.i, i64 %n.vec777
   br label %vector.body778
 
-vector.body778:                                   ; preds = %vector.body778, %vector.ph776
+vector.body778:                                   ; preds = %vector.ph776, %vector.body778
   %index779 = phi i64 [ 0, %vector.ph776 ], [ %index.next784, %vector.body778 ] ; 3 uses
   %next.gep780 = getelementptr i8, ptr %.1369.i.ptr.i, i64 %index779 ; 2 uses
   %next.gep781 = getelementptr i8, ptr %.11391.i.ptr.i, i64 %index779 ; 2 uses
@@ -6401,7 +6401,7 @@ vector.ph731:                                     ; preds = %vector.main.loop.it
   %i.ts = getelementptr i8, ptr %.11391.i.i, i64 %n.vec732
   br label %vector.body733
 
-vector.body733:                                   ; preds = %vector.body733, %vector.ph731
+vector.body733:                                   ; preds = %vector.ph731, %vector.body733
   %index734 = phi i64 [ 0, %vector.ph731 ], [ %index.next738, %vector.body733 ] ; 3 uses
   %next.gep735 = getelementptr i8, ptr %.1369.i.i, i64 %index734 ; 2 uses
   %next.gep736 = getelementptr i8, ptr %.11391.i.i, i64 %index734 ; 2 uses
@@ -6687,7 +6687,7 @@ vector.ph127:                                     ; preds = %vector.main.loop.it
   %n.vec128 = and i64 %i.as, -32                  ; 4 uses
   br label %vector.body129
 
-vector.body129:                                   ; preds = %vector.body129, %vector.ph127
+vector.body129:                                   ; preds = %vector.ph127, %vector.body129
   %index130 = phi i64 [ 0, %vector.ph127 ], [ %index.next133, %vector.body129 ] ; 3 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.aw, i64 %index130 ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 16
@@ -6934,7 +6934,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %.2.i.i, -32                   ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %.079.i.i, i64 %index ; 2 uses
   %i.el = getelementptr inbounds nuw i8, ptr %i.ek, i64 16
@@ -7234,7 +7234,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.am, -32                     ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.aq, i64 %index ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 16

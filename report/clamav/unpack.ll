@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.dh = add i64 %.084148, %n.vec
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue246, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue246
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue246 ] ; 2 uses
   %i.di = add nuw i64 %.084148, %index            ; 16 uses
   %i.dj = getelementptr inbounds nuw [16 x i8], ptr %i.de, i64 %i.di ; 2 uses

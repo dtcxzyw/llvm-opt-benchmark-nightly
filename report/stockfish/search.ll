@@ -205,7 +205,7 @@ vector.ph517:                                     ; preds = %vector.main.loop.it
   %i.pq = getelementptr i8, ptr %i.pg, i64 %i.pp  ; 2 uses
   br label %vector.body518
 
-vector.body518:                                   ; preds = %vector.body518, %vector.ph517
+vector.body518:                                   ; preds = %vector.ph517, %vector.body518
   %index519 = phi i64 [ 0, %vector.ph517 ], [ %index.next522, %vector.body518 ]
   %pointer.phi = phi ptr [ %i.pg, %vector.ph517 ], [ %ptr.ind, %vector.body518 ] ; 2 uses
   %vector.gep = getelementptr i8, ptr %pointer.phi, <16 x i64> <i64 0, i64 72, i64 144, i64 216, i64 288, i64 360, i64 432, i64 504, i64 576, i64 648, i64 720, i64 792, i64 864, i64 936, i64 1008, i64 1080> ; 2 uses
@@ -608,7 +608,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ]
   %vec.phi = phi <8 x i64> [ zeroinitializer, %vector.ph ], [ %i.xq, %vector.body ]
   %vec.phi1200 = phi <8 x i64> [ zeroinitializer, %vector.ph ], [ %i.xr, %vector.body ]
@@ -1011,7 +1011,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.ko = insertelement <16 x i32> <i32 poison, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0>, i32 %.promoted, i64 0
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.phi = phi <16 x i32> [ %i.ko, %vector.ph ], [ %i.vv, %vector.body ]
   %vec.phi365 = phi <16 x i32> [ zeroinitializer, %vector.ph ], [ %i.vw, %vector.body ]

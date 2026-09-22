@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %..i.i.i58, 9223372036854775776 ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.g, i64 %index ; 3 uses
   %i.am = getelementptr inbounds nuw i8, ptr %.sroa.0.057, i64 %index ; 2 uses
@@ -297,7 +297,7 @@ vector.ph72:                                      ; preds = %vector.main.loop.it
   %i.bm = getelementptr i8, ptr %i.g, i64 %n.vec73
   br label %vector.body74
 
-vector.body74:                                    ; preds = %vector.body74, %vector.ph72
+vector.body74:                                    ; preds = %vector.ph72, %vector.body74
   %index75 = phi i64 [ 0, %vector.ph72 ], [ %index.next78, %vector.body74 ] ; 2 uses
   %next.gep = getelementptr i8, ptr %i.g, i64 %index75 ; 3 uses
   %i.bn = getelementptr i8, ptr %next.gep, i64 16 ; 2 uses
@@ -700,7 +700,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n56 = icmp eq i64 %..i.i.i15, %n.vec51
   br i1 %cmp.n56, label %_RINvXs2_NtNtNtCs3oUPovFnLWP_4core4iter8adapters3zipINtB6_3ZipINtNtNtBc_5slice4iter7IterMuthEINtB10_4IterhEEINtB6_7ZipImplBX_B1s_E4folduNCINvNvNtNtNtBa_6traits8iterator8Iterator8for_each4callTQhRhENCINvNtNtCs5yxAJGbRKSL_4ring2bb5bytes25xor_assign_at_start_bytesQShRB4b_E0E0EB3h_.exit, label %.lr.ph.i.preheader
 
-.lr.ph.i.preheader:                               ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph.i.preheader:                               ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.08.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec51, %vec.epilog.middle.block ] ; 3 uses
   %xtraiter = and i64 %..i.i.i15, 3               ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -1103,7 +1103,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.az, -32                     ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bb, i64 %index ; 3 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.ba, i64 %index ; 2 uses
@@ -1150,7 +1150,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n100 = icmp eq i64 %i.az, %n.vec95
   br i1 %cmp.n100, label %.loopexit, label %.lr.ph.i.i.i.preheader
 
-.lr.ph.i.i.i.preheader:                           ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph.i.i.i.preheader:                           ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.08.i.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec95, %vec.epilog.middle.block ]
   br label %.lr.ph.i.i.i
 

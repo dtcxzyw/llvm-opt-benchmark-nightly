@@ -204,7 +204,7 @@ vector.ph166:                                     ; preds = %vector.main.loop.it
   %n.vec167 = and i64 %wide.trip.count.i100, 240  ; 4 uses
   br label %vector.body168
 
-vector.body168:                                   ; preds = %vector.body168, %vector.ph166
+vector.body168:                                   ; preds = %vector.ph166, %vector.body168
   %index169 = phi i64 [ 0, %vector.ph166 ], [ %index.next172, %vector.body168 ] ; 2 uses
   %i.cp = getelementptr inbounds nuw [2 x i8], ptr %i.av, i64 %index169 ; 3 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 16 ; 2 uses
@@ -607,7 +607,7 @@ vector.ph197:                                     ; preds = %vector.main.loop.it
   %n.vec198 = and i64 %wide.trip.count38.i, 4294967280 ; 4 uses
   br label %vector.body199
 
-vector.body199:                                   ; preds = %vector.body199, %vector.ph197
+vector.body199:                                   ; preds = %vector.ph197, %vector.body199
   %index200 = phi i64 [ 0, %vector.ph197 ], [ %index.next203, %vector.body199 ] ; 2 uses
   %i.js = getelementptr inbounds nuw [2 x i8], ptr %i.iv, i64 %index200 ; 3 uses
   %i.jt = getelementptr inbounds nuw i8, ptr %i.js, i64 16 ; 2 uses

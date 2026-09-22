@@ -205,7 +205,7 @@ begin_hunk_0_@_ZN4ojph5local8precinct16prepare_precinctEiPjPNS_21mem_elastic_all
 vec.epilog.iter.check:                            ; preds = %vector.body
   br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !117
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %vec.epilog.vector.body, %vector.memcheck, %vector.scevcheck, %iter.check, %vec.epilog.iter.check
+vec.epilog.scalar.ph.preheader:                   ; preds = %vec.epilog.vector.body, %iter.check, %vector.scevcheck, %vector.memcheck, %vec.epilog.iter.check
   %indvars.iv590.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.scevcheck ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec814, %vec.epilog.vector.body ]
   br label %vec.epilog.scalar.ph
 

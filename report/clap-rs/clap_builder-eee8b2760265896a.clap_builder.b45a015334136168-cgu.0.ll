@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.o, i64 %index ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 16
@@ -608,7 +608,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.hf, 9223372036854775776     ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.iw = getelementptr inbounds nuw i8, ptr %i.he, i64 %index ; 2 uses
   %i.ix = getelementptr inbounds nuw i8, ptr %i.iw, i64 16
@@ -1011,7 +1011,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %2, 9223372036854775776        ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 %index ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16

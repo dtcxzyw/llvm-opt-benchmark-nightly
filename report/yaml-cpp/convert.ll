@@ -202,7 +202,7 @@ vector.ph151:                                     ; preds = %vector.main.loop.it
   %i.fy = getelementptr i8, ptr %i.fu, i64 %n.vec152
   br label %vector.body153
 
-vector.body153:                                   ; preds = %vector.body153, %vector.ph151
+vector.body153:                                   ; preds = %vector.ph151, %vector.body153
   %index154 = phi i64 [ 0, %vector.ph151 ], [ %index.next158, %vector.body153 ] ; 2 uses
   %next.gep155 = getelementptr i8, ptr %i.fu, i64 %index154 ; 3 uses
   %i.fz = getelementptr i8, ptr %next.gep155, i64 16 ; 2 uses
@@ -413,7 +413,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.ie = getelementptr i8, ptr %i.ia, i64 %n.vec
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %next.gep = getelementptr i8, ptr %i.ia, i64 %index ; 3 uses
   %i.if = getelementptr i8, ptr %next.gep, i64 16 ; 2 uses

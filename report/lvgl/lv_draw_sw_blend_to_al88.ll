@@ -191,7 +191,7 @@ vector.ph350:                                     ; preds = %vector.main.loop.it
   %i.bg = add i64 %indvars.iv292, %n.vec351
   br label %vector.body354
 
-vector.body354:                                   ; preds = %vector.body354, %vector.ph350
+vector.body354:                                   ; preds = %vector.ph350, %vector.body354
   %index355 = phi i64 [ 0, %vector.ph350 ], [ %index.next358, %vector.body354 ] ; 2 uses
   %i.bh = add nuw i64 %indvars.iv292, %index355   ; 2 uses
   %i.bi = getelementptr inbounds nuw [2 x i8], ptr %.0174256.us, i64 %i.bh

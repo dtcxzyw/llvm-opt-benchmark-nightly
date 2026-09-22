@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 %index ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16
@@ -608,7 +608,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.r = getelementptr i8, ptr %i.k, i64 %i.i
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %1, i64 %index ; 2 uses
   %i.s = getelementptr i8, ptr %next.gep, i64 16
@@ -652,7 +652,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n11 = icmp eq i64 %i.c, %n.vec6
   br i1 %cmp.n11, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$14extend_trusted17h8a4c823178e07e3aE.exit", label %.lr.ph.i.i.i.preheader
 
-.lr.ph.i.i.i.preheader:                           ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph.i.i.i.preheader:                           ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.ph = phi i64 [ %i.i, %iter.check ], [ %i.i, %vector.memcheck ], [ %i.p, %vec.epilog.iter.check ], [ %i.w, %vec.epilog.middle.block ] ; 2 uses
   %.sroa.0.013.i.i.i.ph = phi ptr [ %1, %iter.check ], [ %1, %vector.memcheck ], [ %i.q, %vec.epilog.iter.check ], [ %i.x, %vec.epilog.middle.block ] ; 3 uses
   %.sroa.0.013.i.i.i.ph14 = ptrtoaddr ptr %.sroa.0.013.i.i.i.ph to i64 ; 2 uses
@@ -776,7 +776,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.s = getelementptr i8, ptr %i.l, i64 %i.j
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %.val.i, i64 %index ; 2 uses
   %i.t = getelementptr i8, ptr %next.gep, i64 16
@@ -820,7 +820,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n10 = icmp eq i64 %i.d, %n.vec5
   br i1 %cmp.n10, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i.preheader
 
-.lr.ph.i.i.i.preheader:                           ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph.i.i.i.preheader:                           ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.ph = phi i64 [ %i.j, %iter.check ], [ %i.j, %vector.memcheck ], [ %i.q, %vec.epilog.iter.check ], [ %i.x, %vec.epilog.middle.block ] ; 2 uses
   %.ph13 = phi ptr [ %.val.i, %iter.check ], [ %.val.i, %vector.memcheck ], [ %i.r, %vec.epilog.iter.check ], [ %i.y, %vec.epilog.middle.block ] ; 3 uses
   %.ph1314 = ptrtoaddr ptr %.ph13 to i64          ; 2 uses

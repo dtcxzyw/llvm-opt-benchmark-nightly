@@ -205,7 +205,7 @@ vector.ph191:                                     ; preds = %vector.main.loop.it
   %i.t = getelementptr i8, ptr %1, i64 %n.vec192  ; 2 uses
   br label %vector.body193
 
-vector.body193:                                   ; preds = %vector.body193, %vector.ph191
+vector.body193:                                   ; preds = %vector.ph191, %vector.body193
   %index194 = phi i64 [ 0, %vector.ph191 ], [ %index.next199, %vector.body193 ] ; 3 uses
   %next.gep195 = getelementptr i8, ptr %0, i64 %index194 ; 2 uses
   %next.gep196 = getelementptr i8, ptr %1, i64 %index194 ; 2 uses
@@ -508,7 +508,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.du = getelementptr i8, ptr %i.de, i64 %i.dr  ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.dv = sub i64 0, %index                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.df, i64 %i.dv ; 2 uses
@@ -911,7 +911,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.an = trunc nuw nsw i64 %n.vec to i32
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ao = sub i64 0, %index                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.ag, i64 %i.ao ; 2 uses
@@ -1314,7 +1314,7 @@ vector.ph225:                                     ; preds = %vector.main.loop.it
   %i.me = getelementptr i8, ptr %.sink.i64.i, i64 %n.vec226 ; 2 uses
   br label %vector.body227
 
-vector.body227:                                   ; preds = %vector.body227, %vector.ph225
+vector.body227:                                   ; preds = %vector.ph225, %vector.body227
   %index228 = phi i64 [ 0, %vector.ph225 ], [ %index.next233, %vector.body227 ] ; 3 uses
   %next.gep229 = getelementptr i8, ptr %i.lx, i64 %index228 ; 2 uses
   %next.gep230 = getelementptr i8, ptr %.sink.i64.i, i64 %index228 ; 2 uses
@@ -1689,7 +1689,7 @@ vec.epilog.middle.block287:                       ; preds = %vec.epilog.vector.b
   %cmp.n288 = icmp eq i64 %n.vec280, %i.pk
   br i1 %cmp.n288, label %nk_decompress_token.exit.thread.sink.split.i, label %.preheader.i76.i.i.preheader
 
-.preheader.i76.i.i.preheader:                     ; preds = %vector.memcheck256, %iter.check275, %vec.epilog.iter.check277, %vec.epilog.middle.block287
+.preheader.i76.i.i.preheader:                     ; preds = %iter.check275, %vector.memcheck256, %vec.epilog.iter.check277, %vec.epilog.middle.block287
   %.09.i77.i.i.ph = phi i32 [ %i.pj, %iter.check275 ], [ %i.pj, %vector.memcheck256 ], [ %i.qi, %vec.epilog.iter.check277 ], [ %i.rj, %vec.epilog.middle.block287 ] ; 4 uses
   %.048.i78.i.i.ph = phi ptr [ %i.qb, %iter.check275 ], [ %i.qb, %vector.memcheck256 ], [ %i.qj, %vec.epilog.iter.check277 ], [ %i.rk, %vec.epilog.middle.block287 ] ; 2 uses
   %.ph338 = phi ptr [ %.sink.i64.i, %iter.check275 ], [ %.sink.i64.i, %vector.memcheck256 ], [ %i.qk, %vec.epilog.iter.check277 ], [ %i.rl, %vec.epilog.middle.block287 ] ; 2 uses
@@ -1818,7 +1818,7 @@ vector.ph297:                                     ; preds = %vector.main.loop.it
   %i.ud = getelementptr i8, ptr %.sink.i64.i, i64 %n.vec298 ; 2 uses
   br label %vector.body299
 
-vector.body299:                                   ; preds = %vector.body299, %vector.ph297
+vector.body299:                                   ; preds = %vector.ph297, %vector.body299
   %index300 = phi i64 [ 0, %vector.ph297 ], [ %index.next305, %vector.body299 ] ; 3 uses
   %next.gep301 = getelementptr i8, ptr %i.tu, i64 %index300 ; 2 uses
   %next.gep302 = getelementptr i8, ptr %.sink.i64.i, i64 %index300 ; 2 uses
@@ -1863,7 +1863,7 @@ vec.epilog.middle.block323:                       ; preds = %vec.epilog.vector.b
   %cmp.n324 = icmp eq i64 %n.vec316, %i.td
   br i1 %cmp.n324, label %nk_decompress_token.exit.thread.sink.split.i, label %.preheader.i82.i.i.preheader
 
-.preheader.i82.i.i.preheader:                     ; preds = %vector.memcheck292, %iter.check311, %vec.epilog.iter.check313, %vec.epilog.middle.block323
+.preheader.i82.i.i.preheader:                     ; preds = %iter.check311, %vector.memcheck292, %vec.epilog.iter.check313, %vec.epilog.middle.block323
   %.09.i83.i.i.ph = phi i32 [ %i.tc, %iter.check311 ], [ %i.tc, %vector.memcheck292 ], [ %i.ub, %vec.epilog.iter.check313 ], [ %i.ui, %vec.epilog.middle.block323 ] ; 4 uses
   %.048.i84.i.i.ph = phi ptr [ %i.tu, %iter.check311 ], [ %i.tu, %vector.memcheck292 ], [ %i.uc, %vec.epilog.iter.check313 ], [ %i.uj, %vec.epilog.middle.block323 ] ; 2 uses
   %.ph340 = phi ptr [ %.sink.i64.i, %iter.check311 ], [ %.sink.i64.i, %vector.memcheck292 ], [ %i.ud, %vec.epilog.iter.check313 ], [ %i.uk, %vec.epilog.middle.block323 ] ; 2 uses

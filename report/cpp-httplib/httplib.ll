@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %wide.load119 = load <16 x i8>, ptr %i.cr, align 16, !tbaa !177
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.da = getelementptr i8, ptr %i.cw, i64 %index ; 2 uses
   %i.db = getelementptr i8, ptr %i.da, i64 16
@@ -250,7 +250,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n125 = icmp eq i64 %umax, %n.vec120
   br i1 %cmp.n125, label %._crit_edge, label %vec.epilog.scalar.ph.preheader
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %vector.scevcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.scevcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.098.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.scevcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec120, %vec.epilog.middle.block ] ; 5 uses
   %.neg = or disjoint i64 %.098.ph, 1
   %xtraiter = and i64 %umax, 1
@@ -653,7 +653,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.bt = getelementptr i8, ptr %i.bg, i64 %i.br
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.bu = shl i64 %index, 1                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.bc, i64 %i.bu ; 2 uses
@@ -1056,7 +1056,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.bt = getelementptr i8, ptr %i.bg, i64 %i.br
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.bu = shl i64 %index, 1                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.bc, i64 %i.bu ; 2 uses
@@ -1459,7 +1459,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.ae = getelementptr i8, ptr %i.i, i64 %i.ac
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.af = shl i64 %index, 1                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.t, i64 %i.af ; 2 uses
@@ -1862,7 +1862,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.ae = getelementptr i8, ptr %i.i, i64 %i.ac
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.af = shl i64 %index, 1                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.t, i64 %i.af ; 2 uses

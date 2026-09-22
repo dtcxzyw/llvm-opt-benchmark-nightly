@@ -205,7 +205,7 @@ vector.ph545:                                     ; preds = %vector.main.loop.it
   %i.ew = getelementptr i8, ptr %.val91, i64 %n.vec546
   br label %vector.body547
 
-vector.body547:                                   ; preds = %vector.body547, %vector.ph545
+vector.body547:                                   ; preds = %vector.ph545, %vector.body547
   %index548 = phi i64 [ 0, %vector.ph545 ], [ %index.next554, %vector.body547 ] ; 2 uses
   %vec.phi549 = phi <16 x i1> [ zeroinitializer, %vector.ph545 ], [ %i.fh, %vector.body547 ]
   %vec.phi550 = phi <16 x i1> [ zeroinitializer, %vector.ph545 ], [ %i.fj, %vector.body547 ]
@@ -374,7 +374,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.gy = getelementptr i8, ptr %i.gt, i64 %n.vec
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.phi = phi <16 x i1> [ zeroinitializer, %vector.ph ], [ %i.hj, %vector.body ]
   %vec.phi531 = phi <16 x i1> [ zeroinitializer, %vector.ph ], [ %i.hl, %vector.body ]
@@ -777,7 +777,7 @@ vector.ph473:                                     ; preds = %vector.main.loop.it
   %i.ey = getelementptr i8, ptr %.val91, i64 %n.vec474
   br label %vector.body475
 
-vector.body475:                                   ; preds = %vector.body475, %vector.ph473
+vector.body475:                                   ; preds = %vector.ph473, %vector.body475
   %index476 = phi i64 [ 0, %vector.ph473 ], [ %index.next482, %vector.body475 ] ; 2 uses
   %vec.phi477 = phi <16 x i1> [ zeroinitializer, %vector.ph473 ], [ %i.fj, %vector.body475 ]
   %vec.phi478 = phi <16 x i1> [ zeroinitializer, %vector.ph473 ], [ %i.fl, %vector.body475 ]
@@ -946,7 +946,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.ha = getelementptr i8, ptr %i.gv, i64 %n.vec
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.phi = phi <16 x i1> [ zeroinitializer, %vector.ph ], [ %i.hl, %vector.body ]
   %vec.phi459 = phi <16 x i1> [ zeroinitializer, %vector.ph ], [ %i.hn, %vector.body ]
@@ -1349,7 +1349,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.gw = getelementptr i8, ptr %.val115.i.i, i64 %n.vec
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.phi = phi <16 x i1> [ zeroinitializer, %vector.ph ], [ %predphi, %vector.body ]
   %vec.phi75 = phi <16 x i1> [ zeroinitializer, %vector.ph ], [ %predphi77, %vector.body ]
@@ -1752,7 +1752,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %.sroa.8.0.copyload, -32       ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.sroa.42.0.copyload, i64 %index ; 3 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 16 ; 2 uses
@@ -2155,7 +2155,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.fz = getelementptr i8, ptr %.val.i.i.i.i4, i64 %n.vec
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.phi = phi <16 x i1> [ zeroinitializer, %vector.ph ], [ %i.gk, %vector.body ]
   %vec.phi171 = phi <16 x i1> [ zeroinitializer, %vector.ph ], [ %i.gm, %vector.body ]
@@ -2558,7 +2558,7 @@ vector.ph185:                                     ; preds = %vector.main.loop.it
   %i.im = getelementptr i8, ptr %.sroa.6200.0.copyload.i, i64 %n.vec186
   br label %vector.body187
 
-vector.body187:                                   ; preds = %vector.body187, %vector.ph185
+vector.body187:                                   ; preds = %vector.ph185, %vector.body187
   %index188 = phi i64 [ 0, %vector.ph185 ], [ %index.next194, %vector.body187 ] ; 2 uses
   %vec.phi189 = phi <16 x i1> [ zeroinitializer, %vector.ph185 ], [ %i.ix, %vector.body187 ]
   %vec.phi190 = phi <16 x i1> [ zeroinitializer, %vector.ph185 ], [ %i.iz, %vector.body187 ]
@@ -2961,7 +2961,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.jq = getelementptr i8, ptr %.val133.i.i, i64 %n.vec
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.phi = phi <16 x i1> [ zeroinitializer, %vector.ph ], [ %predphi, %vector.body ]
   %vec.phi646 = phi <16 x i1> [ zeroinitializer, %vector.ph ], [ %predphi648, %vector.body ]

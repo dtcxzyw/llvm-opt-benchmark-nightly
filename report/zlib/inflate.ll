@@ -205,7 +205,7 @@ vector.ph3972:                                    ; preds = %vector.main.loop.it
   %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
   br label %vector.body3974
 
-vector.body3974:                                  ; preds = %vector.body3974, %vector.ph3972
+vector.body3974:                                  ; preds = %vector.ph3972, %vector.body3974
   %index3975 = phi i32 [ 0, %vector.ph3972 ], [ %index.next3976, %vector.body3974 ] ; 2 uses
   %i.ym = add i32 %.lcssa199519982000, %index3975
   %i.yn = zext i32 %i.ym to i64
@@ -608,7 +608,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.aiy = getelementptr i8, ptr %.1900, i64 %n.vec
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %.01053, i64 %index ; 2 uses
   %next.gep3955 = getelementptr i8, ptr %.1900, i64 %index ; 2 uses

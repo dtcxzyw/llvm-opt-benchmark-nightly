@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %wide.trip.count, 2147483616   ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <16 x i8> [ <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7, i8 8, i8 9, i8 10, i8 11, i8 12, i8 13, i8 14, i8 15>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
   %step.add = add <16 x i8> %vec.ind, splat (i8 16)
@@ -608,7 +608,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %wide.trip.count61.i, 65504    ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.db, i64 %index ; 3 uses
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 16 ; 2 uses
@@ -1011,7 +1011,7 @@ vector.ph643:                                     ; preds = %vector.main.loop.it
   %i.csb = getelementptr i8, ptr %i.cqa, i64 %n.vec644
   br label %vector.body645
 
-vector.body645:                                   ; preds = %vector.body645, %vector.ph643
+vector.body645:                                   ; preds = %vector.ph643, %vector.body645
   %index646 = phi i64 [ 0, %vector.ph643 ], [ %index.next650, %vector.body645 ] ; 2 uses
   %next.gep647 = getelementptr i8, ptr %i.cqa, i64 %index646 ; 3 uses
   %i.csc = getelementptr i8, ptr %next.gep647, i64 16 ; 2 uses
@@ -1104,7 +1104,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %broadcast.splat627 = shufflevector <16 x i32> %broadcast.splatinsert626, <16 x i32> poison, <16 x i32> zeroinitializer
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %next.gep = getelementptr i8, ptr %i.cqa, i64 %index ; 2 uses
   %wide.load = load <16 x i8>, ptr %next.gep, align 1, !tbaa !26

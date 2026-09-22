@@ -205,7 +205,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n58 = icmp eq i64 %n.vec54, %i.z
   br i1 %cmp.n58, label %_ZN3fmt2v96detail12specs_setterIcE7on_fillENS0_17basic_string_viewIcEE.exit.i, label %.lr.ph.i.i.i.preheader
 
-.lr.ph.i.i.i.preheader:                           ; preds = %vector.memcheck, %iter.check, %vec.epilog.middle.block
+.lr.ph.i.i.i.preheader:                           ; preds = %iter.check, %vector.memcheck, %vec.epilog.middle.block
   %.08.i.i.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %iter.check ], [ %n.vec54, %vec.epilog.middle.block ] ; 3 uses
   %xtraiter = and i64 %i.z, 3
   %i.ah = and i8 %i.y, 3

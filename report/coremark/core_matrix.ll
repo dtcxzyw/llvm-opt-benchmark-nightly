@@ -115,7 +115,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   br i1 %cmp.n184, label %.loopexit251, label %vec.epilog.scalar.ph.preheader
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %vector.scevcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.scevcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.scevcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec178, %vec.epilog.middle.block ] ; 3 uses
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
@@ -518,7 +518,7 @@ vec.epilog.vector.body242:                        ; preds = %vec.epilog.vector.b
 vec.epilog.middle.block246:                       ; preds = %vec.epilog.vector.body242
   br i1 %cmp.n247, label %.loopexit, label %vec.epilog.scalar.ph235.preheader
 
-vec.epilog.scalar.ph235.preheader:                ; preds = %vector.scevcheck217, %iter.check234, %vec.epilog.iter.check236, %vec.epilog.middle.block246
+vec.epilog.scalar.ph235.preheader:                ; preds = %iter.check234, %vector.scevcheck217, %vec.epilog.iter.check236, %vec.epilog.middle.block246
   %indvars.iv.i134.ph = phi i64 [ 0, %iter.check234 ], [ 0, %vector.scevcheck217 ], [ %n.vec223, %vec.epilog.iter.check236 ], [ %n.vec239, %vec.epilog.middle.block246 ] ; 3 uses
   br i1 %lcmp.mod328.not, label %vec.epilog.scalar.ph235.prol.loopexit, label %vec.epilog.scalar.ph235.prol
 
@@ -677,7 +677,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   br i1 %cmp.n25, label %.loopexit, label %vec.epilog.scalar.ph.preheader
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %vector.scevcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.scevcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.scevcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec19, %vec.epilog.middle.block ] ; 3 uses
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 

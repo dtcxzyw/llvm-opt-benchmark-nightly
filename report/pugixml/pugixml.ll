@@ -205,7 +205,7 @@ vector.ph30:                                      ; preds = %vector.main.loop.it
   %i.ds = getelementptr i8, ptr %.ptr13, i64 %i.dr
   br label %vector.body32
 
-vector.body32:                                    ; preds = %vector.body32, %vector.ph30
+vector.body32:                                    ; preds = %vector.ph30, %vector.body32
   %index33 = phi i64 [ 0, %vector.ph30 ], [ %index.next37, %vector.body32 ] ; 2 uses
   %i.dt = shl i64 %index33, 1
   %next.gep34 = getelementptr i8, ptr %.ptr13, i64 %i.dt ; 3 uses

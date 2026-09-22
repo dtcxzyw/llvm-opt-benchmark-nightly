@@ -187,7 +187,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n151 = icmp eq i64 %n.vec146, %i.ac
   br i1 %cmp.n151, label %._crit_edge.loopexit, label %.lr.ph.preheader
 
-.lr.ph.preheader:                                 ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph.preheader:                                 ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec146, %vec.epilog.middle.block ] ; 2 uses
   %.pn9299.ph = phi ptr [ %i.q, %iter.check ], [ %i.q, %vector.memcheck ], [ %i.ah, %vec.epilog.iter.check ], [ %i.br, %vec.epilog.middle.block ] ; 2 uses
   %.08798.ph = phi i32 [ %i.ab, %iter.check ], [ %i.ab, %vector.memcheck ], [ %i.aj, %vec.epilog.iter.check ], [ %i.bt, %vec.epilog.middle.block ] ; 4 uses
@@ -304,7 +304,7 @@ vector.ph161:                                     ; preds = %vector.main.loop.it
   %invariant.gep = getelementptr i8, ptr %0, i64 %i.cy
   br label %vector.body163
 
-vector.body163:                                   ; preds = %vector.body163, %vector.ph161
+vector.body163:                                   ; preds = %vector.ph161, %vector.body163
   %index164 = phi i64 [ 0, %vector.ph161 ], [ %index.next167, %vector.body163 ] ; 3 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %.078, i64 %index164 ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 16
@@ -347,7 +347,7 @@ vec.epilog.middle.block181:                       ; preds = %vec.epilog.vector.b
   %cmp.n182 = icmp eq i64 %n.vec176, %wide.trip.count
   br i1 %cmp.n182, label %._crit_edge105.loopexit, label %.lr.ph104.preheader
 
-.lr.ph104.preheader:                              ; preds = %vector.memcheck155, %iter.check171, %vec.epilog.iter.check173, %vec.epilog.middle.block181
+.lr.ph104.preheader:                              ; preds = %iter.check171, %vector.memcheck155, %vec.epilog.iter.check173, %vec.epilog.middle.block181
   %indvars.iv128.ph = phi i64 [ 0, %iter.check171 ], [ 0, %vector.memcheck155 ], [ %n.vec162, %vec.epilog.iter.check173 ], [ %n.vec176, %vec.epilog.middle.block181 ] ; 3 uses
   %indvars.iv126.ph = phi i64 [ %i.cy, %iter.check171 ], [ %i.cy, %vector.memcheck155 ], [ %i.dc, %vec.epilog.iter.check173 ], [ %i.dh, %vec.epilog.middle.block181 ] ; 2 uses
   %xtraiter223 = and i64 %wide.trip.count, 3      ; 2 uses
@@ -698,7 +698,7 @@ vec.epilog.middle.block214:                       ; preds = %vec.epilog.vector.b
   %cmp.n215 = icmp eq i64 %n.vec208, %i.gp
   br i1 %cmp.n215, label %._crit_edge120.loopexit, label %.lr.ph119.preheader
 
-.lr.ph119.preheader:                              ; preds = %vector.memcheck185, %iter.check203, %vec.epilog.iter.check205, %vec.epilog.middle.block214
+.lr.ph119.preheader:                              ; preds = %iter.check203, %vector.memcheck185, %vec.epilog.iter.check205, %vec.epilog.middle.block214
   %indvars.iv134.ph = phi i64 [ %i.go, %iter.check203 ], [ %i.go, %vector.memcheck185 ], [ %i.gv, %vec.epilog.iter.check205 ], [ %i.in, %vec.epilog.middle.block214 ] ; 2 uses
   %.0118.ph = phi i32 [ %i.gn, %iter.check203 ], [ %i.gn, %vector.memcheck185 ], [ %i.gx, %vec.epilog.iter.check205 ], [ %i.ip, %vec.epilog.middle.block214 ] ; 4 uses
   %.pn116.ph = phi ptr [ %i.z, %iter.check203 ], [ %i.z, %vector.memcheck185 ], [ %i.gy, %vec.epilog.iter.check205 ], [ %i.iq, %vec.epilog.middle.block214 ] ; 2 uses

@@ -205,7 +205,7 @@ vector.ph891:                                     ; preds = %vector.main.loop.it
   %n.vec892 = and i64 %wide.trip.count639, 2147483616 ; 4 uses
   br label %vector.body893
 
-vector.body893:                                   ; preds = %vector.body893, %vector.ph891
+vector.body893:                                   ; preds = %vector.ph891, %vector.body893
   %index894 = phi i64 [ 0, %vector.ph891 ], [ %index.next897, %vector.body893 ] ; 2 uses
   %vec.phi = phi <16 x i1> [ zeroinitializer, %vector.ph891 ], [ %i.ge, %vector.body893 ]
   %vec.phi895 = phi <16 x i1> [ zeroinitializer, %vector.ph891 ], [ %i.gf, %vector.body893 ]

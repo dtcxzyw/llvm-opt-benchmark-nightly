@@ -205,7 +205,7 @@ vector.ph178:                                     ; preds = %vector.main.loop.it
   %i.fg = getelementptr i8, ptr %i.fb, i64 %i.fa
   br label %vector.body180
 
-vector.body180:                                   ; preds = %vector.body180, %vector.ph178
+vector.body180:                                   ; preds = %vector.ph178, %vector.body180
   %index181 = phi i64 [ 0, %vector.ph178 ], [ %index.next185, %vector.body180 ] ; 3 uses
   %next.gep182 = getelementptr i8, ptr %3, i64 %index181 ; 2 uses
   %i.fh = getelementptr i8, ptr %next.gep182, i64 16

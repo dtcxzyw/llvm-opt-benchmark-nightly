@@ -202,7 +202,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.et = getelementptr i8, ptr %.8.lcssa, i64 %n.vec ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %.1, i64 %index ; 2 uses
   %next.gep270 = getelementptr i8, ptr %.8.lcssa, i64 %index ; 2 uses
@@ -605,7 +605,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.ev = getelementptr i8, ptr %.8.lcssa, i64 %n.vec ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %.1, i64 %index ; 2 uses
   %next.gep267 = getelementptr i8, ptr %.8.lcssa, i64 %index ; 2 uses

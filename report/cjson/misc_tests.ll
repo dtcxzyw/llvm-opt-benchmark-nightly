@@ -204,7 +204,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %.047.lcssa.i, -32             ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue200, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue200
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue200 ] ; 33 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.au, i64 %index ; 3 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 16

@@ -206,7 +206,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %.sroa.02.07.i.i115, -32       ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.phi = phi <16 x i1> [ zeroinitializer, %vector.ph ], [ %i.bb, %vector.body ]
   %vec.phi1104 = phi <16 x i1> [ zeroinitializer, %vector.ph ], [ %i.bc, %vector.body ]
@@ -355,7 +355,7 @@ vector.ph1116:                                    ; preds = %vector.main.loop.it
   %n.vec1117 = and i64 %i.cj, -32                 ; 4 uses
   br label %vector.body1118
 
-vector.body1118:                                  ; preds = %vector.body1118, %vector.ph1116
+vector.body1118:                                  ; preds = %vector.ph1116, %vector.body1118
   %index1119 = phi i64 [ 0, %vector.ph1116 ], [ %index.next1124, %vector.body1118 ] ; 2 uses
   %vec.phi1120 = phi <16 x i1> [ zeroinitializer, %vector.ph1116 ], [ %i.cp, %vector.body1118 ]
   %vec.phi1121 = phi <16 x i1> [ zeroinitializer, %vector.ph1116 ], [ %i.cq, %vector.body1118 ]
@@ -648,7 +648,7 @@ vector.ph1212:                                    ; preds = %vector.main.loop.it
   %n.vec1213 = and i64 %.sroa.02.07.i.i153, -32   ; 4 uses
   br label %vector.body1214
 
-vector.body1214:                                  ; preds = %vector.body1214, %vector.ph1212
+vector.body1214:                                  ; preds = %vector.ph1212, %vector.body1214
   %index1215 = phi i64 [ 0, %vector.ph1212 ], [ %index.next1220, %vector.body1214 ] ; 2 uses
   %vec.phi1216 = phi <16 x i1> [ zeroinitializer, %vector.ph1212 ], [ %i.fg, %vector.body1214 ]
   %vec.phi1217 = phi <16 x i1> [ zeroinitializer, %vector.ph1212 ], [ %i.fh, %vector.body1214 ]
@@ -807,7 +807,7 @@ vector.ph1180:                                    ; preds = %vector.main.loop.it
   %n.vec1181 = and i64 %i.gf, -32                 ; 4 uses
   br label %vector.body1182
 
-vector.body1182:                                  ; preds = %vector.body1182, %vector.ph1180
+vector.body1182:                                  ; preds = %vector.ph1180, %vector.body1182
   %index1183 = phi i64 [ 0, %vector.ph1180 ], [ %index.next1188, %vector.body1182 ] ; 2 uses
   %vec.phi1184 = phi <16 x i1> [ zeroinitializer, %vector.ph1180 ], [ %i.gn, %vector.body1182 ]
   %vec.phi1185 = phi <16 x i1> [ zeroinitializer, %vector.ph1180 ], [ %i.go, %vector.body1182 ]
@@ -1082,7 +1082,7 @@ vector.ph1148:                                    ; preds = %vector.main.loop.it
   %n.vec1149 = and i64 %i.ix, -32                 ; 4 uses
   br label %vector.body1150
 
-vector.body1150:                                  ; preds = %vector.body1150, %vector.ph1148
+vector.body1150:                                  ; preds = %vector.ph1148, %vector.body1150
   %index1151 = phi i64 [ 0, %vector.ph1148 ], [ %index.next1156, %vector.body1150 ] ; 2 uses
   %vec.phi1152 = phi <16 x i1> [ zeroinitializer, %vector.ph1148 ], [ %i.jg, %vector.body1150 ]
   %vec.phi1153 = phi <16 x i1> [ zeroinitializer, %vector.ph1148 ], [ %i.jh, %vector.body1150 ]

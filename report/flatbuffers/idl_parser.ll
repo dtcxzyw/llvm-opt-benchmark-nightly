@@ -205,7 +205,7 @@ vec.epilog.vector.body124:                        ; preds = %vec.epilog.vector.b
 vec.epilog.middle.block129:                       ; preds = %vec.epilog.vector.body124
   br i1 %cmp.n130, label %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit", label %.lr.ph.i.preheader
 
-.lr.ph.i.preheader:                               ; preds = %vector.memcheck97, %iter.check118, %vec.epilog.iter.check120, %vec.epilog.middle.block129
+.lr.ph.i.preheader:                               ; preds = %iter.check118, %vector.memcheck97, %vec.epilog.iter.check120, %vec.epilog.middle.block129
   %.06.i.ph = phi i64 [ 0, %iter.check118 ], [ 0, %vector.memcheck97 ], [ %n.vec107, %vec.epilog.iter.check120 ], [ %n.vec123, %vec.epilog.middle.block129 ] ; 5 uses
   %.neg = or disjoint i64 %.06.i.ph, 1
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
@@ -314,7 +314,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   br i1 %cmp.n96, label %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.loopexit", label %.lr.ph.i37.preheader
 
-.lr.ph.i37.preheader:                             ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+.lr.ph.i37.preheader:                             ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.06.i38.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec91, %vec.epilog.middle.block ] ; 5 uses
   %.neg135 = or disjoint i64 %.06.i38.ph, 1
   br i1 %lcmp.mod134.not, label %.lr.ph.i37.prol.loopexit, label %.lr.ph.i37.prol
@@ -717,7 +717,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.lg = getelementptr i8, ptr %i.lb, i64 %n.vec
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue828, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue828
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue828 ] ; 33 uses
   %next.gep = getelementptr i8, ptr %i.lb, i64 %index ; 3 uses
   %i.lh = getelementptr i8, ptr %i.lb, i64 %index

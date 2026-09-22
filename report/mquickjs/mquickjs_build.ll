@@ -204,7 +204,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %i.ab, 240                     ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue201, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue201
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue201 ] ; 17 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.b, i64 %index ; 2 uses
   %wide.load = load <16 x i8>, ptr %i.ag, align 16, !tbaa !25 ; 2 uses
@@ -607,7 +607,7 @@ vector.ph226:                                     ; preds = %vector.main.loop.it
   %n.vec227 = and i64 %i.ja, 240                  ; 4 uses
   br label %vector.body228
 
-vector.body228:                                   ; preds = %pred.store.continue262, %vector.ph226
+vector.body228:                                   ; preds = %vector.ph226, %pred.store.continue262
   %index229 = phi i64 [ 0, %vector.ph226 ], [ %index.next263, %pred.store.continue262 ] ; 17 uses
   %i.jf = getelementptr inbounds nuw i8, ptr %i.a, i64 %index229 ; 2 uses
   %wide.load230 = load <16 x i8>, ptr %i.jf, align 16, !tbaa !25 ; 2 uses

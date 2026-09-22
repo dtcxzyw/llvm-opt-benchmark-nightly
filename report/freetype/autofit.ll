@@ -205,7 +205,7 @@ vector.ph216:                                     ; preds = %vector.main.loop.it
   %broadcast.splat = shufflevector <8 x i32> %broadcast.splatinsert, <8 x i32> poison, <8 x i32> zeroinitializer ; 2 uses
   br label %vector.body218
 
-vector.body218:                                   ; preds = %pred.store.continue250, %vector.ph216
+vector.body218:                                   ; preds = %vector.ph216, %pred.store.continue250
   %index219 = phi i64 [ 0, %vector.ph216 ], [ %index.next251, %pred.store.continue250 ] ; 17 uses
   %i.tj = getelementptr inbounds nuw [2 x i8], ptr %i.te, i64 %index219 ; 3 uses
   %i.tk = getelementptr inbounds nuw i8, ptr %i.tj, i64 16
@@ -608,7 +608,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %wide.trip.count.i, 4294967280 ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.qn = getelementptr inbounds nuw [2 x i8], ptr %i.qi, i64 %index ; 2 uses
   %i.qo = getelementptr inbounds nuw i8, ptr %i.qn, i64 16

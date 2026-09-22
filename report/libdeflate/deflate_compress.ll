@@ -205,7 +205,7 @@ vector.ph120:                                     ; preds = %vector.main.loop.it
   %broadcast.splat123 = shufflevector <16 x i8> %broadcast.splatinsert122, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
   br label %vector.body124
 
-vector.body124:                                   ; preds = %vector.body124, %vector.ph120
+vector.body124:                                   ; preds = %vector.ph120, %vector.body124
   %index125 = phi i32 [ 0, %vector.ph120 ], [ %index.next126, %vector.body124 ] ; 2 uses
   %i.be = add i32 %i.aq, %index125
   %i.bf = zext i32 %i.be to i64
@@ -334,7 +334,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.de = add i32 %i.cq, %index
   %i.df = zext i32 %i.de to i64
@@ -463,7 +463,7 @@ vector.ph148:                                     ; preds = %vector.main.loop.it
   %broadcast.splat151 = shufflevector <16 x i8> %broadcast.splatinsert150, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
   br label %vector.body152
 
-vector.body152:                                   ; preds = %vector.body152, %vector.ph148
+vector.body152:                                   ; preds = %vector.ph148, %vector.body152
   %index153 = phi i32 [ 0, %vector.ph148 ], [ %index.next154, %vector.body152 ] ; 2 uses
   %i.fe = add i32 %i.eq, %index153
   %i.ff = zext i32 %i.fe to i64

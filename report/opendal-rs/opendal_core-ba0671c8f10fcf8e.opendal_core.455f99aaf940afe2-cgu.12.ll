@@ -204,7 +204,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %2, -32                        ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.gc = getelementptr inbounds nuw i8, ptr %i.fz, i64 %index ; 3 uses
   %i.gd = getelementptr inbounds nuw i8, ptr %i.gc, i64 16 ; 2 uses
@@ -483,7 +483,7 @@ vector.ph407:                                     ; preds = %vector.main.loop.it
   %n.vec408 = and i64 %i.hs, 4294967264           ; 4 uses
   br label %vector.body409
 
-vector.body409:                                   ; preds = %vector.body409, %vector.ph407
+vector.body409:                                   ; preds = %vector.ph407, %vector.body409
   %index410 = phi i64 [ 0, %vector.ph407 ], [ %index.next413, %vector.body409 ] ; 2 uses
   %i.ii = getelementptr inbounds nuw i8, ptr %i.if, i64 %index410 ; 3 uses
   %i.ij = getelementptr inbounds nuw i8, ptr %i.ii, i64 16 ; 2 uses
@@ -655,7 +655,7 @@ vector.ph433:                                     ; preds = %vector.main.loop.it
   %n.vec434 = and i64 %i.js, -32                  ; 4 uses
   br label %vector.body435
 
-vector.body435:                                   ; preds = %vector.body435, %vector.ph433
+vector.body435:                                   ; preds = %vector.ph433, %vector.body435
   %index436 = phi i64 [ 0, %vector.ph433 ], [ %index.next439, %vector.body435 ] ; 2 uses
   %i.ka = getelementptr inbounds nuw i8, ptr %i.jx, i64 %index436 ; 3 uses
   %i.kb = getelementptr inbounds nuw i8, ptr %i.ka, i64 16 ; 2 uses
@@ -1058,7 +1058,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %2, -32                        ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 %index ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 16 ; 2 uses
@@ -1461,7 +1461,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %2, -32                        ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 %index ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16 ; 2 uses

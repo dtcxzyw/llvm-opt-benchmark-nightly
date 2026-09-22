@@ -204,7 +204,7 @@ vector.ph22:                                      ; preds = %vector.main.loop.it
   %i.bm = getelementptr i8, ptr %i.bd, i64 %n.vec23
   br label %vector.body24
 
-vector.body24:                                    ; preds = %vector.body24, %vector.ph22
+vector.body24:                                    ; preds = %vector.ph22, %vector.body24
   %index25 = phi i64 [ 0, %vector.ph22 ], [ %index.next30, %vector.body24 ] ; 3 uses
   %next.gep26 = getelementptr i8, ptr %i.bc, i64 %index25 ; 2 uses
   %next.gep27 = getelementptr i8, ptr %i.bd, i64 %index25 ; 2 uses
@@ -552,7 +552,7 @@ vector.ph32:                                      ; preds = %vector.main.loop.it
   %i.bp = getelementptr i8, ptr %i.az, i64 %n.vec33
   br label %vector.body34
 
-vector.body34:                                    ; preds = %vector.body34, %vector.ph32
+vector.body34:                                    ; preds = %vector.ph32, %vector.body34
   %index35 = phi i64 [ 0, %vector.ph32 ], [ %index.next40, %vector.body34 ] ; 3 uses
   %next.gep36 = getelementptr i8, ptr %i.bi, i64 %index35 ; 2 uses
   %next.gep37 = getelementptr i8, ptr %i.az, i64 %index35 ; 2 uses
@@ -955,7 +955,7 @@ vector.ph30:                                      ; preds = %vector.main.loop.it
   %i.bl = getelementptr i8, ptr %i.aw, i64 %n.vec31
   br label %vector.body32
 
-vector.body32:                                    ; preds = %vector.body32, %vector.ph30
+vector.body32:                                    ; preds = %vector.ph30, %vector.body32
   %index33 = phi i64 [ 0, %vector.ph30 ], [ %index.next38, %vector.body32 ] ; 3 uses
   %next.gep34 = getelementptr i8, ptr %i.bf, i64 %index33 ; 2 uses
   %next.gep35 = getelementptr i8, ptr %i.aw, i64 %index33 ; 2 uses

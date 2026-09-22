@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i64 %.sroa.0.1.i, -32              ; 4 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %pred.store.continue484, %vector.ph
+vector.body:                                      ; preds = %vector.ph, %pred.store.continue484
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue484 ] ; 33 uses
   %i.hq = getelementptr inbounds nuw i8, ptr %i.hm, i64 %index ; 3 uses
   %i.hr = getelementptr inbounds nuw i8, ptr %i.hq, i64 16
@@ -608,7 +608,7 @@ vector.ph509:                                     ; preds = %vector.main.loop.it
   %n.vec510 = and i64 %.sroa.12.0273.i, -32       ; 4 uses
   br label %vector.body511
 
-vector.body511:                                   ; preds = %pred.store.continue578, %vector.ph509
+vector.body511:                                   ; preds = %vector.ph509, %pred.store.continue578
   %index512 = phi i64 [ 0, %vector.ph509 ], [ %index.next579, %pred.store.continue578 ] ; 33 uses
   %i.my = getelementptr inbounds nuw i8, ptr %.1.3.i, i64 %index512 ; 3 uses
   %i.mz = getelementptr inbounds nuw i8, ptr %i.my, i64 16

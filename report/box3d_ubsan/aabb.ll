@@ -20,20 +20,15 @@ define hidden noundef zeroext i1 @b3RayCastAABB(ptr nofree noundef readonly byva
 bb.a:
   %.sroa.0.0.vec.extract.i = extractelement <2 x float> %1, i64 0 ; 4 uses
   %.sroa.0.4.vec.extract.i = extractelement <2 x float> %1, i64 1 ; 4 uses
-  %7 = shufflevector <2 x float> %3, <2 x float> poison, <3 x i32> <i32 0, i32 1, i32 poison>
-  %8 = insertelement <3 x float> %7, float %4, i64 2
-  %9 = shufflevector <2 x float> %1, <2 x float> poison, <3 x i32> <i32 0, i32 1, i32 poison>
-  %10 = insertelement <3 x float> %9, float %2, i64 2
-  %11 = fsub <3 x float> %8, %10                  ; 4 uses
-  %foldExtExtBinop = fmul <3 x float> %11, %11
-  %12 = extractelement <3 x float> %foldExtExtBinop, i64 0
-  %13 = shufflevector <3 x float> %11, <3 x float> poison, <2 x i32> <i32 1, i32 2> ; 2 uses
-  %14 = fmul <2 x float> %13, %13                 ; 2 uses
-  %i.a = extractelement <2 x float> %14, i64 0
-  %15 = fadd float %12, %i.a
-  %16 = extractelement <2 x float> %14, i64 1
-  %i.b = fadd float %16, %15
-  %sqrt.i = tail call float @llvm.sqrt.f32(float %i.b) ; 6 uses
+  %7 = fsub float %4, %2                          ; 3 uses
+  %8 = fsub <2 x float> %3, %1                    ; 4 uses
+  %9 = fmul <2 x float> %8, %8                    ; 2 uses
+  %shift = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fadd <2 x float> %9, %shift
+  %i.a = extractelement <2 x float> %foldExtExtBinop, i64 0
+  %10 = fmul float %7, %7
+  %i.b = fadd float %10, %i.a
+  %sqrt.i = tail call float @llvm.sqrt.f32(float %i.b) ; 7 uses
   %i.c = fcmp olt float %sqrt.i, f0x34000000
   br i1 %i.c, label %bb.b, label %bb.i
 
@@ -92,15 +87,16 @@ bb.h:                                             ; preds = %bb.g
   unreachable, !nosanitize !16
 
 bb.i:                                             ; preds = %bb.a
-  %i.ae = fdiv float 1.000000e+00, %sqrt.i
-  %17 = insertelement <3 x float> poison, float %i.ae, i64 0
-  %18 = shufflevector <3 x float> %17, <3 x float> poison, <3 x i32> zeroinitializer
-  %19 = fmul <3 x float> %11, %18                 ; 6 uses
+  %i.ae = fdiv float 1.000000e+00, %sqrt.i        ; 3 uses
+  %11 = fmul float %7, %i.ae                      ; 2 uses
+  %12 = extractelement <2 x float> %8, i64 1
+  %13 = fmul float %12, %i.ae                     ; 2 uses
+  %14 = extractelement <2 x float> %8, i64 0
+  %15 = fmul float %14, %i.ae                     ; 2 uses
   %i.af = load float, ptr %0, align 8, !tbaa !13  ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.ah = load float, ptr %i.ag, align 4, !tbaa !19 ; 2 uses
-  %20 = extractelement <3 x float> %19, i64 0
-  %i.ai = tail call float @llvm.fabs.f32(float %20)
+  %i.ai = tail call float @llvm.fabs.f32(float %15)
   %i.aj = fcmp olt float %i.ai, f0x34000000
   br i1 %i.aj, label %bb.j, label %bb.k
 
@@ -116,7 +112,8 @@ bb.k:                                             ; preds = %bb.i
   %i.ao = insertelement <2 x float> %i.an, float %i.af, i64 1
   %i.ap = shufflevector <2 x float> %1, <2 x float> poison, <2 x i32> zeroinitializer
   %i.aq = fsub <2 x float> %i.ao, %i.ap
-  %i.ar = shufflevector <3 x float> %19, <3 x float> poison, <2 x i32> zeroinitializer
+  %16 = insertelement <2 x float> poison, float %15, i64 0
+  %i.ar = shufflevector <2 x float> %16, <2 x float> poison, <2 x i32> zeroinitializer
   %i.as = fdiv <2 x float> %i.aq, %i.ar           ; 4 uses
   %i.at = extractelement <2 x float> %i.as, i64 0
   %i.au = extractelement <2 x float> %i.as, i64 1
@@ -125,11 +122,14 @@ bb.k:                                             ; preds = %bb.i
   %i.ax = shufflevector <2 x i1> %i.aw, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.ay = shufflevector <2 x float> %i.as, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   %i.az = select <2 x i1> %i.ax, <2 x float> %i.as, <2 x float> %i.ay ; 3 uses
-  %21 = insertelement <2 x float> %i.az, float %sqrt.i, i64 1 ; 2 uses
-  %22 = insertelement <2 x float> %i.az, float 0.000000e+00, i64 0
-  %23 = fcmp olt <2 x float> %21, %22
-  %i.ba = insertelement <2 x float> %21, float 0.000000e+00, i64 0
-  %i.bb = select <2 x i1> %23, <2 x float> %i.ba, <2 x float> %i.az ; 3 uses
+  %17 = extractelement <2 x float> %i.az, i64 0
+  %18 = fcmp olt float %17, 0.000000e+00
+  %19 = extractelement <2 x float> %i.az, i64 1
+  %20 = fcmp olt float %sqrt.i, %19
+  %21 = insertelement <2 x i1> poison, i1 %18, i64 0
+  %22 = insertelement <2 x i1> %21, i1 %20, i64 1
+  %i.ba = insertelement <2 x float> <float 0.000000e+00, float poison>, float %sqrt.i, i64 1
+  %i.bb = select <2 x i1> %22, <2 x float> %i.ba, <2 x float> %i.az ; 3 uses
   %i.bc = extractelement <2 x float> %i.bb, i64 0
   %i.bd = extractelement <2 x float> %i.bb, i64 1
   %i.be = fcmp ule float %i.bc, %i.bd
@@ -141,8 +141,7 @@ bb.l:                                             ; preds = %bb.j, %bb.k
   %i.bh = load float, ptr %i.bg, align 4, !tbaa !14 ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.bj = load float, ptr %i.bi, align 8, !tbaa !20 ; 2 uses
-  %24 = extractelement <3 x float> %19, i64 1
-  %i.bk = tail call float @llvm.fabs.f32(float %24)
+  %i.bk = tail call float @llvm.fabs.f32(float %13)
   %i.bl = fcmp olt float %i.bk, f0x34000000
   br i1 %i.bl, label %bb.m, label %bb.n
 
@@ -157,8 +156,9 @@ bb.n:                                             ; preds = %bb.l
   %i.bp = insertelement <2 x float> %i.bo, float %i.bh, i64 1
   %i.bq = shufflevector <2 x float> %1, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.br = fsub <2 x float> %i.bp, %i.bq
-  %25 = shufflevector <3 x float> %19, <3 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.bs = fdiv <2 x float> %i.br, %25             ; 4 uses
+  %23 = insertelement <2 x float> poison, float %13, i64 0
+  %24 = shufflevector <2 x float> %23, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.bs = fdiv <2 x float> %i.br, %24             ; 4 uses
   %i.bt = extractelement <2 x float> %i.bs, i64 0
   %i.bu = extractelement <2 x float> %i.bs, i64 1
   %i.bv = fcmp ogt float %i.bu, %i.bt
@@ -181,8 +181,7 @@ bb.o:                                             ; preds = %bb.m, %bb.n
   %i.cj = load float, ptr %i.ci, align 8, !tbaa !15 ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.cl = load float, ptr %i.ck, align 4, !tbaa !21 ; 2 uses
-  %26 = extractelement <3 x float> %19, i64 2
-  %i.cm = tail call float @llvm.fabs.f32(float %26)
+  %i.cm = tail call float @llvm.fabs.f32(float %11)
   %i.cn = fcmp olt float %i.cm, f0x34000000
   br i1 %i.cn, label %bb.p, label %bb.q
 
@@ -198,8 +197,9 @@ bb.q:                                             ; preds = %bb.o
   %i.cs = insertelement <2 x float> poison, float %2, i64 0
   %i.ct = shufflevector <2 x float> %i.cs, <2 x float> poison, <2 x i32> zeroinitializer
   %i.cu = fsub <2 x float> %i.cr, %i.ct
-  %27 = shufflevector <3 x float> %19, <3 x float> poison, <2 x i32> <i32 2, i32 2>
-  %i.cv = fdiv <2 x float> %i.cu, %27             ; 4 uses
+  %25 = insertelement <2 x float> poison, float %11, i64 0
+  %26 = shufflevector <2 x float> %25, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.cv = fdiv <2 x float> %i.cu, %26             ; 4 uses
   %i.cw = extractelement <2 x float> %i.cv, i64 0
   %i.cx = extractelement <2 x float> %i.cv, i64 1
   %i.cy = fcmp ogt float %i.cx, %i.cw

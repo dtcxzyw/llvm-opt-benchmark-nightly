@@ -204,7 +204,7 @@ vector.ph352:                                     ; preds = %vector.main.loop.it
   %i.bx = getelementptr i8, ptr %2, i64 %n.vec353
   br label %vector.body354
 
-vector.body354:                                   ; preds = %vector.body354, %vector.ph352
+vector.body354:                                   ; preds = %vector.ph352, %vector.body354
   %index355 = phi i64 [ 0, %vector.ph352 ], [ %index.next360, %vector.body354 ] ; 2 uses
   %vec.phi356 = phi <16 x i8> [ zeroinitializer, %vector.ph352 ], [ %i.bz, %vector.body354 ]
   %vec.phi357 = phi <16 x i8> [ zeroinitializer, %vector.ph352 ], [ %i.ca, %vector.body354 ]
