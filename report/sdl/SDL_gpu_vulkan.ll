@@ -205,7 +205,6 @@ begin_hunk_0
 @.str.347 = private unnamed_addr constant [79 x i8] c"Integrated memory detected, allocating TransferBuffers on device-local memory!\00", align 1
 @SDLToVK_LoadOp = internal unnamed_addr constant [3 x i32] [i32 0, i32 1, i32 2], align 4
 @SDLToVK_StoreOp = internal unnamed_addr constant [4 x i32] [i32 0, i32 1, i32 1, i32 0], align 16
-@SDLToVK_IndexType = internal unnamed_addr constant [2 x i32] [i32 0, i32 1], align 4
 @.str.349 = private unnamed_addr constant [34 x i8] c"Buffer has no default usage mode!\00", align 1
 @.str.350 = private unnamed_addr constant [65 x i8] c"Must claim window before querying swapchain composition support!\00", align 1
 @.str.351 = private unnamed_addr constant [29 x i8] c"Window has no Vulkan surface\00", align 1
@@ -608,11 +607,10 @@ bb.ar:                                            ; preds = %.preheader206
   store i32 %i.dy, ptr %i.dz, align 4
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dx, i64 8
   %i.eb = load i32, ptr %i.ea, align 4
-  %20 = zext i32 %i.eb to i64
-  %21 = getelementptr inbounds nuw [4 x i8], ptr @SDLToVK_IndexType, i64 %20
-  %22 = load i32, ptr %21, align 4
+  %notmask.epil = shl nsw i32 -1, %i.eb
+  %20 = xor i32 %notmask.epil, -1
   %i.ec = getelementptr inbounds nuw i8, ptr %i.dz, i64 8
-  store i32 %22, ptr %i.ec, align 4
+  store i32 %20, ptr %i.ec, align 4
   %i.ed = getelementptr inbounds nuw i8, ptr %i.dx, i64 4
   %i.ee = load i32, ptr %i.ed, align 4
   %i.ef = getelementptr inbounds nuw i8, ptr %i.dz, i64 4
@@ -645,11 +643,10 @@ bb.as:                                            ; preds = %bb.as, %.lr.ph.new
   store i32 %i.el, ptr %i.em, align 8
   %i.en = getelementptr inbounds nuw i8, ptr %i.ek, i64 8
   %i.eo = load i32, ptr %i.en, align 4
-  %23 = zext i32 %i.eo to i64
-  %24 = getelementptr inbounds nuw [4 x i8], ptr @SDLToVK_IndexType, i64 %23
-  %25 = load i32, ptr %24, align 4
+  %notmask = shl nsw i32 -1, %i.eo
+  %21 = xor i32 %notmask, -1
   %i.ep = getelementptr inbounds nuw i8, ptr %i.em, i64 8
-  store i32 %25, ptr %i.ep, align 8
+  store i32 %21, ptr %i.ep, align 8
   %i.eq = getelementptr inbounds nuw i8, ptr %i.ek, i64 4
   %i.er = load i32, ptr %i.eq, align 4
   %i.es = getelementptr inbounds nuw i8, ptr %i.em, i64 4
@@ -661,11 +658,10 @@ bb.as:                                            ; preds = %bb.as, %.lr.ph.new
   store i32 %i.eu, ptr %i.ev, align 4
   %i.ew = getelementptr inbounds nuw i8, ptr %i.et, i64 8
   %i.ex = load i32, ptr %i.ew, align 4
-  %26 = zext i32 %i.ex to i64
-  %27 = getelementptr inbounds nuw [4 x i8], ptr @SDLToVK_IndexType, i64 %26
-  %28 = load i32, ptr %27, align 4
+  %notmask.1 = shl nsw i32 -1, %i.ex
+  %22 = xor i32 %notmask.1, -1
   %i.ey = getelementptr inbounds nuw i8, ptr %i.ev, i64 8
-  store i32 %28, ptr %i.ey, align 4
+  store i32 %22, ptr %i.ey, align 4
   %i.ez = getelementptr inbounds nuw i8, ptr %i.et, i64 4
   %i.fa = load i32, ptr %i.ez, align 4
   %i.fb = getelementptr inbounds nuw i8, ptr %i.ev, i64 4
@@ -844,11 +840,10 @@ SDLToVK_PolygonMode.exit:                         ; preds = %._crit_edge, %bb.au
   store i32 %i.in, ptr %i.io, align 8
   %i.ip = getelementptr inbounds nuw i8, ptr %1, i64 60
   %i.iq = load i32, ptr %i.ip, align 4
-  %29 = zext i32 %i.iq to i64
-  %30 = getelementptr inbounds nuw [4 x i8], ptr @SDLToVK_IndexType, i64 %29
-  %31 = load i32, ptr %30, align 4
+  %notmask220 = shl nsw i32 -1, %i.iq
+  %23 = xor i32 %notmask220, -1
   %i.ir = getelementptr inbounds nuw i8, ptr %14, i64 36
-  store i32 %31, ptr %i.ir, align 4
+  store i32 %23, ptr %i.ir, align 4
   %i.is = getelementptr inbounds nuw i8, ptr %1, i64 76
   %i.it = load i8, ptr %i.is, align 4, !range !23, !noundef !24
   %i.iu = zext nneg i8 %i.it to i32
@@ -1251,24 +1246,21 @@ bb.a:
   store i32 0, ptr %i.c, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.e = load i32, ptr %i.d, align 4
-  %4 = zext i32 %i.e to i64
-  %5 = getelementptr inbounds nuw [4 x i8], ptr @SDLToVK_IndexType, i64 %4
-  %6 = load i32, ptr %5, align 4
+  %notmask = shl nsw i32 -1, %i.e
+  %4 = xor i32 %notmask, -1
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 20
-  store i32 %6, ptr %i.f, align 4
+  store i32 %4, ptr %i.f, align 4
   %i.g = load i32, ptr %1, align 4
-  %7 = zext i32 %i.g to i64
-  %8 = getelementptr inbounds nuw [4 x i8], ptr @SDLToVK_IndexType, i64 %7
-  %9 = load i32, ptr %8, align 4
+  %notmask35 = shl nsw i32 -1, %i.g
+  %5 = xor i32 %notmask35, -1
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 24
-  store i32 %9, ptr %i.h, align 8
+  store i32 %5, ptr %i.h, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.j = load i32, ptr %i.i, align 4
-  %10 = zext i32 %i.j to i64
-  %11 = getelementptr inbounds nuw [4 x i8], ptr @SDLToVK_IndexType, i64 %10
-  %12 = load i32, ptr %11, align 4
+  %notmask36 = shl nsw i32 -1, %i.j
+  %6 = xor i32 %notmask36, -1
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 28
-  store i32 %12, ptr %i.k, align 4
+  store i32 %6, ptr %i.k, align 4
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.m = load i32, ptr %i.l, align 4
   %i.n = zext i32 %i.m to i64
@@ -1671,11 +1663,10 @@ VULKAN_INTERNAL_TrackBuffer.exit:                 ; preds = %bb.c, %bb.e
   %i.ak = load ptr, ptr %i.aj, align 8
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.am = load i32, ptr %i.al, align 8
-  %3 = zext i32 %i.am to i64
-  %i.an = zext i32 %2 to i64
-  %4 = getelementptr inbounds nuw [4 x i8], ptr @SDLToVK_IndexType, i64 %i.an
-  %5 = load i32, ptr %4, align 4
-  tail call void %i.ag(ptr noundef %i.ai, ptr noundef %i.ak, i64 noundef %3, i32 noundef %5) #13
+  %i.an = zext i32 %i.am to i64
+  %notmask = shl nsw i32 -1, %2
+  %3 = xor i32 %notmask, -1
+  tail call void %i.ag(ptr noundef %i.ai, ptr noundef %i.ak, i64 noundef %i.an, i32 noundef %3) #13
   ret void
 }
 
@@ -2078,10 +2069,9 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.da = load ptr, ptr %i.cz, align 8
   %i.db = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.dc = load i32, ptr %i.db, align 8
-  %4 = zext i32 %i.dc to i64
-  %5 = getelementptr inbounds nuw [4 x i8], ptr @SDLToVK_IndexType, i64 %4
-  %6 = load i32, ptr %5, align 4
-  call void %i.cu(ptr noundef %i.cw, ptr noundef %i.cy, i32 noundef 6, ptr noundef %i.da, i32 noundef 7, i32 noundef 1, ptr noundef nonnull %2, i32 noundef %6) #13
+  %notmask = shl nsw i32 -1, %i.dc
+  %4 = xor i32 %notmask, -1
+  call void %i.cu(ptr noundef %i.cw, ptr noundef %i.cy, i32 noundef 6, ptr noundef %i.da, i32 noundef 7, i32 noundef 1, ptr noundef nonnull %2, i32 noundef %4) #13
   call fastcc void @VULKAN_INTERNAL_TextureSubresourceTransitionToDefaultUsage(ptr noundef %i.b, ptr noundef nonnull %0, i32 noundef 1, ptr noundef nonnull %i.am)
   call fastcc void @VULKAN_INTERNAL_TextureSubresourceTransitionToDefaultUsage(ptr noundef %i.b, ptr noundef nonnull %0, i32 noundef 2, ptr noundef nonnull %i.as)
   %i.dd = load ptr, ptr %i.am, align 8            ; 3 uses

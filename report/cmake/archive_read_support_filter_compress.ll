@@ -12,7 +12,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.1 = private unnamed_addr constant [41 x i8] c"Can't allocate data for %s decompression\00", align 1
 @compress_reader_vtable = internal constant %struct.archive_read_filter_vtable { ptr @compress_filter_read, ptr @compress_filter_close, ptr null }, align 8
 @.str.2 = private unnamed_addr constant [24 x i8] c"Invalid compressed data\00", align 1
-@getbits.mask = internal unnamed_addr constant [17 x i32] [i32 0, i32 1, i32 3, i32 7, i32 15, i32 31, i32 63, i32 127, i32 255, i32 511, i32 1023, i32 2047, i32 4095, i32 8191, i32 16383, i32 32767, i32 65535], align 16
 @next_code.debug_index = internal unnamed_addr global i32 0, align 4
 
 ; Function Attrs: nounwind uwtable
@@ -81,9 +80,9 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.b,
 define internal range(i32 -30, 1) i32 @compress_bidder_init(ptr nofree noundef captures(none) initializes((48, 60)) %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store i32 3, ptr %i.a, align 8, !tbaa !45
+  store i32 3, ptr %i.a, align 8, !tbaa !44
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store ptr @.str, ptr %i.b, align 8, !tbaa !46
+  store ptr @.str, ptr %i.b, align 8, !tbaa !45
   %i.c = tail call noalias dereferenceable_or_null(262016) ptr @calloc(i64 noundef 1, i64 noundef 262016) #8 ; 16 uses
   %i.d = tail call noalias dereferenceable_or_null(65536) ptr @malloc(i64 noundef 65536) #9 ; 3 uses
   %i.e = icmp eq ptr %i.c, null
@@ -107,7 +106,7 @@ bb.c:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 48
   store ptr %i.d, ptr %i.k, align 8, !tbaa !23
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store ptr @compress_reader_vtable, ptr %i.l, align 8, !tbaa !47
+  store ptr @compress_reader_vtable, ptr %i.l, align 8, !tbaa !46
   %i.m = tail call fastcc i32 @getbits(ptr noundef nonnull %0, i32 noundef 8) ; 0 uses
   %i.n = tail call fastcc i32 @getbits(ptr noundef nonnull %0, i32 noundef 8) ; 0 uses
   %i.o = tail call fastcc i32 @getbits(ptr noundef nonnull %0, i32 noundef 8) ; 2 uses
@@ -173,7 +172,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %vec.ind.next = add <8 x i8> %vec.ind, splat (i8 -16)
   %i.an = icmp eq i64 %index.next, 256
-  br i1 %i.an, label %middle.block, label %vector.body, !llvm.loop !44
+  br i1 %i.an, label %middle.block, label %vector.body, !llvm.loop !43
 
 middle.block:                                     ; preds = %vector.body
   %i.ao = tail call fastcc i32 @next_code(ptr noundef nonnull %0) ; 0 uses
@@ -198,7 +197,7 @@ declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #5
 declare void @archive_set_error(ptr noundef, i32 noundef, ptr noundef, ...) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc i32 @getbits(ptr nofree noundef readonly captures(none) %0, i32 noundef %1) unnamed_addr #0 {
+define internal fastcc range(i32 -30, -2147483648) i32 @getbits(ptr nofree noundef readonly captures(none) %0, i32 noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -294,10 +293,9 @@ bb.h:                                             ; preds = %._crit_edge34, %bb.
   store i32 %i.an, ptr %i.am, align 8, !tbaa !36
   %i.ao = sub nsw i32 %.lcssa, %1
   store i32 %i.ao, ptr %i.d, align 4, !tbaa !35
-  %2 = sext i32 %1 to i64
-  %3 = getelementptr inbounds [4 x i8], ptr @getbits.mask, i64 %2
-  %4 = load i32, ptr %3, align 4, !tbaa !43
-  %i.ap = and i32 %4, %i.al
+  %notmask = shl nsw i32 -1, %1
+  %2 = xor i32 %notmask, -1
+  %i.ap = and i32 %i.al, %2
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.f, %bb.e, %._crit_edge
@@ -307,7 +305,7 @@ bb.h:                                             ; preds = %._crit_edge34, %bb.
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc range(i32 -2147483648, 1) i32 @next_code(ptr nofree noundef readonly captures(none) %0) unnamed_addr #0 {
+define internal fastcc range(i32 -30, 1) i32 @next_code(ptr nofree noundef readonly captures(none) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
@@ -327,11 +325,11 @@ bb.a:
 
 .lr.ph123:                                        ; preds = %bb.a, %.loopexit112
   %i.o = phi i32 [ %i.bq, %.loopexit112 ], [ %i.m, %bb.a ] ; 6 uses
-  %i.p = load i32, ptr @next_code.debug_index, align 4, !tbaa !43
+  %i.p = load i32, ptr @next_code.debug_index, align 4, !tbaa !51
   %i.q = add i32 %i.p, 1                          ; 2 uses
   %i.r = icmp ugt i32 %i.q, 1023
   %spec.select = select i1 %i.r, i32 0, i32 %i.q
-  store i32 %spec.select, ptr @next_code.debug_index, align 4, !tbaa !43
+  store i32 %spec.select, ptr @next_code.debug_index, align 4, !tbaa !51
   %i.s = icmp eq i32 %i.o, 256
   br i1 %i.s, label %bb.b, label %bb.k
 
@@ -453,7 +451,7 @@ getbits.exit:                                     ; preds = %bb.j, %.._crit_edge
   store i32 %.lcssa.i, ptr %i.ae, align 4, !tbaa !35
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   %i.bp = icmp slt i32 %.088, 2
-  br i1 %i.bp, label %.loopexit112, label %.lr.ph, !llvm.loop !50
+  br i1 %i.bp, label %.loopexit112, label %.lr.ph, !llvm.loop !49
 
 .loopexit112:                                     ; preds = %getbits.exit, %bb.c
   store i64 0, ptr %i.f, align 8, !tbaa !42
@@ -525,7 +523,7 @@ bb.r:                                             ; preds = %.lr.ph91, %bb.r
   %i.cq = load i16, ptr %i.cp, align 2, !tbaa !33 ; 2 uses
   %i.cr = zext i16 %i.cq to i32                   ; 2 uses
   %i.cs = icmp ugt i16 %i.cq, 255
-  br i1 %i.cs, label %bb.r, label %._crit_edge92, !llvm.loop !51
+  br i1 %i.cs, label %bb.r, label %._crit_edge92, !llvm.loop !50
 
 ._crit_edge92:                                    ; preds = %bb.r, %bb.q
   %.1.lcssa = phi i32 [ %.069, %bb.q ], [ %i.cr, %bb.r ] ; 2 uses
@@ -755,15 +753,15 @@ attributes #9 = { nounwind allocsize(0) }
 !40 = !{!18, !14, i64 16}
 !41 = !{!11, !11, i64 0}
 !42 = !{!21, !11, i64 32}
-!43 = !{!7, !7, i64 0}
-!44 = distinct !{!44, !34, !48, !49}
-!45 = !{!18, !7, i64 56}
-!46 = !{!18, !17, i64 48}
-!47 = !{!18, !16, i64 32}
-!48 = !{!"llvm.loop.isvectorized", i32 1}
-!49 = !{!"llvm.loop.unroll.runtime.disable"}
+!43 = distinct !{!43, !34, !47, !48}
+!44 = !{!18, !7, i64 56}
+!45 = !{!18, !17, i64 48}
+!46 = !{!18, !16, i64 32}
+!47 = !{!"llvm.loop.isvectorized", i32 1}
+!48 = !{!"llvm.loop.unroll.runtime.disable"}
+!49 = distinct !{!49, !34}
 !50 = distinct !{!50, !34}
-!51 = distinct !{!51, !34}
+!51 = !{!7, !7, i64 0}
 !52 = !{!21, !7, i64 84}
 !53 = distinct !{!53, !34}
 !54 = !{!21, !7, i64 60}

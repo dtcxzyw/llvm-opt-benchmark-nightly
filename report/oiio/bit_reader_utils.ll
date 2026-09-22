@@ -9,7 +9,6 @@ target triple = "x86_64-pc-linux-gnu"
 
 @kVP8Log2Range = hidden local_unnamed_addr constant [128 x i8] c"\07\06\06\05\05\05\05\04\04\04\04\04\04\04\04\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\00", align 16
 @kVP8NewRange = hidden local_unnamed_addr constant [128 x i8] c"\7F\7F\BF\7F\9F\BF\DF\7F\8F\9F\AF\BF\CF\DF\EF\7F\87\8F\97\9F\A7\AF\B7\BF\C7\CF\D7\DF\E7\EF\F7\7F\83\87\8B\8F\93\97\9B\9F\A3\A7\AB\AF\B3\B7\BB\BF\C3\C7\CB\CF\D3\D7\DB\DF\E3\E7\EB\EF\F3\F7\FB\7F\81\83\85\87\89\8B\8D\8F\91\93\95\97\99\9B\9D\9F\A1\A3\A5\A7\A9\AB\AD\AF\B1\B3\B5\B7\B9\BB\BD\BF\C1\C3\C5\C7\C9\CB\CD\CF\D1\D3\D5\D7\D9\DB\DD\DF\E1\E3\E5\E7\E9\EB\ED\EF\F1\F3\F5\F7\F9\FB\FD\7F", align 16
-@kBitMask = internal unnamed_addr constant [25 x i32] [i32 0, i32 1, i32 3, i32 7, i32 15, i32 31, i32 63, i32 127, i32 255, i32 511, i32 1023, i32 2047, i32 4095, i32 8191, i32 16383, i32 32767, i32 65535, i32 131071, i32 262143, i32 524287, i32 1048575, i32 2097151, i32 4194303, i32 8388607, i32 16777215], align 16
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define hidden void @VP8BitReaderSetBuffer(ptr nofree noundef writeonly captures(none) initializes((16, 40)) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #0 {
@@ -412,7 +411,7 @@ ShiftBytes.exit:                                  ; preds = %.critedge.i, %VP8LI
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden i32 @VP8LReadBits(ptr nofree noundef captures(none) %0, i32 noundef %1) local_unnamed_addr #6 {
+define hidden range(i32 0, -2147483648) i32 @VP8LReadBits(ptr nofree noundef captures(none) %0, i32 noundef %1) local_unnamed_addr #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !26
@@ -429,10 +428,9 @@ bb.b:                                             ; preds = %bb.a
   %i.g = zext nneg i32 %i.f to i64
   %i.h = lshr i64 %.val, %i.g
   %i.i = trunc i64 %i.h to i32
-  %2 = sext i32 %1 to i64
-  %3 = getelementptr inbounds [4 x i8], ptr @kBitMask, i64 %2
-  %4 = load i32, ptr %3, align 4, !tbaa !8
-  %i.j = and i32 %4, %i.i                         ; 4 uses
+  %notmask = shl nsw i32 -1, %1
+  %2 = xor i32 %notmask, -1
+  %i.j = and i32 %i.i, %2                         ; 4 uses
   %i.k = add nsw i32 %.val13, %1                  ; 3 uses
   store i32 %i.k, ptr %i.e, align 8, !tbaa !25
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses

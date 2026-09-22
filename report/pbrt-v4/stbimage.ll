@@ -139,7 +139,6 @@ $_ZN4pbrt6detail21stringPrintfRecursiveIRA54_KcJEEEvPNSt7__cxx1112basic_stringIc
 @.str.68 = private unnamed_addr constant [12 x i8] c"bad AC huff\00", align 1
 @.str.69 = private unnamed_addr constant [8 x i8] c"bad SOS\00", align 1
 @.str.70 = private unnamed_addr constant [17 x i8] c"bad huffman code\00", align 1
-@_ZL11stbi__bmask = internal unnamed_addr constant [17 x i32] [i32 0, i32 1, i32 3, i32 7, i32 15, i32 31, i32 63, i32 127, i32 255, i32 511, i32 1023, i32 2047, i32 4095, i32 8191, i32 16383, i32 32767, i32 65535], align 16
 @.str.71 = private unnamed_addr constant [82 x i8] c"(((j->code_buffer) >> (32 - h->size[c])) & stbi__bmask[h->size[c]]) == h->code[c]\00", align 1
 @_ZL11stbi__jbias = internal unnamed_addr constant [16 x i32] [i32 0, i32 -1, i32 -3, i32 -7, i32 -15, i32 -31, i32 -63, i32 -127, i32 -255, i32 -511, i32 -1023, i32 -2047, i32 -4095, i32 -8191, i32 -16383, i32 -32767], align 16
 @.str.72 = private unnamed_addr constant [22 x i8] c"can't merge dc and ac\00", align 1
@@ -542,7 +541,7 @@ bb.ki:                                            ; preds = %bb.kf
   br label %bb.kj
 
 bb.kj:                                            ; preds = %bb.kj, %bb.ki
-  %indvars.iv.i.i.i.i.i.i = phi i64 [ %indvars.iv.next.i.i.i.i.i.i, %bb.kj ], [ 10, %bb.ki ] ; 6 uses
+  %indvars.iv.i.i.i.i.i.i = phi i64 [ %indvars.iv.next.i.i.i.i.i.i, %bb.kj ], [ 10, %bb.ki ] ; 5 uses
   %i.bmm = getelementptr inbounds nuw [4 x i8], ptr %i.bkw, i64 %indvars.iv.i.i.i.i.i.i
   %i.bmn = load i32, ptr %i.bmm, align 4, !tbaa !20
   %i.bmo = icmp ult i32 %i.bml, %i.bmn
@@ -550,7 +549,7 @@ bb.kj:                                            ; preds = %bb.kj, %bb.ki
   br i1 %i.bmo, label %bb.kk, label %bb.kj, !llvm.loop !4
 
 bb.kk:                                            ; preds = %bb.kj
-  %i.bmp = trunc nuw nsw i64 %indvars.iv.i.i.i.i.i.i to i32 ; 4 uses
+  %i.bmp = trunc nuw nsw i64 %indvars.iv.i.i.i.i.i.i to i32 ; 5 uses
   %i.bmq = icmp eq i64 %indvars.iv.i.i.i.i.i.i, 17
   %i.bmr = load i32, ptr %i.atw, align 4, !tbaa !81 ; 3 uses
   br i1 %i.bmq, label %bb.kl, label %bb.km
@@ -565,24 +564,23 @@ bb.km:                                            ; preds = %bb.kk
   br i1 %i.bmt, label %.critedge.sink.split.i.i.i, label %bb.kn
 
 bb.kn:                                            ; preds = %bb.km
-  %i.bmu = sub nuw nsw i32 32, %i.bmp
+  %i.bmu = sub nsw i32 32, %i.bmp
   %i.bmv = lshr i32 %i.bma, %i.bmu
-  %10 = getelementptr inbounds nuw [4 x i8], ptr @_ZL11stbi__bmask, i64 %indvars.iv.i.i.i.i.i.i
-  %11 = load i32, ptr %10, align 4, !tbaa !20
-  %i.bmw = and i32 %11, %i.bmv
+  %notmask.i.i.i.i.i.i = shl nsw i32 -1, %i.bmp
+  %10 = xor i32 %notmask.i.i.i.i.i.i, -1
+  %i.bmw = and i32 %i.bmv, %10
   %i.bmx = getelementptr inbounds nuw [4 x i8], ptr %i.bkx, i64 %indvars.iv.i.i.i.i.i.i
   %i.bmy = load i32, ptr %i.bmx, align 4, !tbaa !20
-  %i.bmz = add i32 %i.bmw, %i.bmy
+  %i.bmz = add i32 %i.bmy, %i.bmw
   %i.bna = sext i32 %i.bmz to i64                 ; 3 uses
   %i.bnb = getelementptr inbounds i8, ptr %i.bku, i64 %i.bna
-  %i.bnc = load i8, ptr %i.bnb, align 1, !tbaa !32 ; 2 uses
-  %i.bnd = zext i8 %i.bnc to i32
-  %i.bne = sub nuw nsw i32 32, %i.bnd
+  %i.bnc = load i8, ptr %i.bnb, align 1, !tbaa !32
+  %i.bnd = zext i8 %i.bnc to i32                  ; 2 uses
+  %i.bne = sub nsw i32 32, %i.bnd
   %i.bnf = lshr i32 %i.bma, %i.bne
-  %12 = zext i8 %i.bnc to i64
-  %13 = getelementptr inbounds nuw [4 x i8], ptr @_ZL11stbi__bmask, i64 %12
-  %14 = load i32, ptr %13, align 4, !tbaa !20
-  %i.bng = and i32 %i.bnf, %14
+  %notmask47.i.i.i.i.i.i = shl nsw i32 -1, %i.bnd
+  %11 = xor i32 %notmask47.i.i.i.i.i.i, -1
+  %i.bng = and i32 %i.bnf, %11
   %i.bnh = getelementptr inbounds [2 x i8], ptr %i.bky, i64 %i.bna
   %i.bni = load i16, ptr %i.bnh, align 2, !tbaa !38
   %i.bnj = zext i16 %i.bni to i32
@@ -607,7 +605,7 @@ _ZL22stbi__jpeg_huff_decodeP10stbi__jpegP13stbi__huffman.exit.i.i.i.i.i: ; preds
   %.1.i.in.in.i.i.i.i.i = getelementptr inbounds i8, ptr %i.bkv, i64 %.pn293.i.i.i.i.i
   %.1.i.in.i.i.i.i.i = load i8, ptr %.1.i.in.in.i.i.i.i.i, align 1, !tbaa !32 ; 2 uses
   %.1.i.i.i.i.i.i = zext i8 %.1.i.in.i.i.i.i.i to i32 ; 2 uses
-  %i.bnp = and i32 %.1.i.i.i.i.i.i, 15            ; 5 uses
+  %i.bnp = and i32 %.1.i.i.i.i.i.i, 15            ; 6 uses
   %i.bnq = lshr i32 %.1.i.i.i.i.i.i, 4            ; 7 uses
   %i.bnr = icmp eq i32 %i.bnp, 0
   br i1 %i.bnr, label %bb.kq, label %bb.kv
@@ -638,13 +636,11 @@ _ZL19stbi__jpeg_get_bitsP10stbi__jpegi.exit.i.i.i.i.i: ; preds = %bb.kt, %bb.ks
   %i.bnw = phi i32 [ %.pre260.i.i.i.i.i.a, %bb.kt ], [ %i.bnn, %bb.ks ] ; 2 uses
   %i.bnx = phi i32 [ %.pre.i.i.i.i.i.i, %bb.kt ], [ %i.bno, %bb.ks ]
   %i.bny = call i32 @llvm.fshl.i32(i32 %i.bnw, i32 %i.bnw, i32 range(i32 1, 15) %i.bnq) ; 2 uses
-  %15 = zext nneg i32 %i.bnq to i64
-  %16 = getelementptr inbounds nuw [4 x i8], ptr @_ZL11stbi__bmask, i64 %15
-  %17 = load i32, ptr %16, align 4, !tbaa !20     ; 2 uses
-  %i.bnz = xor i32 %17, -1
-  %i.boa = and i32 %i.bny, %i.bnz
+  %notmask.i168.i.i.i.i.i = shl nsw i32 -1, %i.bnq ; 2 uses
+  %i.bnz = xor i32 %notmask.i168.i.i.i.i.i, -1
+  %i.boa = and i32 %i.bny, %notmask.i168.i.i.i.i.i
   store i32 %i.boa, ptr %i.atx, align 8, !tbaa !82
-  %i.bob = and i32 %17, %i.bny
+  %i.bob = and i32 %i.bny, %i.bnz
   %i.boc = sub nsw i32 %i.bnx, %i.bnq
   store i32 %i.boc, ptr %i.atw, align 4, !tbaa !81
   %i.bod = add i32 %i.bnv, -1
@@ -674,13 +670,12 @@ _ZL20stbi__extend_receiveP10stbi__jpegi.exit.i.i.i.i.i: ; preds = %bb.kw, %bb.kv
   %i.bom = phi i32 [ %.pre259.i.i.i.i.i.a, %bb.kw ], [ %i.bnn, %bb.kv ] ; 3 uses
   %i.bon = phi i32 [ %.pre.i168.i.i.i.i.i, %bb.kw ], [ %i.bno, %bb.kv ]
   %i.boo = call i32 @llvm.fshl.i32(i32 %i.bom, i32 %i.bom, i32 range(i32 1, 16) %i.bnp) ; 2 uses
-  %i.bop = zext nneg i32 %i.bnp to i64            ; 2 uses
-  %18 = getelementptr inbounds nuw [4 x i8], ptr @_ZL11stbi__bmask, i64 %i.bop
-  %19 = load i32, ptr %18, align 4, !tbaa !20     ; 2 uses
-  %i.boq = xor i32 %19, -1
-  %i.bor = and i32 %i.boo, %i.boq
+  %i.bop = zext nneg i32 %i.bnp to i64
+  %notmask.i169.i.i.i.i.i = shl nsw i32 -1, %i.bnp ; 2 uses
+  %i.boq = xor i32 %notmask.i169.i.i.i.i.i, -1
+  %i.bor = and i32 %i.boo, %notmask.i169.i.i.i.i.i
   store i32 %i.bor, ptr %i.atx, align 8, !tbaa !82
-  %i.bos = and i32 %19, %i.boo
+  %i.bos = and i32 %i.boo, %i.boq
   %i.bot = sub nsw i32 %i.bon, %i.bnp             ; 2 uses
   store i32 %i.bot, ptr %i.atw, align 4, !tbaa !81
   %i.bou = getelementptr inbounds nuw [4 x i8], ptr @_ZL11stbi__jbias, i64 %i.bop
@@ -823,7 +818,7 @@ bb.lk:                                            ; preds = %bb.lh
   br label %bb.ll
 
 bb.ll:                                            ; preds = %bb.ll, %bb.lk
-  %indvars.iv.i172.i.i.i.i.i = phi i64 [ %indvars.iv.next.i173.i.i.i.i.i, %bb.ll ], [ 10, %bb.lk ] ; 6 uses
+  %indvars.iv.i172.i.i.i.i.i = phi i64 [ %indvars.iv.next.i173.i.i.i.i.i, %bb.ll ], [ 10, %bb.lk ] ; 5 uses
   %i.bqz = getelementptr inbounds nuw [4 x i8], ptr %i.bpg, i64 %indvars.iv.i172.i.i.i.i.i
   %i.bra = load i32, ptr %i.bqz, align 4, !tbaa !20
   %i.brb = icmp ult i32 %i.bqy, %i.bra
@@ -831,7 +826,7 @@ bb.ll:                                            ; preds = %bb.ll, %bb.lk
   br i1 %i.brb, label %bb.lm, label %bb.ll, !llvm.loop !4
 
 bb.lm:                                            ; preds = %bb.ll
-  %i.brc = trunc nuw nsw i64 %indvars.iv.i172.i.i.i.i.i to i32 ; 4 uses
+  %i.brc = trunc nuw nsw i64 %indvars.iv.i172.i.i.i.i.i to i32 ; 5 uses
   %i.brd = icmp eq i64 %indvars.iv.i172.i.i.i.i.i, 17
   %i.bre = load i32, ptr %i.atw, align 4, !tbaa !81 ; 3 uses
   br i1 %i.brd, label %bb.ln, label %bb.lo
@@ -846,24 +841,23 @@ bb.lo:                                            ; preds = %bb.lm
   br i1 %i.brg, label %.critedge.sink.split.i.i.i, label %bb.lp
 
 bb.lp:                                            ; preds = %bb.lo
-  %i.brh = sub nuw nsw i32 32, %i.brc
+  %i.brh = sub nsw i32 32, %i.brc
   %i.bri = lshr i32 %i.bql, %i.brh
-  %20 = getelementptr inbounds nuw [4 x i8], ptr @_ZL11stbi__bmask, i64 %indvars.iv.i172.i.i.i.i.i
-  %21 = load i32, ptr %20, align 4, !tbaa !20
-  %i.brj = and i32 %21, %i.bri
+  %notmask.i176.i.i.i.i.i = shl nsw i32 -1, %i.brc
+  %12 = xor i32 %notmask.i176.i.i.i.i.i, -1
+  %i.brj = and i32 %i.bri, %12
   %i.brk = getelementptr inbounds nuw [4 x i8], ptr %i.bph, i64 %indvars.iv.i172.i.i.i.i.i
   %i.brl = load i32, ptr %i.brk, align 4, !tbaa !20
-  %i.brm = add i32 %i.brj, %i.brl
+  %i.brm = add i32 %i.brl, %i.brj
   %i.brn = sext i32 %i.brm to i64                 ; 3 uses
   %i.bro = getelementptr inbounds i8, ptr %i.bpe, i64 %i.brn
-  %i.brp = load i8, ptr %i.bro, align 1, !tbaa !32 ; 2 uses
-  %i.brq = zext i8 %i.brp to i32
-  %i.brr = sub nuw nsw i32 32, %i.brq
+  %i.brp = load i8, ptr %i.bro, align 1, !tbaa !32
+  %i.brq = zext i8 %i.brp to i32                  ; 2 uses
+  %i.brr = sub nsw i32 32, %i.brq
   %i.brs = lshr i32 %i.bql, %i.brr
-  %22 = zext i8 %i.brp to i64
-  %23 = getelementptr inbounds nuw [4 x i8], ptr @_ZL11stbi__bmask, i64 %22
-  %24 = load i32, ptr %23, align 4, !tbaa !20
-  %i.brt = and i32 %i.brs, %24
+  %notmask47.i177.i.i.i.i.i = shl nsw i32 -1, %i.brq
+  %13 = xor i32 %notmask47.i177.i.i.i.i.i, -1
+  %i.brt = and i32 %i.brs, %13
   %i.bru = getelementptr inbounds [2 x i8], ptr %i.bpi, i64 %i.brn
   %i.brv = load i16, ptr %i.bru, align 2, !tbaa !38
   %i.brw = zext i16 %i.brv to i32
@@ -889,7 +883,7 @@ _ZL22stbi__jpeg_huff_decodeP10stbi__jpegP13stbi__huffman.exit174.i.i.i.i.i: ; pr
   %.1.i171.in.i.i.i.i.i = load i8, ptr %.1.i171.in.in.i.i.i.i.i, align 1, !tbaa !32 ; 2 uses
   %.1.i171.i.i.i.i.i = zext i8 %.1.i171.in.i.i.i.i.i to i32 ; 2 uses
   %i.bsc = and i32 %.1.i171.i.i.i.i.i, 15
-  %i.bsd = lshr i32 %.1.i171.i.i.i.i.i, 4         ; 7 uses
+  %i.bsd = lshr i32 %.1.i171.i.i.i.i.i, 4         ; 6 uses
   switch i32 %i.bsc, label %.critedge.sink.split.i.i.i [
     i32 0, label %bb.ls
     i32 1, label %bb.lw
@@ -900,8 +894,8 @@ bb.ls:                                            ; preds = %_ZL22stbi__jpeg_huf
   br i1 %i.bse, label %bb.lt, label %bb.ly
 
 bb.lt:                                            ; preds = %bb.ls
-  %notmask.i.i.i.i.i = shl nsw i32 -1, %i.bsd
-  %i.bsf = xor i32 %notmask.i.i.i.i.i, -1         ; 2 uses
+  %notmask.i.i.i.i.i = shl nsw i32 -1, %i.bsd     ; 2 uses
+  %i.bsf = xor i32 %notmask.i.i.i.i.i, -1         ; 3 uses
   store i32 %i.bsf, ptr %i.auf, align 4, !tbaa !252
   %.not153.i.i.i.i.i = icmp eq i32 %i.bsd, 0
   br i1 %.not153.i.i.i.i.i, label %bb.ly, label %bb.lu
@@ -922,13 +916,9 @@ _ZL19stbi__jpeg_get_bitsP10stbi__jpegi.exit176.i.i.i.i.i: ; preds = %bb.lv, %bb.
   %i.bsi = phi i32 [ %.pre254.i.i.i.i.i, %bb.lv ], [ %i.bsa, %bb.lu ] ; 2 uses
   %i.bsj = phi i32 [ %.pre.i175.i.i.i.i.i, %bb.lv ], [ %i.bsb, %bb.lu ]
   %i.bsk = call i32 @llvm.fshl.i32(i32 %i.bsi, i32 %i.bsi, i32 range(i32 1, 15) %i.bsd) ; 2 uses
-  %25 = zext nneg i32 %i.bsd to i64
-  %26 = getelementptr inbounds nuw [4 x i8], ptr @_ZL11stbi__bmask, i64 %25
-  %27 = load i32, ptr %26, align 4, !tbaa !20     ; 2 uses
-  %28 = xor i32 %27, -1
-  %i.bsl = and i32 %i.bsk, %28                    ; 2 uses
+  %i.bsl = and i32 %i.bsk, %notmask.i.i.i.i.i     ; 2 uses
   store i32 %i.bsl, ptr %i.atx, align 8, !tbaa !82
-  %i.bsm = and i32 %27, %i.bsk
+  %i.bsm = and i32 %i.bsk, %i.bsf
   %i.bsn = sub nsw i32 %i.bsj, %i.bsd             ; 2 uses
   store i32 %i.bsn, ptr %i.atw, align 4, !tbaa !81
   %i.bso = add nsw i32 %i.bsm, %i.bsh
@@ -1331,7 +1321,7 @@ bb.f:                                             ; preds = %.thread
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.g, %bb.f
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.g ], [ 10, %bb.f ] ; 6 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.g ], [ 10, %bb.f ] ; 5 uses
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %indvars.iv.i
   %i.w = load i32, ptr %i.v, align 4, !tbaa !20
   %i.x = icmp ult i32 %i.t, %i.w
@@ -1339,7 +1329,7 @@ bb.g:                                             ; preds = %bb.g, %bb.f
   br i1 %i.x, label %bb.h, label %bb.g, !llvm.loop !4
 
 bb.h:                                             ; preds = %bb.g
-  %i.y = trunc nuw nsw i64 %indvars.iv.i to i32   ; 4 uses
+  %i.y = trunc nuw nsw i64 %indvars.iv.i to i32   ; 5 uses
   %i.z = icmp eq i64 %indvars.iv.i, 17
   %i.aa = load i32, ptr %i.a, align 4, !tbaa !81  ; 3 uses
   br i1 %i.z, label %.loopexit.sink.split.sink.split, label %bb.i
@@ -1349,26 +1339,25 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.ab, label %.loopexit.sink.split, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.ac = sub nuw nsw i32 32, %i.y
+  %i.ac = sub nsw i32 32, %i.y
   %i.ad = lshr i32 %i.f, %i.ac
-  %7 = getelementptr inbounds nuw [4 x i8], ptr @_ZL11stbi__bmask, i64 %indvars.iv.i
-  %8 = load i32, ptr %7, align 4, !tbaa !20
-  %i.ae = and i32 %8, %i.ad
+  %notmask.i = shl nsw i32 -1, %i.y
+  %7 = xor i32 %notmask.i, -1
+  %i.ae = and i32 %i.ad, %7
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 1612
   %i.ag = getelementptr inbounds nuw [4 x i8], ptr %i.af, i64 %indvars.iv.i
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !20
-  %i.ai = add i32 %i.ae, %i.ah
+  %i.ai = add i32 %i.ah, %i.ae
   %i.aj = getelementptr inbounds nuw i8, ptr %2, i64 1280
   %i.ak = sext i32 %i.ai to i64                   ; 3 uses
   %i.al = getelementptr inbounds i8, ptr %i.aj, i64 %i.ak
-  %i.am = load i8, ptr %i.al, align 1, !tbaa !32  ; 2 uses
-  %i.an = zext i8 %i.am to i32
-  %i.ao = sub nuw nsw i32 32, %i.an
+  %i.am = load i8, ptr %i.al, align 1, !tbaa !32
+  %i.an = zext i8 %i.am to i32                    ; 2 uses
+  %i.ao = sub nsw i32 32, %i.an
   %i.ap = lshr i32 %i.f, %i.ao
-  %9 = zext i8 %i.am to i64
-  %10 = getelementptr inbounds nuw [4 x i8], ptr @_ZL11stbi__bmask, i64 %9
-  %11 = load i32, ptr %10, align 4, !tbaa !20
-  %i.aq = and i32 %i.ap, %11
+  %notmask47.i = shl nsw i32 -1, %i.an
+  %8 = xor i32 %notmask47.i, -1
+  %i.aq = and i32 %i.ap, %8
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 512
   %i.as = getelementptr inbounds [2 x i8], ptr %i.ar, i64 %i.ak
   %i.at = load i16, ptr %i.as, align 2, !tbaa !38
@@ -1392,7 +1381,7 @@ _ZL22stbi__jpeg_huff_decodeP10stbi__jpegP13stbi__huffman.exit: ; preds = %bb.e, 
   %i.ay = getelementptr inbounds nuw i8, ptr %2, i64 1024
   %i.az = getelementptr inbounds i8, ptr %i.ay, i64 %.sink118
   %.1.i.in = load i8, ptr %i.az, align 1, !tbaa !32 ; 4 uses
-  %.1.i = zext i8 %.1.i.in to i32                 ; 3 uses
+  %.1.i = zext i8 %.1.i.in to i32                 ; 4 uses
   %or.cond = icmp ugt i8 %.1.i.in, 15
   br i1 %or.cond, label %.loopexit.sink.split, label %bb.m
 
@@ -1415,13 +1404,12 @@ _ZL20stbi__extend_receiveP10stbi__jpegi.exit:     ; preds = %bb.n, %bb.o
   %i.bb = phi i32 [ %.pre.i, %bb.o ], [ %.pre.pre, %bb.n ]
   %i.bc = load i32, ptr %i.e, align 8, !tbaa !82  ; 3 uses
   %i.bd = tail call i32 @llvm.fshl.i32(i32 %i.bc, i32 %i.bc, i32 range(i32 1, 16) %.1.i) ; 2 uses
-  %i.be = zext nneg i8 %.1.i.in to i64            ; 2 uses
-  %12 = getelementptr inbounds nuw [4 x i8], ptr @_ZL11stbi__bmask, i64 %i.be
-  %13 = load i32, ptr %12, align 4, !tbaa !20     ; 2 uses
-  %i.bf = xor i32 %13, -1
-  %i.bg = and i32 %i.bd, %i.bf
+  %i.be = zext nneg i8 %.1.i.in to i64
+  %notmask.i72 = shl nsw i32 -1, %.1.i            ; 2 uses
+  %i.bf = xor i32 %notmask.i72, -1
+  %i.bg = and i32 %i.bd, %notmask.i72
   store i32 %i.bg, ptr %i.e, align 8, !tbaa !82
-  %i.bh = and i32 %i.bd, %13
+  %i.bh = and i32 %i.bd, %i.bf
   %i.bi = sub nsw i32 %i.bb, %.1.i                ; 2 uses
   store i32 %i.bi, ptr %i.a, align 4, !tbaa !81
   %i.bj = getelementptr inbounds nuw [4 x i8], ptr @_ZL11stbi__jbias, i64 %i.be
@@ -1535,7 +1523,7 @@ bb.z:                                             ; preds = %bb.w
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.aa, %bb.z
-  %indvars.iv.i74 = phi i64 [ %indvars.iv.next.i75, %bb.aa ], [ 10, %bb.z ] ; 6 uses
+  %indvars.iv.i74 = phi i64 [ %indvars.iv.next.i75, %bb.aa ], [ 10, %bb.z ] ; 5 uses
   %i.do = getelementptr inbounds nuw [4 x i8], ptr %i.by, i64 %indvars.iv.i74
   %i.dp = load i32, ptr %i.do, align 4, !tbaa !20
   %i.dq = icmp ult i32 %i.dn, %i.dp
@@ -1543,7 +1531,7 @@ bb.aa:                                            ; preds = %bb.aa, %bb.z
   br i1 %i.dq, label %bb.ab, label %bb.aa, !llvm.loop !4
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.dr = trunc nuw nsw i64 %indvars.iv.i74 to i32 ; 4 uses
+  %i.dr = trunc nuw nsw i64 %indvars.iv.i74 to i32 ; 5 uses
   %i.ds = icmp eq i64 %indvars.iv.i74, 17
   %i.dt = load i32, ptr %i.a, align 4, !tbaa !81  ; 3 uses
   br i1 %i.ds, label %.loopexit.sink.split.sink.split, label %bb.ac
@@ -1553,24 +1541,23 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %i.du, label %.loopexit.sink.split, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.dv = sub nuw nsw i32 32, %i.dr
+  %i.dv = sub nsw i32 32, %i.dr
   %i.dw = lshr i32 %i.dc, %i.dv
-  %14 = getelementptr inbounds nuw [4 x i8], ptr @_ZL11stbi__bmask, i64 %indvars.iv.i74
-  %15 = load i32, ptr %14, align 4, !tbaa !20
-  %i.dx = and i32 %15, %i.dw
+  %notmask.i77 = shl nsw i32 -1, %i.dr
+  %9 = xor i32 %notmask.i77, -1
+  %i.dx = and i32 %i.dw, %9
   %i.dy = getelementptr inbounds nuw [4 x i8], ptr %i.bz, i64 %indvars.iv.i74
   %i.dz = load i32, ptr %i.dy, align 4, !tbaa !20
-  %i.ea = add i32 %i.dx, %i.dz
+  %i.ea = add i32 %i.dz, %i.dx
   %i.eb = sext i32 %i.ea to i64                   ; 3 uses
   %i.ec = getelementptr inbounds i8, ptr %i.bw, i64 %i.eb
-  %i.ed = load i8, ptr %i.ec, align 1, !tbaa !32  ; 2 uses
-  %i.ee = zext i8 %i.ed to i32
-  %i.ef = sub nuw nsw i32 32, %i.ee
+  %i.ed = load i8, ptr %i.ec, align 1, !tbaa !32
+  %i.ee = zext i8 %i.ed to i32                    ; 2 uses
+  %i.ef = sub nsw i32 32, %i.ee
   %i.eg = lshr i32 %i.dc, %i.ef
-  %16 = zext i8 %i.ed to i64
-  %17 = getelementptr inbounds nuw [4 x i8], ptr @_ZL11stbi__bmask, i64 %16
-  %18 = load i32, ptr %17, align 4, !tbaa !20
-  %i.eh = and i32 %i.eg, %18
+  %notmask47.i78 = shl nsw i32 -1, %i.ee
+  %10 = xor i32 %notmask47.i78, -1
+  %i.eh = and i32 %i.eg, %10
   %i.ei = getelementptr inbounds [2 x i8], ptr %i.ca, i64 %i.eb
   %i.ej = load i16, ptr %i.ei, align 2, !tbaa !38
   %i.ek = zext i16 %i.ej to i32
@@ -1595,7 +1582,7 @@ _ZL22stbi__jpeg_huff_decodeP10stbi__jpegP13stbi__huffman.exit76: ; preds = %bb.a
   %.1.i73.in.in = getelementptr inbounds i8, ptr %i.bx, i64 %.pn
   %.1.i73.in = load i8, ptr %.1.i73.in.in, align 1, !tbaa !32 ; 2 uses
   %.1.i73 = zext i8 %.1.i73.in to i32             ; 2 uses
-  %i.eq = and i32 %.1.i73, 15                     ; 5 uses
+  %i.eq = and i32 %.1.i73, 15                     ; 6 uses
   %i.er = icmp eq i32 %i.eq, 0
   br i1 %i.er, label %bb.ag, label %bb.ai
 
@@ -1627,13 +1614,12 @@ _ZL20stbi__extend_receiveP10stbi__jpegi.exit79:   ; preds = %bb.ai, %bb.aj
   %i.fa = phi i32 [ %.pre100, %bb.aj ], [ %i.eo, %bb.ai ] ; 3 uses
   %i.fb = phi i32 [ %.pre.i78, %bb.aj ], [ %i.ep, %bb.ai ]
   %i.fc = tail call i32 @llvm.fshl.i32(i32 %i.fa, i32 %i.fa, i32 range(i32 1, 16) %i.eq) ; 2 uses
-  %i.fd = zext nneg i32 %i.eq to i64              ; 2 uses
-  %19 = getelementptr inbounds nuw [4 x i8], ptr @_ZL11stbi__bmask, i64 %i.fd
-  %20 = load i32, ptr %19, align 4, !tbaa !20     ; 2 uses
-  %i.fe = xor i32 %20, -1
-  %i.ff = and i32 %i.fc, %i.fe
+  %i.fd = zext nneg i32 %i.eq to i64
+  %notmask.i80 = shl nsw i32 -1, %i.eq            ; 2 uses
+  %i.fe = xor i32 %notmask.i80, -1
+  %i.ff = and i32 %i.fc, %notmask.i80
   store i32 %i.ff, ptr %i.e, align 8, !tbaa !82
-  %i.fg = and i32 %i.fc, %20
+  %i.fg = and i32 %i.fc, %i.fe
   %i.fh = sub nsw i32 %i.fb, %i.eq                ; 2 uses
   store i32 %i.fh, ptr %i.a, align 4, !tbaa !81
   %i.fi = getelementptr inbounds nuw [4 x i8], ptr @_ZL11stbi__jbias, i64 %i.fd
@@ -2010,7 +1996,7 @@ bb.k:                                             ; preds = %bb.h
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.l, %bb.k
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.l ], [ 10, %bb.k ] ; 6 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.l ], [ 10, %bb.k ] ; 5 uses
   %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %indvars.iv.i
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !20
   %i.ae = icmp ult i32 %i.aa, %i.ad
@@ -2018,7 +2004,7 @@ bb.l:                                             ; preds = %bb.l, %bb.k
   br i1 %i.ae, label %bb.m, label %bb.l, !llvm.loop !4
 
 bb.m:                                             ; preds = %bb.l
-  %i.af = trunc nuw nsw i64 %indvars.iv.i to i32  ; 4 uses
+  %i.af = trunc nuw nsw i64 %indvars.iv.i to i32  ; 5 uses
   %i.ag = icmp eq i64 %indvars.iv.i, 17
   %i.ah = load i32, ptr %i.d, align 4, !tbaa !81  ; 3 uses
   br i1 %i.ag, label %bb.n, label %bb.o
@@ -2033,26 +2019,25 @@ bb.o:                                             ; preds = %bb.m
   br i1 %i.aj, label %_ZL22stbi__jpeg_huff_decodeP10stbi__jpegP13stbi__huffman.exit.thread, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.ak = sub nuw nsw i32 32, %i.af
+  %i.ak = sub nsw i32 32, %i.af
   %i.al = lshr i32 %i.m, %i.ak
-  %4 = getelementptr inbounds nuw [4 x i8], ptr @_ZL11stbi__bmask, i64 %indvars.iv.i
-  %5 = load i32, ptr %4, align 4, !tbaa !20
-  %i.am = and i32 %5, %i.al
+  %notmask.i = shl nsw i32 -1, %i.af
+  %4 = xor i32 %notmask.i, -1
+  %i.am = and i32 %i.al, %4
   %i.an = getelementptr inbounds nuw i8, ptr %2, i64 1612
   %i.ao = getelementptr inbounds nuw [4 x i8], ptr %i.an, i64 %indvars.iv.i
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !20
-  %i.aq = add i32 %i.am, %i.ap
+  %i.aq = add i32 %i.ap, %i.am
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 1280
   %i.as = sext i32 %i.aq to i64                   ; 3 uses
   %i.at = getelementptr inbounds i8, ptr %i.ar, i64 %i.as
-  %i.au = load i8, ptr %i.at, align 1, !tbaa !32  ; 2 uses
-  %i.av = zext i8 %i.au to i32
-  %i.aw = sub nuw nsw i32 32, %i.av
+  %i.au = load i8, ptr %i.at, align 1, !tbaa !32
+  %i.av = zext i8 %i.au to i32                    ; 2 uses
+  %i.aw = sub nsw i32 32, %i.av
   %i.ax = lshr i32 %i.m, %i.aw
-  %6 = zext i8 %i.au to i64
-  %7 = getelementptr inbounds nuw [4 x i8], ptr @_ZL11stbi__bmask, i64 %6
-  %8 = load i32, ptr %7, align 4, !tbaa !20
-  %i.ay = and i32 %i.ax, %8
+  %notmask47.i = shl nsw i32 -1, %i.av
+  %5 = xor i32 %notmask47.i, -1
+  %i.ay = and i32 %i.ax, %5
   %i.az = getelementptr inbounds nuw i8, ptr %2, i64 512
   %i.ba = getelementptr inbounds [2 x i8], ptr %i.az, i64 %i.as
   %i.bb = load i16, ptr %i.ba, align 2, !tbaa !38
@@ -2078,7 +2063,7 @@ _ZL22stbi__jpeg_huff_decodeP10stbi__jpegP13stbi__huffman.exit: ; preds = %bb.j, 
   %i.bi = getelementptr inbounds nuw i8, ptr %2, i64 1024
   %i.bj = getelementptr inbounds i8, ptr %i.bi, i64 %.sink38
   %.1.i.in = load i8, ptr %i.bj, align 1, !tbaa !32 ; 4 uses
-  %.1.i = zext i8 %.1.i.in to i32                 ; 3 uses
+  %.1.i = zext i8 %.1.i.in to i32                 ; 4 uses
   %or.cond = icmp ugt i8 %.1.i.in, 15
   br i1 %or.cond, label %_ZL22stbi__jpeg_huff_decodeP10stbi__jpegP13stbi__huffman.exit.thread, label %bb.s
 
@@ -2105,13 +2090,12 @@ _ZL20stbi__extend_receiveP10stbi__jpegi.exit:     ; preds = %bb.t, %bb.u
   %i.bm = phi i32 [ %.pre, %bb.u ], [ %i.bg, %bb.t ] ; 3 uses
   %i.bn = phi i32 [ %.pre.i, %bb.u ], [ %i.bh, %bb.t ]
   %i.bo = tail call i32 @llvm.fshl.i32(i32 %i.bm, i32 %i.bm, i32 range(i32 1, 16) %.1.i) ; 2 uses
-  %i.bp = zext nneg i8 %.1.i.in to i64            ; 2 uses
-  %9 = getelementptr inbounds nuw [4 x i8], ptr @_ZL11stbi__bmask, i64 %i.bp
-  %10 = load i32, ptr %9, align 4, !tbaa !20      ; 2 uses
-  %i.bq = xor i32 %10, -1
-  %i.br = and i32 %i.bo, %i.bq
+  %i.bp = zext nneg i8 %.1.i.in to i64
+  %notmask.i28 = shl nsw i32 -1, %.1.i            ; 2 uses
+  %i.bq = xor i32 %notmask.i28, -1
+  %i.br = and i32 %i.bo, %notmask.i28
   store i32 %i.br, ptr %i.l, align 8, !tbaa !82
-  %i.bs = and i32 %i.bo, %10
+  %i.bs = and i32 %i.bo, %i.bq
   %i.bt = sub nsw i32 %i.bn, %.1.i
   store i32 %i.bt, ptr %i.d, align 4, !tbaa !81
   %i.bu = getelementptr inbounds nuw [4 x i8], ptr @_ZL11stbi__jbias, i64 %i.bp
