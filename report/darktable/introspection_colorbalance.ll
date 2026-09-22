@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 680
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !91   ; 10 uses
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !91   ; 8 uses
   %i.k = load ptr, ptr %i.a, align 16, !tbaa !47  ; 9 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 512
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 516
@@ -223,99 +223,94 @@ bb.c:                                             ; preds = %bb.b
   %i.z = fmul reassoc nsz arcp contract afn float %i.v, f0x3E038026
   %i.aa = fadd reassoc nsz arcp contract afn float %i.z, f0xBC911AA6
   %i.ab = select reassoc nsz arcp contract afn i1 %i.w, float %i.y, float %i.aa ; 3 uses
-  %3 = fcmp reassoc nsz arcp contract afn ogt float %i.t, f0x3E53DCB1
-  %i.ac = fmul reassoc nsz arcp contract afn float %i.t, %i.t
-  %i.ad = fmul reassoc nsz arcp contract afn float %i.ac, %i.t
-  %i.ae = fmul reassoc nsz arcp contract afn float %i.t, f0x3E038026
-  %4 = fadd reassoc nsz arcp contract afn float %i.ae, f0xBC911AA6
-  %5 = select reassoc nsz arcp contract afn i1 %3, float %i.ad, float %4 ; 6 uses
-  %6 = fsub reassoc nsz arcp contract afn float %i.t, %i.u ; 5 uses
-  %7 = fcmp reassoc nsz arcp contract afn ogt float %6, f0x3E53DCB1
-  %8 = fmul reassoc nsz arcp contract afn float %6, %6
-  %9 = fmul reassoc nsz arcp contract afn float %8, %6
-  %10 = fmul reassoc nsz arcp contract afn float %6, f0x3E038026
-  %11 = fadd reassoc nsz arcp contract afn float %10, f0xBC911AA6
-  %12 = select reassoc nsz arcp contract afn i1 %7, float %9, float %11 ; 3 uses
-  %13 = fmul reassoc nsz arcp contract afn float %i.ab, 9.642000e-01
-  %14 = fmul reassoc nsz arcp contract afn float %i.ab, f0x3FA61CF4
-  %15 = fmul reassoc nsz arcp contract afn float %5, f0x3E82DEFC
-  %16 = fsub reassoc nsz arcp contract afn float %14, %15
-  %17 = fmul reassoc nsz arcp contract afn float %12, f0xBD2CB230
-  %18 = fadd reassoc nsz arcp contract afn float %16, %17 ; 2 uses
-  %i.af = fmul reassoc nsz arcp contract afn float %i.ab, f0x3F066D1A
-  %i.ag = fmul reassoc nsz arcp contract afn float %5, f0x3FC10BA0
-  %19 = fsub reassoc nsz arcp contract afn float %i.ag, %i.af
-  %i.ah = fmul reassoc nsz arcp contract afn float %12, f0x3C8AC481
-  %20 = fadd reassoc nsz arcp contract afn float %19, %i.ah ; 2 uses
-  %21 = fadd reassoc nsz arcp contract afn float %13, %5
-  %i.ai = fmul reassoc nsz arcp contract afn float %21, 0.000000e+00
-  %i.aj = fmul reassoc nsz arcp contract afn float %12, f0x3F7FE762
-  %i.ak = fadd reassoc nsz arcp contract afn float %i.ai, %i.aj ; 2 uses
-  %22 = getelementptr inbounds nuw i8, ptr %i.k, i64 264
-  store float %18, ptr %22, align 4, !tbaa !12
+  %3 = fsub reassoc nsz arcp contract afn float %i.t, %i.u ; 5 uses
+  %i.ac = fmul reassoc nsz arcp contract afn float %i.ab, 9.642000e-01
+  %i.ad = fmul reassoc nsz arcp contract afn float %i.ab, f0x3FA61CF4
+  %i.ae = fmul reassoc nsz arcp contract afn float %i.ab, f0x3F066D1A
+  %4 = getelementptr inbounds nuw i8, ptr %i.k, i64 264
   %.sroa.11.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.k, i64 268
-  store float %20, ptr %.sroa.11.0..sroa_idx.i, align 4, !tbaa !12
   %.sroa.18.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.k, i64 272
-  store float %i.ak, ptr %.sroa.18.0..sroa_idx.i, align 4, !tbaa !12
-  %23 = getelementptr inbounds nuw i8, ptr %i.k, i64 300
-  store i32 1, ptr %23, align 4, !tbaa !15
-  %24 = getelementptr inbounds nuw i8, ptr %i.j, i64 4
-  %25 = getelementptr inbounds nuw i8, ptr %i.j, i64 24
-  %26 = load float, ptr %25, align 4, !tbaa !12
-  %i.al = fsub reassoc nsz arcp contract afn float 2.000000e+00, %26
-  %27 = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %i.al
-  %28 = tail call reassoc nsz arcp contract afn float @llvm.pow.f32(float %5, float %27)
-  %29 = getelementptr inbounds nuw i8, ptr %i.j, i64 40
-  %30 = load float, ptr %29, align 4, !tbaa !12
-  %31 = getelementptr inbounds nuw i8, ptr %i.j, i64 28
-  %32 = load float, ptr %31, align 4, !tbaa !12
-  %33 = fsub reassoc nsz arcp contract afn float 2.000000e+00, %32
-  %34 = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %33
-  %35 = tail call reassoc nsz arcp contract afn float @llvm.pow.f32(float %5, float %34)
-  %36 = getelementptr inbounds nuw i8, ptr %i.j, i64 44
-  %37 = load float, ptr %36, align 4, !tbaa !12
-  %38 = getelementptr inbounds nuw i8, ptr %i.j, i64 32
-  %i.am = load float, ptr %38, align 4, !tbaa !12
+  %5 = getelementptr inbounds nuw i8, ptr %i.k, i64 300
+  store i32 1, ptr %5, align 4, !tbaa !15
+  %6 = getelementptr inbounds nuw i8, ptr %i.j, i64 4
+  %7 = getelementptr inbounds nuw i8, ptr %i.j, i64 24
+  %8 = getelementptr inbounds nuw i8, ptr %i.j, i64 40
+  %9 = getelementptr inbounds nuw i8, ptr %i.j, i64 28
+  %10 = getelementptr inbounds nuw i8, ptr %i.j, i64 44
+  %11 = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %i.j, i64 12 ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %i.j, i64 16
+  %14 = fcmp reassoc nsz arcp contract afn ogt float %3, f0x3E53DCB1
+  %15 = fcmp reassoc nsz arcp contract afn ogt float %i.t, f0x3E53DCB1
+  %i.af = fmul reassoc nsz arcp contract afn float %3, %3
+  %i.ag = fmul reassoc nsz arcp contract afn float %i.t, %i.t
+  %i.ah = fmul reassoc nsz arcp contract afn float %i.af, %3
+  %16 = fmul reassoc nsz arcp contract afn float %i.ag, %i.t
+  %i.ai = fmul reassoc nsz arcp contract afn float %3, f0x3E038026
+  %i.aj = fmul reassoc nsz arcp contract afn float %i.t, f0x3E038026
+  %i.ak = fadd reassoc nsz arcp contract afn float %i.ai, f0xBC911AA6
+  %17 = fadd reassoc nsz arcp contract afn float %i.aj, f0xBC911AA6
+  %18 = select reassoc nsz arcp contract afn i1 %14, float %i.ah, float %i.ak ; 2 uses
+  %19 = select reassoc nsz arcp contract afn i1 %15, float %16, float %17 ; 5 uses
+  %20 = fmul reassoc nsz arcp contract afn float %19, f0x3E82DEFC
+  %21 = fsub reassoc nsz arcp contract afn float %i.ad, %20
+  %22 = fmul reassoc nsz arcp contract afn float %18, f0xBD2CB230
+  %23 = fadd reassoc nsz arcp contract afn float %21, %22 ; 2 uses
+  %24 = fadd reassoc nsz arcp contract afn float %i.ac, %19
+  %25 = fmul reassoc nsz arcp contract afn float %19, f0x3FC10BA0
+  %26 = fmul reassoc nsz arcp contract afn float %24, 0.000000e+00
+  %i.al = fsub reassoc nsz arcp contract afn float %25, %i.ae
+  %27 = insertelement <2 x float> poison, float %18, i64 0
+  %28 = shufflevector <2 x float> %27, <2 x float> poison, <2 x i32> zeroinitializer
+  %29 = fmul reassoc nsz arcp contract afn <2 x float> %28, <float f0x3C8AC481, float f0x3F7FE762>
+  %30 = insertelement <2 x float> poison, float %i.al, i64 0
+  %31 = insertelement <2 x float> %30, float %26, i64 1
+  %32 = fadd reassoc nsz arcp contract afn <2 x float> %31, %29 ; 3 uses
+  store float %23, ptr %4, align 4, !tbaa !12
+  %33 = extractelement <2 x float> %32, i64 0
+  store float %33, ptr %.sroa.11.0..sroa_idx.i, align 4, !tbaa !12
+  %34 = extractelement <2 x float> %32, i64 1
+  store float %34, ptr %.sroa.18.0..sroa_idx.i, align 4, !tbaa !12
+  %i.am = load float, ptr %7, align 4, !tbaa !12
   %i.an = fsub reassoc nsz arcp contract afn float 2.000000e+00, %i.am
   %i.ao = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %i.an
-  %i.ap = tail call reassoc nsz arcp contract afn float @llvm.pow.f32(float %5, float %i.ao)
-  %39 = getelementptr inbounds nuw i8, ptr %i.j, i64 48
-  %i.aq = load float, ptr %39, align 4, !tbaa !12
-  %40 = fadd reassoc nsz arcp contract afn float %28, 1.000000e+00
-  %41 = fmul reassoc nsz arcp contract afn float %30, %18
-  %42 = fsub reassoc nsz arcp contract afn float %40, %41
-  %43 = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 2 uses
-  store float %42, ptr %43, align 4, !tbaa !12
-  %44 = fmul reassoc nsz arcp contract afn float %20, %37
-  %45 = fsub reassoc nsz arcp contract afn float 1.000000e+00, %44
-  %i.ar = fadd reassoc nsz arcp contract afn float %45, %35
-  %46 = getelementptr inbounds nuw i8, ptr %i.j, i64 12 ; 2 uses
-  store float %i.ar, ptr %46, align 4, !tbaa !12
-  %47 = fmul reassoc nsz arcp contract afn float %i.ak, %i.aq
-  %48 = fsub reassoc nsz arcp contract afn float 1.000000e+00, %47
-  %49 = fadd reassoc nsz arcp contract afn float %48, %i.ap
-  %50 = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 2 uses
-  store float %49, ptr %50, align 4, !tbaa !12
+  %i.ap = tail call reassoc nsz arcp contract afn float @llvm.pow.f32(float %19, float %i.ao)
+  %i.aq = load float, ptr %8, align 4, !tbaa !12
+  %35 = load <2 x float>, ptr %9, align 4, !tbaa !12
+  %36 = fsub reassoc nsz arcp contract afn <2 x float> splat (float 2.000000e+00), %35
+  %37 = fdiv reassoc nsz arcp contract afn <2 x float> splat (float 1.000000e+00), %36
+  %38 = insertelement <2 x float> poison, float %19, i64 0
+  %39 = shufflevector <2 x float> %38, <2 x float> poison, <2 x i32> zeroinitializer
+  %40 = tail call reassoc nsz arcp contract afn <2 x float> @llvm.pow.v2f32(<2 x float> %39, <2 x float> %37)
+  %41 = load <2 x float>, ptr %10, align 4, !tbaa !12
+  %i.ar = fadd reassoc nsz arcp contract afn float %i.ap, 1.000000e+00
+  %42 = fmul reassoc nsz arcp contract afn float %i.aq, %23
+  %43 = fsub reassoc nsz arcp contract afn float %i.ar, %42
+  store float %43, ptr %11, align 4, !tbaa !12
+  %44 = fmul reassoc nsz arcp contract afn <2 x float> %32, %41
+  %45 = fsub reassoc nsz arcp contract afn <2 x float> splat (float 1.000000e+00), %44
+  %46 = fadd reassoc nsz arcp contract afn <2 x float> %45, %40
+  store <2 x float> %46, ptr %12, align 4, !tbaa !12
   %i.as = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 104), align 8, !tbaa !90
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 104
   %i.au = atomicrmw add ptr %i.at, i32 1 seq_cst, align 4 ; 0 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.k, i64 120
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !92
-  %i.ax = load float, ptr %43, align 4, !tbaa !12
+  %i.ax = load float, ptr %11, align 4, !tbaa !12
   tail call void @dt_bauhaus_slider_set(ptr noundef %i.aw, float noundef %i.ax) #23
   %i.ay = getelementptr inbounds nuw i8, ptr %i.k, i64 128
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !93
-  %i.ba = load float, ptr %46, align 4, !tbaa !12
+  %i.ba = load float, ptr %12, align 4, !tbaa !12
   tail call void @dt_bauhaus_slider_set(ptr noundef %i.az, float noundef %i.ba) #23
   %i.bb = getelementptr inbounds nuw i8, ptr %i.k, i64 136
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !94
-  %i.bd = load float, ptr %50, align 4, !tbaa !12
+  %i.bd = load float, ptr %13, align 4, !tbaa !12
   tail call void @dt_bauhaus_slider_set(ptr noundef %i.bc, float noundef %i.bd) #23
   %i.be = getelementptr inbounds nuw i8, ptr %i.k, i64 72
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !49
   %i.bg = getelementptr inbounds nuw i8, ptr %i.k, i64 96
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !95
-  tail call fastcc void @set_HSL_sliders(ptr noundef %i.bf, ptr noundef %i.bh, ptr noundef nonnull %24)
+  tail call fastcc void @set_HSL_sliders(ptr noundef %i.bf, ptr noundef %i.bh, ptr noundef nonnull %6)
   %i.bi = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 104), align 8, !tbaa !90
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 104
   %i.bk = atomicrmw sub ptr %i.bj, i32 1 seq_cst, align 4 ; 0 uses
@@ -718,10 +713,10 @@ bb.p:                                             ; preds = %bb.o, %hsl2rgb.exit
 declare i64 @llvm.umin.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.log.v2f32(<2 x float>) #22
+declare <2 x float> @llvm.pow.v2f32(<2 x float>, <2 x float>) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.pow.v2f32(<2 x float>, <2 x float>) #22
+declare <2 x float> @llvm.log.v2f32(<2 x float>) #22
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare <12 x float> @llvm.masked.load.v12f32.p0(ptr captures(none), <12 x i1>, <12 x float>) #24

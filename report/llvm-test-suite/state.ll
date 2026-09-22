@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.iq = phi <2 x double> [ %i.in, %bb.k ], [ zeroinitializer, %bb.j ] ; 2 uses
   %i.ir = phi <2 x double> [ %i.ip, %bb.k ], [ zeroinitializer, %bb.j ] ; 3 uses
   %i.is = fmul double %i.ew, %i.ew                ; 2 uses
-  %i.it = insertelement <2 x double> poison, double %i.ep, i64 0 ; 10 uses
+  %i.it = insertelement <2 x double> poison, double %i.ep, i64 0 ; 8 uses
   %i.iu = insertelement <2 x double> %i.it, double %i.fg, i64 1 ; 3 uses
   %i.iv = fmul <2 x double> %i.iu, %i.iu          ; 10 uses
   %i.iw = shufflevector <2 x double> %i.iv, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 4 uses
@@ -214,7 +214,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.iz = insertelement <2 x double> poison, double %i.ew, i64 0 ; 2 uses
   %i.ja = shufflevector <2 x double> %i.iz, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.jb = fmul <2 x double> %i.iy, %i.ja          ; 3 uses
-  %i.jc = insertelement <2 x double> %i.iz, double %i.ep, i64 1 ; 2 uses
+  %i.jc = insertelement <2 x double> %i.iz, double %i.ep, i64 1
   %i.jd = insertelement <2 x double> %i.it, double %i.ew, i64 1
   %i.je = fdiv <2 x double> %i.jc, %i.jd          ; 2 uses
   %i.jf = fmul double %i.ch, %i.ew
@@ -266,7 +266,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.kz = fmul double %i.ky, 4.900000e+00
   %i.la = extractelement <2 x double> %i.kj, i64 0
   %i.lb = shufflevector <2 x double> %i.ju, <2 x double> %i.ix, <2 x i32> <i32 1, i32 2>
-  %i.lc = shufflevector <2 x double> %i.it, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.lc = shufflevector <2 x double> %i.it, <2 x double> poison, <2 x i32> zeroinitializer ; 7 uses
   %i.ld = fmul <2 x double> %i.lb, %i.lc          ; 2 uses
   %i.le = fcmp olt <2 x double> %i.je, splat (double 1.000000e+00)
   %i.lf = select <2 x i1> %i.le, <2 x double> %i.je, <2 x double> splat (double 1.000000e+00) ; 5 uses
@@ -558,8 +558,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br i1 %i.fm, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %3 = shufflevector <2 x double> %i.jc, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.vu = fmul <2 x double> %3, %i.gf
+  %i.vu = fmul <2 x double> %i.lc, %i.gf
   %i.vv = shufflevector <2 x double> %i.gg, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.vw = fmul <2 x double> %i.vv, %i.gg
   %i.vx = fmul double %.01171, %.01171
@@ -691,10 +690,9 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   br i1 %i.hc, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
-  %4 = shufflevector <2 x double> %i.it, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.zx = fmul <2 x double> %4, %i.hv
+  %i.zx = fmul <2 x double> %i.lc, %i.hv
   %i.zy = insertelement <2 x double> %foldExtExtBinop, double %i.ca, i64 1
-  %i.zz = fmul <2 x double> %i.zy, %4
+  %i.zz = fmul <2 x double> %i.zy, %i.lc
   %i.aaa = insertelement <2 x double> %i.oe, double %i.ep, i64 1
   %i.aab = insertelement <2 x double> %i.it, double %i.fl, i64 1
   %i.aac = fdiv <2 x double> %i.aaa, %i.aab       ; 2 uses
@@ -781,12 +779,11 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   br i1 %i.hx, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
-  %5 = shufflevector <2 x double> %i.it, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.acu = fmul <2 x double> %5, %i.iq
+  %i.acu = fmul <2 x double> %i.lc, %i.iq
   %i.acv = insertelement <2 x double> %i.qg, double %i.ep, i64 1
   %i.acw = fdiv <2 x double> %i.iu, %i.acv        ; 2 uses
   %i.acx = insertelement <2 x double> %foldExtExtBinop, double %i.ca, i64 1
-  %i.acy = fmul <2 x double> %i.acx, %5
+  %i.acy = fmul <2 x double> %i.acx, %i.lc
   %i.acz = fdiv <2 x double> %i.iv, %i.iw         ; 2 uses
   %i.ada = fcmp olt <2 x double> %i.acz, splat (double 5.000000e-01)
   %i.adb = select <2 x i1> %i.ada, <2 x double> %i.acz, <2 x double> splat (double 5.000000e-01)

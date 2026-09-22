@@ -205,29 +205,26 @@ _ZN10polynomialIdE11bit_reverseERKS0_.exit:       ; preds = %_ZN10polynomialIdE9
   %i.af = extractvalue { double, double } %i.ae, 0
   %i.ag = extractvalue { double, double } %i.ae, 1
   %i.ah = tail call noundef { double, double } @cexp(double noundef %i.af, double noundef %i.ag) #14 ; 2 uses
-  %i.ai = extractvalue { double, double } %i.ah, 0 ; 2 uses
-  %i.aj = extractvalue { double, double } %i.ah, 1 ; 2 uses
+  %i.ai = extractvalue { double, double } %i.ah, 0 ; 3 uses
+  %i.aj = extractvalue { double, double } %i.ah, 1 ; 3 uses
   %i.ak = add i64 %.03263, -1
   %invariant.gep = getelementptr [16 x i8], ptr %i.l, i64 %.03263
-  %2 = insertelement <2 x double> poison, double %i.ai, i64 0
-  %3 = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer
-  %4 = insertelement <2 x double> poison, double %i.aj, i64 0
-  %5 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
   br label %.preheader
 
 .preheader:                                       ; preds = %.lr.ph65, %_ZNSt7complexIdEmLIdEERS0_RKS_IT_E.exit
   %.03561 = phi i64 [ 0, %.lr.ph65 ], [ %i.bt, %_ZNSt7complexIdEmLIdEERS0_RKS_IT_E.exit ] ; 3 uses
-  %6 = phi <2 x double> [ <double 1.000000e+00, double 0.000000e+00>, %.lr.ph65 ], [ %23, %_ZNSt7complexIdEmLIdEERS0_RKS_IT_E.exit ] ; 8 uses
+  %.sroa.055.060 = phi double [ 1.000000e+00, %.lr.ph65 ], [ %12, %_ZNSt7complexIdEmLIdEERS0_RKS_IT_E.exit ] ; 5 uses
+  %.sroa.8.059 = phi double [ 0.000000e+00, %.lr.ph65 ], [ %13, %_ZNSt7complexIdEmLIdEERS0_RKS_IT_E.exit ] ; 5 uses
   %i.al = load i64, ptr %i.a, align 8, !tbaa !15  ; 2 uses
   %i.am = add i64 %i.al, -1
   %.not3657 = icmp ugt i64 %.03561, %i.am
   br i1 %.not3657, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %7 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
-  %8 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %9 = extractelement <2 x double> %6, i64 0
-  %10 = extractelement <2 x double> %6, i64 1
+  %2 = insertelement <2 x double> poison, double %.sroa.055.060, i64 0
+  %3 = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer
+  %4 = insertelement <2 x double> poison, double %.sroa.8.059, i64 0
+  %5 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.f
@@ -235,9 +232,9 @@ _ZN10polynomialIdE11bit_reverseERKS0_.exit:       ; preds = %_ZN10polynomialIdE9
   %.03458 = phi i64 [ %i.bm, %bb.f ], [ %.03561, %.lr.ph.preheader ] ; 3 uses
   %gep = getelementptr [16 x i8], ptr %invariant.gep, i64 %.03458 ; 2 uses
   %i.ao = load <2 x double>, ptr %gep, align 8    ; 4 uses
-  %i.ap = fmul <2 x double> %7, %i.ao             ; 2 uses
+  %i.ap = fmul <2 x double> %3, %i.ao             ; 2 uses
   %i.aq = shufflevector <2 x double> %i.ao, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %i.ar = fmul <2 x double> %8, %i.aq             ; 2 uses
+  %i.ar = fmul <2 x double> %5, %i.aq             ; 2 uses
   %i.as = fsub <2 x double> %i.ap, %i.ar          ; 2 uses
   %i.at = fadd <2 x double> %i.ap, %i.ar          ; 2 uses
   %i.au = shufflevector <2 x double> %i.as, <2 x double> %i.at, <2 x i32> <i32 0, i32 3> ; 2 uses
@@ -253,7 +250,7 @@ bb.d:                                             ; preds = %.lr.ph
 bb.e:                                             ; preds = %bb.d
   %i.az = extractelement <2 x double> %i.ao, i64 0
   %i.ba = extractelement <2 x double> %i.ao, i64 1
-  %i.bb = tail call noundef { double, double } @__muldc3(double noundef %9, double noundef %10, double noundef %i.az, double noundef %i.ba) #14 ; 2 uses
+  %i.bb = tail call noundef { double, double } @__muldc3(double noundef %.sroa.055.060, double noundef %.sroa.8.059, double noundef %i.az, double noundef %i.ba) #14 ; 2 uses
   %i.bc = extractvalue { double, double } %i.bb, 0
   %i.bd = extractvalue { double, double } %i.bb, 1
   %.pre = load i64, ptr %i.a, align 8, !tbaa !15
@@ -276,33 +273,28 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %.lr.p
   br i1 %.not36, label %._crit_edge, label %.lr.ph, !llvm.loop !67
 
 ._crit_edge:                                      ; preds = %bb.f, %.preheader
-  %11 = fmul <2 x double> %3, %6                  ; 2 uses
-  %12 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %13 = fmul <2 x double> %5, %12                 ; 2 uses
-  %14 = fsub <2 x double> %11, %13                ; 2 uses
-  %15 = fadd <2 x double> %11, %13                ; 2 uses
-  %16 = shufflevector <2 x double> %14, <2 x double> %15, <2 x i32> <i32 0, i32 3> ; 2 uses
-  %17 = extractelement <2 x double> %14, i64 0
-  %i.bo = fcmp uno double %17, 0.000000e+00
+  %6 = fmul double %i.ai, %.sroa.055.060
+  %7 = fmul double %i.aj, %.sroa.8.059
+  %8 = fmul double %i.aj, %.sroa.055.060
+  %9 = fmul double %i.ai, %.sroa.8.059
+  %10 = fadd double %9, %8                        ; 3 uses
+  %11 = fsub double %6, %7                        ; 3 uses
+  %i.bo = fcmp uno double %11, 0.000000e+00
   br i1 %i.bo, label %bb.g, label %_ZNSt7complexIdEmLIdEERS0_RKS_IT_E.exit, !prof !27
 
 bb.g:                                             ; preds = %._crit_edge
-  %18 = extractelement <2 x double> %15, i64 1
-  %i.bp = fcmp uno double %18, 0.000000e+00
+  %i.bp = fcmp uno double %10, 0.000000e+00
   br i1 %i.bp, label %bb.h, label %_ZNSt7complexIdEmLIdEERS0_RKS_IT_E.exit, !prof !27
 
 bb.h:                                             ; preds = %bb.g
-  %19 = extractelement <2 x double> %6, i64 0
-  %20 = extractelement <2 x double> %6, i64 1
-  %i.bq = tail call noundef { double, double } @__muldc3(double noundef %19, double noundef %20, double noundef %i.ai, double noundef %i.aj) #14 ; 2 uses
+  %i.bq = tail call noundef { double, double } @__muldc3(double noundef %.sroa.055.060, double noundef %.sroa.8.059, double noundef %i.ai, double noundef %i.aj) #14 ; 2 uses
   %i.br = extractvalue { double, double } %i.bq, 0
   %i.bs = extractvalue { double, double } %i.bq, 1
-  %21 = insertelement <2 x double> poison, double %i.br, i64 0
-  %22 = insertelement <2 x double> %21, double %i.bs, i64 1
   br label %_ZNSt7complexIdEmLIdEERS0_RKS_IT_E.exit
 
 _ZNSt7complexIdEmLIdEERS0_RKS_IT_E.exit:          ; preds = %._crit_edge, %bb.g, %bb.h
-  %23 = phi <2 x double> [ %16, %._crit_edge ], [ %16, %bb.g ], [ %22, %bb.h ]
+  %12 = phi double [ %11, %._crit_edge ], [ %11, %bb.g ], [ %i.br, %bb.h ]
+  %13 = phi double [ %10, %._crit_edge ], [ %10, %bb.g ], [ %i.bs, %bb.h ]
   %i.bt = add i64 %.03561, 1                      ; 2 uses
   %.not = icmp ugt i64 %i.bt, %i.ak
   br i1 %.not, label %bb.i, label %.preheader, !llvm.loop !68
@@ -426,29 +418,26 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.aj = extractvalue { double, double } %i.ai, 0
   %i.ak = extractvalue { double, double } %i.ai, 1
   %i.al = tail call noundef { double, double } @cexp(double noundef %i.aj, double noundef %i.ak) #14 ; 2 uses
-  %i.am = extractvalue { double, double } %i.al, 0 ; 2 uses
-  %i.an = extractvalue { double, double } %i.al, 1 ; 2 uses
+  %i.am = extractvalue { double, double } %i.al, 0 ; 3 uses
+  %i.an = extractvalue { double, double } %i.al, 1 ; 3 uses
   %i.ao = add i64 %.03879, -1
   %invariant.gep = getelementptr [16 x i8], ptr %i.l, i64 %.03879
-  %2 = insertelement <2 x double> poison, double %i.am, i64 0
-  %3 = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer
-  %4 = insertelement <2 x double> poison, double %i.an, i64 0
-  %5 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
   br label %.preheader72
 
 .preheader72:                                     ; preds = %.lr.ph81, %_ZNSt7complexIdEmLIdEERS0_RKS_IT_E.exit
   %.04177 = phi i64 [ 0, %.lr.ph81 ], [ %i.bx, %_ZNSt7complexIdEmLIdEERS0_RKS_IT_E.exit ] ; 3 uses
-  %6 = phi <2 x double> [ <double 1.000000e+00, double 0.000000e+00>, %.lr.ph81 ], [ %23, %_ZNSt7complexIdEmLIdEERS0_RKS_IT_E.exit ] ; 8 uses
+  %.sroa.070.076 = phi double [ 1.000000e+00, %.lr.ph81 ], [ %12, %_ZNSt7complexIdEmLIdEERS0_RKS_IT_E.exit ] ; 5 uses
+  %.sroa.8.075 = phi double [ 0.000000e+00, %.lr.ph81 ], [ %13, %_ZNSt7complexIdEmLIdEERS0_RKS_IT_E.exit ] ; 5 uses
   %i.ap = load i64, ptr %i.a, align 8, !tbaa !28  ; 2 uses
   %i.aq = add i64 %i.ap, -1
   %.not4473 = icmp ugt i64 %.04177, %i.aq
   br i1 %.not4473, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.preheader72
-  %7 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
-  %8 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %9 = extractelement <2 x double> %6, i64 0
-  %10 = extractelement <2 x double> %6, i64 1
+  %2 = insertelement <2 x double> poison, double %.sroa.070.076, i64 0
+  %3 = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer
+  %4 = insertelement <2 x double> poison, double %.sroa.8.075, i64 0
+  %5 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.f
@@ -456,9 +445,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %.04074 = phi i64 [ %i.bq, %bb.f ], [ %.04177, %.lr.ph.preheader ] ; 3 uses
   %gep = getelementptr [16 x i8], ptr %invariant.gep, i64 %.04074 ; 2 uses
   %i.as = load <2 x double>, ptr %gep, align 8    ; 4 uses
-  %i.at = fmul <2 x double> %7, %i.as             ; 2 uses
+  %i.at = fmul <2 x double> %3, %i.as             ; 2 uses
   %i.au = shufflevector <2 x double> %i.as, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %i.av = fmul <2 x double> %8, %i.au             ; 2 uses
+  %i.av = fmul <2 x double> %5, %i.au             ; 2 uses
   %i.aw = fsub <2 x double> %i.at, %i.av          ; 2 uses
   %i.ax = fadd <2 x double> %i.at, %i.av          ; 2 uses
   %i.ay = shufflevector <2 x double> %i.aw, <2 x double> %i.ax, <2 x i32> <i32 0, i32 3> ; 2 uses
@@ -474,7 +463,7 @@ bb.d:                                             ; preds = %.lr.ph
 bb.e:                                             ; preds = %bb.d
   %i.bd = extractelement <2 x double> %i.as, i64 0
   %i.be = extractelement <2 x double> %i.as, i64 1
-  %i.bf = tail call noundef { double, double } @__muldc3(double noundef %9, double noundef %10, double noundef %i.bd, double noundef %i.be) #14 ; 2 uses
+  %i.bf = tail call noundef { double, double } @__muldc3(double noundef %.sroa.070.076, double noundef %.sroa.8.075, double noundef %i.bd, double noundef %i.be) #14 ; 2 uses
   %i.bg = extractvalue { double, double } %i.bf, 0
   %i.bh = extractvalue { double, double } %i.bf, 1
   %.pre = load i64, ptr %i.a, align 8, !tbaa !28
@@ -497,33 +486,28 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %.lr.p
   br i1 %.not44, label %._crit_edge, label %.lr.ph, !llvm.loop !75
 
 ._crit_edge:                                      ; preds = %bb.f, %.preheader72
-  %11 = fmul <2 x double> %3, %6                  ; 2 uses
-  %12 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %13 = fmul <2 x double> %5, %12                 ; 2 uses
-  %14 = fsub <2 x double> %11, %13                ; 2 uses
-  %15 = fadd <2 x double> %11, %13                ; 2 uses
-  %16 = shufflevector <2 x double> %14, <2 x double> %15, <2 x i32> <i32 0, i32 3> ; 2 uses
-  %17 = extractelement <2 x double> %14, i64 0
-  %i.bs = fcmp uno double %17, 0.000000e+00
+  %6 = fmul double %i.am, %.sroa.070.076
+  %7 = fmul double %i.an, %.sroa.8.075
+  %8 = fmul double %i.an, %.sroa.070.076
+  %9 = fmul double %i.am, %.sroa.8.075
+  %10 = fadd double %9, %8                        ; 3 uses
+  %11 = fsub double %6, %7                        ; 3 uses
+  %i.bs = fcmp uno double %11, 0.000000e+00
   br i1 %i.bs, label %bb.g, label %_ZNSt7complexIdEmLIdEERS0_RKS_IT_E.exit, !prof !27
 
 bb.g:                                             ; preds = %._crit_edge
-  %18 = extractelement <2 x double> %15, i64 1
-  %i.bt = fcmp uno double %18, 0.000000e+00
+  %i.bt = fcmp uno double %10, 0.000000e+00
   br i1 %i.bt, label %bb.h, label %_ZNSt7complexIdEmLIdEERS0_RKS_IT_E.exit, !prof !27
 
 bb.h:                                             ; preds = %bb.g
-  %19 = extractelement <2 x double> %6, i64 0
-  %20 = extractelement <2 x double> %6, i64 1
-  %i.bu = tail call noundef { double, double } @__muldc3(double noundef %19, double noundef %20, double noundef %i.am, double noundef %i.an) #14 ; 2 uses
+  %i.bu = tail call noundef { double, double } @__muldc3(double noundef %.sroa.070.076, double noundef %.sroa.8.075, double noundef %i.am, double noundef %i.an) #14 ; 2 uses
   %i.bv = extractvalue { double, double } %i.bu, 0
   %i.bw = extractvalue { double, double } %i.bu, 1
-  %21 = insertelement <2 x double> poison, double %i.bv, i64 0
-  %22 = insertelement <2 x double> %21, double %i.bw, i64 1
   br label %_ZNSt7complexIdEmLIdEERS0_RKS_IT_E.exit
 
 _ZNSt7complexIdEmLIdEERS0_RKS_IT_E.exit:          ; preds = %._crit_edge, %bb.g, %bb.h
-  %23 = phi <2 x double> [ %16, %._crit_edge ], [ %16, %bb.g ], [ %22, %bb.h ]
+  %12 = phi double [ %11, %._crit_edge ], [ %11, %bb.g ], [ %i.bv, %bb.h ]
+  %13 = phi double [ %10, %._crit_edge ], [ %10, %bb.g ], [ %i.bw, %bb.h ]
   %i.bx = add i64 %.04177, 1                      ; 2 uses
   %.not = icmp ugt i64 %i.bx, %i.ao
   br i1 %.not, label %bb.i, label %.preheader72, !llvm.loop !76
