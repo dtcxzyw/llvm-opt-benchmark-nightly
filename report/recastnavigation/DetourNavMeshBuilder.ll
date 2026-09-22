@@ -205,16 +205,16 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 ._crit_edge139.us:                                ; preds = %bb.o, %.lr.ph138.us, %bb.b
   %i.bw = phi i16 [ %i.ak, %bb.b ], [ %i.bt, %bb.o ], [ %i.av, %.lr.ph138.us ]
   %i.bx = phi i16 [ %i.ak, %bb.b ], [ %i.bn, %bb.o ], [ %i.ay, %.lr.ph138.us ]
-  %i.by = insertelement <2 x i16> poison, i16 %i.bw, i64 0
-  %i.bz = insertelement <2 x i16> %i.by, i16 %i.bx, i64 1
+  %i.by = insertelement <2 x i16> poison, i16 %i.bx, i64 0
+  %i.bz = insertelement <2 x i16> %i.by, i16 %i.bw, i64 1
   %i.ca = uitofp <2 x i16> %i.bz to <2 x float>
   %i.cb = fmul <2 x float> %i.u, %i.ca
   %i.cc = fdiv <2 x float> %i.cb, %i.v            ; 2 uses
-  %i.cd = extractelement <2 x float> %i.cc, i64 1
+  %i.cd = extractelement <2 x float> %i.cc, i64 0
   %i.ce = tail call noundef float @llvm.floor.f32(float %i.cd)
   %i.cf = fptoui float %i.ce to i16
   store i16 %i.cf, ptr %i.am, align 2, !tbaa !26
-  %i.cg = extractelement <2 x float> %i.cc, i64 0
+  %i.cg = extractelement <2 x float> %i.cc, i64 1
   %i.ch = tail call noundef float @llvm.ceil.f32(float %i.cg)
   %i.ci = fptoui float %i.ch to i16
   store i16 %i.ci, ptr %i.al, align 4, !tbaa !26

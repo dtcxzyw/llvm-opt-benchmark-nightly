@@ -205,8 +205,8 @@ define void @_RNvXs_NtNtCs7tN9tvpkfrg_12typst_layout6inline4decoNtB4_14BezPathBu
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.c = insertelement <2 x float> poison, float %1, i64 0
-  %i.d = insertelement <2 x float> %i.c, float %2, i64 1
+  %i.c = insertelement <2 x float> poison, float %2, i64 0
+  %i.d = insertelement <2 x float> %i.c, float %1, i64 1
   %i.e = fpext <2 x float> %i.d to <2 x double>
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.g = load double, ptr %i.f, align 8, !alias.scope !51207, !noundef !41
@@ -220,15 +220,15 @@ bb.a:
   %i.o = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.n)
   %i.p = fcmp one <2 x double> %i.o, splat (double +inf)
   %i.q = fneg <2 x double> %i.n
-  %i.r = shufflevector <2 x double> %i.n, <2 x double> %i.q, <2 x i32> <i32 0, i32 3>
-  %i.s = select <2 x i1> %i.p, <2 x double> %i.r, <2 x double> <double 0.000000e+00, double -0.000000e+00> ; 2 uses
-  %i.t = extractelement <2 x double> %i.s, i64 0
+  %i.r = shufflevector <2 x double> %i.q, <2 x double> %i.n, <2 x i32> <i32 0, i32 3>
+  %i.s = select <2 x i1> %i.p, <2 x double> %i.r, <2 x double> <double -0.000000e+00, double 0.000000e+00> ; 2 uses
+  %i.t = extractelement <2 x double> %i.s, i64 1
   %i.u = fadd double %i.g, %i.t
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store double %i.u, ptr %i.v, align 8
   %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.x = extractelement <2 x double> %i.s, i64 1
+  %i.x = extractelement <2 x double> %i.s, i64 0
   store double %i.x, ptr %i.w, align 8
   store i64 1, ptr %i.a, align 8
   call void @_RNvMNtCsdqxqgV7ixUt_5kurbo7bezpathNtB2_7BezPath4push(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(56) %i.a)
@@ -241,8 +241,8 @@ define void @_RNvXs_NtNtCs7tN9tvpkfrg_12typst_layout6inline4decoNtB4_14BezPathBu
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.c = insertelement <2 x float> poison, float %1, i64 0
-  %i.d = insertelement <2 x float> %i.c, float %2, i64 1
+  %i.c = insertelement <2 x float> poison, float %2, i64 0
+  %i.d = insertelement <2 x float> %i.c, float %1, i64 1
   %i.e = fpext <2 x float> %i.d to <2 x double>
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.g = load double, ptr %i.f, align 8, !alias.scope !51210, !noundef !41
@@ -256,15 +256,15 @@ bb.a:
   %i.o = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.n)
   %i.p = fcmp one <2 x double> %i.o, splat (double +inf)
   %i.q = fneg <2 x double> %i.n
-  %i.r = shufflevector <2 x double> %i.n, <2 x double> %i.q, <2 x i32> <i32 0, i32 3>
-  %i.s = select <2 x i1> %i.p, <2 x double> %i.r, <2 x double> <double 0.000000e+00, double -0.000000e+00> ; 2 uses
-  %i.t = extractelement <2 x double> %i.s, i64 0
+  %i.r = shufflevector <2 x double> %i.q, <2 x double> %i.n, <2 x i32> <i32 0, i32 3>
+  %i.s = select <2 x i1> %i.p, <2 x double> %i.r, <2 x double> <double -0.000000e+00, double 0.000000e+00> ; 2 uses
+  %i.t = extractelement <2 x double> %i.s, i64 1
   %i.u = fadd double %i.g, %i.t
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store double %i.u, ptr %i.v, align 8
   %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.x = extractelement <2 x double> %i.s, i64 1
+  %i.x = extractelement <2 x double> %i.s, i64 0
   store double %i.x, ptr %i.w, align 8
   store i64 0, ptr %i.a, align 8
   call void @_RNvMNtCsdqxqgV7ixUt_5kurbo7bezpathNtB2_7BezPath4push(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(56) %i.a)

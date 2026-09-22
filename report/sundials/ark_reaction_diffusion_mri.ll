@@ -204,13 +204,13 @@ check_retval.exit43:                              ; preds = %bb.b
 
 bb.c:                                             ; preds = %bb.b
   %i.l = shufflevector <2 x double> %i.c, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.m = fmul <2 x double> %i.l, <double 2.000000e+00, double 1.000000e+00>
+  %i.m = fmul <2 x double> %i.l, <double 1.000000e+00, double 2.000000e+00>
   %i.n = shufflevector <2 x double> %i.c, <2 x double> poison, <2 x i32> zeroinitializer
   %i.o = fdiv <2 x double> %i.m, %i.n             ; 2 uses
-  %i.p = extractelement <2 x double> %i.o, i64 1
+  %i.p = extractelement <2 x double> %i.o, i64 0
   %i.q = extractelement <2 x double> %i.c, i64 0  ; 2 uses
   %i.r = fdiv double %i.p, %i.q                   ; 7 uses
-  %i.s = extractelement <2 x double> %i.o, i64 0
+  %i.s = extractelement <2 x double> %i.o, i64 1
   %i.t = fdiv double %i.s, %i.q                   ; 6 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.v = load double, ptr %i.u, align 8, !tbaa !16

@@ -205,13 +205,13 @@ middle.block:                                     ; preds = %vector.body
   %i.fw = getelementptr i8, ptr %i.fv, i64 -4
   %i.fx = load <2 x i32>, ptr %i.fw, align 4, !tbaa !41 ; 2 uses
   %i.fy = shufflevector <2 x i32> %i.fx, <2 x i32> poison, <2 x i32> <i32 1, i32 1>
-  %i.fz = or <2 x i32> %i.fy, <i32 65280, i32 16711680>
+  %i.fz = or <2 x i32> %i.fy, <i32 16711680, i32 65280>
   %i.ga = shufflevector <2 x i32> %i.fx, <2 x i32> poison, <2 x i32> zeroinitializer
-  %i.gb = and <2 x i32> %i.ga, <i32 16711935, i32 -16711936>
+  %i.gb = and <2 x i32> %i.ga, <i32 -16711936, i32 16711935>
   %i.gc = sub <2 x i32> %i.fz, %i.gb
-  %i.gd = and <2 x i32> %i.gc, <i32 16711935, i32 -16711936> ; 2 uses
+  %i.gd = and <2 x i32> %i.gc, <i32 -16711936, i32 16711935> ; 2 uses
   %shift = shufflevector <2 x i32> %i.gd, <2 x i32> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = or disjoint <2 x i32> %shift, %i.gd
+  %foldExtExtBinop = or disjoint <2 x i32> %i.gd, %shift
   %i.ge = extractelement <2 x i32> %foldExtExtBinop, i64 0
   %i.gf = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv.i
   store i32 %i.ge, ptr %i.gf, align 4, !tbaa !41
