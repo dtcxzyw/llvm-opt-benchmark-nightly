@@ -205,7 +205,7 @@ bluestein_sequence.exit:                          ; preds = %mcexp.exit.i, %bb.i
   br i1 %.not200, label %._crit_edge, label %.lr.ph133.preheader
 
 .lr.ph133.preheader:                              ; preds = %.preheader122
-  %3 = sext i32 %.0.i to i64                      ; 5 uses
+  %3 = zext i32 %.0.i to i64                      ; 5 uses
   %xtraiter218 = and i64 %i.bt, 3                 ; 3 uses
   %i.cq = add nsw i32 %0, -2
   %i.cr = icmp ult i32 %i.cq, 3
@@ -245,7 +245,7 @@ bluestein_sequence.exit:                          ; preds = %mcexp.exit.i, %bb.i
   %niter223 = phi i64 [ 0, %.lr.ph133.preheader.new ], [ %niter223.next.3, %.lr.ph133 ]
   %.idx = mul nuw nsw i64 %indvars.iv159, 48
   %i.de = getelementptr inbounds nuw i8, ptr %i.ak, i64 %.idx ; 2 uses
-  %i.df = sub nsw i64 %3, %indvars.iv159
+  %i.df = sub nuw nsw i64 %3, %indvars.iv159
   %.idx194 = mul nuw nsw i64 %i.df, 48
   %i.dg = getelementptr inbounds nuw i8, ptr %i.al, i64 %.idx194 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(24) %i.dg, ptr noundef nonnull readonly align 2 dereferenceable(24) %i.de, i64 24, i1 false), !tbaa.struct !22
@@ -255,7 +255,7 @@ bluestein_sequence.exit:                          ; preds = %mcexp.exit.i, %bb.i
   %indvars.iv.next160 = add nuw nsw i64 %indvars.iv159, 1 ; 2 uses
   %.idx.1 = mul nuw nsw i64 %indvars.iv.next160, 48
   %i.dj = getelementptr inbounds nuw i8, ptr %i.ak, i64 %.idx.1 ; 2 uses
-  %i.dk = sub nsw i64 %3, %indvars.iv.next160
+  %i.dk = sub nuw nsw i64 %3, %indvars.iv.next160
   %.idx194.1 = mul nuw nsw i64 %i.dk, 48
   %i.dl = getelementptr inbounds nuw i8, ptr %i.al, i64 %.idx194.1 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(24) %i.dl, ptr noundef nonnull readonly align 2 dereferenceable(24) %i.dj, i64 24, i1 false), !tbaa.struct !22
@@ -265,7 +265,7 @@ bluestein_sequence.exit:                          ; preds = %mcexp.exit.i, %bb.i
   %indvars.iv.next160.1 = add nuw nsw i64 %indvars.iv159, 2 ; 2 uses
   %.idx.2 = mul nuw nsw i64 %indvars.iv.next160.1, 48
   %i.do = getelementptr inbounds nuw i8, ptr %i.ak, i64 %.idx.2 ; 2 uses
-  %i.dp = sub nsw i64 %3, %indvars.iv.next160.1
+  %i.dp = sub nuw nsw i64 %3, %indvars.iv.next160.1
   %.idx194.2 = mul nuw nsw i64 %i.dp, 48
   %i.dq = getelementptr inbounds nuw i8, ptr %i.al, i64 %.idx194.2 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(24) %i.dq, ptr noundef nonnull readonly align 2 dereferenceable(24) %i.do, i64 24, i1 false), !tbaa.struct !22
@@ -275,7 +275,7 @@ bluestein_sequence.exit:                          ; preds = %mcexp.exit.i, %bb.i
   %indvars.iv.next160.2 = add nuw nsw i64 %indvars.iv159, 3 ; 2 uses
   %.idx.3 = mul nuw nsw i64 %indvars.iv.next160.2, 48
   %i.dt = getelementptr inbounds nuw i8, ptr %i.ak, i64 %.idx.3 ; 2 uses
-  %i.du = sub nsw i64 %3, %indvars.iv.next160.2
+  %i.du = sub nuw nsw i64 %3, %indvars.iv.next160.2
   %.idx194.3 = mul nuw nsw i64 %i.du, 48
   %i.dv = getelementptr inbounds nuw i8, ptr %i.al, i64 %.idx194.3 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(24) %i.dv, ptr noundef nonnull readonly align 2 dereferenceable(24) %i.dt, i64 24, i1 false), !tbaa.struct !22
@@ -302,7 +302,7 @@ bluestein_sequence.exit:                          ; preds = %mcexp.exit.i, %bb.i
   %epil.iter219 = phi i64 [ 0, %.lr.ph133.epil.preheader ], [ %epil.iter219.next, %.lr.ph133.epil ]
   %.idx.epil = mul nuw nsw i64 %indvars.iv159.epil, 48
   %i.dy = getelementptr inbounds nuw i8, ptr %i.ak, i64 %.idx.epil ; 2 uses
-  %i.dz = sub nsw i64 %3, %indvars.iv159.epil
+  %i.dz = sub nuw nsw i64 %3, %indvars.iv159.epil
   %.idx194.epil = mul nuw nsw i64 %i.dz, 48
   %i.ea = getelementptr inbounds nuw i8, ptr %i.al, i64 %.idx194.epil ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(24) %i.ea, ptr noundef nonnull readonly align 2 dereferenceable(24) %i.dy, i64 24, i1 false), !tbaa.struct !22

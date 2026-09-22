@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %bb.o
 .lr.ph66.split.us.i.preheader.i.i:                ; preds = %.lr.ph.i70.i.i, %.lr.ph.i70.i.i.prol.loopexit
   %.lcssa234 = phi i64 [ %.lcssa234.unr, %.lr.ph.i70.i.i.prol.loopexit ], [ %i.db, %.lr.ph.i70.i.i ] ; 2 uses
   %spec.select.i.i.i.lcssa = phi i64 [ %spec.select.i.i.i.lcssa.unr, %.lr.ph.i70.i.i.prol.loopexit ], [ %spec.select.i.i.i.1, %.lr.ph.i70.i.i ]
-  %i.bo = sub nsw i64 %.val65, %.val64
+  %i.bo = sub nuw nsw i64 %.val65, %.val64
   br label %.lr.ph66.split.us.i.i.i
 
 .lr.ph66.split.us.i.i.i:                          ; preds = %bb.ac, %.lr.ph66.split.us.i.preheader.i.i
@@ -559,7 +559,7 @@ bb.bg:                                            ; preds = %bb.ay
 .lr.ph66.split.us.i.preheader.i.i90:              ; preds = %.lr.ph.i75.i.i, %.lr.ph.i75.i.i.prol.loopexit
   %.lcssa229 = phi i64 [ %.lcssa229.unr, %.lr.ph.i75.i.i.prol.loopexit ], [ %i.ia, %.lr.ph.i75.i.i ] ; 2 uses
   %spec.select.i76.i.i.lcssa = phi i64 [ %spec.select.i76.i.i.lcssa.unr, %.lr.ph.i75.i.i.prol.loopexit ], [ %spec.select.i76.i.i.1, %.lr.ph.i75.i.i ]
-  %i.gn = sub nsw i64 %.val65, %.val64
+  %i.gn = sub nuw nsw i64 %.val65, %.val64
   br label %.lr.ph66.split.us.i.i.i91
 
 .lr.ph66.split.us.i.i.i91:                        ; preds = %bb.bm, %.lr.ph66.split.us.i.preheader.i.i90
@@ -962,7 +962,7 @@ bb.hd:                                            ; preds = %bb.fs
   %.lcssa1636 = phi i64 [ %.lcssa1636.unr, %.lr.ph.i70.i.i.prol.loopexit ], [ %i.uw, %.lr.ph.i70.i.i ] ; 2 uses
   %spec.select.i.i.i.lcssa = phi i64 [ %spec.select.i.i.i.lcssa.unr, %.lr.ph.i70.i.i.prol.loopexit ], [ %spec.select.i.i.i.1, %.lr.ph.i70.i.i ]
   %i.ti = add nsw i64 %.in.i, -1
-  %i.tj = sub nsw i64 %.057136.i, %.val99
+  %i.tj = sub nuw nsw i64 %.057136.i, %.val99
   br label %.lr.ph66.split.us.i.i.i
 
 .lr.ph66.split.us.i.i.i:                          ; preds = %bb.hj, %.lr.ph66.split.us.i.preheader.i.i
@@ -1365,7 +1365,7 @@ bb.kf:                                            ; preds = %bb.io
   %.lcssa1595 = phi i64 [ %.lcssa1595.unr, %.lr.ph.i75.i.i.prol.loopexit ], [ %i.adr, %.lr.ph.i75.i.i ] ; 2 uses
   %spec.select.i76.i.i.lcssa = phi i64 [ %spec.select.i76.i.i.lcssa.unr, %.lr.ph.i75.i.i.prol.loopexit ], [ %spec.select.i76.i.i.1, %.lr.ph.i75.i.i ]
   %i.acd = add nsw i64 %.in.i331, -1
-  %i.ace = sub nsw i64 %.057155.i, %.val99
+  %i.ace = sub nuw nsw i64 %.057155.i, %.val99
   br label %.lr.ph66.split.us.i.i.i336
 
 .lr.ph66.split.us.i.i.i336:                       ; preds = %bb.kl, %.lr.ph66.split.us.i.preheader.i.i335
@@ -1768,7 +1768,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 ._crit_edge.i:                                    ; preds = %._crit_edge.i.unr-lcssa, %.lr.ph.i68.epil.preheader
   %.lcssa22 = phi i64 [ %i.cs, %._crit_edge.i.unr-lcssa ], [ %i.au, %.lr.ph.i68.epil.preheader ]
   %.171.i.lcssa = phi i64 [ %.171.i.1, %._crit_edge.i.unr-lcssa ], [ %.171.i.epil, %.lr.ph.i68.epil.preheader ]
-  %i.ay = sub nsw i64 %1, %3                      ; 3 uses
+  %i.ay = sub nuw nsw i64 %1, %3                  ; 3 uses
   %i.az = getelementptr i8, ptr %0, i64 %i.al     ; 3 uses
   %i.ba = and i8 %i.an, 63
   %i.bb = zext nneg i8 %i.ba to i64
@@ -1927,7 +1927,7 @@ bb.ad:                                            ; preds = %bb.p
 .lr.ph66.split.us.i.preheader:                    ; preds = %.lr.ph.i70, %.lr.ph.i70.prol.loopexit
   %.lcssa18 = phi i64 [ %.lcssa18.unr, %.lr.ph.i70.prol.loopexit ], [ %i.fe, %.lr.ph.i70 ] ; 2 uses
   %spec.select.i.lcssa = phi i64 [ %spec.select.i.lcssa.unr, %.lr.ph.i70.prol.loopexit ], [ %spec.select.i.1, %.lr.ph.i70 ]
-  %i.dr = sub nsw i64 %1, %3
+  %i.dr = sub nuw nsw i64 %1, %3
   br label %.lr.ph66.split.us.i
 
 .lr.ph66.split.us.i:                              ; preds = %.lr.ph66.split.us.i.preheader, %bb.aj
@@ -2164,7 +2164,7 @@ bb.l:                                             ; preds = %asciilib__factorize
   br i1 %.not.i, label %bb.m, label %.critedge.i
 
 bb.m:                                             ; preds = %.lr.ph.i
-  %i.ba = sub nsw i64 %i.as, %.05559.i            ; 2 uses
+  %i.ba = sub nuw nsw i64 %i.as, %.05559.i        ; 2 uses
   store i64 %i.ba, ptr %i.ar, align 8, !tbaa !836
   br label %.lr.ph62.i
 
@@ -2567,7 +2567,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t
 ._crit_edge.i:                                    ; preds = %._crit_edge.i.unr-lcssa, %.lr.ph.i73.epil.preheader
   %.lcssa157 = phi i64 [ %i.ds, %._crit_edge.i.unr-lcssa ], [ %i.br, %.lr.ph.i73.epil.preheader ]
   %.171.i.lcssa = phi i64 [ %.171.i.1, %._crit_edge.i.unr-lcssa ], [ %.171.i.epil, %.lr.ph.i73.epil.preheader ]
-  %i.bv = sub nsw i64 %1, %3                      ; 3 uses
+  %i.bv = sub nuw nsw i64 %1, %3                  ; 3 uses
   %i.bw = getelementptr i8, ptr %0, i64 %i.bi     ; 3 uses
   %i.bx = and i8 %i.bk, 63
   %i.by = zext nneg i8 %i.bx to i64
@@ -2753,7 +2753,7 @@ bb.al:                                            ; preds = %bb.s
 .lr.ph66.split.us.i.preheader:                    ; preds = %.lr.ph.i75, %.lr.ph.i75.prol.loopexit
   %.lcssa154 = phi i64 [ %.lcssa154.unr, %.lr.ph.i75.prol.loopexit ], [ %i.gh, %.lr.ph.i75 ] ; 2 uses
   %spec.select.i76.lcssa = phi i64 [ %spec.select.i76.lcssa.unr, %.lr.ph.i75.prol.loopexit ], [ %spec.select.i76.1, %.lr.ph.i75 ]
-  %i.eu = sub nsw i64 %1, %3
+  %i.eu = sub nuw nsw i64 %1, %3
   br label %.lr.ph66.split.us.i
 
 .lr.ph66.split.us.i:                              ; preds = %.lr.ph66.split.us.i.preheader, %bb.ar
@@ -3156,7 +3156,7 @@ bb.l:                                             ; preds = %ucs1lib__factorize.
   br i1 %.not, label %bb.m, label %.critedge
 
 bb.m:                                             ; preds = %.lr.ph
-  %i.az = sub nsw i64 %i.ar, %.05559
+  %i.az = sub nuw nsw i64 %i.ar, %.05559
   store i64 %i.az, ptr %i.aq, align 8, !tbaa !300
   br label %.lr.ph62
 
@@ -3559,7 +3559,7 @@ middle.block:                                     ; preds = %vector.body
 ._crit_edge.i:                                    ; preds = %.lr.ph.i69, %middle.block
   %.lcssa142 = phi i64 [ %i.cl, %middle.block ], [ %i.ea, %.lr.ph.i69 ]
   %.171.i.lcssa = phi i64 [ %i.cm, %middle.block ], [ %.171.i, %.lr.ph.i69 ]
-  %i.cn = sub nsw i64 %1, %3                      ; 3 uses
+  %i.cn = sub nuw nsw i64 %1, %3                  ; 3 uses
   %i.co = getelementptr [2 x i8], ptr %0, i64 %i.bu ; 3 uses
   %i.cp = and i16 %i.bw, 63
   %i.cq = zext nneg i16 %i.cp to i64
@@ -3777,7 +3777,7 @@ middle.block169:                                  ; preds = %vector.body155
 .lr.ph66.split.us.i.preheader:                    ; preds = %.lr.ph.i71, %middle.block169
   %.lcssa141 = phi i64 [ %i.fs, %middle.block169 ], [ %i.gy, %.lr.ph.i71 ] ; 2 uses
   %spec.select.i72.lcssa = phi i64 [ %rdx.select, %middle.block169 ], [ %spec.select.i72, %.lr.ph.i71 ]
-  %i.ft = sub nsw i64 %1, %3
+  %i.ft = sub nuw nsw i64 %1, %3
   br label %.lr.ph66.split.us.i
 
 .lr.ph66.split.us.i:                              ; preds = %.lr.ph66.split.us.i.preheader, %bb.ax
@@ -4180,7 +4180,7 @@ bb.l:                                             ; preds = %ucs2lib__factorize.
   br i1 %.not, label %bb.m, label %.critedge
 
 bb.m:                                             ; preds = %.lr.ph
-  %i.ba = sub nsw i64 %i.as, %.05559
+  %i.ba = sub nuw nsw i64 %i.as, %.05559
   store i64 %i.ba, ptr %i.ar, align 8, !tbaa !308
   br label %.lr.ph62
 
@@ -4583,7 +4583,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
 ._crit_edge.i:                                    ; preds = %._crit_edge.i.unr-lcssa, %.lr.ph.i72.epil.preheader
   %.lcssa177 = phi i64 [ %i.eq, %._crit_edge.i.unr-lcssa ], [ %i.cp, %.lr.ph.i72.epil.preheader ]
   %.171.i.lcssa = phi i64 [ %.171.i.1, %._crit_edge.i.unr-lcssa ], [ %.171.i.epil, %.lr.ph.i72.epil.preheader ]
-  %i.ct = sub nsw i64 %1, %3                      ; 3 uses
+  %i.ct = sub nuw nsw i64 %1, %3                  ; 3 uses
   %i.cu = getelementptr [4 x i8], ptr %0, i64 %i.cg ; 3 uses
   %i.cv = and i32 %i.ci, 63
   %i.cw = zext nneg i32 %i.cv to i64
@@ -4769,7 +4769,7 @@ bb.au:                                            ; preds = %bb.ab
 .lr.ph66.split.us.i.preheader:                    ; preds = %.lr.ph.i74, %.lr.ph.i74.prol.loopexit
   %.lcssa174 = phi i64 [ %.lcssa174.unr, %.lr.ph.i74.prol.loopexit ], [ %i.hf, %.lr.ph.i74 ] ; 2 uses
   %spec.select.i75.lcssa = phi i64 [ %spec.select.i75.lcssa.unr, %.lr.ph.i74.prol.loopexit ], [ %spec.select.i75.1, %.lr.ph.i74 ]
-  %i.fs = sub nsw i64 %1, %3
+  %i.fs = sub nuw nsw i64 %1, %3
   br label %.lr.ph66.split.us.i
 
 .lr.ph66.split.us.i:                              ; preds = %.lr.ph66.split.us.i.preheader, %bb.ba
@@ -5172,7 +5172,7 @@ bb.l:                                             ; preds = %ucs4lib__factorize.
   br i1 %.not, label %bb.m, label %.critedge
 
 bb.m:                                             ; preds = %.lr.ph
-  %i.ba = sub nsw i64 %i.as, %.05559
+  %i.ba = sub nuw nsw i64 %i.as, %.05559
   store i64 %i.ba, ptr %i.ar, align 8, !tbaa !315
   br label %.lr.ph62
 

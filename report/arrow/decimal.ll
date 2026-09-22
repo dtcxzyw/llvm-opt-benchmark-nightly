@@ -205,8 +205,8 @@ _ZN5arrow12_GLOBAL__N_123Decimal64RealConversion17RoundedRightShiftERKNS_9Decima
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr @_ZN5arrowL21kDecimal64PowersOfTenE, i64 %i.bv
   %i.bx = load i64, ptr %i.bw, align 8, !tbaa !44
   %i.by = mul i64 %i.bx, %.sroa.0.0.i51           ; 4 uses
-  %i.bz = sub nsw i32 %.08588, %.sroa.speculated69 ; 3 uses
-  %8 = icmp sgt i32 %i.bz, 0                      ; 2 uses
+  %i.bz = sub nuw nsw i32 %.08588, %.sroa.speculated69 ; 3 uses
+  %8 = icmp ne i32 %i.bz, 0                       ; 2 uses
   %i.ca = icmp sgt i32 %i.bu, 0                   ; 2 uses
   %i.cb = select i1 %8, i1 %i.ca, i1 false
   br i1 %i.cb, label %.lr.ph, label %._crit_edge, !llvm.loop !381
@@ -553,8 +553,8 @@ _ZN5arrow12_GLOBAL__N_123Decimal64RealConversion17RoundedRightShiftERKNS_9Decima
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr @_ZN5arrowL21kDecimal64PowersOfTenE, i64 %i.bv
   %i.bx = load i64, ptr %i.bw, align 8, !tbaa !44
   %i.by = mul i64 %i.bx, %.sroa.0.0.i51           ; 4 uses
-  %i.bz = sub nsw i32 %.08487, %.sroa.speculated69 ; 3 uses
-  %8 = icmp sgt i32 %i.bz, 0                      ; 2 uses
+  %i.bz = sub nuw nsw i32 %.08487, %.sroa.speculated69 ; 3 uses
+  %8 = icmp ne i32 %i.bz, 0                       ; 2 uses
   %i.ca = icmp sgt i32 %i.bu, 0                   ; 2 uses
   %i.cb = select i1 %8, i1 %i.ca, i1 false
   br i1 %i.cb, label %.lr.ph, label %._crit_edge, !llvm.loop !390

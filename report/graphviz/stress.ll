@@ -205,7 +205,7 @@ bb.df:                                            ; preds = %._crit_edge515
 
 bb.dg:                                            ; preds = %bb.df, %._crit_edge515
   call void @invert_vec(i32 noundef %i.acy, ptr noundef %.1364) #15
-  %i.ada = sext i32 %1 to i64                     ; 19 uses
+  %i.ada = sext i32 %1 to i64                     ; 18 uses
   %.not.i443 = icmp ne i32 %1, 0                  ; 5 uses
   br i1 %.not.i443, label %bb.dh, label %.preheader491.thread811
 
@@ -240,7 +240,6 @@ gv_calloc.exit447:                                ; preds = %bb.dj
 
 .preheader492.preheader:                          ; preds = %gv_calloc.exit447
   %wide.trip.count652 = zext nneg i32 %i.acs to i64
-  %invariant.op = add nsw i64 %i.ada, -1
   br label %.preheader492
 
 .preheader492:                                    ; preds = %.preheader492.preheader, %._crit_edge521
@@ -250,8 +249,10 @@ gv_calloc.exit447:                                ; preds = %bb.dj
   %i.adj = zext i32 %indvars.iv645 to i64
   %i.adk = add nsw i64 %i.adj, -1                 ; 3 uses
   %.1366516 = add i32 %.0365525, 1                ; 2 uses
-  %8 = icmp slt i64 %indvars.iv649, %invariant.op
-  br i1 %8, label %.lr.ph520.preheader, label %._crit_edge521
+  %8 = trunc i64 %indvars.iv649 to i32
+  %9 = sub i32 %1, %8
+  %10 = icmp sgt i32 %9, 1
+  br i1 %10, label %.lr.ph520.preheader, label %._crit_edge521
 
 .lr.ph520.preheader:                              ; preds = %.preheader492
   %i.adl = sext i32 %.1366516 to i64              ; 2 uses
@@ -654,9 +655,7 @@ bb.a:
   br label %.preheader.us
 
 .preheader.us.us.preheader:                       ; preds = %.preheader.lr.ph.split.us
-  %5 = zext nneg i32 %3 to i64
   %wide.trip.count167 = zext nneg i32 %i.a to i64
-  %invariant.op180 = add nsw i64 %5, -1
   %wide.trip.count151 = zext nneg i32 %2 to i64   ; 2 uses
   %xtraiter213 = and i64 %wide.trip.count151, 1
   %i.f = icmp eq i32 %2, 1
@@ -671,8 +670,10 @@ bb.a:
   %.04784.us.us = phi double [ 0.000000e+00, %.preheader.us.us.preheader ], [ %.1.lcssa.us.us, %._crit_edge60.split.us.split.us.us.us ] ; 2 uses
   %.04883.us.us = phi i32 [ 0, %.preheader.us.us.preheader ], [ %.149.lcssa.us.us, %._crit_edge60.split.us.split.us.us.us ]
   %.14955.us.us = add i32 %.04883.us.us, 1        ; 2 uses
-  %6 = icmp slt i64 %indvars.iv164, %invariant.op180
-  br i1 %6, label %.lr.ph59.us.us, label %._crit_edge60.split.us.split.us.us.us
+  %5 = trunc i64 %indvars.iv164 to i32
+  %6 = sub i32 %3, %5
+  %7 = icmp sgt i32 %6, 1
+  br i1 %7, label %.lr.ph59.us.us, label %._crit_edge60.split.us.split.us.us.us
 
 .lr.ph59.us.us:                                   ; preds = %.preheader.us.us
   %i.g = sext i32 %.14955.us.us to i64
@@ -770,7 +771,7 @@ bb.a:
   %.04883.us = phi i32 [ %.149.lcssa.us, %._crit_edge60.split.us.split.us90 ], [ 0, %.preheader.us.preheader ]
   %.05280.us = phi i32 [ %i.cb, %._crit_edge60.split.us.split.us90 ], [ 0, %.preheader.us.preheader ] ; 4 uses
   %i.az = sub i32 %i.a, %.05280.us                ; 3 uses
-  %i.ba = sub nsw i32 %3, %.05280.us
+  %i.ba = sub nuw nsw i32 %3, %.05280.us
   %.14955.us = add i32 %.04883.us, 1              ; 2 uses
   %i.bb = icmp sgt i32 %i.ba, 1
   br i1 %i.bb, label %.lr.ph59.us.preheader, label %._crit_edge60.split.us.split.us90
@@ -850,9 +851,7 @@ bb.a:
   br label %.preheader
 
 .preheader.us94.preheader:                        ; preds = %.preheader.lr.ph.split
-  %7 = zext nneg i32 %3 to i64
   %wide.trip.count139 = zext nneg i32 %i.a to i64
-  %invariant.op = add nsw i64 %7, -1
   %wide.trip.count = zext nneg i32 %2 to i64      ; 2 uses
   %xtraiter199 = and i64 %wide.trip.count, 1
   %i.ce = icmp eq i32 %2, 1
@@ -868,8 +867,10 @@ bb.a:
   %.04784.us95 = phi double [ 0.000000e+00, %.preheader.us94.preheader ], [ %.1.lcssa.us100, %._crit_edge60.split.split.us.us ] ; 2 uses
   %.04883.us96 = phi i32 [ 0, %.preheader.us94.preheader ], [ %.149.lcssa.us101, %._crit_edge60.split.split.us.us ] ; 2 uses
   %.14955.us98 = add i32 %.04883.us96, 1          ; 2 uses
-  %8 = icmp slt i64 %indvars.iv136, %invariant.op
-  br i1 %8, label %.lr.ph59.us99, label %._crit_edge60.split.split.us.us
+  %8 = trunc i64 %indvars.iv136 to i32
+  %9 = sub i32 %3, %8
+  %10 = icmp sgt i32 %9, 1
+  br i1 %10, label %.lr.ph59.us99, label %._crit_edge60.split.split.us.us
 
 .lr.ph59.us99:                                    ; preds = %.preheader.us94
   %i.cf = sext i32 %.14955.us98 to i64
@@ -969,7 +970,7 @@ bb.a:
   %.04883 = phi i32 [ %.149.lcssa, %._crit_edge60.split.split ], [ 0, %.preheader.preheader ] ; 2 uses
   %.05280 = phi i32 [ %i.ey, %._crit_edge60.split.split ], [ 0, %.preheader.preheader ] ; 4 uses
   %i.dy = sub i32 %i.a, %.05280                   ; 3 uses
-  %i.dz = sub nsw i32 %3, %.05280
+  %i.dz = sub nuw nsw i32 %3, %.05280
   %.14955 = add i32 %.04883, 1                    ; 2 uses
   %i.ea = icmp sgt i32 %i.dz, 1
   br i1 %i.ea, label %.lr.ph59.preheader, label %._crit_edge60.split.split

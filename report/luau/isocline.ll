@@ -205,8 +205,8 @@ bb.w:                                             ; preds = %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %bb.v, %bb.w
   %.01825.i.i = phi i64 [ %i.db, %bb.w ], [ 1, %bb.v ] ; 4 uses
-  %i.dc = sub nsw i64 %i.cs, %.01825.i.i
-  %i.dd = getelementptr inbounds i8, ptr %i.x, i64 %i.dc
+  %i.dc = sub nuw nsw i64 %i.cs, %.01825.i.i
+  %i.dd = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.dc
   %i.de = load i8, ptr %i.dd, align 1, !tbaa !48
   %i.df = sub nuw nsw i64 %i.cy, %.01825.i.i
   %i.dg = getelementptr inbounds nuw i8, ptr %i.cx, i64 %i.df

@@ -205,7 +205,7 @@ _ZN5Ttopt17TruthTableRewrite15ShiftToMajorityEii.exit: ; preds = %bb.m, %.lr.ph6
 define linkonce_odr void @_ZN5Ttopt14TruthTableCare13CompleteMergeEv(ptr noundef nonnull align 8 dereferenceable(360) %0) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !94   ; 2 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !94   ; 3 uses
   %i.c = icmp sgt i32 %i.b, 0
   br i1 %i.c, label %.lr.ph15, label %._crit_edge
 
@@ -214,7 +214,8 @@ bb.a:
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !113
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 6 uses
   %i.g = load ptr, ptr %i.f, align 8
-  %i.h = zext nneg i32 %i.b to i64                ; 2 uses
+  %1 = zext nneg i32 %i.b to i64
+  %i.h = zext nneg i32 %i.b to i64
   br label %bb.b
 
 .loopexit:                                        ; preds = %._crit_edge.i, %_ZN5Ttopt17TruthTableRewrite8CopyFuncEiiib.exit.us, %bb.b
@@ -225,7 +226,7 @@ bb.a:
   ret void
 
 bb.b:                                             ; preds = %.lr.ph15, %.loopexit
-  %indvars.iv = phi i64 [ %i.h, %.lr.ph15 ], [ %indvars.iv.next, %.loopexit ] ; 2 uses
+  %indvars.iv = phi i64 [ %1, %.lr.ph15 ], [ %indvars.iv.next, %.loopexit ] ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 3 uses
   %i.j = getelementptr inbounds nuw [24 x i8], ptr %i.e, i64 %indvars.iv.next ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 8
@@ -235,14 +236,14 @@ bb.b:                                             ; preds = %.lr.ph15, %.loopexi
   br i1 %.not11, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b
-  %i.n = sub nsw i64 %i.h, %indvars.iv.next       ; 5 uses
+  %i.n = sub nuw nsw i64 %i.h, %indvars.iv.next   ; 5 uses
   %i.o = icmp samesign ugt i64 %i.n, 6
   %i.p = trunc nuw nsw i64 %i.n to i32            ; 3 uses
   %i.q = lshr exact i32 64, %i.p                  ; 2 uses
-  %1 = add nsw i64 %i.n, -6                       ; 2 uses
-  %2 = trunc nsw i64 %1 to i32                    ; 7 uses
-  %i.r = shl nuw i32 1, %2                        ; 5 uses
-  %i.s = icmp eq i64 %1, 31                       ; 4 uses
+  %2 = trunc nuw i64 %i.n to i32
+  %3 = add nsw i32 %2, -6                         ; 8 uses
+  %i.r = shl nuw i32 1, %3                        ; 5 uses
+  %i.s = icmp eq i32 %3, 31                       ; 4 uses
   %smax.i = tail call i32 @llvm.smax.i32(i32 %i.r, i32 1)
   %wide.trip.count.i = zext nneg i32 %smax.i to i64 ; 7 uses
   %i.t = shl nuw nsw i64 %wide.trip.count.i, 3    ; 2 uses
@@ -283,9 +284,9 @@ bb.c:                                             ; preds = %.lr.ph.split.us
   br i1 %i.s, label %_ZN5Ttopt17TruthTableRewrite8CopyFuncEiiib.exit.us, label %.lr.ph.i.us
 
 .lr.ph.i.us:                                      ; preds = %.preheader60.i.us
-  %i.ad = shl i32 %i.aa, %2
+  %i.ad = shl i32 %i.aa, %3
   %i.ae = load ptr, ptr %i.f, align 8, !tbaa !84  ; 2 uses
-  %i.af = shl i32 %i.y, %2
+  %i.af = shl i32 %i.y, %3
   %i.ag = sext i32 %i.ad to i64                   ; 2 uses
   %i.ah = sext i32 %i.af to i64                   ; 2 uses
   %invariant.gep.i.us = getelementptr [8 x i8], ptr %i.ae, i64 %i.ag ; 6 uses
@@ -347,7 +348,7 @@ scalar.ph32:                                      ; preds = %scalar.ph32.prehead
   br i1 %i.s, label %_ZN5Ttopt17TruthTableRewrite8CopyFuncEiiib.exit.us, label %.lr.ph64.i.us
 
 .lr.ph64.i.us:                                    ; preds = %.preheader58.i.us
-  %i.au = shl i32 %i.y, %2
+  %i.au = shl i32 %i.y, %3
   %i.av = load ptr, ptr %i.f, align 8, !tbaa !84
   %i.aw = sext i32 %i.au to i64
   %i.ax = shl nsw i64 %i.aw, 3
@@ -362,9 +363,9 @@ bb.d:                                             ; preds = %.lr.ph.split.us
   br i1 %i.s, label %_ZN5Ttopt17TruthTableRewrite8CopyFuncEiiib.exit.us, label %.lr.ph66.i.us
 
 .lr.ph66.i.us:                                    ; preds = %.preheader56.i.us
-  %i.ay = shl i32 %i.aa, %2
+  %i.ay = shl i32 %i.aa, %3
   %i.az = load ptr, ptr %i.f, align 8, !tbaa !84  ; 2 uses
-  %i.ba = shl i32 %i.y, %2
+  %i.ba = shl i32 %i.y, %3
   %i.bb = sext i32 %i.ay to i64                   ; 2 uses
   %i.bc = sext i32 %i.ba to i64                   ; 2 uses
   %invariant.gep103.i.us = getelementptr [8 x i8], ptr %i.az, i64 %i.bb ; 6 uses
@@ -432,7 +433,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %i.s, label %_ZN5Ttopt17TruthTableRewrite8CopyFuncEiiib.exit.us, label %.lr.ph68.i.us
 
 .lr.ph68.i.us:                                    ; preds = %.preheader.i.us
-  %i.bv = shl i32 %i.y, %2
+  %i.bv = shl i32 %i.y, %3
   %i.bw = load ptr, ptr %i.f, align 8, !tbaa !84
   %i.bx = sext i32 %i.bv to i64
   %i.by = shl nsw i64 %i.bx, 3
