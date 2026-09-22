@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i, %.lr.ph54.i.i.i
-  %.02152.i.i.i = phi i32 [ %i.f, %.lr.ph54.i.i.i ], [ %i.jw, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 4 uses
+  %.02152.i.i.i = phi i32 [ %i.f, %.lr.ph54.i.i.i ], [ %i.jw, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   %i.bh = load i32, ptr %6, align 8, !tbaa !81    ; 2 uses
   %i.bi = load ptr, ptr %i.j, align 8, !tbaa !1319, !nonnull !195, !align !273 ; 3 uses
@@ -256,24 +256,21 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.as
 
 .preheader91.i.i.i.i:                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i, %.preheader92.i.i.i.i
-  %indvars.iv118.i.i.i.i = phi i32 [ %i.cd, %.preheader92.i.i.i.i ], [ %indvars.iv.next119.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 2 uses
-  %indvars.iv.i.i.i.i = phi i32 [ %i.cc, %.preheader92.i.i.i.i ], [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 3 uses
-  %.070107.i.i.i.i = phi i32 [ 0, %.preheader92.i.i.i.i ], [ %i.ib, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ]
+  %indvars.iv.i.i.i = phi i32 [ %indvars.iv.next.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %.02152.i.i.i, %.preheader92.i.i.i.i ] ; 2 uses
+  %indvars.iv118.i.i.i.i = phi i32 [ %indvars.iv.next119.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cd, %.preheader92.i.i.i.i ] ; 2 uses
+  %indvars.iv.i.i.i.i = phi i32 [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cc, %.preheader92.i.i.i.i ] ; 3 uses
+  %.070107.i.i.i.i = phi i32 [ %i.ib, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ 0, %.preheader92.i.i.i.i ]
   %i.cj = load i32, ptr %i.p, align 4, !tbaa !1327
   %i.ck = load i32, ptr %i.q, align 8, !tbaa !1328
   %smax.i.i.i = call i32 @llvm.smax.i32(i32 %i.cj, i32 %indvars.iv.i.i.i.i)
   %i.cl = add i32 %smax.i.i.i, %indvars.iv118.i.i.i.i
-  %i.cm = and i32 %i.cl, -2
-  %i.cn = add i32 %i.cm, %indvars.iv.i.i.i.i      ; 4 uses
-  %i.co = add i32 %i.ck, -1                       ; 2 uses
-  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cn, i32 %i.co)
-  %7 = icmp sgt i32 %i.cn, %i.co                  ; 2 uses
-  %umin.i.neg11.i.i = sext i1 %7 to i32
-  %8 = select i1 %7, i32 2, i32 0
-  %.neg.i.i = sub i32 %i.cn, %smin.i.i.i
-  %9 = add i32 %.neg.i.i, %umin.i.neg11.i.i
-  %10 = add i32 %9, %8
-  %i.cp = and i32 %10, -2
+  %i.cm = and i32 %i.cl, -2                       ; 2 uses
+  %i.cn = add i32 %i.cm, %indvars.iv.i.i.i.i      ; 2 uses
+  %i.co = add i32 %i.cm, %indvars.iv.i.i.i
+  %7 = add i32 %i.ck, -1
+  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cn, i32 %7)
+  %.neg.i.i = sub i32 %i.co, %smin.i.i.i
+  %i.cp = and i32 %.neg.i.i, -2
   %i.cq = sub i32 %i.cn, %i.cp                    ; 3 uses
   %i.cr = add nsw i32 %i.cq, %i.bk
   %i.cs = srem i32 %i.cr, 2                       ; 2 uses
@@ -676,6 +673,7 @@ _ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi3EXadsoA2_KmL_ZNS1_
   %indvars.iv.next.i.i.i.i = add i32 %indvars.iv.i.i.i.i, 1
   %indvars.iv.next119.i.i.i.i = add i32 %indvars.iv118.i.i.i.i, -1
   %exitcond132.not.i.i.i.i = icmp eq i32 %i.ib, 3
+  %indvars.iv.next.i.i.i = add i32 %indvars.iv.i.i.i, 1
   br i1 %exitcond132.not.i.i.i.i, label %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowC2EiiRKNS0_8ImageBufEiiRA4_Kf.exit.i.i.i, label %.preheader91.i.i.i.i, !llvm.loop !1313
 
 .loopexit.i.i.i.i:                                ; preds = %_ZNKSt6vectorIN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi3EXadsoA2_KmL_ZNS2_L17bayer_channel_mapEEEEE6Window3RowESaIS8_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i, %bb.u
@@ -1078,7 +1076,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i, %.lr.ph54.i.i.i
-  %.02152.i.i.i = phi i32 [ %i.f, %.lr.ph54.i.i.i ], [ %i.jy, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 4 uses
+  %.02152.i.i.i = phi i32 [ %i.f, %.lr.ph54.i.i.i ], [ %i.jy, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   %i.bh = load i32, ptr %6, align 8, !tbaa !81    ; 2 uses
   %i.bi = load ptr, ptr %i.j, align 8, !tbaa !1356, !nonnull !195, !align !273 ; 3 uses
@@ -1129,24 +1127,21 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.as
 
 .preheader91.i.i.i.i:                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i, %.preheader92.i.i.i.i
-  %indvars.iv118.i.i.i.i = phi i32 [ %i.cd, %.preheader92.i.i.i.i ], [ %indvars.iv.next119.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 2 uses
-  %indvars.iv.i.i.i.i = phi i32 [ %i.cc, %.preheader92.i.i.i.i ], [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 3 uses
-  %.070107.i.i.i.i = phi i32 [ 0, %.preheader92.i.i.i.i ], [ %i.id, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ]
+  %indvars.iv.i.i.i = phi i32 [ %indvars.iv.next.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %.02152.i.i.i, %.preheader92.i.i.i.i ] ; 2 uses
+  %indvars.iv118.i.i.i.i = phi i32 [ %indvars.iv.next119.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cd, %.preheader92.i.i.i.i ] ; 2 uses
+  %indvars.iv.i.i.i.i = phi i32 [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cc, %.preheader92.i.i.i.i ] ; 3 uses
+  %.070107.i.i.i.i = phi i32 [ %i.id, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ 0, %.preheader92.i.i.i.i ]
   %i.cj = load i32, ptr %i.p, align 4, !tbaa !1364
   %i.ck = load i32, ptr %i.q, align 8, !tbaa !1365
   %smax.i.i.i = call i32 @llvm.smax.i32(i32 %i.cj, i32 %indvars.iv.i.i.i.i)
   %i.cl = add i32 %smax.i.i.i, %indvars.iv118.i.i.i.i
-  %i.cm = and i32 %i.cl, -2
-  %i.cn = add i32 %i.cm, %indvars.iv.i.i.i.i      ; 4 uses
-  %i.co = add i32 %i.ck, -1                       ; 2 uses
-  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cn, i32 %i.co)
-  %7 = icmp sgt i32 %i.cn, %i.co                  ; 2 uses
-  %umin.i.neg11.i.i = sext i1 %7 to i32
-  %8 = select i1 %7, i32 2, i32 0
-  %.neg.i.i = sub i32 %i.cn, %smin.i.i.i
-  %9 = add i32 %.neg.i.i, %umin.i.neg11.i.i
-  %10 = add i32 %9, %8
-  %i.cp = and i32 %10, -2
+  %i.cm = and i32 %i.cl, -2                       ; 2 uses
+  %i.cn = add i32 %i.cm, %indvars.iv.i.i.i.i      ; 2 uses
+  %i.co = add i32 %i.cm, %indvars.iv.i.i.i
+  %7 = add i32 %i.ck, -1
+  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cn, i32 %7)
+  %.neg.i.i = sub i32 %i.co, %smin.i.i.i
+  %i.cp = and i32 %.neg.i.i, -2
   %i.cq = sub i32 %i.cn, %i.cp                    ; 3 uses
   %i.cr = add nsw i32 %i.cq, %i.bk
   %i.cs = srem i32 %i.cr, 2                       ; 2 uses
@@ -1549,6 +1544,7 @@ _ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi3EXadsoA2_KmL_ZNS1_
   %indvars.iv.next.i.i.i.i = add i32 %indvars.iv.i.i.i.i, 1
   %indvars.iv.next119.i.i.i.i = add i32 %indvars.iv118.i.i.i.i, -1
   %exitcond132.not.i.i.i.i = icmp eq i32 %i.id, 3
+  %indvars.iv.next.i.i.i = add i32 %indvars.iv.i.i.i, 1
   br i1 %exitcond132.not.i.i.i.i, label %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowC2EiiRKNS0_8ImageBufEiiRA4_Kf.exit.i.i.i, label %.preheader91.i.i.i.i, !llvm.loop !1350
 
 .loopexit.i.i.i.i:                                ; preds = %_ZNKSt6vectorIN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi3EXadsoA2_KmL_ZNS2_L17bayer_channel_mapEEEEE6Window3RowESaIS8_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i, %bb.u
@@ -1951,7 +1947,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i, %.lr.ph55.i.i.i
-  %.02153.i.i.i = phi i32 [ %i.f, %.lr.ph55.i.i.i ], [ %i.kn, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 4 uses
+  %.02153.i.i.i = phi i32 [ %i.f, %.lr.ph55.i.i.i ], [ %i.kn, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   %i.bh = load i32, ptr %6, align 8, !tbaa !81    ; 2 uses
   %i.bi = load ptr, ptr %i.j, align 8, !tbaa !1393, !nonnull !195, !align !273 ; 3 uses
@@ -2002,24 +1998,21 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.ax
 
 .preheader91.i.i.i.i:                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i, %.preheader92.i.i.i.i
-  %indvars.iv118.i.i.i.i = phi i32 [ %i.cd, %.preheader92.i.i.i.i ], [ %indvars.iv.next119.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 2 uses
-  %indvars.iv.i.i.i.i = phi i32 [ %i.cc, %.preheader92.i.i.i.i ], [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 3 uses
-  %.070107.i.i.i.i = phi i32 [ 0, %.preheader92.i.i.i.i ], [ %i.is, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ]
+  %indvars.iv.i.i.i = phi i32 [ %indvars.iv.next.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %.02153.i.i.i, %.preheader92.i.i.i.i ] ; 2 uses
+  %indvars.iv118.i.i.i.i = phi i32 [ %indvars.iv.next119.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cd, %.preheader92.i.i.i.i ] ; 2 uses
+  %indvars.iv.i.i.i.i = phi i32 [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cc, %.preheader92.i.i.i.i ] ; 3 uses
+  %.070107.i.i.i.i = phi i32 [ %i.is, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ 0, %.preheader92.i.i.i.i ]
   %i.cj = load i32, ptr %i.p, align 4, !tbaa !1401
   %i.ck = load i32, ptr %i.q, align 8, !tbaa !1402
   %smax.i.i.i = call i32 @llvm.smax.i32(i32 %i.cj, i32 %indvars.iv.i.i.i.i)
   %i.cl = add i32 %smax.i.i.i, %indvars.iv118.i.i.i.i
-  %i.cm = and i32 %i.cl, -2
-  %i.cn = add i32 %i.cm, %indvars.iv.i.i.i.i      ; 4 uses
-  %i.co = add i32 %i.ck, -1                       ; 2 uses
-  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cn, i32 %i.co)
-  %7 = icmp sgt i32 %i.cn, %i.co                  ; 2 uses
-  %umin.i.neg11.i.i = sext i1 %7 to i32
-  %8 = select i1 %7, i32 2, i32 0
-  %.neg.i.i = sub i32 %i.cn, %smin.i.i.i
-  %9 = add i32 %.neg.i.i, %umin.i.neg11.i.i
-  %10 = add i32 %9, %8
-  %i.cp = and i32 %10, -2
+  %i.cm = and i32 %i.cl, -2                       ; 2 uses
+  %i.cn = add i32 %i.cm, %indvars.iv.i.i.i.i      ; 2 uses
+  %i.co = add i32 %i.cm, %indvars.iv.i.i.i
+  %7 = add i32 %i.ck, -1
+  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cn, i32 %7)
+  %.neg.i.i = sub i32 %i.co, %smin.i.i.i
+  %i.cp = and i32 %.neg.i.i, -2
   %i.cq = sub i32 %i.cn, %i.cp                    ; 3 uses
   %i.cr = add nsw i32 %i.cq, %i.bk
   %i.cs = srem i32 %i.cr, 2                       ; 2 uses
@@ -2422,6 +2415,7 @@ _ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi3EX
   %indvars.iv.next.i.i.i.i = add i32 %indvars.iv.i.i.i.i, 1
   %indvars.iv.next119.i.i.i.i = add i32 %indvars.iv118.i.i.i.i, -1
   %exitcond132.not.i.i.i.i = icmp eq i32 %i.is, 3
+  %indvars.iv.next.i.i.i = add i32 %indvars.iv.i.i.i, 1
   br i1 %exitcond132.not.i.i.i.i, label %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowC2EiiRKNS0_8ImageBufEiiRA4_Kf.exit.i.i.i, label %.preheader91.i.i.i.i, !llvm.loop !1387
 
 .loopexit.i.i.i.i:                                ; preds = %_ZNKSt6vectorIN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi3EXadsoA2_KmL_ZNS2_L17bayer_channel_mapEEEEE6Window3RowESaISA_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i, %bb.z
@@ -2824,7 +2818,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i, %.lr.ph54.i.i.i
-  %.02152.i.i.i = phi i32 [ %i.f, %.lr.ph54.i.i.i ], [ %i.jy, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 4 uses
+  %.02152.i.i.i = phi i32 [ %i.f, %.lr.ph54.i.i.i ], [ %i.jy, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   %i.bh = load i32, ptr %6, align 8, !tbaa !81    ; 2 uses
   %i.bi = load ptr, ptr %i.j, align 8, !tbaa !1430, !nonnull !195, !align !273 ; 3 uses
@@ -2875,24 +2869,21 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.as
 
 .preheader91.i.i.i.i:                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i, %.preheader92.i.i.i.i
-  %indvars.iv118.i.i.i.i = phi i32 [ %i.cd, %.preheader92.i.i.i.i ], [ %indvars.iv.next119.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 2 uses
-  %indvars.iv.i.i.i.i = phi i32 [ %i.cc, %.preheader92.i.i.i.i ], [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 3 uses
-  %.070107.i.i.i.i = phi i32 [ 0, %.preheader92.i.i.i.i ], [ %i.id, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ]
+  %indvars.iv.i.i.i = phi i32 [ %indvars.iv.next.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %.02152.i.i.i, %.preheader92.i.i.i.i ] ; 2 uses
+  %indvars.iv118.i.i.i.i = phi i32 [ %indvars.iv.next119.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cd, %.preheader92.i.i.i.i ] ; 2 uses
+  %indvars.iv.i.i.i.i = phi i32 [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cc, %.preheader92.i.i.i.i ] ; 3 uses
+  %.070107.i.i.i.i = phi i32 [ %i.id, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ 0, %.preheader92.i.i.i.i ]
   %i.cj = load i32, ptr %i.p, align 4, !tbaa !1438
   %i.ck = load i32, ptr %i.q, align 8, !tbaa !1439
   %smax.i.i.i = call i32 @llvm.smax.i32(i32 %i.cj, i32 %indvars.iv.i.i.i.i)
   %i.cl = add i32 %smax.i.i.i, %indvars.iv118.i.i.i.i
-  %i.cm = and i32 %i.cl, -2
-  %i.cn = add i32 %i.cm, %indvars.iv.i.i.i.i      ; 4 uses
-  %i.co = add i32 %i.ck, -1                       ; 2 uses
-  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cn, i32 %i.co)
-  %7 = icmp sgt i32 %i.cn, %i.co                  ; 2 uses
-  %umin.i.neg11.i.i = sext i1 %7 to i32
-  %8 = select i1 %7, i32 2, i32 0
-  %.neg.i.i = sub i32 %i.cn, %smin.i.i.i
-  %9 = add i32 %.neg.i.i, %umin.i.neg11.i.i
-  %10 = add i32 %9, %8
-  %i.cp = and i32 %10, -2
+  %i.cm = and i32 %i.cl, -2                       ; 2 uses
+  %i.cn = add i32 %i.cm, %indvars.iv.i.i.i.i      ; 2 uses
+  %i.co = add i32 %i.cm, %indvars.iv.i.i.i
+  %7 = add i32 %i.ck, -1
+  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cn, i32 %7)
+  %.neg.i.i = sub i32 %i.co, %smin.i.i.i
+  %i.cp = and i32 %.neg.i.i, -2
   %i.cq = sub i32 %i.cn, %i.cp                    ; 3 uses
   %i.cr = add nsw i32 %i.cq, %i.bk
   %i.cs = srem i32 %i.cr, 2                       ; 2 uses
@@ -3295,6 +3286,7 @@ _ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi3EXadsoA2_KmL_ZNS1_
   %indvars.iv.next.i.i.i.i = add i32 %indvars.iv.i.i.i.i, 1
   %indvars.iv.next119.i.i.i.i = add i32 %indvars.iv118.i.i.i.i, -1
   %exitcond132.not.i.i.i.i = icmp eq i32 %i.id, 3
+  %indvars.iv.next.i.i.i = add i32 %indvars.iv.i.i.i, 1
   br i1 %exitcond132.not.i.i.i.i, label %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowC2EiiRKNS0_8ImageBufEiiRA4_Kf.exit.i.i.i, label %.preheader91.i.i.i.i, !llvm.loop !1424
 
 .loopexit.i.i.i.i:                                ; preds = %_ZNKSt6vectorIN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi3EXadsoA2_KmL_ZNS2_L17bayer_channel_mapEEEEE6Window3RowESaIS8_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i, %bb.u
@@ -3697,7 +3689,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i, %.lr.ph54.i.i.i
-  %.02152.i.i.i = phi i32 [ %i.f, %.lr.ph54.i.i.i ], [ %i.jy, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 4 uses
+  %.02152.i.i.i = phi i32 [ %i.f, %.lr.ph54.i.i.i ], [ %i.jy, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   %i.bh = load i32, ptr %6, align 8, !tbaa !81    ; 2 uses
   %i.bi = load ptr, ptr %i.j, align 8, !tbaa !1467, !nonnull !195, !align !273 ; 3 uses
@@ -3748,24 +3740,21 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.as
 
 .preheader91.i.i.i.i:                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i, %.preheader92.i.i.i.i
-  %indvars.iv118.i.i.i.i = phi i32 [ %i.cd, %.preheader92.i.i.i.i ], [ %indvars.iv.next119.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 2 uses
-  %indvars.iv.i.i.i.i = phi i32 [ %i.cc, %.preheader92.i.i.i.i ], [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 3 uses
-  %.070107.i.i.i.i = phi i32 [ 0, %.preheader92.i.i.i.i ], [ %i.id, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ]
+  %indvars.iv.i.i.i = phi i32 [ %indvars.iv.next.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %.02152.i.i.i, %.preheader92.i.i.i.i ] ; 2 uses
+  %indvars.iv118.i.i.i.i = phi i32 [ %indvars.iv.next119.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cd, %.preheader92.i.i.i.i ] ; 2 uses
+  %indvars.iv.i.i.i.i = phi i32 [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cc, %.preheader92.i.i.i.i ] ; 3 uses
+  %.070107.i.i.i.i = phi i32 [ %i.id, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ 0, %.preheader92.i.i.i.i ]
   %i.cj = load i32, ptr %i.p, align 4, !tbaa !1475
   %i.ck = load i32, ptr %i.q, align 8, !tbaa !1476
   %smax.i.i.i = call i32 @llvm.smax.i32(i32 %i.cj, i32 %indvars.iv.i.i.i.i)
   %i.cl = add i32 %smax.i.i.i, %indvars.iv118.i.i.i.i
-  %i.cm = and i32 %i.cl, -2
-  %i.cn = add i32 %i.cm, %indvars.iv.i.i.i.i      ; 4 uses
-  %i.co = add i32 %i.ck, -1                       ; 2 uses
-  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cn, i32 %i.co)
-  %7 = icmp sgt i32 %i.cn, %i.co                  ; 2 uses
-  %umin.i.neg11.i.i = sext i1 %7 to i32
-  %8 = select i1 %7, i32 2, i32 0
-  %.neg.i.i = sub i32 %i.cn, %smin.i.i.i
-  %9 = add i32 %.neg.i.i, %umin.i.neg11.i.i
-  %10 = add i32 %9, %8
-  %i.cp = and i32 %10, -2
+  %i.cm = and i32 %i.cl, -2                       ; 2 uses
+  %i.cn = add i32 %i.cm, %indvars.iv.i.i.i.i      ; 2 uses
+  %i.co = add i32 %i.cm, %indvars.iv.i.i.i
+  %7 = add i32 %i.ck, -1
+  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cn, i32 %7)
+  %.neg.i.i = sub i32 %i.co, %smin.i.i.i
+  %i.cp = and i32 %.neg.i.i, -2
   %i.cq = sub i32 %i.cn, %i.cp                    ; 3 uses
   %i.cr = add nsw i32 %i.cq, %i.bk
   %i.cs = srem i32 %i.cr, 2                       ; 2 uses
@@ -4168,6 +4157,7 @@ _ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi3EXadsoA2_KmL_ZNS1_
   %indvars.iv.next.i.i.i.i = add i32 %indvars.iv.i.i.i.i, 1
   %indvars.iv.next119.i.i.i.i = add i32 %indvars.iv118.i.i.i.i, -1
   %exitcond132.not.i.i.i.i = icmp eq i32 %i.id, 3
+  %indvars.iv.next.i.i.i = add i32 %indvars.iv.i.i.i, 1
   br i1 %exitcond132.not.i.i.i.i, label %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowC2EiiRKNS0_8ImageBufEiiRA4_Kf.exit.i.i.i, label %.preheader91.i.i.i.i, !llvm.loop !1461
 
 .loopexit.i.i.i.i:                                ; preds = %_ZNKSt6vectorIN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi3EXadsoA2_KmL_ZNS2_L17bayer_channel_mapEEEEE6Window3RowESaIS8_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i, %bb.u
@@ -4570,7 +4560,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i, %.lr.ph55.i.i.i
-  %.02153.i.i.i = phi i32 [ %i.f, %.lr.ph55.i.i.i ], [ %i.kn, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 4 uses
+  %.02153.i.i.i = phi i32 [ %i.f, %.lr.ph55.i.i.i ], [ %i.kn, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   %i.bh = load i32, ptr %6, align 8, !tbaa !81    ; 2 uses
   %i.bi = load ptr, ptr %i.j, align 8, !tbaa !1504, !nonnull !195, !align !273 ; 3 uses
@@ -4621,24 +4611,21 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.ax
 
 .preheader91.i.i.i.i:                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i, %.preheader92.i.i.i.i
-  %indvars.iv118.i.i.i.i = phi i32 [ %i.cd, %.preheader92.i.i.i.i ], [ %indvars.iv.next119.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 2 uses
-  %indvars.iv.i.i.i.i = phi i32 [ %i.cc, %.preheader92.i.i.i.i ], [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 3 uses
-  %.070107.i.i.i.i = phi i32 [ 0, %.preheader92.i.i.i.i ], [ %i.is, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ]
+  %indvars.iv.i.i.i = phi i32 [ %indvars.iv.next.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %.02153.i.i.i, %.preheader92.i.i.i.i ] ; 2 uses
+  %indvars.iv118.i.i.i.i = phi i32 [ %indvars.iv.next119.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cd, %.preheader92.i.i.i.i ] ; 2 uses
+  %indvars.iv.i.i.i.i = phi i32 [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cc, %.preheader92.i.i.i.i ] ; 3 uses
+  %.070107.i.i.i.i = phi i32 [ %i.is, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ 0, %.preheader92.i.i.i.i ]
   %i.cj = load i32, ptr %i.p, align 4, !tbaa !1512
   %i.ck = load i32, ptr %i.q, align 8, !tbaa !1513
   %smax.i.i.i = call i32 @llvm.smax.i32(i32 %i.cj, i32 %indvars.iv.i.i.i.i)
   %i.cl = add i32 %smax.i.i.i, %indvars.iv118.i.i.i.i
-  %i.cm = and i32 %i.cl, -2
-  %i.cn = add i32 %i.cm, %indvars.iv.i.i.i.i      ; 4 uses
-  %i.co = add i32 %i.ck, -1                       ; 2 uses
-  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cn, i32 %i.co)
-  %7 = icmp sgt i32 %i.cn, %i.co                  ; 2 uses
-  %umin.i.neg11.i.i = sext i1 %7 to i32
-  %8 = select i1 %7, i32 2, i32 0
-  %.neg.i.i = sub i32 %i.cn, %smin.i.i.i
-  %9 = add i32 %.neg.i.i, %umin.i.neg11.i.i
-  %10 = add i32 %9, %8
-  %i.cp = and i32 %10, -2
+  %i.cm = and i32 %i.cl, -2                       ; 2 uses
+  %i.cn = add i32 %i.cm, %indvars.iv.i.i.i.i      ; 2 uses
+  %i.co = add i32 %i.cm, %indvars.iv.i.i.i
+  %7 = add i32 %i.ck, -1
+  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cn, i32 %7)
+  %.neg.i.i = sub i32 %i.co, %smin.i.i.i
+  %i.cp = and i32 %.neg.i.i, -2
   %i.cq = sub i32 %i.cn, %i.cp                    ; 3 uses
   %i.cr = add nsw i32 %i.cq, %i.bk
   %i.cs = srem i32 %i.cr, 2                       ; 2 uses
@@ -5041,6 +5028,7 @@ _ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi3
   %indvars.iv.next.i.i.i.i = add i32 %indvars.iv.i.i.i.i, 1
   %indvars.iv.next119.i.i.i.i = add i32 %indvars.iv118.i.i.i.i, -1
   %exitcond132.not.i.i.i.i = icmp eq i32 %i.is, 3
+  %indvars.iv.next.i.i.i = add i32 %indvars.iv.i.i.i, 1
   br i1 %exitcond132.not.i.i.i.i, label %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowC2EiiRKNS0_8ImageBufEiiRA4_Kf.exit.i.i.i, label %.preheader91.i.i.i.i, !llvm.loop !1498
 
 .loopexit.i.i.i.i:                                ; preds = %_ZNKSt6vectorIN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES5_Li2ELi3EXadsoA2_KmL_ZNS2_L17bayer_channel_mapEEEEE6Window3RowESaISA_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i, %bb.z
@@ -5443,7 +5431,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i, %.lr.ph54.i.i.i
-  %.02152.i.i.i = phi i32 [ %i.f, %.lr.ph54.i.i.i ], [ %i.jy, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 4 uses
+  %.02152.i.i.i = phi i32 [ %i.f, %.lr.ph54.i.i.i ], [ %i.jy, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   %i.bh = load i32, ptr %6, align 8, !tbaa !81    ; 2 uses
   %i.bi = load ptr, ptr %i.j, align 8, !tbaa !1541, !nonnull !195, !align !273 ; 3 uses
@@ -5494,24 +5482,21 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.as
 
 .preheader91.i.i.i.i:                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i, %.preheader92.i.i.i.i
-  %indvars.iv118.i.i.i.i = phi i32 [ %i.cd, %.preheader92.i.i.i.i ], [ %indvars.iv.next119.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 2 uses
-  %indvars.iv.i.i.i.i = phi i32 [ %i.cc, %.preheader92.i.i.i.i ], [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 3 uses
-  %.070107.i.i.i.i = phi i32 [ 0, %.preheader92.i.i.i.i ], [ %i.id, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ]
+  %indvars.iv.i.i.i = phi i32 [ %indvars.iv.next.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %.02152.i.i.i, %.preheader92.i.i.i.i ] ; 2 uses
+  %indvars.iv118.i.i.i.i = phi i32 [ %indvars.iv.next119.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cd, %.preheader92.i.i.i.i ] ; 2 uses
+  %indvars.iv.i.i.i.i = phi i32 [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cc, %.preheader92.i.i.i.i ] ; 3 uses
+  %.070107.i.i.i.i = phi i32 [ %i.id, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ 0, %.preheader92.i.i.i.i ]
   %i.cj = load i32, ptr %i.p, align 4, !tbaa !1549
   %i.ck = load i32, ptr %i.q, align 8, !tbaa !1550
   %smax.i.i.i = call i32 @llvm.smax.i32(i32 %i.cj, i32 %indvars.iv.i.i.i.i)
   %i.cl = add i32 %smax.i.i.i, %indvars.iv118.i.i.i.i
-  %i.cm = and i32 %i.cl, -2
-  %i.cn = add i32 %i.cm, %indvars.iv.i.i.i.i      ; 4 uses
-  %i.co = add i32 %i.ck, -1                       ; 2 uses
-  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cn, i32 %i.co)
-  %7 = icmp sgt i32 %i.cn, %i.co                  ; 2 uses
-  %umin.i.neg11.i.i = sext i1 %7 to i32
-  %8 = select i1 %7, i32 2, i32 0
-  %.neg.i.i = sub i32 %i.cn, %smin.i.i.i
-  %9 = add i32 %.neg.i.i, %umin.i.neg11.i.i
-  %10 = add i32 %9, %8
-  %i.cp = and i32 %10, -2
+  %i.cm = and i32 %i.cl, -2                       ; 2 uses
+  %i.cn = add i32 %i.cm, %indvars.iv.i.i.i.i      ; 2 uses
+  %i.co = add i32 %i.cm, %indvars.iv.i.i.i
+  %7 = add i32 %i.ck, -1
+  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cn, i32 %7)
+  %.neg.i.i = sub i32 %i.co, %smin.i.i.i
+  %i.cp = and i32 %.neg.i.i, -2
   %i.cq = sub i32 %i.cn, %i.cp                    ; 3 uses
   %i.cr = add nsw i32 %i.cq, %i.bk
   %i.cs = srem i32 %i.cr, 2                       ; 2 uses
@@ -5914,6 +5899,7 @@ _ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi3EXadsoA2_KmL_ZNS1_
   %indvars.iv.next.i.i.i.i = add i32 %indvars.iv.i.i.i.i, 1
   %indvars.iv.next119.i.i.i.i = add i32 %indvars.iv118.i.i.i.i, -1
   %exitcond132.not.i.i.i.i = icmp eq i32 %i.id, 3
+  %indvars.iv.next.i.i.i = add i32 %indvars.iv.i.i.i, 1
   br i1 %exitcond132.not.i.i.i.i, label %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi3EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowC2EiiRKNS0_8ImageBufEiiRA4_Kf.exit.i.i.i, label %.preheader91.i.i.i.i, !llvm.loop !1535
 
 .loopexit.i.i.i.i:                                ; preds = %_ZNKSt6vectorIN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi3EXadsoA2_KmL_ZNS2_L17bayer_channel_mapEEEEE6Window3RowESaIS8_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i, %bb.u
@@ -6316,7 +6302,7 @@ bb.a:
   %i.d = load ptr, ptr %.val, align 8, !tbaa !1577, !nonnull !195, !align !273
   call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseC2ERKS1_RKNS0_3ROIENS1_8WrapModeEb(ptr noundef nonnull align 8 dereferenceable(126) %3, ptr noundef nonnull align 8 dereferenceable(16) %i.d, ptr noundef nonnull align 8 dereferenceable(32) %6, i32 noundef 0, i1 noundef zeroext true)
   %i.e = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %i.f = load i32, ptr %i.e, align 8, !tbaa !406  ; 2 uses
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !406  ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %6, i64 12 ; 2 uses
   %i.h = load i32, ptr %i.g, align 4, !tbaa !405
   %i.i = icmp slt i32 %i.f, %i.h
@@ -6368,6 +6354,7 @@ bb.a:
   %i.az = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.ba = getelementptr inbounds nuw i8, ptr %5, i64 20
   %i.bb = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
+  %7 = add i32 %i.f, -1
   br label %bb.d
 
 ._crit_edge55.i.i.i:                              ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i, %bb.a
@@ -6388,6 +6375,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i, %.lr.ph54.i.i.i
+  %indvars.iv.i.i.i = phi i32 [ %7, %.lr.ph54.i.i.i ], [ %indvars.iv.next.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 2 uses
   %.02152.i.i.i = phi i32 [ %i.f, %.lr.ph54.i.i.i ], [ %i.jv, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   %i.bg = load i32, ptr %6, align 8, !tbaa !81    ; 2 uses
@@ -6438,24 +6426,21 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.as
 
 .preheader90.i.i.i.i:                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i, %.preheader91.i.i.i.i
-  %indvars.iv116.i.i.i.i = phi i32 [ %i.cd, %.preheader91.i.i.i.i ], [ %indvars.iv.next117.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 2 uses
-  %indvars.iv.i.i.i.i = phi i32 [ %i.cc, %.preheader91.i.i.i.i ], [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 3 uses
-  %.070105.i.i.i.i = phi i32 [ 0, %.preheader91.i.i.i.i ], [ %i.ia, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ]
+  %indvars.iv65.i.i.i = phi i32 [ %indvars.iv.next66.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %indvars.iv.i.i.i, %.preheader91.i.i.i.i ] ; 2 uses
+  %indvars.iv116.i.i.i.i = phi i32 [ %indvars.iv.next117.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cd, %.preheader91.i.i.i.i ] ; 2 uses
+  %indvars.iv.i.i.i.i = phi i32 [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cc, %.preheader91.i.i.i.i ] ; 3 uses
+  %.070105.i.i.i.i = phi i32 [ %i.ia, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ 0, %.preheader91.i.i.i.i ]
   %i.ci = load i32, ptr %i.p, align 4, !tbaa !1586
   %i.cj = load i32, ptr %i.q, align 8, !tbaa !1587
   %smax.i.i.i = call i32 @llvm.smax.i32(i32 %i.ci, i32 %indvars.iv.i.i.i.i)
   %i.ck = add i32 %smax.i.i.i, %indvars.iv116.i.i.i.i
-  %i.cl = and i32 %i.ck, -2
-  %i.cm = add i32 %i.cl, %indvars.iv.i.i.i.i      ; 4 uses
-  %i.cn = add i32 %i.cj, -1                       ; 2 uses
-  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cm, i32 %i.cn)
-  %7 = icmp sgt i32 %i.cm, %i.cn                  ; 2 uses
-  %umin.i.neg11.i.i = sext i1 %7 to i32
-  %8 = select i1 %7, i32 2, i32 0
-  %.neg.i.i = sub i32 %i.cm, %smin.i.i.i
-  %9 = add i32 %.neg.i.i, %umin.i.neg11.i.i
-  %10 = add i32 %9, %8
-  %i.co = and i32 %10, -2
+  %i.cl = and i32 %i.ck, -2                       ; 2 uses
+  %i.cm = add i32 %i.cl, %indvars.iv.i.i.i.i      ; 2 uses
+  %i.cn = add i32 %i.cl, %indvars.iv65.i.i.i
+  %8 = add i32 %i.cj, -1
+  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cm, i32 %8)
+  %.neg.i.i = sub i32 %i.cn, %smin.i.i.i
+  %i.co = and i32 %.neg.i.i, -2
   %i.cp = sub i32 %i.cm, %i.co                    ; 3 uses
   %i.cq = add nsw i32 %i.cp, %i.bj
   %i.cr = srem i32 %i.cq, 2                       ; 2 uses
@@ -6858,6 +6843,7 @@ _ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi5EXadsoA2_KmL_ZNS1_
   %indvars.iv.next.i.i.i.i = add i32 %indvars.iv.i.i.i.i, 1
   %indvars.iv.next117.i.i.i.i = add i32 %indvars.iv116.i.i.i.i, -1
   %exitcond131.not.i.i.i.i = icmp eq i32 %i.ia, 5
+  %indvars.iv.next66.i.i.i = add i32 %indvars.iv65.i.i.i, 1
   br i1 %exitcond131.not.i.i.i.i, label %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowC2EiiRKNS0_8ImageBufEiiRA4_Kf.exit.i.i.i, label %.preheader90.i.i.i.i, !llvm.loop !1572
 
 .loopexit.i.i.i.i:                                ; preds = %_ZNKSt6vectorIN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi5EXadsoA2_KmL_ZNS2_L17bayer_channel_mapEEEEE6Window3RowESaIS8_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i, %bb.u
@@ -7061,6 +7047,7 @@ _ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi2ELi5EXadsoA2_KmL_ZNS1_
   %i.jv = add nsw i32 %.02152.i.i.i, 1            ; 2 uses
   %i.jw = load i32, ptr %i.g, align 4, !tbaa !405
   %i.jx = icmp slt i32 %i.jv, %i.jw
+  %indvars.iv.next.i.i.i = add i32 %indvars.iv.i.i.i, 1
   br i1 %i.jx, label %bb.d, label %._crit_edge55.i.i.i, !llvm.loop !1574
 
 bb.bf:                                            ; preds = %._crit_edge.i.i.i
@@ -7463,7 +7450,7 @@ bb.a:
   %i.d = load ptr, ptr %.val, align 8, !tbaa !1614, !nonnull !195, !align !273
   call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseC2ERKS1_RKNS0_3ROIENS1_8WrapModeEb(ptr noundef nonnull align 8 dereferenceable(126) %3, ptr noundef nonnull align 8 dereferenceable(16) %i.d, ptr noundef nonnull align 8 dereferenceable(32) %6, i32 noundef 0, i1 noundef zeroext true)
   %i.e = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %i.f = load i32, ptr %i.e, align 8, !tbaa !406  ; 2 uses
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !406  ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %6, i64 12 ; 2 uses
   %i.h = load i32, ptr %i.g, align 4, !tbaa !405
   %i.i = icmp slt i32 %i.f, %i.h
@@ -7515,6 +7502,7 @@ bb.a:
   %i.az = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.ba = getelementptr inbounds nuw i8, ptr %5, i64 20
   %i.bb = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
+  %7 = add i32 %i.f, -1
   br label %bb.d
 
 ._crit_edge55.i.i.i:                              ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i, %bb.a
@@ -7535,6 +7523,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i, %.lr.ph54.i.i.i
+  %indvars.iv.i.i.i = phi i32 [ %7, %.lr.ph54.i.i.i ], [ %indvars.iv.next.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 2 uses
   %.02152.i.i.i = phi i32 [ %i.f, %.lr.ph54.i.i.i ], [ %i.jx, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   %i.bg = load i32, ptr %6, align 8, !tbaa !81    ; 2 uses
@@ -7585,24 +7574,21 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.as
 
 .preheader90.i.i.i.i:                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i, %.preheader91.i.i.i.i
-  %indvars.iv116.i.i.i.i = phi i32 [ %i.cd, %.preheader91.i.i.i.i ], [ %indvars.iv.next117.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 2 uses
-  %indvars.iv.i.i.i.i = phi i32 [ %i.cc, %.preheader91.i.i.i.i ], [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 3 uses
-  %.070105.i.i.i.i = phi i32 [ 0, %.preheader91.i.i.i.i ], [ %i.ic, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ]
+  %indvars.iv65.i.i.i = phi i32 [ %indvars.iv.next66.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %indvars.iv.i.i.i, %.preheader91.i.i.i.i ] ; 2 uses
+  %indvars.iv116.i.i.i.i = phi i32 [ %indvars.iv.next117.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cd, %.preheader91.i.i.i.i ] ; 2 uses
+  %indvars.iv.i.i.i.i = phi i32 [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cc, %.preheader91.i.i.i.i ] ; 3 uses
+  %.070105.i.i.i.i = phi i32 [ %i.ic, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ 0, %.preheader91.i.i.i.i ]
   %i.ci = load i32, ptr %i.p, align 4, !tbaa !1623
   %i.cj = load i32, ptr %i.q, align 8, !tbaa !1624
   %smax.i.i.i = call i32 @llvm.smax.i32(i32 %i.ci, i32 %indvars.iv.i.i.i.i)
   %i.ck = add i32 %smax.i.i.i, %indvars.iv116.i.i.i.i
-  %i.cl = and i32 %i.ck, -2
-  %i.cm = add i32 %i.cl, %indvars.iv.i.i.i.i      ; 4 uses
-  %i.cn = add i32 %i.cj, -1                       ; 2 uses
-  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cm, i32 %i.cn)
-  %7 = icmp sgt i32 %i.cm, %i.cn                  ; 2 uses
-  %umin.i.neg11.i.i = sext i1 %7 to i32
-  %8 = select i1 %7, i32 2, i32 0
-  %.neg.i.i = sub i32 %i.cm, %smin.i.i.i
-  %9 = add i32 %.neg.i.i, %umin.i.neg11.i.i
-  %10 = add i32 %9, %8
-  %i.co = and i32 %10, -2
+  %i.cl = and i32 %i.ck, -2                       ; 2 uses
+  %i.cm = add i32 %i.cl, %indvars.iv.i.i.i.i      ; 2 uses
+  %i.cn = add i32 %i.cl, %indvars.iv65.i.i.i
+  %8 = add i32 %i.cj, -1
+  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cm, i32 %8)
+  %.neg.i.i = sub i32 %i.cn, %smin.i.i.i
+  %i.co = and i32 %.neg.i.i, -2
   %i.cp = sub i32 %i.cm, %i.co                    ; 3 uses
   %i.cq = add nsw i32 %i.cp, %i.bj
   %i.cr = srem i32 %i.cq, 2                       ; 2 uses
@@ -8005,6 +7991,7 @@ _ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi5EXadsoA2_KmL_ZNS1_
   %indvars.iv.next.i.i.i.i = add i32 %indvars.iv.i.i.i.i, 1
   %indvars.iv.next117.i.i.i.i = add i32 %indvars.iv116.i.i.i.i, -1
   %exitcond131.not.i.i.i.i = icmp eq i32 %i.ic, 5
+  %indvars.iv.next66.i.i.i = add i32 %indvars.iv65.i.i.i, 1
   br i1 %exitcond131.not.i.i.i.i, label %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowC2EiiRKNS0_8ImageBufEiiRA4_Kf.exit.i.i.i, label %.preheader90.i.i.i.i, !llvm.loop !1609
 
 .loopexit.i.i.i.i:                                ; preds = %_ZNKSt6vectorIN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi5EXadsoA2_KmL_ZNS2_L17bayer_channel_mapEEEEE6Window3RowESaIS8_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i, %bb.u
@@ -8208,6 +8195,7 @@ _ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi2ELi5EXadsoA2_KmL_ZNS1_
   %i.jx = add nsw i32 %.02152.i.i.i, 1            ; 2 uses
   %i.jy = load i32, ptr %i.g, align 4, !tbaa !405
   %i.jz = icmp slt i32 %i.jx, %i.jy
+  %indvars.iv.next.i.i.i = add i32 %indvars.iv.i.i.i, 1
   br i1 %i.jz, label %bb.d, label %._crit_edge55.i.i.i, !llvm.loop !1611
 
 bb.bf:                                            ; preds = %._crit_edge.i.i.i
@@ -8610,7 +8598,7 @@ bb.a:
   %i.d = load ptr, ptr %.val, align 8, !tbaa !1651, !nonnull !195, !align !273
   call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseC2ERKS1_RKNS0_3ROIENS1_8WrapModeEb(ptr noundef nonnull align 8 dereferenceable(126) %3, ptr noundef nonnull align 8 dereferenceable(16) %i.d, ptr noundef nonnull align 8 dereferenceable(32) %6, i32 noundef 0, i1 noundef zeroext true)
   %i.e = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %i.f = load i32, ptr %i.e, align 8, !tbaa !406  ; 2 uses
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !406  ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %6, i64 12 ; 2 uses
   %i.h = load i32, ptr %i.g, align 4, !tbaa !405
   %i.i = icmp slt i32 %i.f, %i.h
@@ -8662,6 +8650,7 @@ bb.a:
   %i.az = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.ba = getelementptr inbounds nuw i8, ptr %5, i64 20
   %i.bb = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
+  %7 = add i32 %i.f, -1
   br label %bb.d
 
 ._crit_edge56.i.i.i:                              ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i, %bb.a
@@ -8682,6 +8671,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i, %.lr.ph55.i.i.i
+  %indvars.iv.i.i.i = phi i32 [ %7, %.lr.ph55.i.i.i ], [ %indvars.iv.next.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 2 uses
   %.02153.i.i.i = phi i32 [ %i.f, %.lr.ph55.i.i.i ], [ %i.km, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   %i.bg = load i32, ptr %6, align 8, !tbaa !81    ; 2 uses
@@ -8732,24 +8722,21 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.ax
 
 .preheader90.i.i.i.i:                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i, %.preheader91.i.i.i.i
-  %indvars.iv116.i.i.i.i = phi i32 [ %i.cd, %.preheader91.i.i.i.i ], [ %indvars.iv.next117.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 2 uses
-  %indvars.iv.i.i.i.i = phi i32 [ %i.cc, %.preheader91.i.i.i.i ], [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 3 uses
-  %.070105.i.i.i.i = phi i32 [ 0, %.preheader91.i.i.i.i ], [ %i.ir, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ]
+  %indvars.iv66.i.i.i = phi i32 [ %indvars.iv.next67.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %indvars.iv.i.i.i, %.preheader91.i.i.i.i ] ; 2 uses
+  %indvars.iv116.i.i.i.i = phi i32 [ %indvars.iv.next117.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cd, %.preheader91.i.i.i.i ] ; 2 uses
+  %indvars.iv.i.i.i.i = phi i32 [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cc, %.preheader91.i.i.i.i ] ; 3 uses
+  %.070105.i.i.i.i = phi i32 [ %i.ir, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ 0, %.preheader91.i.i.i.i ]
   %i.ci = load i32, ptr %i.p, align 4, !tbaa !1660
   %i.cj = load i32, ptr %i.q, align 8, !tbaa !1661
   %smax.i.i.i = call i32 @llvm.smax.i32(i32 %i.ci, i32 %indvars.iv.i.i.i.i)
   %i.ck = add i32 %smax.i.i.i, %indvars.iv116.i.i.i.i
-  %i.cl = and i32 %i.ck, -2
-  %i.cm = add i32 %i.cl, %indvars.iv.i.i.i.i      ; 4 uses
-  %i.cn = add i32 %i.cj, -1                       ; 2 uses
-  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cm, i32 %i.cn)
-  %7 = icmp sgt i32 %i.cm, %i.cn                  ; 2 uses
-  %umin.i.neg11.i.i = sext i1 %7 to i32
-  %8 = select i1 %7, i32 2, i32 0
-  %.neg.i.i = sub i32 %i.cm, %smin.i.i.i
-  %9 = add i32 %.neg.i.i, %umin.i.neg11.i.i
-  %10 = add i32 %9, %8
-  %i.co = and i32 %10, -2
+  %i.cl = and i32 %i.ck, -2                       ; 2 uses
+  %i.cm = add i32 %i.cl, %indvars.iv.i.i.i.i      ; 2 uses
+  %i.cn = add i32 %i.cl, %indvars.iv66.i.i.i
+  %8 = add i32 %i.cj, -1
+  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cm, i32 %8)
+  %.neg.i.i = sub i32 %i.cn, %smin.i.i.i
+  %i.co = and i32 %.neg.i.i, -2
   %i.cp = sub i32 %i.cm, %i.co                    ; 3 uses
   %i.cq = add nsw i32 %i.cp, %i.bj
   %i.cr = srem i32 %i.cq, 2                       ; 2 uses
@@ -9152,6 +9139,7 @@ _ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi5EX
   %indvars.iv.next.i.i.i.i = add i32 %indvars.iv.i.i.i.i, 1
   %indvars.iv.next117.i.i.i.i = add i32 %indvars.iv116.i.i.i.i, -1
   %exitcond131.not.i.i.i.i = icmp eq i32 %i.ir, 5
+  %indvars.iv.next67.i.i.i = add i32 %indvars.iv66.i.i.i, 1
   br i1 %exitcond131.not.i.i.i.i, label %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowC2EiiRKNS0_8ImageBufEiiRA4_Kf.exit.i.i.i, label %.preheader90.i.i.i.i, !llvm.loop !1646
 
 .loopexit.i.i.i.i:                                ; preds = %_ZNKSt6vectorIN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi5EXadsoA2_KmL_ZNS2_L17bayer_channel_mapEEEEE6Window3RowESaISA_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i, %bb.z
@@ -9355,6 +9343,7 @@ _ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14halfELi2ELi5EX
   %i.km = add nsw i32 %.02153.i.i.i, 1            ; 2 uses
   %i.kn = load i32, ptr %i.g, align 4, !tbaa !405
   %i.ko = icmp slt i32 %i.km, %i.kn
+  %indvars.iv.next.i.i.i = add i32 %indvars.iv.i.i.i, 1
   br i1 %i.ko, label %bb.d, label %._crit_edge56.i.i.i, !llvm.loop !1648
 
 bb.bk:                                            ; preds = %._crit_edge.i.i.i
@@ -9757,7 +9746,7 @@ bb.a:
   %i.d = load ptr, ptr %.val, align 8, !tbaa !1688, !nonnull !195, !align !273
   call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseC2ERKS1_RKNS0_3ROIENS1_8WrapModeEb(ptr noundef nonnull align 8 dereferenceable(126) %3, ptr noundef nonnull align 8 dereferenceable(16) %i.d, ptr noundef nonnull align 8 dereferenceable(32) %6, i32 noundef 0, i1 noundef zeroext true)
   %i.e = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %i.f = load i32, ptr %i.e, align 8, !tbaa !406  ; 2 uses
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !406  ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %6, i64 12 ; 2 uses
   %i.h = load i32, ptr %i.g, align 4, !tbaa !405
   %i.i = icmp slt i32 %i.f, %i.h
@@ -9809,6 +9798,7 @@ bb.a:
   %i.az = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.ba = getelementptr inbounds nuw i8, ptr %5, i64 20
   %i.bb = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
+  %7 = add i32 %i.f, -1
   br label %bb.d
 
 ._crit_edge55.i.i.i:                              ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i, %bb.a
@@ -9829,6 +9819,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i, %.lr.ph54.i.i.i
+  %indvars.iv.i.i.i = phi i32 [ %7, %.lr.ph54.i.i.i ], [ %indvars.iv.next.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 2 uses
   %.02152.i.i.i = phi i32 [ %i.f, %.lr.ph54.i.i.i ], [ %i.jx, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   %i.bg = load i32, ptr %6, align 8, !tbaa !81    ; 2 uses
@@ -9879,24 +9870,21 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.as
 
 .preheader90.i.i.i.i:                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i, %.preheader91.i.i.i.i
-  %indvars.iv116.i.i.i.i = phi i32 [ %i.cd, %.preheader91.i.i.i.i ], [ %indvars.iv.next117.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 2 uses
-  %indvars.iv.i.i.i.i = phi i32 [ %i.cc, %.preheader91.i.i.i.i ], [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 3 uses
-  %.070105.i.i.i.i = phi i32 [ 0, %.preheader91.i.i.i.i ], [ %i.ic, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ]
+  %indvars.iv65.i.i.i = phi i32 [ %indvars.iv.next66.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %indvars.iv.i.i.i, %.preheader91.i.i.i.i ] ; 2 uses
+  %indvars.iv116.i.i.i.i = phi i32 [ %indvars.iv.next117.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cd, %.preheader91.i.i.i.i ] ; 2 uses
+  %indvars.iv.i.i.i.i = phi i32 [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cc, %.preheader91.i.i.i.i ] ; 3 uses
+  %.070105.i.i.i.i = phi i32 [ %i.ic, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ 0, %.preheader91.i.i.i.i ]
   %i.ci = load i32, ptr %i.p, align 4, !tbaa !1697
   %i.cj = load i32, ptr %i.q, align 8, !tbaa !1698
   %smax.i.i.i = call i32 @llvm.smax.i32(i32 %i.ci, i32 %indvars.iv.i.i.i.i)
   %i.ck = add i32 %smax.i.i.i, %indvars.iv116.i.i.i.i
-  %i.cl = and i32 %i.ck, -2
-  %i.cm = add i32 %i.cl, %indvars.iv.i.i.i.i      ; 4 uses
-  %i.cn = add i32 %i.cj, -1                       ; 2 uses
-  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cm, i32 %i.cn)
-  %7 = icmp sgt i32 %i.cm, %i.cn                  ; 2 uses
-  %umin.i.neg11.i.i = sext i1 %7 to i32
-  %8 = select i1 %7, i32 2, i32 0
-  %.neg.i.i = sub i32 %i.cm, %smin.i.i.i
-  %9 = add i32 %.neg.i.i, %umin.i.neg11.i.i
-  %10 = add i32 %9, %8
-  %i.co = and i32 %10, -2
+  %i.cl = and i32 %i.ck, -2                       ; 2 uses
+  %i.cm = add i32 %i.cl, %indvars.iv.i.i.i.i      ; 2 uses
+  %i.cn = add i32 %i.cl, %indvars.iv65.i.i.i
+  %8 = add i32 %i.cj, -1
+  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cm, i32 %8)
+  %.neg.i.i = sub i32 %i.cn, %smin.i.i.i
+  %i.co = and i32 %.neg.i.i, -2
   %i.cp = sub i32 %i.cm, %i.co                    ; 3 uses
   %i.cq = add nsw i32 %i.cp, %i.bj
   %i.cr = srem i32 %i.cq, 2                       ; 2 uses
@@ -10299,6 +10287,7 @@ _ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi5EXadsoA2_KmL_ZNS1_
   %indvars.iv.next.i.i.i.i = add i32 %indvars.iv.i.i.i.i, 1
   %indvars.iv.next117.i.i.i.i = add i32 %indvars.iv116.i.i.i.i, -1
   %exitcond131.not.i.i.i.i = icmp eq i32 %i.ic, 5
+  %indvars.iv.next66.i.i.i = add i32 %indvars.iv65.i.i.i, 1
   br i1 %exitcond131.not.i.i.i.i, label %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowC2EiiRKNS0_8ImageBufEiiRA4_Kf.exit.i.i.i, label %.preheader90.i.i.i.i, !llvm.loop !1683
 
 .loopexit.i.i.i.i:                                ; preds = %_ZNKSt6vectorIN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi5EXadsoA2_KmL_ZNS2_L17bayer_channel_mapEEEEE6Window3RowESaIS8_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i, %bb.u
@@ -10502,6 +10491,7 @@ _ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi2ELi5EXadsoA2_KmL_ZNS1_
   %i.jx = add nsw i32 %.02152.i.i.i, 1            ; 2 uses
   %i.jy = load i32, ptr %i.g, align 4, !tbaa !405
   %i.jz = icmp slt i32 %i.jx, %i.jy
+  %indvars.iv.next.i.i.i = add i32 %indvars.iv.i.i.i, 1
   br i1 %i.jz, label %bb.d, label %._crit_edge55.i.i.i, !llvm.loop !1685
 
 bb.bf:                                            ; preds = %._crit_edge.i.i.i
@@ -10904,7 +10894,7 @@ bb.a:
   %i.d = load ptr, ptr %.val, align 8, !tbaa !1725, !nonnull !195, !align !273
   call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseC2ERKS1_RKNS0_3ROIENS1_8WrapModeEb(ptr noundef nonnull align 8 dereferenceable(126) %3, ptr noundef nonnull align 8 dereferenceable(16) %i.d, ptr noundef nonnull align 8 dereferenceable(32) %6, i32 noundef 0, i1 noundef zeroext true)
   %i.e = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %i.f = load i32, ptr %i.e, align 8, !tbaa !406  ; 2 uses
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !406  ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %6, i64 12 ; 2 uses
   %i.h = load i32, ptr %i.g, align 4, !tbaa !405
   %i.i = icmp slt i32 %i.f, %i.h
@@ -10956,6 +10946,7 @@ bb.a:
   %i.az = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.ba = getelementptr inbounds nuw i8, ptr %5, i64 20
   %i.bb = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
+  %7 = add i32 %i.f, -1
   br label %bb.d
 
 ._crit_edge55.i.i.i:                              ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i, %bb.a
@@ -10976,6 +10967,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i, %.lr.ph54.i.i.i
+  %indvars.iv.i.i.i = phi i32 [ %7, %.lr.ph54.i.i.i ], [ %indvars.iv.next.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 2 uses
   %.02152.i.i.i = phi i32 [ %i.f, %.lr.ph54.i.i.i ], [ %i.jx, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   %i.bg = load i32, ptr %6, align 8, !tbaa !81    ; 2 uses
@@ -11026,24 +11018,21 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.as
 
 .preheader90.i.i.i.i:                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i, %.preheader91.i.i.i.i
-  %indvars.iv116.i.i.i.i = phi i32 [ %i.cd, %.preheader91.i.i.i.i ], [ %indvars.iv.next117.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 2 uses
-  %indvars.iv.i.i.i.i = phi i32 [ %i.cc, %.preheader91.i.i.i.i ], [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 3 uses
-  %.070105.i.i.i.i = phi i32 [ 0, %.preheader91.i.i.i.i ], [ %i.ic, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ]
+  %indvars.iv65.i.i.i = phi i32 [ %indvars.iv.next66.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %indvars.iv.i.i.i, %.preheader91.i.i.i.i ] ; 2 uses
+  %indvars.iv116.i.i.i.i = phi i32 [ %indvars.iv.next117.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cd, %.preheader91.i.i.i.i ] ; 2 uses
+  %indvars.iv.i.i.i.i = phi i32 [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cc, %.preheader91.i.i.i.i ] ; 3 uses
+  %.070105.i.i.i.i = phi i32 [ %i.ic, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ 0, %.preheader91.i.i.i.i ]
   %i.ci = load i32, ptr %i.p, align 4, !tbaa !1734
   %i.cj = load i32, ptr %i.q, align 8, !tbaa !1735
   %smax.i.i.i = call i32 @llvm.smax.i32(i32 %i.ci, i32 %indvars.iv.i.i.i.i)
   %i.ck = add i32 %smax.i.i.i, %indvars.iv116.i.i.i.i
-  %i.cl = and i32 %i.ck, -2
-  %i.cm = add i32 %i.cl, %indvars.iv.i.i.i.i      ; 4 uses
-  %i.cn = add i32 %i.cj, -1                       ; 2 uses
-  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cm, i32 %i.cn)
-  %7 = icmp sgt i32 %i.cm, %i.cn                  ; 2 uses
-  %umin.i.neg11.i.i = sext i1 %7 to i32
-  %8 = select i1 %7, i32 2, i32 0
-  %.neg.i.i = sub i32 %i.cm, %smin.i.i.i
-  %9 = add i32 %.neg.i.i, %umin.i.neg11.i.i
-  %10 = add i32 %9, %8
-  %i.co = and i32 %10, -2
+  %i.cl = and i32 %i.ck, -2                       ; 2 uses
+  %i.cm = add i32 %i.cl, %indvars.iv.i.i.i.i      ; 2 uses
+  %i.cn = add i32 %i.cl, %indvars.iv65.i.i.i
+  %8 = add i32 %i.cj, -1
+  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cm, i32 %8)
+  %.neg.i.i = sub i32 %i.cn, %smin.i.i.i
+  %i.co = and i32 %.neg.i.i, -2
   %i.cp = sub i32 %i.cm, %i.co                    ; 3 uses
   %i.cq = add nsw i32 %i.cp, %i.bj
   %i.cr = srem i32 %i.cq, 2                       ; 2 uses
@@ -11446,6 +11435,7 @@ _ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi5EXadsoA2_KmL_ZNS1_
   %indvars.iv.next.i.i.i.i = add i32 %indvars.iv.i.i.i.i, 1
   %indvars.iv.next117.i.i.i.i = add i32 %indvars.iv116.i.i.i.i, -1
   %exitcond131.not.i.i.i.i = icmp eq i32 %i.ic, 5
+  %indvars.iv.next66.i.i.i = add i32 %indvars.iv65.i.i.i, 1
   br i1 %exitcond131.not.i.i.i.i, label %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowC2EiiRKNS0_8ImageBufEiiRA4_Kf.exit.i.i.i, label %.preheader90.i.i.i.i, !llvm.loop !1720
 
 .loopexit.i.i.i.i:                                ; preds = %_ZNKSt6vectorIN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi5EXadsoA2_KmL_ZNS2_L17bayer_channel_mapEEEEE6Window3RowESaIS8_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i, %bb.u
@@ -11649,6 +11639,7 @@ _ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi2ELi5EXadsoA2_KmL_ZNS1_
   %i.jx = add nsw i32 %.02152.i.i.i, 1            ; 2 uses
   %i.jy = load i32, ptr %i.g, align 4, !tbaa !405
   %i.jz = icmp slt i32 %i.jx, %i.jy
+  %indvars.iv.next.i.i.i = add i32 %indvars.iv.i.i.i, 1
   br i1 %i.jz, label %bb.d, label %._crit_edge55.i.i.i, !llvm.loop !1722
 
 bb.bf:                                            ; preds = %._crit_edge.i.i.i
@@ -12051,7 +12042,7 @@ bb.a:
   %i.d = load ptr, ptr %.val, align 8, !tbaa !1762, !nonnull !195, !align !273
   call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseC2ERKS1_RKNS0_3ROIENS1_8WrapModeEb(ptr noundef nonnull align 8 dereferenceable(126) %3, ptr noundef nonnull align 8 dereferenceable(16) %i.d, ptr noundef nonnull align 8 dereferenceable(32) %6, i32 noundef 0, i1 noundef zeroext true)
   %i.e = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %i.f = load i32, ptr %i.e, align 8, !tbaa !406  ; 2 uses
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !406  ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %6, i64 12 ; 2 uses
   %i.h = load i32, ptr %i.g, align 4, !tbaa !405
   %i.i = icmp slt i32 %i.f, %i.h
@@ -12103,6 +12094,7 @@ bb.a:
   %i.az = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.ba = getelementptr inbounds nuw i8, ptr %5, i64 20
   %i.bb = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
+  %7 = add i32 %i.f, -1
   br label %bb.d
 
 ._crit_edge56.i.i.i:                              ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i, %bb.a
@@ -12123,6 +12115,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i, %.lr.ph55.i.i.i
+  %indvars.iv.i.i.i = phi i32 [ %7, %.lr.ph55.i.i.i ], [ %indvars.iv.next.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 2 uses
   %.02153.i.i.i = phi i32 [ %i.f, %.lr.ph55.i.i.i ], [ %i.km, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   %i.bg = load i32, ptr %6, align 8, !tbaa !81    ; 2 uses
@@ -12173,24 +12166,21 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.ax
 
 .preheader90.i.i.i.i:                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i, %.preheader91.i.i.i.i
-  %indvars.iv116.i.i.i.i = phi i32 [ %i.cd, %.preheader91.i.i.i.i ], [ %indvars.iv.next117.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 2 uses
-  %indvars.iv.i.i.i.i = phi i32 [ %i.cc, %.preheader91.i.i.i.i ], [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 3 uses
-  %.070105.i.i.i.i = phi i32 [ 0, %.preheader91.i.i.i.i ], [ %i.ir, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ]
+  %indvars.iv66.i.i.i = phi i32 [ %indvars.iv.next67.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %indvars.iv.i.i.i, %.preheader91.i.i.i.i ] ; 2 uses
+  %indvars.iv116.i.i.i.i = phi i32 [ %indvars.iv.next117.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cd, %.preheader91.i.i.i.i ] ; 2 uses
+  %indvars.iv.i.i.i.i = phi i32 [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cc, %.preheader91.i.i.i.i ] ; 3 uses
+  %.070105.i.i.i.i = phi i32 [ %i.ir, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ 0, %.preheader91.i.i.i.i ]
   %i.ci = load i32, ptr %i.p, align 4, !tbaa !1771
   %i.cj = load i32, ptr %i.q, align 8, !tbaa !1772
   %smax.i.i.i = call i32 @llvm.smax.i32(i32 %i.ci, i32 %indvars.iv.i.i.i.i)
   %i.ck = add i32 %smax.i.i.i, %indvars.iv116.i.i.i.i
-  %i.cl = and i32 %i.ck, -2
-  %i.cm = add i32 %i.cl, %indvars.iv.i.i.i.i      ; 4 uses
-  %i.cn = add i32 %i.cj, -1                       ; 2 uses
-  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cm, i32 %i.cn)
-  %7 = icmp sgt i32 %i.cm, %i.cn                  ; 2 uses
-  %umin.i.neg11.i.i = sext i1 %7 to i32
-  %8 = select i1 %7, i32 2, i32 0
-  %.neg.i.i = sub i32 %i.cm, %smin.i.i.i
-  %9 = add i32 %.neg.i.i, %umin.i.neg11.i.i
-  %10 = add i32 %9, %8
-  %i.co = and i32 %10, -2
+  %i.cl = and i32 %i.ck, -2                       ; 2 uses
+  %i.cm = add i32 %i.cl, %indvars.iv.i.i.i.i      ; 2 uses
+  %i.cn = add i32 %i.cl, %indvars.iv66.i.i.i
+  %8 = add i32 %i.cj, -1
+  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cm, i32 %8)
+  %.neg.i.i = sub i32 %i.cn, %smin.i.i.i
+  %i.co = and i32 %.neg.i.i, -2
   %i.cp = sub i32 %i.cm, %i.co                    ; 3 uses
   %i.cq = add nsw i32 %i.cp, %i.bj
   %i.cr = srem i32 %i.cq, 2                       ; 2 uses
@@ -12593,6 +12583,7 @@ _ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi5
   %indvars.iv.next.i.i.i.i = add i32 %indvars.iv.i.i.i.i, 1
   %indvars.iv.next117.i.i.i.i = add i32 %indvars.iv116.i.i.i.i, -1
   %exitcond131.not.i.i.i.i = icmp eq i32 %i.ir, 5
+  %indvars.iv.next67.i.i.i = add i32 %indvars.iv66.i.i.i, 1
   br i1 %exitcond131.not.i.i.i.i, label %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowC2EiiRKNS0_8ImageBufEiiRA4_Kf.exit.i.i.i, label %.preheader90.i.i.i.i, !llvm.loop !1757
 
 .loopexit.i.i.i.i:                                ; preds = %_ZNKSt6vectorIN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES5_Li2ELi5EXadsoA2_KmL_ZNS2_L17bayer_channel_mapEEEEE6Window3RowESaISA_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i, %bb.z
@@ -12796,6 +12787,7 @@ _ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14halfES4_Li2ELi5
   %i.km = add nsw i32 %.02153.i.i.i, 1            ; 2 uses
   %i.kn = load i32, ptr %i.g, align 4, !tbaa !405
   %i.ko = icmp slt i32 %i.km, %i.kn
+  %indvars.iv.next.i.i.i = add i32 %indvars.iv.i.i.i, 1
   br i1 %i.ko, label %bb.d, label %._crit_edge56.i.i.i, !llvm.loop !1759
 
 bb.bk:                                            ; preds = %._crit_edge.i.i.i
@@ -13198,7 +13190,7 @@ bb.a:
   %i.d = load ptr, ptr %.val, align 8, !tbaa !1799, !nonnull !195, !align !273
   call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseC2ERKS1_RKNS0_3ROIENS1_8WrapModeEb(ptr noundef nonnull align 8 dereferenceable(126) %3, ptr noundef nonnull align 8 dereferenceable(16) %i.d, ptr noundef nonnull align 8 dereferenceable(32) %6, i32 noundef 0, i1 noundef zeroext true)
   %i.e = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %i.f = load i32, ptr %i.e, align 8, !tbaa !406  ; 2 uses
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !406  ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %6, i64 12 ; 2 uses
   %i.h = load i32, ptr %i.g, align 4, !tbaa !405
   %i.i = icmp slt i32 %i.f, %i.h
@@ -13250,6 +13242,7 @@ bb.a:
   %i.az = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.ba = getelementptr inbounds nuw i8, ptr %5, i64 20
   %i.bb = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
+  %7 = add i32 %i.f, -1
   br label %bb.d
 
 ._crit_edge55.i.i.i:                              ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i, %bb.a
@@ -13270,6 +13263,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i, %.lr.ph54.i.i.i
+  %indvars.iv.i.i.i = phi i32 [ %7, %.lr.ph54.i.i.i ], [ %indvars.iv.next.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 2 uses
   %.02152.i.i.i = phi i32 [ %i.f, %.lr.ph54.i.i.i ], [ %i.jx, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowD2Ev.exit.i.i.i ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   %i.bg = load i32, ptr %6, align 8, !tbaa !81    ; 2 uses
@@ -13320,24 +13314,21 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.as
 
 .preheader90.i.i.i.i:                             ; preds = %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i, %.preheader91.i.i.i.i
-  %indvars.iv116.i.i.i.i = phi i32 [ %i.cd, %.preheader91.i.i.i.i ], [ %indvars.iv.next117.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 2 uses
-  %indvars.iv.i.i.i.i = phi i32 [ %i.cc, %.preheader91.i.i.i.i ], [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ] ; 3 uses
-  %.070105.i.i.i.i = phi i32 [ 0, %.preheader91.i.i.i.i ], [ %i.ic, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ]
+  %indvars.iv65.i.i.i = phi i32 [ %indvars.iv.next66.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %indvars.iv.i.i.i, %.preheader91.i.i.i.i ] ; 2 uses
+  %indvars.iv116.i.i.i.i = phi i32 [ %indvars.iv.next117.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cd, %.preheader91.i.i.i.i ] ; 2 uses
+  %indvars.iv.i.i.i.i = phi i32 [ %indvars.iv.next.i.i.i.i, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ %i.cc, %.preheader91.i.i.i.i ] ; 3 uses
+  %.070105.i.i.i.i = phi i32 [ %i.ic, %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6Window3RowD2Ev.exit.i.i.i.i ], [ 0, %.preheader91.i.i.i.i ]
   %i.ci = load i32, ptr %i.p, align 4, !tbaa !1808
   %i.cj = load i32, ptr %i.q, align 8, !tbaa !1809
   %smax.i.i.i = call i32 @llvm.smax.i32(i32 %i.ci, i32 %indvars.iv.i.i.i.i)
   %i.ck = add i32 %smax.i.i.i, %indvars.iv116.i.i.i.i
-  %i.cl = and i32 %i.ck, -2
-  %i.cm = add i32 %i.cl, %indvars.iv.i.i.i.i      ; 4 uses
-  %i.cn = add i32 %i.cj, -1                       ; 2 uses
-  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cm, i32 %i.cn)
-  %7 = icmp sgt i32 %i.cm, %i.cn                  ; 2 uses
-  %umin.i.neg11.i.i = sext i1 %7 to i32
-  %8 = select i1 %7, i32 2, i32 0
-  %.neg.i.i = sub i32 %i.cm, %smin.i.i.i
-  %9 = add i32 %.neg.i.i, %umin.i.neg11.i.i
-  %10 = add i32 %9, %8
-  %i.co = and i32 %10, -2
+  %i.cl = and i32 %i.ck, -2                       ; 2 uses
+  %i.cm = add i32 %i.cl, %indvars.iv.i.i.i.i      ; 2 uses
+  %i.cn = add i32 %i.cl, %indvars.iv65.i.i.i
+  %8 = add i32 %i.cj, -1
+  %smin.i.i.i = call i32 @llvm.smin.i32(i32 %i.cm, i32 %8)
+  %.neg.i.i = sub i32 %i.cn, %smin.i.i.i
+  %i.co = and i32 %.neg.i.i, -2
   %i.cp = sub i32 %i.cm, %i.co                    ; 3 uses
   %i.cq = add nsw i32 %i.cp, %i.bj
   %i.cr = srem i32 %i.cq, 2                       ; 2 uses
@@ -13740,6 +13731,7 @@ _ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi5EXadsoA2_KmL_ZNS1_
   %indvars.iv.next.i.i.i.i = add i32 %indvars.iv.i.i.i.i, 1
   %indvars.iv.next117.i.i.i.i = add i32 %indvars.iv116.i.i.i.i, -1
   %exitcond131.not.i.i.i.i = icmp eq i32 %i.ic, 5
+  %indvars.iv.next66.i.i.i = add i32 %indvars.iv65.i.i.i, 1
   br i1 %exitcond131.not.i.i.i.i, label %_ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi5EXadsoA2_KmL_ZNS1_L17bayer_channel_mapEEEEE6WindowC2EiiRKNS0_8ImageBufEiiRA4_Kf.exit.i.i.i, label %.preheader90.i.i.i.i, !llvm.loop !1794
 
 .loopexit.i.i.i.i:                                ; preds = %_ZNKSt6vectorIN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi5EXadsoA2_KmL_ZNS2_L17bayer_channel_mapEEEEE6Window3RowESaIS8_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i, %bb.u
@@ -13943,6 +13935,7 @@ _ZN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi2ELi5EXadsoA2_KmL_ZNS1_
   %i.jx = add nsw i32 %.02152.i.i.i, 1            ; 2 uses
   %i.jy = load i32, ptr %i.g, align 4, !tbaa !405
   %i.jz = icmp slt i32 %i.jx, %i.jy
+  %indvars.iv.next.i.i.i = add i32 %indvars.iv.i.i.i, 1
   br i1 %i.jz, label %bb.d, label %._crit_edge55.i.i.i, !llvm.loop !1796
 
 bb.bf:                                            ; preds = %._crit_edge.i.i.i

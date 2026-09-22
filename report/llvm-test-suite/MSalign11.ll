@@ -59,7 +59,7 @@ bb.a:
   %i.b = ptrtoaddr ptr %7 to i64
   %i.c = load i32, ptr @penalty, align 4, !tbaa !10
   %i.d = sitofp i32 %i.c to float                 ; 15 uses
-  %i.e = add i32 %5, -1                           ; 6 uses
+  %i.e = add i32 %5, -1                           ; 5 uses
   %.val192 = load ptr, ptr %15, align 8, !tbaa !13 ; 3 uses
   %.val193 = load ptr, ptr %14, align 8, !tbaa !13 ; 3 uses
   %.not3.i = icmp eq i32 %4, 0
@@ -268,7 +268,7 @@ match_calc.exit200:                               ; preds = %.prol.loopexit285, 
   %i.de = sext i32 %i.aw to i64
   %i.df = getelementptr inbounds [8 x i8], ptr %0, i64 %i.de
   %i.dg = load ptr, ptr %i.df, align 8, !tbaa !22 ; 6 uses
-  %wide.trip.count244 = zext i32 %i.e to i64      ; 6 uses
+  %wide.trip.count244 = zext i32 %i.e to i64      ; 8 uses
   %min.iters.check = icmp ult i32 %5, 9
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -368,11 +368,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
 
 .lr.ph215.preheader:                              ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
   %i.ep = zext nneg i32 %i.e to i64               ; 4 uses
-  %18 = icmp ne i32 %i.e, 0
-  %.neg = sext i1 %18 to i64
-  %19 = zext nneg i32 %5 to i64
-  %20 = add nsw i64 %.neg, %19                    ; 3 uses
-  %min.iters.check272 = icmp ult i64 %20, 8
+  %min.iters.check272 = icmp ult i32 %5, 9
   br i1 %min.iters.check272, label %.lr.ph215.preheader283, label %vector.memcheck270
 
 vector.memcheck270:                               ; preds = %.lr.ph215.preheader
@@ -382,7 +378,7 @@ vector.memcheck270:                               ; preds = %.lr.ph215.preheader
   br i1 %diff.check, label %.lr.ph215.preheader283, label %vector.ph273
 
 vector.ph273:                                     ; preds = %vector.memcheck270
-  %n.vec274 = and i64 %20, -8                     ; 3 uses
+  %n.vec274 = and i64 %wide.trip.count244, 2147483640 ; 3 uses
   %i.es = sub nsw i64 %i.ep, %n.vec274
   br label %vector.body275
 
@@ -409,7 +405,7 @@ vector.body275:                                   ; preds = %vector.body275, %ve
   br i1 %i.fd, label %middle.block280, label %vector.body275, !llvm.loop !32
 
 middle.block280:                                  ; preds = %vector.body275
-  %cmp.n281 = icmp eq i64 %20, %n.vec274
+  %cmp.n281 = icmp eq i64 %n.vec274, %wide.trip.count244
   br i1 %cmp.n281, label %.lr.ph217.preheader, label %.lr.ph215.preheader283
 
 .lr.ph215.preheader283:                           ; preds = %vector.memcheck270, %.lr.ph215.preheader, %middle.block280

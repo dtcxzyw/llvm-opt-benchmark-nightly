@@ -204,7 +204,7 @@ middle.block274:                                  ; preds = %vector.body270
 
 get_tilt_comp.exit:                               ; preds = %long_term_filter.exit, %.loopexit.i57
   %.047.i = phi i32 [ %i.xq, %.loopexit.i57 ], [ 0, %long_term_filter.exit ] ; 3 uses
-  %i.xr = getelementptr inbounds nuw i8, ptr %7, i64 20 ; 5 uses
+  %i.xr = getelementptr inbounds nuw i8, ptr %7, i64 20 ; 6 uses
   %i.xs = call i32 @ff_celp_lp_synthesis_filter(ptr noundef nonnull %i.xr, ptr noundef nonnull %i.at, ptr noundef nonnull %i.jf, i32 noundef %9, i32 noundef 10, i32 noundef 0, i32 noundef 0, i32 noundef 2048) #7 ; 0 uses
   %i.xt = getelementptr inbounds [2 x i8], ptr %7, i64 %i.jg
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(20) %7, ptr noundef nonnull align 2 dereferenceable(20) %i.xt, i64 20, i1 false)
@@ -236,7 +236,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   %i.yg = ashr exact i32 %sext.i66, 16
   %i.yh = select i1 %i.ye, i32 32767, i32 %i.yg
   %i.yi = sdiv i32 %i.yc, %i.yh                   ; 3 uses
-  %i.yj = add nsw i32 %9, -1                      ; 4 uses
+  %i.yj = add nsw i32 %9, -1                      ; 2 uses
   %i.yk = sext i32 %i.yj to i64
   %i.yl = getelementptr inbounds [2 x i8], ptr %i.xr, i64 %i.yk
   %i.ym = load i16, ptr %i.yl, align 2, !tbaa !10
@@ -245,33 +245,25 @@ bb.x:                                             ; preds = %bb.w, %bb.v
 
 .lr.ph.i68:                                       ; preds = %bb.x
   %i.yo = and i32 %.037.i, -2                     ; 2 uses
-  %i.yp = zext i32 %i.yj to i64                   ; 5 uses
-  %10 = icmp ne i32 %i.yj, 0
-  %.neg = sext i1 %10 to i64
-  %11 = zext nneg i32 %9 to i64
-  %12 = add nsw i64 %.neg, %11                    ; 3 uses
-  %min.iters.check286 = icmp ult i64 %12, 8
+  %i.yp = zext i32 %i.yj to i64                   ; 7 uses
+  %min.iters.check286 = icmp ult i32 %9, 9
   br i1 %min.iters.check286, label %scalar.ph285.preheader, label %vector.memcheck277
 
 vector.memcheck277:                               ; preds = %.lr.ph.i68
-  %.not = icmp eq i32 %i.yj, 0
-  %13 = select i1 %.not, i64 0, i64 2             ; 2 uses
-  %scevgep278 = getelementptr i8, ptr %8, i64 %13
+  %scevgep278 = getelementptr i8, ptr %8, i64 2
   %i.yq = shl nuw nsw i64 %i.yp, 1                ; 2 uses
-  %14 = getelementptr i8, ptr %8, i64 %i.yq
-  %scevgep279 = getelementptr i8, ptr %14, i64 2
-  %i.yr = getelementptr i8, ptr %7, i64 %13
-  %scevgep280.a = getelementptr i8, ptr %i.yr, i64 18
+  %i.yr = getelementptr i8, ptr %8, i64 %i.yq
+  %scevgep280.a = getelementptr i8, ptr %i.yr, i64 2
   %i.ys = getelementptr i8, ptr %7, i64 %i.yq
   %scevgep281 = getelementptr i8, ptr %i.ys, i64 22
   %bound0282 = icmp ult ptr %scevgep278, %scevgep281
-  %bound1283 = icmp ult ptr %scevgep280.a, %scevgep279
+  %bound1283 = icmp ult ptr %i.xr, %scevgep280.a
   %found.conflict284 = and i1 %bound0282, %bound1283
   br i1 %found.conflict284, label %scalar.ph285.preheader, label %vector.ph287
 
 vector.ph287:                                     ; preds = %vector.memcheck277
-  %n.vec288 = and i64 %12, -8                     ; 3 uses
-  %15 = sub nsw i64 %i.yp, %n.vec288
+  %n.vec288 = and i64 %i.yp, 4294967288           ; 2 uses
+  %10 = and i64 %i.yp, 7
   %broadcast.splatinsert289 = insertelement <8 x i32> poison, i32 %i.yo, i64 0
   %broadcast.splatinsert291 = insertelement <8 x i32> poison, i32 %i.yi, i64 0
   %broadcast.splatinsert293 = insertelement <8 x i32> poison, i32 %.036.i, i64 0
@@ -308,11 +300,11 @@ vector.body297:                                   ; preds = %vector.body297, %ve
   br i1 %i.zm, label %middle.block305, label %vector.body297, !llvm.loop !41
 
 middle.block305:                                  ; preds = %vector.body297
-  %cmp.n306 = icmp eq i64 %12, %n.vec288
+  %cmp.n306 = icmp eq i64 %n.vec288, %i.yp
   br i1 %cmp.n306, label %apply_tilt_comp.exit, label %scalar.ph285.preheader
 
 scalar.ph285.preheader:                           ; preds = %vector.memcheck277, %.lr.ph.i68, %middle.block305
-  %indvars.iv.i69.ph = phi i64 [ %i.yp, %vector.memcheck277 ], [ %i.yp, %.lr.ph.i68 ], [ %15, %middle.block305 ]
+  %indvars.iv.i69.ph = phi i64 [ %i.yp, %vector.memcheck277 ], [ %i.yp, %.lr.ph.i68 ], [ %10, %middle.block305 ]
   br label %scalar.ph285
 
 scalar.ph285:                                     ; preds = %scalar.ph285.preheader, %scalar.ph285

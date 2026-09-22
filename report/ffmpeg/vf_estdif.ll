@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %.lr.ph157, %._crit_
   %i.ba = sext i32 %i.av to i64                   ; 2 uses
   %i.bb = mul nsw i64 %i.ba, %i.ah
   %i.bc = sdiv i64 %i.bb, %i.ai
-  %i.bd = trunc i64 %i.bc to i32                  ; 12 uses
+  %i.bd = trunc i64 %i.bc to i32                  ; 15 uses
   %i.be = mul nsw i64 %i.ba, %i.ak
   %i.bf = sdiv i64 %i.be, %i.ai
   %i.bg = trunc i64 %i.bf to i32                  ; 4 uses
@@ -240,7 +240,7 @@ bb.g:                                             ; preds = %.lr.ph, %bb.g
   br i1 %i.cb, label %bb.g, label %._crit_edge, !llvm.loop !75
 
 ._crit_edge:                                      ; preds = %bb.g, %bb.f
-  %i.cc = xor i32 %i.bh, %i.am                    ; 10 uses
+  %i.cc = xor i32 %i.bh, %i.am                    ; 13 uses
   %i.cd = add nsw i32 %i.cc, %i.bd                ; 3 uses
   %i.ce = icmp slt i32 %i.cd, %i.bg
   br i1 %i.ce, label %.lr.ph153, label %._crit_edge154
@@ -257,20 +257,26 @@ bb.g:                                             ; preds = %.lr.ph, %bb.g
   %i.cn = add i32 %i.cc, %i.bd
   %i.co = sub i32 6, %i.cn
   %i.cp = add nuw nsw i32 %i.cc, 5
-  %i.cq = add i32 %i.cp, %i.bd
-  %i.cr = add i32 %i.av, -1                       ; 6 uses
+  %4 = add i32 %i.cp, %i.bd
+  %5 = or disjoint i32 %i.cc, 6
+  %i.cq = add i32 %5, %i.bd
+  %i.cr = add i32 %i.av, -1                       ; 3 uses
   %i.cs = add nuw nsw i32 %i.cc, -3
   %i.ct = add i32 %i.cs, %i.bd
   %i.cu = add i32 %i.cc, %i.bd
   %i.cv = sub i32 4, %i.cu
   %i.cw = add nuw nsw i32 %i.cc, 3
-  %i.cx = add i32 %i.cw, %i.bd
+  %6 = add i32 %i.cw, %i.bd
+  %7 = or disjoint i32 %i.cc, 4
+  %i.cx = add i32 %7, %i.bd
   %i.cy = add nsw i32 %i.cc, -1
   %i.cz = add i32 %i.cy, %i.bd
   %i.da = add i32 %i.cc, %i.bd
   %i.db = sub i32 2, %i.da
   %i.dc = add nuw nsw i32 %i.cc, 1
-  %i.dd = add i32 %i.dc, %i.bd
+  %8 = add i32 %i.dc, %i.bd
+  %9 = or disjoint i32 %i.cc, 2
+  %i.dd = add i32 %9, %i.bd
   br label %.preheader142
 
 ._crit_edge154:                                   ; preds = %._crit_edge149, %._crit_edge
@@ -281,57 +287,45 @@ bb.g:                                             ; preds = %.lr.ph, %bb.g
   br i1 %i.dg, label %bb.f, label %._crit_edge158, !llvm.loop !76
 
 .preheader142:                                    ; preds = %.lr.ph153, %._crit_edge149
-  %indvars.iv177 = phi i32 [ %i.dd, %.lr.ph153 ], [ %indvars.iv.next178, %._crit_edge149 ] ; 5 uses
-  %indvars.iv175.a = phi i32 [ %i.db, %.lr.ph153 ], [ %indvars.iv.next176, %._crit_edge149 ] ; 2 uses
-  %indvars.iv172.a = phi i32 [ %i.cz, %.lr.ph153 ], [ %indvars.iv.next173, %._crit_edge149 ] ; 3 uses
-  %indvars.iv168.a = phi i32 [ %i.cx, %.lr.ph153 ], [ %indvars.iv.next169, %._crit_edge149 ] ; 5 uses
-  %indvars.iv166 = phi i32 [ %i.cv, %.lr.ph153 ], [ %indvars.iv.next167, %._crit_edge149 ] ; 2 uses
-  %indvars.iv163.a = phi i32 [ %i.ct, %.lr.ph153 ], [ %indvars.iv.next164, %._crit_edge149 ] ; 3 uses
-  %indvars.iv161.a = phi i32 [ %i.cq, %.lr.ph153 ], [ %indvars.iv.next162.a, %._crit_edge149 ] ; 5 uses
-  %indvars.iv159.a = phi i32 [ %i.co, %.lr.ph153 ], [ %indvars.iv.next160.a, %._crit_edge149 ] ; 2 uses
-  %indvars.iv.a = phi i32 [ %i.cm, %.lr.ph153 ], [ %indvars.iv.next.a, %._crit_edge149 ] ; 3 uses
-  %.0128151.a = phi i32 [ %i.cd, %.lr.ph153 ], [ %i.es, %._crit_edge149 ]
+  %indvars.iv177 = phi i32 [ %i.dd, %.lr.ph153 ], [ %indvars.iv.next178, %._crit_edge149 ] ; 2 uses
+  %indvars.iv175.a = phi i32 [ %8, %.lr.ph153 ], [ %indvars.iv.next176, %._crit_edge149 ] ; 3 uses
+  %indvars.iv172.a = phi i32 [ %i.db, %.lr.ph153 ], [ %indvars.iv.next173, %._crit_edge149 ] ; 2 uses
+  %indvars.iv168.a = phi i32 [ %i.cz, %.lr.ph153 ], [ %indvars.iv.next169, %._crit_edge149 ] ; 3 uses
+  %indvars.iv166 = phi i32 [ %i.cx, %.lr.ph153 ], [ %indvars.iv.next167, %._crit_edge149 ] ; 2 uses
+  %indvars.iv163.a = phi i32 [ %6, %.lr.ph153 ], [ %indvars.iv.next164, %._crit_edge149 ] ; 3 uses
+  %indvars.iv161.a = phi i32 [ %i.cv, %.lr.ph153 ], [ %indvars.iv.next162.a, %._crit_edge149 ] ; 2 uses
+  %indvars.iv159.a = phi i32 [ %i.ct, %.lr.ph153 ], [ %indvars.iv.next160.a, %._crit_edge149 ] ; 3 uses
+  %indvars.iv.a = phi i32 [ %i.cq, %.lr.ph153 ], [ %indvars.iv.next.a, %._crit_edge149 ] ; 2 uses
+  %.0128151.a = phi i32 [ %4, %.lr.ph153 ], [ %indvars.iv.next162, %._crit_edge149 ] ; 3 uses
+  %indvars.iv159 = phi i32 [ %i.co, %.lr.ph153 ], [ %indvars.iv.next160, %._crit_edge149 ] ; 2 uses
+  %indvars.iv = phi i32 [ %i.cm, %.lr.ph153 ], [ %indvars.iv.next, %._crit_edge149 ] ; 3 uses
+  %.0128151 = phi i32 [ %i.cd, %.lr.ph153 ], [ %i.es, %._crit_edge149 ]
   %.1150 = phi ptr [ %i.ch, %.lr.ph153 ], [ %i.er, %._crit_edge149 ] ; 2 uses
-  %smin179 = call i32 @llvm.smin.i32(i32 %indvars.iv177, i32 %i.cr)
-  %4 = icmp sgt i32 %indvars.iv177, %i.cr         ; 2 uses
-  %umin180 = zext i1 %4 to i32
-  %5 = add i32 %smin179, %umin180
-  %i.dh = sub i32 %indvars.iv177, %5
-  %6 = select i1 %4, i32 2, i32 0
-  %7 = add i32 %i.dh, %6
-  %i.di = and i32 %7, -2
-  %i.dj = sub i32 %indvars.iv177, %i.di
-  %smax174 = call i32 @llvm.smax.i32(i32 %indvars.iv172.a, i32 0)
-  %i.dk = add i32 %smax174, %indvars.iv175.a
+  %smin184 = call i32 @llvm.smin.i32(i32 %indvars.iv175.a, i32 %i.cr)
+  %i.dh = sub i32 %indvars.iv177, %smin184
+  %i.di = and i32 %i.dh, -2
+  %i.dj = sub i32 %indvars.iv175.a, %i.di
+  %smax174 = call i32 @llvm.smax.i32(i32 %indvars.iv168.a, i32 0)
+  %i.dk = add i32 %smax174, %indvars.iv172.a
   %i.dl = and i32 %i.dk, -2
-  %i.dm = add i32 %indvars.iv172.a, %i.dl
-  %smin170 = call i32 @llvm.smin.i32(i32 %indvars.iv168.a, i32 %i.cr)
-  %8 = icmp sgt i32 %indvars.iv168.a, %i.cr       ; 2 uses
-  %umin171 = zext i1 %8 to i32
-  %9 = add i32 %smin170, %umin171
-  %i.dn = sub i32 %indvars.iv168.a, %9
-  %10 = select i1 %8, i32 2, i32 0
-  %11 = add i32 %i.dn, %10
-  %i.do = and i32 %11, -2
-  %i.dp = sub i32 %indvars.iv168.a, %i.do
-  %smax165 = call i32 @llvm.smax.i32(i32 %indvars.iv163.a, i32 0)
-  %i.dq = add i32 %smax165, %indvars.iv166
+  %i.dm = add i32 %indvars.iv168.a, %i.dl
+  %smin170 = call i32 @llvm.smin.i32(i32 %indvars.iv163.a, i32 %i.cr)
+  %i.dn = sub i32 %indvars.iv166, %smin170
+  %i.do = and i32 %i.dn, -2
+  %i.dp = sub i32 %indvars.iv163.a, %i.do
+  %smax165 = call i32 @llvm.smax.i32(i32 %indvars.iv159.a, i32 0)
+  %i.dq = add i32 %smax165, %indvars.iv161.a
   %i.dr = and i32 %i.dq, -2
-  %i.ds = add i32 %indvars.iv163.a, %i.dr
-  %smin = call i32 @llvm.smin.i32(i32 %indvars.iv161.a, i32 %i.cr)
-  %12 = icmp sgt i32 %indvars.iv161.a, %i.cr      ; 2 uses
-  %umin = zext i1 %12 to i32
-  %13 = add i32 %smin, %umin
-  %i.dt = sub i32 %indvars.iv161.a, %13
-  %14 = select i1 %12, i32 2, i32 0
-  %15 = add i32 %i.dt, %14
-  %i.du = and i32 %15, -2
-  %i.dv = sub i32 %indvars.iv161.a, %i.du
+  %i.ds = add i32 %indvars.iv159.a, %i.dr
+  %smin = call i32 @llvm.smin.i32(i32 %.0128151.a, i32 %i.cr)
+  %i.dt = sub i32 %indvars.iv.a, %smin
+  %i.du = and i32 %i.dt, -2
+  %i.dv = sub i32 %.0128151.a, %i.du
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
-  %smax = call i32 @llvm.smax.i32(i32 %indvars.iv.a, i32 0)
-  %i.dw = add i32 %smax, %indvars.iv159.a
+  %smax = call i32 @llvm.smax.i32(i32 %indvars.iv, i32 0)
+  %i.dw = add i32 %smax, %indvars.iv159
   %i.dx = and i32 %i.dw, -2
-  %i.dy = add i32 %indvars.iv.a, %i.dx
+  %i.dy = add i32 %indvars.iv, %i.dx
   %i.dz = mul nsw i32 %i.dy, %i.ax
   %i.ea = sext i32 %i.dz to i64
   %i.eb = getelementptr inbounds i8, ptr %i.ap, i64 %i.ea
@@ -356,16 +350,19 @@ bb.g:                                             ; preds = %.lr.ph, %bb.g
 ._crit_edge149:                                   ; preds = %.lr.ph148, %.preheader142
   %i.er = getelementptr inbounds i8, ptr %.1150, i64 %i.ck
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
-  %i.es = add nsw i32 %.0128151.a, 2              ; 2 uses
+  %i.es = add nsw i32 %.0128151, 2                ; 2 uses
   %i.et = icmp slt i32 %i.es, %i.bg
+  %indvars.iv.next = add i32 %indvars.iv, 2
+  %indvars.iv.next160 = add i32 %indvars.iv159, -2
+  %indvars.iv.next162 = add i32 %.0128151.a, 2
   %indvars.iv.next.a = add i32 %indvars.iv.a, 2
-  %indvars.iv.next160.a = add i32 %indvars.iv159.a, -2
-  %indvars.iv.next162.a = add i32 %indvars.iv161.a, 2
+  %indvars.iv.next160.a = add i32 %indvars.iv159.a, 2
+  %indvars.iv.next162.a = add i32 %indvars.iv161.a, -2
   %indvars.iv.next164 = add i32 %indvars.iv163.a, 2
-  %indvars.iv.next167 = add i32 %indvars.iv166, -2
+  %indvars.iv.next167 = add i32 %indvars.iv166, 2
   %indvars.iv.next169 = add i32 %indvars.iv168.a, 2
-  %indvars.iv.next173 = add i32 %indvars.iv172.a, 2
-  %indvars.iv.next176 = add i32 %indvars.iv175.a, -2
+  %indvars.iv.next173 = add i32 %indvars.iv172.a, -2
+  %indvars.iv.next176 = add i32 %indvars.iv175.a, 2
   %indvars.iv.next178 = add i32 %indvars.iv177, 2
   br i1 %i.et, label %.preheader142, label %._crit_edge154, !llvm.loop !77
 
@@ -768,10 +765,10 @@ declare i32 @llvm.smax.i32(i32, i32) #9
 declare i32 @llvm.smin.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #9
+declare i64 @llvm.umin.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #9
+declare i32 @llvm.umin.i32(i32, i32) #9
 
 attributes #0 = { cold nounwind optsize uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
