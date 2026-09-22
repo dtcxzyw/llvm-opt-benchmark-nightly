@@ -204,14 +204,12 @@ bb.h:                                             ; preds = %bb.f
   %i.w = call ptr @proto_tree_add_uint(ptr noundef %i.n, i32 noundef %i.v, ptr noundef %0, i32 noundef %i.r, i32 noundef 4, i32 noundef %i.u)
   %i.x = load i32, ptr @ett_mv_set_value_list, align 4
   %i.y = call ptr @proto_item_add_subtree(ptr noundef %i.w, i32 noundef %i.x) ; 4 uses
-  %i.z = add nsw i32 %i.o, -4                     ; 3 uses
+  %i.z = add nsw i32 %i.o, -4                     ; 2 uses
   %.not98.i = icmp eq i32 %i.u, 0
   br i1 %.not98.i, label %._crit_edge.i, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.h
   %i.aa = add i32 %i.r, 4
-  %6 = shl i32 %i.u, 4                            ; 2 uses
-  %7 = sub i32 %i.z, %6
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.r, %.lr.ph.preheader.i
@@ -289,21 +287,18 @@ dissect_wccp2_mask_value_set_element.exit.thread53: ; preds = %dissect_wccp2_val
   br label %bb.s
 
 bb.r:                                             ; preds = %dissect_wccp2_value_element.exit.i
-  %i.bi = add nsw i32 %.16495.i, -16
+  %i.bi = add nsw i32 %.16495.i, -16              ; 2 uses
   %i.bj = add nsw i32 %.16196.i, 16
   %i.bk = add nuw nsw i32 %.05797.i, 1            ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.bk, %i.u
-  br i1 %exitcond.not.i, label %._crit_edge.loopexit.i, label %.lr.ph.i, !llvm.loop !31
+  br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !31
 
-._crit_edge.loopexit.i:                           ; preds = %bb.r
-  %8 = add i32 %6, 16
-  br label %._crit_edge.i
-
-._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %bb.h
-  %.pre-phi.i = phi i32 [ %8, %._crit_edge.loopexit.i ], [ 16, %bb.h ]
-  %.164.lcssa.i = phi i32 [ %7, %._crit_edge.loopexit.i ], [ %i.z, %bb.h ]
-  %9 = load ptr, ptr %i.a, align 8
-  call void @proto_item_set_len(ptr noundef %9, i32 noundef %.pre-phi.i)
+._crit_edge.i:                                    ; preds = %bb.r, %bb.h
+  %.pre-phi.i = phi i32 [ %i.z, %bb.h ], [ %i.bi, %bb.r ]
+  %6 = load ptr, ptr %i.a, align 8
+  %7 = shl i32 %i.u, 4
+  %8 = add i32 %7, 16
+  call void @proto_item_set_len(ptr noundef %6, i32 noundef %8)
   br label %dissect_wccp2_mask_value_set_element.exit
 
 dissect_wccp2_mask_value_set_element.exit.thread: ; preds = %.lr.ph, %bb.g, %bb.k, %bb.i, %bb.q, %bb.o, %bb.m
@@ -312,7 +307,7 @@ dissect_wccp2_mask_value_set_element.exit.thread: ; preds = %.lr.ph, %bb.g, %bb.
   br label %.thread
 
 dissect_wccp2_mask_value_set_element.exit:        ; preds = %bb.e, %._crit_edge.i
-  %.3.i = phi i32 [ %i.q, %bb.e ], [ %.164.lcssa.i, %._crit_edge.i ] ; 3 uses
+  %.3.i = phi i32 [ %i.q, %bb.e ], [ %.pre-phi.i, %._crit_edge.i ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   %i.bl = icmp slt i32 %.3.i, 0
   br i1 %i.bl, label %.thread, label %bb.s

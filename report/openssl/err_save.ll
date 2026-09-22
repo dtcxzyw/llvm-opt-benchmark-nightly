@@ -202,8 +202,7 @@ err_clear.exit93:                                 ; preds = %bb.k, %bb.l
   tail call void @CRYPTO_free(ptr noundef %i.do, ptr noundef nonnull @.str, i32 noundef 111) #6
   store ptr null, ptr %i.dn, align 8, !tbaa !11
   %indvars.iv.next112 = add nuw nsw i64 %indvars.iv111, 1 ; 2 uses
-  %1 = and i64 %indvars.iv.next112, 4294967295
-  %exitcond114.not = icmp eq i64 %1, 16
+  %exitcond114.not = icmp eq i64 %indvars.iv.next112, 16
   br i1 %exitcond114.not, label %.loopexit, label %bb.k, !llvm.loop !22
 
 .loopexit:                                        ; preds = %err_clear.exit93, %bb.j, %bb.a, %bb.e
