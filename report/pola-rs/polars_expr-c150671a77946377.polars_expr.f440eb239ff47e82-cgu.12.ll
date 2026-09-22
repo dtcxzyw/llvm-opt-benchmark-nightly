@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.x, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNvYB12_NtNtB8_3cmp10PartialOrd2ltECskY9G75ZWc4U_11polars_expr.exit.i, label %bb.l, !dbg !51624
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.y = add nuw i64 %.sroa.01.0.i.i65, 1, !dbg !51625 ; 2 uses
+  %i.y = add nuw nsw i64 %.sroa.01.0.i.i65, 1, !dbg !51625 ; 2 uses
   %exitcond.not = icmp eq i64 %i.y, %i.n, !dbg !51618
   br i1 %exitcond.not, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNvYB12_NtNtB8_3cmp10PartialOrd2ltECskY9G75ZWc4U_11polars_expr.exit.i, label %.lr.ph, !dbg !51618
 
@@ -219,7 +219,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.ad, label %bb.m, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNvYB12_NtNtB8_3cmp10PartialOrd2ltECskY9G75ZWc4U_11polars_expr.exit.i, !dbg !51630
 
 bb.m:                                             ; preds = %.lr.ph69
-  %i.ae = add nuw i64 %.sroa.01.1.i.i68, 1, !dbg !51631 ; 2 uses
+  %i.ae = add nuw nsw i64 %.sroa.01.1.i.i68, 1, !dbg !51631 ; 2 uses
   %exitcond95.not = icmp eq i64 %i.ae, %i.n, !dbg !51619
   br i1 %exitcond95.not, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNvYB12_NtNtB8_3cmp10PartialOrd2ltECskY9G75ZWc4U_11polars_expr.exit.i, label %.lr.ph69, !dbg !51619
 
@@ -622,7 +622,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %.not21.i.i42, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTNtNtCs2mZqlW55729_12polars_utils7float164pf16mENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_7sort_byNCINvNtB17_4sort18arg_sort_ascendingB13_mINtNtNtNtB8_4iter8adapters3map3MapINtNtNtB8_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4l_5BlockRSB13_E3new0EE0E0ECskY9G75ZWc4U_11polars_expr.exit.i, label %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164pf16mE7sort_byNCINvNtBD_4sort18arg_sort_ascendingBz_mINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2e_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3t_5BlockRSBz_E3new0EE0E0CskY9G75ZWc4U_11polars_expr.exit49, !dbg !52128
 
 _RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164pf16mE7sort_byNCINvNtBD_4sort18arg_sort_ascendingBz_mINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2e_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3t_5BlockRSBz_E3new0EE0E0CskY9G75ZWc4U_11polars_expr.exit49: ; preds = %bb.u, %.split.i.i45, %bb.s, %.lr.ph77
-  %i.ag = add nuw i64 %.sroa.01.0.i.i76, 1, !dbg !52130 ; 2 uses
+  %i.ag = add nuw nsw i64 %.sroa.01.0.i.i76, 1, !dbg !52130 ; 2 uses
   %exitcond103.not = icmp eq i64 %i.ag, %i.n, !dbg !52114
   br i1 %exitcond103.not, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTNtNtCs2mZqlW55729_12polars_utils7float164pf16mENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_7sort_byNCINvNtB17_4sort18arg_sort_ascendingB13_mINtNtNtNtB8_4iter8adapters3map3MapINtNtNtB8_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4l_5BlockRSB13_E3new0EE0E0ECskY9G75ZWc4U_11polars_expr.exit.i, label %.lr.ph77, !dbg !52114
 
@@ -666,7 +666,7 @@ bb.z:                                             ; preds = %bb.y
   br i1 %.not21.i.i, label %bb.aa, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTNtNtCs2mZqlW55729_12polars_utils7float164pf16mENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_7sort_byNCINvNtB17_4sort18arg_sort_ascendingB13_mINtNtNtNtB8_4iter8adapters3map3MapINtNtNtB8_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4l_5BlockRSB13_E3new0EE0E0ECskY9G75ZWc4U_11polars_expr.exit.i, !dbg !52143
 
 bb.aa:                                            ; preds = %bb.z, %bb.v, %.split.i.i, %bb.x
-  %i.aq = add nuw i64 %.sroa.01.1.i.i68, 1, !dbg !52145 ; 2 uses
+  %i.aq = add nuw nsw i64 %.sroa.01.1.i.i68, 1, !dbg !52145 ; 2 uses
   %exitcond.not = icmp eq i64 %i.aq, %i.n, !dbg !52115
   br i1 %exitcond.not, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTNtNtCs2mZqlW55729_12polars_utils7float164pf16mENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_7sort_byNCINvNtB17_4sort18arg_sort_ascendingB13_mINtNtNtNtB8_4iter8adapters3map3MapINtNtNtB8_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB4l_5BlockRSB13_E3new0EE0E0ECskY9G75ZWc4U_11polars_expr.exit.i, label %.lr.ph, !dbg !52115
 
@@ -1069,7 +1069,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not2.i.i.i39, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTdmENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_7sort_byNCINvNtCs2mZqlW55729_12polars_utils4sort18arg_sort_ascendingdmINtNtNtNtB8_4iter8adapters3map3MapINtNtNtB8_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3Y_5BlockRSdE3new0EE0E0ECskY9G75ZWc4U_11polars_expr.exit.i, label %bb.l, !dbg !52616
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.w = add nuw i64 %.sroa.01.0.i.i55, 1, !dbg !52621 ; 2 uses
+  %i.w = add nuw nsw i64 %.sroa.01.0.i.i55, 1, !dbg !52621 ; 2 uses
   %exitcond.not = icmp eq i64 %i.w, %i.n, !dbg !52614
   br i1 %exitcond.not, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTdmENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_7sort_byNCINvNtCs2mZqlW55729_12polars_utils4sort18arg_sort_ascendingdmINtNtNtNtB8_4iter8adapters3map3MapINtNtNtB8_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3Y_5BlockRSdE3new0EE0E0ECskY9G75ZWc4U_11polars_expr.exit.i, label %.lr.ph, !dbg !52614
 
@@ -1084,7 +1084,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %.not2.i.i.i, label %bb.m, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTdmENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_7sort_byNCINvNtCs2mZqlW55729_12polars_utils4sort18arg_sort_ascendingdmINtNtNtNtB8_4iter8adapters3map3MapINtNtNtB8_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3Y_5BlockRSdE3new0EE0E0ECskY9G75ZWc4U_11polars_expr.exit.i, !dbg !52622
 
 bb.m:                                             ; preds = %.lr.ph59
-  %i.aa = add nuw i64 %.sroa.01.1.i.i58, 1, !dbg !52627 ; 2 uses
+  %i.aa = add nuw nsw i64 %.sroa.01.1.i.i58, 1, !dbg !52627 ; 2 uses
   %exitcond79.not = icmp eq i64 %i.aa, %i.n, !dbg !52615
   br i1 %exitcond79.not, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTdmENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_7sort_byNCINvNtCs2mZqlW55729_12polars_utils4sort18arg_sort_ascendingdmINtNtNtNtB8_4iter8adapters3map3MapINtNtNtB8_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3Y_5BlockRSdE3new0EE0E0ECskY9G75ZWc4U_11polars_expr.exit.i, label %.lr.ph59, !dbg !52615
 
@@ -1477,7 +1477,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not2.i.i.i39, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTfmENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_7sort_byNCINvNtCs2mZqlW55729_12polars_utils4sort18arg_sort_ascendingfmINtNtNtNtB8_4iter8adapters3map3MapINtNtNtB8_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3Y_5BlockRSfE3new0EE0E0ECskY9G75ZWc4U_11polars_expr.exit.i, label %bb.l, !dbg !53092
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.w = add nuw i64 %.sroa.01.0.i.i55, 1, !dbg !53097 ; 2 uses
+  %i.w = add nuw nsw i64 %.sroa.01.0.i.i55, 1, !dbg !53097 ; 2 uses
   %exitcond.not = icmp eq i64 %i.w, %i.n, !dbg !53090
   br i1 %exitcond.not, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTfmENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_7sort_byNCINvNtCs2mZqlW55729_12polars_utils4sort18arg_sort_ascendingfmINtNtNtNtB8_4iter8adapters3map3MapINtNtNtB8_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3Y_5BlockRSfE3new0EE0E0ECskY9G75ZWc4U_11polars_expr.exit.i, label %.lr.ph, !dbg !53090
 
@@ -1492,7 +1492,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %.not2.i.i.i, label %bb.m, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTfmENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_7sort_byNCINvNtCs2mZqlW55729_12polars_utils4sort18arg_sort_ascendingfmINtNtNtNtB8_4iter8adapters3map3MapINtNtNtB8_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3Y_5BlockRSfE3new0EE0E0ECskY9G75ZWc4U_11polars_expr.exit.i, !dbg !53098
 
 bb.m:                                             ; preds = %.lr.ph59
-  %i.aa = add nuw i64 %.sroa.01.1.i.i58, 1, !dbg !53103 ; 2 uses
+  %i.aa = add nuw nsw i64 %.sroa.01.1.i.i58, 1, !dbg !53103 ; 2 uses
   %exitcond79.not = icmp eq i64 %i.aa, %i.n, !dbg !53091
   br i1 %exitcond79.not, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runTfmENCINvMNtCsgZ49sUHp3tW_5alloc5sliceSB12_7sort_byNCINvNtCs2mZqlW55729_12polars_utils4sort18arg_sort_ascendingfmINtNtNtNtB8_4iter8adapters3map3MapINtNtNtB8_3ops5range5RangejENCNvMs_NtNtCslFlrwjHoTci_14polars_compute7rolling15quantile_filterINtB3Y_5BlockRSfE3new0EE0E0ECskY9G75ZWc4U_11polars_expr.exit.i, label %.lr.ph59, !dbg !53091
 
@@ -1895,7 +1895,7 @@ _RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_
   br i1 %i.bu, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runmNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtB1S_10WindowExprNtB1U_12PhysicalExpr23evaluate_on_groups_impls2_0E0EB1W_.exit.i, label %bb.v, !dbg !53642
 
 bb.v:                                             ; preds = %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtBO_10WindowExprNtBQ_12PhysicalExpr23evaluate_on_groups_impls2_0E0BS_.exit47
-  %i.bv = add nuw i64 %.sroa.01.0.i.i174, 1, !dbg !53670 ; 2 uses
+  %i.bv = add nuw nsw i64 %.sroa.01.0.i.i174, 1, !dbg !53670 ; 2 uses
   %exitcond.not = icmp eq i64 %i.bv, %i.n, !dbg !53640
   br i1 %exitcond.not, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runmNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtB1S_10WindowExprNtB1U_12PhysicalExpr23evaluate_on_groups_impls2_0E0EB1W_.exit.i, label %.lr.ph, !dbg !53640
 
@@ -1959,7 +1959,7 @@ _RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_
   br i1 %i.cr, label %bb.ab, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runmNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtB1S_10WindowExprNtB1U_12PhysicalExpr23evaluate_on_groups_impls2_0E0EB1W_.exit.i, !dbg !53671
 
 bb.ab:                                            ; preds = %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtBO_10WindowExprNtBQ_12PhysicalExpr23evaluate_on_groups_impls2_0E0BS_.exit
-  %i.cs = add nuw i64 %.sroa.01.1.i.i176, 1, !dbg !53699 ; 2 uses
+  %i.cs = add nuw nsw i64 %.sroa.01.1.i.i176, 1, !dbg !53699 ; 2 uses
   %exitcond286.not = icmp eq i64 %i.cs, %i.n, !dbg !53641
   br i1 %exitcond286.not, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runmNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtB1S_10WindowExprNtB1U_12PhysicalExpr23evaluate_on_groups_impls2_0E0EB1W_.exit.i, label %.lr.ph177, !dbg !53641
 
@@ -2362,7 +2362,7 @@ _RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_
   br i1 %i.ev, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runmNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtB1S_10WindowExprNtB1U_12PhysicalExpr23evaluate_on_groups_impls3_0E0EB1W_.exit.i, label %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtBO_10WindowExprNtBQ_12PhysicalExpr23evaluate_on_groups_impls3_0E0BS_.exit54.thread, !dbg !54356
 
 _RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtBO_10WindowExprNtBQ_12PhysicalExpr23evaluate_on_groups_impls3_0E0BS_.exit54.thread: ; preds = %bb.ac, %bb.ad, %bb.ab, %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtBO_10WindowExprNtBQ_12PhysicalExpr23evaluate_on_groups_impls3_0E0BS_.exit54
-  %i.ew = add nuw i64 %.sroa.01.0.i.i189, 1, !dbg !54405 ; 2 uses
+  %i.ew = add nuw nsw i64 %.sroa.01.0.i.i189, 1, !dbg !54405 ; 2 uses
   %exitcond.not = icmp eq i64 %i.ew, %i.n, !dbg !54354
   br i1 %exitcond.not, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runmNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtB1S_10WindowExprNtB1U_12PhysicalExpr23evaluate_on_groups_impls3_0E0EB1W_.exit.i, label %bb.u, !dbg !54354
 
@@ -2480,7 +2480,7 @@ _RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_
   br i1 %i.ha, label %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtBO_10WindowExprNtBQ_12PhysicalExpr23evaluate_on_groups_impls3_0E0BS_.exit.thread78, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runmNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtB1S_10WindowExprNtB1U_12PhysicalExpr23evaluate_on_groups_impls3_0E0EB1W_.exit.i, !dbg !54406
 
 _RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtBO_10WindowExprNtBQ_12PhysicalExpr23evaluate_on_groups_impls3_0E0BS_.exit.thread78: ; preds = %bb.an, %bb.am, %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtBO_10WindowExprNtBQ_12PhysicalExpr23evaluate_on_groups_impls3_0E0BS_.exit
-  %i.hb = add nuw i64 %.sroa.01.1.i.i195, 1, !dbg !54455 ; 2 uses
+  %i.hb = add nuw nsw i64 %.sroa.01.1.i.i195, 1, !dbg !54455 ; 2 uses
   %exitcond301.not = icmp eq i64 %i.hb, %i.n, !dbg !54355
   br i1 %exitcond301.not, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runmNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtB1S_10WindowExprNtB1U_12PhysicalExpr23evaluate_on_groups_impls3_0E0EB1W_.exit.i, label %bb.ae, !dbg !54355
 
@@ -2522,11 +2522,11 @@ bb.ar:                                            ; preds = %bb.ao
 
 _RNvMNtCscgRAwXFJnXP_4core5sliceSm12split_at_mutCskY9G75ZWc4U_11polars_expr.exit11.preheader.i.i: ; preds = %bb.ar
   %i.hk = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %.sroa.0.0.i.i, !dbg !54472 ; 2 uses
-  %min.iters.check = icmp ult i64 %.sroa.0.0.i.i, 16, !dbg !54471
+  %min.iters.check = icmp samesign ult i64 %.sroa.0.0.i.i, 16, !dbg !54471
   br i1 %min.iters.check, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSm12split_at_mutCskY9G75ZWc4U_11polars_expr.exit11.i.i.preheader, label %vector.ph, !dbg !54471
 
 vector.ph:                                        ; preds = %_RNvMNtCscgRAwXFJnXP_4core5sliceSm12split_at_mutCskY9G75ZWc4U_11polars_expr.exit11.preheader.i.i
-  %n.vec = and i64 %i.hj, 9223372036854775800     ; 3 uses
+  %n.vec = and i64 %i.hj, 4611686018427387896     ; 3 uses
   br label %vector.body, !dbg !54471
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -2929,7 +2929,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ba, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runmNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtB1S_10WindowExprNtB1U_12PhysicalExpr23evaluate_on_groups_impls6_0E0EB1W_.exit.i, label %bb.l, !dbg !55017
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.bb = add nuw i64 %.sroa.01.0.i.i64, 1, !dbg !55034 ; 2 uses
+  %i.bb = add nuw nsw i64 %.sroa.01.0.i.i64, 1, !dbg !55034 ; 2 uses
   %exitcond.not = icmp eq i64 %i.bb, %i.n, !dbg !55015
   br i1 %exitcond.not, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runmNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtB1S_10WindowExprNtB1U_12PhysicalExpr23evaluate_on_groups_impls6_0E0EB1W_.exit.i, label %.lr.ph, !dbg !55015
 
@@ -2957,7 +2957,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.bo, label %bb.m, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runmNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtB1S_10WindowExprNtB1U_12PhysicalExpr23evaluate_on_groups_impls6_0E0EB1W_.exit.i, !dbg !55035
 
 bb.m:                                             ; preds = %.lr.ph68
-  %i.bp = add nuw i64 %.sroa.01.1.i.i67, 1, !dbg !55052 ; 2 uses
+  %i.bp = add nuw nsw i64 %.sroa.01.1.i.i67, 1, !dbg !55052 ; 2 uses
   %exitcond94.not = icmp eq i64 %i.bp, %i.n, !dbg !55016
   br i1 %exitcond94.not, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runmNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtB1S_10WindowExprNtB1U_12PhysicalExpr23evaluate_on_groups_impls6_0E0EB1W_.exit.i, label %.lr.ph68, !dbg !55016
 
@@ -3360,7 +3360,7 @@ _RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_
   br i1 %i.ed, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runmNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtB1S_10WindowExprNtB1U_12PhysicalExpr23evaluate_on_groups_impls7_0E0EB1W_.exit.i, label %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtBO_10WindowExprNtBQ_12PhysicalExpr23evaluate_on_groups_impls7_0E0BS_.exit49.thread, !dbg !55624
 
 _RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtBO_10WindowExprNtBQ_12PhysicalExpr23evaluate_on_groups_impls7_0E0BS_.exit49.thread: ; preds = %bb.q, %bb.r, %bb.p, %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtBO_10WindowExprNtBQ_12PhysicalExpr23evaluate_on_groups_impls7_0E0BS_.exit49
-  %i.ee = add nuw i64 %.sroa.01.0.i.i94, 1, !dbg !55665 ; 2 uses
+  %i.ee = add nuw nsw i64 %.sroa.01.0.i.i94, 1, !dbg !55665 ; 2 uses
   %exitcond.not = icmp eq i64 %i.ee, %i.n, !dbg !55622
   br i1 %exitcond.not, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runmNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtB1S_10WindowExprNtB1U_12PhysicalExpr23evaluate_on_groups_impls7_0E0EB1W_.exit.i, label %bb.o, !dbg !55622
 
@@ -3445,7 +3445,7 @@ _RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_
   br i1 %i.gb, label %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtBO_10WindowExprNtBQ_12PhysicalExpr23evaluate_on_groups_impls7_0E0BS_.exit.thread69, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runmNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtB1S_10WindowExprNtB1U_12PhysicalExpr23evaluate_on_groups_impls7_0E0EB1W_.exit.i, !dbg !55666
 
 _RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtBO_10WindowExprNtBQ_12PhysicalExpr23evaluate_on_groups_impls7_0E0BS_.exit.thread69: ; preds = %bb.v, %bb.u, %_RNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtBO_10WindowExprNtBQ_12PhysicalExpr23evaluate_on_groups_impls7_0E0BS_.exit
-  %i.gc = add nuw i64 %.sroa.01.1.i.i100, 1, !dbg !55707 ; 2 uses
+  %i.gc = add nuw nsw i64 %.sroa.01.1.i.i100, 1, !dbg !55707 ; 2 uses
   %exitcond128.not = icmp eq i64 %i.gc, %i.n, !dbg !55623
   br i1 %exitcond128.not, label %_RINvNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared17find_existing_runmNCINvMNtCsgZ49sUHp3tW_5alloc5sliceSm7sort_byNCNvXs_NtNtCskY9G75ZWc4U_11polars_expr11expressions6windowNtB1S_10WindowExprNtB1U_12PhysicalExpr23evaluate_on_groups_impls7_0E0EB1W_.exit.i, label %bb.s, !dbg !55623
 
@@ -3487,11 +3487,11 @@ bb.z:                                             ; preds = %bb.w
 
 _RNvMNtCscgRAwXFJnXP_4core5sliceSm12split_at_mutCskY9G75ZWc4U_11polars_expr.exit11.preheader.i.i: ; preds = %bb.z
   %i.gl = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %.sroa.0.0.i.i, !dbg !55724 ; 2 uses
-  %min.iters.check = icmp ult i64 %.sroa.0.0.i.i, 16, !dbg !55723
+  %min.iters.check = icmp samesign ult i64 %.sroa.0.0.i.i, 16, !dbg !55723
   br i1 %min.iters.check, label %_RNvMNtCscgRAwXFJnXP_4core5sliceSm12split_at_mutCskY9G75ZWc4U_11polars_expr.exit11.i.i.preheader, label %vector.ph, !dbg !55723
 
 vector.ph:                                        ; preds = %_RNvMNtCscgRAwXFJnXP_4core5sliceSm12split_at_mutCskY9G75ZWc4U_11polars_expr.exit11.preheader.i.i
-  %n.vec = and i64 %i.gk, 9223372036854775800     ; 3 uses
+  %n.vec = and i64 %i.gk, 4611686018427387896     ; 3 uses
   br label %vector.body, !dbg !55723
 
 vector.body:                                      ; preds = %vector.body, %vector.ph

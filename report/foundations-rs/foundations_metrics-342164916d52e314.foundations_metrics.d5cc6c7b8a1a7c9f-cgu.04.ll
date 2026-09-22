@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ae, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runTdINtNtNtB8_4sync6atomic6AtomicyEENCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNCINvMsb_NtNtCsim2LhUzKY4R_19foundations_metrics7metrics9histogramNtB2u_13TimeHistogram3newINtNtNtNtB8_4iter8adapters6copied6CopiedINtNtB6_4iter4IterdEEEs_0E0EB2y_.exit.i, label %bb.l, !dbg !452
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.af = add nuw i64 %.sroa.01.0.i.i45, 1, !dbg !461 ; 2 uses
+  %i.af = add nuw nsw i64 %.sroa.01.0.i.i45, 1, !dbg !461 ; 2 uses
   %exitcond.not = icmp eq i64 %i.af, %i.m, !dbg !450
   br i1 %exitcond.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runTdINtNtNtB8_4sync6atomic6AtomicyEENCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNCINvMsb_NtNtCsim2LhUzKY4R_19foundations_metrics7metrics9histogramNtB2u_13TimeHistogram3newINtNtNtNtB8_4iter8adapters6copied6CopiedINtNtB6_4iter4IterdEEEs_0E0EB2y_.exit.i, label %.lr.ph, !dbg !450
 
@@ -223,7 +223,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.an, label %bb.m, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runTdINtNtNtB8_4sync6atomic6AtomicyEENCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNCINvMsb_NtNtCsim2LhUzKY4R_19foundations_metrics7metrics9histogramNtB2u_13TimeHistogram3newINtNtNtNtB8_4iter8adapters6copied6CopiedINtNtB6_4iter4IterdEEEs_0E0EB2y_.exit.i, !dbg !462
 
 bb.m:                                             ; preds = %.lr.ph49
-  %i.ao = add nuw i64 %.sroa.01.1.i.i48, 1, !dbg !471 ; 2 uses
+  %i.ao = add nuw nsw i64 %.sroa.01.1.i.i48, 1, !dbg !471 ; 2 uses
   %exitcond65.not = icmp eq i64 %i.ao, %i.m, !dbg !451
   br i1 %exitcond65.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runTdINtNtNtB8_4sync6atomic6AtomicyEENCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNCINvMsb_NtNtCsim2LhUzKY4R_19foundations_metrics7metrics9histogramNtB2u_13TimeHistogram3newINtNtNtNtB8_4iter8adapters6copied6CopiedINtNtB6_4iter4IterdEEEs_0E0EB2y_.exit.i, label %.lr.ph49, !dbg !451
 
@@ -502,7 +502,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ae, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runTdyENCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNCINvMNtNtCsim2LhUzKY4R_19foundations_metrics7metrics9histogramNtB1X_9Histogram3newINtNtNtNtB8_4iter8adapters6copied6CopiedINtNtB6_4iter4IterdEEEs_0E0EB21_.exit.i, label %bb.l, !dbg !768
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.af = add nuw i64 %.sroa.01.0.i.i45, 1, !dbg !777 ; 2 uses
+  %i.af = add nuw nsw i64 %.sroa.01.0.i.i45, 1, !dbg !777 ; 2 uses
   %exitcond.not = icmp eq i64 %i.af, %i.m, !dbg !766
   br i1 %exitcond.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runTdyENCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNCINvMNtNtCsim2LhUzKY4R_19foundations_metrics7metrics9histogramNtB1X_9Histogram3newINtNtNtNtB8_4iter8adapters6copied6CopiedINtNtB6_4iter4IterdEEEs_0E0EB21_.exit.i, label %.lr.ph, !dbg !766
 
@@ -521,7 +521,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.an, label %bb.m, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runTdyENCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNCINvMNtNtCsim2LhUzKY4R_19foundations_metrics7metrics9histogramNtB1X_9Histogram3newINtNtNtNtB8_4iter8adapters6copied6CopiedINtNtB6_4iter4IterdEEEs_0E0EB21_.exit.i, !dbg !778
 
 bb.m:                                             ; preds = %.lr.ph49
-  %i.ao = add nuw i64 %.sroa.01.1.i.i48, 1, !dbg !787 ; 2 uses
+  %i.ao = add nuw nsw i64 %.sroa.01.1.i.i48, 1, !dbg !787 ; 2 uses
   %exitcond65.not = icmp eq i64 %i.ao, %i.m, !dbg !767
   br i1 %exitcond65.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runTdyENCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNCINvMNtNtCsim2LhUzKY4R_19foundations_metrics7metrics9histogramNtB1X_9Histogram3newINtNtNtNtB8_4iter8adapters6copied6CopiedINtNtB6_4iter4IterdEEEs_0E0EB21_.exit.i, label %.lr.ph49, !dbg !767
 
@@ -840,7 +840,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ae, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_rundNCINvMNtCs1xwejQucwHj_5alloc5sliceSd7sort_byNvMNtB8_3f64d9total_cmpE0ECsim2LhUzKY4R_19foundations_metrics.exit.i, label %bb.l, !dbg !1086
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.af = add nuw i64 %.sroa.01.0.i.i45, 1, !dbg !1095 ; 2 uses
+  %i.af = add nuw nsw i64 %.sroa.01.0.i.i45, 1, !dbg !1095 ; 2 uses
   %exitcond.not = icmp eq i64 %i.af, %i.m, !dbg !1084
   br i1 %exitcond.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_rundNCINvMNtCs1xwejQucwHj_5alloc5sliceSd7sort_byNvMNtB8_3f64d9total_cmpE0ECsim2LhUzKY4R_19foundations_metrics.exit.i, label %.lr.ph, !dbg !1084
 
@@ -859,7 +859,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.an, label %bb.m, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_rundNCINvMNtCs1xwejQucwHj_5alloc5sliceSd7sort_byNvMNtB8_3f64d9total_cmpE0ECsim2LhUzKY4R_19foundations_metrics.exit.i, !dbg !1096
 
 bb.m:                                             ; preds = %.lr.ph49
-  %i.ao = add nuw i64 %.sroa.01.1.i.i48, 1, !dbg !1105 ; 2 uses
+  %i.ao = add nuw nsw i64 %.sroa.01.1.i.i48, 1, !dbg !1105 ; 2 uses
   %exitcond65.not = icmp eq i64 %i.ao, %i.m, !dbg !1085
   br i1 %exitcond65.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_rundNCINvMNtCs1xwejQucwHj_5alloc5sliceSd7sort_byNvMNtB8_3f64d9total_cmpE0ECsim2LhUzKY4R_19foundations_metrics.exit.i, label %.lr.ph49, !dbg !1085
 

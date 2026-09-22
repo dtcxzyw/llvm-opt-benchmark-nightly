@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.u, label %_RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runNtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models7actions3AddNCINvMNtCs6Po7BT7Nknu_5alloc5sliceSB12_7sort_byNCNCNvNtNtB1a_10operations8optimize21build_compaction_plan0s0_0E0EB1a_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.v = add nuw i64 %.sroa.01.0.i.i47, 1         ; 2 uses
+  %i.v = add nuw nsw i64 %.sroa.01.0.i.i47, 1     ; 2 uses
   %exitcond.not = icmp eq i64 %i.v, %i.m
   br i1 %exitcond.not, label %_RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runNtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models7actions3AddNCINvMNtCs6Po7BT7Nknu_5alloc5sliceSB12_7sort_byNCNCNvNtNtB1a_10operations8optimize21build_compaction_plan0s0_0E0EB1a_.exit.i, label %.lr.ph
 
@@ -219,7 +219,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.y, label %bb.m, label %_RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runNtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models7actions3AddNCINvMNtCs6Po7BT7Nknu_5alloc5sliceSB12_7sort_byNCNCNvNtNtB1a_10operations8optimize21build_compaction_plan0s0_0E0EB1a_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph51
-  %i.z = add nuw i64 %.sroa.01.1.i.i50, 1         ; 2 uses
+  %i.z = add nuw nsw i64 %.sroa.01.1.i.i50, 1     ; 2 uses
   %exitcond67.not = icmp eq i64 %i.z, %i.m
   br i1 %exitcond67.not, label %_RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runNtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models7actions3AddNCINvMNtCs6Po7BT7Nknu_5alloc5sliceSB12_7sort_byNCNCNvNtNtB1a_10operations8optimize21build_compaction_plan0s0_0E0EB1a_.exit.i, label %.lr.ph51
 
@@ -486,7 +486,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.s, label %_RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runxNvYxNtNtB8_3cmp10PartialOrd2ltECs14kWLkQVSKO_14deltalake_core.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.t = add nuw i64 %.sroa.01.0.i.i47, 1         ; 2 uses
+  %i.t = add nuw nsw i64 %.sroa.01.0.i.i47, 1     ; 2 uses
   %exitcond.not = icmp eq i64 %i.t, %i.m
   br i1 %exitcond.not, label %_RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runxNvYxNtNtB8_3cmp10PartialOrd2ltECs14kWLkQVSKO_14deltalake_core.exit.i, label %.lr.ph
 
@@ -499,7 +499,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.v, label %bb.m, label %_RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runxNvYxNtNtB8_3cmp10PartialOrd2ltECs14kWLkQVSKO_14deltalake_core.exit.i
 
 bb.m:                                             ; preds = %.lr.ph51
-  %i.w = add nuw i64 %.sroa.01.1.i.i50, 1         ; 2 uses
+  %i.w = add nuw nsw i64 %.sroa.01.1.i.i50, 1     ; 2 uses
   %exitcond67.not = icmp eq i64 %i.w, %i.m
   br i1 %exitcond67.not, label %_RINvNtNtNtCsbvkFyIu7lgC_4core5slice4sort6shared17find_existing_runxNvYxNtNtB8_3cmp10PartialOrd2ltECs14kWLkQVSKO_14deltalake_core.exit.i, label %.lr.ph51
 

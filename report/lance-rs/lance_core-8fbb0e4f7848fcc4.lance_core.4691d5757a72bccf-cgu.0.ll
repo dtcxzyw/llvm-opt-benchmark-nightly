@@ -205,7 +205,7 @@ _RNCINvMNtCs40k4W9msRzi_5alloc5sliceSRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes
   br i1 %.sroa.0.1.in.i.i51, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5FieldNCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_11sort_by_keyTbllENCNvMs4_NtB17_6schemaNtB2Y_6Schema22unenforced_primary_keys_0E0EB19_.exit.i, label %bb.t
 
 bb.t:                                             ; preds = %_RNCINvMNtCs40k4W9msRzi_5alloc5sliceSRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5Field11sort_by_keyTbllENCNvMs4_NtBD_6schemaNtB1R_6Schema22unenforced_primary_keys_0E0BF_.exit54
-  %i.bo = add nuw i64 %.sroa.01.0.i.i83, 1        ; 2 uses
+  %i.bo = add nuw nsw i64 %.sroa.01.0.i.i83, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.bo, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5FieldNCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_11sort_by_keyTbllENCNvMs4_NtB17_6schemaNtB2Y_6Schema22unenforced_primary_keys_0E0EB19_.exit.i, label %.lr.ph
 
@@ -277,7 +277,7 @@ _RNCINvMNtCs40k4W9msRzi_5alloc5sliceSRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes
   br i1 %.sroa.0.1.in.i.i, label %bb.y, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5FieldNCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_11sort_by_keyTbllENCNvMs4_NtB17_6schemaNtB2Y_6Schema22unenforced_primary_keys_0E0EB19_.exit.i
 
 bb.y:                                             ; preds = %_RNCINvMNtCs40k4W9msRzi_5alloc5sliceSRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5Field11sort_by_keyTbllENCNvMs4_NtBD_6schemaNtB1R_6Schema22unenforced_primary_keys_0E0BF_.exit
-  %i.cp = add nuw i64 %.sroa.01.1.i.i85, 1        ; 2 uses
+  %i.cp = add nuw nsw i64 %.sroa.01.1.i.i85, 1    ; 2 uses
   %exitcond106.not = icmp eq i64 %i.cp, %i.n
   br i1 %exitcond106.not, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5FieldNCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_11sort_by_keyTbllENCNvMs4_NtB17_6schemaNtB2Y_6Schema22unenforced_primary_keys_0E0EB19_.exit.i, label %.lr.ph86
 
@@ -680,7 +680,7 @@ _RNCINvMNtCs40k4W9msRzi_5alloc5sliceSRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes
   br i1 %i.ap, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5FieldNCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_11sort_by_keymNCNvMs4_NtB17_6schemaNtB2U_6Schema25unenforced_clustering_keys_0E0EB19_.exit.i, label %_RNCINvMNtCs40k4W9msRzi_5alloc5sliceSRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5Field11sort_by_keymNCNvMs4_NtBD_6schemaNtB1N_6Schema25unenforced_clustering_keys_0E0BF_.exit43.thread
 
 _RNCINvMNtCs40k4W9msRzi_5alloc5sliceSRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5Field11sort_by_keymNCNvMs4_NtBD_6schemaNtB1N_6Schema25unenforced_clustering_keys_0E0BF_.exit43.thread: ; preds = %_RNCNvMs4_NtNtCs63DIHKhvmTb_10lance_core9datatypes6schemaNtB7_6Schema25unenforced_clustering_keys_0Bb_.exit.i40, %_RNCINvMNtCs40k4W9msRzi_5alloc5sliceSRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5Field11sort_by_keymNCNvMs4_NtBD_6schemaNtB1N_6Schema25unenforced_clustering_keys_0E0BF_.exit43
-  %i.aq = add nuw i64 %.sroa.01.0.i.i65, 1        ; 2 uses
+  %i.aq = add nuw nsw i64 %.sroa.01.0.i.i65, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.aq, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5FieldNCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_11sort_by_keymNCNvMs4_NtB17_6schemaNtB2U_6Schema25unenforced_clustering_keys_0E0EB19_.exit.i, label %.lr.ph
 
@@ -716,14 +716,14 @@ _RNCINvMNtCs40k4W9msRzi_5alloc5sliceSRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes
   br i1 %i.be, label %bb.o, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5FieldNCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_11sort_by_keymNCNvMs4_NtB17_6schemaNtB2U_6Schema25unenforced_clustering_keys_0E0EB19_.exit.i
 
 bb.o:                                             ; preds = %_RNCINvMNtCs40k4W9msRzi_5alloc5sliceSRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5Field11sort_by_keymNCNvMs4_NtBD_6schemaNtB1N_6Schema25unenforced_clustering_keys_0E0BF_.exit
-  %i.bf = add nuw i64 %.sroa.01.1.i.i67, 1        ; 2 uses
+  %i.bf = add nuw nsw i64 %.sroa.01.1.i.i67, 1    ; 2 uses
   %exitcond89.not = icmp eq i64 %i.bf, %i.n
   br i1 %exitcond89.not, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5FieldNCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_11sort_by_keymNCNvMs4_NtB17_6schemaNtB2U_6Schema25unenforced_clustering_keys_0E0EB19_.exit.i, label %.lr.ph68
 
 _RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5FieldNCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_11sort_by_keymNCNvMs4_NtB17_6schemaNtB2U_6Schema25unenforced_clustering_keys_0E0EB19_.exit.i: ; preds = %_RNCINvMNtCs40k4W9msRzi_5alloc5sliceSRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5Field11sort_by_keymNCNvMs4_NtBD_6schemaNtB1N_6Schema25unenforced_clustering_keys_0E0BF_.exit43.thread, %_RNCINvMNtCs40k4W9msRzi_5alloc5sliceSRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5Field11sort_by_keymNCNvMs4_NtBD_6schemaNtB1N_6Schema25unenforced_clustering_keys_0E0BF_.exit43, %bb.o, %_RNCINvMNtCs40k4W9msRzi_5alloc5sliceSRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5Field11sort_by_keymNCNvMs4_NtBD_6schemaNtB1N_6Schema25unenforced_clustering_keys_0E0BF_.exit, %_RNCNvMs4_NtNtCs63DIHKhvmTb_10lance_core9datatypes6schemaNtB7_6Schema25unenforced_clustering_keys_0Bb_.exit.i, %_RNCINvMNtCs40k4W9msRzi_5alloc5sliceSRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5Field11sort_by_keymNCNvMs4_NtBD_6schemaNtB1N_6Schema25unenforced_clustering_keys_0E0BF_.exit47.preheader, %.preheader
   %.sroa.3.0.i.i = phi i1 [ true, %.preheader ], [ false, %_RNCINvMNtCs40k4W9msRzi_5alloc5sliceSRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5Field11sort_by_keymNCNvMs4_NtBD_6schemaNtB1N_6Schema25unenforced_clustering_keys_0E0BF_.exit47.preheader ], [ true, %bb.o ], [ true, %_RNCNvMs4_NtNtCs63DIHKhvmTb_10lance_core9datatypes6schemaNtB7_6Schema25unenforced_clustering_keys_0Bb_.exit.i ], [ true, %_RNCINvMNtCs40k4W9msRzi_5alloc5sliceSRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5Field11sort_by_keymNCNvMs4_NtBD_6schemaNtB1N_6Schema25unenforced_clustering_keys_0E0BF_.exit ], [ false, %_RNCINvMNtCs40k4W9msRzi_5alloc5sliceSRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5Field11sort_by_keymNCNvMs4_NtBD_6schemaNtB1N_6Schema25unenforced_clustering_keys_0E0BF_.exit43 ], [ false, %_RNCINvMNtCs40k4W9msRzi_5alloc5sliceSRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5Field11sort_by_keymNCNvMs4_NtBD_6schemaNtB1N_6Schema25unenforced_clustering_keys_0E0BF_.exit43.thread ]
   %.sroa.0.0.i.i = phi i64 [ 2, %.preheader ], [ 2, %_RNCINvMNtCs40k4W9msRzi_5alloc5sliceSRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5Field11sort_by_keymNCNvMs4_NtBD_6schemaNtB1N_6Schema25unenforced_clustering_keys_0E0BF_.exit47.preheader ], [ %i.n, %bb.o ], [ %.sroa.01.1.i.i67, %_RNCINvMNtCs40k4W9msRzi_5alloc5sliceSRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5Field11sort_by_keymNCNvMs4_NtBD_6schemaNtB1N_6Schema25unenforced_clustering_keys_0E0BF_.exit ], [ %.sroa.01.1.i.i67, %_RNCNvMs4_NtNtCs63DIHKhvmTb_10lance_core9datatypes6schemaNtB7_6Schema25unenforced_clustering_keys_0Bb_.exit.i ], [ %.sroa.01.0.i.i65, %_RNCINvMNtCs40k4W9msRzi_5alloc5sliceSRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5Field11sort_by_keymNCNvMs4_NtBD_6schemaNtB1N_6Schema25unenforced_clustering_keys_0E0BF_.exit43 ], [ %i.n, %_RNCINvMNtCs40k4W9msRzi_5alloc5sliceSRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5Field11sort_by_keymNCNvMs4_NtBD_6schemaNtB1N_6Schema25unenforced_clustering_keys_0E0BF_.exit43.thread ] ; 9 uses
-  %i.bg = icmp ule i64 %.sroa.0.0.i.i, %i.n
+  %i.bg = icmp samesign ule i64 %.sroa.0.0.i.i, %i.n
   tail call void @llvm.assume(i1 %i.bg)
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
   br i1 %.not5.i, label %bb.i, label %bb.p
@@ -758,11 +758,11 @@ bb.s:                                             ; preds = %bb.p
 
 _RNvMNtCscI6d9CVNmLh_4core5sliceSRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5Field12split_at_mutBB_.exit11.preheader.i.i: ; preds = %bb.s
   %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.sroa.0.0.i.i ; 2 uses
-  %min.iters.check = icmp ult i64 %.sroa.0.0.i.i, 8
+  %min.iters.check = icmp samesign ult i64 %.sroa.0.0.i.i, 8
   br i1 %min.iters.check, label %_RNvMNtCscI6d9CVNmLh_4core5sliceSRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5Field12split_at_mutBB_.exit11.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %_RNvMNtCscI6d9CVNmLh_4core5sliceSRNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5Field12split_at_mutBB_.exit11.preheader.i.i
-  %n.vec = and i64 %i.bm, 9223372036854775804     ; 3 uses
+  %n.vec = and i64 %i.bm, 4611686018427387900     ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1147,7 +1147,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.t, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runmNvYmNtNtB8_3cmp10PartialOrd2ltECs63DIHKhvmTb_10lance_core.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.u = add nuw i64 %.sroa.01.0.i.i53, 1         ; 2 uses
+  %i.u = add nuw nsw i64 %.sroa.01.0.i.i53, 1     ; 2 uses
   %exitcond.not = icmp eq i64 %i.u, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runmNvYmNtNtB8_3cmp10PartialOrd2ltECs63DIHKhvmTb_10lance_core.exit.i, label %.lr.ph
 
@@ -1160,7 +1160,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.w, label %bb.m, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runmNvYmNtNtB8_3cmp10PartialOrd2ltECs63DIHKhvmTb_10lance_core.exit.i
 
 bb.m:                                             ; preds = %.lr.ph57
-  %i.x = add nuw i64 %.sroa.01.1.i.i56, 1         ; 2 uses
+  %i.x = add nuw nsw i64 %.sroa.01.1.i.i56, 1     ; 2 uses
   %exitcond77.not = icmp eq i64 %i.x, %i.n
   br i1 %exitcond77.not, label %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runmNvYmNtNtB8_3cmp10PartialOrd2ltECs63DIHKhvmTb_10lance_core.exit.i, label %.lr.ph57
 

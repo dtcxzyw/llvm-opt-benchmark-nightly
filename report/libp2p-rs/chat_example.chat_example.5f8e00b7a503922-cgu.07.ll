@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.u, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCNvMs6_NtCs1pSuea8KFR7_16libp2p_gossipsub9behaviourNtB2J_9Behaviour9heartbeats2_0E0ECsvMXERwWlfq_12chat_example.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.v = add nuw i64 %.sroa.01.0.i.i45, 1         ; 2 uses
+  %i.v = add nuw nsw i64 %.sroa.01.0.i.i45, 1     ; 2 uses
   %exitcond.not = icmp eq i64 %i.v, %i.m
   br i1 %exitcond.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCNvMs6_NtCs1pSuea8KFR7_16libp2p_gossipsub9behaviourNtB2J_9Behaviour9heartbeats2_0E0ECsvMXERwWlfq_12chat_example.exit.i, label %.lr.ph
 
@@ -218,7 +218,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.z, label %bb.m, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCNvMs6_NtCs1pSuea8KFR7_16libp2p_gossipsub9behaviourNtB2J_9Behaviour9heartbeats2_0E0ECsvMXERwWlfq_12chat_example.exit.i
 
 bb.m:                                             ; preds = %.lr.ph49
-  %i.aa = add nuw i64 %.sroa.01.1.i.i48, 1        ; 2 uses
+  %i.aa = add nuw nsw i64 %.sroa.01.1.i.i48, 1    ; 2 uses
   %exitcond65.not = icmp eq i64 %i.aa, %i.m
   br i1 %exitcond65.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCNvMs6_NtCs1pSuea8KFR7_16libp2p_gossipsub9behaviourNtB2J_9Behaviour9heartbeats2_0E0ECsvMXERwWlfq_12chat_example.exit.i, label %.lr.ph49
 
@@ -545,7 +545,7 @@ _RNvYNvYNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtCskKLDkoKarTP_4cor
   br i1 %.sroa.0.0.i.i.i.i35, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNvYB12_NtNtB8_3cmp10PartialOrd2ltECsvMXERwWlfq_12chat_example.exit.i, label %bb.n
 
 bb.n:                                             ; preds = %.split41, %_RNvYNvYNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBX_3ops8function5FnMutTRB5_B23_EE8call_mutCsvMXERwWlfq_12chat_example.exit36
-  %i.av = add nuw i64 %.sroa.01.0.i.i53, 1        ; 2 uses
+  %i.av = add nuw nsw i64 %.sroa.01.0.i.i53, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.av, %i.m
   br i1 %exitcond.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNvYB12_NtNtB8_3cmp10PartialOrd2ltECsvMXERwWlfq_12chat_example.exit.i, label %.lr.ph
 
@@ -590,14 +590,14 @@ _RNvYNvYNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtCskKLDkoKarTP_4cor
   br i1 %.sroa.0.0.i.i.i.i, label %bb.p, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNvYB12_NtNtB8_3cmp10PartialOrd2ltECsvMXERwWlfq_12chat_example.exit.i
 
 bb.p:                                             ; preds = %.split42, %_RNvYNvYNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBX_3ops8function5FnMutTRB5_B23_EE8call_mutCsvMXERwWlfq_12chat_example.exit
-  %i.bn = add nuw i64 %.sroa.01.1.i.i56, 1        ; 2 uses
+  %i.bn = add nuw nsw i64 %.sroa.01.1.i.i56, 1    ; 2 uses
   %exitcond74.not = icmp eq i64 %i.bn, %i.m
   br i1 %exitcond74.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNvYB12_NtNtB8_3cmp10PartialOrd2ltECsvMXERwWlfq_12chat_example.exit.i, label %.lr.ph57
 
 _RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNvYB12_NtNtB8_3cmp10PartialOrd2ltECsvMXERwWlfq_12chat_example.exit.i: ; preds = %bb.n, %_RNvYNvYNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBX_3ops8function5FnMutTRB5_B23_EE8call_mutCsvMXERwWlfq_12chat_example.exit36, %.split41, %bb.p, %_RNvYNvYNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBX_3ops8function5FnMutTRB5_B23_EE8call_mutCsvMXERwWlfq_12chat_example.exit, %.split42, %.preheader51, %.preheader
   %.sroa.3.0.i.i = phi i1 [ true, %.preheader ], [ false, %.preheader51 ], [ true, %bb.p ], [ true, %.split42 ], [ true, %_RNvYNvYNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBX_3ops8function5FnMutTRB5_B23_EE8call_mutCsvMXERwWlfq_12chat_example.exit ], [ false, %.split41 ], [ false, %_RNvYNvYNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBX_3ops8function5FnMutTRB5_B23_EE8call_mutCsvMXERwWlfq_12chat_example.exit36 ], [ false, %bb.n ]
   %.sroa.0.0.i.i = phi i64 [ 2, %.preheader ], [ 2, %.preheader51 ], [ %i.m, %bb.p ], [ %.sroa.01.1.i.i56, %_RNvYNvYNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBX_3ops8function5FnMutTRB5_B23_EE8call_mutCsvMXERwWlfq_12chat_example.exit ], [ %.sroa.01.1.i.i56, %.split42 ], [ %i.m, %bb.n ], [ %.sroa.01.0.i.i53, %_RNvYNvYNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBX_3ops8function5FnMutTRB5_B23_EE8call_mutCsvMXERwWlfq_12chat_example.exit36 ], [ %.sroa.01.0.i.i53, %.split41 ] ; 7 uses
-  %i.bo = icmp ule i64 %.sroa.0.0.i.i, %i.m
+  %i.bo = icmp samesign ule i64 %.sroa.0.0.i.i, %i.m
   tail call void @llvm.assume(i1 %i.bo)
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
   br i1 %.not5.i, label %bb.i, label %bb.q
@@ -852,7 +852,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.u, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runRNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCNvMs6_NtCs1pSuea8KFR7_16libp2p_gossipsub9behaviourNtB2K_9Behaviour9heartbeats7_0E0ECsvMXERwWlfq_12chat_example.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.v = add nuw i64 %.sroa.01.0.i.i45, 1         ; 2 uses
+  %i.v = add nuw nsw i64 %.sroa.01.0.i.i45, 1     ; 2 uses
   %exitcond.not = icmp eq i64 %i.v, %i.m
   br i1 %exitcond.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runRNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCNvMs6_NtCs1pSuea8KFR7_16libp2p_gossipsub9behaviourNtB2K_9Behaviour9heartbeats7_0E0ECsvMXERwWlfq_12chat_example.exit.i, label %.lr.ph
 
@@ -865,7 +865,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.z, label %bb.m, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runRNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCNvMs6_NtCs1pSuea8KFR7_16libp2p_gossipsub9behaviourNtB2K_9Behaviour9heartbeats7_0E0ECsvMXERwWlfq_12chat_example.exit.i
 
 bb.m:                                             ; preds = %.lr.ph49
-  %i.aa = add nuw i64 %.sroa.01.1.i.i48, 1        ; 2 uses
+  %i.aa = add nuw nsw i64 %.sroa.01.1.i.i48, 1    ; 2 uses
   %exitcond65.not = icmp eq i64 %i.aa, %i.m
   br i1 %exitcond65.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runRNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCNvMs6_NtCs1pSuea8KFR7_16libp2p_gossipsub9behaviourNtB2K_9Behaviour9heartbeats7_0E0ECsvMXERwWlfq_12chat_example.exit.i, label %.lr.ph49
 

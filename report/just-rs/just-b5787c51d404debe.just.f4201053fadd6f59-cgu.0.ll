@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ak, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runNtNtCsaKJjC64KgbL_3std4path7PathBufNvYB12_NtNtB8_3cmp10PartialOrd2ltECskXtk6F4WjxZ_4just.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.al = add nuw i64 %.sroa.01.0.i.i62, 1        ; 2 uses
+  %i.al = add nuw nsw i64 %.sroa.01.0.i.i62, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.al, %i.x
   br i1 %exitcond.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runNtNtCsaKJjC64KgbL_3std4path7PathBufNvYB12_NtNtB8_3cmp10PartialOrd2ltECskXtk6F4WjxZ_4just.exit.i, label %.lr.ph
 
@@ -229,7 +229,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.aq, label %bb.m, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runNtNtCsaKJjC64KgbL_3std4path7PathBufNvYB12_NtNtB8_3cmp10PartialOrd2ltECskXtk6F4WjxZ_4just.exit.i
 
 bb.m:                                             ; preds = %.lr.ph66
-  %i.ar = add nuw i64 %.sroa.01.1.i.i65, 1        ; 2 uses
+  %i.ar = add nuw nsw i64 %.sroa.01.1.i.i65, 1    ; 2 uses
   %exitcond92.not = icmp eq i64 %i.ar, %i.x
   br i1 %exitcond92.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runNtNtCsaKJjC64KgbL_3std4path7PathBufNvYB12_NtNtB8_3cmp10PartialOrd2ltECskXtk6F4WjxZ_4just.exit.i, label %.lr.ph66
 
@@ -632,7 +632,7 @@ _RNvYNvYNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtCsj6eKBz9Db1c_4core3c
   br i1 %i.bx, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i, label %bb.n
 
 bb.n:                                             ; preds = %_RNvYNvYNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtCsj6eKBz9Db1c_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutB9_.exit52
-  %i.by = add nuw i64 %.sroa.01.0.i.i88, 1        ; 2 uses
+  %i.by = add nuw nsw i64 %.sroa.01.0.i.i88, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.by, %umax
   br i1 %exitcond.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i, label %.lr.ph
 
@@ -709,7 +709,7 @@ _RNvYNvYNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtCsj6eKBz9Db1c_4core3c
   br i1 %i.dd, label %bb.p, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i
 
 bb.p:                                             ; preds = %_RNvYNvYNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtCsj6eKBz9Db1c_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutB9_.exit
-  %i.de = add nuw i64 %.sroa.01.1.i.i90, 1        ; 2 uses
+  %i.de = add nuw nsw i64 %.sroa.01.1.i.i90, 1    ; 2 uses
   %exitcond116.not = icmp eq i64 %i.de, %umax115
   br i1 %exitcond116.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i, label %.lr.ph91
 
@@ -1112,7 +1112,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.t, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runNtNtCskXtk6F4WjxZ_4just6signal6SignalNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.u = add nuw i64 %.sroa.01.0.i.i51, 1         ; 2 uses
+  %i.u = add nuw nsw i64 %.sroa.01.0.i.i51, 1     ; 2 uses
   %exitcond.not = icmp eq i64 %i.u, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runNtNtCskXtk6F4WjxZ_4just6signal6SignalNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i, label %.lr.ph
 
@@ -1125,7 +1125,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.w, label %bb.m, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runNtNtCskXtk6F4WjxZ_4just6signal6SignalNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph55
-  %i.x = add nuw i64 %.sroa.01.1.i.i54, 1         ; 2 uses
+  %i.x = add nuw nsw i64 %.sroa.01.1.i.i54, 1     ; 2 uses
   %exitcond75.not = icmp eq i64 %i.x, %i.n
   br i1 %exitcond75.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runNtNtCskXtk6F4WjxZ_4just6signal6SignalNvYB12_NtNtB8_3cmp10PartialOrd2ltEB16_.exit.i, label %.lr.ph55
 
@@ -1528,7 +1528,7 @@ _RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just6recipe6Recipe11sor
   br i1 %.sroa.0.0.i.i51, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runRNtNtCskXtk6F4WjxZ_4just6recipe6RecipeNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_11sort_by_keyTRINtNtB1M_3vec3VecjEjENCNvMNtB17_8justfileNtB2W_8Justfile14public_recipess_0E0EB17_.exit.i, label %bb.n
 
 bb.n:                                             ; preds = %_RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just6recipe6Recipe11sort_by_keyTRINtNtB7_3vec3VecjEjENCNvMNtBD_8justfileNtB1O_8Justfile14public_recipess_0E0BD_.exit54
-  %i.ax = add nuw i64 %.sroa.01.0.i.i96, 1        ; 2 uses
+  %i.ax = add nuw nsw i64 %.sroa.01.0.i.i96, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.ax, %umax
   br i1 %exitcond.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runRNtNtCskXtk6F4WjxZ_4just6recipe6RecipeNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_11sort_by_keyTRINtNtB1M_3vec3VecjEjENCNvMNtB17_8justfileNtB2W_8Justfile14public_recipess_0E0EB17_.exit.i, label %.lr.ph
 
@@ -1589,7 +1589,7 @@ _RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just6recipe6Recipe11sor
   br i1 %.sroa.0.0.i.i37, label %bb.p, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runRNtNtCskXtk6F4WjxZ_4just6recipe6RecipeNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_11sort_by_keyTRINtNtB1M_3vec3VecjEjENCNvMNtB17_8justfileNtB2W_8Justfile14public_recipess_0E0EB17_.exit.i
 
 bb.p:                                             ; preds = %_RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just6recipe6Recipe11sort_by_keyTRINtNtB7_3vec3VecjEjENCNvMNtBD_8justfileNtB1O_8Justfile14public_recipess_0E0BD_.exit
-  %i.bo = add nuw i64 %.sroa.01.1.i.i98, 1        ; 2 uses
+  %i.bo = add nuw nsw i64 %.sroa.01.1.i.i98, 1    ; 2 uses
   %exitcond129.not = icmp eq i64 %i.bo, %umax128
   br i1 %exitcond129.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runRNtNtCskXtk6F4WjxZ_4just6recipe6RecipeNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_11sort_by_keyTRINtNtB1M_3vec3VecjEjENCNvMNtB17_8justfileNtB2W_8Justfile14public_recipess_0E0EB17_.exit.i, label %.lr.ph99
 
@@ -1992,7 +1992,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.t, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runRNtNtCskXtk6F4WjxZ_4just7binding7BindingNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_11sort_by_keyReNCNvMNtB17_8justfileNtB2D_8Justfile3runs0_0E0EB17_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.u = add nuw i64 %.sroa.01.0.i.i129, 1        ; 2 uses
+  %i.u = add nuw nsw i64 %.sroa.01.0.i.i129, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.u, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runRNtNtCskXtk6F4WjxZ_4just7binding7BindingNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_11sort_by_keyReNCNvMNtB17_8justfileNtB2D_8Justfile3runs0_0E0EB17_.exit.i, label %.lr.ph
 
@@ -2005,7 +2005,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.w, label %bb.m, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runRNtNtCskXtk6F4WjxZ_4just7binding7BindingNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_11sort_by_keyReNCNvMNtB17_8justfileNtB2D_8Justfile3runs0_0E0EB17_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph133
-  %i.x = add nuw i64 %.sroa.01.1.i.i132, 1        ; 2 uses
+  %i.x = add nuw nsw i64 %.sroa.01.1.i.i132, 1    ; 2 uses
   %exitcond209.not = icmp eq i64 %i.x, %i.n
   br i1 %exitcond209.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runRNtNtCskXtk6F4WjxZ_4just7binding7BindingNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_11sort_by_keyReNCNvMNtB17_8justfileNtB2D_8Justfile3runs0_0E0EB17_.exit.i, label %.lr.ph133
 
@@ -2408,7 +2408,7 @@ _RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just8justfile8Justfile1
   br i1 %i.v, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runRNtNtCskXtk6F4WjxZ_4just8justfile8JustfileNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_11sort_by_keyjNCNvMB15_B13_14public_moduless_0E0EB17_.exit.i, label %_RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just8justfile8Justfile11sort_by_keyjNCNvMBB_Bz_14public_moduless_0E0BD_.exit52.thread
 
 _RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just8justfile8Justfile11sort_by_keyjNCNvMBB_Bz_14public_moduless_0E0BD_.exit52.thread: ; preds = %_RNCNvMNtCskXtk6F4WjxZ_4just8justfileNtB4_8Justfile14public_moduless_0B6_.exit.i44, %_RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just8justfile8Justfile11sort_by_keyjNCNvMBB_Bz_14public_moduless_0E0BD_.exit52
-  %i.w = add nuw i64 %.sroa.01.0.i.i87, 1         ; 2 uses
+  %i.w = add nuw nsw i64 %.sroa.01.0.i.i87, 1     ; 2 uses
   %exitcond108.not = icmp eq i64 %i.w, %i.n
   br i1 %exitcond108.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runRNtNtCskXtk6F4WjxZ_4just8justfile8JustfileNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_11sort_by_keyjNCNvMB15_B13_14public_moduless_0E0EB17_.exit.i, label %.lr.ph88
 
@@ -2444,14 +2444,14 @@ _RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just8justfile8Justfile1
   br i1 %i.aa, label %bb.o, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runRNtNtCskXtk6F4WjxZ_4just8justfile8JustfileNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_11sort_by_keyjNCNvMB15_B13_14public_moduless_0E0EB17_.exit.i
 
 bb.o:                                             ; preds = %_RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just8justfile8Justfile11sort_by_keyjNCNvMBB_Bz_14public_moduless_0E0BD_.exit
-  %i.ab = add nuw i64 %.sroa.01.1.i.i84, 1        ; 2 uses
+  %i.ab = add nuw nsw i64 %.sroa.01.1.i.i84, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.ab, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runRNtNtCskXtk6F4WjxZ_4just8justfile8JustfileNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_11sort_by_keyjNCNvMB15_B13_14public_moduless_0E0EB17_.exit.i, label %.lr.ph
 
 _RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runRNtNtCskXtk6F4WjxZ_4just8justfile8JustfileNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_11sort_by_keyjNCNvMB15_B13_14public_moduless_0E0EB17_.exit.i: ; preds = %bb.o, %_RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just8justfile8Justfile11sort_by_keyjNCNvMBB_Bz_14public_moduless_0E0BD_.exit, %_RNCNvMNtCskXtk6F4WjxZ_4just8justfileNtB4_8Justfile14public_moduless_0B6_.exit.i, %_RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just8justfile8Justfile11sort_by_keyjNCNvMBB_Bz_14public_moduless_0E0BD_.exit52.thread, %_RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just8justfile8Justfile11sort_by_keyjNCNvMBB_Bz_14public_moduless_0E0BD_.exit52, %.preheader, %_RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just8justfile8Justfile11sort_by_keyjNCNvMBB_Bz_14public_moduless_0E0BD_.exit66.preheader
   %.sroa.3.0.i.i = phi i1 [ false, %_RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just8justfile8Justfile11sort_by_keyjNCNvMBB_Bz_14public_moduless_0E0BD_.exit66.preheader ], [ false, %_RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just8justfile8Justfile11sort_by_keyjNCNvMBB_Bz_14public_moduless_0E0BD_.exit52.thread ], [ true, %.preheader ], [ false, %_RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just8justfile8Justfile11sort_by_keyjNCNvMBB_Bz_14public_moduless_0E0BD_.exit52 ], [ true, %_RNCNvMNtCskXtk6F4WjxZ_4just8justfileNtB4_8Justfile14public_moduless_0B6_.exit.i ], [ true, %_RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just8justfile8Justfile11sort_by_keyjNCNvMBB_Bz_14public_moduless_0E0BD_.exit ], [ true, %bb.o ]
   %.sroa.0.0.i.i = phi i64 [ 2, %_RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just8justfile8Justfile11sort_by_keyjNCNvMBB_Bz_14public_moduless_0E0BD_.exit66.preheader ], [ %i.n, %_RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just8justfile8Justfile11sort_by_keyjNCNvMBB_Bz_14public_moduless_0E0BD_.exit52.thread ], [ 2, %.preheader ], [ %.sroa.01.0.i.i87, %_RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just8justfile8Justfile11sort_by_keyjNCNvMBB_Bz_14public_moduless_0E0BD_.exit52 ], [ %.sroa.01.1.i.i84, %_RNCNvMNtCskXtk6F4WjxZ_4just8justfileNtB4_8Justfile14public_moduless_0B6_.exit.i ], [ %i.n, %bb.o ], [ %.sroa.01.1.i.i84, %_RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just8justfile8Justfile11sort_by_keyjNCNvMBB_Bz_14public_moduless_0E0BD_.exit ] ; 9 uses
-  %i.ac = icmp ule i64 %.sroa.0.0.i.i, %i.n
+  %i.ac = icmp samesign ule i64 %.sroa.0.0.i.i, %i.n
   tail call void @llvm.assume(i1 %i.ac)
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
   br i1 %.not5.i, label %bb.i, label %bb.p
@@ -2486,11 +2486,11 @@ bb.s:                                             ; preds = %bb.p
 
 _RNvMNtCsj6eKBz9Db1c_4core5sliceSRNtNtCskXtk6F4WjxZ_4just8justfile8Justfile12split_at_mutBz_.exit11.preheader.i.i: ; preds = %bb.s
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.sroa.0.0.i.i ; 2 uses
-  %min.iters.check = icmp ult i64 %.sroa.0.0.i.i, 8
+  %min.iters.check = icmp samesign ult i64 %.sroa.0.0.i.i, 8
   br i1 %min.iters.check, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSRNtNtCskXtk6F4WjxZ_4just8justfile8Justfile12split_at_mutBz_.exit11.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSRNtNtCskXtk6F4WjxZ_4just8justfile8Justfile12split_at_mutBz_.exit11.preheader.i.i
-  %n.vec = and i64 %i.ai, 9223372036854775804     ; 3 uses
+  %n.vec = and i64 %i.ai, 4611686018427387900     ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -2893,7 +2893,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ag, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTNtNtCs4wP2HXfJTCR_5alloc6string6StringB13_ENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB2p_8BTreeMapB13_B13_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB3s_8adapters5chain5ChainINtNtB4p_3map3MapINtB2p_4IterB13_B13_ENCNvMNtCskXtk6F4WjxZ_4just8justfileNtB5x_8Justfile15evaluate_scopes0EINtB2p_8IntoIterB13_B13_EEE0E0EB5z_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.ah = add nuw i64 %.sroa.01.0.i.i55, 1        ; 2 uses
+  %i.ah = add nuw nsw i64 %.sroa.01.0.i.i55, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.ah, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTNtNtCs4wP2HXfJTCR_5alloc6string6StringB13_ENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB2p_8BTreeMapB13_B13_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB3s_8adapters5chain5ChainINtNtB4p_3map3MapINtB2p_4IterB13_B13_ENCNvMNtCskXtk6F4WjxZ_4just8justfileNtB5x_8Justfile15evaluate_scopes0EINtB2p_8IntoIterB13_B13_EEE0E0EB5z_.exit.i, label %.lr.ph
 
@@ -2916,7 +2916,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.ap, label %bb.m, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTNtNtCs4wP2HXfJTCR_5alloc6string6StringB13_ENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB2p_8BTreeMapB13_B13_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB3s_8adapters5chain5ChainINtNtB4p_3map3MapINtB2p_4IterB13_B13_ENCNvMNtCskXtk6F4WjxZ_4just8justfileNtB5x_8Justfile15evaluate_scopes0EINtB2p_8IntoIterB13_B13_EEE0E0EB5z_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph59
-  %i.aq = add nuw i64 %.sroa.01.1.i.i58, 1        ; 2 uses
+  %i.aq = add nuw nsw i64 %.sroa.01.1.i.i58, 1    ; 2 uses
   %exitcond79.not = icmp eq i64 %i.aq, %i.n
   br i1 %exitcond79.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTNtNtCs4wP2HXfJTCR_5alloc6string6StringB13_ENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB2p_8BTreeMapB13_B13_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB3s_8adapters5chain5ChainINtNtB4p_3map3MapINtB2p_4IterB13_B13_ENCNvMNtCskXtk6F4WjxZ_4just8justfileNtB5x_8Justfile15evaluate_scopes0EINtB2p_8IntoIterB13_B13_EEE0E0EB5z_.exit.i, label %.lr.ph59
 
@@ -3314,7 +3314,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ag, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTNtNtCs4wP2HXfJTCR_5alloc6string6StringNtNtCsaKJjC64KgbL_3std4path7PathBufENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB2U_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB3X_8adapters3map3MapINtNtNtB17_3vec9into_iter8IntoIterB13_ENCNCNvMs_NtCskXtk6F4WjxZ_4just6recipeNtB63_6Recipe10run_scripts7_00EE0E0EB65_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.ah = add nuw i64 %.sroa.01.0.i.i55, 1        ; 2 uses
+  %i.ah = add nuw nsw i64 %.sroa.01.0.i.i55, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.ah, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTNtNtCs4wP2HXfJTCR_5alloc6string6StringNtNtCsaKJjC64KgbL_3std4path7PathBufENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB2U_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB3X_8adapters3map3MapINtNtNtB17_3vec9into_iter8IntoIterB13_ENCNCNvMs_NtCskXtk6F4WjxZ_4just6recipeNtB63_6Recipe10run_scripts7_00EE0E0EB65_.exit.i, label %.lr.ph
 
@@ -3337,7 +3337,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.ap, label %bb.m, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTNtNtCs4wP2HXfJTCR_5alloc6string6StringNtNtCsaKJjC64KgbL_3std4path7PathBufENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB2U_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB3X_8adapters3map3MapINtNtNtB17_3vec9into_iter8IntoIterB13_ENCNCNvMs_NtCskXtk6F4WjxZ_4just6recipeNtB63_6Recipe10run_scripts7_00EE0E0EB65_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph59
-  %i.aq = add nuw i64 %.sroa.01.1.i.i58, 1        ; 2 uses
+  %i.aq = add nuw nsw i64 %.sroa.01.1.i.i58, 1    ; 2 uses
   %exitcond79.not = icmp eq i64 %i.aq, %i.n
   br i1 %exitcond79.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTNtNtCs4wP2HXfJTCR_5alloc6string6StringNtNtCsaKJjC64KgbL_3std4path7PathBufENCINvMNtB17_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB17_11collections5btree3mapINtB2U_8BTreeMapB13_B1F_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB3X_8adapters3map3MapINtNtNtB17_3vec9into_iter8IntoIterB13_ENCNCNvMs_NtCskXtk6F4WjxZ_4just6recipeNtB63_6Recipe10run_scripts7_00EE0E0EB65_.exit.i, label %.lr.ph59
 
@@ -3713,7 +3713,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.x, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTNtNtCskXtk6F4WjxZ_4just9attribute9AttributeNtNtB17_4name4NameENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB2b_11collections5btree3mapINtB2Y_8BTreeMapB13_B1K_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtB41_8adapters12GenericShuntINtNtB4W_3map3MapINtB2Y_8IntoIterB13_B1K_ENCNvMNtB17_17unresolved_recipeINtNtB17_6recipe6RecipeNtNtB17_21unresolved_dependency20UnresolvedDependencyE7resolve0EINtNtB8_6result6ResultNtNtB8_7convert10InfallibleNtNtB17_13compile_error12CompileErrorEEE0E0EB17_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.y = add nuw i64 %.sroa.01.0.i.i63, 1         ; 2 uses
+  %i.y = add nuw nsw i64 %.sroa.01.0.i.i63, 1     ; 2 uses
   %exitcond.not = icmp eq i64 %i.y, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTNtNtCskXtk6F4WjxZ_4just9attribute9AttributeNtNtB17_4name4NameENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB2b_11collections5btree3mapINtB2Y_8BTreeMapB13_B1K_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtB41_8adapters12GenericShuntINtNtB4W_3map3MapINtB2Y_8IntoIterB13_B1K_ENCNvMNtB17_17unresolved_recipeINtNtB17_6recipe6RecipeNtNtB17_21unresolved_dependency20UnresolvedDependencyE7resolve0EINtNtB8_6result6ResultNtNtB8_7convert10InfallibleNtNtB17_13compile_error12CompileErrorEEE0E0EB17_.exit.i, label %.lr.ph
 
@@ -3727,7 +3727,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.ad, label %bb.m, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTNtNtCskXtk6F4WjxZ_4just9attribute9AttributeNtNtB17_4name4NameENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB2b_11collections5btree3mapINtB2Y_8BTreeMapB13_B1K_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtB41_8adapters12GenericShuntINtNtB4W_3map3MapINtB2Y_8IntoIterB13_B1K_ENCNvMNtB17_17unresolved_recipeINtNtB17_6recipe6RecipeNtNtB17_21unresolved_dependency20UnresolvedDependencyE7resolve0EINtNtB8_6result6ResultNtNtB8_7convert10InfallibleNtNtB17_13compile_error12CompileErrorEEE0E0EB17_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph67
-  %i.ae = add nuw i64 %.sroa.01.1.i.i66, 1        ; 2 uses
+  %i.ae = add nuw nsw i64 %.sroa.01.1.i.i66, 1    ; 2 uses
   %exitcond93.not = icmp eq i64 %i.ae, %i.n
   br i1 %exitcond93.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTNtNtCskXtk6F4WjxZ_4just9attribute9AttributeNtNtB17_4name4NameENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB2b_11collections5btree3mapINtB2Y_8BTreeMapB13_B1K_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtB41_8adapters12GenericShuntINtNtB4W_3map3MapINtB2Y_8IntoIterB13_B1K_ENCNvMNtB17_17unresolved_recipeINtNtB17_6recipe6RecipeNtNtB17_21unresolved_dependency20UnresolvedDependencyE7resolve0EINtNtB8_6result6ResultNtNtB8_7convert10InfallibleNtNtB17_13compile_error12CompileErrorEEE0E0EB17_.exit.i, label %.lr.ph67
 
@@ -4114,7 +4114,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.x, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTNtNtCskXtk6F4WjxZ_4just9attribute9AttributeNtNtB17_4name4NameENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB2b_11collections5btree3mapINtB2Y_8BTreeMapB13_B1K_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB2b_3vec9into_iter8IntoIterB12_EE0E0EB17_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.y = add nuw i64 %.sroa.01.0.i.i63, 1         ; 2 uses
+  %i.y = add nuw nsw i64 %.sroa.01.0.i.i63, 1     ; 2 uses
   %exitcond.not = icmp eq i64 %i.y, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTNtNtCskXtk6F4WjxZ_4just9attribute9AttributeNtNtB17_4name4NameENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB2b_11collections5btree3mapINtB2Y_8BTreeMapB13_B1K_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB2b_3vec9into_iter8IntoIterB12_EE0E0EB17_.exit.i, label %.lr.ph
 
@@ -4128,7 +4128,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.ad, label %bb.m, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTNtNtCskXtk6F4WjxZ_4just9attribute9AttributeNtNtB17_4name4NameENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB2b_11collections5btree3mapINtB2Y_8BTreeMapB13_B1K_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB2b_3vec9into_iter8IntoIterB12_EE0E0EB17_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph67
-  %i.ae = add nuw i64 %.sroa.01.1.i.i66, 1        ; 2 uses
+  %i.ae = add nuw nsw i64 %.sroa.01.1.i.i66, 1    ; 2 uses
   %exitcond93.not = icmp eq i64 %i.ae, %i.n
   br i1 %exitcond93.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTNtNtCskXtk6F4WjxZ_4just9attribute9AttributeNtNtB17_4name4NameENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB2b_11collections5btree3mapINtB2Y_8BTreeMapB13_B1K_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB2b_3vec9into_iter8IntoIterB12_EE0E0EB17_.exit.i, label %.lr.ph67
 
@@ -4531,7 +4531,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ag, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTRSjjNtNtCs4wP2HXfJTCR_5alloc6string6StringENCINvMNtB1b_5sliceSB12_7sort_byNCNvMNtCskXtk6F4WjxZ_4just8justfileNtB2k_8Justfile13public_groups0E0EB2m_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.ah = add nuw i64 %.sroa.01.0.i.i55, 1        ; 2 uses
+  %i.ah = add nuw nsw i64 %.sroa.01.0.i.i55, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.ah, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTRSjjNtNtCs4wP2HXfJTCR_5alloc6string6StringENCINvMNtB1b_5sliceSB12_7sort_byNCNvMNtCskXtk6F4WjxZ_4just8justfileNtB2k_8Justfile13public_groups0E0EB2m_.exit.i, label %.lr.ph
 
@@ -4554,7 +4554,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.ap, label %bb.m, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTRSjjNtNtCs4wP2HXfJTCR_5alloc6string6StringENCINvMNtB1b_5sliceSB12_7sort_byNCNvMNtCskXtk6F4WjxZ_4just8justfileNtB2k_8Justfile13public_groups0E0EB2m_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph59
-  %i.aq = add nuw i64 %.sroa.01.1.i.i58, 1        ; 2 uses
+  %i.aq = add nuw nsw i64 %.sroa.01.1.i.i58, 1    ; 2 uses
   %exitcond79.not = icmp eq i64 %i.aq, %i.n
   br i1 %exitcond79.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTRSjjNtNtCs4wP2HXfJTCR_5alloc6string6StringENCINvMNtB1b_5sliceSB12_7sort_byNCNvMNtCskXtk6F4WjxZ_4just8justfileNtB2k_8Justfile13public_groups0E0EB2m_.exit.i, label %.lr.ph59
 
@@ -4957,7 +4957,7 @@ _RNvYNvYTRSjjNtNtCs4wP2HXfJTCR_5alloc6string6StringENtNtCsj6eKBz9Db1c_4core3cmp1
   br i1 %.sroa.0.1.i.i48, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTRSjjNtNtCs4wP2HXfJTCR_5alloc6string6StringENvYB12_NtNtB8_3cmp10PartialOrd2ltECskXtk6F4WjxZ_4just.exit.i, label %bb.n
 
 bb.n:                                             ; preds = %.loopexit.i.i.i.i.i.i47, %.split87, %_RNvYNvYTRSjjNtNtCs4wP2HXfJTCR_5alloc6string6StringENtNtCsj6eKBz9Db1c_4core3cmp10PartialOrd2ltINtNtNtBR_3ops8function5FnMutTRB5_B1X_EE8call_mutCskXtk6F4WjxZ_4just.exit60
-  %i.bm = add nuw i64 %.sroa.01.0.i.i113, 1       ; 2 uses
+  %i.bm = add nuw nsw i64 %.sroa.01.0.i.i113, 1   ; 2 uses
   %exitcond.not = icmp eq i64 %i.bm, %umax
   br i1 %exitcond.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTRSjjNtNtCs4wP2HXfJTCR_5alloc6string6StringENvYB12_NtNtB8_3cmp10PartialOrd2ltECskXtk6F4WjxZ_4just.exit.i, label %.lr.ph
 
@@ -5042,7 +5042,7 @@ _RNvYNvYTRSjjNtNtCs4wP2HXfJTCR_5alloc6string6StringENtNtCsj6eKBz9Db1c_4core3cmp1
   br i1 %.sroa.0.1.i.i, label %bb.p, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTRSjjNtNtCs4wP2HXfJTCR_5alloc6string6StringENvYB12_NtNtB8_3cmp10PartialOrd2ltECskXtk6F4WjxZ_4just.exit.i
 
 bb.p:                                             ; preds = %.loopexit.i.i.i.i.i.i, %.split88, %_RNvYNvYTRSjjNtNtCs4wP2HXfJTCR_5alloc6string6StringENtNtCsj6eKBz9Db1c_4core3cmp10PartialOrd2ltINtNtNtBR_3ops8function5FnMutTRB5_B1X_EE8call_mutCskXtk6F4WjxZ_4just.exit
-  %i.cm = add nuw i64 %.sroa.01.1.i.i117, 1       ; 2 uses
+  %i.cm = add nuw nsw i64 %.sroa.01.1.i.i117, 1   ; 2 uses
   %exitcond150.not = icmp eq i64 %i.cm, %umax149
   br i1 %exitcond150.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTRSjjNtNtCs4wP2HXfJTCR_5alloc6string6StringENvYB12_NtNtB8_3cmp10PartialOrd2ltECskXtk6F4WjxZ_4just.exit.i, label %.lr.ph118
 
@@ -5445,7 +5445,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ae, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTReB13_ENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB1i_11collections5btree3mapINtB25_8BTreeMapB13_B13_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB38_8adapters3map3MapINtNtB45_6copied6CopiedINtNtB6_4iter4IterTB13_B13_INtNtB8_6option6OptionB13_EB13_EEENCNCNvNvNtCskXtk6F4WjxZ_4just9constants9constants3MAP00EE0E0EB5Y_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.af = add nuw i64 %.sroa.01.0.i.i55, 1        ; 2 uses
+  %i.af = add nuw nsw i64 %.sroa.01.0.i.i55, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.af, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTReB13_ENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB1i_11collections5btree3mapINtB25_8BTreeMapB13_B13_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB38_8adapters3map3MapINtNtB45_6copied6CopiedINtNtB6_4iter4IterTB13_B13_INtNtB8_6option6OptionB13_EB13_EEENCNCNvNvNtCskXtk6F4WjxZ_4just9constants9constants3MAP00EE0E0EB5Y_.exit.i, label %.lr.ph
 
@@ -5467,7 +5467,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.am, label %bb.m, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTReB13_ENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB1i_11collections5btree3mapINtB25_8BTreeMapB13_B13_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB38_8adapters3map3MapINtNtB45_6copied6CopiedINtNtB6_4iter4IterTB13_B13_INtNtB8_6option6OptionB13_EB13_EEENCNCNvNvNtCskXtk6F4WjxZ_4just9constants9constants3MAP00EE0E0EB5Y_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph59
-  %i.an = add nuw i64 %.sroa.01.1.i.i58, 1        ; 2 uses
+  %i.an = add nuw nsw i64 %.sroa.01.1.i.i58, 1    ; 2 uses
   %exitcond79.not = icmp eq i64 %i.an, %i.n
   br i1 %exitcond79.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTReB13_ENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB1i_11collections5btree3mapINtB25_8BTreeMapB13_B13_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB38_8adapters3map3MapINtNtB45_6copied6CopiedINtNtB6_4iter4IterTB13_B13_INtNtB8_6option6OptionB13_EB13_EEENCNCNvNvNtCskXtk6F4WjxZ_4just9constants9constants3MAP00EE0E0EB5Y_.exit.i, label %.lr.ph59
 
@@ -5853,7 +5853,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ae, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTRejENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB1f_11collections5btree3mapINtB22_8BTreeMapB13_jEINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB32_8adapters10filter_map9FilterMapINtNtB3Z_9enumerate9EnumerateINtNtB6_4iter4IterNtNtCskXtk6F4WjxZ_4just9parameter9ParameterEENCNvMNtB5p_17invocation_parserNtB69_16InvocationParser16parse_invocations_0EE0E0EB5p_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.af = add nuw i64 %.sroa.01.0.i.i55, 1        ; 2 uses
+  %i.af = add nuw nsw i64 %.sroa.01.0.i.i55, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.af, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTRejENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB1f_11collections5btree3mapINtB22_8BTreeMapB13_jEINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB32_8adapters10filter_map9FilterMapINtNtB3Z_9enumerate9EnumerateINtNtB6_4iter4IterNtNtCskXtk6F4WjxZ_4just9parameter9ParameterEENCNvMNtB5p_17invocation_parserNtB69_16InvocationParser16parse_invocations_0EE0E0EB5p_.exit.i, label %.lr.ph
 
@@ -5875,7 +5875,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.am, label %bb.m, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTRejENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB1f_11collections5btree3mapINtB22_8BTreeMapB13_jEINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB32_8adapters10filter_map9FilterMapINtNtB3Z_9enumerate9EnumerateINtNtB6_4iter4IterNtNtCskXtk6F4WjxZ_4just9parameter9ParameterEENCNvMNtB5p_17invocation_parserNtB69_16InvocationParser16parse_invocations_0EE0E0EB5p_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph59
-  %i.an = add nuw i64 %.sroa.01.1.i.i58, 1        ; 2 uses
+  %i.an = add nuw nsw i64 %.sroa.01.1.i.i58, 1    ; 2 uses
   %exitcond79.not = icmp eq i64 %i.an, %i.n
   br i1 %exitcond79.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTRejENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB1f_11collections5btree3mapINtB22_8BTreeMapB13_jEINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB32_8adapters10filter_map9FilterMapINtNtB3Z_9enumerate9EnumerateINtNtB6_4iter4IterNtNtCskXtk6F4WjxZ_4just9parameter9ParameterEENCNvMNtB5p_17invocation_parserNtB69_16InvocationParser16parse_invocations_0EE0E0EB5p_.exit.i, label %.lr.ph59
 
@@ -6243,7 +6243,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.t, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTcjENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB21_8BTreeMapcjEINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB2Y_8adapters10filter_map9FilterMapINtNtB3V_9enumerate9EnumerateINtNtB6_4iter4IterNtNtCskXtk6F4WjxZ_4just9parameter9ParameterEENCNvMNtB5l_17invocation_parserNtB65_16InvocationParser16parse_invocations0_0EE0E0EB5l_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.u = add nuw i64 %.sroa.01.0.i.i51, 1         ; 2 uses
+  %i.u = add nuw nsw i64 %.sroa.01.0.i.i51, 1     ; 2 uses
   %exitcond.not = icmp eq i64 %i.u, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTcjENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB21_8BTreeMapcjEINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB2Y_8adapters10filter_map9FilterMapINtNtB3V_9enumerate9EnumerateINtNtB6_4iter4IterNtNtCskXtk6F4WjxZ_4just9parameter9ParameterEENCNvMNtB5l_17invocation_parserNtB65_16InvocationParser16parse_invocations0_0EE0E0EB5l_.exit.i, label %.lr.ph
 
@@ -6256,7 +6256,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.w, label %bb.m, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTcjENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB21_8BTreeMapcjEINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB2Y_8adapters10filter_map9FilterMapINtNtB3V_9enumerate9EnumerateINtNtB6_4iter4IterNtNtCskXtk6F4WjxZ_4just9parameter9ParameterEENCNvMNtB5l_17invocation_parserNtB65_16InvocationParser16parse_invocations0_0EE0E0EB5l_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph55
-  %i.x = add nuw i64 %.sroa.01.1.i.i54, 1         ; 2 uses
+  %i.x = add nuw nsw i64 %.sroa.01.1.i.i54, 1     ; 2 uses
   %exitcond75.not = icmp eq i64 %i.x, %i.n
   br i1 %exitcond75.not, label %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTcjENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB21_8BTreeMapcjEINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB2Y_8adapters10filter_map9FilterMapINtNtB3V_9enumerate9EnumerateINtNtB6_4iter4IterNtNtCskXtk6F4WjxZ_4just9parameter9ParameterEENCNvMNtB5l_17invocation_parserNtB65_16InvocationParser16parse_invocations0_0EE0E0EB5l_.exit.i, label %.lr.ph55
 

@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.w, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtB19_14metadata_shard12xorb_structs11MDBXorbInfoEENCINvMNtB2i_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB2i_11collections5btree3mapINtB4j_8BTreeMapB13_B2d_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB5m_8adapters3map3MapINtNtB6j_6filter6FilterINtB4j_4IterB13_B2d_ENCNvMNtB2P_15shard_in_memoryNtB7t_16MDBInMemoryShard10difference0ENCB7q_s_0EE0E0EB19_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.x = add nuw i64 %.sroa.01.0.i.i45, 1         ; 2 uses
+  %i.x = add nuw nsw i64 %.sroa.01.0.i.i45, 1     ; 2 uses
   %exitcond.not = icmp eq i64 %i.x, %i.m
   br i1 %exitcond.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtB19_14metadata_shard12xorb_structs11MDBXorbInfoEENCINvMNtB2i_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB2i_11collections5btree3mapINtB4j_8BTreeMapB13_B2d_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB5m_8adapters3map3MapINtNtB6j_6filter6FilterINtB4j_4IterB13_B2d_ENCNvMNtB2P_15shard_in_memoryNtB7t_16MDBInMemoryShard10difference0ENCB7q_s_0EE0E0EB19_.exit.i, label %.lr.ph
 
@@ -219,7 +219,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.ac, label %bb.m, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtB19_14metadata_shard12xorb_structs11MDBXorbInfoEENCINvMNtB2i_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB2i_11collections5btree3mapINtB4j_8BTreeMapB13_B2d_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB5m_8adapters3map3MapINtNtB6j_6filter6FilterINtB4j_4IterB13_B2d_ENCNvMNtB2P_15shard_in_memoryNtB7t_16MDBInMemoryShard10difference0ENCB7q_s_0EE0E0EB19_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph49
-  %i.ad = add nuw i64 %.sroa.01.1.i.i48, 1        ; 2 uses
+  %i.ad = add nuw nsw i64 %.sroa.01.1.i.i48, 1    ; 2 uses
   %exitcond65.not = icmp eq i64 %i.ad, %i.m
   br i1 %exitcond65.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtB19_14metadata_shard12xorb_structs11MDBXorbInfoEENCINvMNtB2i_5sliceSB12_7sort_byNCINvXs1o_NtNtNtB2i_11collections5btree3mapINtB4j_8BTreeMapB13_B2d_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB5m_8adapters3map3MapINtNtB6j_6filter6FilterINtB4j_4IterB13_B2d_ENCNvMNtB2P_15shard_in_memoryNtB7t_16MDBInMemoryShard10difference0ENCB7q_s_0EE0E0EB19_.exit.i, label %.lr.ph49
 
@@ -486,7 +486,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.w, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashNtNtNtB19_14metadata_shard12file_structs11MDBFileInfoENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB3d_11collections5btree3mapINtB40_8BTreeMapB13_B2d_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB53_8adapters3map3MapINtNtB60_6filter6FilterINtB40_4IterB13_B2d_ENCNvMNtB2h_15shard_in_memoryNtB7a_16MDBInMemoryShard10differences0_0ENCB77_s1_0EE0E0EB19_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.x = add nuw i64 %.sroa.01.0.i.i45, 1         ; 2 uses
+  %i.x = add nuw nsw i64 %.sroa.01.0.i.i45, 1     ; 2 uses
   %exitcond.not = icmp eq i64 %i.x, %i.m
   br i1 %exitcond.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashNtNtNtB19_14metadata_shard12file_structs11MDBFileInfoENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB3d_11collections5btree3mapINtB40_8BTreeMapB13_B2d_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB53_8adapters3map3MapINtNtB60_6filter6FilterINtB40_4IterB13_B2d_ENCNvMNtB2h_15shard_in_memoryNtB7a_16MDBInMemoryShard10differences0_0ENCB77_s1_0EE0E0EB19_.exit.i, label %.lr.ph
 
@@ -500,7 +500,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.ac, label %bb.m, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashNtNtNtB19_14metadata_shard12file_structs11MDBFileInfoENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB3d_11collections5btree3mapINtB40_8BTreeMapB13_B2d_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB53_8adapters3map3MapINtNtB60_6filter6FilterINtB40_4IterB13_B2d_ENCNvMNtB2h_15shard_in_memoryNtB7a_16MDBInMemoryShard10differences0_0ENCB77_s1_0EE0E0EB19_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph49
-  %i.ad = add nuw i64 %.sroa.01.1.i.i48, 1        ; 2 uses
+  %i.ad = add nuw nsw i64 %.sroa.01.1.i.i48, 1    ; 2 uses
   %exitcond65.not = icmp eq i64 %i.ad, %i.m
   br i1 %exitcond65.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashNtNtNtB19_14metadata_shard12file_structs11MDBFileInfoENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB3d_11collections5btree3mapINtB40_8BTreeMapB13_B2d_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB53_8adapters3map3MapINtNtB60_6filter6FilterINtB40_4IterB13_B2d_ENCNvMNtB2h_15shard_in_memoryNtB7a_16MDBInMemoryShard10differences0_0ENCB77_s1_0EE0E0EB19_.exit.i, label %.lr.ph49
 
@@ -816,7 +816,7 @@ _RNvYNvYTyTmmEENtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBg_3ops8function
   br i1 %.sroa.0.0.i8.i.i43, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTyTmmEENvYB12_NtNtB8_3cmp10PartialOrd2ltECs31YAwBA1AlL_19xet_core_structures.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.split56, %_RNvYNvYTyTmmEENtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBg_3ops8function5FnMutTRB5_B1m_EE8call_mutCs31YAwBA1AlL_19xet_core_structures.exit44
-  %i.am = add nuw i64 %.sroa.01.0.i.i68, 1        ; 2 uses
+  %i.am = add nuw nsw i64 %.sroa.01.0.i.i68, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.am, %i.m
   br i1 %exitcond.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTyTmmEENvYB12_NtNtB8_3cmp10PartialOrd2ltECs31YAwBA1AlL_19xet_core_structures.exit.i, label %.lr.ph
 
@@ -856,14 +856,14 @@ _RNvYNvYTyTmmEENtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBg_3ops8function
   br i1 %.sroa.0.0.i8.i.i, label %bb.m, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTyTmmEENvYB12_NtNtB8_3cmp10PartialOrd2ltECs31YAwBA1AlL_19xet_core_structures.exit.i
 
 bb.m:                                             ; preds = %.split57, %_RNvYNvYTyTmmEENtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBg_3ops8function5FnMutTRB5_B1m_EE8call_mutCs31YAwBA1AlL_19xet_core_structures.exit
-  %i.ba = add nuw i64 %.sroa.01.1.i.i71, 1        ; 2 uses
+  %i.ba = add nuw nsw i64 %.sroa.01.1.i.i71, 1    ; 2 uses
   %exitcond89.not = icmp eq i64 %i.ba, %i.m
   br i1 %exitcond89.not, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTyTmmEENvYB12_NtNtB8_3cmp10PartialOrd2ltECs31YAwBA1AlL_19xet_core_structures.exit.i, label %.lr.ph72
 
 _RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runTyTmmEENvYB12_NtNtB8_3cmp10PartialOrd2ltECs31YAwBA1AlL_19xet_core_structures.exit.i: ; preds = %bb.l, %_RNvYNvYTyTmmEENtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBg_3ops8function5FnMutTRB5_B1m_EE8call_mutCs31YAwBA1AlL_19xet_core_structures.exit44, %.split56, %bb.m, %_RNvYNvYTyTmmEENtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBg_3ops8function5FnMutTRB5_B1m_EE8call_mutCs31YAwBA1AlL_19xet_core_structures.exit, %.split57, %.preheader66, %.preheader
   %.sroa.3.0.i.i = phi i1 [ true, %.preheader ], [ false, %.preheader66 ], [ true, %bb.m ], [ true, %.split57 ], [ true, %_RNvYNvYTyTmmEENtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBg_3ops8function5FnMutTRB5_B1m_EE8call_mutCs31YAwBA1AlL_19xet_core_structures.exit ], [ false, %.split56 ], [ false, %_RNvYNvYTyTmmEENtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBg_3ops8function5FnMutTRB5_B1m_EE8call_mutCs31YAwBA1AlL_19xet_core_structures.exit44 ], [ false, %bb.l ]
   %.sroa.0.0.i.i = phi i64 [ 2, %.preheader ], [ 2, %.preheader66 ], [ %i.m, %bb.m ], [ %.sroa.01.1.i.i71, %_RNvYNvYTyTmmEENtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBg_3ops8function5FnMutTRB5_B1m_EE8call_mutCs31YAwBA1AlL_19xet_core_structures.exit ], [ %.sroa.01.1.i.i71, %.split57 ], [ %i.m, %bb.l ], [ %.sroa.01.0.i.i68, %_RNvYNvYTyTmmEENtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBg_3ops8function5FnMutTRB5_B1m_EE8call_mutCs31YAwBA1AlL_19xet_core_structures.exit44 ], [ %.sroa.01.0.i.i68, %.split56 ] ; 7 uses
-  %i.bb = icmp ule i64 %.sroa.0.0.i.i, %i.m
+  %i.bb = icmp samesign ule i64 %.sroa.0.0.i.i, %i.m
   tail call void @llvm.assume(i1 %i.bb)
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
   br i1 %.not5.i, label %bb.i, label %bb.n

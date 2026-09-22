@@ -206,7 +206,7 @@ bb.ba:                                            ; preds = %.loopexit114.i.i, %
   br i1 %i.jd, label %._crit_edge.i.i38, label %bb.bb
 
 bb.bb:                                            ; preds = %.lr.ph.i.i37
-  %i.je = add nuw i32 %.185130.i.i, 1             ; 2 uses
+  %i.je = add nuw nsw i32 %.185130.i.i, 1         ; 2 uses
   %exitcond155.not.i.i = icmp eq i32 %i.je, %.086119.i.i
   br i1 %exitcond155.not.i.i, label %.loopexit114.i.i, label %.lr.ph.i.i37, !llvm.loop !813
 
@@ -216,7 +216,7 @@ bb.bb:                                            ; preds = %.lr.ph.i.i37
   br i1 %i.jf, label %.lr.ph135.preheader.i.i, label %.loopexit114.i.i
 
 .lr.ph135.preheader.i.i:                          ; preds = %._crit_edge.i.i38
-  %i.jg = zext i32 %.185.lcssa.i.i to i64         ; 4 uses
+  %i.jg = zext nneg i32 %.185.lcssa.i.i to i64    ; 4 uses
   %i.jh = sub nsw i64 %wide.trip.count159.i.i, %i.jg ; 3 uses
   %min.iters.check = icmp ult i64 %i.jh, 4
   br i1 %min.iters.check, label %.lr.ph135.i.i.preheader, label %vector.ph

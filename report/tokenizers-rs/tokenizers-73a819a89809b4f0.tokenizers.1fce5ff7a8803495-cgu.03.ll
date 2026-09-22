@@ -205,7 +205,7 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTNtNtB7_6string6StringdE7sort_byNCNvMs_NtNtN
   br i1 %.mux.i42, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTNtNtCscdodAO9FK5_5alloc6string6StringdENCINvMNtB17_5sliceSB12_7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB2i_14UnigramTrainer8finalizes_0E0EB2o_.exit.i, label %bb.n
 
 bb.n:                                             ; preds = %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTNtNtB7_6string6StringdE7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1a_14UnigramTrainer8finalizes_0E0B1g_.exit43
-  %i.u = add nuw i64 %.sroa.01.0.i.i73, 1         ; 2 uses
+  %i.u = add nuw nsw i64 %.sroa.01.0.i.i73, 1     ; 2 uses
   %exitcond.not = icmp eq i64 %i.u, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTNtNtCscdodAO9FK5_5alloc6string6StringdENCINvMNtB17_5sliceSB12_7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB2i_14UnigramTrainer8finalizes_0E0EB2o_.exit.i, label %.lr.ph
 
@@ -227,7 +227,7 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTNtNtB7_6string6StringdE7sort_byNCNvMs_NtNtN
   br i1 %.mux.i, label %bb.p, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTNtNtCscdodAO9FK5_5alloc6string6StringdENCINvMNtB17_5sliceSB12_7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB2i_14UnigramTrainer8finalizes_0E0EB2o_.exit.i
 
 bb.p:                                             ; preds = %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTNtNtB7_6string6StringdE7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1a_14UnigramTrainer8finalizes_0E0B1g_.exit
-  %i.x = add nuw i64 %.sroa.01.1.i.i75, 1         ; 2 uses
+  %i.x = add nuw nsw i64 %.sroa.01.1.i.i75, 1     ; 2 uses
   %exitcond101.not = icmp eq i64 %i.x, %i.n
   br i1 %exitcond101.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTNtNtCscdodAO9FK5_5alloc6string6StringdENCINvMNtB17_5sliceSB12_7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB2i_14UnigramTrainer8finalizes_0E0EB2o_.exit.i, label %.lr.ph76
 
@@ -630,7 +630,7 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtB7_6string6StringRyE7sort_byNCNvMs_NtN
   br i1 %i.bd, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTRNtNtCscdodAO9FK5_5alloc6string6StringRyENCINvMNtB18_5sliceSB12_7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB2k_16WordLevelTrainer8do_train0E0EB2q_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.split55, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtB7_6string6StringRyE7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB1c_16WordLevelTrainer8do_train0E0B1i_.exit46
-  %i.be = add nuw i64 %.sroa.01.0.i.i71, 1        ; 2 uses
+  %i.be = add nuw nsw i64 %.sroa.01.0.i.i71, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.be, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTRNtNtCscdodAO9FK5_5alloc6string6StringRyENCINvMNtB18_5sliceSB12_7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB2k_16WordLevelTrainer8do_train0E0EB2q_.exit.i, label %.lr.ph
 
@@ -673,14 +673,14 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtB7_6string6StringRyE7sort_byNCNvMs_NtN
   br i1 %i.bz, label %bb.m, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTRNtNtCscdodAO9FK5_5alloc6string6StringRyENCINvMNtB18_5sliceSB12_7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB2k_16WordLevelTrainer8do_train0E0EB2q_.exit.i
 
 bb.m:                                             ; preds = %.split56, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtB7_6string6StringRyE7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB1c_16WordLevelTrainer8do_train0E0B1i_.exit
-  %i.ca = add nuw i64 %.sroa.01.1.i.i74, 1        ; 2 uses
+  %i.ca = add nuw nsw i64 %.sroa.01.1.i.i74, 1    ; 2 uses
   %exitcond96.not = icmp eq i64 %i.ca, %i.n
   br i1 %exitcond96.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTRNtNtCscdodAO9FK5_5alloc6string6StringRyENCINvMNtB18_5sliceSB12_7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB2k_16WordLevelTrainer8do_train0E0EB2q_.exit.i, label %.lr.ph75
 
 _RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTRNtNtCscdodAO9FK5_5alloc6string6StringRyENCINvMNtB18_5sliceSB12_7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB2k_16WordLevelTrainer8do_train0E0EB2q_.exit.i: ; preds = %bb.l, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtB7_6string6StringRyE7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB1c_16WordLevelTrainer8do_train0E0B1i_.exit46, %.split55, %bb.m, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtB7_6string6StringRyE7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB1c_16WordLevelTrainer8do_train0E0B1i_.exit, %.split56, %.preheader66, %.preheader
   %.sroa.3.0.i.i = phi i1 [ true, %.preheader ], [ false, %.preheader66 ], [ true, %bb.m ], [ true, %.split56 ], [ true, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtB7_6string6StringRyE7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB1c_16WordLevelTrainer8do_train0E0B1i_.exit ], [ false, %.split55 ], [ false, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtB7_6string6StringRyE7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB1c_16WordLevelTrainer8do_train0E0B1i_.exit46 ], [ false, %bb.l ]
   %.sroa.0.0.i.i = phi i64 [ 2, %.preheader ], [ 2, %.preheader66 ], [ %i.n, %bb.m ], [ %.sroa.01.1.i.i74, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtB7_6string6StringRyE7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB1c_16WordLevelTrainer8do_train0E0B1i_.exit ], [ %.sroa.01.1.i.i74, %.split56 ], [ %i.n, %bb.l ], [ %.sroa.01.0.i.i71, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtB7_6string6StringRyE7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models9wordlevel7trainerNtB1c_16WordLevelTrainer8do_train0E0B1i_.exit46 ], [ %.sroa.01.0.i.i71, %.split55 ] ; 9 uses
-  %i.cb = icmp ule i64 %.sroa.0.0.i.i, %i.n
+  %i.cb = icmp samesign ule i64 %.sroa.0.0.i.i, %i.n
   tail call void @llvm.assume(i1 %i.cb)
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
   br i1 %.not5.i, label %bb.i, label %bb.n
@@ -1083,7 +1083,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.v, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runThciENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_11sort_by_keyhNCNvMNtCs3U8yzCisM5Z_32unicode_normalization_alignments9decomposeINtB22_14DecompositionsNtNtNtB8_3str4iter5CharsE12sort_pending0E0ECs2JiOgHzbbc7_10tokenizers.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.w = add nuw i64 %.sroa.01.0.i.i54, 1         ; 2 uses
+  %i.w = add nuw nsw i64 %.sroa.01.0.i.i54, 1     ; 2 uses
   %exitcond.not = icmp eq i64 %i.w, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runThciENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_11sort_by_keyhNCNvMNtCs3U8yzCisM5Z_32unicode_normalization_alignments9decomposeINtB22_14DecompositionsNtNtNtB8_3str4iter5CharsE12sort_pending0E0ECs2JiOgHzbbc7_10tokenizers.exit.i, label %.lr.ph
 
@@ -1097,7 +1097,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %i.z, label %bb.m, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runThciENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_11sort_by_keyhNCNvMNtCs3U8yzCisM5Z_32unicode_normalization_alignments9decomposeINtB22_14DecompositionsNtNtNtB8_3str4iter5CharsE12sort_pending0E0ECs2JiOgHzbbc7_10tokenizers.exit.i
 
 bb.m:                                             ; preds = %.lr.ph58
-  %i.aa = add nuw i64 %.sroa.01.1.i.i57, 1        ; 2 uses
+  %i.aa = add nuw nsw i64 %.sroa.01.1.i.i57, 1    ; 2 uses
   %exitcond78.not = icmp eq i64 %i.aa, %i.n
   br i1 %exitcond78.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runThciENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_11sort_by_keyhNCNvMNtCs3U8yzCisM5Z_32unicode_normalization_alignments9decomposeINtB22_14DecompositionsNtNtNtB8_3str4iter5CharsE12sort_pending0E0ECs2JiOgHzbbc7_10tokenizers.exit.i, label %.lr.ph58
 
@@ -1464,7 +1464,7 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTjdE7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tok
   br i1 %.mux.i41, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTjdENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1X_14UnigramTrainer21prune_sentence_piecess1_0E0EB23_.exit.i, label %bb.n
 
 bb.n:                                             ; preds = %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTjdE7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtBQ_14UnigramTrainer21prune_sentence_piecess1_0E0BW_.exit42
-  %i.u = add nuw i64 %.sroa.01.0.i.i72, 1         ; 2 uses
+  %i.u = add nuw nsw i64 %.sroa.01.0.i.i72, 1     ; 2 uses
   %exitcond.not = icmp eq i64 %i.u, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTjdENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1X_14UnigramTrainer21prune_sentence_piecess1_0E0EB23_.exit.i, label %.lr.ph
 
@@ -1486,7 +1486,7 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTjdE7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tok
   br i1 %.mux.i, label %bb.p, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTjdENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1X_14UnigramTrainer21prune_sentence_piecess1_0E0EB23_.exit.i
 
 bb.p:                                             ; preds = %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTjdE7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtBQ_14UnigramTrainer21prune_sentence_piecess1_0E0BW_.exit
-  %i.x = add nuw i64 %.sroa.01.1.i.i74, 1         ; 2 uses
+  %i.x = add nuw nsw i64 %.sroa.01.1.i.i74, 1     ; 2 uses
   %exitcond100.not = icmp eq i64 %i.x, %i.n
   br i1 %exitcond100.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTjdENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_7sort_byNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1X_14UnigramTrainer21prune_sentence_piecess1_0E0EB23_.exit.i, label %.lr.ph75
 
@@ -1889,7 +1889,7 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3
   br i1 %i.ac, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTmRScENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_11sort_by_keyINtNtB8_3cmp7ReverseB12_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB2t_14UnigramTrainer25make_seed_sentence_piecess2_0E0EB2z_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.split67, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit52
-  %i.ad = add nuw i64 %.sroa.01.0.i.i93, 1        ; 2 uses
+  %i.ad = add nuw nsw i64 %.sroa.01.0.i.i93, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.ad, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTmRScENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_11sort_by_keyINtNtB8_3cmp7ReverseB12_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB2t_14UnigramTrainer25make_seed_sentence_piecess2_0E0EB2z_.exit.i, label %.lr.ph
 
@@ -1925,14 +1925,14 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3
   br i1 %i.al, label %bb.m, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTmRScENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_11sort_by_keyINtNtB8_3cmp7ReverseB12_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB2t_14UnigramTrainer25make_seed_sentence_piecess2_0E0EB2z_.exit.i
 
 bb.m:                                             ; preds = %.split68, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit
-  %i.am = add nuw i64 %.sroa.01.1.i.i96, 1        ; 2 uses
+  %i.am = add nuw nsw i64 %.sroa.01.1.i.i96, 1    ; 2 uses
   %exitcond124.not = icmp eq i64 %i.am, %i.n
   br i1 %exitcond124.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTmRScENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_11sort_by_keyINtNtB8_3cmp7ReverseB12_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB2t_14UnigramTrainer25make_seed_sentence_piecess2_0E0EB2z_.exit.i, label %.lr.ph97
 
 _RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTmRScENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_11sort_by_keyINtNtB8_3cmp7ReverseB12_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB2t_14UnigramTrainer25make_seed_sentence_piecess2_0E0EB2z_.exit.i: ; preds = %bb.l, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit52, %.split67, %bb.m, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit, %.split68, %.preheader78, %.preheader
   %.sroa.3.0.i.i = phi i1 [ true, %.preheader ], [ false, %.preheader78 ], [ true, %bb.m ], [ true, %.split68 ], [ true, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit ], [ false, %.split67 ], [ false, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit52 ], [ false, %bb.l ]
   %.sroa.0.0.i.i = phi i64 [ 2, %.preheader ], [ 2, %.preheader78 ], [ %i.n, %bb.m ], [ %.sroa.01.1.i.i96, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit ], [ %.sroa.01.1.i.i96, %.split68 ], [ %i.n, %bb.l ], [ %.sroa.01.0.i.i93, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTmRScE11sort_by_keyINtNtCs4NRVxsYgnAr_4core3cmp7ReverseBx_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB1B_14UnigramTrainer25make_seed_sentence_piecess2_0E0B1H_.exit52 ], [ %.sroa.01.0.i.i93, %.split67 ] ; 7 uses
-  %i.an = icmp ule i64 %.sroa.0.0.i.i, %i.n
+  %i.an = icmp samesign ule i64 %.sroa.0.0.i.i, %i.n
   tail call void @llvm.assume(i1 %i.an)
   %.not5.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.01.0
   br i1 %.not5.i, label %bb.i, label %bb.n
@@ -2335,7 +2335,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.sroa.0.0.i.i.i39, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTmcENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_11sort_by_keyINtNtB8_3cmp7ReverseB12_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB2r_14UnigramTrainer25make_seed_sentence_piecess0_0E0EB2x_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.ab = add nuw i64 %.sroa.01.0.i.i55, 1        ; 2 uses
+  %i.ab = add nuw nsw i64 %.sroa.01.0.i.i55, 1    ; 2 uses
   %exitcond.not = icmp eq i64 %i.ab, %i.n
   br i1 %exitcond.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTmcENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_11sort_by_keyINtNtB8_3cmp7ReverseB12_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB2r_14UnigramTrainer25make_seed_sentence_piecess0_0E0EB2x_.exit.i, label %.lr.ph
 
@@ -2354,7 +2354,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %.sroa.0.0.i.i.i, label %bb.m, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTmcENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_11sort_by_keyINtNtB8_3cmp7ReverseB12_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB2r_14UnigramTrainer25make_seed_sentence_piecess0_0E0EB2x_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph59
-  %i.ah = add nuw i64 %.sroa.01.1.i.i58, 1        ; 2 uses
+  %i.ah = add nuw nsw i64 %.sroa.01.1.i.i58, 1    ; 2 uses
   %exitcond79.not = icmp eq i64 %i.ah, %i.n
   br i1 %exitcond79.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTmcENCINvMNtCscdodAO9FK5_5alloc5sliceSB12_11sort_by_keyINtNtB8_3cmp7ReverseB12_ENCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB2r_14UnigramTrainer25make_seed_sentence_piecess0_0E0EB2x_.exit.i, label %.lr.ph59
 
