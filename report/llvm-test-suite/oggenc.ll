@@ -205,15 +205,14 @@ bb.c:                                             ; preds = %._crit_edge113.spli
 
 .lr.ph123.preheader:                              ; preds = %.lr.ph126
   %i.bq = lshr i32 %i.bo, 1
-  %i.br = zext nneg i32 %i.bq to i64              ; 4 uses
-  %2 = tail call i64 @llvm.smax.i64(i64 %i.br, i64 1) ; 2 uses
+  %i.br = zext nneg i32 %i.bq to i64              ; 5 uses
   %min.iters.check182 = icmp ult i32 %i.bo, 16
   %i.bs = shl nsw i64 %i.bn, 2
   %diff.check180 = icmp ugt i64 %i.bs, -32
   %or.cond = select i1 %min.iters.check182, i1 true, i1 %diff.check180
-  %n.vec184 = and i64 %2, 1073741816              ; 3 uses
-  %3 = sub nsw i64 %i.br, %n.vec184
-  %cmp.n191 = icmp eq i64 %2, %n.vec184
+  %n.vec184 = and i64 %i.br, 1073741816           ; 2 uses
+  %2 = and i64 %i.br, 7
+  %cmp.n191 = icmp eq i64 %n.vec184, %i.br
   br label %.lr.ph123
 
 .lr.ph123:                                        ; preds = %.lr.ph123.preheader, %._crit_edge124
@@ -246,7 +245,7 @@ middle.block190:                                  ; preds = %vector.body185
   br i1 %cmp.n191, label %._crit_edge124, label %scalar.ph181.preheader
 
 scalar.ph181.preheader:                           ; preds = %.lr.ph123, %middle.block190
-  %indvars.iv141.ph = phi i64 [ %i.br, %.lr.ph123 ], [ %3, %middle.block190 ]
+  %indvars.iv141.ph = phi i64 [ %i.br, %.lr.ph123 ], [ %2, %middle.block190 ]
   br label %scalar.ph181
 
 scalar.ph181:                                     ; preds = %scalar.ph181.preheader, %scalar.ph181
@@ -649,15 +648,15 @@ oggpack_look.exit69:                              ; preds = %bb.k
   %i.eo = add i64 %i.en, -1                       ; 2 uses
   %i.ep = tail call i64 @llvm.smin.i64(i64 %i.eg, i64 %i.eo)
   %i.eq = sub i64 %i.eo, %i.ep
-  %2 = tail call i64 @llvm.usub.sat.i64(i64 %i.em, i64 2)
-  %i.er = tail call i64 @llvm.umin.i64(i64 %i.eq, i64 %2) ; 2 uses
-  %i.es = add nuw nsw i64 %i.er, 1                ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.er, 79
+  %2 = add nsw i64 %i.em, -2
+  %i.er = tail call i64 @llvm.umin.i64(i64 %i.eq, i64 %2)
+  %i.es = add i64 %i.er, 1                        ; 3 uses
+  %min.iters.check = icmp ult i64 %i.es, 80
   br i1 %min.iters.check, label %.lr.ph.split.us.preheader177, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.split.us.preheader
-  %n.vec = and i64 %i.es, 4294967280              ; 3 uses
-  %i.et = sub nsw i64 %i.em, %n.vec
+  %n.vec = and i64 %i.es, -16                     ; 3 uses
+  %i.et = sub i64 %i.em, %n.vec
   %broadcast.splatinsert169 = insertelement <16 x i64> poison, i64 %i.eg, i64 0
   %broadcast.splat170 = shufflevector <16 x i64> %broadcast.splatinsert169, <16 x i64> poison, <16 x i32> zeroinitializer
   %broadcast.splatinsert171 = insertelement <16 x i64> poison, i64 %i.em, i64 0
@@ -1058,9 +1057,6 @@ declare <2 x i32> @llvm.bitreverse.v2i32(<2 x i32>) #30
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.experimental.cttz.elts.i64.v16i1(<16 x i1>, i1 immarg) #50
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #30
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #30
