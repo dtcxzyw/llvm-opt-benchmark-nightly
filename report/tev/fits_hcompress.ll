@@ -26,7 +26,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.4 = private unnamed_addr constant [34 x i8] c"qtree_encode: insufficient memory\00", align 1
 @code = internal unnamed_addr constant [16 x i32] [i32 62, i32 0, i32 1, i32 8, i32 2, i32 9, i32 26, i32 27, i32 3, i32 28, i32 10, i32 29, i32 11, i32 30, i32 63, i32 12], align 16
 @ncode = internal unnamed_addr constant [16 x i32] [i32 6, i32 3, i32 3, i32 4, i32 3, i32 4, i32 5, i32 5, i32 3, i32 5, i32 4, i32 5, i32 4, i32 5, i32 6, i32 4], align 16
-@output_nbits.mask = internal unnamed_addr constant [9 x i32] [i32 0, i32 1, i32 3, i32 7, i32 15, i32 31, i32 63, i32 127, i32 255], align 16
 @.str.5 = private unnamed_addr constant [30 x i8] c"encode64: insufficient memory\00", align 1
 @.str.6 = private unnamed_addr constant [34 x i8] c"encode64: output buffer too small\00", align 1
 @.str.7 = private unnamed_addr constant [36 x i8] c"qtree_encode64: insufficient memory\00", align 1
@@ -429,13 +428,9 @@ bb.ac:                                            ; preds = %output_nybble.exit
 bb.ad:                                            ; preds = %bb.ac
   %notmask83 = shl nsw i32 -1, %bits_to_go3.promoted145
   %i.oh = xor i32 %notmask83, -1
+  %i.oi = and i32 %bitbuffer.promoted138, %i.oh
   %6 = shl i32 %i.np, %bits_to_go3.promoted145
-  %7 = zext nneg i32 %bits_to_go3.promoted145 to i64 ; 2 uses
-  %8 = getelementptr inbounds nuw [4 x i8], ptr @output_nbits.mask, i64 %7
-  %9 = load i32, ptr %8, align 4, !tbaa !13
-  %i.oi = and i32 %9, %i.oh
-  %10 = and i32 %i.oi, %bitbuffer.promoted138
-  %i.oj = or i32 %10, %6                          ; 2 uses
+  %i.oj = or i32 %i.oi, %6                        ; 2 uses
   store i32 %i.oj, ptr @buffer2, align 4, !tbaa !13
   %i.ok = sub nsw i32 %i.oc, %bits_to_go3.promoted145 ; 4 uses
   store i32 %i.ok, ptr @bits_to_go2, align 4, !tbaa !13
@@ -464,6 +459,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   br label %output_nbits.exit
 
 output_nbits.exit:                                ; preds = %bb.ad, %bb.ag
+  %7 = zext nneg i32 %bits_to_go3.promoted145 to i64
   %i.ov = add nsw i64 %i.oe, %7
   store i64 %i.ov, ptr @bitcount, align 8, !tbaa !22
   br label %.loopexit122
@@ -509,13 +505,9 @@ bb.al:                                            ; preds = %output_nybble.exit
 bb.am:                                            ; preds = %bb.al
   %notmask = shl nsw i32 -1, %bits_to_go3.promoted145
   %i.pk = xor i32 %notmask, -1
-  %11 = shl i32 %i.np, %bits_to_go3.promoted145
-  %12 = zext nneg i32 %bits_to_go3.promoted145 to i64 ; 2 uses
-  %13 = getelementptr inbounds nuw [4 x i8], ptr @output_nbits.mask, i64 %12
-  %14 = load i32, ptr %13, align 4, !tbaa !13
-  %i.pl = and i32 %14, %i.pk
-  %15 = and i32 %i.pl, %bitbuffer.promoted138
-  %i.pm = or i32 %15, %11                         ; 3 uses
+  %i.pl = and i32 %bitbuffer.promoted138, %i.pk
+  %8 = shl i32 %i.np, %bits_to_go3.promoted145
+  %i.pm = or i32 %i.pl, %8                        ; 3 uses
   store i32 %i.pm, ptr @buffer2, align 4, !tbaa !13
   %i.pn = sub nsw i32 %i.oc, %bits_to_go3.promoted145 ; 5 uses
   store i32 %i.pn, ptr @bits_to_go2, align 4, !tbaa !13
@@ -545,7 +537,8 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
 
 output_nbits.exit107:                             ; preds = %bb.am, %bb.ap
   %bits_to_go2.promoted167 = phi i32 [ %i.pn, %bb.am ], [ %i.px, %bb.ap ]
-  %i.py = add nsw i64 %i.oe, %12                  ; 2 uses
+  %9 = zext nneg i32 %bits_to_go3.promoted145 to i64
+  %i.py = add nsw i64 %i.oe, %9                   ; 2 uses
   store i64 %i.py, ptr @bitcount, align 8, !tbaa !22
   br label %bb.aq
 
@@ -948,13 +941,9 @@ bb.ac:                                            ; preds = %output_nybble.exit
 bb.ad:                                            ; preds = %bb.ac
   %notmask83 = shl nsw i32 -1, %bits_to_go3.promoted145
   %i.oh = xor i32 %notmask83, -1
+  %i.oi = and i32 %bitbuffer.promoted138, %i.oh
   %6 = shl i32 %i.np, %bits_to_go3.promoted145
-  %7 = zext nneg i32 %bits_to_go3.promoted145 to i64 ; 2 uses
-  %8 = getelementptr inbounds nuw [4 x i8], ptr @output_nbits.mask, i64 %7
-  %9 = load i32, ptr %8, align 4, !tbaa !13
-  %i.oi = and i32 %9, %i.oh
-  %10 = and i32 %i.oi, %bitbuffer.promoted138
-  %i.oj = or i32 %10, %6                          ; 2 uses
+  %i.oj = or i32 %i.oi, %6                        ; 2 uses
   store i32 %i.oj, ptr @buffer2, align 4, !tbaa !13
   %i.ok = sub nsw i32 %i.oc, %bits_to_go3.promoted145 ; 4 uses
   store i32 %i.ok, ptr @bits_to_go2, align 4, !tbaa !13
@@ -983,6 +972,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   br label %output_nbits.exit
 
 output_nbits.exit:                                ; preds = %bb.ad, %bb.ag
+  %7 = zext nneg i32 %bits_to_go3.promoted145 to i64
   %i.ov = add nsw i64 %i.oe, %7
   store i64 %i.ov, ptr @bitcount, align 8, !tbaa !22
   br label %.loopexit122
@@ -1028,13 +1018,9 @@ bb.al:                                            ; preds = %output_nybble.exit
 bb.am:                                            ; preds = %bb.al
   %notmask = shl nsw i32 -1, %bits_to_go3.promoted145
   %i.pk = xor i32 %notmask, -1
-  %11 = shl i32 %i.np, %bits_to_go3.promoted145
-  %12 = zext nneg i32 %bits_to_go3.promoted145 to i64 ; 2 uses
-  %13 = getelementptr inbounds nuw [4 x i8], ptr @output_nbits.mask, i64 %12
-  %14 = load i32, ptr %13, align 4, !tbaa !13
-  %i.pl = and i32 %14, %i.pk
-  %15 = and i32 %i.pl, %bitbuffer.promoted138
-  %i.pm = or i32 %15, %11                         ; 3 uses
+  %i.pl = and i32 %bitbuffer.promoted138, %i.pk
+  %8 = shl i32 %i.np, %bits_to_go3.promoted145
+  %i.pm = or i32 %i.pl, %8                        ; 3 uses
   store i32 %i.pm, ptr @buffer2, align 4, !tbaa !13
   %i.pn = sub nsw i32 %i.oc, %bits_to_go3.promoted145 ; 5 uses
   store i32 %i.pn, ptr @bits_to_go2, align 4, !tbaa !13
@@ -1064,7 +1050,8 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
 
 output_nbits.exit107:                             ; preds = %bb.am, %bb.ap
   %bits_to_go2.promoted167 = phi i32 [ %i.pn, %bb.am ], [ %i.px, %bb.ap ]
-  %i.py = add nsw i64 %i.oe, %12                  ; 2 uses
+  %9 = zext nneg i32 %bits_to_go3.promoted145 to i64
+  %i.py = add nsw i64 %i.oe, %9                   ; 2 uses
   store i64 %i.py, ptr @bitcount, align 8, !tbaa !22
   br label %bb.aq
 

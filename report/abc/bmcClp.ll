@@ -31,7 +31,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.20 = private unnamed_addr constant [15 x i8] c"Onset  expand \00", align 1
 @.str.21 = private unnamed_addr constant [15 x i8] c"Offset minterm\00", align 1
 @.str.22 = private unnamed_addr constant [15 x i8] c"Offset expand \00", align 1
-@__const.Bmc_CollapseOne_int.iOOVars = private unnamed_addr constant [2 x i32] [i32 0, i32 1], align 4
 @.str.27 = private unnamed_addr constant [5 x i8] c"%s =\00", align 1
 @.str.28 = private unnamed_addr constant [11 x i8] c"%9.2f sec\0A\00", align 1
 @enable_dbg_outs = external local_unnamed_addr global i32, align 4
@@ -434,9 +433,10 @@ bb.bw:                                            ; preds = %bb.bw, %.epil.prehe
   br i1 %epil.iter.cmp.not, label %sat_solver_clean_polarity.exit, label %bb.bw, !llvm.loop !172
 
 sat_solver_clean_polarity.exit:                   ; preds = %sat_solver_clean_polarity.exit.loopexit.unr-lcssa, %bb.bw, %bb.bu
-  %12 = getelementptr inbounds nuw [4 x i8], ptr @__const.Bmc_CollapseOne_int.iOOVars, i64 %indvars.iv377
-  %13 = load i32, ptr %12, align 4, !tbaa !34
-  %i.in = shl nsw i32 %13, 1                      ; 2 uses
+  %12 = trunc nuw nsw i64 %indvars.iv377 to i32
+  %notmask = shl nsw i32 -1, %12
+  %13 = xor i32 %notmask, -1
+  %i.in = shl nuw nsw i32 %13, 1                  ; 2 uses
   %i.io = or disjoint i32 %i.in, 1
   store i32 %i.io, ptr %i.c, align 4, !tbaa !34
   %i.ip = call i32 @sat_solver_solve(ptr noundef %i.hh, ptr noundef nonnull %i.c, ptr noundef nonnull %i.bx, i64 noundef 0, i64 noundef 0, i64 noundef 0, i64 noundef 0) #18
@@ -839,7 +839,7 @@ bb.bq:                                            ; preds = %.critedge2
   br i1 %.not151433, label %bb.br, label %.loopexit, !llvm.loop !179
 
 bb.br:                                            ; preds = %.preheader, %bb.bq
-  %indvars.iv378 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next379, %bb.bq ] ; 10 uses
+  %indvars.iv378 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next379, %bb.bq ] ; 8 uses
   %.1333 = phi i64 [ %.0335, %.preheader ], [ %.3432, %bb.bq ]
   br i1 %.not150, label %bb.bu, label %bb.bs
 
@@ -942,9 +942,10 @@ sat_solver_clean_polarity.exit:                   ; preds = %sat_solver_clean_po
   %i.ik = trunc nuw nsw i64 %indvars.iv378 to i32
   %i.il = or i32 %i.ik, 4
   store i32 %i.il, ptr %i.b, align 4, !tbaa !34
-  %11 = getelementptr inbounds nuw [4 x i8], ptr @__const.Bmc_CollapseOne_int.iOOVars, i64 %indvars.iv378
-  %12 = load i32, ptr %11, align 4, !tbaa !34
-  %i.im = shl nsw i32 %12, 1                      ; 2 uses
+  %11 = trunc nuw nsw i64 %indvars.iv378 to i32   ; 3 uses
+  %notmask = shl nsw i32 -1, %11
+  %12 = xor i32 %notmask, -1
+  %i.im = shl nuw nsw i32 %12, 1                  ; 2 uses
   %i.in = or disjoint i32 %i.im, 1
   store i32 %i.in, ptr %i.bv, align 4, !tbaa !34
   %i.io = call i32 @sat_solver_solve(ptr noundef %0, ptr noundef nonnull %i.b, ptr noundef nonnull %i.ca, i64 noundef 0, i64 noundef 0, i64 noundef 0, i64 noundef 0) #18
@@ -1069,8 +1070,7 @@ Vec_IntPush.exit222:                              ; preds = %bb.cf, %bb.ce, %bb.
   br i1 %.not150, label %.thread429, label %bb.ck
 
 .thread429:                                       ; preds = %.critedge
-  %13 = trunc nuw nsw i64 %indvars.iv378 to i32
-  %i.jx = xor i32 %13, 5
+  %i.jx = xor i32 %11, 5
   %i.jy = call i32 @Bmc_CollapseExpand(ptr noundef %0, ptr noundef null, ptr noundef nonnull %i.u, ptr noundef nonnull %i.ab, ptr noundef nonnull %i.ai, i32 noundef %3, i32 noundef %4, i32 noundef %i.jx)
   br label %bb.co
 
@@ -1091,8 +1091,7 @@ bb.cl:                                            ; preds = %bb.ck
 bb.cm:                                            ; preds = %bb.ck, %bb.cl
   %.0.i223 = phi i64 [ %i.kf, %bb.cl ], [ -1, %bb.ck ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #18
-  %14 = trunc nuw nsw i64 %indvars.iv378 to i32
-  %i.kg = xor i32 %14, 5
+  %i.kg = xor i32 %11, 5
   %i.kh = call i32 @Bmc_CollapseExpand(ptr noundef %0, ptr noundef null, ptr noundef nonnull %i.u, ptr noundef nonnull %i.ab, ptr noundef nonnull %i.ai, i32 noundef %3, i32 noundef %4, i32 noundef %i.kg)
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #18
   %i.ki = call i32 @clock_gettime(i32 noundef 1, ptr noundef nonnull %7) #18

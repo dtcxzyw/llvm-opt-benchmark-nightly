@@ -205,13 +205,13 @@ bb.a:
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 6 uses
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 2 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %3, i64 36 ; 5 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %3, i64 36 ; 4 uses
   %i.s = load <2 x float>, ptr %i.o, align 4, !tbaa !33 ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.e, i64 52
   %i.u = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 5 uses
   %i.v = getelementptr inbounds nuw i8, ptr %3, i64 40
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 20 ; 2 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %3, i64 44 ; 4 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %3, i64 44 ; 5 uses
   %i.y = load <2 x float>, ptr %i.u, align 4, !tbaa !33 ; 2 uses
   %i.z = load float, ptr %i.g, align 4, !tbaa !33
   %i.aa = fadd reassoc nsz arcp contract afn float %i.z, -1.000000e+00 ; 2 uses
@@ -452,16 +452,16 @@ vector.ph:                                        ; preds = %bb.b, %bb.a
   store float %i.fn, ptr %i.fp, align 8, !tbaa !43
   %i.fq = getelementptr inbounds nuw i8, ptr %i.fg, i64 44
   store float %i.fo, ptr %i.fq, align 4, !tbaa !44
-  %6 = load float, ptr %i.r, align 4, !tbaa !33
   %i.fr = getelementptr inbounds nuw i8, ptr %i.fg, i64 48
   %i.fs = extractelement <2 x float> %i.dq, i64 0
   store float %i.fs, ptr %i.fr, align 8, !tbaa !43
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fg, i64 52
-  store float %6, ptr %i.ft, align 4, !tbaa !44
-  %7 = getelementptr inbounds nuw i8, ptr %i.fg, i64 56
-  %8 = load <8 x float>, ptr %i.dp, align 4, !tbaa !33
-  %9 = shufflevector <8 x float> %8, <8 x float> poison, <4 x i32> <i32 0, i32 6, i32 1, i32 7>
-  store <4 x float> %9, ptr %7, align 8, !tbaa !33
+  %6 = load float, ptr %i.x, align 4, !tbaa !33
+  %7 = load <7 x float>, ptr %i.dp, align 4, !tbaa !33
+  %8 = shufflevector <7 x float> %7, <7 x float> poison, <4 x i32> <i32 5, i32 0, i32 6, i32 1>
+  store <4 x float> %8, ptr %i.ft, align 4, !tbaa !33
+  %9 = getelementptr inbounds nuw i8, ptr %i.fg, i64 68
+  store float %6, ptr %9, align 4, !tbaa !44
   %i.fu = load float, ptr %i.ag, align 4, !tbaa !33
   %i.fv = load float, ptr %i.ai, align 4, !tbaa !33
   %i.fw = getelementptr inbounds nuw i8, ptr %i.fg, i64 72

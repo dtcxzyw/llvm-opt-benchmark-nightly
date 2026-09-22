@@ -205,7 +205,6 @@ begin_hunk_0
 @.str.245 = private unnamed_addr constant [6 x i8] c"added\00", align 1
 @.str.246 = private unnamed_addr constant [6 x i8] c"count\00", align 1
 @_ZN4mlir6detail14TypeIDResolverINS_13sparse_tensor8ExpandOpEvE2idE = global %"class.mlir::SelfOwningTypeID" undef, align 8
-@__const._ZN4mlir13sparse_tensor9ForeachOp27getODSOperandIndexAndLengthEj.isVariadic = private unnamed_addr constant [2 x i8] c"\00\01", align 1
 @.str.248 = private unnamed_addr constant [6 x i8] c"order\00", align 1
 @.str.249 = private unnamed_addr constant [51 x i8] c"Invalid attribute `order` in property conversion: \00", align 1
 @.str.250 = private unnamed_addr constant [3 x i8] c"in\00", align 1
@@ -608,67 +607,68 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext i32 %1 to i64           ; 5 uses
   %min.iters.check = icmp ult i32 %1, 8
   br i1 %min.iters.check, label %.lr.ph.preheader19, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %wide.trip.count, 4294967288   ; 3 uses
+  %n.vec = and i32 %1, -8                         ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
   %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.c, %vector.body ]
   %vec.phi17 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.d, %vector.body ]
-  %3 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir13sparse_tensor9ForeachOp27getODSOperandIndexAndLengthEj.isVariadic, i64 %index ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %wide.load = load <4 x i8>, ptr %3, align 1, !tbaa !209
-  %wide.load18 = load <4 x i8>, ptr %4, align 1, !tbaa !209
-  %i.a = zext nneg <4 x i8> %wide.load to <4 x i32>
-  %i.b = zext nneg <4 x i8> %wide.load18 to <4 x i32>
+  %vec.ind = phi <4 x i8> [ <i8 0, i8 1, i8 2, i8 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
+  %step.add = add <4 x i8> %vec.ind, splat (i8 4)
+  %3 = shl nsw <4 x i8> splat (i8 -1), %vec.ind
+  %4 = shl nsw <4 x i8> splat (i8 -1), %step.add
+  %5 = xor <4 x i8> %3, splat (i8 -1)
+  %6 = xor <4 x i8> %4, splat (i8 -1)
+  %i.a = zext nneg <4 x i8> %5 to <4 x i32>
+  %i.b = zext nneg <4 x i8> %6 to <4 x i32>
   %i.c = add <4 x i32> %vec.phi, %i.a             ; 2 uses
   %i.d = add <4 x i32> %vec.phi17, %i.b           ; 2 uses
-  %index.next = add nuw i64 %index, 8             ; 2 uses
-  %i.e = icmp eq i64 %index.next, %n.vec
+  %index.next = add nuw i32 %index, 8             ; 2 uses
+  %vec.ind.next = add <4 x i8> %vec.ind, splat (i8 8)
+  %i.e = icmp eq i32 %index.next, %n.vec
   br i1 %i.e, label %middle.block, label %vector.body, !llvm.loop !1427
 
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = add <4 x i32> %i.d, %i.c
   %i.f = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %cmp.n = icmp eq i32 %1, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader19
 
 .lr.ph.preheader19:                               ; preds = %.lr.ph.preheader, %middle.block
-  %indvars.iv.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
-  %.015.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %i.f, %middle.block ]
+  %.015.ph = phi i32 [ 0, %.lr.ph.preheader ], [ %i.f, %middle.block ]
+  %.015.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.a
-  %.pre-phi = phi i64 [ 0, %bb.a ], [ %wide.trip.count, %middle.block ], [ %wide.trip.count, %.lr.ph ]
   %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.f, %middle.block ], [ %spec.select, %.lr.ph ]
   %i.g = add i32 %2, -1
   %i.h = add i32 %2, -2
   %i.i = mul nsw i32 %.0.lcssa, %i.h
   %i.j = add i32 %i.i, %1
-  %5 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir13sparse_tensor9ForeachOp27getODSOperandIndexAndLengthEj.isVariadic, i64 %.pre-phi
-  %6 = load i8, ptr %5, align 1, !tbaa !209, !range !121, !noundef !122
-  %7 = trunc nuw i8 %6 to i1
+  %7 = and i32 %1, 255
+  %.not17 = icmp eq i32 %7, 0
   %i.k = zext i32 %i.g to i64
   %i.l = shl nuw i64 %i.k, 32
-  %.sroa.2.0.insert.shift = select i1 %7, i64 %i.l, i64 4294967296
+  %.sroa.2.0.insert.shift = select i1 %.not17, i64 4294967296, i64 %i.l
   %.sroa.0.0.insert.ext = zext i32 %i.j to i64
   %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
   ret i64 %.sroa.0.0.insert.insert
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader19, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader19 ] ; 2 uses
-  %.015.a = phi i32 [ %spec.select, %.lr.ph ], [ %.015.ph.a, %.lr.ph.preheader19 ]
-  %8 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir13sparse_tensor9ForeachOp27getODSOperandIndexAndLengthEj.isVariadic, i64 %indvars.iv
-  %9 = load i8, ptr %8, align 1, !tbaa !209, !range !121, !noundef !122
+  %.015 = phi i32 [ %spec.select, %.lr.ph ], [ %.015.ph, %.lr.ph.preheader19 ]
+  %.015.a = phi i32 [ %10, %.lr.ph ], [ %.015.ph.a, %.lr.ph.preheader19 ] ; 2 uses
+  %8 = trunc i32 %.015.a to i8
+  %notmask = shl nsw i8 -1, %8
+  %9 = xor i8 %notmask, -1
   %i.m = zext nneg i8 %9 to i32
-  %spec.select = add nuw nsw i32 %.015.a, %i.m    ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %spec.select = add nuw nsw i32 %.015, %i.m      ; 2 uses
+  %10 = add nuw i32 %.015.a, 1                    ; 2 uses
+  %exitcond.not = icmp eq i32 %10, %1
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !1428
 }
 
@@ -950,39 +950,41 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext i32 %1 to i64           ; 3 uses
   %min.iters.check = icmp ult i32 %1, 8
   br i1 %min.iters.check, label %.lr.ph.preheader18, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %wide.trip.count, 4294967288   ; 3 uses
+  %n.vec = and i32 %1, -8                         ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
   %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.c, %vector.body ]
   %vec.phi16 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.d, %vector.body ]
-  %2 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir13sparse_tensor9ForeachOp27getODSOperandIndexAndLengthEj.isVariadic, i64 %index ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %wide.load = load <4 x i8>, ptr %2, align 1, !tbaa !209
-  %wide.load17 = load <4 x i8>, ptr %3, align 1, !tbaa !209
-  %i.a = zext nneg <4 x i8> %wide.load to <4 x i32>
-  %i.b = zext nneg <4 x i8> %wide.load17 to <4 x i32>
+  %vec.ind = phi <4 x i8> [ <i8 0, i8 1, i8 2, i8 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
+  %step.add = add <4 x i8> %vec.ind, splat (i8 4)
+  %2 = shl nsw <4 x i8> splat (i8 -1), %vec.ind
+  %3 = shl nsw <4 x i8> splat (i8 -1), %step.add
+  %4 = xor <4 x i8> %2, splat (i8 -1)
+  %5 = xor <4 x i8> %3, splat (i8 -1)
+  %i.a = zext nneg <4 x i8> %4 to <4 x i32>
+  %i.b = zext nneg <4 x i8> %5 to <4 x i32>
   %i.c = add <4 x i32> %vec.phi, %i.a             ; 2 uses
   %i.d = add <4 x i32> %vec.phi16, %i.b           ; 2 uses
-  %index.next = add nuw i64 %index, 8             ; 2 uses
-  %i.e = icmp eq i64 %index.next, %n.vec
+  %index.next = add nuw i32 %index, 8             ; 2 uses
+  %vec.ind.next = add <4 x i8> %vec.ind, splat (i8 8)
+  %i.e = icmp eq i32 %index.next, %n.vec
   br i1 %i.e, label %middle.block, label %vector.body, !llvm.loop !1429
 
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = add <4 x i32> %i.d, %i.c
   %i.f = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %cmp.n = icmp eq i32 %1, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader18
 
 .lr.ph.preheader18:                               ; preds = %.lr.ph.preheader, %middle.block
-  %indvars.iv.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
-  %.014.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %i.f, %middle.block ]
+  %.014.ph = phi i32 [ 0, %.lr.ph.preheader ], [ %i.f, %middle.block ]
+  %.014.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.a
@@ -1005,26 +1007,25 @@ _ZN4mlir9Operation14getNumOperandsEv.exit:        ; preds = %._crit_edge, %bb.b
   %i.o = add i32 %i.m, -2
   %i.p = mul nsw i32 %i.o, %.0.lcssa
   %i.q = add i32 %i.p, %1
-  %4 = zext i32 %1 to i64
-  %5 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir13sparse_tensor9ForeachOp27getODSOperandIndexAndLengthEj.isVariadic, i64 %4
-  %6 = load i8, ptr %5, align 1, !tbaa !209, !range !121, !noundef !122
-  %7 = trunc nuw i8 %6 to i1
+  %6 = and i32 %1, 255
+  %.not16 = icmp eq i32 %6, 0
   %i.r = zext i32 %i.n to i64
   %i.s = shl nuw i64 %i.r, 32
-  %.sroa.2.0.insert.shift = select i1 %7, i64 %i.s, i64 4294967296
+  %.sroa.2.0.insert.shift = select i1 %.not16, i64 4294967296, i64 %i.s
   %.sroa.0.0.insert.ext = zext i32 %i.q to i64
   %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
   ret i64 %.sroa.0.0.insert.insert
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader18, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader18 ] ; 2 uses
-  %.014.a = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph.a, %.lr.ph.preheader18 ]
-  %8 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir13sparse_tensor9ForeachOp27getODSOperandIndexAndLengthEj.isVariadic, i64 %indvars.iv
-  %9 = load i8, ptr %8, align 1, !tbaa !209, !range !121, !noundef !122
-  %i.t = zext nneg i8 %9 to i32
-  %spec.select = add nuw nsw i32 %.014.a, %i.t    ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %.014 = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph, %.lr.ph.preheader18 ]
+  %.014.a = phi i32 [ %9, %.lr.ph ], [ %.014.ph.a, %.lr.ph.preheader18 ] ; 2 uses
+  %7 = trunc i32 %.014.a to i8
+  %notmask = shl nsw i8 -1, %7
+  %8 = xor i8 %notmask, -1
+  %i.t = zext nneg i8 %8 to i32
+  %spec.select = add nuw nsw i32 %.014, %i.t      ; 2 uses
+  %9 = add nuw i32 %.014.a, 1                     ; 2 uses
+  %exitcond.not = icmp eq i32 %9, %1
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !1430
 }
 
@@ -1427,67 +1428,68 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext i32 %1 to i64           ; 5 uses
   %min.iters.check = icmp ult i32 %1, 8
   br i1 %min.iters.check, label %.lr.ph.preheader19, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %wide.trip.count, 4294967288   ; 3 uses
+  %n.vec = and i32 %1, -8                         ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
   %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.c, %vector.body ]
   %vec.phi17 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.d, %vector.body ]
-  %3 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir13sparse_tensor9ForeachOp27getODSOperandIndexAndLengthEj.isVariadic, i64 %index ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %wide.load = load <4 x i8>, ptr %3, align 1, !tbaa !209
-  %wide.load18 = load <4 x i8>, ptr %4, align 1, !tbaa !209
-  %i.a = zext nneg <4 x i8> %wide.load to <4 x i32>
-  %i.b = zext nneg <4 x i8> %wide.load18 to <4 x i32>
+  %vec.ind = phi <4 x i8> [ <i8 0, i8 1, i8 2, i8 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
+  %step.add = add <4 x i8> %vec.ind, splat (i8 4)
+  %3 = shl nsw <4 x i8> splat (i8 -1), %vec.ind
+  %4 = shl nsw <4 x i8> splat (i8 -1), %step.add
+  %5 = xor <4 x i8> %3, splat (i8 -1)
+  %6 = xor <4 x i8> %4, splat (i8 -1)
+  %i.a = zext nneg <4 x i8> %5 to <4 x i32>
+  %i.b = zext nneg <4 x i8> %6 to <4 x i32>
   %i.c = add <4 x i32> %vec.phi, %i.a             ; 2 uses
   %i.d = add <4 x i32> %vec.phi17, %i.b           ; 2 uses
-  %index.next = add nuw i64 %index, 8             ; 2 uses
-  %i.e = icmp eq i64 %index.next, %n.vec
+  %index.next = add nuw i32 %index, 8             ; 2 uses
+  %vec.ind.next = add <4 x i8> %vec.ind, splat (i8 8)
+  %i.e = icmp eq i32 %index.next, %n.vec
   br i1 %i.e, label %middle.block, label %vector.body, !llvm.loop !1445
 
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = add <4 x i32> %i.d, %i.c
   %i.f = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %cmp.n = icmp eq i32 %1, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader19
 
 .lr.ph.preheader19:                               ; preds = %.lr.ph.preheader, %middle.block
-  %indvars.iv.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
-  %.015.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %i.f, %middle.block ]
+  %.015.ph = phi i32 [ 0, %.lr.ph.preheader ], [ %i.f, %middle.block ]
+  %.015.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.a
-  %.pre-phi = phi i64 [ 0, %bb.a ], [ %wide.trip.count, %middle.block ], [ %wide.trip.count, %.lr.ph ]
   %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.f, %middle.block ], [ %spec.select, %.lr.ph ]
   %i.g = add i32 %2, -1
   %i.h = add i32 %2, -2
   %i.i = mul nsw i32 %.0.lcssa, %i.h
   %i.j = add i32 %i.i, %1
-  %5 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir13sparse_tensor9ForeachOp27getODSOperandIndexAndLengthEj.isVariadic, i64 %.pre-phi
-  %6 = load i8, ptr %5, align 1, !tbaa !209, !range !121, !noundef !122
-  %7 = trunc nuw i8 %6 to i1
+  %7 = and i32 %1, 255
+  %.not17 = icmp eq i32 %7, 0
   %i.k = zext i32 %i.g to i64
   %i.l = shl nuw i64 %i.k, 32
-  %.sroa.2.0.insert.shift = select i1 %7, i64 %i.l, i64 4294967296
+  %.sroa.2.0.insert.shift = select i1 %.not17, i64 4294967296, i64 %i.l
   %.sroa.0.0.insert.ext = zext i32 %i.j to i64
   %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
   ret i64 %.sroa.0.0.insert.insert
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader19, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader19 ] ; 2 uses
-  %.015.a = phi i32 [ %spec.select, %.lr.ph ], [ %.015.ph.a, %.lr.ph.preheader19 ]
-  %8 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir13sparse_tensor9ForeachOp27getODSOperandIndexAndLengthEj.isVariadic, i64 %indvars.iv
-  %9 = load i8, ptr %8, align 1, !tbaa !209, !range !121, !noundef !122
+  %.015 = phi i32 [ %spec.select, %.lr.ph ], [ %.015.ph, %.lr.ph.preheader19 ]
+  %.015.a = phi i32 [ %10, %.lr.ph ], [ %.015.ph.a, %.lr.ph.preheader19 ] ; 2 uses
+  %8 = trunc i32 %.015.a to i8
+  %notmask = shl nsw i8 -1, %8
+  %9 = xor i8 %notmask, -1
   %i.m = zext nneg i8 %9 to i32
-  %spec.select = add nuw nsw i32 %.015.a, %i.m    ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %spec.select = add nuw nsw i32 %.015, %i.m      ; 2 uses
+  %10 = add nuw i32 %.015.a, 1                    ; 2 uses
+  %exitcond.not = icmp eq i32 %10, %1
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !1446
 }
 
@@ -1695,39 +1697,41 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext i32 %1 to i64           ; 3 uses
   %min.iters.check = icmp ult i32 %1, 8
   br i1 %min.iters.check, label %.lr.ph.preheader18, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %wide.trip.count, 4294967288   ; 3 uses
+  %n.vec = and i32 %1, -8                         ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
   %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.c, %vector.body ]
   %vec.phi16 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.d, %vector.body ]
-  %2 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir13sparse_tensor9ForeachOp27getODSOperandIndexAndLengthEj.isVariadic, i64 %index ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %wide.load = load <4 x i8>, ptr %2, align 1, !tbaa !209
-  %wide.load17 = load <4 x i8>, ptr %3, align 1, !tbaa !209
-  %i.a = zext nneg <4 x i8> %wide.load to <4 x i32>
-  %i.b = zext nneg <4 x i8> %wide.load17 to <4 x i32>
+  %vec.ind = phi <4 x i8> [ <i8 0, i8 1, i8 2, i8 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
+  %step.add = add <4 x i8> %vec.ind, splat (i8 4)
+  %2 = shl nsw <4 x i8> splat (i8 -1), %vec.ind
+  %3 = shl nsw <4 x i8> splat (i8 -1), %step.add
+  %4 = xor <4 x i8> %2, splat (i8 -1)
+  %5 = xor <4 x i8> %3, splat (i8 -1)
+  %i.a = zext nneg <4 x i8> %4 to <4 x i32>
+  %i.b = zext nneg <4 x i8> %5 to <4 x i32>
   %i.c = add <4 x i32> %vec.phi, %i.a             ; 2 uses
   %i.d = add <4 x i32> %vec.phi16, %i.b           ; 2 uses
-  %index.next = add nuw i64 %index, 8             ; 2 uses
-  %i.e = icmp eq i64 %index.next, %n.vec
+  %index.next = add nuw i32 %index, 8             ; 2 uses
+  %vec.ind.next = add <4 x i8> %vec.ind, splat (i8 8)
+  %i.e = icmp eq i32 %index.next, %n.vec
   br i1 %i.e, label %middle.block, label %vector.body, !llvm.loop !1447
 
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = add <4 x i32> %i.d, %i.c
   %i.f = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %cmp.n = icmp eq i32 %1, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader18
 
 .lr.ph.preheader18:                               ; preds = %.lr.ph.preheader, %middle.block
-  %indvars.iv.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
-  %.014.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %i.f, %middle.block ]
+  %.014.ph = phi i32 [ 0, %.lr.ph.preheader ], [ %i.f, %middle.block ]
+  %.014.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.a
@@ -1750,26 +1754,25 @@ _ZN4mlir9Operation14getNumOperandsEv.exit:        ; preds = %._crit_edge, %bb.b
   %i.o = add i32 %i.m, -2
   %i.p = mul nsw i32 %i.o, %.0.lcssa
   %i.q = add i32 %i.p, %1
-  %4 = zext i32 %1 to i64
-  %5 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir13sparse_tensor9ForeachOp27getODSOperandIndexAndLengthEj.isVariadic, i64 %4
-  %6 = load i8, ptr %5, align 1, !tbaa !209, !range !121, !noundef !122
-  %7 = trunc nuw i8 %6 to i1
+  %6 = and i32 %1, 255
+  %.not16 = icmp eq i32 %6, 0
   %i.r = zext i32 %i.n to i64
   %i.s = shl nuw i64 %i.r, 32
-  %.sroa.2.0.insert.shift = select i1 %7, i64 %i.s, i64 4294967296
+  %.sroa.2.0.insert.shift = select i1 %.not16, i64 4294967296, i64 %i.s
   %.sroa.0.0.insert.ext = zext i32 %i.q to i64
   %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
   ret i64 %.sroa.0.0.insert.insert
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader18, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader18 ] ; 2 uses
-  %.014.a = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph.a, %.lr.ph.preheader18 ]
-  %8 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir13sparse_tensor9ForeachOp27getODSOperandIndexAndLengthEj.isVariadic, i64 %indvars.iv
-  %9 = load i8, ptr %8, align 1, !tbaa !209, !range !121, !noundef !122
-  %i.t = zext nneg i8 %9 to i32
-  %spec.select = add nuw nsw i32 %.014.a, %i.t    ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %.014 = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph, %.lr.ph.preheader18 ]
+  %.014.a = phi i32 [ %9, %.lr.ph ], [ %.014.ph.a, %.lr.ph.preheader18 ] ; 2 uses
+  %7 = trunc i32 %.014.a to i8
+  %notmask = shl nsw i8 -1, %7
+  %8 = xor i8 %notmask, -1
+  %i.t = zext nneg i8 %8 to i32
+  %spec.select = add nuw nsw i32 %.014, %i.t      ; 2 uses
+  %9 = add nuw i32 %.014.a, 1                     ; 2 uses
+  %exitcond.not = icmp eq i32 %9, %1
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !1448
 }
 
@@ -2172,67 +2175,68 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext i32 %1 to i64           ; 5 uses
   %min.iters.check = icmp ult i32 %1, 8
   br i1 %min.iters.check, label %.lr.ph.preheader19, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %wide.trip.count, 4294967288   ; 3 uses
+  %n.vec = and i32 %1, -8                         ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
   %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.c, %vector.body ]
   %vec.phi17 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.d, %vector.body ]
-  %3 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir13sparse_tensor9ForeachOp27getODSOperandIndexAndLengthEj.isVariadic, i64 %index ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %wide.load = load <4 x i8>, ptr %3, align 1, !tbaa !209
-  %wide.load18 = load <4 x i8>, ptr %4, align 1, !tbaa !209
-  %i.a = zext nneg <4 x i8> %wide.load to <4 x i32>
-  %i.b = zext nneg <4 x i8> %wide.load18 to <4 x i32>
+  %vec.ind = phi <4 x i8> [ <i8 0, i8 1, i8 2, i8 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
+  %step.add = add <4 x i8> %vec.ind, splat (i8 4)
+  %3 = shl nsw <4 x i8> splat (i8 -1), %vec.ind
+  %4 = shl nsw <4 x i8> splat (i8 -1), %step.add
+  %5 = xor <4 x i8> %3, splat (i8 -1)
+  %6 = xor <4 x i8> %4, splat (i8 -1)
+  %i.a = zext nneg <4 x i8> %5 to <4 x i32>
+  %i.b = zext nneg <4 x i8> %6 to <4 x i32>
   %i.c = add <4 x i32> %vec.phi, %i.a             ; 2 uses
   %i.d = add <4 x i32> %vec.phi17, %i.b           ; 2 uses
-  %index.next = add nuw i64 %index, 8             ; 2 uses
-  %i.e = icmp eq i64 %index.next, %n.vec
+  %index.next = add nuw i32 %index, 8             ; 2 uses
+  %vec.ind.next = add <4 x i8> %vec.ind, splat (i8 8)
+  %i.e = icmp eq i32 %index.next, %n.vec
   br i1 %i.e, label %middle.block, label %vector.body, !llvm.loop !1541
 
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = add <4 x i32> %i.d, %i.c
   %i.f = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %cmp.n = icmp eq i32 %1, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader19
 
 .lr.ph.preheader19:                               ; preds = %.lr.ph.preheader, %middle.block
-  %indvars.iv.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
-  %.015.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %i.f, %middle.block ]
+  %.015.ph = phi i32 [ 0, %.lr.ph.preheader ], [ %i.f, %middle.block ]
+  %.015.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.a
-  %.pre-phi = phi i64 [ 0, %bb.a ], [ %wide.trip.count, %middle.block ], [ %wide.trip.count, %.lr.ph ]
   %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.f, %middle.block ], [ %spec.select, %.lr.ph ]
   %i.g = add i32 %2, -1
   %i.h = add i32 %2, -2
   %i.i = mul nsw i32 %.0.lcssa, %i.h
   %i.j = add i32 %i.i, %1
-  %5 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir13sparse_tensor9ForeachOp27getODSOperandIndexAndLengthEj.isVariadic, i64 %.pre-phi
-  %6 = load i8, ptr %5, align 1, !tbaa !209, !range !121, !noundef !122
-  %7 = trunc nuw i8 %6 to i1
+  %7 = and i32 %1, 255
+  %.not17 = icmp eq i32 %7, 0
   %i.k = zext i32 %i.g to i64
   %i.l = shl nuw i64 %i.k, 32
-  %.sroa.2.0.insert.shift = select i1 %7, i64 %i.l, i64 4294967296
+  %.sroa.2.0.insert.shift = select i1 %.not17, i64 4294967296, i64 %i.l
   %.sroa.0.0.insert.ext = zext i32 %i.j to i64
   %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
   ret i64 %.sroa.0.0.insert.insert
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader19, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader19 ] ; 2 uses
-  %.015.a = phi i32 [ %spec.select, %.lr.ph ], [ %.015.ph.a, %.lr.ph.preheader19 ]
-  %8 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir13sparse_tensor9ForeachOp27getODSOperandIndexAndLengthEj.isVariadic, i64 %indvars.iv
-  %9 = load i8, ptr %8, align 1, !tbaa !209, !range !121, !noundef !122
+  %.015 = phi i32 [ %spec.select, %.lr.ph ], [ %.015.ph, %.lr.ph.preheader19 ]
+  %.015.a = phi i32 [ %10, %.lr.ph ], [ %.015.ph.a, %.lr.ph.preheader19 ] ; 2 uses
+  %8 = trunc i32 %.015.a to i8
+  %notmask = shl nsw i8 -1, %8
+  %9 = xor i8 %notmask, -1
   %i.m = zext nneg i8 %9 to i32
-  %spec.select = add nuw nsw i32 %.015.a, %i.m    ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %spec.select = add nuw nsw i32 %.015, %i.m      ; 2 uses
+  %10 = add nuw i32 %.015.a, 1                    ; 2 uses
+  %exitcond.not = icmp eq i32 %10, %1
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !1542
 }
 
@@ -2350,39 +2354,41 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext i32 %1 to i64           ; 3 uses
   %min.iters.check = icmp ult i32 %1, 8
   br i1 %min.iters.check, label %.lr.ph.preheader18, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %wide.trip.count, 4294967288   ; 3 uses
+  %n.vec = and i32 %1, -8                         ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
   %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.c, %vector.body ]
   %vec.phi16 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.d, %vector.body ]
-  %2 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir13sparse_tensor9ForeachOp27getODSOperandIndexAndLengthEj.isVariadic, i64 %index ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %wide.load = load <4 x i8>, ptr %2, align 1, !tbaa !209
-  %wide.load17 = load <4 x i8>, ptr %3, align 1, !tbaa !209
-  %i.a = zext nneg <4 x i8> %wide.load to <4 x i32>
-  %i.b = zext nneg <4 x i8> %wide.load17 to <4 x i32>
+  %vec.ind = phi <4 x i8> [ <i8 0, i8 1, i8 2, i8 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
+  %step.add = add <4 x i8> %vec.ind, splat (i8 4)
+  %2 = shl nsw <4 x i8> splat (i8 -1), %vec.ind
+  %3 = shl nsw <4 x i8> splat (i8 -1), %step.add
+  %4 = xor <4 x i8> %2, splat (i8 -1)
+  %5 = xor <4 x i8> %3, splat (i8 -1)
+  %i.a = zext nneg <4 x i8> %4 to <4 x i32>
+  %i.b = zext nneg <4 x i8> %5 to <4 x i32>
   %i.c = add <4 x i32> %vec.phi, %i.a             ; 2 uses
   %i.d = add <4 x i32> %vec.phi16, %i.b           ; 2 uses
-  %index.next = add nuw i64 %index, 8             ; 2 uses
-  %i.e = icmp eq i64 %index.next, %n.vec
+  %index.next = add nuw i32 %index, 8             ; 2 uses
+  %vec.ind.next = add <4 x i8> %vec.ind, splat (i8 8)
+  %i.e = icmp eq i32 %index.next, %n.vec
   br i1 %i.e, label %middle.block, label %vector.body, !llvm.loop !1543
 
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = add <4 x i32> %i.d, %i.c
   %i.f = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %cmp.n = icmp eq i32 %1, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader18
 
 .lr.ph.preheader18:                               ; preds = %.lr.ph.preheader, %middle.block
-  %indvars.iv.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
-  %.014.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %i.f, %middle.block ]
+  %.014.ph = phi i32 [ 0, %.lr.ph.preheader ], [ %i.f, %middle.block ]
+  %.014.ph.a = phi i32 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.a
@@ -2405,26 +2411,25 @@ _ZN4mlir9Operation14getNumOperandsEv.exit:        ; preds = %._crit_edge, %bb.b
   %i.o = add i32 %i.m, -2
   %i.p = mul nsw i32 %i.o, %.0.lcssa
   %i.q = add i32 %i.p, %1
-  %4 = zext i32 %1 to i64
-  %5 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir13sparse_tensor9ForeachOp27getODSOperandIndexAndLengthEj.isVariadic, i64 %4
-  %6 = load i8, ptr %5, align 1, !tbaa !209, !range !121, !noundef !122
-  %7 = trunc nuw i8 %6 to i1
+  %6 = and i32 %1, 255
+  %.not16 = icmp eq i32 %6, 0
   %i.r = zext i32 %i.n to i64
   %i.s = shl nuw i64 %i.r, 32
-  %.sroa.2.0.insert.shift = select i1 %7, i64 %i.s, i64 4294967296
+  %.sroa.2.0.insert.shift = select i1 %.not16, i64 4294967296, i64 %i.s
   %.sroa.0.0.insert.ext = zext i32 %i.q to i64
   %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
   ret i64 %.sroa.0.0.insert.insert
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader18, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader18 ] ; 2 uses
-  %.014.a = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph.a, %.lr.ph.preheader18 ]
-  %8 = getelementptr inbounds nuw i8, ptr @__const._ZN4mlir13sparse_tensor9ForeachOp27getODSOperandIndexAndLengthEj.isVariadic, i64 %indvars.iv
-  %9 = load i8, ptr %8, align 1, !tbaa !209, !range !121, !noundef !122
-  %i.t = zext nneg i8 %9 to i32
-  %spec.select = add nuw nsw i32 %.014.a, %i.t    ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %.014 = phi i32 [ %spec.select, %.lr.ph ], [ %.014.ph, %.lr.ph.preheader18 ]
+  %.014.a = phi i32 [ %9, %.lr.ph ], [ %.014.ph.a, %.lr.ph.preheader18 ] ; 2 uses
+  %7 = trunc i32 %.014.a to i8
+  %notmask = shl nsw i8 -1, %7
+  %8 = xor i8 %notmask, -1
+  %i.t = zext nneg i8 %8 to i32
+  %spec.select = add nuw nsw i32 %.014, %i.t      ; 2 uses
+  %9 = add nuw i32 %.014.a, 1                     ; 2 uses
+  %exitcond.not = icmp eq i32 %9, %1
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !1544
 }
 

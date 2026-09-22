@@ -204,8 +204,9 @@ bb.be:                                            ; preds = %_RNvMNtNtCsiU5vK8fN
   br i1 %or.cond.i.1, label %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterNtNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18unwrap_return_type13UnwrapperKindENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvBS_18unwrap_return_type0EBW_.exit, label %.loopexit190
 
 _RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterNtNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18unwrap_return_type13UnwrapperKindENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvBS_18unwrap_return_type0EBW_.exit: ; preds = %bb.be, %bb.bd
+  %.not196 = phi i1 [ true, %bb.bd ], [ false, %bb.be ] ; 2 uses
   %.idx.lcssa193 = phi i64 [ 0, %bb.bd ], [ 1, %bb.be ]
-  %.ptr.le = getelementptr inbounds nuw i8, ptr @113, i64 %.idx.lcssa193 ; 2 uses
+  %.ptr.le = getelementptr inbounds nuw i8, ptr @113, i64 %.idx.lcssa193
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   %.val97 = load i64, ptr %i.j, align 8, !range !26, !noundef !5
   %.val98 = load ptr, ptr %i.cy, align 8
@@ -223,9 +224,7 @@ bb.bg:                                            ; preds = %bb.bf
   %i.en = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 3 uses
   store ptr %i.em, ptr %i.en, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  %2 = load i8, ptr %.ptr.le, align 1, !range !17, !noundef !5
-  %3 = trunc nuw i8 %2 to i1                      ; 2 uses
-  %spec.select = select i1 %3, ptr @116, ptr @114
+  %spec.select = select i1 %.not196, ptr @114, ptr @116
   %i.eo = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store ptr %spec.select, ptr %i.eo, align 8
   %i.ep = getelementptr inbounds nuw i8, ptr %i.d, i64 24
@@ -257,7 +256,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9genera
           to label %.body140 unwind label %bb.ab
 
 bb.bj:                                            ; preds = %bb.bg
-  %spec.select204 = select i1 %3, ptr @117, ptr @115
+  %spec.select204 = select i1 %.not196, ptr @115, ptr @117
   %i.ey = extractvalue { i32, i32 } %i.es, 0
   %i.ez = extractvalue { i32, i32 } %i.es, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)

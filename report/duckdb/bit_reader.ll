@@ -131,6 +131,21 @@ _ZN13duckdb_brotliL14BrotliPullByteEPNS_15BrotliBitReaderE.exit.i: ; preds = %.l
   %i.ar = icmp ult i64 %i.ap, %i.ae
   br i1 %i.ar, label %.lr.ph33, label %._crit_edge34, !llvm.loop !16
 
+._crit_edge34:                                    ; preds = %_ZN13duckdb_brotliL14BrotliPullByteEPNS_15BrotliBitReaderE.exit.i, %._crit_edge
+  %3 = phi i64 [ %i.ad, %._crit_edge ], [ %i.ao, %_ZN13duckdb_brotliL14BrotliPullByteEPNS_15BrotliBitReaderE.exit.i ] ; 2 uses
+  %.lcssa = phi i64 [ %i.ac, %._crit_edge ], [ %i.ap, %_ZN13duckdb_brotliL14BrotliPullByteEPNS_15BrotliBitReaderE.exit.i ]
+  %.0.i12.v = shl nsw i64 -1, %i.ae
+  %.0.i12 = xor i64 %.0.i12.v, -1
+  %4 = and i64 %3, %.0.i12
+  %5 = sub nuw i64 %.lcssa, %i.ae
+  store i64 %5, ptr %i.b, align 8, !tbaa !11
+  %6 = lshr i64 %3, %i.ae
+  store i64 %6, ptr %0, align 8, !tbaa !12
+  %7 = shl i64 %4, 16
+  %8 = or disjoint i64 %7, %i.ab
+  store i64 %8, ptr %2, align 8, !tbaa !18
+  br label %_ZN13duckdb_brotliL23BrotliBitReaderSetInputEPNS_15BrotliBitReaderEPKhm.exit
+
 _ZN13duckdb_brotliL18BrotliSafeReadBitsEPNS_15BrotliBitReaderEmPm.exit11.thread: ; preds = %.lr.ph, %.lr.ph.1, %.lr.ph33, %.lr.ph33.preheader
   store i64 %i.a, ptr %0, align 8, !tbaa !12
   store i64 %i.c, ptr %i.b, align 8, !tbaa !11
@@ -144,27 +159,12 @@ _ZN13duckdb_brotliL18BrotliSafeReadBitsEPNS_15BrotliBitReaderEmPm.exit11.thread:
 bb.b:                                             ; preds = %_ZN13duckdb_brotliL18BrotliSafeReadBitsEPNS_15BrotliBitReaderEmPm.exit11.thread
   %i.av = getelementptr i8, ptr %i.as, i64 -27
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %i.av, ptr %i.aw, align 8, !tbaa !18
+  store ptr %i.av, ptr %i.aw, align 8, !tbaa !19
   br label %_ZN13duckdb_brotliL23BrotliBitReaderSetInputEPNS_15BrotliBitReaderEPKhm.exit
 
 bb.c:                                             ; preds = %_ZN13duckdb_brotliL18BrotliSafeReadBitsEPNS_15BrotliBitReaderEmPm.exit11.thread
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %i.e, ptr %i.ax, align 8, !tbaa !18
-  br label %_ZN13duckdb_brotliL23BrotliBitReaderSetInputEPNS_15BrotliBitReaderEPKhm.exit
-
-._crit_edge34:                                    ; preds = %_ZN13duckdb_brotliL14BrotliPullByteEPNS_15BrotliBitReaderE.exit.i, %._crit_edge
-  %3 = phi i64 [ %i.ad, %._crit_edge ], [ %i.ao, %_ZN13duckdb_brotliL14BrotliPullByteEPNS_15BrotliBitReaderE.exit.i ] ; 2 uses
-  %.lcssa = phi i64 [ %i.ac, %._crit_edge ], [ %i.ap, %_ZN13duckdb_brotliL14BrotliPullByteEPNS_15BrotliBitReaderE.exit.i ]
-  %4 = getelementptr inbounds nuw [8 x i8], ptr @_ZN13duckdb_brotli14kBrotliBitMaskE, i64 %i.ae
-  %5 = load i64, ptr %4, align 8, !tbaa !19
-  %6 = and i64 %5, %3
-  %7 = sub nuw i64 %.lcssa, %i.ae
-  store i64 %7, ptr %i.b, align 8, !tbaa !11
-  %8 = lshr i64 %3, %i.ae
-  store i64 %8, ptr %0, align 8, !tbaa !12
-  %9 = shl i64 %6, 16
-  %10 = or disjoint i64 %9, %i.ab
-  store i64 %10, ptr %2, align 8, !tbaa !19
+  store ptr %i.e, ptr %i.ax, align 8, !tbaa !19
   br label %_ZN13duckdb_brotliL23BrotliBitReaderSetInputEPNS_15BrotliBitReaderEPKhm.exit
 
 _ZN13duckdb_brotliL23BrotliBitReaderSetInputEPNS_15BrotliBitReaderEPKhm.exit: ; preds = %bb.c, %bb.b, %._crit_edge34
@@ -202,6 +202,6 @@ attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: wr
 !15 = !{!4, !4, i64 0}
 !16 = distinct !{!16, !17}
 !17 = !{!"llvm.loop.mustprogress"}
-!18 = !{!10, !9, i64 24}
-!19 = !{!7, !7, i64 0}
+!18 = !{!7, !7, i64 0}
+!19 = !{!10, !9, i64 24}
 end_hunk_0

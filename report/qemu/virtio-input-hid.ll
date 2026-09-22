@@ -42,7 +42,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.14 = private unnamed_addr constant [30 x i8] c"%s: unmapped button: %d [%s]\0A\00", align 1
 @__func__.virtio_input_handle_event = private unnamed_addr constant [26 x i8] c"virtio_input_handle_event\00", align 1
 @InputButton_lookup = external constant %struct.QEnumLookup, align 8
-@axismap_abs = internal unnamed_addr constant [2 x i16] [i16 0, i16 1], align 2
 @axismap_tch = internal unnamed_addr constant [2 x i16] [i16 53, i16 54], align 2
 @virtio_keyboard_config = internal global <{ { i8, i8, i8, [5 x i8], { [128 x i8] } }, { i8, i8, i8, [5 x i8], { %struct.virtio_input_devids, [120 x i8] } }, %struct.virtio_input_config, { i8, i8, i8, [5 x i8], { <{ i8, [127 x i8] }> } }, %struct.virtio_input_config }> <{ { i8, i8, i8, [5 x i8], { [128 x i8] } } { i8 1, i8 0, i8 21, [5 x i8] zeroinitializer, { [128 x i8] } { [128 x i8] c"QEMU Virtio Keyboard\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00" } }, { i8, i8, i8, [5 x i8], { %struct.virtio_input_devids, [120 x i8] } } { i8 3, i8 0, i8 8, [5 x i8] zeroinitializer, { %struct.virtio_input_devids, [120 x i8] } { %struct.virtio_input_devids { i16 6, i16 1575, i16 1, i16 1 }, [120 x i8] zeroinitializer } }, %struct.virtio_input_config { i8 17, i8 20, i8 1, [5 x i8] zeroinitializer, %union.anon.7 zeroinitializer }, { i8, i8, i8, [5 x i8], { <{ i8, [127 x i8] }> } } { i8 17, i8 17, i8 1, [5 x i8] zeroinitializer, { <{ i8, [127 x i8] }> } { <{ i8, [127 x i8] }> <{ i8 7, [127 x i8] zeroinitializer }> } }, %struct.virtio_input_config zeroinitializer }>, align 16
 @.str.16 = private unnamed_addr constant [20 x i8] c"virtio-mouse-device\00", align 1
@@ -417,11 +416,11 @@ bb.j:                                             ; preds = %bb.a
   store i16 2, ptr %3, align 8
   %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ai = load i32, ptr %i.ah, align 8
-  %4 = zext i32 %i.ai to i64
-  %5 = getelementptr inbounds nuw [2 x i8], ptr @axismap_abs, i64 %4
-  %6 = load i16, ptr %5, align 2
+  %4 = trunc i32 %i.ai to i16
+  %notmask33 = shl nsw i16 -1, %4
+  %5 = xor i16 %notmask33, -1
   %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 2
-  store i16 %6, ptr %i.aj, align 2
+  store i16 %5, ptr %i.aj, align 2
   %i.ak = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.al = load i64, ptr %i.ak, align 8
   %i.am = trunc i64 %i.al to i32
@@ -434,11 +433,11 @@ bb.k:                                             ; preds = %bb.a
   store i16 3, ptr %3, align 8
   %i.ao = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ap = load i32, ptr %i.ao, align 8
-  %7 = zext i32 %i.ap to i64
-  %8 = getelementptr inbounds nuw [2 x i8], ptr @axismap_abs, i64 %7
-  %9 = load i16, ptr %8, align 2
+  %6 = trunc i32 %i.ap to i16
+  %notmask = shl nsw i16 -1, %6
+  %7 = xor i16 %notmask, -1
   %i.aq = getelementptr inbounds nuw i8, ptr %3, i64 2
-  store i16 %9, ptr %i.aq, align 2
+  store i16 %7, ptr %i.aq, align 2
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.as = load i64, ptr %i.ar, align 8
   %i.at = trunc i64 %i.as to i32

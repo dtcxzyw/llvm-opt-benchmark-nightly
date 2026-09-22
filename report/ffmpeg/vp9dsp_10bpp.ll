@@ -205,23 +205,11 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define internal void @diag_downright_4x4_c(ptr nofree noundef writeonly captures(none) initializes((0, 8)) %0, i64 noundef %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3) #1 {
 bb.a:
-  %i.a = getelementptr inbounds i8, ptr %3, i64 -2
-  %4 = load i16, ptr %i.a, align 2, !tbaa !28
-  %5 = zext i16 %4 to i32                         ; 2 uses
-  %6 = load i16, ptr %3, align 2, !tbaa !28
-  %7 = zext i16 %6 to i32                         ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %3, i64 2
-  %9 = load i16, ptr %8, align 2, !tbaa !28
-  %10 = zext i16 %9 to i32                        ; 3 uses
-  %11 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %12 = load i16, ptr %11, align 2, !tbaa !28
-  %13 = zext i16 %12 to i32                       ; 2 uses
+  %i.a = getelementptr inbounds i8, ptr %3, i64 -2 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 6
   %i.c = load i16, ptr %i.b, align 2, !tbaa !28
-  %14 = zext i16 %i.c to i32
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 6
-  %i.e = load i16, ptr %i.d, align 2, !tbaa !28
-  %15 = zext i16 %i.e to i32                      ; 3 uses
+  %i.e = load i16, ptr %i.d, align 2, !tbaa !28   ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.g = load i16, ptr %i.f, align 2, !tbaa !28
   %i.h = zext i16 %i.g to i32                     ; 3 uses
@@ -239,72 +227,63 @@ bb.a:
   %i.t = trunc nuw i32 %i.s to i16
   %.idx = mul nuw nsw i64 %i.n, 6
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 %.idx ; 4 uses
+  %4 = shl nuw nsw i32 %i.h, 1
+  %5 = getelementptr inbounds nuw i8, ptr %i.u, i64 2
+  %6 = and i64 %1, -2
+  %7 = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %6 ; 3 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.u, i64 4
+  %9 = or i64 %1, 1
+  %10 = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %9
+  %11 = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %i.n ; 3 uses
+  %12 = getelementptr inbounds nuw i8, ptr %i.u, i64 6
+  %13 = getelementptr inbounds nuw i8, ptr %7, i64 4
+  %14 = getelementptr inbounds nuw i8, ptr %11, i64 2
+  %15 = getelementptr inbounds nuw i8, ptr %7, i64 6
+  %16 = getelementptr inbounds nuw i8, ptr %11, i64 4
+  %17 = load <3 x i16>, ptr %i.a, align 2, !tbaa !28 ; 2 uses
+  %18 = shufflevector <3 x i16> %17, <3 x i16> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 2>
+  %19 = load <4 x i16>, ptr %i.a, align 2, !tbaa !28 ; 2 uses
+  %20 = zext <4 x i16> %18 to <4 x i32>
+  %21 = zext <4 x i16> %19 to <4 x i32>
+  %22 = insertelement <4 x i16> poison, i16 %i.e, i64 0
+  %23 = shufflevector <3 x i16> %17, <3 x i16> poison, <4 x i32> <i32 poison, i32 poison, i32 2, i32 poison>
+  %24 = shufflevector <4 x i16> %22, <4 x i16> %23, <4 x i32> <i32 0, i32 6, i32 poison, i32 poison>
+  %25 = shufflevector <4 x i16> %24, <4 x i16> %19, <4 x i32> <i32 0, i32 1, i32 7, i32 poison>
+  %26 = insertelement <4 x i16> %25, i16 %i.c, i64 3
+  %27 = zext <4 x i16> %26 to <4 x i32>
+  %28 = zext i16 %i.e to i32                      ; 2 uses
   store i16 %i.t, ptr %i.u, align 2, !tbaa !28
-  %16 = shl nuw nsw i32 %i.h, 1
-  %17 = add nuw nsw i32 %15, 2
-  %18 = add nuw nsw i32 %17, %16
-  %19 = add nuw nsw i32 %18, %i.k
-  %20 = lshr i32 %19, 2
-  %21 = trunc nuw i32 %20 to i16                  ; 2 uses
-  %22 = getelementptr inbounds nuw i8, ptr %i.u, i64 2
-  store i16 %21, ptr %22, align 2, !tbaa !28
-  %23 = and i64 %1, -2
-  %24 = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %23 ; 3 uses
-  store i16 %21, ptr %24, align 2, !tbaa !28
-  %25 = shl nuw nsw i32 %15, 1
-  %26 = add nuw nsw i32 %5, 2                     ; 2 uses
-  %27 = add nuw nsw i32 %26, %25
-  %28 = add nuw nsw i32 %27, %i.h
-  %29 = lshr i32 %28, 2
-  %30 = trunc nuw i32 %29 to i16                  ; 3 uses
-  %31 = getelementptr inbounds nuw i8, ptr %i.u, i64 4
-  store i16 %30, ptr %31, align 2, !tbaa !28
-  %32 = or i64 %1, 1
-  %33 = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %32
-  store i16 %30, ptr %33, align 2, !tbaa !28
-  %34 = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %i.n ; 4 uses
-  store i16 %30, ptr %34, align 2, !tbaa !28
-  %35 = shl nuw nsw i32 %5, 1
-  %i.v = add nuw nsw i32 %7, 2                    ; 2 uses
-  %i.w = add nuw nsw i32 %i.v, %35
-  %i.x = add nuw nsw i32 %i.w, %15
+  %i.v = add nuw nsw i32 %28, 2
+  %i.w = add nuw nsw i32 %i.v, %4
+  %i.x = add nuw nsw i32 %i.w, %i.k
   %i.y = lshr i32 %i.x, 2
-  %i.z = trunc nuw i32 %i.y to i16                ; 4 uses
-  %36 = getelementptr inbounds nuw i8, ptr %i.u, i64 6
-  store i16 %i.z, ptr %36, align 2, !tbaa !28
-  %37 = getelementptr inbounds nuw i8, ptr %24, i64 4
-  store i16 %i.z, ptr %37, align 2, !tbaa !28
-  %38 = getelementptr inbounds nuw i8, ptr %34, i64 2
-  store i16 %i.z, ptr %38, align 2, !tbaa !28
-  store i16 %i.z, ptr %0, align 2, !tbaa !28
-  %39 = shl nuw nsw i32 %7, 1
-  %i.aa = add nuw nsw i32 %26, %39
-  %i.ab = add nuw nsw i32 %i.aa, %10
+  %i.z = trunc nuw i32 %i.y to i16                ; 2 uses
+  store i16 %i.z, ptr %5, align 2, !tbaa !28
+  store i16 %i.z, ptr %7, align 2, !tbaa !28
+  %29 = shl nuw nsw i32 %28, 1
+  %30 = add nuw nsw <4 x i32> %20, splat (i32 2)  ; 2 uses
+  %31 = extractelement <4 x i32> %30, i64 1
+  %i.aa = add nuw nsw i32 %31, %29
+  %i.ab = add nuw nsw i32 %i.aa, %i.h
   %i.ac = lshr i32 %i.ab, 2
   %i.ad = trunc nuw i32 %i.ac to i16              ; 3 uses
-  %40 = getelementptr inbounds nuw i8, ptr %24, i64 6
-  store i16 %i.ad, ptr %40, align 2, !tbaa !28
-  %41 = getelementptr inbounds nuw i8, ptr %34, i64 4
-  store i16 %i.ad, ptr %41, align 2, !tbaa !28
-  %42 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i16 %i.ad, ptr %42, align 2, !tbaa !28
-  %43 = shl nuw nsw i32 %10, 1
-  %44 = add nuw nsw i32 %i.v, %43
-  %45 = add nuw nsw i32 %44, %13
-  %46 = lshr i32 %45, 2
-  %47 = trunc nuw i32 %46 to i16                  ; 2 uses
-  %48 = getelementptr inbounds nuw i8, ptr %34, i64 6
-  store i16 %47, ptr %48, align 2, !tbaa !28
-  %49 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i16 %47, ptr %49, align 2, !tbaa !28
-  %50 = shl nuw nsw i32 %13, 1
-  %51 = add nuw nsw i32 %10, 2
-  %52 = add nuw nsw i32 %51, %50
-  %53 = add nuw nsw i32 %52, %14
-  %54 = lshr i32 %53, 2
-  %55 = trunc nuw i32 %54 to i16
-  %56 = getelementptr inbounds nuw i8, ptr %0, i64 6
-  store i16 %55, ptr %56, align 2, !tbaa !28
+  store i16 %i.ad, ptr %8, align 2, !tbaa !28
+  store i16 %i.ad, ptr %10, align 2, !tbaa !28
+  store i16 %i.ad, ptr %11, align 2, !tbaa !28
+  %32 = shl nuw nsw <4 x i32> %21, splat (i32 1)
+  %33 = add nuw nsw <4 x i32> %30, %32
+  %34 = add nuw nsw <4 x i32> %33, %27
+  %35 = lshr <4 x i32> %34, splat (i32 2)
+  %36 = trunc <4 x i32> %35 to <4 x i16>          ; 4 uses
+  %37 = extractelement <4 x i16> %36, i64 0       ; 3 uses
+  store i16 %37, ptr %12, align 2, !tbaa !28
+  store i16 %37, ptr %13, align 2, !tbaa !28
+  store i16 %37, ptr %14, align 2, !tbaa !28
+  %38 = extractelement <4 x i16> %36, i64 1
+  store i16 %38, ptr %15, align 2, !tbaa !28
+  %39 = shufflevector <4 x i16> %36, <4 x i16> poison, <2 x i32> <i32 1, i32 2>
+  store <2 x i16> %39, ptr %16, align 2, !tbaa !28
+  store <4 x i16> %36, ptr %0, align 2, !tbaa !28
   ret void
 }
 

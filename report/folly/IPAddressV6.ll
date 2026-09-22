@@ -205,7 +205,7 @@ bb.a:
 define void @_ZNK5folly11IPAddressV622getMacAddressFromEUI64Ev(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.folly::Optional") align 1 captures(none) initializes((0, 1), (8, 9)) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(18) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"class.folly::MacAddress", align 8 ; 5 uses
-  %3 = alloca %"struct.std::array.15", align 1    ; 7 uses
+  %3 = alloca %"struct.std::array.15", align 1    ; 10 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 11
   %i.b = load i8, ptr %i.a, align 1, !tbaa !28
   %i.c = icmp eq i8 %i.b, -1
@@ -228,12 +228,21 @@ bb.c:                                             ; preds = %bb.a
   %i.j = xor i8 %i.i, 2
   store i8 %i.j, ptr %3, align 1, !tbaa !28
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 9
-  %i.l = getelementptr inbounds nuw i8, ptr %3, i64 1
+  %4 = load i8, ptr %i.k, align 1, !tbaa !28
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 1
+  store i8 %4, ptr %5, align 1, !tbaa !28
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 10
+  %7 = load i8, ptr %6, align 2, !tbaa !28
+  %i.l = getelementptr inbounds nuw i8, ptr %3, i64 2
+  store i8 %7, ptr %i.l, align 1, !tbaa !28
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 13
-  %4 = load <2 x i8>, ptr %i.k, align 1, !tbaa !28
-  %5 = load <2 x i8>, ptr %i.m, align 1, !tbaa !28
-  %6 = shufflevector <2 x i8> %4, <2 x i8> %5, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  store <4 x i8> %6, ptr %i.l, align 1, !tbaa !28
+  %8 = load i8, ptr %i.m, align 1, !tbaa !28
+  %9 = getelementptr inbounds nuw i8, ptr %3, i64 3
+  store i8 %8, ptr %9, align 1, !tbaa !28
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 14
+  %11 = load i8, ptr %10, align 2, !tbaa !28
+  %12 = getelementptr inbounds nuw i8, ptr %3, i64 4
+  store i8 %11, ptr %12, align 1, !tbaa !28
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 15
   %i.o = load i8, ptr %i.n, align 1, !tbaa !28
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 5

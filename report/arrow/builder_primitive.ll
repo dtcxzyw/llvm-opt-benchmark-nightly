@@ -205,7 +205,6 @@ $_ZTSSt14default_deleteIN5arrow6BufferEE = comdat any
 @.str.12 = private unnamed_addr constant [21 x i8] c"basic_string::append\00", align 1
 @.str.13 = private unnamed_addr constant [50 x i8] c"basic_string: construction from null is not valid\00", align 1
 @_ZN5arrow8bit_utilL8kBitmaskE = internal unnamed_addr constant [8 x i8] c"\01\02\04\08\10 @\80", align 1
-@_ZN5arrow8bit_utilL17kPrecedingBitmaskE = internal unnamed_addr constant [8 x i8] c"\00\01\03\07\0F\1F?\7F", align 1
 @.str.14 = private unnamed_addr constant [24 x i8] c"length must be positive\00", align 1
 
 @_ZN5arrow18TypedChunkLocationIiEC1Eii = weak_odr unnamed_addr alias void (ptr, i32, i32), ptr @_ZN5arrow18TypedChunkLocationIiEC2Eii
@@ -608,9 +607,10 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.w = load i8, ptr %i.u, align 1, !tbaa !41
-  %7 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8bit_utilL17kPrecedingBitmaskE, i64 %i.v
-  %8 = load i8, ptr %7, align 1, !tbaa !41
-  %i.x = and i8 %8, %i.w                          ; 2 uses
+  %7 = trunc nsw i64 %i.v to i8
+  %notmask.i.i = shl nsw i8 -1, %7
+  %8 = xor i8 %notmask.i.i, -1
+  %i.x = and i8 %i.w, %8                          ; 2 uses
   %i.y = icmp sgt i64 %3, 0
   br i1 %i.y, label %.lr.ph.i.i, label %._crit_edge.i.i
 
@@ -1013,9 +1013,10 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.u = load i8, ptr %i.s, align 1, !tbaa !41
-  %6 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8bit_utilL17kPrecedingBitmaskE, i64 %i.t
-  %7 = load i8, ptr %6, align 1, !tbaa !41
-  %i.v = and i8 %7, %i.u                          ; 2 uses
+  %6 = trunc nsw i64 %i.t to i8
+  %notmask.i.i = shl nsw i8 -1, %6
+  %7 = xor i8 %notmask.i.i, -1
+  %i.v = and i8 %i.u, %7                          ; 2 uses
   %i.w = icmp sgt i64 %3, 0
   br i1 %i.w, label %.lr.ph.i.i, label %._crit_edge.i.i
 
@@ -1418,9 +1419,10 @@ bb.b:                                             ; preds = %_ZN5arrow6StatusD2E
 
 bb.c:                                             ; preds = %bb.b
   %i.af = load i8, ptr %i.ad, align 1, !tbaa !41
-  %5 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8bit_utilL17kPrecedingBitmaskE, i64 %i.ae
-  %6 = load i8, ptr %5, align 1, !tbaa !41
-  %i.ag = and i8 %6, %i.af                        ; 2 uses
+  %5 = trunc nsw i64 %i.ae to i8
+  %notmask.i.i = shl nsw i8 -1, %5
+  %6 = xor i8 %notmask.i.i, -1
+  %i.ag = and i8 %i.af, %6                        ; 2 uses
   %i.ah = icmp sgt i64 %i.k, 0
   br i1 %i.ah, label %.lr.ph.i.i, label %._crit_edge.i.i
 
@@ -1709,9 +1711,10 @@ bb.b:                                             ; preds = %_ZN5arrow6StatusD2E
 
 bb.c:                                             ; preds = %bb.b
   %i.af = load i8, ptr %i.ad, align 1, !tbaa !41
-  %4 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8bit_utilL17kPrecedingBitmaskE, i64 %i.ae
-  %5 = load i8, ptr %4, align 1, !tbaa !41
-  %i.ag = and i8 %5, %i.af                        ; 2 uses
+  %4 = trunc nsw i64 %i.ae to i8
+  %notmask.i.i = shl nsw i8 -1, %4
+  %5 = xor i8 %notmask.i.i, -1
+  %i.ag = and i8 %i.af, %5                        ; 2 uses
   %i.ah = icmp sgt i64 %i.k, 0
   br i1 %i.ah, label %.lr.ph.i.i, label %._crit_edge.i.i
 
@@ -2114,9 +2117,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.e = load i8, ptr %i.c, align 1, !tbaa !41
-  %4 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8bit_utilL17kPrecedingBitmaskE, i64 %i.d
-  %5 = load i8, ptr %4, align 1, !tbaa !41
-  %i.f = and i8 %5, %i.e                          ; 2 uses
+  %4 = trunc nsw i64 %i.d to i8
+  %notmask = shl nsw i8 -1, %4
+  %5 = xor i8 %notmask, -1
+  %i.f = and i8 %i.e, %5                          ; 2 uses
   %i.g = icmp sgt i64 %2, 0
   br i1 %i.g, label %.lr.ph, label %._crit_edge
 

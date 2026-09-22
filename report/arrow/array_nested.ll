@@ -205,7 +205,6 @@ $_ZTSSt23_Sp_counted_ptr_inplaceIN5arrow16SparseUnionArrayESaIvELN9__gnu_cxx12_L
 @_ZN5arrow8bit_utilL8kBitmaskE = internal unnamed_addr constant [8 x i8] c"\01\02\04\08\10 @\80", align 1
 @.str.90 = private unnamed_addr constant [33 x i8] c" array cannot contain more than \00", align 1
 @.str.91 = private unnamed_addr constant [17 x i8] c" elements, have \00", align 1
-@_ZN5arrow8bit_utilL17kPrecedingBitmaskE = internal unnamed_addr constant [8 x i8] c"\00\01\03\07\0F\1F?\7F", align 1
 @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow9ListArrayESaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr @_ZTISt23_Sp_counted_ptr_inplaceIN5arrow9ListArrayESaIvELN9__gnu_cxx12_Lock_policyE2EE, ptr @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EED2Ev, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN5arrow9ListArrayESaIvELN9__gnu_cxx12_Lock_policyE2EED0Ev, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN5arrow9ListArrayESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN5arrow9ListArrayESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_destroyEv, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN5arrow9ListArrayESaIvELN9__gnu_cxx12_Lock_policyE2EE14_M_get_deleterERKSt9type_info] }, comdat, align 8
 @_ZTISt23_Sp_counted_ptr_inplaceIN5arrow9ListArrayESaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSSt23_Sp_counted_ptr_inplaceIN5arrow9ListArrayESaIvELN9__gnu_cxx12_Lock_policyE2EE, ptr @_ZTISt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE }, comdat, align 8
 @_ZTSSt23_Sp_counted_ptr_inplaceIN5arrow9ListArrayESaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr constant [82 x i8] c"St23_Sp_counted_ptr_inplaceIN5arrow9ListArrayESaIvELN9__gnu_cxx12_Lock_policyE2EE\00", comdat, align 1
@@ -608,9 +607,10 @@ bb.ag:                                            ; preds = %bb.af
 
 bb.ah:                                            ; preds = %bb.ag
   %i.ec = load i8, ptr %i.ea, align 1, !tbaa !124
-  %12 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8bit_utilL17kPrecedingBitmaskE, i64 %i.eb
-  %13 = load i8, ptr %12, align 1, !tbaa !124
-  %i.ed = and i8 %13, %i.ec                       ; 2 uses
+  %12 = trunc nsw i64 %i.eb to i8
+  %notmask.i = shl nsw i8 -1, %12
+  %13 = xor i8 %notmask.i, -1
+  %i.ed = and i8 %i.ec, %13                       ; 2 uses
   %i.ee = icmp sgt i64 %i.dn, 0
   br i1 %i.ee, label %.lr.ph.i, label %._crit_edge.i
 
@@ -1013,9 +1013,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.e = load i8, ptr %i.c, align 1, !tbaa !124
-  %4 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8bit_utilL17kPrecedingBitmaskE, i64 %i.d
-  %5 = load i8, ptr %4, align 1, !tbaa !124
-  %i.f = and i8 %5, %i.e                          ; 2 uses
+  %4 = trunc nsw i64 %i.d to i8
+  %notmask = shl nsw i8 -1, %4
+  %5 = xor i8 %notmask, -1
+  %i.f = and i8 %i.e, %5                          ; 2 uses
   %i.g = icmp sgt i64 %2, 0
   br i1 %i.g, label %.lr.ph, label %._crit_edge
 

@@ -204,7 +204,7 @@ bb.a:
   %11 = alloca %"class.rocksdb::Slice", align 8   ; 5 uses
   %12 = alloca %"class.rocksdb::Slice", align 8   ; 5 uses
   %13 = alloca %"class.rocksdb::Slice", align 8   ; 5 uses
-  %14 = alloca %"class.rocksdb::Status", align 8  ; 13 uses
+  %14 = alloca %"class.rocksdb::Status", align 8  ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #26
   tail call void @llvm.experimental.noalias.scope.decl(metadata !315)
   %.not.i = icmp eq ptr %1, null
@@ -255,14 +255,18 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i8, label %_ZNK7rocksdb12MergeContext11GetOperandsEv.exit, label %bb.i
 
 bb.e:                                             ; preds = %bb.d, %bb.b
+  %15 = getelementptr inbounds nuw i8, ptr %14, i64 1
   %.pr = load i8, ptr %14, align 8, !tbaa !114    ; 2 uses
   %i.k = icmp ne i8 %.pr, 0
   call void @llvm.assume(i1 %i.k)
-  store i8 %.pr, ptr %0, align 8, !tbaa !114
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %i.m = getelementptr inbounds nuw i8, ptr %14, i64 1
-  %15 = load <4 x i8>, ptr %i.m, align 1, !tbaa !24
-  store <4 x i8> %15, ptr %i.l, align 1, !tbaa !24
+  %16 = load <3 x i8>, ptr %15, align 1, !tbaa !24
+  %17 = shufflevector <3 x i8> %16, <3 x i8> poison, <4 x i32> <i32 poison, i32 0, i32 1, i32 2>
+  %18 = insertelement <4 x i8> %17, i8 %.pr, i64 0
+  store <4 x i8> %18, ptr %0, align 8, !tbaa !24
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %i.m = getelementptr inbounds nuw i8, ptr %14, i64 4
+  %19 = load i8, ptr %i.m, align 4, !tbaa !165, !range !87, !noundef !88
+  store i8 %19, ptr %i.l, align 4, !tbaa !165
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 5
   %i.o = getelementptr inbounds nuw i8, ptr %14, i64 5
   %i.p = load i8, ptr %i.o, align 1, !tbaa !166
@@ -435,7 +439,7 @@ bb.a:
   %13 = alloca %"class.rocksdb::Slice", align 8   ; 5 uses
   %14 = alloca %"class.rocksdb::Slice", align 8   ; 5 uses
   %15 = alloca %"class.rocksdb::Slice", align 8   ; 5 uses
-  %16 = alloca %"class.rocksdb::Status", align 8  ; 13 uses
+  %16 = alloca %"class.rocksdb::Status", align 8  ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #26
   tail call void @llvm.experimental.noalias.scope.decl(metadata !324)
   %.not.i = icmp eq ptr %1, null
@@ -486,14 +490,18 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i9, label %_ZNK7rocksdb12MergeContext11GetOperandsEv.exit, label %bb.i
 
 bb.e:                                             ; preds = %bb.d, %bb.b
+  %17 = getelementptr inbounds nuw i8, ptr %16, i64 1
   %.pr = load i8, ptr %16, align 8, !tbaa !114    ; 2 uses
   %i.k = icmp ne i8 %.pr, 0
   call void @llvm.assume(i1 %i.k)
-  store i8 %.pr, ptr %0, align 8, !tbaa !114
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %i.m = getelementptr inbounds nuw i8, ptr %16, i64 1
-  %17 = load <4 x i8>, ptr %i.m, align 1, !tbaa !24
-  store <4 x i8> %17, ptr %i.l, align 1, !tbaa !24
+  %18 = load <3 x i8>, ptr %17, align 1, !tbaa !24
+  %19 = shufflevector <3 x i8> %18, <3 x i8> poison, <4 x i32> <i32 poison, i32 0, i32 1, i32 2>
+  %20 = insertelement <4 x i8> %19, i8 %.pr, i64 0
+  store <4 x i8> %20, ptr %0, align 8, !tbaa !24
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %i.m = getelementptr inbounds nuw i8, ptr %16, i64 4
+  %21 = load i8, ptr %i.m, align 4, !tbaa !165, !range !87, !noundef !88
+  store i8 %21, ptr %i.l, align 4, !tbaa !165
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 5
   %i.o = getelementptr inbounds nuw i8, ptr %16, i64 5
   %i.p = load i8, ptr %i.o, align 1, !tbaa !166
@@ -666,7 +674,7 @@ bb.a:
   %12 = alloca %"class.rocksdb::Slice", align 8   ; 5 uses
   %13 = alloca %"class.rocksdb::Slice", align 8   ; 5 uses
   %14 = alloca %"class.rocksdb::Slice", align 8   ; 5 uses
-  %15 = alloca %"class.rocksdb::Status", align 8  ; 13 uses
+  %15 = alloca %"class.rocksdb::Status", align 8  ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #26
   tail call void @llvm.experimental.noalias.scope.decl(metadata !331)
   %.not.i = icmp eq ptr %1, null
@@ -717,14 +725,18 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i9, label %_ZNK7rocksdb12MergeContext11GetOperandsEv.exit, label %bb.j
 
 bb.e:                                             ; preds = %bb.d, %bb.b
+  %16 = getelementptr inbounds nuw i8, ptr %15, i64 1
   %.pr = load i8, ptr %15, align 8, !tbaa !114    ; 2 uses
   %i.k = icmp ne i8 %.pr, 0
   call void @llvm.assume(i1 %i.k)
-  store i8 %.pr, ptr %0, align 8, !tbaa !114
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %i.m = getelementptr inbounds nuw i8, ptr %15, i64 1
-  %16 = load <4 x i8>, ptr %i.m, align 1, !tbaa !24
-  store <4 x i8> %16, ptr %i.l, align 1, !tbaa !24
+  %17 = load <3 x i8>, ptr %16, align 1, !tbaa !24
+  %18 = shufflevector <3 x i8> %17, <3 x i8> poison, <4 x i32> <i32 poison, i32 0, i32 1, i32 2>
+  %19 = insertelement <4 x i8> %18, i8 %.pr, i64 0
+  store <4 x i8> %19, ptr %0, align 8, !tbaa !24
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %i.m = getelementptr inbounds nuw i8, ptr %15, i64 4
+  %20 = load i8, ptr %i.m, align 4, !tbaa !165, !range !87, !noundef !88
+  store i8 %20, ptr %i.l, align 4, !tbaa !165
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 5
   %i.o = getelementptr inbounds nuw i8, ptr %15, i64 5
   %i.p = load i8, ptr %i.o, align 1, !tbaa !166
@@ -881,7 +893,7 @@ bb.a:
   %12 = alloca %"class.rocksdb::Slice", align 8   ; 5 uses
   %13 = alloca %"class.rocksdb::Slice", align 8   ; 5 uses
   %14 = alloca %"class.rocksdb::Slice", align 8   ; 5 uses
-  %15 = alloca %"class.rocksdb::Status", align 8  ; 13 uses
+  %15 = alloca %"class.rocksdb::Status", align 8  ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #26
   tail call void @llvm.experimental.noalias.scope.decl(metadata !337)
   %.not.i = icmp eq ptr %1, null
@@ -932,14 +944,18 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i9, label %_ZNK7rocksdb12MergeContext11GetOperandsEv.exit, label %bb.j
 
 bb.e:                                             ; preds = %bb.d, %bb.b
+  %16 = getelementptr inbounds nuw i8, ptr %15, i64 1
   %.pr = load i8, ptr %15, align 8, !tbaa !114    ; 2 uses
   %i.k = icmp ne i8 %.pr, 0
   call void @llvm.assume(i1 %i.k)
-  store i8 %.pr, ptr %0, align 8, !tbaa !114
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %i.m = getelementptr inbounds nuw i8, ptr %15, i64 1
-  %16 = load <4 x i8>, ptr %i.m, align 1, !tbaa !24
-  store <4 x i8> %16, ptr %i.l, align 1, !tbaa !24
+  %17 = load <3 x i8>, ptr %16, align 1, !tbaa !24
+  %18 = shufflevector <3 x i8> %17, <3 x i8> poison, <4 x i32> <i32 poison, i32 0, i32 1, i32 2>
+  %19 = insertelement <4 x i8> %18, i8 %.pr, i64 0
+  store <4 x i8> %19, ptr %0, align 8, !tbaa !24
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %i.m = getelementptr inbounds nuw i8, ptr %15, i64 4
+  %20 = load i8, ptr %i.m, align 4, !tbaa !165, !range !87, !noundef !88
+  store i8 %20, ptr %i.l, align 4, !tbaa !165
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 5
   %i.o = getelementptr inbounds nuw i8, ptr %15, i64 5
   %i.p = load i8, ptr %i.o, align 1, !tbaa !166
@@ -1342,7 +1358,7 @@ bb.a:
   %12 = alloca %"class.rocksdb::Slice", align 8   ; 5 uses
   %13 = alloca %"class.rocksdb::Slice", align 8   ; 5 uses
   %14 = alloca %"class.rocksdb::Slice", align 8   ; 5 uses
-  %15 = alloca %"class.rocksdb::Status", align 8  ; 13 uses
+  %15 = alloca %"class.rocksdb::Status", align 8  ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #26
   tail call void @llvm.experimental.noalias.scope.decl(metadata !404)
   %.not.i = icmp eq ptr %1, null
@@ -1393,14 +1409,18 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i9, label %_ZNK7rocksdb12MergeContext11GetOperandsEv.exit, label %bb.i
 
 bb.e:                                             ; preds = %bb.d, %bb.b
+  %16 = getelementptr inbounds nuw i8, ptr %15, i64 1
   %.pr = load i8, ptr %15, align 8, !tbaa !114    ; 2 uses
   %i.k = icmp ne i8 %.pr, 0
   call void @llvm.assume(i1 %i.k)
-  store i8 %.pr, ptr %0, align 8, !tbaa !114
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %i.m = getelementptr inbounds nuw i8, ptr %15, i64 1
-  %16 = load <4 x i8>, ptr %i.m, align 1, !tbaa !24
-  store <4 x i8> %16, ptr %i.l, align 1, !tbaa !24
+  %17 = load <3 x i8>, ptr %16, align 1, !tbaa !24
+  %18 = shufflevector <3 x i8> %17, <3 x i8> poison, <4 x i32> <i32 poison, i32 0, i32 1, i32 2>
+  %19 = insertelement <4 x i8> %18, i8 %.pr, i64 0
+  store <4 x i8> %19, ptr %0, align 8, !tbaa !24
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %i.m = getelementptr inbounds nuw i8, ptr %15, i64 4
+  %20 = load i8, ptr %i.m, align 4, !tbaa !165, !range !87, !noundef !88
+  store i8 %20, ptr %i.l, align 4, !tbaa !165
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 5
   %i.o = getelementptr inbounds nuw i8, ptr %15, i64 5
   %i.p = load i8, ptr %i.o, align 1, !tbaa !166
@@ -1573,7 +1593,7 @@ bb.a:
   %11 = alloca %"class.rocksdb::Slice", align 8   ; 5 uses
   %12 = alloca %"class.rocksdb::Slice", align 8   ; 5 uses
   %13 = alloca %"class.rocksdb::Slice", align 8   ; 5 uses
-  %14 = alloca %"class.rocksdb::Status", align 8  ; 13 uses
+  %14 = alloca %"class.rocksdb::Status", align 8  ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #26
   tail call void @llvm.experimental.noalias.scope.decl(metadata !411)
   %.not.i = icmp eq ptr %1, null
@@ -1624,14 +1644,18 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i9, label %_ZNK7rocksdb12MergeContext11GetOperandsEv.exit, label %bb.j
 
 bb.e:                                             ; preds = %bb.d, %bb.b
+  %15 = getelementptr inbounds nuw i8, ptr %14, i64 1
   %.pr = load i8, ptr %14, align 8, !tbaa !114    ; 2 uses
   %i.k = icmp ne i8 %.pr, 0
   call void @llvm.assume(i1 %i.k)
-  store i8 %.pr, ptr %0, align 8, !tbaa !114
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %i.m = getelementptr inbounds nuw i8, ptr %14, i64 1
-  %15 = load <4 x i8>, ptr %i.m, align 1, !tbaa !24
-  store <4 x i8> %15, ptr %i.l, align 1, !tbaa !24
+  %16 = load <3 x i8>, ptr %15, align 1, !tbaa !24
+  %17 = shufflevector <3 x i8> %16, <3 x i8> poison, <4 x i32> <i32 poison, i32 0, i32 1, i32 2>
+  %18 = insertelement <4 x i8> %17, i8 %.pr, i64 0
+  store <4 x i8> %18, ptr %0, align 8, !tbaa !24
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %i.m = getelementptr inbounds nuw i8, ptr %14, i64 4
+  %19 = load i8, ptr %i.m, align 4, !tbaa !165, !range !87, !noundef !88
+  store i8 %19, ptr %i.l, align 4, !tbaa !165
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 5
   %i.o = getelementptr inbounds nuw i8, ptr %14, i64 5
   %i.p = load i8, ptr %i.o, align 1, !tbaa !166
@@ -1758,7 +1782,7 @@ bb.a:
   %10 = alloca %"class.rocksdb::Slice", align 8   ; 5 uses
   %11 = alloca %"class.rocksdb::Slice", align 8   ; 5 uses
   %12 = alloca %"class.rocksdb::Slice", align 8   ; 5 uses
-  %13 = alloca %"class.rocksdb::Status", align 8  ; 13 uses
+  %13 = alloca %"class.rocksdb::Status", align 8  ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #26
   tail call void @llvm.experimental.noalias.scope.decl(metadata !419)
   %.not.i = icmp eq ptr %1, null
@@ -1809,14 +1833,18 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i8, label %_ZNK7rocksdb12MergeContext11GetOperandsEv.exit, label %bb.i
 
 bb.e:                                             ; preds = %bb.d, %bb.b
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 1
   %.pr = load i8, ptr %13, align 8, !tbaa !114    ; 2 uses
   %i.k = icmp ne i8 %.pr, 0
   call void @llvm.assume(i1 %i.k)
-  store i8 %.pr, ptr %0, align 8, !tbaa !114
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %i.m = getelementptr inbounds nuw i8, ptr %13, i64 1
-  %14 = load <4 x i8>, ptr %i.m, align 1, !tbaa !24
-  store <4 x i8> %14, ptr %i.l, align 1, !tbaa !24
+  %15 = load <3 x i8>, ptr %14, align 1, !tbaa !24
+  %16 = shufflevector <3 x i8> %15, <3 x i8> poison, <4 x i32> <i32 poison, i32 0, i32 1, i32 2>
+  %17 = insertelement <4 x i8> %16, i8 %.pr, i64 0
+  store <4 x i8> %17, ptr %0, align 8, !tbaa !24
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %i.m = getelementptr inbounds nuw i8, ptr %13, i64 4
+  %18 = load i8, ptr %i.m, align 4, !tbaa !165, !range !87, !noundef !88
+  store i8 %18, ptr %i.l, align 4, !tbaa !165
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 5
   %i.o = getelementptr inbounds nuw i8, ptr %13, i64 5
   %i.p = load i8, ptr %i.o, align 1, !tbaa !166

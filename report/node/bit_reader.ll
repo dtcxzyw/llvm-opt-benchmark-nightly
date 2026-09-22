@@ -131,6 +131,21 @@ BrotliPullByte.exit.i:                            ; preds = %.lr.ph33.preheader,
   %i.ar = icmp ult i64 %i.ap, %i.ae
   br i1 %i.ar, label %.lr.ph33, label %._crit_edge34, !llvm.loop !19
 
+._crit_edge34:                                    ; preds = %BrotliPullByte.exit.i, %._crit_edge
+  %3 = phi i64 [ %i.ad, %._crit_edge ], [ %i.ao, %BrotliPullByte.exit.i ] ; 2 uses
+  %.lcssa = phi i64 [ %i.ac, %._crit_edge ], [ %i.ap, %BrotliPullByte.exit.i ]
+  %.0.i12.v = shl nsw i64 -1, %i.ae
+  %.0.i12 = xor i64 %.0.i12.v, -1
+  %4 = and i64 %3, %.0.i12
+  %5 = sub nuw i64 %.lcssa, %i.ae
+  store i64 %5, ptr %i.b, align 8, !tbaa !14
+  %6 = lshr i64 %3, %i.ae
+  store i64 %6, ptr %0, align 8, !tbaa !15
+  %7 = shl i64 %4, 16
+  %8 = or disjoint i64 %7, %i.ab
+  store i64 %8, ptr %2, align 8, !tbaa !21
+  br label %BrotliBitReaderSetInput.exit
+
 BrotliSafeReadBits.exit11.thread:                 ; preds = %.lr.ph, %.lr.ph.1, %.lr.ph33, %.lr.ph33.preheader
   store i64 %i.a, ptr %0, align 8, !tbaa !15
   store i64 %i.c, ptr %i.b, align 8, !tbaa !14
@@ -144,27 +159,12 @@ BrotliSafeReadBits.exit11.thread:                 ; preds = %.lr.ph, %.lr.ph.1, 
 bb.b:                                             ; preds = %BrotliSafeReadBits.exit11.thread
   %i.av = getelementptr i8, ptr %i.as, i64 -27
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %i.av, ptr %i.aw, align 8, !tbaa !21
+  store ptr %i.av, ptr %i.aw, align 8, !tbaa !22
   br label %BrotliBitReaderSetInput.exit
 
 bb.c:                                             ; preds = %BrotliSafeReadBits.exit11.thread
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %i.e, ptr %i.ax, align 8, !tbaa !21
-  br label %BrotliBitReaderSetInput.exit
-
-._crit_edge34:                                    ; preds = %BrotliPullByte.exit.i, %._crit_edge
-  %3 = phi i64 [ %i.ad, %._crit_edge ], [ %i.ao, %BrotliPullByte.exit.i ] ; 2 uses
-  %.lcssa = phi i64 [ %i.ac, %._crit_edge ], [ %i.ap, %BrotliPullByte.exit.i ]
-  %4 = getelementptr inbounds nuw [8 x i8], ptr @kBrotliBitMask, i64 %i.ae
-  %5 = load i64, ptr %4, align 8, !tbaa !22
-  %6 = and i64 %5, %3
-  %7 = sub nuw i64 %.lcssa, %i.ae
-  store i64 %7, ptr %i.b, align 8, !tbaa !14
-  %8 = lshr i64 %3, %i.ae
-  store i64 %8, ptr %0, align 8, !tbaa !15
-  %9 = shl i64 %6, 16
-  %10 = or disjoint i64 %9, %i.ab
-  store i64 %10, ptr %2, align 8, !tbaa !22
+  store ptr %i.e, ptr %i.ax, align 8, !tbaa !22
   br label %BrotliBitReaderSetInput.exit
 
 BrotliBitReaderSetInput.exit:                     ; preds = %bb.c, %bb.b, %._crit_edge34
@@ -205,6 +205,6 @@ attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: wr
 !18 = !{!6, !6, i64 0}
 !19 = distinct !{!19, !20}
 !20 = !{!"llvm.loop.mustprogress"}
-!21 = !{!13, !12, i64 24}
-!22 = !{!10, !10, i64 0}
+!21 = !{!10, !10, i64 0}
+!22 = !{!13, !12, i64 24}
 end_hunk_0

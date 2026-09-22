@@ -205,10 +205,11 @@ _RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValu
   br i1 %i.bl, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterNtNtCs9fPPV5zPXBl_5typst4args16DiagnosticFormatENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2u_15EnumValueParserBQ_ENtB2u_16TypedValueParser9parse_refs1_0EBU_.exit, label %bb.ad
 
 _RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterNtNtCs9fPPV5zPXBl_5typst4args16DiagnosticFormatENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2u_15EnumValueParserBQ_ENtB2u_16TypedValueParser9parse_refs1_0EBU_.exit: ; preds = %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args16DiagnosticFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.1, %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args16DiagnosticFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i
-  %.ptr.lcssa16 = phi ptr [ @1033, %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args16DiagnosticFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @1033, i64 1), %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args16DiagnosticFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.1 ]
-  %.val = load i8, ptr %.ptr.lcssa16, align 1, !range !53, !noundef !28
+  %.idx.lcssa17 = phi i8 [ 0, %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args16DiagnosticFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i ], [ 1, %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args16DiagnosticFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.1 ]
+  %notmask = shl nsw i8 -1, %.idx.lcssa17
+  %5 = xor i8 %notmask, -1
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %.val, ptr %i.bm, align 1
+  store i8 %5, ptr %i.bm, align 1
   br label %bb.ax
 
 bb.ad:                                            ; preds = %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args16DiagnosticFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.1
@@ -611,10 +612,11 @@ _RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValu
   br i1 %i.bl, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterNtNtCs9fPPV5zPXBl_5typst4args19SerializationFormatENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2x_15EnumValueParserBQ_ENtB2x_16TypedValueParser9parse_refs1_0EBU_.exit, label %bb.ad
 
 _RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterNtNtCs9fPPV5zPXBl_5typst4args19SerializationFormatENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB2x_15EnumValueParserBQ_ENtB2x_16TypedValueParser9parse_refs1_0EBU_.exit: ; preds = %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args19SerializationFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.1, %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args19SerializationFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i
-  %.ptr.lcssa16 = phi ptr [ @1033, %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args19SerializationFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i ], [ getelementptr inbounds nuw (i8, ptr @1033, i64 1), %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args19SerializationFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.1 ]
-  %.val = load i8, ptr %.ptr.lcssa16, align 1, !range !53, !noundef !28
+  %.idx.lcssa17 = phi i8 [ 0, %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args19SerializationFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i ], [ 1, %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args19SerializationFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.1 ]
+  %notmask = shl nsw i8 -1, %.idx.lcssa17
+  %5 = xor i8 %notmask, -1
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %.val, ptr %i.bm, align 1
+  store i8 %5, ptr %i.bm, align 1
   br label %bb.ax
 
 bb.ad:                                            ; preds = %_RNCNvXso_NtNtCsj1PC5XHMKi0_12clap_builder7builder12value_parserINtB7_15EnumValueParserNtNtCs9fPPV5zPXBl_5typst4args19SerializationFormatENtB7_16TypedValueParser9parse_refs1_0B1q_.exit.i.1

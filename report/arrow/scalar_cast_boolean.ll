@@ -205,7 +205,6 @@ $_ZGVZN5arrow8internal10ParseValueINS_11BooleanTypeEEENSt9enable_ifIXsr22is_para
 @.str = private unnamed_addr constant [13 x i8] c"cast_boolean\00", align 1
 @__libc_single_threaded = external local_unnamed_addr global i8, align 1
 @_ZN5arrow8bit_utilL8kBitmaskE = internal unnamed_addr constant [8 x i8] c"\01\02\04\08\10 @\80", align 1
-@_ZN5arrow8bit_utilL17kPrecedingBitmaskE = internal unnamed_addr constant [8 x i8] c"\00\01\03\07\0F\1F?\7F", align 1
 @.str.1 = private unnamed_addr constant [31 x i8] c"std::get: variant is valueless\00", align 1
 @.str.2 = private unnamed_addr constant [34 x i8] c"std::get: wrong index for variant\00", align 1
 @_ZTISt18bad_variant_access = linkonce_odr constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSSt18bad_variant_access, ptr @_ZTISt9exception }, comdat, align 8
@@ -608,9 +607,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.e = load i8, ptr %i.c, align 1, !tbaa !40
-  %4 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8bit_utilL17kPrecedingBitmaskE, i64 %i.d
-  %5 = load i8, ptr %4, align 1, !tbaa !40
-  %i.f = and i8 %5, %i.e                          ; 2 uses
+  %4 = trunc nsw i64 %i.d to i8
+  %notmask = shl nsw i8 -1, %4
+  %5 = xor i8 %notmask, -1
+  %i.f = and i8 %i.e, %5                          ; 2 uses
   %i.g = icmp sgt i64 %2, 0
   br i1 %i.g, label %.lr.ph, label %._crit_edge
 
@@ -816,9 +816,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.e = load i8, ptr %i.c, align 1, !tbaa !40
-  %4 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8bit_utilL17kPrecedingBitmaskE, i64 %i.d
-  %5 = load i8, ptr %4, align 1, !tbaa !40
-  %i.f = and i8 %5, %i.e                          ; 2 uses
+  %4 = trunc nsw i64 %i.d to i8
+  %notmask = shl nsw i8 -1, %4
+  %5 = xor i8 %notmask, -1
+  %i.f = and i8 %i.e, %5                          ; 2 uses
   %i.g = icmp sgt i64 %2, 0
   br i1 %i.g, label %.lr.ph, label %._crit_edge
 
@@ -997,9 +998,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.e = load i8, ptr %i.c, align 1, !tbaa !40
-  %4 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8bit_utilL17kPrecedingBitmaskE, i64 %i.d
-  %5 = load i8, ptr %4, align 1, !tbaa !40
-  %i.f = and i8 %5, %i.e                          ; 2 uses
+  %4 = trunc nsw i64 %i.d to i8
+  %notmask = shl nsw i8 -1, %4
+  %5 = xor i8 %notmask, -1
+  %i.f = and i8 %i.e, %5                          ; 2 uses
   %i.g = icmp sgt i64 %2, 0
   br i1 %i.g, label %.lr.ph, label %bb.e
 
@@ -1207,9 +1209,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.e = load i8, ptr %i.c, align 1, !tbaa !40
-  %4 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8bit_utilL17kPrecedingBitmaskE, i64 %i.d
-  %5 = load i8, ptr %4, align 1, !tbaa !40
-  %i.f = and i8 %5, %i.e                          ; 2 uses
+  %4 = trunc nsw i64 %i.d to i8
+  %notmask = shl nsw i8 -1, %4
+  %5 = xor i8 %notmask, -1
+  %i.f = and i8 %i.e, %5                          ; 2 uses
   %i.g = icmp sgt i64 %2, 0
   br i1 %i.g, label %.lr.ph, label %bb.e
 
@@ -1417,9 +1420,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.e = load i8, ptr %i.c, align 1, !tbaa !40
-  %4 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8bit_utilL17kPrecedingBitmaskE, i64 %i.d
-  %5 = load i8, ptr %4, align 1, !tbaa !40
-  %i.f = and i8 %5, %i.e                          ; 2 uses
+  %4 = trunc nsw i64 %i.d to i8
+  %notmask = shl nsw i8 -1, %4
+  %5 = xor i8 %notmask, -1
+  %i.f = and i8 %i.e, %5                          ; 2 uses
   %i.g = icmp sgt i64 %2, 0
   br i1 %i.g, label %.lr.ph, label %bb.e
 
@@ -1627,9 +1631,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.e = load i8, ptr %i.c, align 1, !tbaa !40
-  %4 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8bit_utilL17kPrecedingBitmaskE, i64 %i.d
-  %5 = load i8, ptr %4, align 1, !tbaa !40
-  %i.f = and i8 %5, %i.e                          ; 2 uses
+  %4 = trunc nsw i64 %i.d to i8
+  %notmask = shl nsw i8 -1, %4
+  %5 = xor i8 %notmask, -1
+  %i.f = and i8 %i.e, %5                          ; 2 uses
   %i.g = icmp sgt i64 %2, 0
   br i1 %i.g, label %.lr.ph, label %bb.e
 
@@ -1837,9 +1842,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.e = load i8, ptr %i.c, align 1, !tbaa !40
-  %4 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8bit_utilL17kPrecedingBitmaskE, i64 %i.d
-  %5 = load i8, ptr %4, align 1, !tbaa !40
-  %i.f = and i8 %5, %i.e                          ; 2 uses
+  %4 = trunc nsw i64 %i.d to i8
+  %notmask = shl nsw i8 -1, %4
+  %5 = xor i8 %notmask, -1
+  %i.f = and i8 %i.e, %5                          ; 2 uses
   %i.g = icmp sgt i64 %2, 0
   br i1 %i.g, label %.lr.ph, label %bb.e
 
@@ -2047,9 +2053,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.e = load i8, ptr %i.c, align 1, !tbaa !40
-  %4 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8bit_utilL17kPrecedingBitmaskE, i64 %i.d
-  %5 = load i8, ptr %4, align 1, !tbaa !40
-  %i.f = and i8 %5, %i.e                          ; 2 uses
+  %4 = trunc nsw i64 %i.d to i8
+  %notmask = shl nsw i8 -1, %4
+  %5 = xor i8 %notmask, -1
+  %i.f = and i8 %i.e, %5                          ; 2 uses
   %i.g = icmp sgt i64 %2, 0
   br i1 %i.g, label %.lr.ph, label %bb.e
 
@@ -2257,9 +2264,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.e = load i8, ptr %i.c, align 1, !tbaa !40
-  %4 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8bit_utilL17kPrecedingBitmaskE, i64 %i.d
-  %5 = load i8, ptr %4, align 1, !tbaa !40
-  %i.f = and i8 %5, %i.e                          ; 2 uses
+  %4 = trunc nsw i64 %i.d to i8
+  %notmask = shl nsw i8 -1, %4
+  %5 = xor i8 %notmask, -1
+  %i.f = and i8 %i.e, %5                          ; 2 uses
   %i.g = icmp sgt i64 %2, 0
   br i1 %i.g, label %.lr.ph, label %bb.e
 
@@ -2467,9 +2475,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.e = load i8, ptr %i.c, align 1, !tbaa !40
-  %4 = getelementptr inbounds nuw i8, ptr @_ZN5arrow8bit_utilL17kPrecedingBitmaskE, i64 %i.d
-  %5 = load i8, ptr %4, align 1, !tbaa !40
-  %i.f = and i8 %5, %i.e                          ; 2 uses
+  %4 = trunc nsw i64 %i.d to i8
+  %notmask = shl nsw i8 -1, %4
+  %5 = xor i8 %notmask, -1
+  %i.f = and i8 %i.e, %5                          ; 2 uses
   %i.g = icmp sgt i64 %2, 0
   br i1 %i.g, label %.lr.ph, label %bb.e
 
@@ -2872,9 +2881,10 @@ _ZN5arrow7compute10ExecResult18array_span_mutableEv.exit: ; preds = %bb.a
 bb.b:                                             ; preds = %_ZN5arrow7compute10ExecResult18array_span_mutableEv.exit
   %i.q = getelementptr inbounds i8, ptr %i.g, i64 %i.l
   %i.r = load i8, ptr %i.q, align 1, !tbaa !40
-  %6 = getelementptr inbounds i8, ptr @_ZN5arrow8bit_utilL17kPrecedingBitmaskE, i64 %i.m
-  %7 = load i8, ptr %6, align 1, !tbaa !40
-  %i.s = and i8 %7, %i.r
+  %6 = trunc nsw i64 %i.m to i8
+  %notmask.i = shl nsw i8 -1, %6
+  %7 = xor i8 %notmask.i, -1
+  %i.s = and i8 %i.r, %7
   br label %_ZN5arrow8internal21FirstTimeBitmapWriterC2EPhll.exit
 
 _ZN5arrow8internal21FirstTimeBitmapWriterC2EPhll.exit: ; preds = %_ZN5arrow7compute10ExecResult18array_span_mutableEv.exit, %bb.b
@@ -3277,9 +3287,10 @@ _ZN5arrow7compute10ExecResult18array_span_mutableEv.exit: ; preds = %bb.a
 bb.b:                                             ; preds = %_ZN5arrow7compute10ExecResult18array_span_mutableEv.exit
   %i.q = getelementptr inbounds i8, ptr %i.g, i64 %i.l
   %i.r = load i8, ptr %i.q, align 1, !tbaa !40
-  %6 = getelementptr inbounds i8, ptr @_ZN5arrow8bit_utilL17kPrecedingBitmaskE, i64 %i.m
-  %7 = load i8, ptr %6, align 1, !tbaa !40
-  %i.s = and i8 %7, %i.r
+  %6 = trunc nsw i64 %i.m to i8
+  %notmask.i = shl nsw i8 -1, %6
+  %7 = xor i8 %notmask.i, -1
+  %i.s = and i8 %i.r, %7
   br label %_ZN5arrow8internal21FirstTimeBitmapWriterC2EPhll.exit
 
 _ZN5arrow8internal21FirstTimeBitmapWriterC2EPhll.exit: ; preds = %_ZN5arrow7compute10ExecResult18array_span_mutableEv.exit, %bb.b
@@ -3663,9 +3674,10 @@ _ZN5arrow7compute10ExecResult18array_span_mutableEv.exit: ; preds = %bb.a
 bb.b:                                             ; preds = %_ZN5arrow7compute10ExecResult18array_span_mutableEv.exit
   %i.p = getelementptr inbounds i8, ptr %i.f, i64 %i.k
   %i.q = load i8, ptr %i.p, align 1, !tbaa !40
-  %6 = getelementptr inbounds i8, ptr @_ZN5arrow8bit_utilL17kPrecedingBitmaskE, i64 %i.l
-  %7 = load i8, ptr %6, align 1, !tbaa !40
-  %i.r = and i8 %7, %i.q
+  %6 = trunc nsw i64 %i.l to i8
+  %notmask.i = shl nsw i8 -1, %6
+  %7 = xor i8 %notmask.i, -1
+  %i.r = and i8 %i.q, %7
   br label %_ZN5arrow8internal21FirstTimeBitmapWriterC2EPhll.exit
 
 _ZN5arrow8internal21FirstTimeBitmapWriterC2EPhll.exit: ; preds = %_ZN5arrow7compute10ExecResult18array_span_mutableEv.exit, %bb.b
