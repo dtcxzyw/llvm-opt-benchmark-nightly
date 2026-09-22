@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %bb.c
   %i.z = zext nneg i32 %i.b to i64                ; 6 uses
   %i.aa = add nsw i64 %i.z, -1                    ; 2 uses
-  %min.iters.check520 = icmp ult i32 %i.b, 29
+  %min.iters.check520 = icmp ult i32 %i.b, 17
   br i1 %min.iters.check520, label %.lr.ph.i.i.i.i.i.i.preheader546, label %vector.memcheck511
 
 vector.memcheck511:                               ; preds = %.lr.ph.i.i.i.i.i.i.preheader
