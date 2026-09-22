@@ -202,18 +202,16 @@ bb.e:                                             ; preds = %.lr.ph
 .critedge:                                        ; preds = %.critedge.loopexit, %bb.d
   %.pre-phi104 = phi i64 [ %.pre103, %.critedge.loopexit ], [ %i.m, %bb.d ]
   %.pre-phi = phi i64 [ %.pre102, %.critedge.loopexit ], [ %i.l, %bb.d ]
-  %.063.lcssa = phi ptr [ %.063.lcssa.ph, %.critedge.loopexit ], [ %.06696, %bb.d ] ; 4 uses
+  %.063.lcssa = phi ptr [ %.063.lcssa.ph, %.critedge.loopexit ], [ %.06696, %bb.d ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #17
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(45) %i.d, i8 0, i64 45, i1 false)
-  %i.ad = call ptr @memchr(ptr noundef %.063.lcssa, i32 noundef 61, i64 noundef %.pre-phi104) #18 ; 4 uses
-  %.not74 = icmp eq ptr %i.ad, null
-  %.not75 = icmp eq ptr %.063.lcssa, %i.ad
-  %or.cond84 = or i1 %.not74, %.not75
+  %i.ad = call ptr @memchr(ptr noundef %.063.lcssa, i32 noundef 61, i64 noundef %.pre-phi104) #18 ; 3 uses
+  %.not75 = icmp eq ptr %i.ad, null
   %i.ae = ptrtoint ptr %i.ad to i64
   %i.af = sub i64 %i.ae, %.pre-phi                ; 2 uses
   %.not7693 = icmp eq i64 %i.af, 0
-  %or.cond99 = or i1 %or.cond84, %.not7693
+  %or.cond99 = or i1 %.not75, %.not7693
   br i1 %or.cond99, label %.critedge2.thread.thread, label %.lr.ph95
 
 .lr.ph95:                                         ; preds = %.critedge, %bb.f

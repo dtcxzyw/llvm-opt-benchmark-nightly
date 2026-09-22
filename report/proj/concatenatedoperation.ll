@@ -202,13 +202,13 @@ bb.a:
   %17 = alloca %"class.std::shared_ptr.41", align 8 ; 6 uses
   %18 = alloca %"struct.osgeo::proj::util::BaseObjectNNPtr", align 8 ; 8 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !29   ; 2 uses
-  %i.c = load ptr, ptr %2, align 8, !tbaa !30     ; 4 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !29
+  %i.c = load ptr, ptr %2, align 8, !tbaa !30     ; 2 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e
   %i.g = icmp ult i64 %i.f, 17
-  br i1 %i.g, label %bb.b, label %19
+  br i1 %i.g, label %bb.b, label %.lr.ph
 
 bb.b:                                             ; preds = %bb.a
   %i.h = tail call ptr @__cxa_allocate_exception(i64 40) #25 ; 3 uses
@@ -225,15 +225,11 @@ bb.d:                                             ; preds = %bb.b
   tail call void @__cxa_free_exception(ptr nonnull %i.h) #25
   br label %bb.fj
 
-19:                                               ; preds = %bb.a
+.lr.ph:                                           ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, i8 0, i64 16, i1 false)
-  %.not = icmp eq ptr %i.b, %i.c
-  br i1 %.not, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %19
   %i.j = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
@@ -242,12 +238,10 @@ bb.d:                                             ; preds = %bb.b
   %i.o = getelementptr inbounds nuw i8, ptr %6, i64 8
   br label %bb.e
 
-._crit_edge:                                      ; preds = %_ZNSt12__shared_ptrIN5osgeo4proj3crs3CRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit127, %19
-  %.044.lcssa = phi i1 [ false, %19 ], [ %i.aa, %_ZNSt12__shared_ptrIN5osgeo4proj3crs3CRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit127 ]
-  %.lcssa = phi ptr [ %i.c, %19 ], [ %i.fs, %_ZNSt12__shared_ptrIN5osgeo4proj3crs3CRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit127 ]
+._crit_edge:                                      ; preds = %_ZNSt12__shared_ptrIN5osgeo4proj3crs3CRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit127
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #25
-  %i.p = load ptr, ptr %.lcssa, align 8, !tbaa !51
+  %i.p = load ptr, ptr %i.fs, align 8, !tbaa !51
   invoke void @_ZNK5osgeo4proj9operation19CoordinateOperation9sourceCRSEv(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr.41") align 8 %11, ptr noundef nonnull align 8 dereferenceable(72) %i.p)
           to label %bb.by unwind label %bb.cq
 
@@ -650,7 +644,7 @@ bb.dz:                                            ; preds = %_ZN5osgeo4proj4util
 
 bb.ea:                                            ; preds = %bb.dz
   %i.ll = load ptr, ptr %0, align 8, !tbaa !60
-  invoke void @_ZN5osgeo4proj9operation19CoordinateOperation28setHasBallparkTransformationEb(ptr noundef nonnull align 8 dereferenceable(72) %i.ll, i1 noundef zeroext %.044.lcssa)
+  invoke void @_ZN5osgeo4proj9operation19CoordinateOperation28setHasBallparkTransformationEb(ptr noundef nonnull align 8 dereferenceable(72) %i.ll, i1 noundef zeroext %i.aa)
           to label %bb.eb unwind label %bb.ed
 
 bb.eb:                                            ; preds = %bb.ea
@@ -1053,7 +1047,7 @@ bb.a:
   %3 = alloca %"struct.osgeo::proj::util::BaseObjectNNPtr", align 8 ; 10 uses
   %4 = alloca %"class.std::shared_ptr.81", align 8 ; 12 uses
   %5 = alloca %"class.osgeo::proj::util::PropertyMap", align 8 ; 9 uses
-  %6 = alloca %"class.std::vector", align 16      ; 30 uses
+  %6 = alloca %"class.std::vector", align 16      ; 29 uses
   %7 = alloca %"class.std::vector", align 8       ; 10 uses
   %8 = alloca %"class.dropbox::oxygen::nn", align 8 ; 7 uses
   %9 = alloca %"class.std::shared_ptr.52", align 8 ; 7 uses
@@ -1110,7 +1104,7 @@ bb.f:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %6, i8 0, i64 24, i1 false)
   %.not362 = icmp eq ptr %i.d, %i.c
-  br i1 %.not362, label %._crit_edge367.thread, label %.lr.ph366
+  br i1 %.not362, label %._crit_edge367, label %.lr.ph366
 
 .lr.ph366:                                        ; preds = %bb.f
   %i.q = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
@@ -1119,23 +1113,21 @@ bb.f:                                             ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 4 uses
   br label %bb.g
 
-._crit_edge367:                                   ; preds = %_ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEESaIS9_EE12emplace_backIJRKS9_EEERS9_DpOT_.exit124
-  %.pre413 = load ptr, ptr %i.s, align 8, !tbaa !29 ; 3 uses
-  %.pre414 = load ptr, ptr %6, align 16, !tbaa !30 ; 3 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 6 uses
-  %i.v = ptrtoint ptr %.pre413 to i64
-  %i.w = ptrtoint ptr %.pre414 to i64
+._crit_edge367.loopexit:                          ; preds = %_ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEESaIS9_EE12emplace_backIJRKS9_EEERS9_DpOT_.exit124
+  %.pre413 = load ptr, ptr %i.s, align 8, !tbaa !29
+  %.pre414 = load ptr, ptr %6, align 16, !tbaa !30
+  br label %._crit_edge367
+
+._crit_edge367:                                   ; preds = %._crit_edge367.loopexit, %bb.f
+  %23 = phi ptr [ null, %bb.f ], [ %.pre414, %._crit_edge367.loopexit ] ; 2 uses
+  %24 = phi ptr [ null, %bb.f ], [ %.pre413, %._crit_edge367.loopexit ] ; 2 uses
+  %.074.lcssa = phi i1 [ false, %bb.f ], [ %i.ab, %._crit_edge367.loopexit ]
+  %i.u = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 5 uses
+  %i.v = ptrtoint ptr %24 to i64
+  %i.w = ptrtoint ptr %23 to i64
   %i.x = sub i64 %i.v, %i.w
   %i.y = icmp ugt i64 %i.x, 32
-  br i1 %i.y, label %.preheader, label %_ZNSt6vectorImSaImEED2Ev.exit
-
-._crit_edge367.thread:                            ; preds = %bb.f
-  %23 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  br label %_ZNSt6vectorImSaImEED2Ev.exit
-
-.preheader:                                       ; preds = %._crit_edge367
-  %.not380 = icmp eq ptr %.pre413, %.pre414
-  br i1 %.not380, label %.critedge110.preheader, label %.lr.ph372
+  br i1 %i.y, label %.lr.ph372, label %_ZNSt6vectorImSaImEED2Ev.exit
 
 bb.g:                                             ; preds = %.lr.ph366, %_ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEESaIS9_EE12emplace_backIJRKS9_EEERS9_DpOT_.exit124
   %.074364 = phi i1 [ false, %.lr.ph366 ], [ %i.ab, %_ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEESaIS9_EE12emplace_backIJRKS9_EEERS9_DpOT_.exit124 ]
@@ -1145,7 +1137,7 @@ bb.g:                                             ; preds = %.lr.ph366, %_ZNSt6v
           to label %bb.h unwind label %bb.j
 
 bb.h:                                             ; preds = %bb.g
-  %i.ab = or i1 %.074364, %i.aa                   ; 4 uses
+  %i.ab = or i1 %.074364, %i.aa                   ; 2 uses
   %i.ac = load ptr, ptr %.sroa.0281.0363, align 8, !tbaa !51 ; 4 uses
   %i.ad = icmp eq ptr %i.ac, null
   br i1 %i.ad, label %bb.aj, label %bb.i
@@ -1545,13 +1537,10 @@ bb.ao:                                            ; preds = %bb.aj
 _ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEESaIS9_EE12emplace_backIJRKS9_EEERS9_DpOT_.exit124: ; preds = %bb.ao, %_ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEC2ERKS8_.exit.i120, %_ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEESaIS9_EED2Ev.exit
   %i.eh = getelementptr inbounds nuw i8, ptr %.sroa.0281.0363, i64 16 ; 2 uses
   %.not = icmp eq ptr %i.eh, %i.c
-  br i1 %.not, label %._crit_edge367, label %bb.g
+  br i1 %.not, label %._crit_edge367.loopexit, label %bb.g
 
-.critedge110.preheader:                           ; preds = %_ZNSt6vectorImSaImEE9push_backERKm.exit, %.preheader
-  %.sroa.0253.0.lcssa = phi ptr [ null, %.preheader ], [ %.sroa.0253.1, %_ZNSt6vectorImSaImEE9push_backERKm.exit ] ; 9 uses
-  %.sroa.20.0.lcssa = phi ptr [ null, %.preheader ], [ %.sroa.20.3, %_ZNSt6vectorImSaImEE9push_backERKm.exit ]
-  %.sroa.30.0.lcssa = phi ptr [ null, %.preheader ], [ %.sroa.30.1, %_ZNSt6vectorImSaImEE9push_backERKm.exit ] ; 3 uses
-  %i.ei = ptrtoint ptr %.sroa.0253.0.lcssa to i64 ; 5 uses
+.critedge110.preheader:                           ; preds = %_ZNSt6vectorImSaImEE9push_backERKm.exit
+  %i.ei = ptrtoint ptr %.sroa.0253.1 to i64       ; 5 uses
   %i.ej = getelementptr inbounds nuw i8, ptr %12, i64 8
   %i.ek = getelementptr inbounds nuw i8, ptr %11, i64 8
   %i.el = getelementptr inbounds nuw i8, ptr %10, i64 8
@@ -1559,13 +1548,13 @@ _ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19Coordina
   %i.en = getelementptr inbounds nuw i8, ptr %8, i64 8
   br label %.critedge110
 
-.lr.ph372:                                        ; preds = %.preheader, %_ZNSt6vectorImSaImEE9push_backERKm.exit
-  %i.eo = phi ptr [ %i.fe, %_ZNSt6vectorImSaImEE9push_backERKm.exit ], [ %.pre414, %.preheader ]
-  %i.ep = phi ptr [ %i.ff, %_ZNSt6vectorImSaImEE9push_backERKm.exit ], [ %.pre413, %.preheader ]
-  %storemerge371 = phi i64 [ %i.fg, %_ZNSt6vectorImSaImEE9push_backERKm.exit ], [ 0, %.preheader ] ; 3 uses
-  %.sroa.30.0370 = phi ptr [ %.sroa.30.1, %_ZNSt6vectorImSaImEE9push_backERKm.exit ], [ null, %.preheader ] ; 4 uses
-  %.sroa.20.0369 = phi ptr [ %.sroa.20.3, %_ZNSt6vectorImSaImEE9push_backERKm.exit ], [ null, %.preheader ] ; 3 uses
-  %.sroa.0253.0368 = phi ptr [ %.sroa.0253.1, %_ZNSt6vectorImSaImEE9push_backERKm.exit ], [ null, %.preheader ] ; 7 uses
+.lr.ph372:                                        ; preds = %._crit_edge367, %_ZNSt6vectorImSaImEE9push_backERKm.exit
+  %i.eo = phi ptr [ %i.fe, %_ZNSt6vectorImSaImEE9push_backERKm.exit ], [ %23, %._crit_edge367 ]
+  %i.ep = phi ptr [ %i.ff, %_ZNSt6vectorImSaImEE9push_backERKm.exit ], [ %24, %._crit_edge367 ]
+  %storemerge371 = phi i64 [ %i.fg, %_ZNSt6vectorImSaImEE9push_backERKm.exit ], [ 0, %._crit_edge367 ] ; 3 uses
+  %.sroa.30.0370 = phi ptr [ %.sroa.30.1, %_ZNSt6vectorImSaImEE9push_backERKm.exit ], [ null, %._crit_edge367 ] ; 4 uses
+  %.sroa.20.0369 = phi ptr [ %.sroa.20.3, %_ZNSt6vectorImSaImEE9push_backERKm.exit ], [ null, %._crit_edge367 ] ; 3 uses
+  %.sroa.0253.0368 = phi ptr [ %.sroa.0253.1, %_ZNSt6vectorImSaImEE9push_backERKm.exit ], [ null, %._crit_edge367 ] ; 7 uses
   %.not.i125 = icmp eq ptr %.sroa.20.0369, %.sroa.30.0370
   br i1 %.not.i125, label %bb.aq, label %bb.ap
 
@@ -1627,9 +1616,9 @@ _ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIP
 _ZNSt6vectorImSaImEE9push_backERKm.exit:          ; preds = %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i, %bb.ap
   %i.fe = phi ptr [ %.pre416, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i ], [ %i.eo, %bb.ap ] ; 2 uses
   %i.ff = phi ptr [ %.pre415, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i ], [ %i.ep, %bb.ap ] ; 2 uses
-  %.sroa.0253.1 = phi ptr [ %i.fa, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i ], [ %.sroa.0253.0368, %bb.ap ] ; 2 uses
+  %.sroa.0253.1 = phi ptr [ %i.fa, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i ], [ %.sroa.0253.0368, %bb.ap ] ; 10 uses
   %.pn297 = phi ptr [ %i.fb, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i ], [ %.sroa.20.0369, %bb.ap ]
-  %.sroa.30.1 = phi ptr [ %i.fd, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i ], [ %.sroa.30.0370, %bb.ap ] ; 2 uses
+  %.sroa.30.1 = phi ptr [ %i.fd, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i ], [ %.sroa.30.0370, %bb.ap ] ; 4 uses
   %.sroa.20.3 = getelementptr inbounds nuw i8, ptr %.pn297, i64 8 ; 2 uses
   %i.fg = add nuw i64 %storemerge371, 1           ; 2 uses
   %i.fh = ptrtoint ptr %i.ff to i64
@@ -1655,7 +1644,7 @@ bb.au:                                            ; preds = %.loopexit.split-lp,
   br i1 %.not.i.i.i173, label %_ZNSt6vectorImSaImEED2Ev.exit174, label %.thread289
 
 .critedge110:                                     ; preds = %.critedge110.preheader, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES6_ET0_T_S8_S7_.exit.i.i
-  %.sroa.20.1 = phi ptr [ %spec.select295, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES6_ET0_T_S8_S7_.exit.i.i ], [ %.sroa.20.0.lcssa, %.critedge110.preheader ] ; 6 uses
+  %.sroa.20.1 = phi ptr [ %spec.select295, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES6_ET0_T_S8_S7_.exit.i.i ], [ %.sroa.20.3, %.critedge110.preheader ] ; 6 uses
   %i.fm = ptrtoint ptr %.sroa.20.1 to i64         ; 2 uses
   %i.fn = sub i64 %i.fm, %i.ei
   %i.fo = ashr exact i64 %i.fn, 3                 ; 4 uses
@@ -1671,13 +1660,13 @@ bb.av:                                            ; preds = %_ZN7dropbox6oxygen2
 .lr.ph603:                                        ; preds = %.critedge110, %bb.av
   %i.fr = phi i64 [ %i.fq, %bb.av ], [ 1, %.critedge110 ] ; 4 uses
   %.052602 = phi i64 [ %i.fr, %bb.av ], [ 0, %.critedge110 ]
-  %i.fs = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0253.0.lcssa, i64 %.052602 ; 6 uses
+  %i.fs = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0253.1, i64 %.052602 ; 6 uses
   %i.ft = load i64, ptr %i.fs, align 8, !tbaa !75
   %i.fu = load ptr, ptr %6, align 16, !tbaa !30   ; 2 uses
   %i.fv = getelementptr inbounds nuw [16 x i8], ptr %i.fu, i64 %i.ft
   %i.fw = load ptr, ptr %i.fv, align 8, !tbaa !51 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #25
-  %i.fx = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0253.0.lcssa, i64 %i.fr ; 2 uses
+  %i.fx = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0253.1, i64 %i.fr ; 2 uses
   %i.fy = load i64, ptr %i.fx, align 8, !tbaa !75
   %i.fz = getelementptr inbounds nuw [16 x i8], ptr %i.fu, i64 %i.fy
   %i.ga = load ptr, ptr %i.fz, align 8, !tbaa !51 ; 2 uses
@@ -2080,7 +2069,7 @@ select.unfold:                                    ; preds = %.critedge110, %bb.a
 bb.ct:                                            ; preds = %select.unfold
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #25
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %13, i8 0, i64 24, i1 false)
-  %.not381 = icmp eq ptr %.sroa.20.2.ph, %.sroa.0253.0.lcssa
+  %.not381 = icmp eq ptr %.sroa.20.2.ph, %.sroa.0253.1
   br i1 %.not381, label %._crit_edge379, label %.lr.ph378
 
 .lr.ph378:                                        ; preds = %bb.ct
@@ -2263,7 +2252,7 @@ _ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19Coordina
 
 bb.di:                                            ; preds = %.lr.ph378, %_ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEESaIS9_EE12emplace_backIJRS9_EEESD_DpOT_.exit
   %.0376 = phi i64 [ 0, %.lr.ph378 ], [ %i.nw, %_ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEESaIS9_EE12emplace_backIJRS9_EEESD_DpOT_.exit ] ; 2 uses
-  %i.ng = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0253.0.lcssa, i64 %.0376
+  %i.ng = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0253.1, i64 %.0376
   %i.nh = load i64, ptr %i.ng, align 8, !tbaa !75
   %i.ni = load ptr, ptr %6, align 16, !tbaa !30
   %i.nj = getelementptr inbounds nuw [16 x i8], ptr %i.ni, i64 %i.nh ; 3 uses
@@ -2320,29 +2309,27 @@ bb.do:                                            ; preds = %bb.dn
   br label %.thread289
 
 bb.dp:                                            ; preds = %_ZNSt6vectorIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEESaIS9_EED2Ev.exit164, %select.unfold
-  %.not.i.i.i172 = icmp eq ptr %.sroa.0253.0.lcssa, null
+  %.not.i.i.i172 = icmp eq ptr %.sroa.0253.1, null
   br i1 %.not.i.i.i172, label %_ZNSt6vectorImSaImEED2Ev.exit, label %bb.dq
 
 bb.dq:                                            ; preds = %bb.dp
-  %i.ny = ptrtoint ptr %.sroa.30.0.lcssa to i64
+  %i.ny = ptrtoint ptr %.sroa.30.1 to i64
   %i.nz = sub i64 %i.ny, %i.ei
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0253.0.lcssa, i64 noundef %i.nz) #26
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0253.1, i64 noundef %i.nz) #26
   br label %_ZNSt6vectorImSaImEED2Ev.exit
 
 .thread289:                                       ; preds = %bb.do, %bb.cs, %bb.au
   %.pre-phi429 = phi i64 [ %i.ei, %bb.do ], [ %i.ei, %bb.cs ], [ %i.er, %bb.au ]
-  %.sroa.0253.0348 = phi ptr [ %.sroa.0253.0.lcssa, %bb.do ], [ %.sroa.0253.0.lcssa, %bb.cs ], [ %.sroa.0253.0368, %bb.au ]
-  %.sroa.30.0338 = phi ptr [ %.sroa.30.0.lcssa, %bb.do ], [ %.sroa.30.0.lcssa, %bb.cs ], [ %.sroa.30.0370, %bb.au ]
+  %.sroa.0253.0348 = phi ptr [ %.sroa.0253.1, %bb.do ], [ %.sroa.0253.1, %bb.cs ], [ %.sroa.0253.0368, %bb.au ]
+  %.sroa.30.0338 = phi ptr [ %.sroa.30.1, %bb.do ], [ %.sroa.30.1, %bb.cs ], [ %.sroa.30.0370, %bb.au ]
   %.pn98292 = phi { ptr, i32 } [ %i.nx, %bb.do ], [ %.pn.pn.pn.pn, %bb.cs ], [ %lpad.phi, %bb.au ]
   %i.oa = ptrtoint ptr %.sroa.30.0338 to i64
   %i.ob = sub i64 %i.oa, %.pre-phi429
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.0253.0348, i64 noundef %i.ob) #26
   br label %_ZNSt6vectorImSaImEED2Ev.exit174
 
-_ZNSt6vectorImSaImEED2Ev.exit:                    ; preds = %._crit_edge367.thread, %bb.dq, %bb.dp, %._crit_edge367
-  %24 = phi ptr [ %23, %._crit_edge367.thread ], [ %i.u, %bb.dq ], [ %i.u, %bb.dp ], [ %i.u, %._crit_edge367 ] ; 2 uses
-  %.074.lcssa520 = phi i1 [ false, %._crit_edge367.thread ], [ %i.ab, %bb.dq ], [ %i.ab, %bb.dp ], [ %i.ab, %._crit_edge367 ]
-  %i.oc = load ptr, ptr %24, align 8, !tbaa !29
+_ZNSt6vectorImSaImEED2Ev.exit:                    ; preds = %bb.dq, %bb.dp, %._crit_edge367
+  %i.oc = load ptr, ptr %i.u, align 8, !tbaa !29
   %i.od = load ptr, ptr %6, align 16, !tbaa !30   ; 3 uses
   %i.oe = ptrtoint ptr %i.oc to i64
   %i.of = ptrtoint ptr %i.od to i64
@@ -2745,7 +2732,7 @@ bb.fo:                                            ; preds = %_ZNSt7__cxx1112basi
 
 bb.fp:                                            ; preds = %bb.fo
   %i.sr = load ptr, ptr %22, align 16, !tbaa !60
-  invoke void @_ZN5osgeo4proj9operation19CoordinateOperation28setHasBallparkTransformationEb(ptr noundef nonnull align 8 dereferenceable(72) %i.sr, i1 noundef zeroext %.074.lcssa520)
+  invoke void @_ZN5osgeo4proj9operation19CoordinateOperation28setHasBallparkTransformationEb(ptr noundef nonnull align 8 dereferenceable(72) %i.sr, i1 noundef zeroext %.074.lcssa)
           to label %_ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation21ConcatenatedOperationEEED2Ev.exit unwind label %bb.ge
 
 _ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation21ConcatenatedOperationEEED2Ev.exit: ; preds = %bb.fp
@@ -2928,7 +2915,7 @@ bb.gi:                                            ; preds = %bb.gh, %bb.ee
 
 _ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEC2ERKS8_.exit177: ; preds = %bb.du, %bb.dt, %bb.dr, %_ZNSt12__shared_ptrIN5osgeo4proj8metadata6ExtentELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
   %i.ur = load ptr, ptr %6, align 16, !tbaa !30   ; 3 uses
-  %i.us = load ptr, ptr %24, align 8, !tbaa !29   ; 2 uses
+  %i.us = load ptr, ptr %i.u, align 8, !tbaa !29  ; 2 uses
   %.not4.i.i.i224 = icmp eq ptr %i.ur, %i.us
   br i1 %.not4.i.i.i224, label %_ZSt8_DestroyIPN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEES9_EvT_SB_RSaIT0_E.exit.i235, label %.lr.ph.i.i.i225
 

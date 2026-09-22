@@ -205,8 +205,7 @@ bb.a:
   %.val = load ptr, ptr %i.k, align 8, !tbaa !133 ; 5 uses
   %wide.trip.count = zext nneg i32 %i.h to i64    ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
-  %4 = add nsw i32 %i.h, -1
-  %i.l = icmp ult i32 %4, 3
+  %i.l = icmp ult i32 %i.h, 4
   br i1 %i.l, label %.lr.ph.split.epil.preheader, label %.lr.ph.split.preheader.new
 
 .lr.ph.split.preheader.new:                       ; preds = %.lr.ph.split.preheader

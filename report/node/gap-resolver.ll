@@ -202,17 +202,13 @@ bb.o:                                             ; preds = %._crit_edge
   br i1 %i.k, label %.critedge, label %bb.p
 
 bb.p:                                             ; preds = %_ZN2v88internal10ZoneVectorIPNS0_8compiler12MoveOperandsEE6resizeEm.exit, %bb.o
-  %i.cd = phi ptr [ %i.bt, %_ZN2v88internal10ZoneVectorIPNS0_8compiler12MoveOperandsEE6resizeEm.exit ], [ %.pre, %bb.o ] ; 4 uses
-  %.pre74101 = phi ptr [ %.pre74.pre, %_ZN2v88internal10ZoneVectorIPNS0_8compiler12MoveOperandsEE6resizeEm.exit ], [ %.pre70, %bb.o ] ; 4 uses
+  %i.cd = phi ptr [ %i.bt, %_ZN2v88internal10ZoneVectorIPNS0_8compiler12MoveOperandsEE6resizeEm.exit ], [ %.pre, %bb.o ] ; 3 uses
+  %.pre74101 = phi ptr [ %.pre74.pre, %_ZN2v88internal10ZoneVectorIPNS0_8compiler12MoveOperandsEE6resizeEm.exit ], [ %.pre70, %bb.o ] ; 3 uses
   %i.ce = ptrtoint ptr %i.cd to i64
   %i.cf = ptrtoint ptr %.pre74101 to i64
   %i.cg = sub i64 %i.ce, %i.cf
   %i.ch = icmp ult i64 %i.cg, 9
-  br i1 %i.ch, label %.critedge, label %.preheader
-
-.preheader:                                       ; preds = %bb.p
-  %.not69 = icmp eq ptr %i.cd, %.pre74101
-  br i1 %.not69, label %._crit_edge64, label %.lr.ph63
+  br i1 %i.ch, label %.critedge, label %.lr.ph63
 
 .critedge:                                        ; preds = %bb.a, %_ZN2v88internal10ZoneVectorIPNS0_8compiler12MoveOperandsEE6resizeEm.exit, %bb.o, %bb.p
   %i.ci = phi ptr [ %i.bt, %_ZN2v88internal10ZoneVectorIPNS0_8compiler12MoveOperandsEE6resizeEm.exit ], [ %.pre, %bb.o ], [ %i.cd, %bb.p ], [ %i.b, %bb.a ] ; 2 uses
@@ -233,7 +229,7 @@ bb.p:                                             ; preds = %_ZN2v88internal10Zo
   %.not43 = icmp eq ptr %i.cp, %i.ci
   br i1 %.not43, label %.loopexit, label %.lr.ph67
 
-._crit_edge64:                                    ; preds = %bb.r, %.preheader
+._crit_edge64:                                    ; preds = %bb.r
   %i.cq = load ptr, ptr %0, align 8               ; 2 uses
   %i.cr = load ptr, ptr %i.cq, align 8
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 48
@@ -241,10 +237,10 @@ bb.p:                                             ; preds = %_ZN2v88internal10Zo
   tail call void %i.ct(ptr noundef nonnull align 8 dereferenceable(12) %i.cq) #10
   br label %.loopexit
 
-.lr.ph63:                                         ; preds = %.preheader, %bb.r
-  %i.cu = phi ptr [ %i.db, %bb.r ], [ %.pre74101, %.preheader ] ; 2 uses
-  %i.cv = phi ptr [ %i.dc, %bb.r ], [ %i.cd, %.preheader ]
-  %.062 = phi i64 [ %i.dd, %bb.r ], [ 0, %.preheader ] ; 2 uses
+.lr.ph63:                                         ; preds = %bb.p, %bb.r
+  %i.cu = phi ptr [ %i.db, %bb.r ], [ %.pre74101, %bb.p ] ; 2 uses
+  %i.cv = phi ptr [ %i.dc, %bb.r ], [ %i.cd, %bb.p ]
+  %.062 = phi i64 [ %i.dd, %bb.r ], [ 0, %bb.p ]  ; 2 uses
   %i.cw = getelementptr inbounds nuw [8 x i8], ptr %i.cu, i64 %.062
   %i.cx = load ptr, ptr %i.cw, align 8            ; 2 uses
   %i.cy = load i64, ptr %i.cx, align 8

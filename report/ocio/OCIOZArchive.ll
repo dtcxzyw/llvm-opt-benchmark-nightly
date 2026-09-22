@@ -204,13 +204,13 @@ _ZN16OpenColorIO_v2_524getFileBufferFromArchiveERKNSt7__cxx1112basic_stringIcSt1
   %i.cf = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !44 ; 3 uses
   %i.ch = load ptr, ptr %5, align 8, !tbaa !42    ; 10 uses
-  %7 = ptrtoint ptr %i.cg to i64                  ; 3 uses
   %i.ci = ptrtoint ptr %i.ch to i64               ; 3 uses
-  %8 = sub i64 %7, %i.ci                          ; 11 uses
-  %.not = icmp eq i64 %8, 0
+  %.not = icmp eq ptr %i.cg, %i.ch
   br i1 %.not, label %bb.ad, label %bb.p
 
 bb.p:                                             ; preds = %_ZN16OpenColorIO_v2_524getFileBufferFromArchiveERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_.exit
+  %7 = ptrtoint ptr %i.cg to i64                  ; 3 uses
+  %8 = sub i64 %7, %i.ci                          ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #20
   %i.cj = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 9 uses
   store ptr %i.cj, ptr %6, align 8, !tbaa !11
@@ -219,7 +219,7 @@ bb.p:                                             ; preds = %_ZN16OpenColorIO_v2
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
   store i64 %8, ptr %i.a, align 8, !tbaa !13
   %i.cl = icmp ugt i64 %8, 15
-  br i1 %i.cl, label %.noexc.i35, label %._crit_edge.i.i34
+  br i1 %i.cl, label %.noexc.i35, label %iter.check
 
 .noexc.i35:                                       ; preds = %bb.p
   %i.cm = invoke noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 0)
@@ -227,20 +227,15 @@ bb.p:                                             ; preds = %_ZN16OpenColorIO_v2
 
 .noexc36:                                         ; preds = %.noexc.i35
   store ptr %i.cm, ptr %6, align 8, !tbaa !15
-  %i.cn = load i64, ptr %i.a, align 8, !tbaa !13  ; 2 uses
+  %i.cn = load i64, ptr %i.a, align 8, !tbaa !13
   store i64 %i.cn, ptr %i.cj, align 8, !tbaa !16
-  br label %._crit_edge.i.i34
+  br label %iter.check
 
-._crit_edge.i.i34:                                ; preds = %.noexc36, %bb.p
-  %9 = phi i64 [ %i.cn, %.noexc36 ], [ %8, %bb.p ]
-  %10 = phi ptr [ %i.cm, %.noexc36 ], [ %i.cj, %bb.p ] ; 7 uses
-  %.not5.i.i.i = icmp eq ptr %i.ch, %i.cg
-  br i1 %.not5.i.i.i, label %bb.q, label %iter.check
-
-iter.check:                                       ; preds = %._crit_edge.i.i34
-  %11 = ptrtoaddr ptr %10 to i64
+iter.check:                                       ; preds = %.noexc36, %bb.p
+  %9 = phi ptr [ %i.cm, %.noexc36 ], [ %i.cj, %bb.p ] ; 6 uses
   %min.iters.check = icmp ult i64 %8, 8
-  %i.co = sub i64 %i.ci, %11
+  %10 = ptrtoaddr ptr %9 to i64
+  %i.co = sub i64 %i.ci, %10
   %diff.check = icmp ugt i64 %i.co, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
@@ -252,13 +247,13 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.cp = and i64 %8, 24
   %n.vec = and i64 %8, -32                        ; 5 uses
-  %i.cq = getelementptr i8, ptr %10, i64 %n.vec
+  %i.cq = getelementptr i8, ptr %9, i64 %n.vec
   %i.cr = getelementptr i8, ptr %i.ch, i64 %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %next.gep = getelementptr i8, ptr %10, i64 %index ; 2 uses
+  %next.gep = getelementptr i8, ptr %9, i64 %index ; 2 uses
   %next.gep104 = getelementptr i8, ptr %i.ch, i64 %index ; 2 uses
   %i.cs = getelementptr i8, ptr %next.gep104, i64 16
   %wide.load = load <16 x i8>, ptr %next.gep104, align 1, !tbaa !16
@@ -272,7 +267,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %8, %n.vec
-  br i1 %cmp.n, label %_ZZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIN9__gnu_cxx17__normal_iteratorIPhSt6vectorIhSaIhEEEEEEvT_SD_St20forward_iterator_tagEN6_GuardD2Ev.exit.loopexit.i.i, label %vec.epilog.iter.check
+  br i1 %cmp.n, label %bb.q, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %i.cp, 0
@@ -281,13 +276,13 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec107 = and i64 %8, -8                      ; 4 uses
-  %i.cv = getelementptr i8, ptr %10, i64 %n.vec107
+  %i.cv = getelementptr i8, ptr %9, i64 %n.vec107
   %i.cw = getelementptr i8, ptr %i.ch, i64 %n.vec107
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index108 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next112, %vec.epilog.vector.body ] ; 3 uses
-  %next.gep109.a = getelementptr i8, ptr %10, i64 %index108
+  %next.gep109.a = getelementptr i8, ptr %9, i64 %index108
   %next.gep110 = getelementptr i8, ptr %i.ch, i64 %index108
   %wide.load111 = load <8 x i8>, ptr %next.gep110, align 1, !tbaa !16
   store <8 x i8> %wide.load111, ptr %next.gep109.a, align 1, !tbaa !16
@@ -297,10 +292,10 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %cmp.n113 = icmp eq i64 %8, %n.vec107
-  br i1 %cmp.n113, label %_ZZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIN9__gnu_cxx17__normal_iteratorIPhSt6vectorIhSaIhEEEEEEvT_SD_St20forward_iterator_tagEN6_GuardD2Ev.exit.loopexit.i.i, label %.lr.ph.i.i.i.preheader
+  br i1 %cmp.n113, label %bb.q, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.07.i.i.i.ph = phi ptr [ %10, %iter.check ], [ %i.cq, %vec.epilog.iter.check ], [ %i.cv, %vec.epilog.middle.block ] ; 2 uses
+  %.07.i.i.i.ph = phi ptr [ %9, %iter.check ], [ %i.cq, %vec.epilog.iter.check ], [ %i.cv, %vec.epilog.middle.block ] ; 2 uses
   %.sroa.02.06.i.i.i.ph = phi ptr [ %i.ch, %iter.check ], [ %i.cr, %vec.epilog.iter.check ], [ %i.cw, %vec.epilog.middle.block ] ; 3 uses
   %.sroa.02.06.i.i.i.ph116 = ptrtoaddr ptr %.sroa.02.06.i.i.i.ph to i64 ; 2 uses
   %i.cy = sub i64 %7, %.sroa.02.06.i.i.i.ph116
@@ -325,7 +320,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.sroa.02.06.i.i.i.unr = phi ptr [ %.sroa.02.06.i.i.i.ph, %.lr.ph.i.i.i.preheader ], [ %i.da, %.lr.ph.i.i.i.prol ]
   %i.dc = sub i64 %.sroa.02.06.i.i.i.ph116, %7
   %i.dd = icmp ugt i64 %i.dc, -8
-  br i1 %i.dd, label %_ZZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIN9__gnu_cxx17__normal_iteratorIPhSt6vectorIhSaIhEEEEEEvT_SD_St20forward_iterator_tagEN6_GuardD2Ev.exit.loopexit.i.i, label %.lr.ph.i.i.i
+  br i1 %i.dd, label %bb.q, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.prol.loopexit, %.lr.ph.i.i.i
   %.07.i.i.i = phi ptr [ %i.eb, %.lr.ph.i.i.i ], [ %.07.i.i.i.unr, %.lr.ph.i.i.i.prol.loopexit ] ; 9 uses
@@ -363,18 +358,13 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ea = getelementptr inbounds nuw i8, ptr %.sroa.02.06.i.i.i, i64 8 ; 2 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %.07.i.i.i, i64 8
   %.not.i.i.i.7 = icmp eq ptr %i.ea, %i.cg
-  br i1 %.not.i.i.i.7, label %_ZZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIN9__gnu_cxx17__normal_iteratorIPhSt6vectorIhSaIhEEEEEEvT_SD_St20forward_iterator_tagEN6_GuardD2Ev.exit.loopexit.i.i, label %.lr.ph.i.i.i, !llvm.loop !118
+  br i1 %.not.i.i.i.7, label %bb.q, label %.lr.ph.i.i.i, !llvm.loop !118
 
-_ZZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIN9__gnu_cxx17__normal_iteratorIPhSt6vectorIhSaIhEEEEEEvT_SD_St20forward_iterator_tagEN6_GuardD2Ev.exit.loopexit.i.i: ; preds = %.lr.ph.i.i.i.prol.loopexit, %.lr.ph.i.i.i, %vec.epilog.middle.block, %middle.block
-  %.pre10.i.i = load i64, ptr %i.a, align 8, !tbaa !13
+bb.q:                                             ; preds = %.lr.ph.i.i.i.prol.loopexit, %.lr.ph.i.i.i, %vec.epilog.middle.block, %middle.block
+  %.pre10.i.i = load i64, ptr %i.a, align 8, !tbaa !13 ; 2 uses
   %.pre11.i.i = load ptr, ptr %6, align 8, !tbaa !15
-  br label %bb.q
-
-bb.q:                                             ; preds = %_ZZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIN9__gnu_cxx17__normal_iteratorIPhSt6vectorIhSaIhEEEEEEvT_SD_St20forward_iterator_tagEN6_GuardD2Ev.exit.loopexit.i.i, %._crit_edge.i.i34
-  %12 = phi ptr [ %.pre11.i.i, %_ZZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIN9__gnu_cxx17__normal_iteratorIPhSt6vectorIhSaIhEEEEEEvT_SD_St20forward_iterator_tagEN6_GuardD2Ev.exit.loopexit.i.i ], [ %10, %._crit_edge.i.i34 ]
-  %13 = phi i64 [ %.pre10.i.i, %_ZZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIN9__gnu_cxx17__normal_iteratorIPhSt6vectorIhSaIhEEEEEEvT_SD_St20forward_iterator_tagEN6_GuardD2Ev.exit.loopexit.i.i ], [ %9, %._crit_edge.i.i34 ] ; 2 uses
-  store i64 %13, ptr %i.ck, align 8, !tbaa !17
-  %i.ec = getelementptr inbounds nuw i8, ptr %12, i64 %13
+  store i64 %.pre10.i.i, ptr %i.ck, align 8, !tbaa !17
+  %i.ec = getelementptr inbounds nuw i8, ptr %.pre11.i.i, i64 %.pre10.i.i
   store i8 0, ptr %i.ec, align 1, !tbaa !16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20
   %i.ed = load ptr, ptr %0, align 8, !tbaa !15    ; 6 uses

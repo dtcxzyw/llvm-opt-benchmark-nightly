@@ -202,8 +202,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.e
   %.017 = phi i32 [ 0, %.lr.ph ], [ %.1, %bb.e ]  ; 3 uses
   %.sroa.08.016 = phi ptr [ %i.a, %.lr.ph ], [ %i.u, %bb.e ] ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.sroa.08.016, i64 8 ; 3 uses
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !32   ; 3 uses
-  %i.h = load ptr, ptr %.sroa.08.016, align 8, !tbaa !33 ; 7 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !32   ; 2 uses
+  %i.h = load ptr, ptr %.sroa.08.016, align 8, !tbaa !33 ; 6 uses
   %i.i = ptrtoint ptr %i.g to i64
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = sub i64 %i.i, %i.j
@@ -217,17 +217,10 @@ bb.c:                                             ; preds = %bb.b
   %i.p = load float, ptr %i.o, align 4, !tbaa !36
   %i.q = fdiv float %i.n, %i.p
   %i.r = fcmp ogt float %i.q, %i.e
-  br i1 %i.r, label %2, label %bb.e
+  br i1 %i.r, label %_ZNSt6vectorIN2cv6DMatchESaIS1_EE5clearEv.exit, label %bb.e
 
-2:                                                ; preds = %bb.c
-  %.not.i.i = icmp eq ptr %i.g, %i.h
-  br i1 %.not.i.i, label %_ZNSt6vectorIN2cv6DMatchESaIS1_EE5clearEv.exit, label %_ZSt8_DestroyIPN2cv6DMatchES1_EvT_S3_RSaIT0_E.exit.i.i
-
-_ZSt8_DestroyIPN2cv6DMatchES1_EvT_S3_RSaIT0_E.exit.i.i: ; preds = %2
+_ZNSt6vectorIN2cv6DMatchESaIS1_EE5clearEv.exit:   ; preds = %bb.c
   store ptr %i.h, ptr %i.f, align 8, !tbaa !32
-  br label %_ZNSt6vectorIN2cv6DMatchESaIS1_EE5clearEv.exit
-
-_ZNSt6vectorIN2cv6DMatchESaIS1_EE5clearEv.exit:   ; preds = %2, %_ZSt8_DestroyIPN2cv6DMatchES1_EvT_S3_RSaIT0_E.exit.i.i
   %i.s = add nsw i32 %.017, 1
   br label %bb.e
 
@@ -271,16 +264,14 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph43, %_ZNSt6vectorIN2cv6DMatchESaIS1_EE9push_backEOS1_.exit
   %i.g = phi ptr [ %i.c, %.lr.ph43 ], [ %i.bf, %_ZNSt6vectorIN2cv6DMatchESaIS1_EE9push_backEOS1_.exit ] ; 4 uses
   %.sroa.020.042 = phi ptr [ %i.a, %.lr.ph43 ], [ %i.bg, %_ZNSt6vectorIN2cv6DMatchESaIS1_EE9push_backEOS1_.exit ] ; 3 uses
-  %i.h = load ptr, ptr %.sroa.020.042, align 8, !tbaa !38 ; 5 uses
+  %i.h = load ptr, ptr %.sroa.020.042, align 8, !tbaa !38 ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.020.042, i64 8
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !38   ; 2 uses
-  %4 = icmp eq ptr %i.h, %i.j
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !38
   %i.k = ptrtoint ptr %i.j to i64
   %i.l = ptrtoint ptr %i.h to i64
   %i.m = sub i64 %i.k, %i.l
   %i.n = icmp ult i64 %i.m, 17
-  %or.cond = or i1 %4, %i.n
-  br i1 %or.cond, label %_ZNSt6vectorIN2cv6DMatchESaIS1_EE9push_backEOS1_.exit, label %bb.c
+  br i1 %i.n, label %_ZNSt6vectorIN2cv6DMatchESaIS1_EE9push_backEOS1_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.o = load ptr, ptr %2, align 8, !tbaa !29     ; 2 uses
@@ -294,16 +285,14 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %.lr.ph, %bb.l
   %.sroa.013.040 = phi ptr [ %i.o, %.lr.ph ], [ %i.be, %bb.l ] ; 3 uses
-  %i.r = load ptr, ptr %.sroa.013.040, align 8, !tbaa !38 ; 4 uses
+  %i.r = load ptr, ptr %.sroa.013.040, align 8, !tbaa !38 ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.013.040, i64 8
-  %i.t = load ptr, ptr %i.s, align 8, !tbaa !38   ; 2 uses
-  %5 = icmp eq ptr %i.r, %i.t
+  %i.t = load ptr, ptr %i.s, align 8, !tbaa !38
   %i.u = ptrtoint ptr %i.t to i64
   %i.v = ptrtoint ptr %i.r to i64
   %i.w = sub i64 %i.u, %i.v
   %i.x = icmp ult i64 %i.w, 17
-  %or.cond36 = or i1 %5, %i.x
-  br i1 %or.cond36, label %bb.l, label %bb.e
+  br i1 %i.x, label %bb.l, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.y = load i32, ptr %i.h, align 4, !tbaa !71   ; 3 uses
@@ -549,8 +538,8 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %_ZNSt6vectorIN2cv6DMatchESaIS1_EE5clearEv.exit.i, %.lr.ph.i
   %.sroa.08.016.i = phi ptr [ %i.ak, %.lr.ph.i ], [ %i.bb, %_ZNSt6vectorIN2cv6DMatchESaIS1_EE5clearEv.exit.i ] ; 3 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.08.016.i, i64 8 ; 2 uses
-  %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !32 ; 3 uses
-  %i.ar = load ptr, ptr %.sroa.08.016.i, align 8, !tbaa !33 ; 6 uses
+  %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !32 ; 2 uses
+  %i.ar = load ptr, ptr %.sroa.08.016.i, align 8, !tbaa !33 ; 5 uses
   %i.as = ptrtoint ptr %i.aq to i64
   %i.at = ptrtoint ptr %i.ar to i64
   %i.au = sub i64 %i.as, %i.at
@@ -563,10 +552,8 @@ bb.h:                                             ; preds = %bb.g
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ar, i64 28
   %i.az = load float, ptr %i.ay, align 4, !tbaa !36
   %i.ba = fdiv float %i.ax, %i.az
-  %22 = fcmp ule float %i.ba, %i.ao
-  %.not.i.i.i = icmp eq ptr %i.aq, %i.ar
-  %or.cond = or i1 %22, %.not.i.i.i
-  br i1 %or.cond, label %_ZNSt6vectorIN2cv6DMatchESaIS1_EE5clearEv.exit.i, label %_ZNSt6vectorIN2cv6DMatchESaIS1_EE5clearEv.exit.i.sink.split
+  %22 = fcmp ogt float %i.ba, %i.ao
+  br i1 %22, label %_ZNSt6vectorIN2cv6DMatchESaIS1_EE5clearEv.exit.i.sink.split, label %_ZNSt6vectorIN2cv6DMatchESaIS1_EE5clearEv.exit.i
 
 bb.i:                                             ; preds = %bb.g
   %.not.i.i5.i = icmp eq ptr %i.aq, %i.ar
@@ -596,8 +583,8 @@ _ZN13RobustMatcher9ratioTestERSt6vectorIS0_IN2cv6DMatchESaIS2_EESaIS4_EE.exit: ;
 bb.j:                                             ; preds = %_ZNSt6vectorIN2cv6DMatchESaIS1_EE5clearEv.exit.i50, %.lr.ph.i39
   %.sroa.08.016.i41 = phi ptr [ %i.bc, %.lr.ph.i39 ], [ %i.bt, %_ZNSt6vectorIN2cv6DMatchESaIS1_EE5clearEv.exit.i50 ] ; 3 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.08.016.i41, i64 8 ; 2 uses
-  %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !32 ; 3 uses
-  %i.bj = load ptr, ptr %.sroa.08.016.i41, align 8, !tbaa !33 ; 6 uses
+  %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !32 ; 2 uses
+  %i.bj = load ptr, ptr %.sroa.08.016.i41, align 8, !tbaa !33 ; 5 uses
   %i.bk = ptrtoint ptr %i.bi to i64
   %i.bl = ptrtoint ptr %i.bj to i64
   %i.bm = sub i64 %i.bk, %i.bl
@@ -610,10 +597,8 @@ bb.k:                                             ; preds = %bb.j
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bj, i64 28
   %i.br = load float, ptr %i.bq, align 4, !tbaa !36
   %i.bs = fdiv float %i.bp, %i.br
-  %23 = fcmp ule float %i.bs, %i.bg
-  %.not.i.i.i48 = icmp eq ptr %i.bi, %i.bj
-  %or.cond89 = or i1 %23, %.not.i.i.i48
-  br i1 %or.cond89, label %_ZNSt6vectorIN2cv6DMatchESaIS1_EE5clearEv.exit.i50, label %_ZNSt6vectorIN2cv6DMatchESaIS1_EE5clearEv.exit.i50.sink.split
+  %23 = fcmp ogt float %i.bs, %i.bg
+  br i1 %23, label %_ZNSt6vectorIN2cv6DMatchESaIS1_EE5clearEv.exit.i50.sink.split, label %_ZNSt6vectorIN2cv6DMatchESaIS1_EE5clearEv.exit.i50
 
 bb.l:                                             ; preds = %bb.j
   %.not.i.i5.i42 = icmp eq ptr %i.bi, %i.bj
@@ -1016,8 +1001,8 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %_ZNSt6vectorIN2cv6DMatchESaIS1_EE5clearEv.exit.i, %.lr.ph.i
   %.sroa.08.016.i = phi ptr [ %i.af, %.lr.ph.i ], [ %i.aw, %_ZNSt6vectorIN2cv6DMatchESaIS1_EE5clearEv.exit.i ] ; 3 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.08.016.i, i64 8 ; 2 uses
-  %i.al = load ptr, ptr %i.ak, align 8, !tbaa !32 ; 3 uses
-  %i.am = load ptr, ptr %.sroa.08.016.i, align 8, !tbaa !33 ; 6 uses
+  %i.al = load ptr, ptr %i.ak, align 8, !tbaa !32 ; 2 uses
+  %i.am = load ptr, ptr %.sroa.08.016.i, align 8, !tbaa !33 ; 5 uses
   %i.an = ptrtoint ptr %i.al to i64
   %i.ao = ptrtoint ptr %i.am to i64
   %i.ap = sub i64 %i.an, %i.ao
@@ -1030,10 +1015,8 @@ bb.f:                                             ; preds = %bb.e
   %i.at = getelementptr inbounds nuw i8, ptr %i.am, i64 28
   %i.au = load float, ptr %i.at, align 4, !tbaa !36
   %i.av = fdiv float %i.as, %i.au
-  %19 = fcmp ule float %i.av, %i.aj
-  %.not.i.i.i = icmp eq ptr %i.al, %i.am
-  %or.cond = or i1 %19, %.not.i.i.i
-  br i1 %or.cond, label %_ZNSt6vectorIN2cv6DMatchESaIS1_EE5clearEv.exit.i, label %_ZNSt6vectorIN2cv6DMatchESaIS1_EE5clearEv.exit.i.sink.split
+  %19 = fcmp ogt float %i.av, %i.aj
+  br i1 %19, label %_ZNSt6vectorIN2cv6DMatchESaIS1_EE5clearEv.exit.i.sink.split, label %_ZNSt6vectorIN2cv6DMatchESaIS1_EE5clearEv.exit.i
 
 bb.g:                                             ; preds = %bb.e
   %.not.i.i5.i = icmp eq ptr %i.al, %i.am

@@ -205,8 +205,8 @@ declare void @_ZN5draco14RAnsBitEncoder13StartEncodingEv(ptr noundef nonnull ali
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr noundef i32 @_ZN5draco33DynamicIntegerPointsKdTreeEncoderILi6EE16GetAndEncodeAxisINS_12PointDVectorIjE20PointDVectorIteratorEEEjT_S6_RKSt6vectorIjSaIjEESB_j(ptr noundef nonnull align 8 dereferenceable(2080) %0, ptr noundef byval(%"class.draco::PointDVector<unsigned int>::PointDVectorIterator") align 8 %1, ptr noundef byval(%"class.draco::PointDVector<unsigned int>::PointDVectorIterator") align 8 %2, ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %4, i32 noundef %5) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = load i64, ptr %2, align 8, !tbaa !173    ; 6 uses
-  %i.b = load i64, ptr %1, align 8, !tbaa !173    ; 7 uses
+  %i.a = load i64, ptr %2, align 8, !tbaa !173    ; 5 uses
+  %i.b = load i64, ptr %1, align 8, !tbaa !173    ; 6 uses
   %i.c = sub i64 %i.a, %i.b                       ; 4 uses
   %i.d = icmp ult i64 %i.c, 64
   br i1 %i.d, label %.preheader, label %bb.c
@@ -269,83 +269,50 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph61.new
   br i1 %niter112.ncmp.3, label %.loopexit.loopexit.unr-lcssa, label %bb.b, !llvm.loop !519
 
 bb.c:                                             ; preds = %bb.a
-  %i.ag = trunc i64 %i.c to i32                   ; 2 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.ag = trunc i64 %i.c to i32
+  %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.ai = load i32, ptr %i.ah, align 8, !tbaa !214
   %.not63 = icmp eq i32 %i.ai, 0
   br i1 %.not63, label %._crit_edge57, label %.lr.ph52
 
 .lr.ph52:                                         ; preds = %bb.c
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 1960
-  %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !160 ; 3 uses
-  %i.al = load ptr, ptr %4, align 8, !tbaa !160   ; 2 uses
+  %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !160 ; 2 uses
+  %i.al = load ptr, ptr %4, align 8, !tbaa !160
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 1984
-  %i.an = load ptr, ptr %i.am, align 8, !tbaa !160 ; 2 uses
+  %i.an = load ptr, ptr %i.am, align 8, !tbaa !160
   %i.ao = load ptr, ptr %3, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx, align 8
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.sroa.8.0.copyload = load i32, ptr %.sroa.8.0..sroa_idx, align 8 ; 2 uses
-  %.not4648 = icmp eq i64 %i.b, %i.a
   %6 = getelementptr inbounds nuw i8, ptr %.sroa.7.0.copyload, i64 40
   %7 = zext i32 %.sroa.8.0.copyload to i64        ; 3 uses
-  %.not4648.fr = freeze i1 %.not4648
-  br i1 %.not4648.fr, label %.lr.ph52.split.us, label %.lr.ph52.split.preheader
-
-.lr.ph52.split.preheader:                         ; preds = %.lr.ph52
-  %ident.check.not = icmp eq i32 %.sroa.8.0.copyload, 1
+  %.not4648 = icmp eq i32 %.sroa.8.0.copyload, 1
   %n.vec = and i64 %i.c, -8                       ; 3 uses
   %8 = add i64 %i.b, %n.vec
   %cmp.n = icmp eq i64 %i.c, %n.vec
   br label %.lr.ph52.split
 
-.lr.ph52.split.us:                                ; preds = %.lr.ph52, %18
-  %indvars.iv69 = phi i64 [ %indvars.iv.next70, %18 ], [ 0, %.lr.ph52 ] ; 4 uses
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.ak, i64 %indvars.iv69 ; 3 uses
-  store i32 0, ptr %9, align 4, !tbaa !58
-  %10 = load i32, ptr %0, align 8, !tbaa !189     ; 2 uses
-  %11 = getelementptr inbounds nuw [4 x i8], ptr %i.al, i64 %indvars.iv69
-  %12 = load i32, ptr %11, align 4, !tbaa !58     ; 2 uses
-  %13 = sub i32 %10, %12
-  %14 = getelementptr inbounds nuw [4 x i8], ptr %i.an, i64 %indvars.iv69
-  store i32 %13, ptr %14, align 4, !tbaa !58
-  %.not38.us = icmp eq i32 %10, %12
-  br i1 %.not38.us, label %18, label %15
-
-15:                                               ; preds = %.lr.ph52.split.us
-  %16 = load i32, ptr %9, align 4, !tbaa !58      ; 2 uses
-  %17 = sub i32 %i.ag, %16
-  %.sroa.speculated.us = tail call i32 @llvm.umax.i32(i32 %17, i32 %16)
-  store i32 %.sroa.speculated.us, ptr %9, align 4, !tbaa !58
-  br label %18
-
-18:                                               ; preds = %15, %.lr.ph52.split.us
-  %indvars.iv.next70 = add nuw nsw i64 %indvars.iv69, 1 ; 2 uses
-  %19 = load i32, ptr %i.ah, align 8, !tbaa !214  ; 2 uses
-  %20 = zext i32 %19 to i64
-  %21 = icmp samesign ult i64 %indvars.iv.next70, %20
-  br i1 %21, label %.lr.ph52.split.us, label %.preheader47, !llvm.loop !520
-
-.preheader47:                                     ; preds = %bb.d, %18
-  %.lcssa = phi i32 [ %19, %18 ], [ %i.ct, %bb.d ] ; 4 uses
-  %.not64 = icmp eq i32 %.lcssa, 0
+.preheader47:                                     ; preds = %bb.d
+  %.not64 = icmp eq i32 %i.ct, 0
   br i1 %.not64, label %._crit_edge57, label %.lr.ph56
 
 .lr.ph56:                                         ; preds = %.preheader47
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 1984
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !160 ; 3 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 1960 ; 3 uses
-  %wide.trip.count = zext i32 %.lcssa to i64      ; 2 uses
+  %wide.trip.count = zext i32 %i.ct to i64        ; 2 uses
   %xtraiter101 = and i64 %wide.trip.count, 1
-  %i.as = icmp eq i32 %.lcssa, 1
+  %i.as = icmp eq i32 %i.ct, 1
   br i1 %i.as, label %.epil.preheader, label %.lr.ph56.new
 
 .lr.ph56.new:                                     ; preds = %.lr.ph56
   %unroll_iter = and i64 %wide.trip.count, 4294967294
   br label %bb.f
 
-.lr.ph52.split:                                   ; preds = %.lr.ph52.split.preheader, %bb.d
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.d ], [ 0, %.lr.ph52.split.preheader ] ; 9 uses
+.lr.ph52.split:                                   ; preds = %.lr.ph52, %bb.d
+  %indvars.iv = phi i64 [ 0, %.lr.ph52 ], [ %indvars.iv.next, %bb.d ] ; 9 uses
   %i.at = shl nuw nsw i64 %indvars.iv, 2
   %i.au = getelementptr i8, ptr %i.ak, i64 %i.at
   %scevgep = getelementptr i8, ptr %i.au, i64 4
@@ -373,7 +340,7 @@ bb.c:                                             ; preds = %bb.a
   %i.bk = load ptr, ptr %6, align 8, !tbaa !163, !noalias !530 ; 3 uses
   %invariant.gep = getelementptr [4 x i8], ptr %i.bk, i64 %indvars.iv ; 4 uses
   %.promoted = load i32, ptr %i.az, align 4, !tbaa !58 ; 3 uses
-  br i1 %ident.check.not, label %vector.memcheck, label %scalar.ph.preheader
+  br i1 %.not4648, label %vector.memcheck, label %scalar.ph.preheader
 
 vector.memcheck:                                  ; preds = %.lr.ph
   %scevgep91 = getelementptr i8, ptr %i.bk, i64 %i.aw
@@ -406,7 +373,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bu = add <4 x i32> %vec.phi93, %i.bs         ; 2 uses
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.bv = icmp eq i64 %index.next, %n.vec
-  br i1 %i.bv, label %middle.block, label %vector.body, !llvm.loop !525
+  br i1 %i.bv, label %middle.block, label %vector.body, !llvm.loop !524
 
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = add <4 x i32> %i.bu, %i.bt
@@ -468,14 +435,14 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   store i32 %i.cr, ptr %i.az, align 4, !tbaa !58
   %i.cs = add i64 %.sroa.041.049, 2               ; 2 uses
   %.not46.1 = icmp eq i64 %i.cs, %i.a
-  br i1 %.not46.1, label %._crit_edge, label %scalar.ph, !llvm.loop !527
+  br i1 %.not46.1, label %._crit_edge, label %scalar.ph, !llvm.loop !526
 
 bb.d:                                             ; preds = %.lr.ph52.split, %._crit_edge
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.ct = load i32, ptr %i.ah, align 8, !tbaa !214 ; 2 uses
+  %i.ct = load i32, ptr %i.ah, align 8, !tbaa !214 ; 5 uses
   %i.cu = zext i32 %i.ct to i64
   %i.cv = icmp samesign ult i64 %indvars.iv.next, %i.cu
-  br i1 %i.cv, label %.lr.ph52.split, label %.preheader47, !llvm.loop !520
+  br i1 %i.cv, label %.lr.ph52.split, label %.preheader47, !llvm.loop !527
 
 ._crit_edge57.loopexit.unr-lcssa:                 ; preds = %bb.j
   %lcmp.mod102.not = icmp eq i64 %xtraiter101, 0
@@ -485,7 +452,7 @@ bb.d:                                             ; preds = %.lr.ph52.split, %._
   %indvars.iv72.epil.init = phi i64 [ 0, %.lr.ph56 ], [ %indvars.iv.next73.1, %._crit_edge57.loopexit.unr-lcssa ] ; 3 uses
   %.03354.epil.init = phi i32 [ 0, %.lr.ph56 ], [ %.1.1, %._crit_edge57.loopexit.unr-lcssa ]
   %.253.epil.init = phi i32 [ 0, %.lr.ph56 ], [ %.3.1, %._crit_edge57.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod104 = trunc i32 %.lcssa to i1
+  %lcmp.mod104 = trunc i32 %i.ct to i1
   tail call void @llvm.assume(i1 %lcmp.mod104)
   %i.cw = getelementptr inbounds nuw [4 x i8], ptr %i.aq, i64 %indvars.iv72.epil.init
   %i.cx = load i32, ptr %i.cw, align 4, !tbaa !58
@@ -888,19 +855,19 @@ begin_hunk_1_@llvm.vector.reduce.add.v4i32
 !517 = !{!492, !490, !502}
 !518 = !{!502}
 !519 = distinct !{!519, !76}
-!520 = distinct !{!520, !76}
-!521 = distinct !{!521, !"_ZNK5draco12PointDVectorIjE20PointDVectorIteratordeEv"}
-!522 = distinct !{!522, !521, !"_ZNK5draco12PointDVectorIjE20PointDVectorIteratordeEv: argument 0"}
-!523 = distinct !{!523, !"LVerDomain"}
-!524 = distinct !{!524, !523}
-!525 = distinct !{!525, !76, !108, !109}
-!526 = distinct !{!526, !523}
-!527 = distinct !{!527, !76, !108}
+!520 = distinct !{!520, !"_ZNK5draco12PointDVectorIjE20PointDVectorIteratordeEv"}
+!521 = distinct !{!521, !520, !"_ZNK5draco12PointDVectorIjE20PointDVectorIteratordeEv: argument 0"}
+!522 = distinct !{!522, !"LVerDomain"}
+!523 = distinct !{!523, !522}
+!524 = distinct !{!524, !76, !108, !109}
+!525 = distinct !{!525, !522}
+!526 = distinct !{!526, !76, !108}
+!527 = distinct !{!527, !76}
 !528 = distinct !{!528, !76}
 !529 = distinct !{!529, !68}
-!530 = !{!522}
-!531 = !{!524}
-!532 = !{!526}
+!530 = !{!521}
+!531 = !{!523}
+!532 = !{!525}
 !533 = distinct !{!533, !76}
 !534 = !{!219, !217, i64 16}
 !535 = distinct !{!535, !"_ZNSt5dequeIN5draco33DynamicIntegerPointsKdTreeEncoderILi5EE14EncodingStatusINS0_12PointDVectorIjE20PointDVectorIteratorEEESaIS7_EE3endEv"}

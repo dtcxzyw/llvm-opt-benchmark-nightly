@@ -204,8 +204,7 @@ bb.a:
   %.val42.val = load ptr, ptr %i.h, align 8, !tbaa !24 ; 5 uses
   %wide.trip.count = zext nneg i32 %i.f to i64    ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
-  %2 = add nsw i32 %i.f, -1
-  %i.i = icmp ult i32 %2, 3
+  %i.i = icmp ult i32 %i.f, 4
   br i1 %i.i, label %.lr.ph.split.epil.preheader, label %.lr.ph.split.preheader.new
 
 .lr.ph.split.preheader.new:                       ; preds = %.lr.ph.split.preheader
@@ -347,8 +346,7 @@ bb.d:                                             ; preds = %bb.b
   %.val48.val = load ptr, ptr %i.bk, align 8, !tbaa !24 ; 5 uses
   %wide.trip.count71 = zext nneg i32 %i.bi to i64 ; 2 uses
   %xtraiter78 = and i64 %wide.trip.count71, 3     ; 3 uses
-  %3 = add nsw i32 %i.bi, -1
-  %i.bl = icmp ult i32 %3, 3
+  %i.bl = icmp ult i32 %i.bi, 4
   br i1 %i.bl, label %.lr.ph59.split.epil.preheader, label %.lr.ph59.split.preheader.new
 
 .lr.ph59.split.preheader.new:                     ; preds = %.lr.ph59.split.preheader
@@ -751,8 +749,7 @@ Bac_ManRoot.exit:                                 ; preds = %bb.a, %Bac_ManNtkIs
   %.val143 = load ptr, ptr %i.r, align 8, !tbaa !24 ; 5 uses
   %wide.trip.count = zext nneg i32 %i.o to i64    ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
-  %2 = add nsw i32 %i.o, -1
-  %i.s = icmp ult i32 %2, 3
+  %i.s = icmp ult i32 %i.o, 4
   br i1 %i.s, label %.lr.ph.split.epil.preheader, label %.lr.ph.split.preheader.new
 
 .lr.ph.split.preheader.new:                       ; preds = %.lr.ph.split.preheader

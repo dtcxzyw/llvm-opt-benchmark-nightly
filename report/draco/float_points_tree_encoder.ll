@@ -205,24 +205,19 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph65.new
 
 bb.c:                                             ; preds = %bb.a
   %i.ag = udiv exact i64 %i.c, 12
-  %i.ah = trunc i64 %i.ag to i32                  ; 2 uses
-  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.ah = trunc i64 %i.ag to i32
+  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.aj = load i32, ptr %i.ai, align 8, !tbaa !186
   %.not67 = icmp eq i32 %i.aj, 0
-  br i1 %.not67, label %._crit_edge61, label %.lr.ph56
+  br i1 %.not67, label %._crit_edge61, label %.lr.ph56.split.preheader
 
-.lr.ph56:                                         ; preds = %bb.c
+.lr.ph56.split.preheader:                         ; preds = %bb.c
   %6 = getelementptr inbounds nuw i8, ptr %0, i64 1960
-  %7 = load ptr, ptr %6, align 8, !tbaa !62       ; 3 uses
-  %8 = load ptr, ptr %4, align 8, !tbaa !62       ; 2 uses
+  %7 = load ptr, ptr %6, align 8, !tbaa !62       ; 2 uses
+  %8 = load ptr, ptr %4, align 8, !tbaa !62
   %9 = getelementptr inbounds nuw i8, ptr %0, i64 1984
-  %10 = load ptr, ptr %9, align 8, !tbaa !62      ; 2 uses
+  %10 = load ptr, ptr %9, align 8, !tbaa !62
   %11 = load ptr, ptr %3, align 8
-  %.not4951 = icmp eq ptr %1, %2
-  %.not4951.fr = freeze i1 %.not4951
-  br i1 %.not4951.fr, label %.lr.ph56.split.us, label %.lr.ph56.split.preheader
-
-.lr.ph56.split.preheader:                         ; preds = %.lr.ph56
   %i.ak = add i64 %i.a, -12
   %i.al = sub i64 %i.ak, %i.b
   %.fr = freeze i64 %i.al                         ; 2 uses
@@ -242,45 +237,17 @@ bb.c:                                             ; preds = %bb.a
   %i.ax = getelementptr i8, ptr %1, i64 %i.aw
   br label %.lr.ph56.split
 
-.lr.ph56.split.us:                                ; preds = %.lr.ph56, %21
-  %indvars.iv = phi i64 [ %indvars.iv.next, %21 ], [ 0, %.lr.ph56 ] ; 4 uses
-  %12 = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %indvars.iv ; 3 uses
-  store i32 0, ptr %12, align 4, !tbaa !44
-  %13 = load i32, ptr %0, align 8, !tbaa !89      ; 2 uses
-  %14 = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %indvars.iv
-  %15 = load i32, ptr %14, align 4, !tbaa !44     ; 2 uses
-  %16 = sub i32 %13, %15
-  %17 = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %indvars.iv
-  store i32 %16, ptr %17, align 4, !tbaa !44
-  %.not38.us = icmp eq i32 %13, %15
-  br i1 %.not38.us, label %21, label %18
-
-18:                                               ; preds = %.lr.ph56.split.us
-  %19 = load i32, ptr %12, align 4, !tbaa !44     ; 2 uses
-  %20 = sub i32 %i.ah, %19
-  %.sroa.speculated.us = tail call i32 @llvm.umax.i32(i32 %20, i32 %19)
-  store i32 %.sroa.speculated.us, ptr %12, align 4, !tbaa !44
-  br label %21
-
-21:                                               ; preds = %18, %.lr.ph56.split.us
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %22 = load i32, ptr %i.ai, align 8, !tbaa !186  ; 2 uses
-  %23 = zext i32 %22 to i64
-  %24 = icmp samesign ult i64 %indvars.iv.next, %23
-  br i1 %24, label %.lr.ph56.split.us, label %.preheader50, !llvm.loop !344
-
-.preheader50:                                     ; preds = %bb.d, %21
-  %.lcssa = phi i32 [ %22, %21 ], [ %i.dq, %bb.d ] ; 4 uses
-  %.not68 = icmp eq i32 %.lcssa, 0
+.preheader50:                                     ; preds = %bb.d
+  %.not68 = icmp eq i32 %i.dq, 0
   br i1 %.not68, label %._crit_edge61, label %.lr.ph60
 
 .lr.ph60:                                         ; preds = %.preheader50
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 1984
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !62 ; 3 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 1960 ; 3 uses
-  %wide.trip.count = zext i32 %.lcssa to i64      ; 2 uses
+  %wide.trip.count = zext i32 %i.dq to i64        ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 1
-  %i.bb = icmp eq i32 %.lcssa, 1
+  %i.bb = icmp eq i32 %i.dq, 1
   br i1 %i.bb, label %.epil.preheader, label %.lr.ph60.new
 
 .lr.ph60.new:                                     ; preds = %.lr.ph60
@@ -380,7 +347,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.de = add <4 x i32> %vec.phi97, %i.dc         ; 2 uses
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.df = icmp eq i64 %index.next, %n.vec
-  br i1 %i.df, label %middle.block, label %vector.body, !llvm.loop !347
+  br i1 %i.df, label %middle.block, label %vector.body, !llvm.loop !346
 
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = add <4 x i32> %i.de, %i.dd
@@ -410,14 +377,14 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store i32 %i.dn, ptr %i.bd, align 4, !tbaa !44
   %i.do = getelementptr inbounds nuw i8, ptr %.sroa.0.052, i64 12 ; 2 uses
   %.not49 = icmp eq ptr %i.do, %2
-  br i1 %.not49, label %._crit_edge, label %scalar.ph, !llvm.loop !349
+  br i1 %.not49, label %._crit_edge, label %scalar.ph, !llvm.loop !348
 
 bb.d:                                             ; preds = %.lr.ph56.split, %._crit_edge
   %i.dp = add nuw i32 %.03453, 1                  ; 2 uses
-  %i.dq = load i32, ptr %i.ai, align 8, !tbaa !186 ; 2 uses
+  %i.dq = load i32, ptr %i.ai, align 8, !tbaa !186 ; 5 uses
   %i.dr = icmp ult i32 %i.dp, %i.dq
   %indvar.next = add i64 %indvar, 1
-  br i1 %i.dr, label %.lr.ph56.split, label %.preheader50, !llvm.loop !344
+  br i1 %i.dr, label %.lr.ph56.split, label %.preheader50, !llvm.loop !349
 
 ._crit_edge61.loopexit.unr-lcssa:                 ; preds = %bb.j
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -427,7 +394,7 @@ bb.d:                                             ; preds = %.lr.ph56.split, %._
   %indvars.iv73.epil.init = phi i64 [ 0, %.lr.ph60 ], [ %indvars.iv.next74.1, %._crit_edge61.loopexit.unr-lcssa ] ; 3 uses
   %.03358.epil.init = phi i32 [ 0, %.lr.ph60 ], [ %.1.1, %._crit_edge61.loopexit.unr-lcssa ]
   %.257.epil.init = phi i32 [ 0, %.lr.ph60 ], [ %.3.1, %._crit_edge61.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod112 = trunc i32 %.lcssa to i1
+  %lcmp.mod112 = trunc i32 %i.dq to i1
   tail call void @llvm.assume(i1 %lcmp.mod112)
   %i.ds = getelementptr inbounds nuw [4 x i8], ptr %i.az, i64 %indvars.iv73.epil.init
   %i.dt = load i32, ptr %i.ds, align 4, !tbaa !44
@@ -830,16 +797,16 @@ begin_hunk_1_@llvm.vector.reduce.add.v4i32
 !341 = !{!190, !188, i64 64}
 !342 = !{!329}
 !343 = distinct !{!343, !64}
-!344 = distinct !{!344, !64}
-!345 = distinct !{!345, !"LVerDomain"}
-!346 = distinct !{!346, !345}
-!347 = distinct !{!347, !64, !112, !113}
-!348 = distinct !{!348, !345}
-!349 = distinct !{!349, !64, !112}
+!344 = distinct !{!344, !"LVerDomain"}
+!345 = distinct !{!345, !344}
+!346 = distinct !{!346, !64, !112, !113}
+!347 = distinct !{!347, !344}
+!348 = distinct !{!348, !64, !112}
+!349 = distinct !{!349, !64}
 !350 = distinct !{!350, !64}
 !351 = distinct !{!351, !354}
-!352 = !{!346}
-!353 = !{!348}
+!352 = !{!345}
+!353 = !{!347}
 !354 = !{!"llvm.loop.unroll.disable"}
 !355 = distinct !{!355, !64}
 !356 = !{!190, !188, i64 16}

@@ -205,15 +205,13 @@ _ZN6duckdb23MultiFileReaderBindDataD2Ev.exit:     ; preds = %_ZSt8_DestroyIPN6du
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #24
   %i.ck = getelementptr inbounds nuw i8, ptr %4, i64 456 ; 3 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %4, i64 464 ; 2 uses
-  %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !516 ; 2 uses
-  %i.cn = load ptr, ptr %i.ck, align 8, !tbaa !517 ; 2 uses
+  %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !516
+  %i.cn = load ptr, ptr %i.ck, align 8, !tbaa !517
   %i.co = ptrtoint ptr %i.cm to i64
   %i.cp = ptrtoint ptr %i.cn to i64
   %i.cq = sub i64 %i.co, %i.cp
-  %14 = icmp ult i64 %i.cq, 17
-  %.not109 = icmp eq ptr %i.cm, %i.cn
-  %or.cond = or i1 %14, %.not109
-  br i1 %or.cond, label %.loopexit100, label %.lr.ph
+  %14 = icmp ugt i64 %i.cq, 16
+  br i1 %14, label %.lr.ph, label %.loopexit100
 
 .lr.ph:                                           ; preds = %_ZN6duckdb23MultiFileReaderBindDataD2Ev.exit
   %i.cr = getelementptr inbounds nuw i8, ptr %i.b, i64 1144

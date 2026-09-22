@@ -22,7 +22,7 @@ target triple = "x86_64-pc-linux-gnu"
 define zeroext i1 @kissat_sweep(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.sweep_candidates, align 8   ; 8 uses
-  %i.a = alloca [256 x i64], align 16             ; 35 uses
+  %i.a = alloca [256 x i64], align 16             ; 34 uses
   %2 = alloca %struct.sweeper, align 8            ; 86 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 4 uses
   %i.c = load i8, ptr %i.b, align 1, !tbaa !63, !range !64, !noundef !65
@@ -378,8 +378,8 @@ reschedule_previously_remaining.exit.i:           ; preds = %.critedge.loopexit.
   br label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %._crit_edge.loopexit.i.i, %reschedule_previously_remaining.exit.i
-  %i.fa = phi ptr [ %.pre205.i.i, %._crit_edge.loopexit.i.i ], [ null, %reschedule_previously_remaining.exit.i ] ; 14 uses
-  %i.fb = phi ptr [ %.pre204.i.i, %._crit_edge.loopexit.i.i ], [ null, %reschedule_previously_remaining.exit.i ] ; 5 uses
+  %i.fa = phi ptr [ %.pre205.i.i, %._crit_edge.loopexit.i.i ], [ null, %reschedule_previously_remaining.exit.i ] ; 12 uses
+  %i.fb = phi ptr [ %.pre204.i.i, %._crit_edge.loopexit.i.i ], [ null, %reschedule_previously_remaining.exit.i ] ; 4 uses
   %i.fc = ptrtoint ptr %i.fb to i64
   %i.fd = ptrtoint ptr %i.fa to i64
   %i.fe = sub i64 %i.fc, %i.fd                    ; 10 uses
@@ -474,30 +474,21 @@ scheduled_variable.exit.thread.i12.i:             ; preds = %bb.ag, %bb.ad, %bb.
 
 bb.ah:                                            ; preds = %._crit_edge.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
-  %.not152167.i.i = icmp eq ptr %i.fb, %i.fa
-  %.not152167.i.fr.i = freeze i1 %.not152167.i.i
-  br i1 %.not152167.i.fr.i, label %.loopexit.i.us.3.i, label %.lr.ph174.i.preheader.i
-
-.loopexit.i.us.3.i:                               ; preds = %bb.ah
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(34359738376) %i.a, i8 0, i64 34359738376, i1 false)
-  br label %.split32.us.i
-
-.split32.us.i:                                    ; preds = %.lr.ph187.i.3.i, %bb.aq, %.loopexit.i.2.i, %.loopexit.i.us.3.i
-  %.us-phi.i = phi ptr [ null, %.loopexit.i.us.3.i ], [ %.3148.i.2.i, %.loopexit.i.2.i ], [ %.3148.i.2.i, %bb.aq ], [ %.1146.i.3.i, %.lr.ph187.i.3.i ] ; 4 uses
-  %.us-phi34.i = phi ptr [ %i.fa, %.loopexit.i.us.3.i ], [ %.2140.i.2.i, %.loopexit.i.2.i ], [ %.2140.i.2.i, %bb.aq ], [ %i.pi, %.lr.ph187.i.3.i ]
-  %i.gp = icmp eq ptr %.us-phi34.i, %.us-phi.i
-  br i1 %i.gp, label %bb.at, label %bb.au
-
-.lr.ph174.i.preheader.i:                          ; preds = %bb.ah
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(2048) %i.a, i8 0, i64 2048, i1 false)
   br label %.lr.ph174.i.i
 
-.lr.ph174.i.i:                                    ; preds = %.lr.ph174.i.i, %.lr.ph174.i.preheader.i
-  %.0118172.i.i = phi ptr [ %i.gy, %.lr.ph174.i.i ], [ %i.fa, %.lr.ph174.i.preheader.i ] ; 2 uses
-  %.0119171.i.i = phi i32 [ %.1.i.i, %.lr.ph174.i.i ], [ 0, %.lr.ph174.i.preheader.i ] ; 2 uses
-  %.0120170.i.i = phi i8 [ %.1121.i.i, %.lr.ph174.i.i ], [ 1, %.lr.ph174.i.preheader.i ] ; 2 uses
-  %.1125169.i.i = phi i32 [ %.2.i14.i, %.lr.ph174.i.i ], [ -1, %.lr.ph174.i.preheader.i ]
-  %.1127168.i.i = phi i32 [ %.2128.i.i, %.lr.ph174.i.i ], [ 0, %.lr.ph174.i.preheader.i ]
+.split32.us.i:                                    ; preds = %.lr.ph187.i.3.i, %bb.aq, %.loopexit.i.2.i
+  %.us-phi.i = phi ptr [ %.3148.i.2.i, %bb.aq ], [ %.3148.i.2.i, %.loopexit.i.2.i ], [ %.1146.i.3.i, %.lr.ph187.i.3.i ] ; 4 uses
+  %.us-phi34.i = phi ptr [ %.2140.i.2.i, %bb.aq ], [ %.2140.i.2.i, %.loopexit.i.2.i ], [ %i.pi, %.lr.ph187.i.3.i ]
+  %i.gp = icmp eq ptr %.us-phi34.i, %.us-phi.i
+  br i1 %i.gp, label %bb.at, label %bb.au
+
+.lr.ph174.i.i:                                    ; preds = %.lr.ph174.i.i, %bb.ah
+  %.0118172.i.i = phi ptr [ %i.gy, %.lr.ph174.i.i ], [ %i.fa, %bb.ah ] ; 2 uses
+  %.0119171.i.i = phi i32 [ %.1.i.i, %.lr.ph174.i.i ], [ 0, %bb.ah ] ; 2 uses
+  %.0120170.i.i = phi i8 [ %.1121.i.i, %.lr.ph174.i.i ], [ 1, %bb.ah ] ; 2 uses
+  %.1125169.i.i = phi i32 [ %.2.i14.i, %.lr.ph174.i.i ], [ -1, %bb.ah ]
+  %.1127168.i.i = phi i32 [ %.2128.i.i, %.lr.ph174.i.i ], [ 0, %bb.ah ]
   %i.gq = load i32, ptr %.0118172.i.i, align 4, !tbaa !167 ; 3 uses
   %.2128.i.i = or i32 %i.gq, %.1127168.i.i        ; 8 uses
   %.2.i14.i = and i32 %i.gq, %.1125169.i.i        ; 6 uses

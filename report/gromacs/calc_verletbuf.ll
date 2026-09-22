@@ -205,8 +205,8 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av
 .thread.i.i:                                      ; preds = %bb.an, %.preheader150.i.i
   %.089.lcssa227231.i.i = phi float [ %.lcssa305, %bb.an ], [ 0.000000e+00, %.preheader150.i.i ] ; 4 uses
   %i.uc = sub nsw i32 %i.qd, %i.qb
-  %8 = icmp slt i32 %i.uc, 2
-  br i1 %8, label %.loopexit.i.i, label %.lr.ph173.i.i
+  %8 = icmp sgt i32 %i.uc, 1
+  br i1 %8, label %.lr.ph173.i.i, label %.loopexit.i.i
 
 .lr.ph173.i.i:                                    ; preds = %.thread.i.i
   %i.ud = load ptr, ptr %i.pu, align 8, !tbaa !236 ; 3 uses
@@ -292,8 +292,8 @@ bb.bc:                                            ; preds = %bb.bb
   br label %bb.be
 
 .loopexit.i.i:                                    ; preds = %.prol.loopexit, %bb.ax, %bb.al, %._crit_edge168.us.i.i, %.lr.ph173.split.i.i, %.thread.i.i, %bb.am
-  %.089.lcssa226.i.i = phi float [ %.089.lcssa227231.i.i, %.thread.i.i ], [ %.089.lcssa227231.i.i, %._crit_edge168.us.i.i ], [ %.089.lcssa227231.i.i, %.lr.ph173.split.i.i ], [ %.lcssa305, %bb.am ], [ %.lcssa305, %bb.al ], [ %.lcssa305, %bb.ax ], [ %.lcssa305, %.prol.loopexit ]
-  %.6.i.i = phi float [ 0.000000e+00, %.thread.i.i ], [ %.5.us.i.i, %._crit_edge168.us.i.i ], [ 0.000000e+00, %.lr.ph173.split.i.i ], [ %i.sk, %bb.am ], [ 0.000000e+00, %bb.al ], [ %.2.i.i.lcssa.unr, %.prol.loopexit ], [ %.2.i.i.3, %bb.ax ]
+  %.089.lcssa226.i.i = phi float [ %.089.lcssa227231.i.i, %.thread.i.i ], [ %.lcssa305, %bb.al ], [ %.089.lcssa227231.i.i, %.lr.ph173.split.i.i ], [ %.lcssa305, %bb.am ], [ %.089.lcssa227231.i.i, %._crit_edge168.us.i.i ], [ %.lcssa305, %bb.ax ], [ %.lcssa305, %.prol.loopexit ]
+  %.6.i.i = phi float [ 0.000000e+00, %.thread.i.i ], [ 0.000000e+00, %bb.al ], [ 0.000000e+00, %.lr.ph173.split.i.i ], [ %i.sk, %bb.am ], [ %.5.us.i.i, %._crit_edge168.us.i.i ], [ %.2.i.i.lcssa.unr, %.prol.loopexit ], [ %.2.i.i.3, %bb.ax ]
   %i.vq = fdiv float %.015.i, %.089.lcssa226.i.i  ; 9 uses
   %i.vr = tail call float @llvm.fmuladd.f32(float %.6.i.i, float -2.000000e+00, float %i.ld) ; 8 uses
   %i.vs = fmul float %i.vr, %i.vr                 ; 8 uses

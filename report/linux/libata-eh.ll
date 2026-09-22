@@ -204,7 +204,7 @@ bb.eh:                                            ; preds = %ata_is_host_link.ex
   br i1 %i.ri, label %bb.ei, label %bb.ep
 
 bb.ei:                                            ; preds = %bb.eh
-  %i.rj = sub i64 %i.ek, %i.rg                    ; 4 uses
+  %i.rj = sub i64 %i.ek, %i.rg                    ; 3 uses
   %i.rk = load ptr, ptr %.2353, align 64          ; 4 uses
   %i.rl = getelementptr i8, ptr %i.rk, i64 15816
   %.val432 = load i32, ptr %i.rl, align 8
@@ -253,15 +253,14 @@ bb.en:                                            ; preds = %bb.em
   %.pre.i = load ptr, ptr %i.dd, align 8
   br label %ata_eh_release.exit
 
-ata_eh_release.exit:                              ; preds = %bb.em, %bb.en
+ata_eh_release.exit:                              ; preds = %bb.en, %bb.em
   %i.sh = phi ptr [ %.pre.i, %bb.en ], [ %i.sc, %bb.em ]
   %i.si = getelementptr i8, ptr %i.sh, i64 88
   store ptr null, ptr %i.si, align 8
   %i.sj = load ptr, ptr %i.dd, align 8
   %i.sk = getelementptr i8, ptr %i.sj, i64 64
   call void @mutex_unlock(ptr noundef %i.sk) #16
-  %.not423545 = icmp eq i64 %i.rj, 0
-  br i1 %.not423545, label %._crit_edge548, label %.lr.ph547
+  br label %.lr.ph547
 
 .lr.ph547:                                        ; preds = %ata_eh_release.exit, %.lr.ph547
   %.0344546 = phi i64 [ %i.sl, %.lr.ph547 ], [ %i.rj, %ata_eh_release.exit ]
@@ -269,7 +268,7 @@ ata_eh_release.exit:                              ; preds = %bb.em, %bb.en
   %.not423 = icmp eq i64 %i.sl, 0
   br i1 %.not423, label %._crit_edge548, label %.lr.ph547, !llvm.loop !107
 
-._crit_edge548:                                   ; preds = %.lr.ph547, %ata_eh_release.exit
+._crit_edge548:                                   ; preds = %.lr.ph547
   %i.sm = load ptr, ptr %i.dd, align 8
   %i.sn = getelementptr i8, ptr %i.sm, i64 64
   call void @mutex_lock(ptr noundef %i.sn) #16

@@ -202,8 +202,8 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %_ZNSt16istream_iteratorIdcSt11char_traitsIcElEC2ERSi.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %8)
   call void @llvm.lifetime.end.p0(ptr nonnull %9)
-  %i.ft = load ptr, ptr %i.dr, align 8, !tbaa !66 ; 2 uses
-  %i.fu = load ptr, ptr %17, align 8, !tbaa !38   ; 2 uses
+  %i.ft = load ptr, ptr %i.dr, align 8, !tbaa !66
+  %i.fu = load ptr, ptr %17, align 8, !tbaa !38
   %i.fv = ptrtoint ptr %i.ft to i64
   %i.fw = ptrtoint ptr %i.fu to i64
   %i.fx = sub i64 %i.fv, %i.fw                    ; 4 uses
@@ -276,30 +276,25 @@ bb.y:                                             ; preds = %bb.r
 
 bb.z:                                             ; preds = %bb.y
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.go, i8 0, i64 24, i1 false)
-  %.not.i.i.i.i.i = icmp eq ptr %i.ft, %i.fu
-  br i1 %.not.i.i.i.i.i, label %.noexc242, label %26
+  %26 = icmp ugt i64 %i.fx, 9223372036854775800
+  br i1 %26, label %.noexc.i.i.i, label %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i, !prof !67
 
-26:                                               ; preds = %bb.z
-  %27 = icmp ugt i64 %i.fx, 9223372036854775800
-  br i1 %27, label %.noexc.i.i.i, label %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i, !prof !67
-
-.noexc.i.i.i:                                     ; preds = %26
+.noexc.i.i.i:                                     ; preds = %bb.z
   invoke void @_ZSt28__throw_bad_array_new_lengthv() #20
           to label %.noexc241 unwind label %.loopexit.split-lp561
 
 .noexc241:                                        ; preds = %.noexc.i.i.i
   unreachable
 
-_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i: ; preds = %26
+_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i: ; preds = %bb.z
   %i.gq = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fx) #21
-          to label %.noexc242 unwind label %.loopexit560
+          to label %.noexc242 unwind label %.loopexit560 ; 6 uses
 
-.noexc242:                                        ; preds = %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i, %bb.z
-  %28 = phi ptr [ null, %bb.z ], [ %i.gq, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i ] ; 6 uses
-  store ptr %28, ptr %i.go, align 8, !tbaa !38
+.noexc242:                                        ; preds = %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i
+  store ptr %i.gq, ptr %i.go, align 8, !tbaa !38
   %i.gr = getelementptr inbounds nuw i8, ptr %i.go, i64 8 ; 2 uses
-  store ptr %28, ptr %i.gr, align 8, !tbaa !66
-  %i.gs = getelementptr inbounds nuw i8, ptr %28, i64 %i.fx
+  store ptr %i.gq, ptr %i.gr, align 8, !tbaa !66
+  %i.gs = getelementptr inbounds nuw i8, ptr %i.gq, i64 %i.fx
   %i.gt = getelementptr inbounds nuw i8, ptr %i.go, i64 16
   store ptr %i.gs, ptr %i.gt, align 8, !tbaa !39
   %i.gu = load ptr, ptr %17, align 8, !tbaa !68   ; 3 uses
@@ -311,7 +306,7 @@ _ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i.i: ; preds = %26
   br i1 %i.gz, label %bb.aa, label %bb.ab, !prof !69
 
 bb.aa:                                            ; preds = %.noexc242
-  call void @llvm.memmove.p0.p0.i64(ptr align 8 %28, ptr align 8 %i.gu, i64 %i.gy, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.gq, ptr align 8 %i.gu, i64 %i.gy, i1 false)
   br label %_ZNSt6vectorIdSaIdEEC2ERKS1_.exit.i
 
 bb.ab:                                            ; preds = %.noexc242
@@ -320,11 +315,11 @@ bb.ab:                                            ; preds = %.noexc242
 
 bb.ac:                                            ; preds = %bb.ab
   %i.hb = load double, ptr %i.gu, align 8, !tbaa !70
-  store double %i.hb, ptr %28, align 8, !tbaa !70
+  store double %i.hb, ptr %i.gq, align 8, !tbaa !70
   br label %_ZNSt6vectorIdSaIdEEC2ERKS1_.exit.i
 
 _ZNSt6vectorIdSaIdEEC2ERKS1_.exit.i:              ; preds = %bb.ac, %bb.ab, %bb.aa
-  %i.hc = getelementptr inbounds i8, ptr %28, i64 %i.gy
+  %i.hc = getelementptr inbounds i8, ptr %i.gq, i64 %i.gy
   store ptr %i.hc, ptr %i.gr, align 8, !tbaa !66
   %i.hd = load ptr, ptr %i.o, align 8, !tbaa !35
   %i.he = getelementptr inbounds nuw i8, ptr %i.hd, i64 24

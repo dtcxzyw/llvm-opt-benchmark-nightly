@@ -205,7 +205,7 @@ bb.a:
   %9 = alloca %"struct.Luau::TypeIterator", align 8 ; 15 uses
   %10 = alloca %"struct.Luau::TypeIterator", align 8 ; 11 uses
   %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %12 = alloca %"struct.Luau::UnionType", align 8 ; 11 uses
+  %12 = alloca %"struct.Luau::UnionType", align 8 ; 10 uses
   %13 = alloca %"struct.Luau::WithPredicate.472", align 8 ; 8 uses
   %14 = alloca %"struct.Luau::WithPredicate.472", align 8 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #35
@@ -375,7 +375,7 @@ _ZN4Luau3getINS_9UnionTypeEEEPKT_PKNS_4TypeE.exit: ; preds = %bb.p, %bb.q, %bb.k
   %i.bi = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.bj = getelementptr inbounds nuw i8, ptr %9, i64 32
   %i.bk = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 2 uses
-  %i.bl = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 4 uses
+  %i.bl = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 3 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %13, i64 16
   %i.bo = getelementptr inbounds nuw i8, ptr %13, i64 24
@@ -623,8 +623,8 @@ _ZN4Luau12TypeIteratorINS_9UnionTypeEEppEv.exit.preheader: ; preds = %bb.an
   br label %_ZN4Luau12TypeIteratorINS_9UnionTypeEEppEv.exit
 
 _ZN4Luau12TypeIteratorINS_9UnionTypeEEppEv.exit:  ; preds = %_ZN4Luau12TypeIteratorINS_9UnionTypeEEppEv.exit.preheader, %_ZN4Luau12TypeIteratorINS_9UnionTypeEE7advanceEv.exit.i
-  %.sroa.0227.0 = phi ptr [ %.sroa.0227.2, %_ZN4Luau12TypeIteratorINS_9UnionTypeEE7advanceEv.exit.i ], [ null, %_ZN4Luau12TypeIteratorINS_9UnionTypeEEppEv.exit.preheader ] ; 28 uses
-  %.sroa.15.0 = phi ptr [ %.sroa.15.2, %_ZN4Luau12TypeIteratorINS_9UnionTypeEE7advanceEv.exit.i ], [ null, %_ZN4Luau12TypeIteratorINS_9UnionTypeEEppEv.exit.preheader ] ; 18 uses
+  %.sroa.0227.0 = phi ptr [ %.sroa.0227.2, %_ZN4Luau12TypeIteratorINS_9UnionTypeEE7advanceEv.exit.i ], [ null, %_ZN4Luau12TypeIteratorINS_9UnionTypeEEppEv.exit.preheader ] ; 27 uses
+  %.sroa.15.0 = phi ptr [ %.sroa.15.2, %_ZN4Luau12TypeIteratorINS_9UnionTypeEE7advanceEv.exit.i ], [ null, %_ZN4Luau12TypeIteratorINS_9UnionTypeEEppEv.exit.preheader ] ; 17 uses
   %.sroa.25.0 = phi ptr [ %.sroa.25.2, %_ZN4Luau12TypeIteratorINS_9UnionTypeEE7advanceEv.exit.i ], [ null, %_ZN4Luau12TypeIteratorINS_9UnionTypeEEppEv.exit.preheader ] ; 15 uses
   %i.dr = load i64, ptr %i.ba, align 8, !tbaa !833
   %i.ds = icmp eq i64 %i.dr, 0                    ; 2 uses
@@ -686,7 +686,7 @@ _ZN4Luau12TypeIteratorINS_9UnionTypeEED2Ev.exit134: ; preds = %_ZN4Luau12TypeIte
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #35
   %i.es = ptrtoint ptr %.sroa.15.0 to i64
   %i.et = ptrtoint ptr %.sroa.0227.0 to i64       ; 2 uses
-  %i.eu = sub i64 %i.es, %i.et                    ; 7 uses
+  %i.eu = sub i64 %i.es, %i.et                    ; 6 uses
   %i.ev = icmp eq i64 %i.eu, 8
   br i1 %i.ev, label %.thread287, label %bb.cd
 
@@ -1089,27 +1089,17 @@ bb.cd:                                            ; preds = %_ZN4Luau12TypeItera
 bb.ce:                                            ; preds = %bb.cd
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #35
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %12, i8 0, i64 24, i1 false)
-  %.not.i.i.i.i192 = icmp eq ptr %.sroa.15.0, %.sroa.0227.0
-  br i1 %.not.i.i.i.i192, label %.thread, label %16
+  %15 = icmp ugt i64 %i.eu, 9223372036854775800
+  br i1 %15, label %.noexc.i.i, label %_ZNSt15__new_allocatorIPKN4Luau4TypeEE8allocateEmPKv.exit.i.i.i.i, !prof !314
 
-.thread:                                          ; preds = %bb.ce
-  %15 = getelementptr inbounds i8, ptr null, i64 %i.eu ; 2 uses
-  store i64 0, ptr %12, align 8
-  store ptr %15, ptr %i.bl, align 8, !tbaa !296
-  br label %18
-
-16:                                               ; preds = %bb.ce
-  %17 = icmp ugt i64 %i.eu, 9223372036854775800
-  br i1 %17, label %.noexc.i.i, label %_ZNSt15__new_allocatorIPKN4Luau4TypeEE8allocateEmPKv.exit.i.i.i.i, !prof !314
-
-.noexc.i.i:                                       ; preds = %16
+.noexc.i.i:                                       ; preds = %bb.ce
   invoke void @_ZSt28__throw_bad_array_new_lengthv() #38
           to label %.noexc193 unwind label %.loopexit.split-lp320
 
 .noexc193:                                        ; preds = %.noexc.i.i
   unreachable
 
-_ZNSt15__new_allocatorIPKN4Luau4TypeEE8allocateEmPKv.exit.i.i.i.i: ; preds = %16
+_ZNSt15__new_allocatorIPKN4Luau4TypeEE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.ce
   %i.jn = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.eu) #37
           to label %.noexc194 unwind label %.loopexit319 ; 4 uses
 
@@ -1119,15 +1109,11 @@ _ZNSt15__new_allocatorIPKN4Luau4TypeEE8allocateEmPKv.exit.i.i.i.i: ; preds = %16
   %i.jo = getelementptr inbounds nuw i8, ptr %i.jn, i64 %i.eu ; 2 uses
   store ptr %i.jo, ptr %i.bl, align 8, !tbaa !296
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.jn, ptr align 8 %.sroa.0227.0, i64 %i.eu, i1 false)
-  br label %18
-
-18:                                               ; preds = %.noexc194, %.thread
-  %19 = phi ptr [ %i.jo, %.noexc194 ], [ %15, %.thread ]
-  store ptr %19, ptr %i.bk, align 8, !tbaa !547
-  %20 = invoke noundef ptr @_ZN4Luau11TypeChecker7addTypeINS_9UnionTypeEEEPKNS_4TypeERKT_(ptr noundef nonnull align 8 dereferenceable(2040) %1, ptr noundef nonnull align 8 dereferenceable(24) %12)
+  store ptr %i.jo, ptr %i.bk, align 8, !tbaa !547
+  %16 = invoke noundef ptr @_ZN4Luau11TypeChecker7addTypeINS_9UnionTypeEEEPKNS_4TypeERKT_(ptr noundef nonnull align 8 dereferenceable(2040) %1, ptr noundef nonnull align 8 dereferenceable(24) %12)
           to label %bb.cf unwind label %bb.ch
 
-bb.cf:                                            ; preds = %18
+bb.cf:                                            ; preds = %.noexc194
   %i.jp = load ptr, ptr %12, align 8, !tbaa !295  ; 3 uses
   %.not.i.i.i.i195 = icmp eq ptr %i.jp, null
   br i1 %.not.i.i.i.i195, label %_ZN4Luau9UnionTypeD2Ev.exit, label %bb.cg
@@ -1154,7 +1140,7 @@ _ZN4Luau9UnionTypeD2Ev.exit:                      ; preds = %bb.cf, %bb.cg
           cleanup
   br label %_ZN4Luau9UnionTypeD2Ev.exit197
 
-bb.ch:                                            ; preds = %18
+bb.ch:                                            ; preds = %.noexc194
   %i.ju = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.jv = load ptr, ptr %12, align 8, !tbaa !295  ; 3 uses
@@ -1175,7 +1161,7 @@ _ZN4Luau9UnionTypeD2Ev.exit197:                   ; preds = %.loopexit319, %.loo
   br label %bb.cl
 
 bb.cj:                                            ; preds = %bb.cd, %_ZN4Luau9UnionTypeD2Ev.exit
-  %.sroa.0254.1 = phi ptr [ undef, %bb.cd ], [ %20, %_ZN4Luau9UnionTypeD2Ev.exit ] ; 2 uses
+  %.sroa.0254.1 = phi ptr [ undef, %bb.cd ], [ %16, %_ZN4Luau9UnionTypeD2Ev.exit ] ; 2 uses
   %.sroa.10.1 = phi i8 [ 0, %bb.cd ], [ 1, %_ZN4Luau9UnionTypeD2Ev.exit ] ; 2 uses
   %.not.i.i.i198 = icmp eq ptr %.sroa.0227.0, null
   br i1 %.not.i.i.i198, label %_ZNSt6vectorIPKN4Luau4TypeESaIS3_EED2Ev.exit, label %bb.ck

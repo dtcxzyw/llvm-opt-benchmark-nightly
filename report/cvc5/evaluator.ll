@@ -202,17 +202,15 @@ _ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.avo
           to label %_ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i..noexc3158_crit_edge unwind label %.loopexit4077
 
 _ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i..noexc3158_crit_edge: ; preds = %_ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i
-  %.pre16397 = load ptr, ptr %i.eix, align 8, !tbaa !90 ; 3 uses
-  %.pre16398 = load ptr, ptr %i.eiy, align 8, !tbaa !90 ; 2 uses
+  %.pre16397 = load ptr, ptr %i.eix, align 8, !tbaa !90 ; 2 uses
+  %.pre16398 = load ptr, ptr %i.eiy, align 8, !tbaa !90
   %.pre16459 = ptrtoint ptr %.pre16398 to i64
   %.pre16461 = ptrtoint ptr %.pre16397 to i64
-  %429 = icmp ne ptr %.pre16398, %.pre16397
   br label %.noexc3158
 
 .noexc3158:                                       ; preds = %_ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i..noexc3158_crit_edge, %_ZNSt13unordered_mapIN4cvc58internal12NodeTemplateILb0EEENS1_6theory10EvalResultESt4hashIS3_ESt8equal_toIS3_ESaISt4pairIKS3_S5_EEEixEOS3_.exit3154
   %.pre-phi16462 = phi i64 [ %.pre16461, %_ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i..noexc3158_crit_edge ], [ %i.ejc, %_ZNSt13unordered_mapIN4cvc58internal12NodeTemplateILb0EEENS1_6theory10EvalResultESt4hashIS3_ESt8equal_toIS3_ESaISt4pairIKS3_S5_EEEixEOS3_.exit3154 ]
   %.pre-phi16460 = phi i64 [ %.pre16459, %_ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i..noexc3158_crit_edge ], [ %i.ejb, %_ZNSt13unordered_mapIN4cvc58internal12NodeTemplateILb0EEENS1_6theory10EvalResultESt4hashIS3_ESt8equal_toIS3_ESaISt4pairIKS3_S5_EEEixEOS3_.exit3154 ]
-  %430 = phi i1 [ %429, %_ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i..noexc3158_crit_edge ], [ false, %_ZNSt13unordered_mapIN4cvc58internal12NodeTemplateILb0EEENS1_6theory10EvalResultESt4hashIS3_ESt8equal_toIS3_ESaISt4pairIKS3_S5_EEEixEOS3_.exit3154 ]
   %i.ejg = phi ptr [ %.pre16397, %_ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i..noexc3158_crit_edge ], [ %i.eja, %_ZNSt13unordered_mapIN4cvc58internal12NodeTemplateILb0EEENS1_6theory10EvalResultESt4hashIS3_ESt8equal_toIS3_ESaISt4pairIKS3_S5_EEEixEOS3_.exit3154 ] ; 2 uses
   %i.ejh = phi ptr [ %i.ejf, %_ZNSt15__new_allocatorIjE8allocateEmPKv.exit.i.i.i.i..noexc3158_crit_edge ], [ null, %_ZNSt13unordered_mapIN4cvc58internal12NodeTemplateILb0EEENS1_6theory10EvalResultESt4hashIS3_ESt8equal_toIS3_ESaISt4pairIKS3_S5_EEEixEOS3_.exit3154 ] ; 8 uses
   store ptr %i.ejh, ptr %254, align 8, !tbaa !32
@@ -241,15 +239,12 @@ bb.avr:                                           ; preds = %.noexc3158
   call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.ejh, ptr align 4 %i.ejg, i64 %i.ejj, i1 false)
   %i.ejo = getelementptr inbounds nuw i8, ptr %i.ejh, i64 %i.ejj ; 2 uses
   store ptr %i.ejo, ptr %i.dt, align 8, !tbaa !89
-  br i1 %430, label %.lr.ph.i.i.preheader, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEEvT_S7_.exit
-
-.lr.ph.i.i.preheader:                             ; preds = %bb.avr
   %.sroa.0.08.i.i = getelementptr inbounds i8, ptr %i.ejo, i64 -4
   br label %.lr.ph.i.i
 
-.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader, %.lr.ph.i.i
-  %.sroa.0.010.i.i = phi ptr [ %.sroa.0.0.i.i, %.lr.ph.i.i ], [ %.sroa.0.08.i.i, %.lr.ph.i.i.preheader ] ; 3 uses
-  %.sroa.05.09.i.i = phi ptr [ %i.ejr, %.lr.ph.i.i ], [ %i.ejh, %.lr.ph.i.i.preheader ] ; 3 uses
+.lr.ph.i.i:                                       ; preds = %bb.avr, %.lr.ph.i.i
+  %.sroa.0.010.i.i = phi ptr [ %.sroa.0.0.i.i, %.lr.ph.i.i ], [ %.sroa.0.08.i.i, %bb.avr ] ; 3 uses
+  %.sroa.05.09.i.i = phi ptr [ %i.ejr, %.lr.ph.i.i ], [ %i.ejh, %bb.avr ] ; 3 uses
   %i.ejp = load i32, ptr %.sroa.05.09.i.i, align 4, !tbaa !91
   %i.ejq = load i32, ptr %.sroa.0.010.i.i, align 4, !tbaa !91
   store i32 %i.ejq, ptr %.sroa.05.09.i.i, align 4, !tbaa !91
@@ -259,7 +254,7 @@ bb.avr:                                           ; preds = %.noexc3158
   %i.ejs = icmp ult ptr %i.ejr, %.sroa.0.0.i.i
   br i1 %i.ejs, label %.lr.ph.i.i, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEEvT_S7_.exit, !llvm.loop !276
 
-_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEEvT_S7_.exit: ; preds = %.lr.ph.i.i, %.thread, %bb.avr
+_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEEvT_S7_.exit: ; preds = %.lr.ph.i.i, %.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %255) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %256) #22
   invoke void @_ZN4cvc58internal6StringC1ERKSt6vectorIjSaIjEE(ptr noundef nonnull align 8 dereferenceable(24) %256, ptr noundef nonnull align 8 dereferenceable(24) %254)

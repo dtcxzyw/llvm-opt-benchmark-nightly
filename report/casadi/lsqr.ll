@@ -204,8 +204,8 @@ define noundef i32 @_ZNK6casadi4Lsqr5nfactEPvPKd(ptr nofree nonnull readnone ali
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 112
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 120
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !23   ; 2 uses
-  %i.d = load ptr, ptr %i.a, align 8, !tbaa !24   ; 4 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !23
+  %i.d = load ptr, ptr %i.a, align 8, !tbaa !24   ; 3 uses
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f                       ; 3 uses
@@ -213,9 +213,7 @@ bb.a:
   br i1 %i.h, label %bb.b, label %bb.c, !prof !70
 
 bb.b:                                             ; preds = %bb.a
-  %3 = icmp eq ptr %i.d, %i.c
-  %spec.select.i = select i1 %3, ptr null, ptr %i.d
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %spec.select.i, ptr align 8 %2, i64 %i.g, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.d, ptr align 8 %2, i64 %i.g, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit
 
 bb.c:                                             ; preds = %bb.a

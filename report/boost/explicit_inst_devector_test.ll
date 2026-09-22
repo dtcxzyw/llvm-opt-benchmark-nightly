@@ -204,13 +204,9 @@ bb.d:                                             ; preds = %bb.c
   %i.s = zext i16 %i.r to i64
   %i.t = sub nsw i64 %i.s, %i.n
   %.not64 = icmp ult i64 %i.t, %i.a
-  br i1 %.not64, label %.thread, label %6
+  br i1 %.not64, label %.thread, label %.lr.ph.i.preheader
 
-6:                                                ; preds = %bb.d
-  %.not12.i = icmp eq i64 %3, %5
-  br i1 %.not12.i, label %_ZN5boost9container24uninitialized_copy_allocINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEENS0_17constant_iteratorIS4_EEPS4_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SC_E4typeERT_SB_SB_SC_.exit, label %.lr.ph.i.preheader
-
-.lr.ph.i.preheader:                               ; preds = %6
+.lr.ph.i.preheader:                               ; preds = %bb.d
   %xtraiter233 = and i64 %i.a, 3                  ; 2 uses
   %lcmp.mod234.not = icmp eq i64 %xtraiter233, 0
   br i1 %lcmp.mod234.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
@@ -267,7 +263,7 @@ bb.d:                                             ; preds = %bb.c
   %.not.i.3 = icmp eq i64 %i.an, %5
   br i1 %.not.i.3, label %_ZN5boost9container24uninitialized_copy_allocINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEENS0_17constant_iteratorIS4_EEPS4_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SC_E4typeERT_SB_SB_SC_.exit, label %.lr.ph.i, !llvm.loop !0
 
-_ZN5boost9container24uninitialized_copy_allocINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEENS0_17constant_iteratorIS4_EEPS4_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SC_E4typeERT_SB_SB_SC_.exit: ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %6
+_ZN5boost9container24uninitialized_copy_allocINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEENS0_17constant_iteratorIS4_EEPS4_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SC_E4typeERT_SB_SB_SC_.exit: ; preds = %.lr.ph.i, %.lr.ph.i.prol.loopexit
   %i.ap = trunc i64 %i.a to i16
   %i.aq = add i16 %i.m, %i.ap
   store i16 %i.aq, ptr %i.l, align 2, !tbaa !73
@@ -283,13 +279,9 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %.not63 = icmp ugt i64 %i.a, %i.at
-  br i1 %.not63, label %.thread, label %7
+  br i1 %.not63, label %.thread, label %.lr.ph.i66.preheader
 
-7:                                                ; preds = %bb.f
-  %.not12.i65 = icmp eq i64 %3, %5
-  br i1 %.not12.i65, label %_ZN5boost9container24uninitialized_copy_allocINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEENS0_17constant_iteratorIS4_EEPS4_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SC_E4typeERT_SB_SB_SC_.exit71, label %.lr.ph.i66.preheader
-
-.lr.ph.i66.preheader:                             ; preds = %7
+.lr.ph.i66.preheader:                             ; preds = %bb.f
   %i.aw = sub nsw i64 0, %i.a
   %i.ax = getelementptr inbounds [4 x i8], ptr %i.au, i64 %i.aw ; 2 uses
   %xtraiter230 = and i64 %i.a, 3                  ; 2 uses
@@ -348,7 +340,7 @@ bb.f:                                             ; preds = %bb.e
   %.not.i69.3 = icmp eq i64 %i.br, %5
   br i1 %.not.i69.3, label %_ZN5boost9container24uninitialized_copy_allocINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEENS0_17constant_iteratorIS4_EEPS4_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SC_E4typeERT_SB_SB_SC_.exit71, label %.lr.ph.i66, !llvm.loop !0
 
-_ZN5boost9container24uninitialized_copy_allocINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEENS0_17constant_iteratorIS4_EEPS4_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SC_E4typeERT_SB_SB_SC_.exit71: ; preds = %.lr.ph.i66.prol.loopexit, %.lr.ph.i66, %7
+_ZN5boost9container24uninitialized_copy_allocINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEENS0_17constant_iteratorIS4_EEPS4_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SC_E4typeERT_SB_SB_SC_.exit71: ; preds = %.lr.ph.i66, %.lr.ph.i66.prol.loopexit
   %i.bt = trunc nuw i64 %i.a to i16
   %i.bu = sub i16 %i.as, %i.bt                    ; 2 uses
   store i16 %i.bu, ptr %i.ar, align 8, !tbaa !81

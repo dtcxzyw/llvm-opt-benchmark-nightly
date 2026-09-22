@@ -204,8 +204,8 @@ bb.av:                                            ; preds = %"_ZSt8count_ifIN9__
           to label %bb.aw unwind label %bb.ay
 
 bb.aw:                                            ; preds = %bb.av
-  %i.nr = load ptr, ptr %i.ak, align 8, !tbaa !143 ; 4 uses
-  %i.ns = load ptr, ptr %30, align 8, !tbaa !142  ; 4 uses
+  %i.nr = load ptr, ptr %i.ak, align 8, !tbaa !143 ; 3 uses
+  %i.ns = load ptr, ptr %30, align 8, !tbaa !142  ; 3 uses
   %i.nt = ptrtoint ptr %i.nr to i64
   %i.nu = ptrtoint ptr %i.ns to i64
   %i.nv = sub i64 %i.nt, %i.nu
@@ -217,8 +217,7 @@ bb.ax:                                            ; preds = %bb.aw
   store ptr %i.al, ptr %31, align 8, !tbaa !79
   store i64 0, ptr %i.am, align 8, !tbaa !81
   store i8 0, ptr %i.al, align 8, !tbaa !82
-  %.not8381933 = icmp eq ptr %i.ns, %i.nr
-  br i1 %.not8381933, label %._crit_edge.thread, label %.lr.ph.a
+  br label %.lr.ph.a
 
 ._crit_edge.a:                                    ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit302
   %.pre.a = load i64, ptr %i.am, align 8, !tbaa !81
@@ -231,7 +230,7 @@ bb.ay:                                            ; preds = %bb.av
   br label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit720
 
 .lr.ph.a:                                         ; preds = %bb.ax, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit302
-  %.sroa.0789.01934 = phi ptr [ %i.pj, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit302 ], [ %i.ns, %bb.ax ] ; 4 uses
+  %.sroa.0789.01934 = phi ptr [ %i.ns, %bb.ax ], [ %i.pj, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit302 ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %32) #29
   invoke void @_ZNK17cmGeneratorTarget12GetPchHeaderERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_S7_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %32, ptr noundef nonnull align 8 dereferenceable(3187) %1, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0798.01948, ptr noundef nonnull align 8 dereferenceable(32) %.0174.ptr1946, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0789.01934)
           to label %bb.az unwind label %bb.bh
@@ -566,7 +565,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit321: ; preds = %_Z
   call void @llvm.lifetime.end.p0(ptr nonnull %34) #29
   br label %bb.by
 
-._crit_edge.thread:                               ; preds = %bb.ax, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit315, %._crit_edge.a
+._crit_edge.thread:                               ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit315, %._crit_edge.a
   %i.rc = load ptr, ptr %31, align 8, !tbaa !144  ; 2 uses
   %i.rd = icmp eq ptr %i.rc, %i.al
   br i1 %i.rd, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit324, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i322

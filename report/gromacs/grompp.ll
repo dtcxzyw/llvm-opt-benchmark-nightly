@@ -205,8 +205,8 @@ bb.a:
 define void @_ZN17InteractionOfType15sortBondAtomIdsEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(105) %0) local_unnamed_addr #1 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !35   ; 2 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !33     ; 5 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !35
+  %i.c = load ptr, ptr %0, align 8, !tbaa !33     ; 4 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e
@@ -219,25 +219,17 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNK17InteractionOfType2ajEv.exit:                ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 4 ; 2 uses
-  %i.i = load i32, ptr %i.h, align 4, !tbaa !34   ; 2 uses
-  %1 = icmp eq ptr %i.c, %i.b
-  br i1 %1, label %2, label %_ZNK17InteractionOfType2aiEv.exit
+  %1 = load i32, ptr %i.h, align 4, !tbaa !34     ; 2 uses
+  %i.i = load i32, ptr %i.c, align 4, !tbaa !34   ; 2 uses
+  %2 = icmp slt i32 %1, %i.i
+  br i1 %2, label %bb.c, label %bb.d
 
-2:                                                ; preds = %_ZNK17InteractionOfType2ajEv.exit
-  tail call void @_ZN3gmx8internal13assertHandlerEPKcS2_S2_S2_i(ptr noundef nonnull @.str.12, ptr noundef nonnull @.str.13, ptr noundef nonnull @"__PRETTY_FUNCTION__._ZZNK17InteractionOfType2aiEvENK3$_0clEv", ptr noundef nonnull @.str.11, i32 noundef 166) #29
-  unreachable
-
-_ZNK17InteractionOfType2aiEv.exit:                ; preds = %_ZNK17InteractionOfType2ajEv.exit
-  %3 = load i32, ptr %i.c, align 4, !tbaa !34     ; 2 uses
-  %4 = icmp slt i32 %i.i, %3
-  br i1 %4, label %bb.c, label %bb.d
-
-bb.c:                                             ; preds = %_ZNK17InteractionOfType2aiEv.exit
-  store i32 %i.i, ptr %i.c, align 4, !tbaa !34
-  store i32 %3, ptr %i.h, align 4, !tbaa !34
+bb.c:                                             ; preds = %_ZNK17InteractionOfType2ajEv.exit
+  store i32 %1, ptr %i.c, align 4, !tbaa !34
+  store i32 %i.i, ptr %i.h, align 4, !tbaa !34
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %_ZNK17InteractionOfType2aiEv.exit
+bb.d:                                             ; preds = %bb.c, %_ZNK17InteractionOfType2ajEv.exit
   ret void
 }
 
@@ -245,8 +237,8 @@ bb.d:                                             ; preds = %bb.c, %_ZNK17Intera
 define void @_ZN17InteractionOfType16sortAngleAtomIdsEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(105) %0) local_unnamed_addr #1 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !35   ; 2 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !33     ; 5 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !35
+  %i.c = load ptr, ptr %0, align 8, !tbaa !33     ; 4 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e
@@ -259,25 +251,17 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNK17InteractionOfType2akEv.exit:                ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  %i.i = load i32, ptr %i.h, align 4, !tbaa !34   ; 2 uses
-  %1 = icmp eq ptr %i.c, %i.b
-  br i1 %1, label %2, label %_ZNK17InteractionOfType2aiEv.exit
+  %1 = load i32, ptr %i.h, align 4, !tbaa !34     ; 2 uses
+  %i.i = load i32, ptr %i.c, align 4, !tbaa !34   ; 2 uses
+  %2 = icmp slt i32 %1, %i.i
+  br i1 %2, label %bb.c, label %bb.d
 
-2:                                                ; preds = %_ZNK17InteractionOfType2akEv.exit
-  tail call void @_ZN3gmx8internal13assertHandlerEPKcS2_S2_S2_i(ptr noundef nonnull @.str.12, ptr noundef nonnull @.str.13, ptr noundef nonnull @"__PRETTY_FUNCTION__._ZZNK17InteractionOfType2aiEvENK3$_0clEv", ptr noundef nonnull @.str.11, i32 noundef 166) #29
-  unreachable
-
-_ZNK17InteractionOfType2aiEv.exit:                ; preds = %_ZNK17InteractionOfType2akEv.exit
-  %3 = load i32, ptr %i.c, align 4, !tbaa !34     ; 2 uses
-  %4 = icmp slt i32 %i.i, %3
-  br i1 %4, label %bb.c, label %bb.d
-
-bb.c:                                             ; preds = %_ZNK17InteractionOfType2aiEv.exit
-  store i32 %i.i, ptr %i.c, align 4, !tbaa !34
-  store i32 %3, ptr %i.h, align 4, !tbaa !34
+bb.c:                                             ; preds = %_ZNK17InteractionOfType2akEv.exit
+  store i32 %1, ptr %i.c, align 4, !tbaa !34
+  store i32 %i.i, ptr %i.h, align 4, !tbaa !34
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %_ZNK17InteractionOfType2aiEv.exit
+bb.d:                                             ; preds = %bb.c, %_ZNK17InteractionOfType2akEv.exit
   ret void
 }
 
@@ -291,8 +275,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !35   ; 2 uses
-  %i.f = load ptr, ptr %0, align 8, !tbaa !33     ; 6 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !35
+  %i.f = load ptr, ptr %0, align 8, !tbaa !33     ; 5 uses
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = sub i64 %i.g, %i.h
@@ -305,29 +289,21 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNK17InteractionOfType2alEv.exit:                ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 12 ; 2 uses
-  %i.l = load i32, ptr %i.k, align 4, !tbaa !34   ; 2 uses
-  %1 = icmp eq ptr %i.f, %i.e
-  br i1 %1, label %2, label %_ZNK17InteractionOfType2aiEv.exit
+  %1 = load i32, ptr %i.k, align 4, !tbaa !34     ; 2 uses
+  %i.l = load i32, ptr %i.f, align 4, !tbaa !34   ; 2 uses
+  %2 = icmp slt i32 %1, %i.l
+  br i1 %2, label %bb.d, label %bb.e
 
-2:                                                ; preds = %_ZNK17InteractionOfType2alEv.exit
-  tail call void @_ZN3gmx8internal13assertHandlerEPKcS2_S2_S2_i(ptr noundef nonnull @.str.12, ptr noundef nonnull @.str.13, ptr noundef nonnull @"__PRETTY_FUNCTION__._ZZNK17InteractionOfType2aiEvENK3$_0clEv", ptr noundef nonnull @.str.11, i32 noundef 166) #29
-  unreachable
-
-_ZNK17InteractionOfType2aiEv.exit:                ; preds = %_ZNK17InteractionOfType2alEv.exit
-  %3 = load i32, ptr %i.f, align 4, !tbaa !34     ; 2 uses
-  %4 = icmp slt i32 %i.l, %3
-  br i1 %4, label %bb.d, label %bb.e
-
-bb.d:                                             ; preds = %_ZNK17InteractionOfType2aiEv.exit
-  store i32 %i.l, ptr %i.f, align 4, !tbaa !34
-  store i32 %3, ptr %i.k, align 4, !tbaa !34
+bb.d:                                             ; preds = %_ZNK17InteractionOfType2alEv.exit
+  store i32 %1, ptr %i.f, align 4, !tbaa !34
+  store i32 %i.l, ptr %i.k, align 4, !tbaa !34
   %i.m = getelementptr inbounds nuw i8, ptr %i.f, i64 4 ; 2 uses
   %i.n = load <2 x i32>, ptr %i.m, align 4, !tbaa !34
   %i.o = shufflevector <2 x i32> %i.n, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
   store <2 x i32> %i.o, ptr %i.m, align 4, !tbaa !34
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %_ZNK17InteractionOfType2aiEv.exit, %bb.a
+bb.e:                                             ; preds = %bb.d, %_ZNK17InteractionOfType2alEv.exit, %bb.a
   ret void
 }
 
@@ -730,7 +706,7 @@ bb.yb:                                            ; preds = %bb.ya
 
 bb.yc:                                            ; preds = %.critedge.i.i, %.lr.ph121.i.i
   %indvars.iv.i.i866 = phi i64 [ 0, %.lr.ph121.i.i ], [ %indvars.iv.next.i.i867, %.critedge.i.i ] ; 2 uses
-  %.165118.i.i = phi i1 [ %.064124.i.i, %.lr.ph121.i.i ], [ %i.eac, %.critedge.i.i ] ; 6 uses
+  %.165118.i.i = phi i1 [ %.064124.i.i, %.lr.ph121.i.i ], [ %i.eac, %.critedge.i.i ] ; 5 uses
   %i.dwl = getelementptr [4 x i8], ptr %i.dvz, i64 %indvars.iv.i.i866 ; 3 uses
   %i.dwm = getelementptr i8, ptr %i.dwl, i64 4
   %i.dwn = load i32, ptr %i.dwm, align 4, !tbaa !34
@@ -782,23 +758,19 @@ bb.yf:                                            ; preds = %bb.ye
   %i.dxv = getelementptr [4 x i8], ptr %i.dvi, i64 %i.dxu ; 2 uses
   %i.dxw = load i32, ptr %i.dxv, align 4, !tbaa !34
   %i.dxx = sext i32 %i.dxw to i64
-  %.idx111.i.i = shl nsw i64 %i.dxx, 2            ; 4 uses
+  %.idx111.i.i = shl nsw i64 %i.dxx, 2            ; 3 uses
   %i.dxy = getelementptr i8, ptr %i.dxv, i64 4
   %i.dxz = load i32, ptr %i.dxy, align 4, !tbaa !34
   %i.dya = sext i32 %i.dxz to i64
-  %.idx.i.i = shl nsw i64 %i.dya, 2               ; 4 uses
+  %.idx.i.i = shl nsw i64 %i.dya, 2               ; 3 uses
   %i.dyb = getelementptr inbounds i8, ptr %i.dvh, i64 %.idx.i.i
   %gepdiff.i.i = sub nsw i64 %.idx.i.i, %.idx111.i.i
   %i.dyc = icmp sgt i64 %gepdiff.i.i, 8
-  br i1 %i.dyc, label %144, label %.critedge.i.i
+  br i1 %i.dyc, label %iter.check2990, label %.critedge.i.i
 
-144:                                              ; preds = %bb.yf
-  %145 = load i32, ptr %i.dxf, align 4, !tbaa !34 ; 3 uses
-  %146 = load i32, ptr %i.dxo, align 4, !tbaa !34 ; 3 uses
-  %.not112113.i.i = icmp eq i64 %.idx111.i.i, %.idx.i.i
-  br i1 %.not112113.i.i, label %.critedge.i.i, label %iter.check2990
-
-iter.check2990:                                   ; preds = %144
+iter.check2990:                                   ; preds = %bb.yf
+  %144 = load i32, ptr %i.dxf, align 4, !tbaa !34 ; 3 uses
+  %145 = load i32, ptr %i.dxo, align 4, !tbaa !34 ; 3 uses
   %i.dyd = getelementptr inbounds i8, ptr %i.dvh, i64 %.idx111.i.i ; 5 uses
   %i.dye = add nsw i64 %.idx.i.i, -4
   %i.dyf = sub nsw i64 %i.dye, %.idx111.i.i       ; 3 uses
@@ -816,9 +788,9 @@ vector.ph2957:                                    ; preds = %vector.main.loop.it
   %n.vec2958 = and i64 %i.dyh, 9223372036854775776 ; 4 uses
   %i.dyj = shl i64 %n.vec2958, 2
   %i.dyk = getelementptr i8, ptr %i.dyd, i64 %i.dyj
-  %broadcast.splatinsert2959 = insertelement <8 x i32> poison, i32 %145, i64 0
+  %broadcast.splatinsert2959 = insertelement <8 x i32> poison, i32 %144, i64 0
   %broadcast.splat2960 = shufflevector <8 x i32> %broadcast.splatinsert2959, <8 x i32> poison, <8 x i32> zeroinitializer ; 4 uses
-  %broadcast.splatinsert2961 = insertelement <8 x i32> poison, i32 %146, i64 0
+  %broadcast.splatinsert2961 = insertelement <8 x i32> poison, i32 %145, i64 0
   %broadcast.splat2962 = shufflevector <8 x i32> %broadcast.splatinsert2961, <8 x i32> poison, <8 x i32> zeroinitializer ; 4 uses
   br label %vector.body2963
 
@@ -888,9 +860,9 @@ vec.epilog.ph2994:                                ; preds = %vector.main.loop.it
   %n.vec2995 = and i64 %i.dyh, 9223372036854775804 ; 3 uses
   %i.dzk = shl i64 %n.vec2995, 2
   %i.dzl = getelementptr i8, ptr %i.dyd, i64 %i.dzk
-  %broadcast.splatinsert2996 = insertelement <4 x i32> poison, i32 %145, i64 0
+  %broadcast.splatinsert2996 = insertelement <4 x i32> poison, i32 %144, i64 0
   %broadcast.splat2997 = shufflevector <4 x i32> %broadcast.splatinsert2996, <4 x i32> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert2998 = insertelement <4 x i32> poison, i32 %146, i64 0
+  %broadcast.splatinsert2998 = insertelement <4 x i32> poison, i32 %145, i64 0
   %broadcast.splat2999 = shufflevector <4 x i32> %broadcast.splatinsert2998, <4 x i32> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert3000 = insertelement <4 x i1> poison, i1 %bc.merge.rdx2987, i64 0
   %broadcast.splat3001 = shufflevector <4 x i1> %broadcast.splatinsert3000, <4 x i1> poison, <4 x i32> zeroinitializer
@@ -941,16 +913,16 @@ vec.epilog.middle.block3011:                      ; preds = %vec.epilog.vector.b
   %.054115.i.i = phi i1 [ %spec.select75.i.i, %.lr.ph.i.i869 ], [ %.054115.i.i.ph, %.lr.ph.i.i869.preheader ]
   %.sroa.0.0114.i.i = phi ptr [ %i.eab, %.lr.ph.i.i869 ], [ %.sroa.0.0114.i.i.ph, %.lr.ph.i.i869.preheader ] ; 2 uses
   %i.dzy = load i32, ptr %.sroa.0.0114.i.i, align 4, !tbaa !34 ; 2 uses
-  %i.dzz = icmp eq i32 %i.dzy, %145
+  %i.dzz = icmp eq i32 %i.dzy, %144
   %spec.select75.i.i = select i1 %i.dzz, i1 true, i1 %.054115.i.i ; 2 uses
-  %i.eaa = icmp eq i32 %i.dzy, %146
+  %i.eaa = icmp eq i32 %i.dzy, %145
   %.1.i.i870 = select i1 %i.eaa, i1 true, i1 %.053116.i.i ; 2 uses
   %i.eab = getelementptr inbounds nuw i8, ptr %.sroa.0.0114.i.i, i64 4 ; 2 uses
   %.not112.i.i = icmp eq ptr %i.eab, %i.dyb
   br i1 %.not112.i.i, label %._crit_edge.loopexit.i.i871, label %.lr.ph.i.i869, !llvm.loop !471
 
-.critedge.i.i:                                    ; preds = %._crit_edge.loopexit.i.i871, %144, %bb.yf, %bb.ye, %bb.yd, %bb.yc
-  %.367.i.i = phi i1 [ %.165118.i.i, %bb.ye ], [ %.165118.i.i, %bb.yf ], [ %.165118.i.i, %bb.yc ], [ %.165118.i.i, %bb.yd ], [ %.165118.i.i, %144 ], [ %i.dzx, %._crit_edge.loopexit.i.i871 ]
+.critedge.i.i:                                    ; preds = %._crit_edge.loopexit.i.i871, %bb.yf, %bb.ye, %bb.yd, %bb.yc
+  %.367.i.i = phi i1 [ %i.dzx, %._crit_edge.loopexit.i.i871 ], [ %.165118.i.i, %bb.yf ], [ %.165118.i.i, %bb.yc ], [ %.165118.i.i, %bb.yd ], [ %.165118.i.i, %bb.ye ]
   %i.eac = freeze i1 %.367.i.i                    ; 2 uses
   %indvars.iv.next.i.i867 = add nsw i64 %indvars.iv.i.i866, %i.dwj ; 2 uses
   %i.ead = icmp slt i64 %indvars.iv.next.i.i867, %i.dwk

@@ -204,25 +204,21 @@ bb.r:                                             ; preds = %bb.a, %_ZNSt7__cxx1
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #21
   call void @_ZN17BalanceConcatTree11gatherTermsEP11AstNodeExpr(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.88") align 8 %6, ptr noundef %0)
   %i.bp = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
-  %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !131 ; 3 uses
-  %i.br = load ptr, ptr %6, align 8, !tbaa !132   ; 4 uses
-  %i.bs = ptrtoint ptr %i.bq to i64               ; 3 uses
+  %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !131 ; 2 uses
+  %i.br = load ptr, ptr %6, align 8, !tbaa !132   ; 3 uses
+  %i.bs = ptrtoint ptr %i.bq to i64
   %i.bt = ptrtoint ptr %i.br to i64
   %i.bu = sub i64 %i.bs, %i.bt
   %i.bv = icmp ult i64 %i.bu, 32
-  br i1 %i.bv, label %.loopexit102, label %.preheader
-
-.preheader:                                       ; preds = %bb.r
-  %.not101103 = icmp eq ptr %i.br, %i.bq
-  br i1 %.not101103, label %.critedge, label %.lr.ph.a
+  br i1 %i.bv, label %.loopexit102, label %.lr.ph.a
 
 bb.s:                                             ; preds = %bb.u
   %i.bw = getelementptr inbounds nuw i8, ptr %.sroa.098.0104, i64 8 ; 2 uses
   %.not101 = icmp eq ptr %i.bw, %i.bq
-  br i1 %.not101, label %.critedge.loopexit, label %.lr.ph.a
+  br i1 %.not101, label %.critedge, label %.lr.ph.a
 
-.lr.ph.a:                                         ; preds = %.preheader, %bb.s
-  %.sroa.098.0104 = phi ptr [ %i.bw, %bb.s ], [ %i.br, %.preheader ] ; 2 uses
+.lr.ph.a:                                         ; preds = %bb.r, %bb.s
+  %.sroa.098.0104 = phi ptr [ %i.bw, %bb.s ], [ %i.br, %bb.r ] ; 2 uses
   %i.bx = load ptr, ptr %.sroa.098.0104, align 8, !tbaa !134 ; 2 uses
   %i.by = load ptr, ptr %i.bx, align 8, !tbaa !44
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 208
@@ -238,18 +234,13 @@ bb.t:                                             ; preds = %.lr.ph.a
 bb.u:                                             ; preds = %.lr.ph.a
   br i1 %i.cb, label %bb.s, label %.loopexit102thread-pre-split
 
-.critedge.loopexit:                               ; preds = %bb.s
-  %.pre109 = load ptr, ptr %i.bp, align 8, !tbaa !131
-  %.pre110 = load ptr, ptr %6, align 8, !tbaa !132
-  %.pre120 = ptrtoint ptr %.pre109 to i64
-  %.pre121 = ptrtoint ptr %.pre110 to i64
-  br label %.critedge
-
-.critedge:                                        ; preds = %.critedge.loopexit, %.preheader
-  %.pre-phi122 = phi i64 [ %.pre121, %.critedge.loopexit ], [ %i.bs, %.preheader ]
-  %.pre-phi = phi i64 [ %.pre120, %.critedge.loopexit ], [ %i.bs, %.preheader ]
+.critedge:                                        ; preds = %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #21
-  %i.cd = sub i64 %.pre-phi, %.pre-phi122
+  %11 = load ptr, ptr %i.bp, align 8, !tbaa !131
+  %12 = load ptr, ptr %6, align 8, !tbaa !132
+  %13 = ptrtoint ptr %11 to i64
+  %14 = ptrtoint ptr %12 to i64
+  %i.cd = sub i64 %13, %14
   %i.ce = ashr exact i64 %i.cd, 3
   %i.cf = add nsw i64 %i.ce, 1                    ; 4 uses
   %i.cg = icmp ugt i64 %i.cf, 576460752303423487

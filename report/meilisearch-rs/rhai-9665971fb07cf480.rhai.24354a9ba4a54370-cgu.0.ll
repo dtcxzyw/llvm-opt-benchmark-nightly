@@ -205,26 +205,26 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %.not.i.i = icmp samesign ult i64 %.sroa.0.0.i, %i.b
-  br i1 %.not.i.i, label %_ZN4rhai4eval6target15calc_offset_len17h407217cb2a84fe50E.exit.i, label %_ZN4rhai4eval6target15calc_offset_len17h407217cb2a84fe50E.exit.thread.i.a
+  br i1 %.not.i.i, label %_ZN4rhai4eval6target15calc_offset_len17h407217cb2a84fe50E.exit.thread.i.a, label %_ZN4rhai4eval6target15calc_offset_len17h407217cb2a84fe50E.exit.i
 
 _ZN4rhai4eval6target15calc_offset_len17h407217cb2a84fe50E.exit.thread.i.a: ; preds = %bb.c
-  store i64 0, ptr %0, align 8, !alias.scope !44177, !noalias !44178
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr inttoptr (i64 8 to ptr), ptr %i.h, align 8, !alias.scope !44177, !noalias !44178
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 0, ptr %4, align 8, !alias.scope !44177, !noalias !44178
+  %4 = tail call i64 @llvm.umin.i64(i64 %.sroa.0.0.i1, i64 %i.b)
+  %spec.select.i.i = sub nuw nsw i64 %4, %.sroa.0.0.i
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %5 = load ptr, ptr %i.h, align 8, !alias.scope !44178, !noalias !44177, !nonnull !55, !noundef !55
+  %6 = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %.sroa.0.0.i
+  tail call fastcc void @"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17hdd9f0a48cae959c4E"(ptr noalias noundef align 8 captures(address) dereferenceable(24) %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) %6, i64 noundef %spec.select.i.i), !noalias !44178
   br label %_ZN4rhai8packages11array_basic15array_functions7extract17h253114294c45b06fE.exit
 
 _ZN4rhai4eval6target15calc_offset_len17h407217cb2a84fe50E.exit.i: ; preds = %bb.c
-  %5 = tail call i64 @llvm.umin.i64(i64 %.sroa.0.0.i1, i64 %i.b)
-  %spec.select.i.i = sub nuw nsw i64 %5, %.sroa.0.0.i
-  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %6 = load ptr, ptr %i.i, align 8, !alias.scope !44178, !noalias !44177, !nonnull !55, !noundef !55
-  %7 = getelementptr inbounds nuw [16 x i8], ptr %6, i64 %.sroa.0.0.i
-  tail call fastcc void @"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17hdd9f0a48cae959c4E"(ptr noalias noundef align 8 captures(address) dereferenceable(24) %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) %7, i64 noundef %spec.select.i.i), !noalias !44178
+  store i64 0, ptr %0, align 8, !alias.scope !44177, !noalias !44178
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr inttoptr (i64 8 to ptr), ptr %i.i, align 8, !alias.scope !44177, !noalias !44178
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i64 0, ptr %7, align 8, !alias.scope !44177, !noalias !44178
   br label %_ZN4rhai8packages11array_basic15array_functions7extract17h253114294c45b06fE.exit
 
-_ZN4rhai8packages11array_basic15array_functions7extract17h253114294c45b06fE.exit: ; preds = %bb.b, %_ZN4rhai4eval6target15calc_offset_len17h407217cb2a84fe50E.exit.thread.i.a, %_ZN4rhai4eval6target15calc_offset_len17h407217cb2a84fe50E.exit.i
+_ZN4rhai8packages11array_basic15array_functions7extract17h253114294c45b06fE.exit: ; preds = %bb.b, %_ZN4rhai4eval6target15calc_offset_len17h407217cb2a84fe50E.exit.i, %_ZN4rhai4eval6target15calc_offset_len17h407217cb2a84fe50E.exit.thread.i.a
   ret void
 }
 

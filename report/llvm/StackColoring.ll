@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %_ZN4llvm20BumpPtrAl
   store i32 0, ptr %i.dp, align 8, !tbaa !42
   %i.dq = getelementptr inbounds nuw i8, ptr %24, i64 12 ; 2 uses
   store i32 8, ptr %i.dq, align 4, !tbaa !43
-  %i.dr = zext i32 %i.dn to i64                   ; 20 uses
+  %i.dr = zext i32 %i.dn to i64                   ; 22 uses
   %i.ds = icmp ugt i32 %i.dn, 8                   ; 2 uses
   br i1 %i.ds, label %bb.m, label %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit
 
@@ -608,7 +608,6 @@ _ZN12_GLOBAL__N_113StackColoring14collectMarkersEj.exit: ; preds = %_ZN4llvm11Sm
   %i.amf = getelementptr inbounds nuw i8, ptr %0, i64 1128
   %i.amg = getelementptr inbounds nuw i8, ptr %0, i64 1056
   %i.amh = ptrtoint ptr %25 to i64
-  %umax = call i32 @llvm.umax.i32(i32 %i.dn, i32 1)
   br label %bb.he
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
@@ -1011,7 +1010,7 @@ _ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi.exit: ; preds = %bb.hl, %bb
   call void @_ZNSt10unique_ptrIN4llvm12LiveIntervalESt14default_deleteIS1_EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %25) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %25) #22
   %i.bxs = add nuw i32 %.0100541, 1               ; 2 uses
-  %exitcond714.not = icmp eq i32 %i.bxs, %umax
+  %exitcond714.not = icmp eq i32 %i.bxs, %i.dn
   br i1 %exitcond714.not, label %._crit_edge543, label %bb.he, !llvm.loop !415
 
 bb.hn:                                            ; preds = %_ZN12_GLOBAL__N_113StackColoring22calculateLiveIntervalsEj.exit
@@ -1342,14 +1341,12 @@ _ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i259: ; pr
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %26, i8 0, i64 24, i1 false)
   %i.cdc = load ptr, ptr %24, align 8, !tbaa !35  ; 9 uses
   %i.cdd = load ptr, ptr %i.be, align 8, !tbaa !35 ; 3 uses
-  %umax718 = call i32 @llvm.umax.i32(i32 %i.dn, i32 1) ; 2 uses
-  %wide.trip.count719 = zext i32 %umax718 to i64  ; 2 uses
-  %xtraiter1515 = and i64 %wide.trip.count719, 1
+  %xtraiter1515 = and i64 %i.dr, 1
   %i.cde = icmp eq i32 %i.dn, 1
   br i1 %i.cde, label %.epil.preheader, label %.lr.ph545.new
 
 .lr.ph545.new:                                    ; preds = %.lr.ph545
-  %unroll_iter1519 = and i64 %wide.trip.count719, 4294967294
+  %unroll_iter1519 = and i64 %i.dr, 4294967294
   br label %bb.ij
 
 ._crit_edge546.unr-lcssa:                         ; preds = %bb.in
@@ -1358,7 +1355,7 @@ _ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i259: ; pr
 
 .epil.preheader:                                  ; preds = %._crit_edge546.unr-lcssa, %.lr.ph545
   %indvars.iv715.epil.init = phi i64 [ 0, %.lr.ph545 ], [ %indvars.iv.next716.1, %._crit_edge546.unr-lcssa ]
-  %lcmp.mod1518 = trunc i32 %umax718 to i1
+  %lcmp.mod1518 = trunc i32 %i.dn to i1
   call void @llvm.assume(i1 %lcmp.mod1518)
   %i.cdf = getelementptr inbounds nuw [4 x i8], ptr %i.cdc, i64 %indvars.iv715.epil.init ; 2 uses
   %i.cdg = load i32, ptr %i.cdf, align 4, !tbaa !230
@@ -1486,8 +1483,7 @@ bb.in:                                            ; preds = %bb.im, %bb.il
   %i.cev = getelementptr inbounds nuw i8, ptr %26, i64 8 ; 10 uses
   %i.cew = getelementptr inbounds nuw i8, ptr %26, i64 20 ; 13 uses
   %i.cex = getelementptr inbounds nuw i8, ptr %26, i64 16 ; 11 uses
-  %umax730 = call i32 @llvm.umax.i32(i32 %i.dn, i32 1)
-  %wide.trip.count731 = zext i32 %umax730 to i64
+  %wide.trip.count731 = zext i32 %i.dn to i64
   br label %.preheader418.us
 
 .preheader418.us:                                 ; preds = %.loopexit.us, %.preheader418.us.preheader

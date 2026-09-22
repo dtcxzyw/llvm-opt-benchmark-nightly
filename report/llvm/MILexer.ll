@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %_ZNK12_GLOBAL__N_16
 
 .preheader:                                       ; preds = %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit, %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit8.i
   %.pn.i = phi ptr [ %.sroa.09.0.i, %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit8.i ], [ %i.n, %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit ] ; 3 uses
-  %.sroa.09.0.i = getelementptr inbounds nuw i8, ptr %.pn.i, i64 1 ; 6 uses
+  %.sroa.09.0.i = getelementptr inbounds nuw i8, ptr %.pn.i, i64 1 ; 5 uses
   %i.al = ptrtoint ptr %.sroa.09.0.i to i64
   %i.am = sub i64 %i.a, %i.al
   %.not.i.i = icmp sgt i64 %i.am, 0
@@ -211,24 +211,20 @@ bb.d:                                             ; preds = %_ZNK12_GLOBAL__N_16
 _ZNK12_GLOBAL__N_16Cursor4peekEi.exit.i:          ; preds = %.preheader
   %i.an = load i8, ptr %.sroa.09.0.i, align 1, !tbaa !27 ; 2 uses
   %.not.i75 = icmp eq i8 %i.an, 34
-  br i1 %.not.i75, label %bb.f, label %10
-
-10:                                               ; preds = %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit.i
-  %11 = icmp eq ptr %.sroa.09.0.i, %1
-  br i1 %11, label %bb.e, label %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit8.i
+  br i1 %.not.i75, label %bb.f, label %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit8.i
 
 .thread.i:                                        ; preds = %.preheader
   %i.ao = icmp eq ptr %.sroa.09.0.i, %1
   br i1 %i.ao, label %bb.e, label %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit8.i
 
-_ZNK12_GLOBAL__N_16Cursor4peekEi.exit8.i:         ; preds = %.thread.i, %10
-  %i.ap = phi i8 [ 0, %.thread.i ], [ %i.an, %10 ]
+_ZNK12_GLOBAL__N_16Cursor4peekEi.exit8.i:         ; preds = %.thread.i, %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit.i
+  %i.ap = phi i8 [ 0, %.thread.i ], [ %i.an, %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit.i ]
   switch i8 %i.ap, label %.preheader [
     i8 13, label %bb.e
     i8 10, label %bb.e
   ], !llvm.loop !1
 
-bb.e:                                             ; preds = %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit8.i, %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit8.i, %.thread.i, %10
+bb.e:                                             ; preds = %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit8.i, %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit8.i, %.thread.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #16
   %i.aq = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.ar = getelementptr inbounds nuw i8, ptr %5, i64 33
@@ -631,32 +627,25 @@ bb.b:                                             ; preds = %_ZNK12_GLOBAL__N_16
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit27.thread, %bb.b
-  %.sroa.036.0 = phi ptr [ %i.e, %bb.b ], [ %i.l, %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit27.thread ] ; 8 uses
+  %.sroa.036.0 = phi ptr [ %i.e, %bb.b ], [ %i.l, %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit27.thread ] ; 7 uses
   %i.f = ptrtoint ptr %.sroa.036.0 to i64         ; 2 uses
   %i.g = sub i64 %i.a, %i.f
   %.not.i24 = icmp sgt i64 %i.g, 0
   br i1 %.not.i24, label %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit25, label %.thread
 
 _ZNK12_GLOBAL__N_16Cursor4peekEi.exit25:          ; preds = %bb.c
-  %i.h = load i8, ptr %.sroa.036.0, align 1, !tbaa !27 ; 2 uses
-  %.not11 = icmp eq i8 %i.h, 96
-  br i1 %.not11, label %bb.e, label %6
-
-6:                                                ; preds = %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit25
-  %7 = icmp eq ptr %.sroa.036.0, %1
-  br i1 %7, label %bb.d, label %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit27
+  %i.h = load i8, ptr %.sroa.036.0, align 1, !tbaa !27
+  switch i8 %i.h, label %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit27.thread [
+    i8 96, label %bb.e
+    i8 13, label %bb.d
+    i8 10, label %bb.d
+  ]
 
 .thread:                                          ; preds = %bb.c
   %i.i = icmp eq ptr %.sroa.036.0, %1
   br i1 %i.i, label %bb.d, label %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit27.thread
 
-_ZNK12_GLOBAL__N_16Cursor4peekEi.exit27:          ; preds = %6
-  switch i8 %i.h, label %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit27.thread [
-    i8 13, label %bb.d
-    i8 10, label %bb.d
-  ]
-
-bb.d:                                             ; preds = %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit27, %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit27, %.thread, %6
+bb.d:                                             ; preds = %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit25, %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit25, %.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #16
   %i.j = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.k = getelementptr inbounds nuw i8, ptr %5, i64 33
@@ -668,7 +657,7 @@ bb.d:                                             ; preds = %_ZNK12_GLOBAL__N_16
   store i32 1, ptr %2, align 8, !tbaa !22
   br label %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit.thread.sink.split
 
-_ZNK12_GLOBAL__N_16Cursor4peekEi.exit27.thread:   ; preds = %.thread, %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit27
+_ZNK12_GLOBAL__N_16Cursor4peekEi.exit27.thread:   ; preds = %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit25, %.thread
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.036.0, i64 1
   br label %bb.c, !llvm.loop !66
 
@@ -959,7 +948,7 @@ _ZNK12_GLOBAL__N_16Cursor4peekEi.exit:            ; preds = %bb.a
 
 .preheader:                                       ; preds = %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit, %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit8.i
   %.pn.i = phi ptr [ %.sroa.09.0.i, %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit8.i ], [ %i.b, %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit ] ; 2 uses
-  %.sroa.09.0.i = getelementptr inbounds nuw i8, ptr %.pn.i, i64 1 ; 6 uses
+  %.sroa.09.0.i = getelementptr inbounds nuw i8, ptr %.pn.i, i64 1 ; 5 uses
   %i.h = ptrtoint ptr %.sroa.09.0.i to i64
   %i.i = sub i64 %i.c, %i.h
   %.not.i.i = icmp sgt i64 %i.i, 0
@@ -968,18 +957,14 @@ _ZNK12_GLOBAL__N_16Cursor4peekEi.exit:            ; preds = %bb.a
 _ZNK12_GLOBAL__N_16Cursor4peekEi.exit.i:          ; preds = %.preheader
   %i.j = load i8, ptr %.sroa.09.0.i, align 1, !tbaa !27 ; 2 uses
   %.not.i34 = icmp eq i8 %i.j, 34
-  br i1 %.not.i34, label %bb.b, label %7
-
-7:                                                ; preds = %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit.i
-  %8 = icmp eq ptr %.sroa.09.0.i, %1
-  br i1 %8, label %bb.h, label %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit8.i
+  br i1 %.not.i34, label %bb.b, label %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit8.i
 
 .thread.i:                                        ; preds = %.preheader
   %i.k = icmp eq ptr %.sroa.09.0.i, %1
   br i1 %i.k, label %bb.h, label %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit8.i
 
-_ZNK12_GLOBAL__N_16Cursor4peekEi.exit8.i:         ; preds = %.thread.i, %7
-  %i.l = phi i8 [ 0, %.thread.i ], [ %i.j, %7 ]
+_ZNK12_GLOBAL__N_16Cursor4peekEi.exit8.i:         ; preds = %.thread.i, %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit.i
+  %i.l = phi i8 [ 0, %.thread.i ], [ %i.j, %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit.i ]
   switch i8 %i.l, label %.preheader [
     i8 13, label %bb.h
     i8 10, label %bb.h
@@ -1093,7 +1078,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i38
   call void @_ZdlPvm(ptr noundef %i.av, i64 noundef %i.az) #14
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
-bb.h:                                             ; preds = %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit8.i, %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit8.i, %.thread.i, %7
+bb.h:                                             ; preds = %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit8.i, %_ZNK12_GLOBAL__N_16Cursor4peekEi.exit8.i, %.thread.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #16
   %i.ba = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.bb = getelementptr inbounds nuw i8, ptr %5, i64 33

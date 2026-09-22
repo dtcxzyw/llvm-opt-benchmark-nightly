@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
 
 .lr.ph262.preheader:                              ; preds = %bb.f, %bb.d
   %i.u = phi i8 [ %i.r, %bb.f ], [ %i.m, %bb.d ]
-  %.0191 = phi ptr [ %i.p, %bb.f ], [ %.1, %bb.d ] ; 10 uses
+  %.0191 = phi ptr [ %i.p, %bb.f ], [ %.1, %bb.d ] ; 9 uses
   %.0191385 = ptrtoaddr ptr %.0191 to i64
   %i.v = sub i64 %i.a, %.0191385
   %scevgep386 = getelementptr i8, ptr %.0191, i64 %i.v
@@ -229,7 +229,7 @@ bb.g:                                             ; preds = %.lr.ph262
   br i1 %.not.i, label %.critedge.i, label %.lr.ph262, !llvm.loop !0
 
 .critedge.i:                                      ; preds = %bb.g, %.lr.ph262
-  %.1192.lcssa.ph = phi ptr [ %scevgep386, %bb.g ], [ %.1192259, %.lr.ph262 ] ; 7 uses
+  %.1192.lcssa.ph = phi ptr [ %scevgep386, %bb.g ], [ %.1192259, %.lr.ph262 ] ; 6 uses
   %.0183.lcssa.ph = phi i64 [ %i.ac, %bb.g ], [ %.0183260, %.lr.ph262 ] ; 4 uses
   %i.ae = ptrtoint ptr %.1192.lcssa.ph to i64     ; 2 uses
   %i.af = ptrtoint ptr %.0191 to i64
@@ -475,20 +475,16 @@ bb.y:                                             ; preds = %bb.o, %bb.n
 .critedge9.i:                                     ; preds = %.critedge11.i, %.lr.ph298
   %.180.i.lcssa.ph = phi i64 [ %spec.select118.i, %.critedge11.i ], [ %.180.i296, %.lr.ph298 ]
   %i.df = icmp sgt i64 %.180.i.lcssa.ph, 19
-  br i1 %i.df, label %.preheader248, label %_ZN10fast_float19parse_number_stringILb1EcEENS_22parsed_number_string_tIT0_EEPKS2_S5_NS_15parse_options_tIS2_EE.exit
+  br i1 %i.df, label %.lr.ph304, label %_ZN10fast_float19parse_number_stringILb1EcEENS_22parsed_number_string_tIT0_EEPKS2_S5_NS_15parse_options_tIS2_EE.exit
 
-.preheader248:                                    ; preds = %.critedge9.i
-  %.not370 = icmp eq ptr %.0191, %.1192.lcssa.ph
-  br i1 %.not370, label %._crit_edge305.thread, label %.lr.ph304
-
-.lr.ph304:                                        ; preds = %.preheader248, %.lr.ph304
-  %.3186303 = phi i64 [ %i.dk, %.lr.ph304 ], [ 0, %.preheader248 ]
-  %.7198302 = phi ptr [ %i.dl, %.lr.ph304 ], [ %.0191, %.preheader248 ] ; 2 uses
+.lr.ph304:                                        ; preds = %.critedge9.i, %.lr.ph304
+  %.3186303 = phi i64 [ %i.dk, %.lr.ph304 ], [ 0, %.critedge9.i ]
+  %.7198302 = phi ptr [ %i.dl, %.lr.ph304 ], [ %.0191, %.critedge9.i ] ; 2 uses
   %i.dg = mul nuw i64 %.3186303, 10
   %i.dh = load i8, ptr %.7198302, align 1, !tbaa !37
   %i.di = sext i8 %i.dh to i64
   %i.dj = add i64 %i.dg, -48
-  %i.dk = add i64 %i.dj, %i.di                    ; 5 uses
+  %i.dk = add i64 %i.dj, %i.di                    ; 6 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %.7198302, i64 1 ; 3 uses
   %i.dm = icmp ult i64 %i.dk, 1000000000000000000
   %i.dn = icmp ne ptr %i.dl, %.1192.lcssa.ph
@@ -499,14 +495,13 @@ bb.y:                                             ; preds = %bb.o, %bb.n
   %i.dp = icmp ugt i64 %i.dk, 999999999999999999
   br i1 %i.dp, label %bb.z, label %._crit_edge305.thread
 
-._crit_edge305.thread:                            ; preds = %.preheader248, %._crit_edge305
-  %.3186.lcssa424 = phi i64 [ %i.dk, %._crit_edge305 ], [ 0, %.preheader248 ] ; 2 uses
+._crit_edge305.thread:                            ; preds = %._crit_edge305
   %i.dq = getelementptr inbounds nuw i8, ptr %.sroa.17.0220, i64 %.sroa.20.0221
   %.not371.a = icmp samesign eq i64 %.sroa.20.0221, 0
   br i1 %.not371.a, label %._crit_edge312, label %.lr.ph311
 
 .lr.ph311:                                        ; preds = %._crit_edge305.thread, %.lr.ph311
-  %.4187309 = phi i64 [ %i.dv, %.lr.ph311 ], [ %.3186.lcssa424, %._crit_edge305.thread ]
+  %.4187309 = phi i64 [ %i.dv, %.lr.ph311 ], [ %i.dk, %._crit_edge305.thread ]
   %.8199308 = phi ptr [ %i.dw, %.lr.ph311 ], [ %.sroa.17.0220, %._crit_edge305.thread ] ; 2 uses
   %i.dr = mul nuw i64 %.4187309, 10
   %i.ds = load i8, ptr %.8199308, align 1, !tbaa !37
@@ -521,7 +516,7 @@ bb.y:                                             ; preds = %bb.o, %bb.n
 
 ._crit_edge312:                                   ; preds = %.lr.ph311, %._crit_edge305.thread
   %.8199.lcssa = phi ptr [ %.sroa.17.0220, %._crit_edge305.thread ], [ %i.dw, %.lr.ph311 ]
-  %.4187.lcssa = phi i64 [ %.3186.lcssa424, %._crit_edge305.thread ], [ %i.dv, %.lr.ph311 ]
+  %.4187.lcssa = phi i64 [ %i.dk, %._crit_edge305.thread ], [ %i.dv, %.lr.ph311 ]
   %i.ea = ptrtoint ptr %.sroa.17.0220 to i64
   br label %bb.z
 
@@ -924,7 +919,7 @@ bb.f:                                             ; preds = %bb.e
 
 .lr.ph262.preheader:                              ; preds = %bb.f, %bb.d
   %i.u = phi i8 [ %i.r, %bb.f ], [ %i.m, %bb.d ]
-  %.0191 = phi ptr [ %i.p, %bb.f ], [ %.1, %bb.d ] ; 10 uses
+  %.0191 = phi ptr [ %i.p, %bb.f ], [ %.1, %bb.d ] ; 9 uses
   %.0191385 = ptrtoaddr ptr %.0191 to i64
   %i.v = sub i64 %i.a, %.0191385
   %scevgep386 = getelementptr i8, ptr %.0191, i64 %i.v
@@ -948,7 +943,7 @@ bb.g:                                             ; preds = %.lr.ph262
   br i1 %.not.i, label %.critedge.i, label %.lr.ph262, !llvm.loop !0
 
 .critedge.i:                                      ; preds = %bb.g, %.lr.ph262
-  %.1192.lcssa.ph = phi ptr [ %scevgep386, %bb.g ], [ %.1192259, %.lr.ph262 ] ; 7 uses
+  %.1192.lcssa.ph = phi ptr [ %scevgep386, %bb.g ], [ %.1192259, %.lr.ph262 ] ; 6 uses
   %.0183.lcssa.ph = phi i64 [ %i.ac, %bb.g ], [ %.0183260, %.lr.ph262 ] ; 4 uses
   %i.ae = ptrtoint ptr %.1192.lcssa.ph to i64     ; 2 uses
   %i.af = ptrtoint ptr %.0191 to i64
@@ -1194,20 +1189,16 @@ bb.y:                                             ; preds = %bb.o, %bb.n
 .critedge9.i:                                     ; preds = %.critedge11.i, %.lr.ph298
   %.180.i.lcssa.ph = phi i64 [ %spec.select118.i, %.critedge11.i ], [ %.180.i296, %.lr.ph298 ]
   %i.df = icmp sgt i64 %.180.i.lcssa.ph, 19
-  br i1 %i.df, label %.preheader248, label %_ZN10fast_float19parse_number_stringILb1EcEENS_22parsed_number_string_tIT0_EEPKS2_S5_NS_15parse_options_tIS2_EE.exit
+  br i1 %i.df, label %.lr.ph304, label %_ZN10fast_float19parse_number_stringILb1EcEENS_22parsed_number_string_tIT0_EEPKS2_S5_NS_15parse_options_tIS2_EE.exit
 
-.preheader248:                                    ; preds = %.critedge9.i
-  %.not370 = icmp eq ptr %.0191, %.1192.lcssa.ph
-  br i1 %.not370, label %._crit_edge305.thread, label %.lr.ph304
-
-.lr.ph304:                                        ; preds = %.preheader248, %.lr.ph304
-  %.3186303 = phi i64 [ %i.dk, %.lr.ph304 ], [ 0, %.preheader248 ]
-  %.7198302 = phi ptr [ %i.dl, %.lr.ph304 ], [ %.0191, %.preheader248 ] ; 2 uses
+.lr.ph304:                                        ; preds = %.critedge9.i, %.lr.ph304
+  %.3186303 = phi i64 [ %i.dk, %.lr.ph304 ], [ 0, %.critedge9.i ]
+  %.7198302 = phi ptr [ %i.dl, %.lr.ph304 ], [ %.0191, %.critedge9.i ] ; 2 uses
   %i.dg = mul nuw i64 %.3186303, 10
   %i.dh = load i8, ptr %.7198302, align 1, !tbaa !37
   %i.di = sext i8 %i.dh to i64
   %i.dj = add i64 %i.dg, -48
-  %i.dk = add i64 %i.dj, %i.di                    ; 5 uses
+  %i.dk = add i64 %i.dj, %i.di                    ; 6 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %.7198302, i64 1 ; 3 uses
   %i.dm = icmp ult i64 %i.dk, 1000000000000000000
   %i.dn = icmp ne ptr %i.dl, %.1192.lcssa.ph
@@ -1218,14 +1209,13 @@ bb.y:                                             ; preds = %bb.o, %bb.n
   %i.dp = icmp ugt i64 %i.dk, 999999999999999999
   br i1 %i.dp, label %bb.z, label %._crit_edge305.thread
 
-._crit_edge305.thread:                            ; preds = %.preheader248, %._crit_edge305
-  %.3186.lcssa424 = phi i64 [ %i.dk, %._crit_edge305 ], [ 0, %.preheader248 ] ; 2 uses
+._crit_edge305.thread:                            ; preds = %._crit_edge305
   %i.dq = getelementptr inbounds nuw i8, ptr %.sroa.17.0220, i64 %.sroa.20.0221
   %.not371.a = icmp samesign eq i64 %.sroa.20.0221, 0
   br i1 %.not371.a, label %._crit_edge312, label %.lr.ph311
 
 .lr.ph311:                                        ; preds = %._crit_edge305.thread, %.lr.ph311
-  %.4187309 = phi i64 [ %i.dv, %.lr.ph311 ], [ %.3186.lcssa424, %._crit_edge305.thread ]
+  %.4187309 = phi i64 [ %i.dv, %.lr.ph311 ], [ %i.dk, %._crit_edge305.thread ]
   %.8199308 = phi ptr [ %i.dw, %.lr.ph311 ], [ %.sroa.17.0220, %._crit_edge305.thread ] ; 2 uses
   %i.dr = mul nuw i64 %.4187309, 10
   %i.ds = load i8, ptr %.8199308, align 1, !tbaa !37
@@ -1240,7 +1230,7 @@ bb.y:                                             ; preds = %bb.o, %bb.n
 
 ._crit_edge312:                                   ; preds = %.lr.ph311, %._crit_edge305.thread
   %.8199.lcssa = phi ptr [ %.sroa.17.0220, %._crit_edge305.thread ], [ %i.dw, %.lr.ph311 ]
-  %.4187.lcssa = phi i64 [ %.3186.lcssa424, %._crit_edge305.thread ], [ %i.dv, %.lr.ph311 ]
+  %.4187.lcssa = phi i64 [ %i.dk, %._crit_edge305.thread ], [ %i.dv, %.lr.ph311 ]
   %i.ea = ptrtoint ptr %.sroa.17.0220 to i64
   br label %bb.z
 

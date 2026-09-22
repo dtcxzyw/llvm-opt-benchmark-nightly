@@ -202,11 +202,11 @@ bb.a:
   store i64 %2, ptr %i.e, align 8, !tbaa !68
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 168
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 176
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !43   ; 4 uses
-  %i.i = load ptr, ptr %i.f, align 8, !tbaa !41   ; 7 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !43   ; 3 uses
+  %i.i = load ptr, ptr %i.f, align 8, !tbaa !41   ; 5 uses
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %i.i to i64
-  %i.l = sub i64 %i.j, %i.k                       ; 4 uses
+  %i.l = sub i64 %i.j, %i.k                       ; 3 uses
   %i.m = icmp ugt i64 %i.l, 16
   br i1 %i.m, label %bb.b, label %bb.e
 
@@ -219,15 +219,11 @@ bb.b:                                             ; preds = %bb.a
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = sub i64 %i.r, %i.s
   %i.u = icmp eq i64 %i.l, %i.t
-  br i1 %i.u, label %4, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
+  br i1 %i.u, label %.lr.ph.i.i.i.i.i.i, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
 
-4:                                                ; preds = %bb.b
-  %.not9.i.i.i.i.i.i = icmp eq ptr %i.i, %i.h
-  br i1 %.not9.i.i.i.i.i.i, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit, label %.lr.ph.i.i.i.i.i.i
-
-.lr.ph.i.i.i.i.i.i:                               ; preds = %4, %bb.c
-  %.011.i.i.i.i.i.i = phi ptr [ %i.z, %bb.c ], [ %i.q, %4 ] ; 2 uses
-  %.0810.i.i.i.i.i.i = phi ptr [ %i.y, %bb.c ], [ %i.i, %4 ] ; 2 uses
+.lr.ph.i.i.i.i.i.i:                               ; preds = %bb.b, %bb.c
+  %.011.i.i.i.i.i.i = phi ptr [ %i.z, %bb.c ], [ %i.q, %bb.b ] ; 2 uses
+  %.0810.i.i.i.i.i.i = phi ptr [ %i.y, %bb.c ], [ %i.i, %bb.b ] ; 2 uses
   %i.v = load double, ptr %.0810.i.i.i.i.i.i, align 8, !tbaa !44
   %i.w = load double, ptr %.011.i.i.i.i.i.i, align 8, !tbaa !44
   %i.x = fcmp oeq double %i.v, %i.w
@@ -250,37 +246,26 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i.i.i.i
   %.not.i = icmp eq i64 %i.l, %i.ag
   br i1 %.not.i, label %.lr.ph.i.i.i.i.i2.i, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
 
-.lr.ph.i.i.i.i.i2.i:                              ; preds = %.loopexit.i, %5
-  %.011.i.i.i.i.i3.i = phi ptr [ %7, %5 ], [ %i.ad, %.loopexit.i ] ; 2 uses
-  %.0810.i.i.i.i.i4.i = phi ptr [ %6, %5 ], [ %i.i, %.loopexit.i ] ; 2 uses
+.lr.ph.i.i.i.i.i2.i:                              ; preds = %.loopexit.i, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit
+  %.011.i.i.i.i.i3.i = phi ptr [ %i.al, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit ], [ %i.ad, %.loopexit.i ] ; 2 uses
+  %.0810.i.i.i.i.i4.i = phi ptr [ %i.ak, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit ], [ %i.i, %.loopexit.i ] ; 2 uses
   %i.ah = load double, ptr %.0810.i.i.i.i.i4.i, align 8, !tbaa !44
   %i.ai = load double, ptr %.011.i.i.i.i.i3.i, align 8, !tbaa !44
   %i.aj = fcmp oeq double %i.ah, %i.ai
-  br i1 %i.aj, label %5, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
+  br i1 %i.aj, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
 
-5:                                                ; preds = %.lr.ph.i.i.i.i.i2.i
-  %6 = getelementptr inbounds nuw i8, ptr %.0810.i.i.i.i.i4.i, i64 8 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i.i3.i, i64 8
-  %.not.i.i.i.i.i5.i = icmp eq ptr %6, %i.h
-  br i1 %.not.i.i.i.i.i5.i, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke, label %.lr.ph.i.i.i.i.i2.i, !llvm.loop !0
-
-_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit: ; preds = %4
-  %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 216
-  %i.al = getelementptr inbounds nuw i8, ptr %1, i64 224
-  %8 = load ptr, ptr %i.al, align 8, !tbaa !43
-  %9 = load ptr, ptr %i.ak, align 8, !tbaa !41
-  %10 = ptrtoint ptr %8 to i64
-  %11 = ptrtoint ptr %9 to i64
-  %12 = sub i64 %10, %11
-  %i.am = icmp eq i64 %i.l, %12
-  br i1 %i.am, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
+_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit: ; preds = %.lr.ph.i.i.i.i.i2.i
+  %i.ak = getelementptr inbounds nuw i8, ptr %.0810.i.i.i.i.i4.i, i64 8 ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i.i3.i, i64 8
+  %i.am = icmp eq ptr %i.ak, %i.h
+  br i1 %i.am, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke, label %.lr.ph.i.i.i.i.i2.i, !llvm.loop !0
 
 bb.d:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke, %_ZNSolsEd.exit11, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %_ZNSolsEd.exit10, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread, %bb.f
   %i.an = landingpad { ptr, i32 }
           cleanup
   br label %.body
 
-_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread: ; preds = %.lr.ph.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i2.i, %.loopexit.i, %bb.b, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit
+_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread: ; preds = %.lr.ph.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i2.i, %.loopexit.i, %bb.b
   %i.ao = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.ap = load double, ptr %i.ao, align 8, !tbaa !44
   %i.aq = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %3, double noundef %i.ap)
@@ -306,8 +291,8 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12: ; preds = %_ZNSo
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !41
   br label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke
 
-_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke: ; preds = %5, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12
-  %.sink26 = phi ptr [ %i.ay, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12 ], [ %i.i, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit ], [ %i.i, %5 ]
+_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke: ; preds = %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12
+  %.sink26 = phi ptr [ %i.ay, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12 ], [ %i.i, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit ]
   %i.az = getelementptr inbounds nuw i8, ptr %.sink26, i64 16
   %i.ba = load double, ptr %i.az, align 8, !tbaa !44
   %i.bb = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %3, double noundef %i.ba)
@@ -429,11 +414,11 @@ bb.a:
   store i64 %2, ptr %i.e, align 8, !tbaa !68
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 168
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 176
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !43   ; 4 uses
-  %i.i = load ptr, ptr %i.f, align 8, !tbaa !41   ; 7 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !43   ; 3 uses
+  %i.i = load ptr, ptr %i.f, align 8, !tbaa !41   ; 5 uses
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %i.i to i64
-  %i.l = sub i64 %i.j, %i.k                       ; 4 uses
+  %i.l = sub i64 %i.j, %i.k                       ; 3 uses
   %i.m = icmp ugt i64 %i.l, 24
   br i1 %i.m, label %bb.b, label %bb.e
 
@@ -446,15 +431,11 @@ bb.b:                                             ; preds = %bb.a
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = sub i64 %i.r, %i.s
   %i.u = icmp eq i64 %i.l, %i.t
-  br i1 %i.u, label %4, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
+  br i1 %i.u, label %.lr.ph.i.i.i.i.i.i, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
 
-4:                                                ; preds = %bb.b
-  %.not9.i.i.i.i.i.i = icmp eq ptr %i.i, %i.h
-  br i1 %.not9.i.i.i.i.i.i, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit, label %.lr.ph.i.i.i.i.i.i
-
-.lr.ph.i.i.i.i.i.i:                               ; preds = %4, %bb.c
-  %.011.i.i.i.i.i.i = phi ptr [ %i.z, %bb.c ], [ %i.q, %4 ] ; 2 uses
-  %.0810.i.i.i.i.i.i = phi ptr [ %i.y, %bb.c ], [ %i.i, %4 ] ; 2 uses
+.lr.ph.i.i.i.i.i.i:                               ; preds = %bb.b, %bb.c
+  %.011.i.i.i.i.i.i = phi ptr [ %i.z, %bb.c ], [ %i.q, %bb.b ] ; 2 uses
+  %.0810.i.i.i.i.i.i = phi ptr [ %i.y, %bb.c ], [ %i.i, %bb.b ] ; 2 uses
   %i.v = load double, ptr %.0810.i.i.i.i.i.i, align 8, !tbaa !44
   %i.w = load double, ptr %.011.i.i.i.i.i.i, align 8, !tbaa !44
   %i.x = fcmp oeq double %i.v, %i.w
@@ -477,37 +458,26 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i.i.i.i
   %.not.i = icmp eq i64 %i.l, %i.ag
   br i1 %.not.i, label %.lr.ph.i.i.i.i.i2.i, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
 
-.lr.ph.i.i.i.i.i2.i:                              ; preds = %.loopexit.i, %5
-  %.011.i.i.i.i.i3.i = phi ptr [ %7, %5 ], [ %i.ad, %.loopexit.i ] ; 2 uses
-  %.0810.i.i.i.i.i4.i = phi ptr [ %6, %5 ], [ %i.i, %.loopexit.i ] ; 2 uses
+.lr.ph.i.i.i.i.i2.i:                              ; preds = %.loopexit.i, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit
+  %.011.i.i.i.i.i3.i = phi ptr [ %i.al, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit ], [ %i.ad, %.loopexit.i ] ; 2 uses
+  %.0810.i.i.i.i.i4.i = phi ptr [ %i.ak, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit ], [ %i.i, %.loopexit.i ] ; 2 uses
   %i.ah = load double, ptr %.0810.i.i.i.i.i4.i, align 8, !tbaa !44
   %i.ai = load double, ptr %.011.i.i.i.i.i3.i, align 8, !tbaa !44
   %i.aj = fcmp oeq double %i.ah, %i.ai
-  br i1 %i.aj, label %5, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
+  br i1 %i.aj, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
 
-5:                                                ; preds = %.lr.ph.i.i.i.i.i2.i
-  %6 = getelementptr inbounds nuw i8, ptr %.0810.i.i.i.i.i4.i, i64 8 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i.i3.i, i64 8
-  %.not.i.i.i.i.i5.i = icmp eq ptr %6, %i.h
-  br i1 %.not.i.i.i.i.i5.i, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke, label %.lr.ph.i.i.i.i.i2.i, !llvm.loop !0
-
-_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit: ; preds = %4
-  %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 216
-  %i.al = getelementptr inbounds nuw i8, ptr %1, i64 224
-  %8 = load ptr, ptr %i.al, align 8, !tbaa !43
-  %9 = load ptr, ptr %i.ak, align 8, !tbaa !41
-  %10 = ptrtoint ptr %8 to i64
-  %11 = ptrtoint ptr %9 to i64
-  %12 = sub i64 %10, %11
-  %i.am = icmp eq i64 %i.l, %12
-  br i1 %i.am, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
+_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit: ; preds = %.lr.ph.i.i.i.i.i2.i
+  %i.ak = getelementptr inbounds nuw i8, ptr %.0810.i.i.i.i.i4.i, i64 8 ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i.i3.i, i64 8
+  %i.am = icmp eq ptr %i.ak, %i.h
+  br i1 %i.am, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke, label %.lr.ph.i.i.i.i.i2.i, !llvm.loop !0
 
 bb.d:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke, %_ZNSolsEd.exit11, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %_ZNSolsEd.exit10, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread, %bb.f
   %i.an = landingpad { ptr, i32 }
           cleanup
   br label %.body
 
-_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread: ; preds = %.lr.ph.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i2.i, %.loopexit.i, %bb.b, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit
+_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread: ; preds = %.lr.ph.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i2.i, %.loopexit.i, %bb.b
   %i.ao = getelementptr inbounds nuw i8, ptr %i.i, i64 24
   %i.ap = load double, ptr %i.ao, align 8, !tbaa !44
   %i.aq = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %3, double noundef %i.ap)
@@ -533,8 +503,8 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12: ; preds = %_ZNSo
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !41
   br label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke
 
-_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke: ; preds = %5, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12
-  %.sink26 = phi ptr [ %i.ay, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12 ], [ %i.i, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit ], [ %i.i, %5 ]
+_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke: ; preds = %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12
+  %.sink26 = phi ptr [ %i.ay, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12 ], [ %i.i, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit ]
   %i.az = getelementptr inbounds nuw i8, ptr %.sink26, i64 24
   %i.ba = load double, ptr %i.az, align 8, !tbaa !44
   %i.bb = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %3, double noundef %i.ba)
@@ -656,11 +626,11 @@ bb.a:
   store i64 %2, ptr %i.e, align 8, !tbaa !68
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 168
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 176
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !43   ; 4 uses
-  %i.i = load ptr, ptr %i.f, align 8, !tbaa !41   ; 7 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !43   ; 3 uses
+  %i.i = load ptr, ptr %i.f, align 8, !tbaa !41   ; 5 uses
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %i.i to i64
-  %i.l = sub i64 %i.j, %i.k                       ; 4 uses
+  %i.l = sub i64 %i.j, %i.k                       ; 3 uses
   %i.m = icmp ugt i64 %i.l, 8
   br i1 %i.m, label %bb.b, label %bb.e
 
@@ -673,15 +643,11 @@ bb.b:                                             ; preds = %bb.a
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = sub i64 %i.r, %i.s
   %i.u = icmp eq i64 %i.l, %i.t
-  br i1 %i.u, label %4, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
+  br i1 %i.u, label %.lr.ph.i.i.i.i.i.i, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
 
-4:                                                ; preds = %bb.b
-  %.not9.i.i.i.i.i.i = icmp eq ptr %i.i, %i.h
-  br i1 %.not9.i.i.i.i.i.i, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit, label %.lr.ph.i.i.i.i.i.i
-
-.lr.ph.i.i.i.i.i.i:                               ; preds = %4, %bb.c
-  %.011.i.i.i.i.i.i = phi ptr [ %i.z, %bb.c ], [ %i.q, %4 ] ; 2 uses
-  %.0810.i.i.i.i.i.i = phi ptr [ %i.y, %bb.c ], [ %i.i, %4 ] ; 2 uses
+.lr.ph.i.i.i.i.i.i:                               ; preds = %bb.b, %bb.c
+  %.011.i.i.i.i.i.i = phi ptr [ %i.z, %bb.c ], [ %i.q, %bb.b ] ; 2 uses
+  %.0810.i.i.i.i.i.i = phi ptr [ %i.y, %bb.c ], [ %i.i, %bb.b ] ; 2 uses
   %i.v = load double, ptr %.0810.i.i.i.i.i.i, align 8, !tbaa !44
   %i.w = load double, ptr %.011.i.i.i.i.i.i, align 8, !tbaa !44
   %i.x = fcmp oeq double %i.v, %i.w
@@ -704,37 +670,26 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i.i.i.i
   %.not.i = icmp eq i64 %i.l, %i.ag
   br i1 %.not.i, label %.lr.ph.i.i.i.i.i2.i, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
 
-.lr.ph.i.i.i.i.i2.i:                              ; preds = %.loopexit.i, %5
-  %.011.i.i.i.i.i3.i = phi ptr [ %7, %5 ], [ %i.ad, %.loopexit.i ] ; 2 uses
-  %.0810.i.i.i.i.i4.i = phi ptr [ %6, %5 ], [ %i.i, %.loopexit.i ] ; 2 uses
+.lr.ph.i.i.i.i.i2.i:                              ; preds = %.loopexit.i, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit
+  %.011.i.i.i.i.i3.i = phi ptr [ %i.al, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit ], [ %i.ad, %.loopexit.i ] ; 2 uses
+  %.0810.i.i.i.i.i4.i = phi ptr [ %i.ak, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit ], [ %i.i, %.loopexit.i ] ; 2 uses
   %i.ah = load double, ptr %.0810.i.i.i.i.i4.i, align 8, !tbaa !44
   %i.ai = load double, ptr %.011.i.i.i.i.i3.i, align 8, !tbaa !44
   %i.aj = fcmp oeq double %i.ah, %i.ai
-  br i1 %i.aj, label %5, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
+  br i1 %i.aj, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
 
-5:                                                ; preds = %.lr.ph.i.i.i.i.i2.i
-  %6 = getelementptr inbounds nuw i8, ptr %.0810.i.i.i.i.i4.i, i64 8 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i.i3.i, i64 8
-  %.not.i.i.i.i.i5.i = icmp eq ptr %6, %i.h
-  br i1 %.not.i.i.i.i.i5.i, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke, label %.lr.ph.i.i.i.i.i2.i, !llvm.loop !0
-
-_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit: ; preds = %4
-  %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 216
-  %i.al = getelementptr inbounds nuw i8, ptr %1, i64 224
-  %8 = load ptr, ptr %i.al, align 8, !tbaa !43
-  %9 = load ptr, ptr %i.ak, align 8, !tbaa !41
-  %10 = ptrtoint ptr %8 to i64
-  %11 = ptrtoint ptr %9 to i64
-  %12 = sub i64 %10, %11
-  %i.am = icmp eq i64 %i.l, %12
-  br i1 %i.am, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
+_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit: ; preds = %.lr.ph.i.i.i.i.i2.i
+  %i.ak = getelementptr inbounds nuw i8, ptr %.0810.i.i.i.i.i4.i, i64 8 ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i.i3.i, i64 8
+  %i.am = icmp eq ptr %i.ak, %i.h
+  br i1 %i.am, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke, label %.lr.ph.i.i.i.i.i2.i, !llvm.loop !0
 
 bb.d:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke, %_ZNSolsEd.exit11, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %_ZNSolsEd.exit10, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread, %bb.f
   %i.an = landingpad { ptr, i32 }
           cleanup
   br label %.body
 
-_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread: ; preds = %.lr.ph.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i2.i, %.loopexit.i, %bb.b, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit
+_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread: ; preds = %.lr.ph.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i2.i, %.loopexit.i, %bb.b
   %i.ao = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.ap = load double, ptr %i.ao, align 8, !tbaa !44
   %i.aq = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %3, double noundef %i.ap)
@@ -760,8 +715,8 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12: ; preds = %_ZNSo
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !41
   br label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke
 
-_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke: ; preds = %5, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12
-  %.sink26 = phi ptr [ %i.ay, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12 ], [ %i.i, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit ], [ %i.i, %5 ]
+_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke: ; preds = %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12
+  %.sink26 = phi ptr [ %i.ay, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12 ], [ %i.i, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit ]
   %i.az = getelementptr inbounds nuw i8, ptr %.sink26, i64 8
   %i.ba = load double, ptr %i.az, align 8, !tbaa !44
   %i.bb = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %3, double noundef %i.ba)
@@ -883,11 +838,11 @@ bb.a:
   store i64 %2, ptr %i.e, align 8, !tbaa !68
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 168
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 176
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !43   ; 4 uses
-  %i.i = load ptr, ptr %i.f, align 8, !tbaa !41   ; 7 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !43   ; 3 uses
+  %i.i = load ptr, ptr %i.f, align 8, !tbaa !41   ; 5 uses
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %i.i to i64
-  %i.l = sub i64 %i.j, %i.k                       ; 4 uses
+  %i.l = sub i64 %i.j, %i.k                       ; 3 uses
   %i.m = icmp ugt i64 %i.l, 32
   br i1 %i.m, label %bb.b, label %bb.e
 
@@ -900,15 +855,11 @@ bb.b:                                             ; preds = %bb.a
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = sub i64 %i.r, %i.s
   %i.u = icmp eq i64 %i.l, %i.t
-  br i1 %i.u, label %4, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
+  br i1 %i.u, label %.lr.ph.i.i.i.i.i.i, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
 
-4:                                                ; preds = %bb.b
-  %.not9.i.i.i.i.i.i = icmp eq ptr %i.i, %i.h
-  br i1 %.not9.i.i.i.i.i.i, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit, label %.lr.ph.i.i.i.i.i.i
-
-.lr.ph.i.i.i.i.i.i:                               ; preds = %4, %bb.c
-  %.011.i.i.i.i.i.i = phi ptr [ %i.z, %bb.c ], [ %i.q, %4 ] ; 2 uses
-  %.0810.i.i.i.i.i.i = phi ptr [ %i.y, %bb.c ], [ %i.i, %4 ] ; 2 uses
+.lr.ph.i.i.i.i.i.i:                               ; preds = %bb.b, %bb.c
+  %.011.i.i.i.i.i.i = phi ptr [ %i.z, %bb.c ], [ %i.q, %bb.b ] ; 2 uses
+  %.0810.i.i.i.i.i.i = phi ptr [ %i.y, %bb.c ], [ %i.i, %bb.b ] ; 2 uses
   %i.v = load double, ptr %.0810.i.i.i.i.i.i, align 8, !tbaa !44
   %i.w = load double, ptr %.011.i.i.i.i.i.i, align 8, !tbaa !44
   %i.x = fcmp oeq double %i.v, %i.w
@@ -931,37 +882,26 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i.i.i.i
   %.not.i = icmp eq i64 %i.l, %i.ag
   br i1 %.not.i, label %.lr.ph.i.i.i.i.i2.i, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
 
-.lr.ph.i.i.i.i.i2.i:                              ; preds = %.loopexit.i, %5
-  %.011.i.i.i.i.i3.i = phi ptr [ %7, %5 ], [ %i.ad, %.loopexit.i ] ; 2 uses
-  %.0810.i.i.i.i.i4.i = phi ptr [ %6, %5 ], [ %i.i, %.loopexit.i ] ; 2 uses
+.lr.ph.i.i.i.i.i2.i:                              ; preds = %.loopexit.i, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit
+  %.011.i.i.i.i.i3.i = phi ptr [ %i.al, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit ], [ %i.ad, %.loopexit.i ] ; 2 uses
+  %.0810.i.i.i.i.i4.i = phi ptr [ %i.ak, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit ], [ %i.i, %.loopexit.i ] ; 2 uses
   %i.ah = load double, ptr %.0810.i.i.i.i.i4.i, align 8, !tbaa !44
   %i.ai = load double, ptr %.011.i.i.i.i.i3.i, align 8, !tbaa !44
   %i.aj = fcmp oeq double %i.ah, %i.ai
-  br i1 %i.aj, label %5, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
+  br i1 %i.aj, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
 
-5:                                                ; preds = %.lr.ph.i.i.i.i.i2.i
-  %6 = getelementptr inbounds nuw i8, ptr %.0810.i.i.i.i.i4.i, i64 8 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i.i3.i, i64 8
-  %.not.i.i.i.i.i5.i = icmp eq ptr %6, %i.h
-  br i1 %.not.i.i.i.i.i5.i, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke, label %.lr.ph.i.i.i.i.i2.i, !llvm.loop !0
-
-_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit: ; preds = %4
-  %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 216
-  %i.al = getelementptr inbounds nuw i8, ptr %1, i64 224
-  %8 = load ptr, ptr %i.al, align 8, !tbaa !43
-  %9 = load ptr, ptr %i.ak, align 8, !tbaa !41
-  %10 = ptrtoint ptr %8 to i64
-  %11 = ptrtoint ptr %9 to i64
-  %12 = sub i64 %10, %11
-  %i.am = icmp eq i64 %i.l, %12
-  br i1 %i.am, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
+_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit: ; preds = %.lr.ph.i.i.i.i.i2.i
+  %i.ak = getelementptr inbounds nuw i8, ptr %.0810.i.i.i.i.i4.i, i64 8 ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i.i3.i, i64 8
+  %i.am = icmp eq ptr %i.ak, %i.h
+  br i1 %i.am, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke, label %.lr.ph.i.i.i.i.i2.i, !llvm.loop !0
 
 bb.d:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke, %_ZNSolsEd.exit11, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %_ZNSolsEd.exit10, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread, %bb.f
   %i.an = landingpad { ptr, i32 }
           cleanup
   br label %.body
 
-_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread: ; preds = %.lr.ph.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i2.i, %.loopexit.i, %bb.b, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit
+_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread: ; preds = %.lr.ph.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i2.i, %.loopexit.i, %bb.b
   %i.ao = getelementptr inbounds nuw i8, ptr %i.i, i64 32
   %i.ap = load double, ptr %i.ao, align 8, !tbaa !44
   %i.aq = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %3, double noundef %i.ap)
@@ -987,8 +927,8 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12: ; preds = %_ZNSo
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !41
   br label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke
 
-_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke: ; preds = %5, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12
-  %.sink26 = phi ptr [ %i.ay, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12 ], [ %i.i, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit ], [ %i.i, %5 ]
+_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke: ; preds = %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12
+  %.sink26 = phi ptr [ %i.ay, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12 ], [ %i.i, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit ]
   %i.az = getelementptr inbounds nuw i8, ptr %.sink26, i64 32
   %i.ba = load double, ptr %i.az, align 8, !tbaa !44
   %i.bb = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %3, double noundef %i.ba)
@@ -1110,11 +1050,11 @@ bb.a:
   store i64 %2, ptr %i.e, align 8, !tbaa !68
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 168
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 176
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !43   ; 4 uses
-  %i.i = load ptr, ptr %i.f, align 8, !tbaa !41   ; 7 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !43   ; 3 uses
+  %i.i = load ptr, ptr %i.f, align 8, !tbaa !41   ; 5 uses
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %i.i to i64
-  %i.l = sub i64 %i.j, %i.k                       ; 4 uses
+  %i.l = sub i64 %i.j, %i.k                       ; 3 uses
   %i.m = icmp ugt i64 %i.l, 40
   br i1 %i.m, label %bb.b, label %bb.e
 
@@ -1127,15 +1067,11 @@ bb.b:                                             ; preds = %bb.a
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = sub i64 %i.r, %i.s
   %i.u = icmp eq i64 %i.l, %i.t
-  br i1 %i.u, label %4, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
+  br i1 %i.u, label %.lr.ph.i.i.i.i.i.i, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
 
-4:                                                ; preds = %bb.b
-  %.not9.i.i.i.i.i.i = icmp eq ptr %i.i, %i.h
-  br i1 %.not9.i.i.i.i.i.i, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit, label %.lr.ph.i.i.i.i.i.i
-
-.lr.ph.i.i.i.i.i.i:                               ; preds = %4, %bb.c
-  %.011.i.i.i.i.i.i = phi ptr [ %i.z, %bb.c ], [ %i.q, %4 ] ; 2 uses
-  %.0810.i.i.i.i.i.i = phi ptr [ %i.y, %bb.c ], [ %i.i, %4 ] ; 2 uses
+.lr.ph.i.i.i.i.i.i:                               ; preds = %bb.b, %bb.c
+  %.011.i.i.i.i.i.i = phi ptr [ %i.z, %bb.c ], [ %i.q, %bb.b ] ; 2 uses
+  %.0810.i.i.i.i.i.i = phi ptr [ %i.y, %bb.c ], [ %i.i, %bb.b ] ; 2 uses
   %i.v = load double, ptr %.0810.i.i.i.i.i.i, align 8, !tbaa !44
   %i.w = load double, ptr %.011.i.i.i.i.i.i, align 8, !tbaa !44
   %i.x = fcmp oeq double %i.v, %i.w
@@ -1158,37 +1094,26 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i.i.i.i
   %.not.i = icmp eq i64 %i.l, %i.ag
   br i1 %.not.i, label %.lr.ph.i.i.i.i.i2.i, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
 
-.lr.ph.i.i.i.i.i2.i:                              ; preds = %.loopexit.i, %5
-  %.011.i.i.i.i.i3.i = phi ptr [ %7, %5 ], [ %i.ad, %.loopexit.i ] ; 2 uses
-  %.0810.i.i.i.i.i4.i = phi ptr [ %6, %5 ], [ %i.i, %.loopexit.i ] ; 2 uses
+.lr.ph.i.i.i.i.i2.i:                              ; preds = %.loopexit.i, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit
+  %.011.i.i.i.i.i3.i = phi ptr [ %i.al, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit ], [ %i.ad, %.loopexit.i ] ; 2 uses
+  %.0810.i.i.i.i.i4.i = phi ptr [ %i.ak, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit ], [ %i.i, %.loopexit.i ] ; 2 uses
   %i.ah = load double, ptr %.0810.i.i.i.i.i4.i, align 8, !tbaa !44
   %i.ai = load double, ptr %.011.i.i.i.i.i3.i, align 8, !tbaa !44
   %i.aj = fcmp oeq double %i.ah, %i.ai
-  br i1 %i.aj, label %5, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
+  br i1 %i.aj, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
 
-5:                                                ; preds = %.lr.ph.i.i.i.i.i2.i
-  %6 = getelementptr inbounds nuw i8, ptr %.0810.i.i.i.i.i4.i, i64 8 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i.i3.i, i64 8
-  %.not.i.i.i.i.i5.i = icmp eq ptr %6, %i.h
-  br i1 %.not.i.i.i.i.i5.i, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke, label %.lr.ph.i.i.i.i.i2.i, !llvm.loop !0
-
-_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit: ; preds = %4
-  %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 216
-  %i.al = getelementptr inbounds nuw i8, ptr %1, i64 224
-  %8 = load ptr, ptr %i.al, align 8, !tbaa !43
-  %9 = load ptr, ptr %i.ak, align 8, !tbaa !41
-  %10 = ptrtoint ptr %8 to i64
-  %11 = ptrtoint ptr %9 to i64
-  %12 = sub i64 %10, %11
-  %i.am = icmp eq i64 %i.l, %12
-  br i1 %i.am, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke, label %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread
+_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit: ; preds = %.lr.ph.i.i.i.i.i2.i
+  %i.ak = getelementptr inbounds nuw i8, ptr %.0810.i.i.i.i.i4.i, i64 8 ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i.i3.i, i64 8
+  %i.am = icmp eq ptr %i.ak, %i.h
+  br i1 %i.am, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke, label %.lr.ph.i.i.i.i.i2.i, !llvm.loop !0
 
 bb.d:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke, %_ZNSolsEd.exit11, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %_ZNSolsEd.exit10, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread, %bb.f
   %i.an = landingpad { ptr, i32 }
           cleanup
   br label %.body
 
-_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread: ; preds = %.lr.ph.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i2.i, %.loopexit.i, %bb.b, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit
+_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit.thread: ; preds = %.lr.ph.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i2.i, %.loopexit.i, %bb.b
   %i.ao = getelementptr inbounds nuw i8, ptr %i.i, i64 40
   %i.ap = load double, ptr %i.ao, align 8, !tbaa !44
   %i.aq = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %3, double noundef %i.ap)
@@ -1214,8 +1139,8 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12: ; preds = %_ZNSo
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !41
   br label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke
 
-_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke: ; preds = %5, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12
-  %.sink26 = phi ptr [ %i.ay, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12 ], [ %i.i, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit ], [ %i.i, %5 ]
+_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12.invoke: ; preds = %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12
+  %.sink26 = phi ptr [ %i.ay, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit12 ], [ %i.i, %_ZNK16OpenColorIO_v2_59LogOpData18allComponentsEqualEv.exit ]
   %i.az = getelementptr inbounds nuw i8, ptr %.sink26, i64 40
   %i.ba = load double, ptr %i.az, align 8, !tbaa !44
   %i.bb = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %3, double noundef %i.ba)

@@ -202,8 +202,8 @@ bb.b:                                             ; preds = %bb.a
   store i64 %i.l, ptr %i.m, align 8, !tbaa !550
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 128
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 136
-  %i.p = load ptr, ptr %i.o, align 8, !tbaa !1097 ; 3 uses
-  %i.q = load ptr, ptr %i.n, align 8, !tbaa !1098 ; 3 uses
+  %i.p = load ptr, ptr %i.o, align 8, !tbaa !1097 ; 2 uses
+  %i.q = load ptr, ptr %i.n, align 8, !tbaa !1098 ; 2 uses
   %i.r = ptrtoint ptr %i.p to i64
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = sub i64 %i.r, %i.s                       ; 2 uses
@@ -264,13 +264,13 @@ bb.h:                                             ; preds = %_ZNKSt7__cxx1112bas
 
 bb.i:                                             ; preds = %bb.b
   %.not = icmp eq i64 %i.t, 16
-  br i1 %.not, label %24, label %bb.j
+  br i1 %.not, label %.lr.ph, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.ac = load i8, ptr %i.h, align 8, !tbaa !1094
   switch i8 %i.ac, label %bb.k [
-    i8 1, label %24
-    i8 4, label %24
+    i8 1, label %.lr.ph
+    i8 4, label %.lr.ph
   ]
 
 bb.k:                                             ; preds = %bb.j
@@ -320,11 +320,7 @@ bb.o:                                             ; preds = %_ZNKSt7__cxx1112bas
   call void @__cxa_free_exception(ptr %i.ad) #23
   br label %bb.dr
 
-24:                                               ; preds = %bb.j, %bb.j, %bb.i
-  %.not188199 = icmp eq ptr %i.q, %i.p
-  br i1 %.not188199, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %24
+.lr.ph:                                           ; preds = %bb.i, %bb.j, %bb.j
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ak = getelementptr inbounds nuw i8, ptr %6, i64 96 ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %6, i64 104
@@ -345,7 +341,7 @@ bb.o:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.ba = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 3 uses
   br label %bb.p
 
-._crit_edge:                                      ; preds = %_ZN6duckdb10shared_ptrINS_6BinderELb1EED2Ev.exit, %24
+._crit_edge:                                      ; preds = %_ZN6duckdb10shared_ptrINS_6BinderELb1EED2Ev.exit
   %i.bb = load i8, ptr %i.e, align 8, !tbaa !549
   %i.bc = icmp eq i8 %i.bb, 4
   br i1 %i.bc, label %bb.aq, label %bb.ar

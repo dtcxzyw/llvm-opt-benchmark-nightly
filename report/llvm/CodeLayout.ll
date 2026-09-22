@@ -205,22 +205,21 @@ _ZN12_GLOBAL__N_110ExtTSPImpl16mergeForcedPairsEv.exit.i: ; preds = %.loopexit.i
   br label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %bb.ey, %.preheader.lr.ph.i.i
-  %.val37278.i.i = phi ptr [ %.val37276.i.i, %.preheader.lr.ph.i.i ], [ %.val37.i.i, %bb.ey ] ; 2 uses
-  %.val277.i.i = phi ptr [ %.val275.i.i, %.preheader.lr.ph.i.i ], [ %.val.i6.i, %bb.ey ] ; 2 uses
-  %.not213261.i.i = icmp eq ptr %.val277.i.i, %.val37278.i.i
-  br i1 %.not213261.i.i, label %_ZN12_GLOBAL__N_110ExtTSPImpl15mergeChainPairsEv.exit.i, label %.lr.ph268.i.i
+  %.val37278.i.i = phi ptr [ %.val37276.i.i, %.preheader.lr.ph.i.i ], [ %.val37.i.i, %bb.ey ]
+  %.val277.i.i = phi ptr [ %.val275.i.i, %.preheader.lr.ph.i.i ], [ %.val.i6.i, %bb.ey ]
+  br label %.lr.ph268.i.i
 
 ._crit_edge269.i.i:                               ; preds = %._crit_edge.i5.i
   %i.yj = fcmp ugt double %.sroa.0166.1.lcssa.i.i, 1.000000e-08
   br i1 %i.yj, label %bb.ey, label %_ZN12_GLOBAL__N_110ExtTSPImpl15mergeChainPairsEv.exit.i
 
-.lr.ph268.i.i:                                    ; preds = %.preheader.i.i, %._crit_edge.i5.i
-  %.028267.i.i = phi ptr [ %.129.lcssa.i.i, %._crit_edge.i5.i ], [ null, %.preheader.i.i ] ; 2 uses
-  %.031266.i.i = phi ptr [ %.132.lcssa.i.i, %._crit_edge.i5.i ], [ null, %.preheader.i.i ] ; 2 uses
-  %.sroa.0165.0265.i.i = phi ptr [ %i.ys, %._crit_edge.i5.i ], [ %.val277.i.i, %.preheader.i.i ] ; 2 uses
-  %.sroa.0166.0264.i.i = phi double [ %.sroa.0166.1.lcssa.i.i, %._crit_edge.i5.i ], [ -1.000000e+00, %.preheader.i.i ] ; 2 uses
-  %.sroa.7.0263.i.i = phi i64 [ %.sroa.7.1.lcssa.i.i, %._crit_edge.i5.i ], [ 0, %.preheader.i.i ] ; 2 uses
-  %.sroa.9.0262.i.i = phi i32 [ %.sroa.9.1.lcssa.i.i, %._crit_edge.i5.i ], [ 0, %.preheader.i.i ] ; 2 uses
+.lr.ph268.i.i:                                    ; preds = %._crit_edge.i5.i, %.preheader.i.i
+  %.028267.i.i = phi ptr [ null, %.preheader.i.i ], [ %.129.lcssa.i.i, %._crit_edge.i5.i ] ; 2 uses
+  %.031266.i.i = phi ptr [ null, %.preheader.i.i ], [ %.132.lcssa.i.i, %._crit_edge.i5.i ] ; 2 uses
+  %.sroa.0165.0265.i.i = phi ptr [ %.val277.i.i, %.preheader.i.i ], [ %i.ys, %._crit_edge.i5.i ] ; 2 uses
+  %.sroa.0166.0264.i.i = phi double [ -1.000000e+00, %.preheader.i.i ], [ %.sroa.0166.1.lcssa.i.i, %._crit_edge.i5.i ] ; 2 uses
+  %.sroa.7.0263.i.i = phi i64 [ 0, %.preheader.i.i ], [ %.sroa.7.1.lcssa.i.i, %._crit_edge.i5.i ] ; 2 uses
+  %.sroa.9.0262.i.i = phi i32 [ 0, %.preheader.i.i ], [ %.sroa.9.1.lcssa.i.i, %._crit_edge.i5.i ] ; 2 uses
   %i.yk = load ptr, ptr %.sroa.0165.0265.i.i, align 8, !tbaa !121, !noalias !298 ; 14 uses
   %i.yl = getelementptr inbounds nuw i8, ptr %i.yk, i64 56 ; 2 uses
   %.val42.i1.i = load ptr, ptr %i.yl, align 8, !tbaa !112, !noalias !298 ; 2 uses
@@ -623,7 +622,7 @@ bb.ey:                                            ; preds = %._crit_edge269.i.i
   %i.ahx = icmp ugt i64 %i.ahw, 8
   br i1 %i.ahx, label %.preheader.i.i, label %_ZN12_GLOBAL__N_110ExtTSPImpl15mergeChainPairsEv.exit.i
 
-_ZN12_GLOBAL__N_110ExtTSPImpl15mergeChainPairsEv.exit.i: ; preds = %bb.ey, %._crit_edge269.i.i, %.preheader.i.i, %_ZN12_GLOBAL__N_110ExtTSPImpl16mergeForcedPairsEv.exit.i
+_ZN12_GLOBAL__N_110ExtTSPImpl15mergeChainPairsEv.exit.i: ; preds = %bb.ey, %._crit_edge269.i.i, %_ZN12_GLOBAL__N_110ExtTSPImpl16mergeForcedPairsEv.exit.i
   %i.ahy = load i64, ptr %10, align 8, !tbaa !278, !noalias !298 ; 2 uses
   %.not46.i.i = icmp eq i64 %i.ahy, 0
   br i1 %.not46.i.i, label %_ZN12_GLOBAL__N_110ExtTSPImpl15mergeColdChainsEv.exit.i, label %.lr.ph44.i.i

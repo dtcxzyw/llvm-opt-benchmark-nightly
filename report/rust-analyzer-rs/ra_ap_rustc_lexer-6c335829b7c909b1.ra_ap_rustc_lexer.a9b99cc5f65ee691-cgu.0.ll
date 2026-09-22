@@ -202,7 +202,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !511)
   %i.d = load ptr, ptr %1, align 8, !alias.scope !512, !nonnull !4, !noundef !4 ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 10 uses
-  %i.f = load ptr, ptr %i.e, align 8, !alias.scope !512, !nonnull !4, !noundef !4 ; 70 uses
+  %i.f = load ptr, ptr %i.e, align 8, !alias.scope !512, !nonnull !4, !noundef !4 ; 69 uses
   %.not.i = icmp eq ptr %i.d, %i.f
   br i1 %.not.i, label %_RNvMs_CsezrqMfYJdg3_17ra_ap_rustc_lexerNtB4_6Cursor4bump.exit, label %bb.b
 
@@ -451,7 +451,7 @@ _RNvMs_CsezrqMfYJdg3_17ra_ap_rustc_lexerNtB4_6Cursor4bump.exit207: ; preds = %_R
   br i1 %.not.i197, label %_RNvMs_CsezrqMfYJdg3_17ra_ap_rustc_lexerNtB4_6Cursor5first.exit.thread, label %.lr.ph
 
 _RNvMs_CsezrqMfYJdg3_17ra_ap_rustc_lexerNtB4_6Cursor5first.exit.thread: ; preds = %_RNvMs_CsezrqMfYJdg3_17ra_ap_rustc_lexerNtB4_6Cursor5first.exit, %_RNvMs_CsezrqMfYJdg3_17ra_ap_rustc_lexerNtB4_6Cursor4bump.exit207, %bb.g
-  %i.dh = phi ptr [ %.promoted, %bb.g ], [ %i.dg, %_RNvMs_CsezrqMfYJdg3_17ra_ap_rustc_lexerNtB4_6Cursor4bump.exit207 ], [ %i.as, %_RNvMs_CsezrqMfYJdg3_17ra_ap_rustc_lexerNtB4_6Cursor5first.exit ] ; 9 uses
+  %i.dh = phi ptr [ %.promoted, %bb.g ], [ %i.dg, %_RNvMs_CsezrqMfYJdg3_17ra_ap_rustc_lexerNtB4_6Cursor4bump.exit207 ], [ %i.as, %_RNvMs_CsezrqMfYJdg3_17ra_ap_rustc_lexerNtB4_6Cursor5first.exit ] ; 8 uses
   %.sroa.05.0.lcssa = phi i32 [ %spec.select.i.ph, %bb.g ], [ %spec.select.i204, %_RNvMs_CsezrqMfYJdg3_17ra_ap_rustc_lexerNtB4_6Cursor4bump.exit207 ], [ %.sroa.05.0321, %_RNvMs_CsezrqMfYJdg3_17ra_ap_rustc_lexerNtB4_6Cursor5first.exit ]
   %i.di = icmp eq i32 %.sroa.05.0.lcssa, 10
   %i.dj = ptrtoint ptr %i.f to i64
@@ -472,15 +472,11 @@ _RNvMNtCshzWfHUSfYae_4core5sliceSh11starts_withCsezrqMfYJdg3_17ra_ap_rustc_lexer
   %i.dt = icmp ne i16 %i.ds, 0
   %i.du = zext i1 %i.dt to i32
   %i.dv = icmp eq i32 %i.du, 0
-  br i1 %i.dv, label %2, label %.thread292
+  br i1 %i.dv, label %bb.k, label %.thread292
 
-2:                                                ; preds = %_RNvMNtCshzWfHUSfYae_4core5sliceSh11starts_withCsezrqMfYJdg3_17ra_ap_rustc_lexer.exit
+bb.k:                                             ; preds = %_RNvMNtCshzWfHUSfYae_4core5sliceSh11starts_withCsezrqMfYJdg3_17ra_ap_rustc_lexer.exit
   tail call void @llvm.experimental.noalias.scope.decl(metadata !523)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !524)
-  %.not.i209 = icmp eq ptr %i.dh, %i.f
-  br i1 %.not.i209, label %_RNvMs_CsezrqMfYJdg3_17ra_ap_rustc_lexerNtB4_6Cursor4bump.exit214, label %bb.k
-
-bb.k:                                             ; preds = %2
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dh, i64 1 ; 2 uses
   store ptr %i.dw, ptr %1, align 8, !alias.scope !525
   %i.dx = load i8, ptr %i.dh, align 1, !noalias !526, !noundef !4 ; 3 uses
@@ -510,7 +506,7 @@ _RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   store ptr %i.eg, ptr %1, align 8, !alias.scope !529
   br label %_RNvMs_CsezrqMfYJdg3_17ra_ap_rustc_lexerNtB4_6Cursor4bump.exit214
 
-_RNvMs_CsezrqMfYJdg3_17ra_ap_rustc_lexerNtB4_6Cursor4bump.exit214: ; preds = %bb.k, %2, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsezrqMfYJdg3_17ra_ap_rustc_lexer.exit12.i.i210, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsezrqMfYJdg3_17ra_ap_rustc_lexer.exit14.i.i212, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsezrqMfYJdg3_17ra_ap_rustc_lexer.exit16.i.i213
+_RNvMs_CsezrqMfYJdg3_17ra_ap_rustc_lexerNtB4_6Cursor4bump.exit214: ; preds = %bb.k, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsezrqMfYJdg3_17ra_ap_rustc_lexer.exit12.i.i210, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsezrqMfYJdg3_17ra_ap_rustc_lexer.exit14.i.i212, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsezrqMfYJdg3_17ra_ap_rustc_lexer.exit16.i.i213
   %i.eh = tail call fastcc i64 @_RNvMs_CsezrqMfYJdg3_17ra_ap_rustc_lexerNtB4_6Cursor11frontmatter(ptr noalias nofree noundef align 8 dereferenceable(32) %1, i1 noundef zeroext true) ; 3 uses
   %.sroa.0128.0.extract.trunc = trunc i64 %i.eh to i8
   %.sroa.4129.0.extract.shift = lshr i64 %i.eh, 8

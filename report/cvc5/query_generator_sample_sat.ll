@@ -204,8 +204,8 @@ bb.fn:                                            ; preds = %.noexc275, %bb.fm
   %.sroa.06.0.i272 = phi ptr [ %i.xo, %.noexc275 ], [ %.19.i.i.i.i266, %bb.fm ] ; 2 uses
   %i.xp = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i272, i64 40 ; 4 uses
   %i.xq = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i272, i64 48 ; 3 uses
-  %i.xr = load ptr, ptr %i.xq, align 8, !tbaa !101 ; 2 uses
-  %i.xs = load ptr, ptr %i.xp, align 8, !tbaa !108 ; 2 uses
+  %i.xr = load ptr, ptr %i.xq, align 8, !tbaa !101
+  %i.xs = load ptr, ptr %i.xp, align 8, !tbaa !108
   %i.xt = ptrtoint ptr %i.xr to i64
   %i.xu = ptrtoint ptr %i.xs to i64
   %i.xv = sub i64 %i.xt, %i.xu                    ; 2 uses
@@ -229,23 +229,18 @@ bb.fp:                                            ; preds = %bb.fo
   %.pre499 = ptrtoint ptr %.pre496 to i64
   %.pre500 = ptrtoint ptr %.pre497 to i64
   %.pre502 = sub i64 %.pre499, %.pre500
-  br label %bb.fq
+  %34 = icmp eq ptr %.pre496, %.pre497
+  br i1 %34, label %bb.fs, label %bb.fq
 
-bb.fq:                                            ; preds = %.noexc277, %bb.fo
+bb.fq:                                            ; preds = %bb.fo, %.noexc277
   %.pre-phi503 = phi i64 [ %.pre502, %.noexc277 ], [ %i.xv, %bb.fo ]
-  %34 = phi ptr [ %.pre497, %.noexc277 ], [ %i.xs, %bb.fo ]
-  %35 = phi ptr [ %.pre496, %.noexc277 ], [ %i.xr, %bb.fo ]
   %i.ya = ashr exact i64 %.pre-phi503, 3          ; 4 uses
-  %36 = add nsw i64 %i.ya, -1
-  %.not.i.i.i278 = icmp eq ptr %35, %34
-  br i1 %.not.i.i.i278, label %bb.fs, label %37
-
-37:                                               ; preds = %bb.fq
-  %38 = invoke noundef i64 @_ZNSt23mersenne_twister_engineImLm64ELm312ELm156ELm31ELm13043109905998158313ELm29ELm6148914691236517205ELm17ELm8202884508482404352ELm37ELm18444473444759240704ELm43ELm6364136223846793005EEclEv(ptr noundef nonnull align 8 dereferenceable(2504) %i.xc)
+  %35 = invoke noundef i64 @_ZNSt23mersenne_twister_engineImLm64ELm312ELm156ELm31ELm13043109905998158313ELm29ELm6148914691236517205ELm17ELm8202884508482404352ELm37ELm18444473444759240704ELm43ELm6364136223846793005EEclEv(ptr noundef nonnull align 8 dereferenceable(2504) %i.xc)
           to label %.noexc280 unwind label %.loopexit.split-lp426
 
-.noexc280:                                        ; preds = %37
-  %i.yb = zext i64 %38 to i128
+.noexc280:                                        ; preds = %bb.fq
+  %36 = add nsw i64 %i.ya, -1
+  %i.yb = zext i64 %35 to i128
   %i.yc = zext i64 %i.ya to i128                  ; 2 uses
   %i.yd = mul nuw i128 %i.yb, %i.yc               ; 2 uses
   %i.ye = trunc i128 %i.yd to i64                 ; 2 uses
@@ -276,7 +271,7 @@ bb.fr:                                            ; preds = %.noexc280
   %extract.t20.le.i.i.i.i = trunc nuw i128 %extract19.le.i.i.i.i to i64
   br label %_ZN4cvc58internal6Random4pickImTnNSt9enable_ifIXsr3std11is_integralIT_EE5valueEiE4typeELi0EEES4_S4_S4_.exit
 
-bb.fs:                                            ; preds = %bb.fq
+bb.fs:                                            ; preds = %.noexc277
   %i.yn = invoke noundef i64 @_ZNSt23mersenne_twister_engineImLm64ELm312ELm156ELm31ELm13043109905998158313ELm29ELm6148914691236517205ELm17ELm8202884508482404352ELm37ELm18444473444759240704ELm43ELm6364136223846793005EEclEv(ptr noundef nonnull align 8 dereferenceable(2504) %i.xc)
           to label %_ZN4cvc58internal6Random4pickImTnNSt9enable_ifIXsr3std11is_integralIT_EE5valueEiE4typeELi0EEES4_S4_S4_.exit unwind label %.loopexit.split-lp426
 
@@ -411,7 +406,7 @@ bb.gd:                                            ; preds = %.critedge.i273
           cleanup
   br label %bb.he
 
-.loopexit.split-lp426:                            ; preds = %bb.fp, %37, %bb.fs
+.loopexit.split-lp426:                            ; preds = %bb.fp, %bb.fq, %bb.fs
   %lpad.loopexit.split-lp428 = landingpad { ptr, i32 }
           cleanup
   br label %bb.he

@@ -204,25 +204,20 @@ bb.m:                                             ; preds = %bb.k
   br i1 %.not49, label %.thread, label %bb.g, !llvm.loop !45
 
 .thread:                                          ; preds = %bb.m, %bb.j, %bb.l, %.backedge
-  %.pre57 = load i32, ptr %i.n, align 4           ; 2 uses
-  %.pre56 = load i32, ptr %i.l, align 8           ; 2 uses
+  %.pre57 = load i32, ptr %i.n, align 4
+  %.pre56 = load i32, ptr %i.l, align 8
   %i.bk = sub i32 %.pre56, %.pre57
   %i.bl = icmp ult i32 %i.bk, 256
-  br i1 %i.bl, label %bb.n, label %1
+  br i1 %i.bl, label %bb.n, label %bb.q
 
 bb.n:                                             ; preds = %.thread
   tail call void @uart_write_wakeup(ptr noundef %0) #13
   %.pre58 = load i32, ptr %i.l, align 8
   %.pre59 = load i32, ptr %i.n, align 4
-  br label %1
+  %1 = icmp eq i32 %.pre58, %.pre59
+  br i1 %1, label %bb.o, label %bb.q
 
-1:                                                ; preds = %bb.n, %.thread
-  %2 = phi i32 [ %.pre59, %bb.n ], [ %.pre57, %.thread ]
-  %3 = phi i32 [ %.pre58, %bb.n ], [ %.pre56, %.thread ]
-  %4 = icmp eq i32 %3, %2
-  br i1 %4, label %bb.o, label %bb.q
-
-bb.o:                                             ; preds = %1
+bb.o:                                             ; preds = %bb.n
   %i.bm = getelementptr i8, ptr %0, i64 584
   %i.bn = load i32, ptr %i.bm, align 8
   %i.bo = and i32 %i.bn, 32768
@@ -233,7 +228,7 @@ bb.p:                                             ; preds = %bb.o
   tail call fastcc void @__stop_tx(ptr noundef %0) #15, !srcloc !49
   br label %bb.q
 
-bb.q:                                             ; preds = %1, %bb.o, %bb.p, %bb.f, %uart_tx_stopped.exit.thread, %bb.b
+bb.q:                                             ; preds = %.thread, %bb.n, %bb.o, %bb.p, %bb.f, %uart_tx_stopped.exit.thread, %bb.b
   ret void
 }
 

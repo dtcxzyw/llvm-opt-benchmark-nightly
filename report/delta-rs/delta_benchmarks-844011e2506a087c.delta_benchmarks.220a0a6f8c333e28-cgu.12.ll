@@ -204,9 +204,13 @@ bb.g:                                             ; preds = %bb.d
   call void @llvm.experimental.noalias.scope.decl(metadata !10007)
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.w = load ptr, ptr %i.v, align 8, !alias.scope !10007, !noalias !10008, !noundef !15
-  %i.x = ptrtoint ptr %i.w to i64
-  %i.y = and i64 %i.x, 3
-  %i.z = icmp eq i64 %i.y, 0
+  %i.x = ptrtoint ptr %i.w to i64                 ; 3 uses
+  %4 = add i64 %i.x, 3
+  %i.y = and i64 %4, -4                           ; 2 uses
+  %5 = sub i64 %i.y, %i.x
+  %6 = icmp ult i64 %5, 4
+  call void @llvm.assume(i1 %6)
+  %i.z = icmp eq i64 %i.y, %i.x
   br i1 %i.z, label %bb.k, label %.invoke.i.i, !prof !83
 
 bb.h:                                             ; preds = %.invoke.i.i
@@ -345,9 +349,13 @@ bb.g:                                             ; preds = %bb.d
   call void @llvm.experimental.noalias.scope.decl(metadata !10051)
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.w = load ptr, ptr %i.v, align 8, !alias.scope !10051, !noalias !10052, !noundef !15
-  %i.x = ptrtoint ptr %i.w to i64
-  %i.y = and i64 %i.x, 7
-  %i.z = icmp eq i64 %i.y, 0
+  %i.x = ptrtoint ptr %i.w to i64                 ; 3 uses
+  %4 = add i64 %i.x, 7
+  %i.y = and i64 %4, -8                           ; 2 uses
+  %5 = sub i64 %i.y, %i.x
+  %6 = icmp ult i64 %5, 8
+  call void @llvm.assume(i1 %6)
+  %i.z = icmp eq i64 %i.y, %i.x
   br i1 %i.z, label %bb.k, label %.invoke.i.i, !prof !83
 
 bb.h:                                             ; preds = %.invoke.i.i
@@ -750,9 +758,13 @@ define hidden void @_RNvXs3_NtNtCs7xHNgVo2C7m_12arrow_buffer6buffer6scalarINtB5_
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !noundef !15
-  %i.c = ptrtoint ptr %i.b to i64
-  %i.d = and i64 %i.c, 3
-  %i.e = icmp eq i64 %i.d, 0
+  %i.c = ptrtoint ptr %i.b to i64                 ; 3 uses
+  %2 = add i64 %i.c, 3
+  %i.d = and i64 %2, -4                           ; 2 uses
+  %3 = sub i64 %i.d, %i.c
+  %4 = icmp ult i64 %3, 4
+  tail call void @llvm.assume(i1 %4)
+  %i.e = icmp eq i64 %i.d, %i.c
   br i1 %i.e, label %bb.d, label %.invoke, !prof !83
 
 bb.b:                                             ; preds = %.invoke

@@ -205,29 +205,25 @@ bb.a:
   %4 = alloca %"struct.std::pair", align 8        ; 4 uses
   %5 = alloca %"struct.std::pair", align 8        ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 9 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !46   ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !46   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 12 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !47   ; 2 uses
   %i.e = ptrtoint ptr %i.d to i64
-  %i.f = ptrtoint ptr %i.b to i64                 ; 3 uses
+  %i.f = ptrtoint ptr %i.b to i64
   %i.g = sub i64 %i.e, %i.f                       ; 2 uses
   %i.h = icmp eq ptr %i.b, %i.d
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !38   ; 11 uses
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !38   ; 10 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !38   ; 7 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !38   ; 6 uses
   %i.m = ptrtoint ptr %i.l to i64
   %i.n = ptrtoint ptr %i.j to i64
   %i.o = sub i64 %i.m, %i.n
   %i.p = icmp ugt i64 %i.o, 8
   %or.cond = select i1 %i.h, i1 %i.p, i1 false
-  br i1 %or.cond, label %.preheader, label %.critedge
+  br i1 %or.cond, label %.lr.ph, label %.critedge
 
-.preheader:                                       ; preds = %bb.a
-  %.not126 = icmp eq ptr %i.j, %i.l
-  br i1 %.not126, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %.preheader
+.lr.ph:                                           ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 4
@@ -235,18 +231,12 @@ bb.a:
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 3 uses
   br label %bb.b
 
-._crit_edge.loopexit:                             ; preds = %_ZNSt6vectorISt4pairIiiESaIS1_EED2Ev.exit
-  %.pre131 = load ptr, ptr %i.a, align 8, !tbaa !46 ; 2 uses
-  %.pre132 = load ptr, ptr %i.c, align 8, !tbaa !47
-  %.pre133 = ptrtoint ptr %.pre132 to i64
-  %.pre134 = ptrtoint ptr %.pre131 to i64
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader
-  %.pre-phi135 = phi i64 [ %.pre134, %._crit_edge.loopexit ], [ %i.f, %.preheader ]
-  %.pre-phi = phi i64 [ %.pre133, %._crit_edge.loopexit ], [ %i.f, %.preheader ]
-  %6 = phi ptr [ %.pre131, %._crit_edge.loopexit ], [ %i.b, %.preheader ]
-  %i.v = sub i64 %.pre-phi, %.pre-phi135
+._crit_edge:                                      ; preds = %_ZNSt6vectorISt4pairIiiESaIS1_EED2Ev.exit
+  %6 = load ptr, ptr %i.a, align 8, !tbaa !46     ; 2 uses
+  %7 = load ptr, ptr %i.c, align 8, !tbaa !47
+  %8 = ptrtoint ptr %7 to i64
+  %9 = ptrtoint ptr %6 to i64
+  %i.v = sub i64 %8, %9
   %i.w = ashr exact i64 %i.v, 3
   %sext11 = shl i64 %i.g, 29
   %i.x = ashr exact i64 %sext11, 32               ; 2 uses
@@ -449,7 +439,7 @@ _ZNSt6vectorISt4pairIiiESaIS1_EED2Ev.exit:        ; preds = %_ZNSt6vectorIPN4mli
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #14
   %i.co = getelementptr inbounds nuw i8, ptr %.0127, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.co, %i.l
-  br i1 %.not, label %._crit_edge.loopexit, label %bb.b
+  br i1 %.not, label %._crit_edge, label %bb.b
 
 .critedge:                                        ; preds = %bb.a
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses

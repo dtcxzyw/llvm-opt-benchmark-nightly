@@ -202,10 +202,6 @@ bb.a:
   %i.c = icmp eq i64 %2, 0
   br i1 %i.c, label %_RNvXs1_NtCs8O45qwFIwQX_10serde_json3serQINtB5_10SerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtCs4NSHK7GLW4I_10serde_core3ser10Serializer13serialize_seqCsl8OoimOLbh_6qdrant.exit.thread, label %.lr.ph.i.i
 
-_RNvXs1_NtCs8O45qwFIwQX_10serde_json3serQINtB5_10SerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtCs4NSHK7GLW4I_10serde_core3ser10Serializer13serialize_seqCsl8OoimOLbh_6qdrant.exit.thread: ; preds = %bb.a
-  tail call void @_RNvMs1_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE17extend_from_sliceCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @18, i64 noundef range(i64 0, -9223372036854775808) 1), !noalias !14789
-  br label %_RNvXs2_NtCs8O45qwFIwQX_10serde_json3serINtB5_8CompoundQINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB5_16CompactFormatterENtNtCs4NSHK7GLW4I_10serde_core3ser12SerializeSeq3endCsl8OoimOLbh_6qdrant.exit
-
 .lr.ph.i.i:                                       ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 2 uses
@@ -215,6 +211,10 @@ _RNvXs1_NtCs8O45qwFIwQX_10serde_json3serQINtB5_10SerializerQINtNtCsexYYUdYSQU6_5
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14792)
   %i.g = icmp ugt i8 %.val7.peel.i.i, 9
   br i1 %i.g, label %bb.b, label %bb.c
+
+_RNvXs1_NtCs8O45qwFIwQX_10serde_json3serQINtB5_10SerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtCs4NSHK7GLW4I_10serde_core3ser10Serializer13serialize_seqCsl8OoimOLbh_6qdrant.exit.thread: ; preds = %bb.a
+  tail call void @_RNvMs1_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE17extend_from_sliceCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @18, i64 noundef range(i64 0, -9223372036854775808) 1), !noalias !14789
+  br label %_RNvXs2_NtCs8O45qwFIwQX_10serde_json3serINtB5_8CompoundQINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB5_16CompactFormatterENtNtCs4NSHK7GLW4I_10serde_core3ser12SerializeSeq3endCsl8OoimOLbh_6qdrant.exit
 
 bb.b:                                             ; preds = %.lr.ph.i.i
   %i.h = zext i8 %.val7.peel.i.i to i32           ; 2 uses

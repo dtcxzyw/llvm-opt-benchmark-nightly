@@ -205,24 +205,20 @@ bb.p:                                             ; preds = %bb.o
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.eb, i8 0, i64 24, i1 false), !noalias !6831
   store ptr %i.eb, ptr %8, align 8, !tbaa !582, !alias.scope !6831
   %i.ec = getelementptr inbounds nuw i8, ptr %i.ea, i64 24 ; 22 uses
-  %i.ed = load i64, ptr %i.ec, align 8, !tbaa !578 ; 5 uses
+  %i.ed = load i64, ptr %i.ec, align 8, !tbaa !578 ; 4 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %i.ea, i64 16 ; 19 uses
-  %i.ef = load i64, ptr %i.ee, align 8, !tbaa !574 ; 2 uses
+  %i.ef = load i64, ptr %i.ee, align 8, !tbaa !574
   %i.eg = sub i64 %i.ed, %i.ef                    ; 3 uses
   %i.eh = icmp ugt i64 %i.eg, 100
-  br i1 %i.eh, label %51, label %bb.q
+  br i1 %i.eh, label %.split.i.i.i.i, label %bb.q
 
-51:                                               ; preds = %bb.p
-  %52 = add i64 %i.eg, -100                       ; 2 uses
-  %.not.i.i485 = icmp eq i64 %i.ed, %i.ef
-  br i1 %.not.i.i485, label %_ZN5boost9container10deque_implIiSaIiELb0ENS0_9deque_optILm0ELm0EvLb0EEEE6resizeEm.exit, label %.split.i.i.i.i
-
-.split.i.i.i.i:                                   ; preds = %51
+.split.i.i.i.i:                                   ; preds = %bb.p
+  %51 = add i64 %i.eg, -100                       ; 2 uses
   %i.ei = load ptr, ptr %i.ea, align 8, !tbaa !573, !noalias !6832, !nonnull !366, !noundef !366
   %i.ej = lshr i64 %i.ed, 8
   %i.ek = getelementptr inbounds nuw [8 x i8], ptr %i.ei, i64 %i.ej ; 2 uses
   %.idx.i486 = and i64 %i.ed, 255
-  %i.el = sub nsw i64 %.idx.i486, %52             ; 2 uses
+  %i.el = sub nsw i64 %.idx.i486, %51             ; 2 uses
   %or.cond.i = icmp slt i64 %i.el, 0
   br i1 %or.cond.i, label %.lr.ph.i.i.i.preheader.i, label %_ZN5boost9container10deque_baseISaIiENS0_9deque_optILm0ELm0EmLb0EEELb0EE39prot_deallocate_nodes_if_not_reservableEPPiS7_.exit.i.i
 
@@ -247,7 +243,7 @@ _ZN5boost9container10deque_baseISaIiENS0_9deque_optILm0ELm0EmLb0EEELb0EE39prot_d
 
 _ZN5boost9container10deque_baseISaIiENS0_9deque_optILm0ELm0EmLb0EEELb0EE39prot_deallocate_nodes_if_not_reservableEPPiS7_.exit.i.i: ; preds = %_ZN5boost9container10deque_baseISaIiENS0_9deque_optILm0ELm0EmLb0EEELb0EE39prot_deallocate_nodes_if_not_reservableEPPiS7_.exit.loopexit.i.i, %.split.i.i.i.i
   %i.es = phi i64 [ %.pre.i.i, %_ZN5boost9container10deque_baseISaIiENS0_9deque_optILm0ELm0EmLb0EEELb0EE39prot_deallocate_nodes_if_not_reservableEPPiS7_.exit.loopexit.i.i ], [ %i.ed, %.split.i.i.i.i ]
-  %i.et = sub i64 %i.es, %52
+  %i.et = sub i64 %i.es, %51
   store i64 %i.et, ptr %i.ec, align 8, !tbaa !578
   br label %_ZN5boost9container10deque_implIiSaIiELb0ENS0_9deque_optILm0ELm0EvLb0EEEE6resizeEm.exit
 
@@ -261,7 +257,7 @@ bb.q:                                             ; preds = %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #22
   br label %_ZN5boost9container10deque_implIiSaIiELb0ENS0_9deque_optILm0ELm0EvLb0EEEE6resizeEm.exit
 
-_ZN5boost9container10deque_implIiSaIiELb0ENS0_9deque_optILm0ELm0EvLb0EEEE6resizeEm.exit: ; preds = %.noexc488, %_ZN5boost9container10deque_baseISaIiENS0_9deque_optILm0ELm0EmLb0EEELb0EE39prot_deallocate_nodes_if_not_reservableEPPiS7_.exit.i.i, %51
+_ZN5boost9container10deque_implIiSaIiELb0ENS0_9deque_optILm0ELm0EvLb0EEEE6resizeEm.exit: ; preds = %.noexc488, %_ZN5boost9container10deque_baseISaIiENS0_9deque_optILm0ELm0EmLb0EEELb0EE39prot_deallocate_nodes_if_not_reservableEPPiS7_.exit.i.i
   %i.ev = getelementptr inbounds nuw i8, ptr %i.eb, i64 8 ; 44 uses
   %i.ew = load ptr, ptr %i.ev, align 8, !tbaa !381 ; 4 uses
   %i.ex = load ptr, ptr %i.eb, align 8, !tbaa !379 ; 5 uses
@@ -300,8 +296,8 @@ _ZNSt6vectorIiSaIiEE6resizeEm.exit:               ; preds = %._ZNSt6vectorIiSaIi
   %.pre-phi = phi i64 [ %.pre1168, %._ZNSt6vectorIiSaIiEE6resizeEm.exit_crit_edge ], [ %i.ez, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i ], [ %i.ez, %bb.t ], [ %i.ez, %bb.s ]
   %i.ff = phi ptr [ %.pre1161, %._ZNSt6vectorIiSaIiEE6resizeEm.exit_crit_edge ], [ %i.ex, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i ], [ %i.ex, %bb.t ], [ %i.ex, %bb.s ]
   %i.fg = phi ptr [ %.pre1160, %._ZNSt6vectorIiSaIiEE6resizeEm.exit_crit_edge ], [ %i.fe, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i ], [ %i.ew, %bb.t ], [ %i.ew, %bb.s ]
-  %i.fh = load i64, ptr %i.ec, align 8, !tbaa !578 ; 8 uses
-  %i.fi = load i64, ptr %i.ee, align 8, !tbaa !574 ; 5 uses
+  %i.fh = load i64, ptr %i.ec, align 8, !tbaa !578 ; 7 uses
+  %i.fi = load i64, ptr %i.ee, align 8, !tbaa !574 ; 4 uses
   %i.fj = sub i64 %i.fh, %i.fi                    ; 5 uses
   %i.fk = ptrtoint ptr %i.fg to i64
   %i.fl = sub i64 %i.fk, %.pre-phi
@@ -392,18 +388,14 @@ bb.y:                                             ; preds = %bb.z, %_ZN5boost9co
 
 _ZN5boost9container4test20CheckEqualContainersINS0_5dequeIiSaIiENS0_9deque_optILm0ELm0EvLb0EEEEESt6vectorIiS4_EEEbRKT_RKT0_.exit512.thread1071: ; preds = %_ZN5boost9container14deque_iteratorIPiLb1ELj0ELj0EmEppEv.exit.i506, %.preheader.i501
   %i.gp = icmp ugt i64 %i.fj, 200
-  br i1 %i.gp, label %53, label %_ZN5boost9container4test20CheckEqualContainersINS0_5dequeIiSaIiENS0_9deque_optILm0ELm0EvLb0EEEEESt6vectorIiS4_EEEbRKT_RKT0_.exit512.thread1071.thread
+  br i1 %i.gp, label %.split.i.i.i.i514, label %_ZN5boost9container4test20CheckEqualContainersINS0_5dequeIiSaIiENS0_9deque_optILm0ELm0EvLb0EEEEESt6vectorIiS4_EEEbRKT_RKT0_.exit512.thread1071.thread
 
-53:                                               ; preds = %_ZN5boost9container4test20CheckEqualContainersINS0_5dequeIiSaIiENS0_9deque_optILm0ELm0EvLb0EEEEESt6vectorIiS4_EEEbRKT_RKT0_.exit512.thread1071
-  %54 = add nsw i64 %i.fj, -200                   ; 2 uses
-  %.not.i.i513 = icmp eq i64 %i.fh, %i.fi
-  br i1 %.not.i.i513, label %_ZN5boost9container10deque_implIiSaIiELb0ENS0_9deque_optILm0ELm0EvLb0EEEE6resizeEm.exit525, label %.split.i.i.i.i514
-
-.split.i.i.i.i514:                                ; preds = %53
+.split.i.i.i.i514:                                ; preds = %_ZN5boost9container4test20CheckEqualContainersINS0_5dequeIiSaIiENS0_9deque_optILm0ELm0EvLb0EEEEESt6vectorIiS4_EEEbRKT_RKT0_.exit512.thread1071
+  %52 = add nsw i64 %i.fj, -200                   ; 2 uses
   %i.gq = lshr i64 %i.fh, 8
   %i.gr = getelementptr inbounds nuw [8 x i8], ptr %i.fn, i64 %i.gq ; 2 uses
   %.idx.i515 = and i64 %i.fh, 255
-  %i.gs = sub nsw i64 %.idx.i515, %54             ; 2 uses
+  %i.gs = sub nsw i64 %.idx.i515, %52             ; 2 uses
   %or.cond.i516 = icmp slt i64 %i.gs, 0
   br i1 %or.cond.i516, label %.lr.ph.i.i.i.preheader.i518, label %_ZN5boost9container10deque_baseISaIiENS0_9deque_optILm0ELm0EmLb0EEELb0EE39prot_deallocate_nodes_if_not_reservableEPPiS7_.exit.i.i517
 
@@ -428,7 +420,7 @@ _ZN5boost9container10deque_baseISaIiENS0_9deque_optILm0ELm0EmLb0EEELb0EE39prot_d
 
 _ZN5boost9container10deque_baseISaIiENS0_9deque_optILm0ELm0EmLb0EEELb0EE39prot_deallocate_nodes_if_not_reservableEPPiS7_.exit.i.i517: ; preds = %_ZN5boost9container10deque_baseISaIiENS0_9deque_optILm0ELm0EmLb0EEELb0EE39prot_deallocate_nodes_if_not_reservableEPPiS7_.exit.loopexit.i.i522, %.split.i.i.i.i514
   %i.gz = phi i64 [ %.pre.i.i523, %_ZN5boost9container10deque_baseISaIiENS0_9deque_optILm0ELm0EmLb0EEELb0EE39prot_deallocate_nodes_if_not_reservableEPPiS7_.exit.loopexit.i.i522 ], [ %i.fh, %.split.i.i.i.i514 ]
-  %i.ha = sub i64 %i.gz, %54
+  %i.ha = sub i64 %i.gz, %52
   store i64 %i.ha, ptr %i.ec, align 8, !tbaa !578
   br label %_ZN5boost9container10deque_implIiSaIiELb0ENS0_9deque_optILm0ELm0EvLb0EEEE6resizeEm.exit525
 
@@ -442,7 +434,7 @@ _ZN5boost9container4test20CheckEqualContainersINS0_5dequeIiSaIiENS0_9deque_optIL
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #22
   br label %_ZN5boost9container10deque_implIiSaIiELb0ENS0_9deque_optILm0ELm0EvLb0EEEE6resizeEm.exit525
 
-_ZN5boost9container10deque_implIiSaIiELb0ENS0_9deque_optILm0ELm0EvLb0EEEE6resizeEm.exit525: ; preds = %.noexc524, %_ZN5boost9container10deque_baseISaIiENS0_9deque_optILm0ELm0EmLb0EEELb0EE39prot_deallocate_nodes_if_not_reservableEPPiS7_.exit.i.i517, %53
+_ZN5boost9container10deque_implIiSaIiELb0ENS0_9deque_optILm0ELm0EvLb0EEEE6resizeEm.exit525: ; preds = %.noexc524, %_ZN5boost9container10deque_baseISaIiENS0_9deque_optILm0ELm0EmLb0EEELb0EE39prot_deallocate_nodes_if_not_reservableEPPiS7_.exit.i.i517
   %i.hc = load ptr, ptr %i.ev, align 8, !tbaa !381 ; 4 uses
   %i.hd = load ptr, ptr %i.eb, align 8, !tbaa !379 ; 5 uses
   %i.he = ptrtoint ptr %i.hc to i64
@@ -845,18 +837,14 @@ bb.t:                                             ; preds = %bb.s
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ec, i8 0, i64 24, i1 false), !noalias !14830
   store ptr %i.ec, ptr %8, align 8, !tbaa !582, !alias.scope !14830
   %i.ed = getelementptr inbounds nuw i8, ptr %i.eb, i64 24 ; 25 uses
-  %i.ee = load i64, ptr %i.ed, align 8, !tbaa !645 ; 3 uses
+  %i.ee = load i64, ptr %i.ed, align 8, !tbaa !645 ; 2 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %i.eb, i64 16 ; 21 uses
-  %i.eg = load i64, ptr %i.ef, align 8, !tbaa !641 ; 2 uses
+  %i.eg = load i64, ptr %i.ef, align 8, !tbaa !641
   %i.eh = sub i64 %i.ee, %i.eg                    ; 3 uses
   %i.ei = icmp ugt i64 %i.eh, 100
-  br i1 %i.ei, label %51, label %bb.u
+  br i1 %i.ei, label %_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i, label %bb.u
 
-51:                                               ; preds = %bb.t
-  %.not.i.i479 = icmp eq i64 %i.ee, %i.eg
-  br i1 %.not.i.i479, label %_ZN5boost9container10deque_implIiNS0_9allocatorIiLj2ELj0EEELb0ENS0_9deque_optILm0ELm0EvLb1EEEE6resizeEm.exit, label %_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i
-
-_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i: ; preds = %51
+_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i: ; preds = %bb.t
   %.neg.i = add i64 %i.ee, 100
   %i.ej = sub i64 %.neg.i, %i.eh
   store i64 %i.ej, ptr %i.ed, align 8, !tbaa !645
@@ -875,12 +863,12 @@ bb.u:                                             ; preds = %bb.t
   %.pre1137 = load ptr, ptr %i.ec, align 8, !tbaa !379
   br label %_ZN5boost9container10deque_implIiNS0_9allocatorIiLj2ELj0EEELb0ENS0_9deque_optILm0ELm0EvLb1EEEE6resizeEm.exit
 
-_ZN5boost9container10deque_implIiNS0_9allocatorIiLj2ELj0EEELb0ENS0_9deque_optILm0ELm0EvLb1EEEE6resizeEm.exit: ; preds = %.noexc480, %_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i, %51
-  %52 = phi ptr [ %.pre1137, %.noexc480 ], [ null, %_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i ], [ null, %51 ] ; 5 uses
-  %53 = phi ptr [ %.pre1136, %.noexc480 ], [ null, %_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i ], [ null, %51 ] ; 4 uses
+_ZN5boost9container10deque_implIiNS0_9allocatorIiLj2ELj0EEELb0ENS0_9deque_optILm0ELm0EvLb1EEEE6resizeEm.exit: ; preds = %.noexc480, %_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i
+  %51 = phi ptr [ %.pre1137, %.noexc480 ], [ null, %_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i ] ; 5 uses
+  %52 = phi ptr [ %.pre1136, %.noexc480 ], [ null, %_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i ] ; 4 uses
   %i.el = getelementptr inbounds nuw i8, ptr %i.ec, i64 8 ; 42 uses
-  %i.em = ptrtoint ptr %53 to i64
-  %i.en = ptrtoint ptr %52 to i64                 ; 4 uses
+  %i.em = ptrtoint ptr %52 to i64
+  %i.en = ptrtoint ptr %51 to i64                 ; 4 uses
   %i.eo = sub i64 %i.em, %i.en                    ; 2 uses
   %i.ep = ashr exact i64 %i.eo, 2                 ; 2 uses
   %i.eq = icmp ult i64 %i.ep, 100
@@ -902,8 +890,8 @@ bb.w:                                             ; preds = %_ZN5boost9container
   br i1 %.not1075, label %_ZNSt6vectorIiSaIiEE6resizeEm.exit, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.es = getelementptr inbounds nuw i8, ptr %52, i64 400 ; 3 uses
-  %.not.i.i481 = icmp eq ptr %53, %i.es
+  %i.es = getelementptr inbounds nuw i8, ptr %51, i64 400 ; 3 uses
+  %.not.i.i481 = icmp eq ptr %52, %i.es
   br i1 %.not.i.i481, label %_ZNSt6vectorIiSaIiEE6resizeEm.exit, label %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i
 
 _ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.x
@@ -911,15 +899,15 @@ _ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.x
   br label %_ZNSt6vectorIiSaIiEE6resizeEm.exit
 
 _ZNSt6vectorIiSaIiEE6resizeEm.exit:               ; preds = %._ZNSt6vectorIiSaIiEE6resizeEm.exit_crit_edge, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i, %bb.x, %bb.w
-  %.pre-phi = phi i64 [ %.pre1144, %._ZNSt6vectorIiSaIiEE6resizeEm.exit_crit_edge ], [ %i.en, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i ], [ %i.en, %bb.x ], [ %i.en, %bb.w ] ; 3 uses
-  %i.et = phi ptr [ %.pre1143, %._ZNSt6vectorIiSaIiEE6resizeEm.exit_crit_edge ], [ %i.es, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i ], [ %53, %bb.x ], [ %53, %bb.w ] ; 3 uses
-  %i.eu = phi ptr [ %.pre1138, %._ZNSt6vectorIiSaIiEE6resizeEm.exit_crit_edge ], [ %52, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i ], [ %52, %bb.x ], [ %52, %bb.w ] ; 3 uses
-  %i.ev = load i64, ptr %i.ed, align 8, !tbaa !645 ; 6 uses
-  %i.ew = load i64, ptr %i.ef, align 8, !tbaa !641 ; 5 uses
+  %.pre-phi = phi i64 [ %.pre1144, %._ZNSt6vectorIiSaIiEE6resizeEm.exit_crit_edge ], [ %i.en, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i ], [ %i.en, %bb.x ], [ %i.en, %bb.w ] ; 2 uses
+  %i.et = phi ptr [ %.pre1143, %._ZNSt6vectorIiSaIiEE6resizeEm.exit_crit_edge ], [ %i.es, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i ], [ %52, %bb.x ], [ %52, %bb.w ] ; 2 uses
+  %i.eu = phi ptr [ %.pre1138, %._ZNSt6vectorIiSaIiEE6resizeEm.exit_crit_edge ], [ %51, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i ], [ %51, %bb.x ], [ %51, %bb.w ] ; 2 uses
+  %i.ev = load i64, ptr %i.ed, align 8, !tbaa !645 ; 5 uses
+  %i.ew = load i64, ptr %i.ef, align 8, !tbaa !641 ; 4 uses
   %i.ex = sub i64 %i.ev, %i.ew                    ; 5 uses
   %i.ey = ptrtoint ptr %i.et to i64
-  %i.ez = sub i64 %i.ey, %.pre-phi                ; 3 uses
-  %i.fa = ashr exact i64 %i.ez, 2                 ; 3 uses
+  %i.ez = sub i64 %i.ey, %.pre-phi                ; 2 uses
+  %i.fa = ashr exact i64 %i.ez, 2                 ; 2 uses
   %.not.i483 = icmp eq i64 %i.ex, %i.fa
   br i1 %.not.i483, label %bb.y, label %_ZN5boost9container4test20CheckEqualContainersINS0_5dequeIiNS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EvLb1EEEEESt6vectorIiSaIiEEEEbRKT_RKT0_.exit504.thread
 
@@ -1006,13 +994,9 @@ bb.ac:                                            ; preds = %bb.ad, %_ZN5boost9c
 
 _ZN5boost9container4test20CheckEqualContainersINS0_5dequeIiNS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EvLb1EEEEESt6vectorIiSaIiEEEEbRKT_RKT0_.exit504.thread1049: ; preds = %_ZN5boost9container14deque_iteratorIPiLb1ELj0ELj0EmEppEv.exit.i498, %.preheader.i493
   %i.gd = icmp ugt i64 %i.ex, 200
-  br i1 %i.gd, label %54, label %_ZN5boost9container4test20CheckEqualContainersINS0_5dequeIiNS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EvLb1EEEEESt6vectorIiSaIiEEEEbRKT_RKT0_.exit504.thread1049.thread
+  br i1 %i.gd, label %_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i506, label %_ZN5boost9container4test20CheckEqualContainersINS0_5dequeIiNS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EvLb1EEEEESt6vectorIiSaIiEEEEbRKT_RKT0_.exit504.thread1049.thread
 
-54:                                               ; preds = %_ZN5boost9container4test20CheckEqualContainersINS0_5dequeIiNS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EvLb1EEEEESt6vectorIiSaIiEEEEbRKT_RKT0_.exit504.thread1049
-  %.not.i.i505 = icmp eq i64 %i.ev, %i.ew
-  br i1 %.not.i.i505, label %_ZN5boost9container10deque_implIiNS0_9allocatorIiLj2ELj0EEELb0ENS0_9deque_optILm0ELm0EvLb1EEEE6resizeEm.exit509, label %_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i506
-
-_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i506: ; preds = %54
+_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i506: ; preds = %_ZN5boost9container4test20CheckEqualContainersINS0_5dequeIiNS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EvLb1EEEEESt6vectorIiSaIiEEEEbRKT_RKT0_.exit504.thread1049
   %.neg.i507 = add i64 %i.ev, 200
   %i.ge = sub i64 %.neg.i507, %i.ex
   store i64 %i.ge, ptr %i.ed, align 8, !tbaa !645
@@ -1034,12 +1018,12 @@ _ZN5boost9container4test20CheckEqualContainersINS0_5dequeIiNS0_9allocatorIiLj2EL
   %.pre1151 = ashr exact i64 %.pre1149, 2
   br label %_ZN5boost9container10deque_implIiNS0_9allocatorIiLj2ELj0EEELb0ENS0_9deque_optILm0ELm0EvLb1EEEE6resizeEm.exit509
 
-_ZN5boost9container10deque_implIiNS0_9allocatorIiLj2ELj0EEELb0ENS0_9deque_optILm0ELm0EvLb1EEEE6resizeEm.exit509: ; preds = %.noexc508, %_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i506, %54
-  %.pre-phi1152 = phi i64 [ %.pre1151, %.noexc508 ], [ %i.fa, %_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i506 ], [ %i.fa, %54 ] ; 2 uses
-  %.pre-phi1150 = phi i64 [ %.pre1149, %.noexc508 ], [ %i.ez, %_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i506 ], [ %i.ez, %54 ]
-  %.pre-phi1148 = phi i64 [ %.pre1147, %.noexc508 ], [ %.pre-phi, %_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i506 ], [ %.pre-phi, %54 ] ; 3 uses
-  %55 = phi ptr [ %.pre1140, %.noexc508 ], [ %i.eu, %_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i506 ], [ %i.eu, %54 ] ; 4 uses
-  %56 = phi ptr [ %.pre1139, %.noexc508 ], [ %i.et, %_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i506 ], [ %i.et, %54 ] ; 3 uses
+_ZN5boost9container10deque_implIiNS0_9allocatorIiLj2ELj0EEELb0ENS0_9deque_optILm0ELm0EvLb1EEEE6resizeEm.exit509: ; preds = %.noexc508, %_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i506
+  %.pre-phi1152 = phi i64 [ %.pre1151, %.noexc508 ], [ %i.fa, %_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i506 ] ; 2 uses
+  %.pre-phi1150 = phi i64 [ %.pre1149, %.noexc508 ], [ %i.ez, %_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i506 ]
+  %.pre-phi1148 = phi i64 [ %.pre1147, %.noexc508 ], [ %.pre-phi, %_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i506 ] ; 3 uses
+  %53 = phi ptr [ %.pre1140, %.noexc508 ], [ %i.eu, %_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i506 ] ; 4 uses
+  %54 = phi ptr [ %.pre1139, %.noexc508 ], [ %i.et, %_ZN5boost9container10deque_baseINS0_9allocatorIiLj2ELj0EEENS0_9deque_optILm0ELm0EmLb1EEELb0EE11prot_finishEv.exit.i.i506 ] ; 3 uses
   %i.gg = icmp ult i64 %.pre-phi1152, 200
   br i1 %i.gg, label %bb.ad, label %bb.ae
 
@@ -1059,8 +1043,8 @@ bb.ae:                                            ; preds = %_ZN5boost9container
   br i1 %.not1076, label %_ZNSt6vectorIiSaIiEE6resizeEm.exit513, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %i.gi = getelementptr inbounds nuw i8, ptr %55, i64 800 ; 3 uses
-  %.not.i.i510 = icmp eq ptr %56, %i.gi
+  %i.gi = getelementptr inbounds nuw i8, ptr %53, i64 800 ; 3 uses
+  %.not.i.i510 = icmp eq ptr %54, %i.gi
   br i1 %.not.i.i510, label %_ZNSt6vectorIiSaIiEE6resizeEm.exit513, label %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i511
 
 _ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i511:     ; preds = %bb.af
@@ -1069,8 +1053,8 @@ _ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i511:     ; preds = %bb.af
 
 _ZNSt6vectorIiSaIiEE6resizeEm.exit513:            ; preds = %._ZNSt6vectorIiSaIiEE6resizeEm.exit513_crit_edge, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i511, %bb.af, %bb.ae
   %.pre-phi1154 = phi i64 [ %.pre1153, %._ZNSt6vectorIiSaIiEE6resizeEm.exit513_crit_edge ], [ %.pre-phi1148, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i511 ], [ %.pre-phi1148, %bb.af ], [ %.pre-phi1148, %bb.ae ]
-  %i.gj = phi ptr [ %.pre1142, %._ZNSt6vectorIiSaIiEE6resizeEm.exit513_crit_edge ], [ %55, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i511 ], [ %55, %bb.af ], [ %55, %bb.ae ] ; 4 uses
-  %i.gk = phi ptr [ %.pre1141, %._ZNSt6vectorIiSaIiEE6resizeEm.exit513_crit_edge ], [ %i.gi, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i511 ], [ %56, %bb.af ], [ %56, %bb.ae ] ; 2 uses
+  %i.gj = phi ptr [ %.pre1142, %._ZNSt6vectorIiSaIiEE6resizeEm.exit513_crit_edge ], [ %53, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i511 ], [ %53, %bb.af ], [ %53, %bb.ae ] ; 4 uses
+  %i.gk = phi ptr [ %.pre1141, %._ZNSt6vectorIiSaIiEE6resizeEm.exit513_crit_edge ], [ %i.gi, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i511 ], [ %54, %bb.af ], [ %54, %bb.ae ] ; 2 uses
   %i.gl = load i64, ptr %i.ed, align 8, !tbaa !645 ; 6 uses
   %i.gm = load i64, ptr %i.ef, align 8, !tbaa !641 ; 10 uses
   %i.gn = sub i64 %i.gl, %i.gm                    ; 2 uses

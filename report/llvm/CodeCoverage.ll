@@ -205,15 +205,13 @@ bb.h:                                             ; preds = %.loopexit.i, %.lr.p
   %.sroa.0127.0139.i = phi ptr [ %i.ar, %.lr.ph141.i ], [ %i.fi, %.loopexit.i ] ; 3 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %.sroa.0127.0139.i, i64 8
   %i.bw = getelementptr inbounds nuw i8, ptr %.sroa.0127.0139.i, i64 16
-  %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !273 ; 3 uses
-  %i.by = load ptr, ptr %i.bv, align 8, !tbaa !275 ; 3 uses
+  %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !273 ; 2 uses
+  %i.by = load ptr, ptr %i.bv, align 8, !tbaa !275 ; 2 uses
   %i.bz = ptrtoint ptr %i.bx to i64
   %i.ca = ptrtoint ptr %i.by to i64
   %i.cb = sub i64 %i.bz, %i.ca
   %i.cc = icmp ult i64 %i.cb, 9
-  %.not135.i = icmp eq ptr %i.by, %i.bx
-  %or.cond.i = or i1 %.not135.i, %i.cc
-  br i1 %or.cond.i, label %.loopexit.i, label %.lr.ph137.i
+  br i1 %i.cc, label %.loopexit.i, label %.lr.ph137.i
 
 .lr.ph137.i:                                      ; preds = %bb.h, %_ZNSt10unique_ptrIN4llvm18SourceCoverageViewESt14default_deleteIS1_EED2Ev.exit93.i
   %.066136.i = phi ptr [ %i.fb, %_ZNSt10unique_ptrIN4llvm18SourceCoverageViewESt14default_deleteIS1_EED2Ev.exit93.i ], [ %i.by, %bb.h ] ; 2 uses

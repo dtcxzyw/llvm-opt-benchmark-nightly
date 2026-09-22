@@ -205,16 +205,14 @@ bb.a:
   %.026 = phi ptr [ %i.ap, %.loopexit ], [ %i.d, %bb.a ] ; 2 uses
   %i.g = load ptr, ptr %.026, align 8             ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 16
-  %i.i = load ptr, ptr %i.h, align 8              ; 4 uses
+  %i.i = load ptr, ptr %i.h, align 8              ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  %i.k = load ptr, ptr %i.j, align 8              ; 4 uses
+  %i.k = load ptr, ptr %i.j, align 8              ; 3 uses
   %i.l = ptrtoint ptr %i.i to i64
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = sub i64 %i.l, %i.m
-  %1 = icmp ult i64 %i.n, 5
-  %.not2123 = icmp eq ptr %i.k, %i.i
-  %or.cond = or i1 %1, %.not2123
-  br i1 %or.cond, label %.loopexit, label %.lr.ph
+  %1 = icmp ugt i64 %i.n, 4
+  br i1 %1, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %.lr.ph27
   %.sroa.01.0.copyload.peel = load i32, ptr %i.k, align 4
@@ -304,16 +302,14 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph23
   %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 16
-  %i.l = load ptr, ptr %i.k, align 8              ; 3 uses
+  %i.l = load ptr, ptr %i.k, align 8              ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  %i.n = load ptr, ptr %i.m, align 8              ; 3 uses
+  %i.n = load ptr, ptr %i.m, align 8              ; 2 uses
   %i.o = ptrtoint ptr %i.l to i64
   %i.p = ptrtoint ptr %i.n to i64
   %i.q = sub i64 %i.o, %i.p
   %i.r = icmp ult i64 %i.q, 5
-  %.not1819 = icmp eq ptr %i.n, %i.l
-  %or.cond = or i1 %i.r, %.not1819
-  br i1 %or.cond, label %.loopexit, label %.lr.ph
+  br i1 %i.r, label %.loopexit, label %.lr.ph
 
 bb.c:                                             ; preds = %.lr.ph
   %i.s = getelementptr inbounds nuw i8, ptr %.020, i64 4 ; 2 uses
@@ -366,16 +362,14 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph23
   %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 48
-  %i.l = load ptr, ptr %i.k, align 8              ; 3 uses
+  %i.l = load ptr, ptr %i.k, align 8              ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 40
-  %i.n = load ptr, ptr %i.m, align 8              ; 3 uses
+  %i.n = load ptr, ptr %i.m, align 8              ; 2 uses
   %i.o = ptrtoint ptr %i.l to i64
   %i.p = ptrtoint ptr %i.n to i64
   %i.q = sub i64 %i.o, %i.p
   %i.r = icmp ult i64 %i.q, 5
-  %.not1819 = icmp eq ptr %i.n, %i.l
-  %or.cond = or i1 %i.r, %.not1819
-  br i1 %or.cond, label %.loopexit, label %.lr.ph
+  br i1 %i.r, label %.loopexit, label %.lr.ph
 
 bb.c:                                             ; preds = %.lr.ph
   %i.s = getelementptr inbounds nuw i8, ptr %.020, i64 4 ; 2 uses

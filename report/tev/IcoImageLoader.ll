@@ -205,7 +205,7 @@ bb.a:
   br label %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev14IcoImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PZNKS3_4loadESA_SF_SH_SK_iEN7IconDir5EntryEEEvT1_SQ_T0_.exit.outer"
 
 "_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev14IcoImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PZNKS3_4loadESA_SF_SH_SK_iEN7IconDir5EntryEEEvT1_SQ_T0_.exit.outer": ; preds = %bb.au, %bb.a
-  %.020.ph = phi ptr [ %i.of, %bb.au ], [ %1, %bb.a ] ; 29 uses
+  %.020.ph = phi ptr [ %i.of, %bb.au ], [ %1, %bb.a ] ; 28 uses
   %.017.ph = phi ptr [ %.017, %bb.au ], [ %0, %bb.a ]
   %.048.ph = phi i8 [ %.048.ph319, %bb.au ], [ %i.a, %bb.a ]
   %.046.ph = phi i64 [ %i.if, %bb.au ], [ %2, %bb.a ]
@@ -226,7 +226,7 @@ bb.a:
   br label %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev14IcoImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PZNKS3_4loadESA_SF_SH_SK_iEN7IconDir5EntryEEEvT1_SQ_T0_.exit"
 
 "_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev14IcoImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PZNKS3_4loadESA_SF_SH_SK_iEN7IconDir5EntryEEEvT1_SQ_T0_.exit": ; preds = %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev14IcoImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PZNKS3_4loadESA_SF_SH_SK_iEN7IconDir5EntryEEEvT1_SQ_T0_.exit.outer317", %bb.av
-  %.017 = phi ptr [ %.130.lcssa.i, %bb.av ], [ %.017.ph318, %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev14IcoImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PZNKS3_4loadESA_SF_SH_SK_iEN7IconDir5EntryEEEvT1_SQ_T0_.exit.outer317" ] ; 63 uses
+  %.017 = phi ptr [ %.130.lcssa.i, %bb.av ], [ %.017.ph318, %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev14IcoImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PZNKS3_4loadESA_SF_SH_SK_iEN7IconDir5EntryEEEvT1_SQ_T0_.exit.outer317" ] ; 62 uses
   %.046 = phi i64 [ %i.if, %bb.av ], [ %.046.ph320, %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev14IcoImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PZNKS3_4loadESA_SF_SH_SK_iEN7IconDir5EntryEEEvT1_SQ_T0_.exit.outer317" ] ; 2 uses
   %i.j = ptrtoint ptr %.017 to i64                ; 2 uses
   %i.k = sub i64 %i.b, %i.j                       ; 4 uses
@@ -297,7 +297,7 @@ bb.f:                                             ; preds = %"_ZNSt3__116__inser
 
 bb.g:                                             ; preds = %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev14IcoImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PZNKS3_4loadESA_SF_SH_SK_iEN7IconDir5EntryEEEvT1_SQ_T0_.exit"
   %i.al = icmp slt i64 %i.k, 576
-  br i1 %i.al, label %bb.h, label %9
+  br i1 %i.al, label %bb.h, label %bb.p
 
 bb.h:                                             ; preds = %bb.g
   %i.am = trunc nuw i8 %.048.ph319 to i1
@@ -484,13 +484,9 @@ bb.o:                                             ; preds = %bb.n, %"_ZZNK3tev14
   %.not.i62 = icmp eq ptr %storemerge.i61, %.020.ph
   br i1 %.not.i62, label %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev14IcoImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PZNKS3_4loadESA_SF_SH_SK_iEN7IconDir5EntryEEEvT1_SQ_T0_.exit.thread", label %.lr.ph.i59, !llvm.loop !763
 
-9:                                                ; preds = %bb.g
-  %10 = icmp eq i64 %.046, 0
-  br i1 %10, label %bb.p, label %bb.ah
-
-bb.p:                                             ; preds = %9
-  %i.cq = icmp eq ptr %.017, %.020.ph
-  br i1 %i.cq, label %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev14IcoImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PZNKS3_4loadESA_SF_SH_SK_iEN7IconDir5EntryEEEvT1_SQ_T0_.exit.thread", label %bb.q
+bb.p:                                             ; preds = %bb.g
+  %i.cq = icmp eq i64 %.046, 0
+  br i1 %i.cq, label %bb.q, label %bb.ah
 
 bb.q:                                             ; preds = %bb.p
   %i.cr = add nsw i64 %i.l, -2
@@ -842,7 +838,7 @@ bb.ag:                                            ; preds = %"_ZZNK3tev14IcoImag
   %i.ie = icmp sgt i64 %.02.i.i.i, 2
   br i1 %i.ie, label %.lr.ph.i.i.i, label %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev14IcoImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PZNKS3_4loadESA_SF_SH_SK_iEN7IconDir5EntryEEEvT1_SQ_T0_.exit.thread", !llvm.loop !768
 
-bb.ah:                                            ; preds = %9
+bb.ah:                                            ; preds = %bb.p
   %i.if = add nsw i64 %.046, -1                   ; 4 uses
   %i.ig = lshr i64 %i.l, 1
   %i.ih = icmp samesign ugt i64 %i.k, 3072
@@ -1245,7 +1241,7 @@ bb.aw:                                            ; preds = %bb.av, %"_ZNSt3__13
   %.017.ph318.be = phi ptr [ %.336.lcssa.i, %"_ZNSt3__131__partition_with_equals_on_leftB8ne180100INS_17_ClassicAlgPolicyEPZNK3tev14IcoImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiEN7IconDir5EntryERZNKS3_4loadESA_SF_SH_SK_iE3$_0EET0_SQ_SQ_T1_.exit" ], [ %.130.lcssa.i, %bb.aw ]
   br label %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev14IcoImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PZNKS3_4loadESA_SF_SH_SK_iEN7IconDir5EntryEEEvT1_SQ_T0_.exit.outer317", !llvm.loop !781
 
-"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev14IcoImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PZNKS3_4loadESA_SF_SH_SK_iEN7IconDir5EntryEEEvT1_SQ_T0_.exit.thread": ; preds = %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev14IcoImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PZNKS3_4loadESA_SF_SH_SK_iEN7IconDir5EntryEEEvT1_SQ_T0_.exit", %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev14IcoImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PZNKS3_4loadESA_SF_SH_SK_iEN7IconDir5EntryEEEvT1_SQ_T0_.exit", %bb.au, %"_ZNSt3__110__pop_heapB8ne180100INS_17_ClassicAlgPolicyEZNK3tev14IcoImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PZNKS3_4loadESA_SF_SH_SK_iEN7IconDir5EntryEEEvT1_SP_RT0_NS_15iterator_traitsISP_E15difference_typeE.exit.i.i.i", %bb.o, %bb.k, %bb.p, %bb.l, %bb.i, %bb.c, %bb.e, %bb.d, %bb.f, %.split, %"_ZZNK3tev14IcoImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_0clIZNKS0_4loadES8_SD_SF_SI_iEN7IconDir5EntryESM_EEDaRKT_RKT0_.exit"
+"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev14IcoImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PZNKS3_4loadESA_SF_SH_SK_iEN7IconDir5EntryEEEvT1_SQ_T0_.exit.thread": ; preds = %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev14IcoImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PZNKS3_4loadESA_SF_SH_SK_iEN7IconDir5EntryEEEvT1_SQ_T0_.exit", %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev14IcoImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PZNKS3_4loadESA_SF_SH_SK_iEN7IconDir5EntryEEEvT1_SQ_T0_.exit", %bb.au, %"_ZNSt3__110__pop_heapB8ne180100INS_17_ClassicAlgPolicyEZNK3tev14IcoImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PZNKS3_4loadESA_SF_SH_SK_iEN7IconDir5EntryEEEvT1_SP_RT0_NS_15iterator_traitsISP_E15difference_typeE.exit.i.i.i", %bb.o, %bb.k, %bb.l, %bb.i, %bb.c, %bb.e, %bb.d, %bb.f, %.split, %"_ZZNK3tev14IcoImageLoader4loadERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiENK3$_0clIZNKS0_4loadES8_SD_SF_SI_iEN7IconDir5EntryESM_EEDaRKT_RKT0_.exit"
   ret void
 }
 

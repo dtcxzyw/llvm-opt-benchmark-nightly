@@ -205,7 +205,7 @@ bb.a:
   br label %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev16DicomImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PNS2_14DicomImageDataEEEvT1_SP_T0_.exit.outer"
 
 "_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev16DicomImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PNS2_14DicomImageDataEEEvT1_SP_T0_.exit.outer": ; preds = %bb.fv, %bb.a
-  %.024.ph = phi ptr [ %i.bec, %bb.fv ], [ %1, %bb.a ] ; 30 uses
+  %.024.ph = phi ptr [ %i.bec, %bb.fv ], [ %1, %bb.a ] ; 29 uses
   %.021.ph = phi ptr [ %.021, %bb.fv ], [ %0, %bb.a ]
   %.048.ph = phi i8 [ %.048.ph678, %bb.fv ], [ %i.a, %bb.a ]
   %.046.ph = phi i64 [ %i.aqz, %bb.fv ], [ %2, %bb.a ]
@@ -227,7 +227,7 @@ bb.a:
   br label %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev16DicomImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PNS2_14DicomImageDataEEEvT1_SP_T0_.exit"
 
 "_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev16DicomImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PNS2_14DicomImageDataEEEvT1_SP_T0_.exit": ; preds = %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev16DicomImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PNS2_14DicomImageDataEEEvT1_SP_T0_.exit.outer676", %bb.fw
-  %.021 = phi ptr [ %i.beu, %bb.fw ], [ %.021.ph677, %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev16DicomImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PNS2_14DicomImageDataEEEvT1_SP_T0_.exit.outer676" ] ; 99 uses
+  %.021 = phi ptr [ %i.beu, %bb.fw ], [ %.021.ph677, %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev16DicomImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PNS2_14DicomImageDataEEEvT1_SP_T0_.exit.outer676" ] ; 98 uses
   %.046 = phi i64 [ %i.aqz, %bb.fw ], [ %.046.ph679, %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev16DicomImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PNS2_14DicomImageDataEEEvT1_SP_T0_.exit.outer676" ] ; 2 uses
   %i.au = ptrtoint ptr %.021 to i64               ; 2 uses
   %i.av = sub i64 %i.al, %i.au                    ; 4 uses
@@ -297,7 +297,7 @@ bb.f:                                             ; preds = %"_ZNSt3__116__inser
 
 bb.g:                                             ; preds = %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev16DicomImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PNS2_14DicomImageDataEEEvT1_SP_T0_.exit"
   %i.cg = icmp slt i64 %i.av, 8640
-  br i1 %i.cg, label %bb.h, label %11
+  br i1 %i.cg, label %bb.h, label %bb.bu
 
 bb.h:                                             ; preds = %bb.g
   %i.ch = trunc nuw i8 %.048.ph678 to i1
@@ -700,13 +700,9 @@ bb.bt:                                            ; preds = %_ZN3tev14DicomImage
   %.not.i61 = icmp eq ptr %storemerge.i60, %.024.ph
   br i1 %.not.i61, label %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev16DicomImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PNS2_14DicomImageDataEEEvT1_SP_T0_.exit.thread", label %bb.ap, !llvm.loop !2977
 
-11:                                               ; preds = %bb.g
-  %12 = icmp eq i64 %.046, 0
-  br i1 %12, label %bb.bu, label %bb.eu
-
-bb.bu:                                            ; preds = %11
-  %i.tn = icmp eq ptr %.021, %.024.ph
-  br i1 %i.tn, label %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev16DicomImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PNS2_14DicomImageDataEEEvT1_SP_T0_.exit.thread", label %bb.bv
+bb.bu:                                            ; preds = %bb.g
+  %i.tn = icmp eq i64 %.046, 0
+  br i1 %i.tn, label %bb.bv, label %bb.eu
 
 bb.bv:                                            ; preds = %bb.bu
   %i.to = add nsw i64 %i.aw, -2
@@ -1109,7 +1105,7 @@ bb.et:                                            ; preds = %_ZNSt3__124__option
   %i.aqy = icmp sgt i64 %.028.i.i.i, 2
   br i1 %i.aqy, label %bb.cj, label %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev16DicomImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PNS2_14DicomImageDataEEEvT1_SP_T0_.exit.thread", !llvm.loop !2983
 
-bb.eu:                                            ; preds = %11
+bb.eu:                                            ; preds = %bb.bu
   %i.aqz = add nsw i64 %.046, -1                  ; 4 uses
   %i.ara = lshr i64 %i.aw, 1
   %i.arb = icmp samesign ugt i64 %i.av, 46080
@@ -1512,7 +1508,7 @@ bb.fx:                                            ; preds = %bb.fw, %"_ZNSt3__13
   %.021.ph677.be = phi ptr [ %.321.lcssa.i, %"_ZNSt3__131__partition_with_equals_on_leftB8ne180100INS_17_ClassicAlgPolicyEPN3tev14DicomImageDataERZNKS2_16DicomImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS8_EERKNS2_19ImageLoaderSettingsEiE3$_0EET0_SP_SP_T1_.exit" ], [ %i.bew, %bb.fx ]
   br label %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev16DicomImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PNS2_14DicomImageDataEEEvT1_SP_T0_.exit.outer676", !llvm.loop !2996
 
-"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev16DicomImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PNS2_14DicomImageDataEEEvT1_SP_T0_.exit.thread": ; preds = %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev16DicomImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PNS2_14DicomImageDataEEEvT1_SP_T0_.exit", %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev16DicomImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PNS2_14DicomImageDataEEEvT1_SP_T0_.exit", %bb.fv, %"_ZNSt3__110__pop_heapB8ne180100INS_17_ClassicAlgPolicyEZNK3tev16DicomImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PNS2_14DicomImageDataEEEvT1_SO_RT0_NS_15iterator_traitsISO_E15difference_typeE.exit.i.i.i", %bb.bt, %bb.an, %bb.bu, %.preheader.i54, %bb.ao, %.preheader.i, %bb.i, %bb.c, %bb.e, %bb.d, %bb.f, %bb.b
+"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev16DicomImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PNS2_14DicomImageDataEEEvT1_SP_T0_.exit.thread": ; preds = %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev16DicomImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PNS2_14DicomImageDataEEEvT1_SP_T0_.exit", %"_ZNSt3__116__insertion_sortB8ne180100INS_17_ClassicAlgPolicyERZNK3tev16DicomImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PNS2_14DicomImageDataEEEvT1_SP_T0_.exit", %bb.fv, %"_ZNSt3__110__pop_heapB8ne180100INS_17_ClassicAlgPolicyEZNK3tev16DicomImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS6_EERKNS2_19ImageLoaderSettingsEiE3$_0PNS2_14DicomImageDataEEEvT1_SO_RT0_NS_15iterator_traitsISO_E15difference_typeE.exit.i.i.i", %bb.bt, %bb.an, %.preheader.i54, %bb.ao, %.preheader.i, %bb.i, %bb.c, %bb.e, %bb.d, %bb.f, %bb.b
   ret void
 }
 

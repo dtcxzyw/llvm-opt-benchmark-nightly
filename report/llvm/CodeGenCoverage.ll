@@ -202,13 +202,11 @@ _ZN4llvm9StringRefC2EPKc.exit.us:                 ; preds = %.preheader.us
 _ZN4llvmeqENS_9StringRefES0_.exit.split.us45:     ; preds = %_ZN4llvm9StringRefC2EPKc.exit.us, %bb.c
   %.224.us46 = phi ptr [ %i.m, %bb.c ], [ %scevgep74, %_ZN4llvm9StringRefC2EPKc.exit.us ] ; 4 uses
   %i.h = load ptr, ptr %i.c, align 8, !tbaa !39   ; 2 uses
-  %.not33.us47 = icmp eq ptr %.224.us46, %i.h     ; 2 uses
   %i.i = ptrtoint ptr %i.h to i64
   %i.j = ptrtoint ptr %.224.us46 to i64
   %i.k = sub i64 %i.i, %i.j
   %i.l = icmp slt i64 %i.k, 8
-  %or.cond = or i1 %.not33.us47, %i.l
-  br i1 %or.cond, label %.critedge, label %bb.b
+  br i1 %i.l, label %.critedge.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit.split.us45
   %.0.copyload.i.i.us48 = load i64, ptr %.224.us46, align 1 ; 2 uses
@@ -295,13 +293,11 @@ bb.i:                                             ; preds = %bb.h
 _ZN4llvmeqENS_9StringRefES0_.exit.split:          ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit, %bb.k
   %.224 = phi ptr [ %i.ag, %bb.k ], [ %scevgep71, %_ZN4llvmeqENS_9StringRefES0_.exit ] ; 4 uses
   %i.ab = load ptr, ptr %i.c, align 8, !tbaa !39  ; 2 uses
-  %.not33 = icmp eq ptr %.224, %i.ab              ; 2 uses
   %i.ac = ptrtoint ptr %i.ab to i64
   %i.ad = ptrtoint ptr %.224 to i64
   %i.ae = sub i64 %i.ac, %i.ad
   %i.af = icmp slt i64 %i.ae, 8
-  %or.cond120 = or i1 %.not33, %i.af
-  br i1 %or.cond120, label %.critedge, label %bb.j
+  br i1 %i.af, label %.critedge.loopexit125, label %bb.j
 
 bb.j:                                             ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit.split
   %.0.copyload.i.i = load i64, ptr %.224, align 1 ; 2 uses
@@ -323,8 +319,16 @@ bb.k:                                             ; preds = %bb.j
   %.not = icmp eq ptr %.us-phi, %i.ah
   br i1 %.not, label %.critedge, label %.preheader, !llvm.loop !36
 
-.critedge:                                        ; preds = %.split.us, %.preheader, %bb.h, %_ZN4llvmeqENS_9StringRefES0_.exit.split, %.split.us50, %.preheader.us, %bb.e, %_ZN4llvmeqENS_9StringRefES0_.exit.split.us45, %bb.a
-  %.not38 = phi i1 [ false, %bb.e ], [ %.not33.us47, %_ZN4llvmeqENS_9StringRefES0_.exit.split.us45 ], [ false, %bb.h ], [ %.not33, %_ZN4llvmeqENS_9StringRefES0_.exit.split ], [ true, %bb.a ], [ %.not102.not, %.split.us50 ], [ %.not102.not, %.preheader.us ], [ %.not99.not, %.preheader ], [ %.not99.not, %.split.us ]
+.critedge.loopexit:                               ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit.split.us45
+  %.not33.us47 = icmp eq ptr %.224.us46, %i.h
+  br label %.critedge
+
+.critedge.loopexit125:                            ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit.split
+  %.not33 = icmp eq ptr %.224, %i.ab
+  br label %.critedge
+
+.critedge:                                        ; preds = %.split.us, %.preheader, %bb.h, %.split.us50, %.preheader.us, %bb.e, %.critedge.loopexit125, %.critedge.loopexit, %bb.a
+  %.not38 = phi i1 [ false, %bb.e ], [ false, %bb.h ], [ %.not33.us47, %.critedge.loopexit ], [ %.not102.not, %.split.us50 ], [ true, %bb.a ], [ %.not33, %.critedge.loopexit125 ], [ %.not102.not, %.preheader.us ], [ %.not99.not, %.preheader ], [ %.not99.not, %.split.us ]
   ret i1 %.not38
 }
 

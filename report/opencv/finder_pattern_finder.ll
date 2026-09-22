@@ -204,15 +204,13 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN5zxing3RefINS2_6qrcode13FinderPattern
   %i.uq = fmul float %i.tr, 5.000000e-01          ; 2 uses
   %i.ur = fcmp olt float %i.uq, %i.tv
   %.sroa.speculated = select i1 %i.ur, float %i.tv, float %i.uq
-  %i.us = load ptr, ptr %i.c, align 8, !tbaa !84  ; 3 uses
-  %i.ut = load ptr, ptr %i.b, align 8, !tbaa !85  ; 3 uses
-  %.not500 = icmp ne ptr %i.us, %i.ut
+  %i.us = load ptr, ptr %i.c, align 8, !tbaa !84  ; 2 uses
+  %i.ut = load ptr, ptr %i.b, align 8, !tbaa !85  ; 2 uses
   %i.uu = ptrtoint ptr %i.us to i64
   %i.uv = ptrtoint ptr %i.ut to i64
   %i.uw = sub i64 %i.uu, %i.uv
   %i.ux = icmp ugt i64 %i.uw, 24
-  %or.cond = and i1 %.not500, %i.ux
-  br i1 %or.cond, label %.lr.ph721, label %_ZNSt6vectorIN5zxing3RefINS0_6qrcode13FinderPatternEEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EESB_.exit
+  br i1 %i.ux, label %.lr.ph721, label %_ZNSt6vectorIN5zxing3RefINS0_6qrcode13FinderPatternEEESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EESB_.exit
 
 .lr.ph:                                           ; preds = %bb.fl
   %i.uy = icmp ugt i64 %i.wx, 3
