@@ -205,7 +205,7 @@ middle.block651:                                  ; preds = %vector.body647
   %i.ga = zext nneg i32 %.0281.lcssa to i64       ; 4 uses
   %i.gb = zext nneg i32 %.0444 to i64             ; 6 uses
   %i.gc = add nsw i64 %i.gb, -1                   ; 2 uses
-  %min.iters.check659 = icmp ult i32 %.0444, 25
+  %min.iters.check659 = icmp ult i32 %.0444, 21
   br i1 %min.iters.check659, label %.lr.ph494.preheader719, label %vector.memcheck654
 
 vector.memcheck654:                               ; preds = %.lr.ph494.preheader
@@ -498,7 +498,7 @@ middle.block684:                                  ; preds = %vector.body679
   %i.jt = zext i32 %.2283.lcssa to i64            ; 5 uses
   %i.ju = zext nneg i32 %.1439 to i64             ; 6 uses
   %i.jv = add nsw i64 %i.ju, -1                   ; 2 uses
-  %min.iters.check698 = icmp ult i32 %.1439, 25
+  %min.iters.check698 = icmp ult i32 %.1439, 17
   br i1 %min.iters.check698, label %.lr.ph503.preheader715, label %vector.memcheck688
 
 vector.memcheck688:                               ; preds = %.lr.ph503.preheader
